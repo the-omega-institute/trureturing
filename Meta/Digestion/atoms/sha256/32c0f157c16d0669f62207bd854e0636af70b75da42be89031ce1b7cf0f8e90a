@@ -1,0 +1,4 @@
+**命题 14.3（已知固定模型的有限效果闭包）。** 存在 $1\le N_*\le d^2$，使所有 $N\ge N_*$ 满足 $\mathcal V_N=\mathcal V_\infty$。
+
+证明。置 $\mathcal A(F)=Q^\dagger FQ$。有 $\mathcal A(E_{n,x})=E_{n+1,x}$ 与 $\mathcal A(I)=I-\sum_xE_{1,x}$。若某 $N\ge1$ 有 $\mathcal V_{N+1}=\mathcal V_N$，则 $\mathcal A(\mathcal V_N)\subseteq\mathcal V_N$，以后稳定。空间总维度为 $d^2$，而 $\dim\mathcal V_1\ge1$，不可能发生 $d^2$ 次连续严格增长。此为精确模型的有限闭包，不是未知装置的有限样本识别。$\square$
+

@@ -1,0 +1,8 @@
+**推论 2.31。** The cylinder-extension relation $R_K$ is undecidable, and $\mu(K)$ is noncomputable. More precisely, for every oracle $A$,
+$$
+\mu(K)\text{ is }A\text{-computable}
+\quad\Longleftrightarrow\quad
+R_K\text{ is }A\text{-decidable}.
+\tag{TM.588}
+$$
+

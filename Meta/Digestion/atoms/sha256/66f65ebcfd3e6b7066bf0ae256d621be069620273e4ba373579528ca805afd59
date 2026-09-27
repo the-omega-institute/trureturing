@@ -1,0 +1,20 @@
+**命题 1.4。** If $L$ is a positive odd integer, the padded binary divisibility language
+$$
+\mathcal B_L
+=\{w\in\{0,1\}^*:\operatorname{val}_{\mathrm{bin}}(w)\equiv0\pmod L\}
+\tag{TM.530}
+$$
+has a complete minimal DFA with exactly $L$ states. Here $\operatorname{val}_{\mathrm{bin}}$ denotes ordinary binary evaluation, including $\operatorname{val}_{\mathrm{bin}}(\varepsilon)=0$.
+
+**Proof.** Use residues $r\in\mathbb Z/L\mathbb Z$, initial and accepting residue $0$, and digit transitions
+$$
+r\longmapsto2r+d\pmod L.
+\tag{TM.531}
+$$
+Every residue is reachable by the binary representation of a representative in $\{0,\ldots,L-1\}$. For distinct residues $r,s$, choose $t$ with $2^t\ge L$, and take $0\le y<L$ satisfying $y\equiv-2^tr\pmod L$. The length-$t$ padded binary representation of $y$ accepts from $r$. It rejects from $s$ because
+$$
+2^ts+y\equiv2^t(s-r)\not\equiv0\pmod L,
+\tag{TM.532}
+$$
+as $2$ is invertible modulo odd $L$. $\square$
+

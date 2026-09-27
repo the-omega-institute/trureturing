@@ -1,0 +1,26 @@
+**定理197.3（下一项的可分辨区间）。** 若进一步满足
+
+$$
+\frac{\ell_\epsilon^2}{\epsilon}\to0,
+\qquad
+\frac{\epsilon}{\ell_\epsilon}\to0,
+$$
+
+则
+
+$$
+\boxed{
+\begin{aligned}
+\frac{\ell_\epsilon^2}{\epsilon^3}
+\left[
+\mathscr E(\ell_\epsilon,\epsilon)
+-\frac34-\Phi_\infty\epsilon
++\frac{g^2\delta^2}{16}\frac{\epsilon^2}{\ell_\epsilon}
+\right]
+\longrightarrow
+-\frac{\beta\Sigma g^2\delta^2}{32}.
+\end{aligned}
+}
+\tag{197.7}
+$$
+

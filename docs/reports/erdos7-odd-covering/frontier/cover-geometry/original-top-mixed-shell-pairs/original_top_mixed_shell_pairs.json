@@ -1,0 +1,357 @@
+{
+  "scope": "One literal uniform source per control. OB3 exact mixed-prime capacities, disjoint same-original-pair direction regions, and one fixed-owner partition. Noncover missing phases remain separate. No Lean/unrestricted conclusion.",
+  "controls": [
+    {
+      "name": "six_distinct_odd_noncover",
+      "period": 10395,
+      "lower_modulus": 9,
+      "whole_cover": false,
+      "numerically_distinct": true,
+      "all_moduli_odd": true,
+      "classes": [
+        [
+          135,
+          0
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          15,
+          12
+        ],
+        [
+          45,
+          18
+        ],
+        [
+          35,
+          14
+        ],
+        [
+          55,
+          44
+        ]
+      ],
+      "uncovered_count": 6856,
+      "mixed_shell_formula_checks": 21,
+      "nonzero_mixed_shell_pairs": 14,
+      "prime_pair_controls": [
+        {
+          "primes": [
+            3,
+            5
+          ],
+          "selected_labels": [
+            0
+          ],
+          "private_count": 77,
+          "feasible_private_count": 0,
+          "missing_private_count": 77,
+          "demand_coefficient": 8,
+          "feasible_demand": "0",
+          "raw_full_capacity": "166/3465",
+          "owner_full_capacity": "496/10395",
+          "raw_feasible_private_service": "0",
+          "owner_feasible_private_service": "0"
+        },
+        {
+          "primes": [
+            3,
+            7
+          ],
+          "selected_labels": [],
+          "private_count": 0,
+          "feasible_private_count": 0,
+          "missing_private_count": 0,
+          "demand_coefficient": 12,
+          "feasible_demand": "0",
+          "raw_full_capacity": "0",
+          "owner_full_capacity": "0",
+          "raw_feasible_private_service": "0",
+          "owner_feasible_private_service": "0"
+        },
+        {
+          "primes": [
+            3,
+            11
+          ],
+          "selected_labels": [],
+          "private_count": 0,
+          "feasible_private_count": 0,
+          "missing_private_count": 0,
+          "demand_coefficient": 20,
+          "feasible_demand": "0",
+          "raw_full_capacity": "0",
+          "owner_full_capacity": "0",
+          "raw_feasible_private_service": "0",
+          "owner_feasible_private_service": "0"
+        },
+        {
+          "primes": [
+            5,
+            7
+          ],
+          "selected_labels": [
+            4
+          ],
+          "private_count": 270,
+          "feasible_private_count": 0,
+          "missing_private_count": 270,
+          "demand_coefficient": 24,
+          "feasible_demand": "0",
+          "raw_full_capacity": "16/63",
+          "owner_full_capacity": "16/63",
+          "raw_feasible_private_service": "0",
+          "owner_feasible_private_service": "0"
+        },
+        {
+          "primes": [
+            5,
+            11
+          ],
+          "selected_labels": [
+            5
+          ],
+          "private_count": 162,
+          "feasible_private_count": 0,
+          "missing_private_count": 162,
+          "demand_coefficient": 40,
+          "feasible_demand": "0",
+          "raw_full_capacity": "80/297",
+          "owner_full_capacity": "160/693",
+          "raw_feasible_private_service": "0",
+          "owner_feasible_private_service": "0"
+        },
+        {
+          "primes": [
+            7,
+            11
+          ],
+          "selected_labels": [],
+          "private_count": 0,
+          "feasible_private_count": 0,
+          "missing_private_count": 0,
+          "demand_coefficient": 60,
+          "feasible_demand": "0",
+          "raw_full_capacity": "12/77",
+          "owner_full_capacity": "12/77",
+          "raw_feasible_private_service": "0",
+          "owner_feasible_private_service": "0"
+        }
+      ]
+    },
+    {
+      "name": "distinct_even_L60_whole",
+      "period": 60,
+      "lower_modulus": 2,
+      "whole_cover": true,
+      "numerically_distinct": true,
+      "all_moduli_odd": false,
+      "classes": [
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          10,
+          2
+        ],
+        [
+          20,
+          8
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          30,
+          24
+        ]
+      ],
+      "uncovered_count": 0,
+      "mixed_shell_formula_checks": 38,
+      "nonzero_mixed_shell_pairs": 31,
+      "prime_pair_controls": [
+        {
+          "primes": [
+            2,
+            3
+          ],
+          "selected_labels": [],
+          "private_count": 0,
+          "feasible_private_count": 0,
+          "missing_private_count": 0,
+          "demand_coefficient": 2,
+          "feasible_demand": "0",
+          "raw_full_capacity": "7/15",
+          "owner_full_capacity": "17/60",
+          "raw_feasible_private_service": "0",
+          "owner_feasible_private_service": "0"
+        },
+        {
+          "primes": [
+            2,
+            5
+          ],
+          "selected_labels": [
+            6
+          ],
+          "private_count": 1,
+          "feasible_private_count": 1,
+          "missing_private_count": 0,
+          "demand_coefficient": 4,
+          "feasible_demand": "1/15",
+          "raw_full_capacity": "13/15",
+          "owner_full_capacity": "2/5",
+          "raw_feasible_private_service": "1/15",
+          "owner_feasible_private_service": "1/15"
+        },
+        {
+          "primes": [
+            3,
+            5
+          ],
+          "selected_labels": [
+            7,
+            8
+          ],
+          "private_count": 2,
+          "feasible_private_count": 2,
+          "missing_private_count": 0,
+          "demand_coefficient": 8,
+          "feasible_demand": "4/15",
+          "raw_full_capacity": "8/3",
+          "owner_full_capacity": "7/10",
+          "raw_feasible_private_service": "4/15",
+          "owner_feasible_private_service": "4/15"
+        }
+      ]
+    },
+    {
+      "name": "repeated_modulus_15_whole",
+      "period": 15,
+      "lower_modulus": 1,
+      "whole_cover": true,
+      "numerically_distinct": false,
+      "all_moduli_odd": true,
+      "classes": [
+        [
+          15,
+          0
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          15,
+          4
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          15,
+          6
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          15,
+          8
+        ],
+        [
+          15,
+          9
+        ],
+        [
+          15,
+          10
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          15,
+          12
+        ],
+        [
+          15,
+          13
+        ],
+        [
+          15,
+          14
+        ]
+      ],
+      "uncovered_count": 0,
+      "mixed_shell_formula_checks": 225,
+      "nonzero_mixed_shell_pairs": 120,
+      "prime_pair_controls": [
+        {
+          "primes": [
+            3,
+            5
+          ],
+          "selected_labels": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "private_count": 15,
+          "feasible_private_count": 15,
+          "missing_private_count": 0,
+          "demand_coefficient": 8,
+          "feasible_demand": "8",
+          "raw_full_capacity": "8",
+          "owner_full_capacity": "8",
+          "raw_feasible_private_service": "8",
+          "owner_feasible_private_service": "8"
+        }
+      ]
+    }
+  ]
+}

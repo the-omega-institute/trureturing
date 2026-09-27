@@ -1,0 +1,19 @@
+**定义 73.1（同一二维端口上的两个完整仪器）。** 继续使用第 71 节的共同活动空间 $\mathcal H=\mathbb C^2$、两个正交记录标签“未点击、点击”和相同量子输出空间。名义仪器 $\Gamma_0$ 与相干暗态仪器 $\Gamma_+$ 的 Kraus 算子为
+
+$$
+Q_0=|0\rangle\langle1|,\qquad L_0=|0\rangle\langle0|,
+\qquad
+Q_+=P_+=|+\rangle\langle+|,\qquad L_+=|0\rangle\langle-|,
+$$
+
+其中 $|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$。完整通道记为
+
+$$
+\Gamma_i(\rho)
+=|\varnothing\rangle\langle\varnothing|\otimes Q_i\rho Q_i^\dagger
++|\mathrm{click}\rangle\langle\mathrm{click}|\otimes L_i\rho L_i^\dagger,
+\qquad i\in\{0,+\}.
+$$
+
+每次未点击后重复同一仪器，第一次点击后停止；永久未点击的实际成本为无穷。两组算子均满足 $Q_i^\dagger Q_i+L_i^\dagger L_i=I$，因此都是完整合法仪器。
+

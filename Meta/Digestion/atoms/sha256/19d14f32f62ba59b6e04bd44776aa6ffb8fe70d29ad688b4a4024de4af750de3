@@ -1,0 +1,12 @@
+**命题 360.1（共同分量与差异分量的可逆分解）。** 设 $w$ 是任意概率向量，定义 $E=\mathbf1 w^{\mathsf T}$，并对 $x\in\mathbb R^n$ 写
+
+$$
+c=w^{\mathsf T}x,\qquad r=x-c\mathbf1.
+$$
+
+则 $E^2=E$、$w^{\mathsf T}r=0$。映射 $x\mapsto(c,r)$ 是从 $\mathbb R^n$ 到 $\mathbb R\times\ker(w^{\mathsf T})$ 的双射，其逆为 $(c,r)\mapsto c\mathbf1+r$。
+
+证明。由 $w^{\mathsf T}\mathbf1=1$，有 $E^2=\mathbf1(w^{\mathsf T}\mathbf1)w^{\mathsf T}=E$，且 $w^{\mathsf T}(x-c\mathbf1)=c-c=0$。先分解再重组显然恢复 $x$；反过来，若 $w^{\mathsf T}r=0$，则 $w^{\mathsf T}(c\mathbf1+r)=c$，所得余项仍为 $r$。证毕。
+
+这是相对于权重 $w$ 的分解，通常不是标准欧氏内积的正交投影。在第 354 节中 $w$ 由长期影响确定，故 $E$ 是极限算子。若只保存 $c$，差异余项消失；若保存 $(c,r)$，则全部初始向量仍可恢复。数学上的“形成共同答案”和“删除所有差别”因而可以被分成两个操作。
+

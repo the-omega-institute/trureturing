@@ -1,0 +1,14 @@
+### 7.6 有限段的精确动态规划及可计算合法原像
+
+对 $|v|\le r$，记 $E_v=\{g\in G_j:v\preceq g\}$。用变量 $z_{l+1},\ldots,z_r$ 定义生成多项式 $P_v$，指数记录切口中每个深度的祖先数，系数记录具有该计数的不同切口数。
+
+若 $E_v=\varnothing$，置 $P_v=1$，表示唯一空切口。若 $|v|=r$ 且 $v\in G_j$，置 $P_v=z_r$。其余非空内部节点满足
+$$
+P_v=\prod_{a\in A}P_{va}
++\begin{cases}
+z_{|v|},&l<|v|<r\text{ 且 }E_v=vA^{r-|v|},\\
+0,&\text{其他情况}.
+\end{cases}
+\tag{RST.20}
+$$
+

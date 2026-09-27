@@ -1,0 +1,20 @@
+## 412. 重复量子比特记录成功配置的精确维数与局部开集
+
+沿用第 411 节的有序不同射线配置空间 $\mathcal D_k$、成功集合 $\mathcal E_{k,n}$ 及其实半代数维数，整数范围始终为 $k\ge2$、$n\ge1$。对每条已知射线选单位代表 $s_j\in\mathbb C^2$，系统和全部原始记录仍为
+
+$$
+S=\mathbb C^k,\qquad R_n=(\mathbb C^2)^{\otimes n},\qquad
+J_n|j\rangle=|j\rangle\otimes s_j^{\otimes n},\qquad
+W_n=\operatorname{Sym}^n(\mathbb C^2)\subseteq R_n.
+$$
+
+这里采用定义 400.1 的受控制备；全部 $n$ 份记录在制备后保持联合可访问，$W_n$ 仅为数学子空间。允许的操作恰为第 411 节的完整有限结果联合 CP instrument，作用于整个 $R_n$，与输入无关的记录辅助装置并入其中；各分支之和保迹，输出记录取迹后得到系统分支 $\mathcal M_y$。每个协议的接受集合 $Y_{\mathrm s}$ 固定，每个实际结果只控制作用于整个 $S$ 的一个终端酉算子 $U_y$；此前不操作系统，任意有限维参考 $A$ 始终不被操作。每个协议的结果数有限，不要求不同协议共用结果数上界。成功要求同一协议和同一 $p>0$ 对全部矩阵满足
+
+$$
+\mathcal T(X)=\sum_{y\in Y_{\mathrm s}}U_y\mathcal M_y(X)U_y^\dagger=pX,
+\qquad
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})=pX_{AS}
+$$
+
+第一式对每个 $X\in\mathcal L(S)$ 成立，第二式对每个有限维 $A$ 及每个 $X_{AS}\in\mathcal L(A\otimes S)$ 成立。协议和 $p$ 可依赖已知配置与 $n$，不得依赖未知输入；局部构造中的不同配置可以分别校准。
+

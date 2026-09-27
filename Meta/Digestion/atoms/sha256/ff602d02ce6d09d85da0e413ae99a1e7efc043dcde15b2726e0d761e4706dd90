@@ -1,0 +1,103 @@
+**定理 6.3（方向误差的泊松尺度与无界不可逆率）。** 令
+$d\to\infty$、$n=2^d$，对每个 $d$ 任选 $r_d\in(0,1)$ 满足 $r_d\to1$。
+若整数 $T_d\ge0$ 满足 $T_d/n\to\lambda\in[0,\infty)$，则在正向律下
+
+$$
+N_{ZH}\ \xrightarrow{\mathrm d}\ \operatorname{Poisson}(\lambda/2),
+\qquad
+\boxed{\ \lim_{d\to\infty}e_{d,r_d}(T_d)=\frac12e^{-\lambda/2}.\ }
+\tag{6.7}
+$$
+
+若 $T_d/n\to\infty$，则 $e_{d,r_d}(T_d)\to0$。
+对任意固定 $0<\eta<1/2$，定义达到误差 $\eta$ 所需的最小完整轨迹长度
+
+$$
+T_\eta(d,r_d)=\min\{T\ge0:e_{d,r_d}(T)\le\eta\}.
+$$
+
+则有精确尺度
+
+$$
+\frac{T_\eta(d,r_d)}{n}\longrightarrow2\log\frac1{2\eta}.
+\tag{6.8}
+$$
+
+这些结论与不可逆率的发散速度无关。例如取
+$r_d=1-e^{-n^2}$，则全部核严格为正，所有真子坐标过程仍为均匀独立过程，且
+
+$$
+nI(P_{d,r_d})\longrightarrow\log2,\qquad
+\frac{\sigma(P_{d,r_d})}{n}\longrightarrow\frac12,
+\qquad
+T_d=o(n)\ \Longrightarrow\ e_{d,r_d}(T_d)\longrightarrow\frac12.
+\tag{6.9}
+$$
+
+证明。局部依赖稀有事件的泊松近似已有一般定理，见
+[Arratia–Goldstein–Gordon（1990），定理 1](../../../Library/Dynamics/arratia1990poisson.md)。
+这里直接以因子矩证明所需的计数极限，再由 (6.4) 得到本族的最优判错曲线。
+记 $E_t=\{Y_t=Z,Y_{t+1}=H\}$。
+$Z$ 的平稳质量为 $1/2$，每个 $Z$ 中的状态下一步到 $z$ 的概率为 $1/n$，
+所以 $\Pr(E_t)=1/(2n)$，与 $r$ 无关。
+定理 2.1 的 $P^2=\Pi$ 还给出如下精确独立性：
+若相邻选定时刻相距至少三，则相应的 $E_t$ 联合独立。
+因为前一对状态的末端到后一对的起端至少有两步，
+条件分布已恢复均匀，递归条件化即可。
+
+对任何 $k$ 个不同的指定时刻，无论是否相近，它们的共同发生概率至多为 $n^{-k}$。
+这是因为对完整自然滤过 $\mathcal F_t$，
+$\Pr(E_t\mid\mathcal F_t)=\mathbf1_{Y_t=Z}/n\le1/n$；
+按时间先后条件化即可，不能共同发生的事件组合概率为零。
+固定 $k\ge2$，$T$ 个时刻中包含间距一或二的 $k$ 元集合只有 $O_k(T^{k-1})$ 个。
+因而对 $N=N_{ZH}$，当 $T/n\to\lambda>0$ 时，
+
+$$
+\mathbb E\binom Nk
+=\binom Tk(2n)^{-k}+O_k(T^{k-1}n^{-k})
+\longrightarrow\frac{(\lambda/2)^k}{k!}.
+\tag{6.10}
+$$
+
+$k=0,1$ 的公式直接成立，且对所有 $k$ 有
+$\mathbb E\binom Nk\le(T/n)^k/k!$。
+对 $u\in[0,1]$ 展开 $u^N=(1+(u-1))^N$，
+此界允许逐项取极限，给出
+$\mathbb E u^N\to\exp((\lambda/2)(u-1))$。
+这是泊松分布的概率生成函数；在 $u=0$ 处同时得到
+$\Pr(N=0)\to e^{-\lambda/2}$。
+若 $\lambda=0$，$\Pr(N>0)\le T/(2n)\to0$，结论相同。
+
+由于 $q_{r_d}\to0$、$1-r_d\to0$，(6.4) 的右边在 $T_d/n$ 有界时趋于零，
+故得 (6.7)。当 $T_d/n\to\infty$ 时，对每个固定 $K>0$，
+只观察前 $\lfloor Kn\rfloor$ 步便得
+$\limsup e_{d,r_d}(T_d)\le e^{-K/2}/2$；再令 $K\to\infty$。
+同样，由误差随 $T$ 单调不增，将 (6.7) 分别用于
+$\lambda$ 略小于及略大于 $2\log(1/(2\eta))$ 的情形，夹逼出 (6.8)。
+对于每个固定的 $d,r>0$，此最小值确实存在：
+抽取 $(X_{3j},X_{3j+1})$，这些相邻状态对独立同律，正反联合律不同，
+对一个概率不同的事件使用样本频率即可将判错率降到零。
+
+最后，(5.1) 与 (2.2) 给出
+
+$$
+nI(P_{d,r_d})=\phi(r_d)+(M-1)\phi(r_d/(M-1)),
+$$
+
+$$
+\sigma(P_{d,r_d})
+=\frac{g(r_d)+(M-1)g(r_d/(M-1))}{n}.
+\tag{6.11}
+$$
+
+因 $\phi(u)=u^2/2+O(u^4)$、$g(u)=u^2+O(u^4)$，
+两个式子的非单峰部分均为 $O(1/n)$。
+$r_d=1-e^{-n^2}$ 时，$\phi(r_d)\to\log2$，
+$g(r_d)=(n^2+\log2)/2+o(1)$。
+这证明 (6.9) 的两个数值极限；方向误差则由 (6.7) 的 $\lambda=0$ 得到。
+完整路径的方向相对熵虽为 $T\sigma$，它不决定等先验的有限轨迹判错率。
+稀有高耗散轨迹使平均耗散大而整体时间不对称性小的机制，已有
+[Feng–Crooks（2008），式 (14)–(16)](../../../Library/Dynamics/fengcrooks2008arrow.md)
+的先例；这里的 (6.7)–(6.8) 求出了本核族在 $T/n$ 尺度上的完整误差曲线和常数。
+式 (6.3) 将这种差异定位于同一轨迹上的稀有 $Z\to H$ 边及其逆边。$\square$
+

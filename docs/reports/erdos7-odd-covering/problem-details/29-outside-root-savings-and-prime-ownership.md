@@ -274,8 +274,8 @@ remain available on the same families.
 ## 6. Standalone exact certificate
 
 The standard-library program
-[outside_root_savings_certificate.py](../frontier/cover-geometry/outside_root_savings_certificate.py)
-and its [exact data](../frontier/cover-geometry/outside_root_savings_certificate.json)
+[outside_root_savings_certificate.py](../frontier/cover-geometry/outside-root-savings-certificate/outside_root_savings_certificate.py)
+and its [exact data](../frontier/cover-geometry/outside-root-savings-certificate/outside_root_savings_certificate.json)
 recompute the six outside-kernel bounds, the five fixed-cap core tests,
 the no-owner test, and all ten assigned-owner interval tests. No external
 input or imported certificate program is needed.
@@ -299,5 +299,5 @@ ordinary proofs. Python 3.10 or later is required; optimized `-O`
 execution is rejected. Reproduce the JSON from the repository root with
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/outside_root_savings_certificate.py --output /tmp/outside-root-savings-certificate.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/outside-root-savings-certificate/outside_root_savings_certificate.py --output /tmp/outside-root-savings-certificate.json
 ```

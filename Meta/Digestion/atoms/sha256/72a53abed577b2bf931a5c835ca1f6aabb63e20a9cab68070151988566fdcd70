@@ -1,0 +1,140 @@
+**定理 60.1。** 在 $a=1/2$、$\varepsilon=1/4$ 时，
+
+$$
+\min_{S\text{ 因果}}D(R_{1/2,1/4},S)=\frac14.
+\tag{60.5}
+$$
+
+特别地，保留两条非零相干本身不充分保证严格超过归一化缺陷的修复成本。
+
+**证明。** 定义正候选 $S$ 的对角元素为
+
+$$
+\begin{array}{c|rrrrrr}
+\text{向量}&x&y&z&h_0&h_1&v\\\hline
+\text{对角值}&17/20&4/5&3/20&3/40&3/40&1/20
+\end{array}
+$$
+
+另外两个基向量 $|0,0,1\rangle,|1,1,0\rangle$ 的对角值为零。仅有的非零非对角元素为
+
+$$
+S_{xy}=S_{yx}=\frac35,
+\qquad S_{xz}=S_{zx}=\frac6{25}.
+\tag{60.6}
+$$
+
+在 $x,y,z$ 的星形块上，Schur 补为
+
+$$
+\frac{17}{20}-\frac{(3/5)^2}{4/5}
+-\frac{(6/25)^2}{3/20}=\frac2{125}>0.
+\tag{60.7}
+$$
+
+其余非零对角值为正，故 $S\succeq0$。直接偏迹给
+
+$$
+\operatorname{Tr}_D S
+=I_A\otimes\operatorname{diag}(17/20,3/20),
+\tag{60.8}
+$$
+
+所以 $S$ 因果且归一化。
+
+记
+
+$$
+\alpha=\frac{\sqrt6}{4}-\frac35,
+\qquad
+\beta=\frac{\sqrt2}{4}-\frac6{25}.
+$$
+
+平方比较给简单有理界
+
+$$
+0<\alpha<\frac1{80},\qquad0<\beta<\frac3{25}.
+\tag{60.9}
+$$
+
+令 $Q_-=C_-\otimes I_D$，并定义正向上界
+
+$$
+P=R_{1/2,1/4}-S+\frac18Q_-.
+\tag{60.10}
+$$
+
+它的非零对角值为
+
+$$
+P_{xx}=\frac3{20},\quad
+P_{yy}=P_{vv}=\frac3{40},\quad
+P_{zz}=\frac1{10},\quad
+P_{h_0h_0}=P_{h_1h_1}=\frac1{20},
+$$
+
+非零非对角元素为 $P_{xy}=\alpha$、$P_{xz}=\beta$ 及其共轭。其星形块的 Schur 补由式（60.9）满足
+
+$$
+\frac3{20}-\frac{\alpha^2}{3/40}-\frac{\beta^2}{1/10}
+>\frac3{20}-\frac1{480}-\frac{18}{125}
+=\frac{47}{12000}>0.
+\tag{60.11}
+$$
+
+因此 $P\succeq0$，式（60.10）又直接给 $P\succeq R-S$，且
+
+$$
+\operatorname{Tr}_D P
+=I_A\otimes\operatorname{diag}(3/20,1/10).
+\tag{60.12}
+$$
+
+这是质量 $1/4$ 的正因果上界。
+
+负向上界 $N$ 在标准二进制基次序
+$000,001,010,011,100,101,110,111$ 上的对角为
+
+$$
+\operatorname{diag}N=
+(1/20,1/20,3/40,3/40,1/20,1/20,3/40,3/40),
+$$
+
+仅有的非零非对角元素为 $N_{xy}=N_{yx}=-\alpha$。由于 $\alpha<1/80<1/20$，$N\succeq0$，并有
+
+$$
+\operatorname{Tr}_D N
+=I_A\otimes\operatorname{diag}(1/10,3/20).
+\tag{60.13}
+$$
+
+$Y=N-S+R$ 支撑在 $Q_+=C_+\otimes I_D$ 上。其 $xz$ 块为
+
+$$
+\begin{pmatrix}1/5&\beta\\\beta&7/40\end{pmatrix},
+$$
+
+另外在 $|0,0,1\rangle$、$|1,1,0\rangle$ 上分别有正对角 $1/20,3/40$。由式（60.9），
+
+$$
+\frac15\frac7{40}-\beta^2
+>\frac7{200}-\frac9{625}>0,
+$$
+
+故 $Y\succeq0$，即 $N\succeq S-R$。
+
+对每个合法事件，正性和因果偏迹给
+
+$$
+\begin{aligned}
+\operatorname{Tr}((R-S)E)
+&\le\operatorname{Tr}(PE)
+\le\operatorname{Tr}(P(C\otimes I_D))=\frac14,\\
+\operatorname{Tr}((S-R)E)
+&\le\operatorname{Tr}(NE)
+\le\operatorname{Tr}(N(C\otimes I_D))=\frac14.
+\end{aligned}
+$$
+
+因此 $D(R,S)\le1/4$。整个事件的归一化缺陷给反向下界 $D(R,S)\ge1/4$，从而式（60.5）成立。$\square$
+

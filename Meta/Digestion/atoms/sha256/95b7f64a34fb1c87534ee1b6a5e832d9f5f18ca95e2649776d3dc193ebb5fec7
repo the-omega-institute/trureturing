@@ -1,0 +1,35 @@
+### 263.5 数值半径极值空间只是共同核投影的一部分
+
+若 $w(Z)=1$，定义
+$$
+W_{\mathrm{ext}}
+=\operatorname{span}_{\mathbb C}
+\{x:\|x\|=1,\ |x^\dagger Zx|=1\}.
+\tag{263.20}
+$$
+对每个这样的 $x$，写 $x^\dagger Zx=e^{i\theta}$。§262的零二次型计算给
+$$
+T_Z(F)\binom{x}{-e^{-i\theta}x}=0
+\quad\text{对全部 }F\in\mathcal F(Z).
+\tag{263.21}
+$$
+因此
+$$
+\boxed{W_{\mathrm{ext}}\subseteq W.}
+\tag{263.22}
+$$
+这就解释了 $W_{\mathrm{ext}}=S$ 为什么足以保证唯一。
+
+包含可以严格。§262的矩阵族
+$$
+Z_a=\begin{pmatrix}1&a\\-a&1-2a^2\end{pmatrix},
+\qquad0<a<1,
+\tag{263.23}
+$$
+只有 $W_{\mathrm{ext}}=\mathbb Ce_0$，但其唯一填充的核含有
+$$
+(e_0,-e_0),\qquad(ae_0+e_1,ae_0-e_1).
+\tag{263.24}
+$$
+这些核向量的分量投影张成整个 $\mathbb C^2$，所以 $W=S$。完整共同核判据保留了极值向量检验没有直接提供的那条联合约束。
+

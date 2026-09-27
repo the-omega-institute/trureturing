@@ -1,0 +1,1 @@
+- $\mathrm{Advance}$ 若 $L<U$ 且 $E<B$，发出一个 $W$。令 $E'=E+1$，其余数值字段不变；若 $E'\bmod P=P-m$ 则进入 $\mathrm{Read}$，否则进入 $\mathrm{Seek}$。

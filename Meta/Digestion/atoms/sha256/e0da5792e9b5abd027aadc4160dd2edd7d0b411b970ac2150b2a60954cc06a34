@@ -1,0 +1,68 @@
+### 267.1 固定来源、仪器、访问权限与成功目标
+
+取§265的固定 $H\otimes E=\mathbb C^2\otimes\mathbb C^2$ 来源族。块矩阵使用同一输入 $Y$ 本征基，记
+$$
+Z_*=\begin{pmatrix}1&1/2\\-1/2&1/2\end{pmatrix},
+\qquad
+F_*=\begin{pmatrix}1/2&-1/4\\-1/4&1/2\end{pmatrix},
+$$
+$$
+\Omega_0=\frac12
+\begin{pmatrix}F_*&Z_*/2\\Z_*^\dagger/2&I_2-F_*\end{pmatrix}.
+\tag{267.1}
+$$
+对每个已知 $0<h\le1/8$，令
+$$
+D_h=\begin{pmatrix}0&2h^2\\2h^2&h\end{pmatrix},
+\qquad \delta=64h^4,
+$$
+$$
+\Omega_h=\frac12
+\begin{pmatrix}
+F_*+D_h&(1-\delta)Z_*/2\\
+(1-\delta)Z_*^\dagger/2&I_2-F_*-D_h
+\end{pmatrix}.
+\tag{267.2}
+$$
+§265已证明 $\Omega_h$ 严格正定，且
+$$
+\rho_h=\rho_0=\frac12I_2,\qquad
+K_h=(1-\delta)K_0,\qquad K_0=Z_*/2,
+$$
+$$
+h\le\|\Omega_h-\Omega_0\|_1<2h.
+\tag{267.3}
+$$
+
+固定§253的实际重置仪器，取
+$$
+A=B=\frac12,\qquad b_0=\frac1{\sqrt2},
+\qquad
+A_a=\frac{Z_H+X_H}{\sqrt2},
+\quad A_b=\frac{Z_H-X_H}{\sqrt2},
+$$
+$$
+E_{w,s}=\frac{I_2+sA_w}{4},
+\qquad w\in\{a,b\},\quad s\in\{+1,-1\}.
+\tag{267.4}
+$$
+四个效应正半定且和为 $I_2$；量子输出统一重置为同一纯态 $P_{\mathrm{reset}}$。全部可见记录 $(w,s)$ 与完整参考 $E$ 均保留。输入Pauli算子 $Z_H$ 与固定参考矩阵 $Z_*$ 是不同对象。
+
+未知假设 $j\in\{0,h\}$ 以等先验选定，此后提供 $n$ 份同一来源的独立副本。比较两个接口：
+
+- 重置前接口开放 $\Omega_j^{\otimes n}$ 的全部输入与参考。
+- 规定输出接口只开放 $\sigma_j^{\otimes n}$，其中 $\sigma_j=(\mathcal S_p\otimes\operatorname{id}_E)(\Omega_j)$，固定仪器各次独立作用。
+
+两种接口均允许任意集体POVM、辅助处理和自适应终端测量。输出接口不开放原输入、额外设置种子或其隐藏副本，也不允许改换仪器查询其他方向。来源与通道没有共享的未建模记忆。
+
+令 $N_{\mathrm{in}}(h)$、$N_{\mathrm{out}}(h)$ 为达到等先验平均错误率不超过 $1/3$ 的最小整数副本数。方案可依赖已知 $h$ 和固定仪器。这里统计的是已知二元判别，不是未知幅度的复合检验。
+
+沿用未除以二的迹范数，并记
+$$
+d(\tau,\omega)=\frac12\|\tau-\omega\|_1,
+\qquad
+\mathsf F(\tau,\omega)=\|\sqrt\tau\sqrt\omega\|_1
+\tag{267.5}
+$$
+为半迹距离与未平方的根保真度。
+

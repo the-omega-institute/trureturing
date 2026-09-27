@@ -1,0 +1,2 @@
+**Proof of the forward implication when $r$ is nondyadic.** For every $n$, the real $r$ lies strictly between two consecutive points of the grid $2^{-n}\mathbb Z$. From an $A$-computable Cauchy name, search for an approximation interval that lies entirely within one such open interval. The search terminates because $r$ is not a grid point. Its interval index determines the first $n$ binary digits, which uniquely equal the first $n$ digits of $\mathbf 1_S$. This computes $S$ relative to $A$.
+

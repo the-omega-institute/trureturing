@@ -1,0 +1,13 @@
+**定义 16.1（呈示相对的非平凡分量轮廓）。** 固定定义 15.1 的有理分解。对 inert A，记录 nu_lambda(A) 及
+
+$$
+R_{A,\lambda}(j)=\operatorname{rank}_{D_\lambda}(A_\lambda^j),\qquad j\ge0.
+$$
+
+秩指右向量空间上像的维数，j=0 使用相应恒等矩阵。这些量附属于指定矩阵呈示，不预先当作共轭不变量。对 inert A,B 定义
+
+$$
+\Delta_\nu(A,B)=\max_\lambda
+|\nu_\lambda(A)-\nu_\lambda(B)|.
+$$
+

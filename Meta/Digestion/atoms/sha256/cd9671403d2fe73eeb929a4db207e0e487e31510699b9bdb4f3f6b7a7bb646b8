@@ -1,0 +1,23 @@
+**命题162.4（正历时的归一化权重界）。** 以
+$\|\alpha-\beta\|_{\mathrm{TV}}=\tfrac12\int|d\alpha-d\beta|$
+约定概率测度的全变差距离，则
+
+$$
+\|w_t\mu_G-w_u\mu_G\|_{\mathrm{TV}}
+\le\frac{\|c_t-c_u\|_\infty}{m},
+\tag{162.13}
+$$
+
+以及
+
+$$
+\boxed{
+W_1(\nu_t^c,\nu_u^c)
+\le\|h_t-h_u\|_\infty
++\frac{\|c_t-c_u\|_\infty}{m}.
+}
+\tag{162.14}
+$$
+
+所以已标定时间占比的极限分布同样弱连续。
+

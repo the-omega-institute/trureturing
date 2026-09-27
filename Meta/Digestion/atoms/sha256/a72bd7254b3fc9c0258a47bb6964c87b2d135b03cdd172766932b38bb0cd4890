@@ -1,0 +1,26 @@
+### 42.2 纯势差子群、有限别名与连续维数
+
+沿用（32.1）的关联矩阵 $\mathsf D$、边荷矩阵 $G$，记
+
+$$
+\begin{aligned}
+\Lambda&=G\ker_{\mathbb Z}
+\begin{pmatrix}\mathsf D\\\mathbf1^{\mathsf T}\end{pmatrix},
+&L&=\operatorname{span}_{\mathbb R}\Lambda,\qquad r=\operatorname{rank}\Lambda,\\
+\Lambda_0&=G\ker_{\mathbb Z}\mathsf D,
+&r_0&=\operatorname{rank}\Lambda_0.
+\end{aligned}
+\tag{42.7}
+$$
+
+第31节固定长度子群为 $\mathcal H=\Lambda^\perp$。纯端点势差子群定义为
+
+$$
+\mathcal H_0=
+\{h\in\mathbb T^q:\exists |z_i|=1,
+e^{ih\cdot g_{ij}}=z_i\overline{z_j}\text{ 对全部支持边}\}.
+\tag{42.8}
+$$
+
+这里的商仍指端点支撑的退化方向，含义与第31节相同。端点势差可能改变完整目标中的端点相干；它们被已有有限个端点支撑保存，并不是断言这些完整目标密度矩阵全都相同。
+

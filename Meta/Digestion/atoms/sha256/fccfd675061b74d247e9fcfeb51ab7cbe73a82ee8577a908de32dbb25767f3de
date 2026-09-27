@@ -1,0 +1,90 @@
+#### 5.2.4 代表点粗模型的有限时域值收敛
+
+现在令 $X$ 为紧度量空间，固定有限时域 $H$ 和共同的有限非空动作集 $A$。对 $0\le t<H$、$a\in A$，给定连续转移 $F_t(\cdot,a):X\to X$、连续奖励 $r_t(\cdot,a):X\to\mathbb R$，以及连续终值 $h:X\to\mathbb R$。定义
+
+$$
+V_H=h,\qquad
+V_t(x)=\max_{a\in A}\{r_t(x,a)+V_{t+1}(F_t(x,a))\}.
+\tag{TM.455}
+$$
+
+有限个连续函数的最大值连续，故倒推得到全部 $V_t$ 连续且有界。
+
+任取右逆 $s_i$，定义同一个代表点粗模型
+
+$$
+\bar r_{i,t}(y,a)=r_t(s_i y,a),\qquad
+\bar F_{i,t}(y,a)=q_iF_t(s_i y,a),\qquad
+\bar h_i(y)=h(s_i y),
+$$
+
+并用这些函数作同样的 Bellman 递推，得到 $\bar V_{i,t}$。此递推在全部有界函数上进行；不预设粗函数连续。
+
+令 $e_{i,t}=\|V_t-\bar V_{i,t}q_i\|_\infty$，则
+
+$$
+e_{i,H}\le\omega_h(\eta_i),\qquad
+e_{i,t}\le e_{i,t+1}+\omega_{V_t}(\eta_i).
+\tag{TM.456}
+$$
+
+证明：对 $y=q_i(x)$，细 Bellman 值 $V_t(s_i y)$ 与粗值 $\bar V_{i,t}(y)$ 的奖励相同，各动作的续值差至多 $e_{i,t+1}$。由
+
+$$
+|\max_a u_a-\max_a v_a|\le\max_a|u_a-v_a|
+$$
+
+可得 $|V_t(s_i y)-\bar V_{i,t}(y)|\le e_{i,t+1}$。又 $q_i(s_iq_i x)=q_i x$，故 $d(x,s_iq_i x)\le\eta_i$，从而 $|V_t(x)-V_t(s_iq_i x)|\le\omega_{V_t}(\eta_i)$。三角不等式即给出递推；终值按式（TM.454）处理。
+
+因此
+
+$$
+e_{i,t}\le\sum_{s=t}^{H}\omega_{V_s}(\eta_i)
+\longrightarrow0.
+\tag{TM.457}
+$$
+
+收敛对同一固定模型、同一固定有限时域成立，而且估计与右逆的具体选择无关。它没有把粗模型的一个转移当成细模型的精确路径提升。
+
+若希望只用原始数据控制误差，定义对动作取最大后的统一模量
+
+$$
+\omega_{r,t}(u)=\max_a\sup_{d(x,x')\le u}|r_t(x,a)-r_t(x',a)|,
+$$
+
+$$
+\omega_{F,t}(u)=\max_a\sup_{d(x,x')\le u}d(F_t(x,a),F_t(x',a)).
+$$
+
+逐动作比较给出
+
+$$
+\omega_{V_t}(u)
+\le\omega_{r,t}(u)+\omega_{V_{t+1}}(\omega_{F,t}(u)),
+$$
+
+故也有
+
+$$
+e_{i,t}\le e_{i,t+1}
++\omega_{r,t}(\eta_i)
++\omega_{V_{t+1}}(\omega_{F,t}(\eta_i)).
+\tag{TM.458}
+$$
+
+若奖励、转移和终值具有相应 Lipschitz 常数，取
+
+$$
+L_H=L_h,\qquad
+L_t=L_{r,t}+L_{F,t}L_{t+1},
+$$
+
+则 $V_t$ 为 $L_t$-Lipschitz，且
+
+$$
+e_{i,0}\le\eta_i\sum_{t=0}^{H}L_t.
+\tag{TM.459}
+$$
+
+若动作集合依赖状态，但每个 $L_t$ 是A卷第5.2.2节所述连续有限值映射，则在全部合法性标签已经下降的阶段取粗合法集 $\bar L_{i,t}(y)=L_t(s_i y)$。每条纤维中的合法集相同，且细 $V_t$ 仍连续：在每一点附近合法集局部常值，再取有限最大值。式（TM.456）—（TM.457）的证明保持有效。式（TM.458）中对任意度量近点的模量估计原先使用共同动作，不能在跨越不同合法集时原样套用。
+

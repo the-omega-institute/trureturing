@@ -1,0 +1,42 @@
+**定理 219.2（时间一致 Hoeffding 盒）。** 有
+
+$$
+\boxed{
+\Pr_{\mathrm{data}}
+\left\{
+|\widehat\theta_n-\theta|
+\le r_n(\delta)
+\text{ 对所有 }n\ge1
+\right\}
+\ge1-\delta.
+}
+\tag{219.1}
+$$
+
+### 证明
+
+对每个固定 $n$，Hoeffding 不等式给出
+
+$$
+\Pr_{\mathrm{data}}
+\left\{
+|\widehat\theta_n-\theta|>r_n
+\right\}
+\le
+2e^{-2nr_n^2}
+=
+\delta_n.
+$$
+
+对所有 $n$ 使用可数并集界，并利用
+
+$$
+\sum_{n\ge1}\delta_n
+=
+\frac{6\delta}{\pi^2}
+\sum_{n\ge1}\frac1{n^2}
+=\delta,
+$$
+
+即得（219.1）。证毕。
+

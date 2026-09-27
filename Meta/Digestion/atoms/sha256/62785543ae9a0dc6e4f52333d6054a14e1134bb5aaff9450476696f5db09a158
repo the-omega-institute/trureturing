@@ -1,0 +1,48 @@
+**证明。** 构造
+\[
+P_i(X)=\sum_{h=0}^i(-1)^h\binom jh\binom{n-h}{i-h}X^{i-h}
+=\frac1{(n-i)!}\left(\frac d{dX}\right)^{n-i}[X^{n-j}(X-1)^j].
+\tag{24}
+\]
+对每个 `0<=h<=i`，精确恒等式
+\[
+\binom nj\binom jh\binom{n-h}{i-h}
+=\binom ni\binom ih\binom{n-h}{j-h}
+\tag{25}
+\]
+说明 `C(n,i)/g` 整除 `P_i` 的每个系数：先在等式两侧消去 `g`，再使用 `C(n,i)/g` 与 `C(n,j)/g` 互素。故
+\[
+Q_i(X)=\frac g{\binom ni}P_i(X)\in\mathbb Z[X]
+\tag{26}
+\]
+首项为 `g`。
+
+须证明根互异，不能只说根在单位区间。实根多项式的导数在每两个相邻不同根之间恰有一个简单根；重复根只能来自原多项式的重复根，重数减少一。其依据为 Rolle 定理和导数次数计数，或对数导数在相邻根之间严格递减。对 (24) 连续应用这一事实，所有新生内部根均简单；求导 `n-i` 次后，端点 0、1 的根均已消失，因为 `j>i` 且 `n-j>=j>i`。因此 `Q_i` 恰有 `i` 个互异根 `alpha_r in (0,1)`。
+
+置 `mu=j/n`。由前三个系数和 Vieta 公式，
+\[
+\sum_r\alpha_r=i\mu,\quad
+\sum_{r<s}\alpha_r\alpha_s
+=\frac{i(i-1)j(j-1)}{2n(n-1)}.
+\]
+所以根的离散平方偏差满足精确恒等式
+\[
+\sum_r(\alpha_r-\mu)^2
+=\frac{i(i-1)\mu(1-\mu)}{n-1}
+\le\frac{i(i-1)}{4(n-1)}.
+\tag{27}
+\]
+又 `sum_{r<s}(alpha_r-alpha_s)^2=i*sum_r(alpha_r-mu)^2`。对 `i(i-1)/2` 个正平方距离使用 AM–GM，得到
+\[
+\prod_{r<s}(\alpha_r-\alpha_s)^2
+\le\left(\frac i{2(n-1)}\right)^{i(i-1)/2}.
+\tag{28}
+\]
+`Q_i` 为整系数且根互异，故多项式判别式是正整数。这里无须不可约性，也无须将其认作数域判别式。因此
+\[
+1\le\Delta(Q_i)
+=g^{2i-2}\prod_{r<s}(\alpha_r-\alpha_s)^2
+\le g^{2i-2}\left(\frac i{2(n-1)}\right)^{i(i-1)/2}.
+\]
+取 `2/(i-1)` 次幂即得 (23)。证毕。
+

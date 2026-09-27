@@ -1,0 +1,16 @@
+## 14. 来源、适用范围与精确核验
+
+第 10 至 13 节沿用第 3 至 6 节的纸面构造。第 10 节的差空间、像空间降维与有限图循环是经典线性代数和自动机方法在本卷提升对象上的直接推导；第 11 节的实际等变因子下降、2m-1 群环链长与轨道数界在本文给出证明；Epperlein 的 n(|H|-1) 停止界只作为外部中间前提，第 12.3 至 12.5 条在其上作不可约表示细化并给出达到界及不蕴含逐路径遗忘的例子；第 13 节按真实扭曲路径计数并证明有限递推。其余推导按 repo-derived 记录，不主张全球首创，也不把最新论文的既有结果作为本项目的新发现。
+
+外部来源的精确范围如下。
+
+[^rrosft2-epperlein]: Jeremias Epperlein, *Eventual conjugacy of free inert G-SFTs*, Ergodic Theory and Dynamical Systems, published online 25 May 2026, [DOI:10.1017/etds.2026.10309](https://doi.org/10.1017/etds.2026.10309)。使用第 4 节的群环、增广和自由扩张，Theorems 4.5–4.6 的 SSE/G 共轭与 SE/eventual G 共轭区分，以及 Theorem 5.2 的惰性与最终均匀系数等价、Remark 5.3(a) 的单次均匀即最终均匀及 5.3(b) 的 n(|H|-1) 界。Theorem 6.2 只在充分高次移位给出等变共轭，本文不把它升级为 Question 1.3 的原时间结论。本文的不可约块精确指数与 n d_* 细化、定量链及扭曲计数公式在自身假设下另证。
+
+[^rrosft2-rep]: Jamie Mason, *Representation Theory of Finite Groups*, Durham lecture notes, [§1.5, Theorem 1.5.12](https://www.maths.dur.ac.uk/users/jamie.j.mason/RepresentationTheoryNotes-michaelmas/Ch1.S5.html) 给出完全可约性；[§1.6, Theorem 1.6.6](https://www.maths.dur.ac.uk/users/jamie.j.mason/RepresentationTheoryNotes-michaelmas/Ch1.S6.html) 给出正则表示的不可约分解与维数，Theorem 1.6.8 给出阿贝尔群的一维不可约表示判据。本文只用复表示，不把该分解直接推广到特征整除 |H| 的模表示。
+
+BDR26 的版本与引用见本卷原脚注 rrosft-bdr。本文使用期刊 Definitions 3.2–3.3、Theorem 3.5 与 Remark 3.8。群标记 aligned/balanced 的使用经过自由扩张上的普通非负整数定理，不假设文献已证明本文的群环定量结论。文献检索涉及 concrete shift lag bounds、group-ring SSE、inert G-SFTs、strong synchronization 和 Fourier nilpotence；未查证到上述完整定量组合的同一陈述，不据此宣称首创。
+
+有限核验使用固定种子 2026091702：150 个有类型入边提升上，响应分划、差空间像递归、非对角对图三个判据一致，其中 70 个达到有限遗忘、80 个返回稳定非零空间及循环；每个循环在两次重复后恢复原有序状态对。对 C_2、C_3、S_3 共验证 60 个随机矩形群环乘积的自由扩张恒等式，并验证 236 个扭曲计数及矩形 SSE 类迹等式。九组群标记延迟证书覆盖上述三群及 m=1,2,3，逐项验证每个等变矩形因子下降、群环乘积与 2m-1 链长；S_3 的两种输入标记选择不交换的换位。另验证 C_2 的 n=1 至 6 锐界族，以及 S_3 的两步非均匀例子、平均消差反例与 C_3 的非等变共轭反例。
+
+这些有限运算没有穷尽全部图、群或证书。完整结论的承重是前面的数学证明。本文没有消去任意输入 A、B 的无界证书存在量词，没有证明最优链长为 m，没有解决原时间的自由惰性作用共轭问题，也未给出非自由作用的群环下降。对非自由作用，轨道代表与自由中间指标求和的引理需要重新处理稳定子，不能直接套用。
+

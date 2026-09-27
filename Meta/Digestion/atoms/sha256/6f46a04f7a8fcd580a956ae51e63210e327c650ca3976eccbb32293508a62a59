@@ -1,0 +1,121 @@
+### 185.2 一个显式区间内的唯一驻点
+
+置 $b=\beta w$、$c=\gamma w$。由（185.1），
+
+$$
+0<b<\frac1{80},\qquad
+0<c<\frac1{500}.
+\tag{185.6}
+$$
+
+条件酉为
+
+$$
+U_s(t)=\cos t\,I-is\sin t\,X,\qquad s=\pm1.
+$$
+
+沿用第183节的实际迹距离矩阵
+
+$$
+d(w,t)=\lambda_{\max}H(w,t),
+$$
+
+$$
+H(w,t)=
+\begin{pmatrix}
+r(u-q)&\sqrt\Delta\,v\\
+\sqrt\Delta\,v&\ell(u+q)
+\end{pmatrix},
+$$
+
+$$
+u=b+(1-2b)\sin^2t,\qquad
+v=b+\sin^2t,\qquad
+q=c\sin2t.
+\tag{185.7}
+$$
+
+考察闭区间
+
+$$
+0\le t\le2c<\frac1{250}.
+\tag{185.8}
+$$
+
+在此区间，$H$ 的非对角元严格为正，因此最高本征值简单，可取实单位最高本征向量
+$\xi=x|00\rangle+y|11\rangle$，其中 $x,y>0$。定义
+
+$$
+d_0=\sqrt r\,x,\quad d_1=\sqrt\ell\,y,\qquad
+\tau=d_0+d_1,\quad\zeta=d_0-d_1.
+$$
+
+于是 $|\zeta|\le\tau$、
+$d_0^2+d_1^2\le\tau^2$，并且
+
+$$
+\tau^2\ge\ell(x^2+y^2)=\ell>\frac18.
+\tag{185.9}
+$$
+
+Hellmann–Feynman 公式给
+
+$$
+\partial_td
+=
+\bigl[\tau^2-2b(d_0^2+d_1^2)\bigr]\sin2t
+-2c\tau\zeta\cos2t.
+\tag{185.10}
+$$
+
+在 $t=0$，$\xi=\Xi$、$\tau=1$、$\zeta=\kappa$，故
+
+$$
+\partial_td(w,0)=-2\kappa c<0.
+\tag{185.11}
+$$
+
+在 $t=2c$，利用 $\cos4c>0$、$\tan4c\ge4c$，有
+
+$$
+\begin{aligned}
+\partial_td(w,2c)
+&\ge\tau^2\bigl[(1-2b)\sin4c-2c\cos4c\bigr]\\
+&=\tau^2\cos4c\bigl[(1-2b)\tan4c-2c\bigr]\\
+&\ge\tau^2\cos4c\,(2-8b)c>0.
+\end{aligned}
+\tag{185.12}
+$$
+
+还需排除区间中的多个驻点。若 $\xi_\perp$ 是另一实单位本征向量、$\lambda_-<d$ 为另一根，简单根二阶导数公式给
+
+$$
+\partial_t^2d
+=
+\langle\xi,H''\xi\rangle
++\frac{2|\langle\xi_\perp,H'\xi\rangle|^2}{d-\lambda_-}
+\ge\langle\xi,H''\xi\rangle.
+$$
+
+直接对（185.7）求导，
+
+$$
+\langle\xi,H''\xi\rangle
+=
+2\bigl[\tau^2-2b(d_0^2+d_1^2)\bigr]\cos2t
++4c\tau\zeta\sin2t.
+$$
+
+由于 $0\le2t<1/125$，
+$\cos2t\ge99/100$、$0\le\sin2t\le1$，所以
+
+$$
+\begin{aligned}
+\partial_t^2d
+&\ge2\tau^2\bigl[(1-2b)\cos2t-2c\sin2t\bigr]\\
+&>2\tau^2\left[\frac{39}{40}\frac{99}{100}-\frac1{250}\right]
+>0.
+\end{aligned}
+\tag{185.13}
+$$
+

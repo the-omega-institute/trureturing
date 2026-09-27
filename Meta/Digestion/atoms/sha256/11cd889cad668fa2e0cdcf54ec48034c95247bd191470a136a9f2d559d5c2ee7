@@ -1,0 +1,44 @@
+### 264.1 合同及已有稳定恢复结果的适用面
+
+沿用有限维联合空间 $H\otimes E$，其中 $\dim H=2$。所有块矩阵使用同一固定输入 $Y$ 本征基。数据映射为
+$$
+\mathscr K(X)=2X_{+-},\qquad
+\mathcal M(X)=\bigl(\operatorname{Tr}_H X,\mathscr K(X)\bigr),
+$$
+$$
+\|\mathcal M(X)\|_{\oplus}
+=\|\operatorname{Tr}_H X\|_1+\|\mathscr K(X)\|_1.
+\tag{264.1}
+$$
+所有联合迹范数与数据核范数均未除以二。
+
+理想源为归一化纯纠缠态
+$$
+\Omega_\psi=P_\psi=|\psi\rangle\langle\psi|,\qquad
+\rho=\operatorname{Tr}_H P_\psi.
+\tag{264.2}
+$$
+令 $p$ 为 $\rho$ 的最小非零本征值。由于输入为qubit且源纯纠缠，$\rho$ 恰有两个非零本征值
+$$
+p,\quad q=1-p,\qquad 0<p\le\frac12.
+\tag{264.3}
+$$
+这里的Schmidt权是Schmidt系数的平方。特别地，在整个参考空间上
+$$
+\|\rho\|=1-p.
+\tag{264.4}
+$$
+
+竞争态 $\Xi$ 可以是同一完整 $H\otimes E$ 上的任意归一化正半定态，不要求相同边缘、相同支撑、相同秩或纯性。记
+$$
+\Delta=\Xi-P_\psi,\qquad
+R=\operatorname{Tr}_H\Delta,\qquad
+N=\mathscr K(\Delta),\qquad
+\varepsilon=\|R\|_1+\|N\|_1.
+\tag{264.5}
+$$
+
+严格完备量子层析中的成熟结果已说明，正性与足够的可识别性能够支持稳健凸恢复。Baldwin、Deutsch、Kalev，*Strictly-complete measurements for bounded-rank quantum-state tomography*，[arXiv:1605.02109v1](https://arxiv.org/pdf/1605.02109v1)，PDF第4页 Corollary 2及第9—10页 Appendix A，讨论这种正性约束下的稳健估计。Carmeli、Heinosaari、Kech、Schultz、Toigo，*Efficient Pure State Quantum Tomography from Five Orthonormal Bases*，[arXiv:1604.02970v1](https://arxiv.org/pdf/1604.02970v1)，PDF第3页 Theorem 2与第4页 Theorems 3—4，给出能区分所有纯态与任意合法态的测量方案的稳定性及恢复结论；该文在第4页明确说明没有给出其常数的显式估计。
+
+这些结果不能直接提供本具体映射的 $p$ 依赖。本映射还存在前节已给出的产品源退化，不能把“每个纯态均与全部合法态区分”的全局前提直接移入。下文利用本映射的具体核计算显式界，研究结论不作文献原创性声明。
+

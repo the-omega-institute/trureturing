@@ -1,0 +1,14 @@
+**$\nu=0$。** 顶陈类证明不提供共同零点；这不判定一般竞争者是否能逼近。确有不能沿用正距离结论的实际例子：取输出 $\mathbb C^d\oplus\mathbb C^{r-1}$、等距 $Uv=(v,0)$，事件像为
+$$
+L_{[v]}=\mathbb C(v,0)\oplus(0,\mathbb C^{r-1}).
+\tag{230.HR.42}
+$$
+它是连续秩 $r$ 子丛，满足
+$$
+L\cong H\oplus\underline{\mathbb C}^{r-1},
+\qquad H^*\otimes L
+\cong\underline{\mathbb C}\oplus(H^*)^{\oplus(r-1)}.
+\tag{230.HR.43}
+$$
+因此 $c_r(H^*\otimes L)=0$。实际秩一通道 $X\mapsto UXU^\dagger$ 的事件概率恒一；目标与竞争者取同一通道时距离为零。当 $r<d$ 时，不能删除 $\nu\ne0$ 后仍要求（230.HR.19）。
+

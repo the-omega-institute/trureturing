@@ -1,0 +1,34 @@
+### 304.6 参数尺度条件不能删除
+
+以下实际重参数化说明不能删除（304.3）后仍保留 \(\log\log(1/h)\)。
+
+先取 Bernoulli 正均值发现实验
+$$
+P_\mu=\operatorname{Bernoulli}((1-\mu)/2),\qquad
+Q=\operatorname{Bernoulli}(1/2),\qquad 0<\mu\le1/2.
+$$
+将输出线性化为均值 \(\mu\) 的有界变量。采用第303节第一阶段的 dyadic 发现规则，固定任意小常数 \(\delta\in(0,1)\)。该规则在所有 \(\mu>0\) 下几乎必然有限停止，并有
+$$
+Q(N<\infty)\le\delta,\qquad
+\mathbb E_\mu N\le
+A\mu^{-2}\left[1+\log\log(e^e/\mu)\right].
+\tag{304.20}
+$$
+前一个结论直接来自全时 Hoeffding 事件：在零均值下该好事件使任何级都不越过两倍置信半径。后一结论正是尺度发现的尾和估计。停止后给任意固定答案即可；一般主命题只要求有限回答和零信号质量，不需要额外分类风险。
+
+现重参数化为
+$$
+\mu(h)=1/\log(1/h),\qquad 0<h\le e^{-2}.
+$$
+每步 KL 仍由同一真实实验给出，但
+$$
+d(h)\sim\frac1{2\log^2(1/h)}.
+$$
+令 \(t=\log(1/h)\)。由（304.20），
+$$
+\frac{d(h)\mathbb E_hN}{\log\log(1/h)}
+\le A\frac{1+\log(e+\log t)}{\log t}
+\longrightarrow0,
+$$
+尽管 \(Q(N<\infty)\le\delta<1\)。这直接反驳没有尺度假设的（304.4）。它不反驳以已声明的自然信息尺度作归一化的结果；此处没有进一步声称一般无正则参数族的信息尺度定理。
+

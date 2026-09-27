@@ -1,0 +1,117 @@
+**定理 272.2（信道归约与误差传递）。** 定义272.1中的最小值达到。存在某个有限输出维数上的精确可恢复实编码，当且仅当 $\delta(\mathcal R)=0$。可行时，输出维数 $2d$ 已经充分。
+
+对任意有限 $D$ 和任意编码、解码，都有
+
+$$
+\boxed{e(\mathcal D,\mathcal E)+r(\mathcal E)
+\ge\delta(\mathcal R).}
+\tag{272.3}
+$$
+
+因此，若精确可恢复实编码不可行，任何维数上的完全实输出都具有严格正的统一恢复误差下界 $\delta(\mathcal R)$。
+
+证明。对一个信道 $\mathcal A$ 定义其共轭信道
+
+$$
+\overline{\mathcal A}(X)
+=\overline{\mathcal A(\overline X)}.
+\tag{272.4}
+$$
+
+右端外层横线作用于输出矩阵，内层横线作用于输入矩阵。若 $A_k$ 是 $\mathcal A$ 的 Kraus 算子，则 $\overline{A_k}$ 是式（272.4）的 Kraus 算子；所以它仍为复线性 CPTP 映射。这里没有把单独的复共轭当成物理信道。
+
+给定任意 $\mathcal E,\mathcal D$，取输入维数内的信道 $\mathcal C=\overline{\mathcal D}\mathcal E$。对每个模型状态，
+
+$$
+\begin{aligned}
+\frac12\|\mathcal C(\rho_j)-\overline{\rho_j}\|_1
+&\le\frac12\|\overline{\mathcal D}(\mathcal E(\rho_j))
+-\overline{\mathcal D}(\overline{\mathcal E(\rho_j)})\|_1\\
+&\quad+\frac12\|\overline{\mathcal D\mathcal E(\rho_j)}
+-\overline{\rho_j}\|_1\\
+&\le\frac12\|\mathcal E(\rho_j)-\overline{\mathcal E(\rho_j)}\|_1
++\frac12\|\mathcal D\mathcal E(\rho_j)-\rho_j\|_1.
+\end{aligned}
+\tag{272.5}
+$$
+
+第二步使用信道对密度矩阵迹距离的收缩性及复共轭保持迹范数。对 $j$ 取最大值，再在输入维数内的信道上取最小值，即得（272.3）。特别地，精确恢复且完全实输出给出 $\mathcal C(\rho_j)=\overline{\rho_j}$。
+
+反过来，若一个 CPTP 映射 $\mathcal C$ 在整个模型上实现复共轭，则
+
+$$
+\overline{\mathcal C}(\overline{\rho_j})=\rho_j.
+\tag{272.6}
+$$
+
+定义到 $2d$ 维空间的信道
+
+$$
+\mathcal F(X)=\frac12\bigl(X\oplus\mathcal C(X)\bigr),
+\qquad
+\mathcal E(X)=Q\mathcal F(X)Q^*,
+\qquad
+Q=\frac1{\sqrt2}\begin{pmatrix}I&I\\-iI&iI\end{pmatrix}.
+\tag{272.7}
+$$
+
+两个对角块均由完全正映射取得，迹之和经二分之一归一化后为 $\operatorname{Tr}X$，而 $Q$ 酉。因此这是对全部输入定义的 CPTP 编码。在模型上，式（271.13）的直接乘法给出
+
+$$
+\mathcal E(\rho_j)
+=\frac12
+\begin{pmatrix}
+\operatorname{Re}\rho_j&-\operatorname{Im}\rho_j\\
+\operatorname{Im}\rho_j&\operatorname{Re}\rho_j
+\end{pmatrix},
+\tag{272.8}
+$$
+
+故所有输出均为实矩阵。令 $Y'=Q^*YQ$，按两个 $d$ 维块记其压缩为 $Y'_{LL},Y'_{RR}$，取
+
+$$
+\mathcal D(Y)=Y'_{LL}+\overline{\mathcal C}(Y'_{RR}).
+\tag{272.9}
+$$
+
+这是两个完全正压缩及信道的和，且输出迹为两个对角块的迹之和，等于 $\operatorname{Tr}Y$。由（272.6），
+
+$$
+\mathcal D\mathcal E(\rho_j)
+=\tfrac12\bigl(\rho_j+\overline{\mathcal C}\mathcal C(\rho_j)\bigr)
+=\rho_j.
+\tag{272.10}
+$$
+
+上述共轭直和构造具有正映射层面的文献先例。van Luijk、Wilming，*Sufficiency and Petz recovery for positive maps*，[arXiv:2604.08380v2](https://arxiv.org/pdf/2604.08380v2)，例4.11及第32页续证，以正映射研究加权共轭直和；定理5.1描述正保迹互换。其第32页显示的是 Heisenberg 图景的保单位元的正映射（unital positive maps）。取迹对偶后，相应状态图景映射为
+
+$$
+\mathcal F_p^+(X)=pX\oplus(1-p)X^{\mathsf T},
+\qquad
+\mathcal G^+(Y)=Y_{LL}+Y_{RR}^{\mathsf T}.
+$$
+
+这两个映射正且保迹，并有 $\mathcal G^+\mathcal F_p^+=\mathrm{id}$。当 $d\ge2$、$0<p<1$ 时，两者均不完全正：否则压缩转置分支或限制输入到该分支会使转置本身完全正。故在 $p=1/2$ 时，上述先例结合 $Q$ 已给出普遍的正映射可恢复实表示。本证明要求全部操作完全正，式（272.7）以模型上可实现的 $\mathcal C$ 替换转置分支，式（272.9）以其共轭信道恢复；这正是这里需要判定的额外条件。既有正映射互换并未消去该完全正约束。
+
+最后，固定有限维输入与输出的 CPTP 信道集可由 Choi 矩阵 $J\succeq0$、$\operatorname{Tr}_{\rm out}J=I_d$ 表示。它闭且有界，因为 $\operatorname{Tr}J=d$，故为紧集。式（272.1）的有限个连续函数之最大值连续，最小值达到。因此 $\delta=0$ 等价于某个信道精确实现模型共轭，结合上述构造得到所述等价。不可行时最小值严格为正，而（272.3）对全部有限 $D$ 都成立。证毕。
+
+这个归约还给出有限维半正定规划。使用输出指标在前的未归一化 Choi 矩阵，记
+
+$$
+X_j(J)=\operatorname{Tr}_{\rm in}
+\left[J(I_d\otimes\rho_j^{\mathsf T})\right]
+-\overline{\rho_j}.
+$$
+
+最小化实数 $t$，约束为
+
+$$
+J\succeq0,\quad\operatorname{Tr}_{\rm out}J=I_d,
+\qquad
+Y_j\succeq X_j(J),\quad Y_j\succeq-X_j(J),
+\quad\operatorname{Tr}Y_j\le2t\quad(1\le j\le n).
+\tag{272.11}
+$$
+
+其中 $Y_j$ Hermitian。这是迹范数的标准半正定表示：对 Hermitian $X$，满足 $Y\succeq\pm X$ 的最小迹为 $\|X\|_1$，可取 $Y=|X|$；反向下界由 $X$ 的正、负谱投影分别压缩两条不等式得到。因此该规划的值正是 $\delta(\mathcal R)$。它消除了对任意输出维数的搜索，不宣称有限精度下的零值判定算法。
+

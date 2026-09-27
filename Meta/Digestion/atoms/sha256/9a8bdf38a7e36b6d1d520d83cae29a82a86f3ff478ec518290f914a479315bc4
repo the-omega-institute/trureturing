@@ -1,0 +1,59 @@
+### 169.2 Bures 缺口恰是分支与活动记忆的不独立距离
+
+采用平方 Bures 距离
+
+$$
+d_{\mathrm B}(a,b)^2=2\bigl(1-\sqrt{F(a,b)}\bigr).
+\tag{169.7}
+$$
+
+分块矩阵的平方根与迹范数分别分块计算，给出
+
+$$
+\sqrt{F(\Gamma,\Pi)}
+=\sum_jp_j\sqrt{F_j}.
+\tag{169.8}
+$$
+
+故平均条件 Bures 平方距离恰等于联合态到独立比较态的 Bures 平方距离：
+
+$$
+\mathcal B:=
+\sum_jp_jd_{\mathrm B}(\rho_j,\rho)^2
+=d_{\mathrm B}(\Gamma,\Pi)^2.
+\tag{169.9}
+$$
+
+对 $x\in[0,1]$，有
+
+$$
+1-x\le2(1-\sqrt x)\le2(1-x).
+$$
+
+逐支加权得到
+
+$$
+\boxed{u\le\mathcal B\le2u,\qquad
+\frac{\beta}{2}\mathcal B\le a
+\le\frac{\beta}{1-\beta}\mathcal B.}
+\tag{169.10}
+$$
+
+特别地，
+
+$$
+\boxed{
+a=0
+\iff u=0
+\iff\mathcal B=0
+\iff\Gamma=\gamma_J\otimes\rho
+\iff\rho_j=\rho\ \text{对全部 }j
+\iff\chi=0.
+}
+\tag{169.11}
+$$
+
+除最后一个等价外，其余直接来自正权重、保真度等于一的判据及（169.6）；相对熵等价也可由下一节的下界得到。
+
+因此，在本节合同下，读出一个与 $M$ 不独立的分支标记，就存在接收端不能消去的纯化恢复损失。这里判定的是同一联合态内的相关性及给定局部操作限制，没有断言某个读取动作产生了这些相关性，也没有把 Holevo 信息当作已被某次测量完全提取的经典信息。
+

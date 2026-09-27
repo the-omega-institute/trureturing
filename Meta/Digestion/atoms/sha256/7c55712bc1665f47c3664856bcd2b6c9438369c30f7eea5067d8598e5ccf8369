@@ -1,0 +1,40 @@
+**定义 35.1（精确后验损失的两个尺度）。** 沿用定义 34.1 的两种实际实验、
+格点间隙或非格点阈值、固定参数与共同排序。先取正确对齐方向，所有条件后验
+均在均匀基数先验的概率空间中解释。置
+
+```math
+\overline C_M=\sum_{i\in A_M}\pi_i,\qquad
+b_M^\circ=\sqrt{q/\sqrt\lambda},\qquad
+U_M=-\frac{C_M-\overline C_M}{b_M^\circ}.
+```
+
+式 (35.1)。
+
+这里 $`b_M^\circ`$ 是噪声尺度，与格点阈值 $`b_M`$ 不同。对固定
+$`-A\le a\le A`$，定义原始遗漏数、其精确后验中心及归一化过程
+
+```math
+L_M(a)=|S\setminus T_M(a)|,\qquad
+\overline L_M(a)=q-\sum_{i\in T_M(a)}\pi_i,\qquad
+\mathcal P_M(a)=\frac{L_M(a)-\overline L_M(a)}{b_M^\circ}.
+```
+
+式 (35.2)。
+
+后验中心 $`\overline L_M(a)`$ 是数据函数，不是确定风险中心
+$`qH_{\mathcal E,m_M(a)}^\xi`$。未知方向时按定义 34.1 的同一次判决，
+使用全部正向工作权重计算 (35.1)、(35.2)。记
+$`d_*=\varphi(z_*)/\sqrt v`$，其中 $`v`$ 是定义 27.1 的信号得分方差率，置
+
+```math
+\Gamma_s=
+\begin{cases}
+d_*\log(1+e^{-s}),&\text{非格点},\\[0pt]
+d_*h\displaystyle\sum_{j=1}^{\infty}\frac1{1+e^{s+jh}},&\text{格点间隙}.
+\end{cases}
+```
+
+式 (35.3)。
+
+两种常数均严格为正且有限；格点和从阈值上方的第一层开始，不含 $`j=0`$。
+

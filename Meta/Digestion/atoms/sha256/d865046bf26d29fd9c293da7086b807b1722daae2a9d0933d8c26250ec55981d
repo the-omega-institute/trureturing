@@ -1,0 +1,1 @@
+| [D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean)，`target_family_minimal_quotient` | 给任意目标族共同核的最小商、目标下降及所有充分读出的核包含；本题目标分别取全部合法精确计数或布尔读数。它不自行识别直方图、七类或噪声锐常数。 

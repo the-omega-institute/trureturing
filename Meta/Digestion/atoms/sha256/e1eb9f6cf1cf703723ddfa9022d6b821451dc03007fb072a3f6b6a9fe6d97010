@@ -1,0 +1,6 @@
+**命题 4.3.2（数量化局部间隔）。** 假设对每个标准柱 $C$ 统一供应可计算实数 $c_C>0$，保证
+$$
+K\cap C\ne\varnothing\quad\Longrightarrow\quad\mu(K\cap C)\ge c_C.
+$$
+则 $\mathbf C$ 均匀判定 $\mathbf R$，不需要 $M$ 的数值正下界。
+

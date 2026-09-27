@@ -1,0 +1,29 @@
+### 25.1 有限时间投影是逐层增加的边界
+
+设 $X$ 是实际共同来源的状态像，$F:X\to X$ 是合法更新，$r:X\to R$ 是指定的记录读出。对 $N\in\mathbb N$ 定义有限时间投影
+
+$$
+\operatorname{TP}_N(x)(k)=r(F^k x),\qquad 0\le k\le N.
+$$
+
+若 $\pi_{\rm sp}:X\to S$ 是当前空间或端口投影，则联合边界为
+
+$$
+\boxed{
+Q_N(x)=\bigl(\pi_{\rm sp}(x),\operatorname{TP}_N(x)\bigr).
+}
+\tag{25.1}
+$$
+
+这里的“时间”只是沿合法更新取得的一列记录；若任务还需要失败、权限或 inactive archive event，就必须把相应读出并入 $r$ 或扩充 $Q_N$。
+
+仓内 `PredictionExpansionEscape.prediction_escape_iff_expansion_escape`、`TimeExpansionEscape.time_expansion_escape_iff_expansion_escape` 和 `FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws` 给出有限投影的逐项刻画与限制律；`FiniteTimeProjectionKernelAntitone.finite_time_projection_kernel_antitone` 给出
+
+$$
+N\le M\Longrightarrow
+\ker(\operatorname{TP}_M)\subseteq\ker(\operatorname{TP}_N).
+\tag{25.2}
+$$
+
+因此 $N$ 增大只会切开原来合并的未来，不会把已经区分的有限记录重新合并。若存在 $x,y$ 使得 $\operatorname{TP}_N(x)=\operatorname{TP}_N(y)$ 而 $\operatorname{TP}_M(x)\ne\operatorname{TP}_M(y)$，这正是有限时间分辨率下的 expansion escape；它表示当前边界还没有承载足够的未来关系，而不是表示某个外部观察者看见了一个额外对象。
+

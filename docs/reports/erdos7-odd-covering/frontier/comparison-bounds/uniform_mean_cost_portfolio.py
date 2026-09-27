@@ -12,8 +12,8 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/uniform_mean_cost_portfolio.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
-    'certificates/source_norms/comparison-bounds/uniform_k_neighborhood_cost.json': '06dfe1b20c2d4e08a61585bc654efc00c4d3461030917699a29996d387655482',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '41cf0ee10fc00ef29278ee8329085cb20c365a73008313c10b1bc888f737af6c',
+    'certificates/source_norms/comparison-bounds/uniform_k_neighborhood_cost.json': '69b21dbe7b00a1abe0f0b5a5dfb58b06b4e6ca622c4b148d60ee306421d0fd62',
     'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': 'cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6',
 }
 INDICES = (1, 2, 7, 10, 17, 18, 23, 26, 32, 33, 36)

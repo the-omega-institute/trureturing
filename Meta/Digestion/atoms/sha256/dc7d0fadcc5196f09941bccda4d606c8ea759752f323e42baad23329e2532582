@@ -1,0 +1,41 @@
+**命题 518.1（排除比例决定该族的预算斜率）。** 对定义 516.1 的全部参数以及 $\eta\ge0$，预算可行当且仅当 $\eta\ge\beta$；可行时
+
+$$
+\mathcal J_{\mathcal Q,r}(\eta)
+=\lambda+\left(\frac2c-1\right)(\lambda-\eta)_+,
+\qquad
+\beta=c(r-\alpha)_+,\quad\lambda=cr(1-\alpha).
+$$
+
+证明：边缘可行性来自命题 516.2，因为任一从 $Y$ 生成新增输出的模拟器，都可以额外保留实际 $Y$ 而不改变新增边缘。若 $\eta\ge\lambda$，命题 516.2 的联合上界生成器满足 $m=j=\lambda$；同一命题的通常模拟下界给出最优性。
+
+以下设 $0<r<1$ 且 $\beta\le\eta\le\lambda$。选
+
+$$
+R(\circ)=1-\frac\eta{cr},\qquad
+R(x)=\frac\eta{qr}\quad(1\le x\le n),
+$$
+
+并在揭示 $S$ 时选
+
+$$
+T_S(\circ)=\frac{\alpha-r+\eta/c}{1-r},\qquad
+T_S(x)=\begin{cases}
+(1-T_S(\circ))/p,&x\in S,\\
+0,&x\notin S.
+\end{cases}
+$$
+
+由于 $q=cn$，擦除分支的质量和为一。$\eta\le\lambda$ 给出 $R(\circ)\ge\alpha\ge0$。$\eta\ge\beta$ 保证揭示分支的公共质量非负；$\eta/c\le r(1-\alpha)$ 又给出 $T_S(\circ)\le\alpha\le1$。因此这些是同一合法生成器的概率分支。
+
+其新增边缘在公共符号上的质量为 $\alpha$，在 $S^c$ 上的总质量为 $\eta$，在 $S$ 上的总质量比目标少 $\eta$；对称性保证允许标签的差同号。所以 $m=\eta$。在命题 517.1 的记号中，$a=0$、$z=\eta/c$、$s_0=z-L$。揭示分支贡献 $L-z$，擦除分支贡献 $L-(1-c)z$，两者合计
+
+$$
+j=2L-\left(\frac2c-1\right)\eta
+=\lambda+\left(\frac2c-1\right)(\lambda-\eta).
+$$
+
+这达到命题 517.1 的下界，并在 $\eta=\lambda$ 接上平坦段。
+
+$r=0$ 时全部状态已揭示，$\beta=\lambda=0$，可令两个误差为零。$r=1$ 时实际记录恒为 $\star$，联合与新增边缘是同一个距离，$\beta=\lambda=c(1-\alpha)$；可行时最优值为 $\lambda$。$\alpha=1$ 时所有目标都集中于 $\circ$，两个误差均可为零。$\alpha=0$ 时 $\beta=\lambda=cr$，非平坦区间不属于可行预算。由此覆盖所有端点。证毕。
+

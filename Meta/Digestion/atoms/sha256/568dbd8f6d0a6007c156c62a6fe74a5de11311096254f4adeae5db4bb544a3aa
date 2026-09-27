@@ -1,0 +1,30 @@
+**推论198.3（有限噪声唯一恢复阈值）。**
+对全部充分小正 $\epsilon$，存在唯一
+$\ell_\epsilon\in[0,1/2]$ 使
+
+$$
+\mathscr E(\ell_\epsilon,\epsilon)=\frac34,
+$$
+
+并有
+
+$$
+\boxed{
+\ell_\epsilon=h_c\epsilon+O(\epsilon^2),\qquad
+h_\epsilon:=\frac{\ell_\epsilon}{\epsilon}=h_c+O(\epsilon).
+}
+\tag{198.12}
+$$
+
+同时，在完整来源区间 $[0,1/2]$ 上，
+
+$$
+\boxed{
+\ell<\ell_\epsilon\Longrightarrow
+\mathscr E(\ell,\epsilon)<\frac34,\qquad
+\ell>\ell_\epsilon\Longrightarrow
+\mathscr E(\ell,\epsilon)>\frac34.
+}
+\tag{198.13}
+$$
+

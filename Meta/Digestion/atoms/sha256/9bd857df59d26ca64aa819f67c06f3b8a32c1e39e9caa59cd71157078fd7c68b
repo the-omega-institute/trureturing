@@ -1,0 +1,23 @@
+**证明：充分性及实际求解。** $c$ 是 Kraus 矩阵的归一 Hilbert–Schmidt Gram 矩阵，故半正定且$\operatorname{tr}c=1$。取有限酉对角化 $V^\dagger cV=\operatorname{diag}(\lambda_j)$，令$F_j=\sum_aV_{aj}E_a$。则
+
+$$
+F_j^\dagger F_k=\lambda_j\delta_{jk}I_d.
+$$
+
+$\lambda_j=0$时$F_j=0$。正权重时令$S_j=F_j/\sqrt{\lambda_j}$，得到$S_j^\dagger S_k=\delta_{jk}I_d$。因此
+
+$$
+Q=\sum_{\lambda_j>0}\lambda_jS_jS_j^\dagger,
+\qquad WF_j=S_j.
+$$
+
+对同一 Kraus 混合，候选恢复的支持部分变为$\sum_jS_j^\dagger X S_j$，故
+
+$$
+\mathcal R_{\mathcal N}\mathcal N(\rho)
+=\sum_{j,k}\lambda_kS_j^\dagger S_k\rho S_k^\dagger S_j
+=\sum_k\lambda_k\rho=\rho.
+$$
+
+补空间项在原通道输出上为零。最后一个条件显然给出第一个。∎
+

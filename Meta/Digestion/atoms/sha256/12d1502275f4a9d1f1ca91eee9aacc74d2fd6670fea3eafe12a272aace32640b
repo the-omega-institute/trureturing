@@ -1,0 +1,18 @@
+**命题 6.3（配对相干探针的恢复公式）。** 对 $x<y$，令
+
+$$
+F^R_{xy}=\frac{(|x\rangle+|y\rangle)(\langle x|+\langle y|)}2,
+\qquad
+F^I_{xy}=\frac{(|x\rangle-i|y\rangle)(\langle x|+i\langle y|)}2.
+$$
+
+取 $r_{xy}=\operatorname{Tr}(\rho F^R_{xy})$、$s_{xy}=\operatorname{Tr}(\rho F^I_{xy})$，则
+
+$$
+\operatorname{Re}\rho_{xy}=r_{xy}-\frac{p_x+p_y}{2},
+\qquad
+\operatorname{Im}\rho_{xy}=s_{xy}-\frac{p_x+p_y}{2}.
+$$
+
+证明。展开两个投影的二次型，分别为 $(\rho_{xx}+\rho_{yy})/2+\operatorname{Re}\rho_{xy}$ 与 $(\rho_{xx}+\rho_{yy})/2+\operatorname{Im}\rho_{xy}$。共 $d+2\binom d2=d^2$ 个读数确定所有矩阵元。每个效果可作为二结果测量的一支；它们并未被声明为同一个 POVM 的所有结果。精确读数恢复不等于从同一未知样本无损读出这些概率。$\square$
+

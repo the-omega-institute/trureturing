@@ -1,0 +1,137 @@
+**引理34.1（三条互异尾射线强制共同四加二维分解）。** 反设
+$\eta_3,\eta_4,\eta_5$ 的射线两两不同，令
+$F=\operatorname{span}\{\eta_3,\eta_4,\eta_5\}$，则 $\dim F=2$。
+所有五个环境向量均属于 $F$，且存在正交分解
+$K=S\oplus Q$，$\dim S=4$、$\dim Q=2$，满足
+
+$$
+\begin{gathered}
+Q_3=Q_4=Q_5=Q,\qquad
+S=G_3+G_4=G_2+G_3=G_2+G_4,\\
+G_5\subseteq S,\qquad p\in S,\quad v\in Q,\qquad
+V_0K\subseteq S\otimes F.
+\end{gathered}
+\tag{34.3}
+$$
+
+映射 $U:=V_1|_S:S\to Q\otimes F$ 为满等距，且
+
+$$
+U(G_2)=Q\otimes\eta_3,\qquad
+U(G_3)=Q\otimes\eta_4,\qquad
+U(G_4)=Q\otimes\eta_5.
+\tag{34.4}
+$$
+
+三个尾环境还必须两两非正交：
+
+$$
+0<|\langle\eta_i,\eta_j\rangle|<1
+\qquad(3\le i<j\le5).
+\tag{34.5}
+$$
+
+证明。若 $x\in G_3\cap G_4$，固定 $V_1x$ 同时属于
+$Q_4\otimes\eta_4$ 与 $Q_5\otimes\eta_5$。不同环境射线使这两个张量子空间相交为零；等距的单射性给
+$G_3\cap G_4=0$。
+
+以 $\eta_3,\eta_4$ 为 $F$ 的代数基，写
+$\eta_5=\alpha\eta_3+\beta\eta_4$，其中 $\alpha\beta\ne0$。若
+
+$$
+x_3\otimes\eta_3+x_4\otimes\eta_4+x_5\otimes\eta_5=0,
+\qquad x_j\in G_j,
+$$
+
+则环境坐标给 $x_3=-\alpha x_5$、$x_4=-\beta x_5$。所以
+$x_5\in G_3\cap G_4=0$，三个向量均为零。由（34.2），这些像子空间全部包含于
+$V_0K$，其维数和已达六，故
+
+$$
+V_0K=(G_3\otimes\eta_3)\dotplus
+(G_4\otimes\eta_4)\dotplus(G_5\otimes\eta_5)
+\subseteq K\otimes F.
+\tag{34.6}
+$$
+
+此处 $\dotplus$ 是代数直和，不断言正交。又由（34.1），
+$V_0H_1=G_2\otimes\eta_2$、$V_0k=p\otimes\eta_1$，其中接收器因子非零。
+将环境投影到 $F^\perp$ 就得 $\eta_1,\eta_2\in F$。这一步只使用零位像的全域饱和。
+
+二维复空间中的每条射线只有一条正交补射线；在三条不同射线中，至少有一条与另两条都非正交。选其编号
+$j\in\{3,4,5\}$。固定 $V$ 的两个输入位像正交，故比较
+$G_i\otimes\eta_i\subset V_0K$ 与 $Q_j\otimes\eta_j\subset V_1K$，得到
+$Q_j\perp G_i$，对 $i=3,4,5$ 均成立。因此
+
+$$
+S:=G_3+G_4=Q_j^\perp,\qquad \dim S=4,
+\qquad G_5\subseteq S.
+\tag{34.7}
+$$
+
+由（34.6）有 $V_0K\subseteq S\otimes F$；再用早期纯张量像，得到
+$G_2\subseteq S$、$p\in S$。
+
+现在 $V_1(G_2+G_3+G_4)$ 等于
+
+$$
+(Q_3\otimes\eta_3)+(Q_4\otimes\eta_4)+(Q_5\otimes\eta_5).
+$$
+
+其维数恰为
+
+$$
+6-\dim(Q_3\cap Q_4\cap Q_5).
+\tag{34.8}
+$$
+
+确切地说，从 $Q_3\oplus Q_4\oplus Q_5$ 到上述和空间的自然映射，其核是
+$\{(-\alpha x,-\beta x,x):x\in Q_3\cap Q_4\cap Q_5\}$。
+另一方面，输入包含于四维 $S$，所以（34.8）至多为四。这迫使三个二维
+$Q_i$ 全部相等，记为 $Q$；（34.7）给 $K=S\oplus Q$。同时
+
+$$
+V_1S=V_1(G_3+G_4)
+=Q\otimes\eta_4+Q\otimes\eta_5=Q\otimes F.
+\tag{34.9}
+$$
+
+所以 $U=V_1|_S$ 为满等距，（34.4）成立，任意两个不同环境纤维的逆像张成
+$S$。又因 $p\in S$、$V_1p=v\otimes\eta_2$，得到 $v\in Q$。
+
+还须排除尾环境的正交对。若 $\eta_3\perp\eta_4$，由固定
+$V_0,V_1$ 分别得 $H_2\perp H_3$、$G_2\perp G_3$。
+此时 $H_3\subseteq G_3\oplus Q$，且 $P_QH_3=Q$，可取
+$h\in H_3$ 使 $\langle v,h\rangle\ne0$。因为
+$u\in G_2\subset S$，有 $u\perp H_3$，于是
+
+$$
+\langle a^2u+bv,h\rangle
+=\bar b\langle v,h\rangle\ne0,
+$$
+
+违反 $H_2\perp H_3$。若 $\eta_3\perp\eta_5$，改用
+$H_4\subseteq G_4\oplus Q$、$P_QH_4=Q$，同理违反 $H_2\perp H_4$。
+
+若 $\eta_4\perp\eta_5$，则 $H_3\perp H_4$、$G_3\perp G_4$。
+任取单位 $z\in Q$，用两个满投影选取 $h_3\in H_3$、$h_4\in H_4$，使
+$P_Qh_3=P_Qh_4=z$。由 $S\perp Q$、$G_3\perp G_4$，
+
+$$
+\langle h_3,h_4\rangle=\langle z,z\rangle=1,
+$$
+
+又与 $H_3\perp H_4$ 矛盾。三个内积都非零；单位向量不共线给其绝对值严格小于一，证明完毕。
+
+对任意单位 $\xi\in F$，下文记
+
+$$
+W_\xi:Q\to S,\qquad W_\xi z=U^{-1}(z\otimes\xi).
+\qquad
+W_\xi^*W_\zeta=\langle\xi,\zeta\rangle I_Q.
+\tag{34.10}
+$$
+
+于是 $G_2,G_3,G_4$ 分别是 $W_{\eta_3},W_{\eta_4},W_{\eta_5}$ 的像，
+$p=W_{\eta_2}v$。式（34.10）给出了这些二维子空间的完整交叠矩阵。
+

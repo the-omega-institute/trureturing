@@ -1,0 +1,39 @@
+**定义154.2（有限周期与收缩证书）。** 一份证书由正整数 $q,m$、线性映射
+$P:\mathscr V\to\mathscr V$ 及实数 $0<\kappa<1$ 构成，满足
+
+$$
+P^2=P,\qquad P\mathcal A=\mathcal A P,\qquad
+\mathcal A^qP=P,
+\tag{154.8}
+$$
+
+并且，置 $\mathscr H=\ker P$、$L=qm$ 后，
+
+$$
+\boxed{
+\|\mathcal A^L|_{\mathscr H}\|_{\mathrm{HS}\to\mathrm{HS}}
+\le\kappa<1.
+}
+\tag{154.9}
+$$
+
+$P$ 不要求为正映射，也不要求为正交投影；其作用是在实际可达线性空间内分离周期部分与衰减部分。式（154.8）保证 $\mathscr H$ 不变。在 $\mathscr H$ 的任意 Hilbert–Schmidt 正交单位基中，若 $A_L$ 表示 $\mathcal A^L|_{\mathscr H}$，则（154.9）等价于有限矩阵不等式
+
+$$
+A_L^*A_L\preceq\kappa^2 I_{\mathscr H}.
+\tag{154.10}
+$$
+
+当 $\mathscr H=\{0\}$ 时，这个条件为空，后文衰减常数取零。证书全部涉及已给定装置的有限矩阵；本节不把未经核验的数值谱估计视为该证书。
+
+定义 $q$ 个比较通道候选
+
+$$
+\mathcal R_*^{(r)}
+=\mathcal F^rP\mathcal E_\omega,
+\qquad 0\le r<q.
+\tag{154.11}
+$$
+
+其中 $P$ 只在 $\mathcal E_\omega$ 的可达值域上使用。
+

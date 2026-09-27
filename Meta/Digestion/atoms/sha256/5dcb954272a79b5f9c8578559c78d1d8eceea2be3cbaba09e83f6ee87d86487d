@@ -1,0 +1,41 @@
+### 170.6 真实启动诱导的逻辑通道必须保留
+
+令 $\mathcal R_L$ 为第159节实际独立初始化、运行 $L$ 个启动步骤后的通道，其输入仍是原始活动记忆。定义
+
+$$
+\Theta_L=\Lambda_\infty\mathcal R_L.
+\tag{170.30}
+$$
+
+这是一条从原始来源输入到逻辑 qubit 的 CPTP 通道，包含该输入与外部参考的全部渐近残余关系。对 $k\ge1$，式（170.23）后接真实启动给
+
+$$
+\boxed{
+d_\diamond\!\left(
+\mathcal R_{L+k},
+\mathcal E\mathcal U^k\Theta_L
+\right)
+\le C_p^{\mathrm{abs}}p^{(k-1)/2}.
+}
+\tag{170.31}
+$$
+
+尚未证明 $\Theta_L$ 为常值通道。已有启动估计只给出
+
+$$
+d_\diamond(\mathcal R_L,\mathcal E\mathcal C_0)\le\delta_L,
+\qquad
+\mathcal C_0(X)=\operatorname{Tr}(X)P_{|0\rangle}.
+$$
+
+由 $\Lambda_\infty\mathcal E=\operatorname{id}$ 和收缩性，
+
+$$
+\boxed{
+d_\diamond(\Theta_L,\mathcal C_0)\le\delta_L.
+}
+\tag{170.32}
+$$
+
+这个界不能被升级为 $\Theta_L=\mathcal C_0$。几何吸引消去的是代码外部分；进入逻辑外围子空间的启动信息仍由 $\Theta_L$ 承载。
+

@@ -1,0 +1,90 @@
+**$ABBCB,ABCBB$，异常字母 $B$。** 前者取 $n=4$，后者取 $n=3$。两词都满足
+
+$$
+G_2=P,\qquad V_0p=u\otimes A,\quad u\in P,\qquad
+V_0H_n=P\otimes C,\qquad V_1G_n=Q_{n+1}\otimes C,
+$$
+
+且第 $n$ 轮当前方向为 $B=\theta$，所以 $Q_n=Q$。置 $r=|\langle A,C\rangle|$。$\zeta$ 必在 $A,C$ 中，故第三射线条件使 $r>0$。真实 $p$ 是单位向量，零位像给 $\|P_{H_n}p\|=r$，一位像 $V_1p=v\otimes A$ 给 $\|P_{G_n}p\|\le r$。又 $p\in S_0\perp Q_n$，同一严格投影给 $r<r$ 的矛盾。
+
+### 121.7 ABAAC 的正交夹逼
+
+此词的异常字母为 $A$。完整一位 $A$ 纤维为二维 $Q$，故 $G_3=G_4$，真实 $V_1p$ 又使 $p\in G_3$。第3轮当前方向为普通 $B$，所以
+
+$$
+G_3=G_4=P,\qquad p\in P.
+$$
+
+置 $r=|\langle A,B\rangle|$。真实零位像 $V_0H_2=P\otimes B$、$V_0H_3=P\otimes A$ 给同一单位 $w\in H_2$ 的读数 $\|P_{H_3}w\|=r$。一位映射在 $G_2,G_3$ 上的环境分别为 $B,A$，故 $\|P_{G_3}w\|\le r$。
+
+若 $r>0$，$w\otimes A\in R_0$ 与 $Q_3\otimes B\subset R_1$ 跨位正交使 $w\perp Q_3$，严格投影便给
+
+$$
+r=\|P_{H_3}P_{G_3}w\|<\|P_{G_3}w\|\le r,
+$$
+
+矛盾。因此 $A\perp B$，必有 $B=\zeta$。一位等距进一步给 $G_2\perp P$，故 $u\perp P$。实际 $V_0p=u\otimes A$ 与 $V_0H_3=P\otimes A$ 使 $p\perp H_3$，却和非零 $p\in P=G_3$ 及满投影 $P_{G_3}H_3=G_3$ 冲突。
+
+### 121.8 AABAC 的首末投影秩矛盾
+
+最后的尾词为 $A,A,B,A,C$，异常方向为 $A=\theta$。$G_2,G_4$ 的已执行一位后继均为 $A$，完整一位纤维二维；第4轮当前方向又是普通 $B$。所以
+
+$$
+G_2=G_4=P,\qquad V_1P=Q\otimes A,\qquad p\in P.
+$$
+
+首先证明 $A\perp B$。置 $r=|\langle A,B\rangle|$。实际 $V_0p=u\otimes A$、$u\in P$，以及 $V_0H_3=P\otimes B$，给 $\|P_{H_3}p\|=r$；实际 $V_1p=v\otimes A$、$V_1G_3=Q_4\otimes B$ 给 $\|P_{G_3}p\|\le r$。第3轮当前方向是 $A$，故 $Q_3=Q\perp p$。若 $r>0$，后期严格投影立即给 $r<r$。因此 $B=\zeta$，且 $A\perp B$。
+
+$G_3$ 的一位后继为 $B$，而 $V_1P=Q\otimes A$，所以 $G_3\perp P$。结合 $G_3\subset S_0=P\oplus D$，得 $G_3\subset D$。又 $Q_3=Q$，故
+
+$$
+P_PH_3=0.
+$$
+
+首轮平面满足 $H_1=\operatorname{span}(p,q)$，其中 $p\in P$、$q\in P^\perp$，所以 $P_PH_1=\mathbb Cp$，只有一维。
+
+真实第6轮的方向 $C$ 是普通方向，因此 $G_6=P$。实际零位像给
+
+$$
+V_0H_1=P\otimes A,\qquad
+V_0H_3=P\otimes B,\qquad
+V_0H_5=P\otimes C.
+$$
+
+$A,B$ 张成同一二维环境 $F$，所以 $V_0(H_1+H_3)=P\otimes F$，从而 $H_5\subset H_1+H_3$。于是
+
+$$
+\dim P_PH_5\le1.
+$$
+
+另一方面，第5轮当前方向为 $A$，故 $Q_5=Q$，且同轮投影满射给
+
+$$
+P_PH_5=P_PG_5.
+$$
+
+真实 $V_1G_5=Q_6\otimes C$；$C$ 不等于 $\zeta=B$，所以 $Q_6=Q$。因而同一个 $V_1$ 把 $P,G_5$ 分别等距映到 $Q\otimes A,Q\otimes C$。第三条 $C$ 不同于 $B=A^\perp$，故 $\langle A,C\rangle\ne0$，这使 $P_P|_{G_5}$ 单射：若 $x\in G_5$ 正交于 $P$，写 $V_1x=y\otimes C$，则 $y\otimes C$ 正交于整个 $Q\otimes A$；非零环境内积迫使 $y=0$，进而 $x=0$。两个空间均二维，所以
+
+$$
+P_PG_5=P,\qquad \dim P_PH_5=2,
+$$
+
+与前面的至多一维矛盾。最后一词排除。
+
+### 121.9 单支持形态的完整边界
+
+两尾及十三个必要三尾词均已排除；第74节不允许更多尾方向，因此单支持 $N=D\otimes\zeta$ 不可能，定理得证。所用实际来源差值为
+
+$$
+\delta_5-\delta_3=\frac{x^4y^2}{t_3t_5}>0,\qquad
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0,
+\quad x=|a|^2,\quad y=|b|^2,\quad
+ t_0=1,\quad t_j=1-yt_{j-1}.
+$$
+
+结论不依赖重选首轮环境，不给末轮增加一位动作，也不把不同普通环境的相同接收平面当作同一乘积输出。二重分支的三维乘积生成剩余空间仍须检查支持分割 $2+1$ 和 $1+1+1$；本节没有排除全部七维接收器。一般容量区间保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

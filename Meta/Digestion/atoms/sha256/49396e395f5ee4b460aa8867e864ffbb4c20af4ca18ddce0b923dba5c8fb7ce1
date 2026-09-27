@@ -1,0 +1,37 @@
+**定义 187.1（有限 horizon 的双侧因子化）。** 在 $\mathcal X$ 上固定 Euclidean 内积，并用 Riesz 表示把每个效果 $f_i$ 写成向量 $\widehat f_i$。对给定 $N,M\ge0$，定义
+
+$$
+B_M:\mathbb R^{s(M+1)}\to\mathcal X,
+\qquad
+B_M e_{j,m}=T^m b_j,
+$$
+
+以及
+
+$$
+C_N:\mathcal X\to\mathbb R^{t(N+1)},
+\qquad
+(C_Nx)_{i,n}=f_i(T^n x).
+$$
+
+则第 183 节的响应块满足
+
+$$
+\mathsf H_{N,M}=C_NB_M.
+$$
+
+定义有限可达 Gramian 与有限可观测 Gramian：
+
+$$
+W_c^{(M)}=B_MB_M^{\mathsf T}
+=\sum_{j=1}^s\sum_{m=0}^{M}
+(T^m b_j)(T^m b_j)^{\mathsf T},
+$$
+
+$$
+W_o^{(N)}=C_N^{\mathsf T}C_N
+=\sum_{i=1}^t\sum_{n=0}^{N}
+(T^n)^{\mathsf T}
+\widehat f_i\widehat f_i^{\mathsf T}T^n.
+$$
+

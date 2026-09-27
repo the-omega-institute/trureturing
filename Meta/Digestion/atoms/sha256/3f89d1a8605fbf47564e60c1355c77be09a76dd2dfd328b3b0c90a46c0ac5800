@@ -1,0 +1,87 @@
+**定理 83.2（保留全部剩余类的实际同步界）。** 存在只依赖 $K$ 的常数 $C$，
+使充分大的原合法 $Q$ 下，任意上述斜率且 $d\le Q^{2/3}$，都可找到原整数
+$j>0$、$k<0$ 和一个共同规模整数 $L$，使该原单元位于选定参数邻域，并且
+
+$$
+\max_{\mathcal E\in\{pair,path\}}
+\max_{i\in\{j,k\}}\left|\ln\bar c_{Q,i}^{\mathcal E}(\beta)\right|
+\le C\left(1+\sqrt{d\omega_{Q,p,d}}+\frac{d^2}{Q}\right)
+\quad(\beta\in\mathcal J_{Q,L}).
+\tag{83.2}
+$$
+
+正根代理均值 $2^L\chi_{Q,j}$ 同时位于 $[2^{-1/2},2^{1/2}]$。
+单元中点 $\beta_{Q,L}$ 满足
+
+$$
+|\beta_{Q,L}-F(u)|
+\le C\left(\frac{\sqrt{\omega_{Q,p,d}/d}}Q
+             +\frac d{Q^2}+\frac{\ln Q}{Q^3}\right).
+\tag{83.3}
+$$
+
+特别地，最坏相位下的对数均值界是 $C(1+\sqrt d)$。
+这改进定理 81.3 证明中的 $d$ 阶界；它仍不是固定参数的无限层复现。
+
+证明。由定理 81.2，在固定的放大根邻域内
+$c/N\le G_Q''\le C/N$。令 $m=\lceil dh_Q(t)\rceil$。
+由于 $p,d$ 互素，恰有一个剩余类 $r\pmod d$ 满足
+
+$$
+pr+m\equiv0\pmod d.
+\tag{83.4}
+$$
+
+这使 $m/d$ 成为该剩余类上的合法整数配对截距。
+严格凸性给 $x_*\ge t$，使 $h_Q(x_*)=m/d$，并且积分曲率界给
+
+$$
+0\le x_*-t\le CQ\sqrt{\omega_{Q,p,d}/d}.
+\tag{83.5}
+$$
+
+$\omega=0$ 时取 $x_*=t$。选取 $j\equiv r\pmod d$ 且 $|j-x_*|\le d/2$，
+再令 $k=(pj+m)/d\in\mathbb Z$。两点仍在固定内部根邻域中，因而 $j>0>k$。
+利用 $h_Q'(t)=0$ 和积分导数界，得到
+
+$$
+\begin{aligned}
+|G_Q(j)-k|
+ &=|h_Q(j)-m/d|\\
+ &\le \frac C N\bigl(|x_*-t|+d\bigr)d
+ \le C\left(\frac{\sqrt{d\omega_{Q,p,d}}}{Q}+\frac{d^2}{Q^2}\right),\\
+|j-Nu|&\le C\left(Q\sqrt{\omega_{Q,p,d}/d}+d+Q^{-1}\right).
+\end{aligned}
+\tag{83.6}
+$$
+
+精确等值关系 $\ell_Q(G_Q(j))=\ell_Q(j)$ 及 $|\ell_Q'|\le CQ$ 因此给
+
+$$
+|\ln\chi_{Q,j}-\ln\chi_{Q,k}|
+\le C\left(\sqrt{d\omega_{Q,p,d}}+d^2/Q\right).
+\tag{83.7}
+$$
+
+取 $L$ 为 $-\ell_Q(j)/\ln2$ 的最近整数，即得正根代理均值界。
+原 Stirling 公式给 $\beta_{Q,L}=F(j/N)+O_K(\ln Q/Q^3)$，从而得到 (83.3)。
+这里对两根只选一次 $L$，其原 $q$、补偿和全部取整随该同一单元确定。
+
+还须将代理均值接回实际依赖行。第 72、74 章的实际标记行系数估计与全组尾界给
+
+$$
+\bar c_{Q,i}^{\mathcal E}(\beta)
+ =2^{L_0(\beta)}\chi_{Q,i}(1+o(1))+O(M^{-10}),
+\tag{83.8}
+$$
+
+误差在选定截断、紧参数区间及两个实验上统一。
+在本构造中代理均值位于 $\exp(\pm C Q^{1/3})$ 内，
+而 $M=\exp(\Theta_K(Q^3))$，所以加性尾误差也可相对化。
+这证明 (83.2)，没有以独立 Poisson 行替代实际路径。
+最后 $\omega<1$ 且 $d^2/Q\le\sqrt d$，给最坏相位界。证毕。
+
+上述证明直接积分精确曲率，没有丢弃自然 $O(Q)$ 指标窗口中的三阶项。
+该项在 $G_Q$ 中为 $O(Q^{-1})$，乘回 $|\ell_Q'|=O(Q)$ 后可留下常数误差；
+仅解一个未计余项的二次同余式不足以给指定均值比。
+

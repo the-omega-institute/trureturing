@@ -1,0 +1,11 @@
+**引理 6.2.1（保留实际条件尾的 Borel 比较）。** 给 $q\in\mathcal Q_\delta$ 和 $N\ge0$，令 $\nu_N$ 的前 $N$ 个条件行均匀，之后在每个实际历史上仍用 $q$ 的原行。对所有 Borel 集 $D$，
+$$
+(d\delta)^N\nu_N(D)\le\mu_q(D)\le(dr)^N\nu_N(D).
+$$
+**证明。** 对 $v\in A^N$，令 $D_v$ 是 $D$ 在柱 $[v]$ 的尾截面，$\kappa_v$ 是该历史后的实际条件尾律。两律在此使用相同的 $\kappa_v$，故
+$$
+\mu_q(D)=\sum_{|v|=N}\mu_q[v]\kappa_v(D_v),\qquad
+\nu_N(D)=\sum_{|v|=N}d^{-N}\kappa_v(D_v).
+$$
+将 $\delta^N\le\mu_q[v]\le r^N$ 代入即可；$N=0$ 是同一律。条件尾的 Borel 一致性来自所有尾柱乘积一致及概率测度唯一性。这里没有断言 $\mu_q$ 与无限均匀 iid 律互相绝对连续。证毕。
+

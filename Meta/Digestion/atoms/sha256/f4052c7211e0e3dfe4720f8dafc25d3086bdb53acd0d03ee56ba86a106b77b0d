@@ -1,0 +1,33 @@
+**定理 60.3（同边缘律而不同联合律）。** 两个奇偶分支有相同过程边缘律。
+任意 $`\theta\ne0`$ 的边缘分布均非 Gaussian；在零点只有 Gaussian 偏移。
+若 $`Y=W_\rho(1)`$，则
+
+```math
+\operatorname{Cov}(\mathcal R_\zeta^{\rm even}(\theta),Y^2-\gamma)
+ =\frac{4\pi g_0\sqrt\zeta}{\omega}
+        \operatorname{erf}\left(\frac{\omega\theta}{\zeta\sqrt\kappa}\right),
+\qquad
+\operatorname{Cov}(\mathcal R_\zeta^{\rm odd}(\theta),Y^2-\gamma)=0.
+```
+
+式 (60.16)。
+
+证明。两场同律且各自独立于同分布偏移，故边缘过程同律。
+核算子 $`T_{\zeta,\theta}`$ 的实特征值为 $`(\lambda_n)`$，
+二阶混沌的经典谱公式给出第四累积量 $`48\sum\lambda_n^4`$。
+当 $`\theta\ne0`$，核在对角附近非零，$`\rho>0`$，
+所以自伴 Hilbert–Schmidt 算子非零，至少一个特征值非零。
+独立 Gaussian 偏移不改变第四累积量，证明非 Gaussian 性。
+偶数支的协方差由二阶等距公式化为
+$`(4g_0\sqrt\zeta/\omega)\int e^{-\kappa d^2/4}\sin(\omega\theta d/\zeta)/d\,dd`$。
+该积分对频率求导为 $`2\sqrt{\pi/\kappa}e^{-a^2/\kappa}`$，
+在零频率取零，积分得 $`\pi\operatorname{erf}(a/\sqrt\kappa)`$。
+奇数支由独立性取零。这些是极限变量的矩恒等式，不声称实际矩收敛。
+
+对任一规定奇偶性，选同奇偶整数 $`m_M`$ 最近于
+$`\sqrt\zeta/(2\sqrt\delta)`$，误差至多一，便有
+$`(2m_M)^2\delta-\zeta=O(\sqrt\delta)`$。
+所以两分支都可由合法确定探测尺度实现。
+奇偶性不稳定时，新过程本身仍由两子列论证收敛到共同边缘律；
+若两种奇偶性均出现无穷次，(60.16) 表明不能宣称一个不分支的旧场联合极限。
+

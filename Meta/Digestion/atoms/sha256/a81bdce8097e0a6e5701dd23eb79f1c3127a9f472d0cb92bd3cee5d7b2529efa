@@ -1,0 +1,30 @@
+## ST2．带源和几何变分的精确 Schur 约化
+
+本节先在有限维实对称矩阵上完成全部证明。连续算子和规范场版本还须处理定义域、边界、量子测度及正规化。
+
+### 定理 ST2.1：保留任意线性观察接口的响应
+
+设
+
+$$
+D=\begin{pmatrix}A&B\\B^{\mathsf T}&C\end{pmatrix}>0,
+\qquad S=A-BC^{-1}B^{\mathsf T},
+$$
+
+以及完整源读数矩阵 $J=(J_V,J_H)$。定义
+
+$$
+J_{\mathrm{eff}}=J_V-J_HC^{-1}B^{\mathsf T}.
+$$
+
+则
+
+$$
+\boxed{
+JD^{-1}J^{\mathsf T}
+=J_{\mathrm{eff}}S^{-1}J_{\mathrm{eff}}^{\mathsf T}
++J_HC^{-1}J_H^{\mathsf T}.
+}
+\tag{ST2.1}
+$$
+

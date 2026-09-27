@@ -1,0 +1,22 @@
+**定理 61.1。** 当 $\varepsilon\downarrow0$，
+
+$$
+e_\varepsilon
+=\frac98\varepsilon-\frac9{16}\varepsilon^{3/2}
++o(\varepsilon^{3/2}).
+\tag{61.2}
+$$
+
+对任意最优参数的选择 $p_\varepsilon$，都有
+
+$$
+p_\varepsilon
+=\varepsilon-\frac34\varepsilon^{3/2}
++o(\varepsilon^{3/2}).
+\tag{61.3}
+$$
+
+式（61.3）还适用于任意原始最优因果修复的边缘参数 $p=\sigma_{11}$，因为单参数约化在保持该 $p$ 时不会增加误差。
+
+证明使用单参数约化、特征值公式和一致的有限维极值分析。
+

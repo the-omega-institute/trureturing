@@ -1,0 +1,69 @@
+**定理 64.1（截断计数的均值置信区间）。** 设真实等待律属于 $\mathcal P_{p,K}$。取整数 $\ell,m\ge1$，每次运行至首次点击或第 $m$ 轮，记录实际调用数
+
+$$
+Y_i=\min(\mathsf N_i,m),\qquad
+\widehat\mu_{m,\ell}=\frac1\ell\sum_{i=1}^{\ell}Y_i.
+$$
+
+对任意 $t>0$，以至少 $1-2e^{-t}$ 的概率有
+
+$$
+\boxed{
+|\widehat\mu_{m,\ell}-\mu|
+\le\frac K{m^\beta}
++\sqrt{\frac{2Km^{1-\beta}t}{\ell}}
++\frac{2mt}{3\ell}.
+}
+$$
+
+若 $t=\log(2/\alpha)$、$0<\alpha<1$、整数 $\ell\ge t$，并取
+
+$$
+x=\left(\frac{K\ell}{t}\right)^{1/p},\qquad
+m=\lceil x\rceil,
+$$
+
+则上述半径不超过
+
+$$
+\boxed{\frac{13}{3}K^{1/p}\left(\frac t\ell\right)^r.}
+$$
+
+所有实验的调用总数确定地不超过 $\ell m$；其期望则不超过 $\ell\mu\le\ell K^{1/p}$。
+
+证明。第 60.1 条给 $0\le\mu-\mathbb EY_i\le K/m^\beta$。逐点有
+
+$$
+Y_i^2\le\mathsf N_i^p m^{2-p},
+$$
+
+因为 $\mathsf N_i\le m$ 时可把 $\mathsf N_i^{2-p}$ 换成 $m^{2-p}$，反之可把 $m^p$ 换成 $\mathsf N_i^p$。故 $\operatorname{Var}Y_i\le Km^{1-\beta}$。又 $|Y_i-\mathbb EY_i|\le m$。有界变量的 Bernstein 不等式给
+
+$$
+\mathbb P\!\left(
+\left|\widehat\mu_{m,\ell}-\mathbb EY_i\right|
+>\sqrt{\frac{2Km^{1-\beta}t}{\ell}}+\frac{2mt}{3\ell}
+\right)\le2e^{-t}.
+$$
+
+所用常数也可直接由中心变量 $Z$ 的指数矩界核对：若 $|Z|\le m$、$\mathbb EZ=0$、$\mathbb EZ^2\le v$，则对 $0\le\lambda<3/m$，展开指数级数并用 $j!\ge2\cdot3^{j-2}$（$j\ge2$）得到
+
+$$
+\log\mathbb Ee^{\pm\lambda Z}
+\le\frac{\lambda^2v}{2(1-\lambda m/3)}.
+$$
+
+独立性、Chernoff 界及对两个符号取并集给以上 Bernstein 形式。加上截断偏差即得第一式。
+
+对参数选择，由 $K\ge1$、$\ell\ge t$ 得 $x\ge1$，所以 $x\le m\le2x$。三项分别至多
+
+$$
+K^{1/p}(t/\ell)^r,\qquad
+2^{1-\beta/2}K^{1/p}(t/\ell)^r,\qquad
+\frac43K^{1/p}(t/\ell)^r.
+$$
+
+因为 $2^{1-\beta/2}\le2$，三项之和不超过所列常数。调用总数为 $\sum_iY_i$，逐项用 $Y_i\le m$ 及 $Y_i\le\mathsf N_i$ 得两种成本界。$\square$
+
+这里给定的矩预算、调用计数可读性与来源重置都仍是前提。制备、计数器和物理秒数没有折算进调用成本；若需要确定的总运行预算，应使用 $\ell m$，不能把期望上界当作硬截止。
+

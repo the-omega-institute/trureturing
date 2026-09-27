@@ -1,0 +1,31 @@
+**定义 33.1（非格点阈值的精确平均容量）。** 沿用定义 27.1 的实验和固定参数，
+另设 $`\log(1+r)/\log(1-r)\notin\mathbb Q`$。取确定序列
+$`s_M\to s\in\mathbb R`$，令 $`u_M=\tau_M+s_M`$。
+在正确对齐的数据上定义
+
+```math
+A_M=\{i:W_i\gt u_M\},\quad N_M=|A_M|,\quad C_M=|A_M\cap S|,
+\quad m_M=\lfloor\mathbb E_S N_M\rfloor,\quad
+\overline H_M=1-\frac{\mathbb E_S C_M}{q}.
+```
+
+式 (33.1)。
+
+支持对称性使 $`m_M`$ 为不依赖支持位置的确定容量。
+令 $`T_M`$ 选取 $`m_M`$ 个最高补偿得分，同分处仍用独立优先级。
+任意容量的固定输出风险采用定义 31.1 的公式，记为
+$`H_{\mathcal E,m_M}^{\xi}`$。置
+
+```math
+\widehat G_M=-\frac{N_M-\mathbb E_S N_M}{\sqrt q},\qquad
+p_s=\frac{e^s}{1+e^s},\qquad \sigma^2=p_*(1-p_*).
+```
+
+式 (33.2)。
+
+沿用定义 32.1 的 $`I_M,D_M,\varepsilon_M,\Delta_M,\overline\Delta_M,\mathcal R_M`$，
+但以本章的 $`A_M,T_M`$ 代入。
+已知方向时，$`\pi_i`$ 是均匀固定基数先验在完整对齐数据与优先级下的精确后验概率。
+未知方向时，先作第 27 章的方向判决，再以所选方向计算各个量和正向模型后验权重；
+仍使用 (33.1) 的确定容量与正确对齐的确定均值。
+

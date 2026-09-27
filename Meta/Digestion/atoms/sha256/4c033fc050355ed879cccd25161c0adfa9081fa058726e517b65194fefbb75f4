@@ -1,0 +1,44 @@
+**定理173.3（真实二元入口的完整参考恢复公式）。** 有
+
+$$
+\boxed{
+e=\min_{\{\mathcal D_0,\mathcal D_1\}\ {\rm instrument}}
+\max_{q\in[0,1]}f_{\mathcal D}(q).
+}
+\tag{173.7}
+$$
+
+两个极值都取得，instrument 仍在整个 $K$ 上定义。
+
+**证明。** 对输入（173.4），实际输出在参考标签 $j$、输出标签 $k$ 上分块，块为 $q_j\sigma_{kj}$，其中 $q_0=q$、$q_1=1-q$。目标纯态只位于 $j=k$ 的匹配子空间。
+
+在匹配的 $00,11$ 两块上，目标减实际输出恰为
+$P_{u_q}-B_{\mathcal D}(q)$。两个不匹配块为
+$-q\sigma_{10}$ 与 $-(1-q)\sigma_{01}$，均半负定。
+
+秩一投影减半正定矩阵至多有一个正本征值。匹配块的迹为
+$1-q\operatorname{Tr}\sigma_{00}-(1-q)\operatorname{Tr}\sigma_{11}\ge0$，故其最大本征值非负。完整输出差的迹为零，因此其半迹范数恰为全部正本征值之和，即匹配块的最大本征值。结合引理173.1—173.2即得公式。矩阵谱连续，instrument Choi 集及 $[0,1]$ 均紧，故极值取得。证毕。
+
+还可无损交换这两个极值：
+
+$$
+\boxed{
+e=\max_{q\in[0,1]}
+\min_{\{\mathcal D_0,\mathcal D_1\}\ {\rm instrument}}
+f_{\mathcal D}(q).
+}
+\tag{173.8}
+$$
+
+这里的依据是精确的凸凹结构。固定 $q$，最大本征值是 instrument 的凸函数。固定 instrument，$f_{\mathcal D}$ 是 $q$ 的凹函数：若
+$q=\lambda q_1+(1-\lambda)q_2$，取带正交参考旗标的混合输入
+$\lambda P_{\phi_{q_1}}\otimes P_0^F+(1-\lambda)P_{\phi_{q_2}}\otimes P_1^F$。
+其输入边缘为 $\operatorname{diag}(q,1-q)$，因此是 $P_{\phi_q}$ 经参考侧通道所得。迹范数收缩和旗标分块给
+
+$$
+f_{\mathcal D}(q)
+\ge\lambda f_{\mathcal D}(q_1)+(1-\lambda)f_{\mathcal D}(q_2).
+$$
+
+连续性、紧凸定义域及凸凹性满足 Sion 的 minimax 定理（原文定理3.4）的条件，得到（173.8）和一份共同鞍点。[^phase_binary_instrument_sion] 这里把 $q$ 作为凹变量、instrument Choi 对作为凸变量；连续性比所需的半连续性更强。这个交换允许选择最坏测试权重；它没有允许为 $j=0,1$ 分别使用两套不相容的解码器。
+

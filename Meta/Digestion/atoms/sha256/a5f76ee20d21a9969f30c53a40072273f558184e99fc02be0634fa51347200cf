@@ -1,0 +1,18 @@
+**定义 219.1（顺序经验均值与时间一致半径）。** 令 $X_1,X_2,\ldots$ 为独立的 $[0,1]$ 有界样本，均值为 $\theta$。定义
+
+$$
+\widehat\theta_n=\frac1n\sum_{k=1}^nX_k.
+$$
+
+对 $0<\delta<1$，令
+
+$$
+\delta_n=\frac{6\delta}{\pi^2n^2},
+\qquad
+r_n(\delta)
+=
+\sqrt{\frac{\log\!\left(\pi^2n^2/(3\delta)\right)}{2n}}.
+$$
+
+这里使用 $\sum_{n\ge1}n^{-2}=\pi^2/6$，将总置信预算分配到所有可能的样本量。
+

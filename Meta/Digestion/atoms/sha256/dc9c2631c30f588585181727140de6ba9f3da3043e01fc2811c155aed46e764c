@@ -1,0 +1,32 @@
+**引理 231.1（Hermitian 泛函的完整范数）。** 对有限维 Hermitian 矩阵 $M$，令 $f_M(X)=\operatorname{Tr}(MX)$。则
+$$
+\boxed{\|f_M\|_\diamond=\|M\|_{\rm op}.}
+\tag{231.TR.8}
+$$
+若 $\tau$ 是任意固定密度矩阵，则 $X\mapsto f_M(X)\tau$ 具有相同的 diamond 范数。
+
+**证明。** 对任意有限维参考空间 $E$ 及任意矩阵 $X$，
+$$
+(f_M\otimes\operatorname{id}_E)(X)
+=\operatorname{Tr}_A[(M\otimes I_E)X].
+$$
+迹范数的对偶公式给
+$$
+\begin{aligned}
+\|\operatorname{Tr}_A[(M\otimes I_E)X]\|_1
+&=\sup_{\|Y\|_{\rm op}\le1}
+\left|\operatorname{Tr}[(M\otimes Y^\dagger)X]\right|\\
+&\le\|M\|_{\rm op}\|X\|_1.
+\end{aligned}
+\tag{231.TR.9}
+$$
+这对任意参考维数及任意 $X$ 成立，给完整范数上界。取 $M$ 的一个最大绝对本征值所对应的单位本征向量 $v$，无参考输入 $P_v$ 满足
+$$
+|f_M(P_v)|=\|M\|_{\rm op},
+$$
+给匹配下界。固定态输出只将放大后的结果变为 $\tau\otimes(f_M\otimes\operatorname{id})(X)$，而
+$$
+\|\tau\otimes Z\|_1=\|\tau\|_1\|Z\|_1=\|Z\|_1.
+$$
+所以范数不变。$\square$
+

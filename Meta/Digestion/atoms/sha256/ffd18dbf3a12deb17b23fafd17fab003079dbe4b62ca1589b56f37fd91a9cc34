@@ -1,0 +1,10 @@
+**引理159.3（标签可读与隐藏的误差隙）。** 有
+
+$$
+\boxed{
+\mathfrak e(|+\rangle)=\frac34,\qquad
+\mathfrak e(|0\rangle)\ge\frac34+\frac{\lambda_*}{4}.
+}
+\tag{159.19}
+$$
+

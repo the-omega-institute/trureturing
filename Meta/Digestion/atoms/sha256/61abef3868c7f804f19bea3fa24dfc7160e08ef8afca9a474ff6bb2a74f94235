@@ -1,0 +1,15 @@
+### 147.4 同一固定接收器的全时域结论
+
+沿用第11节的完整参考误差合同。对装置 $\mathfrak C$ 及其终端解码器，记
+
+$$
+\mathcal E_\infty(\mathfrak C)
+=\sup_{n\ge1}\sup_{J,\omega}
+D\!\left(
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n(\omega),
+\Omega_n(\omega)
+\right),\qquad
+D(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{147.15}
+$$
+

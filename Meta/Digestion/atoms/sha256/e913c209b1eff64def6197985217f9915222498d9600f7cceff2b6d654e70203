@@ -1,0 +1,30 @@
+**构造。** 无空隙时取
+\[
+\mu_c=w_c\delta_1+(1-w_c)\delta_t,\qquad\nu_c=\delta_b.
+\tag{19.4}
+\]
+有空隙时取
+\[
+\mu_h=w_h\delta_1+u_l\delta_l+u_r\delta_r,\qquad\nu_h=\delta_b,
+\]
+\[
+u_l=\frac{c(t)(r-t)}{(1-l)(r-l)},\qquad
+u_r=\frac{c(t)(t-l)}{(1-r)(r-l)}.
+\tag{19.5}
+\]
+这里式 (19.5) 的 $u_l,u_r$ 为残余概率质量。所有分母为正，$u_l,u_r\geq0$，而
+\[
+w_c=\frac{(b-t)(1+b+t)}{(1-t)(2+t)}\geq0,\qquad
+1-w_c=\frac{(1-b)(2+b)}{(1-t)(2+t)}>0.
+\]
+式 (19.2) 给 $w_h\geq0$。直接代入得到
+\[
+w_h+u_l+u_r=1,
+\]
+\[
+\int x\,d(\mu_c-\nu_c)=\int x\,d(\mu_h-\nu_h)=-\varepsilon(t),\qquad
+\int x^2\,d(\mu_c-\nu_c)=\int x^2\,d(\mu_h-\nu_h)=\varepsilon(t).
+\tag{19.6}
+\]
+因此两组都是实际可行概率对。
+

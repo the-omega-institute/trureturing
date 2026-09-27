@@ -1,0 +1,27 @@
+**定义 65.1（未锚定残差和统一失谐幅度）。** 保留原实际实验、固定幅度与 beta、完整固定总量后验、精确中心及定义 54.1 的有限截距。对确定性 $\eta_M\to\infty$，令
+
+$$
+r_M=\eta_M^2\delta_M,\quad s_M=\log(\eta_M/\delta_M),\quad
+s_M\sqrt{\delta_M}\le U/2,\quad
+z_M(\theta)=s_M+\theta/\eta_M^3.
+\tag{65.1}
+$$
+
+记 $\omega=\pi/2$，唯一选取
+$d_M\in(-\pi/2,\pi/2]$ 与整数 $m_M$ 使
+$\omega\eta_M=\pi m_M+d_M$。本章使用未在零点锚定的过程
+
+$$
+\begin{aligned}
+\mathcal V_M(\theta)
+&=\eta_M^{3/2}e^{z_M(\theta)/2}
+\left[\mathcal Z_M(z_M(\theta)\sqrt\delta)-J_M
+-2z_M(\theta)\sqrt\delta\,T_M\right],\\
+\mathcal D_M(\theta)&=\mathcal V_M(\theta)-\mathcal V_M(0),\qquad
+\mathcal A_M^2=\frac{\eta_M^2d_M^2}{\delta_M+|d_M|}.
+\end{aligned}
+\tag{65.2}
+$$
+
+所有时间与旧坐标均使用同一个后验标签向量。$r_M$ 表示网格尺度比，不表示原模型的固定信号幅度。
+

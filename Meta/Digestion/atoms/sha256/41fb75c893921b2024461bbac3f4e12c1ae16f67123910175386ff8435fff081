@@ -1,0 +1,58 @@
+**证明。** 这些条件给出以下实际接口：
+
+$$
+V_1L=R\otimes C,\qquad V_1T=Q\otimes B,
+$$
+
+$$
+\begin{array}{c|c|c}
+\text{实际域}&V_0\text{ 像}&\text{同轮分解}\\ \hline
+H_2&L\otimes B&\operatorname{span}(a^2u+bv,w)\\
+H_3&T\otimes C&H_3\subset L\oplus Q\\
+H_4&T\otimes B&H_4\subset T\oplus R\\
+H_5&G_6\otimes B&H_5\subset T\oplus Q
+\end{array}
+\tag{86.4}
+$$
+
+这正是第78节（78.5）、（78.6）、（78.8）在矩阵计算开始时使用的全部空间与环境关系。以下说明它们如何接到该节的矩阵矛盾，避免将定理78.1对三条不同尾射线的初始假设直接扩大。
+
+取环境相位使 $r=\langle C,B\rangle\in(0,1)$，按第78节78.2的固定来源与输入位换基令 $a,b>0$。用同一实际来源的归一化列定义该节（78.10）的六个正对角系数矩阵 $\mathsf A,\mathsf B,\mathsf C,\mathsf D,\mathsf E,\mathsf F$。这里矩阵 $\mathsf C$ 与环境向量 $C$ 不同。取实际 $G_3,G_4,Q_5,Q_4$ 的列等距 $L_0,T_0,Q_0,R_0$，写
+
+$$
+J=R_0^*Q_0,\qquad L_0^*T_0=rJ,
+$$
+
+并以任意酉 $U,W$ 表示实际 $G_5,G_2$ 相对于 $T_0$ 的基旋转。来源递推与（86.4）逐项给出（78.13）的三个列式；固定 $V_0$ 保持内积，以及 $H_3$ 去掉在 $H_4$ 上的投影后与 $H_5$ 正交，又给
+
+$$
+r\mathsf A J\mathsf C+\mathsf B W^*J^*\mathsf D=rU,
+$$
+
+$$
+r\mathsf A J U\mathsf E+\mathsf B W^*\mathsf F
+=rU(\mathsf C U\mathsf E+\mathsf D J\mathsf F).
+\tag{86.5}
+$$
+
+同一个实际早期向量 $w$ 则给
+
+$$
+e_2^*W^*\mathsf C=r e_2^*JU,\qquad
+ e_2^*W^*J^*\mathsf A=r e_2^*J,
+\tag{86.6}
+$$
+
+其中 $e_2=(0,1)^T$。这就是（78.14）—（78.16），没有使用第2轮环境与 $C$ 不同。
+
+第78节78.3—78.5已在全部任意复酉 $U,W$ 下证明上述方程不相容：令 $\xi=J^*e_2$、$z=We_2$、$M=\mathsf C-U^*\mathsf A J$，得到非零秩一的 $M$、$Mz=0$，以及
+
+$$
+\mathsf D(I-JJ^*)\mathsf D
+=-M U\mathsf C^{-1}M^*U^*\mathsf C\succeq0.
+$$
+
+该节分别排除 $\xi_1=0$、$\xi_2=0$；两坐标均非零时，实际向量方程将 $U$ 化为正对角元的实旋转 $U_0$，使右侧正半定性迫 $\mathsf C U_0$ 具有严格负实特征值，而其行列式和迹均严格为正。矛盾。因此本引理的实际接口不能同时成立。证明完毕。
+
+该推论复用的是已经展开的矩阵矛盾及其精确接口，不要求重新假定三条不同尾射线，也没有给 $G_6$ 添加下一轮操作。
+

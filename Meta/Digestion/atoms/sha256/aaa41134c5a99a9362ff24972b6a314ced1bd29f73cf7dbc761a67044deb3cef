@@ -1,0 +1,12 @@
+**定理168.2（局部恢复误差的精确值）。**
+
+$$
+\boxed{
+\varepsilon_{\mathrm{loc}}
+=\frac{1-\kappa}{2}
+=\ell
+=\lambda_{\min}(\rho_*).
+}
+\tag{168.14}
+$$
+

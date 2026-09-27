@@ -1,0 +1,44 @@
+**证明。** 跨位像正交及 $P\otimes B\subset V_0K$ 给
+
+$$
+R,S\subset P^\perp.
+\tag{87.7}
+$$
+
+反设 $L\ne T$，置
+
+$$
+D=L+T,\qquad N=R+S.
+$$
+
+由（87.5），$V_1D=N\otimes B$，所以 $\dim D=\dim N$。两个不同二维平面的和至少三维，而 $N\subset P^\perp$ 至多三维。因此
+
+$$
+\dim D=\dim N=3,\qquad N=P^\perp.
+\tag{87.8}
+$$
+
+如果 $\langle A,B\rangle\ne0$，则 $V_0H_1=L\otimes A$ 与 $V_1D=N\otimes B$ 正交，迫 $L\perp N$，即 $L\subset P$。但是
+
+$$
+V_1P=(S\otimes B)\dotplus(Q\otimes A).
+$$
+
+其中 $A,B$ 线性独立，而 $V_1L=R\otimes B$。逐环境坐标比较给 $R\subset S$；二者均二维，故 $R=S$，再由固定 $V_1$ 单射性得到 $L=T$，矛盾。
+
+剩下只能 $A\perp B$。此时 $V_1U=Q\otimes A$ 与 $V_1D=N\otimes B$ 正交，固定等距性使 $U\perp D$，特别地 $U\perp T$。同样，由（87.5）的零位像得到
+
+$$
+H_1\perp H_3.
+$$
+
+对于任意 $h\in H_1$、$h'\in H_3$，按（87.6）分别写成 $h=u+s$、$h'=t+r$。由 $U\perp T$ 及（87.7），所有混合内积都消失，只剩
+
+$$
+0=\langle h,h'\rangle=\langle s,r\rangle.
+$$
+
+（87.6）的两个满投影使 $s,r$ 可以分别遍历 $S,R$，所以 $S\perp R$。这要求四维正交和 $S\oplus R$ 包含在三维 $N$ 中，矛盾。
+
+故 $L=T$。将它代入（87.5），同一个 $V_1$ 的像给 $R=S$。证明完毕。
+

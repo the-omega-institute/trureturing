@@ -1,0 +1,27 @@
+**同一个全域酉。** 每轮取新环境 $`E=\mathbb C^2`$。定义
+$`V:K\otimes\mathcal B\to K\otimes E`$ 如下，表中后一位为输入位或输出环境：
+
+$$
+\begin{aligned}
+V(w\otimes0)&=t\otimes0,
+&V(t\otimes0)&=u\otimes1,\\
+V(w\otimes1)&=q\otimes0,
+&V(t\otimes1)&=v\otimes1,\\
+V(z\otimes0)&=s\otimes0,
+&V(q\otimes0)&=w\otimes1,\\
+V(u\otimes1)&=r\otimes0,
+&V(f\otimes0)&=t\otimes1,\\
+V(g\otimes1)&=w\otimes0,
+&V(s\otimes1)&=e\otimes1.
+\end{aligned}
+\tag{23.23}
+$$
+
+输入位零时的五个接收向量为 $`w,z,t,q,f`$，是正交单位基；输入位一时为 $`w,u,g,t,s`$，也是正交单位基。输出环境零时的接收向量为
+$`t,q,s,r,w`$，环境一时为 $`u,v,w,t,e`$，两组仍分别为正交单位基。因此（23.23）将一个十维正交单位基映到另一个，确定全域酉。运行中固定使用
+
+$$
+\mathcal C(X)=\operatorname{Tr}_E(VXV^\dagger).
+\tag{23.24}
+$$
+

@@ -1,0 +1,70 @@
+### 99.1 正则假设与实际子空间
+
+反设 $D$ 不恒为零。第95节定理95.3给一对正交射线 $[A],[B]$，使五位尾部 $[\eta_2],\ldots,[\eta_6]$ 全部属于这对，且两条都出现。交换命名后设 $[\eta_2]=[A]$。以下也以 $A,B$ 表示单位代表；射线相位吸收到接收因子，不改变所用子空间。
+
+定义完整接收纤维
+
+$$
+\mathcal G_i([z])
+=\{y\in K:y\otimes z\in\operatorname{ran}V_i\},
+\qquad g_i([z])=\dim\mathcal G_i([z]),
+$$
+
+以及
+
+$$
+P_A=\mathcal G_0([A]),\quad P_B=\mathcal G_0([B]),
+\qquad \alpha=\dim P_A,\quad\beta=\dim P_B.
+$$
+
+第90节的正交纤维配对、正则零点预算及第95节引理95.1给
+
+$$
+\alpha,\beta\ge2,\qquad
+\alpha+\beta\le7,\qquad
+g_1([A])=\beta,\quad g_1([B])=\alpha,\qquad
+P_A\cap P_B=0.
+\tag{99.2}
+$$
+
+更一般地，任意两条不同环境射线的零位接收纤维交零。这里的 $\alpha,\beta$ 是全域纤维维数，与来源振幅 $a,b$ 不同。
+
+实际早期向量可取为
+
+$$
+\begin{aligned}
+V_0k&=p\otimes\eta_1,&V_1k&=q\otimes\eta_1,\\
+V_0p&=u\otimes A,&V_1p&=v\otimes A,&V_0q&=w\otimes A,
+\end{aligned}
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{99.3}
+$$
+
+$p,q$ 正交归一，$u,v,w$ 正交归一，故 $w$ 是 $H_2\cap G_2$ 中的非零向量。对实际轮次 $3\le n\le6$，有
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+\tag{99.4}
+$$
+
+$$
+\dim H_n=\dim G_n=\dim Q_n=2,\qquad
+H_n\subset G_n\oplus Q_n,\quad G_n\perp Q_n,
+\tag{99.5}
+$$
+
+且 $H_n$ 向 $G_n,Q_n$ 的两个正交投影都是同构。因此
+
+$$
+H_n\cap G_n=0\qquad(3\le n\le6).
+\tag{99.6}
+$$
+
+所有 $2\le i\le6$ 还满足 $G_i\subset\mathcal G_0([\eta_i])$。下面始终使用同一个 $V_0,V_1$；没有为第六轮补加一位后继。
+

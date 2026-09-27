@@ -1,0 +1,23 @@
+## ST13．能谱闭合不能替代连续实验闭合
+
+### 定理 ST13.1：仪器压缩的精确漏出算子
+
+取有限 Kraus 仪器 $\{K_{a\ell}\}$，满足
+
+$$
+\sum_{a,\ell}K_{a\ell}^\dagger K_{a\ell}=I_{\mathcal H}.
+$$
+
+令 $k_{a\ell}=U^\dagger K_{a\ell}U$。则
+
+$$
+\boxed{
+\sum_{a,\ell}k_{a\ell}^\dagger k_{a\ell}=I_V-\Lambda,
+\quad
+\Lambda=\sum_{a,\ell}U^\dagger K_{a\ell}^\dagger(I-\Pi)K_{a\ell}U\ge0.
+}
+\tag{ST13.1}
+$$
+
+以下条件等价：$\Lambda=0$；全部 $K_{a\ell}\operatorname{Ran}U\subseteq\operatorname{Ran}U$；压缩 Kraus 家族组成归一仪器。
+

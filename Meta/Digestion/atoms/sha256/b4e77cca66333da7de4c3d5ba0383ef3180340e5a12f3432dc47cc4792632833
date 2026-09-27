@@ -1,0 +1,11 @@
+### 262.2 只有一个极值方向的非正规矩阵族
+
+固定
+$$
+0<a<1,
+\qquad
+Z_a=\begin{pmatrix}1&a\\-a&1-2a^2\end{pmatrix}
+\quad\text{作用于 }S=\mathbb C^2.
+\tag{262.7}
+$$
+

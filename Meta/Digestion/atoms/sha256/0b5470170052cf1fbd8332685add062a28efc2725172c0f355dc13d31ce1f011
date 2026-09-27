@@ -1,0 +1,69 @@
+**引理198.2（冻结操作的统一导数展开）。** 上述邻域可固定选择，使全部
+$h\in I$、$\Gamma\in\mathcal K$ 且 $A_j$ 位于该邻域时，
+
+$$
+e_\epsilon(h,\Gamma)
+=\lambda+\epsilon[\mathcal N(\Gamma)+h\mathcal P(\Gamma)]
++O_{C^1(h)}(\epsilon^2).
+\tag{198.4}
+$$
+
+记号表示余项及其关于 $h$ 的一阶导数均不超过
+$C_I\epsilon^2$，常数与 instrument 无关。特别地，
+
+$$
+\partial_he_\epsilon(h,\Gamma)
+=\epsilon\mathcal P(\Gamma)+O(\epsilon^2),
+\tag{198.5}
+$$
+
+主系数与 $h$ 无关。
+
+**证明。** 第189节的完整参考约化将误差写成匹配偶块的最高根对参考权重的最大值；奇块半负定。在 $\epsilon=0$，该偶块的非零部分为
+
+$$
+P_{u_v}-\operatorname{diag}(vA_0,(1-v)A_1),
+\qquad u_v=(\sqrt v,\sqrt{1-v})^{\mathsf T},
+$$
+
+其最大最高根严格为 $\lambda$，唯一最大权重为
+$v=q=A_1/s_A$。在 $A_0=A_1=1/2$ 时，谱函数为
+$1/4+\sqrt{1/16+3v(1-v)/4}$，在 $v=1/2$ 的二阶导数为 $-3/2$。
+故对固定小邻域中的 $A_j$，最高根间隙、最大点附近的严格负曲率以及固定邻域以外的值差均可统一保持。
+
+置 $\tau=\sqrt\epsilon$、$\ell=h\tau^2$。
+第189节偶块关于 $\tau,h$ 和 Choi 条目解析；
+$h$ 位于一个远离零的紧区间。变换 $\tau\mapsto-\tau$ 只改变两个非对角大块的符号，是块对角酉共轭。因此简单最高根关于 $\tau$ 为偶函数。谱间隙及紧性给出其关于
+$\epsilon=\tau^2$ 的一致解析展开，且余项的 $h$ 导数也一致有界。
+
+最大参考权重由严格负曲率和隐函数定理唯一延拓，
+$v_\epsilon=q+O(\epsilon)$；固定邻域以外的值差保证它仍是全部参考上的最大点。
+把该临界点代回，得到（198.4）的统一 $C^1(h)$ 余项。
+
+还需核对主系数。在基点最大权重 $q$，最高单位向量为
+$u_q$，顶块最高根为 $\lambda$。
+噪声直接给
+$-q^2L_0-(1-q)^2L_1$。
+来源顶块的因子 $1-h\epsilon$ 给 $-h\lambda$。
+平方根来源耦合的系数矩阵为
+
+$$
+\mathsf C=P_{u_q}
+-\operatorname{diag}(qM_0,(1-q)M_1).
+$$
+
+作用于最高向量后，
+
+$$
+\mathsf C^\dagger u_q
+=
+\begin{pmatrix}
+\sqrt q(1-q\overline M_0)\\
+\sqrt{1-q}(1-(1-q)\overline M_1)
+\end{pmatrix}.
+$$
+
+耦合到的下方子空间在基点本征值为零，所以它贡献
+$h\|\mathsf C^\dagger u_q\|^2/\lambda$。
+这严格给出（198.3）；参考最大点的移动不影响一阶系数，因为基点的一阶参考导数为零。证毕。
+

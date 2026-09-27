@@ -1,0 +1,24 @@
+## 86. ABABB 尾词归约到公共向量矩阵禁阻
+
+固定同一非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1,
+$$
+
+独立纯接收初态 $k$、七维持久接收空间 $K$、每轮共用的全域 CPTP 通道及前六个完整参考—活动记忆—档案纯终端合同。全部持久资源计入 $K$，活动来源与参考不可访问。固定 Stinespring 位块 $V_0,V_1$ 均为等距且像正交。设
+
+$$
+F=\operatorname{span}\{\eta_2,\ldots,\eta_6\},\qquad
+\dim F=2,\qquad \eta_1\notin F,
+$$
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])=(A,B,A,B,B),
+\qquad A\ne B.
+\tag{86.1}
+$$
+
+也用 $A,B$ 表示单位环境代表；同射线各轮的共同相位可同步吸收。首环境外置不被预设为与尾环境正交。
+

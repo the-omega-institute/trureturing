@@ -1,0 +1,57 @@
+**引理157.5（共同相位群的字符刻画）。** 有
+
+$$
+\boxed{
+G=\{z\in\mathbb T^s:\chi_k(z)=1\text{ 对全部 }k\in\Lambda\}.
+}
+\tag{157.15}
+$$
+
+**证明。** 若 $k\in\Lambda$，则 $\chi_k(g^n)=1$ 对全部非负整数 $n$ 成立；由连续性，该字符在 $G$ 上恒为一。得到正向包含。
+
+为证反向，固定一个满足右侧全部字符条件的 $z\in\mathbb T^s$。使用环面上的平移不变弦距离
+$d(u,v)=\max_j|u_j-v_j|$，令
+
+$$
+f(w)=\operatorname{dist}(w,G).
+$$
+
+由于 $G$ 为闭群，$f$ 连续、$f(1)=0$，且
+$f(wg')=f(w)$ 对全部 $g'\in G$ 成立。
+
+三角多项式的一致稠密性是 Stone–Weierstrass 定理的标准特例。给定任意 $\epsilon>0$，取有限三角多项式
+
+$$
+P(w)=\sum_{k\in F}c_k\chi_k(w),\qquad F\subset\mathbb Z^s\text{ 有限},
+$$
+
+使 $\|P-f\|_\infty<\epsilon$。沿实际共同相位作 Cesàro 平均：
+
+$$
+P_N(w)=\frac1N\sum_{n=0}^{N-1}P(wg^n).
+$$
+
+因 $f(wg^n)=f(w)$，仍有 $\|P_N-f\|_\infty<\epsilon$。逐项计算有限几何和，
+
+$$
+\frac1N\sum_{n=0}^{N-1}\chi_k(g)^n
+\longrightarrow
+\begin{cases}
+1,&k\in\Lambda,\\
+0,&k\notin\Lambda.
+\end{cases}
+$$
+
+因此 $P_N$ 一致收敛到
+
+$$
+\overline P(w)=\sum_{k\in F\cap\Lambda}c_k\chi_k(w),
+\qquad
+\|\overline P-f\|_\infty\le\epsilon.
+$$
+
+由 $z$ 的字符条件，$\overline P(z)=\overline P(1)$，故
+$|f(z)-f(1)|\le2\epsilon$。令 $\epsilon\downarrow0$，得到 $f(z)=0$，即 $z\in G$。证毕。
+
+这是紧环面闭子群字符分离的成熟结论的短证明。它保留实际共同轮次产生的全部整数关系，没有从近似相位值猜测稠密性。
+

@@ -1,0 +1,48 @@
+**证明。** 沿用（169.14）的谱概率，对 $\log$ 使用 Jensen 不等式：
+
+$$
+D(a\|b)
+\le\log\left(\sum_{i,l}w_{il}\frac{a_i}{b_l}\right)
+=\log\operatorname{Tr}(a^2b^{-1}).
+\tag{169.18}
+$$
+
+由 $\log x\le x-1$、迹的循环性及 $\operatorname{Tr}a=\operatorname{Tr}b=1$，
+
+$$
+\begin{aligned}
+D(a\|b)
+&\le\operatorname{Tr}(a^2b^{-1})-1\\
+&=\operatorname{Tr}\bigl((a-b)^2b^{-1}\bigr)\\
+&\le\lambda_{\min}(b)^{-1}\|a-b\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{169.19}
+$$
+
+这里没有假设 $a$ 与 $b$ 对易。最后一步使用
+$b^{-1}\preceq\lambda_{\min}(b)^{-1}I$ 及 $(a-b)^2\succeq0$。
+
+为比较 Hilbert–Schmidt 距离与保真度，令 $X=a-b$，写成正负谱部分
+$X=X_+-X_-$。因为 $\operatorname{Tr}X=0$，
+
+$$
+\operatorname{Tr}X_+=\operatorname{Tr}X_-
+=\frac12\|a-b\|_1=:t.
+$$
+
+所以
+
+$$
+\|a-b\|_{\mathrm{HS}}^2
+=\operatorname{Tr}X_+^2+\operatorname{Tr}X_-^2
+\le2t^2
+\le2(1-F(a,b)).
+\tag{169.20}
+$$
+
+末项可由纯化直接得到：选择达到 Uhlmann 重叠的两份纯化，两纯态的半迹距离等于
+$\sqrt{1-F(a,b)}$，取边缘的迹距离收缩给
+$t\le\sqrt{1-F(a,b)}$。逐支应用（169.19）—（169.20）并加权，即得（169.16）；再用（169.6）得到（169.17）。证毕。
+
+每个固定有限维实例都有正的支撑谱常数 $\lambda$。若研究一族实例的统一界，必须另给统一下界 $\lambda\ge\lambda_0>0$；不能把逐实例的正性换成同一个常数。
+

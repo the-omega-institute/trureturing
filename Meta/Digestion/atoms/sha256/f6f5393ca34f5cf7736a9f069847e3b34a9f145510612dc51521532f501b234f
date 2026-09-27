@@ -1,0 +1,41 @@
+### 190.1 圆盘变量与一阶极限
+
+沿用第188—189节的模型，固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，写
+
+$$
+\delta=R-1,\qquad g=|\gamma|,\qquad
+\ell=h\epsilon,\quad\kappa=1-2h\epsilon,
+\quad w_0=\epsilon,\quad w_1=R\epsilon.
+$$
+
+令 $D=\{(x,y):x,y\ge0,\ x^2+y^2\le1\}$。将第188节的变量改写为
+$x=2|n|$、$y=2m$，并使 $n$ 与 $\gamma$ 同号。第189节的一阶极限是
+
+$$
+\mathcal C(h)
+=\min_{(x,y)\in D}\left[A(x,y)+hM(y)\right],
+\tag{190.1}
+$$
+
+其中
+
+$$
+A(x,y)
+=-\frac{\beta\delta}{8}
++\frac{\beta\delta}{8}x^2-\frac{g\delta}{4}x
++\frac{\beta R}{4}y^2,
+\qquad
+M(y)=\frac{(1-y)(7-y)}{12}.
+\tag{190.2}
+$$
+
+准确地，对每个固定 $h\ge0$，
+
+$$
+h_{1-2h\epsilon}(\epsilon,R)
+=\frac34+\mathcal C(h)\epsilon+o(\epsilon).
+\tag{190.3}
+$$
+
+$M$ 在 $0\le y\le1$ 非负，只在 $y=1$ 为零。它来自完整参考最高本征值中的来源项，包含目标与正确块之间的平方根相干修正；不能只由输入识别成功率代替。
+

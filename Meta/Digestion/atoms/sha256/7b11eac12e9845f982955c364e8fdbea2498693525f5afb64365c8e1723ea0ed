@@ -1,0 +1,11 @@
+**命题 8.2（顺序概率的双表示）。** 对符合策略的有限词 $w=(a_1,y_1)\cdots(a_n,y_n)$，记沿该词选择的分支为 $\Phi_i$，则
+
+$$
+p(w)=\operatorname{Tr}[\Phi_n\circ\cdots\circ\Phi_1(\rho_0)]
+=\operatorname{Tr}(\rho_0F_w),
+\qquad
+F_w=\Phi_1^*\circ\cdots\circ\Phi_n^*(I).
+$$
+
+证明。正概率前缀的条件概率相乘时，归一化因子逐项抵消。若某前缀概率为零，其未归一化正算子迹为零，故该算子为零，后续分支也为零。最后反复使用迹对偶恒等式 $\operatorname{Tr}[F\Phi(X)]=\operatorname{Tr}[\Phi^*(F)X]$。这个论证只要求沿已指定词的实际分支，不把不同历史下的设置当作同一固定操作。$\square$
+

@@ -1,0 +1,13 @@
+**Proof.** Equality forces
+
+$$
+w_j
+=\sum_{n>j}(\mathbf1_{S'}(n)-\mathbf1_S(n))w_n
+\le\sum_{n>j}w_n
+=t_j\le w_j.
+$$
+
+All inequalities must be equalities. Equality $t_j=w_j$ is equivalent to the first condition by C卷第2.9.3节. Equality in the termwise tail bound requires every tail difference to equal one, yielding the last two conditions. Conversely, these three conditions give cancellation of $w_j$ by the full binary tail. $\square$
+
+Hence a value with more than one support expansion has exactly the familiar terminating-versus-full-tail ambiguity after a finite common prefix. Every participating support is finite or cofinite. In mixed radices the ambiguous real need not be a dyadic rational in the ordinary binary coordinate.
+

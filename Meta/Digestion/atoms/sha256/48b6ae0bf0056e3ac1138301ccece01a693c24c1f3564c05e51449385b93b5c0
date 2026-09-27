@@ -1,0 +1,39 @@
+**证明。** 反设 $v\notin Q$。令
+
+$$
+N=Q+\mathbb Cv,\qquad W=U+\mathbb Cv.
+$$
+
+由（81.8），$N$ 三维且正交于四维 $P$，所以
+
+$$
+K=P\oplus N.
+\tag{81.10}
+$$
+
+$W$ 也三维。由 $p\in H_1=H_2\subset U+\mathbb Cv$，写 $p=e+c v$，其中 $e\in U$。若 $c=0$，则 $p\in U$，实际 $V_1p=v\otimes A$ 将属于 $V_1U=Q\otimes A$，迫 $v\in Q$，矛盾。因此 $c\ne0$。这使 $W=U+\mathbb Cp$，于是同一个固定一位映射给
+
+$$
+V_1W=(Q+\mathbb Cv)\otimes A=N\otimes A.
+\tag{81.11}
+$$
+
+若 $\langle\eta_1,A\rangle\ne0$，实际 $V_0k=p\otimes\eta_1$ 与（81.11）的跨位正交会迫 $p\perp N$。由（81.10），$p\in P$；又 $p\in U+\mathbb Cv$、$v\perp P$，所以 $p\in U$，再次迫 $v\in Q$，矛盾。故此反设只能满足
+
+$$
+\eta_1\perp A.
+\tag{81.12}
+$$
+
+现在实际 $V_1k=q\otimes\eta_1$ 与 $V_1W=N\otimes A$ 正交，固定等距性给 $k\perp W$，特别 $k\perp U$、$k\perp v$。实际 $V_0k=p\otimes\eta_1$ 与 $V_0H_3=L\otimes A$ 也正交，故 $k\perp H_3$。结合（81.9）的 $H_3\subset U\oplus Q$ 和 $P_QH_3=Q$，由 $k\perp U$、$k\perp H_3$ 推出 $k\perp Q$。因此 $k\perp N$，由（81.10）得到 $k\in P$。
+
+然而（81.6）使
+
+$$
+V_1P=(Q\otimes A)+(R\otimes B)\subset K\otimes F.
+$$
+
+$k\in P$ 将使真实首轮像 $V_1k=q\otimes\eta_1$ 属于 $K\otimes F$，与 $q\ne0$、$\eta_1\notin F$ 矛盾。反设不成立，故 $v\in Q$。证明完毕。
+
+这个证明覆盖首环境与 $A$ 内积为零及非零的全部情形，没有把首环境的外置性替换为与整个尾环境正交。
+

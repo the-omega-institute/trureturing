@@ -1,0 +1,38 @@
+**定理 223.2（失配半径的三角扩张）。** 在上述合同下，以抽样数据概率至少 $1-\delta$，
+
+$$
+\boxed{
+|\widehat\theta_j-\theta_j|
+\le
+r_j+\kappa_j
+\quad\text{对所有 }j.
+}
+\tag{223.1}
+$$
+
+因此真实参数的可审计区间是
+
+$$
+I_j^{\mathrm{true}}
+=
+\left[
+\max\{0,\widehat\theta_j-r_j-\kappa_j\},
+\min\{1,\widehat\theta_j+r_j+\kappa_j\}
+\right].
+$$
+
+### 证明
+
+在抽样置信事件上，三角不等式给出
+
+$$
+|\widehat\theta_j-\theta_j|
+\le
+|\widehat\theta_j-\bar\theta_j|
++
+|\bar\theta_j-\theta_j|
+\le r_j+\kappa_j.
+$$
+
+对所有坐标同时成立的概率沿用原抽样合同，截断到 $[0,1]$ 不排除真实参数。证毕。
+

@@ -1,0 +1,26 @@
+### 87.4 正交射线下的公共一位平面矛盾
+
+设 $\rho=0$。固定 $V_1$ 的两个环境像给 $L\perp U$，固定 $V_0$ 的两个像 $L\otimes A,U\otimes B$ 给 $H_1\perp H_3$。
+
+由（87.9），对于任意 $h\in H_1,h'\in H_3$，可以分别写
+
+$$
+h=u+r,\qquad h'=l+r',
+\qquad u\in U,\quad l\in L,\quad r,r'\in R.
+$$
+
+$L\perp U$ 及 $R\perp(L+U)$ 使
+
+$$
+0=\langle h,h'\rangle=\langle r,r'\rangle.
+$$
+
+两个满投影 $P_RH_1=P_RH_3=R$ 表明 $r,r'$ 可以独立遍历同一个二维 $R$。于是 $R\perp R$，与 $\dim R=2$ 矛盾。两个环境内积分支均已排除，定理87.1证明完毕。
+
+本节只使用前六轮已经执行的关系、首环境外置以及同一非退化来源的实际早期公共向量和满投影合同。一般接收容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{87.15}
+$$
+

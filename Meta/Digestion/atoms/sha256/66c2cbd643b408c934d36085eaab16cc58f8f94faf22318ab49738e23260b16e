@@ -1,0 +1,15 @@
+**proposition 25.4: 隐藏档案反例只否定其实际合并的纤维；Claim status: open.** 第25.3节的既有 Lean 反例无条件否定的是
+\[
+\pi_{\rm sp}(x)=\pi_{\rm sp}(x')
+\Longrightarrow
+\bigl(\operatorname{Guard}(x,Y)\leftrightarrow\operatorname{Guard}(x',Y)\bigr).
+\tag{25.9}
+\]
+它未指定 $F,r$，因而不能直接否定含有 $\operatorname{TP}_N$ 的式（25.4）。例如，若所声明读出本身已分离该合法性，联合边界可以在零窗口就区分两个档案；这种读出的实际可取得性仍须另证。
+
+一个明确的联合边界反例可以取包含 $U,U_{\rm old}$ 的档案状态类、恒等更新 $F=\mathrm{id}$ 以及单点读出 $r\equiv *$。此时对全部 $N$，
+\[
+Q_N(U)=Q_N(U_{\rm old}),
+\]
+而式（25.7）的合法性仍不同。因此，增加同一个不分离读出的窗口长度不能补回隐藏档案差别。所需补充不必是全部不活动事件资料；准确要求只是新摘要切开仍被目标区分的纤维。`HiddenArchiveTemporalDomain.current_spatial_projection_domain_refutation` 承担式（25.9）的有限反驳，以上指定恒等更新的连接是普通数学推导。
+

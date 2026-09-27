@@ -1,0 +1,4 @@
+**定义 43.2（描述承诺与语义候选）。** 在一个固定的经典命题语言中，令 $K$ 为所承担的句子集合，$\operatorname{Mod}(K)$ 为满足其中每句话的模型集合。如果撤去若干前提而得到 $K'\subseteq K$，那么 $\operatorname{Mod}(K)\subseteq\operatorname{Mod}(K')$。这一基本包含关系说明，撤回可以重新开放候选；它本身没有要求新候选全部满足原命题的否定。
+
+例如令 $p,r$ 为两个独立命题字母，原承诺为 $K=\{p,r\}$，撤回后为 $K'=\{r\}$。$K'$ 同时允许 $p$ 真与 $p$ 假，因此不蕴涵 $\neg p$。若被删的句子仍能由剩余前提推出，单纯删除该句甚至不能撤去它的全部推论承诺。信念修正理论区分收缩、扩张与修订，参见 [SEP《Logic of Belief Revision》§1.2、§2](https://plato.stanford.edu/entries/logic-belief-revision/)；此处只借用“放弃 $p$ 不等于接受 $\neg p$”这一分析区分，不把任意删句操作称为满足 AGM 公设的收缩。
+

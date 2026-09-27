@@ -1,0 +1,11 @@
+**命题 13.4（暗权重之外的尾界）。** 在命题 13.3 的非零补空间情形，
+
+$$
+0\le s_{md}-\operatorname{Tr}(\rho P_{\mathcal D})
+\le(1-g)^m\operatorname{Tr}(\rho P_{\mathcal D^\perp}).
+$$
+
+若初态支撑于 $\mathcal D^\perp$，首次点击轮数 $\mathsf N$ 满足 $\mathbb E\mathsf N\le d/g$。
+
+证明。第一式由分块收缩得到。对取值于正整数的等待时间，$\mathbb E\mathsf N=\sum_{N\ge0}s_N$，按长度 $d$ 分块，以 $d\sum_{m\ge0}(1-g)^m=d/g$ 控制。$\square$
+

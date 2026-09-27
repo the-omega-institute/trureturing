@@ -1,0 +1,12 @@
+**证明。** 不妨 $a\ge b$。记 $D_+=\sum_{\omega\in E}(p(\omega)-r(\omega))_+$、$D_-=\sum_{\omega\in E}(r(\omega)-p(\omega))_+$，则 $a-b=D_+-D_-$ 且 $D_+\le d$。插入 $r\mathbf1_E/a$，三角不等式给
+
+$$
+\operatorname{TV}(p(\cdot\mid E),r(\cdot\mid E))
+\le\frac{D_++D_-}{2a}+\frac{a-b}{2a}
+=\frac{D_+}{a}\le\frac d a.
+$$
+
+交换 $p,r$ 得另一顺序，概率距离不超过一给截断。对共同似然 $\ell:\Omega\to[0,1]$，将事件指示变量作为附加观测，联合律由同一通道生成，联合 TV 不超过先验 TV；在该联合空间使用刚才的界即可。$\square$
+
+这一有限论证也出现于项目 [singh2004zeckendorfprobability](../../../Library/notes/singh2004zeckendorfprobability.md) 的条件化讨论；这里把它接到 MMM 的表达误差，保留事件与联合律的共同来源要求。
+

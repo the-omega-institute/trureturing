@@ -1,0 +1,56 @@
+**第二终端纯性强制第一接收态纯。**
+
+首次来源发射的档案恒为 $|0\rangle_{\mathcal B}$，所以
+
+$$
+\sigma_1=|m_0\rangle\langle m_0|\otimes\tau,\qquad
+\tau=\mathcal C(|e,0\rangle\langle e,0|).
+\tag{38.4}
+$$
+
+假设 $\sigma_2$ 纯。若 $\tau$ 秩二，取其谱分解
+$\tau=\lambda_0|q_0\rangle\langle q_0|+\lambda_1|q_1\rangle\langle q_1|$，
+其中 $\lambda_0,\lambda_1>0$，$q_0,q_1$ 正交归一。
+
+第二次发射前后的 $M\mathcal B$ 纯态为
+
+$$
+|\Theta\rangle
+=a|m_0\rangle|0\rangle_{\mathcal B}
++b|0\rangle|1\rangle_{\mathcal B},
+\tag{38.5}
+$$
+
+它的记忆边缘为正定的 $\rho_2$，故在 $\mathcal B$ 上具有满 Schmidt 支撑。接收第二步时，这个纯态与 $\tau$ 张量相乘。
+
+两个正权谱分支接收后的混合态等于同一个纯态 $\sigma_2$，所以每个分支的 $MK$ 输出都等于这份纯态。两份关于正定 $\rho_2$ 的纯化只差 $K$ 上酉变换，因此存在一个共同酉 $U:\mathcal B\to K$ 和单位环境向量 $\zeta_0,\zeta_1$，满足
+
+$$
+V(q_j\otimes|b\rangle)
+=U|b\rangle\otimes\zeta_j
+\quad(j,b\in\{0,1\}).
+\tag{38.6}
+$$
+
+这里对全部 $b$ 的结论来自（38.5）的满 Schmidt 支撑，不能只比较一条输入向量。
+
+等距 $V$ 保持 $q_0\otimes|b\rangle$ 与 $q_1\otimes|b\rangle$ 的正交性，故 $\zeta_0\perp\zeta_1$。由于 $\{q_j\otimes|b\rangle\}$ 已是整个四维输入空间的基，（38.6）给出全域通道
+
+$$
+\mathcal C(X)=U(\operatorname{Tr}_K X)U^*.
+\tag{38.7}
+$$
+
+将它用于首步，得到 $\tau=U|0\rangle\langle0|U^*$ 为纯态，矛盾。
+
+所以 $\tau$ 必为纯态。取单位向量 $k\in K$，使 $\tau=|k\rangle\langle k|$。首步和第二步的固定等距因而可写为
+
+$$
+V(e\otimes|0\rangle)=k\otimes\eta_1,\qquad
+V(k\otimes|b\rangle)=u_b\otimes\eta_2
+\quad(b=0,1),
+\tag{38.8}
+$$
+
+其中 $\eta_1,\eta_2$ 单位，$u_0,u_1$ 是 $K$ 的一组正交归一基。
+

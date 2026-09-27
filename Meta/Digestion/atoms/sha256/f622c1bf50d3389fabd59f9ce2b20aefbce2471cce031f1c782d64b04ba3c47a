@@ -1,0 +1,88 @@
+### 170.7 真实误差的单圆相位表示与共同经验分布
+
+令 $z=e^{2i\varphi}\in\mathbb T$，其中
+
+$$
+U_\varphi=
+\begin{pmatrix}
+\cos\varphi&-\sin\varphi\\
+\sin\varphi&\cos\varphi
+\end{pmatrix}.
+$$
+
+由于 $U_{\varphi+\pi}=-U_\varphi$，通道
+$\operatorname{Ad}_{U_\varphi}$ 只依赖 $z$。定义
+
+$$
+\mathcal H_L(z)=
+\mathcal E\operatorname{Ad}_{U_\varphi}\Theta_L,
+$$
+
+$$
+h_L(z)=
+\min_{\mathcal D_{\mathrm{loc}}:QR\to
+Q_{\mathrm{out}}R_{\mathrm{out}}\ {\rm CPTP}}
+\frac12
+\left\|
+(\operatorname{id}_M\otimes\mathcal D_{\mathrm{loc}})
+\mathcal H_L(z)-\mathcal W_*
+\right\|_\diamond.
+\tag{170.33}
+$$
+
+这里始终优化只访问接收端的解码器。$h_L$ 连续：相位通道连续，且任意两个输入通道的最优解码误差之差不超过它们的半 diamond 距离。一个单圆已足以参数化全部真实渐近相位，不再需要由数值谱猜测外围群。
+
+第159节的规范输出压缩将实际档案任务写为同一接收端优化，目标是
+$\operatorname{Ad}_{W_{L+k}}$，并满足
+
+$$
+d_\diamond(\operatorname{Ad}_{W_{L+k}},\mathcal W_*)
+\le\delta_{L+k}.
+$$
+
+因此（170.31）给出真实终端误差的消失尾界
+
+$$
+\boxed{
+|e_{L+k}-h_L(e^{2ik\theta})|
+\le C_p^{\mathrm{abs}}p^{(k-1)/2}+\delta_{L+k},
+\qquad k\ge1.
+}
+\tag{170.34}
+$$
+
+右侧两项都随 $k$ 趋零；第一项来自真实运行通道的全空间吸引，第二项仍是规范目标的终端误差。
+
+这不把第165节的常值入口闭式变为真实误差闭式。由（170.32）只能推出
+
+$$
+\left|h_L(e^{2i\varphi})-\mathfrak e(U_\varphi|0\rangle)\right|
+\le\delta_L.
+\tag{170.35}
+$$
+
+所以在与那条常值比较曲线相比较时，固定启动带仍须保留。式（170.34）之所以有消失尾界，是因为其相位函数保留了真实的 $\Theta_L$。
+
+由第159节，$e^{i\theta}$ 不是单位根，因此
+$e^{2im\theta}$ 对每个正整数 $m$ 都不是单位根。
+圆群上的无理旋转等分布于是给出：任取 $m\ge1$、$0\le r<m$，
+
+$$
+\boxed{
+\frac1N\sum_{j=0}^{N-1}\delta_{e_{L+r+mj}}
+\ \Longrightarrow\
+\nu_L:=(h_L)_\#m_{\mathbb T}
+\qquad(N\to\infty).
+}
+\tag{170.36}
+$$
+
+有限个不满足（170.34）起始范围的索引不影响极限。证明是在任意连续测试函数下先用（170.34）替换误差，再对
+$e^{2i(r+mj)\theta}$ 使用等分布。所有有限等差子序列因此具有同一份真实经验分布，而不仅是各自拥有某个未知相位子群的分布。
+
+若启动长度满足第159节的 $\delta_L<\lambda_*/8$，其已证振荡间隔迫使
+$h_L$ 非常数。上述共同分布结论本身不要求先证明非常数，也没有用
+$\Theta_L$ 的数值估计代替其精确结构。
+
+本节给出实际运行通道的解析泄漏律、联合渐近投影及带全部参考的统一尾界。没有新增 Lean 核验声明；终端局部解码的权限与原始来源输入的任务量词均保持不变。
+

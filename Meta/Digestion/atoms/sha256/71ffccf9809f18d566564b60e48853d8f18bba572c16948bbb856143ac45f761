@@ -1,0 +1,24 @@
+**227.7.2 在目标 TP 约束内构造逼近。**
+
+原目标满足 $G=A^\dagger A+B^\dagger B\preceq I$。先把 $A,B$ 共同乘以 $\sqrt{1-\varepsilon}$，则新的余量满足
+$$
+I-(1-\varepsilon)G\succeq\varepsilon I\succ0.
+$$
+在足够小的邻域内选一个非退化矩阵对 $(A_\varepsilon,B_\varepsilon)$，仍保持
+$$
+R_\varepsilon=I-A_\varepsilon^\dagger A_\varepsilon
+-B_\varepsilon^\dagger B_\varepsilon\succ0,
+$$
+并使其趋向 $(A,B)$。
+
+$K_0$ 的极分解部分等距总能扩成一个固定等距嵌入 $U:\mathbb C^2\to\mathbb C^m$，因为 $m\ge2$。所以
+$$
+K_0=U(K_0^\dagger K_0)^{1/2}.
+$$
+定义
+$$
+K_{0,\varepsilon}=UR_\varepsilon^{1/2}.
+\tag{227.GD.30}
+$$
+它非零，与 $A_\varepsilon,B_\varepsilon$ 共同满足 TP，并由正平方根的连续性趋向原 $K_0$。非退化条件也保证 $A_\varepsilon,B_\varepsilon$ 线性独立：若两者相关，则 Gram 的无迹像至多在一条直线上，$L$ 不可能可逆。得到的目标 $\mathcal R_\varepsilon$ 因而均为合法结果秩 $(1,2)$，并在完整 diamond 范数下趋向原目标。
+

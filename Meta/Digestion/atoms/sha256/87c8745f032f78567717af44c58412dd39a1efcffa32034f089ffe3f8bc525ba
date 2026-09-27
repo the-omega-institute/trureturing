@@ -1,0 +1,74 @@
+**定理 408.2（不同记录射线数控制正局部恢复的充分次数）。** 在定义 407.1 的归一化纯量子比特记录族中，设不同复射影射线的个数为 $k$，即将相差单位相位的记录归为一类后共有 $k$ 类。对每一个整数
+
+$$
+n\ge\max(1,k-2),
+$$
+
+都存在定义 407.1 的完整局部乘积投影测量及终端对角反馈，其接受映射为 $p\operatorname{id}_S$，其中 $p\in(0,1]$，并保持任意有限维未操作参考。$p$ 与所选投影可依赖记录族及 $n$。这是充分界，不作一般最优阈值的断言。
+
+证明。依定理 401.3 的射线相位约定，每类选单位代表 $q_j=(x_j,y_j)$，$1\le j\le k$，写
+
+$$
+r_i=u_iq_{c(i)},\qquad |u_i|=1.
+$$
+
+先在代表元上计算齐次评价的秩。设 $\mathscr B_n$ 为复系数 $n$ 次齐次二元多项式空间，其维数为 $n+1$，评价映射为
+
+$$
+\operatorname{ev}_n:\mathscr B_n\longrightarrow\mathbb C^k,\qquad
+F\longmapsto(F(q_1),\ldots,F(q_k)).
+$$
+
+当 $n\ge k-1$ 时，定义线性式
+
+$$
+\Delta_\ell(x,y)=y_\ell x-x_\ell y,\qquad
+h_j(x,y)=\overline{x_j}x+\overline{y_j}y.
+$$
+
+不同代表射线不共线，故 $\Delta_\ell(q_j)\ne0$ 对所有 $\ell\ne j$ 成立，而 $h_j(q_j)=1$。于是以下齐次插值多项式有定义且次数为 $n$：
+
+$$
+F_j(x,y)=h_j(x,y)^{\,n-k+1}
+          \prod_{\ell\ne j}
+          \frac{\Delta_\ell(x,y)}{\Delta_\ell(q_j)},\qquad
+F_j(q_\ell)=\delta_{j\ell}.
+$$
+
+空积和零次幂均解释为常多项式 $1$，即便其底数在别处取零也不改变这个约定。这一构造不要求 $x_j$ 或 $y_j$ 非零，也没有选取共同仿射坐标图。评价映射因而满射，秩为 $k$。当 $n<k-1$ 时，在任意 $n+1$ 个代表上使用相同的次数 $n$ 构造，得到这部分评价的秩为 $n+1$；整个映射的秩至少为 $n+1$，又不能超过定义域维数，故也等于 $n+1$。
+
+以对称子空间的正交基写各 $q_j^{\otimes n}$ 为行，得到矩阵 $Q_n$。定理 407.2 证明中的对称基展开说明：每个 $F\in\mathscr B_n$ 唯一对应一个复线性泛函 $h$，使 $F(x,y)=h((x|0\rangle+y|1\rangle)^{\otimes n})$；系数中的 $\sqrt{\binom ns}$ 均非零。因此 $\operatorname{ev}_n$ 与 $Q_n$ 表示同一个评价映射，得到
+
+$$
+\operatorname{rank}Q_n
+ =\operatorname{rank}(Q_nQ_n^\dagger)
+ =\min(k,n+1).
+$$
+
+这一步是经典齐次插值的应用。复制纯态的线性独立性界见 Chefles，[*Unambiguous Discrimination Between Linearly Dependent States With Multiple Copies*, quant-ph/0105016v3](https://arxiv.org/abs/quant-ph/0105016v3)，§II（PDF 第 3–5 页），尤其式 (2.8) 的量子比特条件 $N\le C+1$，对应这里的 $k\le n+1$。该来源讨论线性独立性与无歧义判别；这里不把独立性当作相干精确恢复的必要条件。
+
+令 $H_n=Q_nQ_n^\dagger$，这是 $k\times k$ 的归一化代表 Gram 矩阵。若 $k\ge3$ 且 $n=k-2$，则 $n\ge1$、$\operatorname{rank}H_n=k-1$，引理 408.1 给出
+
+$$
+\tau\in\mathbb T^k\cap\operatorname{ran}H_n
+       =\mathbb T^k\cap\operatorname{ran}Q_n.
+$$
+
+若 $n\ge k-1$，则 $H_n$ 满秩，同样可以选择这样的 $\tau$。这覆盖 $k\ge3$ 时的全部所述次数，也覆盖 $k=2$ 时的每个 $n\ge1$。写 $\tau=Q_nb$，以这些系数定义对称子空间上的复线性泛函 $h$，便有 $h(q_j^{\otimes n})=\tau_j$。提升回原始全部系统标签，令
+
+$$
+z_i=u_i^n\tau_{c(i)}.
+$$
+
+每个 $|z_i|=1$，并且由 $h$ 的线性性，
+
+$$
+h(r_i^{\otimes n})
+ =h\bigl(u_i^n q_{c(i)}^{\otimes n}\bigr)
+ =u_i^n\tau_{c(i)}=z_i.
+$$
+
+将 $h$ 限制到 $E_n$ 并写成其行坐标泛函，即得 $z\in\operatorname{ran}R_n$。于是定理 391.1 与定理 407.2 给出所需的正局部恢复。引理 408.1 仅施于 $k\times k$ 的代表矩阵；重复标签形成的 $d\times d$ 矩阵不需要满足余维至多一。
+
+最后，若 $k=1$，则 $r_i=u_iq_1$。让每位持有者都取 $\langle a_a|=\langle q_1|$，全第一结果的幅度为 $t_i=u_i^n$，取 $U=\operatorname{diag}(\overline{u_1^n},\ldots,\overline{u_d^n})$ 即得 $UK=I_S$、$p=1$，适用于全部 $n\ge1$。各情形均对给定的 $n$ 单独构造并测量全部 $n$ 份记录，不借助成功概率关于 $n$ 的单调性，也不丢弃额外记录。证毕。
+

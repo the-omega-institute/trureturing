@@ -1,0 +1,87 @@
+**证明。** 前五终端误差为零。第六轮比较（148.14）与（148.16）：
+
+$$
+\|L_B-U_6\|_{\mathrm{op}}=a(\lambda-\nu),\qquad
+\|L_A\|_{\mathrm{op}}^2=a^2\mu^2.
+\tag{148.23}
+$$
+
+由于 $\nu>0$ 及（148.11），有
+$\lambda-\nu=\mu^2/(\lambda+\nu)$。对任意参考和任意输入密度矩阵 $\rho$，利用
+$\|L_B\|_{\mathrm{op}}\le1$、$\|U_6\|_{\mathrm{op}}=1$，
+
+$$
+\begin{aligned}
+&\frac12\left\|
+(I_R\otimes L_B)\rho(I_R\otimes L_B)^*
+-(I_R\otimes U_6)\rho(I_R\otimes U_6)^*
+\right\|_1\\
+&\hspace{35mm}\le a(\lambda-\nu).
+\end{aligned}
+\tag{148.24}
+$$
+
+确切地，在两项之间加减
+$(I_R\otimes U_6)\rho(I_R\otimes L_B)^*$，
+再用 $\|X\rho Y\|_1\le\|X\|_{\mathrm{op}}\|Y\|_{\mathrm{op}}\operatorname{Tr}\rho$ 即得。另一个分支为正，其迹至多 $a^2\mu^2$。结合（148.15），得到
+
+$$
+\frac12\|\sigma_6(\rho)
+-(I_R\otimes U_6)\rho(I_R\otimes U_6)^*\|_1
+\le a(\lambda-\nu)+\frac{a^2\mu^2}{2}.
+\tag{148.25}
+$$
+
+对两态应用同一个 $\mathcal D_6$，半迹距离收缩，并由（148.20）得到所需全参考恢复误差。这一估计在参考维数和输入态上统一，故可直接取第140节定义中的上确界。
+
+现在计算 $\mu$。由（148.3）、（148.5），
+
+$$
+\begin{aligned}
+c^2\kappa^2-a^4d^4
+&=b^2(c^4-a^4d^2)\\
+&=b^6=p^3>0.
+\end{aligned}
+\tag{148.26}
+$$
+
+因此 $c\kappa-a^2d^2>0$，有理化（148.10）给
+
+$$
+\boxed{
+\mu^2
+=\frac{b^2p^6}{\kappa^2(c\kappa+a^2d^2)^2}
+=\frac{p^7}{\kappa^2(c\kappa+a^2d^2)^2}.
+}
+\tag{148.27}
+$$
+
+此外，直接展开参数得
+
+$$
+c^2=x+p^2,\qquad d^2=1+p^2,\qquad
+\kappa^2=x+p^2c^2,\qquad
+\lambda^2=1+p^2+p^4.
+\tag{148.28}
+$$
+
+所以 $\lambda\ge1$，而
+$\nu=d(x+cp/\kappa)\ge x$。由 $1+x\ge2\sqrt x=2a$，
+
+$$
+\frac{a}{\lambda+\nu}+\frac{a^2}{2}
+\le\frac{a}{1+x}+\frac x2
+\le\frac{1+x}{2}\le1.
+$$
+
+这证明（148.21）。又 $c^2,\kappa^2\ge x$、$d^2\ge1$，故
+
+$$
+\kappa^2(c\kappa+xd^2)^2\ge4x^3.
+$$
+
+当 $p\le1/2$ 时 $x\ge1/2$，分母至少 $1/2$，得到（148.22）。证毕。
+
+此处环境泄漏振幅是 $a\mu$，泄漏概率至多 $a^2\mu^2$。七阶上界并非把振幅与概率直接互换：还同时证明保留的 $B$ 分支与理想比较等距只相差
+$a(\lambda-\nu)=a\mu^2/(\lambda+\nu)$，所以保留分支的全部参考相干项也具有相同的平方阶误差。若缺少（148.23）—（148.25），单独的泄漏概率不够推出这个恢复界。
+

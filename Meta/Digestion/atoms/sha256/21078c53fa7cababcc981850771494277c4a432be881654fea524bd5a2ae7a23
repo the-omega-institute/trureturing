@@ -1,0 +1,13 @@
+**命题 1.11（unrestricted attainable residues）。** For every $a,t$,
+$$
+D_{a,t}=\mathbb Z/L\mathbb Z.
+\tag{TM.539}
+$$
+
+**Proof.** Let $P$ be the preceding period. Since $G_0=1$,
+$$
+G_{jP}\equiv1\pmod L\qquad(j\ge0).
+\tag{TM.540}
+$$
+Fix $c\in\{0,\ldots,L-1\}$. Choose $c$ absolute digit positions divisible by $P$, all sufficiently far beyond $t$, with consecutive selected positions separated by a multiple of $P$ at least $k$. Put a $1$ at each selected position and $0$ at every other continuation position. Initial zeros clear the incoming run $a$, and the separation makes the continuation legal. Each selected position contributes $1\pmod L$, so its total increment is $c\pmod L$. For $c=0$, the empty continuation suffices. $\square$
+

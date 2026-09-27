@@ -1,0 +1,138 @@
+**定理 9.2（独立对的精确亲和度与临界窗口）。** 对定义 9.1 的核，
+
+$$
+\operatorname{TV}(Q_P,Q_P^\top)=\frac1{2n^2}\sum_{x,y}|b(x)-b(y)|,
+\qquad
+\rho_P=\frac{U_+^2+U_-^2+2V_+V_-}{n^2},
+\tag{9.2}
+$$
+
+且固定核的错误指数为
+
+$$
+C_{\rm pair}(P):=\lim_{m\to\infty}-\frac1m\log e_P^{\rm pair}(m)
+=-\log\rho_P.
+\tag{9.3}
+$$
+
+对正单峰，置 $k=M-1$、
+$A_r=\sqrt{1+r}+k\sqrt{1-r/k}$、
+$B_r=\sqrt{1-r}+k\sqrt{1+r/k}$，则
+
+$$
+\operatorname{TV}(Q_{P_{d,r}},Q_{P_{d,r}}^\top)=\frac{3r}{2n},\qquad
+\rho_{P_{d,r}}=\frac{A_r^2+M^2+2MB_r}{n^2},
+\tag{9.4}
+$$
+
+并且一致地对 $0\le r<1$，
+
+$$
+C_{\rm pair}(P_{d,r})
+=\frac{2-\sqrt{1+r}-\sqrt{1-r}}n+O(n^{-2}).
+\tag{9.5}
+$$
+
+令 $d\to\infty$、$r_d\to1$、$m_d/n\to\tau\in[0,\infty)$。
+若 $N_1,N_2$ 为独立的 Poisson 随机变量，均值分别为 $\tau,\tau/2$，则
+
+$$
+\boxed{\quad
+ e_{P_{d,r_d}}^{\rm pair}(m_d)
+ \longrightarrow e^{-\tau/2}
+ \left(\Pr(N_1<N_2)+\tfrac12\Pr(N_1=N_2)\right).
+\quad}
+\tag{9.6}
+$$
+
+当 $\tau>0$ 时，(9.6) 严格小于定理 6.3 的连续轨迹极限
+$\tfrac12e^{-\tau/2}$。两个固定核指数的大维数极限也不同：
+$nC_{\rm pair}\to2-\sqrt2$，而 $nC_{\rm path}\to1/2$。
+两种指数极限均先在固定核下取样本数趋于无穷；(9.6) 则直接处理联合极限。
+
+证明。$Q_P(x,y)-Q_P(y,x)=\chi(x)\chi(y)(b(x)-b(y))/n^2$，
+给出全变差公式。亲和度按同类与异类边分块即得 (9.2)。
+为证明 (9.3)，令
+$\widetilde Q(x,y)=\sqrt{Q_P(x,y)Q_P(y,x)}/\rho_P$。
+该概率律在交换坐标下不变，故单对对数似然比在其下均值为零。
+对 $m$ 个独立的 $\widetilde Q$ 样本，以 $L_m$ 记总对数似然比，直接得到
+
+$$
+e_P^{\rm pair}(m)=\frac{\rho_P^m}2
+\widetilde{\mathbb E}\bigl[e^{-|L_m|/2}\bigr].
+\tag{9.7}
+$$
+
+由大数律 $L_m/m\to0$，如同 (8.8) 的上下界论证得到 (9.3)。
+这是对转置假设的标准 Chernoff 中点倾斜论证。
+
+在单峰族中，$b$ 的三组取值为 $r,-r/k,0$，组大小为 $1,k,M$。
+不同组间绝对差的无序加权和为
+$k(r+r/k)+Mr+kM(r/k)=3Mr$；计入两个顺序后得到 (9.4) 的全变差。
+代入四个平方根和得到其亲和度。又一致地有
+
+$$
+A_r=M+\sqrt{1+r}-1-r/2+O(n^{-1}),\qquad
+B_r=M+\sqrt{1-r}-1+r/2+O(n^{-1}).
+$$
+
+因此 $1-\rho_{P_{d,r}}=(2-\sqrt{1+r}-\sqrt{1-r})/n+O(n^{-2})$，
+取负对数即为 (9.5)。
+
+下面直接证明联合极限。以 $H,B,Z$ 记定义 6.1 的三个状态类，
+但现在 $N_{UV}$ 计数的是独立样本对。置 $q=r/k$，仍用
+
+$$
+A=\log\frac{1+r}{1-q},\qquad B_0=\log(1+q),\qquad C=-\log(1-r).
+$$
+
+总对数似然比精确等于
+
+$$
+L_m=A(N_{HB}-N_{BH})+C(N_{ZH}-N_{HZ})
+       +B_0(N_{BZ}-N_{ZB}).
+\tag{9.8}
+$$
+
+在正向律下，四种稀有类别 $(HB,BH,HZ,ZH)$ 的单次概率分别为
+
+$$
+\frac{k(1+r)}{n^2},\quad \frac{k(1-q)}{n^2},\quad
+\frac{1-r}{2n},\quad \frac1{2n}.
+\tag{9.9}
+$$
+
+多项分布的概率母函数为
+$\bigl(1+\sum_jp_j(t_j-1)\bigr)^m$。
+沿给定序列它趋向
+$\exp(\tau(t_1-1)+\frac\tau2(t_2-1)+\frac\tau2(t_4-1))$。
+故四个计数联合趋于独立 Poisson 变量，均值分别为
+$(\tau,\tau/2,0,\tau/2)$；特别地 $\Pr(N_{HZ}>0)\to0$。
+
+背景类别满足
+$p_{BZ}-p_{ZB}=kMq/n^2=r/(2n)$。
+独立性给出 $\operatorname{Var}(N_{BZ}-N_{ZB})\le m$，故当 $m=O(n)$ 时，
+
+$$
+\mathbb E[B_0(N_{BZ}-N_{ZB})]=O(n^{-1}),\qquad
+\operatorname{Var}[B_0(N_{BZ}-N_{ZB})]=O(n^{-1}).
+\tag{9.10}
+$$
+
+所以背景对数似然趋零。又 $A\to\log2$、$C\to\infty$。
+在 $N_{HZ}=0,N_{ZH}>0$ 上，稀有计数的紧性与 (9.10) 使
+$\min(1,e^{-L_m})$ 依概率趋零；在 $N_{HZ}=N_{ZH}=0$ 上，
+其极限为 $\min(1,2^{N_2-N_1})$。
+函数有界，计数联合收敛及极限独立性遂给出
+
+$$
+\lim e_{P_{d,r_d}}^{\rm pair}(m_d)
+=\frac{e^{-\tau/2}}2\mathbb E\min(1,2^{N_2-N_1}).
+\tag{9.11}
+$$
+
+交换 Poisson 计数 $i,j$ 时，其概率质量之比为 $2^{i-j}$，
+所以 (9.11) 等于 (9.6)。当 $\tau>0$，对每个 $i>j$，
+$\Pr(N_1=i,N_2=j)>\Pr(N_1=j,N_2=i)$。
+求和得到 $\Pr(N_1>N_2)>\Pr(N_1<N_2)$，证明严格比较。$\square$
+

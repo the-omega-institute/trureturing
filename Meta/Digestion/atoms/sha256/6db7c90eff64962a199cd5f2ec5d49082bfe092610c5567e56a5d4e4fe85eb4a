@@ -1,0 +1,29 @@
+## 105. 已执行零位像必须具有全方向乘积纤维
+
+沿用七维接收器、独立纯初态、每轮同一个固定全域接收通道，以及前六个完整参考—活动记忆—原档案终端合同。来源为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+选取第89节保持全部实际轨迹的固定酉替代，位等距为 $V_0,V_1$，共同二维环境为 $F$。固定实际零位输入域及其像
+
+$$
+I_0=\mathbb Ck+H_1+H_2+H_3+H_4+H_5,\qquad E_0=V_0I_0,
+$$
+
+$$
+E_0=\mathbb C(p\otimes\eta_1)
++\sum_{n=2}^6G_n\otimes\eta_n.
+\tag{105.1}
+$$
+
+定义实际像的接收纤维及其通常维数
+
+$$
+P([z])=\{y\in K:y\otimes z\in E_0\},\qquad
+\kappa_0=\min_{[z]\in\mathbb{CP}^1}\dim P([z]).
+\tag{105.2}
+$$
+

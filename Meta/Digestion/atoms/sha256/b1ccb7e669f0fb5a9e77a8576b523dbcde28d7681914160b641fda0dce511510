@@ -1,0 +1,10 @@
+**定理 241.2（单纯形的边缘偏差证书）。** 对每份纯联合输入的输入边缘 $\rho$，
+$$
+\boxed{
+D_*-f(\rho)\ge
+\kappa\|\rho-I_d/d\|_{\mathrm{HS}}^2
+=\kappa\left(\operatorname{Tr}\rho^2-\frac1d\right).
+}
+\tag{241.17}
+$$
+

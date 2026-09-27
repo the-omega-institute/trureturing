@@ -1,0 +1,10 @@
+### 195.3 全部有限噪声等值点的位置
+
+令第190节的唯一一阶零点为 $h_c>0$。对每个充分小正 $\epsilon$，定义完整来源区间上的等值集合
+
+$$
+\mathcal Z_\epsilon
+=\left\{\ell\in[0,1/2]:
+\mathscr E(\ell,\epsilon)=\frac34\right\}.
+$$
+

@@ -1,0 +1,10 @@
+**命题 4.3.6（真实外逼近的尾包含）。** 在标准前缀乘积空间中，令 $K=X\setminus\bigcup_{w\in\mathcal P}[w]$，不先要求稀疏性。以真实延拓定义 $A_n=\bigcup_{|\sigma|=n,\,R(\sigma)=1}[\sigma]$。则
+$$
+K\subseteq A_n,\qquad
+A_n\setminus K\subseteq\bigcup_{\substack{w\in\mathcal P\\|w|>n}}[w].
+$$
+若每个正深度至多一个最终禁柱，且深度 $h$ 的柱质量至多 $u_h$，进一步有
+$$
+0\le\mu(A_n)-M\le\sum_{h>n}u_h.
+$$
+

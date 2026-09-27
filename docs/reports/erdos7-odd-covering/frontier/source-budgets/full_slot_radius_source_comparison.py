@@ -19,11 +19,11 @@ CERTIFICATE = 'certificates/source_norms/source-budgets/full_slot_radius_source_
 HEAD_CERTIFICATE = 'certificates/source_norms/source-budgets/full_slot_radius_source_heads.json'
 DELTA, RHO = F(1, 27), F(1, 1000)
 PINS = {
-    'frontier/source-budgets/expanded_source_complete_comparison.py': '409a9ef1a59b4ab0164b9917daaec01872c9253bf6d50684c444e504b61c5944',
-    'frontier/source-budgets/fixed_support_source_slab.py': 'f8a0073ff44d3e72456f92869f106647729bd098240d44d8bb72b771c5a0f99d',
-    'certificates/source_norms/source-budgets/fixed_support_source_slab.json': '2d759db1497bc09d0ba3031d55fdfd42dc9f2fac27e2406dcaa60f90e7c256fc',
-    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '011a476decdc6612890e23a3ab60922d5f3aa8b8031f6cf98f8497b978836b5a',
-    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'f82b29cc441d393572fe944396462639102bdfddc82e7eeef7759a3de795d268',
+    'frontier/source-budgets/expanded_source_complete_comparison.py': '0b4f06f6eba8cd84c37c7c1407c7bb639c33a35f879d7a92c4a36038b241b9d3',
+    'frontier/source-budgets/fixed_support_source_slab.py': '246ac23c14897ff31948cd281bad9cbaa8bff9bb5966c3ba0fd9a0f097b20536',
+    'certificates/source_norms/source-budgets/fixed_support_source_slab.json': 'ae7406625e480d10237101e2884ac40ecb28456bbc372dcf2942ea130eb1d23f',
+    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '9c888d210c1f64578ade69f66759f057c48981f250ce66c1637b626491a7ee2b',
+    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'ed8d0d10eeff83f9cc72ee6df3872df2fd98629851a15fed073b8e0d9bfd6207',
 }
 
 

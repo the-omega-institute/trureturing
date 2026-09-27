@@ -1,0 +1,26 @@
+**先 reset，任意 \(n\ge1\)。** 使用 §284 的真实记录
+\[
+W=(2\zeta\,\mathbf1_{\{w=0\}},2\zeta\,\mathbf1_{\{w=1\}}),
+\quad\zeta\in\{-1,1\},
+\qquad V=W_1\cdot W_2\in\{-4,0,4\}.
+\]
+§290—§291 给 \(\mathbb E_cV=a_n^2c\)、\(a_n\ge15/16\)。在每块后独立随机产生
+\[
+Y\mid V\sim\operatorname{Bernoulli}\!\left(\frac{1+V/4}{2}\right).
+\]
+其实际成功率是
+\[
+p_R(c)=\frac12+\frac{a_n^2c}{8}.
+\]
+这由可访问的 \(V\) 随机化而成，绝非不可访问的模拟程序位。令
+\[
+h_R(t)=F_\eta\!\left(\frac{8(t-1/2)}{a_n^2}\right),\qquad0\le t\le1,
+\]
+便有 \(h_R(p_R(c))=F_\eta(c)\)。
+
+因 \(V\le4\) 且 \(c=1\) 是合法真实参数，\(a_n^2=\mathbb E_1V\le4\)；所以
+\[
+225/256\le a_n^2\le4.
+\]
+两个仿射变换的斜率因而一致有界，零区和一区的边缘保持固定的正间距。以下关于 \(h\) 的常数对 \(\eta\) 一致，并对 reset 的 \(n\) 一致。
+

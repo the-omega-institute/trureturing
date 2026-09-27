@@ -31,6 +31,47 @@ if zipfile.lzma is not None:
     INVALID_SEED += (zipfile.lzma.LZMAError,)
 
 
+class InputMismatch(ValueError):
+    def __init__(self, previous, current):
+        super().__init__('registered inputs or execution environment changed')
+        self.mismatch = None
+        if not isinstance(previous, dict) or not isinstance(previous.get('files'), dict):
+            return
+        old_files, new_files = previous['files'], current['files']
+        old_version = previous.get('semantic_version')
+        self.mismatch = dict(
+            cached_semantic_version=old_version if type(old_version) is int else None,
+            current_semantic_version=current['semantic_version'],
+            added_inputs=len(new_files.keys() - old_files.keys()),
+            removed_inputs=len(old_files.keys() - new_files.keys()),
+            changed_inputs=sum(old_files[path] != new_files[path]
+                               for path in old_files.keys() & new_files.keys()),
+            execution_changed=previous.get('execution') != current['execution'])
+
+
+def warn_mismatch(result, stream):
+    """Explain an observed mismatch without changing cache acceptance or its inputs."""
+    mismatch = result.get('mismatch')
+    if mismatch is None:
+        return
+    old = mismatch['cached_semantic_version']
+    new = mismatch['current_semantic_version']
+    impact = ('Previous-version module reports are incompatible; a large native audit batch may be required.'
+              if old is not None and old != new else
+              'Lake will determine which module reports can be reused and which require regeneration.')
+    message = (f"LEAN_REPORT_CACHE_MISMATCH cached_version={old if old is not None else 'unknown'} "
+               f"current_version={new} added_inputs={mismatch['added_inputs']} "
+               f"removed_inputs={mismatch['removed_inputs']} changed_inputs={mismatch['changed_inputs']} "
+               f"execution_changed={str(mismatch['execution_changed']).lower()}. {impact} "
+               'Lean compilation has independent incremental reuse. Agents: use LEAN_CACHE and LEAN_INSPECTOR_WORK '
+               'to distinguish compilation from report regeneration; seed-rejected alone does not mean a full rebuild.')
+    if os.environ.get('GITHUB_ACTIONS') == 'true':
+        escaped = message.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
+        print('::warning title=Lean report cache mismatch::' + escaped, file=stream, flush=True)
+    else:
+        print('WARNING ' + message, file=stream, flush=True)
+
+
 def capture(repository):
     """Hash only the manifest's complete declared input population."""
     inputs = publication.selection.Selection(repository)
@@ -75,7 +116,7 @@ def read_receipt(report, captured):
     if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
         raise ValueError('reuse receipt lacks complete entry success')
     if receipt['inputs'] != captured:
-        raise ValueError('registered inputs or execution environment changed')
+        raise InputMismatch(receipt['inputs'], captured)
     if receipt['bundle'] != bundle_hashes(report):
         raise ValueError('reuse receipt bundle mismatch')
     return receipt
@@ -85,6 +126,8 @@ def miss(reason, error=None):
     result = dict(needs_lake=True, reason=reason)
     if error is not None:
         result['detail'] = str(error)
+    if isinstance(error, InputMismatch) and error.mismatch is not None:
+        result['mismatch'] = error.mismatch
     return result
 
 
@@ -158,6 +201,8 @@ def main():
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
+    parser.add_argument('--diagnostics', action='store_true',
+                        help='emit probe mismatch warnings to stderr while retaining JSON stdout')
     args = parser.parse_args()
     if args.command in ('probe', 'reuse', 'seal') and args.report is None:
         parser.error('--report is required')
@@ -170,10 +215,14 @@ def main():
     elif args.command == 'seal':
         seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()))
     elif args.command == 'probe':
-        print(json.dumps(probe(args.repository, args.report), separators=(',', ':')))
+        result = probe(args.repository, args.report)
+        print(json.dumps(result, separators=(',', ':')))
+        if args.diagnostics:
+            warn_mismatch(result, sys.stderr)
     else:
         result = reuse(args.repository, args.report, args.output)
         print('LEAN_INSPECTOR_REUSE ' + json.dumps(result, separators=(',', ':')))
+        warn_mismatch(result, sys.stdout)
         if result['needs_lake']:
             return 3
         print('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0')

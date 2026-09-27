@@ -1,0 +1,103 @@
+### 159.2 来源释放隐藏标签，固定接收器重新隐藏它
+
+令 $Y,Z$ 为标准 Pauli 矩阵，并记
+
+$$
+|\psi_s\rangle_{MR}=(I_M\otimes Y_R^s)|\Xi\rangle_{MR},
+\qquad s=0,1.
+\tag{159.8}
+$$
+
+两态均纯化同一个 $\rho_*$。由于 $\rho_*$ 在当前固定基中实对称，
+$\operatorname{Tr}(\rho_*Y)=0$，所以 $\psi_0,\psi_1$ 正交。
+
+第156.2节已经构造了同一个全空间酉
+
+$$
+U_{\mathrm{abs}}:R\otimes B\longrightarrow R\otimes B,
+$$
+
+使两份实际发射后的态同时满足
+
+$$
+(I_M\otimes U_{\mathrm{abs}})
+(T\otimes I_R)|\psi_s\rangle
+=|\Xi\rangle_{MR}|s\rangle_B,
+\qquad s=0,1.
+\tag{159.9}
+$$
+
+该式由共同 Schmidt 支撑的正交性给出，两个分支使用同一个物理酉，未按未知标签另换门。
+
+在 $Q\otimes R$ 上定义固定随机酉通道
+
+$$
+\mathcal N(X)=\frac12\sum_{s=0}^1
+(Z_Q^s\otimes Y_R^s)X(Z_Q^s\otimes Y_R^s)^*.
+\tag{159.10}
+$$
+
+对应的共同编码通道为
+
+$$
+\mathfrak E(\sigma_Q)
+=\frac12\sum_{s=0}^1
+Z_Q^s\sigma_QZ_Q^s\otimes|\psi_s\rangle\langle\psi_s|_{MR},
+\tag{159.11}
+$$
+
+系统顺序按标记置换。它等于对
+$\sigma_Q\otimes|\Xi\rangle\langle\Xi|_{MR}$
+在接收侧施加（159.10）。每份编码态的活动记忆边缘均为 $\rho_*$。
+
+固定逻辑旋转
+
+$$
+U=
+\begin{pmatrix}
+3/5&-4/5\\
+4/5&3/5
+\end{pmatrix}
+\quad\text{作用于 }Q.
+\tag{159.12}
+$$
+
+下面的运行接收器完成四个固定操作：先用 $U_{\mathrm{abs}}$ 将旧标签释放到本轮发出位，再按该位对 $Q$ 施加 $Z^s$ 解除旧掩码，随后旋转 $Q$ 并丢弃本轮位，最后施加（159.10）以新的独立均匀标签重新掩码。
+
+为给出整个输入空间上的精确定义，置
+
+$$
+D_{\mathrm{old}}
+=\sum_{s=0}^1Z_Q^s\otimes I_R\otimes|s\rangle\langle s|_B,
+\qquad
+W=(U_Q\otimes I_{RB})D_{\mathrm{old}}
+(I_Q\otimes U_{\mathrm{abs}}).
+\tag{159.13}
+$$
+
+$W$ 是 $Q\otimes R\otimes B$ 上的酉。定义四个 Kraus 算子
+
+$$
+C_{t,s}=
+\frac1{\sqrt2}(Z_Q^t\otimes Y_R^t)
+(I_{QR}\otimes\langle s|_B)W,
+\qquad s,t\in\{0,1\},
+$$
+
+$$
+\mathcal C_{\mathrm{run}}(X)
+=\sum_{t,s}C_{t,s}XC_{t,s}^*.
+\tag{159.14}
+$$
+
+它们满足
+
+$$
+\sum_{t,s}C_{t,s}^*C_{t,s}=I_{QRB}.
+\tag{159.15}
+$$
+
+因此 $\mathcal C_{\mathrm{run}}$ 是整个八维输入到四维运行接收空间的 CPTP 通道。旧标签随本轮 $B$ 丢弃；新的随机标签是新环境中的 Kraus 索引，不成为额外持久控制寄存器。
+
+记一次真实来源发射加运行接收为 $\mathcal F_{\mathrm{run}}$。
+

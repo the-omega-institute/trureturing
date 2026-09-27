@@ -1,0 +1,67 @@
+**定义 68.1（实际模型的精确能量增广）。** 保持定义 39.1 的固定振幅、固定 $\beta\in(1/2,1)$、
+实际平稳独立对实验和连续路径实验，以及定义 54.1 的完整选择窗口与精确中心。
+将十进制指数记为 $d_n$：
+
+```math
+d_1=1,\quad d_{n+1}=10^{5d_n},\quad Q_n=10^{d_n},\quad
+P_n=\sum_{l\le n}10^{d_n-d_l},\quad
+\alpha=\sum_{l\ge1}10^{-d_l}
+       =\frac{\log(1+r)}{-\log(1-r)}.
+```
+
+式 (68.1)。
+
+省略序列下标，记 $a=(1+r)/2$、$b=(1-r)/2$、
+$\phi=a\log(1+r)+b\log(1-r)>0$，以及
+
+```math
+\lambda=Q^3,\quad M=2^{\lfloor\phi\lambda/(\beta\log2)\rfloor},
+\quad T=2M\lambda,\quad k_0=\lfloor a\lambda\rfloor,
+\quad l_0=\lambda-k_0,
+```
+
+```math
+z_0=k_0\log(1+r)+l_0\log(1-r),\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad\tau=\log(M/q),\quad \epsilon=\frac{rq}{M-q},
+\quad w=\sqrt{\lambda/q},\quad\delta=Q^{-1/2},\quad B^2=\frac q{Q\sqrt\lambda}.
+```
+
+式 (68.2)。
+
+先正确对齐方向。对正类候选行，以原始计数 $k_i,l_i$ 定义
+
+```math
+W_i=k_i\log\frac{1+r}{1-\epsilon}
+       +l_i\log\frac{1-r}{1+\epsilon},\qquad
+J=\{i:\tau-w<W_i\le\tau+w\}.
+```
+
+式 (68.3)。
+
+在全行计数截断与格线隔离事件上，$J$ 的完整等分数组对应
+$(k_0+jQ,l_0+jP)$，$|j|\le K_M$，其中确定性 $K_M=O(Q^2)$ 覆盖整个截断窗口。
+设 $\mathscr X_M$ 为全部原始数据，$\pi_i=\mathbb P(i\in S\mid\mathscr X_M)$ 为均匀大小 $q$ 支持先验的完整后验边缘，令
+
+```math
+C_j=|J_j|,\quad R_j=|S\cap J_j|,\quad
+\mu_j=\sum_{i\in J_j}\pi_i,\quad A_j=(R_j-\mu_j)/B,
+\quad\mathcal I_M=\{j:C_j>0\},\quad D_M=\sum_jj\delta A_j.
+```
+
+式 (68.4)。
+
+空组补零至对称范围。取原数据可测方差 $V_M=B^{-2}\sum_{i\in J}p_i(1-p_i)$，
+其中 $p_i$ 为原共同校准的辅助 Bernoulli 参数，完整后验中心仍是 $\pi_i$。
+定义 54.1 的精确关系为
+
+```math
+\mathcal Q_M=\sum_jA_j^2=V_M+\sqrt\delta\,T_M.
+```
+
+式 (68.5)。
+
+考察增广观测 $(\mathscr X_M,\mathcal Q_M)$ 或等价的 $(\mathscr X_M,T_M)$。
+新增标量来自同一潜在标签实现；它不被声明为原始数据本身可计算的标签统计量。
+参数与实数读数精确已知，允许可测的精确相等检验。
+截断或隔离失败时附原始数据可见的失败旗并取默认输出。
+

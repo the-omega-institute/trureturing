@@ -1,0 +1,17 @@
+### 21.3 定理：精确柱集与全部有效估计器的分类
+
+对每个 $0\leq j\leq n$，
+\[
+\boxed{\{x\in[0,1):O_n(x)=O_n(q_j)\}=[q_j,q_{j+1}).}
+\tag{21.3}
+\]
+并且对任意实数中心 $z$ 与半径 $R$，
+\[
+\boxed{
+\bigl[\forall x\in[0,1),\ O_n(x)=O_n(q_j)\Rightarrow |x-z|\leq R\bigr]
+\iff q_{j+1}-R\leq z\leq q_j+R.
+}
+\tag{21.4}
+\]
+所以该读出的最佳统一估计半径为 $(q_{j+1}-q_j)/2$，唯一最优中心为 $(q_j+q_{j+1})/2$。
+

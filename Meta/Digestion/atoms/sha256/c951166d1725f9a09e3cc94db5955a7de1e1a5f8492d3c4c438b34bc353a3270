@@ -1,0 +1,12 @@
+**定义 122.2（一种明确但不唯一的冲突修订）。** 当旧候选可能错误时，可研究项目[冲突重置修订](../../../D5/S3/ConceptDynamics/Revision/RevisionConflictNoncommutation.lean)的具体规则
+
+$$
+\operatorname{Rev}_P(A)=
+\begin{cases}
+A\cap P,&A\cap P\ne\varnothing,\\
+P,&A\cap P=\varnothing.
+\end{cases}
+$$
+
+它在新旧相容时求交，否则放弃旧限制而采用新证据集合。若 $P$ 为空，结果仍为空；这不是任何输入都能被“修好”的保证。它也没有比较两份消息的可靠性，或证明后来收到的一份必然优先。信念修正中的扩张、收缩与修订区分可参见 [SEP《Logic of Belief Revision》§1.2](https://plato.stanford.edu/entries/logic-belief-revision/)；本卷只分析写出的集合规则，不将其无条件称为已经满足一整套 AGM 公设或现实理性标准。
+

@@ -1,0 +1,90 @@
+**定理 180.2（全部整数时长上的统一程序界）。** 存在与 $N,w$ 无关的常数 $c,C>0$，使全部充分近一的 $r$、全部 $N\ge1$ 和 $w\in[0,\delta(r)]$ 都满足
+$$
+\pi_{N,+}(w):=\frac{1+u_N(w)-2a_N}{2}\ge c\min\{\gamma N,1\},
+\qquad
+\pi_{N,-}(w):=\frac{1-u_N(w)}2\ge c\min\{\gamma N,1\}.
+\tag{180.2}
+$$
+因而每个时长都有正的经典程序分解
+$$
+\mathcal T_w^{(N)}
+=a_N\operatorname{Id}+\pi_{N,+}(w)\mathcal Q_+
++\pi_{N,-}(w)\mathcal Q_-.
+\tag{180.3}
+$$
+这里 $\mathcal Q_\pm$ 是第179节相邻系数为零、$02$ 系数为 $\pm1$ 的固定通道。一次查询的参考辅助最优信息量及其程序信息量分别满足
+$$
+I_1^{(N)}(r,w)=\frac{u_N'(w)^2}{1-u_N(w)^2}
+\le I_{{\rm prog},N}(r,w)
+:=\frac{u_N'(w)^2}{4}
+\left(\frac1{\pi_{N,+}(w)}+\frac1{\pi_{N,-}(w)}\right)
+\le\frac{CN}{\varepsilon}.
+\tag{180.4}
+$$
+均衡 $02$ 输入达到第一个等号。另令 $P_{N,w}=(a_N,\pi_{N,+}(w),\pi_{N,-}(w))$ 为程序分布；使用自然对数的经典相对熵满足有限参数差界
+$$
+D(P_{N,w_0}\Vert P_{N,w_1})
+\le \frac{CNd^2}{\varepsilon}.
+\tag{180.5}
+$$
+
+证明。 由 $\alpha/\gamma\to\sqrt3<7/4$，可统一取 $\alpha/\gamma\le7/4$、$x\ge1/2$。令 $t=\gamma N$。有 $a_N\le r^N=e^{-t}$，而每条符号路径的相位绝对值不超过 $N\alpha\le7t/4$。
+
+若 $0<t\le1$，用 $\cos z\ge1-z^2/2$ 及指数函数的三阶下界，得到
+$$
+\begin{aligned}
+1+u_N-2a_N
+&\ge e^{-t}\left(e^t-1-\frac{49t^2}{32}\right)\\
+&\ge e^{-t}t\left(1-\frac{33t}{32}+\frac{t^2}{6}\right)
+\ge\frac{13}{96e}\,t.
+\end{aligned}
+\tag{180.6}
+$$
+最后一个二次式在 $[0,1]$ 上递减，末值为 $13/96$。若 $1\le t\le7/6$，则每条相位的绝对值不超过 $49/24<2\pi/3$，所以 $Z_{N,w/x}\ge-1/2$，从而
+$$
+1+u_N-2a_N\ge1-\frac{5}{2e}>0.
+\tag{180.7}
+$$
+若 $t\ge7/6$，则粗界 $Z_{N,w/x}\ge-1$ 给出
+$$
+1+u_N-2a_N\ge1-3e^{-7/6}>0.
+\tag{180.8}
+$$
+另有 $1-u_N\ge1-e^{-t}\ge(1-e^{-1})\min\{t,1\}$。故（180.2）可取
+$$
+c=\min\left\{
+\frac{13}{192e},\frac{1-5/(2e)}2,
+\frac{1-3e^{-7/6}}2,\frac{1-e^{-1}}2
+\right\}>0.
+\tag{180.9}
+$$
+程序权重总和为一，逐系数比较即得（180.3）。这也证明 $2a_N-1<u_N<1$，故第179节证明中的一般 Schur 信息量优化适用，给出（180.4）的精确单次值。
+
+为控制导数，令 $M=N-1$，以 $c_k\in[-1,1]$ 表示在 $M$ 个位置恰有 $k$ 次翻转时终端余弦的平均值。条件符号链给出 Bernstein 多项式
+$$
+Z_{N,p}=\sum_{k=0}^{M}\binom Mk p^k(1-p)^{M-k}c_k,
+\quad
+|\partial_pZ_{N,p}|\le2(N-1),
+\quad
+|\partial_p^2Z_{N,p}|\le4(N-1)(N-2).
+\tag{180.10}
+$$
+后两界分别来自一阶、二阶系数差；$N=1,2$ 的零阶情形按实际多项式解释。于是 $|u_N'(w)|\le2(N-1)e^{-t}/x$。代入（180.2）可得
+$$
+\frac{I_{{\rm prog},N}}N
+\le\frac{2}{cx^2\gamma}
+\frac{t e^{-2t}}{\min\{t,1\}}
+\le\frac{8}{c\varepsilon}.
+\tag{180.11}
+$$
+这里使用 $\gamma\ge\varepsilon$ 及 $t e^{-2t}/\min\{t,1\}\le1$，可取 $C=8/c$。经典模拟和信息量单调性给出（180.4）的其余不等式。
+
+对有限参数差，令 $b_N=[u_N(w_1)-u_N(w_0)]/2$，则 $|b_N|\le e^{-t}(N-1)d/x$。两个程序分布只有后两个权重分别改变 $b_N,-b_N$。由 $D(P\Vert Q)\le\sum_i(P_i-Q_i)^2/Q_i$，
+$$
+D(P_{N,w_0}\Vert P_{N,w_1})
+\le b_N^2\left(\frac1{\pi_{N,+}(w_1)}+\frac1{\pi_{N,-}(w_1)}\right)
+\le\frac{CNd^2}{\varepsilon},
+\tag{180.12}
+$$
+证明（180.5）。证毕。
+

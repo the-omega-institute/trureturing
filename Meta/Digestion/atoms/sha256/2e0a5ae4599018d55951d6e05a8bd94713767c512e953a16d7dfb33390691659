@@ -1,0 +1,6 @@
+**定理。** 如果
+
+$$\boxed{S_e(b)>2\pi\quad\text{对全部 }e\in E,}$$
+
+则存在 $l^*\in\mathcal L(\mathcal T)$，使所有 $K_e(l^*)=0$。因此给定的同一理想剖分具有非退化双曲几何实现。
+

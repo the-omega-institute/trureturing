@@ -1,0 +1,13 @@
+### 212.3 最优操作本身的折角与新方向的权重
+
+在切换线上记
+$k=k_1(\epsilon,b(\epsilon),0)$、$w=w(\epsilon,b(\epsilon),0)$，并令
+
+$$
+P=I-\frac{kk^\dagger}{\|k\|^2},\qquad
+a_c=a(\epsilon,b(\epsilon)).
+\tag{212.14}
+$$
+
+因为 $k_a>0$、$w_a=0$、$w_b=1$，有 $Pw\ne0$。
+

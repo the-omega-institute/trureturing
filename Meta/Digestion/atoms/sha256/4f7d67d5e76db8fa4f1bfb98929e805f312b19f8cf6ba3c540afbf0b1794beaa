@@ -1,0 +1,14 @@
+**定理 20.3（点击后继续观察的精确桥梁）。** 给定任意实线性空间 $\mathcal W\subseteq\operatorname{Herm}(\mathcal H)$ 和一支 $\mathcal C_x$。对所有具有相同 $b_\rho$ 的初态，只要该结果概率为正，其归一化后继在 $\mathcal W$ 上具有相同期望，当且仅当
+
+$$
+\mathcal C_x^*(\mathcal W)\subseteq\mathcal V.
+$$
+
+证明。$p_x=\operatorname{Tr}(\rho B_x)$ 已由 $b_\rho$ 确定。若所示包含成立，则每个 $H\in\mathcal W$ 的条件期望为 $b_\rho(\mathcal C_x^*H)/p_x$，故充分。反之若某 $H$ 的拉回 $D=\mathcal C_x^*H$ 不在 $\mathcal V$，取其在 $\mathcal V^\perp$ 上的非零正交投影 $\Delta$。则 $\operatorname{Tr}\Delta=0$，$\operatorname{Tr}(\Delta D)=\|\Delta\|_2^2>0$。充分小的 $\varepsilon>0$ 使
+
+$$
+\rho_\pm=I/d\pm\varepsilon\Delta
+$$
+
+都是满秩状态且具有相同边界。$D\ne0$ 意味着 $\mathcal C_x\ne0$，故正效果 $B_x\ne0$，两态的共同结果概率 $\operatorname{Tr}(B_x)/d>0$。两分支期望之差为 $2\varepsilon\|\Delta\|_2^2/p_x\ne0$，与假设矛盾。若 $B_x=0$，完全正性给出该分支为零，包含关系自动成立。$\square$
+

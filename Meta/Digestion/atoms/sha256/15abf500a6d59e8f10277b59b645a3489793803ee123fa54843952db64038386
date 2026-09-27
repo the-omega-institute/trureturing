@@ -1,0 +1,10 @@
+**证明。** 在 $Q$ 的非负本征值 $q$ 上，支撑函数满足 $p(q)^2=p(q)$、$p(q)q=q$，且 $f(q)qf(q)=p(q)$，故前四式成立。再令 $C=I-P$，则
+
+$$
+0=CQC=\sum_a(CE_a)(CE_a)^\dagger.
+$$
+
+每项半正定，故 $CE_a=0$。恢复的显式 Kraus 为 $E_a^\dagger W$ 与 $|v\rangle\langle b|(I-P)$，其中 $b$ 遍历物理正交基。其平方和分别为 $P$ 与 $I-P$，相加为 $I$。当 $Q=0$ 时 $P=W=0$，只剩复位通道；没有除以分支概率。∎
+
+该归一化构造属于既有 transpose/Petz 恢复结构。[QREC-BK] 通道合法性本身没有给出 $\mathcal R_E\mathcal N=\mathrm{id}$；精确恢复仍需约束错误算子。
+

@@ -14,8 +14,8 @@ CERTIFICATE = 'certificates/source_norms/moments-survival/uniform_factorial_neig
 ROOT = (0, 0, 1, 1, 1)
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/moments-survival/complete_off_face_factorial_tail.py': '6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
+    'frontier/moments-survival/complete_off_face_factorial_tail.py': '475e060fda48d619f1ecb9ff512bc8fde200521c07429901f4daeafda0f23667',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '41cf0ee10fc00ef29278ee8329085cb20c365a73008313c10b1bc888f737af6c',
 }
 
 

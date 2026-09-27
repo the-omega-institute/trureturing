@@ -1,0 +1,18 @@
+**引理152.1（真实边缘中的可混淆方向）。** 有
+
+$$
+\varrho_1\succeq s_p\Pi_S,\qquad
+\|\Pi_Sh\|^2=\alpha_p,\qquad
+\|(I-\Pi_S)h\|^2=\beta_p.
+\tag{152.6}
+$$
+
+并且在 $p\downarrow0$ 时，
+
+$$
+s_p\sim p^2,\qquad
+\ell_p\sim\frac14p^7,\qquad
+\alpha_p\to1,\qquad \beta_p\to0.
+\tag{152.7}
+$$
+

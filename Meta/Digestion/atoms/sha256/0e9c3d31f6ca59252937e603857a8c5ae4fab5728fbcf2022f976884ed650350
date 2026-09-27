@@ -1,0 +1,125 @@
+**定理 123.1（标记弱极限）。** 对每个固定的有界连续函数 $f:[0,\infty)\to\mathbb C$，测试响应作为线性映射在完整 diamond 范数中满足
+
+$$
+\boxed{
+\mathbf M_j[f](X)\longrightarrow
+f(0)\operatorname{Tr}(Q_*X)P_0
++
+\left(\int_0^\infty f(t)e^{-t}\,dt\right)
+\operatorname{Tr}(P_*X)\zeta.
+}
+\tag{123.1}
+$$
+
+等价地，$\mathbf M_j$ 弱收敛到算子值测度
+
+$$
+\boxed{
+\mathbf M_\infty(X)
+=
+\delta_0\,\operatorname{Tr}(Q_*X)P_0
++
+e^{-t}\,dt\,\operatorname{Tr}(P_*X)\zeta.
+}
+\tag{123.2}
+$$
+
+### 证明
+
+将式（122.3）代入式（122.2），得到
+
+$$
+\mathbf M_j[f](X)
+=
+a_j(f)\,\zeta_j\operatorname{Tr}(G_jX)
++\mathbf S_j[f](X),
+\tag{123.3}
+$$
+
+其中
+
+$$
+a_j(f)=\epsilon_j\sum_{n\ge1}f(\epsilon_j n)r_j^{\,n-1},
+$$
+
+$$
+\mathbf S_j[f](X)
+=
+\sum_{n\ge1}f(\epsilon_j n)
+\mathcal C_j\mathcal B_j^{\,n-1}(\operatorname{id}-\mathcal P_j)(X).
+$$
+
+先处理慢项。对任意固定 $L>0$，在 $0\le\epsilon_j n\le L$ 上，
+
+$$
+(1-\epsilon_j)^{n-1}
+\longrightarrow e^{-\epsilon_j n}
+$$
+
+一致成立；因此有限区间上的和是黎曼和。尾部由
+
+$$
+\epsilon_j\sum_{n>L/\epsilon_j}(1-\epsilon_j)^{n-1}
+\le e^{-L/2}
+$$
+
+控制，充分大的 $j$ 上该界与 $f$ 无关。先令 $j\to\infty$，再令 $L\to\infty$，得到
+
+$$
+a_j(f)\longrightarrow
+\int_0^\infty f(t)e^{-t}\,dt.
+\tag{123.4}
+$$
+
+因为 $G_j\to P_*$、$\zeta_j\to\zeta$，慢项趋向式（123.1）的第二项。
+
+再处理稳定项。由式（122.4），对任意固定 $N$，前 $N$ 项满足
+
+$$
+\sum_{n=1}^{N}
+\bigl(f(\epsilon_j n)-f(0)\bigr)
+\mathcal C_j\mathcal B_j^{\,n-1}(\operatorname{id}-\mathcal P_j)
+\longrightarrow0.
+$$
+
+其余项的范数不超过
+
+$$
+2\|f\|_\infty C'\sum_{n>N}q^{n-1},
+$$
+
+其中 $C'$ 吸收 $\mathcal C_j$ 与 $\operatorname{id}-\mathcal P_j$ 的统一有界范数；可先取 $N$ 很大使其任意小。因此，利用
+
+$$
+\sum_{m\ge0}\mathcal B_j^m(\operatorname{id}-\mathcal P_j)
+=
+\mathcal R_j,
+$$
+有
+
+$$
+\mathbf S_j[f]
+-
+f(0)\mathcal C_j\mathcal R_j
+\longrightarrow0.
+$$
+
+第 115 节的稳定 resolvent 连续性直接给出
+
+$$
+\mathcal C_j\mathcal R_j
+\longrightarrow
+\mathcal C_*(\operatorname{id}-\mathcal P_*).
+$$
+
+第 106 节的边界分支分类于是给
+
+$$
+\mathcal C_*(\operatorname{id}-\mathcal P_*)(X)
+=
+\operatorname{Tr}(Q_*X)P_0.
+\tag{123.5}
+$$
+
+这得到式（123.1）。所有估计在张量任意参考系统后仍成立；输入维数固定时，有限维完全范数与所用线性映射范数等价，所以收敛是完整 diamond 收敛。证毕。
+

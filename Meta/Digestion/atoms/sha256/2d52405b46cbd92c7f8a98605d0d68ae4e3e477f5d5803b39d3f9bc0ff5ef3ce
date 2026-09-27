@@ -1,0 +1,47 @@
+### 189.4 近最优性强制的统一速率
+
+保持接收端量子接口并均匀输出标签的合法解码器给
+$H_h(\epsilon)\le3/4+C\epsilon$。
+有限维 CPTP 集紧，最优解存在；可将每个最优解作上述对称化。
+
+事实上，以下结论适用于任意满足 $e\le3/4+C\epsilon$
+的共同 instrument 族。置
+
+$$
+\mathcal C=C_0+C_1,\qquad S_F=F_0+F_1,\qquad
+D_F=F_0-F_1.
+$$
+
+由（189.6）、（189.8），严格有
+
+$$
+S_F=1-\mathcal C+\epsilon(L_0+L_1).
+$$
+
+对足够小的 $\epsilon$，$S_F=0$ 与近最优上界矛盾。
+利用恒等式
+
+$$
+1-\frac{F_0F_1}{S_F}
+=\frac34+\frac{\mathcal C}{4}
+-\frac{\epsilon(L_0+L_1)}4+\frac{D_F^2}{4S_F},
+\tag{189.12}
+$$
+
+将（189.11）与上界比较，注意 $r=1-h\epsilon$
+以及（189.9），先得到
+$\mathcal C=O(\epsilon)$，继而得到
+$D_F^2=O(\epsilon)$。因此
+
+$$
+\boxed{
+C_0+C_1=O(\epsilon),\qquad
+A_j=\frac12+O(\sqrt\epsilon),\qquad
+F_j=\frac12+O(\sqrt\epsilon).
+}
+\tag{189.13}
+$$
+
+这些估计对上述全部近最优族统一成立。
+这里没有用紧性代替收敛速率：速率由完整误差的压缩不等式强制产生。
+

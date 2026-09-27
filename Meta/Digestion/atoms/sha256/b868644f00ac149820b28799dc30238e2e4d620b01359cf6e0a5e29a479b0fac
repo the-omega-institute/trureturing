@@ -1,0 +1,8 @@
+### 46.9 既有机制与本节新增的模型内容
+
+过程卷定理3.5已给出实际比较载体上的联合下降，定理3.6及仓内 `StrictOneHoleContexts.contextual_equivalence_is_greatest` 处理强上下文同余；`RowColumnObserverCore.row_column_observer_core` 与 `DoubleExtensionalQuotientUniversality.double_extensional_quotient_universal_minimality` 处理总评价的行列商；`DynamicClosureMinimality.dynamic_closure_is_least` 处理给定初始观察后的最小动态细化。它们的既有一般机制不在这里重新取得新内容名义，也不把总评价范围自动换成对角受限来源。
+
+本节具体补入的是 (46.3) 的同一有限动作族下，六个全部稳定核、三个资源极小点、不能由两端各少于八态规避的控制位重复，以及 (46.18) 的保记录修复；(46.20)—(46.28) 进一步给出维数可变的精确前沿和一位最小重复。平移使分类覆盖任意确定性状态编码，而非只覆盖事先选定的线性编码。上述普通证明和显式表没有被计作新增 Lean 结果。
+
+全部结论限制在固定状态编码、同步具名动作、无额外本地原态读取及无跨端通信的合同。允许交互通信、免费共享档案、依赖完整历史的变动编码、随机化、误差或来源外输入，会产生不同问题。本节未给这些扩张模型的普遍最小内存定理。空间上的信息分配、时间上的更新作用、边界的恢复性与记忆的容量在这里由同一实际关系连接，但其最优值不能被一个标量或一份唯一最小坐标取代。Claim status: open。
+

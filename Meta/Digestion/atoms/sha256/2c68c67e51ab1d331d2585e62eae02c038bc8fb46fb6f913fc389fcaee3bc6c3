@@ -1,0 +1,73 @@
+## ST10．能量依赖消元同时决定物理范数
+
+### 假设 ST10.1
+
+设 $V,W$ 为非零有限维复 Hilbert 空间，
+
+$$
+H=\begin{pmatrix}A&B\\B^\dagger&C\end{pmatrix}=H^\dagger.
+$$
+
+取实数 $E\notin\operatorname{spec}C$，定义
+
+$$
+R_E=(C-EI)^{-1},\quad X_E=-R_EB^\dagger,\quad
+L_E=\begin{pmatrix}I\\X_E\end{pmatrix},
+$$
+
+$$
+S(E)=A-EI-BR_EB^\dagger.
+$$
+
+本节固定 $H$ 求能量导数。$E$ 可以位于完整 $H$ 的谱中，唯一排除的是隐藏块的谱。
+
+### 定理 ST10.2：重建、范数与能量导数恒等式
+
+有
+
+$$
+(H-EI)L_E=\begin{pmatrix}S(E)\\0\end{pmatrix},
+\qquad
+\ker S(E)\xrightarrow{\ L_E\ }\ker(H-EI)
+\text{ 为线性同构},
+\tag{ST10.1}
+$$
+
+以及
+
+$$
+\boxed{
+G(E):=L_E^\dagger L_E
+=I+B(C-EI)^{-2}B^\dagger
+=-\partial_E S(E)>0.
+}
+\tag{ST10.2}
+$$
+
+**证明。** 块乘法给出(ST10.1)第一式。任一完整本征向量 $(v,w)$ 的第二块方程强制 $w=X_Ev$；若 $v=0$ 则 $w=0$。因此重建双向成立。又因 $R_E=R_E^\dagger$，有 $L_E^\dagger L_E=I+BR_E^2B^\dagger$。对 $(C-EI)R_E=I$ 求导，得 $\partial_E R_E=R_E^2$，代入 $S$ 得到最后一式。对 $v\ne0$，$v^\dagger Gv=\|v\|^2+\|X_Ev\|^2>0$。∎
+
+### 推论 ST10.3：Born 读数及可见谱权重
+
+对任意效果 $0\le O\le I_{\mathcal H}$ 和非零 $v\in V$，重建态的概率为
+
+$$
+\boxed{
+p_O(v)=\frac{v^\dagger L_E^\dagger O L_Ev}{v^\dagger G(E)v}.
+}
+\tag{ST10.3}
+$$
+
+令 $\delta=\operatorname{dist}(E,\operatorname{spec}C)>0$。则
+
+$$
+I\le G(E)\le\left(1+\frac{\|B\|^2}{\delta^2}\right)I,
+\qquad
+\frac1{1+\|B\|^2/\delta^2}\le
+Z(v):=\frac{\|v\|^2}{v^\dagger G(E)v}\le1.
+\tag{ST10.4}
+$$
+
+**证明。** 将 $L_Ev$ 归一化并应用原空间的 Born 规则即可。有限维谱定理给出 $\|R_E\|=1/\delta$，再用 $\|R_EB^\dagger v\|\le\|B\|\|v\|/\delta$。∎
+
+$Z$ 是完整纯态在原可见直和分量上的权重。保留非线性本征方程 $S(E)v=0$，却继续用 $v^\dagger v$ 代替完整范数，一般会改变概率。本定理没有从能谱独自推导 Born 公理；它推导的是给定 Born 公理在消元后的精确形式。不同能量上的 $G(E)$ 也不能直接拼成一个对任意叠加态有效的单一动力学，ST12处理这一问题。
+

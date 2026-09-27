@@ -1,0 +1,19 @@
+### 276.4 完整数据唯一时，可分性等价于加权酉性
+
+定理275.3表明：（276.2）的完整数据纤维唯一，当且仅当
+$$
+\operatorname{spec}(M)\subseteq\mathbb S^1.
+\tag{276.19}
+$$
+在这个子类中，设最大Jordan块长为 $m$，则标准奇异度为 $m$，完整数据的锐局部逆指数为 $1/(2m)$；这些结论的竞争类仍包含所有密度态。
+
+将前述标准结构用于（276.19）的唯一来源子类，得到
+$$
+\boxed{
+\Omega(Q,M)\text{ 可分}
+\quad\Longleftrightarrow\quad A\text{ 酉}
+\quad\Longleftrightarrow\quad M^\dagger QM=Q.
+}
+\tag{276.20}
+$$
+

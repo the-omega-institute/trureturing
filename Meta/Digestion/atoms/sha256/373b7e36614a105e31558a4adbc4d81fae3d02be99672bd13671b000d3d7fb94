@@ -1,0 +1,38 @@
+**定义 249.1（分别受限的有限过渡尺度）。** 沿用第243—248节的实际任务、共同处理器及两个分别成立的全域预算。记 $d=\sqrt{D_*}$、$h=r_0/d=b/\sigma>0$，并设
+
+$$
+\delta_s=\sqrt{\eta_s^2+\zeta_s^2}=F_s+e_s,\qquad
+0<e_s=o(s),\qquad
+\gamma_s=\frac{\eta_s^2}{4dse_s}\longrightarrow\gamma\in(0,\infty).
+\tag{249.1}
+$$
+
+此时自动有 $\eta_s=o(s)$。在第244节的实际尾窗上，定义两个归一化代价
+
+$$
+\mathcal P_s=e_s^2\sup_{T_s}I_Q,\qquad
+\mathcal E_s=\frac{e_s}{s}\int_{T_s}I_Q\,du.
+\tag{249.2}
+$$
+
+设
+
+$$
+\begin{aligned}
+A(z)&=\frac{\pi^2}{4}+(h-z)^2,\\
+g(z)&=1+\frac{z^2-\sqrt{z^4+4}}2,\\
+D_\gamma(z)&=1-\gamma g(z),\\
+\mathcal Z_\gamma&=\{z\in[0,h]:D_\gamma(z)>0\}.
+\end{aligned}
+\tag{249.3}
+$$
+
+这里 $g(0)=0$，$g$ 在正半轴严格递增。记
+
+$$
+P_\gamma=\min_{z\in\mathcal Z_\gamma}\frac{A(z)}{D_\gamma(z)^2},
+\qquad
+E_\gamma=2d\min_{z\in\mathcal Z_\gamma}\frac{A(z)}{D_\gamma(z)}.
+\tag{249.4}
+$$
+

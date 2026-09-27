@@ -1,0 +1,7 @@
+**定义 14.1（事件效果空间）。** 在实空间 $\operatorname{Herm}(\mathcal H)$ 上使用迹内积，令
+
+$$
+\mathcal V_N=\operatorname{span}_{\mathbb R}\bigl(\{I\}\cup\{E_{n,x}:1\le n\le N\}\bigr),
+\qquad \mathcal V_\infty=\bigcup_{N\ge1}\mathcal V_N.
+$$
+

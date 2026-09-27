@@ -1,0 +1,80 @@
+### 59.2 合法对称化与完整事件公式
+
+使用连续联合相位群
+
+$$
+\begin{aligned}
+U_A(\alpha)&=\operatorname{diag}(1,e^{i\alpha}),\\
+U_B(\beta)&=\operatorname{diag}(1,e^{i\beta}),\\
+U_D(\alpha,\beta)&=
+\operatorname{diag}(1,e^{-i\alpha},e^{-i(\alpha+\beta)}),\\
+U(\alpha,\beta)&=U_A(\alpha)\otimes U_B(\beta)\otimes U_D(\alpha,\beta).
+\end{aligned}
+\tag{59.9}
+$$
+
+该群固定 $R_\varepsilon$，并同时保持因果集合与完整 tester 集合。$N$ 是凸函数，所以对 $\alpha,\beta$ 平均一个最优修复不会增加误差。
+
+在十二个标准基向量中，恰好 $x,y,z$ 具有零相位字符。记 $\Pi$ 为它们张成空间的投影。平均后的修复满足
+
+$$
+S=P\oplus S_\perp,
+\qquad P=\Pi S\Pi\succeq0,
+\qquad S_\perp\succeq0.
+\tag{59.10}
+$$
+
+早输出边缘也被相位平均为 $\sigma=\operatorname{diag}(1-p,p)$，其中 $0\le p\le1$，故
+
+$$
+P_{xx},P_{yy}\le1-p,
+\qquad P_{zz}\le p.
+\tag{59.11}
+$$
+
+复共轭保持 $R_\varepsilon$、因果集合及 tester 集合，因此再取 $(S+\overline S)/2$ 仍不增加误差。主块解耦性质保持，可设 $P$ 实对称。
+
+对这样的 $S$，$R_\varepsilon-S$ 仍在联合相位群下不变。按第 58 节的联合平均论证，计算 $h$ 时可取
+
+$$
+C(q,t)=\operatorname{diag}(q,1-t,1-q,t),
+\qquad0\le q,t\le1,
+\tag{59.12}
+$$
+
+其对角次序为 $00,01,10,11$；事件仍遍历整个正区间。令
+
+$$
+D(q,t)=\operatorname{diag}(\sqrt q,\sqrt{1-q},\sqrt t),
+\qquad
+B(P;q,t)=D(q,t)(r_0r_0^{\mathsf T}-P)D(q,t),
+$$
+
+并定义
+
+$$
+\lambda(P;q,t)=\max\{0,\lambda_{\max}(B(P;q,t))\}.
+\tag{59.13}
+$$
+
+由于 $P\succeq0$，$B$ 至多有一个严格正特征值。$C\otimes I_D$ 与 $\Pi$ 交换，而 $R_\varepsilon-S$ 在 $\Pi$ 外的压缩非正。因此固定 $C$ 时，$R_\varepsilon-S$ 的加权正谱和就是 $\lambda$。
+
+反向使用 $\operatorname{Tr}X_+=\operatorname{Tr}X+\operatorname{Tr}(-X)_+$，以及因果归一化
+$\operatorname{Tr}(S(C\otimes I_D))=1$，得到固定 $C$ 时 $S-R_\varepsilon$ 的加权正谱和为
+
+$$
+\lambda+1-\operatorname{Tr}(R_\varepsilon(C\otimes I_D))
+=\lambda+\varepsilon(1-q-t).
+$$
+
+所以完整双向事件误差恰为
+
+$$
+N(R_\varepsilon-S)
+=\max_{0\le q,t\le1}
+\left[\lambda(P;q,t)+\varepsilon(1-q-t)_+\right].
+\tag{59.14}
+$$
+
+补块 $S_\perp$ 的细节通过归一化迹项进入此式；其正质量没有被丢弃。
+

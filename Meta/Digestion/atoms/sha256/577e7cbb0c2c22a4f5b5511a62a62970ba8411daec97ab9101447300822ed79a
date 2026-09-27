@@ -1,0 +1,4 @@
+**命题 14.4（所有态的可识别性判据）。** 完整事件律唯一确定任意密度矩阵，当且仅当 $\mathcal V_\infty=\operatorname{Herm}(\mathcal H)$。
+
+证明。充分性由命题 14.2。若空间真小，取非零 $\Delta\in\mathcal V_\infty^\perp$；因 $I\in\mathcal V_\infty$，$\operatorname{Tr}\Delta=0$。充分小的 $a>0$ 使 $I/d\pm a\Delta$ 为不同密度矩阵，而事件律相同。$\square$
+

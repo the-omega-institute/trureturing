@@ -1,0 +1,30 @@
+### 111.6 乘积支持的正交方向仍须在实际零位历史中出现
+
+对于任意非零 $D_z$，因为 $D_z\otimes z\subset R_1$，跨位正交给
+
+$$
+P_{D_z}G_i=0\quad\text{若 }[\eta_i]\ne[z^\perp],\quad 2\le i\le5,
+$$
+
+$$
+P_{D_z}p=0\quad\text{若 }[\eta_1]\ne[z^\perp].
+$$
+
+将 $S=\mathbb Cp+G_2+\cdots+G_5$ 投影到 $D_z\subset S$，可得
+
+$$
+D_z=\operatorname{span}\!\left(
+\{P_{D_z}p:[\eta_1]=[z^\perp]\}
+\cup\bigcup_{\substack{2\le i\le5\\[\eta_i]=[z^\perp]}}P_{D_z}G_i
+\right).
+$$
+
+因此 $z^\perp$ 必在第1至5轮环境中实际出现；若 $\dim D_z=2$，它必须在第2至5轮出现，单个首轮向量不足以张成二维。这一推导只需要 $M\subset N$ 和真实 $S$ 的已执行跨度，不要求 $\kappa_1=2$。
+
+
+本节把 $\dim N_{\mathrm{prod}}=2$ 的实际尾像分为固定四维乘积块与秩一的两方向后继，并保留实际一位通常维数为一的新分支。它没有排除这两种剩余实际尾像，也没有处理 $\dim N_{\mathrm{prod}}=3$ 的全部情形。一般容量区间仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

@@ -1,0 +1,26 @@
+**定理212.4（Choi 导数折角与小特征值的线性启用）。**
+唯一最优 Choi 对跨曲线连续并局部 Lipschitz，但在曲线上关于 $h$ 不可微。
+结果1的导数差具有不随主向量规范消失的投影：
+
+$$
+\boxed{
+P\left[(J_1)_h\big|_{\rm 左}-(J_1)_h\big|_{\rm 右}\right]P
+=-a_cPww^\dagger P\ne0.
+}
+\tag{212.15}
+$$
+
+若 $\lambda_2$ 为最优 $J_1$ 的第二大特征值，则对固定小正 $\epsilon$，
+
+$$
+\boxed{
+\lambda_2
+=c_\lambda(\epsilon)[b(\epsilon)-h]_+
++O([b(\epsilon)-h]_+^2),\qquad
+c_\lambda(\epsilon)=a_c\|Pw\|^2>0.
+}
+\tag{212.16}
+$$
+
+余项可在固定小 $\epsilon$ 区间一致选取。
+

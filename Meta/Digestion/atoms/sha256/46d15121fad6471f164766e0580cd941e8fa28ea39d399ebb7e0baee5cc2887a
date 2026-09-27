@@ -1,0 +1,10 @@
+**命题 30.2（远离零事件权重的来源保留有界控制）。** 对任意来源子集 $\mathfrak S$，若有 $a>0$ 使 $r_\rho\ge a$ 对全部 $\rho\in\mathfrak S$ 成立，则过滤 $\mathcal S_R/r_{\max}$ 在该来源集上的成功率至少为 $a/r_{\max}$，并且
+
+$$
+D(\tau_R(\rho),\tau_R(\sigma))
+\le\frac{r_{\max}}aD(\rho,\sigma)
+\qquad(\rho,\sigma\in\mathfrak S).
+$$
+
+证明。该过滤在原空间上仍然合法，因为 $R/r_{\max}\le I$。成功率公式和定理 25.2 给出两式。这是来源约束下的充分界，不声称对每个受限来源类都达到最优。$\square$
+

@@ -1,0 +1,59 @@
+### 293.2 临界坐标上的两个光滑拼接函数
+
+对实数 $x$，定义
+$$
+G(x)=
+\begin{cases}
+1,&x\le0,\\
+1-(2x^2-x^3)/3,&0\le x\le1,\\
+(3-x)/3,&1\le x\le2,\\
+(1-u)^2(1+u)/3,\quad u=x-2,&2\le x\le3,\\
+0,&x\ge3,
+\end{cases}
+\tag{293.4}
+$$
+以及
+$$
+H(x)=
+\begin{cases}
+0,&x\le0,\\
+2x^2-x^3,&0\le x\le1,\\
+x,&1\le x\le2,\\
+(1-u)^2(2+5u),\quad u=x-2,&2\le x\le3,\\
+0,&x\ge3.
+\end{cases}
+\tag{293.5}
+$$
+各段在端点给同一函数值。$G'$ 在 $x=0,1,2,3$ 依次为 $0,-1/3,-1/3,0$，$H'$ 依次为 $0,1,1,0$，因此二者均为连续可微函数，其导数全局Lipschitz。
+
+逐段求导得到
+$$
+|G'|\le4/9,\qquad |G''|\le4/3,
+\qquad |H'|\le49/15,\qquad |H''|\le16,
+\tag{293.6}
+$$
+二阶导数界在各段内部成立，一阶导数的连续拼接使它们也控制全局Lipschitz常数。
+
+此外 $0\le G\le1$、$H\ge0$。在三个非恒定区间，分别有
+$$
+H\le\tfrac32G,
+\qquad H\le6G,
+\qquad H\le\tfrac{21}{2}G.
+\tag{293.7}
+$$
+第一段使用 $H\le1$、$G\ge2/3$；第二段使用 $H/G=3x/(3-x)\le6$；第三段使用 $H/G=3(2+5u)/(1+u)\le21/2$，在零端点按连续性成立。
+
+令
+$$
+\varepsilon=\eta/144,\qquad A_\varepsilon(x)=G(x)-\varepsilon H(x).
+\tag{293.8}
+$$
+因为 $0<\varepsilon\le1/144$，上述界给
+$$
+0\le A_\varepsilon\le1,
+\qquad |A_\varepsilon'|\le1,
+\qquad |A_\varepsilon''|\le2.
+\tag{293.9}
+$$
+这些常数均不随 $g$ 缩小而增大。
+

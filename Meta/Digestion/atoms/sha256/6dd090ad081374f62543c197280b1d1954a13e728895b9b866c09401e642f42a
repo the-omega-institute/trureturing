@@ -1,0 +1,58 @@
+### 60.1 同边缘的 CPTP 压缩族
+
+取端口序 $A\otimes B\otimes D$，三者均为二维，$B$ 是早输出，$A$ 是晚输入，$D$ 是晚输出。在指定基上记
+
+$$
+x=|0,0,0\rangle,\quad y=|1,0,1\rangle,
+\quad z=|1,1,1\rangle,
+\quad h_0=|0,1,0\rangle,\quad h_1=|0,1,1\rangle,
+\quad v=|1,0,0\rangle.
+$$
+
+对 $0<a<1$、$0<\varepsilon<1$，令
+
+$$
+R_{a,\varepsilon}
+=|\sqrt a\,x+\sqrt{1-\varepsilon}\,y\rangle
+ \langle\sqrt a\,x+\sqrt{1-\varepsilon}\,y|
++|\sqrt{1-a}\,x+\sqrt\varepsilon\,z\rangle
+ \langle\sqrt{1-a}\,x+\sqrt\varepsilon\,z|.
+\tag{60.1}
+$$
+
+这是一个正、秩二的全局通道 Choi 算符。其早期边缘为
+
+$$
+\operatorname{Tr}_D R_{a,\varepsilon}
+=|0,0\rangle\langle0,0|
++(1-\varepsilon)|1,0\rangle\langle1,0|
++\varepsilon|1,1\rangle\langle1,1|.
+\tag{60.2}
+$$
+
+式（60.1）可以由第 55 节三维末输出的纯等距反例作 CPTP 末端处理得到：对输入末端基 $0,1,2$ 使用
+
+$$
+K_0=\sqrt a\,|0\rangle\langle0|+|1\rangle\langle1|,
+\qquad
+K_1=\sqrt{1-a}\,|0\rangle\langle0|+|1\rangle\langle2|.
+\tag{60.3}
+$$
+
+$K_0^*K_0+K_1^*K_1=I_3$；两条原先的 $xy$、$xz$ 相干都保留但衰减，而 $yz$ 相干被丢弃。
+
+因果修复与完整 tester 的合同为
+
+$$
+\begin{gathered}
+S\succeq0,\quad\operatorname{Tr}_D S=I_A\otimes\sigma,
+\quad\operatorname{Tr}\sigma=1,\\
+C\succeq0,\quad\operatorname{Tr}_A C=I_B,
+\quad0\preceq E\preceq C\otimes I_D,\\
+D(R,S)=\max_{C,E}|\operatorname{Tr}((R-S)E)|.
+\end{gathered}
+\tag{60.4}
+$$
+
+全转置已吸收到 $C$ 的配对约定，事件量词包含全部量子参考与记忆。式（60.2）给所有反馈总响应的范围 $[1-\varepsilon,1+\varepsilon]$，故归一化缺陷为 $\varepsilon$。可用 $AB$ 的对角投影 $C_+=|00\rangle\langle00|+|11\rangle\langle11|$、$C_-=|01\rangle\langle01|+|10\rangle\langle10|$ 达到两端。
+

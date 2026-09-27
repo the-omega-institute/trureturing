@@ -1,0 +1,11 @@
+**定义 29.1（整个来源类上的条件数）。** 假设 $\dim\mathcal H_P\ge2$，记
+
+$$
+\kappa_R=\frac{r_{\max}}{r_{\min}},\qquad
+L_R=\sup_{\rho\ne\sigma\text{ 支撑于 }P}
+\frac{D(\tau_R(\rho),\tau_R(\sigma))}{D(\rho,\sigma)},
+\qquad D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1.
+$$
+
+两态可以为混态，且共享同一个已知 $R$。$L_R$ 是归一化状态变换的灵敏度，不是对未知仪器误差的界。
+

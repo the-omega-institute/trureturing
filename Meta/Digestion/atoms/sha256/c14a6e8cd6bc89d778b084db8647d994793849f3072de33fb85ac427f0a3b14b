@@ -1,0 +1,83 @@
+**定理 79.3（信息矩、方差与同一残差的相关性）。** 对每个固定 $p>0$ 和整数 $k\ge0$，
+
+$$
+\begin{aligned}
+\mathbb E_x|H_M|^p&\longrightarrow\mathbb E|c+\Xi|^p,\\
+\mathbb E_xH_M^k&\longrightarrow\mathbb E(c+\Xi)^k,
+\qquad\Xi=(Z^2-G_\infty^2)/2.
+\end{aligned}
+\tag{79.7}
+$$
+
+任意固定的 $(G,H_M)$ 混合多项式矩也收敛。以实际纤维均值中心化后，
+
+$$
+\begin{aligned}
+\mathbb E_x(H_M-\mathbb E_xH_M)^{2m}&\longrightarrow[(2m-1)!!]^2,\\
+\mathbb E_x(H_M-\mathbb E_xH_M)^{2m+1}&\longrightarrow0,\qquad m\ge1,\\
+\mathbb E_x|H_M-\mathbb E_xH_M|^p
+ &\longrightarrow\frac{2^p\Gamma((p+1)/2)^2}{\pi}.
+\end{aligned}
+\tag{79.8}
+$$
+
+特别地，$\operatorname{Var}_x i_x(R,Y)\to1$，四阶中心矩趋于 $9$，
+$\operatorname{Cov}_x(H_M,G^2)\to-1$。
+
+证明。必须另证一致可积，不能对 (79.3) 直接取矩。
+固定确定 $B\ge1,K<\infty$，限制在
+$\|f_x\|_\infty\le B$、$\mathbb E_xY^2\le K$ 的环境类。
+对任意 $r,R>0$，
+
+$$
+\Pr_x\{-\ln f_x(Y)>r\}\le2Re^{-r}+K/R^2.
+\tag{79.9}
+$$
+
+第一项是区间 $[-R,R]$ 内密度小于 $e^{-r}$ 部分的积分上界，第二项是二阶矩尾界。
+取 $R=e^{r/3}$，得到
+
+$$
+\Pr_x\{(-\ln f_x(Y))_+>r\}\le(2+K)e^{-2r/3},\qquad
+(\ln f_x(Y))_+\le\ln B.
+\tag{79.10}
+$$
+
+对任意固定 $s>0$ 分层积分，
+$\mathbb E_x[(-\ln f_x(Y))_+]^s\le(2+K)\Gamma(s+1)(3/2)^s$。
+由 (79.6) 第一种表达及 $G$ 的精确 Gaussian 矩，便得
+
+$$
+\mathbb E_x|\ln f_x(Y)|^s\le C_{s,B,K},\qquad
+\mathbb E_x|H_M|^s\le C'_{s,B,K}.
+\tag{79.11}
+$$
+
+不要求 $G$ 与 $f_x(Y)$ 独立，也不要求 $Y$ 的任意高阶矩。
+每个有限纤维的密度上确界和二阶矩均有限，因此全部信息绝对矩在每个纤维上存在。
+这不证明其全原数据期望一致可积。
+
+固定 $s>p$，(79.11) 给
+$\mathbb E_x[|H_M|^p\mathbf1_{|H_M|>A}]\le C'_{s,B,K}A^{p-s}$。
+对连续截断使用 (79.3)，再令 $A\to\infty$，得到固定环境类上的矩转移。
+定理 77.2 与 $\mathbb E_xY^2=\mathbb E_xT^2+\sigma_M^2$
+使这类环境的补集原数据概率任意小；最后令该失败容差趋零，证明 (79.7)。
+对混合矩用 Hölder，把所需更高阶 $|G^jH_M^k|$ 矩分成精确 Gaussian 矩
+与 (79.11)，同样得到一致可积。
+
+经典正态旋转给 $\Xi=UV_*$，所以
+
+$$
+\mathbb Ee^{it\Xi}=(1+t^2)^{-1/2},\qquad
+\mathbb E\Xi^{2m}=[(2m-1)!!]^2,\qquad
+\mathbb E\Xi^{2m+1}=0,\qquad
+\mathbb E|\Xi|^p=\frac{2^p\Gamma((p+1)/2)^2}{\pi}.
+\tag{79.12}
+$$
+
+第一式可由条件于 $U$ 后积分 $e^{-t^2U^2/2}$ 直接得到。
+均值收敛给 $\mathbb E_xH_M\to c$；展开整数中心矩并对绝对中心矩再用截断，证明 (79.8)。
+同一联合极限中
+$\operatorname{Cov}(c+(Z^2-G_\infty^2)/2,G_\infty^2)=-1$。
+标量乘积表示识别的是分布，未把信息波动与测量残差变成独立变量。证毕。
+

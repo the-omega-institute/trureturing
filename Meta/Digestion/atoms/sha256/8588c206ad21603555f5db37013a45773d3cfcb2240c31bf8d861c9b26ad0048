@@ -1,0 +1,16 @@
+### 90.1 同一酉的两个位纤维由正交射线配对
+
+对环境射线 $[z]$，令
+
+$$
+\mathcal G_i([z])
+=\{y\in K:y\otimes z\in\operatorname{ran}V_i\},
+\qquad g_i([z])=\dim\mathcal G_i([z]).
+$$
+
+只取射线，因此不依赖非零代表的长度。令
+
+$$
+z^\perp=-\overline{z_1}e_0+\overline{z_0}e_1.
+$$
+

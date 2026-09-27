@@ -1,0 +1,4 @@
+**命题 236.2（可见返回后的行为变化证明当前读数遗漏了状态）。** 再给一个由完整状态决定的回应 $p:X\to A$。如果 $q(T_wx)=q(x)$，但 $p(T_wx)\ne p(x)$，就有 $T_wx\ne x$；而且不存在 $r:Q\to A$ 使 $p=r\circ q$。前一句因相同状态必有相同回应，后一句因该分解会迫使同一 $q$ 读数给出同一 $p$。
+
+这对应上述模块的 `visible_loop_policy_change_witnesses_pointed_holonomy` 与 `strategy_factorization_makes_visible_loops_invisible`。反向结论不自动成立：内部变化可以不影响所选回应。只有增加足够的检测条件，例如 $x\mapsto(q(x),p(x))$ 单射，才可从两项读数都返回推出完整状态返回；相应项目声明为 `faithful_joint_readout_kills_hidden_holonomy`。
+

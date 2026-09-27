@@ -1,0 +1,17 @@
+### 40.4 历史同构运输的不变量范围
+
+当局部接口带有历史档案、当前集合、选择集合和因果关系时，transition 还必须运输这些结构。仓内 `HistoricalCongruence` 对历史同构的 product、complement 和 temporal composition 逐项运输 attributes、causal、current 与 selection，并保持相应的边界关系；它本身没有把 records、合法域、失败标签、reference 或 permissions 纳入同一结论。
+
+抽象地，若 $h_i:S_i\simeq S_i'$ 是局部接口的历史同构，则对每个局部操作 $T$ 应有
+
+$$
+h_{\mathrm{out}}\circ T_i
+=
+T_i'\circ h_{\mathrm{in}},
+\tag{40.11}
+$$
+
+若任务还要求记录、合法域和失败标签随接口运输，则必须把它们作为额外的 transition 假设写入：它们也要交换。仅有状态集合之间的双射不够；它可能把当前显示对应起来，却不保持因果边或选择集合，因而不能作为 transition 参与全局拼接。
+
+若多个局部接口沿路径运输满足 (40.11)，闭路后的 holonomy 至少必须保持声明的记录和操作；是否要求 holonomy 恒等，取决于任务是恢复裸状态、恢复带参考的状态，还是允许一个可观测的 gauge 变换。这里的“允许 gauge”必须写入目标共同核，不能在证明失败后临时扩大等价关系。
+

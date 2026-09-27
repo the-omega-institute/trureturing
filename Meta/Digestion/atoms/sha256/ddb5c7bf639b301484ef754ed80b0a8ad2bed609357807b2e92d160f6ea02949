@@ -1,0 +1,65 @@
+**定义 227.2（Gram 矩阵的 Bloch 表示）。**
+
+从本定义到定理 227.7 的第 227.7.3 项先设 $m\ge2$；一维量子输出由第 227.7.4 项单独处理。采用 Pauli 矩阵
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+对单位输入 $v=(x,y)$，约定
+$$
+s(v)=\bigl(2\operatorname{Re}(\overline xy),
+2\operatorname{Im}(\overline xy),|x|^2-|y|^2\bigr),
+\qquad
+P_v=\frac{I+s(v)\cdot\sigma}{2}.
+\tag{227.GD.4}
+$$
+令 $W_v=[Av\ Bv]$，并定义 Kraus 系数空间中的 Gram 矩阵
+$$
+T(s(v))=W_v^\dagger W_v
+=\begin{pmatrix}
+\|Av\|^2&v^\dagger A^\dagger Bv\\
+v^\dagger B^\dagger Av&\|Bv\|^2
+\end{pmatrix}.
+$$
+它对输入密度矩阵线性，故唯一可写成
+$$
+\boxed{
+T(s)=(a+t\cdot s)I_2+(u+Ls)\cdot\sigma,
+}
+\tag{227.GD.5}
+$$
+其中 $a\in\mathbb R$、$t,u\in\mathbb R^3$、$L\in M_3(\mathbb R)$。这里 $T$ 是这一明确 Gram 约定；不把它未经转置便认作通常的环境通道，也不假设它保迹。
+
+对单位系数 $c=(c_0,c_1)$，记 $n=s(c)$。则
+$$
+\|(c_0A+c_1B)v\|^2
+=c^\dagger T(s)c
+=f(s,n),
+$$
+$$
+f(s,n)=a+t\cdot s+u\cdot n+n\cdot Ls.
+\tag{227.GD.6}
+$$
+记闭单位球为 $\mathbb B$，球面为 $S^2$。定义
+$$
+\lambda_\pm(s)=a+t\cdot s\pm\|u+Ls\|,
+$$
+$$
+\alpha=\min_{s\in S^2}\lambda_+(s),
+\qquad
+\beta=\max_{s\in S^2}\lambda_-(s).
+\tag{227.GD.7}
+$$
+$\lambda_\pm$ 是 $T(s)$ 的两个本征值，也给出 $\Gamma(P_v)$ 的两个可能非零本征值。因此 $\beta$ 是输入端口的第二大本征值尾量。
+
+由（227.GD.6），
+$$
+\delta
+=\min_{n\in S^2}\max_{s\in S^2}f(s,n)
+=\min_{n\in S^2}
+\left[a+u\cdot n+\|t+L^Tn\|\right].
+\tag{227.GD.8}
+$$
+一般弱极小极大已给 $\beta\le\delta$。下面确定何时还需要 $\alpha$。
+

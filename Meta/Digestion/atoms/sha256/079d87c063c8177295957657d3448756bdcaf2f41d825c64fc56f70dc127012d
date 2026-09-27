@@ -1,0 +1,87 @@
+### 255.1 给定矩阵与三个数据条件
+
+固定§248的已标定通道及同一有限维参考空间 $E$。记
+$$
+A\ge B>0,\quad b_0^2=B,\quad
+\ell=\sqrt{A+B},\quad D=\frac\ell2,\quad U=\frac{\sqrt A}{2},
+\qquad
+\kappa=\frac{A-B}{A+B}\in[0,1),
+\tag{255.1}
+$$
+输入算子仍为
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X.
+\tag{255.2}
+$$
+给定 $E$ 上任意两份 Hermitian 矩阵 $R_a,R_b$。它们目前只是候选响应，并未假定来自某个态。
+
+**条件一：共同响应幅度。** 要求
+$$
+|R_a|=|R_b|=:M\ne0.
+\tag{255.3}
+$$
+令 $S=\operatorname{supp}M$，$P_0$ 为 $S$ 的正交投影，并取
+$$
+H_a=\operatorname{sign}R_a,
+\qquad H_b=\operatorname{sign}R_b,
+\tag{255.4}
+$$
+其中核上取零。在 $S$ 上，两者都是 Hermitian 对合。谱函数性质给
+$$
+R_w=H_wM=MH_w,
+\qquad w=a,b.
+\tag{255.5}
+$$
+
+**条件二：允许的相对角谱。** 在 $S$ 上定义
+$$
+J=\frac12(H_aH_b+H_bH_a).
+\tag{255.6}
+$$
+要求
+$$
+\operatorname{spec}(J)\subseteq
+\begin{cases}
+\{\kappa,1\},&A>B,\\
+\{0,1,-1\},&A=B.
+\end{cases}
+\tag{255.7}
+$$
+因为 $J$ 为 Hermitian，该条件分别等价于有限矩阵恒等式
+$$
+\begin{cases}
+(J-\kappa I_S)(J-I_S)=0,&A>B,\\
+J(J^2-I_S)=0,&A=B.
+\end{cases}
+\tag{255.8}
+$$
+在 $S$ 内定义谱投影 $Q=\mathbf1_{\{\kappa\}}(J)$，再向 $E$ 的未占用方向补零。也可显式写成
+$$
+Q\big|_S=
+\begin{cases}
+\dfrac{I_S-J}{1-\kappa},&A>B,\\
+I_S-J^2,&A=B,
+\end{cases}
+\qquad
+P=P_0-Q.
+\tag{255.9}
+$$
+特别在 $A=B$ 时，必须先限制到 $S$；环境中未占用的零方向不属于 $Q$。
+
+**条件三：权重归一化与内点。** 定义
+$$
+\rho_*=\left(\frac Q\ell+\frac P{\sqrt A}\right)M,
+\qquad
+\theta_*:=\operatorname{Tr}(Q\rho_*).
+\tag{255.10}
+$$
+要求
+$$
+\operatorname{Tr}\rho_*=1,
+\qquad0<\theta_*<1.
+\tag{255.11}
+$$
+以下证明 $M$ 与 $J,Q,P$ 自动交换，因此 $\rho_*$ 是正半定矩阵。这里的 $\theta_*$ 完全由给定数据计算，尚未借用任何未知源的形成纠缠。
+

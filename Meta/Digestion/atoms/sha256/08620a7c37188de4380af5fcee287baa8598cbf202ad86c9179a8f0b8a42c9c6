@@ -1,0 +1,57 @@
+**定理 185.1（共同最小多项式递推）。** 令 $\mu_{\overline T}(z)$ 为 $\overline T$ 的最小多项式，次数记为 $\mu$。写
+
+$$
+\mu_{\overline T}(z)
+=z^\mu+c_{\mu-1}z^{\mu-1}+\cdots+c_0.
+$$
+
+则每个响应序列 $h_{ij}(k)=f_i(T^k b_j)$ 都满足
+
+$$
+\boxed{
+ h_{ij}(k+\mu)
++c_{\mu-1}h_{ij}(k+\mu-1)
++\cdots
++c_0h_{ij}(k)=0
+}
+\tag{185.1}
+$$
+
+对所有 $i,j,k\ge0$ 成立。特别地，Cayley–Hamilton 定理给出一个次数不超过 $r_{\mathrm H}$ 的共同递推。
+
+反过来，若一个非零首一多项式 $q$ 使全部响应序列都满足由 $q$ 给出的同样线性递推，则
+
+$$
+q(\overline T)=0,
+$$
+
+所以 $\deg q\ge\mu_{\overline T}$。因此共同递推的最小次数正是最小商转移的最小多项式次数。
+
+### 证明
+
+由最小多项式恒等式
+
+$$
+\overline T^\mu+c_{\mu-1}\overline T^{\mu-1}+\cdots+c_0I=0
+$$
+
+左乘任意 $\overline T^k$，再作用于 $\overline b_j$ 并由 $\overline f_i$ 读取，得到（185.1）。Cayley–Hamilton 给出次数上界。
+
+反过来，设 $q$ 使全部序列满足递推。对任意 $m,j$，把递推式移位 $m$ 步，得到
+
+$$
+\overline f_i\,\overline T^n q(\overline T)\overline T^m\overline b_j=0
+$$
+
+对所有 $i,n$ 成立。可达向量 $\overline T^m\overline b_j$ 张成整个 $\overline{\mathcal R}$，而商的定义已经删去了所有对全部 $\overline f_i\overline T^n$ 不可观测的方向，所以
+
+$$
+q(\overline T)\overline T^m\overline b_j=0
+$$
+
+对所有 $m,j$。故 $q(\overline T)=0$，最小多项式的定义给出次数下界。证毕。
+
+这份递推只说明精确代数响应的有限维闭合；从有限带噪读数估计递推系数，还需要额外的谱间隔、样本量和数值稳定性合同。
+
+---
+

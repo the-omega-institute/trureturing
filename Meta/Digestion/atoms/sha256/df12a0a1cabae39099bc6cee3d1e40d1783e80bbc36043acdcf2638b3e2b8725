@@ -1,0 +1,12 @@
+**推论 68.3（先认证有限性，再传递成本差）。** 若名义成本势 $\widehat T$ 存在，$\widehat M=\|\widehat T\|_\infty$，且 $\delta\widehat M<1$，则实际仪器满足
+
+$$
+\boxed{
+\|T\|_\infty\le\frac{\widehat M}{1-\delta\widehat M},\qquad
+\|T-\widehat T\|_\infty
+\le\frac{\delta\widehat M^2}{1-\delta\widehat M}.
+}
+$$
+
+证明。取 $B=\widehat T$。由其收敛级数，$\widehat T-\widehat{\mathcal A}(\widehat T)=I$，故 $\varepsilon=1$。定理 68.2 先给实际成本存在与第一式，此后两侧都满足定理 66.3 的假设。将第一式代入其乘积界即得第二式。$\square$
+

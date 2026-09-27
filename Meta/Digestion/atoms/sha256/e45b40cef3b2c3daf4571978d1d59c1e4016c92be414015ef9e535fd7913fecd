@@ -1,0 +1,22 @@
+**定理 19.2（有限维剩余尾项的统一收缩）。** 若 $R\ne0$，存在整数 $M\ge1$ 和 $0<q<1$，使
+
+$$
+R_M\le qR,\qquad
+0\le R_n\le q^{\lfloor n/M\rfloor}R.
+$$
+
+因此范数收敛的算子级数
+
+$$
+T=\sum_{n=0}^{\infty}R_n
+$$
+
+满足
+
+$$
+0\le T\le\frac M{1-q}R,
+\qquad T-\mathcal A(T)=R.
+$$
+
+证明。$0\le R_n\le R$ 且 $R_n\to0$。正算子被 $R$ 控制时，其核包含 $\ker R$，所以可限制到 $P=\operatorname{supp}R$。在该空间 $R^{-1/2}$ 有界，$R^{-1/2}R_nR^{-1/2}\to0$。选 $M$ 使其范数小于某个 $q<1$，得到第一式。正性与 $R_n=\mathcal A^nR$ 推出 $R_{kM}\le q^kR$；对 $0\le j<M$，再用 $\mathcal A^jR\le R$ 得到第二式。按块求和得 $T$ 的界，逐项移位得方程。若 $R=0$，所有 $R_n$ 与 $T$ 均为零。$\square$
+

@@ -1,0 +1,23 @@
+**定理202.1（二阶近优类的一致差额公式）。**
+对每个固定有限 $K$，全部 $h\in I$ 及
+$\Gamma\in\mathcal N_{\epsilon,K}(h)$ 一致满足
+
+$$
+\boxed{
+\begin{aligned}
+\frac{e_\epsilon(h,\Gamma)-E_\epsilon(h)}{\epsilon^2}
+={}&\left(x+\frac{a_{\mathrm{eff}}}{2}\right)^2
++\frac14\sum_{j,\alpha}
+\left|\frac c\epsilon+itd\right|^2\\
+&+\frac{\beta\delta}{4\epsilon}U
++\frac{\beta R}{4\epsilon}V
++\frac{h}{6\epsilon}\sum_j|M_j-m|^2
++o_{I,K}(1).
+\end{aligned}}
+\tag{202.4}
+$$
+
+余项的一致性指：对上述整个近优类取余项绝对值的上确界，
+该上确界在 $\epsilon\downarrow0$ 时趋于零。
+五个非负项及其和均不依赖 Kraus 表示。
+

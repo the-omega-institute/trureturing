@@ -1,0 +1,42 @@
+**定理 56.2（带噪读数的上下包络证书）。** 预先固定 $r\ge1$ 个 $q_i\in(0,1)$。若同一真实等待律满足
+
+$$
+|a(q_i)-b_i|\le\varepsilon_i\quad(1\le i\le r),
+\qquad\varepsilon_i\ge0,
+$$
+
+取实系数 $c_0,c_1,\ldots,c_r$，置
+
+$$
+h(n)=c_0+\sum_{i=1}^r c_i f_{q_i}(n).
+$$
+
+对任意非负扩展实值目标 $g$，若 $h(n)\le g(n)$ 对全部有限 $n$ 及 $n=\infty$ 成立，则
+
+$$
+\boxed{
+\mathbb E g(\mathsf N)
+\ge c_0+\sum_i c_i b_i-\sum_i|c_i|\varepsilon_i.
+}
+$$
+
+若反向的逐点不等式 $h(n)\ge g(n)$ 在同一完整定义域成立，则
+
+$$
+\boxed{
+\mathbb E g(\mathsf N)
+\le c_0+\sum_i c_i b_i+\sum_i|c_i|\varepsilon_i.
+}
+$$
+
+证明。$h$ 有界可积，且 $\mathbb Eh=c_0+\sum_i c_i a(q_i)$。逐点序关系可取期望，而
+
+$$
+\left|\sum_i c_i(a(q_i)-b_i)\right|
+\le\sum_i|c_i|\varepsilon_i.
+$$
+
+两式合并即得。$\square$
+
+如果上述全部读数区间在一个概率至少 $1-\alpha$ 的共同事件上成立，那么在这个事件上，所有满足逐点条件的证书同时有效。可以读完数据后再选择系数或包络，而无需仅因这种选择重新支付并集界；但所用全部读数必须已包含在共同事件内，选出的包络仍须真正满足全部逐点不等式。这个结论没有证明最优证书存在、强对偶成立，或无穷多个逐点约束可以免费核验。
+

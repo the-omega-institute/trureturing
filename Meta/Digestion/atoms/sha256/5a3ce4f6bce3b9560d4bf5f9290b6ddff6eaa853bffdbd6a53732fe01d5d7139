@@ -1,0 +1,13 @@
+**定义 447.1（有限实验与方向明确的误差）。** 取有限非空状态集 $\Theta$、观察集 $X,Y$。实验 $K:\Theta\to\Delta_X$ 与 $L:\Theta\to\Delta_Y$ 指定每个未知状态下的观察律。模拟器 $T:X\to\Delta_Y$ 只能读取已经取得的 $x$ 并使用额外随机量，不能读取未知的 $\theta$。记
+
+$$
+(KT)_\theta(y)=\sum_xK_\theta(x)T_x(y),\qquad
+d(K\longrightarrow L)=
+\min_T\max_{\theta\in\Theta}
+\operatorname{TV}(L_\theta,(KT)_\theta),
+$$
+
+其中 $\operatorname{TV}(p,q)=\frac12\sum|p-q|$。有限个行概率单纯形的乘积紧致，目标函数连续，所以此处最小值达到。零误差等价于存在一个精确模拟器。箭头从提供实际观察的一侧，指向想要模拟的一侧；它表示替代能力，不表示时间、因果来源或本体生成的方向。
+
+项目 FiniteDeficiencyRiskTransfer 的 finiteDeficiency 以“目标、来源”为参数顺序，且用扩展非负实数值表示下确界；本文的 $d(K\longrightarrow L)$ 对应其中 finiteDeficiency $L\,K$。本批各行是概率行，所有集合非空，误差在 $[0,1]$ 中，因此可使用普通实数的有限最小值，不把参数顺序倒过来。
+

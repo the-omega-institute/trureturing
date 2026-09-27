@@ -1,0 +1,25 @@
+**定义 182.1（同一实 Schur 族的二元决策）。** 固定 $0<a<1$ 和
+$$
+2a-1<u_0<u_1<1,
+\qquad
+F(a,u)=\begin{pmatrix}1&a&u\\a&1&a\\u&a&1\end{pmatrix},
+\qquad
+\mathcal T_u(X)=F(a,u)\odot X.
+\tag{182.1}
+$$
+该范围内 $F(a,u)$ 正定且对角为一，因此 $\mathcal T_u$ 是通道。一次实验可自由选择与未知假设无关的信号—参考输入，使用一次 $\mathcal T_{u_j}$，再作联合测量。假设 $H_j$ 的先验为 $\pi_j$；损失为猜错的概率。定义
+$$
+h_j=\frac{1+u_j}{2},\quad \ell_j=1-h_j,\quad
+\pi_0=\frac{h_1}{h_0+h_1},\quad
+\pi_1=\frac{h_0}{h_0+h_1},\quad
+k=\pi_0-\pi_1=\frac{u_1-u_0}{2+u_0+u_1}>0.
+\tag{182.2}
+$$
+这里先固定两条候选通道，再指定这一组合法先验；它不是对全部先验的最优式。均衡 $02$ 探针 $|+\rangle=(|0\rangle+|2\rangle)/\sqrt2$ 的输出为
+$$
+\tau_j=h_j|+\rangle\langle+|+\ell_j|-\rangle\langle-|,
+\qquad | -\rangle=(|0\rangle-|2\rangle)/\sqrt2.
+\tag{182.3}
+$$
+故保留整个输出态与保留二项概率 $(h_j,\ell_j)$ 对这组实验等价。本文使用第15.3节的 Schur 输出等距表示与第121节的实验比较原则。一般量子统计比较的文献为 Buscemi，*Comparison of quantum statistical models: equivalent conditions for sufficiency*，arXiv:1004.3794v4：定义7比较全部决策集合与收益，式（49）—（50）定义 CPTP 充分性；定理3的统计态射与命题5的完全比较须区分。以下通过具体风险差与正性障碍论证，不借用任意维度下未经限定的比较逆定理。
+

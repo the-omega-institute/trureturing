@@ -1,0 +1,28 @@
+#### 6.8.1 原始读数、阈值与向前等待
+
+对任意已知非负累计事件数 $n=cP+s$，其中 $0\le s<P$，直接有
+$$
+d_k(x+n)=\bigl(b+c+\mathbf1_{\{r\ge P-s\}}\bigr)\bmod p.
+\tag{AS.2}
+$$
+该式包括整个状态的环绕。确实，对任意非负整数 $z$，写 $z=apP+v$、$0\le v<pP$，则 $\lfloor z/P\rfloor=ap+\lfloor v/P\rfloor$，所以先模 $pP$ 后取商等于先取商再模 $p$。再将 $n=cP+s$ 代入，其整数恒等式为
+$$
+\left\lfloor\frac{bP+r+n}{P}\right\rfloor=b+c+\left\lfloor\frac{r+s}{P}\right\rfloor.
+$$
+由于 $0\le r+s<2P$，商 $\lfloor(r+s)/P\rfloor$ 恰为 $\mathbf1_{\{r\ge P-s\}}$。因此任意有限块模型的原始式同样为
+
+$$
+R_{p,P}(b,r;n)=
+\left(b+c+\mathbf1_{\{r\ge P-s\}}\right)\bmod p.
+$$
+
+当 $s=0$，指示量恒为零。否则从实际读数减去已知的 $b+c$、再对 $p$ 取模，恰得到 $0$ 或 $1$，由于 $p\ge2$ 两值不同。高位本身有 $p$ 种可能符号，但在已知 $b$ 和本次动作之后，至多增加一个二元分支。发生环绕也不损害此解码。
+
+任给阈值 $1\le\theta<P$，取 $s=P-\theta$，即可读取 $\mathbf1_{\{r\ge\theta\}}$。若当前事件数为 $n_0$，选择严格晚于 $n_0$ 且模 $P$ 等于 $s$ 的最早事件数，就只需再等
+$$
+\delta(n_0,\theta)=((P-\theta-n_0)\bmod P),
+\quad\text{若此值为零则取 }P.
+\tag{AS.3}
+$$
+这里只前进；归一化公式中的 $c$ 由累计事件数给出，不能忘记该档案。为获取下一个模 $P$ 相位，无需等待整个状态周期 $pP$。
+

@@ -1,0 +1,165 @@
+**定理 18.3（未知方向的恢复与三种信息任务的严格分离）。** 在定义 18.1
+的假设下，两种实验都满足
+
+```math
+\lim_{d\to\infty}H_{\mathcal E,q}^{\mathrm o}
+=\lim_{d\to\infty}H_{\mathcal E,\mathrm u}^{\mathrm o}
+=\begin{cases}
+0,&\alpha\gt\alpha_A,\\[0pt]
+1,&\alpha\lt\alpha_A,
+\end{cases}
+\qquad
+\lim_{d\to\infty}F_{\mathcal E}^{\mathrm o}
+=\lim_{d\to\infty}J_{\mathcal E}
+=\begin{cases}
+0,&\alpha\gt\alpha_E,\\[0pt]
+1,&\alpha\lt\alpha_E.
+\end{cases}
+\tag{18.27}
+```
+
+设 $`\alpha_D(r,\beta)`$ 是 $`B_r(\alpha_D)=\beta`$ 的唯一解，则
+
+```math
+0\lt\alpha_D(r,\beta)
+\lt\alpha_A(r,\beta)=\frac{\beta}{\phi(r)}
+\lt\frac1{\phi(r)}\lt\alpha_E(r,\beta)\lt\infty.
+\tag{18.28}
+```
+
+因而在 $`\alpha_D\lt\alpha\lt\alpha_A`$ 区间，方向错误率可一致趋零，
+但两种支持 Hamming 极小极大风险均趋一；在
+$`\alpha_A\lt\alpha\lt\alpha_E`$ 区间，几乎全支持与方向可以同时恢复，
+而精确支持及联合恢复的极小极大错误率均趋一；在 $`\alpha\gt\alpha_E`$
+区间，联合精确错误率趋零。$`\alpha\lt\alpha_D`$ 时方向极小极大错误率趋于
+$`1/2`$，支持风险的下侧结论仍成立。
+
+此外，对固定 $`\beta\in(1/2,1)`$，标量相界函数满足
+
+```math
+\lim_{r\downarrow0}\frac{r^2\alpha_A(r,\beta)}2=\beta,\qquad
+\lim_{r\downarrow0}\frac{r^2\alpha_E(r,\beta)}2
+=(1+\sqrt{1-\beta})^2.
+\tag{18.29}
+```
+
+右端是上述高斯选择文献中的两条已知归一化相界。
+(18.29) 只给出固定振幅相界函数的端点极限；(18.27) 不包含随维数变化的
+$`r`$、未知 $`q,r`$ 的适应性、任何等号情形或两个完整实验的渐近等价性。
+精确恢复的未知方向结论采用错误概率，不把它加强为未归一化期望 Hamming 损失趋零。
+
+证明。先构造贯穿几乎全恢复区间的方向规则。设
+$`m=\alpha\phi(r)\gt\beta`$，选择固定 $`\beta\lt x\lt m`$，
+在原始观测上形成 (18.8) 的出发行辅助得分 $`Z_u`$，并置
+
+```math
+T_x=\sum_{u\in C_+}\mathbf1_{\{Z_u\ge x\ell\}},\qquad
+\widehat\varepsilon=
+\begin{cases}
++,&T_x\gt q/2,\\[0pt]
+-,&T_x\le q/2.
+\end{cases}
+\tag{18.30}
+```
+
+真实正向时，每条信号行低于阈值的概率趋零，所以未越界信号数的期望为
+$`o(q)`$，Markov 不等式给出正向错误概率趋零。
+真实反向时，(17.7) 的每条出发行比较律都精确为 $`Q_0`$，故
+
+```math
+\mathbb E_{S,-}^{\mathcal E}T_x
+=M^{1-I_{\alpha,r}(x)+o(1)}+O(M^{1-D})=o(q),\qquad
+\max_{S,\varepsilon}
+\mathbb P_{S,\varepsilon}^{\mathcal E}
+ \{\widehat\varepsilon\ne\varepsilon\}\longrightarrow0.
+\tag{18.31}
+```
+
+这里使用 $`I_{\alpha,r}(x)\ge x\gt\beta`$，再用 Markov 不等式。
+不必知道极限参数：取
+$`\beta_M=\log(M/q)/\ell`$、$`\alpha_M=\lambda/\ell`$，
+将阈值系数换为 $`x_M=(\beta_M+\alpha_M\phi(r))/2`$ 即可；
+它趋向严格位于 $`\beta,m`$ 之间的常数，(18.15) 的尾估计仍适用。
+
+估计方向为反向时对同一份数据施以 $`\mathcal R`$，然后按
+$`W`$ 取最大的 $`q`$ 行。记所得支持为 $`\widehat S`$，
+记真实方向已知时对同一数据应用该排序所得支持为 $`T_q^\varepsilon`$。
+在方向判断正确的事件上两者相同，而且二者始终输出 $`q`$ 元集合，所以逐点有
+
+```math
+\begin{aligned}
+L_q(\widehat S,S)
+ &\le\mathbf1_{\{\widehat\varepsilon\ne\varepsilon\}}
+       +L_q(T_q^\varepsilon,S),\\[0pt]
+L_{\mathrm u}(\widehat S,S)
+ &\le2\mathbf1_{\{\widehat\varepsilon\ne\varepsilon\}}
+       +L_{\mathrm u}(T_q^\varepsilon,S),\\[0pt]
+\mathbf1_{\{(\widehat S,\widehat\varepsilon)\ne(S,\varepsilon)\}}
+ &\le\mathbf1_{\{\widehat\varepsilon\ne\varepsilon\}}
+       +\mathbf1_{\{T_q^\varepsilon\ne S\}}.
+\end{aligned}
+\tag{18.32}
+```
+
+无需拆分样本，也无需对方向估计与排序规则假设独立。
+由定理 18.2 及 (18.31) 得到 (18.27) 的全部上侧。
+向估计者揭示真实方向只能降低风险，故已知方向的 Bayes 下界也给出
+未知方向的支持下界；联合错误至少包含支持错误，得到联合下界。
+受约束风险上界为一，无约束风险由空集规则给出上界一，精确与联合错误上界也为一，
+所以这些下界确实使相应极小极大风险趋一。
+
+由定理 17.3，$`B_r`$ 从 $`1/2`$ 连续严格递增到在
+$`\alpha_1=1/\phi(r)`$ 取得的一，故 $`\alpha_D`$ 存在唯一。
+为与恢复界严格比较，记 $`\alpha_0=1/c_r`$。
+当 $`0\lt\alpha\le\alpha_0`$ 时，(17.5) 给出
+
+```math
+B_r(\alpha)-\alpha\phi(r)
+=\frac12+\alpha\left(\frac{r^2}{2}-\phi(r)\right)
+\ge\frac{g_r'(2)-\phi(r)}{c_r}\gt0.
+\tag{18.33}
+```
+
+其中 $`\phi(r)\gt r^2/2`$ 由其正项幂级数得到，
+$`g_r'(2)\gt g_r'(1)=\phi(r)`$ 由严格凸性得到。
+当 $`\alpha_0\lt\alpha\lt\alpha_1`$ 时，$`B_r(\alpha)`$
+是位于信号均值 $`\alpha\phi(r)`$ 之上的 $`I_{\alpha,r}(x)=1`$ 根，
+所以仍有同一严格比较。特别地
+$`B_r(\alpha_A)\gt\alpha_A\phi(r)=\beta`$，从而
+$`\alpha_D\lt\alpha_A`$。这也说明定理 17.3 的方向规则在整个
+几乎全恢复区间都适用。
+
+另一方面，严格凸性给出 $`0\lt\theta\lt1`$ 时
+
+```math
+-g_r(\theta)\lt\phi(r)(1-\theta),\qquad
+\frac{1-\beta\theta}{-g_r(\theta)}
+\gt\frac{1-\theta}{\phi(r)(1-\theta)}
+=\frac1{\phi(r)}.
+\tag{18.34}
+```
+
+(18.5) 的最小值在内部取得，所以
+$`\alpha_E\gt1/\phi(r)`$；又 $`\beta\lt1`$，故 (18.28) 成立。
+各开放区间的风险结论由定理 18.2、(18.27) 与定理 17.3 组合得到。
+这些下界仍是最坏风险或均匀先验下的断言；例如恒定输出某个指定支持的规则，
+在那个支持上可以没有支持错误。
+
+最后，在 $`0\le\theta\le1`$ 上作一致展开。$`g_r(0)=g_r(1)=0`$
+与关于 $`r`$ 的偶次解析展开使余项也含有 $`\theta(1-\theta)`$ 因子，故
+
+```math
+g_r(\theta)
+=-\frac{r^2}{2}\theta(1-\theta)
+ +O\!\left(r^4\theta(1-\theta)\right),\qquad
+\phi(r)=\frac{r^2}{2}+O(r^4).
+\tag{18.35}
+```
+
+由此 (18.5) 中的缩放目标函数与
+$`(1-\beta\theta)/(\theta(1-\theta))`$ 在整个开区间内有一致的相对
+$`1+O(r^2)`$ 误差。后者的唯一最小点为
+$`\theta=(1+\sqrt{1-\beta})^{-1}`$，最小值为
+$`(1+\sqrt{1-\beta})^2`$，证明 (18.29)。此处只对标量函数取极限，
+没有对 (18.11) 的常数作变动振幅的一致估计。∎
+

@@ -1,0 +1,154 @@
+**定理115.1（单环境二维剩余空间的三尾禁阻）。** 在（115.1）、（115.2）的同一实际合同中，五个尾环境恰有两条不同射线。特别地，三条尾射线不可能。
+
+### 115.1 普通零位纤维的共同三维空间与固定单线
+
+取单位 $\theta\perp\zeta$。由于 $N$ 三维，可写
+
+$$
+N=(D\otimes\zeta)+
+\mathbb C(r_0\otimes\zeta+r_1\otimes\theta),
+\qquad r_0\in S\cap D^\perp,\quad r_1\in S.
+\tag{115.3}
+$$
+
+这里先选取一个补向量，再减去其沿 $D\otimes\zeta$ 的分量。由（115.2），必有
+
+$$
+r_1\ne0,\qquad r_0\notin D+\mathbb Cr_1.
+\tag{115.4}
+$$
+
+若 $r_1=0$，整个 $N$ 都沿 $\zeta$ 乘积生成，违反其乘积生成维数二。若 $r_0=d+cr_1$，则从补向量减去 $d\otimes\zeta$ 得到
+$r_1\otimes(c\zeta+\theta)\in N$，产生不在 $D\otimes\zeta$ 中的乘积向量，仍矛盾。
+
+全部一位乘积接收因子属于 $Q\oplus D$，且完整纤维准确为
+
+$$
+\mathcal G_1([z])=
+\begin{cases}
+Q\oplus D,&[z]=[\zeta],\\
+Q,&[z]\ne[\zeta].
+\end{cases}
+\tag{115.5}
+$$
+
+这是因为任意一位乘积向量沿 $Q\oplus S$ 分解后，其 $S$ 部分仍为 $N$ 中的乘积向量，只能属于（115.2）。完整位像的正交配对因此给
+
+$$
+g_0([z])=
+\begin{cases}
+4,&[z]=[\theta],\\
+2,&[z]\ne[\theta].
+\end{cases}
+\tag{115.6}
+$$
+
+称 $[\theta]$ 为异常零位方向，其余为普通方向。
+
+置
+
+$$
+B_0=S\cap D^\perp,\qquad\dim B_0=3.
+$$
+
+与（115.3）正交可直接读取完整零位纤维。采用对第二变量线性的内积约定，对
+$z=\alpha\zeta+\beta\theta$、$\alpha\ne0$，
+
+$$
+\mathcal G_0([z])
+=\{r\in B_0:\alpha\langle r_0,r\rangle+
+                     \beta\langle r_1,r\rangle=0\};
+\qquad
+\mathcal G_0([\theta])=S\cap r_1^\perp.
+\tag{115.7}
+$$
+
+必须有 $r_1\notin D$。否则所有普通纤维都等于
+$B_0\cap r_0^\perp$，而异常纤维 $S\cap r_1^\perp$ 包含 $B_0$。全部零位乘积接收因子便落在同一四维空间 $S\cap r_1^\perp$，与第101节给出的五维完整接收跨度 $S=S_{R_0}$ 矛盾。
+
+因此 $r_{1,B}=P_{B_0}r_1\ne0$；式（115.4）还使 $r_0,r_{1,B}$ 线性独立。于是
+
+$$
+P=B_0\cap r_0^\perp\cap r_1^\perp
+\tag{115.8}
+$$
+
+恰为一维，且 $P\otimes F\subset R_0$。对任意两条不同普通射线 $X,Y$，式（115.7）给
+
+$$
+\mathcal G_0(X)\ne\mathcal G_0(Y),\qquad
+\mathcal G_0(X)\cap\mathcal G_0(Y)=P,\qquad
+\mathcal G_0(X)+\mathcal G_0(Y)=B_0.
+\tag{115.9}
+$$
+
+其中纤维相异来自 $r_0,r_{1,B}$ 的线性独立：不同射线给两个不成比例的线性泛函，因而给不同二维核。
+
+全部实际 $Q_n$ 都包含于 $Q\oplus D=B_0^\perp$。所以只要第 $n$ 轮当前环境普通，$G_n$ 已填满对应二维完整零位纤维，并有
+
+$$
+G_n=\mathcal G_0([\eta_n])\subset B_0,\qquad
+P_{B_0}H_n=G_n\quad(3\le n\le6).
+\tag{115.10}
+$$
+
+这项投影关系允许比较两个不同普通当前环境上的 $H_n$，没有把不同环境的完整纤维认作相同。
+
+### 115.2 普通方向的已执行后继及全部带标签候选
+
+反设尾部恰有三条不同射线。异常方向 $[\theta]$ 必须出现在尾部；否则所有实际尾方向的完整已执行零位纤维均二维，违反第107节定理107.1。这里使用第112节的 $E_0=R_0$，所以完整与已执行零位纤维一致。
+
+两个普通方向各自的实际平面都填满完整二维纤维，且按（115.9）共同包含同一非零单线 $P$。凡两个普通当前位置 $i,j\in\{2,3,4,5\}$ 已有后继，同一个非零 $V_1P$ 因而迫使其后继射线相同。这同时禁止普通字母自身分叉。
+
+若这两个位置采用不同普通射线，实际输入平面之和为 $B_0$，三维。因此它们的共同后继必须是 $[\zeta]$：
+
+$$
+\begin{gathered}
+[\eta_i]\ne[\eta_j],\quad
+[\eta_i],[\eta_j]\ne[\theta],\quad i,j\in\{2,3,4,5\}\\
+\Longrightarrow\quad
+[\eta_{i+1}]=[\eta_{j+1}]=[\zeta].
+\end{gathered}
+\tag{115.11}
+$$
+
+确切地说，同一个 $V_1$ 将三维 $B_0$ 送入这个后继的完整一位纤维；式（115.5）中只有 $[\zeta]$ 的四维纤维容得下它，其余只有二维。若其中一条普通射线只在第六轮首次出现，就不能调用（115.11）。
+
+按尾词首次出现命名 $A,B,C$。第69、74节给十三个必要三尾词。再要求所有已执行的普通当前位置具有同一后继，逐项得到下表；第二列标明哪一字母必须为异常方向 $[\theta]$。
+
+| 尾词 | 可能的异常字母 |
+|---|---|
+| $AAABC$ | $A$ |
+| $AABAC$ | $A$ |
+| $AABCC$ | $A$ |
+| $ABAAC$ | $A$ |
+| $ABABC$ | $B$ |
+| $ABACA$ | $A$ |
+| $ABBBC$ | $B$ |
+| $ABBCB$ | $B$ |
+| $ABCAB$ | 无 |
+| $ABCBA$ | $B$ |
+| $ABCBB$ | $B$ |
+| $ABCBC$ | $B$ |
+| $ABCCC$ | $A$ |
+
+该表只读取前四个尾位置的后继。例如 $ABCAB$ 的三个当前字母具有三个不同后继，任意选择异常字母后，两个普通字母都违反共同后继条件。对于有分叉的字母，异常标签必须落在该字母上；没有给末位新增后继。
+
+在 $ABACA$ 中，两个普通当前字母 $B,C$ 都有后继 $A$；在
+$ABBCB,ABCBA,ABCBB,ABCBC$ 中，两个普通当前字母 $A,C$ 都有后继 $B$。这五词的共同后继恰是表中异常字母，即 $[\theta]$，却被（115.11）要求为不同的 $[\zeta]$，全部矛盾。
+
+只剩七个带标签候选：
+
+$$
+\begin{array}{c|c}
+\text{尾词}&\text{异常字母}\\ \hline
+AAABC,\ AABAC,\ AABCC,\ ABAAC,\ ABCCC&A\\
+ABABC,\ ABBBC&B
+\end{array}
+\tag{115.12}
+$$
+
+其中 $AAABC,AABAC,ABAAC,ABABC,ABBBC$ 的第三条射线首次出现在末位；下文不对这条末位射线调用未执行后继。
+
+### 115.3 三个早期相同平面的直接禁阻
+

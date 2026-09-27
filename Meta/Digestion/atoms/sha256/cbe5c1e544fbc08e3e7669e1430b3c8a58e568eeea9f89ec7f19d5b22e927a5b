@@ -1,0 +1,18 @@
+### 定理 11.3：显式复位补全不等于逻辑恢复
+
+若 $L'$ 非零，选单位基向量 $v\in L'$。对 $H'$ 的任意正交基 $e_b$，令
+
+$$
+T_{a,b}=|v\rangle\langle e_b|R_a.
+$$
+
+把每个 $k_a$ 与该分支的全部 $T_{a,b}$ 作为同一公开结果 $a$ 的 Kraus 算子，得到合法仪器
+
+$$
+\widehat{\mathcal I}_a(\rho)=k_a\rho k_a^\dagger+
+\operatorname{tr}(R_a\rho R_a^\dagger)|v\rangle\langle v|.
+\tag{11.3}
+$$
+
+其分支概率恰为 $\operatorname{tr}(K_aU\rho U^\dagger K_a^\dagger)$。
+

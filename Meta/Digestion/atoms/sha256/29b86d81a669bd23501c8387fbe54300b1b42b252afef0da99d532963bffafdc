@@ -1,0 +1,42 @@
+**命题46.1（截断复位码的准确误差）。** 若 $d_s=0$，误差 $E_s=0$。若 $d_s>0$，其完整联合半迹误差 $E_s$ 是方程
+
+$$
+\boxed{E_s^3-d_sE_s-d_s^2(p_s-a_*)=0}
+\tag{46.9}
+$$
+
+的唯一正根。因此，对 $0<\epsilon<1$，这份 $4s$ 维装置满足合同，当且仅当
+
+$$
+\boxed{\epsilon^3\ge d_s\epsilon+d_s^2(p_s-a_*).}
+\tag{46.10}
+$$
+
+证明。只需在 $\theta=0$ 下计算，记 $p=p_s$、$d=d_s$，$|v\rangle=P_s|\psi_0\rangle$。差算子
+
+$$
+A=|\psi_0\rangle\langle\psi_0|
+-|v\rangle\langle v|-d|\ell_*\rangle\langle\ell_*|
+\tag{46.11}
+$$
+
+迹为零，且是一个秩一正算子减去正算子，所以至多有一个正特征值。其支撑至多由保留方向、保留方向内的 $|\ell_*\rangle$ 分量以及丢弃方向张成，维数至多三。
+
+具体取单位 $|s_0\rangle=|v\rangle/\sqrt p$、单位丢弃方向 $|o\rangle$，并在保留空间中把
+$|\ell_*\rangle=\sqrt t\,|s_0\rangle+\sqrt{1-t}\,|u\rangle$，其中相位可吸收且 $t=a_*/p$。在这组至多三维基中，$A$ 的矩阵为
+
+$$
+\begin{pmatrix}
+-dt&-d\sqrt{t(1-t)}&\sqrt{pd}\\
+-d\sqrt{t(1-t)}&-d(1-t)&0\\
+\sqrt{pd}&0&d
+\end{pmatrix}.
+\tag{46.12}
+$$
+
+若 $t=1$，第二方向无须存在，可补一个零行列来计算同一特征多项式。直接计算得
+$\operatorname{Tr}A^2=2d$、$\det A=d^2(p-a_*)$。故特征多项式是
+$z^3-dz-d^2(p-a_*)$。$d>0$ 时 $A$ 非零，唯一正特征值等于半迹距离；多项式在正半轴上只有一个正根，得到（46.9）。对正的 $\epsilon$，多项式值非负当且仅当 $\epsilon$ 不小于这个根，得到（46.10）。证明完毕。
+
+$\epsilon=0$ 不能不加区分地使用（46.10）：当 $s=1$ 时三次式还有零根，而真正误差是 $\sqrt{d_s}$。零误差统一由 $s=M_*$ 以及第42节精确容量处理。
+

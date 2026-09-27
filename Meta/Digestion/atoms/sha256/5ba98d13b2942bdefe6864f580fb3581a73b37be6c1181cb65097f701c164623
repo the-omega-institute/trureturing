@@ -1,0 +1,49 @@
+### 255.4 从数据构造合法源
+
+由上述分解，在 $H\otimes E$ 上定义
+$$
+\boxed{
+\Omega_*=
+(I_H\otimes V)\left(\frac2\ell P_{\Phi^+}\otimes K\right)(I_H\otimes V^\dagger)
++\sum_sP_{r_s}\otimes\frac{M_s}{\sqrt A}.
+}
+\tag{255.26}
+$$
+量子项与各产品项嵌入两两正交的参考空间，$|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2$。各项均为正半定。由于 Bell 态的参考边缘为 $I_2/2$，
+$$
+\operatorname{Tr}_H\Omega_*
+=\frac1\ell QMQ+\sum_s\frac{M_s}{\sqrt A}
+=\rho_*.
+\tag{255.27}
+$$
+条件三因而给 $\operatorname{Tr}\Omega_*=1$。量子块与产品块的权重分别是
+$$
+\theta_*=\frac2\ell\operatorname{Tr}K,
+\qquad
+p_s=\frac{\operatorname{Tr}M_s}{\sqrt A},
+\qquad
+\sum_sp_s=1-\theta_*.
+\tag{255.28}
+$$
+
+令 $\mathcal R_w(T)=\operatorname{Tr}_H[(A_w\otimes I_E)T]$。在量子块中，构造的响应为
+$$
+\begin{aligned}
+\mathcal R_w(\Omega_*)\big|_{QE}
+&=V\left(\frac{A_w^{\mathsf T}}\ell\otimes K\right)V^\dagger\\
+&=H_wQMQ.
+\end{aligned}
+\tag{255.29}
+$$
+在产品块中，由（255.17），
+$$
+\mathcal R_w(\Omega_*)\big|_{E_s}=s_wM_s=H_wM_s.
+\tag{255.30}
+$$
+合并并在 $S^\perp$ 上补零，得到
+$$
+\boxed{\mathcal R_a(\Omega_*)=R_a,\qquad\mathcal R_b(\Omega_*)=R_b.}
+\tag{255.31}
+$$
+因此候选数据的实际可实现性已经由显式正半定源建立。
+

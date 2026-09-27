@@ -1,0 +1,19 @@
+**定理 22.4（可识别性不提供统一精度成本）。** 固定任一信息完备 POVM $\{H_j\}$ 和 $0<\gamma<1$，构造一般仪器
+
+$$
+\mathcal N(X)=(1-\gamma)X,
+\qquad
+\mathcal C_j(X)=\gamma\sqrt{H_j}\,X\sqrt{H_j}.
+$$
+
+它没有永久暗方向，最终端口分布为 $\operatorname{Tr}(\rho H_j)$；但固定时限 $N$ 内两态记录的总变差恰为
+
+$$
+\bigl[1-(1-\gamma)^N\bigr]
+\operatorname{TV}\bigl((\operatorname{Tr}\rho H_j)_j,(\operatorname{Tr}\sigma H_j)_j\bigr),
+$$
+
+可随 $\gamma\downarrow0$ 趋零，平均首次点击轮数为 $1/\gamma$。
+
+证明。第 $(n,j)$ 效果为 $\gamma(1-\gamma)^{n-1}H_j$，未点击效果为 $(1-\gamma)^NI$。后者对两态相同，前者的绝对差求和分离出几何系数，得到总变差式。所有 $\gamma>0$ 下第一层效果已满张成，生存概率又趋零，但固定时限内的实际信号与等待成本并不统一。$\square$
+

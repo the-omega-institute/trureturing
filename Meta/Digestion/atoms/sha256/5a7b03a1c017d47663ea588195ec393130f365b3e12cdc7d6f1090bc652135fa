@@ -1,0 +1,4 @@
+**定义 236.1（外观回路与内部输运）。** 设完整状态为 $x\in X$，可见读数为 $q:X\to Q$，一段有限行动序列 $w$ 所诱导的总更新为 $T_w:X\to X$。若 $q(T_wx)=q(x)$，称它在该初态处构成相对于 $q$ 的可见回路；若还满足 $T_wx\ne x$，则这条回路保留了被当前读数隐藏的变化。这里的“隐藏”只相对于 $q$，不表示原则上不能认识，也不预先把它解释成某种超自然实体。
+
+项目 [MemoryTransport](../../../D5/S3/Observer/AgencyHolonomy/MemoryTransport.lean) 的 `transportWord_append` 说明按从左到右执行的两段更新串具有复合关系 $T_{uv}=T_v\circ T_u$；项目 [VisibleLoopHolonomy](../../../D5/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy.lean) 则将可见返回与内部变化分别写入 `VisibleLoopAt` 和 `NontrivialTransportAt`。这使“绕了一圈”同时包含一个必须指出的观察范围和一段实际执行的更新。
+

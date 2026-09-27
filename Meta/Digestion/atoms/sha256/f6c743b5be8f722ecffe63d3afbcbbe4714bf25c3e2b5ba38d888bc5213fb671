@@ -1,0 +1,12 @@
+**定义 208.1（相对于目标族的恢复）。** 设两套描述的状态空间为 $X,Y$，转换为 $h:X\to Y$、$k:Y\to X$。源侧询问族为 $q_i:X\to A$，目标侧询问族为 $r_j:Y\to B$。若
+
+$$
+\forall i,\quad q_i\circ k\circ h=q_i,
+\qquad
+\forall j,\quad r_j\circ h\circ k=r_j,
+$$
+
+则所有指定的源侧问题均能由 $h(x)$ 恢复答案，解码为 $q_i\circ k$；目标侧相应由 $k(y)$ 恢复，解码为 $r_j\circ h$。这里两族内部各使用一个固定值域，双方的值域不要求相同；也没有预先给出两族索引的一一对应。
+
+项目 [TargetRelativeBiinterpretation](../../../D5/S3/ConceptDynamics/Transport/TargetRelativeBiinterpretation.lean) 的 `target_relative_biinterpretation_transports_answerability` 给出这个因子化关系及其非双射实例。上述等式是应当验证的前提，不能因已经把两个函数命名为“翻译”与“回译”就视为成立。
+

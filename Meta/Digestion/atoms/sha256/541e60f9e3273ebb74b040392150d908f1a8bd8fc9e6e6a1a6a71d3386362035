@@ -1,0 +1,12 @@
+#### 4.6.2 全局柱集界不需要固定采样顺序
+
+对 $A\subseteq I$ 及具名部分赋值 $a\in\prod_{i\in A}X_i$，定义实际柱集与价格
+
+$$
+C_a=\{v\in\Omega:v_i=a_i\ \forall i\in A\},
+\qquad c_a=\prod_{i\in A}r_i.
+\tag{TM.214}
+$$
+
+空赋值给 $C_\varnothing=\Omega$、$c_\varnothing=1$。
+

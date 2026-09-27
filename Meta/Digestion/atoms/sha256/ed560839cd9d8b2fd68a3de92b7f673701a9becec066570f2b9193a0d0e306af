@@ -1,0 +1,10 @@
+**引理154.3（真实周期极限）。** 若（154.8）—（154.9）成立，则
+
+$$
+\mathcal R_{qk+r}\longrightarrow\mathcal R_*^{(r)}
+\qquad(k\to\infty),
+\tag{154.12}
+$$
+
+且每个 $\mathcal R_*^{(r)}$ 都是 CPTP 通道。
+

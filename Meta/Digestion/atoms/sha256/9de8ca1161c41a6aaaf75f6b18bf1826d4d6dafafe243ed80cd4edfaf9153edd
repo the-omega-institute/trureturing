@@ -1,0 +1,6 @@
+**定理 6.4.5（停止词的熵与平均长度）。** 对满测前缀码 $F$，停止时间 $\tau$ 几乎必然有限，停止词 $W$ 满足 $\Pr(W=w)=p(w)$，并有允许无穷的恒等式
+$$
+H(W)=\mathbb E I_\tau=h\,\mathbb E\tau.
+$$
+若 $\mathbb E\tau<\infty$，则熵 Kraft 和 $K_h(F)=\sum_{w\in F}e^{-h|w|}\ge1$。因此若 $\sum_nb_ne^{-hn}<1$，每份合法满测码都具有无穷平均长度。
+

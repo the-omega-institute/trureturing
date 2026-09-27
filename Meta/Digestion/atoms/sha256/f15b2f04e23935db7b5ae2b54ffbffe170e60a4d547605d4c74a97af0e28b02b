@@ -1,0 +1,63 @@
+**命题 245.3（实际区分值与形成纠缠同时取等）。** 上述同一探针满足
+$$
+\boxed{
+g(\Omega_\theta)=\theta D+(1-\theta)U,
+\qquad E_F(\Omega_\theta)=\theta.
+}
+\tag{245.23}
+$$
+
+**证明。** $|\Phi\rangle$ 的输入边缘为 $I_2/2$，由§244取得完整值 $D$。$|\eta\rangle$ 是共同轴上的产品纯态，取得无参考最优值 $U$。两个通道都只作用于输入并保持参考不变，因此两分量的输出差仍支撑在正交参考块上。块对角矩阵的迹范数相加，故
+$$
+g(\Omega_\theta)
+=\theta g(|\Phi\rangle\langle\Phi|)
+ +(1-\theta)g(|\eta\rangle\langle\eta|)
+=\theta D+(1-\theta)U.
+\tag{245.24}
+$$
+这是所有运行的无条件联合输出距离，不是对某个旗标分支后选择再归一化。
+
+现证明形成纠缠等式。给出的两项纯态分解分别具有纠缠熵一和零，故 $E_F(\Omega_\theta)\le\theta$。反向，先设 $0<\theta<1$，此时 $\Omega_\theta$ 的支撑为二维空间
+$$
+\operatorname{span}\{|\Phi\rangle,|\eta\rangle\}.
+\tag{245.25}
+$$
+任意纯态分解中具有正权重的向量都必须属于这个支撑：对支撑正交补投影取期望，所得各项均非负且总和为零，故各项逐个为零。
+
+因此每个归一化分量在忽略整体相位后可写为
+$$
+|\chi\rangle=\sqrt x\,|\Phi\rangle+
+ e^{i\varphi}\sqrt{1-x}\,|\eta\rangle,
+\qquad x\in[0,1].
+\tag{245.26}
+$$
+两份参考支撑正交，输入偏迹没有交叉项，因而
+$$
+\operatorname{Tr}_E|\chi\rangle\langle\chi|
+=\frac x2I_2+(1-x)|u,+\rangle\langle u,+|.
+\tag{245.27}
+$$
+其两个本征值为 $1-x/2$ 和 $x/2$。二元熵在 $[0,1/2]$ 上的凹性及端点 $H_2(0)=0$、$H_2(1/2)=1$ 给
+$$
+S(\operatorname{Tr}_E|\chi\rangle\langle\chi|)
+=H_2(x/2)\ge x.
+\tag{245.28}
+$$
+对任意分解 $\Omega_\theta=\sum_j\lambda_j|\chi_j\rangle\langle\chi_j|$，设其系数为 $x_j$。向 $|\Phi\rangle$ 投影，得到
+$$
+\sum_j\lambda_jx_j
+=\langle\Phi|\Omega_\theta|\Phi\rangle=\theta.
+\tag{245.29}
+$$
+所以该分解的平均纠缠熵至少是 $\theta$。对所有分解取下确界，得到 $E_F(\Omega_\theta)\ge\theta$，与上界合并即所需等式。
+
+$\theta=0$ 时为产品纯态，$\theta=1$ 时为最大纠缠纯态，端点直接成立。$\square$
+
+这个构造也明确展示单侧熵与形成纠缠的差别：
+$$
+S(\operatorname{Tr}_E\Omega_\theta)=H_2(\theta/2)>\theta
+=E_F(\Omega_\theta),\qquad 0<\theta<1.
+\tag{245.30}
+$$
+严格不等式来自二元熵的严格凹性；它不影响（245.23）的精确形成纠缠值。
+

@@ -1,0 +1,28 @@
+**定义 215.1（首次失败参数与经验读数）。** 固定首次失败节点 $b_1,\ldots,b_m$。对每个节点定义真实参数
+
+$$
+\beta_i=P^\pi(b_i),
+\qquad
+\alpha_i=P^\pi(\text{在 }b_i\text{ 失败}\mid b_i),
+$$
+
+并令 $\alpha_\infty$ 是未覆盖尾项的失败概率。这里把 $\beta_i,\alpha_i,\alpha_\infty$ 视为来源合同中声明的统一参数；若它们随来源变化，则还需对来源族声明额外的联合估计合同。对每个参数 $\theta_j$（其中 $\theta_j$ 遍历所有 $\beta_i,\alpha_i$ 和 $\alpha_\infty$）使用 $n_j$ 个独立的 $[0,1]$ 有界样本，经验均值记为 $\widehat\theta_j$。若共有 $K$ 个参数，给定 $0<\delta<1$，定义
+
+$$
+r_j(\delta)
+=
+\sqrt{\frac{\log(2K/\delta)}{2n_j}},
+$$
+
+以及截断区间
+
+$$
+I_j=
+\left[
+\max\{0,\widehat\theta_j-r_j\},
+\min\{1,\widehat\theta_j+r_j\}
+\right].
+$$
+
+这里的独立样本合同只描述统计读数的取得方式，不声称实际装置可以无成本重复准备。
+

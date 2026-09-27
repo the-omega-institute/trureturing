@@ -1,0 +1,20 @@
+**定理 18.5（一般仪器暗方向的有限闭合）。** 若 $d=\dim\mathcal H$，则
+
+$$
+\mathcal D_n=\ker(I-S_n),\qquad
+\mathcal D_d=\mathcal D_{d+1}=\cdots
+=\ker(I-F)=:\mathcal D.
+$$
+
+$\mathcal D$ 是所有点击 Kraus 算子为零且对全部 $Q_\alpha$ 不变的最大子空间。该空间的定义与结论均不依赖所选 Kraus 表示。
+
+证明。$I-S_n$ 是前 $n$ 轮全部可读点击效果之和。将 $\mathcal N^k$ 展开为所有 $Q$ 词的 Kraus 和后，
+
+$$
+\langle\psi,(I-S_n)\psi\rangle
+=\sum_{k=0}^{n-1}\sum_{x,\beta}\sum_{\alpha_1,\ldots,\alpha_k}
+\|L_{x\beta}Q_{\alpha_k}\cdots Q_{\alpha_1}\psi\|^2.
+$$
+
+非负和为零等价于这些向量全部为零，正好给出递归式。子空间列递减；若 $\mathcal D_{n+1}=\mathcal D_n$，则该空间已由递归式保持不变，以后恒定。若在前 $d$ 次都严格缩小，则 $\mathcal D_d=\{0\}$，也已稳定。因而至多 $d$ 轮闭合。$I-S_n\uparrow I-F$，其共同核等于 $\ker(I-F)$。任何满足所述不变条件的子空间都包含于全部 $\mathcal D_n$；反向由稳定递归得到。最后 $\ker(I-S_n)$ 与 $\ker(I-F)$ 是映射本身的对象，故 Kraus 表示不改变它们。$\square$
+

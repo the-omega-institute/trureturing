@@ -1,0 +1,174 @@
+**定理 297.1（保预算的半群替换）。** 对正半径六态模型，记 $\alpha_i=1/a_i$、$A=\sum_i\alpha_i^2$、$\eta=A^{-1/2}$、$a_{\max}=\max_i a_i$。固定 $R>0$。若一对实际二维 CPTP 编码、解码的残差不超过 $R$，最坏恢复误差为 $e$，则存在另一对同维实际通道，其残差仍不超过 $R$，复合恢复是一个幺元、时间齐次 CPTP 半群的时间一通道，且恢复误差 $e'$ 满足
+
+$$
+e'\le e+\frac{a_{\max}^2 A}{R}e^2.
+\tag{297.1}
+$$
+
+因此对 $0<R<\eta$，无限制最优误差与定义293.2的微分可分最优误差满足
+
+$$
+0<\widehat G_a(R)-F_a^{(2)}(R)
+\le \frac{a_{\max}^2 A}{R}
+\bigl(F_a^{(2)}(R)\bigr)^2.
+\tag{297.2}
+$$
+
+特别地，当 $R\uparrow\eta$ 时，
+
+$$
+0<\widehat G_a(R)-F_a^{(2)}(R)=O\bigl((\eta-R)^2\bigr).
+\tag{297.3}
+$$
+
+这加强了第296节的差距余项，但其证明不需要先求端点切向优化问题。对于三个半径都等于 $a$ 的情形，平方阶不能再统一提高：
+
+$$
+\lim_{R\uparrow a/\sqrt3}
+\frac{\widehat G_a(R)-F_a^{(2)}(R)}{(a/\sqrt3-R)^2}
+=\frac1{8\sqrt2\,a}>0.
+\tag{297.4}
+$$
+
+证明。先用第281节把原实际方案共同支配为一个幺元恢复 $\mathcal N$，并保留同一残差上界。记其 Bloch 矩阵为 $T$、误差为 $e_0\le e$，则 $r_*(T)\le R$，而
+
+$$
+\|I-T\|_{\rm op}^2
+\le\|I-T\|_F^2
+\le4A e_0^2.
+\tag{297.5}
+$$
+
+以下对同一个 $T$ 同时控制替换后的残差与误差。
+
+采用标准通道半群构造
+
+$$
+\mathcal P_t=\exp\bigl(t(\mathcal N-\mathrm{id})\bigr)
+=e^{-t}\sum_{k=0}^{\infty}\frac{t^k}{k!}\mathcal N^k,
+\qquad t\ge0.
+\tag{297.6}
+$$
+
+泊松权重非负且和为一，所以它是幺元 CPTP 半群，Bloch 矩阵为 $P_t=\exp(t(T-I))$。这一半群构造及其对原通道的二阶近似是既有方法：Wolf–Cirac，*Dividing Quantum Channels*（2008），[引理1与定理16证明中的式（27）](https://arxiv.org/abs/math-ph/0611057v3)。下面只将它接入当前两个共同预算；不把一般 Markov 近似作为新定理。
+
+每个 $P_t$ 都把单位 Bloch 球映入自身，故 $\|P_t\|_{\rm op}\le1$。令 $d=\|T-I\|_{\rm op}$，对矩阵指数使用带积分余项的二阶展开：
+
+$$
+P_1-T=\int_0^1(1-t)P_t(T-I)^2\,dt.
+$$
+
+于是
+
+$$
+\|P_1-T\|_{\rm op}\le\frac{d^2}{2}
+\le2A e_0^2.
+\tag{297.7}
+$$
+
+这里利用半群的收缩性，因而无需在余项中加入指数放大因子。
+
+对任意两个实矩阵 $B,C$，当前两个任务量满足
+
+$$
+\begin{aligned}
+|r_*(B)-r_*(C)|&\le a_{\max}\|B-C\|_{\rm op},\\
+|e(B)-e(C)|&\le\frac{a_{\max}}2\|B-C\|_{\rm op},
+\end{aligned}
+\tag{297.8}
+$$
+
+其中 $r_*(B)=\min_{\|n\|=1}\max_i a_i|n^{\mathsf T}Be_i|$，$e(B)=\frac12\max_i a_i\|(B-I)e_i\|$。第一式先对每个固定 $n$ 用三角不等式，再取最小值；第二式逐列用反三角不等式后取最大值。它们不需要最优方向唯一。
+
+记 $P=P_1$、$\beta=d^2/2$、$r_P=r_*(P)$。式（297.7）与原预算给出 $r_P\le R+a_{\max}\beta$。由于矩阵指数可逆且各半径正，$r_P>0$。取
+
+$$
+c=\min\{1,R/r_P\},\qquad Q=cP.
+\tag{297.9}
+$$
+
+则 $0<c\le1$，并由残差的正齐次性得到 $r_*(Q)=c r_P\le R$。若 $c<1$，还有
+
+$$
+1-c=\frac{r_P-R}{r_P}
+\le\frac{a_{\max}\beta}{R};
+\tag{297.10}
+$$
+
+若 $c=1$，同一上界仍成立。还可直接控制泊松替换本身的误差，而不为式（297.7）的全部距离支付误差代价。积分恒等式
+
+$$
+P-I=\int_0^1P_t(T-I)\,dt
+$$
+
+与每个 $P_t$ 的收缩性共同给出，对每个 $i$，
+
+$$
+\|(P-I)e_i\|_2
+\le\int_0^1\|P_t(T-I)e_i\|_2\,dt
+\le\|(T-I)e_i\|_2,
+\qquad e(P)\le e_0.
+\tag{297.11}
+$$
+
+因此只有随后乘以 $c$ 的预算校正需要计入可能增加的恢复误差。
+
+还须保证这次预算校正保持同一个时间齐次半群类。令 $\mathcal Z(X)=\operatorname{Tr}(X)I/2$ 为完全退极化通道，$\lambda=-\log c\ge0$。因为 $\mathcal N$ 保迹且幺元，$\mathcal N\mathcal Z=\mathcal Z\mathcal N=\mathcal Z$，所以两个生成元 $\mathcal N-\mathrm{id}$ 与 $\lambda(\mathcal Z-\mathrm{id})$ 交换。由此
+
+$$
+\mathcal Q_t
+=\exp\bigl(t(\mathcal N-\mathrm{id})
+          +t\lambda(\mathcal Z-\mathrm{id})\bigr)
+=\mathcal P_t\exp\bigl(t\lambda(\mathcal Z-\mathrm{id})\bigr)
+\tag{297.12}
+$$
+
+仍是幺元 CPTP 半群；其 Bloch 矩阵为 $e^{-\lambda t}P_t$，在时间一恰为 $Q$。这一步直接给出固定生成元，没有以两个一般微分可分通道的任意复合替代证明。
+
+对 $Q$ 取达到 $r_*(Q)$ 的单位方向，酉旋转到编码虚轴并采用逆酉解码。第281节保证这给出一对完整 $M_2$ 上的实际通道，其共同恢复正是 $\mathcal Q_1$，残差不超过 $R$。式（297.8）、（297.10）、（297.11）与 $\beta\le2A e_0^2$ 于是给出
+
+$$
+\begin{aligned}
+e(Q)&\le e(P)+\frac{a_{\max}}2(1-c)\|P\|_{\rm op}\\
+&\le e_0+\frac{a_{\max}^2}{2R}\beta\\
+&\le e_0+\frac{a_{\max}^2 A}{R}e_0^2
+\le e+\frac{a_{\max}^2 A}{R}e^2.
+\end{aligned}
+$$
+
+这证明式（297.1）。将原方案取为达到无限制最优值的方案，就得式（297.2）的上界；严格正下界来自定理293.3。
+
+写 $R=\eta(1-\delta)$。各向同性恢复 $(1-\delta)I$ 与相应酉编码给出
+
+$$
+F_a^{(2)}(R)\le\frac{a_{\max}}2\delta.
+$$
+
+当 $0<\delta\le1/2$ 时，式（297.2）因此进一步给出明确读数
+
+$$
+\widehat G_a(R)-F_a^{(2)}(R)
+\le\frac{a_{\max}^4 A}{2\eta}\delta^2.
+\tag{297.13}
+$$
+
+由于半径固定，$\delta=(\eta-R)/\eta$，这就是式（297.3）。
+
+最后，等半径时第277、293节的精确公式在端点附近给出
+
+$$
+\begin{aligned}
+F_a^{(2)}(\eta(1-\delta))&=\frac{a\delta}{2\sqrt2},\\
+\widehat G_a(\eta(1-\delta))
+&=\frac{a\delta}{2\sqrt3}
+\sqrt{1+\frac{2}{(1+\sqrt{1-\delta})^2}}\\
+&=\frac{a\delta}{2\sqrt2}
+ +\frac{a\delta^2}{24\sqrt2}+O(\delta^3).
+\end{aligned}
+\tag{297.14}
+$$
+
+再用 $\eta^2=a^2/3$，便得式（297.4）。证毕。
+
+式（297.1）的常数不是最优常数；该替换界对所有正半径和所有正预算成立，式（297.2）的严格正差距则限于 $0<R<\eta$。一般不等半径的二阶差距是否具有正极限，以及其最优系数，仍未由本节决定。$R=0$ 不在替换界的范围内，不能把其中的 $1/R$ 当作零预算端点的估计。
+

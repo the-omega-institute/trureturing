@@ -1,0 +1,93 @@
+### 72.6 最早例外被秩一缺陷二次纤维禁阻排除
+
+现在
+$$
+Q_4=Q_5=Q_6=Q,\qquad Q_3\subset Q\oplus Z,\qquad
+V_1Z=Z\eta_3,\qquad\eta_2\perp\eta_3.
+\tag{72.21}
+$$
+$G_3,G_4,G_5,G_6\subset R_0$，只有 $G_2$ 带有 $Z$ 分量。由 $S_0=K$，全部零位像属于 $R\otimes F$。将接收器投影到 $Z$ 后，整个零位像恰为 $Z\eta_2$，是一维。因此
+$$
+S_{\rm core}:=V_0K\cap(R_0\otimes F)
+$$
+六维。置
+$$
+D_0=V_0^{-1}(S_{\rm core}),\qquad\dim D_0=6.
+$$
+实际 $H_2,H_3,H_4,H_5$ 均属于 $D_0$，因为它们的零位接收平面为 $G_3,\ldots,G_6\subset R_0$。
+
+令 $\mathcal U=V_1|_{R_0}:R_0\to Q\otimes F$，这是满等距。前三个核心零位块在该坐标下为
+$$
+Q\otimes(\eta_4\otimes\eta_3),\qquad
+Q\otimes(\eta_5\otimes\eta_4),\qquad
+Q\otimes(\eta_6\otimes\eta_5).
+$$
+三个首环境 $\eta_4,\eta_5,\eta_6$ 两两不同，三个次环境 $\eta_3,\eta_4,\eta_5$ 也两两不同。这三个乘积张量独立：前两个次环境作为基时，第三个次环境的两个系数均非零；若第三张量落在前两个的和中，就会迫三个首环境同线，矛盾。因此这三个二维块张成全部六维核心像。
+
+这三个张量在四维 $F\otimes F$ 中张成三维 $J$，是一个非零双线性形式的核。该形式不可能秩一：若它是两个线性泛函的乘积，三个实际乘积张量中，每个都须被某一个泛函消去；每个泛函至多消去上述各自互异的环境中的一个，无法覆盖三项。因此该形式秩二。对每个第二环境 $z$，核内第一环境构成一条直线，且由同一个可逆 $A:F\to F$ 给出。这得到
+$$
+A\eta_3\parallel\eta_4,\quad
+A\eta_4\parallel\eta_5,\quad
+A\eta_5\parallel\eta_6,\qquad
+J=\operatorname{span}\{Az\otimes z:z\in F\},
+$$
+$$
+(\mathcal U\otimes I)S_{\rm core}=Q\otimes J.
+\tag{72.22}
+$$
+最后实际块 $G_6\eta_6$ 也在核心像内，因此
+$$
+\mathcal UG_6=Q\otimes A\eta_6.
+\tag{72.23}
+$$
+这只是第六接收因子的纤维标记，不加入第七轮任务。
+
+定义满等距
+$$
+T_0=(\mathcal U\otimes I)V_0|_{D_0}:D_0\to Q\otimes J,
+$$
+以及
+$$
+M=\mathcal U(P_{R_0}|_{D_0})T_0^{-1}:Q\otimes J\to Q\otimes F.
+\tag{72.24}
+$$
+设 $n$ 是 $D_0^\perp$ 中的单位向量。则
+$$
+I-MM^*
+=\mathcal U\,|P_{R_0}n\rangle\langle P_{R_0}n|\,\mathcal U^*
+\succeq0,
+\qquad\operatorname{rank}(I-MM^*)\le1.
+\tag{72.25}
+$$
+这是在真实六维输入域上限制正交投影得到的秩一缺陷，不是满余等距假设。
+
+实际 $n=2,3,4,5$ 给四个输入纤维
+$$
+T_0H_n=Q\otimes(A\eta_{n+1}\otimes\eta_{n+1}).
+\tag{72.26}
+$$
+对 $n\ge3$，$Q_n\subset Q\oplus Z\perp R_0$，故 $P_{R_0}H_n=G_n$。于是
+$$
+M(T_0H_n)=Q\otimes\eta_{n+1}\qquad(n=3,4,5).
+\tag{72.27}
+$$
+
+对第二轮，必须使用真实 $H_2$。由（72.20），$v\in Q$，而 $u,w\in G_2$，所以
+$P_{R_0}H_2\subset P_{R_0}G_2$。对任意 $g\in G_2$，在 $R=R_0\oplus Z$ 中分解；（72.21）使其 $Z$ 分量的一位像属于 $Z\eta_3$，而总一位像属于 $Q_3\eta_3$。取接收器 $Q$ 投影，得到
+$$
+\mathcal U(P_{R_0}G_2)\subset Q\otimes\eta_3.
+$$
+因此仍有
+$$
+M(T_0H_2)\subset Q\otimes\eta_3.
+\tag{72.28}
+$$
+不需要声称该第二轮投影满秩。
+
+四条 $\eta_3,\eta_4,\eta_5,\eta_6$ 两两不同。（72.25）—（72.28）恰满足引理72.1，所以 $M$ 在每个这些纤维上的秩至多一。但（72.27）使三个后期纤维的像均二维，矛盾。
+
+所有例外位置均被排除，因此五条二维尾射线互异不可能。证明完毕。
+
+本定理排除的是 ABCDE 尾词；四条尾射线中末条重复的模式仍需单独检查，其中第70节对四射线只给接收跨度至多六维，不能直接沿用这里的五维归约。一般容量区间仍为 $7\le d_{\mathrm{CPTP},6}\le8$。
+
+

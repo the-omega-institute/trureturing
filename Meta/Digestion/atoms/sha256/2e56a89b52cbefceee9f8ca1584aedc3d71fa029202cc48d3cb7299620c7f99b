@@ -1,0 +1,65 @@
+### 218.3 合法解析候选给出上界
+
+第213节给解析共同 TP 族
+$$
+J_0(p,t)=k_0(p,t)k_0(p,t)^\dagger,\qquad
+J_1(p,t)=k_1(p,t)k_1(p,t)^\dagger+t\,w(p,t)w(p,t)^\dagger.
+\tag{218.10}
+$$
+对 $t\ge0$，它是合法 CPTP instrument。写
+$$
+\mathsf J(p,t)=J_0(p,t)\oplus J_1(p,t).
+$$
+实际最优权重为
+$$
+t^\sharp=a(p)[\Delta(p)]_+,\qquad a>0.
+\tag{218.11}
+$$
+边界候选 $\Gamma_A(p)=\Gamma(p,0)$ 的两份 Choi 均秩一，因此其记录通道
+$\mathcal R_A(p)$ 属于 $\mathfrak C_2$。
+
+对任意两通道之差 $\Theta$，在当前未归一化 Choi 约定下，
+$$
+\|\Theta\|_\diamond\le\|\mathsf J(\Theta)\|_1.
+\tag{218.12}
+$$
+这里可直接在 diamond 定义中的任意输入算子上证明，不必只检查态输入。给任意有限参考空间和算子 $X$，取奇异值分解
+$$
+X=\sum_l s_l|u_l\rangle\langle v_l|,\qquad
+s_l\ge0,\quad \|u_l\|=\|v_l\|=1,\quad
+\sum_l s_l=\|X\|_1.
+$$
+记未归一化向量 $|\Omega\rangle=\sum_{i=1}^2|ii\rangle$。
+可写
+$$
+u_l=(I\otimes A_l)|\Omega\rangle,\qquad
+v_l=(I\otimes B_l)|\Omega\rangle,
+$$
+其中 $\|A_l\|_{\mathrm{HS}}=\|B_l\|_{\mathrm{HS}}=1$，故两个算子的算子范数都至多一。
+固定因子排列后，有
+$$
+(\Theta\otimes\operatorname{id})(|u_l\rangle\langle v_l|)
+=(I\otimes A_l)\mathsf J(\Theta)(I\otimes B_l^\dagger).
+$$
+迹范数的双边乘法界给每项至多 $\|\mathsf J(\Theta)\|_1$。
+求和得到
+$$
+\|(\Theta\otimes\operatorname{id})(X)\|_1
+\le \|X\|_1\|\mathsf J(\Theta)\|_1.
+$$
+这对全部参考空间和非 Hermitian 输入同样成立，取上确界便得（218.12）。
+
+由（218.12）和沿 $t$ 的基本积分，
+$$
+\begin{aligned}
+d_2(p)
+&\le\frac12\|\mathcal R_+^\sharp(p)-\mathcal R_A(p)\|_\diamond\\
+&\le\frac12\|\mathsf J(p,t^\sharp)-\mathsf J(p,0)\|_1\\
+&\le
+\frac{t^\sharp}{2}
+\sup_{0\le t\le t^\sharp}\|\partial_t\mathsf J(p,t)\|_1.
+\end{aligned}
+\tag{218.13}
+$$
+比较路径上的所有 $t$ 都非负，所以整条路径都给合法共同 CPTP 候选。这里 $\mathcal R_A$ 仅用于上界，不被宣称为距离最优器。
+

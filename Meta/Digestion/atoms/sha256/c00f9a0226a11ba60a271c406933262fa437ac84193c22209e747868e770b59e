@@ -1,0 +1,23 @@
+**定理 53.3（不闭合策略族的归一化不足）。** 存在两轮模型，所有动作在所有节点分别合法，但允许的常动作策略均归一化，而到真正因果替代表的最优受限事件误差可任意接近一。
+
+取第一轮动作及第二轮输出为单点，$Y_1=A_2=\{1,\ldots,m\}$，$m\ge2$。完整第一轮输出记入任务的终端档案，但在线控制器不能读取它，只能读常值摘要。因此允许策略族 $\Pi_{\mathrm{const}}$ 只含 $a_2\equiv a$。终端测试者可读完整输出档案，不构成在线控制器的额外权限。
+
+对 $0\le\varepsilon\le1$，使用命题 52.8 的同一表族
+
+$$
+r_a(y)=\frac{1-\varepsilon}{m}
++\varepsilon\,\mathbf1_{\{y=a\}}.
+\tag{53.8}
+$$
+
+任何按“先输出、后动作”实现的因果替代表均为与后动作无关的概率分布 $q(y)$。在同一常动作策略族和终端事件族下，有
+
+$$
+\Delta_{\mathrm{const}}(r)=0,\qquad
+\min_qD_{\mathrm{const}}(r,q)
+=\varepsilon\left(1-\frac1m\right),
+\quad
+D_{\mathrm{const}}(r,q)=\max_a\operatorname{TV}(r_a,q).
+\tag{53.9}
+$$
+

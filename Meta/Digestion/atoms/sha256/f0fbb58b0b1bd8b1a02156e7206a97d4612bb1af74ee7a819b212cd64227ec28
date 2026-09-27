@@ -1,0 +1,33 @@
+**定理217.1（联合端点的容量代价与谱权重）。** 存在固定小参数箱，使对于其中全部合法的 $\epsilon>0,h\ge0$：
+
+1. $\mathcal K_{11}$ 的唯一最优对称化 Choi 对是 $\Gamma_A(p)$，且
+   $E_{11}(p)=E_A(p)$。
+2. 存在联合实解析正函数 $C_{\mathrm{cap}}$，使
+   $$
+   \boxed{
+   E_{11}(p)-E(p)
+   =\epsilon C_{\mathrm{cap}}(p)[\Delta(p)]_+^2,\qquad
+   C_{\mathrm{cap}}(0)=\frac{\beta(R-1)}{32}.
+   }
+   \tag{217.5}
+   $$
+3. 若 $\lambda_2^\sharp(p)$ 是实际最优 $J_1$ 的第二大本征值，则存在联合实解析正函数 $\kappa$，使
+   $$
+   \boxed{
+   \lambda_2^\sharp(p)=\kappa(p)[\Delta(p)]_+,\qquad
+   \kappa(0)=\frac12.
+   }
+   \tag{217.6}
+   $$
+4. 因而有正解析函数 $D_{\mathrm{cap}}=C_{\mathrm{cap}}/\kappa^2$，满足
+   $$
+   \boxed{
+   E_{11}-E=\epsilon D_{\mathrm{cap}}(\lambda_2^\sharp)^2,\qquad
+   D_{\mathrm{cap}}(0)=\frac{\beta(R-1)}8.
+   }
+   \tag{217.7}
+   $$
+
+$\epsilon=0$ 处的数值是解析系数的端点读数，不是退化物理最优器唯一性的断言。所有真实输入仍须满足 $\ell\le1/2$ 和
+$R\epsilon<\beta/(\beta^2+\gamma^2)$；可统一缩小参数箱满足这些条件。
+

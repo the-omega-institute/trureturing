@@ -1,0 +1,43 @@
+## ST30．syndrome记录不完整时的精确最优误差
+
+### 假设 ST30.1：相位型路径与有损经典记录
+
+逻辑空间为一个量子比特。分支$j$以输入无关概率$p_j$出现，并实施
+
+$$
+V_j=\operatorname{diag}(z_j,1),\qquad |z_j|=1.
+$$
+
+记录器只输出$r$，其条件概率为$T(r|j)$，$\sum_rT(r|j)=1$。一切额外syndrome量子自由度此时已被删除。可访问通道为
+
+$$
+\mathcal M_T(\rho)=\sum_r|r\rangle\langle r|\otimes
+\sum_jp_jT(r|j)V_j\rho V_j^\dagger.
+\tag{ST30.1}
+$$
+
+定义
+
+$$
+q_r=\sum_jp_jT(r|j),\qquad
+c_r=\sum_jp_jT(r|j)z_j,\qquad
+s_T=\sum_r|c_r|\le1.
+\tag{ST30.2}
+$$
+
+允许任意作用在“记录+量子比特”上的确定性CPTP恢复，最终输出一个量子比特；目标是恢复恒等通道，不要求输出原记录。不知道$T,p,z$时的估计成本另行处理。
+
+### 定理 ST30.2：带粗记录的最优恢复公式
+
+有
+
+$$
+\boxed{
+\inf_{\mathcal R\ {\mathrm{CPTP}}}
+\frac12\|\mathcal R\mathcal M_T-\mathrm{id}\|_\diamond
+=\frac{1-s_T}{2}
+=\frac12\left(1-\sum_r\left|\sum_jp_jT(r|j)z_j\right|\right).
+}
+\tag{ST30.3}
+$$
+

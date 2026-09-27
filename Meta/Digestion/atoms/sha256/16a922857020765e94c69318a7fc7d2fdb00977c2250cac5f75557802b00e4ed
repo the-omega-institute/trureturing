@@ -1,0 +1,30 @@
+## 113. 一重全域纤维的剩余乘积生成维数至少为四
+
+沿用第112节结论，七维实际候选满足
+
+$$
+I_0=K,\qquad E_0=R_0,\qquad
+\gamma=\kappa_0=1,\qquad \dim S_0=6.
+$$
+
+令
+
+$$
+Q=S_0^\perp,\qquad \dim Q=1,\qquad
+R_1=(Q\otimes F)\oplus N,\quad\dim N=5,
+$$
+
+其中 $N\subset S_0\otimes F$ 的通常乘积纤维为零。**定理113.1（一重分支的剩余乘积生成维数下界）。** 上述实际合同中，
+
+$$
+\boxed{\dim N_{\mathrm{prod}}\ge4.}
+$$
+
+**证明。** 第112节已给 $\dim N_{\mathrm{prod}}\ge3$。反设其取最小值
+
+$$
+\dim N_{\mathrm{prod}}=3.
+$$
+
+记 $M=N_{\mathrm{prod}}$。以下五维实际输入域记为 $L$；它不等于六维 $S_0$。
+

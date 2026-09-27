@@ -1,0 +1,21 @@
+### 228.1 偶数相位事件与分支 Kraus 容量
+
+设 $\mathcal R$ 为输入 $\mathbb C^d$、有限维量子输出 $\mathbb C^m$ 及一个固定有限经典结果寄存器上的 CPTP 记录通道。固定结果 $q$ 的完全正分支 $\Gamma$。
+
+假设存在连续单位向量映射
+$$
+r:S^{2d-1}\longrightarrow S^{2m-1},
+$$
+一个偶整数 $n\in2\mathbb Z$，以及统一常数 $\alpha\ge0$，使
+$$
+r(e^{i\theta}v)=e^{in\theta}r(v)
+\quad\text{对所有单位 }v\text{ 及实数 }\theta,
+\tag{228.HC.1}
+$$
+$$
+\langle r(v),\Gamma(P_v)r(v)\rangle\ge\alpha
+\quad\text{对所有单位 }v.
+\tag{228.HC.2}
+$$
+$P_v=|v\rangle\langle v|$。目标是完整 CPTP 通道中的一个已指定分支，因此（228.HC.2）描述同一事件族的真实分支概率，不是另行归一化后的条件概率。
+

@@ -1,0 +1,32 @@
+### 82.1 合同、加权系数与最大纤维秩
+
+沿用有限维复 Hilbert 空间 $Q,F$，$\dim Q=q\ge1$、$\dim F=2$，以及可逆 $A:F\to F$。令
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\},
+$$
+设 $M:Q\otimes J\to Q\otimes F$ 是收缩，保持四条不同二次纤维，完整正缺陷满足
+$$
+D=I-MM^*\succeq0,\qquad \operatorname{rank}D=d.
+$$
+第76节引理76.1给全部射线保持。取 $A^*A$ 的正交单位特征基，记正特征值为 $\mu,\nu$，置
+$$
+s=\mu+\nu,\qquad \Delta=s^2-\mu\nu.
+$$
+在该节的正交二次基中，
+$$
+M=\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt s&0\\
+0&L_0/\sqrt s&L_1/\sqrt\nu
+\end{pmatrix},
+\qquad
+M(\xi\otimes Az\otimes z)=L(z)\xi\otimes z,
+\quad L(z)=z_0L_0+z_1L_1.
+\tag{82.1}
+$$
+定义
+$$
+r=\max_{z\ne0}\operatorname{rank}L(z).
+\tag{82.2}
+$$
+它就是实际二次纤维映射的最大秩，且为非负整数。
+

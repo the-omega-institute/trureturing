@@ -1,0 +1,20 @@
+**定义 212.1（固定三维相位处理器）。** 固定 $0<a<1$，记 $L=1-a$，选择
+$$
+ 0<\delta<\min\left\{\frac L4,\frac{1-a^2}{16}\right\},\qquad
+ \lambda=L-\delta,\quad B=2\sqrt{a\lambda},\quad
+ p_\delta=\frac a{1-\delta},\quad u_\delta=2p_\delta-1.
+\tag{212.1}
+$$
+因此 $a<p_\delta<1$、$2a-1<u_\delta<1$。在程序空间 $\mathbb C^3$ 上定义
+$$
+ P=\operatorname{diag}(1,1,0),\quad Q=I-P,\quad Z=2P-I,
+ \qquad
+ K=\begin{pmatrix}
+ a-\lambda&\delta&B\\
+ \delta&a&0\\
+ 0&0&0
+ \end{pmatrix}.
+\tag{212.2}
+$$
+参数域仍为 $J_a=(2a-1,1)$，目标通道仍为第187节的 $\mathcal T_u$，固定均衡读出的信息量为 $I_r(u)=1/(1-u^2)$。本节只要求纯态准备在开区间 $J_a$ 上光滑，不要求闭端点延拓。校准集合沿用定义210.1。
+

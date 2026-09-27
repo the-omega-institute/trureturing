@@ -1,0 +1,13 @@
+**定义 71.1（固定接口中的不终止距离）。** 对名义完整仪器 $\widehat\Gamma$，固定其量子输入、活动输出和经典记录接口，定义
+
+$$
+\mathfrak r_{\mathrm{fail}}
+=\inf\left\{
+\frac12\|\Gamma-\widehat\Gamma\|_\diamond:
+\Gamma\text{ 是同接口完整仪器，且存在初态 }
+\rho\text{ 满足 }\lim_n\operatorname{Tr}\mathcal N^n(\rho)>0
+\right\}.
+$$
+
+本节仅比较有限维、每轮重复同一仪器的过程，不把增加隐藏活动维数或历史自适应控制计入同一扰动类。
+

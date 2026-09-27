@@ -1,0 +1,28 @@
+**定义 287.1（一般有限模型的宽度与预算）。** 令 $\mathcal V\subseteq\{v\in\mathbb R^3:\|v\|_2\le1\}$ 为有限集合，满足 $\mathcal V=-\mathcal V$ 且 $\operatorname{span}\mathcal V=\mathbb R^3$。模型态取 $\rho_v=(I+v\cdot\boldsymbol\sigma)/2$。编码、解码仍都作用于完整 $M_2$，记
+
+$$
+\eta_{\mathcal V}=\min_{\|n\|_2=1}\max_{v\in\mathcal V}|n\cdot v|,
+\qquad
+e_{\mathcal V}(T)=\frac12\max_{v\in\mathcal V}\|(T-I)v\|_2,
+\tag{287.1}
+$$
+
+以及
+
+$$
+r_{\mathcal V,*}(T)=\min_{\|n\|_2=1}
+\max_{v\in\mathcal V}|n^{\mathsf T}Tv|.
+\tag{287.2}
+$$
+
+全张成性与球面紧性保证 $\eta_{\mathcal V}>0$。用 $F^{(2)}_{\mathcal V}(R)$ 表示残差上界为 $R$ 时，任意实际二维编码、解码的最小最大恢复误差。定理281.2已适用于这里的有限中心对称模型，因此
+
+$$
+F^{(2)}_{\mathcal V}(R)
+=\min_{\substack{T\text{ 为幺元 CPTP Bloch 矩阵}\\
+r_{\mathcal V,*}(T)\le R}}e_{\mathcal V}(T).
+\tag{287.3}
+$$
+
+通道集与球面紧，两个成本连续，$T=0$ 可行，所以这个最小值达到。
+

@@ -1,0 +1,66 @@
+**第三步作用在正确的理想前缀上。**
+
+（40.12）中的 $\phi_2$ 具有正确的记忆边缘，且由 $U$ 写为
+
+$$
+\phi_2=a\,m_0\otimes u_0+b\,|0\rangle\otimes u_1.
+$$
+
+定义
+
+$$
+q=(a^2u_0+bu_1)/r.
+$$
+
+它单位，且 $|\langle q,u_0\rangle|=(1-p)/r=1-g$。
+
+对理想前缀 $\phi_2$ 再作一次真实来源发射和真实接收 $V$，得到纯态
+$\chi_3\in M\otimes K\otimes E_3$。实际第三步纯化 $\Gamma_3$ 与
+$\chi_3\otimes\zeta_2$ 的向量距离至多 $\zeta$，因为实际第二步与
+$\phi_2\otimes\zeta_2$ 的距离至多 $\zeta$，之后使用同一个等距。
+
+又由（40.12），$\Gamma_3$ 与 $\phi_3\otimes\zeta_3$ 的距离至多 $\zeta$。
+所以
+
+$$
+\|\chi_3\otimes\zeta_2-\phi_3\otimes\zeta_3\|\le2\zeta.
+$$
+
+对旧环境施以 $\langle\zeta_2|$，得到
+$\|\chi_3-\phi_3\otimes w_3\|\le2\zeta$。
+当 $2\zeta<1$ 时，归一化 $w_3$ 为单位 $\eta_3$，给
+
+$$
+\|\chi_3-\phi_3\otimes\eta_3\|\le4\zeta.
+\tag{40.19}
+$$
+
+这一步保留旧环境整体相干，没有按环境分支选择不同接收门。
+
+理想第三步的 $K\mathcal B$ Schmidt 支撑为
+
+$$
+S_3=\operatorname{span}\{q\otimes|0\rangle,u_0\otimes|1\rangle\}.
+$$
+
+它的记忆边缘是正确的 $\rho_3\succeq\mu I$，而 $\phi_3$ 也是该边缘的二维纯化。
+再次用最小 Schmidt 权重除去源侧振幅，可得一组正交归一 $v_0,v_1$，使
+
+$$
+\boxed{
+\|V(q\otimes|0\rangle)-v_0\otimes\eta_3\|\le4\eta,\qquad
+\|V(u_0\otimes|1\rangle)-v_1\otimes\eta_3\|\le4\eta.
+}
+\tag{40.20}
+$$
+
+（40.17）、（40.18）、（40.20）涉及的所有实际输入和理想乘积输出均为单位向量。
+因此不同块间每个内积的误差至多相应两项向量误差之和。
+当 $\eta\le1$ 时，所有这些交叉 Gram 误差统一不超过
+
+$$
+\delta_G=8\sqrt\eta
+=\frac{16\epsilon^{1/8}}{\sqrt\mu}.
+\tag{40.21}
+$$
+

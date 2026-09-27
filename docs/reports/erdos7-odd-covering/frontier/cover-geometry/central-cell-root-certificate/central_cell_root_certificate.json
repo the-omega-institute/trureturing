@@ -1,0 +1,3891 @@
+{
+  "schema": "central-cell-root-example-v1",
+  "scope": "Literal ten-prime head; complete55-star40-pair inventory with one global phase per original",
+  "outside_primes": [
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "originals": [
+    {
+      "kind": "pure",
+      "modulus": 3,
+      "residue": 2,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 2
+        }
+      ]
+    },
+    {
+      "kind": "pure",
+      "modulus": 5,
+      "residue": 4,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 4
+        }
+      ]
+    },
+    {
+      "kind": "pure",
+      "modulus": 7,
+      "residue": 0,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "kind": "pure",
+      "modulus": 11,
+      "residue": 0,
+      "components": [
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "kind": "pure",
+      "modulus": 13,
+      "residue": 0,
+      "components": [
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "kind": "central15",
+      "modulus": 15,
+      "residue": 0,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "kind": "pure",
+      "modulus": 17,
+      "residue": 0,
+      "components": [
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "kind": "pure",
+      "modulus": 19,
+      "residue": 0,
+      "components": [
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 21,
+      "residue": 15,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pure",
+      "modulus": 23,
+      "residue": 0,
+      "components": [
+        {
+          "prime": 23,
+          "exponent": 1,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "kind": "pure",
+      "modulus": 29,
+      "residue": 0,
+      "components": [
+        {
+          "prime": 29,
+          "exponent": 1,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "kind": "pure",
+      "modulus": 31,
+      "residue": 0,
+      "components": [
+        {
+          "prime": 31,
+          "exponent": 1,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 33,
+      "residue": 12,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 35,
+      "residue": 30,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 2
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 39,
+      "residue": 27,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 51,
+      "residue": 18,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 55,
+      "residue": 45,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 57,
+      "residue": 39,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 63,
+      "residue": 36,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 65,
+      "residue": 40,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 77,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 85,
+      "residue": 35,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 91,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 95,
+      "residue": 20,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 99,
+      "residue": 45,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 105,
+      "residue": 36,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 117,
+      "residue": 27,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 119,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 133,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 143,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 147,
+      "residue": 99,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 153,
+      "residue": 18,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 165,
+      "residue": 111,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 171,
+      "residue": 153,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 175,
+      "residue": 100,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 2
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 187,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 195,
+      "residue": 66,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 209,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 221,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 245,
+      "residue": 100,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 2,
+          "residue": 2
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 247,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 255,
+      "residue": 171,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 275,
+      "residue": 100,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 285,
+      "residue": 96,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 315,
+      "residue": 36,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 323,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 325,
+      "residue": 300,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 363,
+      "residue": 243,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 11,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 425,
+      "residue": 375,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 441,
+      "residue": 99,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 475,
+      "residue": 400,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 495,
+      "residue": 441,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 507,
+      "residue": 339,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 13,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 525,
+      "residue": 351,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 539,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 585,
+      "residue": 261,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 605,
+      "residue": 485,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 11,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 637,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 693,
+      "residue": 540,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 765,
+      "residue": 171,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 819,
+      "residue": 729,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 825,
+      "residue": 276,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 833,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 845,
+      "residue": 170,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 13,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 847,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 11,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 855,
+      "residue": 666,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 867,
+      "residue": 579,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 17,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 931,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 975,
+      "residue": 651,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 1071,
+      "residue": 477,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 1083,
+      "residue": 723,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 19,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 1089,
+      "residue": 243,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 11,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 1183,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 1197,
+      "residue": 666,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 1275,
+      "residue": 426,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 1287,
+      "residue": 144,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 1425,
+      "residue": 951,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 1445,
+      "residue": 290,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 17,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 1521,
+      "residue": 846,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 13,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 1573,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 11,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 1575,
+      "residue": 351,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 1683,
+      "residue": 936,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 1805,
+      "residue": 1445,
+      "components": [
+        {
+          "prime": 5,
+          "exponent": 1,
+          "residue": 0
+        },
+        {
+          "prime": 19,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 1859,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 1881,
+      "residue": 837,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 1989,
+      "residue": 1548,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 2023,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 2057,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 11,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 2223,
+      "residue": 495,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 2299,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 11,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 2475,
+      "residue": 1926,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 2527,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 2601,
+      "residue": 2313,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 17,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 2873,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 13,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 2907,
+      "residue": 324,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 2925,
+      "residue": 2601,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 3179,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 3211,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 13,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 3249,
+      "residue": 2889,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 19,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 3757,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 3825,
+      "residue": 1701,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 3971,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 11,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "star",
+      "modulus": 4275,
+      "residue": 2376,
+      "components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 5,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 4693,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 13,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 5491,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 17,
+          "exponent": 2,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 1,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "kind": "pair",
+      "modulus": 6137,
+      "residue": 1,
+      "components": [
+        {
+          "prime": 17,
+          "exponent": 1,
+          "residue": 1
+        },
+        {
+          "prime": 19,
+          "exponent": 2,
+          "residue": 1
+        }
+      ]
+    }
+  ],
+  "central_cells": [
+    {
+      "l": 0,
+      "m": 0,
+      "residues": [
+        0,
+        0
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 1,
+      "residues": [
+        0,
+        5
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 2,
+      "residues": [
+        0,
+        10
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 3,
+      "residues": [
+        0,
+        15
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 4,
+      "residues": [
+        0,
+        20
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 5,
+      "residues": [
+        0,
+        1
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 6,
+      "residues": [
+        0,
+        6
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 7,
+      "residues": [
+        0,
+        11
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 8,
+      "residues": [
+        0,
+        16
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 9,
+      "residues": [
+        0,
+        21
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 10,
+      "residues": [
+        0,
+        2
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 11,
+      "residues": [
+        0,
+        7
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 12,
+      "residues": [
+        0,
+        12
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 13,
+      "residues": [
+        0,
+        17
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 14,
+      "residues": [
+        0,
+        22
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 15,
+      "residues": [
+        0,
+        3
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 16,
+      "residues": [
+        0,
+        8
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 17,
+      "residues": [
+        0,
+        13
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 18,
+      "residues": [
+        0,
+        18
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 0,
+      "m": 19,
+      "residues": [
+        0,
+        23
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 0,
+      "residues": [
+        3,
+        0
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 1,
+      "residues": [
+        3,
+        5
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 2,
+      "residues": [
+        3,
+        10
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 3,
+      "residues": [
+        3,
+        15
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 4,
+      "residues": [
+        3,
+        20
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 5,
+      "residues": [
+        3,
+        1
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 6,
+      "residues": [
+        3,
+        6
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 7,
+      "residues": [
+        3,
+        11
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 8,
+      "residues": [
+        3,
+        16
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 9,
+      "residues": [
+        3,
+        21
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 10,
+      "residues": [
+        3,
+        2
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 11,
+      "residues": [
+        3,
+        7
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 12,
+      "residues": [
+        3,
+        12
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 13,
+      "residues": [
+        3,
+        17
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 14,
+      "residues": [
+        3,
+        22
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 15,
+      "residues": [
+        3,
+        3
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 16,
+      "residues": [
+        3,
+        8
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 17,
+      "residues": [
+        3,
+        13
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 18,
+      "residues": [
+        3,
+        18
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 1,
+      "m": 19,
+      "residues": [
+        3,
+        23
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 0,
+      "residues": [
+        6,
+        0
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 1,
+      "residues": [
+        6,
+        5
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 2,
+      "residues": [
+        6,
+        10
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 3,
+      "residues": [
+        6,
+        15
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 4,
+      "residues": [
+        6,
+        20
+      ],
+      "mask": false,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 5,
+      "residues": [
+        6,
+        1
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 6,
+      "residues": [
+        6,
+        6
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 7,
+      "residues": [
+        6,
+        11
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 8,
+      "residues": [
+        6,
+        16
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 9,
+      "residues": [
+        6,
+        21
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 10,
+      "residues": [
+        6,
+        2
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 11,
+      "residues": [
+        6,
+        7
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 12,
+      "residues": [
+        6,
+        12
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 13,
+      "residues": [
+        6,
+        17
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 14,
+      "residues": [
+        6,
+        22
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 15,
+      "residues": [
+        6,
+        3
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 16,
+      "residues": [
+        6,
+        8
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 17,
+      "residues": [
+        6,
+        13
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 18,
+      "residues": [
+        6,
+        18
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 2,
+      "m": 19,
+      "residues": [
+        6,
+        23
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 0,
+      "residues": [
+        1,
+        0
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 1,
+      "residues": [
+        1,
+        5
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 2,
+      "residues": [
+        1,
+        10
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 3,
+      "residues": [
+        1,
+        15
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 4,
+      "residues": [
+        1,
+        20
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 5,
+      "residues": [
+        1,
+        1
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 6,
+      "residues": [
+        1,
+        6
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 7,
+      "residues": [
+        1,
+        11
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 8,
+      "residues": [
+        1,
+        16
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 9,
+      "residues": [
+        1,
+        21
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 10,
+      "residues": [
+        1,
+        2
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 11,
+      "residues": [
+        1,
+        7
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 12,
+      "residues": [
+        1,
+        12
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 13,
+      "residues": [
+        1,
+        17
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 14,
+      "residues": [
+        1,
+        22
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 15,
+      "residues": [
+        1,
+        3
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 16,
+      "residues": [
+        1,
+        8
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 17,
+      "residues": [
+        1,
+        13
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 18,
+      "residues": [
+        1,
+        18
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 3,
+      "m": 19,
+      "residues": [
+        1,
+        23
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 0,
+      "residues": [
+        4,
+        0
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 1,
+      "residues": [
+        4,
+        5
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 2,
+      "residues": [
+        4,
+        10
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 3,
+      "residues": [
+        4,
+        15
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 4,
+      "residues": [
+        4,
+        20
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 5,
+      "residues": [
+        4,
+        1
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 6,
+      "residues": [
+        4,
+        6
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 7,
+      "residues": [
+        4,
+        11
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 8,
+      "residues": [
+        4,
+        16
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 9,
+      "residues": [
+        4,
+        21
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 10,
+      "residues": [
+        4,
+        2
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 11,
+      "residues": [
+        4,
+        7
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 12,
+      "residues": [
+        4,
+        12
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 13,
+      "residues": [
+        4,
+        17
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 14,
+      "residues": [
+        4,
+        22
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 15,
+      "residues": [
+        4,
+        3
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 16,
+      "residues": [
+        4,
+        8
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 17,
+      "residues": [
+        4,
+        13
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 18,
+      "residues": [
+        4,
+        18
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 4,
+      "m": 19,
+      "residues": [
+        4,
+        23
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 0,
+      "residues": [
+        7,
+        0
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 1,
+      "residues": [
+        7,
+        5
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 2,
+      "residues": [
+        7,
+        10
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 3,
+      "residues": [
+        7,
+        15
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 4,
+      "residues": [
+        7,
+        20
+      ],
+      "mask": true,
+      "deleted_roots": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 5,
+      "residues": [
+        7,
+        1
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 6,
+      "residues": [
+        7,
+        6
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 7,
+      "residues": [
+        7,
+        11
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 8,
+      "residues": [
+        7,
+        16
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 9,
+      "residues": [
+        7,
+        21
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 10,
+      "residues": [
+        7,
+        2
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 11,
+      "residues": [
+        7,
+        7
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 12,
+      "residues": [
+        7,
+        12
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 13,
+      "residues": [
+        7,
+        17
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 14,
+      "residues": [
+        7,
+        22
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 15,
+      "residues": [
+        7,
+        3
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 16,
+      "residues": [
+        7,
+        8
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 17,
+      "residues": [
+        7,
+        13
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 18,
+      "residues": [
+        7,
+        18
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "l": 5,
+      "m": 19,
+      "residues": [
+        7,
+        23
+      ],
+      "mask": true,
+      "deleted_roots": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "inherited_base_gate": "23282735008494655373261/638394875922057408000000",
+  "inherited_alpha": "2673/110656",
+  "two_root_extension": {
+    "replacement": {
+      "modulus": 63,
+      "old_residue": 36,
+      "new_residue": 9,
+      "new_components": [
+        {
+          "prime": 3,
+          "exponent": 2,
+          "residue": 0
+        },
+        {
+          "prime": 7,
+          "exponent": 1,
+          "residue": 2
+        }
+      ]
+    },
+    "added_originals": [
+      {
+        "kind": "pure",
+        "modulus": 9,
+        "residue": 1,
+        "components": [
+          {
+            "prime": 3,
+            "exponent": 2,
+            "residue": 1
+          }
+        ]
+      },
+      {
+        "kind": "pure",
+        "modulus": 25,
+        "residue": 6,
+        "components": [
+          {
+            "prime": 5,
+            "exponent": 2,
+            "residue": 6
+          }
+        ]
+      }
+    ],
+    "ternary_leaf_mask": [
+      0
+    ],
+    "additional_live_root_at7": 2,
+    "inherited_gate": "3214176579848528977121/134398921246748928000000",
+    "full_network_density_denominator": 4250
+  },
+  "new_lean_verification": false
+}

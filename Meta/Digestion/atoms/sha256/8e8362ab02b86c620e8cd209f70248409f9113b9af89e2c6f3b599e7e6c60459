@@ -1,0 +1,46 @@
+### 6.5 有限视界的值与全部最优动作下降
+
+取共同有限非空动作集 $U$，商状态 $a=q(g)$。假设全定义确定性更新满足 $qT_u=\overline T_uq$，实值阶段奖励和终值满足
+
+$$
+r(g,u)=\bar r(qg,u),\qquad h(g)=\bar h(qg).
+\tag{CE.22}
+$$
+
+对加法控制，$\overline T_u(a)=a+q(g_u)$。Bellman 递推为
+
+$$
+V_0(g)=h(g),\quad
+V_{n+1}(g)=\max_{u\in U}\{r(g,u)+V_n(T_u g)\}.
+\tag{CE.23}
+$$
+
+这里直接使用本卷第5.1.4节命题5.2及 [`finite_horizon_value_factorization`](https://github.com/the-omega-institute/trureturing/blob/7f2bd771ec9e4bffc9558419ac45147775310773/D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.lean)：微状态取 $G$，宏状态取 $Q$，抽象取 $q$，共同动作取有限非空的 $U$，微／宏转移取 $T_u,\overline T_u$，奖励与终值取 $r,h,\bar r,\bar h$。转移交换关系及式（CE.22）正好给出三个前提，故
+
+$$
+V_n(g)=\bar V_n(qg)\quad\text{对所有有限 }n.
+\tag{CE.24}
+$$
+
+相同参数满足 [`finite_horizon_optimal_actions_descend`](https://github.com/the-omega-institute/trureturing/blob/7f2bd771ec9e4bffc9558419ac45147775310773/D5/S3/ConceptDynamics/DecisionValue/FiniteHorizonOptimalActionDescent.lean) 的前提。对每个动作，实际评分相等：
+
+$$
+r(g,u)+V_n(T_u g)=\bar r(qg,u)+\bar V_n(\overline T_u(qg)).
+$$
+
+这里 $n$ 是续值的剩余阶段数，该评分决定 $n+1$ 阶段问题的首动作。在同一有限非空动作集上取最大值，最大值和全部达到最大值的动作标签，包括并列最优动作，都相同。两扩张共享商更新、奖励和终值时，分别经这个商系统得到同样的值与全部最优动作。该值函数来源不要求状态集有限；其共同有限非空动作和实值条件不能挪给第6.9节的扩展非负最小—最大费用。
+
+部分动作采用 [ML 卷定理2.2、3.2的严格下降条件](https://github.com/the-omega-institute/trureturing/blob/7f2bd771ec9e4bffc9558419ac45147775310773/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)：每个动作定义域是 $q$ 纤维的并；同纤维的合法具名菜单相同、有限且非空；合法时的输出、费用和后继观察均经 $q$ 因子化，不合法时的失败报告及其费用也一致。以终值下降为零视界基例，对剩余视界归纳，同一合法动作的评分相等，再在同一非空菜单上取最大值，给值和全体最优标签相等。逐前缀归纳还保持输出、累计费用和失败语义。这里另行核对了部分域，没有将全定义转移的来源定理当作任意部分动作版本。
+
+具体取第6.3节的两个 $K=Q=\mathbb F_p$ 扩张，$p$ 为素数。一个非恒定任务是 $U=\{0,1\}$、按各自的 $s(u)$ 平移，
+
+$$
+\bar r(a,u)=\mathbf1_{a=0}-u/4,
+\qquad\bar h(a)=\mathbf1_{a=1}.
+\tag{CE.25}
+$$
+
+两扩张对所有有限视界的上述任务等价。相反，若任务终值改为 $h_s(g)=\mathbf1_{k_s(g)=0}$，则 $(0,a)$ 与 $(1,a)$ 低位相同而终值不同，连零步任务都不能经 $q$ 下降。
+
+所以是否需要保留进位，取决于目标及操作：有的任务只需要商，有的任务必须恢复核坐标或整个运算。相同最优值不是无条件的内部同构证书。
+

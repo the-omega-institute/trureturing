@@ -1,0 +1,2 @@
+**推论 1.22（scope of block quotient preservation）。** When complete blocks and terminal tails are both retained as continuation tests, expansion gives the common test correspondence required by the continuation-intertwining theorem in A卷第2.17节. Identify concatenation of encoded tests by concatenating their expanded words and taking the unique decomposition again whenever the concatenation is legal. With the composed raw transitions, costs, and roofs, the corresponding quotient is preserved.
+

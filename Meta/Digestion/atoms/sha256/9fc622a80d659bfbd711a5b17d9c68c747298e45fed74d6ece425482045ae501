@@ -1,0 +1,64 @@
+### 277.1 固定的真实来源对
+
+固定 $n\ge1$、参考空间 $E=\mathbb C^n$、qubit输入 $H$ 及其固定 $Y$ 本征基。沿用§269—270的同一单Jordan来源对：
+$$
+Je_1=0,\qquad Je_j=e_{j-1}\quad(j\ge2),
+\qquad t=\frac14,\qquad M=I_n+tJ,
+$$
+$$
+Q=Q^\dagger\succ0,
+\qquad Q+M^\dagger QM=I_n,
+\qquad Z=2QM.
+\tag{277.1}
+$$
+令 $C$、$k>0$ 为§269式（269.32）—（269.43）所固定的矩阵与常数，定义
+$$
+S_h=\operatorname{diag}(h^{n-1},h^{n-2},\ldots,1),
+\qquad D_h=hS_hCS_h,
+\qquad\delta=\delta_h=kh^{2n},
+$$
+$$
+\Omega_*=
+\frac1n\begin{pmatrix}Q&QM\\M^\dagger Q&I_n-Q\end{pmatrix},
+\qquad
+\Omega_h=
+\frac1n\begin{pmatrix}
+Q+D_h&(1-\delta)QM\\
+(1-\delta)M^\dagger Q&I_n-Q-D_h
+\end{pmatrix}.
+\tag{277.2}
+$$
+§269的Schur缩放证明给某个 $h_*>0$，使 $0<h\le h_*$ 时 $\Omega_h\succ0$。缩小 $h_*$，可同时要求 $h_*\le1$ 和 $0<\delta\le1/2$。两来源均为迹一的实际密度态，满足
+$$
+\rho_*:=\operatorname{Tr}_H\Omega_*
+=\operatorname{Tr}_H\Omega_h=I_n/n,
+$$
+$$
+K_*:=\mathscr K(\Omega_*)=Z/n,
+\qquad
+K_h:=\mathscr K(\Omega_h)=(1-\delta)Z/n,
+\qquad \mathscr K(X)=2X_{+-},
+$$
+$$
+\|\Omega_h-\Omega_*\|_1=\Theta(h).
+\tag{277.3}
+$$
+这里及下文的渐近常数可以依赖固定的 $n,t,Q,C,k$。态和数据的迹范数均未除以二；无下标矩阵范数为算子范数。
+
+对任意同维密度态 $\Xi$，沿用参考响应
+$$
+R_Z(\Xi)=\operatorname{Tr}_H[(Z_H\otimes I)\Xi],
+\qquad
+R_X(\Xi)=\operatorname{Tr}_H[(X_H\otimes I)\Xi],
+$$
+$$
+K_\Xi=R_Z(\Xi)-iR_X(\Xi).
+\tag{277.4}
+$$
+对两个来源 $\Xi,\Omega$，记完整数据距离为
+$$
+\varepsilon_{\mathcal D}(\Xi,\Omega)
+=\|\rho_\Xi-\rho_\Omega\|_1+\|K_\Xi-K_\Omega\|_1.
+\tag{277.5}
+$$
+

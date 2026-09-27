@@ -1,0 +1,7 @@
+**Proof.** In the padded-word convention, the Bertrand property is $w\in\mathcal L_k$ if and only if $w0^n\in\mathcal L_k$ for every $n\ge0$. Appending zeros preserves legality, and deleting appended zeros cannot remove an internal forbidden run. Passing between canonical and padded words preserves recognizability. The positive root satisfies
+$$
+1=\lambda_k^{-1}+\cdots+\lambda_k^{-k}.
+\tag{TM.549}
+$$
+To verify the greedy digits, put $r_j=\sum_{h=1}^{k-j}\lambda_k^{-h}$ for $0\le j\le k$. Then $r_0=1$, $r_k=0$, $0\le r_j<1$ for $j\ge1$, and $\lambda_kr_{j-1}=1+r_j$ for $1\le j\le k$. Thus the greedy expansion of $1$ is $1^k$, and $\lambda_k$ is a simple Parry number. Binary is a Bertrand system associated with the Parry number $2$. The required multiplicative independence is the preceding proposition. $\square$
+

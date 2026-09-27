@@ -1,0 +1,60 @@
+**定理 104.1（真实失效边界的二次发散）。** 定理 89.1 中的临界参数满足
+
+$$
+\boxed{
+p=2,\qquad
+\frac{1+\sqrt5}{32}\le c\le\frac1{1-R},
+\qquad R=\sqrt{\frac{11+5\sqrt5}{32}}.
+}
+\tag{104.1}
+$$
+
+因而存在正整数 $m$，使真实最坏成本满足
+
+$$
+\boxed{
+\mathscr K(R-h)
+=c\,h^{-2}\bigl(1+O(h^{1/m})\bigr)
+\qquad(h\downarrow0).
+}
+\tag{104.2}
+$$
+
+证明。先对式（103.1）的同一个实际仪器计算全部等待。其未点击映射为
+
+$$
+\mathcal N_\theta(X)=\operatorname{Tr}(P_\psi X)P_{\psi_\theta}.
+$$
+
+唯一可能的非零特征值为
+$\operatorname{Tr}(P_\psi P_{\psi_\theta})=\cos^2\theta$。对充分小的非零 $\theta$，该值严格小于一，所以所有初态终止。其伴随生存效果为
+
+$$
+\mathcal A_\theta^n(I)
+=\cos^{2(n-1)}\theta\,P_\psi
+\quad(n\ge1).
+$$
+
+求和得到准确成本
+
+$$
+T_{\widehat\Gamma_\theta}=I+\frac{P_\psi}{\sin^2\theta},
+\qquad
+M(\widehat\Gamma_\theta)=1+\frac1{\sin^2\theta}.
+\tag{104.3}
+$$
+
+由定理 103.2，令 $h_t=R-\delta(\widehat\Gamma_{-t})=\kappa t+O(t^2)>0$。同一个装置属于半径 $R-h_t$ 的校准球，因此
+
+$$
+\mathscr K(R-h_t)\ge1+\csc^2t,
+\qquad
+\liminf_{t\downarrow0}h_t^2\mathscr K(R-h_t)
+\ge\kappa^2=\frac{1+\sqrt5}{32}>0.
+\tag{104.4}
+$$
+
+第 89.1 条已证明实际最坏值具有正首系数和某个 $1\le p\le2$ 的有理幂主项。若 $p<2$，式（104.4）的左侧将为零，矛盾。故 $p=2$，并给首系数下界；第 89.2 条给 $c\le1/(1-R)$。代回既有主项便得式（104.2）。$\square$
+
+这一步履行了第 95.8 式此前留下的条件：旋转从已证明最近的失效装置出发，完整距离一阶向内，谱泄漏二阶开启。它没有要求这条显式旋转族在每个子临界半径上都恰好最优，首系数 $c$ 的精确值仍未确定。
+

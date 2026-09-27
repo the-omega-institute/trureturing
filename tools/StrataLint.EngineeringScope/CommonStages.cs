@@ -236,15 +236,31 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     {
         output.WriteLine("STAGE_STEP " + JsonSerializer.Serialize(new { stage, name, status = "started" }));
         output.Flush();
-        var result = Capture("dotnet", arguments);
-        output.WriteLine(result.Text);
-        var proof = name == "capability-proof" ? CompilationProof.ValidateCapability(result.Exit, result.Text)
-            : name == "banned-api-proof" ? CompilationProof.ValidateBannedApi(result.Exit, result.Text,
-                File.ReadAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"))) : result.Exit == 0;
+        Func<int, string, bool>? rejectionProof = name switch
+        {
+            "capability-proof" => CompilationProof.ValidateCapability,
+            "banned-api-proof" => (exit, text) => CompilationProof.ValidateBannedApi(exit, text,
+                File.ReadAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"))),
+            _ => null,
+        };
+        var result = Capture("dotnet", arguments, rejectionProof: rejectionProof);
+        var proof = rejectionProof is null ? result.Exit == 0 : result.ExpectedRejection;
         var exit = proof ? 0 : result.Exit is 0 or 1 ? 1 : 2;
         var log = $"{CommonExecutionEvidence.RootPath}/logs/engineering/{name}.log";
         Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(root, log))!);
         File.WriteAllText(Path.Combine(root, log), result.Text);
+        if (proof && (name is "capability-proof" or "banned-api-proof"))
+        {
+            var diagnostic = name == "capability-proof" ? "CS7036" : "RS0030";
+            output.WriteLine("EXPECTED_DIAGNOSTIC " + JsonSerializer.Serialize(new {
+                stage, name, status = "matched", raw_exit = result.Exit, diagnostic, log }));
+            // Reclassify only the validated errors; retain all other compiler output.
+            output.WriteLine(result.Text
+                .Replace(": error " + diagnostic + ":", ": expected diagnostic " + diagnostic + ":", StringComparison.Ordinal)
+                .Replace("Build FAILED.", "Compilation rejected as expected.", StringComparison.Ordinal)
+                .Replace(" Error(s)", " Expected diagnostic(s)", StringComparison.Ordinal));
+        }
+        else output.WriteLine(result.Text);
         steps.Add(new(name, result.Exit, exit, exit == 0 ? "executed" : "failed", log));
         return new(name, result.Exit, result.Text);
     }
@@ -378,8 +394,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         return result.Text;
     }
 
-    private (int Exit, string Text) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null,
-        bool streamOutput = false)
+    private (int Exit, string Text, bool ExpectedRejection) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null,
+        bool streamOutput = false, Func<int, string, bool>? rejectionProof = null)
     {
         var clock = timeProvider ?? TimeProvider.System;
         if (deadlineCancellation.IsCancellationRequested) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
@@ -420,6 +436,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var liveOutput = streamOutput ? TextWriter.Synchronized(output) : null;
         var phase = "child-exit";
         var outcome = "faulted";
+        var expectedRejection = false;
         string? cancelledPhase = null;
         double? cancelledElapsed = null;
         var deadlineCancelled = false;
@@ -446,8 +463,10 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             processExited?.Invoke(process);
             drains.WaitAsync(cancellation.Token).GetAwaiter().GetResult();
             cancellation.Token.ThrowIfCancellationRequested();
+            var text = Captured(stdoutText) + Captured(stderrText);
+            expectedRejection = rejectionProof?.Invoke(process.ExitCode, text) == true;
             outcome = "completed";
-            return (process.ExitCode, Captured(stdoutText) + Captured(stderrText));
+            return (process.ExitCode, text, expectedRejection);
         }
         catch (OperationCanceledException)
         {
@@ -471,7 +490,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             var diagnostic = "\nstage deadline exceeded: " + executable + "\n";
             liveOutput?.Write(diagnostic);
             liveOutput?.Flush();
-            return (124, Captured(stdoutText) + Captured(stderrText) + diagnostic);
+            return (124, Captured(stdoutText) + Captured(stderrText) + diagnostic, false);
         }
         finally
         {
@@ -488,6 +507,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 output.WriteLine("STAGE_PROCESS " + JsonSerializer.Serialize(new
                 {
                     stage, command = executable, arguments, process_id = process.Id, phase, outcome,
+                    expected_rejection = expectedRejection,
                     started_elapsed_ms = startedElapsed, elapsed_ms = Elapsed(),
                     timeout_ms = timeout == Timeout.InfiniteTimeSpan ? (double?)null : timeout.TotalMilliseconds,
                     cancelled_phase = cancelledPhase, cancelled_elapsed_ms = cancelledElapsed,

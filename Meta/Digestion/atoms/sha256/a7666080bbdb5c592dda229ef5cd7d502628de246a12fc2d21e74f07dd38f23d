@@ -1,0 +1,37 @@
+### 232.1 目标、候选与结论
+
+固定整数 $N\ge2$、$m\ge2$，输入 $A=\mathbb C^2$，量子输出 $O=\mathbb C^m$，记录空间 $B=\mathbb C^N$，其指定正交标签为 $|1\rangle,\ldots,|N\rangle$。任选固定单位向量
+$$
+r_j\in\mathbb C^m,\qquad P_j=|r_j\rangle\langle r_j|\quad(1\le j\le N).
+\tag{232.UC.1}
+$$
+这些输出向量可以相同，不需要正交。目标为均匀纯重置记录通道
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\mathcal R_j(X),
+\qquad\mathcal R_j(X)=\frac1N\operatorname{Tr}(X)P_j.
+\tag{232.UC.2}
+$$
+
+候选为同接口的任意 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\mathcal S_j(X),
+\tag{232.UC.3}
+$$
+各分支完全正，总和保迹。仅要求保留该经典记录接口；不将候选预先限制为重置通道、秩一输出通道或测量—制备通道。定义
+$$
+k_j=\operatorname{rank}J_{\mathcal S_j},\qquad
+K(\mathcal S)=\sum_{j=1}^Nk_j=\operatorname{rank}J_{\mathcal S},
+\tag{232.UC.4}
+$$
+即完整记录通道的最小 Kraus 数。最后一个等式来自标签块正交。零分支计秩零。
+
+对每个整数预算 $R\ge1$，置
+$$
+D_R=\inf\left\{
+\frac12\|\mathcal R-\mathcal S\|_\diamond:
+\mathcal S\text{ 满足（232.UC.3），}\ K(\mathcal S)\le R
+\right\}.
+\tag{232.UC.5}
+$$
+距离包含完整记录、量子输出及任意外部参考。候选集非空：由于 $m\ge2$，可以将一个等距通道放入单个标签，其余分支取零，得到 $K=1$ 的合法候选。预算 $R=0$ 不存在 CPTP 候选，不属于（232.UC.5）的定义域。
+

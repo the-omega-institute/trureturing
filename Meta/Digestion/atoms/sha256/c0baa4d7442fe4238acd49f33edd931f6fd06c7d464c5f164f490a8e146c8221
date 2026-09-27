@@ -1,0 +1,15 @@
+**推论201.2（实际参数的正熵位移）。**
+对第200节的
+$\beta=288/2353$、$\gamma=42/2353$、$R=4$，有
+
+$$
+\boxed{
+S_\epsilon-H_2(h_c\epsilon)
+=k_c\epsilon^2\log_2\frac1\epsilon
+-k_c\epsilon^2\log_2h_c+o(\epsilon^2)>0
+}
+\tag{201.7}
+$$
+
+对全部充分小正 $\epsilon$ 成立。
+

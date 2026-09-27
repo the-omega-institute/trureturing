@@ -1,0 +1,17 @@
+**定义 227.1（固定实结构下的准备虚部）。** 对第225节固定实坐标中的处理器，令 $C$ 为逐坐标共轭。精确纯态准备具有唯一正 $q$ 代表
+
+$$
+\psi(p)=\frac{\rho(p)q}{\sqrt{1-p}},\qquad
+q^\dagger\psi(p)=\sqrt{1-p},\qquad a<p<1.
+\tag{227.1}
+$$
+
+写 $\psi=\alpha+i\beta$，其中 $\alpha,\beta$ 为实向量，记该规范下的虚部模平方为 $t=\|\beta\|^2$。密度矩阵的共轭距离则不依赖整体相位。相对于固定 $C$，使用已有的虚性鲁棒度
+
+$$
+I_R^C(\rho)=\frac12\|\rho-C\rho C\|_1.
+\tag{227.2}
+$$
+
+这一迹范数公式是 Wu 等，*Operational Resource Theory of Imaginarity*，Phys. Rev. Lett. **126**, 090401（2021），arXiv:2007.14847v2，定理2式（5）的既有结果；对 Hermitian 密度矩阵，转置等于逐坐标共轭。本节的下界来自指定尖锐节点及精确矩约束，不把该资源公式作为新增结论。
+

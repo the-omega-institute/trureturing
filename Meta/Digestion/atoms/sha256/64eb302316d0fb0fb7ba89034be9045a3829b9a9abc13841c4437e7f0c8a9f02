@@ -1,0 +1,28 @@
+### 22.9 定理：一般几何完成与参数、截断的联合误差
+
+设 $0\leq r<1$、$0\leq\alpha,\beta<1$，并定义
+\[
+q_j=(1-r)r^j,\qquad P_{r,n}(\alpha,x)=\sum_{j=0}^{n-1}q_js_j(\alpha,x),\qquad
+G_r(\alpha,x)=\sum_{j=0}^{\infty}q_js_j(\alpha,x).
+\]
+对每个实相位 $x$，级数收敛，且
+\[
+\boxed{0\leq G_r(\alpha,x)-P_{r,n}(\alpha,x)\leq r^n.}
+\tag{22.14}
+\]
+两个完成读出在 $[0,1)$ 上可积，并满足
+\[
+\int_0^1|P_{r,n}(\beta,x)-P_{r,n}(\alpha,x)|\,dx
+=(1-r^n)|\beta-\alpha|,
+\]
+\[
+\boxed{\int_0^1|G_r(\beta,x)-G_r(\alpha,x)|\,dx=|\beta-\alpha|.}
+\tag{22.15}
+\]
+若 $\beta\leq\alpha$，则参数替代与输出截断的联合误差恰为
+\[
+\boxed{\int_0^1|G_r(\alpha,x)-P_{r,n}(\beta,x)|\,dx
+=\alpha-\beta(1-r^n)=(\alpha-\beta)+\beta r^n.}
+\tag{22.16}
+\]
+

@@ -1,0 +1,11 @@
+### 95.1 正则零位纤维的接收因子不能相交
+
+对非零环境向量 $z$，定义完整全域接收纤维
+
+$$
+\mathcal G_i([z])
+=\{y\in K:y\otimes z\in\operatorname{ran}V_i\},
+\qquad g_i([z])=\dim\mathcal G_i([z]).
+\tag{95.2}
+$$
+

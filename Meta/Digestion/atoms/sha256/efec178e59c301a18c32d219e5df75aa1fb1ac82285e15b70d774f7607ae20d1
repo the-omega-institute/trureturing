@@ -1,0 +1,15 @@
+**定义 195.2（集合间的响应距离）。** 对两个非空紧响应集合 $\mathfrak A,\mathfrak B$，定义 Hausdorff 距离
+
+$$
+d_{\mathrm H}(\mathfrak A,\mathfrak B)
+=
+\max\left\{
+\sup_{A\in\mathfrak A}\inf_{B\in\mathfrak B}\|A-B\|,
+\sup_{B\in\mathfrak B}\inf_{A\in\mathfrak A}\|A-B\|
+\right\}.
+$$
+
+它衡量两份合同在最坏合法实现下能否彼此匹配，不是某一个平均响应的距离。
+
+---
+

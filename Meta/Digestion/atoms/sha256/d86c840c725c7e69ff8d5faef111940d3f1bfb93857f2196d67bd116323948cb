@@ -1,0 +1,18 @@
+- reset 的§292必要条件为
+$$
+g\ge\frac{c_*}{3K}
+\left(\frac{c_*+k^3}{c_*+1}\right)^K,\qquad c_*=33/32,
+$$
+也给固定 $k$ 下的 $K=\Omega_k(\log(1/g))$，且不依赖 $n$。
+
+在上述相同风险与权限条件下，（296.29）匹配其发散阶：
+$$
+N_{\min}^{\mathrm{full},\,n=1}(k,g)
+=\Theta_k(\log(1/g)),
+$$
+$$
+N_{\min}^{\mathrm{reset}}(n;k,g)
+=\Theta_k(\log(1/g)),
+$$
+后者可对全部 $n\ge1$ 选择统一的上下界常数。具体地，两条必要界取负对数后均给 $\log(1/g)\le A_kK+B_k\log K+C_k$，用 $\log K\le K$ 即得上述下界阶。准确常数及有限预算最优决定表未在这里求解。
+

@@ -1,0 +1,9 @@
+- $AABBB$：$G_4=G_5=G_6=P_B$，固定 $V_0$ 给 $H_4=H_5$，违反实际 $\delta_5-\delta_4=-x^3y^3/(t_4t_5)\ne0$。
+
+这里 $x=|a|^2,y=|b|^2,t_0=1,t_j=1-yt_{j-1}$，非退化来源保证显示的主角差值严格非零。因此只剩
+
+$$
+\boxed{AAAAB,\qquad AAABA,\qquad AAABB,\qquad AABAA,\qquad ABAAA.}
+\tag{112.9}
+$$
+

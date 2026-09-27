@@ -1,0 +1,89 @@
+### 6.1 带标记扩张与进位运算
+
+固定有限阿贝尔群及其加法同态组成的正合列
+
+$$
+0\longrightarrow K\xrightarrow{\iota}G\xrightarrow{q}Q\longrightarrow0.
+\tag{CE.1}
+$$
+
+正合表示 $\iota$ 单射、$q$ 满射且 $\iota(K)=\ker q$。核 $K$ 与商 $Q$ 都带标记；比较时须说明是否保留这些标记。取一个归一化的**集合截面**
+
+$$
+s:Q\to G,\qquad q\circ s=\operatorname{id}_Q,\quad s(0)=0.
+\tag{CE.2}
+$$
+
+有限性保证可以选代表，但不保证能在给定实验预算内准备这些代表。截面也不必是群同态。
+
+因为 $q(s(a)+s(b)-s(a+b))=0$，存在唯一的 $c_s(a,b)\in K$ 使
+
+$$
+\iota(c_s(a,b))=s(a)+s(b)-s(a+b).
+\tag{CE.3}
+$$
+
+记 $c=c_s$。既有[截面进位构造 `kernelCarry`](https://github.com/the-omega-institute/trureturing/blob/7f2bd771ec9e4bffc9558419ac45147775310773/D5/S1/Deficit/Cocycles/AdditiveCarryCocycle.lean)以 $\ker q$ 为值域；这里用正合性给出的同构 $\iota:K\cong\ker q$ 将其运输到指定的 $K$。该来源的加法群取 $X=G$、$B=Q$，商同态取 $q$、代表函数取 $s$，右逆条件正是式（CE.2）。该构造不需要有限性；有限性是本章的模型条件。
+
+定义
+
+$$
+\Phi_s:K\times Q\to G,\qquad\Phi_s(k,a)=\iota(k)+s(a).
+\tag{CE.4}
+$$
+
+它是集合双射，因为
+
+$$
+\Phi_s^{-1}(g)=
+\left(\iota^{-1}(g-s(qg)),qg\right),
+\tag{CE.5}
+$$
+
+其中 $\iota^{-1}$ 只在 $\ker q$ 上使用。确实，$q(g-s(qg))=0$；代回 $\Phi_s$ 得到 $g$，而对 $g=\iota(k)+s(a)$，有 $qg=a$ 和 $g-s(qg)=\iota(k)$，所以另一复合也为恒等。再由式（CE.3），
+
+$$
+\begin{aligned}
+\Phi_s(k,a)+\Phi_s(\ell,b)
+&=\iota(k+\ell)+s(a)+s(b)\\
+&=\iota(k+\ell+c(a,b))+s(a+b).
+\end{aligned}
+$$
+
+于是完整加法被精确运输成
+
+$$
+(k,a)\star_c(\ell,b)
+=\bigl(k+\ell+c(a,b),a+b\bigr).
+\tag{CE.6}
+$$
+
+仅有集合双射 $G\cong K\times Q$ 不表示群是直积；群直积要求进位能在合适截面下消去。
+
+由归一化、交换律及结合律分别得到
+
+$$
+c(0,a)=c(a,0)=0,\qquad c(a,b)=c(b,a),
+\tag{CE.7}
+$$
+
+$$
+c(a,b)+c(a+b,d)=c(b,d)+c(a,b+d).
+\tag{CE.8}
+$$
+
+归一化由 $s(0)=0$ 和 $\iota$ 单射得到，对称性由 $G$ 交换得到。式（CE.8）直接使用上述来源的 `section_carry_cocycle`，参数仍为 $G,Q,q,s$，并经 $\iota$ 运输；它只要求加法交换群与右逆，归一化和对称性由此处另列的条件保证。在当前坐标中，两边经 $\iota$ 都等于 $s(a)+s(b)+s(d)-s(a+b+d)$。
+
+反过来，若阿贝尔群 $K,Q$ 和一张表 $c:Q^2\to K$ 满足 CE.7–CE.8，则 CE.6 给出阿贝尔群。两种结合次序的 $Q$ 坐标相同，$K$ 坐标相等恰是 CE.8；零元是 $(0,0)$，逆元为
+
+$$
+(k,a)^{-1}=(-k-c(a,-a),-a).
+\tag{CE.9}
+$$
+
+反向构造的细节如下。对 $(k,a),(\ell,b),(m,d)$，左结合的核坐标为 $k+\ell+m+c(a,b)+c(a+b,d)$，右结合的为 $k+\ell+m+c(b,d)+c(a,b+d)$；式（CE.8）使其相等。式（CE.7）的两个归一化等式分别给出左右单位元。式（CE.9）与 $(k,a)$ 右乘时，核坐标是 $k-k-c(a,-a)+c(a,-a)=0$；左乘时由 $c(-a,a)=c(a,-a)$ 同样为零。交换性由 $K,Q$ 交换和 $c(a,b)=c(b,a)$ 得到。因此它确为阿贝尔群，记作 $G_c$。
+
+嵌入 $k\mapsto(k,0)$ 保加法且单射，投影 $(k,a)\mapsto a$ 保加法且满射；投影核恰为 $\{(k,0):k\in K\}$，所以恢复式（CE.1）的正合性。截面 $a\mapsto(0,a)$ 的进位恰为 $c(a,b)$。原扩张的 $\Phi_s$ 则是保持指定核与商的群同构。因而在这些条件下，两层的群运算加上一张归一化对称余循环表，足以重建带标记扩张。
+
+这比“层数、大小或维数相同”严格更强。每层的数据说明有哪些坐标，进位表说明这些坐标怎样共同运算。
+

@@ -1,0 +1,40 @@
+### 239.1 固定接口与联合最优值
+
+固定整数
+$$
+d\ge2,\qquad N\ge d+1,\qquad m\ge d.
+\tag{239.1}
+$$
+输入为 $A=\mathbb C^d$，量子输出为 $O=\mathbb C^m$，记录空间保留全部 $N$ 个指定正交标签。任选固定单位向量 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j.
+\tag{239.2}
+$$
+输出向量可以相同。候选为同接口全部 CPTP 经典记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\sum_{a=1}^{k_j}C_{j,a}XC_{j,a}^{\dagger},
+\qquad \sum_{j,a}C_{j,a}^{\dagger}C_{j,a}=I_d.
+\tag{239.3}
+$$
+各分支采用最小 Kraus 表示，允许零分支和任意量子输出方向；总容量为
+$$
+K(\mathcal S)=\sum_jk_j=\operatorname{rank}J_{\mathcal S}.
+\tag{239.4}
+$$
+对一份固定候选，定义完整误差及无参考误差
+$$
+D(\mathcal S)=\frac12\|\mathcal R-\mathcal S\|_{\diamond},
+\qquad
+U(\mathcal S)=\sup_{\rho\succeq0,\ \operatorname{Tr}\rho=1}
+\frac12\|\mathcal R(\rho)-\mathcal S(\rho)\|_1.
+\tag{239.5}
+$$
+前者允许任意外部参考，后者只使用原输入系统中的密度矩阵，输出仍保留全部记录与量子部分。相应预算最优值为
+$$
+D_R=\inf_{K(\mathcal S)\le R}D(\mathcal S),
+\qquad U_R=\inf_{K(\mathcal S)\le R}U(\mathcal S).
+\tag{239.6}
+$$
+

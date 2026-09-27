@@ -1,0 +1,16 @@
+# 382．历史态、条件切片与相干—去相干区别
+
+对链图 $0\to1\to\cdots\to N$，其中 $N\ge1$，把 $\bigoplus_{n=0}^N\mathcal H$ 识别为 $\mathbb C^{N+1}\otimes\mathcal H$。取酉 $U_0,\ldots,U_{N-1}$，令
+
+$$
+V_0=I,\qquad V_n=U_{n-1}\cdots U_0,
+$$
+
+并定义
+
+$$
+W\psi=\frac1{\sqrt{N+1}}\sum_{n=0}^N|n\rangle\otimes V_n\psi .
+$$
+
+则 $W^\dagger W=I$，且 $\operatorname{ran}W=\ker K_G$。对初态密度矩阵 $\rho_0$，令 $\Gamma=W\rho_0W^\dagger$。
+

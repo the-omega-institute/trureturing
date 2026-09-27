@@ -1,0 +1,32 @@
+**Proof.** Subtracting from one preserves computability of a real. The binary expansion lemma identifies computability of $1-M$ with decidability of the canonical depth support $S$. The reductions in C卷第2.8.2节 identify decidability of $S$ with decidability of $R$. Every reduction uses the same fixed presentation and the same final complement. $\square$
+
+For a nondyadic mass, the forward construction is uniform in the presentation and a valid mass name, under that nondyadic promise. For a dyadic mass, $R$ is decidable outright, but the proof is nonuniform in the presentation. Thus every fixed presentation admits a mass-name-to-extension operator, while one common such operator for all presentations need not exist. The next section proves that it does not exist.
+
+The reverse direction remains uniform over all permitted presentations, including dyadic ones. Define
+
+$$
+R_n=\{s\in\{0,1\}^n:s\in R\},
+\qquad
+A_n=\bigcup_{s\in R_n}[s],
+\qquad a_n=|R_n|2^{-n}.
+\tag{TM.667}
+$$
+
+Then
+
+$$
+E\subseteq A_n,
+\qquad
+A_n\setminus E\subseteq\bigcup_{h>n:\,C_h\text{ announced}}C_h,
+\tag{TM.668}
+$$
+
+because any forbidden ancestor of depth at most $n$ would make the containing depth-$n$ cylinder nonextendible. Therefore
+
+$$
+\boxed{0\le a_n-M\le2^{-n}.}
+\tag{TM.669}
+$$
+
+An extension oracle computes a $2^{-n}$-accurate rational approximation by $2^n$ depth-$n$ queries. This is a bound for the displayed procedure, not an optimality claim.
+

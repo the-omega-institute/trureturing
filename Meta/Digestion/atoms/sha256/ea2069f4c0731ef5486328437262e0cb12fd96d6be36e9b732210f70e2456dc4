@@ -1,0 +1,23 @@
+### 19.3 定理：连续支撑模型的完整噪声曲线
+
+记
+\[
+m=\frac{a+b}{2},\quad h=\frac{b-a}{2},\quad
+\varepsilon_1=\frac{(1-b)(b-a)}{4+a+b},\quad
+\varepsilon_2=\frac{(1-b)(b-a)}{2+a},\quad
+\varepsilon_3=1-b^2.
+\]
+有 $0<\varepsilon_1<\varepsilon_2<\varepsilon_3$，且对全部 $\varepsilon\geq0$，
+\[
+\boxed{
+W(\varepsilon)=
+\begin{cases}
+\dfrac{h^2+\varepsilon(1+2m)}{(1-m)^2},&0\leq\varepsilon\leq\varepsilon_1,\\[4pt]
+\dfrac{\varepsilon(1+2b)-\varepsilon^2}{(1-b)^2+3\varepsilon},&\varepsilon_1\leq\varepsilon\leq\varepsilon_2,\\[4pt]
+\dfrac{b^2-a^2+\varepsilon}{1-a^2},&\varepsilon_2\leq\varepsilon\leq\varepsilon_3,\\[4pt]
+1,&\varepsilon\geq\varepsilon_3.
+\end{cases}}
+\tag{19.8}
+\]
+相邻表达式在转折点相等。
+

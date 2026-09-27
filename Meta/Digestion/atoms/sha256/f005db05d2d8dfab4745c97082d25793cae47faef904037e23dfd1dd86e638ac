@@ -1,0 +1,140 @@
+**第五轮的二维夹角矛盾。**
+
+此后取 $`D=6`$、$`k=w`$。由第二轮与第三轮输入环境正交，
+$$
+p\perp z,w,u,\qquad q\perp z,w.
+\tag{25.17}
+$$
+因为 $`z,u`$ 张成 $`u,v`$ 平面，故 $`p\perp L`$。定义二维空间
+$$
+L_0=(L\oplus\operatorname{span}\{p\})^\perp.
+\tag{25.18}
+$$
+于是 $`q\in\operatorname{span}\{y_0\}\oplus L_0`$，且 $`q`$ 为单位向量。
+
+置
+$$
+d=\sqrt{c^2+|b|^2},\qquad f=\frac{cs+br}{d}.
+\tag{25.19}
+$$
+因 $`s,r,p,q`$ 正交归一，$`f`$ 是单位向量且 $`f\perp p,q`$。
+第四轮环境为一而第三轮零位输入空间为 $`H`$，给 $`f\perp z,w`$。
+故 $`q,f`$ 是三维空间
+$$
+T=\operatorname{span}\{y_0\}\oplus L_0
+\tag{25.20}
+$$
+中的一组正交单位向量。由第四轮一位输入与第三轮一位输入环境正交，还得到
+$`s\perp u,w`$。
+
+第四轮新出现的正交输入 $`f0,s1`$ 均与第二轮输入 $`p0,p1,q0`$ 正交。
+因此可写
+$$
+V(f0)=A\eta_1,\qquad V(s1)=B\eta_1,
+\tag{25.21}
+$$
+其中 $`A,B`$ 正交归一，且 $`A,B\perp u,v,w`$。第四轮两列为
+$$
+ad\,m_0A+cb\,m_1B,\qquad
+m_0(a^2u+bw)+ab\,m_1v.
+\tag{25.22}
+$$
+
+第五轮环境为零，必须与第二、四轮环境一的全部输入正交。
+（25.22）第一列的一位输入向量是非零倍数的 $`A`$，所以
+$$
+A\perp p,s.
+\tag{25.23}
+$$
+其零位输入向量为
+$$
+h_5=a^2d A+cb B,
+\tag{25.24}
+$$
+故
+$$
+h_5\perp p,q,f.
+\tag{25.25}
+$$
+由 $`A\perp p`$、$`cb\ne0`$ 及（25.25），有 $`B\perp p`$。结合
+$`A,B\perp L`$，可知 $`A,B`$ 是二维 $`L_0`$ 的正交单位基。
+
+令
+$$
+X=|a|^2,\qquad Y=|b|^2,\qquad
+\kappa^2=X^2d^2+Yc^2,
+\qquad \ell=h_5/\kappa.
+\tag{25.26}
+$$
+$`\ell`$ 是 $`L_0`$ 中的单位向量。由（25.25），$`q,f`$ 张成
+$`T\cap\ell^\perp`$。取 $`L_0\cap\ell^\perp`$ 的单位向量 $`e`$，则
+$$
+\operatorname{span}\{q,f\}=\operatorname{span}\{y_0,e\}.
+\tag{25.27}
+$$
+所以存在 $`\alpha,\beta\in\mathbb C`$、$`\theta\in\mathbb R`$，使
+$$
+q=\alpha y_0+\beta e,\qquad
+f=e^{i\theta}(-\overline\beta\,y_0+\overline\alpha\,e),
+\qquad |\alpha|^2+|\beta|^2=1.
+\tag{25.28}
+$$
+这里保留了伴随向量的全部相位 $`e^{i\theta}`$，没有假定复振幅为正实数。
+
+因为 $`s\perp p,q,w`$，可在正交基 $`z,f,\ell`$ 中写
+$$
+s=\sigma z+\frac{c}{d}f+\tau\ell.
+\tag{25.29}
+$$
+其中 $`f`$ 的系数是正实数 $`c/d`$，由（25.19）及 $`s\perp r`$ 得到。
+另一方面，由（25.5）、（25.28）有
+$$
+\langle u,z\rangle=\frac{a^2}{c},\qquad
+|\langle u,f\rangle|^2=\frac{Y|\beta|^2}{c^2}.
+\tag{25.30}
+$$
+利用 $`s\perp u`$ 和 $`\|s\|=1`$，令 $`T_\beta=|\beta|^2`$，得到
+$$
+|\sigma|^2=\frac{Yc^2T_\beta}{X^2d^2},
+\qquad
+|\tau|^2=\frac{Y}{d^2}
+\left(1-\frac{c^2T_\beta}{X^2}\right).
+\tag{25.31}
+$$
+特别地 $`T_\beta\le X^2/c^2<1`$，所以 $`\alpha\ne0`$。
+$`s`$ 在 $`L_0=\operatorname{span}\{e,\ell\}`$ 上的投影为
+$$
+s_{L_0}=\frac{c}{d}e^{i\theta}\overline\alpha\,e+\tau\ell,
+\qquad
+\|s_{L_0}\|^2=
+\frac{d^2-c^4T_\beta/X^2}{d^2}>0.
+\tag{25.32}
+$$
+由 $`A\in L_0`$、$`\|A\|=1`$、$`A\perp s`$，二维正交补的坐标给出
+$$
+|\langle\ell,A\rangle|^2
+=\frac{c^2(1-T_\beta)}{d^2-c^4T_\beta/X^2}.
+\tag{25.33}
+$$
+但（25.24）、（25.26）以及 $`A,B`$ 正交归一又给
+$$
+|\langle\ell,A\rangle|^2
+=\frac{X^2d^2}{X^2d^2+Yc^2}.
+\tag{25.34}
+$$
+比较（25.33）—（25.34），乘正分母，并用
+$`c^2=X^2+Y`$、$`d^2=X^2+2Y`$，得到
+$$
+\begin{aligned}
+0
+&=c^2(1-T_\beta)(X^2d^2+Yc^2)
+-X^2d^2(d^2-c^4T_\beta/X^2)\\
+&=Y^3+Y^2c^2T_\beta.
+\end{aligned}
+\tag{25.35}
+$$
+右侧严格为正，因为 $`Y>0`$、$`T_\beta\ge0`$。矛盾。等价地，这一合同会强制
+$`T_\beta=-Y/c^2<0`$。
+
+故六维及以下无法以确定、正交、交替的环境序列01010服务五个精确终端。
+

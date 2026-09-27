@@ -1,0 +1,114 @@
+**定理 213.2（每个尖锐点强制原程序空间中的三维不变块）。** 对任意定义213.1程序，在其原联合支持 $`\mathcal H`$ 上按第209.3式固定对称化处理器，取相应的 $`A,K`$ 及 $`E=(I+A)/2`$。对每个尖锐校准点 $`t`$，记
+
+```math
+h=\frac{1+t}{2},\quad \ell=1-h,\quad
+ \alpha=\sqrt{1-a^2/h},\quad \gamma=\sqrt{1-a^2/h^2},\quad
+ c_t=(1-t)(1+t)^2,\quad V_*=(\alpha+\sqrt h\,\gamma)^2/4.
+\tag{213.3}
+```
+
+存在原空间中的正交单位向量 $`e,z,f`$，使 $`Ee=e`$、$`Ez=z`$、$`Ef=0`$，并可选择名义纯向量为 $`\psi_t=\sqrt h\,e+\sqrt\ell\,f`$。子空间 $`\mathcal S_t=\operatorname{span}\{e,z,f\}`$ 被同一个固定算子 $`K^\dagger`$ 保持，且
+
+```math
+\begin{aligned}
+ K^\dagger e&=\frac{at}{h}e+\gamma z+2a\sqrt{\ell/h}\,f,\\[0pt]
+ K^\dagger z&=\frac{\psi_t-(a/\sqrt h)K^\dagger e}{\alpha},\qquad
+ K^\dagger f=0.
+ \end{aligned}
+\tag{213.4}
+```
+
+因此这一限制酉等价于第211.17式的 $`T_0(a,t)^\dagger`$，其特征多项式为
+
+```math
+\det\bigl(xI-K^\dagger|_{\mathcal S_t}\bigr)
+   =x\bigl(x^2-s(h)x-b(h)\bigr).
+\tag{213.5}
+```
+
+这里不要求原空间上的整个 $`E`$ 是投影，不以 Naimark 扩大空间的维数代替实际程序维数。
+
+证明。 第211.2节的有限忠实平均论证适用于任意固定处理器：选择有限多个实际准备态，其支持张成 $`\mathcal H`$，它们的严格正权平均在 $`\mathcal H`$ 上忠实。每个信号基态的输出仍为同一个纯基态，非负输出概率的零和迫使原 Stinespring 等距在整个联合支持上具有受控形式。随后作固定信号交换对称化，得到
+
+```math
+0\le E\le I,\quad KK^\dagger\le E,\qquad
+ \langle\psi_u,E\psi_u\rangle=\frac{1+u}{2},\quad
+ \langle\psi_u,K\psi_u\rangle=a.
+\tag{213.6}
+```
+
+此处 $`K`$ 及 $`E`$ 不随校准点改变。选定 $`C=E^{+1/2}K`$，其中 $`E^{+1/2}`$ 表示在正谱上取逆平方根、在核上取零，故 $`K=\sqrt E\,C`$、$`\|C\|\le1`$。采用固定等距与扩大算子
+
+```math
+Jx=\sqrt E\,x\oplus\sqrt{I-E}\,x,\qquad
+ T=\iota_+CJ^\dagger,\qquad
+ P+Q=I,
+\tag{213.7}
+```
+
+其中 $`P,Q`$ 为两个分量的投影，$`\iota_+`$ 为第一分量的嵌入。于是
+
+```math
+PT=T,\quad \|T\|\le1,\quad J^\dagger TJ=K,\quad
+ \operatorname{ran}T^\dagger\subseteq\operatorname{ran}J.
+\tag{213.8}
+```
+
+在 $`t`$ 附近选择 $`C^1`$ 单位向量表示及水平相位，令 $`\phi_u=J\psi_u`$、$`\langle\phi_u,\phi'_u\rangle=0`$。局部表示可由 $`\rho_u w/\sqrt{w^\dagger\rho_u w}`$ 再乘积分相位取得。写
+
+```math
+H_u=\frac P{1+u}-\frac Q{1-u},\qquad
+ d(u)=\phi'_u-\frac12H_u\phi_u,\qquad
+ M=\frac{T+T^\dagger}{2},\qquad v(u)=(M-aI)\phi_u.
+\tag{213.9}
+```
+
+纯态信息公式和固定投影概率导数给出
+
+```math
+g(u):=I_Q(\rho_u)-I_r(u)=4\|d(u)\|^2.
+\tag{213.10}
+```
+
+校准时 $`d(t)=0`$，所以 $`H_t\phi_t=2\phi'_t\in\operatorname{ran}J`$。由于 $`H_t`$ 的两个分量系数不同，$`p=P\phi_t`$、$`q=Q\phi_t`$ 均属于 $`\operatorname{ran}J`$。置 $`Je=p/\sqrt h`$、$`Jf=q/\sqrt\ell`$；由 $`J`$ 的定义得 $`Ee=e`$、$`Ef=0`$。
+
+第211.10—211.14式的标量残差与方差界在纯态上为
+
+```math
+\varepsilon(u)=2\operatorname{Re}\langle d(u),v(u)\rangle,
+ \qquad \frac{\varepsilon(u)}{u-t}\longrightarrow\frac a{c_t},
+ \qquad \|v(t)\|^2\le V_*.
+\tag{213.11}
+```
+
+选取实现尖锐下极限的序列 $`u_n\to t`$。由 Cauchy–Schwarz、（213.10）及 $`\kappa_*=a^2/(c_t^2V_*)`$，有
+
+```math
+\frac{a^2}{c_t^2}
+ \le \kappa_*\|v(t)\|^2\le\kappa_*V_*=
+ \frac{a^2}{c_t^2}.
+\tag{213.12}
+```
+
+故方差界必须取等。第211.13式的正交分解给出
+
+```math
+T\phi_t=\frac ahp+k_\perp,\qquad
+ T^\dagger p=\frac{at}{h}p+2aq+r_\perp,
+ \qquad v(t)=\frac{k_\perp+r_\perp}{2},
+\tag{213.13}
+```
+
+其中两个余向量均正交于 $`p,q`$，且 $`k_\perp\in\operatorname{ran}P`$。它们的范数上界分别为 $`\alpha`$、$`\sqrt h\,\gamma`$，均严格为正。方差取等迫使两个范数取等并正向共线。因此存在单位向量 $`\widetilde z`$，使
+
+```math
+k_\perp=\alpha\widetilde z,\qquad
+ r_\perp=\sqrt h\,\gamma\widetilde z,\qquad
+ \widetilde z\in\operatorname{ran}P\cap\{p,q\}^\perp.
+\tag{213.14}
+```
+
+复 Hilbert 空间的三角等号同样要求正实比例，故这里没有未受约束的相对相位。由（213.8）及 $`p,q\in\operatorname{ran}J`$，$`r_\perp`$ 属于 $`\operatorname{ran}J`$；于是 $`\widetilde z=Jz`$，且 $`Ez=z`$。这把第三个方向放回原程序空间。
+
+式（213.13）现在成为 $`T J\psi_t=(a/\sqrt h)Je+\alpha Jz`$。范数取等还给出 $`\|TJ\psi_t\|=1`$，压缩性因而蕴含 $`T^\dagger TJ\psi_t=J\psi_t`$。对这两个等式及 $`T^\dagger p`$ 的分解施加 $`J^\dagger`$，便得到（213.4）的前两式。由 $`KK^\dagger\le E`$ 及 $`Ef=0`$ 得最后一式。它们直接证明 $`\mathcal S_t`$ 对 $`K^\dagger`$ 不变。在同一正交基 $`(e,z,f)`$ 中，三列恰为 $`T_0^\dagger`$，而不是独立的左右基底变换。第211.24式给出其非零二维块的迹 $`s(h)`$ 和行列式 $`-b(h)`$，故得（213.5）。整个证明仅使用实际曲线的一阶可微性；二阶信息由可微的标量残差取得。证毕。
+

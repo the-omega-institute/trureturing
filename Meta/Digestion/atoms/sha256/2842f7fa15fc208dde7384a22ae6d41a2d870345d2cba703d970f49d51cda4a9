@@ -1,0 +1,14 @@
+### 178.4 近似模拟的一个方向具有精确误差
+
+对同输出接口的两条通道，定义接收端近似模拟误差
+
+$$
+\delta_K(\mathcal P\to\mathcal Q)
+=\min_{\Lambda:K\to K\ {\rm CPTP}}
+d_\diamond\bigl((\operatorname{id}_M\otimes\Lambda)\mathcal P,
+\mathcal Q\bigr).
+\tag{178.5}
+$$
+
+解码通道集紧，故最小值取得。
+

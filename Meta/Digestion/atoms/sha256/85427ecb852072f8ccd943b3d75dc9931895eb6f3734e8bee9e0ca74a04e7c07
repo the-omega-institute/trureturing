@@ -1,0 +1,52 @@
+**命题209.2（实际全共同 CPTP 最优值的角点解析）。**
+存在固定 $\ell_*,\tau_*>0$，以及原点开邻域中的实解析函数 $V$，使
+
+$$
+F(\ell,\tau)=V(\ell,\tau)
+\qquad(0\le\ell\le\ell_*,\ 0\le\tau\le\tau_*).
+\tag{209.9}
+$$
+
+以下证明这一命题，最后再回到全来源余项。
+先作第189节的无损标签及旗标对称化。
+正旗标上的共同 instrument 用输入优先 Choi 对表示，固定可行集为
+
+$$
+\mathcal K=\{(J_0,J_1):J_j\succeq0,
+\operatorname{Tr}_{\mathrm{out}}(J_0+J_1)=I\}.
+\tag{209.10}
+$$
+
+记完整误差为 $e(\ell,\epsilon,\Gamma)$。
+它对 $\Gamma\in\mathcal K$ 凸。
+基点取 $K_0=K_1=I/\sqrt2$，对应
+$J_j=|\operatorname{vec}I\rangle\langle\operatorname{vec}I|/2$，记此对为 $\Gamma_*$。
+
+第207节的独立 $(\epsilon,t=\sqrt\ell)$ 偶解析论证，
+在 $(0,0,\Gamma_*)$ 附近给出与邻近可行 Choi 对上真实误差一致的环境实解析函数
+$\widetilde e(\ell,\epsilon,\Gamma)$。
+其依据是完整参考最大点的唯一性、最高根间隙及参考负曲率：
+基点四个本征值为 $3/4,-1/4,0,0$，参考曲率为 $-3/2$；
+$t$ 变号为块酉共轭，故收敛级数只含 $t^{2k}$。
+这里不要求完整范数在任意非 CP 环境方向可微。
+
+该解析函数在零来源零噪声处严格满足
+
+$$
+\widetilde e(0,0,\Gamma)
+=1-\frac{A_0A_1}{A_0+A_1},
+\tag{209.11}
+$$
+
+在纯基点最优面 $A_j=1/2,C_j=0$ 上，其来源导数为
+
+$$
+\mathcal P(\Gamma)=\frac7{12}
+-\frac23\operatorname{Re}(M_0+M_1)
++\frac16(|M_0|^2+|M_1|^2).
+\tag{209.12}
+$$
+
+这些冻结函数的解析事实还不是命题209.2；
+全类最优性由第209.6—209.7节的真实对偶与凸支持完成。
+

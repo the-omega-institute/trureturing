@@ -1,0 +1,9 @@
+**引理157.5（共同相位群的字符刻画）。** 有
+
+$$
+\boxed{
+G=\{z\in\mathbb T^s:\chi_k(z)=1\text{ 对全部 }k\in\Lambda\}.
+}
+\tag{157.15}
+$$
+

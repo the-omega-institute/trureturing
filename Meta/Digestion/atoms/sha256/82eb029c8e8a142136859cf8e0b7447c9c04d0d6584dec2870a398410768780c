@@ -1,0 +1,11 @@
+**定义 229.1（三态循环量）。** 对一条纯态密度曲线，使用既有的三阶 Bargmann 不变量
+
+$$
+B(t_0,s,t)=\operatorname{Tr}\bigl(\rho(t_0)\rho(s)\rho(t)\bigr).
+\tag{229.1}
+$$
+
+它在共同酉变换下不变，也不依赖各单位向量代表的整体相位；若一个固定共轭使全部状态同时为实矩阵，则所有这样的循环量都实。非实循环量作为状态集合虚性的坐标无关见证是已有方法：参见 Fernandes、Wagner、Novo、Galvão，*Unitary-invariant witnesses of quantum imaginarity*，arXiv:2403.15066v1，第2页的集合虚性定义及式（1）；Elliott，arXiv:2505.16523v2，第II.B、III.E节及附录B已将它用于有限通信任务的实复维数分离。
+
+这里的“实”允许循环量为负，不能等同于全局同相的正循环量。后者对应更强的 null-phase 条件；Chaturvedi 等，*Null Phase Curves and Manifolds in Geometric Phase Theory*，arXiv:1302.0206v1，式（2.10）、（3.6）及（4.11）—（4.13），给出正循环量、锚规范和实 Gram 表示之间的既有关系。下述证明使用实 Gram 构造，并以解析性处理锚正交零点和参数局部化。
+

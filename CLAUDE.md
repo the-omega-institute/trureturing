@@ -2,6 +2,39 @@
 
 **默认 thinking 与回答技能**：所有 agent 开始处理用户请求时，默认读取并使用 [`skills/formal-thinking-and-answer/SKILL.md`](skills/formal-thinking-and-answer/SKILL.md)，无需用户显式点名。按该技能进行思考、核验证据与组织回答；具体形式化和编译范围遵守技能的适用条件，面向用户默认用普通语言回答，并保留影响结论的条件与未决边界。
 
+## 常用命令速查
+
+在仓库根目录运行；`<…>` 换成实际值。完整参数以 `make help`、`make -C tools help` 和脚本用法为准；有 make 目标就用目标（第 8.1 条），长任务用宿主后台作业（第 8.6 条）。
+
+| 用途 | 命令 |
+|---|---|
+| 创建会话 worktree（已有则复用） | `make worktree KIND=<kind> NAME=<任务码> DEST=../trureturing-<session-id>` |
+| 编译指定 Lean 模块及依赖 | `make lean LEAN_TARGETS="<点分模块名>"`（省略 `LEAN_TARGETS` 为全项目） |
+| 生成 Lean 报告 / 发射 Scribe | `make lean-report` / `make emit` |
+| 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
+| 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
+| 查看开放 atom 的就绪情况 | `make digestion-readiness` |
+| 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
+| 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
+| 预览 atom 子句拆分 | `make decompose ATOM_ID=<id> DRY_RUN=1` |
+| 按请求结算 atom（先连读上下文） | `make settle REQUEST=<请求文件>`（适用范围见第 3.2 条） |
+| 快速 .NET 结构检查 | `make preflight MODE=fast`（不验证 Lean 或完整准入） |
+| 基线到当前工作树的完整增量检查 | `make preflight MODE=push BASE=<40位commit-SHA>` |
+| .NET 构建 / 全量测试 | `make -C tools dotnet` / `make -C tools test` |
+| 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
+| 建 PR 并等 required CI | `make pr-open HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；自动合并须显式加 `AUTO_MERGE=1`） |
+| 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
+| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 会删除，含未提交改动） |
+
+常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
+
+| 用途 | 命令 |
+|---|---|
+| 查指定修订的工具文件 / 目录容量余量 | `bash tools/scripts/agent/headroom.sh HEAD` |
+| 提取定理前的节级假设 | `bash tools/scripts/agent/section-context.sh <源文件.md> <定理号>` |
+| Nyx 提问 / 续取已提交任务 | `bash tools/scripts/agent/nyx.sh ask <brief文件> <输出文件>` / `bash tools/scripts/agent/nyx.sh fetch <task-id> <输出文件>` |
+| 查看 Nyx 任务状态 | `bash tools/scripts/agent/nyx.sh status` |
+
 ## 1. 权威、本体与不可逆真值 DAG
 
 ### 1.1 权威原文与守护强度
@@ -14,7 +47,9 @@
 
 **形式化优先，消化从简。** 只有经 Lean kernel 验证的形式化代码——声明、证明项及其 axiom 闭包——承载本库的数学真值；百分之百可信指该形式系统内已验证的陈述，不包括理论散文、消化状态或模型解释。工作的最高优先级是高效推进实质形式化、复用已有证明并扩展真值 DAG。
 
-**消化系统只是辅助追踪，不承担数学真值。** 其索引、覆盖路由和账目状态的一致性偏差，在相关现有记录中简短注明原因即可；不要求另立案、立即结算、全局对齐或专门派席反复审计，不为账本完美而扩建工具、重跑验证或占用形式化主线。能够随手完成的 canonical 结算照做；其余允许暂存偏差，继续真正缺失的数学内容。若现役机器门实际阻断形式化提交，只做恢复该提交所需的最小处理。不得伪报覆盖、证明或检查通过；Lean 核验、公理边界和冻结真值保护仍须严格执行。本款优先于本文件其他条款对消化记账、结算及修器的投入要求。
+**消化系统只是辅助追踪，不承担数学真值。** 其索引、覆盖路由和账目状态的一致性偏差，在相关现有记录中简短注明原因即可；不要求另立案、立即结算、全局对齐或专门派席反复审计，不为账本完美而扩建工具、重跑验证或占用形式化主线。能够随手完成的 canonical 结算照做；其余允许暂存偏差，继续真正缺失的数学内容。若现役机器门实际阻断形式化提交，只做恢复该提交所需的最小处理。不得伪报覆盖、证明或检查通过；Lean 核验、公理边界和冻结真值保护仍须严格执行。本款优先于本文件其他条款对消化记账、结算及修器的投入要求，但不豁免下款。
+
+**形式化走消化链。** 形式化以消化账本中的 atom 为靶：开工前用 `make show-atom`/`make atom-context` 定位所处理内容对应的 atom；若该内容尚未摄入，先把自己要处理的部分 atom 化——缺理论正文时按第 3.8 条补入相关理论卷，再经 `make ingest SOURCE=…` 摄入——然后在同一交付中 deposit 并 cover，使冻结结果回写到 atom。唯一例外是第 3.2 条「开放问题结算依据」所准入的外部具名开放问题，可经 `make deposit-uncovered` 冻结。上款的从简只管账目偏差的处置投入，不免除形式化交付的摄入与覆盖。
 〔守护：**工作优先级与软纪律**；本条不把消化收据升级为证明，也不宣称既有机器检查已随文字修改。〕
 
 **整个系统是一张不可逆真值 DAG**,架构三分:
@@ -26,7 +61,7 @@ docs/theory(参考输入)──(可选)摄入机器──► Lean(唯一真源)�
 
 - **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门、SL-016 等 fail-closed 消费者读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
 - **C# harness**:程序集只许程序(类型/逻辑/loader/writer);声明性实例住程序目录外(TOML/scribe.cs/Evidence/D5)或测试 fixture(第 4.2 条)。
-- **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置；卷与 atoms 不删属建设者纪律。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
+- **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置，形式化交付不在此列(第 1.2 条「形式化走消化链」)；卷与 atoms 不删属建设者纪律。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
 
 ### 1.3 真值图、冻结与两个偏序
 
@@ -214,7 +249,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 3.8 理论正文与追加纪律
 
-- **形式化遇到理论缺口，可以直接推理补充理论。** 缺少定义、桥接引理、不变量、构造或证明步骤时，agent 可以在当前目标内研究并补足，继续形式化，无须等待用户补写理论或另行授权。补充须保持原问题的目标、假设与量词，归入既有相关理论卷并遵守追加纪律；尚未证成的部分明确标为待证，不冒称定理。理论补充和消化摄入不必先行完成，Lean 证明可以同步推进，数学真值仍只由内核验证的形式化代码承担。
+- **形式化遇到理论缺口，可以直接推理补充理论。** 缺少定义、桥接引理、不变量、构造或证明步骤时，agent 可以在当前目标内研究并补足，继续形式化，无须等待用户补写理论或另行授权。补充须保持原问题的目标、假设与量词，归入既有相关理论卷并遵守追加纪律；尚未证成的部分明确标为待证，不冒称定理。理论补充与 Lean 证明可以同步推进，但含形式化的交付须在 deposit 前把所处理的内容摄入为 atom，并在同一交付中完成 cover(第 1.2 条)；数学真值仍只由内核验证的形式化代码承担。
 - **新增理论 PR 可不做消化。** 仅新增或追加 `docs/develop/theory/**` 正文、且不提交形式化、覆盖、冻结或消化工件的 PR，可以不运行 `make ingest`，不要求同时新增 atom CAS 或 backfill，也不要求先取得任何消化状态。正文仍须遵守本节的纯数学、文献尽调与追加纪律；若以后需要把该卷接入消化账本，另行提交 canonical ingest PR。含有 ingest、cover、deposit 或其它消化工件的 PR，仍按第 4.7 条对应链路核对。
 - **理论推理只包含定义、假设、定理与证明。** `docs/develop/theory/**` 的正文保持纯数学:引理、命题、推论归入定理,例子与反例写成命题并给出证明,符号约定与数学引文附于对应条目。不得混入模型调用、工程实现、代码或测试、核验日志、摄入流程、评审记录、工单与交付状态;正式成果按既有归属置于正文之外;过程材料依第 2.10 条不保存。
 - **理论文档须可持续追加。** 新理论接在文末,保留既有条目的文本、编号与引用;新定义、新假设和新定理使用新编号,不复用旧编号、不整体重排。需要修正时,追加明确指向原条目的更正命题、适用假设与证明,说明替代关系;不得静默改写旧假设、结论或证明,也不得把被更正的结论继续当作有效前提。追加纪律自卷合入 `dev` 起生效;合入前的草稿可在其 PR 内就地修订。
@@ -296,11 +331,11 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 4.7 生产链、冻结与消化状态
 
 **理论产出是一条单向链:什么源产什么、什么 PR 落哪几个面、冻结与消化是两个正交状态。**
-本款描述实际执行消化与冻结时的次序、PR 形态与状态语义；纯理论新增 PR 可以停在正文，不要求先进入这条消化链；消化偏差的投入优先级服从第 1.2 条。路径→kind→producer→verifier 唯一映射在 `Meta/FILEMAP.toml`,冲突以它为准(strict loader+`FileMapPolicy`,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空)。
+本款描述实际执行消化与冻结时的次序、PR 形态与状态语义；纯理论新增 PR 可以停在正文，不要求先进入这条消化链；含形式化的交付必须走完这条链，所处理内容未摄入的先 ingest(第 1.2 条)；消化偏差的投入优先级服从第 1.2 条。路径→kind→producer→verifier 唯一映射在 `Meta/FILEMAP.toml`,冲突以它为准(strict loader+`FileMapPolicy`,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空)。
 
 ```
 docs/develop/theory/**                       参考输入·当前正确,历史归 git,程序对其零知识
-  │ make ingest (可选；仅在该 PR 要登记消化账目时)
+  │ make ingest (纯理论 PR 可选；形式化所处理的内容尚未摄入时必做)
   ├─► Meta/Digestion/atoms/sha256/<atom_id>              atom CAS blob·一经产出不可变
   └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml   消化账目·四态见下
   │ 形式化(先库后证,第 3.1 条)——链上唯一一环不由 make 产出

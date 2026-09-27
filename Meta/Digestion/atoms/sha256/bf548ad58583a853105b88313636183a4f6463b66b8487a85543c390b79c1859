@@ -1,0 +1,48 @@
+### 220.6 实际驻点决定输出旋转的中心系数
+
+以下只为计算已经存在的联合解析函数 $F_{\mathrm{opt}}$ 的中心值，限制到 $\epsilon=\nu=t=0$ 的驻点切片。第211.15—211.17式及第213节的联合延拓给
+$$
+a=\frac1{\sqrt2},\quad c=u=v=0,\quad
+b=-i\sqrt2n,\quad d=\sqrt2m,
+$$
+$$
+m=\frac{2h}{h+3\beta R+3\rho},\qquad
+n=\frac{\beta(R-1)}{2(\beta(R-1)+2\rho)},\qquad
+m^2+n^2=\frac14.
+\tag{220.22}
+$$
+中心 $m=\rho=0,n=1/2$。直接对这组精确方程求 $h$ 导数：第一式给 $m_h=2/(3\beta R)$，约束给 $n_h=0$，第二式再给 $\rho_h=0$。置
+$$
+M=\frac2{3\beta R},\qquad D=\sqrt2M,\qquad b_*=-i/\sqrt2.
+$$
+于是 $d=Dh+O(h^2)$、$b=b_*+O(h^2)$。
+
+此切片上 $\|k_1\|=1,w=e_b$，故 $\eta=1-|b|^2=1/2+d^2$。在 $t=0$，压缩因子给精确式
+$$
+\gamma_{\mathrm{ev}}(h,z)
+=\frac{s^4}
+{(1+2d^2)\bigl(s^2a^2+|sb+\overline zd|^2\bigr)}.
+\tag{220.23}
+$$
+因 $a^2=1/2$，计算中心二阶 Taylor 项得到
+$$
+\begin{aligned}
+\gamma_{\mathrm{ev}}(h,z)
+&=1-D^2h^2-|z|^2-2Dh\operatorname{Re}(b_*z)
++O((|h|+|z|)^3)\\
+&=1-2M^2h^2-|z|^2-2Mh\operatorname{Im}z
++O((|h|+|z|)^3).
+\end{aligned}
+\tag{220.24}
+$$
+驻点因而满足 $z_*(h)=-iMh+O(h^2)$，代回得
+$$
+g(h)=1-M^2h^2+O(h^3).
+$$
+与（220.19）的联合解析因子比较，得到
+$$
+\boxed{F_{\mathrm{opt}}(0,0)=M^2=\frac4{9\beta^2R^2}.}
+\tag{220.25}
+$$
+若固定输出零，则由（220.14）得到 $F(0,0)=2M^2$。输出方向的一阶旋转将该下界的二次损失系数减半。这里只用切片计算中心系数；最终的联合统一性由整面精确因子（220.19）保证。
+

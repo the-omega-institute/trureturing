@@ -1,0 +1,59 @@
+**定理 131.2（时间敏感续接的二扇区公式）。** 在第 126 节的临界极限下，
+
+$$
+\boxed{
+\mathcal K_{\Lambda_\bullet}(X)
+=
+\operatorname{Tr}(Q_*X)\Lambda_0(P_0)
++
+\operatorname{Tr}(P_*X)
+\int_0^\infty e^{-t}\Lambda_t(\zeta)\,dt.
+}
+\tag{131.2}
+$$
+
+对有限参考系统 $R$ 和联合输入 $\omega_{RA}$，有
+
+$$
+\boxed{
+(\operatorname{id}_R\otimes\mathcal K_{\Lambda_\bullet})(\omega_{RA})
+=
+\omega_R^Q\otimes\Lambda_0(P_0)
++
+\int_0^\infty e^{-t}\,
+\omega_R^P\otimes\Lambda_t(\zeta)\,dt.
+}
+\tag{131.3}
+$$
+
+若每个 $\Lambda_t$ 为通道，式（131.2）和（131.3）的迹分别为输入的总迹。
+
+### 证明
+
+由式（126.1），时间零原子为
+
+$$
+\mathbf M_\infty(\{0\})(X)=\operatorname{Tr}(Q_*X)P_0,
+$$
+
+正时间部分为
+
+$$
+\mathbf M_\infty(dt)(X)
+=e^{-t}dt\,\operatorname{Tr}(P_*X)\zeta.
+$$
+
+将这两式代入定义 131.1，因 $\Lambda_t$ 对算子线性且积分在有限维中可交换，得到式（131.2）。
+
+对联合输入，定理 127.2 的微分形式给出
+
+$$
+(\operatorname{id}_R\otimes\mathbf M_\infty)(\omega_{RA})
+=
+\omega_R^Q\otimes P_0\,\delta_0
++
+\omega_R^P\otimes\zeta\,e^{-t}dt.
+$$
+
+逐点作用 $\operatorname{id}_R\otimes\Lambda_t$ 并积分，得到式（131.3）。若 $\Lambda_t$ 保迹，则快速项贡献 $\operatorname{Tr}\omega_R^Q$，慢项贡献 $\operatorname{Tr}\omega_R^P\int_0^\infty e^{-t}dt$，两者相加为总迹。证毕。
+

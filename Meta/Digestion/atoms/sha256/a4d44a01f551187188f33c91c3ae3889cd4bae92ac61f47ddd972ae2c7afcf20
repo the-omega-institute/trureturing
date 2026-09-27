@@ -1,0 +1,28 @@
+### 19.6 定理：保留校准节点的最优有限网格
+
+固定整数 $M\geq1$，考虑所有网格
+\[
+G=\{g_0,g_1,\ldots,g_M,b\},\qquad
+a=g_0<g_1<\cdots<g_M=m.
+\]
+这类网格保留 $a,m,b$ 三个校准节点，并允许在 $[a,m]$ 内选择 $M-1$ 个附加节点。则
+\[
+\boxed{\inf_G\sup_{\varepsilon\geq0}\bigl(W(\varepsilon)-W_G(\varepsilon)\bigr)
+=\frac{(1-b)(2+b)}{9M^2}\bigl(\psi(m)-\psi(a)\bigr)^2.}
+\tag{19.15}
+\]
+唯一最优的有序节点由
+\[
+\psi_j=\psi(a)+\frac jM\bigl(\psi(m)-\psi(a)\bigr),\qquad
+\boxed{g_j=\frac{\psi_j^2-2}{\psi_j^2+1}\quad(0\leq j\leq M)}
+\tag{19.16}
+\]
+给出。
+
+**证明。** 式 (19.9) 和第三、四阶段的取等分布只使用 $a,m,b,1$，所以所有这些网格在移动阶段之外都精确。移动阶段内，式 (19.14) 给出
+\[
+\sup_{\varepsilon\geq0}(W-W_G)
+=\frac K9\max_{0\leq j<M}\bigl(\psi(g_{j+1})-\psi(g_j)\bigr)^2.
+\]
+$M$ 个正增量之和固定为 $\psi(m)-\psi(a)$，其最大值至少为该和除以 $M$。等号成立当且仅当全部增量相等，得到式 (19.15)--(19.16)。这是固定有限 $M$ 下的精确最优值，因而也给出 $M^{-2}$ 误差阶。节点数预算和保留校准节点的条件是结论的一部分；未要求保留这些节点的更大设计类没有在此被优化。
+

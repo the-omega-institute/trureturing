@@ -1,0 +1,11 @@
+**命题 1.24（bare bijections do not preserve prefix complexity）。** For every integer $n\ge4$, two subsets of $\{0,1\}^{2n}$ can be carried onto one another by a bijection of that universe while having different native continuation complexity: one has at least $2^n$ distinct residuals at its middle cut, while the other has a DFA with $2n+2$ states.
+
+**Proof.** Let
+$$
+A_n=\{xx:x\in\{0,1\}^n\},
+\qquad
+B_n=0^n\{0,1\}^n.
+\tag{TM.560}
+$$
+Both have cardinality $2^n$, so a bijection $A_n\to B_n$ extends to a permutation of the whole finite universe. After a length-$n$ prefix $x$ in $A_n$, the only accepting continuation is $x$; distinct prefixes therefore have $2^n$ distinct residuals. A DFA for $B_n$ uses one state for each length $0,\ldots,2n$ and one rejecting sink, requires zero during the first $n$ digits, permits either digit during the last $n$, and rejects every extra digit. $\square$
+

@@ -1,0 +1,86 @@
+### 64.3 若同系数可修复，两个饱和总事件强迫哪些矩阵元
+
+假设存在因果 $S$ 使完整事件误差至多 $\varepsilon$。记
+
+$$
+\Pi_+=C_+\otimes I_D,
+\qquad\Pi_-=C_-\otimes I_D.
+$$
+
+对任意因果 $S$，两个总响应均为 $1$。因此
+
+$$
+\operatorname{Tr}(\Pi_+(R-S)\Pi_+)=\varepsilon,
+\qquad
+\operatorname{Tr}(\Pi_-(S-R)\Pi_-)=\varepsilon.
+$$
+
+如果第一个压缩有负特征值，其正谱投影就是合法的 $\Pi_+$ 以下事件，响应将严格超过总迹 $\varepsilon$，与误差假设矛盾。第二个压缩同理。故
+
+$$
+S_+:=\Pi_+S\Pi_+\preceq R_+:=\Pi_+R\Pi_+,
+\qquad
+S_-:=\Pi_-S\Pi_-\succeq R_-:=\Pi_-R\Pi_-.
+\tag{64.13}
+$$
+
+这里
+
+$$
+R_+=|u\rangle\langle u|+|v\rangle\langle v|,
+\qquad R_-=c^2|y\rangle\langle y|.
+$$
+
+正性与 $S_+\preceq R_+$ 强制 $S_+$ 支撑在 $\operatorname{span}\{u,v\}$。可写
+
+$$
+S_+=m|u\rangle\langle u|+n|v\rangle\langle v|
++w|u\rangle\langle v|+\overline w|v\rangle\langle u|,
+\tag{64.14}
+$$
+
+其中 $m,n\in[0,1]$。因果条件中 $A=0$ 到 $A=1$ 的非对角块为零，故
+
+$$
+0=(\operatorname{Tr}_D S)_{00,11}
+=\sqrt{\varepsilon a(1-a)}(m-n).
+$$
+
+$0<a<1$、$\varepsilon>0$ 保证系数非零，因此 $m=n$。此时
+
+$$
+\sigma_{00}=S_{x,x}+S_{x',x'}=m,
+\qquad
+\sigma_{11}=S_{z,z}+S_{z',z'}=\varepsilon m.
+$$
+
+归一化迫使
+
+$$
+\mu:=m=n=\frac1{1+\varepsilon},
+\qquad p:=\sigma_{11}=\frac{\varepsilon}{1+\varepsilon},
+\qquad
+S_{x,x}=\mu a,\quad S_{x',x'}=\mu(1-a).
+\tag{64.15}
+$$
+
+这一结论不要求把 $S$ 相位平均，也不要求式（64.14）的 $w$ 为零。
+
+令
+
+$$
+s=S_{y,y},\qquad
+k=\frac{S_{x,y}}{\sqrt a},
+\qquad
+\eta=\mu-c^2=\frac{\varepsilon^2}{1+\varepsilon}.
+\tag{64.16}
+$$
+
+$S_-\succeq c^2|y\rangle\langle y|$ 给 $s\ge c^2$；而因果偏迹在 $AB=10$ 上给 $s\le\sigma_{00}=\mu$。$S$ 在 $x,y$ 上的二阶主子式给
+
+$$
+c^2\le s\le\mu,
+\qquad |k|^2\le\mu s\le\mu^2.
+\tag{64.17}
+$$
+

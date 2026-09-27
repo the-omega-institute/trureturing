@@ -1,0 +1,41 @@
+### 113.1 已执行一位像恰好用尽全部乘积向量
+
+第103节给实际末轮之前的跨度
+
+$$
+L=\mathbb Cp+G_2+G_3+G_4+G_5,\qquad\dim L\ge5.
+$$
+
+同一个 $V_1$ 的实际尾像
+
+$$
+E_{\mathrm{tail}}=V_1L
+=\mathbb C(v\otimes\eta_2)+\sum_{n=3}^6Q_n\otimes\eta_n
+$$
+
+由乘积向量生成，包含于
+
+$$
+(R_1)_{\mathrm{prod}}=(Q\otimes F)\oplus M.
+$$
+
+右侧维数为 $2+3=5$，所以
+
+$$
+\boxed{\dim L=5,\qquad E_{\mathrm{tail}}=(R_1)_{\mathrm{prod}}.}
+$$
+
+真实首轮 $V_1k=q\otimes\eta_1$ 也属于这个全部乘积向量的跨度。固定 $V_1$ 单射，故 $k\in L$。于是
+
+$$
+I_1=L+\mathbb Ck=L,\qquad E_1=E_{\mathrm{tail}},\qquad d_1=5.
+$$
+
+第101节恒等式使 $M$ 的接收因子跨度 $D$ 也为三维。沿 $Q\oplus S_0$ 分解，全部一位乘积接收因子的跨度为 $Q\oplus D$，四维。因此
+
+$$
+\boxed{s_1=4,\qquad \kappa_1=d_1-s_1=1.}
+$$
+
+这些是当前一重分支的实际已执行量，没有借用 $\kappa_1=2$。
+

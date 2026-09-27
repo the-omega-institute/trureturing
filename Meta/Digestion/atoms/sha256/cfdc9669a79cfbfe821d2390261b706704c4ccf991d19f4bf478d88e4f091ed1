@@ -1,0 +1,4 @@
+**定义 323.1（项目根据与本文增加的数学关系）。** 本批使用 `PriorPosteriorAuthorizationSeparation`、`StrictPreferenceReversalValueState`、`StrictMonotoneObjectiveArgmaxAlignment` 与 `DecisionWithoutFullPrediction` 四个模块。正文分别说明了重复施行与固定事件不同、严格反转需要忠实的同域评价前提、严格递增因子化保留共同菜单的最优项，以及决策充分可以少于完整分数预测。
+
+所有两项菜单刻画弱序、实际值域上的递增表示、全实数延伸失败、非线性重标度造成风险方案反转、有限后果上全部期望比较的正仿射刻画，以及固定事件与形成路径的对应，由本文给出条件、推导或反例。这些是通常顺序、概率与状态关系的应用和综合，不申报原创数学，不冒称每项都已在上述源码中逐字出现。本批未进行 Lean 编译或公理闭包核验；文本中的教育、同意与宗教解释也没有被数学构造独自证实。
+

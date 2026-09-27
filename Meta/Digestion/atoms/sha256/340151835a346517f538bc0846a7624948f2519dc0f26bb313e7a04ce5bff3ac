@@ -1,0 +1,19 @@
+**定义 261.1（固定共同上界的允许类）。** 固定 $n$ 阶半正定矩阵 $C$，令
+
+$$
+\mathcal R(C)=
+\left\{\rho\in C^2(\mathbb R;M_n):
+\rho(t)\succeq0,\ \operatorname{Tr}\rho(t)=1,
+\ \rho''(t)\preceq C\ \text{对所有 }t\in\mathbb R\right\},
+\tag{261.1}
+$$
+
+并定义
+
+$$
+\mathfrak F(C)=\sup_{\rho\in\mathcal R(C)}I_Q(\rho_0).
+\tag{261.2}
+$$
+
+这个类总含常值密度，故非空。矩阵 $C$ 在整个问题中固定，不随参数或准备曲线改变。
+

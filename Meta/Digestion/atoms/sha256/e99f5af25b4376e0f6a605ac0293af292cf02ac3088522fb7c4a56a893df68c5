@@ -1,0 +1,36 @@
+**定理 222.2（完整秩预算夹界与无谱简单性要求的证书）。** 在定义 222.1 的全部条件下，两个极值均取得，且
+
+$$
+\gamma
+=\max_{\|r\|=1}\min_{\|c\|=1}g(c,r)
+\le
+\min_{\|c\|=1}\max_{\|r\|=1}g(c,r)
+=\delta_{\rm rot}<1.
+$$
+
+真实距离满足
+
+$$
+\boxed{
+\min(\gamma,q_0)\le d_2\le\min(\delta_{\rm rot},q_0).
+}
+$$
+
+此外，$\gamma=\delta_{\rm rot}$ 当且仅当存在一份两 Kraus 酉混合 $(M,N)$ 及单位输出向量 $r$，令 $\delta=\|M\|_\infty^2$ 后同时满足
+
+$$
+\boxed{
+MM^\dagger r=\delta r,\qquad
+\langle M^\dagger r,N^\dagger r\rangle=0,\qquad
+\|N^\dagger r\|^2\ge\delta.
+}
+$$
+
+此时 $\delta=\gamma=\delta_{\rm rot}$，且
+
+$$
+\boxed{d_2=\min(\delta_{\rm rot},q_0).}
+$$
+
+证书允许 $M$ 的两个奇异值相等。若仅为检验 $\gamma=\delta_{\rm rot}$ 而允许任意 $A,B\in M_2(\mathbb C)$，不要求线性独立或共同 TP，则 $\gamma\le\delta_{\rm rot}$ 及该等号证书仍成立，包括共同值为零的情形；严格界 $\delta_{\rm rot}<1$ 和关于 $d_2$ 的结论仍使用定义 222.1 的通道条件。
+

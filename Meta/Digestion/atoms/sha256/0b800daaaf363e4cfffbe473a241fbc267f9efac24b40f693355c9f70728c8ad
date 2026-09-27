@@ -1,0 +1,7 @@
+**文献事实 1.15。** For every $k\ge2$, the polynomial
+$$
+\psi_k(x)=x^k-x^{k-1}-\cdots-x-1
+\tag{TM.545}
+$$
+is irreducible over $\mathbb Q$ and has exactly one zero outside the unit circle. Its positive zero $\lambda_k$ lies in $(1,2)$. These polynomial facts are stated by Diego Marques in *On the intersection of two distinct k-generalized Fibonacci sequences*, Mathematica Bohemica 137 (2012), 403–413, **printed page 411**, citing D. A. Wolfram, *Solving generalized Fibonacci recurrences*, Fibonacci Quarterly 36 (1998), 129–145. [Marques source](https://mat.unb.br/diego/doc/trifibonacci.pdf), DOI [10.21136/MB.2012.142996](https://doi.org/10.21136/MB.2012.142996).
+

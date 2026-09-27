@@ -1,0 +1,87 @@
+**证明。** $\delta_{\rm rot}=0$ 时由（223.TS.4）立即成立。设 $\delta_{\rm rot}>0$。对输入、输出分别换酉基，再将两个 Kraus 同除以 $\sqrt{\delta_{\rm rot}}$。所有三个优化值均按相同平方尺度变化，所以只须研究
+$$
+M=\begin{pmatrix}1&0\\0&t\end{pmatrix},
+\qquad 0\le t<1.
+\tag{223.TS.6}
+$$
+对复参数 $z$，
+$$
+F(z)=\frac{\|M+zN\|_\infty^2}{1+|z|^2}
+$$
+在 $z=0$ 达到全局最小值一。简单主奇异值的两个实方向导数为零，给 $N_{00}=0$。利用保持（223.TS.6）的左右相位及 $N$ 的整体相位，可写
+$$
+N=\begin{pmatrix}0&a\\b&c\end{pmatrix},
+\qquad a,b\ge0,\quad c=x+iy.
+\tag{223.TS.7}
+$$
+若某个非对角元为零，相应未用相位任取。
+
+当 $a^2\ge1$，固定输出 $r=|0\rangle$，有
+$$
+\Gamma^*(P_0)=P_0+a^2P_1,
+$$
+所以 $\gamma_{\rm out}\ge1$。当 $b^2\ge1$，固定输入 $v=|0\rangle$，有
+$$
+\Gamma(P_0)=P_0+b^2P_1,
+$$
+所以 $\gamma_{\rm in}\ge1$。结合（223.TS.4）即可结算。
+
+因此只需排除
+$$
+a<1,\qquad b<1.
+\tag{223.TS.8}
+$$
+置 $q=(1-a^2)(1-b^2)>0$。若 $c=0$，则 $\|N\|_\infty=\max(a,b)<1$，直接违反 $M$ 的全局最小性。
+
+以下设 $c\ne0$。令 $z=\rho e^{i\theta}$，其中 $\rho$ 可以是任意非零实数。考察 Hermitian 矩阵
+$$
+D(z)=(1+|z|^2)I-(M+zN)^\dagger(M+zN).
+\tag{223.TS.9}
+$$
+直接展开得到
+$$
+D_{00}=(1-b^2)\rho^2>0,
+$$
+以及平方完成恒等式
+$$
+\boxed{
+\frac{\det D(z)}{\rho^2}
+=q(1+\rho^2)
+-\bigl((t+ab)\cos\theta+x\rho\bigr)^2
+-\bigl((t-ab)\sin\theta-y\rho\bigr)^2.
+}
+\tag{223.TS.10}
+$$
+例如展开右侧的线性项是
+$$
+-2\rho\bigl((t+ab)x\cos\theta-(t-ab)y\sin\theta\bigr),
+$$
+二次项系数是 $q-|c|^2$；这同时保留了 $c$ 的两个复方向。
+
+实矩阵
+$$
+T_0=
+\begin{pmatrix}
+t+ab&0&x\\
+0&t-ab&-y
+\end{pmatrix}
+\tag{223.TS.11}
+$$
+必有非零核向量 $(u,v,w)$。因为 $(x,y)\ne(0,0)$，任何纯第三坐标向量都不在其核中，所以 $u^2+v^2>0$。除以 $\sqrt{u^2+v^2}$，令
+$$
+\cos\theta=\frac{u}{\sqrt{u^2+v^2}},
+\quad
+\sin\theta=\frac{v}{\sqrt{u^2+v^2}},
+\quad
+\rho=\frac{w}{\sqrt{u^2+v^2}}.
+$$
+若 $\rho\ne0$，（223.TS.10）的两个平方同时为零，故 $\det D>0$。若 $\rho=0$，同一角度下（223.TS.10）右侧在零处严格等于 $q$；取充分小非零 $\rho$，仍保持正值。
+
+两种情形都得到 $D_{00}>0$、$\det D>0$，即 $D$ 正定。因此
+$$
+\|M+zN\|_\infty^2<1+|z|^2,
+$$
+违反全局最小性。这排除了（223.TS.8），证明引理。证毕。
+
+该引理只要求全局最优，不能把任意局部驻点代入。平方完成构造可能给出远离该驻点的下降方向，正是从局部正交关系到全局端口完备性的额外内容。
+

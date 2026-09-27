@@ -1,0 +1,4 @@
+**定义 471.3（与项目实验比较接口的区别）。** 项目 [FiniteDeficiencyRiskTransfer](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean) 的 uniformSimulationError 对指定模拟器取最坏状态 TV，finiteDeficiency 再对全部随机模拟器取下确界。本文沿用第 447 节的方向记号 $d(K\longrightarrow L)$，对应源码的 finiteDeficiency L K，即目标写在前、来源写在后。
+
+$j(T)$ 是指定坐标中一份已经生成的联合律与目标的直接距离；$\min_T j(T)$ 也只优化保留实际 $Y$ 的生成器。通常的 $d$ 则允许从来源观察到整个目标空间的任意随机后处理。两种可用操作集合不同，不能只因为都使用 TV，就把它们当成同一个定义。它们在后面的某些模型中恰好取得相同的无约束最优值，需要上下界说明。
+

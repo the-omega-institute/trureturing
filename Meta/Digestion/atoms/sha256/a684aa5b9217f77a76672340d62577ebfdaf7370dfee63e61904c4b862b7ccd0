@@ -1,0 +1,14 @@
+#### 4.8.2 前缀估计与仓内数学接口
+
+平方倾斜的前缀估计及 Perron 具体算法见《Perron 回返概率下的稀疏禁柱：正间隔与有效延拓》第 2–7 节；一般 Hölder 倾斜、Shannon 极限与参数搜索见《Rényi 熵下的稀疏前缀间隔与有效参数搜索》第 2–5 节。平方上界对应前一数学稿第 2 节命题 2.1 的不等式，倾斜字母定义和柱乘积身份是其证明的输入，不是另一个上界。第 4.6 节的共同证明以标准 Hölder、Jensen、柱概率可加性及有限测度连续性为工具，所有具体模型前提均在正文履行。
+
+可数 Hölder 的直接仓内来源为 [CountableWeightedHolderInterpolation](../../../D5/S3/Analytic/SeriesInequalities/CountableWeightedHolderInterpolation.lean) 的 `countable_weighted_holder_interpolation`。它要求非负可和实函数和正互补指数；定理 4.6.2 的辅助柱不交与长度几何和分别履行两个可和性条件。
+
+[PrefixFreeCode](../../../D5/S0/Computability/Coding/PrefixFreeCode.lean) 的 `kraft_inequality_of_isPrefixFree` 与 [KraftInequality](../../../D5/S0/Computability/KraftInequality.lean) 的 `finite_binary_kraft_inequality` 处理有限二元均匀权 $2^{-|w|}$，分别使用适当的无空词前缀自由或唯一可译码前提。它们没有提供任意非均匀可数倾斜族的概率界。有限码唯一可译码性可由经典 Sardinas–Patterson 算法以有限剩余后缀状态判定；这一性质不能被说成有限情形不可检查。相应经典来源是 A. A. Sardinas and G. W. Patterson，*A necessary and sufficient condition for the unique decomposition of coded messages*，1953。
+
+[CollisionShannonComparison](../../../D5/S3/QuantumBounds/CollisionShannonComparison.lean) 的 `collision_entropy_le_shannon_entropy` 适用于有限非负归一化概率，给阶二碰撞熵不超过 Shannon 熵；其等号描述是正支撑上的均匀性。任意 $q>1$ 的比较与趋一极限由命题 4.6.7 和定理 4.6.5 分别承担。
+
+[MarkovPrefixMass](../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkovPrefixMass.lean) 的 `markov_chain_law_map_prefix_apply_singleton` 以概率初始测度、Markov 核及可测单点为前提，给长度 $n+1$ 的非空单点前缀质量。对有限离散字母，取初态律为 $p$、从每个当前字母出发的核均为 $p$，便得到本章 iid 前缀乘积；空词的质量一单独来自归一化。该来源保留其 Tau Ceti 来源及 Apache-2.0 许可证归属；它不供应回返编码、根初态识别、平稳性或预算运输。
+
+回返编码及初态识别的具体来源是本卷第 1.4.2–1.4.9 节，关联 Context Geometry 定理 9.18、式（9.18）—（9.20）与 RRO 主文定理 33.9–33.10 的根律及平稳律区分。W. Parry 的 [*Intrinsic Markov chains* (1964)](https://doi.org/10.1090/S0002-9947-1964-0161372-1) 按这些既有章节的归属使用；本章所需的回返权与窗口等式由该处转移公式及这里的同一模型计算承担。
+

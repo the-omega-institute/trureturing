@@ -1,0 +1,43 @@
+### 38.3 协议创新是切开当前纤维的关系
+
+令当前摘要为 $q:X\to Q$，新增协议律为 $\ell:X\to L$。联合摘要为
+
+$$
+(q,\ell):X\to Q\times L.
+$$
+
+其核严格小于当前核当且仅当存在一对当前不可区分、但被新协议分开的来源：
+
+$$
+\boxed{
+ \ker(q,\ell)\subsetneq\ker q
+ \iff
+ \exists x,y,\ q(x)=q(y)\land\ell(x)\ne\ell(y).
+}
+\tag{38.6}
+$$
+
+这给出递归细化的局部证书。若第 $n$ 步协议为 $\ell_n$，令
+
+$$
+ K_0:=\ker q,
+ \qquad
+ K_{n+1}:=K_n\cap\ker\ell_n,
+ \tag{38.7}
+$$
+
+则 $K_{n+1}\subseteq K_n$；严格性恰由某个仍在 $K_n$ 中的 private witness 见证。有限状态时这条下降链只能有限次严格下降，之后的稳定核才可作为有限阶段证书。无限状态时，充分协议族可能没有包含极小子族：例如 $X=\mathbb N$、$\ell_n(x)=\min(x,n)$，任何无界指标族都能区分所有状态，但删除一个指标后仍无界。
+
+因此三种优化不能互换：
+
+$$
+\text{每个协议都有 private witness}
+\not\Longleftrightarrow
+\text{协议数最少}
+\not\Longleftrightarrow
+\text{读出信息量最少}.
+\tag{38.8}
+$$
+
+(38.6) 只给出严格细化判据；成本最优化需要另行声明成本函数和允许的协议族。
+

@@ -1,0 +1,20 @@
+**命题 2.16（路径相对频率）。** 若同一校准参数 $t$ 下，
+
+$$
+u_e(t)=e^{-i\omega_et},
+$$
+
+则
+
+$$
+u(P,t)=e^{-i\Omega_Pt},\qquad
+\Omega_P=\sum_{e\in P}\omega_e,
+$$
+
+形式逆遍历对该和取负号，并且
+
+$$
+u(P\bar Q,t)=e^{-i(\Omega_P-\Omega_Q)t}.
+\tag{AP.19}
+$$
+

@@ -1,0 +1,93 @@
+**证明。** 以 $A,B$ 命名实际两条尾射线，并令第二轮射线为 $A$。反设
+
+$$
+f(A)\le3,\qquad f(B)\le3.
+$$
+
+同一当前环境的任意两个实际二维平面 $G_i,G_j$ 必非零相交；同一个固定 $V_1$ 因而迫使其已执行后继相同。两字母的前向不分叉尾词只能是 $ABABA$ 或 $ABBBB$。后者违反第71节，因此尾词必须为 $ABABA$。
+
+置
+
+$$
+R_A=G_2+G_4+G_6,\qquad O=G_3+G_5,\qquad
+D=G_2+G_4,
+$$
+
+$$
+r=\dim R_A,\qquad s=\dim O,\qquad e=\dim D.
+$$
+
+第99节引理99.3的局部论证给
+
+$$
+r\ge3,\qquad s\ge e,\qquad s\ge3.
+$$
+
+这里只复用其实际向量证明：$r=2$ 会由固定 $V_1,V_0$ 及同轮正交投影得到 $G_3=G_5$、$H_2=H_4$，把真实 $w$ 放进 $H_4\cap G_4$；投影 $H_2+H_4$ 到 $D$ 给 $s\ge e$，再排除 $s=2$。这部分不要求正则纤维交零，也不要求 $A\perp B$。
+
+由于 $R_A\subset P_A$、$O\subset P_B$，当前反设迫使
+
+$$
+f(A)=f(B)=3,\qquad R_A=P_A,\quad O=P_B.
+$$
+
+两条尾射线已贡献总超额四，预算因此饱和，其他方向均满足 $f=1$。由上面的引理，存在同一个单线 $P$，并有
+
+$$
+P_A=P\oplus D_A,\qquad P_B=P\oplus D_B,
+\qquad \dim D_A=\dim D_B=2,
+$$
+
+$$
+S_0=P\oplus(D_A\dotplus D_B),\qquad
+E_0=(P\otimes F)\oplus
+\bigl((D_A\otimes A)\dotplus(D_B\otimes B)\bigr).
+$$
+
+这里 $D_A,D_B\subset P^\perp$，尚不假定它们彼此正交。
+
+若 $\langle A,B\rangle\ne0$，每个实际一位尾输出的环境对 $A,B$ 均非正交。它们与 $P_A\otimes A$、$P_B\otimes B$ 的跨位正交使
+
+$$
+v,Q_3,Q_4,Q_5,Q_6\subset S_0^\perp.
+$$
+
+而 $S_0$ 五维，$S_0^\perp$ 二维。第103节的
+$L=\mathbb Cp+G_2+\cdots+G_5$ 至少五维；其同一个一位像由上述尾输出生成，却包含在四维 $S_0^\perp\otimes F$ 中，与 $V_1$ 等距矛盾。因此 $A\perp B$。
+
+现在使用固定等距的实际正交输入关系：
+
+$$
+V_1D\subset K\otimes B,\qquad
+V_1O\subset K\otimes A.
+$$
+
+所以 $D\perp O=P_B$。又 $D\subset P_A$、$\dim D\ge2$，而 $P\subset P_B$，故
+
+$$
+D\subset P_A\cap P^\perp=D_A,\qquad D=D_A.
+$$
+
+于是
+
+$$
+G_2=G_4=D_A,\qquad H_1=H_3.
+$$
+
+真实 $V_1p=v\otimes A$ 与 $V_1D_A\subset K\otimes B$ 正交，因此 $p\perp D_A$。
+
+全部首轮环境现在可以同时处理。若 $[\eta_1]=[A]$，真实首轮零位像给 $p\in P_A$，与 $p\perp D_A$ 合并得 $p\in P$。若 $[\eta_1]=[B]$，则直接有 $p\in P_B$。若首轮是第三条射线，预算饱和后的完整纤维为固定 $P$，仍给 $p\in P$。所以所有情形均有
+
+$$
+0\ne p\in P_B.
+$$
+
+另一方面，$P_B\otimes B\subset E_0\subset\operatorname{ran}V_0$，而实际 $Q_3\otimes B\subset\operatorname{ran}V_1$。跨位正交给 $Q_3\perp P_B$。由于
+
+$$
+p\in H_1=H_3,\qquad
+H_3\subset G_3\oplus Q_3,\qquad G_3\subset P_B,
+$$
+
+正交分解使 $p\in G_3$。这违反后期 $H_3\cap G_3=0$。因此两个尾纤维同时至多三维的反设不可能。证明完毕。
+

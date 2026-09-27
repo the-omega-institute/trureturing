@@ -1,0 +1,73 @@
+**命题99.5（四个正则单调尾词均不可能）。** 尾词不能是 $ABBBB,AAAAB,AAABB,AABBB$ 中任一个。
+
+**证明。**
+
+若尾词为 $ABBBB$，则第3至第6轮环境共同为 $B$。第71节定理71.1给接收维数至少八，与七维矛盾；该定理不限制前两轮环境。
+
+若尾词为 $AAAAB$，令
+
+$$
+E=G_2+G_3+G_4,\qquad e=\dim E.
+$$
+
+它们的一位后继均为 $A$，所以 $V_1E\subset K\otimes A$，从而 $e\le g_1([A])=\beta$。$G_5$ 的一位后继为 $B$，同一个 $V_1$ 等距给 $G_5\perp E$。又 $E,G_5\subset P_A$，故
+
+$$
+\alpha\ge e+2,\qquad\beta\ge e.
+\tag{99.16}
+$$
+
+如果 $e=2$，则 $G_2=G_3=G_4$。同一个 $V_0$ 给 $H_2=H_3$，非零 $w\in H_2\cap G_2$ 落入 $H_3\cap G_3=0$，矛盾。因此 $e\ge3$，（99.16）使 $\alpha+\beta\ge2e+2\ge8$，违反（99.2）。
+
+若尾词为 $AAABB$，令
+
+$$
+E=G_2+G_3,\qquad e=\dim E.
+$$
+
+$E$ 的一位像环境为 $A$，$G_4$ 的一位像环境为 $B$，所以 $G_4\perp E$。同时 $E,G_4\subset P_A$，又得
+$\alpha\ge e+2$、$\beta\ge e$。若 $e\ge3$，总预算至少八，矛盾。若 $e=2$，则 $G_2=G_3$ 且 $G_4\perp G_3$。实际
+
+$$
+V_0H_2=G_3\otimes A,\qquad
+V_0H_3=G_4\otimes A
+$$
+
+给 $H_2\perp H_3$。于是非零 $w\in H_2\cap G_2=H_2\cap G_3$ 正交于 $H_3$。然而 $H_3\subset G_3\oplus Q_3$，$G_3\perp Q_3$，且 $P_{G_3}H_3=G_3$；属于 $G_3$ 的向量若正交于 $H_3$，就必须正交于整个 $G_3$。这使 $w=0$，矛盾。
+
+最后若尾词为 $AABBB$，令
+
+$$
+T=G_4+G_5\subset P_B,\qquad t=\dim T\le\beta\le3.
+$$
+
+$G_3\subset P_A$，故正则纤维交零给 $G_3\cap T=0$。$G_3,G_4,G_5$ 的一位后继均为 $B$，因此
+
+$$
+\alpha=g_1([B])\ge\dim(G_3+T)=2+t,\qquad\beta\ge t.
+\tag{99.17}
+$$
+
+若 $t=3$，总预算至少八，矛盾。因此 $t=2$，记 $G_4=G_5=L$。$G_3\cap G_4=0$，而同一个 $V_1$ 把二者分别映成 $Q_4\otimes B$、$Q_5\otimes B$，所以
+
+$$
+\dim(Q_4+Q_5)=4.
+\tag{99.18}
+$$
+
+实际 $H_4\subset L\oplus Q_4$、$H_5\subset L\oplus Q_5$，各 $Q_4,Q_5$ 都正交于 $L$，并且两个图向对应 $Q$ 的投影满射。故
+
+$$
+P_{L^\perp}(H_4+H_5)=Q_4+Q_5,
+\qquad \dim(H_4+H_5)\ge4.
+$$
+
+但实际零位像为
+
+$$
+V_0(H_4+H_5)=(G_5+G_6)\otimes B
+\subset P_B\otimes B,
+$$
+
+其维数至多 $\beta\le3$，与 $V_0$ 单射矛盾。四种情形全部排除。证明完毕。
+

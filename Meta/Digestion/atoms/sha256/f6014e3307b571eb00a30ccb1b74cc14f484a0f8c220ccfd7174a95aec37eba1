@@ -1,0 +1,97 @@
+### 64.4 第三个反馈族给出不相容的二阶约束
+
+取任意 $0<q<1$，令
+
+$$
+C_q=\operatorname{diag}(q,1,1-q,0)
+\tag{64.18}
+$$
+
+按 $AB=00,01,10,11$ 排列。它满足 $\operatorname{Tr}_A C_q=I_B$。记
+
+$$
+H_q=(C_q^{1/2}\otimes I_D)(R-S)(C_q^{1/2}\otimes I_D).
+$$
+
+它在 $x,y$ 子空间上的主块为
+
+$$
+B_q=
+\begin{pmatrix}
+a p q&\sqrt{a q(1-q)}(c-k)\\
+\sqrt{a q(1-q)}(c-\overline k)&(c^2-s)(1-q)
+\end{pmatrix}.
+\tag{64.19}
+$$
+
+令 $\lambda_q=\max\{0,\lambda_{\max}(B_q)\}$。因为第一个对角元非负、第二个非正，$B_q$ 至多有一个正特征值，故它的正谱和等于 $\lambda_q$。
+
+在加权空间中取 $B_q$ 的正谱投影，再加上与它正交的 $|x'\rangle\langle x'|$ 投影，得到一个效果 $0\preceq F_q\preceq I$。把它变为
+
+$$
+E_q=(C_q^{1/2}\otimes I_D)F_q(C_q^{1/2}\otimes I_D)
+$$
+
+就是合法 tester 事件，且
+
+$$
+\operatorname{Tr}((R-S)E_q)=\lambda_q+p(1-a)q.
+\tag{64.20}
+$$
+
+即使 $H_q$ 在这些子空间之间有交叉项，它们与所选分块投影配对时也不贡献。另一方面，式（64.9）给完整总响应差
+
+$$
+\operatorname{Tr}((R-S)(C_q\otimes I_D))=-\varepsilon(1-q).
+$$
+
+因此互补事件 $C_q\otimes I_D-E_q$ 的响应为
+$-\varepsilon(1-q)-\lambda_q-p(1-a)q$。误差至多 $\varepsilon$ 的假设迫使
+
+$$
+\lambda_q\le q A,
+\qquad A:=\varepsilon-p(1-a)=\eta+ap.
+\tag{64.21}
+$$
+
+于是 $qA I_2-B_q\succeq0$。其行列式非负，除以 $q>0$ 得
+
+$$
+\eta\,[qA+(s-c^2)(1-q)]
+-a|c-k|^2(1-q)\ge0.
+$$
+
+令 $q\downarrow0$，得到必须满足的二阶约束
+
+$$
+a|c-k|^2\le\eta(s-c^2)\le\eta^2.
+\tag{64.22}
+$$
+
+条件（64.6）保证 $c>\mu$；由式（64.17），$|k|\le\mu$，所以
+
+$$
+|c-k|\ge c-|k|\ge c-\mu.
+$$
+
+因此任何同系数修复都必须满足
+
+$$
+a(c-\mu)^2\le\eta^2.
+\tag{64.23}
+$$
+
+但准确恒等式为
+
+$$
+c-\mu=
+\frac{\varepsilon(c-\varepsilon)}{(1+c)(1+\varepsilon)},
+\qquad
+\eta=\frac{\varepsilon^2}{1+\varepsilon}.
+\tag{64.24}
+$$
+
+故条件（64.6）恰好使式（64.23）严格失败。矛盾说明不存在事件误差至多 $\varepsilon$ 的因果修复。
+
+因果修复集合由正性、闭线性约束及固定迹 $\operatorname{Tr}S=2$ 给出，有限维下紧；完整事件误差连续。因此最优值达到，不存在误差至多 $\varepsilon$ 的修复推出严格的 $e(R)>\varepsilon$，证明定理 64.1 的一般条件部分。
+

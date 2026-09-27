@@ -1,0 +1,14 @@
+#### 4.8.1 概率、支撑与有效性的来源范围
+
+加权有限分割的密度夹逼见数学稿《稀疏禁柱的质量、条件律、有效逼近与采样：统一接口及其边界》第 9 节；非均匀实权重的完整有效除法及倒数误差见《非均匀有限分割中的条件律、质量恢复与编码接口》第 2–2.1 节。第 4.1 节将这两部分放在同一个概率空间和同一外部体积合同下。等权独有的整层查询算法保留在定理 4.4.2；第 2.5.2 节的三进外体积与后验上确界是相同有限加权平均思路的既有具体应用。
+
+概率归一化、Doob 条件转移及密度计算的既有对象见第 2.10.4–2.10.6 节；停止流与 canonical 次概率见第 2.10.8–2.10.9 节。第 4.2 节所需有限字母、同一 oracle 和非有理阶段的适配均明确写出，未借三进特例的 $1/2$ 数值界代替一般的 $M>0$。一般局部质量的来源为第 2.3.2–2.3.3 节及第 2.7.2 节；第 4.3 节另保留真实延拓所需的间隔或支撑条件。
+
+关于概率律与公平随机计算，直接文献是 Ackerman–Freer–Roy，[*On the Computability of Conditional Probability*, arXiv:1005.3014v4](https://arxiv.org/abs/1005.3014v4)：其 PDF 第 10 页固定公平 iid 输入，第 13 页 Proposition 2.18 给 $\mathbf S\to\mathbf C$，并归于 Galatolo–Hoyrup–Rojas（2010） 的 Proposition 2.4.2；Proposition 2.19 给 $\mathbf C\to\mathbf S$，并归于 Hoyrup–Rojas 的 Theorem 5.1.1。这里使用这两条采样箭头；有限 clopen 条件化由本章直接计算，不由其他条件分布定理省去额外假设。
+
+Hoyrup–Rojas，[*Computability of probability measures and Martin-Löf randomness over metric spaces*, arXiv:0709.0907v2](https://arxiv.org/abs/0709.0907v2)，PDF 第 19–23 页 Definitions 5.0.1–5.0.2、5.1.1 及 Theorem 5.1.1，讨论可计算概率空间及带可计算 Cantor 测度 $\mu_\delta$ 的几乎处处同构。这个 Cantor 测度不应直接认作公平硬币律；定理 4.2.4 对公平源所需的方向由其明确区间构造承担。
+
+Pauly–Fouché，[*How constructive is constructing measures?*, arXiv:1409.3428v1](https://arxiv.org/abs/1409.3428v1)，PDF 第 2–4、8–9 页的表示空间、开集及 overt 信息框架中，Theorem 25 的正向支撑关系给出：开集与支撑相交当且仅当该开集概率严格正。本章仅使用这份正信息。命题 4.3.3 的负判定另来自可计算 clopen 阶段和紧致性；该文的逆向构造并不提供这里指定的条件律、归一化常数或概率精度预算。
+
+Bienvenu–Porter，[*Deep $\Pi^0_1$ Classes*, arXiv:1403.0450v3](https://arxiv.org/abs/1403.0450v3) 的 Remark 2.2 和作者明确标作 folklore 的 Lemma 3.5，按第 2.10.8 节与第 2.3 节所保留的原文及证明范围使用：前者连接几乎必然持续输出与可计算律，后者的证明给局部质量计算及正质量点选择。有限变化字母表的算法合同由本章及第 2.3.3 节承担，不将这些更具体措辞逐字归于文献。
+

@@ -1,0 +1,59 @@
+**定理 228.2（动作失配的条件后继界）。** 若真实和名义分支概率都满足
+
+$$
+p,\bar p\ge p_*>0,
+$$
+
+则
+
+$$
+\boxed{
+D\!\left(
+\frac{K_{a,y}(\rho)}p,
+\frac{\bar K_{a,y}(\rho)}{\bar p}
+\right)
+\le
+\frac{2\kappa_{a,y}}{p_*}.
+}
+\tag{228.1}
+$$
+
+### 证明
+
+令 $A=K_{a,y}(\rho)$、$\bar A=\bar K_{a,y}(\rho)$，并令
+
+$$
+d=\frac12\|A-\bar A\|_1\le\kappa_{a,y}.
+$$
+
+迹差满足
+
+$$
+|p-\bar p|\le\|A-\bar A\|_1=2d.
+$$
+
+分解归一化差：
+
+$$
+\frac A p-\frac{\bar A}{\bar p}
+=
+\frac{A-\bar A}{p}
++
+\bar A\left(\frac1p-\frac1{\bar p}\right).
+$$
+
+取半迹范数得到
+
+$$
+D\!\left(\frac A p,\frac{\bar A}{\bar p}\right)
+\le
+\frac d p+
+\frac{|p-\bar p|}{2p}
+\le
+\frac{2d}{p_*}
+\le
+\frac{2\kappa_{a,y}}{p_*}.
+$$
+
+证毕。
+

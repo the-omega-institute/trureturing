@@ -1,0 +1,7 @@
+**定理82.1（通用最大纤维秩界）。** 上述合同满足
+$$
+r\le\min\left\{q,\left\lfloor\frac{q+d}{2}\right\rfloor\right\}\le2d.
+\tag{82.3}
+$$
+因而每条非零二次纤维的秩都至多 $2d$。
+

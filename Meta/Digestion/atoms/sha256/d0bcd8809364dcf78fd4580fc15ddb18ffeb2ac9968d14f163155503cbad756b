@@ -1,0 +1,49 @@
+**定理 47.2（二步回归合同的精确容量）。** 对任意 $N\ge5$，在纯正交交替环境及二步回归 $k\parallel w$ 的合同下，最小接收维数恰为
+
+$$
+\boxed{d_N^{\mathrm{return},AB}(a,b)
+=\left\lceil\frac{3N}{2}\right\rceil-1.}
+\tag{47.32}
+$$
+
+不需要固定第25节的九行向量坐标。
+
+证明：第47.3节已得到第43节 Gram 缺陷证明所需的全部正交族。为明确对应，令 $\alpha_n=|A_n|^2$，则
+
+$$
+\alpha_1=1,\qquad
+\alpha_n=1-|b|^2\alpha_{n-1}
+=\frac{1-(-|b|^2)^n}{1+|b|^2}.
+\tag{47.33}
+$$
+
+取 $n=2,\ldots,N-1$ 的两个正交族 $(P_n)$、$(Z_{n+1})$，令 $M$ 为其交叠矩阵，$\|M\|\le1$。同环境跨位正交使其按奇偶排序的对角块为 $\operatorname{diag}(r_n)$，其中
+
+$$
+r_n=\frac{aA_n}{A_{n+1}},\qquad
+|r_n|^2=|a|^2\frac{\alpha_n}{\alpha_{n+1}}
+\begin{cases}
+<|a|^2,&n\text{ 偶},\\
+>|a|^2,&n\text{ 奇}.
+\end{cases}
+\tag{47.34}
+$$
+
+所以第43节的块收缩论证给
+
+$$
+\operatorname{rank}(I-MM^*)\ge
+\left\lfloor\frac{N-1}{2}\right\rfloor.
+\tag{47.35}
+$$
+
+两个族联合张成的维数至少为 $N-2$ 加这个缺秩；共同正交的 $w,p$ 再给两维，于是
+
+$$
+D\ge N+\left\lfloor\frac{N-1}{2}\right\rfloor
+=\left\lceil\frac{3N}{2}\right\rceil-1.
+\tag{47.36}
+$$
+
+第25节的五终端七维构造和第41节的 $N\ge6$ 构造都满足二步回归与正交交替环境，因此达到。证明完毕。
+

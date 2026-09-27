@@ -1,0 +1,32 @@
+**定义 51.2（物理当前读出的完整未来核）。** 令 $T_w:X\to X$ 按词的先后顺序执行物理动作，$T_{\varnothing}=\operatorname{id}$。采用已有完整未来读出核
+
+$$
+xE_Ay\iff\forall w\in\Sigma^*,\ p_A(T_wx)=p_A(T_wy),
+\qquad
+xE_By\iff\forall w\in\Sigma^*,\ p_B(T_wx)=p_B(T_wy).
+\tag{51.4}
+$$
+
+记 $\mathcal C_A=X/E_A$、$\mathcal C_B=X/E_B$，类数为 $k_A,k_B$。空词使 $E_A\subseteq\ker p_A$、$E_B\subseteq\ker p_B$。在任一动作后接任意词，立即得到两个关系的前向稳定性，故每个动作均诱导商上的局部更新，商类也确定当前读出。
+
+这一构造直接对应 `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean` 的 `controlledBehavior`、`ControlledCompletion`。区分深度采用 `D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.lean` 的 `controlled_finite_stability`：其有限非空 $Y,U,O$、满射 `readout` 在这里分别取 $X,\Sigma,A,p_A$，另一端取 $B,p_B$；声明已给出最小稳定深度不超过完整商类数减读出基数。Process Geometry 定理6.3(c)已给相应的完整商类数差界；其第29.4节命题29.1则在保留联合标签核的有限细化中给出原状态数减初层类数的同类计数界。以下只是这些界对本节物理读出的专门化。
+
+具体地，从 $E_{A,0}=\ker p_A$ 出发，令
+
+$$
+xE_{A,n+1}y\iff xE_{A,n}y\ \land
+\bigwedge_{s\in\Sigma}s(x)E_{A,n}s(y).
+\tag{51.5}
+$$
+
+按词首字母归纳，$E_{A,n}$ 正是长度至多 $n$ 的读出相等。每次严格细化至少增加一个类，类数由 $|A|$ 起且不超过 $k_A$；一旦相邻两层相等，该关系就在每个动作下稳定，逐词归纳给它等于 $E_A$。因此
+
+$$
+n_A:=k_A-|A|,\quad n_B:=k_B-|B|,\quad
+E_{A,n_A}=E_A,\quad E_{B,n_B}=E_B,\quad
+L:=\max\{n_A,n_B\}.
+\tag{51.6}
+$$
+
+若 $\Sigma=\varnothing$，上引 Lean 声明的 `Nonempty U` 不满足；此时只有空词，两商就是当前读出核，$n_A=n_B=L=0$，直接成立。对任意一对 $x\not E_Ay$，存在长度至多 $n_A$ 的区分词，B 端同理。此为逐对存在的有限视界，不要求一条通用词同时区分所有来源，也不声称 $L$ 最优。本节未增加通用分割细化算法或新的形式化基础设施。
+

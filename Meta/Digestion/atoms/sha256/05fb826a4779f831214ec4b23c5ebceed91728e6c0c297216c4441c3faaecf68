@@ -1,0 +1,28 @@
+**定义 12.1（系数均匀化与非平凡表示块）。** 本节 H 为非平凡有限群，s=|H|，A∈M_n(N[H]) essential。令
+
+$$
+u_H=\sum_{h\in H}h,\qquad
+\tau(A)=\min\{j\ge1:A^j\in u_H M_n(N)\},
+$$
+
+若集合空则 tau(A)=∞。式中 u_H M_n(N) 表示各条目的全部群系数相同。采用文献定义：自由扩张的 H 作用在维数群上恒等时，称 A inert。Epperlein Theorem 5.2 将这个定义等价地刻画为 A 的所有充分高次幂均属于 u_H M_n(N)。[^rrosft2-epperlein]
+
+令 Irr(H) 为全部复不可约表示的同构类，1 为平凡表示，d_rho=dim rho，并定义
+
+$$
+A_\rho=\left(\sum_{h\in H}[h]A_{ij}\,\rho(h)\right)_{i,j}
+\in M_{n d_\rho}(\mathbb C),\qquad
+d_* =\max_{\rho\ne1}d_\rho.
+$$
+
+对方阵 M，nu(M) 为最小正整数 j 使 M^j=0；不存在时取无穷，特别 nu(0)=1。
+
+**文献接口（Epperlein Remark 5.3(b) 的有限惰性停止界）。** 令 K 为 Q^{n×H} 中每个基顶点的群坐标之和为零的子空间，则 dim K=n(s-1)，E(A) 保持 K；所引结果给出
+
+$$
+A\text{ inert}\quad\Longleftrightarrow\quad
+A^{n(s-1)}\in u_H M_n(N).
+$$
+
+该停止界是后续不可约块细化的外部前提，不记作本卷定理。[^rrosft2-epperlein]
+

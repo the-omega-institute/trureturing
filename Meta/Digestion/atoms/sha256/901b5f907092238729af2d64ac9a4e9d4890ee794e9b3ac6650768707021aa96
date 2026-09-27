@@ -1,0 +1,14 @@
+**推论 11.5（群标记兼容证书的 2m-1 上界）。** 设 A、B∈M(N[H]) essential，给定 R、S∈M(N[H]) 以及第 4.1 条类型的路径双射，要求双射保持端点及完整有序群标记，并满足同一个兼容方程 (C)，滞后 m≥1。则
+
+$$
+\boxed{\ell_H(A,B)\le2m-1.}
+$$
+
+令 r=Σ_{i,j}epsilon(R_{ij})，则中间群环方阵阶数至多 r，且
+
+$$
+d_L\le\min(m,r-n),\qquad d_R\le\min(m,r-k).
+$$
+
+完整群标记 aligned 或 balanced 证书也给出相同结论。
+

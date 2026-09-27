@@ -1,0 +1,434 @@
+{
+  "scope": "Finite rational primal/dual certificates for the general ordinary proof; all-height and arbitrary-prime statements are proved separately, not inferred from these diagnostics.",
+  "results": [
+    {
+      "p": 5,
+      "n": 4,
+      "min_all": "161/128",
+      "min_fixed": "83/64",
+      "gap": "5/128",
+      "global_maxima": {
+        "3": "1/2",
+        "5": "7/32",
+        "15": "1/8"
+      },
+      "fixed_maxima": {
+        "3": "1/2",
+        "5": "1/4",
+        "15": "1/8"
+      },
+      "dual": {
+        "alpha": "121/128",
+        "beta": "71/128",
+        "c1": "25/16",
+        "c2": "5/16"
+      },
+      "fixed_slope": "13/64",
+      "free_ternary_survival": "6/7"
+    },
+    {
+      "p": 7,
+      "n": 6,
+      "min_all": "29/27",
+      "min_fixed": "157/144",
+      "gap": "7/432",
+      "global_maxima": {
+        "3": "1/2",
+        "7": "11/72",
+        "21": "1/12"
+      },
+      "fixed_maxima": {
+        "3": "1/2",
+        "7": "1/6",
+        "21": "1/12"
+      },
+      "dual": {
+        "alpha": "95/108",
+        "beta": "67/108",
+        "c1": "14/9",
+        "c2": "7/36"
+      },
+      "fixed_slope": "59/144",
+      "free_ternary_survival": "10/11"
+    },
+    {
+      "p": 11,
+      "n": 10,
+      "min_all": "937/1000",
+      "min_fixed": "377/400",
+      "gap": "11/2000",
+      "global_maxima": {
+        "3": "1/2",
+        "11": "19/200",
+        "33": "1/20"
+      },
+      "fixed_maxima": {
+        "3": "1/2",
+        "11": "1/10",
+        "33": "1/20"
+      },
+      "dual": {
+        "alpha": "827/1000",
+        "beta": "673/1000",
+        "c1": "77/50",
+        "c2": "11/100"
+      },
+      "fixed_slope": "223/400",
+      "free_ternary_survival": "18/19"
+    },
+    {
+      "p": 13,
+      "n": 12,
+      "min_all": "3125/3456",
+      "min_fixed": "523/576",
+      "gap": "13/3456",
+      "global_maxima": {
+        "3": "1/2",
+        "13": "23/288",
+        "39": "1/24"
+      },
+      "fixed_maxima": {
+        "3": "1/2",
+        "13": "1/12",
+        "39": "1/24"
+      },
+      "dual": {
+        "alpha": "2813/3456",
+        "beta": "2371/3456",
+        "c1": "221/144",
+        "c2": "13/144"
+      },
+      "fixed_slope": "341/576",
+      "free_ternary_survival": "22/23"
+    },
+    {
+      "p": 17,
+      "n": 16,
+      "min_all": "7079/8192",
+      "min_fixed": "887/1024",
+      "gap": "17/8192",
+      "global_maxima": {
+        "3": "1/2",
+        "17": "31/512",
+        "51": "1/32"
+      },
+      "fixed_maxima": {
+        "3": "1/2",
+        "17": "1/16",
+        "51": "1/32"
+      },
+      "dual": {
+        "alpha": "6535/8192",
+        "beta": "5753/8192",
+        "c1": "391/256",
+        "c2": "17/256"
+      },
+      "fixed_slope": "649/1024",
+      "free_ternary_survival": "30/31"
+    },
+    {
+      "p": 19,
+      "n": 18,
+      "min_all": "4963/5832",
+      "min_fixed": "1105/1296",
+      "gap": "19/11664",
+      "global_maxima": {
+        "3": "1/2",
+        "19": "35/648",
+        "57": "1/36"
+      },
+      "fixed_maxima": {
+        "3": "1/2",
+        "19": "1/18",
+        "57": "1/36"
+      },
+      "dual": {
+        "alpha": "4621/5832",
+        "beta": "4127/5832",
+        "c1": "247/162",
+        "c2": "19/324"
+      },
+      "fixed_slope": "839/1296",
+      "free_ternary_survival": "34/35"
+    },
+    {
+      "p": 23,
+      "n": 22,
+      "min_all": "2215/2662",
+      "min_fixed": "1613/1936",
+      "gap": "23/21296",
+      "global_maxima": {
+        "3": "1/2",
+        "23": "43/968",
+        "69": "1/44"
+      },
+      "fixed_maxima": {
+        "3": "1/2",
+        "23": "1/22",
+        "69": "1/44"
+      },
+      "dual": {
+        "alpha": "4177/5324",
+        "beta": "3809/5324",
+        "c1": "184/121",
+        "c2": "23/484"
+      },
+      "fixed_slope": "1291/1936",
+      "free_ternary_survival": "42/43"
+    },
+    {
+      "p": 29,
+      "n": 28,
+      "min_all": "35741/43904",
+      "min_fixed": "365/448",
+      "gap": "29/43904",
+      "global_maxima": {
+        "3": "1/2",
+        "29": "55/1568",
+        "87": "1/56"
+      },
+      "fixed_maxima": {
+        "3": "1/2",
+        "29": "1/28",
+        "87": "1/56"
+      },
+      "dual": {
+        "alpha": "34117/43904",
+        "beta": "31739/43904",
+        "c1": "1189/784",
+        "c2": "29/784"
+      },
+      "fixed_slope": "307/448",
+      "free_ternary_survival": "54/55"
+    },
+    {
+      "p": 101,
+      "n": 100,
+      "min_all": "1535249/2000000",
+      "min_fixed": "30707/40000",
+      "gap": "101/2000000",
+      "global_maxima": {
+        "3": "1/2",
+        "101": "199/20000",
+        "303": "1/200"
+      },
+      "fixed_maxima": {
+        "3": "1/2",
+        "101": "1/100",
+        "303": "1/200"
+      },
+      "dual": {
+        "alpha": "1515049/2000000",
+        "beta": "1484951/2000000",
+        "c1": "15049/10000",
+        "c2": "101/10000"
+      },
+      "fixed_slope": "29293/40000",
+      "free_ternary_survival": "198/199"
+    },
+    {
+      "p": 1009,
+      "n": 1008,
+      "min_all": "1539847511/2048385024",
+      "min_fixed": "436465/580608",
+      "gap": "1009/2048385024",
+      "global_maxima": {
+        "3": "1/2",
+        "1009": "2015/2032128",
+        "3027": "1/2016"
+      },
+      "fixed_maxima": {
+        "3": "1/2",
+        "1009": "1/1008",
+        "3027": "1/2016"
+      },
+      "dual": {
+        "alpha": "1537813367/2048385024",
+        "beta": "1534764169/2048385024",
+        "c1": "1524599/1016064",
+        "c2": "1009/1016064"
+      },
+      "fixed_slope": "434447/580608",
+      "free_ternary_survival": "2014/2015"
+    }
+  ],
+  "unused_prime_lift": {
+    "primes": [
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "euler": "323323/207360",
+    "min_all": "66898267/26542080",
+    "min_fixed": "11419147/4423680",
+    "gap": "323323/5308416"
+  },
+  "checks": {
+    "5:prime": true,
+    "5:actual_survivor": true,
+    "5:witness_probabilities": true,
+    "5:global_full_support": true,
+    "5:global_maxima": true,
+    "5:fixed_maxima": true,
+    "5:primal_values": true,
+    "5:strict_gap": true,
+    "5:dual_nonnegative": true,
+    "5:dual_budgets": true,
+    "5:dual_every_surviving_cell": true,
+    "5:fixed_slope_positive": true,
+    "5:fixed_good_fibre_dual": true,
+    "5:fixed_bad_fibre_dual": true,
+    "5:free_ternary_prior": true,
+    "5:free_ternary_attains_global": true,
+    "7:prime": true,
+    "7:actual_survivor": true,
+    "7:witness_probabilities": true,
+    "7:global_full_support": true,
+    "7:global_maxima": true,
+    "7:fixed_maxima": true,
+    "7:primal_values": true,
+    "7:strict_gap": true,
+    "7:dual_nonnegative": true,
+    "7:dual_budgets": true,
+    "7:dual_every_surviving_cell": true,
+    "7:fixed_slope_positive": true,
+    "7:fixed_good_fibre_dual": true,
+    "7:fixed_bad_fibre_dual": true,
+    "7:free_ternary_prior": true,
+    "7:free_ternary_attains_global": true,
+    "11:prime": true,
+    "11:actual_survivor": true,
+    "11:witness_probabilities": true,
+    "11:global_full_support": true,
+    "11:global_maxima": true,
+    "11:fixed_maxima": true,
+    "11:primal_values": true,
+    "11:strict_gap": true,
+    "11:dual_nonnegative": true,
+    "11:dual_budgets": true,
+    "11:dual_every_surviving_cell": true,
+    "11:fixed_slope_positive": true,
+    "11:fixed_good_fibre_dual": true,
+    "11:fixed_bad_fibre_dual": true,
+    "11:free_ternary_prior": true,
+    "11:free_ternary_attains_global": true,
+    "13:prime": true,
+    "13:actual_survivor": true,
+    "13:witness_probabilities": true,
+    "13:global_full_support": true,
+    "13:global_maxima": true,
+    "13:fixed_maxima": true,
+    "13:primal_values": true,
+    "13:strict_gap": true,
+    "13:dual_nonnegative": true,
+    "13:dual_budgets": true,
+    "13:dual_every_surviving_cell": true,
+    "13:fixed_slope_positive": true,
+    "13:fixed_good_fibre_dual": true,
+    "13:fixed_bad_fibre_dual": true,
+    "13:free_ternary_prior": true,
+    "13:free_ternary_attains_global": true,
+    "17:prime": true,
+    "17:actual_survivor": true,
+    "17:witness_probabilities": true,
+    "17:global_full_support": true,
+    "17:global_maxima": true,
+    "17:fixed_maxima": true,
+    "17:primal_values": true,
+    "17:strict_gap": true,
+    "17:dual_nonnegative": true,
+    "17:dual_budgets": true,
+    "17:dual_every_surviving_cell": true,
+    "17:fixed_slope_positive": true,
+    "17:fixed_good_fibre_dual": true,
+    "17:fixed_bad_fibre_dual": true,
+    "17:free_ternary_prior": true,
+    "17:free_ternary_attains_global": true,
+    "19:prime": true,
+    "19:actual_survivor": true,
+    "19:witness_probabilities": true,
+    "19:global_full_support": true,
+    "19:global_maxima": true,
+    "19:fixed_maxima": true,
+    "19:primal_values": true,
+    "19:strict_gap": true,
+    "19:dual_nonnegative": true,
+    "19:dual_budgets": true,
+    "19:dual_every_surviving_cell": true,
+    "19:fixed_slope_positive": true,
+    "19:fixed_good_fibre_dual": true,
+    "19:fixed_bad_fibre_dual": true,
+    "19:free_ternary_prior": true,
+    "19:free_ternary_attains_global": true,
+    "23:prime": true,
+    "23:actual_survivor": true,
+    "23:witness_probabilities": true,
+    "23:global_full_support": true,
+    "23:global_maxima": true,
+    "23:fixed_maxima": true,
+    "23:primal_values": true,
+    "23:strict_gap": true,
+    "23:dual_nonnegative": true,
+    "23:dual_budgets": true,
+    "23:dual_every_surviving_cell": true,
+    "23:fixed_slope_positive": true,
+    "23:fixed_good_fibre_dual": true,
+    "23:fixed_bad_fibre_dual": true,
+    "23:free_ternary_prior": true,
+    "23:free_ternary_attains_global": true,
+    "29:prime": true,
+    "29:actual_survivor": true,
+    "29:witness_probabilities": true,
+    "29:global_full_support": true,
+    "29:global_maxima": true,
+    "29:fixed_maxima": true,
+    "29:primal_values": true,
+    "29:strict_gap": true,
+    "29:dual_nonnegative": true,
+    "29:dual_budgets": true,
+    "29:dual_every_surviving_cell": true,
+    "29:fixed_slope_positive": true,
+    "29:fixed_good_fibre_dual": true,
+    "29:fixed_bad_fibre_dual": true,
+    "29:free_ternary_prior": true,
+    "29:free_ternary_attains_global": true,
+    "101:prime": true,
+    "101:actual_survivor": true,
+    "101:witness_probabilities": true,
+    "101:global_full_support": true,
+    "101:global_maxima": true,
+    "101:fixed_maxima": true,
+    "101:primal_values": true,
+    "101:strict_gap": true,
+    "101:dual_nonnegative": true,
+    "101:dual_budgets": true,
+    "101:dual_every_surviving_cell": true,
+    "101:fixed_slope_positive": true,
+    "101:fixed_good_fibre_dual": true,
+    "101:fixed_bad_fibre_dual": true,
+    "101:free_ternary_prior": true,
+    "101:free_ternary_attains_global": true,
+    "1009:prime": true,
+    "1009:actual_survivor": true,
+    "1009:witness_probabilities": true,
+    "1009:global_full_support": true,
+    "1009:global_maxima": true,
+    "1009:fixed_maxima": true,
+    "1009:primal_values": true,
+    "1009:strict_gap": true,
+    "1009:dual_nonnegative": true,
+    "1009:dual_budgets": true,
+    "1009:dual_every_surviving_cell": true,
+    "1009:fixed_slope_positive": true,
+    "1009:fixed_good_fibre_dual": true,
+    "1009:fixed_bad_fibre_dual": true,
+    "1009:free_ternary_prior": true,
+    "1009:free_ternary_attains_global": true,
+    "p5_regression": true,
+    "unused_tensor_gap": true,
+    "original_privatization": true
+  },
+  "check_count": 163
+}

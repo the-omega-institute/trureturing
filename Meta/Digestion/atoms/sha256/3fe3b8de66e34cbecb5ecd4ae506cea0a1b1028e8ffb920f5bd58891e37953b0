@@ -1,0 +1,12 @@
+### 104.2 两条二维完整后继纤维的实际禁阻
+
+记只由末轮之前的输入 $S$ 执行的一位像为
+
+$$
+E=V_1S
+=\mathbb C(v\otimes\eta_2)
++\sum_{n=3}^6 Q_n\otimes\eta_n,
+\qquad \dim E=5.
+\tag{104.5}
+$$
+

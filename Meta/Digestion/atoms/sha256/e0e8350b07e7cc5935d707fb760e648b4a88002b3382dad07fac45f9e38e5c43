@@ -1,0 +1,86 @@
+### 274.5 可逆参考过滤的状态与数据双向控制
+
+令 $A:E\to E$ 可逆。对任意密度态 $X$，定义归一化参考过滤
+$$
+F_A(X)=
+\frac{(I_H\otimes A)X(I_H\otimes A^\dagger)}{s_A(X)},
+\qquad
+s_A(X)=\operatorname{Tr}(A\rho_XA^\dagger).
+\tag{274.30}
+$$
+置
+$$
+a=\lambda_{\min}(A^\dagger A)>0,\qquad
+b=\lambda_{\max}(A^\dagger A),\qquad
+\kappa=\frac ba\ge1.
+\tag{274.31}
+$$
+则 $a\le s_A(X)\le b$，而逆映射恰为 $F_{A^{-1}}$。
+
+记未归一化线性分子为 $\Phi_A(X)$。它满足
+$$
+\|\Phi_A(X)-\Phi_A(Y)\|_1\le b\|X-Y\|_1,
+\qquad
+|s_A(X)-s_A(Y)|\le b\|X-Y\|_1.
+$$
+利用 $\|\Phi_A(Y)\|_1=s_A(Y)$ 分解两个归一化分数之差，得到
+$$
+\|F_A(X)-F_A(Y)\|_1\le2\kappa\|X-Y\|_1.
+\tag{274.32}
+$$
+逆过滤的条件数也是 $\kappa$，所以
+$$
+\boxed{
+\frac1{2\kappa}\|X-Y\|_1
+\le\|F_A(X)-F_A(Y)\|_1
+\le2\kappa\|X-Y\|_1.
+}
+\tag{274.33}
+$$
+
+完整数据的变换是
+$$
+g_A(\rho,K)=
+\left(\frac{A\rho A^\dagger}{s},
+\frac{AKA^\dagger}{s}\right),
+\qquad s=\operatorname{Tr}(A\rho A^\dagger).
+\tag{274.34}
+$$
+其逆在实际数据像上为 $g_{A^{-1}}$。为给出统一数据常数，先注意任意密度态都满足 $\|K\|_1\le1$。确实，将PSD平方根按输入分成两组行，可写
+$$
+X=\begin{pmatrix}UU^\dagger&UV^\dagger\\VU^\dagger&VV^\dagger\end{pmatrix}.
+$$
+于是
+$$
+\|K\|_1=2\|UV^\dagger\|_1
+\le2\|U\|_{\mathrm{HS}}\|V\|_{\mathrm{HS}}
+\le\|U\|_{\mathrm{HS}}^2+\|V\|_{\mathrm{HS}}^2=1.
+\tag{274.35}
+$$
+这一证明允许奇异态。
+
+对两个实际数据点，记差为 $\Delta\rho,\Delta K$。边缘项按（274.32）估计，非对角项分解分子与分母的变化，给
+$$
+\|\Delta\rho'\|_1\le2\kappa\|\Delta\rho\|_1,
+$$
+$$
+\|\Delta K'\|_1
+\le\kappa\|\Delta K\|_1+\kappa^2\|\Delta\rho\|_1.
+\tag{274.36}
+$$
+因此若
+$$
+\delta_{\mathcal D}(X,Y)
+=\|\rho_X-\rho_Y\|_1+\|K_X-K_Y\|_1,
+\qquad L_{\mathcal D}=2\kappa+\kappa^2,
+$$
+则正反过滤同时给
+$$
+\boxed{
+L_{\mathcal D}^{-1}\delta_{\mathcal D}(X,Y)
+\le\delta_{\mathcal D}(F_A(X),F_A(Y))
+\le L_{\mathcal D}\delta_{\mathcal D}(X,Y).
+}
+\tag{274.37}
+$$
+

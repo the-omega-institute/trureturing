@@ -1,0 +1,24 @@
+**定义 169.1（同一个联合通道的有限记忆预测合同）。** 沿用定义161.1的三标签源 $\mathcal M_{r,\phi}$、固定未知相位 $|\phi|\le\alpha(r)$、逐步新鲜的真实记录单元，以及定义161.2的全参考距离。取 $1/\sqrt3<r<1$，故 $0<\alpha(r)<\pi/2$。预测者现在允许选一个有限维辅助空间 $K$、其密度矩阵 $\sigma_r$，以及作用于 $B(\mathbb C^3\otimes K)$ 的同一个 CPTP 通道 $\Lambda_r$。它们可以依赖已知的 $r$，但不依赖未知的 $\phi$、视界 $N$ 或系统与参考的输入态。记忆只在开始时初始化，初态与系统及参考独立；定义
+$$
+\mathcal P_{r,N}(A)=\operatorname{Tr}_K
+\Lambda_r^N(A\otimes\sigma_r),\qquad N\ge0,
+\tag{169.1}
+$$
+以及
+$$
+W_r^{\rm mem}(\Lambda_r,\sigma_r)
+=\sup_{N\ge1}\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}).
+\tag{169.2}
+$$
+系统与记忆之间没有额外的随步数改变的控制。这里仍只比较终端系统通道，不访问真实源的旧记录，也不取得额外相位校准。联合通道及记忆初始化的框架是标准有限记忆通道方法，参见 Dennis Kretschmann、Reinhard F. Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III A；该处主要讨论消息串的串接，本定义明确采用同一系统的重复演化。
+
+令 $H(r)=\sup_{N\ge1}\mathcal R_N(r)$。分别以 $J_{\rm mem}(r)$ 与 $J_{{\rm mem},1}(r)$ 表示（169.2）在全部有限维上述合同上的下确界，以及进一步要求
+$$
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi},\mathcal P_{r,1})
+=\mathcal R_1(r)
+\tag{169.3}
+$$
+时的下确界。维数一恰好退化为定义163.1的通道幂合同；一个被持续保留的随机种子同样属于记忆，不能计为维数一。
+

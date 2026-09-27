@@ -1,0 +1,1 @@
+- D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean 的 stateThread_bijective_iff_complete_and_separates：原状态到线程的映射双射，当且仅当线程完备且分离状态。其 ThreadComplete 明确要求所有线程由原状态实现，直接承担C卷第2.1.4节不可省略的桥；stateEquivInverseLimit 在源码中是 noncomputable 定义，不构成本节算法的已有实现。

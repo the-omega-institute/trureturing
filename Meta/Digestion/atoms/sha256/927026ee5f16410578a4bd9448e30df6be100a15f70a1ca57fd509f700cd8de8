@@ -1,0 +1,51 @@
+**引理 244.2（远端过零强制的有限任务代价）。** 使用第243节中固定的端点邻域 $p\ge p_R>1/2$。对充分小的实际任务，若一条满足两个预算、总预算为 $F_s<\delta<1$ 的允许准备，其实部平均 $S=(\rho+C\rho C)/2$ 在该邻域内于两个节点之间经过分隔面，则
+
+$$
+\sup_{u\in T_s(\delta)}I_Q(\rho_u)
+\ge\frac{c_s^2}{\Delta_s(\delta)^2},
+\qquad
+\int_{T_s(\delta)}I_Q(\rho_u)\,du
+\ge\frac{2c_s^2}{\Delta_s(\delta)}.
+\tag{244.3}
+$$
+
+证明。 设该过零发生于 $p_\times<h_3(s)$。第243.10式和实部归约给出
+
+$$
+\delta^2\ge J(S_{p_\times})^2
+\ge4p_\times(1-p_\times).
+\tag{244.4}
+$$
+
+因为 $p_\times>1/2$，函数 $4p(1-p)$ 严格递减，故 $p_\times\ge p_\delta$。于是 $u_\times=2p_\times-1$ 位于尾窗内，剩余参数长度满足 $u_3-u_\times\le2\Delta_s(\delta)$。
+
+在这个固定任务中取自伴算子
+
+$$
+O_s=|q\rangle\langle n_s|+|n_s\rangle\langle q|,
+\qquad \|O_s\|=1.
+\tag{244.5}
+$$
+
+远端分隔面的偏移为零，所以 $\operatorname{Tr}(O_sS_{u_\times})=0$；在强制第三节点，$S_{u_3}=\Pi_3$，故 $\operatorname{Tr}(O_sS_{u_3})=2c_s$。迹范数的对偶性及曲线长度给出
+
+$$
+2|c_s|
+\le\|S_{u_3}-S_{u_\times}\|_1
+\le\int_{u_\times}^{u_3}\|S'_u\|_1\,du
+\le\int_{u_\times}^{u_3}\sqrt{I_Q(\rho_u)}\,du.
+\tag{244.6}
+$$
+
+最后一步先用第237.12式的点态 SLD 迹速度界，再用第242节的 $I_Q(S_u)\le I_Q(\rho_u)$；它们也适用于秩变化点。以区间长度乘峰值平方根控制最后一项，得到（244.3）的第一个不等式。再用 Cauchy–Schwarz，得到
+
+$$
+4c_s^2\le(u_3-u_\times)
+\int_{u_\times}^{u_3}I_Q(\rho_u)\,du
+\le2\Delta_s(\delta)
+\int_{T_s(\delta)}I_Q(\rho_u)\,du,
+\tag{244.7}
+$$
+
+即第二个不等式。证毕。
+

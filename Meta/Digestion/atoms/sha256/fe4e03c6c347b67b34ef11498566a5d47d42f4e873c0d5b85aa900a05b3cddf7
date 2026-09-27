@@ -1,0 +1,134 @@
+### 211.3 逐层消去与解析除法
+
+第207节提供环境实解析函数；它只在基点附近的合法共同 CPTP 点上
+与真实完整参考误差一致。
+记其与上述图的复合为
+
+$$
+f(\epsilon,h,x,y,t,u,v)
+=\widetilde e(h\epsilon,\epsilon,\Gamma(x,y,t,u,v)).
+\tag{211.6}
+$$
+
+带符号变量只用于解析延拓，不解释为物理操作。
+
+**五个快坐标。**
+
+在 $\epsilon=0$，精确基点公式为
+
+$$
+f(0,h,x,y,t,u,v)
+=\frac34+\frac{C_{\rm main}+t|u|^2}{4}
++\frac{\xi^2}{1-C_{\rm main}-t|u|^2}.
+\tag{211.7}
+$$
+
+快 Hessian 在全基点为
+$\operatorname{diag}(2,1/2,1/2,1/2,1/2)\succ0$。
+隐函数定理唯一解出 $x=X(\epsilon,h,y,t,u,v)$，
+使 $\partial_xf=0$，且
+$X(0,h,y,t,u,v)=0$ 是整面恒等式。
+消去后记为 $f_1$，则
+
+$$
+f_1(0,h,y,t,u,v)=\frac34+\frac{t|u|^2}{4}.
+\tag{211.8}
+$$
+
+**额外 Kraus 的泄漏方向。**
+
+$t=0$ 时图及 $f_1$ 与 $u,v$ 无关，
+故 $\partial_uf_1$ 的每个实分量可被 $t$ 解析整除。
+将
+
+$$
+\frac1t\partial_uf_1=0
+\tag{211.9}
+$$
+
+按解析延拓解释，包括 $t=0$。
+它在 $\epsilon=0$ 为 $u/2=0$，
+两个实分量的 Jacobian 为 $I_2/2$。
+隐函数定理给 $u=U(\epsilon,h,y,t,v)$，
+且 $U(0,h,y,t,v)=0$。
+
+消去后记 $f_2$，整面上 $f_2(0,h,y,t,v)=3/4$，
+故有真正的解析整除
+
+$$
+H(\epsilon,h,y,t,v)=\frac{f_2-3/4}{\epsilon}.
+\tag{211.10}
+$$
+
+$H$ 在 $t=0$ 仍与 $v$ 无关。
+
+**额外 Kraus 的剩余方向。**
+
+令 $\kappa_0=\beta\delta/4>0$、$\kappa_d=\beta R/4>0$。
+在 $\epsilon=0,h=h_b$，消去后 $x=u=0$，
+$a_j=1/\sqrt2$、$b_1=-b_0$，
+额外向量为 $(0,0,1,v)$。
+第206节在 $\rho=0$ 的平方恒等式精确给
+
+$$
+\begin{aligned}
+H(0,h_b,y,t,v)-\Phi_{h_b}
+={}&\kappa_0|b_0-i\sqrt2n_b|^2\\
+&+\left(\kappa_d+\frac{h_b}{12}\right)
+\left(|d_0-\sqrt2m_b|^2+|d_1-\sqrt2m_b|^2\right)
++\kappa_dt|v|^2.
+\end{aligned}
+\tag{211.11}
+$$
+
+它对小带符号 $t$ 也成立，因为只使用仿射 TP 和代数展开。
+$\partial_vH$ 可被 $t$ 解析整除。
+在全基点，$(1/t)\partial_vH$ 对两个实 $v$ 分量的 Jacobian
+为 $2\kappa_dI_2=\beta RI_2/2\succ0$。
+主列关于 $v$ 只通过 $t|v|^2$ 变化，
+而主列二次型在基点的一阶导数为零，
+故 Jacobian 正是最后一项的 $2\kappa_dI_2$。
+于是
+
+$$
+\frac1t\partial_vH=0
+\tag{211.12}
+$$
+
+唯一给出解析 $v=V(\epsilon,h,y,t)$。
+在 $\epsilon=0$，一阶函数对 $v$ 仅通过 $|v|^2$ 依赖，
+所以 $V(0,h,y,t)=0$。
+
+**五个慢坐标和一个标量约束。**
+
+代入 $V$ 得 $H_1(\epsilon,h,y,t)$。
+在全基点，其关于六个实坐标 $(y,t)$ 的 Hessian 严格正定。
+确实，当 $x=u=v=0$ 时，
+
+$$
+2|b_0|^2+|d_0|^2+|d_1|^2=1-t.
+$$
+
+$(y,t)\mapsto(b_0,d_0,d_1)\in\mathbb C^3$
+是局部实微分同胚：$y$ 给五个球面方向，$t$ 给非零径向方向。
+（211.11）在这六个方向为正定二次型。
+
+$\partial_yH_1=0$ 唯一给解析 $y=Y(\epsilon,h,t)$。
+最终定义
+
+$$
+q(\epsilon,h,t)=H_1(\epsilon,h,Y(\epsilon,h,t),t),
+\qquad
+\mu(\epsilon,h,t)=\partial_tq(\epsilon,h,t).
+\tag{211.13}
+$$
+
+Schur 补给 $q_{tt}(0,h_b,0)>0$，
+固定缩小邻域后保持 $q_{tt}>0$。
+沿完全消去后的候选族，精确目标为
+
+$$
+\mathcal V(\epsilon,h,t)=\frac34+\epsilon q(\epsilon,h,t).
+\tag{211.14}
+$$
+

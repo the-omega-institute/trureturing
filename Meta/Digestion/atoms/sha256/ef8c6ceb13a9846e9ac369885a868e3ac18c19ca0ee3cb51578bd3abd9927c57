@@ -1,0 +1,35 @@
+**引理 2.38。** For every oracle $A$ and every set $S\subseteq\mathbb N_{>0}$,
+
+$$
+\sum_{h\in S}2^{-h}\text{ is }A\text{-computable}
+\quad\Longleftrightarrow\quad
+S\text{ is }A\text{-decidable}.
+\tag{TM.662}
+$$
+
+This is an oracle-relative, pointwise statement. There is no uniform operator that, from a name of the sum alone, selects the original set $S$ for all inputs.
+
+**Proof of the reverse implication.** The finite partial sum through depth $n$ has error at most
+
+$$
+\sum_{h>n}2^{-h}=2^{-n},
+\tag{TM.663}
+$$
+
+so an $A$-decision procedure for $S$ computes the real uniformly.
+
+**Proof of the forward implication when $r$ is nondyadic.** For every $n$, the real $r$ lies strictly between two consecutive points of the grid $2^{-n}\mathbb Z$. From an $A$-computable Cauchy name, search for an approximation interval that lies entirely within one such open interval. The search terminates because $r$ is not a grid point. Its interval index determines the first $n$ binary digits, which uniquely equal the first $n$ digits of $\mathbf 1_S$. This computes $S$ relative to $A$.
+
+**Proof of the forward implication when $r$ is dyadic.** Every binary expansion of a dyadic real in $[0,1]$ is either eventually zero or eventually one. Hence $S$ is finite or cofinite and is computable without any oracle.
+
+For completeness, the ambiguity statement follows by comparing two digit sequences at their first unequal index $j$. A difference of $2^{-j}$ there can be canceled by the later digits only if their entire tail difference attains
+
+$$
+\sum_{h>j}2^{-h}=2^{-j}.
+\tag{TM.664}
+$$
+
+Equality forces every later digit on one side to be zero and every later digit on the other to be one. Comparing with a terminating expansion proves the stated dyadic alternatives. At $r=0$ the only support is empty, and at $r=1$ it is all positive depths. $\square$
+
+In the dyadic case, the statement that a finite or cofinite set is computable is nonuniform: a program may contain its finite exceptional set as constants. It does not give a procedure recovering those constants, or choosing between the two binary expansions, from an arbitrary real name. The pointwise theorem does not use such a procedure.
+

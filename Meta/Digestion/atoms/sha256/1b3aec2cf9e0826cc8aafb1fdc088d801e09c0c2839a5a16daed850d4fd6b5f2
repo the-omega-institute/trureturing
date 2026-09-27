@@ -1,0 +1,4 @@
+**定义 387.1（两种 belief 的不同类型）。** 第 372 节的相容集合由已知确定性动力与观察历史递推，记录哪些状态仍可能。项目 [BeliefSetSufficiency](../../../D5/S3/ObserverMemory/PredictionFactors/BeliefSetSufficiency.lean) 的 `belief_set_sufficiency` 说明：在同一更新与读数下，相容集合相同的历史，对每个未来行动字给出同一组可能观察轨迹。这是集合相等的结论，没有赋予轨迹概率。
+
+概率后验 $b_h(x)=\Pr(X_t=x\mid h)$ 则除支撑外还保存权重。将它送到 $\operatorname{supp}(b_h)=\{x:b_h(x)>0\}$，会再丢失一层信息。同样的可能性范围可以对应不同预测。
+

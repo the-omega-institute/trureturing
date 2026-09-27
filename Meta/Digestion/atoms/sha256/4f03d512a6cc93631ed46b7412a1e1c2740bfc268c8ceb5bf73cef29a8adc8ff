@@ -1,0 +1,23 @@
+**引理61.2（非常值尾的接收支撑分解）。** 在 $AAB$ 或 $ABA$ 两种模式下，置
+$$
+L_0=A_0+G_4+G_5+G_6,\qquad
+L_1=B_0+Q_4+Q_5+Q_6.
+\tag{61.8}
+$$
+则
+$$
+K=L_0\oplus L_1,\qquad
+\dim L_0=4,\qquad\dim L_1=3,
+\qquad L_0\perp L_1.
+\tag{61.9}
+$$
+进一步，若 $R_\Gamma\xi_\alpha=\alpha$、$R_\Gamma\xi_\beta=\beta$，则
+$$
+\begin{array}{c|c|c|c}
+\text{环境模式}&\text{重复零位接收空间}&\text{实际零记忆空间}&\text{重复一位接收空间}\\ \hline
+AAB&G_4=A_0&H_3=H\otimes\mathbb C\xi_\alpha&Q_5=Q_4\\
+ABA&G_5=A_0&H_4=H\otimes\mathbb C\xi_\beta&Q_6=Q_4
+\end{array}
+\tag{61.10}
+$$
+

@@ -1,0 +1,36 @@
+### 301.6 两流系数之差的远尾点态界
+
+分别估计 $S_I,S_J$ 会引入 $\sum q^m/m\sim\log(1/h)$。改为先估计 $\lambda_I-\lambda_J$。
+
+对任意 $i,j\in\{0,\ldots,K\}$，将（301.16）在二者之间求和。每个下降阶乘随非负整数索引不减，且
+$$
+\frac{(K)_s}{(K-1)_s}
+=\frac{K}{K-s}\le\frac87
+\qquad(0\le s\le d-1,\ d\le K/8).
+$$
+于是
+$$
+\boxed{
+|\lambda_i-\lambda_j|
+\le\frac{8B}{7K}|i-j|
+\sum_{s=0}^{d-1}B^s
+\left[
+\frac{(i)_s}{(K)_s}
++\frac{(j)_s}{(K)_s}
+\right].
+}
+\tag{301.28}
+$$
+这是全经验网格上的代数界，包括负经验坐标、$i=j$ 和 $s=0$。用两个端点之和只放宽非负上界；没有对非正坐标取对数。
+
+令
+$$
+F=G^c\cup\{X<a_0(h_0)\}.
+\tag{301.29}
+$$
+由
+$$
+|\beta|\le1+\frac{|\lambda_I-\lambda_J|}{D\kappa},
+$$
+估计（301.28）的联合加权远尾即可。
+

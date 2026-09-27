@@ -1,0 +1,12 @@
+**命题 201.1（空交叠检查可以漏掉两端的直接冲突）。** 取三个节点的路径 $1-2-3$，值域均为 $\{0,1\}$，并令
+
+$$
+S_1=\{x\},\quad S_2=\{y\},\quad S_3=\{x\},
+\qquad
+\Gamma_1=\{x=0\},\quad\Gamma_2=\{y=0\},\quad\Gamma_3=\{x=1\}.
+$$
+
+两条边的交叠都是空集。非空关系限制到空集，都得到同一条空记录，故边上的完整投影检查全部相等。然而全局记录必须同时满足 $x=0$ 与 $x=1$，所以不存在。
+
+本例对应项目 [RunningIntersectionNecessity](../../../D5/S3/ConceptDynamics/Gluing/RunningIntersectionNecessity.lean) 的 `edge_matching_without_ri_is_false`。失败位置很明确：变量 $x$ 出现在两端，却没有出现在连接它们的中间节点，因此第 200 节的变量连通条件不成立。
+

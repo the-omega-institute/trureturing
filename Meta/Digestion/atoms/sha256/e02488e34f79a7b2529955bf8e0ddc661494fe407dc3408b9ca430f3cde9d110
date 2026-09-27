@@ -1,0 +1,13 @@
+**证明。** 相同输入数据必须有同一输出。用三角不等式
+$|R-\alpha'/R|\le|R-\widehat R|+|\widehat R-\alpha'/R|$。∎
+
+可恢复的候选量包括
+
+$$
+\left|\log\frac R{\sqrt{\alpha'}}\right|,
+\qquad
+\frac R{\sqrt{\alpha'}}+\frac{\sqrt{\alpha'}}R.
+$$
+
+因此本卷第30节的共同几何重建，在接入这种微观实现后，需要将“唯一”写成相对于规定规范和对偶关系的唯一。选择 $R\ge\sqrt{\alpha'}$ 可以选定代表元，但它是一项约定，不增加观测信息。
+

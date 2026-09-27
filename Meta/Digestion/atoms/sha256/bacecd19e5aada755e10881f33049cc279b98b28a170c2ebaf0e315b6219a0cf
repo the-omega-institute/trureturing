@@ -1,0 +1,22 @@
+**定义 239.1（当前等价纤维与目标泛函）。** 令 $\mathfrak M$ 是声明的关系模型类，$O:\mathfrak M\to\mathcal Y$ 是当前边界给出的观察映射，$\Phi:\mathfrak M\to\mathbb R$ 是未来任务要恢复的目标。定义
+
+$$
+M\sim_O M'
+\quad\Longleftrightarrow\quad
+O(M)=O(M').
+$$
+
+允许干预 $a\in\mathcal A$ 的结果核记为 $P_M^a$。给定干预集合 $I\subseteq\mathcal A$，把联合接口写成
+
+$$
+O_I(M)
+=
+\left(
+O(M),\{P_M^a\}_{a\in I}
+\right),
+\qquad
+M\sim_I M'
+\Longleftrightarrow
+O_I(M)=O_I(M').
+$$
+

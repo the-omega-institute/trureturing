@@ -1,0 +1,46 @@
+## ST20．带参考系统的尖锐单步误差界
+
+记 $\mathcal E_U(\rho)=U\rho U^\dagger$。用一个正交经典寄存器保留结果，定义通道
+
+$$
+\mathfrak I\mathcal E_U(\rho)
+=\sum_a|a\rangle\langle a|\otimes\mathcal I_a(U\rho U^\dagger),
+$$
+
+$$
+\mathcal E_W\widehat{\mathfrak I}(\rho)
+=\sum_a|a\rangle\langle a|\otimes
+W\widehat{\mathcal I}_a(\rho)W^\dagger.
+$$
+
+### 定理 ST20.1：仪器补全的钻石距离界
+
+定义
+
+$$
+\boxed{b(q)=\frac{q+\sqrt{q(4-3q)}}2,\qquad0\le q\le1.}
+\tag{ST20.1}
+$$
+
+对任意参考系统 $R$ 及输入密度态 $\rho_{VR}$，令
+$q=\operatorname{tr}[(\Lambda\otimes I_R)\rho_{VR}]$。则
+
+$$
+\frac12\left\|[(\mathfrak I\mathcal E_U-\mathcal E_W\widehat{\mathfrak I})
+\otimes\mathrm{id}_R](\rho_{VR})\right\|_1
+\le b(q)\le b(\lambda).
+\tag{ST20.2}
+$$
+
+因而
+
+$$
+\boxed{
+\frac12\|\mathfrak I\mathcal E_U-\mathcal E_W\widehat{\mathfrak I}\|_\diamond
+\le b(\lambda)\le \sqrt\lambda+\lambda/2.
+}
+\tag{ST20.3}
+$$
+
+标量函数 $b$ 与 Regula–Lami–Datta 的加强温和测量引理中广义迹距离的尖锐函数一致；该函数的普遍改进归于其2026年论文。以下给出投影特例的自含证明，再把它接到保持结果的仪器补全。[ST19-RLD]
+

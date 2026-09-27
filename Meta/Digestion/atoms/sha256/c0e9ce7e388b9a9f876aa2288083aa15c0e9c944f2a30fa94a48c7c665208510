@@ -1,0 +1,82 @@
+**定理69.4（ABAAC 不可能）。** 在（69.1）下，三条不同尾射线组成的 $ABAAC$ 不能实现七维六纯终端接收器。
+
+**证明。** 此时
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])=(A,B,A,A,C).
+$$
+
+当前 $A$ 的三个已见位置具有后继 $B,A,C$。令 $P=G_2+G_4+G_5$，引理69.2给
+
+$$
+\dim P=4,\qquad G_3=G_6=:T\subset P,\qquad
+V_0S_0=(P\otimes A)\dotplus(T\otimes B),\qquad\dim S_0=6.
+\tag{69.10}
+$$
+
+同一个一位映射又给
+
+$$
+V_1P=(Q_3\otimes B)+(Q_5\otimes A)+(Q_6\otimes C).
+$$
+
+三个环境射线不同且张成二维，这个和的维数为 $6-\dim(Q_3\cap Q_5\cap Q_6)$。左侧四维，所以三个二维接收空间均相等，记为 $Q$，并有 $V_1P=Q\otimes F$。由 $T\subset P$ 及 $V_1T=Q_4\otimes A$，还有 $Q_4=Q$。再比较 $V_1G_4=Q_5\otimes A$，单射性得到
+
+$$
+G_3=G_4=G_6=T.
+\tag{69.11}
+$$
+
+跨位正交使 $P\perp Q$。置满等距 $U=V_1|_P$，有
+
+$$
+UG_2=Q\otimes B,\qquad UT=Q\otimes A,\qquad UG_5=Q\otimes C.
+\tag{69.12}
+$$
+
+实际 $H_3,H_4,H_5$ 的零位像分别为 $T\otimes A,G_5\otimes A,T\otimes C$。$G_5\cap T=0$，故这三个像的和六维；三个输入又均在 $P\oplus Q$ 中。因此
+
+$$
+S_0=H_3+H_4+H_5=P\oplus Q.
+\tag{69.13}
+$$
+
+实际 $V_1p=v\otimes A$ 与 $P\otimes A\subset V_0K$ 跨位正交，给 $v\perp P$。又 $a^2u+bv\in H_2\subset S_0$、$u\in P$、$b\ne0$，故 $v\in Q$。于是 $P_PH_2=G_2$；实际 $n=3,4,5$ 本已满足 $P_PH_n=G_n$、$H_n\cap P=0$。
+
+取单位向量 $\alpha$ 表示 $A$，令
+
+$$
+J=(F\otimes\alpha)+(\alpha\otimes F),\qquad
+T_0=(U\otimes I_F)V_0|_{S_0},\qquad M=(UP_P)T_0^{-1}.
+\tag{69.14}
+$$
+
+（69.10）—（69.12）使 $T_0:S_0\to Q\otimes J$ 满等距，$MM^*=I$。四个实际输入分别给
+
+$$
+\begin{aligned}
+M(Q\otimes\alpha\otimes B)&=Q\otimes B &&(H_2),\\
+M(Q\otimes\alpha\otimes\alpha)&=Q\otimes\alpha &&(H_3),\\
+M(Q\otimes C\otimes\alpha)&=Q\otimes\alpha &&(H_4),\\
+M(Q\otimes\alpha\otimes C)&=Q\otimes C &&(H_5).
+\end{aligned}
+\tag{69.15}
+$$
+
+在 $Q\otimes\alpha\otimes F$ 上，$M$ 保留 $A,B,C$ 三条不同的环境射线，因此它在这一支上的限制必为 $L\otimes I_F$。确实，以其中两个射线为基，纤维条件使两个非对角算子块为零；第三条射线的两个基坐标均非零，迫使两个对角算子块相等。这个论证不要求所选代数基正交。
+
+由（69.15）的第二、第三行，$\alpha,C$ 张成 $F$，故 $M(Q\otimes F\otimes\alpha)\subset Q\otimes\alpha$。再取正交单位基 $e_0=\alpha,e_1$，在 $J$ 的正交单位基 $e_0e_0,e_1e_0,e_0e_1$ 中必有
+
+$$
+M=\begin{pmatrix}L&N&0\\0&0&L\end{pmatrix}.
+\tag{69.16}
+$$
+
+余等距条件给 $LL^*=I_Q$ 及 $LL^*+NN^*=I_Q$，所以 $N=0$、$L$ 酉。于是 $M$ 在整个 $Q\otimes\alpha\otimes F$ 上保持范数。取非零 $x\in T_0H_3=Q\otimes\alpha\otimes\alpha$，令 $h=T_0^{-1}x$，得到
+
+$$
+\|P_Ph\|=\|Mx\|=\|x\|=\|h\|.
+$$
+
+正交投影的等号迫使非零 $h\in H_3\cap P$，违反实际满投影。证明完毕。本证明没有从六维尾域饱和推断独立初态也在该尾域中。
+

@@ -1,0 +1,26 @@
+**容量账。** 由（15.5），
+
+$$
+\sum_kr_k\le\sum_k(\dim A_k)r_k\le m,
+\qquad q\le m\max_k\dim A_k\le m^2.
+\tag{15.28}
+$$
+
+于是
+
+$$
+\begin{aligned}
+\dim K
+&=\sum_{t=0}^{L-1}\dim S_t+q\sum_kr_k\\
+&\le1+(L-1)m^2+m^3\\
+&\le m^4+m^3,
+\end{aligned}
+\tag{15.29}
+$$
+
+最后一步使用 $`L\le m^2`$ 和 $`m\ge1`$。所有持久启动、块标签、纯化与 Kraus 记忆均已计入。证明完毕。
+
+本判据区分两种量词：每个固定终端的实际档案支撑始终不超过 $`m^2`$，但要让一个独立初始化、固定 CPTP 的有限物理装置连续维护精确边界，还必须排除全部非零严格收缩谱模。单位模部分可以永久可逆地运行，零谱部分可以在有限启动内消去。结论不要求外围相位是单位根，也没有声称同维固定酉、无丢弃环境的接收合同成立。
+
+[^phase_peripheral_structure]: Michael M. Wolf and David Pérez-García, *The Inverse Eigenvalue Problem for Quantum Channels*, [arXiv:1005.4545v1, Theorem 8, pp.10–11, equations (22)–(24)](https://arxiv.org/pdf/1005.4545v1#page=10). 原定理适用于保迹 Schwarz 映射，文中定义为其对偶满足 Schwarz 不等式；CPTP 映射属于此类。定理给原 Hilbert 空间在某个正交基下的分解，允许瞬态空间及不同噪声块维数。原文输出第 $`k`$ 块读取输入第 $`\pi(k)`$ 块，本节用 $`p=\pi^{-1}`$ 写成输入块到输出块的方向。原定理只描述外围空间；有限步进入该空间由本节的额外谱假设（15.2）和 Jordan 分解提供。固定接收器及容量上界是本节在该结构上的组合推导，不是原定理的原有结论。
+

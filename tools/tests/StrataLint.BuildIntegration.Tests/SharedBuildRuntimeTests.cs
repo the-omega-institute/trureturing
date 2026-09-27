@@ -70,7 +70,7 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
             <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup>
             <ItemGroup><ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" /></ItemGroup></Project>
             """);
-        Write("tools/tests/CompileFailProof/MissingCapability.cs", "public class MissingCapability { public void Proof() => StrataLint.Cli.Value.Require(); }\n");
+        Write("tools/tests/CompileFailProof/MissingCapability.cs", "#warning unrelated fixture warning\npublic class MissingCapability { public void Proof() => StrataLint.Cli.Value.Require(); }\n");
         const string bannedProject = "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj";
         Write(bannedProject, """
             <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
@@ -268,6 +268,21 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
         Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
         environment["CI_BUILD_ROUND"] = build.Round;
         var engineering = Stage("engineering", "engineering");
+        foreach (var (name, diagnostic) in new[] { ("capability-proof", "CS7036"), ("banned-api-proof", "RS0030") })
+        {
+            Assert.Contains(": expected diagnostic " + diagnostic + ":", engineering, StringComparison.Ordinal);
+            Assert.DoesNotContain(": error " + diagnostic + ":", engineering, StringComparison.Ordinal);
+            var marker = Assert.Single(engineering.Split('\n'), line =>
+                line.StartsWith("EXPECTED_DIAGNOSTIC ", StringComparison.Ordinal)
+                && line.Contains("\"name\":\"" + name + "\"", StringComparison.Ordinal));
+            using var matched = JsonDocument.Parse(marker["EXPECTED_DIAGNOSTIC ".Length..]);
+            Assert.Equal("matched", matched.RootElement.GetProperty("status").GetString());
+            Assert.Equal(1, matched.RootElement.GetProperty("raw_exit").GetInt32());
+            Assert.Contains(": error " + diagnostic + ":", File.ReadAllText(
+                Path.Combine(root, matched.RootElement.GetProperty("log").GetString()!)), StringComparison.Ordinal);
+        }
+        Assert.Contains(": warning CS1030:", engineering, StringComparison.Ordinal);
+        Assert.DoesNotContain("Build FAILED.", engineering, StringComparison.Ordinal);
         Assert.DoesNotContain(Calls(), call => call.StartsWith("build tools/StrataLint.sln", StringComparison.Ordinal));
         Assert.Equal(2, Compilers(engineering)); // Both real negative proof compiles.
         Assert.Equal(1, Assert.Single(CommonExecutionEvidence.ValidateTests(root, [testProject]).Projects).Executed);
@@ -449,6 +464,8 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
                 }
             }
             Assert.True(result.Exit == expected, result.Text);
+            if (stage == "engineering" && expected == 0)
+                Assert.Matches(@"CI_SUMMARY .*error=0 .*status=completed exit=0", result.Text);
             var rawOutput = File.ReadAllText(Path.Combine(root, "build/ci/logs", stage, "console.log"));
             if (stage == "build" && expected == 0)
             {

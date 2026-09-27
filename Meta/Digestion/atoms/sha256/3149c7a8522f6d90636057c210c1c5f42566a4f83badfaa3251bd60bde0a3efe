@@ -1,0 +1,25 @@
+**引理 31.2（截止递推、有限支撑与尚未收敛的权重）。** 对 $m\ge1$ 有
+
+$$
+H_m=B+\mathcal A(H_{m-1}),\qquad
+0\le H_m\le H_{m+1}\le R,\qquad
+R-H_m=\mathcal A^m(R).
+$$
+
+若 $d=\dim\mathcal H$，则 $P_m=P=\operatorname{supp}R$ 对全部 $m\ge d$ 成立。对任意 Kraus 表示，
+
+$$
+G_{m-1}Q_\alpha(I-P_m)=0,
+\qquad L_{x\beta}(I-P_m)=0.
+$$
+
+证明。由 $B=I-\mathcal A(I)$ 得到递推，前 $m$ 轮点击效果的非负和给出单调性。$\mathcal A^m(F)=F$，故 $R-H_m=\mathcal A^m(I)-F=\mathcal A^m(R)$。定理 18.5 给出 $\ker H_m=\mathcal D$ 对 $m\ge d$ 成立，从而支撑相等。若 $u\in\ker H_m$，递推式的二次型为
+
+$$
+0=\langle u,H_mu\rangle
+=\sum_{x,\beta}\|L_{x\beta}u\|^2
++\sum_\alpha\|G_{m-1}Q_\alpha u\|^2.
+$$
+
+每项非负，所以每项为零。支撑的有限稳定只确定哪些方向能在截止前触发事件；它不推出 $H_m=R$，因为剩余尾项仍可非零。$\square$
+

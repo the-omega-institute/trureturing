@@ -1,0 +1,35 @@
+### 231.4 预算三的完整下界来自共同参考
+
+取二级参考 $E=\mathbb C^2$，输入归一化最大纠缠态
+$$
+|\Omega\rangle=\frac{|0\rangle_A|0\rangle_E+|1\rangle_A|1\rangle_E}{\sqrt2}.
+\tag{231.TR.16}
+$$
+目标输出为
+$$
+\tau=(\mathcal R\otimes\operatorname{id}_E)(P_\Omega)
+=\frac16\sum_{j=1}^3|j\rangle\langle j|\otimes P_j\otimes I_E
+=\frac16\Pi,
+\tag{231.TR.17}
+$$
+其中 $\Pi$ 为秩六正交投影；标签正交保证这一结论，即使所有 $r_j$ 相同也成立。
+
+对任意总秩至多三的候选，令
+$$
+\sigma=(\mathcal S\otimes\operatorname{id}_E)(P_\Omega).
+$$
+它是候选归一化 Choi 态，故 $\operatorname{rank}\sigma=K(\mathcal S)\le3$。令 $Q$ 为 $\sigma$ 的支撑投影，则
+$$
+\operatorname{Tr}(Q\sigma)=1,
+\qquad
+\operatorname{Tr}(Q\tau)=\frac16\operatorname{Tr}(Q\Pi)
+\le\frac16\operatorname{rank}Q\le\frac12.
+\tag{231.TR.18}
+$$
+使用效果 $I-Q$，候选概率为零，目标概率至少为 $1/2$。因此
+$$
+\boxed{D_3\ge\frac12.}
+\tag{231.TR.19}
+$$
+候选的支撑不必包含于目标支撑；（231.TR.18）仅使用 $0\preceq\Pi\preceq I$。这一论证覆盖任意允许的 Kraus 及量子输出方向。
+

@@ -1,0 +1,13 @@
+**引理257.1（共同非对角块的根保真度界）。** 设
+$$
+X=\begin{pmatrix}P&C\\C^\dagger&Q\end{pmatrix}\succeq0,
+\qquad
+Y=\begin{pmatrix}R&C\\C^\dagger&S\end{pmatrix}\succeq0.
+\tag{257.9}
+$$
+不要求归一化，则
+$$
+\boxed{\mathsf F(X,Y)\ge2\|C\|_1.}
+\tag{257.10}
+$$
+

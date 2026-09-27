@@ -1,0 +1,10 @@
+### 173.5 经典区分能力强制的下界及二分之一端点
+
+令接收端的两份局部边缘为
+
+$$
+\kappa_j=\operatorname{Tr}_M\xi_j,
+\qquad
+d_K=D(\kappa_0,\kappa_1)=\frac12\|\kappa_0-\kappa_1\|_1.
+$$
+

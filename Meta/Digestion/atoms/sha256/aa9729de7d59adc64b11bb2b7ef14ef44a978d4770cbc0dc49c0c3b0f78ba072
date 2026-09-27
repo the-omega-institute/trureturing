@@ -1,0 +1,38 @@
+### 69.4 无法同时消去的相干差
+
+令
+
+$$
+s=S_{y,y},\qquad k=\frac{S_{x,y}}{\sqrt a}.
+$$
+
+因果偏迹与正性给 $s\le1-p$，而 $S$ 在 $x,y$ 上的二阶主子式给 $|k|\le\sqrt{As/a}$。于是
+
+$$
+\begin{aligned}
+|k|&\le\frac{A/a+s}{2}
+\le\mu+\frac{\delta_A}{2a}+\frac{\delta_p}{2},\\
+\frac{\delta_A}{2a}+\frac{\delta_p}{2}
+&<\frac7{512}\varepsilon+\frac{\varepsilon^2}{32}
+\le\frac\varepsilon{64}.
+\end{aligned}
+\tag{69.21}
+$$
+
+在 $0<\varepsilon\le1/16$ 上，$c-\varepsilon>7/8$、$(1+c)(1+\varepsilon)<17/8$，所以
+
+$$
+c-\mu
+=\frac{\varepsilon(c-\varepsilon)}{(1+c)(1+\varepsilon)}
+>\frac7{17}\varepsilon.
+$$
+
+因此，对允许任意复相位的 $k$，
+
+$$
+|c-k|\ge c-|k|
+>\left(\frac7{17}-\frac1{64}\right)\varepsilon
+>\frac\varepsilon3.
+\tag{69.22}
+$$
+

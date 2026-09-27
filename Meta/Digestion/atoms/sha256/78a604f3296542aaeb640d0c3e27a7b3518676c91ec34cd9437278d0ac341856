@@ -1,0 +1,19 @@
+**证明。** 固定 j，令 I=im T^{j-1}，M=S(I)。由 QS=ST，M 是 Q 不变子空间，且 M⊆im Q^{j-1}。又
+
+$$
+R(M)=RS(I)=T^l(I)=\operatorname{im}T^{j+l-1}=:N.
+$$
+
+R:M→N 是与算子相容的满射，因此诱导商空间满射 M/QM→N/TN。由有限维秩零度公式，
+
+$$
+\begin{aligned}
+w_{j+l}(T)
+&=\dim(N/TN)\le\dim(M/QM)\\
+&=\dim\ker(Q|_M)
+\le\dim\ker(Q|_{\operatorname{im}Q^{j-1}})=w_j(Q).
+\end{aligned}
+$$
+
+交换两端及 R、S 得第二式。为得到块长界，若 λ_i>μ_i+l，取 j=μ_i+1。此时 λ 至少有 i 个块长≥j+l，而 μ 至多有 i-1 个块长≥j，与第一式矛盾。故 λ_i≤μ_i+l；反向同理。补零保证块数不同时也包含在证明中。证毕。
+

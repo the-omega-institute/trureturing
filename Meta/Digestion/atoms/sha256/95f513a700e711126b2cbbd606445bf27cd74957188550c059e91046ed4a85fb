@@ -1,0 +1,30 @@
+**证明：下界。** 对任意允许的 $W_n,W_m$，第143节的实际位块分解给出
+
+$$
+\mathcal U_n=(A\otimes|0\rangle)\oplus(B\otimes|1\rangle),
+$$
+
+$$
+\mathcal U_m=(A'\otimes|0\rangle)\oplus(B'\otimes|1\rangle),
+$$
+
+其中四个子空间维数均为 $k=2r$。它们各自的主角列表分别为
+$(\theta_{n,i})$ 与 $(\theta_{m,i})$。由于投影差在同一个位基下分块对角，
+
+$$
+\varepsilon:=\|P_{\mathcal U_n}-P_{\mathcal U_m}\|_{\mathrm{op}}
+=\max\{\|P_A-P_{A'}\|_{\mathrm{op}},
+       \|P_B-P_{B'}\|_{\mathrm{op}}\}.
+\tag{145.12}
+$$
+
+引理145.1给
+
+$$
+\max_i|\theta_{n,i}-\theta_{m,i}|
+\le\theta_{\max}(A,A')+\theta_{\max}(B,B')
+\le2\arcsin\varepsilon.
+$$
+
+移项后即得（145.11）右侧为每一对编码的下界。
+

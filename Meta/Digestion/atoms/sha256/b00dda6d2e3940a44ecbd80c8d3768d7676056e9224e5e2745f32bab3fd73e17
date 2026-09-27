@@ -1,0 +1,40 @@
+### 55.1 接口、配对和事件合同
+
+取早期输出 $B=\mathbb C^2$、晚输入 $A=\mathbb C^2$、晚输出 $D=\mathbb C^3$；第一轮输入为一维。固定基并采用张量次序 $A\otimes B\otimes D$。静态候选是通道 $A\to B\otimes D$ 的未归一化 Choi 算符：
+
+$$
+R\succeq0,\qquad\operatorname{Tr}_{BD}R=I_A.
+\tag{55.1}
+$$
+
+归一化因果修复恰为
+
+$$
+S\succeq0,\qquad
+\operatorname{Tr}_D S=I_A\otimes\sigma,
+\qquad\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+\tag{55.2}
+$$
+
+所有反馈归一化算符写作 $\widehat C=C\otimes I_D$，其中
+
+$$
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B.
+\tag{55.3}
+$$
+
+吸收标准梳 Born 规则中的全转置后，事件为全部 $0\preceq E\preceq\widehat C$，配对为 $\operatorname{Tr}(RE)$。量词包括全部有限辅助参考、量子记忆及最终测量，而不限定某个反馈通道的经典实现方式。任意正分解 $(E,\widehat C-E)$ 都是可实现的二结果 tester。
+
+定义
+
+$$
+\begin{aligned}
+\Delta(R)&=\max_C|\operatorname{Tr}(R\widehat C)-1|,\\
+D(R,S)&=\max_{C,\;0\preceq E\preceq\widehat C}
+|\operatorname{Tr}((R-S)E)|.
+\end{aligned}
+\tag{55.4}
+$$
+
+对非因果候选，式（55.4）比较事件响应，不预设其在每个反馈下已归一化。
+

@@ -1,0 +1,66 @@
+**命题 260.5（非交换二阶方向的精确共同上界）。** 在二维空间中取
+
+$$
+H_1=\Lambda\sigma_x,\qquad H_2=\Lambda\sigma_z,
+\qquad \Lambda>0,
+\tag{260.19}
+$$
+
+其中 $\sigma_x,\sigma_z$ 为 Pauli 矩阵。则
+
+$$
+\nu(H_1,H_2)=\sqrt2\,\Lambda.
+\tag{260.20}
+$$
+
+一个达到最小值的共同上界为
+
+$$
+C_0=\frac{\Lambda}{\sqrt2}I
++\frac{\Lambda}{2}(\sigma_x+\sigma_z).
+\tag{260.21}
+$$
+
+证明。 对 $aI+v\cdot\sigma$，两个特征值为 $a\pm\|v\|$。在 $C_0$、$C_0-H_1$ 和 $C_0-H_2$ 中，向量部分长度均为 $\Lambda/\sqrt2$，故三者均半正定，且 $\operatorname{Tr}C_0=\sqrt2\Lambda$。另一方面，取
+
+$$
+E_1=\frac12\left(I+\frac{\sigma_x-\sigma_z}{\sqrt2}\right),
+\qquad E_2=I-E_1,\qquad E_0=0.
+\tag{260.22}
+$$
+
+这是一个可行测量，收益为
+
+$$
+\operatorname{Tr}(E_1H_1)+\operatorname{Tr}(E_2H_2)
+=\sqrt2\Lambda.
+\tag{260.23}
+$$
+
+由（260.10），两个可行证据相等，证明（260.20）。若两份矩阵都加 $dI$，其中 $d\ge0$，则 $C_0+dI$ 与同一个测量分别给出相等的两侧值，故
+
+$$
+\nu(H_1+dI,H_2+dI)=\sqrt2\Lambda+2d.
+\tag{260.24}
+$$
+
+这些二阶数据也能由实际正密度曲线在一个有限区间上共同实现。取 $\ell>0$ 满足 $\Lambda\ell^2\le1/2$，令 $x=t/\ell$，并在 $0\le t\le\ell$ 上定义
+
+$$
+\rho(t)=\frac I2+\Lambda\ell^2
+\left[
+\left(\frac{x^2}{2}-\frac{x^3}{6}\right)\sigma_x
++\frac{x^3}{6}\sigma_z
+\right].
+\tag{260.25}
+$$
+
+方括号中向量系数的长度至多为 $\sqrt5/6$，因此 $\rho(t)$ 的两个特征值都严格为正；连续性还给出整个闭区间的正开邻域。它的迹恒为一，矩阵元是多项式，并且
+
+$$
+\rho''(t)=\Lambda\bigl((1-x)\sigma_x+x\sigma_z\bigr).
+\tag{260.26}
+$$
+
+这是两个端点二阶矩阵的凸组合，故 $C_0$ 控制整段曲线；端点又迫使任何共同上界满足（260.19），所以 $\nu_{[0,\ell]}(\rho)=\sqrt2\Lambda$。该曲线的最大二阶算子范数恰为 $\Lambda$。对同一条曲线、同样的两个端点信息，标量范数证书的二阶项是 $4\Lambda$，共同矩阵证书的对应项则是 $2\sqrt2\Lambda$，得到严格改进。这个比较不主张实际 Fisher 峰值达到任一上界，也不把多项式密度延拓后的全实轴正性当作已知。证毕。
+

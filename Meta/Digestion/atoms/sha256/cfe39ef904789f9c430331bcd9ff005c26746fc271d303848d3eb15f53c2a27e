@@ -1,0 +1,18 @@
+**定义 175.1（因果评价商）。** 取 $V_\infty$ 的一组基 $F_1,\ldots,F_r$，定义评价映射
+
+$$
+\mathsf q_{V_\infty}:\mathcal X\longrightarrow\mathbb R^r,
+\qquad
+\mathsf q_{V_\infty}(x)
+=
+\bigl(F_1(x),\ldots,F_r(x)\bigr).
+$$
+
+写
+
+$$
+x\equiv_{V_\infty}y
+\iff
+\mathsf q_{V_\infty}(x)=\mathsf q_{V_\infty}(y).
+$$
+

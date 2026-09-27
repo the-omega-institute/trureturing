@@ -1,0 +1,46 @@
+**定理167.2（秩一目标的纯见证变分式）。** 有
+
+$$
+\boxed{
+\min_{\sigma\in\mathcal C}\lambda_{\max}(P_\Psi-\beta\sigma)
+=\max_{\|w\|=1}
+\left\{|\langle\Psi|w\rangle|^2
+-\beta\max_{\sigma\in\mathcal C}\langle w|\sigma|w\rangle\right\}.
+}
+\tag{167.9}
+$$
+
+最小值和最大值均能达到。若 $\sigma_*$ 达到左侧，且 $w_*$ 是 $P_\Psi-\beta\sigma_*$ 的正本征值对应单位向量，则 $w_*$ 达到右侧，且
+
+$$
+\langle w_*|\sigma_*|w_*\rangle
+=\max_{\sigma\in\mathcal C}\langle w_*|\sigma|w_*\rangle.
+\tag{167.10}
+$$
+
+**证明。** 紧性给左侧最优状态 $\sigma_*$。与引理167.1相同，每个 $P_\Psi-\beta\sigma$ 恰有一个严格正本征值，因而最大本征值单重；它至少为 $1-\beta$，其余本征值不大于零。
+
+对任意 $\sigma\in\mathcal C$，沿可行线段
+$\sigma(t)=(1-t)\sigma_*+t\sigma$，最大本征值在 $t=0$ 的导数为
+
+$$
+\left.\frac{d}{dt}\lambda_{\max}(P_\Psi-\beta\sigma(t))\right|_{t=0}
+=-\beta\langle w_*|(\sigma-\sigma_*)|w_*\rangle.
+\tag{167.11}
+$$
+
+这个导数公式可直接由单重本征向量的微分得到：微分 $H(t)w(t)=\lambda(t)w(t)$ 后左乘 $w(0)^*$，本征向量的导数项抵消，只剩 $\lambda'(0)=w(0)^*H'(0)w(0)$。严格谱间隔保证局部可作这样的微分选择。
+
+最优性使右导数非负，得到（167.10）。因此在 $w_*$ 上，右侧花括号恰等于左侧最优值。另一方面，对任何单位 $w$，
+
+$$
+|\langle\Psi|w\rangle|^2
+-\beta\max_{\sigma\in\mathcal C}\langle w|\sigma|w\rangle
+\le\langle w|(P_\Psi-\beta\sigma_*)|w\rangle
+\le\lambda_{\max}(P_\Psi-\beta\sigma_*).
+$$
+
+这给反向不等式，证明等式与达到。证毕。
+
+这里不是对两个任意非凸优化交换次序。纯见证之所以足够，是秩一正项保证所有可行目标矩阵的正最大本征值始终单重。目标若改成一般混合态，本证明不再给出这一结论。
+

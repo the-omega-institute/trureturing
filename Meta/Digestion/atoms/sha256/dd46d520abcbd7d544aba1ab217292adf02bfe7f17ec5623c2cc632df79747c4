@@ -1,0 +1,15 @@
+**定义 371.1（对全部有限输入字比较）。** 设有限非空输入集 $U$ 的每个元素给出总映射 $F_u:X\to X$。对字 $w=(u_1,\ldots,u_n)$ 按从左到右执行，记 $F_w=F_{u_n}\circ\cdots\circ F_{u_1}$，空字对应恒等映射。定义
+
+$$
+xR_N^Uy\quad\Longleftrightarrow\quad
+q(F_wx)=q(F_wy)\ \text{对所有 }|w|\le N.
+$$
+
+项目 [ControlledBehaviorUniversality](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean) 的 `runWord` 与 `controlledBehavior` 固定了这一执行次序；[ControlledRelationRecursion](../../../D5/S3/ObserverMemory/Algorithms/ControlledRelationRecursion.lean) 给出
+
+$$
+R_{N+1}^U=\ker q\cap\bigcap_{u\in U}(F_u\times F_u)^{-1}(R_N^U).
+$$
+
+同一个固定递推算子使“一步不再细分”推出永久稳定，这个条件结论不需要状态集有限。若进一步要求 $X$ 有限非空，令 $m=|X|$、$k=|q[X]|$、$r$ 为全部有限输入字的行为等价类数，$d$ 为首次满足 $R_d^U=R_{d+1}^U$ 的深度，则类数增长给出 $d\le r-k\le m-k$。应用所引有限稳定定理时，输出仍限制到实际像 $q[X]$，使读数满射；不能用一条被动轨迹的类数替代这里的 $r$。项目 [ControlledSignatureStabilization](../../../D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.lean) 还用“当前读数加每个后继的前一层标签”构造递归签名，并把其相等与有界字行为对应起来。
+

@@ -1,0 +1,265 @@
+{
+  "old_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "R": [
+    23
+  ],
+  "S": [
+    29,
+    31
+  ],
+  "split_prefixes": [
+    [
+      3,
+      11,
+      1,
+      2
+    ],
+    [
+      5,
+      7,
+      1,
+      2
+    ],
+    [
+      7,
+      6,
+      1,
+      2
+    ]
+  ],
+  "common_prefixes": [
+    [
+      11,
+      4,
+      1
+    ],
+    [
+      13,
+      4,
+      1
+    ],
+    [
+      17,
+      4,
+      1
+    ],
+    [
+      19,
+      4,
+      1
+    ]
+  ],
+  "schema": "correlated-unit-defect-input-v1",
+  "families": [
+    {
+      "name": "one_cell",
+      "old_labels": [
+        1,
+        3
+      ],
+      "classes": [
+        {
+          "modulus": 23,
+          "residue": 0,
+          "selector": "A"
+        },
+        {
+          "modulus": 29,
+          "residue": 0,
+          "selector": "A"
+        },
+        {
+          "modulus": 31,
+          "residue": 0,
+          "selector": "A"
+        },
+        {
+          "modulus": 667,
+          "residue": 2,
+          "selector": "A"
+        },
+        {
+          "modulus": 69,
+          "residue": 4,
+          "selector": "A"
+        },
+        {
+          "modulus": 87,
+          "residue": 4,
+          "selector": "A"
+        },
+        {
+          "modulus": 2001,
+          "residue": 1,
+          "selector": "A"
+        },
+        {
+          "modulus": 46023,
+          "residue": 1,
+          "selector": "A"
+        }
+      ],
+      "defect_mode": "uniform",
+      "eta": "614/615",
+      "old_521_obstructed_labels": [
+        1,
+        3
+      ],
+      "transports": {
+        "R": [
+          [
+            3,
+            3,
+            "1"
+          ],
+          [
+            3,
+            1,
+            "1/615"
+          ]
+        ],
+        "S": [
+          [
+            3,
+            3,
+            "1"
+          ],
+          [
+            3,
+            1,
+            "1/615"
+          ]
+        ],
+        "M": [
+          [
+            1,
+            1,
+            "38808/42025"
+          ],
+          [
+            3,
+            3,
+            "1"
+          ],
+          [
+            3,
+            1,
+            "213/4715"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "generated_queries",
+      "old_labels": [
+        1,
+        3,
+        9
+      ],
+      "classes": [
+        {
+          "modulus": 23,
+          "residue": 0,
+          "selector": "A"
+        },
+        {
+          "modulus": 29,
+          "residue": 0,
+          "selector": "A"
+        },
+        {
+          "modulus": 31,
+          "residue": 0,
+          "selector": "A"
+        },
+        {
+          "modulus": 69,
+          "residue": 1,
+          "selector": "A"
+        },
+        {
+          "modulus": 87,
+          "residue": 1,
+          "selector": "A"
+        },
+        {
+          "modulus": 93,
+          "residue": 1,
+          "selector": "A"
+        },
+        {
+          "modulus": 667,
+          "residue": 2,
+          "selector": "A"
+        },
+        {
+          "modulus": 713,
+          "residue": 2,
+          "selector": "A"
+        },
+        {
+          "modulus": 6003,
+          "residue": 1,
+          "selector": "A"
+        }
+      ],
+      "defect_mode": "generated",
+      "eta": "6122/6141",
+      "old_521_obstructed_labels": [
+        1
+      ],
+      "transports": {
+        "R": [
+          [
+            3,
+            3,
+            "1"
+          ],
+          [
+            3,
+            1,
+            "19/6141"
+          ]
+        ],
+        "S": [
+          [
+            3,
+            3,
+            "1"
+          ],
+          [
+            3,
+            1,
+            "17249/18423"
+          ]
+        ],
+        "M": [
+          [
+            1,
+            1,
+            "322168/113135643"
+          ],
+          [
+            9,
+            9,
+            "1"
+          ],
+          [
+            9,
+            3,
+            "19/6141"
+          ]
+        ]
+      }
+    }
+  ],
+  "scope": "Actual finite phase/account controls for the ordinary correlated-law bridge. Defect is paid with mixed originals in one shared matrix. Full-reference old phases are exact for these fixtures. No source producer, geometry, optimizer or Lean run."
+}

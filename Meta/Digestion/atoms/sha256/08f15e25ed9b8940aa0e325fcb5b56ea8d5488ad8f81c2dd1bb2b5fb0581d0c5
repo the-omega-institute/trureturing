@@ -1,0 +1,27 @@
+**定义 207.1（有限记录过滤）。** 令 $\Omega$ 为有限或紧的完整来源空间，令
+
+$$
+r_t:\Omega\longrightarrow\mathcal H_t,
+\qquad 0\le t\le N,
+$$
+
+为第 $t$ 步的记录映射。称 $(r_t)$ 为过滤，若存在忘却映射
+
+$$
+q_t:\mathcal H_{t+1}\longrightarrow\mathcal H_t
+$$
+
+使
+
+$$
+r_t=q_t\circ r_{t+1}.
+$$
+
+历史 $h\in\mathcal H_t$ 的来源纤维为
+
+$$
+\Omega_h=\{\omega\in\Omega:r_t(\omega)=h\}.
+$$
+
+在历史 $h$ 上的非预见策略是一个只依赖 $h$ 的动作 $a_t(h)$；它不能依赖尚未出现的 $r_{t+1},\ldots,r_N$。
+

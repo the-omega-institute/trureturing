@@ -1,0 +1,49 @@
+### 206.2 全区间系数与规范 Choi 对
+
+使用规范 Kraus
+
+$$
+K_0^*=\begin{pmatrix}1/\sqrt2&i\sqrt2n\\0&\sqrt2m\end{pmatrix},\qquad
+K_1^*=\begin{pmatrix}1/\sqrt2&-i\sqrt2n\\0&\sqrt2m\end{pmatrix},\qquad
+J^*=\sqrt{B_*}|0\rangle\langle1|,
+\tag{206.6}
+$$
+
+其中 $J^*$ 属于结果1。
+三者共同 TP；$J^*=0$ 时只剩前两项。
+对应 Choi 对记为 $\Gamma^*(h)$，在整个区间连续。
+
+定义当前规范矩给出的噪声系数
+
+$$
+\begin{gathered}
+L_0=\beta(2n^2-1/2)-2\gamma n,\\
+L_1=R[\beta(1/2-4m^2-2n^2)+2\gamma n],\\
+L_s=L_0+L_1,\quad L_d=L_0-L_1,\quad
+T_s=m(-\beta\Sigma+2\gamma\delta n),\quad z=1-m/2,\\
+a_{\mathrm{eff}}=L_d-\beta\delta(1/4+n^2),\qquad
+\theta=\gamma R-2\rho n
+=\frac{\gamma\Sigma}{2}+\beta\delta n>0.
+\end{gathered}
+\tag{206.7}
+$$
+
+$L_1$ 使用完整的 $B_1^*=1-2n^2-4m^2$，
+没有在内侧偷用只属于圆周的 $B_1^*=2n^2$。
+令
+
+$$
+\begin{aligned}
+Z(h)={}&\frac{hL_s}{4}-\frac{2hzT_s}{3}
++\frac{4h^2z^2}{9}(1-4m^2)
+-\frac{16hz^2\Phi_h}{9}+\frac{L_d^2}{4},\\
+Q(h)={}&Z(h)-\frac{a_{\mathrm{eff}}(h)^2}{4}
+-\theta(h)^2m(h)^2.
+\end{aligned}
+\tag{206.8}
+$$
+
+这些都是 $I$ 上连续的显式函数，唯一隐含量为（206.2）的非负标量根。
+在 $\rho=0$ 的区域，（206.8）恢复第200、203节的系数；
+在 $\rho>0$ 的区域，它恢复第205节的完整活跃系数。
+

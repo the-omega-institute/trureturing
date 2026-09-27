@@ -1,0 +1,26 @@
+## 定理 ST39.1：只由逻辑矩阵单位构造运输生成元
+
+沿有限时间区间，设$F_{ij}(t)=\pi_t(e_{ij})$为$C^1$矩阵族，满足
+
+$$
+F_{ij}F_{kl}=\delta_{jk}F_{il},\quad F_{ij}^\dagger=F_{ji},\quad
+P=\sum_iF_{ii}.
+$$
+
+定义
+
+$$
+Z=\frac1d\sum_{ij}\dot F_{ij}F_{ji},
+\qquad\boxed{K=Z-P\dot P.}
+\tag{ST39.1}
+$$
+
+则
+
+$$
+\boxed{K^\dagger=-K,\qquad [K,F_{ij}]=\dot F_{ij},\qquad[K,P]=\dot P.}
+\tag{ST39.2}
+$$
+
+$d=1$时，$K=[\dot P,P]$，恢复通常的投影平行运输生成元。一般$d$时，式(ST39.1)同时固定内部逻辑代数的运输，不只固定支持投影。
+

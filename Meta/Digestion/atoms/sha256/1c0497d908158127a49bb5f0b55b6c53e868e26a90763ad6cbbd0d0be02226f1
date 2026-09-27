@@ -1,0 +1,6 @@
+**命题 360.2（压缩是否有损取决于实际出现的状态）。** 设初始联合读数为 $q:\Omega\to\mathbb R^n$，共同输出为 $a=w^{\mathsf T}q$。则 $a$ 与 $q$ 具有相同观察纤维，当且仅当线性函数 $x\mapsto w^{\mathsf T}x$ 在实现像 $q[\Omega]$ 上单射。
+
+证明。若该函数在实现像上单射，则相同 $a$ 强迫相同 $q$；相同 $q$ 本来就给出相同 $a$。反过来，取实现像中的 $x=q(\omega)$、$y=q(\omega')$，若二者输出相同，同纤维条件给出 $x=y$。证毕。
+
+这正是项目 `D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lean` 的编码判据在该输出上的应用。第 82 节已引用的 `JointLosslessCommunicationCriterion.lean` 对逐坐标通信保留同一要点：应在实际出现的联合记录上判断，某个坐标丢失可以被相关坐标补偿。把本节的跨坐标平均代入时，直接使用一般编码判据，而不把平均硬写成各坐标各自编码。
+

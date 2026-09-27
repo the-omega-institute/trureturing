@@ -1,0 +1,124 @@
+### 62.5 整个参数区间的统一证书
+
+**证明。** 以下固定 $p=\bar p_\varepsilon$，并记
+
+$$
+u=\frac{b^2}{B},\qquad\mu=p+u,
+\qquad\beta=\sqrt p-\sqrt{\varepsilon(1-p)}.
+$$
+
+交点关系 $\mu=G_\varepsilon(p)$ 给
+
+$$
+\beta^2=\mu(\mu-\varepsilon).
+\tag{62.21}
+$$
+
+直接展开两项平方还给出恒等式
+
+$$
+\gamma^2=c\beta^2+d\varepsilon-d(c+\varepsilon)p.
+\tag{62.22}
+$$
+
+式（62.21）、（62.22）使 $L_\varepsilon(p)$ 在交点处可完全改写成有理代数式。
+
+令
+
+$$
+\rho=\frac d{2-d}=\frac{1-c}{1+c},
+\qquad w=\frac B\varepsilon.
+\tag{62.23}
+$$
+
+由于 $d\le\varepsilon\le1/16$ 且 $2-d>1$，有
+$0<\rho\le1/16$。又因 $p_0<p<p_*<\varepsilon$，
+
+$$
+1<w<\frac{B(\varepsilon)}\varepsilon=2-\rho<2.
+\tag{62.24}
+$$
+
+利用 $\varepsilon=d(2-d)$ 与
+$\varepsilon^2-4b^2=d^2B$，得到
+
+$$
+\begin{aligned}
+P:=\frac p\varepsilon&=\frac{2+w+\rho}{4},\\
+U:=\frac u\varepsilon&=\frac{1/w-\rho}{4},\\
+M:=\frac\mu\varepsilon&=\frac{(w+1)^2}{4w},\\
+c&=\frac{1-\rho}{1+\rho},\qquad
+\frac d\varepsilon=\frac{1+\rho}{2},\qquad
+\frac{d(c+\varepsilon)}\varepsilon
+=\frac{1+4\rho-\rho^2}{2(1+\rho)}.
+\end{aligned}
+\tag{62.25}
+$$
+
+将式（62.21）、（62.22）代入 $L_\varepsilon$，可得
+
+$$
+\begin{aligned}
+\frac{L_\varepsilon(p)}{\varepsilon^2}
+={}&P(P-1)+(P+1)U-cM(M-1)\\
+&-\frac{1+\rho}{2}
++\frac{1+4\rho-\rho^2}{2(1+\rho)}P.
+\end{aligned}
+\tag{62.26}
+$$
+
+将式（62.25）代入式（62.26），整理为
+
+$$
+16w^2(1+\rho)\frac{L_\varepsilon(p)}{\varepsilon^2}
+=N_0(w)+\rho N_1(w)
+-\rho^2w(w^2+10w-1)-2\rho^3w^2,
+\tag{62.27}
+$$
+
+其中
+
+$$
+\begin{aligned}
+N_0(w)&=2w^3-5w^2+6w-1,\\
+N_1(w)&=2w^4+9w^3-9w^2+7w+1.
+\end{aligned}
+$$
+
+在 $1\le w\le2$ 上，两个正项有直接的下界：
+
+$$
+\begin{aligned}
+N_0(w)
+&=2(w-1)^3+(w-1)^2+2(w-1)+2\ge2,\\
+N_1(w)
+&=2w^4+9w^2(w-1)+7w+1\ge10.
+\end{aligned}
+\tag{62.28}
+$$
+
+同时
+
+$$
+0<w(w^2+10w-1)\le46,\qquad 2w^2\le8.
+$$
+
+所以式（62.27）的右侧满足
+
+$$
+\begin{aligned}
+N_0+\rho N_1-\rho^2w(w^2+10w-1)-2\rho^3w^2
+&\ge2+\rho(10-46\rho-8\rho^2)\\
+&\ge2+\frac{227}{32}\rho>2,
+\end{aligned}
+\tag{62.29}
+$$
+
+最后一步用了 $\rho\le1/16$。另一方面，
+
+$$
+16w^2(1+\rho)<16\cdot4\cdot\frac{17}{16}=68.
+$$
+
+因此 $L_\varepsilon(p)/\varepsilon^2>2/68=1/34$，这就是式（62.6）。第 62.4 节的条件达界部分随即给出式（62.5）、最优修复的达到性及全部最优边缘参数的唯一性，完成定理 62.1 的证明。$\square$
+

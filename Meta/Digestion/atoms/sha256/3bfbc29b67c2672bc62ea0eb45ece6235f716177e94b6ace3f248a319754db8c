@@ -1,0 +1,17 @@
+# 386．可见能隙、周期性与驻定生成元
+
+设 $\hbar>0$，$H=H^\dagger$ 为有限维 Hamiltonian，
+
+$$
+H=\sum_aE_aP_a,\qquad
+\rho(t)=e^{-iHt/\hbar}\rho_0e^{iHt/\hbar},
+$$
+
+并令 $F=F^\dagger$ 为固定效果。定义 $f_F(t)=\operatorname{Tr}(\rho(t)F)$ 和
+
+$$
+\Omega=\{(E_a-E_b)/\hbar\}.
+$$
+
+称 $f_F$ 非恒定，若存在 $t,u$ 使 $f_F(t)\ne f_F(u)$；称其周期，若存在 $T>0$ 使 $f_F(t+T)=f_F(t)$ 对所有 $t$ 成立。
+

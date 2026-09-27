@@ -1,0 +1,16 @@
+**定义 400.1（统一一步近似的合同）。** 令 $X_t$ 是有限非空状态集上的时间齐次 Markov 链，转移为 $P$，初始律为 $\mu$；设满射 $q:X\to B$，$Y_t=q(X_t)$。给定 $B$ 上的 Markov 核 $Q$，并假设
+
+$$
+\max_x\operatorname{TV}(q_*P_x,Q_{q(x)})\le\varepsilon,
+\qquad 0\le\varepsilon\le1.
+$$
+
+比较链 $\widehat Y_t$ 以 $q_*\mu$ 为初始律、以 $Q$ 为转移。$Y_t$ 本身不必是 Markov 链；对每个正概率观察历史 $h=(y_0,\ldots,y_t)$，其下一步条件律是隐藏当前状态的后验混合：
+
+$$
+\Pr(Y_{t+1}\in\cdot\mid h)
+=\sum_{q(x)=y_t}\Pr(X_t=x\mid h)\,q_*P_x.
+$$
+
+每一行距同一个 $Q_{y_t}$ 至多 $\varepsilon$，混合后仍如此。这一步应用 TV 的凸性；项目 [Convexity](../../../D5/S3/TotalVariation/Convexity.lean) 提供二元联合凸性，有限混合由其迭代或有限和三角不等式得到。它不要求隐藏后验在不同历史下相同。
+

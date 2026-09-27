@@ -1,0 +1,27 @@
+**证明。** 引入 $F\succeq0$，将原问题写成
+
+$$
+E,F\succeq0,\qquad E+F=C\otimes I_D,
+\qquad\operatorname{Tr}_A C=I_B.
+$$
+
+可将 $C$ 当作自由厄米变量，因为前一等式已推出 $C\succeq0$。对两条等式分别使用厄米乘子 $N,n$，Lagrange 表达式为
+
+$$
+\operatorname{Tr}n+
+\operatorname{Tr}((X-N)E)-\operatorname{Tr}(NF)
++\operatorname{Tr}\bigl((\operatorname{Tr}_D N-I_A\otimes n)C\bigr).
+$$
+
+其上确界有限当且仅当式（55.5）的约束成立。原问题有严格正可行点
+$C=I_{AB}/\dim A$、$E=F=(C\otimes I_D)/2$；对偶取充分大的 $N=tI_{ABD}$、$n=t(\dim D)I_B$ 亦严格可行。原问题的可行集紧，故有限维半定规划强对偶给式（55.5）及达到性。$\square$
+
+特别地，
+
+$$
+D(R,S)=\max\{h(R-S),h(S-R)\}.
+\tag{55.6}
+$$
+
+这是两套独立的单向上界，不是把单独的策略范数除以二。
+

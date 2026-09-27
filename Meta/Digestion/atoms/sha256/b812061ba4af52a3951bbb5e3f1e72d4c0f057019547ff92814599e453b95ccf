@@ -1,0 +1,19 @@
+### 74.1 两个同时变化的参数
+
+考虑第64节同一混合族 $R_{a,\varepsilon}$，其中 $0<a<1$、$0<\varepsilon<1$。完整事件最优修复误差仍为 $e(R_{a,\varepsilon})$，归一化缺陷为 $\varepsilon$。定义尺度比
+
+$$
+r=\frac{1-a}{\varepsilon}.
+\tag{74.1}
+$$
+
+第70、71节的函数 $\gamma_r=\operatorname{dist}_N(H_r,\mathcal T)$ 在 $r\ge0$ 连续，$\gamma_0=1$，且在 $r\to\infty$ 时趋于一。置
+
+$$
+\Gamma=\max_{r>0}\gamma_r,\qquad
+\mathcal A=\{r>0:\gamma_r=\Gamma\}.
+\tag{74.2}
+$$
+
+前述结果保证 $\mathcal A$ 为非空紧集，包含于 $(0,\infty)$，并且 $1<\Gamma<9/8$。
+

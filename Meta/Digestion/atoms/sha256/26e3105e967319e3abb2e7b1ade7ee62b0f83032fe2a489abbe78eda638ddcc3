@@ -1,0 +1,2 @@
+**假设 0.3（标准表示工具）。** 使用矩阵乘法、谱定理、Cayley–Hamilton 定理及有限维通道的 Kraus 表示。通道与仪器的标准框架见 Watrous, *The Theory of Quantum Information*, [公开书稿](https://cs.uwaterloo.ca/~watrous/TQI/)。历史编码、双路径互补、Choi 表示与首次探测公式作为下述关系接口推导中的既有工具；其具体用途在相应条目内注明，不据此提出原创性主张。
+

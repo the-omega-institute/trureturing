@@ -1,0 +1,24 @@
+## 33. 完成运输的实际像与双向条件勘误
+
+第32.2节的“kernel 双向对应”应严格理解为完成像上的诱导映射，而不是把状态映射 $h$ 直接当成两个关系集合之间的双射。令
+
+$$
+I_X=\operatorname{im}(\operatorname{TP}_\infty^X),
+\qquad
+I_Y=\operatorname{im}(\operatorname{TP}_\infty^Y).
+$$
+
+在 (32.1) 下，$\widehat h:I_X\to I_Y$ 首先只是良定义的单向映射；若 $h$ 在实际来源像上满射，则 $\widehat h$ 在相应 profile 像上满射。只有再有反向系统态射、或直接证明 $\widehat h$ 单射并满足反向的更新与读出交换，才能称两种完成表示双向恢复。
+
+若 $h(x)=h(y)$ 蕴含两者的完整 profile 相同，则 $\widehat h$ 的良定义不需要 $h$ 单射；若完整 profile 相同的反向蕴含也成立，则它们在状态 quotient 上反射同一未来核。因而可检验的双向条件是
+
+$$
+\widehat h\text{ 在 }I_X\text{ 与 }I_Y\text{ 之间为双射，且}
+\widehat h\circ\operatorname{itineraryUpdate}_X
+=\operatorname{itineraryUpdate}_Y\circ\widehat h,
+$$
+
+并带有读出翻译的交换式。第32节中的 `shift` 均指这里的 `itineraryUpdate`；有限窗口只得到对应的有限 itinerary 映射。
+
+本勘误只限定跨切面双向恢复的对象和量词，不改变单向半共轭、唯一运输或复合自然性。Claim status 为 open，无新增 Lean 声明。
+

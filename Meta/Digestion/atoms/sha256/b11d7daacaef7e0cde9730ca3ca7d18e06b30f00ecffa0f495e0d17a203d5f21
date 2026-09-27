@@ -1,0 +1,72 @@
+### 179.1 反向模拟等价于共同的局部纯化恢复
+
+固定任意整数 $L\ge3$，沿用第178节的
+
+$$
+\mathcal N_L(X)=X_{00}\omega_0+X_{11}\omega_1,
+\qquad
+\mathcal S(X)=\operatorname{Tr}(X)\omega_*,
+$$
+
+$$
+\omega_j=\mathfrak E(U_{\pi/4}\tau_jU_{\pi/4}^\dagger),
+\qquad
+\omega_*=\mathfrak E(P_+),
+\qquad
+K=Q\otimes R.
+\tag{179.1}
+$$
+
+记接收端反向近似模拟误差为
+
+$$
+\delta_L^{\leftarrow}
+=\min_{\Lambda:K\to K\ {\rm CPTP}}
+d_\diamond\!\left(
+(\operatorname{id}_M\otimes\Lambda)\mathcal N_L,\mathcal S
+\right).
+\tag{179.2}
+$$
+
+对输入和输出都采用第174节的接收端解掩码酉与旗标坐标变换。它们只作用于 $K$，故前后复合给合法模拟器的双射，不改变最优值。目标与两份真实输入分别变为
+
+$$
+\omega_*'=\frac{I_Q}{2}\otimes P_\Xi,
+\qquad
+\omega_j'=\frac12\sum_{\nu=0}^1P_{q_\nu}^Q\otimes\eta_{j,\nu}^{MR},
+\tag{179.3}
+$$
+
+其中
+
+$$
+\begin{aligned}
+\eta_{j,\nu}
+={}&(1-\beta w_j)P_\Xi+\beta w_jP_\psi\\
+&+(-1)^{\nu+1}\gamma w_j
+\bigl(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\bigr),
+\end{aligned}
+$$
+
+$$
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353},\qquad
+|\psi\rangle=(I_M\otimes Y_R)|\Xi\rangle.
+\tag{179.4}
+$$
+
+$\Xi,\psi$ 正交，且第171、174节给
+$0<w_0<w_1<1/2$。
+
+两条比较通道都先测原输入的计算基。对任意共同模拟器，其完整半 diamond 距离恰为两个分支的半迹距离最大值：
+
+$$
+d_\diamond\!\left(
+(\operatorname{id}_M\otimes\Lambda)\mathcal N_L,\mathcal S
+\right)
+=\max_jD\bigl((\operatorname{id}_M\otimes\Lambda)(\omega_j),\omega_*\bigr).
+\tag{179.5}
+$$
+
+下界分别输入 $P_j$ 得到；上界对任意原输入参考态的两个正对角参考块用三角不等式得到。因此这一归约保留全部参考系统。
+

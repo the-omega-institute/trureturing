@@ -1,0 +1,100 @@
+**定理145.2（实际输入支撑的独立最优对齐）。** 在（145.1）—（145.5）的条件下，
+
+$$
+\boxed{
+d^{\mathrm{geom}}_{n,m}(r,K)
+=\sin\!\left(
+\frac12\max_{1\le i\le2r}
+|\theta_{n,i}-\theta_{m,i}|
+\right).
+}
+\tag{145.11}
+$$
+
+下确界由一对允许的实际编码等距取得。右侧在满足（145.3）后不再依赖 $K$ 的额外维数；角的重复次数相同，故它也不依赖 $r$。
+
+**证明：下界。** 对任意允许的 $W_n,W_m$，第143节的实际位块分解给出
+
+$$
+\mathcal U_n=(A\otimes|0\rangle)\oplus(B\otimes|1\rangle),
+$$
+
+$$
+\mathcal U_m=(A'\otimes|0\rangle)\oplus(B'\otimes|1\rangle),
+$$
+
+其中四个子空间维数均为 $k=2r$。它们各自的主角列表分别为
+$(\theta_{n,i})$ 与 $(\theta_{m,i})$。由于投影差在同一个位基下分块对角，
+
+$$
+\varepsilon:=\|P_{\mathcal U_n}-P_{\mathcal U_m}\|_{\mathrm{op}}
+=\max\{\|P_A-P_{A'}\|_{\mathrm{op}},
+       \|P_B-P_{B'}\|_{\mathrm{op}}\}.
+\tag{145.12}
+$$
+
+引理145.1给
+
+$$
+\max_i|\theta_{n,i}-\theta_{m,i}|
+\le\theta_{\max}(A,A')+\theta_{\max}(B,B')
+\le2\arcsin\varepsilon.
+$$
+
+移项后即得（145.11）右侧为每一对编码的下界。
+
+**证明：达到性。** 先设至少一个轮次大于等于三。由（145.3），$\dim K\ge4r=2k$。在 $K$ 中取 $k$ 个两两正交的二维平面，每个平面有正交单位基 $e_i,f_i$。对 $j\in\{n,m\}$，置
+
+$$
+\begin{aligned}
+a_{j,i}
+&=\cos(\theta_{j,i}/2)e_i+\sin(\theta_{j,i}/2)f_i,\\
+b_{j,i}
+&=\cos(\theta_{j,i}/2)e_i-\sin(\theta_{j,i}/2)f_i,
+\end{aligned}
+\tag{145.13}
+$$
+
+并令 $A_j=\operatorname{span}\{a_{j,i}\}$、
+$B_j=\operatorname{span}\{b_{j,i}\}$。同轮的交叉内积为
+
+$$
+\langle a_{j,i},b_{j,l}\rangle
+=\delta_{il}\cos\theta_{j,i},
+\tag{145.14}
+$$
+
+故这些子空间具有所需的主角列表。
+
+还需核对它们来自实际 $W_j$。来源中的
+$\mathscr H_j\otimes\mathbb C^r$ 与
+$\mathscr G_j\otimes\mathbb C^r$
+具有同一主角列表，而且两者张成整个 $S_j\otimes\mathbb C^r$：
+从 $g_j^i=\chi_{i0}^j$ 与 $h_j^i=a\chi_{i0}^j+\chi_{i1}^j$ 可以恢复全部实际档案列。选择两组来源主向量，把它们分别送到（145.13）的两组向量。两组生成向量的完整 Gram 矩阵由（145.14）保持，所以该规定良定，并延拓为
+
+$$
+W_j:S_j\otimes\mathbb C^r\longrightarrow K
+$$
+
+的等距。由真实（145.4），对应输入像恰为
+$A_j\otimes|0\rangle\oplus B_j\otimes|1\rangle$。
+
+当 $j=2$ 时，恰有 $r$ 个角为零；相应 $a_{j,i}=b_{j,i}=e_i$，每项只占一维，其余 $r$ 项各占二维。因此这一轮的编码像维数仍为 $3r$。当 $j\ge3$ 时，全部角严格大于零，编码像维数为 $4r$。构造没有把第二轮的来源空间扩成四维逻辑档案。
+
+在每个二维平面内，同一位块的两轮向量之间的角为
+$|\theta_{n,i}-\theta_{m,i}|/2$。所以（145.7）、（145.12）给
+
+$$
+\begin{aligned}
+\|P_{\mathcal U_n}-P_{\mathcal U_m}\|_{\mathrm{op}}
+&=\max_i\sin\!\left(\frac{|\theta_{n,i}-\theta_{m,i}|}{2}\right)\\
+&=\sin\!\left(\frac12\max_i|\theta_{n,i}-\theta_{m,i}|\right),
+\end{aligned}
+$$
+
+达到下界。
+
+剩下的情形是 $n=m=2$，此时（145.3）只要求 $\dim K\ge3r$。直接选择两份相同的编码等距，输入投影相同，距离为零，与（145.11）一致。无需为这个情形另添 $r$ 维空方向。证毕。
+
+对于 $n\ne m$，右侧严格为正：若排序角列表相同，主角特征值乘积相同，就会使第143节的 $\delta_n=\delta_m$，违反该节式（143.11）。因此（145.11）将支撑不重合加强为固定两轮、固定来源下的严格正距离下界。
+

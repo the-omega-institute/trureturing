@@ -1,0 +1,8 @@
+**定义 2.4（出边唯一提升）。** 对另一 essential 图 H 及满射 p:Q→V_H，给定
+
+$$
+\rho_b:Q_{s(b)}\longrightarrow Q_{t(b)}\qquad(b\in E_H).
+$$
+
+每个 (q,b) 是从 q 到 rho_b(q) 的提升边。对 beta=b_1…b_d，令 rho_beta=rho_{b_d}∘…∘rho_{b_1}。所有长度 d 的 rho_beta 常值，称长度 d 的右边界遗忘；最小长度记为 d_R。反转全部箭头后，这正是定义 2.3 的情形。
+

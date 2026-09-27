@@ -1,0 +1,49 @@
+### 162.1 共同相位合同与一侧有限包络
+
+令 $P$ 为紧度量参数空间。对每个 $t\in P$，固定同一来源和同一接收维数下的一台物理装置，记其单终端最优完整参考半迹误差为 $e_n(t)$，并置
+
+$$
+E_\infty(t)=\sup_{n\ge1}e_n(t).
+\tag{162.1}
+$$
+
+假设每个有限终端函数 $e_n:P\to[0,1]$ 连续。再假设给定一个固定紧子群 $G\subseteq\mathbb T^s$、连续生成元映射 $t\mapsto g_t\in G$，以及联合连续的函数
+
+$$
+h:P\times G\longrightarrow[0,1],
+$$
+
+满足
+
+$$
+\overline{\{g_t^n:n\ge0\}}=G
+\quad\text{对每个 }t\in P,
+\tag{162.2}
+$$
+
+以及一个与参数无关的非负递减序列 $\zeta_n\to0$，使
+
+$$
+|e_n(t)-h(t,g_t^n)|\le\zeta_n
+\quad(t\in P,\ n\ge3).
+\tag{162.3}
+$$
+
+若起初只有一致趋零的界 $\xi_n$，可将其换为
+$\zeta_N=\sup_{n\ge N}\xi_n$。
+
+令
+
+$$
+H(t)=\max_{z\in G}h(t,z),
+$$
+
+$$
+B_N(t)=
+\max\left\{
+\max_{1\le n<N}e_n(t),\ H(t)
+\right\},
+\qquad N\ge3.
+\tag{162.4}
+$$
+

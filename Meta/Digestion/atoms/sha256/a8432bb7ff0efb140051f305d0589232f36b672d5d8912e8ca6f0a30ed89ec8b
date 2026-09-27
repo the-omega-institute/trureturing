@@ -1,0 +1,76 @@
+### 277.2 已知角度的实际仪器与完整输出合同
+
+给定已知实数 $\theta$，取两个设置
+$$
+A_0(\theta)=\cos\theta\,Z_H+\sin\theta\,X_H,
+\qquad
+A_1(\theta)=-\sin\theta\,Z_H+\cos\theta\,X_H,
+$$
+$$
+E_{w,\eta}(\theta)=\frac{I_2+\eta A_w(\theta)}4,
+\qquad w\in\{0,1\},\quad\eta\in\{+1,-1\}.
+\tag{277.6}
+$$
+每个 $A_w$ 的本征值为 $\pm1$，故四个效果正半定，且和为单位矩阵。仪器把输入量子输出重置为同一固定纯态 $P_{\rm reset}$，保留全部实际记录 $(w,\eta)$ 和整个参考 $E$。
+
+记
+$$
+R'_0(\Xi)=\cos\theta\,R_Z(\Xi)+\sin\theta\,R_X(\Xi),
+$$
+$$
+R'_1(\Xi)=-\sin\theta\,R_Z(\Xi)+\cos\theta\,R_X(\Xi).
+\tag{277.7}
+$$
+完整输出除共同纯重置因子外，精确为
+$$
+\sigma_\theta(\Xi)
+=\bigoplus_{w,\eta}\sigma_{w,\eta}(\Xi),
+\qquad
+\sigma_{w,\eta}(\Xi)
+=\frac{\rho_\Xi+\eta R'_w(\Xi)}4.
+\tag{277.8}
+$$
+它是记录空间 $\mathbb C^4$ 与参考 $E$ 上的迹一正矩阵。完整物理输出为 $P_{\rm reset}\otimes\sigma_\theta(\Xi)$；插入固定纯因子是等距嵌入，保留迹距离、根保真度和二元可区分性。因此下文可在这个 $4n$ 维有效输出空间中计算，所有记录和参考仍完整保留。
+
+令
+$$
+H_0(\theta)=\operatorname{Re}(e^{i\theta}Z),
+\qquad
+H_1(\theta)=\operatorname{Re}(e^{i(\theta+\pi/2)}Z),
+\qquad \operatorname{Re}B=(B+B^\dagger)/2.
+\tag{277.9}
+$$
+对固定来源对，输出块为
+$$
+\sigma_{\theta,*;w,\eta}=\frac{I_n+\eta H_w(\theta)}{4n},
+\qquad
+\sigma_{\theta,h;w,\eta}
+=\frac{I_n+\eta(1-\delta)H_w(\theta)}{4n}.
+\tag{277.10}
+$$
+在有效输出空间上还有精确恒等式
+$$
+\boxed{
+\sigma_{\theta,h}
+=(1-\delta)\sigma_{\theta,*}+\frac{\delta}{4n}I_{4n}.
+}
+\tag{277.11}
+$$
+因此两输出交换；在每个记录内选择 $H_w(\theta)$ 的本征基即可同时对角化。不同记录的 $H_w$ 无需彼此交换。
+
+二元假设 $j\in\{*,h\}$ 具有等先验，此后提供同一来源的独立副本。每份都经过同一个已知角度 $\theta$ 的仪器。允许对所有完整输出作任意集体POVM与终端处理。令
+$$
+N_{\rm out}(\theta,h)
+=\min\{N\ge1:\text{$N$份完整输出可使等先验平均错误率不超过 $1/3$}\}.
+\tag{277.12}
+$$
+这里 $N$ 是固定整数；方案知道来源族、$h$ 和 $\theta$。角度是两假设共用的设置参数；不同角度定义不同仪器。在每次此二元检验中，所有副本使用同一角度。
+
+采用半迹距离与未平方的根保真度
+$$
+d(\tau,\omega)=\frac12\|\tau-\omega\|_1,
+\qquad
+\mathsf F(\tau,\omega)=\|\sqrt\tau\sqrt\omega\|_1.
+\tag{277.13}
+$$
+

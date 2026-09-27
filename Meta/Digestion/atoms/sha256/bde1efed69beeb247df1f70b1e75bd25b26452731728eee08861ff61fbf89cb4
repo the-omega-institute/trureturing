@@ -1,0 +1,44 @@
+### 247.2 最优凸屋系综与端点分量的强制性
+
+有限维形成纠缠的最优纯态系综确实存在。标准结果可见 J. Watrous，*The Theory of Quantum Information*，[作者版原文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Exercise 6.3(a)，印刷第385页、PDF第393页。这里所需的存在性也可由紧性直接说明：归一化纯向量形成紧集，映射
+$$
+|\psi\rangle\longmapsto
+\left(|\psi\rangle\langle\psi|,
+S(\operatorname{Tr}_E|\psi\rangle\langle\psi|)\right)
+\tag{247.8}
+$$
+连续，故其像紧。有限维实向量空间中，该像的凸包仍紧，并由 Carathéodory 定理用有限凸组合表示。固定第一坐标为 $\Omega$ 的非空紧纤维上，第二坐标取得最小值，正是 $E_F(\Omega)$。这只用作已有凸屋定义的存在工具。
+
+现在任取 $\Omega\in\mathcal C_\theta$，并任取一个达到形成纠缠的有限纯态分解
+$$
+\Omega=\sum_j\lambda_j|\psi_j\rangle\langle\psi_j|,
+\qquad \lambda_j>0,\quad\sum_j\lambda_j=1.
+\tag{247.9}
+$$
+记各纯分量的纠缠熵为 $e_j$，则 $\sum_j\lambda_je_j=\theta$。§244的纯探针最优响应 $G(e)$ 与§245的严格弦界给
+$$
+\begin{aligned}
+U+\delta\theta=g(\Omega)
+&\le\sum_j\lambda_jg(|\psi_j\rangle\langle\psi_j|)\\
+&\le\sum_j\lambda_jG(e_j)\\
+&\le U+\delta\sum_j\lambda_je_j
+=U+\delta\theta.
+\end{aligned}
+\tag{247.10}
+$$
+两端相同，每个不等式都取等。严格弦界在 $0<e<1$ 时严格，因此每个正权重分量都必须满足
+$$
+e_j\in\{0,1\}.
+\tag{247.11}
+$$
+而且每个分量分别达到其纯态最优值。
+
+令 $J_1$ 和 $J_0$ 分别为 $e_j=1$ 和 $e_j=0$ 的指标集。输入是量子比特，故 $J_1$ 中每个分量的输入边缘为 $I_2/2$，是输入与某个二维参考平面之间的最大纠缠纯态，并取得 $D$；$J_0$ 中每个分量是产品纯态，并取得 $U$。权重满足
+$$
+\sum_{j\in J_1}\lambda_j=\theta,
+\qquad
+\sum_{j\in J_0}\lambda_j=1-\theta.
+\tag{247.12}
+$$
+内部 $\theta$ 下两组均非空。此时还没有假定两类分量的参考支撑相互正交。
+

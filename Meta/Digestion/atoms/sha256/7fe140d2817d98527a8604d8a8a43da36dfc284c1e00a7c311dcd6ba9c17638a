@@ -1,0 +1,123 @@
+**引理34.2（早期矩形强制第四纤维和双线性约束）。** 在引理34.1的假设下，取代数基
+$e_0=\eta_3$、$e_1=\eta_4$，写
+
+$$
+\eta_5=\alpha e_0+\beta e_1,\qquad
+\eta_2=ce_0+de_1,\qquad
+\alpha\beta\ne0,\quad(c,d)\ne(0,0).
+\tag{34.11}
+$$
+
+定义辅助非零向量
+
+$$
+\eta_6=\alpha c e_0+(\beta c-\alpha d)e_1.
+\tag{34.12}
+$$
+
+则
+
+$$
+U(G_5)=Q\otimes\mathbb C\eta_6,\qquad
+(U\otimes I_F)V_0K=Q\otimes J,
+\tag{34.13}
+$$
+
+其中
+
+$$
+J=\operatorname{span}\{
+\eta_4\otimes\eta_3,\eta_5\otimes\eta_4,
+\eta_6\otimes\eta_5\}\subset F\otimes F,
+\qquad \dim J=3.
+\tag{34.14}
+$$
+
+令 $\mathcal B:F\times F\to\mathbb C$ 为复双线性形式，其在
+$e_0,e_1$ 基中的矩阵为
+
+$$
+[\mathcal B]=
+\begin{pmatrix}d&-c\\0&\alpha c/\beta\end{pmatrix}.
+\tag{34.15}
+$$
+
+它的线性延拓满足 $J=\ker\mathcal B$，并有
+
+$$
+\mathcal B(\eta_{j+1},\eta_j)=0,\qquad j=1,\ldots,5.
+\tag{34.16}
+$$
+
+$\eta_6$ 只标记一个辅助纤维，不声称第六轮存在或具有这一环境。
+$\mathcal B$ 是双线性形式，不是 Hilbert 内积；其消失值不表示环境正交。
+
+证明。在零位像的接收器因子上作用 $U$，由（34.6）得到
+
+$$
+\begin{aligned}
+(U\otimes I)V_0K
+={}&Q\otimes(e_1\otimes e_0)
++Q\otimes((\alpha e_0+\beta e_1)\otimes e_1)\\
+&+U(G_5)\otimes(\alpha e_0+\beta e_1).
+\end{aligned}
+\tag{34.17}
+$$
+
+前两个标量张量独立，张成二维空间 $L\subset F\otimes F$。定义满射
+$\pi:F\otimes F\to\mathbb C^2$：
+
+$$
+\begin{aligned}
+\pi(e_0\otimes e_0)&=(1,0),&
+\pi(e_0\otimes e_1)&=(0,1),\\
+\pi(e_1\otimes e_0)&=0,&
+\pi(e_1\otimes e_1)&=(0,-\alpha/\beta).
+\end{aligned}
+\tag{34.18}
+$$
+
+其核恰为 $L$。对 $x=x_0\otimes e_0+x_1\otimes e_1\in Q\otimes F$，有
+
+$$
+(I_Q\otimes\pi)(x\otimes\eta_5)
+=(\alpha x_0,\beta x_0-\alpha x_1).
+\tag{34.19}
+$$
+
+右侧定义了 $Q\oplus Q$ 上的可逆线性变换 $T$，因为 $\alpha\ne0$。
+故（34.17）在这个商中的像恰为二维空间 $T(U(G_5))$。
+
+早期矩形 $V_0H_1=G_2\otimes\eta_2$ 也包含于 $V_0K$；在
+$U$ 坐标下，它是 $Q\otimes e_0\otimes(ce_0+de_1)$，商像为
+$\{(cz,dz):z\in Q\}$。此空间二维，故它与 $T(U(G_5))$ 相等。
+解
+
+$$
+\alpha x_0=cz,\qquad \beta x_0-\alpha x_1=dz
+$$
+
+得
+$x_0=(c/\alpha)z$、$x_1=((\beta c-\alpha d)/\alpha^2)z$，即（34.12）—（34.13）的第一式。
+该辅助向量非零：$c\ne0$ 时其 $e_0$ 系数非零；$c=0$ 时
+$d\ne0$，其 $e_1$ 系数为 $-\alpha d\ne0$。
+
+代回（34.17）得像空间等式（34.13）。左侧维数六，$\dim Q=2$，所以
+$\dim J=3$。早期矩形包含进一步给
+$\eta_3\otimes\eta_2\in J$。而由（34.1）、（34.10），
+
+$$
+(U\otimes I)V_0k=v\otimes\eta_2\otimes\eta_1\in Q\otimes J,
+$$
+
+由于 $v\ne0$，还得 $\eta_2\otimes\eta_1\in J$。
+
+直接代入（34.15），$\mathcal B$ 在（34.14）的三个生成张量上均为零。
+它非零且核为三维，故 $J=\ker\mathcal B$，连同两个早期包含即得（34.16）。证明完毕。
+
+两种退化的后果将用于下一步。若 $d=0$，则
+$\eta_2\parallel\eta_3$、$\eta_6\parallel\eta_5$，从而 $G_5=G_4$；
+由 $\mathcal B(\eta_2,\eta_1)=0$ 还得 $\eta_1\parallel\eta_3$。
+若 $c=0$，则 $\eta_2\parallel\eta_4$、$\eta_6\parallel\eta_4$，
+从而 $G_5=G_3$。这两个分支的双线性形式都为秩一，不能提前使用非退化性。
+

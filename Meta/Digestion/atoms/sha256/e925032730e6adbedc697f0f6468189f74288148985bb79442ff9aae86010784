@@ -1,0 +1,25 @@
+**定义 407.1（任意系统维数下的局部乘积后选择）。** 取任意整数 $d,n\ge1$，系统为单个 $S=\mathbb C^d$，固定系统基 $\{|i\rangle\}_{i=1}^d$，已知归一化纯记录为 $r_i\in\mathbb C^2$。输入是 $S$ 上任意未知态，也可与任意有限维参考 $A$ 纠缠。按定义 400.1，先完成全部记录的制备：
+
+$$
+J_n|i\rangle=|i\rangle\otimes r_i^{\otimes n},\qquad
+\mathcal H_R=(\mathbb C^2)^{\otimes n},\qquad
+E_n=\operatorname{span}\{r_i^{\otimes n}:1\le i\le d\}.
+$$
+
+第 $a$ 位持有者只持有第 $a$ 个物理量子比特。$E_n$ 是占据的子空间，不授予新的局部张量分解或跨持有者压缩权限。制备之后不添加共享纠缠、联合记录测量或量子通信。每位持有者选择一个单位 ket $|a_a\rangle\in\mathbb C^2$，作两结果投影测量
+
+$$
+\{\Pi_a,I_2-\Pi_a\},\qquad \Pi_a=|a_a\rangle\langle a_a|,
+$$
+
+并报告经典结果。只接受所有持有者均取得第一个结果的分支；失败结果也属于完整测量。系统在记录测量期间不被操作，成功时只施加一个预先固定的终端对角酉算子 $U$，参考 $A$ 始终不被操作。投影和反馈可以依赖已知记录族及 $n$，不得依赖未知输入。
+
+沿用定义 389.1 的 ket 行坐标：$C_{ij}=\langle r_j|r_i\rangle$；在 $E_n$ 的一组正交基中，$R_n$ 的第 $i$ 行是 $r_i^{\otimes n}$ 的坐标。由命题 400.2，
+
+$$
+R_nR_n^\dagger=C^{\circ n},\qquad
+\operatorname{ran}(C^{\circ n})=\operatorname{ran}R_n.
+$$
+
+$\eta(C^{\circ n})$ 仍指第 390—391 节中允许完整联合记录测量的最优总成功量。局部接受映射 $\mathcal T$ 的精确恢复要求为 $\mathcal T=p\operatorname{id}_S$，其中 $0<p\le1$，等式在全部系统矩阵上成立，因而也须保持任意未操作参考及其与系统的纠缠。
+

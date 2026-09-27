@@ -1,0 +1,63 @@
+### 271.3 同时消去每条链首层的显式证书
+
+沿用§266的标准面约化定义。在联合Hermitian空间中，固定方向为
+$$
+L=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{271.12}
+$$
+$L^\perp$ 恰由上下对角块相等的Hermitian矩阵组成。若当前面支撑为 $P$，合法证书满足
+$$
+PYP\succeq0,
+\qquad Y\in L^\perp,
+\qquad \langle Y,T_*\rangle=0,
+\tag{271.13}
+$$
+其中 $\langle A,B\rangle=\operatorname{Re}\operatorname{Tr}(AB)$。严格约化还要求当前压缩非零。
+
+令
+$$
+\mathcal N_j
+=\operatorname{span}\{q_{b,a}:1\le a\le\min(j,r_b)\},
+\qquad \mathcal N_0=\{0\},
+$$
+$$
+P_j=P_{\mathcal N_j^\perp},
+\qquad
+\mathcal C_j=\{X\succeq0:\operatorname{supp}X\subseteq\mathcal N_j^\perp\}.
+\tag{271.14}
+$$
+第一步取
+$$
+Y_1=\sum_{b\in\mathcal B}q_{b,1}q_{b,1}^\dagger.
+\tag{271.15}
+$$
+它具有相同对角块、全空间PSD，并消去 $T_*$。其零配对同时消去全部首层向量，故将 $\mathcal C_0$ 约化到 $\mathcal C_1$。
+
+若 $1\le j<m$，对 $r_b>j$ 的链定义
+$$
+w_{b,j}=\left(0,\ te_{b,j+1}+\frac{t^2}{2}e_{b,j}\right),
+$$
+$$
+Y_{j+1}
+=\sum_{b:r_b>j}
+\left(q_{b,j+1}q_{b,j+1}^\dagger
++q_{b,j}w_{b,j}^\dagger+w_{b,j}q_{b,j}^\dagger\right).
+\tag{271.16}
+$$
+对每个加数，交叉项的上下对角块之差恰抵消第一个外积的差。因此 $Y_{j+1}\in L^\perp$。全部交叉项含真值核向量，故 $\langle Y_{j+1},T_*\rangle=0$，且
+$$
+P_jY_{j+1}P_j
+=\sum_{b:r_b>j}(P_jq_{b,j+1})(P_jq_{b,j+1})^\dagger\succeq0.
+\tag{271.17}
+$$
+全部 $q_{b,a}$ 线性独立，所以这些新投影向量线性独立且非零。其零配对恰好增加所有尚未耗尽链的新一层核约束，得到
+$$
+\mathcal C_j\cap\{Y_{j+1}\}^\perp=\mathcal C_{j+1}.
+\tag{271.18}
+$$
+至少最长链在每一步都贡献新向量，因此全部 $m$ 步均严格。最终 $\mathcal N_m=\mathcal N$，真值在剩余支撑上严格正，故
+$$
+d_S\le m.
+\tag{271.19}
+$$
+

@@ -1,0 +1,1 @@
+| [FractionalKnapsackDual.fractional_knapsack_strong_duality](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Analytic/Knapsack/FractionalKnapsackDual.lean) | 对应另一类单预算可行域，不是给定总质量下全部删除读数的联合约束。 

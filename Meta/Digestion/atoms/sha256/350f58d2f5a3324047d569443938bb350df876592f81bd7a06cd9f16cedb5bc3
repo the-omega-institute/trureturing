@@ -1,0 +1,118 @@
+### 274.3 任意权重下的全竞争恢复上界
+
+继续使用（274.6），但不限制 $Q$ 的跨链条目。令 $T=T(Q,M)$、$T'=c\Xi$，并写
+$$
+R=\operatorname{Tr}_H\Xi-\rho_*,
+\qquad B=\mathscr K(\Xi)-K_*.
+$$
+存在Hermitian $D$，使
+$$
+T'-T=\operatorname{diag}(D,-D)+X,
+\qquad
+X=\frac c2\begin{pmatrix}R&B\\B^\dagger&R\end{pmatrix},
+$$
+$$
+\xi:=\|X\|\le\frac c2\varepsilon,
+\qquad
+\|T'\|,\|T\|\le c.
+\tag{274.13}
+$$
+这是完整数据误差的精确分解；$D$ 仍可具有全部跨链条目。
+
+对长度 $r=r_b$ 的链，令 $\iota_b:\mathbb C^r\to E$ 为等距嵌入。取
+$$
+0<\theta\le\theta_{0,b}:=
+\min\left\{1,\frac{t}{2r},\frac{\pi}{r}\right\},
+\qquad \ell=0,\ldots,r-1,
+$$
+$$
+\lambda_\ell=e^{i\ell\theta},
+\qquad z_\ell=\frac{\lambda_\ell-1}{t},
+\qquad
+x_\ell=\iota_b(1,z_\ell,\ldots,z_\ell^{r-1})^{\mathsf T},
+\qquad
+v_\ell=(x_\ell,-\lambda_\ell^{-1}x_\ell).
+\tag{274.14}
+$$
+则
+$$
+G_Mv_\ell=\lambda_\ell^{-1}tz_\ell^r e_{b,r},
+\qquad
+v_\ell^\dagger\operatorname{diag}(D,-D)v_\ell=0,
+\qquad
+\|v_\ell\|^2\le2r.
+\tag{274.15}
+$$
+由PSD不等式 $(T')^2\preceq\|T'\|T'$，
+$$
+\|T'v_\ell\|^2
+\le c\left(\|Q\|t^2|z_\ell|^{2r}+2r\xi\right).
+\tag{274.16}
+$$
+同时 $\|Tv_\ell\|\le\|G_M\|\|Q\|t|z_\ell|^r$。读取误差分解的第一分量，得
+$$
+\begin{aligned}
+\|Dx_\ell\|\le{}&
+\left(\sqrt{c\|Q\|}+\|G_M\|\|Q\|\right)t|z_\ell|^r\\
+&+\sqrt{2cr\xi}+\sqrt{2r}\xi.
+\end{aligned}
+\tag{274.17}
+$$
+对 $0\le\varepsilon\le1$，可取
+$$
+A_b=
+\left(\sqrt{c\|Q\|}+\|G_M\|\|Q\|\right)t
+\left(\frac{r-1}{t}\right)^r
++c\sqrt r+\frac{c\sqrt{2r}}2
+\tag{274.18}
+$$
+使 $\max_\ell\|Dx_\ell\|\le A_b(\theta^r+\sqrt\varepsilon)$。$r=1$ 时第一项为零。
+
+§269的Lagrange系数估计给相应Vandermonde矩阵
+$$
+\|V_b^{-1}\|\le r(\pi t)^{r-1}\theta^{1-r}.
+$$
+其 $D\iota_bV_b$ 的列为完整参考向量 $Dx_\ell$，因此
+$$
+\|D\iota_b\|
+\le r^{3/2}(\pi t)^{r-1}A_b
+\theta^{1-r}(\theta^r+\sqrt\varepsilon).
+\tag{274.19}
+$$
+这控制整个列块，不只是 $D$ 的对角参考块。
+
+令
+$$
+\eta_0=\min_b\theta_{0,b}^{2r_b}>0,\qquad
+C_D=\left(\sum_b
+\left[2r_b^{3/2}(\pi t)^{r_b-1}A_b\right]^2\right)^{1/2}.
+\tag{274.20}
+$$
+对 $0<\varepsilon\le\eta_0$，各链分别取 $\theta=\varepsilon^{1/(2r_b)}$，再以Cauchy–Schwarz合并列块，得到
+$$
+\|D\|\le C_D\varepsilon^{1/(2m)}.
+\tag{274.21}
+$$
+若 $\varepsilon=0$，在（274.19）中让各 $\theta\downarrow0$，得 $D=0$、$X=0$。
+
+总参考维数为 $d$，故
+$$
+\begin{aligned}
+\|\Xi-\Omega\|_1
+&\le\frac2c\|D\|_1+\frac1c\|X\|_1\\
+&\le\frac{2d}{c}\|D\|+\frac{2d}{c}\|X\|\\
+&\le\left(\frac{2dC_D}{c}+d\right)\varepsilon^{1/(2m)}
+\end{aligned}
+\tag{274.22}
+$$
+在小误差区间成立。其余误差由态迹距至多二补全。因此存在固定有限 $C_{\mathrm{up}}$，使全部密度态满足
+$$
+\boxed{
+\|\Xi-\Omega\|_1
+\le\min\{2,C_{\mathrm{up}}\varepsilon(\Xi)^{1/(2m)}\}.
+}
+\tag{274.23}
+$$
+例如可取
+$C_{\mathrm{up}}=\max\{2dC_D/c+d,\ 2\eta_0^{-1/(2m)},\ 2\}$。本证明从未要求竞争态同边缘、同秩或块对角。
+

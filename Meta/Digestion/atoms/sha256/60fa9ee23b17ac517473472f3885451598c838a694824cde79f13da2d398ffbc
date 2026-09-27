@@ -1,0 +1,6 @@
+**例 48.10（只允许未知模式下作控制平移）。** 保留局部初始化与共同根，左存 $(x,k)$、右存 $(y,c,k)$，共同模式 $k\in\{?,\mathsf K\}$，初始化 $k=?$。数据平移总合法且只改本端数据；控制平移 $\tau_c$ 仅在 $k=?$ 时合法，届时只翻右端 $c$。未知模式的 $N_x$ 由右端传一位旧 $c$，写左 $(c,\mathsf K)$、右 $(0,0,\mathsf K)$；$N_y$ 零通信写左 $(0,\mathsf K)$、右 $(c,0,\mathsf K)$。已知模式下 $c=0$，两个重写都零通信写各自零数据并保持已知。
+
+合法性由各端自己的模式可判；每条合法词总通信至多一位。实际联合像为未知时的全部八个 $z$，加已知且 $c=0$ 的四个 $z$，共十二态；本地容量四、六态。已知层由重写零态后数据平移覆盖，故这些计数都是实际像。此时静默后继中没有 $c=1$ 的状态，正好失去引理48.2靠总控制平移取得的全 $V$ 覆盖；它没有满足所有具名动作在每个可达状态总定义的前提。
+
+有限状态前提也不能从“每条无限词都只付有限费用”删去。取 $Q=\{\operatorname{wait}(n),\operatorname{pay}(n):n\ge0\}\cup\{\operatorname{done}\}$，初始 $\operatorname{wait}(0)$，两动作 $w,s$，令 $\operatorname{wait}(n)\xrightarrow{w/0}\operatorname{wait}(n+1)$、$\operatorname{wait}(n)\xrightarrow{s/0}\operatorname{pay}(n)$，在 $\operatorname{pay}(k)$、$k>0$ 时任一动作都以成本一到 $\operatorname{pay}(k-1)$，在 $\operatorname{pay}(0)$ 时任一动作以成本零到 $\operatorname{done}$，后者零费自环；每条无限词或者永远等待而成本零，或者首次选择 $s$ 前等待 $n$ 次、随后总成本恰为 $n$，故逐词有限且无正费周期，但 $w^nsw^n$ 的成本为 $n$，没有统一有限界。
+

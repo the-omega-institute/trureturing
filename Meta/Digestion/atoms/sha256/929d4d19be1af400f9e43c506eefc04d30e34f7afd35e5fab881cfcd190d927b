@@ -1,0 +1,8 @@
+### 19.8 文献定位
+
+[19-A] Dimitris Bertsimas and Ioana Popescu. *Optimal Inequalities in Probability Theory: A Convex Optimization Approach*. SIAM Journal on Optimization 15(3), 780--804, 2005. DOI: 10.1137/S1052623401399903. https://epubs.siam.org/doi/10.1137/S1052623401399903 . 一般矩约束下紧概率界及多项式优化的背景；不把二次证书或矩对偶方法本身归为本节新发现。
+
+[19-B] Ken'ichiro Tanaka and Alexis Akira Toda. *Discretizing Distributions with Exact Moments: Error Estimate and Convergence Analysis*. SIAM Journal on Numerical Analysis 53(5), 2158--2177, 2015. DOI: 10.1137/140971269. https://epubs.siam.org/doi/10.1137/140971269 . 研究矩保持离散化的误差与收敛；其给定分布的近似问题与本节两种可变测度间的最坏端点质量问题不同。
+
+[19-C] Vinesha Peiris, Nadezda Sukhorukova and Duy Khoa Pham. *Best free knot linear spline approximation and its application to neural networks*. IMA Journal of Applied Mathematics 91(3), 273--292, June 2026. DOI: 10.1093/imamat/hxag015. https://academic.oup.com/imamat/advance-article/doi/10.1093/imamat/hxag015/8706326 . 研究一般自由节点一致逼近，给出单内部节点的优化与充分最优性条件。这里的有限网格公式针对特殊矩极值曲线的受限设计类，不替代该文的一般问题。
+

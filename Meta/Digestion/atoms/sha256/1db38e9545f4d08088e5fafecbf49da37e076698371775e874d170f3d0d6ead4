@@ -1,0 +1,38 @@
+**定理197.3（下一项的可分辨区间）。** 若进一步满足
+
+$$
+\frac{\ell_\epsilon^2}{\epsilon}\to0,
+\qquad
+\frac{\epsilon}{\ell_\epsilon}\to0,
+$$
+
+则
+
+$$
+\boxed{
+\begin{aligned}
+\frac{\ell_\epsilon^2}{\epsilon^3}
+\left[
+\mathscr E(\ell_\epsilon,\epsilon)
+-\frac34-\Phi_\infty\epsilon
++\frac{g^2\delta^2}{16}\frac{\epsilon^2}{\ell_\epsilon}
+\right]
+\longrightarrow
+-\frac{\beta\Sigma g^2\delta^2}{32}.
+\end{aligned}
+}
+\tag{197.7}
+$$
+
+**证明。** 在（197.5）中减去已写出的前两阶与首个修正，再除以 $\epsilon^3/\ell^2$。余项被
+$O(\ell^2/\epsilon+\epsilon/\ell)$ 控制，按假设趋零。证毕。
+
+例如 $\ell_\epsilon=c\epsilon^\alpha$、$c>0$、$1/2<\alpha<1$ 时，两个修正分别为
+
+$$
+-\frac{g^2\delta^2}{16c}\epsilon^{2-\alpha},\qquad
+-\frac{\beta\Sigma g^2\delta^2}{32c^2}\epsilon^{3-2\alpha}.
+$$
+
+当 $\gamma\ne0$ 时，这两个非零修正的绝对值都比统一的 $O(\epsilon^2)$ 不确定量更大，因此这两个系数均被（197.5）分辨；$\gamma=0$ 时两个系数均为零，仍由相同极限确定。若固定正 $\ell$，则首个修正本身只有 $O(\epsilon^2)$；第196节不能在该路径上决定完整二阶系数。
+

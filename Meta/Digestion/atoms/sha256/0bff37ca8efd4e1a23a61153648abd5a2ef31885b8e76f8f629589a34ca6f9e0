@@ -1,0 +1,25 @@
+### 39.4 与身份、规范化、行为三类 completion 的交叉
+
+第38.1节所定义的
+
+$$
+\operatorname{IdComp},\qquad
+\operatorname{NormComp},\qquad
+\operatorname{BehComp}
+$$
+
+属于语义任务轴；它们分别讨论身份单射、代表的唯一存在和指定未来在读出纤维上的恒定。仓内 `ThreeCompletionOrthogonality` 已给出三者之间的有限反例以及“同一 readout 下身份蕴含行为”的唯一一般方向。
+
+因此，完整描述至少需要记录两类标签：
+
+$$
+\boxed{
+\bigl(\text{语义任务参数与 completion 类型},\ \text{解析/代数辅助数据与 completion 类型}\bigr).
+}
+\tag{39.8}
+$$
+
+不能把 `IdentityCompletion` 当成 Uniform，也不能把 `BehaviorCompletion` 当成 MemberTarget；`NormalizationCompletion` 还依赖代表关系 $\mathsf{Rep}$，并非裸读出 $r$ 的属性。前者讨论读出是否单射，后者讨论未来行为是否在纤维上恒定；Hilbert 投影误差和窗口生成代数又是另一组载体条件。
+
+同样，解析对象的收敛不是一个免费来源。若 $r$ 只在形式极限上有值，必须另行说明该极限是否来自实际配置、是否落在观测者可取得的接口中，以及更新是否仍然保留在来源像内。第37节已经区分有限窗口的形式行为、completion 载体和实际来源；本节只把这一区分提升为类型化积，不把它们重新合并。
+

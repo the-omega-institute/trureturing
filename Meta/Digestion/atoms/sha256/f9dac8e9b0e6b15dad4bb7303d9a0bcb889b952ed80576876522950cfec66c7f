@@ -1,0 +1,21 @@
+### 155.3 渐近误差的全部取值来自一份静态几何
+
+对任意 CPTP 通道 $\mathcal R:M_{\mathrm{in}}\to M\otimes K$，沿用
+
+$$
+\mathfrak h(\mathcal R)
+=\min_{\mathcal D:\mathcal L(K)\to\mathcal L(H_{\mathrm{can}})\ \mathrm{CPTP}}
+\frac12\|(\operatorname{id}_M\otimes\mathcal D)\mathcal R-\mathcal V_*\|_\diamond,
+\qquad
+h(z)=\mathfrak h(\mathcal R_z).
+\tag{155.11}
+$$
+
+每个 $h(z)$ 都是第153节的固定数据解码 SDP 值；其矩阵阶数仍为 $4D$ 与 $16$。令 $e_n$ 为实际第 $n$ 终端的最优完整参考误差，并置
+
+$$
+\zeta_n=C_pp^{n-1}+\sqrt D\,B\,\kappa^{\lfloor n/L\rfloor},
+\qquad n\ge3.
+\tag{155.12}
+$$
+

@@ -1,0 +1,133 @@
+**定理 55.3。** 对式（55.8）的候选，
+
+$$
+\min_{S\text{ 满足式（55.2）}}D(R,S)>\frac14=\Delta(R).
+\tag{55.12}
+$$
+
+**证明。** 反设某个因果 $S$ 满足 $D(R,S)\le1/4$。令
+
+$$
+Q_+=C_+\otimes I_D,\qquad Q_-=C_-\otimes I_D;
+$$
+
+它们是正交互补投影。
+
+先看 $Q_+$。归一化给
+
+$$
+\operatorname{Tr}((R-S)Q_+)=\frac54-1=\frac14.
+\tag{55.13}
+$$
+
+若 $Q_+(R-S)Q_+$ 有负谱部分，则其正谱部分的迹严格大于 $1/4$。取该正谱部分的支撑投影作为 $E\preceq Q_+$，就违反 $D\le1/4$。因此
+
+$$
+0\preceq Q_+SQ_+\preceq Q_+RQ_+
+=|w\rangle\langle w|,
+\qquad w=x+\frac12z.
+$$
+
+秩一支撑于是迫使
+
+$$
+Q_+SQ_+=t|w\rangle\langle w|.
+$$
+
+其迹为 $\operatorname{Tr}(SQ_+)=1$，而 $\|w\|^2=5/4$，所以
+
+$$
+t=\frac45,
+\qquad
+\langle x|S|x\rangle=\frac45,
+\qquad
+\langle0|\sigma|0\rangle=\frac45.
+\tag{55.14}
+$$
+
+最后一式来自 $Q_+$ 包含完整的 $A=0,B=0$ 块，并结合式（55.2）。再由 $A=1,B=0$ 块的偏迹，得到
+
+$$
+0\le\langle y|S|y\rangle\le\frac45.
+\tag{55.15}
+$$
+
+正性矩阵元界给
+
+$$
+|\langle x|S|y\rangle|^2
+\le\langle x|S|x\rangle\langle y|S|y\rangle
+\le\left(\frac45\right)^2.
+\tag{55.16}
+$$
+
+再看负方向。由引理 55.1 及 $h(S-R)\le1/4$，存在
+
+$$
+N\succeq0,\quad N\succeq S-R,\quad
+\operatorname{Tr}_D N=I_A\otimes n,
+\quad\operatorname{Tr}n\le\frac14.
+\tag{55.17}
+$$
+
+但 $Q_-$ 上的总差已经为
+
+$$
+\operatorname{Tr}((S-R)Q_-)=1-\frac34=\frac14.
+$$
+
+而 $\operatorname{Tr}(NQ_-)=\operatorname{Tr}n$，故式（55.17）强制
+
+$$
+\operatorname{Tr}n=\frac14,
+\qquad (N-S+R)Q_-=0.
+\tag{55.18}
+$$
+
+此处使用的事实是：若 $Y\succeq0$、$Q$ 为投影且 $\operatorname{Tr}(YQ)=0$，则 $YQ=0$。
+
+因为 $y\in\operatorname{ran}Q_-$，式（55.18）给
+
+$$
+\langle x|N|y\rangle
+=\langle x|S|y\rangle-\frac{\sqrt3}{2}.
+\tag{55.19}
+$$
+
+整个 $A=1,B=0$ 块也包含于 $Q_-$。对该块取 $D$ 迹，并用式（55.9）、（55.14），得
+
+$$
+\langle0|n|0\rangle
+=\langle0|\sigma|0\rangle-\frac34
+=\frac45-\frac34=\frac1{20}.
+\tag{55.20}
+$$
+
+式（55.17）的因果偏迹及 $N\succeq0$ 因而分别给
+
+$$
+\langle x|N|x\rangle\le\frac1{20},
+\qquad
+\langle y|N|y\rangle\le\frac1{20}.
+$$
+
+再用正性矩阵元界与式（55.19），
+
+$$
+\left|\langle x|S|y\rangle-\frac{\sqrt3}{2}\right|
+=|\langle x|N|y\rangle|
+\le\frac1{20}.
+\tag{55.21}
+$$
+
+式（55.16）与（55.21）的三角不等式给
+
+$$
+\frac{\sqrt3}{2}
+\le\frac45+\frac1{20}=\frac{17}{20},
+$$
+
+而 $3/4=300/400>289/400=(17/20)^2$，矛盾。
+
+最后，式（55.2）的因果集合为闭且有界的有限维集合，且 $D(R,S)$ 是紧 tester 集上连续线性响应绝对值的最大值，因此连续并达到最小值。既然没有任何 $S$ 满足 $D(R,S)\le1/4$，最小值必严格大于 $1/4$。$\square$
+

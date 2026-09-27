@@ -1,0 +1,16 @@
+**定理 1.2（Charlier–Rampersad–Rigo–Waxweiler）。** For $k\ge2$ and $L\ge2$, the minimal trim most-significant-digit automaton recognizing $\mathcal A_{k,L}$ has exactly
+$$
+kL^k
+\tag{TM.528}
+$$
+states. A state reached after $w$ is determined by its legality state and the residue vector
+$$
+\bigl(
+\operatorname{val}_k(w),
+\operatorname{val}_k(w0),\ldots,
+\operatorname{val}_k(w0^{k-1})
+\bigr)\pmod L.
+\tag{TM.529}
+$$
+This is Corollary 19, printed page 55, of *State Complexity of Testing Divisibility*, arXiv:1008.1668v1, DOI [10.4204/EPTCS.31.7](https://doi.org/10.4204/EPTCS.31.7). The language in that result is $0^*\operatorname{rep}_U(L\mathbb N)$; the modulus need not be prime or odd. The explicit residue-state description follows on printed pages 55–56. [Original source](https://arxiv.org/pdf/1008.1668v1).
+

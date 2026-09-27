@@ -1,0 +1,22 @@
+## 定理 383.1（逐切面换表示）
+
+若 $\rho_{t(e)}=U_e\rho_{s(e)}U_e^\dagger$，则
+
+$$
+\rho'_{t(e)}=U'_e\rho'_{s(e)}U_e'{}^\dagger ,
+\qquad
+\operatorname{Tr}(\rho'_vF'_v)=\operatorname{Tr}(\rho_vF_v).
+$$
+
+### 证明
+
+把定义代入，邻接的 $G_v^\dagger G_v$ 消去；概率等式由迹的循环性质得到。∎
+
+在链上取 $G_n=V_n^\dagger$，则
+
+$$
+U'_n=G_{n+1}U_nG_n^\dagger=I,
+$$
+
+并可把 $\rho_n$ 全部写成 $\rho_0$，同时把变化移到 $F'_n=V_n^\dagger F_nV_n$。这是表示等价，不是免费施加的受控操作。
+

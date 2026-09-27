@@ -1,0 +1,22 @@
+**二维商像中的 $G_4\ne U$ 分支。**
+
+由（55.11）、（55.12）及 $B\not\parallel A$，$\dim\pi G_4\le1$。当前不等于 $U$，故 $N=\pi G_4$ 恰一维。式（55.18）使 $N\cap M=0$：否则 $G_4$ 中一个不在 $U$ 的向量会属于 $S$。因此
+$$
+Z=(M\otimes A)\oplus(N\otimes B).
+$$
+对 $\pi(G_6)\otimes C\subset Z$ 比较两个非零环境分量，得 $\pi G_6\subset M\cap N=0$，所以
+$$
+G_6=U.
+\tag{55.19}
+$$
+式（55.18）还给 $\dim(S+G_4)=5$；结合（55.17）和 $\dim Q=2$，
+$$
+K=(S+G_4)\oplus Q.
+$$
+由（55.6）得 $v\in Q$。于是（55.3）、（55.16）给
+$$
+V_1p_C=v\otimes C\in Q\otimes C=V_1G_5,
+\quad\text{故 }p_C\in G_5.
+$$
+而（55.19）使 $H_5=X_C$，所以 $p_C\in H_5\cap G_5=0$，与 $p_C$ 单位矛盾。
+

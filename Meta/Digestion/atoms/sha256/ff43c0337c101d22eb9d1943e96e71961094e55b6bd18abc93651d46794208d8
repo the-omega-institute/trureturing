@@ -1,0 +1,9 @@
+### 75.1 三个环境射线上的完整接收纤维
+
+设 $A,B,C$ 是二维 $F$ 中三条不同射线，以下也用它们表示非零代表。设 $L_A,L_B,L_C\subset K$ 都二维，令
+
+$$
+W=(L_A\otimes A)+(L_B\otimes B)+(L_C\otimes C),
+\qquad W_X=\{z\in K:z\otimes X\in W\}.
+$$
+

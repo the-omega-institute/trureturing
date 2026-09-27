@@ -1,0 +1,34 @@
+**推论202.2（二阶渐近最优恢复器的刚性）。**
+若一族对称化 instrument 在 $h\in I$ 上一致满足
+
+$$
+e_\epsilon(h,\Gamma_\epsilon(h))-E_\epsilon(h)
+=o_I(\epsilon^2),
+\tag{202.7}
+$$
+
+则一致有
+
+$$
+\boxed{
+\begin{gathered}
+\frac{A_0-A_1}{\epsilon}+a_{\mathrm{eff}}(h)\longrightarrow0,\\
+\frac{C}{\epsilon^2}-4t^2m(h)^2\longrightarrow0,\qquad
+\frac{P}{\epsilon}+4it\,m(h)^2\longrightarrow0.
+\end{gathered}}
+\tag{202.8}
+$$
+
+同时
+
+$$
+U=o_I(\epsilon),\qquad V=o_I(\epsilon),\qquad
+\sum_j|M_j-m(h)|^2=o_I(\epsilon),\qquad
+\sum_{j,\alpha}\left|\frac c\epsilon+itd\right|^2=o_I(1).
+\tag{202.9}
+$$
+
+对任意变化的 $h_\epsilon\in I$，相应逐序列结论也成立，
+各比较目标均在当前 $h_\epsilon$ 处取值；
+不要求 $h_\epsilon$ 自身收敛。
+

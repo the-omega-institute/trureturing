@@ -1,0 +1,12 @@
+**引理268.2（单Jordan块的不变正协方差）。** 设
+$M_r=I_r+tJ_r$、$t>0$。若复Hermitian矩阵 $C\succeq0$ 满足
+$$
+M_rCM_r^\dagger=C,
+\tag{268.29}
+$$
+则
+$$
+\boxed{C=c\,e_1e_1^\dagger,\qquad c\ge0.}
+\tag{268.30}
+$$
+

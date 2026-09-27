@@ -1,0 +1,16 @@
+**定义 248.1（线性动力学中的有限步取得）。** 设 $V,U$ 为有限维实或复内积空间，$A:V\to V$、$B:U\to V$ 为线性映射，系统从 $x_0=0$ 按 $x_{t+1}=Ax_t+Bu_t$ 演化，暂不限制输入大小。经过 $N$ 步有
+
+$$
+x_N=\sum_{j=0}^{N-1}A^{N-1-j}Bu_j.
+$$
+
+所以全部有限步可达状态构成
+
+$$
+\mathcal R=\operatorname{span}\{A^kBu:k\ge0,\ u\in U\}.
+$$
+
+每条有限输入序列显然落在这个张成空间；反过来，一个有限线性组合可以先把相同指数的输入合并，再选择足够长的时间窗，在对应时刻输入这些向量，其他时刻取零。这说明张成空间中的每个元素都确能用某个有限序列取得，而不只是形式地给一批方向取了名字。
+
+项目 [ReachableObservableQuotientReachability](../../../D5/S3/Observer/LinearMemory/ReachableObservableQuotientReachability.lean) 的 `reachableSubspace` 正是这个张成定义。其 `reachable_observable_quotient_is_reachable` 还说明：把可达空间中永远不可见的方向商去后，输入迭代的像仍张成整个商空间。这是对可达部分的表示结论，不会把原本不可达的环境方向变成可达。
+

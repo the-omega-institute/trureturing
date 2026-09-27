@@ -1,0 +1,23 @@
+**定义 238.1（干预—联合 provenance 边界）。** 对目标策略族 $\Pi$，定义
+
+$$
+\boxed{
+\eta_{\mathrm{causal}}
+=
+\left(
+\mathsf{supp}_{\operatorname{do}},
+\mathsf{Ign},
+\Gamma_{\mathrm{joint}},
+\{r_{S,A}\},
+\{g_{t,h,a}\},
+\{\kappa_{t,h,a}\},
+\{n_a,c_a\},
+H,
+\text{干预是否保持来源}
+\right).
+}
+\tag{238.1}
+$$
+
+其中 $\mathsf{Ign}$ 表示可交换性或其他识别合同，$\Gamma_{\mathrm{joint}}$ 表示路径误差的联合耦合，$r_{S,A}$ 是来源—动作联合覆盖比。若任务只需确定性最坏界，可以把 $\Gamma_{\mathrm{joint}}$ 压缩为半径盒；若任务涉及尾部、方差或干预迁移，则必须保留更细的联合结构。
+

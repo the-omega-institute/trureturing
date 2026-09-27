@@ -1,0 +1,51 @@
+#### 8.3.1 固定动作合同与实际联合支持
+
+固定正整数 $L$、当前实际幸存集合 $H\subseteq X_L=\mathbb Z/L\mathbb Z$，以及有限剩余模数集合
+
+$$
+M\subseteq\{m>0:m\mid L\},\qquad D=\operatorname{lcm}(M),\quad\operatorname{lcm}(\varnothing)=1.
+\tag{ER8.FB.1}
+$$
+
+每个 $m\in M$ 至多使用一次，可任选 $a\in\mathbb Z/m\mathbb Z$，操作为删去 $a\bmod m$ 并消费这个模数。合法续接是一组动作
+
+$$
+C=\{(m,a_m):m\in T\},\qquad T\subseteq M,
+$$
+
+每个模数在 $C$ 中至多出现一次。动作带标签，包含空续接，允许中途停止。其读数为
+
+$$
+b_C(H)=\mathbf1\{\exists x\in H:\forall(m,a)\in C,\ x\not\equiv a\pmod m\}.
+\tag{ER8.FB.2}
+$$
+
+未来等价定义为对所有同标签合法 $C$ 的读数相同。中间读数已经由各前缀查询包含；同一确定性自适应策略面对等价状态，也逐步取得相同动作及读数。这里没有开放重复模数、新模数、精确基数或额外的隐藏状态传感器。
+
+令实际支持
+
+$$
+S_D(H)=\{r\in\mathbb Z/D\mathbb Z:K_D(r;H)>0\}.
+\tag{ER8.FB.3}
+$$
+
+因为所有允许动作仅依赖模 $D$ 余数，ER8.FB.2 只依赖 $S_D(H)$。纤维中的点数及具体点身份可以遗忘。相同支持因此一定布尔等价，但不同支持也可能等价；下一节以后给出更粗的精确分类。
+
+这一步使用同一个实际 $H$ 的联合支持。任意选择几份单模数支持再自由拼接，不能替代它。第 8.1 节的完整直方图仍充分，但其必要性所用的有符号反演不能用于布尔值。
+
+当前动作后的实际支持仍可按共同来源计算。若执行 $(m,a)$，记
+
+$$
+M'=M\setminus\{m\},\qquad D'=\operatorname{lcm}(M'),
+$$
+
+则
+
+$$
+S_{D'}(H')=
+\{r\bmod D':\exists s\in S_D(H),\ s\equiv r\pmod{D'},\ s\not\equiv a\pmod m\}.
+\tag{ER8.FB.4}
+$$
+
+下面的商状态更新必须与这条实际更新相容，不能靠补入不存在的联合实现取得。
+

@@ -1,0 +1,26 @@
+**命题 314.2（有限后果上的全部随机比较固定正仿射尺度）。** 设 $Z$ 有限非空，$u,v:Z\to\mathbb R$，且 $u$ 非常数。允许比较 $Z$ 上的全部概率分布。以下两项等价：
+
+$$
+\forall P,Q,\quad
+\mathbb E_Pu\le\mathbb E_Qu
+\Longleftrightarrow
+\mathbb E_Pv\le\mathbb E_Qv;
+$$
+
+以及存在 $\alpha>0$、$\beta\in\mathbb R$，对所有 $z$ 有 $v(z)=\alpha u(z)+\beta$。
+
+正仿射形式的充分性来自概率总和为一：$\mathbb E_Pv=\alpha\mathbb E_Pu+\beta$。反向选 $u$ 的最小与最大后果 $z_-,z_+$，其值为 $m<M$。确定后果也是概率分布，故假设给出 $v(z_-)<v(z_+)$。对任意 $z$，令
+
+$$
+\lambda_z=\frac{u(z)-m}{M-m}\in[0,1].
+$$
+
+确定得到 $z$，与按概率 $1-\lambda_z,\lambda_z$ 分别得到 $z_-,z_+$，具有相同 $u$ 期望。双向比较保留这个并列，于是
+
+$$
+v(z)=(1-\lambda_z)v(z_-)+\lambda_zv(z_+)
+=\alpha u(z)+\beta,
+$$
+
+其中 $\alpha=(v(z_+)-v(z_-))/(M-m)>0$，$\beta=v(z_-)-\alpha m$。这完成反向。若 $u$ 为常数，全部分布都并列，保留全部比较便要求 $v$ 也为常数；这是另一个退化情形。
+

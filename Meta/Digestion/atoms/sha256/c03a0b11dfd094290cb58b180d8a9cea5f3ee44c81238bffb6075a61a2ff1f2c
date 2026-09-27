@@ -1,0 +1,58 @@
+### 185.3 候选检验向量的显式控制
+
+以下在 $t=t_\circ(w)$ 处构造对偶。先给出对整个
+$0\le t\le2c$ 都成立的估计。
+
+在偶宇称二维空间，
+
+$$
+H(w,t)=bP_\Xi+E,
+$$
+
+$$
+E=\sin^2t\bigl(P_\Xi-2b\,\operatorname{diag}(r,\ell)\bigr)
+-q\,\operatorname{diag}(r,-\ell).
+$$
+
+矩阵 $P_\Xi-2b\,\operatorname{diag}(r,\ell)$ 的最大根至多为 $1$，最小根至少为 $-2b$，故其算子范数至多为 $1$。又有
+$\|\operatorname{diag}(r,-\ell)\|<1$。因此
+
+$$
+\boxed{
+\|E\|\le\sin^2t+|q|
+\le t^2+2ct
+\le8c^2=8\gamma^2w^2.
+}
+\tag{185.15}
+$$
+
+置 $\eta=\|E\|/b$。由（185.1）和 $w\le1/10$，
+
+$$
+\eta\le\frac{8\gamma^2w}{\beta}<\frac1{375}.
+\tag{185.16}
+$$
+
+设 $\xi$ 为正分量的单位最高本征向量，$\lambda=d(w,t)$。
+Rayleigh 商给 $\lambda\ge b-\|E\|$。将本征方程投影到
+$\Xi^\perp$，得到
+
+$$
+\|(I-P_\Xi)\xi\|
+\le\frac{\|E\|}{\lambda}
+\le\frac{\eta}{1-\eta}<\frac1{374}.
+$$
+
+$\langle\Xi,\xi\rangle>0$，所以
+
+$$
+\boxed{
+\delta_\xi:=\|\xi-\Xi\|
+\le\sqrt2\,\|(I-P_\Xi)\xi\|
+<\frac1{187}<\frac1{180}.
+}
+\tag{185.17}
+$$
+
+这给后续对偶估计所需的显式检验控制；没有以数值本征向量替代证明。
+

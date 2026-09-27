@@ -1,0 +1,24 @@
+**定理184.1（完整原输入恢复的最优二阶项）。** 当 $L\to\infty$ 时，全体共同接收端 CPTP 解码器的最优完整半 diamond 恢复误差满足
+
+$$
+\boxed{
+h_L(i)=
+\frac34+\frac{\beta\Sigma w}{8}
++\left(\frac{3\beta^2}{64}-\frac{3\gamma^2}{8}\right)(\Delta w)^2
+-\frac{5\gamma^2}{144}(\Sigma w)^2
++O(w_1^3).
+}
+\tag{184.1}
+$$
+
+相对于第182节同一启动上的显式共同反馈构造，下面的解码器改善
+
+$$
+\boxed{
+\frac{5\gamma^2}{16}(\Delta w)^2+O(w_1^3).
+}
+\tag{184.2}
+$$
+
+由于 $\Delta w/w_1\to3/4$，该改善对全部充分大的 $L$ 严格为正。原有最优一阶项保持不变。
+

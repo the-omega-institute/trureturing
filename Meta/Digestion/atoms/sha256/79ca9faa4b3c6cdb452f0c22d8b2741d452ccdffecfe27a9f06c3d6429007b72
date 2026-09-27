@@ -1,0 +1,31 @@
+**定义 226.1（目标通道与完整候选类）。**
+
+取
+$$
+M=\begin{pmatrix}1&0\\0&19/20\\0&0\end{pmatrix},
+\qquad
+N=\begin{pmatrix}0&1/10\\2/5&0\\4/5&2\end{pmatrix},
+$$
+$$
+\Gamma(X)=MXM^\dagger+NXN^\dagger,
+\qquad
+G=M^\dagger M+N^\dagger N
+=\begin{pmatrix}9/5&8/5\\8/5&393/80\end{pmatrix}.
+\tag{226.WP.2}
+$$
+输入为 $\mathbb C^2$，量子输出为 $\mathbb C^3$。设 $E:\mathbb C^2\to\mathbb C^3$ 为前两个坐标的等距嵌入，并取
+$$
+K_0=E(I_2-G/8)^{1/2}.
+$$
+由于 $G\succeq0$ 且 $\operatorname{Tr}G=537/80<8$，根号严格正定。定义两标签记录通道
+$$
+\mathcal R(X)=
+|0\rangle\langle0|\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|\otimes\frac18\Gamma(X).
+\tag{226.WP.3}
+$$
+其 CP 与 TP 均由构造成立，两个结果分支的 Choi 秩为 $(1,2)$。
+
+$d_2$ 的竞争者是同输入、同量子输出、同经典标签且总 Choi 秩至多二的全部 CPTP 记录通道。记录输出在标签上块对角，故总 Choi 秩为两个分支 Choi 秩之和。候选可以改变结果0分支；完整通道误差始终包括两个结果分支。
+

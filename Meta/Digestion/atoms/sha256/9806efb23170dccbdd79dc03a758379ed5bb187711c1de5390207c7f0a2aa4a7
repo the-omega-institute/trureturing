@@ -1,0 +1,18 @@
+### 249.6 低于均值的实际成功与临界边界
+
+指数为零本身不说明成功概率趋于一。对严格低于均值的输出率 $R<\theta$，可以另外直接检验：$K<\lceil nR\rceil$ 蕴含 $K/n<R$，而
+$$
+\mathbb E(K/n)=\theta,\qquad
+\operatorname{Var}(K/n)=\frac{\theta(1-\theta)}n.
+$$
+因此 Chebyshev 不等式给
+$$
+1-P_{\mathrm{exact}}(n,k_n)
+\le\frac{\theta(1-\theta)}{n(\theta-R)^2}
+\longrightarrow0.
+\tag{249.31}
+$$
+所以 $R<\theta$ 时精确带标记成功概率趋于一，无条件最佳重叠也趋于一。
+
+若 $R>\theta$，式（249.24）的指数严格为正，故连无条件最佳重叠 $F_{n,k_n}$ 都趋于零，精确成功概率也不超过它。临界 $R=\theta$ 在本节只得到指数零，不据此宣称精确成功概率趋于一。所有渐近结论都建立在逐个有限 $n$ 已经完成的协议全局优化上。
+

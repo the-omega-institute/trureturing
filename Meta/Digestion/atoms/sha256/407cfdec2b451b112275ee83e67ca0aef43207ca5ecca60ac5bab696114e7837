@@ -1,0 +1,15 @@
+**$ABBCB$。** 此时
+
+$$
+G_2=G_3=G_5=P,\qquad Q_3=Q_4=Q_6=T_B,
+\qquad Q_5=Q.
+$$
+
+实际零位像为 $V_0H_2=P\otimes B$、$V_0H_4=P\otimes C$。置 $r=|\langle B,C\rangle|$；因为 $B=X$ 而普通 $C\ne Y=X^\perp$，有 $r>0$。同一个单位早期 $w\in H_2\cap G_2$ 满足
+
+$$
+\|P_{H_4}w\|=r,\qquad \|P_{G_4}w\|\le r.
+$$
+
+第一式来自两份零位像；第二式来自 $G_2,G_4$ 的实际一位环境 $B,C$。又 $Q_4=T_B\subset U^\perp$、$w\in U$，所以 $P_{H_4}w=P_{H_4}P_{G_4}w$。后期 $H_4\cap G_4=0$ 给非零方向上的严格投影收缩，遂有 $r<r$，矛盾。
+

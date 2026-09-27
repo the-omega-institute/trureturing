@@ -1,0 +1,146 @@
+**证明。** 先证明密度比较所需的经典有限界。若 $G_0\sim N(0,1)$、
+$U\sim\chi^2_{m-1}$ 独立，$m=1$ 时取 $U=0$，则对充分小的 $\varepsilon\ge0$，
+
+```math
+d_{\rm TV}(\mathcal L(G_0+\varepsilon(G_0^2+U-m)),N(0,1))
+ \le\min\{1,C\varepsilon(1+\sqrt m)\}.
+```
+
+式 (69.32)。
+
+仅有随机误差趋零不够推出该 TV 结论：把正态数舍入到趋零网格，耦合误差趋零而 TV 恒为一。
+为证明 (69.32)，先取固定光滑截断 $\chi$，在 $[-1,1]$ 为一、在 $[-2,2]$ 外为零。
+置 $A=\varepsilon^{-1/2}$、$h(x)=x^2\chi(x/A)$、$F_t(x)=x+t\varepsilon h(x)$。
+有 $|h|\le x^2$、$|h'|\le C|x|$；对小 $\varepsilon$，
+$1/2\le F_t'\le3/2$ 且 $|x|/2\le|F_t(x)|\le3|x|/2$。
+$F_t$ 因而为递增双射。以 $\varphi$ 表示标准正态密度，换元及对 $t$ 积分给
+
+```math
+2d_{\rm TV}(\mathcal L(F_1(G_0)),N(0,1))
+ =\int|\varphi(x)-\varphi(F_1(x))F_1'(x)|\,dx\le C\varepsilon,
+```
+
+式 (69.33)。
+
+因为被积表达式对 $t$ 的导数绝对值至多
+$C\varepsilon(|x|^3+|x|)e^{-x^2/8}$。
+$F_1(G_0)$ 与 $G_0+\varepsilon G_0^2$ 只在 $|G_0|>A$ 上不同，
+该概率至多 $2e^{-1/(2\varepsilon)}$，所以未忽略完整二次映射远端的非单调分支。
+再作 $-\varepsilon$ 平移，用正态平移 TV 界，得到
+$d_{\rm TV}(G_0+\varepsilon(G_0^2-1),G_0)\le C\varepsilon$。
+与同一个独立 $\varepsilon(U-(m-1))$ 卷积收缩 TV；随后混合正态平移界，
+代价为 $C\varepsilon\mathbb E|U-(m-1)|\le C\varepsilon\sqrt{2(m-1)}$，得 (69.32)。
+这里没有假定 $G_0$ 与 $G_0^2$ 独立。
+
+为比较原通道，重新取固定核心常数与电荷噪声
+
+```math
+D_*^{(p)}=\frac{8(p+5/4)}\kappa,\quad
+R_c^{(p)}=\sqrt{D_*^{(p)}\log Q},\quad
+\sigma_M^{(p)}=\frac{c}{2\sqrt\gamma}Q^{-(p+1/4)},
+```
+
+```math
+\overline T_M^{(p)}=\delta^{-1/2}
+ \left[\sum_{|j\delta|\le R_c^{(p)}}(A_j+\sigma_M^{(p)}\xi_j)^2
+             -m_M(\sigma_M^{(p)})^2-V_M\right].
+```
+
+式 (69.34)。
+
+本证明以下简写核心、维数和电荷噪声为 $\mathcal K,m,\sigma$。
+$\overline T_M^{(p)}$ 是一个辅助比较观测；其已知噪声平方偏差已扣除，原观察量仍是 (69.30)。
+定理 69.3 的有限反射论证对该固定 $D_*^{(p)}$ 与 $\sigma$ 仍成立：
+$m=O(Q^{1/2}\sqrt{\log Q})$，核心最小组方差保持指数下界，
+$m\alpha_M^2\to0$、$me_M^2\to0$，而
+$\sigma^{-1}e^{-c_q\lambda/36}\to0$。
+有限核心偶极的测量噪声方差至多
+$C\sigma^2\delta^{-1}(R_c^{(p)})^3
+ =O(Q^{-2p}(\log Q)^{3/2})\to0$；
+原偶极的核心尾、精确中心误差与反集中仍按 (69.26)–(69.28) 处理。
+扣除确定的 $m\sigma^2$ 不破坏反射不变性。
+因此该比较观测已具有 (69.31) 型风险结论。
+
+现在必须把比较连回同一标签的原标量与符号。令实际核心、外部平方质量为
+
+```math
+E_c=\sum_{j\in\mathcal K}A_j^2,\qquad
+E_o=\sum_{j\notin\mathcal K}A_j^2.
+```
+
+式 (69.35)。
+
+本次所需精度是 $E_o=o_{\mathsf P}(\sigma)$，强于单独的 $E_o=o_{\mathsf P}(\sqrt\delta)$。
+(69.12)–(69.13) 对新固定核心常数给
+$\mathbb E_{\rm data}L_M^{(0)}\le CQ^{-(p+5/4)}+Q^Ce^{-c\lambda^{1/4}}$。
+逐组精确中心界还给局部版本
+$\sum_{j\notin\mathcal K}e_j^2\le Ce_M^2L_M^{(0)}$。
+先在 $e_M\le1$ 的好数据上对辅助平方尾作 Markov，再通过一次所选向量 TV 转移该事件，得到
+
+```math
+\mathsf P\{E_o/\sigma>h\mid\mathscr X_M\}
+ \le\tau_M+\frac{C L_M^{(0)}}{h\sigma}=o_{\mathbb P}(1)
+ \qquad(h>0).
+```
+
+式 (69.36)。
+
+其中 $\mathbb E L_M^{(0)}/\sigma=O(Q^{-1})+o(1)$，坏环境只付其概率。
+结合原 $\mathcal Q_M\to\gamma$，得到 $E_c\to\gamma$ 的实际条件概率结论。
+使用全局中心范数代替局部尾中心界会限制可处理的 $p$，此处不能丢掉局部化。
+
+给定任意实际标签向量与数据、且 $E_c>0$，旋转独立测量正态到核心向量的方向，
+其余平方和为独立的 $U\sim\chi^2_{m-1}$。于是该有限测量通道精确满足
+
+```math
+\overline T_M^{(p)}
+\ \stackrel{d}{=}\ T_M-\delta^{-1/2}E_o
+ +2\sigma\delta^{-1/2}\sqrt{E_c}
+   \left[G_0+\frac{\sigma}{2\sqrt{E_c}}(G_0^2+U-m)\right].
+```
+
+式 (69.37)。
+
+旋转只计算给定电荷的测量噪声律，不把电荷本身假定为 Gaussian。
+在 $E_c\in[\gamma/2,2\gamma]$ 上，(69.32) 的误差至多
+$C_\gamma\sigma(1+\sqrt m)=O(Q^{-p}(1+\log Q)^{1/4})\to0$。
+主正态标准差与 $\upsilon_M$ 之比恰为 $\sqrt{E_c/\gamma}$；
+平移量除以 $\upsilon_M$ 为 $E_o/(2\sqrt\gamma\sigma)$。
+有限正态亲和度或直接密度积分因而给每个实际标签上的通道误差界
+
+```math
+\min\left\{1,C_\gamma
+ \left[\sigma(1+\sqrt m)+|E_c/\gamma-1|+E_o/\sigma\right]\right\},
+```
+
+式 (69.38)。
+
+在上述能量区间外只用界一。对同一个完整实际后验标签律混合，
+由 (69.36) 和 $E_c\to\gamma$，这一有界误差的条件平均 $\epsilon_M(x)$ 趋零。
+即使附带完整所选标签向量 $L_J$，仍有
+
+```math
+d_{\rm TV}\!\left(
+ \mathcal L(Z_M,L_J\mid\mathscr X_M),
+ \mathcal L(\overline T_M^{(p)},L_J\mid\mathscr X_M)\right)
+ \le\epsilon_M(\mathscr X_M)\longrightarrow0.
+```
+
+式 (69.39)。
+
+收敛在先验数据概率及均值意义下成立。两端使用相同后验混合权重，
+所以原符号 $S_M$ 可随标签一起保留；单独的标量边缘 TV 不足以完成这一步。
+所有解码成功事件现在只相差 $\epsilon_M$，与比较通道的反射风险界合并即得 (69.31)。
+未把 TV 误差乘一个无界实际矩，也未从耦合接近直接推断 TV。
+
+直接噪声 $\upsilon_MG$ 本身趋零，条件 Slutsky 保持原完整旧组束的联合弱极限。
+对置换不变规则，原群作用仍保持直接标量通道与成功事件，故先验平均等于各确定支持概率；
+不受限制的确定支持反例仍如推论 69.4。未知方向只使用同一个判向成功事件。
+
+偏差修正对比较的范围有实质作用。若不扣除 $m\sigma^2$，
+其均值除以主正态尺度为 $m\sigma/(2\sqrt\gamma)
+ \asymp Q^{1/4-p}\sqrt{\log Q}$，在 $p\le1/4$ 时未趋零。
+当 $p=7/4,c=2\sqrt\gamma$ 时，$\sigma=Q^{-2}$、$D_*^{(p)}=24/\kappa$，
+该未修正偏差也趋零，故这时可直接与未扣偏差的核心平方和比较。
+本定理不作对 $p\to\infty$ 的一致断言，也不把电荷域指定指数噪声的结论移到原标量上。证毕。
+

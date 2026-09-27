@@ -1,0 +1,55 @@
+**定理 156.1（同一控制集合的顺序反例）。** 在扇区核层面取两个列随机矩阵
+
+$$
+T^{\mathrm A}
+=
+\begin{pmatrix}
+1&1\\
+0&0
+\end{pmatrix},
+\qquad
+T^{\mathrm B}
+=
+\begin{pmatrix}
+0&0\\
+1&1
+\end{pmatrix},
+$$
+
+并以 $w=e_0=(1,0)^{\mathsf T}$ 开始。对四次事件分别使用续接序列 $\mathrm A,\mathrm B,\mathrm A$ 与 $\mathrm B,\mathrm A,\mathrm B$，得到确定的扇区词
+
+$$
+(0,0,1,0),
+\qquad
+(0,1,0,1).
+$$
+
+因此两种顺序的总历时测度分别为
+
+$$
+\boxed{
+\gamma_1(dt)=e^{-t}dt,
+\qquad
+\gamma_2(dt)=te^{-t}dt.
+}
+\tag{156.1}
+$$
+
+### 证明
+
+$T^{\mathrm A}$ 把任一输入列重置到快速扇区，$T^{\mathrm B}$ 把任一输入列重置到慢扇区。故从 $e_0$ 出发，顺序 $\mathrm A,\mathrm B,\mathrm A$ 产生
+
+$$
+0\overset{\mathrm A}{\longmapsto}0
+\overset{\mathrm B}{\longmapsto}1
+\overset{\mathrm A}{\longmapsto}0,
+$$
+
+四个事件扇区为 $(0,0,1,0)$；顺序 $\mathrm B,\mathrm A,\mathrm B$ 产生 $(0,1,0,1)$。路径中慢扇区次数分别为一与二，代入 $\gamma_{|\mathbf a|}$ 即得式（156.1）。
+
+两种控制序列使用完全相同的两个一步核，只是排列不同；若先把它们替换成一个平均矩阵，就无法同时保留这两个有序乘积及其时间律。证毕。
+
+这个反例只在有限扇区核层面说明因果顺序；它不宣称每个抽象列随机矩阵都来自上一节固定量子接口的同一 CP 实现。若要把控制序列纳入量子模型，必须另外声明能够实现这些核的控制寄存器与续接通道。
+
+---
+

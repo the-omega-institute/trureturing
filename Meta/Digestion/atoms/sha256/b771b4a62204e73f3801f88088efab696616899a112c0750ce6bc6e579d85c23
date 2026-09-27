@@ -1,0 +1,22 @@
+### 261.3 纯源切向空间具有显式线性逆
+
+先证明一个不带条件数的代数估计。设 $a,b$ 为任意参考空间中的正交单位向量，令
+$$
+\chi=(a,b),\qquad g=(r,s),\qquad
+T'=|\chi\rangle\langle g|+|g\rangle\langle\chi|.
+\tag{261.17}
+$$
+$r,s$ 可以包含 $\operatorname{span}\{a,b\}$ 之外的任意分量。记
+$$
+T'=\begin{pmatrix}P'&N\\N^\dagger&Q'\end{pmatrix},
+\qquad R'=P'+Q'.
+\tag{261.18}
+$$
+直接展开得
+$$
+P'=ar^\dagger+ra^\dagger,\qquad
+Q'=bs^\dagger+sb^\dagger,\qquad
+N=as^\dagger+rb^\dagger.
+\tag{261.19}
+$$
+

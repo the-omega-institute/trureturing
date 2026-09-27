@@ -1,0 +1,38 @@
+**定理 414.1（一般纯记录成功集的维数与共同泛型失败）。** 在上述接口下，
+
+$$
+\mathcal E_{q,k,n}
+=\left\{(x_1,\ldots,x_k)\in\mathcal C_{q,k}:\begin{array}{l}
+\exists\,b\in W,\ \|b\|=1,\ \exists\,t\in(0,1],\\
+|\langle b|s_j^{\otimes n}\rangle|^2=t\quad(1\le j\le k)
+\end{array}\right\}.
+$$
+
+该集合是半代数集，并且
+
+$$
+\boxed{\quad
+\dim_{\mathbb R}\mathcal E_{q,k,n}
+=L:=\min\bigl(km,D+k(m-1)\bigr)
+=k(m-1)+\min(k,D).
+\quad}
+$$
+
+它包含一个实际嵌入的、维数为 $L$ 的光滑片；当 $k\le D$ 时，该片给出非空相对开成功集。当 $k\ge D+1=2M$ 时，
+
+$$
+\mathcal C_{q,k}\setminus\overline{\mathcal E_{q,k,n}}^{\,\mathcal C_{q,k}}
+$$
+
+是开、稠密且具有满乘积 Fubini--Study 测度的集合，并且包含于失败集。这里不声称 $\mathcal E_{q,k,n}$ 闭，也不声称全部失败集开。固定 $q,k$，令
+
+$$
+B_{q,k}=\left\{n\ge1:2\binom{n+q-1}{n}\le k\right\}.
+$$
+
+这是有限集。对每个 $n\in B_{q,k}$ 分别取上面的相对闭包补集，并约定空交集为 $\mathcal C_{q,k}$；所得有限交仍开、稠密且满测度。在这个共同集合上，任何实际次数 $n$ 若成功，必满足
+
+$$
+2\binom{n+q-1}{n}>k.
+$$
+

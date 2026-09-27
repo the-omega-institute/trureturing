@@ -1,0 +1,20 @@
+**证明。** 定义等距$J_0:V\otimes\mathbb C^{|J|}\to\mathcal H$为$J_0(v\otimes|j\rangle)=S_jv$。式(ST27.1)保证等距性，故$\mathcal N_\sigma(\rho)=J_0(\rho\otimes\sigma)J_0^\dagger$完全正且保迹。
+
+恢复第一项由Kraus矩阵$S_j^\dagger$构造。第二项是正效果$I-P$后制备$\tau$的映射，故也完全正。两部分的迹相加为$\operatorname{tr}X$。
+
+对任意$\sigma,\rho$矩阵（此处甚至不需正性），
+
+$$
+\sum_iS_i^\dagger\mathcal N_\sigma(\rho)S_i
+=\sum_{i,j,k}\sigma_{jk}\delta_{ij}\delta_{ki}\rho
+=\operatorname{tr}(\sigma)\rho.
+$$
+
+$\mathcal N_\sigma$的输出支持在$P$内，故复位项为零。密度态的迹为一，得到结论。`OrthogonalSyndromeDecoding.lean` 承载对应的矩阵恢复恒等式。∎
+
+### 例 ST27.3：漏出参数为一但恢复误差为零
+
+取$\mathcal H=V\otimes\mathbb C^2$，旧编码$S_0v=v\otimes|0\rangle$，噪声实际把它送到$S_1v=v\otimes|1\rangle$。相对于旧投影$P_0=S_0S_0^\dagger$，ST19意义的漏出为$\lambda=1$。然而丢弃第二因子就精确恢复$\rho$。
+
+所以ST20对“压回旧空间并复位”的误差上界，没有声称是所有恢复方法的最优下界。能否恢复，取决于被允许访问的输出系统和 syndrome 信息。如果这些自由度实际不可访问，则不能使用这里的恢复器。[ST27-KL][ST27-EA]
+

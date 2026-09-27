@@ -1,0 +1,9 @@
+**引理252.1（投影扰动）。** 对任意密度矩阵 $\Xi$ 及正交投影 $\Pi$，有
+$$
+\boxed{
+\|\Xi-\Pi\Xi\Pi\|_1\le2\sqrt t,
+\qquad t=\operatorname{Tr}[(I-\Pi)\Xi].
+}
+\tag{252.14}
+$$
+

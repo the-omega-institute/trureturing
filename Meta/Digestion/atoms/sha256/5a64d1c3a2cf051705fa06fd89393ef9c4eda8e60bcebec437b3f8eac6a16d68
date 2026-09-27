@@ -1,0 +1,16 @@
+**定理 4.4（兼容方程使左右边界在 m 步内消失）。** 定义 4.3 的 C 是 essential 图，并同时为 A 上的入边唯一提升、B 上的出边唯一提升。两侧最小遗忘长度满足
+
+$$
+d_L\le\min(m,q-n),\qquad d_R\le\min(m,q-k).
+$$
+
+更明确地，对每条 alpha∈E_A^m 和 beta∈E_B^m，
+
+$$
+\lambda_\alpha(r_{\rm end})=\operatorname{pr}_{E_R}\psi_A^{-1}(\alpha),
+\qquad
+\rho_\beta(r_{\rm start})=\operatorname{pr}_{E_R}\psi_B^{-1}(\beta),
+$$
+
+其中第一个 pr 取 E_RE_S 中的第一因子，第二个 pr 取 E_SE_R 中的第二因子。
+

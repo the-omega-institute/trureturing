@@ -1,0 +1,4 @@
+## §3. 本原所有权与 Hall 约化
+
+令 \(\varepsilon_c=\lfloor\min(c-1,N-c)/2\rfloor\)。数对 \(e=\{x,y\}\subseteq V\) 称为坏对，若 \(\{c,x,y\}\) 不是 AP。
+

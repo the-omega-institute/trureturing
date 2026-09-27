@@ -1,0 +1,34 @@
+**引理 61.2。** 对 $1-c\le p\le\varepsilon\le1/16$，正向最大值在 $q=t=1$ 达到，且
+
+$$
+f_\varepsilon^+(p)
+=\frac{\varepsilon+
+\sqrt{\varepsilon^2+4(\sqrt{\varepsilon(1-p)}-\sqrt p)^2}}2.
+\tag{61.5}
+$$
+
+**证明。** 在该 $p$ 区间，$rr^{\mathsf T}-P_p$ 的非对角元素均非负，且 $zz$ 对角为 $\varepsilon-p\ge0$。增加 $t$ 只增加这些非负元素。因此加共同标量单位阵后的 Perron 比较给 $\lambda$ 随 $t$ 不减，可取 $t=1$。
+
+此时两加权向量的范数平方为 $1+\varepsilon q$ 和 $1$，内积为 $A+Bq$，其中
+
+$$
+A=c\sqrt{1-p}+\sqrt{\varepsilon p},
+\qquad B=(1-c)\sqrt{1-p}.
+$$
+
+Cauchy 给 $A\le1$。又因为 $p\ge1-c$，
+
+$$
+2B\le2(1-c)\sqrt c
+\le(1-c)(1+c)=\varepsilon.
+$$
+
+特征值根式内的多项式是
+
+$$
+4(1-A^2)+4(\varepsilon-2AB)q+(\varepsilon^2-4B^2)q^2.
+$$
+
+三个系数均非负，迹项 $\varepsilon q$ 也随 $q$ 不减，因此可取 $q=1$。这时两个向量的楔积为
+$\sqrt p-\sqrt{\varepsilon(1-p)}$，特征值公式给式（61.5）。$\square$
+

@@ -1,0 +1,27 @@
+**定义 201.1（联合条件后继与矩形包络）。** 令 $\Lambda$ 为有限或紧参数空间，$\mathfrak J\subseteq\mathsf D(\mathcal H)\times\Lambda$ 为非空紧联合来源。对每个 $\lambda$ 给定完全正迹不增分支 $\Phi_\lambda$，定义
+
+$$
+ p_\lambda(\rho)=\operatorname{Tr}[\Phi_\lambda(\rho)],
+$$
+
+并在指定事件的正概率集合上定义
+
+$$
+\mathfrak J_\Phi
+=
+\left\{
+\left(
+\frac{\Phi_\lambda(\rho)}{p_\lambda(\rho)},\lambda\right):
+(\rho,\lambda)\in\mathfrak J, p_\lambda(\rho)>0
+\right\}.
+$$
+
+记其两个投影为 $\mathfrak R_\Phi$ 和 $\Lambda_\Phi$，矩形包络为
+
+$$
+\operatorname{Rect}(\mathfrak J_\Phi)
+=\mathfrak R_\Phi\times\Lambda_\Phi.
+$$
+
+矩形化保留两个边缘集合，却允许它们任意重新配对。
+

@@ -1,0 +1,168 @@
+**定理 24.1（网半径、导数阶数与完整恢复误差）。** 给定非空 $`\Theta\subseteq\mathbb T`$、$`n\ge4`$、$`h>0`$ 及整数 $`k\ge1`$，存在一份维数至多
+
+$$
+4kP(\Theta,h)
+\tag{24.2}
+$$
+
+的全域 CPTP 编解码，对全部候选相位及全部参考完整输入，其联合半迹恢复误差至多
+
+$$
+\boxed{
+\min\left\{1,\;
+2\sqrt{\frac{(g_n^2h^2/2)^k}{k!}}\right\}
+\le
+\min\left\{1,\;
+2\sqrt{\frac{(nh^2/2)^k}{k!}}\right\}.
+}
+\tag{24.3}
+$$
+
+特别地，只要右侧的第二项不超过 $`\epsilon`$，就有
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta)
+\le\min\{2n-1,\;4kP(\Theta,h)\}.
+}
+\tag{24.4}
+$$
+
+常数统一于 $`\Theta,n,h,k`$。本定理允许集合不可测、非闭，也允许 $`h>\pi`$；此时分离数为一。
+
+证明。先建立两个初始来源基态都适用的共同移心矩估计。令
+
+$$
+Y_i=S_n-\mathbb E_iS_n,
+\qquad
+X=S_n-b_n,
+\qquad
+c_i=\mathbb E_iS_n-b_n=(i-\tfrac12)h_n.
+\tag{24.5}
+$$
+
+（5.7）的条件取值区间宽度及 Hoeffding 指数估计给，对全部实数 $`t`$，
+
+$$
+\mathbb E_i e^{tY_i}\le e^{V_nt^2/8}.
+\tag{24.6}
+$$
+
+同时使用 $`t`$ 与 $`-t`$，并用 $`|c_i|=h_n/2`$ 及 $`\cosh u\le e^{u^2/2}`$，得到
+
+$$
+\begin{aligned}
+\mathbb E_i(e^{tX}+e^{-tX})
+&\le2e^{V_nt^2/8}\cosh(tc_i)\\
+&\le2e^{g_n^2t^2/8}.
+\end{aligned}
+\tag{24.7}
+$$
+
+这里没有声称 $`X`$ 在每个初态下均值为零。对 $`t>0`$，事件 $`|X|\ge u`$ 上有 $`e^{tX}+e^{-tX}\ge e^{tu}`$。优化 $`t`$ 给
+
+$$
+\Pr_i\{|S_n-b_n|\ge u\}
+\le2e^{-2u^2/g_n^2}.
+\tag{24.8}
+$$
+
+由尾积分公式，对每个整数 $`k\ge1`$，
+
+$$
+\begin{aligned}
+\mathbb E_i|S_n-b_n|^{2k}
+&=2k\int_0^\infty u^{2k-1}
+\Pr_i\{|S_n-b_n|\ge u\}\,du\\
+&\le2k!\left(\frac{g_n^2}{2}\right)^k.
+\end{aligned}
+\tag{24.9}
+$$
+
+**每个参考相位的导数支撑。** 在档案 $`H_n`$ 上定义自伴总荷算子
+
+$$
+\widehat Q_n|w\rangle
+=\left(\sum_{t=1}^nw_t\right)|w\rangle.
+\tag{24.10}
+$$
+
+它在整个计算基上定义；实际来源只占其中的合法词。对参考相位 $`\varphi`$，令 $`S_n(\varphi)`$ 为定理3.2中的四维档案支撑，定义
+
+$$
+S_{n,k}(\varphi)
+=\sum_{r=0}^{k-1}
+(\widehat Q_n-b_nI)^rS_n(\varphi).
+\tag{24.11}
+$$
+
+每个线性像的维数至多四，故 $`\dim S_{n,k}(\varphi)\le4k`$。这些子空间由已知来源、参考相位及终端编号确定。
+
+对实提升差 $`t=\vartheta-\varphi`$，共同相位的实际作用给
+
+$$
+T_{\vartheta,n}
+=(e^{it\widehat Q_n}\otimes I_M)T_{\varphi,n}.
+\tag{24.12}
+$$
+
+以同一个标量 $`e^{ib_nt}`$ 定义近似算子
+
+$$
+A_{\varphi,k}(t)
+=e^{ib_nt}\sum_{r=0}^{k-1}\frac{(it)^r}{r!}
+[(\widehat Q_n-b_nI)^r\otimes I_M]T_{\varphi,n}.
+\tag{24.13}
+$$
+
+它的档案分量全部落在 $`S_{n,k}(\varphi)`$ 内，不要求近似算子本身等距。对实数 $`x`$，积分形式的 Taylor 余项给
+
+$$
+\left|e^{ix}-\sum_{r=0}^{k-1}\frac{(ix)^r}{r!}\right|
+\le\frac{|x|^k}{k!}.
+\tag{24.14}
+$$
+
+这是沿实轴对 $`e^{ix}`$ 的估计，不额外产生 $`e^{|x|}`$ 因子。逐档案词展开并使用（24.9），对两个输入基向量都有
+
+$$
+\|(T_{\vartheta,n}-A_{\varphi,k}(t))|i\rangle\|^2
+\le\frac{|t|^{2k}}{(k!)^2}
+\mathbb E_i|S_n-b_n|^{2k}
+\le2\frac{(g_n^2t^2/2)^k}{k!}.
+\tag{24.15}
+$$
+
+两个误差列仍处于不同档案首位扇区，因而正交。于是同一个算子界成立：
+
+$$
+(T_{\vartheta,n}-A_{\varphi,k}(t))^*
+(T_{\vartheta,n}-A_{\varphi,k}(t))
+\preceq2\frac{(g_n^2t^2/2)^k}{k!}I_M.
+\tag{24.16}
+$$
+
+特别地，张量任意参考后仍保留该界；没有分别替换两个来源输入的相位。
+
+**合并参考点并进行物理压缩。** 取取得 $`q=P(\Theta,h)`$ 的最大分离集。与第22节相同，极大性保证每个实际候选都与某个中心的距离小于 $`h`$。若 $`h>\pi`$，只需任取一个中心，圆周上全部点与它的测地距离均小于 $`h`$。对每个候选与相应中心，取实现测地距离的实提升差 $`t`$。
+
+令 $`P_0`$ 投影到全部 $`q`$ 个中心的 $`S_{n,k}(\varphi)`$ 之和，记其秩为 $`r`$，则 $`r\le4kq`$。由（24.13）与（24.16），
+
+$$
+T_{\vartheta,n}^*[(I-P_0)\otimes I_M]T_{\vartheta,n}
+\preceq d_*I_M,
+\qquad
+d_*:=2\frac{(g_n^2h^2/2)^k}{k!}.
+\tag{24.17}
+$$
+
+对这个子空间使用（18.12）的投影编码与同一空间内的失败重置。任意纯化输入的实际失败质量 $`d`$ 满足 $`d\le\min\{1,d_*\}`$；恢复态的目标重叠至少为 $`(1-d)^2`$。因此（18.14）给统一半迹误差
+
+$$
+\sqrt{1-(1-d)^2}\le\sqrt{2d}
+\le2\sqrt{\frac{(g_n^2h^2/2)^k}{k!}}.
+\tag{24.18}
+$$
+
+半迹距离本身至多为一，故得到（24.3）。对混态丢弃额外纯化参考即可。网点及通道均预先固定，候选依赖的临近点选择仅用于误差证明。再与全圆精确编码比较，得到（24.4）。证明完毕。
+

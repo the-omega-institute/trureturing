@@ -1,0 +1,46 @@
+**历史支撑与因果闭合。** 对任意固定相位历史定义
+
+$$
+\chi_{ij}^{n,\boldsymbol\varphi}
+=\sum_{w\in\mathcal W_n^{ij}}
+A(w)e^{i\sum_{t=1}^n\varphi_tw_t}|w\rangle,
+\qquad
+S_n(\boldsymbol\varphi)
+=\operatorname{span}\{\chi_{ij}^{n,\boldsymbol\varphi}:i,j=0,1\}.
+\tag{28.15}
+$$
+
+逐词展开给
+
+$$
+T_{\boldsymbol\varphi,n}|i\rangle
+=\sum_{j=0}^1\chi_{ij}^{n,\boldsymbol\varphi}\otimes m_j,
+\qquad \dim S_n(\boldsymbol\varphi)\le4.
+\tag{28.16}
+$$
+
+令 $`W_0=H_0=\mathbb C`$，并对 $`n\in B_k`$ 取普通线性和
+
+$$
+W_n=\sum_{a\in A_k}S_n(\boldsymbol\varphi^{,a,n})
+\subseteq H_n.
+\tag{28.17}
+$$
+
+这里不假设不同历史的支撑正交。立即有 $`\dim W_n\le4|A_k|`$。若 $`\boldsymbol\varphi'`$ 延长 $`\boldsymbol\varphi`$ 一步，则
+
+$$
+\chi_{ij}^{n+1,\boldsymbol\varphi'}
+=e^{i\varphi'_{n+1}j}
+\sum_{b=0}^1(m_b)_j\,
+\chi_{ib}^{n,\boldsymbol\varphi}\otimes|j\rangle.
+\tag{28.18}
+$$
+
+故延长历史的支撑包含于其前缀支撑张量 $`B`$。区块内部，每个叶节点只延长自己的历史；在 $`n+1=2^{k+1}`$ 的边界，新叶节点的长度 $`n`$ 前缀恰为其父节点在旧层的历史。因此对所有 $`n\ge0`$，
+
+$$
+W_{n+1}\subseteq W_n\otimes B.
+\tag{28.19}
+$$
+

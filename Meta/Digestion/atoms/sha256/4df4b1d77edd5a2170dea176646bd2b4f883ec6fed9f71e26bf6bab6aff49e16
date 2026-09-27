@@ -1,0 +1,62 @@
+### 205.5 全部共同 CPTP 最优器的二阶下界
+
+只对占据列偏置作 Taylor 展开，其他当前矩保持不动。
+在 $\Gamma^*(h)$，反对称 $A$ 方向的来源导数为零，
+噪声导数为 $L_d-\beta\delta/4$。由（205.13）及一致 Choi 收敛，
+
+$$
+L_h(\Gamma)=G_h(\Gamma)
++(L_d-\beta\delta/4)\epsilon x+o_I(\epsilon).
+\tag{205.17}
+$$
+
+其他矩只需一致收敛，因为它们的系数误差乘在 $O(\epsilon)$ 的偏置上。
+基点缺陷仍精确给
+
+$$
+\lambda-\frac34
+=\frac C4+\epsilon^2x^2+o_I(\epsilon^2).
+$$
+
+（205.11）的 $A$ 反对称项给 $-\beta\delta n^2\epsilon x$，
+含 $C$ 的其余项在完整误差中为 $O_I(\epsilon^3)$。
+于是
+
+$$
+\begin{aligned}
+\frac{e_\epsilon-3/4-\epsilon\Phi_h}{\epsilon^2}
+={}&Z+x^2+a_{\mathrm{act}}x
++\frac C{4\epsilon^2}
++\frac\vartheta{2\epsilon}\operatorname{Im}P\\
+&+\frac{w_0}{\epsilon}U_0+\frac{w_1}{\epsilon}U_1
++\frac{w_d}{\epsilon}V
++\frac h{6\epsilon}\sum_j|M_j-m|^2+o_I(1).
+\end{aligned}
+\tag{205.18}
+$$
+
+对任意复 Kraus，严格有
+
+$$
+x^2+a_{\mathrm{act}}x
+=(x+a_{\mathrm{act}}/2)^2-a_{\mathrm{act}}^2/4,
+$$
+
+$$
+\frac C{4\epsilon^2}+\frac\vartheta{2\epsilon}\operatorname{Im}P
+=\frac14\sum_{j,\alpha}|c/\epsilon+i\vartheta d|^2
+-\frac{\vartheta^2}{4}(D_0+D_1).
+\tag{205.19}
+$$
+
+删除非负平方并使用（205.14），得到
+
+$$
+\mathscr E(h\epsilon,\epsilon)
+\ge\frac34+\epsilon\Phi_h+\epsilon^2Q_{\mathrm{act}}(h)
++o_I(\epsilon^2).
+\tag{205.20}
+$$
+
+特别地，正乘子产生的 $w_1U_1/\epsilon$ 已完整保留。
+

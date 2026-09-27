@@ -1,0 +1,15 @@
+**引理277.4（角度与扰动的共同分母）。** 在上述矩形上，令
+$$
+F(\theta,h)=\mathsf F(\sigma_{\theta,*},\sigma_{\theta,h}),
+\qquad a(\theta,h)=1-F(\theta,h)^2.
+$$
+存在固定 $c_F,C_F>0$，使
+$$
+\boxed{
+c_F\frac{\delta^2}{\theta^{2n}+\delta}
+\le a(\theta,h)
+\le C_F\frac{\delta^2}{\theta^{2n}+\delta}.
+}
+\tag{277.35}
+$$
+

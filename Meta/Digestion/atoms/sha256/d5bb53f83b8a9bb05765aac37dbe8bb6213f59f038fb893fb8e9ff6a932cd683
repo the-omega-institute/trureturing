@@ -1,0 +1,9 @@
+### 文献拓展：从全态恢复到可纠正观测量
+
+Bény、Kempf 与 Kribs 的算子代数量子纠错以 Heisenberg 图像中的观测量代数为对象，允许保护量子与经典信息的混合结构，而不要求恢复整个物理态。[QREC-OA-PRL][QREC-OA-PRA] 定理11.4提供该视角下的一个显式有限矩阵实例；一般可纠正代数的充要条件属于文献中的更广结果，不能由本节这个正交综合征实例反向宣称已证明。
+
+因而“保留目标所需的可区分性”应先指定目标观测代数及允许的仪器，而不是把所有物理自由度无区别地列为恢复目标。对仅保留经典结果概率的(11.3)与保持完整逻辑乘法结构的(11.4)，两者所解决的是不同的数学任务。
+
+[QREC-OA-PRL]: https://doi.org/10.1103/PhysRevLett.98.100502 "C. Bény, A. Kempf and D. W. Kribs, Generalization of Quantum Error Correction via the Heisenberg Picture, Physical Review Letters 98, 100502 (2007); arXiv:quant-ph/0608071."
+[QREC-OA-PRA]: https://doi.org/10.1103/PhysRevA.76.042303 "C. Bény, A. Kempf and D. W. Kribs, Quantum Error Correction of Observables, Physical Review A 76, 042303 (2007); arXiv:0705.1574."
+

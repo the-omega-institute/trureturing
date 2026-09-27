@@ -1,0 +1,87 @@
+### 270.2 一阶跨支撑变化强制二阶支撑泄漏
+
+令 $P$ 为 $\Omega_*$ 的支撑投影，$R=I-P$。由§268，
+$$
+\operatorname{ran}R
+=\operatorname{span}\{q_1,\ldots,q_n\},
+\qquad q_j=(-Me_j,e_j).
+\tag{270.9}
+$$
+记
+$$
+B=\operatorname{diag}(E_{nn},-E_{nn}),
+\qquad V=\frac anB.
+\tag{270.10}
+$$
+因为
+$(D_h)_{ij}=C_{ij}h^{2n-i-j+1}$、$C_{nn}=a$，且 $\delta_h=O(h^2)$，存在固定 $A_2\ge1$，使
+$$
+\boxed{
+\Omega_h-\Omega_*=hV+G_h,\qquad
+\|G_h\|_{\mathrm{HS}}\le A_2h^2
+\quad(0<h\le h_0).
+}
+\tag{270.11}
+$$
+这是有限矩阵多项式的余项界；$n=1$ 时非对角扰动仍是二阶。
+
+首先，核内一阶块严格为零。$M^\dagger E_{nn}M=E_{nn}$ 给
+$$
+q_i^\dagger Bq_j
+=e_i^\dagger(M^\dagger E_{nn}M-E_{nn})e_j=0,
+\qquad RVR=0.
+\tag{270.12}
+$$
+但是跨支撑的一阶块非零：
+$$
+Vq_n=-\frac an(e_n,e_n)\ne0.
+\tag{270.13}
+$$
+这个向量属于 $\operatorname{ran}P$，因为 $M^\dagger e_n=e_n$，从而它与每个 $q_j$ 正交。因此
+$$
+\beta:=\|PVR\|_{\mathrm{HS}}>0.
+\tag{270.14}
+$$
+
+定义理想支撑外质量
+$$
+\ell_h=\operatorname{Tr}(R\Omega_h).
+\tag{270.15}
+$$
+由（270.11）—（270.12）与 $\operatorname{rank}R=n$，
+$$
+0\le\ell_h=\operatorname{Tr}(RG_h)
+\le\sqrt n\,A_2h^2.
+\tag{270.16}
+$$
+
+为证明匹配下界，令
+$$
+\Lambda=\Omega_*\big|_{\operatorname{ran}P},
+\qquad \mu=\lambda_{\min}(\Lambda)>0,
+\qquad
+A_h=P\Omega_hP\big|_{\operatorname{ran}P}.
+\tag{270.17}
+$$
+充分小的 $h$ 满足 $A_h\succeq(\mu/2)I$，并且
+$$
+\|P\Omega_hR\|_{\mathrm{HS}}
+=\|hPVR+PG_hR\|_{\mathrm{HS}}
+\ge\frac\beta2h.
+\tag{270.18}
+$$
+后一个不等式只需再取 $h\le\beta/(2A_2)$。
+
+在分解 $\operatorname{ran}P\oplus\operatorname{ran}R$ 中，$\Omega_h\succeq0$ 的Schur补给
+$$
+R\Omega_hR
+\succeq(R\Omega_hP)A_h^{-1}(P\Omega_hR).
+\tag{270.19}
+$$
+$\Omega_h$ 为密度态，所以 $A_h\preceq I$、$A_h^{-1}\succeq I$。取迹得到
+$$
+\ell_h\ge\|P\Omega_hR\|_{\mathrm{HS}}^2
+\ge\frac{\beta^2}{4}h^2.
+\tag{270.20}
+$$
+

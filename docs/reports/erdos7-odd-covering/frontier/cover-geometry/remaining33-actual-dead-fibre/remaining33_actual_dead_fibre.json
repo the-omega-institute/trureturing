@@ -1,0 +1,151 @@
+{
+  "schema": "remaining33-fixedstar-actual-dead-fibre-v1",
+  "status": "PASS",
+  "scope": "One actual15-original family with the fixed631 STAR central roles on present slots; three new linear stars from remaining33 make one old positive cell truly empty. Not a global cover and not a uniform33 certificate.",
+  "central_cell": {
+    "leaf_indices": [
+      1,
+      11
+    ],
+    "residue_mod225": 57,
+    "old_theta": "1"
+  },
+  "originals": [
+    {
+      "modulus": 3,
+      "residue": 2
+    },
+    {
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "modulus": 7,
+      "residue": 0
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 25,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 0
+    },
+    {
+      "modulus": 45,
+      "residue": 0
+    },
+    {
+      "modulus": 75,
+      "residue": 0
+    },
+    {
+      "modulus": 225,
+      "residue": 0
+    },
+    {
+      "modulus": 21,
+      "residue": 15
+    },
+    {
+      "modulus": 35,
+      "residue": 2
+    },
+    {
+      "modulus": 105,
+      "residue": 87
+    },
+    {
+      "modulus": 315,
+      "residue": 102
+    },
+    {
+      "modulus": 525,
+      "residue": 432
+    },
+    {
+      "modulus": 1575,
+      "residue": 1182
+    }
+  ],
+  "fibre": [
+    {
+      "residue_mod1575": 57,
+      "root7": 1,
+      "covering_modulus": 21
+    },
+    {
+      "residue_mod1575": 282,
+      "root7": 2,
+      "covering_modulus": 35
+    },
+    {
+      "residue_mod1575": 507,
+      "root7": 3,
+      "covering_modulus": 105
+    },
+    {
+      "residue_mod1575": 732,
+      "root7": 4,
+      "covering_modulus": 315
+    },
+    {
+      "residue_mod1575": 957,
+      "root7": 5,
+      "covering_modulus": 525
+    },
+    {
+      "residue_mod1575": 1182,
+      "root7": 6,
+      "covering_modulus": 1575
+    },
+    {
+      "residue_mod1575": 1407,
+      "root7": 0,
+      "covering_modulus": 7
+    }
+  ],
+  "global_uncovered_integer": 3,
+  "new_uniform_fullslot_Z7": "-3/35",
+  "producer_sha256": "2a5d1461f60f97cdeea48d40b6aaa4dced1ce19fc95738500140f1f59111dd50",
+  "checks": {
+    "15_distinct_odd_numerical_moduli": true,
+    "central_leaf_and_crt": true,
+    "central_cell_avoids_3": true,
+    "central_cell_avoids_5": true,
+    "central_cell_avoids_9": true,
+    "central_cell_avoids_25": true,
+    "central_cell_avoids_15": true,
+    "central_cell_avoids_45": true,
+    "central_cell_avoids_75": true,
+    "central_cell_avoids_225": true,
+    "global_central_projection_21": true,
+    "distinct_live_root_21": true,
+    "global_central_projection_35": true,
+    "distinct_live_root_35": true,
+    "global_central_projection_105": true,
+    "distinct_live_root_105": true,
+    "global_central_projection_315": true,
+    "distinct_live_root_315": true,
+    "global_central_projection_525": true,
+    "distinct_live_root_525": true,
+    "global_central_projection_1575": true,
+    "distinct_live_root_1575": true,
+    "exact_seven_point_fibre": true,
+    "all_fibre_points_covered_57": true,
+    "all_fibre_points_covered_282": true,
+    "all_fibre_points_covered_507": true,
+    "all_fibre_points_covered_732": true,
+    "all_fibre_points_covered_957": true,
+    "all_fibre_points_covered_1182": true,
+    "all_fibre_points_covered_1407": true,
+    "global_survivor3": true,
+    "new_fullslot_budget_negative": true
+  },
+  "check_count": 32,
+  "new_lean_verification": false
+}

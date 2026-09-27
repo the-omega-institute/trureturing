@@ -1,0 +1,25 @@
+**定义 117.1（保持点击相干项的同接口仪器）。** 固定
+
+$$
+\psi=|+\rangle,\quad P=P_\psi,\quad
+\eta=\frac{-|0\rangle+|1\rangle}{\sqrt2},\quad
+\psi_t=\cos t\,\psi-\sin t\,\eta.
+$$
+
+对充分小的 $t>0$ 及 $0\le k<1$，取
+
+$$
+Q_{t,k}=\sqrt{1-k}\,|\psi_t\rangle\langle\psi|,
+\qquad
+B_k=|0\rangle\langle\eta|+\sqrt k\,|1\rangle\langle\psi|,
+$$
+
+$$
+\Gamma_{t,k}^{\rm coh}
+=(X\mapsto Q_{t,k}XQ_{t,k}^\dagger,
+  X\mapsto B_kXB_k^\dagger).
+\tag{117.1}
+$$
+
+$Q_{t,k}^\dagger Q_{t,k}=(1-k)P$，而 $B_k^\dagger B_k=I-P+kP$，故这是完整仪器。它仍只有未点击与点击两个可读结果。点击映射包含交叉项，不是第 107 节两个制备项的经典相加。
+

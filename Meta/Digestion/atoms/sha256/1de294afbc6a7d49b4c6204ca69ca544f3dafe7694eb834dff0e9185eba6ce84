@@ -1,0 +1,45 @@
+## ST31．有限记录分辨率与后续实验预算
+
+### 定理 ST31.1：相位分箱给出二次精度界
+
+将单位圆分为$K\ge2$个等宽相位箱，每箱只保存箱号。对箱中心相位$\vartheta_r$，每个所属相位距它不超过$\delta=\pi/K\le\pi/2$，所以
+
+$$
+\operatorname{Re}(e^{-i\vartheta_r}c_r)\ge q_r\cos\delta.
+$$
+
+从而
+
+$$
+\boxed{e_*\le\frac{1-\cos(\pi/K)}2\le\frac{\pi^2}{4K^2}.}
+\tag{ST31.1}
+$$
+
+**证明。** 对箱内各分支按正权重求和，利用$|c_r|$大于实部；再对$r$求和并用$1-\cos x\le x^2/2$。∎
+
+这是一个由明确分箱构造实现的统一上界；它没有声称该分箱对所有分布最优。它允许非均匀分支概率和空箱。相位谱、分箱权限及校准成本仍是明确输入。
+
+### 命题 ST31.2：带误差的syndrome解码与记录损失可合并
+
+设实际一段过程$\widetilde{\mathcal M}$在同一输入/输出载体上，与ST30模型相距
+
+$$
+\frac12\|\widetilde{\mathcal M}-\mathcal M_T\|_\diamond\le\epsilon.
+$$
+
+采用ST30的恢复，得到
+
+$$
+\frac12\|\mathcal R\widetilde{\mathcal M}-\mathrm{id}\|_\diamond
+\le\epsilon+e_*.
+\tag{ST31.2}
+$$
+
+证明是通道后复合的收缩性与三角不等式。有限轮经典自适应实验可逐段替换，安全总预算为
+
+$$
+\min\{1,\sum_j\sup_h(\epsilon_j(h)+e_{*,j}(h))\}.
+$$
+
+这需要每段模型、恢复和历史条件均明确，并且有效起点确实是对应逻辑编码。不能在丢失全部syndrome后继续把未获知的$j$用作控制输入。
+

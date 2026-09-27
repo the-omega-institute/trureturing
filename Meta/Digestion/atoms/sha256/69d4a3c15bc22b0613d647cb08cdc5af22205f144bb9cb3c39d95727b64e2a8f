@@ -1,0 +1,104 @@
+**定理53.4（纯第二终端排除秩三第一终端）。** 在同一七维合同中，若 $r_2=1$，则 $r_1=3$ 不可能。证明只需前五个完整参考终端，因而该分支只余 $r_1=1$ 或 $2$。
+
+证明。反设 $r_1=3$。第一终端附加态的纯化与第二终端纯性，沿第29节式（29.37）给出六个正交单位接收向量 $p_\alpha,q_\alpha$、三个正交单位 $u,v,w$ 和三个正交单位环境向量 $f_\alpha$，使对 $\alpha=1,2,3$ 有
+$$
+V_0p_\alpha=u\otimes f_\alpha,\qquad
+V_1p_\alpha=v\otimes f_\alpha,\qquad
+V_0q_\alpha=w\otimes f_\alpha.
+$$
+这里 $V_i x=V(x\otimes|i\rangle)$，同一个 $V$ 是固定通道的 Stinespring 等距。记
+$$
+X=\operatorname{span}\{p_\alpha,q_\alpha\},\quad
+F=\operatorname{span}\{f_\alpha\},\quad
+U=\operatorname{span}(u,w)=G_2.
+$$
+则
+$$
+\dim X=6,\quad\dim F=3,\quad V_0X=U\otimes F.
+\tag{53.17}
+$$
+第二终端的实际系数空间为
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad G_2=U,
+\qquad \dim(H_2+G_2)=3.
+\tag{53.18}
+$$
+第三至第五轮的新环境 $\eta_3,\eta_4,\eta_5$ 为输入无关纯向量，并有
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\quad
+V_1G_{n-1}=Q_n\otimes\eta_n\qquad(n=3,4,5).
+\tag{53.19}
+$$
+各 $H_n,G_n,Q_n$ 均二维；$n\ge3$ 时 $C_n=H_n+G_n=G_n\oplus Q_n$ 四维，且 $H_n$ 到 $G_n,Q_n$ 的两个投影都是同构。
+
+**尾环境共线。**
+
+首先，各 $\eta_n$ 都属于 $F$。否则（53.17）与 $G_n\otimes\eta_n$ 形成 $6+2=8$ 维直和，不能包含在七维 $V_0K$ 中。
+
+令 $\pi:K\to K/U$ 为商映射。因为 $(\pi\otimes I_E)V_0$ 在六维 $X$ 上为零，
+$$
+\mathcal Z:=(\pi\otimes I_E)V_0K,
+\qquad \dim\mathcal Z\le1.
+\tag{53.20}
+$$
+对每个尾终端，$\pi(G_n)\otimes\eta_n\subseteq\mathcal Z$。
+
+若 $\eta_3,\eta_4$ 不共线，固定 $V_1$ 在 $U=G_2$、$G_3$ 上的像分别属于两条不同环境线，因此 $U\cap G_3=0$。于是 $\dim\pi(G_3)=2$，违反（53.20）。故可统一选取 $\eta_3=\eta_4=\eta$。
+
+$G_3,G_4$ 不可能都等于 $U$：否则（53.19）和 $V_0$ 单射性使 $H_2=H_3$，继而 $C_3=C_2$，与三维、四维支撑秩差矛盾。因此（53.20）恰为一维，其接收商方向由 $\pi(G_3)$ 或 $\pi(G_4)$ 确定，且
+$$
+W:=U+G_3+G_4,\qquad \dim W=3.
+\tag{53.21}
+$$
+若 $\eta_5$ 不共线于 $\eta$，固定 $V_1$ 在 $G_3,G_4$ 上的不同环境像会迫使 $G_3\cap G_4=0$。但这两个二维空间都在三维 $W$ 中，矛盾。故 $\eta_5=\eta$ 也可统一选取，且（53.20）使 $G_5\subseteq W$。
+
+**三维图空间的秩冲突。**
+
+因为 $\eta\in F$，取单位系数向量 $\xi=(\xi_1,\xi_2,\xi_3)$ 使 $\eta=\sum_\alpha\xi_\alpha f_\alpha$，并令
+$$
+p_\xi=\sum_\alpha\xi_\alpha p_\alpha,\qquad
+q_\xi=\sum_\alpha\xi_\alpha q_\alpha.
+$$
+则
+$$
+V_0p_\xi=u\eta,\quad V_0q_\xi=w\eta,\quad
+V_1p_\xi=v\eta.
+\tag{53.22}
+$$
+（53.17）、（53.19）、（53.21）使整个 $W\otimes\eta$ 包含在 $V_0K$ 中。令
+$$
+S_0=V_0^{-1}(W\otimes\eta),\qquad S_1=\mathbb Cp_\xi+W.
+$$
+$S_0$ 恰三维，包含 $p_\xi,q_\xi,H_2,H_3,H_4$。$S_1$ 包含 $p_\xi,G_2,G_3,G_4$，所以共同环境上可写
+$$
+V_0x=f(x)\otimes\eta\quad(x\in S_0),\qquad
+V_1y=g(y)\otimes\eta\quad(y\in S_1),
+$$
+其中 $f,g$ 等距，$fS_0=W$，且不同输入位正交给
+$$
+gS_1\perp W.
+\tag{53.23}
+$$
+
+由（53.18）、（53.22）、（53.23），$H_2$ 到 $W$ 的投影为 $U$。来源同轮系数递推又给 $H_3,H_4$ 到 $W$ 的投影分别为 $G_3,G_4$：其另一个分量分别在 $Q_3=gU$、$Q_4=gG_3$ 中，由（53.23）正交于 $W$。因此
+$$
+P_WS_0\supseteq U+G_3+G_4=W.
+$$
+两空间同为三维，所以该投影为同构；存在唯一线性映射 $T:W\to W^\perp$，使 $S_0$ 为其图。
+
+从（53.18）得到
+$$
+Tw=0,\qquad T(U)=\mathbb Cv.
+\tag{53.24}
+$$
+从 $H_3,H_4$ 到同轮两个接收输出空间的满投影，又得到
+$$
+T(G_3)=Q_3=gU,\qquad T(G_4)=Q_4=gG_3.
+\tag{53.25}
+$$
+由于 $w\ne0$ 在三维域 $W$ 的核中，$\operatorname{rank}T\le2$；（53.25）的第一项已有秩二，所以 $\operatorname{im}T=gU$。再用（53.25）的第二项，得到 $gG_3\subseteq gU$。$g$ 单射给 $G_3\subseteq U$，两者均二维，故 $G_3=U$。
+
+然而（53.24）称 $T(U)$ 一维，（53.25）称 $T(G_3)$ 二维，矛盾。证明完毕。
+
+本节没有排除全部七维接收器。第二终端秩二的候选须满足上述三种尾模式及环境交叠下界；第二终端纯而第一终端秩二的候选仍未结算。全部早期终端纯的非周期环境也未在此归约。一般六终端固定 CPTP 接收容量仍为 $7\le d_{\mathrm{CPTP},6}\le8$。
+

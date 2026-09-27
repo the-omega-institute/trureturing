@@ -1,0 +1,63 @@
+**定理 2.40。** There is a uniformly computable family of permitted event presentations, all with complement mass $1/2$, for which one cylinder-extension query is the nonhalting predicate. Consequently no total uniform operator can take a permitted presentation and a valid name of its mass and return its extension characteristic function.
+
+**Proof.** For each machine index $e$, always enumerate
+
+$$
+[01],\ [001],\ [0001],\ldots,
+\quad\text{equivalently }[0^n1]\ (n\ge1).
+\tag{TM.670}
+$$
+
+Independently simulate machine $e$ on its specified input. If it halts, enumerate $[0]$. Dovetail these two procedures. There is one possible forbidden cylinder at depth one and exactly one at each depth at least two, so the sparsity condition holds for every $e$, with no promise about halting.
+
+The cylinders $[0^n1]$ cover $[0]\setminus\{0^\infty\}$. Hence the final complements are
+
+$$
+E_e=
+\begin{cases}
+[1],&e\text{ halts},\\
+[1]\cup\{0^\infty\},&e\text{ does not halt}.
+\end{cases}
+\tag{TM.671}
+$$
+
+In both cases,
+
+$$
+\mu(E_e)=\frac12,
+\tag{TM.672}
+$$
+
+but
+
+$$
+E_e\cap[0]\ne\varnothing
+\quad\Longleftrightarrow\quad
+e\text{ does not halt}.
+\tag{TM.673}
+$$
+
+If the asserted uniform operator existed, provide it with this effectively constructed presentation index and the constant rational Cauchy name $v(t)=1/2$. Querying the returned extension procedure at $[0]$ would decide nonhalting, a contradiction. $\square$
+
+Every individual $R_{E_e}$ is nevertheless decidable. In the halting case it is the extension relation of $[1]$. In the nonhalting case a finite word is extendible exactly when it is empty, begins with $1$, or consists only of zeros. The impossibility concerns uniformly selecting the correct procedure from $e$ and the identical mass name.
+
+The canonical supports display the ambiguity directly:
+
+$$
+S_e=
+\begin{cases}
+\{1\},&e\text{ halts},\\
+\{2,3,4,\ldots\},&e\text{ does not halt}.
+\end{cases}
+\tag{TM.674}
+$$
+
+They encode the same forbidden mass through
+
+$$
+\frac12=2^{-1}=\sum_{h=2}^{\infty}2^{-h}.
+\tag{TM.675}
+$$
+
+The raw event list does not resolve this alternative at a bounded stage: an announcement of $[0]$ may still arrive later. No claim of a computable stabilization bound is used.
+

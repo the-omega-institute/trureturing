@@ -1,0 +1,10 @@
+**定理 22.3（重复准备下的有限样本保证）。** 假定可以独立同分布地准备同一未知 $\rho$，每份样本运行同一有限记录 POVM。令 $m$ 次结果频率为 $\widehat p$，$\widehat\rho$ 为全部密度矩阵中使 $\|\mathsf M(\tau)-\widehat p\|_{\ell^2}$ 最小的一个。若 $\alpha>0$，则对 $0<\delta<1$，以至少 $1-\delta$ 的概率，
+
+$$
+\frac12\|\widehat\rho-\rho\|_1
+\le\frac{\sqrt{dJ}}{\alpha}
+\sqrt{\frac{\log(2J/\delta)}{2m}}.
+$$
+
+证明。状态集紧，所以极小值存在。对每个结果的指示变量应用 Hoeffding 不等式，再取 $J$ 项并集界，以概率至少 $1-\delta$ 有每个坐标误差不超过 $\varepsilon=\sqrt{\log(2J/\delta)/(2m)}$。故 $\|\widehat p-\mathsf M\rho\|_{\ell^2}\le\sqrt J\varepsilon$。极小性给出 $\|\mathsf M\widehat\rho-\widehat p\|_{\ell^2}\le\sqrt J\varepsilon$，三角不等式及定理 22.2 得结论。所用集中界参见 Hoeffding, *Probability Inequalities for Sums of Bounded Random Variables*, [DOI:10.1080/01621459.1963.10500830](https://doi.org/10.1080/01621459.1963.10500830)。若 $H_j$ 来自 $N$ 轮时限协议，每份准备至多运行 $N$ 轮；其历时仍需逐轮钟标定。$\square$
+

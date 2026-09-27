@@ -1,0 +1,8 @@
+**早期两个位像给出的共同正交约束。** 由 （29.52）、$`V_0K\perp V_1K`$ 和 （29.41），
+$$
+G_n\perp v,\qquad Q_n\perp U,
+\qquad n=3,4,5.
+\tag{29.53}
+$$
+环境属于 $`F`$ 是这一步的必要前提；例如可用同一个 $`\eta_n\in F`$ 将 $`G_n\otimes\eta_n\perp v\otimes F`$ 化为 $`G_n\perp v`$。
+

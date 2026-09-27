@@ -1,0 +1,46 @@
+## ST10．能量依赖消元同时决定物理范数
+
+### 假设 ST10.1
+
+设 $V,W$ 为非零有限维复 Hilbert 空间，
+
+$$
+H=\begin{pmatrix}A&B\\B^\dagger&C\end{pmatrix}=H^\dagger.
+$$
+
+取实数 $E\notin\operatorname{spec}C$，定义
+
+$$
+R_E=(C-EI)^{-1},\quad X_E=-R_EB^\dagger,\quad
+L_E=\begin{pmatrix}I\\X_E\end{pmatrix},
+$$
+
+$$
+S(E)=A-EI-BR_EB^\dagger.
+$$
+
+本节固定 $H$ 求能量导数。$E$ 可以位于完整 $H$ 的谱中，唯一排除的是隐藏块的谱。
+
+### 定理 ST10.2：重建、范数与能量导数恒等式
+
+有
+
+$$
+(H-EI)L_E=\begin{pmatrix}S(E)\\0\end{pmatrix},
+\qquad
+\ker S(E)\xrightarrow{\ L_E\ }\ker(H-EI)
+\text{ 为线性同构},
+\tag{ST10.1}
+$$
+
+以及
+
+$$
+\boxed{
+G(E):=L_E^\dagger L_E
+=I+B(C-EI)^{-2}B^\dagger
+=-\partial_E S(E)>0.
+}
+\tag{ST10.2}
+$$
+

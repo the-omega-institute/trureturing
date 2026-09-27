@@ -1,0 +1,20 @@
+### 263.6 标准Fejér–Riesz分解给出低秩填充
+
+本节使用以下标准外部定理：若矩阵Laurent多项式
+$$
+Q(\zeta)=\sum_{j=-m}^{m}Q_j\zeta^j
+\tag{263.25}
+$$
+在全部 $|\zeta|=1$ 上正半定，则存在作用于同一空间的矩阵多项式
+$$
+P(\zeta)=\sum_{j=0}^{m}P_j\zeta^j
+\tag{263.26}
+$$
+使
+$$
+Q(\zeta)=P(\zeta)^\dagger P(\zeta)
+\quad(|\zeta|=1).
+\tag{263.27}
+$$
+不要求 $Q$ 严格正，次数上界仍为 $m$。精确形式见 M. A. Dritschel、J. Rovnyak，*The Operator Fejér–Riesz Theorem*，[arXiv:0903.3639v1](https://arxiv.org/abs/0903.3639v1)，PDF第4页Theorem 2.1。其系数保持作用于同一Hilbert空间这一点，将保证下面没有额外扩大的因子维数。
+

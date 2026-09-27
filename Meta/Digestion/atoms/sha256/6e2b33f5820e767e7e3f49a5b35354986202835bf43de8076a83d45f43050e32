@@ -1,0 +1,15 @@
+**命题 477.2（达到四倍的擦除目标）。** 令目标空间为 $X=\{0,1,\star\}$，取 $0<r\le\alpha<1$，并置
+
+$$
+Q_0=(1-\alpha,0,\alpha),\qquad Q_1=(0,1-\alpha,\alpha).
+$$
+
+对合交换前两个坐标、保持 $\star$。此时精确边缘可行，且
+
+$$
+j_{\mathrm{exact}}=2r(1-\alpha),\qquad
+j_{\mathrm{free}}=\frac{r(1-\alpha)}2.
+$$
+
+证明：这里 $l=(0,0,\alpha)$，$M=\alpha$、$D=1-\alpha$。因 $\alpha/r\ge1>\alpha$，有 $u=(0,0,\alpha)$，所以 $U=\alpha$。命题 476.1 给出第一式，命题 477.1 给出第二式。精确边缘时，容量条件迫使 $R=\delta_\star$；揭示分支在正确位上的质量为 $(1-\alpha)/(1-r)$，在 $\star$ 上的质量为 $(\alpha-r)/(1-r)$，均非负并归一化。这也直接实现了最优值。证毕。
+

@@ -1,0 +1,10 @@
+**推论。** 对 $n\geq1$，记实际 Hamming 差为 $H_n(x)$，则在同一参数区间内
+\[
+\lambda(H_n=1)=n\delta,\qquad
+\lambda(H_n=2)=\frac{n(n-1)}2\delta,\qquad
+\lambda(H_n=0)=1-\frac{n(n+1)}2\delta,
+\]
+\[
+\int_0^1 H_n(x)\,dx=n^2\delta.
+\tag{22.4}
+\]

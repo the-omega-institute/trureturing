@@ -1,0 +1,13 @@
+**定理 11（Hall 约化）.** 有
+\[
+ |P|-\nu=\max_{J\subseteq P}\bigl(|J|-|N_L(J)|\bigr),\qquad
+ \Phi\leq|\mathcal G|+|H|+|L|+\min\{|P|,\varepsilon_c+|B_P\setminus L|\}.\tag{3}
+\]
+特别地，
+\[
+ \Phi\leq\binom N2+1+\varepsilon_c+|\mathcal G|+|H|-N;\tag{4}
+\]
+故 \(|\mathcal G|+|H|\leq N\) 蕴含 \(\Phi\leq B(N)\)。
+
+**证明.** 第一式是二部图 Hall 缺额公式。按含 \(c\) 的公差 \(d\) 分割 \(J\)，对每条线上的任意子族应用定理 4：该子族至多比其所覆盖的本原坏对多 \(\mathbf1_{2d\leq\min(c-1,N-c)}\) 个。本原对的所有权由定理 10 保证不同线之间不重叠；求和得到 \(|J|\leq|B_J|+\varepsilon_c\)。从 \(B_J\) 删除不属于 \(L\) 的对，便得 \(|J|-|N_L(J)|\leq\varepsilon_c+|B_P\setminus L|\)。同时缺额至多 \(|P|\)，给出 (3)。由于 \(|B_P\setminus L|\leq\binom{N-1}{2}-|L|\)，整理得 (4)。最后 \(\varepsilon_c\leq\lfloor(N-1)/4\rfloor\)。\(\square\)
+

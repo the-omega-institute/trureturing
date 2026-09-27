@@ -1,0 +1,14 @@
+## 32. 本轮核验、来源比较与剩余目标
+
+新增检查器：`tools/scripts/agent/openproblem/erdos699-dyadic-height-ceiling-check.py`。实际运行 `--nmax 200 --amax 80 --symbolic` 后通过：
+
+- 9409 个实际二项式有理参数对的三次判别式恒等式，其中 403 个光滑约分分母对验证 (75)–(76)，337 个中点正的参数对验证耦合不等式；未将这些对称作假想反例。
+- 474 个明确标为非反例的合成二进代数对照，覆盖 `c in {1,3}` 和 `r in {0,1,2}`，核验准确最简分母。偶数分子造成分母消去、`D_0=0` 造成重根分别作为失败前提对照。
+- 高度定理代入的全部整数指数与 `C_c,Gamma_c` 因子恒等式；检查器没有重新证明外部高度定理，也没有枚举巨大截止。
+- 六条线的完整关联计数、六个基点、(86) 的符号因式分解、九次式的六个准确四重零点，以及次数 1–8 的尖锐表达式。所有次数的结论来自 §31 的书面证明，有限次数检查仅用于核验实现。
+
+检查器 SHA-256：`1e9ceeebeee49d372c97e30284a04f83347389e832bfe63e10401e617d90bbd2`，Git blob：`bf20835830cc661770b6688130bf2cb619205b45`；报告 SHA-256：`c4d541b82b7102da14c1577ada9b1547cb63c77ba0f18bf0f409d1ab719af866`。源版本和原理论前缀需在提交后回读核对，不能把本地文件自动视为已写回。
+
+本轮新增的无界结论是：不限制 `k` 的 (78)–(80)，其中临界比例带获得有效有限归约；以及覆盖所有固定齐次次数的方法界 (84)。`Delta` 和 `k` 在全体反例中仍没有统一上界，因此完整 `i=3` 的反例有限性没有由此证明。其余 `4<=i<=324` 的有限异常仍未全部排除，`i>=325` 的先前区域定理保持不变。全题解决状态不变。
+
+[13] Łucja Farnik, Janusz Gwoździewicz, Beata Hejmej, Magdalena Lampa-Baczyńska, Grzegorz Malara, Justyna Szpond, *Initial sequences and Waldschmidt constants of planar point configurations*, arXiv:1607.01031。已读取 Definitions 1.1–1.2 与 Theorem 2.3(d) 的文本；后者记录六点配置 `H(6,9)` 的 `9/4` 常数，故不把该几何常数当作本项目首创。该 PDF 第 4 页图像请求未成功，未以未见图形作为配置等同的证明；本节需要的具体六点不等式由 §31.2 独立给出。https://arxiv.org/abs/1607.01031 ; https://arxiv.org/pdf/1607.01031

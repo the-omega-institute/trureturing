@@ -1,0 +1,91 @@
+**定理 216.2（名义秩的原空间维数下界）。** 每个定义216.1的 $`C^1`$ 程序都满足
+
+```math
+\dim\mathcal H\ge
+ \begin{cases}
+ 3r,&h\ne h_c,\\[0pt]
+ \max\{3,r+1\},&h=h_c.
+ \end{cases}
+\tag{216.2}
+```
+
+在非临界情形，原空间包含 $`r`$ 个两两正交的三维 $`K^\dagger`$ 不变子空间，每个限制都酉等价于 $`V`$。
+
+证明。 在第215.2节中选择 $`\rho_t=\sum_{j=1}^r p_j|x_j\rangle\langle x_j|`$ 的谱纯化，$`p_j>0`$ 且 $`x_j`$ 正交归一。把回到 $`\mathcal H\otimes\mathbb C^r`$ 的三个正交向量按辅助基逐分量展开，得到线性映射 $`A_j:\mathbb C^3\to\mathcal H`$，满足
+
+```math
+K^\dagger A_j=A_jV,\qquad
+ \sum_jA_j^\dagger A_j=I_3,\qquad
+ A_j\psi_0=\sqrt{p_j}\,x_j.
+\tag{216.3}
+```
+
+此处每个 $`A_j`$ 单独不预设为等距。令
+
+```math
+Q_{jk}=A_j^\dagger A_k,\qquad
+ D_{jk}=A_j^\dagger(I-KK^\dagger)A_k
+        =Q_{jk}-V^\dagger Q_{jk}V.
+\tag{216.4}
+```
+
+$`KK^\dagger\le I`$ 保证由 $`D_{jk}`$ 组成的块矩阵半正定；由（216.3）还有
+
+```math
+\sum_jD_{jj}=I-V^\dagger V=|f\rangle\langle f|.
+\tag{216.5}
+```
+
+若 $`y\perp f`$，则所有非负数 $`\langle A_jy,(I-KK^\dagger)A_jy\rangle`$ 的和为零，所以 $`(I-KK^\dagger)^{1/2}A_jy=0`$ 对每个 $`j`$ 成立。这同时消去每个交叉块在 $`f^\perp`$ 上的行与列。因此存在一个半正定标量矩阵 $`C=(c_{jk})`$，使
+
+```math
+D_{jk}=c_{jk}|f\rangle\langle f|,
+ \qquad Q_{jk}-V^\dagger Q_{jk}V=c_{jk}|f\rangle\langle f|.
+\tag{216.6}
+```
+
+下面使用有限维 Stein 方程的经典 Gramian 迭代；稳定情形的级数及唯一性见 Pontes Duff、Kürschner，*Numerical computation and new output bounds for time-limited balanced truncation of discrete-time systems*，arXiv:1902.01652v1，式（4b）、（5b）。这里所需的复矩阵版本直接由以下望远镜恒等式给出。若 $`h\ne h_c`$，定理214.2和第213.18式保证 $`V`$ 的三个特征值模均小于一，故 $`V^n\to0`$。迭代（216.6）并取极限，得到
+
+```math
+Q_{jk}=c_{jk}\sum_{n=0}^{\infty}(V^\dagger)^n
+                   |f\rangle\langle f|V^n=c_{jk}I_3.
+\tag{216.7}
+```
+
+最后一式也可将 $`|f\rangle\langle f|=I-V^\dagger V`$ 代入有限和后望远镜消去取得。将（216.7）在 $`\psi_0`$ 上取矩阵元，由（216.3）及谱向量的正交性得
+$`c_{jk}=p_j\delta_{jk}`$。所以 $`A_j/\sqrt{p_j}`$ 是等距，各自像空间两两正交，并由交织关系保持于 $`K^\dagger`$。这证明 $`3r`$ 的下界及不变块结论。
+
+现在设 $`h=h_c`$。此时 $`0<a<1/2`$，三个特征值为 $`0,2a,-1`$。单位模特征向量属于压缩算子的约化子空间。直接代入第211.17式可取其单位向量及投影为
+
+```math
+z_- =\frac{(1,-2\sqrt{a(1+a)},0)^{\mathsf T}}{1+2a},
+ \qquad Z=|z_-\rangle\langle z_-|,\qquad R=I-Z.
+\tag{216.8}
+```
+
+$`VZ=ZV=-Z`$，$`V|_{\operatorname{ran}R}`$ 严格稳定，且 $`f\in\operatorname{ran}R`$。在 $`R\oplus Z`$ 分块中求解（216.6）：稳定块仍由迭代唯一给出 $`c_{jk}R`$；两个交叉块的齐次方程经迭代趋零；单位块没有强迫项。因此
+
+```math
+Q_{jk}=c_{jk}R+d_{jk}Z.
+\tag{216.9}
+```
+
+在 $`R`$ 中取单位向量检验交叉 Gram 矩阵，可知 $`C=(c_{jk})`$ 半正定；在 $`Z`$ 中同样得到 $`D=(d_{jk})\ge0`$。由 $`\sum_jQ_{jj}=I`$ 得 $`\operatorname{Tr}C=\operatorname{Tr}D=1`$，所以两者秩均至少为一。又有
+
+```math
+w=\langle\psi_0,Z\psi_0\rangle=\frac a{1+2a}>0,
+ \qquad v=1-w=\frac{1+a}{1+2a}>0,
+ \qquad vC+wD=\operatorname{diag}(p_1,\ldots,p_r).
+\tag{216.10}
+```
+
+令 $`c=\operatorname{rank}C`$、$`d=\operatorname{rank}D`$。右侧满秩，故 $`r\le c+d`$。另一方面，所有 $`A_j`$ 合成的映射 $`\bigoplus_j\mathbb C^3\to\mathcal H`$ 的 Gram 矩阵为 $`C\otimes R+D\otimes Z`$，其秩为 $`2c+d`$。于是
+
+```math
+\dim\mathcal H\ge2c+d\ge r+1,
+ \qquad \dim\mathcal H\ge2c+d\ge3.
+\tag{216.11}
+```
+
+这证明临界下界。整个推导只使用单个校准点的谱纯化与原算子的压缩性，没有增加实际程序寄存器。证毕。
+

@@ -1,0 +1,33 @@
+**定义 25.1（投影快照与受限公共作用）。** 设 $G$ 为有限阿贝尔群，$\chi:G\twoheadrightarrow C_2$ 为满同态，$H=\ker\chi$，$r\ge3$。取非空集合
+$T\subseteq\{c\in G:\chi(c)=1,\ 2c=0\}$ 及预先固定、已知的选择映射 $\theta:G^2\to T$。沿用定义23.1的同一实际来源与整个快照消费者，专取如下局部编码：
+
+$$
+\begin{gathered}
+S=G^r\times H,\qquad Y(s)=\sum_{i=1}^r x_i,\qquad
+t(s)=Y(s)+h,\qquad a(s)=x_1,\qquad B(s)=(a(s),t(s)),\\
+p_c(x)=x-\chi(x)c,\qquad c=\theta(B(s)),\qquad
+O(s)=\bigl(a,t,p_c(x_2),\ldots,p_c(x_r)\bigr).
+\end{gathered}
+\tag{25.10}
+$$
+
+二元特征作为 $0,1$ 系数乘以二阶元。接收端读取 $(a,t)$ 并发出公共查询 $c$；发送者 $i\ge2$ 只读取自己的 $(x_i,t)$ 与 $c$，同时返回带下标的 $p_c(x_i)$。所有 $s\in S$ 都允许，查询由 $(a,t)$ 确定。
+
+声明子群 $D\le S$ 为合法公共输入集；每个 $d=(u_1,\ldots,u_r,k)\in D$ 都是可在任何来源上执行的单步平移，所有有限输入词（含空词）均允许。要求在每个词的每个前缀之后读出整个重新评估的 $O$。输入改变上下文的同态及其像为
+
+$$
+\lambda:S\to G^2,\qquad
+\lambda(u,k)=\left(u_1,\sum_i u_i+k\right),\qquad
+\Lambda=\lambda(D),\qquad B(s+d)=B(s)+\lambda(d).
+\tag{25.11}
+$$
+
+定义 $s\sim_D s'$ 当且仅当对每个 $n\ge0$ 和每个 $(d_1,\ldots,d_n)\in D^n$，有
+
+$$
+O(s+d_1+\cdots+d_n)=O(s'+d_1+\cdots+d_n).
+\tag{25.12}
+$$
+
+称上下文 $B$ 为常值轨道上下文，若 $\theta$ 在 $B+\Lambda$ 上恒定。令 $\mathcal C_0$ 为这些上下文的集合，$\mathcal C_1=G^2\setminus\mathcal C_0$，$c_j=|\mathcal C_j|$。这里 $c_j$ 数上下文，不数轨道；$c_0+c_1=|G|^2$。两集合都是 $\Lambda$-轨道的并。
+

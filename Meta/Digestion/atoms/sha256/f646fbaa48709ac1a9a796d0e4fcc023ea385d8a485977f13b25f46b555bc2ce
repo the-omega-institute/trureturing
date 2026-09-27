@@ -1,0 +1,47 @@
+**证明。** 取引理277.4的区间，并令 $a=1-F^2$。在共同本征基中，张量输出的根保真度为 $F^N$。根保真度—迹距不等式给
+$$
+d(\sigma_{\theta,*}^{\otimes N},\sigma_{\theta,h}^{\otimes N})^2
+\le1-F^{2N}=1-(1-a)^N\le Na.
+\tag{277.40}
+$$
+Holevo–Helstrom公式使目标平均错误要求半迹距离至少为 $1/3$，故
+$$
+N_{\rm out}(\theta,h)\ge\frac1{9a}
+\ge\frac{\theta^{2n}+\delta}{9C_F\delta^2}.
+\tag{277.41}
+$$
+这对完整联合输出上的所有集体POVM成立。
+
+为得上界，逐份读取实际记录 $(w,\eta)$，并在该记录内测量已知的 $H_w(\theta)$ 本征基。两个假设产生的实际经典分布是 $p$ 和 $q$。对 $N$ 个独立样本作等先验似然比检验，其平均错误为
+$$
+\begin{aligned}
+P_{\rm err}
+&=\frac12\sum_{\boldsymbol j}
+\min\left\{\prod_{\ell=1}^Np_{j_\ell},
+\prod_{\ell=1}^Nq_{j_\ell}\right\}\\
+&\le\frac12\sum_{\boldsymbol j}
+\prod_{\ell=1}^N\sqrt{p_{j_\ell}q_{j_\ell}}
+=\frac12F^N.
+\end{aligned}
+\tag{277.42}
+$$
+该公式允许某个 $p_j$ 为零；对应序列的检验按两个似然值直接比较。
+
+由 $0<F<1$ 和自然对数不等式，
+$$
+-\log F\ge1-F=\frac{a}{1+F}\ge\frac a2.
+$$
+因此取
+$$
+N=\left\lceil\frac{2\log(3/2)}a\right\rceil
+\le
+\left\lceil
+\frac{2\log(3/2)}{c_F}
+\frac{\theta^{2n}+\delta}{\delta^2}
+\right\rceil
+\tag{277.43}
+$$
+即足够。因 $0<\delta\le1/2$，有 $(\theta^{2n}+\delta)/\delta^2\ge2$，取整项可被固定系数吸收。与（277.41）合并得到（277.38）；代入 $\delta=kh^{2n}$，其中 $k>0$ 固定，便得到（277.39）。$\square$
+
+证明中使用的标准判别界可见 Watrous，*The Theory of Quantum Information*，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 3.4（Holevo–Helstrom）和 Theorem 3.33（根保真度—迹距界）。本节统一阶的来源是（277.26）、（277.33）和（277.35）的具体输出谱估计。
+

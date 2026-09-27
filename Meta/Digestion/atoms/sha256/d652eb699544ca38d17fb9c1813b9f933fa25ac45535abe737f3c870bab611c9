@@ -1,0 +1,101 @@
+**定理81.1（三次共同尾环境后分叉不可能）。** 在（81.1）的七维实际合同下，（81.2）不能发生。特别地，外置首轮剩余必要尾词 $AAABA$、$AAABB$ 均不可能。
+
+第68节已排除末轮为第三条射线的 $AAABC$。本定理给出不区分末轮射线的共同前缀禁阻，新增排除的是 $AAABA$ 与 $AAABB$；不把既有 $AAABC$ 结果另计为新的缺口。
+
+### 81.1 四维当前跨度与两个相同早期域
+
+沿用实际早期正交单位组 $p,q$ 和 $u,v,w$。在同射线各轮同步吸收环境代表及终端列的共同相位后，可用一个单位向量 $A$ 表示第2、3、4轮环境，并有
+
+$$
+\begin{gathered}
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,\\
+V_0p=u\otimes A,\qquad V_1p=v\otimes A,\qquad
+V_0q=w\otimes A,\\
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\end{gathered}
+\tag{81.3}
+$$
+
+对 $n=3,\ldots,6$，实际二维空间满足
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,\qquad
+P_{G_n}H_n=G_n,\qquad P_{Q_n}H_n=Q_n.
+\tag{81.4}
+$$
+
+这里两个投影都是同构。特别地，$H_n\cap G_n=0$；没有把第二轮的一维一位输出 $\mathbb Cv$ 称为二维 $Q_2$。
+
+置 $S_0=H_1+\cdots+H_5$。实际 $V_0S_0\subset K\otimes F$，但 $V_0k=p\otimes\eta_1$ 不属于该空间，所以 $k\notin S_0$，并有 $\dim S_0\le6$。这个事实不要求 $k\perp S_0$。
+
+当前射线 $A$ 在第3、4轮有不同的已见后继 $A,B$，正好满足第69节引理69.2的分叉条件。为保留此处实际需要的维数桥梁，令 $P_A$ 为所有当前环境属于 $A$ 的 $G_n$、$2\le n\le6$ 的线性和。固定 $V_1$ 把 $G_3,G_4$ 送入不同环境射线，故
+
+$$
+G_3\cap G_4=0,\qquad \dim(G_3+G_4)=4.
+$$
+
+另一方面，$P_A\otimes A$ 与实际第5轮的 $G_5\otimes B$ 之和是代数直和，并包含于 $V_0S_0$。两条环境射线独立、$G_5$ 二维，因此
+
+$$
+4\le\dim P_A,\qquad \dim P_A+2\le\dim S_0\le6.
+$$
+
+所以
+
+$$
+P:=P_A=G_3+G_4,\qquad \dim P=4,\qquad \dim S_0=6.
+\tag{81.5}
+$$
+
+这仅使用已经发生的三个零位块 $G_3\otimes A$、$G_4\otimes A$、$G_5\otimes B$ 及外置首轮预算；没有给 $G_6$ 添加一位后继。
+
+现在
+
+$$
+V_1P=(Q_4\otimes A)\dotplus(Q_5\otimes B).
+$$
+
+由于 $G_2\subset P$ 且 $V_1G_2=Q_3\otimes A$，逐环境 $A,B$ 坐标比较给 $Q_3\subset Q_4$。二者均二维，所以 $Q_3=Q_4=:Q$；固定 $V_1$ 单射性进一步给 $G_2=G_3=:U$。令 $L=G_4$、$R=Q_5$，得到
+
+$$
+\begin{gathered}
+P=U+L,\qquad U\cap L=0,\\
+V_1U=Q\otimes A,\qquad V_1L=R\otimes B,\\
+V_0H_1=U\otimes A=V_0H_2,\qquad
+V_0H_3=L\otimes A.
+\end{gathered}
+\tag{81.6}
+$$
+
+因此
+
+$$
+H_1=H_2,\qquad H_2\cap H_3=0.
+\tag{81.7}
+$$
+
+后一个交零来自同一 $V_0$ 的单射性和 $U\cap L=0$。
+
+由 $P\otimes A\subset V_0K$，分别与 $V_1U=Q\otimes A$ 及 $V_1p=v\otimes A$ 作跨位正交比较，得到
+
+$$
+Q\perp P,\qquad v\perp P.
+\tag{81.8}
+$$
+
+特别地，实际第三终端为
+
+$$
+H_3\subset U\oplus Q,\qquad P_QH_3=Q.
+\tag{81.9}
+$$
+
+### 81.2 真实首轮像迫使早期残差属于 Q
+

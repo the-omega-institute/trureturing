@@ -1,0 +1,33 @@
+## 142. 六终端七维最优误差的半代数性与端点幂界
+
+第140节得到七维前六终端最优误差的来源连续性：每个非退化来源都有严格正隙，且靠近退化集合时有线性上界。本节补上一个有限幂阶的下界。新增步骤是确认完整参考合同下的最优半迹误差为连续半代数函数，再复用经典 Łojasiewicz 不等式；不重新建立实代数工具，也不宣称常数、指数或最优端点衰减率已经算出。
+
+沿用第140节的完整复振幅参数空间与最优误差：
+
+$$
+\Theta=\{(a,b)\in\mathbb C^2:|a|^2+|b|^2=1\},
+\qquad
+\varepsilon_{D,N}(\theta)
+=\min_{\mathfrak A}\max_{1\le n\le N}\sup_{R,\rho_{RM}}
+\frac12\left\|
+(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\sigma_n^{\theta,\mathfrak A}(\rho)-\Omega_n^\theta(\rho)
+\right\|_1.
+\tag{142.1}
+$$
+
+这里 $\mathfrak A=(\mathcal C,\mathcal D_1,\ldots,\mathcal D_N)$ 从独立纯态 $e_0\in\mathbb C^D$ 启动，逐轮重复同一个全域 CPTP 接收通道 $\mathcal C$；所有持久控制计入容量，只允许解码器依赖终端。误差比较同一实际来源的参考、活动记忆和全部原档案。来源参数已知，装置可据此设计。本节仍允许复相位，不先把参数球面商成一个概率区间。
+
+令
+
+$$
+\begin{gathered}
+\varepsilon_7(\theta)=\varepsilon_{7,6}(\theta),\\
+Z=\{(a,b)\in\Theta:ab=0\},\qquad
+d(\theta)=\operatorname{dist}(\theta,Z).
+\end{gathered}
+\tag{142.2}
+$$
+
+$Z$ 是退化来源的两条圆：$\{(0,e^{it})\}$ 与 $\{(e^{it},0)\}$。
+

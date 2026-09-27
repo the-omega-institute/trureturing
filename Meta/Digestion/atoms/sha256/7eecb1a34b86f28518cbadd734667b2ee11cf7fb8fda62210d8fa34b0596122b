@@ -1,0 +1,10 @@
+**Proof.** Equality of residual functions gives the same legal tests and the same observed triples. If $u$ is legal from $q\sim q'$, then $v$ is legal from $\delta(q,u)$ exactly when $uv$ is legal from $q$, and likewise for $q'$. Thus these successor states admit the same tests. Their terminal observations agree by applying residual equality to $uv$. Additivity gives
+$$
+\begin{aligned}
+c(q,uv)&=c(q,u)+c(\delta(q,u),v),\\
+c(q',uv)&=c(q',u)+c(\delta(q',u),v).
+\end{aligned}
+\tag{TM.554}
+$$
+The left sides and the first summands agree, so cancellation in $M$ gives equality of the successor continuation costs. Cancellation in $\mathbb N$ gives the corresponding equality of durations. Hence $\delta(q,u)\sim\delta(q',u)$. The identity test supplies $o(q)=o(q')$. $\square$
+

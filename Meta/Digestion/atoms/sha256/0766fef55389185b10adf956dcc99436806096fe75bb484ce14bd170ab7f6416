@@ -1,0 +1,12 @@
+**第三终端支撑的形状。** 由 （29.5）、（29.6），
+$`S_1=G_\xi+A`$ 为三维，所以 $`\dim(G_\xi\cap A)=1`$。而
+$`H_\xi\cap A=H_3\cap G_3=0`$，且
+$`H_\xi\cap G_\xi=\mathbb C(w\otimes\xi)`$。这两条不同的交线张成 $`G_\xi`$，故
+$$
+Q\otimes\mathbb C\xi=H_\xi+G_\xi
+\subseteq H_\xi+A=C_3.
+\tag{29.15}
+$$
+由 $`V_1A\subset K\otimes\eta`$，输入 $`A`$ 必正交于 $`G\otimes\xi^\perp`$。故
+$`A\subset(Q\otimes\xi)\oplus\mathbb C(v\otimes\xi^\perp)`$。结合 （29.15） 和 $`\dim C_3=4`$，得到 （29.7）。
+

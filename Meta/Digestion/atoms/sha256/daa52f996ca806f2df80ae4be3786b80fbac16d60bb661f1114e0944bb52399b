@@ -1,0 +1,44 @@
+**命题 163.3（此固定构造的局部代价与全程改进）。** 定义163.1中的固定通道满足
+$$
+\lim_{r\uparrow1}\frac{D_1(r)}{\mathcal R_1(r)}
+=\sqrt{1+\frac{k_*^2}{3}}>1.
+\tag{163.19}
+$$
+另一方面，
+$$
+\lim_{r\uparrow1}\mathcal J_{\rm one}(r)
+=\sqrt{\frac37}\,
+\exp\!\left[-\frac2{\sqrt3}\arctan\!\left(\frac{\sqrt3}{2}\right)\right]
+>L=\lim_{r\uparrow1}\mathcal J(r).
+\tag{163.20}
+$$
+因此对所有充分接近一的 $r<1$，$\mathcal T_r$ 的全视界最坏误差严格小于每一个单步最优固定预测通道的全视界最坏误差。
+
+证明。 令 $\varepsilon=1-r$。当 $\varepsilon\downarrow0$ 时，
+$$
+1-r^{k_*}=k_*\varepsilon+O(\varepsilon^2),\qquad
+1-\cos\alpha(r)=\frac32\varepsilon^2+O(\varepsilon^3).
+$$
+由
+$$
+|e^{i\alpha}-r^{k_*}|^2
+=(1-r^{k_*})^2+2r^{k_*}(1-\cos\alpha)
+$$
+得到
+$$
+D_1(r)=\frac{\sqrt{k_*^2+3}}2\,\varepsilon+o(\varepsilon),
+\qquad
+\mathcal R_1(r)=\frac{\sqrt3}{2}\,\varepsilon+o(\varepsilon).
+\tag{163.21}
+$$
+这证明式（163.19）。
+
+对 $1/\sqrt3<r<1$，每个 $\mathcal F\in\mathfrak F_1(r)$ 的第 $N$ 步误差至少为 $\mathcal E_N(r)$。定理162.2还提供同一个 $\mathcal F_*$ 同时达到每个 $N$ 的下界，因此
+$$
+\mathcal J_{\rm one}(r)=\sup_{N\ge1}\mathcal E_N(r).
+\tag{163.22}
+$$
+应用定理162.4，再用定理163.2，得到式（163.20）及充分接近一时的严格比较。证毕。
+
+式（163.19）的比值约为 $1.1992166662$，是这一显式构造相对于单步最优值的代价，不是所有渐近全视界最优模型必须支付的最小局部代价。式（163.20）消除的是单步最优限制造成的额外常数；残余误差 $L>0$ 仍在，因而没有恢复被遗漏的相位信息，也没有把未知源识别出来。
+

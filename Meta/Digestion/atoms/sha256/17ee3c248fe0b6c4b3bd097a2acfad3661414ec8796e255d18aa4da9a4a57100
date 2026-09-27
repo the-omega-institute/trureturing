@@ -1,0 +1,34 @@
+**引理265.4（未归一化投影误差）。** 设 $\sigma$ 是有限维密度态，$P$ 为正交投影，$t=\operatorname{Tr}((I-P)\sigma)$。则
+$$
+\|\sigma-P\sigma P\|_1\le2\sqrt t.
+\tag{265.35}
+$$
+若 $t<1$，归一化压缩 $\sigma'=P\sigma P/(1-t)$ 还满足
+$$
+\|\sigma-\sigma'\|_1\le2\sqrt t+t.
+\tag{265.36}
+$$
+
+**证明。** 先取纯态 $\sigma=vv^\dagger$，$\|v\|=1$。在 $Pv$ 与 $(I-P)v$ 生成的至多二维空间内，当 $0<t<1$ 时，
+$$
+vv^\dagger-(Pv)(Pv)^\dagger
+\quad\text{的矩阵为}\quad
+\begin{pmatrix}
+0&\sqrt{t(1-t)}\\
+\sqrt{t(1-t)}&t
+\end{pmatrix}.
+\tag{265.37}
+$$
+其迹范数为 $\sqrt{4t-3t^2}\le2\sqrt t$；$t=0,1$ 两个端点直接满足同一界。
+
+一般情况下，取谱分解 $\sigma=\sum_j\lambda_jv_jv_j^\dagger$，并令
+$t_j=\|(I-P)v_j\|^2$。迹范数凸性和平方根的凹性给
+$$
+\|\sigma-P\sigma P\|_1
+\le2\sum_j\lambda_j\sqrt{t_j}
+\le2\sqrt{\sum_j\lambda_jt_j}
+=2\sqrt t.
+\tag{265.38}
+$$
+最后，$\|P\sigma P-\sigma'\|_1=t$；加三角不等式即得（265.36）。$\square$
+

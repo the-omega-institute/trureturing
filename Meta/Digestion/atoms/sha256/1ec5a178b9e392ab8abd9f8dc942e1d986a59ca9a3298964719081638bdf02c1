@@ -1,0 +1,47 @@
+### 242.2 给定输入边缘的精确可见误差
+
+四个输入效应差分别为
+$$
+\frac14n\cdot\sigma,
+\quad-\frac14n\cdot\sigma,
+\quad\frac14m\cdot\sigma,
+\quad-\frac14m\cdot\sigma.
+\tag{242.8}
+$$
+标准纯化将其变为对应的 $\sqrt\rho(\cdot)\sqrt\rho$ 参考块，再作转置。转置保持迹范数，固定纯输出的迹范数为一，记录块又彼此正交，故
+$$
+f(\rho)=\frac14\left[
+\|\sqrt\rho(n\cdot\sigma)\sqrt\rho\|_1
++\|\sqrt\rho(m\cdot\sigma)\sqrt\rho\|_1
+\right].
+\tag{242.9}
+$$
+对任意单位轴 $v$，记 $Q=v\cdot\sigma$、$X=\sqrt\rho Q\sqrt\rho$。由于 $Q$ 的本征值为 $1,-1$，
+$$
+\operatorname{Tr}X=r\cdot v,
+\qquad
+\det X=\det\rho\det Q=-\frac{1-t^2}{4}.
+\tag{242.10}
+$$
+当 $t<1$，行列式为负，两个本征值异号，因而
+$$
+\|X\|_1^2=(\operatorname{Tr}X)^2-4\det X.
+$$
+当 $t=1$，$\det X=0$，$X$ 至多秩一，同一公式仍给 $\|X\|_1=|\operatorname{Tr}X|$，包括 $X=0$ 的情形。因此对全部 $t\in[0,1]$，
+$$
+\|\sqrt\rho(v\cdot\sigma)\sqrt\rho\|_1
+=\sqrt{1-t^2+(r\cdot v)^2}.
+\tag{242.11}
+$$
+代回（242.9），得到完整的固定边缘公式
+$$
+\boxed{
+f(\rho)=\frac14\left[
+\sqrt{1-t^2+(r\cdot n)^2}
++\sqrt{1-t^2+(r\cdot m)^2}
+\right].
+}
+\tag{242.12}
+$$
+这里没有假设输入边缘满秩，也没有把纯联合探针的量子参考改成经典变量。
+

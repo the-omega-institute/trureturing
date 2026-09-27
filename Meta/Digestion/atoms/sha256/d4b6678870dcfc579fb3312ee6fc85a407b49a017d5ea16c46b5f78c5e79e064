@@ -1,0 +1,121 @@
+**定理 275.5（非实残差预算下的完整最优恢复曲线）。** 固定 $0<\varepsilon\le1$，记
+
+$$
+\delta_\varepsilon=\frac{\varepsilon}{1+2\varepsilon},
+\qquad b_\varepsilon=\max\left\{\frac14,\delta_\varepsilon\right\}.
+$$
+
+对 $R\ge0$，令 $F_\varepsilon(R)$ 为模型 $\mathcal R_\varepsilon$ 上、任意有限输出维数、任意编码、解码及共同输出基底中满足 $r(\mathcal E)\le R$ 时的最小最坏恢复误差。则这个最小值存在，且
+
+$$
+\boxed{F_\varepsilon(R)
+=b_\varepsilon\max\left\{1-\frac R{\delta_\varepsilon},0\right\}.}
+\tag{275.22}
+$$
+
+对非负预算 $E,R$，存在同一个编码、解码满足 $e\le E$、$r\le R$ 的充要条件是
+
+$$
+\frac E{b_\varepsilon}+\frac R{\delta_\varepsilon}\ge1.
+\tag{275.23}
+$$
+
+输出维数十对全部预算已经充分；$0<\varepsilon\le1/2$ 时九维已经充分。这些维数不宣称最小。
+
+证明。先证明额外的维数无关下界
+
+$$
+4e+\frac r{\delta_\varepsilon}\ge1.
+\tag{275.24}
+$$
+
+取任意编码、解码和定义 $r$ 时使用的输出基底。令 $T_2,T_D$ 为相应输入、输出转置，定义
+
+$$
+\overline{\mathcal E}=T_D\mathcal ET_2,
+\qquad \mathcal N=\mathcal D\mathcal E,
+\qquad \mathcal C=\mathcal D\overline{\mathcal E}.
+\tag{275.25}
+$$
+
+共轭 Kraus 算子给出 $\overline{\mathcal E}$ 的 CPTP 性；所以 $\mathcal N,\mathcal C$ 都是量子比特通道。由于 $T_2^2=\operatorname{id}$，对每个模型状态都有
+
+$$
+\begin{aligned}
+\frac12\|\mathcal N(\rho)-\mathcal C(T_2\rho)\|_1
+&=\frac12\|\mathcal D(\mathcal E\rho-T_D\mathcal E\rho)\|_1\\
+&\le\frac12\|\mathcal E\rho-T_D\mathcal E\rho\|_1
+\le r.
+\end{aligned}
+\tag{275.26}
+$$
+
+输入是 Hermitian 态，故其输出的转置等于逐项共轭，最后一项正是非实残差的逐态界。第一步收缩作用于 Hermitian 矩阵差，不把 $T_D$ 本身当作完全正映射。
+
+同时平均通道对 $(\mathcal N,\mathcal C)$。对于保持模型的 Pauli 与 Hadamard 群元素 $U$，将二者分别变成
+
+$$
+\operatorname{Ad}_{U^*}\mathcal N\operatorname{Ad}_U,
+\qquad
+\operatorname{Ad}_{U^*}\mathcal C\operatorname{Ad}_{\overline U}.
+\tag{275.27}
+$$
+
+恒等式 $T_2\operatorname{Ad}_U=\operatorname{Ad}_{\overline U}T_2$ 保证式（275.26）在模型标签重排后保持同一界；恢复误差也不增加。平均后两个映射仍是 CPTP。所用群中每个 $U$ 与 $\overline U$ 至多相差整体相位，故第275.3节的同一对角化给出 Bloch 系数
+
+$$
+\mathcal N:(t,s,t),\qquad
+\mathcal C:(u,v,u).
+\tag{275.28}
+$$
+
+这里不需要平均后的通道对仍来自原编码和解码；只把它们作为原方案必然给出的满足上述界的 CPTP 通道对。
+
+模型的 $X,Z$ 方向为纯态，恢复误差界给出
+
+$$
+t\ge1-2e.
+\tag{275.29}
+$$
+
+式（275.26）在 $X,Z$ 方向给出 $|t-u|/2\le r$，在半径 $\varepsilon$ 的 $Y$ 方向给出 $\varepsilon|s+v|/2\le r$。因此
+
+$$
+u\ge t-2r,
+\qquad v\le-s+\frac{2r}{\varepsilon}.
+\tag{275.30}
+$$
+
+两个通道的完全正约束分别蕴含 $s\ge2|t|-1\ge2t-1$ 和 $2u\le2|u|\le1+v$。将它们与式（275.29）—（275.30）组合，得到
+
+$$
+3-8e\le4t-1\le2t+s
+\le1+\left(4+\frac2\varepsilon\right)r
+=1+\frac{2r}{\delta_\varepsilon}.
+\tag{275.31}
+$$
+
+整理即得式（275.24）。此推导只用最终的两个量子比特通道，没有输出维数或编码基底的限制。
+
+再与定理272.2的 $e+r\ge\delta_\varepsilon$ 以及 $e\ge0$ 合并，可得
+
+$$
+e\ge\max\left\{
+0,\ \delta_\varepsilon-r,\ \frac14\left(1-\frac r{\delta_\varepsilon}\right)
+\right\}
+=b_\varepsilon\max\left\{1-\frac r{\delta_\varepsilon},0\right\}.
+\tag{275.32}
+$$
+
+若 $r\le\delta_\varepsilon$，两条非零仿射界共享因子 $1-r/\delta_\varepsilon$，较大系数是 $b_\varepsilon$；若 $r\ge\delta_\varepsilon$，两者均非正。右端关于 $r$ 单调不增，故 $r\le R$ 进一步给出式（275.22）的下界。
+
+取命题275.4的混合编码，并令
+
+$$
+\theta=\max\left\{1-\frac R{\delta_\varepsilon},0\right\}.
+$$
+
+由定理275.3，$e_{\mathbb R}=b_\varepsilon$；式（275.18）于是给出 $e=\theta b_\varepsilon$、$r=(1-\theta)\delta_\varepsilon\le R$，精确达到下界。当 $R\ge\delta_\varepsilon$ 时直接使用可逆编码，恢复误差为零。两种方案的直和输出维数至多为 $4+6=10$；小参数区间的实输出方案只需三维，故九维足够。式（275.23）就是 $E\ge F_\varepsilon(R)$ 的等价预算形式。证毕。
+
+对固定正 $\varepsilon$，式（275.22）关于非实残差预算连续。若以相对预算 $R=\lambda\delta_\varepsilon$、$0\le\lambda\le1$ 趋向 $\varepsilon\downarrow0$，最小恢复误差趋向 $(1-\lambda)/4$；特别地，趋零的非实残差预算可以与零恢复误差相容，而恒取严格的 $R=0$ 会保留 $1/4$ 的正参数极限。这些是同一预算曲线的不同极限，不把几乎为实与严格为实交换使用。
+

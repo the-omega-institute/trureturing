@@ -1,0 +1,5 @@
+### 22.13 文献关系
+
+[22-D] Michel Laurent and Arnaldo Nogueira. *Rotation number of contracted rotations*. Journal of Modern Dynamics 12, 175--191, 2018. DOI: 10.3934/jmd.2018007. https://www.aimsciences.org/article/doi/10.3934/jmd.2018007 . 使用 Hecke--Mahler 级数研究收缩旋转的参数与旋转数关系。相关的取整级数与阶梯现象属于已有研究；本节对指定实际机械读出、任意固定相位和所给误差泛函逐项证明，没有把不同参数映射直接识别。
+
+[22-E] DoYong Kwon. *A devil's staircase from rotations and irrationality measures for Liouville numbers*. arXiv:0709.1642, 2007. https://arxiv.org/abs/0709.1642 . 研究由机械词构造的另一阶梯函数及其连续性和单侧极限。其目标映射与本节的几何加权相位函数不同；本节不把无理连续、有理跳变的一般现象宣称为首次发现。

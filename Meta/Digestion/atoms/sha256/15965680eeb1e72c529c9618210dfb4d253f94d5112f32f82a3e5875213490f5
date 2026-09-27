@@ -1,0 +1,41 @@
+**定义 49.1（满投影的相关准备合同）。** 沿用 (48.1) 的 $d\ge2$、$D=d+1$、$V=W\oplus\langle e_c\rangle=A\oplus B$、$r,s>0$、$c,\ell_A,\ell_B,\alpha_i,\beta_i$。固定关系 $C\subseteq A\times B$，要求两个投影分别充满 $A,B$，并把 (48.2) 的实际初始化集替换为
+
+$$
+I_C=\{(\iota_A(a),\iota_B(b)):(a,b)\in C\},
+\qquad \rho_A\iota_A=\operatorname{id}_A,\quad
+\rho_B\iota_B=\operatorname{id}_B.
+\tag{49.1}
+$$
+
+$C$ 是协议设计时固定、双方已知的关系；准备映射与控制器可以依赖这个固定参数，但一次初始化仍只能读取本端的 $a$ 或 $b$。不假设端点能够学到未公开的 $C$，也不优化从 $C$ 构造表格、程序或执行本地计算的时间成本。
+
+其余合同逐项保持：具名动作仍为全部基平移与 $N_i z=c(z)e_i$；每个动作在每个实际可达状态上总定义、确定且有限停止；全部基平移发送零位；初始化、当前投影读出、共同协议根、发送位和终端更新均满足第48.1节的端点局部性。没有免费的旧动作史、计时器、消息缺席信号、提前输出或来源相关的动作选择。须保留的历史都计入持久状态。$Q$ 是从 $I_C$ 经全部有限动作词可达的联合像，$M_A,M_B$ 恰为其两个实际投影；它们允许无限。当前读出仍为 $R(m)=\rho_A(m_A)+\rho_B(m_B)$，每步满足 (48.4)。
+
+把每个 $(a,b)\in C$ 作为二分支撑图 $A\sqcup B$ 的一条边，边的控制值为 $c(a+b)=\ell_A(a)+\ell_B(b)$。置
+
+$$
+\begin{gathered}
+\varepsilon_A=\operatorname{rank}\ell_A\in\{0,1\},\quad
+\varepsilon_B=\operatorname{rank}\ell_B\in\{0,1\},\quad
+\varepsilon_A+\varepsilon_B\ge1,\\
+A_\epsilon=\{a:\ell_A(a)=\epsilon\},\qquad
+B_\delta=\{b:\ell_B(b)=\delta\},\\
+h=\mathbf1_{\{\text{某个支撑连通分量含两条控制值不同的边}\}}.
+\end{gathered}
+\tag{49.2}
+$$
+
+称后一种分量为硬分量。满投影保证没有孤立顶点，且 $C\ne\varnothing$。不同分量可以带不同控制值。
+
+本节容量最小值取遍满足此合同、并且存在某个整数 $K<\infty$ 使
+
+$$
+\forall m_0\in I_C\ \forall u\in\mathcal F^*,\qquad
+\operatorname{Comm}(m_0,u)\le K
+\tag{49.3}
+$$
+
+的全部正确控制器。$K$ 可随控制器改变；这不是预先固定一个预算后求容量前沿，也不要求先把 $K$ 最小化。
+
+补充 (48.14) 的记号域：$\log_2|M|$ 与 $\lceil\log_2|M|\rceil$ 对有限非空实际状态集按通常意义定义，对无限实际状态集均约定为 $+\infty$；本节所有同类本地指标沿用此约定，集中联合编码指标对 $Q$ 也同样处理。因此有限基数下界可以量化无限控制器，而后述对数与固定宽度最小值由有限达到者取得；不对无限基数直接作实对数运算。
+

@@ -1,0 +1,147 @@
+**定理 12.2（保留环境相干约束的有限时域障碍）。** 对定义12.1的任务，
+
+$$
+\boxed{
+N<8\,d_{\mathrm{CPTP},N}(a,b)^2,
+\qquad
+d_{\mathrm{CPTP},N}(a,b)>\sqrt{N/8}.
+}
+\tag{12.1}
+$$
+
+对 $`N\ge2`$，已有固定纯空白酉构造同时给
+
+$$
+\sqrt{N/8}<d_{\mathrm{CPTP},N}(a,b)\le2N-1.
+\tag{12.2}
+$$
+
+此外，对每个固定正整数 $`D`$，存在 $`\widehat\eta_D>0`$，使任一维数不超过 $`D`$ 的固定接收器，至少在一个 $`n\le8D^2`$ 上具有不小于 $`\widehat\eta_D`$ 的最坏参考完整半迹恢复误差。这里 $`\widehat\eta_D`$ 可以依赖已固定的 $`a,b`$，未给其数值，也不主张在振幅退化极限上一致。式（12.1）加强定理11.2的精确时域下界，不改动其正误差容量上界，也不主张平方根下界最优。
+
+证明。只取任务允许的纯源初态 $`|0\rangle_M`$，接收初态为 $`|e\rangle_K`$，令
+
+$$
+H=M\otimes K,\quad \dim K=D,\quad
+|\psi_0\rangle=|0\rangle_M|e\rangle_K,\qquad
+\mathcal R(X)=\sum_{u\in\mathsf A}K_uXK_u^*.
+\tag{12.3}
+$$
+
+这里 $`\mathcal R`$ 是一次源发射与固定接收合成的 $`H`$ 上通道，$`\mathsf A`$ 为一份固定有限 Kraus 表的指标集。$`K_u`$ 是算子，寄存器仍记为 $`K`$。对词 $`w=u_1\cdots u_n`$，置 $`K_w=K_{u_n}\cdots K_{u_1}`$，空词取恒等算子。连续使用这份 Kraus 表的一份全局纯化为
+
+$$
+|\chi_n\rangle
+=\sum_{w\in\mathsf A^n}K_w|\psi_0\rangle\otimes|w\rangle_{E_n}.
+\tag{12.4}
+$$
+
+$`E_n`$ 只在数学纯化中保留已丢弃的环境，并不供接收器使用。记 $`\sigma_n=\operatorname{Tr}_{E_n}|\chi_n\rangle\langle\chi_n|`$。
+
+若终端 $`n`$ 的局部解码恢复全部档案与活动记忆的目标纯态，则对解码器取 Stinespring 等距，解码后的全局纯态必分解为目标纯态与其余系统纯态的张量积。因此，解码前后的 $`ME_n`$ 边缘相同，并满足
+
+$$
+\rho_{ME_n}=\rho_{M,n}\otimes\rho_{E_n}.
+\tag{12.5}
+$$
+
+逐环境矩阵元读取（12.5），得到对任意 $`w,v\in\mathsf A^n`$ 及 $`A\in\operatorname{End}(M)`$，
+
+$$
+\langle\psi_0|K_w^*(A\otimes I_K)K_v|\psi_0\rangle
+=\operatorname{Tr}(\rho_{M,n}A)
+\langle\psi_0|K_w^*K_v|\psi_0\rangle.
+\tag{12.6}
+$$
+
+反过来，（12.6）对全部 $`A,w,v`$ 成立也足以逐矩阵元恢复（12.5）。这里包含 $`w\ne v`$ 的环境相干矩阵元，不能只检查各分支概率。由纯目标恢复得到（12.5）的步骤是标准的环境解耦必要条件，本证明将它用于同一固定接收器的全部有限续接。
+
+置 $`p=|b|^2\in(0,1)`$、$`\lambda=-p`$，并沿用（10.4）的平稳态 $`\rho_*`$。令
+
+$$
+\Delta=|0\rangle\langle0|-\rho_*.
+\tag{12.7}
+$$
+
+本来源的边缘通道满足 $`E(\rho_*)=\rho_*`$、$`E(\Delta)=\lambda\Delta`$，所以
+
+$$
+\rho_{M,n}=\rho_*+\lambda^n\Delta\qquad(n\ge0).
+\tag{12.8}
+$$
+
+该式在 $`n=0`$ 也成立；它与（10.5）在 $`n\ge1`$ 的表达相同。
+
+现在把（12.6）的整族关系放进一个有限维线性空间。取
+
+$$
+\mathcal V=\operatorname{End}(H)\oplus\operatorname{End}(H),
+\qquad \dim_{\mathbb C}\mathcal V=8D^2,
+\tag{12.9}
+$$
+
+并定义
+
+$$
+\begin{aligned}
+g_A&=\left(
+(A-\operatorname{Tr}(\rho_*A)I_M)\otimes I_K,
+\operatorname{Tr}(\Delta A)I_H
+\right),\\
+\ell(X,Y)&=\langle\psi_0|(X-Y)|\psi_0\rangle,\\
+\mathcal L_{uv}(X,Y)&=
+(K_u^*XK_v,\ \lambda K_u^*YK_v)
+\qquad(u,v\in\mathsf A).
+\end{aligned}
+\tag{12.10}
+$$
+
+对 $`g_A`$ 作长度 $`n`$ 的字母对复合，所得向量遍历
+
+$$
+\left(
+K_w^*[(A-\operatorname{Tr}(\rho_*A)I_M)\otimes I_K]K_v,
+\lambda^n\operatorname{Tr}(\Delta A)K_w^*K_v
+\right)
+\quad(w,v\in\mathsf A^n).
+\tag{12.11}
+$$
+
+因此（12.6）恰为 $`\ell`$ 在这些向量上等于零。第二坐标携带 $`\lambda^n`$，故把不同长度的等式放在同一线性空间中，没有删去它们各自的时间因子。
+
+定义累计词空间
+
+$$
+W_0=\operatorname{span}_{\mathbb C}\{g_A:A\in\operatorname{End}(M)\},
+\qquad
+W_{t+1}=W_t+\sum_{u,v\in\mathsf A}\mathcal L_{uv}(W_t).
+\tag{12.12}
+$$
+
+归纳可见，$`W_t`$ 正是长度至多 $`t`$ 的全部（12.11）的张成。若 $`W_t=W_{t+1}`$，它就对全部 $`\mathcal L_{uv}`$ 不变，此后永久稳定。每次严格增长至少增加一维，故
+
+$$
+W_{8D^2}=\bigcup_{t\ge0}W_t.
+\tag{12.13}
+$$
+
+这只是有限维可达空间的标准稳定机制；本处的两个算子坐标把随时间变化的边缘目标与全部环境交叉关系一并纳入该机制。
+
+假设同一 $`D`$ 维接收器精确服务前 $`8D^2`$ 个终端。每个这些终端的（12.6）都成立，长度零的等式则由（12.7）自动成立。因此 $`\ell`$ 在 $`W_{8D^2}`$ 上恒零。由（12.13），（12.6）便对所有 $`n\ge0`$ 成立，从而（12.5）也对所有这些 $`n`$ 成立。
+
+这里只对各个时刻已经成立的同长度交叉等式作线性组合，没有要求不同时间之间存在物理相干，也没有假设有限合同之外仍有解码器。被继续迭代的只是同一个已定义于全域的通道。
+
+由（12.4）的全局纯性以及（12.5），有
+
+$$
+\operatorname{Tr}\sigma_{K,n}^2
+=\operatorname{Tr}\rho_{ME_n}^2
+=\operatorname{Tr}\rho_{M,n}^2\operatorname{Tr}\rho_{E_n}^2
+=\operatorname{Tr}\rho_{M,n}^2\operatorname{Tr}\sigma_n^2
+\qquad(n\ge0).
+\tag{12.14}
+$$
+
+定理10.2证明中的（10.9）—（10.12）已排除这条全时域纯度乘积恒等式：源纯度的唯一最低模正实基底为 $`p^2`$ 且系数严格正，与有限维固定通道轨道的最低纯度谱模相乘，会产生偏迹侧不可能具有的更低模项。因此假设矛盾，得到 $`N<8D^2`$ 及（12.1）。定理9.2的固定酉属于这里允许的 CPTP 接收器，给出（12.2）的上界。
+
+最后固定 $`D`$ 和 $`8D^2`$ 个终端。独立纯初态、固定接收通道及这有限多个局部解码器的参数集紧。前 $`8D^2`$ 个终端的最大参考完整半迹误差是连续函数：输入维数为二，可把通道差的参考维数限制为二。上面已排除最小值为零，故该函数的最小值 $`\widehat\eta_D`$ 严格正。较小维数的装置可补到 $`D`$ 维，因而同一结论也覆盖全部不超过 $`D`$ 的容量。证明完毕。
+

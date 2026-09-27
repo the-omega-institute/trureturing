@@ -1,0 +1,9 @@
+### 149.2 一份忠实纯态对完整通道差的控制
+
+下述结论允许输入和输出空间不同。diamond 范数采用不除以二的完整范数；对两通道另记半距离
+
+$$
+d_\diamond(\mathcal A,\mathcal B)
+:=\frac12\|\mathcal A-\mathcal B\|_\diamond.
+$$
+

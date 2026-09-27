@@ -1,0 +1,81 @@
+**定理 193.2（幂律成本下的最优误差分配）。** 在没有额外上限的内点问题中，令
+
+$$
+S
+=
+\sum_{i=1}^{k}
+a_i^{1/(p+1)}
+w_i^{p/(p+1)}.
+$$
+
+则唯一最优分配为
+
+$$
+\boxed{
+\delta_i^*
+=
+\frac{\varepsilon}{S}
+\left(\frac{a_i}{w_i}\right)^{1/(p+1)},
+}
+\tag{193.1}
+$$
+
+最小总成本为
+
+$$
+\boxed{
+C(\delta^*)
+=
+\frac{S^{p+1}}{\varepsilon^p}.
+}
+\tag{193.2}
+$$
+
+### 证明
+
+成本随每个 $\delta_i$ 严格递减，所以最优点饱和约束。令拉格朗日乘子为 $\lambda>0$：
+
+$$
+\mathscr L
+=
+\sum_i a_i\delta_i^{-p}
++
+\lambda
+\left(
+\sum_iw_i\delta_i-\varepsilon
+\right).
+$$
+
+一阶条件给出
+
+$$
+-p a_i\delta_i^{-p-1}+\lambda w_i=0,
+$$
+
+故存在常数 $c>0$ 使
+
+$$
+\delta_i=c\left(\frac{a_i}{w_i}\right)^{1/(p+1)}.
+$$
+
+代入饱和约束得到 $c=\varepsilon/S$，即（193.1）。再代回成本：
+
+$$
+\sum_i a_i
+\left[
+\frac{\varepsilon}{S}
+\left(\frac{a_i}{w_i}\right)^{1/(p+1)}
+\right]^{-p}
+=
+\frac{S^p}{\varepsilon^p}
+\sum_i a_i^{1/(p+1)}w_i^{p/(p+1)}
+=
+\frac{S^{p+1}}{\varepsilon^p}.
+$$
+
+严格凸性保证内点解唯一。若另有可达精度上限，需把相应约束加入并按活动集重新结算。证毕。
+
+这说明前段和后段不应默认承担同样的局部精度：因果权重大的阶段更值得分配较小误差，但其具体比例还受该阶段的测量或压缩成本系数 $a_i$ 控制。
+
+---
+

@@ -674,9 +674,9 @@ density.
 ## 10. Exact certificate and source inputs
 
 The standalone
-[producer](../frontier/cover-geometry/seven_block_certificate.py)
+[producer](../frontier/cover-geometry/seven-block-certificate/seven_block_certificate.py)
 and its
-[exact data](../frontier/cover-geometry/seven_block_certificate.json)
+[exact data](../frontier/cover-geometry/seven-block-certificate/seven_block_certificate.json)
 record the complete boundary, selected cutoffs, minimum coordinate
 residuals, and fee ratios. The producer checks every one of the 64
 coordinate residuals for each selected six-coordinate comparison.
@@ -688,13 +688,13 @@ expense, coordinate caps, cutoff, minimum residual, \(Z,L,K_S\),
 and all three placement costs.
 
 The calculation reuses Chapter 30's
-[source helper](../frontier/cover-geometry/six_prime_prefix_certificate.py)
+[source helper](../frontier/cover-geometry/finite-prefix-sources/six_prime_prefix_certificate.py)
 and
-[ordinary geometry](../frontier/cover-geometry/six_prime_prefix_geometry.json).
+[ordinary geometry](../frontier/cover-geometry/finite-prefix-sources/six_prime_prefix_geometry.json).
 No new geometry copy or geometric search is needed. From the
 repository root:
 
-    python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/seven_block_certificate.py --geometry docs/reports/erdos7-odd-covering/frontier/cover-geometry/six_prime_prefix_geometry.json --output /tmp/seven-block-certificate.json
+    python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/seven-block-certificate/seven_block_certificate.py --geometry docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/six_prime_prefix_geometry.json --output /tmp/seven-block-certificate.json
 
 The default helper is the existing adjacent Chapter 30 program;
 an explicit helper path can also be supplied. Absolute input paths

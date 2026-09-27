@@ -1,0 +1,67 @@
+#### 3.6.7 不可行理想目标：到最优共同来源的统一误差界
+
+即使理想局部律没有共同实现，仍可另行研究“距离它最近的合法共同来源”。继续固定上述 $A,E,B_e,\pi_e,M$ 和两份范数，允许目标 $r=(r_e)_{e\in E}\in\prod_e\Delta_{B_e}$ 不属于 $M(\Delta_A)$。定义
+$$
+\delta_r(q)=\max_{e\in E}\operatorname{TV}(M_eq,r_e),\qquad
+\alpha_r=\min_{q\in\Delta_A}\delta_r(q),\qquad
+\operatorname{Opt}_r=\{p\in\Delta_A:\delta_r(p)=\alpha_r\}.
+\tag{TM.78}
+$$
+
+有限维总变差与有限最大值都是连续函数，$\Delta_A$ 非空紧，故 $\alpha_r$ 达到，$\operatorname{Opt}_r$ 为非空紧集。所有 $r_e$ 都是概率律，因而 $0\le\alpha_r\le1$。又因 $M(\Delta_A)$ 紧，$\alpha_r=0$ 当且仅当 $r\in M(\Delta_A)$；不可行目标具有严格正的最小剩余量。
+
+令有限行指标集为 $\mathcal I=\{(e,s):e\in E,\ s\in\{-1,1\}^{B_e}\}$。对任意实向量 $z$，每个坐标选择其符号即得 $\sum_b|z_b|=\max_s\sum_bs_bz_b$。因此可定义与 $r$ 无关的固定矩阵 $\widetilde A$，以及依赖 $r$ 的右端 $b_r$：
+$$
+\begin{aligned}
+\delta_r(q)
+&=\max_{(e,s)\in\mathcal I}\tfrac12s^{\mathsf T}(M_eq-r_e),\\
+\widetilde A_{(e,s)}&=\tfrac12s^{\mathsf T}M_e,\qquad
+(b_r)_{(e,s)}=\alpha_r+\tfrac12s^{\mathsf T}r_e.
+\end{aligned}
+\tag{TM.79}
+$$
+
+矩阵有 $\sum_e2^{|B_e|}$ 行；这里用有限符号展开证明多面体性，不附带有效率的计算保证。由式(TM.79)，全部行不等式等价于 $\delta_r(p)\le\alpha_r$；对 $p\in\Delta_A$，最优值的定义又给反向不等式，故
+$$
+\operatorname{Opt}_r
+=\{p\in\Delta_A:\widetilde A p\le b_r\}.
+\tag{TM.80}
+$$
+
+这一多面体非空已有紧性保证，所以 $b_r$ 是固定系统 $\widetilde A p\le b$、$p\in\Delta_A$ 的可行右端。
+
+现在用源范数 $\tfrac12\|\cdot\|_1$，并在行剩余量空间 $\mathbb R^{\mathcal I}$ 使用 $\ell^\infty$ 范数。向量 $w$ 到非负正交锥的 $\ell^\infty$ 距离为 $\|(-w)_+\|_\infty$：逐坐标将负值截断为零即可达到，任意非负候选在相应坐标上的误差又至少为该负值的绝对值。因此，所引命题5取等式矩阵为空时的剩余距离，正好是 $\|(\widetilde A q-b_r)_+\|_\infty$。对任意 $q\in\Delta_A$，它进一步满足
+$$
+\begin{aligned}
+\|(\widetilde A q-b_r)_+\|_\infty
+&=\max_{(e,s)\in\mathcal I}
+\left(\tfrac12s^{\mathsf T}(M_eq-r_e)-\alpha_r\right)_+\\
+&=\bigl(\delta_r(q)-\alpha_r\bigr)_+
+=\delta_r(q)-\alpha_r.
+\end{aligned}
+\tag{TM.81}
+$$
+
+最后一步使用 $q$ 属于同一可行来源集，故其目标值不小于最优值。这也是为什么不能把任意有符号输入代入该式最后一行。
+
+参考多面体版本的纯不等式 Hoffman 界因此给出
+$$
+\boxed{
+\min_{p\in\operatorname{Opt}_r}\operatorname{TV}(p,q)
+\le C_{A,M}\bigl(\delta_r(q)-\alpha_r\bigr)
+\quad\forall r\in\prod_e\Delta_{B_e},\quad\forall q\in\Delta_A,
+}
+\qquad C_{A,M}=H(\widetilde A\mid\Delta_A)<\infty.
+\tag{TM.82}
+$$
+
+式(TM.82)的 $H(\widetilde A\mid\Delta_A)$ 是这里对所引混合约束常数 $H(\widetilde A,[]\mid\Delta_A)$ 的纯不等式简记；它与式(TM.67)取不等式矩阵为空的纯等式记号 $\widetilde H(C\mid R)$ 分别使用自己的约束类型。
+
+左侧最小值由 $\operatorname{Opt}_r$ 的紧性达到。常数的统一性来自成熟定理对全部可行不等式右端的量词：$r$ 和 $\alpha_r$ 只改变 $b_r$，参考多面体、矩阵及两份范数均未改变。因此该常数与 $r$ 无关。式(TM.78)—(TM.82)给出的是该成熟定理的有限多面体应用，不是新的普遍误差界。
+
+一个具体不可行例子仍来自式(TM.74)的 $n=2$ 档案。让两条理想边都以概率一读到 $01$。合法来源必须满足 $p_1+p_2\le1$，而剩余量为 $\delta_r(p)=\max\{1-p_1,1-p_2\}=1-\min\{p_1,p_2\}$。所以 $\alpha_r=1/2$，唯一最优来源是 $p_*=(\delta_{e_1}+\delta_{e_2})/2$。理想目标仍没有精确共同实现；最优来源留下不可消去的目标剩余量 $1/2$。若 $q=\delta_{\mathbf0}$，其剩余量为一，超出最优值的部分为 $1/2$，到最优来源的总变差为一。这里的“最优”始终相对于固定合法档案和所声明的最大边误差。
+
+选定式(TM.82)的某个最近最优来源后，式(TM.71)、(TM.72)的同一证明继续控制全部 $[0,1]$ 有界任务和共同随机核，只需将右侧换为 $\min\{1,C_{A,M}(\delta_r(q)-\alpha_r)\}$。这将目标剩余量分成相对于该档案无法减少的 $\alpha_r$，以及可以通过移向最优来源减少的超额部分；即使超额为零，也不抹去正的 $\alpha_r$。
+
+这个结论逼近某个最优共同来源，不识别一份预先指定的隐藏整体，也不保证唯一解码器或高效取得最优值、常数与修复律。它的跨规模常数仍可增长：允许的目标包含式(TM.75)的可行全零目标，此时 $\alpha_r=0$，该实例已迫使任何对应星图档案的统一常数 $C_{A_n,M}$ 至少为 $n$。非线性准入、无限档案或无限上下文不自动具有上述有限多面体结构，须另行供应相应误差界。
+

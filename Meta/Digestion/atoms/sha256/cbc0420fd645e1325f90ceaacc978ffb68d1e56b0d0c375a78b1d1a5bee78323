@@ -1,0 +1,27 @@
+**文献已知中间构件 20.2（不需要额外选择假设的完整滞后一证书）。** 定义 20.1 给出保端点和总群标记的互逆双射
+
+$$
+\psi_A:E_U E_V\longrightarrow E_A,\qquad
+\psi_B:E_V E_U\longrightarrow E_B.
+$$
+
+若 psi_A^{-1}(a)=(u,v)、psi_B^{-1}(b)=(v,u)，则定义
+
+$$
+\varphi_U(a,u')=(u,\psi_B(v,u')),
+\qquad
+\varphi_V(b,v')=(v,\psi_A(u,v')).
+$$
+
+它们分别是 E_A E_U→E_U E_B 和 E_B E_V→E_V E_A 的保端点、总标记双射。两组滞后一 compatible 方程都成立，具体为
+
+$$
+\varphi_U=(\operatorname{id}_U\times\psi_B)(\psi_A^{-1}\times\operatorname{id}_U),
+\qquad
+\varphi_V=(\operatorname{id}_V\times\psi_A)(\psi_B^{-1}\times\operatorname{id}_V).
+$$
+
+**证明。** [g](UV)_ij 逐项展开，恰数出对应 UV 路径纤维的元素个数。因此按序号配对在每个有限纤维中双射，逆映射返回该元素的序号；VU 同理。phi_U 的逆把 (u,b) 中的 b 分解成 (v,u')，再返回 (psi_A(u,v),u')。复合的三条半边端点吻合，两个方向的总标记均为 ell(u)ell(v)ell(u')，且次序未改变。phi_V 的逆对称构造。最后两个兼容等式就是对同一个三半边路径的这两种分组公式，已在全部实际输入上成立。证毕。
+
+这些重组属于经典基本 SSE 与二分图编码构件；第 20 节将边身份、有限排序和扩张群坐标全部明确化，不将基本二分图编码归为本项目首创。[^rrosft4-bipartite]
+

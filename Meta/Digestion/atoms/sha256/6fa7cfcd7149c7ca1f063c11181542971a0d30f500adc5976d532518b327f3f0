@@ -1,0 +1,38 @@
+**推论 257.3（已知三阶变化界下的有限数据认证）。** 设 $T$ 为目标紧区间，$I$ 为较大的紧区间，并已知每个 $u\in T$ 都满足 $[u-r,u+r]\subset I$。假设 $\rho\in C^3(I)$，且已知一个对允许类有效的数值界
+
+$$
+\sup_{v\in I}\|\rho'''(v)\|_{\rm op}\le M.
+\tag{257.10}
+$$
+
+非空有限采样集 $\{v_j\}\subset I$ 的填充半径为
+$h=\sup_{v\in I}\min_j|v-v_j|$。若在各点得到二阶导数估计 $H_j$，并有认证误差 $\|H_j-\rho''(v_j)\|_{\rm op}\le\varepsilon$，则
+
+$$
+L_{\rm cert}=\max_j\|H_j\|_{\rm op}+\varepsilon+Mh
+\tag{257.11}
+$$
+
+是 $\sup_I\|\rho''\|_{\rm op}$ 的上界，且
+
+$$
+\sup_{u\in T}I_Q(\rho_u)\le2nL_{\rm cert}+r^{-2},
+\qquad
+\int_T I_Q\,du\le |T|(2nL_{\rm cert}+r^{-2}).
+\tag{257.12}
+$$
+
+证明。 对任意 $v\in I$，取最近的采样点 $v_j$。微积分基本定理和（257.10）给出
+$\|\rho''(v)-\rho''(v_j)\|_{\rm op}\le M|v-v_j|\le Mh$，从而得到（257.11）。逐点应用定理257.2并积分即得结论，也可直接使用（257.5）的较紧余项。这里积分按 Lebesgue 意义理解：记 $X=\rho'$、$\mathscr L_\rho(Z)=\rho Z+Z\rho$，则
+
+$$
+I_Q(\rho_u)
+=\lim_{\epsilon\downarrow0}
+2\operatorname{Re}\operatorname{Tr}
+\left[X_u(\mathscr L_{\rho_u}+\epsilon\operatorname{Id})^{-1}(X_u)\right].
+$$
+
+核—核块为零保证这个点态极限就是 SLD 谱式；每个正则化项连续，故信息可测。上界再保证可积，无需假定跨秩连续。证毕。
+
+这不是从解析性或有限数据自动推导一个未知的 $M$。已知的（257.10）是新增约束，排除了第256节中任意快的隐藏往返。也可用一个已知的二阶导数连续模替换 $Mh$；所需信息是窗口之间的定量变化控制。
+

@@ -1,0 +1,174 @@
+## 419. 五射线严格内部的三阶段自适应恢复增益
+
+操作约定与构造。固定已知实数 $r>0$，满足 $1/2<r^2<2$。取系统 $S=\mathbb C^5$ 及其正交基 $\{|i\rangle\}_{i=1}^5$，在原始记录空间中令
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&
+s_1&=|0\rangle,&s_2&=|1\rangle,&
+s_{3+a}&=\frac{|0\rangle+r\omega^a|1\rangle}{\sqrt{1+r^2}}
+\quad(a=0,1,2),\\
+R_A&=\mathbb C^2,&R_B&=\mathbb C^2,&R_2&=R_A\otimes R_B,&
+q_i&=s_i\otimes s_i,\\
+J&:S\longrightarrow S\otimes R_2,&
+J|i\rangle&=|i\rangle\otimes q_i&&&(1\le i\le5).
+\end{aligned}
+$$
+
+Alice、Bob 分别持有原始因子 $R_A,R_B$。允许的协议为有限深度的局部操作树：每个节点由一方在自己的有限维工作空间上执行有限结果的完全正仪器，各结果之和保迹；后续节点只依赖已经取得的实际经典历史，允许双方传递经典消息。所有局部输出空间有限维且非零；局部辅助态与未知输入及未操作参考独立，两方初始辅助态为乘积态。允许局部记忆、丢弃辅助输出、提前终止及零结果，全部失败结果仍属于完整树。每棵协议有限，不要求不同协议共用深度、结果数或维数上界。没有共享纠缠、量子通信、遗漏原始因子或记录操作期间的系统操作。
+
+这个有限条件仪器接口采用 Chitambar 等，[*Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)*, arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.2 的局部仪器与条件复合。将一棵树的局部隐藏 Kraus 指标展开后，实际终端历史 $y$ 的记录映射可写为
+
+$$
+\begin{aligned}
+\mathcal I_y(Z_0)&=\sum_\nu L_{y\nu}Z_0L_{y\nu}^\dagger,
+&L_{y\nu}&:R_2\longrightarrow O_{A,y}\otimes O_{B,y},\\
+E_y&=\sum_\nu L_{y\nu}^\dagger L_{y\nu},
+&\sum_yE_y&=I_{R_2},\\
+\mathcal M_y(D)&=\operatorname{Tr}_{O_{A,y}\otimes O_{B,y}}
+ \left[(\operatorname{id}_S\otimes\mathcal I_y)(JDJ^\dagger)\right]
+&&\quad(D\in\mathcal L(S)).
+\end{aligned}
+$$
+
+辅助态准备及全部局部丢弃吸收在这些映射内。隐藏指标 $\nu$ 不是可通信结果；若对实际历史粗粒化，同一最终标签内的全部项也共用一个反馈。预先固定接受集合 $\mathsf Y_{\mathrm s}$，全部记录操作结束后，每个实际历史控制一个预先指定、作用于整个 $S$ 的终端酉算子 $U_y$。协议、接受集合及反馈只依赖已知源族，不依赖未知输入或参考。精确恢复要求同一个标量 $p\in[0,1]$ 满足
+
+$$
+\begin{aligned}
+\mathcal T(D)&:=\sum_{y\in\mathsf Y_{\mathrm s}}
+ U_y\mathcal M_y(D)U_y^\dagger=pD
+&&\text{对全部 }D\in\mathcal L(S),\\
+(\operatorname{id}_F\otimes\mathcal T)(D_{FS})&=pD_{FS}
+&&\text{对每个有限维未操作参考 }F
+\text{ 及全部 }D_{FS}\in\mathcal L(F\otimes S).
+\end{aligned}
+$$
+
+矩阵张量基展开使两行等价；这里仍显式要求任意参考使用同一协议和同一 $p$。空接受集合允许 $p=0$。记这些有限树所能实现的 $p$ 的上确界为 $\eta_{\mathrm{fin}}(r)$。沿用第 416、417 节的量
+
+$$
+\kappa=\frac{\sqrt{4+2(r^2+r^{-2})}}3,
+\qquad h=\frac1{3(1+\kappa)},\qquad
+L=2h,\qquad U=\frac1{3\kappa}.
+$$
+
+定理 417.1 在同一全矩阵、全参考接口下给出取得的单向最大值 $L$；定理 416.1 给出有限可分上界 $U$。以下构造仍使用完整的四维物理空间。设
+
+$$
+e_0=|00\rangle,\qquad e_1=\frac{|01\rangle+|10\rangle}{\sqrt2},
+\qquad e_2=|11\rangle,\qquad
+e_-=\frac{|01\rangle-|10\rangle}{\sqrt2},\qquad
+W=\operatorname{span}\{e_0,e_1,e_2\}.
+$$
+
+$R_2=W\oplus\mathbb C e_-$ 是数学分解，$W$ 不替代原始两因子，也不授权物理压缩。取第 413、416 节的任一平坦单位向量 $b=b_0e_0+b_1e_1+b_2e_2$，复用其精确关系
+
+$$
+|b_k|^2=\frac13\quad(k=0,1,2),\qquad
+|\langle b|q_i\rangle|^2=\frac13\quad(1\le i\le5),\qquad
+d^2=b_1^2-2b_0b_2,\qquad |d|^2=\kappa.
+$$
+
+令 $V_\pm=(b\pm d e_-)/\sqrt{1+\kappa}$。它们是第 416 节的单位乘积提升。使用该处的精确因子，可写为
+
+$$
+\tau=\frac{b_1-d}{\sqrt2\,b_0},\qquad
+x=\frac{(1,\tau)}{\sqrt{1+|\tau|^2}},\qquad
+y=\frac{\sqrt{1+|\tau|^2}}{\sqrt{1+\kappa}}
+       \left(b_0,\frac{b_1+d}{\sqrt2}\right),\qquad
+x\otimes y=V_+,\quad y\otimes x=V_-.
+$$
+
+选择根 $d$ 的符号，使 $x$ 的 Bloch 高度为负；下面证明两高度非零且相反，故此选择可行。固定
+
+$$
+H=\operatorname{diag}(1,\omega),\qquad
+\theta_a=\frac{2\pi a}{3},\qquad
+x_a=H^ax,\quad y_a=H^ay\quad(a\in\mathbb Z/3\mathbb Z),\qquad
+\rho=2\sqrt h,\quad\zeta=\sqrt{1-4h}.
+$$
+
+用计算基中的 Pauli 矩阵 $X,Y,Z$ 定义通常的 Bloch 坐标。令 $\phi_0$ 为实际射线 $x$ 的方位角，令 $\delta\in(-\pi,\pi]$ 为从 $x$ 到 $y$ 的带符号方位角差。只作共同的被动坐标标定
+
+$$
+X'=\cos\phi_0 X+\sin\phi_0 Y,\qquad
+Y'=-\sin\phi_0 X+\cos\phi_0 Y,\qquad Z'=Z,
+\qquad \sigma'=(X',Y',Z').
+$$
+
+对单位 ket $v$，记 $P_v=|v\rangle\langle v|$，并以 $v_{\mathrm B}$ 表示在这组三轴下的 Bloch 向量，即 $P_v=(I_2+v_{\mathrm B}\cdot\sigma')/2$。三个源纬线的方位角在新坐标中是 $\theta_a-\phi_0$；上面给定的源 ket 保持原样。整体 ket 相位不改变 Bloch 射线，不能用它代替这次坐标标定，也不把 $\delta$ 换成其绝对值。
+
+定义两个权重三元组、伙伴均值及其方向
+
+$$
+\begin{aligned}
+(u_0,u_1,u_2)&=\left(\frac23,\frac16,\frac16\right),&
+v_a&=\frac{1-\cos(\delta-\theta_a)}3,\\
+M&=\sum_{a=0}^2\bigl(u_a x_{a,\mathrm B}+v_a y_{a,\mathrm B}\bigr),&
+m&=\|M\|,\qquad n=\frac{M}{m},\qquad q=\frac m4.
+\end{aligned}
+$$
+
+下文将证明严格内部有 $0<m<1$，因此方向 $n$ 有定义。令 $R_z(\theta)$ 表示绕被动坐标的第三轴旋转，Alice 的第一阶段为
+
+$$
+n_j=R_z(\theta_j)n,\qquad
+A_j=\frac{I_2+q n_j\cdot\sigma'}3,\qquad
+F_j=A_j^{1/2}\quad(j=0,1,2).
+$$
+
+Alice 报告实际结果 $j$ 并发给 Bob。记 Bob 的六个实际标签为 $\ell=(\epsilon,a)$，其中 $\epsilon\in\{+,-\}$、$a\in\mathbb Z/3\mathbb Z$。条件于 $j$，给定
+
+$$
+\begin{aligned}
+(t_{j,(+,a)},g_{j,(+,a)},w_{(+,a)})&=(x_{a+j},y_{a+j},u_a),\\
+(t_{j,(-,a)},g_{j,(-,a)},w_{(-,a)})&=(y_{a+j},x_{a+j},v_a),\\
+B_{\ell\mid j}&=\sqrt{w_\ell}\,P_{g_{j\ell}}.
+\end{aligned}
+$$
+
+所有轨道下标按模三相加。Bob 把实际 $\ell$ 发回 Alice。对这个已知 $(j,\ell)$，置
+
+$$
+\begin{aligned}
+c_{j\ell}&=n_j\cdot t_{j\ell,\mathrm B},&
+\mu_{j\ell}&=\frac1{\langle t_{j\ell}|A_j^{-1}|t_{j\ell}\rangle}
+             =\frac{1-q^2}{3(1-qc_{j\ell})},\\
+f_{j\ell}&=\sqrt{\mu_{j\ell}}\,A_j^{-1/2}t_{j\ell},&
+T_{j\ell}&=P_{f_{j\ell}}.
+\end{aligned}
+$$
+
+Alice 第三阶段的两个 Kraus 算子为 $T_{j\ell}$ 和 $I_2-T_{j\ell}$，实际结果分别记为 $\mathrm s,\mathrm f$。不引入辅助空间，三个阶段的局部输出都保留原来的量子比特空间。完整历史、固定接受集合及记录 Kraus 算子为
+
+$$
+\begin{aligned}
+\mathsf Y&=\{(j,\ell,o):j=0,1,2,\ \ell\in\{+,-\}\times\mathbb Z/3\mathbb Z,
+                         \ o\in\{\mathrm s,\mathrm f\}\},\\
+\mathsf Y_{\mathrm s}&=\{(j,\ell,\mathrm s):j=0,1,2,\ \ell\in\{+,-\}\times\mathbb Z/3\mathbb Z\},\\
+L_{j\ell\mathrm s}&=(T_{j\ell}F_j)\otimes B_{\ell\mid j},\\
+L_{j\ell\mathrm f}&=((I_2-T_{j\ell})F_j)\otimes B_{\ell\mid j},
+\qquad \mathcal I_{j\ell o}(Z_0)=L_{j\ell o}Z_0L_{j\ell o}^\dagger.
+\end{aligned}
+$$
+
+次序是 Alice、Bob、Alice，共有两次持有者之间的消息传递；随后把完整实际历史 $(j,\ell,o)$ 交给终端系统反馈端。成功反馈按实际乘积振幅标定为
+
+$$
+z_{j\ell i}=\frac{\langle t_{j\ell}\otimes g_{j\ell}|q_i\rangle}{\sqrt h},
+\qquad
+U_{j\ell\mathrm s}=\operatorname{diag}(\overline z_{j\ell1},\ldots,
+                                      \overline z_{j\ell5}),\qquad
+U_{j\ell\mathrm f}=I_S.
+$$
+
+下文证明 $|z_{j\ell i}|=1$。这些反馈在协议执行前固定，每个实际历史只用这一个全系统酉算子。
+
+最后记六个未旋转的目标为 $t_\ell=t_{0\ell}$，设
+
+$$
+c_\ell=n\cdot t_{\ell,\mathrm B},\qquad
+\Delta=\frac{hm^2(8-m^2)}{64},\qquad
+R=h(1-q^2)q^2\sum_\ell\frac{w_\ell c_\ell^2}{1-qc_\ell}.
+$$
+

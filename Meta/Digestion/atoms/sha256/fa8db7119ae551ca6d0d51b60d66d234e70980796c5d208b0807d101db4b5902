@@ -1,0 +1,17 @@
+### 54.1 Choi 配对与全部反馈事件
+
+固定非零有限维 Hilbert 空间 $A,B$ 及其基，记 $d_A=\dim A$。静态候选是通道 $\Phi:A\to B$ 的未归一化 Choi 算符
+
+$$
+R\succeq0,\qquad \operatorname{Tr}_B R=I_A,
+\tag{54.1}
+$$
+
+作用于 $B\otimes A$。这里的通道方向描述静态对应关系，而 $B$ 的输出被赋予较早的时刻。此接口上的归一化因果梳恰为
+
+$$
+S_\sigma=\sigma\otimes I_A,
+\qquad \sigma\succeq0,\qquad \operatorname{Tr}\sigma=1.
+\tag{54.2}
+$$
+

@@ -1,0 +1,70 @@
+**定理 5.3（任意物理编码的相位区分下界）。** 对 \(n\ge4\)，
+\[
+\boxed{k_n^{(\epsilon)}\ge
+\frac{1-\epsilon}{2\sqrt\pi}
+\sqrt{\alpha^3\left\lfloor\frac{n-1}{3}\right\rfloor}.}
+\tag{5.13}
+\]
+下界允许任意满足定义5.1的 CPTP 编解码，不限制为投影、荷窗口或相位协变通道。
+
+证明。只取合法 Bell 输入，其实际联合纯态为（2.9）。把不可访问的 \(JM\) 合记为四维 \(R\)。按总荷分组有
+\[
+|\Psi_\vartheta\rangle=\sum_qe^{iq\vartheta}|v_q\rangle,
+\qquad \langle v_q,v_{q'}\rangle=0\quad(q\ne q').
+\tag{5.14}
+\]
+对全圆相位取数学平均，得到
+\[
+\overline\Omega=\frac1{2\pi}\int_{-\pi}^{\pi}
+|\Psi_\vartheta\rangle\langle\Psi_\vartheta|\,d\vartheta
+=\sum_q|v_q\rangle\langle v_q|,
+\qquad
+\|\overline\Omega\|_\infty=\max_q\Pr\{S_n=q\}.
+\tag{5.15}
+\]
+右侧是（5.5）中初位均匀的链；这是实际 Bell 来源的荷分布，不是给接收器增加相位读数或准备权限。
+
+先估计此分布的最大点质量。置 \(z=e^{it}\)、\(A(t)=P\operatorname{diag}(1,z)\)，并用最大绝对行和范数。直接相乘得
+\[
+A(t)^2=
+\begin{pmatrix}
+\alpha^2(1+z)&\alpha^3z\\
+\alpha&\alpha^2z
+\end{pmatrix}.
+\tag{5.16}
+\]
+令 \(c=|\cos(t/2)|\)。两行绝对和分别为 \(1-2\alpha^2(1-c)\) 和一；再左乘 \(A(t)\)，逐行三角不等式给
+\[
+\|A(t)^3\|_\infty
+\le1-2\alpha^3(1-c)
+\le1-\alpha^3\sin^2(t/2),\qquad
+\|A(t)\|_\infty=1.
+\tag{5.17}
+\]
+取 \(m=\lfloor(n-1)/3\rfloor\ge1\)。荷的特征函数是
+\(\frac12(1,e^{it})A(t)^{n-1}(1,1)^{\mathsf T}\)，故其绝对值至多
+\(\exp[-m\alpha^3\sin^2(t/2)]\)。整数 Fourier 反演和 \(\sin(|t|/2)\ge|t|/\pi\) 对 \(|t|\le\pi\) 给
+\[
+\max_q\Pr\{S_n=q\}
+\le\frac1{2\pi}\int_{-\pi}^{\pi}
+ e^{-m\alpha^3\sin^2(t/2)}\,dt
+\le\frac{\sqrt\pi}{2\sqrt{m\alpha^3}}=:\beta_n.
+\tag{5.18}
+\]
+
+现取任何 \(k\) 维接收器，令其编码后的 \(KR\) 态为 \(\tau_\vartheta\)，恢复态为 \((\mathcal D\otimes\operatorname{id}_R)(\tau_\vartheta)\)。由 \(0\preceq\tau_\vartheta\preceq I_{KR}\)，以及解码对偶的正性，其目标重叠满足
+\[
+f_\vartheta
+\le\operatorname{Tr}\bigl[(\mathcal D^*\otimes\operatorname{id}_R)
+(|\Psi_\vartheta\rangle\langle\Psi_\vartheta|)\bigr].
+\tag{5.19}
+\]
+（5.1）对目标纯态投影这个效果给 \(f_\vartheta\ge1-\epsilon\)。积分（5.19），再用（5.15）、（5.18）及 \(\mathcal D^*(I)=I_K\)，得到
+\[
+1-\epsilon\le
+\operatorname{Tr}[(\mathcal D^*\otimes\operatorname{id}_R)(\overline\Omega)]
+\le\beta_n\operatorname{Tr}I_{KR}=4k\beta_n.
+\tag{5.20}
+\]
+代入 \(\beta_n\) 即得（5.13）。保留的四维参考已明确计入此下界估计，没有把它当成可访问的编码寄存器。证明完毕。
+

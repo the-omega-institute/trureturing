@@ -1,0 +1,5 @@
+source_id = "latin-h-transversals"
+path = "docs/develop/theory/LATIN_H_TRANSVERSALS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

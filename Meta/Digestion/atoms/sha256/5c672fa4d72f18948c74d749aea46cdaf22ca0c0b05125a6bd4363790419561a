@@ -1,0 +1,72 @@
+**定义 28.1（增加输出后的真实信号增益）。** 沿用定义 27.1 的实验、固定参数、
+有限内在偏移及方向处理。对固定实数 $`\kappa\ge1`$，令
+$`m_\kappa=\lfloor\kappa q\rfloor`$；下文取维数充分大，使其不超过正类状态数。
+令 $`T_\kappa`$ 是补偿得分最大的 $`m_\kappa`$ 个位置。
+所有预算使用同一份数据、同一个方向判决和同一组独立均匀同分优先级，因此这些集合嵌套。
+置
+
+```math
+M_\kappa=\frac{|S\setminus T_\kappa|}{q},\qquad
+D_\kappa=M_1-M_\kappa.
+```
+
+式 (28.1)。
+
+本章使用遗漏信号比例。输出大小不等于基数时，它不等于 Hamming 损失除以两倍基数。
+记相应固定输出大小的精确极小极大遗漏风险为
+
+```math
+H_{\mathcal E,\kappa}^{\xi}
+ =\inf_{\widehat T:\,|\widehat T|=m_\kappa}
+   \sup_{S,\,\varepsilon\in\Xi_\xi}
+    \mathbb E_{S,\varepsilon}^{\mathcal E}
+       \frac{|S\setminus\widehat T|}{q}.
+```
+
+式 (28.2)。
+
+已知方向时，$`\Xi_{\mathrm k}`$ 只含给定方向且规则可使用该方向；
+未知方向时，$`\Xi_{\mathrm o}=\{+,-\}`$。
+在 $`\kappa=1`$ 处，这与原来的恰好基数风险相同。
+已知方向的排序规则达到 (28.2)；未知方向仍使用定义 27.1 的组合规则。
+
+为描述边界概率，定义
+
+```math
+d(z)=\frac{\varphi(z)}{\sqrt v},\qquad
+b_\kappa(z)=\kappa-1+\Phi(z),\qquad
+x_\kappa(z)=\log\frac{d(z)}{b_\kappa(z)},\qquad
+\zeta_M=\tau_M-\tfrac12\log\lambda.
+```
+
+式 (28.3)。
+
+非格点振幅的时钟为
+
+```math
+\Theta(\kappa)
+ =d(z_*)\log\frac{\kappa-1+p_*}{p_*}.
+```
+
+式 (28.4)。
+
+对最大格距为 $`h`$ 的格点振幅，沿用支持恢复卷第 26 章的
+$`L_h=h/(e^h-1)`$、$`l_h=\log L_h`$ 及连续周期函数 $`G_h`$。
+对相位 $`\omega\in\mathbb R/h\mathbb Z`$，取任一实代表，置
+
+```math
+\begin{aligned}
+y_\kappa(\omega)
+ &=h\left\lceil\frac{\omega+x_\kappa(z_*)+l_h}{h}\right\rceil
+       -\omega-x_\kappa(z_*),\\[0pt]
+C_\kappa(\omega)
+ &=x_\kappa(z_*)+G_h(y_\kappa(\omega)),\\[0pt]
+\Theta_\omega(\kappa)
+ &=d(z_*)[C_1(\omega)-C_\kappa(\omega)].
+\end{aligned}
+```
+
+式 (28.5)。
+
+周期性使它们不依赖相位代表的选择，端点处按 $`G_h`$ 的连续延拓取值。
+

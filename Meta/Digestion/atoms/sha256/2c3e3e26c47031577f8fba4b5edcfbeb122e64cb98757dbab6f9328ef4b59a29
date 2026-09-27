@@ -1,0 +1,23 @@
+**定义 70.1（原始数据纤维上的 Rényi 熵）。** 保留第 68 章的模型、完整窗口和计数向量 $R$。
+对每份原始数据 $x$，令 $\mathsf P_x$ 是均匀大小 $q$ 支持先验的精确计数后验，
+$\mathsf Q_x$ 是同一校准参数下的独立二项计数律。
+以 $\nu$ 表示熵的阶数，原计数线斜率 $\alpha$ 不变。定义
+
+```math
+H_{\nu,M}(x)=\frac{\log_2\sum_n\mathsf P_x(n)^\nu}{1-\nu}
+ \quad(0<\nu\ne1),\qquad
+H_{0,M}(x)=\log_2|\operatorname{supp}\mathsf P_x|,
+```
+
+```math
+H_{1,M}=h_M,\qquad H_{\infty,M}=h_{\infty,M},\qquad
+\widetilde H_{\nu,M}=H_\nu(\mathsf Q_x),\qquad
+A(u)=(c_q-I(u))_+.
+```
+
+式 (70.1)。
+
+$h_M,h_{\infty,M},c_q,I,\mathcal I,\ell,\mathscr H$ 均取第 68 章的定义。
+阶数为零时仅数正概率的组计数元组，不数每个元组内部的标签排列。
+这些量都在同一数据纤维上先取有限和，再取对数。
+

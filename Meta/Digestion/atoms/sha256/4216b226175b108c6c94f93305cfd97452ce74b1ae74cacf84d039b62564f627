@@ -1,0 +1,4 @@
+**张量收缩是另一份空间合同。** Igor L. Markov、Yaoyun Shi，*Simulating quantum computation by contracting tensor networks*，[arXiv:quant-ph/0511069v7](https://arxiv.org/pdf/quant-ph/0511069v7)，PDF第8页 Definition 3.3 与式(1)描述通常一次同时求和两张量全部共享指标的收缩，也允许开放连线；第9页 Proposition 3.5 在电路概率任务中通过输入与测量张量关闭网络。第10页为图论分析另取逐条边收缩、保留随后仍待收缩的自环这一约定，Definition 4.1 的 $\operatorname{cc}(G)$ 只统计新合并顶点的最大度，不包含初始顶点；第10—11页 Proposition 4.2 才在该约定下证明 $\operatorname{cc}(G)=\operatorname{tw}(L(G))$。
+
+这里 $L(G)$ 是线图。第10页 Proposition 3.6 的运行时参数却是所有出现张量的最大 rank，初始张量不能漏算；路径例子的 $\operatorname{cc}=1$ 而初始最大度数为二，已经显示两种计量不同。将平行边改成同时收缩会改变中间计数，不能原封不动保留上述精确等式。第11页 Lemma 4.4、Theorem 4.5 还给原图 treewidth 与 $\operatorname{cc}$ 的比较，包含最大度依赖；星图 $K_{1,m}$ 的原图 treewidth 为一，而线图是 $K_m$、$\operatorname{cc}=m-1$，说明该依赖不可省略。以上是成熟的网络收缩连接，不把它等同于本节的拓扑执行次序、驻留输出或任意开放端口模型的空间成本。
+

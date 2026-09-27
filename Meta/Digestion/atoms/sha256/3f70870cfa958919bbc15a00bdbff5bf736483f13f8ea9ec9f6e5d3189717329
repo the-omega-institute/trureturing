@@ -1,0 +1,2 @@
+**定义 25.1（分支预测误差）。** 记 $D(\rho,\sigma)=\|\rho-\sigma\|_1/2$。给定完全正迹不增分支 $\Phi$，令 $B=\Phi^*(I)$、$p=\operatorname{Tr}(\rho B)$、$q=\operatorname{Tr}(\sigma B)$。仅在 $p,q>0$ 时比较条件后继 $\rho_\Phi=\Phi(\rho)/p$ 与 $\sigma_\Phi=\Phi(\sigma)/q$。这里 $\Phi$ 也可为一条已指定有限结果词的分支复合。
+

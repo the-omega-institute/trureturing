@@ -1,0 +1,42 @@
+**定义 222.1（共同记录接口与两个纯策略优化）。** 输入、量子输出均为 $\mathbb C^2$，经典记录为 $Q=\{0,1\}$。取 $K_0,A,B\in M_2(\mathbb C)$，其中 $K_0\ne0$、$A,B$ 线性独立，且
+
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I.
+$$
+
+定义 CPTP 记录通道
+
+$$
+\mathcal R(X)=P_0^Q\otimes K_0XK_0^\dagger
++P_1^Q\otimes\Gamma_1(X),\qquad
+\Gamma_1(X)=AXA^\dagger+BXB^\dagger.
+$$
+
+两记录块的 Choi 秩为 $(1,2)$。令 $\mathfrak C_2$ 为同输入、同量子输出及同经典记录接口上，总 Choi 秩至多二的全部 CPTP 记录通道；允许某个记录块为零。定义完整半 diamond 距离
+
+$$
+d_2=\inf_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R-\mathcal S\|_\diamond,
+\qquad
+q_0=\|K_0^\dagger K_0\|_\infty.
+$$
+
+对单位系数 $c=(c_0,c_1)\in\mathbb C^2$ 与单位量子输出向量 $r$，定义
+
+$$
+M_c=c_0A+c_1B,\qquad
+g(c,r)=\|M_c^\dagger r\|^2,
+$$
+
+$$
+\delta_{\rm rot}=\min_{\|c\|=1}\|M_c\|_\infty^2,
+\qquad
+\gamma=\max_{\|r\|=1}
+\lambda_{\min}\!\left(\Gamma_1^*(P_r)\right),
+\qquad P_r=|r\rangle\langle r|.
+$$
+
+每个单位系数 $c$ 都可以补成一个 $2\times2$ 酉矩阵的行。因此 $\delta_{\rm rot}$ 是在同一记录块的全部两 Kraus 酉混合中，删除一项的最小输入效应范数。这里 $A,B$ 已带实际 Kraus 权重，不另将其归一化。$\gamma$ 固定一个纯输出事件，再取其输入效应的最小本征值；它与允许按竞争者改变输出事件的检验具有不同量词。
+
+本节使用第 219 节的修复结论：从 CPTP 通道删去 CP 分量 $\mathcal L$，若 $E=\mathcal L^*(I)$ 满足 $\delta=\|E\|_\infty<1$，则将所有保留 Kraus 算子统一右乘 $(I-E)^{-1/2}$，得到保持各保留记录块秩的 CPTP 通道，完整半 diamond 误差不超过 $\delta$。有限维酉 Kraus 变换、Gram 矩阵的非零谱对应和弱极小极大不等式作为下述推导的标准中间工具；后者可参见钉版 Mathlib 的 `Mathlib/Order/SaddlePoint.lean`。本节关注这些工具在固定记录接口上给出的精确分岔，不把一般极小极大关系另列为新增结论。
+

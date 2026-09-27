@@ -72,6 +72,9 @@ public sealed class NegativeProofStageTests
             Assert.True(process.WaitForExit((int)TestBudgets.ScriptProcessHangGuard.TotalMilliseconds));
             var output = await stdout + await stderr;
             Assert.True(process.ExitCode == expected, output);
+            var diagnostic = proof == "capability-proof" ? "CS7036" : "RS0030";
+            Assert.Contains(": error " + diagnostic + ":", output, StringComparison.Ordinal);
+            Assert.DoesNotContain(": expected diagnostic " + diagnostic + ":", output, StringComparison.Ordinal);
             using var summary = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllText(
                 Path.Combine(fixture.Root, CommonExecutionEvidence.RootPath, "engineering-result.json")));
             var step = summary.RootElement.GetProperty("steps").EnumerateArray().Last();

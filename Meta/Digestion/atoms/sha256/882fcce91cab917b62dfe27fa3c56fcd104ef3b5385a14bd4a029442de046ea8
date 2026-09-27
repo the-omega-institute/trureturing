@@ -1,0 +1,71 @@
+### 150.1 分开固定装置与终端解码
+
+固定同一份已知来源等距 $T:M\to M\otimes B$，其中 $M,B$ 有限维。指定有限接收维数 $D\ge1$，令 $K=\mathbb C^D$。一个持续运行的装置参数为
+
+$$
+c=(\omega_K,\mathcal C),\qquad
+\omega_K\ \text{为纯密度矩阵},\qquad
+\mathcal C:\mathcal L(K\otimes B)\to\mathcal L(K)\ \text{为 CPTP}.
+\tag{150.1}
+$$
+
+初态 $\omega_K$ 与来源输入及参考独立；每轮重复同一个 $\mathcal C$。所有持久控制已经包括在 $K$ 内，允许每轮丢弃新的环境。
+
+记这些参数构成的空间为 $\mathcal X_D$。纯密度矩阵集合在有限维中闭且有界；通道 Choi 矩阵集合由半正定性和固定偏迹给出，也是闭且有界。因此 $\mathcal X_D$ 紧。
+
+对终端 $n$，记全部 CPTP 解码器
+$\mathcal D:\mathcal L(K)\to\mathcal L(H_n)$ 的紧空间为 $\mathcal Y_n$，其中 $H_n=B^{\otimes n}$。目标仍为恢复完整有序档案与不可访问活动记忆及参考的联合态。定义
+
+$$
+h_n(c,\mathcal D)
+=\sup_{J,\rho_{JM}}
+D_{\mathrm{tr}}\!\left(
+(\operatorname{id}_{JM}\otimes\mathcal D)\sigma_n^c(\rho),
+\Omega_n(\rho)
+\right),\qquad
+D_{\mathrm{tr}}(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{150.2}
+$$
+
+对于固定 $n$，它是两个从初始 $M$ 出发的通道之间的半 diamond 距离。因此参考 $J$ 只需取 $\dim J=\dim M$；无须让参考维数随档案增长。有限轮通道复合连续，密度矩阵输入集紧，故 $h_n$ 在 $\mathcal X_D\times\mathcal Y_n$ 上连续，且取值于 $[0,1]$。
+
+定义同一持续装置在各终端允许分别选择解码器后的误差
+
+$$
+e_n(c)=\min_{\mathcal D\in\mathcal Y_n}h_n(c,\mathcal D),
+\qquad
+g_N(c)=\max_{1\le n\le N}e_n(c).
+\tag{150.3}
+$$
+
+最小值由紧性取得。对固定 $n$，$h_n$ 在紧参数积上连续，故关于 $c$ 的变化在全部 $\mathcal D$ 上一致；从而
+
+$$
+|e_n(c)-e_n(c')|
+\le\sup_{\mathcal D\in\mathcal Y_n}
+|h_n(c,\mathcal D)-h_n(c',\mathcal D)|,
+$$
+
+说明 $e_n$ 连续。于是每个 $g_N$ 连续，且 $g_N\le g_{N+1}$。
+
+有限前缀最优值为
+
+$$
+\varepsilon_{D,N}
+=\min_{c\in\mathcal X_D}g_N(c).
+\tag{150.4}
+$$
+
+因为各终端解码器可以独立选择，并且每个 $e_n(c)$ 均能取得，这与同时优化一台固定装置和前 $N$ 个解码器的原合同相同。它不等于对每个终端分别另换接收装置。
+
+定义全时域最优值
+
+$$
+\varepsilon_{D,\infty}
+=\inf_{c,\;(\mathcal D_n)_{n\ge1}}
+\sup_{n\ge1}h_n(c,\mathcal D_n).
+\tag{150.5}
+$$
+
+这里始终只有一个持续装置 $c$；只有读取终端的解码器可以依赖 $n$。
+

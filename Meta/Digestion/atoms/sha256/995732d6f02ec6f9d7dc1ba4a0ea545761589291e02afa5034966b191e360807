@@ -1,0 +1,12 @@
+**定理286.1（相位失配下的维数一致预算过渡）。** 对（286.1）—（286.2）的同一已标定来源、独立两份块和确定最大预算，全部 $n\ge1$、$0<\delta\le1/4$、$3/4\le r\le1$ 同时满足
+$$
+\boxed{
+\frac{\varepsilon+\delta}{180\delta^2}
+\le N_{\rm full,2}(n,\delta,r)
+\le1537\frac{\varepsilon+\delta}{\delta^2},
+\qquad\varepsilon=1-r.
+}
+\tag{286.29}
+$$
+同一漂移下，先reset的最优预算仍为维数一致的 $\Theta(\delta^{-2})$。
+

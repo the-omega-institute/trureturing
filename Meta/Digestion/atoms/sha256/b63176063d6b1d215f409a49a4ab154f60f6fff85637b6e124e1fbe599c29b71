@@ -1,0 +1,64 @@
+**定理 312.2（整个奇异支撑分支的二阶等号分类）。** 当最优支撑 $G$ 奇异时，令唯一零列对应的坐标最后排列，并沿用第305节的 $p_1,p_2,z,r,L=r+z,q,K,u$。则
+
+$$
+\mathcal E_a=0\quad\Longleftrightarrow\quad p_1=p_2.
+\tag{312.9}
+$$
+
+因此，零支撑列以外的两个半径不相等时，固定端点半群在每个充分接近端点的非零预算差处都严格次优。这一结论包括最后一列范数约束刚好取等的阈值。
+
+证明。第305节给出
+
+$$
+M_*=\frac1q\begin{pmatrix}K&u\\0&q\end{pmatrix},
+\qquad K>0,\quad u>0,
+\qquad \pi_1,\pi_2>0,\quad \pi_3=0,
+$$
+
+其中 $K>0$ 表示每个条目严格为正。前两列始终活跃。若第三列也活跃，其衰减率为
+
+$$
+\rho_3=1+\frac{u^{\mathsf T}Ku}{q(q^2+\|u\|_2^2)}>1.
+\tag{312.10}
+$$
+
+而式（312.4）使 $\pi_1\rho_1+\pi_2\rho_2<1$，因为 $\lambda,d_1,d_2$ 都严格为正。因此活跃列中的最小衰减率总是 $\min\{\rho_1,\rho_2\}$，不受第三列是否取等影响。由定理312.1，$\mathcal E_a=0$ 恰好等价于 $\rho_1=\rho_2$。
+
+剩下只需确定这两个率何时相等。记
+
+$$
+U=p_1^2,\qquad V=p_2^2,\qquad
+s_1=\frac{p_1}{\sqrt{z^2+U}},\qquad
+s_2=\frac{p_2}{\sqrt{z^2+V}},\qquad \tau=s_1s_2.
+$$
+
+由第305节的 $K=G_0H$、$G_0^2=r^2(z^2I+pp^{\mathsf T})$，得到
+
+$$
+K^{\mathsf T}K=
+\begin{pmatrix}U&\sqrt{UV}\,\tau\\\sqrt{UV}\,\tau&V\end{pmatrix}.
+$$
+
+将它用于 $\rho_j=(K^{\mathsf T}K^2)_{jj}/(qp_j^2)$，可得
+
+$$
+\rho_1=\frac{s_1}{q}\left[z+\frac{U+V\tau}{L}\right],\qquad
+\rho_2=\frac{s_2}{q}\left[z+\frac{V+U\tau}{L}\right].
+\tag{312.11}
+$$
+
+两式相减，并使用 $1-s_1^2=z^2/(z^2+U)$、$1-s_2^2=z^2/(z^2+V)$，得到
+
+$$
+q(\rho_1-\rho_2)
+=z(s_1-s_2)
++\frac{z^2\left[U\sqrt{U(z^2+U)}-V\sqrt{V(z^2+V)}\right]}
+{L(z^2+U)(z^2+V)}.
+\tag{312.12}
+$$
+
+函数 $x\mapsto\sqrt{x/(z^2+x)}$ 与
+$x\mapsto x\sqrt{x(z^2+x)}$ 在 $x>0$ 上都严格递增。故右侧两项在 $U\ne V$ 时均与 $U-V$ 同号，在 $U=V$ 时均为零。因此 $\rho_1=\rho_2$ 恰好等价于 $p_1=p_2$，证明式（312.9）。严格正二阶超额随后结合式（312.2）给出充分小正预算差处的严格次优性。证毕。
+
+这里的等号只消除了二阶超额。它不保证误差曲线在有限预算区间内完全重合；当 $\mathcal E_a=0$ 时，更高阶差距和有限预算的真正最优通道仍需另行确定。正定支撑分支在本节只得到式（312.3）的精确判据，没有将三个 $\rho_i$ 相等进一步分类为半径条件。
+

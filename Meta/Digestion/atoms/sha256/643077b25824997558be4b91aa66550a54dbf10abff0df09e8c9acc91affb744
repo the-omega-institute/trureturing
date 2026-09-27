@@ -1,0 +1,25 @@
+## 定理 ST35.1：可检验的恢复充要条件与反演构造
+
+由原始矩阵定义
+
+$$
+c_{ab}=\frac1d\operatorname{tr}(E_a^\dagger E_b),
+\qquad D_{ab}=E_a^\dagger E_b-c_{ab}I_d.
+\tag{ST35.1}
+$$
+
+下列三个条件等价：
+
+$$
+\boxed{
+\exists\mathcal R\ \mathrm{CPTP}:\mathcal R\mathcal N=\mathrm{id}
+\quad\Longleftrightarrow\quad
+D_{ab}=0\quad\forall a,b
+\quad\Longleftrightarrow\quad
+\mathcal R_{\mathcal N}\mathcal N=\mathrm{id}.
+}
+\tag{ST35.2}
+$$
+
+这里等号均指全部逻辑矩阵，因而同时保留未知输入与参考系统的纠缠。充要条件属于 Knill–Laflamme 纠错理论；可逆通道的附加态正规形属于 Nayak–Sen 的既有定理。[ST27-KL][ST34-NS] 以下证明同时给出本节需要的每个构造。
+

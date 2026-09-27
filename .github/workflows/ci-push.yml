@@ -65,13 +65,13 @@ jobs:
       commit: ${{ steps.pack.outputs.commit }}
       work_required: ${{ steps.route.outputs.work_required }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: 2
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         if: inputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ inputs.plan_artifact_id }}
@@ -86,7 +86,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage build --job-timeout-minutes 30
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         if: steps.route.outputs.dotnet == 'true'
         with:
           global-json-file: global.json
@@ -96,7 +96,7 @@ jobs:
       - id: judge
         if: steps.keys.outputs.judge_key != ''
         continue-on-error: true
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         env:
           # SDK binary modes are part of the verified judge material identity.
           TAR_OPTIONS: --same-permissions
@@ -117,7 +117,7 @@ jobs:
         run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-build.tar.gz"
       - id: upload
         if: steps.pack.outcome == 'success'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.pack.outputs.artifact_name }}
           path: ${{ steps.pack.outputs.archive }}
@@ -133,7 +133,7 @@ jobs:
       - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.judge_ready == 'true'
         continue-on-error: true
         timeout-minutes: ${{ fromJSON(steps.snapshot.outputs.save_timeout_minutes || '1') }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.judge_path }}
           key: ${{ steps.keys.outputs.judge_key }}
@@ -155,13 +155,13 @@ jobs:
       run_attempt: ${{ steps.pack.outputs.run_attempt }}
       commit: ${{ steps.pack.outputs.commit }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: 2
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         if: inputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ inputs.plan_artifact_id }}
@@ -176,11 +176,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage engineering --job-timeout-minutes 40
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         if: steps.route.outputs.dotnet == 'true'
         with:
           global-json-file: global.json
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         if: steps.route.outputs.build_required == 'true'
         with:
           artifact-ids: ${{ needs.build.outputs.artifact_id }}
@@ -198,14 +198,14 @@ jobs:
       - id: elan
         if: steps.keys.outputs.elan_key != ''
         continue-on-error: true
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - id: engineering
         if: steps.keys.outputs.engineering_key != ''
         continue-on-error: true
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.engineering_path }}
           key: ${{ steps.keys.outputs.engineering_key }}
@@ -213,11 +213,31 @@ jobs:
       - name: Install required Lean toolchain
         if: steps.route.outputs.lake == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: steps.keys.outputs.project_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore requested optional seeds
         if: steps.route.outputs.cache_layers != ''
         env:
           ENGINEERING_KEY: ${{ steps.engineering.outputs.cache-matched-key }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --engineering-key "$ENGINEERING_KEY"
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --engineering-key "$ENGINEERING_KEY" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Execute selected stage
         if: steps.route.outputs.required == 'true'
         run: make -C tools engineering SEED_EXPORT=deferred
@@ -226,7 +246,7 @@ jobs:
         run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-engineering.tar.gz"
       - id: upload
         if: steps.pack.outcome == 'success'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.pack.outputs.artifact_name }}
           path: ${{ steps.pack.outputs.archive }}
@@ -240,7 +260,7 @@ jobs:
       - if: steps.save_elan.outcome == 'success' && steps.save_elan.outputs.save_allowed == 'true'
         continue-on-error: true
         timeout-minutes: ${{ fromJSON(steps.save_elan.outputs.save_timeout_minutes || '1') }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
@@ -249,7 +269,7 @@ jobs:
       - name: Retain engineering diagnostics
         if: failure() || (success() && steps.route.outputs.required == 'true')
         continue-on-error: true
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ci-engineering-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
@@ -287,13 +307,13 @@ jobs:
       run_attempt: ${{ steps.pack.outputs.run_attempt }}
       commit: ${{ steps.pack.outputs.commit }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: 2
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         if: inputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ inputs.plan_artifact_id }}
@@ -308,11 +328,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage current --job-timeout-minutes 60
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         if: steps.route.outputs.dotnet == 'true'
         with:
           global-json-file: global.json
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         if: steps.route.outputs.build_required == 'true'
         with:
           artifact-ids: ${{ needs.build.outputs.artifact_id }}
@@ -330,7 +350,7 @@ jobs:
       - id: current
         if: steps.keys.outputs.current_key != ''
         continue-on-error: true
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.current_path }}
           key: ${{ steps.keys.outputs.current_key }}
@@ -344,7 +364,7 @@ jobs:
       - id: elan
         if: steps.keys.outputs.elan_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
@@ -354,7 +374,7 @@ jobs:
       - id: dependency
         if: steps.keys.outputs.dependency_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
@@ -362,7 +382,7 @@ jobs:
       - id: project
         if: steps.keys.outputs.project_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
@@ -385,7 +405,7 @@ jobs:
         run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage current --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-current.tar.gz"
       - id: upload
         if: steps.pack.outcome == 'success'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.pack.outputs.artifact_name }}
           path: ${{ steps.pack.outputs.archive }}
@@ -402,7 +422,7 @@ jobs:
       - if: steps.snapshot_current.outcome == 'success' && steps.snapshot_current.outputs.current_ready == 'true'
         continue-on-error: true
         timeout-minutes: ${{ fromJSON(steps.snapshot_current.outputs.save_timeout_minutes || '1') }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.current_path }}
           key: ${{ steps.keys.outputs.current_key }}
@@ -415,7 +435,7 @@ jobs:
       - if: steps.snapshot_project.outcome == 'success' && steps.snapshot_project.outputs.project_ready == 'true'
         continue-on-error: true
         timeout-minutes: ${{ fromJSON(steps.snapshot_project.outputs.save_timeout_minutes || '1') }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
@@ -428,7 +448,7 @@ jobs:
       - if: steps.snapshot_dependency.outcome == 'success' && steps.snapshot_dependency.outputs.dependency_ready == 'true'
         continue-on-error: true
         timeout-minutes: ${{ fromJSON(steps.snapshot_dependency.outputs.save_timeout_minutes || '1') }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
@@ -439,7 +459,7 @@ jobs:
       - if: steps.save_elan.outcome == 'success' && steps.save_elan.outputs.save_allowed == 'true'
         continue-on-error: true
         timeout-minutes: ${{ fromJSON(steps.save_elan.outputs.save_timeout_minutes || '1') }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
@@ -448,7 +468,7 @@ jobs:
       - name: Retain current diagnostics
         if: (failure() || cancelled() || (success() && steps.route.outputs.required == 'true')) && needs.build.result == 'success'
         continue-on-error: true
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ci-current-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
           path: |

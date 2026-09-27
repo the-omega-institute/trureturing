@@ -1,0 +1,57 @@
+### 260.6 弱纠缠极限不允许跨边缘统一常数
+
+即使始终限定理想源为纯纠缠态，线性常数也不能对所有参考边缘统一有界。固定 $E=\mathbb C^2$，令
+$$
+0<p\le\frac12,\qquad q=1-p,
+$$
+$$
+|\psi_p\rangle
+=\sqrt p\,|y_+\rangle|0\rangle_E
++\sqrt q\,|y_-\rangle|1\rangle_E,
+\qquad
+\rho_p=pE_{00}+qE_{11}.
+\tag{260.34}
+$$
+以下令 $p\downarrow0$。每个 $p>0$ 的源都纯且纠缠，其参考条件数为 $\kappa(\rho_p)=q/p$。取合法竞争态
+$$
+\Xi_p=P_{y_+}\otimes\rho_p.
+\tag{260.35}
+$$
+它是具有同一个 $\rho_p$ 的混合产品态，属于定理的竞争范围。两份数据为
+$$
+K_{\Omega_{\psi_p}}=2\sqrt{pq}\,E_{01},
+\qquad K_{\Xi_p}=0,
+\qquad
+\delta_p=2\sqrt{pq}\longrightarrow0.
+\tag{260.36}
+$$
+
+为直接核验态距离，在有序基
+$(y_+0,y_+1,y_-0,y_-1)$ 中，
+$$
+\Xi_p-\Omega_{\psi_p}=
+\begin{pmatrix}
+0&0&0&-\sqrt{pq}\\
+0&q&0&0\\
+0&0&0&0\\
+-\sqrt{pq}&0&0&-q
+\end{pmatrix}.
+\tag{260.37}
+$$
+其非零本征值是 $q$ 及
+$$
+\frac{-q\pm\sqrt{q^2+4pq}}2.
+\tag{260.38}
+$$
+后两个本征值异号，因此
+$$
+\boxed{
+\|\Xi_p-\Omega_{\psi_p}\|_1
+=q+\sqrt{q^2+4pq}\longrightarrow2.
+}
+\tag{260.39}
+$$
+相应半迹距离趋于一。若存在对所有这些边缘都相同的有限常数 $C$，使全态误差不超过 $C\delta_p$，其右侧会趋于零，与（260.39）矛盾。
+
+这里每个比较对的边缘都精确相同；只有在改变 $p$ 时边缘才改变。这个反例证明某种边缘依赖不可省略，不证明定理260.2中条件数的一次方依赖或常数七最优。
+

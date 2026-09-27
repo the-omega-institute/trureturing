@@ -1,0 +1,43 @@
+**定理 169.2（端点比特的合法实现与精确风险）。** 取 $K=\mathbb C^2$，基向量标为 $s=\pm$，并取 $\sigma=(|+\rangle\langle+|+|-\rangle\langle-|)/2$。令
+$$
+\Lambda_r(X)=\sum_{s=\pm}
+\mathcal M_{r,s\alpha(r)}
+\bigl((I\otimes\langle s|)X(I\otimes|s\rangle)\bigr)
+\otimes|s\rangle\langle s|.
+\tag{169.4}
+$$
+则 $\Lambda_r$ 为 CPTP，其记忆始终可保持为经典比特，且
+$$
+\mathcal P_{r,N}^{\rm bit}
+=\frac12\bigl(\mathcal M_{r,\alpha(r)}^N
++\mathcal M_{r,-\alpha(r)}^N\bigr).
+\tag{169.5}
+$$
+它精确满足单步最优条件（169.3）。若
+$$
+m(x)=
+\begin{cases}
+\sin x,&0\le x\le\pi/2,\\
+1-\cos x,&\pi/2\le x\le\pi,\\
+1+|\cos x|,&x\ge\pi,
+\end{cases}
+\tag{169.6}
+$$
+则每个整数视界的精确风险为
+$$
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{\rm bit})
+=\frac{r^N}{2}m(N\alpha(r)).
+\tag{169.7}
+$$
+
+证明。 为每个合法端点通道选一组 Kraus 算符 $K_{s,j}$，则（169.4）的 Kraus 算符为 $K_{s,j}\otimes|s\rangle\langle s|$，且其伴随乘积之和为 $I\otimes I_K$。这也在含记忆非对角块的任意联合输入上证明完全正与保迹，未将通道只定义在经典输入上。对初始经典比特逐次应用（169.4），标签 $s$ 不变，条件系统演化为 $\mathcal M_{r,s\alpha}^N$，故得到（169.5）。辅助比特与真实相位独立，它是预测器自行选取的内部标签，不是对真实相位的读取。
+
+第162节已经给出固定端点混合的相干因子 $\cos(N\alpha)$，并区分它与每步重抽后的 $(\cos\alpha)^N$；此处将该既有构造放入（169.1）的联合 CPTP 合同。由（169.5），预测器的 $01,12$ 系数为 $r^N$，$02$ 系数为 $r^N\cos(N\alpha)$。因此式（161.11）给出包含任意参考系统的精确距离
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{\rm bit})
+=\frac{r^N}{2}|e^{iN\phi}-\cos(N\alpha)|.
+\tag{169.8}
+$$
+令 $x=N\alpha$。当 $x\le\pi/2$，实中心 $\cos x\ge0$，允许弧上最远点为 $e^{\pm ix}$，距离为 $\sin x$。当 $\pi/2\le x\le\pi$，中心非正，弧包含最远点 $1$，距离为 $1-\cos x$。当 $x\ge\pi$，允许弧覆盖单位圆，最大距离为 $1+|\cos x|$。这证明（169.6）—（169.7）。$N=1$ 时，预测器恰为定义162.1的 $\mathcal F_*$，所以满足（169.3）。证毕。
+

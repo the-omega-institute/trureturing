@@ -1,0 +1,41 @@
+### 42.3 细化运输与固定点集合的逆极限
+
+设每个分辨率 $n$ 都有纤维 $B_{i,n}$、运输 $T_{e,n}$ 和限制映射
+
+$$
+r_{i,n}:B_{i,n+1}\to B_{i,n}
+$$
+
+满足自然性
+
+$$
+r_{j,n}\circ T_{e,n+1}
+=
+T_{e,n}\circ r_{i,n}.
+\tag{42.7}
+$$
+
+同一生成树下，(42.7) 把细层 holonomy 降到粗层 holonomy，并诱导固定点集合之间的映射
+
+$$
+F_{n+1}:=\bigcap_e\operatorname{Fix}(H_{e,n+1})
+\longrightarrow
+F_n:=\bigcap_e\operatorname{Fix}(H_{e,n}).
+\tag{42.8}
+$$
+
+于是形式上有
+
+$$
+\Gamma\!\left(\varprojlim_n B_{\bullet,n}\right)
+\simeq
+\varprojlim_n\Gamma(B_{\bullet,n})
+\simeq
+\varprojlim_n F_n,
+\tag{42.9}
+$$
+
+但 (42.9) 只是相容 section 的形式重排，不是实际来源存在性定理。
+
+细化限制即使全都满射，也不保证全局 section 能提升。粗层取单点纤维和恒等运输，故 $F_0$ 非空；细层取三角形 bit 纤维，第三边为交换，故 $F_1=\varnothing$。每个 $r_{i,0}:\{0,1\}\twoheadrightarrow\{*\}$ 都满射且满足 (42.7)，但粗 section 没有细层提升。
+

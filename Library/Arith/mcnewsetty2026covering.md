@@ -256,7 +256,7 @@ existing stronger result, with no new Lean declaration or novelty claim.
 
 ## 5. Verification and scope
 
-The [standard-library checker](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/mcnew_setty_v2_counterexamples.py)
+The [standard-library checker](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/mcnew-setty-v2-counterexamples/mcnew_setty_v2_counterexamples.py)
 constructs exact integer residue masks, evaluates all 1,023 nonempty
 label subsets for the first example, checks every residue of periods
 225, 128 and 1920, and computes the divisor and Stirling-number terms

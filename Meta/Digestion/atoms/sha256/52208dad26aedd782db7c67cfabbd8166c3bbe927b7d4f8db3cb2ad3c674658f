@@ -1,0 +1,6 @@
+**推论 2.29（selection）。** Either a decidable $R$ or a computable $M$ suffices to compute one point of $E$.
+
+**Proof.** The root cylinder meets $E$ because $M\ge c_p>0$. From an extendible depth-$n$ cylinder, query its $p$ children and select the least extendible one. At least one exists since the children partition the parent. Iteration computes compatible standard residues of a point in the closed set $E$. By the preceding theorem, a computable mass supplies the same extension decisions. $\square$
+
+The converse from one computable point to computable total mass or decidable extension is false, as C卷第2.7.6节 shows. Decidable extension also need not recover the entire raw inventory: undecidable announcements of redundant descendants inside an already forbidden cylinder leave $E$, its mass, and every extension answer unchanged.
+

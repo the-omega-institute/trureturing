@@ -198,6 +198,7 @@ public sealed partial class ProductionEnvironmentTests
         IReadOnlyCollection<JsonDocument> events,
         ImmutableArray<RuleId> executedRules)
     {
+        Assert.All(events, document => Assert.Equal("information", document.RootElement.GetProperty("level").GetString()));
         var ruleEvents = events
             .Where(static document => document.RootElement.GetProperty("stage").GetString()
                 ?.StartsWith("rule-sl-", StringComparison.Ordinal) is true)

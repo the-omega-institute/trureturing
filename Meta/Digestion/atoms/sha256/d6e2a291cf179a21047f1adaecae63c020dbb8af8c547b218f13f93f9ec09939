@@ -1,0 +1,51 @@
+**定理 161.6（趋于同射线的记录仍有非零统一视界误差）。** 令 $r=1-\varepsilon$，$\varepsilon\downarrow0$。对每个固定 $t\ge0$，有
+$$
+\lim_{\varepsilon\downarrow0}
+\mathcal R_{\lfloor t/\varepsilon\rfloor}(1-\varepsilon)
+=f(t):=\frac{e^{-t}}2\sin\!\bigl(\min\{\sqrt3t,\pi/2\}\bigr).
+\tag{161.17}
+$$
+该收敛在每个有限 $t$ 区间上一致，且
+$$
+\boxed{
+\lim_{r\uparrow1}\sup_{N\ge1}\mathcal R_N(r)
+=\frac{\sqrt3}{4}\exp\!\left(-\frac{\pi}{3\sqrt3}\right)>0,
+\qquad
+\forall N<\infty,\quad\lim_{r\uparrow1}\mathcal R_N(r)=0.
+}
+\tag{161.18}
+$$
+对每个 $0<r<1$ 选任一达到 $\sup_{N\ge1}\mathcal R_N(r)$ 的整数 $N_*(r)$，则
+$$
+\lim_{r\uparrow1}(1-r)N_*(r)=\frac{\pi}{3\sqrt3}.
+\tag{161.19}
+$$
+
+证明。 对 $1/2<r<1$，阈值具有精确恒等式
+$$
+1-\cos\alpha(r)
+=\frac{(1-r)^2(2r+1)}{2r^3}.
+\tag{161.20}
+$$
+结合 $2(1-\cos u)/u^2\to1$，得到 $\alpha(1-\varepsilon)/\varepsilon\to\sqrt3$。同时 $\log(1-\varepsilon)/\varepsilon\to-1$。对 $N=\lfloor t/\varepsilon\rfloor$，有 $|N\varepsilon-t|\le\varepsilon$；因而在任意有限 $t$ 区间上一致地成立
+$$
+(1-\varepsilon)^N\longrightarrow e^{-t},
+\qquad N\alpha(1-\varepsilon)\longrightarrow\sqrt3t.
+$$
+$h$ 连续且为全局 Lipschitz 函数，所以定理161.3给出式（161.17），包括 $t=0$ 处的约定。
+
+对任意整数 $N$，$1-\varepsilon\le e^{-\varepsilon}$ 给出统一尾界
+$$
+0\le\mathcal R_N(1-\varepsilon)\le\frac12e^{-\varepsilon N}.
+\tag{161.21}
+$$
+先选择大的 $T$ 控制全部 $\varepsilon N\ge T$ 的尾，再使用 $[0,T]$ 上的一致收敛与网格间距 $\varepsilon\to0$，得到最大值趋于 $\max_{t\ge0}f(t)$。在 $0<t<\pi/(2\sqrt3)$，
+$$
+f'(t)=\frac{e^{-t}}2\bigl(\sqrt3\cos(\sqrt3t)-\sin(\sqrt3t)\bigr).
+$$
+其唯一零点为 $t_* =\pi/(3\sqrt3)$，此前为正，此后为负；在 $t\ge\pi/(2\sqrt3)$，$f(t)=e^{-t}/2$ 严格下降。因此全局最大点唯一，且 $f(t_*)=(\sqrt3/4)e^{-\pi/(3\sqrt3)}$。
+
+固定 $0<r<1$ 时，$\mathcal R_1(r)>0$ 且 $\mathcal R_N(r)\to0$，所以最大值由有限整数取得。对任意序列 $r\uparrow1$，尾界使其最大点的缩放参数留在某个有限区间；一致收敛和 $f$ 的唯一最大点表明该参数只能趋于 $t_*$，证明式（161.19）。对固定 $N$，$\alpha(r)\to0$，由式（161.7）直接得到式（161.18）的后一式。证毕。
+
+式（161.18）比较的是先取全部视界上确界与先令 $r\uparrow1$，并不声称两个普通迭代极限 $\lim_{r\uparrow1}\lim_{N\to\infty}\mathcal R_N(r)$ 和 $\lim_{N\to\infty}\lim_{r\uparrow1}\mathcal R_N(r)$ 不同；它们都为零。遗漏相位造成的是预测充分性对视界的不一致性。第14节的已知源恢复问题允许恢复依赖完整 $C$，本节预测者只取得定义161.1的共同校准数据；这两个优化的量词不同。第55节的复用记录回流也不承担本节的新鲜记录结论。
+

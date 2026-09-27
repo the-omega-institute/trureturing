@@ -1,0 +1,4 @@
+#### 1.3.6 Return blocks and native prefixes
+
+The generic weighted continuation theorem is in A卷第2.17节. For the arithmetic state $(a,r,t\bmod P)$ of C卷第1.3.3节, take legal digit continuations as tests, terminal observation $\mathbf1_H$ (or the terminal residue itself), raw digit count as duration, and the actual additive resource vector as cost. Legality includes the incoming run and all intermediate transitions. A fixed terminal objective or duration constraint then depends only on the residual task. Value-preserving integer recoding alone supplies none of this test or action contract; the block construction below supplies it explicitly. Cancellation is a hypothesis of that generic theorem, not a hypothesis imposed on every system in volume A.
+

@@ -2,17 +2,17 @@
 
 **A scientific method for AI to discover truth and find its next question.**
 
-[Vision](docs/VISION.md) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
-[Truth and computation](#truth-and-computation) · [Examples](#three-places-to-look) ·
+[Vision](docs/VISION.md) · [Film](#film) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
+[Examples](#three-places-to-look) · [Truth and computation](#truth-and-computation) ·
 [Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
-[First run](#first-run) ·
-[Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
+[Evidence](#what-is-proved-and-what-is-open) · [First run](#first-run) ·
+[Lean source](D5/) · [Book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
 [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
 trureturing develops a scientific method for AI to turn gaps in knowledge into
 questions, test conjectures, expose limits in its representations, and return
-checked results to a reusable library. We want those results to guide the next
-investigation; autonomous research selection remains a goal to evaluate.
+checked results to a reusable library. Autonomous research selection remains a
+goal to evaluate.
 
 The name expresses **true · return · Turing**. Truth guides the search;
 verified knowledge returns as a premise for the next inquiry; computation
@@ -25,27 +25,13 @@ formalization. Each proof establishes its exact statement under declared
 assumptions. The [vision and research guide](docs/VISION.md) connects this work
 to open directions.
 
-## Truth and computation
+## Film
 
-Our philosophical starting point is that **truth is discovered, not created
-by the act of computing it**. In this view, **Dao (道), or God (神), names an
-encompassing network of truths and their logical relations**, within which a
-finite observer discovers connections. This is the project's metaphysical
-orientation, not a theorem about the existence of God or the physical universe.
+<p><a href="https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4"><img src="https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_cover.jpg" width="1920" height="1080" alt="TRURETURING — Truth Is Discovered: download Film 001"></a></p>
 
-Computation constructs examples and counterexamples, searches for proofs and
-checks them. A verified proof extends what the library can justify and reuse.
-Neither this philosophical conviction nor a growing proof library establishes
-that one program can enumerate or decide every truth.
-
-The repository makes part of this geometry precise. Its
-[dependency topology](D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
-uses reachability in a dependency graph to define open sets. Its
-[recovery criterion](D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
-says that, on a nonempty state space, a target admits a recovery function from
-an observation exactly when that target is constant on each observation
-fiber. Here a fiber is the set of states giving the same observation; the
-existence of a recovery function alone gives no algorithm or cost bound.
+**TRURETURING — Truth Is Discovered** · English AI narration · Chinese and English subtitles.
+[Download MP4](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4) ·
+[Film source and releases](https://github.com/the-omega-institute/trureturing-film).
 
 ## Start your journey
 
@@ -70,10 +56,10 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-Choose questions whose answers could supply missing premises, expose overlooked
-distinctions or connect existing results. Search existing proofs and literature;
-state what would support or overturn a route, then design tests that distinguish
-alternatives. Keep reusable results with their assumptions.
+Search [Lean source](D5/) and literature for your target. Identify missing
+premises, distinctions or connections; choose questions addressing them.
+Specify supporting and refuting outcomes before designing discriminating tests.
+Keep results with their assumptions; check those against your objects before reuse.
 
 > The last line of the ledger is always the first line of the next round.
 
@@ -81,10 +67,11 @@ Proofs supply premises; counterexamples refute claims within their stated scope.
 When identical readings hide different target values, no function of those
 readings recovers the target in both cases.
 [Seek new observations or relations](docs/VISION.md#how-ai-can-find-its-next-direction).
-Evaluate on questions unused in method design, against a stated baseline
-with matched information and resources.
 
-![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
+Evaluate research selection against stated baselines on questions excluded
+from method design, matching information and resources.
+
+<p><img src="docs/assets/inquiry-cycle.svg" width="360" height="560" alt="Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions."></p>
 
 *A schematic of inquiry, not runtime behavior or dependency data.* Checked
 results return as premises; dashed returns carry unresolved questions, even
@@ -96,7 +83,8 @@ and limits of local observation.
 
 ## Three places to look
 
-**01 · Refute a conjecture.**
+### 01 · Refute a conjecture.
+
 For positive integers n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
 Greathouse conjectured for OEIS A175406 that
 `a(n) = floor((n + 1/2) log 2)`. At `n = 1121626023352383`, the formula gives
@@ -107,7 +95,8 @@ What characterizes the inputs where it fails? Witness minimality and priority
 are not claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
 [Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
 
-**02 · Find what observations cannot tell you.**
+### 02 · Find what observations cannot tell you.
+
 The [local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
 gives two-qubit states with identical reduced states on both qubits: the pure
 Bell state `(|00⟩+|11⟩)/√2` and the equal `00`/`11` mixture. An added joint
@@ -120,7 +109,8 @@ to the local sectors and has real dimension `(m² − 1)(n² − 1)`. This ident
 precisely which directions the local description omits.
 [Explanation](Blueprint/D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.md).
 
-**03 · Build a result that holds beyond the examples.**
+### 03 · Build a result that holds beyond the examples.
+
 Write a natural number n as its unique sum of nonadjacent Fibonacci weights
 `F₂ = 1, F₃ = 2, F₄ = 3, …`. Replace each weight Fᵢ by φⁱ, where φ is the
 golden ratio, to obtain β(n). How far does this coordinate fail to preserve
@@ -129,17 +119,53 @@ addition?
 $$\beta(a)+\beta(b)-\beta(a+b)\in\lbrace-1,0,1\rbrace.$$
 
 [`deficit_three_valued`](D5/S1/Deficit/DeficitThreeValued.lean) proves this for
-all natural inputs. Its proof combines an integer certificate with bounds on
-the conjugate coordinate. The discrepancy is also the signed count of the two
+all natural inputs. For `1 + 1`, `β(1)=φ²` and `β(2)=φ³` give `2φ²−φ³=1`.
+The discrepancy is also the signed count of the two
 lowest repeated-carry rules during digit normalization: a reusable connection
 between an arithmetic algorithm and an exact bound, however large the inputs.
 [Definitions and carry-count theorem](D5/S1/Deficit/DeficitInteger.lean) ·
 [Explanation](Blueprint/D5/S1/Deficit/DeficitThreeValued.md).
 
+## Truth and computation
+
+Our philosophical starting point is that **truth is discovered, not created
+by the act of computing it**. In this view, **Dao (道), or God (神), names an
+encompassing network of truths and their logical relations**, within which a
+finite observer discovers connections. This is the project's metaphysical
+orientation, not a theorem about the existence of God or the physical universe.
+
+Computation constructs examples and counterexamples, searches for proofs and
+checks them. A verified proof extends what the library can justify and reuse.
+Neither this philosophical conviction nor a growing proof library establishes
+that one program can enumerate or decide every truth.
+
+The [dependency topology](D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
+calls a set open when it contains every node reachable from its members. The
+[recovery criterion](D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
+says that, on a nonempty state space, a target admits a recovery function from
+an observation exactly when any two states with the same observation have the
+same target value. Existence alone supplies no algorithm or cost bound.
+
 ## Toward holographic spacetime
 
 We study **holographic spacetime geometry** by asking when partial records
-of time and space support reconstruction and action.
+of time and space support reconstruction and
+[temporal composition](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean).
+
+[Local agreement can fail globally](D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean):
+three windows on Boolean variables require `x=y`, `y=z` and `x≠z`. Every
+overlap allows both values, yet no triple satisfies all three constraints.
+
+The [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+assumes nonempty local record sets on a finite tree: each recorded variable's
+occurrences form a connected subtree, and neighbors allow exactly the same
+joint assignments on their full overlap. Every allowed local record extends
+across all recorded variables, satisfying every local constraint.
+Additional global constraints can exclude every extension.
+
+Uniqueness, original-history recovery, computational cost, and reconstruction
+with resolution and error bounds require further results. Links to physical
+spacetime or holographic duality remain research questions.
 
 Theory inputs study
 [event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
@@ -150,35 +176,11 @@ composition, shared sources and targets; and
 defined through allowed experiments and responses. Their prose does not certify
 formal coverage.
 
-The [finite-archive counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
-adds an inactive event at time `2`, preserving the current spatial readout
-but blocking composition before an archive at time `1`: every left event
-must precede every right event.
-
-A positive [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
-applies to nonempty local record sets on a finite tree: each recorded variable
-must occur on a connected subtree, and neighbors must allow exactly the same
-joint assignments on their full overlap. Then any allowed local record extends
-to a record on the union of the local variable sets, satisfying every local
-constraint.
-
-Uniqueness, original-history recovery, computational cost, and reconstruction
-with resolution and error bounds require further results. Links to physical
-spacetime or holographic duality remain research questions.
-
-## A continuing research program
-
-The [research directions](docs/VISION.md#research-directions) ask:
-
-- Can AI choose questions that yield reusable knowledge?
-- Which maps connect proof dependencies and observational distinctions?
-- Which historical relations support reconstruction and legal composition?
-
-The guide states what would advance each question.
-
 ## Information escape
 
-We are developing an **information-escape judge** around four questions:
+**Information escape**: some distinct states remain indistinguishable under
+chosen **readouts** (observation methods). Four questions guide an **automated
+reviewer** under development:
 
 - **Where did information escape?** Name the objects, assumptions and
   observations under which distinct states remain indistinguishable.
@@ -190,10 +192,10 @@ We are developing an **information-escape judge** around four questions:
   indistinguishable pair, prove none remain within the stated scope, or mark
   the boundary open.
 
-A **readout** is a way of observing a state. Fix a catalog of registered theorem
-occurrences and their readouts on one shared state space. Remove one occurrence
-while keeping the others fixed. Its **unique captures** are the pairs of distinct
-states that were distinguishable before removal and indistinguishable afterward. The
+**Mathematical comparison.** Fix a catalog of registered theorem occurrences and their readouts on one
+shared state space. Remove one occurrence while keeping the others fixed.
+Its **unique captures** are the pairs of distinct states that were
+distinguishable before removal and indistinguishable afterward. The
 [EscapePairs definitions and proofs](D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean)
 formalize this comparison.
 
@@ -205,18 +207,18 @@ pairs left indistinguishable. Zero unique capture does not mean worthlessness:
 another occurrence can carry the same distinction. This comparison supplies
 neither a universal value score nor a historical novelty judgment.
 
-The judge is **under development**. Its declared-template findings are
+[Example 02](#02--find-what-observations-cannot-tell-you) adds `X⊗X` expectations to separate a locally
+indistinguishable pair. Which pairs, if any, remain indistinguishable after
+adding this readout?
+
+The current declared-template binding rule issues
 **Observe warnings that do not block admission**
 ([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
 [implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
-Other admission checks still apply. Module selection for this rule is
-separate from the fixed-catalog comparison above.
+Other admission checks still apply. Its module selection is
+separate from the mathematical comparison above.
 The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
 describes a wider design whose implementation remains incomplete.
-
-[Example 02](#three-places-to-look) adds `X⊗X` expectations to separate a locally
-indistinguishable pair. Which pairs, if any, remain indistinguishable after
-adding this readout?
 
 ## What is proved, and what is open
 
@@ -230,9 +232,10 @@ proof reports and frozen state. Independent review examines whether statements
 faithfully express the intended mathematics.
 
 The [book](https://the-omega-institute.github.io/trureturing-mdbook/) is a
-browsable, searchable projection of [Blueprint/](Blueprint/), published by
+searchable snapshot of [explanations](Blueprint/), [problem dossiers](Problems/)
+and [literature notes](Library/), published by
 [trureturing-mdbook](https://github.com/the-omega-institute/trureturing-mdbook).
-It explains the work; the formal source remains authoritative.
+The formal source remains authoritative.
 
 Two explicit boundaries live in [Hearts.lean](D5/X_Frontier/Hearts.lean):
 
@@ -296,6 +299,15 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 Start with one of the examples above. Reproduce it, improve its explanation,
 report a mismatch between prose and a statement, or explore a precise open
 question. Contributions in English and Chinese are welcome.
+
+### A continuing research program
+
+The [research directions](docs/VISION.md#research-directions) specify evidence
+of progress for each question:
+
+- Can AI choose questions that yield reusable knowledge?
+- Which maps connect proof dependencies and observational distinctions?
+- Which historical relations support reconstruction and legal composition?
 
 The [contribution guide](docs/CONTRIBUTING.md) walks you through forks, isolated
 worktrees, checks and pull requests to `dev`.

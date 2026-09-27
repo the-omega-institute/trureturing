@@ -1,0 +1,21 @@
+**第三词 $ABCCC$。** 已见后继为
+
+$$
+A\longmapsto B,\qquad B\longmapsto C,\qquad C\longmapsto C.
+$$
+
+（108.6）要求两个二维纤维为 $B,C$，唯一三维纤维为 $A$。于是
+
+$$
+G_4=G_5=G_6=P_C.
+$$
+
+同一个 $V_0$ 给 $H_4=H_5$，所以 $(H_4,G_4)=(H_5,G_5)$。这却违反实际来源的
+
+$$
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0.
+\tag{108.12}
+$$
+
+三个尾词全部排除，故 $|\mathcal T|\ne3$。结合已有上下界，只能为二。证明完毕。
+

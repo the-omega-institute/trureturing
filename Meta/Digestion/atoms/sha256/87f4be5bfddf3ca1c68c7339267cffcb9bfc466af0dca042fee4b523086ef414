@@ -1,0 +1,35 @@
+**条件二：允许的相对角谱。** 在 $S$ 上定义
+$$
+J=\frac12(H_aH_b+H_bH_a).
+\tag{255.6}
+$$
+要求
+$$
+\operatorname{spec}(J)\subseteq
+\begin{cases}
+\{\kappa,1\},&A>B,\\
+\{0,1,-1\},&A=B.
+\end{cases}
+\tag{255.7}
+$$
+因为 $J$ 为 Hermitian，该条件分别等价于有限矩阵恒等式
+$$
+\begin{cases}
+(J-\kappa I_S)(J-I_S)=0,&A>B,\\
+J(J^2-I_S)=0,&A=B.
+\end{cases}
+\tag{255.8}
+$$
+在 $S$ 内定义谱投影 $Q=\mathbf1_{\{\kappa\}}(J)$，再向 $E$ 的未占用方向补零。也可显式写成
+$$
+Q\big|_S=
+\begin{cases}
+\dfrac{I_S-J}{1-\kappa},&A>B,\\
+I_S-J^2,&A=B,
+\end{cases}
+\qquad
+P=P_0-Q.
+\tag{255.9}
+$$
+特别在 $A=B$ 时，必须先限制到 $S$；环境中未占用的零方向不属于 $Q$。
+

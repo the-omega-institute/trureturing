@@ -1,0 +1,89 @@
+**命题 50（遗忘映射与严格核偏序，repo-derived）。** $\Xi$ 由 $\Gamma_t$ 沿自身的时间—位置单元边缘化：
+
+$$
+\begin{aligned}
+W_X(n,p)&=\sum_{\epsilon,r,b,U}
+ \Gamma_t(X)((p,\epsilon,r,n),b,U),\\
+Z_X(n,p)&=\sum_{\epsilon,r,U}
+ \Gamma_t(X)((p,\epsilon,r,n),1,U).
+\end{aligned}
+\tag{TCAU-TS}
+$$
+
+这里的单元恰为 #6684／定义 22 的 $K=\mathbb Z\times\mathbb Z^3$，背景取 $\Omega$、选择取 $A$，三个端点按原定义照搬（$s$ 由支撑取出）。**系数已经含符号，不再乘 $\epsilon$**。对 $U_0$，正确 $W$ 总和为 $0$；若重复乘符号则变成 $2$，与定义 22 不符。
+
+无时间剖面则是沿
+
+$$
+(a,b,U)\longmapsto(\varphi(a),b,\varphi[U])
+\tag{TCAU-FORGET}
+$$
+
+的系数推送，其中 $\varphi[U]$ 为**去重后的集合**。由此及已有边缘化，有严格主链
+
+$$
+\ker(\Gamma_t,m,M)
+\subsetneq\ker(\Gamma_c,m,M,s)
+\subsetneq\ker(\rho_{\rm src},m,M,s)
+\subsetneq\ker\Theta
+\subsetneq\ker\pi
+\subsetneq\ker z
+\subsetneq\ker q.
+\tag{TCAU-CHAIN}
+$$
+
+另外有
+
+$$
+\begin{gathered}
+\ker(\Gamma_t,m,M)\subsetneq\ker\Xi\subsetneq\ker\Theta,\\
+\ker(\rho_{\rm src},m,M,s)\subsetneq\ker\rho_{\rm src}\subsetneq\ker\pi,\\
+{=}\ \subsetneq\ {\cong_h}\ \subsetneq\ker(\Gamma_t,m,M).
+\end{gathered}
+\tag{TCAU-BRANCHES}
+$$
+
+$\ker\Xi$ 与 $\ker(\Gamma_c,m,M,s)$、$\ker(\rho_{\rm src},m,M,s)$ 分别不可比；$\ker\rho_{\rm src}$ 与 $\ker\Theta$ 也不可比。
+
+**证明（映射及包含）。** 将 (TCAU-P) 的有限事件和按 $(t(e),x(e))$ 重分组，背景及选择分别就是定义 22 的 $W,Z$；无需再加权。每个 $e$ 的 $\varphi[U_t^X(e)]=U_X(e)$，自身属性也沿 $\varphi$ 忘时，故有限推送为定义 25 的 $\Gamma_c$。对自身符号及后继集求和得 §27 的 $\rho_{\rm src}$，再沿来源求和得 $\pi$；携带端点即得 $\Theta$。$\Xi\to\Theta$ 为 (TS-SP)，$\pi\to z\to q$ 为既有投影；丢端点得到另一支链。历史同构逐事件保持属性、偏序、区域与选择，因而保持 $U_t$、剖面及端点，编码相等当然给历史同构。
+
+**证明（每条严格边与不可比的见证）。** 下表“相同”总在较粗核侧，“不同”总在较细核侧；只引用已有反例，不重新编号。
+
+| 严格边或两核比较 | 见证及方向 |
+| --- | --- |
+| $\Gamma_t,m,M\to\Gamma_c,m,M,s$ | B2：旧剖面及端点相同；含时间 $Q=\{(0,+1,l_0,1)\}$ 读 $2,1$，故 $\Gamma_t$ 不同。D11 另给固定情境的忘时见证 |
+| $\Gamma_c,m,M,s\to\rho_{\rm src},m,M,s$ | D7：来源双电荷及端点相同；负属性因果筛选读 $0,1$。D6 也可用；B1 不承担此边 |
+| $\rho_{\rm src},m,M,s\to\Theta$ | B1：同 $\Theta=((0,\delta_0),0,0,0)$，来源 $l_7/l_8$ 分开 |
+| $\Theta\to\pi$ | $U_0,T_1(U_0)$：同 $\pi=(0,\delta_0)$，端点分别全 $0$、全 $1$ |
+| $\pi\to z$ | §16 的 $0_\varnothing,B_\alpha$，$\alpha=\delta_0-\delta_v$：同 $z=0$，背景分别为 $0,\alpha$ |
+| $z\to q$ | $U_0$ 与其非零空间平移：同 $q=1$，$z=\delta_0,\delta_v$ |
+| $\Gamma_t,m,M\to\Xi$ | B2：同 $\Xi$，含时间因果读数 $2,1$；D5 还给同 $\Xi$ 而来源不同的见证 |
+| $\Xi\to\Theta$ | #6684／§26.1 D1：同 $\Theta$、同端点，联合单元 $(0,0)$ 的 $Z$ 为 $1,0$ |
+| $\Xi$ 对两条来源／无时间因果核：第一方向 | D1 的空偏序使每个无时间 $U$ 都是自身单点集；两位置各有一选中正点、一未选负点，故同 $\Gamma_c$、同 $\rho_{\rm src}$、同端点而异 $\Xi$ |
+| 同上：反方向 | D5：同 $\Xi$，来源 $l_0$ 读 $1,0$，故 $\rho_{\rm src}$ 不同，进而 $\Gamma_c$ 不同 |
+| $\rho_{\rm src},m,M,s\to\rho_{\rm src}$ | $U_0,T_1(U_0)$：同来源双电荷，端点不同 |
+| $\rho_{\rm src}\to\pi$ | B1：同空间双电荷，来源双电荷不同 |
+| $\rho_{\rm src}$ 与 $\Theta$ 不可比 | $U_0,T_1(U_0)$ 同前者异后者；B1 同后者异前者 |
+| 编码相等 $\to$ 历史同构 | §4 的非平凡事件重命名：历史同构而编码不同 |
+| 历史同构 $\to\Gamma_t,m,M$ | D10：同剖面、同端点，时刻 $1$ 上层入度多重集为 $\{1,1\}$ 与 $\{2,0\}$，历史不同构 |
+
+每行给出严格性或不包含所需的一对实际平衡表示，配合已证因子映射即完成偏序结算。证毕。
+
+下表追加 §18 的分层视图；“适用签名”只记已证观察核的语言，不借表新增任何代数律。
+
+| 层 | 所存信息 | 适用签名 | 遗忘内容 | 见证 |
+| --- | --- | --- | --- | --- |
+| 编码相等 | 全档案、属性、偏序、区域、选择及出现标签 | 本批运算的严格编码解释 | 无编码遗忘 | §4 重命名后仅同构 |
+| 历史同构 | 全部历史结构，容许保属性的出现重命名 | 本批去身份操作保同构；不称其观察核 | 出现标签 | D10 同剖面而不同构 |
+| $\ker(\Gamma_t,m,M)$ | 含时间自身属性、后继属性集、两选择位及全档案端点 | $\Sigma_{{\rm cau},t}$，命题 49 | 目标重数、入射关联及未记录的旧档案细节 | D10；B2 分开下一层 |
+| $\ker(\Gamma_c,m,M,s)$ | 无时间因果剖面及三个端点 | $\Sigma_{\rm cau}$，命题 46 | 属性行内的自身／目标时间 | B2、D11；D7 分开来源层 |
+| $\ker(\rho_{\rm src},m,M,s)$ | 来源—位置双电荷及端点 | $\Sigma_{\rm src}\cup\Sigma_{\rm st}$，命题 44 | 因果后继属性集、联合时间信息 | D7、D1 |
+| $\ker\Xi$（支链） | 时间—位置双电荷及三个端点 | $\Sigma_{\rm ts}$ 及 §25.3 指定扩展，命题 40–41 | 来源、因果关联 | D5、B2；与上两行不可比 |
+| $\ker\rho_{\rm src}$（支链） | 来源—位置双电荷 | $\Sigma_{\rm src}$，命题 43 | 因果、时间与档案端点 | $U_0,T_1(U_0)$；与 $\Theta$ 不可比 |
+| $\ker\Theta$ | 空间双电荷及三个端点 | $\Sigma_{\rm st}$，命题 30 | 来源、因果、联合单元信息 | B1、D1 |
+| $\ker\pi$ | 背景与选择的空间电荷 | $\Sigma_{\rm sp}$，命题 22 | 时间、来源与历史 | $U_0,T_1(U_0)$ |
+| $\ker z$ | 选择的空间电荷 | $\Sigma_z$，命题 22 | 背景电荷及上述历史 | §16 的 $B_\alpha$ |
+| $\ker q$ | 所选总电荷 | $\Sigma_{\rm arith}$，命题 22 | 空间分布及上述背景、历史 | $U_0$ 的非零空间平移 |
+
+**表达边界（ARCH-R4-A1）。** 从 $\Gamma_t$ 恢复 $\Xi$ 不等于存在保持完整 $C$ 的 $\Sigma_{{\rm cau},t}$ 上下文实现定义 23 的 $F_B$。柱集 $B=\mathbb Z\times S$ 时已有 $F_B=F_S$，故“所有 $F_B$ 都不可表达”为假。一般 $B$ 的可表达性分类**未测**：本批仅证明下一节的具名单元边界，没有给剩余 $B$ 的统一判据，亦未逐类反驳其可表达性。$M_P$ 同样不并入；含它的混合闭包在本批**未测**，不能从命题 41 或两核取交推出。
+

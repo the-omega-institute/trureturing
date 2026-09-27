@@ -1,0 +1,39 @@
+**证明。** 按顺序构造混合协议：前 $j$ 步使用补全后重新编码的操作，后续步骤仍使用真实操作。相邻混合协议在第 $j$ 步之前共享编码内输入，故可用(ST20.3)。之后双方共用真实 CPTP 过程，误差不会增加。对分支控制通道取 $\sup_h$，再对各次替换用三角不等式，最后读出经典记录。证明没有假设真实协议在每一步自动留在编码中。∎
+
+若各段演化另有 ST14 的等距交织误差 $\varepsilon_j(h)$，可在同一替换证明中使用
+
+$$
+\min\left\{1,\sum_j\sup_h[b(\lambda_j(h))+\varepsilon_j(h)]\right\}.
+\tag{ST21.2}
+$$
+
+### 反例 ST21.2：未监测的相干漏出不能用概率并集界控制
+
+在 $\mathbb C^2$ 中只保留 $|0\rangle$，重复真实酉旋转
+
+$$
+R_\theta=\begin{pmatrix}\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta\end{pmatrix}.
+$$
+
+每一步在编码输入上的漏出参数为 $\lambda=\sin^2\theta$。一维归一补全只能留在 $|0\rangle$。取 $\theta=\pi/(2N)$，真实演化满足
+
+$$
+R_\theta^N|0\rangle=|1\rangle,
+\qquad
+N\lambda=N\sin^2\frac{\pi}{2N}\longrightarrow0.
+$$
+
+最终测量 $|1\rangle\langle1|$ 的概率差却等于1。相反，$N b(\lambda)$ 的小角主项趋于 $\pi/2$，与(ST21.1)的截断上界相容。若每一步真的测量是否漏出，实验本身会改变；本反例中没有偷偷加入该测量。
+
+### 命题 ST21.3：输入输出换框不改变预算
+
+在同一个物理编码像内取 $U'=Ug_{\rm in}$、$W'=Wg_{\rm out}$，其中 $g$ 酉。则
+
+$$
+k'_{a\ell}=g_{\rm out}^\dagger k_{a\ell}g_{\rm in},\quad
+\Lambda'_a=g_{\rm in}^\dagger\Lambda_a g_{\rm in}.
+$$
+
+若同时运输 $\tau'_a=g_{\rm out}^\dagger\tau_a g_{\rm out}$，补全通道也协变，$\lambda$ 和全部误差界保持不变。证明由代入定义和酉范数不变性。改变物理编码像属于另一个问题，不在此换框命题内。
+

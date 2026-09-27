@@ -1,0 +1,80 @@
+**一次共同的启动编码。** 记 $`P_k`$ 为来源块投影，定义
+
+$$
+F_k(X)=\operatorname{Tr}_{B_k}\bigl(P_kE^L(X)P_k\bigr).
+\tag{15.7}
+$$
+
+这是完全正映射，且由（15.4）—（15.5），
+
+$$
+E^L(X)=\bigoplus_k F_k(X)\otimes\tau_k,
+\qquad
+\sum_k\operatorname{Tr}F_k(X)=\operatorname{Tr}X.
+\tag{15.8}
+$$
+
+为每个 $`F_k`$ 取最小 Kraus 实现
+
+$$
+V_k:M\longrightarrow A_k\otimes Q_k,
+\qquad
+F_k(X)=\operatorname{Tr}_{Q_k}(V_kXV_k^\dagger),
+\qquad q_k:=\dim Q_k\le m\dim A_k.
+\tag{15.9}
+$$
+
+各 $`V_k`$ 不必分别等距，但 $`\sum_kV_k^\dagger V_k=I_M`$。取 $`q=\max_kq_k`$ 维公共空间 $`Q`$，固定等距 $`j_k:Q_k\to Q`$，并令 $`\widetilde V_k=(I\otimes j_k)V_k`$。
+
+取 $`\tau_k`$ 的最小纯化
+
+$$
+|\Xi_k\rangle\in B_k\otimes R_k,
+\qquad \dim R_k=r_k,
+\qquad K_{\rm run}=Q\otimes\bigoplus_kR_k.
+\tag{15.10}
+$$
+
+按固定张量因子次序，将
+
+$$
+W_{\rm can}|\psi\rangle
+=\sum_k\widetilde V_k|\psi\rangle\otimes|\Xi_k\rangle
+\in M\otimes K_{\rm run}
+\tag{15.11}
+$$
+
+解释为等距：其中 $`A_kB_k`$ 属于来源，第 $`k`$ 个 $`QR_k`$ 属于接收器。不同 $`R_k`$ 正交，故迹掉接收器所得通道正是 $`E^L`$。式（15.11）是相干求和，不是测量块标签后选择分支。
+
+令 $`W_t:M\to M\otimes\mathcal B^{\otimes t}`$ 为真实来源的 $`t`$ 步发射等距，只将活动来源写在张量积前方。定义统一实际档案支撑
+
+$$
+S_t=\operatorname{span}\{
+(\langle u|_M\otimes I)W_t|v\rangle:
+u,v\in M\}
+\subseteq\mathcal B^{\otimes t}.
+\tag{15.12}
+$$
+
+于是
+
+$$
+S_0=\mathbb C,\qquad
+\dim S_t\le m^2,\qquad
+S_{t+1}\subseteq S_t\otimes\mathcal B.
+\tag{15.13}
+$$
+
+维数界来自输入和活动来源各有 $`m`$ 个基向量；包含关系来自下一次发射只作用于活动来源。这一支撑同时容纳全部输入及全部参考，未依实际态选择。
+
+由于 $`W_L`$ 与 $`W_{\rm can}`$ 给出同一个来源通道，存在一个等距
+
+$$
+C_L:S_L\longrightarrow K_{\rm run},
+\qquad
+(I_M\otimes C_L)W_L=W_{\rm can}.
+\tag{15.14}
+$$
+
+这是最小实际环境上的 Stinespring 唯一性，也可直接由 Gram 矩阵证明：在输入和来源输出基下，两份等距的档案系数向量具有相同的全部内积，因为这些内积就是 $`E^L(|i\rangle\langle j|)`$ 的矩阵元。因此把真实系数送到规范系数的线性映射良定且等距。这里比较的是整个通道的一份共同编码，已经固定不同块的相对相位。
+

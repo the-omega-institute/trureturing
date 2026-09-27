@@ -1,0 +1,51 @@
+### 9.11 概率中心的统一上界与锐定理
+
+对任意可行 $y$ 和 $\varepsilon>0$，第 9.2 节给每格半宽不超过 $2\varepsilon$。第 9.7–9.10 节对每个非空子集给
+
+$$
+\frac{\sum_{t\in S}u_t-1}{|S|}\le\varepsilon\Lambda(S)\le\frac{20}{9}\varepsilon,
+$$
+
+真子集还满足更强的 $17\varepsilon/8$ 上界。必须另外控制下端总和。为每个 $t\in\Omega$ 选取达到 $l_t$ 的来源，在全体集的均匀基点处取方向 $x^{(t)}=(p^{(t)}-u)/\varepsilon$ 和共同 $h=(y-Fu)/\varepsilon$。因为 $S=\Omega$ 没有面外非负条件，同时取反 $x^{(t)},h$ 仍可行。全体集的上界于是给
+
+$$
+\frac{1-\sum_t l_t}{9}
+=\frac{\varepsilon}{9}\sum_t(-x^{(t)}_t)
+\le\frac{20}{9}\varepsilon.
+\tag{ER9.SH.15}
+$$
+
+这个取反只用于全体集；真子集的面外非负条件一般不允许它。
+
+现在取 $r=20\varepsilon/9$，$\alpha_i=\max(0,u_i-r)$、$\beta_i=l_i+r$。上述半宽、全部子集和下端总和条件恰给 $\alpha_i\le\beta_i$ 与 $\sum\alpha_i\le1\le\sum\beta_i$。将它们代入 ER9.CENTER 得到概率向量 $q(y)$，对整个实际纤维误差不超过 $r$。零噪声时由反演准确恢复唯一来源；不可行输入固定输出 $u$。故
+
+$$
+R_{\Delta_9}(\varepsilon)\le\frac{20}{9}\varepsilon\qquad(\varepsilon\ge0).
+\tag{ER9.SH.16}
+$$
+
+常值均匀输出又满足 $\sup_{p\in\Delta_9}\|u-p\|_\infty=8/9$，所以全尺度有效界为
+
+$$
+R_{\Delta_9}(\varepsilon)\le\min\left(\frac{20}{9}\varepsilon,\frac89\right).
+$$
+
+第 9.4 节的九个同输入来源给 $[0,1/7]$ 内的匹配下界，第 9.6 节给仿射上界，第 9.2 节给实输出值。这完成 ER9.SH.1 的证明。由直径中心界与九源下界也单独得到较弱但有效的比较
+
+$$
+\frac{20}{9}\varepsilon\le R_{\Delta_9}(\varepsilon)
+\le\frac{32}{9}\varepsilon\qquad(0\le\varepsilon\le1/7),
+\tag{ER9.MS.1}
+$$
+
+$$
+\liminf_{\varepsilon\downarrow0}\frac{R_{\Delta_9}(\varepsilon)}{\varepsilon}
+\ge\frac{20}{9}>2;
+\qquad
+\lim_{\varepsilon\downarrow0}\frac{R_{\Delta_9}(\varepsilon)}{\varepsilon}
+=\frac{20}{9}.
+\tag{ER9.MS.2}
+$$
+
+前一个上界只用紧单纯形中心的直径估计；精确等号另外使用了全部面证书。源质量、输出质量和观测自洽是三个独立条件，不能互相替代。
+

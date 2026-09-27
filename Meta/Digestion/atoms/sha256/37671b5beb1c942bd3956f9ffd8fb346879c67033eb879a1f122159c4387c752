@@ -1,0 +1,27 @@
+**命题 55.5。** 对推论 55.4 的 $R_\varepsilon$，在末输出 $D$ 的指定基上完全退相干，得到
+
+$$
+R_\varepsilon^{\mathrm{diag}}
+=|x\rangle\langle x|
++(1-\varepsilon)|y\rangle\langle y|
++\varepsilon|z\rangle\langle z|.
+\tag{55.25}
+$$
+
+它与 $R_\varepsilon$ 具有相同的早期边缘，因而对**每一个**反馈归一化算符都有
+
+$$
+\operatorname{Tr}(R_\varepsilon^{\mathrm{diag}}\widehat C)
+=\operatorname{Tr}(R_\varepsilon\widehat C).
+\tag{55.26}
+$$
+
+但其最优因果修复误差恰为
+
+$$
+\min_{S\text{ 因果}}D(R_\varepsilon^{\mathrm{diag}},S)
+=\varepsilon
+<\min_{S\text{ 因果}}D(R_\varepsilon,S).
+\tag{55.27}
+$$
+

@@ -1,0 +1,2 @@
+**命题 232.4（稀有支持造成覆盖放大）。** 若 $q(b)=\varepsilon>0$、$\pi(b)=1$，则 $C=1/\varepsilon$。一个动作 $b$ 上的参考加权失配 $\varepsilon\kappa_b$，传输到目标策略后变为至多 $\kappa_b$；当 $\varepsilon\downarrow0$ 时，覆盖税发散。
+

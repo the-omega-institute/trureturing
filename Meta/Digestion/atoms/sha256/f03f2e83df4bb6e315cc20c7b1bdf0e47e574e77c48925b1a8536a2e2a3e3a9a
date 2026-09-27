@@ -1,0 +1,12 @@
+**证明。** 令 $s=(2+t)/(1-t)$、$s_l=(2+l)/(1-l)$、$s_r=(2+r)/(1-r)$。将式 (19.3) 中的 $1-w_c=K/[(2+t)(1-t)]$ 代入，精确化为
+\[
+w_c-w_h=\frac K9\frac{(s-s_l)(s_r-s)}s
+=\frac K9\left(s_l+s_r-s-\frac{s_ls_r}s\right).
+\]
+对 $s>0$，
+\[
+s+\frac{s_ls_r}s-2\sqrt{s_ls_r}
+=\frac{(s-\sqrt{s_ls_r})^2}s\geq0.
+\]
+因此在 $s=\sqrt{s_ls_r}=\psi(l)\psi(r)$ 处取得且仅取得最大值。该点严格位于两端之间，反变换给出 $t_*$，而最大值为式 (19.14)。
+

@@ -1,0 +1,10 @@
+**定义 191.1（局部精确程序及规则达到）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$。局部精确程序由一个包含 $t$ 的开区间 $U\subset J_a$、一个固定 CPTP 处理器和一条定义在 $U$ 上的 $C^1$ 程序曲线组成，要求
+$$
+\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega)
+\qquad(u\in U)
+\tag{191.1}
+$$
+对全部信号输入成立。称在 $t$ 规则达到，若程序秩在 $t$ 的某个邻域恒定且 $I_Q(\rho_t)=I_r(t)$，其中 $I_r(u)=1/(1-u^2)$。这是在一个真实开区间内精确生成通道的要求，比仅匹配 $\mathcal T_t$ 与其一阶导数强；其覆盖域又小于第190节要求的整个 $J_a$。
+
+量子估计文献中的局部模拟可采用切向意义：Kołodyński、Demkowicz-Dobrzański，*Efficient tools for quantum metrology with uncorrelated noise*，New J. Phys. **15**, 073043（2013），DOI:10.1088/1367-2630/15/7/073043，arXiv:1303.7271v2，第4.1.2节与附录D式（D.1），允许通道等式具有 $O((u-t)^2)$ 余项。本节（191.1）要求开区间内严格相等，以下二维构造与纯态障碍均针对这个更强条件。
+

@@ -1,0 +1,74 @@
+**定理 240.1（最坏纯探针的精确刻画）。** 对任意归一化纯联合输入及其输入边缘 $\rho$，
+$$
+\boxed{
+\varepsilon(\rho)=D_*
+\quad\Longleftrightarrow\quad
+[\rho,\Pi_j]=0\quad\text{对全部 }j.
+}
+\tag{240.9}
+$$
+因此全部最坏纯探针的输入边缘，恰是与整个投影族对易的密度矩阵。
+
+**证明。** 令
+$$
+a=\frac dR-\frac1N>0,
+\qquad b=\frac1N>0,
+$$
+并定义正半定矩阵
+$$
+A_j=a\sqrt\rho\,\Pi_j\sqrt\rho,
+\qquad
+B_j=b\sqrt\rho\,(I_d-\Pi_j)\sqrt\rho.
+\tag{240.10}
+$$
+按（240.8），第 $j$ 个记录块的参考差为 $(A_j-B_j)^{\mathsf T}$，另张量固定纯输出 $P_j$。记录块正交，转置不改变迹范数，$\|P_j\|_1=1$，故
+$$
+\varepsilon(\rho)=\frac12\sum_j\|A_j-B_j\|_1.
+\tag{240.11}
+$$
+逐项三角不等式给
+$$
+\|A_j-B_j\|_1\le\operatorname{Tr}A_j+\operatorname{Tr}B_j.
+\tag{240.12}
+$$
+而（240.2）与 $\operatorname{Tr}\rho=1$ 给
+$$
+\begin{aligned}
+\sum_j(\operatorname{Tr}A_j+\operatorname{Tr}B_j)
+&=a\frac Rd+b\left(N-\frac Rd\right)\\
+&=2\left(1-\frac R{Nd}\right)=2D_*.
+\end{aligned}
+\tag{240.13}
+$$
+因此全局取等当且仅当每个标签在（240.12）中取等。
+
+对任意正半定矩阵 $A,B$，有标准迹范数取等条件
+$$
+\|A-B\|_1=\operatorname{Tr}A+\operatorname{Tr}B
+\quad\Longleftrightarrow\quad AB=0.
+\tag{240.14}
+$$
+为包含奇异情形，取 $Z=\operatorname{sign}(A-B)$。由 $-I\preceq Z\preceq I$，三角上界与实际范数之差等于
+$$
+\operatorname{Tr}[(I-Z)A]+\operatorname{Tr}[(I+Z)B]\ge0.
+$$
+等号使两个非负项分别为零，因而 $A$ 的像落在 $Z$ 的 $+1$ 特征子空间，$B$ 的像落在 $-1$ 特征子空间；二者正交，即 $AB=0$。反之，正交支撑直接给（240.14）的等号。正半定性还给
+$$
+AB=0\quad\Longleftrightarrow\quad\operatorname{Tr}(AB)=0,
+\tag{240.15}
+$$
+因为 $\operatorname{Tr}(AB)=\|A^{1/2}B^{1/2}\|_{\mathrm{HS}}^2$。
+
+在（240.10）中，循环移位计算得到
+$$
+\begin{aligned}
+\operatorname{Tr}(A_jB_j)
+&=ab\operatorname{Tr}[\Pi_j\rho(I_d-\Pi_j)\rho]\\
+&=ab\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{240.16}
+$$
+由于 $ab>0$，此式为零恰当且仅当 $(I_d-\Pi_j)\rho\Pi_j=0$。取伴随还得到 $\Pi_j\rho(I_d-\Pi_j)=0$，所以这恰等价于 $[\rho,\Pi_j]=0$。结合（240.11）—（240.15）及每项非负的取等缺额，得到（240.9）。$\square$
+
+该证明保留了参考块的转置，再利用范数不变性转回输入坐标；最后的对易条件针对实际输入边缘 $\rho$。证明没有对 $\rho$ 求逆，因此同样覆盖秩亏纯探针边缘。
+

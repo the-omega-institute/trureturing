@@ -1,0 +1,33 @@
+## 139. 同一固定接收器的六终端精确容量为八
+
+本节结算第39节留下的七至八维区间。固定一份已知非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\qquad |a|^2+|b|^2=1,
+$$
+
+其每轮发射等距为
+
+$$
+|i\rangle_M\longmapsto m_i\otimes|i\rangle_B.
+\tag{139.1}
+$$
+
+接收器 $K$ 从与来源及参考独立的纯态启动，每轮只访问自身与最新发出位，并重复使用同一个全域 CPTP 通道
+
+$$
+\mathcal C:\mathcal L(K\otimes\mathbb C^2)\longrightarrow\mathcal L(K).
+$$
+
+所有持久辅助系统、轮次控制和保留的参考均计入 $K$；来源活动记忆与外部参考不可访问。对每个 $1\le n\le6$，允许选取依终端而异的接收端解码器 $\mathcal D_n$，但要求对任意参考 $R$ 及任意初始联合态 $\rho_{RM}$，精确恢复完整参考—活动记忆—按取得顺序保存的原始档案：
+
+$$
+(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\bigl(\rho^{\mathrm{received}}_{RMK,n}\bigr)
+=\rho^{\mathrm{source}}_{RM B_1\cdots B_n}.
+\tag{139.2}
+$$
+
+记满足这一合同所需的最小接收空间维数为 $d_{\mathrm{CPTP},6}(a,b)$。通道与初态可针对已知 $a,b$ 校准，实际各轮使用的接收通道保持相同。
+

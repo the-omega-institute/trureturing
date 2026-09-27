@@ -1,0 +1,70 @@
+**定义31.1（来源、商空间与完整联合合同）。** 取状态集 $\mathcal V=\{1,\ldots,m\}$、primitive 行随机矩阵 $P$，即某个正整数幂的全部矩阵元严格为正。记非空支持边集
+$\mathcal E=\{(i,j):P_{ij}>0\}$、$s=|\mathcal E|$。每条支持边给定整数荷 $g_{ij}\in\mathbb Z^q$。活动记忆为 $M=\mathbb C^m$，发出位为 $B=\mathbb C^{\mathcal E}$，其已知正交基保留完整边标签。对 $\theta\in\mathbb T^q=(\mathbb R/2\pi\mathbb Z)^q$，一步等距为
+
+$$
+V_\theta|i\rangle
+=\sum_{j:P_{ij}>0}\sqrt{P_{ij}}\,
+e^{i\theta\cdot g_{ij}}|i,j\rangle_B\otimes|j\rangle_M.
+\tag{31.1}
+$$
+
+不同初始状态由边标签中的起点区分，行随机性保证范数为一。置 $H_n=B^{\otimes n}$、$H_0=\mathbb C$，并递归定义
+
+$$
+T_{\theta,0}=I_M,\qquad
+T_{\theta,n+1}=(I_{H_n}\otimes V_\theta)T_{\theta,n},\qquad
+\Omega_{\theta,n}(\rho)
+=(I_J\otimes T_{\theta,n})\rho(I_J\otimes T_{\theta,n}^*).
+\tag{31.2}
+$$
+
+这里 $J$ 是任意有限参考，$\rho\in\mathcal D(J\otimes M)$ 是任意初始联合态。固定非空候选集 $\Theta\subseteq\mathbb T^q$，不要求闭或可测。允许全域 CPTP 编解码
+$\mathcal E_n:\mathcal L(H_n)\to\mathcal L(K)$、
+$\mathcal D_n:\mathcal L(K)\to\mathcal L(H_n)$，依赖已知模型、$\Theta,n,\epsilon$，但不能依赖实际相位、输入或参考，也不能访问 $J,M$。半迹距离记为 $D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1$。要求
+
+$$
+\sup_{\theta\in\Theta,\ J,\ \rho}
+D\!\left(
+(\operatorname{id}_J\otimes\mathcal D_n\mathcal E_n
+ \otimes\operatorname{id}_M)\Omega_{\theta,n}(\rho),
+\Omega_{\theta,n}(\rho)\right)\le\epsilon.
+\tag{31.3}
+$$
+
+最小 $\dim K$ 记为 $k_n^{(\epsilon)}(\Theta)$；$\epsilon=0$ 表示精确恢复，$k_0^{(\epsilon)}=1$。全部持久且携带输入信息的接收系统计入 $K$，包括经典标签和失败旗标。已知门描述、时间编号、网的取得、路由和新空白另行计量；本节不提供任意候选集的有效描述或门复杂度界。
+
+与未来终端无关的在线合同要求预先给定同一列
+
+$$
+K_0=\mathbb C,\qquad
+\mathcal C_t:\mathcal L(K_{t-1}\otimes B)\to\mathcal L(K_t),
+\qquad
+\mathcal D_t:\mathcal L(K_t)\to\mathcal L(H_t),
+\tag{31.4}
+$$
+
+在每个确定终端满足（31.3）。门可依赖当前编号，不能依赖未来终端；新环境可立即丢弃。不增加适应性停止或解码后继续运行的要求。
+
+定义标量相位加端点势差的子群
+
+$$
+\mathcal H=\left\{h\in\mathbb T^q:
+\begin{array}{l}
+\exists\,\omega\in\mathbb R,\ |z_1|=\cdots=|z_m|=1,\\
+e^{ih\cdot g_{ij}}=e^{i\omega}z_i\overline{z_j}
+\quad((i,j)\in\mathcal E)
+\end{array}\right\}.
+\tag{31.5}
+$$
+
+原环面取平坦测地距离。下文证明 $\mathcal H$ 闭；商
+$\mathcal Q=\mathbb T^q/\mathcal H$ 配距离
+
+$$
+d_{\mathcal Q}([\theta],[\varphi])
+=\min_{h\in\mathcal H}d_{\mathbb T^q}(\theta-\varphi,h).
+\tag{31.6}
+$$
+
+相位乘子、内部酉规范和量子 Markov 参数识别已有一般理论，局部参数的 $n^{-1/2}$ 高斯尺度也已有先例。[^phase_multiphase_gk] 本节另外证明此边标签模型的全局有限步估计、任意参考历史界与完整联合接收容量。
+

@@ -1,0 +1,63 @@
+### 301.5 近区的实际增益、方差与均值
+
+对实际 $h\in[h_0,1]$，定义
+$$
+w_h=w(h)=C-h+h\kappa,\qquad
+t_h=\frac{Kh^2\kappa^2}{w_h}.
+$$
+有
+$$
+w_h\le w_0,\qquad w_h\ge h\kappa,\qquad t_h\ge t.
+\tag{301.24}
+$$
+最后一式也可直接由 $h\ge h_0,w_h\le w_0$ 得到，不需要比较不同实验的最优值。
+
+全部真实 $c\ge kl>k^3$ 满足 $1-c\le3\kappa$，故
+$$
+C-hc\le C-h+3h\kappa\le3w_h.
+$$
+经验坐标的准确方差为
+$$
+K\,\mathrm{Var}(X)=(C-hc)[C(B-1)+hc]\le A w_h,
+$$
+参考坐标同样有 $K\,\mathrm{Var}(Y)\le A w_h$。
+
+对 $Z=X-\tau Y$ 或其相反数，$\tau\in[0,1]$，两流独立使
+$$
+\Pr(|Z-\mathbb EZ|\ge s)
+\le2\exp\!\left[-bK\frac{s^2}{w_h+s}\right].
+\tag{301.25}
+$$
+其中每个中心化加权项的绝对值至多 $4C_\star/K$。
+
+若 $\mathbb EZ\le-b_0h\kappa$，$b_0>0$ 为固定阈值常数，则
+$$
+\Pr(Z\ge0)\le A e^{-a t_h},
+$$
+$$
+\boxed{
+\mathbb E Z_+
+\le A\,\frac{w_h}{Kh\kappa}e^{-a t_h}.
+}
+\tag{301.26}
+$$
+完整积分仍使用 $\phi(s)=s^2/(w_h+s)$ 的凸性。
+因 $w_h\ge h\kappa$，在 $s_0=b_0h\kappa$ 有
+$$
+\phi(s_0)\ge a h^2\kappa^2/w_h,\qquad
+\phi'(s_0)\ge a h\kappa/w_h.
+$$
+积分指数切线即可得到（301.26），包括大超额区。
+
+乘上（301.22）、（301.23）的 $1/(h_0\kappa)$ 后，
+$$
+\frac{w_h}{K h_0h\kappa^2}
+=
+\frac1t\frac{w_h}{w_0}\frac{h_0}{h}
+\le\frac1t.
+\tag{301.27}
+$$
+因此两种近区有害期望都不超过
+$A t^{-1}e^{-a t_h}\le A e^{-at}$。
+这里使用的是同一真实对象的 $h$、方差和均值间距；若提前全部替换成 $h_0$ 的粗界，会掩盖所需抵消。
+

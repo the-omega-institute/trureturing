@@ -1,0 +1,10 @@
+**命题 223.1（信息增量的条件形式）。** 本节全部变量有限，并由同一个非负、归一化的联合概率律给出。以自然对数定义香农熵 $\mathcal H$，相应互信息单位为 nat。已有读数为 $A$，新读数为 $B$，目标为 $H$，则
+
+$$
+I(H;A,B)-I(H;A)=I(H;B\mid A)\ge0.
+$$
+
+等号成立当且仅当对每个具有正概率的 $a$，给定 $A=a$ 时 $H$ 与 $B$ 的联合分布等于其两个条件边缘分布之积。这里对应项目 [MutualInformationChainRule](../../../D5/S3/Entropy/Submodularity/MutualInformationChainRule.lean) 中的 `mutual_information_chain_rule`、`mutual_information_le_pair` 与 `mutual_information_pair_eq_iff_conditional_product`。把该文件中的三变量依次解释为 $H,A,B$，并保留同一个联合概率律，就得到上述关系。
+
+因此，“新消息对目标有无增量”必须相对于当前信息说明。若 $B$ 是 $A$ 的确定函数，其条件增量为零；若尚未持有 $A$，接收同一个 $B$ 却可以有用。它也允许另一种零增量：$B$ 含有一些新变化，但在给定 $A$ 后，这些变化与当前目标 $H$ 条件独立。新增字数、现象或细节，不自动等于对指定问题的新增信息。
+

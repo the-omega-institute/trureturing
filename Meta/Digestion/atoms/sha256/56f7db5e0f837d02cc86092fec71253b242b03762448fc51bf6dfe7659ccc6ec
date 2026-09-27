@@ -1,0 +1,32 @@
+## 132. 正交二加一支持均进入三尾时只剩五个带标签词
+
+沿用第89、103、112、119、124、127节的同一七维六终端实际合同。通常纤维维数为二，三维剩余空间的支持分割为二加一，两个支持已由第124节证明正交。按完整零位纤维尺寸命名
+
+$$
+X\perp Y,\qquad
+\mathcal G_0(X)=U,\quad\dim U=4,
+\qquad \mathcal G_0(Y)=M,\quad\dim M=3,
+$$
+
+$$
+U\cap M=P,\quad\dim P=2,\qquad
+S=U+M,\quad\dim S=5,\qquad Q=S^\perp,\quad\dim Q=2.
+\tag{132.1}
+$$
+
+本节假设三条尾射线恰为 $X,Y,Z$，其中 $Z\ne X,Y$。普通方向满足
+
+$$
+\mathcal G_0(Z)=P,\qquad \mathcal G_1(Z)=Q,
+$$
+
+而两个异常方向的一位纤维是
+
+$$
+F_X=U^\perp,\quad\dim F_X=3,\qquad
+F_Y=M^\perp,\quad\dim F_Y=4.
+\tag{132.2}
+$$
+
+所有一位接收因子均正交于 $P$；特别 $q,v,Q_n\subset P^\perp$。两个接收块 $U,M$ 不预设正交。只有环境 $X,Y$ 正交，第三方向 $Z$ 与两者均不正交。
+

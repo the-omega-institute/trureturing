@@ -1,0 +1,11 @@
+### 249.4 每次都输出固定目标维数的最优重叠
+
+现在不后选择。协议始终输出两方各 $2^k$ 维的归一化态，定义
+$$
+F_{n,k}:=\max_{\Lambda\text{ 为允许的 LOCC}}
+\langle\Phi_{2^k}|\Lambda(\Omega^{\otimes n})|\Phi_{2^k}\rangle,
+\qquad k\ge0.
+\tag{249.13}
+$$
+这里优化的是与纯 Bell 目标的重叠平方，不是其平方根。
+

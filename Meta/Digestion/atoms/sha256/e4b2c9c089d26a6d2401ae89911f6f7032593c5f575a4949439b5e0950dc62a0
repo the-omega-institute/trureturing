@@ -1,0 +1,20 @@
+**命题 5.7.4（显式有界预算的局部零质量反例）。** 固定 $d\ge2$、正 iid 律和一个长度 $h\ge1$ 的词 $v$，再固定字母 $a$。令
+$$
+b_j=0\quad(1\le j\le h),\qquad b_{h+n}=d-1\quad(n\ge1),
+$$
+$$
+\mathcal F_v=\{v a^{n-1}z:n\ge1,\ z\ne a\}.
+$$
+预算显式有界且次指数，满足全局严格条件
+$$
+B_d(b)=\sum_{n\ge1}(d-1)d^{-(h+n)}=d^{-h}<1.
+$$
+然而
+$$
+E=(X\setminus[v])\cup\{va^\infty\},\qquad
+M=1-p(v)>0,\qquad
+E\cap[v]=\{va^\infty\}\ne\varnothing,
+\qquad\mu_p(E\cap[v])=0.
+$$
+故全族根处正余量不能单独推出本对象的局部正间隔或 $E=\operatorname{supp}\nu$。
+

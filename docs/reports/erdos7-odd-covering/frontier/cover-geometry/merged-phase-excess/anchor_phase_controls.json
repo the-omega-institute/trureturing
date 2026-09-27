@@ -1,0 +1,86 @@
+{
+  "result": "PASS",
+  "tail_residue_table": [
+    {
+      "r": 1,
+      "k0": 4,
+      "first_integer": 121,
+      "denominator": 3120
+    },
+    {
+      "r": 7,
+      "k0": 4,
+      "first_integer": 127,
+      "denominator": 3300
+    },
+    {
+      "r": 11,
+      "k0": 3,
+      "first_integer": 101,
+      "denominator": 2520
+    },
+    {
+      "r": 13,
+      "k0": 3,
+      "first_integer": 103,
+      "denominator": 2580
+    },
+    {
+      "r": 17,
+      "k0": 3,
+      "first_integer": 107,
+      "denominator": 2700
+    },
+    {
+      "r": 19,
+      "k0": 3,
+      "first_integer": 109,
+      "denominator": 2760
+    },
+    {
+      "r": 23,
+      "k0": 3,
+      "first_integer": 113,
+      "denominator": 2880
+    },
+    {
+      "r": 29,
+      "k0": 3,
+      "first_integer": 119,
+      "denominator": 3060
+    }
+  ],
+  "prime_square_upper": "25333216947944940335217017219727643/619258216451156108309703080921860800",
+  "reserve_at_degree48": "469208737519897511020611152016557/25802425685464837846237628371744200",
+  "source_control": {
+    "original_labels": 12,
+    "outside_heights": [
+      2,
+      1
+    ],
+    "pure_survivor_masses": {
+      "11": "98/121",
+      "13": "12/13"
+    },
+    "product_source_points": 1176,
+    "omega_points": 1142,
+    "Phi": "1573/47040",
+    "rho_Omega": "571/588"
+  },
+  "degree_one_Phi_failure": {
+    "original_labels": 240,
+    "retained_rows": 120,
+    "minimum_Phi": "1",
+    "outside_point": [
+      1,
+      0
+    ]
+  },
+  "high_incidence_diagnostic": {
+    "original_labels": 121,
+    "retained_prime_incidence": 121,
+    "outside_prime_incidence": 37,
+    "D_alpha": 1
+  },
+  "scope": "Exact finite arithmetic and actual CRT law controls; infinite tail justified by explicit integral proof; not Lean or unrestricted noncoverage."
+}

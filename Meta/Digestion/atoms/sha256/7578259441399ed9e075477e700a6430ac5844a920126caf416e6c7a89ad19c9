@@ -1,0 +1,63 @@
+**证明。** 记 $P=I_H\otimes P_S$，并令
+$$
+t=\operatorname{Tr}((I-P)\Xi).
+\tag{265.40}
+$$
+由于理想边缘在 $S^\perp$ 上为零，
+$$
+0\le t
+=\operatorname{Tr}\!\left(P_{S^\perp}
+(\operatorname{Tr}_H\Xi-\rho_0)\right)
+\le\varepsilon.
+\tag{265.41}
+$$
+先考虑 $0\le\varepsilon\le1/2$，此时 $t<1$。定义
+$$
+\Xi_c=P\Xi P,\qquad
+\Xi'=\frac{\Xi_c}{1-t}.
+\tag{265.42}
+$$
+$\Xi'$ 是 $H\otimes S$ 上的合法密度态。参考压缩与两个数据读出相容：
+$$
+\rho_c=P_S(\operatorname{Tr}_H\Xi)P_S,
+\qquad
+K_c=P_S\mathscr K(\Xi)P_S.
+\tag{265.43}
+$$
+左、右乘正交投影不增加核范数，因此
+$$
+\|\rho_c-\rho_0\|_1+\|K_c-K_0\|_1\le\varepsilon.
+\tag{265.44}
+$$
+
+对任意半正定联合块 $B=\left(\begin{smallmatrix}A&C\\C^\dagger&D\end{smallmatrix}\right)$，
+$$
+2\|C\|_1\le2\sqrt{\operatorname{Tr}A\,\operatorname{Tr}D}
+\le\operatorname{Tr}B.
+\tag{265.45}
+$$
+例如由Gram分解写 $A=XX^\dagger,D=YY^\dagger,C=XY^\dagger$，再用
+$\|XY^\dagger\|_1\le\|X\|_{\mathrm F}\|Y\|_{\mathrm F}$ 即得。因此
+$\|\rho_c\|_1=1-t$、$\|K_c\|_1\le1-t$。归一化对两项数据分别引入至多 $t$ 的误差，故
+$$
+\varepsilon'
+=\|\operatorname{Tr}_H\Xi'-\rho_0\|_1
++\|\mathscr K(\Xi')-K_0\|_1
+\le\varepsilon+2t\le3\varepsilon.
+\tag{265.46}
+$$
+
+将定理265.3用于 $\Xi'$，再用引理265.4，得到
+$$
+\begin{aligned}
+\|\Xi-\Omega_0\|_1
+&\le\|\Xi-\Xi'\|_1+\|\Xi'-\Omega_0\|_1\\
+&\le2\sqrt{\varepsilon}+\varepsilon
++20(3\varepsilon)^{1/4}\\
+&\le\left(3+20\cdot3^{1/4}\right)\varepsilon^{1/4}\\
+&\le30\varepsilon^{1/4}.
+\end{aligned}
+\tag{265.47}
+$$
+当 $\varepsilon\ge1/2$ 时，迹距上界二已足以给出（265.39）。全过程在估计中保留了压缩丢失的质量与相干，并没有把压缩后的来源冒充原竞争态。$\square$
+

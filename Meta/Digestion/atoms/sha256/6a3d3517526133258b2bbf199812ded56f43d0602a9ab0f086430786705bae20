@@ -1,0 +1,34 @@
+**定理 29.2（条件化的锐迹距离常数）。** 定义 29.1 下，
+
+$$
+\boxed{L_R=\kappa_R.}
+$$
+
+并且全部来源满足双向界
+
+$$
+\kappa_R^{-1}D(\rho,\sigma)
+\le D(\tau_R(\rho),\tau_R(\sigma))
+\le\kappa_RD(\rho,\sigma).
+$$
+
+证明。对迹不增过滤 $\mathcal E(X)=GXG/r_{\max}$，每个来源的成功概率至少为 $r_{\min}/r_{\max}$。由定理 25.2 的概率加权收缩界得到上界。若 $r_{\min}<r_{\max}$，取相应正交本征态 $P_-,P_+$，置 $\rho=P_-$、$\sigma_\varepsilon=(1-\varepsilon)P_-+\varepsilon P_+$，其中 $0<\varepsilon<1$。则
+
+$$
+D(\rho,\sigma_\varepsilon)=\varepsilon,
+\qquad
+\frac{D(\tau_R(\rho),\tau_R(\sigma_\varepsilon))}
+{D(\rho,\sigma_\varepsilon)}
+=\frac{\kappa_R}{1+(\kappa_R-1)\varepsilon}
+\longrightarrow\kappa_R.
+$$
+
+故上界最优。若两本征值相等，$\tau_R$ 是恒等映射，来源类中存在不同两态，所以 $L_R=1=\kappa_R$。逆变换为
+
+$$
+\tau_R^{-1}(\omega)
+=\frac{G^{-1}\omega G^{-1}}{\operatorname{Tr}(\omega R^{-1})}.
+$$
+
+它对应正算子 $R^{-1}$ 的归一化过滤，谱比仍是 $\kappa_R$；用合法缩放 $r_{\min}R^{-1}\le I_P$ 重复上界论证，得到下界。$\square$
+

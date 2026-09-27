@@ -1,0 +1,14 @@
+**定理 31.4（相邻分拆的一步严格正群环因子）。** 若 λ、μ∈P(n)，d_∞(λ,μ)≤1，按补零后的同一索引 i 直和第 31.3 条的块，得到总尺寸 n×n 的普通 0/1 矩阵 P、Q。它们满足 PQ=N_λ、QP=N_μ。令
+
+$$
+\boxed{U_{\lambda\mu}=qJ_nu+zP,\qquad
+       V_{\lambda\mu}=qJ_nu+zQ.}
+$$
+
+则两个因子的每个群系数严格为正，并且
+
+$$
+U_{\lambda\mu}V_{\lambda\mu}=A_\lambda,\qquad
+V_{\lambda\mu}U_{\lambda\mu}=A_\mu.
+$$
+

@@ -1,0 +1,63 @@
+**Proof.** Enumerate machines with their inputs fixed. Put
+$$
+q_n=
+\begin{cases}
+p^{-t},&\text{machine }n\text{ first halts at step }t\ge1,\\
+0,&\text{it never halts}.
+\end{cases}
+\tag{TM.593}
+$$
+These real numbers are uniformly computable: simulation through $T$ steps either finds the exact value or bounds any later value by $p^{-T}$. Nevertheless $q_n=0$ is the nonhalting predicate.
+
+For $y=\sum_{j\ge0}y_jp^j\in\mathbb Z_p$, define
+$$
+\theta(y)=\sum_{j\ge0}y_jp^{-(j+1)}\in[0,1].
+\tag{TM.594}
+$$
+This is a computable continuous map. Under Haar measure its digits are independent and uniform, so its pushforward is Lebesgue measure on $[0,1]$. In particular,
+$$
+\mu\{y:\theta(y)\le q\}=q,
+\qquad
+\mu\{y:\theta(y)\ge q\}=1-q
+\qquad(0\le q\le1).
+\tag{TM.595}
+$$
+Endpoint fibers have measure zero. The two sets are effectively closed uniformly in a computable name for $q$, because the strict reverse inequalities define effectively open preimages.
+
+Inside $D_n=[p^n]_{n+1}$, use its two children with next digit $0$ and $1$:
+$$
+F_{n,0}=\{p^n+p^{n+2}y:\theta(y)\le q_n\},
+\qquad
+F_{n,1}=\{p^n+p^{n+1}+p^{n+2}y:\theta(y)\ge q_n\}.
+\tag{TM.596}
+$$
+Put
+$$
+F=\{0\}\cup\bigcup_{n\ge0}(F_{n,0}\cup F_{n,1}).
+\tag{TM.597}
+$$
+Each component is closed in its clopen cylinder $D_n$, and these cylinders accumulate only at zero, which has been included. The complement is effectively open: outside zero, the first nonzero digit either excludes the point immediately or identifies its unique $D_n$; its next digit and the applicable strict inequality then enumerate the complement inside that cylinder. Thus $F$ is effectively closed. The disjoint pairs have masses
+$$
+\mu(F_{n,0})=p^{-(n+2)}q_n,
+\qquad
+\mu(F_{n,1})=p^{-(n+2)}(1-q_n).
+\tag{TM.598}
+$$
+Consequently,
+$$
+\mu(F)=\sum_{n\ge0}p^{-(n+2)}=\frac1{p(p-1)}.
+\tag{TM.599}
+$$
+For the computable cylinder family $C_n=[p^n]_{n+2}$, its intersection with $F$ is exactly $F_{n,0}$. Therefore
+$$
+\mu(F\cap C_n)=0
+\quad\Longleftrightarrow\quad
+q_n=0
+\quad\Longleftrightarrow\quad
+\text{machine }n\text{ does not halt}.
+\tag{TM.600}
+$$
+This proves undecidability of zero cylinder mass despite computability of the total mass and of every local mass uniformly. $\square$
+
+Neither general example is asserted to admit the one-forbidden-cylinder-per-depth presentation of C卷第2.7.1节. The equivalence theorem depends on that structural promise, not merely on effective closedness or positive total mass.
+

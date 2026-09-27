@@ -1,0 +1,72 @@
+### 209.4 共同 TP 局部坐标与快慢 Hessian
+
+先在两份单 Kraus 的共同 TP 流形上构造候选。
+写 $K_j=\begin{psmallmatrix}a_j&b_j\\c_j&d_j\end{psmallmatrix}$，
+其整体相位不改变 Choi，在基点附近可固定 $a_j>0$。
+用五个实坐标
+
+$$
+x=(\xi,\operatorname{Re}c_0,\operatorname{Im}c_0,
+\operatorname{Re}c_1,\operatorname{Im}c_1),\qquad C=|c_0|^2+|c_1|^2,
+$$
+
+$$
+a_0=\sqrt{(1-C)/2+\xi},\qquad
+a_1=\sqrt{(1-C)/2-\xi},\qquad
+p=(a_0,c_0,a_1,c_1)^{\mathsf T}.
+\tag{209.13}
+$$
+
+第一列 $p$ 严格单位归一。
+在 $p^\perp$ 内选实解析正交单位标架 $e_0(x),e_1(x),e_2(x)$，基点值为
+
+$$
+e_0=(0,1,0,1)^{\mathsf T}/\sqrt2,\qquad
+e_1=(1,0,-1,0)^{\mathsf T}/\sqrt2,\qquad
+e_2=(0,1,0,-1)^{\mathsf T}/\sqrt2.
+$$
+
+可先投影再作 Gram–Schmidt；基点各分母严格正，故该标架在固定邻域解析。
+取五个慢实坐标
+$y=(\operatorname{Re}z_1,\operatorname{Im}z_1,
+\operatorname{Re}z_2,\operatorname{Im}z_2,\varphi)$，定义第二列
+
+$$
+r(x,y)=\sqrt{1-|z_1|^2-|z_2|^2}\,e^{i\varphi}e_0(x)
++z_1e_1(x)+z_2e_2(x).
+\tag{209.14}
+$$
+
+两列严格正交单位归一，因此严格满足共同 TP。
+这些坐标覆盖基点附近单 Kraus 共同 TP 流形模两份整体相位的全部切向。
+此处只在该流形上产生候选，没有限制原优化集合的 Kraus 数量。
+
+由（209.11），其零来源零噪声目标恰为
+
+$$
+\widetilde e(0,0,\Gamma(x,y))
+=\frac34+\frac C4+\frac{\xi^2}{1-C}.
+\tag{209.15}
+$$
+
+它完全不依赖 $y$；关于 $x$ 的基点 Hessian 是
+$\operatorname{diag}(2,1/2,1/2,1/2,1/2)\succ0$。
+
+当 $x=0$，令
+$d_+=\sqrt{1-|z_1|^2-|z_2|^2}e^{i\varphi}$。
+此时 $b_0=z_1/\sqrt2,b_1=-z_1/\sqrt2$，
+$d_0=(d_++z_2)/\sqrt2,d_1=(d_+-z_2)/\sqrt2$。
+代入（209.12），得
+
+$$
+\begin{aligned}
+\mathcal P(y)
+&=\frac23-\frac23\sqrt{1-|z_1|^2-|z_2|^2}\cos\varphi
+-\frac{|z_1|^2}{12}\\
+&=\frac{|z_1|^2}{4}+\frac{|z_2|^2}{3}+\frac{\varphi^2}{3}+O(|y|^4).
+\end{aligned}
+\tag{209.16}
+$$
+
+所以五个慢方向的约化 Hessian 也严格正定。
+

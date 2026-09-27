@@ -1,0 +1,10 @@
+**命题 5.3（纯记录的可分辨性）。** 定义等先验记录的半迹距离
+
+$$
+\mathcal D=\frac12\bigl\||d_L\rangle\langle d_L|-|d_R\rangle\langle d_R|\bigr\|_1.
+$$
+
+则 $\mathcal D=\sqrt{1-|\kappa|^2}$，故 $\mathcal D^2+\mathcal V^2=1$。
+
+证明。忽略不改变投影的整体相位后，记录态在其至多二维张成空间可写为 $|0\rangle$ 与 $|\kappa||0\rangle+\sqrt{1-|\kappa|^2}|1\rangle$。两投影之差迹为零，非零本征值为 $\pm\sqrt{1-|\kappa|^2}$。取迹范数即得；张成空间一维时差为零。$\square$
+

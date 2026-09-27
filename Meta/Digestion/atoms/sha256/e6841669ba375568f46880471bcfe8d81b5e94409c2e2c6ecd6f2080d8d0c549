@@ -1,0 +1,10 @@
+# 383．规范运输与绕行不变量
+
+对每个顶点选酉 $G_v$，同时定义
+
+$$
+\rho'_v=G_v\rho_vG_v^\dagger,\qquad
+F'_v=G_vF_vG_v^\dagger,\qquad
+U'_e=G_{t(e)}U_eG_{s(e)}^\dagger .
+$$
+

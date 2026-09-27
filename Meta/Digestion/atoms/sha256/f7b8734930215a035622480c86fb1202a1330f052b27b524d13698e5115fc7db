@@ -1,0 +1,44 @@
+### 248.3 全部响应饱和态的正交正常形
+
+产品部分也可细分为由响应见证确定的正交经典块。§247已证明，每个最优产品分量 $|\varphi\rangle\otimes|z\rangle$ 都满足
+$$
+H_a z=s_a z,\qquad H_b z=s_b z,
+\qquad s_a,s_b\in\{+1,-1\},
+\tag{248.17}
+$$
+且输入的单位 Bloch 向量 $r$ 满足
+$$
+r\cdot a=s_a\sqrt A,
+\qquad r\cdot b=s_b\sqrt A.
+\tag{248.18}
+$$
+在正交轴 $u,v$ 上，这等价于
+$$
+r\cdot u=\frac{s_a+s_b}{2},
+\qquad
+r\cdot v=\frac{\sqrt A}{2b_0}(s_a-s_b).
+\tag{248.19}
+$$
+若两符号相同，单位长度强制 $r=s_a u$。若两符号相反，则 $|r\cdot v|=\sqrt{A/B}$；因 $A\ge B$，这只在 $A=B$ 时可能，并且强制 $r=s_a\operatorname{sgn}(b_0)v$。
+
+所以允许的符号集合及唯一输入方向为
+$$
+\Sigma=
+\begin{cases}
+\{(+,+),(-,-)\},&A>B,\\
+\{(+,+),(+,-),(-,+),(-,-)\},&A=B,
+\end{cases}
+\tag{248.20}
+$$
+$$
+r_{s_a,s_b}=
+\begin{cases}
+s_a u,&s_a=s_b,\\
+s_a\operatorname{sgn}(b_0)v,&s_a=-s_b\text{ 且 }A=B.
+\end{cases}
+\tag{248.21}
+$$
+这里保留 $b_0$ 的符号，因此也覆盖 $p>1/2$ 的固定标签合同。
+
+不同符号对至少在 $H_a,H_b$ 中的一个本征值上不同；Hermitian 算子不同本征值的向量正交。因此各符号对的产品参考向量分别张成相互正交的子空间 $E_s$，又都与 $E_{\mathrm{ent}}$ 正交。同一符号对的输入态唯一，故其联合块为固定纯输入与参考密度矩阵的乘积。
+

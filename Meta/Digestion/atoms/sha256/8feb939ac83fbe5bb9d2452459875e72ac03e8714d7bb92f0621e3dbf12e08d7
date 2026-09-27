@@ -1,0 +1,55 @@
+### 270.5 全部重置输出具有共同严格正支撑
+
+省略共同纯重置因子，实际输出为
+$$
+\sigma_j=\bigoplus_{w,\eta}
+\frac{\rho_*+\eta R_w^{(j)}}4.
+\tag{270.34}
+$$
+由固定坐标关系 $K=R_Z-iR_X$，
+$$
+R_Z=\frac{K_*+K_*^\dagger}{2},\qquad
+R_X=\frac{K_*^\dagger-K_*}{2i},
+$$
+$$
+R_a=\frac{R_Z+R_X}{\sqrt2},\qquad
+R_b=\frac{R_Z-R_X}{\sqrt2}.
+\tag{270.35}
+$$
+若 $\phi_a=\pi/4$、$\phi_b=-\pi/4$，并记
+$\operatorname{Re}X=(X+X^\dagger)/2$，则
+$$
+R_w=\frac1n\operatorname{Re}(e^{i\phi_w}Z),
+\qquad
+R_w^{(h)}=(1-\delta_h)R_w.
+\tag{270.36}
+$$
+
+为证明理想输出严格正，使用§268的矩阵谱因子
+$$
+\mathcal P(\zeta)=Q^{1/2}(I+\zeta M),
+$$
+$$
+\mathcal P(\zeta)^\dagger\mathcal P(\zeta)
+=I+\operatorname{Re}(\zeta Z)
+\quad(|\zeta|=1),
+$$
+$$
+\det\mathcal P(\zeta)=\det(Q^{1/2})(1+\zeta)^n.
+\tag{270.37}
+$$
+四个 $\zeta=\eta e^{i\phi_w}$ 都不等于 $-1$，所以谱因子可逆，从而
+$$
+\boxed{
+\frac{\rho_*+\eta R_w}{4}
+=\frac1{4n}
+\mathcal P(\eta e^{i\phi_w})^\dagger
+\mathcal P(\eta e^{i\phi_w})
+\succ0.
+}
+\tag{270.38}
+$$
+竞争输出块是这个理想块与 $I_n/(4n)$ 的凸组合，故同样严格正。这里的严格正性指省略共同纯重置因子后的 $4n$ 维有效支撑，不要求在无用纯态正交补上全秩。
+
+每个固定记录块内，$\rho_*=I_n/n$，两假设都是同一个 $R_w$ 的仿射函数，所以它们同时对角化。不同记录块彼此正交，故完整 $\sigma_*,\sigma_h$ 交换；这不要求 $R_a$ 与 $R_b$ 彼此交换。
+

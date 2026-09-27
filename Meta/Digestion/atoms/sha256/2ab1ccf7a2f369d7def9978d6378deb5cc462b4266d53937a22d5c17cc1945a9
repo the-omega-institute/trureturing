@@ -1,0 +1,88 @@
+### 174.3 同一个解码器的 Choi 收益算子
+
+任取一个合法解码器。在旗标输入 $q_r$ 固定后，取其输出
+$Q_{\mathrm{out}}$ 的计算基对角块，得到 CP 映射
+
+$$
+\mathcal D_{k,r}:\mathcal L(R)\to\mathcal L(R_{\mathrm{out}}),
+\qquad k=0,1,
+$$
+
+且对每个 $r$，
+$\mathcal D_{0,r}+\mathcal D_{1,r}$ 保迹。
+这个构造不要求解码器的完整输出已经是经典的；仅取下述目标检验会读取的对角块。
+
+采用输入优先的、未归一化的 Choi 约定
+
+$$
+J_{k,r}=\sum_{a,b=0}^1|a\rangle\langle b|_R
+\otimes\mathcal D_{k,r}(|a\rangle\langle b|).
+$$
+
+于是
+
+$$
+J_{k,r}\succeq0,\qquad
+\operatorname{Tr}_{R_{\mathrm{out}}}(J_{0,r}+J_{1,r})=I_R.
+\tag{174.11}
+$$
+
+令原输入 $j$ 的正确输出块为 $\sigma_{jj}$，并记
+$f_j=\langle\Xi|\sigma_{jj}|\Xi\rangle$。由（174.9），
+
+$$
+f_j=\frac12\sum_{r=0}^1
+\left\langle\Xi\left|
+(\operatorname{id}_M\otimes\mathcal D_{j,r})(\eta_{j,r})
+\right|\Xi\right\rangle.
+\tag{174.12}
+$$
+
+以下显式指标式固定所有转置与共轭。对任意
+$|a\rangle=\sum_{m,k}a_{mk}|m\rangle_M|k\rangle_R$，定义
+
+$$
+g(a)_{k s}=\sum_m\overline{a_{mk}}\,\Xi_{ms}.
+\tag{174.13}
+$$
+
+直接代入 Choi 定义可得
+
+$$
+\left\langle\Xi\left|
+(\operatorname{id}_M\otimes\mathcal D)(P_a)
+\right|\Xi\right\rangle
+=\operatorname{Tr}\!\left[J_\mathcal D
+|g(a)\rangle\langle g(a)|\right].
+\tag{174.14}
+$$
+
+在本模型中，$\sqrt\rho$ 为实对称矩阵，$Y^{\mathsf T}=-Y$，故
+
+$$
+g_0:=g(\Xi)=\operatorname{vec}\rho,
+\qquad
+g_1:=g(\psi)=\operatorname{vec}(-Y\rho).
+\tag{174.15}
+$$
+
+由线性性，（174.12）中的收益算子为
+
+$$
+\begin{aligned}
+A_{j,r}
+={}&(1-\beta w_j)|g_0\rangle\langle g_0|
++\beta w_j|g_1\rangle\langle g_1|\\
+&+(-1)^{r+1}\gamma w_j
+\left(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|\right),
+\end{aligned}
+$$
+
+$$
+f_j=\frac12\sum_r\operatorname{Tr}(J_{j,r}A_{j,r}).
+\tag{174.16}
+$$
+
+这里同一个原始解码器给出整个族 $J_{k,r}$。特别地，不能为
+$j=0$ 和 $j=1$ 分别赋予一份独立的保迹预算。
+

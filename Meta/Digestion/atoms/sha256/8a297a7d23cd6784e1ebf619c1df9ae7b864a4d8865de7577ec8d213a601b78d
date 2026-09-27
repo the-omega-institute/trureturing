@@ -1,0 +1,25 @@
+## 146. 两步启动的七维固定吸收器与二次振幅误差上界
+
+本节构造一族实际七维接收器。它在前两终端精确恢复，此后使用同一个平稳吸收通道，并在全部后续终端对任意来源输入及参考满足统一误差界。靠近 $b=0$ 时，该界为 $O(|b|^2)$，改进第140节直接使用退化装置给出的 $O(|b|)$ 上界。
+
+固定已知非退化复来源
+
+$$
+T|0\rangle=(a|0\rangle+b|1\rangle)_M\otimes|0\rangle_B,
+\qquad T|1\rangle=|0\rangle_M\otimes|1\rangle_B,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+置
+
+$$
+p=|b|^2,\quad x=1-p=|a|^2,\qquad
+|m_0\rangle=a|0\rangle+b|1\rangle,\qquad
+R_0=|m_0\rangle\langle m_0|,\quad
+R_1=|0\rangle\langle0|,\quad
+\rho_* =\frac{R_0+pR_1}{1+p}.
+\tag{146.1}
+$$
+
+误差仍比较完整参考、活动记忆与全部原档案的半迹距离。初态与来源独立，所有持久控制计入七维寄存器，只访问寄存器与最新发出位，每轮重复同一个全域 CPTP 通道。
+

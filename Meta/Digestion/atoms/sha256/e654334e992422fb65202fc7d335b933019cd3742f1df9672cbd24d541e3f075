@@ -1,0 +1,96 @@
+**定理 272.3（六个 Pauli 状态的最优实编码误差）。** 对 $0<a\le1$，令
+
+$$
+\mathcal R_a=
+\left\{\frac{I_2\pm aX}{2},
+\frac{I_2\pm aY}{2},
+\frac{I_2\pm aZ}{2}\right\}.
+\tag{272.12}
+$$
+
+则
+
+$$
+\delta(\mathcal R_a)=\frac a3.
+\tag{272.13}
+$$
+
+在所有有限输出维数、所有在同一基底中产生完全实模型的 CPTP 编码及所有 CPTP 解码上，最小最坏恢复误差亦为 $a/3$，并由一个四维经典输出编码达到。对允许非实残差的编码，仍有 $e+r\ge a/3$。
+
+证明。以 Bloch 向量表示量子比特，逐项复共轭对应反射矩阵
+
+$$
+S=\operatorname{diag}(1,-1,1).
+$$
+
+将任意候选 $\mathcal C$ 在保持六个坐标轴方向的二十四个立方体旋转 $g$ 上平均。输入旋转 $g$ 由酉矩阵实现；输出旋转 $Sg^{-1}S$ 也是正旋转，故同样由酉矩阵实现。取相应的前后酉共轭后再平均，仍为 CPTP 信道。每项都仅排列六个输入并相应旋转共轭目标，最大迹距离不增加。
+
+若原 Bloch 仿射映射为 $u\mapsto Mu+b$，平均后的映射为
+
+$$
+u\longmapsto
+S\left(\frac1{24}\sum_g g^{-1}(SM)g\right)u
++\frac1{24}\sum_g Sg^{-1}Sb
+=tSu,
+\qquad t=\frac13\operatorname{Tr}(SM).
+\tag{272.14}
+$$
+
+这些有限平均恒等式可直接由群中的坐标轴半周旋转和坐标置换验证：前者消去向量平均及矩阵非对角项，后者使三个对角项相等。因而只须考虑
+
+$$
+\mathcal C_t(A)=tA^{\mathsf T}+(1-t)\operatorname{Tr}(A)I_2/2.
+\tag{272.15}
+$$
+
+其未归一化 Choi 矩阵为 $tF+(1-t)I_4/2$，其中 $F$ 是两量子比特交换算子。在三维对称空间和一维反对称空间上，特征值分别为 $(1+t)/2$ 和 $(1-3t)/2$。因此完全正的精确范围为
+
+$$
+-1\le t\le1/3.
+\tag{272.16}
+$$
+
+两个量子比特状态的迹距离为其 Bloch 向量欧氏距离的一半，所以式（272.12）每个状态的共轭误差均为 $a|1-t|/2$。它在合法区间上的最小值为 $a/3$，由 $t=1/3$ 达到。有限平均没有增加误差，故这同时给出所有 CPTP 候选中的下界及达到，证明（272.13）。
+
+这里使用的近似转置通道是既有结果。Buscemi、D’Ariano、Perinotti、Sacchi，*Optimal realization of the transposition maps*，[arXiv:quant-ph/0304175v1](https://arxiv.org/pdf/quant-ph/0304175v1)，第2节式（15）给出一般维数的 $\mathcal C(\rho)=(I+\rho^{\mathsf T})/(d+1)$，其原文优化指标为纯态转置保真度。本证明的有限旋转平均与 Choi 特征值计算将该标准通道接到这里的六态、迹距离目标，不把不同优化指标的结论直接互换。
+
+现在对完全实编码应用（272.3），得到 $e\ge a/3$。为达到这个下界，取正四面体的四个单位向量
+
+$$
+n_1=(1,1,1)/\sqrt3,\quad
+n_2=(1,-1,-1)/\sqrt3,\quad
+n_3=(-1,1,-1)/\sqrt3,\quad
+n_4=(-1,-1,1)/\sqrt3.
+$$
+
+它们满足 $\sum_k n_k=0$、$\sum_k n_kn_k^{\mathsf T}=4I_3/3$。令 $\boldsymbol\sigma=(X,Y,Z)$，定义 POVM 效应和制备态
+
+$$
+F_k=\frac{I_2+n_k\cdot\boldsymbol\sigma}{4},
+\qquad
+P_k=\frac{I_2+n_k\cdot\boldsymbol\sigma}{2}.
+\tag{272.17}
+$$
+
+由 $|n_k|=1$ 得 $F_k\succeq0$、$P_k$ 为纯态；向量和为零使 $\sum_kF_k=I_2$。取
+
+$$
+\mathcal E(\rho)=\sum_{k=1}^4\operatorname{Tr}(F_k\rho)|k\rangle\langle k|,
+\qquad
+\mathcal D(Y)=\sum_{k=1}^4\langle k|Y|k\rangle P_k.
+\tag{272.18}
+$$
+
+它们分别是测量和按记录制备的 CPTP 映射，编码的每个输出均为实对角矩阵。对任意 Bloch 向量 $u$，输出记录概率为 $(1+n_k\cdot u)/4$，所以解码后的 Bloch 向量为
+
+$$
+\sum_k\frac{1+n_k\cdot u}{4}n_k=\frac u3.
+\tag{272.19}
+$$
+
+故六个模型状态的恢复误差均为 $\tfrac12|au-au/3|=a/3$，其中 $u$ 为对应单位轴向量。这达到对所有实输出量子编码的下界，完成证明。证毕。
+
+式（272.17）是标准量子比特四面体 SIC POVM 的归一化。近似转置的量子设计与测量—制备实现见 Kalev、Bae，*Optimal approximate transpose map via quantum designs and its applications to entanglement detection*，[arXiv:1303.3096v2](https://arxiv.org/pdf/1303.3096v2)，式（1）—（2）及 SIC 实现式（6）。这里的解码制备 $P_k$ 本身，得到式（272.19）的收缩；若按该文制备共轭态，则得到近似转置。四面体设计与近似转置通道均为所用的既有构造，本节的最优实编码误差由（272.3）与上述达到共同确定。
+
+四维输出只给出达到该误差的一种实现；本节没有证明达到时的最小输出维数。这里的误差衡量不含参考系统的六个指定状态；没有将其改称 diamond 距离或任意纠缠输入的误差。下界允许任意有限维量子输出，最优实现恰可选为经典记录；这项结论不将所有实矩阵族判为经典模型。
+

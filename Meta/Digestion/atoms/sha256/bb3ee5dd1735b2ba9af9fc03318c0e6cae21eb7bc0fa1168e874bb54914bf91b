@@ -1,0 +1,32 @@
+**定义 205.1（事件树联合合同）。** 设有限结果集为 $Y$，仪器分支为 $\{\Phi_y\}_{y\in Y}$，满足 $\sum_y\Phi_y$ 为迹保持通道。对来源集合 $\mathfrak R$ 定义事件树关系集
+
+$$
+\boxed{
+\mathfrak E(\mathfrak R)
+=
+\left\{
+\left((p_y(\rho),\tau_y(\rho))\right)_{y\in Y}:
+\rho\in\mathfrak R,\ p_y(\rho)>0\Rightarrow
+\tau_y(\rho)=\frac{\Phi_y(\rho)}{p_y(\rho)}
+\right\},
+}
+\tag{205.1}
+$$
+
+其中 $p_y(\rho)=\operatorname{Tr}\Phi_y(\rho)$，零概率分支保留为显式的不可达标签。逐分支边缘只保存
+
+$$
+\mathfrak E_y=\operatorname{proj}_y\mathfrak E(\mathfrak R),
+$$
+
+而不是完整的 $\mathfrak E(\mathfrak R)$。
+
+给定各分支未来效果 $H_y$，策略的无条件值为
+
+$$
+F\left((p_y,\tau_y)_{y\in Y}\right)
+=\sum_{y\in Y}p_y\operatorname{Tr}(\tau_yH_y),
+$$
+
+零概率分支的项按零计。
+

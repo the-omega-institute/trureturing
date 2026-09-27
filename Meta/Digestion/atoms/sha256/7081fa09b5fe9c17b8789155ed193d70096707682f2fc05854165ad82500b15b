@@ -1,0 +1,71 @@
+**定理 184.2（最小商实现与 Hankel 等式）。** 有：
+
+$$
+T\mathcal R\subseteq\mathcal R,
+\qquad
+T\mathcal N\subseteq\mathcal N.
+$$
+
+因此 $T$ 在商空间
+
+$$
+\overline{\mathcal R}=\mathcal R/\mathcal N
+$$
+
+上诱导线性映射 $\overline T$。令 $\overline b_j=b_j+\mathcal N$，并令 $\overline f_i$ 为 $f_i$ 在商上的观测泛函。则
+
+$$
+ f_i(T^k b_j)
+=
+\overline f_i(\overline T^k\overline b_j)
+$$
+
+对所有 $i,j,k$ 成立，而且
+
+$$
+\boxed{
+ r_{\mathrm H}
+=\dim\overline{\mathcal R}
+=\dim\mathcal R-\dim\mathcal N.
+}
+\tag{184.1}
+$$
+
+任何能够产生同一组双侧响应的有限维线性状态实现，其状态维数都不小于 $r_{\mathrm H}$；上述商实现达到该维数。
+
+### 证明
+
+$T\mathcal R\subseteq\mathcal R$ 直接来自生成式。若 $x\in\mathcal N$，则 $Tx\in\mathcal R$，且
+
+$$
+(f_i\circ T^n)(Tx)=f_i\circ T^{n+1}(x)=0
+$$
+
+对所有 $i,n$ 成立，故 $T\mathcal N\subseteq\mathcal N$，商上的 $\overline T$ 定义良好。由于每个 $f_iT^k$ 在 $\mathcal N$ 上为零，响应在商上保持不变。
+
+令
+
+$$
+\mathcal O
+=\operatorname{span}\{(f_i\circ T^n)|_{\mathcal R}:i,n\}
+\subseteq\mathcal R^*.
+$$
+
+Hankel 的所有行生成 $\mathcal O$，所有列生成 $\mathcal R$ 的像；其条目正是自然配对
+
+$$
+\mathcal O\times\mathcal R\longrightarrow\mathbb R.
+$$
+
+该配对的右核正是 $\mathcal N$，所以其秩为
+
+$$
+\dim\mathcal R-\dim\mathcal N.
+$$
+
+有限维性保证取足够大的 $N,M$ 已包含 $\mathcal O$ 和 $\mathcal R$ 的基，故有限块秩的上确界就是该配对秩，得到（184.1）。任意另一线性实现的每个有限响应块都可分解为“输出矩阵乘状态矩阵”，因此其状态维数至少为 $r_{\mathrm H}$；这是定理 183.2 所用因子化下界的同一矩阵论证。商实现本身达到等号。证毕。
+
+这里的最小性只针对声明的源族、固定接口和终端效果族。扩大任一族都会改变 $\mathcal R$ 或 $\mathcal N$，从而可能增加最小实现维数。
+
+---
+

@@ -1,0 +1,13 @@
+**定理 23.3（固定协议的暗方向可以被合法控制解除）。** 在命题 13.5 的二维空间中，取设置 $a$ 的未点击、点击算子为 $(P_D,P_B)$，设置 $b$ 的为 $(P_B,P_D)$。分别固定设置时均存在一维暗区；若独立以概率 $w$、$1-w$ 选择两设置，$0<w<1$，则无共同暗区，并且
+
+$$
+\overline{\mathcal A}^{,n}(I)
+=w^nP_D+(1-w)^nP_B,
+\qquad
+\mathbb E\mathsf N
+=\frac{\operatorname{Tr}(\rho P_D)}{1-w}
++\frac{\operatorname{Tr}(\rho P_B)}w.
+$$
+
+证明。$\overline{\mathcal A}(X)=wP_DXP_D+(1-w)P_BXP_B$。两投影正交，迭代得到幂公式并取几何级数。每个固定设置的暗态都能由另一个设置点击，因此共同暗区为零。该构造改变了探测耦合，未仅对既有事件时间重新命名。$\square$
+

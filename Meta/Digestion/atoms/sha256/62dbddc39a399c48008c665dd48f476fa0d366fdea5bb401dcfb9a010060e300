@@ -1,0 +1,43 @@
+**有限窗口的准确条件。** 定义
+
+$$
+\Lambda_{N,W}
+=\left\langle c-c':
+ c,c'\in C_{\mathcal I}(i,j)\text{，某个共同端点 }i,j\right\rangle_{\mathbb Z}.
+\tag{42.12}
+$$
+
+对于有限 $N,W$，端点支撑的准确相位子群是 $\Lambda_{N,W}^\perp$：同一端点向量（42.6）在相移后只乘一个标量，当且仅当所有所含字符获得同一相位。始终有 $\Lambda_{N,W}\subseteq\Lambda_0$。
+
+存在仅依赖支持图与标签的整数 $N_0$，使
+
+$$
+\Lambda_{N,1}=\Lambda\quad(N\ge N_0),\qquad
+\Lambda_{N,W}=\Lambda_0\quad(N\ge N_0,\ W\ge2).
+\tag{42.13}
+$$
+
+证明。先取有限个实际等长同端点路径对，其荷差生成 $\Lambda$。如引理31.3的共同桥处理，把这些路径对加上共同前后缀，统一到一个起终点和一个长度。primitive 性允许继续加共同后缀，将它们放入每个充分大的指定长度 $N$；因此该长度的差格包含 $\Lambda$，反向包含本来成立。
+
+再取同一对端点的 $N$ 步和 $N+1$ 步路径；充分大的 $N$ 保证两者都存在。其计数差 $z$ 是长度一整数循环，所以 $Gz-\gamma\in\Lambda$。只要窗口含这两个相邻长度，窗口差格便包含 $\Lambda$ 和 $\gamma$，由（42.10）得到 $\Lambda_0$。证明完毕。
+
+这一区分保留有限长度的偶然退化；并未把 $W\ge2$ 单独当作全部小 $N$ 的充分条件。即使（42.13）使连续商增加一维，一个有界宽度的窗口也只在新方向给有限分辨率，不能仅凭商维数断言新增一个 $N$ 的幂次。
+
+平稳边频率 $f_{ij}=\pi_iP_{ij}$ 满足 $\mathsf Df=0$、$\mathbf1^{\mathsf T}f=1$。令平稳漂移
+
+$$
+\mu=\sum_{i,j}\pi_iP_{ij}g_{ij}=Gf.
+\tag{42.14}
+$$
+
+因为 $f-v\in\ker_{\mathbb R}[\mathsf D;\mathbf1^{\mathsf T}]$，有 $\mu-\gamma\in L$，所以
+
+$$
+\boxed{r_0=r+1\ \Longleftrightarrow\ \mu\notin L.}
+\tag{42.15}
+$$
+
+若漂移已经在固定长度荷差空间中，相干长度无需增加连续商维数；它仍可以沿该空间中已有方向改变分辨尺度。
+
+例如，在两态全正图上取 $g_{ij}=1+2j$，其中 $i,j\in\{0,1\}$，则（32.7）给 $\Lambda=2\mathbb Z$，而自环荷一给 $\Lambda_0=\mathbb Z$。故 $\mathcal H=\{0,\pi\}$、$\mathcal H_0=\{0\}$，两商都是一维。相移 $\pi$ 给每条边乘 $-1$：固定长度只有整体符号，相邻长度相干则使这个符号可见。这是消除有限别名，未增加连续维数。
+

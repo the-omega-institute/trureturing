@@ -1,0 +1,31 @@
+### 7.3 数量预算的运输只给出可行集包络
+
+令 $b_n$ 为有限非负整数，$\mathcal C_b$ 是满足 $c_n(F)\le b_n$ 的所有前缀自由码。定义保留层预算
+$$
+\beta_j=\sum_{n_{j-1}<n\le n_j}b_nd^{n_j-n}.
+\tag{RST.10}
+$$
+$\beta_j$ 约束的是原始深度 $n_j$，不是深度 $j$。每段有限，所以每个 $\beta_j$ 也是有限整数。令 $\mathcal C_{S,\beta}$ 为只在保留深度停止且满足相应数量界的前缀自由码，则式 (RST.6) 给
+$$
+D_S(\mathcal C_b)\subseteq\mathcal C_{S,\beta}.
+\tag{RST.11}
+$$
+同时有非负项的重排恒等式
+$$
+\sum_{j\ge1}\beta_jd^{-n_j}=\sum_{n\ge1}b_nd^{-n}.
+\tag{RST.12}
+$$
+两边允许无穷。预算是上界，不要求所有名额可以同时兑现；某层预算也可大于当层实际可用节点数。
+
+真实展开保留了同一祖先的全部后代必须成束出现的条件。只保留 $\beta_j$，会允许名额在该深度重新分配，所以式 (RST.11) 不保证为等号。对同一概率律定义
+$$
+M_b(\mu)=\sup_{F\in\mathcal C_b}\mu(U_F),\qquad
+M_{S,\beta}(\mu)=\sup_{G\in\mathcal C_{S,\beta}}\mu(U_G).
+$$
+逐码事件相等与像包含仅给出
+$$
+M_b(\mu)\le M_{S,\beta}(\mu).
+\tag{RST.13}
+$$
+若右边只对真实像 $D_S(\mathcal C_b)$ 取上确界，才精确等于 $M_b(\mu)$。
+

@@ -1,0 +1,38 @@
+**证明。** 先使用 ABAA 的无正交结构归约
+$$
+G_4=G_5=U.
+\tag{57.8}
+$$
+为使来源依赖完整，简要复核：令 $L=U+G_4+G_5$、$R=U+G_3+G_5+G_6$、$T=U+G_5$。固定 $V_1$ 在 $L$ 上使用 $A$、在 $G_3$ 上使用 $B$，故 $G_3\cap L=0$。环境 $A$ 的零、一位正交像给
+$$
+7\ge\dim R+\dim L\ge2\dim T+2,
+$$
+所以 $T=U$、$G_5=U$。此时 $\dim L\in\{2,3\}$。若 $\dim L=3$，则 $\dim R=4$，环境 $A$ 的两个位像饱和为接收正交分解 $K=R\oplus Q_A$，$V_1L=Q_A\otimes A$。式（57.6）给 $v\in Q_A$，故（57.4）和单射性使 $p_A\in L$。另一方面 $G_5=U$ 使 $H_4=X_A$，故 $p_A\in H_4$。环境 $B$ 的零位像包含 $L\otimes B$，一位像包含 $Q_4\otimes B$，所以 $Q_4\perp L$。$H_4\subset G_4\oplus Q_4$ 到 $Q_4$ 的投影单射，且 $G_4\subset L$，因而 $H_4\cap L=0$，矛盾。故 $L=U$，得到（57.8）。该归约未使用 $A,B$ 正交。
+
+由（57.8）及固定零位映射，
+$$
+H_3=X_B,\qquad H_4=X_A,\qquad X=H_3+H_4.
+\tag{57.9}
+$$
+最后一个等式使用 $A,B$ 张成二维 $F$。固定一位映射还给
+$$
+Q_3=Q_5=Q_6.
+\tag{57.10}
+$$
+
+令
+$$
+S=U+G_3,\qquad W=Q_3+Q_4.
+\tag{57.11}
+$$
+$V_1U$ 与 $V_1G_3$ 分属不同射线，所以 $U\cap G_3=0$、$\dim S=4$。所有尾环境都在两条非正交射线中，跨位正交和（57.6）给
+$$
+S\perp W,\qquad v\perp S,\qquad\dim W\in\{2,3\}.
+\tag{57.12}
+$$
+若 $v\in Q_3$，由 $V_1p_A=v\otimes A\in Q_3\otimes A=V_1U$ 得 $p_A\in U$，但（57.9）使 $p_A\in H_4$，违反 $H_4\cap U=0$。同理，$v\in Q_4$ 会使 $p_B\in G_3\cap H_3=0$。因此
+$$
+v\notin Q_3\cup Q_4.
+\tag{57.13}
+$$
+

@@ -1,0 +1,8 @@
+**定理82.3（通用双侧锐利秩界）。** 在本节合同下，每个非零复 $z$ 都满足
+$$
+\max(0,q-d)\le\operatorname{rank}L(z)
+\le\min\left\{q,\left\lfloor\frac{q+d}{2}\right\rfloor\right\}.
+\tag{82.17}
+$$
+对每个满足（82.13）的整数对 $(q,d)$ 及每个固定可逆 $A$，第82.4节的同一个构造在射线 $e_0$ 上达到右端，在射线 $e_1$ 上达到左端。
+

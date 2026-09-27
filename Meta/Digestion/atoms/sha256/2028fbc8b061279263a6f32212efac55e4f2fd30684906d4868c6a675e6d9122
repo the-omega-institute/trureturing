@@ -1,0 +1,14 @@
+**定理 246.3（最省形成纠缠的最小总参考维数）。** 若 $\delta>0$，则
+$$
+\boxed{
+M(\epsilon)=
+\begin{cases}
+2,&\epsilon=0,\\
+3,&0<\epsilon<\delta,\\
+1,&\epsilon\ge\delta.
+\end{cases}
+}
+\tag{246.28}
+$$
+若 $\delta=0$，则所有 $\epsilon\ge0$ 都有 $M(\epsilon)=1$。
+

@@ -1,0 +1,32 @@
+### 45.4 乘法域文献、保单位特例及非保单位桥梁
+
+本节的细分势有明确的方法先例。Rahaman 在 [《Multiplicative properties of quantum channels》](https://doi.org/10.1088/1751-8121/aa7b57)（2017，Remark 2.7）引入乘法指数；Jaques–Rahaman 的 [《Spectral properties of tensor products of channels》](https://doi.org/10.1016/j.jmaa.2018.05.052)（2018，Lemma 3.5、Theorem 3.6）以势
+
+$$
+\chi(\mathcal A)=\sum_j(2n_j-1)
+$$
+
+控制有限维含幺 $*$-子代数链，并证明保单位、保迹的完全正通道在 $d\ge2$ 时满足
+
+$$
+\kappa(\Phi)\le2d-2.
+\tag{45.11}
+$$
+
+这里的保单位意为 $\Phi(I)=I$，不意为通道由单个酉算子实现。上述标签对应 [arXiv:1710.00427v3](https://arxiv.org/pdf/1710.00427v3) 的 Lemma 3.5（第15—16页）及 Theorem 3.6（第16—17页）。Rahaman 的 [arXiv:1701.06205v4](https://arxiv.org/pdf/1701.06205v4) 给出较早的 $\kappa<d^2$ 讨论，不能作为（45.11）的出处。
+
+这些既有结果还直接给出一个更强的保单位特例。设 $P$ 是秩一投影，$\Phi$ 保单位且 CPTP。如果 $\Phi^{2d-2}(P)$ 是纯态，则全部 $\Phi^n(P)$ 都是纯态，无须另行假设中间时刻纯。
+
+证明：令 $k=2d-2$。纯输出是投影，而 $P^*P=PP^*=P$，故
+
+$$
+\Phi^k(P^*P)=\Phi^k(P)^*\Phi^k(P),\qquad
+\Phi^k(PP^*)=\Phi^k(P)\Phi^k(P)^*.
+$$
+
+乘法域的 Schwarz 等号判据给 $P\in\mathcal M_{\Phi^k}$。乘法指数上界使该代数已稳定为 $\bigcap_{n\ge1}\mathcal M_{\Phi^n}$，所以每个 $\Phi^n(P)$ 均为投影。保迹使其迹为一，因此秩为一。$d=1$ 的情形直接成立。
+
+引理45.1允许不保单位的 CPTP 通道，使用不要求正交的共同本征子空间及其细分。这些子空间尚未被等同于通道各次幂的乘法 $*$-代数；匹配的势函数不能替代该对应。取伴随也不自动补齐条件：任意 CPTP 通道的伴随保单位，但一般不保迹，而上述乘法域链结论使用了保迹性。Rahaman 的 [《A New Bound on Quantum Wielandt Inequality》](https://doi.org/10.1109/TIT.2019.2945776)（2020，Proposition 3.11）又明确证明，其保迹 Schwarz 映射自动保单位，因此该表述同样不能直接越过这里的非保单位边界。
+
+命题45.1a给每个 $d\ge2$ 一份不保单位通道：它在 $2d-2$ 时仍纯，却在下一时刻混合，阻止了将保单位阈值原样推广。本节承认代数链势的方法先例，并给出自身所需的非保单位推导；对上述三篇原文的核对不等于穷尽相关文献，也不据此宣称本节结论的文献原创性。
+

@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "scope": "Exact retained-field source interfaces, not a33-gate or positive primal conclusion.",
+  "fields": [
+    {
+      "field": "ergodic208_dyadic24",
+      "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/clustered109-average-ergodic208-dyadic24-joined-input/clustered109_average_ergodic208_dyadic24_joined_input.json",
+      "sha256": "770420a04994e7a0a9ad8f3d5a1d0019df2afd1c370d003f10f749d480527cdf",
+      "old_gate": "-9082804123171807944020779148317090563631/686632158388515413240659880548761600000000",
+      "source_mass": "85384825724321905997/759250790513639424000",
+      "selected_fee": "1300578919273672380047/759250790513639424000",
+      "seconds": 3.9122214999515563
+    }
+  ],
+  "exact_source_states": 2125830,
+  "checks": 10722,
+  "seconds": 4.024816708173603,
+  "program_sha256": "e87ed030526c259706de4c59de424d396c080f8487e668f92cda0cd96e04536e",
+  "peak_rss_bytes": 663797760
+}

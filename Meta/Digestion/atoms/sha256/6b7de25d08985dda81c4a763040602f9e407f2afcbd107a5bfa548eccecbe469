@@ -1,0 +1,27 @@
+### 204.2 从两个局部平方恢复整份 Choi 对
+
+固定有限 $K\ge0$，考虑满足
+
+$$
+0\le e_\epsilon(h,\Gamma)-E_\epsilon(h)\le K\epsilon^2
+\tag{204.3}
+$$
+
+的全部对称化 instrument。
+第191节的速率给
+
+$$
+C=C_0+C_1=O_{I,K}(\epsilon^2),\qquad
+A_j-1/2=O_{I,K}(\epsilon),\qquad
+x=\frac{A_0-A_1}{2\epsilon}=O_{I,K}(1).
+\tag{204.4}
+$$
+
+定义 $U,V$ 如（200.8），令
+
+$$
+\mathfrak d=\|\Gamma-\Gamma^*(h)\|_{\mathrm F},\qquad S=U+V.
+$$
+
+这里 Frobenius 距离取两份 Choi 差矩阵的 Frobenius 范数平方和的平方根。
+

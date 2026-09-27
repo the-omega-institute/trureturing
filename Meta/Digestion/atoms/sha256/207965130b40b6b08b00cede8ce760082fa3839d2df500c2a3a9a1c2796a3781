@@ -1,0 +1,4 @@
+**证明。** 从指定的 $a_r$ 开始，以 $r$ 为根，沿树逐个加入与已处理连通区域相邻的新节点 $j$，令其父节点为 $i$。已选父记录在 $S_i\cap S_j$ 上的限制属于父侧投影；投影相同，故可选取子侧一行使完整交叠上的值相同。若新节点的变量还出现在先前某个节点，包含该变量的节点连通性保证它也出现在父节点；所以新旧区域的所有共同变量都已在父子交叠中核对。合并记录因此无歧义。有限次加入全部节点，便得到所需的全局记录，并保留初始行。
+
+上述结构对应项目 [RunningIntersectionRecords](../../../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean) 的 `RunningIntersection`、`EdgeProjectionConsistency` 和 `local_row_extends_raw_join`。源码只要求节点有限，并未要求每个变量值域有限；这里的存在推导也没有额外给出选择所需记录的算法、复杂度或全局唯一性。这是对项目结构的普通数学解释，不申报本批新增形式化。
+

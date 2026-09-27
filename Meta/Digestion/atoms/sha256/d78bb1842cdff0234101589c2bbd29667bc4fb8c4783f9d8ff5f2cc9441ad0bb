@@ -1,0 +1,20 @@
+**定义 244.1（第三节点前的预算尾窗）。** 沿用第243节的实际任务与允许准备，记第三节点参数为 $u_3(s)=2h_3(s)-1$。给定 $F_s<\delta<1$，置
+
+$$
+\begin{aligned}
+p_\delta&=\frac{1+\sqrt{1-\delta^2}}2,\\
+\Delta_s(\delta)&=h_3(s)-p_\delta>0,\\
+T_s(\delta)&=[2p_\delta-1,u_3(s)].
+\end{aligned}
+\tag{244.1}
+$$
+
+这是由实际预算确定的区间，长度为 $2\Delta_s(\delta)$。令 $\Pi_3(s)$ 为强制的第三节点实规范纯态，$n_s$ 为第243节的实际分隔面单位法向，定义
+
+$$
+c_s=\langle q,\Pi_3(s)n_s\rangle\in\mathbb R.
+\tag{244.2}
+$$
+
+本节的代价均针对同一条实际准备，不将不同曲线的两个下确界当成共同实现。
+

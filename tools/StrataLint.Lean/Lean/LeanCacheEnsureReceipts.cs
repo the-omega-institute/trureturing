@@ -41,7 +41,8 @@ internal static partial class LeanCacheEnsureCommand
         string? pinSha256,
         string reason,
         string? stampMiss = null,
-        ClonefileReceipt? clonefile = null) =>
+        ClonefileReceipt? clonefile = null,
+        LeanArchiveAttempt? archive = null) =>
         new(
             false,
             string.Empty,
@@ -54,7 +55,8 @@ internal static partial class LeanCacheEnsureCommand
                 reason,
                 MathlibOleanInventory.Unknown,
                 stampMiss,
-                clonefile));
+                clonefile,
+                archive));
 
     private static CommandResult RefusedSymlink(string root, string pinSha256) =>
         FailureReceipt(

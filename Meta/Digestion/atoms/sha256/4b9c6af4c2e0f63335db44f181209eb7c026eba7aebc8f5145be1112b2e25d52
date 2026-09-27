@@ -1,0 +1,18 @@
+**例 128.2（相同临界标记、不同相干输入）。** 在二维活动空间中取 $P_*=|p\rangle\langle p|$、$Q_*=|q\rangle\langle q|$。固定 $0<p<1$，定义
+
+$$
+|\psi_\phi\rangle
+=\sqrt p\,|p\rangle+e^{i\phi}\sqrt{1-p}\,|q\rangle,
+\qquad
+\rho_\phi=|\psi_\phi\rangle\langle\psi_\phi|.
+$$
+
+不同的 $\phi$ 给出不同的纯态；当 $\phi-\phi'\notin2\pi\mathbb Z$ 时，通常 $\rho_\phi\ne\rho_{\phi'}$。但
+
+$$
+\mathbf M_\infty(E)(\rho_\phi)
+=\mathbf M_\infty(E)(\rho_{\phi'})
+$$
+
+对所有 $E$ 成立。临界时间—后继接口完全删去了 $P_*\!-\!Q_*$ 之间的相对相位。
+

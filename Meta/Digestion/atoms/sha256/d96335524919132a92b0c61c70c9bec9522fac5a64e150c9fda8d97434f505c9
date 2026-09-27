@@ -1,0 +1,48 @@
+### 37.4 过去逆极限是另一种 completion
+
+完整过去空间定义为
+
+$$
+ P_F:=
+ \{(x_0,x_{-1},x_{-2},\ldots):
+ F(x_{-n-1})=x_{-n}\ \forall n\ge0\}.
+ \tag{37.8}
+$$
+
+它是平稳逆系统的逆极限。其移位在 $P_F$ 上可以是双射，即使原始 $F$ 不是双射；但零坐标映射
+
+$$
+ \operatorname{ev}_0:P_F\to X
+$$
+
+可能不满射，甚至 $P_F$ 可能为空。有限载体上，公开的 BackwardOrbitCore、IdentityFuturePastGap 与 FiniteBilateralTrajectory 给出
+
+$$
+ \operatorname{im}(\operatorname{ev}_0)
+ =\operatorname{Per}(F),
+ \qquad
+ P_F\simeq\operatorname{Per}(F).
+ \tag{37.9}
+$$
+
+二点反例
+
+$$
+ X=\{0,1\},\qquad F(0)=F(1)=0,\qquad q=\operatorname{id}
+$$
+
+的未来行为商仍有两个元素，但 $P_F$ 只有常值零线程。故正向行为商不能自动恢复被非单射更新抹去的过去。
+
+在无限系统中，$\operatorname{im}(\operatorname{ev}_0)$ 也不必等于稳定像
+$\bigcap_nF^n(X)$：每个有限深度可以有前驱，却可能没有一条可相容的无限分支。要把商上的过去线程提升回原始来源，至少需要逐步后向提升条件
+
+$$
+\forall x\in X,\ \forall b\in Q,\quad
+ \overline F(b)=\pi(x)
+ \Longrightarrow
+ \exists y\in X,\ F(y)=x\land\pi(y)=b,
+ \tag{37.10}
+$$
+
+以及能够把这些局部选择组成一条完整历史的相容性条件。商映射满射和正向半共轭本身不充分。
+

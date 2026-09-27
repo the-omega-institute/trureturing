@@ -1,0 +1,1 @@
+| `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean`，`controlled_behavior_universal_property` | 有限受控行为的商、唯一满射因子与基数界 | 该定理的有限状态及候选实现前提不能省略；无限纤维、有限任务商与有类型部分动作须另外连接 

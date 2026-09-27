@@ -1,0 +1,12 @@
+**定义 216.1（指定名义秩的尖锐维数）。** 固定 $`0<a<1`$、$`t\in J_a`$ 及整数 $`r\ge1`$，令 $`D_\nu(a,t;r)`$ 为第215节混态程序满足 $`t\in\mathcal E_*(\rho)`$ 和 $`\operatorname{rank}\rho_t=r`$ 所需的最小实际联合支持维数，其中 $`\nu=1,\infty,\omega`$ 分别要求完整准备曲线为 $`C^1`$、光滑、实解析。仍使用点态 SLD 信息，允许曲线在别处改变秩。记
+
+```math
+h=(1+t)/2,\qquad h_c=a+2a^2,\qquad
+ V=T_0(a,t)^\dagger,\quad
+ \psi_0=(\sqrt h,0,\sqrt{1-h})^{\mathsf T},\quad
+ f=(0,0,1)^{\mathsf T}.
+\tag{216.1}
+```
+
+$`T_0`$ 为第211.17式的固定三维尖锐模型，满足 $`V^\dagger V=I-|f\rangle\langle f|`$。临界位置 $`h=h_c`$ 属于 $`(a,1)`$ 当且仅当 $`a<1/2`$。
+

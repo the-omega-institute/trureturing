@@ -1,0 +1,26 @@
+**定义 38.1（中心原子的噪声尺度）。** 取定义 37.1 的同一序列、同一数据与精确后验。
+记
+
+```math
+B_M=\{i:(N_{i,+},N_{i,-})=(3\lambda/4,\lambda/4)\},\qquad
+b_M^\bullet=\sqrt{q/\lambda},\qquad
+\gamma_*=\frac1{\pi\sqrt3},\qquad
+Y_M=\frac1{b_M^\bullet}\sum_{i\in J_M}(\mathbf1_{\{i\in S\}}-\pi_i).
+```
+
+式 (38.1)。
+
+在同一收缩窗口内定义右连续过程
+
+```math
+\mathcal A_M(u)=\frac1{b_M^\bullet}
+ \sum_{\tau-w\lt W_i\le\tau+uw}(\mathbf1_{\{i\in S\}}-\pi_i),
+\qquad -1\le u\le1,\qquad
+u_M=\frac{W_c-\tau}{w}.
+```
+
+式 (38.2)。
+
+这里 $`W_c`$ 是 (37.6) 的确定得分，$`u_M\to0`$。
+未知方向时仍按定义 37.1 的同一次判决使用工作得分与工作权重。
+

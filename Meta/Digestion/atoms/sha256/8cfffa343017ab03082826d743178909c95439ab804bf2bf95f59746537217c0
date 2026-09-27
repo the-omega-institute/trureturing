@@ -1,0 +1,4 @@
+**证明。** 若相差相位，共轭通道相同。反向利用Choi矩阵：$\Phi$的Choi矩阵是$\sum_jp_j|V_j\rangle\!\rangle\langle\!\langle V_j|$，酉通道的Choi矩阵秩一。正权重排除非共线向量，故$V_j=c_jV$；酉性给出$|c_j|=1$。∎
+
+这说明瞬时可纠正性和整条路径的恢复是不同问题。连接变化产生的syndrome相关逻辑作用必须保留或补偿。Lanka、Garcia-Nila、Brun在2026年3月的预印本中利用连续测量记录识别瞬时syndrome并途中调整holonomic路径，提供了直接相邻的物理实现方向。本文没有复现该文的连续测量动力学或容错阈值。[ST27-Steering]
+

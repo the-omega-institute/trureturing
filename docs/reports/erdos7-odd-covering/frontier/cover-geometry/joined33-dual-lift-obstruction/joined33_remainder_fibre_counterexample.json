@@ -1,0 +1,4208 @@
+{
+  "status": "PASS",
+  "checks": 1840,
+  "program_sha256": "121faaea50e85403e0fb36b0658cb636d0798cbc29ec30a86dcf46539b30ab3b",
+  "source_sha256": {
+    "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
+    "clustered_higher_pure_capacity_obstruction.json": "bbf9d977613f469b387cf60b7024092a9903b17bbac4374316c87d87c442bb99",
+    "remaining33_global_root_exclusion_certificate.json": "36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4",
+    "clustered109_central_block_outside_witness.json": "bfac781f0630effacf47c097d2685c37fe0db80decec983390f36505c51ee620"
+  },
+  "scope": "One actual109 same-source pair disproves sufficiency of selected33 responses for the full699 gate. The specific698 proportional-row desired density remains shallow-fibre constant; its whole-layout convex-hull membership is not decided.",
+  "central_cell": [
+    4,
+    0
+  ],
+  "central_mod225": 175,
+  "central_pure_survivor_counts": {
+    "3": 41,
+    "5": 625
+  },
+  "outside_roots": [
+    1,
+    2,
+    2,
+    2,
+    2
+  ],
+  "A_categories": [
+    0,
+    2,
+    2,
+    2,
+    2
+  ],
+  "B_categories": [
+    1,
+    2,
+    2,
+    2,
+    2
+  ],
+  "A_source_mass": "1/244944000",
+  "B_source_mass": "1/40824000",
+  "A_retention": "1",
+  "B_retention": "1/6",
+  "equal_mass": "1/244944000",
+  "all_selected33_responses_equal": true,
+  "K33_both": "11/9797760",
+  "common_attaining_layout": {
+    "3": 1,
+    "5": 0,
+    "7": 1,
+    "9": 4,
+    "11": 2,
+    "13": 2,
+    "15": 10,
+    "17": 2,
+    "19": 2,
+    "21": 1,
+    "25": 0,
+    "33": 13,
+    "35": 15,
+    "39": 28,
+    "45": 40,
+    "51": 19,
+    "55": 35,
+    "57": 40,
+    "65": 15,
+    "75": 25,
+    "77": 57,
+    "85": 70,
+    "91": 15,
+    "95": 40,
+    "119": 36,
+    "133": 78,
+    "143": 2,
+    "187": 2,
+    "209": 2,
+    "221": 2,
+    "225": 175,
+    "247": 2,
+    "323": 2
+  },
+  "screen1_A": "1/6998400",
+  "screen1_B": "1/40824000",
+  "screen1_difference": "29/244944000",
+  "screen1_remaining_coefficient": "1084133/1132015500",
+  "screen1_deep_row": {
+    "mode": 0,
+    "support": 1,
+    "selector": 0,
+    "token": 7,
+    "literal_modulus": 49,
+    "literal_residue": 1,
+    "normalizer": 35
+  },
+  "weighted_remaining_sum": "3438647673661217076583/11398170972545280000",
+  "gate_A": "-25353866294237612163871/558382718139826212864000000",
+  "gate_B": "-563511436146099283301/58164866472898563840000000",
+  "gate_B_minus_gate_A": "99720782536175295220907/2791913590699131064320000000",
+  "gate_A_decimal": -4.540589361128594e-05,
+  "gate_B_decimal": -9.68817553133493e-06,
+  "difference_decimal": 3.571771807995101e-05,
+  "specific698_exterior_rows": 292,
+  "specific698_exterior_groups": 25,
+  "specific698_deep_rows": 0,
+  "specific698_R_both": "2792882767253/1000000000000",
+  "specific698_R_difference": "0",
+  "specific698_convex_hull_membership": "open",
+  "screens": [
+    {
+      "screen": 0,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "0",
+      "A": "1/244944000",
+      "B": "1/244944000"
+    },
+    {
+      "screen": 1,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "1084133/1132015500",
+      "A": "1/6998400",
+      "B": "1/40824000"
+    },
+    {
+      "screen": 2,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "14093729/45280620000",
+      "A": "1/24494400",
+      "B": "1/24494400"
+    },
+    {
+      "screen": 3,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "946225597841/627589393200000",
+      "A": "1/699840",
+      "B": "1/4082400"
+    },
+    {
+      "screen": 4,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "33608123/159387782400",
+      "A": "1/20412000",
+      "B": "1/20412000"
+    },
+    {
+      "screen": 5,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "112945445807/100414302912000",
+      "A": "1/583200",
+      "B": "1/3402000"
+    },
+    {
+      "screen": 6,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "2469003767/6520409280000",
+      "A": "1/2041200",
+      "B": "1/2041200"
+    },
+    {
+      "screen": 7,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "15408791615797/6455205187200000",
+      "A": "1/58320",
+      "B": "1/340200"
+    },
+    {
+      "screen": 8,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "44449453/386394624000",
+      "A": "1/15309000",
+      "B": "1/15309000"
+    },
+    {
+      "screen": 9,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "3030567368519/4138286423040000",
+      "A": "1/437400",
+      "B": "1/2551500"
+    },
+    {
+      "screen": 10,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "2522449374637/10838369203200000",
+      "A": "1/1530900",
+      "B": "1/1530900"
+    },
+    {
+      "screen": 11,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "27328340665793/15648982272000000",
+      "A": "1/43740",
+      "B": "1/255150"
+    },
+    {
+      "screen": 12,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "76018529227/472947019776000",
+      "A": "1/1275750",
+      "B": "1/1275750"
+    },
+    {
+      "screen": 13,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "39277496663173/27542208798720000",
+      "A": "1/36450",
+      "B": "1/212625"
+    },
+    {
+      "screen": 14,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "108263472003977/137711043993600000",
+      "A": "1/127575",
+      "B": "1/127575"
+    },
+    {
+      "screen": 15,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "2637960717477797/12393993959424000000",
+      "A": "1/3645",
+      "B": "2/42525"
+    },
+    {
+      "screen": 16,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "24935059/277117394400",
+      "A": "1/13608000",
+      "B": "1/13608000"
+    },
+    {
+      "screen": 17,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "4117087122569/6634190421936000",
+      "A": "1/388800",
+      "B": "1/2268000"
+    },
+    {
+      "screen": 18,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "2013152184289/10425156377328000",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 19,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "6912129323213/4489301789280000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 20,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "1102902739919/8340125101862400",
+      "A": "1/1134000",
+      "B": "1/1134000"
+    },
+    {
+      "screen": 21,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "49672484450669/39505855745664000",
+      "A": "1/32400",
+      "B": "1/189000"
+    },
+    {
+      "screen": 22,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "27384080992157/39505855745664000",
+      "A": "1/113400",
+      "B": "1/113400"
+    },
+    {
+      "screen": 23,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "666507074721737/3555527017109760000",
+      "A": "1/3240",
+      "B": "1/18900"
+    },
+    {
+      "screen": 24,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "1531426372327/20218485095424000",
+      "A": "1/850500",
+      "B": "1/850500"
+    },
+    {
+      "screen": 25,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "88102547974681/95771771504640000",
+      "A": "1/24300",
+      "B": "1/141750"
+    },
+    {
+      "screen": 26,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "48575077345033/95771771504640000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 27,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "1178329734402853/8619459435417600000",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 28,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "349117056601249/842791589240832000",
+      "A": "1/70875",
+      "B": "1/70875"
+    },
+    {
+      "screen": 29,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "8445940570438237/75851243031674880000",
+      "A": "1/2025",
+      "B": "2/23625"
+    },
+    {
+      "screen": 30,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "4607279981032717/75851243031674880000",
+      "A": "2/14175",
+      "B": "2/14175"
+    },
+    {
+      "screen": 31,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "152542080020616217/6826611872850739200000",
+      "A": "2/405",
+      "B": "4/4725"
+    },
+    {
+      "screen": 32,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "0",
+      "A": "1/244944000",
+      "B": "1/244944000"
+    },
+    {
+      "screen": 33,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "107195321/14087304000",
+      "A": "1/6998400",
+      "B": "1/40824000"
+    },
+    {
+      "screen": 34,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "1931001449/996173640000",
+      "A": "1/24494400",
+      "B": "1/24494400"
+    },
+    {
+      "screen": 35,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "70696190293/2716837200000",
+      "A": "1/699840",
+      "B": "1/4082400"
+    },
+    {
+      "screen": 36,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "64402441/53129260800",
+      "A": "1/20412000",
+      "B": "1/20412000"
+    },
+    {
+      "screen": 37,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "101614698821/4781633472000",
+      "A": "1/583200",
+      "B": "1/3402000"
+    },
+    {
+      "screen": 38,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "280166579977/23908167360000",
+      "A": "1/2041200",
+      "B": "1/2041200"
+    },
+    {
+      "screen": 39,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "6761747121397/2151735062400000",
+      "A": "1/58320",
+      "B": "1/340200"
+    },
+    {
+      "screen": 40,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "3868226639/6568708608000",
+      "A": "1/15309000",
+      "B": "1/15309000"
+    },
+    {
+      "screen": 41,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "180244212769/11591838720000",
+      "A": "1/437400",
+      "B": "1/2551500"
+    },
+    {
+      "screen": 42,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "1491021760639/173877580800000",
+      "A": "1/1530900",
+      "B": "1/1530900"
+    },
+    {
+      "screen": 43,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "11955817120193/5216327424000000",
+      "A": "1/43740",
+      "B": "1/255150"
+    },
+    {
+      "screen": 44,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "714455791081/102008180736000",
+      "A": "1/1275750",
+      "B": "1/1275750"
+    },
+    {
+      "screen": 45,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "17141062757509/9180736266240000",
+      "A": "1/36450",
+      "B": "1/212625"
+    },
+    {
+      "screen": 46,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "4252125256507/4173061939200000",
+      "A": "1/127575",
+      "B": "1/127575"
+    },
+    {
+      "screen": 47,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1531139022194597/4131331319808000000",
+      "A": "1/3645",
+      "B": "2/42525"
+    },
+    {
+      "screen": 48,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "1548021443/3510153662400",
+      "A": "1/13608000",
+      "B": "1/13608000"
+    },
+    {
+      "screen": 49,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "227955218189/16627043664000",
+      "A": "1/388800",
+      "B": "1/2268000"
+    },
+    {
+      "screen": 50,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "125717142893/16627043664000",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 51,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "274632663703/136039448160000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 52,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "903608565281/146317984243200",
+      "A": "1/1134000",
+      "B": "1/1134000"
+    },
+    {
+      "screen": 53,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "21656060288813/13168618581888000",
+      "A": "1/32400",
+      "B": "1/189000"
+    },
+    {
+      "screen": 54,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "11819400902237/13168618581888000",
+      "A": "1/113400",
+      "B": "1/113400"
+    },
+    {
+      "screen": 55,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "386342833103177/1185175672369920000",
+      "A": "1/3240",
+      "B": "1/18900"
+    },
+    {
+      "screen": 56,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "1603069472269/354710264832000",
+      "A": "1/850500",
+      "B": "1/850500"
+    },
+    {
+      "screen": 57,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "38295571686937/31923923834880000",
+      "A": "1/24300",
+      "B": "1/141750"
+    },
+    {
+      "screen": 58,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "20904534962953/31923923834880000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 59,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "680259971525413/2873153145139200000",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 60,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "149889151450273/280930529746944000",
+      "A": "1/70875",
+      "B": "1/70875"
+    },
+    {
+      "screen": 61,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "4859838277720669/25283747677224960000",
+      "A": "1/2025",
+      "B": "2/23625"
+    },
+    {
+      "screen": 62,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "2615000929522957/25283747677224960000",
+      "A": "2/14175",
+      "B": "2/14175"
+    },
+    {
+      "screen": 63,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "116681057093440537/2275537290950246400000",
+      "A": "2/405",
+      "B": "4/4725"
+    },
+    {
+      "screen": 64,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "0",
+      "A": "1/244944000",
+      "B": "1/244944000"
+    },
+    {
+      "screen": 65,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "465574883/9056124000",
+      "A": "1/6998400",
+      "B": "1/40824000"
+    },
+    {
+      "screen": 66,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "1170964/56600775",
+      "A": "1/24494400",
+      "B": "1/24494400"
+    },
+    {
+      "screen": 67,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "46676622253/1630102320000",
+      "A": "1/699840",
+      "B": "1/4082400"
+    },
+    {
+      "screen": 68,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "2442310687/159387782400",
+      "A": "1/20412000",
+      "B": "1/20412000"
+    },
+    {
+      "screen": 69,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "335132604217/14344900416000",
+      "A": "1/583200",
+      "B": "1/3402000"
+    },
+    {
+      "screen": 70,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "184088307817/14344900416000",
+      "A": "1/2041200",
+      "B": "1/2041200"
+    },
+    {
+      "screen": 71,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "5032338222517/1291041037440000",
+      "A": "1/58320",
+      "B": "1/340200"
+    },
+    {
+      "screen": 72,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "3774991201/386394624000",
+      "A": "1/15309000",
+      "B": "1/15309000"
+    },
+    {
+      "screen": 73,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "84824370419/4967930880000",
+      "A": "1/437400",
+      "B": "1/2551500"
+    },
+    {
+      "screen": 74,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "326201436373/34775516160000",
+      "A": "1/1530900",
+      "B": "1/1530900"
+    },
+    {
+      "screen": 75,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "8881312411073/3129796454400000",
+      "A": "1/43740",
+      "B": "1/255150"
+    },
+    {
+      "screen": 76,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "2342477071757/306024542208000",
+      "A": "1/1275750",
+      "B": "1/1275750"
+    },
+    {
+      "screen": 77,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "5778989080171/2503837163520000",
+      "A": "1/36450",
+      "B": "1/212625"
+    },
+    {
+      "screen": 78,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "34475358985097/27542208798720000",
+      "A": "1/127575",
+      "B": "1/127575"
+    },
+    {
+      "screen": 79,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1309774683137957/2478798791884800000",
+      "A": "1/3645",
+      "B": "2/42525"
+    },
+    {
+      "screen": 80,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "1134725857/138558697200",
+      "A": "1/13608000",
+      "B": "1/13608000"
+    },
+    {
+      "screen": 81,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "107237012671/7125875856000",
+      "A": "1/388800",
+      "B": "1/2268000"
+    },
+    {
+      "screen": 82,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "82481920421/9976226198400",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 83,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "2242725296237/897860357856000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 84,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "2961574817413/438953952729600",
+      "A": "1/1134000",
+      "B": "1/1134000"
+    },
+    {
+      "screen": 85,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "80263877282209/39505855745664000",
+      "A": "1/32400",
+      "B": "1/189000"
+    },
+    {
+      "screen": 86,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "8706464884253/7901171149132800",
+      "A": "1/113400",
+      "B": "1/113400"
+    },
+    {
+      "screen": 87,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "66061996955893/142221080684390400",
+      "A": "1/3240",
+      "B": "1/18900"
+    },
+    {
+      "screen": 88,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "5248293123137/1064130794496000",
+      "A": "1/850500",
+      "B": "1/850500"
+    },
+    {
+      "screen": 89,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "20238697449563/13681681643520000",
+      "A": "1/24300",
+      "B": "1/141750"
+    },
+    {
+      "screen": 90,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "15370426486537/19154354300928000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 91,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "1366225926941/4056216204902400",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 92,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "50019804736399/76617417203712000",
+      "A": "1/70875",
+      "B": "1/70875"
+    },
+    {
+      "screen": 93,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "20713089095885777/75851243031674880000",
+      "A": "1/2025",
+      "B": "2/23625"
+    },
+    {
+      "screen": 94,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "443309023844201/3034049721266995200",
+      "A": "2/14175",
+      "B": "2/14175"
+    },
+    {
+      "screen": 95,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "9955350228000491/124120215870013440000",
+      "A": "2/405",
+      "B": "4/4725"
+    },
+    {
+      "screen": 96,
+      "central_multiplier": "15",
+      "other_root_factor": 1,
+      "remaining_coefficient": "1084133/1609977600",
+      "A": "1/16329600",
+      "B": "1/16329600"
+    },
+    {
+      "screen": 97,
+      "central_multiplier": "15",
+      "other_root_factor": 1,
+      "remaining_coefficient": "2732617369/724489920000",
+      "A": "1/466560",
+      "B": "1/2721600"
+    },
+    {
+      "screen": 98,
+      "central_multiplier": "15",
+      "other_root_factor": 10,
+      "remaining_coefficient": "4526897579/2173469760000",
+      "A": "1/1632960",
+      "B": "1/1632960"
+    },
+    {
+      "screen": 99,
+      "central_multiplier": "15",
+      "other_root_factor": 10,
+      "remaining_coefficient": "34666838233/65204092800000",
+      "A": "1/46656",
+      "B": "1/272160"
+    },
+    {
+      "screen": 100,
+      "central_multiplier": "15",
+      "other_root_factor": 12,
+      "remaining_coefficient": "10849159501/6375511296000",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 101,
+      "central_multiplier": "15",
+      "other_root_factor": 12,
+      "remaining_coefficient": "22605650843/52163274240000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 102,
+      "central_multiplier": "15",
+      "other_root_factor": 120,
+      "remaining_coefficient": "136049171737/573796016640000",
+      "A": "1/136080",
+      "B": "1/136080"
+    },
+    {
+      "screen": 103,
+      "central_multiplier": "15",
+      "other_root_factor": 120,
+      "remaining_coefficient": "4167633773077/51641641497600000",
+      "A": "1/3888",
+      "B": "1/22680"
+    },
+    {
+      "screen": 104,
+      "central_multiplier": "15",
+      "other_root_factor": 16,
+      "remaining_coefficient": "57762805147/46367354880000",
+      "A": "1/1020600",
+      "B": "1/1020600"
+    },
+    {
+      "screen": 105,
+      "central_multiplier": "15",
+      "other_root_factor": 16,
+      "remaining_coefficient": "40004123407/126456422400000",
+      "A": "1/29160",
+      "B": "1/170100"
+    },
+    {
+      "screen": 106,
+      "central_multiplier": "15",
+      "other_root_factor": 160,
+      "remaining_coefficient": "722395583359/4173061939200000",
+      "A": "1/102060",
+      "B": "1/102060"
+    },
+    {
+      "screen": 107,
+      "central_multiplier": "15",
+      "other_root_factor": 160,
+      "remaining_coefficient": "7344060056513/125191858176000000",
+      "A": "1/2916",
+      "B": "1/17010"
+    },
+    {
+      "screen": 108,
+      "central_multiplier": "15",
+      "other_root_factor": 192,
+      "remaining_coefficient": "1727576129933/12240981688320000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 109,
+      "central_multiplier": "15",
+      "other_root_factor": 192,
+      "remaining_coefficient": "52500662929049/1101688351948800000",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 110,
+      "central_multiplier": "15",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "28326349566857/1101688351948800000",
+      "A": "1/8505",
+      "B": "1/8505"
+    },
+    {
+      "screen": 111,
+      "central_multiplier": "15",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1199092513609637/99151951675392000000",
+      "A": "1/243",
+      "B": "2/2835"
+    },
+    {
+      "screen": 112,
+      "central_multiplier": "15",
+      "other_root_factor": 18,
+      "remaining_coefficient": "24355047061/22169391552000",
+      "A": "1/907200",
+      "B": "1/907200"
+    },
+    {
+      "screen": 113,
+      "central_multiplier": "15",
+      "other_root_factor": 18,
+      "remaining_coefficient": "32711799269/117367367040000",
+      "A": "1/25920",
+      "B": "1/151200"
+    },
+    {
+      "screen": 114,
+      "central_multiplier": "15",
+      "other_root_factor": 180,
+      "remaining_coefficient": "12172861837/79809809587200",
+      "A": "1/90720",
+      "B": "1/90720"
+    },
+    {
+      "screen": 115,
+      "central_multiplier": "15",
+      "other_root_factor": 180,
+      "remaining_coefficient": "1853608293989/35914414314240000",
+      "A": "1/2592",
+      "B": "1/15120"
+    },
+    {
+      "screen": 116,
+      "central_multiplier": "15",
+      "other_root_factor": 216,
+      "remaining_coefficient": "198485528447/1596196191744000",
+      "A": "1/75600",
+      "B": "1/75600"
+    },
+    {
+      "screen": 117,
+      "central_multiplier": "15",
+      "other_root_factor": 216,
+      "remaining_coefficient": "66255665201281/1580234229826560000",
+      "A": "1/2160",
+      "B": "1/12600"
+    },
+    {
+      "screen": 118,
+      "central_multiplier": "15",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "7149996875261/316046845965312000",
+      "A": "1/7560",
+      "B": "1/7560"
+    },
+    {
+      "screen": 119,
+      "central_multiplier": "15",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "1616543104907/152108107683840000",
+      "A": "1/216",
+      "B": "1/1260"
+    },
+    {
+      "screen": 120,
+      "central_multiplier": "15",
+      "other_root_factor": 288,
+      "remaining_coefficient": "351342364003/3869566525440000",
+      "A": "1/56700",
+      "B": "1/56700"
+    },
+    {
+      "screen": 121,
+      "central_multiplier": "15",
+      "other_root_factor": 288,
+      "remaining_coefficient": "116767394003069/3830870860185600000",
+      "A": "1/1620",
+      "B": "1/9450"
+    },
+    {
+      "screen": 122,
+      "central_multiplier": "15",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "741374838137/45069068943360000",
+      "A": "1/5670",
+      "B": "1/5670"
+    },
+    {
+      "screen": 123,
+      "central_multiplier": "15",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "48258094787471/6268697771212800000",
+      "A": "1/162",
+      "B": "1/945"
+    },
+    {
+      "screen": 124,
+      "central_multiplier": "15",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "450603899524901/33711663569633280000",
+      "A": "1/4725",
+      "B": "1/4725"
+    },
+    {
+      "screen": 125,
+      "central_multiplier": "15",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "18920037949526993/3034049721266995200000",
+      "A": "1/135",
+      "B": "2/1575"
+    },
+    {
+      "screen": 126,
+      "central_multiplier": "15",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "2017317214070029/606809944253399040000",
+      "A": "2/945",
+      "B": "2/945"
+    },
+    {
+      "screen": 127,
+      "central_multiplier": "15",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "105922750215287833/54612894982805913600000",
+      "A": "2/27",
+      "B": "4/315"
+    },
+    {
+      "screen": 128,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "0",
+      "A": "1/244944000",
+      "B": "1/244944000"
+    },
+    {
+      "screen": 129,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "107195321/14087304000",
+      "A": "1/6998400",
+      "B": "1/40824000"
+    },
+    {
+      "screen": 130,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "1931001449/996173640000",
+      "A": "1/24494400",
+      "B": "1/24494400"
+    },
+    {
+      "screen": 131,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "70696190293/2716837200000",
+      "A": "1/699840",
+      "B": "1/4082400"
+    },
+    {
+      "screen": 132,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "64402441/53129260800",
+      "A": "1/20412000",
+      "B": "1/20412000"
+    },
+    {
+      "screen": 133,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "101614698821/4781633472000",
+      "A": "1/583200",
+      "B": "1/3402000"
+    },
+    {
+      "screen": 134,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "280166579977/23908167360000",
+      "A": "1/2041200",
+      "B": "1/2041200"
+    },
+    {
+      "screen": 135,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "6761747121397/2151735062400000",
+      "A": "1/58320",
+      "B": "1/340200"
+    },
+    {
+      "screen": 136,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "3868226639/6568708608000",
+      "A": "1/15309000",
+      "B": "1/15309000"
+    },
+    {
+      "screen": 137,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "180244212769/11591838720000",
+      "A": "1/437400",
+      "B": "1/2551500"
+    },
+    {
+      "screen": 138,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "1491021760639/173877580800000",
+      "A": "1/1530900",
+      "B": "1/1530900"
+    },
+    {
+      "screen": 139,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "11955817120193/5216327424000000",
+      "A": "1/43740",
+      "B": "1/255150"
+    },
+    {
+      "screen": 140,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "714455791081/102008180736000",
+      "A": "1/1275750",
+      "B": "1/1275750"
+    },
+    {
+      "screen": 141,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "17141062757509/9180736266240000",
+      "A": "1/36450",
+      "B": "1/212625"
+    },
+    {
+      "screen": 142,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "4252125256507/4173061939200000",
+      "A": "1/127575",
+      "B": "1/127575"
+    },
+    {
+      "screen": 143,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1531139022194597/4131331319808000000",
+      "A": "1/3645",
+      "B": "2/42525"
+    },
+    {
+      "screen": 144,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "1548021443/3510153662400",
+      "A": "1/13608000",
+      "B": "1/13608000"
+    },
+    {
+      "screen": 145,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "227955218189/16627043664000",
+      "A": "1/388800",
+      "B": "1/2268000"
+    },
+    {
+      "screen": 146,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "125717142893/16627043664000",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 147,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "274632663703/136039448160000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 148,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "903608565281/146317984243200",
+      "A": "1/1134000",
+      "B": "1/1134000"
+    },
+    {
+      "screen": 149,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "21656060288813/13168618581888000",
+      "A": "1/32400",
+      "B": "1/189000"
+    },
+    {
+      "screen": 150,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "11819400902237/13168618581888000",
+      "A": "1/113400",
+      "B": "1/113400"
+    },
+    {
+      "screen": 151,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "386342833103177/1185175672369920000",
+      "A": "1/3240",
+      "B": "1/18900"
+    },
+    {
+      "screen": 152,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "1603069472269/354710264832000",
+      "A": "1/850500",
+      "B": "1/850500"
+    },
+    {
+      "screen": 153,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "38295571686937/31923923834880000",
+      "A": "1/24300",
+      "B": "1/141750"
+    },
+    {
+      "screen": 154,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "20904534962953/31923923834880000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 155,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "680259971525413/2873153145139200000",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 156,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "149889151450273/280930529746944000",
+      "A": "1/70875",
+      "B": "1/70875"
+    },
+    {
+      "screen": 157,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "4859838277720669/25283747677224960000",
+      "A": "1/2025",
+      "B": "2/23625"
+    },
+    {
+      "screen": 158,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "2615000929522957/25283747677224960000",
+      "A": "2/14175",
+      "B": "2/14175"
+    },
+    {
+      "screen": 159,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "116681057093440537/2275537290950246400000",
+      "A": "2/405",
+      "B": "4/4725"
+    },
+    {
+      "screen": 160,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "0",
+      "A": "1/244944000",
+      "B": "1/244944000"
+    },
+    {
+      "screen": 161,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "28468529/431244000",
+      "A": "1/6998400",
+      "B": "1/40824000"
+    },
+    {
+      "screen": 162,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "642931013/22640310000",
+      "A": "1/24494400",
+      "B": "1/24494400"
+    },
+    {
+      "screen": 163,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "30663576893/905612400000",
+      "A": "1/699840",
+      "B": "1/4082400"
+    },
+    {
+      "screen": 164,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "229025101/10625852160",
+      "A": "1/20412000",
+      "B": "1/20412000"
+    },
+    {
+      "screen": 165,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "251244203/9107873280",
+      "A": "1/583200",
+      "B": "1/3402000"
+    },
+    {
+      "screen": 166,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "120036126377/7969389120000",
+      "A": "1/2041200",
+      "B": "1/2041200"
+    },
+    {
+      "screen": 167,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "3879398956597/717245020800000",
+      "A": "1/58320",
+      "B": "1/340200"
+    },
+    {
+      "screen": 168,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "5513940533/386394624000",
+      "A": "1/15309000",
+      "B": "1/15309000"
+    },
+    {
+      "screen": 169,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "15552144493/772789248000",
+      "A": "1/437400",
+      "B": "1/2551500"
+    },
+    {
+      "screen": 170,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "1910978024317/173877580800000",
+      "A": "1/1530900",
+      "B": "1/1530900"
+    },
+    {
+      "screen": 171,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "6831642604993/1738775808000000",
+      "A": "1/43740",
+      "B": "1/255150"
+    },
+    {
+      "screen": 172,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "5536760543/618231398400",
+      "A": "1/1275750",
+      "B": "1/1275750"
+    },
+    {
+      "screen": 173,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "1394607350803/437177917440000",
+      "A": "1/36450",
+      "B": "1/212625"
+    },
+    {
+      "screen": 174,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "26276679760777/15301227110400000",
+      "A": "1/127575",
+      "B": "1/127575"
+    },
+    {
+      "screen": 175,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "105654405190927/125191858176000000",
+      "A": "1/3645",
+      "B": "2/42525"
+    },
+    {
+      "screen": 176,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "1483433/122185800",
+      "A": "1/13608000",
+      "B": "1/13608000"
+    },
+    {
+      "screen": 177,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "8931777343/503849808000",
+      "A": "1/388800",
+      "B": "1/2268000"
+    },
+    {
+      "screen": 178,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "53658438773/5542347888000",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 179,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "1723902626573/498811309920000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 180,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "384785895617/48772661414400",
+      "A": "1/1134000",
+      "B": "1/1134000"
+    },
+    {
+      "screen": 181,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "1759607462123/627077075328000",
+      "A": "1/32400",
+      "B": "1/189000"
+    },
+    {
+      "screen": 182,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "6631174205597/4389539527296000",
+      "A": "1/113400",
+      "B": "1/113400"
+    },
+    {
+      "screen": 183,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "292954752563657/395058557456640000",
+      "A": "1/3240",
+      "B": "1/18900"
+    },
+    {
+      "screen": 184,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "680718059533/118236754944000",
+      "A": "1/850500",
+      "B": "1/850500"
+    },
+    {
+      "screen": 185,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "21693246257689/10641307944960000",
+      "A": "1/24300",
+      "B": "1/141750"
+    },
+    {
+      "screen": 186,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "11681020835593/10641307944960000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 187,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "514236717232933/957717715046400000",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 188,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "83479849733281/93643509915648000",
+      "A": "1/70875",
+      "B": "1/70875"
+    },
+    {
+      "screen": 189,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "523495835259259/1203987984629760000",
+      "A": "1/2025",
+      "B": "2/23625"
+    },
+    {
+      "screen": 190,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "177355264759367/766174172037120000",
+      "A": "2/14175",
+      "B": "2/14175"
+    },
+    {
+      "screen": 191,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "104727382784381977/758512430316748800000",
+      "A": "2/405",
+      "B": "4/4725"
+    },
+    {
+      "screen": 192,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "200163067/201247200",
+      "A": "1/244944000",
+      "B": "1/244944000"
+    },
+    {
+      "screen": 193,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "33176477/377338500",
+      "A": "1/6998400",
+      "B": "1/40824000"
+    },
+    {
+      "screen": 194,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "361899653/9056124000",
+      "A": "1/24494400",
+      "B": "1/24494400"
+    },
+    {
+      "screen": 195,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "22657054213/543367440000",
+      "A": "1/699840",
+      "B": "1/4082400"
+    },
+    {
+      "screen": 196,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "182406491/5903251200",
+      "A": "1/20412000",
+      "B": "1/20412000"
+    },
+    {
+      "screen": 197,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "162191714329/4781633472000",
+      "A": "1/583200",
+      "B": "1/3402000"
+    },
+    {
+      "screen": 198,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "88010035657/4781633472000",
+      "A": "1/2041200",
+      "B": "1/2041200"
+    },
+    {
+      "screen": 199,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "3302929323637/430347012480000",
+      "A": "1/58320",
+      "B": "1/340200"
+    },
+    {
+      "screen": 200,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "8122364531/386394624000",
+      "A": "1/15309000",
+      "B": "1/15309000"
+    },
+    {
+      "screen": 201,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "286320122021/11591838720000",
+      "A": "1/437400",
+      "B": "1/2551500"
+    },
+    {
+      "screen": 202,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "466186857599/34775516160000",
+      "A": "1/1530900",
+      "B": "1/1530900"
+    },
+    {
+      "screen": 203,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "5806807701953/1043265484800000",
+      "A": "1/43740",
+      "B": "1/255150"
+    },
+    {
+      "screen": 204,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "1112675188109/102008180736000",
+      "A": "1/1275750",
+      "B": "1/1275750"
+    },
+    {
+      "screen": 205,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "41432445976217/9180736266240000",
+      "A": "1/36450",
+      "B": "1/212625"
+    },
+    {
+      "screen": 206,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "22177340148617/9180736266240000",
+      "A": "1/127575",
+      "B": "1/127575"
+    },
+    {
+      "screen": 207,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1088410344081317/826266263961600000",
+      "A": "1/3645",
+      "B": "2/42525"
+    },
+    {
+      "screen": 208,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "1668962513/92372464800",
+      "A": "1/13608000",
+      "B": "1/13608000"
+    },
+    {
+      "screen": 209,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "361542086449/16627043664000",
+      "A": "1/388800",
+      "B": "1/2268000"
+    },
+    {
+      "screen": 210,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "39246697949/3325408732800",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 211,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "86146546573/17605105056000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 212,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "1405106808421/146317984243200",
+      "A": "1/1134000",
+      "B": "1/1134000"
+    },
+    {
+      "screen": 213,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "52247453120353/13168618581888000",
+      "A": "1/32400",
+      "B": "1/189000"
+    },
+    {
+      "screen": 214,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "5593528866269/2633723716377600",
+      "A": "1/113400",
+      "B": "1/113400"
+    },
+    {
+      "screen": 215,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "274277136455753/237035134473984000",
+      "A": "1/3240",
+      "B": "1/18900"
+    },
+    {
+      "screen": 216,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "354462697847/50672894976000",
+      "A": "1/850500",
+      "B": "1/850500"
+    },
+    {
+      "screen": 217,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "91863905859197/31923923834880000",
+      "A": "1/24300",
+      "B": "1/141750"
+    },
+    {
+      "screen": 218,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "9836318010121/6384784766976000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 219,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "481032066374437/574630629027840000",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 220,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "350989946949413/280930529746944000",
+      "A": "1/70875",
+      "B": "1/70875"
+    },
+    {
+      "screen": 221,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "141545345480729/208956592373760000",
+      "A": "1/2025",
+      "B": "2/23625"
+    },
+    {
+      "screen": 222,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "1818089308919053/5056749535444992000",
+      "A": "2/14175",
+      "B": "2/14175"
+    },
+    {
+      "screen": 223,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "20467329584514053/91021491638009856000",
+      "A": "2/405",
+      "B": "4/4725"
+    },
+    {
+      "screen": 224,
+      "central_multiplier": "15",
+      "other_root_factor": 1,
+      "remaining_coefficient": "449112119/24149664000",
+      "A": "1/16329600",
+      "B": "1/16329600"
+    },
+    {
+      "screen": 225,
+      "central_multiplier": "15",
+      "other_root_factor": 1,
+      "remaining_coefficient": "161616119/34499520000",
+      "A": "1/466560",
+      "B": "1/2721600"
+    },
+    {
+      "screen": 226,
+      "central_multiplier": "15",
+      "other_root_factor": 10,
+      "remaining_coefficient": "5574170057/2173469760000",
+      "A": "1/1632960",
+      "B": "1/1632960"
+    },
+    {
+      "screen": 227,
+      "central_multiplier": "15",
+      "other_root_factor": 10,
+      "remaining_coefficient": "18653792873/21734697600000",
+      "A": "1/46656",
+      "B": "1/272160"
+    },
+    {
+      "screen": 228,
+      "central_multiplier": "15",
+      "other_root_factor": 12,
+      "remaining_coefficient": "4443941357/2125170432000",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 229,
+      "central_multiplier": "15",
+      "other_root_factor": 12,
+      "remaining_coefficient": "133368232681/191265338880000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 230,
+      "central_multiplier": "15",
+      "other_root_factor": 120,
+      "remaining_coefficient": "71996990297/191265338880000",
+      "A": "1/136080",
+      "B": "1/136080"
+    },
+    {
+      "screen": 231,
+      "central_multiplier": "15",
+      "other_root_factor": 120,
+      "remaining_coefficient": "3014694507157/17213880499200000",
+      "A": "1/3888",
+      "B": "1/22680"
+    },
+    {
+      "screen": 232,
+      "central_multiplier": "15",
+      "other_root_factor": 16,
+      "remaining_coefficient": "70804925137/46367354880000",
+      "A": "1/1020600",
+      "B": "1/1020600"
+    },
+    {
+      "screen": 233,
+      "central_multiplier": "15",
+      "other_root_factor": 16,
+      "remaining_coefficient": "33582625267/66239078400000",
+      "A": "1/29160",
+      "B": "1/170100"
+    },
+    {
+      "screen": 234,
+      "central_multiplier": "15",
+      "other_root_factor": 160,
+      "remaining_coefficient": "1142351847037/4173061939200000",
+      "A": "1/102060",
+      "B": "1/102060"
+    },
+    {
+      "screen": 235,
+      "central_multiplier": "15",
+      "other_root_factor": 160,
+      "remaining_coefficient": "5294390250433/41730619392000000",
+      "A": "1/2916",
+      "B": "1/17010"
+    },
+    {
+      "screen": 236,
+      "central_multiplier": "15",
+      "other_root_factor": 192,
+      "remaining_coefficient": "907708207501/4080327229440000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 237,
+      "central_multiplier": "15",
+      "other_root_factor": 192,
+      "remaining_coefficient": "37743040325273/367229450649600000",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 238,
+      "central_multiplier": "15",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "20127670342537/367229450649600000",
+      "A": "1/8505",
+      "B": "1/8505"
+    },
+    {
+      "screen": 239,
+      "central_multiplier": "15",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1051516287571877/33050650558464000000",
+      "A": "1/243",
+      "B": "2/2835"
+    },
+    {
+      "screen": 240,
+      "central_multiplier": "15",
+      "other_root_factor": 18,
+      "remaining_coefficient": "9943306237/7389797184000",
+      "A": "1/907200",
+      "B": "1/907200"
+    },
+    {
+      "screen": 241,
+      "central_multiplier": "15",
+      "other_root_factor": 18,
+      "remaining_coefficient": "42384178963/95011678080000",
+      "A": "1/25920",
+      "B": "1/151200"
+    },
+    {
+      "screen": 242,
+      "central_multiplier": "15",
+      "other_root_factor": 180,
+      "remaining_coefficient": "1884754561/7824491136000",
+      "A": "1/90720",
+      "B": "1/90720"
+    },
+    {
+      "screen": 243,
+      "central_multiplier": "15",
+      "other_root_factor": 180,
+      "remaining_coefficient": "53391424973/478858857523200",
+      "A": "1/2592",
+      "B": "1/15120"
+    },
+    {
+      "screen": 244,
+      "central_multiplier": "15",
+      "other_root_factor": 216,
+      "remaining_coefficient": "1145695473589/5852719369728000",
+      "A": "1/75600",
+      "B": "1/75600"
+    },
+    {
+      "screen": 245,
+      "central_multiplier": "15",
+      "other_root_factor": 216,
+      "remaining_coefficient": "4325277190307/47885885752320000",
+      "A": "1/2160",
+      "B": "1/12600"
+    },
+    {
+      "screen": 246,
+      "central_multiplier": "15",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "1014941239321/21069789731020800",
+      "A": "1/7560",
+      "B": "1/7560"
+    },
+    {
+      "screen": 247,
+      "central_multiplier": "15",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "264938328401801/9481405378959360000",
+      "A": "1/216",
+      "B": "1/1260"
+    },
+    {
+      "screen": 248,
+      "central_multiplier": "15",
+      "other_root_factor": 288,
+      "remaining_coefficient": "2020063178561/14188410593280000",
+      "A": "1/56700",
+      "B": "1/56700"
+    },
+    {
+      "screen": 249,
+      "central_multiplier": "15",
+      "other_root_factor": 288,
+      "remaining_coefficient": "98657311859/1507623321600000",
+      "A": "1/1620",
+      "B": "1/9450"
+    },
+    {
+      "screen": 250,
+      "central_multiplier": "15",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "1782793319477/51078278135808000",
+      "A": "1/5670",
+      "B": "1/5670"
+    },
+    {
+      "screen": 251,
+      "central_multiplier": "15",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "464429740945189/22985225161113600000",
+      "A": "1/162",
+      "B": "1/945"
+    },
+    {
+      "screen": 252,
+      "central_multiplier": "15",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "317785296090917/11237221189877760000",
+      "A": "1/4725",
+      "B": "1/4725"
+    },
+    {
+      "screen": 253,
+      "central_multiplier": "15",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "972311946336193/59491171005235200000",
+      "A": "1/135",
+      "B": "2/1575"
+    },
+    {
+      "screen": 254,
+      "central_multiplier": "15",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "1751680007202061/202269981417799680000",
+      "A": "2/945",
+      "B": "2/945"
+    },
+    {
+      "screen": 255,
+      "central_multiplier": "15",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "101141280491664409/18204298327601971200000",
+      "A": "2/27",
+      "B": "4/315"
+    },
+    {
+      "screen": 256,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "0",
+      "A": "1/244944000",
+      "B": "1/244944000"
+    },
+    {
+      "screen": 257,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "728778289/31696434000",
+      "A": "1/6998400",
+      "B": "1/40824000"
+    },
+    {
+      "screen": 258,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "1170964/56600775",
+      "A": "1/24494400",
+      "B": "1/24494400"
+    },
+    {
+      "screen": 259,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "1228413013/101881395000",
+      "A": "1/699840",
+      "B": "1/4082400"
+    },
+    {
+      "screen": 260,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "2442310687/159387782400",
+      "A": "1/20412000",
+      "B": "1/20412000"
+    },
+    {
+      "screen": 261,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "136971167887/14344900416000",
+      "A": "1/583200",
+      "B": "1/3402000"
+    },
+    {
+      "screen": 262,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "9313063717/2049271488000",
+      "A": "1/2041200",
+      "B": "1/2041200"
+    },
+    {
+      "screen": 263,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "5032338222517/1291041037440000",
+      "A": "1/58320",
+      "B": "1/340200"
+    },
+    {
+      "screen": 264,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "3774991201/386394624000",
+      "A": "1/15309000",
+      "B": "1/15309000"
+    },
+    {
+      "screen": 265,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "233477072333/34775516160000",
+      "A": "1/437400",
+      "B": "1/2551500"
+    },
+    {
+      "screen": 266,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "10002302183/3161410560000",
+      "A": "1/1530900",
+      "B": "1/1530900"
+    },
+    {
+      "screen": 267,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "8881312411073/3129796454400000",
+      "A": "1/43740",
+      "B": "1/255150"
+    },
+    {
+      "screen": 268,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "108169368731/43717791744000",
+      "A": "1/1275750",
+      "B": "1/1275750"
+    },
+    {
+      "screen": 269,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "5778989080171/2503837163520000",
+      "A": "1/36450",
+      "B": "1/212625"
+    },
+    {
+      "screen": 270,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "34475358985097/27542208798720000",
+      "A": "1/127575",
+      "B": "1/127575"
+    },
+    {
+      "screen": 271,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1309774683137957/2478798791884800000",
+      "A": "1/3645",
+      "B": "2/42525"
+    },
+    {
+      "screen": 272,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "1134725857/138558697200",
+      "A": "1/13608000",
+      "B": "1/13608000"
+    },
+    {
+      "screen": 273,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "72821212483/12470282748000",
+      "A": "1/388800",
+      "B": "1/2268000"
+    },
+    {
+      "screen": 274,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "68392529423/24940565496000",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 275,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "2242725296237/897860357856000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 276,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "940328166847/438953952729600",
+      "A": "1/1134000",
+      "B": "1/1134000"
+    },
+    {
+      "screen": 277,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "80263877282209/39505855745664000",
+      "A": "1/32400",
+      "B": "1/189000"
+    },
+    {
+      "screen": 278,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "8706464884253/7901171149132800",
+      "A": "1/113400",
+      "B": "1/113400"
+    },
+    {
+      "screen": 279,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "66061996955893/142221080684390400",
+      "A": "1/3240",
+      "B": "1/18900"
+    },
+    {
+      "screen": 280,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "224757030431/152018684928000",
+      "A": "1/850500",
+      "B": "1/850500"
+    },
+    {
+      "screen": 281,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "20238697449563/13681681643520000",
+      "A": "1/24300",
+      "B": "1/141750"
+    },
+    {
+      "screen": 282,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "15370426486537/19154354300928000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 283,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "1366225926941/4056216204902400",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 284,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "50019804736399/76617417203712000",
+      "A": "1/70875",
+      "B": "1/70875"
+    },
+    {
+      "screen": 285,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "20713089095885777/75851243031674880000",
+      "A": "1/2025",
+      "B": "2/23625"
+    },
+    {
+      "screen": 286,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "443309023844201/3034049721266995200",
+      "A": "2/14175",
+      "B": "2/14175"
+    },
+    {
+      "screen": 287,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "9955350228000491/124120215870013440000",
+      "A": "2/405",
+      "B": "4/4725"
+    },
+    {
+      "screen": 288,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "200163067/201247200",
+      "A": "1/244944000",
+      "B": "1/244944000"
+    },
+    {
+      "screen": 289,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "33176477/377338500",
+      "A": "1/6998400",
+      "B": "1/40824000"
+    },
+    {
+      "screen": 290,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "361899653/9056124000",
+      "A": "1/24494400",
+      "B": "1/24494400"
+    },
+    {
+      "screen": 291,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "22657054213/543367440000",
+      "A": "1/699840",
+      "B": "1/4082400"
+    },
+    {
+      "screen": 292,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "182406491/5903251200",
+      "A": "1/20412000",
+      "B": "1/20412000"
+    },
+    {
+      "screen": 293,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "162191714329/4781633472000",
+      "A": "1/583200",
+      "B": "1/3402000"
+    },
+    {
+      "screen": 294,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "88010035657/4781633472000",
+      "A": "1/2041200",
+      "B": "1/2041200"
+    },
+    {
+      "screen": 295,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "3302929323637/430347012480000",
+      "A": "1/58320",
+      "B": "1/340200"
+    },
+    {
+      "screen": 296,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "8122364531/386394624000",
+      "A": "1/15309000",
+      "B": "1/15309000"
+    },
+    {
+      "screen": 297,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "286320122021/11591838720000",
+      "A": "1/437400",
+      "B": "1/2551500"
+    },
+    {
+      "screen": 298,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "466186857599/34775516160000",
+      "A": "1/1530900",
+      "B": "1/1530900"
+    },
+    {
+      "screen": 299,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "5806807701953/1043265484800000",
+      "A": "1/43740",
+      "B": "1/255150"
+    },
+    {
+      "screen": 300,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "1112675188109/102008180736000",
+      "A": "1/1275750",
+      "B": "1/1275750"
+    },
+    {
+      "screen": 301,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "41432445976217/9180736266240000",
+      "A": "1/36450",
+      "B": "1/212625"
+    },
+    {
+      "screen": 302,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "22177340148617/9180736266240000",
+      "A": "1/127575",
+      "B": "1/127575"
+    },
+    {
+      "screen": 303,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1088410344081317/826266263961600000",
+      "A": "1/3645",
+      "B": "2/42525"
+    },
+    {
+      "screen": 304,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "1668962513/92372464800",
+      "A": "1/13608000",
+      "B": "1/13608000"
+    },
+    {
+      "screen": 305,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "361542086449/16627043664000",
+      "A": "1/388800",
+      "B": "1/2268000"
+    },
+    {
+      "screen": 306,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "39246697949/3325408732800",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 307,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "86146546573/17605105056000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 308,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "1405106808421/146317984243200",
+      "A": "1/1134000",
+      "B": "1/1134000"
+    },
+    {
+      "screen": 309,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "52247453120353/13168618581888000",
+      "A": "1/32400",
+      "B": "1/189000"
+    },
+    {
+      "screen": 310,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "5593528866269/2633723716377600",
+      "A": "1/113400",
+      "B": "1/113400"
+    },
+    {
+      "screen": 311,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "274277136455753/237035134473984000",
+      "A": "1/3240",
+      "B": "1/18900"
+    },
+    {
+      "screen": 312,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "354462697847/50672894976000",
+      "A": "1/850500",
+      "B": "1/850500"
+    },
+    {
+      "screen": 313,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "91863905859197/31923923834880000",
+      "A": "1/24300",
+      "B": "1/141750"
+    },
+    {
+      "screen": 314,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "9836318010121/6384784766976000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 315,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "481032066374437/574630629027840000",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 316,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "350989946949413/280930529746944000",
+      "A": "1/70875",
+      "B": "1/70875"
+    },
+    {
+      "screen": 317,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "141545345480729/208956592373760000",
+      "A": "1/2025",
+      "B": "2/23625"
+    },
+    {
+      "screen": 318,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "1818089308919053/5056749535444992000",
+      "A": "2/14175",
+      "B": "2/14175"
+    },
+    {
+      "screen": 319,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "20467329584514053/91021491638009856000",
+      "A": "2/405",
+      "B": "4/4725"
+    },
+    {
+      "screen": 320,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "200163067/201247200",
+      "A": "1/244944000",
+      "B": "1/244944000"
+    },
+    {
+      "screen": 321,
+      "central_multiplier": "1",
+      "other_root_factor": 1,
+      "remaining_coefficient": "1126896013/9056124000",
+      "A": "1/6998400",
+      "B": "1/40824000"
+    },
+    {
+      "screen": 322,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "89407511/1509354000",
+      "A": "1/24494400",
+      "B": "1/24494400"
+    },
+    {
+      "screen": 323,
+      "central_multiplier": "1",
+      "other_root_factor": 10,
+      "remaining_coefficient": "3570628121/65204092800",
+      "A": "1/699840",
+      "B": "1/4082400"
+    },
+    {
+      "screen": 324,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "1058234261/22769683200",
+      "A": "1/20412000",
+      "B": "1/20412000"
+    },
+    {
+      "screen": 325,
+      "central_multiplier": "1",
+      "other_root_factor": 12,
+      "remaining_coefficient": "638017681757/14344900416000",
+      "A": "1/583200",
+      "B": "1/3402000"
+    },
+    {
+      "screen": 326,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "2751775249/114759203328",
+      "A": "1/2041200",
+      "B": "1/2041200"
+    },
+    {
+      "screen": 327,
+      "central_multiplier": "1",
+      "other_root_factor": 120,
+      "remaining_coefficient": "2957047543861/258208207488000",
+      "A": "1/58320",
+      "B": "1/340200"
+    },
+    {
+      "screen": 328,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "21992483/681472000",
+      "A": "1/15309000",
+      "B": "1/15309000"
+    },
+    {
+      "screen": 329,
+      "central_multiplier": "1",
+      "other_root_factor": 16,
+      "remaining_coefficient": "1124150139193/34775516160000",
+      "A": "1/437400",
+      "B": "1/2551500"
+    },
+    {
+      "screen": 330,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "2694099017/154557849600",
+      "A": "1/1530900",
+      "B": "1/1530900"
+    },
+    {
+      "screen": 331,
+      "central_multiplier": "1",
+      "other_root_factor": 160,
+      "remaining_coefficient": "5191906760129/625959290880000",
+      "A": "1/43740",
+      "B": "1/255150"
+    },
+    {
+      "screen": 332,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "4333574056897/306024542208000",
+      "A": "1/1275750",
+      "B": "1/1275750"
+    },
+    {
+      "screen": 333,
+      "central_multiplier": "1",
+      "other_root_factor": 192,
+      "remaining_coefficient": "185025795975421/27542208798720000",
+      "A": "1/36450",
+      "B": "1/212625"
+    },
+    {
+      "screen": 334,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1792521489211/500767432704000",
+      "A": "1/127575",
+      "B": "1/127575"
+    },
+    {
+      "screen": 335,
+      "central_multiplier": "1",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1044137476269989/495759758376960000",
+      "A": "1/3645",
+      "B": "2/42525"
+    },
+    {
+      "screen": 336,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "1936080841/69279348600",
+      "A": "1/13608000",
+      "B": "1/13608000"
+    },
+    {
+      "screen": 337,
+      "central_multiplier": "1",
+      "other_root_factor": 18,
+      "remaining_coefficient": "1418593429997/49881130992000",
+      "A": "1/388800",
+      "B": "1/2268000"
+    },
+    {
+      "screen": 338,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "152998267273/9976226198400",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 339,
+      "central_multiplier": "1",
+      "other_root_factor": 180,
+      "remaining_coefficient": "594929314019/81623668896000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 340,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "5469066033113/438953952729600",
+      "A": "1/1134000",
+      "B": "1/1134000"
+    },
+    {
+      "screen": 341,
+      "central_multiplier": "1",
+      "other_root_factor": 216,
+      "remaining_coefficient": "13718873025877/2323873867392000",
+      "A": "1/32400",
+      "B": "1/189000"
+    },
+    {
+      "screen": 342,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "24854708313361/7901171149132800",
+      "A": "1/113400",
+      "B": "1/113400"
+    },
+    {
+      "screen": 343,
+      "central_multiplier": "1",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "1315352833955053/711105403421952000",
+      "A": "1/3240",
+      "B": "1/18900"
+    },
+    {
+      "screen": 344,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "567008246261/62595929088000",
+      "A": "1/850500",
+      "B": "1/850500"
+    },
+    {
+      "screen": 345,
+      "central_multiplier": "1",
+      "other_root_factor": 288,
+      "remaining_coefficient": "409512553008241/95771771504640000",
+      "A": "1/24300",
+      "B": "1/141750"
+    },
+    {
+      "screen": 346,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "43647481574189/19154354300928000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 347,
+      "central_multiplier": "1",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "2305546379296697/1723891887083520000",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 348,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "1555721829596089/842791589240832000",
+      "A": "1/70875",
+      "B": "1/70875"
+    },
+    {
+      "screen": 349,
+      "central_multiplier": "1",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "82048831723123477/75851243031674880000",
+      "A": "1/2025",
+      "B": "2/23625"
+    },
+    {
+      "screen": 350,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "511293572605489/892367565078528000",
+      "A": "2/14175",
+      "B": "2/14175"
+    },
+    {
+      "screen": 351,
+      "central_multiplier": "1",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "504511035027416189/1365322374570147840000",
+      "A": "2/405",
+      "B": "4/4725"
+    },
+    {
+      "screen": 352,
+      "central_multiplier": "15",
+      "other_root_factor": 1,
+      "remaining_coefficient": "481636109/24149664000",
+      "A": "1/16329600",
+      "B": "1/16329600"
+    },
+    {
+      "screen": 353,
+      "central_multiplier": "15",
+      "other_root_factor": 1,
+      "remaining_coefficient": "4055259629/724489920000",
+      "A": "1/466560",
+      "B": "1/2721600"
+    },
+    {
+      "screen": 354,
+      "central_multiplier": "15",
+      "other_root_factor": 10,
+      "remaining_coefficient": "1324288507/434693952000",
+      "A": "1/1632960",
+      "B": "1/1632960"
+    },
+    {
+      "screen": 355,
+      "central_multiplier": "15",
+      "other_root_factor": 10,
+      "remaining_coefficient": "15451183801/13040818560000",
+      "A": "1/46656",
+      "B": "1/272160"
+    },
+    {
+      "screen": 356,
+      "central_multiplier": "15",
+      "other_root_factor": 12,
+      "remaining_coefficient": "2259212663/910787328000",
+      "A": "1/1360800",
+      "B": "1/1360800"
+    },
+    {
+      "screen": 357,
+      "central_multiplier": "15",
+      "other_root_factor": 12,
+      "remaining_coefficient": "551547236813/573796016640000",
+      "A": "1/38880",
+      "B": "1/226800"
+    },
+    {
+      "screen": 358,
+      "central_multiplier": "15",
+      "other_root_factor": 120,
+      "remaining_coefficient": "5380595819/10432654848000",
+      "A": "1/136080",
+      "B": "1/136080"
+    },
+    {
+      "screen": 359,
+      "central_multiplier": "15",
+      "other_root_factor": 120,
+      "remaining_coefficient": "2784106653973/10328328299520000",
+      "A": "1/3888",
+      "B": "1/22680"
+    },
+    {
+      "screen": 360,
+      "central_multiplier": "15",
+      "other_root_factor": 16,
+      "remaining_coefficient": "83847045127/46367354880000",
+      "A": "1/1020600",
+      "B": "1/1020600"
+    },
+    {
+      "screen": 361,
+      "central_multiplier": "15",
+      "other_root_factor": 16,
+      "remaining_coefficient": "970424903737/1391020646400000",
+      "A": "1/29160",
+      "B": "1/170100"
+    },
+    {
+      "screen": 362,
+      "central_multiplier": "15",
+      "other_root_factor": 160,
+      "remaining_coefficient": "28405602013/75873853440000",
+      "A": "1/102060",
+      "B": "1/102060"
+    },
+    {
+      "screen": 363,
+      "central_multiplier": "15",
+      "other_root_factor": 160,
+      "remaining_coefficient": "4884456289217/25038371635200000",
+      "A": "1/2916",
+      "B": "1/17010"
+    },
+    {
+      "screen": 364,
+      "central_multiplier": "15",
+      "other_root_factor": 192,
+      "remaining_coefficient": "531239016439/1748711669760000",
+      "A": "1/85050",
+      "B": "1/85050"
+    },
+    {
+      "screen": 365,
+      "central_multiplier": "15",
+      "other_root_factor": 192,
+      "remaining_coefficient": "173957579022589/1101688351948800000",
+      "A": "1/2430",
+      "B": "1/14175"
+    },
+    {
+      "screen": 366,
+      "central_multiplier": "15",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "18487934497673/220337670389760000",
+      "A": "1/8505",
+      "B": "1/8505"
+    },
+    {
+      "screen": 367,
+      "central_multiplier": "15",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "40880041694573/793215613403136000",
+      "A": "1/243",
+      "B": "2/2835"
+    },
+    {
+      "screen": 368,
+      "central_multiplier": "15",
+      "other_root_factor": 18,
+      "remaining_coefficient": "35304790361/22169391552000",
+      "A": "1/907200",
+      "B": "1/907200"
+    },
+    {
+      "screen": 369,
+      "central_multiplier": "15",
+      "other_root_factor": 18,
+      "remaining_coefficient": "1224034928873/1995245239680000",
+      "A": "1/25920",
+      "B": "1/151200"
+    },
+    {
+      "screen": 370,
+      "central_multiplier": "15",
+      "other_root_factor": 180,
+      "remaining_coefficient": "131380656037/399049047936000",
+      "A": "1/90720",
+      "B": "1/90720"
+    },
+    {
+      "screen": 371,
+      "central_multiplier": "15",
+      "other_root_factor": 180,
+      "remaining_coefficient": "6155105451961/35914414314240000",
+      "A": "1/2592",
+      "B": "1/15120"
+    },
+    {
+      "screen": 372,
+      "central_multiplier": "15",
+      "other_root_factor": 216,
+      "remaining_coefficient": "39418756543/147547547136000",
+      "A": "1/75600",
+      "B": "1/75600"
+    },
+    {
+      "screen": 373,
+      "central_multiplier": "15",
+      "other_root_factor": 216,
+      "remaining_coefficient": "219212629358981/1580234229826560000",
+      "A": "1/2160",
+      "B": "1/12600"
+    },
+    {
+      "screen": 374,
+      "central_multiplier": "15",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "23298240304369/316046845965312000",
+      "A": "1/7560",
+      "B": "1/7560"
+    },
+    {
+      "screen": 375,
+      "central_multiplier": "15",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "1287336409793197/28444216136878080000",
+      "A": "1/216",
+      "B": "1/1260"
+    },
+    {
+      "screen": 376,
+      "central_multiplier": "15",
+      "other_root_factor": 288,
+      "remaining_coefficient": "8255613067333/42565231779840000",
+      "A": "1/56700",
+      "B": "1/56700"
+    },
+    {
+      "screen": 377,
+      "central_multiplier": "15",
+      "other_root_factor": 288,
+      "remaining_coefficient": "384609064864369/3830870860185600000",
+      "A": "1/1620",
+      "B": "1/9450"
+    },
+    {
+      "screen": 378,
+      "central_multiplier": "15",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "40880427335981/766174172037120000",
+      "A": "1/5670",
+      "B": "1/5670"
+    },
+    {
+      "screen": 379,
+      "central_multiplier": "15",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "2255739403008953/68955675483340800000",
+      "A": "1/162",
+      "B": "1/945"
+    },
+    {
+      "screen": 380,
+      "central_multiplier": "15",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "208015411002943/4815951938519040000",
+      "A": "1/4725",
+      "B": "1/4725"
+    },
+    {
+      "screen": 381,
+      "central_multiplier": "15",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "80255780576764693/3034049721266995200000",
+      "A": "1/135",
+      "B": "2/1575"
+    },
+    {
+      "screen": 382,
+      "central_multiplier": "15",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "8492762829142337/606809944253399040000",
+      "A": "2/945",
+      "B": "2/945"
+    },
+    {
+      "screen": 383,
+      "central_multiplier": "15",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "500924932734698621/54612894982805913600000",
+      "A": "2/27",
+      "B": "4/315"
+    },
+    {
+      "screen": 384,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1,
+      "remaining_coefficient": "1084133/226403100",
+      "A": "1/27552000",
+      "B": "1/27552000"
+    },
+    {
+      "screen": 385,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1,
+      "remaining_coefficient": "413199211/16301023200",
+      "A": "1/787200",
+      "B": "1/4592000"
+    },
+    {
+      "screen": 386,
+      "central_multiplier": "729/82",
+      "other_root_factor": 10,
+      "remaining_coefficient": "5702258327/407525580000",
+      "A": "1/2755200",
+      "B": "1/2755200"
+    },
+    {
+      "screen": 387,
+      "central_multiplier": "729/82",
+      "other_root_factor": 10,
+      "remaining_coefficient": "66331230461/18338651100000",
+      "A": "1/78720",
+      "B": "1/459200"
+    },
+    {
+      "screen": 388,
+      "central_multiplier": "729/82",
+      "other_root_factor": 12,
+      "remaining_coefficient": "9316973/815051160",
+      "A": "1/2296000",
+      "B": "1/2296000"
+    },
+    {
+      "screen": 389,
+      "central_multiplier": "729/82",
+      "other_root_factor": 12,
+      "remaining_coefficient": "47570670731/16138012968000",
+      "A": "1/65600",
+      "B": "3/1148000"
+    },
+    {
+      "screen": 390,
+      "central_multiplier": "729/82",
+      "other_root_factor": 120,
+      "remaining_coefficient": "130044279727/80690064840000",
+      "A": "1/229600",
+      "B": "1/229600"
+    },
+    {
+      "screen": 391,
+      "central_multiplier": "729/82",
+      "other_root_factor": 120,
+      "remaining_coefficient": "369049610627/660191439600000",
+      "A": "1/6560",
+      "B": "3/114800"
+    },
+    {
+      "screen": 392,
+      "central_multiplier": "729/82",
+      "other_root_factor": 16,
+      "remaining_coefficient": "9447653/1129075200",
+      "A": "1/1722000",
+      "B": "1/1722000"
+    },
+    {
+      "screen": 393,
+      "central_multiplier": "729/82",
+      "other_root_factor": 16,
+      "remaining_coefficient": "84165940609/39122455680000",
+      "A": "1/49200",
+      "B": "1/287000"
+    },
+    {
+      "screen": 394,
+      "central_multiplier": "729/82",
+      "other_root_factor": 160,
+      "remaining_coefficient": "230123164213/195612278400000",
+      "A": "1/172200",
+      "B": "1/172200"
+    },
+    {
+      "screen": 395,
+      "central_multiplier": "729/82",
+      "other_root_factor": 160,
+      "remaining_coefficient": "650173046563/1600464096000000",
+      "A": "1/4920",
+      "B": "1/28700"
+    },
+    {
+      "screen": 396,
+      "central_multiplier": "729/82",
+      "other_root_factor": 192,
+      "remaining_coefficient": "330142702441/344277609984000",
+      "A": "1/143500",
+      "B": "1/143500"
+    },
+    {
+      "screen": 397,
+      "central_multiplier": "729/82",
+      "other_root_factor": 192,
+      "remaining_coefficient": "10223427161989/30984984898560000",
+      "A": "1/4100",
+      "B": "3/71750"
+    },
+    {
+      "screen": 398,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "27557723389577/154924924492800000",
+      "A": "1/14350",
+      "B": "1/14350"
+    },
+    {
+      "screen": 399,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1185257242418597/13943243204352000000",
+      "A": "1/410",
+      "B": "3/7175"
+    },
+    {
+      "screen": 400,
+      "central_multiplier": "729/82",
+      "other_root_factor": 18,
+      "remaining_coefficient": "2629022441/356293792800",
+      "A": "3/4592000",
+      "B": "3/4592000"
+    },
+    {
+      "screen": 401,
+      "central_multiplier": "729/82",
+      "other_root_factor": 18,
+      "remaining_coefficient": "212712309973/112232544732000",
+      "A": "3/131200",
+      "B": "9/2296000"
+    },
+    {
+      "screen": 402,
+      "central_multiplier": "729/82",
+      "other_root_factor": 180,
+      "remaining_coefficient": "116324215561/112232544732000",
+      "A": "3/459200",
+      "B": "3/459200"
+    },
+    {
+      "screen": 403,
+      "central_multiplier": "729/82",
+      "other_root_factor": 180,
+      "remaining_coefficient": "451242167177/1262616128235000",
+      "A": "3/13120",
+      "B": "9/229600"
+    },
+    {
+      "screen": 404,
+      "central_multiplier": "729/82",
+      "other_root_factor": 216,
+      "remaining_coefficient": "417212312471/493823196820800",
+      "A": "9/1148000",
+      "B": "9/1148000"
+    },
+    {
+      "screen": 405,
+      "central_multiplier": "729/82",
+      "other_root_factor": 216,
+      "remaining_coefficient": "758878102249/2614358100816000",
+      "A": "9/32800",
+      "B": "27/574000"
+    },
+    {
+      "screen": 406,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "632312579467/4040371610352000",
+      "A": "9/114800",
+      "B": "9/114800"
+    },
+    {
+      "screen": 407,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "298791507597377/3999967894248480000",
+      "A": "9/3280",
+      "B": "27/57400"
+    },
+    {
+      "screen": 408,
+      "central_multiplier": "729/82",
+      "other_root_factor": 288,
+      "remaining_coefficient": "6204748091/10060060032000",
+      "A": "3/287000",
+      "B": "3/287000"
+    },
+    {
+      "screen": 409,
+      "central_multiplier": "729/82",
+      "other_root_factor": 288,
+      "remaining_coefficient": "22730891597017/107743242942720000",
+      "A": "3/8200",
+      "B": "9/143500"
+    },
+    {
+      "screen": 410,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "1114317315323/9794840267520000",
+      "A": "3/28700",
+      "B": "3/28700"
+    },
+    {
+      "screen": 411,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "524613170626213/9696891864844800000",
+      "A": "3/820",
+      "B": "9/14350"
+    },
+    {
+      "screen": 412,
+      "central_multiplier": "729/82",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "87630431090593/948140537895936000",
+      "A": "9/71750",
+      "B": "9/71750"
+    },
+    {
+      "screen": 413,
+      "central_multiplier": "729/82",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "3739181311246429/85332648410634240000",
+      "A": "9/2050",
+      "B": "27/35875"
+    },
+    {
+      "screen": 414,
+      "central_multiplier": "729/82",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "117200807407421/5019567553566720000",
+      "A": "9/7175",
+      "B": "9/7175"
+    },
+    {
+      "screen": 415,
+      "central_multiplier": "729/82",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "105474487428698137/7679938356957081600000",
+      "A": "9/205",
+      "B": "54/7175"
+    },
+    {
+      "screen": 416,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1,
+      "remaining_coefficient": "226182259/1811224800",
+      "A": "1/27552000",
+      "B": "1/27552000"
+    },
+    {
+      "screen": 417,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1,
+      "remaining_coefficient": "865017653/27168372000",
+      "A": "1/787200",
+      "B": "1/4592000"
+    },
+    {
+      "screen": 418,
+      "central_multiplier": "729/82",
+      "other_root_factor": 10,
+      "remaining_coefficient": "7098621631/407525580000",
+      "A": "1/2755200",
+      "B": "1/2755200"
+    },
+    {
+      "screen": 419,
+      "central_multiplier": "729/82",
+      "other_root_factor": 10,
+      "remaining_coefficient": "36306770411/6112883700000",
+      "A": "1/78720",
+      "B": "1/459200"
+    },
+    {
+      "screen": 420,
+      "central_multiplier": "729/82",
+      "other_root_factor": 12,
+      "remaining_coefficient": "424377829/29885209200",
+      "A": "1/2296000",
+      "B": "1/2296000"
+    },
+    {
+      "screen": 421,
+      "central_multiplier": "729/82",
+      "other_root_factor": 12,
+      "remaining_coefficient": "42897619/8891467200",
+      "A": "1/65600",
+      "B": "3/1148000"
+    },
+    {
+      "screen": 422,
+      "central_multiplier": "729/82",
+      "other_root_factor": 120,
+      "remaining_coefficient": "69995359627/26896688280000",
+      "A": "1/229600",
+      "B": "1/229600"
+    },
+    {
+      "screen": 423,
+      "central_multiplier": "729/82",
+      "other_root_factor": 120,
+      "remaining_coefficient": "2978665155097/2420701945200000",
+      "A": "1/6560",
+      "B": "3/114800"
+    },
+    {
+      "screen": 424,
+      "central_multiplier": "729/82",
+      "other_root_factor": 16,
+      "remaining_coefficient": "4506821071/434693952000",
+      "A": "1/1722000",
+      "B": "1/1722000"
+    },
+    {
+      "screen": 425,
+      "central_multiplier": "729/82",
+      "other_root_factor": 16,
+      "remaining_coefficient": "831538759/237105792000",
+      "A": "1/49200",
+      "B": "1/287000"
+    },
+    {
+      "screen": 426,
+      "central_multiplier": "729/82",
+      "other_root_factor": 160,
+      "remaining_coefficient": "370108585439/195612278400000",
+      "A": "1/172200",
+      "B": "1/172200"
+    },
+    {
+      "screen": 427,
+      "central_multiplier": "729/82",
+      "other_root_factor": 160,
+      "remaining_coefficient": "5230338068993/5868368352000000",
+      "A": "1/4920",
+      "B": "1/28700"
+    },
+    {
+      "screen": 428,
+      "central_multiplier": "729/82",
+      "other_root_factor": 192,
+      "remaining_coefficient": "35283493397/22951840665600",
+      "A": "1/143500",
+      "B": "1/143500"
+    },
+    {
+      "screen": 429,
+      "central_multiplier": "729/82",
+      "other_root_factor": 192,
+      "remaining_coefficient": "7456372923781/10328328299520000",
+      "A": "1/4100",
+      "B": "3/71750"
+    },
+    {
+      "screen": 430,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "19871461616777/51641641497600000",
+      "A": "1/14350",
+      "B": "1/14350"
+    },
+    {
+      "screen": 431,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1046904530508197/4647747734784000000",
+      "A": "1/410",
+      "B": "3/7175"
+    },
+    {
+      "screen": 432,
+      "central_multiplier": "729/82",
+      "other_root_factor": 18,
+      "remaining_coefficient": "446726557/48903069600",
+      "A": "3/4592000",
+      "B": "3/4592000"
+    },
+    {
+      "screen": 433,
+      "central_multiplier": "729/82",
+      "other_root_factor": 18,
+      "remaining_coefficient": "115433059411/37410848244000",
+      "A": "3/131200",
+      "B": "9/2296000"
+    },
+    {
+      "screen": 434,
+      "central_multiplier": "729/82",
+      "other_root_factor": 180,
+      "remaining_coefficient": "62280187471/37410848244000",
+      "A": "3/459200",
+      "B": "3/459200"
+    },
+    {
+      "screen": 435,
+      "central_multiplier": "729/82",
+      "other_root_factor": 180,
+      "remaining_coefficient": "659286207949/841744085490000",
+      "A": "3/13120",
+      "B": "9/229600"
+    },
+    {
+      "screen": 436,
+      "central_multiplier": "729/82",
+      "other_root_factor": 216,
+      "remaining_coefficient": "20241255577/14964339297600",
+      "A": "9/1148000",
+      "B": "9/1148000"
+    },
+    {
+      "screen": 437,
+      "central_multiplier": "729/82",
+      "other_root_factor": 216,
+      "remaining_coefficient": "9398874718001/14814695904624000",
+      "A": "9/32800",
+      "B": "27/574000"
+    },
+    {
+      "screen": 438,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "294697256641/871452700272000",
+      "A": "9/114800",
+      "B": "9/114800"
+    },
+    {
+      "screen": 439,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "2179925433017/11019195300960000",
+      "A": "9/3280",
+      "B": "27/57400"
+    },
+    {
+      "screen": 440,
+      "central_multiplier": "729/82",
+      "other_root_factor": 288,
+      "remaining_coefficient": "35680294823/36277186176000",
+      "A": "3/287000",
+      "B": "3/287000"
+    },
+    {
+      "screen": 441,
+      "central_multiplier": "729/82",
+      "other_root_factor": 288,
+      "remaining_coefficient": "16505019561049/35914414314240000",
+      "A": "3/8200",
+      "B": "9/143500"
+    },
+    {
+      "screen": 442,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "8798672670793/35914414314240000",
+      "A": "3/28700",
+      "B": "3/28700"
+    },
+    {
+      "screen": 443,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "42032222751503/293845208025600000",
+      "A": "3/820",
+      "B": "9/14350"
+    },
+    {
+      "screen": 444,
+      "central_multiplier": "729/82",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "62726942946721/316046845965312000",
+      "A": "9/71750",
+      "B": "9/71750"
+    },
+    {
+      "screen": 445,
+      "central_multiplier": "729/82",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "3290918524656733/28444216136878080000",
+      "A": "9/2050",
+      "B": "27/35875"
+    },
+    {
+      "screen": 446,
+      "central_multiplier": "729/82",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "1743378844487437/28444216136878080000",
+      "A": "9/7175",
+      "B": "9/7175"
+    },
+    {
+      "screen": 447,
+      "central_multiplier": "729/82",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "100991859562801177/2559979452319027200000",
+      "A": "9/205",
+      "B": "54/7175"
+    },
+    {
+      "screen": 448,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1,
+      "remaining_coefficient": "81176129/603741600",
+      "A": "1/27552000",
+      "B": "1/27552000"
+    },
+    {
+      "screen": 449,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1,
+      "remaining_coefficient": "446301409/11643588000",
+      "A": "1/787200",
+      "B": "1/4592000"
+    },
+    {
+      "screen": 450,
+      "central_multiplier": "729/82",
+      "other_root_factor": 10,
+      "remaining_coefficient": "188777443/9056124000",
+      "A": "1/2755200",
+      "B": "1/2755200"
+    },
+    {
+      "screen": 451,
+      "central_multiplier": "729/82",
+      "other_root_factor": 10,
+      "remaining_coefficient": "30301878401/3667730220000",
+      "A": "1/78720",
+      "B": "1/459200"
+    },
+    {
+      "screen": 452,
+      "central_multiplier": "729/82",
+      "other_root_factor": 12,
+      "remaining_coefficient": "190174993/11206953450",
+      "A": "1/2296000",
+      "B": "1/2296000"
+    },
+    {
+      "screen": 453,
+      "central_multiplier": "729/82",
+      "other_root_factor": 12,
+      "remaining_coefficient": "108147686239/16138012968000",
+      "A": "1/65600",
+      "B": "3/1148000"
+    },
+    {
+      "screen": 454,
+      "central_multiplier": "729/82",
+      "other_root_factor": 120,
+      "remaining_coefficient": "57985575607/16138012968000",
+      "A": "1/229600",
+      "B": "1/229600"
+    },
+    {
+      "screen": 455,
+      "central_multiplier": "729/82",
+      "other_root_factor": 120,
+      "remaining_coefficient": "2762489042737/1452421167120000",
+      "A": "1/6560",
+      "B": "3/114800"
+    },
+    {
+      "screen": 456,
+      "central_multiplier": "729/82",
+      "other_root_factor": 16,
+      "remaining_coefficient": "597366193/48299328000",
+      "A": "1/1722000",
+      "B": "1/1722000"
+    },
+    {
+      "screen": 457,
+      "central_multiplier": "729/82",
+      "other_root_factor": 16,
+      "remaining_coefficient": "27177407123/5588922240000",
+      "A": "1/49200",
+      "B": "1/287000"
+    },
+    {
+      "screen": 458,
+      "central_multiplier": "729/82",
+      "other_root_factor": 160,
+      "remaining_coefficient": "34006267111/13040818560000",
+      "A": "1/172200",
+      "B": "1/172200"
+    },
+    {
+      "screen": 459,
+      "central_multiplier": "729/82",
+      "other_root_factor": 160,
+      "remaining_coefficient": "4846024980353/3521021011200000",
+      "A": "1/4920",
+      "B": "1/28700"
+    },
+    {
+      "screen": 460,
+      "central_multiplier": "729/82",
+      "other_root_factor": 192,
+      "remaining_coefficient": "728362099469/344277609984000",
+      "A": "1/143500",
+      "B": "1/143500"
+    },
+    {
+      "screen": 461,
+      "central_multiplier": "729/82",
+      "other_root_factor": 192,
+      "remaining_coefficient": "34514810380697/30984984898560000",
+      "A": "1/4100",
+      "B": "3/71750"
+    },
+    {
+      "screen": 462,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "18334209262217/30984984898560000",
+      "A": "1/14350",
+      "B": "1/14350"
+    },
+    {
+      "screen": 463,
+      "central_multiplier": "729/82",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1019233988126117/2788648640870400000",
+      "A": "1/410",
+      "B": "3/7175"
+    },
+    {
+      "screen": 464,
+      "central_multiplier": "729/82",
+      "other_root_factor": 18,
+      "remaining_coefficient": "27162951727/2494056549600",
+      "A": "3/4592000",
+      "B": "3/4592000"
+    },
+    {
+      "screen": 465,
+      "central_multiplier": "729/82",
+      "other_root_factor": 18,
+      "remaining_coefficient": "68555149499/16033220676000",
+      "A": "3/131200",
+      "B": "9/2296000"
+    },
+    {
+      "screen": 466,
+      "central_multiplier": "729/82",
+      "other_root_factor": 180,
+      "remaining_coefficient": "51471381853/22446508946400",
+      "A": "3/459200",
+      "B": "3/459200"
+    },
+    {
+      "screen": 467,
+      "central_multiplier": "729/82",
+      "other_root_factor": 180,
+      "remaining_coefficient": "152661645667/126261612823500",
+      "A": "3/13120",
+      "B": "9/229600"
+    },
+    {
+      "screen": 468,
+      "central_multiplier": "729/82",
+      "other_root_factor": 216,
+      "remaining_coefficient": "918710555611/493823196820800",
+      "A": "9/1148000",
+      "B": "9/1148000"
+    },
+    {
+      "screen": 469,
+      "central_multiplier": "729/82",
+      "other_root_factor": 216,
+      "remaining_coefficient": "43492320569773/44444087713872000",
+      "A": "9/32800",
+      "B": "27/574000"
+    },
+    {
+      "screen": 470,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "4620736360649/8888817542774400",
+      "A": "9/114800",
+      "B": "9/114800"
+    },
+    {
+      "screen": 471,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "256766871354593/799993578849696000",
+      "A": "9/3280",
+      "B": "27/57400"
+    },
+    {
+      "screen": 472,
+      "central_multiplier": "729/82",
+      "other_root_factor": 288,
+      "remaining_coefficient": "1616534435489/1197147143808000",
+      "A": "3/287000",
+      "B": "3/287000"
+    },
+    {
+      "screen": 473,
+      "central_multiplier": "729/82",
+      "other_root_factor": 288,
+      "remaining_coefficient": "10899889395611/15391891848960000",
+      "A": "3/8200",
+      "B": "9/143500"
+    },
+    {
+      "screen": 474,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "8106909111241/21548648588544000",
+      "A": "3/28700",
+      "B": "3/28700"
+    },
+    {
+      "screen": 475,
+      "central_multiplier": "729/82",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "449902706194597/1939378372968960000",
+      "A": "3/820",
+      "B": "9/14350"
+    },
+    {
+      "screen": 476,
+      "central_multiplier": "729/82",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "288731226589733/948140537895936000",
+      "A": "9/71750",
+      "B": "9/71750"
+    },
+    {
+      "screen": 477,
+      "central_multiplier": "729/82",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "16006329836693969/85332648410634240000",
+      "A": "9/2050",
+      "B": "27/35875"
+    },
+    {
+      "screen": 478,
+      "central_multiplier": "729/82",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "1693571868199693/17066529682126848000",
+      "A": "9/7175",
+      "B": "9/7175"
+    },
+    {
+      "screen": 479,
+      "central_multiplier": "729/82",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "20019066797924357/307197534278283264000",
+      "A": "9/205",
+      "B": "54/7175"
+    },
+    {
+      "screen": 480,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 1,
+      "remaining_coefficient": "265211047/108673488000",
+      "A": "1/1836800",
+      "B": "1/1836800"
+    },
+    {
+      "screen": 481,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 1,
+      "remaining_coefficient": "1261810331/1630102320000",
+      "A": "1/52480",
+      "B": "3/918400"
+    },
+    {
+      "screen": 482,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 10,
+      "remaining_coefficient": "2048087813/4890306960000",
+      "A": "1/183680",
+      "B": "1/183680"
+    },
+    {
+      "screen": 483,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 10,
+      "remaining_coefficient": "6824858099/36677302200000",
+      "A": "1/5248",
+      "B": "3/91840"
+    },
+    {
+      "screen": 484,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 12,
+      "remaining_coefficient": "2442310687/7172450208000",
+      "A": "3/459200",
+      "B": "3/459200"
+    },
+    {
+      "screen": 485,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 12,
+      "remaining_coefficient": "97338880621/645520518720000",
+      "A": "3/13120",
+      "B": "9/229600"
+    },
+    {
+      "screen": 486,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 120,
+      "remaining_coefficient": "51980683597/645520518720000",
+      "A": "3/45920",
+      "B": "3/45920"
+    },
+    {
+      "screen": 487,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 120,
+      "remaining_coefficient": "2654400986557/58096846684800000",
+      "A": "3/1312",
+      "B": "9/22960"
+    },
+    {
+      "screen": 488,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 16,
+      "remaining_coefficient": "12926278139/52163274240000",
+      "A": "1/114800",
+      "B": "1/114800"
+    },
+    {
+      "screen": 489,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 16,
+      "remaining_coefficient": "171026195429/1564898227200000",
+      "A": "1/3280",
+      "B": "3/57400"
+    },
+    {
+      "screen": 490,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 160,
+      "remaining_coefficient": "274030313279/4694694681600000",
+      "A": "1/11480",
+      "B": "1/11480"
+    },
+    {
+      "screen": 491,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 160,
+      "remaining_coefficient": "4653868436033/140840840448000000",
+      "A": "1/328",
+      "B": "3/5740"
+    },
+    {
+      "screen": 492,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 192,
+      "remaining_coefficient": "651499481741/13771104399360000",
+      "A": "3/28700",
+      "B": "3/28700"
+    },
+    {
+      "screen": 493,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 192,
+      "remaining_coefficient": "3011934841963/112672672358400000",
+      "A": "3/820",
+      "B": "9/14350"
+    },
+    {
+      "screen": 494,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "17565583084937/1239399395942400000",
+      "A": "3/2870",
+      "B": "3/2870"
+    },
+    {
+      "screen": 495,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 1920,
+      "remaining_coefficient": "1005398716935077/111545945634816000000",
+      "A": "3/82",
+      "B": "9/1435"
+    },
+    {
+      "screen": 496,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 18,
+      "remaining_coefficient": "10879274459/49881130992000",
+      "A": "9/918400",
+      "B": "9/918400"
+    },
+    {
+      "screen": 497,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 18,
+      "remaining_coefficient": "107811605303/1122325447320000",
+      "A": "9/26240",
+      "B": "27/459200"
+    },
+    {
+      "screen": 498,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 180,
+      "remaining_coefficient": "11516744761/224465089464000",
+      "A": "9/91840",
+      "B": "9/91840"
+    },
+    {
+      "screen": 499,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 180,
+      "remaining_coefficient": "234530708011/8080743220704000",
+      "A": "9/2624",
+      "B": "27/45920"
+    },
+    {
+      "screen": 500,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 216,
+      "remaining_coefficient": "821431305049/19752927872832000",
+      "A": "27/229600",
+      "B": "27/229600"
+    },
+    {
+      "screen": 501,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 216,
+      "remaining_coefficient": "41741294059657/1777763508554880000",
+      "A": "27/6560",
+      "B": "81/114800"
+    },
+    {
+      "screen": 502,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "177047114381/14222108068439040",
+      "A": "27/22960",
+      "B": "27/22960"
+    },
+    {
+      "screen": 503,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 2160,
+      "remaining_coefficient": "253264818334361/31999743153987840000",
+      "A": "27/656",
+      "B": "81/11480"
+    },
+    {
+      "screen": 504,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 288,
+      "remaining_coefficient": "1443593545601/47885885752320000",
+      "A": "9/57400",
+      "B": "9/57400"
+    },
+    {
+      "screen": 505,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 288,
+      "remaining_coefficient": "73186289751293/4309729717708800000",
+      "A": "9/1640",
+      "B": "27/28700"
+    },
+    {
+      "screen": 506,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "1552205466293/172389188708352000",
+      "A": "9/5740",
+      "B": "9/5740"
+    },
+    {
+      "screen": 507,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 2880,
+      "remaining_coefficient": "443676834158629/77575134918758400000",
+      "A": "9/164",
+      "B": "27/2870"
+    },
+    {
+      "screen": 508,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "25116316592527/3447783774167040000",
+      "A": "27/14350",
+      "B": "27/14350"
+    },
+    {
+      "screen": 509,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 3456,
+      "remaining_coefficient": "15782198443399121/3413305936425369600000",
+      "A": "27/410",
+      "B": "81/7175"
+    },
+    {
+      "screen": 510,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "1668668380055821/682661187285073920000",
+      "A": "27/1435",
+      "B": "27/1435"
+    },
+    {
+      "screen": 511,
+      "central_multiplier": "10935/82",
+      "other_root_factor": 34560,
+      "remaining_coefficient": "9058824654821099/5585409714150604800000",
+      "A": "27/41",
+      "B": "162/1435"
+    }
+  ]
+}

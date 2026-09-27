@@ -1,0 +1,39 @@
+### 305.4 可预测请求与随机时长收费
+
+保留种子、实际来源请求、完整联合返回、停止及截断标志。记第 \(i\) 次可能曝光真正被该截断请求的指标为 \(J_i\)。请求前的过去记为 \(\mathcal F_{i-1}\)，包含已选择动作、剩余分析步骤、全部已完成记录和累计钟。则
+$$
+J_i\in\mathcal F_{i-1},\qquad i\le R.
+\tag{305.8}
+$$
+这正是不能按本次尚未看到的随机时长删样本的原因。
+
+共同控制核不贡献 KL。有限链式公式给
+$$
+\begin{aligned}
+D(P_h^{b,R}\Vert Q^{b,R})
+&=\mathbb E_h\sum_{i=1}^R
+J_i\,d_{A_i}(h,\mathcal H_{i-1})\\
+&\le I(h)\mathbb E_h\sum_{i=1}^R
+J_i\,c_{A_i}(h,\mathcal H_{i-1}).
+\end{aligned}
+\tag{305.9}
+$$
+用（305.8）逐项条件化：
+$$
+\begin{aligned}
+\mathbb E_h[J_i\tau_i]
+&=\mathbb E_h\!\left[
+J_i\,\mathbb E_h(\tau_i\mid\mathcal F_{i-1})\right]\\
+&=\mathbb E_h[J_i c_{A_i}(h,\mathcal H_{i-1})].
+\end{aligned}
+$$
+有限求和于是给出
+$$
+\boxed{
+D(P_h^{b,R}\Vert Q^{b,R})
+\le I(h)\mathbb E_hT_{b,R}
+\le I(h)\min\{\mathbb E_hT,\ b+\tau_{\max}\}.}
+\tag{305.10}
+$$
+这里不要求时长与同次读数独立，也不要求时长在给定动作后为确定量；只需要完整联合核和请求的可预测性。没有将无界停时任意代入 Wald 等式，也没有先把随机停止次数替换成其均值。
+

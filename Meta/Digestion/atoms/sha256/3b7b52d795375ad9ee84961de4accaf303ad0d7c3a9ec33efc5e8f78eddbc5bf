@@ -1,0 +1,20 @@
+### 21.2 定理：实际 bit 记录决定全部切点测试
+
+对任意 $x,y\in[0,1)$ 和 $n\geq0$，
+\[
+\boxed{O_n(x)=O_n(y)
+\iff \forall k<n,\ (c_k\leq x\iff c_k\leq y).}
+\tag{21.2}
+\]
+
+**证明。** 窗口读出与实际取整增量相等：
+\[
+s_k(x)=\lfloor x+(k+1)\alpha\rfloor-\lfloor x+k\alpha\rfloor\in\{0,1\}.
+\]
+从 $\lfloor x\rfloor=0$ 起累加这些 bit，得到每一个 $\lfloor x+k\alpha\rfloor$，$0\leq k\leq n$。反之，相邻两个这样的整数之差恢复每一位读出。已有进位恒等式给出
+\[
+\lfloor x+(k+1)\alpha\rfloor
+=\lfloor(k+1)\alpha\rfloor+\mathbf1_{\{c_k\leq x\}}.
+\]
+因此全部累计整数相等，当且仅当全部切点测试相等，即得式 (21.2)。这一步没有把累计计数、柱集几何或切点测试与实际读出的等价性放入假设。
+

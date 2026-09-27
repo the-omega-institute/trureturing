@@ -1,0 +1,66 @@
+### 279.1 固定来源与输出的完整数据合同
+
+固定 $k\ge1$。每份来源的输入 $H$ 与参考 $E$ 都是qubit；输入使用固定 $Y$ 本征基 $\{|+\rangle,|-\rangle\}$，参考使用 $\{e_1,e_2\}$。记
+$$
+J_2e_1=0,\qquad J_2e_2=e_1,\qquad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\qquad t=\frac14,
+$$
+$$
+Q=\frac12I_2-\frac t4X
+=\begin{pmatrix}1/2&-1/16\\-1/16&1/2\end{pmatrix},
+\qquad M=I_2+tJ_2.
+\tag{279.1}
+$$
+于是
+$$
+Q\succ0,\qquad M^\dagger QM=I_2-Q,\qquad
+\operatorname{Tr}Q=\operatorname{Tr}(I_2-Q)=1.
+\tag{279.2}
+$$
+$Q$ 的两个本征值为
+$$
+\lambda_+=\frac9{16},\qquad
+\lambda_-=\frac7{16}.
+\tag{279.3}
+$$
+沿用图记号
+$$
+T(A,B)=
+\begin{pmatrix}A&AB\\B^\dagger A&B^\dagger AB\end{pmatrix},
+\qquad
+\Omega_2=\frac12T(Q,M).
+\tag{279.4}
+$$
+实际批次由 $k$ 份独立同分布来源 $\Omega_2^{\otimes k}$ 组成。以下固定重排
+$$
+(H\otimes E)^{\otimes k}\cong H^{\otimes k}\otimes E^{\otimes k}.
+$$
+
+对于任意输出参考空间 $F$ 上的正定图参数 $A\succ0,B$，令
+$$
+c=\operatorname{Tr}(A+B^\dagger AB),\qquad
+\Omega=\frac{T(A,B)}c,
+$$
+$$
+\rho=\operatorname{Tr}_H\Omega=\frac{A+B^\dagger AB}c,
+\qquad
+K=\mathscr K(\Omega)=\frac{2AB}c,
+\qquad
+\mathscr K(Y)=2Y_{+-}.
+\tag{279.5}
+$$
+在整个 $H\otimes F$ 上，对任意密度态 $\Xi$ 使用
+$$
+\varepsilon_\Omega(\Xi)
+=\|\operatorname{Tr}_H\Xi-\rho\|_1+
+\|\mathscr K(\Xi)-K\|_1.
+\tag{279.6}
+$$
+迹范数未除以二。后文的深度和锐指数均指这一原始完整数据合同，其仿射方向是
+$$
+L_F=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{279.7}
+$$
+定理274.3已经证明：若 $B$ 为unipotent，最大Jordan链长为 $r$，则完整数据纤维为单点，标准奇异度 $d_S=r$；对全部密度态竞争者存在局部恢复上界 $C\varepsilon^{1/(2r)}$，任何更大的指数都不成立，且失败见证可取精确同参考边缘。这里的常数允许依赖固定输出来源。
+

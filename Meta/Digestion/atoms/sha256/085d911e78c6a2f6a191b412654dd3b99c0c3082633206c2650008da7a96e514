@@ -1,0 +1,16 @@
+### 301.7 两种单流倾斜的事件距离与计数差
+
+对 $0\le s<d$，任务流倾斜恒等式为
+$$
+\mathbb E\!\left[
+\frac{(I)_s}{(K)_s}|I-J|\mathbf1_F(I,J)\right]
+=p_x^s
+\mathbb E\!\left[
+|I_s-J|\mathbf1_F(I_s,J)\right],
+\tag{301.30}
+$$
+$$
+I_s=s+\mathrm{Bin}(K-s,p_x),
+$$
+其中 $I_s,J$ 独立。参考流有对称式，$J_s=s+\mathrm{Bin}(K-s,p_y)$，且与 $I$ 独立。$s=0$ 包含在恒等式中；若某个 $p=0,s>0$，该项的权重为零，恒等式仍有效。
+

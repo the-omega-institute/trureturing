@@ -1,0 +1,6 @@
+**定义 529.1（数学前置与新增综合）。** 经典 Doeblin 系数、共同相等的最大耦合及擦除通道的退化判据，依 Makur 与 Singh 的 arXiv:2309.08475v2，Definition 1、Theorem 2、Lemma 1 引用，作为本批构造中的前置。TV 的凸性、数据处理、三角不等式与共同质量恒等式也作为已有数学使用，没有另立成新创通用定理。
+
+项目前置包括 TotalVariation 的 Convexity、DataProcessing，SequentialDecisionRisk 的 FiniteDeficiencyRiskTransfer，Quotients 的 AnswerabilityCriterion，以及 Faithfulness 的 JointFaithfulnessLeibnizCriterion。它们分别承接对称平均、合法输出后处理、风险差下界、摘要纤维与回答能力，以及多个读数的联合区分条件。具体使用处已给出源码链接与参数对应；读取这些源码不等于对本批取得 Lean 内核或公理闭包核验。
+
+本批的新增综合是：把第 504 节的完整子集族推进到全部边缘预算，给出决策下界与同一合法生成器的达到方式；构造相同容量、半径、覆盖数及距离摘要却有不同预算曲线的两族；用全支撑等距三点族分离距离数据、共同容量、半径及精确可行性；再将这些构造接入回答能力判据，并给出全支撑共同质量带来的定量比例改进。这些是本卷中的普通数学推导，不申报外部数学原创性。
+

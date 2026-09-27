@@ -1,0 +1,67 @@
+### 252.6 固定三维参考中的平方根锐性
+
+固定任意 $\theta\in(0,1)$ 与当前 $A,B,b_0$。令参考为
+$$
+E=\operatorname{span}\{|0\rangle_E,|1\rangle_E\}
+\oplus\operatorname{span}\{|2\rangle_E\},
+\qquad
+|\Phi\rangle=\frac{|0\rangle_H|0\rangle_E+|1\rangle_H|1\rangle_E}{\sqrt2}.
+\tag{252.33}
+$$
+输入 $|0\rangle_H$ 是 $Z$ 的正本征态。取固定饱和源
+$$
+\Omega=\theta P_\Phi+(1-\theta)P_{0_H}\otimes P_{2_E}.
+\tag{252.34}
+$$
+对 $0<s<1$，定义合法竞争态
+$$
+|\psi_s\rangle=\sqrt{1-s^2}|0\rangle_H+is|1\rangle_H,
+\qquad
+\Xi_s=\theta P_\Phi+(1-\theta)P_{\psi_s}\otimes P_{2_E}.
+\tag{252.35}
+$$
+两态在参考端具有相同边缘
+$$
+\operatorname{Tr}_H\Xi_s=\operatorname{Tr}_H\Omega
+=\operatorname{diag}\left(\frac\theta2,\frac\theta2,1-\theta\right).
+\tag{252.36}
+$$
+它们也具有相同形成纠缠 $E_F=\theta$。显式 Bell—产品分解给上界 $\theta$；参考端测量两个正交旗标后，以概率 $\theta$ 得到 Bell 态，其余为产品态。§248的平均形成纠缠单调性给反向下界 $\theta$。
+
+直接计算产品输入的读数，
+$$
+\langle\psi_s|X|\psi_s\rangle=0,
+\qquad
+\langle\psi_s|Z|\psi_s\rangle=1-2s^2.
+\tag{252.37}
+$$
+因此两条响应差均为
+$$
+\mathcal R_w(\Xi_s)-\mathcal R_w(\Omega)
+=-2(1-\theta)\sqrt A\,s^2P_{2_E},
+\qquad w=a,b,
+\tag{252.38}
+$$
+总误差为
+$$
+\varepsilon_s=4(1-\theta)\sqrt A\,s^2.
+\tag{252.39}
+$$
+联合态之差只在产品参考块中非零。由两份纯态的重叠平方 $|\langle0|\psi_s\rangle|^2=1-s^2$，
+$$
+\boxed{
+\|\Xi_s-\Omega\|_1
+=2(1-\theta)s
+=\sqrt{\frac{1-\theta}{\sqrt A}}\,\sqrt{\varepsilon_s}.
+}
+\tag{252.40}
+$$
+这给固定接口、固定理想源、固定参考边缘及固定形成纠缠下的精确平方根下界。因而任何声称对全部合法竞争态成立的统一 $o(\sqrt\varepsilon)$ 模量都失败，特别是统一 Lipschitz 界 $C\varepsilon$。
+
+对 $0<s<1$，$\Xi_s$ 的产品响应因子为 $|1-2s^2|<1$，所以它不再响应饱和。其未直接读取的 $Y$ 方向期望为
+$$
+\langle\psi_s|Y|\psi_s\rangle=2s\sqrt{1-s^2}.
+\tag{252.41}
+$$
+在 $s\to0$ 时，该相干关联一阶变化，而既定两份响应只二阶变化。这里限制的是固定 $A_a,A_b$ 接口的恢复尺度；若新增直接读取 $Y$ 的实验，数据合同随之改变。
+

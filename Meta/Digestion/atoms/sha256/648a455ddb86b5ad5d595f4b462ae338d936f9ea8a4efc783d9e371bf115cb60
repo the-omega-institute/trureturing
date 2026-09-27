@@ -1,0 +1,12 @@
+### 209.3 角点命题与局部完整参考函数
+
+引入独立角点变量
+
+$$
+\tau=\epsilon/\ell,\qquad
+F(\ell,\tau)=\mathscr E(\ell,\ell\tau).
+\tag{209.8}
+$$
+
+在 $\ell=0$ 时按右式定义 $F(0,\tau)=\mathscr E(0,0)=3/4$。
+

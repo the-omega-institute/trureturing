@@ -1,0 +1,48 @@
+**定理182.3（比第180节更低的完整恢复二阶上界）。** 当 $L\to\infty$ 时，
+
+$$
+\boxed{
+\begin{aligned}
+h_L(i)
+&\le\widetilde e_L(\widehat r_L,\widehat t_L,\widehat u_L)\\
+&=\frac34+\frac{\beta\Sigma w}{8}
++\frac{3\beta^2-4\gamma^2}{64}(\Delta w)^2
+-\frac{5\gamma^2}{144}(\Sigma w)^2
++O(w_1^3).
+\end{aligned}
+}
+\tag{182.21}
+$$
+
+而且，存在有限 $L_0$，使全部 $L\ge L_0$ 都有
+
+$$
+\boxed{
+\widetilde e_L(\widehat r_L,\widehat t_L,\widehat u_L)
+<e_L(\widehat r_L,\widehat t_L).
+}
+\tag{182.22}
+$$
+
+**证明。** 将（182.20）对应的
+$r_1=-\beta(R-1)/8$、$t_1=-\gamma(R-1)/2$、
+$u_1=\kappa\gamma(1+R)/2$ 代入（182.19）。第180节给
+$Q_{180}=(3\beta^2-4\gamma^2)(R-1)^2/64$，而
+$\kappa^2/16=5/144$，即得（182.21）。$R$ 具有统一正上下界，
+故一致的 $O(\epsilon^3)$ 可写为 $O(w_1^3)$。
+
+与第180节同一组 $\widehat r_L,\widehat t_L$ 的误差相减，得到
+
+$$
+e_L(\widehat r_L,\widehat t_L)
+-\widetilde e_L(\widehat r_L,\widehat t_L,\widehat u_L)
+=\frac{5\gamma^2}{144}(\Sigma w)^2+O(w_1^3).
+\tag{182.23}
+$$
+
+由于 $\Sigma w\ge w_1>0$、$w_1\to0$，余项相对
+$(\Sigma w)^2$ 趋零；首项系数严格为正。因此充分大的 $L$ 上严格改善。证毕。
+
+本式保留 $w_0,w_1$ 本身直到二阶，没有把 $R$ 提前替换成其极限 $4$；
+故没有将真实启动展开中的较低阶修正吞入错误的余项。
+

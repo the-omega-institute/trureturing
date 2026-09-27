@@ -1,0 +1,41 @@
+### 172.4 每个有限等差子序列具有相同的局部读出分布
+
+第159节已证明 $e^{i\theta}=(3+4i)/5$ 不是单位根。因此对任意
+$m\ge1$、$0\le r<m$，相位
+$2(r+mj)\theta$ 模 $2\pi$ 等分布。结合（172.9），得到
+
+$$
+\boxed{
+\liminf_{j\to\infty}D_{L,r+mj}=\kappa d_L,
+\qquad
+\limsup_{j\to\infty}D_{L,r+mj}=d_L.
+}
+\tag{172.12}
+$$
+
+相应猜测成功率的下、上极限分别为
+$(1+\kappa d_L)/2$ 与 $(1+d_L)/2$。
+
+还可以精确写出共同经验分布。令 $\nu_L^{\mathrm{bit}}$ 为
+$\mathfrak d_L(\varphi)$ 在均匀相位下的分布。则
+
+$$
+\frac1N\sum_{j=0}^{N-1}\delta_{D_{L,r+mj}}
+\ \Longrightarrow\ \nu_L^{\mathrm{bit}}.
+\tag{172.13}
+$$
+
+其分布函数为
+
+$$
+\nu_L^{\mathrm{bit}}((-\infty,x])=
+\begin{cases}
+0,&x<\kappa d_L,\\[2mm]
+\dfrac2\pi\arcsin
+\sqrt{\dfrac{x^2-\kappa^2d_L^2}{(1-\kappa^2)d_L^2}},
+&\kappa d_L\le x\le d_L,\\[3mm]
+1,&x>d_L.
+\end{cases}
+\tag{172.14}
+$$
+

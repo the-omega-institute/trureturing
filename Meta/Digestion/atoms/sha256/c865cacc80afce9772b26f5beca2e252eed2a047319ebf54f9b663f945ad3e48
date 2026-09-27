@@ -1,0 +1,15 @@
+**命题 6.1（有理实例，repo-derived）。** 取 $N=3,p=6$，
+$$
+\Phi=\begin{pmatrix}1&0&1&0&0&0\\0&1&0&1&0&0\\0&0&1&1&1&0\end{pmatrix},\qquad
+\theta^\star=\Phi^\top(1,-1,2)^\top=(1,-1,3,1,2,0)^\top,\qquad y=\Phi\theta^\star=(4,0,6)^\top,
+$$
+测试特征 $(0,1,0,0,0,1),(0,0,0,0,1,1),(1,0,0,1,0,0),(0,1,1,0,0,0)$ 及目标 $y_{\rm test}=\varphi^\top\theta^\star=(-1,2,2,2)$，初始化 $\theta(0)=(3,-2,5,4,-1,6)^\top$，$\lambda=1/20$。则 $\Phi\Phi^\top$ 的特征值为 $1,2,4$（$\sigma_N^2=1$），
+$$
+P^\perp\theta(0)=\big(-\tfrac14,-\tfrac94,\tfrac14,\tfrac94,-\tfrac52,6\big)^\top,\qquad
+b=\big(\tfrac{15}4,\tfrac72,2,-2\big),\qquad
+a=\Big(\tfrac{3341}{69741},-\tfrac{82}{1701},-\tfrac{2}{1701},-\tfrac{2}{1701}\Big),
+$$
+$\langle a,b\rangle=\tfrac{3047}{278964}>0$，$\|b\|^2=\tfrac{549}{16}$，平台值 $L_\infty=\tfrac{11580382}{1621269027}\approx7.1428\times10^{-3}$。逃逸读数的进入时刻为 $T_\varepsilon(x)=20\log(|b(x)|/\varepsilon)$（当 $|b(x)|>\varepsilon$）、否则为 $0$，把 $P^\perp\theta(0)$ 放大四倍后每个 $T_\varepsilon(x)>0$ 恰增加 $20\log4\approx27.726$；归约超出量的对数斜率落在 $[-0.1,-0.05]$。
+
+证明。$\Phi\Phi^\top=\begin{pmatrix}2&0&1\\0&2&1\\1&1&3\end{pmatrix}$ 的特征多项式为 $(t-1)(t-2)(t-4)$。$P^\perp\theta(0)$、$\theta_\lambda=\Phi^\top(\Phi\Phi^\top+\tfrac1{20}I)^{-1}y$、$a$、$b$ 与 $L_\infty$ 都是有理算术，逐项按约定 1.2 与评注 3.2 所记的岭残差计算即得；后两句是评注 3.2 所记的进入时刻与对数斜率在 $\langle a,b\rangle>0$、$b\ne0$ 下的直接代入。证毕。
+

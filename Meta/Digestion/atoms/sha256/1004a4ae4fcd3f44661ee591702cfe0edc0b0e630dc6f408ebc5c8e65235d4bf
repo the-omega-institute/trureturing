@@ -1,0 +1,15 @@
+### 172.5 最近常值通道的精确半径
+
+对任意逻辑状态 $\sigma$，记
+$\mathcal C_\sigma(X)=\operatorname{Tr}(X)\sigma$。由第171节，$\Theta_L$
+已经先测原输入计算基，所以
+
+$$
+d_\diamond(\Theta_L,\mathcal C_\sigma)
+=\max_{j=0,1}D(\tau_j,\sigma).
+\tag{172.15}
+$$
+
+上界对任意参考输入的两个正对角参考块使用三角不等式得到；分别输入
+$P_j$ 达到对应下界。这是完整半 diamond 距离的等式。
+

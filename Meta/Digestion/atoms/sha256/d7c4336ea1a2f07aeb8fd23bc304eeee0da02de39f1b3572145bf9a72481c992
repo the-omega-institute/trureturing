@@ -1,0 +1,18 @@
+**约定 26.1（来源、支撑与输出类型）。** 沿用第 18—19 节的固定有限维仪器：未点击分支为 $\mathcal N$，点击分支为 $\mathcal C_x$，$\mathcal A=\mathcal N^*$，$B_x=\mathcal C_x^*(I)$。置
+
+$$
+F=\lim_{n\to\infty}\mathcal A^n(I),\qquad
+R=I-F\ne0,\qquad
+\mathcal D=\ker R,\qquad P=P_{\mathcal D^\perp},
+\qquad\mathcal H_P=P\mathcal H.
+$$
+
+记 $G=R^{1/2}$；$G^{-1}$ 始终指 $\mathcal H_P$ 上的逆，嵌入原空间时在 $\mathcal D$ 上补零。符号 $I_P$ 表示 $\mathcal H_P$ 的恒等。对 $r_\rho=\operatorname{Tr}(\rho R)>0$ 定义
+
+$$
+\mathcal S_R(X)=GXG,\qquad
+\tau_R(\rho)=\frac{\mathcal S_R(\rho)}{r_\rho}.
+$$
+
+新未点击分支的输入、输出都是 $\mathcal H_P$，新点击分支的输入为 $\mathcal H_P$、输出仍为原来的 $\mathcal H$。将不同结果放入正交标志直和，就得到通常意义下具有共同输出空间的仪器。这里保留点击后的量子系统，不只保存点击概率。
+

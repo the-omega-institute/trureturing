@@ -1,0 +1,12 @@
+**命题 29.4（稀有程度与条件敏感度可以分离）。** 对正数 $a$，只要 $aR\le I$，便有
+
+$$
+\tau_{aR}=\tau_R,\qquad
+\kappa_{aR}=\kappa_R,
+\qquad p_{\mathrm{opt}}(aR)=p_{\mathrm{opt}}(R),
+$$
+
+而原始过滤成功概率满足 $\operatorname{Tr}(\rho aR)=a\operatorname{Tr}(\rho R)$。
+
+证明。归一化分子、分母同时乘 $a$；最小和最大正本征值也同时乘 $a$，所以比值不变。最后一式由迹的线性性。此命题首先是效果过滤的结论：把 $R$ 缩放后若仍要求它来自某套首次点击仪器，还须另给该仪器；第 30.3 条提供一族实际实现。$\square$
+

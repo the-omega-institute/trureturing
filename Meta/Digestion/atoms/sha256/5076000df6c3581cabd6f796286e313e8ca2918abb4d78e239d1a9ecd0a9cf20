@@ -1,0 +1,14 @@
+### 56.10 已有结果的归属与适用边界
+
+第24.8、24.10节已给连续高位恢复与动态行为商，第55节已给实际传感器上的条件二元桥、精确读取数和有限控制实现。第55节引用的五个 Lean 模块，在固定版本 `ffec542f612d6e8858eb4b08715aed884285a2b0` 下仍各按自己的假设使用：`DynamicClosureMinimality.dynamic_closure_is_least` 管干预闭合的最小细化；`WorstCaseDepthInformationLowerBound` 的叶计数管给定分支数的历史深度；`PassiveAdaptiveTranscriptUpperBound` 管被动记录通过完整联合读数因子化；`AdaptiveResidueIdentification` 的四状态可选模传感器与 `PrimePowerNonadaptiveResolution` 的截断赋值端口都不等于本节的固定高位端口。这些归属不提供额外等待态或驻定取得容量公式。
+
+普通的单射输出基数下界可直接归于同一固定版本的 [FiniteIdentificationCapacityBound](https://github.com/the-omega-institute/trureturing/blob/ffec542f612d6e8858eb4b08715aed884285a2b0/D5/S3/ConceptDynamics/Experiment/FiniteIdentificationCapacityBound.lean) 中 `finite_identification_capacity_bound`：其 `Cap` 是依赖联合读数积的基数，`cost_form`、`cardinal_bound_iff_cost_bound` 处理相应二进制对数。`FiniteIdentificationOutputCapacity.finite_identification_output_capacity` 另以实际输出值域的乘积给界。它们支持一般输出容量的解释，不替代（56.4）的槽图关联、奇环亏损或（56.15）的等待尾链费用。
+
+可比较的原始文献也需保留解码器与费用合同。Petra van den Bos、Frits Vaandrager 的 [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2，第10—12页，定义12、13、17、例18、引理19](https://arxiv.org/pdf/1907.11034v2) 允许 DAG 测试，以到终点的最大可观察迹区别状态；例18的 $a.(x.0+y.0)$ 即使汇入同一终点零，也可用不同迹 $ax,ay$ 区别，引理19的构造亦只用一个叶。这种外部迹解码不蕴涵本节“终止控制态单独输出初态”的 $M$ 标签成本。
+
+Markus Theo Frohme 的 [*Active Automata Learning with Adaptive Distinguishing Sequences*, arXiv:1902.01139v1，§6.1，PDF第56页／印刷第50页](https://arxiv.org/pdf/1902.01139v1) 的最小长度目标使用 $1+\max$ 子费用，最小大小目标对孩子费用求和并计 symbol nodes，单点费用为零。它优化明确的符号树，不计这里所有驻定终止标签、正等待中间态及图共享；其树费用不能直接给（56.6）或（56.11）。
+
+Ran Raz 的 [*Fast Learning Requires Good Memory: A Time-Space Lower Bound for Parity Learning*, arXiv:1602.05161v1，第4、10—11、19页，定义5.1、定理2](https://arxiv.org/pdf/1602.05161v1) 接收均匀随机奇偶样本，定义5.1把顶点排成 $m+1$ 层并限制每层宽度，边进入下一层。定理2在长度至多 $2^{\alpha n}$、宽度至多 $2^{cn^2}$、$c<1/20$ 及输出仿射子空间维数至多 $3n/5$ 的合同下给分布性成功率界。其随机样本、分层宽度和位记忆假设不能替换本题的主动加一、全部初态精确成功与总驻定状态数。这里没有调用 DEVS 编辑草稿或未取得原文的 Lee–Yannakakis 结果。
+
+本节的容量式由上述参数一致的普通数学证明承担；有限总表核对只能检验构造的具体实现，不能证明最小性。结论不带新增 Lean/kernel 核验或原创性主张。已解决的是全部整数基的 $C_A$、读取最优的二幂族 $C_B$ 及所列小参数；一般非二幂 $P\ge4$ 的精确 $C_B$ 在本节保留为开放问题，已有的是（56.20）的界和（56.23）的忠实全类刻画。路径步数最优、物理时延及完整 p 进初态识别也不在这些容量式内。这里的有限商取得结果不完成长期的关系表示与互相恢复目标。
+

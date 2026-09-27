@@ -1,0 +1,32 @@
+**引理182.1（旗标平均后的正确块）。** 令
+$f_j=\langle\Xi|\widetilde\sigma_{jj}|\Xi\rangle$。有一致展开
+
+$$
+\boxed{
+\widetilde\sigma_{jj}
+=\frac12P_\Xi+
+\epsilon\left[
+a_jP_\Xi+\frac{\beta c_j}{2}(P_\psi-P_\Xi)
+\right]+O(\epsilon^2)
+}
+\tag{182.10}
+$$
+
+以及
+
+$$
+\boxed{
+\begin{aligned}
+f_j={}&\frac12+
+\left(a_j-\frac{\beta c_j}{2}\right)\epsilon\\
+&+\left[
+-\beta c_ja_j-\frac{b_j^2}{2}-\frac{u_1^2}{2}
++\kappa u_1b_j+\gamma c_jb_j
++\kappa\gamma c_ju_1
+\right]\epsilon^2
++O(\epsilon^3).
+\end{aligned}
+}
+\tag{182.11}
+$$
+

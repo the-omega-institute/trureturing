@@ -1,0 +1,87 @@
+### 301.3 几何阈值与统一整数基线
+
+仍取
+$$
+\eta=\frac{\log(l/k^2)}\kappa,\quad
+\bar\eta=\min(\eta,1/2),\quad
+D=3-\bar\eta/2,\quad
+L(c)=1+\frac{\log c}{D\kappa}.
+$$
+于是
+$$
+11/4\le D<3,\quad L(r)\le1,\quad L(kr)>0,
+$$
+$$
+L(r)-L(kr)\ge1/3+\bar\eta/18,\qquad
+1+\log(1/\bar\eta)\asymp1+\log(\kappa/g).
+\tag{301.8}
+$$
+这些关系与增益无关。
+
+令
+$$
+c_0=e^{-3\kappa_0},\quad \gamma=c_0/16,
+$$
+$$
+t_0=k^{43/16},\quad v_-=k^{21/8},\quad
+v=k^{5/2},\quad u=k^{1/2},\quad u_+=k^{1/4}.
+$$
+需要的所有阈值差
+$$
+t_0-k^{11/4},\ v_--t_0,\ v-v_-,\ k^2-v,\ u-k,\ u_+-u,\ 1-u_+
+$$
+都至少为 $\gamma\kappa$。$k^D\le k^{11/4}$。
+
+现在让低经验坐标截断随增益下界缩小：
+$$
+a_0(h_0)=c_0h_0/4.
+\tag{301.9}
+$$
+选一个固定
+$$
+0<\alpha\le
+\min\left\{\frac1{8\kappa_0},
+\frac{c_0}{32C_\star\kappa_0}\right\},
+\qquad
+d=\lfloor\alpha h_0\kappa K\rfloor.
+\tag{301.10}
+$$
+所以 $d\le K/8$。这里阶数含有 $h_0$，以保留趋零的远阈值距离。
+
+取固定 $K_\star$ 足够大，使
+$$
+K_\star\ge\max\{8C_\star/c_0,\ 6C_\star/\gamma\}.
+\tag{301.11}
+$$
+若 $K\ge K_\star/h_0$，则
+$$
+\varepsilon:=C/K\le a_0(h_0)/2,\qquad
+\varepsilon\le\gamma h_0/6.
+\tag{301.12}
+$$
+上界部分记
+$$
+t=\frac{K h_0^2\kappa^2}{w_0}.
+$$
+有
+$$
+w_0\ge h_0\kappa,\qquad
+w_0\ge\kappa,
+\tag{301.13}
+$$
+其中第二式来自
+$$
+w_0-\kappa=(C-1)+(1-h_0)(1-\kappa)\ge0.
+$$
+因此
+$$
+Kh_0\kappa=\frac{tw_0}{h_0\kappa}\ge t,\qquad
+Kh_0=\frac{tw_0}{h_0\kappa^2}\ge t/\kappa\ge t/\kappa_0.
+$$
+选固定
+$$
+A_0\ge\max\{1,2/\alpha,\kappa_0K_\star\}
+\tag{301.14}
+$$
+并要求 $t\ge A_0$，便同时保证 $d\ge1$、$d\le K/8$ 和 $K\ge K_\star/h_0$。所有整数/合法性条件由一个不依赖 $h_0$ 的基线常数满足。
+

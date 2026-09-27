@@ -1,0 +1,105 @@
+### 269.6 精确竞争族及其Schur补
+
+对 $h>0$，定义
+$$
+S_h=\operatorname{diag}(h^{n-1},h^{n-2},\ldots,1),
+\qquad
+D_h=hS_hCS_h,\qquad
+\delta_h=kh^{2n}.
+\tag{269.43}
+$$
+令
+$$
+T_h=
+\begin{pmatrix}
+Q+D_h&(1-\delta_h)QM\\
+(1-\delta_h)M^\dagger Q&I_n-Q-D_h
+\end{pmatrix},
+\qquad \Omega_h=\frac1nT_h.
+\tag{269.44}
+$$
+现在证明充分小的正 $h$ 使 $T_h$ 严格正。
+
+由于 $D_h\to0$ 且 $Q\succ0$，充分小的 $h$ 满足 $Q+D_h\succ0$。记
+$$
+V_h=(Q+D_h)^{-1}.
+\tag{269.45}
+$$
+$T_h$ 对左上块的Schur补为
+$$
+R_h=M^\dagger QM-D_h
+-(1-\delta_h)^2M^\dagger QV_hQM.
+\tag{269.46}
+$$
+利用精确恒等式
+$$
+Q-QV_hQ=D_h-D_hV_hD_h,
+\tag{269.47}
+$$
+得到
+$$
+\begin{aligned}
+R_h={}&M^\dagger D_hM-D_h
+-M^\dagger D_hV_hD_hM\\
+&+(2\delta_h-\delta_h^2)M^\dagger QV_hQM.
+\end{aligned}
+\tag{269.48}
+$$
+（269.47）来自把 $Q=(Q+D_h)-D_h$ 代入双侧乘积；不要求 $Q$ 与 $D_h$ 对易。
+
+为保留各坐标不同的尺度，定义
+$$
+H_h=hS_h,\qquad
+M_h=S_hMS_h^{-1}=I_n+thJ,
+$$
+$$
+A_h=h^{n-1}S_h^{-1}
+=\operatorname{diag}(1,h,\ldots,h^{n-1}).
+\tag{269.49}
+$$
+逐项同余缩放给精确等式
+$$
+\begin{aligned}
+H_h^{-1}R_hH_h^{-1}
+={}&t(J^\dagger C+CJ)+t^2hJ^\dagger CJ\\
+&-M_h^\dagger CS_hV_hS_hCM_h\\
+&+(2k-k^2h^{2n})
+A_hM^\dagger QV_hQMA_h.
+\end{aligned}
+\tag{269.50}
+$$
+其中第一行来自
+$h^{-1}(M_h^\dagger CM_h-C)$；最后一行使用
+$h^{n-1}S_h^{-1}=A_h$，所以数据扰动的 $h^{2n}$ 次数正好补偿所需双侧缩放。
+
+当 $h\downarrow0$，
+$$
+S_h\longrightarrow E_{nn},\qquad
+A_h\longrightarrow E_{11},\qquad
+V_h\longrightarrow Q^{-1},\qquad
+M_h\longrightarrow I_n.
+\tag{269.51}
+$$
+又因为 $Me_1=e_1$，将（269.2）夹在 $e_1$ 上得到
+$$
+Q_{11}=(M^\dagger QM)_{11}=\frac12.
+\tag{269.52}
+$$
+所以（269.50）的极限为
+$$
+t(J^\dagger C+CJ)-\beta CE_{nn}C+kE_{11}
+=R_0\succ0.
+\tag{269.53}
+$$
+在固定有限维空间中，严格正定集合是开集，而（269.50）在零点具有上述连续延拓。因此存在 $h_0>0$，使 $0<h\le h_0$ 时 $Q+D_h$ 与缩放Schur补均严格正。可再缩小 $h_0$，同时保证 $h_0\le1$、$\delta_h<1$。由于 $H_h$ 对每个 $h>0$ 都可逆，原Schur补也严格正，故
+$$
+\boxed{T_h\succ0\quad(0<h\le h_0).}
+\tag{269.54}
+$$
+
+这是精确缩放极限与严格正开集给出的存在性证明；没有把去掉高阶项后的近似正性冒作 $T_h$ 的正性。这里不要求一个最大的允许 $h$ 区间，也没有声称其常数最优。
+
+当 $n=1$ 时，$J=0$、$M=1$、$Q=1/2$，$u$ 为空，且
+$S_h=A_h=I_1=E_{11}$。此时 $\mu_0=t$、$s=t/4$、$k=t^2/4$，
+$R_0=t^2/8>0$，所以上述证明也覆盖这个端点。
+

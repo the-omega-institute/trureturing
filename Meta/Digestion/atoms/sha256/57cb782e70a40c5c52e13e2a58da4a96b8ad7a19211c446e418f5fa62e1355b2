@@ -1,0 +1,33 @@
+### 300.1 两源合同与统一预算
+
+第298节固定信号与增益下界，给出共同校准后的临界对数取得律；第299节允许信号和可达边界同时变化。本节在第298节的完整两源经典实验中，把读数背景也纳入同一估计，说明稀有点击与正背景之间怎样连续过渡。全部调用按原两源合同计费，风险始终使用同一个未知参数对。
+
+固定
+$$
+0<h_\star\le1,\qquad
+\kappa_0=-\log\sqrt{3/4},\qquad C_\star=1024/225.
+$$
+已知参数满足
+$$
+h_0\in[h_\star,1],\quad B\in\{2,4\},\quad C\in[1,C_\star],
+$$
+$$
+0<\kappa\le\kappa_0,\quad k=e^{-\kappa},\quad
+0<g\le k-k^2,\quad l=k^2+g.
+$$
+批次内未知 $r\in[l,1]$、$h\in[h_0,1]$ 固定，两假设共享同一 $(r,h)$，令 $c=k^jr$，$j\in\{0,1\}$。每次允许调用任务或参考来源：
+$$
+T:\ Y_T\sim\mathrm{Bernoulli}\!\left(\frac{1-hc/C}{B}\right),
+\qquad
+H:\ Y_H\sim\mathrm{Bernoulli}\!\left(\frac{1-h/C}{B}\right).
+$$
+条件于 $(j,r,h)$，每次新调用与过去结果独立。策略可按完整过去记录和独立随机数自适应选择来源。成本为确定最大调用总数，任务和参考每次均收费。风险为
+$$
+\sup_{r,h}\frac{\Pr_{0,r,h}(\widehat j=1)
++\Pr_{1,r,h}(\widehat j=0)}2.
+$$
+
+置
+$$
+w=C-h_0+\kappa>0.
+$$

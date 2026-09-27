@@ -1,0 +1,66 @@
+**证明。** 写实际来源记忆系数矩阵为 $X_n=[x_n^0\ x_n^1]$、$Y_n=[y_n^0\ y_n^1]$。在共同环境 $C$ 的第4、5、6轮，
+$$
+X_{n+1}=a fX_n+gY_n,\qquad Y_{n+1}=b fX_n
+\quad(n=3,4,5),
+\tag{64.39}
+$$
+其中各 $gY_n$ 的输入在 $J$ 中。$H_3=H_4$ 使存在可逆二阶矩阵 $Z$ 满足 $X_4=X_3Z$；继而 $Y_5=Y_4Z$。令
+$$
+M=Y_4-Y_3Z.
+$$
+则
+$$
+X_5-X_4Z=gM.
+\tag{64.40}
+$$
+$\operatorname{ran}(gM)\subset W\perp L$，而 $D=H_4$ 到 $T\subset L$ 的投影单射，所以 $D\cap W=0$。因此 $S=D+H_5$ 三维使（64.40）中的 $M$ 恰为秩一。
+
+置 $x=|a|^2$、$y=|b|^2$、$t_0=1$、$t_n=1-y t_{n-1}$，并记
+$$
+D_n=X_n^*X_n=\operatorname{diag}(t_n,t_{n-1}).
+$$
+同轮来源 Gram 恒等式给
+$$
+X_n^*Y_n=\bar a b D_{n-1},\qquad
+Z^*D_3Z=D_4.
+\tag{64.41}
+$$
+对非零 $h\in\ker M$，$Y_4h=Y_3Zh$，所以
+$$
+(D_3-Z^*D_2Z)h=0.
+\tag{64.42}
+$$
+令 $U_Z=D_3^{1/2}ZD_4^{-1/2}$；它是二阶酉矩阵。置 $p_*=|(U_Z)_{00}|^2$。直接展开得到
+$$
+\det(D_3-Z^*D_2Z)
+=p_*\frac{(t_2^2-t_1t_3)(t_3^2-t_2t_4)}{t_2t_3}
+=-p_*\frac{y^5}{t_2t_3}.
+\tag{64.43}
+$$
+最后一步由 $t_2^2-t_1t_3=y^2$、$t_3^2-t_2t_4=-y^3$。式（64.42）给 $p_*=0$，故存在单位复数 $\omega,\nu$ 使
+$$
+Z=\begin{pmatrix}0&\omega\\ \nu\sqrt{t_4/t_2}&0\end{pmatrix}.
+\tag{64.44}
+$$
+此时
+$$
+D_3-Z^*D_2Z
+=\operatorname{diag}\left(t_3-\frac{t_1t_4}{t_2},0\right),
+$$
+第一个对角元等于 $xy^2/t_2>0$。所以 $\ker M$ 正是第二坐标轴，得到
+$$
+Y_4^1=\omega Y_3^0,\qquad X_4^1=\omega X_3^0.
+\tag{64.45}
+$$
+第三轮实际系数为
+$$
+X_3^0=ac s+ab r,\quad X_3^1=a^2t+bj,
+\qquad Y_3^0=bc s,\quad Y_3^1=ab t.
+$$
+由 $Y_4^1=b fX_3^1=\omega bc s$，有 $fX_3^1=\omega c s$，故 $s\in T$。再用（64.39）、（64.45），
+$$
+X_4^1=a\omega c s+ab\,g t
+=\omega(ac s+ab r).
+$$
+$ab\ne0$ 使 $g t=\omega r$。两平面 $G_3,T$ 不同且共同张成三维 $J$，交恰一维，因此其交为 $\mathbb Cs$。证明完毕。
+

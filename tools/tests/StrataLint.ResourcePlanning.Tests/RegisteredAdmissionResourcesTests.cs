@@ -13,6 +13,61 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     private const string RegisteredReportContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
+    [InlineData("push", false)]
+    [InlineData("pr", false)]
+    [InlineData("push", true)]
+    [InlineData("pr", true)]
+    public void DeclaredTemplateNativeEvidenceProvisionsLeanInEngineering(string mode, bool aggregate)
+    {
+        var plan = Plan(aggregate ? "tools/lean-inspector/native.py"
+            : "tools/tests/StrataLint.DeclaredTemplate.Tests/FourierBridgeSourceEvidenceTests.cs", "", mode);
+        var requirements = EngineeringRequirements(plan);
+        Assert.Contains(aggregate ? "engineering" : "test-declared-template",
+            Strings(plan["stages"]!["engineering"]!["resources"]!));
+        var tests = Strings(plan["execution"]!["tests"]!);
+        Assert.Contains("tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj", tests);
+        if (aggregate) Assert.Equal(50, tests.Length);
+        else Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+        Assert.Contains("lake", Strings(requirements["tools"]!));
+        foreach (var layer in new[] { "dependency", "elan", "engineering", "project" })
+        {
+            Assert.Contains(layer, Strings(requirements["cache_layers"]!));
+            Assert.Equal("stage-start", requirements["cache_activation"]![layer]!.GetValue<string>());
+        }
+        foreach (var material in new[] { "lean-toolchain", "lake-manifest.json", "lakefile.toml" })
+            Assert.Contains(material, Strings(requirements["materials"]!));
+    }
+
+    [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
+    public void DotnetOnlyEngineeringDoesNotRequestLeanSeeds(string mode)
+    {
+        var plan = Plan("tools/tests/StrataLint.ResourcePlanning.Tests/RegisteredAdmissionResourcesTests.cs", "", mode);
+        var requirements = EngineeringRequirements(plan);
+        Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+        Assert.DoesNotContain("tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj",
+            Strings(plan["execution"]!["tests"]!));
+        Assert.DoesNotContain("lake", Strings(requirements["tools"]!));
+        Assert.Equal(new[] { "engineering" }, Strings(requirements["cache_layers"]!));
+        Assert.DoesNotContain("lean-toolchain", Strings(requirements["materials"]!));
+    }
+
+    private JsonNode EngineeringRequirements(JsonNode plan)
+    {
+        var result = Python(basis.Path, """
+            import json, pathlib, sys
+            source, root = map(pathlib.Path, sys.argv[1:3])
+            sys.path.insert(0, str(source / 'tools/scripts/workflow'))
+            import ci_plan
+            print(json.dumps(ci_plan.stage_requirements(root, json.loads(sys.argv[3]), 'engineering')))
+            """, plan.ToJsonString());
+        Assert.True(result.Exit == 0, result.Text);
+        output.WriteLine("ENGINEERING_REQUIREMENTS " + result.Text);
+        return JsonNode.Parse(result.Text)!;
+    }
+
+    [Theory]
     [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean", "push")]
     [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean", "pr")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "push")]

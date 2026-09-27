@@ -1,0 +1,158 @@
+**定理 165.2（任意三维 CPTP 族的精确必要局部代价）。** 每个 $(\mathcal F_r)\in\mathscr A$ 都满足
+$$
+\boxed{
+\liminf_{r\uparrow1}
+\frac{\ell_r(\mathcal F_r)}{\mathcal R_1(r)}
+\ge h_*.
+}
+\tag{165.3}
+$$
+第163节的合法通道 $\mathcal T_r(A)=C(r,r^{k_*})\odot A$ 属于 $\mathscr A$，且其比值收敛至 $h_*$。因此
+$$
+\inf_{(\mathcal F_r)\in\mathscr A}
+\liminf_{r\uparrow1}
+\frac{\ell_r(\mathcal F_r)}{\mathcal R_1(r)}
+=h_*=1.1992166662\ldots.
+\tag{165.4}
+$$
+这里的下界允许全部三维 CPTP 通道，不预设 Schur 形式、有限 $r$ 的半群嵌入、参数连续性或局部比值的收敛。结论给出的是趋于 $r=1$ 时的精确最小相对局部代价，不是有限参数处 $\mathcal J(r)$ 的精确值。
+
+证明。 若式（165.3）不成立，可取 $r_n\uparrow1$，使
+$$
+\frac{\ell_{r_n}(\mathcal F_{r_n})}{\mathcal R_1(r_n)}
+\longrightarrow h<h_*.
+\tag{165.5}
+$$
+因单步最优值是所有 CPTP 通道的下确界，必有 $h\ge1$。设 $\varepsilon_n=1-r_n$，由式（163.21），
+$$
+S_n:=\frac{\ell_{r_n}(\mathcal F_{r_n})}{\varepsilon_n}
+\longrightarrow S=\frac{\sqrt3}{2}h<S_*.
+\tag{165.6}
+$$
+把通道视为矩阵空间 $M_3(\mathbb C)$ 上的复线性算子，定义
+$$
+\mathcal G_n=
+\frac{\mathcal F_{r_n}-\mathrm{Id}}{\varepsilon_n},\qquad
+\|\mathcal G\|_{1\to1}=
+\sup_{A\ne0}\frac{\|\mathcal G(A)\|_1}{\|A\|_1}.
+\tag{165.7}
+$$
+令 $\Delta$ 为系统基下的完全去相干通道。允许相位 $\phi=0$ 的真实通道恰为
+$$
+\mathcal M_{r,0}=r\,\mathrm{Id}+(1-r)\Delta.
+$$
+故对每个系统密度矩阵 $\rho$，三角不等式与两个态的距离至多为一给出
+$$
+\|\mathcal G_n(\rho)\|_1
+\le 2(S_n+1).
+\tag{165.8}
+$$
+对 Hermitian 输入 $A=A_+-A_-$，分别归一化其正负部分，得到
+$$
+\|\mathcal G_n(A)\|_1\le2(S_n+1)\|A\|_1.
+$$
+对任意复矩阵写 $A=H+iK$，其中 $H,K$ Hermitian 且 $\|H\|_1,\|K\|_1\le\|A\|_1$，于是
+$$
+\|\mathcal G_n\|_{1\to1}\le4(S_n+1).
+\tag{165.9}
+$$
+有限维有界性允许再取子列，使 $\mathcal G_n\to\mathcal G$ 为算子范数收敛。由于 $3\log2<\pi$，有 $k_*<\sqrt3$、$S_*<3/2$，因而
+$$
+\|\mathcal G\|_{1\to1}
+\le4(S+1)<10<6\sqrt3=\frac{2\pi}{t_*}.
+\tag{165.10}
+$$
+特别地，$\mathcal G$ 的每个复特征值 $\mu$ 都满足 $|\operatorname{Im}\mu|<2\pi/t_*$。
+
+对任意固定 $t\ge0$，有限维 Euler 极限给出
+$$
+\mathcal F_{r_n}^{\lfloor t/\varepsilon_n\rfloor}
+=(\mathrm{Id}+\varepsilon_n\mathcal G_n)^{\lfloor t/\varepsilon_n\rfloor}
+\longrightarrow e^{t\mathcal G}.
+\tag{165.11}
+$$
+具体地，式（165.9）的统一有界性保证充分大的 $n$ 下可用收敛的矩阵对数级数，且
+$$
+\log(\mathrm{Id}+\varepsilon_n\mathcal G_n)
+=\varepsilon_n\mathcal G_n+O(\varepsilon_n^2)
+$$
+在算子范数中成立。乘以 $\lfloor t/\varepsilon_n\rfloor$ 后趋于 $t\mathcal G$，再用指数的连续性即得（165.11）。每个左侧通道都 CPTP，有限维 CPTP 集合闭，故 $e^{t\mathcal G}$ 也 CPTP。这一论证没有要求单个 $\mathcal F_{r_n}$ 本身具有 CPTP 的对数生成元，也不对无界 $t$ 声称一致收敛。
+
+取 $P,X,Y$ 如式（164.4）的赤道圆盘，写
+$$
+\rho_\theta=\frac12(P+\cos\theta\,X+\sin\theta\,Y),\qquad
+N_n=\lfloor t_*/\varepsilon_n\rfloor.
+$$
+真实源的两个允许端点为 $\phi=\pm\alpha(r_n)$。由 $r_n^{N_n}\to e^{-t_*}$ 与 $N_n\alpha(r_n)\to\pi/3$，其在 $\rho_\theta$ 上的输出趋于
+$$
+\sigma_{\theta,\pm}
+=\frac12\left(P+e^{-t_*}
+\left[\cos(\theta\pm\pi/3)X+
+\sin(\theta\pm\pi/3)Y\right]\right).
+\tag{165.12}
+$$
+端点标签可随 $Y$ 的符号约定互换，不影响下述距离与中点。因为 $W_{r_n}(\mathcal F_{r_n})\to L$，式（165.11）推出
+$$
+D(e^{t_*\mathcal G}(\rho_\theta),\sigma_{\theta,\pm})\le L.
+\tag{165.13}
+$$
+两个端点的距离为 $2L$，中点是
+$$
+m_\theta=\frac12\left(P+\lambda
+(\cos\theta\,X+\sin\theta\,Y)\right),\qquad
+\lambda=\frac{e^{-t_*}}2=e^{-(1+k_*)t_*}.
+\tag{165.14}
+$$
+这个中点在整个三维态空间中也是唯一可满足式（165.13）的态。事实上，写 $\sigma_{\theta,\pm}=m_\theta\pm Q_\theta$，则 $Q_\theta$ Hermitian、无迹，且 $Q_\theta^2=L^2P$。对任一满足（165.13）的态 $\tau$，式（164.7）适用于无迹 Hermitian 差 $\tau-\sigma_{\theta,\pm}$。Hilbert–Schmidt 平行四边形恒等式给出
+$$
+\|\tau-m_\theta\|_2^2+2L^2
+=\frac12\left(\|\tau-\sigma_{\theta,+}\|_2^2+
+\|\tau-\sigma_{\theta,-}\|_2^2\right)
+\le2L^2.
+\tag{165.15}
+$$
+故 $\tau=m_\theta$。此处只使用实际端点的极限，不把 $e^{-t_*}$ 当作一个新的源参数并调用不同的完整相位族。对全部 $\theta$ 比较（165.14），得到
+$$
+e^{t_*\mathcal G}(P)=P,\qquad
+e^{t_*\mathcal G}(X)=\lambda X,\qquad
+e^{t_*\mathcal G}(Y)=\lambda Y.
+\tag{165.16}
+$$
+
+下面从这一时刻的算子信息返回生成元。对任意 $b>0$，令 $a=(\log b)/t_*$。整函数
+$$
+e^{t_*z}-b=(z-a)u_b(z),\qquad u_b(a)=t_*b
+\tag{165.17}
+$$
+中的 $u_b$ 只可能在 $a+2\pi i m/t_*$、$m\in\mathbb Z\setminus\{0\}$ 处为零。式（165.10）排除这些点与 $\mathcal G$ 的谱相交，因此 $u_b(\mathcal G)$ 可逆，且与 $\mathcal G-a\mathrm{Id}$ 交换。于是
+$$
+\ker(e^{t_*\mathcal G}-b\mathrm{Id})
+=\ker(\mathcal G-a\mathrm{Id}).
+\tag{165.18}
+$$
+可逆性也可直接在每个 Jordan 块上核对：$u_b$ 作用后的对角元均为非零的 $u_b(\mu)$。因此（165.18）不需要 $\mathcal G$ 可对角化。这里使用的是标准矩阵函数演算及其谱映射性质；相关背景见 Higham、Lin，[*Matrix Functions: A Short Course*](https://eprints.maths.manchester.ac.uk/2067/1/covered/MIMS_ep2013_42.pdf)，§3。谱带界（165.10）承担排除指数不同对数分支的具体义务。
+
+分别取 $b=1$ 和 $b=\lambda$，式（165.16）遂迫使
+$$
+\mathcal G(P)=0,\qquad
+\mathcal G(X)=-(1+k_*)X,\qquad
+\mathcal G(Y)=-(1+k_*)Y.
+\tag{165.19}
+$$
+特别地，对 $\rho_0=(P+X)/2$，有 $\mathcal G(\rho_0)=-(1+k_*)X/2$。真实端点通道在同一个输入上的一阶展开为
+$$
+\frac{\mathcal M_{r_n,\alpha(r_n)}(\rho_0)-\rho_0}{\varepsilon_n}
+\longrightarrow\frac12(-X\pm\sqrt3Y),
+\tag{165.20}
+$$
+其中用到了 $\alpha(r_n)/\varepsilon_n\to\sqrt3$。因此全参考单步风险至少包含这个无参考输入的距离，给出
+$$
+S=\lim_n\frac{\ell_{r_n}(\mathcal F_{r_n})}{\varepsilon_n}
+\ge\frac12\left\|\frac12(-k_*X\mp\sqrt3Y)\right\|_1
+=\frac12\sqrt{k_*^2+3}=S_*.
+\tag{165.21}
+$$
+最后一步由 $X^2=Y^2=P$、$XY+YX=0$，相应矩阵的两个非零特征值为 $\pm\sqrt{k_*^2+3}/2$。这与（165.6）矛盾，证明（165.3），包括局部比值振荡或无上界的族：若其下极限低于 $h_*$，总能选出（165.5）的有限收敛子列。可达到性由定理163.2及命题163.3直接给出，证明（165.4）。证毕。
+
+式（165.3）将命题164.4的必要下界加强到精确值，并确定第163节构造的最小代价性质；这正是前两节尚未确定的部分。此前的有限参数界与近似圆盘估计仍按各自假设成立。
+

@@ -1,0 +1,51 @@
+### 42.6 动态 gluing 还要运输策略与实际像
+
+静态 transition 不能自动给出过程 transition。对每条边 $e:i\to j$，先明确输入/输出边界及局部数据：
+
+$$
+T_e^{\mathrm{in}}:B_i^{\mathrm{in}}\simeq B_j^{\mathrm{in}},
+\quad
+T_e^{\mathrm{out}}:B_i^{\mathrm{out}}\simeq B_j^{\mathrm{out}},
+$$
+
+$$
+D_{i,a}\subseteq B_i^{\mathrm{in}},
+\quad
+O_{i,a}:D_{i,a}\to Y_a,
+\quad
+U_{i,a}:D_{i,a}\to B_i^{\mathrm{out}},
+\quad
+\pi_i:B_i^{\mathrm{in}}\to A.
+$$
+
+对每个动作 $a$，局部运输至少需要交换
+
+$$
+T_e^{\mathrm{in}}(D_{i,a})=D_{j,a},
+\qquad
+O_{j,a}\circ T_e^{\mathrm{in}}=O_{i,a},
+\qquad
+T_e^{\mathrm{out}}\circ U_{i,a}=U_{j,a}\circ T_e^{\mathrm{in}},
+\tag{42.12}
+$$
+
+并且内生策略满足
+
+$$
+\pi_j\circ T_e^{\mathrm{in}}=\pi_i.
+\tag{42.13}
+$$
+
+这些式子才能把局部更新诱导到相容 section 上；若输入输出边界已通过一个声明的 canonical identification 视为同一纤维，才可以把 $T_e^{\mathrm{in}}$ 与 $T_e^{\mathrm{out}}$ 简写成同一个 $T_e$。若 $r$ 是实际来源到 global profile 的映射，诱导更新还要求
+
+$$
+U_\Gamma(r(\Omega))\subseteq r(\Omega).
+\tag{42.14}
+$$
+
+否则形式 section 虽有更新，实际来源像却会被送出，不能把它报告为内部观察者可执行的后继。
+
+有限反例是：$q(a)=q(b)=0,q(c)=1$，读出当前因子通过 $q$，但令 $U(a)=a$、$U(b)=U(c)=c$。同一摘要类 $q(a)=q(b)$ 的后继类不同，所以不存在边界更新；静态 factorization 不提供动态 descent。
+
+本节把局部 gluing、holonomy、细化和实际来源放在同一条证明链上，但没有把它们自动合成无限模型的全局存在定理。相关具体来源、拓扑和策略条件仍须逐模型核对；本节是普通数学综合，Claim status 为 open。
+

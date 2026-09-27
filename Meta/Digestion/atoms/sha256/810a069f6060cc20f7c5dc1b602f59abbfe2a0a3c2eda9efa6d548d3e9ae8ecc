@@ -1,0 +1,105 @@
+### 174.4 公共二阶支配证书
+
+在 Choi 输入因子上作用 $\rho^{-1/2}$，置
+
+$$
+\widehat g_a=(\rho^{-1/2}\otimes I)g_a.
+$$
+
+有
+
+$$
+\|\widehat g_0\|^2=1,\qquad
+\langle\widehat g_0,\widehat g_1\rangle=0,\qquad
+\|\widehat g_1\|^2=6.
+\tag{174.17}
+$$
+
+前两式分别为 $\operatorname{Tr}\rho=1$ 和
+$-\operatorname{Tr}(Y\rho)=0$。对第三式，使用
+$Y\rho Y=I-\rho$。若 $\rho$ 的本征值为 $r,\ell$，则
+$r+\ell=1$、$r\ell=\det\rho=1/9$，所以
+
+$$
+\begin{aligned}
+\|\widehat g_1\|^2
+&=\operatorname{Tr}(\rho^2Y\rho^{-1}Y)\\
+&=\frac{r^2}{\ell}+\frac{\ell^2}{r}
+=\frac1{\det\rho}-3=6.
+\end{aligned}
+\tag{174.18}
+$$
+
+因此，在正交单位向量
+$\widehat g_0,\widehat g_1/\sqrt6$ 的张成上，合同变换后的
+$A_{j,r}$ 的非零矩阵为
+
+$$
+B_{w_j}^{(r)}=
+\begin{pmatrix}
+1-\beta w_j&(-1)^{r+1}\sqrt6\,\gamma w_j\\
+(-1)^{r+1}\sqrt6\,\gamma w_j&6\beta w_j
+\end{pmatrix}.
+\tag{174.19}
+$$
+
+其余正交方向为零。两个旗标的符号不影响本征值。定义
+
+$$
+\mu(w)=
+\frac{
+1+5\beta w+
+\sqrt{(1-7\beta w)^2+24\gamma^2w^2}
+}{2},
+\qquad
+\Gamma_L=\max\{\mu(w_0),\mu(w_1)\}.
+\tag{174.20}
+$$
+
+这给出对两个原输入和两个旗标均成立的公共支配：
+
+$$
+A_{j,r}\preceq\Gamma_L(\rho\otimes I_{R_{\mathrm{out}}}).
+\tag{174.21}
+$$
+
+把（174.21）与同一个 instrument 的（174.11）组合，
+
+$$
+\begin{aligned}
+f_0+f_1
+&\le\frac{\Gamma_L}{2}
+\sum_r\operatorname{Tr}\!\left[
+(J_{0,r}+J_{1,r})(\rho\otimes I)
+\right]\\
+&=\frac{\Gamma_L}{2}\sum_r\operatorname{Tr}\rho
+=\Gamma_L.
+\end{aligned}
+\tag{174.22}
+$$
+
+现在核对 $\Gamma_L<1$。对全部 $L\ge3$，
+$0<|t_j|\le1/6$，从而 $d(t_j)\ge5/72>1/16$。又
+
+$$
+w(t)=
+\frac{9t^2}{\,4/3-t+4\sqrt{d(t)}\,},
+\tag{174.23}
+$$
+
+所以 $w_j>0$；同时
+$w_j<3/2-1=1/2$。另一方面，
+
+$$
+\begin{aligned}
+\det(I-B_w^{(r)})
+&=\beta w-6(\beta^2+\gamma^2)w^2\\
+&=\frac{216}{2353}\,w\left(\frac43-w\right).
+\end{aligned}
+\tag{174.24}
+$$
+
+当 $0<w<1/2$ 时，该行列式严格为正，且
+$(I-B_w^{(r)})_{11}=\beta w>0$。故
+$I-B_w^{(r)}$ 正定，$\mu(w)<1$，得到 $\Gamma_L<1$。
+

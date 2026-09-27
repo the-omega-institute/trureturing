@@ -1,0 +1,2 @@
+**定义 281.1（中心对称量子比特模型）。** 令 $\mathcal V\subseteq\{v\in\mathbb R^3:|v|\le1\}$ 为非空有限集合，满足 $v\in\mathcal V\Rightarrow-v\in\mathcal V$，并取模型态 $\rho_v=(I+v\cdot\boldsymbol\sigma)/2$。编码和解码均为量子比特之间的复线性 CPTP 通道。恢复误差 $e$ 仍是模型上的最大迹距离，非实残差 $r$ 是编码态与其在一个共同输出基底中逐项共轭之态的最大迹距离。
+

@@ -1,0 +1,35 @@
+**定理 60.4（已识别临界族的低参数边界）。** 在固定的 $`W_\sigma`$ 上构造
+$`I_2(q_{\zeta,\theta};W_\sigma)`$。当 $`\zeta\downarrow0`$，
+此族在每个固定 $`C(I)`$ 中趋于 $`4\sqrt{g_0}B_{\rm odd}`$，
+且相对于整个 $`W_\sigma`$ mixing；可联合附加独立偏移 $`Z_0`$。
+这是已识别 Gaussian 混沌族的极限，不通过代入定理 60.2 取得实际数组结论。
+
+证明。角频率 Fourier 变换下，sinc 核的乘子为
+$`(2\pi\sqrt\zeta/\omega)\operatorname{sgn}(\theta)
+1_{\{|\xi|<\omega|\theta|/\zeta\}}`$。
+在 Lebesgue $`L^2`$ 上以 $`\sqrt\rho`$ 共轭，Plancherel 给出
+$`\|T_{\zeta,\theta}\|_{\rm op}\le
+2\pi\|\rho\|_\infty\sqrt\zeta/\omega`$。
+二阶协方差为
+
+```math
+\frac{8\zeta}{\omega^2}\int
+  \frac{\sin(\omega\theta d/\zeta)\sin(\omega u d/\zeta)}{d^2}g(d)\,dd
+ \longrightarrow16g_0\operatorname{sgn}(\theta u)\min(|\theta|,|u|).
+```
+
+式 (60.17)。
+
+用 $`d=\zeta v`$、$`g(0)=g_0`$ 和可积的倒数平方尾支配，
+再用 $`\int\sin(av)\sin(bv)/v^2\,dv
+=\pi\operatorname{sgn}(ab)\min(|a|,|b|)`$ 即得。
+有限组合的小算子范数和有界 Hilbert–Schmidt 范数使谱特征函数趋于 Gaussian。
+同一积分恒等式给出任意符号时间的增量方差至多 $`C|\theta-u|`$，
+第二混沌第四矩至多 $`C|\theta-u|^2`$，故在 $`C(I)`$ 中紧。
+最后按 (59.21) 删除固定有限秩柱面，再作 $`L^1`$ 柱面逼近，取得 mixing。
+协方差 (60.17) 识别的是同一 Brownian motion 的奇反射。
+
+经典 Gaussian 谱、混沌独立性及 sinc Fourier 工具的适用条件见
+[文献说明](../../../Library/Dynamics/iyer2025empirical.md)。
+本章不包含失谐、随机奇偶分布、实际矩收敛、增长参数区间、其它幅度或临界参数趋零、无穷时的实际数组定理。
+

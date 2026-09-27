@@ -1,0 +1,78 @@
+## 418. 局部信息完备乘积记录的单向恢复对偶与有限最优协议
+
+操作约定与定义。取有限正整数 $k,d_A,d_B$，令 $S=\mathbb C^k$、$A=\mathbb C^{d_A}$、$B=\mathbb C^{d_B}$。在 $S$ 中固定正交基 $\{|i\rangle\}_{i=1}^k$；在原始记录因子 $A,B$ 中分别给定单位向量族 $u_i,v_i$，使用同一个源标签 $i$ 配对。记 $P_x=|x\rangle\langle x|$，并假设
+
+$$
+\operatorname{span}_{\mathbb R}\{P_{u_i}:1\le i\le k\}
+ =\operatorname{Herm}(A),\qquad
+\operatorname{span}_{\mathbb R}\{P_{v_i}:1\le i\le k\}
+ =\operatorname{Herm}(B).
+$$
+
+这里 $\operatorname{Herm}$ 是 Hermitian 算子的实向量空间，配对为 $\langle H,G\rangle=\operatorname{Tr}(HG)$。上述局部信息完备性只要求源投影张成，不要求它们组成归一化测量，也不表示协议实施了态层析。制备等距为
+
+$$
+q_i=u_i\otimes v_i,\qquad
+J:S\longrightarrow S\otimes A\otimes B,\qquad
+J|i\rangle=|i\rangle\otimes q_i.
+$$
+
+Alice 持有原始因子 $A$，Bob 持有原始因子 $B$。允许各自加入有限维辅助态；这些态与未知输入及其参考独立，两方的初始辅助态为乘积态。辅助态准备、局部处理和丢弃吸收进下述完全正映射，不改变原始输入因子。Alice 先执行一次有限结果仪器，产生实际标签 $a\in\mathsf A$，并把 $a$ 发送给 Bob；Bob 依实际 $a$ 执行一次有限结果仪器，产生 $b\in\mathsf B_a$ 后结束记录操作。标签集有限非空，各局部输出空间 $O_{A,a},O_{B,ab}$ 有限维且非零。写有限隐藏 Kraus 表示
+
+$$
+\begin{aligned}
+\mathcal A_a(Z)&=\sum_\mu A_{a\mu}ZA_{a\mu}^\dagger,
+&A_{a\mu}&:A\longrightarrow O_{A,a},\\
+\mathcal B_{b\mid a}(Z)&=\sum_\nu B_{b\mid a,\nu}ZB_{b\mid a,\nu}^\dagger,
+&B_{b\mid a,\nu}&:B\longrightarrow O_{B,ab},\\
+E_a&=\sum_\mu A_{a\mu}^\dagger A_{a\mu},
+&F_{b\mid a}&=\sum_\nu B_{b\mid a,\nu}^\dagger B_{b\mid a,\nu},\\
+E_a&\succeq0,\quad\sum_aE_a=I_A,
+&F_{b\mid a}&\succeq0,\quad\sum_{b\in\mathsf B_a}F_{b\mid a}=I_B
+\quad\text{对每个 }a.
+\end{aligned}
+$$
+
+Bob 不读取隐藏指标 $\mu$；没有共享纠缠、量子通信、反向记录消息或 Bob 结果控制的再次 Alice 操作。记录操作之前及期间不操作 $S$。实际叶子集是 $\mathsf Y=\{(a,b):a\in\mathsf A,\ b\in\mathsf B_a\}$，包括全部失败与零分支。每个实际叶子的记录映射及输出迹为
+
+$$
+\begin{aligned}
+\mathcal I_{ab}&=\mathcal A_a\otimes\mathcal B_{b\mid a},\\
+\mathcal M_{ab}(X)&=\operatorname{Tr}_{O_{A,a}\otimes O_{B,ab}}
+ \left[(\operatorname{id}_S\otimes\mathcal I_{ab})(JXJ^\dagger)\right].
+\end{aligned}
+$$
+
+两个实际标签都到达终端反馈端。预先固定接受集合 $\mathsf Y_{\mathrm s}\subseteq\mathsf Y$，并为每个实际叶子指定一个作用于整个 $S$ 的酉算子 $U_{ab}$；同一叶子的所有隐藏指标共用它。仪器、接受集合与反馈可依赖已知源族，不得依赖未知输入。精确恢复要求存在同一个 $p\in[0,1]$，使
+
+$$
+\begin{aligned}
+\mathcal T&=\sum_{(a,b)\in\mathsf Y_{\mathrm s}}
+     \operatorname{Ad}_{U_{ab}}\circ\mathcal M_{ab}
+     =p\operatorname{id}_S,\qquad
+\operatorname{Ad}_U(X)=UXU^\dagger,\\
+(\operatorname{id}_R\otimes\mathcal T)(X_{RS})&=pX_{RS}
+\quad\text{对任意未操作的有限维参考 }R
+\text{ 及全部 }X_{RS}\in\mathcal L(R\otimes S).
+\end{aligned}
+$$
+
+第一行在全部系统矩阵上成立，与第二行由矩阵张量基展开等价。空接受集合允许 $p=0$。每份协议均有限，不预设不同协议共同的结果数或输出维数上界；记允许概率的上确界为 $p_*$。这使用第 417 节相同的实际单向次序，其局部仪器与条件复合含义沿用 Chitambar 等，[arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.2–2.3。
+
+称单位投影对 $(P_x,P_y)$ 为平坦乘积对，若所有源响应有共同水平 $c$。定义
+
+$$
+\begin{aligned}
+Q&=\left\{(P_x,P_y,c):\|x\|=\|y\|=1,\ 0\le c\le1,\quad
+       \operatorname{Tr}(P_xP_{u_i})\operatorname{Tr}(P_yP_{v_i})=c
+       \quad(1\le i\le k)\right\},\\
+C&=\{(P_x,c):\exists P_y\ (P_x,P_y,c)\in Q\},\\
+K&=\operatorname{cone}(C)\subseteq\operatorname{Herm}(A)\times\mathbb R,\\
+\operatorname{cone}(C)&=
+ \left\{\sum_{\ell=1}^m a_\ell(P_{x_\ell},c_\ell):
+       m\in\mathbb Z_{\ge0},\ a_\ell\ge0,\ (P_{x_\ell},c_\ell)\in C\right\}.
+\end{aligned}
+$$
+
+空和为 $(0,0)$，特别约定 $\operatorname{cone}(\varnothing)=\{(0,0)\}$。$Q$ 保留 $c=0$ 的对；此时乘积向量对全部 $q_i$ 不可见。相位不影响这些定义，给定的投影对唯一决定 $c$；$C$ 中的生成元仍附有至少一个 Bob 伙伴投影作为见证。
+

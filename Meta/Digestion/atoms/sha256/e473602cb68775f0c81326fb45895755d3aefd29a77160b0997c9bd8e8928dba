@@ -1,0 +1,90 @@
+**定理 168.2（连续多个预测器的精确风险夹界）。** 对任意 $0<r<1$ 及任意 $h\in[0,h_0]$，
+$$
+\boxed{
+W_r(\mathcal T_r)
+\le W_r(\mathcal F_{h,r})
+\le\max\{W_r(\mathcal T_r),L\}.
+}
+\tag{168.4}
+$$
+因此，对任意函数 $h:(r_0,1)\to[0,h_0]$，不要求它连续或收敛，均有
+$$
+\lim_{r\uparrow1}W_r(\mathcal F_{h(r),r})=L.
+\tag{168.5}
+$$
+
+证明。 固定视界 $N\ge1$ 及合法实际相位 $\phi$，令
+$$
+x=-N\log r>0,\qquad s=e^{-x}=r^N,\qquad
+d=s(1-e^{-hx}),\qquad
+w=s(e^{iN\phi}-e^{-k_*x}),\quad q=|w|.
+\tag{168.6}
+$$
+$\mathcal M_{r,\phi}^N-\mathcal F_{h,r}^N$ 是 Hermitian Schur 乘子，其乘子矩阵为
+$$
+B=\begin{pmatrix}0&d&w\\d&0&d\\\overline w&d&0\end{pmatrix}.
+\tag{168.7}
+$$
+先在本证明内建立所需的支配估计：若 $2d\le q$，则此差的全参考半迹范数恰为 $q/2$。$q=0$ 时 $d=0$，结论直接成立。否则写 $w=qe^{i\theta}$，取
+$$
+Y=\begin{pmatrix}
+q&de^{i\theta}&0\\
+de^{-i\theta}&q&de^{i\theta}\\
+0&de^{-i\theta}&q
+\end{pmatrix}.
+\tag{168.8}
+$$
+两个矩阵 $Y\pm B$ 都半正定。确实，将 $02$ 块排在前面，该块分别为
+$$
+\begin{pmatrix}q&\pm qe^{i\theta}\\\pm qe^{-i\theta}&q\end{pmatrix},
+$$
+其秩为一；连接标签 $1$ 的列向量分别为
+$$
+v_\pm=d\begin{pmatrix}e^{i\theta}\pm1\\e^{-i\theta}\pm1\end{pmatrix}.
+$$
+它们位于对应秩一块的像中。该块的非零特征值为 $2q$，所以 Schur 补条件为
+$$
+q\ge \frac{\|v_\pm\|^2}{2q}
+=\frac{d^2|e^{i\theta}\pm1|^2}{q},
+$$
+这由 $2d\le q$ 保证。正半定乘子给出完全正 Schur 映射，是第161节所用相关矩阵框架的标准正性事实。
+
+记 $S_B,S_Y$ 为对应 Schur 映射。对任意系统与有限参考的联合密度矩阵 $\rho$，令
+$$
+A=(S_Y\otimes\mathrm{Id})(\rho),\qquad
+H=(S_B\otimes\mathrm{Id})(\rho).
+$$
+因为 $S_Y\pm S_B$ 完全正，故 $A\ge0$ 且 $-A\le H\le A$。$Y$ 的三个对角元均为 $q$，从而 $\operatorname{Tr}A=q$。分别以 $H$ 的正、负谱投影压缩上述两个不等式并取迹，可得
+$$
+\|H\|_1\le\operatorname{Tr}A=q.
+\tag{168.9}
+$$
+另一方面，无参考的平衡 $02$ 输入使输出差只含系数 $w/2$ 及其共轭，迹范数为 $q$。因此，当 $2d\le q$ 时，精确距离为
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_{h,r}^N)=\frac q2.
+\tag{168.10}
+$$
+
+当 $0<x\le T_0$，函数 $1-e^{-k_*x}$ 的凹性及其在零点的零值给出
+$$
+2(1-e^{-hx})\le2hx\le2h_0x
+=\frac{x}{T_0}(1-e^{-k_*T_0})
+\le1-e^{-k_*x}
+\le|e^{iN\phi}-e^{-k_*x}|.
+\tag{168.11}
+$$
+乘以 $s$ 得到 $2d\le q$。故在此范围，式（168.10）与式（161.11）共同给出
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_{h,r}^N)
+=d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal T_r^N).
+\tag{168.12}
+$$
+当 $x\ge T_0$，将（168.7）拆为三个单边乘子，分别使用式（161.11）的正块矩阵估计及三角不等式，得到
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_{h,r}^N)
+\le d+\frac q2
+\le2e^{-x}\le2e^{-T_0}=L.
+\tag{168.13}
+$$
+这两段估计都是实际离散视界上的界，不需要交换参数极限与视界上确界。它们证明（168.4）的上界。对于每个 $N,\phi$，平衡 $02$ 输入也总给出下界 $q/2$，而 $\mathcal T_r$ 的完整距离恰为 $q/2$。取上确界便得到（168.4）的下界。最后由定理163.2的 $W_r(\mathcal T_r)\to L$ 夹逼得到（168.5）；夹界与所选 $h$ 无关，所以也允许任意参数函数 $h(r)$。证毕。
+

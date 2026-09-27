@@ -1,0 +1,16 @@
+## ST33．与相对论、弦有效理论及形式化源的连接
+
+本增订得到三个不同的判据：离开旧编码子空间的几何漏出；在给定访问权限下能否恢复未知逻辑态；把整个参数路径连同记录与参考保留下来时能否恢复逻辑演化。三者不相互自动等同。
+
+Lanka等2026年预印本使“记录syndrome并调整几何路径”成为直接的物理研究入口。[ST27-Steering] Lacambra等2026年4月预印本用量子参考系讨论Abelian格点规范理论中的Gauss-law codes和vacuum codes，提供“规范约束与可纠错逻辑子系统”相邻而具体的输入；本卷尚未将其所有模型形式化。[ST27-Gauss]
+
+接入弦场论时，应先指定物理正内积空间、允许操作和有效模型，之后才适用这些恢复定理。BV一致性保留规范恒等式，不能替代syndrome可访问性。这里的参数曲率仍没有被同一化为时空Einstein曲率，也没有导出Newton常数。
+
+**形式化覆盖。**
+
+`D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.lean`：公开3个声明，证明真实矩阵和构造的syndrome编码/解码恒等式，以及逐syndrome酉运输后的恢复。相邻的 `OrthogonalSyndromeChannel` 另构造有限 CPTP 解码与编码通道；更广的物理实现仍由正文讨论。
+
+两相位可见度缺陷及相反相位例子属于本卷普通证明，不计入当前 Lean 覆盖。
+
+对应的 Scribe 与 Blueprint 阅读稿逐项列出声明和边界。数学最优性、参考系统上的通道范数、全局丛与 Chern 数只在正文中证明，不能据局部 Lean 覆盖把整章称为 kernel-verified。
+

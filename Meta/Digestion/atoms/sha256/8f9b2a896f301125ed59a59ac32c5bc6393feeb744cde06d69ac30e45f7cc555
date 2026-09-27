@@ -1,0 +1,24 @@
+## 定理 381.1（零约束的逐边判据）
+
+$$
+K_G\succeq0,\qquad
+K_G\Psi=0\Longleftrightarrow
+\psi_{t(e)}=U_e\psi_{s(e)}\quad(\forall e\in E).
+$$
+
+### 证明
+
+$$
+\langle\Psi,K_G\Psi\rangle
+=\sum_e\lambda_e\|\psi_{t(e)}-U_e\psi_{s(e)}\|^2\ge0.
+$$
+
+若 $K_G\Psi=0$，则左端为零，严格正的 $\lambda_e$ 和非负的各项迫使每项均为零。反向蕴含则由 $A_e\Psi=0$ 逐项相加得到。∎
+
+在底层无向路径上，正向经过 $e$ 使用 $U_e$，反向经过 $e$ 使用 $U_e^{-1}$，并记路径复合为 $U_\gamma$。定义根处向量共同不动子空间
+
+$$
+\mathcal F_r=
+\{x\in\mathcal H:U_\gamma x=x\text{ 对每条根处闭走法 }\gamma\}.
+$$
+

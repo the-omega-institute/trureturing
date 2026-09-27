@@ -1,0 +1,118 @@
+**定理 222.3（满秩 Kraus 族中的三个精确读数）。** 固定
+
+$$
+0<b<a,\qquad a+b<1,\qquad 0\le u\le1,
+$$
+
+并令
+
+$$
+D_u=\operatorname{diag}(1,u),\qquad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+$$
+
+$$
+A_u=\sqrt a\,D_u,\qquad B_u=\sqrt b\,XD_u,
+$$
+
+$$
+K_{0,u}=\operatorname{diag}
+\left(\sqrt{1-a-b},\sqrt{1-(a+b)u^2}\right).
+$$
+
+以 $(K_{0,u},A_u,B_u)$ 定义共同记录通道。它对整个参数范围具有严格的记录块 Choi 秩 $(1,2)$，且
+
+$$
+\boxed{
+\delta_{\rm rot}=b,\qquad
+\gamma=\min(b,au^2),\qquad
+q_0=1-(a+b)u^2,\qquad
+d_2=\min\bigl(b,1-(a+b)u^2\bigr).
+}
+$$
+
+当 $u>0$ 时两个结果一 Kraus 矩阵均可逆、结果一总输入效应正定；其两个非零 Choi 根始终互异。因此 $0<u<\sqrt{b/a}$ 给出具有可逆 Kraus 算子的严格极小极大间隙。
+
+**证明。** 直接计算得
+
+$$
+K_{0,u}^\dagger K_{0,u}
++(a+b)D_u^2=I,
+$$
+
+所以共同 TP 成立。$K_{0,u}$ 可逆，$A_u,B_u$ 非零且 HS 正交，结果一的两正 Choi 根为
+
+$$
+a(1+u^2)>b(1+u^2)>0.
+$$
+
+当 $u>0$ 时 $D_u$ 可逆，故 $A_u,B_u$ 均可逆；结果一总输入效应为 $(a+b)D_u^2$，亦正定。
+
+任意归一化混合 $M=c_0A_u+c_1B_u$ 的首列满足
+
+$$
+\|M|0\rangle\|^2=a|c_0|^2+b|c_1|^2\ge b.
+$$
+
+因此 $\|M\|_\infty^2\ge b$。取 $M=B_u$ 时 $\|B_u\|_\infty^2=b$，得到 $\delta_{\rm rot}=b$。
+
+对任意单位输出 $r$，在固定输入 $|1\rangle$ 上取 Rayleigh 商，得到
+
+$$
+\lambda_{\min}(\Gamma_1^*(P_r))
+\le u^2(a|r_1|^2+b|r_0|^2)
+\le au^2.
+$$
+
+结合定理 222.2 的 $\gamma\le\delta_{\rm rot}=b$，有 $\gamma\le\min(b,au^2)$。取 $r=|1\rangle$ 时，
+
+$$
+\Gamma_1^*(P_1)=\operatorname{diag}(b,au^2),
+$$
+
+恰好达到该上界。$q_0$ 的公式则由 $0\le u\le1$ 和 $K_{0,u}$ 的两个对角元直接得到。
+
+真实距离需要比固定输出核值更强的下界。取任意总秩至多二的竞争者。若其结果一 Choi 秩至多一，写该分支为 $C(\cdot)C^\dagger$。固定输入 $|0\rangle$，选择单位输出 $r$ 垂直于 $C|0\rangle$；若该向量为零，任选单位 $r$。竞争者对事件“标签一且输出为 $r$”给零概率，而目标在该输入的结果一输出为
+
+$$
+\Gamma_1(P_0)=aP_0+bP_1.
+$$
+
+因此目标事件概率为
+
+$$
+a|r_0|^2+b|r_1|^2\ge b.
+$$
+
+故这类竞争者的完整半 diamond 距离至少为 $b$。若竞争者结果一的 Choi 秩为二，则结果零必缺失；输入 $|1\rangle$ 并检验标签零，得到下界 $q_0$。于是
+
+$$
+d_2\ge\min(b,q_0).
+$$
+
+上界也可显式达到。删除 $B_u$，其输入效应为
+
+$$
+E_B=B_u^\dagger B_u=bD_u^2,
+\qquad \|E_B\|_\infty=b<\frac12.
+$$
+
+共同右修复后得到 Kraus 算子
+
+$$
+K_{0,u}(I-bD_u^2)^{-1/2},\qquad
+A_u(I-bD_u^2)^{-1/2},
+$$
+
+分别保留标签零与一。它们给出秩 $(1,1)$ 候选，完整半 diamond 误差至多 $b$。
+
+若 $q_0<b$，则 $u>0$ 且 $q_0<1$。删除整个结果零块，保留 Gram 矩阵 $(a+b)D_u^2$ 严格正定。右修复后的结果一 Kraus 算子为
+
+$$
+\sqrt{\frac a{a+b}}\,I,
+\qquad
+\sqrt{\frac b{a+b}}\,X.
+$$
+
+该秩 $(0,2)$ 候选的完整半 diamond 误差至多 $q_0$。两种构造与下界合并，得到 $d_2=\min(b,q_0)$，且存在达到该距离的合法候选。证毕。
+

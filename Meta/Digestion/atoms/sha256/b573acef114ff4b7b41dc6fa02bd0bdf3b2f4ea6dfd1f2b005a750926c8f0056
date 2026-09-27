@@ -1,0 +1,37 @@
+**定义 87.1（同一二维仪器的实坐标）。** 本节及后续三节继续固定
+
+$$
+Q_0=|0\rangle\langle1|,\qquad
+L_0=|0\rangle\langle0|,\qquad
+\Gamma_0=(\mathcal N_0,\mathcal C_0).
+$$
+
+活动记忆为 $\mathcal H=\mathbb C^2$，结果记录为未点击与点击两个正交标签；每个结果都保留同一个二维量子后继。完整仪器写成通道
+
+$$
+\Gamma(X)=|\varnothing\rangle\langle\varnothing|\otimes\mathcal N(X)
++|\bullet\rangle\langle\bullet|\otimes\mathcal C(X).
+$$
+
+沿用第 79—83 节的
+
+$$
+\delta(\Gamma)=\frac12\|\Gamma-\Gamma_0\|_\diamond,
+\quad R=\mathfrak r_{\mathrm{fail}},
+\quad\mathfrak B_u=\{\Gamma:\delta(\Gamma)\le u\},
+\quad\mathscr K(u)=\sup_{\Gamma\in\mathfrak B_u,\rho}
+\mathbb E_\rho^\Gamma\mathsf N.
+$$
+
+每次执行始终重复自己同一个仪器。$\mathsf N$ 包括首次点击那一轮；永久未点击的成本为无穷。
+
+用两个 $4\times4$ Hermitian Choi 矩阵 $J_{\varnothing},J_\bullet$ 表示仪器，并将矩阵元实部、虚部分别作为实坐标。合法性条件准确为
+
+$$
+J_{\varnothing}\succeq0,\qquad J_\bullet\succeq0,
+\qquad \operatorname{Tr}_{\rm out}(J_{\varnothing}+J_\bullet)=I_2.
+\tag{87.1}
+$$
+
+记这些条件为 $\mathsf I(\Gamma)$。它们不固定 Kraus 秩，不删除秩退化装置。这里沿用标准 Choi 完全正性与保迹表征；参见第 73、81 节所引 Watrous 定理 2.22、2.26。
+

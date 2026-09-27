@@ -1,0 +1,93 @@
+### 300.5 离散斜率与中区概率合法性
+
+这是本节避免 $1/\kappa$ 点态误差损失的关键。
+
+对 $0\le i<K$，下降阶乘差分恒等式给
+$$
+\lambda_i-\lambda_{i+1}
+=\frac BK\sum_{s=0}^{d-1}
+B^s\frac{(i)_s}{(K-1)_s}.
+\tag{300.18}
+$$
+由于 $d\ge1$，右侧严格为正。因此 $\lambda$ 随经验坐标严格增加，特别地
+$$
+\boxed{\ \beta_{ij}>1\quad\Longleftrightarrow\quad X_i>Y_j.\ }
+\tag{300.19}
+$$
+这个判据对全部整数计数成立，不要求坐标为正。
+
+置 $\varepsilon=C/K$。若上侧格点 $X_i>\varepsilon$，则
+$$
+q=\frac{Bi}{K-1}<1,\qquad
+\frac{(i)_s}{(K-1)_s}\le\left(\frac{i}{K-1}\right)^s.
+$$
+除以网格步长 $BC/K$ 得
+$$
+0<
+\frac{\lambda_i-\lambda_{i+1}}{BC/K}
+\le\frac1C\sum_{s\ge0}q^s
+=\frac{1-1/K}{X_i-\varepsilon}
+\le\frac1{X_i-\varepsilon}.
+\tag{300.20}
+$$
+对格点 $\varepsilon<X\le Y$ 求和。函数 $z\mapsto1/(z-\varepsilon)$ 递减，各步上端矩形不超过该步积分，故
+$$
+\boxed{
+0\le\lambda(Y)-\lambda(X)
+\le\log\frac{Y-\varepsilon}{X-\varepsilon}.
+}
+\tag{300.21}
+$$
+这里只定义网格上的 $\lambda$，无需宣称连续插值具有额外性质。
+
+定义
+$$
+G=\{Y\ge h_0/2\}.
+$$
+在 $G$ 上记经验比 $R=X/Y$。
+由（300.11）、（300.15），在 $G$ 上，
+$$
+\varepsilon(1-k^D)
+\le3\varepsilon\kappa
+\le\gamma h_\star\kappa/2
+\le(t_0-k^D)Y.
+$$
+于是
+$$
+\boxed{
+k^D Y+\varepsilon(1-k^D)\le t_0Y.
+}
+\tag{300.22}
+$$
+当 $G$、$t_0Y\le X\le Y$ 时，
+$X\ge t_0 h_\star/2\ge m_\star/2=2a_\star>\varepsilon$。
+式（300.21）给
+$$
+\beta\ge
+1+\frac1{D\kappa}\log\frac{X-\varepsilon}{Y-\varepsilon}
+=\frac1{D\kappa}
+\log\frac{X-\varepsilon}{k^D(Y-\varepsilon)}
+\ge0.
+\tag{300.23}
+$$
+若 $X>Y$，则直接有 $\beta>1$。故
+$$
+G,\ X/Y\ge t_0\quad\Longrightarrow\quad\beta\ge0.
+\tag{300.24}
+$$
+
+实际概率表取
+$$
+a_{ij}=
+\begin{cases}
+0,&Y_j<h_0/2,\\
+0,&G,\ X_i/Y_j\le v,\\
+\beta_{ij},&G,\ v<X_i/Y_j<u,\\
+1,&G,\ X_i/Y_j\ge u.
+\end{cases}
+\tag{300.25}
+$$
+中区 $v>t_0$ 保证 $\beta\ge0$，而 $X/Y<u<1$ 和严格单调性保证 $\beta<1$。所以（300.25）逐项合法。相等阈值已有明确分支。它只使用已取得计数和已知参数。
+
+这一合法性只需要固定 $K_0(h_\star)$ 和 $d\ge1$，没有使用会产生 $(K\kappa)^{-1}$ 误差的两次独立对数近似。
+

@@ -1,0 +1,95 @@
+{
+  "scope": "Exact constants from retained data. The same charged-law mass transfer, shared query law, full-support averaging, prime transport and Chapter33 analytic tail are ordinary proof inputs, not conclusions of this arithmetic consumer. No new Lean certification or unrestricted Erdos7 conclusion.",
+  "inputs": {
+    "query_stoploss_completion.json": "44f871684942eb7dceb37c55880c9f9a49244d8bdd60134670ad80d10a3c587d",
+    "randomized_completion_support.json": "35bb2ad24786cc125f188c59a073e6df23e42433eb8195f01fd3b21b16c28938"
+  },
+  "ordinary_proof_inputs": {
+    "mass": "Chapter31 SV16-SV24 and report461's retained 32-vertex prefix bound",
+    "same_charged_process": "Chapter30's retained charged7 ordinary domination and report467's mass-transfer proof",
+    "query_and_full_support": "Report466's common-law query estimate and randomized completion averaging",
+    "two_prime_extension": "Report463 PE8-PE10, including the old unit cofactor",
+    "tail": "Chapter33 SH11-SH13, including its inherited analytic prime-product premise"
+  },
+  "source_producer_rerun": false,
+  "geometry_enumeration_rerun": false,
+  "old_query_rows_recomputed": false,
+  "common_seven_core_law": {
+    "unnormalized_mass_lower": "7235955529/450000000000",
+    "unnormalized_mass_upper": "3/8",
+    "conditional_caps": [
+      "3/2",
+      "5/3",
+      "3/2",
+      "2",
+      "9/5"
+    ],
+    "unnormalized_joint_density_cap": "27/2",
+    "normalized_joint_density_cap": "6075000000000/7235955529",
+    "rounded_strict_density_cap": "840",
+    "cap_gap": "3202644360/7235955529",
+    "query_R_upper": "70871/3375",
+    "coarse_query_R_upper": "21",
+    "density_lower_on_full_original_survivor_set": "1/5",
+    "scope": "One law, one fixed finite original family and resolved core period; the separate compactness argument gives a compatible all-depth law."
+  },
+  "nine_core_head": {
+    "reference_new_primes": [
+      43,
+      47
+    ],
+    "coarse_extension_numerator": "17",
+    "unnormalized_product_live_mass_lower": "17/1845",
+    "pure_product_density_cap": "644/615",
+    "haar_lower_with_exact_cap": "123011243993/11736900000000000",
+    "haar_lower_with_rounded_cap": "17/1622880",
+    "simple_strict_haar_lower": "1/100000"
+  },
+  "tail": {
+    "reference_head_primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      43,
+      47
+    ],
+    "M2": "1026827659/43877376",
+    "B": 5000000,
+    "ell": 14,
+    "3_power_ell": 4782969,
+    "c": "393/391",
+    "tau7_series_terms": [
+      "1",
+      "1/2",
+      "3/14",
+      "15/196",
+      "15/686",
+      "45/9604",
+      "45/67228",
+      "45/941192"
+    ],
+    "tau7_series": "1711167/941192",
+    "tau7": "1548532291830892024017324375000/4109273328836041460637664491099747871",
+    "tail_loss_upper": "3356799809382166491242085430546875/380639009086383090810803745583236836992",
+    "remaining_live_mass_lower": {
+      "exact_cap": "360270493849052043213219296321439511763804357/216785810643729119688340570726702854818100000000000",
+      "rounded_cap": "28371225593899239920050689645882701/17128755408887239086486168551245657664640",
+      "simple_head": "1404969629630201302706100079017166781/1189496903394947158783761704947615115600000"
+    },
+    "simple_strict_remaining_live_mass_lower": "1/1000000",
+    "scope": "Remaining unnormalized distorted-law mass, not a Haar-density lower bound."
+  },
+  "noncoverage_scope": {
+    "distinct_odd_numerical_moduli_greater_than_one": true,
+    "maximum_support_primes_below43": 7,
+    "maximum_support_primes_at_most5000000": 9,
+    "larger_prime_count": "unrestricted finite",
+    "original_phases_and_finite_heights": "unrestricted",
+    "shared_large_primes_per_modulus": "unrestricted",
+    "unrestricted_erdos7_resolved": false
+  }
+}

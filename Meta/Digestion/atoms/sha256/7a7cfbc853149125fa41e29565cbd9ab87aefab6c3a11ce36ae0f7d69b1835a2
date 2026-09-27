@@ -1,0 +1,19 @@
+### 54.5 外部交替尾环境的排除
+
+仍采用54.1节第一终端秩二、第二终端纯的七维六终端精确接收合同。特别地，
+$$
+U=G_2=\operatorname{span}(u,w),\quad
+H_2=\operatorname{span}(a^2u+bv,w),\quad
+V_0X=U\otimes F,
+\quad\dim U=\dim F=2.
+\tag{54.37}
+$$
+$u,v,w$ 正交单位，$ab\ne0$。各纯尾满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad
+G_n\perp Q_n\quad(3\le n\le6).
+\tag{54.38}
+$$
+各 $H_n,G_n,Q_n$ 二维，$C_n=H_n+G_n=G_n\oplus Q_n$ 在 $n\ge3$ 时四维。$H_n$ 到同轮 $G_n,Q_n$ 的正交投影均为同构。
+

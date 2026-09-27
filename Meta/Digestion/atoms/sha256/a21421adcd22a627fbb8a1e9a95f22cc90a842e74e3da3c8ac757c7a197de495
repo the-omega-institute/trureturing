@@ -1,0 +1,11 @@
+**推论。** 在第 22.2 节的局部区间中，同一对模型同时满足
+\[
+\lambda(O_n(\alpha,\cdot)\neq O_n(\alpha+\delta,\cdot))
+=\frac{n(n+1)}2\delta,
+\qquad
+\|B_n(\alpha+\delta,\cdot)-B_n(\alpha,\cdot)\|_1
+=(1-2^{-n})\delta.
+\tag{22.8}
+\]
+完整记录相等与数值编码接近是两个不同的目标。这条等式不声称 $L^\infty$ 参数稳定性。
+

@@ -1,0 +1,38 @@
+### 108.1 同轮状态平面恢复其完整零位投影
+
+对每个 $3\le n\le6$，实际合同给
+
+$$
+G_n\subset P_{\eta_n},\qquad
+G_n\otimes\eta_n\subset\operatorname{ran}V_0,
+\qquad Q_n\otimes\eta_n\subset\operatorname{ran}V_1,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad
+G_n\perp Q_n,\qquad P_{G_n}H_n=G_n.
+$$
+
+由于 $P_{\eta_n}\otimes\eta_n\subset E_0\subset\operatorname{ran}V_0$，两个位像的正交性在同一个非零环境向量上给
+
+$$
+Q_n\perp P_{\eta_n}.
+\tag{108.1}
+$$
+
+因此投影到整个已执行接收纤维后，恰好恢复实际零位平面：
+
+$$
+\boxed{P_{P_{\eta_n}}H_n=G_n.}
+\tag{108.2}
+$$
+
+这里 $P_U$ 表示到子空间 $U$ 的正交投影。式（108.2）来自 $G_n\subset P_{\eta_n}$、（108.1）及 $P_{G_n}H_n=G_n$，不要求 $G_n$ 已经填满整个纤维。特别地，若 $H_i=H_j$ 且 $[\eta_i]=[\eta_j]$，其中 $3\le i,j\le6$，那么
+
+$$
+G_i=G_j.
+\tag{108.3}
+$$
+
+该恢复关系只比较同轮环境，不要求它与其他尾环境正交。
+

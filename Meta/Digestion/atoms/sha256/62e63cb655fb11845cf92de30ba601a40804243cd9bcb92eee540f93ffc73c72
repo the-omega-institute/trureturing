@@ -1,0 +1,37 @@
+#### 1.2.4 精确容量界与固定 k 下的长度标度
+
+存在唯一 $\lambda_k\in(1,2)$ 满足
+$$
+\sum_{h=1}^{k}\lambda_k^{-h}=1,
+\qquad
+\lambda_k^k=\lambda_k^{k-1}+\cdots+1.
+\tag{TM.382}
+$$
+存在唯一性来自倒数幂和的连续严格递减：它在一处等于 $k>1$，在二处等于 $1-2^{-k}<1$。方程两种形式相乘即可互换。
+
+不需要额外谱理论即可得到全体 $N$ 的界
+$$
+\lambda_k^N\le G_N\le B_k\lambda_k^N,
+\qquad
+B_k=(2/\lambda_k)^{k-1}.
+\tag{TM.383}
+$$
+初始 $0\le j<k$ 时，比值 $G_j/\lambda_k^j=(2/\lambda_k)^j$ 位于 $[1,B_k]$。序列 $G_N$ 与 $\lambda_k^N$ 满足同一个正系数递推；把已有上下界相加就归纳得到下一步。结合式（TM.376），
+$$
+N\log\lambda_k\le\log|\mathcal W_N^{(k)}|
+\le N\log\lambda_k+(k-1)\log(2/\lambda_k),
+\qquad
+\lim_{N\to\infty}\frac{\log|\mathcal W_N^{(k)}|}{N}=\log\lambda_k.
+\tag{TM.384}
+$$
+令 $N_k(m)=\min\{N:G_N\ge m\}$。由于 $m>1$，有 $N_k(m)\ge1$，且 $G_{N_k(m)-1}<m\le G_{N_k(m)}$。将式（TM.383）代入左右两边，得到
+$$
+\log m-(k-1)\log(2/\lambda_k)
+\le N_k(m)\log\lambda_k
+<\log m+\log\lambda_k.
+\tag{TM.385}
+$$
+所以固定 $k$ 时，所需完整词长满足 $N_k(m)\log\lambda_k=\log m+O_k(1)$。这是长度与可区分整数数目的关系，不是说各编码的同深度前缀可以互相恢复。
+
+计数的对数是均匀律下的最大 Shannon 熵；未指定概率律时，式（TM.384）是语言增长率。若 $G_N>m$，实际标准余数代码集仍只有 $m$ 个元素，不能用全部 $G_N$ 个合法词代替这项实验的样本空间。
+

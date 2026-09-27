@@ -1,0 +1,23 @@
+**定理 67.3（跨临界尺度仍可共享一个能量场）。** 取有限个符合原外频范围的确定性载波，每个 $`r_{a,M}=\eta_a^2\delta`$ 或趋于 $`\zeta_a\in(0,\infty)`$，或趋于无穷。
+添入 $`\varphi_{0,M}=0`$ 表示旧场。
+假定每个实际相位差和相位和的 $`2\pi`$ 主值除以 $`\delta`$，分别收敛到有限 $`\Delta_{ab}`$、$`\Sigma_{ab}`$，或其绝对值趋于无穷；包括自身相位和。
+令 $`C_0=W_0`$，场族 $`C_a`$ 由第 63 章相同的兼容 Hermitian 与伪 Gram 确定，$`F_a(v)=C_a(e^{i\omega vx})`$。
+则共同旧坐标及 $`T_M`$ 与下列所有极限联合成立：
+
+```math
+\mathcal S_{a,M}(\theta)\Longrightarrow
+ 2\theta(|F_a(0)|^2-\gamma),\qquad r_{a,M}\to\infty,
+```
+
+```math
+\mathcal V_{a,M}(\theta)-\mathcal V_{a,M}(0)\Longrightarrow
+ \frac2{\sqrt{\zeta_a}}\int_0^\theta
+ (|F_a(t/\zeta_a)|^2-\gamma)\,dt,
+ \qquad r_{a,M}\to\zeta_a\in(0,\infty).
+```
+
+式 (67.13)。
+
+$`N_2`$ 独立于整个场族；各载波之间是否独立，由两类 Gram 共同决定。
+这些相位条件是本联合场结论的充分条件，不宣称是所有非线性能量元组收敛的必要条件。
+

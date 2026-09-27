@@ -1,0 +1,44 @@
+**定理 60.1（独立高阶矩预算给出均值区间）。** 假定同一等待律另满足已知条件
+
+$$
+\mathbb E\mathsf N^{1+\beta}\le K<\infty,\qquad\beta>0.
+$$
+
+则它没有永不点击质量，$\mu<\infty$，且对每个整数 $m\ge1$，
+
+$$
+\boxed{
+0\le\mu-\mathbb E\min(\mathsf N,m)\le\frac K{m^\beta}.
+}
+$$
+
+若已取得第 59.2 条的截断成本估计及误差 $e_{m,k}$，则
+
+$$
+\boxed{
+\max\{1,\widehat v_{m,k}-e_{m,k}\}
+\le\mu\le
+\widehat v_{m,k}+e_{m,k}+\frac K{m^\beta}.
+}
+$$
+
+证明。正的永不点击质量会令高阶矩无穷，与假设矛盾。又 $\mathsf N\le\mathsf N^{1+\beta}$，故均值有限。对有限正整数 $n$，
+
+$$
+0\le n-\min(n,m)
+\le n\,\mathbf1_{\{n>m\}}
+\le\frac{n^{1+\beta}}{m^\beta}.
+$$
+
+取期望得到尾界，再与截断成本区间合并。$\square$
+
+这里 $K,\beta$ 必须是模型类预先给出的合同，或由另一份有效证书提供；第 58 节证明，同一批有限精度有界读数不能普遍认证这样一个有限预算。若尾预算本身只有置信度 $1-\alpha_{\mathrm{tail}}$，读数区间的置信度为 $1-\alpha_{\mathrm{data}}$，两者在同一真实模型上的联合结论可用并集界给至少 $1-\alpha_{\mathrm{tail}}-\alpha_{\mathrm{data}}$，不要求二事件独立。若尾预算只是尚未核验的前提，结论仍是条件式。
+
+这与前文的共同加权尾条件相接：高阶矩上界是一个方便且明确的充分条件。更一般地，只要已有可用函数 $r(m)\downarrow0$，并认证
+
+$$
+\mathbb E[(\mathsf N-m)_+]\le r(m),
+$$
+
+同一均值区间就可把 $K/m^\beta$ 换成 $r(m)$。不需要把高阶矩有限误当成所有均值认证方法的必要条件。
+

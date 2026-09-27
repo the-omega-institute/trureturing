@@ -1,0 +1,78 @@
+### 180.1 两参数的共同接收端 instrument
+
+固定 $L\ge3$ 和相位 $\varphi=\pi/4$。沿用第179节的接收端坐标，输入为
+
+$$
+\omega_j'=\frac12\sum_{\nu=0}^1P_{q_\nu}\otimes\eta_{j,\nu},
+\qquad s_\nu=(-1)^{\nu+1},
+$$
+
+$$
+\eta_{j,\nu}=(1-\beta w_j)P_\Xi+\beta w_jP_\psi
++s_\nu\gamma w_j
+\bigl(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\bigr).
+\tag{180.1}
+$$
+
+这里 $\psi=(I\otimes Y)\Xi$、$\Xi\perp\psi$，
+$0<w_0<w_1<1/2$，
+$\beta=288/2353$、$\gamma=42/2353$。
+
+取
+
+$$
+0<r<1,\qquad |t|<\min\{r,1-r\},
+$$
+
+$$
+p_0=r,\quad p_1=1-r,\qquad t_0=t,\quad t_1=-t.
+\tag{180.2}
+$$
+
+接收端读取旗标 $\nu$ 后，在 $R$ 上使用两个 Kraus 算子
+
+$$
+K_{k,\nu}=\bigl(p_kI+s_\nu t_kY\bigr)^{1/2},
+\qquad k=0,1,
+\tag{180.3}
+$$
+
+并把结果 $k$ 写到 $Q_{\mathrm{out}}$，保留 Kraus 输出作为
+$R_{\mathrm{out}}$，随后丢弃旧旗标。因为
+
+$$
+\sum_{k=0}^1K_{k,\nu}^\dagger K_{k,\nu}
+=(p_0+p_1)I+s_\nu(t_0+t_1)Y=I,
+$$
+
+这是每个旗标上的保迹 instrument。参数 $r,t$ 只依赖已知的模型与启动长度，不依赖未知原输入 $j$；整个解码器是对两个原输入共同使用的接收端 CPTP 映射。
+
+将平方根写成
+
+$$
+K_{k,\nu}=a_kI+s_\nu b_kY,
+$$
+
+$$
+a_k=\frac{\sqrt{p_k+t_k}+\sqrt{p_k-t_k}}2,\qquad
+b_k=\frac{\sqrt{p_k+t_k}-\sqrt{p_k-t_k}}2.
+\tag{180.4}
+$$
+
+于是
+
+$$
+a_k^2+b_k^2=p_k,\qquad
+2a_kb_k=t_k,\qquad
+a_k^2-b_k^2=\sqrt{p_k^2-t_k^2}.
+\tag{180.5}
+$$
+
+因为 $Y^2=I$，这些算子在 $\Xi,\psi$ 张成的子空间内作用：
+
+$$
+(I\otimes K_{k,\nu})\Xi=a_k\Xi+s_\nu b_k\psi,\qquad
+(I\otimes K_{k,\nu})\psi=s_\nu b_k\Xi+a_k\psi.
+\tag{180.6}
+$$
+

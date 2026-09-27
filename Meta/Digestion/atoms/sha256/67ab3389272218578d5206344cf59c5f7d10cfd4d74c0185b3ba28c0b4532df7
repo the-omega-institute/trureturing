@@ -1,0 +1,11 @@
+#### 2.9.2 Canonical cylinders and the exact extension relation
+
+Let
+
+$$
+\mathcal B
+=\{[s]: |s|\ge1,\ [s]\subseteq U,\ [s^-]\not\subseteq U\}
+$$
+
+be the canonical shortest forbidden-prefix basis. Here $s^-$ deletes the last symbol. These cylinders are pairwise disjoint and cover $U$.
+

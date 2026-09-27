@@ -1,0 +1,15 @@
+**命题 233.3（总预算小于输入维数）。** 若 $1\le R<d$，则
+$$
+\boxed{D_R=1.}
+\tag{233.FF.40}
+$$
+证明：对任意候选取全部最小 Kraus $C_{j,a}$，总数 $K\le R<d$。考虑同时收集全部目标事件振幅的线性映射
+$$
+v\longmapsto\bigl(\langle r_j,C_{j,a}v\rangle\bigr)_{j,a}
+\quad:\mathbb C^d\to\mathbb C^K.
+\tag{233.FF.41}
+$$
+它有非零核。取核中的单位输入，候选在 $\sum_j|j\rangle\langle j|\otimes P_j$ 上概率为零，目标概率为一。故半 diamond 距离至少为一；任意两份 CPTP 通道的半 diamond 距离至多为一，且候选集非空。$\square$
+
+相应的投影和条件也不可能成立：$0<R/d<1$，但任意非零 $\Pi_j$ 都满足 $\Pi_j\preceq\sum_i\Pi_i=(R/d)I$，在其单位像向量上会给 $1\le R/d$，矛盾。
+

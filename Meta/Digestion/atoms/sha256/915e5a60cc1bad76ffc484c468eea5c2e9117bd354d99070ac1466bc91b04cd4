@@ -1,0 +1,9 @@
+**引理 58.3。** 对全部 $0<\varepsilon<1$，
+
+$$
+h(X_\varepsilon)=1+\frac{k^2}{1+2k},
+\qquad
+h(-X_\varepsilon)=\frac{1+\sqrt{1+4b^2}}2.
+\tag{58.12}
+$$
+

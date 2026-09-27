@@ -1,0 +1,28 @@
+### 249.2 逐模式有效的 Schmidt 秩约束
+
+一个混合态若可写成 Schmidt 秩至多 $r$ 的归一化纯态的凸组合，就称其 Schmidt number 至多 $r$。对 $|z|=j$ 的模式，$\Gamma_z$ 有这样的分解，且
+$$
+\operatorname{SN}(\Gamma_z)\le2^j.
+\tag{249.7}
+$$
+因为其 Bell 部分具有 Schmidt 秩 $2^j$，其余局部混合态和可分部分都可以分解为不增加该秩的产品纯态。
+
+沿任意有限轮 LOCC 的一条细化结果路径，Kraus 算子是两方局部算子的张量积。纯态的 Schmidt 秩在局部线性映射下不增加；合并结果或丢弃局部寄存器只形成这类低秩纯态的混合。因此（249.7）也约束每个模式经过协议后任意非零概率条件输出。
+
+还需要一个标准 Bell 重叠界：对 $\mathbb C^m\otimes\mathbb C^m$ 上 Schmidt number 至多 $r$ 的归一化态 $\rho$，
+$$
+\langle\Phi_m|\rho|\Phi_m\rangle\le\min\left\{1,\frac rm\right\}.
+\tag{249.8}
+$$
+可核对的标准出处是 J. Watrous，*The Theory of Quantum Information*，[作者版原文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Example 6.16，印刷第324页、PDF第332页，式（6.84）。本节在实际推导中直接使用该界。
+
+其所需计算很短：若纯态的系数矩阵为 $T$，则 $\|T\|_{\mathrm{HS}}=1$、$\operatorname{rank}T\le r$，而
+$$
+|\langle\Phi_m|\psi\rangle|
+=\frac{|\operatorname{Tr}T|}{\sqrt m}
+\le\frac{\|T\|_*}{\sqrt m}
+\le\sqrt{\frac rm}.
+\tag{249.9}
+$$
+最后一步是对非零奇异值使用 Cauchy–Schwarz。纯态重叠还至多为一；再对纯态分解取平均就得到（249.8）。这里的 $\|T\|_*$ 是矩阵核范数。
+

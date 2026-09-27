@@ -1,0 +1,138 @@
+**定理170.3（全空间渐近逻辑投影）。** 存在 CPTP 通道
+$\Lambda_\infty:\mathcal L(H)\to\mathcal L(H_{\mathrm{log}})$，使
+
+$$
+\boxed{
+\Lambda_\infty\mathcal E=\operatorname{id},\qquad
+\Lambda_\infty\mathcal F=\mathcal U\Lambda_\infty.
+}
+\tag{170.21}
+$$
+
+令
+
+$$
+\Lambda_n=\mathcal U^{-n}\mathcal D\mathcal F^n.
+$$
+
+则
+
+$$
+\boxed{
+d_\diamond(\Lambda_\infty,\Lambda_n)
+\le\frac{2p^{n/2}}{1-\sqrt p}
+\quad(n\ge0),
+}
+\tag{170.22}
+$$
+
+以及
+
+$$
+\boxed{
+d_\diamond\!\left(
+\mathcal F^n,\mathcal E\mathcal U^n\Lambda_\infty
+\right)
+\le C_p^{\mathrm{abs}}p^{(n-1)/2},
+\qquad
+C_p^{\mathrm{abs}}=
+\frac{2(2-\sqrt p)}{1-\sqrt p},
+\quad n\ge1.
+}
+\tag{170.23}
+$$
+
+**证明。** 置
+$\mathcal Z=\mathcal F-\mathcal E\mathcal U\mathcal D$。
+由（170.20），$\mathcal Z$ 在整个 $\mathsf P$ 算子块上为零。
+
+任取带外部参考的归一化输入态 $\omega$，记
+$\omega_n=(\mathcal F^n\otimes\operatorname{id})(\omega)$。
+由泄漏上界及对偶通道的正性归纳，
+
+$$
+\operatorname{Tr}[(\mathsf Q\otimes I)\omega_n]
+\le p^n\operatorname{Tr}[(\mathsf Q\otimes I)\omega]\le p^n.
+$$
+
+投影的 gentle measurement 估计给
+
+$$
+\|\omega_n-(\mathsf P\otimes I)\omega_n
+(\mathsf P\otimes I)\|_1\le2p^{n/2}.
+\tag{170.24}
+$$
+
+$\mathcal Z$ 是两条 CPTP 通道之差；每条通道在 Hermitian 输入上收缩迹范数。因此
+
+$$
+\|(\mathcal Z\otimes\operatorname{id})(\omega_n)\|_1
+\le4p^{n/2}.
+$$
+
+这个估计与参考维数无关。用通道差的状态优化刻画 diamond 范数，得到
+
+$$
+\frac12\|\mathcal Z\mathcal F^n\|_\diamond
+\le2p^{n/2}.
+\tag{170.25}
+$$
+
+各 $\Lambda_n$ 都是 CPTP。由 $\mathcal D\mathcal E=\operatorname{id}$，
+
+$$
+\Lambda_{n+1}-\Lambda_n
+=\mathcal U^{-(n+1)}\mathcal D
+\mathcal Z\mathcal F^n.
+$$
+
+故相邻项的 $d_\diamond$ 至多为 $2p^{n/2}$。几何级数可和，$\Lambda_n$
+在有限维通道空间中收敛到 CPTP 极限 $\Lambda_\infty$；求和即得（170.22）。
+
+由代码合同有 $\mathcal F\mathcal E=\mathcal E\mathcal U$，于是
+$\Lambda_n\mathcal E=\operatorname{id}$。同时
+$\Lambda_n\mathcal F=\mathcal U\Lambda_{n+1}$。取极限得到（170.21）。
+
+最后，对 $n\ge1$，
+
+$$
+\mathcal F^n-\mathcal E\mathcal U^n\Lambda_\infty
+=
+\mathcal Z\mathcal F^{n-1}
++\mathcal E\mathcal U^n(\Lambda_{n-1}-\Lambda_\infty).
+\tag{170.26}
+$$
+
+第一项由（170.25）控制，第二项由（170.22）与通道收缩控制；两项半 diamond 范数之和为
+
+$$
+2p^{(n-1)/2}
++\frac{2p^{(n-1)/2}}{1-\sqrt p}
+=C_p^{\mathrm{abs}}p^{(n-1)/2}.
+$$
+
+证毕。
+
+定义
+
+$$
+\Pi_\infty=\mathcal E\Lambda_\infty.
+\tag{170.27}
+$$
+
+由（170.21），这是 CPTP 投影，满足
+
+$$
+\boxed{
+\Pi_\infty^2=\Pi_\infty,\qquad
+\mathcal F\Pi_\infty=\Pi_\infty\mathcal F,\qquad
+\operatorname{ran}\Pi_\infty=\operatorname{ran}\mathcal E.
+}
+\tag{170.28}
+$$
+
+在 $\ker\Pi_\infty$ 上，（170.23）给出几何衰减；其谱半径至多为
+$\sqrt p<1$。在 $\operatorname{ran}\mathcal E$ 上，
+$\mathcal F$ 与 $\mathcal U$ 由 $\mathcal E,\Lambda_\infty$ 相似。
+因此 $\mathcal F$ 的全部单位模谱及其本征算子都来自逻辑酉通道，代码外不存在额外外围模，也不存在额外外围 Jordan 链。
+

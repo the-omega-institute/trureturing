@@ -1,0 +1,100 @@
+{
+  "scope": "Finite local facts and rational constants; arbitrary-height deductions are ordinary proofs.",
+  "q_primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "nonternary_height": 3,
+  "method_obstruction_from_height": 405,
+  "original_count_at_threshold": 1662975,
+  "side_cylinder_pair_checks_through_depth_three": 3858,
+  "proper_support_phase_checks": 1664,
+  "equal_support_phase_checks": 57,
+  "largest_coordinate_mask_checks": 114,
+  "u_parameters": [
+    [
+      31,
+      94
+    ],
+    [
+      57,
+      286
+    ],
+    [
+      133,
+      1198
+    ],
+    [
+      183,
+      2014
+    ],
+    [
+      307,
+      4606
+    ],
+    [
+      381,
+      6478
+    ]
+  ],
+  "K": [
+    -5263897225533641,
+    276488459193698752
+  ],
+  "T": [
+    1303469977854414345,
+    1935419214355891264
+  ],
+  "coarse_concentration_floor": [
+    19,
+    694
+  ],
+  "uniform_source_upper_at_height_four": [
+    -17,
+    8200
+  ],
+  "query_obstruction_surplus_at_threshold": [
+    335,
+    35394
+  ],
+  "overlap_corrected_w_mass": [
+    204550887415385513,
+    1935419214355891264
+  ],
+  "overlap_corrected_z_mass": [
+    1475883367641688121,
+    1935419214355891264
+  ],
+  "alternative_query_unrounded_uniform_upper": [
+    43245758512410621731,
+    5074712435238276096
+  ],
+  "alternative_query_upper": [
+    1097,
+    128
+  ],
+  "alternative_query_target_surplus": [
+    16373,
+    6528
+  ],
+  "alternative_density_unrounded_uniform_upper": [
+    977428077776150,
+    1380053985669
+  ],
+  "alternative_density_upper": [
+    720,
+    1
+  ],
+  "later_remaining_probability": [
+    2339,
+    11264
+  ],
+  "later_haar_floor": [
+    2339,
+    8110080
+  ]
+}

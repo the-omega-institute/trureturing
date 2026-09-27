@@ -1,0 +1,1 @@
+| `D5/S3/Observer/AgencyHolonomy/ActionLoopRequiresMemory.lean`，`policy_change_implies_memory_change`、`injective_policy_detects_memory_change` | 策略变化推出记忆变化，以及单射策略读数下的对应逆向蕴含 | 没有最小记忆基数或维数定理 

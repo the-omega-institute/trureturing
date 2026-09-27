@@ -1,0 +1,35 @@
+**定义 63.1（临界窗口与相位关系）。** 沿用第 62 章的原实验、精确组电荷、有限截距及旧联合坐标，固定正整数 $p$。对 $1\le a\le p$ 取确定性序列
+
+$$
+\eta_{a,M}\to\infty,\qquad
+r_{a,M}=\eta_{a,M}^2\delta_M\to\zeta_a\in(0,\infty),\qquad
+\phi_{a,M}=\omega\eta_{a,M},\qquad \omega=\pi/2.
+$$
+
+记 $\langle t\rangle$ 为 $t$ 模 $2\pi$ 在 $(-\pi,\pi]$ 内的代表。假定下列有限组实序列各自收敛到一个有限实数，或其绝对值趋于无穷：
+
+$$
+\delta_M^{-1}\langle\phi_{a,M}\rangle,\quad
+\delta_M^{-1}\langle\phi_{a,M}-\pi\rangle,\quad
+\delta_M^{-1}\langle\phi_{a,M}-\phi_{b,M}\rangle,\quad
+\delta_M^{-1}\langle\phi_{a,M}+\phi_{b,M}\rangle.
+\tag{63.1}
+$$
+
+这里 $a=b$ 也包括在内。有限极限分别记作 $b_a^0,b_a^\pi,d_{ab}^-,d_{ab}^+$；不存在有限极限的项记作 $\infty$，不赋予无穷项符号。若 $d_{ab}^-$ 或 $d_{ab}^+$ 有限，则称 $a,b$ 属于同一别名簇。
+
+各窗口都使用同一后验标签向量。令
+
+$$
+s_{a,M}=\log(\eta_{a,M}/\delta_M),\qquad
+z_{a,M}(\theta)=s_{a,M}+\theta/\eta_{a,M}^3,
+$$
+
+$$
+V_{a,M}(\theta)=\eta_{a,M}^{3/2}e^{z_{a,M}(\theta)/2}
+\left[\mathcal Z_M(z_{a,M}(\theta)\sqrt{\delta_M})
+-J_M-2z_{a,M}(\theta)\sqrt{\delta_M}T_M\right],\qquad
+D_{a,M}(\theta)=V_{a,M}(\theta)-V_{a,M}(0).
+\tag{63.2}
+$$
+

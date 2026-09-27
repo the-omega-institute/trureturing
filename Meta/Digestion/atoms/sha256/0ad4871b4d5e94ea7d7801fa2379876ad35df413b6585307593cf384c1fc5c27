@@ -1,0 +1,16 @@
+**证明。** 竞争者写作结果映射 $\Psi_0,\Psi_1$。
+
+若 $\operatorname{rank}J(\Psi_1)\le1$，则
+$\Psi_1(X)=KXK^\dagger$，包括 $K=0$。由于输入维数至少二，线性泛函
+$\langle r|K$ 有非零核。取核中的单位输入 $|\psi\rangle$。
+竞争者对事件“结果1且输出为 $r$”的概率为零，目标概率为
+$\langle\psi|B|\psi\rangle\ge\lambda_{\min}(B)$。
+效果概率差给半迹距离下界，该输入又是完整 diamond 检验的合法输入。
+
+若 $\operatorname{rank}J(\Psi_1)=2$，总秩约束迫使 $\Psi_0=0$。
+选择使 $\langle\psi|E_0|\psi\rangle=\|E_0\|_\infty$ 的输入，并只检验输出标签0，得到距离下界 $\|E_0\|_\infty$。
+
+两种情况穷尽总秩二候选，证明（219.15）。证毕。
+
+这里的候选量子输出完全任意；引理没有把它们限制为目标输出的重制备态。下界只使用各候选的一项合法测试，不将该测试等同于完整 diamond 最大值。
+

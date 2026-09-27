@@ -1,0 +1,14 @@
+### 证明
+
+这是全方差公式
+
+$$
+\operatorname{Var}(Z)
+=
+\mathbb E[\operatorname{Var}(Z\mid Y)]
++
+\operatorname{Var}(\mathbb E[Z\mid Y])
+$$
+
+的移项。证毕。
+

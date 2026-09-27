@@ -1,0 +1,83 @@
+### 194.3 用恢复损失吸收噪声收益
+
+逐 Kraus 的恒等式
+
+$$
+r|b|^2+\ell|c|^2-|rb-\ell c|^2
+=r\ell|b+c|^2
+$$
+
+以及 $r\ge1/2\ge\ell$、（194.4）给
+
+$$
+V_0+V_1
+\le r\sum|b|^2+\ell\sum|c|^2
+\le\frac D\ell.
+$$
+
+因此
+
+$$
+V_0+RV_1\le\frac{RD}{\ell},
+\qquad
+|W_0+RW_1|
+\le R\sqrt{(U_0+U_1)(V_0+V_1)}
+\le R\sqrt{\frac D\ell}.
+\tag{194.7}
+$$
+
+另一方面，精确有
+
+$$
+U_0+RU_1=\frac{\Sigma(1-D)-\delta t}{2}.
+$$
+
+将它与（194.6）—（194.7）代入（194.5），得到
+
+$$
+\begin{aligned}
+e\ge{}&\frac34+\frac{\beta\Sigma}{8}\epsilon\\
+&+\left(\frac14-\frac{\beta\Sigma\epsilon}{8}
+-\frac{\beta R\epsilon}{4\ell}\right)D
+-\frac{gR\epsilon}{2\sqrt\ell}\sqrt D\\
+&+\frac{t^2}{16}-\frac{\beta\delta\epsilon}{8}t
+-\frac{B_*^2\epsilon^2}{8}.
+\end{aligned}
+\tag{194.8}
+$$
+
+例如可选 $K\ge\max\{1,\beta(5R+1)\}$。
+因为 $\ell\le1/2$ 且 $\ell\ge K\epsilon$，$D$ 前的括号至少为 $3/16$。
+两次完成平方给
+
+$$
+\frac{3D}{16}
+-\frac{gR\epsilon}{2\sqrt\ell}\sqrt D
+\ge\frac D{16}-\frac{g^2R^2\epsilon^2}{2\ell},
+$$
+
+$$
+\frac{t^2}{16}-\frac{\beta\delta\epsilon}{8}t
+\ge\frac{t^2}{32}-\frac{\beta^2\delta^2\epsilon^2}{8}.
+$$
+
+由于 $\ell\le1/2$，若置
+
+$$
+A=\frac{g^2R^2}{2}
++\frac{B_*^2+\beta^2\delta^2}{16},
+$$
+
+便得到对全部共同对称化 instrument 成立的定量下界
+
+$$
+\boxed{
+e\ge\frac34+\frac{\beta\Sigma}{8}\epsilon
++\frac D{16}+\frac{t^2}{32}
+-A\frac{\epsilon^2}{\ell}.
+}
+\tag{194.9}
+$$
+
+这同时保留了来源恢复损失和输出标签偏置，未假设二者预先具有某种参数阶数。
+

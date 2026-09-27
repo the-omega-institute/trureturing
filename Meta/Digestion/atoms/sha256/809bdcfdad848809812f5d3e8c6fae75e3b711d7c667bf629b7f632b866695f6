@@ -1,0 +1,29 @@
+**命题 2.4（完整端口共同运输）。** 取列状态邻接矩阵
+
+$$
+A_{ts}=\sum_{e:s\to t}w_e,\qquad G=\operatorname{diag}(g_v).
+$$
+
+逐边换基给
+
+$$
+A'=GAG^{-1}.
+$$
+
+对输入、读出及初态共同运输
+
+$$
+B'=GB,\qquad H'=HG^{-1},\qquad x'_0=Gx_0,
+\tag{AP.9}
+$$
+
+则所有 $n\ge0$ 满足
+
+$$
+H'(A')^nB'=HA^nB,\qquad
+H'(A')^nx'_0=HA^nx_0.
+\tag{AP.10}
+$$
+
+同一输入序列下的全部有限时刻实际输出保持。
+

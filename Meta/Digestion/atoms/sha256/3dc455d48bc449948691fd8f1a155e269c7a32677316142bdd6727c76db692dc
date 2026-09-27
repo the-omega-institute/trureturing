@@ -1,0 +1,31 @@
+**定理63.2（新环境切口的谱尾损失）。** 对任何上述实际输入、任意接收器 CPTP 解码以及任意新环境正交投影，均有
+$$
+1-\langle\psi|\rho_{BQ}|\psi\rangle\ge w_P\epsilon_{m_P},
+$$
+从而
+$$
+\frac12\|\rho_{BQ}-|\psi\rangle\langle\psi|\|_1
+\ge w_P\epsilon_{m_P}.
+$$
+更一般地，若 $P_j$ 是新环境的一组两两正交投影，$m_j=\operatorname{rank}((I_K\otimes P_j)W)$，$w_j$ 是对应实际概率，则
+$$
+1-\langle\psi|\rho_{BQ}|\psi\rangle
+\ge\sum_j w_j\epsilon_{m_j}.
+$$
+
+证明。先看单一投影。$W_P$ 的像至多 $m_P$ 维，因此 $|\Omega_P\rangle$ 在切分
+$$
+(B\otimes E_{\mathrm{old}})\mid(K\otimes E_{\mathrm{new}})
+$$
+上的 Schmidt 秩至多 $m_P$。把 $\mathcal D$ 扩张为作用在右侧 $K$ 的等距，再分别对左侧 $E_{\mathrm{old}}$ 和右侧解码辅助空间及 $E_{\mathrm{new}}$ 取迹。用这些辅助空间的正交基逐项展开偏迹，每个未归一化 $BQ$ 向量仍是至多 $m_P$ 个积向量的和。因此该分支解码正算子 $\rho_P$ 的 Schmidt 数不超过 $m_P$，且 $\operatorname{Tr}\rho_P=w_P$。
+
+引理给 $\langle\psi|\rho_P|\psi\rangle\le w_P\Lambda_{m_P}$。迹掉环境后，不同正交环境投影之间的交叉项为零，所以
+$$
+\rho_{BQ}=\rho_P+\rho_{I-P}.
+$$
+另一分支的重叠至多其迹 $1-w_P$。于是总重叠不超过 $w_P\Lambda_{m_P}+1-w_P$，得到第一式。
+
+用效果 $I-|\psi\rangle\langle\psi|$ 测试两态，其概率差正好是左侧的 infidelity；迹距离是全部效果概率差的上界，得到第二式。
+
+对多投影，加上补投影 $I-\sum_jP_j$，逐分支应用同一上界并求和即可。各项始终来自同一目标、同一解码和同一实际输入。证明完毕。
+

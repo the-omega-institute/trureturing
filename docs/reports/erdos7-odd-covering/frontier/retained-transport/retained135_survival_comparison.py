@@ -12,12 +12,12 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/retained135_survival_comparison.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/retained-transport/retained135_heavy_comparison.py': '93ad67489e6ce429f45bd8888cfd8f6e5ac91b0bc3d4fbeebfedef9f7d4b84ac',
-    'certificates/source_norms/retained-transport/retained135_heavy_comparison.json': '4251657492261cb125c28cace5cf2f76c022b19a415648f8387672cbbc2778a0',
-    'frontier/retained-transport/retained_deletion_survival_comparison.py': 'bf265663d663f4e681e79efdca61af3607917cac3a47f9c8fbc1dd19f911abab',
-    'certificates/source_norms/retained-transport/retained_deletion_survival_comparison.json': '646acfad14cbb6e3476c7d33a1fb2ce3ba068305dc02fa75635df8c8509fff87',
-    'frontier/comparison-bounds/load_two_cost_remainders.py': '4bb1f09f0768f92b9dc447156ad0c816e1858c7a1e553c2b422ebe878d7d0ec2',
-    'certificates/source_norms/comparison-bounds/load_two_cost_remainders.json': 'f4224aa378cf67701c4d67bc6e7781277163ad429970727013673aa4e3b2a9e3',
+    'frontier/retained-transport/retained135_heavy_comparison.py': 'cb3dfecc24fe9c95759008a54a9e023bafd45d280a92f06c5072e0565e4b7374',
+    'certificates/source_norms/retained-transport/retained135_heavy_comparison.json': '6f89430cd4685ca366f4fa1561ff588e8e63d9296399eebe9e97b5058b6e27da',
+    'frontier/retained-transport/retained_deletion_survival_comparison.py': '4cdcaa195455c3cb1bb417ea0444020fbc9f686f90e8496c99e943a06d671199',
+    'certificates/source_norms/retained-transport/retained_deletion_survival_comparison.json': '48eabcb0d986ae2f5ab5e848e92a5364630c01ae24014ab2d6b3a131b33c3fd6',
+    'frontier/comparison-bounds/load_two_cost_remainders.py': 'd946a67c8179e127e43bc6b9e58ce2820f4f9e7b7e3c37224f3a50dee7387a0a',
+    'certificates/source_norms/comparison-bounds/load_two_cost_remainders.json': '656c97a891b2fac1fb702c980eac0cdb852fac0293a0bb99047b04a974b903b7',
 }
 
 

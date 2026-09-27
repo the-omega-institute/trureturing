@@ -1,0 +1,32 @@
+### 236.3 最小支持线性关系给统一下界
+
+假设候选总容量满足
+$$
+K(\mathcal S)<(N-1)d.
+\tag{236.MP.12}
+$$
+由（236.MP.8），
+$$
+\sum_j\dim G_j
+=Nd-\sum_j\operatorname{rank}L_j
+\ge Nd-K(\mathcal S)>d.
+\tag{236.MP.13}
+$$
+所以外部直和上的加法映射
+$$
+T:\bigoplus_{j=1}^NG_j\to A,
+\qquad T((w_j)_j)=\sum_jw_j
+\tag{236.MP.14}
+$$
+有非零核。
+
+从所有非零核元中，选择非零分量数最少的一份 $(w_j)_j$。记其支持为 $J$，$q=|J|$。由于一份非零向量不能独自相加为零，
+$$
+2\le q\le N.
+$$
+对全部 $j\in J$，$w_j\ne0$ 且 $w_j\in G_j$，并有
+$$
+\sum_{j\in J}w_j=0.
+\tag{236.MP.15}
+$$
+

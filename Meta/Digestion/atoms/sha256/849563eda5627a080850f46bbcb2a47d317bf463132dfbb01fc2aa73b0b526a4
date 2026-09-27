@@ -1,0 +1,35 @@
+### 235.2 实际事件振幅与子空间参考
+
+对任意候选（235.AD.2），定义复线性映射
+$$
+L_j:A\to\mathbb C^{k_j},
+\qquad(L_jv)_a=\langle r_j,C_{j,a}v\rangle,
+\qquad G_j=\ker L_j.
+\tag{235.AD.7}
+$$
+因此
+$$
+\operatorname{rank}L_j\le k_j,
+\qquad\dim G_j\ge d-k_j.
+\tag{235.AD.8}
+$$
+这里的核只消去指定目标输出方向上的振幅；不要求 $C_{j,a}v=0$，也不删除候选的其他输出。
+
+直接应用第234节引理234.1，对任意非零输入子空间 $H\subseteq A$、$h=\dim H$，有
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge1-\frac{\sum_{j=1}^3\operatorname{rank}(L_j|_H)}{3h}
+=\frac{\sum_{j=1}^3\dim(H\cap G_j)}{3h}.
+}
+\tag{235.AD.9}
+$$
+最后一个等号是限制映射上的秩—零化度公式。此前的效果构造直接作用于原候选，允许任意输出泄漏；这里保留其全部候选量词，不重复那份证明。
+
+一维情形就是共同核事件。更具体地，若标签集合 $J$ 满足 $\sum_{j\in J}k_j<d$，将其振幅矩阵纵向堆叠后必有非零核。该单位输入一次消去这些标签的目标事件，给无参考下界
+$$
+\delta_0(\mathcal R,\mathcal S)\ge\frac{|J|}{3}.
+\tag{235.AD.13}
+$$
+子空间 $H$ 及事件可以依赖被检验的候选，这符合每个候选分别取最坏输入的量词。
+

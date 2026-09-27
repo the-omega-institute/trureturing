@@ -1,0 +1,62 @@
+### 251.2 两份响应确定占用空间及典范分块
+
+对 $R_a,R_b$ 取谱符号，核上一律取零：
+$$
+H_a=\operatorname{sign}R_a,
+\qquad H_b=\operatorname{sign}R_b,
+\qquad C=[H_a,H_b],
+\qquad\gamma=\frac{4\sqrt{AB}}{A+B}.
+\tag{251.8}
+$$
+§248的正常形给出量子块及产品块上的响应
+$$
+\begin{aligned}
+R_w\big|_{E_{\mathrm{ent}}}
+ &=\frac\theta2V(A_w^{\mathsf T}\otimes\sigma_M)V^\dagger,\\
+R_w\big|_{E_s}
+ &=q_s s_w\sqrt A\,\tau_s.
+\end{aligned}
+\tag{251.9}
+$$
+这里 $V:\mathbb C^2\otimes M\to E_{\mathrm{ent}}$ 是共同 Bell 解码的逆同构；只保留正权重块，并将 $M,E_s$ 限制到相应密度矩阵的支撑。于是 $\sigma_M,\tau_s$ 在各自空间上严格正，$A_w^2=\ell^2I_2$，每个占用块上的 $R_w$ 都可逆。因此
+$$
+E_0:=\operatorname{supp}|R_a|
+=\operatorname{supp}|R_b|
+=\operatorname{supp}\operatorname{Tr}_H\Omega.
+\tag{251.10}
+$$
+令 $P_0$ 为 $E_0$ 的正交投影。它由响应取得，无需另行给定参考边缘。§250的交换子公式给
+$$
+Q=-\frac{C^2}{\gamma^2},
+\qquad P=P_0-Q,
+\tag{251.11}
+$$
+分别为量子与产品参考空间的正交投影。它们与 $H_a,H_b$ 交换。在 $QE$ 上有
+$$
+V^\dagger H_wV=\frac{A_w^{\mathsf T}}\ell\otimes I_M;
+\tag{251.12}
+$$
+在 $PE$ 上，$H_a,H_b$ 是交换的 Hermitian 对合。
+
+对允许的符号对 $s=(s_a,s_b)$，定义
+$$
+Q_s=\frac14P(I_E+s_aH_a)(I_E+s_bH_b),
+\qquad E_s=Q_sE.
+\tag{251.13}
+$$
+当 $A>B$ 时允许集合为 $\Sigma=\{(+,+),(-,-)\}$；当 $A=B$ 时允许全部四个符号对。零投影可省略，且 $\sum_sQ_s=P$。以 $u,v$ 分别表示 $Z,X$ 的 Bloch 轴，对应产品输入方向为
+$$
+r_s=
+\begin{cases}
+s_a u,&s_a=s_b,\\
+s_a\operatorname{sgn}(b_0)v,&s_a=-s_b\ \text{且 }A=B.
+\end{cases}
+\tag{251.14}
+$$
+选对应单位向量 $|r_s\rangle$，记 $P_{r_s}=|r_s\rangle\langle r_s|$。各 $|r_s\rangle$ 都是 $Z$ 或 $X$ 的本征向量。参考空间分为
+$$
+E=E_{\mathrm{ent}}\oplus\bigoplus_{s\in\Sigma}E_s\oplus E_0^\perp.
+\tag{251.15}
+$$
+此时尚未对竞争态 $\Xi$ 施加任何关于该分块的支撑或块对角假设。
+

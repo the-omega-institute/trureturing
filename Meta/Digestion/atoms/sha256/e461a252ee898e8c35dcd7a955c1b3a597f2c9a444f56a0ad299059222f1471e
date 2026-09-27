@@ -1,0 +1,14 @@
+**定义 66.2（控制原则的因子化表达）。** 若存在 $\bar J:B\to L$，使
+
+$$
+J=\bar J\circ C,
+$$
+
+则这项评价只取决于模型列入 $C$ 的事实。在本节的有限非空条件下，项目的 [`moral_luck_descent_iff`](../../../D5/S3/ConceptDynamics/MoralLuck/MoralLuckDescent.lean)将这一条件等价地表示为：不存在 $x,y\in X$ 满足
+
+$$
+C(x)=C(y),\qquad J(x)\ne J(y).
+$$
+
+它与[《形式概念动力学》第 40 节](FORMAL_CONCEPT_DYNAMICS.md)的对应是直接的：同一控制纤维内的评价差异，见证这项既定评价不能仅从控制读数恢复。非空状态经 $J$ 给出至少一个评价值，因而未实现的 $B$ 标签也可赋予一个默认值；没有把只在实际像上的函数直接与陪域为 $B$ 的 $C$ 作不合类型的复合。
+

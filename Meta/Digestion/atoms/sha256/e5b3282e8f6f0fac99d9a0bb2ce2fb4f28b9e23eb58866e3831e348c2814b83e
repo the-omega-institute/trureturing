@@ -1,0 +1,25 @@
+**证明。** 反设 $[\eta_1]\notin\{[A],[B]\}$ 且 $p\notin U+W$。首轮环境在 $A,B$ 上的两个坐标均非零，首轮乘积向量独立于两个尾块，所以
+
+$$
+\dim U+\dim W=6,\qquad
+\dim(U+W)=\dim S_0-1=6-\gamma.
+$$
+
+因此
+
+$$
+\dim(U\cap W)=\gamma\ge1.
+\tag{123.4}
+$$
+
+又真实 $V_1k=q\otimes\eta_1$ 与两个尾零位块正交，故 $q\perp U+W$。首轮跨位正交还给 $q\perp p$，于是
+
+$$
+q\in S_0^\perp,\qquad H_1\ne H_n\quad(3\le n\le6).
+\tag{123.5}
+$$
+
+第二项是因为非零 $q\in H_1$ 被每个后期 $P_{G_n}$ 消去，而 $P_{G_n}|_{H_n}$ 必须单射。
+
+每条尾射线实际出现一个二维平面，所以 $\dim U,\dim W\ge2$。和为六，只有以下三种维数组合。
+

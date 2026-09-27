@@ -1,0 +1,20 @@
+#### 8.7.4 共同输入下的多来源匹配下界
+
+先设 $0\le\varepsilon\le1/2$。令 $b_i=(1-2\varepsilon)/m$，构造 $m$ 个实际概率来源
+$$
+p^{(j)}=b+2\varepsilon e_j,\qquad1\le j\le m.
+$$
+使用同一个观测
+$$
+\widehat y_i=1-b_i-\varepsilon,
+$$
+空读数取一。对来源 $p^{(j)}$，第 $j$ 格噪声是 $+\varepsilon$，其他格噪声是 $-\varepsilon$，均合法。任意概率输出 $q$ 必有某个 $q_j\le1/m$，于是针对来源 $p^{(j)}$ 有
+$$
+\|p^{(j)}-q\|_\infty
+\ge b_j+2\varepsilon-q_j
+\ge2\varepsilon\left(1-\frac1m\right).
+$$
+当 $\varepsilon\ge1/2$，使用全部顶点来源 $e_j$ 和完整读数 $\widehat y_i=1/2$，噪声只需 $1/2$。任意概率输出同样至少对一个顶点有误差 $1-1/m$。这与上界匹配，证明 ER8.SO.1。
+
+若允许内部随机化并以期望最大坐标误差计风险，同一公式仍成立。对共同输入的随机概率输出 $Q$，存在固定索引 $j$ 使 $\mathbb E Q_j\le1/m$；针对该固定来源，对逐坐标下界取期望即可。实输出的两点下界则对逐点三角不等式取期望。对抗者无需看到已经实现的随机种子再选择来源。
+

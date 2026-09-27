@@ -1,0 +1,43 @@
+### 235.8 输入分块保持任意参考的上界
+
+目标与候选 $\mathcal S^{\rm blk}$ 都消去（235.AD.24）不同输入块之间的非对角项。令 $\Delta=\mathcal S^{\rm blk}-\mathcal R$，并以 $Q_a$ 记各输入块的投影。
+
+定义输入 pinching
+$$
+\mathcal P(X)=\sum_aQ_aXQ_a,
+\qquad\Delta=\Delta\circ\mathcal P.
+\tag{235.AD.31}
+$$
+若共有 $b$ 个块，将它们编号为 $a=0,\ldots,b-1$，令 $\omega=e^{2\pi i/b}$、$V=\sum_{a=0}^{b-1}\omega^aQ_a$，则
+$$
+\mathcal P(X)=\frac1b\sum_{\ell=0}^{b-1}V^\ell X(V^\dagger)^\ell.
+\tag{235.AD.32}
+$$
+因此 pinching 是酉共轭的平均，对任意矩阵及任意参考都迹范数收缩。其输出为输入块直和，故相应块 $X_a$ 满足
+$$
+\sum_a\|X_a\|_1=\|(\mathcal P\otimes\operatorname{id})(X)\|_1
+\le\|X\|_1.
+\tag{235.AD.33}
+$$
+
+每个二维块的完整差范数为一；奇数维附加的一维块只改变标签概率向量 $(1/3,1/3,1/3)$ 与 $(0,1/2,1/2)$，完整差范数为 $2/3$。所以对任意参考及任意输入矩阵，
+$$
+\|(\Delta\otimes\operatorname{id})(X)\|_1
+\le\sum_{a=1}^t\|X_{H_a}\|_1
++\frac23\|X_G\|_1
+\le\|X\|_1,
+\tag{235.AD.34}
+$$
+其中偶数维时省略 $G$ 项。故完整半误差至多 $1/2$；将输入放在任意一个二维块的最大纠缠态上即达到该值。
+
+对无参考密度矩阵，各对角块均为次归一化正矩阵，迹之和为一。每个二维块及可选的一维块的无参考误差都至多 $1/3$，由三角不等式得到整体上界 $1/3$；在一个二维块内取达到（235.AD.22）的纯输入实现等号。因此
+$$
+\boxed{
+\delta_\diamond(\mathcal R,\mathcal S^{\rm blk})=\frac12,
+\qquad
+\delta_0(\mathcal R,\mathcal S^{\rm blk})=\frac13.
+}
+\tag{235.AD.35}
+$$
+候选总秩为 $R_*$，所以它在全部预算 $R_*\le R<2d$ 中都可用。第三、四节对全部候选的下界恰与两项上界匹配。结合第五节，定理235.1全部成立。
+

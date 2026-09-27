@@ -1,0 +1,1 @@
+- `D5/S0/Tower/DBonacci/Values.lean` 的 `dbonacciWordValue` 使用 `dbonacciPerronRoot d` 的负幂实数权重，对应式（TM.402）类型的任务，不是式（TM.375）的整数解码。

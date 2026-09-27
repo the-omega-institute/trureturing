@@ -1,0 +1,48 @@
+**命题 23.5（分支变化的反例）。** 分支间更换陪集划分会破坏闭性，即使奇特征二阶元存在。取
+
+$$
+G=C_2\times C_2,
+\qquad (\alpha,\beta)\in G,
+\qquad \chi(\alpha,\beta)=\alpha,
+\qquad r=3,
+\tag{23.18}
+$$
+
+取常值查询，并令两个发送者的回复为
+
+$$
+ e_i(x_i,t)=\beta_i+\alpha(t)\alpha_i\pmod2\qquad(i=2,3).
+\tag{23.19}
+$$
+
+固定 $t$ 的陪集周期为 $\tau(t)=(1,\alpha(t))$，随分支改变。解码器可取
+
+$$
+Y_\alpha=\alpha(t),
+\qquad
+Y_\beta=\beta(a)+e_2+e_3+\alpha(t)\bigl(\alpha(t)+\alpha(a)\bigr)\pmod2.
+\tag{23.20}
+$$
+
+令 $v=(1,0)$、$s=(0,0,0,0)$、$s'=(0,v,v,0)$，并取 $d=(v,0,0,0)$。直接计算得
+
+$$
+O(s)=O(s')=(0,0,0,0),
+\qquad
+O(s+d)=(v,v,0,0),
+\qquad
+O(s'+d)=(v,v,1,1),
+\tag{23.21}
+$$
+
+而
+
+$$
+F(s+d)=F(s'+d)=(v,v).
+\tag{23.22}
+$$
+
+所以不存在确定性 $V_d$。这也说明仅有逐分支的非单射形式不足以替代固定的全局 $J,\tau$。
+
+证明。式 (23.20) 中 $\alpha(Y)=\alpha(t)$；又 $\alpha_2+\alpha_3=\alpha(t)+\alpha(a)$，代入 (23.19) 即得 $\beta(Y)$，故观察精确。对 $s,s'$ 有 $\alpha(t)=0$，两回复均为零；平移后共同有 $t=v$，此时 $\alpha(t)=1$，$s+d$ 的两回复为 $(0,0)$，而 $s'+d$ 的两回复为 $(1,1)$。两者的 $(Y,t)$ 均为 $(v,v)$，故 (23.21)--(23.22) 成立。证毕。
+

@@ -1,0 +1,33 @@
+### 232.2 固定纯输出将效应序变为完全正序
+
+对任意正矩阵 $F\succeq0$ 和单位输出 $r$，定义
+$$
+\mathsf M_{F,r}(X)=\operatorname{Tr}(FX)|r\rangle\langle r|.
+\tag{232.UC.7}
+$$
+若 $F=\sum_{\ell=1}^q\lambda_\ell|u_\ell\rangle\langle u_\ell|$ 是正本征值分解，则
+$$
+\mathsf M_{F,r}(X)=\sum_{\ell=1}^q
+K_\ell XK_\ell^\dagger,
+\qquad K_\ell=\sqrt{\lambda_\ell}|r\rangle\langle u_\ell|.
+\tag{232.UC.8}
+$$
+因此该映射完全正，其迹效应为 $F$：
+$$
+\mathsf M_{F,r}^*(I)=F.
+\tag{232.UC.9}
+$$
+在固定输入基的 Choi 约定下，
+$$
+J_{\mathsf M_{F,r}}=F^{\mathsf T}\otimes|r\rangle\langle r|,
+\qquad\operatorname{rank}J_{\mathsf M_{F,r}}=\operatorname{rank}F.
+\tag{232.UC.10}
+$$
+特别地，若 $0\preceq F\preceq G$，则
+$$
+\mathsf M_{G,r}-\mathsf M_{F,r}=\mathsf M_{G-F,r}
+\quad\text{完全正}.
+\tag{232.UC.11}
+$$
+以下上界使用同一固定 $r_j$ 上的这项 CP 序关系。只有迹效应相等，一般并不足以证明两份任意量子分支之间的 CP 序关系。
+

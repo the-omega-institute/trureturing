@@ -1,0 +1,12 @@
+**定理 3.1（成对实例：泛化时刻对训练曲线不可见，repo-derived）。** 在约定 1.2 下设 $\lambda\ge0$，$v\in\ker\Phi$，$v\ne0$。
+（i）初始化 $\theta(0)$ 与 $\theta(0)+v$ 的训练损失曲线在所有 $t\ge0$ 逐点相等；
+（ii）它们在任一满足 $\varphi(x)^\top v\ne0$ 的测试点上的预测相差 $e^{-\lambda t}\varphi(x)^\top v$；
+（iii）以整条训练曲线 $q:\theta(0)\mapsto(t\mapsto L(\theta(t)))$ 为读数，任何依赖零空间分量（约定 1.1）的量 $T$ 都有 $\mathcal E(q;T)\ne\varnothing$，故按 RRO 定理 2.2 不存在把 $T$ 表成训练曲线之函数的方式；
+（iv）“某测试点的预测误差首次不超过容差 $\varepsilon$ 的时刻”是这样的量：取 $N=1,p=2$，$\Phi=(1,0)$，$y=0$，$\lambda>0$，测试特征 $\varphi(x)=e_2$、目标 $y(x)=0$，$0<\varepsilon<1$，初始化 $(0,1)$ 与 $(0,2)$。两者训练曲线恒为零，而进入时刻分别为 $\lambda^{-1}\log(1/\varepsilon)$ 与 $\lambda^{-1}\log(2/\varepsilon)$。
+
+证明。中间步骤是正则最小二乘梯度流的已知精确解（第 7 章表：Hoerl–Kennard 的岭代数，Levi–Beck–Bar-Sinai、Boursier–Pesme–Dragomir 与 Xu–Vardi–Safran 的零空间分量衰减），这里只作一行验证：$\Phi^\top(\Phi\theta-y)\in\operatorname{row}\Phi$ 给 $P^\perp\dot\theta=-\lambda P^\perp\theta$，故 $P^\perp\theta(t)=e^{-\lambda t}P^\perp\theta(0)$；行分量满足 $\dot\theta_r=-(\Phi^\top\Phi+\lambda I)\theta_r+\Phi^\top y$，$\Phi^\top\Phi+\lambda I$ 限制到 $\operatorname{row}\Phi$ 上可逆（$\lambda=0$ 时亦然），其不动点是约定 1.2 的 $\theta_\lambda$，因为 $(\Phi^\top\Phi+\lambda I)\theta_\lambda=\Phi^\top y$（推移恒等式），故
+$$
+\theta(t)=\theta_\lambda+e^{-(\Phi^\top\Phi+\lambda I)t}\big(P\theta(0)-\theta_\lambda\big)+e^{-\lambda t}P^\perp\theta(0),
+$$
+$\Phi^\top\Phi+\lambda I$ 限制到 $\operatorname{row}\Phi$ 的谱为 $\{\sigma_i^2+\lambda\}$，$\lambda=0$ 时把 $\theta_\lambda$ 读作 $\theta_0$。（i）$P(\theta(0)+v)=P\theta(0)$，两条轨迹的行分量逐点相等，而 $\Phi\theta=\Phi\theta_r$，故训练残差相等。（ii）零空间分量相差 $e^{-\lambda t}v$，作用到 $\varphi(x)$ 即得。（iii）依赖零空间分量的定义恰给出一对 $\theta,\theta+v$ 使 $T$ 取不同值，而由（i）它们的 $q$ 相同，故这一对属于 $\mathcal E(q;T)$；RRO 定理 2.2 给结论。（iv）$\ker\Phi=\operatorname{span}(e_2)$，两初始化的行分量都是零且 $y=0$，训练残差恒为零；预测分别为 $e^{-\lambda t}$ 与 $2e^{-\lambda t}$，进入时刻由 $e^{-\lambda t}=\varepsilon$、$2e^{-\lambda t}=\varepsilon$ 解出。仅预测不同不足以推出任意统计量不同（对称的容差统计量在 $\pm b$ 上相等），所以（iii）的“依赖”按约定 1.1 取非常值，（iv）给出实际见证。证毕。
+

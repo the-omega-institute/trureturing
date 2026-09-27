@@ -1,0 +1,109 @@
+**定理179.2（反向局部模拟的有限证书）。** 对每个整数 $L\ge3$，
+
+$$
+\boxed{
+1-\mu(w_1)
+\le\delta_L^{\leftarrow}
+\le\beta w_1.
+}
+\tag{179.9}
+$$
+
+**证明。** 先证明下界。对任意（179.7）的合法恢复映射对，记
+$J_\nu$ 为输入优先、未归一化的 Choi 矩阵。各旗标分别有
+
+$$
+J_\nu\succeq0,\qquad
+\operatorname{Tr}_{R_{\mathrm{out}}}J_\nu=I_R.
+\tag{179.10}
+$$
+
+固定单个原输入 $j$。第174节的显式收益向量为
+
+$$
+g_0=\operatorname{vec}\rho,\qquad
+g_1=\operatorname{vec}(-Y\rho).
+$$
+
+相应的收益算子是
+
+$$
+\begin{aligned}
+A_{j,\nu}
+={}&(1-\beta w_j)|g_0\rangle\langle g_0|
++\beta w_j|g_1\rangle\langle g_1|\\
+&+(-1)^{\nu+1}\gamma w_j
+\bigl(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|\bigr).
+\end{aligned}
+\tag{179.11}
+$$
+
+其定义保证
+$\langle\Xi|\sigma_j|\Xi\rangle
+=\frac12\sum_\nu\operatorname{Tr}(J_\nu A_{j,\nu})$。
+在 Choi 输入因子上作 $\rho^{-1/2}$ 合同变换，
+两个收益向量正交且范数平方分别为 $1,6$。因而第174节的二阶证书直接给
+
+$$
+A_{j,\nu}\preceq\mu(w_j)(\rho\otimes I).
+\tag{179.12}
+$$
+
+这里不对两个原输入分配独立预算；只取其中 $j=1$ 测试任意共同恢复器。由（179.10），
+
+$$
+\begin{aligned}
+\langle\Xi|\sigma_1|\Xi\rangle
+&\le\frac{\mu(w_1)}2
+\sum_\nu\operatorname{Tr}[J_\nu(\rho\otimes I)]\\
+&=\mu(w_1).
+\end{aligned}
+\tag{179.13}
+$$
+
+纯态目标的投影检验给
+$D(\sigma_1,P_\Xi)\ge1-\langle\Xi|\sigma_1|\Xi\rangle$。
+结合（179.6），得到（179.9）的下界。
+
+对上界，取共同恢复器为丢弃旗标并保持 $R$。两个旗标的非对角项相消，所以
+
+$$
+\sigma_j=(1-\beta w_j)P_\Xi+\beta w_jP_\psi.
+$$
+
+由 $\Xi\perp\psi$，
+$D(\sigma_j,P_\Xi)=\beta w_j$。
+两分支的最大值为 $\beta w_1$，再用命题179.1即得到原接口的合法模拟器和上界。证毕。
+
+下界还可写成一个更简单的严格正数。第174节已给
+$B_w\succeq0$、$I-B_w\succ0$，并且
+
+$$
+\det(I-B_w)
+=\beta w\left(1-\frac34w\right).
+$$
+
+因此
+
+$$
+\boxed{
+1-\mu(w_1)
+\ge\beta w_1\left(1-\frac34w_1\right)
+>\frac58\beta w_1>0.
+}
+\tag{179.14}
+$$
+
+这是对反向局部模拟本身的证书。相比之下，第176节的合法均匀标签解码器给
+
+$$
+h_L(i)-\frac34\le\frac{\beta w_1}{4}.
+\tag{179.15}
+$$
+
+具体地，该解码器的误差是 $1-ab/(a+b)$，
+$a=(1-\beta w_0)/2\ge b=(1-\beta w_1)/2$；
+$ab/(a+b)\ge b/2$ 就得到（179.15）。
+故新的下界严格高于仅从来源恢复任务转移而来的
+$h_L(i)-3/4$，对全部有限 $L\ge3$ 均成立。
+

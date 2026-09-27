@@ -1,0 +1,46 @@
+### 53.1 第二终端秩二与第三轮固定等距块
+
+第二终端的六维编码支撑可写成 $Q\otimes\Gamma\subset K$，其中 $\dim Q=3$、$\dim\Gamma=2$，余下的 $Z=(Q\otimes\Gamma)^\perp$ 一维。取 $Q$ 中正交单位 $u,v,w$，置
+$$
+c=\sqrt{|a|^4+|b|^2},\quad
+z=\frac{a^2u+bv}{c},\quad
+H=\operatorname{span}(z,w),\quad G=\operatorname{span}(u,w).
+$$
+固定 $V_i x=V(x\otimes|i\rangle)$。沿第27节的纯化系数比较，存在等距 $R:\Gamma\to E$、二维环境 $F=R\Gamma$，以及正交单位接收向量 $s,t,r,j$，使对全部 $\xi\in\Gamma$ 有
+$$
+V_0(z\otimes\xi)=s\otimes R\xi,\quad
+V_0(w\otimes\xi)=t\otimes R\xi,
+$$
+$$
+V_1(u\otimes\xi)=r\otimes R\xi,\quad
+V_1(w\otimes\xi)=j\otimes R\xi.
+$$
+令 $A=\operatorname{span}(s,t)=G_3$、$B=\operatorname{span}(r,j)$，则
+$$
+V_0(H\otimes\Gamma)=A\otimes F,\qquad
+V_1(G\otimes\Gamma)=B\otimes F.
+\tag{53.1}
+$$
+两像各四维，$A\perp B$。实际第三终端支撑为 $C_3=A\oplus B$。
+
+对 $n=3,4,5,6$，在标准活动记忆基下明确写实际来源两列为
+$$
+\Psi_n^i=|0\rangle_Mu_n^i+|1\rangle_Mv_n^i,
+\qquad
+H_n=\operatorname{span}\{u_n^0,u_n^1\},\quad
+G_n=\operatorname{span}\{v_n^0,v_n^1\}.
+$$
+它们均二维、交零，$C_n=H_n+G_n$ 四维。第三轮等距块具体产生
+$$
+\Psi_3^0=c\,m_0s+ab\,m_1r,\qquad
+\Psi_3^1=a\,m_0t+b\,m_1j.
+$$
+因为 $m_0=a|0\rangle+b|1\rangle$ 且 $ab\ne0$，这里 $A=G_3$，另一实际输出空间为 $B=Q_3=\operatorname{span}(r,j)$。这使下文 $V_1A$ 使用第四轮环境 $\eta_4$ 的对应明确成立。
+
+对 $n=4,5,6$，有二维 $Q_n$，满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n.
+\tag{53.2}
+$$
+

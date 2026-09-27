@@ -1,0 +1,6 @@
+**定理 20.** 充分条件
+\[
+ z\geq g+h-N+p-\left\lfloor\frac{N-1}{4}\right\rfloor\tag{13}
+\]
+在无穷多个 \(N\) 的混合公差、多避点成员情形下失败。
+

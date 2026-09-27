@@ -1,0 +1,8 @@
+**命题 4.2.2（总变差与质量的精确对应）。** 采用 $d_{\mathrm{TV}}(\alpha,\beta)=\sup_{E\text{ Borel}}|\alpha(E)-\beta(E)|$ 的约定，有
+$$
+d_{\mathrm{TV}}(\nu_s,\nu)
+=\frac12\int\left|\frac{\mathbf1_{K_s}}{p_s}-\frac{\mathbf1_K}M\right|\,d\mu
+=\frac{p_s-M}{p_s}.
+$$
+该距离随 $s$ 非增并趋于零，上确界在 $E=K$ 达到。
+

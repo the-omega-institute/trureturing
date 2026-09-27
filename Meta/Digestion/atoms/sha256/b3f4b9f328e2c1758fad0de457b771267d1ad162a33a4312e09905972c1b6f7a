@@ -1,0 +1,34 @@
+### 254.6 任意小选择频率下的近源碰撞
+
+当 $\gamma\to0$ 时，
+$$
+z_\gamma\sim\frac{\gamma}{\sqrt A},
+\tag{254.32}
+$$
+所以擦除标签造成的碰撞源可任意接近固定 $\Omega_0$。这里每个 $\gamma$ 都规定自己的已知随机仪器接口及已知候选对。
+
+若保留选择标签，同一候选对的输出不同：旧标签块中的两份产品响应仍相差 $-2q\sqrt A\,z_\gamma^2P_{2_E}$，并带正权重 $1-\gamma$，故不能被 $Y$ 标签块抵消。
+
+对充分小的 $\gamma$，$z_\gamma\le1/2$，可以应用定理254.1。此时
+$$
+r(z_\gamma,\gamma)
+=(1-\gamma)z_\gamma^4+\gamma z_\gamma^2
+\sim\frac{\gamma^3}{A}.
+\tag{254.33}
+$$
+因此同一对源在三种规定接口下具有以下预算：
+$$
+\boxed{
+\begin{aligned}
+\text{保留选择记录：}\quad
+&N_{\mathrm{log}}(z_\gamma,\gamma)=\Theta(\gamma^{-3}),\\
+\text{只用旧仪器：}\quad
+&N_{\mathrm{out}}(z_\gamma)=\Theta(\gamma^{-4}),\\
+\text{混合后擦除选择记录：}\quad
+&\text{任意有限副本均不能超过正确率 }1/2.
+\end{aligned}
+}
+\tag{254.34}
+$$
+第二式直接应用§253。前两式是 $\gamma\to0$、其余参数固定时的渐近阶；第三式对全部 $0<\gamma<1$ 精确成立。
+

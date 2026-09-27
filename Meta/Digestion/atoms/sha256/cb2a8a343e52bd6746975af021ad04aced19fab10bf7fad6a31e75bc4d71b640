@@ -1,0 +1,78 @@
+**定理 281.2（中心对称模型的酉解码正规形）。** 对任意上述方案，都存在一个幺元量子比特通道 $\mathcal N$ 与一个酉矩阵 $U$，使新方案
+
+$$
+\mathcal E'=\operatorname{Ad}_U\mathcal N,
+\qquad
+\mathcal D'=\operatorname{Ad}_{U^*}
+\tag{281.1}
+$$
+
+的恢复误差和非实残差分别不大于原方案的对应值。因此，在这些二维模型的两个上界预算问题中，允许一般仿射编码、解码所得到的可行区域，已由式（281.1）的方案完全达到。这里的结论只比较这两个任务量，不宣称保留原方案的所有其他操作性质。
+
+证明。在计算原方案非实残差的输出基底中，写编码与解码的 Bloch 作用为
+
+$$
+\mathcal E:\ v\longmapsto c+Av,
+\qquad
+\mathcal D:\ w\longmapsto d+Lw.
+\tag{281.2}
+$$
+
+沿用第277节的自旋反转 $\mathcal S(X)=YX^{\mathsf T}Y$。对任意量子比特 CPTP 通道 $\Phi$，双侧复合 $\mathcal S\Phi\mathcal S$ 仍为 CPTP：若 $K_j$ 是 $\Phi$ 的 Kraus 算子，相应算子可取 $Y\bar K_jY$。因此分别定义
+
+$$
+\mathcal E_0=\tfrac12(\mathcal E+\mathcal S\mathcal E\mathcal S),
+\qquad
+\mathcal D_0=\tfrac12(\mathcal D+\mathcal S\mathcal D\mathcal S).
+\tag{281.3}
+$$
+
+这两个通道分别具有无平移的线性部分 $A,L$。其复合 $\mathcal N=\mathcal D_0\mathcal E_0$ 是幺元 CPTP，Bloch 矩阵为 $T=LA$。这一步直接计算两个实际因子的线性部分，不假定任意独立平均都会保持复合。
+
+原恢复通道的平移为 $h=d+Lc$。中心对称性给出，对每对 $v,-v$，
+
+$$
+\max\{\|h+(T-I)v\|_2,\|h-(T-I)v\|_2\}
+\ge\|(T-I)v\|_2.
+\tag{281.4}
+$$
+
+所以去掉平移后的恢复误差不增。量子比特状态与其共轭的迹距离等于虚轴 $Y$ 坐标的绝对值；同一中心对称性给出
+
+$$
+r(\mathcal E)=|c_y|+\max_{v\in\mathcal V}|e_y^{\mathsf T}Av|,
+\qquad
+r(\mathcal E_0)=\max_{v\in\mathcal V}|e_y^{\mathsf T}Av|.
+\tag{281.5}
+$$
+
+因此编码去平移也不会增加残差。
+
+现在令 $P=\operatorname{span}_{\mathbb R}\{e_x,e_z\}$ 为原编码输出的实 Bloch 平面。$L(P)$ 的维数至多为二，可取一个单位向量 $n$ 垂直于它。于是
+
+$$
+L^{\mathsf T}n=k e_y
+\tag{281.6}
+$$
+
+对某个实数 $k$ 成立。量子比特通道的迹距离收缩性给出 $\|L\|_{\rm op}\le1$，故 $|k|\le1$。不要求 $L$ 可逆；当像空间维数更低时，仍可选择这样的 $n$。
+
+取酉矩阵 $U$，使其 Bloch 旋转 $R$ 满足 $R^{\mathsf T}e_y=n$，并使用式（281.1）的新编码、解码。其恢复复合恰为 $\mathcal N$，所以恢复误差已经由式（281.4）控制。编码后的虚坐标为
+
+$$
+e_y^{\mathsf T}RTv
+=n^{\mathsf T}LAv
+=k e_y^{\mathsf T}Av.
+$$
+
+从而
+
+$$
+r(\mathcal E')
+=|k|\max_{v\in\mathcal V}|e_y^{\mathsf T}Av|
+\le r(\mathcal E_0)\le r(\mathcal E).
+\tag{281.7}
+$$
+
+所有新通道都在完整 $M_2$ 上 CPTP。式（281.1）的方案本来就是允许的一类方案，而每个原方案都被这一类中的某个方案在两个成本上弱支配，因此两者的上界预算区域相同。证毕。
+

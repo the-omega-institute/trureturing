@@ -1,0 +1,4 @@
+* 常值未来目标与常值读出满足 $\operatorname{BehComp}$，但读出仍不能区分两个当前身份。
+
+仓内 ThreeCompletionOrthogonality 形式化了这些方向的分离。于是理论中每次写“completion”都必须标注它完成的是身份、代表选择、未来行为、联合约束还是某种代数残差。
+

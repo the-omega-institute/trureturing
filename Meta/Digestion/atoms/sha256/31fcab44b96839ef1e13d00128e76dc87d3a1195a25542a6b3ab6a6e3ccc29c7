@@ -1,0 +1,46 @@
+**证明。** 对每个效果，
+$q^2a_0+(1-q)^2a_1$ 的二阶导数是 $2(a_0+a_1)$，且
+
+$$
+a_0+a_1=1+\operatorname{Tr}[F(\rho_0-\rho_1)]
+\ge1-\delta\epsilon\sqrt D>0.
+\tag{208.8}
+$$
+
+最后一步使用 $\delta\epsilon\sqrt D<\delta\beta/(R\sqrt D)<1$。
+这些二次函数减去同一个正系数的 $q^2$ 后仍凸，
+其最大值也凸，故 $g$ 强凸。
+由（208.6），唯一极小点不能在 $[q_L,q_U]$ 之外。
+
+令 $v=(\beta,-i\gamma)^{\mathsf T}/\sqrt D$，
+则 $\operatorname{Tr}(P_v\rho_0)=u$、
+$\operatorname{Tr}(P_v\rho_1)=w$。
+$C(q_L)$ 的核为 $\mathbb Cv$，另一根为负。
+穿过零的本征值导数为
+
+$$
+\langle v,C'(q_L)v\rangle
+=2[q_Lu+(1-q_L)w]=2rw.
+$$
+
+加上背景 $(1-q)^2$ 的导数，得到（208.7）第一式。
+
+另一个端点满足
+
+$$
+C(q_U)=\frac{R-1}{(1+s)^2}P_0.
+\tag{208.9}
+$$
+
+其核为 $\mathbb C|1\rangle$，过零根的导数为
+
+$$
+\langle1,C'(q_U)1\rangle
+=2\beta\epsilon[q_U+R(1-q_U)]
+=2\beta\epsilon s.
+$$
+
+从中间区间趋近 $q_U$ 时，正谱迹等于总迹减去负根。
+总迹导数为 $2$，因此
+$g'_-(q_U)=-2/(1+s)+2-2\beta\epsilon s$，即第二式。证毕。
+

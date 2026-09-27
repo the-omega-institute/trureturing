@@ -223,7 +223,7 @@ In particular a29 class supported on y=0 or1 at sigma's charged point
 still removes genuine preceding survivors with old3=old5=2. Thus these
 are not globally redundant29 labels. The all-2 point survives every class.
 
-The [exact checker](../../frontier/cover-geometry/two_step_23_29_joint_obstruction.py) reconstructs all
+The [exact checker](../../frontier/cover-geometry/two-step-23-29-joint-obstruction/two_step_23_29_joint_obstruction.py) reconstructs all
 11 original classes in both families, verifies all22 private CRT points,
 and computes the23 and29 normalized/killed rows with exact fractions.
 It checks the equal full physical distribution of alpha29, every entry
@@ -231,7 +231,7 @@ of the displayed table, and both same-law identities. This is a finite
 fixture check with no family search, optimizer, or large-period scan.
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_step_23_29_joint_obstruction.py
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two-step-23-29-joint-obstruction/two_step_23_29_joint_obstruction.py
 ```
 
 ## What the current18 source bounds do and do not provide

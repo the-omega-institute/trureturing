@@ -1,0 +1,28 @@
+### 38.1 三种 completion 不是同一个性质
+
+给定读出 $r:X\to R$、未来目标 $b:X\to B$ 和代表关系 $\mathsf{Rep}\subseteq X\times U$，分别定义：
+
+$$
+\begin{aligned}
+ \operatorname{IdComp}(r)
+ &:\Longleftrightarrow \operatorname{Injective}(r),\\
+ \operatorname{NormComp}(\mathsf{Rep})
+ &:\Longleftrightarrow
+   \forall x,\ \exists!u,\ \mathsf{Rep}(x,u),\\
+ \operatorname{BehComp}(r,b)
+ &:\Longleftrightarrow
+   \forall x,y,\ r(x)=r(y)\Longrightarrow b(x)=b(y).
+\end{aligned}
+\tag{38.1}
+$$
+
+第一项说当前读出保留身份，第二项说每个对象有唯一规范代表，第三项说当前读出足以恢复指定未来目标。它们的量词不同，互相没有一般蕴含。
+
+最小的有限反例已经存在于二点载体：
+
+* 恒等读出满足 $\operatorname{IdComp}$，但“任意代表都合法”的关系不满足 $\operatorname{NormComp}$；
+* 对象等于代表的关系满足 $\operatorname{NormComp}$，但常值读出不满足 $\operatorname{IdComp}$；
+* 常值未来目标与常值读出满足 $\operatorname{BehComp}$，但读出仍不能区分两个当前身份。
+
+仓内 ThreeCompletionOrthogonality 形式化了这些方向的分离。于是理论中每次写“completion”都必须标注它完成的是身份、代表选择、未来行为、联合约束还是某种代数残差。
+

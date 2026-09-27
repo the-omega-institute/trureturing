@@ -1,0 +1,7 @@
+**命题99.2（正则尾词只剩交替词与四个单调词）。** 若 $\alpha\le3$，尾词只能为 $ABABA$；若 $\alpha\ge4$，尾词只能为
+
+$$
+ABABA,\qquad A^tB^{5-t}\quad(1\le t\le4).
+\tag{99.7}
+$$
+

@@ -1,0 +1,14 @@
+**定理217.3（总秩至多二的最优值桥梁）。**
+定义
+$$
+\mathcal K_{\le2}
+=\left\{(J_0,J_1):
+J_j\succeq0,\quad
+\operatorname{Tr}_{\mathrm{out}}(J_0+J_1)=I,\quad
+\operatorname{rank}(J_0\oplus J_1)\le2
+\right\}.
+\tag{217.26}
+$$
+则在全部合法参数下，$\min_{\mathcal K_{\le2}}e=E_{11}$。
+在定理217.1的局部参数箱中，两预算的唯一最优 Choi 对均为 $\Gamma_A$。
+

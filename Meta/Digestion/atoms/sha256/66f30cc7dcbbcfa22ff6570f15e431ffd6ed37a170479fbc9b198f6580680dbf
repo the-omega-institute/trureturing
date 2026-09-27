@@ -1,0 +1,91 @@
+**定理 13.3（任意振幅的临界窗口与混合似然质量逃逸）。** 令
+$r_d\in(0,1)$ 任意，且整数 $s_d$ 满足
+
+$$
+\frac{s_dF_M(r_d)-\log M}{\sqrt{s_dv}}\longrightarrow t\in\mathbb R.
+\tag{13.15}
+$$
+
+置 $p=\Phi(-t)$。在两种实验各自的均匀参考律下，均有
+
+$$
+\overline L^{+,E}_{s_d}\longrightarrow p,\qquad
+\overline L^{-,E}_{s_d}\longrightarrow p
+\quad\text{依概率},
+\tag{13.16}
+$$
+
+虽然每个混合似然的期望始终为一。最坏方向风险与最优联合恢复率分别满足
+
+$$
+\mathcal R^E_{d,r_d}(s_d)\longrightarrow\frac{\Phi(-t)}2,
+\qquad
+\mathcal S^E_{d,r_d}(s_d)\longrightarrow\Phi(t).
+\tag{13.17}
+$$
+
+方向已知时，最优精确定位成功率也趋于 $\Phi(t)$。
+经有限群对称化的联合最大似然规则具有相同的最坏参数成功率极限。
+
+证明。由 $v\asymp I$，(13.15) 推出
+$\mu/\log M\to1$、$\sigma\asymp\sqrt{\log M}$。
+取 $a=(\log M)^{1/4}$、$h_\pm=\log M\pm a$。
+固定任一方向，置
+
+$$
+T_z=L_z\mathbf1_{\{\log L_z\le h_-\}},\qquad
+\overline T=M^{-1}\sum_zT_z.
+$$
+
+由 (13.2) 及换测度，$\mathbb E_{\mathsf U}\overline T\to p$。
+对角二阶矩满足 $M^{-1}\mathbb E T_z^2\le e^{h_-}/M=e^{-a}\to0$。
+异位项由 (13.3)–(13.4) 满足
+
+$$
+\mathbb E_{\mathsf U}T_zT_w
+=\beta^s\mathsf T_{z,w,s}
+  \{\log L_z\le h_-,\ \log L_w\le h_-\}
+\longrightarrow p^2,
+\tag{13.18}
+$$
+
+因为 $s(1-\beta)=O(\mu/n)\to0$，且两个标准化门槛均趋于 $-t$。
+置换对称性使所有异位项完全相同，故 $\overline T\to p$ 于 $L^2$。
+中间带 $h_-<\log L_z\le h_+$ 对混合似然的期望贡献，
+等于真律下落入该带的概率，由 (13.2) 趋零。
+另一方面，参考律下任一分量超过 $e^{h_+}$ 的概率至多
+$Me^{-h_+}=e^{-a}$。三部分合起来证明 (13.16)。
+
+由 (11.12)，方向风险等于
+$\tfrac12\mathbb E_{\mathsf U}\min(\overline L^+,\overline L^-)$。
+两个混合的乘积期望由 (10.3) 精确等于一。
+对 $K>0$，
+
+$$
+\mathbb E\!\left[
+\min(\overline L^+,\overline L^-)
+\mathbf1_{\{\max(\overline L^+,\overline L^-)>K\}}\right]
+\le\frac{\mathbb E(\overline L^+\overline L^-)}K=\frac1K.
+\tag{13.19}
+$$
+
+因此最小值族一致可积；其依概率极限为 $p$，得到方向风险极限。
+这一步只使用混合之间的交叉内积，未假设两个混合独立。
+
+若方向已知，任意定位规则的成功率由 (11.14) 的分割步骤至多为
+
+$$
+\frac{e^{h_-}}M+
+\mathsf P^{\epsilon,E}_{b_z,s}\{\log L^{\epsilon,E}_{b_z,s}>h_-\}
+\longrightarrow\Phi(t).
+$$
+
+这里不再用 Chebyshev 界，而使用 (13.2)。透露方向只增加信息，
+所以它也是未知方向联合恢复率的上界。
+对联合最大似然，若真似然超过 $e^{h_+}$ 而错误候选均低于此值，恢复必成功。
+由 (11.15) 及 Markov 不等式，错误候选越界的总概率至多
+$(2M-1)e^{-h_+}\to0$；真似然越界概率由 (13.2) 趋于 $\Phi(t)$。
+这给出匹配的联合恢复下界，也给出已知方向定位的下界。
+有限群对称化保留均匀平均成功率，并使每个参数的成功率相等，
+完成最坏参数陈述。$\square$
+

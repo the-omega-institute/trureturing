@@ -1,0 +1,134 @@
+**证明。** 首先加强 (68.34) 的密度比较。下文在给定好数据 $x$ 上以
+$\mathsf Q_x$ 表示乘积组计数律，$\mathsf P_x$ 表示精确后验计数律，
+$V=S_J-\mathbb E_{\mathsf Q_x}S_J$。
+由 (68.39)、$|\sqrt{d_{\rm all}/d_{J^c}}-1|\le Cd_J/q$、
+$1-e^{-t}\le t$ 及独立 Bernoulli 和的四阶中心矩，
+
+```math
+\mathbb E_{\mathsf Q_x}V^4\le3d_J^2+d_J,\qquad
+\chi_x^2:=\mathbb E_{\mathsf Q_x}(L(S_J)-1)^2
+ \le C\{(d_J/q)^2+q^{-1}\}.
+```
+
+式 (68.46)。
+
+这里 $d_J\le q$，$d_{J^c}\asymp q$。
+因此 $\chi_x=O_{\mathbb P}(Q^{-5/2}+q^{-1/2})$。
+密度比只依赖组计数之和，所以对计数律仍有
+$\mathsf P_x(n)=L(\sum_j n_j)\mathsf Q_x(n)$、
+$\mathbb E_{\mathsf Q_x}L=1$；没有另行近似实际各组独立。
+
+所需二项信息量界可直接从全部原子取得。
+固定 $p_0\in(0,1/2)$，记 $f_{n,p}$ 为二项概率质量，
+$n\ge0$、$p\in[p_0,1-p_0]$。Fourier 模界及带端点的 Stirling 界给
+
+```math
+\max_k f_{n,p}(k)\le\frac C{\sqrt{n+1}},\qquad
+f_{n,p}(k)\ge\frac c{\sqrt{n+1}}
+       \exp\left(-C\frac{(k-np)^2}{n+1}\right),\quad0\le k\le n.
+```
+
+式 (68.47)。
+
+具体地，对 $n\ge1$、$z=k/n$，阶乘界给
+$\binom nk\ge c\sqrt{(n+1)/((k+1)(n-k+1))}\,e^{n[-z\log z-(1-z)\log(1-z)]}$。
+前因子至少为 $c/\sqrt{n+1}$；乘 $p^k(1-p)^{n-k}$ 后的指数为
+$-nD(z\Vert p)$。由 $\log t\le t-1$ 有
+$D(z\Vert p)\le(z-p)^2/[p(1-p)]$，包括 $z=0,1$ 的连续延拓，得下界。
+$n=0$ 的单位原子单独满足两界。
+
+令 $K\sim\operatorname{Bin}(n,p)$、$Z=-\log f_{n,p}(K)$、$\Delta=K-np$。
+于是 $-C\le Z-\tfrac12\log(n+1)\le C+C\Delta^2/(n+1)$；
+而 $\mathbb E\Delta^4\le C(n+1)^2$，故
+
+```math
+\mathbb E\{Z-\tfrac12\log(n+1)\}^2\le C,\qquad
+\operatorname{Var}(Z)\le C.
+```
+
+式 (68.48)。
+
+这些常数不随占据数增长。完整乘积计数的信息量
+$\mathcal S(n)=-\log\mathsf Q_x(n)$ 是这些独立坐标信息量之和，所以
+$\operatorname{Var}_{\mathsf Q_x}(\mathcal S)\le C|K_M|\le CQ^2$。
+以自然对数计算有限分布的熵 $h$，精确恒等式与相对熵界为
+
+```math
+\begin{aligned}
+h(\mathsf P_x)-h(\mathsf Q_x)
+ &=\mathbb E_{\mathsf Q_x}[(L-1)(\mathcal S-\mathbb E_{\mathsf Q_x}\mathcal S)]
+       -D(\mathsf P_x\Vert\mathsf Q_x),\\
+0\le D(\mathsf P_x\Vert\mathsf Q_x)
+ &\le\mathbb E_{\mathsf Q_x}L(L-1)=\chi_x^2.
+\end{aligned}
+```
+
+式 (68.49)。
+
+零密度点按 $0\log0=0$ 处理。第二行仍只用 $\log t\le t-1$ 与归一化。
+Cauchy–Schwarz 因而给
+
+```math
+|h(\mathsf P_x)-h(\mathsf Q_x)|
+ \le\chi_x\sqrt{\operatorname{Var}_{\mathsf Q_x}(\mathcal S)}+\chi_x^2
+ \le CQ(d_J/q+q^{-1/2})+C\{(d_J/q)^2+q^{-1}\}
+ =O_{\mathbb P}(Q^{-3/2}).
+```
+
+式 (68.50)。
+
+信息量的 $Q^5$ 阶均值在估计之前已精确消去。
+这是由密度的 $L^2$ 范数及乘积信息量方差控制期望，不能仅由 TV 推出。
+除以 $\log2$ 得 (68.45) 第一式；第二式由 (68.41) 直接得到。
+
+最后比较同一个二项坐标的两种熵。记自然对数下的差为
+$g(n,p)=h(\operatorname{Bin}(n,p))-h_\infty(\operatorname{Bin}(n,p))$。
+经典二项熵渐近式与模态 Stirling 估计给
+
+```math
+0\le g(n,p)\le C,\qquad g(0,p)=0,\qquad
+\sup_{p\in[p_0,1-p_0]}|g(n,p)-1/2|\longrightarrow0.
+```
+
+式 (68.51)。
+
+半 nat 常数属于经典二项熵结论，可由 Adell–Lekuona–Yu 的统一熵界与模态估计直接取得。
+此处给出适于全部占据数的验证：在模态 $k^*=np+O(1)$ 处，
+$-\log f_{n,p}(k^*)=\tfrac12\log(2\pi np(1-p))+O(n^{-1})$。
+在 $|\Delta|\le n^{5/8}$ 内，对二项相对熵作 Taylor 展开得到
+$-\log f_{n,p}(K)+\log f_{n,p}(k^*)=\Delta^2/[2np(1-p)]+O(n^{-1/8})$，
+误差对上述参数区间统一。
+补集上，(68.47) 将非负差界为 $C+C\Delta^2/n$；四阶矩给
+$\mathbb P(|\Delta|>n^{5/8})\le Cn^{-1/2}$ 及
+$\mathbb E[(\Delta^2/n)1_{\{|\Delta|>n^{5/8}\}}]\le Cn^{-1/4}$。
+故期望趋于 $\mathbb E\Delta^2/[2np(1-p)]=1/2$。
+统一有界性则由 (68.48) 与模态的双边 $(n+1)^{-1/2}$ 界给出，包括小 $n$。
+
+乘积律的熵与最小熵均逐坐标相加，故其差精确等于
+$\sum_{j\in K_M}g(C_j,p_j)$。固定 $0<e<c_q$。
+在 $I(\bar u_j)\le c_q-e$ 的格点，(68.29) 使全部 $C_j\ge e^{e\lambda/2}$，
+所以每项统一趋于 $1/2$。
+在 $I(\bar u_j)\ge c_q+e$ 的格点，(68.27)、(68.28) 给
+$\mathbb E\sum C_j\le Q^{C}e^{-e\lambda}\to0$，
+所以这些组以概率趋一全部为空，贡献精确为零。
+剩余条带 $|I(\bar u_j)-c_q|\le e$ 中只用 $0\le g\le C$。
+
+$I$ 的严格凸性及两侧单调性使水平集 $I=c_q$ 至多含两点。
+固定条带和子水平集都是有限个区间，网格间距为 $Q^{-2}$，
+投影到闭左端点只改变有界个格点。
+先令规模趋无穷，再令 $e\downarrow0$，条带长度趋零，得到
+
+```math
+\frac1{Q^2}\sum_{j\in K_M}g(C_j,p_j)
+       \longrightarrow\frac12\operatorname{Leb}\{I<c_q\}.
+```
+
+式 (68.52)。
+
+(68.45) 将其传回实际后验，换算为比特即得 (68.44)。
+若正区域接触闭左端点，其整个邻接区间仍被计入。
+这里先逐组相减，故不必排除两种熵各自可能存在的更大格点或端点修正。
+坏数据只付其概率；支持置换、未知方向的共同成功事件及 $H_M$ 上的原子重标记
+均按定理 68.5 传递。没有期望熵、参数趋端点的一致性或有限精度解码结论。证毕。
+
+

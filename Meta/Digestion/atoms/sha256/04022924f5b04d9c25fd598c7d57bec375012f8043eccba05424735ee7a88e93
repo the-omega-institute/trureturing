@@ -1,0 +1,22 @@
+### 12.1 路径时钟与 renewal 计数
+
+设局部配置沿合法路径产生状态 $s_0,s_1,\ldots$，每步有非负费用 $c_t$，并给出 renewal 指示 $r_t\in\{0,1\}$. 定义
+
+$$
+T_n=\sum_{t<n}c_t,
+\qquad
+N_n=\sum_{t<n}r_t.
+\tag{12.1}
+$$
+
+$T_n$ 是累积时钟或资源费用，$N_n$ 是实际 renewal 次数。即使每步 $c_t=1$，也可能 $N_n$ 有限；反之，零费用的校准事件可以使 $N_n$ 无限而 $T_n$ 不反映取得难度。若费用依赖动作和来源，严格的路径拼接律是
+
+$$
+T_{u v}(s)=T_u(s)+T_v(T_u s),
+\tag{12.2}
+$$
+
+而不是端点标量的自动差值。`D5/S0/History/Accounting/CumulativeTax.lean` 的 `terminal_balance_eq_initial_add_tax` 是有限累加望远镜的直接形式化锚；它没有把所有路径费用化成势函数。
+
+预测细化深度另有定义。仓内 `ClockTimeVersusRefinementDepth.clock_time_does_not_determine_refinement_depth` 给出一状态可运行任意时钟步数而边界深度为零，以及延迟四状态循环在短时钟后仍需更深预测商的反例。因此不能用 $T_n$ 或 $N_n$ 代替完成层数。
+

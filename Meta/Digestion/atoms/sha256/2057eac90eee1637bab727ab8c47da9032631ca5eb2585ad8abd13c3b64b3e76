@@ -1,0 +1,23 @@
+## ST23．非零 Chern 数阻止单一全局图编码
+
+### 假设 ST23.1
+
+令 $\Sigma$ 为紧致、无边界、定向光滑曲面，$P(x)$ 是固定平凡丛 $\Sigma\times\mathbb C^n$ 上的光滑秩 $r$ 正交投影，$1\le r<n$。记 $E_x=\operatorname{Ran}P(x)$。本文采用物理连接规范
+
+$$
+\mathcal A=iU^\dagger dU,\qquad
+\mathcal F=d\mathcal A-i\mathcal A\wedge\mathcal A,\qquad
+C_1(E)=\frac1{2\pi}\int_\Sigma\operatorname{tr}\mathcal F.
+$$
+
+标准第一 Chern 数的整数性作为向量丛背景使用；下述障碍证明实际只需要这个积分非零。度量拓扑界的既有讨论见[ST19-MO]。
+
+### 定理 ST23.2：单一固定可见空间的障碍
+
+若 $C_1(E)\ne0$，则对每个固定秩 $r$ 投影 $P_0$，存在 $x\in\Sigma$ 与单位向量 $v\in E_x$，使 $P_0v=0$。特别地，
+
+$$
+\boxed{\max_{x\in\Sigma}\|(I-P_0)P(x)\|=1.}
+\tag{ST23.1}
+$$
+

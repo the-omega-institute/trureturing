@@ -1,0 +1,16 @@
+**Definition 1.1 (ordered cochains and energies).** Let $V$ be a nonempty
+finite set of size $n$. A real triangle cochain $F:V^3\to\mathbb R$ is
+alternating when swapping either adjacent pair of arguments changes its
+sign. Put
+$$
+ S(i,j)=\sum_{r\in V}F(r,i,j),\qquad
+ a(i,j)=\frac{S(i,j)}n,\qquad
+ (da)(i,j,k)=a(j,k)-a(i,k)+a(i,j),
+$$
+and
+$$
+ (dF)(r,i,j,k)=F(i,j,k)-F(r,j,k)+F(r,i,k)-F(r,i,j).
+$$
+All sums below range over ordered tuples, including tuples with repeated
+vertices. Alternation determines the values on those tuples.
+

@@ -1,0 +1,11 @@
+**证明。** $\mathcal S$ 的输出与原输入无关，任何后处理仍是常值。第171节及编码的联合左逆保证 $\omega_0\ne\omega_1$，所以它不能变成 $\mathcal N_L$。这个方向即使允许处理整个 $MK$ 也仍不可能。
+
+若存在接收端 $\Lambda$ 使
+$(\operatorname{id}_M\otimes\Lambda)\mathcal N_L=\mathcal S$，则把
+$\mathcal S$ 的最优解码器接在 $\Lambda$ 后面，就是
+$\mathcal N_L$ 的合法接收端解码器。因此
+$e(\mathcal N_L)\le e(\mathcal S)$，与（178.4）矛盾。证毕。
+
+若改为允许联合处理 $MK$，则把全部输出重置为 $\omega_*$ 就可以从
+$\mathcal N_L$ 得到 $\mathcal S$。这里的差异完全由已声明的操作权限承担：同一个联合状态可以重置，不表示其不可访问部分可以由接收端重置。
+

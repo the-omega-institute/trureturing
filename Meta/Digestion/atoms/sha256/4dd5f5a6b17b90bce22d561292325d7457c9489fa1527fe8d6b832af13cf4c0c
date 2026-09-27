@@ -1,0 +1,54 @@
+### 254.2 有选择记录时的相对熵与联合测量下界
+
+先限制 $0<z\le1/2$，允许 $\gamma$ 在整个 $[0,1]$ 内取值，也允许其随 $z$ 变化。记达到目标成功率的最小整数副本数为 $N_{\mathrm{log}}(z,\gamma)$。
+
+在 $Y$ 仪器的产品参考块中，符号均值从零变为
+$$
+y_z=\langle\psi_z|Y|\psi_z\rangle
+=2z\sqrt{1-z^2}.
+\tag{254.9}
+$$
+Bell 参考块在两假设下保持相同，故自然对数相对熵为
+$$
+D_{\mathrm{nat}}(\upsilon_z\|\upsilon_0)
+=qD_{\mathrm B}\left(\frac{1+y_z}{2}\middle\|\frac12\right)
+\le qy_z^2
+\le4qz^2.
+\tag{254.10}
+$$
+这里使用§253由 $\ln u\le u-1$ 得到的 Bernoulli 相对熵上界。旧仪器已有
+$$
+D_{\mathrm{nat}}(\sigma_z\|\sigma_0)
+\le\frac{4qA}{1-A}z^4.
+\tag{254.11}
+$$
+选择标签正交，且两假设的选择概率相同，所以
+$$
+\begin{aligned}
+D_{\mathrm{nat}}(\tau_z^\gamma\|\tau_0^\gamma)
+&=(1-\gamma)D_{\mathrm{nat}}(\sigma_z\|\sigma_0)
++\gamma D_{\mathrm{nat}}(\upsilon_z\|\upsilon_0)\\
+&\le4q\left((1-\gamma)\frac A{1-A}z^4+\gamma z^2\right).
+\end{aligned}
+\tag{254.12}
+$$
+$\gamma=0,1$ 时省略零权重块，该式仍成立。
+
+由等先验 Helstrom 公式，成功率至少 $2/3$ 要求两份 $n$ 副本态的迹范数距离至少为 $2/3$。自然对数 Pinsker 界与相对熵加性给
+$$
+\frac49
+\le\| (\tau_z^\gamma)^{\otimes n}-(\tau_0^\gamma)^{\otimes n}\|_1^2
+\le8nq\left((1-\gamma)\frac A{1-A}z^4+\gamma z^2\right).
+\tag{254.13}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{log}}(z,\gamma)
+\ge
+\frac1{18q\left((1-\gamma)\dfrac A{1-A}z^4+\gamma z^2\right)}.
+}
+\tag{254.14}
+$$
+该下界对任何联合输出测量成立。
+

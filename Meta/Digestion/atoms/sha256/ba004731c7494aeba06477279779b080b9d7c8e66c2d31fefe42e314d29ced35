@@ -1,0 +1,9 @@
+**$AABAC$。** 普通第4轮给 $G_4=P$，其后继为 $A$。结合（128.8），$G_2,G_4$ 的一位像都为 $Q\otimes A$，所以 $G_2=G_4=P$。普通第6轮也给 $G_6=P$。因此
+
+$$
+V_0H_1=P\otimes A,\qquad
+V_0H_3=P\otimes B,\qquad V_0H_5=P\otimes C.
+$$
+
+两个普通环境 $B,C$ 独立，所以 $H_1\subset H_3+H_5$。第3、第5轮当前环境均为大侧 $A$，由（128.8）有 $H_3,H_5\subset U\oplus Q$。真实 $p\in H_1\cap S$ 因而属于 $(U\oplus Q)\cap S=U$，违反（128.3）。
+

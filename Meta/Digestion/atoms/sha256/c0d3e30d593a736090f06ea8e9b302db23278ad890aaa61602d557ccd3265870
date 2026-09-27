@@ -1,0 +1,37 @@
+### 79.1 两个环境的真实输入域与接收跨度
+
+定义
+
+$$
+\begin{aligned}
+R_A&=G_2+G_4+G_6,& r&=\dim R_A,\\
+E&=G_2+G_4,& e&=\dim E,\\
+O&=G_3+G_5,& s&=\dim O,\\
+D_A&=H_1+H_3+H_5,&D_B&=H_2+H_4,\\
+Q_B&=Q_3+Q_5,&Q_A&=Q_4+Q_6.
+\end{aligned}
+$$
+
+全部定义使用已经发生的轮次。特别地，$G_6$ 只进入已执行的零位像，不为它添加一位后继。固定实际位块给
+
+$$
+\begin{aligned}
+V_0D_A&=R_A\otimes A,&V_0D_B&=O\otimes B,\\
+V_1E&=Q_B\otimes B,&V_1O&=Q_A\otimes A.
+\end{aligned}
+\tag{79.4}
+$$
+
+所以 $\dim D_A=r$、$\dim D_B=s$、$\dim Q_B=e$、$\dim Q_A=s$。不同环境射线使 $D_A\cap D_B=0$ 和 $E\cap O=0$。
+
+令 $S_0=D_A+D_B=H_1+\cdots+H_5$。其零位像都在 $K\otimes F$ 中，而 $V_0k=p\otimes\eta_1$ 不在其中，因此 $k\notin S_0$。七维预算给
+
+$$
+r+s=\dim S_0\le6,
+\qquad r\ge e\ge2,
+\qquad s\ge2.
+\tag{79.5}
+$$
+
+这里没有把 $k$ 与尾域判为正交。
+

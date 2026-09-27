@@ -1,0 +1,14 @@
+### 义务 5（保护坐标与目标洗白）⇢ 已被第 57.2 侧冻结定理收编
+
+独立裁定席（la39）给出逐子句映射，每半条恰对应一条冻结定理的结论：
+
+| 义务 5 子句 | 收编定理（GID 尾段） |
+|---|---|
+| protectedCoordinates 是七保护字段的直接投影 | `protected_coordinate_dependent_extensionality` |
+| 仅改 Condition 即强制保护坐标不等 | 同上，于 `ProtectedCoordinateTag.conditions` 实例化 |
+| 被改坐标须有可审计、封闭、非空的见证束 | `has_closed_coordinate_witness_bundle_iff_ne` |
+| RegradeReport 证明修订判决为修订承诺在旧证据上的实际求值 | `regrade_report_carries_actual_evaluation`（原载体，经 57.2-C 的 `reportVerdictCorrect` 消费） |
+| 正文级洗白 = 报告身份 ∧ 严格到达后重评 ∧ 归因原承诺 ∧ 保护坐标变化 | `semantic_target_laundering_iff_protected_coordinates_ne` |
+| 草图级与正文级不得混同 | `semantic_sketch_target_laundering_iff_body_and_timestamp`（须显式时间桥） |
+| 洗白谓词有精确有限判定证书（无额外 Verdict/Fintype 前件） | `target_laundering_decision_nonempty` |
+

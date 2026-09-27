@@ -1,0 +1,11 @@
+**定义 185.1（分布差异与结果幅度）。** 对第 184 节的两个行动分布，记
+
+$$
+\operatorname{TV}(\pi_1,\pi_0)
+=\frac12\sum_{a\in A}|\pi_1(a)-\pi_0(a)|,
+\qquad
+\operatorname{osc}(m)=\max_{a\in A}m(a)-\min_{a\in A}m(a).
+$$
+
+总变差衡量本次行动分布的改变，幅度衡量这些行动在所选结果均值上的最大区别。项目的[有限总变差数据处理](../../../D5/S3/TotalVariation/DataProcessing.lean)说明，同一个非负行随机核不会放大总变差：本例有 $\operatorname{TV}(q_1,q_0)\le\operatorname{TV}(\pi_1,\pi_0)$。其条件是两边使用同一个核；若实际实施也改变了核，就须转到第 186 节。
+

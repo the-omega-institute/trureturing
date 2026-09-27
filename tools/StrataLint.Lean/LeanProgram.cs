@@ -12,7 +12,7 @@ internal static class LeanProgram
             if (arguments.FirstOrDefault() == "lean-utility-input")
             {
                 var result = LeanUtilityInputCommand.Run(
-                    () => GitRepositorySnapshotReader.ReadCurrent(Directory.GetCurrentDirectory()), arguments.Skip(1).ToArray());
+                    Directory.GetCurrentDirectory(), arguments.Skip(1).ToArray());
                 Console.Out.Write(result.Output);
                 Console.Error.Write(result.Error);
                 return result.ExitCode;

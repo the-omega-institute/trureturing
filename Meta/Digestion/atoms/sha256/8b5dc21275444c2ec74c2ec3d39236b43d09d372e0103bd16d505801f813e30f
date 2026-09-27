@@ -1,0 +1,19 @@
+### 22.4 定理：二进制数值完成是一个全局 L1 等距读出
+
+定义
+\[
+B_n(\alpha,x)=\sum_{j=0}^{n-1}2^{-j-1}s_j(\alpha,x),\qquad
+B_\infty(\alpha,x)=\sum_{j=0}^{\infty}2^{-j-1}s_j(\alpha,x).
+\]
+该级数一致收敛，且 $0\leq B_\infty-B_n\leq2^{-n}$。对任意 $0\leq\alpha,\beta<1$，不要求无理，也不要求局部扰动，
+\[
+\boxed{\int_0^1|B_n(\beta,x)-B_n(\alpha,x)|\,dx
+=(1-2^{-n})|\beta-\alpha|,}
+\]
+\[
+\boxed{\int_0^1|B_\infty(\beta,x)-B_\infty(\alpha,x)|\,dx
+=|\beta-\alpha|.}
+\tag{22.7}
+\]
+因此 $\alpha\mapsto B_\infty(\alpha,\cdot)$ 给出到 $L^1([0,1])$ 的保序等距嵌入。这里的对象是关于同一均匀相位的函数，不是一个标量就无损恢复任意无限词的声明。
+

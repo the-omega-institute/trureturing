@@ -1,0 +1,13 @@
+### 219.5 可复用的核输入事件下界
+
+考虑任意有限维输入空间，维数至少二，假定下述总秩二预算集合非空。给定一个目标经典二结果记录通道
+$$
+\mathcal R(X)
+=\sum_{j=0}^1|j\rangle\langle j|^Q\otimes\Gamma_j(X).
+$$
+固定量子输出单位向量 $|r\rangle$，定义两个输入效应
+$$
+B=\Gamma_1^*(|r\rangle\langle r|),\qquad
+E_0=\Gamma_0^*(I).
+$$
+

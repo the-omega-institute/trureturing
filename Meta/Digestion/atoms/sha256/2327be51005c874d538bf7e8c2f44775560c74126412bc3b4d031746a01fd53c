@@ -1,0 +1,53 @@
+**推论204.4（阈值的三阶余项与熵的对数放大界）。** 有
+
+$$
+\boxed{
+\ell_\epsilon=h_c\epsilon+k_c\epsilon^2+O(\epsilon^3).
+}
+\tag{204.15}
+$$
+
+第201节的四项熵展开因此强化为
+
+$$
+\begin{aligned}
+H_2(\ell_\epsilon)={}&
+h_c\epsilon\log_2(1/\epsilon)
++h_c\epsilon\log_2(e/h_c)
++k_c\epsilon^2\log_2(1/\epsilon)\\
+&-\left[k_c\log_2h_c+\frac{h_c^2}{2\ln2}\right]\epsilon^2
++O\bigl(\epsilon^3\log(1/\epsilon)\bigr).
+\end{aligned}
+\tag{204.16}
+$$
+
+**证明。** 写 $h_\epsilon=\ell_\epsilon/\epsilon$。
+已有 $h_\epsilon=h_c+O(\epsilon)$；
+在这一变化点使用（204.2）的一致界，得到
+
+$$
+0=\Phi_{h_\epsilon}+\epsilon Q(h_\epsilon)+O(\epsilon^2).
+$$
+
+内点上的 $\Phi$ 二次可微、$Q$ 光滑，且 $\Phi'_{h_c}>0$。
+Taylor 展开于是给
+$h_\epsilon=h_c+k_c\epsilon+O(\epsilon^2)$，证明（204.15）。
+
+置 $u_\epsilon=h_c\epsilon+k_c\epsilon^2$。
+二元熵的导数在 $u_\epsilon$ 与 $\ell_\epsilon$ 之间为
+$O(\log(1/\epsilon))$，故两处熵值相差
+$O(\epsilon^3\log(1/\epsilon))$。
+直接将 $u_\epsilon$ 代入
+
+$$
+H_2(u)=u\log_2(1/u)+\frac{u}{\ln2}-\frac{u^2}{2\ln2}+O(u^3)
+$$
+
+并展开 $\log(1+(k_c/h_c)\epsilon)$，
+给出（204.16）的四个项以及 $O(\epsilon^3)$ 的剩余量。
+合并两种误差即得结论。证毕。
+
+这里的熵仍是指定来源边缘的熵。
+本节量化的是恢复任务与来源阈值的逼近误差，
+没有改变来源、观察者权限或将该熵替换为原始档案容量。
+

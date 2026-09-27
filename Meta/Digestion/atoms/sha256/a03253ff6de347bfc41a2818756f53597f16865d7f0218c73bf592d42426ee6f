@@ -1,0 +1,44 @@
+**证明。** 必要性：对同一个通道取一个全域 Stinespring 等距 $V$。引理141.2对每轮给出同一环境中的 $R_n$ 和 $VJ_n=T_n$，故
+
+$$
+T_n^*T_m=J_n^*V^*VJ_m=J_n^*J_m.
+$$
+
+全域等距要求输出维数不少于输入维数，所以（141.15）的维数条件也必要。
+
+充分性：在实际输入像的共同张成
+
+$$
+\mathcal U=\operatorname{span}_{0\le n<N}\operatorname{ran}J_n
+\subseteq K\otimes B
+$$
+
+上规定
+
+$$
+V_{\mathcal U}\!\left(\sum_nJ_n\xi_n\right)=\sum_nT_n\xi_n.
+\tag{141.18}
+$$
+
+对任意 $\xi_n\in S_{n+1}\otimes\Gamma_n$，全部 Gram 块相等给出
+
+$$
+\left\|\sum_nT_n\xi_n\right\|^2
+=\sum_{n,m}\langle\xi_n,T_n^*T_m\xi_m\rangle
+=\left\|\sum_nJ_n\xi_n\right\|^2.
+$$
+
+所以输入的任意零表示也映到零，（141.18）良定并等距。设 $q=\dim\mathcal U$。它的像维数也是 $q$，而（141.15）保证
+
+$$
+\dim(K\otimes E)-q\ge\dim(K\otimes B)-q.
+$$
+
+因此可以把输入正交补的一个正交基映入输出像的正交补，得到全域等距
+$V:K\otimes B\to K\otimes E$。取
+$\mathcal C(Y)=\operatorname{Tr}_E(VYV^*)$。它全域 CPTP，并满足 $VJ_n=T_n$。引理141.2的反向蕴涵给出全部（141.8）。证毕。
+
+对本节的位输入，维数条件就是 $\dim E\ge2$。只有部分输入子空间上的 Gram 条件、却没有全域输出容量时，不能直接宣称已经构成全域通道。反之，可以共同扩大 $E$；将所有 $R_n$ 经同一环境嵌入扩大不改变 Gram 块和偏迹条件。必要性一侧可取 Kraus 数不超过输入输出维数乘积的实现，故存在解时可以取 $2\le\dim E\le2D^2$。
+
+式（141.16）包括首轮与每个后续轮次、相邻轮次以及所有远隔轮次。只验证每个接口内部或仅验证相邻接口，都没有给出（141.18）在全部线性关系上的良定性。
+

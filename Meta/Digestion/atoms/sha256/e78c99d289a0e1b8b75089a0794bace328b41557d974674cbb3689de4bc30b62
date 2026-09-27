@@ -1,0 +1,18 @@
+**证明。** 任意可行 $H$ 满足 $-G\preceq H\preceq G$，所以（259.7）、（259.24）给
+$$
+d(\Omega_H,\Omega_0)
+=\frac12\|H\|_1
+\le\frac12\operatorname{Tr}G.
+\tag{259.30}
+$$
+$H=G$ 达到这一上界。另一方面，对任意合法中心 $\widehat\Omega$，三角不等式与定理259.2给
+$$
+\operatorname{Tr}G
+=d(\Omega_+,\Omega_-)
+\le d(\Omega_+,\widehat\Omega)+d(\widehat\Omega,\Omega_-).
+\tag{259.31}
+$$
+故中心到这两个可能来源的最大距离至少为 $\operatorname{Tr}G/2$。上下界相等。$\square$
+
+这一半径是指定精确数据合同下的确定性最坏误差。它没有把状态制备权限、有限样本误差或数据处理成本免费加入模型，也不要求最优中心唯一。
+

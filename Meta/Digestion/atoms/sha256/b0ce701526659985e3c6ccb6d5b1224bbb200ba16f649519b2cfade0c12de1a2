@@ -1,0 +1,17 @@
+### 58.2 联合相位平均与完整 tester
+
+定义
+
+$$
+\begin{aligned}
+U_A(\alpha)&=\operatorname{diag}(1,e^{i\alpha}),\\
+U_B(\beta)&=\operatorname{diag}(1,e^{i\beta}),\\
+U_D(\alpha,\beta)&=
+\operatorname{diag}(1,e^{-i\alpha},e^{-i(\alpha+\beta)}),\\
+U(\alpha,\beta)&=U_A(\alpha)\otimes U_B(\beta)\otimes U_D(\alpha,\beta).
+\end{aligned}
+\tag{58.6}
+$$
+
+$U$ 分别固定 $x,y,z$，将 $h_0$ 乘以 $e^{i\beta}$。因此 $R_\varepsilon,S_\varepsilon$ 及其厄米差均在该群下不变。
+

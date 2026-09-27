@@ -1,0 +1,32 @@
+## 127. 正交二加一三尾不能从普通方向启动
+
+沿用第89、103、112、119、124节的同一七维六终端实际合同。假设通常纤维维数为二，三维乘积剩余空间采用重数二与一的两个支持。第124节已迫使这两个支持正交。按零位纤维尺寸命名两个正交方向 $X,Y$，则
+
+$$
+X\perp Y,\qquad
+\mathcal G_0(X)=U,\quad\dim U=4,
+\qquad \mathcal G_0(Y)=M,\quad\dim M=3,
+$$
+
+$$
+U\cap M=P,\quad\dim P=2,\qquad
+U+M=S,\quad\dim S=5,\qquad Q=S^\perp,\quad\dim Q=2.
+\tag{127.1}
+$$
+
+完整位像沿这两个环境分块，故完整一位纤维为
+
+$$
+\mathcal G_1(X)=U^\perp,\qquad
+\mathcal G_1(Y)=M^\perp.
+$$
+
+任何不同于 $X,Y$ 的方向 $Z$ 都满足
+
+$$
+\mathcal G_0(Z)=P,\qquad \mathcal G_1(Z)=Q.
+\tag{127.2}
+$$
+
+两个接收空间 $U,M$ 不预设正交；唯一使用的正交分解 $U=P\oplus(U\cap P^\perp)$ 来自原接收内积。所有一位接收因子均正交于 $P$，包括真实 $q,v$ 与各 $Q_n$。
+

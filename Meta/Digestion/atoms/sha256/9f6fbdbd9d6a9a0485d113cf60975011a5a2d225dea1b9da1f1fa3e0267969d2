@@ -1,0 +1,26 @@
+**定理 224.2（三个精确优化值与合法共同来源）。** 在输出基 $e_0,e_1,e_2$ 与输入基 $f_0,f_1$ 中，取
+$$
+M=e_0f_0^\dagger
+=\begin{pmatrix}1&0\\0&0\\0&0\end{pmatrix},
+$$
+$$
+N=\frac1{\sqrt2}
+(e_1f_0^\dagger+e_0f_1^\dagger+e_2f_1^\dagger)
+=\frac1{\sqrt2}
+\begin{pmatrix}0&1\\1&0\\0&1\end{pmatrix}.
+\tag{224.RK.5}
+$$
+令此处 $\Gamma(X)=MXM^\dagger+NXN^\dagger$。
+
+由这两个矩阵定义的三个优化满足
+
+$$
+\boxed{
+\delta_{\rm rot}=1,\qquad
+\gamma_{\rm out}=\frac{2+\sqrt2}{4},\qquad
+\gamma_{\rm in,tail}=\frac12.
+}
+$$
+
+因此两端口证书与删除成本之间有严格差距 $(2-\sqrt2)/4$。该差距可以保持两个 Kraus 矩阵都满输入秩，并可通过任意 $0<\kappa<1/2$ 的共同缩放补成严格记录秩 $(1,2)$ 的 CPTP 通道，使 $q_0>\delta_{\rm rot}$。
+

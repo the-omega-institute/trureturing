@@ -1,0 +1,36 @@
+### 9.2 何时能与共同边界互相恢复
+
+令 $\equiv_\star$ 是声明的联合任务共同核，令
+
+$$
+ r_{\partial}:S\to R_{\partial},qquad
+ r_{\mathrm{clock}}:S\to R_{\mathrm{clock}}
+$$
+
+分别是边界和时钟表示的实际像。若
+
+$$
+ \ker(r_{\partial})
+ =
+ \ker(r_{\mathrm{clock}})
+ =
+ \equiv_\star,
+ \tag{9.3}
+$$
+
+则存在唯一双射
+
+$$
+ g_{\partial,\mathrm{clock}}:R_{\partial}\simeq R_{\mathrm{clock}},qquad
+ g_{\partial,\mathrm{clock}}(r_{\partial}(s))=r_{\mathrm{clock}}(s).
+ \tag{9.4}
+$$
+
+若更新和协议续接在共同核上下降，则式 (9.4) 还与相应的动态作用交换。反之，若时钟读数只满足
+
+$$
+ E(x,p)=E(x',p')
+$$
+
+而不满足式 (9.2)，式 (9.4) 只能是从边界到读数的有损投影；不能由当前时钟值恢复未来权限或完整档案。
+

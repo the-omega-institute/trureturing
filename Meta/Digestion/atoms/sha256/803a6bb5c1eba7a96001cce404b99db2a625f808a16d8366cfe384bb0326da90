@@ -1,0 +1,46 @@
+**定理 230.1（秩 $r$ 事件的共同零点）。** 在（230.HR.1）—（230.HR.5）及 $\nu\ne0$ 下，给定任意 $k\ge1$ 个复线性映射
+$$
+C_j:\mathbb C^d\to\mathbb C^m\quad(1\le j\le k).
+$$
+若 $rk<d$，则存在单位输入 $v$，使
+$$
+\boxed{P([v])C_jv=0\qquad(1\le j\le k).}
+\tag{230.HR.10}
+$$
+这些映射不必构成保迹通道。
+
+**证明。** 每个 $C_j$ 定义一份连续截面
+$$
+s_j(x)=P(x)C_j|_{H_x}\in\operatorname{Hom}(H_x,L_x).
+\tag{230.HR.11}
+$$
+该定义作用于整条输入线，不依赖所选单位代表的相位。全部截面组成
+$$
+s=(s_1,\ldots,s_k)\in\Gamma(E^{\oplus k}),
+\qquad\operatorname{rank}_{\mathbb C}(E^{\oplus k})=rk.
+\tag{230.HR.12}
+$$
+Whitney 直和公式及 $c_i(E)=0$ 对 $i>r$ 成立，给
+$$
+\boxed{c_{rk}(E^{\oplus k})=c_r(E)^k=\nu^k h^{rk}.}
+\tag{230.HR.13}
+$$
+第一等式来自总陈类乘积中的最高可能次数：每个因子的次数至多为 $r$，要得到总次数 $rk$，必须从每个因子取 $c_r(E)$。无需把 $L$ 分裂成线丛。
+
+标准整数上同调环为
+$$
+H^*(\mathbb {CP}^{d-1};\mathbb Z)
+=\mathbb Z[h]/(h^d).
+\tag{230.HR.14}
+$$
+因为 $rk<d$ 且 $\nu\ne0$，式（230.HR.13）是一个非零上同调类。
+
+若 $s$ 没有零点，将其按诱导的 Hermitian 度量归一化，便得到一个平凡复线子丛。其 Hermitian 正交补 $E'$ 为复秩 $rk-1$ 的向量丛，因此
+$$
+E^{\oplus k}\cong\underline{\mathbb C}\oplus E',
+\qquad c_{rk}(E^{\oplus k})=c_{rk}(E')=0,
+$$
+与（230.HR.13）矛盾。故 $s$ 在某个 $[v]$ 为零。任选该输入线的单位代表，即得（230.HR.10）。$\square$
+
+这里唯一使用的分裂，是假定无零点截面后推出的“平凡线子丛及其正交补”。它不预设事件丛或候选映射丛存在全局线丛分解。
+

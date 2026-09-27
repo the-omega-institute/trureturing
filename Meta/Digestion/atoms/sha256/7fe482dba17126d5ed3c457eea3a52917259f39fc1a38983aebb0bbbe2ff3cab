@@ -1,0 +1,17 @@
+**命题 343.1（共同区域上的近似常值界）。** 保留第 339 节的有限、正概率、共同事件与共同可及类。设 $a_i\in[0,1]$、$\varepsilon_i\geq0$，并且对所有 $w\in C$ 都有 $|p_i(w)-a_i|\leq\varepsilon_i$。则
+
+$$
+|a_i-P(E\mid C)|\leq\varepsilon_i,
+\qquad |a_1-a_2|\leq\varepsilon_1+\varepsilon_2.
+$$
+
+证明。每个格 $I\in\mathcal I_i|_C$ 的权重 $\lambda_I=P(I)/P(C)$ 为正，且总和为一。记该格的后验为 $p_i(I)=P(E\cap I)/P(I)$，按分割求和得到 $P(E\mid C)=\sum_I\lambda_Ip_i(I)$。因此
+
+$$
+\left|P(E\mid C)-a_i\right|
+\leq\sum_I\lambda_I|p_i(I)-a_i|
+\leq\varepsilon_i\sum_I\lambda_I=\varepsilon_i.
+$$
+
+再经共同中间值 $P(E\mid C)$ 使用三角不等式即得两人之间的界。证毕。条件覆盖整个共同区域；仅在实际世界的邻近几格观测到接近，不能直接替代它。
+

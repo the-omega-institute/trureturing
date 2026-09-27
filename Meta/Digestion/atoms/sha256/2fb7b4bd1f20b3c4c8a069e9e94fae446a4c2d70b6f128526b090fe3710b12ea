@@ -1,0 +1,10 @@
+**命题 6.2（有限截止的精确分解）。** $\mathsf F_0(A,n,D)$ 当且仅当 $|A|=1$。若 $q\ge1$，则
+
+$$
+\begin{aligned}
+\mathsf F_q(A,n,D)\iff{}& |A|=1\\
+&\text{或 }\exists t\in\{n,\ldots,D\}\ \forall y\in R_{p,P}(b,A;t),\quad
+\mathsf F_{q-1}(A_y(t),t,D).
+\end{aligned}
+$$
+

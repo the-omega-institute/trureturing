@@ -1,0 +1,28 @@
+**定义 161.1（已校准两条边的共同记录源）。** 令系统空间为 $\mathcal H_S=\mathbb C^3$，固定有序基 $|0\rangle,|1\rangle,|2\rangle$。设 $0\le r\le1$ 为已知参数，定义 Hermitian 矩阵
+$$
+C(r,z)=\begin{pmatrix}
+1&r&rz\\
+r&1&r\\
+r\overline z&r&1
+\end{pmatrix},\qquad z\in\mathbb C.
+\tag{161.1}
+$$
+允许的未知参数为满足 $C(r,e^{i\phi})\succeq0$ 的 $\phi\in[-\pi,\pi]$。两个端点 $-\pi,\pi$ 表示同一个矩阵。源按第3节的有限 Gram 实现提供单位记录向量 $e_j^{(\phi)}\in\mathbb C^3$，方向固定为
+$$
+\langle e_k^{(\phi)}\mid e_j^{(\phi)}\rangle
+=C(r,e^{i\phi})_{jk}.
+\tag{161.2}
+$$
+例如可以取 $C(r,e^{i\phi})^{\mathsf T}$ 的正半定平方根的各列；其通常方向的 Gram 矩阵即为 $C(r,e^{i\phi})^{\mathsf T}$。三标签也可使用第14.4节的两个位置 Zeckendorf 合法基底，以下只使用这三个正交标签。
+
+初态为固定空白向量的环境单元，实施受控记录等距映射 $|j\rangle|m_*\rangle\mapsto|j\rangle|e_j^{(\phi)}\rangle$。丢弃该单元后，系统通道为
+$$
+\mathcal M_{r,\phi}(A)=C(r,e^{i\phi})\odot A.
+\tag{161.3}
+$$
+这里 $\odot$ 表示逐项乘积。单位对角与 Gram 实现保证它完全正且保持迹。参数 $\phi$ 在整个重复协议中固定未知；每一步使用同一受控记录规则和一个与系统、参考及既有记录独立的新空白单元。旧记录不再访问，两步之间没有额外控制或中间结果读取。于是 $N$ 步终端通道是同一个 $\mathcal M_{r,\phi}$ 的 $N$ 次复合，不是每步重新抽取独立相位的平均通道。
+
+所有源的逐对记录转移概率均为 $|\langle e_k^{(\phi)}\mid e_j^{(\phi)}\rangle|^2=r^2$（$j\ne k$），而循环乘积为 $r^3e^{-i\phi}$；故本节参数与第14.6节的有向循环相位相差负号。式（161.1）还声明了相对于系统制备和读出基的两条实际校准边 $C_{01}=C_{12}=r$。它们是来源合同的一部分，不能从逐对模资料推出，也不能以没有运输输入和效果的坐标变换免费取得。以下预测半径针对这一已校准源族；任意未校准边相位的更大源族不在等式的范围内。循环相位作为三态不变量及其可行域使用第8.9、14.6节的既有机制。
+
+逐对区分度之外的三态相位具有成熟先例：A. J. Menssen 等，*Distinguishability and many-particle interference*，[arXiv:1609.09804v1](https://arxiv.org/abs/1609.09804v1)，正文第2页式(4)给三光子 tritter 的符合概率，其中含有 $r_{12}r_{23}r_{31}\cos\varphi$；第3页式(10)—(14)给固定逐对模而改变三者相位的准备。本节使用三标签受控记录通道，不将该三光子散射概率改称式（161.3），也不将循环相位本身当作新增机制。
+

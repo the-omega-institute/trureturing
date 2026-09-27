@@ -1,0 +1,17 @@
+### 246.2 直接复用两比特等纠缠最优分解
+
+采用 W. K. Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[arXiv:quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，正式发表于 *Physical Review Letters* **80**, 2245（1998），[DOI:10.1103/PhysRevLett.80.2245](https://doi.org/10.1103/PhysRevLett.80.2245) 的标准结果。
+
+该文 PDF第4页式（8）—（10）给出任意两比特态的形成纠缠公式。第5页明确说明：最小平均纠缠总可由四个或更少纯态组成的分解达到，且每个分量具有相同纠缠。第7—9页构造等 concurrence 的最优分解并证明下界；第10页补全零 concurrence 情形。
+
+本节直接使用其如下具体后果，不另立为新定理：对任意 $\Omega\in\mathcal D(\mathbb C^2\otimes\mathbb C^2)$，存在分解
+$$
+\Omega=\sum_jw_j|\psi_j\rangle\langle\psi_j|,
+\qquad
+S(\operatorname{Tr}_E|\psi_j\rangle\langle\psi_j|)
+=E_F(\Omega)
+\quad(w_j>0).
+\tag{246.9}
+$$
+零形成纠缠时可取产品态分解，同样满足该式。所用结论覆盖全部两比特密度矩阵，不限于秩二态或某种矩阵形状；也不将它移用于§245的 $2\times3$ 旗标态。
+

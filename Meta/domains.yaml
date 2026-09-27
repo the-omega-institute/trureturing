@@ -146,6 +146,9 @@ domains:
   Quad:
     stratum: S1
     definition: Parameterized quadratic presentation rings and actual orders carrying the digit-gas root-unit criteria.
+  QuadraticForms:
+    stratum: S3
+    definition: Finite-dimensional quadratic forms, congruence, inertia, and symmetric-matrix signature.
   Quantum:
     stratum: S3
     definition: Finite-dimensional complex operator-algebra and probability structures.

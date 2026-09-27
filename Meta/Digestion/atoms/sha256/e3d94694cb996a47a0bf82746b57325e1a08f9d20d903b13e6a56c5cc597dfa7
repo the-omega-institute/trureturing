@@ -1,0 +1,48 @@
+**定理277.1（完整输出的统一范数界）。** 对任意实数 $\theta$ 及任意两个同维来源，
+$$
+\boxed{
+\frac13\varepsilon_{\mathcal D}(\Xi,\Omega)
+\le\|\sigma_\theta(\Xi)-\sigma_\theta(\Omega)\|_1
+\le\varepsilon_{\mathcal D}(\Xi,\Omega).
+}
+\tag{277.14}
+$$
+两个常数与角度和参考维数均无关。
+
+**证明。** 记输出块差为
+$$
+B_{w,\eta}=\frac{\Delta\rho+\eta\Delta R'_w}4,
+\qquad d_{\rm out}=\sum_{w,\eta}\|B_{w,\eta}\|_1.
+$$
+由（277.7）—（277.8），
+$$
+\Delta\rho=\sum_{w,\eta}B_{w,\eta},
+\qquad
+\Delta R'_w=2(B_{w,+}-B_{w,-}),
+$$
+$$
+\Delta K=e^{-i\theta}(\Delta R'_0-i\Delta R'_1).
+\tag{277.15}
+$$
+三角不等式给 $\|\Delta\rho\|_1\le d_{\rm out}$ 和 $\|\Delta K\|_1\le2d_{\rm out}$，得到左侧。
+
+反向，对任意矩阵 $B$ 和实数 $\phi$，核范数的三角不等式及伴随不变性给 $\|\operatorname{Re}(e^{i\phi}B)\|_1\le\|B\|_1$。因此
+$$
+\begin{aligned}
+d_{\rm out}
+&\le\|\Delta\rho\|_1+
+\frac12\bigl(\|\Delta R'_0\|_1+\|\Delta R'_1\|_1\bigr)\\
+&\le\|\Delta\rho\|_1+\|\Delta K\|_1.
+\end{aligned}
+\tag{277.16}
+$$
+这就是右侧。$\square$
+
+式（277.15）同时给出输出与完整数据的精确对应。对每个固定 $\theta$，$\Omega_*$ 的实际输出纤维与完整数据纤维相同，故由§269可知其唯一。若以实际输出迹距离代替完整数据误差，$\Omega_*$ 处的最优局部逆指数仍恰为 $1/(2n)$：上界由（277.14）与§269的完整数据上界合成；同边缘族（277.2）的态差为 $\Theta(h)$，而
+$$
+\varepsilon_{\mathcal D}(\Omega_h,\Omega_*)
+=\frac{k\|Z\|_1}{n}h^{2n},
+\tag{277.17}
+$$
+所以（277.14）也排除一切更大指数。此指数对全部竞争态和精确共同边缘子合同相同。
+

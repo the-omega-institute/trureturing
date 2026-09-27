@@ -1,0 +1,94 @@
+**定理83.1（外置首轮 AABAA 不可能）。** 上述七维实际合同不能具有尾词 $AABAA$。
+
+### 83.1 分叉跨度与第四终端回到第一输入域
+
+实际早期正交单位组 $p,q$ 和 $u,v,w$ 满足
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+$$
+
+$$
+V_0p=u\otimes A,\qquad V_1p=v\otimes A,
+\qquad V_0q=w\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\quad
+G_2=\operatorname{span}(u,w),\quad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{83.2}
+$$
+
+对实际 $3\le n\le6$，有二维空间
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\qquad P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n.
+\tag{83.3}
+$$
+
+两个投影均为同构，故 $H_n\cap G_n=0$。
+
+置 $S_0=H_1+\cdots+H_5$。实际 $V_0S_0\subset K\otimes F$，但 $V_0k=p\otimes\eta_1$ 不属于该空间，故 $\dim S_0\le6$。令
+
+$$
+P_A=G_2+G_3+G_5+G_6.
+$$
+
+$G_2,G_3$ 的一位后继分别使用 $A,B$，所以 $G_2\cap G_3=0$。又 $P_A\otimes A$ 与 $G_4\otimes B$ 是代数直和，且包含于 $V_0S_0$。因此
+
+$$
+4\le\dim P_A,\qquad \dim P_A+2\le6.
+$$
+
+令 $U=G_2$、$L=G_3$、$T=G_4$，则
+
+$$
+P:=P_A=U+L,\qquad U\cap L=0,\qquad\dim P=4.
+\tag{83.4}
+$$
+
+先记 $Q=Q_3$、$R=Q_4$。同一个一位映射给
+
+$$
+V_1P=(Q\otimes A)\dotplus(R\otimes B).
+$$
+
+因为 $G_5\subset P$ 且 $V_1G_5=Q_6\otimes A$，比较两个独立环境坐标，得到 $Q_6\subset Q$。二者均二维，故 $Q_6=Q$；固定单射性继而给 $G_5=U$。另记 $S=Q_5$，实际关系归为
+
+$$
+\begin{aligned}
+V_1U&=Q\otimes A,&V_1L&=R\otimes B,&V_1T&=S\otimes A,\\
+V_0H_1&=U\otimes A,&V_0H_2&=L\otimes A,&V_0H_3&=T\otimes B,\\
+V_0H_4&=U\otimes A,&V_0H_5&=G_6\otimes A.
+\end{aligned}
+\tag{83.5}
+$$
+
+特别地，
+
+$$
+H_4=H_1,\qquad
+H_3\subset L\oplus Q,\quad P_QH_3=Q,
+\qquad
+H_5\subset U\oplus S,\quad P_SH_5=S.
+\tag{83.6}
+$$
+
+$G_6$ 只通过已经发生的零位像进入以上关系，没有添加第七轮的一位后继。
+
+### 83.2 第四终端确定三维正交补
+
+$P\otimes A\subset V_0K$。将其与实际一位像 $Q\otimes A$、$S\otimes A$ 及 $\mathbb Cv\otimes A$ 作跨位正交比较，得到
+
+$$
+Q\perp P,\qquad S\perp P,\qquad v\perp P.
+\tag{83.7}
+$$
+

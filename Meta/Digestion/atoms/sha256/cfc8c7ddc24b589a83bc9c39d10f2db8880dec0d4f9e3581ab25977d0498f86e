@@ -1,0 +1,20 @@
+**定理169.1（信息量对额外损失的上界）。** 有
+
+$$
+\boxed{
+\chi\ge-\log(1-u),\qquad
+u\le1-e^{-\chi}\le\chi,
+}
+\tag{169.12}
+$$
+
+以及
+
+$$
+\boxed{
+a\le\frac{\beta}{1-\beta}(1-e^{-\chi})
+\le\frac{\beta}{1-\beta}\chi.
+}
+\tag{169.13}
+$$
+

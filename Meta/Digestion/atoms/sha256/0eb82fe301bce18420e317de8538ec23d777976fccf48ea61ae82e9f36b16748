@@ -1,0 +1,74 @@
+**引理 111.2（准平稳方程压低一项潜在的一阶相干）。** 在上述范围内，准确地有
+
+$$
+\begin{aligned}
+\epsilon&=\operatorname{Tr}(E\sigma),&
+y\operatorname{Tr}E&\le\epsilon,\\
+\ell_\psi&=\epsilon+\frac{y\beta}{1-y},&
+h&=-\frac y{1-y}\sum_j\overline{b_j}a_j,\\
+0\le F&\le\ell_\psi,&
+|g|&\le\sqrt{(\ell_\psi-F)(1-\beta-v)}+\sqrt{Fv}.
+\end{aligned}
+\tag{111.5}
+$$
+
+因此，趋近最近失效集合时，
+
+$$
+\boxed{
+\begin{gathered}
+y=O(\epsilon),\qquad
+\ell_\psi=\epsilon(1+o(1)),\qquad F=O(\epsilon),\\
+\beta,v\to0,\qquad
+|h|=O(\epsilon)\sqrt{\beta v},\qquad
+|g|\le(1+\sqrt v)\sqrt{\ell_\psi}.
+\end{gathered}}
+\tag{111.6}
+$$
+
+证明。对式（111.1）取迹，使用完整性得到第一条恒等式。又有 $\sigma\succeq yI$，故正算子 $E$ 给 $\epsilon\ge y\operatorname{Tr}E$。
+
+取式（111.1）的 $\psi$ 对角元与 $\eta,\psi$ 非对角元，分别得到
+
+$$
+(1-\epsilon)(1-y)=(1-y)C+y\beta,
+\qquad
+0=(1-y)\sum_j\overline{c_j}f_j
++y\sum_j\overline{b_j}a_j.
+$$
+
+整理得到 $\ell_\psi$ 与 $h$ 的两条恒等式。完整性还给
+
+$$
+E=
+\begin{pmatrix}
+\ell_\psi-F&-g-\sum_j\overline{f_j}a_j\\
+-\overline g-\sum_j\overline{a_j}f_j&1-\beta-v
+\end{pmatrix}\succeq0.
+$$
+
+其对角元非负，二阶行列式非负，再用 Cauchy–Schwarz，便有
+
+$$
+\left|g+\sum_j\overline{f_j}a_j\right|^2
+\le(\ell_\psi-F)(1-\beta-v),
+\qquad
+\left|\sum_j\overline{f_j}a_j\right|\le\sqrt{Fv}.
+$$
+
+这证明式（111.5）及 $|g|$ 的后一上界。
+
+定理 96.2 和推论 102.2 给共同边界极限 $\sigma\to P_*$、$\mathcal N\to P_*({\cdot})P_*$。例如
+
+$$
+\beta=\langle\psi|\mathcal N(P_\eta)|\psi\rangle,
+\quad
+v=\langle\eta|\mathcal N(P_\eta)|\eta\rangle,
+\quad
+C=\langle\psi|\mathcal N(P)|\psi\rangle,
+$$
+
+故 $\beta,v\to0$、$C\to1$，同时 $\operatorname{Tr}E\to1$。这些都是映射的矩阵元，不要求固定 Kraus 个数或选取连续的 Kraus 算子。因此 $y\le\epsilon/\operatorname{Tr}E=O(\epsilon)$，再代入已证恒等式得到 $\ell_\psi/\epsilon\to1$、$F=O(\epsilon)$ 及 $h$ 的界。紧性和这些矩阵元的连续性使估计在整个最近失效集合附近一致。$\square$
+
+这个坐标选择有实际作用：单靠完整性只能把某些相干项控制到 $\sqrt\epsilon$ 阶；当前准平稳方程使 $h$ 降至 $O(\epsilon)\sqrt{\beta v}$。它没有宣称每个 $f_j$ 单独消失，也没有把混合准平稳态换成纯态来证明。
+

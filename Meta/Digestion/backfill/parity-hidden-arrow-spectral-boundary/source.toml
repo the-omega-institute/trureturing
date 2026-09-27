@@ -1,0 +1,5 @@
+source_id = "parity-hidden-arrow-spectral-boundary"
+path = "docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

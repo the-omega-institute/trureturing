@@ -1,0 +1,29 @@
+**定理 87.2（输出积分的首阶 varentropy 损失）。** 对 (87.1) 中每个确定噪声序列，
+有
+
+$$
+\int_{\mathbb R}f_x(y)
+ \left|\delta\{\mathcal V_{{\rm post},x}(y)-\mathcal V_{{\rm prior},x}\}
+                 +\frac{\gamma^2}{\nu+\sigma_M^2}\right|dy
+ \longrightarrow0.
+\tag{87.3}
+$$
+
+量词为：对每个 $\varepsilon>0$，上述积分超过 $\varepsilon$ 的数据概率，
+在各原实验内对合法真实支持 $S_0\subset C_+$、$|S_0|=q$ 取上确界后趋零。
+等价地可将 (87.3) 的常数写成
+
+$$
+\frac{\gamma^2}{\nu}=\sqrt{\frac\pi\kappa}>0.
+\tag{87.4}
+$$
+
+因此首个已识别的损失为负，阶为 $Q^{1/2}$，低于原 $Q^2$ 阶信息方差。
+保留 $\nu+\sigma_M^2$ 只表示相差 $O(\sigma_M^2)=o(1)$ 的等价写法，
+不声称余项比 $\sigma_M^2$ 小，也不提供收敛速率。
+
+证明。以下所有辅助量均取给定数据后的原定义。
+沿用 $\mathsf Q_x,L_x=dP_x/d\mathsf Q_x,a_x=\|L_x-1\|_{2,\mathsf Q_x}$，
+以及第 82 章的同一移动核心 $\mathcal C$、外部集 $\mathcal O$ 和参考标量
+$T^{\rm G}$。(82.7) 中的精确 $e_j$ 和外部中心截距保持不动。
+

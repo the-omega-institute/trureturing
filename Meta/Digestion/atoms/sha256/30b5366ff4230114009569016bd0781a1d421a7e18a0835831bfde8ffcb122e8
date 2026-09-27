@@ -1,0 +1,38 @@
+**定理 19.3（含格点振幅的一阶等号序列）。** 在 (19.1) 下，不要求 (19.4)。
+若 $`\lambda=\alpha_E(r,\beta)\ell+O(1)`$，则对两种真实实验都有
+
+```math
+F_{\mathcal E}^{\mathrm k}\longrightarrow0,\qquad
+F_{\mathcal E}^{\mathrm o}\longrightarrow0,\qquad
+J_{\mathcal E}\longrightarrow0.
+\tag{19.21}
+```
+
+证明。仍用 (19.10) 的固定倾斜。给定 $`N_-`$，任意宽度为固定 $`h\gt 0`$
+的得分区间至多包含 $`\lfloor h/h_+\rfloor+1`$ 个可行 $`N_+`$。
+$`N_+`$ 的均值是 $`\lambda e^{\theta h_+}/2`$，最大泊松质量为
+$`O(\lambda^{-1/2})`$，故对全部区间位置有
+
+```math
+\sup_u Q_\theta\{Z\in[u,u+h]\}\le C_h\lambda^{-1/2}.
+\tag{19.22}
+```
+
+按固定宽度区间求几何级数，不论端点是否为原子，都得到
+
+```math
+Q_0\{Z\ge u\}\le C\lambda^{-1/2}e^{\lambda g(\theta)-\theta u},\qquad
+Q_1\{Z\le u\}\le C\lambda^{-1/2}e^{\lambda g(\theta)+(1-\theta)u}.
+\tag{19.23}
+```
+
+令 $`u=\beta\ell+O(1)`$。由临界点的两个恒等式及本定理的样本数条件，
+$`M`$ 倍第一尾部、$`q`$ 倍第二尾部均为 $`O(\ell^{-1/2})`$。
+截断计数后有 $`W-Z=o(1)`$，将其用绝对值不超过一的偏移夹住即可；
+背景补偿的质量比仍为 $`1+o(1)`$。一行的实际律比较取 $`D\gt 1`$，
+经全部行的联合界，背景得分达到 $`\beta\ell`$ 或信号得分不超过
+$`\beta\ell`$ 的概率趋零。因此排序精确恢复支持。
+第 18 章的一致方向规则及同数据联合界给出其余两式。
+满足 (19.4) 时，$`\lambda/\ell\to\alpha_E`$ 本身不能推出成功：
+定理 19.2 的每条有限偏移序列也满足该比值条件，却具有严格介于零与一之间的极限错误率。∎
+

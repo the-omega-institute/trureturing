@@ -1,0 +1,14 @@
+**定理205.1（活跃区的一致二阶展开）。** 对全部 $h\in I$ 一致有
+
+$$
+\boxed{
+\mathscr E(h\epsilon,\epsilon)
+=\frac34+\epsilon\Phi_h+\epsilon^2Q_{\mathrm{act}}(h)
++o_I(\epsilon^2).
+}
+\tag{205.9}
+$$
+
+最小化仍覆盖任意随 $\epsilon,h$ 变化的共同 CPTP 操作，
+不预先限制各结果的 Choi 秩，不假定最优器光滑。
+

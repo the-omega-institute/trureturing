@@ -1,0 +1,49 @@
+**定理 196.1（圆弧替代与不可见转动的精确信息成本）。** 固定定义193.1中的一个纯二维程序、连通精确开区间 $U$ 及名义点 $t\in U$。存在使用同一处理器、定义在同一个 $U$ 上的解析纯态程序 $\widetilde\rho_u$，满足 $\widetilde\rho_t=\rho_t$，并在每个 $u\in U$ 同时满足
+$$
+\mathcal G(\omega\otimes\widetilde\rho_u)=\mathcal T_u(\omega),\qquad
+I_Q(\widetilde\rho_u)\le I_Q(\rho_u).
+\tag{196.1}
+$$
+替代程序的 Bloch 曲线位于一个平面圆弧上。若处理器的实 Bloch 到通道映射秩为二，则原程序本身已经是这样的解析圆弧。
+
+证明。 令 $K=\ker\mathcal L$，其中 $\mathcal L$ 如（193.7）。第193节给出 $K\ne\{0\}$，而目标非恒定排除 $\mathcal L$ 的秩为零。将原 Bloch 曲线正交分解为
+$$
+r(u)=x(u)+b(u),\qquad
+x(u)=P_{K^\perp}r(u)=x_0+(u-t)v,\qquad v\ne0.
+\tag{196.2}
+$$
+$x(u)$ 的仿射性来自 $\mathcal L|_{K^\perp}$ 单射和目标通道仿射。其范数在每个 $u\in U$ 都严格小于一：若在内点等于一，两个充分小的对称位移之平方范数平均为 $1+s^2|v|^2>1$，与它们都是单位 Bloch 向量的投影矛盾。
+
+因此在整个 $U$ 上可定义
+$$
+\beta(u)=\sqrt{1-|x(u)|^2}>0,\qquad e(u)=\frac{b(u)}{\beta(u)}\in K,\qquad |e(u)|=1.
+\tag{196.3}
+$$
+$e$ 是 $C^1$ 曲线，且 $e\cdot e'=0$。由于 $v\perp K$，求导后所有交叉项消失，得到精确恒等式
+$$
+I_Q(\rho_u)=|r'(u)|^2
+=|v|^2+\frac{(x(u)\cdot v)^2}{1-|x(u)|^2}
+ +(1-|x(u)|^2)|e'(u)|^2.
+\tag{196.4}
+$$
+取固定单位向量 $n=e(t)$，并定义
+$$
+\widetilde r(u)=x(u)+\sqrt{1-|x(u)|^2}\,n,
+\qquad \widetilde\rho_u=\frac{I+\widetilde r(u)\cdot\sigma}{2}.
+\tag{196.5}
+$$
+这是一条在整个 $U$ 上解析的纯态曲线。$n\in K$ 保证诱导通道与原曲线相同，在 $t$ 又有 $\widetilde r(t)=r(t)$。并且
+$$
+I_Q(\rho_u)-I_Q(\widetilde\rho_u)
+=(1-|x(u)|^2)|e'(u)|^2\ge0.
+\tag{196.6}
+$$
+该替代指定另一种程序准备，不断言它能由作用在原程序上的 CPTP 映射取得。
+
+令 $x_\perp=x_0-(x_0\cdot v)v/|v|^2$。它同时垂直于 $v,n$，而（196.5）位于平面
+$$
+x_\perp+\operatorname{span}\{v,n\}
+\tag{196.7}
+$$
+与单位球面的交圆上。圆心为 $x_\perp$，半径为 $\sqrt{1-|x_\perp|^2}>0$；正平方根选择其中的半圆弧或更小的弧。当 $\operatorname{rank}\mathcal L=2$ 时，$K$ 为一维，连续单位向量 $e(u)$ 在连通区间上只能恒定，所以原曲线已等于替代曲线。秩为一时，$x_0,v$ 共线，替代曲线是大圆弧，原曲线在二维核内的额外转动恰贡献（196.6）。证毕。
+

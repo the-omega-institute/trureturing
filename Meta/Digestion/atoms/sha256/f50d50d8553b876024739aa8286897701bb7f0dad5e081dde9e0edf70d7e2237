@@ -1,0 +1,59 @@
+**推论 22.3（可数零测度候选集的不同容量增长）。** 固定 $`0<\epsilon<1`$。对任意 $`\beta>0`$，令
+
+$$
+\Theta_\beta=\{0\}\cup\{j^{-\beta}:j\ge1\},
+\qquad
+\Theta_{\exp}=\{0\}\cup\{2^{-j}:j\ge0\},
+\tag{22.15}
+$$
+
+均视为相位圆上 $`[0,1]`$ 内的集合。它们都紧、可数、Haar 零测度，但单终端容量分别满足
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta_\beta)
+=\Theta_{\beta,\epsilon}\bigl(n^{1/[2(\beta+1)]}\bigr),
+\qquad
+k_n^{(\epsilon)}(\Theta_{\exp})
+=\Theta_\epsilon(\log n).
+}
+\tag{22.16}
+$$
+
+证明。先计算 $`\Theta_\beta`$ 的小尺度分离数。取
+ $`J=\lceil\delta^{-1/(\beta+1)}\rceil`$。前 $`J`$ 项至多贡献 $`J`$ 个分离点，剩余全部位于长度 $`J^{-\beta}`$ 的区间中；该区间至多容纳 $`1+J^{-\beta}/\delta`$ 个距离至少为 $`\delta`$ 的点。于是
+
+$$
+P(\Theta_\beta,\delta)
+\le J+1+\frac{J^{-\beta}}\delta
+=O_\beta(\delta^{-1/(\beta+1)}).
+\tag{22.17}
+$$
+
+反向，对充分小的 $`\delta`$ 取
+ $`J'=\lfloor(\beta/\delta)^{1/(\beta+1)}\rfloor-1`$。
+均值定理给
+
+$$
+j^{-\beta}-(j+1)^{-\beta}
+\ge\beta(j+1)^{-(\beta+1)}
+\ge\delta\qquad(1\le j\le J').
+\tag{22.18}
+$$
+
+故前 $`J'+1`$ 项组成分离集，得到匹配下界。这些点处于长度一的实区间内，实距离就是测地距离。
+
+对 $`\Theta_{\exp}`$，令 $`J=\lceil\log_2(1/\delta)\rceil`$。前 $`J`$ 项至多贡献 $`J`$ 点，其余全部处于长度 $`2^{-J}\le\delta`$ 的区间，至多再贡献两点。反向，令 $`L=\lfloor\log_2(1/\delta)\rfloor`$，前 $`L+1`$ 项的最小相邻差为 $`2^{-L}\ge\delta`$，给匹配下界。因此
+
+$$
+P(\Theta_\beta,\delta)
+=\Theta_\beta(\delta^{-1/(\beta+1)}),
+\qquad
+P(\Theta_{\exp},\delta)=\Theta(\log(1/\delta)).
+\tag{22.19}
+$$
+
+代入定理22.2的 $`\delta=n^{-1/2}`$ 即得。两组序列都只在零处聚集，故其连同零的集合紧；可数性给零测度。证明完毕。
+
+特别地，第19节的 $`\{0\}\cup\{1/j:j\ge1\}`$ 具有 $`n^{1/4}`$ 单终端容量阶；零测度不将其容量降为常数。几何收敛的候选序列则给对数阶，仍由定理19.2排除任意固定有限容量的全时域实现。这些区别全部发生在同一内部记忆通道及同一完整恢复任务下。
+

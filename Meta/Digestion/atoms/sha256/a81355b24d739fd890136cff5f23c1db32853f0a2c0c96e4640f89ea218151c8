@@ -1,0 +1,17 @@
+**定义 459.1（共同观察通道与逐输出的亲和差额）。** 取有限非空 $Y$，令 $W(x,y)\ge0$ 且每行之和为一。用同一通道作用于 $p,q$，写
+
+$$
+P(y)=\sum_xp(x)W(x,y),\qquad Q(y)=\sum_xq(x)W(x,y).
+$$
+
+对任意有限质量 $u$，记 $(W_*u)(y)=\sum_xu(x)W(x,y)$。这与项目 [ClassicalDPI](../../../D5/S3/Divergence/ClassicalDPI.lean) 的 channelOutput 方向一致。接着置
+
+$$
+b_y=\sum_x\sqrt{p(x)q(x)}W(x,y),\quad
+B_y=\sqrt{P(y)Q(y)},\quad d_y=B_y-b_y,
+$$
+
+以及 $Z=Z(p,q)$、$Z_c=Z(P,Q)$、$\delta=Z_c-Z$。在每个输出上，对 $\sqrt{p(x)W(x,y)}$ 和 $\sqrt{q(x)W(x,y)}$ 应用 Cauchy—Schwarz，得到 $b_y\le B_y$。故 $d_y\ge0$，并且 $\sum_y d_y=\delta\ge0$。
+
+这是项目 [HellingerDataProcessing](../../../D5/S3/TotalVariation/HellingerDataProcessing.lean) 的 bhattacharyya_channel_le 所使用的逐输出关系；hellinger_sq_channel_le 相应给出平方根距离收缩。通道可以是确定性的忘却映射，也可以随机输出；其共同性是比较所需前提，不能给两来源分别挑选方便的通道后仍把它当作同一个操作。
+

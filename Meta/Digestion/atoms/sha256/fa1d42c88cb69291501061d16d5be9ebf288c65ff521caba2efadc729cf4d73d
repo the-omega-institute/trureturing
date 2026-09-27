@@ -1,0 +1,52 @@
+## 120. 一重全域纤维的实际尾部只能使用正交两射线
+
+沿用第89、112、118、119节的同一实际七维六终端合同。来源为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+接收器独立纯启动，每轮使用同一个固定全域接收通道；全部参考—活动记忆—原档案终端遵守同一实际来源续接。现在限定通常纤维维数为一。第112、118、119节给
+
+$$
+I_0=K,\qquad R_0=E_0,\qquad
+K=P\oplus D\oplus Q,\qquad
+\dim P=\dim Q=1,\quad\dim D=5,
+\tag{120.1}
+$$
+
+并给 $D$ 中互为内积对偶的基 $d_i,e_i$ 及环境向量 $z_i\ne0$，使
+
+$$
+R_1=(Q\otimes F)\oplus\operatorname{span}\{d_i\otimes z_i:1\le i\le5\},
+$$
+
+$$
+R_0=(P\otimes F)\oplus\operatorname{span}\{e_i\otimes z_i^\perp:1\le i\le5\}.
+\tag{120.2}
+$$
+
+记非固定支持集合及重数为
+
+$$
+\mathcal Z=\{[z_i]:1\le i\le5\},\qquad
+m_z=|\{i:[z_i]=[z]\}|,\qquad
+\sum_{[z]\in\mathcal Z}m_z=5.
+$$
+
+完整接收纤维记为 $P_z=\mathcal G_0([z])$、$F_z=\mathcal G_1([z])$。第119节给
+
+$$
+g_0([z])=1+m_{z^\perp},\qquad g_1([z])=1+m_z,
+\tag{120.3}
+$$
+
+$$
+P_z\cap P_w=P\quad([z]\ne[w]),\qquad
+P\subset P_z,\quad Q\subset F_z.
+\tag{120.4}
+$$
+
+下文 $S_0=P\oplus D$ 始终六维；没有把它改名为某个五维实际输入域。
+

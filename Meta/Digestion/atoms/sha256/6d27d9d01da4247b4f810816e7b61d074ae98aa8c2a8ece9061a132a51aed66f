@@ -1,0 +1,63 @@
+**定理 106.1（保留原始点击后继的最近失效分类）。** 对定义 87.1 的原名义仪器和完整二维接口，最近失效集合准确为
+
+$$
+\boxed{
+\mathfrak F_R=
+\{\Gamma_\vartheta^{\rm eq}:\vartheta\in\mathbb R/(2\pi\mathbb Z)\},
+}
+\tag{106.1}
+$$
+
+其中
+
+$$
+\psi_\vartheta=\frac{|0\rangle+e^{i\vartheta}|1\rangle}{\sqrt2},
+\quad P_\vartheta=|\psi_\vartheta\rangle\langle\psi_\vartheta|,
+$$
+
+$$
+\mathcal N_\vartheta^{\rm eq}(X)=P_\vartheta XP_\vartheta,
+\qquad
+\mathcal C_\vartheta^{\rm eq}(X)
+=\operatorname{Tr}[(I-P_\vartheta)X]P_0.
+\tag{106.2}
+$$
+
+该分类按实际 CP 分支映射成立，不分类实现同一映射的内部 Kraus 表示或环境搭建。它补足第 105.2 条未给出的原始点击后继分类。
+
+证明。推论 102.2 已证明：每个最近失效装置的暗态平衡，且原始未点击分支就是 $X\mapsto P_\psi XP_\psi$。以计算基对角酉变换对齐相位，可令 $\psi=|+\rangle$；该变换保持名义仪器及完整距离，也保持 $P_0$。
+
+完整性使点击效果恰为 $P_\eta=I-P_\psi$。取任一点击 Kraus 表示 $\mathcal C(X)=\sum_j B_jXB_j^\dagger$。因
+
+$$
+\sum_j\|B_j\psi\|^2
+=\langle\psi|P_\eta|\psi\rangle=0,
+$$
+
+每个 $B_j$ 都消去 $\psi$，故 $B_j=|v_j\rangle\langle\eta|$。因此存在迹一正算子 $\tau=\sum_j|v_j\rangle\langle v_j|$，使
+
+$$
+\mathcal C(X)=\operatorname{Tr}(P_\eta X)\tau.
+\tag{106.3}
+$$
+
+现在对这个原始点击输出使用第 101 节的同一个联合输入和负谱检验，取 $a=1/2,z=z_0=\phi/2$。与重置后的 $\Gamma_+$ 相比，未点击块完全相同，点击块只增加
+
+$$
+w|0_R\rangle\langle0_R|\otimes(\tau-P_0),
+\qquad w=\frac12(1-z_0)>0.
+$$
+
+原检验 $E_C$ 支撑在参考系统张量量子输出 $|0\rangle$ 的空间内，且
+$h_C=\langle0_R0|E_C|0_R0\rangle>0$。所以同一个负谱检验给
+
+$$
+\delta(\Gamma)
+\ge R+w h_C\bigl(1-\langle0|\tau|0\rangle\bigr).
+\tag{106.4}
+$$
+
+最近失效要求左侧恰为 $R$。正性和迹一保证括号非负，因 $w h_C>0$，只能有 $\langle0|\tau|0\rangle=1$，从而 $\tau=P_0$。撤销相位对齐得到式（106.2）。
+
+反过来，每个式（106.2）都是 $\Gamma_+$ 的计算基对角相位共轭，故具有相同的完整距离 $R$，并固定 $P_\vartheta$ 而永久未点击。它们全部属于 $\mathfrak F_R$。不同相位模 $2\pi$ 给不同的 $P_\vartheta$；而未点击效果就是 $P_\vartheta$，所以不同参数确实给不同分支映射。$\square$
+

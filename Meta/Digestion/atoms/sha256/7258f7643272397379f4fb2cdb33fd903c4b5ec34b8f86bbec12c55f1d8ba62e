@@ -1,0 +1,54 @@
+### 206.3 互补关系下的完整平方恒等式
+
+保持一般复 Kraus 及其共同 TP 矩，令
+
+$$
+\begin{gathered}
+U_0=\sum_{\alpha\in0}|b-i2na|^2,\qquad
+U_1=\sum_{\alpha\in1}|b+i2na|^2,\qquad
+V=\sum_{j,\alpha}|d-2ma|^2,\\
+k_0=\frac{\beta\delta+\rho}{4},\qquad
+k_1=\frac\rho4,\qquad k_d=\frac{\beta R+\rho}{4}.
+\end{gathered}
+\tag{206.10}
+$$
+
+第205节的加权 Gram 展开在（206.4）下给出
+
+$$
+\begin{aligned}
+G_h-\Phi_h={}&k_0U_0+k_1U_1+k_dV
++\frac h6\sum_j|M_j-m|^2\\
+&-\beta\delta n^2(A_0-1/2)
+-\left(\beta Rm^2+\frac\rho4\right)(A_0+A_1-1)
++\frac\theta2\operatorname{Im}P.
+\end{aligned}
+\tag{206.11}
+$$
+
+具体地，将三个平方展开，利用 $N_0+N_1=-P$、
+$B_0+B_1+D_0+D_1=1$ 和两个驻点关系，
+第205节未压缩的加权式中残留的常数为 $\rho(m^2+n^2-1/4)$。
+互补关系既使该常数为零，也将共同 $A_0+A_1-1$ 项系数中的
+$\rho(m^2+n^2)$ 化为 $\rho/4$，得到（206.11）的压缩写法。
+因此同一恒等式覆盖内侧与外侧。
+内侧规范点虽然有 $U_1=B_*$，其加权值 $k_1U_1$ 仍严格为零。
+
+在纯来源最优面上，（206.11）只剩非负平方。
+整个区间均有
+
+$$
+k_0\ge\beta\delta/4>0,\qquad k_d\ge\beta R/4>0.
+\tag{206.12}
+$$
+
+因此等号强制 $U_0=V=0$、$M_j=m$。
+共同 TP 随后唯一确定结果1的剩余 Gram 条目，
+包括其额外跳跃权重，得到同一个 $\Gamma^*(h)$。
+这一唯一性不要求 $\rho$ 或 $B_*$ 有正下界。
+
+第191节仍给全部固定二阶近优类一致的
+$C=O(\epsilon^2)$、$A_j-1/2=O(\epsilon)$。
+一阶值展开、非负基点缺陷与上述唯一性，
+通过紧性给这整个类到 $\Gamma^*(h)$ 的一致收敛。
+

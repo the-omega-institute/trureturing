@@ -1,0 +1,33 @@
+### 233.1 共同接口与取等定理
+
+固定整数 $d,N\ge2$、$m\ge d$，输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$，以及记录空间 $B=\mathbb C^N$ 的指定正交标签。任取固定单位向量 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$，定义目标
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\frac1N\operatorname{Tr}(X)P_j.
+\tag{233.FF.1}
+$$
+输出向量不必互相正交。候选为全部同接口 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\mathcal S_j(X),
+\tag{233.FF.2}
+$$
+其中各分支完全正、总和保迹。保留经典标签块对角接口，但不限制候选的量子输出方向或分支 Kraus 形状。
+
+使用非归一化 Choi 约定
+$$
+J_\Phi=\sum_{a,b=1}^d|a\rangle\langle b|\otimes\Phi(|a\rangle\langle b|),
+\tag{233.FF.3}
+$$
+其中第一因子为固定输入基的 Choi 副本。定义完整总 Kraus 容量
+$$
+K(\mathcal S)=\operatorname{rank}J_{\mathcal S}
+=\sum_{j=1}^N\operatorname{rank}J_{\mathcal S_j}.
+\tag{233.FF.4}
+$$
+对每个整数 $R\ge1$，置
+$$
+D_R=\inf_{K(\mathcal S)\le R}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+\tag{233.FF.5}
+$$
+距离包含全部记录、量子输出及任意外部参考。$m\ge d$ 保证每个预算的候选集非空：将一个等距通道放在单个标签即可得到总秩一候选。
+

@@ -1,0 +1,48 @@
+**定理 11.5（一般误差壳上的精确补充容量）。** 取整数 $m\ge2$，满足
+
+$$
+m-1\le\varepsilon<m,\qquad
+j\ge3+\lfloor\log_2m\rfloor,\qquad
+n=ma+\rho,\quad 0\le\rho<m,\quad a\ge2\rho.
+\tag{TM.1110}
+$$
+
+其中 $m$ 仅表示误差壳参数。则完整截止族的最小补充字母表为
+
+$$
+\boxed{
+\Lambda_{j,h}(\varepsilon)
+=\max\left\{2m,\left\lceil\frac{2n-L}{a}\right\rceil\right\}
+=2m+\mathbf1_{\{L<2\rho\}},\qquad L=j-q(h).
+}
+\tag{TM.1111}
+$$
+
+证明。整数距离使不同前缀的邻接条件恰为 $1\le d_n(t,t')\le m-1$。设 $f=\lfloor\log_2m\rfloor$，则 $n\ge4\cdot2^f>2m$。此外 $t<m<2^{f+1}$，这段整数中的二进制重量至多 $f$：若有 $f+1$ 个一，其最小值为 $2^{f+1}-1\ge m$。故 $t=0,\ldots,m-1$ 均满足 $\operatorname{wt}(t)\le j-3$，都是双需求。它们在图中给出一个 $K_{2m}$，于是 $\Lambda\ge2m$。
+
+同一颜色在每个前缀至多出现一次，且它所占据的不同前缀循环距离至少 $m$。将这些前缀循环排序，全部相邻间隙之和为 $n$、每个至少 $m$，所以同一颜色至多占据 $a=\lfloor n/m\rfloor$ 个类型；只有一个前缀的情形也满足此界。共有 $M=2n-L$ 个类型，故 $\Lambda\ge\lceil M/a\rceil$。两项下界均在同一图上成立。
+
+为给达到构造，先证明所需的循环槽块事实。按 $t=0,\ldots,n-1$ 排列整数长度为 $\ell_t\ge k_t$ 的连续槽块，把全部槽依次按模 $c$ 着色。若总槽数 $T=\sum_t\ell_t$ 被 $c$ 整除，且任意循环连续 $m$ 个槽块的长度之和至多 $c$，则从每块任选 $k_t$ 个不同槽作为该前缀的颜色，得到正常染色。事实上，同一块的已选槽和任意相邻前缀的已选槽均落在某个连续 $m$ 块窗口内；窗口至多含 $c$ 个连续槽，其中模 $c$ 的颜色两两不同。跨过 $n-1$ 与零的窗口也如此：因 $T\equiv0\pmod c$，把槽序列周期延长后，跨缝颜色正好延续原模 $c$ 顺序。这同时处理块内两奇偶和圆周首尾边，不能只检查不回绕的窗口。
+
+若 $L\ge2\rho$，从实际单需求集 $\mathcal S_h$ 中选择任意 $2\rho$ 个前缀组成 $J$，令这些块的长度为一，其余块长度为二。所需类型均放得下；没有选入 $J$ 的单需求块可有一个未使用槽。总长度为 $2n-2\rho=2ma$，被 $2m$ 整除；任意 $m$ 块长度至多 $2m$。上述槽块事实给出 $2m$ 色构造，与团下界相等。
+
+若 $L<2\rho$，取
+
+$$
+c=2m+1,\qquad
+z=(-2n)\bmod c=(a-2\rho)\bmod c,
+\quad 0\le z<c.
+\tag{TM.1112}
+$$
+
+因为 $a\ge2\rho$，有 $z\le a-2\rho\le a$。每个前缀先放两个槽，再在位置 $0,m,\ldots,(z-1)m$ 的块末各放一个未使用的附加槽；$z=0$ 时不放。所选位置的循环间隔至少 $m$：内部间隔恰为 $m$，跨缝间隔为 $n-(z-1)m\ge m+\rho$。所以任何 $m$ 块窗口至多含一个附加槽，长度至多 $2m+1=c$。总槽数为 $2n+z$，按定义被 $c$ 整除，槽块构造给 $2m+1$ 色。另一方面
+
+$$
+2n-L=2ma+(2\rho-L),\qquad 1\le2\rho-L\le a,
+\tag{TM.1113}
+$$
+
+故容量下界恰为 $2m+1$。当 $L\ge2\rho$ 时容量下界至多 $2m$；两种情形合起来即（TM.1111）。$\square$
+
+均匀需求的对应先例是 Campêlo、Corrêa、Moura、Santos, *On optimal k-fold colorings of webs and antiwebs*, Discrete Applied Mathematics **161**(1–2), 60–70 (2013), [doi:10.1016/j.dam.2012.07.013](https://doi.org/10.1016/j.dam.2012.07.013)，预印本 [arXiv:1108.5757v1](https://arxiv.org/abs/1108.5757v1)。按其第2页约定，$W_m^n$ 的边满足 $m\le|t-t'|\le n-m$；在 $n\ge2m$ 时，其补图 antiweb 正是这里的前缀图 $C_n^{m-1}$。该文第8页定理2给均匀 $k$ 重需求的色数 $\lceil kn/\lfloor n/m\rfloor\rceil$。取 $k=2$ 即为全部双需求时的 $\lceil2n/a\rceil$。本定理对截止产生的单、双混合需求另给下界和达到证明，未将混合需求公式归给该均匀定理。
+

@@ -1,0 +1,17 @@
+**定理183.2（单输入距离的精确全 CPTP 最优酉）。** 存在 $w_*>0$，使对
+$0<w<w_*$，
+
+$$
+\boxed{
+\min_{\Gamma_+,\Gamma_-\ {\rm CPTP}}
+D\left(
+\frac12\sum_{s=\pm1}(\operatorname{id}_M\otimes\Gamma_s)(\eta_s(w)),
+P_\Xi
+\right)
+=d(w,t_*(w)).
+}
+\tag{183.13}
+$$
+
+最小值由同角度的条件酉 $U_s(t_*(w))$ 取得。
+

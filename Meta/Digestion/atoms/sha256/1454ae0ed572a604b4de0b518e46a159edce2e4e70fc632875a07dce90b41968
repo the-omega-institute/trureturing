@@ -1,0 +1,22 @@
+**定理 40.3（长期事件的四个等价接口）。** 在定义 40.1 下，以下条件等价：
+
+- $\theta\mapsto R_\theta$ 在算子范数下连续。
+- $\displaystyle\lim_{m\to\infty}\sup_{\theta\in\Theta}\|R_{m,\theta}\|_\infty=0$。
+- $\theta\mapsto\Phi_{\infty,\theta}$ 在半 diamond 距离下连续。
+- $\displaystyle\lim_{m\to\infty}\sup_{\theta\in\Theta}\delta(\Phi_{\infty,\theta},\Phi_{m,\theta})=0$。
+
+证明。每个固定 $m$ 的 $H_{m,\theta}$ 与 $\Phi_{m,\theta}$ 都连续：第 35.2 条控制停止通道，效果选择和共同读出保持连续性。
+
+假设第一项。$f_m(\theta)=\|R_\theta-H_{m,\theta}\|_\infty$ 连续，正算子余项递减且逐点趋零；正算子的算子范数保持此单调性。引理 40.2 推出第二项。反过来，第二项使 $R_\theta$ 为连续函数 $H_{m,\theta}$ 的一致极限，故连续。
+
+第 38.2 条的精确恒等式使第二与第四项等价。第四项使最终通道为连续有限通道的一致极限，推出第三项。最后，对最终通道使用“在点击块”这一共同效果，得到
+
+$$
+\|R_\theta-R_\eta\|_\infty
+\le\delta(\Phi_{\infty,\theta},\Phi_{\infty,\eta}),
+$$
+
+故第三项推出第一项。$\square$
+
+这里的正交旗标承担了反向推论：若把点击与永不点击全都压成同一个固定输出，所得常值通道当然连续，却不再包含最终点击效果。
+

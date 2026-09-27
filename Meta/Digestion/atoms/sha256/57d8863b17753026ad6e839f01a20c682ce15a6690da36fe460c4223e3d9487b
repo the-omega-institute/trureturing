@@ -1,0 +1,26 @@
+**定义 199.1（圆弧程序的分块相关矩阵域）。** 固定定义195.1的 $a,t,R$，记 $F=F(a,t)$、$E_{02}=E_{20}=1$ 且其余 $E$ 元素为零。令 $\mathscr M(a,t,R)$ 由参数 $\varepsilon,x,c,C$ 构成，其中
+$$
+0<\varepsilon\le\frac12,\qquad c>0,\qquad x\in\mathbb R,
+\qquad C=C^T\in M_3(\mathbb R),\qquad \operatorname{diag}C=\mathbf1,
+\tag{199.1}
+$$
+并要求
+$$
+\Gamma=
+\begin{pmatrix}
+\dfrac{F-xE/c-\varepsilon C}{1-\varepsilon}&E/c\\[2mm]
+E/c&C
+\end{pmatrix}\succeq0,
+\qquad
+|x|+cR<\sqrt{4\varepsilon(1-\varepsilon)}.
+\tag{199.2}
+$$
+定义该参数的名义成本
+$$
+Q(\varepsilon,x,c)
+=\frac{4c^2\varepsilon(1-\varepsilon)}
+       {4\varepsilon(1-\varepsilon)-x^2}.
+\tag{199.3}
+$$
+式（199.2）使分母严格为正，也使 $C$ 自动成为相关矩阵。
+

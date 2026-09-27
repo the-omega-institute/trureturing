@@ -1,0 +1,67 @@
+**定理 192.2（任意有限维程序的额外信息具有正积分下界）。** 对任意 $C^1$ 的全区间精确程序曲线，允许秩变化，有
+$$
+\int_{I_a}\sqrt{D(u)}\,du\ge\frac{\mu_a(1-a)}{2C_a},
+\tag{192.5}
+$$
+$$
+\int_{I_a}D(u)\,du\ge\frac{\mu_a^2(1-a)}{4C_a^2},
+\qquad
+\int_{I_a}e(u)\,du\ge\Gamma(a).
+\tag{192.6}
+$$
+积分均取非负函数的 Lebesgue 积分，允许值为正无穷；常数与程序维数无关。
+
+证明。 先说明秩变化时的可测性。对任一内部参数，有限 Hermitian SLD $L$ 满足 $\rho'=(L\rho+\rho L)/2$，因而
+$$
+I_Q(\rho_u)=\sup_{H=H^\dagger}
+\left[2\operatorname{Tr}(\rho_u'H)-\operatorname{Tr}(\rho_uH^2)\right].
+\tag{192.7}
+$$
+对固定 $u$，方括号等于 $I_Q-\operatorname{Tr}(\rho_u(H-L)^2)$，并在 $H=L$ 达到上确界。由于它对有限维变量 $H$ 连续，可以只取一个可数稠密的 Hermitian 矩阵集合。每个固定 $H$ 对应的函数关于 $u$ 连续，所以 $I_Q$ 下半连续，从而 $D,e$ 及 $\sqrt D$ 都是非负 Borel 函数。这使用点态 SLD 约定，不假设 SLD 矩阵沿曲线连续。
+
+沿第189节，用固定 Naimark 嵌入与 CPTP 解码把读出写成互补投影 $P_\pm$，程序记为 $\sigma_u$。令
+$$
+K_u=\sqrt h\,P_++\sqrt\ell\,P_-,\qquad
+\tau_u=K_u^{-1}\sigma_uK_u^{-1},\qquad
+\widehat\sigma_u=K_u\tau_aK_u,
+\tag{192.8}
+$$
+其中 $h=(1+u)/2$、$\ell=1-h$。第189节的精确剩余平方给出
+$$
+\|\tau_u'\|_1\le\frac{\sqrt{D(u)}}{\min(h,\ell)}.
+\tag{192.9}
+$$
+$\tau_u'$ 由连续的程序导数及光滑矩阵直接定义，因此可对它使用微积分基本定理。由于 $\|K_{u_i}\|_\infty^2\le1$，
+$$
+\|\sigma_{u_-}-\widehat\sigma_{u_-}\|_1
+\le\int_{u_-}^{a}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du,
+$$
+$$
+\|\sigma_{u_+}-\widehat\sigma_{u_+}\|_1
+\le\int_a^{u_+}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du,
+\qquad \sigma_a=\widehat\sigma_a.
+\tag{192.10}
+$$
+上式右边为无穷时不等式仍成立。
+
+向同一扩展处理器输入均衡三能级纯态，实际输出为 $X_u=F(a,u)/3$，参考输出为 $\widehat X_u$。第189节的固定分块展开及（192.3）给出
+$$
+\sum_i\alpha_iX_{u_i}=F(a,-1)/3,
+\qquad
+\sum_i\alpha_i\widehat X_{u_i}=X_-,
+\tag{192.11}
+$$
+其中 $X_-$ 是密度矩阵。$F(a,-1)/3$ 的负特征值为 $-\mu_a$，两者迹均为一，故其迹范数距离至少为 $2\mu_a$。再用固定处理器的迹范数收缩、（192.10）及中点误差为零，得到
+$$
+2\mu_a\le
+|\alpha_-|\int_{u_-}^{a}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du
++|\alpha_+|\int_a^{u_+}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du.
+\tag{192.12}
+$$
+在 $I_a$ 上，$\min(h,\ell)\ge(1-a)/4$，故
+$$
+2\mu_a\le\frac{4C_a}{1-a}\int_{I_a}\sqrt{D(u)}\,du,
+\tag{192.13}
+$$
+证明（192.5）。若 $\int D$ 有限，Cauchy–Schwarz 给出 $(\int\sqrt D)^2\le(1-a)\int D$；若无穷，所需下界自动成立。最后，$|u_-|\le u_+$，所以 $1-u^2\ge1-u_+^2$，结合 $e=(1-u^2)D$ 即得（192.6）。证毕。
+

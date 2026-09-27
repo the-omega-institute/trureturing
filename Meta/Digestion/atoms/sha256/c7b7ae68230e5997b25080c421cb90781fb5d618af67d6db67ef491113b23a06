@@ -1,0 +1,120 @@
+**定理146.1（七维装置的统一二次振幅上界）。** 对每份上述已知来源，存在一台满足该合同的七维装置及仅依赖终端编号的局部解码器，使前两终端误差为零，并且
+
+$$
+\boxed{
+\sup_{n\ge1}\sup_{J,\rho_{JM}}
+\frac12\left\|
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n(\rho)
+-\Omega_n(\rho)\right\|_1
+\le\min\{1,2\sqrt2\,p\}.
+}
+\tag{146.2}
+$$
+
+这里没有让接收器按外部轮次换门；两步启动的控制也属于同一个七维寄存器。因此特别有
+
+$$
+\boxed{\varepsilon_{7,6}(a,b)\le\min\{1,2\sqrt2\,|b|^2\}.}
+\tag{146.3}
+$$
+
+### 146.1 两份规范纯化组成同一个完整两位酉编码
+
+取两个接收 qubit $Q,R$，令 $R$ 的基与活动记忆 $M$ 的固定基对应，并定义
+
+$$
+|\operatorname{vec}A\rangle_{MR}
+=\sum_{j,k=0}^1A_{jk}|j\rangle_M|k\rangle_R.
+$$
+
+从两个初始记忆基态出发，第二终端的活动记忆边缘分别为
+
+$$
+\rho_{0,2}=xR_0+pR_1,\qquad \rho_{1,2}=R_0.
+\tag{146.4}
+$$
+
+按“记忆在前、档案按发出顺序在后”的次序，两份真实纯态为
+
+$$
+\begin{aligned}
+|\psi_0\rangle&=a|m_0\rangle_M|00\rangle+b|0\rangle_M|01\rangle,\\
+|\psi_1\rangle&=|m_0\rangle_M|10\rangle.
+\end{aligned}
+\tag{146.5}
+$$
+
+第一位档案标签不同，故两份档案扇区正交。下面给出一个定义在完整四维两位档案 $H_2$ 上的酉
+
+$$
+F_2:H_2\longrightarrow Q\otimes R,
+$$
+
+同时把它们送到所选规范纯化。
+
+令
+
+$$
+M_0=\begin{pmatrix}a^2&b\\ab&0\end{pmatrix},
+\qquad M_0M_0^*=\rho_{0,2}.
+$$
+
+$ab\ne0$ 保证 $M_0$ 可逆。定义两个 $2\times2$ 酉
+
+$$
+F_0=\left(M_0^*\rho_{0,2}^{-1/2}\right)^{\mathsf T},
+\qquad
+F_1=\begin{pmatrix}\overline a&-b\\\overline b&a\end{pmatrix},
+\tag{146.6}
+$$
+
+其中 $\mathsf T$ 是固定基中的转置。第一项酉性来自
+$\rho_{0,2}^{-1/2}M_0M_0^*\rho_{0,2}^{-1/2}=I$；第二项的两列直接正交归一。规定
+
+$$
+F_2|i,s\rangle=|i\rangle_Q\otimes F_i|s\rangle_R
+\qquad(i,s\in\{0,1\}).
+\tag{146.7}
+$$
+
+这是两个正交首位扇区上的共同受控酉，而不是按实际未知初态选择编码。由
+$M_0F_0^{\mathsf T}=\sqrt{\rho_{0,2}}$ 及
+$F_1|0\rangle=\overline a|0\rangle+\overline b|1\rangle$，可得
+
+$$
+(I_M\otimes F_2)|\psi_i\rangle
+=|i\rangle_Q\otimes
+|\operatorname{vec}\sqrt{\rho_{i,2}}\rangle_{MR},
+\qquad i=0,1,
+\tag{146.8}
+$$
+
+右侧按标记系统作固定因子重排。因此（146.8）在线性叠加和任意参考纠缠上同时成立。
+
+实际 $S_2$ 只有三维，但 $F_2$ 定义在完整四维 $H_2$ 上，包含未到达的 $|11\rangle$。这份全域酉扩展使后文的逆解码既作用于实际启动态，也作用于满秩平稳比较态，不需要把比较态假定在实际三维支撑内。
+
+### 146.2 规范纯化到共同平稳态的明确距离
+
+来源边缘通道为
+
+$$
+\mathcal T(X)=X_{00}R_0+X_{11}R_1.
+$$
+
+式（146.1）给 $\mathcal T(\rho_*)=\rho_*$，且
+
+$$
+\det\rho_* =\frac{p^2}{(1+p)^2}>0.
+\tag{146.9}
+$$
+
+令
+
+$$
+|\Xi\rangle_{MR}=|\operatorname{vec}\sqrt{\rho_*}\rangle,
+\qquad
+\delta_i=\|\sqrt{\rho_{i,2}}-\sqrt{\rho_*}\|_{\rm HS},
+\qquad \delta=\max\{\delta_0,\delta_1\}.
+\tag{146.10}
+$$
+

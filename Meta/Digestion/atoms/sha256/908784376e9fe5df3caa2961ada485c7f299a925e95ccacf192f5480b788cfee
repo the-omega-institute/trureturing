@@ -1,0 +1,57 @@
+**定理 79.2（实际联合波动律）。** 给定原始数据的条件律满足
+
+$$
+\mathcal L_x(T,Y,G,H_M)
+ \Longrightarrow
+ \mathcal L\left(\sqrt\nu Z,\sqrt\nu Z,G_\infty,
+               c+\frac{Z^2-G_\infty^2}{2}\right),
+\qquad Z\perp G_\infty,\quad Z,G_\infty\sim N(0,1).
+\tag{79.3}
+$$
+
+精确含义是 $\mathbb R^4$ 上的有界 Lipschitz 距离在上述原数据概率中趋零。
+标量 $H_M$ 的条件 Kolmogorov 距离也趋零。
+
+证明。任意概率密度 $f$、严格正密度 $p$ 与 $u>0$ 满足有限不等式
+
+$$
+ \int_{\{|\ln(f/p)|>u\}}f(y)dy
+ \le\frac{\|f-p\|_1}{1-e^{-u}}.
+\tag{79.4}
+$$
+
+在 $f>e^up$ 上，$|f-p|\ge(1-e^{-u})f$；在不相交的
+$f<e^{-u}p$ 上，$|f-p|\ge(e^u-1)f$。相加积分即得，零密度点不贡献质量。
+定理 77.2 因而给
+
+$$
+\Pr_x\{|\Lambda_x(Y)|>u\}
+ \le\frac{\|f_x-\varphi_\nu\|_1}{1-e^{-u}}\longrightarrow0.
+\tag{79.5}
+$$
+
+这是实际输出质量加权的对数密度替换，不要求逐点相对误差一致趋零。
+Gaussian 通道的精确恒等式为
+
+$$
+H_M=-\tfrac12\ln(2\pi)-\tfrac12G^2-\ln f_x(Y)
+   =c+\frac{Y^2}{2\nu}-\frac{G^2}{2}-\Lambda_x(Y).
+\tag{79.6}
+$$
+
+第 77 章给 $Y$ 的律在 TV 中趋于 $N(0,\nu)$，而
+$|\mathbb E_xh(T)-\mathbb E_xh(Y)|\le\sigma_M\mathbb E|G|$
+对每个一阶 Lipschitz 测试函数成立。因此 $T$ 条件弱收敛到同一正态。
+每个有限纤维中 $T$ 与 $G$ 独立；它们的联合律就是该实际 $T$ 边缘与标准正态的乘积。
+紧性、紧集上的有限乘积测试函数逼近给其联合弱极限。
+再用 $Y-T=\sigma_MG\to0$、(79.5) 和 (79.6) 的连续映射，得到 (79.3)。
+此处极限中出现的 $G_\infty$ 正是同一测量残差的极限，不能用一个独立拷贝替代。
+
+上述证明适用于误差读数趋零的任意确定好环境序列。
+各读数的一致原数据概率控制，再以反证选取失败环境序列，给所述随机环境结论。
+没有把无界测试函数在异常数据上的值乘以其概率。
+令 $U=(Z+G_\infty)/\sqrt2$、$V_*=(Z-G_\infty)/\sqrt2$，则
+$U,V_*$ 是独立标准正态，且 $(Z^2-G_\infty^2)/2=UV_*$。
+条件于非零的一个因子可知乘积无原子，故极限 CDF 连续。
+在两尾和有限内部网格上用 CDF 单调性，弱收敛升级为标量 Kolmogorov 收敛。证毕。
+

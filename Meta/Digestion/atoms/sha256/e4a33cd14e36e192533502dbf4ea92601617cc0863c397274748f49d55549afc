@@ -1,0 +1,53 @@
+**列交换与下一轮纯环境不相容。** 由（27.4）、（29.18）—（29.19），
+$$
+Y_3^1=ab t,\qquad Y_2^0=ab u_\xi,
+$$
+所以 $`t=\omega u_\xi`$。又由
+$$
+X_3^1=a^2t+bj=\omega X_2^0
+=\omega(a^2u_\xi+bv_\xi),
+$$
+得到 $`j=\omega v_\xi`$。四个向量 $`s,r,t,j`$ 正交归一；结合 （29.7），$`s,r`$ 必为
+$`\operatorname{span}\{w_\xi,v\otimes\xi^\perp\}`$ 的一组正交基。
+另一方面，（29.28） 给
+$$
+X_3^0=\kappa w_\xi,
+\qquad \kappa=\nu a\sqrt{\tau/x}\ne0.
+\tag{29.30}
+$$
+写
+$$
+s=\alpha w_\xi+\beta(v\otimes\xi^\perp).
+\tag{29.31}
+$$
+必须有 $`\beta\ne0`$：否则 $`s`$ 沿 $`w_\xi`$，$`r`$ 沿 $`v\otimes\xi^\perp`$，而
+$`X_3^0=ac s+ab r`$ 含非零的后一个分量，违反 （29.30）。
+
+此时 $`S_1=G_\xi+A=\operatorname{span}\{u_\xi,w_\xi,v\otimes\xi^\perp\}`$。所以
+$$
+e=g(v\otimes\xi^\perp)
+\tag{29.32}
+$$
+是单位向量。它正交于 $`gG_\xi=B_3`$，也正交于 $`fH_\xi=A`$，故由 （29.7）
+$$
+e\in C_3^\perp=G\otimes\mathbb C\xi^\perp.
+\tag{29.33}
+$$
+由 （29.11）、（29.19）、（29.30）、（29.31），
+$$
+X_4^0=a\kappa t+bc\,g s
+=a\kappa t+bc\alpha j+bc\beta e.
+\tag{29.34}
+$$
+前两项位于 $`Q\otimes\xi`$，最后一项为 $`e`$ 的非零倍数。
+
+但是 $`V_0H_4\subset K\otimes\eta`$，而第27节的全附加因子等式给
+$$
+V_0(H\otimes\xi^\perp)=A\otimes R\xi^\perp,
+\qquad R\xi^\perp\perp\eta.
+$$
+故等距性要求 $`H_4\perp H\otimes\xi^\perp`$。将 （29.34） 代入，得到
+$`e\perp H\otimes\xi^\perp`$。这与 （29.33） 不相容：$`P_H|_G`$ 单射，因为
+$`G=\operatorname{span}\{u,w\}`$、$`H=\operatorname{span}\{z,w\}`$，且
+$`\langle z,u\rangle=\bar a^2/c\ne0`$。因此 $`e=0`$，违反其单位范数。矛盾，证明完毕。
+

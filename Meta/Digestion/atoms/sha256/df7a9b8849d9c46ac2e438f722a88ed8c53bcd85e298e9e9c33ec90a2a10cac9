@@ -1,0 +1,19 @@
+**定义 103.1（平衡投影的输出旋转）。** 取
+
+$$
+\psi=\frac{|0\rangle+|1\rangle}{\sqrt2},\qquad
+\eta=\frac{-|0\rangle+|1\rangle}{\sqrt2},\qquad
+\psi_\theta=\cos\theta\,\psi+\sin\theta\,\eta.
+$$
+
+定义固定齐次仪器
+
+$$
+\widehat Q_\theta=|\psi_\theta\rangle\langle\psi|,
+\qquad \widehat L_\theta=|0\rangle\langle\eta|,
+\qquad \widehat\Gamma_\theta=(\operatorname{Ad}_{\widehat Q_\theta},\operatorname{Ad}_{\widehat L_\theta}).
+\tag{103.1}
+$$
+
+这与定义 95.1 在 $\Gamma_+$ 处的输出旋转一致，完整性对每个 $\theta$ 成立。$\theta=0$ 是定理 102.1 已证明的真实最近失效装置；参数向内的方向将是 $\theta<0$。
+

@@ -1,0 +1,17 @@
+**首环境在 $F$ 外时，全部外部环境同射线。** 现在取 $\eta_1\notin F$。若 $\eta_j\notin F$、$\eta_j\not\parallel\eta_1$，第一条维数事实给
+$$
+\eta_j=c\eta_1+f,\qquad c\ne0,\quad0\ne f\in F.
+$$
+逐个环境分量比较得到
+$$
+\bigl(A\otimes F+G_1\otimes\eta_1\bigr)
+\cap(G_j\otimes\eta_j)
+=(A\cap G_1\cap G_j)\otimes\eta_j.
+\tag{54.10}
+$$
+左侧两个空间分别六维和二维，同处七维 $V_0K$，故交非零，特别有 $A\cap G_1\ne0$。固定 $V_1$ 因而强制 $\eta_2\parallel\eta_1$。
+
+若 $\eta_2\parallel\eta_1$，当 $L=2$ 时已得到全部尾环境共线；当 $L\ge3$ 时，$G_1+G_2$ 至多三维，因为其张量共同外部环境的像与 $A\otimes F$ 交零。因此 $G_1\cap G_2\ne0$，固定 $V_1$ 给 $\eta_3\parallel\eta_2$。对每个仍有后继的指标重复该论证，全部后续环境都与 $\eta_1$ 共线。这与上面选取的 $\eta_j$ 矛盾。
+
+所以全部外部环境均属于同一射线 $O=\mathbb C\eta_1$。若 $\eta_2\in O$，已经得到全 $O$ 模式；只需讨论 $\eta_2\in F$。
+

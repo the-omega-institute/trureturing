@@ -1,0 +1,44 @@
+### 161.1 同一持久空间上的连续装置族
+
+固定 $p=1/2$ 的来源，沿用第159节的运行空间 $K_{\mathrm{run}}=Q\otimes R$、混合编码 $\operatorname{Enc}$、共同来源吸收酉和两个相位误差界。用
+
+$$
+V_\theta=
+\begin{pmatrix}
+\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta
+\end{pmatrix}
+\tag{161.1}
+$$
+
+作为每轮解密后的逻辑酉。每个固定 $\theta$ 对应一台逐轮重复同一个全域 CPTP 通道的装置 $\mathcal C_\theta$。不同参数的启动通道、扇区分解与独立纯初态完全相同。
+
+启动长度取 $L=10$，最后一个启动步骤将规范档案的逻辑位重置为 $|+\rangle$，然后施加第159节的随机掩码。这里起始相位选为能够在接收端纠正掩码的 $|+\rangle$。持久维数为
+
+$$
+D=4L-2=38.
+\tag{161.2}
+$$
+
+第154节的统一启动界给
+
+$$
+\delta_n\le2\left(\frac12\right)^{n-1}=2^{2-n},
+\qquad
+b_L:=2^{2-L}=\frac1{256},
+\qquad
+\delta_n\le b_L\quad(n\ge L).
+\tag{161.3}
+$$
+
+第 $n$ 个完整参考最优误差记为 $e_n(\theta)$，并置
+
+$$
+M_N(\theta)=\max_{1\le n\le N}e_n(\theta),
+\qquad
+E_\infty(\theta)=\sup_{n\ge1}e_n(\theta).
+\tag{161.4}
+$$
+
+各终端仍优化全部接收端 CPTP 解码器，活动来源与外部参考均不受其控制。
+

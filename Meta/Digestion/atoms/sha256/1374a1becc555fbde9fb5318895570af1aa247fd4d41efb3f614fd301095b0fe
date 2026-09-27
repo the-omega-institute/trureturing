@@ -1,0 +1,7 @@
+**第二族，$c=kr\le v_-$。** 实际输出零只可能发生在 $G,X>vY$。其线性均值 $h(c-v)\le-h_\star\gamma\kappa$，所以
+$$
+f_K(c,h)\le Ae^{-at}\le L(c)+Ae^{-at},
+\tag{300.41}
+$$
+使用 $L(c)>0$。
+

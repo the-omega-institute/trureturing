@@ -1,0 +1,50 @@
+**定理 78.3（全压缩范围的三分之一次界）。** 对
+
+$$
+0<\varepsilon\le2^{-12}
+$$
+
+有
+
+$$
+\sup_{0<a<1}
+\left|
+\frac{e(a,\varepsilon)}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|
+\le3000\varepsilon^{1/3}.
+\tag{78.11}
+$$
+
+证明。取 $R=\varepsilon^{-1/3}\ge16$。则
+
+$$
+9\varepsilon(R+1)
+=9(\varepsilon^{2/3}+\varepsilon)
+\le\frac{153}{4096}<\frac18,
+$$
+
+所以引理 78.2 适用于 $0<r=(1-a)/\varepsilon\le R$。由 $R\ge8$ 有 $R+1\le9R/8$，于是
+
+$$
+2280\varepsilon(R+1)^2
+\le\frac{2280\cdot81}{64}\varepsilon^{1/3}
+<3000\varepsilon^{1/3}.
+$$
+
+对 $r\ge R$，第 74 节的实际修复上界与第 71 节的系数尾界为
+
+$$
+1\le\frac{e(a,\varepsilon)}{\varepsilon}\le1+\frac{16}{r},
+\qquad
+1\le\gamma_r\le1+\frac{12}{r},
+$$
+
+它们都对 $r\ge8$ 成立。两者同在 $[1,1+16/r]$ 中，因此差至多
+
+$$
+\frac{16}{r}\le\frac{16}{R}=16\varepsilon^{1/3}.
+$$
+
+两区间覆盖全部 $0<a<1$，得到统一界。$\square$
+

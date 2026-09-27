@@ -1,0 +1,42 @@
+**引理151.2（非对角块与本地通道）。** 设 $Z$ 为 $\mathbb C^2\otimes H$ 上的厄米算子，$Z_{10}$ 为活动二维系统的 $(1,0)$ 块。则
+
+$$
+\frac12\|Z\|_1\ge\|Z_{10}\|_1.
+\tag{151.6}
+$$
+
+对任意 CPTP 映射 $\mathcal D$ 和任意算子 $X$，不要求 $X$ 厄米，有
+
+$$
+\|\mathcal D(X)\|_1\le\|X\|_1.
+\tag{151.7}
+$$
+
+**证明。** 令 $J=\operatorname{diag}(1,-1)\otimes I_H$。算子 $(Z-JZJ)/2$ 只保留两个非对角块，其迹范数等于 $2\|Z_{10}\|_1$；另一方面，迹范数的酉不变性与三角不等式给
+$\|(Z-JZJ)/2\|_1\le\|Z\|_1$，得到（151.6）。
+
+对任意厄米算子 $H=H_+-H_-$，正映射的保迹性给
+$\|\mathcal D(H)\|_1\le\operatorname{Tr}H_++\operatorname{Tr}H_-=\|H\|_1$。
+现在把 $\operatorname{id}_2\otimes\mathcal D$ 作用于厄米扩张
+
+$$
+\begin{pmatrix}0&X\\X^*&0\end{pmatrix}.
+$$
+
+完全正性保证该扩张通道仍为正且保迹。输入与输出的迹范数分别为 $2\|X\|_1$ 和 $2\|\mathcal D(X)\|_1$，因此得到（151.7）。证毕。
+
+特别地，若理想目标态 $\Omega$ 的活动记忆 $(1,0)$ 块为 $Y$，实际接收态 $\sigma$ 的对应块为 $X$，则任意只作用于接收器的解码通道满足
+
+$$
+\begin{aligned}
+\frac12\|
+(\operatorname{id}_M\otimes\mathcal D)(\sigma)-\Omega
+\|_1
+&\ge\|\mathcal D(X)-Y\|_1\\
+&\ge\|Y\|_1-\|X\|_1.
+\end{aligned}
+\tag{151.8}
+$$
+
+这条下界不要求解码器为等距映射，也不要求它精确恢复任何指定基态。
+

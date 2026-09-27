@@ -1,0 +1,43 @@
+**证明。** 对固定 $c$，任意解码器族都有
+$h_n(c,\mathcal D_n)\ge e_n(c)$。反过来，对每个 $n$ 选择取得（150.3）最小值的解码器，即使所有这些等号同时成立。因此
+
+$$
+\inf_{(\mathcal D_n)}\sup_n h_n(c,\mathcal D_n)
+=\sup_n e_n(c).
+\tag{150.7}
+$$
+
+这一步只使用终端解码可分别选择的既有权限。
+
+有限最优值随 $N$ 非降且不超过一，故其极限
+
+$$
+\ell=\sup_N\varepsilon_{D,N}\in[0,1]
+$$
+
+存在。对每个 $N$，置
+
+$$
+F_N=\{c\in\mathcal X_D:g_N(c)\le\ell\}.
+\tag{150.8}
+$$
+
+由于 $g_N$ 连续，$F_N$ 是闭集；由于最小值取得且
+$\varepsilon_{D,N}\le\ell$，它非空。又 $g_N\le g_{N+1}$，所以
+$F_{N+1}\subseteq F_N$。紧性给出
+
+$$
+\bigcap_{N\ge1}F_N\ne\varnothing.
+$$
+
+取 $c_*$ 属于该交集。对每个 $n$，有 $e_n(c_*)\le\ell$，所以
+$\sup_n e_n(c_*)\le\ell$。
+
+另一方面，对任意 $c$ 和任意 $N$，
+
+$$
+\sup_n e_n(c)\ge g_N(c)\ge\varepsilon_{D,N}.
+$$
+
+对 $N$ 取上确界，得到 $\sup_n e_n(c)\ge\ell$。因此 $c_*$ 达到该下界。再按（150.7）逐终端选取解码器，便得到（150.6）及共同达到性。证毕。
+

@@ -27,5 +27,5 @@ run_cmd do
           throwError "production companion has the wrong module owner: {name}"
     let artifact ← Lean.Elab.Command.liftTermElabM <| serializeSealArtifact records
     unless Sha256.hex artifact.toUTF8 == digest do
-      throwError "production joint seal digest mismatch: {root}"
+      throwError "production joint seal digest mismatch: {root}; expected={digest}; actual={Sha256.hex artifact.toUTF8}"
   logInfo "production joint import retained eleven frozen and ten shadow catalogs"

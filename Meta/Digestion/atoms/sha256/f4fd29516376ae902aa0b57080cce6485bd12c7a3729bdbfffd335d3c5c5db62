@@ -1,0 +1,17 @@
+**定理 224.4（矩形记录通道的完整预算夹界）。** 考虑任意 qubit 输入、三维量子输出、两标签、结果秩 $(1,2)$ 的 CPTP 通道。候选总 Choi 秩至多二。
+
+令 $d_2$ 为到同输入、同三维量子输出、同两个经典标签、总 Choi 秩至多二的全部 CPTP 记录通道的完整半 diamond 距离，允许标签缺失。令 $q_0=\|K_0^\dagger K_0\|_\infty$。则
+
+$$
+\boxed{
+\min\{\max(\gamma_{\rm out},\gamma_{\rm in,tail}),q_0\}
+\le d_2\le\min(\delta_{\rm rot},q_0).
+}
+$$
+
+对定理 224.2 的共同 TP 族，特别有
+
+$$
+\kappa\frac{2+\sqrt2}{4}\le d_2\le\kappa.
+$$
+

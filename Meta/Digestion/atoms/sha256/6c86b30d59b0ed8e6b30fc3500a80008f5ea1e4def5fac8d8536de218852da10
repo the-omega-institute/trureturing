@@ -1,0 +1,9 @@
+**定理273.1（多链负性的精确加权和）。** 对上述实际来源，有
+$$
+\boxed{
+\operatorname{Neg}(\Omega(t))
+=\sum_b\frac{n_b}{N}\operatorname{Neg}(\Omega_b(t)).
+}
+\tag{273.12}
+$$
+

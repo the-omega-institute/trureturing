@@ -1,0 +1,33 @@
+### 302.3 停止 KL 的方向与有限期望链式等式
+
+记完整增广停止记录律为 \(P^\tau,Q^\tau\)。在每个有限停止叶上，共同控制、选择和停止规则的因子相同。因此
+$$
+\frac{dP^\tau}{dQ^\tau}
+=\prod_{t=1}^{\tau}
+\frac{P_{A_t}(Z_t)}{Q_{A_t}(Z_t)}
+\qquad P^\tau\text{-几乎处处}.
+\tag{302.8}
+$$
+先在固定有限长度上按条件核逐次相乘，再在互不相交的停止层上求和，即得该密度与 \(P^\tau\ll Q^\tau\)。\(Q\) 可以有额外的 \(P\)-零概率叶；密度在其上为零，不影响 \(P\) 下的期望。反向密度公式不能无条件用于这些额外叶。
+
+由（302.7），停止对数似然的绝对增量和至多为 \(L\tau\)，在 \(P\) 下可积。于是可直接使用 Fubini 与条件期望：
+$$
+\begin{aligned}
+D(P^\tau\Vert Q^\tau)
+&=\mathbb E_P\sum_{t=1}^{\tau}
+\log\frac{P_{A_t}(Z_t)}{Q_{A_t}(Z_t)}\\
+&=\sum_{t\ge1}\sum_a
+\Pr_P(\tau\ge t,A_t=a)\,D(P_a\Vert Q_a)\\
+&=\boxed{\sum_a\mathbb E_PN_a\,D(P_a\Vert Q_a)}.
+\end{aligned}
+\tag{302.9}
+$$
+第 \(t\) 次继续及来源选择在取得新结果前已可测，故条件期望确为该来源的单次 KL。这里没有把任意无界停时直接代入一个只对有界停止成立的等式。
+
+式（302.9）中的期望在第一分布 \(P\) 下。改变方向必须同时改变单次 KL 和期望预算，并重新验证绝对连续。本文完整来源的零支持端点不能反向使用。
+
+忽略增广信息、输出终端决定或制备参数无关的条件量子态都是共同后处理。实际决定的可区分性因此受增广停止记录的 TV 控制；不必把隐藏程序当成实际可观测数据。
+
+这一步采用成熟的序贯换测度机制。Kaufmann、Cappé、Garivier，
+[*On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf)，JMLR 17（2016），第7页 Lemma 1 给互相绝对连续、几乎必然有限停止时的逐来源期望次数加权 KL 与停止事件二元 KL 界；第24—28页 Lemma 18、19和式(18)给停止似然及期望背景。其 Lemma 1 不直接陈述（302.9）的完整停止记录等式，也不直接覆盖本节单向的零支持端点；上面的有限叶密度和可积性推导履行了这些额外前提。
+

@@ -1,0 +1,4 @@
+**定义 445.1（所连接的项目结构）。** 本批承重的综合连接是：将项目中共同残余的零值判据、完整记录的后验两端与轨迹律接口，接到一个有正前缀的部分共享模型；再将第 429 节的补偿似然识别为逐步组合律的密度，比较它与逐层整体几何组合的忘却关系，并用于第 442 节的停止预算质量和亲和量表示。第 439 节的共享成分选择与第 441 节的两个反例，使“共有”“组合”“同源”在同一个比较框架中取得不同检验条件。这是本卷新增的综合推导及解释，不宣告其中使用的测度分解、Bayes 决策、概率延拓、强大数律、独立乘积亲和或停时密度是新发现的经典定理。
+
+项目源码入口分别为 `D5/S3/Observer/MeasureSeparation/` 下的 `ZeroBayesResidualCriterion`、`EquivalentMeasuresExcludePerfectSeparator`、`EquivalentLawPosteriorInterior`、`SingularPosteriorCollapse`，以及 `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/HasLawTrajectory`。其中轨迹律模块标明其 LeanMachineLearning 上游来源；这里按其实际陈述使用初始律和自身历史条件律，不把模块名当成对任意拼接分布的授权。前批有限亲和与似然接口的来源继续见第 435.1 项。
+

@@ -1,0 +1,14 @@
+**227.3.2 系数中心在球面上：直接处理临界情形。**
+
+设 $\|n_0\|=1$。同样的两式及 Cauchy–Schwarz 给
+$$
+\lambda_+(s)\ge c,\qquad\lambda_-(s)\le c.
+$$
+由于 $0\in\operatorname{int}K$，沿 $Lx$ 的正、负 $n_0$ 射线分别能到达 $\partial(LK)$，所以两侧都能取等，得到 $\alpha=\beta=c$。
+
+另一方面，取球面系数 $n=n_0$，有
+$$
+a+u\cdot n_0+\|t+L^Tn_0\|=c.
+$$
+所以 $\delta\le c$。结合 $\beta\le\delta$，得到三者均为 $c$。这里没有把临界点排除或依赖数值极限。
+

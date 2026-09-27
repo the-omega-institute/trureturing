@@ -1,0 +1,18 @@
+#### 5.1.12 结果归属与本节的适用范围
+
+源码归属固定于提交 `19a8543ea50538700a993a51989d9cbc7b5bf4fd`。`D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean` 的 `ThreadComplete`、`SeparatesStates` 与 `stateThread_bijective_iff_complete_and_separates`（58–109 行），以及 `D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion.lean` 的 `completion_map_equiv_iff`（29–82 行），承担类型层的相容线程与等价条件；它们没有假设紧 Hausdorff 拓扑，也没有自动给出本节的有限交性质与同胚升级。
+
+紧度量纤维直径的有向极限在A卷第5.1.3节由A卷第5.2.1节的一般核缩小定理代入开度量对角邻域得到。`D5/S3/Observer/MetricGeometry/FiniteWordFiberDiameter.lean`（21–56 行）给有限观察前缀的折扣预测距离界，距离和假设与本节不同；`D5/S3/ConceptDynamics/EscapeSpectrum/CompactResidualFiniteCompletion.lean`（43–71 行）在紧残差域与开放分离条件下抽取有限预算，其对象是既定目标的缺陷关系。本节没有把二者冒认为一般紧度量观察塔直径定理的同形所有权。
+
+`D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.lean` 的 `finite_horizon_value_factorization`（27–70 行）和 `D5/S3/ConceptDynamics/DecisionValue/FiniteHorizonOptimalActionDescent.lean` 的 `finite_horizon_optimal_actions_descend`（94–163 行）直接承担有限非空动作下的值及最优动作下降。`D5/S3/Observer/DynamicProgramming/DiscountedBellmanContraction.lean` 的声明限于有限状态、有限动作的随机转移收缩；本节提及一般紧空间上连续确定转移的折扣扩展采用普通 sup 范数证明，没有将其归成该有限状态声明的逐字结论。
+
+`D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean` 的 `InterventionClosed`（36–41 行）、`DynClosure`（43–47 行）和 `dynamic_closure_is_least`（79–99 行）承担干预保持观察纤维及最小闭合细化；旋转的固定商反例与同时运输观察的式子在本节直接验证。
+
+`D5/S3/ConceptDynamics/Gluing/LocalDescentGlobalCompatibility.lean`（21–54 行）已有自然数截断每层满射而最大线程不在原像中的反例；其非紧载体不与A卷命题5.1 冲突。`D5/S1/Solenoid/Connectivity/FiniteNameInverseLimitNoGo.lean`（28–47 行）及 `D5/S3/ConceptDynamics/Topology/ConnectedDiscreteNamingDiscontinuity.lean`（29–45 行）承担有限离散名字的连通性障碍。二进制完成后识别边界双表示的机制已有 `docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md` 39.16 节（35395–35448 行）的正文归属。
+
+素数与联合像接口分别来自 `D5/S3/Factorization/PrimePowers/PrimeBudgetReadoutDichotomy.lean`（44–100 行）、`SamePrimeScaleRedundancy.lean`（43–64、92–123 行）及 `CompatibleResidueJointImage.lean` 的 `joint_residue_image_eq_compatible_pairs`（49–130 行）。本节所用正模数 CRT 是后者允许任意自然模数的陈述之受限情形；圆周幂读数的 gcd 核、$4/9$ 恢复及其联合像由本节直接证明，不借用整数 CRT 的自由乘积结论。
+
+`D5/S1/Dynamics/UniversalSolenoid.lean`（14–18、64–123、132–188 行）给原载体、同一可见投影、实流、稠密性和连通性；`D5/S1/Solenoid/ExactSequence.lean` 的 `CongruenceData`（21–26 行）与 `congruence_solenoid_short_exact`（177–186 行）给同一投影的元素级核与满射接口。`D5/S1/Dynamics/SolenoidCharacter.lean` 的 `continuous_solenoid_characters_are_rational`、`characterEquivRational` 给连续特征分类；`D5/S1/Solenoid/Connectivity/CharacterCompletionDuality.lean` 明确直接复用该分类，不将其作为第二份独立证明。
+
+本节据此保留三个不能互相代替的保证：相容观察塔的完整拓扑恢复、指定任务的 Bellman 下降，以及数字完成后经明确接缝得到的连续实现。它们可以在同一研究中组合，但每一步都要指明恢复的是原状态、任务行为、相容线程，还是带新边界识别的商空间。
+

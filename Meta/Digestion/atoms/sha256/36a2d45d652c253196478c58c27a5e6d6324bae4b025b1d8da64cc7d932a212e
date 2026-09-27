@@ -1,0 +1,5 @@
+#### 1.4.1 仓内已有供应及本节范围
+
+以下既有结果的来源是固定仓库快照 `85565d32fc6d30521579532de103c92e9f17b824`。
+
+- [BinaryZeckendorfBlockSkeletonCore](https://github.com/the-omega-institute/trureturing/blob/85565d32fc6d30521579532de103c92e9f17b824/D5/S0/Automata/BinaryZeckendorfBlockSkeletonCore.lean) 已定义回返块 `zero`、`oneZero`，可选终端通道、展开与解码，并有 `decode_expand`、`expandCode_injective` 等声明。[BinaryZeckendorfBlockSkeleton](https://github.com/the-omega-institute/trureturing/blob/85565d32fc6d30521579532de103c92e9f17b824/D5/S0/Automata/BinaryZeckendorfBlockSkeleton.lean) 已处理回返骨架与原机器行为的运输。本节不将有限 $0/10$ 分解重新记为成果。

@@ -1,0 +1,29 @@
+**定理 181.3（一个折扣读数不保持全部 horizon）。** 取 $\mathcal X=\mathbb R^2$，并把 $T$ 视为作用在效果空间 $\mathcal X^*$ 上的交换算子，令终端效果 $H=e_1^*$，并取 $0<\lambda<1$。则
+
+$$
+\mathsf R_{\lambda,T}(H)
+=\frac{e_1^*+\lambda e_2^*}{1-\lambda^2}.
+$$
+
+存在非零状态差
+
+$$
+\Delta=-\lambda e_1+e_2
+$$
+
+使
+
+$$
+\mathsf R_{\lambda,T}(H)(\Delta)=0,
+$$
+
+但
+
+$$
+H(\Delta)=-\lambda\ne0,
+\qquad
+(TH)(\Delta)=e_2^*(\Delta)=1.
+$$
+
+所以两个边界状态若只保留这一个折扣读数，可以在折扣任务上相同，却在 horizon $0$ 和 $1$ 的离散任务上不同。
+

@@ -7,8 +7,8 @@ two-prime clique sums. In particular, the displayed two-K4 example has six
 total primes; bare noncoverage is not claimed as new beyond the reported
 at-most-eight-total-primes result.
 
-The self-contained Python 3 standard-library [control program](../frontier/cover-geometry/two_prime_separator_controls.py)
-and its [exact data](../frontier/cover-geometry/two_prime_separator_controls.json)
+The self-contained Python 3 standard-library [control program](../frontier/cover-geometry/two-prime-separator-controls/two_prime_separator_controls.py)
+and its [exact data](../frontier/cover-geometry/two-prime-separator-controls/two_prime_separator_controls.json)
 retain every original label and boundary table. Direct CRT enumeration and
 four full-period sieves agree. The results below are ordinary mathematical
 proofs and exact experimental checks, without new Lean certification.

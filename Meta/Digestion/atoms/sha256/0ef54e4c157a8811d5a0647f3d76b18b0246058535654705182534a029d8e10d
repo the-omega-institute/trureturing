@@ -1,0 +1,59 @@
+### 259.1 固定数据与未知块的重新排列
+
+设参考空间 $E$ 为非零有限维复Hilbert空间，给定
+$$
+\rho\succeq0,\qquad \operatorname{Tr}\rho=1,\qquad K=K^\dagger.
+\tag{259.1}
+$$
+在§256的输入 $Y$ 基中，固定边缘和响应的全部来源为
+$$
+\mathfrak S(\rho,K)=
+\left\{
+\Omega=
+\begin{pmatrix}P&K/2\\K/2&\rho-P\end{pmatrix}
+:\ \Omega\succeq0
+\right\}.
+\tag{259.2}
+$$
+对角和已保证每个成员迹一。引入Hermitian未知量
+$$
+H=2P-\rho,
+\qquad
+\Omega_H=\frac12
+\begin{pmatrix}\rho+H&K\\K&\rho-H\end{pmatrix}.
+\tag{259.3}
+$$
+令 $W=2^{-1/2}\bigl(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\bigr)$ 作用于这两个输入块，则
+$$
+(W\otimes I)\Omega_H(W^\dagger\otimes I)
+=\frac12\begin{pmatrix}A&H\\H&B\end{pmatrix},
+\qquad
+A=\rho+K,\quad B=\rho-K.
+\tag{259.4}
+$$
+因此
+$$
+\boxed{
+\mathfrak S(\rho,K)\ne\varnothing
+\iff A,B\succeq0
+\iff-\rho\preceq K\preceq\rho.
+}
+\tag{259.5}
+$$
+必要性来自块压缩；充分性由 $H=0$ 给出。以下均假设这一可实现性条件成立。
+
+记态间的半迹距离为
+$$
+d(\Omega,\Xi)=\frac12\|\Omega-\Xi\|_1.
+\tag{259.6}
+$$
+直接由（259.3）的对角块差可得
+$$
+\boxed{
+d(\Omega_{H_1},\Omega_{H_2})
+=\frac12\|H_1-H_2\|_1.
+}
+\tag{259.7}
+$$
+这个因子将区分下文的纤维直径与重建半径。
+

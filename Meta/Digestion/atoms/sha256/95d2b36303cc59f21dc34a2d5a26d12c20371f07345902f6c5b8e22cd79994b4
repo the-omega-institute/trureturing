@@ -1,0 +1,21 @@
+**命题 54.2（双参数极限具有连续的过渡层）。** 令 $\eta\downarrow0$，同时 $\gamma/\eta\to u\in[0,\infty]$。则
+
+$$
+\boxed{
+a_\eta(\gamma)\longrightarrow1,\qquad
+c_\eta(\gamma)\longrightarrow1+\frac{u}{1+u},
+}
+$$
+
+其中 $u=\infty$ 时分式解释为一。
+
+证明。点击概率结论由第 54.1 条的共同上界 $1-a_\eta\le\eta$。另有
+
+$$
+c_\eta-1=\frac{q(\gamma/\eta)}{1+q(\gamma/\eta)},
+$$
+
+而 $q\to1$，逐种 $u$ 取极限即得。$\square$
+
+因此先让模型退化与先移除截止并不交换；中间的任何有限比值都产生一个介于一与二之间的成本极限。它是探测变化与截止长度的相对尺度，不是物理秒本身出现分数化。
+

@@ -1,0 +1,40 @@
+**从 $N$ 到 $M$ 的完整区间传播。** 取任意实数 $x\ge e^T$，令 $t=\log x$。由(494.3H)有
+$$
+1<L<C=e^{0.9T}\le x^{0.9}\le x.
+$$
+因此(494.3C)可以使用，并且整个积分区间 $[C,x]$ 均落在(494.3J)第一条的有效域。对 $N(x)$ 单独使用(494.3J)第二条。于是
+$$
+|M(x)|\le \frac C{4345}+\frac{FC}{S^\gamma}
++E\frac x{t^\gamma}+F\int_C^x\frac{du}{(\log u)^{\gamma+1}}.
+\tag{494.3K}
+$$
+因为 $\gamma+1>0$ 且 $C\le x^{0.9}$，按真实有序区间分段给出
+$$
+\begin{aligned}
+\int_C^x\frac{du}{(\log u)^{\gamma+1}}
+&\le\frac{x^{0.9}-C}{S^{\gamma+1}}
+ +\frac{x-x^{0.9}}{(0.9t)^{\gamma+1}}\\
+&\le\frac{x^{0.9}}{S^{\gamma+1}}+
+\frac{x}{(0.9t)^{\gamma+1}}.
+\end{aligned}
+\tag{494.3L}
+$$
+把(494.3K)乘以 $t^\gamma/x$，再用 $t\ge T>10\gamma$，得到
+$$
+\frac{|M(x)|t^\gamma}{x}\le
+E+\left(\frac1{4345}+\frac F{S^\gamma}\right)C t^\gamma e^{-t}
++\frac{F t^\gamma e^{-t/10}}{S^{\gamma+1}}
++\frac F{0.9^{\gamma+1}t}
+\le K_j,
+$$
+其中
+$$
+K_j=E+\left(\frac1{4345}+\frac F{S^\gamma}\right)T^\gamma e^{-T/10}
++\frac{F T^\gamma e^{-T/10}}{S^{\gamma+1}}
++\frac F{0.9^{\gamma+1}T}.
+\tag{494.3M}
+$$
+第二个不等式的理由完整如下：对 $b>0$，$(t^\gamma e^{-bt})'=t^{\gamma-1}e^{-bt}(\gamma-bt)$；因此所用 $b=1,1/10$ 的两个函数在 $t\ge T>10\gamma$ 均递减，$1/t$ 也递减；$Ce^{-T}=e^{-T/10}$。不存在把未证的 $N$ 估计延伸到积分下端的步骤。
+
+这替代了第417–418页命题7在本六行上的直接套用。其印刷条件 $x>\max(e^T,C^{9/10})$ 不能单独保证 $C\le x^{9/10}$；实际分段条件应为 $x\ge C^{10/9}$。所取 $C=e^{0.9T}$ 使后者恰为 $x\ge e^T$。另一个独立问题是积分上使用的 $N$ 界需从 $C$ 开始；(494.3J)和(494.3M)已经具体补足该条件，而没有假设 $E$ 可向下延用。
+

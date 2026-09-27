@@ -472,6 +472,14 @@ internal sealed class LeanCacheDonorSelection : IDisposable
     public void Dispose() => guard?.Dispose();
 }
 
+internal sealed record LeanWorktreeLocation(
+    bool IsLinked,
+    string MainCheckout);
+
+/// <summary>
+/// Resolves cache donors. A linked worktree may use only the main checkout of its repository;
+/// main-worktree and standalone callers retain the registered-worktree donor inventory.
+/// </summary>
 internal static class GitWorktreeInventory
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -611,6 +619,118 @@ internal static class GitWorktreeInventory
                         : "no existing worktree contains .lake";
         return new LeanCacheDonorSelection(null, notice);
     }
+
+    internal static LeanWorktreeLocation Locate(
+        string repositoryRoot,
+        IWorktreeProcessRunner runner)
+    {
+        var root = LeanCacheGuard.PhysicalPath(repositoryRoot);
+        var gitMarker = Path.Combine(root, ".git");
+        if (Directory.Exists(gitMarker) || !File.Exists(gitMarker))
+        {
+            return new LeanWorktreeLocation(
+                IsLinked: false,
+                MainCheckout: root);
+        }
+
+        var gitDirectory = ResolveGitPath(
+            repositoryRoot,
+            StrictUtf8.GetString(RunGit(
+                repositoryRoot,
+                ["rev-parse", "--absolute-git-dir"],
+                runner,
+                "could not resolve worktree Git directory").StandardOutput).Trim());
+        var commonDirectory = ResolveGitPath(
+            repositoryRoot,
+            StrictUtf8.GetString(RunGit(
+                repositoryRoot,
+                ["rev-parse", "--git-common-dir"],
+                runner,
+                "could not resolve common Git directory").StandardOutput).Trim());
+        var linked = !string.Equals(
+            LeanCacheGuard.PhysicalPath(gitDirectory),
+            LeanCacheGuard.PhysicalPath(commonDirectory),
+            StringComparison.Ordinal);
+        var parent = Directory.GetParent(commonDirectory)
+            ?? throw new InvalidOperationException(
+                $"common Git directory has no main checkout parent: {commonDirectory}");
+        return new LeanWorktreeLocation(
+            linked,
+            LeanCacheGuard.PhysicalPath(parent.FullName));
+    }
+
+    internal static LeanCacheDonorSelection SelectMainDonor(
+        LeanWorktreeLocation location,
+        LeanPinSet requestedPins,
+        IWorktreeProcessRunner runner,
+        ILeanCacheStateProbe stateProbe)
+    {
+        ArgumentNullException.ThrowIfNull(location);
+        ArgumentNullException.ThrowIfNull(stateProbe);
+        if (!location.IsLinked)
+            throw new InvalidOperationException("main-checkout donor selection requires a linked worktree");
+
+        var main = LeanCacheGuard.PhysicalPath(location.MainCheckout);
+        var lake = Path.Combine(main, ".lake");
+        if (!Directory.Exists(lake) || IsSymlink(lake))
+            return UnavailableMain(main, "stamp absent");
+
+        var stamp = LeanCacheStamp.Inspect(lake, requestedPins);
+        if (stamp.State is LeanCacheStampState.Missing or LeanCacheStampState.Corrupt)
+            return UnavailableMain(main, "stamp absent", stamp.Reason);
+        if (stamp.State == LeanCacheStampState.Mismatch)
+            return UnavailableMain(main, "stamp mismatch", stamp.Reason);
+
+        var project = stateProbe.ProbeOleans(Path.Combine(lake, "build", "lib", "lean"));
+        if (!project.IsWarm)
+            return UnavailableMain(main, "project layer cold", project.Error);
+
+        var guard = LeanCacheGuard.TryAcquireShared(lake);
+        if (guard is null)
+            return UnavailableMain(main, "cache is busy");
+
+        var verifiedStamp = LeanCacheStamp.Inspect(lake, requestedPins);
+        var verifiedProject = stateProbe.ProbeOleans(Path.Combine(lake, "build", "lib", "lean"));
+        if (verifiedStamp.State != LeanCacheStampState.Match
+            || !verifiedProject.IsWarm
+            || LeanCacheBusyProbe.IsBusy(main, runner))
+        {
+            guard.Dispose();
+            var state = verifiedStamp.State switch
+            {
+                LeanCacheStampState.Missing or LeanCacheStampState.Corrupt => "stamp absent",
+                LeanCacheStampState.Mismatch => "stamp mismatch",
+                _ when !verifiedProject.IsWarm => "project layer cold",
+                _ => "cache is busy",
+            };
+            return UnavailableMain(
+                main,
+                state,
+                verifiedStamp.Reason ?? verifiedProject.Error);
+        }
+
+        return new LeanCacheDonorSelection(main, null, guard, verifiedProject);
+    }
+
+    private static LeanCacheDonorSelection UnavailableMain(
+        string main,
+        string state,
+        string? detail = null)
+    {
+        var reason = $"main checkout {state}";
+        if (!string.IsNullOrWhiteSpace(detail)) reason += $" ({detail})";
+        reason += "; sync dev and warm the dev cache: "
+            + $"make -C {ShellQuote(main)} warm-donor";
+        return new LeanCacheDonorSelection(null, reason);
+    }
+
+    private static string ShellQuote(string value) => "'" + value.Replace("'", "'\"'\"'") + "'";
+
+    private static bool IsSymlink(string path) =>
+        File.GetAttributes(path).HasFlag(FileAttributes.ReparsePoint);
+
+    private static string ResolveGitPath(string repositoryRoot, string value) =>
+        Path.GetFullPath(Path.IsPathRooted(value) ? value : Path.Combine(repositoryRoot, value));
 
     internal static void FetchRemoteBase(
         string repositoryRoot,

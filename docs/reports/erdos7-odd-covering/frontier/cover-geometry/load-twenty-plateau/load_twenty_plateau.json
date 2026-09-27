@@ -1,0 +1,245 @@
+{
+  "result": "PASS",
+  "period": 14549535,
+  "divisor_count": 192,
+  "query_rule": "residue 1 except unit and changed_labels, which use 0",
+  "changed_labels": [
+    9,
+    315,
+    495,
+    585,
+    693,
+    765,
+    819,
+    855,
+    1071,
+    1197,
+    1287,
+    1683,
+    1881,
+    1989,
+    2223,
+    2907
+  ],
+  "set_rule": "x=1 mod9; exactly three listed prime coordinates equal 1",
+  "other_prime_coordinates": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "CRT_strata": [
+    {
+      "prime_coordinates_equal_to_one": [
+        5,
+        7,
+        11
+      ],
+      "point_count": 3456,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        5,
+        7,
+        13
+      ],
+      "point_count": 2880,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        5,
+        7,
+        17
+      ],
+      "point_count": 2160,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        5,
+        7,
+        19
+      ],
+      "point_count": 1920,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        5,
+        11,
+        13
+      ],
+      "point_count": 1728,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        5,
+        11,
+        17
+      ],
+      "point_count": 1296,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        5,
+        11,
+        19
+      ],
+      "point_count": 1152,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        5,
+        13,
+        17
+      ],
+      "point_count": 1080,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        5,
+        13,
+        19
+      ],
+      "point_count": 960,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        5,
+        17,
+        19
+      ],
+      "point_count": 720,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        7,
+        11,
+        13
+      ],
+      "point_count": 1152,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        7,
+        11,
+        17
+      ],
+      "point_count": 864,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        7,
+        11,
+        19
+      ],
+      "point_count": 768,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        7,
+        13,
+        17
+      ],
+      "point_count": 720,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        7,
+        13,
+        19
+      ],
+      "point_count": 640,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        7,
+        17,
+        19
+      ],
+      "point_count": 480,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        11,
+        13,
+        17
+      ],
+      "point_count": 432,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        11,
+        13,
+        19
+      ],
+      "point_count": 384,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        11,
+        17,
+        19
+      ],
+      "point_count": 288,
+      "query_load": 20,
+      "aligned_query_load": 24
+    },
+    {
+      "prime_coordinates_equal_to_one": [
+        13,
+        17,
+        19
+      ],
+      "point_count": 240,
+      "query_load": 20,
+      "aligned_query_load": 24
+    }
+  ],
+  "point_count": 23320,
+  "Haar_mass": "424/264537",
+  "uniform_set_density_relative_to_Haar": "264537/424",
+  "source_density_cap": "6075000000000/7235955529",
+  "displayed_query_load_on_set": 20,
+  "aligned_query_load_on_set": 24,
+  "R_lower_bound_for_every_supported_probability": 23,
+  "source_R_cap": "70871/3375",
+  "verification": "Complete CRT strata, not full-period enumeration",
+  "scope": "No original family with this survivor set is asserted; every supported law violates the common-query cap."
+}

@@ -1,0 +1,37 @@
+**定理76.3（纤维秩不受缺陷秩直接控制）。** 存在 $q=3$、$A=I$ 的映射 $M$，使它保留所有二次纤维，$I-MM^*$ 是秩一正交投影，但每条非零二次纤维上的映射秩都为二。因此“每条纤维秩不超过 $d$”在一般 $q$ 下为假。
+
+取 $Q=\mathbb C^3$，正交单位基记为 $u_0,u_1,u_2$；取 $F=\mathbb C^2$，正交单位基为 $e_0,e_1$。令 $A=I_F$，故
+$$
+J=\operatorname{Sym}^2F
+=\operatorname{span}\left\{
+e_0e_0,\frac{e_0e_1+e_1e_0}{\sqrt2},e_1e_1
+\right\}.
+$$
+这里张量积缩写为并列符号，所列为正交单位基。记 $c=\sqrt{2/3}$，定义 $Q$ 上两个算子，其输入和输出均使用同一基 $(u_0,u_1,u_2)$：
+$$
+L_0=
+\begin{pmatrix}
+1&0&0\\
+0&0&0\\
+0&c&0
+\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}
+0&0&0\\
+1&0&0\\
+0&0&c
+\end{pmatrix}.
+\tag{76.6}
+$$
+按 $Q\otimes J$ 的三个二次基块与 $Q\otimes F$ 的两个环境块，令
+$$
+M=
+\begin{pmatrix}
+L_0&L_1/\sqrt2&0\\
+0&L_0/\sqrt2&L_1
+\end{pmatrix}.
+\tag{76.7}
+$$
+这是明确的 $6\times9$ 复线性矩阵。
+

@@ -1,0 +1,12 @@
+**命题 4.2（钟—仪器联合分支）。** 有 $J^\dagger J=I$，且命题 3.2 的历史态给出
+
+$$
+p(n,x)=\frac1{N+1}\operatorname{Tr}(\rho_nE_x),
+\qquad
+\rho_{n,x}=\frac{K_x\rho_nK_x^\dagger}{\operatorname{Tr}(\rho_nE_x)}
+$$
+
+，第二式仅在分母正时定义。
+
+证明。记录正交性使 $J^\dagger J=\sum_xK_x^\dagger K_x$。钟块 $\rho_n/(N+1)$ 经第 $x$ 分支变为 $K_x\rho_nK_x^\dagger/(N+1)$，取迹并归一化即得。该构造指定一次钟—仪器联合实验，不把历史编码的均匀钟权重解释成真实首次点击时间。$\square$
+

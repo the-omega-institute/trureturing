@@ -1,0 +1,43 @@
+### 249.1 同一源态的独立复本与真实旗标模式
+
+固定§248的一份已知饱和态 $\Omega$，其形成纠缠为
+$$
+E_F(\Omega)=\theta,\qquad 0<\theta<1.
+\tag{249.1}
+$$
+两方分别持有输入与整个参考。由已有正常形，在参考本地等距坐标中，它具有正交分块
+$$
+\Omega=\theta\Gamma_1\oplus(1-\theta)\Gamma_0,
+\qquad
+\Gamma_1=P_{\Phi_2}\otimes\sigma_M,
+\tag{249.2}
+$$
+其中 $\Gamma_0$ 是带可读取产品方向标签的可分态，$\sigma_M$ 完全位于参考方。参考方可读取两块旗标；在 $\Gamma_1$ 上丢弃 $M$，就得到一个确切 Bell 对。这里记
+$$
+|\Phi_m\rangle=\frac1{\sqrt m}\sum_{i=1}^m|i\rangle|i\rangle,
+\qquad P_{\Phi_m}=|\Phi_m\rangle\langle\Phi_m|.
+\tag{249.3}
+$$
+$k$ 个标准 Bell 对按已知局部基重排等于 $\Phi_{2^k}$。
+
+现在源严格为同一态的独立复本
+$$
+\Omega^{\otimes n},\qquad n\ge1.
+\tag{249.4}
+$$
+对模式 $z=(z_1,\ldots,z_n)\in\{0,1\}^n$，置 $|z|=\sum_i z_i$。初态本来就是正交模式的混合，模式概率与归一化条件态分别为
+$$
+\pi_z=\theta^{|z|}(1-\theta)^{n-|z|},
+\qquad
+\Gamma_z=\bigotimes_{i=1}^n\Gamma_{z_i}.
+\tag{249.5}
+$$
+所以读取旗标后的 Bell 数量
+$$
+\boxed{K\sim\operatorname{Binomial}(n,\theta).}
+\tag{249.6}
+$$
+每个 $|z|=j$ 的模式可以实际解码出 $j$ 个独立 Bell 对；其余寄存器为本地态或可分产品部分，可丢弃。
+
+允许两方在各自全部 $n$ 份系统上作联合本地操作、加入本地辅助态、交换经典消息并执行有限轮 LOCC。不提供额外共享纠缠或纠缠催化剂。协议可根据已知源态选择解码器；上界不要求它先测旗标。
+

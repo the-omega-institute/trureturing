@@ -227,7 +227,7 @@ structure could impose a stronger bound; that question remains open.
 ## 6. Verification and remaining scope
 
 The proof of SM5 is the finite prefix argument above. The retained
-[exact checker](../../frontier/cover-geometry/hsw11_prime_private_matching.py) checks
+[exact checker](../../frontier/cover-geometry/hsw11-family/hsw11_prime_private_matching.py) checks
 literal prefix coverage, constructs the path and matching, and
 independently verifies that the returned original labels all cover
 the same tail with distinct nontrivial cofactors. Its HSW fixtures

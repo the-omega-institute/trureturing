@@ -8,9 +8,9 @@ open Lean LeanInformationAudit
 def rootId : Name := `Reg.Catalogs.SharedInformationRoot
 
 def causalOccurrences : Array SnapshotOccurrence :=
-  Reg.Support.fixedInformationSourceSnapshot.occurrences.filter fun row =>
+  (Reg.Support.fixedInformationSourceSnapshot.occurrences.filter fun row =>
     row.objectArenaName ==
-      `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena
+      `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena).map InformationRootContract.currentOccurrence
 
 def contract : RootCatalogContract := {
   rootId
@@ -19,9 +19,8 @@ def contract : RootCatalogContract := {
   baseline := InformationRootContract.contract.baseline
   companionPrefix := some rootId }
 
--- Independently translated from the existing D5 seal: only catalog, verdict,
--- unit and certificate names change to this root's generated names.
+-- Seal reference for the combined finite and lossless context transports.
 def expectedSealDigest : String :=
-  "f38a50d6a9696940e04d8368b1c2d6d5f9491b990b94f9083b81f757c7cbbb88"
+  "25105046611fa8c42d96f1e62b51c732a37c092d2c9a1c1310f4145bd215797f"
 
 end Reg.Support.SharedInformationRootContract

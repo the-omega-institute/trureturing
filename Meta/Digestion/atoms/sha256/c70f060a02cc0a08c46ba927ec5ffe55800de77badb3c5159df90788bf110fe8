@@ -1,0 +1,2 @@
+**命题 2.34（computable mass without decidable extension）。** For an odd prime $p$, there exists an effectively closed $F\subseteq\mathbb Z_p$ with positive computable mass and an undecidable cylinder-extension relation.
+

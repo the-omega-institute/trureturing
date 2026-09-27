@@ -1,0 +1,9 @@
+**引理120.2（异常支持必须由实际零位历史生成）。** 有
+
+$$
+\boxed{\mathcal Z^\perp\subset\mathcal T\cup\{[\eta_1]\}.}
+\tag{120.5}
+$$
+
+若 $[z^\perp]\notin\mathcal T$，则必有 $[\eta_1]=[z^\perp]$，且 $m_z=1$。
+

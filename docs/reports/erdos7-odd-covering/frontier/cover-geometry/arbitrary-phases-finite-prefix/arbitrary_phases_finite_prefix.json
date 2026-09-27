@@ -1,0 +1,107 @@
+{
+  "scope": "arbitrary independently chosen deeper old residues, requiring c=a mod gcd(d,D) for every original23/29-touching label; old-only residues and all finite heights unrestricted",
+  "inputs": {
+    "query_stoploss_completion.json": "44f871684942eb7dceb37c55880c9f9a49244d8bdd60134670ad80d10a3c587d",
+    "common_law_mass_tail.json": "3781704377f2ca6234ed55f3eff1a37d2f8665a3810b02c694aebdc2fc063cb4"
+  },
+  "prefix_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "prefix_heights": [
+    5,
+    4,
+    3,
+    3,
+    3,
+    3,
+    3
+  ],
+  "D": 5133293432417701175625,
+  "generic_unsafe_upper": "3383355836309703271531/205331737296708047025000",
+  "generic_rational_bound": "17/1000",
+  "six_cylinder_anchor": {
+    "maximum": "372486651515592800987/25666467162088505878125",
+    "upper_bound": "3/200",
+    "reference_prefix_maximizer": [
+      2,
+      3
+    ],
+    "raw_ternary_positions": 27,
+    "raw_quinary_positions": 25,
+    "ternary_signatures": 6,
+    "quinary_signatures": 6,
+    "joint_checks": 36,
+    "later_safe_product_weights": {
+      "1": "1978/4199",
+      "2": "7109738059/20364499155",
+      "3": "217159845218891/6584310960292065",
+      "4": "158151888443/1568066434935",
+      "6": "1869019031428870/101398388788497801",
+      "9": "406185067561529/506991943942489005",
+      "8": "212684526/14933966047",
+      "12": "91531653752754/24142473521070905",
+      "18": "408788394354/1270656501108995",
+      "16": "73580184/74669830235"
+    }
+  },
+  "coarse_safe_margins": {
+    "(1, 2, 1)": "2023359811/90000000000",
+    "(1, 2, 2)": "18416399129/1350000000000",
+    "(1, 4, 1)": "11170899553/675000000000",
+    "(1, 4, 2)": "2066133457/225000000000",
+    "(2, 2, 1)": "2770457957/270000000000",
+    "(2, 2, 2)": "15209399/703125000",
+    "(2, 4, 1)": "485955529/450000000000",
+    "(2, 4, 2)": "4236359579/450000000000"
+  },
+  "uniform_safe_mass_lower": "485955529/450000000000",
+  "original_fibre_floor": "1/77",
+  "original_Haar_lower": "485955529/467775000000000",
+  "original_Haar_strict_lower": "1/1000000",
+  "three_phase_scope_control": {
+    "classes": [
+      {
+        "m": 16767,
+        "c": 0,
+        "old_cofactor": 729,
+        "old_residue": 0,
+        "new_exponent": 1
+      },
+      {
+        "m": 385641,
+        "c": 128547,
+        "old_cofactor": 729,
+        "old_residue": 243,
+        "new_exponent": 2
+      },
+      {
+        "m": 8869743,
+        "c": 2956581,
+        "old_cofactor": 729,
+        "old_residue": 486,
+        "new_exponent": 3
+      }
+    ],
+    "excludes_two_center_representation": "All three original labels have the same old cofactor and three distinct old residues; two fixed centers can supply at most two such residues."
+  },
+  "large_prime_tail": {
+    "B": 100000000,
+    "ell": 16,
+    "M2": "14003665/540672",
+    "c": "513/511",
+    "tau7": "102233761825090897760894841796875/5962469980721804569768693918223960571904",
+    "loss_upper": "477215784096120508930940488250478515625/1074580189805606506781993092717995070110826496",
+    "remaining_distorted_mass_lower": "9333818839210718716422696944804946163841039/16790315465712601668468642073718672970481664000000",
+    "remaining_distorted_mass_strict_lower": "1/2000000",
+    "ordinary_analytic_input": "Chapter33 SH11-SH13 prime-product estimate as used in reports477-479"
+  },
+  "source_producers_rerun": false,
+  "Lean_rerun": false,
+  "unrestricted_erdos7_resolved": false
+}

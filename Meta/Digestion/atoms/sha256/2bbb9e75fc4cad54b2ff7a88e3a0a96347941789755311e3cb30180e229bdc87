@@ -1,0 +1,10 @@
+**定义 62.2（内部理由与外部可预测能够相容）。** [《形式概念动力学》第 37 节](FORMAL_CONCEPT_DYNAMICS.md)分别给出内部控制、外部可预测、理由响应与非强迫要求。项目的 [`external_prediction_compatible_with_reflective_autonomy`](../../../D5/S3/ConceptDynamics/Agency/ExternalPredictionReflectiveAutonomy.lean)提供一个较窄的接口：若内部理由 $r$ 由外部读数 $e$ 确定，即 $r=f\circ e$，行动由理由策略 $\pi$ 决定，则
+
+$$
+a=\pi\circ r=(\pi\circ f)\circ e.
+$$
+
+行动同时具有内部理由说明和外部预测说明。该源码还给出行动可取得、当前认可、反思后保持行动及认可的共存实例；这些明确谓词并未涵盖非强迫、充分替代机会和一切理由响应。因而它支持的是“外部可预测本身不足以排除这些自主条件”，不是对任何可预测行为颁发完整的自由证明。
+
+另一个源码 [`boundary_relative_agency`](../../../D5/S3/ConceptDynamics/Agency/BoundaryRelativeAgency.lean)说明观察权限的重要性：能从读数恢复决策变量，就能组合出行动；若同一读数隐藏两种决策且决策到行动的映射单射，行动便不能由该读数决定。这里单射承担“隐藏决策差异确实改变行动”的条件；没有它，决策不同仍可作出同一行动。
+

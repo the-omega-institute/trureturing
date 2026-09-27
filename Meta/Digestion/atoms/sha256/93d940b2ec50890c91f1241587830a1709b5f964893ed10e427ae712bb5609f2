@@ -1,0 +1,20 @@
+**定义 184.1（可达空间与不可观测核）。** 令
+
+$$
+\mathcal R
+=\operatorname{span}\{T^m b_j:m\ge0,\ 1\le j\le s\}
+\subseteq\mathcal X,
+$$
+
+并定义
+
+$$
+\mathcal N
+=
+\mathcal R
+\cap
+\bigcap_{i,n}\ker(f_i\circ T^n).
+$$
+
+称 $\mathcal R$ 为可达空间，称 $\mathcal N$ 为在该源族和效果族下的可达不可观测方向。
+

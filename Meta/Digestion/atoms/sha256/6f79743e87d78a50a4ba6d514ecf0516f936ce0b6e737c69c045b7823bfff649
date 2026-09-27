@@ -1,0 +1,47 @@
+**连续的规范纯化与单终端恒等式。**
+
+对固定接收通道 $\mathcal C$，令 $\mathcal R_{\mathcal C}$ 为一次来源发射和接收合成的 $M\otimes K$ 上通道。只取允许的指定来源输入 $|0\rangle_M$，置
+
+$$
+\sigma_0=|0,e_0\rangle\langle0,e_0|,\qquad
+\sigma_n=\mathcal R_{\mathcal C}^{\,n}(\sigma_0),\qquad
+\rho_n=\operatorname{Tr}_K\sigma_n.
+\tag{37.2}
+$$
+
+局部接收不改变来源记忆边缘，所以 $\rho_n$ 也是未接收的真实纯目标
+$|\Psi_n\rangle_{M\mathcal B^{\otimes n}}$ 的 $M$ 边缘。
+
+始终使用同一个辅助空间 $E=\mathbb C^{2D}$，并在 $M\otimes K$ 选定基
+$\{|z\rangle\}_{z=1}^{2D}$。定义
+
+$$
+|\Omega\rangle=\sum_{z=1}^{2D}|z\rangle_{MK}|z\rangle_E,\qquad
+|\Gamma_n\rangle=(\sqrt{\sigma_n}\otimes I_E)|\Omega\rangle,\qquad
+\omega_n=\operatorname{Tr}_K|\Gamma_n\rangle\langle\Gamma_n|.
+\tag{37.3}
+$$
+
+$|\Omega\rangle$ 未归一化，$|\Gamma_n\rangle$ 则因
+$\operatorname{Tr}\sigma_n=1$ 归一化。它是 $\sigma_n$ 的纯化，且
+$\omega_n$ 是 $M\otimes E$ 上的密度矩阵。
+
+正半定矩阵平方根在整个正半定锥上连续，包括秩发生变化的边界。因而
+$\mathcal C\mapsto\sigma_n\mapsto|\Gamma_n\rangle\mapsto\omega_n$ 连续。
+这里不能仅说“任选一个纯化”就推出所选纯化连续；（37.3）提供了所需的全局规范。
+
+本文使用根保真度
+
+$$
+F(A,B)=\operatorname{Tr}\sqrt{\sqrt A B\sqrt A}.
+$$
+
+对每个终端定义
+
+$$
+f_n(\mathcal C)=
+\max_{\tau\in\mathcal D(E)}
+F(\omega_n,\rho_n\otimes\tau).
+\tag{37.4}
+$$
+

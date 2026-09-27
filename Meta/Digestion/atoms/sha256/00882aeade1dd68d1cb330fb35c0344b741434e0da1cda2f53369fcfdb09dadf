@@ -1,0 +1,16 @@
+### 34.4 带一般读出的推广
+
+对一般 $q:Y\to O$，正向 completion 是
+
+$$
+I_{F,q}^+=\operatorname{im}\bigl(y\mapsto(q(F^n y))_{n\ge0}\bigr),
+$$
+
+其 kernel 是未来可观测等价；过去线程还需满足同一读出下的双侧兼容。恒等读出反例表明，即使正向 kernel 为最细，过去线程也可能严格缺少瞬态来源。因而一般情况下，双向恢复需要同时证明：
+
+1. 更新在实际来源像上可逆，或已限制到稳定核心；
+2. 过去与未来 profile 的 kernel 在该核心上相等；
+3. 空间、边界和记忆投影在这个双向 kernel 上都满足动态下降。
+
+本节组织仓内 `IdentityFuturePastGap`、`BackwardOrbitCore`、`StableImagePeriodicCore` 与 `FiniteBilateralTrajectory` 的既有结果，强调未来 completion 与过去记忆的方向性差异。没有新增 Lean 声明，理论结论 Claim status 为 open。
+

@@ -1,0 +1,9 @@
+**定义 4.1（单 Kraus 局域仪器）。** 给定 $K_x:\mathcal H\to\mathcal H'$，满足 $\sum_xK_x^\dagger K_x=I$，令
+
+$$
+E_x=K_x^\dagger K_x,
+\qquad J\psi=\sum_xK_x\psi\otimes|r_x\rangle,
+$$
+
+其中 $r_x$ 为正交记录标签。事件 $e=(n,a,x)$ 同时指定钟标签、实际仪器设置及局域结果。多 Kraus 结果的不可读内部指标在第 18 节处理。
+

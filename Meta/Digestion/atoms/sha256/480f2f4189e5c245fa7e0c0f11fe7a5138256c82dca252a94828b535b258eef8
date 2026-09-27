@@ -1,0 +1,20 @@
+**定义 214.1（风险感知边界）。** 对过滤化来源合同和策略 $\pi$，定义
+
+$$
+\boxed{
+\eta_{\mathrm{risk}}
+=
+\left(
+\{\mathfrak J_h\}_{h},
+\{\overline\beta_b\}_{b\in\mathcal B},
+\{\overline\alpha_b\}_{b\in\mathcal B},
+\overline\alpha_\infty,
+\text{来源量词与先验},
+\text{策略许可、时限与成本}
+\right).
+}
+\tag{214.1}
+$$
+
+其中 $\mathcal B$ 是声明的首次失败节点集合。该边界同时保存到达权重、条件风险、未覆盖尾项和风险量词；删去任一项都可能改变（212.2）的证书。
+

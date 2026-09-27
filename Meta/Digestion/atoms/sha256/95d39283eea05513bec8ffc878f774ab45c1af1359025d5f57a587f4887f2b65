@@ -1,0 +1,28 @@
+### 9.1 从评价方格得到一个时钟表示
+
+设实际联合配置为 $S$，状态投影为 $x:S\to X$，协议投影为 $p:S\to P$，时钟评价为
+
+$$
+ E:X\times P\to L.
+$$
+
+真正可用的时钟表示不是孤立的数 $E(x,p)$，而是带协议族的行
+
+$$
+ r_{\mathrm{clock}}(s):w\longmapsto
+ \operatorname{Run}_w(s)\text{ 的时钟读出、合法性和记录标签}.
+ \tag{9.1}
+$$
+
+若只取 $E(x,p)$，则两个配置可能在当前读数相同，却在下一项协议的权限、失败标签或记忆更新上不同。因而时钟的精确核应定义为
+
+$$
+ s\equiv_{\mathrm{clock}}t
+ \iff
+ \forall w,
+ \operatorname{ClockRun}_w(s)=\operatorname{ClockRun}_w(t),
+ \tag{9.2}
+$$
+
+其中 $\operatorname{ClockRun}$ 至少保留时钟读数、可执行性、失败和记录。它是边界卷式 (35.1) 的未来核在时钟任务上的专门化。
+

@@ -1,0 +1,10 @@
+**定理 397.2（把纤维差异接到表达的最佳误差）。** 在定义 397.1 下，项目 [DescentDefectBounds](../../../D5/S3/Estimation/DecisionRisk/DescentDefectBounds.lean) 的半直径下界与代表元上界给出相应关系
+
+$$
+\frac{\delta(q,L)}2\le e_{\min}\le\delta(q,L).
+$$
+
+该源码的输入表达与目标输出共用一个类型；此处将两个角色分开，沿用相同的三角不等式与代表元论证。若讨论动力系统并令 $C=B$、$L_x=q_*P_x$，便回到其直接对应。它使“表达不完全”获得一个具体问题：遗漏的区别是否影响当前目标，影响至少多大。
+
+**证明。** 同纤维的两点共用 $Q_b$，故 $\operatorname{TV}(L_x,L_{x'})\le\operatorname{TV}(L_x,Q_b)+\operatorname{TV}(Q_b,L_{x'})\le2e(Q)$。取最大值，再对 $Q$ 取下确界，得下界。每个非空纤维取代表 $x_b$，令 $Q_b=L_{x_b}$，则每项误差至多 $\delta(q,L)$，得上界。有限个概率单纯形的乘积紧致，$e(Q)$ 连续，所以这里下确界也确实达到。于是 $e_{\min}=0$ 当且仅当 $\delta=0$，也就是 $L$ 在每个纤维上恒定。项目 [StochasticDescentLumpability](../../../D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.lean) 对应这一零缺陷关系；本节使用实际像，避免把源码一般下降构造在未实现标签上的零行误读成概率行。$\square$
+

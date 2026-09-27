@@ -1,0 +1,66 @@
+### 256.1 两份 Hermitian 响应合成一个复矩阵
+
+固定输入 $H=\mathbb C^2$、非零有限维参考 $E$，并令 $r=\dim E$。可信且已标定的输入方向为
+$$
+A_a=\sqrt A\,Z+b_0X,\qquad
+A_b=\sqrt A\,Z-b_0X,\qquad
+A\ge B>0,\quad b_0^2=B.
+\tag{256.1}
+$$
+联合态的实际响应定义为 $\mathcal R_w(\Omega)=\operatorname{Tr}_H[(A_w\otimes I_E)\Omega]$，$w=a,b$。给定任意两份 Hermitian 候选矩阵 $R_a,R_b$，定义
+$$
+R_Z=\frac{R_a+R_b}{2\sqrt A},
+\qquad
+R_X=\frac{R_a-R_b}{2b_0},
+\qquad
+K=R_Z-iR_X.
+\tag{256.2}
+$$
+$b_0$ 的符号保留在转换中。每个复矩阵 $K\in\mathcal L(E)$ 都唯一对应
+$$
+R_Z=\frac{K+K^\dagger}{2},
+\qquad
+R_X=\frac{K^\dagger-K}{2i},
+\tag{256.3}
+$$
+再由（256.1）恢复 $R_a,R_b$。这是两份 Hermitian 矩阵与一个任意复矩阵之间的实线性双射，共含 $2r^2$ 个实坐标。
+
+取输入的 $Y$ 本征基
+$$
+|y_+\rangle=\frac{|0\rangle+i|1\rangle}{\sqrt2},
+\qquad
+|y_-\rangle=\frac{|0\rangle-i|1\rangle}{\sqrt2},
+\qquad
+U_Y=\frac1{\sqrt2}
+\begin{pmatrix}1&1\\ i&-i\end{pmatrix}.
+\tag{256.4}
+$$
+直接相乘得到
+$$
+U_Y^\dagger ZU_Y=X,\qquad
+U_Y^\dagger XU_Y=Y,\qquad
+U_Y^\dagger YU_Y=Z.
+\tag{256.5}
+$$
+对任意联合态，写
+$$
+\Omega_Y=(U_Y^\dagger\otimes I_E)\Omega(U_Y\otimes I_E)
+=\begin{pmatrix}P&C\\ C^\dagger&Q\end{pmatrix}.
+\tag{256.6}
+$$
+按输入偏迹计算，
+$$
+R_Z=C+C^\dagger,\qquad
+R_X=i(C-C^\dagger),\qquad
+\boxed{K=2C.}
+\tag{256.7}
+$$
+因此给定响应的来源问题，等价于求
+$$
+\begin{pmatrix}P&K/2\\ K^\dagger/2&Q\end{pmatrix}\succeq0,
+\qquad
+\operatorname{Tr}P+\operatorname{Tr}Q=1.
+\tag{256.8}
+$$
+参考边缘 $P+Q$ 与第三个算子响应 $R_Y=P-Q$ 均未作为输入数据给定。
+

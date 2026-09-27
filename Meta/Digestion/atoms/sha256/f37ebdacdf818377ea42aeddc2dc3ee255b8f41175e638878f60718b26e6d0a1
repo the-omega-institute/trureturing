@@ -1,0 +1,1 @@
+| `D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.lean` 中 `finite_horizon_value_factorization` | 共同有限动作、奖励与终值精确下降、转移精确交换时，任意有限时域的值精确下降 | 紧观察塔、近似模型、非连续合法性或一致误差率 

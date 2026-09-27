@@ -1,0 +1,37 @@
+**定理123.3（两尾完整位像的共同环境分块）。** 存在接收子空间 $U_A,U_B\subset K$，使
+
+$$
+\boxed{
+R_0=(U_A\otimes A)\oplus(U_B\otimes B),\qquad
+R_1=(U_A^\perp\otimes A)\oplus(U_B^\perp\otimes B).
+}
+\tag{123.7}
+$$
+
+这里 $U_A,U_B$ 恰为 $R_0$ 在两个尾方向上的完整接收纤维。它们不必彼此正交；显示的直和沿正交环境方向。
+
+**证明。** 若首轮采用 $A$，取 $U_A=U+\mathbb Cp$、$U_B=W$；若采用 $B$，取 $U_A=U$、$U_B=W+\mathbb Cp$。两者都直接由（123.2）成立。
+
+若首轮采用第三条射线，写 $\eta_1=\alpha A+\beta B$，$\alpha\beta\ne0$。推论123.2保证 $p$ 至少属于一侧。若 $p\in U$，减去已在 $U\otimes A$ 中的 $\alpha p\otimes A$，就把额外首轮向量改写为 $p\otimes B$，从而取 $U_A=U$、$U_B=W+\mathbb Cp$。若 $p\in W$ 对称处理；若同时属于两侧，额外首轮向量已在原两个尾块中。
+
+因此全部情况都给第一个分解。沿正交环境 $A,B$ 取同一个 Hilbert 空间中的正交补，立即得到第二个分解。它们的完整接收纤维就是显示的 $U_A,U_B$ 及其正交补。证明完毕。
+
+特别地，若 $z$ 不属于两个尾方向，则
+
+$$
+\mathcal G_0([z])=U_A\cap U_B,\qquad
+\mathcal G_1([z])=(U_A+U_B)^\perp.
+\tag{123.8}
+$$
+
+所以
+
+$$
+\dim U_A+\dim U_B=7,\qquad
+\dim(U_A\cap U_B)=\gamma,\qquad
+\dim(U_A+U_B)=7-\gamma.
+\tag{123.9}
+$$
+
+它们分别是同一个完整位像的维数、通常纤维及接收因子跨度读数。
+

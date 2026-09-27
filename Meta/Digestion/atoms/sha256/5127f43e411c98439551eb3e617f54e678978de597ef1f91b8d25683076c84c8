@@ -1,0 +1,41 @@
+**定理 169.2（响应秩的接口维数下界）。** 若线性摘要 $S:X\to Y$ 对 $\mathcal F$ 充分，即对每个 $F_j$ 都存在 $\overline F_j:Y\to\mathbb R$ 使
+
+$$
+F_j=\overline F_j\circ S,
+$$
+
+则
+
+$$
+\boxed{
+\dim Y\ge\operatorname{rank}\mathcal R_{\mathcal F}.
+}
+\tag{169.1}
+$$
+
+反过来，取
+
+$$
+Y=\operatorname{im}\mathcal R_{\mathcal F},
+\qquad
+S=\mathcal R_{\mathcal F},
+$$
+
+即可达到这个线性维数。
+
+### 证明
+
+充分性意味着 $\mathcal R_{\mathcal F}=\overline{\mathcal R}\circ S$，其中 $\overline{\mathcal R}:Y\to\mathbb R^J$ 由各个 $\overline F_j$ 组成。因此
+
+$$
+\operatorname{rank}\mathcal R_{\mathcal F}
+\le
+\operatorname{rank}S
+\le
+\dim Y,
+$$
+
+得到式（169.1）。
+
+若取 $S=\mathcal R_{\mathcal F}$，每个 $F_j$ 就是 $\operatorname{im}\mathcal R_{\mathcal F}$ 上的第 $j$ 个坐标投影，因而摘要充分；其取值空间维数等于响应映射的秩。证毕。
+
