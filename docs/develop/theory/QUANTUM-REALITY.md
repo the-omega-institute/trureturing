@@ -65639,3 +65639,1836 @@ $$
 右端与 $r$ 无关并趋于零，故得到物理统一结论。仪器的局部完全正、条件复合、粗粒标签和可分实现约定可参照 Chitambar 等，《Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)》，[arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.1–2.3；这里使用的精确对象是上述假设中的完整原始记录空间和全系统、全参考恢复等式。闭包紧性、分别凹包络和有限分裂是背景数学构造；它们在此处仅作为已写出的直接证明所需的背景，不改变本定理的量词。整个结论只涉及所声明有限类中的上确界，不使用可分最优值、固定深度严格障碍或任何无限协议的可达性。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 431. 固定根精确支撑上的上半连续正则化与最小深度位移
+
+**定义 431.1（完整有限分裂树与深度值）。** 设 $I$ 为有限指标集，每个复 Hilbert 空间 $\mathcal H_i$ 满足 $1\le\dim\mathcal H_i<\infty$，并记
+
+$$
+\mathcal D(\mathcal H_i)
+=\{P\in\operatorname{Herm}(\mathcal H_i):P\succeq0,\ \operatorname{tr}P=1\},
+\qquad X=\prod_{i\in I}\mathcal D(\mathcal H_i).
+$$
+
+沿用定义430.1的完整树约定：以 $A\in X$ 为根的坐标树 $\mathsf T$ 是一棵自身有限的有根树，每个节点 $v$ 带标签 $P_v\in X$。每个内部节点选择一个坐标 $i=i(v)$，有有限非空的子节点集，并满足
+
+$$
+P_{v,i}=\sum_j\lambda_{vj}P_{vj,i},\qquad
+\lambda_{vj}\ge0,\qquad \sum_j\lambda_{vj}=1,
+\qquad P_{vj,h}=P_{v,h}\quad(h\ne i).
+$$
+
+有限分支数不设统一上界；选择的坐标可以重复，也可以依节点而变。允许提前终止、不同叶深和单子节点分解。所有零权、剩余及失败分支均保留。深度是各根叶路径上的内部节点数的最大值，单子节点也计数。节点权重 $w_v$ 是根到该节点的边概率之积，根权重为 $1$。
+
+固定 $0\le H<\infty$。对任意函数 $f:X\to[0,H]$，不加可测性条件，定义
+
+$$
+\operatorname{val}_f(\mathsf T)=\sum_{\ell\text{ 为叶}}w_\ell f(P_\ell),\qquad
+T_n^f(A)=\sup_{\operatorname{depth}(\mathsf T)\le n}\operatorname{val}_f(\mathsf T),
+\qquad T_\infty^f(A)=\sup_{n\in\mathbb N_0}T_n^f(A).
+$$
+
+深度零的树只有根叶，故 $T_0^f(A)=f(A)$。上确界遍历完整的有限树，不预设存在最优树。
+
+加性效果树的根局部因子是 $X_{\varnothing,i}=A_i$。在选择坐标 $i$ 的内部节点，要求
+
+$$
+X_{v,i}=\sum_jX_{vj,i},\qquad X_{vj,i}\succeq0,
+\qquad X_{vj,h}=X_{v,h}\quad(h\ne i).
+$$
+
+若叶的所有 $a_{\ell,i}=\operatorname{tr}X_{\ell,i}$ 都严格为正，其收益为
+
+$$
+\left(\prod_i a_{\ell,i}\right)
+f\left(\left(\frac{X_{\ell,i}}{a_{\ell,i}}\right)_i\right).
+$$
+
+若任一迹为零，该叶收益定义为零，不对零迹作除法。加性树同样保留全部节点并采用同一深度计数。
+
+这种保持重心的有限分裂，与方向凸性及有限阶层合测度中的原子分裂有共同的代数形式。方向凸性及分别凸性的关系见 Matoušek–Plecháč，*On Functional Separately Convex Hulls*，Discrete & Computational Geometry 19 (1998), 105–130，[doi:10.1007/PL00009331](https://doi.org/10.1007/PL00009331)；有限次原子分裂见 Müller–Šverák，*Convex integration for Lipschitz mappings and counterexamples to regularity*，Annals of Mathematics 157 (2003), §2, 717–719，[doi:10.4007/annals.2003.157.715](https://doi.org/10.4007/annals.2003.157.715)。这里允许的变化发生在单个完整矩阵坐标内，收益取上确界；这些方向和优化方向须与文献中的具体定义区分，文献中连续函数、开域及凸下包络的结论不直接给出下述任意有界收益的深度比较。
+
+**定义 431.2（先限制支撑的上半连续包络）。** 固定根 $A=(A_i)_{i\in I}$，令
+
+$$
+S_i=\operatorname{supp}A_i=(\ker A_i)^\perp,\qquad
+r_i=\operatorname{rank}A_i\ge1,\qquad
+X_A=\prod_{i\in I}\mathcal D(S_i),
+$$
+
+$$
+J=\{i\in I:r_i\ge2\},\qquad s=s(A)=|J|,\qquad g=f|_{X_A}.
+$$
+
+以零延拓将 $\mathcal D(S_i)$ 视为 $\mathcal D(\mathcal H_i)$ 的子集。$X_A$ 上取距离
+
+$$
+d(z,y)=\max_{i\in I}\|z_i-y_i\|_{\mathrm{op}}.
+$$
+
+只在此精确支撑乘积内定义
+
+$$
+\bar g(z)=\overline g^{\,X_A}(z)
+=\inf_{\delta>0}\ \sup\{g(y):y\in X_A,\ d(y,z)<\delta\}.
+$$
+
+这是 $g$ 在 $X_A$ 上的最小上半连续上界；等价地，它是截断下图
+
+$$
+K_g=\{(z,t):z\in X_A,\ 0\le t\le g(z)\}
+$$
+
+在 $X_A\times[0,H]$ 中闭包的上边界。上半连续函数与闭下图的对应是标准的半连续分析结构，参见 Royset，*Approximations of Semicontinuous Functions with Applications to Stochastic Optimization and Statistical Estimation*，Mathematical Programming 184 (2020), §2, 292–293，[doi:10.1007/s10107-019-01413-z](https://doi.org/10.1007/s10107-019-01413-z)。这里使用的定义域是非空闭集 $X_A$，收益有限有界；下文直接证明所需包络性质，不使用函数族的紧性或下图收敛定理。
+
+当 $I=\varnothing$ 时，$X=X_A$ 是只含空元组的单点集，距离恒为零，空标量积为 $1$，$s=0$；因没有可选坐标，只有根叶树。所有密度因子的空间仍要求维数至少为一，不引入零维密度空间。
+
+**定理 431.3（固定根的精确正则化位移及其最小性）。** 在定义431.1与431.2的全部假设下，对每个固定根 $A$、每个 $f:X\to[0,H]$ 及每个 $n\in\mathbb N_0$，有
+
+$$
+\boxed{
+T_n^f(A)=T_n^g(A)
+\le T_n^{\bar g}(A)
+\le T_{n+s(A)}^g(A)=T_{n+s(A)}^f(A).
+}
+$$
+
+含 $g$ 或 $\bar g$ 的值均在支撑域 $X_A$ 上计算。因此
+
+$$
+\boxed{T_\infty^f(A)=T_\infty^g(A)=T_\infty^{\bar g}(A).}
+$$
+
+坐标树与加性效果树有保持树形、分支数、所选坐标、深度和总收益的双向翻译，所以以上断言对两种树均成立。零因子的密度装饰不要求在来回翻译中唯一恢复。支撑限制通过对首条零权边之下的整棵子树作相容重标记实现，不删除任何零权节点。
+
+更具体地，所有逆算子仅取在 $S_i$ 上。设
+
+$$
+\Omega_i=I_{S_i}/r_i,\qquad \Omega=(\Omega_i)_i,
+\qquad L_i(P)=\frac{A_i^{-1/2}PA_i^{-1/2}}{r_i},
+$$
+
+$$
+q_i(P)=\operatorname{tr}L_i(P),\qquad
+\phi_i(P)=\frac{L_i(P)}{q_i(P)},\qquad
+\psi_i(B)=\frac{A_i^{1/2}BA_i^{1/2}}{\operatorname{tr}(A_iB)},
+$$
+
+$$
+h_i(B)=r_i\operatorname{tr}(A_iB),\qquad
+h(B)=\prod_i h_i(B_i),\qquad G(B)=h(B)g(\psi(B)).
+$$
+
+$\phi=\prod_i\phi_i$ 与 $\psi=\prod_i\psi_i$ 是 $X_A$ 上互逆的同胚，$\phi(A)=\Omega$，$h$ 连续且严格为正。若 $\bar G$ 表示 $G$ 在同一支撑域的上半连续包络，则
+
+$$
+\boxed{
+\bar G(B)=h(B)\bar g(\psi(B)),\qquad
+T_m^g(A)=T_m^G(\Omega),\qquad
+T_m^{\bar g}(A)=T_m^{\bar G}(\Omega)
+\quad(m\in\mathbb N_0).
+}
+$$
+
+定义针对完整收益类的最小位移
+
+$$
+d_{\min}(A,H)=\min\left\{d\in\mathbb N_0:
+\ \forall f:X\to[0,H]\ \forall n\in\mathbb N_0,
+\ T_{n+d}^f(A)\ge
+T_n^{\overline{\,f|_{X_A}\,}^{\,X_A}}(A)\right\}.
+$$
+
+则该集合非空，并且
+
+$$
+\boxed{
+d_{\min}(A,H)=
+\begin{cases}
+s(A),&H>0,\\
+0,&H=0.
+\end{cases}
+}
+$$
+
+当 $H>0$ 时，每个固定根都有同一个形式的尖锐见证
+
+$$
+f_A^\sharp(z)=
+\begin{cases}
+H,&z_i\ne A_i\text{ 对每个 }i\in J,\\
+0,&\text{否则},
+\end{cases}
+\qquad z\in X.
+$$
+
+其支撑限制 $g_A^\sharp$ 满足
+
+$$
+\overline{g_A^\sharp}^{\,X_A}\equiv H,\qquad
+T_m^{f_A^\sharp}(A)=0\quad(0\le m<s),\qquad
+T_s^{f_A^\sharp}(A)=H.
+$$
+
+若 $s=0$，见证中的空合取取真，故该见证恒等于 $H$，关于 $m<s$ 的断言为空。对任意收益，$s=0$ 时 $X_A$ 为单点，所有 $T_n^f(A)$ 都等于 $f(A)$；空指标集也遵循此约定。
+
+**证明。** 先核对完整树接口及支撑限制，再证明中心根的提取不等式，最后运输到固定根并给出最小性见证。
+
+**（一）完整翻译、权重守恒与精确支撑。** 从坐标树出发，令根处 $a_{\varnothing,i}=1$、$X_{\varnothing,i}=A_i$。在一个 $i$ 分裂上置
+
+$$
+a_{vj,i}=a_{v,i}\lambda_{vj},\qquad
+X_{vj,i}=a_{vj,i}P_{vj,i},
+$$
+
+并保持其余坐标的 $a$ 与 $X$ 不变。归纳给出 $X_{v,i}=a_{v,i}P_{v,i}$ 和
+
+$$
+\sum_jX_{vj,i}=X_{v,i},\qquad
+w_v=\prod_i a_{v,i}.
+$$
+
+此式在零概率处仍成立，因此两种叶收益一致。
+
+反向翻译时，对正迹局部因子用其归一化密度作标签。若被分裂的 $X_{v,i}$ 有正迹，令
+
+$$
+\lambda_{vj}=\frac{\operatorname{tr}X_{vj,i}}{\operatorname{tr}X_{v,i}}.
+$$
+
+正迹子因子取其归一化密度；零迹子因子为零，赋予父节点在该坐标的密度标签。若父局部因子的迹已为零，则它及其所有子因子均为零；任选一个和为 $1$ 的非负概率向量，所有子节点在该坐标都沿用父标签。其余坐标保持不变，并在后继节点递归采用同一规则。每个分裂都是合法凸分解，即使它位于总权重为零的子树内也如此。对每个节点，权重仍等于局部迹之积：一旦该积为零，至少一个零因子在全部后继上持续为零，相应节点权重也持续为零。全部形状、分支数、坐标选择和深度都得到保留；零因子的任意密度装饰不构成唯一性断言。
+
+每个坐标分裂的子权重之和为父权重。对有限树归纳，得到
+
+$$
+\sum_{\ell\text{ 为叶}}w_\ell=1,\qquad
+0\le T_n^f(A)\le H,\qquad T_n^f(A)\le T_{n+1}^f(A).
+$$
+
+现在考虑正权节点的支撑。若 $P_{v,i}$ 支撑于 $S_i$，对 $u\in S_i^\perp$ 有
+
+$$
+0=\langle u,P_{v,i}u\rangle
+=\sum_j\lambda_{vj}\langle u,P_{vj,i}u\rangle.
+$$
+
+各项非负，故每个 $\lambda_{vj}>0$ 的子节点都满足 $\langle u,P_{vj,i}u\rangle=0$。由正半定性，$\|P_{vj,i}^{1/2}u\|^2=0$，从而 $P_{vj,i}u=0$。未选坐标不变，因此从根归纳可知所有正权节点的全部坐标都在根支撑内。
+
+对从正权节点 $v$ 出发的每一条零概率边，把它下面的整个子树的元组标签都改为 $P_v$，同时保留原来的每条边概率、每个内部节点选择的坐标、全部节点和全部叶。入边的零概率使父节点凸分解不变；子树内部各分裂是同一个元组的常值凸分解，因而仍合法。不同的首条零概率边之下的子树互不相交，这一规则相容地处理全部零权节点。所得树的所有标签都在 $X_A$ 内，正权叶标签及全部叶贡献保持不变。反向则把任一支撑树的局部密度零延拓到原空间。因此对每个 $m$，
+
+$$
+T_m^f(A)=T_m^g(A).
+$$
+
+在加性表示中同样可直接看到 $0\preceq X_{v,i}\preceq A_i$，故所有局部因子均支撑于 $S_i$，包括零因子。这里限制的是数学标签和收益的定义域，没有加入物理滤波操作。
+
+**（二）包络的局部性质。** 记 $u=\bar g$。每个邻域都包含中心点，故 $g\le u\le H$。给定 $z$ 与 $\varepsilon>0$，可取 $\delta>0$ 使
+
+$$
+\sup_{d(y,z)<\delta}g(y)<u(z)+\varepsilon.
+$$
+
+若 $d(x,z)<\delta/2$，则 $B(x,\delta/2)\subset B(z,\delta)$，于是 $u(x)<u(z)+\varepsilon$，这证明 $u$ 上半连续。若 $v\ge g$ 上半连续，取足够小的邻域使 $v(y)<v(z)+\varepsilon$，即得 $u(z)\le v(z)+\varepsilon$；令 $\varepsilon\downarrow0$，得 $u\le v$。
+
+对每个 $z$ 和每个 $\eta>0$，邻域上确界的定义给出一个 $z'\in X_A$，使
+
+$$
+d(z,z')<\eta,\qquad g(z')\ge\bar g(z)-\eta.
+$$
+
+特别地，可以选择 $z_j\to z$ 且 $g(z_j)\to u(z)$。若 $0\le t\le u(z)$，则 $(z_j,\min\{t,g(z_j)\})\in K_g$ 并趋于 $(z,t)$。反之，若 $(z_j,t_j)\in K_g$ 趋于 $(z,t)$，对任意 $\delta>0$ 最终有 $t_j\le\sup_{B(z,\delta)}g$，故 $t\le u(z)$。所以
+
+$$
+\overline{K_g}=\{(z,t):z\in X_A,\ 0\le t\le\bar g(z)\},
+$$
+
+这也核对了定义431.2与截断下图定义的一致性。以上论证不涉及可测选择。
+
+**（三）中心根只需为非单点坐标增加一次分裂。** 先在 $\prod_i\mathcal D(S_i)$ 的中心根 $\Omega$ 证明：对任意 $F:X_A\to[0,1]$，
+
+$$
+T_{n+s}^F(\Omega)\ge T_n^{\bar F}(\Omega).
+$$
+
+若 $s=0$，定义域为单点，$F=\bar F$，断言立即成立。以下设 $s\ge1$，令 $r_*=\max_{i\in J}r_i$。固定一棵深度至多 $n$ 的完整有限树 $\mathsf T$，用 $\bar F$ 计算其值为 $V$。再固定任意 $\eta>0$。对每个正权叶 $\ell$ 的原标签 $z_\ell$，选一个联合标签 $z'_\ell$，满足
+
+$$
+d(z_\ell,z'_\ell)<\eta,\qquad
+F(z'_\ell)\ge\bar F(z_\ell)-\eta.
+$$
+
+这只要求对该树的有限多个叶各作一次选择。置
+
+$$
+c=(1+r_*\eta)^{-1}\in(0,1),\qquad
+D_i(X)=cX+(1-c)\operatorname{tr}(X)\frac{I_{S_i}}{r_i}.
+$$
+
+$D_i$ 是未归一化 Hermitian 矩阵上的正线性保迹映射，固定 $\Omega_i$，把零映到零，并且保持每个加性分裂。对坐标树的每个节点施加 $D_i$ 时，它也保持原边概率的凸分解。对全部坐标和全部节点同时施加此映射，所得树根仍为 $\Omega$，树形、深度及各叶权重均不变；当 $r_i=1$ 时 $D_i$ 就是恒等映射。
+
+固定一个变换后的正权叶，暂记其原标签和目标为 $z,z'$。对每个 $i\in J$ 定义
+
+$$
+R_i=c(z_i-z'_i)+(1-c)\frac{I_{S_i}}{r_i}.
+$$
+
+因为 $\|z_i-z'_i\|_{\mathrm{op}}<\eta$ 且 $1-c=c r_*\eta$，有
+
+$$
+\begin{aligned}
+R_i&\succeq
+\left(-c\eta+\frac{1-c}{r_i}\right)I_{S_i}
+=c\eta\left(\frac{r_*}{r_i}-1\right)I_{S_i}\succeq0,\\
+\operatorname{tr}R_i&=1-c,\qquad
+D_i(z_i)=cz'_i+R_i.
+\end{aligned}
+$$
+
+故 $Q_i=R_i/(1-c)$ 是密度矩阵，并有完整二叉分解
+
+$$
+D_i(z_i)=cz'_i+(1-c)Q_i.
+$$
+
+固定 $J$ 的一个次序，依次执行这些坐标分裂，每次只在选中的 $z'_i$ 子节点上继续，另一个剩余子节点立即终止并保留。前面已选坐标保持其目标值，后面尚未分裂的坐标仍为 $D_i(z_i)$；非 $J$ 坐标只有一个密度值，已等于目标，因而无须增加节点。若原叶权重为 $w$，最终目标叶标签恰为 $z'$，其权重为 $wc^s$，第 $j$ 次分裂的剩余叶权重为 $w(1-c)c^{j-1}$。它们满足
+
+$$
+wc^s+\sum_{j=1}^s w(1-c)c^{j-1}=w.
+$$
+
+在每个原正权叶实施这一有限构造，原零权叶全部保留。所得完整有限树深度至多 $n+s$；每条新增剩余分支都保留其非负收益，不作成功分支条件化。因此其值至少为
+
+$$
+c^s\sum_{\ell:w_\ell>0}w_\ell F(z'_\ell)
+\ge c^s(V-\eta)\ge c^sV-\eta.
+$$
+
+固定实数 $T_{n+s}^F(\Omega)$ 遂对每个 $\eta>0$ 满足
+
+$$
+T_{n+s}^F(\Omega)\ge(1+r_*\eta)^{-s}V-\eta.
+$$
+
+只在这个数值不等式中令 $\eta\downarrow0$，得到 $T_{n+s}^F(\Omega)\ge V$；随后才对最初固定的深度至多 $n$ 的树取上确界，得到所需比较。这里各 $\eta$ 对应的树可以不同，没有选择最优树，也没有构造极限树。若收益界是任意 $M>0$，对 $F/M$ 应用结论，再利用正比例缩放与邻域上确界相容，即得同一比较；$M=0$ 时直接成立。
+
+**（四）固定根的归一化合同及全收益运输。** 因 $A_i$ 在 $S_i$ 上严格正定，对每个支撑密度 $P,B$ 都有 $q_i(P)>0$ 和 $\operatorname{tr}(A_iB)>0$。未归一化映射的逆为
+
+$$
+L_i^{-1}(Y)=r_iA_i^{1/2}YA_i^{1/2}.
+$$
+
+直接代入可得
+
+$$
+\phi_i(\psi_i(B))=B,\qquad
+\psi_i(\phi_i(P))=P,\qquad
+q_i(\psi_i(B))=\frac1{h_i(B)},
+$$
+
+$$
+L_i(A_i)=\Omega_i,\qquad q_i(A_i)=1,\qquad \phi_i(A_i)=\Omega_i.
+$$
+
+分子连续、分母严格为正，故 $\phi_i,\psi_i$ 连续且互逆。对一个坐标凸分解 $P_i=\sum_j\lambda_jP_{j,i}$，定义
+
+$$
+B_i=\phi_i(P_i),\qquad B_{j,i}=\phi_i(P_{j,i}),\qquad
+\lambda'_j=\lambda_j\frac{q_i(P_{j,i})}{q_i(P_i)}.
+$$
+
+由 $L_i$ 的线性，$\lambda'_j\ge0$、$\sum_j\lambda'_j=1$，并且 $B_i=\sum_j\lambda'_jB_{j,i}$。逆概率公式是
+
+$$
+\lambda_j=\lambda'_j\frac{h_i(B_{j,i})}{h_i(B_i)}.
+$$
+
+零概率在两方向中恰好保持为零；变换适用于所有节点标签，包括零权子树。故这给出支撑域坐标树与中心根坐标树之间保持全部形状及深度的双射。对加性树，逐因子施加 $L_i$ 及 $L_i^{-1}$ 就得到对应的线性双射，所有零因子仍是零。
+
+沿任一根叶路径，将每条边的概率修正因子相乘。对于同一坐标，历次变化的分子分母相消；其余步骤该坐标不变，所以即使坐标重复选择或依节点自适应选择，仍有
+
+$$
+w'_\ell
+=w_\ell\prod_i\frac{q_i(P_{\ell,i})}{q_i(A_i)}
+=\frac{w_\ell}{h(B_\ell)},\qquad B_\ell=\phi(P_\ell).
+$$
+
+该等式也适用于 $w_\ell=0$，因为所有 $q_i$ 都正且有限，不曾除以边概率。于是逐叶成立
+
+$$
+w'_\ell G(B_\ell)
+=\frac{w_\ell}{h(B_\ell)}h(B_\ell)g(\psi(B_\ell))
+=w_\ell g(P_\ell).
+$$
+
+这是全部收益的运输等式，涵盖零收益、剩余及失败叶；没有只运输一组目标点。取两方向的树上确界，得 $T_m^g(A)=T_m^G(\Omega)$。
+
+记 $\lambda_i^-$ 与 $\lambda_i^+$ 为 $A_i|_{S_i}$ 的最小与最大本征值。因 $B_i$ 为密度矩阵，
+
+$$
+0<a:=\prod_i r_i\lambda_i^-
+\le h(B)\le b:=\prod_i r_i\lambda_i^+<\infty,
+\qquad 0\le G(B)\le Hb.
+$$
+
+这些界针对固定根成立。空积时 $a=b=h=1$。
+
+设 $u(B)=g(\psi(B))$。同胚及其逆把每个点的邻域基互相运输，故邻域上确界定义给出
+
+$$
+\bar u(B)=\bar g(\psi(B)).
+$$
+
+还须把连续权因子一起纳入包络。固定 $B$ 及 $\varepsilon>0$；连续性保证某个 $\delta_0>0$ 使 $d(C,B)<\delta_0$ 时 $|h(C)-h(B)|<\varepsilon$。因 $0\le u\le H$，对所有 $0<\delta<\delta_0$ 有
+
+$$
+h(B)\sup_{d(C,B)<\delta}u(C)-H\varepsilon
+\le\sup_{d(C,B)<\delta}G(C)
+\le h(B)\sup_{d(C,B)<\delta}u(C)+H\varepsilon.
+$$
+
+令 $\delta\downarrow0$，再令 $\varepsilon\downarrow0$，得到
+
+$$
+\bar G(B)=h(B)\bar u(B)=h(B)\bar g(\psi(B)).
+$$
+
+把上一段的全收益运输用于 $\bar g$，遂有 $T_m^{\bar g}(A)=T_m^{\bar G}(\Omega)$。这一步同时运输函数及其权因子，不能只对 $g\circ\psi$ 取包络后丢掉 $h$。
+
+若 $H>0$，令 $M=Hb>0$。第三步适用于 $G/M$，且 $\overline{G/M}=\bar G/M$，故缩放后得到
+
+$$
+T_{n+s}^g(A)
+=T_{n+s}^G(\Omega)
+\ge T_n^{\bar G}(\Omega)
+=T_n^{\bar g}(A).
+$$
+
+若 $H=0$，全部收益恒为零，同样成立。再由 $g\le\bar g$ 和第一步的支撑等式，得到定理的完整有限深度不等式链。
+
+归一化中出现的
+
+$$
+\alpha_i(P)=\frac1{\operatorname{tr}(A_i^{-1}P)}
+$$
+
+仅是使 $A_i^{-1/2}PA_i^{-1/2}$ 迹为一的因子。它不必等于半正定序中的最大提取系数，后者为
+
+$$
+\max\{t\ge0:A_i-tP\succeq0\}
+=\frac1{\|A_i^{-1/2}PA_i^{-1/2}\|_{\mathrm{op}}}.
+$$
+
+确实，合同变换把左侧约束化为 $I-tA_i^{-1/2}PA_i^{-1/2}\succeq0$，其允许的最大 $t$ 由最大本征值决定。在 $A_i=P=I_2/2$ 时，这两个数分别是 $1/2$ 和 $1$。上述合同是树的数学坐标变换，不提供免费的物理滤波步骤或物理实现权限。
+
+**（五）全体有限深度的上确界相等。** 由 $g\le\bar g$，有 $T_\infty^g(A)\le T_\infty^{\bar g}(A)$。另一方面，已经证明的位移比较给出
+
+$$
+T_\infty^{\bar g}(A)
+=\sup_{n\ge0}T_n^{\bar g}(A)
+\le\sup_{n\ge0}T_{n+s}^g(A)
+\le T_\infty^g(A).
+$$
+
+结合支撑等式即得结论。这只使用有界实数上确界，不需要统一收敛、函数族紧性或无限树。
+
+**（六）每个固定根上的最小性。** 设 $H>0$ 且 $s\ge1$。对每个 $i\in J$，因 $r_i\ge2$，存在非零无迹 Hermitian 矩阵 $B_i$，通过缩放可使
+
+$$
+0<\|B_i\|_{\mathrm{op}}<\lambda_i^-.
+$$
+
+于是 $A_i+B_i$ 与 $A_i-B_i$ 都是不同于 $A_i$ 的支撑密度。进一步缩小 $B_i$，可使它们任意接近 $A_i$，故 $A_i$ 不是 $\mathcal D(S_i)$ 的孤立点。集合 $\mathcal D(S_i)\setminus\{A_i\}$ 相对开且稠密：除了被移除的 $A_i$ 外每点已在该集合中，而 $A_i$ 是其极限点。因而
+
+$$
+\mathcal U_A=
+\prod_{i\in J}\bigl(\mathcal D(S_i)\setminus\{A_i\}\bigr)
+\times\prod_{i\notin J}\mathcal D(S_i)
+$$
+
+在按原指标次序排列的 $X_A$ 内开且稠密。$g_A^\sharp$ 在 $\mathcal U_A$ 上等于 $H$，其他点为零，所以每个非空邻域的收益上确界都是 $H$，即 $\overline{g_A^\sharp}^{\,X_A}\equiv H$。
+
+若一棵树深度至多 $m<s$，每条根叶路径至多经过 $m$ 个内部节点，因而至多选择过 $m$ 个不同坐标。该路径上至少有一个 $i\in J$ 从未被选择，叶标签的这个坐标仍等于 $A_i$，于是该叶收益为零。论证不依赖分支数，也不受重复坐标、依节点选择、单子节点或提前终止影响。所有叶收益都为零，故 $T_m^{f_A^\sharp}(A)=0$。
+
+另一方面，将 $J$ 排成一个固定次序。轮到坐标 $i$ 时，在当时的每条分支上实施
+
+$$
+A_i=\tfrac12(A_i+B_i)+\tfrac12(A_i-B_i).
+$$
+
+这个坐标此前未动，因此父标签确为 $A_i$。保留两个子分支并在下一层处理下一个坐标。所得完整二叉树深度恰为 $s$，有 $2^s$ 个叶，每叶权重 $2^{-s}$，每个非单点坐标都不同于根坐标，所以每叶收益为 $H$。其总值为 $H$；由第一步的上界，$T_s^{f_A^\sharp}(A)=H$。
+
+任何 $d\in\mathbb N_0$ 且 $d<s$ 的位移若试图对该固定根及全部收益成立，在 $n=0$ 和这个见证处就必须满足不可能的比较
+
+$$
+0=T_d^{f_A^\sharp}(A)
+\ge T_0^{\overline{g_A^\sharp}^{\,X_A}}(A)=H>0.
+$$
+
+故 $d_{\min}(A,H)\ge s$，而充分性已给出 $d_{\min}(A,H)\le s$，于是相等。这里必要性只用 $n=0$，其量词是对完整收益类取最小通用位移。
+
+若 $s=0$，每个根支撑因子都是一维，$X_A$ 为单点；支撑限制后 $g=\bar g$，所有树值都等于 $f(A)$，最小非负位移为零。此时 $f_A^\sharp\equiv H$，其深度零值已为 $H$。若 $H=0$，无论 $s$ 为何，唯一收益均为零，最小位移同样为零。若 $I=\varnothing$，只有根叶树，所有 $T_n$ 等于空元组处的收益，全部公式也成立。
+
+**（七）支撑次序与位移断言的边界。** 取单坐标空间 $\mathbb C^2$、秩一根 $A=|0\rangle\langle0|$，并令 $H>0$，
+
+$$
+f(P)=\begin{cases}0,&P=A,\\ H,&P\ne A.\end{cases}
+$$
+
+所有正权后继都支撑在一维空间 $\operatorname{supp}A$，故都等于 $A$，从而 $T_m^f(A)=0$ 对每个 $m$ 成立。精确支撑域只有 $A$，所以 $g=\bar g=0$。但环境域 $\mathcal D(\mathbb C^2)$ 内的 $A$ 可由
+
+$$
+(1-\varepsilon)|0\rangle\langle0|+\varepsilon|1\rangle\langle1|,
+\qquad \varepsilon\downarrow0,
+$$
+
+这些收益为 $H$ 的不同密度逼近，因此环境域的包络在 $A$ 处为 $H$，并且在整个环境域恒为 $H$。若先取环境包络再限制，连 $n=0$ 的比较都无法由任何有限位移成立。这证明支撑限制与闭包的先后次序是结论的必要部分。
+
+精确值 $s(A)$ 衡量的是同一个固定根上、对全部有界非负收益成立的正则化比较。某个单独收益可以需要更小位移，例如支撑上已上半连续的收益直接满足 $g=\bar g$。本结论不为所有收益给出统一的收敛速度下界，也不声称任意深度都存在同样大小的收敛误差。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 432. 固定根最小面上的锐利有限深度正则化与维数边界
+
+**定义 432.1（凸因子、根面与完整有限分裂树）。** 设 $I$ 是有限指标集，允许 $I=\varnothing$。对每个 $i\in I$，令 $E_i$ 为有限维实赋范空间，$C_i\subset E_i$ 为非空凸集，$a_i\in C_i$。置
+
+$$
+C=\prod_{i\in I}C_i,\qquad a=(a_i)_{i\in I},\qquad
+0\le H<\infty,\qquad f:C\longrightarrow[0,H].
+$$
+
+不要求 $C_i$ 闭或有界，也不要求 $f$ 可测。凸集 $K$ 的非空凸子集 $G$ 称为一个面，如果对所有 $u,v\in K$ 和 $0<\theta<1$，
+
+$$
+\theta u+(1-\theta)v\in G\quad\Longrightarrow\quad u,v\in G.
+$$
+
+这里的面不附加闭性要求。包含 $b\in K$ 的最小面是所有包含 $b$ 的面的交。$\operatorname{aff}K$ 指代数仿射包，不取闭包；$\operatorname{ri}K$ 指 $K$ 在 $\operatorname{aff}K$ 的相对范数拓扑中的内部。先定义线段集合
+
+$$
+F_i=\{x\in C_i:\ \exists\lambda\in(0,1)\ \exists y\in C_i,
+\ a_i=\lambda x+(1-\lambda)y\},
+$$
+
+$$
+F=\prod_{i\in I}F_i,\qquad
+N=\{i\in I:F_i\ne\{a_i\}\},\qquad s=|N|.
+$$
+
+每个 $F_i$ 都包含 $a_i$。在 $C$ 及其子集上使用距离
+
+$$
+d(z,w)=\max\bigl(\{\|z_i-w_i\|:i\in I\}\cup\{0\}\bigr).
+$$
+
+只有在把收益限制为 $g=f|_F$ 之后，才在 $F$ 上定义包络
+
+$$
+\bar f(z)=\overline{\,f|_F\,}^{\,F}(z)
+=\inf_{\delta>0}\ \sup\{g(w):w\in F,\ d(w,z)<\delta\},
+\qquad z\in F.
+$$
+
+对任意非空凸因子乘积 $K=\prod_{i\in I}K_i$、根 $b\in K$ 和收益 $h:K\to[0,H]$，一棵以 $b$ 为根的完整有限单坐标分裂树 $\mathsf T$ 是一棵节点总数有限的有根树。每个节点 $v$ 有标签 $z_v\in K$，根标签为 $b$。每个内部节点选一个坐标 $i=i(v)\in I$，有有限非空子节点集，边权及标签满足
+
+$$
+\lambda_{vj}\ge0,\qquad \sum_j\lambda_{vj}=1,\qquad
+z_{v,i}=\sum_j\lambda_{vj}z_{vj,i},\qquad
+z_{vj,h}=z_{v,h}\quad(h\ne i).
+$$
+
+每个内部节点的分支数有限，但不设共同上界。坐标可重复选择，也可依节点而变。允许提前停止、不同叶深、单子节点及标签相同的分裂；所有零权、余项和失败分支均保留。深度是根至叶路径上的内部节点数的最大值，每个内部节点均计数，包括单子节点和常值分裂。节点概率 $q_v$ 是沿根至该节点路径的边权之积，根概率为 $1$。定义
+
+$$
+\operatorname{val}_h(\mathsf T)
+=\sum_{\ell\in\operatorname{Leaf}(\mathsf T)}q_\ell h(z_\ell),
+\qquad
+T_n^h(b;K)=\sup_{\operatorname{depth}(\mathsf T)\le n}
+\operatorname{val}_h(\mathsf T),\qquad n\in\mathbb N_0,
+$$
+
+$$
+T_\infty^h(b;K)=\sup_{n\in\mathbb N_0}T_n^h(b;K).
+$$
+
+上确界只遍历逐棵有限的完整树；$T_\infty$ 不以无限树为对象。深度零的树只有根叶。若 $I=\varnothing$，所有乘积均为只含空元组的单点集，距离恒为零，$N=\varnothing$、$s=0$；因没有可选坐标，任何深度上界下都只有根叶树。
+
+**定理 432.2（最小面上的固定根正则化及最小位移）。** 在定义432.1的假设下，每个 $F_i$ 恰是 $C_i$ 中包含 $a_i$ 的最小面，且
+
+$$
+a_i\in\operatorname{ri}F_i.
+$$
+
+乘积 $F$ 恰是 $C$ 中包含 $a$ 的最小面。函数 $\bar f$ 是 $g=f|_F$ 的最小相对上半连续实值上界。对每个 $f:C\to[0,H]$ 和每个 $n\in\mathbb N_0$，
+
+$$
+\boxed{
+T_n^f(a;C)=T_n^g(a;F)
+\le T_n^{\bar f}(a;F)
+\le T_{n+s}^g(a;F)=T_{n+s}^f(a;C).
+}
+$$
+
+因此
+
+$$
+\boxed{
+T_\infty^f(a;C)=T_\infty^g(a;F)=T_\infty^{\bar f}(a;F).
+}
+$$
+
+固定因子 $C_i$、根 $a$ 和 $H$，令
+
+$$
+d_{\min}(C,a,H)
+=\min\left\{k\in\mathbb N_0:\quad
+\forall f:C\to[0,H]\ \forall n\in\mathbb N_0,\quad
+T_n^{\overline{\,f|_F\,}^{\,F}}(a;F)
+\le T_{n+k}^f(a;C)\right\}.
+$$
+
+该集合非空，且
+
+$$
+\boxed{
+d_{\min}(C,a,H)=
+\begin{cases}
+s,&H>0,\\
+0,&H=0.
+\end{cases}
+}
+$$
+
+当 $H>0$ 时，令
+
+$$
+U_a=\{z\in F:z_i\ne a_i\text{ 对所有 }i\in N\},\qquad
+f_*(z)=H\mathbf1_{U_a}(z)\quad(z\in C),
+$$
+
+即在 $C\setminus U_a$ 上取零。则 $U_a$ 在 $F$ 内相对开且稠密，并且
+
+$$
+\overline{\,f_*|_F\,}^{\,F}\equiv H,\qquad
+T_k^{f_*}(a;C)=0\quad(0\le k<s),\qquad
+T_s^{f_*}(a;C)=H.
+$$
+
+若 $s=0$，则 $F=\{a\}$、$U_a=F$，关于 $k<s$ 的断言为空；对任意收益和任意 $n$，均有 $T_n^f(a;C)=f(a)=\bar f(a)$。这些结论包括空积和单点因子，不要求一般收益的上确界达到。
+
+**证明。**
+
+**（一）线段集合确为最小面。** 先对任意实向量空间中的非空凸集 $K$ 和 $b\in K$ 证明代数事实，记
+
+$$
+S_b=\{x\in K:\exists\lambda\in(0,1),\ \exists y\in K,
+\ b=\lambda x+(1-\lambda)y\}.
+$$
+
+取 $x=y=b$ 可知 $b\in S_b$。若 $b=\lambda x+(1-\lambda)y$，则对每个 $0<\mu\le\lambda$，
+
+$$
+y_\mu=\frac{(\lambda-\mu)x+(1-\lambda)y}{1-\mu}\in K,
+\qquad b=\mu x+(1-\mu)y_\mu.
+$$
+
+分母严格为正，分子系数非负且和为 $1-\mu$，故确是凸组合。给定 $x_1,x_2\in S_b$，从各自见证中取共同的 $0<\mu\le\min\{\lambda_1,\lambda_2\}$，得到 $b=\mu x_j+(1-\mu)y_j$。于是对任意 $t\in[0,1]$，
+
+$$
+b=\mu\bigl(tx_1+(1-t)x_2\bigr)
+ +(1-\mu)\bigl(ty_1+(1-t)y_2\bigr).
+$$
+
+两个括号中的点均属于 $K$，故 $tx_1+(1-t)x_2\in S_b$，证明 $S_b$ 凸。
+
+若 $z\in S_b$ 且 $z=\theta u+(1-\theta)v$，其中 $u,v\in K$、$0<\theta<1$，选 $b=\lambda z+(1-\lambda)y$。则
+
+$$
+b=\lambda\theta u+(1-\lambda\theta)
+\frac{\lambda(1-\theta)v+(1-\lambda)y}{1-\lambda\theta}.
+$$
+
+最后的商是 $K$ 中的凸组合，且 $0<\lambda\theta<1$，故 $u\in S_b$。交换 $u,v$ 得 $v\in S_b$，所以 $S_b$ 是面。任意包含 $b$ 的面 $G$，由每个等式 $b=\lambda x+(1-\lambda)y$ 的面性质都必须包含 $x$，故 $S_b\subseteq G$。于是 $S_b$ 正是包含 $b$ 的最小面。此证明不使用维数、拓扑或闭包。
+
+应用于每个 $C_i,a_i$ 即得 $F_i$ 的结论。再把同一线段集合用于 $C,a$。若 $x$ 属于该集合，逐坐标读取见证可得 $x_i\in F_i$，故 $x\in F$。反过来，若 $I\ne\varnothing$ 且 $x\in F$，逐坐标选择 $a_i=\lambda_i x_i+(1-\lambda_i)y_i$；用前述公式把系数减小到一个共同的 $0<\mu\le\min_{i\in I}\lambda_i$，得到 $y'_i\in C_i$ 及
+
+$$
+a=\mu x+(1-\mu)y',\qquad y'=(y'_i)_i\in C.
+$$
+
+故 $x$ 属于 $a$ 的线段集合，证明 $F$ 就是乘积中的最小面。空积时二者均为单点，结论同样成立。
+
+**（二）有限维根面含有相对范数球。** 固定一个坐标，暂写 $a,F$，令
+
+$$
+L=\operatorname{span}(F-a),\qquad \operatorname{aff}F=a+L.
+$$
+
+若 $L=\{0\}$，则 $F=\{a\}$，$a$ 在零维仿射空间中为内点。否则，因 $L$ 有限维，可从 $F-a$ 选一组基 $v_j=x_j-a$，$1\le j\le d=\dim L$。对每个 $x_j\in F$，取见证
+
+$$
+a=\lambda_jx_j+(1-\lambda_j)y_j,\qquad
+0<\lambda_j<1,\qquad y_j\in C_i.
+$$
+
+交换两端后同一等式说明 $y_j\in F$，并且
+
+$$
+y_j-a=-t_jv_j,\qquad t_j=\frac{\lambda_j}{1-\lambda_j}>0.
+$$
+
+取 $0<\delta\le\min_{1\le j\le d}\{1,t_j\}$。沿 $[a,x_j]$ 和 $[a,y_j]$ 的凸性给出 $a\pm\delta v_j\in F$，从而
+
+$$
+a+\left\{\sum_{j=1}^d b_jv_j:\sum_{j=1}^d|b_j|\le\delta\right\}
+=\operatorname{conv}\{a+\delta v_j,a-\delta v_j:1\le j\le d\}
+\subseteq F.
+$$
+
+这里，若 $\sum_j|b_j|\le\delta$，以 $|b_j|/\delta$ 为各个带相应符号顶点的权重，再把剩余权重赋给 $a$，就得到左侧点；$a$ 本身是任意一对相反顶点的中点。反向包含由凸组合的坐标绝对值和不超过 $\delta$ 得到。
+
+为直接得到范数球，集合 $\{b\in\mathbb R^d:\sum_j|b_j|=1\}$ 是有限维紧集，函数 $b\mapsto\|\sum_jb_jv_j\|$ 连续且因基的线性无关性处处为正，故其最小值 $\beta$ 严格为正。齐次性给出
+
+$$
+\left\|\sum_jb_jv_j\right\|\ge\beta\sum_j|b_j|.
+$$
+
+取 $\rho=\beta\delta>0$，便有
+
+$$
+a+\{v\in L:\|v\|<\rho\}\subseteq F.
+$$
+
+这个球是在整个方向空间 $L$ 中取的球；其包含性没有预先把球与 $F$ 相交。故 $a\in\operatorname{ri}F$。以上没有把 $F$ 替换为其闭包，也没有要求它有界。
+
+线段描述属于经典的面几何：Stephan Weis，*A note on faces of convex sets*，[arXiv:2404.00832v3](https://arxiv.org/html/2404.00832v3#S4)，§4，Proposition 4.1（该文归于 Alfsen）、Corollary 4.2 给出所生成面的线段刻画；Theorem 4.5 给出根属于所生成面的相对代数内部。相对代数内部本身不保证无限维范数内球；这里的范数球由上述有限基构造得到。这些文献事实只用于面几何背景，下述树的深度比较另行证明。
+
+**（三）完整树的面限制与包络。** 对任何有限树，$q_{vj}=q_v\lambda_{vj}$ 给出 $\sum_jq_{vj}=q_v$。从叶向根有限次归纳，有
+
+$$
+\sum_{\ell\in\operatorname{Leaf}(\mathsf T)}q_\ell=1.
+$$
+
+故任意收益取值于 $[0,H]$ 时，每个树值也属于 $[0,H]$。停止树使允许的树类非空，且深度至多 $n$ 的树也允许用于深度至多 $n+1$，因此
+
+$$
+T_0^h(b;K)=h(b),\qquad
+0\le T_n^h(b;K)\le H,\qquad
+T_n^h(b;K)\le T_{n+1}^h(b;K).
+$$
+
+现取以 $a$ 为根的 $C$ 树。若父节点的所选坐标标签 $x$ 在 $F_i$ 内，且某个子节点标签为 $x_j$、权重为 $0<\alpha<1$，则其余子节点的归一化平均
+
+$$
+y=\frac{1}{1-\alpha}\sum_{h\ne j}\lambda_hx_h\in C_i
+$$
+
+满足 $x=\alpha x_j+(1-\alpha)y$。由面性质 $x_j\in F_i$。若该子权重为 $1$，平均等式直接给出 $x_j=x$。其他坐标在这一分裂处不变，故从根递推，每个正概率节点的标签都属于 $F$。
+
+对每条从正概率父节点 $v$ 出发的零权边，把该边下方整棵子树的所有标签改为 $z_v$，但保留全部节点、边、边权、所选坐标和叶。这样的子树两两不交，并覆盖所有零概率节点。入边权重为零，故重标记不影响父节点平均；子树内部每个分裂都成为同一标签的常值凸分解，仍满足全部坐标约束。深度和各节点概率不变，正概率叶标签不变，而所有被重标记叶的贡献仍为零。所得完整树的全部标签都在 $F$ 内，且树值与原树相同。反过来，每棵 $F$ 树本来就是一棵 $C$ 树。因此对任意 $m\in\mathbb N_0$，
+
+$$
+T_m^f(a;C)=T_m^g(a;F).
+$$
+
+这一步限制定义域而不删除任何分支。
+
+令 $B_F(z,\delta)=\{w\in F:d(w,z)<\delta\}$。它总含 $z$，故
+
+$$
+0\le g(z)\le\bar f(z)\le H.
+$$
+
+给定实数 $b>\bar f(z)$，由下确界定义，存在 $\delta>0$ 使 $\sup_{B_F(z,\delta)}g<b$。若 $d(u,z)<\delta/2$，则 $B_F(u,\delta/2)\subset B_F(z,\delta)$，因而 $\bar f(u)<b$。这证明 $\bar f$ 在 $F$ 上相对上半连续。若 $h:F\to\mathbb R$ 相对上半连续且 $h\ge g$，则对任意 $z\in F$ 和 $\varepsilon>0$，存在 $\delta>0$，使 $w\in B_F(z,\delta)$ 时 $h(w)<h(z)+\varepsilon$。于是
+
+$$
+\bar f(z)\le\sup_{B_F(z,\delta)}g\le h(z)+\varepsilon.
+$$
+
+令 $\varepsilon\downarrow0$ 得 $\bar f(z)\le h(z)$，证明最小上界性质。逐叶比较 $g\le\bar f$，立即得到 $T_n^g(a;F)\le T_n^{\bar f}(a;F)$。
+
+还需一个不要求上确界达到的近似事实：对每个 $z\in F$ 及每个 $\eta,\varepsilon>0$，存在 $z'\in F$ 满足
+
+$$
+d(z,z')<\eta,\qquad g(z')\ge\bar f(z)-\varepsilon.
+$$
+
+确实，$M=\sup_{B_F(z,\eta)}g$ 有限且不小于 $\bar f(z)$；按上确界定义可取 $z'\in B_F(z,\eta)$，使 $g(z')>M-\varepsilon\ge\bar f(z)-\varepsilon$。整个论证只用非空邻域和有限实值上界，不需要 $F$ 闭。
+
+**（四）固定根的一次缩放与逐坐标修补。** 若 $s=0$，则 $F=\{a\}$。第三步的面限制表明所有树值都等于 $g(a)=f(a)$，而 $\bar f(a)=g(a)$，所需比较成立。以下设 $s>0$。对每个 $i\in N$，第二步给出某个相对内球；因 $N$ 有限，可取共同的 $\rho>0$，使
+
+$$
+L_i=\operatorname{span}(F_i-a_i),\qquad
+a_i+\{v\in L_i:\|v\|<\rho\}\subseteq F_i
+\quad(i\in N).
+$$
+
+固定任意 $n\in\mathbb N_0$，再固定一棵深度至多 $n$、以 $a$ 为根的完整 $F$ 树 $\mathsf T$。用 $\bar f$ 计算其值
+
+$$
+V=\sum_{\ell\in\operatorname{Leaf}(\mathsf T)}q_\ell\bar f(z_\ell).
+$$
+
+叶按节点编号；即使两个叶的标签相同，它们也作为不同叶保留。给定任意 $\eta,\varepsilon>0$，置
+
+$$
+c=\frac{\rho}{\rho+\eta}\in(0,1),\qquad
+D_i(x)=cx+(1-c)a_i\quad(x\in F_i).
+$$
+
+各 $D_i$ 是固定 $a_i$ 的仿射映射，且由凸性映入 $F_i$。把全部节点标签逐坐标替换为 $D_i(z_{v,i})$，并保留所有节点、边权和坐标选择。若原来在坐标 $i$ 有 $z_{v,i}=\sum_j\lambda_{vj}z_{vj,i}$，则
+
+$$
+\sum_j\lambda_{vj}D_i(z_{vj,i})
+=c\sum_j\lambda_{vj}z_{vj,i}+(1-c)a_i\sum_j\lambda_{vj}
+=D_i(z_{v,i}).
+$$
+
+未选坐标的逐子节点相等关系也保持，故得到同根、同深度、同节点概率的完整合法树，包括原来的全部零权子树。
+
+对每个原叶 $\ell$，用第三步的近似事实选一个联合目标 $z'_\ell\in F$，满足
+
+$$
+d(z_\ell,z'_\ell)<\eta,\qquad
+f(z'_\ell)=g(z'_\ell)\ge\bar f(z_\ell)-\varepsilon.
+$$
+
+这里只对一棵有限树的有限多个叶作选择，包括零概率叶，不涉及可测选择。固定 $N$ 的次序 $i_1,\ldots,i_s$。在每个缩放后的原叶上，沿指定的继续分支依此顺序恰好追加 $s$ 个二叉分裂。暂略叶下标，写原标签为 $z$、目标为 $z'$。处理坐标 $i$ 时令
+
+$$
+r_i=a_i+\frac{c}{1-c}(z_i-z'_i)
+=a_i+\frac{\rho}{\eta}(z_i-z'_i).
+$$
+
+因 $z_i-z'_i\in L_i$ 且 $\|z_i-z'_i\|<\eta$，有
+
+$$
+\|r_i-a_i\|<\rho,\qquad r_i\in F_i.
+$$
+
+在该坐标尚未处理时，其当前值仍是 $D_i(z_i)$，并且
+
+$$
+D_i(z_i)=cz'_i+(1-c)r_i.
+$$
+
+故以权重 $c$ 取 $z'_i$ 为继续子节点，以权重 $1-c$ 取 $r_i$ 为余项子节点，是合法二叉分裂。其他坐标在两个子节点中都保持当前值：此前成功处理过的坐标为相应 $z'_j$，尚未处理的坐标为 $D_j(z_j)$。每个余项子节点立即终止，作为叶保留。即使两个子标签重合，或 $z_i=z'_i$，也仍执行并保留这次二叉分裂，计入一个内部节点；不能仅凭原标签与目标相同就跳过，因为缩放后的标签是 $D_i(z_i)$。
+
+所有 $i\notin N$ 的因子均为 $\{a_i\}$，故这些坐标已经等于目标。完成 $s$ 步后，继续末叶的联合标签恰为 $z'$。若该原叶概率为 $q_\ell$，则末叶及第 $j$ 次分裂的余项叶概率分别为
+
+$$
+q_\ell c^s,\qquad q_\ell c^{j-1}(1-c)\quad(1\le j\le s),
+$$
+
+而
+
+$$
+q_\ell c^s+\sum_{j=1}^s q_\ell c^{j-1}(1-c)=q_\ell.
+$$
+
+此等式包括 $q_\ell=0$ 的情形。所有原节点与原边仍在树中；原叶成为新增分裂的起点，原零权子树及新增余项叶全部保留。每条路径至多增加 $s$ 个内部节点，所得树仍有限，深度至多 $n+s$。由于所有余项收益非负，新树的总收益至少为
+
+$$
+c^s\sum_\ell q_\ell f(z'_\ell)
+\ge c^s\sum_\ell q_\ell\bigl(\bar f(z_\ell)-\varepsilon\bigr)
+=c^s(V-\varepsilon).
+$$
+
+这计算的是完整树的无条件总收益，没有对继续分支作概率归一化。于是，对每个 $\eta,\varepsilon>0$，同一个实数 $T_{n+s}^g(a;F)$ 满足
+
+$$
+T_{n+s}^g(a;F)
+\ge\left(\frac{\rho}{\rho+\eta}\right)^s(V-\varepsilon).
+$$
+
+固定 $\varepsilon$，先在此数值不等式中令 $\eta\downarrow0$，右侧趋于 $V-\varepsilon$，故 $T_{n+s}^g(a;F)\ge V-\varepsilon$；再令 $\varepsilon\downarrow0$，得到 $T_{n+s}^g(a;F)\ge V$。每对参数只对应一棵有限树，参数改变时树可以改变；这里不对树取极限，也没有预先选取最优树。最后对最初任意固定的深度至多 $n$ 的 $\mathsf T$ 取上确界，得到
+
+$$
+T_n^{\bar f}(a;F)\le T_{n+s}^g(a;F).
+$$
+
+与第三步的面限制等式及逐叶支配合并，就得到定理的完整有限深度不等式链。
+
+**（五）全体有限树的上确界。** 由 $g\le\bar f$，有 $T_\infty^g(a;F)\le T_\infty^{\bar f}(a;F)$。反向由已证的位移界，
+
+$$
+T_\infty^{\bar f}(a;F)
+=\sup_{n\ge0}T_n^{\bar f}(a;F)
+\le\sup_{n\ge0}T_{n+s}^g(a;F)
+\le T_\infty^g(a;F).
+$$
+
+故二者相等，再用面限制得到与 $T_\infty^f(a;C)$ 的等式。这只是在 $[0,H]$ 中比较实数上确界。
+
+**（六）同一个 $s$ 给出最小位移障碍。** 设 $H>0$ 且 $s>0$。对每个 $i\in N$，单点 $\{a_i\}$ 在赋范空间中闭，故 $F_i\setminus\{a_i\}$ 在 $F_i$ 内相对开。取任意 $x_i\in F_i\setminus\{a_i\}$，则
+
+$$
+a_i+t(x_i-a_i)\in F_i\setminus\{a_i\}\quad(0<t\le1),\qquad
+\|t(x_i-a_i)\|\longrightarrow0\quad(t\downarrow0).
+$$
+
+所以被删去的 $a_i$ 也是该集合的极限点，证明它在 $F_i$ 内稠密。由有限个坐标条件，$U_a$ 相对开。为直接核对其稠密性，任给 $z\in F$ 和 $\eta>0$，对每个 $i\in N$：若 $z_i\ne a_i$ 就保留 $z_i$；若 $z_i=a_i$，就按上式选一个与 $a_i$ 距离小于 $\eta$ 的非根点。其余坐标不变，所得 $z'\in U_a$ 且 $d(z,z')<\eta$。因此每个 $F$ 中的球都含有收益为 $H$ 的点，遂有
+
+$$
+\overline{\,f_*|_F\,}^{\,F}\equiv H,\qquad
+T_0^{\overline{\,f_*|_F\,}^{\,F}}(a;F)=H.
+$$
+
+任取深度至多 $k<s$ 的 $C$ 树。每条根叶路径至多经过 $k$ 个内部节点，每个内部节点只选一个坐标，所以这条路径至多选过 $k$ 个不同坐标。至少一个 $i\in N$ 从未被选择，该叶的第 $i$ 坐标仍等于 $a_i$。于是叶标签不在 $U_a$，其收益为零。此论证对每个叶都成立，包括零概率叶，也适用于任意有限分支数、重复坐标、依节点选择、单子节点和提前停止。因此
+
+$$
+T_k^{f_*}(a;C)=0\qquad(0\le k<s).
+$$
+
+另一方面，对每个 $i\in N$，方向空间 $L_i$ 非零，第二步的内球允许选择 $0\ne v_i\in L_i$，使 $\|v_i\|<\rho$，从而 $a_i\pm v_i\in F_i$ 且均不同于 $a_i$。按同一固定顺序处理 $N$ 中的坐标，每一层在当时的每条分支上作
+
+$$
+a_i=\tfrac12(a_i+v_i)+\tfrac12(a_i-v_i).
+$$
+
+这个坐标此前尚未处理，故其父值确为 $a_i$。保留全部两个子分支，继续下一坐标。所得完整二叉树有恰好 $s$ 层内部节点和 $2^s$ 个叶，每叶概率 $2^{-s}$，每叶标签都在 $U_a$。因此其值为 $H$，结合普遍上界得到 $T_s^{f_*}(a;C)=H$。
+
+若某个整数 $k<s$ 能对全部收益及全部 $n$ 作为通用位移，取该 $f_*$ 和 $n=0$ 就会要求
+
+$$
+H=T_0^{\overline{\,f_*|_F\,}^{\,F}}(a;F)
+\le T_k^{f_*}(a;C)=0,
+$$
+
+与 $H>0$ 矛盾。第四步已经证明 $s$ 充分，所以最小通用位移恰为 $s$。同一个非单点面数 $s$，在上界构造中逐一计数修补，在下界见证中逐一计数必须触及的坐标。
+
+若 $s=0$，则 $F=\{a\}$。由第三步，任意深度的值为 $f(a)=\bar f(a)$，故最小非负位移为零。此时 $U_a=F$，见证在 $a$ 处取 $H$，深度零即可取得 $H$。若 $H=0$，唯一允许的收益恒为零，所有树值及包络均为零，无论 $s$ 为何，最小位移都为零。空积没有内部节点，同样有所有深度的值等于唯一点的收益。
+
+**（七）面限制必须先于包络。** 取一个因子 $C=[0,1]$、根 $a=0$ 及 $H>0$，令
+
+$$
+f(0)=0,\qquad f(x)=H\quad(0<x\le1).
+$$
+
+若 $0=\lambda x+(1-\lambda)y$，其中 $x,y\in[0,1]$、$0<\lambda<1$，非负性迫使 $x=y=0$，故根面为 $F=\{0\}$。同理，任何标签为零的节点的正权子节点也只能为零，从根递推，所有正概率叶均为零。因此对所有 $n$，
+
+$$
+T_n^f(0;C)=0,\qquad
+\overline{\,f|_F\,}^{\,F}(0)=0.
+$$
+
+但若先在 $C$ 上取邻域包络，则每个根邻域都含 $x>0$，故环境包络 $\overline f^{\,C}(0)=H$。此时即使仅用根停止树，也有 $T_0^{\overline f^{\,C}}(0;C)=H$，不能由任何有限位移的 $T_k^f(0;C)$ 控制。因而限制与包络的次序是定理的一部分。
+
+最小位移的量词针对固定因子和固定根上的全部 $[0,H]$ 值收益。对单个收益所需位移可以较小；例如 $g$ 已相对上半连续时，最小上界性质给出 $g=\bar f$，零位移就足够。证明中的内球半径依赖根及因子，上述定理不含全根一致的收敛速率断言。$\square$
+
+**命题 432.3（范数紧的无限维反例）。** 在实 Hilbert 空间 $\ell^2$ 中，令 $e_m$ 为第 $m$ 个标准基向量，并取
+
+$$
+C=\left\{x=(x_m)_{m\ge1}\in\ell^2:
+\sum_{m=1}^\infty m|x_m|\le1\right\},\qquad a=0,
+$$
+
+$$
+D=\left\{x\in\ell^2:\sum_{m=1}^\infty m|x_m|<\infty\right\},
+\qquad L(x)=\sum_{m=1}^\infty mx_m\quad(x\in D).
+$$
+
+则 $C$ 是非空、凸、对称、范数紧且仿射维数无限的集合，$\operatorname{aff}C=D$。按定义432.1的线段公式，根面为 $F(0)=C$，但 $0\notin\operatorname{ri}C$，其中相对内部使用 $D$ 上继承的 $\ell^2$ 范数拓扑。对任意 $H>0$，令
+
+$$
+f(x)=H\mathbf1_{\{L(x)=1\}}\quad(x\in C),\qquad
+\bar f(x)=\inf_{\delta>0}\sup\{f(y):y\in C,\ \|y-x\|_2<\delta\}.
+$$
+
+在这个单因子上使用定义432.1的完整有限树与深度约定，只把有限维环境换成 $\ell^2$。则
+
+$$
+\boxed{
+T_0^f(0;C)=0,\qquad
+T_n^f(0;C)=\frac H2\quad(n\ge1),\qquad
+T_\infty^f(0;C)=\frac H2,
+}
+$$
+
+$$
+\boxed{
+T_n^{\bar f}(0;C)=H\quad(n\ge0),\qquad
+T_\infty^{\bar f}(0;C)=H.
+}
+$$
+
+所以，纵使单个非单点根面范数紧，所有有限位移的上界及全体有限树的包络等式仍可同时失败。
+
+**证明。** 首先 $0\in C$，且 $x\in C$ 蕴含 $-x\in C$。对 $x,y\in C$、$t\in[0,1]$，由三角不等式及非负级数的部分和极限，
+
+$$
+\sum_{m=1}^\infty m|tx_m+(1-t)y_m|
+\le t\sum_{m=1}^\infty m|x_m|
+ +(1-t)\sum_{m=1}^\infty m|y_m|\le1,
+$$
+
+故 $C$ 凸。每个有限部分和 $x\mapsto\sum_{m=1}^N m|x_m|$ 在 $\ell^2$ 上连续，且
+
+$$
+C=\bigcap_{N\ge1}\left\{x\in\ell^2:
+\sum_{m=1}^N m|x_m|\le1\right\},
+$$
+
+所以 $C$ 范数闭。设 $P_Nx=\sum_{m=1}^N x_me_m$。对每个 $x\in C$，
+
+$$
+\|x-P_Nx\|_2
+\le\sum_{m>N}|x_m|
+\le\frac1{N+1}\sum_{m>N}m|x_m|
+\le\frac1{N+1}.
+$$
+
+第一不等式可先对有限尾和平方，利用 $\sum |x_m|^2\le(\sum|x_m|)^2$，再取递增部分和极限得到。给定 $\varepsilon>0$，选 $N$ 使 $1/(N+1)<\varepsilon/2$。$P_NC$ 位于有限维空间 $\operatorname{span}\{e_1,\ldots,e_N\}$，并因 $\|P_Nx\|_2\le\sum_{m\le N}|x_m|\le1$ 而有界，所以可由有限个半径 $\varepsilon/2$ 的球覆盖，球心可取在 $P_NC$ 中。又 $P_NC\subset C$，结合一致尾界，这些球心给出 $C$ 的有限 $\varepsilon$ 网。因此 $C$ 全有界。
+
+$C$ 是完备空间 $\ell^2$ 的闭子集，故完备。具体地，对 $C$ 中任意序列，逐次使用有限的 $2^{-j}$ 网，嵌套选取落入同一网球的无限子序列，再作对角选择，得到 Cauchy 子序列；完备性使其收敛于 $C$ 中。因此 $C$ 序列紧，按度量空间中紧性与序列紧性的等价，$C$ 范数紧。向量 $e_m/m\in C$ 且线性无关，故 $C$ 仿射维数无限。
+
+由加权绝对值的三角不等式，$D$ 是实线性子空间，且 $C\subset D$，从而 $\operatorname{span}C\subset D$。反过来，若 $x\in D\setminus\{0\}$，则实数
+
+$$
+b_x=\sum_{m=1}^\infty m|x_m|
+$$
+
+严格为正且有限，而 $x/b_x\in C$，故 $x\in\operatorname{span}C$；零点同样包含。因此 $D=\operatorname{span}C$。又因 $0\in C$，任何线性组合都可通过添加零点的系数改写成系数和为一的仿射组合，所以
+
+$$
+\operatorname{aff}C=\operatorname{span}C=D.
+$$
+
+这个代数仿射包不是整个 $\ell^2$；例如 $(1/m^2)_{m\ge1}\in\ell^2$，而其加权绝对和是发散的调和级数，故不在 $D$ 中。
+
+对每个 $x\in C$，有 $0=\tfrac12x+\tfrac12(-x)$，所以线段公式给出 $F(0)=C$；定理432.2证明第一步的代数论证在此仍适用，因而它确是最小面。此处单个因子非单点，按同样的计数有 $s=1$。然而，对任意 $\rho>0$，选 $m$ 使 $2/m<\rho$，则
+
+$$
+y=\frac{2e_m}{m}\in D,\qquad
+\|y\|_2=\frac2m<\rho,\qquad
+\sum_{j=1}^\infty j|y_j|=2>1.
+$$
+
+所以 $y\notin C$。根在仿射包 $D$ 的相对范数拓扑中没有任何内球，即 $0\notin\operatorname{ri}C$；范数紧性没有消除这个障碍。
+
+对每个 $x\in D$，定义 $L(x)$ 的级数绝对收敛。若 $u,v\in D$、$\alpha,\beta\in\mathbb R$，则
+
+$$
+\sum_m m|\alpha u_m+\beta v_m|
+\le |\alpha|\sum_m m|u_m|+|\beta|\sum_m m|v_m|<\infty.
+$$
+
+有限部分和线性，令部分和长度趋于无穷，由各级数收敛可得
+
+$$
+L(\alpha u+\beta v)=\alpha L(u)+\beta L(v).
+$$
+
+故 $L$ 是 $D$ 上处处有定义的实线性泛函。它在 $C$ 上满足 $|L(x)|\le\sum_m m|x_m|\le1$，但
+
+$$
+u_m=\frac{e_m}{m}\longrightarrow0\quad\text{于 }\ell^2,
+\qquad L(u_m)=1,\qquad L(0)=0.
+$$
+
+所以 $L$ 在根处对相对范数拓扑不连续。对上述收益，$f(0)=0$，$f(u_m)=H$，而每个根邻域包含充分大的 $u_m$，故
+
+$$
+\bar f(0)=H,\qquad 0\le\bar f\le H.
+$$
+
+现取任意以零为根的完整有限树。每个节点的全部标签都在 $C\subset D$，故可对其有限凸分解应用 $L$ 的线性，得到
+
+$$
+L(z_v)=\sum_j\lambda_{vj}L(z_{vj}).
+$$
+
+这里子项数有限，也可先交换有限子项和有限部分和，再对绝对收敛级数取极限；不使用 $L$ 的连续性。乘上 $q_v$，从叶向根有限次代入，可得
+
+$$
+\sum_{\ell\in\operatorname{Leaf}(\mathsf T)}q_\ell L(z_\ell)
+=L(0)=0,\qquad
+\sum_{\ell\in\operatorname{Leaf}(\mathsf T)}q_\ell=1.
+$$
+
+零权叶仍在这些有限和中。对每个 $x\in C$，若 $L(x)=1$，则 $f(x)=H$；若 $L(x)\ne1$，则 $f(x)=0$ 且 $L(x)\ge-1$。因而逐点成立
+
+$$
+f(x)\le\frac H2\bigl(1+L(x)\bigr).
+$$
+
+于是每棵完整有限树的收益均满足
+
+$$
+\operatorname{val}_f(\mathsf T)
+\le\frac H2\sum_\ell q_\ell\bigl(1+L(z_\ell)\bigr)
+=\frac H2.
+$$
+
+一次等权分裂
+
+$$
+0=\tfrac12e_1+\tfrac12(-e_1)
+$$
+
+的两个叶都在 $C$ 内，其收益分别为 $H$ 与 $0$，故该深度一树的值为 $H/2$。允许提前停止使同一棵树可用于每个深度上界 $n\ge1$，从而 $T_n^f(0;C)=H/2$。深度零时只有根叶，故 $T_0^f(0;C)=0$；对有限深度取上确界得到 $T_\infty^f(0;C)=H/2$。
+
+对包络收益，由 $\bar f(0)=H$，根停止树在每个深度上界下都给出值 $H$；又全部叶收益至多 $H$、叶概率和为一，故 $T_n^{\bar f}(0;C)=H$ 对每个 $n\ge0$ 成立，其全有限上确界也为 $H$。于是任意有限整数 $k\ge0$ 都不能使 $T_0^{\bar f}(0;C)\le T_k^f(0;C)$ 成立，连两个 $T_\infty$ 也不相等。
+
+这个反例同时保有完整有限树、范数紧性和整个根最小面，失去的是与包络拓扑相容的根相对范数内球。它证明在所声明的无条件凸域类别中不能直接删除有限维假设，不断言每个无限维凸域都失败。$\square$
+
+相对内点的几何边界可参见 Lu Yu，*Notions of Relative Interior for Compact Convex Sets*，Journal of Convex Analysis 33 (2026), 197–206，[原文](https://journalofconvexanalysis.com/articles/jca33013/jca33013.pdf)，[doi:10.68381/jca33013](https://doi.org/10.68381/jca33013)。其定义2.2在代数仿射包上取相对拓扑；命题2.3（第198页）给出相对内部为空的紧 Hilbert 立方体；引理3.1和推论3.5（第199页）说明相对内点与紧集维数的几何限制。这些事实支持相对内点的背景，不承担定理432.2的树位移结论或命题432.3的具体收益计算。
+
+## 追加锚（本行以下为增补区）
+
+## 433. 对称根集的 Minkowski 半范数与锐利有限树正则化
+
+本节沿用定义430.1、定义431.1与定义432.1的完整有限树和最大路径深度约定，把根面上的包络拓扑改由对称根集的 Minkowski 泛函给出。实向量空间的维数任意，不预设环境拓扑。第432节的外部范数包络仍使用原来的拓扑；两种包络的比较另由命题433.4给出。
+
+**定义 433.1（根面、对称根集、完整树与包络）。** 设 $I$ 为有限集，允许为空。对每个 $i\in I$，给定实向量空间 $E_i$、非空凸集 $C_i\subset E_i$ 及 $a_i\in C_i$。置
+
+$$
+Y=\prod_{i\in I}C_i,\qquad a=(a_i)_{i\in I},
+$$
+
+$$
+F_i=\left\{x\in C_i:\ \exists\lambda\in(0,1)\ \exists y\in C_i,
+\ a_i=\lambda x+(1-\lambda)y\right\},
+\qquad L_i=\operatorname{span}(F_i-a_i),
+$$
+
+$$
+B_i=(F_i-a_i)\cap(a_i-F_i),\qquad
+p_i(v)=\inf\{t>0:v\in tB_i\}\quad(v\in L_i),
+$$
+
+$$
+X=\prod_{i\in I}F_i,\qquad
+J=\{i\in I:F_i\ne\{a_i\}\},\qquad s=|J|.
+$$
+
+这里的张成是有限线性组合构成的代数张成，不取闭包；泛函的定义暂允许 $+\infty$。非空凸子集 $G\subset C_i$ 称为面，是指对所有 $u,v\in C_i$ 和 $0<\theta<1$，$\theta u+(1-\theta)v\in G$ 蕴含 $u,v\in G$；面不要求闭。引理433.2将证明 $F_i$ 为包含 $a_i$ 的最小面，且 $p_i$ 为 $L_i$ 上有限的半范数。
+
+对 $Z=Y$ 或 $Z=X$，以 $a$ 为根的完整坐标树是节点总数有限的有根树。每个节点 $v$ 有标签 $z_v\in Z$，根标签为 $a$。每个内部节点选一个坐标 $i=i(v)\in I$，列出其全部有限非空子节点集，满足
+
+$$
+\lambda_{vj}\ge0,\qquad \sum_j\lambda_{vj}=1,\qquad
+z_{v,i}=\sum_j\lambda_{vj}z_{vj,i},\qquad
+z_{vj,h}=z_{v,h}\quad(h\ne i).
+$$
+
+最后一个条件也约束零权子节点。所有子节点及其后代均保留，包括零权、余项和失败分支。允许提前停止、不等叶深、单子节点、标签重复，以及依节点选择或重复选择坐标。深度是根叶路径上内部节点数的最大值，等于最大路径边数；单子节点、常值分裂和零权路径上的内部节点都计数。单根树深度为零。节点权重 $w_v$ 为路径边权之积，根权重为 $1$。
+
+固定 $0\le H<\infty$。对任意 $h:Z\to[0,H]$ 与 $n\in\mathbb N_0$，定义
+
+$$
+T_n^h(a;Z)=\sup_{\operatorname{depth}(\mathsf T)\le n}
+\sum_{\ell\in\operatorname{Leaf}(\mathsf T)}w_\ell h(z_\ell),
+\qquad T_{\mathrm{fin}}^h(a;Z)=\sup_{n\in\mathbb N_0}T_n^h(a;Z).
+$$
+
+这与前节 $T_\infty$ 的全体有限树上确界含义相同，不引入无限树，也不预设上确界达到。空积是单点；$I=\varnothing$ 时没有可选坐标，只有单根树。
+
+在引理433.2给出的半范数下，定义 $X$ 上的伪度量
+
+$$
+d_p(z,w)=\max\bigl(\{p_i(z_i-w_i):i\in I\}\cup\{0\}\bigr).
+$$
+
+任给 $f:Y\to[0,H]$，先限制为 $g=f|_X$，再定义
+
+$$
+\bar f_p(z)=\inf_{\eta>0}\sup\{g(y):y\in X,\ d_p(y,z)<\eta\}
+\quad(z\in X).
+$$
+
+凡含 $g$ 或 $\bar f_p$ 的树值都在 $X$ 内计算。函数不要求可测。伪度量拓扑中的上半连续指对每个实数 $t$，严格下水平集 $\{z:h(z)<t\}$ 开；不同点可以具有零距离。
+
+**引理 433.2（任意维根面的代数几何与有限半范数）。** 在定义433.1的条件下，对每个 $i\in I$，$F_i$ 是 $C_i$ 中包含 $a_i$ 的最小面，并有线段恒等式
+
+$$
+F_i=\{a_i\}\ \cup\!
+\bigcup_{\substack{u,v\in C_i,\ u\ne v\\a_i\in(u,v)}}[u,v],
+$$
+
+其中 $[u,v]=\{\theta u+(1-\theta)v:0\le\theta\le1\}$，$(u,v)$ 使用 $0<\theta<1$。$B_i$ 凸、对称且吸收 $L_i$：对每个 $v\in L_i$，存在 $R>0$ 使 $v\in RB_i$。其 Minkowski 泛函为有限半范数，并满足
+
+$$
+\{v\in L_i:p_i(v)<1\}\subseteq B_i
+\subseteq\{v\in L_i:p_i(v)\le1\},
+$$
+
+$$
+\ker p_i=\{v\in L_i:p_i(v)=0\}
+=\{v\in L_i:\mathbb Rv\subseteq B_i\}.
+$$
+
+特别地，对每个 $v\in L_i$，存在 $\delta>0$ 使 $a_i+tv\in F_i$ 对所有 $|t|\le\delta$ 成立。这里不断言 $B_i$ 是闭单位球，也不要求核为零。
+
+**证明。** 固定一个坐标并省略下标，把 $a$ 平移到零，记 $D=C-a$。由定义中的 $x\in C$，有
+
+$$
+F=a+M,\qquad
+M=\{v\in D:\exists\varepsilon>0,\ -\varepsilon v\in D\}.
+$$
+
+两种见证的换算为 $\varepsilon=\lambda/(1-\lambda)$。$0\in M$。若 $v,w\in M$，把两个正见证减小到共同的 $\varepsilon>0$；因 $0\in D$ 且 $D$ 凸，减小后仍为见证。对每个 $0\le\theta\le1$，$\theta v+(1-\theta)w$ 及其负 $\varepsilon$ 倍都在 $D$ 内，故 $M$ 凸，$F$ 也凸。
+
+若 $x\in F$ 且 $x=\theta u+(1-\theta)v$，其中 $u,v\in C$、$0<\theta<1$，选 $a=\lambda x+(1-\lambda)y$ 为见证。于是
+
+$$
+a=\lambda\theta u+(1-\lambda\theta)
+\frac{\lambda(1-\theta)v+(1-\lambda)y}{1-\lambda\theta}.
+$$
+
+分母正，最后的商是 $C$ 中的凸组合，且 $0<\lambda\theta<1$，所以 $u\in F$；交换 $u,v$ 得 $v\in F$。因此 $F$ 是面。任何包含 $a$ 的面，由每个见证等式的面性质都必须包含相应的 $x$，故包含 $F$，证明最小性。
+
+见证等式的两个端点均在 $F$ 中。若 $x\ne a$，其见证两端不同且开线段含 $a$，所以 $x$ 属于所列并集。反过来，开线段含 $a$ 的两个端点都属于最小面，整条闭线段由凸性属于该面。加上 $a$ 本身即得线段恒等式。
+
+$B=(F-a)\cap(a-F)$ 凸、对称且含零，因此平衡，即 $|t|\le1$ 蕴含 $tB\subseteq B$。对 $v=x-a\in F-a$，见证的另一端点也在 $F$，故存在 $\kappa>0$ 使 $-\kappa v\in F-a$。取 $\delta=\min(1,\kappa)>0$，沿两段的凸性给出 $\pm\delta v\in F-a$，于是 $\delta v\in B$。
+
+任给 $w\in L$，写成有限和 $w=\sum_{j=1}^m\alpha_jv_j$，其中 $v_j\in F-a$。各取 $\delta_j>0$ 使 $b_j=\delta_jv_j\in B$。若
+
+$$
+R=\sum_{j=1}^m\frac{|\alpha_j|}{\delta_j}>0,
+\qquad
+\frac wR=\sum_{\alpha_j\ne0}
+\frac{|\alpha_j|/\delta_j}{R}\operatorname{sgn}(\alpha_j)b_j,
+$$
+
+右侧是 $B$ 中点的凸组合，故 $w\in RB$。若 $R=0$ 或和为空，则 $w=0\in B$。由平衡性，$w\in RB$ 还蕴含 $tw\in B\subset F-a$ 对所有 $|t|\le1/R$ 成立；零向量可任取正半径。这证明吸收性及所述双侧线段性质。
+
+对每个 $v\in L$，集合 $A_v=\{t>0:v\in tB\}$ 非空且向上封闭，所以 $0\le p(v)<\infty$，而 $r>p(v)$ 蕴含 $v\in rB$：下确界定义先给出 $t\in A_v$、$t<r$，再用平衡性。$p(0)=0$；缩放及对称性给出 $p(\alpha v)=|\alpha|p(v)$ 对所有实数 $\alpha$ 成立。若 $r>p(v)$、$t>p(w)$，则
+
+$$
+\frac{v+w}{r+t}
+=\frac r{r+t}\frac vr+\frac t{r+t}\frac wt\in B,
+$$
+
+故 $p(v+w)\le r+t$。分别令 $r\downarrow p(v)$、$t\downarrow p(w)$，即得次可加性。
+
+若 $p(v)<1$，取 $p(v)<r<1$，则 $v\in rB\subseteq B$；若 $v\in B$，则 $p(v)\le1$。若 $p(v)=0$，齐次性及严格包含式使每个实倍数 $tv$ 都在 $B$ 中；反之若整条直线在 $B$ 内，则对每个 $t>0$ 有 $v/t\in B$，故 $p(v)\le t$，从而 $p(v)=0$。半范数性质使核为线性子空间。单点面给出 $L=\{0\}$ 及其上的零半范数。所有推导均未使用拓扑或闭性。$\square$
+
+**定理 433.3（伪度量包络、完整树限制与精确最小位移）。** 对定义433.1的任意固定几何、任意 $0\le H<\infty$ 及任意 $f:Y\to[0,H]$，$\bar f_p$ 是 $g=f|_X$ 的最小实值 $d_p$ 上半连续上界。对每个 $n\in\mathbb N_0$，
+
+$$
+\boxed{
+T_n^f(a;Y)=T_n^g(a;X)
+\le T_n^{\bar f_p}(a;X)
+\le T_{n+s}^g(a;X)=T_{n+s}^f(a;Y).
+}
+$$
+
+因此
+
+$$
+T_{\mathrm{fin}}^f(a;Y)
+=T_{\mathrm{fin}}^g(a;X)
+=T_{\mathrm{fin}}^{\bar f_p}(a;X).
+$$
+
+固定几何与 $H$，令
+
+$$
+k_{\min}=\min\left\{k\in\mathbb N_0:
+\ \forall f:Y\to[0,H]\ \forall n\in\mathbb N_0,
+\ T_n^{\bar f_p}(a;X)\le T_{n+k}^f(a;Y)\right\}.
+$$
+
+该集合非空，且 $H>0$ 时 $k_{\min}=s$，$H=0$ 时 $k_{\min}=0$。$s$ 计数原来的非单点根面，不计数半范数核商空间的维数。
+
+**证明。** 首先，每个 $p_i$ 有限，且坐标差属于 $L_i$；半范数性质说明 $d_p$ 为有限伪度量。每个球含中心，所以 $0\le g\le\bar f_p\le H$。若 $\bar f_p(z)<t$，存在 $\eta>0$ 使球 $B_p(z,\eta)$ 上的 $g$ 上确界小于 $t$。当 $d_p(w,z)<\eta/2$ 时，$B_p(w,\eta/2)\subseteq B_p(z,\eta)$，所以 $\bar f_p(w)<t$，证明上半连续。
+
+若 $h:X\to\mathbb R$ 上半连续且 $h\ge g$，任取 $z\in X$ 及 $t>h(z)$。某个 $z$ 的球包含于 $\{h<t\}$，该球上 $g$ 的上确界至多为 $t$，于是 $\bar f_p(z)\le t$。令 $t\downarrow h(z)$ 得 $\bar f_p\le h$。零距离点具有完全相同的球，故包络在这些点取相同值；这里不要求 Hausdorff 性。
+
+其次，对每棵完整有限树及其任一子树，按子树形状归纳，叶相对权重之和为 $1$，叶标签的加权向量平均为子树根标签。叶节点情形直接成立；内部节点情形先用各子树的归纳结论，再用全部子权重和为一及每个坐标的平均等式。故在整树根处
+
+$$
+\sum_\ell w_\ell=1,\qquad
+\sum_\ell w_\ell z_\ell=a.
+$$
+
+这包含零权叶、失败叶与提前停止叶。因此树值在 $[0,H]$ 内，停止树使树类非空，深度类嵌套，且 $T_0^h(a;Z)=h(a)$。
+
+现取任意完整 $Y$ 树。从根向下归纳，每个正权节点的标签均在 $X$ 内。事实上，若父标签在 $X$，某个子边权 $q$ 满足 $0<q<1$，则活动坐标的父标签是该子标签与其余子标签归一化平均的严格凸组合；其余平均属于 $C_i$，面性质使该子标签属于 $F_i$。若 $q=1$，该子标签的活动坐标等于父坐标。非活动坐标总保持不变。
+
+对每条路径上第一条零权边，把其子节点和全部后代的标签都改成该边父节点的标签。这样的父节点有正权，标签在 $X$ 中；这些子树互不相交，覆盖所有零权节点。保留全部节点、边、权重和活动坐标。附着边权为零，故父节点平均不变；子树内部成为同一标签的常值分裂，仍满足活动与非活动坐标的全部要求。所有叶权重、最大路径深度及正权叶标签不变，零权叶贡献仍为零。于是每棵 $Y$ 树都得到同值同深度的完整 $X$ 树；反向包含显然。因此 $T_m^f(a;Y)=T_m^g(a;X)$ 对所有 $m\in\mathbb N_0$ 成立。原来的零权标签不必在 $X$ 中，此结论使用整棵零权子树的重标记，而非删除分支。
+
+以下证明位移上界。$s=0$ 时 $X=\{a\}$，面限制已使全部树值为 $f(a)=\bar f_p(a)$。设 $s>0$，固定任意深度至多 $n$ 的完整 $X$ 树，其包络值为
+
+$$
+V=\sum_\ell w_\ell\bar f_p(z^\ell).
+$$
+
+任取 $\eta,\varepsilon>0$。每个 $B_p(z^\ell,\eta)$ 非空，$g$ 在其上的上确界至少为 $\bar f_p(z^\ell)$，故可为每个叶，包括零权叶，选择 $z'{}^\ell\in X$ 满足
+
+$$
+d_p(z^\ell,z'{}^\ell)<\eta,\qquad
+g(z'{}^\ell)\ge\bar f_p(z^\ell)-\varepsilon.
+$$
+
+这是有限多次选择。置 $c=(1+\eta)^{-1}\in(0,1)$，并对每个节点的每个坐标同时施加
+
+$$
+D_i(x)=cx+(1-c)a_i.
+$$
+
+凸性使标签留在 $F_i$ 内，仿射性使全部平均等式保持，非活动坐标的相等关系也保持。根固定，形状、边权、节点权重和深度不变。
+
+固定一个原叶，略去其上标，记原标签为 $z$、目标为 $z'$。对每个 $i\in J$ 置
+
+$$
+r_i=a_i+\frac{z_i-z'_i}{\eta}.
+$$
+
+严格不等式 $p_i((z_i-z'_i)/\eta)<1$ 与引理433.2给出 $(z_i-z'_i)/\eta\in B_i$，因而 $r_i\in F_i$。由 $1-c=c\eta$，精确成立
+
+$$
+\boxed{D_i(z_i)=cz'_i+(1-c)r_i.}
+$$
+
+固定 $J$ 的次序 $i_1,\ldots,i_s$。在缩放后的每个原叶上，沿指定继续分支依次执行这 $s$ 次二叉分裂：活动坐标分别取目标 $z'_i$，权重 $c$，以及余项 $r_i$，权重 $1-c$；其他坐标在两个子节点都不变。余项子节点立即停止并保留，目标子节点继续处理下一个坐标。尚未处理的坐标仍为 $D_i(z_i)$，所以每一步均适用所列等式。即使 $z_i=z'_i$ 或两个子标签相同，也执行并保留该分裂，计入一个内部节点。非 $J$ 坐标只有根值，已等于目标。
+
+完成后，继续末叶恰为 $z'$。原叶权重若为 $w_\ell$，其继续末叶及第 $j$ 个余项叶的权重分别为 $w_\ell c^s$ 和 $w_\ell c^{j-1}(1-c)$，并满足
+
+$$
+w_\ell c^s+\sum_{j=1}^s w_\ell c^{j-1}(1-c)=w_\ell.
+$$
+
+此式也包含 $w_\ell=0$。对全部原叶嫁接这一构造，所有原节点和原边仍在，原叶成为嫁接根，零权子树及每个新增余项叶全部保留。每条路径至多增加 $s$ 个内部节点，所得完整树有限且深度至多 $n+s$。余项收益非负，故其无条件总值至少为
+
+$$
+c^s\sum_\ell w_\ell g(z'{}^\ell)
+\ge c^s(V-\varepsilon).
+$$
+
+于是同一个有限实数 $T_{n+s}^g(a;X)$ 对所有 $\eta,\varepsilon>0$ 满足
+
+$$
+T_{n+s}^g(a;X)\ge(1+\eta)^{-s}(V-\varepsilon).
+$$
+
+取 $\eta=\varepsilon=1/k$ 并令正整数 $k\to\infty$，得到 $T_{n+s}^g(a;X)\ge V$。这里只有实数界取极限；每个 $k$ 使用一棵有限树，树可随 $k$ 改变。再对原树取上确界，得到位移上界。另一方向由 $g\le\bar f_p$ 逐叶比较得到。最后，深度类嵌套且 $s$ 有限，故
+
+$$
+T_{\mathrm{fin}}^{\bar f_p}(a;X)
+\le\sup_{n\ge0}T_{n+s}^g(a;X)
+\le T_{\mathrm{fin}}^g(a;X)
+\le T_{\mathrm{fin}}^{\bar f_p}(a;X),
+$$
+
+证明全有限等式。
+
+为证最小性，设 $H>0$ 且 $s>0$。引理433.2使每个 $i\in J$ 都可选 $0\ne b_i\in B_i$。定义
+
+$$
+S=\{z\in X:z_i\ne a_i\text{ 对每个 }i\in J\},\qquad
+f_*(z)=H\mathbf1_S(z)\quad(z\in Y).
+$$
+
+$S$ 在 $d_p$ 下稠密：任给 $z\in X$ 和 $\eta>0$，保留每个已不同于 $a_i$ 的坐标；其余 $i\in J$ 换成 $a_i+\delta b_i$，其中 $0<\delta<\min(1,\eta)$。新坐标在 $F_i$ 中且不是 $a_i$，其距离至多 $\delta p_i(b_i)\le\delta<\eta$。其他坐标不变，所得点在 $S$ 内。因此 $\bar f_{*,p}\equiv H$，即使 $p_i(b_i)=0$ 也如此。这里不主张 $S$ 开。
+
+每条长度至多 $k<s$ 的路径至多选择 $k$ 个不同坐标，至少一个 $i\in J$ 从未活动，该叶坐标仍为 $a_i$，所以其收益为零。此论证包括零权路径、重复坐标、单子节点和提前停止，给出
+
+$$
+T_k^{f_*}(a;Y)=0\quad(0\le k<s),\qquad
+T_0^{\bar f_{*,p}}(a;X)=H.
+$$
+
+故任何小于 $s$ 的统一位移在 $n=0$ 已失败。另一方面，按固定次序处理 $J$，在每一层的每个当前叶把尚未活动的坐标分成 $a_i+b_i$ 与 $a_i-b_i$，各权 $1/2$，并保留全部分支。这给出深度恰为 $s$ 的完整二叉树，每个叶在 $S$ 中，值为 $H$，故 $T_s^{f_*}(a;Y)=H$。充分性和必要性合并证明精确位移。
+
+若 $s=0$，面限制使所有树值等于 $f(a)$，最小位移为零，包含空积情形。若 $H=0$，唯一允许收益及其包络恒为零，无论 $s$ 为何最小位移都为零。某个特定收益可需要更小位移；上述最小性量词针对固定几何上的整个收益类。$\square$
+
+**命题 433.4（与指定外部范数的精确比较）。** 对定义433.1的一个坐标，省略下标，在 $L$ 上另外指定一个范数 $\|\cdot\|$。令 $\tau_p$ 为 $p$ 的伪度量拓扑，$\tau_{\|\cdot\|}$ 为该范数拓扑。则
+
+$$
+\begin{aligned}
+&\exists\delta>0,\ \{v\in L:\|v\|<\delta\}\subseteq B
+\quad\Longleftrightarrow\quad
+\exists M>0,\ \forall v\in L,\ p(v)\le M\|v\|,\\
+&\exists R>0,\ \forall b\in B,\ \|b\|\le R
+\quad\Longleftrightarrow\quad
+\exists R>0,\ \forall v\in L,\ \|v\|\le Rp(v).
+\end{aligned}
+$$
+
+因此 $\tau_p=\tau_{\|\cdot\|}$ 当且仅当 $B$ 同时包含一个以零为心的外部范数开球并且外部范数有界。若 $L$ 有限维，包含范数球自动成立，且
+
+$$
+\tau_p=\tau_{\|\cdot\|}
+\quad\Longleftrightarrow\quad B\text{ 范数有界}
+\quad\Longleftrightarrow\quad\ker p=\{0\}.
+$$
+
+这里不要求 $F$ 有界。一般情形的拓扑等价是在整个 $L$ 上陈述的；它蕴含 $F\subset a+L$ 上两个相对拓扑相同。在有限维情形，$F$ 上的相对拓扑相同也蕴含上述等价条件。
+
+再对有限个坐标分别指定 $L_i$ 上的范数 $\|\cdot\|_i$，在 $X$ 上定义
+
+$$
+d_{\mathrm{ext}}(z,w)=\max\bigl(\{\|z_i-w_i\|_i:i\in I\}\cup\{0\}\bigr),
+\qquad
+\bar f_{\mathrm{ext}}(z)=\inf_{\eta>0}\sup_{\substack{y\in X\\d_{\mathrm{ext}}(y,z)<\eta}}f(y).
+$$
+
+若每个 $B_i$ 都包含一个相应范数开球，则对所有 $f:Y\to[0,H]$、$n\in\mathbb N_0$，
+
+$$
+g\le\bar f_{\mathrm{ext}}\le\bar f_p,
+\qquad
+T_n^f(a;Y)\le T_n^{\bar f_{\mathrm{ext}}}(a;X)
+\le T_{n+s}^f(a;Y),
+$$
+
+$$
+T_{\mathrm{fin}}^f(a;Y)=T_{\mathrm{fin}}^{\bar f_{\mathrm{ext}}}(a;X).
+$$
+
+若每个 $B_i$ 还范数有界，则 $\bar f_{\mathrm{ext}}=\bar f_p$。若只知每个 $B_i$ 范数有界，则可断言的包络方向为 $\bar f_p\le\bar f_{\mathrm{ext}}$，不由此得到外部包络的树值上界。两种条件均未知时，本命题不给包络排序。
+
+**证明。** 若半径 $\delta$ 的范数球包含于 $B$，则对每个 $v\in L$ 和每个 $t>\|v\|/\delta$，有 $v/t\in B$，所以 $p(v)\le\|v\|/\delta$。反之，若 $p\le M\|\cdot\|$，则 $\|v\|<1/M$ 蕴含 $p(v)<1$，由引理433.2得 $v\in B$。
+
+若 $\|b\|\le R$ 对所有 $b\in B$ 成立，对任意 $t>p(v)$，引理433.2的证明给出 $v\in tB$，故 $\|v\|\le Rt$。令 $t\downarrow p(v)$ 得 $\|v\|\le Rp(v)$。反之，该不等式用于 $b\in B$，结合 $p(b)\le1$ 就得 $\|b\|\le R$。
+
+两侧比较常数给出两个恒等映射的连续性，故两个拓扑相同。反过来，若两个拓扑相同，则从范数拓扑到 $p$ 拓扑的零点连续性给出某个 $\delta>0$，使 $\|v\|<\delta$ 蕴含 $p(v)<1$，进而给出 $B$ 中的范数球。另一方向连续性给出某个 $\varepsilon>0$，使 $p(v)<\varepsilon$ 蕴含 $\|v\|<1$。任取 $t>p(v)/\varepsilon$，用于 $v/t$ 后有 $\|v\|<t$，令 $t\downarrow p(v)/\varepsilon$ 得
+
+$$
+\|v\|\le p(v)/\varepsilon.
+$$
+
+这包含 $p(v)=0$ 的情况，并给出 $B$ 有界。零空间 $L=\{0\}$ 时所有条件均成立，可任取正的比较常数。
+
+设 $L$ 非零且有限维，取一组基 $e_1,\ldots,e_d$。半范数给出
+
+$$
+p\left(\sum_{j=1}^d t_je_j\right)
+\le\sum_{j=1}^d|t_j|p(e_j).
+$$
+
+在 $\sum_j|t_j|=1$ 的有限维紧集上，函数 $t\mapsto\|\sum_jt_je_j\|$ 连续且处处正，故有正最小值 $\beta$。齐次性得 $\sum_j|t_j|\le\beta^{-1}\|\sum_jt_je_j\|$，从而 $p\le M\|\cdot\|$ 对某个 $M>0$ 成立。于是范数球条件自动成立，且 $|p(v)-p(w)|\le M\|v-w\|$，故 $p$ 范数连续。
+
+若 $\ker p=\{0\}$，则在外部范数单位球面上 $p$ 连续且处处正；该球面有限维紧，故 $p$ 有正最小值 $\mu$。齐次性给出 $\|v\|\le p(v)/\mu$，所以 $B$ 有界且拓扑相同。反之 $B$ 有界给出的反向不等式迫使核为零。这证明有限维的全部等价。若 $k\ne0$ 属于核，引理433.2还给出 $a+k\in F$，它与 $a$ 不同却距离零，故 $F$ 的 $p$ 相对拓扑不是 Hausdorff，不能等于外部范数相对拓扑；这证明有限维相对拓扑的反向断言。
+
+对于有限乘积，范数球条件给出 $d_p\le M d_{\mathrm{ext}}$，其中 $M>0$ 可取全部坐标常数及 $1$ 的最大值。故 $p$ 拓扑较粗，$p$ 上半连续函数也是外部上半连续函数。定理433.3关于最小上界的证明同样适用于 $d_{\mathrm{ext}}$，所以
+
+$$
+g\le\bar f_{\mathrm{ext}}\le\bar f_p.
+$$
+
+逐叶比较及定理433.3给出所述树值不等式；对有限深度取上确界，得到全有限等式。若各 $B_i$ 有界，则有 $d_{\mathrm{ext}}\le R d_p$，相同论证反向给出 $\bar f_p\le\bar f_{\mathrm{ext}}$。两个条件同时成立时拓扑及包络相同。空乘积时两种距离都为零，这些断言仍成立。$\square$
+
+当各 $L_i$ 有限维时，命题433.4的范数球条件自动满足，故其外部包络位移结论直接恢复定理432.2的比较；不需要再重复一次有限维树证明。对于第431节的密度根面，它们有界，因而 $B_i$ 也有界，两种包络相同。有限维但无界的根面则不保证包络函数相同，下一命题给出反例。
+
+**命题 433.5（严格单位球、零核商与无界面的边界）。** 下列单因子实例均采用定义433.1的根面与半范数。
+
+若 $C=(-1,1)$、$a=0$，则 $F=B=(-1,1)$、$L=\mathbb R$、$p(v)=|v|$，而 $1\notin B$、$p(1)=1$。若 $C=\mathbb R$、$a=0$，则 $F=B=L=\mathbb R$、$p\equiv0$；对任意 $H>0$ 和 $f=H\mathbf1_{\{1\}}$，根半范数包络恒为 $H$，普通绝对值范数包络等于 $f$，且 $T_1^f(0;\mathbb R)=H$，但没有任何有限树取得值 $H$。若 $C=[0,\infty)$、$a=1$，则 $F=C$ 无界，而 $B=[-1,1]$、$L=\mathbb R$、$p(v)=|v|$。
+
+**证明。** 前两个集合关于根对称，所以每个 $x\in C$ 都由 $0=\tfrac12x+\tfrac12(-x)$ 得到根面见证，故 $F=C$。开区间情形 $v\in tB$ 当且仅当 $|v|<t$，于是下确界为 $|v|$，但端点不在 $B$。全直线情形 $tB=\mathbb R$ 对所有 $t>0$ 成立，故 $p=0$。
+
+在全直线情形每个正半径的 $p$ 球都是整条直线，包络为 $\sup f=H$。普通范数中 $\{1\}$ 闭，$f$ 上半连续，故其最小上半连续上界就是 $f$。对每个 $0<q<1$，根的完整一次分裂
+
+$$
+0=q\cdot1+(1-q)\left(-\frac q{1-q}\right)
+$$
+
+给出值 $qH$，而所有树值至多为 $H$，所以 $T_1^f=H$。若某棵有限树值为 $H$，其全部正权叶必须位于 $1$，其叶标签加权平均于是为 $1$，与根重心为 $0$ 矛盾。因此一般上确界不取得；此例 $L/\ker p$ 为零空间而 $s=1$，仍不能把最小位移降为零。
+
+半直线情形，任取 $x\ge0$，选 $\lambda=1/[2(x+1)]$，则 $0<\lambda<1$ 且 $\lambda x<1$，置 $y=(1-\lambda x)/(1-\lambda)\ge0$。则 $1=\lambda x+(1-\lambda)y$，故 $F=C$。于是
+
+$$
+B=[-1,\infty)\cap(-\infty,1]=[-1,1],
+$$
+
+其 Minkowski 泛函为绝对值。故无界的面仍可给出外部范数拓扑。$\square$
+
+包络的定义域次序也不可省略：沿用定理432.2的边界例，取 $C=[0,1]$、$a=0$、$f=H\mathbf1_{(0,1]}$、$H>0$。根的严格凸组合见证由非负性迫使两端都为零，故 $F=\{0\}$。完整树的正权叶全为零，所以所有 $T_n^f$ 及根面包络都为零；但在整个 $C$ 上先取普通范数包络，根值为 $H$。因此任何本节包络都先限制到 $X$，不把它延拓到 $Y$ 上用于树评价。
+
+**命题 433.6（同一紧凸集的外部包络与根半范数包络）。** 保留命题432.3的原外部拓扑。设 $E=\ell^2(\mathbb R)$，$a=0$，并令
+
+$$
+q(x)=\sum_{m=1}^{\infty}m|x_m|\in[0,\infty],\qquad
+C=\{x\in\ell^2:q(x)\le1\},\qquad
+L=\{x\in\ell^2:q(x)<\infty\}.
+$$
+
+对 $x\in L$ 令 $\ell(x)=\sum_{m\ge1}mx_m$。固定任意 $H>0$，在 $C$ 上定义 $f=H\mathbf1_{\{\ell=1\}}$。则 $C$ 在 $\ell^2$ 范数下紧，$F=B=C$、$\operatorname{span}C=L$，根的 Minkowski 泛函恰为
+
+$$
+p(v)=q(v)=\sum_{m\ge1}m|v_m|\quad(v\in L).
+$$
+
+分别在 $C$ 上对 $p$ 距离和外部 $\ell^2$ 距离取包络，所得 $\bar f_p=f$，而 $\bar f_{\ell^2}(0)=H$。使用同一完整树类，对每个 $n\in\mathbb N_0$ 有
+
+$$
+T_0^f(0;C)=0,\qquad
+T_n^f(0;C)=T_n^{\bar f_p}(0;C)=H/2\quad(n\ge1),
+$$
+
+$$
+T_{\mathrm{fin}}^f(0;C)=T_{\mathrm{fin}}^{\bar f_p}(0;C)=H/2,
+\qquad
+T_n^{\bar f_{\ell^2}}(0;C)=T_{\mathrm{fin}}^{\bar f_{\ell^2}}(0;C)=H.
+$$
+
+**证明。** 非负级数的三角不等式使 $C$ 凸、对称且含零。命题432.3已证明该集合的紧性；其适用依据可简述为：$C$ 是所有连续有限部分和的次水平闭集之交，故在 $\ell^2$ 内闭，而且
+
+$$
+\sup_{x\in C}\left\|x-\sum_{m=1}^N x_me_m\right\|_2
+\le\sup_{x\in C}\sum_{m>N}|x_m|\le\frac1{N+1}.
+$$
+
+有限坐标投影有界并有有限网，上式把这些网扩成 $C$ 的任意精度有限网，所以 $C$ 全有界；它又是完备空间 $\ell^2$ 的闭子集，故紧。这里的完备性只用于本例的紧性，不是定理433.3的假设。
+
+对称性由中点见证给出 $F=C$，进而 $B=C$。$q$ 在 $C$ 的有限线性组合上有限；反之每个 $q(v)<\infty$ 的向量都属于某个 $tC$，所以 $\operatorname{span}C=L$。对 $v\in L$ 和 $t>0$，$v\in tC$ 当且仅当 $q(v)\le t$，取下确界便得 $p=q$。又
+
+$$
+\|v\|_2\le p(v),\qquad
+x^{(m)}=e_m/m\in C,\qquad
+p(x^{(m)})=1,\qquad\|x^{(m)}\|_2=1/m\longrightarrow0.
+$$
+
+故 $p$ 拓扑严格细于继承的 $\ell^2$ 拓扑。$B=C$ 外部范数有界且 $\ker p=\{0\}$，但它不含任何 $L$ 中的外部范数开球：对每个 $\delta>0$，取 $m$ 使 $2/m<\delta$，则 $2e_m/m\in L$ 的外部范数小于 $\delta$，而 $p(2e_m/m)=2$，不在 $B$ 中。这也说明有限维命题中“核零”等价于拓扑相同的条件不能直接移到无限维。
+
+定义 $\ell$ 的级数在 $L$ 上绝对收敛，有限和的线性取级数极限后仍成立，且
+
+$$
+|\ell(x)-\ell(y)|\le p(x-y)\quad(x,y\in L).
+$$
+
+所以 $\{x\in C:\ell(x)=1\}$ 在 $p$ 相对拓扑中闭，其指标收益 $f$ 上半连续，由最小上界性质 $\bar f_p=f$。特别地 $\bar f_p(0)=0$。外部拓扑中 $x^{(m)}\to0$ 而 $f(x^{(m)})=H$，所以每个零点邻域的收益上确界为 $H$，给出 $\bar f_{\ell^2}(0)=H$。
+
+最后重申命题432.3的树值计算以区分两个包络。对任意根为零的完整有限树，全部标签在 $L$ 中，由定理433.3证明中的有限重心恒等式及 $\ell$ 的线性，
+
+$$
+\sum_{v\in\operatorname{Leaf}(\mathsf T)}w_v\ell(z_v)=0,\qquad
+\sum_{v\in\operatorname{Leaf}(\mathsf T)}w_v=1.
+$$
+
+这里不使用 $\ell$ 的外部连续性。若收益为 $H$ 的叶总权重为 $P$，则这些叶的 $\ell$ 值为 $1$，其他叶的 $\ell$ 值至少为 $-1$，故 $0\ge P-(1-P)$，即 $P\le1/2$。因此任意树值至多为 $H/2$。一次完整等权分裂 $0=\tfrac12e_1+\tfrac12(-e_1)$ 达到 $H/2$，并可用于每个深度上界 $n\ge1$；深度零值为 $f(0)=0$。由 $\bar f_p=f$ 得根半范数包络的全部等式。外部包络在根已为 $H$，停止树达到普遍上界 $H$，给出其全部等式。于是对每个有限 $k\ge0$，$T_0^{\bar f_{\ell^2}}(0;C)>T_k^f(0;C)$，全有限值也不相等；第432节的外部包络反例完整保留。$\square$
+
+本节的代数最小面与双侧方向性质属于已有凸几何背景，参见 Stephan Weis，*A note on faces of convex sets*，[arXiv:2404.00832v3](https://arxiv.org/html/2404.00832v3#S4)，§4 的 Proposition 4.1、Corollary 4.2 与 Theorem 4.5。该作者原文支持面及相对代数内部的背景，不作为有限树位移定理的来源；其所引更早文献的归属不在此扩张。Minkowski 泛函采用标准定义，引理433.2独立给出所需吸收性和半范数证明。
+
+定义430.1与定理430.3提供完整树约定和收缩后保留余项的先例；定理431.3给出密度根面上的非单点坐标计数，定理432.2给出有限维外部范数版本，命题432.3提供本节保留的紧 $\ell^2$ 反例。本节的统一恒等式 $D_i(z_i)=cz'_i+(1-c)[a_i+(z_i-z'_i)/\eta]$ 表明，同一个收缩参数可以用于全部坐标和全部叶；有限深度代价来自须处理的坐标数，而非维数或核商的维数。
+
+本节只涉及有限指标集、逐棵有限的完整树、有界收益及明确指定的包络拓扑。没有把这一半范数拓扑认定为最细局部凸拓扑、内在核拓扑或 bornological 拓扑。全有限上确界相等不推出最优有限树、极限树、无限协议或物理实现，也不把定理430.3的全收益统一有限深度收敛推广到任意凸域。本节不主张这些构造或结论的原创优先权。
+
+## 追加锚（本行以下为增补区）
+
+## 434. 新完备树的标量优势、支撑秩分叉与统一近似规模
+
+在固定有限密度维数与共同有限报酬幅度下，定理 430.3 的统一有限深度可以与同深度的新树构造结合，得到统一的近似组合规模。每个局部密度节点至多需要当前父支撑秩平方个子结果；在假设 430.2 的原五射线恢复接口中，每个局部仪器至多四个实际结果已经足够。这里比较各自完整的新旧实验的标量值，允许改变树形、权重、实际标签和反馈。
+
+**定义 434.1（终端坐标报酬与新完备树）。** 取 $k\ge1$ 个非空凸集 $C_i$，其所在实仿射空间中的仿射维数为 $m_i<\infty$，令 $C=\prod_{i=1}^k C_i$。以 $a\in C$ 为根的树逐棵有限，每个节点 $v$ 标有 $x_v\in C$；内部节点选择一个坐标 $i$，声明一个有限非空子结果索引集及完整分解
+
+$$
+x_{v,i}=\sum_j\lambda_{vj}x_{vj,i},\qquad
+\lambda_{vj}\ge0,\qquad \sum_j\lambda_{vj}=1,\qquad
+x_{vj,h}=x_{v,h}\quad(h\ne i).
+$$
+
+这个已声明的树包含所有子结果及其后续，包括零权重、失败、余量和提前停止分支。深度是根到叶路径上内部节点数的最大值，单例分解也计一个节点。根即叶时深度为零。叶权重 $w_\ell$ 是路径边权的乘积，空乘积为 $1$。
+
+给定任意有界函数 $f:C\to\mathbb R$，只以终端坐标计报酬：
+
+$$
+\operatorname{val}_f(\mathsf T)=\sum_{\ell}w_\ell f(x_\ell),\qquad
+T_n^f(a)=\sup_{\operatorname{depth}(\mathsf T)\le n}\operatorname{val}_f(\mathsf T),
+\qquad T_\infty^f(a)=\sup_{n\ge0}T_n^f(a).
+$$
+
+不要求 $f$ 连续、上半连续或可测，也不把旧结果名称、旧记录或旧路径另行加入报酬。各节点归一化递归给出 $\sum_\ell w_\ell=1$，所以这些上确界有限。新树是另行声明的完整对象，其子结果集合可以不同于旧树；声明完成后，其每个结果均保留，不对成功子树作条件化。
+
+**定理 434.2（新树优势与有限深度到有限组合规模）。** 有以下四项结论。
+
+一、对定义 434.1 中任一给定有限树 $\mathsf T$，存在同根的新完备树 $\mathsf T'$，满足
+
+$$
+\operatorname{depth}(\mathsf T')\le\operatorname{depth}(\mathsf T),\qquad
+\operatorname{val}_f(\mathsf T')\ge\operatorname{val}_f(\mathsf T),
+$$
+
+且每条新边权严格为正，每个 $i$-节点至多有 $m_i+1$ 个子节点。因此对每个 $n\in\mathbb N_0$，把这些限制加入 $T_n^f(a)$ 的取上确界类，所得数值恰好不变；逐棵有限树的总上确界也不变。该结论不要求最优树取得。
+
+二、对密度域 $C_i=\mathcal D_{d_i}$，可把每个 $i$-节点的子数限制为
+
+$$
+\bigl(\operatorname{rank}P_{v,i}\bigr)^2\le
+\bigl(\operatorname{rank}A_i\bigr)^2\le d_i^2,
+$$
+
+其中 $A$ 是根，$P_{v,i}$ 是该新节点的当前父密度。根可以奇异。对任意报酬的一般类，$m_i+1$ 以及密度面上的秩平方界在正仿射维数时是不能普遍降低的同深度界；这不声称五射线特定任务必须有四个结果。
+
+三、固定定义 430.1 的 $k\ge1$、$d_i\ge1$ 及 $0\le H<\infty$。对每个 $\varepsilon>0$，存在有限整数 $N=N(k,\mathbf d,H,\varepsilon)$，使
+
+$$
+\forall A\in X_{\mathbf d}\ \forall g:X_{\mathbf d}\to[0,H]\quad
+\exists\mathsf T':\quad
+\operatorname{depth}(\mathsf T')\le N,\qquad
+0\le T_\infty^g(A)-\operatorname{val}_g(\mathsf T')<\varepsilon,
+$$
+
+并可同时满足第二项的严格正权及秩平方分叉界。$N$ 与根和报酬无关，新树则分别依赖它们。令 $b=\max_i d_i^2$；对固定根也可使用较小的 $b(A)=\max_i\operatorname{rank}(A_i)^2$。以 $L,I,V,E$ 分别表示新树的叶数、内部节点数、全部节点数和边数，则当 $b\ge2$ 时，
+
+$$
+L\le b^N,\qquad
+I\le\frac{b^N-1}{b-1},\qquad
+V\le\frac{b^{N+1}-1}{b-1},\qquad
+E=V-1\le\frac{b(b^N-1)}{b-1}.
+$$
+
+当 $b=1$ 时，相应界为 $L=1$、$I\le N$、$V\le N+1$、$E\le N$；当 $N=0$ 时，$L=V=1$、$I=E=0$。共同区间 $L_0\le f\le U_0$ 内的有符号报酬也满足同一结论，幅度参数取 $H=U_0-L_0$。
+
+四、完全采用假设 430.2：$r>0$、$1/2<r^2<2$，原始系统 $S=\mathbb C^5$、原始两方记录 $R_A=R_B=\mathbb C^2$、五射线 $q_i=s_i\otimes s_i$、准备 $J|i\rangle=|i\rangle\otimes q_i$，以及该假设的局部完全正仪器、实际历史、实际标签和共同终端反馈合同。对每棵允许的旧协议 $\Pi$，存在另一完整协议 $\Pi'$，使
+
+$$
+\operatorname{depth}(\Pi')\le\operatorname{depth}(\Pi),\qquad
+p(\Pi')\ge p(\Pi),
+$$
+
+且每个局部仪器至多四个实际结果。新协议仍在原始完整记录空间上完备；其接受映射满足
+
+$$
+\mathcal T'(X)=p(\Pi')X\quad(X\in\mathcal L(S)),\qquad
+(\operatorname{id}_F\otimes\mathcal T')(X_{FS})=p(\Pi')X_{FS}
+$$
+
+对任意有限维未操作参考 $F$ 和所有联合矩阵成立。记四结果限制下的上确界为 $p_n^{(4)}(r)$、$\eta_{\mathrm{fin}}^{(4)}(r)$，则
+
+$$
+p_n^{(4)}(r)=p_n(r)=4T_n^{V_{0,r}}(\Omega_{(2,2)}),\qquad
+\eta_{\mathrm{fin}}^{(4)}(r)=\eta_{\mathrm{fin}}(r)=4T_\infty^{V_{0,r}}(\Omega_{(2,2)}).
+$$
+
+对每个 $\varepsilon>0$，存在与上述 $r$ 无关的有限 $N$，使每个 $r$ 各有一个这样的新协议，满足 $0\le\eta_{\mathrm{fin}}(r)-p(\Pi')<\varepsilon$，并且
+
+$$
+L\le4^N,\qquad I\le\frac{4^N-1}{3},\qquad
+V\le\frac{4^{N+1}-1}{3},\qquad E\le\frac{4(4^N-1)}3.
+$$
+
+这里 $L$ 同时界定终端实际历史数和逐叶命名时的终端标签数，$E$ 界定全树实际结果的出现次数；全部失败历史也计入。深度沿用 430.2 的局部仪器节点计数，包含单结果通道，不把它换成通信轮数或物理时间。
+
+**证明。** 先给出第一项所需的有限权重消元。设 $x=\sum_{j=1}^q\lambda_jx_j$，$\lambda_j>0$、$\sum_j\lambda_j=1$，诸 $x_j$ 位于仿射维数至多 $m$ 的空间中，并给每个点附上一个实数续接值 $v_j$。若 $q>m+1$，选定仿射坐标后，增广向量 $(x_j,1)$ 线性相关，故存在不全为零的实数 $\alpha_j$，满足
+
+$$
+\sum_j\alpha_j=0,\qquad \sum_j\alpha_jx_j=0.
+$$
+
+零和保证 $\alpha$ 同时有正项和负项。必要时把全部 $\alpha_j$ 反号，使 $D=\sum_j\alpha_jv_j\ge0$。置
+
+$$
+t=\min_{\alpha_j<0}\frac{\lambda_j}{-\alpha_j}>0,\qquad
+\mu_j=\lambda_j+t\alpha_j.
+$$
+
+由最小值定义，全部 $\mu_j\ge0$，至少一项变为零，并且
+
+$$
+\sum_j\mu_j=1,\qquad \sum_j\mu_jx_j=x,\qquad
+\sum_j\mu_jv_j=\sum_j\lambda_jv_j+tD\ge\sum_j\lambda_jv_j.
+$$
+
+若正系数的数量仍大于 $m+1$，就在当前正支撑上重复。每次正支撑严格变小，所以有限步后得到 $1$ 至 $m+1$ 个正系数，保留总质量与重心，且不降低标量值。报酬在这里决定可行方向的符号；它没有被加入 $\sum_j\alpha_jv_j=0$ 这一额外等式，故界是 $m+1$，不是 $m+2$。这一步允许正负任意续接值，不使用紧性或最大值取得。
+
+现在对给定树的高度归纳。高度为零时，取同一个根叶。设根为 $i$-节点；对每个旧正权子节点 $j$，将归纳假设用于其有限子树 $\mathsf T_j$，得到同一子根上的新树 $\mathsf S_j$，其深度不增加，并令
+
+$$
+v_j=\operatorname{val}_f(\mathsf S_j)\ge\operatorname{val}_f(\mathsf T_j).
+$$
+
+旧零权子树对根值贡献为零；这里不修改旧树，而只把正权索引输入上述有限权重问题。它们原来的权重仍和为 $1$，其 $i$ 坐标重心仍为父坐标，其他坐标都等于父坐标。用消元选出的正支撑和新权重声明新根的全部子结果，并接上相应 $\mathsf S_j$ 的新副本。于是
+
+$$
+\operatorname{val}_f(\mathsf T')
+=\sum_j\mu_jv_j
+\ge\sum_j\lambda_jv_j
+\ge\sum_j\lambda_j\operatorname{val}_f(\mathsf T_j)
+=\operatorname{val}_f(\mathsf T),
+$$
+
+其中第一和只取新正支撑，后两和取旧正支撑。新深度至多 $1+\max_j\operatorname{depth}(\mathsf T_j)$，每个下层节点满足归纳结论，故第一项的逐树断言成立。每个新内部节点的全部系数和为 $1$；从叶向根归纳，其完整叶质量也为 $1$。没有按成功质量作除法，也没有省略新树已声明的结果。
+
+固定 $n$，受限新树类是原类的子集，故其上确界不大于 $T_n^f(a)$；逐棵优势构造使每个原类值不大于某个受限类值，给出反向不等式。再对 $n$ 取上确界即得总上确界相等。此论证从未选择最优树；$n=0$ 时两类都只有根叶。
+
+证明第二项。实 Hermite 矩阵空间维数为 $d^2$，迹为一的仿射超平面维数为 $d^2-1$；密度域含有以 $I_d/d$ 为中心的相对开邻域，故其仿射维数恰为 $d^2-1$。更精确地，若
+
+$$
+P=\sum_j\lambda_jP_j,\qquad \lambda_j>0,
+$$
+
+则对 $u\in\ker P$，有 $0=\sum_j\lambda_j\langle u,P_ju\rangle$。各项非负，所以 $\|P_j^{1/2}u\|^2=0$，进而 $P_ju=0$。因此所有这些 $P_j$ 都支撑在 $\operatorname{ran}P$。若 $s=\operatorname{rank}P$，就在面 $\mathcal D(\operatorname{ran}P)$ 的 $s^2-1$ 维仿射空间内实施同一个消元。将这一选择用于上述归纳的每个节点，就得到 $s^2$ 界。沿新树正边支撑只能缩小，故还得到根秩平方界。这里没有使用根的可逆性；旧零权坐标标签可能位于父支撑外，不适用正权支撑论证，也没有把零效果除以其迹。
+
+界的尖锐性如下。对 $m\ge1$，取 $C_i$ 中仿射无关的 $z_0,\ldots,z_m$，根的该坐标为其严格重心 $a_i$，其他坐标固定。令 $f$ 恰在这 $m+1$ 个完整终端元组上为 $1$，其余为 $0$。一步单纯形树值为 $1$，根叶值为 $0$。任何深度至多一、值至少为 $1$ 的树都须把全部正质量放在这些终端点上；分裂其他坐标不能到达它们。仿射无关性使重心坐标唯一且全部为正，故必须有至少 $m+1$ 个子节点。当 $m=0$ 时该因子是单点，内部节点至多一个子节点的结论仍成立，但单因子情形直接取根叶即可，不声称必须保留一个内部节点。
+
+密度面上的同类见证可显式构造。对秩 $s\ge2$ 的支撑，取其上正定密度 $P$ 和迹零 Hermite 基 $H_1,\ldots,H_m$，其中 $m=s^2-1$。取足够小的 $\delta>0$，使
+
+$$
+Z_0=P-\delta\sum_{a=1}^mH_a,\qquad Z_a=P+\delta H_a\quad(1\le a\le m)
+$$
+
+都正定。它们等权平均为 $P$；若 $\sum_a t_a(Z_a-Z_0)=0$，基坐标给出 $t_a+\sum_b t_b=0$，求和后得 $(m+1)\sum_b t_b=0$，再得全部 $t_a=0$。所以这 $s^2$ 个密度仿射无关，前述报酬见证适用。$s=1$ 对应已说明的零维情形。
+
+证明第三项，仅使用定理 430.3 对固定 $k,\mathbf d,H$、任意根和任意 $[0,H]$ 值函数给出的结论：
+
+$$
+\Delta_n:=\sup_{A\in X_{\mathbf d}}\sup_{g:X_{\mathbf d}\to[0,H]}
+\bigl(T_\infty^g(A)-T_n^g(A)\bigr)\longrightarrow0.
+$$
+
+先选 $N$ 使 $\Delta_N<\varepsilon/2$。对每个给定 $(A,g)$，深度至多 $N$ 的类非空且报酬有界，因此上确界定义给出一棵实际有限树 $\mathsf T$，使
+
+$$
+\operatorname{val}_g(\mathsf T)>T_N^g(A)-\varepsilon/2.
+$$
+
+对它使用第二项的新树构造，得到
+
+$$
+0\le T_\infty^g(A)-\operatorname{val}_g(\mathsf T')
+\le\Delta_N+T_N^g(A)-\operatorname{val}_g(\mathsf T)
+<\varepsilon.
+$$
+
+严格余量先于个别近似树的选取保留；从各点严格不等式直接取上确界不足以替代 $\Delta_N<\varepsilon/2$。新树构造不额外增加深度。若用 430.3 证明中的中心化索引 $n$ 和 $k$ 步移位选界，须先将总预算记为 $N=n+k$，再代入本节计数，不能把移位漏计。
+
+组合计数不要求等叶深。距离根 $j$ 条边的节点最多 $b^j$ 个，内部节点只能出现在第 $0$ 至 $N-1$ 层，所以 $I\le\sum_{j=0}^{N-1}b^j$、$V\le\sum_{j=0}^{N}b^j$。叶数界对剩余高度归纳：根叶贡献 $1\le b^N$，否则至多 $b$ 棵子树各有至多 $b^{N-1}$ 片叶。因此 $L\le b^N$，而每个非根节点恰有一条入边，给出 $E=V-1$。等比求和就是陈述中的四个界。$b=1$ 时树是一条有限路径，直接得到所列界；$N=0$ 时内部节点和边的求和为空。若所有根密度秩均为一，正权后代的每个坐标只能等于对应根坐标，旧零权分支不贡献值，故所有树值就是根报酬，直接取深度零。$H=0$ 时同样直接取根叶。
+
+对于共同区间 $[L_0,U_0]$ 中的有符号函数，令 $g=f-L_0$。完整叶质量为 $1$ 给出 $\operatorname{val}_f=\operatorname{val}_g+L_0$，所有有限深度和总上确界也平移 $L_0$，所以误差不变。这里必须有共同有限幅度，不声称对没有共同幅度界的全体有界函数存在同一 $N$。430.3 本来假设 $k\ge1$；若另行扩展到 $k=0$，规定空坐标乘积为单点，且无坐标可分裂，则只允许根叶，$L=V=1$、$I=E=0$，不对空集合取 $\max_i d_i^2$。
+
+证明第四项。只在假设 430.2 的完整接口下使用 430.3 的物理桥。沿旧协议每个真实历史 $v$，把辅助态、已执行分支、局部控制及丢弃合成为两方从原始记录输入出发的完全正映射 $\Lambda_{A,v},\Lambda_{B,v}$。该桥给出累计输入效果
+
+$$
+\widehat X_{v,A}=\Lambda_{A,v}^{*}(I),\qquad
+\widehat X_{v,B}=\Lambda_{B,v}^{*}(I),
+$$
+
+根为 $(I_2,I_2)$；若 Alice 行动，则 $\sum_j\widehat X_{vj,A}=\widehat X_{v,A}$，Bob 因子不变，反之亦然。遗忘过的实际历史仍可作为完整求和索引，但不成为旧协议后来可用的控制。这里复用的是 430.3 对真实历史的结果：在相同实际标签共用一个全系统酉反馈、全部接受映射等于 $p\operatorname{id}_S$ 的条件下，每个非零接受真实历史的效果必为 $tP_x\otimes P_y$，其中 $(P_x,P_y)\in\mathcal S_r$，其接受标量为 $t h(r)$。无需重新证明五射线平坦性或把结论错误施加到合并后的标签上。
+
+令 $X_{v,i}=\widehat X_{v,i}/2$，得到根为 $\Omega_{(2,2)}=(I_2/2,I_2/2)$ 的完整加性树，再用 430.3 的保深度、保报酬翻译得到坐标树 $\mathsf T$。零迹因子依照定义 430.1 贡献零，不作除法。因每个叶张量效果缩小为原来的四分之一，且旧拒绝叶的 $V_{0,r}$ 也可能为正，桥接方向是
+
+$$
+p(\Pi)\le4\operatorname{val}_{V_{0,r}}(\mathsf T).
+$$
+
+使用第二项得到同根、深度不增加、值不减的四分叉新坐标树 $\mathsf T'$。把它翻译为加性树，并对其每个局部因子作 $\widehat X_{v,i}=2X_{v,i}$，则根回到 $(I_2,I_2)$，每个叶张量效果乘以 $4$，归一化终端密度不变。新坐标边权严格为正，故这些局部因子的迹均正；它们仍可秩亏。这些坐标始终是归一化累计输入效果，不是后测量条件态。
+
+为保证四个数学子节点恰对应至多四个实际结果，完整写出提升及其累计恒等式。对新加性树的一个非零局部父因子 $A=\sum_{j\in J_v}A_j$，$1\le|J_v|\le4$，令 $P$ 为 $A$ 的支撑投影，$A^{-1/2}$ 为支撑上的逆并在核上置零，置
+
+$$
+L_j=\sqrt{A_j}A^{-1/2},\qquad Q=I_2-P.
+$$
+
+由 $0\preceq A_j\preceq A$，每个 $A_j$ 支撑于 $P$，所以
+
+$$
+\sum_jL_j^\dagger L_j=P,\qquad
+L_j\sqrt A=\sqrt{A_j}P=\sqrt{A_j},\qquad Q\sqrt A=0.
+$$
+
+选一个已有的 $j_0\in J_v$，定义整个实际结果族
+
+$$
+\Phi_j(Z)=L_j ZL_j^\dagger+\mathbf1_{j=j_0}\,QZQ.
+$$
+
+各 $\Phi_j$ 完全正，且
+
+$$
+\sum_j\Phi_j^{*}(I_2)=\sum_jL_j^\dagger L_j+Q=I_2.
+$$
+
+故总和在原始完整量子比特空间上保迹，每个分支迹不增加。$Q$ 通常非零，它只是 $j_0$ 内部的额外隐藏 Kraus 项；它不是第五个实际结果。特别地，对全部 $Z\in\mathcal L(\mathbb C^2)$，有精确的累计映射恒等式
+
+$$
+\boxed{\Phi_j\circ\operatorname{Ad}_{\sqrt A}(Z)
+=\operatorname{Ad}_{\sqrt{A_j}}(Z),\qquad
+\operatorname{Ad}_B(Z)=BZB^\dagger.}
+$$
+
+因为主项用 $L_j\sqrt A=\sqrt{A_j}$，隐藏项用 $Q\sqrt A=0$。这没有假设 $A$ 与 $A_j$ 对易，也没有声称 $QZQ$ 作为独立分支在任意 $Z$ 上为零。
+
+将恒等式沿全树递归。令节点 $v$ 的两方物理因子为 $A_v,B_v$，$C_v=\sqrt{A_v}\otimes\sqrt{B_v}$。对任意附加有限维空间 $Z_0$，实际前缀 $v$ 的累计分支在全部矩阵 $Y\in\mathcal L(Z_0\otimes R_A\otimes R_B)$ 上满足
+
+$$
+Y\longmapsto(I_{Z_0}\otimes C_v)Y(I_{Z_0}\otimes C_v)^\dagger.
+$$
+
+根处 $C_\varnothing=I$。若 Alice 下一步取得 $j$，主累计 Kraus 为
+
+$$
+(L_j\otimes I_2)C_v=\sqrt{A_{vj}}\otimes\sqrt{B_v},
+$$
+
+而 $j_0$ 中的隐藏累计 Kraus 为 $(Q\otimes I_2)C_v=0$。因此完整的已观察结果映射恰是子节点公式；Bob 的步骤交换两因子即可。这证明前缀恒等式对所有 $Y$ 成立，隐藏零项经任何后续完全正映射仍为零。取 $Z_0=F\otimes S$，并取
+
+$$
+Y=(I_F\otimes J)X_{FS}(I_F\otimes J)^\dagger,
+$$
+
+便覆盖全部系统／参考矩阵，而非只覆盖某个已选输入态。
+
+对新树中平坦叶的物理效果 $tP_x\otimes P_y$，定义
+
+$$
+z_i=\frac{\langle x\otimes y\mid q_i\rangle}{\sqrt{h(r)}},\qquad
+|z_i|=1,\qquad U_\ell=\operatorname{diag}(\overline z_i)_{i=1}^5.
+$$
+
+430.3 的终端效果公式给出迹掉全部记录后的系统 Kraus
+
+$$
+K_\ell=\sqrt{t h(r)}\operatorname{diag}(z_i),\qquad
+U_\ell K_\ell=\sqrt{t h(r)}I_5.
+$$
+
+于是该叶校正后在每个系统矩阵上恰为 $X\mapsto t h(r)X$。按参考空间的矩阵单位展开，同一等式张量 $\operatorname{id}_F$ 后在每个 $X_{FS}$ 上仍成立。给每个新终端实际前缀自己的实际标签，接受全部平坦叶，拒绝全部其他叶；每个标签只用上述一个反馈，其中全部隐藏项共用该反馈。所有拒绝叶和每个仪器的完备性项仍属于新实验。求和得
+
+$$
+\mathcal T'=p'\operatorname{id}_S,\qquad
+p'=\sum_{\ell\ \mathrm{flat}}t_\ell h(r)
+=4\operatorname{val}_{V_{0,r}}(\mathsf T')
+\ge4\operatorname{val}_{V_{0,r}}(\mathsf T)\ge p(\Pi).
+$$
+
+完整仪器与终端酉保持总概率，故 $0\le p'\le1$。新策略保留并在需要时通信自己的实际前缀，所选仪器、接受规则及反馈只依赖这些已取得的信息和已知 $r$。没有重新取得旧协议遗忘的结果，没有读取隐藏 Kraus 指标，也没有加入共享纠缠、量子通信或提前操作 $S$。依 430.2，纯经典通信、记账和终端系统酉不另计局部仪器节点；本构造每个内部节点只实施上述一个完整局部仪器，故深度及实际分叉数正好满足所述界。严格正的数学边权只保证正迹效果，不保证每个结果对每个未知物理输入都有正概率。
+
+由逐旧协议优势与受限协议类的包含关系，得到每个固定深度的物理上确界相等，再对有限深度取上确界。与 430.3 的 $p_n=4T_n^{V_{0,r}}$、$\eta_{\mathrm{fin}}=4T_\infty^{V_{0,r}}$ 联立即得第四项的等式，仍不需要取得性。
+
+最后取统一近似协议。430.2 中
+
+$$
+V_{0,r}=h(r)\mathbf1_{\mathcal S_r},\qquad
+h(r)=\frac1{3(1+\kappa(r))},\qquad
+\kappa(r)=\frac{\sqrt{4+2(r^2+r^{-2})}}3,
+\qquad H_0=\frac1{3+2\sqrt2}.
+$$
+
+纯态条件和五个连续平坦等式使 $\mathcal S_r$ 闭，故 $V_{0,r}$ 上半连续；$r^2+r^{-2}\ge2$ 给出 $0\le V_{0,r}\le H_0$。直接使用 430.3 在根 $\Omega_{(2,2)}$ 上的统一上半连续误差 $E_N^{\mathrm{USC}}(H_0;(2,2))\to0$，先选 $N$ 使
+
+$$
+4E_N^{\mathrm{USC}}(H_0;(2,2))<\varepsilon/2.
+$$
+
+对每个 $r$，再选择实际有限树 $\mathsf T$，深度至多 $N$ 且值大于 $T_N^{V_{0,r}}(\Omega_{(2,2)})-\varepsilon/8$。新树构造及上述提升给出
+
+$$
+0\le\eta_{\mathrm{fin}}(r)-p'
+\le4E_N^{\mathrm{USC}}(H_0;(2,2))
++4\bigl(T_N^{V_{0,r}}(\Omega_{(2,2)})-\operatorname{val}_{V_{0,r}}(\mathsf T)\bigr)
+<\varepsilon.
+$$
+
+这里的中心化上半连续界已经给出总深度 $N$，不额外加两层。将第三项计数取 $b=4$ 即得全部物理计数，包括 $N=0$ 的一个终端历史、零内部节点和零边。证毕。
+
+**434节的等式、记录与取得性边界。** 单侧优势不能加强为每棵旧树的报酬精确保持。取 $C=[-1,1]$、根 $0$，令 $f(-1)=f(1)=1$，其余点为 $0$。一步分解 $(-1,0,1)$ 的权重为 $(1/4,1/2,1/4)$ 时值为 $1/2$。若新树深度至多一且至多两个正权子点：两个端点都出现时值为 $1$；没有端点时值为 $0$；只有端点 $1$ 时，另一点必为 $x\in(-1,0)$，端点权重为 $-x/(1-x)<1/2$，值也严格小于 $1/2$；只有端点 $-1$ 的情形对称。根叶值为 $0$。因此不存在这样的新树精确保留 $1/2$，而两端点等权树给出严格优势 $1$。
+
+保留原始记录树的分叉界也不成立。在单点域 $C=\{a\}$ 上，旧根有 $M\ge2$ 个不同实际标签，各权重 $1/M$、坐标均为 $a$。若须逐一保留这些原始根结果，根仍有 $M$ 个子节点，不能满足零维界 $m+1=1$；另取根叶却可保持任意终端坐标报酬。物理版本是量子比特上完整仪器 $\Phi_j(Z)=Z/M$，$1\le j\le M$。当 $M>4$ 时，逐一保留其原始根记录需要超过四个实际结果。这只反驳原节点和原记录逐项保留的要求；不反驳允许改变记录结构、增加步骤或另供随机性的终端分布模拟。定理没有把这些额外要求偷带进标量目标。
+
+有限分叉与有限深度也不保证一般有界报酬的最大值取得。例如仍取根 $0\in[-1,1]$，令 $f(x)=|x|$ 当 $|x|<1$，而 $f(-1)=f(1)=0$。每个点的值严格小于 $1$，故每棵有限树的有限加权平均严格小于 $1$；但对任意 $0<a<1$，一步等权分裂到 $\pm a$ 的值为 $a$。所以 $T_1^f(0)=T_\infty^f(0)=1$，却没有任何有限树取得它。此例针对任意有界报酬的一般断言，不改判其他章节在额外正则性假设下的取得性结论。
+
+**434节的来源与范围。** 有限权重问题具有至多 $m+1$ 秩的重心及质量约束，报酬是线性目标；所用仿射相关、方向选取和最小比值边界步骤属于经典 Carathéodory／有限线性规划方法。Carathéodory 的1911年论文 [Über den Variabilitätsbereich der Fourier’schen Konstanten von positiven harmonischen Funktionen](https://doi.org/10.1007/BF03014795) 是历史书目，此处不以未核对的1911原文作为本节精确命题的证据。有限线性规划的原始背景可参见 G. B. Dantzig，[*Maximization of a Linear Function of Variables Subject to Linear Inequalities*](https://cowles.yale.edu/sites/default/files/2022-09/m13-all.pdf)，收入 T. C. Koopmans 编 *Activity Analysis of Production and Allocation*（1951），第 XXI 章，尤其第341页定理A及第341—342页的可行方向与最小比值步骤。该有限线性规划背景不提供本节整个树类的最优取得性；本节有限消元的全部必要步骤已在证明中给出。
+
+D. Leung、A. Winter、N. Yu，[*LOCC protocols with bounded width per round optimize convex functions*, arXiv:1904.10985v1](https://arxiv.org/abs/1904.10985v1)，§3.2 定理4、推论5、引理6及定理7，是更直接的先行结果：固定重心的极端分布有至多 $m+1$ 个支撑点，局部测量有维数平方的支撑界，并可为线性或凸目标选择较优协议分量。该文定理7的陈述使用“相同成功概率”，其证明的选优步骤首先给出“不低于”，而等号使用原协议最优性。本节只使用独立证明的单侧优势，不从该措辞推出任意旧树报酬可精确保留，也不把任意终端坐标函数自动视为整个物理仪器上的凸函数。
+
+E. Chitambar、D. Leung、L. Mančinska、M. Ozols、A. Winter，[*Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)*, arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，定理2及附录A，保持一个预先指定的有限结果目标仪器，以反复 Carathéodory 分解控制中间结果，并在末端粗粒化；附录A引理3明述通常的 $m+1$ 点定理。其界涉及目标结果数、全局维数及剩余通信轮数。其轮次允许一方的仪器连同其他方的条件保迹操作；430.2 则把每个实际局部仪器、包括单例通道，都计一个路径节点。因此该文的目标仪器保持与轮次界不能直接替代本节的标量优势、当前父秩界或精确四结果深度结论。
+
+本卷[固定源码](https://github.com/the-omega-institute/trureturing/blob/72a1a0426ef79dff4206d15ab29d27758beb1630/docs/develop/theory/QUANTUM-REALITY.md)中的定理 421.1 已给出同一五射线接口的至多五结果有限深度实现；定理 422.1 对系统维数 $d$、局部记录维数 $d_a$ 给出保持整个聚合接受 Choi 映射的 $d^4+d_a^2$ 结果界，在此为 $5^4+2^2=629$。这些既有结果与 430.3 的统一深度已可导出较粗的物理近似规模界。本节陈述的是任意有界终端坐标报酬的同深度新树优势、当前父支撑秩平方细化，以及满足 430.2 全合同的四结果组合计数，不作首次有限规模或优先权主张。
+
+关键联系是：标量目标选择可行方向，不增加重心约束的维数；完整空间的补项必须保留，却可置于已有实际结果内部，并在累计输入边界上严格消失。这两点一起使四结果构造与完整仪器、全系统和全参考等式相容。
+
+430.3 对规模界的“不声称”不是不可能性定理。本节的量词是每个精度有共同有限深度和组合数界，再对每个根、报酬或参数分别存在一棵新树。它不限制所有旧协议的大小，不保留旧记录输出仪器、遗忘机制或原标签商，不给出共同协议、数值 $N$、收敛速率、任意黑箱报酬的有效构造算法、精确全局最优协议或无限协议。所计对象仅为树节点、边、实际结果及实际历史，不是参数精度、稳定性、记忆维数、硬件、时间、能量或总物理资源；抽象完全正实现也不是装置建造证明。以上是有限维纯理论推导，不构成 Lean 或其他机器形式验证声明。
+
+## 追加锚（本行以下为增补区）
