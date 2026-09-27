@@ -168,7 +168,8 @@ spacetime or holographic duality remain research questions.
 
 ## Information escape
 
-We are developing an **information-escape judge** around four questions:
+A **readout** is a way of observing a state. We are developing an
+**information-escape judge** around four questions:
 
 - **Where did information escape?** Name the objects, assumptions and
   observations under which distinct states remain indistinguishable.
@@ -180,10 +181,10 @@ We are developing an **information-escape judge** around four questions:
   indistinguishable pair, prove none remain within the stated scope, or mark
   the boundary open.
 
-A **readout** is a way of observing a state. Fix a catalog of registered theorem
-occurrences and their readouts on one shared state space. Remove one occurrence
-while keeping the others fixed. Its **unique captures** are the pairs of distinct
-states that were distinguishable before removal and indistinguishable afterward. The
+Fix a catalog of registered theorem occurrences and their readouts on one
+shared state space. Remove one occurrence while keeping the others fixed.
+Its **unique captures** are the pairs of distinct states that were
+distinguishable before removal and indistinguishable afterward. The
 [EscapePairs definitions and proofs](D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean)
 formalize this comparison.
 
