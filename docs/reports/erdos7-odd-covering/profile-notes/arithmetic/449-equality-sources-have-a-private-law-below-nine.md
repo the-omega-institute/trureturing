@@ -10,7 +10,7 @@ This result allows incidence five at every full root. It uses actual private poi
 
 The next cut values66/63 and67/63 force actual nineteen-point laws with bound159/19. The68/63 and69/63 strata have eighteen-point laws with bound79/9. The saturated-block transport theorem below controls every cut78/63, with the sharp local refinement giving bound233/26. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate.
 
-The complete classifications below also control every70/63,71/63 and72/63 source, with bounds643/72,79/9 and643/72 respectively. At73/63, twelve of thirteen necessary families and six further fully active shapes are controlled:48 of117 shapes are excluded and26 receive actual supported laws, with bound at most206/23. The fully active public3/private26 family has43 remaining necessary shapes. The general fixed-head cut window remains73/63 through77/63; specified profiles within that window are separately controlled.
+The complete classifications below also control every70/63,71/63 and72/63 source, with bounds643/72,79/9 and643/72 respectively. At73/63, twelve of thirteen necessary families and eleven further fully active shapes are controlled:48 of117 shapes are excluded and31 receive actual supported laws, with bound at most206/23. The fully active public3/private26 family has38 remaining necessary shapes. The general fixed-head cut window remains73/63 through77/63; specified profiles within that window are separately controlled.
 
 These are ordinary proofs with exact construction controls, not new Lean-certified declarations. They do not prove that every remaining source contains this structure, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
 
@@ -4241,9 +4241,9 @@ Across the fourteen families the possible displayed bounds are
 
 Their maximum is643/72, with strict margin5/72 below nine. This proves(C72-law). The bound is a common uniform upper bound, not a claimed sharp optimum over every source or phase layout.
 
-## Cut73: twelve complete families and43 remaining shapes
+## Cut73: twelve complete families and38 remaining shapes
 
-Retain the SAME literal4555 source, the original five/seven coordinates, all legal pair-restriction tests and the standalone five-tree premise. This section controls twelve of the thirteen necessary normalized-cut73 profile families and six of the49 shapes in the remaining family. It does not assert a complete cut73 theorem or an unrestricted odd-covering result. These are ordinary proofs and exact finite controls, not Lean verification. Every probability is supported on actual source points and chosen before the original numerical phase queries.
+Retain the SAME literal4555 source, the original five/seven coordinates, all legal pair-restriction tests and the standalone five-tree premise. This section controls twelve of the thirteen necessary normalized-cut73 profile families and eleven of the49 shapes in the remaining family. It does not assert a complete cut73 theorem or an unrestricted odd-covering result. These are ordinary proofs and exact finite controls, not Lean verification. Every probability is supported on actual source points and chosen before the original numerical phase queries.
 
 The root order is gap4/full5/full5/full5. As in the cut72 classification, a normalized cut has raw capacity7T+7k+2Z: T records top-root and child cuts, k the public prefix cost in leaf units, and Z the private prefix cost. A finite private leaf costs1 and a whole private seven-column costs3. Inactive children remain in the original source; deleting them is not presumed to preserve standalone or literal blocking.
 
@@ -4261,11 +4261,11 @@ The [necessary-profile enumerator](../../frontier/cover-geometry/height_two_cut7
 |4055|0|26|1|impossible|
 |4455|4|19|4|one law,328/37|
 |4555|1|33|13|impossible|
-|4555|3|26|49|six shapes,79/9;43 unresolved|
+|4555|3|26|49|eleven shapes,79/9;38 unresolved|
 |4555|5|19|35|one law,79/9;29 shapes impossible|
 |4555|7|12|3|impossible|
 
-The full-root permutations in each row preserve their original roles when constructing the actual probability. Necessary shapes are not claims of realizability. The twelve complete families contain68 shapes:48 are excluded, while20 shape cases receive the stated universal laws. Six additional fully active shapes also have the79/9 law, bringing the handled total to74 of117. This counts mathematical cases, not the number of actual sources.
+The full-root permutations in each row preserve their original roles when constructing the actual probability. Necessary shapes are not claims of realizability. The twelve complete families contain68 shapes:48 are excluded, while20 shape cases receive the stated universal laws. Eleven additional fully active shapes also have the79/9 law, bringing the handled total to79 of117. This counts mathematical cases, not the number of actual sources.
 
 ### A public-five triangle obstruction
 
@@ -4759,9 +4759,61 @@ In every case the eighteen points have distinct original child owners and distin
 
 in divisor order(1,5,7,25,35,49,175,245,1225), hence envelope79/9. This is one law on the unchanged source. The other fully active public3/private26 shapes and unrestricted odd covering remain separate.
 
+### Full cut73: five further gap1222 shapes
+
+Ordinary proof, not Lean verification. The following five public3/private26 shapes each have one actual supported law with ordered numerical-LCM envelope79/9:
+
+    1222 / 01222 / 11111 / 11113
+    1222 / 01222 / 11111 / 11122
+    1222 / 01222 / 11112 / 11112
+    1222 / 01223 / 11111 / 11112
+    1222 / 01233 / 11111 / 11111.
+
+Private cost-three prefixes retain both possibilities: three finite leaves or one whole column. This proof uses actual-tree tests; it does not require the separate matched-flow actuality lemma.
+
+#### Public G and distinct private anchors
+
+Except for the second shape, singleton-triple tests at two full roots each having at least four singleton children lock those families into distinct H columns. The tight public3+private3+private3 tests force finite P to be three leaves in one G, distinct from the H columns; whole P is already G. Testing the other full singleton triples against these anchors locks their private singleton labels in further distinct H columns.
+
+The second shape needs a separate finite-public argument. Its clean root C has five singletons; singleton exchange in tests against the gap singleton-plus-double restriction locks C into H_C. All three gap minimum private restrictions and all three minimum restrictions zero+singleton+double at the01222 root have three actual private candidates. Each such triple, together with P, must form the two branches outside H_C. Thus P occupies at most two columns. If P has type2A+1B, each such private triple has complementary vector1A+2B. Pair a gap minimum restriction with a01222 minimum restriction; their whole projection would lie in A,B, violating a ternary tree. Therefore finite P is one G branch. Now the exactly-three singleton children at11122, tested against a clean triple, must be three actual leaves in a third H column. All other locks proceed as usual. This argument does not use an exchange among only three singleton children.
+
+At the gap1222 root, its singleton z and every double form a tight private triple against a full singleton anchor. They are actual and lie in one K outside G and every full anchor column. The three two-element double sets avoid z, and any two have union of size at least three: otherwise their legal gap pair against an anchor triple has only G and the anchor as full branches. Hall selects three distinct double representatives. Together with z these give four distinct actual private points at four gap owners.
+
+At a full root01222,01223 or01233, its zero, singleton w and any double form a tight private triple against an anchor. All singleton and double leaves there are actual, lie in one H, and every double avoids w. Testing a minimum restriction against the gap minimum restriction and against the other full anchors makes H different from K and all those anchor columns. A01222 root's three double sets have distinct representatives, by the same pair-union test using zero+two doubles. It supplies four private points and, when needed, one actual G point at its zero owner. A01223 root's two double sets admit two distinct representatives, giving three private points and one actual zero-owner G point.
+
+At11112 or11122, a double has an actual H point outside all singleton labels. Indeed pair the double and any two singleton siblings against another locked full singleton triple. A third branch must be H; the double alone cannot form a new three-leaf branch elsewhere. It supplies an actual H leaf outside the chosen pair. Its at-most-two actual H leaves could fit in some pair if all belonged to the singleton family, a contradiction. This applies when there are three or four singleton siblings.
+
+#### The01233 cost-three extension
+
+In the last shape, let w and E be the singleton and unique double at01233, in H. Select either cost-three owner D at that root. There are three other private anchors: gap K and the two clean full columns H1,H2. For every one of them, pair the full restriction(zero,w,D) with its minimum actual private triple.
+
+For a finite cost-three cut, the actual private support of that restriction is contained in {w} plus three candidates, so has at most four leaves outside G. It must contain a three-leaf branch different from the tested anchor. A set of at most four leaves has at most one column containing three leaves. The same actual restriction is used against all three anchors; its unique three-leaf column L therefore avoids all of K,H1,H2 and G. If L=H, D supplies at least two actual L leaves different from w; if L differs from H, D supplies all three L leaves.
+
+For a whole private column L at D, the restriction support is contained in G, H and L, with only w available in H if L differs from H. Pairing with each anchor rules out L=G or any of K,H1,H2. The L branch requires at least two actual D leaves different from w when L=H, or at least three when L differs from H.
+
+In either form D supplies an eligible actual set W of at least two leaves outside G,K,H1,H2 and {w}. The double E is another two-element actual set satisfying the same exclusions. Choose different representatives from E and W. Together with w and any actual G point at the zero owner, these are four distinct original owners and labels at the01233 root. The other cost-three owner is not selected.
+
+#### The five selections
+
+For the first shape, take gap4,01222's four private points plus zero, clean5 and the four11113 singleton points:4+5+5+4=18. The11113 cost-three owner is not used.
+
+For the second, take gap4,01222's five points, clean5, and the11122 three singletons plus one extra double point:4+5+5+4=18.
+
+For the third, take gap4,01222's five points, the four singletons at each11112 root, and one extra double point at either:4+5+5+4=18.
+
+For the fourth, take gap4,01223's three private points plus zero, clean5 and11112's five points:4+4+5+5=18. The01223 cost-three owner is not needed.
+
+For the fifth, take gap4, the four01233 points just constructed, and both clean five-point families:4+4+5+5=18.
+
+Each selection has distinct actual seven labels and original child owners. The gap column has four selected points, the clean/full anchor columns at most five, G one point, and any additional01233 column at most one point. Thus every column has at most five. The single uniform law has caps
+
+    (1,5/18,5/18,1/18,5/18,1/18,1/18,1/18,1/18)
+
+in divisor order(1,5,7,25,35,49,175,245,1225), hence envelope79/9. No conclusion about the other necessary full-k3 shapes or unrestricted odd covering is asserted.
+
 ### Exact actual-source controls and the residual gap
 
-Seven standard-library constructors retain the actual numerical coordinates, owners and one common probability on each source:
+Eight standard-library constructors retain the actual numerical coordinates, owners and one common probability on each source:
 
 |constructor and exact data|actual sources|additional scope checked|
 |---|---:|---|
@@ -4772,16 +4824,19 @@ Seven standard-library constructors retain the actual numerical coordinates, own
 |[partial public4/private19](../../frontier/cover-geometry/height_two_cut73_partial_k4.py), [data](../../frontier/cover-geometry/height_two_cut73_partial_k4.json)|24|all eight shapes in both public forms, actual eighteen-point selections, public-point reassignment and the entire-projection puncture branch|
 |[fully active one-clean-root](../../frontier/cover-geometry/height_two_cut73_one_clean.py), [data](../../frontier/cover-geometry/height_two_cut73_one_clean.json)|2|whole-public support, including two zero owners with the same sole public leaf|
 |[fully active zero/cost-three shapes](../../frontier/cover-geometry/height_two_cut73_zero_triple.py), [data](../../frontier/cover-geometry/height_two_cut73_zero_triple.json)|15|all five shapes; finite private prefixes, thin whole prefixes with only three actual leaves, and finite public support|
+|[five further gap1222 shapes](../../frontier/cover-geometry/height_two_cut73_gap1222.py), [data](../../frontier/cover-geometry/height_two_cut73_gap1222.json)|10|finite and whole cost-three prefixes, thin actual support, and the01233 eligible-leaf selection|
 
-Each source has a checked integral maximum flow and a matching actual cut of73, passes480 pair tests and10000 complete literal tests, and has a standalone five-tree. Each selected law is checked on1767 original numerical cylinders and81 ordered LCM terms. The66 controls therefore check31680 pair tests,660000 complete literal tests,116622 cylinders and5346 ordered LCM terms. These finite controls corroborate the constructions; the universal implications are proved above.
+Each source has a checked integral maximum flow and a matching actual cut of73, passes480 pair tests and10000 complete literal tests, and has a standalone five-tree. Each selected law is checked on1767 original numerical cylinders and81 ordered LCM terms. The76 controls therefore check36480 pair tests,760000 complete literal tests,134292 cylinders and6156 ordered LCM terms. These finite controls corroborate the constructions; the universal implications are proved above.
 
 The six190-point full-k5 controls are supplemented by a182-point source whose zero owner's only actual G-leaf is G6, outside the original G0,...,G4 branch. Replacing one branch leaf includes that point without changing its owner. All seven controls have an actual eighteen-owner/eighteen-leaf selection with column cap5; their measured envelopes are79/9 or149/18. The six partial2555 controls have measured envelope1391/165, below127/15. The single-active controls include both repeated-label branches and all five possible maximum column counts; the M4 and M5 examples attain their stated249/28 cap envelope. The0555 control has envelope41/5. Each partial3455 source checks1200 complete restrictions and7200 common-G pair tests; both attain3761/459. No source is manufactured for an excluded shape.
 
-The24 partial-public4 controls consist of the eight shapes in both public forms, plus cases C and H in both forms with either a deficient active matching or a public-point reassignment. In the four deficient examples the maximum owner/leaf matching on the active support is exactly17, and a legal gap pair has its entire actual projection of size two. The supported puncture law has measured envelope307/37, below328/37. The other20 examples have an actual uniform eighteen-point law with envelope79/9. All24 have matching actual maximum flow and cut73. Their individual counts are11520 pair tests,240000 complete literal tests,42408 numerical cylinders and1944 ordered LCM terms; these are included in the66-source totals above.
+The24 partial-public4 controls consist of the eight shapes in both public forms, plus cases C and H in both forms with either a deficient active matching or a public-point reassignment. In the four deficient examples the maximum owner/leaf matching on the active support is exactly17, and a legal gap pair has its entire actual projection of size two. The supported puncture law has measured envelope307/37, below328/37. The other20 examples have an actual uniform eighteen-point law with envelope79/9. All24 have matching actual maximum flow and cut73. Their individual counts are11520 pair tests,240000 complete literal tests,42408 numerical cylinders and1944 ordered LCM terms; these are included in the76-source totals above.
 
 The two one-clean-root controls have159 and147 actual points. In the latter, both zero-private owners have the same sole actual G-leaf; the selection uses just one of them. Both have actual maximum flow and cut73, distinct eighteen-owner/eighteen-leaf selections, and envelope79/9. They add960 pair tests,20000 complete literal tests,3534 numerical cylinders and162 ordered LCM terms to the combined counts. Finite public support is excluded by the proof and has no positive control.
 
-The15 zero/cost-three controls use three actual realizations per shape: whole public support with finite private leaves, whole public support with thin whole-private prefixes having only three actual leaves, and finite public support with two distinct whole-private columns supporting standalone. All have matching actual maximum flow and cut73, a single uniform eighteen-point law and envelope79/9. They contribute7200 pair tests,150000 complete literal tests,26505 numerical cylinders and1215 ordered LCM terms, included in the66-source totals.
+The15 zero/cost-three controls use three actual realizations per shape: whole public support with finite private leaves, whole public support with thin whole-private prefixes having only three actual leaves, and finite public support with two distinct whole-private columns supporting standalone. All have matching actual maximum flow and cut73, a single uniform eighteen-point law and envelope79/9. They contribute7200 pair tests,150000 complete literal tests,26505 numerical cylinders and1215 ordered LCM terms, included in the76-source totals.
+
+The ten further-gap1222 controls cover all five shapes, including finite and thin whole-private variants and two finite-public controls, with matching flow/cut73 and envelope79/9. The01233 selection uses actual eligible leaves at the selected cost-three owner; thin whole-prefix variants preserve only actual source incidences. These controls add4800 pair tests,100000 complete literal tests,17670 numerical cylinders and810 ordered LCM terms to the76-source totals.
 
 Reproduce the inventories and actual-source controls with:
 
@@ -4794,9 +4849,10 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut73_partial_k4.py
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut73_one_clean.py
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut73_zero_triple.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut73_gap1222.py
 ```
 
-The largest bound over the treated source families is206/23<9. This is conditional on membership in those twelve families or the six additional fully active shapes, not a common bound for all cut73 sources. The remaining necessary cases are the other43 fully active public3/private26 shapes. The program also produces necessary inventories for74 through77, but those outputs alone establish neither source realizability nor a supported-law theorem at those cuts. The unrestricted original-cofactor and common-law lift remain separate unproved obligations.
+The largest bound over the treated source families is206/23<9. This is conditional on membership in those twelve families or the eleven additional fully active shapes, not a common bound for all cut73 sources. The remaining necessary cases are the other38 fully active public3/private26 shapes. The program also produces necessary inventories for74 through77, but those outputs alone establish neither source realizability nor a supported-law theorem at those cuts. The unrestricted original-cofactor and common-law lift remain separate unproved obligations.
 
 ## Remaining source and arithmetic gaps
 
@@ -4804,7 +4860,7 @@ All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are contro
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
 The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. The public-column/two-public-leaf cut supplier also gives T3 for its distinguished mass20 block under the exact matched-cut hypothesis; it can be combined with the simultaneous consumer only when the other dangerous blocks of that same flow also have T3. Excluding every remaining terminal trap, or supplying a further global reroute, remains missing.
-The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. The fully active public4/private22 family also has an actual eighteen-point law for every one of its22 necessary shapes and every finite or whole-prefix realization. This completes all fourteen cut72 families and proves(C72-law) with bound643/72. At cut73, twelve complete families and six additional fully active shapes account for74 of117 necessary shapes:48 exclusions and26 supported-law cases, bounded by206/23. The other43 fully active public3/private26 shapes remain unresolved. General high-incidence sources in the remaining
+The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. The fully active public4/private22 family also has an actual eighteen-point law for every one of its22 necessary shapes and every finite or whole-prefix realization. This completes all fourteen cut72 families and proves(C72-law) with bound643/72. At cut73, twelve complete families and eleven additional fully active shapes account for79 of117 necessary shapes:48 exclusions and31 supported-law cases, bounded by206/23. The other38 fully active public3/private26 shapes remain unresolved. General high-incidence sources in the remaining
 range73/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
 whole-column shapes at75/63 and77/63 are controlled by(WC1), but this
