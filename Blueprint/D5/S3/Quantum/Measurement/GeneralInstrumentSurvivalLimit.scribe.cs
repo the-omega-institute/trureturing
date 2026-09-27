@@ -48,7 +48,8 @@ internal sealed class GeneralInstrumentSurvivalLimitDocument : IScribeDocumentDe
             Sp, Plus, Sp, Sum, Underscore, Grp(I, Sp, InMacro, Sp, Iota), Sp,
             Sub("L", I), Caret, Grp(Star), Sp, Sub("L", I), Sp, Eq, Sp, F.Id("I"));
         Formula chain = Seq(
-            D(0), Sp, Leq, Sp, Sub("S", Seq(N, Plus, D(1))), Sp, Leq, Sp, Sub("S", N), Sp, Leq, Sp, F.Id("I"),
+            D(0), Sp, Leq, Sp, Sub("S", N), Comma, Quad, Sp,
+            Sub("S", Seq(N, Plus, D(1))), Sp, Leq, Sp, Sub("S", N), Sp, Leq, Sp, F.Id("I"),
             Comma, Quad, Sp, Eff, Sp, Leq, Sp, Sub("S", N), Comma, Quad, Sp,
             Sub("S", N), Sp, To, Sp, Eff);
         Formula fixedPoint = Seq(
