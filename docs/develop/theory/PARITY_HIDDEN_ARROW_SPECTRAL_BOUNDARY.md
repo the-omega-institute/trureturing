@@ -37503,3 +37503,512 @@ No stronger sigma rate, eta^3/delta restriction, t^2>>log Q assumption or smalle
 本章的模型内推导是线性电荷与外部补偿量的精确对应 (143.12)，以及在同一实际符号条件后验内的加权比较 (143.23)–(143.31)。外部整数位移无需有界；它除以外部标准差后趋零，而全计数盒包络同时支付尾部。文献版本、定理条件及未适用的展开见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
 
 ## 追加锚（本行以下为增补区）
+
+## 144. 少数符号相在驻点消失前进入指数边界层
+
+负号条件化允许一个不同于驻点消失的转变：负半轴的内部峰仍然存在，但边界已经承载主要条件概率。本章在第 143 章之外的增长正外场下，直接归一化负号分支，并把有限噪声密度比和尾部控制迁回原完整选择计数。任意慢的尺度分离及原严格半指数噪声范围均保留。
+
+### 144.1 原完整选择律的指数边界结论
+
+**定理 144.1（少数符号相的边界尺度）。** Fix the original admissible amplitude, beta in (1/2,1), and every original legal deterministic floor/scale sequence. Define the distinct limiting constants
+$$
+ \kappa_c=\frac23\sqrt{\frac23},\qquad
+ \kappa_{\rm sp}=\frac4{3\sqrt3},\qquad \kappa_c<\kappa_{\rm sp}.
+ \tag{144.1}
+$$
+The first is the negative-half-line dominance threshold; the second is the fold of the limiting stationary equation. Neither is asserted to be an exact finite-level threshold.
+
+Retain the exact full finite objects
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ Q_x(n)=\prod_j\binom{C_j}{n_j}p_j^{n_j}(1-p_j)^{C_j-n_j},
+ \quad v_j=C_jp_j(1-p_j)/B^2,
+$$
+$$
+ V=\sum_jv_j,\quad C_2=\delta^{-1}\sum_jv_j^2,\quad
+ e_j=(\mu_j-C_jp_j)/B,\quad x_j=(n_j-\mu_j)/B,
+$$
+$$
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ T=(E-V)/\sqrt\delta,\quad m=m_Q=\sqrt{2V^4/C_2}.
+ \tag{144.2}
+$$
+Q denotes the level as well as, with subscript and argument, the auxiliary product law; their roles are kept distinct. The true selected law is P_x, explicitly recalled in Section 144.2. All floors, full count multiplicities, low groups, exact original mu and calibration remain fixed. No recalibration of T or D is performed.
+
+Let eta=eta_Q be EACH deterministic positive sequence with eta->0 and t=eta/sqrt(delta)->infinity, arbitrarily slowly. Set v=t^2, a=1/(2V)+eta and
+$$
+ h=\kappa m\eta^{3/2}/\sqrt\delta
+   =\kappa m t\sqrt\eta,\qquad
+ U=\sqrt{\delta/\eta}\,D,\qquad X=-hD.
+ \tag{144.3}
+$$
+The conditional law in the primary result is
+$$
+ \pi^P_{y,h}(n)=\frac1{Z^P_y(h)}
+ P_x(n)\exp\{aD(n)^2+hD(n)-(T(n)-y)^2/(2\sigma^2)\}.
+ \tag{144.4}
+$$
+Sigma is positive at every level, tends to zero at ANY rate subject to the original strict margin
+$$
+ \limsup\frac{\log(1/\sigma)}{Q^3}<c_q/2,\qquad
+ \log q=c_qQ^3+O(1),\quad c_q=\phi(1-\beta)/\beta.
+ \tag{144.5}
+$$
+The definition uses the same actual-data fiber for every kappa,y.
+
+For each fixed compact interval K_+ contained in (kappa_c,infinity), R<infinity, and fixed continuous f:[0,infinity)->R with |f(x)|<=C_f(1+x^p), p finite, we prove
+$$
+ \sup_{\kappa\in K_+,\ |y|\le R}
+ \left|E_{\pi^P_{y,h}}[f(-hD)\mid D<0]
+                    -\int_0^\infty f(x)e^{-x}\,dx\right|
+ \ \longrightarrow\ 0.
+ \tag{144.6}
+$$
+In particular all fixed polynomial moments converge to the corresponding Exp(1) moments, and the conditional laws converge in Wasserstein1. The conditioning event has positive probability on common events whose actual-data probability tends to one. Conditional expressions may be assigned arbitrary values off those events.
+
+For a compact interval K_- contained in (0,kappa_c), let w_+(kappa) be the unique root in (sqrt(2/3),1) of
+$$
+ 2w(1-w^2)=\kappa.
+ \tag{144.7}
+$$
+For each fixed continuous polynomial-growth phi on the real line we also prove
+$$
+ \sup_{\kappa\in K_-,\ |y|\le R}
+ \left|E_{\pi^P_{y,h}}[\phi(U/m)\mid D<0]
+                         -\phi(-w_+(\kappa))\right|\to0.
+ \tag{144.8}
+$$
+For K_+ as in (144.6), the analogous expectation tends uniformly to phi(0).
+
+All these limits are in the ORIGINAL raw-data probability, uniformly over deterministic size-q supports, separately for the pair and path experiments. Precisely, for each positive tolerance, the supremum over such supports of the probability that the displayed same-fiber supremum exceeds the tolerance tends to zero. No independent rows, phases, centers, outside labels or optimized environments are substituted. Uniformity over all admissible sequences eta is not a claim of a common rate over those sequences; every such sequence is covered without an extra divergence assumption.
+
+The threshold and field dependences are asymptotic statements with the finite empirical m retained. No finite-Q equality of switch or fold values, no claim at kappa_c, no exact normalized minority-probability prefactor, no entropy derivative and no global phase diagram is asserted. Chapters 137, 139, 141 and 143 retain their stated scopes.
+
+### 144.2 原始完整选择律与已有密度接口
+
+The original support posterior gives each size-q support A probability proportional to exp(sum_{i in A}W_i), where W_i is the original row score. The original calibrated independent labels have
+$$
+ p_i=\operatorname{logistic}
+ \{W_i-\log((M-q)/q)+\theta_M\},\qquad \sum_i p_i=q.
+$$
+Conditioning ALL these labels to have total q is exactly that support posterior. Let J be the union of the complete original count groups, k=sum_j n_j, and
+$$
+ m_J=\sum_jC_jp_j,\quad d_J=B^2V,\quad
+ d_c=\sum_{i\notin J}p_i(1-p_i),\quad d_{\rm all}=d_c+d_J.
+$$
+Equations (68.33), (68.38), (70.6) and the complete conditional-product identity in Section 143.2 give
+$$
+ P_x(n)=L_x(k)\,Q_x(n),\qquad
+ L_x(k)=\frac{[z^{q-k}]\prod_{i\notin J}(1-p_i+p_i z)}
+ {[z^q]\prod_i(1-p_i+p_i z)},\qquad BD=k-m_J .
+ \tag{144.9}
+$$
+The last identity follows by cancelling mu_j in x_j+e_j, not by changing the energy centers. Outside labels supply q-k; the selected charge is not fixed to zero. Original good events have N_J=sum C_j<q<M-N_J and all label probabilities strictly inside(0,1), giving the full box support.
+
+The exact finite comparison (143.13)–(143.15), using the variance-based Poisson-binomial local theorem of Siripraparat–Neammanee, is
+$$
+ L_x(k)=e^{\ell_0-\varepsilon D^2}+O(q^{-1/2}),\qquad
+ \ell_0=\tfrac12\log(d_{\rm all}/d_c),\quad
+ \varepsilon=B^2/(2d_c),
+$$
+$$
+ 0\le L_x(k)\le1+C(\delta^5+q^{-1/2}),\qquad
+ |L_x(k)-1|\le C(\delta^5+q^{-1/2}+\varepsilon D^2),
+ \quad \varepsilon=O(\delta^5).
+ \tag{144.10}
+$$
+The bounds are pointwise over the ENTIRE count box. They require d_c,d_all comparable to q and d_J=O(B^2), all on the inherited common classes. The finite normalization in (144.9) is retained. We do not assume that an unconditioned TV bound survives the new weighting.
+
+The other previously established interfaces are explicitly limited as follows. From Chapter 137 we use the exact conditional Gaussian energy transform, its real-saddle density bounds and global density tails, its relative actual-e comparison on bounded U, and its original count-cell geometry. From Chapter 139 we use the exact derivatives in the charge-square parameter and the differentiated saddle prefactor, valid also at zero charge. From Chapter 141 we reuse the METHOD of joint field/likelihood count return, not its fixed-K theorem at this growing field. The new sign-conditioned law and its tails are proved below before (144.10) is integrated.
+
+On each fixed tight-constant actual-data class these inputs have
+$$
+ c\le V,C_2\le C,\quad v_*\le C\delta,\quad n_g\le C\delta^{-4},
+ \quad p_j\in[1/4,3/4],\quad \sum C_j\le CB^2,
+$$
+$$
+ |e_j|\le C\delta^5\sqrt{v_j},\quad
+ \|e\|^2\le C\delta^{10},\quad
+ (\sum|e_j|)^2\le C\delta^6.
+ \tag{144.11}
+$$
+A block of at least c/delta coordinates has variances in[c delta,C delta]. Those classes exhaust the stated support-uniform actual-data probability. Finite intersections used below do not change that scope.
+
+Fix the same high block H={j:C_j>=exp(zeta Q^3)} used in Chapters 137 and 139, once for the whole parameter domain. Choose l,zeta with eventually log(1/sigma)<=lQ^3, l<c_q/2, zeta<c_q/2 and 2zeta<c_q-l. High/full variance discrepancies are bounded by P(Q)exp(-bQ^3), b>0. Every low tuple is retained in the original count return. The high block is only an analytic comparison device.
+
+### 144.3 权重切换与驻点消失的不同阈值
+
+Set z=u/m and on the negative half-line write w=-z>=0. The candidate action divided by m^2 is
+$$
+ f_\kappa(w)=w^2-\tfrac12w^4-\kappa w,\qquad f_\kappa(0)=0.
+ \tag{144.12}
+$$
+Its positive stationary points solve kappa=2w(1-w^2). The right side has maximum4/(3sqrt3) at w=1/sqrt3. Hence for0<kappa<kappa_sp there are two positive stationary points: the smaller is a local minimum and the larger w_+(kappa) is a local maximum. At the fold they coalesce; above it there is no positive stationary point.
+
+At a stationary point,
+$$
+ f_\kappa(w)=w^2(\tfrac32w^2-1).
+ \tag{144.13}
+$$
+The larger stationary point has boundary-equal value exactly when w=sqrt(2/3), giving kappa_c in (144.1). For kappa<kappa_c its value is positive, and it is the unique global maximum on w>=0. For kappa_c<kappa<kappa_sp it remains a local maximum but lies BELOW the boundary value. For kappa>=kappa_sp the boundary is again the unique maximum. This proves the candidate dominance threshold independently of any Gaussian or count approximation.
+
+A stronger global inequality is useful. For A,B>0,
+$$
+ \sup_{w\ge0}(Aw-\tfrac12Bw^3)
+ =\kappa_c\,A^{3/2}/\sqrt B.
+ \tag{144.14}
+$$
+Differentiate the cubic: its maximizing w is sqrt(2A/(3B)), and substitution proves (144.14). Consequently a fixed positive gap kappa-kappa_c survives small relative perturbations of both quadratic and quartic coefficients. This will give an exponential envelope at the boundary scale, not merely an o(v) action comparison.
+
+We next justify the candidate action and this perturbation statement on the same exact noisy conditional fiber. At no point does the quartic calculation itself stand in for the original-count proof.
+
+### 144.4 零电荷附近的有限噪声精确导数
+
+Let Y_j be independent centered Gaussians of variances v_j for j in H, before observation; let D_G=sum_H Y_j and E_H=sum_H(Y_j-e_j)^2. Put H_y=V+sqrt(delta)y and add an independent N(0,delta sigma^2) energy noise. Conditional on D_G=r, the centered comparator with e_H=0 has mean vector r d and covariance
+$$
+ V_H=\sum_Hv_j,\quad C_H=\operatorname{diag}(v_j),\quad
+ w_H=(v_j),\quad d=w_H/V_H,\quad
+ A=C_H-w_Hw_H^T/V_H.
+$$
+This is an anisotropic conditional Gaussian law, not a spherical law or an energy-charge independence assumption. Define
+$$
+ K_0(z)=-\tfrac12\log\det(I-2zA)+\tfrac12\delta\sigma^2z^2,\qquad
+ \Psi(z)=z\,d^T(I-2zA)^{-1}d,
+$$
+$$
+ K(z,R_0)=K_0(z)+R_0\Psi(z),\quad R_0=r^2,\quad
+ \gamma=\eta-\{(2V_H)^{-1}-(2V)^{-1}\}.
+ \tag{144.15}
+$$
+R_0 denotes squared charge in this section, not the output cutoff R.
+
+Let z(R_0) be the exact REAL solution K_z(z,R_0)=H_y. Positive sigma guarantees its existence; monotonicity gives uniqueness. For0<=R_0<=M^2 eta/delta with M fixed, the inherited real-bracket argument gives |z|delta<=C_M(eta+sqrt(delta)); the covariance block is retained. Let f_r^0(H_y) be the centered conditional energy-plus-noise density and
+$$
+ g_y^0(r)=e^{\gamma r^2}f_r^0(H_y),\quad
+ {\cal H}(R_0)=\gamma R_0+K(z(R_0),R_0)-z(R_0)H_y.
+$$
+The exact density decomposition from Chapter 139 is
+$$
+ g_y^0(r)=\delta^{-1/2}e^{{\cal H}(R_0)}p_y(R_0),
+ \quad c_M\le p_y\le C_M,\quad
+ |(\log p_y)'|\le C_M\delta,\quad
+ |(\log p_y)''|\le C_M\delta^2.
+ \tag{144.16}
+$$
+These are ACTUAL parameter derivatives, not derivatives of a C0 limit. In Chapter 139 they follow by differentiating the exact Fourier integral at the real energy saddle; the saddle equation cancels the constant and linear frequency terms, and the retained block bounds every fixed frequency insertion. The domain includes R_0=0 and slightly positive energy saddles, so its hypotheses match this new boundary problem.
+
+Write ell(R_0)=log g_y^0(sqrt(R_0)). With W_0=K_{zz}(z(R_0),R_0), implicit differentiation gives exactly
+$$
+ {\cal H}'=\gamma+\Psi(z),\qquad
+ {\cal H}''=-\Psi'(z)^2/W_0.
+ \tag{144.17}
+$$
+At R_0=0, the energy mean differs from H_y by O_R(sqrt(delta)); hence z(0)=O_R(delta^-1/2), and
+$$
+ \ell'(0)=\eta+O_R(\sqrt\delta+\delta)+o_{\exp}(1).
+ \tag{144.18}
+$$
+Here and below an exponential remainder can have a fixed polynomial factor in Q. Such factors divided by eta remain exponentially small because eta>=sqrt(delta) eventually.
+
+The exact finite-noise curvature has to be kept before taking a limit. Put
+$$
+ \chi_{Q,\sigma}=\frac{2C_2}{2C_2+\sigma^2}.
+$$
+Using s_2=sum_Hv_j^2=delta C_2+o_exp(1), tr A^2=s_2+O(delta^2), and b_H=||d||^2=s_2/V_H^2, uniformly on the above R_0 interval,
+$$
+ \Psi'(z)=\frac{\delta C_2}{V^2}
+       \{1+O_M(\eta+\sqrt\delta)+o_{\exp}(1)\},
+$$
+$$
+ W_0=\delta\{2C_2+\sigma^2+O_M(\eta+\sqrt\delta)\}
+       +o_{\exp}(1),
+$$
+$$
+ \ell''(R_0)=-\frac{\delta}{m^2}\,
+        \chi_{Q,\sigma}\{1+O_M(\eta+\sqrt\delta)\}
+        +O_M(\delta^2)+o_{\exp}(1).
+ \tag{144.19}
+$$
+The original full V and C_2 enter these equations. In particular the finite-noise factor chi is not replaced by1 at absolute logarithmic precision. It tends to1 solely from sigma->0, with no comparison of its rate to eta or delta.
+
+Twice integrating (144.18)--(144.19) gives, for each fixed M, numbers a_Q,b_Q positive eventually, uniform over the compact output range, with a_Q->1, b_Q->1, such that
+$$
+ \ell(r^2)-\ell(0)
+ \le \eta a_Q r^2-\frac{\delta b_Q}{2m^2}r^4,
+ \qquad |r|\le M\sqrt{\eta/\delta}.
+ \tag{144.20}
+$$
+For example a_Q can be chosen1+O_M(t^-1+delta/eta)+o_exp(1)/eta, and b_Q=chi_{Q,sigma}{1-O_M(eta+sqrt(delta))}-O_M(delta)-o_exp(1)/delta. Uniform positive class bounds make these choices valid. Formula (144.20) has zero error at r=0; an additive o(v) error would be useless there.
+
+The same derivatives also give the local absolute estimate
+$$
+ |\ell(r^2)-\ell(0)|
+ \le C_M\{(\eta+\sqrt\delta+\delta)r^2+\delta r^4\}
+          +o_{\exp}(1)(r^2+r^4)
+ \tag{144.21}
+$$
+throughout that interval. These two inequalities are the new boundary-use of the exact finite saddle derivatives.
+
+### 144.5 边界密度比、全局包络与直接归一化
+
+Let g_y^e(r)=e^{gamma r^2}f_r^e(H_y) use the ACTUAL noncentral e_H. Equations (137.25)–(137.27) supply the absolute relative comparison
+$$
+ \sup_{|u|\le M,|y|\le R}
+ \left|\frac{g_y^e(\sqrt{\eta/\delta}u)}
+              {g_y^0(\sqrt{\eta/\delta}u)}-1\right|\to0 .
+ \tag{144.22}
+$$
+Its domain contains zero. It keeps the same covariance, full H_y,V and noise; its proof uses the same real saddle and a common Fourier block. In particular no division by a C0 approximation to a rare energy density is involved. Original e is not discarded from the count law.
+
+At r=0 we have uniformly
+$$
+ c_R\le\sqrt\delta\,f_0^e(H_y)\le C_R.
+ \tag{144.23}
+$$
+This follows also directly from (144.15)--(144.16): z(0)=O(delta^-1/2), the tilted action at zero is O_R(1), and the scaled tilted density has positive bounded variance. Equation (144.22) transfers the same bound to actual e. The noise remains finite in f_0^e.
+
+Fix K_+=[kappa_0,kappa_1] with kappa_0>kappa_c. For x>=0 put r=-x/h and define the exact Gaussian boundary profile
+$$
+ J_Q(x;\kappa,y)=e^{-x}\frac{g_y^e(-x/h)}{g_y^e(0)}.
+ \tag{144.24}
+$$
+On any fixed x compact, r lies in the moderate interval because
+$$
+ \frac{|r|}{\sqrt{\eta/\delta}}
+ =\frac{x}{\kappa m v},\qquad
+ \frac{\eta}{h^2}=\frac1{\kappa^2m^2t^2},\quad
+ \frac{\sqrt\delta}{h^2}=\frac1{\kappa^2m^2t^3},\quad
+ \frac{\delta}{h^4}=\frac1{\kappa^4m^4t^6}.
+ \tag{144.25}
+$$
+Thus (144.21)--(144.22) give J_Q(x)->exp(-x) uniformly on each fixed x compact, uniformly kappa,y. This covers both h->0 and h->infinity. The local physical energy-density ratio is controlled absolutely, not just to relative speed order.
+
+For domination on the WHOLE moderate interval, write r=-m sqrt(eta/delta)w with w>=0. From (144.20),
+$$
+ hr+\log\frac{g_y^0(r)}{g_y^0(0)}
+ \le m^2v\{a_Qw^2-\tfrac12b_Qw^4-\kappa w\}.
+ \tag{144.26}
+$$
+By (144.14), a_Q,b_Q->1 and the fixed gap kappa_0-kappa_c, there is c_+>0 such that the braces are at most -c_+ kappa w for all w>=0 and all sufficiently large levels. Since x=kappa m^2v w, (144.22) implies
+$$
+ J_Q(x)\le C e^{-c_+x}
+ \quad\hbox{when }|r|\le M\sqrt{\eta/\delta}.
+ \tag{144.27}
+$$
+A coarse quartic approximation could not yield (144.27) down to x=0; the anchored derivative bound (144.20) does.
+
+The remaining charges require the global DENSITY estimate, not a tail probability. Equations (137.21)–(137.23) give, for a fixed sufficiently large M,
+$$
+ \frac{g_y^e(\sqrt{\eta/\delta}u)}{g_y^e(0)}
+ \le C\exp\!\left[v\left\{u^2-\frac{c u^4}{1+\eta u^2}\right\}\right],
+ \quad |u|\ge M.
+ \tag{144.28}
+$$
+Its exact negative energy tilt retains the Gaussian energy noise and the actual noncentral mean. The reference denominator in (144.28) is paid by (144.23); the unconditional energy density used in Chapter 137 is also of order delta^-1/2, so no polynomial-in-Q prefactor appears.
+
+Choose M so large that the braces in (144.28) are <=-B_0 u^2 for a fixed B_0>0, eventually for ALL |u|>=M. Indeed u^2/(1+eta u^2) is increasing, and eta M^2<=1 eventually. On the negative side hr=-x, hence (144.28) gives J_Q(x)<=C exp(-x) in this entire far region. Combining with (144.27),
+$$
+ 0\le J_Q(x;\kappa,y)\le C e^{-c x}
+ \quad\hbox{for every }x\ge0,
+ \tag{144.29}
+$$
+uniformly on the specified parameter domain and common classes. This is global exponential integrability at the boundary scale, not a formal endpoint expansion. Every fixed polynomial weight is integrable against the common envelope.
+
+Dominated convergence with local uniformity now proves
+$$
+ \int_0^\infty f(x)J_Q(x;\kappa,y)\,dx
+       \to\int_0^\infty f(x)e^{-x}\,dx
+ \tag{144.30}
+$$
+uniformly for every fixed continuous polynomial-growth f. In particular the integral for f=1 tends to1 and is bounded below. The raw negative Gaussian numerator, with the original likelihood kernel as in (144.4), is EXACTLY
+$$
+ N_G^-(h,y)
+ =\sigma\sqrt{\delta/V_H}
+       \int_{r<0}e^{hr}g_y^e(r)\,dr
+ =\frac{\sigma\sqrt{\delta/V_H}}h\,f_0^e(H_y)
+       \int_0^\infty J_Q(x;\kappa,y)\,dx.
+ \tag{144.31}
+$$
+The first equality includes the normalizing constants of the Gaussian charge and Gaussian energy noise. Consequently N_G^- is comparable to sigma/h, uniformly, and its leading finite-noise factor in (144.31) is retained exactly. This is a direct negative normalization, not division by a majority-dominated partition.
+
+Equation (144.30) proves the Gaussian negative conditional Exp(1) law and all its moments. The next section returns this statement to original counts before applying selection.
+
+### 144.6 增长外场下返回完整乘积计数
+
+The growing h is not covered by Chapter 141's fixed-K theorem. The requisite joint bound is instead re-established. On common classes, for kappa in any fixed compact subset of(0,infinity),
+$$
+ hD\le\eta D^2+\frac{h^2}{4\eta},\qquad
+ \frac{h^2}{4\eta}=\frac{\kappa^2m^2}{4}v\le C_\kappa v.
+ \tag{144.32}
+$$
+Thus the original weighted likelihood is bounded by exp(C_kappa v) times that at a_+=1/(2V)+2eta, on the SAME D,E,T and noise. The sequence2eta satisfies Chapter 137's original scope and has speed4v. Its joint modal-score, likelihood-score and charge-moment estimate (137.28) therefore yields
+$$
+ E_y^G[e^{aD_G^2+hD_G}(1+S_G)^j(1+\Lambda_y)^k(1+|U_G|^p)]
+ \le P_{j,k,p}(Q)e^{C_{j,k,p,\kappa}v}.
+ \tag{144.33}
+$$
+Here S_G=(1/2)sum_H Y_j^2/v_j, Lambda_y=(E_H-H_y)^2/(2delta sigma^2), U_G=sqrt(delta/eta)D_G. The bound holds also for widths in[sigma/2,2sigma]. At2eta its native U is U_G/sqrt2; this only changes constants. These insertions are bounded together in the SAME energy-conditioned Gaussian Fourier integral, as proved in Chapter 137. No product of separately attainable marginal bounds is being used.
+
+For clarity the count-cell payment is explicit. On the original central high cells,
+$$
+ |\log(\hbox{lifted high density}/\phi_C)|\le{\cal E}_Q,\quad
+ |D-D_G|\le{\cal E}_Q,\quad
+ |T-T_G|/\sigma\le{\cal E}_Q,\quad
+ |D_G|\le CQ^3,\quad
+ {\cal E}_Q=P(Q)e^{-bQ^3}.
+ \tag{144.34}
+$$
+These are the original Stirling and geometry bounds from Chapter 137, uniform over ALL low tuples, whose exact product probabilities are retained. T_G=(E_H-V)/sqrt(delta) uses full original V. The positive margins are c_q/2-l and c_q-2zeta-l, together with the high Stirling margin.
+
+Now h<=C delta^-1/2 eventually, so its variation within a cell is at most a fixed polynomial times E_Q. The quadratic variation is likewise bounded. For the likelihood, with b_0=(T-T_G)/sigma and u_0=(T_G-y)/sigma, the exponent difference is b_0u_0+b_0^2/2. The mean-value bound and Young's inequality absorb exp(C E_Q|u_0|) into width sigma/sqrt(1-C E_Q). Equation (144.33) controls the integrated error, including joint likelihood scores. Integrating the EXACT log-width derivative2Lambda_y of the kernel over this small width interval pays the width change as well; no differentiation of an asymptotic inequality is used. The ordinary likelihood normalization is comparable to sigma. Hence the central lifted signed-measure error, with every fixed U weight, is at most
+$$
+ \sigma P_p(Q)\exp[-bQ^3+C_{p,\kappa}v].
+ \tag{144.35}
+$$
+All low probabilities are summed only after this pointwise uniform comparison.
+
+Extreme counts are also included. For every original tuple let d_noise=delta sigma^2; the elementary full-tuple inequality from Chapter 137, used with the bounded a_+, gives
+$$
+ e^{aD^2+hD-(E-H_y)^2/(2d_{\rm noise})}
+ \le \exp\{C_\kappa v+2a_+(\sum e_j)^2
+          +2a_+n_gH_y+4a_+^2n_g^2d_{\rm noise}\}
+           e^{-(E-H_y)^2/(4d_{\rm noise})}.
+ \tag{144.36}
+$$
+It follows from D^2<=2n_gE+2(sum e_j)^2 and maximization of a real quadratic in E. The prefactor log is O(Q^(7/2))+O(v). The raw high-cell binomial complement is P(Q)exp(-cQ^4). Every fixed count-charge polynomial costs at most exp(C_pQ^3); division by sigma costs log(1/sigma)=O(Q^3). Thus excluded count cells contribute exp(-c'Q^4) after normalization by sigma, with the new field paid. The Gaussian excluded cells obey the same bound using their raw coordinate tails and fixed moments. This is a joint energy/charge/noise bound on every tuple; no divergent unconditioned supercritical Gaussian integral is used.
+
+We need weights in X, not just U. Exactly
+$$
+ -hD_G=-\kappa m v\,U_G,\qquad
+ 1+|hD_G|^p\le P_{p,\kappa}(Q)(1+|U_G|^p).
+ \tag{144.37}
+$$
+Since v=o(Q^(1/2)), the extra factor is a fixed polynomial in Q. Combining (144.35)--(144.37) bounds the whole lifted measure error for this weight by the right side of (144.35) with enlarged P,C.
+
+For K_+, divide by the DIRECT negative normalization (144.31), not the total partition. On the common class h and h^-1 are polynomially bounded: since sqrt(delta)<=eta<=1 eventually,
+$$
+ c_\kappa\delta^{1/4}\le h\le C_\kappa\delta^{-1/2}.
+ \tag{144.38}
+$$
+Thus the relative error is at most
+$$
+ hP_{p,\kappa}(Q)e^{-bQ^3+C_{p,\kappa}v}
+ \le e^{-b'_pQ^3}.
+ \tag{144.39}
+$$
+No logarithm of a power of Q is divided by the arbitrarily slow speed v. It is absorbed by the strict exponential count margin. This proves relative negative normalization for the lifted law, including polynomial X weights.
+
+The sign cut and original lattice still need attention. A discrepancy between D<0 and D_G<0 on central cells requires |D_G|<=E_Q. In that strip the absolute density is bounded by C sigma: (144.21)--(144.23) control g near0, and h E_Q->0. Its raw Gaussian mass is at most C sigma E_Q, hence its mass relative to N_G^- is at most C h E_Q. Also |hD-hD_G|<=h E_Q->0. This pays zero atoms and sign disagreements even when the boundary scale1/h shrinks. Equivalently the actual count charge has spacing1/B and X has spacing h/B->0 exponentially; no alignment of m_J with an integer is assumed or required.
+
+For a continuous polynomial-growth test, restrict X to a fixed compact, use uniform continuity and the last displacement bound, then remove the truncation using (144.29),(144.35)--(144.39) and a higher fixed moment. These estimates prove, for the ORIGINAL product COUNT law with all low tuples and floors,
+$$
+ \frac{N_Q^-(h,y)}{N_G^-(h,y)}=1+o(1),\qquad
+ E_{\pi^Q_{y,h}}[f(-hD)\mid D<0]\to\int_0^\infty f(x)e^{-x}\,dx.
+ \tag{144.40}
+$$
+The error and convergence are uniform in kappa,y as stated. In particular the negative product mass is positive eventually. This is the new count return at the growing field; it is not an application of (141.5)–(141.7).
+
+### 144.7 在同一负号条件律内恢复完整选择
+
+Let nu_Q^- be the exact product posterior in (144.40) conditioned on D<0. It has uniformly bounded moments of X=-hD of every fixed order. On this SAME law, (144.10) gives for each fixed p
+$$
+ E_{\nu_Q^-}[(1+X^p)|L_x(k)-1|]
+ \le C_p\{\delta^5+q^{-1/2}+\varepsilon/h^2\}
+ \le C_{p,\kappa}\rho_Q,
+$$
+$$
+ \rho_Q=\delta^5+q^{-1/2}+\delta^6/\eta^3
+        =\delta^5+q^{-1/2}+\delta^{9/2}/t^3\to0.
+ \tag{144.41}
+$$
+The equality D^2=X^2/h^2 is exact; the required (p+2)-moment comes from (144.40). These are joint estimates under a single conditioned law, not unconditioned L2 bounds.
+
+Writing A_-=E_{\nu_Q^-}L_x(k), the exact finite change of measure is
+$$
+ N_P^-/N_Q^-=A_-=1+O_{\mathbb P}(\rho_Q),\qquad
+ d\nu_P^-=\frac{L_x(k)}{A_-}\,d\nu_Q^- .
+ \tag{144.42}
+$$
+Eventually A_->=1/2 on the common events, giving selected negative positivity and RELATIVE normalization. For any measurable f bounded by C_f(1+X^p), the difference-of-quotients identity bounds its selected/product conditional expectation difference by C_f rho_Q. This proves (144.6) from (144.40).
+
+All tails are paid after selection as well. From the pointwise upper bound in (144.10), for every nonnegative G on the exact tuple,
+$$
+ E_{\nu_P^-}G\le
+ \frac{1+C(\delta^5+q^{-1/2})}{1-C\rho_Q}\,E_{\nu_Q^-}G.
+ \tag{144.43}
+$$
+Applying this to polynomially weighted tails transfers their uniform integrability. There is no lower bound assumed for L at extreme count boundaries; its expectation tends to1 by (144.41), which is sufficient. Full outside-label constraint, original calibration and physical residual are present throughout (144.41)--(144.43).
+
+A stronger actual-count tail statement follows without a new approximation. Choose any fixed theta with0<theta<1-kappa_c/kappa_0. Replacing h by(1-theta)h keeps kappa in a fixed compact interval above kappa_c while leaving eta,a and the entire fiber unchanged. From the exact finite sums and the already proved relative normalization (144.31),(144.40),(144.42),
+$$
+ E_{\nu_P^-}e^{\theta X}
+ =\frac{N_P^-((1-\theta)h,y)}{N_P^-(h,y)}
+ \longrightarrow\frac1{1-\theta}
+ \tag{144.43a}
+$$
+uniformly. The finite factor sigma sqrt(delta/V_H) f_0^e(H_y) is identical at both fields and cancels. This gives uniform exponential integrability on the actual selected negative law for such theta. It is derived from two proved raw negative normalizations, not from polynomial-test convergence.
+
+The negative event can be very rare in the full tilted posterior. Neither (144.39) nor (144.42) divides an absolute TOTAL-law approximation by that rare sign probability. Equation (144.31) normalizes the negative Gaussian numerator directly, and (144.42) normalizes selection inside the already proved negative count law. The actual full normalization Z_y(h) cancels from a conditional law given D<0. This is the precise reason no minority-probability amplification occurs.
+
+### 144.8 内部集中与仍存的驻点支
+
+For kappa in K_- compactly below kappa_c, the new field adds EXACTLY kappa m v u to the zero-field Gaussian charge exponent. Chapter 137's relative logarithmic density estimate on each fixed u compact, including its bounded scaled saddle prefactor, therefore gives
+$$
+ v^{-1}\log w_Q(u,y;h)
+ =u^2-\frac{u^4}{2m^2}+\kappa m u+o(1),
+ \tag{144.44}
+$$
+uniformly there. Its finite-noise coefficient before the limit is C_2^2/[2V^4(2C_2+sigma^2)], and its difference from1/(2m^2) tends to zero; it is used here only at relative speed precision. The same actual noncentral comparison applies.
+
+On u<0 the external field is helpful for far tails. The zero-field global envelope (144.28), with the added negative term kappa m u, is exponentially small outside a fixed sufficiently large compact. It controls every fixed U moment. On compact sets, Section 144.3 gives a uniformly separated unique maximum at u=-m w_+(kappa), with strictly positive value. The common finite m interval and compact K_- give a uniform gap away from any fixed neighborhood of this point. The usual elementary upper/lower integral comparison then gives concentration and all fixed polynomial-growth tests: a fixed interval near the maximum provides the lower bound, while the compact gap and the far density envelope pay the complement. The u Jacobian is common to numerator and denominator; no O(log Q) error is divided by the slow speed.
+
+This Gaussian negative raw numerator is at least c sigma for large levels. To see it without dropping a prefactor, in u coordinates the exact raw common factor is sigma sqrt(eta/delta) times a density with positive bounded zero-charge reference; the maximum action has a fixed positive lower bound and a fixed neighborhood exceeds half that bound. Since eta>=sqrt(delta), the common factor divided by sigma is bounded below. Thus the count comparison (144.35)--(144.39), with a lower bound c sigma in place of sigma/h, again gives a vanishing relative error, with all fixed U weights. Sign-crossing cells near0 are also negligible: the negative interior normalization has a strictly positive action gap over that boundary strip. This returns the concentration to the original PRODUCT counts without a new noise or eta condition.
+
+Only after those same-sign moments are proved do we use selection. Since D^2=(eta/delta)U^2, (144.10) gives
+$$
+ E_{\pi^Q_{y,h}}[(1+|U|^p)|L-1|\mid D<0]
+ \le C_{p,\kappa}\{\delta^5+q^{-1/2}+\eta\delta^4\}\to0.
+ \tag{144.45}
+$$
+The exact conditional quotient as in (144.42) proves (144.8) for P and its polynomial-growth extension. Above kappa_c, (144.6) gives X bounded in every fixed moment and
+$$
+ U/m=-X/(\kappa m^2v)\to0
+ \tag{144.46}
+$$
+with every fixed polynomial moment, proving the above-threshold secondary assertion.
+
+There is also a precise sense in which the stationary interior branch survives past the dominance switch. For the centered finite Gaussian comparison, differentiate the exact ell from (144.16)--(144.19), with r=-m sqrt(eta/delta)w. On fixed w compacts,
+$$
+ \frac1{m^2v}\frac{d}{dw}\{\ell(r^2)+hr\}
+       =2w-2w^3-\kappa+o(1),
+$$
+$$
+ \frac1{m^2v}\frac{d^2}{dw^2}\{\ell(r^2)+hr\}
+       =2-6w^2+o(1).
+ \tag{144.47}
+$$
+Uniform C2 control comes from actual finite derivatives, not differentiating (144.44). On every compact subinterval of(kappa_c,kappa_sp), the larger root is nondegenerate with negative second derivative. The intermediate value theorem and the fixed negative derivative bound give a unique nearby local maximum of this finite comparator, even though (144.6) shows the actual selected negative conditional law is at the boundary scale. This verifies the distinction without calling a discrete count mass function differentiable or asserting an exact finite-Q fold. The word stationary here refers to the real conditional-density action/comparator and its limiting quartic, not to a specified dynamics.
+
+At kappa=kappa_c the interior and boundary have equal leading action. Their prefactors, finite noise and smaller empirical terms can matter, and the present strict-gap arguments do not settle their relative masses. A detailed description of the stationary branch exactly at its fold would require a different local stationary expansion. That description is not claimed; the primary boundary theorem DOES include kappa_sp because it lies strictly above kappa_c.
+
+### 144.9 共同实现、误差尺度与未解边界
+
+The primary result uses a local energy-density ratio at r=-x/h and a GLOBAL envelope in x, obtained from exact charge-square derivatives plus the inherited global density tilt. A speed-level o(v) error is used only for the secondary interior concentration, where it suffices. The full finite-noise chi factor remains in (144.19)--(144.20) until the fixed kappa gap permits its limit. No assumption comparing sigma to eta or delta appears. The stated uniform Wasserstein1 consequence follows by a finite net of bounded Lipschitz tests on each fixed compact, followed by the uniform second-moment tail bound.
+
+The high block keeps the inherited Fourier smoothing and count geometry, while every low group is present in the exact count law and is summed with its original probability. Original mu,e,V,T, floors and outside labels are never optimized separately. The only independent labels/Gaussians are the analytic comparison laws established in the preceding chapters on the same fiber; actual pair/path dependence is retained in the probability statements through their common classes.
+
+The new large field costs O(v) in the joint full-tuple bound, whereas the count margin is exp(-bQ^3) and v=o(Q^(1/2)). Both h and h^-1 are polynomial, the lattice mesh h/B vanishes exponentially, and the direct boundary numerator carries exactly its sigma factor. These facts account for arbitrary slow t and arbitrary slow sigma without discarding a polynomial error at speed scale.
+
+Selection is applied last using NEW negative-sign charge moments, not Chapter 143's moments outside their range. Equation (144.41) gives a quantitative original full-q bridge and (144.42) its relative negative normalization. Equations (144.6),(144.8),(144.46) therefore concern the original selected law, not a reference Gaussian or an auxiliary product prior alone.
+
+The mature endpoint-Laplace and quartic-stationary algebra are not originality claims. The new contribution is this original-model boundary-scale density/tail/count/selection chain. The conclusions apply away from the switch; the switch window, exact minority probability and any broader phase diagram remain outside this finite contribution.
+
+### 144.10 方法归属与适用边界
+
+端点 Laplace 原理、Watson 引理及四次势的驻点计算是成熟方法。Temme 的 *Uniform Asymptotic Methods for Integrals* 说明解析振幅、增长控制与额外参数的作用；本章的 $h$ 可趋零、保持有界或发散，振幅还随数组与噪声变化，故未直接套用固定振幅的大参数公式。正文 (144.20)–(144.29) 给出实际归一化密度比及可积包络，再直接证明所需的一阶极限。
+
+Cuff–Ding–Louidor–Lubetzky–Peres–Sly 对均场 Potts Glauber 动力学的研究说明热力学占优与 spinodal 阈值可以不同。其状态空间、动力学和混合时间结论不对应这里的带噪观测条件律，未借用任何 Potts 定理。本章“仍存驻点”只指有限中心 Gaussian 比较密度与极限四次势，不宣称离散原计数的动力学亚稳态。
+
+完整选择的局部比较沿用第 143 章所列 Siripraparat–Neammanee Theorem 2 与条件乘积恒等式；新内容是增长外场下的同一数据纤维密度、尾部、原计数与逐负号选择比较。临界值 $\kappa_c$ 处的权重、转变窗口、完整少数相概率前因子仍未解决。文献版本、条件及未适用范围见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（本行以下为增补区）

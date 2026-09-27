@@ -5644,3 +5644,13 @@ Richard Arratia、Larry Goldstein、Bryan Langholz，*Local central limit theore
 Lemma 3.5 及其证明给出正权重、有限可行固定样本数下的精确条件乘积恒等式，直接对应全部标签上的校准 Bernoulli 条件化。其高阶展开不作为本章井位移的估计：Condition 2.1 要求方差至少为 Bernoulli 总数的固定正比例，Theorem 2.1 还使用有界中心偏移；本模型 $d_{\rm all}\asymp q$ 而 $q/M\to0$，井上的整数位移也无需有界。Theorem 3.1 的权重稳定性及采样比例远离零、一的条件不能替代这一稀疏模型。原文条件与 Lemma 3.5 的完整证明已核对；未将整个高阶展开路线宣称为适用。
 
 新推导在完整计数盒上保留 $L_x(k)=\exp(\ell_0-\varepsilon D^2)+r_x(k)$ 的加性误差，避免对极端尾点取未获相对控制的对数。对同一逐相后验积分后，误差为 $O_{\mathbb P}(q^{-1/2}+\delta^5+\eta\delta^4+\delta^5/\eta)$，不含逆噪声或逆少数相概率。条件抽样、局部极限及有限换测度是成熟工具；本章贡献是它们在原完整计数、原能量、同一外部补偿与弱场下的定量连接，不宣称全局原创、增长外场范围或完整相图。
+
+## 谱边界第 144 章补充：端点占优与驻点消失的区分
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 144 章研究原完整选择律的增长正外场 $h=\kappa m_Q\eta^{3/2}/\sqrt\delta$。对每个 $\eta\to0$、$t=\eta/\sqrt\delta\to\infty$ 的确定序列，保留原严格半指数噪声、紧物理输出和支持一致的 pair/path 数据概率。对紧集内 $\kappa>\kappa_c=(2/3)\sqrt{2/3}$，负号条件下 $-hD$ 趋于 $\mathrm{Exp}(1)$，包含每个固定连续多项式增长测试；边界阈值小于驻点消失阈值 $4/(3\sqrt3)$。有限层精确阈值、临界窗口及离散动力学亚稳态均不在结论中。
+
+Nico M. Temme，*Uniform Asymptotic Methods for Integrals*，[arXiv:1308.1547v1](https://arxiv.org/abs/1308.1547v1)。arXiv 标记为 2013-08-07，题页为 2013-08-08。PDF 385,992 字节，SHA256 `93d3557ce4824a823e1fe2b8a3ca1e34a780ad1db46654e9af0f219a81d419a4`。Section 2.1 的 (2.1)–(2.3) 讨论零点及扇形内解析、无穷远指数增长可控的振幅与趋于无穷的大 Laplace 参数；Section 2.2 给出转成 Gaussian 积分后的 Laplace 展开条件；Section 4 开头明确指出额外参数可能影响展开的一致有效性。这里只借鉴端点渐近与参数一致性的成熟方法：本章 $h$ 无须趋于无穷，振幅随数组、有限噪声和 $\eta$ 变化，未从该文取得直接可套用的统一 Watson 公式。所需一阶结论由正文 (144.20)–(144.30) 的局部比值和全局包络证明。Temme 引向 Olver 的一般 Watson 证明未作为本章承重结论。
+
+Paul Cuff、Jian Ding、Oren Louidor、Eyal Lubetzky、Yuval Peres、Allan Sly，*Glauber Dynamics for the mean-field Potts Model*，[arXiv:1204.4503v2](https://arxiv.org/abs/1204.4503v2)，2012-06-11。PDF 3,605,812 字节，SHA256 `5a59fb6d9219f4ae45765664fea300f0acd6dc1a0e8e50bdf392025e78fd9595`。该文完整图 Potts Gibbs 测度、单点 Glauber 转移与混合时间定义是定理的模型前提。Section 1.1 的 (1.1) 及 Theorems 1–4 区分动力学阈值和热力学阈值；Theorem 2 使用 $\beta(n)=\beta_s-\xi(n)$ 及 $n^{2/3}\xi(n)$ 描述混合时间与 cutoff，Section 1.2 解释局部自由能极小值消失的 spinodal 含义。该模型没有本章带噪能量观测及原计数选择条件，故仅作结构比较，未迁移任何混合定理。来源的模型、定理条件与自由能解释已核对，完整混合证明未承担本章推导。
+
+本章保持原有限噪声曲率因子 $\chi_{Q,\sigma}=2C_2/(2C_2+\sigma^2)$，以在零电荷处误差为零的上界支付边界层。直接负号分子保留 $\sigma/h$ 尺度；增长外场只在同一联合估计中付出 $\exp(Ct^2)$，由原计数比较的 $\exp(-bQ^3)$ 裕量支付。最后对同一负号条件律使用第 143 章的全计数盒选择包络，误差为 $O_{\mathbb P}(\delta^5+q^{-1/2}+\delta^6/\eta^3)$，不含逆少数相概率。两场的精确负号分子比还给出正文 (144.43a) 的指数矩结论。局部极限与条件抽样文献沿用第 143 章的版本及范围；模型内连接是本章的推导内容，不宣称全局原创或完整相图。
