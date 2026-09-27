@@ -1,0 +1,1401 @@
+{
+  "schema": "uniform-large-owner-forward-kernels-v1",
+  "source": {
+    "name": "growing_parent_sets_forward_kernels.json",
+    "sha256": "33b4c5d38583ab39bb8253adc34f8d49274d39331d536dfb8c2d9ba1294bacbc",
+    "producer_sha256": "1271c86d6397c0511d6dfb6cf1b36d020f323cf3fbc3ccf2df8ea0ff791d7f1c"
+  },
+  "caps_source": {
+    "name": "unrestricted_triple_parent_forward_kernels.json",
+    "sha256": "ed7a6ce06258ba9e64c66420fc14975b0abb29b2a9904db180a489e7362cefd1",
+    "producer_sha256": "68a762ddd880b5f6ec0ac390403f0c6c587b105f9447805792bad2db72708ea9"
+  },
+  "scope": {
+    "head": "Complete fixed Report617 actual pure-source and relational-root hypotheses inherited through Reports619/620",
+    "below_threshold": "Retain Report620 parent-count growth conditions and its actual row choices",
+    "above_threshold": "Any fixed finite union of distinct smaller head or declared network parent primes; no parent-count growth condition; one N=0 row per owner",
+    "tuples": "Merge and deduplicate actual numerical moduli across all tuples before choosing the one owner row",
+    "phases_and_heights": "One globally fixed phase per distinct numerical modulus, with arbitrary finite exponent heights",
+    "common_law": "One full head submeasure and normalized rows in increasing prime order; include dead fibres; no survival conditioning",
+    "ordinary": "Inherited private-domain and component gluing restrictions, with each original assigned once",
+    "unresolved": "Unrestricted head, owner restrictions below threshold, undeclared private crossings; unrestricted Erdos #7 remains open"
+  },
+  "inherited": {
+    "alpha": "2673/138320",
+    "simple_raw_reserve": "10417363/5120000000"
+  },
+  "small_prime_factors": [
+    {
+      "prime": 3,
+      "cap": "2",
+      "cap_kind": "joint_head_query",
+      "full_coordinate_moment": "5",
+      "euler_correction": "20480/531441"
+    },
+    {
+      "prime": 5,
+      "cap": "2",
+      "cap_kind": "joint_head_query",
+      "full_coordinate_moment": "11/4",
+      "euler_correction": "46137344/244140625"
+    },
+    {
+      "prime": 7,
+      "cap": "2",
+      "cap_kind": "joint_head_query",
+      "full_coordinate_moment": "19/9",
+      "euler_correction": "4595429376/13841287201"
+    },
+    {
+      "prime": 11,
+      "cap": "2",
+      "cap_kind": "joint_head_query",
+      "full_coordinate_moment": "41/25",
+      "euler_correction": "1640000000000/3138428376721"
+    },
+    {
+      "prime": 13,
+      "cap": "2",
+      "cap_kind": "joint_head_query",
+      "full_coordinate_moment": "55/36",
+      "euler_correction": "13621820129280/23298085122481"
+    },
+    {
+      "prime": 17,
+      "cap": "2",
+      "cap_kind": "joint_head_query",
+      "full_coordinate_moment": "89/64",
+      "euler_correction": "391426139488256/582622237229761"
+    },
+    {
+      "prime": 19,
+      "cap": "2",
+      "cap_kind": "joint_head_query",
+      "full_coordinate_moment": "109/81",
+      "euler_correction": "1556723710808064/2213314919066161"
+    },
+    {
+      "prime": 23,
+      "cap": "2",
+      "cap_kind": "joint_head_query",
+      "full_coordinate_moment": "155/121",
+      "euler_correction": "16467152130682880/21914624432020321"
+    },
+    {
+      "prime": 29,
+      "cap": "2",
+      "cap_kind": "joint_head_query",
+      "full_coordinate_moment": "239/196",
+      "euler_correction": "283164108960825344/353814783205469041"
+    },
+    {
+      "prime": 31,
+      "cap": "2",
+      "cap_kind": "joint_head_query",
+      "full_coordinate_moment": "271/225",
+      "euler_correction": "640091160000000000/787662783788549761"
+    },
+    {
+      "prime": 37,
+      "cap": "72/19",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "226/171",
+      "euler_correction": "118986020273409490944/125076088110960670339"
+    },
+    {
+      "prime": 41,
+      "cap": "80/23",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "291/230",
+      "euler_correction": "488216985600000000000/518960276908422279863"
+    },
+    {
+      "prime": 43,
+      "cap": "84/25",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "653/525",
+      "euler_correction": "936883027370272002048/998990769931564410025"
+    },
+    {
+      "prime": 47,
+      "cap": "23/6",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "173/138",
+      "euler_correction": "337584308467935991808/348574449326845734723"
+    },
+    {
+      "prime": 53,
+      "cap": "4",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "417/338",
+      "euler_correction": "482235833446054232064/491258904256726154641"
+    },
+    {
+      "prime": 59,
+      "cap": "116/27",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "959/783",
+      "euler_correction": "47924383192317501485056/48038330292467383355787"
+    },
+    {
+      "prime": 61,
+      "cap": "120/29",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "526/435",
+      "euler_correction": "76332500582400000000000/76976120254629998591309"
+    },
+    {
+      "prime": 67,
+      "cap": "66/17",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "661/561",
+      "euler_correction": "136840529533228753047552/139106221378758571457537"
+    },
+    {
+      "prime": 71,
+      "cap": "35/8",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "333/280",
+      "euler_correction": "16461245135475000000000/16409682740640811134241"
+    },
+    {
+      "prime": 73,
+      "cap": "72/17",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "721/612",
+      "euler_correction": "388707321734244782309376/389334816790334398095857"
+    },
+    {
+      "prime": 79,
+      "cap": "78/17",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "781/663",
+      "euler_correction": "1015597584174493593022464/1004555687538460607484497"
+    },
+    {
+      "prime": 83,
+      "cap": "82/19",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "903/779",
+      "euler_correction": "2035495385660507513745408/2030910147034561363793059"
+    },
+    {
+      "prime": 89,
+      "cap": "176/35",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "129/110",
+      "euler_correction": "1264617231863493156667392/1234952017826310701517605"
+    },
+    {
+      "prime": 97,
+      "cap": "192/43",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "1177/1032",
+      "euler_correction": "30048307682380674465005568/29835221522803834012686763"
+    },
+    {
+      "prime": 101,
+      "cap": "200/39",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "1126/975",
+      "euler_correction": "45040000000000000000000000/43946176175146819105786839"
+    },
+    {
+      "prime": 103,
+      "cap": "68/13",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2297/1989",
+      "euler_correction": "19040205242550108471496704/18534891529000326290821933"
+    },
+    {
+      "prime": 107,
+      "cap": "212/43",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2599/2279",
+      "euler_correction": "98673559062275383134629888/96844238325315403521908443"
+    },
+    {
+      "prime": 109,
+      "cap": "24/5",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "1378/1215",
+      "euler_correction": "14279993501961120336838656/14063323908914472428636405"
+    },
+    {
+      "prime": 113,
+      "cap": "224/41",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "1317/1148",
+      "euler_correction": "183250013649441691306819584/177715447107859156270582121"
+    },
+    {
+      "prime": 127,
+      "cap": "28/5",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "643/567",
+      "euler_correction": "18158269414440716744085504/17605349516220764271966721"
+    },
+    {
+      "prime": 131,
+      "cap": "260/47",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "3447/3055",
+      "euler_correction": "1235515375649107800000000000/1200475789287004404381327167"
+    },
+    {
+      "prime": 137,
+      "cap": "272/53",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2007/1802",
+      "euler_correction": "2363389794744528708575428608/2316982083172017080882156693"
+    },
+    {
+      "prime": 139,
+      "cap": "276/55",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "4211/3795",
+      "euler_correction": "2911288115485844901964836864/2861147797050899701400655655"
+    },
+    {
+      "prime": 149,
+      "cap": "296/53",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2184/1961",
+      "euler_correction": "6519157817827880779772854272/6346161069218895814694859653"
+    },
+    {
+      "prime": 151,
+      "cap": "60/11",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "4577/4125",
+      "euler_correction": "1583597302734375000000000000/1545667419401902707215104811"
+    },
+    {
+      "prime": 157,
+      "cap": "104/17",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2224/1989",
+      "euler_correction": "3948608730442973147081736192/3812806367512243486112473217"
+    },
+    {
+      "prime": 163,
+      "cap": "108/19",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "5105/4617",
+      "euler_correction": "6863879448777161856146780160/6683513872146404399991677539"
+    },
+    {
+      "prime": 167,
+      "cap": "166/29",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2657/2407",
+      "euler_correction": "14015562051812122898273972224/13645694739052078511345540669"
+    },
+    {
+      "prime": 173,
+      "cap": "43/8",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "3011/2752",
+      "euler_correction": "733506030678272002169765888/718709255220793060317103921"
+    },
+    {
+      "prime": 179,
+      "cap": "356/57",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "5609/5073",
+      "euler_correction": "63758113877029063965912272896/61675293861657952391739685737"
+    },
+    {
+      "prime": 181,
+      "cap": "360/59",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2926/2655",
+      "euler_correction": "75219747156733132800000000000/72944896106883834271960853099"
+    },
+    {
+      "prime": 191,
+      "cap": "380/69",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "7127/6555",
+      "euler_correction": "166045215033521362600000000000/162648288507825812614492926789"
+    },
+    {
+      "prime": 193,
+      "cap": "384/71",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "3697/3408",
+      "euler_correction": "193296040349708795209951739904/189647034831358465988206944071"
+    },
+    {
+      "prime": 197,
+      "cap": "392/75",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "794/735",
+      "euler_correction": "52083154329218087832252317696/51249068134863488180771079615"
+    },
+    {
+      "prime": 199,
+      "cap": "396/67",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "7229/6633",
+      "euler_correction": "265109513831885258002410172416/258411430147125984466256719267"
+    },
+    {
+      "prime": 211,
+      "cap": "35/6",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "1024/945",
+      "euler_correction": "7970759123449651200000000000/7787345861668898615544483121"
+    },
+    {
+      "prime": 223,
+      "cap": "148/23",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "8327/7659",
+      "euler_correction": "358327405112065087324579835904/347845342403754319249792517783"
+    },
+    {
+      "prime": 227,
+      "cap": "452/73",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "8929/8249",
+      "euler_correction": "1402896556597884905756260241408/1366573977094311832903723845433"
+    },
+    {
+      "prime": 229,
+      "cap": "152/25",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "4618/4275",
+      "euler_correction": "532937134151092227555855433728/519955045397573143371752466025"
+    },
+    {
+      "prime": 233,
+      "cap": "464/79",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "4931/4582",
+      "euler_correction": "2067106381207500509295549612032/2022544769510971499390493755119"
+    },
+    {
+      "prime": 239,
+      "cap": "476/69",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "8927/8211",
+      "euler_correction": "2477890200015567086760061800448/2396756435232172404159207391749"
+    },
+    {
+      "prime": 241,
+      "cap": "480/71",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "4621/4260",
+      "euler_correction": "2812675425033623961600000000000/2725604638275171853619336998151"
+    },
+    {
+      "prime": 251,
+      "cap": "500/81",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "10877/10125",
+      "euler_correction": "5186557769775390625000000000000/5064886022229150695962365618081"
+    },
+    {
+      "prime": 257,
+      "cap": "512/87",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "5953/5568",
+      "euler_correction": "7369457053865868776474486505472/7222985326541984098470050534487"
+    },
+    {
+      "prime": 263,
+      "cap": "524/93",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "12971/12183",
+      "euler_correction": "10358995860289060093117894660096/10184786522460647939975081588733"
+    },
+    {
+      "prime": 269,
+      "cap": "268/39",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "433/402",
+      "euler_correction": "443609283698684551417573670912/430673961091923497299347294483"
+    },
+    {
+      "prime": 271,
+      "cap": "27/4",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2903/2700",
+      "euler_correction": "161379528247106832690000000000/156903087818962082857498424641"
+    },
+    {
+      "prime": 277,
+      "cap": "276/43",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "6349/5934",
+      "euler_correction": "8989493556449727088746874011648/8774566795685616625164768554203"
+    },
+    {
+      "prime": 281,
+      "cap": "56/9",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "6721/6300",
+      "euler_correction": "2229627085235138068480000000000/2181314811465152425768170759849"
+    },
+    {
+      "prime": 283,
+      "cap": "141/23",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "3455/3243",
+      "euler_correction": "6197524308702635652315603578880/6069669757008095407574886652103"
+    },
+    {
+      "prime": 293,
+      "cap": "584/83",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "6498/6059",
+      "euler_correction": "34201965476101459448210323931136/33226877982592395315896218009283"
+    },
+    {
+      "prime": 307,
+      "cap": "204/31",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "15149/14229",
+      "euler_correction": "22244794489337206167500232093696/21728122423150908129658575282031"
+    },
+    {
+      "prime": 311,
+      "cap": "620/97",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "15967/15035",
+      "euler_correction": "81139430120979187315400000000000/79413877679072641246731414083137"
+    },
+    {
+      "prime": 313,
+      "cap": "624/83",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "6943/6474",
+      "euler_correction": "75736928917545151245412819009536/73385480628845551797463157401523"
+    },
+    {
+      "prime": 317,
+      "cap": "632/87",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "7348/6873",
+      "euler_correction": "92211916377790433792041966108672/89583989496638812443598383864807"
+    },
+    {
+      "prime": 331,
+      "cap": "330/49",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "8581/8085",
+      "euler_correction": "86740363198857963335400000000000/84748497103730798825090150186689"
+    },
+    {
+      "prime": 337,
+      "cap": "84/13",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "9241/8736",
+      "euler_correction": "28472200013486770938329104908288/27893445470895382196790407567053"
+    },
+    {
+      "prime": 347,
+      "cap": "173/23",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "4239/3979",
+      "euler_correction": "72132419368094436658234090303488/70094111246567451657809370367943"
+    },
+    {
+      "prime": 349,
+      "cap": "348/47",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "8701/8178",
+      "euler_correction": "157750537518659259091788710805504/153462751803142526586124958547647"
+    },
+    {
+      "prime": 353,
+      "cap": "352/49",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "9153/8624",
+      "euler_correction": "188175360314415153718582824665088/183439367672250869264718701228209"
+    },
+    {
+      "prime": 359,
+      "cap": "179/26",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "4923/4654",
+      "euler_correction": "60945708321333864552685151471616/59576740003523257464727026980653"
+    },
+    {
+      "prime": 367,
+      "cap": "61/9",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "5216/4941",
+      "euler_correction": "6099521318699240994260362592256/5970253488172346700935405703361"
+    },
+    {
+      "prime": 373,
+      "cap": "372/49",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "9673/9114",
+      "euler_correction": "365227543401847104255449930661888/355387429118190399633307832507329"
+    },
+    {
+      "prime": 379,
+      "cap": "189/26",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2599/2457",
+      "euler_correction": "117016222285061764263247379705856/114186266152613747617281006715933"
+    },
+    {
+      "prime": 383,
+      "cap": "382/53",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "10697/10123",
+      "euler_correction": "540740606109795833601373208276992/528033112019723338276775927662133"
+    },
+    {
+      "prime": 389,
+      "cap": "388/53",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "205/194",
+      "euler_correction": "12300785298329586911543212113920/12005913662407062729708916003921"
+    },
+    {
+      "prime": 397,
+      "cap": "132/19",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "11881/11286",
+      "euler_correction": "297446444510417101520217135120384/291232395259293013774843285650979"
+    },
+    {
+      "prime": 401,
+      "cap": "800/101",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "10701/10100",
+      "euler_correction": "1795329884160000000000000000000000/1746038618977445168303375147044901"
+    },
+    {
+      "prime": 409,
+      "cap": "408/53",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "11425/10812",
+      "euler_correction": "1191648027342497044108565230387200/1161329787718501979969211241643093"
+    },
+    {
+      "prime": 419,
+      "cap": "209/29",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "6375/6061",
+      "euler_correction": "867859225182257831029571716608000/849114531813169862069569543243469"
+    },
+    {
+      "prime": 421,
+      "cap": "420/59",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "13021/12390",
+      "euler_correction": "1868170581835882348953600000000000/1829098786741994315514851399839019"
+    },
+    {
+      "prime": 431,
+      "cap": "860/111",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "25157/23865",
+      "euler_correction": "4675648520775509927999800000000000/4560896539559994788087065203140271"
+    },
+    {
+      "prime": 433,
+      "cap": "864/113",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "12853/12204",
+      "euler_correction": "5027889377090326883553585729110016/4908323737890557483762553935561393"
+    },
+    {
+      "prime": 439,
+      "cap": "876/119",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "3911/3723",
+      "euler_correction": "890293140314223442752774548312064/871010046419650516900193001769457"
+    },
+    {
+      "prime": 443,
+      "cap": "221/28",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "1630/1547",
+      "euler_correction": "410074310088560243182709171118080/399892035640036493356055687070007"
+    },
+    {
+      "prime": 449,
+      "cap": "8",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "13217/12544",
+      "euler_correction": "68870464582709841751673906659328/67136097368206902852275559609601"
+    },
+    {
+      "prime": 457,
+      "cap": "38/5",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2873/2736",
+      "euler_correction": "84878490022199766188956474933248/82984006869379204630915034834401"
+    },
+    {
+      "prime": 461,
+      "cap": "230/31",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "14951/14260",
+      "euler_correction": "2917469939828965903769600000000000/2856095983673481377087861907024751"
+    },
+    {
+      "prime": 463,
+      "cap": "22/3",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "15247/14553",
+      "euler_correction": "99068497776634354744729347846144/97044715732393126432543586057281"
+    },
+    {
+      "prime": 467,
+      "cap": "466/65",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "3169/3029",
+      "euler_correction": "1426255454896549167148610442334208/1398768743432648653448838007578493"
+    },
+    {
+      "prime": 479,
+      "cap": "956/123",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "30833/29397",
+      "euler_correction": "18354926142874027641535242667159552/17944496307075417596261722670958843"
+    },
+    {
+      "prime": 487,
+      "cap": "486/61",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "15553/14823",
+      "euler_correction": "11113302338866569810304675411439616/10856188351370094769151504993429341"
+    },
+    {
+      "prime": 491,
+      "cap": "70/9",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "16171/15435",
+      "euler_correction": "1806449033618157135439400000000000/1766934354924255293652858195442329"
+    },
+    {
+      "prime": 499,
+      "cap": "249/32",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "4171/3984",
+      "euler_correction": "243597582070355251819192455316224/238345275364920662780910016494001"
+    },
+    {
+      "prime": 503,
+      "cap": "251/33",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "8660/8283",
+      "euler_correction": "8836672837216969496371630381711360/8656249398150272136015447273143553"
+    },
+    {
+      "prime": 509,
+      "cap": "508/67",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "17781/17018",
+      "euler_correction": "20676975480339933222593765471944704/20262274320205169877648059047262227"
+    },
+    {
+      "prime": 521,
+      "cap": "1040/131",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "17811/17030",
+      "euler_correction": "53553156634820016812851200000000000/52399117806845320536024076638855971"
+    },
+    {
+      "prime": 523,
+      "cap": "1044/133",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "5183/4959",
+      "euler_correction": "8128056943496658315901438126338048/7957449063950061063307975357564099"
+    },
+    {
+      "prime": 541,
+      "cap": "8",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "19036/18225",
+      "euler_correction": "642145253876324493557760000000000/628589585424465130312977473332081"
+    },
+    {
+      "prime": 547,
+      "cap": "26/3",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "18019/17199",
+      "euler_correction": "735426375153192481247442571677696/717542973516054083971838830896241"
+    },
+    {
+      "prime": 557,
+      "cap": "139/16",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "18627/17792",
+      "euler_correction": "913725286233292253303574489071616/891789474247188754533370855326001"
+    },
+    {
+      "prime": 563,
+      "cap": "562/67",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "19671/18827",
+      "euler_correction": "69495375411756358541875118237085696/67947822078848728379817790079212627"
+    },
+    {
+      "prime": 569,
+      "cap": "284/35",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "20733/19880",
+      "euler_correction": "41161750939304231933564434205638656/40310226747322413053011685493429635"
+    },
+    {
+      "prime": 571,
+      "cap": "570/71",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "21091/20235",
+      "euler_correction": "87046352928833143992312600000000000/85288730022498580112385781367477111"
+    },
+    {
+      "prime": 577,
+      "cap": "288/37",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "22177/21312",
+      "euler_correction": "51351142922237414979005694137597952/50386185583354882977858497703479077"
+    },
+    {
+      "prime": 587,
+      "cap": "293/35",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "2139/2051",
+      "euler_correction": "11970562443008264613946109390942208/11715349653793024083993796342072567"
+    },
+    {
+      "prime": 593,
+      "cap": "1184/141",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "21757/20868",
+      "euler_correction": "272394150431696646520086359519002624/266609384965798128841233867461841741"
+    },
+    {
+      "prime": 599,
+      "cap": "1196/147",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "45749/43953",
+      "euler_correction": "319981319572755643542931408387895296/313645602914346343661061122051661747"
+    },
+    {
+      "prime": 601,
+      "cap": "1200/149",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "23251/22350",
+      "euler_correction": "337415773962240000000000000000000000/330887173451743962146123812021312949"
+    },
+    {
+      "prime": 607,
+      "cap": "303/35",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "316/303",
+      "euler_correction": "2558090731181006145332678146670592/2501867427200535611013579150076801"
+    },
+    {
+      "prime": 613,
+      "cap": "612/73",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "23257/22338",
+      "euler_correction": "209821183400504234020590468288479232/205517379796554669050089103653308313"
+    },
+    {
+      "prime": 617,
+      "cap": "616/75",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "961/924",
+      "euler_correction": "9314106879091652678515356443082752/9131523121711369083665039281282083"
+    },
+    {
+      "prime": 619,
+      "cap": "1236/145",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "1609/1545",
+      "euler_correction": "16160666414818606594729651611979776/15821869298898623423305172090014805"
+    },
+    {
+      "prime": 631,
+      "cap": "9",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "11498/11025",
+      "euler_correction": "4076902258580459225448720000000000/3984302564291813457966339655092961"
+    },
+    {
+      "prime": 641,
+      "cap": "128/15",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "24961/24000",
+      "euler_correction": "14734373722363651772383232000000000/14435027279256213371876451368163843"
+    },
+    {
+      "prime": 643,
+      "cap": "321/38",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "6340/6099",
+      "euler_correction": "96828802816177484704512335884861440/94904165783725186234037708463829219"
+    },
+    {
+      "prime": 647,
+      "cap": "323/39",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "13082/12597",
+      "euler_correction": "213925146663200507824635810662047744/209853383136079645066539070014593799"
+    },
+    {
+      "prime": 653,
+      "cap": "652/81",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "27385/26406",
+      "euler_correction": "495754076453766091617285275868200960/486903833864451676351587495501336321"
+    },
+    {
+      "prime": 659,
+      "cap": "1316/159",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "54287/52311",
+      "euler_correction": "1086952755431583704546494426136670208/1066650397272985369089950829851847279"
+    },
+    {
+      "prime": 661,
+      "cap": "1320/161",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "27556/26565",
+      "euler_correction": "1140931204785976253851238400000000000/1120065421236108967588606305628680881"
+    },
+    {
+      "prime": 673,
+      "cap": "672/79",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "27553/26544",
+      "euler_correction": "695441961362553337219532597250490368/682036884619107516724678025082007759"
+    },
+    {
+      "prime": 677,
+      "cap": "676/81",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "28393/27378",
+      "euler_correction": "764988547498432379492358342978830336/750842838944891143939822949579175201"
+    },
+    {
+      "prime": 683,
+      "cap": "682/75",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "26599/25575",
+      "euler_correction": "789811451598668953561601872645566464/772875797378293179936748474032942075"
+    },
+    {
+      "prime": 691,
+      "cap": "690/79",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "28291/27255",
+      "euler_correction": "955032811145776571515255800000000000/936189271218447102788718170755709599"
+    },
+    {
+      "prime": 701,
+      "cap": "700/79",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "28701/27650",
+      "euler_correction": "1135025097016860000000000000000000000/1112354732602645033324002834395523679"
+    },
+    {
+      "prime": 709,
+      "cap": "708/83",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "30445/29382",
+      "euler_correction": "1364306061409001686294791620269178880/1339161374873076478006911544783142723"
+    },
+    {
+      "prime": 719,
+      "cap": "359/39",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "14540/14001",
+      "euler_correction": "760262008864673357156222083251650560/744408445422680648581926231749384679"
+    },
+    {
+      "prime": 727,
+      "cap": "363/41",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "15428/14883",
+      "euler_correction": "911260307056178801796845892341907456/893710349030569209323832737114145161"
+    },
+    {
+      "prime": 733,
+      "cap": "488/55",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "31294/30195",
+      "euler_correction": "1349030306808434987244724678406701056/1323153973023039177887551598039926855"
+    },
+    {
+      "prime": 739,
+      "cap": "1476/163",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "62363/60147",
+      "euler_correction": "4411405442608272089867162383489216512/4324350278174907762136373250884193523"
+    },
+    {
+      "prime": 743,
+      "cap": "371/41",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "15768/15211",
+      "euler_correction": "1183721579604433239239006151096434688/1160511963423389305191687087464983241"
+    },
+    {
+      "prime": 751,
+      "cap": "375/43",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "16688/16125",
+      "euler_correction": "1409639900207519531250000000000000000/1384036997419269879945809012065512043"
+    },
+    {
+      "prime": 757,
+      "cap": "9",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "32887/31752",
+      "euler_correction": "36100624803896719169618594827862016/35412008027797732443707036682349201"
+    },
+    {
+      "prime": 761,
+      "cap": "380/43",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "33821/32680",
+      "euler_correction": "1652479039613085595310489600000000000/1622125071653951247497218586211781003"
+    },
+    {
+      "prime": 769,
+      "cap": "128/15",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "35713/34560",
+      "euler_correction": "217549076819621275016082427503181824/213838589915388906390390689482060805"
+    },
+    {
+      "prime": 773,
+      "cap": "386/41",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "32811/31652",
+      "euler_correction": "1904626271685867017258817872103211008/1866112335727690055755002796967271161"
+    },
+    {
+      "prime": 787,
+      "cap": "786/89",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "36157/34977",
+      "euler_correction": "5115291545685110856642166904269000704/5024429941113711207900733064287328009"
+    },
+    {
+      "prime": 797,
+      "cap": "796/91",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "37413/36218",
+      "euler_correction": "6082698280419738825021424265588637696/5977798188231060060945216178280901931"
+    },
+    {
+      "prime": 809,
+      "cap": "1616/173",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "36159/34946",
+      "euler_correction": "13861217274146623002982188718554611712/13596538678482960851230544612183958413"
+    },
+    {
+      "prime": 811,
+      "cap": "324/35",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "73307/70875",
+      "euler_correction": "577524804210991909190459736000000000/566693577319950717289107922967376247"
+    },
+    {
+      "prime": 821,
+      "cap": "328/37",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "39156/37925",
+      "euler_correction": "3530536315434012500917616640000000000/3469921177516714962269581707377084917"
+    },
+    {
+      "prime": 823,
+      "cap": "1644/187",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "79325/76857",
+      "euler_correction": "18366655047052250516060029821942067200/18056751825575838853116137591522670427"
+    },
+    {
+      "prime": 827,
+      "cap": "826/85",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "7269/7021",
+      "euler_correction": "1775354907787441325421247740032421888/1739862933990340347339649358024258657"
+    },
+    {
+      "prime": 829,
+      "cap": "414/43",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "36847/35604",
+      "euler_correction": "4620998621746810489820181528506793984/4530256813144716730847351417161699963"
+    },
+    {
+      "prime": 839,
+      "cap": "838/91",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "39387/38129",
+      "euler_correction": "11273716349954383695139545668380889088/11070950838894683524878545937125236411"
+    },
+    {
+      "prime": 853,
+      "cap": "852/95",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "41749/40470",
+      "euler_correction": "14338760656272893751701210727243055104/14096522189243209879174145637148354895"
+    },
+    {
+      "prime": 857,
+      "cap": "856/97",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "42801/41516",
+      "euler_correction": "15477304361072739358891721693344038912/15224449478446838032677407677381437697"
+    },
+    {
+      "prime": 859,
+      "cap": "143/16",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "5309/5148",
+      "euler_correction": "164142725849347240148320915567193088/161405364891475526005003176560483281"
+    },
+    {
+      "prime": 863,
+      "cap": "1724/177",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "78875/76287",
+      "euler_correction": "30799898974284121071400353866117632000/30206667488844944038130917802375333937"
+    },
+    {
+      "prime": 877,
+      "cap": "1752/185",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "8366/8103",
+      "euler_correction": "7800510385838552147071730970173374464/7659436930819618701731584405294502677"
+    },
+    {
+      "prime": 881,
+      "cap": "1760/189",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "42901/41580",
+      "euler_correction": "42056855708663348770688204800000000000/41321179052309035493990673130214821629"
+    },
+    {
+      "prime": 883,
+      "cap": "1764/191",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "86879/84231",
+      "euler_correction": "43661559680931722383263682068534226944/42910325623988140775037111824841671951"
+    },
+    {
+      "prime": 887,
+      "cap": "1772/195",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "17809/17277",
+      "euler_correction": "9406768806215455334436978559915470848/9250134445422300680222151965645452359"
+    },
+    {
+      "prime": 907,
+      "cap": "302/31",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "43489/42129",
+      "euler_correction": "9788098629613523763213448742216134656/9608357167738139913243769674191199631"
+    },
+    {
+      "prime": 911,
+      "cap": "182/19",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "44591/43225",
+      "euler_correction": "6320661300773648731360607240000000000/6208320438034831675418091798688274899"
+    },
+    {
+      "prime": 919,
+      "cap": "102/11",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "46819/45441",
+      "euler_correction": "4059561385649683697401654372713959424/3991892356499676938365311404394204971"
+    },
+    {
+      "prime": 929,
+      "cap": "29/3",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "45937/44544",
+      "euler_correction": "1262032052741057255300774942897864704/1239680650648807150394521683881646723"
+    },
+    {
+      "prime": 937,
+      "cap": "1872/193",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "46567/45162",
+      "euler_correction": "89985511076842477899686330530579611648/88395956529443352956963170329146886433"
+    },
+    {
+      "prime": 941,
+      "cap": "1880/197",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "47706/46295",
+      "euler_correction": "96613849100122432247331225600000000000/94960218947196646761224231163701349557"
+    },
+    {
+      "prime": 947,
+      "cap": "1892/203",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "98859/96019",
+      "euler_correction": "107361534251581671412303685791753187328/105607749024008114012205582507181100123"
+    },
+    {
+      "prime": 953,
+      "cap": "952/101",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "49505/48076",
+      "euler_correction": "57634893201461749594672567014632980480/56680827425415606355956867547529166341"
+    },
+    {
+      "prime": 967,
+      "cap": "161/16",
+      "cap_kind": "actual_report619_row",
+      "full_coordinate_moment": "23909/23184",
+      "euler_correction": "680923873296973879167308652401331456/668525055912402737052504143865180961"
+    }
+  ],
+  "finite_product": "6358100174764825729855517583622377251087910620554532075696445130560583255745327070659249066893203337279881831180550840481424489281699322862660248863865056604946200684481389344522152495179527201157064348669768690632819867682858631725794470798302988806150220502764799633370793935405250760484038657127965464210587899863018362544680475505909200457286518555400144027/766989597570971529141635042557904916065518479830366987876786379646878508626261366291104523990837788314386499305510615988432892848155013521870267938660692805802759603671820503694386366785346607774424625541930057838481701581264091617684794337444181728727867935133748964474125531669376094703372918524477440000000000000000000000000000000000000000000000000000",
+  "finite_euler_correction": "593586345983337018803073639966211921815948500419919912070358587803531669183795302749864727364096456502551595939313443819808090643340323052493311989517308749728111233160752736690642790197375170128213855192140368910765955471980541472586175052264741796209376213569428629975582299198077930569933453115812218128468532307192240817468924233752424510710901837439438120458187471850654113998018202836137896877284019594108537799591918217661742716019471413945633688676785283054956347269344936524147325035438036920263343780842139653367977719440264312634477351984916987312547930673482957554332015905283848510073089441879043630682770053399221660657989477687438184587563082454684445614230413780055181928089805081591049976584199488223725669091034048253240093781925446321324025249344115602572353255252267348546435032287519636592857902375940423759493236762040900652251031273689569059672846275004340148163382540639734799306112107269335955597905743583382231452088438827193138711259827105154996294803039958241990589498498668581372131746969222266152870733883778907981734532975900137847171771506742628923539299731156721960791055385402824914440667330624320758525103397486684162494051051061199029541344087993248621719096116183816649728096864249422572544814047832284245369426966835689137016937028057160747695452958546510503987765255815865895659625249771491440977051849114291962758487234179648507123100097135625280484880814353182719023336983388455524895704646146391385317874756352352736200203491814046519009142993183608193881347646065380892178103521122738371429027383337888115017280901688421706207775901735293055694256966696298746167575958075636674752535018603624950032306671019430528320435069963262650125399432106085722523588119367624378062571191637887022182449797055650526906413390885685222157099924521389355442172531461615785408095921085860044936121680466375809764293548730625645667694237120439751078824653052293823636600160485715872592099752313737184475098879907324758571116960964264378589424033757134381211472268588746893232890151788351169806517270763144036244799211448218667581730356554734003394758105117233611202453716767063546061575119410284826837684083738991520534310333455389101922171281096105036380132962602490317866790905057904260874128255291438578169707117893550372235911422394191367343908329725847190878343835002177755150543831917007222573943147047012224813521955150258937284812589030328183172287033696763320777190190792921706720350915700082804388210606523691223105551045359545668447374036517381864219888954567918543839935527099289106313843419023280380287002233764721390832346027462343384656770170672975039038205526648278295407913660283527181307336752140446609430135478122431906674222296164888494442284099153994752229881153190150399111079586033994229642860216510456300406341209227023991225258197487910039673490433139340551339669429697715218273011210500106402593372712453492363667486315493090164729697403155682680723398394864795826479410330630914138695347735019738665207414650894834404592935619717329083058961367165631353965434316954994273397956194362818853093187414669887697070244892616283894263706040271618748557528330813068991316308787200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000/207251957003185485101887594900397686159014611652862891166223284695542521911507464604017664168148979011097707679361733130724663476891737013580866038340831836371159339027175071757060492725416778309031872391420789698282805348149045294651695567765631934052169518608261656129156300539581243752671439615437878550158756011442439983291144229597539369269894946981167227767721443226470005418789868972658845724177027029996436804726077859083665791504802478461859672007495608524426858737087210034281511787545549762546562582738555449262780481532084272558543181835624887324173910315503185371524550463230765860802303431533070254464421114331363193531220361162054910228485362310278039318235845889513794149064350768095259504530953977799882543890395357474843281657610726448811041324511283625837807978955154423979296130136818682503250034207265382064410231984653391737499333085960424339529884801787923569688143923873654742628929560710340085577877469399633902286718902150169392448676128635289109681355019978619797912325083243532310882894682313436643331644186565980831656231992988091440938744161908787764407510082116142419673914153232699626212289127755124535311211331189586587134363979938047347178521231085212172568163647558101971960171985835340826255581104969630011361539174499185049554126424554828493283129066478545248989566976002974445923158483396262673470739668969431012008152397039806689106571656498260842820603587555911690567046299808319862560163472341185453730207503548554861564999429416624676370783053905207084504480556904541067341046118293988662551619993203892208139736152324405011533186556719604050327815383363461107001148460161213938364810685726252566689329922019794724892090371791420522105412668642345040696109632448996244214545453970060688846238100151989259637940751838566502288338351515014940820647292335713930767233764181637026278805092897117889936543731024820794344628235137340559384537847152191961906032896366133423947421852768581750602080506607746765680931115747161036793208744070748199294388625007085654648576580521364013120608349958089388611686321539649040673761706619060301897704975401494486868245534929783467598397123139812680863531267675503555766740641474486247276069315316329696580071068388240176828237565823546921497617728235321308696385868974952769023585141629745244557748752586143841161178522294903154510607474003600454266638890338101865942693974581285895675236980204839068485001943389259955185368254058702890402909044117565709743101183316849729073842066094372113998675072458531834726980871774820379849103151492986873258521441068121066030148812511770966420891044901122347768079406733389635854001357875310880352370517118810098573212835494212634413376191108019320248458019178626166165333817784967934220005959540972858573831420771862957394269835238432846135482046110040047838480069107928943741966909811568277485167793206926119058368657386408136295143110469399508316916433838087351598203411300065501014170555364927594378723068086969060060904427513071712897971390767797570548391458592929384474059728244245276210161501094160243323076597799764149114473765743729826457495683832698312646924753228528919998412311950886421392186162596305171009969455815090321856122934509043938891372455257263414532137055989707005680760421092035191112656376533242443740929105140127977034235989601126771703826917582978369965277262924994823267507771354835851615397956837939016454544573348601588446155571848318214499521317228347902300420437261544661540011145068052420886433824858403452732872999362641768062653624976194749782804134537754556948115964430227597995836546203751000287719662753750758099327691476365616448160307501707511853889321694270931915498509",
+  "finite_euler_correction_strict_upper": "3/1000",
+  "full_moment_bound": "M(v) <= A * product_(3<=p<v, p prime) (1-1/p)^(-12)",
+  "elementary_euler_bound": "product_(3<=p<=2^k, p prime) (1-1/p)^(-1) <= 4(k+1), k>=2",
+  "tail": {
+    "minimum_k": 109,
+    "ratio_at_minimum": "1947987996273487986556928/3498450596935634189769921",
+    "geometric_ratio": "3/5",
+    "odd_integers_per_band": "2^(k-1)",
+    "band_fee_bound": "2*A*[4(k+2)]^12*2^(-k)",
+    "complete_fee_strict_upper": "(15/1000)*[4(K+2)]^12*2^(-K), K>=109"
+  },
+  "thresholds": [
+    {
+      "dyadic_exponent": 109,
+      "uniform_owner_threshold": 649037107316853453566312041152512,
+      "tail_fee_upper": "10495351790806902569309763/7737125245533626718119526400",
+      "raw_good_lower": "16396631524814805343190794273/24178516392292583494123520000000",
+      "exact_head_lower": "43828196065829974682348993091729/3344372387381910148907165286400000000",
+      "strict_head_lower": "1/80000",
+      "full_density_lower": "1/(80000 Q_off)"
+    },
+    {
+      "dyadic_exponent": 115,
+      "uniform_owner_threshold": 41538374868278621028243970633760768,
+      "tail_fee_upper": "19740202146111572828188083/495176015714152109959649689600",
+      "raw_good_lower": "3086766644042929390738075674097/1547425049106725343623905280000000",
+      "exact_head_lower": "8250927239526750261442876276861281/214039832792442249530058578329600000000",
+      "strict_head_lower": "1/26000",
+      "full_density_lower": "1/(26000 Q_off)"
+    },
+    {
+      "dyadic_exponent": 120,
+      "uniform_owner_threshold": 1329227995784915872903807060280344576,
+      "tail_fee_upper": "7963046922892758474963/3868562622766813359059763200",
+      "raw_good_lower": "24572418413909148065907642449/12089258196146291747061760000000",
+      "exact_head_lower": "65682074420379152780171128266177/1672186193690955074453582643200000000",
+      "strict_head_lower": "1/26000",
+      "full_density_lower": "1/(26000 Q_off)"
+    }
+  ],
+  "checks": {
+    "report620_producer_binding": true,
+    "report620_prior_checks": true,
+    "report620_no_Lean_claim": true,
+    "report619_producer_binding": true,
+    "report619_prior_checks": true,
+    "report619_no_Lean_claim": true,
+    "report620_binds_exact_report619": true,
+    "inherited_projection": true,
+    "inherited_raw_reserve": true,
+    "inherited_reserve_derivation": true,
+    "inherited_actual_reserve_stronger": true,
+    "inherited_head_reserve": true,
+    "inherited_cubical_cap_boundary": true,
+    "complete_finite_outside_prime_list": true,
+    "finite_outside_count": true,
+    "actual_row_37": true,
+    "actual_row_41": true,
+    "actual_row_43": true,
+    "actual_row_47": true,
+    "actual_row_53": true,
+    "actual_row_59": true,
+    "actual_row_61": true,
+    "actual_row_67": true,
+    "actual_row_71": true,
+    "actual_row_73": true,
+    "actual_row_79": true,
+    "actual_row_83": true,
+    "actual_row_89": true,
+    "actual_row_97": true,
+    "actual_row_101": true,
+    "actual_row_103": true,
+    "actual_row_107": true,
+    "actual_row_109": true,
+    "actual_row_113": true,
+    "actual_row_127": true,
+    "actual_row_131": true,
+    "actual_row_137": true,
+    "actual_row_139": true,
+    "actual_row_149": true,
+    "actual_row_151": true,
+    "actual_row_157": true,
+    "actual_row_163": true,
+    "actual_row_167": true,
+    "actual_row_173": true,
+    "actual_row_179": true,
+    "actual_row_181": true,
+    "actual_row_191": true,
+    "actual_row_193": true,
+    "actual_row_197": true,
+    "actual_row_199": true,
+    "actual_row_211": true,
+    "actual_row_223": true,
+    "actual_row_227": true,
+    "actual_row_229": true,
+    "actual_row_233": true,
+    "actual_row_239": true,
+    "actual_row_241": true,
+    "actual_row_251": true,
+    "actual_row_257": true,
+    "actual_row_263": true,
+    "actual_row_269": true,
+    "actual_row_271": true,
+    "actual_row_277": true,
+    "actual_row_281": true,
+    "actual_row_283": true,
+    "actual_row_293": true,
+    "actual_row_307": true,
+    "actual_row_311": true,
+    "actual_row_313": true,
+    "actual_row_317": true,
+    "actual_row_331": true,
+    "actual_row_337": true,
+    "actual_row_347": true,
+    "actual_row_349": true,
+    "actual_row_353": true,
+    "actual_row_359": true,
+    "actual_row_367": true,
+    "actual_row_373": true,
+    "actual_row_379": true,
+    "actual_row_383": true,
+    "actual_row_389": true,
+    "actual_row_397": true,
+    "actual_row_401": true,
+    "actual_row_409": true,
+    "actual_row_419": true,
+    "actual_row_421": true,
+    "actual_row_431": true,
+    "actual_row_433": true,
+    "actual_row_439": true,
+    "actual_row_443": true,
+    "actual_row_449": true,
+    "actual_row_457": true,
+    "actual_row_461": true,
+    "actual_row_463": true,
+    "actual_row_467": true,
+    "actual_row_479": true,
+    "actual_row_487": true,
+    "actual_row_491": true,
+    "actual_row_499": true,
+    "actual_row_503": true,
+    "actual_row_509": true,
+    "actual_row_521": true,
+    "actual_row_523": true,
+    "actual_row_541": true,
+    "actual_row_547": true,
+    "actual_row_557": true,
+    "actual_row_563": true,
+    "actual_row_569": true,
+    "actual_row_571": true,
+    "actual_row_577": true,
+    "actual_row_587": true,
+    "actual_row_593": true,
+    "actual_row_599": true,
+    "actual_row_601": true,
+    "actual_row_607": true,
+    "actual_row_613": true,
+    "actual_row_617": true,
+    "actual_row_619": true,
+    "actual_row_631": true,
+    "actual_row_641": true,
+    "actual_row_643": true,
+    "actual_row_647": true,
+    "actual_row_653": true,
+    "actual_row_659": true,
+    "actual_row_661": true,
+    "actual_row_673": true,
+    "actual_row_677": true,
+    "actual_row_683": true,
+    "actual_row_691": true,
+    "actual_row_701": true,
+    "actual_row_709": true,
+    "actual_row_719": true,
+    "actual_row_727": true,
+    "actual_row_733": true,
+    "actual_row_739": true,
+    "actual_row_743": true,
+    "actual_row_751": true,
+    "actual_row_757": true,
+    "actual_row_761": true,
+    "actual_row_769": true,
+    "actual_row_773": true,
+    "actual_row_787": true,
+    "actual_row_797": true,
+    "actual_row_809": true,
+    "actual_row_811": true,
+    "actual_row_821": true,
+    "actual_row_823": true,
+    "actual_row_827": true,
+    "actual_row_829": true,
+    "actual_row_839": true,
+    "actual_row_853": true,
+    "actual_row_857": true,
+    "actual_row_859": true,
+    "actual_row_863": true,
+    "actual_row_877": true,
+    "actual_row_881": true,
+    "actual_row_883": true,
+    "actual_row_887": true,
+    "actual_row_907": true,
+    "actual_row_911": true,
+    "actual_row_919": true,
+    "actual_row_929": true,
+    "actual_row_937": true,
+    "actual_row_941": true,
+    "actual_row_947": true,
+    "actual_row_953": true,
+    "actual_row_967": true,
+    "all_small_odd_primes_once": true,
+    "small_cap_count": true,
+    "actual_exception_not_replaced_by_four": true,
+    "exact_finite_correction_identity": true,
+    "finite_product_bound": true,
+    "finite_correction_bound": true,
+    "tail_factor_binomial_domination": true,
+    "empty_selection_new_row_cap": true,
+    "all_k_ge109_geometric_ratio_base": true,
+    "odd_count_dyadic_factor": true,
+    "geometric_tail_factor": true,
+    "new_row_cap_at_109": true,
+    "geometric_ratio_at_109": true,
+    "positive_raw_at_109": true,
+    "head_lower_at_109": true,
+    "new_row_cap_at_115": true,
+    "geometric_ratio_at_115": true,
+    "positive_raw_at_115": true,
+    "head_lower_at_115": true,
+    "new_row_cap_at_120": true,
+    "geometric_ratio_at_120": true,
+    "positive_raw_at_120": true,
+    "head_lower_at_120": true,
+    "threshold109_fee_exact": true,
+    "threshold115_fee_exact": true
+  },
+  "producer_sha256": "8a848c882778b2f52e66e97a9a23f75532ff03c895f6a5b937be6731a2086145",
+  "new_lean_verification": false
+}

@@ -1,0 +1,148 @@
+{
+  "scope": "Fixed arithmetic for UR and FR; not a proof of the Gibbs argument or the general query target",
+  "retained_input_sha256": "da1e922b5745ede67d601c3780043f6d97aa8ee1bf64944479c58b2113f9d10f",
+  "alpha": "7235955529/6075000000000",
+  "reciprocal_excess": "212731/110592",
+  "target": "565/51",
+  "Haar_threshold": "3616427/20828160",
+  "small_branch_strict_lower": "38525/3456",
+  "small_branch_margin": "4045/58752",
+  "large_branch_strict_lower": "49/4",
+  "large_branch_margin": "239/204",
+  "retained_tail": "34604032562187981294849877215156671047943193711076221152899/7018898160469913278777886468111881488265080561292467000000000000",
+  "originals": [
+    {
+      "modulus": 525,
+      "residue": 0,
+      "private_integer": 525
+    },
+    {
+      "modulus": 875,
+      "residue": 0,
+      "private_integer": 875
+    }
+  ],
+  "replacement_query_phases": [
+    1,
+    1
+  ],
+  "common_divisor": 175,
+  "complete_period": 2625,
+  "old_cover_root_points_inspected": 15,
+  "exclusive_cover_masses": {
+    "525": "4/2625",
+    "525,875": "1/2625",
+    "875": "2/2625"
+  },
+  "complete_survivor_mass": "374/375",
+  "fixed_cardinality": 1,
+  "sampling_probabilities": {
+    "fixed_cardinality": [
+      {
+        "selected_labels": [
+          525
+        ],
+        "mass": "1/2"
+      },
+      {
+        "selected_labels": [
+          875
+        ],
+        "mass": "1/2"
+      }
+    ],
+    "independent": [
+      {
+        "selected_labels": [],
+        "mass": "1/4"
+      },
+      {
+        "selected_labels": [
+          525
+        ],
+        "mass": "1/4"
+      },
+      {
+        "selected_labels": [
+          875
+        ],
+        "mass": "1/4"
+      },
+      {
+        "selected_labels": [
+          525,
+          875
+        ],
+        "mass": "1/4"
+      }
+    ],
+    "both_or_neither": [
+      {
+        "selected_labels": [],
+        "mass": "1/2"
+      },
+      {
+        "selected_labels": [
+          525,
+          875
+        ],
+        "mass": "1/2"
+      }
+    ]
+  },
+  "sampling_total_masses": {
+    "fixed_cardinality": "1",
+    "independent": "1",
+    "both_or_neither": "1"
+  },
+  "marginal_replacement_probabilities": {
+    "fixed_cardinality": [
+      "1/2",
+      "1/2"
+    ],
+    "independent": [
+      "1/2",
+      "1/2"
+    ],
+    "both_or_neither": [
+      "1/2",
+      "1/2"
+    ]
+  },
+  "fixed_cardinality_exterior_mass": "1/875",
+  "independent_exterior_mass": "13/10500",
+  "fixed_cardinality_beta": "2051688703/42525000000000",
+  "independent_beta": "-1998311297/42525000000000",
+  "same_marginals_positive_correlation_inside_at_one": "1/2",
+  "exponential_comparison": "exp(1)>1+1+1/2=5/2, hence exp(-1)<2/5<1/2",
+  "checks": {
+    "complete_reciprocal_excess": true,
+    "alpha_below_one_over_800": true,
+    "small_private_mass_gap": true,
+    "small_branch_lower_and_margin": true,
+    "large_branch_Haar_endpoint": true,
+    "large_branch_reciprocal_excess": true,
+    "large_branch_low_multiplicity_mass": true,
+    "large_branch_paid_mass": true,
+    "large_branch_parameter_threshold": true,
+    "large_branch_log_argument": true,
+    "large_branch_free_baseline": true,
+    "large_branch_lower_above_target": true,
+    "retained_tail_below_one_over_80": true,
+    "actual_numerical_labels": true,
+    "actual_private_integers": true,
+    "common_and_complete_period": true,
+    "only_15_possible_old_cover_roots": true,
+    "exclusive_old_cover_counts": true,
+    "complete_actual_survivor_mass": true,
+    "exact_fixed_leak": true,
+    "exact_independent_leak": true,
+    "strict_validity_separation": true,
+    "sampling_tables_are_probability_laws": true,
+    "three_sampling_rules_have_same_marginals": true,
+    "fixed_table_selects_exactly_one": true,
+    "query_one_is_actual_survivor": true,
+    "positive_correlation_inside_from_sampling": true,
+    "positive_correlation_exceeds_inverse_exp_lower": true
+  }
+}

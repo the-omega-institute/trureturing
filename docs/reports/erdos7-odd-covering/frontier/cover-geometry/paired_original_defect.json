@@ -1,0 +1,279 @@
+{
+  "schema": "paired-original-defect-result-v1",
+  "input_sha256": "e578ef5973c6f032325a13a147dac0c25fe972e0900d9a403ef2edc00fea2c2a",
+  "original_class_count": 9,
+  "periods": {
+    "R": 23,
+    "S": 899
+  },
+  "all_unit_live_count": 18423,
+  "lambda": "801/899",
+  "actual_phase_rows": [
+    {
+      "modulus": 23,
+      "residue": 0,
+      "selector": "A",
+      "old": 1,
+      "R": 23,
+      "S": 1,
+      "rho_R": "0",
+      "rho_S": "1",
+      "rho_joint": "0",
+      "account": "R",
+      "scaled_charge": "0"
+    },
+    {
+      "modulus": 29,
+      "residue": 0,
+      "selector": "A",
+      "old": 1,
+      "R": 1,
+      "S": 29,
+      "rho_R": "1",
+      "rho_S": "0",
+      "rho_joint": "0",
+      "account": "S",
+      "scaled_charge": "0"
+    },
+    {
+      "modulus": 31,
+      "residue": 0,
+      "selector": "A",
+      "old": 1,
+      "R": 1,
+      "S": 31,
+      "rho_R": "1",
+      "rho_S": "0",
+      "rho_joint": "0",
+      "account": "S",
+      "scaled_charge": "0"
+    },
+    {
+      "modulus": 69,
+      "residue": 25,
+      "selector": "A",
+      "old": 3,
+      "R": 23,
+      "S": 1,
+      "rho_R": "87/2047",
+      "rho_S": "1",
+      "rho_joint": "87/2047",
+      "account": "R",
+      "scaled_charge": "1914/2047"
+    },
+    {
+      "modulus": 87,
+      "residue": 31,
+      "selector": "A",
+      "old": 3,
+      "R": 1,
+      "S": 29,
+      "rho_R": "1",
+      "rho_S": "70/2047",
+      "rho_joint": "70/2047",
+      "account": "S",
+      "scaled_charge": "1960/2047"
+    },
+    {
+      "modulus": 93,
+      "residue": 64,
+      "selector": "A",
+      "old": 3,
+      "R": 1,
+      "S": 31,
+      "rho_R": "1",
+      "rho_S": "196/6141",
+      "rho_joint": "196/6141",
+      "account": "S",
+      "scaled_charge": "5488/6141"
+    },
+    {
+      "modulus": 667,
+      "residue": 2,
+      "selector": "A",
+      "old": 1,
+      "R": 23,
+      "S": 29,
+      "rho_R": "87/2047",
+      "rho_S": "70/2047",
+      "rho_joint": "0",
+      "account": "M",
+      "scaled_charge": "0"
+    },
+    {
+      "modulus": 713,
+      "residue": 2,
+      "selector": "A",
+      "old": 1,
+      "R": 23,
+      "S": 31,
+      "rho_R": "87/2047",
+      "rho_S": "196/6141",
+      "rho_joint": "0",
+      "account": "M",
+      "scaled_charge": "0"
+    },
+    {
+      "modulus": 6003,
+      "residue": 1,
+      "selector": "A",
+      "old": 9,
+      "R": 23,
+      "S": 29,
+      "rho_R": "280/6141",
+      "rho_S": "659/18423",
+      "rho_joint": "10/6141",
+      "account": "M",
+      "scaled_charge": "6160/6141"
+    }
+  ],
+  "accounts": {
+    "R": {
+      "1": "0",
+      "3": "1914/2047",
+      "9": "0"
+    },
+    "S": {
+      "1": "0",
+      "3": "11368/6141",
+      "9": "0"
+    },
+    "M": {
+      "1": "0",
+      "3": "0",
+      "9": "6160/6141"
+    }
+  },
+  "pair_expenses_and_payments": [
+    {
+      "R_modulus": 69,
+      "S_modulus": 87,
+      "old_R": "3",
+      "old_S": "3",
+      "scaled_price": "3751440/4190209",
+      "incorrect_live_only_scaled_price": "0",
+      "paid": "3751440/4190209",
+      "payments": [
+        [
+          3,
+          "3751440/4190209"
+        ]
+      ]
+    },
+    {
+      "R_modulus": 69,
+      "S_modulus": 93,
+      "old_R": "3",
+      "old_S": "3",
+      "scaled_price": "3501344/4190209",
+      "incorrect_live_only_scaled_price": "0",
+      "paid": "3501344/4190209",
+      "payments": [
+        [
+          3,
+          "438769/4190209"
+        ],
+        [
+          1,
+          "3062575/4190209"
+        ]
+      ]
+    }
+  ],
+  "combined_payments": {
+    "R": {
+      "rows": {
+        "1": "0",
+        "3": "1914/2047",
+        "9": "0"
+      },
+      "columns": {
+        "1": "0",
+        "3": "1914/2047",
+        "9": "0"
+      }
+    },
+    "S": {
+      "rows": {
+        "1": "0",
+        "3": "11368/6141",
+        "9": "0"
+      },
+      "columns": {
+        "1": "5227/6141",
+        "3": "1",
+        "9": "0"
+      }
+    },
+    "M": {
+      "rows": {
+        "1": "0",
+        "3": "0",
+        "9": "6160/6141"
+      },
+      "columns": {
+        "1": "9226618/12570627",
+        "3": "1",
+        "9": "1"
+      }
+    }
+  },
+  "single_comparison_witness": {
+    "old_residue": 1,
+    "active_moduli": [
+      69,
+      87,
+      93,
+      6003
+    ],
+    "scalar_scaled_defect": "7127736/4190209",
+    "pair_scaled_bound": "7252784/4190209",
+    "actual_survival": "16414/18423",
+    "proxy_survival": "11198528/12570627"
+  },
+  "eta": "1",
+  "theta": "1/3696",
+  "conditional_strict_Haar_coefficient": "89/99681120000",
+  "lcm_countercontrol": {
+    "reference_A": 1,
+    "reference_B": 2,
+    "old_point": 7,
+    "R_original": [
+      69,
+      1
+    ],
+    "S_original": [
+      145,
+      117
+    ],
+    "old_R": 3,
+    "old_S": 5,
+    "R_selector": "A",
+    "S_selector": "B",
+    "outside_primes": [
+      23,
+      29
+    ],
+    "unit_originals": [
+      [
+        23,
+        0
+      ],
+      [
+        29,
+        0
+      ],
+      [
+        667,
+        2
+      ]
+    ],
+    "lcm": 15,
+    "joint_activation": 1,
+    "h_lcm": 0,
+    "h_endpoint_R": 1,
+    "h_endpoint_S": 1,
+    "positive_pair_price": "1/378225"
+  },
+  "scope": "Fixed outside-kernel and original-label pair checks; no enumeration of old activations. A single comparison witness rejects scalar-to-unit accounting for this law. The ordinary pair-implication proof covers all activations. No source producer, geometry, optimizer or Lean run, and no claim outside all522 methods."
+}

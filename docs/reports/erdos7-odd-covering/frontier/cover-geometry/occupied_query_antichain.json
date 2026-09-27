@@ -1,0 +1,320 @@
+{
+  "scope": "Actual twenty-label antichain for occupied-query deletion criteria.\n\nEnumerates 3^7 patterns (zero, one, other), weighted by their exact Haar\ncardinality; never enumerates the full period. No Lean and no claim about\nthe complete nonunit divisor-query load.\n",
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "period": 4849845,
+  "pattern_count": 2187,
+  "original_residue": 0,
+  "query_residue": 1,
+  "labels": [
+    {
+      "outside_support": [
+        5,
+        7,
+        11
+      ],
+      "modulus": 1155,
+      "query_mass_under_H_conditioned_U": "4199/4824718"
+    },
+    {
+      "outside_support": [
+        5,
+        7,
+        13
+      ],
+      "modulus": 1365,
+      "query_mass_under_H_conditioned_U": "3553/4824718"
+    },
+    {
+      "outside_support": [
+        5,
+        7,
+        17
+      ],
+      "modulus": 1785,
+      "query_mass_under_H_conditioned_U": "2717/4824718"
+    },
+    {
+      "outside_support": [
+        5,
+        7,
+        19
+      ],
+      "modulus": 1995,
+      "query_mass_under_H_conditioned_U": "2431/4824718"
+    },
+    {
+      "outside_support": [
+        5,
+        11,
+        13
+      ],
+      "modulus": 2145,
+      "query_mass_under_H_conditioned_U": "2261/4824718"
+    },
+    {
+      "outside_support": [
+        5,
+        11,
+        17
+      ],
+      "modulus": 2805,
+      "query_mass_under_H_conditioned_U": "1729/4824718"
+    },
+    {
+      "outside_support": [
+        5,
+        11,
+        19
+      ],
+      "modulus": 3135,
+      "query_mass_under_H_conditioned_U": "1547/4824718"
+    },
+    {
+      "outside_support": [
+        5,
+        13,
+        17
+      ],
+      "modulus": 3315,
+      "query_mass_under_H_conditioned_U": "1463/4824718"
+    },
+    {
+      "outside_support": [
+        5,
+        13,
+        19
+      ],
+      "modulus": 3705,
+      "query_mass_under_H_conditioned_U": "1309/4824718"
+    },
+    {
+      "outside_support": [
+        5,
+        17,
+        19
+      ],
+      "modulus": 4845,
+      "query_mass_under_H_conditioned_U": "1001/4824718"
+    },
+    {
+      "outside_support": [
+        7,
+        11,
+        13
+      ],
+      "modulus": 3003,
+      "query_mass_under_H_conditioned_U": "1615/4824718"
+    },
+    {
+      "outside_support": [
+        7,
+        11,
+        17
+      ],
+      "modulus": 3927,
+      "query_mass_under_H_conditioned_U": "1235/4824718"
+    },
+    {
+      "outside_support": [
+        7,
+        11,
+        19
+      ],
+      "modulus": 4389,
+      "query_mass_under_H_conditioned_U": "1105/4824718"
+    },
+    {
+      "outside_support": [
+        7,
+        13,
+        17
+      ],
+      "modulus": 4641,
+      "query_mass_under_H_conditioned_U": "1045/4824718"
+    },
+    {
+      "outside_support": [
+        7,
+        13,
+        19
+      ],
+      "modulus": 5187,
+      "query_mass_under_H_conditioned_U": "935/4824718"
+    },
+    {
+      "outside_support": [
+        7,
+        17,
+        19
+      ],
+      "modulus": 6783,
+      "query_mass_under_H_conditioned_U": "715/4824718"
+    },
+    {
+      "outside_support": [
+        11,
+        13,
+        17
+      ],
+      "modulus": 7293,
+      "query_mass_under_H_conditioned_U": "665/4824718"
+    },
+    {
+      "outside_support": [
+        11,
+        13,
+        19
+      ],
+      "modulus": 8151,
+      "query_mass_under_H_conditioned_U": "595/4824718"
+    },
+    {
+      "outside_support": [
+        11,
+        17,
+        19
+      ],
+      "modulus": 10659,
+      "query_mass_under_H_conditioned_U": "455/4824718"
+    },
+    {
+      "outside_support": [
+        13,
+        17,
+        19
+      ],
+      "modulus": 12597,
+      "query_mass_under_H_conditioned_U": "385/4824718"
+    }
+  ],
+  "weighted_counts": {
+    "total": 4849845,
+    "deleted": 25127,
+    "survivors": 4824718,
+    "raw_hinge": 345,
+    "deleted_hinge": 0,
+    "query_load": 30960,
+    "surviving_query_load": 30960
+  },
+  "load_histogram": {
+    "0": 4824718,
+    "1": 23320,
+    "4": 1740,
+    "10": 66,
+    "20": 1
+  },
+  "surviving_load_histogram": {
+    "0": 4799591,
+    "1": 23320,
+    "4": 1740,
+    "10": 66,
+    "20": 1
+  },
+  "H_W": "25127/4849845",
+  "H_U": "4824718/4849845",
+  "raw_hinge": "23/323323",
+  "deleted_hinge": "0",
+  "occupied_query_sum": "15480/2412359",
+  "exponential_integer_certificate": 72705052102411,
+  "refuted_claims": [
+    "A universal c>0 giving E_H[1_W(L_F-5)+] >= c E_H[(L_F-5)+] for all actual irredundant rooted arithmetic families with simultaneous occupied-label maximizing query phases.",
+    "A universal upper bound log E_H[1_U exp(L_F)] <= 51863873/25500000 for these families; this example gives log moment >4 by a rational exponential certificate."
+  ],
+  "not_refuted": "No assertion about the complete nonunit divisor-query load, existence of a desired common survivor law, R<565/51, or unrestricted Erdos7 is refuted.",
+  "checks": {
+    "twenty_distinct_labels": true,
+    "period": true,
+    "all_labels_shallow": true,
+    "numerical_antichain": true,
+    "squarefree_rooted_1155": true,
+    "private_point_1155": true,
+    "squarefree_rooted_1365": true,
+    "private_point_1365": true,
+    "squarefree_rooted_1785": true,
+    "private_point_1785": true,
+    "squarefree_rooted_1995": true,
+    "private_point_1995": true,
+    "squarefree_rooted_2145": true,
+    "private_point_2145": true,
+    "squarefree_rooted_2805": true,
+    "private_point_2805": true,
+    "squarefree_rooted_3135": true,
+    "private_point_3135": true,
+    "squarefree_rooted_3315": true,
+    "private_point_3315": true,
+    "squarefree_rooted_3705": true,
+    "private_point_3705": true,
+    "squarefree_rooted_4845": true,
+    "private_point_4845": true,
+    "squarefree_rooted_3003": true,
+    "private_point_3003": true,
+    "squarefree_rooted_3927": true,
+    "private_point_3927": true,
+    "squarefree_rooted_4389": true,
+    "private_point_4389": true,
+    "squarefree_rooted_4641": true,
+    "private_point_4641": true,
+    "squarefree_rooted_5187": true,
+    "private_point_5187": true,
+    "squarefree_rooted_6783": true,
+    "private_point_6783": true,
+    "squarefree_rooted_7293": true,
+    "private_point_7293": true,
+    "squarefree_rooted_8151": true,
+    "private_point_8151": true,
+    "squarefree_rooted_10659": true,
+    "private_point_10659": true,
+    "squarefree_rooted_12597": true,
+    "private_point_12597": true,
+    "pattern_count": true,
+    "weighted_total_period": true,
+    "deleted_structural_characterization": true,
+    "load_structural_characterization": true,
+    "deleted_count": true,
+    "survivor_count": true,
+    "raw_hinge_count": true,
+    "deleted_hinge_count": true,
+    "query_load_count": true,
+    "independent_deleted_count": true,
+    "independent_hinge_count": true,
+    "hinge_closed_form": true,
+    "query_mass_sum_closed_form": true,
+    "maximizing_query_1155": true,
+    "maximizing_query_1365": true,
+    "maximizing_query_1785": true,
+    "maximizing_query_1995": true,
+    "maximizing_query_2145": true,
+    "maximizing_query_2805": true,
+    "maximizing_query_3135": true,
+    "maximizing_query_3315": true,
+    "maximizing_query_3705": true,
+    "maximizing_query_4845": true,
+    "maximizing_query_3003": true,
+    "maximizing_query_3927": true,
+    "maximizing_query_4389": true,
+    "maximizing_query_4641": true,
+    "maximizing_query_5187": true,
+    "maximizing_query_6783": true,
+    "maximizing_query_7293": true,
+    "maximizing_query_8151": true,
+    "maximizing_query_10659": true,
+    "maximizing_query_12597": true,
+    "H_W_exact": true,
+    "H_U_exact": true,
+    "hinge_exact": true,
+    "occupied_query_sum_exact": true,
+    "exponential_integer_certificate": true,
+    "exp_taylor_lower_base": true,
+    "exponential_threshold": true,
+    "all_one_point_has_max_load": true
+  },
+  "passed_count": 85
+}

@@ -1,0 +1,207 @@
+{
+  "kind": "ordinary-proof-consumer-and-exact-arithmetic",
+  "B": {
+    "exact": "432040125182653876501/86355045355449035400",
+    "decimal": 5.003067549838209
+  },
+  "c0": {
+    "exact": "25/27",
+    "decimal": 0.9259259259259259
+  },
+  "new_R_upper": {
+    "exact": "6199418183523781383463/539719033471556471250",
+    "decimal": 11.486380503663476
+  },
+  "gate_slack": {
+    "exact": "1709481952235674937813/539719033471556471250",
+    "decimal": 3.167355320489667
+  },
+  "old_uniform_bound": {
+    "exact": "4276958830743405547809/359812688981037647500",
+    "decimal": 11.886625907650533
+  },
+  "new_compatible_loss_limit": {
+    "exact": "2305626180867071404702/27706989537234114087851",
+    "decimal": 0.08321460466748469
+  },
+  "old_scalar_loss_limit": {
+    "exact": "1152813090433535702351/24438477835592077018200",
+    "decimal": 0.04717204967465627
+  },
+  "nine_head_Haar_lower": {
+    "exact": "1709481952235674937813/62903178645754948300800000",
+    "decimal": 2.7176400128565523e-05
+  },
+  "no_pure3_h1_M3": {
+    "query_upper": {
+      "exact": "475217647860378394201/43177522677724517700",
+      "decimal": 11.006135099676419
+    },
+    "gate": {
+      "exact": "1152813090433535702351/43177522677724517700",
+      "decimal": 26.699380115855448
+    }
+  },
+  "example": {
+    "originals": [
+      {
+        "m": 3,
+        "a": 2,
+        "d": 1,
+        "e": 1,
+        "qphase": 0,
+        "tphase": 2
+      },
+      {
+        "m": 5,
+        "a": 0,
+        "d": 5,
+        "e": 0,
+        "qphase": 0,
+        "tphase": 0
+      },
+      {
+        "m": 15,
+        "a": 6,
+        "d": 5,
+        "e": 1,
+        "qphase": 1,
+        "tphase": 0
+      },
+      {
+        "m": 405,
+        "a": 162,
+        "d": 5,
+        "e": 4,
+        "qphase": 2,
+        "tphase": 0
+      },
+      {
+        "m": 1215,
+        "a": 243,
+        "d": 5,
+        "e": 5,
+        "qphase": 3,
+        "tphase": 0
+      },
+      {
+        "m": 7,
+        "a": 0,
+        "d": 7,
+        "e": 0,
+        "qphase": 0,
+        "tphase": 0
+      },
+      {
+        "m": 21,
+        "a": 15,
+        "d": 7,
+        "e": 1,
+        "qphase": 1,
+        "tphase": 0
+      },
+      {
+        "m": 567,
+        "a": 324,
+        "d": 7,
+        "e": 4,
+        "qphase": 2,
+        "tphase": 0
+      },
+      {
+        "m": 1701,
+        "a": 486,
+        "d": 7,
+        "e": 5,
+        "qphase": 3,
+        "tphase": 0
+      },
+      {
+        "m": 385,
+        "a": 2,
+        "d": 385,
+        "e": 0,
+        "qphase": 2,
+        "tphase": 0
+      }
+    ],
+    "period": 93555,
+    "private_witnesses": {
+      "3": 8,
+      "5": 10,
+      "15": 6,
+      "405": 972,
+      "1215": 243,
+      "7": 7,
+      "21": 57,
+      "567": 324,
+      "1701": 5589,
+      "385": 387
+    },
+    "selected_Q_cells": 164,
+    "joint_positive_cells": 26285,
+    "minimum_fibre_survival": {
+      "exact": "53/54",
+      "decimal": 0.9814814814814815
+    },
+    "inverse_normalizer": {
+      "exact": "43129/42665",
+      "decimal": 1.0108754248212821
+    },
+    "raw_surviving_mass": {
+      "exact": "42665/43129",
+      "decimal": 0.989241577592803
+    },
+    "RQ": {
+      "exact": "166604093/124416000",
+      "decimal": 1.3390889676568931
+    },
+    "RP": {
+      "exact": "6621447999031/2123283456000",
+      "decimal": 3.1184946034030605
+    }
+  },
+  "checks": [
+    "h3 M2 minimum fibre mass",
+    "new exact query upper",
+    "new upper passes pure23/29 gate",
+    "new exact gate slack",
+    "old uniform mass-loss bound fails at same worst-case reserve",
+    "new nine-head Haar bound",
+    "nine-head Haar lower exceeds one over 37000",
+    "strictly wider compatible-fibre reserve than old scalar criterion",
+    "no pure3 h1 M3 exact reserve",
+    "no pure3 exact common query bound",
+    "no pure3 exact positive gate",
+    "ten actual numerical labels distinct",
+    "all originals are odd nonunits",
+    "one fixed CRT phase per original",
+    "all ten originals have an actual private witness",
+    "essential Q-only triple excludes star and all-three-rooted support classes",
+    "selected phases cover every nonunit-cofactor original through e3",
+    "through-five finite-window condition fails at cofactor5",
+    "through-five finite-window condition fails at cofactor7",
+    "residual activation uses at most two actual cofactors at each Q point",
+    "one explicit selected Q source normalizes",
+    "selected Q source avoids all selected classes",
+    "all actual Q fibres meet the claimed reserve",
+    "explicit example exact minimum fibre survival",
+    "inverse raw prior is one probability",
+    "inverse raw prior has the intended normalized Q marginal",
+    "inverse product deletion has positive raw survival",
+    "explicit selected source obeys the SD1 complete-query bound",
+    "one joint law normalized on actual survivor",
+    "exact example full query norm passes gate and general bound",
+    "exact example obeys its stronger actual-fibre bound"
+  ],
+  "check_count": 31,
+  "scope": {
+    "all_finite_original_heights": true,
+    "all_query_heights": true,
+    "globally_fixed_phases": true,
+    "same_Q_source_and_joint_law": true,
+    "unrestricted_P_families": false,
+    "exact_optimality": false,
+    "new_Lean_verification": false
+  }
+}

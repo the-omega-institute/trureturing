@@ -1,0 +1,330 @@
+{
+  "parameters": {
+    "core_primes": [
+      3,
+      5,
+      7,
+      11
+    ],
+    "minimum_distinguished_prime": 13,
+    "existing_Gamma_upper": "4939031/47730",
+    "existing_Haar_density_cap": "720/29",
+    "nonunit_layout_mean_strict_upper": "46/5",
+    "Jensen_square_slack": "133991/238650",
+    "core_completion_mean_strict_upper": "299/30",
+    "good_load_threshold": "1313/120",
+    "good_Haar_mass_strict_lower": "29/8080",
+    "minimum_completion_margin": "39/40",
+    "Haar_density_cap": 279,
+    "M1": "77/32",
+    "M2": "231/20",
+    "cutoff_integer": 3223,
+    "cutoff": "3^256 * 3223^3",
+    "weighted_tail_numerator": "1740123/8",
+    "source_scope": "Same uniform complete old survivor law; arbitrary original residues and finite heights."
+  },
+  "literal_controls": [
+    {
+      "parent_prime": 13,
+      "core_period": 3,
+      "parent_height": 3,
+      "outside_primes": [
+        5,
+        7
+      ],
+      "auxiliary_early_cuts": {
+        "5": 1,
+        "7": 1
+      },
+      "actual_originals": [
+        [
+          3,
+          0
+        ],
+        [
+          13,
+          0
+        ],
+        [
+          39,
+          1
+        ],
+        [
+          169,
+          1
+        ],
+        [
+          507,
+          2
+        ],
+        [
+          2197,
+          2
+        ],
+        [
+          6591,
+          2200
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          65,
+          27
+        ],
+        [
+          195,
+          28
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          21,
+          8
+        ],
+        [
+          91,
+          79
+        ],
+        [
+          273,
+          80
+        ],
+        [
+          35,
+          4
+        ],
+        [
+          455,
+          146
+        ],
+        [
+          1365,
+          1174
+        ],
+        [
+          845,
+          510
+        ],
+        [
+          1183,
+          679
+        ],
+        [
+          5915,
+          3045
+        ],
+        [
+          2535,
+          1357
+        ],
+        [
+          3549,
+          1864
+        ],
+        [
+          17745,
+          8962
+        ],
+        [
+          10985,
+          8792
+        ],
+        [
+          15379,
+          2201
+        ],
+        [
+          76895,
+          63717
+        ],
+        [
+          32955,
+          30764
+        ],
+        [
+          46137,
+          17582
+        ],
+        [
+          230685,
+          63719
+        ]
+      ],
+      "original_count": 30,
+      "kernel_branches": {
+        "high": 5,
+        "low": 5
+      },
+      "measured_global_survival": "53/105",
+      "final_core_marginal": {
+        "1": "18/53",
+        "2": "35/53"
+      },
+      "weighted_tail_completion": "36/8957",
+      "base_three_weight_majorant": "4/53",
+      "joint_cylinder_queries": 192,
+      "literal_full_CRT_checks": 21970,
+      "average_actual_parent_fibre_escape": "103470/116441",
+      "scope": "Small outside primes use measured survival only; this is not a large-cutoff instance."
+    },
+    {
+      "parent_prime": 17,
+      "core_period": 3,
+      "parent_height": 3,
+      "outside_primes": [
+        5,
+        7
+      ],
+      "auxiliary_early_cuts": {
+        "5": 1,
+        "7": 1
+      },
+      "actual_originals": [
+        [
+          3,
+          0
+        ],
+        [
+          17,
+          0
+        ],
+        [
+          51,
+          1
+        ],
+        [
+          289,
+          1
+        ],
+        [
+          867,
+          2
+        ],
+        [
+          4913,
+          2
+        ],
+        [
+          14739,
+          9829
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          85,
+          52
+        ],
+        [
+          255,
+          223
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          21,
+          8
+        ],
+        [
+          119,
+          86
+        ],
+        [
+          357,
+          206
+        ],
+        [
+          35,
+          4
+        ],
+        [
+          595,
+          496
+        ],
+        [
+          1785,
+          1279
+        ],
+        [
+          1445,
+          870
+        ],
+        [
+          2023,
+          581
+        ],
+        [
+          10115,
+          6650
+        ],
+        [
+          4335,
+          2317
+        ],
+        [
+          6069,
+          583
+        ],
+        [
+          30345,
+          6652
+        ],
+        [
+          24565,
+          4917
+        ],
+        [
+          34391,
+          4917
+        ],
+        [
+          171955,
+          4917
+        ],
+        [
+          73695,
+          4919
+        ],
+        [
+          103173,
+          4919
+        ],
+        [
+          515865,
+          4919
+        ]
+      ],
+      "original_count": 30,
+      "kernel_branches": {
+        "high": 5,
+        "low": 5
+      },
+      "measured_global_survival": "53/105",
+      "final_core_marginal": {
+        "1": "18/53",
+        "2": "35/53"
+      },
+      "weighted_tail_completion": "36/15317",
+      "base_three_weight_majorant": "4/53",
+      "joint_cylinder_queries": 192,
+      "literal_full_CRT_checks": 49130,
+      "average_actual_parent_fibre_escape": "238618/260389",
+      "scope": "Small outside primes use measured survival only; this is not a large-cutoff instance."
+    }
+  ]
+}

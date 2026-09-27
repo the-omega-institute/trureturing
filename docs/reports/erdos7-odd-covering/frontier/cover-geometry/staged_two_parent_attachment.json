@@ -1,0 +1,2378 @@
+{
+  "schema": "staged-two-parent-attachment-v1",
+  "sources": {
+    "central_high_support_augmentation.json": {
+      "sha256": "0cfa07bd80c2f5f5b753669c7a13be74a3c0c89d1bb6e822cdba8d26636bdc4c",
+      "producer_sha256": "e4466a57f5ad969b6a9f71c3bfbf1b6209303517c1f57bfe1ca12ffd62907898"
+    },
+    "two_parent_entry_attachment.json": {
+      "sha256": "a133ebca1f0cbecc4f360e28ebdc3e9949f19fcba4f05984cd309f25284aad8f",
+      "producer_sha256": "e4f43fbb80ba3fc463f136c9a2de88a02ddba7afa14ea665fab49ef51697741b"
+    }
+  },
+  "scope": {
+    "minimum_entry_prime": 37,
+    "head": "Report598 ten-prime head restriction",
+    "parents": "Any two distinct head coordinates",
+    "branches": "Report600 disjoint private branches; Report599 private blocks",
+    "all_original_heights": "Unbounded finite",
+    "residue_choice": "One globally fixed phase per numerical original",
+    "transport": "Only head digit coordinates change; outside coordinates fixed",
+    "excluded": "General recursive two-parent separators; unrestricted Erdos7",
+    "lean_verified": false
+  },
+  "constants": {
+    "c": "1084133/201247200",
+    "inherited_gate": "26345885990886052732242307711/9055182074115772514304000000000",
+    "density_D": "3458/405",
+    "continuation_multiplier": "200/33",
+    "alpha": "2673/138320",
+    "early_pair_density": "10/3"
+  },
+  "fee_tables": {
+    "3_5": {
+      "reference_parents": [
+        3,
+        5
+      ],
+      "finite_rows": [
+        {
+          "entry_prime": 37,
+          "selected_label_count": 28,
+          "reciprocal_tail": "52769/54675000",
+          "blocker_fee_upper": "52769/328050000"
+        },
+        {
+          "entry_prime": 41,
+          "selected_label_count": 32,
+          "reciprocal_tail": "84611/164025000",
+          "blocker_fee_upper": "84611/984150000"
+        },
+        {
+          "entry_prime": 43,
+          "selected_label_count": 32,
+          "reciprocal_tail": "84611/164025000",
+          "blocker_fee_upper": "84611/1312200000"
+        },
+        {
+          "entry_prime": 47,
+          "selected_label_count": 36,
+          "reciprocal_tail": "705901/2460375000",
+          "blocker_fee_upper": "705901/19683000000"
+        },
+        {
+          "entry_prime": 53,
+          "selected_label_count": 43,
+          "reciprocal_tail": "823999/7381125000",
+          "blocker_fee_upper": "823999/51667875000"
+        },
+        {
+          "entry_prime": 59,
+          "selected_label_count": 47,
+          "reciprocal_tail": "2430203/36905625000",
+          "blocker_fee_upper": "2430203/332150625000"
+        },
+        {
+          "entry_prime": 61,
+          "selected_label_count": 50,
+          "reciprocal_tail": "1699763/36905625000",
+          "blocker_fee_upper": "1699763/295245000000"
+        },
+        {
+          "entry_prime": 67,
+          "selected_label_count": 55,
+          "reciprocal_tail": "2784497/110716875000",
+          "blocker_fee_upper": "2784497/996451875000"
+        },
+        {
+          "entry_prime": 71,
+          "selected_label_count": 60,
+          "reciprocal_tail": "23434327/1660753125000",
+          "blocker_fee_upper": "23434327/13286025000000"
+        },
+        {
+          "entry_prime": 73,
+          "selected_label_count": 61,
+          "reciprocal_tail": "21072367/1660753125000",
+          "blocker_fee_upper": "21072367/14946778125000"
+        },
+        {
+          "entry_prime": 79,
+          "selected_label_count": 66,
+          "reciprocal_tail": "12255991/1660753125000",
+          "blocker_fee_upper": "12255991/16607531250000"
+        },
+        {
+          "entry_prime": 83,
+          "selected_label_count": 70,
+          "reciprocal_tail": "120360281/24911296875000",
+          "blocker_fee_upper": "120360281/249112968750000"
+        },
+        {
+          "entry_prime": 89,
+          "selected_label_count": 76,
+          "reciprocal_tail": "64468601/24911296875000",
+          "blocker_fee_upper": "64468601/249112968750000"
+        },
+        {
+          "entry_prime": 97,
+          "selected_label_count": 84,
+          "reciprocal_tail": "87681419/74733890625000",
+          "blocker_fee_upper": "87681419/747338906250000"
+        },
+        {
+          "entry_prime": 101,
+          "selected_label_count": 88,
+          "reciprocal_tail": "301533943/373669453125000",
+          "blocker_fee_upper": "301533943/3736694531250000"
+        },
+        {
+          "entry_prime": 103,
+          "selected_label_count": 90,
+          "reciprocal_tail": "742101829/1121008359375000",
+          "blocker_fee_upper": "742101829/11210083593750000"
+        },
+        {
+          "entry_prime": 107,
+          "selected_label_count": 93,
+          "reciprocal_tail": "564604909/1121008359375000",
+          "blocker_fee_upper": "51327719/1121008359375000"
+        },
+        {
+          "entry_prime": 109,
+          "selected_label_count": 95,
+          "reciprocal_tail": "467104909/1121008359375000",
+          "blocker_fee_upper": "467104909/12331091953125000"
+        },
+        {
+          "entry_prime": 113,
+          "selected_label_count": 99,
+          "reciprocal_tail": "330231757/1121008359375000",
+          "blocker_fee_upper": "330231757/12331091953125000"
+        },
+        {
+          "entry_prime": 127,
+          "selected_label_count": 112,
+          "reciprocal_tail": "1596627227/16815125390625000",
+          "blocker_fee_upper": "1596627227/201781504687500000"
+        },
+        {
+          "entry_prime": 131,
+          "selected_label_count": 116,
+          "reciprocal_tail": "3440773313/50445376171875000",
+          "blocker_fee_upper": "3440773313/605344514062500000"
+        },
+        {
+          "entry_prime": 137,
+          "selected_label_count": 122,
+          "reciprocal_tail": "10524041461/252226880859375000",
+          "blocker_fee_upper": "10524041461/3026722570312500000"
+        },
+        {
+          "entry_prime": 139,
+          "selected_label_count": 124,
+          "reciprocal_tail": "8944541461/252226880859375000",
+          "blocker_fee_upper": "8944541461/3026722570312500000"
+        },
+        {
+          "entry_prime": 149,
+          "selected_label_count": 133,
+          "reciprocal_tail": "13141211239/756680642578125000",
+          "blocker_fee_upper": "1010862403/756680642578125000"
+        },
+        {
+          "entry_prime": 151,
+          "selected_label_count": 135,
+          "reciprocal_tail": "11298882439/756680642578125000",
+          "blocker_fee_upper": "869144803/756680642578125000"
+        },
+        {
+          "entry_prime": 157,
+          "selected_label_count": 141,
+          "reciprocal_tail": "107570800649/11350209638671875000",
+          "blocker_fee_upper": "8274676973/11350209638671875000"
+        },
+        {
+          "entry_prime": 163,
+          "selected_label_count": 146,
+          "reciprocal_tail": "73196185649/11350209638671875000",
+          "blocker_fee_upper": "73196185649/158902934941406250000"
+        },
+        {
+          "entry_prime": 167,
+          "selected_label_count": 150,
+          "reciprocal_tail": "54718310129/11350209638671875000",
+          "blocker_fee_upper": "7816901447/22700419277343750000"
+        },
+        {
+          "entry_prime": 173,
+          "selected_label_count": 156,
+          "reciprocal_tail": "106572754451/34050628916015625000",
+          "blocker_fee_upper": "106572754451/476708804824218750000"
+        },
+        {
+          "entry_prime": 179,
+          "selected_label_count": 162,
+          "reciprocal_tail": "347126464447/170253144580078125000",
+          "blocker_fee_upper": "49589494921/340506289160156250000"
+        },
+        {
+          "entry_prime": 181,
+          "selected_label_count": 164,
+          "reciprocal_tail": "301068244447/170253144580078125000",
+          "blocker_fee_upper": "301068244447/2383544024121093750000"
+        },
+        {
+          "entry_prime": 191,
+          "selected_label_count": 173,
+          "reciprocal_tail": "482706978661/510759433740234375000",
+          "blocker_fee_upper": "482706978661/7661391506103515625000"
+        },
+        {
+          "entry_prime": 193,
+          "selected_label_count": 175,
+          "reciprocal_tail": "421769478661/510759433740234375000",
+          "blocker_fee_upper": "421769478661/7661391506103515625000"
+        },
+        {
+          "entry_prime": 197,
+          "selected_label_count": 179,
+          "reciprocal_tail": "321988950853/510759433740234375000",
+          "blocker_fee_upper": "321988950853/7661391506103515625000"
+        },
+        {
+          "entry_prime": 199,
+          "selected_label_count": 181,
+          "reciprocal_tail": "282501450853/510759433740234375000",
+          "blocker_fee_upper": "282501450853/7661391506103515625000"
+        },
+        {
+          "entry_prime": 211,
+          "selected_label_count": 193,
+          "reciprocal_tail": "1902997973483/7661391506103515625000",
+          "blocker_fee_upper": "1902997973483/114920872591552734375000"
+        },
+        {
+          "entry_prime": 223,
+          "selected_label_count": 204,
+          "reciprocal_tail": "2835442745177/22984174518310546875000",
+          "blocker_fee_upper": "2835442745177/367746792292968750000000"
+        },
+        {
+          "entry_prime": 227,
+          "selected_label_count": 209,
+          "reciprocal_tail": "10348977040069/114920872591552734375000",
+          "blocker_fee_upper": "10348977040069/1723813088873291015625000"
+        },
+        {
+          "entry_prime": 229,
+          "selected_label_count": 210,
+          "reciprocal_tail": "9703276225069/114920872591552734375000",
+          "blocker_fee_upper": "9703276225069/1838733961464843750000000"
+        },
+        {
+          "entry_prime": 233,
+          "selected_label_count": 214,
+          "reciprocal_tail": "7564633225069/114920872591552734375000",
+          "blocker_fee_upper": "7564633225069/1838733961464843750000000"
+        },
+        {
+          "entry_prime": 239,
+          "selected_label_count": 220,
+          "reciprocal_tail": "15664713423847/344762617774658203125000",
+          "blocker_fee_upper": "15664713423847/5516201884394531250000000"
+        },
+        {
+          "entry_prime": 241,
+          "selected_label_count": 221,
+          "reciprocal_tail": "14742072798847/344762617774658203125000",
+          "blocker_fee_upper": "14742072798847/5860964502169189453125000"
+        },
+        {
+          "entry_prime": 251,
+          "selected_label_count": 230,
+          "reciprocal_tail": "8604101673031/344762617774658203125000",
+          "blocker_fee_upper": "8604101673031/6205727119943847656250000"
+        },
+        {
+          "entry_prime": 257,
+          "selected_label_count": 237,
+          "reciprocal_tail": "85000403713121/5171439266619873046875000",
+          "blocker_fee_upper": "85000403713121/87914467532537841796875000"
+        },
+        {
+          "entry_prime": 263,
+          "selected_label_count": 243,
+          "reciprocal_tail": "59750542185041/5171439266619873046875000",
+          "blocker_fee_upper": "59750542185041/87914467532537841796875000"
+        },
+        {
+          "entry_prime": 269,
+          "selected_label_count": 248,
+          "reciprocal_tail": "44715085584041/5171439266619873046875000",
+          "blocker_fee_upper": "44715085584041/93085906799157714843750000"
+        },
+        {
+          "entry_prime": 271,
+          "selected_label_count": 250,
+          "reciprocal_tail": "40082602417193/5171439266619873046875000",
+          "blocker_fee_upper": "40082602417193/93085906799157714843750000"
+        },
+        {
+          "entry_prime": 277,
+          "selected_label_count": 256,
+          "reciprocal_tail": "85101875994779/15514317799859619140625000",
+          "blocker_fee_upper": "85101875994779/279257720397473144531250000"
+        },
+        {
+          "entry_prime": 281,
+          "selected_label_count": 260,
+          "reciprocal_tail": "340975625222263/77571588999298095703125000",
+          "blocker_fee_upper": "340975625222263/1396288601987365722656250000"
+        },
+        {
+          "entry_prime": 283,
+          "selected_label_count": 263,
+          "reciprocal_tail": "286402520576863/77571588999298095703125000",
+          "blocker_fee_upper": "286402520576863/1318717012988067626953125000"
+        },
+        {
+          "entry_prime": 293,
+          "selected_label_count": 273,
+          "reciprocal_tail": "492576072443869/232714766997894287109375000",
+          "blocker_fee_upper": "492576072443869/3956151038964202880859375000"
+        },
+        {
+          "entry_prime": 307,
+          "selected_label_count": 285,
+          "reciprocal_tail": "256724807671837/232714766997894287109375000",
+          "blocker_fee_upper": "256724807671837/4421580572959991455078125000"
+        },
+        {
+          "entry_prime": 311,
+          "selected_label_count": 290,
+          "reciprocal_tail": "987803273058089/1163573834989471435546875000",
+          "blocker_fee_upper": "987803273058089/20944329029810485839843750000"
+        },
+        {
+          "entry_prime": 313,
+          "selected_label_count": 292,
+          "reciprocal_tail": "2653916630504267/3490721504968414306640625000",
+          "blocker_fee_upper": "2653916630504267/62832987089431457519531250000"
+        },
+        {
+          "entry_prime": 317,
+          "selected_label_count": 295,
+          "reciprocal_tail": "2249556459629267/3490721504968414306640625000",
+          "blocker_fee_upper": "2249556459629267/66323708594399871826171875000"
+        },
+        {
+          "entry_prime": 331,
+          "selected_label_count": 308,
+          "reciprocal_tail": "1144974405889211/3490721504968414306640625000",
+          "blocker_fee_upper": "1144974405889211/69814430099368286132812500000"
+        },
+        {
+          "entry_prime": 337,
+          "selected_label_count": 314,
+          "reciprocal_tail": "2511373698734033/10472164514905242919921875000",
+          "blocker_fee_upper": "2511373698734033/209443290298104858398437500000"
+        },
+        {
+          "entry_prime": 347,
+          "selected_label_count": 324,
+          "reciprocal_tail": "7503808558575301/52360822574526214599609375000",
+          "blocker_fee_upper": "7503808558575301/1047216451490524291992187500000"
+        },
+        {
+          "entry_prime": 349,
+          "selected_label_count": 326,
+          "reciprocal_tail": "6784148871075301/52360822574526214599609375000",
+          "blocker_fee_upper": "6784148871075301/1047216451490524291992187500000"
+        },
+        {
+          "entry_prime": 353,
+          "selected_label_count": 330,
+          "reciprocal_tail": "5579703247694821/52360822574526214599609375000",
+          "blocker_fee_upper": "5579703247694821/1047216451490524291992187500000"
+        },
+        {
+          "entry_prime": 359,
+          "selected_label_count": 336,
+          "reciprocal_tail": "12345868335984463/157082467723578643798828125000",
+          "blocker_fee_upper": "12345868335984463/3141649354471572875976562500000"
+        },
+        {
+          "entry_prime": 367,
+          "selected_label_count": 344,
+          "reciprocal_tail": "8319153832139599/157082467723578643798828125000",
+          "blocker_fee_upper": "8319153832139599/3141649354471572875976562500000"
+        },
+        {
+          "entry_prime": 373,
+          "selected_label_count": 349,
+          "reciprocal_tail": "32730719978940803/785412338617893218994140625000",
+          "blocker_fee_upper": "32730719978940803/16493659110975757598876953125000"
+        },
+        {
+          "entry_prime": 379,
+          "selected_label_count": 356,
+          "reciprocal_tail": "69441625659990209/2356237015853679656982421875000",
+          "blocker_fee_upper": "69441625659990209/47124740317073593139648437500000"
+        },
+        {
+          "entry_prime": 383,
+          "selected_label_count": 359,
+          "reciprocal_tail": "60081436519365209/2356237015853679656982421875000",
+          "blocker_fee_upper": "60081436519365209/49480977332927272796630859375000"
+        },
+        {
+          "entry_prime": 389,
+          "selected_label_count": 366,
+          "reciprocal_tail": "42831115953265889/2356237015853679656982421875000",
+          "blocker_fee_upper": "42831115953265889/47124740317073593139648437500000"
+        },
+        {
+          "entry_prime": 397,
+          "selected_label_count": 373,
+          "reciprocal_tail": "30957792977636297/2356237015853679656982421875000",
+          "blocker_fee_upper": "30957792977636297/49480977332927272796630859375000"
+        },
+        {
+          "entry_prime": 401,
+          "selected_label_count": 377,
+          "reciprocal_tail": "76779733122068891/7068711047561038970947265625000",
+          "blocker_fee_upper": "76779733122068891/148442931998781818389892578125000"
+        },
+        {
+          "entry_prime": 409,
+          "selected_label_count": 385,
+          "reciprocal_tail": "264329429688033127/35343555237805194854736328125000",
+          "blocker_fee_upper": "264329429688033127/742214659993909091949462890625000"
+        },
+        {
+          "entry_prime": 419,
+          "selected_label_count": 394,
+          "reciprocal_tail": "173536374235247167/35343555237805194854736328125000",
+          "blocker_fee_upper": "173536374235247167/777558215231714286804199218750000"
+        },
+        {
+          "entry_prime": 421,
+          "selected_label_count": 396,
+          "reciprocal_tail": "158495005265885167/35343555237805194854736328125000",
+          "blocker_fee_upper": "14408636842353197/70687110475610389709472656250000"
+        },
+        {
+          "entry_prime": 431,
+          "selected_label_count": 406,
+          "reciprocal_tail": "301505268634664173/106030665713415584564208984375000",
+          "blocker_fee_upper": "301505268634664173/2332674645695142860412597656250000"
+        },
+        {
+          "entry_prime": 433,
+          "selected_label_count": 408,
+          "reciprocal_tail": "275447550821144173/106030665713415584564208984375000",
+          "blocker_fee_upper": "275447550821144173/2332674645695142860412597656250000"
+        },
+        {
+          "entry_prime": 439,
+          "selected_label_count": 413,
+          "reciprocal_tail": "218890666042769173/106030665713415584564208984375000",
+          "blocker_fee_upper": "218890666042769173/2438705311408558444976806640625000"
+        },
+        {
+          "entry_prime": 443,
+          "selected_label_count": 418,
+          "reciprocal_tail": "878799992309346881/530153328567077922821044921875000",
+          "blocker_fee_upper": "878799992309346881/11663373228475714302062988281250000"
+        },
+        {
+          "entry_prime": 449,
+          "selected_label_count": 424,
+          "reciprocal_tail": "2008438297116610643/1590459985701233768463134765625000",
+          "blocker_fee_upper": "2008438297116610643/34990119685427142906188964843750000"
+        },
+        {
+          "entry_prime": 457,
+          "selected_label_count": 431,
+          "reciprocal_tail": "1474138763213279003/1590459985701233768463134765625000",
+          "blocker_fee_upper": "1474138763213279003/36580579671128376674652099609375000"
+        },
+        {
+          "entry_prime": 461,
+          "selected_label_count": 436,
+          "reciprocal_tail": "1178253069785054003/1590459985701233768463134765625000",
+          "blocker_fee_upper": "1178253069785054003/34990119685427142906188964843750000"
+        },
+        {
+          "entry_prime": 463,
+          "selected_label_count": 437,
+          "reciprocal_tail": "1127807693613179003/1590459985701233768463134765625000",
+          "blocker_fee_upper": "1127807693613179003/36580579671128376674652099609375000"
+        },
+        {
+          "entry_prime": 467,
+          "selected_label_count": 440,
+          "reciprocal_tail": "993377748143234819/1590459985701233768463134765625000",
+          "blocker_fee_upper": "993377748143234819/38171039656829610443115234375000000"
+        },
+        {
+          "entry_prime": 479,
+          "selected_label_count": 453,
+          "reciprocal_tail": "8508025004026309429/23856899785518506526947021484375000",
+          "blocker_fee_upper": "8508025004026309429/548708695066925650119781494140625000"
+        },
+        {
+          "entry_prime": 487,
+          "selected_label_count": 461,
+          "reciprocal_tail": "5991328439123269429/23856899785518506526947021484375000",
+          "blocker_fee_upper": "5991328439123269429/548708695066925650119781494140625000"
+        },
+        {
+          "entry_prime": 491,
+          "selected_label_count": 464,
+          "reciprocal_tail": "5283195727398548509/23856899785518506526947021484375000",
+          "blocker_fee_upper": "5283195727398548509/572565594852444156646728515625000000"
+        },
+        {
+          "entry_prime": 499,
+          "selected_label_count": 473,
+          "reciprocal_tail": "10842696207167048527/71570699356555519580841064453125000",
+          "blocker_fee_upper": "10842696207167048527/1646126085200776950359344482421875000"
+        },
+        {
+          "entry_prime": 503,
+          "selected_label_count": 476,
+          "reciprocal_tail": "9568057326062550871/71570699356555519580841064453125000",
+          "blocker_fee_upper": "9568057326062550871/1717696784557332469940185546875000000"
+        },
+        {
+          "entry_prime": 509,
+          "selected_label_count": 482,
+          "reciprocal_tail": "7453212948317267671/71570699356555519580841064453125000",
+          "blocker_fee_upper": "7453212948317267671/1717696784557332469940185546875000000"
+        },
+        {
+          "entry_prime": 521,
+          "selected_label_count": 494,
+          "reciprocal_tail": "22651163928677620787/357853496782777597904205322265625000",
+          "blocker_fee_upper": "22651163928677620787/8588483922786662349700927734375000000"
+        },
+        {
+          "entry_prime": 523,
+          "selected_label_count": 496,
+          "reciprocal_tail": "20841600191627620787/357853496782777597904205322265625000",
+          "blocker_fee_upper": "20841600191627620787/8588483922786662349700927734375000000"
+        },
+        {
+          "entry_prime": 541,
+          "selected_label_count": 513,
+          "reciprocal_tail": "31097021956071458081/1073560490348332793712615966796875000",
+          "blocker_fee_upper": "31097021956071458081/26839012258708319842815399169921875000"
+        },
+        {
+          "entry_prime": 547,
+          "selected_label_count": 519,
+          "reciprocal_tail": "24504931426082990513/1073560490348332793712615966796875000",
+          "blocker_fee_upper": "24504931426082990513/26839012258708319842815399169921875000"
+        },
+        {
+          "entry_prime": 557,
+          "selected_label_count": 529,
+          "reciprocal_tail": "246405975645819729583/16103407355224991905689239501953125000",
+          "blocker_fee_upper": "246405975645819729583/402585183880624797642230987548828125000"
+        },
+        {
+          "entry_prime": 563,
+          "selected_label_count": 535,
+          "reciprocal_tail": "193534866202187649583/16103407355224991905689239501953125000",
+          "blocker_fee_upper": "193534866202187649583/402585183880624797642230987548828125000"
+        },
+        {
+          "entry_prime": 569,
+          "selected_label_count": 540,
+          "reciprocal_tail": "158186813215703274583/16103407355224991905689239501953125000",
+          "blocker_fee_upper": "158186813215703274583/418688591235849789547920227050781250000"
+        },
+        {
+          "entry_prime": 571,
+          "selected_label_count": 542,
+          "reciprocal_tail": "146344442598745184743/16103407355224991905689239501953125000",
+          "blocker_fee_upper": "146344442598745184743/418688591235849789547920227050781250000"
+        },
+        {
+          "entry_prime": 577,
+          "selected_label_count": 548,
+          "reciprocal_tail": "115825504959909686743/16103407355224991905689239501953125000",
+          "blocker_fee_upper": "115825504959909686743/418688591235849789547920227050781250000"
+        },
+        {
+          "entry_prime": 587,
+          "selected_label_count": 558,
+          "reciprocal_tail": "235515009665801602117/48310222065674975717067718505859375000",
+          "blocker_fee_upper": "235515009665801602117/1256065773707549368643760681152343750000"
+        },
+        {
+          "entry_prime": 593,
+          "selected_label_count": 564,
+          "reciprocal_tail": "186560278699475602117/48310222065674975717067718505859375000",
+          "blocker_fee_upper": "186560278699475602117/1256065773707549368643760681152343750000"
+        },
+        {
+          "entry_prime": 599,
+          "selected_label_count": 570,
+          "reciprocal_tail": "739827323299763876249/241551110328374878585338592529296875000",
+          "blocker_fee_upper": "739827323299763876249/6280328868537746843218803405761718750000"
+        },
+        {
+          "entry_prime": 601,
+          "selected_label_count": 572,
+          "reciprocal_tail": "685001533406439386249/241551110328374878585338592529296875000",
+          "blocker_fee_upper": "685001533406439386249/6280328868537746843218803405761718750000"
+        },
+        {
+          "entry_prime": 607,
+          "selected_label_count": 578,
+          "reciprocal_tail": "543710155448867636249/241551110328374878585338592529296875000",
+          "blocker_fee_upper": "543710155448867636249/6280328868537746843218803405761718750000"
+        },
+        {
+          "entry_prime": 613,
+          "selected_label_count": 584,
+          "reciprocal_tail": "1296870760677402268187/724653330985124635756015777587890625000",
+          "blocker_fee_upper": "1296870760677402268187/18840986605613240529656410217285156250000"
+        },
+        {
+          "entry_prime": 617,
+          "selected_label_count": 588,
+          "reciprocal_tail": "1113945581626491868187/724653330985124635756015777587890625000",
+          "blocker_fee_upper": "1113945581626491868187/18840986605613240529656410217285156250000"
+        },
+        {
+          "entry_prime": 619,
+          "selected_label_count": 590,
+          "reciprocal_tail": "1032515213459241868187/724653330985124635756015777587890625000",
+          "blocker_fee_upper": "79424247189172451399/1449306661970249271512031555175781250000"
+        },
+        {
+          "entry_prime": 631,
+          "selected_label_count": 601,
+          "reciprocal_tail": "683580472812722118851/724653330985124635756015777587890625000",
+          "blocker_fee_upper": "683580472812722118851/19565639936598365165412425994873046875000"
+        },
+        {
+          "entry_prime": 641,
+          "selected_label_count": 612,
+          "reciprocal_tail": "6807457521636351448741/10869799964776869536340236663818359375000",
+          "blocker_fee_upper": "6807457521636351448741/282614799084198607944846153259277343750000"
+        },
+        {
+          "entry_prime": 643,
+          "selected_label_count": 614,
+          "reciprocal_tail": "6314025412596431038741/10869799964776869536340236663818359375000",
+          "blocker_fee_upper": "6314025412596431038741/282614799084198607944846153259277343750000"
+        },
+        {
+          "entry_prime": 647,
+          "selected_label_count": 617,
+          "reciprocal_tail": "5642673900886800913741/10869799964776869536340236663818359375000",
+          "blocker_fee_upper": "5642673900886800913741/293484599048975477481186389923095703125000"
+        },
+        {
+          "entry_prime": 653,
+          "selected_label_count": 623,
+          "reciprocal_tail": "4509462535925550913741/10869799964776869536340236663818359375000",
+          "blocker_fee_upper": "4509462535925550913741/293484599048975477481186389923095703125000"
+        },
+        {
+          "entry_prime": 659,
+          "selected_label_count": 629,
+          "reciprocal_tail": "3619530314377107792061/10869799964776869536340236663818359375000",
+          "blocker_fee_upper": "3619530314377107792061/293484599048975477481186389923095703125000"
+        },
+        {
+          "entry_prime": 661,
+          "selected_label_count": 631,
+          "reciprocal_tail": "3365707213019124042061/10869799964776869536340236663818359375000",
+          "blocker_fee_upper": "3365707213019124042061/293484599048975477481186389923095703125000"
+        },
+        {
+          "entry_prime": 673,
+          "selected_label_count": 643,
+          "reciprocal_tail": "6532863390859455757159/32609399894330608609020709991455078125000",
+          "blocker_fee_upper": "6532863390859455757159/880453797146926432443559169769287109375000"
+        },
+        {
+          "entry_prime": 677,
+          "selected_label_count": 646,
+          "reciprocal_tail": "5861511879149825632159/32609399894330608609020709991455078125000",
+          "blocker_fee_upper": "5861511879149825632159/913063197041257041052579879760742187500000"
+        },
+        {
+          "entry_prime": 683,
+          "selected_label_count": 653,
+          "reciprocal_tail": "22766150657890779287123/163046999471653043045103549957275390625000",
+          "blocker_fee_upper": "22766150657890779287123/4402268985734632162217795848846435546875000"
+        },
+        {
+          "entry_prime": 691,
+          "selected_label_count": 660,
+          "reciprocal_tail": "17673079762352785553723/163046999471653043045103549957275390625000",
+          "blocker_fee_upper": "17673079762352785553723/4565315985206285205262899398803710937500000"
+        },
+        {
+          "entry_prime": 701,
+          "selected_label_count": 670,
+          "reciprocal_tail": "37101673105428533116049/489140998414959129135310649871826171875000",
+          "blocker_fee_upper": "37101673105428533116049/13695947955618855615788698196411132812500000"
+        },
+        {
+          "entry_prime": 709,
+          "selected_label_count": 677,
+          "reciprocal_tail": "28921230465547967941049/489140998414959129135310649871826171875000",
+          "blocker_fee_upper": "28921230465547967941049/14185088954033814744924008846282958984375000"
+        },
+        {
+          "entry_prime": 719,
+          "selected_label_count": 687,
+          "reciprocal_tail": "20343648232270750083977/489140998414959129135310649871826171875000",
+          "blocker_fee_upper": "20343648232270750083977/14185088954033814744924008846282958984375000"
+        },
+        {
+          "entry_prime": 727,
+          "selected_label_count": 695,
+          "reciprocal_tail": "15440719035998344083977/489140998414959129135310649871826171875000",
+          "blocker_fee_upper": "15440719035998344083977/14185088954033814744924008846282958984375000"
+        },
+        {
+          "entry_prime": 733,
+          "selected_label_count": 702,
+          "reciprocal_tail": "180909498975796997421007/7337114976224386937029659748077392578125000",
+          "blocker_fee_upper": "180909498975796997421007/205439219334282834236830472946166992187500000"
+        },
+        {
+          "entry_prime": 739,
+          "selected_label_count": 707,
+          "reciprocal_tail": "151789908457058234046007/7337114976224386937029659748077392578125000",
+          "blocker_fee_upper": "151789908457058234046007/212776334310507221173860132694244384765625000"
+        },
+        {
+          "entry_prime": 743,
+          "selected_label_count": 711,
+          "reciprocal_tail": "132186301305683234046007/7337114976224386937029659748077392578125000",
+          "blocker_fee_upper": "132186301305683234046007/212776334310507221173860132694244384765625000"
+        },
+        {
+          "entry_prime": 751,
+          "selected_label_count": 719,
+          "reciprocal_tail": "100213370111623771010647/7337114976224386937029659748077392578125000",
+          "blocker_fee_upper": "100213370111623771010647/212776334310507221173860132694244384765625000"
+        },
+        {
+          "entry_prime": 757,
+          "selected_label_count": 724,
+          "reciprocal_tail": "84613446941448786635647/7337114976224386937029659748077392578125000",
+          "blocker_fee_upper": "84613446941448786635647/220113449286731608110889792442321777343750000"
+        },
+        {
+          "entry_prime": 761,
+          "selected_label_count": 729,
+          "reciprocal_tail": "214529271632580595043893/22011344928673160811088979244232177734375000",
+          "blocker_fee_upper": "214529271632580595043893/638329002931521663521580398082733154296875000"
+        },
+        {
+          "entry_prime": 769,
+          "selected_label_count": 737,
+          "reciprocal_tail": "163060282101791385818293/22011344928673160811088979244232177734375000",
+          "blocker_fee_upper": "163060282101791385818293/638329002931521663521580398082733154296875000"
+        },
+        {
+          "entry_prime": 773,
+          "selected_label_count": 740,
+          "reciprocal_tail": "147519737849253651443293/22011344928673160811088979244232177734375000",
+          "blocker_fee_upper": "147519737849253651443293/660340347860194824332669377326965332031250000"
+        },
+        {
+          "entry_prime": 787,
+          "selected_label_count": 754,
+          "reciprocal_tail": "458353533888630756825521/110056724643365804055444896221160888671875000",
+          "blocker_fee_upper": "458353533888630756825521/3301701739300974121663346886634826660156250000"
+        },
+        {
+          "entry_prime": 797,
+          "selected_label_count": 765,
+          "reciprocal_tail": "951816498183798326283323/330170173930097412166334688663482666015625000",
+          "blocker_fee_upper": "951816498183798326283323/9574935043972824952823705971240997314453125000"
+        },
+        {
+          "entry_prime": 809,
+          "selected_label_count": 776,
+          "reciprocal_tail": "662214266390051355444179/330170173930097412166334688663482666015625000",
+          "blocker_fee_upper": "662214266390051355444179/9905105217902922364990040659904479980468750000"
+        },
+        {
+          "entry_prime": 811,
+          "selected_label_count": 778,
+          "reciprocal_tail": "619048825491239117977379/330170173930097412166334688663482666015625000",
+          "blocker_fee_upper": "619048825491239117977379/9905105217902922364990040659904479980468750000"
+        },
+        {
+          "entry_prime": 821,
+          "selected_label_count": 787,
+          "reciprocal_tail": "461185665040070524642379/330170173930097412166334688663482666015625000",
+          "blocker_fee_upper": "461185665040070524642379/10235275391833019777156375348567962646484375000"
+        },
+        {
+          "entry_prime": 823,
+          "selected_label_count": 789,
+          "reciprocal_tail": "2162605176841033005069463/1650850869650487060831673443317413330078125000",
+          "blocker_fee_upper": "2162605176841033005069463/51176376959165098885781876742839813232421875000"
+        },
+        {
+          "entry_prime": 827,
+          "selected_label_count": 794,
+          "reciprocal_tail": "5505038800728954893632189/4952552608951461182495020329952239990234375000",
+          "blocker_fee_upper": "5505038800728954893632189/148576578268543835474850609898567199707031250000"
+        },
+        {
+          "entry_prime": 829,
+          "selected_label_count": 796,
+          "reciprocal_tail": "5145326793238852914742189/4952552608951461182495020329952239990234375000",
+          "blocker_fee_upper": "5145326793238852914742189/148576578268543835474850609898567199707031250000"
+        },
+        {
+          "entry_prime": 839,
+          "selected_label_count": 805,
+          "reciprocal_tail": "3829800456145781303617189/4952552608951461182495020329952239990234375000",
+          "blocker_fee_upper": "3829800456145781303617189/153529130877495296657345630228519439697265625000"
+        },
+        {
+          "entry_prime": 853,
+          "selected_label_count": 818,
+          "reciprocal_tail": "2511787894231861379787469/4952552608951461182495020329952239990234375000",
+          "blocker_fee_upper": "2511787894231861379787469/158481683486446757839840650558471679687500000000"
+        },
+        {
+          "entry_prime": 857,
+          "selected_label_count": 822,
+          "reciprocal_tail": "2215782805558948011645037/4952552608951461182495020329952239990234375000",
+          "blocker_fee_upper": "2215782805558948011645037/158481683486446757839840650558471679687500000000"
+        },
+        {
+          "entry_prime": 859,
+          "selected_label_count": 825,
+          "reciprocal_tail": "2014123663152794502369637/4952552608951461182495020329952239990234375000",
+          "blocker_fee_upper": "2014123663152794502369637/153529130877495296657345630228519439697265625000"
+        },
+        {
+          "entry_prime": 863,
+          "selected_label_count": 829,
+          "reciprocal_tail": "5304859679392597934468911/14857657826854383547485060989856719970703125000",
+          "blocker_fee_upper": "5304859679392597934468911/460587392632485889972036890685558319091796875000"
+        },
+        {
+          "entry_prime": 877,
+          "selected_label_count": 843,
+          "reciprocal_tail": "16980777689494603938709067/74288289134271917737425304949283599853515625000",
+          "blocker_fee_upper": "16980777689494603938709067/2302936963162429449860184453427791595458984375000"
+        },
+        {
+          "entry_prime": 881,
+          "selected_label_count": 847,
+          "reciprocal_tail": "14902441646218459171789067/74288289134271917737425304949283599853515625000",
+          "blocker_fee_upper": "14902441646218459171789067/2302936963162429449860184453427791595458984375000"
+        },
+        {
+          "entry_prime": 883,
+          "selected_label_count": 849,
+          "reciprocal_tail": "13977256441768608403039067/74288289134271917737425304949283599853515625000",
+          "blocker_fee_upper": "13977256441768608403039067/2302936963162429449860184453427791595458984375000"
+        },
+        {
+          "entry_prime": 887,
+          "selected_label_count": 852,
+          "reciprocal_tail": "12718472357313051918664067/74288289134271917737425304949283599853515625000",
+          "blocker_fee_upper": "12718472357313051918664067/2377225252296701367597609758377075195312500000000"
+        },
+        {
+          "entry_prime": 907,
+          "selected_label_count": 872,
+          "reciprocal_tail": "20407706537338271362617833/222864867402815753212275914847850799560546875000",
+          "blocker_fee_upper": "20407706537338271362617833/7131675756890104102792829275131225585937500000000"
+        },
+        {
+          "entry_prime": 911,
+          "selected_label_count": 876,
+          "reciprocal_tail": "18018169892725126107264233/222864867402815753212275914847850799560546875000",
+          "blocker_fee_upper": "18018169892725126107264233/7131675756890104102792829275131225585937500000000"
+        },
+        {
+          "entry_prime": 919,
+          "selected_label_count": 883,
+          "reciprocal_tail": "14455855100229843462219233/222864867402815753212275914847850799560546875000",
+          "blocker_fee_upper": "1314168645475440314747203/668594602208447259636827744543552398681640625000"
+        },
+        {
+          "entry_prime": 929,
+          "selected_label_count": 894,
+          "reciprocal_tail": "51629354668049822717054701/1114324337014078766061379574239253997802734375000",
+          "blocker_fee_upper": "51629354668049822717054701/35658378784450520513964146375656127929687500000000"
+        },
+        {
+          "entry_prime": 937,
+          "selected_label_count": 902,
+          "reciprocal_tail": "120413737708707415510164103/3342973011042236298184138722717761993408203125000",
+          "blocker_fee_upper": "120413737708707415510164103/106975136353351561541892439126968383789062500000000"
+        },
+        {
+          "entry_prime": 941,
+          "selected_label_count": 905,
+          "reciprocal_tail": "109923870338244444807039103/3342973011042236298184138722717761993408203125000",
+          "blocker_fee_upper": "109923870338244444807039103/110318109364393797840076577849686145782470703125000"
+        },
+        {
+          "entry_prime": 947,
+          "selected_label_count": 912,
+          "reciprocal_tail": "88732677715162900166986663/3342973011042236298184138722717761993408203125000",
+          "blocker_fee_upper": "88732677715162900166986663/106975136353351561541892439126968383789062500000000"
+        },
+        {
+          "entry_prime": 953,
+          "selected_label_count": 917,
+          "reciprocal_tail": "75995768822266565066761663/3342973011042236298184138722717761993408203125000",
+          "blocker_fee_upper": "75995768822266565066761663/110318109364393797840076577849686145782470703125000"
+        },
+        {
+          "entry_prime": 967,
+          "selected_label_count": 932,
+          "reciprocal_tail": "145191344818762145539660597/10028919033126708894552416168153285980224609375000",
+          "blocker_fee_upper": "145191344818762145539660597/320925409060054684625677317380905151367187500000000"
+        }
+      ],
+      "prefix_count": 971,
+      "prefix_last": 7328839614111285205078125,
+      "finite_fee": "274654680179187513705045337712872293894228765021232970257/715166192625059001701426870634865611791610717773437500000000",
+      "analytic_tail": "5/204558018192",
+      "total_fee": "274654697659954069474997263035611701314387151251701720257/715166192625059001701426870634865611791610717773437500000000",
+      "strictly_less_than": "1/2600"
+    },
+    "3_23": {
+      "reference_parents": [
+        3,
+        23
+      ],
+      "finite_rows": [
+        {
+          "entry_prime": 37,
+          "selected_label_count": 29,
+          "reciprocal_tail": "1915241/94835292156",
+          "blocker_fee_upper": "1915241/474176460780"
+        },
+        {
+          "entry_prime": 41,
+          "selected_label_count": 34,
+          "reciprocal_tail": "45113425/6543635158764",
+          "blocker_fee_upper": "45113425/26174540635056"
+        },
+        {
+          "entry_prime": 43,
+          "selected_label_count": 35,
+          "reciprocal_tail": "37318957/6543635158764",
+          "blocker_fee_upper": "37318957/32718175793820"
+        },
+        {
+          "entry_prime": 47,
+          "selected_label_count": 39,
+          "reciprocal_tail": "48302071/19630905476292",
+          "blocker_fee_upper": "48302071/98154527381460"
+        },
+        {
+          "entry_prime": 53,
+          "selected_label_count": 44,
+          "reciprocal_tail": "57868009/58892716428876",
+          "blocker_fee_upper": "57868009/353356298573256"
+        },
+        {
+          "entry_prime": 59,
+          "selected_label_count": 50,
+          "reciprocal_tail": "1359662021/4063597433592444",
+          "blocker_fee_upper": "1359662021/24381584601554664"
+        },
+        {
+          "entry_prime": 61,
+          "selected_label_count": 52,
+          "reciprocal_tail": "969938621/4063597433592444",
+          "blocker_fee_upper": "969938621/24381584601554664"
+        },
+        {
+          "entry_prime": 67,
+          "selected_label_count": 58,
+          "reciprocal_tail": "1056032063/12190792300777332",
+          "blocker_fee_upper": "1056032063/73144753804663992"
+        },
+        {
+          "entry_prime": 71,
+          "selected_label_count": 61,
+          "reciprocal_tail": "662411627/12190792300777332",
+          "blocker_fee_upper": "662411627/85335546105441324"
+        },
+        {
+          "entry_prime": 73,
+          "selected_label_count": 64,
+          "reciprocal_tail": "28670291347/841164668753635908",
+          "blocker_fee_upper": "28670291347/5046988012521815448"
+        },
+        {
+          "entry_prime": 79,
+          "selected_label_count": 69,
+          "reciprocal_tail": "39967664125/2523494006260907724",
+          "blocker_fee_upper": "39967664125/17664458043826354068"
+        },
+        {
+          "entry_prime": 83,
+          "selected_label_count": 73,
+          "reciprocal_tail": "21809440525/2523494006260907724",
+          "blocker_fee_upper": "21809440525/17664458043826354068"
+        },
+        {
+          "entry_prime": 89,
+          "selected_label_count": 79,
+          "reciprocal_tail": "27646381687/7570482018782723172",
+          "blocker_fee_upper": "27646381687/52993374131479062204"
+        },
+        {
+          "entry_prime": 97,
+          "selected_label_count": 87,
+          "reciprocal_tail": "642840347603/522363259296007898868",
+          "blocker_fee_upper": "642840347603/3656542815072055292076"
+        },
+        {
+          "entry_prime": 101,
+          "selected_label_count": 90,
+          "reciprocal_tail": "434615136959/522363259296007898868",
+          "blocker_fee_upper": "434615136959/4178906074368063190944"
+        },
+        {
+          "entry_prime": 103,
+          "selected_label_count": 93,
+          "reciprocal_tail": "869924732609/1567089777888023696604",
+          "blocker_fee_upper": "869924732609/10969628445216165876228"
+        },
+        {
+          "entry_prime": 107,
+          "selected_label_count": 96,
+          "reciprocal_tail": "582975434765/1567089777888023696604",
+          "blocker_fee_upper": "582975434765/12536718223104189572832"
+        },
+        {
+          "entry_prime": 109,
+          "selected_label_count": 98,
+          "reciprocal_tail": "455535843365/1567089777888023696604",
+          "blocker_fee_upper": "455535843365/12536718223104189572832"
+        },
+        {
+          "entry_prime": 113,
+          "selected_label_count": 102,
+          "reciprocal_tail": "821358465383/4701269333664071089812",
+          "blocker_fee_upper": "821358465383/37610154669312568718496"
+        },
+        {
+          "entry_prime": 127,
+          "selected_label_count": 116,
+          "reciprocal_tail": "10728372874267/324387584022820905197028",
+          "blocker_fee_upper": "10728372874267/2595100672182567241576224"
+        },
+        {
+          "entry_prime": 131,
+          "selected_label_count": 120,
+          "reciprocal_tail": "19644390134425/973162752068462715591084",
+          "blocker_fee_upper": "19644390134425/7785302016547701724728672"
+        },
+        {
+          "entry_prime": 137,
+          "selected_label_count": 125,
+          "reciprocal_tail": "11293231947229/973162752068462715591084",
+          "blocker_fee_upper": "11293231947229/8758464768616164440319756"
+        },
+        {
+          "entry_prime": 139,
+          "selected_label_count": 128,
+          "reciprocal_tail": "23899520241523/2919488256205388146773252",
+          "blocker_fee_upper": "23899520241523/23355906049643105174186016"
+        },
+        {
+          "entry_prime": 149,
+          "selected_label_count": 137,
+          "reciprocal_tail": "623907625193411/201444689678171782127354388",
+          "blocker_fee_upper": "623907625193411/1813002207103546039146189492"
+        },
+        {
+          "entry_prime": 151,
+          "selected_label_count": 139,
+          "reciprocal_tail": "495879980782811/201444689678171782127354388",
+          "blocker_fee_upper": "495879980782811/1813002207103546039146189492"
+        },
+        {
+          "entry_prime": 157,
+          "selected_label_count": 145,
+          "reciprocal_tail": "266522643661811/201444689678171782127354388",
+          "blocker_fee_upper": "266522643661811/1813002207103546039146189492"
+        },
+        {
+          "entry_prime": 163,
+          "selected_label_count": 150,
+          "reciprocal_tail": "460963306202261/604334069034515346382063164",
+          "blocker_fee_upper": "460963306202261/6043340690345153463820631640"
+        },
+        {
+          "entry_prime": 167,
+          "selected_label_count": 154,
+          "reciprocal_tail": "312784988803061/604334069034515346382063164",
+          "blocker_fee_upper": "312784988803061/6043340690345153463820631640"
+        },
+        {
+          "entry_prime": 173,
+          "selected_label_count": 159,
+          "reciprocal_tail": "556884760662707/1813002207103546039146189492",
+          "blocker_fee_upper": "556884760662707/19943024278139006430608084412"
+        },
+        {
+          "entry_prime": 179,
+          "selected_label_count": 166,
+          "reciprocal_tail": "6526551873440977/41699050763381558900362358316",
+          "blocker_fee_upper": "6526551873440977/416990507633815589003623583160"
+        },
+        {
+          "entry_prime": 181,
+          "selected_label_count": 169,
+          "reciprocal_tail": "14300142727836175/125097152290144676701087074948",
+          "blocker_fee_upper": "14300142727836175/1125874370611302090309783674532"
+        },
+        {
+          "entry_prime": 191,
+          "selected_label_count": 179,
+          "reciprocal_tail": "16302028335605125/375291456870434030103261224844",
+          "blocker_fee_upper": "16302028335605125/3377623111833906270929351023596"
+        },
+        {
+          "entry_prime": 193,
+          "selected_label_count": 180,
+          "reciprocal_tail": "14711924992025473/375291456870434030103261224844",
+          "blocker_fee_upper": "14711924992025473/3752914568704340301032612248440"
+        },
+        {
+          "entry_prime": 197,
+          "selected_label_count": 182,
+          "reciprocal_tail": "12203531514499273/375291456870434030103261224844",
+          "blocker_fee_upper": "12203531514499273/4503497482445208361239134698128"
+        },
+        {
+          "entry_prime": 199,
+          "selected_label_count": 185,
+          "reciprocal_tail": "9356577944382925/375291456870434030103261224844",
+          "blocker_fee_upper": "9356577944382925/4128206025574774331135873473284"
+        },
+        {
+          "entry_prime": 211,
+          "selected_label_count": 197,
+          "reciprocal_tail": "216436639513375169/25895110524059948077125024514236",
+          "blocker_fee_upper": "216436639513375169/284846215764659428848375269656596"
+        },
+        {
+          "entry_prime": 223,
+          "selected_label_count": 208,
+          "reciprocal_tail": "239864169564474119/77685331572179844231375073542708",
+          "blocker_fee_upper": "239864169564474119/932223978866158130776500882512496"
+        },
+        {
+          "entry_prime": 227,
+          "selected_label_count": 214,
+          "reciprocal_tail": "418183789458794165/233055994716539532694125220628124",
+          "blocker_fee_upper": "83636757891758833/466111989433079065388250441256248"
+        },
+        {
+          "entry_prime": 229,
+          "selected_label_count": 215,
+          "reciprocal_tail": "381611412556462169/233055994716539532694125220628124",
+          "blocker_fee_upper": "381611412556462169/2563615941881934859635377426909364"
+        },
+        {
+          "entry_prime": 233,
+          "selected_label_count": 218,
+          "reciprocal_tail": "296740733136865901/233055994716539532694125220628124",
+          "blocker_fee_upper": "296740733136865901/2796671936598474392329502647537488"
+        },
+        {
+          "entry_prime": 239,
+          "selected_label_count": 224,
+          "reciprocal_tail": "178798190827663565/233055994716539532694125220628124",
+          "blocker_fee_upper": "178798190827663565/2796671936598474392329502647537488"
+        },
+        {
+          "entry_prime": 241,
+          "selected_label_count": 226,
+          "reciprocal_tail": "451538152858127303/699167984149618598082375661884372",
+          "blocker_fee_upper": "451538152858127303/8390015809795423176988507942612464"
+        },
+        {
+          "entry_prime": 251,
+          "selected_label_count": 237,
+          "reciprocal_tail": "4145712752435595133/16080863635441227755894640223340556",
+          "blocker_fee_upper": "4145712752435595133/176889499989853505314841042456746116"
+        },
+        {
+          "entry_prime": 257,
+          "selected_label_count": 242,
+          "reciprocal_tail": "8193932261605828147/48242590906323683267683920670021668",
+          "blocker_fee_upper": "8193932261605828147/578911090875884199212207048040260016"
+        },
+        {
+          "entry_prime": 263,
+          "selected_label_count": 248,
+          "reciprocal_tail": "5009483619257365075/48242590906323683267683920670021668",
+          "blocker_fee_upper": "5009483619257365075/578911090875884199212207048040260016"
+        },
+        {
+          "entry_prime": 269,
+          "selected_label_count": 253,
+          "reciprocal_tail": "9944465207775289717/144727772718971049803051762010065004",
+          "blocker_fee_upper": "9944465207775289717/1881461045346623647439672906130845052"
+        },
+        {
+          "entry_prime": 271,
+          "selected_label_count": 255,
+          "reciprocal_tail": "8494121532199826389/144727772718971049803051762010065004",
+          "blocker_fee_upper": "8494121532199826389/1881461045346623647439672906130845052"
+        },
+        {
+          "entry_prime": 277,
+          "selected_label_count": 261,
+          "reciprocal_tail": "5309672889851363317/144727772718971049803051762010065004",
+          "blocker_fee_upper": "5309672889851363317/1881461045346623647439672906130845052"
+        },
+        {
+          "entry_prime": 281,
+          "selected_label_count": 265,
+          "reciprocal_tail": "11686197688310920351/434183318156913149409155286030195012",
+          "blocker_fee_upper": "11686197688310920351/5644383136039870942319018718392535156"
+        },
+        {
+          "entry_prime": 283,
+          "selected_label_count": 267,
+          "reciprocal_tail": "229623267590613658217/9986216317609002436410571578694485276",
+          "blocker_fee_upper": "229623267590613658217/129820812128917031673337430523028308588"
+        },
+        {
+          "entry_prime": 293,
+          "selected_label_count": 277,
+          "reciprocal_tail": "105457765416016628873/9986216317609002436410571578694485276",
+          "blocker_fee_upper": "105457765416016628873/129820812128917031673337430523028308588"
+        },
+        {
+          "entry_prime": 307,
+          "selected_label_count": 291,
+          "reciprocal_tail": "108159468851362613051/29958648952827007309231714736083455828",
+          "blocker_fee_upper": "108159468851362613051/389462436386751095020012291569084925764"
+        },
+        {
+          "entry_prime": 311,
+          "selected_label_count": 295,
+          "reciprocal_tail": "240430081331997594929/89875946858481021927695144208250367484",
+          "blocker_fee_upper": "240430081331997594929/1168387309160253285060036874707254777292"
+        },
+        {
+          "entry_prime": 313,
+          "selected_label_count": 297,
+          "reciprocal_tail": "207072176793761938385/89875946858481021927695144208250367484",
+          "blocker_fee_upper": "207072176793761938385/1168387309160253285060036874707254777292"
+        },
+        {
+          "entry_prime": 317,
+          "selected_label_count": 301,
+          "reciprocal_tail": "154449967988589091985/89875946858481021927695144208250367484",
+          "blocker_fee_upper": "154449967988589091985/1168387309160253285060036874707254777292"
+        },
+        {
+          "entry_prime": 331,
+          "selected_label_count": 314,
+          "reciprocal_tail": "4133407563814391688169/6201440333235190513010964950369275356396",
+          "blocker_fee_upper": "4133407563814391688169/86820164665292667182153509305169854989544"
+        },
+        {
+          "entry_prime": 337,
+          "selected_label_count": 320,
+          "reciprocal_tail": "2698400651538326866057/6201440333235190513010964950369275356396",
+          "blocker_fee_upper": "2698400651538326866057/86820164665292667182153509305169854989544"
+        },
+        {
+          "entry_prime": 347,
+          "selected_label_count": 330,
+          "reciprocal_tail": "3924671519563628648131/18604320999705571539032894851107826069188",
+          "blocker_fee_upper": "3924671519563628648131/260460493995878001546460527915509564968632"
+        },
+        {
+          "entry_prime": 349,
+          "selected_label_count": 331,
+          "reciprocal_tail": "3649610587410004546063/18604320999705571539032894851107826069188",
+          "blocker_fee_upper": "3649610587410004546063/279064814995583573085493422766617391037820"
+        },
+        {
+          "entry_prime": 353,
+          "selected_label_count": 335,
+          "reciprocal_tail": "2771346644292668438863/18604320999705571539032894851107826069188",
+          "blocker_fee_upper": "2771346644292668438863/279064814995583573085493422766617391037820"
+        },
+        {
+          "entry_prime": 359,
+          "selected_label_count": 342,
+          "reciprocal_tail": "5078759368192004731681/55812962999116714617098684553323478207564",
+          "blocker_fee_upper": "5078759368192004731681/781381481987634004639381583746528694905896"
+        },
+        {
+          "entry_prime": 367,
+          "selected_label_count": 348,
+          "reciprocal_tail": "3394186036389667766593/55812962999116714617098684553323478207564",
+          "blocker_fee_upper": "3394186036389667766593/893007407985867433873578952853175651321024"
+        },
+        {
+          "entry_prime": 373,
+          "selected_label_count": 356,
+          "reciprocal_tail": "135114310903931845295693/3851094446939053308579809234179319996321916",
+          "blocker_fee_upper": "135114310903931845295693/53915322257146746320117329278510479948506824"
+        },
+        {
+          "entry_prime": 379,
+          "selected_label_count": 361,
+          "reciprocal_tail": "95957232384802101585881/3851094446939053308579809234179319996321916",
+          "blocker_fee_upper": "95957232384802101585881/57766416704085799628697138512689799944828740"
+        },
+        {
+          "entry_prime": 383,
+          "selected_label_count": 364,
+          "reciprocal_tail": "78722792771751432786893/3851094446939053308579809234179319996321916",
+          "blocker_fee_upper": "78722792771751432786893/61617511151024852937276947746869119941150656"
+        },
+        {
+          "entry_prime": 389,
+          "selected_label_count": 372,
+          "reciprocal_tail": "137083852708299067761455/11553283340817159925739427702537959988965748",
+          "blocker_fee_upper": "137083852708299067761455/161745966771440238960351987835531439845520472"
+        },
+        {
+          "entry_prime": 397,
+          "selected_label_count": 378,
+          "reciprocal_tail": "91600372749635969704079/11553283340817159925739427702537959988965748",
+          "blocker_fee_upper": "91600372749635969704079/184852533453074558811830843240607359823451968"
+        },
+        {
+          "entry_prime": 401,
+          "selected_label_count": 383,
+          "reciprocal_tail": "66585866536150695433283/11553283340817159925739427702537959988965748",
+          "blocker_fee_upper": "66585866536150695433283/173299250112257398886091415538069399834486220"
+        },
+        {
+          "entry_prime": 409,
+          "selected_label_count": 390,
+          "reciprocal_tail": "125346146620674072846965/34659850022451479777218283107613879966897244",
+          "blocker_fee_upper": "125346146620674072846965/554557600359223676435492529721822079470355904"
+        },
+        {
+          "entry_prime": 419,
+          "selected_label_count": 400,
+          "reciprocal_tail": "1537383555744567662362795/797176550516384034876020511475119239238636612",
+          "blocker_fee_upper": "1537383555744567662362795/12754824808262144558016328183601907827818185792"
+        },
+        {
+          "entry_prime": 421,
+          "selected_label_count": 403,
+          "reciprocal_tail": "3783003823551141793260853/2391529651549152104628061534425357717715909836",
+          "blocker_fee_upper": "3783003823551141793260853/35872944773237281569420923016380365765738647540"
+        },
+        {
+          "entry_prime": 431,
+          "selected_label_count": 411,
+          "reciprocal_tail": "2260432833982270655523253/2391529651549152104628061534425357717715909836",
+          "blocker_fee_upper": "2260432833982270655523253/40656004076335585778677046085231081201170467212"
+        },
+        {
+          "entry_prime": 433,
+          "selected_label_count": 414,
+          "reciprocal_tail": "1879558196903135740400209/2391529651549152104628061534425357717715909836",
+          "blocker_fee_upper": "1879558196903135740400209/38264474424786433674048984550805723483454557376"
+        },
+        {
+          "entry_prime": 439,
+          "selected_label_count": 421,
+          "reciprocal_tail": "3595122863818123143549103/7174588954647456313884184603276073153147729508",
+          "blocker_fee_upper": "3595122863818123143549103/107618834319711844708262769049141097297215942620"
+        },
+        {
+          "entry_prime": 443,
+          "selected_label_count": 424,
+          "reciprocal_tail": "2953864877232723684247627/7174588954647456313884184603276073153147729508",
+          "blocker_fee_upper": "2953864877232723684247627/114793423274359301022146953652417170450363672128"
+        },
+        {
+          "entry_prime": 449,
+          "selected_label_count": 429,
+          "reciprocal_tail": "2183620703611948979358535/7174588954647456313884184603276073153147729508",
+          "blocker_fee_upper": "2183620703611948979358535/121968012229006757336031138255693243603511401636"
+        },
+        {
+          "entry_prime": 457,
+          "selected_label_count": 439,
+          "reciprocal_tail": "3519263387903181937145197/21523766863942368941652553809828219459443188524",
+          "blocker_fee_upper": "3519263387903181937145197/322856502959135534124788307147423291891647827860"
+        },
+        {
+          "entry_prime": 461,
+          "selected_label_count": 441,
+          "reciprocal_tail": "3113397763386468703974349/21523766863942368941652553809828219459443188524",
+          "blocker_fee_upper": "3113397763386468703974349/365904036687020272008093414767079730810534204908"
+        },
+        {
+          "entry_prime": 463,
+          "selected_label_count": 443,
+          "reciprocal_tail": "2767660379538898172013997/21523766863942368941652553809828219459443188524",
+          "blocker_fee_upper": "2767660379538898172013997/365904036687020272008093414767079730810534204908"
+        },
+        {
+          "entry_prime": 467,
+          "selected_label_count": 447,
+          "reciprocal_tail": "50382809069228571544973027/495046637870674485658008737626049047567193336052",
+          "blocker_fee_upper": "50382809069228571544973027/8415792843801466256186148539642833808642286712884"
+        },
+        {
+          "entry_prime": 479,
+          "selected_label_count": 459,
+          "reciprocal_tail": "72086747216350015250590193/1485139913612023456974026212878147142701580008156",
+          "blocker_fee_upper": "72086747216350015250590193/25247378531404398768558445618928501425926860138652"
+        },
+        {
+          "entry_prime": 487,
+          "selected_label_count": 467,
+          "reciprocal_tail": "45091055533899147259349897/1485139913612023456974026212878147142701580008156",
+          "blocker_fee_upper": "45091055533899147259349897/25247378531404398768558445618928501425926860138652"
+        },
+        {
+          "entry_prime": 491,
+          "selected_label_count": 472,
+          "reciprocal_tail": "33340675386079517573140541/1485139913612023456974026212878147142701580008156",
+          "blocker_fee_upper": "33340675386079517573140541/23762238617792375311584419406050354283225280130496"
+        },
+        {
+          "entry_prime": 499,
+          "selected_label_count": 479,
+          "reciprocal_tail": "65570583363239598193042595/4455419740836070370922078638634441428104740024468",
+          "blocker_fee_upper": "65570583363239598193042595/75742135594213196305675336856785504277780580415956"
+        },
+        {
+          "entry_prime": 503,
+          "selected_label_count": 482,
+          "reciprocal_tail": "55286968162102955484720407/4455419740836070370922078638634441428104740024468",
+          "blocker_fee_upper": "55286968162102955484720407/80197555335049266676597415495419945705885320440424"
+        },
+        {
+          "entry_prime": 509,
+          "selected_label_count": 488,
+          "reciprocal_tail": "39064529916139801692442607/4455419740836070370922078638634441428104740024468",
+          "blocker_fee_upper": "39064529916139801692442607/80197555335049266676597415495419945705885320440424"
+        },
+        {
+          "entry_prime": 521,
+          "selected_label_count": 501,
+          "reciprocal_tail": "1275907655654519091681190855/307423962117688855593623426065776458539227061688292",
+          "blocker_fee_upper": "1275907655654519091681190855/5226207356000710545091598243118199795166860048700964"
+        },
+        {
+          "entry_prime": 523,
+          "selected_label_count": 503,
+          "reciprocal_tail": "1139994843204117959135791591/307423962117688855593623426065776458539227061688292",
+          "blocker_fee_upper": "1139994843204117959135791591/5226207356000710545091598243118199795166860048700964"
+        },
+        {
+          "entry_prime": 541,
+          "selected_label_count": 520,
+          "reciprocal_tail": "1288829819432972438279055337/922271886353066566780870278197329375617681185064876",
+          "blocker_fee_upper": "1288829819432972438279055337/16600893954355198202055665007551928761118261331167768"
+        },
+        {
+          "entry_prime": 547,
+          "selected_label_count": 526,
+          "reciprocal_tail": "915713739775819901056665937/922271886353066566780870278197329375617681185064876",
+          "blocker_fee_upper": "915713739775819901056665937/16600893954355198202055665007551928761118261331167768"
+        },
+        {
+          "entry_prime": 557,
+          "selected_label_count": 536,
+          "reciprocal_tail": "1564119460394475260364059107/2766815659059199700342610834591988126853043555194628",
+          "blocker_fee_upper": "1564119460394475260364059107/49802681863065594606166995022655786283354783993503304"
+        },
+        {
+          "entry_prime": 563,
+          "selected_label_count": 542,
+          "reciprocal_tail": "1126113627753470107972558507/2766815659059199700342610834591988126853043555194628",
+          "blocker_fee_upper": "1126113627753470107972558507/49802681863065594606166995022655786283354783993503304"
+        },
+        {
+          "entry_prime": 569,
+          "selected_label_count": 548,
+          "reciprocal_tail": "2424822013025464951016013721/8300446977177599101027832503775964380559130665583884",
+          "blocker_fee_upper": "2424822013025464951016013721/149408045589196783818500985067967358850064351980509912"
+        },
+        {
+          "entry_prime": 571,
+          "selected_label_count": 550,
+          "reciprocal_tail": "2172779460200586033216917113/8300446977177599101027832503775964380559130665583884",
+          "blocker_fee_upper": "2172779460200586033216917113/149408045589196783818500985067967358850064351980509912"
+        },
+        {
+          "entry_prime": 577,
+          "selected_label_count": 556,
+          "reciprocal_tail": "36091047063079011107754139799/190910280475084779323640147586847180752860005308429332",
+          "blocker_fee_upper": "36091047063079011107754139799/3436385048551526027825522656563249253551480095551727976"
+        },
+        {
+          "entry_prime": 587,
+          "selected_label_count": 565,
+          "reciprocal_tail": "22069344789563218758936746147/190910280475084779323640147586847180752860005308429332",
+          "blocker_fee_upper": "22069344789563218758936746147/3627295329026610807149162804150096434304340100860157308"
+        },
+        {
+          "entry_prime": 593,
+          "selected_label_count": 571,
+          "reciprocal_tail": "47764237578497956495754267177/572730841425254337970920442760541542258580015925287996",
+          "blocker_fee_upper": "47764237578497956495754267177/10881885987079832421447488412450289302913020302580471924"
+        },
+        {
+          "entry_prime": 599,
+          "selected_label_count": 577,
+          "reciprocal_tail": "34583301756039966926316890177/572730841425254337970920442760541542258580015925287996",
+          "blocker_fee_upper": "34583301756039966926316890177/10881885987079832421447488412450289302913020302580471924"
+        },
+        {
+          "entry_prime": 601,
+          "selected_label_count": 579,
+          "reciprocal_tail": "30999913043695967473194043361/572730841425254337970920442760541542258580015925287996",
+          "blocker_fee_upper": "30999913043695967473194043361/10881885987079832421447488412450289302913020302580471924"
+        },
+        {
+          "entry_prime": 607,
+          "selected_label_count": 585,
+          "reciprocal_tail": "22418243211581459117079087161/572730841425254337970920442760541542258580015925287996",
+          "blocker_fee_upper": "22418243211581459117079087161/10881885987079832421447488412450289302913020302580471924"
+        },
+        {
+          "entry_prime": 613,
+          "selected_label_count": 590,
+          "reciprocal_tail": "51369521272686440196558457655/1718192524275763013912761328281624626775740047775863988",
+          "blocker_fee_upper": "10273904254537288039311691531/6872770097103052055651045313126498507102960191103455952"
+        },
+        {
+          "entry_prime": 617,
+          "selected_label_count": 595,
+          "reciprocal_tail": "39564920561651635243687405931/1718192524275763013912761328281624626775740047775863988",
+          "blocker_fee_upper": "39564920561651635243687405931/32645657961239497264342465237350867908739060907741415772"
+        },
+        {
+          "entry_prime": 619,
+          "selected_label_count": 596,
+          "reciprocal_tail": "37486640751151972540323503855/1718192524275763013912761328281624626775740047775863988",
+          "blocker_fee_upper": "7497328150230394508064700771/6872770097103052055651045313126498507102960191103455952"
+        },
+        {
+          "entry_prime": 631,
+          "selected_label_count": 608,
+          "reciprocal_tail": "60306585785822818529218748765/5154577572827289041738283984844873880327220143327591964",
+          "blocker_fee_upper": "12061317157164563705843749753/20618310291309156166953135939379495521308880573310367856"
+        },
+        {
+          "entry_prime": 641,
+          "selected_label_count": 619,
+          "reciprocal_tail": "780930966542960428340028714847/118555284175027647959980531651432099247526063296534615172",
+          "blocker_fee_upper": "780930966542960428340028714847/2252550399325525311239630101377209885702995202634157688268"
+        },
+        {
+          "entry_prime": 643,
+          "selected_label_count": 620,
+          "reciprocal_tail": "740212076922429999818565596395/118555284175027647959980531651432099247526063296534615172",
+          "blocker_fee_upper": "148042415384485999963713119279/474221136700110591839922126605728396990104253186138460688"
+        },
+        {
+          "entry_prime": 647,
+          "selected_label_count": 625,
+          "reciprocal_tail": "572381397271122229010437364647/118555284175027647959980531651432099247526063296534615172",
+          "blocker_fee_upper": "572381397271122229010437364647/2252550399325525311239630101377209885702995202634157688268"
+        },
+        {
+          "entry_prime": 653,
+          "selected_label_count": 631,
+          "reciprocal_tail": "1259931766458107999620589872717/355665852525082943879941594954296297742578189889603845516",
+          "blocker_fee_upper": "1259931766458107999620589872717/6757651197976575933718890304131629657108985607902473064804"
+        },
+        {
+          "entry_prime": 659,
+          "selected_label_count": 637,
+          "reciprocal_tail": "922553516110644263497934612917/355665852525082943879941594954296297742578189889603845516",
+          "blocker_fee_upper": "922553516110644263497934612917/6757651197976575933718890304131629657108985607902473064804"
+        },
+        {
+          "entry_prime": 661,
+          "selected_label_count": 638,
+          "reciprocal_tail": "874753080469152021320564865169/355665852525082943879941594954296297742578189889603845516",
+          "blocker_fee_upper": "874753080469152021320564865169/7113317050501658877598831899085925954851563797792076910320"
+        },
+        {
+          "entry_prime": 673,
+          "selected_label_count": 650,
+          "reciprocal_tail": "1424732502651894784851404051107/1066997557575248831639824784862888893227734569668811536548",
+          "blocker_fee_upper": "1424732502651894784851404051107/21339951151504976632796495697257777864554691393376230730960"
+        },
+        {
+          "entry_prime": 677,
+          "selected_label_count": 654,
+          "reciprocal_tail": "1163472570800845706016823573675/1066997557575248831639824784862888893227734569668811536548",
+          "blocker_fee_upper": "232694514160169141203364714735/4267990230300995326559299139451555572910938278675246146192"
+        },
+        {
+          "entry_prime": 683,
+          "selected_label_count": 659,
+          "reciprocal_tail": "903013852652629490330094487303/1066997557575248831639824784862888893227734569668811536548",
+          "blocker_fee_upper": "903013852652629490330094487303/22406948709080225464436320482120666757782425963045042267508"
+        },
+        {
+          "entry_prime": 691,
+          "selected_label_count": 668,
+          "reciprocal_tail": "580514700361766266307294433307/1066997557575248831639824784862888893227734569668811536548",
+          "blocker_fee_upper": "580514700361766266307294433307/21339951151504976632796495697257777864554691393376230730960"
+        },
+        {
+          "entry_prime": 701,
+          "selected_label_count": 678,
+          "reciprocal_tail": "24232361073671108044088975732063/73622831472692169383147910155539333632713685307147996021812",
+          "blocker_fee_upper": "24232361073671108044088975732063/1472456629453843387662958203110786672654273706142959920436240"
+        },
+        {
+          "entry_prime": 709,
+          "selected_label_count": 686,
+          "reciprocal_tail": "16322672576975600872801299817175/73622831472692169383147910155539333632713685307147996021812",
+          "blocker_fee_upper": "3264534515395120174560259963435/294491325890768677532591640622157334530854741228591984087248"
+        },
+        {
+          "entry_prime": 719,
+          "selected_label_count": 697,
+          "reciprocal_tail": "28452491673103941295854819233777/220868494418076508149443730466618000898141055921443988065436",
+          "blocker_fee_upper": "28452491673103941295854819233777/4196501393943453654839430878865742017064680062507435773243284"
+        },
+        {
+          "entry_prime": 727,
+          "selected_label_count": 703,
+          "reciprocal_tail": "21108447877212207905706528673577/220868494418076508149443730466618000898141055921443988065436",
+          "blocker_fee_upper": "3015492553887458272243789810511/662605483254229524448331191399854002694423167764331964196308"
+        },
+        {
+          "entry_prime": 733,
+          "selected_label_count": 709,
+          "reciprocal_tail": "15779230911469098216559140873377/220868494418076508149443730466618000898141055921443988065436",
+          "blocker_fee_upper": "15779230911469098216559140873377/4638238382779606671138318339798978018860962174350323749374156"
+        },
+        {
+          "entry_prime": 739,
+          "selected_label_count": 716,
+          "reciprocal_tail": "33871017676149201342953948438687/662605483254229524448331191399854002694423167764331964196308",
+          "blocker_fee_upper": "33871017676149201342953948438687/13252109665084590488966623827997080053888463355286639283926160"
+        },
+        {
+          "entry_prime": 743,
+          "selected_label_count": 719,
+          "reciprocal_tail": "29215532522057832959112119031395/662605483254229524448331191399854002694423167764331964196308",
+          "blocker_fee_upper": "29215532522057832959112119031395/13914715148338820013414955019396934056582886523050971248122468"
+        },
+        {
+          "entry_prime": 751,
+          "selected_label_count": 727,
+          "reciprocal_tail": "19930246025937020192817890783483/662605483254229524448331191399854002694423167764331964196308",
+          "blocker_fee_upper": "19930246025937020192817890783483/13914715148338820013414955019396934056582886523050971248122468"
+        },
+        {
+          "entry_prime": 757,
+          "selected_label_count": 732,
+          "reciprocal_tail": "363685351812743150644117539885289/15239926114847279062311617402196642061971732858579635176515084",
+          "blocker_fee_upper": "363685351812743150644117539885289/335278374526640139370855582848326125363378122888751973883331848"
+        },
+        {
+          "entry_prime": 761,
+          "selected_label_count": 737,
+          "reciprocal_tail": "287391517912833999528640327581013/15239926114847279062311617402196642061971732858579635176515084",
+          "blocker_fee_upper": "287391517912833999528640327581013/320038448411792860308543965446129483301406390030172338706816764"
+        },
+        {
+          "entry_prime": 769,
+          "selected_label_count": 745,
+          "reciprocal_tail": "583033346609216504343708868357255/45719778344541837186934852206589926185915198575738905529545252",
+          "blocker_fee_upper": "583033346609216504343708868357255/960115345235378580925631896338388449904219170090517016120450292"
+        },
+        {
+          "entry_prime": 773,
+          "selected_label_count": 748,
+          "reciprocal_tail": "505333363248681965075939954230339/45719778344541837186934852206589926185915198575738905529545252",
+          "blocker_fee_upper": "505333363248681965075939954230339/1005835123579920418112566748544978376090134368666255921649995544"
+        },
+        {
+          "entry_prime": 787,
+          "selected_label_count": 763,
+          "reciprocal_tail": "751645578219843799254483329172829/137159335033625511560804556619769778557745595727216716588635756",
+          "blocker_fee_upper": "751645578219843799254483329172829/2880346035706135742776895689015165349712657510271551048361350876"
+        },
+        {
+          "entry_prime": 797,
+          "selected_label_count": 772,
+          "reciprocal_tail": "489610946637827009052190773140689/137159335033625511560804556619769778557745595727216716588635756",
+          "blocker_fee_upper": "489610946637827009052190773140689/3017505370739761254337700245634935128270403105998767764949986632"
+        },
+        {
+          "entry_prime": 809,
+          "selected_label_count": 785,
+          "reciprocal_tail": "808791999660633405754975506196903/411478005100876534682413669859309335673236787181650149765907268",
+          "blocker_fee_upper": "808791999660633405754975506196903/8641038107118407228330687067045496049137972530814653145084052628"
+        },
+        {
+          "entry_prime": 811,
+          "selected_label_count": 787,
+          "reciprocal_tail": "736562358699179777473915975937479/411478005100876534682413669859309335673236787181650149765907268",
+          "blocker_fee_upper": "736562358699179777473915975937479/8641038107118407228330687067045496049137972530814653145084052628"
+        },
+        {
+          "entry_prime": 821,
+          "selected_label_count": 795,
+          "reciprocal_tail": "510213049559582083960137867676375/411478005100876534682413669859309335673236787181650149765907268",
+          "blocker_fee_upper": "510213049559582083960137867676375/9463994117320160297695514406764114720484446105177953444615867164"
+        },
+        {
+          "entry_prime": 823,
+          "selected_label_count": 797,
+          "reciprocal_tail": "466613959096492642613992190466103/411478005100876534682413669859309335673236787181650149765907268",
+          "blocker_fee_upper": "466613959096492642613992190466103/9463994117320160297695514406764114720484446105177953444615867164"
+        },
+        {
+          "entry_prime": 827,
+          "selected_label_count": 801,
+          "reciprocal_tail": "8982063138496790820389858953634609/9463994117320160297695514406764114720484446105177953444615867164",
+          "blocker_fee_upper": "8982063138496790820389858953634609/217671864698363686846996831355574638571142260419092929226164944772"
+        },
+        {
+          "entry_prime": 829,
+          "selected_label_count": 805,
+          "reciprocal_tail": "7491273057881293817655225145376369/9463994117320160297695514406764114720484446105177953444615867164",
+          "blocker_fee_upper": "7491273057881293817655225145376369/198743876463723366251605802542046409130173368208737022336933210444"
+        },
+        {
+          "entry_prime": 839,
+          "selected_label_count": 815,
+          "reciprocal_tail": "14103371103711067121806189488251627/28391982351960480893086543220292344161453338315533860333847601492",
+          "blocker_fee_upper": "14103371103711067121806189488251627/596231629391170098754817407626139227390520104626211067010799631332"
+        },
+        {
+          "entry_prime": 853,
+          "selected_label_count": 828,
+          "reciprocal_tail": "7912586554817853527840135691269711/28391982351960480893086543220292344161453338315533860333847601492",
+          "blocker_fee_upper": "7912586554817853527840135691269711/624623611743130579647903950846431571551973442941744927344647232824"
+        },
+        {
+          "entry_prime": 857,
+          "selected_label_count": 833,
+          "reciprocal_tail": "18849441227255629231259801776957001/85175947055881442679259629660877032484360014946601581001542804476",
+          "blocker_fee_upper": "18849441227255629231259801776957001/1788694888173510296264452222878417682171560313878633201032398893996"
+        },
+        {
+          "entry_prime": 859,
+          "selected_label_count": 835,
+          "reciprocal_tail": "17188159485142195780795432580990249/85175947055881442679259629660877032484360014946601581001542804476",
+          "blocker_fee_upper": "2455451355020313682970776082998607/255527841167644328037778888982631097453080044839804743004628413428"
+        },
+        {
+          "entry_prime": 863,
+          "selected_label_count": 839,
+          "reciprocal_tail": "14288790030006862795977713339072801/85175947055881442679259629660877032484360014946601581001542804476",
+          "blocker_fee_upper": "14288790030006862795977713339072801/1788694888173510296264452222878417682171560313878633201032398893996"
+        },
+        {
+          "entry_prime": 877,
+          "selected_label_count": 852,
+          "reciprocal_tail": "8098005481113649202011659542090885/85175947055881442679259629660877032484360014946601581001542804476",
+          "blocker_fee_upper": "8098005481113649202011659542090885/1873870835229391738943711852539294714655920328825234782033941698472"
+        },
+        {
+          "entry_prime": 881,
+          "selected_label_count": 856,
+          "reciprocal_tail": "6774812866045441461095331592495157/85175947055881442679259629660877032484360014946601581001542804476",
+          "blocker_fee_upper": "6774812866045441461095331592495157/1873870835229391738943711852539294714655920328825234782033941698472"
+        },
+        {
+          "entry_prime": 883,
+          "selected_label_count": 857,
+          "reciprocal_tail": "19405698006143016253774373329420523/255527841167644328037778888982631097453080044839804743004628413428",
+          "blocker_fee_upper": "19405698006143016253774373329420523/5877140346855819544868914446600515241420841031315509089106453508844"
+        },
+        {
+          "entry_prime": 887,
+          "selected_label_count": 861,
+          "reciprocal_tail": "16226948415311302111594032660505379/255527841167644328037778888982631097453080044839804743004628413428",
+          "blocker_fee_upper": "16226948415311302111594032660505379/5877140346855819544868914446600515241420841031315509089106453508844"
+        },
+        {
+          "entry_prime": 907,
+          "selected_label_count": 882,
+          "reciprocal_tail": "447999824477951534904354301234062595/17631421040567458634606743339801545724262523093946527267319360526532",
+          "blocker_fee_upper": "447999824477951534904354301234062595/387891262892484089961348353475634005933775508066823599881025931583704"
+        },
+        {
+          "entry_prime": 911,
+          "selected_label_count": 885,
+          "reciprocal_tail": "391356536608121855778150762835540831/17631421040567458634606743339801545724262523093946527267319360526532",
+          "blocker_fee_upper": "391356536608121855778150762835540831/405522683933051548595955096815435551658038031160770127148345292110236"
+        },
+        {
+          "entry_prime": 919,
+          "selected_label_count": 892,
+          "reciprocal_tail": "289763906607984621124895937435389947/17631421040567458634606743339801545724262523093946527267319360526532",
+          "blocker_fee_upper": "289763906607984621124895937435389947/423154104973619007230561840155237097382300554254716654415664652636768"
+        },
+        {
+          "entry_prime": 929,
+          "selected_label_count": 903,
+          "reciprocal_tail": "180210487853223706570721862645359911/17631421040567458634606743339801545724262523093946527267319360526532",
+          "blocker_fee_upper": "180210487853223706570721862645359911/405522683933051548595955096815435551658038031160770127148345292110236"
+        },
+        {
+          "entry_prime": 937,
+          "selected_label_count": 910,
+          "reciprocal_tail": "396362847618108338980781906807712529/52894263121702375903820230019404637172787569281839581801958081579596",
+          "blocker_fee_upper": "396362847618108338980781906807712529/1269462314920857021691685520465711292146901662764149963246993957910304"
+        },
+        {
+          "entry_prime": 941,
+          "selected_label_count": 914,
+          "reciprocal_tail": "334082901931072161898804121109338041/52894263121702375903820230019404637172787569281839581801958081579596",
+          "blocker_fee_upper": "334082901931072161898804121109338041/1269462314920857021691685520465711292146901662764149963246993957910304"
+        },
+        {
+          "entry_prime": 947,
+          "selected_label_count": 920,
+          "reciprocal_tail": "259756302893985039910084697030443609/52894263121702375903820230019404637172787569281839581801958081579596",
+          "blocker_fee_upper": "259756302893985039910084697030443609/1269462314920857021691685520465711292146901662764149963246993957910304"
+        },
+        {
+          "entry_prime": 953,
+          "selected_label_count": 927,
+          "reciprocal_tail": "193485464191149962938957599650116141/52894263121702375903820230019404637172787569281839581801958081579596",
+          "blocker_fee_upper": "193485464191149962938957599650116141/1216568051799154645787865290446306654974114093482310381445035876330708"
+        },
+        {
+          "entry_prime": 967,
+          "selected_label_count": 940,
+          "reciprocal_tail": "7698925677444619173280388217431290037/3649704155397463937363595871338919964922342280446931144335107628992124",
+          "blocker_fee_upper": "7698925677444619173280388217431290037/87592899729539134496726300912134079158136214730726347464042583095810976"
+        }
+      ],
+      "prefix_count": 971,
+      "prefix_last": 40795622822184613239294664484792769,
+      "finite_fee": "6803239101432222244938024936158464932759758290395425833288996235255428/885024972476680674465157430931685214863939854855707338784895002946465381039",
+      "analytic_tail": "23/1125069100056",
+      "total_fee": "54426057553318457986801992582544048015458530301726134473298068481222195/7080199779813445395721259447453481718911518838845658710279160023571723048312",
+      "strictly_less_than": "1/125000"
+    }
+  },
+  "analytic_tail": {
+    "first_odd_entry": 971,
+    "rectangle_start": 22,
+    "formula": "9 C / (n0 3^n0), C=a/(a-1)b/(b-1)"
+  },
+  "consequence": {
+    "early_deletion_upper": "274654697659954069474997263035611701314387151251701720257/214549857787517700510428061190459683537483215332031250000000",
+    "early_gate_lower": "2378612121157591553067962342849747379556798368335500039602083290193903/1453711517035320910511108012764530942877148437500000000000000000000000000",
+    "head_after_continuation_lower": "2378612121157591553067962342849747379556798368335500039602083290193903/75225356167723751717881204760789345311921875000000000000000000000000000000",
+    "simple_head_lower": "14799217832760926534994307711/468579418066477236879360000000000",
+    "ordinary_attachment_fee": "1/131072",
+    "extendible_head_lower": "55449532468860801493270748792912662877965212115362618487951541155039536990925129366061038153362161989170983246021/3401113894978646176018221240084961158096166952480000988085112710331033655056524413140625000000000000000000000000000000",
+    "simple_extendible_head_lower": "31991/2048000000",
+    "strictly_greater_than": "1/65000",
+    "full_density_lower": "1/(65000 Q_outside)"
+  },
+  "checks": {
+    "central_high_support_augmentation.json_checks_true": true,
+    "central_high_support_augmentation.json_producer_fingerprint": true,
+    "two_parent_entry_attachment.json_checks_true": true,
+    "two_parent_entry_attachment.json_producer_fingerprint": true,
+    "inherited_complete_moment_gate": true,
+    "same_head_density": true,
+    "early_pair_density_10_over_3": true,
+    "rectangle_tail_boundary": true,
+    "complete_152_prime_rows": true,
+    "3_5_literal_prefix_complete": true,
+    "3_5_complete_tail_positive": true,
+    "3_5_original_parent_tail_37": true,
+    "3_5_original_parent_tail_41": true,
+    "3_5_original_parent_tail_43": true,
+    "3_5_original_parent_tail_47": true,
+    "3_5_original_parent_tail_53": true,
+    "unchanged_600_fee_53": true,
+    "3_5_original_parent_tail_59": true,
+    "unchanged_600_fee_59": true,
+    "3_5_original_parent_tail_61": true,
+    "unchanged_600_fee_61": true,
+    "3_5_original_parent_tail_67": true,
+    "unchanged_600_fee_67": true,
+    "3_5_original_parent_tail_71": true,
+    "unchanged_600_fee_71": true,
+    "3_5_original_parent_tail_73": true,
+    "unchanged_600_fee_73": true,
+    "3_5_original_parent_tail_79": true,
+    "unchanged_600_fee_79": true,
+    "3_5_original_parent_tail_83": true,
+    "unchanged_600_fee_83": true,
+    "3_5_original_parent_tail_89": true,
+    "unchanged_600_fee_89": true,
+    "3_5_original_parent_tail_97": true,
+    "unchanged_600_fee_97": true,
+    "3_5_original_parent_tail_101": true,
+    "unchanged_600_fee_101": true,
+    "3_5_original_parent_tail_103": true,
+    "unchanged_600_fee_103": true,
+    "3_5_original_parent_tail_107": true,
+    "unchanged_600_fee_107": true,
+    "3_5_original_parent_tail_109": true,
+    "unchanged_600_fee_109": true,
+    "3_5_original_parent_tail_113": true,
+    "unchanged_600_fee_113": true,
+    "3_5_original_parent_tail_127": true,
+    "unchanged_600_fee_127": true,
+    "3_5_original_parent_tail_131": true,
+    "unchanged_600_fee_131": true,
+    "3_5_original_parent_tail_137": true,
+    "unchanged_600_fee_137": true,
+    "3_5_original_parent_tail_139": true,
+    "unchanged_600_fee_139": true,
+    "3_5_original_parent_tail_149": true,
+    "unchanged_600_fee_149": true,
+    "3_5_original_parent_tail_151": true,
+    "unchanged_600_fee_151": true,
+    "3_5_original_parent_tail_157": true,
+    "unchanged_600_fee_157": true,
+    "3_5_original_parent_tail_163": true,
+    "unchanged_600_fee_163": true,
+    "3_5_original_parent_tail_167": true,
+    "unchanged_600_fee_167": true,
+    "3_5_original_parent_tail_173": true,
+    "unchanged_600_fee_173": true,
+    "3_5_original_parent_tail_179": true,
+    "unchanged_600_fee_179": true,
+    "3_5_original_parent_tail_181": true,
+    "unchanged_600_fee_181": true,
+    "3_5_original_parent_tail_191": true,
+    "unchanged_600_fee_191": true,
+    "3_5_original_parent_tail_193": true,
+    "unchanged_600_fee_193": true,
+    "3_5_original_parent_tail_197": true,
+    "unchanged_600_fee_197": true,
+    "3_5_original_parent_tail_199": true,
+    "unchanged_600_fee_199": true,
+    "3_5_original_parent_tail_211": true,
+    "unchanged_600_fee_211": true,
+    "3_5_original_parent_tail_223": true,
+    "unchanged_600_fee_223": true,
+    "3_5_original_parent_tail_227": true,
+    "unchanged_600_fee_227": true,
+    "3_5_original_parent_tail_229": true,
+    "unchanged_600_fee_229": true,
+    "3_5_original_parent_tail_233": true,
+    "unchanged_600_fee_233": true,
+    "3_5_original_parent_tail_239": true,
+    "unchanged_600_fee_239": true,
+    "3_5_original_parent_tail_241": true,
+    "unchanged_600_fee_241": true,
+    "3_5_original_parent_tail_251": true,
+    "unchanged_600_fee_251": true,
+    "3_5_original_parent_tail_257": true,
+    "unchanged_600_fee_257": true,
+    "3_5_original_parent_tail_263": true,
+    "unchanged_600_fee_263": true,
+    "3_5_original_parent_tail_269": true,
+    "unchanged_600_fee_269": true,
+    "3_5_original_parent_tail_271": true,
+    "unchanged_600_fee_271": true,
+    "3_5_original_parent_tail_277": true,
+    "unchanged_600_fee_277": true,
+    "3_5_original_parent_tail_281": true,
+    "unchanged_600_fee_281": true,
+    "3_5_original_parent_tail_283": true,
+    "unchanged_600_fee_283": true,
+    "3_5_original_parent_tail_293": true,
+    "unchanged_600_fee_293": true,
+    "3_5_original_parent_tail_307": true,
+    "unchanged_600_fee_307": true,
+    "3_5_original_parent_tail_311": true,
+    "unchanged_600_fee_311": true,
+    "3_5_original_parent_tail_313": true,
+    "unchanged_600_fee_313": true,
+    "3_5_original_parent_tail_317": true,
+    "unchanged_600_fee_317": true,
+    "3_5_original_parent_tail_331": true,
+    "unchanged_600_fee_331": true,
+    "3_5_original_parent_tail_337": true,
+    "unchanged_600_fee_337": true,
+    "3_5_original_parent_tail_347": true,
+    "unchanged_600_fee_347": true,
+    "3_5_original_parent_tail_349": true,
+    "unchanged_600_fee_349": true,
+    "3_5_original_parent_tail_353": true,
+    "unchanged_600_fee_353": true,
+    "3_5_original_parent_tail_359": true,
+    "unchanged_600_fee_359": true,
+    "3_5_original_parent_tail_367": true,
+    "unchanged_600_fee_367": true,
+    "3_5_original_parent_tail_373": true,
+    "unchanged_600_fee_373": true,
+    "3_5_original_parent_tail_379": true,
+    "unchanged_600_fee_379": true,
+    "3_5_original_parent_tail_383": true,
+    "unchanged_600_fee_383": true,
+    "3_5_original_parent_tail_389": true,
+    "unchanged_600_fee_389": true,
+    "3_5_original_parent_tail_397": true,
+    "unchanged_600_fee_397": true,
+    "3_5_original_parent_tail_401": true,
+    "unchanged_600_fee_401": true,
+    "3_5_original_parent_tail_409": true,
+    "unchanged_600_fee_409": true,
+    "3_5_original_parent_tail_419": true,
+    "unchanged_600_fee_419": true,
+    "3_5_original_parent_tail_421": true,
+    "unchanged_600_fee_421": true,
+    "3_5_original_parent_tail_431": true,
+    "unchanged_600_fee_431": true,
+    "3_5_original_parent_tail_433": true,
+    "unchanged_600_fee_433": true,
+    "3_5_original_parent_tail_439": true,
+    "unchanged_600_fee_439": true,
+    "3_5_original_parent_tail_443": true,
+    "unchanged_600_fee_443": true,
+    "3_5_original_parent_tail_449": true,
+    "unchanged_600_fee_449": true,
+    "3_5_original_parent_tail_457": true,
+    "unchanged_600_fee_457": true,
+    "3_5_original_parent_tail_461": true,
+    "unchanged_600_fee_461": true,
+    "3_5_original_parent_tail_463": true,
+    "unchanged_600_fee_463": true,
+    "3_5_original_parent_tail_467": true,
+    "unchanged_600_fee_467": true,
+    "3_5_original_parent_tail_479": true,
+    "unchanged_600_fee_479": true,
+    "3_5_original_parent_tail_487": true,
+    "unchanged_600_fee_487": true,
+    "3_5_original_parent_tail_491": true,
+    "unchanged_600_fee_491": true,
+    "3_5_original_parent_tail_499": true,
+    "unchanged_600_fee_499": true,
+    "3_5_original_parent_tail_503": true,
+    "unchanged_600_fee_503": true,
+    "3_5_original_parent_tail_509": true,
+    "unchanged_600_fee_509": true,
+    "3_5_original_parent_tail_521": true,
+    "unchanged_600_fee_521": true,
+    "3_5_original_parent_tail_523": true,
+    "unchanged_600_fee_523": true,
+    "3_5_original_parent_tail_541": true,
+    "unchanged_600_fee_541": true,
+    "3_5_original_parent_tail_547": true,
+    "unchanged_600_fee_547": true,
+    "3_5_original_parent_tail_557": true,
+    "unchanged_600_fee_557": true,
+    "3_5_original_parent_tail_563": true,
+    "unchanged_600_fee_563": true,
+    "3_5_original_parent_tail_569": true,
+    "unchanged_600_fee_569": true,
+    "3_5_original_parent_tail_571": true,
+    "unchanged_600_fee_571": true,
+    "3_5_original_parent_tail_577": true,
+    "unchanged_600_fee_577": true,
+    "3_5_original_parent_tail_587": true,
+    "unchanged_600_fee_587": true,
+    "3_5_original_parent_tail_593": true,
+    "unchanged_600_fee_593": true,
+    "3_5_original_parent_tail_599": true,
+    "unchanged_600_fee_599": true,
+    "3_5_original_parent_tail_601": true,
+    "unchanged_600_fee_601": true,
+    "3_5_original_parent_tail_607": true,
+    "unchanged_600_fee_607": true,
+    "3_5_original_parent_tail_613": true,
+    "unchanged_600_fee_613": true,
+    "3_5_original_parent_tail_617": true,
+    "unchanged_600_fee_617": true,
+    "3_5_original_parent_tail_619": true,
+    "unchanged_600_fee_619": true,
+    "3_5_original_parent_tail_631": true,
+    "unchanged_600_fee_631": true,
+    "3_5_original_parent_tail_641": true,
+    "unchanged_600_fee_641": true,
+    "3_5_original_parent_tail_643": true,
+    "unchanged_600_fee_643": true,
+    "3_5_original_parent_tail_647": true,
+    "unchanged_600_fee_647": true,
+    "3_5_original_parent_tail_653": true,
+    "unchanged_600_fee_653": true,
+    "3_5_original_parent_tail_659": true,
+    "unchanged_600_fee_659": true,
+    "3_5_original_parent_tail_661": true,
+    "unchanged_600_fee_661": true,
+    "3_5_original_parent_tail_673": true,
+    "unchanged_600_fee_673": true,
+    "3_5_original_parent_tail_677": true,
+    "unchanged_600_fee_677": true,
+    "3_5_original_parent_tail_683": true,
+    "unchanged_600_fee_683": true,
+    "3_5_original_parent_tail_691": true,
+    "unchanged_600_fee_691": true,
+    "3_5_original_parent_tail_701": true,
+    "unchanged_600_fee_701": true,
+    "3_5_original_parent_tail_709": true,
+    "unchanged_600_fee_709": true,
+    "3_5_original_parent_tail_719": true,
+    "unchanged_600_fee_719": true,
+    "3_5_original_parent_tail_727": true,
+    "unchanged_600_fee_727": true,
+    "3_5_original_parent_tail_733": true,
+    "unchanged_600_fee_733": true,
+    "3_5_original_parent_tail_739": true,
+    "unchanged_600_fee_739": true,
+    "3_5_original_parent_tail_743": true,
+    "unchanged_600_fee_743": true,
+    "3_5_original_parent_tail_751": true,
+    "unchanged_600_fee_751": true,
+    "3_5_original_parent_tail_757": true,
+    "unchanged_600_fee_757": true,
+    "3_5_original_parent_tail_761": true,
+    "unchanged_600_fee_761": true,
+    "3_5_original_parent_tail_769": true,
+    "unchanged_600_fee_769": true,
+    "3_5_original_parent_tail_773": true,
+    "unchanged_600_fee_773": true,
+    "3_5_original_parent_tail_787": true,
+    "unchanged_600_fee_787": true,
+    "3_5_original_parent_tail_797": true,
+    "unchanged_600_fee_797": true,
+    "3_5_original_parent_tail_809": true,
+    "unchanged_600_fee_809": true,
+    "3_5_original_parent_tail_811": true,
+    "unchanged_600_fee_811": true,
+    "3_5_original_parent_tail_821": true,
+    "unchanged_600_fee_821": true,
+    "3_5_original_parent_tail_823": true,
+    "unchanged_600_fee_823": true,
+    "3_5_original_parent_tail_827": true,
+    "unchanged_600_fee_827": true,
+    "3_5_original_parent_tail_829": true,
+    "unchanged_600_fee_829": true,
+    "3_5_original_parent_tail_839": true,
+    "unchanged_600_fee_839": true,
+    "3_5_original_parent_tail_853": true,
+    "unchanged_600_fee_853": true,
+    "3_5_original_parent_tail_857": true,
+    "unchanged_600_fee_857": true,
+    "3_5_original_parent_tail_859": true,
+    "unchanged_600_fee_859": true,
+    "3_5_original_parent_tail_863": true,
+    "unchanged_600_fee_863": true,
+    "3_5_original_parent_tail_877": true,
+    "unchanged_600_fee_877": true,
+    "3_5_original_parent_tail_881": true,
+    "unchanged_600_fee_881": true,
+    "3_5_original_parent_tail_883": true,
+    "unchanged_600_fee_883": true,
+    "3_5_original_parent_tail_887": true,
+    "unchanged_600_fee_887": true,
+    "3_5_original_parent_tail_907": true,
+    "unchanged_600_fee_907": true,
+    "3_5_original_parent_tail_911": true,
+    "unchanged_600_fee_911": true,
+    "3_5_original_parent_tail_919": true,
+    "unchanged_600_fee_919": true,
+    "3_5_original_parent_tail_929": true,
+    "unchanged_600_fee_929": true,
+    "3_5_original_parent_tail_937": true,
+    "unchanged_600_fee_937": true,
+    "3_5_original_parent_tail_941": true,
+    "unchanged_600_fee_941": true,
+    "3_5_original_parent_tail_947": true,
+    "unchanged_600_fee_947": true,
+    "3_5_original_parent_tail_953": true,
+    "unchanged_600_fee_953": true,
+    "3_5_original_parent_tail_967": true,
+    "unchanged_600_fee_967": true,
+    "3_5_infinite_fee_target": true,
+    "unchanged_600_analytic_tail": true,
+    "3_23_literal_prefix_complete": true,
+    "3_23_complete_tail_positive": true,
+    "3_23_original_parent_tail_37": true,
+    "3_23_original_parent_tail_41": true,
+    "3_23_original_parent_tail_43": true,
+    "3_23_original_parent_tail_47": true,
+    "3_23_original_parent_tail_53": true,
+    "3_23_original_parent_tail_59": true,
+    "3_23_original_parent_tail_61": true,
+    "3_23_original_parent_tail_67": true,
+    "3_23_original_parent_tail_71": true,
+    "3_23_original_parent_tail_73": true,
+    "3_23_original_parent_tail_79": true,
+    "3_23_original_parent_tail_83": true,
+    "3_23_original_parent_tail_89": true,
+    "3_23_original_parent_tail_97": true,
+    "3_23_original_parent_tail_101": true,
+    "3_23_original_parent_tail_103": true,
+    "3_23_original_parent_tail_107": true,
+    "3_23_original_parent_tail_109": true,
+    "3_23_original_parent_tail_113": true,
+    "3_23_original_parent_tail_127": true,
+    "3_23_original_parent_tail_131": true,
+    "3_23_original_parent_tail_137": true,
+    "3_23_original_parent_tail_139": true,
+    "3_23_original_parent_tail_149": true,
+    "3_23_original_parent_tail_151": true,
+    "3_23_original_parent_tail_157": true,
+    "3_23_original_parent_tail_163": true,
+    "3_23_original_parent_tail_167": true,
+    "3_23_original_parent_tail_173": true,
+    "3_23_original_parent_tail_179": true,
+    "3_23_original_parent_tail_181": true,
+    "3_23_original_parent_tail_191": true,
+    "3_23_original_parent_tail_193": true,
+    "3_23_original_parent_tail_197": true,
+    "3_23_original_parent_tail_199": true,
+    "3_23_original_parent_tail_211": true,
+    "3_23_original_parent_tail_223": true,
+    "3_23_original_parent_tail_227": true,
+    "3_23_original_parent_tail_229": true,
+    "3_23_original_parent_tail_233": true,
+    "3_23_original_parent_tail_239": true,
+    "3_23_original_parent_tail_241": true,
+    "3_23_original_parent_tail_251": true,
+    "3_23_original_parent_tail_257": true,
+    "3_23_original_parent_tail_263": true,
+    "3_23_original_parent_tail_269": true,
+    "3_23_original_parent_tail_271": true,
+    "3_23_original_parent_tail_277": true,
+    "3_23_original_parent_tail_281": true,
+    "3_23_original_parent_tail_283": true,
+    "3_23_original_parent_tail_293": true,
+    "3_23_original_parent_tail_307": true,
+    "3_23_original_parent_tail_311": true,
+    "3_23_original_parent_tail_313": true,
+    "3_23_original_parent_tail_317": true,
+    "3_23_original_parent_tail_331": true,
+    "3_23_original_parent_tail_337": true,
+    "3_23_original_parent_tail_347": true,
+    "3_23_original_parent_tail_349": true,
+    "3_23_original_parent_tail_353": true,
+    "3_23_original_parent_tail_359": true,
+    "3_23_original_parent_tail_367": true,
+    "3_23_original_parent_tail_373": true,
+    "3_23_original_parent_tail_379": true,
+    "3_23_original_parent_tail_383": true,
+    "3_23_original_parent_tail_389": true,
+    "3_23_original_parent_tail_397": true,
+    "3_23_original_parent_tail_401": true,
+    "3_23_original_parent_tail_409": true,
+    "3_23_original_parent_tail_419": true,
+    "3_23_original_parent_tail_421": true,
+    "3_23_original_parent_tail_431": true,
+    "3_23_original_parent_tail_433": true,
+    "3_23_original_parent_tail_439": true,
+    "3_23_original_parent_tail_443": true,
+    "3_23_original_parent_tail_449": true,
+    "3_23_original_parent_tail_457": true,
+    "3_23_original_parent_tail_461": true,
+    "3_23_original_parent_tail_463": true,
+    "3_23_original_parent_tail_467": true,
+    "3_23_original_parent_tail_479": true,
+    "3_23_original_parent_tail_487": true,
+    "3_23_original_parent_tail_491": true,
+    "3_23_original_parent_tail_499": true,
+    "3_23_original_parent_tail_503": true,
+    "3_23_original_parent_tail_509": true,
+    "3_23_original_parent_tail_521": true,
+    "3_23_original_parent_tail_523": true,
+    "3_23_original_parent_tail_541": true,
+    "3_23_original_parent_tail_547": true,
+    "3_23_original_parent_tail_557": true,
+    "3_23_original_parent_tail_563": true,
+    "3_23_original_parent_tail_569": true,
+    "3_23_original_parent_tail_571": true,
+    "3_23_original_parent_tail_577": true,
+    "3_23_original_parent_tail_587": true,
+    "3_23_original_parent_tail_593": true,
+    "3_23_original_parent_tail_599": true,
+    "3_23_original_parent_tail_601": true,
+    "3_23_original_parent_tail_607": true,
+    "3_23_original_parent_tail_613": true,
+    "3_23_original_parent_tail_617": true,
+    "3_23_original_parent_tail_619": true,
+    "3_23_original_parent_tail_631": true,
+    "3_23_original_parent_tail_641": true,
+    "3_23_original_parent_tail_643": true,
+    "3_23_original_parent_tail_647": true,
+    "3_23_original_parent_tail_653": true,
+    "3_23_original_parent_tail_659": true,
+    "3_23_original_parent_tail_661": true,
+    "3_23_original_parent_tail_673": true,
+    "3_23_original_parent_tail_677": true,
+    "3_23_original_parent_tail_683": true,
+    "3_23_original_parent_tail_691": true,
+    "3_23_original_parent_tail_701": true,
+    "3_23_original_parent_tail_709": true,
+    "3_23_original_parent_tail_719": true,
+    "3_23_original_parent_tail_727": true,
+    "3_23_original_parent_tail_733": true,
+    "3_23_original_parent_tail_739": true,
+    "3_23_original_parent_tail_743": true,
+    "3_23_original_parent_tail_751": true,
+    "3_23_original_parent_tail_757": true,
+    "3_23_original_parent_tail_761": true,
+    "3_23_original_parent_tail_769": true,
+    "3_23_original_parent_tail_773": true,
+    "3_23_original_parent_tail_787": true,
+    "3_23_original_parent_tail_797": true,
+    "3_23_original_parent_tail_809": true,
+    "3_23_original_parent_tail_811": true,
+    "3_23_original_parent_tail_821": true,
+    "3_23_original_parent_tail_823": true,
+    "3_23_original_parent_tail_827": true,
+    "3_23_original_parent_tail_829": true,
+    "3_23_original_parent_tail_839": true,
+    "3_23_original_parent_tail_853": true,
+    "3_23_original_parent_tail_857": true,
+    "3_23_original_parent_tail_859": true,
+    "3_23_original_parent_tail_863": true,
+    "3_23_original_parent_tail_877": true,
+    "3_23_original_parent_tail_881": true,
+    "3_23_original_parent_tail_883": true,
+    "3_23_original_parent_tail_887": true,
+    "3_23_original_parent_tail_907": true,
+    "3_23_original_parent_tail_911": true,
+    "3_23_original_parent_tail_919": true,
+    "3_23_original_parent_tail_929": true,
+    "3_23_original_parent_tail_937": true,
+    "3_23_original_parent_tail_941": true,
+    "3_23_original_parent_tail_947": true,
+    "3_23_original_parent_tail_953": true,
+    "3_23_original_parent_tail_967": true,
+    "3_23_infinite_fee_target": true,
+    "late_pair_analytic_tail": true,
+    "early_loss_below_1_780": true,
+    "positive_early_gate_and_head": true,
+    "unchanged_ordinary_branch_fee": true,
+    "simple_joint_reserve": true
+  },
+  "producer_sha256": "7e8ab9bd5071e6434928083864a362c5634b18345caf38228f9b05af5f179186"
+}

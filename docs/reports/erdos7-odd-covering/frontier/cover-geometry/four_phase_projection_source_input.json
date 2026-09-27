@@ -1,0 +1,136 @@
+{
+  "description": "Actual nine-prime family for the four-projection supported-source application; raw obstruction is unit-conditioned only.",
+  "core_primes": [
+    3,
+    5,
+    7,
+    11,
+    13
+  ],
+  "old_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "outside_primes": [
+    23,
+    29
+  ],
+  "old_originals": [
+    {
+      "modulus": 5,
+      "residue": 0,
+      "assignment": null
+    },
+    {
+      "modulus": 7,
+      "residue": 0,
+      "assignment": null
+    },
+    {
+      "modulus": 11,
+      "residue": 0,
+      "assignment": null
+    },
+    {
+      "modulus": 13,
+      "residue": 0,
+      "assignment": null
+    },
+    {
+      "modulus": 15,
+      "residue": 1,
+      "assignment": null
+    },
+    {
+      "modulus": 17,
+      "residue": 0,
+      "assignment": 17
+    },
+    {
+      "modulus": 51,
+      "residue": 1,
+      "assignment": 17
+    },
+    {
+      "modulus": 85,
+      "residue": 2,
+      "assignment": 17
+    },
+    {
+      "modulus": 119,
+      "residue": 3,
+      "assignment": 17
+    },
+    {
+      "modulus": 19,
+      "residue": 0,
+      "assignment": 19
+    },
+    {
+      "modulus": 57,
+      "residue": 1,
+      "assignment": 19
+    },
+    {
+      "modulus": 95,
+      "residue": 2,
+      "assignment": 19
+    },
+    {
+      "modulus": 133,
+      "residue": 3,
+      "assignment": 19
+    },
+    {
+      "modulus": 323,
+      "residue": 156,
+      "assignment": 17
+    }
+  ],
+  "unit_originals": [
+    {
+      "modulus": 23,
+      "residue": 0
+    },
+    {
+      "modulus": 29,
+      "residue": 0
+    }
+  ],
+  "cycle": {
+    "old_prime": 3,
+    "outside_prime": 23,
+    "count": 506,
+    "index_first": 1,
+    "index_last": 506,
+    "outside_depths": [
+      1,
+      2
+    ],
+    "old_residue_initial": [
+      0,
+      1,
+      2
+    ],
+    "old_residue_after_initial": "3^(i-1)-1",
+    "depth1_residue": "1+(i mod22)",
+    "depth2_residue": "23*floor((i-1)/22)+1+((i-1) mod22)",
+    "full_modulus": "3^i*23^e",
+    "full_residue": "CRT(old residue modulo3^i, depth-e residue modulo23^e)"
+  },
+  "private_witness_other_coordinates": {
+    "5": 2,
+    "7": 1,
+    "11": 1,
+    "13": 1,
+    "17": 4,
+    "19": 4,
+    "29": 1
+  },
+  "scope": "The projection assignment is one fixed input, not automatically available. Every raw transport obstruction below requires a probability law avoiding0mod23. No failure of unconditioned Haar report520 is asserted."
+}

@@ -1,0 +1,29 @@
+{
+  "certificate_sha256": "c68dfccbf512cb339e14291b8d10715932b8258b1c3c70e8345af7bdd93f3f36",
+  "verification": "passed exact standard-library checks",
+  "positive_orbits": 136,
+  "finite_period": 41247931725,
+  "coarse_query_labels": 1008,
+  "nonzero_phase_classes": 48075,
+  "integer_centers": {
+    "a": 0,
+    "b": 30610605025
+  },
+  "normalizer": 999999999925,
+  "support_haar": "35805248/13749310575",
+  "density_min": "3966795245413/11519999999136",
+  "density_min_float": 0.3443398650790373,
+  "density_max": "171827199999724269/204799999984640",
+  "density_max_float": 839.0000000615787,
+  "R_all_depth": "1467018358219244540381743/76441190394266910720000",
+  "R_all_depth_float": 19.19146406083795,
+  "R_target": "70871/3375",
+  "margin": "138156043093967379510737/76441190394266910720000",
+  "third_root_mass": 0,
+  "B_probability": 1,
+  "test_box_zero_query_labels": 702,
+  "test_box_zero_cover_upper": "11356324750837/37150418534400",
+  "test_box_uncovered_mass_lower": "25794093783563/37150418534400",
+  "maxima_sha256": "41a9da6edf74b3e140f965e08b645f1963709a555a35fa16a83590c52fd00f64",
+  "scope": "actual finite CRT law with Haar tails on fixed seven primes; the zero-cylinder test-box bound excludes E as the complete survivor set of any odd-distinct family on these seven primes; no covering counterexample"
+}

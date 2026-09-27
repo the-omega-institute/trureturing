@@ -1,0 +1,5499 @@
+{
+  "scope": "N=K=4 actual two-copy six-prime family; zero-debit and repaired legal completions; prefix-free and nested query hinges; exact actual all-depth norm; rational constants and finite slot guards for the general criterion",
+  "arithmetic": "exact integer congruences and Fraction; no floating-point decisions; no old producer import",
+  "N": 4,
+  "K": 4,
+  "prime_support": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "original_count": 176,
+  "numerical_label_count": 88,
+  "originals": [
+    {
+      "kind": "pure5",
+      "cylinder": {
+        "5": [
+          1,
+          1
+        ]
+      },
+      "modulus": 5,
+      "residue": 1,
+      "private": {
+        "5": 1
+      },
+      "prime": 5,
+      "depth": 1,
+      "digit": 1
+    },
+    {
+      "kind": "pure5",
+      "cylinder": {
+        "5": [
+          1,
+          2
+        ]
+      },
+      "modulus": 5,
+      "residue": 2,
+      "private": {
+        "5": 2
+      },
+      "prime": 5,
+      "depth": 1,
+      "digit": 2
+    },
+    {
+      "kind": "pure5",
+      "cylinder": {
+        "5": [
+          2,
+          5
+        ]
+      },
+      "modulus": 25,
+      "residue": 5,
+      "private": {
+        "5": 5
+      },
+      "prime": 5,
+      "depth": 2,
+      "digit": 1
+    },
+    {
+      "kind": "pure5",
+      "cylinder": {
+        "5": [
+          2,
+          10
+        ]
+      },
+      "modulus": 25,
+      "residue": 10,
+      "private": {
+        "5": 10
+      },
+      "prime": 5,
+      "depth": 2,
+      "digit": 2
+    },
+    {
+      "kind": "pure5",
+      "cylinder": {
+        "5": [
+          3,
+          25
+        ]
+      },
+      "modulus": 125,
+      "residue": 25,
+      "private": {
+        "5": 25
+      },
+      "prime": 5,
+      "depth": 3,
+      "digit": 1
+    },
+    {
+      "kind": "pure5",
+      "cylinder": {
+        "5": [
+          3,
+          50
+        ]
+      },
+      "modulus": 125,
+      "residue": 50,
+      "private": {
+        "5": 50
+      },
+      "prime": 5,
+      "depth": 3,
+      "digit": 2
+    },
+    {
+      "kind": "pure5",
+      "cylinder": {
+        "5": [
+          4,
+          125
+        ]
+      },
+      "modulus": 625,
+      "residue": 125,
+      "private": {
+        "5": 125
+      },
+      "prime": 5,
+      "depth": 4,
+      "digit": 1
+    },
+    {
+      "kind": "pure5",
+      "cylinder": {
+        "5": [
+          4,
+          250
+        ]
+      },
+      "modulus": 625,
+      "residue": 250,
+      "private": {
+        "5": 250
+      },
+      "prime": 5,
+      "depth": 4,
+      "digit": 2
+    },
+    {
+      "kind": "pure7",
+      "cylinder": {
+        "7": [
+          1,
+          1
+        ]
+      },
+      "modulus": 7,
+      "residue": 1,
+      "private": {
+        "7": 1
+      },
+      "prime": 7,
+      "depth": 1,
+      "digit": 1
+    },
+    {
+      "kind": "pure7",
+      "cylinder": {
+        "7": [
+          1,
+          2
+        ]
+      },
+      "modulus": 7,
+      "residue": 2,
+      "private": {
+        "7": 2
+      },
+      "prime": 7,
+      "depth": 1,
+      "digit": 2
+    },
+    {
+      "kind": "pure7",
+      "cylinder": {
+        "7": [
+          2,
+          7
+        ]
+      },
+      "modulus": 49,
+      "residue": 7,
+      "private": {
+        "7": 7
+      },
+      "prime": 7,
+      "depth": 2,
+      "digit": 1
+    },
+    {
+      "kind": "pure7",
+      "cylinder": {
+        "7": [
+          2,
+          14
+        ]
+      },
+      "modulus": 49,
+      "residue": 14,
+      "private": {
+        "7": 14
+      },
+      "prime": 7,
+      "depth": 2,
+      "digit": 2
+    },
+    {
+      "kind": "pure7",
+      "cylinder": {
+        "7": [
+          3,
+          49
+        ]
+      },
+      "modulus": 343,
+      "residue": 49,
+      "private": {
+        "7": 49
+      },
+      "prime": 7,
+      "depth": 3,
+      "digit": 1
+    },
+    {
+      "kind": "pure7",
+      "cylinder": {
+        "7": [
+          3,
+          98
+        ]
+      },
+      "modulus": 343,
+      "residue": 98,
+      "private": {
+        "7": 98
+      },
+      "prime": 7,
+      "depth": 3,
+      "digit": 2
+    },
+    {
+      "kind": "pure7",
+      "cylinder": {
+        "7": [
+          4,
+          343
+        ]
+      },
+      "modulus": 2401,
+      "residue": 343,
+      "private": {
+        "7": 343
+      },
+      "prime": 7,
+      "depth": 4,
+      "digit": 1
+    },
+    {
+      "kind": "pure7",
+      "cylinder": {
+        "7": [
+          4,
+          686
+        ]
+      },
+      "modulus": 2401,
+      "residue": 686,
+      "private": {
+        "7": 686
+      },
+      "prime": 7,
+      "depth": 4,
+      "digit": 2
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          1,
+          3
+        ],
+        "7": [
+          1,
+          3
+        ]
+      },
+      "modulus": 35,
+      "residue": 3,
+      "private": {
+        "5": 3,
+        "7": 3
+      },
+      "depth5": 1,
+      "depth7": 1,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          1,
+          3
+        ],
+        "7": [
+          1,
+          4
+        ]
+      },
+      "modulus": 35,
+      "residue": 18,
+      "private": {
+        "5": 3,
+        "7": 4
+      },
+      "depth5": 1,
+      "depth7": 1,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          1,
+          3
+        ],
+        "7": [
+          2,
+          21
+        ]
+      },
+      "modulus": 245,
+      "residue": 168,
+      "private": {
+        "5": 3,
+        "7": 21
+      },
+      "depth5": 1,
+      "depth7": 2,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          1,
+          3
+        ],
+        "7": [
+          2,
+          28
+        ]
+      },
+      "modulus": 245,
+      "residue": 28,
+      "private": {
+        "5": 3,
+        "7": 28
+      },
+      "depth5": 1,
+      "depth7": 2,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          1,
+          3
+        ],
+        "7": [
+          3,
+          147
+        ]
+      },
+      "modulus": 1715,
+      "residue": 833,
+      "private": {
+        "5": 3,
+        "7": 147
+      },
+      "depth5": 1,
+      "depth7": 3,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          1,
+          3
+        ],
+        "7": [
+          3,
+          196
+        ]
+      },
+      "modulus": 1715,
+      "residue": 1568,
+      "private": {
+        "5": 3,
+        "7": 196
+      },
+      "depth5": 1,
+      "depth7": 3,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          1,
+          3
+        ],
+        "7": [
+          4,
+          1029
+        ]
+      },
+      "modulus": 12005,
+      "residue": 10633,
+      "private": {
+        "5": 3,
+        "7": 1029
+      },
+      "depth5": 1,
+      "depth7": 4,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          1,
+          3
+        ],
+        "7": [
+          4,
+          1372
+        ]
+      },
+      "modulus": 12005,
+      "residue": 3773,
+      "private": {
+        "5": 3,
+        "7": 1372
+      },
+      "depth5": 1,
+      "depth7": 4,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          2,
+          15
+        ],
+        "7": [
+          1,
+          3
+        ]
+      },
+      "modulus": 175,
+      "residue": 115,
+      "private": {
+        "5": 15,
+        "7": 3
+      },
+      "depth5": 2,
+      "depth7": 1,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          2,
+          15
+        ],
+        "7": [
+          1,
+          4
+        ]
+      },
+      "modulus": 175,
+      "residue": 165,
+      "private": {
+        "5": 15,
+        "7": 4
+      },
+      "depth5": 2,
+      "depth7": 1,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          2,
+          15
+        ],
+        "7": [
+          2,
+          21
+        ]
+      },
+      "modulus": 1225,
+      "residue": 315,
+      "private": {
+        "5": 15,
+        "7": 21
+      },
+      "depth5": 2,
+      "depth7": 2,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          2,
+          15
+        ],
+        "7": [
+          2,
+          28
+        ]
+      },
+      "modulus": 1225,
+      "residue": 665,
+      "private": {
+        "5": 15,
+        "7": 28
+      },
+      "depth5": 2,
+      "depth7": 2,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          2,
+          15
+        ],
+        "7": [
+          3,
+          147
+        ]
+      },
+      "modulus": 8575,
+      "residue": 490,
+      "private": {
+        "5": 15,
+        "7": 147
+      },
+      "depth5": 2,
+      "depth7": 3,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          2,
+          15
+        ],
+        "7": [
+          3,
+          196
+        ]
+      },
+      "modulus": 8575,
+      "residue": 2940,
+      "private": {
+        "5": 15,
+        "7": 196
+      },
+      "depth5": 2,
+      "depth7": 3,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          2,
+          15
+        ],
+        "7": [
+          4,
+          1029
+        ]
+      },
+      "modulus": 60025,
+      "residue": 27440,
+      "private": {
+        "5": 15,
+        "7": 1029
+      },
+      "depth5": 2,
+      "depth7": 4,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          2,
+          15
+        ],
+        "7": [
+          4,
+          1372
+        ]
+      },
+      "modulus": 60025,
+      "residue": 44590,
+      "private": {
+        "5": 15,
+        "7": 1372
+      },
+      "depth5": 2,
+      "depth7": 4,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          3,
+          75
+        ],
+        "7": [
+          1,
+          3
+        ]
+      },
+      "modulus": 875,
+      "residue": 325,
+      "private": {
+        "5": 75,
+        "7": 3
+      },
+      "depth5": 3,
+      "depth7": 1,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          3,
+          75
+        ],
+        "7": [
+          1,
+          4
+        ]
+      },
+      "modulus": 875,
+      "residue": 200,
+      "private": {
+        "5": 75,
+        "7": 4
+      },
+      "depth5": 3,
+      "depth7": 1,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          3,
+          75
+        ],
+        "7": [
+          2,
+          21
+        ]
+      },
+      "modulus": 6125,
+      "residue": 5950,
+      "private": {
+        "5": 75,
+        "7": 21
+      },
+      "depth5": 3,
+      "depth7": 2,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          3,
+          75
+        ],
+        "7": [
+          2,
+          28
+        ]
+      },
+      "modulus": 6125,
+      "residue": 5075,
+      "private": {
+        "5": 75,
+        "7": 28
+      },
+      "depth5": 3,
+      "depth7": 2,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          3,
+          75
+        ],
+        "7": [
+          3,
+          147
+        ]
+      },
+      "modulus": 42875,
+      "residue": 33075,
+      "private": {
+        "5": 75,
+        "7": 147
+      },
+      "depth5": 3,
+      "depth7": 3,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          3,
+          75
+        ],
+        "7": [
+          3,
+          196
+        ]
+      },
+      "modulus": 42875,
+      "residue": 26950,
+      "private": {
+        "5": 75,
+        "7": 196
+      },
+      "depth5": 3,
+      "depth7": 3,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          3,
+          75
+        ],
+        "7": [
+          4,
+          1029
+        ]
+      },
+      "modulus": 300125,
+      "residue": 51450,
+      "private": {
+        "5": 75,
+        "7": 1029
+      },
+      "depth5": 3,
+      "depth7": 4,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          3,
+          75
+        ],
+        "7": [
+          4,
+          1372
+        ]
+      },
+      "modulus": 300125,
+      "residue": 8575,
+      "private": {
+        "5": 75,
+        "7": 1372
+      },
+      "depth5": 3,
+      "depth7": 4,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          4,
+          375
+        ],
+        "7": [
+          1,
+          3
+        ]
+      },
+      "modulus": 4375,
+      "residue": 2250,
+      "private": {
+        "5": 375,
+        "7": 3
+      },
+      "depth5": 4,
+      "depth7": 1,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          4,
+          375
+        ],
+        "7": [
+          1,
+          4
+        ]
+      },
+      "modulus": 4375,
+      "residue": 375,
+      "private": {
+        "5": 375,
+        "7": 4
+      },
+      "depth5": 4,
+      "depth7": 1,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          4,
+          375
+        ],
+        "7": [
+          2,
+          21
+        ]
+      },
+      "modulus": 30625,
+      "residue": 3500,
+      "private": {
+        "5": 375,
+        "7": 21
+      },
+      "depth5": 4,
+      "depth7": 2,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          4,
+          375
+        ],
+        "7": [
+          2,
+          28
+        ]
+      },
+      "modulus": 30625,
+      "residue": 21000,
+      "private": {
+        "5": 375,
+        "7": 28
+      },
+      "depth5": 4,
+      "depth7": 2,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          4,
+          375
+        ],
+        "7": [
+          3,
+          147
+        ]
+      },
+      "modulus": 214375,
+      "residue": 196000,
+      "private": {
+        "5": 375,
+        "7": 147
+      },
+      "depth5": 4,
+      "depth7": 3,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          4,
+          375
+        ],
+        "7": [
+          3,
+          196
+        ]
+      },
+      "modulus": 214375,
+      "residue": 104125,
+      "private": {
+        "5": 375,
+        "7": 196
+      },
+      "depth5": 4,
+      "depth7": 3,
+      "digit7": 4
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          4,
+          375
+        ],
+        "7": [
+          4,
+          1029
+        ]
+      },
+      "modulus": 1500625,
+      "residue": 471625,
+      "private": {
+        "5": 375,
+        "7": 1029
+      },
+      "depth5": 4,
+      "depth7": 4,
+      "digit7": 3
+    },
+    {
+      "kind": "mixed57",
+      "cylinder": {
+        "5": [
+          4,
+          375
+        ],
+        "7": [
+          4,
+          1372
+        ]
+      },
+      "modulus": 1500625,
+      "residue": 1329125,
+      "private": {
+        "5": 375,
+        "7": 1372
+      },
+      "depth5": 4,
+      "depth7": 4,
+      "digit7": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          1,
+          1
+        ]
+      },
+      "modulus": 11,
+      "residue": 1,
+      "private": {
+        "5": 4,
+        "11": 1
+      },
+      "prime": 11,
+      "depth": 1,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          1,
+          2
+        ]
+      },
+      "modulus": 11,
+      "residue": 2,
+      "private": {
+        "5": 4,
+        "11": 2
+      },
+      "prime": 11,
+      "depth": 1,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          1,
+          3
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 55,
+      "residue": 14,
+      "private": {
+        "5": 4,
+        "11": 3
+      },
+      "prime": 11,
+      "depth": 1,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          1,
+          4
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 55,
+      "residue": 4,
+      "private": {
+        "5": 4,
+        "11": 4
+      },
+      "prime": 11,
+      "depth": 1,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          1,
+          5
+        ],
+        "5": [
+          2,
+          4
+        ]
+      },
+      "modulus": 275,
+      "residue": 104,
+      "private": {
+        "5": 4,
+        "11": 5
+      },
+      "prime": 11,
+      "depth": 1,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          1,
+          6
+        ],
+        "5": [
+          2,
+          4
+        ]
+      },
+      "modulus": 275,
+      "residue": 204,
+      "private": {
+        "5": 4,
+        "11": 6
+      },
+      "prime": 11,
+      "depth": 1,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          2,
+          11
+        ]
+      },
+      "modulus": 121,
+      "residue": 11,
+      "private": {
+        "5": 4,
+        "11": 11
+      },
+      "prime": 11,
+      "depth": 2,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          2,
+          22
+        ]
+      },
+      "modulus": 121,
+      "residue": 22,
+      "private": {
+        "5": 4,
+        "11": 22
+      },
+      "prime": 11,
+      "depth": 2,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          2,
+          33
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 605,
+      "residue": 154,
+      "private": {
+        "5": 4,
+        "11": 33
+      },
+      "prime": 11,
+      "depth": 2,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          2,
+          44
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 605,
+      "residue": 44,
+      "private": {
+        "5": 4,
+        "11": 44
+      },
+      "prime": 11,
+      "depth": 2,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          2,
+          55
+        ],
+        "5": [
+          2,
+          4
+        ]
+      },
+      "modulus": 3025,
+      "residue": 2354,
+      "private": {
+        "5": 4,
+        "11": 55
+      },
+      "prime": 11,
+      "depth": 2,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          2,
+          66
+        ],
+        "5": [
+          2,
+          4
+        ]
+      },
+      "modulus": 3025,
+      "residue": 429,
+      "private": {
+        "5": 4,
+        "11": 66
+      },
+      "prime": 11,
+      "depth": 2,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          3,
+          121
+        ]
+      },
+      "modulus": 1331,
+      "residue": 121,
+      "private": {
+        "5": 4,
+        "11": 121
+      },
+      "prime": 11,
+      "depth": 3,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          3,
+          242
+        ]
+      },
+      "modulus": 1331,
+      "residue": 242,
+      "private": {
+        "5": 4,
+        "11": 242
+      },
+      "prime": 11,
+      "depth": 3,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          3,
+          363
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 6655,
+      "residue": 1694,
+      "private": {
+        "5": 4,
+        "11": 363
+      },
+      "prime": 11,
+      "depth": 3,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          3,
+          484
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 6655,
+      "residue": 484,
+      "private": {
+        "5": 4,
+        "11": 484
+      },
+      "prime": 11,
+      "depth": 3,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          3,
+          605
+        ],
+        "5": [
+          2,
+          4
+        ]
+      },
+      "modulus": 33275,
+      "residue": 5929,
+      "private": {
+        "5": 4,
+        "11": 605
+      },
+      "prime": 11,
+      "depth": 3,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          3,
+          726
+        ],
+        "5": [
+          2,
+          4
+        ]
+      },
+      "modulus": 33275,
+      "residue": 18029,
+      "private": {
+        "5": 4,
+        "11": 726
+      },
+      "prime": 11,
+      "depth": 3,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          4,
+          1331
+        ]
+      },
+      "modulus": 14641,
+      "residue": 1331,
+      "private": {
+        "5": 4,
+        "11": 1331
+      },
+      "prime": 11,
+      "depth": 4,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          4,
+          2662
+        ]
+      },
+      "modulus": 14641,
+      "residue": 2662,
+      "private": {
+        "5": 4,
+        "11": 2662
+      },
+      "prime": 11,
+      "depth": 4,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          4,
+          3993
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 73205,
+      "residue": 18634,
+      "private": {
+        "5": 4,
+        "11": 3993
+      },
+      "prime": 11,
+      "depth": 4,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          4,
+          5324
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 73205,
+      "residue": 5324,
+      "private": {
+        "5": 4,
+        "11": 5324
+      },
+      "prime": 11,
+      "depth": 4,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          4,
+          6655
+        ],
+        "5": [
+          2,
+          4
+        ]
+      },
+      "modulus": 366025,
+      "residue": 211629,
+      "private": {
+        "5": 4,
+        "11": 6655
+      },
+      "prime": 11,
+      "depth": 4,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "11": [
+          4,
+          7986
+        ],
+        "5": [
+          2,
+          4
+        ]
+      },
+      "modulus": 366025,
+      "residue": 344729,
+      "private": {
+        "5": 4,
+        "11": 7986
+      },
+      "prime": 11,
+      "depth": 4,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          1,
+          1
+        ]
+      },
+      "modulus": 13,
+      "residue": 1,
+      "private": {
+        "5": 4,
+        "13": 1
+      },
+      "prime": 13,
+      "depth": 1,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          1,
+          2
+        ]
+      },
+      "modulus": 13,
+      "residue": 2,
+      "private": {
+        "5": 4,
+        "13": 2
+      },
+      "prime": 13,
+      "depth": 1,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          1,
+          3
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 65,
+      "residue": 29,
+      "private": {
+        "5": 4,
+        "13": 3
+      },
+      "prime": 13,
+      "depth": 1,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          1,
+          4
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 65,
+      "residue": 4,
+      "private": {
+        "5": 4,
+        "13": 4
+      },
+      "prime": 13,
+      "depth": 1,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          1,
+          5
+        ],
+        "5": [
+          2,
+          9
+        ]
+      },
+      "modulus": 325,
+      "residue": 109,
+      "private": {
+        "5": 9,
+        "13": 5
+      },
+      "prime": 13,
+      "depth": 1,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          1,
+          6
+        ],
+        "5": [
+          2,
+          9
+        ]
+      },
+      "modulus": 325,
+      "residue": 84,
+      "private": {
+        "5": 9,
+        "13": 6
+      },
+      "prime": 13,
+      "depth": 1,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          2,
+          13
+        ]
+      },
+      "modulus": 169,
+      "residue": 13,
+      "private": {
+        "5": 4,
+        "13": 13
+      },
+      "prime": 13,
+      "depth": 2,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          2,
+          26
+        ]
+      },
+      "modulus": 169,
+      "residue": 26,
+      "private": {
+        "5": 4,
+        "13": 26
+      },
+      "prime": 13,
+      "depth": 2,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          2,
+          39
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 845,
+      "residue": 39,
+      "private": {
+        "5": 4,
+        "13": 39
+      },
+      "prime": 13,
+      "depth": 2,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          2,
+          52
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 845,
+      "residue": 559,
+      "private": {
+        "5": 4,
+        "13": 52
+      },
+      "prime": 13,
+      "depth": 2,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          2,
+          65
+        ],
+        "5": [
+          2,
+          9
+        ]
+      },
+      "modulus": 4225,
+      "residue": 234,
+      "private": {
+        "5": 9,
+        "13": 65
+      },
+      "prime": 13,
+      "depth": 2,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          2,
+          78
+        ],
+        "5": [
+          2,
+          9
+        ]
+      },
+      "modulus": 4225,
+      "residue": 4134,
+      "private": {
+        "5": 9,
+        "13": 78
+      },
+      "prime": 13,
+      "depth": 2,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          3,
+          169
+        ]
+      },
+      "modulus": 2197,
+      "residue": 169,
+      "private": {
+        "5": 4,
+        "13": 169
+      },
+      "prime": 13,
+      "depth": 3,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          3,
+          338
+        ]
+      },
+      "modulus": 2197,
+      "residue": 338,
+      "private": {
+        "5": 4,
+        "13": 338
+      },
+      "prime": 13,
+      "depth": 3,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          3,
+          507
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 10985,
+      "residue": 2704,
+      "private": {
+        "5": 4,
+        "13": 507
+      },
+      "prime": 13,
+      "depth": 3,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          3,
+          676
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 10985,
+      "residue": 9464,
+      "private": {
+        "5": 4,
+        "13": 676
+      },
+      "prime": 13,
+      "depth": 3,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          3,
+          845
+        ],
+        "5": [
+          2,
+          9
+        ]
+      },
+      "modulus": 54925,
+      "residue": 27209,
+      "private": {
+        "5": 9,
+        "13": 845
+      },
+      "prime": 13,
+      "depth": 3,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          3,
+          1014
+        ],
+        "5": [
+          2,
+          9
+        ]
+      },
+      "modulus": 54925,
+      "residue": 22984,
+      "private": {
+        "5": 9,
+        "13": 1014
+      },
+      "prime": 13,
+      "depth": 3,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          4,
+          2197
+        ]
+      },
+      "modulus": 28561,
+      "residue": 2197,
+      "private": {
+        "5": 4,
+        "13": 2197
+      },
+      "prime": 13,
+      "depth": 4,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          4,
+          4394
+        ]
+      },
+      "modulus": 28561,
+      "residue": 4394,
+      "private": {
+        "5": 4,
+        "13": 4394
+      },
+      "prime": 13,
+      "depth": 4,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          4,
+          6591
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 142805,
+      "residue": 92274,
+      "private": {
+        "5": 4,
+        "13": 6591
+      },
+      "prime": 13,
+      "depth": 4,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          4,
+          8788
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 142805,
+      "residue": 37349,
+      "private": {
+        "5": 4,
+        "13": 8788
+      },
+      "prime": 13,
+      "depth": 4,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          4,
+          10985
+        ],
+        "5": [
+          2,
+          9
+        ]
+      },
+      "modulus": 714025,
+      "residue": 268034,
+      "private": {
+        "5": 9,
+        "13": 10985
+      },
+      "prime": 13,
+      "depth": 4,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "13": [
+          4,
+          13182
+        ],
+        "5": [
+          2,
+          9
+        ]
+      },
+      "modulus": 714025,
+      "residue": 213109,
+      "private": {
+        "5": 9,
+        "13": 13182
+      },
+      "prime": 13,
+      "depth": 4,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          1,
+          1
+        ]
+      },
+      "modulus": 17,
+      "residue": 1,
+      "private": {
+        "5": 4,
+        "17": 1
+      },
+      "prime": 17,
+      "depth": 1,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          1,
+          2
+        ]
+      },
+      "modulus": 17,
+      "residue": 2,
+      "private": {
+        "5": 4,
+        "17": 2
+      },
+      "prime": 17,
+      "depth": 1,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          1,
+          3
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 85,
+      "residue": 54,
+      "private": {
+        "5": 4,
+        "17": 3
+      },
+      "prime": 17,
+      "depth": 1,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          1,
+          4
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 85,
+      "residue": 4,
+      "private": {
+        "5": 4,
+        "17": 4
+      },
+      "prime": 17,
+      "depth": 1,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          1,
+          5
+        ],
+        "5": [
+          2,
+          14
+        ]
+      },
+      "modulus": 425,
+      "residue": 39,
+      "private": {
+        "5": 14,
+        "17": 5
+      },
+      "prime": 17,
+      "depth": 1,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          1,
+          6
+        ],
+        "5": [
+          2,
+          14
+        ]
+      },
+      "modulus": 425,
+      "residue": 414,
+      "private": {
+        "5": 14,
+        "17": 6
+      },
+      "prime": 17,
+      "depth": 1,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          1,
+          7
+        ],
+        "5": [
+          3,
+          14
+        ]
+      },
+      "modulus": 2125,
+      "residue": 1639,
+      "private": {
+        "5": 14,
+        "17": 7
+      },
+      "prime": 17,
+      "depth": 1,
+      "slot": 4,
+      "digit": 7
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          1,
+          8
+        ],
+        "5": [
+          3,
+          14
+        ]
+      },
+      "modulus": 2125,
+      "residue": 2014,
+      "private": {
+        "5": 14,
+        "17": 8
+      },
+      "prime": 17,
+      "depth": 1,
+      "slot": 4,
+      "digit": 8
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          1,
+          9
+        ],
+        "5": [
+          4,
+          14
+        ]
+      },
+      "modulus": 10625,
+      "residue": 8764,
+      "private": {
+        "5": 14,
+        "17": 9
+      },
+      "prime": 17,
+      "depth": 1,
+      "slot": 5,
+      "digit": 9
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          1,
+          10
+        ],
+        "5": [
+          4,
+          14
+        ]
+      },
+      "modulus": 10625,
+      "residue": 639,
+      "private": {
+        "5": 14,
+        "17": 10
+      },
+      "prime": 17,
+      "depth": 1,
+      "slot": 5,
+      "digit": 10
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          2,
+          17
+        ]
+      },
+      "modulus": 289,
+      "residue": 17,
+      "private": {
+        "5": 4,
+        "17": 17
+      },
+      "prime": 17,
+      "depth": 2,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          2,
+          34
+        ]
+      },
+      "modulus": 289,
+      "residue": 34,
+      "private": {
+        "5": 4,
+        "17": 34
+      },
+      "prime": 17,
+      "depth": 2,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          2,
+          51
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 1445,
+      "residue": 629,
+      "private": {
+        "5": 4,
+        "17": 51
+      },
+      "prime": 17,
+      "depth": 2,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          2,
+          68
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 1445,
+      "residue": 1224,
+      "private": {
+        "5": 4,
+        "17": 68
+      },
+      "prime": 17,
+      "depth": 2,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          2,
+          85
+        ],
+        "5": [
+          2,
+          14
+        ]
+      },
+      "modulus": 7225,
+      "residue": 3264,
+      "private": {
+        "5": 14,
+        "17": 85
+      },
+      "prime": 17,
+      "depth": 2,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          2,
+          102
+        ],
+        "5": [
+          2,
+          14
+        ]
+      },
+      "modulus": 7225,
+      "residue": 2414,
+      "private": {
+        "5": 14,
+        "17": 102
+      },
+      "prime": 17,
+      "depth": 2,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          2,
+          119
+        ],
+        "5": [
+          3,
+          14
+        ]
+      },
+      "modulus": 36125,
+      "residue": 16014,
+      "private": {
+        "5": 14,
+        "17": 119
+      },
+      "prime": 17,
+      "depth": 2,
+      "slot": 4,
+      "digit": 7
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          2,
+          136
+        ],
+        "5": [
+          3,
+          14
+        ]
+      },
+      "modulus": 36125,
+      "residue": 22389,
+      "private": {
+        "5": 14,
+        "17": 136
+      },
+      "prime": 17,
+      "depth": 2,
+      "slot": 4,
+      "digit": 8
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          2,
+          153
+        ],
+        "5": [
+          4,
+          14
+        ]
+      },
+      "modulus": 180625,
+      "residue": 28764,
+      "private": {
+        "5": 14,
+        "17": 153
+      },
+      "prime": 17,
+      "depth": 2,
+      "slot": 5,
+      "digit": 9
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          2,
+          170
+        ],
+        "5": [
+          4,
+          14
+        ]
+      },
+      "modulus": 180625,
+      "residue": 71264,
+      "private": {
+        "5": 14,
+        "17": 170
+      },
+      "prime": 17,
+      "depth": 2,
+      "slot": 5,
+      "digit": 10
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          3,
+          289
+        ]
+      },
+      "modulus": 4913,
+      "residue": 289,
+      "private": {
+        "5": 4,
+        "17": 289
+      },
+      "prime": 17,
+      "depth": 3,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          3,
+          578
+        ]
+      },
+      "modulus": 4913,
+      "residue": 578,
+      "private": {
+        "5": 4,
+        "17": 578
+      },
+      "prime": 17,
+      "depth": 3,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          3,
+          867
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 24565,
+      "residue": 20519,
+      "private": {
+        "5": 4,
+        "17": 867
+      },
+      "prime": 17,
+      "depth": 3,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          3,
+          1156
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 24565,
+      "residue": 6069,
+      "private": {
+        "5": 4,
+        "17": 1156
+      },
+      "prime": 17,
+      "depth": 3,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          3,
+          1445
+        ],
+        "5": [
+          2,
+          14
+        ]
+      },
+      "modulus": 122825,
+      "residue": 65314,
+      "private": {
+        "5": 14,
+        "17": 1445
+      },
+      "prime": 17,
+      "depth": 3,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          3,
+          1734
+        ],
+        "5": [
+          2,
+          14
+        ]
+      },
+      "modulus": 122825,
+      "residue": 50864,
+      "private": {
+        "5": 14,
+        "17": 1734
+      },
+      "prime": 17,
+      "depth": 3,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          3,
+          2023
+        ],
+        "5": [
+          3,
+          14
+        ]
+      },
+      "modulus": 614125,
+      "residue": 404889,
+      "private": {
+        "5": 14,
+        "17": 2023
+      },
+      "prime": 17,
+      "depth": 3,
+      "slot": 4,
+      "digit": 7
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          3,
+          2312
+        ],
+        "5": [
+          3,
+          14
+        ]
+      },
+      "modulus": 614125,
+      "residue": 513264,
+      "private": {
+        "5": 14,
+        "17": 2312
+      },
+      "prime": 17,
+      "depth": 3,
+      "slot": 4,
+      "digit": 8
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          3,
+          2601
+        ],
+        "5": [
+          4,
+          14
+        ]
+      },
+      "modulus": 3070625,
+      "residue": 7514,
+      "private": {
+        "5": 14,
+        "17": 2601
+      },
+      "prime": 17,
+      "depth": 3,
+      "slot": 5,
+      "digit": 9
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          3,
+          2890
+        ],
+        "5": [
+          4,
+          14
+        ]
+      },
+      "modulus": 3070625,
+      "residue": 730014,
+      "private": {
+        "5": 14,
+        "17": 2890
+      },
+      "prime": 17,
+      "depth": 3,
+      "slot": 5,
+      "digit": 10
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          4,
+          4913
+        ]
+      },
+      "modulus": 83521,
+      "residue": 4913,
+      "private": {
+        "5": 4,
+        "17": 4913
+      },
+      "prime": 17,
+      "depth": 4,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          4,
+          9826
+        ]
+      },
+      "modulus": 83521,
+      "residue": 9826,
+      "private": {
+        "5": 4,
+        "17": 9826
+      },
+      "prime": 17,
+      "depth": 4,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          4,
+          14739
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 417605,
+      "residue": 14739,
+      "private": {
+        "5": 4,
+        "17": 14739
+      },
+      "prime": 17,
+      "depth": 4,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          4,
+          19652
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 417605,
+      "residue": 186694,
+      "private": {
+        "5": 4,
+        "17": 19652
+      },
+      "prime": 17,
+      "depth": 4,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          4,
+          24565
+        ],
+        "5": [
+          2,
+          14
+        ]
+      },
+      "modulus": 2088025,
+      "residue": 1611464,
+      "private": {
+        "5": 14,
+        "17": 24565
+      },
+      "prime": 17,
+      "depth": 4,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          4,
+          29478
+        ],
+        "5": [
+          2,
+          14
+        ]
+      },
+      "modulus": 2088025,
+      "residue": 1365814,
+      "private": {
+        "5": 14,
+        "17": 29478
+      },
+      "prime": 17,
+      "depth": 4,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          4,
+          34391
+        ],
+        "5": [
+          3,
+          14
+        ]
+      },
+      "modulus": 10440125,
+      "residue": 9472264,
+      "private": {
+        "5": 14,
+        "17": 34391
+      },
+      "prime": 17,
+      "depth": 4,
+      "slot": 4,
+      "digit": 7
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          4,
+          39304
+        ],
+        "5": [
+          3,
+          14
+        ]
+      },
+      "modulus": 10440125,
+      "residue": 874514,
+      "private": {
+        "5": 14,
+        "17": 39304
+      },
+      "prime": 17,
+      "depth": 4,
+      "slot": 4,
+      "digit": 8
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          4,
+          44217
+        ],
+        "5": [
+          4,
+          14
+        ]
+      },
+      "modulus": 52200625,
+      "residue": 2716889,
+      "private": {
+        "5": 14,
+        "17": 44217
+      },
+      "prime": 17,
+      "depth": 4,
+      "slot": 5,
+      "digit": 9
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "17": [
+          4,
+          49130
+        ],
+        "5": [
+          4,
+          14
+        ]
+      },
+      "modulus": 52200625,
+      "residue": 14999389,
+      "private": {
+        "5": 14,
+        "17": 49130
+      },
+      "prime": 17,
+      "depth": 4,
+      "slot": 5,
+      "digit": 10
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          1,
+          1
+        ]
+      },
+      "modulus": 19,
+      "residue": 1,
+      "private": {
+        "5": 4,
+        "19": 1
+      },
+      "prime": 19,
+      "depth": 1,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          1,
+          2
+        ]
+      },
+      "modulus": 19,
+      "residue": 2,
+      "private": {
+        "5": 4,
+        "19": 2
+      },
+      "prime": 19,
+      "depth": 1,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          1,
+          3
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 95,
+      "residue": 79,
+      "private": {
+        "5": 4,
+        "19": 3
+      },
+      "prime": 19,
+      "depth": 1,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          1,
+          4
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 95,
+      "residue": 4,
+      "private": {
+        "5": 4,
+        "19": 4
+      },
+      "prime": 19,
+      "depth": 1,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          1,
+          5
+        ],
+        "5": [
+          2,
+          19
+        ]
+      },
+      "modulus": 475,
+      "residue": 119,
+      "private": {
+        "5": 19,
+        "19": 5
+      },
+      "prime": 19,
+      "depth": 1,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          1,
+          6
+        ],
+        "5": [
+          2,
+          19
+        ]
+      },
+      "modulus": 475,
+      "residue": 44,
+      "private": {
+        "5": 19,
+        "19": 6
+      },
+      "prime": 19,
+      "depth": 1,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          1,
+          7
+        ],
+        "5": [
+          3,
+          19
+        ]
+      },
+      "modulus": 2375,
+      "residue": 1394,
+      "private": {
+        "5": 19,
+        "19": 7
+      },
+      "prime": 19,
+      "depth": 1,
+      "slot": 4,
+      "digit": 7
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          1,
+          8
+        ],
+        "5": [
+          3,
+          19
+        ]
+      },
+      "modulus": 2375,
+      "residue": 2269,
+      "private": {
+        "5": 19,
+        "19": 8
+      },
+      "prime": 19,
+      "depth": 1,
+      "slot": 4,
+      "digit": 8
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          1,
+          9
+        ],
+        "5": [
+          4,
+          19
+        ]
+      },
+      "modulus": 11875,
+      "residue": 3144,
+      "private": {
+        "5": 19,
+        "19": 9
+      },
+      "prime": 19,
+      "depth": 1,
+      "slot": 5,
+      "digit": 9
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          1,
+          10
+        ],
+        "5": [
+          4,
+          19
+        ]
+      },
+      "modulus": 11875,
+      "residue": 8769,
+      "private": {
+        "5": 19,
+        "19": 10
+      },
+      "prime": 19,
+      "depth": 1,
+      "slot": 5,
+      "digit": 10
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          2,
+          19
+        ]
+      },
+      "modulus": 361,
+      "residue": 19,
+      "private": {
+        "5": 4,
+        "19": 19
+      },
+      "prime": 19,
+      "depth": 2,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          2,
+          38
+        ]
+      },
+      "modulus": 361,
+      "residue": 38,
+      "private": {
+        "5": 4,
+        "19": 38
+      },
+      "prime": 19,
+      "depth": 2,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          2,
+          57
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 1805,
+      "residue": 779,
+      "private": {
+        "5": 4,
+        "19": 57
+      },
+      "prime": 19,
+      "depth": 2,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          2,
+          76
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 1805,
+      "residue": 1159,
+      "private": {
+        "5": 4,
+        "19": 76
+      },
+      "prime": 19,
+      "depth": 2,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          2,
+          95
+        ],
+        "5": [
+          2,
+          19
+        ]
+      },
+      "modulus": 9025,
+      "residue": 3344,
+      "private": {
+        "5": 19,
+        "19": 95
+      },
+      "prime": 19,
+      "depth": 2,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          2,
+          114
+        ],
+        "5": [
+          2,
+          19
+        ]
+      },
+      "modulus": 9025,
+      "residue": 1919,
+      "private": {
+        "5": 19,
+        "19": 114
+      },
+      "prime": 19,
+      "depth": 2,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          2,
+          133
+        ],
+        "5": [
+          3,
+          19
+        ]
+      },
+      "modulus": 45125,
+      "residue": 9519,
+      "private": {
+        "5": 19,
+        "19": 133
+      },
+      "prime": 19,
+      "depth": 2,
+      "slot": 4,
+      "digit": 7
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          2,
+          152
+        ],
+        "5": [
+          3,
+          19
+        ]
+      },
+      "modulus": 45125,
+      "residue": 26144,
+      "private": {
+        "5": 19,
+        "19": 152
+      },
+      "prime": 19,
+      "depth": 2,
+      "slot": 4,
+      "digit": 8
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          2,
+          171
+        ],
+        "5": [
+          4,
+          19
+        ]
+      },
+      "modulus": 225625,
+      "residue": 178144,
+      "private": {
+        "5": 19,
+        "19": 171
+      },
+      "prime": 19,
+      "depth": 2,
+      "slot": 5,
+      "digit": 9
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          2,
+          190
+        ],
+        "5": [
+          4,
+          19
+        ]
+      },
+      "modulus": 225625,
+      "residue": 59394,
+      "private": {
+        "5": 19,
+        "19": 190
+      },
+      "prime": 19,
+      "depth": 2,
+      "slot": 5,
+      "digit": 10
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          3,
+          361
+        ]
+      },
+      "modulus": 6859,
+      "residue": 361,
+      "private": {
+        "5": 4,
+        "19": 361
+      },
+      "prime": 19,
+      "depth": 3,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          3,
+          722
+        ]
+      },
+      "modulus": 6859,
+      "residue": 722,
+      "private": {
+        "5": 4,
+        "19": 722
+      },
+      "prime": 19,
+      "depth": 3,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          3,
+          1083
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 34295,
+      "residue": 28519,
+      "private": {
+        "5": 4,
+        "19": 1083
+      },
+      "prime": 19,
+      "depth": 3,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          3,
+          1444
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 34295,
+      "residue": 1444,
+      "private": {
+        "5": 4,
+        "19": 1444
+      },
+      "prime": 19,
+      "depth": 3,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          3,
+          1805
+        ],
+        "5": [
+          2,
+          19
+        ]
+      },
+      "modulus": 171475,
+      "residue": 145844,
+      "private": {
+        "5": 19,
+        "19": 1805
+      },
+      "prime": 19,
+      "depth": 3,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          3,
+          2166
+        ],
+        "5": [
+          2,
+          19
+        ]
+      },
+      "modulus": 171475,
+      "residue": 118769,
+      "private": {
+        "5": 19,
+        "19": 2166
+      },
+      "prime": 19,
+      "depth": 3,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          3,
+          2527
+        ],
+        "5": [
+          3,
+          19
+        ]
+      },
+      "modulus": 857375,
+      "residue": 434644,
+      "private": {
+        "5": 19,
+        "19": 2527
+      },
+      "prime": 19,
+      "depth": 3,
+      "slot": 4,
+      "digit": 7
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          3,
+          2888
+        ],
+        "5": [
+          3,
+          19
+        ]
+      },
+      "modulus": 857375,
+      "residue": 750519,
+      "private": {
+        "5": 19,
+        "19": 2888
+      },
+      "prime": 19,
+      "depth": 3,
+      "slot": 4,
+      "digit": 8
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          3,
+          3249
+        ],
+        "5": [
+          4,
+          19
+        ]
+      },
+      "modulus": 4286875,
+      "residue": 1923769,
+      "private": {
+        "5": 19,
+        "19": 3249
+      },
+      "prime": 19,
+      "depth": 3,
+      "slot": 5,
+      "digit": 9
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          3,
+          3610
+        ],
+        "5": [
+          4,
+          19
+        ]
+      },
+      "modulus": 4286875,
+      "residue": 3954394,
+      "private": {
+        "5": 19,
+        "19": 3610
+      },
+      "prime": 19,
+      "depth": 3,
+      "slot": 5,
+      "digit": 10
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          4,
+          6859
+        ]
+      },
+      "modulus": 130321,
+      "residue": 6859,
+      "private": {
+        "5": 4,
+        "19": 6859
+      },
+      "prime": 19,
+      "depth": 4,
+      "slot": 1,
+      "digit": 1
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          4,
+          13718
+        ]
+      },
+      "modulus": 130321,
+      "residue": 13718,
+      "private": {
+        "5": 4,
+        "19": 13718
+      },
+      "prime": 19,
+      "depth": 4,
+      "slot": 1,
+      "digit": 2
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          4,
+          20577
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 651605,
+      "residue": 281219,
+      "private": {
+        "5": 4,
+        "19": 20577
+      },
+      "prime": 19,
+      "depth": 4,
+      "slot": 2,
+      "digit": 3
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          4,
+          27436
+        ],
+        "5": [
+          1,
+          4
+        ]
+      },
+      "modulus": 651605,
+      "residue": 418399,
+      "private": {
+        "5": 4,
+        "19": 27436
+      },
+      "prime": 19,
+      "depth": 4,
+      "slot": 2,
+      "digit": 4
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          4,
+          34295
+        ],
+        "5": [
+          2,
+          19
+        ]
+      },
+      "modulus": 3258025,
+      "residue": 2510394,
+      "private": {
+        "5": 19,
+        "19": 34295
+      },
+      "prime": 19,
+      "depth": 4,
+      "slot": 3,
+      "digit": 5
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          4,
+          41154
+        ],
+        "5": [
+          2,
+          19
+        ]
+      },
+      "modulus": 3258025,
+      "residue": 1995969,
+      "private": {
+        "5": 19,
+        "19": 41154
+      },
+      "prime": 19,
+      "depth": 4,
+      "slot": 3,
+      "digit": 6
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          4,
+          48013
+        ],
+        "5": [
+          3,
+          19
+        ]
+      },
+      "modulus": 16290125,
+      "residue": 14513644,
+      "private": {
+        "5": 19,
+        "19": 48013
+      },
+      "prime": 19,
+      "depth": 4,
+      "slot": 4,
+      "digit": 7
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          4,
+          54872
+        ],
+        "5": [
+          3,
+          19
+        ]
+      },
+      "modulus": 16290125,
+      "residue": 4225144,
+      "private": {
+        "5": 19,
+        "19": 54872
+      },
+      "prime": 19,
+      "depth": 4,
+      "slot": 4,
+      "digit": 8
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          4,
+          61731
+        ],
+        "5": [
+          4,
+          19
+        ]
+      },
+      "modulus": 81450625,
+      "residue": 26516894,
+      "private": {
+        "5": 19,
+        "19": 61731
+      },
+      "prime": 19,
+      "depth": 4,
+      "slot": 5,
+      "digit": 9
+    },
+    {
+      "kind": "later",
+      "cylinder": {
+        "19": [
+          4,
+          68590
+        ],
+        "5": [
+          4,
+          19
+        ]
+      },
+      "modulus": 81450625,
+      "residue": 65098769,
+      "private": {
+        "5": 19,
+        "19": 68590
+      },
+      "prime": 19,
+      "depth": 4,
+      "slot": 5,
+      "digit": 10
+    }
+  ],
+  "pure_forbidden_masses": {
+    "5": "312/625",
+    "7": "800/2401"
+  },
+  "pure_survivor_masses": {
+    "5": "313/625",
+    "7": "1601/2401"
+  },
+  "pure_deficits": {
+    "5": "1/1250",
+    "7": "1/7203"
+  },
+  "mixed_mass": "4992/60025",
+  "mixed_mass_saving": "121/720300",
+  "initial_actual_mass": "53759/214375",
+  "rows": {
+    "11": {
+      "threshold": 2,
+      "cap": "5/3",
+      "coefficient": "1/3",
+      "deepest_residue": 4,
+      "deepest_depth": 2,
+      "mass_before_on_deepest_cell": "1601/60025",
+      "pointwise_deep_loss": "14638/43923",
+      "actual_loss": "23435438/2636478075",
+      "local_Jensen_charge": "1562576/175765205",
+      "loss_charge_ratio": "7319/7320",
+      "stage_debit": "0/1",
+      "g_on_removed_set": "11713/14641",
+      "final_query_probability": "14641/117130"
+    },
+    "13": {
+      "threshold": 2,
+      "cap": "3/2",
+      "coefficient": "1/4",
+      "deepest_residue": 9,
+      "deepest_depth": 2,
+      "mass_before_on_deepest_cell": "1601/60025",
+      "pointwise_deep_loss": "14279/57122",
+      "actual_loss": "22860679/3428748050",
+      "local_Jensen_charge": "326604/48982115",
+      "loss_charge_ratio": "14279/14280",
+      "stage_debit": "0/1",
+      "g_on_removed_set": "23801/28561",
+      "final_query_probability": "28561/285612"
+    },
+    "17": {
+      "threshold": 4,
+      "cap": "2/1",
+      "coefficient": "1/4",
+      "deepest_residue": 14,
+      "deepest_depth": 4,
+      "mass_before_on_deepest_cell": "1601/1500625",
+      "pointwise_deep_loss": "20879/83521",
+      "actual_loss": "33427279/125333700625",
+      "local_Jensen_charge": "6685776/25066740125",
+      "loss_charge_ratio": "20879/20880",
+      "stage_debit": "0/1",
+      "g_on_removed_set": "73081/83521",
+      "final_query_probability": "83521/1169296"
+    },
+    "19": {
+      "threshold": 4,
+      "cap": "9/5",
+      "coefficient": "1/5",
+      "deepest_residue": 19,
+      "deepest_depth": 4,
+      "mass_before_on_deepest_cell": "1601/1500625",
+      "pointwise_deep_loss": "130316/651605",
+      "actual_loss": "208635916/977814753125",
+      "local_Jensen_charge": "41728464/195562950625",
+      "loss_charge_ratio": "32579/32580",
+      "stage_debit": "0/1",
+      "g_on_removed_set": "115841/130321",
+      "final_query_probability": "130321/2085138"
+    }
+  },
+  "final_actual_subprobability_mass": "48097731105673596116097079/204902695364146715704518750",
+  "slot_completion": "Keep actual old phases. Missing labels containing 5 use pure forbidden root 1 at 5; otherwise labels containing 7 use root 1 at 7; later-only labels use root 1 at one previous later prime. Unit is 1. Empty later exponent slots have zero hinge.",
+  "final_query_layout": "Any label containing 5 uses 5-root 4; otherwise any label containing 7 uses 7-root 5. Each positive later exponent n uses prefix 0^(n-1)(q-1); absent coordinates are unrestricted. These choices are fixed globally and are not asserted maximal.",
+  "countable_query_justification": "Prefix-free later query cylinders avoid every original q digit; their geometric Haar sum is 1/(q-1). On transported eta all completed kernels equal actual normalized rows and depend only on the fixed value k=1, giving the four independent Bernoulli indicators. Finite inventories increase to the displayed all-depth load.",
+  "elementary_symmetric": {
+    "2": "18120312259118152493/384740583935833794240",
+    "3": "27309120553558058227/10195625474299595547360",
+    "4": "1872273456736111/33552037759932852480"
+  },
+  "bernoulli_patterns": [
+    {
+      "bits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "probability": "1242596095481235119585/1812555639875483652864",
+      "load": 1,
+      "hinge": 0
+    },
+    {
+      "bits": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "probability": "82839654944278693105/1812555639875483652864",
+      "load": 2,
+      "hinge": 0
+    },
+    {
+      "bits": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "probability": "84338946150435976273/1599313799890132634880",
+      "load": 2,
+      "hinge": 0
+    },
+    {
+      "bits": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "probability": "5622590657473802849/1599313799890132634880",
+      "load": 4,
+      "hinge": 1
+    },
+    {
+      "bits": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "probability": "10620396815310088495/139427356913498742528",
+      "load": 2,
+      "hinge": 0
+    },
+    {
+      "bits": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "probability": "708025729962459935/139427356913498742528",
+      "load": 4,
+      "hinge": 1
+    },
+    {
+      "bits": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "probability": "720840085012343231/123024138453087125760",
+      "load": 4,
+      "hinge": 1
+    },
+    {
+      "bits": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "probability": "48055956500733103/123024138453087125760",
+      "load": 8,
+      "hinge": 5
+    },
+    {
+      "bits": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "probability": "48411890146811578145/494333356329677359872",
+      "load": 2,
+      "hinge": 0
+    },
+    {
+      "bits": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "probability": "3227456041062990385/494333356329677359872",
+      "load": 4,
+      "hinge": 1
+    },
+    {
+      "bits": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "probability": "3285868844253440401/436176490879127082240",
+      "load": 4,
+      "hinge": 1
+    },
+    {
+      "bits": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "probability": "219057698829073313/436176490879127082240",
+      "load": 8,
+      "hinge": 5
+    },
+    {
+      "bits": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "probability": "413773619447288815/38025642794590566144",
+      "load": 4,
+      "hinge": 1
+    },
+    {
+      "bits": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "probability": "27584879740656095/38025642794590566144",
+      "load": 8,
+      "hinge": 5
+    },
+    {
+      "bits": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "probability": "28084130584299647/33552037759932852480",
+      "load": 8,
+      "hinge": 5
+    },
+    {
+      "bits": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "probability": "1872273456736111/33552037759932852480",
+      "load": 16,
+      "hinge": 13
+    }
+  ],
+  "final_hinge": "4273900631016651774307/81565003794396764378880",
+  "J_L": "610557233002378824901/140108154554677935606750",
+  "actual_query_norm": {
+    "value": "28910445817468311387876570938125683440809953920799874748454507061303396366140761311/12819829015616627078469015194714652014097027856899937287868470899215252808291827200",
+    "complete_raw_sum_including_unit": "41730274833084938466345586132840335454906981777699812036322977960518649174432588511/54614167010000267586151299985927301416713259835124564527430869771097314669040000000",
+    "profiles": [
+      {
+        "later_mask": 0,
+        "contains7": false,
+        "depth_maxima": [
+          "48097731105673596116097079/204902695364146715704518750",
+          "24040157700713475135473839/204902695364146715704518750",
+          "1601/60025",
+          "1601/300125",
+          "1601/1500625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "157938801989200585312093711/409805390728293431409037500"
+      },
+      {
+        "later_mask": 0,
+        "contains7": true,
+        "depth_maxima": [
+          "40686155543413001314679/85340564499852859518750",
+          "1/5",
+          "1/25",
+          "1/125",
+          "1/625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            3
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            3,
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "124042593336752432388733/170681128999705719037500"
+      },
+      {
+        "later_mask": 1,
+        "contains7": false,
+        "depth_maxima": [
+          "2326989559727105985966668867/6516202409331571037880093750",
+          "25861769857177133107133839/122947215270407000714718750",
+          "1601/36015",
+          "1601/180075",
+          "1601/900375"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "8119499989436454500257040293/13032404818663142075760187500"
+      },
+      {
+        "later_mask": 1,
+        "contains7": true,
+        "depth_maxima": [
+          "1876565142066214019841667/2713953523253465655093750",
+          "16153510216850176831439/51206670250065389718750",
+          "1/15",
+          "1/75",
+          "1/375"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "5917727954327457726331493/5427907046506931310187500"
+      },
+      {
+        "later_mask": 2,
+        "contains7": false,
+        "depth_maxima": [
+          "1062778274363521951916752709879/3251316286055316968046692268750",
+          "25406412300309915059228839/136604188313739631446018750",
+          "4803/120050",
+          "4803/600250",
+          "4803/3001250"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "1045757692341831655800070915471/1857895020603038267455252725000"
+      },
+      {
+        "later_mask": 2,
+        "contains7": true,
+        "depth_maxima": [
+          "866491081693626650893607479/1354150889652360253247268750",
+          "15869089506751976926439/56894705670029001018750",
+          "3/50",
+          "3/250",
+          "3/1250"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "5383010391071029890853309097/5416603558609441012989075000"
+      },
+      {
+        "later_mask": 3,
+        "contains7": false,
+        "depth_maxima": [
+          "52556081469757200150199582814467/103396565765233649129661918843750",
+          "27228024456773573030888839/81966245088190879192218750",
+          "45726161/685761615",
+          "45726161/3428808075",
+          "45726161/17144040375"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "191041957092811210579312642265693/206793131530467298259323837687500"
+      },
+      {
+        "later_mask": 3,
+        "contains7": true,
+        "depth_maxima": [
+          "40883377846343477636132627267/43063959085894897596693843750",
+          "17006885981744892586439/34138377795997867218750",
+          "28561/285615",
+          "28561/1428075",
+          "28561/7140375"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "135439331678506324590762116893/86127918171789795193387687500"
+      },
+      {
+        "later_mask": 4,
+        "contains7": false,
+        "depth_maxima": [
+          "7350204084051450471983267966871196639639/24483012917664667270267700294864175018750",
+          "55623434095873586305146371100483079/335012012939952481086297400074768750",
+          "146584134542026/3271311420225625",
+          "95512458/8952514375",
+          "3202/1500625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "12838784806682464374274356048648546279473/24483012917664667270267700294864175018750"
+      },
+      {
+        "later_mask": 4,
+        "contains7": true,
+        "depth_maxima": [
+          "6044481752240075986197260784359361239/10197006629597945551964889752130018750",
+          "34742931977435094506649825796679/139530201141171379044688629768750",
+          "91557860426/1362478725625",
+          "417606/26100625",
+          "2/625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "9472702066188242071325985382596306673/10197006629597945551964889752130018750"
+      },
+      {
+        "later_mask": 5,
+        "contains7": false,
+        "depth_maxima": [
+          "361416842929248373304369013272774426464547/778595261903507779821937886468836432593750",
+          "59594486591108166816911473765743079/201016360472473365640538396260968750",
+          "2146138313829802666/28738470826682115625",
+          "1398397897578/78647838784375",
+          "46880482/13182990625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "667692671061116744179952871404606858555749/778595261903507779821937886468836432593750"
+      },
+      {
+        "later_mask": 5,
+        "contains7": true,
+        "depth_maxima": [
+          "283521655556487136810477567372387349347/324279575969807488472277337138207593750",
+          "37223289563465438361593675056679/83721932724895196018549935968750",
+          "1340498634497066/11969375604615625",
+          "873452778/32756284375",
+          "29282/5490625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "474824483871208167963246997810758637349/324279575969807488472277337138207593750"
+      },
+      {
+        "later_mask": 6,
+        "contains7": false,
+        "depth_maxima": [
+          "164485324633008473096558791118857787194180439/388486927853435978252402733187445219502768750",
+          "58601822617053509675713706404038079/223345251860566338446279499836268750",
+          "4186589466654804586/62289040752516125625",
+          "909310437646/56821608738125",
+          "91452322/28573400625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "300299646030049880855266291050066455403824473/388486927853435978252402733187445219502768750"
+      },
+      {
+        "later_mask": 6,
+        "contains7": true,
+        "depth_maxima": [
+          "130414706381433146103354051190653887782039/161802135715716775615328085459160857768750",
+          "36603262096847913601320241351679/93021762540843956037600791268750",
+          "2614984051626986/25942957414625625",
+          "3975748322/165660666875",
+          "57122/11900625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "215245637922370939831466168574294530011673/161802135715716775615328085459160857768750"
+      },
+      {
+        "later_mask": 7,
+        "contains7": false,
+        "depth_maxima": [
+          "8255046602853154181141119290531787058805394147/12354446830353053661239667685659478958171343750",
+          "62572875112288090187478809069298079/134013253028828309763715962438468750",
+          "5572350580117544903966/49746293000986742146875",
+          "1210292192506826/45379802978584375",
+          "121723040582/22819756771875"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "15819290003957887507475588260259307154901707949/12354446830353053661239667685659478958171343750"
+      },
+      {
+        "later_mask": 7,
+        "contains7": true,
+        "depth_maxima": [
+          "6256317540288882880598327663151424648518947/5145542203395690821007774962790286946343750",
+          "39083619682878257456264090611679/55815598929124660459690113468750",
+          "3480543772715518366/20718989171589646875",
+          "755960145226/18900376084375",
+          "76029382/9504271875"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "10981016728986405258071450067728264183869549/5145542203395690821007774962790286946343750"
+      },
+      {
+        "later_mask": 8,
+        "contains7": false,
+        "depth_maxima": [
+          "3067055684081892988103124764270250262229/10557063710887548495828282855298745456250",
+          "158827944393368951063734199506386719/1002474951181041543616777405308018750",
+          "1963783221328049/47196691705253125",
+          "5216104429/543233753125",
+          "14409/7503125"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "10611293854958918049995323683187442804657/21114127421775096991656565710597490912500"
+      },
+      {
+        "later_mask": 8,
+        "contains7": true,
+        "depth_maxima": [
+          "2532657305444927210550726125322759829/4396944486000644937871004937650456250",
+          "99205461832210462875536664276319/417523928022091438407654063018750",
+          "1226597889649/19657097753125",
+          "3258029/226253125",
+          "9/3125"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "7861805858107301063068394258544921457/8793888972001289875742009875300912500"
+      },
+      {
+        "later_mask": 9,
+        "contains7": false,
+        "depth_maxima": [
+          "150474662284698945444660924128789636460217/335729912513339049067695351331286959781250",
+          "170286379026292777323073809402846719/601512358863837849919635920062218750",
+          "28751750143463965409/414622936630648703125",
+          "76368984944989/4772308521203125",
+          "210962169/65914953125"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "551030886532187897119875954226746961330981/671459825026678098135390702662573919562500"
+      },
+      {
+        "later_mask": 9,
+        "contains7": true,
+        "depth_maxima": [
+          "118512176100404632850593400970818673017/139829201379982944218115514923484781250",
+          "106362510322481434930089824736319/250525763791685901674150737218750",
+          "17958619702351009/172687603761203125",
+          "47700802589/1987633703125",
+          "131769/27453125"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "393227701334344560036323657637557201381/279658402759965888436231029846969562500"
+      },
+      {
+        "later_mask": 10,
+        "contains7": false,
+        "depth_maxima": [
+          "68515564439725198852829365435268641954283029/167515381460122282463733336084525785320706250",
+          "167422056463744591305972105686541719/668328333932222682399322802929518750",
+          "5098873871304582499/81697473341793159375",
+          "148977158596669/10343713893253125",
+          "137178483/47622334375"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "247900748941394553733459218603270029262192457/335030762920244564927466672169051570641412500"
+      },
+      {
+        "later_mask": 10,
+        "contains7": true,
+        "depth_maxima": [
+          "54542726977912445815820153040964490460629/69769005189555302983645704325083625706250",
+          "104573426898029101377871396431319/278354158239159801082600084518750",
+          "3184805666024099/34026436210659375",
+          "93052566269/4308085753125",
+          "85683/19834375"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "178335685100074832935700573247908209749257/139538010379110605967291408650167251412500"
+      },
+      {
+        "later_mask": 11,
+        "contains7": false,
+        "depth_maxima": [
+          "3431765492583514221969715255012074022724365817/5327231690782066479511410419208771823936031250",
+          "178880491096668417565311715583001719/401015259449120706569090282339718750",
+          "74652612349770392367859/717712303307652905109375",
+          "198288598092166439/8260866050202609375",
+          "182584560873/38032927953125"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "51968353885303800445533170025614718808233031/42448061281132003820808051149073879075187500"
+      },
+      {
+        "later_mask": 11,
+        "contains7": true,
+        "depth_maxima": [
+          "2610480069063195995593424774665989555218617/2218755389746799866518704880969917461031250",
+          "111730475388300073432424556891319/167020099728913247217447014718750",
+          "46628739756258833459/298922242110642609375",
+          "123852965704039/3440593940109375",
+          "114044073/15840453125"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "36180780988935150206866578146839612023431/17679325814715536785009600645178625187500"
+      },
+      {
+        "later_mask": 12,
+        "contains7": false,
+        "depth_maxima": [
+          "472461768273054195749791394349980983476197795946860789/1261421801928598995665773429787018225641808959140956250",
+          "366473482229812379162095625446951499318624759/1639027494100040228588453092599470654258268750",
+          "19102990997651370346/331583396865489575625",
+          "4149093013006/302478603188125",
+          "417287842/152104850625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "848806595322839958738800065090813299604886357890241923/1261421801928598995665773429787018225641808959140956250"
+      },
+      {
+        "later_mask": 12,
+        "contains7": true,
+        "depth_maxima": [
+          "379351218255006272336898668979740983722246727262389/525373511840316116478872732106213338459728845956250",
+          "228902862104817226209928560553998438050359/682643687671820170174282837400862413268750",
+          "11931911928576746/138102206108075625",
+          "18140943842/881861816875",
+          "260642/63350625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "614419817286727548407484971753527564689572499869123/525373511840316116478872732106213338459728845956250"
+      },
+      {
+        "later_mask": 13,
+        "contains7": false,
+        "depth_maxima": [
+          "23536536361112211536005303333597702622694125193118423897/40115039825624297204901471059079613479267431215137281250",
+          "391452479695929850313333933360253033716684759/983461275573311482012810628952008038908468750",
+          "279686891196613713235786/2912960141463325921865625",
+          "60746870803420846/2657274529007678125",
+          "6109511294722/1336241112740625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "44501696723349436072078413907932932996926172813066603999/40115039825624297204901471059079613479267431215137281250"
+      },
+      {
+        "later_mask": 13,
+        "contains7": true,
+        "depth_maxima": [
+          "18050062675114693683713465236226045462306940419548697/16707638411338732696751966288662896076329625662281250",
+          "244504984194834384955236685421769540110359/409604862796048097464727458955438583468750",
+          "174695122546292138186/1213227880659444365625",
+          "37943079827246/1106736580178125",
+          "3816059522/556535240625"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "31145103500996782713115782896647800849085233748685599/16707638411338732696751966288662896076329625662281250"
+      },
+      {
+        "later_mask": 14,
+        "contains7": false,
+        "depth_maxima": [
+          "10681851763088299721429745628003699976335638183516120609589/20015750602533696831116203167058309885292592492919056206250",
+          "385208354008250511373756055383600933022579759/1092704125036198522199948718048615970299768750",
+          "41969271221840060650162/485667650747368231498125",
+          "9115557349574182/443038083331160625",
+          "916781388874/222786804673125"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "19982413453733824525090347274044485374603421181291977484923/20015750602533696831116203167058309885292592492919056206250"
+      },
+      {
+        "later_mask": 14,
+        "contains7": true,
+        "depth_maxima": [
+          "8276135499573758554089041015247315572595184974959891189/8336422574982797514000917603939321068426735732161206250",
+          "240604843228138982744382295679950614005359/455103758865555402832131910890718854768750",
+          "26214410507083110962/202277238961835998125",
+          "39855653620874/1291656219624375",
+          "572630474/92789173125"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "14085355793543480480173114498096026002493862675007272123/8336422574982797514000917603939321068426735732161206250"
+      },
+      {
+        "later_mask": 15,
+        "contains7": false,
+        "depth_maxima": [
+          "542351562578323819710290167128215115215281699463318103513497/636529851737770774745704513052263122337385255629094813531250",
+          "410187351474367982524994363296902467420639759/655652328286524418928116213923713632885968750",
+          "55861099996269120725365622/387871846528693628519184375",
+          "12132806832283236242/353826323824022371875",
+          "1220236028591294/177925643550309375"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "1059531802847711415407604204416094411783088591218661190886199/636529851737770774745704513052263122337385255629094813531250"
+      },
+      {
+        "later_mask": 15,
+        "contains7": true,
+        "depth_maxima": [
+          "402524706061684741178129744500632386224028090043398878297/265110308928684204392213458164207881023484071482338531250",
+          "256206965318156141489690420547721716065359/273074688998968937496091717585886560968750",
+          "34891380384927620690422/161545958570884476684375",
+          "7578267852769042/147366232329871875",
+          "762171160894/74104807809375"
+        ],
+        "maximizing_roots": [
+          [
+            0
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ]
+        ],
+        "complete_5_depth_sum": "725560458884537705386320898334410835048392169840615047799/265110308928684204392213458164207881023484071482338531250"
+      }
+    ],
+    "later_masks": 16,
+    "old5_cells": 625,
+    "exact_tail": "Beyond 5-depth four every density is constant on its old cell; sum of maxima equals depth-four maximum / 4. Positive 7 and later exponents contribute geometric factors 1/6 and 1/(q-1)."
+  },
+  "nested_query": {
+    "first_moment": "114905298683550696005149/81565003794396764378880",
+    "hinge": "4841508204833317525789/81565003794396764378880",
+    "J_L": "4841508204833317525789/980757081882745549247250",
+    "zero_completion_gap": "1033608573342003864932556253000744351/232113625594504985939851425896313600000",
+    "scope": "Checks the exact nested safe-query value in the analytic maximizer theorem; the universal maximality proof is not replaced by this finite arithmetic."
+  },
+  "repaired_completion": {
+    "old_cofactors": [
+      7,
+      35
+    ],
+    "fixed_R": {
+      "5": [
+        1,
+        3
+      ],
+      "7": [
+        1,
+        3
+      ]
+    },
+    "declaration": "At every first11 exponent and in both slots, retain actual phases, include the unit, complete cofactor 7 to root 3 and cofactor 35 to roots (3,3). Put all other missing phases in pure forbidden prefixes. This includes every absent exponent beyond K.",
+    "removed_R_mass": "1/35",
+    "head_beta": "14640/14641",
+    "tail_beta": "1/14641",
+    "J11": "1/35",
+    "credit": "31/1071",
+    "margin": "9546482409995175389/542935350932041267200",
+    "rectangle_hinges": [
+      {
+        "depth5": 1,
+        "depth7": 1,
+        "digit7": 3,
+        "completed_load": 3,
+        "hinge": 1
+      },
+      {
+        "depth5": 1,
+        "depth7": 1,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 1,
+        "depth7": 2,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 1,
+        "depth7": 2,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 1,
+        "depth7": 3,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 1,
+        "depth7": 3,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 1,
+        "depth7": 4,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 1,
+        "depth7": 4,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 2,
+        "depth7": 1,
+        "digit7": 3,
+        "completed_load": 2,
+        "hinge": 0
+      },
+      {
+        "depth5": 2,
+        "depth7": 1,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 2,
+        "depth7": 2,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 2,
+        "depth7": 2,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 2,
+        "depth7": 3,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 2,
+        "depth7": 3,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 2,
+        "depth7": 4,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 2,
+        "depth7": 4,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 3,
+        "depth7": 1,
+        "digit7": 3,
+        "completed_load": 2,
+        "hinge": 0
+      },
+      {
+        "depth5": 3,
+        "depth7": 1,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 3,
+        "depth7": 2,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 3,
+        "depth7": 2,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 3,
+        "depth7": 3,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 3,
+        "depth7": 3,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 3,
+        "depth7": 4,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 3,
+        "depth7": 4,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 4,
+        "depth7": 1,
+        "digit7": 3,
+        "completed_load": 2,
+        "hinge": 0
+      },
+      {
+        "depth5": 4,
+        "depth7": 1,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 4,
+        "depth7": 2,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 4,
+        "depth7": 2,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 4,
+        "depth7": 3,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 4,
+        "depth7": 3,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 4,
+        "depth7": 4,
+        "digit7": 3,
+        "completed_load": 1,
+        "hinge": 0
+      },
+      {
+        "depth5": 4,
+        "depth7": 4,
+        "digit7": 4,
+        "completed_load": 1,
+        "hinge": 0
+      }
+    ]
+  },
+  "general_criterion": {
+    "Gamma_critical": "6168733163201163811/15715215573196339200",
+    "exponent_one_weight": "5/11",
+    "margin": "974546642797172189/542935350932041267200",
+    "numerical_count_patterns": 27,
+    "matching_empty_slot_patterns": 216,
+    "scope": "Rational constants and finite slot logic only; the same-family eta(C)>=1/35-delta bound and general all-depth theorem are ordinary proofs."
+  },
+  "NC4_constants": {
+    "c0": "6168733163201163811/542935350932041267200",
+    "A5": "44887686823492905683/27146767546602063360",
+    "A7": "20281636668601030051/20313907687933516800",
+    "A57": "585035299774741193/203139076879335168"
+  },
+  "credits": {
+    "pure": "1909679866745396595103/1306438188180224299200000",
+    "mixed_mass": "3751/7347060",
+    "stage": "0/1",
+    "final_query": "610557233002378824901/140108154554677935606750"
+  },
+  "remaining_gap": "389314337271786978910446370296350517/77371208531501661979950475298771200000",
+  "limits": {
+    "row_loss_sum": "451/28125",
+    "final_hinge": "939/17920",
+    "J_L": "313/71680",
+    "gap": "1898967831309504083/271467675466020633600"
+  },
+  "verification_counts": {
+    "mixed_pair_intersections": 496,
+    "mixed_pure_intersections": 512,
+    "private_point_class_incidence_checks": 30976,
+    "five_adic_histories": 625,
+    "bernoulli_patterns": 16
+  },
+  "checks": {
+    "176_actual_original_classes": true,
+    "88_labels_with_exactly_two_occurrences": true,
+    "odd_nonunit_labels": true,
+    "all_zero_is_actual_survivor": true,
+    "all_176_explicit_private_points": true,
+    "CRT_encoding_preserves_all_coordinate_phases": true,
+    "pure_5_prefixes_disjoint": true,
+    "pure_7_prefixes_disjoint": true,
+    "32_mixed_rectangles_pairwise_disjoint": true,
+    "mixed_rectangles_avoid_all_pure_5_7_classes": true,
+    "mixed_5_roots_are_only_0_or_3": true,
+    "mixed_7_roots_are_only_0_3_4": true,
+    "nested_25_and_125_originals": true,
+    "mixed_mass_product_formula": true,
+    "reported_finite_anchor_values": true,
+    "four_deep_cells_pairwise_disjoint": true,
+    "all_deep_cells_in_root_4": true,
+    "deep_cells_avoid_pure_5_and_mixed_anchor_originals": true,
+    "history_marginal_is_exact_anchor_mass": true,
+    "removed_history_marginal_is_exact_mixed_mass": true,
+    "q11_forbidden_q_prefixes_pairwise_disjoint": true,
+    "q11_original_digits_nonzero_and_below_query_digit": true,
+    "q11_actual_fibre_fraction_formula": true,
+    "q11_loss_only_on_deepest_cell": true,
+    "q11_previous_rows_preserve_current_deep_mass": true,
+    "q11_sequential_loss_formula": true,
+    "q11_exact_local_Jensen_charge": true,
+    "q11_Jensen_ratio": true,
+    "q11_charge_slack": true,
+    "q11_completed_rows_equal_actual_rows_on_removed_set": true,
+    "q11_stage_debit_zero_with_declared_completion": true,
+    "q11_missing_old_5_7_phases_are_forbidden": true,
+    "q11_missing_later_only_phases_are_forbidden_on_eta": true,
+    "q11_all_depth_query_probability_formula": true,
+    "q13_forbidden_q_prefixes_pairwise_disjoint": true,
+    "q13_original_digits_nonzero_and_below_query_digit": true,
+    "q13_actual_fibre_fraction_formula": true,
+    "q13_loss_only_on_deepest_cell": true,
+    "q13_previous_rows_preserve_current_deep_mass": true,
+    "q13_sequential_loss_formula": true,
+    "q13_exact_local_Jensen_charge": true,
+    "q13_Jensen_ratio": true,
+    "q13_charge_slack": true,
+    "q13_completed_rows_equal_actual_rows_on_removed_set": true,
+    "q13_stage_debit_zero_with_declared_completion": true,
+    "q13_missing_old_5_7_phases_are_forbidden": true,
+    "q13_missing_later_only_phases_are_forbidden_on_eta": true,
+    "q13_all_depth_query_probability_formula": true,
+    "q17_forbidden_q_prefixes_pairwise_disjoint": true,
+    "q17_original_digits_nonzero_and_below_query_digit": true,
+    "q17_actual_fibre_fraction_formula": true,
+    "q17_loss_only_on_deepest_cell": true,
+    "q17_previous_rows_preserve_current_deep_mass": true,
+    "q17_sequential_loss_formula": true,
+    "q17_exact_local_Jensen_charge": true,
+    "q17_Jensen_ratio": true,
+    "q17_charge_slack": true,
+    "q17_completed_rows_equal_actual_rows_on_removed_set": true,
+    "q17_stage_debit_zero_with_declared_completion": true,
+    "q17_missing_old_5_7_phases_are_forbidden": true,
+    "q17_missing_later_only_phases_are_forbidden_on_eta": true,
+    "q17_all_depth_query_probability_formula": true,
+    "q19_forbidden_q_prefixes_pairwise_disjoint": true,
+    "q19_original_digits_nonzero_and_below_query_digit": true,
+    "q19_actual_fibre_fraction_formula": true,
+    "q19_loss_only_on_deepest_cell": true,
+    "q19_previous_rows_preserve_current_deep_mass": true,
+    "q19_sequential_loss_formula": true,
+    "q19_exact_local_Jensen_charge": true,
+    "q19_Jensen_ratio": true,
+    "q19_charge_slack": true,
+    "q19_completed_rows_equal_actual_rows_on_removed_set": true,
+    "q19_stage_debit_zero_with_declared_completion": true,
+    "q19_missing_old_5_7_phases_are_forbidden": true,
+    "q19_missing_later_only_phases_are_forbidden_on_eta": true,
+    "q19_all_depth_query_probability_formula": true,
+    "one_unnormalized_sequential_mass_identity": true,
+    "actual_final_mass_positive": true,
+    "stage_debits_all_zero": true,
+    "reported_query_probabilities": true,
+    "hinge_polynomial_at_k0_pattern0000": true,
+    "hinge_polynomial_at_k1_pattern0001": true,
+    "hinge_polynomial_at_k1_pattern0010": true,
+    "hinge_polynomial_at_k2_pattern0011": true,
+    "hinge_polynomial_at_k1_pattern0100": true,
+    "hinge_polynomial_at_k2_pattern0101": true,
+    "hinge_polynomial_at_k2_pattern0110": true,
+    "hinge_polynomial_at_k3_pattern0111": true,
+    "hinge_polynomial_at_k1_pattern1000": true,
+    "hinge_polynomial_at_k2_pattern1001": true,
+    "hinge_polynomial_at_k2_pattern1010": true,
+    "hinge_polynomial_at_k3_pattern1011": true,
+    "hinge_polynomial_at_k2_pattern1100": true,
+    "hinge_polynomial_at_k3_pattern1101": true,
+    "hinge_polynomial_at_k3_pattern1110": true,
+    "hinge_polynomial_at_k4_pattern1111": true,
+    "16_pattern_probability_is_one": true,
+    "final_hinge_elementary_symmetric_formula": true,
+    "reported_final_hinge": true,
+    "reported_JL": true,
+    "reported_pure_credit": true,
+    "reported_mixed_credit": true,
+    "reported_positive_gap": true,
+    "reported_limiting_hinge": true,
+    "reported_limiting_JL": true,
+    "reported_limiting_row_loss_sum": true,
+    "reported_limiting_gap": true,
+    "actual_norm_mask0_positive_5_depths_admit_root4": true,
+    "actual_norm_unit_is_final_unnormalized_mass": true,
+    "actual_norm_5_7_control_root3_strictly_beats_root4": true,
+    "actual_norm_mask1_positive_5_depths_admit_root4": true,
+    "actual_norm_mask2_positive_5_depths_admit_root4": true,
+    "actual_norm_mask3_positive_5_depths_admit_root4": true,
+    "actual_norm_mask4_positive_5_depths_admit_root4": true,
+    "actual_norm_mask5_positive_5_depths_admit_root4": true,
+    "actual_norm_mask6_positive_5_depths_admit_root4": true,
+    "actual_norm_mask7_positive_5_depths_admit_root4": true,
+    "actual_norm_mask8_positive_5_depths_admit_root4": true,
+    "actual_norm_mask9_positive_5_depths_admit_root4": true,
+    "actual_norm_mask10_positive_5_depths_admit_root4": true,
+    "actual_norm_mask11_positive_5_depths_admit_root4": true,
+    "actual_norm_mask12_positive_5_depths_admit_root4": true,
+    "actual_norm_mask13_positive_5_depths_admit_root4": true,
+    "actual_norm_mask14_positive_5_depths_admit_root4": true,
+    "actual_norm_mask15_positive_5_depths_admit_root4": true,
+    "actual_all_depth_norm_matches_independent_root_result": true,
+    "actual_all_depth_norm_strictly_below_target": true,
+    "nested_final_hinge_exact": true,
+    "nested_final_JL_matches_analytic_maximizer_formula": true,
+    "zero_completion_nested_maximizer_gap_positive": true,
+    "all_actual_first11_cofactors_are_1_5_25": true,
+    "no_actual_7_times_11_power_or_35_times_11_power": true,
+    "first11_occupied_old_5_25_phases_retained": true,
+    "repair_R_is_one_whole_actual_mixed_rectangle": true,
+    "repaired_hinge_rectangle_1_1_3": true,
+    "repaired_hinge_rectangle_1_1_4": true,
+    "repaired_hinge_rectangle_1_2_3": true,
+    "repaired_hinge_rectangle_1_2_4": true,
+    "repaired_hinge_rectangle_1_3_3": true,
+    "repaired_hinge_rectangle_1_3_4": true,
+    "repaired_hinge_rectangle_1_4_3": true,
+    "repaired_hinge_rectangle_1_4_4": true,
+    "repaired_hinge_rectangle_2_1_3": true,
+    "repaired_hinge_rectangle_2_1_4": true,
+    "repaired_hinge_rectangle_2_2_3": true,
+    "repaired_hinge_rectangle_2_2_4": true,
+    "repaired_hinge_rectangle_2_3_3": true,
+    "repaired_hinge_rectangle_2_3_4": true,
+    "repaired_hinge_rectangle_2_4_3": true,
+    "repaired_hinge_rectangle_2_4_4": true,
+    "repaired_hinge_rectangle_3_1_3": true,
+    "repaired_hinge_rectangle_3_1_4": true,
+    "repaired_hinge_rectangle_3_2_3": true,
+    "repaired_hinge_rectangle_3_2_4": true,
+    "repaired_hinge_rectangle_3_3_3": true,
+    "repaired_hinge_rectangle_3_3_4": true,
+    "repaired_hinge_rectangle_3_4_3": true,
+    "repaired_hinge_rectangle_3_4_4": true,
+    "repaired_hinge_rectangle_4_1_3": true,
+    "repaired_hinge_rectangle_4_1_4": true,
+    "repaired_hinge_rectangle_4_2_3": true,
+    "repaired_hinge_rectangle_4_2_4": true,
+    "repaired_hinge_rectangle_4_3_3": true,
+    "repaired_hinge_rectangle_4_3_4": true,
+    "repaired_hinge_rectangle_4_4_3": true,
+    "repaired_hinge_rectangle_4_4_4": true,
+    "both_slot_beta_weights_head_plus_full_tail": true,
+    "repair_removed_R_mass_exact": true,
+    "repair_J11_includes_absent_exponent_tail": true,
+    "repair_credit_exact": true,
+    "repair_margin_positive": true,
+    "general_Gamma_threshold_exact_and_below_5_over_11": true,
+    "general_5_over_11_margin_positive": true,
+    "every_pair_of_5_7_35_has_lcm_35": true,
+    "all_27_numerical_two_of_three_patterns": true,
+    "all_216_matching_empty_slot_alignment_patterns": true
+  },
+  "passed_count": 176,
+  "complete": true,
+  "boundaries": [
+    "No Lean verification.",
+    "Nested all-maximizer classification is an ordinary analytic theorem, not implied by fixed-instance tests.",
+    "No all-laws lower witness.",
+    "The actual PA query norm is strictly below 257/51.",
+    "No transfer from this two-copy six-prime family to unrestricted Erdos #7."
+  ]
+}

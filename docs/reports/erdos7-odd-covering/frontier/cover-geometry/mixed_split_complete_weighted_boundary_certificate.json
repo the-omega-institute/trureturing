@@ -1,0 +1,173 @@
+{
+  "reference": [
+    2,
+    7,
+    3,
+    4
+  ],
+  "old_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "split_old_primes": [
+    3,
+    5,
+    7
+  ],
+  "common_old_primes": [
+    11,
+    13,
+    17,
+    19
+  ],
+  "new_primes": [
+    23,
+    29
+  ],
+  "theta": "1/3696",
+  "profile_indices": [
+    4407,
+    5640,
+    16010
+  ],
+  "profiles": [
+    [
+      4,
+      2,
+      -4,
+      1,
+      2,
+      1,
+      1
+    ],
+    [
+      5,
+      -2,
+      4,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      -5,
+      -3,
+      -2,
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "weight": [
+    17,
+    16,
+    13
+  ],
+  "subset_directions": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "complete_axis_directions": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      2
+    ],
+    [
+      1,
+      2,
+      1
+    ],
+    [
+      2,
+      1,
+      1
+    ]
+  ],
+  "support_file": "mixed_split_binary_support_certificate.json",
+  "support_sha256": "3f0715af4dfaac94a7546cba453eca629e0c07fd2e85cd1dc1b1a64894672ee3",
+  "full_label_rule": "Each original numerical label d*23^j*29^k has one fixed A/B selector shared by all tested old points; missing labels only lower activation.",
+  "survivor_scope": "s_i is full23/29 Haar survival of later classes in one fixed old fibre; old-only survival is additionally needed for full-family survival.",
+  "base_result_file": "mixed_split_binary_support_barrier.json",
+  "base_result_sha256": "13e506dc11664b6b709cd4a53a1dbad75b6c8dcecd76f5992bb739dc4bc03d17",
+  "fractional_file": "mixed_split_fractional_support_certificate.json",
+  "fractional_sha256": "6d7555cc5496dffb2a058adf192fe49ac84064767b97fae586a5c273f6e59c28",
+  "remove_indices": [
+    4405,
+    4407
+  ]
+}

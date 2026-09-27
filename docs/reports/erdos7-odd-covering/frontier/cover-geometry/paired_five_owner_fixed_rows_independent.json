@@ -1,0 +1,120 @@
+{
+  "status": "PASS",
+  "scope": "Exact independent pair-product divisor convolution for193 hinges, old canonical and five analytic runner candidates; complete638 metadata plus ordinary exchange proof; unchanged-tail policy/fingerprint audit. Candidate producer was neither read as source nor imported/executed. No new seventh-moment tail audited.",
+  "candidate_sha256": "aef68901053153b6c6090063572b9d1e59d8c82ce5bbc5e9b8a1533f8b2bcb5e",
+  "candidate_program_sha256": "12b6563a72394d9feed87fb915c57141c160c97f06e72d324cf8ee90ab239cde",
+  "program_sha256": "e06e7c042a1e2e1447e71763017019f00d683a7ded9ad6ea1118dcb63940ae48",
+  "paired_exact_sha256": "fd36998babe0073af22f48e833f3f9bd51d4b7a4c5a89c676a68d2e9e48b7309",
+  "old_exact_sha256": "da63d7b8672593f4142e8bd30d700da94b068feaab1f52087c6b8227e732e3ce",
+  "exceptional_owners": [
+    41
+  ],
+  "runner_types": {
+    "17": 86,
+    "outside37": 107
+  },
+  "paired_total_decimal": 0.0166461950820516,
+  "combined_total_decimal": 0.016649386961474392,
+  "policies": [
+    {
+      "kind": "RS",
+      "fixed_cutoffs": [
+        137,
+        397
+      ],
+      "allpair_sha256": "89a3e375145182eb83ef25a4466f209ef4991aa60980cef061c2cddc94a27455",
+      "baseline_cutoffs": [
+        [
+          "legacy666_four_and655_five",
+          137,
+          419
+        ],
+        [
+          "baseline683_four_and655_five",
+          137,
+          397
+        ],
+        [
+          "paired_four_andfive",
+          137,
+          397
+        ]
+      ]
+    },
+    {
+      "kind": "elementary",
+      "fixed_cutoffs": [
+        191,
+        587
+      ],
+      "allpair_sha256": "d7ac63812cf7da3e3bfcac97c81dd653b3ddf7ac810358a98408678838855333",
+      "baseline_cutoffs": [
+        [
+          "legacy666_four_and655_five",
+          191,
+          601
+        ],
+        [
+          "baseline683_four_and655_five",
+          191,
+          587
+        ],
+        [
+          "paired_four_andfive",
+          191,
+          587
+        ]
+      ]
+    }
+  ],
+  "checks": {
+    "input fingerprint": 3,
+    "producer fingerprint bytes only": 1,
+    "candidate scope": 1,
+    "193 complete owner rows": 1,
+    "unchanged row": 193,
+    "actual cap": 193,
+    "actual threshold": 193,
+    "hinge shift": 193,
+    "finite negative support envelope": 1,
+    "matching constants": 1,
+    "positive tau blocks": 1,
+    "tau coefficients": 1,
+    "complete mass mean": 1,
+    "positive reference atoms": 10,
+    "positive complete hinges": 7,
+    "exact paired row enclosed": 193,
+    "exact paired fee fingerprint": 1,
+    "exact paired total enclosed": 1,
+    "exact old canonical enclosed": 193,
+    "exact old fee fingerprint": 1,
+    "exact old total enclosed": 1,
+    "analytic runner type": 193,
+    "exact runner enclosed": 193,
+    "exact allbranch maximum enclosed": 193,
+    "row improvement": 193,
+    "five above inherited four": 193,
+    "unique owner41 exception": 1,
+    "row winner counts": 1,
+    "published upper-total enclosure": 1,
+    "exact combined total bounded": 1,
+    "638 complete branch identities": 1,
+    "all early eligibility counts": 1,
+    "branch eligible count": 637,
+    "unchanged tail constants": 1,
+    "unchanged projection gate": 1,
+    "unchanged Euler counts": 1,
+    "unchanged arbitrary tail": 2,
+    "unchanged switch": 2,
+    "allpair interval": 37830,
+    "allpair count": 2,
+    "allpair fingerprint": 2,
+    "policy exact endpoints": 29,
+    "policy target": 29,
+    "previous cutoff minimality": 29,
+    "direct policy endpoints": 4,
+    "direct policy predecessor": 4,
+    "complete Pareto frontier": 2
+  },
+  "check_count": 40736
+}

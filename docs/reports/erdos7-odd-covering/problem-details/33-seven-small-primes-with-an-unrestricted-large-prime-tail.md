@@ -251,11 +251,14 @@ Use the same analytic prime-product premise as Chapter 32:
 \]
 
 for \(B\ge286\), integer \(\ell\ge4\), \(3^\ell\le B\),
-and \(z\ge B\). Chapter 32 identifies the inspected pinned
-Schroeder source, Lemma 8.2 (`lem:mertens`), and its
-Rosser--Schoenfeld premise. The rational certificate here does not
-prove this analytic estimate or improve its source-verification
-status.
+and \(z\ge B\). Chapter32 and the
+[Rosser--Schoenfeld citation note](../../../../Library/Arith/rosser1962approximate.md)
+identify both the pinned Schroeder source, Lemma8.2 (`lem:mertens`),
+and the directly inspected original Theorem8, equations (3.28)--(3.29).
+The displayed ratio follows by dividing the upper product bound at
+`z` by the positive lower bound at `B`. The rational certificate
+here does not prove that analytic theorem or reverify its source
+tables.
 
 Starting from any head submeasure supported on avoidance of all
 original head-only classes, of mass at least \(m\) and at most

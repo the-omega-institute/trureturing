@@ -1,0 +1,4650 @@
+{
+  "inputs": {
+    "integer_selector_tail_interface_certificate.json": "66f155d2d9f65b044017e0c033c1d3e8f9999cea100eabce1b8aa049810ecb5a",
+    "integer_selector_tail_interface.json": "4681c5b6da42138625dfa6c21e680522edf60ed400a3ae83c817d94bfcf9e4f4",
+    "two_region_triple_survival.json": "aada38719d5029f778ea663739a52d9312e7957a1672a7c11d11b71c6f240365"
+  },
+  "profiles": [
+    [
+      4,
+      2,
+      -4,
+      1,
+      2,
+      1,
+      1
+    ],
+    [
+      5,
+      -2,
+      4,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      -5,
+      -3,
+      -2,
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "old_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "old_carrier": 43791554181375,
+  "old_centres": [
+    0,
+    39877380955126
+  ],
+  "old_points": [
+    31665150944505,
+    15191541084006,
+    32718121335901
+  ],
+  "first_weight": [
+    17,
+    9,
+    8
+  ],
+  "target_weight": [
+    17,
+    16,
+    13
+  ],
+  "second_weight": [
+    9,
+    16,
+    9
+  ],
+  "literal_labels": [
+    {
+      "d": 1,
+      "masks": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "scores": [
+        34,
+        34
+      ],
+      "maximum": 34,
+      "maximizing_selectors": [
+        0,
+        1
+      ],
+      "gap": null
+    },
+    {
+      "d": 3,
+      "masks": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        26,
+        8
+      ],
+      "maximum": 26,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 18
+    },
+    {
+      "d": 5,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ]
+      ],
+      "scores": [
+        17,
+        17
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0,
+        1
+      ],
+      "gap": null
+    },
+    {
+      "d": 7,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        25
+      ],
+      "maximum": 25,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 16
+    },
+    {
+      "d": 9,
+      "masks": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        26,
+        8
+      ],
+      "maximum": 26,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 18
+    },
+    {
+      "d": 13,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        17,
+        17
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0,
+        1
+      ],
+      "gap": null
+    },
+    {
+      "d": 15,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        17,
+        8
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 21,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        8
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 1
+    },
+    {
+      "d": 25,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 27,
+      "masks": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        26,
+        8
+      ],
+      "maximum": 26,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 18
+    },
+    {
+      "d": 35,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 39,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        17,
+        0
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 17
+    },
+    {
+      "d": 45,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        17,
+        8
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 49,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        17
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 63,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        8
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 1
+    },
+    {
+      "d": 65,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        17,
+        0
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 17
+    },
+    {
+      "d": 75,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 81,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        8
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 1
+    },
+    {
+      "d": 91,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        0,
+        17
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 17
+    },
+    {
+      "d": 105,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 117,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        17,
+        0
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 17
+    },
+    {
+      "d": 135,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        17,
+        8
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 147,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 175,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 189,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        8
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 1
+    },
+    {
+      "d": 195,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        17,
+        0
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 17
+    },
+    {
+      "d": 225,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 315,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 343,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        17
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 351,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        17,
+        0
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 17
+    },
+    {
+      "d": 405,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 441,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 525,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 567,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        8
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 1
+    },
+    {
+      "d": 585,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        17,
+        0
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 17
+    },
+    {
+      "d": 637,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        0,
+        17
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 17
+    },
+    {
+      "d": 675,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 945,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 1029,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 1323,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 1575,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 1755,
+      "masks": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        17,
+        0
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 17
+    },
+    {
+      "d": 2025,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 2835,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 3087,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 3969,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 4459,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        0,
+        17
+      ],
+      "maximum": 17,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 17
+    },
+    {
+      "d": 4725,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 9261,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 14175,
+      "masks": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        0,
+        8
+      ],
+      "maximum": 8,
+      "maximizing_selectors": [
+        1
+      ],
+      "gap": 8
+    },
+    {
+      "d": 27783,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    }
+  ],
+  "phase_block": [
+    {
+      "d": 1,
+      "masks": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "scores": [
+        34,
+        34
+      ],
+      "maximum": 34,
+      "maximizing_selectors": [
+        0,
+        1
+      ],
+      "gap": null
+    },
+    {
+      "d": 3,
+      "masks": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        26,
+        8
+      ],
+      "maximum": 26,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 18
+    },
+    {
+      "d": 9,
+      "masks": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        26,
+        8
+      ],
+      "maximum": 26,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 18
+    },
+    {
+      "d": 21,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        8
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 1
+    },
+    {
+      "d": 27,
+      "masks": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        26,
+        8
+      ],
+      "maximum": 26,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 18
+    },
+    {
+      "d": 63,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        8
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 1
+    },
+    {
+      "d": 81,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        8
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 1
+    },
+    {
+      "d": 147,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 189,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        8
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 1
+    },
+    {
+      "d": 441,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 567,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": [
+        9,
+        8
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 1
+    },
+    {
+      "d": 1029,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 1323,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 3087,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 3969,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 9261,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    },
+    {
+      "d": 27783,
+      "masks": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "scores": [
+        9,
+        0
+      ],
+      "maximum": 9,
+      "maximizing_selectors": [
+        0
+      ],
+      "gap": 9
+    }
+  ],
+  "excluded_tied_label_d5": {
+    "d": 5,
+    "masks": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1
+      ]
+    ],
+    "scores": [
+      17,
+      17
+    ],
+    "maximum": 17,
+    "maximizing_selectors": [
+      0,
+      1
+    ],
+    "gap": null
+  },
+  "axis_directions": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      2
+    ],
+    [
+      1,
+      2,
+      1
+    ],
+    [
+      2,
+      1,
+      1
+    ]
+  ],
+  "axis_capacities": [
+    22,
+    21,
+    39,
+    30,
+    45,
+    42,
+    58,
+    85,
+    78,
+    79
+  ],
+  "good_thresholds": [
+    "4180/207",
+    "3052/261"
+  ],
+  "packed_top_k": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "152/9"
+  ],
+  "selector_loss_branches": [
+    "1",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17"
+  ],
+  "block_ceiling": "229/667",
+  "good_block_union_upper": "228/667",
+  "good_mixed_union_upper": "40631/37352",
+  "regions": [
+    {
+      "region": "base_first",
+      "weight": [
+        17,
+        9,
+        8
+      ],
+      "capacity": 671,
+      "minimum": "41",
+      "vertex_pairs": 330,
+      "minimizers": [
+        {
+          "t": [
+            "18",
+            "21",
+            "18"
+          ],
+          "u": [
+            "22",
+            "12",
+            "23"
+          ]
+        }
+      ],
+      "t_constraints": [
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "21"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            0
+          ],
+          "rhs": "39"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "30"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            1
+          ],
+          "rhs": "45"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            1
+          ],
+          "rhs": "42"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            1
+          ],
+          "rhs": "58"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            2
+          ],
+          "rhs": "85"
+        },
+        {
+          "normal": [
+            1,
+            2,
+            1
+          ],
+          "rhs": "78"
+        },
+        {
+          "normal": [
+            2,
+            1,
+            1
+          ],
+          "rhs": "79"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            -1,
+            0,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            -1,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            -1
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "20"
+        }
+      ],
+      "u_constraints": [
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "21"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            0
+          ],
+          "rhs": "39"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "30"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            1
+          ],
+          "rhs": "45"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            1
+          ],
+          "rhs": "42"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            1
+          ],
+          "rhs": "58"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            2
+          ],
+          "rhs": "85"
+        },
+        {
+          "normal": [
+            1,
+            2,
+            1
+          ],
+          "rhs": "78"
+        },
+        {
+          "normal": [
+            2,
+            1,
+            1
+          ],
+          "rhs": "79"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            -1,
+            0,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            0,
+            -1,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            -1
+          ],
+          "rhs": "0"
+        }
+      ],
+      "t_vertices": [
+        {
+          "point": [
+            "0",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            11,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "0",
+            "22"
+          ],
+          "active_rows": [
+            11,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "20",
+            "22"
+          ],
+          "active_rows": [
+            5,
+            11,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "21",
+            "0"
+          ],
+          "active_rows": [
+            1,
+            11,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "21",
+            "21"
+          ],
+          "active_rows": [
+            1,
+            5,
+            11
+          ]
+        },
+        {
+          "point": [
+            "15",
+            "21",
+            "21"
+          ],
+          "active_rows": [
+            1,
+            5,
+            8
+          ]
+        },
+        {
+          "point": [
+            "16",
+            "20",
+            "22"
+          ],
+          "active_rows": [
+            5,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "21",
+            "0"
+          ],
+          "active_rows": [
+            1,
+            2,
+            15
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "21",
+            "18"
+          ],
+          "active_rows": [
+            1,
+            2,
+            8
+          ]
+        },
+        {
+          "point": [
+            "19",
+            "20",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            13,
+            15,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "0",
+            "22"
+          ],
+          "active_rows": [
+            13,
+            14,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "16",
+            "22"
+          ],
+          "active_rows": [
+            6,
+            14,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "19",
+            "0"
+          ],
+          "active_rows": [
+            2,
+            15,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "19",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            16
+          ]
+        }
+      ],
+      "u_vertices": [
+        {
+          "point": [
+            "0",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            11,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "0",
+            "28"
+          ],
+          "active_rows": [
+            11,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "14",
+            "28"
+          ],
+          "active_rows": [
+            5,
+            11,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "21",
+            "0"
+          ],
+          "active_rows": [
+            1,
+            11,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "21",
+            "21"
+          ],
+          "active_rows": [
+            1,
+            5,
+            11
+          ]
+        },
+        {
+          "point": [
+            "15",
+            "14",
+            "28"
+          ],
+          "active_rows": [
+            5,
+            7,
+            14
+          ]
+        },
+        {
+          "point": [
+            "15",
+            "21",
+            "21"
+          ],
+          "active_rows": [
+            1,
+            5,
+            8
+          ]
+        },
+        {
+          "point": [
+            "16",
+            "15",
+            "27"
+          ],
+          "active_rows": [
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "point": [
+            "16",
+            "20",
+            "22"
+          ],
+          "active_rows": [
+            5,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "17",
+            "0",
+            "28"
+          ],
+          "active_rows": [
+            4,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "17",
+            "12",
+            "28"
+          ],
+          "active_rows": [
+            4,
+            7,
+            14
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "13",
+            "27"
+          ],
+          "active_rows": [
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "21",
+            "0"
+          ],
+          "active_rows": [
+            1,
+            2,
+            15
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "21",
+            "18"
+          ],
+          "active_rows": [
+            1,
+            2,
+            8
+          ]
+        },
+        {
+          "point": [
+            "19",
+            "20",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "21",
+            "13",
+            "24"
+          ],
+          "active_rows": [
+            4,
+            6,
+            9
+          ]
+        },
+        {
+          "point": [
+            "21",
+            "18",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            9
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            0,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "0",
+            "23"
+          ],
+          "active_rows": [
+            0,
+            4,
+            13
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "12",
+            "23"
+          ],
+          "active_rows": [
+            0,
+            4,
+            9
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "17",
+            "0"
+          ],
+          "active_rows": [
+            0,
+            2,
+            15
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "17",
+            "18"
+          ],
+          "active_rows": [
+            0,
+            2,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "region": "bad_t2",
+      "weight": [
+        17,
+        9,
+        8
+      ],
+      "capacity": 671,
+      "minimum": "8821/207",
+      "vertex_pairs": 330,
+      "minimizers": [
+        {
+          "t": [
+            "3893/207",
+            "4180/207",
+            "3893/207"
+          ],
+          "u": [
+            "22",
+            "12",
+            "23"
+          ]
+        }
+      ],
+      "t_constraints": [
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "21"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            0
+          ],
+          "rhs": "39"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "30"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            1
+          ],
+          "rhs": "45"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            1
+          ],
+          "rhs": "42"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            1
+          ],
+          "rhs": "58"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            2
+          ],
+          "rhs": "85"
+        },
+        {
+          "normal": [
+            1,
+            2,
+            1
+          ],
+          "rhs": "78"
+        },
+        {
+          "normal": [
+            2,
+            1,
+            1
+          ],
+          "rhs": "79"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            -1,
+            0,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            -1,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            -1
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "20"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "4180/207"
+        }
+      ],
+      "u_constraints": [
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "21"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            0
+          ],
+          "rhs": "39"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "30"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            1
+          ],
+          "rhs": "45"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            1
+          ],
+          "rhs": "42"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            1
+          ],
+          "rhs": "58"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            2
+          ],
+          "rhs": "85"
+        },
+        {
+          "normal": [
+            1,
+            2,
+            1
+          ],
+          "rhs": "78"
+        },
+        {
+          "normal": [
+            2,
+            1,
+            1
+          ],
+          "rhs": "79"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            -1,
+            0,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            0,
+            -1,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            -1
+          ],
+          "rhs": "0"
+        }
+      ],
+      "t_vertices": [
+        {
+          "point": [
+            "0",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            11,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "0",
+            "22"
+          ],
+          "active_rows": [
+            11,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "20",
+            "22"
+          ],
+          "active_rows": [
+            5,
+            11,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "4180/207",
+            "0"
+          ],
+          "active_rows": [
+            11,
+            15,
+            17
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "4180/207",
+            "4514/207"
+          ],
+          "active_rows": [
+            5,
+            11,
+            17
+          ]
+        },
+        {
+          "point": [
+            "3272/207",
+            "4180/207",
+            "4514/207"
+          ],
+          "active_rows": [
+            5,
+            8,
+            17
+          ]
+        },
+        {
+          "point": [
+            "16",
+            "20",
+            "22"
+          ],
+          "active_rows": [
+            5,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "3893/207",
+            "4180/207",
+            "0"
+          ],
+          "active_rows": [
+            2,
+            15,
+            17
+          ]
+        },
+        {
+          "point": [
+            "3893/207",
+            "4180/207",
+            "3893/207"
+          ],
+          "active_rows": [
+            2,
+            8,
+            17
+          ]
+        },
+        {
+          "point": [
+            "19",
+            "20",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            13,
+            15,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "0",
+            "22"
+          ],
+          "active_rows": [
+            13,
+            14,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "16",
+            "22"
+          ],
+          "active_rows": [
+            6,
+            14,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "19",
+            "0"
+          ],
+          "active_rows": [
+            2,
+            15,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "19",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            16
+          ]
+        }
+      ],
+      "u_vertices": [
+        {
+          "point": [
+            "0",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            11,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "0",
+            "28"
+          ],
+          "active_rows": [
+            11,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "14",
+            "28"
+          ],
+          "active_rows": [
+            5,
+            11,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "21",
+            "0"
+          ],
+          "active_rows": [
+            1,
+            11,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "21",
+            "21"
+          ],
+          "active_rows": [
+            1,
+            5,
+            11
+          ]
+        },
+        {
+          "point": [
+            "15",
+            "14",
+            "28"
+          ],
+          "active_rows": [
+            5,
+            7,
+            14
+          ]
+        },
+        {
+          "point": [
+            "15",
+            "21",
+            "21"
+          ],
+          "active_rows": [
+            1,
+            5,
+            8
+          ]
+        },
+        {
+          "point": [
+            "16",
+            "15",
+            "27"
+          ],
+          "active_rows": [
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "point": [
+            "16",
+            "20",
+            "22"
+          ],
+          "active_rows": [
+            5,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "17",
+            "0",
+            "28"
+          ],
+          "active_rows": [
+            4,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "17",
+            "12",
+            "28"
+          ],
+          "active_rows": [
+            4,
+            7,
+            14
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "13",
+            "27"
+          ],
+          "active_rows": [
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "21",
+            "0"
+          ],
+          "active_rows": [
+            1,
+            2,
+            15
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "21",
+            "18"
+          ],
+          "active_rows": [
+            1,
+            2,
+            8
+          ]
+        },
+        {
+          "point": [
+            "19",
+            "20",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "21",
+            "13",
+            "24"
+          ],
+          "active_rows": [
+            4,
+            6,
+            9
+          ]
+        },
+        {
+          "point": [
+            "21",
+            "18",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            9
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            0,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "0",
+            "23"
+          ],
+          "active_rows": [
+            0,
+            4,
+            13
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "12",
+            "23"
+          ],
+          "active_rows": [
+            0,
+            4,
+            9
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "17",
+            "0"
+          ],
+          "active_rows": [
+            0,
+            2,
+            15
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "17",
+            "18"
+          ],
+          "active_rows": [
+            0,
+            2,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "region": "bad_u2",
+      "weight": [
+        17,
+        9,
+        8
+      ],
+      "capacity": 671,
+      "minimum": "1269/29",
+      "vertex_pairs": 150,
+      "minimizers": [
+        {
+          "t": [
+            "18",
+            "21",
+            "18"
+          ],
+          "u": [
+            "22",
+            "3052/261",
+            "23"
+          ]
+        }
+      ],
+      "t_constraints": [
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "21"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            0
+          ],
+          "rhs": "39"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "30"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            1
+          ],
+          "rhs": "45"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            1
+          ],
+          "rhs": "42"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            1
+          ],
+          "rhs": "58"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            2
+          ],
+          "rhs": "85"
+        },
+        {
+          "normal": [
+            1,
+            2,
+            1
+          ],
+          "rhs": "78"
+        },
+        {
+          "normal": [
+            2,
+            1,
+            1
+          ],
+          "rhs": "79"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            -1,
+            0,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            -1,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            -1
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "20"
+        }
+      ],
+      "u_constraints": [
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "21"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            0
+          ],
+          "rhs": "39"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "30"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            1
+          ],
+          "rhs": "45"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            1
+          ],
+          "rhs": "42"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            1
+          ],
+          "rhs": "58"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            2
+          ],
+          "rhs": "85"
+        },
+        {
+          "normal": [
+            1,
+            2,
+            1
+          ],
+          "rhs": "78"
+        },
+        {
+          "normal": [
+            2,
+            1,
+            1
+          ],
+          "rhs": "79"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            -1,
+            0,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            0,
+            -1,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            -1
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "3052/261"
+        }
+      ],
+      "t_vertices": [
+        {
+          "point": [
+            "0",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            11,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "0",
+            "22"
+          ],
+          "active_rows": [
+            11,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "20",
+            "22"
+          ],
+          "active_rows": [
+            5,
+            11,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "21",
+            "0"
+          ],
+          "active_rows": [
+            1,
+            11,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "21",
+            "21"
+          ],
+          "active_rows": [
+            1,
+            5,
+            11
+          ]
+        },
+        {
+          "point": [
+            "15",
+            "21",
+            "21"
+          ],
+          "active_rows": [
+            1,
+            5,
+            8
+          ]
+        },
+        {
+          "point": [
+            "16",
+            "20",
+            "22"
+          ],
+          "active_rows": [
+            5,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "21",
+            "0"
+          ],
+          "active_rows": [
+            1,
+            2,
+            15
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "21",
+            "18"
+          ],
+          "active_rows": [
+            1,
+            2,
+            8
+          ]
+        },
+        {
+          "point": [
+            "19",
+            "20",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            13,
+            15,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "0",
+            "22"
+          ],
+          "active_rows": [
+            13,
+            14,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "16",
+            "22"
+          ],
+          "active_rows": [
+            6,
+            14,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "19",
+            "0"
+          ],
+          "active_rows": [
+            2,
+            15,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "19",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            16
+          ]
+        }
+      ],
+      "u_vertices": [
+        {
+          "point": [
+            "0",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            11,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "0",
+            "28"
+          ],
+          "active_rows": [
+            11,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "3052/261",
+            "0"
+          ],
+          "active_rows": [
+            11,
+            15,
+            16
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "3052/261",
+            "28"
+          ],
+          "active_rows": [
+            11,
+            14,
+            16
+          ]
+        },
+        {
+          "point": [
+            "17",
+            "0",
+            "28"
+          ],
+          "active_rows": [
+            4,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "17",
+            "3052/261",
+            "28"
+          ],
+          "active_rows": [
+            4,
+            14,
+            16
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            0,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "0",
+            "23"
+          ],
+          "active_rows": [
+            0,
+            4,
+            13
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "3052/261",
+            "0"
+          ],
+          "active_rows": [
+            0,
+            15,
+            16
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "3052/261",
+            "23"
+          ],
+          "active_rows": [
+            0,
+            4,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "region": "base_second",
+      "weight": [
+        9,
+        16,
+        9
+      ],
+      "capacity": 662,
+      "minimum": "92",
+      "vertex_pairs": 264,
+      "minimizers": [
+        {
+          "t": [
+            "21",
+            "18",
+            "19"
+          ],
+          "u": [
+            "15",
+            "21",
+            "21"
+          ]
+        }
+      ],
+      "t_constraints": [
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "21"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            0
+          ],
+          "rhs": "39"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "30"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            1
+          ],
+          "rhs": "45"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            1
+          ],
+          "rhs": "42"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            1
+          ],
+          "rhs": "58"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            2
+          ],
+          "rhs": "85"
+        },
+        {
+          "normal": [
+            1,
+            2,
+            1
+          ],
+          "rhs": "78"
+        },
+        {
+          "normal": [
+            2,
+            1,
+            1
+          ],
+          "rhs": "79"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            -1,
+            0,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            -1,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            -1
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            -1,
+            0,
+            0
+          ],
+          "rhs": "-20"
+        }
+      ],
+      "u_constraints": [
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "22"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "21"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            0
+          ],
+          "rhs": "39"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "30"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            1
+          ],
+          "rhs": "45"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            1
+          ],
+          "rhs": "42"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            1
+          ],
+          "rhs": "58"
+        },
+        {
+          "normal": [
+            1,
+            1,
+            2
+          ],
+          "rhs": "85"
+        },
+        {
+          "normal": [
+            1,
+            2,
+            1
+          ],
+          "rhs": "78"
+        },
+        {
+          "normal": [
+            2,
+            1,
+            1
+          ],
+          "rhs": "79"
+        },
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            -1,
+            0,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            0,
+            -1,
+            0
+          ],
+          "rhs": "0"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "rhs": "28"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            -1
+          ],
+          "rhs": "0"
+        }
+      ],
+      "t_vertices": [
+        {
+          "point": [
+            "20",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            13,
+            15,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "0",
+            "22"
+          ],
+          "active_rows": [
+            13,
+            14,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "16",
+            "22"
+          ],
+          "active_rows": [
+            6,
+            14,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "19",
+            "0"
+          ],
+          "active_rows": [
+            2,
+            15,
+            16
+          ]
+        },
+        {
+          "point": [
+            "20",
+            "19",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            16
+          ]
+        },
+        {
+          "point": [
+            "21",
+            "15",
+            "22"
+          ],
+          "active_rows": [
+            6,
+            9,
+            14
+          ]
+        },
+        {
+          "point": [
+            "21",
+            "18",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            9
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            0,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "0",
+            "22"
+          ],
+          "active_rows": [
+            0,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "13",
+            "22"
+          ],
+          "active_rows": [
+            0,
+            9,
+            14
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "17",
+            "0"
+          ],
+          "active_rows": [
+            0,
+            2,
+            15
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "17",
+            "18"
+          ],
+          "active_rows": [
+            0,
+            2,
+            9
+          ]
+        }
+      ],
+      "u_vertices": [
+        {
+          "point": [
+            "0",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            11,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "0",
+            "28"
+          ],
+          "active_rows": [
+            11,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "14",
+            "28"
+          ],
+          "active_rows": [
+            5,
+            11,
+            14
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "21",
+            "0"
+          ],
+          "active_rows": [
+            1,
+            11,
+            15
+          ]
+        },
+        {
+          "point": [
+            "0",
+            "21",
+            "21"
+          ],
+          "active_rows": [
+            1,
+            5,
+            11
+          ]
+        },
+        {
+          "point": [
+            "15",
+            "14",
+            "28"
+          ],
+          "active_rows": [
+            5,
+            7,
+            14
+          ]
+        },
+        {
+          "point": [
+            "15",
+            "21",
+            "21"
+          ],
+          "active_rows": [
+            1,
+            5,
+            8
+          ]
+        },
+        {
+          "point": [
+            "16",
+            "15",
+            "27"
+          ],
+          "active_rows": [
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "point": [
+            "16",
+            "20",
+            "22"
+          ],
+          "active_rows": [
+            5,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "17",
+            "0",
+            "28"
+          ],
+          "active_rows": [
+            4,
+            13,
+            14
+          ]
+        },
+        {
+          "point": [
+            "17",
+            "12",
+            "28"
+          ],
+          "active_rows": [
+            4,
+            7,
+            14
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "13",
+            "27"
+          ],
+          "active_rows": [
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "21",
+            "0"
+          ],
+          "active_rows": [
+            1,
+            2,
+            15
+          ]
+        },
+        {
+          "point": [
+            "18",
+            "21",
+            "18"
+          ],
+          "active_rows": [
+            1,
+            2,
+            8
+          ]
+        },
+        {
+          "point": [
+            "19",
+            "20",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            8
+          ]
+        },
+        {
+          "point": [
+            "21",
+            "13",
+            "24"
+          ],
+          "active_rows": [
+            4,
+            6,
+            9
+          ]
+        },
+        {
+          "point": [
+            "21",
+            "18",
+            "19"
+          ],
+          "active_rows": [
+            2,
+            6,
+            9
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "0",
+            "0"
+          ],
+          "active_rows": [
+            0,
+            13,
+            15
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "0",
+            "23"
+          ],
+          "active_rows": [
+            0,
+            4,
+            13
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "12",
+            "23"
+          ],
+          "active_rows": [
+            0,
+            4,
+            9
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "17",
+            "0"
+          ],
+          "active_rows": [
+            0,
+            2,
+            15
+          ]
+        },
+        {
+          "point": [
+            "22",
+            "17",
+            "18"
+          ],
+          "active_rows": [
+            0,
+            2,
+            9
+          ]
+        }
+      ]
+    }
+  ],
+  "uniform_numerator": "27963/667",
+  "max_survivor_lower": "27963/13969648"
+}

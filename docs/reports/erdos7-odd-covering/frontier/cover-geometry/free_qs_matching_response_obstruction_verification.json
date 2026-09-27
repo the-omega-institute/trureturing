@@ -1,0 +1,476 @@
+{
+  "schema": "free-qs-matching-response-obstruction-verification-v1",
+  "status": "PASS",
+  "candidate_sha256": "165a4e665809d7b05d66b6537928003b9fb392ad601229658d240c4a7b69eeba",
+  "verifier_sha256": "a35216ad474c5156a85588fba75e635a044b7e82527150947843c71bafb0254d",
+  "source640_sha256": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4",
+  "new_lean_verification": false,
+  "optimizer_used": false,
+  "check_count": 4843,
+  "checks": {
+    "schema": 1,
+    "source_pin": 1,
+    "complete_source_coefficients": 1,
+    "literal_head": 1,
+    "literal_nulls": 1,
+    "literal_role": 1,
+    "literal_corner": 1,
+    "literal_labelled_alphas": 1,
+    "strict_whole_box": 1,
+    "actual_corner_totals": 1,
+    "positive_induced_response": 2560,
+    "fees_nonnegative": 1,
+    "literal_selector_count": 1,
+    "complete_screen_evaluated": 512,
+    "exact_unit_gate": 1,
+    "positive_dual_denominator": 1,
+    "literal_dual_address": 354,
+    "nonnegative_integer_dual": 354,
+    "no_duplicate_dual_address": 354,
+    "exact_fee_budget": 512,
+    "exact_upper": 1,
+    "strict_obstruction": 1,
+    "literal_dimensions": 1,
+    "distinct_linear_original": 40,
+    "retained_common_root": 40,
+    "distinct_square_star": 15,
+    "square_star_actual_role": 15,
+    "distinct_pair_original": 40,
+    "free_qs_actual_endpoints": 10,
+    "fixed_9qs_actual_phase": 10,
+    "four_distinct_edge_firstroot_pairs": 10
+  },
+  "strict_whole_box_margin": "3268184199595333/4382751255268945",
+  "unit_gate": "-1793736311487940720438438757/82770023646214483138560000000",
+  "source_mass": "1143702682426201/2975154389707500",
+  "unit_debit": "33440609858060718292783316837/82770023646214483138560000000",
+  "universal_field_upper": "28213946244578637328303303/718489788595611832800000000000000000",
+  "upper_ceiling": "1/10000000000",
+  "target": "193/100000",
+  "dual_nonzero_count": 354,
+  "positive_cell_cap_count": 70,
+  "actual_phase_witness_count": 105,
+  "actual_phase_witness": [
+    {
+      "modulus": 3,
+      "residue": 2
+    },
+    {
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "modulus": 7,
+      "residue": 0
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 11,
+      "residue": 0
+    },
+    {
+      "modulus": 13,
+      "residue": 0
+    },
+    {
+      "modulus": 15,
+      "residue": 0
+    },
+    {
+      "modulus": 17,
+      "residue": 0
+    },
+    {
+      "modulus": 19,
+      "residue": 0
+    },
+    {
+      "modulus": 21,
+      "residue": 15
+    },
+    {
+      "modulus": 25,
+      "residue": 1
+    },
+    {
+      "modulus": 33,
+      "residue": 12
+    },
+    {
+      "modulus": 35,
+      "residue": 15
+    },
+    {
+      "modulus": 39,
+      "residue": 27
+    },
+    {
+      "modulus": 51,
+      "residue": 18
+    },
+    {
+      "modulus": 55,
+      "residue": 45
+    },
+    {
+      "modulus": 57,
+      "residue": 39
+    },
+    {
+      "modulus": 63,
+      "residue": 36
+    },
+    {
+      "modulus": 65,
+      "residue": 40
+    },
+    {
+      "modulus": 77,
+      "residue": 2
+    },
+    {
+      "modulus": 85,
+      "residue": 35
+    },
+    {
+      "modulus": 91,
+      "residue": 2
+    },
+    {
+      "modulus": 95,
+      "residue": 20
+    },
+    {
+      "modulus": 99,
+      "residue": 45
+    },
+    {
+      "modulus": 105,
+      "residue": 15
+    },
+    {
+      "modulus": 117,
+      "residue": 27
+    },
+    {
+      "modulus": 119,
+      "residue": 2
+    },
+    {
+      "modulus": 133,
+      "residue": 2
+    },
+    {
+      "modulus": 143,
+      "residue": 2
+    },
+    {
+      "modulus": 147,
+      "residue": 51
+    },
+    {
+      "modulus": 153,
+      "residue": 18
+    },
+    {
+      "modulus": 165,
+      "residue": 45
+    },
+    {
+      "modulus": 171,
+      "residue": 153
+    },
+    {
+      "modulus": 175,
+      "residue": 50
+    },
+    {
+      "modulus": 187,
+      "residue": 2
+    },
+    {
+      "modulus": 195,
+      "residue": 105
+    },
+    {
+      "modulus": 209,
+      "residue": 2
+    },
+    {
+      "modulus": 221,
+      "residue": 2
+    },
+    {
+      "modulus": 245,
+      "residue": 2
+    },
+    {
+      "modulus": 247,
+      "residue": 2
+    },
+    {
+      "modulus": 255,
+      "residue": 120
+    },
+    {
+      "modulus": 275,
+      "residue": 100
+    },
+    {
+      "modulus": 285,
+      "residue": 210
+    },
+    {
+      "modulus": 315,
+      "residue": 225
+    },
+    {
+      "modulus": 323,
+      "residue": 2
+    },
+    {
+      "modulus": 325,
+      "residue": 300
+    },
+    {
+      "modulus": 363,
+      "residue": 123
+    },
+    {
+      "modulus": 425,
+      "residue": 375
+    },
+    {
+      "modulus": 441,
+      "residue": 247
+    },
+    {
+      "modulus": 475,
+      "residue": 400
+    },
+    {
+      "modulus": 495,
+      "residue": 45
+    },
+    {
+      "modulus": 507,
+      "residue": 171
+    },
+    {
+      "modulus": 525,
+      "residue": 225
+    },
+    {
+      "modulus": 539,
+      "residue": 4
+    },
+    {
+      "modulus": 585,
+      "residue": 495
+    },
+    {
+      "modulus": 605,
+      "residue": 2
+    },
+    {
+      "modulus": 637,
+      "residue": 4
+    },
+    {
+      "modulus": 693,
+      "residue": 619
+    },
+    {
+      "modulus": 765,
+      "residue": 630
+    },
+    {
+      "modulus": 819,
+      "residue": 367
+    },
+    {
+      "modulus": 825,
+      "residue": 375
+    },
+    {
+      "modulus": 833,
+      "residue": 4
+    },
+    {
+      "modulus": 845,
+      "residue": 2
+    },
+    {
+      "modulus": 847,
+      "residue": 5
+    },
+    {
+      "modulus": 855,
+      "residue": 495
+    },
+    {
+      "modulus": 867,
+      "residue": 291
+    },
+    {
+      "modulus": 931,
+      "residue": 4
+    },
+    {
+      "modulus": 975,
+      "residue": 300
+    },
+    {
+      "modulus": 1071,
+      "residue": 241
+    },
+    {
+      "modulus": 1083,
+      "residue": 363
+    },
+    {
+      "modulus": 1089,
+      "residue": 607
+    },
+    {
+      "modulus": 1183,
+      "residue": 5
+    },
+    {
+      "modulus": 1197,
+      "residue": 934
+    },
+    {
+      "modulus": 1275,
+      "residue": 375
+    },
+    {
+      "modulus": 1287,
+      "residue": 718
+    },
+    {
+      "modulus": 1425,
+      "residue": 1350
+    },
+    {
+      "modulus": 1445,
+      "residue": 2
+    },
+    {
+      "modulus": 1521,
+      "residue": 1354
+    },
+    {
+      "modulus": 1573,
+      "residue": 4
+    },
+    {
+      "modulus": 1575,
+      "residue": 225
+    },
+    {
+      "modulus": 1683,
+      "residue": 1312
+    },
+    {
+      "modulus": 1805,
+      "residue": 2
+    },
+    {
+      "modulus": 1859,
+      "residue": 5
+    },
+    {
+      "modulus": 1881,
+      "residue": 421
+    },
+    {
+      "modulus": 1989,
+      "residue": 1771
+    },
+    {
+      "modulus": 2023,
+      "residue": 5
+    },
+    {
+      "modulus": 2057,
+      "residue": 4
+    },
+    {
+      "modulus": 2223,
+      "residue": 250
+    },
+    {
+      "modulus": 2299,
+      "residue": 4
+    },
+    {
+      "modulus": 2475,
+      "residue": 2025
+    },
+    {
+      "modulus": 2527,
+      "residue": 5
+    },
+    {
+      "modulus": 2601,
+      "residue": 580
+    },
+    {
+      "modulus": 2873,
+      "residue": 4
+    },
+    {
+      "modulus": 2907,
+      "residue": 1618
+    },
+    {
+      "modulus": 2925,
+      "residue": 2250
+    },
+    {
+      "modulus": 3179,
+      "residue": 5
+    },
+    {
+      "modulus": 3211,
+      "residue": 4
+    },
+    {
+      "modulus": 3249,
+      "residue": 724
+    },
+    {
+      "modulus": 3757,
+      "residue": 5
+    },
+    {
+      "modulus": 3825,
+      "residue": 2925
+    },
+    {
+      "modulus": 3971,
+      "residue": 5
+    },
+    {
+      "modulus": 4275,
+      "residue": 1350
+    },
+    {
+      "modulus": 4693,
+      "residue": 5
+    },
+    {
+      "modulus": 5491,
+      "residue": 4
+    },
+    {
+      "modulus": 6137,
+      "residue": 5
+    }
+  ],
+  "scope": "All cell fields theta in [0,1] for this one matching-response table, globally fixed labelled layout and actual realizable central corner. Forty cq root incidences remain. No claim about the maximum actual survivor density, all possible source constructions or unrestricted odd covering."
+}
