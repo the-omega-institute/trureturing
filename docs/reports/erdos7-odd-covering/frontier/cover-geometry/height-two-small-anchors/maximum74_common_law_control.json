@@ -1,0 +1,506 @@
+{
+  "actual_common_envelope": "98723/11026",
+  "actual_points": 272,
+  "base_weight": "134/149",
+  "coherent_queries": 1225,
+  "common_max_coherent_K": "87697/149",
+  "designated_row_before": "6",
+  "designated_row_response": "5",
+  "fixture_sha256": "2a53631631ef031c9521b3653c0832ac2fcb9e4086c8a51088f75ecc75347819",
+  "initial_bad_queries": [
+    {
+      "K": "593",
+      "center": [
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "K": "593",
+      "center": [
+        0,
+        2,
+        0,
+        1
+      ]
+    }
+  ],
+  "initial_max_K": "593",
+  "live_edges": 655,
+  "maximizing_coherent_centers": [
+    [
+      0,
+      2,
+      0,
+      0
+    ],
+    [
+      0,
+      2,
+      0,
+      1
+    ]
+  ],
+  "mixed_law": [
+    {
+      "mass": "2",
+      "point": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        0,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "mass": "581/298",
+      "point": [
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "mass": "581/298",
+      "point": [
+        0,
+        2,
+        0,
+        1
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        0,
+        2,
+        0,
+        2
+      ]
+    },
+    {
+      "mass": "179/298",
+      "point": [
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "mass": "1",
+      "point": [
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "mass": "1",
+      "point": [
+        0,
+        3,
+        0,
+        1
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        0,
+        3,
+        0,
+        3
+      ]
+    },
+    {
+      "mass": "15/298",
+      "point": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "mass": "1/2",
+      "point": [
+        1,
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "mass": "581/298",
+      "point": [
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        1,
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "mass": "15/298",
+      "point": [
+        1,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "mass": "1/2",
+      "point": [
+        1,
+        1,
+        0,
+        2
+      ]
+    },
+    {
+      "mass": "283/298",
+      "point": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "mass": "1/2",
+      "point": [
+        1,
+        2,
+        0,
+        2
+      ]
+    },
+    {
+      "mass": "1",
+      "point": [
+        1,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        1,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "mass": "1/2",
+      "point": [
+        1,
+        3,
+        0,
+        2
+      ]
+    },
+    {
+      "mass": "1",
+      "point": [
+        1,
+        3,
+        1,
+        3
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        1,
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "mass": "1/2",
+      "point": [
+        1,
+        4,
+        0,
+        2
+      ]
+    },
+    {
+      "mass": "1",
+      "point": [
+        1,
+        4,
+        1,
+        4
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        1,
+        4,
+        2,
+        4
+      ]
+    },
+    {
+      "mass": "1/2",
+      "point": [
+        2,
+        0,
+        0,
+        3
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        2,
+        0,
+        3,
+        0
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        2,
+        1,
+        3,
+        1
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        2,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        2,
+        2,
+        3,
+        2
+      ]
+    },
+    {
+      "mass": "1",
+      "point": [
+        2,
+        3,
+        1,
+        3
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        2,
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "mass": "1",
+      "point": [
+        2,
+        4,
+        1,
+        4
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        2,
+        4,
+        3,
+        4
+      ]
+    },
+    {
+      "mass": "1",
+      "point": [
+        3,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        3,
+        0,
+        4,
+        0
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        3,
+        0,
+        4,
+        5
+      ]
+    },
+    {
+      "mass": "3/2",
+      "point": [
+        3,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        3,
+        1,
+        4,
+        1
+      ]
+    },
+    {
+      "mass": "1",
+      "point": [
+        3,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        3,
+        2,
+        4,
+        2
+      ]
+    },
+    {
+      "mass": "1",
+      "point": [
+        3,
+        3,
+        1,
+        3
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        3,
+        3,
+        4,
+        3
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        3,
+        4,
+        1,
+        4
+      ]
+    },
+    {
+      "mass": "2",
+      "point": [
+        3,
+        4,
+        4,
+        4
+      ]
+    }
+  ],
+  "original_maximum": 74,
+  "original_pair_checks": 480,
+  "response_max_K": "549",
+  "response_weight": "15/149",
+  "reused_noncoherent_bound": "587",
+  "scope": "One complete actual maximum74 source and one common rational law; all1225 coherent centers checked. Noncoherent587 is reused from TB.4. Not a universal source enumeration or Lean verification.",
+  "status": "PASS",
+  "universal_bound": "99227/11026"
+}

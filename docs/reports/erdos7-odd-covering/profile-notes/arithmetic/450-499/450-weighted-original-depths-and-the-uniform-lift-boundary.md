@@ -1341,3 +1341,66 @@ Reproduce it from the repository root with explicit input and output:
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_obstruction.py --input docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_originals.json --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_obstruction.json
 ```
+
+### 12.4. Containment reduction removes this particular obstruction
+
+The452-class example does not obstruct the same supplier after a
+union-preserving reduction. For classes A=(a modulo m) and C=(c modulo n),
+with m>n, the conditions n divides m and a=c modulo n imply A is contained
+in C. Delete every original class properly contained in another original
+class. Finite descent in the numerical modulus ensures that every deleted
+class is contained in one of the retained classes. Thus the covered subset
+of the integers is EXACTLY unchanged. Numerical distinctness and oddness
+also persist; no new class or residue is introduced.
+
+For the complete numerical input of UC1, this leaves263 original classes
+and deletes189. Each deletion has a retained containing class, explicitly
+recorded in the [exact reduction data](../../../frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_containment_reduction.json).
+The four outside-only classes are still precisely0 modulo11,13,17,19.
+Take the SINGLE outside coordinate
+
+    y=24950 modulo46189,
+    (y modulo11,13,17,19)=(2,3,11,3).
+
+It belongs to the unchanged outside survivor set. Reconstructing the
+active retained phases from all263 FULL numerical originals gives exactly
+
+    (d,r)=(3,1),(5,1),(7,1),(49,3),(63,5),
+          (75,2),(105,3),(125,2),(147,2),(243,2).
+
+All other retained numerical rows have no active phase at this y. Every
+row therefore has at most one phase, and the reduced family has
+
+    F_S(y)=F_H(y)=0.                              (UC5)
+
+Since each excess summand is nonnegative, zero is also the exact global
+minimum of each reduced excess on V_A; an exhaustive search is unnecessary
+to certify that minimum. The point mass at this common y is one supported
+law for every retained numerical row. By contrast, the ORIGINAL452 classes
+at this SAME y have
+
+    F_S(y)=118982/297675>1/3,
+    F_H(y)=291596/1488375>5/48.
+
+Thus the scalar excess is not invariant under an exact preservation of the
+covered set. This leaves UC1--UC4 intact for their stated original family,
+but prevents using that example to rule out a supplier restricted to
+containment-free families or to a genuinely minimal whole cover. The263
+retained classes have no pairwise class containment; this does NOT assert
+that none is covered by a UNION of the others. No inclusion-minimality or
+universal low-excess theorem is inferred.
+
+The [numerical verifier](../../../frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_containment_reduction.py)
+checks all189 retained-containment witnesses, the unchanged outside-only
+family, all active original congruences at y, and both exact excesses. A
+separate complete outside-carrier probe also found minimum zero; UC5 and
+nonnegativity already provide the exact certificate. Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_containment_reduction.py --input docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_originals.json --output /tmp/e7_phase_containment_reduction.json
+```
+
+The unrestricted obligation remains to prove an appropriate supplier for
+every relevant reduced original family, or to use further whole-cover
+structure. This diagnostic neither supplies that quantifier nor settles
+Erdős #7, and it is not new Lean verification.
