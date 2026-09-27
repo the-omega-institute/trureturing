@@ -61603,3 +61603,454 @@ William D. Kirwin 的 *Higher Asymptotics of Laplace's Approximation*，arXiv:08
 以上是普通数学推导，未作 Lean 核认证，不主张文献检索穷尽或全球原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 196. 同一输出中的相位信息与两个噪声指数的物理剖面障碍
+
+第 192 章证明原选取输出与平滑参考之间存在密度障碍，但零阶密度差异不直接判定后验信息方差。本章把可测相位与两个宏观输出函数放进同一个选取后验的 Gram 矩阵，并计算它们与中心化计数惊奇量及同一残差平方的联合矩。这样得到的额外信息进入条件均值平方，因而能直接约束原物理方差的积分修正。
+
+**定理 196.1（相位信息下界及两个固定指数的实际剖面障碍）。** 固定原模型参数 $\beta>4/5$，保留固定振幅、全部取整、完整大小 $q$ 的选取后验及物理中心。令
+
+$$
+c_1=7c_q/4,\qquad c_2=2c_q,\qquad
+\gamma=99c_q/200.
+\tag{196.1}
+$$
+
+对原 pair 和平稳依赖 path 两种实验分别成立以下结论，所有概率误差对规定大小的确定性真实支持一致。令 $Z$ 为 (196.3) 中的中心化联合惊奇量，$I_{x,c}=\mathbb E_x[\mathbb E_x(Z\mid Y_c)^2]$，$A,\Lambda_c$ 为 (196.7) 的实际有限系数。由同一原始数组可测构造的 $\theta_{x,c}\in[0,1)$ 满足
+
+$$
+I_{x,c}-\frac{A^2}{\Lambda_c}
+\ge \frac{14}{3}-\frac8{\sqrt3}
++\frac12\left(1-\frac{\sqrt6}{2}\theta_{x,c}\right)^2-o_{\mathbb P}(1),
+\qquad c\in\{c_1,c_2\}.
+$$
+
+记 $D_{x,c}$、$R_*$ 为 (196.39)–(196.40) 的有限系数扣除量与原残余剖面，$\overline R=8/\sqrt3-25/6$。在同一原始数组上，以概率趋于一，两个通道中至少一个满足
+
+$$
+\overline R-\int_{\mathbb R}f_{x,c}(y)D_{x,c}(y)\,dy\ge\frac1{1000},
+$$
+
+且两个通道的加权绝对剖面误差之最大值至少为 $1/2000$。每个统计量只使用其自身通道的同一标量输出，没有向任一后验提供组合观测。
+
+对每条固定真实支持序列，至少一个固定指数的失败概率具有至少 $1/2$ 的上极限；本证明不指定一个对所有支持都失败的共同指数。结论不判定整个指数区间，也不排除紧邻 $\gamma$ 的另一正区间。第 163 章在 $0<c<\gamma$ 内的结论保留原范围。以下给出完整构造、联合矩与概率支付。
+
+### 196.2 The exact physical object and the inherited actual-data inputs
+
+Write lambda=Q^3, delta=Q^-1/2, phi=((1+r)log(1+r)+(1-r)log(1-r))/2, c_q=phi(1-beta)/beta. The original fixed amplitude is r. The original floors give log q=c_q lambda+O(1), log M=(c_q+phi)lambda+O(1). Put B^2=q/Q^(5/2), mathcal B=B^2 sqrt(delta)=q/Q^(11/4). For an original noise exponent c, rho_c=sigma_c mathcal B is asymptotic, up to bounded positive factors, to exp(-c lambda). No parameter in these definitions is tuned below.
+
+For a realized raw array x, I is the COMPLETE physical count window, including low and outside-core groups. On the original truncation/isolation event its counts are (k_0+jQ,l_0+jP_n), |j|<=C_0Q^2. All labels outside I remain in the exact marginal
+
+$$
+ P_x(n)=\frac{\prod_{j\in I}{C_j\choose n_j}L_j^{n_j}
+ e_{q-\sum_I n_j}(L_{\rm out})}{e_q(L_{\rm all})},\qquad
+ T_x(n)=\mathcal B^{-1}\sum_I(n_j-\mu_j)^2-V_{\rm phys}/\sqrt\delta,
+ \tag{196.2}
+$$
+$$
+ \mu_j=E_{P_x}R_j,\quad Y_c=T_x(R)+\sigma_cG,\quad
+ s_x=-\log P_x(R)-E_{P_x}[-\log P_x(R)],\quad
+ Z=s_x+(G^2-1)/2.
+ \tag{196.3}
+$$
+
+Zero-probability tuples are excluded from logarithms. The denominator is strictly positive, since all likelihoods are positive and0<q<M. G is the SAME original independent standard Gaussian residual, not a new phase or reference noise. Every proof comparison evaluates the same T, including its empirical mu and physical intercept. The full selected count prior is never replaced in the theorem statement.
+
+Let p_i be the exact common logistic calibration, sum_all p_i=q. For groups set m_j=C_jp_j, d_j=C_jp_j(1-p_j), w_j=d_j/mathcal B. Q_x denotes the calibrated product binomials on I. Write h=dP_x/dQ_x and a=||h-1||_2. The selected-law estimates of Chapters 100, 142 and 153 supply, separately for pair and stationary path and uniformly over deterministic support,
+
+$$
+ 0\le h\le C,\quad a=O_{\mathbb P}(Q^{-5/2}),\quad
+ |\mu_j-m_j|\le a\sqrt{d_j}\ (j\in I),\quad 1/4\le p_j\le3/4.
+ \tag{196.4}
+$$
+
+All uses below are on a single intersection of these actual-data events, a<=Q^-12/5, and the profile and outside bounds of Chapters 100 and 142. This intersection has probability1-o(1) uniformly in support, separately in the two experiments. Tight quantities can, if needed, be bounded by Q to make the intersection probability tend to one; this changes only polynomial margins below. No claim of probability1-o(1) is inferred from a fixed cutoff of a merely tight variable.
+
+The complete count-line likelihood and full-q two-label exchange, (192.11)–(192.12), give
+
+$$
+ \log(L_j/L_0)=j\Delta_Q,\quad |\Delta_Q|\le C Qq/M,
+ \quad \pi_j:=\mu_j/C_j,\quad |\pi_j-\pi_0|\le D_Q:=CQ^3q/M.
+ \tag{196.5}
+$$
+
+The exchange proof retains the outside symmetric coefficients: pi_j-pi_0=tanh(j Delta_Q/2)P_x(I_j+I_0=1). The common calibrated logits likewise differ by j Delta_Q, so |p_j-p_0|<=CQ^3q/M. In particular p_j(1-p_j) differs from p_0(1-p_0), bounded below by3/16, by that same exponentially small order. These estimates hold for the actual arbitrary outside environment; no distribution of pi_0 is assumed.
+
+We retain J={j:d_j>=Q^3600}, E=I\J, and the ORIGINAL logarithmic physical core H. The lattice comparison Q_x^lat uses normalized integer Gaussians of parameters (m_j,d_j) on J and exact binomials on E. The signed count-measure comparison through centered surprise power2 is
+
+$$
+ \max_{0\le k\le2}\|Q_xs_Q^k-Q_x^{\rm lat}s_{\rm lat}^k\|_{\rm TV}
+ \le C Q^{-444}.
+ \tag{196.6}
+$$
+
+TV here means total absolute signed mass. Both means used in centering surprise are exact for their respective laws. This is (142.33) and (153.47); it has no noise restriction. Its role here is transfer of bounded marked observables, not whole output-density comparison to a continuous law.
+
+The actual variance profile and core calculation in Chapter 100 and (142.7)–(142.8) give V_out=sum_(I\H)d_j/B^2<=Q^-200 with probability1-o(1), max_I w_j=O_P(sqrt(delta)), and
+
+$$
+ A=\sum_Hw_j,\quad \nu_0=2\sum_Hw_j^2,\quad
+ \kappa_3=8\sum_Hw_j^3,\quad \kappa_4=48\sum_Hw_j^4,\quad
+ \Lambda_c=\nu_0+\sigma_c^2,
+ \tag{196.7}
+$$
+$$
+ \sqrt\delta A\to g_1,\quad \sum_Hw_j^2\to g_2>0,\quad
+ \delta^{-1/2}\sum_Hw_j^3\to g_3>0,\quad
+ \delta^{-1}\sum_Hw_j^4\to g_4>0,
+ \quad \frac{g_1g_3}{g_2^2}=\frac2{\sqrt3},\quad
+ \frac{g_1g_4}{g_2g_3}=\frac{\sqrt6}{2}.
+ \tag{196.8}
+$$
+
+These g's are the integrals of successive powers of the original Gaussian profile; g_2 is called $g_0$ in Chapters 98, 100 and 101. This change of labels avoids calling its integral g_1 by the bandwidth symbol gamma. Set nu=2g_2. No amplified empirical coefficient is replaced by its deterministic limit. A=O_P(delta^-1/2), nu_0 stays bounded away from zero, kappa_3=O_P(sqrt(delta)), kappa_4=O_P(delta). The original supply at a central group has d_0 comparable to q/Q^3 with probability1-o(1). Thus, with
+
+$$
+ V_C:=\sum_I C_j^2d_j,
+ \quad e^{3c_q\lambda-O(\log Q)}\le V_C\le16q^3,
+ \quad \sum_I C_j\le4q,
+ \tag{196.9}
+$$
+
+the lower bound follows already from that central group and the upper bounds from p_j>=1/4 and sum C_jp_j<=q. Original pair/path supply is the actual-law supply of Chapter 142, not an iid substitution for path rows.
+
+### 196.3 An attained phase with a positive normalization at every array
+
+Take H_Q=ceil(q^(3/2)Q^40). Among the H_Q+1 fractional parts of0,2pi_0,...,2H_Q pi_0, two fall in one of H_Q intervals. Choose the least integer1<=p<=H_Q and a deterministic nearest integer k satisfying
+
+$$
+ \alpha=2p\pi_0-k,\qquad |\alpha|\le H_Q^{-1}.
+ \tag{196.10}
+$$
+
+This choice is measurable in the complete array x and independent of c. It is valid for atomic and rational pi_0, including alpha=0. There is no uniform-phase, genericity or Diophantine hypothesis. Define
+
+$$
+ e_j=2p\mu_j-kC_j=\alpha C_j+2pC_j(\pi_j-\pi_0),\quad
+ t=2\pi p\mathcal B,\quad \eta_c=2\pi p\rho_c,
+ \tag{196.11}
+$$
+$$
+ v_c=4\pi^2\alpha^2V_C+\eta_c^2>0,\qquad
+ \theta_c=\frac{4\pi^2\alpha^2V_C}{v_c}\in[0,1),
+ \quad
+ \zeta=2\pi p\sum_I\mu_j^2-tV_{\rm phys}/\sqrt\delta-2\pi\sum_I e_jm_j.
+ \tag{196.12}
+$$
+
+The positivity is supplied by the original sigma_c>0, not by an assumed nonzero alpha. For EVERY integer tuple, using pR_j^2 and kC_jR_j integral, there is the exact congruence
+
+$$
+ tY_c-\zeta=-2\pi\sum_I e_j(R_j-m_j)+\eta_cG\pmod{2\pi}.
+ \tag{196.13}
+$$
+
+All actual centers, including their common finite-q calibration, occur in this identity. Introduce the real normalized variables under the lattice comparison
+
+$$
+ U_c=\frac{-2\pi\alpha\sum_I C_j(R_j-m_j)+\eta_cG}{\sqrt{v_c}},\qquad
+ E_c=\frac{-4\pi p\sum_I C_j(\pi_j-\pi_0)(R_j-m_j)}{\sqrt{v_c}}.
+ \tag{196.14}
+$$
+
+For every fixed moment order r, independence inside Q_x^lat, the Gaussian/binomial centered-moment bounds and the tiny lattice mean bias give
+
+$$
+ \|E_c\|_r\le Q^{O_r(1)}q^{3/2}D_Q/\rho_c
+ =Q^{O_r(1)}e^{-(\phi-3c_q/2-c)\lambda},
+ \quad
+ v_c\le CQ^{-80}+Q^{O(1)}e^{-2(c-3c_q/2)\lambda}.
+ \tag{196.15}
+$$
+
+For the first estimate, bound the r-norm of the weighted independent count sum by a fixed constant times D_Q sqrt(V_C), plus an exponentially small lattice bias, and use sqrt(v_c)>=eta_c. The p cancels. This is why no lower bound on alpha and no multiplication of a TV error by1/v_c occurs. The second estimate uses (196.9–10). Both estimates hold with a strict exponential margin for each fixed c in(3c_q/2,phi-3c_q/2). For beta>4/5, both exponents in(196.1) lie strictly inside this interval. All subsequent bounds can therefore be intersected for those two channels on the same actual-data event.
+
+On E, d_j<Q^3600 and p_j lies in the fixed compact interval, so C_j<=CQ^3600. The contribution of E to V_C and to any fixed moment of its normalized count direction is polynomial divided by the exponential lower bound in(196.9); it vanishes exponentially. On J, the normalized variable (R_j-m_j)/sqrt(d_j) has every fixed polynomial moment equal to the corresponding standard Gaussian moment up to Ce^{-c'd_j}, uniformly in real m_j. For completeness, Poisson summation gives
+
+$$
+ \sum_{n\in\mathbb Z}e^{-(n-m)^2/(2d)}
+ =\sqrt{2\pi d}\sum_{\ell\in\mathbb Z}e^{-2\pi^2d\ell^2}e^{2\pi i\ell m}.
+ \tag{196.16}
+$$
+
+Insert a real linear source before summation and differentiate a fixed number of times at zero. The nonzero dual terms are fixed polynomials in sqrt(d)ell times e^{-2pi^2d ell^2}; their sums are bounded by Ce^{-c'd}, independently of m. The zeroth sum is positive and1+O(e^{-c'd}) after division by sqrt(2pi d). Division and the same finite differentiations prove the normalized moment assertion, including the mean bias. Products over O(Q^2) coordinates cost only a fixed power of Q for each fixed-degree moment. This is a finite polynomial-moment calculation; it does not replace the law of Y or its microscopic phase by a continuous law.
+
+Consequently U_c has uniformly bounded moments of every FIXED order, uniformly in theta_c. Its joint fixed-degree moments with the physical energy and centered lattice surprise can be computed with independent standard Gaussian variables on J and exact E factors. This statement allows data-dependent alpha,p,k because the moment estimates hold pointwise for every such set of coefficients with their displayed normalized bounds. No normal/phase is conditioned on as if it were independent.
+
+Define the actual measurable observable
+
+$$
+ F_{3,c}^{\rm raw}(y)=\frac{2[1-\cos(ty-\zeta)]}{v_c}.
+ \tag{196.17}
+$$
+
+Equations(196.13–15), the inequalities0<=2(1-cos z)<=z^2 and |2(1-cos z)-z^2|<=Cz^4, imply under Q_x^lat
+
+$$
+ \|F_{3,c}^{\rm raw}(Y_c)-U_c^2\|_r
+ \le C_rv_c+Q^{O_r(1)}e^{-\epsilon_c\lambda}
+ \tag{196.18}
+$$
+
+for each fixed r, with epsilon_c>0 on the chosen two-point set. The norm estimate uses moments of U_c+E_c, which are bounded before multiplying by v_c. It remains valid when alpha=0. Multiplication by the O(Q) norm of surprise still leaves an error far below the rates needed below.
+
+### 196.4 Bounded observables and the exact selected log h return
+
+The raw observable in(196.17) can have a large supremum. It is therefore NOT transferred by multiplying TV by1/v_c. Instead put L_Q=Q^(1/100) and define three deterministic functions of the SAME physical Y_c:
+
+$$
+ F_1(y)=\max(-L_Q,\min(y,L_Q)),\quad F_2(y)=F_1(y)^2,
+ \quad F_{3,c}(y)=\min(F_{3,c}^{\rm raw}(y),L_Q).
+ \tag{196.19}
+$$
+
+Every product F_iF_j is bounded by L_Q^4, and every F_i by L_Q^2. Under Q_x^lat all fixed moments of Y_c and F_3^raw(Y_c) are bounded on a fixed profile localization, and at worst polynomially bounded on the probability1-o(1) localization used above. The energy assertion follows by expanding moments of independent centered squares, using sum w_j^2=O_P(1), max w_j=O_P(sqrt(delta)), the exact center bound(196.4), and the E binomial moment bound. The bias is at most a^2 sum_Iw_j. Outside-core energy has every fixed r-norm at most C_r sum_(I\H)w_j plus its noncentral correction, hence is O_r(Q^-199) here. Centered lattice surprise has r-norm O_r(Q), since its O(Q^2) independent centered summands have uniformly bounded fixed moments; singleton indices vanish in an even-moment expansion.
+
+A single sufficiently large FIXED moment order, for example4000, pays clipping. Indeed for any random variable X and L>=1, E[|X|^r;|X|>L]<=L^{-(s-r)}E|X|^s for s>r. Apply this to Y_c and U_c+E_c, with Holder for the one centered-surprise factor, and (196.18). It makes all unmarked moments of the three features through degree2 and their once-marked moments differ from the unclipped polynomial calculations below by o(Q^-4). One may first fix bounds on the profile constants and then let those bounds increase; equivalently the resulting errors are o_P(Q^-4). No moment order increases with Q, and no clipping is imposed on the observation or its posterior.
+
+Here is the selected-law transfer, including its exact surprise correction. If s_Q is centered product surprise, then on h>0
+
+$$
+ s_x=s_Q-\log h-d,\qquad d=E_{P_x}s_Q-E_{P_x}\log h,
+ \quad |d|\le C a Q.
+ \tag{196.20}
+$$
+
+For0<=h<=C, with the limiting convention at0, |h log h|<=C'|h-1| and h(log h)^2<=C'(h-1)^2. The ratios are continuous at1 and bounded at0 and on the compact upper interval. Since E_Qs_Q=0 and ||s_Q||_4<=CQ, Cauchy–Schwarz yields
+
+$$
+ \|P_x-Q_x\|_{\rm TV}\le a,\quad
+ \|P_xs_x-Q_xs_Q\|_{\rm TV}\le CaQ,\quad
+ \|P_xs_x^2-Q_xs_Q^2\|_{\rm TV}\le CaQ^2.
+ \tag{196.21}
+$$
+
+To verify the last bound, expand h(s_Q-log h-d)^2-s_Q^2. Its (h-1)s_Q^2 term has norm at most a||s_Q||_4^2. The cross log term is bounded by sqrt(E_Qh(log h)^2)sqrt(E_Qh s_Q^2)<=CaQ. The d cross term costs CaQ^2; the remaining squared terms are O(a^2Q^2). These estimates are exact on the selected support, with the zero-weight convention elsewhere. They do not discard the outside coefficient or its log h contribution.
+
+Adjoin the SAME G independently before observing Y. For any bounded observable F(Y), expand Z=s+(G^2-1)/2 and Z^2. The norms of the resulting kernels are fixed Gaussian moments, independent of sigma: integral |G|^{2r}varphi(G)dG. Thus (196.6),(196.21) transfer the zeroth, first and second normalized REAL marks without inverse-noise loss. In particular the selected Gram entries differ from lattice entries by
+
+$$
+ O((a+Q^{-444})L_Q^4)=o_P(\delta),
+ \tag{196.22}
+$$
+
+and the selected centered mark covariances differ by
+
+$$
+ O((aQ+Q^{-444})L_Q^2)=o_P(\sqrt\delta).
+ \tag{196.23}
+$$
+
+These rates use a<=Q^-12/5 and are substantially stronger than the displayed requirements. Centering the observables adds only products of the same controlled expectations, because E_PZ=0 exactly. The second-mark signed measure error is O(aQ^2+Q^-444)=o_P(1); its centering uses the exact prior variance. This accounts for marks0–2, including the normalized second mark Z^2-EZ^2. We do not infer squared conditional means from unmarked TV.
+
+### 196.5 The joint moment computation on the same array
+
+For this calculation only, let X_j, j in J, and G be independent standard Gaussians; E counts remain exact and independent. This is a way to evaluate polynomial moments justified by(196.16), not a new physical observation. Write
+
+$$
+ Y_0=\sum_Hw_j(X_j^2-1)+\sigma_cG,\quad
+ Z_0=\tfrac12\sum_J(X_j^2-1)+s_E+(G^2-1)/2,
+ \tag{196.24}
+$$
+
+where s_E is the exact centered surprise of the retained low groups. The true lattice energy differs from Y_0 by outside-core energy, its exact small bias, and the noncentral linear term. With a_j=(mu_j-m_j)/sqrt(d_j), |a_j|<=a, the latter has fixed r-norm at most C_ra(sum w_j^2)^(1/2)=O_P(a), and its bias is at most a^2 sum w_j. Hence changing a moment with one Z factor costs at most O_P(Qa)+O(Q^-190), while unmarked moments cost O_P(a)+O(Q^-190). These are o_P(sqrt(delta)) and o_P(delta), respectively. Odd Gaussian contractions also vanish, but these norm bounds already suffice. All physical noncentralities are thus paid, not silently set to zero.
+
+Let U be the Gaussian polynomial-moment version of U_c. Up to exponentially small E effects, it is
+
+$$
+ U=-\operatorname{sgn}(\alpha)\sqrt{\theta_c}
+       \sum_J \frac{C_j\sqrt{d_j}}{\sqrt{V_C}}X_j
+       +\sqrt{1-\theta_c}\,G.
+ \tag{196.25}
+$$
+
+When alpha=0 the first term is zero. Its variance is1 up to the already paid E error. Define empirical ratios
+
+$$
+ r_x=\frac{\sum_H w_jC_j^2d_j}{V_C},\qquad
+ r_{2,x}=\frac{\sum_H w_j^2C_j^2d_j}{V_C}.
+ \tag{196.26}
+$$
+
+The exponentially common p_j(1-p_j) in(196.5) implies C_j^2d_j=d_j^3/[p_j(1-p_j)]^2. Outside H, sum w_j is O(Q^-199) and max w_j=O_P(sqrt(delta)), so its cubic and fourth-power contributions are negligible relative to the positive core sums. Therefore
+
+$$
+ r_x=\frac{\sum_Hw_j^4}{\sum_Hw_j^3}+o_P(\sqrt\delta),\quad
+ r_{2,x}=O_P(\delta),\quad
+ \frac{2Ar_x}{\Lambda_c}\longrightarrow\chi:=\frac{\sqrt6}{2}.
+ \tag{196.27}
+$$
+
+The error in the first relation is in fact exponentially small plus the prescribed polynomial outside error, hence remains o_P(1) after multiplication by A. The limit uses only bounded empirical ratios in(196.8), not replacement of A^2/Lambda_c.
+
+The needed Gaussian moments can be checked by expansion: E(X^2-1)^2=2, E(X^2-1)^3=8, E(X^2-1)^4=60; odd terms vanish. For U=b dot X+b_GG, covariance with a centered square is twice the corresponding squared coefficient. Applying these facts gives the complete operative table
+
+$$
+ E Y_0^2=\Lambda_c,\quad E Y_0^3=\kappa_3,\quad
+ E Y_0^4=3\Lambda_c^2+\kappa_4,
+ \quad E Z_0Y_0=A,\quad E Z_0Y_0^2=2\nu_0+\sigma_c^2,
+ \tag{196.28}
+$$
+$$
+ \operatorname{Var}(U^2)=2+o(1),\quad E Z_0(U^2-1)=1+o(1),
+ \quad E (U^2-1)Y_0=2\theta_cr_x+o(\sqrt\delta),
+ \tag{196.29}
+$$
+$$
+ E (U^2-1)(Y_0^2-EY_0^2)
+ =8\theta_cr_{2,x}+2\sigma_c^2(1-\theta_c)+o(1).
+ \tag{196.30}
+$$
+
+For the middle marked entry of(196.29), each J square contributes its squared U coefficient and the SAME G mark contributes b_G^2; their sum is1, with the negligible E direction removed. This is precisely the centered surprise covariance absent from an unmarked characteristic-modulus argument. For(196.30), the quadratic energy part contributes8sum w_j^2b_j^2; the sigma^2G^2 part contributes2sigma^2b_G^2. Cross terms vanish by parity. The E surprise is independent of the core and G, and its covariance with the normalized E part is exponentially small by Holder and(196.9). Thus every term is computed jointly, including the residual mark.
+
+Use (196.18–23) and the noncentral bounds to carry this table to the exact SELECTED law of the clipped features. All centering and orthogonalization in the remainder of the proof are under that selected law. Define
+
+$$
+ B_1=F_1-E_PF_1,\qquad
+ B_2=F_2-E_PF_2-\frac{\operatorname{Cov}_P(F_2,F_1)}{\operatorname{Var}_P(F_1)}B_1.
+ \tag{196.31}
+$$
+
+These are exactly orthogonal. Their denominators are eventually positive on probability1-o(1), because the moment table gives
+
+$$
+ \operatorname{Var}_P B_1=\Lambda_c+o_P(\delta),\quad
+ E_PZB_1=A+o_P(\sqrt\delta),
+ \tag{196.32}
+$$
+$$
+ \operatorname{Var}_PB_2=2\Lambda_c^2+\kappa_4-\kappa_3^2/\Lambda_c+o_P(1)\to2\nu^2,
+ \quad E_PZB_2=2\nu_0+\sigma_c^2-A\kappa_3/\Lambda_c+o_P(1).
+ \tag{196.33}
+$$
+
+The tiny true mean of Y is retained through centering. Algebraically orthogonalizing Y^2 against centered Y gives exactly the same second centered polynomial; its mean-dependent linear terms cancel. The stated small errors remain valid for F_1,F_2 by clipping. In particular the first projection norm is A^2/Lambda_c+o_P(1): its variance error is o_P(delta), which is essential because A^2=O_P(delta^-1). The second projection norm tends to
+
+$$
+ K=2(1-2/\sqrt3)^2=14/3-8/\sqrt3.
+ \tag{196.34}
+$$
+
+This preserves the leading term AND the known order-one macro correction; a lower bound of size A^2/Lambda alone would not suffice for the requested gain.
+
+Now center F_3 under P and project off BOTH preceding features:
+
+$$
+ B_3=F_{3,c}-E_PF_{3,c}
+ -\frac{\operatorname{Cov}_P(F_{3,c},B_1)}{\operatorname{Var}_PB_1}B_1
+ -\frac{\operatorname{Cov}_P(F_{3,c},B_2)}{\operatorname{Var}_PB_2}B_2.
+ \tag{196.35}
+$$
+
+From(196.29–33), Cov_P(F_3,B_1)=2theta_c r_x+o_P(sqrt(delta)). Its covariance with B_2 equals
+
+$$
+ 8\theta_cr_{2,x}+2\sigma_c^2(1-\theta_c)
+       -\frac{\kappa_3}{\Lambda_c}\,2\theta_cr_x+o_P(1)=o_P(1).
+ \tag{196.36}
+$$
+
+The stronger error on the first covariance is needed because its projection is paired with E ZB_1 of order delta^-1/2. We have paid that rate in(196.18),(196.23),(196.24), rather than only claiming an o(1) entry. Exact selected centering and the ratio error in the orthogonalization preserve it. Consequently
+
+$$
+ \operatorname{Var}_PB_3=2+o_P(1),\qquad
+ E_PZB_3=1-\chi\theta_c+o_P(1).
+ \tag{196.37}
+$$
+
+Every feature, denominator and covariance in(196.31–37) belongs to the same full selected law at the same x. Positivity of all three variances is now proved on the common actual-data event. No separately favorable phase is paired with a different macroscopic realization.
+
+### 196.6 New information lower bound and its physical consequence
+
+Let I_(x,c)=E_P[E_P(Z|Y_c)^2]. For any centered orthogonal functions B_i(Y_c), projection in L2(P) gives I_(x,c)>=sum_i(E_PZB_i)^2/E_PB_i^2. To verify it directly, use E[ZB_i]=E[E(Z|Y)B_i], subtract the three orthogonal projections from E(Z|Y), and expand its nonnegative squared norm. Applying the ACTUAL estimated table above yields the new bound
+
+$$
+ \boxed{\quad I_{x,c}-\frac{A^2}{\Lambda_c}
+ \ \ge\ K+\tfrac12(1-\chi\theta_{x,c})^2-o_{\mathbb P}(1),
+ \qquad \chi=\sqrt6/2.\quad}
+ \tag{196.38}
+$$
+
+Its one-sided error tends to zero in raw-data probability uniformly in deterministic support, separately for pair/path, simultaneously for c_1,c_2. More generally it holds at each fixed c in(3c_q/2,phi-3c_q/2) under the same restricted beta assumption. This is a quantitative estimate on the original selected conditional mean square; the variational identity by itself was only its final elementary step.
+
+Keep the ORIGINAL finite coefficient and residual profile
+
+$$
+ C_{x,c}=A^2\kappa_3/\Lambda_c^3-2A\nu_0/\Lambda_c^2,\qquad
+ D_{x,c}(y)=Vpost_{x,c}(y)-Vprior_x+A^2/\Lambda_c-C_{x,c}y,
+ \tag{196.39}
+$$
+$$
+ R_*(y)=29/6-3\sqrt2+(3\sqrt2+8/\sqrt3-9)y^2/\nu,
+ \quad \overline R=8/\sqrt3-25/6=1/2-K.
+ \tag{196.40}
+$$
+
+The original physical intercept is V_phys=sum_I d_j/B^2. Under Q_x, E T=mathcal B^-1 sum_I(mu_j-m_j)^2<=a^2 sum_I w_j. Cauchy–Schwarz with h-1 and the bounded second energy moment gives |E_PT-E_QT|=O_P(a). Therefore m_(x,c)=E_PY_c=O_P(a+a^2delta^-1/2), C_(x,c)=O_P(delta^-1/2), and C_(x,c)m_(x,c)=o_P(1). This smallness is proved; it is not a deterministic mean substitution. The exact C_xm_x remains in all physical expressions.
+
+The same moment comparison, using E_QY^4=O_P(1) to bound the h-1 term, gives E_PY_c^2->nu. These moments are sigma-independent estimates except for the original vanishing sigma_c; they do not require a density local limit.
+
+At each finite Q, the exact integrated variance identity, with Z in (196.3), is
+
+$$
+ \int f_{x,c}(y)D_{x,c}(y)\,dy
+ =\tfrac12-I_{x,c}+A^2/\Lambda_c-C_{x,c}m_{x,c}.
+ \tag{196.41}
+$$
+
+It follows by integrating b/f-(a/f)^2+1/2, where a(y)dy=E[Z;Y in dy], b(y)dy=E[Z^2-EZ^2;Y in dy]. The full mixture density is positive for every y because sigma_c>0; a^2/f is bounded by the integrable second-mark density. Thus the nonlinear conditional mean square and both normalized real derivatives, not only unmarked TV, enter the identity. The exact prior varentropy and all outside coefficients stay in it.
+
+Combining(196.38),(196.41), with Dint_(x,c)=integral f_(x,c)D_(x,c), gives
+
+$$
+ \overline R-Dint_{x,c}
+ \ge\tfrac12(1-\chi\theta_{x,c})^2-o_{\mathbb P}(1).
+ \tag{196.42}
+$$
+
+It remains to pay an actual probability for a NONZERO gain. No probability law for alpha is needed. The SAME chosen p,k,alpha,V_C apply at c_1 and c_2. If theta_(c_1)<=2/3, then |1-chi theta_(c_1)|>=1/6, since chi<5/4. Otherwise alpha is nonzero, and the exact odds relation is
+
+$$
+ \frac{\theta_{c_2}}{1-\theta_{c_2}}
+ =\frac{\theta_{c_1}}{1-\theta_{c_1}}
+       \left(\frac{\rho_{c_1}}{\rho_{c_2}}\right)^2.
+ \tag{196.43}
+$$
+
+The rightmost factor tends to infinity exponentially, so theta_(c_2)>=11/12 eventually in this case. Since chi>6/5, |1-chi theta_(c_2)|>=1/10. These alternatives are pointwise on every array, including the alpha=0 case in the first branch. Consequently max_a (1/2)(1-chi theta_(c_a))^2>=1/200 eventually. Intersecting the two already paid error events in(196.42) proves
+
+$$
+ \boxed{\quad
+ \inf_{S\ {\rm legal}}P_S\!\left\{
+ \max_{a=1,2}(\overline R-Dint_{x,c_a})\ge1/1000
+ \right\}\longrightarrow1 .\quad}
+ \tag{196.44}
+$$
+
+This statement is separate for actual stationary pairs and stationary paths. It averages the actual raw-data law, without conditioning on a favorable selected phase or using independent path rows. The only union is over two fixed original channels. All data regularity costs have probability o(1); no such cost is multiplied by inverse noise or an exponential harmonic volume.
+
+Because E_PY_c^2->nu, integral f_(x,c)R_*->overline R simultaneously for the same pair. The elementary all-output inequality |integral f(D-R_*)|<=integral f|D-R_*| then strengthens the consequence to
+
+$$
+ \inf_{S\ {\rm legal}}P_S\!\left\{
+ \max_{a=1,2}\int_{\mathbb R}f_{x,c_a}(y)
+        |D_{x,c_a}(y)-R_*(y)|\,dy\ge1/2000
+ \right\}\longrightarrow1.
+ \tag{196.45}
+$$
+
+This is the SAME weighted absolute profile in the original target. There is no inference in the reverse direction from the necessary integrated condition to a positive profile theorem; here an integrated failure forces a profile failure. If a stronger nonnegative output weight is required, its error is at least this one. For each deterministic support sequence, P(E_1)+P(E_2)>=P(E_1 union E_2)->1. Hence max{limsup P(E_1),limsup P(E_2)}>=1/2. This proves the stated fixed-member subsequence consequence; it does not identify a single member that fails uniformly for every support, nor a whole interval of failures.
+
+The microscopic correction can vanish near theta=1/chi for ONE channel. The two-exponent argument handles this without inventing a calibration distribution. A positive theorem near gamma, a classification for each fixed high c, beta<=4/5, endpoints, and an upper bound identifying the entire microscopic information remain open.
+
+
+### 196.7 来源、迁移条件与未解范围
+
+第 100 章提供原 Gaussian 方差剖面、对数核心及实际有限系数；第 142、153 章提供精确选取律、完整低群与带中心惊奇量的格点比较；第 192 章提供完整计数线与全 $q$ 的两标签交换身份。本章保留它们的实际数据事件、物理中心和原残差。新增推导是有界相位观测的联合矩及选取律返回、三维正交投影的增益，以及同一数组上两个固定噪声指数的概率结论。
+
+Dytso–Poor–Shamai 的 *A General Derivative Identity for the Conditional Mean Estimator in Gaussian Noise and Some Applications*，arXiv:2104.01883v1，主定理及附录 A，讨论满足 $U-X-Y$ Markov 关系、独立非退化 Gaussian 噪声及相应条件可积性的均值导数身份。纯计数标记 $U=s_x(R)$、$X=T_x(R)$ 满足该 Markov 关系；本章含同一个 $G^2$ 的联合标记 $Z$ 不满足。因此该来源仅承担经典条件均值方法及其适用边界的归属，本章对 $Z$ 的联合矩、归一化身份和投影不援引其定理。两个噪声指数的比较完全由 (196.43) 的精确 odds 关系承担。
+
+Poisson 求和、固定 Gaussian 矩与 Hilbert 空间正交投影是经典工具。这里没有经验相位均匀分布假设，也没有把 theta 身份当作实际相位衰减定理。一个固定高噪声指数的完整分类、$\beta\le4/5$、各端点、邻近 $\gamma$ 的正区间及全部微观信息的匹配上界仍未解决。本章为普通数学推导，未作 Lean 核验，不主张检索穷尽或全球原创性。
+
+## 追加锚（本行以下为增补区）

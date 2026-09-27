@@ -6411,3 +6411,13 @@ William D. Kirwin，*Higher Asymptotics of Laplace's Approximation*，[arXiv:081
 第 169、171、174、179、182、184、186 章按各自范围复用。Gaussian 条件化、Stieltjes 单调性、秩一与 Schur 补身份、Rouché 原理及解析 Laplace 方法属于经典工具。新综合不等于全球原创性；本文不作 Lean 认证，也不从负实场零点排除区推出全部左半平面或振荡区域的结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 196. 同一残差标记下的相位信息与物理剖面障碍
+
+对应 `PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md` 第 196 章。Dytso–Poor–Shamai，*A General Derivative Identity for the Conditional Mean Estimator in Gaussian Noise and Some Applications*，arXiv:2104.01883v1（[原始版本](https://arxiv.org/abs/2104.01883v1)），主定理与附录 A 的条件均值求导以 $U-X-Y$ Markov 结构、独立满秩 Gaussian 噪声及相应可积性为条件。原始 TeX 的主定理和完整附录证明已核对；正文所需纯计数标记符合该结构，含同一噪声平方的联合标记不符合。故不将该来源的定理迁移为联合标记的导数、I-MMSE 或噪声单调性结论。
+
+第 100 章的 Gaussian 方差剖面与有限系数、第 142、153 章的带标记选取律比较及第 192 章的完整计数线身份是模型内前置。Poisson 求和、Gaussian 固定矩和正交投影的经典身份在第 196 章按实际参数使用；新增关系是可测相位、两个宏观观测和中心联合惊奇量在同一选取律下的 Gram 估计，及其导出的条件均值平方增益。低群、外部对称系数、精确中心及同一个残差均保留。
+
+物理结论只断言：原 $\beta>4/5$ 下，对 $c_1=7c_q/4,c_2=2c_q$，同一原始数组上，两个通道的积分修正偏差之最大值以概率趋于一有固定正下界，最大加权剖面误差也有固定下界；pair/path 分别对确定性支持一致。它不指定一个对所有支持统一失败的指数，不反驳每个指数，不否定紧邻 $\gamma=99c_q/200$ 的正区间。有限来源核对不构成全球原创性判断，普通推导不冒充 Lean 认证。
+
+## 追加锚（本行以下为增补区）
