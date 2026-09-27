@@ -307,6 +307,20 @@ def resolveIncludedDeclaration (env : Environment) (moduleName selector : String
 def closedExpression (expression : Expr) : Bool :=
   !expression.hasFVar && !expression.hasMVar && !expression.hasLooseBVars
 
+/-- Render deferred errors while their Meta context still exists, including
+the phase and operation that exhausted its heartbeat budget. -/
+def runReportMeta (env : Environment) (phase : String) (action : MetaM α)
+    (heartbeatBudget : Nat := 0) : IO α := do
+  let action : MetaM α := tryCatchRuntimeEx action fun error => do
+    let message ← addMessageContextFull error.toMessageData
+    throw <| Exception.error Syntax.missing m!"{phase}: {message}"
+  let options := ({} : Options).setBool `debug.moduleNameAtTimeout true
+  let options := if heartbeatBudget == 0 then options else
+    options.set `maxHeartbeats heartbeatBudget
+  return (← action.run' |>.toIO
+    { fileName := phase, fileMap := default,
+      options, maxHeartbeats := heartbeatBudget * 1000 } { env }).1
+
 /-- This checks one declared relationship, not the usefulness or classification of a module. -/
 def closedNegation (env : Environment) (input : ModuleInput) (utility : UtilityInput) : IO Bool := do
   if utility.resultModule != input.moduleName || utility.claimGid == utility.resultGid then return false
@@ -322,7 +336,7 @@ def closedNegation (env : Environment) (input : ModuleInput) (utility : UtilityI
     let expected := mkApp (mkConst ``Not) (mkConst claim.name)
     if !(← Meta.isDefEq result.type expected) then return false
     return ← Meta.isDefEq (← Meta.inferType result.value) expected
-  return (← check.run' |>.toIO { fileName := "<utility-refutation>", fileMap := default } { env }).1
+  runReportMeta env s!"utility-refutation:{utility.resultModule}.{utility.resultSelector}" check
 
 elab "informationMaterialWriterProgram" : term => do
   let path := (System.FilePath.mk (← getFileName)).parent.getD "." / "materials.py"
@@ -599,12 +613,9 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
     let driver ← IO.ofExcept <| env.evalConstCheck (Array Name → MetaM (Array Json)) {}
       typeName producerName
-    -- The complete imported join runs in one MetaM transaction, not one per module.
     let heartbeatBudget := max 200000 (inputs.size * 1000)
-    let options := ({} : Options).set `maxHeartbeats heartbeatBudget
-    let (bindings, _) ← (driver (inputs.map (·.moduleName.toName))).run' |>.toIO
-      { fileName := "<information-template-join>", fileMap := default,
-        options, maxHeartbeats := heartbeatBudget * 1000 } { env }
+    let bindings ← runReportMeta env "information-template-join"
+      (driver (inputs.map (·.moduleName.toName))) heartbeatBudget
     return bindings
   throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
 
