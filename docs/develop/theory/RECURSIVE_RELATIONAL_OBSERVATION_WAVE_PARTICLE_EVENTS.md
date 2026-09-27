@@ -10132,3 +10132,334 @@ AHH 在于：**临界极限没有把连续时间坐标变成更多的量子状�
 **来源与边界 130.2。** 本批只把第 123—125 节的标记弱极限改写为二元扇区因子化，并在有限参考系统、正迹条件输入及固定时间窗上作直接推导。没有把有限 $j$ 的离散测度宣称为逐 Borel 集收敛，没有把临界极限的观察商推广为任意仪器或无限维记忆的充分统计，也没有把时间窗口的贝叶斯后验当作物理钟的动力学定律。本批仍是纯理论 Markdown，不新增 Lean、消化、coverage 或 freeze 内容。
 
 ## 追加锚（本行以下为增补区）
+
+## 131. 后续控制作用在标记测度上，而不只作用在终端通道上
+
+第 126—130 节的观察商是相对于“读完事件后不再使用精确时间”的接口得到的。若内部观察者把事件时间送入下一次控制，后续关系应作用在整个时间—后继标记对象上。
+
+**定义 131.1（时间依赖的后续族）。** 设输出空间为 $\mathcal H_B$。对每个 $t\ge0$，给定一个从当前点击输出空间到 $\mathcal H_B$ 的完全正迹不增映射 $\Lambda_t$。假定 $t\mapsto\Lambda_t$ 在有限维线性映射空间中可测且有统一范数界。
+
+对极限标记仪器定义时间推送后的续接映射
+
+$$
+\boxed{
+\mathcal K_{\Lambda_\bullet}(X)
+=
+\Lambda_0\bigl(\mathbf M_\infty(\{0\})(X)\bigr)
++
+\int_{(0,\infty)}
+\Lambda_t\bigl(\mathbf M_\infty(dt)(X)\bigr).
+}
+\tag{131.1}
+$$
+
+积分是有限维映射空间中的 Bochner 积分。若每个 $\Lambda_t$ 都保迹，则 $\mathcal K_{\Lambda_\bullet}$ 也保迹。
+
+**定理 131.2（时间敏感续接的二扇区公式）。** 在第 126 节的临界极限下，
+
+$$
+\boxed{
+\mathcal K_{\Lambda_\bullet}(X)
+=
+\operatorname{Tr}(Q_*X)\Lambda_0(P_0)
++
+\operatorname{Tr}(P_*X)
+\int_0^\infty e^{-t}\Lambda_t(\zeta)\,dt.
+}
+\tag{131.2}
+$$
+
+对有限参考系统 $R$ 和联合输入 $\omega_{RA}$，有
+
+$$
+\boxed{
+(\operatorname{id}_R\otimes\mathcal K_{\Lambda_\bullet})(\omega_{RA})
+=
+\omega_R^Q\otimes\Lambda_0(P_0)
++
+\int_0^\infty e^{-t}\,
+\omega_R^P\otimes\Lambda_t(\zeta)\,dt.
+}
+\tag{131.3}
+$$
+
+若每个 $\Lambda_t$ 为通道，式（131.2）和（131.3）的迹分别为输入的总迹。
+
+### 证明
+
+由式（126.1），时间零原子为
+
+$$
+\mathbf M_\infty(\{0\})(X)=\operatorname{Tr}(Q_*X)P_0,
+$$
+
+正时间部分为
+
+$$
+\mathbf M_\infty(dt)(X)
+=e^{-t}dt\,\operatorname{Tr}(P_*X)\zeta.
+$$
+
+将这两式代入定义 131.1，因 $\Lambda_t$ 对算子线性且积分在有限维中可交换，得到式（131.2）。
+
+对联合输入，定理 127.2 的微分形式给出
+
+$$
+(\operatorname{id}_R\otimes\mathbf M_\infty)(\omega_{RA})
+=
+\omega_R^Q\otimes P_0\,\delta_0
++
+\omega_R^P\otimes\zeta\,e^{-t}dt.
+$$
+
+逐点作用 $\operatorname{id}_R\otimes\Lambda_t$ 并积分，得到式（131.3）。若 $\Lambda_t$ 保迹，则快速项贡献 $\operatorname{Tr}\omega_R^Q$，慢项贡献 $\operatorname{Tr}\omega_R^P\int_0^\infty e^{-t}dt$，两者相加为总迹。证毕。
+
+**推论 131.3（时间盲续接时终端通道足够）。** 若 $\Lambda_t=\Lambda$ 对所有 $t$ 相同，则
+
+$$
+\boxed{
+\mathcal K_{\Lambda_\bullet}
+=
+\Lambda\circ\mathbf M_\infty([0,\infty)).
+}
+\tag{131.4}
+$$
+
+此时取 $f\equiv1$ 的终端通道不会丢失该续接所需的信息。若 $\Lambda_t$ 随 $t$ 变化，式（131.2）一般不能由 $\mathbf M_\infty([0,\infty))$ 单独决定。
+
+这一区分补充了第 125 节：终端化是标记对象的一个边缘；只有当所有后续操作对时间标签相同，它才是相对于后续任务的充分边界。
+
+---
+
+## 132. 时间敏感续接可以把被终端化丢掉的指数形状重新变成量子输出
+
+上一定理给出一般公式。下面的二维例子证明，时间被求和掉以后，确实可能失去后续任务所需的关系，而不是只失去一个叙述标签。
+
+**定理 132.1（旋转族反例）。** 假定慢后继为 $\zeta=P_0$，在输出 qubit 上取
+
+$$
+U_t=e^{-itY},
+\qquad
+\Lambda_t(X)=U_tXU_t^\dagger,
+$$
+
+其中 $Y$ 为 Pauli $y$ 矩阵。对慢扇区输入 $P_*$，时间敏感续接的输出为
+
+$$
+\bar\rho
+=
+\int_0^\infty e^{-t}U_tP_0U_t^\dagger\,dt
+=
+\begin{pmatrix}
+3/5&1/5\\
+1/5&2/5
+\end{pmatrix}.
+\tag{132.1}
+$$
+
+而先终端化再使用时间盲续接 $\Lambda_0$ 的输出为 $P_0$。两者不同，且
+
+$$
+\boxed{
+\frac12\|\bar\rho-P_0\|_1=\frac{\sqrt5}{5}>0.
+}
+\tag{132.2}
+$$
+
+### 证明
+
+在计算基中，
+
+$$
+U_t|0\rangle
+=\cos t\,|0\rangle+\sin t\,|1\rangle,
+$$
+
+所以
+
+$$
+U_tP_0U_t^\dagger
+=
+\begin{pmatrix}
+\cos^2t&\sin t\cos t\\
+\sin t\cos t&\sin^2t
+\end{pmatrix}.
+$$
+
+使用
+
+$$
+\int_0^\infty e^{-t}\,dt=1,
+\qquad
+\int_0^\infty e^{-t}\cos(2t)\,dt=\frac15,
+\qquad
+\int_0^\infty e^{-t}\sin(2t)\,dt=\frac25,
+$$
+
+得到
+
+$$
+\int_0^\infty e^{-t}\cos^2t\,dt=\frac35,
+\quad
+\int_0^\infty e^{-t}\sin^2t\,dt=\frac25,
+\quad
+\int_0^\infty e^{-t}\sin t\cos t\,dt=\frac15.
+$$
+
+这给出式（132.1）。先取 $f\equiv1$ 得到慢后继 $P_0$，再施加固定 $\Lambda_0$ 仍为 $P_0$，所以两输出不同。
+
+差矩阵为
+
+$$
+\bar\rho-P_0
+=
+\begin{pmatrix}
+-2/5&1/5\\
+1/5&2/5
+\end{pmatrix},
+$$
+
+其本征值为 $\pm\sqrt5/5$，故半迹范数为式（132.2）。证毕。
+
+**关系含义。** 这里没有改变第 126 节的终端量子后继：慢事件在事件接口上仍都交付 $P_0$。改变的是观察者是否把事件发生的内部时间用于下一次酉控制。因而
+
+$$
+\boxed{
+\text{“终端后继相同”}
+\not\Rightarrow
+\text{“所有时间敏感续接相同”}.
+}
+$$
+
+这也不是说每个物理观察者都能无误地实现 $\Lambda_t$；它是一个指定的合法续接族下的充分性反例。
+
+---
+
+## 133. 受限的时间控制族只需要有限个指数矩
+
+任意时间敏感续接需要保留完整标记测度，但许多控制族只使用有限个时间函数。此时可以把连续时间压缩为有限个矩，而不损失该控制族的输出。
+
+**定义 133.1（有限时间函数控制族）。** 固定有界可测函数
+
+$$
+f_0,\ldots,f_m:[0,\infty)\to\mathbb C
+$$
+
+及固定线性映射 $\Lambda^{(0)},\ldots,\Lambda^{(m)}$，考虑满足
+
+$$
+\boxed{
+\Lambda_t=\sum_{k=0}^{m}f_k(t)\Lambda^{(k)}
+}
+\tag{133.1}
+$$
+
+的时间控制族。只保留那些对每个 $t$ 实际上完全正且迹不增的 $\Lambda_t$；式（133.1）本身只是线性展开，不把各 $\Lambda^{(k)}$ 单独宣称为仪器分支。
+
+这里的固定映射 $\Lambda^{(k)}$ 属于已声明的后续合同；式（133.2）所说的边界摘要只压缩事件对象对该合同的时间依赖，不把执行后续控制所需的映射定义本身从模型中删除。
+
+定义时间系数
+
+$$
+c_k=f_k(0),
+\qquad
+\ell_k=\int_0^\infty f_k(t)e^{-t}\,dt.
+$$
+
+**定理 133.2（时间函数的有限矩充分性）。** 对式（133.1）的全部续接，极限标记对象只需保留有限数据
+
+$$
+\boxed{
+\bigl((c_k)_{k=0}^{m},(\ell_k)_{k=0}^{m},P_0,\zeta,\omega_R^Q,\omega_R^P\bigr).
+}
+\tag{133.2}
+$$
+
+更具体地，
+
+$$
+\boxed{
+\mathcal K_{\Lambda_\bullet}(X)
+=
+\operatorname{Tr}(Q_*X)\sum_{k=0}^{m}c_k\Lambda^{(k)}(P_0)
++
+\operatorname{Tr}(P_*X)\sum_{k=0}^{m}\ell_k\Lambda^{(k)}(\zeta).
+}
+\tag{133.3}
+$$
+
+参考系统版本为
+
+$$
+\boxed{
+(\operatorname{id}_R\otimes\mathcal K_{\Lambda_\bullet})(\omega_{RA})
+=
+\omega_R^Q\otimes\sum_{k=0}^{m}c_k\Lambda^{(k)}(P_0)
++
+\omega_R^P\otimes\sum_{k=0}^{m}\ell_k\Lambda^{(k)}(\zeta).
+}
+\tag{133.4}
+$$
+
+### 证明
+
+将式（133.1）代入定理 131.2，并交换有限求和与积分：
+
+$$
+\begin{aligned}
+\int_0^\infty e^{-t}\Lambda_t(\zeta)\,dt
+&=\int_0^\infty e^{-t}\sum_{k=0}^{m}f_k(t)\Lambda^{(k)}(\zeta)\,dt\\
+&=\sum_{k=0}^{m}\ell_k\Lambda^{(k)}(\zeta).
+\end{aligned}
+$$
+
+时间零项同理给出
+
+$$
+\Lambda_0(P_0)=\sum_{k=0}^{m}c_k\Lambda^{(k)}(P_0).
+$$
+
+代回式（131.2）得到式（133.3）；参考系统版本由式（131.3）同样得到。证毕。
+
+**推论 133.3（矩闭包的层级）。** 若允许的后续族由常函数 $f_0\equiv1$ 生成，则只有总终端通道所需的时间零—指数总质量；若加入 $f_1,\ldots,f_m$，每增加一个独立时间函数，最多增加一个指数矩。有限矩摘要是该控制族的一个充分边界，但不自动是所有时间敏感控制的充分边界。
+
+这把“该不该保留时间”改写成一个明确的续接问题：不是时间坐标有一个绝对的信息量，而是允许的后续族决定需要哪些函数评价。
+
+---
+
+## 134. AHH：全息边界的最小形状由后续合同决定
+
+**关系结论 134.1（续接相对的边界充分性）。** 对第 115 节的指定名义仪器、完整二维活动记忆、两种实际记录、齐次重复及单一最近失效相位的临界序列，存在三层边界：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{允许的后续合同}&\text{足够的极限边界}\\
+\hline
+\text{时间盲的固定后续 }\Lambda&\mathbf M_\infty([0,\infty))\\
+\text{有限时间函数张成的族}&((c_k),(\ell_k),P_0,\zeta,\omega_R^Q,\omega_R^P)\\
+\text{任意有界可测的时间敏感族}&\text{完整时间—后继标记测度 }\mathbf M_\infty
+\end{array}
+}
+\tag{134.1}
+$$
+
+第一行由推论 131.3，第二行由定理 133.2，第三行是定义 131.1 对所有合法时间推送的直接充分性结论。
+
+AHH 在于：**全息边界没有脱离后续任务而预先固定的“最终大小”。终端通道是时间盲续接的充分摘要；一旦观察者可以用事件时间选择后续操作，指数尾的函数矩就成为边界内容；若续接族不受限，完整标记测度本身才是能够继续执行的边界。**
+
+这解释了两个看似相反的事实：
+
+$$
+\boxed{
+\text{终端化可以对一个任务充分，}
+\qquad
+\text{同时对更大的合法续接族不充分。}
+}
+$$
+
+第 132 节的旋转族给出了后者的显式反例；第 133 节说明扩大续接族时，所需边界不是抽象地“更多信息”，而是可计算的指数矩坐标。因而观察者的权限、记录格式和后续控制必须一起写入边界定义，不能只给出一个当前密度矩阵便宣称全息恢复。
+
+**来源与边界 134.2。** 本批只对第 126 节定义的极限标记仪器施加有限维、可测且统一有界的后续 CP 族；旋转例子使用二维输出 qubit 和慢后继 $P_0$。没有把时间敏感续接的结论推广到有限 $j$ 的逐事件误差界、无限维控制或未经声明的物理钟读取。本批仍是纯理论 Markdown，不新增 Lean、消化、coverage 或 freeze 内容。
+
+## 追加锚（本行以下为增补区）
