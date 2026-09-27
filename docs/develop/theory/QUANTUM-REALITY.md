@@ -65173,3 +65173,469 @@ $$
 于是这些点的 $V_0,V_1$ 内点簇只有 $\{0\}$，而 $F$ 的内点簇为 $[0,h]$；沿着 $F\to h$ 的内点序列，$E_0$ 和 $E_1$ 趋于 $h$，尽管边界值为零。故连续零边界误差和边界簇等结论不能把阈值降到一。这里的 $n\ge2$ 是这些连续误差及簇结论的深度阈值，并非对 $V_n\to F$ 的极限序列另加一个起始指标限制。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 430. 乘积密度树上有界报酬的统一有限深度
+
+**定义 430.1（完备坐标树与加性效果树）。** 固定整数 $k\ge1$、$d_i\ge1$ 以及 $0\le H<\infty$。记
+
+$$
+\mathcal D_d=\{P\in\operatorname{Herm}(\mathbb C^d):P\succeq0,\ \operatorname{tr}P=1\},
+\qquad X_{\mathbf d}=\prod_{i=1}^k\mathcal D_{d_i}.
+$$
+
+以 $A\in X_{\mathbf d}$ 为根的坐标树是逐棵有限的有根树，每个节点 $v$ 带有 $P_v\in X_{\mathbf d}$。每个内部节点选择一个坐标 $i$，并作有限非空分解
+
+$$
+P_{v,i}=\sum_j\lambda_{vj}P_{vj,i},\qquad
+\lambda_{vj}\ge0,\qquad\sum_j\lambda_{vj}=1,
+\qquad P_{vj,h}=P_{v,h}\quad(h\ne i).
+$$
+
+所有子节点（包括零权重子节点）均保留。允许提前终止和单例分解。深度是根到叶最长路径上的内部节点数，单例节点也计数。叶子 $\ell$ 的权重 $w_\ell$ 是沿边权重的乘积。对任意 $g:X_{\mathbf d}\to[0,H]$，置
+
+$$
+\operatorname{val}_g(\mathsf T)=\sum_{\ell\text{ 为叶}}w_\ell g(P_\ell),\qquad
+T_n^g(A)=\sup_{\operatorname{depth}(\mathsf T)\le n}\operatorname{val}_g(\mathsf T),
+$$
+$$
+T_\infty^g(A)=\sup_{n\ge0}T_n^g(A),
+\qquad e_n^g(A)=T_\infty^g(A)-T_n^g(A).
+$$
+
+加性效果树在每个节点带正半定局部因子 $X_{v,i}$，根因子为 $X_{\varnothing,i}=A_i$；$i$-分裂把 $X_{v,i}$ 换成和为它的正半定因子 $X_{vj,i}$，其余坐标保持不变。若叶子所有迹都为正，令
+
+$$
+a_{\ell,i}=\operatorname{tr}X_{\ell,i},\qquad P_{\ell,i}=X_{\ell,i}/a_{\ell,i},
+$$
+
+叶报酬为 $(\prod_i a_{\ell,i})g(P_\ell)$。若有一个迹为零，则该叶报酬定义为零，不对该坐标作除法。这些是效果的数学坐标；其迹权重不必是未知输入下的条件概率。所有终端分支及其精确加性等式都保留，不对成功子树作条件化。
+
+对正整数元组 $\mathbf r=(r_1,\ldots,r_k)$，令
+
+$$
+\Omega_{\mathbf r}=(I_{r_i}/r_i)_i,
+\qquad
+E_n^{\mathrm{USC}}(M;\mathbf r)=
+\sup_{f:X_{\mathbf r}\to[0,M]\ \mathrm{上半连续}}e_n^f(\Omega_{\mathbf r}).
+$$
+
+在 $X_{\mathbf r}$ 上取各坐标算子范数最大值的度量。对任意 $f:X_{\mathbf r}\to[0,M]$，定义
+
+$$
+K_f=\{(z,t):z\in X_{\mathbf r},\ 0\le t\le f(z)\},
+\qquad
+\overline f(z)=\max\{t:(z,t)\in\overline{K_f}\},
+$$
+
+其中闭包取于 $X_{\mathbf r}\times[0,M]$ 的最大积度量。下文证明该纤维最大值存在，且给出 $f$ 的最小上半连续主函数。
+
+**假设 430.2（原五射线恢复接口）。** 物理推论完全采用五射线操作约定。已知 $r>0$ 且 $1/2<r^2<2$，令
+
+$$
+\omega=e^{2\pi i/3},\quad s_1=|0\rangle,\quad s_2=|1\rangle,\quad
+s_{3+j}=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}\ (j=0,1,2),
+$$
+$$
+q_i=s_i\otimes s_i,\qquad J|i\rangle=|i\rangle\otimes q_i.
+$$
+
+系统为 $S=\mathbb C^5$，原始记录因子为 $R_A=R_B=\mathbb C^2$。每个允许协议是有限深度的、逐棵有限的局部完全正仪器树：工作空间有限维，分支迹不增加，每个仪器各分支之和保迹；允许任意有限局部量子和经典记忆、非零有限维输出、与输入及参考独立的乘积辅助态、局部丢弃、粗粒完全正结果、后来遗忘的真实历史、任一方的重复操作、双向经典通信、零分支、单例通道、提前停止和不等叶深。下一操作只能使用当时实际可用的信息，局部量子控制包含在行动方的完全正映射内。禁止共享纠缠、量子通信及终端反馈前对 $S$ 的操作。仪器在原始完整记录空间上完备，不预设向对称子空间的物理压缩。
+
+路径深度是路径上局部仪器节点数的最大值，单例通道也计数。纯经典消息和记账以及 $S$ 的终端酉反馈不计数；记账伴随的实际局部量子操作计入。每个真实历史 $\ell$ 有最终实际标签 $y(\ell)$。被遗忘历史可以为求和保留，却不能重新成为控制；隐藏 Kraus 指标不是实际结果。含全部剩余记忆的记录分支 $\mathcal I_\ell$ 的输出空间记为 $O_\ell$，并定义
+
+$$
+\mathcal M_\ell(X)=\operatorname{Tr}_{O_\ell}
+[(\operatorname{id}_S\otimes\mathcal I_\ell)(JXJ^\dagger)],
+\qquad
+\mathcal M_y=\sum_{\ell:y(\ell)=y}\mathcal M_\ell.
+$$
+
+固定一组被接受的实际标签，并为每个标签指定一个作用在整个 $S$ 上的酉 $U_y$。存在同一 $p\in[0,1]$ 使
+
+$$
+\mathcal T(X)=\sum_{y\ \mathrm{accepted}}U_y\mathcal M_y(X)U_y^\dagger=pX
+\quad(X\in\mathcal L(S)),
+$$
+$$
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})=pX_{FS}
+$$
+
+对每个有限维未操作参考 $F$ 及所有 $X_{FS}$ 成立。同一实际标签下的所有历史和隐藏项共用一个 $U_y$。控制与反馈可依赖已知 $r$，不可依赖未知输入或参考。所有失败历史保留在完整仪器内。记深度至多 $n$ 的成功概率上确界为 $p_n(r)$，逐棵有限协议的上确界为 $\eta_{\mathrm{fin}}(r)$。
+
+定义
+
+$$
+\kappa(r)=\frac{\sqrt{4+2(r^2+r^{-2})}}3,\qquad
+h(r)=\frac1{3(1+\kappa(r))},\qquad H_0=\frac1{3+2\sqrt2},
+$$
+$$
+\mathcal S_r=\{(P_x,P_y):\|x\|=\|y\|=1,\quad
+\langle q_i|P_x\otimes P_y|q_i\rangle=h(r)\ (1\le i\le5)\},
+$$
+$$
+V_{0,r}=h(r)\mathbf1_{\mathcal S_r}
+\quad\text{定义在 }\mathcal D_2\times\mathcal D_2\text{ 上}.
+$$
+
+这里的坐标是归一化的累计输入效果，而不是后测量条件态。
+
+**定理 430.3（支撑归一化、移位正则化与统一有限深度）。** 定义 430.1 的两种树有保持深度和报酬的相互翻译。对固定 $k,\mathbf d,H$，有
+
+$$
+\boxed{\displaystyle
+\lim_{n\to\infty}\sup_{A\in X_{\mathbf d}}
+\sup_{g:X_{\mathbf d}\to[0,H]}
+\bigl(T_\infty^g(A)-T_n^g(A)\bigr)=0.}
+$$
+
+$g$ 不需满足任何正则性或可测性。更精确地，对每个固定 $\mathbf r,M$，$E_n^{\mathrm{USC}}(M;\mathbf r)\to0$。若 $S_i=\operatorname{ran}A_i$、$r_i=\dim S_i$，先把 $g$ 限制到 $X_S=\prod_i\mathcal D(S_i)$，只在 $S_i$ 上使用逆，置
+
+$$
+\psi_i(B_i)=\frac{A_i^{1/2}B_iA_i^{1/2}}{\operatorname{tr}(A_iB_i)},\qquad
+f_A(B)=\left[\prod_i r_i\operatorname{tr}(A_iB_i)\right]g(\psi(B)).
+$$
+
+在 $S_i\simeq\mathbb C^{r_i}$ 的酉识别下，对每个 $n\ge0$，
+
+$$
+\begin{aligned}
+T_n^g(A)&=T_n^{f_A}(\Omega_{\mathbf r}),&
+T_\infty^g(A)&=T_\infty^{f_A}(\Omega_{\mathbf r}),&
+0\le f_A&\le H\prod_i r_i,\\
+T_n^f(\Omega_{\mathbf r})&\le T_n^{\overline f}(\Omega_{\mathbf r})
+\le T_{n+k}^f(\Omega_{\mathbf r}),&
+T_\infty^f(\Omega_{\mathbf r})&=T_\infty^{\overline f}(\Omega_{\mathbf r}),\\
+e_{n+k}^g(A)&\le E_n^{\mathrm{USC}}(H\prod_i r_i;\mathbf r).
+\end{aligned}
+$$
+
+中间的移位断言对每个有界非负 $f$ 成立；一般根的闭包只在中心化的精确支撑域上施加于 $f_A$。若 $g$ 上半连续，最后一行可将 $e_{n+k}^g$ 换成 $e_n^g$。
+
+若 $f,f':X_{\mathbf r}\to[0,M]$ 上半连续，令 $\eta=d_H(K_f,K_{f'})$、$r_* =\max_i r_i$、$c=(1+r_*\eta)^{-1}$，则在根 $\Omega_{\mathbf r}$ 有
+
+$$
+T_{n+k}^{f'}\ge c^kT_n^f-\eta,\qquad
+|T_\infty^{f'}-T_\infty^f|\le M(1-c^k)+\eta,
+$$
+$$
+e_{n+k}^{f'}\le e_n^f+2M(1-c^k)+2\eta.
+$$
+
+因此任意有限大小的精确命中列表（纯态或混态目标、报酬在 $[0,H]$ 内）都是抽象特例，且界与列表大小无关。在假设 430.2 下，物理量满足
+
+$$
+\boxed{\begin{aligned}
+p_n(r)&=4T_n^{V_{0,r}}(\Omega_{(2,2)}),&
+\eta_{\mathrm{fin}}(r)&=4T_\infty^{V_{0,r}}(\Omega_{(2,2)}),\\
+\sup_{r>0,\ 1/2<r^2<2}\bigl(\eta_{\mathrm{fin}}(r)-p_n(r)\bigr)
+&\le4E_n^{\mathrm{USC}}(H_0;(2,2))\longrightarrow0.
+\end{aligned}}
+$$
+
+量词针对完整的逐棵有限树和最大路径深度；不声称存在共同树、最优树取得、无限协议、收敛速率或统一的总节点数、结果数、分叉数、结果元数或记忆维数界。坐标变换不提供免费的物理操作。抽象混合目标不扩大物理接受历史类，物理结论也不把 $\eta_{\mathrm{fin}}$ 认定为可分最优值。
+
+**证明。** 先证明两种树的翻译。给定坐标树，从 $a_{\varnothing,i}=1$、$X_{\varnothing,i}=A_i$ 开始；在 $i$-分裂处令
+
+$$
+a_{vj,i}=a_{v,i}\lambda_{vj},\qquad X_{vj,i}=a_{vj,i}P_{vj,i},
+$$
+
+其余因子不变。这给出加性等式。归纳得到 $w_v=\prod_i a_{v,i}$，故叶报酬相同。
+
+反向地，在局部因子迹为正的分裂处，用正迹子因子归一化并令 $\lambda_{vj}=\operatorname{tr}X_{vj,i}/\operatorname{tr}X_{v,i}$。零子因子权重为零，可把该坐标的密度任意取为父密度。若被分裂因子的迹已为零，正性迫使每个子因子均为零；任取和为一的概率并沿用父密度。非活动坐标保持不变，递归应用于包括零总权重子树在内的每个节点。树形、分叉数和深度均不变。零因子的任意归一化装饰不必在往返中恢复，故这里不声称这些装饰有字面双射；后面的正线性映射则给出真正的树双射。每个加性分裂都给出
+
+$$
+\sum_{\ell\text{ 为叶}}\bigotimes_iX_{\ell,i}=\bigotimes_iA_i,
+\qquad \sum_\ell w_\ell=1.
+$$
+
+于是 $0\le T_n^g\le H$，$T_n^g\le T_{n+1}^g$，并且由定义对固定 $(A,g)$ 有 $e_n^g\downarrow0$。整个翻译只用有限和。
+
+现在直接建立所需紧性。固定 $\mathbf r,M$，令 $Y=X_{\mathbf r}\times[0,M]$。密度域是有限维实 Hermite 空间中的有界闭集，故 $Y$ 非空紧。以 Hausdorff 距离记非空紧子集空间为 $\mathcal K(Y)$。它全有界：给定 $\delta>0$，取 $Y$ 的有限 $\delta/2$-网 $Q$；对任意 $K\in\mathcal K(Y)$，取
+
+$$
+Q_K=\{q\in Q:\operatorname{dist}(q,K)\le\delta/2\}.
+$$
+
+$Q_K$ 非空且有限。对每个 $x\in K$ 取 $q\in Q$ 满足 $d(x,q)\le\delta/2$，则 $q\in Q_K$ 且 $d(x,Q_K)\le\delta/2$；对每个 $q\in Q_K$，定义中的距离条件给出到 $K$ 不超过 $\delta/2$。故 $d_H(K,Q_K)\le\delta/2<\delta$，而这样的 $Q_K$ 只有有限多个。
+
+还需证明完备性。若 $K_j$ 是 Hausdorff-Cauchy 列，令 $u_j(y)=\operatorname{dist}(y,K_j)$。则
+
+$$
+\|u_j-u_m\|_\infty\le d_H(K_j,K_m),
+$$
+
+故 $u_j$ 一致收敛到连续的 $1$-Lipschitz 函数 $u$。令 $K=u^{-1}(0)$。从每个 $K_j$ 取 $y_j$，由 $Y$ 紧性取收敛子列，其极限满足 $u(y)=0$，所以 $K$ 非空且紧。若 $y\in K$，则 $\operatorname{dist}(y,K_j)\le\|u_j-u\|_\infty$。若反向距离不趋于零，可取 $y_{j_m}\in K_{j_m}$ 与 $K$ 保持固定正距离；再取收敛子列，其极限同时落在 $K$ 外和 $u^{-1}(0)$ 内，矛盾。故 $d_H(K_j,K)\to0$。全有界且完备的度量空间紧：逐级取有限的 $2^{-m}$-网可从任意序列抽出 Cauchy 子列，再由完备性收敛。
+
+若 $f$ 上半连续，则 $K_f$ 在 $Y$ 中闭而紧。若下图集 $K_{f_j}$ Hausdorff 收敛到 $K$，则 $X_{\mathbf r}\times\{0\}\subseteq K$。若 $(z,t)\in K$，取 $(z_j,t_j)\in K_{f_j}$ 收敛于它；对 $0\le s\le t$，点 $(z_j,\min\{s,t_j\})$ 的极限说明 $(z,s)\in K$。所以每个纤维是非空紧的初始区间，其最大值定义 $f_K$。若 $z_j\to z$，取使 $f_K(z_j)$ 达到上极限的子列，闭性给出 $\limsup f_K(z_j)\le f_K(z)$，故 $f_K$ 上半连续且 $K=K_{f_K}$。这些下图集在 $\mathcal K(Y)$ 中构成闭的紧子空间。
+
+接着证明中心化传递。取 $\eta>0$，在未归一化效果上定义
+
+$$
+D_i(X)=cX+(1-c)\operatorname{tr}(X)I_{r_i}/r_i,\qquad
+c=(1+r_*\eta)^{-1}.
+$$
+
+它们保持迹、加性分裂和零因子，并固定 $I_{r_i}/r_i$。将每个深度至多 $n$ 的 $f$-树的全部局部因子施以 $D_i$，根、树形、深度和叶权重均保持。对每个正权重且正报酬的叶，其归一化元组记为 $C=(C_i)$；由 Hausdorff 距离选择一个 $(C',t')\in K_{f'}$，使其到 $(C,f(C))$ 的距离不超过 $\eta$。于是
+
+$$
+\|C_i-C_i'\|_{\mathrm{op}}\le\eta,\qquad f'(C')\ge f(C)-\eta.
+$$
+
+令
+
+$$
+R_i=c(C_i-C_i')+(1-c)I_{r_i}/r_i.
+$$
+
+因为 $C_i-C_i'\succeq-\eta I$，有精确余量计算
+
+$$
+R_i\succeq\left[-c\eta+\frac{1-c}{r_i}\right]I_{r_i}
+=c\eta\left(\frac{r_*}{r_i}-1\right)I_{r_i}\succeq0,
+$$
+$$
+\operatorname{tr}R_i=1-c,\qquad D_i(C_i)=cC_i'+R_i.
+$$
+
+若原局部因子为 $a_iC_i$，就把 $a_iD_i(C_i)$ 分成 $a_icC_i'$ 与 $a_iR_i$。沿选中的子节点对每个坐标各做一次，余量子节点立即终止并全部保留。每条路径最多增加 $k$ 个节点，选中的叶恰为 $C'$，权重为 $c^kw_\ell$。对有限多个被选旧叶同时作此构造，所有其他旧叶及余量叶保持非负报酬。因此所得完整有限树的报酬至少为
+
+$$
+\sum_{\ell\text{ 被选}}c^kw_\ell(f(C_\ell)-\eta)
+\ge c^k\operatorname{val}_f(\mathsf T)-\eta.
+$$
+
+当 $\eta=0$ 时两个下图集相同，无需改树。对旧树取上确界得
+
+$$
+T_{n+k}^{f'}\ge c^kT_n^f-\eta.
+$$
+
+再对 $n$ 取上确界并交换 $f,f'$，得到
+
+$$
+T_\infty^{f'}\ge c^kT_\infty^f-\eta,\qquad
+T_\infty^f\ge c^kT_\infty^{f'}-\eta,
+$$
+$$
+|T_\infty^{f'}-T_\infty^f|\le M(1-c^k)+\eta.
+$$
+
+从后一不等式减去有限深度下界，并用 $T_n^f\le M$，得
+
+$$
+e_{n+k}^{f'}\le e_n^f+2M(1-c^k)+2\eta.
+$$
+
+这里没有使用最优树取得。
+
+令 $m(\eta)=2M[1-(1+r_*\eta)^{-k}]+2\eta$。若 $M=0$，所有误差为零。否则给定 $\varepsilon>0$，按 $m(\eta)\to0$ 取 $\delta>0$ 使 $m(\delta)<\varepsilon/4$。每个上半连续 $f$ 都有某个 $n_f$ 使 $e_{n_f}^f(\Omega_{\mathbf r})<\varepsilon/4$。上面得到的下图集族是紧的，半径 $\delta$ 的 Hausdorff 球给出有限子覆盖，中心记为 $f_1,\ldots,f_s$。置
+
+$$
+L=\max_j n_{f_j},\qquad
+b=\max_j e_{n_{f_j}}^{f_j}(\Omega_{\mathbf r})<\varepsilon/4.
+$$
+
+任取 $f'$ 并选一个距离小于 $\delta$ 的中心。对 $n\ge L+k$，在深度 $n-k$ 使用传递不等式，再用误差单调性及 $m$ 的单调性，得
+
+$$
+e_n^{f'}(\Omega_{\mathbf r})\le b+m(\delta),\qquad
+E_n^{\mathrm{USC}}(M;\mathbf r)\le b+m(\delta)<\varepsilon/2<\varepsilon.
+$$
+
+这个严格余量在对所有上半连续报酬取上确界后仍保留，故 $E_n^{\mathrm{USC}}(M;\mathbf r)\to0$。有限覆盖的中心和深度不构成共同的最优树。
+
+对任意有界 $f$，闭包 $\overline{K_f}$ 含有每个 $z$ 上的零点，并按同一坐标的最小值论证向下封闭。其纤维最大值定义上半连续函数 $\overline f$，且 $\overline f\ge f$。若 $u$ 是上半连续主函数，则 $K_u$ 闭并含 $K_f$，故含其闭包，从而 $u\ge\overline f$；因此 $\overline f$ 是最小主函数。对任意 $z$ 和 $\delta>0$，闭包定义给出某个 $z'$ 满足
+
+$$
+d(z,z')<\delta,\qquad f(z')\ge\overline f(z)-\delta.
+$$
+
+固定一棵以 $\overline f$ 评价、深度至多 $n$、报酬为 $V$ 的有限树，只在其正权重正报酬叶逐叶选取上述近似点，应用相同余量构造（此时 $c_\delta=(1+r_*\delta)^{-1}$）。所得以 $f$ 评价的完整有限树深度至多 $n+k$，报酬至少 $c_\delta^kV-\delta$。所以固定的实数 $T_{n+k}^f$ 对所有 $\delta>0$ 都不小于该量；令 $\delta\downarrow0$ 得 $T_{n+k}^f\ge V$，再对旧树取上确界，得到
+
+$$
+T_n^f\le T_n^{\overline f}\le T_{n+k}^f.
+$$
+
+逐点 $f\le\overline f$ 给出第一不等式，对所有有限深度取上确界给出 $T_\infty^f=T_\infty^{\overline f}$ 以及 $e_{n+k}^f\le e_n^{\overline f}$。每棵树只用有限多个近似点；近似树可随 $\delta$ 改变，不使用极限树或取得性，也不出现积分或可测选择。
+
+现在精确处理任意根。加性树中每个后代满足 $0\preceq X_{v,i}\preceq A_i$。若 $u\in\ker A_i$，则 $\langle u,X_{v,i}u\rangle=0$，从而 $X_{v,i}^{1/2}u=0$；所有后代都支撑在 $S_i=\operatorname{ran}A_i$。先把整个报酬限制到 $X_S=\prod_i\mathcal D(S_i)$；支撑上的树可零延拓回原空间，双向都保持树值和深度。不可达的报酬点被删去，而不是投影到某个面上。
+
+在 $S_i$ 上定义
+
+$$
+L_i(X)=\frac{A_i^{-1/2}XA_i^{-1/2}}{r_i},\qquad
+L_i^{-1}(Y)=r_iA_i^{1/2}YA_i^{1/2}.
+$$
+
+它们是正线性互逆映射，把以 $A$ 为根的完备加性树与以 $\Omega_{\mathbf r}$ 为根的树作字面双射，保持所有树形、零因子、提前终止、分裂等式和深度。为计算报酬，令
+
+$$
+\alpha_i(P)=\frac1{\operatorname{tr}(A_i^{-1}P)},\qquad
+\phi_i(P)=\alpha_i(P)A_i^{-1/2}PA_i^{-1/2},\qquad
+\beta(P)=\prod_i r_i\alpha_i(P_i).
+$$
+
+所有分母均为正，且
+
+$$
+\phi_i\psi_i=\operatorname{id},\qquad
+\psi_i\phi_i=\operatorname{id},\qquad
+\alpha_i(\psi_i(B))=\operatorname{tr}(A_iB).
+$$
+
+故它们是连续互逆的归一化坐标。若正权重叶满足 $X_i=a_iP_i$、$w=\prod_i a_i$，则
+
+$$
+\operatorname{tr}L_i(X_i)=\frac{a_i}{r_i\alpha_i(P_i)},\qquad
+w'=\frac{w}{\beta(P)},\qquad
+w'f_A(\phi(P))=\frac{w}{\beta(P)}\beta(P)g(P)=wg(P).
+$$
+
+零权重叶两侧贡献均为零；零报酬、余量和失败叶也完全相消，不是只对选中的目标列表成立。逆树双射给出
+
+$$
+T_n^g(A)=T_n^{f_A}(\Omega_{\mathbf r}),\qquad
+T_\infty^g(A)=T_\infty^{f_A}(\Omega_{\mathbf r}).
+$$
+
+由于支撑上的密度 $A_i\preceq I$，有 $\operatorname{tr}(A_iB_i)\le1$，故 $0\le f_A\le H\prod_i r_i$，不需要关于根的统一最小特征值界。若 $g$ 上半连续，支撑限制、与 $\psi$ 复合以及乘以正连续因子都保持上半连续。
+
+这里的 $\alpha_i$ 是迹归一化因子，而不是在半正定序下提取混合密度的最大权重。例如 $A=P=I_2/2$ 时 $\alpha_i(P)=1/2$，但 $\max\{t:A-tP\succeq0\}=1$；一般后者为
+
+$$
+\|A^{-1/2}PA^{-1/2}\|_{\mathrm{op}}^{-1},
+$$
+
+与逆迹不同，秩一时才必相等。
+
+令 $D=\prod_i d_i$，$\mathcal R=\prod_i\{1,\ldots,d_i\}$。对任意根和有界报酬，先作闭包再用中心化界，得到
+
+$$
+e_{n+k}^g(A)=e_{n+k}^{f_A}(\Omega_{\mathbf r})
+\le e_n^{\overline{f_A}}(\Omega_{\mathbf r})
+\le E_n^{\mathrm{USC}}(H\prod_i r_i;\mathbf r)
+\le\max_{\mathbf s\in\mathcal R}E_n^{\mathrm{USC}}(HD;\mathbf s).
+$$
+
+秩元组只有有限多个，且每个中心化误差趋于零。给定 $\varepsilon>0$，取 $N_c$ 使最后有限最大值在 $n\ge N_c$ 时小于 $\varepsilon/2$；对 $m\ge N_c+k$ 置 $n=m-k$，再对所有根和报酬取上确界即得统一极限。若 $g$ 上半连续，直接对 $f_A$ 使用中心化界，去掉这一个额外的 $k$。秩一根和奇异根均已包含，$H=0$ 时结论显然。
+
+边界例子说明支撑次序和深度移位各自不可删。在中心化根 $\Omega=I_2/2$ 上取 $f(\Omega)=0$ 而 $f(P)=1$（$P\ne\Omega$）。全域上半连续包络为常数 $1$，故 $T_0^f(\Omega)=0$、$T_0^{\overline f}(\Omega)=1$；把 $\Omega$ 分裂成两个正交秩一投影即得 $T_1^f(\Omega)=1$，与移位结论相容。若错误地先在全域取闭包，取秩一根 $P_0$、$g(P_0)=0$ 且其他点取 $1$，则所有正权重后代仍为 $P_0$，故 $T_\infty^g(P_0)=0$，而全域包络给出值 $1$。在精确支撑单点上，限制后的函数及包络均为零。这两个例子并不反驳支撑上的移位正则化。
+
+给定任意有限列表 $(z_j,t_j)_{j=1}^m$，其中 $z_j\in X_{\mathbf d}$、$0\le t_j\le H$，令
+
+$$
+g(z)=\max(\{t_j:z=z_j\}\cup\{0\}).
+$$
+
+每个正超水平集有限而闭，所以 $g$ 上半连续；重复目标取最大值，混合密度目标允许出现。证明中的界与 $m$ 无关，故任意固定大小列表结论都是直接推论。
+
+最后证明物理桥接。以下保持假设 430.2 的真实标签及共同反馈。所需平坦乘积归一化是五射线计算的直接部分。置
+
+$$
+e_0=|00\rangle,\quad e_1=(|01\rangle+|10\rangle)/\sqrt2,\quad e_2=|11\rangle,
+$$
+$$
+e_-=(|01\rangle-|10\rangle)/\sqrt2,\qquad W=\operatorname{span}\{e_0,e_1,e_2\}.
+$$
+
+五个 $q_i$ 张成 $W$。反对称线中 $be_-$ 的系数矩阵行列式为 $b^2/2$，故其中没有非零乘积向量。令单位对称向量 $v=v_0e_0+v_1e_1+v_2e_2$ 的五个平方重叠相等。两极点给出 $|v_0|^2=|v_2|^2=p$；设 $u=r^2$，对三个纬线平均得
+
+$$
+\frac{p+2u|v_1|^2+u^2p}{(1+u)^2}=p.
+$$
+
+所以 $|v_1|^2=p$，归一化给出 $p=1/3$。调节整体相位，使共轭坐标为 $(1,e^{i\phi},e^{i\psi})/\sqrt3$。三个纬线平方重叠的非恒定 Fourier 系数为零，故
+
+$$
+\sqrt2 e^{i\phi}+\sqrt2u e^{i(\psi-\phi)}+r e^{-i\psi}=0,\qquad
+\cos(\psi-2\phi)=\frac14-\frac{u+u^{-1}}2,
+$$
+$$
+|v_1^2-2v_0v_2|^2=\frac{4+2(u+u^{-1})}{9}=\kappa(r)^2.
+$$
+
+任一具有相等五个平方重叠的单位乘积向量的对称投影非零。写成 $av+be_-$，其中 $a>0$ 且 $v$ 为单位对称平坦向量。秩一系数矩阵给出
+
+$$
+b^2=a^2(v_1^2-2v_0v_2),\qquad |b|^2=\kappa a^2,\qquad a^2=\frac1{1+\kappa}.
+$$
+
+其共同平方重叠为 $a^2/3=h(r)$。不需计数平坦集合。
+
+沿任意真实历史合成两方局部分支（包括辅助件与丢弃）为 $\Lambda_A\otimes\Lambda_B$。累计原始输入效果为 $A=\Lambda_A^*(I)$、$B=\Lambda_B^*(I)$；Alice 节点满足 $\sum_jA_j=A$，Bob 同理，根为 $(I_2,I_2)$。输出迹在矩阵单位上给出
+
+$$
+\mathcal M_\ell(|i\rangle\langle j|)=
+\langle q_j|A_\ell\otimes B_\ell|q_i\rangle |i\rangle\langle j|.
+$$
+
+这就是效果树接口；遗忘历史只作为原控制限制下的求和项，隐藏指标不成为控制。
+
+对非零接受真实历史，把其乘积效果谱分解成正的秩一乘积项 $c_\nu|v_\nu\rangle\langle v_\nu|$。对应系统 Kraus 矩阵为
+
+$$
+K_\nu=\sqrt{c_\nu}\operatorname{diag}(\langle v_\nu|q_i\rangle)_i.
+$$
+
+把接受恒等式向量化，得到完整的正 Choi 分解
+
+$$
+\sum_{\ell\ \mathrm{accepted},\nu}
+|\!\operatorname{vec}(U_{y(\ell)}K_{\ell\nu})\rangle
+\langle\operatorname{vec}(U_{y(\ell)}K_{\ell\nu})\!|
+=p\,|\!\operatorname{vec}I\rangle\langle\operatorname{vec}I\!|.
+$$
+
+若 $\xi\perp\operatorname{vec}I$，则左侧对 $\xi$ 的二次型是非负项之和而右侧为零，故每一项都满足
+
+$$
+\langle\xi,\operatorname{vec}(U_{y(\ell)}K_{\ell\nu})\rangle=0.
+$$
+
+因此每个保留项的向量都属于 $\mathbb C\operatorname{vec}I$，即存在标量 $\gamma_\nu$ 使
+
+$$
+U_{y(\ell)}K_\nu=\gamma_\nu I.
+$$
+
+保留的非零乘积项不能有 $\gamma_\nu=0$，否则 $v_\nu\in W^\perp$，与反对称线无非零乘积向量矛盾。固定真实历史时，同一个 $U_{y(\ell)}$ 使所有重叠向量共线；由于 $q_i$ 张成 $W$，
+
+$$
+\dim P_W(\operatorname{supp}A_\ell\otimes\operatorname{supp}B_\ell)\le1.
+$$
+
+对非零 $x\in\operatorname{supp}A_\ell$，$P_W$ 在 $x\otimes\mathbb C^2$ 上是单射，因为核中非零向量会是反对称线内的乘积向量。因此 $\operatorname{rank}B_\ell=1$；交换两方得 $\operatorname{rank}A_\ell=1$。于是效果为 $t_\ell P_x\otimes P_y$，$(P_x,P_y)\in\mathcal S_r$，校正标量为 $t_\ell h(r)$。该秩一结论只对真实历史成立，不对合并后的最终标签作要求。反向地，平坦叶的系统 Kraus 为 $K=\sqrt{th(r)}\operatorname{diag}(z_i)$，其中 $|z_i|=1$，用 $\operatorname{diag}(\overline z_i)$ 校正即可；对所有系统矩阵成立，张量任意未操作有限参考仍成立。
+
+现在说明任何根为 $(I_2,I_2)$ 的有限加性效果树都能在不增加深度和实际结果数的情况下实现。对非零局部父因子 $A=\sum_jA_j$，令 $P$ 为其支撑投影，在支撑上取逆并置
+
+$$
+L_j=\sqrt{A_j}A^{-1/2},\qquad Q=I_2-P.
+$$
+
+则 $\sum_jL_j^\dagger L_j=P$、$L_j\sqrt A=\sqrt{A_j}$ 且 $Q\sqrt A=0$。把 $Q$ 作为一个已有实际结果中的隐藏额外 Kraus 项，即可在原始完整空间上补全仪器。该项在所有系统矩阵和参考扩展上都为零，并在后续 CP 映射后继续为零。零分支和不可达子树按指定有限形状保留。由根递归实现全部指定乘积效果；相容的共同反馈可保留，新树则可为每个平坦叶使用自己的实际标签及反馈。这个构造不声称保留原协议的记录输出状态或遗忘机制。
+
+物理反向提升必须显式保留因子 $2$。从以 $(I_2/2,I_2/2)$ 为根的归一化加性树出发，令每个局部因子
+
+$$
+\widehat X_{v,i}=2X_{v,i}.
+$$
+
+于是根变成 $(I_2,I_2)$，每个加性分裂仍成立；每个叶张量效果变为原来的 $4$ 倍，而归一化坐标不变。故可先对 $\widehat X$ 使用上述完整物理树构造。原始根上的叶权重为 $\operatorname{tr}\widehat X_{\ell,A}\operatorname{tr}\widehat X_{\ell,B}=4\operatorname{tr}X_{\ell,A}\operatorname{tr}X_{\ell,B}$，所以物理成功率是四倍坐标树的 $V_{0,r}$ 报酬。任意物理协议的接受历史给出不超过四倍的树报酬；拒绝叶的 $V_{0,r}$ 可能为正，仍必须保留，故上界方向不能把它们删去。反向地，实现任意坐标树并用各自实际标签接受每个平坦叶，得到恰为四倍的报酬。取两边上确界，得到
+
+$$
+p_n(r)=4T_n^{V_{0,r}}(\Omega_{(2,2)}),\qquad
+\eta_{\mathrm{fin}}(r)=4T_\infty^{V_{0,r}}(\Omega_{(2,2)}).
+$$
+
+集合 $\mathcal S_r$ 由纯态条件和五个连续等式闭定义，故 $V_{0,r}$ 上半连续。由 $r^2+r^{-2}\ge2$，有 $\kappa(r)\ge2\sqrt2/3$ 及 $h(r)\le H_0$。直接使用中心化上半连续界（不产生任意有界报酬的额外 $k$ 移位），得
+
+$$
+0\le\eta_{\mathrm{fin}}(r)-p_n(r)
+=4e_n^{V_{0,r}}(\Omega_{(2,2)})
+\le4E_n^{\mathrm{USC}}(H_0;(2,2)).
+$$
+
+右端与 $r$ 无关并趋于零，故得到物理统一结论。仪器的局部完全正、条件复合、粗粒标签和可分实现约定可参照 Chitambar 等，《Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)》，[arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.1–2.3；这里使用的精确对象是上述假设中的完整原始记录空间和全系统、全参考恢复等式。闭包紧性、分别凹包络和有限分裂是背景数学构造；它们在此处仅作为已写出的直接证明所需的背景，不改变本定理的量词。整个结论只涉及所声明有限类中的上确界，不使用可分最优值、固定深度严格障碍或任何无限协议的可达性。证毕。
+
+## 追加锚（本行以下为增补区）
