@@ -1,6 +1,6 @@
 [Index](../../marked_head_profile.md) · [Literal equality reduction](448-literal-product-trees-exclude-the-equality-cut.md) · [Generic cut bound](447-strict-child-cut-surplus-and-arithmetic-boundaries.md)
 
-# Literal 65/63 and 66/63 cuts force private laws below nine
+# Literal cuts65/63 through67/63 force private laws below nine
 
 The sharp network in [448](448-literal-product-trees-exclude-the-equality-cut.md) is not a moment obstruction. Every source attaining that network's lower bound65/63, under its literal product-blocking and standalone-tree premises, has one actual supported law with
 
@@ -8,9 +8,9 @@ The sharp network in [448](448-literal-product-trees-exclude-the-equality-cut.md
 
 This result allows incidence five at every full root. It uses actual private points forced by the equality cut, gives the common column zero mass, and chooses ONE probability before all original numerical labels and all phase tests. The same law construction applies to any larger actual source containing the specified private structure, whether or not that larger source has an equality cut or satisfies the tree premises.
 
-The next cut value66/63 also forces an actual private law, with bound141/16<9. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate below.
+The next cut values66/63 and67/63 also force actual private laws, with bounds159/19 and79/9, respectively. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate below.
 
-These are ordinary proofs with exact construction controls, not new Lean-certified declarations. It does not prove that every remaining source contains this structure, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
+These are ordinary proofs with exact construction controls, not new Lean-certified declarations. They do not prove that every remaining source contains this structure, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
 
 ## Exact description of the equality sources
 
@@ -139,7 +139,7 @@ Keep exactly the literal height-two source, occupancy4555 and network
 premises above. If the minimum cut is66/63, there is one actual supported
 probability with
 
-    Gamma_1225(nu)<=141/16=9-3/16<9.
+    Gamma_1225(nu)<=159/19=9-12/19<9.
 
 This conclusion has no low-incidence premise. It neither assumes nor
 proves that an original odd-covering residual realizes this cut value.
@@ -230,20 +230,28 @@ Each full root therefore fills five distinct leaves in one of the four external 
 
 ### One fixed law handles every independently phased original query
 
-Give every root mass1/4, distributed uniformly among its own n_r private points. It is a probability on ACTUAL F. Its root-level caps are
+Put the uniform law on all nineteen private points. It is a probability
+on ACTUAL F, selected before the phases. Every first-five root and every
+first-seven column contains at most five of these points. Its root-level
+caps are therefore
 
-    q5,q7,q35 <=1/4.
+    q5,q7,q35 <=5/19.
 
-Every cylinder whose exponent at5 or7 is two contains at most one private point. Its mass is at most1/(4*4)=1/16, so
+Every cylinder whose exponent at5 or7 is two contains at most one private
+point. Thus
 
-    q25,q49,q175,q245,q1225 <=1/16.
+    q25,q49,q175,q245,q1225 <=1/19.
 
 The complete ordered-LCM envelope on all81 ordered divisor pairs gives
 
-    Gamma_1225 <= 1 + (3+3+9)/4 + (5+5+15+15+25)/16
-               = 141/16 <9.
+    Gamma_1225 <=1+(3+3+9)*(5/19)+(5+5+15+15+25)/19
+               =159/19<9.
 
-This uses one fixed law and all nine independent query phases. The actual source's other points may receive zero probability, just as in449's private-law construction. No claim that deleting them preserves the source's tree premises is needed.
+This uses one fixed law and all nine independent query phases. The actual
+source's other points may receive zero probability. No claim that deleting
+them preserves the source's tree premises is needed. Giving every root
+mass1/4 instead yields the valid but weaker bound141/16; uniform mass on
+all nineteen actual points supplies the stronger bound above.
 
 ### Exact necessary-profile and private-law controls
 
@@ -261,7 +269,7 @@ active cuts satisfy the standalone-tree bound.
 The verifier also checks uniqueness of the p-vector and child-cost
 shapes, then embeds the nineteen-point private pattern into literal CRT
 residues and checks all1767 numerical cylinders and81 ordered LCM pairs.
-A coherent layout attains141/16 for this particular constructed law;
+A coherent layout attains159/19 for this particular constructed law;
 this does not assert source-level minimax optimality. Necessary cut
 profiles are not treated as realized sources. The ordinary actual-point
 and column-forcing arguments above are essential, and the private subset
@@ -270,6 +278,35 @@ itself need not satisfy the full source's tree premises.
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut66_private_law.py
 ```
+
+### A literal source realizing the66/63 stratum
+
+The class is nonempty as a class of finite sources. Write source points
+as(r,c,y), with x5=r+5c and y=x7, and put C0={0,7,14,21,28}. Define
+
+    F_(1,c)=C0 union{29,1+7c},  c=0,...,3,
+    F_(r,c)=C0 union{r+7c},   r=2,3,4, c=0,...,4.
+
+This source has118 points. Its common column0 meets every occupied child,
+so it has high incidence. Every gap/full pair-subset has ternary columns
+0,1,r; every full/full pair-subset has columns0,r,s. Its whole projection
+has five complete five-leaf columns0,...,4. The verifier checks all10000
+literal ternary-five trees using the dual ternary-seven criterion, not
+by enumerating all five-ary seven-trees.
+
+An explicit cut consists of public column0, public leaf29 and the one
+private leaf at each of the nineteen children. Its cost is
+
+    21/63+7/63+19*(2/63)=66/63.
+
+There is a matching actual flow in units1/63. Give each private point two
+units. At each full root give its five actual common points with y=7c
+weights(2,2,1,1,1); these add21 units altogether. At the four gap children
+give their actual y=29 points weights(2,2,2,1), adding seven units. The
+verifier checks every top, private-prefix and public-prefix capacity and
+that the cut intercepts every actual path. Thus the minimum cut is
+exactly66/63. This example is not claimed to be the residual of an
+original odd whole cover.
 
 ## Large cuts give a different law without an incidence restriction
 
@@ -355,9 +392,9 @@ no literal tree premise beyond whatever is used to establish the cut
 value. In the occupancy4555 setting of447, the stated tree premises give
 t>=65/63. All network capacities, including the actual bridges, are
 integer multiples of1/63; so t=k/63 for an integer k. The source edges
-also give t<=4/3=84/63. The private-law theorems above handle k=65,66,
+also give t<=4/3=84/63. The private-law theorems in this report handle k=65,66,67,
 and LC3 handles k>=79. Consequently the only remaining possible cut
-values for that source class are k=67,...,78. This lists twelve
+values for that source class are k=68,...,78. This lists eleven
 unresolved values, not a claim that each is attained or that each source
 at those values fails. Any source already containing the private
 structure above is handled regardless of its cut value.
@@ -415,7 +452,7 @@ Consequently R+sum L_rc>=5/3. If R=k/9>=10/9, the cut cost is at least
 
     R+(2/7)(5/3-R)=(30+5k)/63>=80/63.
 
-Therefore fully active cuts in the remaining low window never have R>1. For R=1, cuts below79/63 have Z=6 or7, giving75/63 or77/63, and no top cost. Covering all five complete branches of the standalone tree with public/private prefixes of total unweighted integer cost9+Z<=16 forces a first-prefix edge in each branch: replacing a first-prefix cost3 by its five required leaf edges costs5, already exceeding the possible slack1. Thus the public cut has three whole columns, the private cut has two further whole columns, and at77/63 it has one extra private leaf. This excludes other fully active R=1 low-cut structures. It does not yet supply a law for those75/77 shapes or justify deleting their exceptional children.
+Therefore fully active cuts in the remaining low window never have R>1. For R=1, cuts below79/63 have Z=6 or7, giving75/63 or77/63, and no top cost. Covering all five complete branches of the standalone tree with public/private prefixes of total unweighted integer cost9+Z<=16 forces a first-prefix edge in each branch: replacing a first-prefix cost3 by its five required leaf edges costs5, already exceeding the possible slack1. Thus the public cut has three whole columns, the private cut has two further whole columns, and at77/63 it has one extra private leaf. The two private whole columns are first-prefix cut cylinders, each in one child tree; this does not assert that the child has all seven leaves as actual points. This excludes other fully active R=1 low-cut structures. It does not yet supply a law for those75/77 shapes or justify deleting their exceptional children.
 
 ## One67/63 cut structure is also impossible
 
@@ -433,17 +470,244 @@ and parity then leave only(R,Z)=(1/3,23) or(5/9,16).
 
 In the latter case the pair inequalities are p_r+p_s>=4. Their unique total16 integer minimum is p=(2,2,2,2). The gap child costs are all1; each full root's sorted costs are(0,1,1,1,1). Thus there are exactly sixteen private cut leaves and no private depth-one cut. Public cost5/9 means either five leaves or one full column plus two leaves. Five leaves give total seven projection size at most21<25. One full column leaves at most18 distinct points outside it, whereas a standalone five-ary tree needs either20 outside it or25 if it does not use that column. Both cases are impossible.
 
-This excludes the `(5/9,16)` STRUCTURE at67/63. It does not close67/63: the fully active `(1/3,23)` case remains. The exact verifier checks both possible profiles and the unique rejected private-cost shape.
+This excludes the(5/9,16) structure at67/63. The fully active(1/3,23) case is handled next. The cut66 profile verifier checks both possible profiles and the unique rejected private-cost shape.
+
+## The67/63 stratum also has one common law below nine
+
+Under the same literal source and network premises, every source with
+minimum cut67/63 admits one supported law with Gamma_1225<=79/9<9.
+Two of its three remaining private-cut shapes give159/19. The law uses
+actual selected points, before any independent query phases are chosen.
+
+### The three remaining shapes
+
+The previously reviewed low-cut reduction makes the cut fully active. It leaves `(R,Z)=(1/3,23)` and `(5/9,16)`; the latter is excluded by the standalone projection count. Thus `R=1/3`, total unweighted private integer cost is `23`, and the public cut set `P` is either one whole first-seven column or three seven leaves.
+
+Put `p_r` equal to the least `q_r`-child private sum, where `q=(2,3,3,3)`. The pair constraints are `p_r+p_s>=6`. The sorted-integer lower functions are
+
+`f_gap(p)=p+2 ceil(p/2)` and `f_full(p)=p+2 ceil(p/3)`.
+
+If the smallest `p` is0,1,2, the Report448 minimum-coordinate bounds are at least28 and exclude total23. Hence all `p>=3`. At `(3,3,3,3)` the lower sum is22. Increasing a full-root coordinate to4 increases that root's lower bound from5 to8 and is impossible. The gap coordinate can increase to4, whose lower bound is8, but cannot increase further. Consequently the only possibilities are:
+
+- **A:** `p=(4,3,3,3)`. Gap costs `(2,2,2,2)`; every full root has five costs1.
+- **B:** `p=(3,3,3,3)`, with the one excess unit at the gap root. Gap costs `(1,2,2,3)`; every full root has five costs1.
+- **C:** `p=(3,3,3,3)`, with the one excess unit at one full root. Gap costs `(1,2,2,2)`; one full root has costs `(1,1,1,1,2)`; the other two have five costs1.
+
+The sorted-vector claims follow directly from the prescribed least-two or least-three sum and total. For example, gap total8 and least-two sum3 force `(1,2,2,3)`; full total6 and least-three sum3 force `(1,1,1,1,2)`.
+
+A child of cost1 has one private cut leaf; cost2 has two. A cost3 child may have three private leaves or one private first-prefix edge. The latter is only a candidate whole column until actual points are forced below.
+
+For every child, path containment gives `F_rc subset P union S_rc`, where `S_rc` is its own private cut-prefix union. No bridge crosses. This statement does not identify all points of `S_rc` as actual.
+
+### Two clean full roots lock the public and private columns
+
+Call a full root clean when all five children have one private cut leaf. There are at least two clean full roots in A, B, and C.
+
+Choose any three children at each of two clean full roots. Literal product blocking forces a ternary seven-tree in their actual projection. If `P` is one whole column, the six private candidates must provide exactly the other two three-leaf columns. If `P` consists of three leaves, the nine candidates must be distinct actual leaves and form exactly three columns with three leaves each. In either case every selected private leaf is outside `P`, globally distinct within the selection, and actual at its own child: no other selected child can supply its unique leaf outside `P`.
+
+Exchange one child in a clean-root triple while retaining the other two and the partner triple. The column-count vector changes by the difference of two coordinate unit vectors, while both original vectors have entries divisible by3. Hence the exchanged leaves have the same first-seven column. Since each clean root has at least four singleton children, every pair of them can be compared using two other children.
+
+Thus the five private leaves of each clean full root are actual at their own children, distinct, and in one column. The two private columns are different. In the three-public-leaf case, the two private triples occupy two complete three-leaf columns, so the three public leaves all lie in a third column `G`. In the whole-column case, call that column `G` too. Therefore in both cases
+
+`P subset G`,
+
+and every established full private column differs from `G`.
+
+In A and B, apply the same argument to the third clean full root. There are three distinct full private columns `H1,H2,H3`, with five actual singleton points at each root.
+
+In C, use any three of the four singleton children of the exceptional full root, paired with a triple at a clean full root. The same count and exchange argument applies to these four children: two alternative triples share two children, enough to compare any pair. Their four private leaves are actual at their own children and occupy one column `H3`. Pairing with both clean roots proves `H3` differs from `G,H1,H2`. We retain these four points and do not use the exceptional cost2 child's points. The exceptional full root still supplies legal triples from its four retained children for every gap argument below.
+
+Accordingly all three cases have three distinct columns `H1,H2,H3`, each admitting a triple of actual private points at three distinct children of its root, and all disjoint from `G`.
+
+### A useful consequence of pairing with full-root triples
+
+Suppose a chosen pair of gap children has at most four private leaf candidates. Its actual projection, together with a fixed full-root triple in `Hj`, is contained in `G`, three points of `Hj`, and those at most four candidates.
+
+A ternary tree cannot omit `G`: outside it there are at most seven leaves. It cannot omit `Hj`: the gap pair has at most four candidates, insufficient for two further three-leaf columns. Hence there is a third column, different from `G,Hj`, containing at least three distinct actual leaves supplied by the gap pair.
+
+There can be only one column containing at least three leaves of a set of at most four. Testing the same gap pair against triples in `H1,H2,H3` therefore shows that this unique third column avoids all three full private columns. All statements concern actual unions of the two child fibres; candidate cut leaves are never promoted without this tree count.
+
+### Shape A: four two-leaf children
+
+Let `A_i` be the actual leaves outside `G` at gap child `i`; each has size at most2. For every pair `i,j`, the preceding argument gives at least three leaves of `A_i union A_j` in a unique column `K_ij`, outside `G,H1,H2,H3`.
+
+All the `K_ij` coincide. Indeed, if `K_ij` and `K_ik` differed, child `i` would have exactly one leaf in each of those two columns. Child `j` would then need two leaves in `K_ij`, and child `k` two leaves in `K_ik`. Their pair would have no column containing three leaves, a contradiction.
+
+Call the common column `K` and put `B_i=A_i intersect K`. These are nonempty actual sets of size at most2, with every pair-union having size at least3. They have a four-element system of distinct representatives. Hall's conditions for one, two, and three sets are immediate. For four sets, a union of size at most3 is impossible: a singleton would force all the other sets to be the same complementary pair, violating the pair condition; without a singleton, four distinct two-element subsets would be required inside a three-element set, which has only three such subsets.
+
+Choose these four distinct actual gap leaves, one at each gap child. They all lie in `K`, outside all full private columns. Retain all fifteen actual points at the clean full roots. This gives nineteen selected points, different at every full five-child and every full seven-leaf.
+
+### Shape B: one singleton, two doubles, and one cost3 child
+
+Name the first three gap private sets `{z}`, `E1`, `E2`, and call the cost3 child `d`.
+
+Pair the singleton child with either double child and a full-root triple. There are exactly three gap private candidates, so all three are actual at their own children, distinct, and in one third column. The shared `z` makes this the same column `K` for both doubles. Testing all three full roots shows that `K` avoids `G,H1,H2,H3`. Thus `E1,E2` are actual two-element subsets of `K`, neither containing `z`.
+
+Pair the two double children with a full-root triple. Their union must contain at least three leaves in `K`, so `E1 != E2`, and `|E1 union E2|>=3`.
+
+If child `d` has three private cut leaves, its actual leaves outside `G` form a set `A_d` of size at most3. Pairing it with the singleton and each full-root triple yields one of two alternatives:
+
+1. `A_d` contains at least two actual leaves in `K` different from `z`; or
+2. all three of its cut leaves are actual in one other column `J`, distinct from `K,G,H1,H2,H3`.
+
+To see exhaustion, if the third tree column is `K`, the singleton accounts for only `z` and at least two further actual leaves are required. Otherwise three of `d`'s at most three candidates fill that other column. It is then fixed for every full-root test and cannot equal any `Hj`.
+
+If child `d` instead has one private first-prefix edge, write its candidate column as `J`. This does not mean the entire column is actual. If `J=G` or `J=Hj` for some `j`, pairing `d` and the singleton with a triple in that `Hj` leaves at most the columns `G,Hj` and the lone point `z`, and no ternary tree is possible. Therefore `J` avoids `G,H1,H2,H3`. If `J=K`, the same pair test forces at least two actual leaves of `d` in `K` different from `z`. If `J!=K`, the lone `z` cannot fill a tree branch, so `d` must have at least three actual leaves in `J`.
+
+The two resulting selection cases are simple. If `d` supplies actual leaves in a new column `J`, choose one there, retain `z`, and choose distinct representatives from `E1,E2`. If it supplies at least two actual leaves in `K` different from `z`, apply Hall to `E1,E2` and any two of those leaves: every set has size2, and their total union has size at least3 because `E1 != E2`. Choose three distinct representatives and also `z`.
+
+Thus four actual gap points can be chosen, one per child, all distinct as seven-leaves, and all outside the three full private columns. They occupy either only `K` or `K` and one new column `J`. Retain all fifteen full-root points. There are nineteen selected points, and no seven-column contains more than five: each full column has five, while the gap contributes only four points total outside them.
+
+### Shape C: retain four singleton children at the exceptional full root
+
+The clean-root argument already supplies five points at each clean full root and four actual singleton points at the exceptional full root, in three distinct columns `H1,H2,H3`.
+
+The gap has one singleton candidate `{z}` and three double candidates `E1,E2,E3`. Pair the singleton with each double and a triple from any of the three full columns. The same exact three-leaf count makes all of them actual at their own children, with `z` outside every `Ei`, all in one common column `K` outside `G,H1,H2,H3`.
+
+Pairing any two double children with a full-root triple gives `|Ei union Ej|>=3`, so the double sets are distinct. They have distinct representatives: every set has two elements, every pair has at least three, and all three together have at least three. Choose those representatives and `z`.
+
+Retaining these four gap points, the ten points at the two clean full roots, and the four singleton points at the exceptional full root gives eighteen actual selected points. There is at most one point per five-child and per seven-leaf; the seven-column counts are `(5,5,4,4)`.
+
+### The stronger uniform law and every original phase
+
+In A and B use the uniform law on all nineteen selected points. In C use the uniform law on all eighteen. Write the selected count as `N`.
+
+Every first-five root has at most five points. Every first-seven column has at most five points, including B's possible additional gap column. Hence every modulus5,7,35 cylinder has mass at most `5/N`.
+
+Each literal five-child and each literal seven-leaf contains at most one selected point. Every other nonunit cylinder —25,49,175,245,1225— therefore has mass at most `1/N`.
+
+Select this one law before the query. Every pair of the nine independently phased original labels has empty intersection or a cylinder of its literal LCM. Including the unit-unit term exactly once, all81 ordered pairs give
+
+`Gamma_1225 <= 1 + (3+3+9)*5/N + (5+5+15+15+25)/N = 1+140/N`.
+
+For `N=19` this is `159/19`; for `N=18` it is `79/9`. The latter bounds all three cases. These are supported laws on selected actual points, with no requirement that the selected subset retain the source's product-blocking property.
+
+### Exact shape, matching and source controls
+
+The [cut67 verifier](../../frontier/cover-geometry/height_two_cut67_private_law.py)
+and its [result](../../frontier/cover-geometry/height_two_cut67_private_law.json)
+check every p-vector in{0,...,23}^4, all sorted child-cost shapes with total23,
+the finite Hall claims up to relabelling of their union, and every literal
+CRT cylinder of canonical19-point and18-point selected laws. Their exact
+LCM bounds are159/19 and79/9. The general actual-point forcing comes from
+the preceding ordinary argument, not from those canonical law patterns.
+
+The three-public-leaf branch cannot be discarded. One actual source is
+constructed as follows, in coordinates(r,c,g,h). At full roots r=1,2,3,
+every child c=0,...,4 has the three public leaves(0,0),(0,1),(0,2) and its
+private leaf(r,c). At the gap root r=0 the four child fibres are
+
+    {(4,0)}, {(4,1),(4,2)}, {(4,3),(4,4)}, {(5,h): h=0,...,4}.
+
+The public column0 has only three actual leaves. The standalone tree uses
+columns1,2,3,4,5 instead. Its public cut consists of three leaves, and the
+last gap child's private cut is a first-prefix edge. The total cut is
+(21+2*23)/63=67/63. The verifier checks all480 selected pair/subset tests,
+all10000 literal ternary-five trees through ternary-seven duality, an
+exact integral maximum flow of67/63, and a19-point actual supported law.
+It witnesses this previously easy-to-omit case without asserting an
+original covering-family realization.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut67_private_law.py
+```
+
+## At78/63 the choice of maximum flow matters
+
+All raw quantities in this section are integer units1/63 unless otherwise
+stated. A literal68-point source realizes both a bad and a good maximum
+flow at78/63. The example refutes the assertion that every maximum flow
+works. The subsequent mixture criterion is conditional: existence of its
+reroutings on every admissible source remains unproved.
+
+### Integral flows leave a discrete equality obstruction
+
+Choose an integral maximum flow of value78, possible because all scaled network capacities are integers. At one coherent centre write u_d for its integer cylinder mass. Let
+
+    h=u5+u175-u25-u35>=0,
+    s5=21-u5, s7=21-u7, s35=21-u35, s49=7-u49,
+    s175=6-u175, s245=7-u245, s1225=2-u1225.
+
+The conic identity behind449 LC2 gives exactly
+
+    625-K = 8s5+3s7+4s35+5s49+20s175+15s245+25s1225+5h.
+
+Every term is a nonnegative integer multiple of a coefficient at least3. Thus a coherent charge is either625 or at most622;623 and624 are impossible. In the625 case every displayed slack and h vanishes, so in particular
+
+    u5=u7=u35=21, u25=u175=6, u49=u245=7, u1225=2.
+
+The chosen five-root and seven-column carry21 and all their mass lies in their joint block. Such blocks use distinct roots and distinct columns, and there are at most three because total mass is78. Report449's existing noncoherent estimate622 already falls below the target624; the remaining issue is to select a law that removes these coherent obstructions with more than one unit of saving.
+
+### The same actual source has a bad and a good maximum flow
+
+The [exact flow-choice program](../../frontier/cover-geometry/height_two_cut78_flow_choice.py) and its [result](../../frontier/cover-geometry/height_two_cut78_flow_choice.json) construct the following source. Use full five-roots r=0,1,2, gap root r=3 with children0,1,2,3, and empty root4. Let common seven-column be0, the full roots' private columns be r+1, and the gap private column be4.
+
+At each full root include the support of the matrix
+
+    T=[[2,2,2,0,0,0,0],
+       [2,2,1,1,0,0,0],
+       [2,0,0,0,0,0,0],
+       [1,2,1,1,0,0,0],
+       [0,1,1,0,0,0,0]]
+
+in its private column, with row=actual five-child and column=second seven digit. Add the actual point(c,h)=(0,4) in that private column. Also include one common-column point h=c at each child. At the gap root, child c has exactly the two actual leaves(4,0) and(4,c+1).
+
+This is a68-point source with occupancy5554, equivalent to4555 by a root permutation. Every full-root triple has at least three private leaves and three common leaves. Every gap pair has three private leaves. Thus every pair of three literal five-children at distinct occupied roots projects to a ternary seven-tree; all600 literal tests pass. All five occupied seven-columns have at least five leaves, giving the standalone five-ary tree.
+
+Put T's indicated masses on each full-root private block,21 per root. In the gap private column put masses(2,2,2,1) on the four h=0 points and mass2 on each distinct h=c+1 point. The gap contributes15. This is a legal actual-bridge flow of total78.
+
+A matching actual network cut has the three full-root source edges, costing63; the common-tree leaf edge at(4,0), costing7; and the four private leaf edges at the gap's(c,4,c+1), costing8. No actual bridge crosses. The exact edge list and cut membership realization in the program show that the minimum cut is exactly78, rather than merely supplying a feasible measure of that mass.
+
+At a full root's private centre with(c,h)=(0,0), the raw nonunit charge is625. The measured cylinder maxima, in order(5,7,25,35,49,175,245,1225), are(21,21,6,21,7,6,7,2). Their complete ordered-LCM envelope is625 for the nonunit square and is attained by that one centre. Thus this SAME normalized maximum-flow law has exact Gamma703/78=9+1/78 without needing the general449 phase bound. The sharp-cap obstruction therefore CAN occur as an actual maximum flow on a source satisfying the literal blocking/tree/network hypotheses. Those hypotheses do not make an arbitrary maximum-flow output good.
+
+The source nevertheless has a better maximum flow. For each full root move one unit from its actual private point(c,h)=(0,0) to its actual common-column point(c,h)=(0,0). Child totals stay unchanged, private capacities remain legal, and the new common leaf receives only three units. The three old private columns now carry20 each, common column3 and gap column15, so every root/column cylinder is at most20. The measured cylinder maxima are(21,20,6,20,7,6,7,2). Using the full ordered-LCM multiplicities(3,3,5,9,5,15,15,25), their nonunit envelope is613. One coherent centre attains613, so this second maximum-flow law has exactly
+
+    Gamma=1+613/78=691/78<9.
+
+Both exact Gamma values follow from complete81-pair upper envelopes and matching legal layouts. The checker verifies5806 predicates: actual support,600 literal product tests, standalone tree, all1211 network capacities and conservation, the matching cut, all1767 literal cylinders for each law, and matching ordered-LCM/coherent-centre bounds. It uses only standard-library integer/rational arithmetic.
+
+### A common mixture of conditional reroutings
+
+Let lambda be any integral value78 maximum flow in the stated source class. List the b<=3 root/column blocks supporting625 centres. Assume for each such block i there is another integral value78 flow lambda_i on the SAME source with:
+
+* that old root/column block's mass at most20;
+* at each five-child which supports an old625 centre in that block, the new pure-five-child mass at most6.
+
+All other eight caps follow from being a legal flow. Every cylinder of an old625 centre was at its cap except u25=6; the second condition prevents that exceptional term from increasing. Its u35 decreases by at least one. In the exact coherent formula with coefficient9 on u35 this gives charge at most616 in lambda_i. Every centre remains at most625 in every lambda_i.
+
+Use one common mixture
+
+    lambda_bar=(1/2)lambda+(1/(2b))sum_i lambda_i
+
+when b>0; if b=0, lambda already suffices. For a centre not originally625, its mixed charge is at most(622+625)/2=623.5. For an old625 centre in block i it is at most625-9/(2b)<=623.5. Noncoherent layouts obey622 under every flow and hence under their mixture. All flows have the same mass and are supported on the same literal source, so
+
+    Gamma(lambda_bar/(78/63))<=1+623.5/78=1403/156<9.
+
+This avoids conflating independently available reroutes: their convex mixture is explicitly one feasible flow. It also avoids the false inference that making every old625 value merely strict automatically crosses624.
+
+One transparent sufficient realization of each hypothesis is an actual off-block bridge plus a residual return route that moves a unit out of the old block, keeping its used child's total fixed. A free destination common leaf/column gives such a move immediately; an alternating residual path may provide it when the destination is saturated. If the new child had zero old mass, it was not an old625 child. Original bridge support, both private-prefix capacities, and both common-prefix capacities must be checked on the entire route. A presumed root-level four-cycle is not enough.
+
+The unresolved uniform obligation is to obtain the stated reroutings
+from literal product blocking and the actual source, or construct a law
+by another method when a required residual route is absent. The existence
+of an off-block point alone does not certify residual reachability under
+all private and common capacities. The68-point example rules out solving
+this obligation by excluding625 equality from every actual maximum flow;
+it does not refute a uniform theorem selecting a good law.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut78_flow_choice.py
+```
 
 ## Remaining source and arithmetic gaps
 
-All sources with a literal65/63 or66/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
+All sources with a literal65/63,66/63 or67/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 For occupancy4555, the large-cut estimate also handles every cut at
-least79/63. General high-incidence sources in the remaining range67/63
+least79/63. General high-incidence sources in the remaining range68/63
 through78/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. Some may contain
 the private structure, but its existence has not been proved for every
 remaining source. Other occupancy patterns retain their own stated
-premises and are not classified by this twelve-value reduction.
+premises and are not classified by this eleven-value reduction.
 
 The theorem is at the fixed head1225. An actual full odd-covering residual must also carry every original outside-cofactor constraint under one common lift, as in439. A head law alone does not supply that lift, and a uniform complete-Gamma bound below nine for arbitrary free cofactors is already ruled out there. The next arithmetic obligation remains a bound for the actual original test family and its same-law deletion correlations. No unrestricted noncoverage conclusion follows from this finite head theorem alone.
