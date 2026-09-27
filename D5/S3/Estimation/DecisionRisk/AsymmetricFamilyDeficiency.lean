@@ -25,11 +25,11 @@ open D5.S3.TotalVariation.Metric
 open D5.S3.TotalVariation.Pinsker
 
 /-- Along a fixed-`M`, fixed-`a` asymmetric-family fibre, increasing the second
-label mass is an exact garbling, while reversal has the stated positive deficiency. -/
+label mass is an exact garbling through the displayed kernel, while the displayed
+reverse kernel attains the stated positive deficiency in both states. -/
 theorem asymmetric_family_deficiency
     (a M dOne dTwo : ℝ)
     (ha : 0 < 2 * a)
-    (haM : 2 * a < M)
     (hM : M < 1)
     (hadOne : a ≤ dOne)
     (hdOneTwo : dOne < dTwo)
@@ -39,9 +39,27 @@ theorem asymmetric_family_deficiency
     let QOne := asymmetricExperiment a dOne (L - dOne)
     let QTwo := asymmetricExperiment a dTwo (L - dTwo)
     let gamma := D * (dTwo - dOne) / (2 * dTwo + D)
+    let h := 2 * (dTwo - dOne) / (2 * dTwo + D)
     finiteDeficiency QTwo QOne = 0 ∧
       finiteDeficiency QOne QTwo = ENNReal.ofReal gamma ∧
-      0 < gamma := by
+      0 < gamma ∧
+      0 < (dTwo - dOne) / (L - dOne) ∧
+      (dTwo - dOne) / (L - dOne) < 1 ∧
+      0 < h ∧
+      h < 1 ∧
+      (∃ K : FiniteMarkovKernel (Fin 3) (Fin 3),
+        K.1 = !![1 - (dTwo - dOne) / (L - dOne), 0, (dTwo - dOne) / (L - dOne);
+                 0, 1, 0;
+                 0, 0, 1] ∧
+        ∀ state : Fin 2, channelOutput K.1 (QOne state) = QTwo state) ∧
+      ∃ reverseKernel : FiniteMarkovKernel (Fin 3) (Fin 3),
+        reverseKernel.1 = !![1, 0, 0;
+                             0, 1, 0;
+                             h, 0, 1 - h] ∧
+        (∀ state : Fin 2,
+          totalVariation (QOne state)
+            (channelOutput reverseKernel.1 (QTwo state)) = gamma) ∧
+        uniformSimulationError QOne QTwo reverseKernel = gamma := by
   let D := 1 - M
   let L := M - a
   let delta := dTwo - dOne
@@ -49,26 +67,48 @@ theorem asymmetric_family_deficiency
   let bTwo := L - dTwo
   let QOne := asymmetricExperiment a dOne bOne
   let QTwo := asymmetricExperiment a dTwo bTwo
+  let forwardProbability := delta / bOne
   let gamma := D * delta / (2 * dTwo + D)
+  let h := 2 * delta / (2 * dTwo + D)
   change finiteDeficiency QTwo QOne = 0 ∧
-    finiteDeficiency QOne QTwo = ENNReal.ofReal gamma ∧ 0 < gamma
-  have haPos : 0 < a := by linarith
+    finiteDeficiency QOne QTwo = ENNReal.ofReal gamma ∧
+    0 < gamma ∧
+    0 < forwardProbability ∧
+    forwardProbability < 1 ∧
+    0 < h ∧
+    h < 1 ∧
+    (∃ K : FiniteMarkovKernel (Fin 3) (Fin 3),
+      K.1 = !![1 - forwardProbability, 0, forwardProbability;
+               0, 1, 0;
+               0, 0, 1] ∧
+      ∀ state : Fin 2, channelOutput K.1 (QOne state) = QTwo state) ∧
+    ∃ reverseKernel : FiniteMarkovKernel (Fin 3) (Fin 3),
+      reverseKernel.1 = !![1, 0, 0;
+                           0, 1, 0;
+                           h, 0, 1 - h] ∧
+      (∀ state : Fin 2,
+        totalVariation (QOne state)
+          (channelOutput reverseKernel.1 (QTwo state)) = gamma) ∧
+      uniformSimulationError QOne QTwo reverseKernel = gamma
+  have haM : 2 * a < M := by linarith
+  have haPos : 0 < a := pos_of_mul_pos_right ha (by norm_num)
   have hMPos : 0 < M := ha.trans haM
   have hD : 0 < D := by
     dsimp [D]
-    linarith
+    exact sub_pos.mpr hM
   have hdOnePos : 0 < dOne := lt_of_lt_of_le haPos hadOne
   have hdTwoPos : 0 < dTwo := hdOnePos.trans hdOneTwo
   have hdelta : 0 < delta := by
     dsimp [delta]
-    linarith
+    exact sub_pos.mpr hdOneTwo
   have hbOne : 0 < bOne := by
     dsimp [bOne, L]
-    linarith
+    exact sub_pos.mpr (hdOneTwo.trans hdTwo)
   have hbTwo : 0 < bTwo := by
     dsimp [bTwo, L]
-    linarith
-  have hden : 0 < 2 * dTwo + D := by linarith
+    exact sub_pos.mpr hdTwo
+  have hden : 0 < 2 * dTwo + D :=
+    add_pos (mul_pos (by norm_num) hdTwoPos) hD
   have hgamma : 0 < gamma := div_pos (mul_pos hD hdelta) hden
   have hExperimentStochastic : ∀ d b : ℝ,
       0 < d → 0 < b → b + a + d = M →
@@ -93,7 +133,6 @@ theorem asymmetric_family_deficiency
   have hQTwoStochastic : IsRowStochastic QTwo := by
     apply hExperimentStochastic dTwo bTwo hdTwoPos hbTwo
     exact hsumTwo
-  let forwardProbability := delta / bOne
   have hForwardProbabilityPos : 0 < forwardProbability :=
     div_pos hdelta hbOne
   have hForwardProbabilityLt : forwardProbability < 1 := by
@@ -134,17 +173,16 @@ theorem asymmetric_family_deficiency
     · unfold finiteDeficiency
       exact (iInf_le _ forwardKernel).trans_eq (by simp [hForwardError])
     · exact bot_le
-  let reverseProbability := 2 * delta / (2 * dTwo + D)
-  have hReverseProbabilityPos : 0 < reverseProbability := by
+  have hReverseProbabilityPos : 0 < h := by
     exact div_pos (mul_pos (by norm_num) hdelta) hden
-  have hReverseProbabilityLt : reverseProbability < 1 := by
+  have hReverseProbabilityLt : h < 1 := by
     rw [div_lt_one hden]
-    dsimp [delta, D]
+    dsimp [h, delta, D]
     linarith
   let reverseKernel : FiniteMarkovKernel (Fin 3) (Fin 3) :=
     ⟨!![1, 0, 0;
         0, 1, 0;
-        reverseProbability, 0, 1 - reverseProbability], by
+        h, 0, 1 - h], by
       constructor
       · intro source target
         fin_cases source <;> fin_cases target <;>
@@ -153,7 +191,7 @@ theorem asymmetric_family_deficiency
         fin_cases source <;> simp [Fin.sum_univ_succ]⟩
   have hReverseDifference00 : QOne 0 0 -
       channelOutput reverseKernel.1 (QTwo 0) 0 = gamma := by
-    simp [reverseKernel, reverseProbability, QOne, QTwo, gamma,
+    simp [reverseKernel, h, QOne, QTwo, gamma,
       asymmetricExperiment, channelOutput, Fin.sum_univ_succ]
     field_simp [ne_of_gt hden]
     dsimp [bOne, bTwo, delta, L, D]
@@ -165,14 +203,14 @@ theorem asymmetric_family_deficiency
     ring
   have hReverseDifference02 : QOne 0 2 -
       channelOutput reverseKernel.1 (QTwo 0) 2 = -gamma := by
-    simp [reverseKernel, reverseProbability, QOne, QTwo, gamma,
+    simp [reverseKernel, h, QOne, QTwo, gamma,
       asymmetricExperiment, channelOutput, Fin.sum_univ_succ]
     field_simp [ne_of_gt hden]
     dsimp [bOne, bTwo, delta, L, D]
     ring
   have hReverseDifference10 : QOne 1 0 -
       channelOutput reverseKernel.1 (QTwo 1) 0 = -gamma := by
-    simp [reverseKernel, reverseProbability, QOne, QTwo, gamma,
+    simp [reverseKernel, h, QOne, QTwo, gamma,
       asymmetricExperiment, channelOutput, Fin.sum_univ_succ]
     field_simp [ne_of_gt hden]
     dsimp [bOne, bTwo, delta, L, D]
@@ -183,7 +221,7 @@ theorem asymmetric_family_deficiency
       asymmetricExperiment, channelOutput, Fin.sum_univ_succ]
   have hReverseDifference12 : QOne 1 2 -
       channelOutput reverseKernel.1 (QTwo 1) 2 = gamma := by
-    simp [reverseKernel, reverseProbability, QOne, QTwo, gamma,
+    simp [reverseKernel, h, QOne, QTwo, gamma,
       asymmetricExperiment, channelOutput, Fin.sum_univ_succ]
     field_simp [ne_of_gt hden]
     dsimp [bOne, bTwo, delta, L, D]
@@ -274,7 +312,8 @@ theorem asymmetric_family_deficiency
     rw [htPlusTwo]
     exact ⟨le_rfl, htTwoOne.le⟩
   let tOne := (dOne + D) / (2 * dOne + D)
-  have hdenOne : 0 < 2 * dOne + D := by linarith
+  have hdenOne : 0 < 2 * dOne + D :=
+    add_pos (mul_pos (by norm_num) hdOnePos) hD
   have htTwoLeOne : tTwo ≤ tOne := by
     dsimp [tTwo, tOne]
     rw [div_le_div_iff₀ hden hdenOne]
@@ -305,7 +344,7 @@ theorem asymmetric_family_deficiency
   have hRiskOneNonnegative :
       0 ≤ asymmetricBayesRisk a dOne bOne tTwo := by
     rw [hRiskOne]
-    have hOneMinus : 0 ≤ 1 - tTwo := by linarith
+    have hOneMinus : 0 ≤ 1 - tTwo := sub_nonneg.mpr htTwoOne.le
     have hSlope : 0 ≤ 2 * tTwo - 1 := by linarith
     exact add_nonneg (mul_nonneg hMPos.le hOneMinus)
       (mul_nonneg hSlope hdOnePos.le)
@@ -315,7 +354,11 @@ theorem asymmetric_family_deficiency
     rw [hRiskBridge dTwo bTwo, hRiskBridge dOne bOne, hRiskGap,
       ENNReal.ofReal_add hRiskOneNonnegative hgamma.le] at hRiskTransfer
     exact ENNReal.le_of_add_le_add_left ENNReal.ofReal_ne_top hRiskTransfer
-  refine ⟨hForwardDeficiency, le_antisymm hReverseUpper hReverseLower, hgamma⟩
+  refine ⟨hForwardDeficiency, le_antisymm hReverseUpper hReverseLower, hgamma,
+    hForwardProbabilityPos, hForwardProbabilityLt,
+    hReverseProbabilityPos, hReverseProbabilityLt, ?_, ?_⟩
+  · exact ⟨forwardKernel, rfl, hForwardIdentity⟩
+  · exact ⟨reverseKernel, rfl, hReverseTv, hReverseError⟩
 
 #print axioms asymmetric_family_deficiency
 

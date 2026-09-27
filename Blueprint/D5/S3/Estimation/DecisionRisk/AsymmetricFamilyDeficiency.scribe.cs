@@ -21,12 +21,14 @@ internal sealed class AsymmetricFamilyDeficiencyDocument : IScribeDocumentDefini
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "Increasing the second label mass is an exact garbling: the common output "
-                        + "is split between itself and the second label while both labels remain fixed.")),
+                    "Increasing the second label mass is an exact garbling through the displayed "
+                        + "state-independent kernel: the common output is split between itself and "
+                        + "the second label while both labels remain fixed.")),
                 Paragraph(Text(
                     "In the reverse direction, the optimal error is the positive quantity gamma. "
-                        + "A zero-one Bayes risk comparison gives the lower bound, and a kernel that "
-                        + "moves mass from the third output to the common output attains it in both states."))),
+                        + "A zero-one Bayes risk comparison gives the lower bound, and the displayed "
+                        + "kernel moves mass from the third output to the common output and has total-"
+                        + "variation error exactly gamma in each state."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -34,19 +36,61 @@ internal sealed class AsymmetricFamilyDeficiencyDocument : IScribeDocumentDefini
         Formula a = F.Id("a"), mass = F.Id("M"), dOne = F.Id("dOne");
         Formula dTwo = F.Id("dTwo"), defect = F.Id("D"), length = F.Id("L");
         Formula qOne = F.Id("QOne"), qTwo = F.Id("QTwo"), gamma = F.Id("gamma");
+        Formula reverseProbability = F.Id("h"), forwardKernel = F.Id("K");
+        Formula reverseKernel = F.Id("reverseKernel"), state = F.Id("i");
         Formula twoA = Mul(D(2), a);
         Formula qOneValue = Call("asymmetricExperiment", a, dOne, Paren(Sub(length, dOne)));
         Formula qTwoValue = Call("asymmetricExperiment", a, dTwo, Paren(Sub(length, dTwo)));
+        Formula delta = Sub(dTwo, dOne);
+        Formula forwardProbability = Div(Paren(delta), Paren(Sub(length, dOne)));
         Formula gammaValue = Div(
-            Mul(defect, Paren(Sub(dTwo, dOne))),
+            Mul(defect, Paren(delta)),
             Paren(Add(Mul(D(2), dTwo), defect)));
+        Formula reverseProbabilityValue = Div(
+            Mul(D(2), Paren(delta)),
+            Paren(Add(Mul(D(2), dTwo), defect)));
+        Formula forwardMatrix = MatrixThree(
+            Sub(D(1), Paren(forwardProbability)), D(0), forwardProbability,
+            D(0), D(1), D(0),
+            D(0), D(0), D(1));
+        Formula reverseMatrix = MatrixThree(
+            D(1), D(0), D(0),
+            D(0), D(1), D(0),
+            reverseProbability, D(0), Sub(D(1), reverseProbability));
+        Formula finThreeKernel = Call(
+            "FiniteMarkovKernel", Call("Fin", D(3)), Call("Fin", D(3)));
+        Formula forwardKernelClause = Seq(
+            Exists, Sp, forwardKernel, Colon, Sp, finThreeKernel, Comma, RowBreak, Grp(),
+            And(
+                Eqn(Projection(forwardKernel), forwardMatrix),
+                Seq(Forall, Sp, state, Colon, Sp, Call("Fin", D(2)), Comma, Sp,
+                    Eqn(
+                        Call("channelOutput", Projection(forwardKernel), Apply(qOne, state)),
+                        Apply(qTwo, state)))));
+        Formula reverseKernelClause = Seq(
+            Exists, Sp, reverseKernel, Colon, Sp, finThreeKernel, Comma, RowBreak, Grp(),
+            And(
+                Eqn(Projection(reverseKernel), reverseMatrix),
+                Seq(Forall, Sp, state, Colon, Sp, Call("Fin", D(2)), Comma, Sp,
+                    Eqn(
+                        Call("totalVariation", Apply(qOne, state),
+                            Call("channelOutput", Projection(reverseKernel), Apply(qTwo, state))),
+                        gamma)),
+                Eqn(
+                    Call("uniformSimulationError", qOne, qTwo, reverseKernel),
+                    gamma)));
         Formula conclusion = And(
             Eqn(Call("finiteDeficiency", qTwo, qOne), D(0)),
             Eqn(Call("finiteDeficiency", qOne, qTwo), Call("ofReal", gamma)),
-            LtF(D(0), gamma));
+            LtF(D(0), gamma),
+            LtF(D(0), Paren(forwardProbability)),
+            LtF(Paren(forwardProbability), D(1)),
+            LtF(D(0), reverseProbability),
+            LtF(reverseProbability, D(1)),
+            forwardKernelClause,
+            reverseKernelClause);
         Formula hypotheses = Implies(
             LtF(D(0), twoA),
-            LtF(twoA, mass),
             LtF(mass, D(1)),
             LeF(a, dOne),
             LtF(dOne, dTwo),
@@ -57,7 +101,8 @@ internal sealed class AsymmetricFamilyDeficiencyDocument : IScribeDocumentDefini
                     Eqn(length, Sub(mass, a)),
                     Eqn(qOne, qOneValue),
                     Eqn(qTwo, qTwoValue),
-                    Eqn(gamma, gammaValue)
+                    Eqn(gamma, gammaValue),
+                    Eqn(reverseProbability, reverseProbabilityValue)
                 ],
                 conclusion));
 
@@ -93,6 +138,22 @@ internal sealed class AsymmetricFamilyDeficiencyDocument : IScribeDocumentDefini
     }
 
     private static Formula Real() => Seq(Mathbb, Grp(F.Id("R")));
+
+    private static Formula Apply(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+
+    private static Formula Projection(Formula value) => Seq(value, Dot, D(1));
+
+    private static Formula MatrixThree(
+        Formula a00, Formula a01, Formula a02,
+        Formula a10, Formula a11, Formula a12,
+        Formula a20, Formula a21, Formula a22) =>
+        Seq(
+            Begin, Grp(F.Id("pmatrix")),
+            a00, Amp, a01, Amp, a02, RowBreak,
+            a10, Amp, a11, Amp, a12, RowBreak,
+            a20, Amp, a21, Amp, a22,
+            End, Grp(F.Id("pmatrix")));
 
     private static Formula LetIn(Formula[] definitions, Formula body)
     {
