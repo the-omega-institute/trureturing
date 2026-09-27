@@ -120126,3 +120126,520 @@ T_{\rm block}\in\{2,4,6,\ldots\}\quad\text{几乎必成立},
 [^periodic_cp_realization]: Alex Monras and Andreas Winter, *Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*, [arXiv:1412.3634v1](https://arxiv.org/pdf/1412.3634v1)。Definition 5、Theorem 6（PDF 第5—6页）给该文平稳过程的正实现与多面锥条件，Example 2给其无理旋转障碍；Example 3（第8页）在 \(\gamma=1\) 时是单 qubit CP 实现，在 \(\gamma<1\) 时则包含非 CP 转置分支。Examples 5、6（第10—12页）给四维 Hilbert 空间中的实际 CP 扩展。它们的多字母平稳过程与本节受控终端接口不同；本节不借非 CP 分支实施量子操作，也不由该文例子的范围推出此处全部准备或任意中间测量的模拟。
 
 ## 追加锚（本行以下为增补区）
+
+## 351. 严格阻尼的有限正实现与消失阻尼容量边界
+
+第350节的无阻尼无理相位响应可由一个 qubit 精确保持，却不能由任何有限经典装置在全时域上逼近到误差 \(1/2\) 以下。本节给每次 advance 加入已知的严格相位阻尼，仍保持固定制备、任意有限次数 advance 和一次终端 test 的接口。每个固定严格阻尼都允许有限经典精确实现；当固定无理角的阻尼消失时，任何固定误差要求 \(\varepsilon<1/2\) 所需的经典状态数仍趋于无穷。
+
+这里还有一条完整的实现桥梁：对本特定余弦响应，一个复数能作为 \(d\) 阶随机矩阵的特征值，当且仅当目标能由 \(d\) 态经典装置精确实现。必要性来自响应递推，充分性来自最大模特征向量与合法概率效果的直接对应。因此成熟的随机矩阵谱区域确实可以解释此接口的精确容量；不是只观察到某个谱值以后便省略初态和输出约束。
+
+### 351.1 固定参数与完整终端概率合同
+
+固定已知
+
+\[
+0\le r\le1,\qquad \theta\in\mathbb R,\qquad
+\lambda=re^{i\theta}.
+\tag{351.1}
+\]
+
+目标为
+
+\[
+h_k^{r,\theta}
+=\frac{1-r^k\cos(k\theta)}2
+=\frac{1-\operatorname{Re}\lambda^k}{2},
+\qquad k\ge0,
+\tag{351.2}
+\]
+
+其中 \(\lambda^0=1\)，包括 \(\lambda=0\) 的情况。因此每个参数下都有 \(h_0^{r,\theta}=0\)。\(r=1\) 是无阻尼边界；\(0\le r<1\) 是本节的严格阻尼区间。
+
+沿用第350.1节的权限：每次从同一固定初态开始，外部发出 \(k\) 次同样的 advance，再发出一次结束试验的 test。装置未获赠可读取的整数 \(k\)，也不允许在 test 后继续本次试验。这里只保持这一固定制备的终端比特族，不要求任意量子制备、任意中间测量或任意多次测试的全部联合律。
+
+一个经典 \(d\) 态实现仍由
+
+\[
+\alpha\in\Delta_d,\qquad P\mathbf1=\mathbf1,\quad P_{ij}\ge0,
+\qquad b\in[0,1]^d
+\tag{351.3}
+\]
+
+给出，其响应为 \(g_k=\alpha P^kb\)。所有持续记录、模式、可再读私种子和影响后续动作的计数或钟值都须计入状态。初态、转移和效果可以依赖已知 \(r,\theta\)，但每次 advance 使用同一个 \(P\)，不能按未计入内部记忆的 \(k\) 改换操作。
+
+定义
+
+\[
+d_{\rm ex}(r,\theta)
+=\min\{d\ge1:\exists(\alpha,P,b)\ \forall k\ge0,\
+\alpha P^kb=h_k^{r,\theta}\},
+\tag{351.4}
+\]
+
+以及对 \(\varepsilon\ge0\)，
+
+\[
+d_\varepsilon(r,\theta)
+=\min\left\{d\ge1:\exists(\alpha,P,b)\
+\sup_{k\ge0}|\alpha P^kb-h_k^{r,\theta}|
+\le\varepsilon\right\}.
+\tag{351.5}
+\]
+
+集合为空时最小值记为 \(\infty\)，且 \(d_0=d_{\rm ex}\)。误差仍是终端 Bernoulli 律的总变差距离。固定实转移概率、私随机分支和精确量子门作为理想原语给定；系数描述与物理控制成本另行讨论。
+
+### 351.2 阻尼 qubit 的实际 CPTP 实现
+
+以
+
+\[
+\rho_0=\frac{I+\sigma_x}{2}
+\tag{351.6}
+\]
+
+制备一个 qubit。令 \(U_\theta=\exp(-i\theta\sigma_z/2)\)，每次 advance 施加
+
+\[
+\mathcal T_{r,\theta}
+=\mathcal D_r\circ\operatorname{Ad}_{U_\theta},
+\qquad
+\mathcal D_r
+=\frac{1+r}{2}\operatorname{id}
++\frac{1-r}{2}\operatorname{Ad}_{\sigma_z}.
+\tag{351.7}
+\]
+
+\(\mathcal D_r\) 是两个酉共轭通道的凸组合，故完全正且保迹；它把 Bloch 赤道坐标 \((x,y)\) 变为 \((rx,ry)\)，保持 \(z\) 坐标。\(\operatorname{Ad}_{U_\theta}\) 在赤道平面旋转 \(\theta\)，且与此阻尼交换。因此
+
+\[
+\mathcal T_{r,\theta}^k(\rho_0)
+=\frac12\left[
+I+r^k\cos(k\theta)\sigma_x
++r^k\sin(k\theta)\sigma_y
+\right].
+\tag{351.8}
+\]
+
+取固定终端效果 \(E=(I-\sigma_x)/2\)，即得
+
+\[
+\operatorname{tr}\!\left(E\,\mathcal T_{r,\theta}^k(\rho_0)\right)
+=h_k^{r,\theta}.
+\tag{351.9}
+\]
+
+这是一份覆盖全部 \(k\) 的单 qubit 实现。若 \(\lambda\ne1\)，则 \(\operatorname{Re}\lambda<1\)，故 \(h_1^{r,\theta}>h_0^{r,\theta}=0\)。一维 Hilbert 空间只有一个归一化态，固定 CPTP 更新与固定效果只能给常数响应，因而此时最小持续 Hilbert 维数恰为 2。若 \(\lambda=1\)，目标恒 0，一维已足够。
+
+这里需要保存的是指定终端概率，不是通过一次测量读出 \(k\)。阻尼后的连续密度态及经典连续信念分布本身，都不能代替后面的正实现容量证明。
+
+### 351.3 正多边形给出循环随机实现
+
+取整数 \(m\ge3\)，令
+
+\[
+\zeta_m=e^{2\pi i/m},\qquad
+\Pi_m=\operatorname{conv}\{1,\zeta_m,\ldots,\zeta_m^{m-1}\}.
+\tag{351.10}
+\]
+
+若 \(\lambda\in\Pi_m\)，选择一组凸系数
+
+\[
+\lambda=\sum_{\ell=0}^{m-1}a_\ell\zeta_m^\ell,
+\qquad a_\ell\ge0,\qquad \sum_\ell a_\ell=1.
+\tag{351.11}
+\]
+
+在状态集 \(\mathbb Z/m\mathbb Z\) 上，令当前状态 \(j\) 以概率 \(a_\ell\) 转到 \(j+\ell\)。这给一个固定行随机循环矩阵
+
+\[
+P_{j,j+\ell}=a_\ell
+\quad\text{（下标模 \(m\)）}.
+\tag{351.12}
+\]
+
+从状态 0 开始，并取终端输出概率
+
+\[
+b_j=\frac{1-\operatorname{Re}\zeta_m^j}{2}\in[0,1].
+\tag{351.13}
+\]
+
+若 \(J_k\) 为内部状态，则
+
+\[
+\mathbb E[\zeta_m^{J_{k+1}}\mid J_k=j]
+=\sum_\ell a_\ell\zeta_m^{j+\ell}
+=\lambda\zeta_m^j.
+\tag{351.14}
+\]
+
+初始复坐标为 1，迭代得 \(\mathbb E[\zeta_m^{J_k}]=\lambda^k\)。因此
+
+\[
+\alpha P^kb=\mathbb E[b_{J_k}]
+=\frac{1-\operatorname{Re}\lambda^k}{2}
+=h_k^{r,\theta}
+\quad(k\ge0).
+\tag{351.15}
+\]
+
+全部初态、更新行与输出概率均已给出；没有把一般带符号线性递推误当作随机程序。
+
+几何上，复数乘法 \(z\mapsto\lambda z\) 把每个顶点的像写成相同权重的旋转顶点凸组合。式（351.11）因此保证整个 \(\Pi_m\) 在该更新下前向不变。这是正实现中不变多边形或多面锥方法的具体概率版本。[^damped_positive_cone]
+
+### 351.4 每个严格阻尼的角度一致有限上界
+
+正 \(m\) 边形每条边的支撑直线距原点为 \(\cos(\pi/m)\)，且其内部为这些向内半平面的交，所以
+
+\[
+\{z:|z|\le\cos(\pi/m)\}\subseteq\Pi_m.
+\tag{351.16}
+\]
+
+对任意 \(0\le r<1\)，取
+
+\[
+m(r)=\max\left\{
+3,\left\lceil\frac{\pi}{\arccos r}\right\rceil
+\right\}.
+\tag{351.17}
+\]
+
+此时 \(r\le\cos(\pi/m(r))\)，所以不论角度为何，\(\lambda\in\Pi_{m(r)}\)。由上一节得到
+
+\[
+d_{\rm ex}(r,\theta)\le m(r)<\infty
+\qquad(0\le r<1,\ \theta\in\mathbb R).
+\tag{351.18}
+\]
+
+由于 \(\arccos r\sim\sqrt{2(1-r)}\) 当 \(r\uparrow1\)，该充分上界满足
+
+\[
+m(r)=O((1-r)^{-1/2}).
+\tag{351.19}
+\]
+
+它对角度一致，但不声称最优或给匹配下界。直接检验 \(\lambda\in\Pi_m\) 而不把多边形换成内切圆，可以得到依赖角度的更小充分阶数。后面的完整谱刻画又允许使用不属于这种循环构造的随机矩阵，故不能将式（351.17）当作最小状态数公式。
+
+### 351.5 从一个随机特征值构造合法概率接口
+
+给定任意 \(d\) 阶行随机矩阵 \(P\)，若 \(\lambda\) 是其特征值，则本目标具有 \(d\) 态精确实现。
+
+取非零复右特征向量 \(v\)，满足 \(Pv=\lambda v\)。选择模最大的分量 \(v_i\ne0\)，将整个向量除以 \(v_i\)，得到
+
+\[
+v_i=1,\qquad |v_j|\le1\quad(1\le j\le d).
+\tag{351.20}
+\]
+
+令初态为第 \(i\) 个纯经典状态，终端成功概率为
+
+\[
+\alpha=e_i^\top,\qquad
+b=\frac{\mathbf1-\operatorname{Re}v}{2}.
+\tag{351.21}
+\]
+
+由 \(|v_j|\le1\) 可知 \(0\le b_j\le1\)，所以 \(b\) 是合法效果。又因 \(P\) 为实矩阵，\(P^k\mathbf1=\mathbf1\)，且 \(P^kv=\lambda^kv\)，故
+
+\[
+\begin{aligned}
+\alpha P^kb
+&=\frac12-\frac12\operatorname{Re}(\alpha P^kv)\\
+&=\frac12-\frac12\operatorname{Re}(\lambda^kv_i)
+=\frac{1-\operatorname{Re}\lambda^k}{2}.
+\end{aligned}
+\tag{351.22}
+\]
+
+特别地 \(b_i=0\)，所以初始时刻 \(k=0\) 也满足目标。该证明不要求 \(P\) 不可约，也不要求特征向量各分量非负；非负要求施加在真实概率效果 \(b\) 上。
+
+对一般给定响应，只知道某个特征值能出现，并不自动提供指定振幅、常数项、初态和合法输出。本节之所以可以从谱值推出完整实现，正因为式（351.20）—（351.22）逐项履行了这些条件。
+
+### 351.6 精确实现反向迫使所需谱值
+
+反过来，若 \(\alpha P^kb=h_k^{r,\theta}\) 对全部 \(k\ge0\) 成立，则 \(\lambda\) 是 \(P\) 的特征值，包括实相位及零半径参数的退化情况。
+
+令 \(\chi\) 为 \(P\) 的特征多项式。首先设 \(\lambda\notin\mathbb R\)。三个数 \(1,\lambda,\overline\lambda\) 两两不同，且
+
+\[
+h_k^{r,\theta}
+=\frac12-\frac14\lambda^k-\frac14\overline\lambda^k.
+\tag{351.23}
+\]
+
+由 Cayley–Hamilton，对全部 \(k\ge0\)，
+
+\[
+0=\alpha P^k\chi(P)b
+=\frac12\chi(1)
+-\frac14\lambda^k\chi(\lambda)
+-\frac14\overline\lambda^k\chi(\overline\lambda).
+\tag{351.24}
+\]
+
+取 \(k=0,1,2\)，三频率的 Vandermonde 矩阵可逆，所以 \(\chi(\lambda)=0\)。这里不要求相位有理或无理，只使用频率互异。
+
+若 \(\lambda\in\mathbb R\setminus\{1\}\)，响应化为 \(h_k=(1-\lambda^k)/2\)。在 \(k=0\) 应用同一个特征多项式递推，得到
+
+\[
+0=\frac12\chi(1)-\frac12\chi(\lambda).
+\tag{351.25}
+\]
+
+行随机矩阵本有特征值 1，因此 \(\chi(1)=0\)，仍得 \(\chi(\lambda)=0\)。这一计算包含 \(\lambda=0\)，按 \(\lambda^0=1\) 处理首项，无需除以 \(\lambda\)。
+
+若 \(\lambda=1\)，目标恒为 0，而任何行随机矩阵都已含特征值 1，结论同样成立。结合上一节，精确实现与谱容纳的两个方向都已证明。
+
+### 351.7 Karpelevič 区域给出精确容量刻画
+
+定义成熟的随机矩阵单特征值区域
+
+\[
+\Theta_d
+=\{z\in\mathbb C:
+z\text{ 是某个 \(d\) 阶行随机矩阵的特征值}\}.
+\tag{351.26}
+\]
+
+第351.5—351.6节给出
+
+\[
+\begin{aligned}
+&\exists\ d\text{ 态经典精确实现}
+\quad\Longleftrightarrow\quad
+re^{i\theta}\in\Theta_d,\\
+&d_{\rm ex}(r,\theta)
+=\min\{d\ge1:re^{i\theta}\in\Theta_d\}.
+\end{aligned}
+\tag{351.27}
+\]
+
+这里的第一行是“存在一个 \(d\) 态实现”，并未要求它最小；增加未使用状态可以把更小实现补到 \(d\) 态。
+
+\(\Theta_d\) 是 Karpelevič 理论研究的谱区域。它包含于闭单位圆盘，关于实轴对称，单位圆上的交点恰为阶数不超过 \(d\) 的单位根；完整边界由相邻单位根之间的曲线弧描述。[^damped_karpelevic] 本节使用的是该成熟区域与当前概率目标之间的式（351.27），不重新宣称谱区域问题为新问题，也不把正多边形 \(\Pi_d\) 当作全部 \(\Theta_d\)。
+
+后面只需要下列两个可直接说明的性质。第一，\(\Theta_d\) 闭且紧：对一列随机矩阵及其特征值，矩阵可在紧的行随机矩阵集合中取收敛子列；\(\det(zI-P)=0\) 在极限下保持，而全部特征值有模至多 1。第二，
+
+\[
+\Theta_d\cap\{|z|=1\}
+=\{z:z^q=1\text{ 对某个 }1\le q\le d\}.
+\tag{351.28}
+\]
+
+必要方向是第350.4节的最大模特征向量闭环引理：沿正概率边传播相位，必得到长度不超过 \(d\) 的闭环。充分方向由确定性 \(q\) 周期矩阵给出，再加入未使用状态。这个直接证明也覆盖 \(d=1\)，其中 \(\Theta_1=\{1\}\)。
+
+谱区域刻画提供了精确数学准则；本节尚未把它化为固定无理角逼近单位圆时的精确容量速率。角度一致的式（351.19）仍只是一个明确可实现的上界。
+
+### 351.8 实相位、零半径与有理周期
+
+先处理容易混在一般三频证明中的退化情形。若 \(\lambda=1\)，目标恒为 0，所以
+
+\[
+d_{\rm ex}(r,\theta)=1.
+\tag{351.29}
+\]
+
+若 \(-1\le\lambda<1\) 为实数，一态行随机矩阵只有特征值 1，故至少需要两态。而
+
+\[
+P_\lambda=\frac12
+\begin{pmatrix}
+1+\lambda&1-\lambda\\
+1-\lambda&1+\lambda
+\end{pmatrix},
+\qquad
+\alpha=(1,0),\qquad b=(0,1)^\top
+\tag{351.30}
+\]
+
+给精确响应 \((1-\lambda^k)/2\)，因此此时最小态数恰为 2。特别地：
+
+- \(r=0\) 时，\(h_0=0\)，全部 \(k\ge1\) 的目标为 \(1/2\)，最小经典态数为 2，与角度无关。
+- \(\theta\equiv0\pmod{2\pi}\) 且 \(r<1\) 时，目标为 \((1-r^k)/2\)，最小态数为 2；\(r=1\) 时退化为式（351.29）。
+- \(\theta\equiv\pi\pmod{2\pi}\) 时，\(\lambda=-r<1\)，最小态数为 2，包括 \(r=1\) 的二周期。
+
+更一般地，若
+
+\[
+\theta\equiv\frac{2\pi a}{q}\pmod{2\pi},
+\qquad \gcd(a,q)=1,\qquad q\ge2,
+\tag{351.31}
+\]
+
+则对所有 \(0\le r\le1\)，都有 \(q\) 态精确实现。令 \(C_a\) 为状态 \(j\mapsto j+a\) 的周期置换，\(J_q\) 为每一行均匀分布的重置矩阵，取
+
+\[
+P=rC_a+(1-r)J_q.
+\tag{351.32}
+\]
+
+对 \(v_j=e^{2\pi ij/q}\)，有 \(J_qv=0\)、\(C_av=e^{i\theta}v\)，从而 \(Pv=re^{i\theta}v\)。以状态 0 开始，取 \(b_j=(1-\operatorname{Re}v_j)/2\)，第351.5节直接给目标。因此
+
+\[
+d_{\rm ex}(r,\theta)\le q\qquad(0\le r\le1).
+\tag{351.33}
+\]
+
+在 \(r=1\) 时，式（351.28）又迫使 \(d\ge q\)，所以最小态数恰为 \(q\)。更强地，对每个固定的既约角 \(a/q\)，存在 \(r_0<1\)，使
+
+\[
+d_{\rm ex}(r,\theta)=q\qquad(r_0<r\le1).
+\]
+
+若不成立，便可选 \(r_j\uparrow1\) 及至多 \(q-1\) 态的精确实现。由式（351.27），补齐维数后的随机矩阵 \(P_j\) 含有 \(r_je^{i\theta}\) 为特征值。取紧性子列 \(P_j\to P\)，行列式连续性使 \(e^{i\theta}\) 成为 \(q-1\) 阶随机矩阵的特征值。这是本原 \(q\) 次单位根，与式（351.28）矛盾。因此在足够接近无阻尼的邻域里，下界与式（351.33）的上界吻合。严格阻尼的其余参数处，仍不声称全部需要 \(q\) 态。
+
+这给精确有限实现的完整存在性分界：每个 \(|\lambda|<1\) 都有有限实现；单位圆上的有理相位以有限周期实现；单位圆上的无理相位则无有限实现。是否存在有限实现，与严格阻尼内部最小态数的具体大小，是两个不同问题。
+
+### 351.9 固定无理角的精确容量在阻尼消失时发散
+
+固定 \(\theta/(2\pi)\) 无理。对每个 \(r<1\)，式（351.18）保证 \(d_{\rm ex}(r,\theta)<\infty\)，但
+
+\[
+d_{\rm ex}(r,\theta)\longrightarrow\infty
+\qquad(r\uparrow1).
+\tag{351.34}
+\]
+
+反设存在固定整数 \(D\) 和序列 \(r_j\uparrow1\)，使 \(d_{\rm ex}(r_j,\theta)\le D\)。将实现补齐到共同维数 \(D\)，由式（351.27）选择随机矩阵 \(P_j\) 含有特征值 \(r_je^{i\theta}\)。行随机矩阵集合紧，取子列 \(P_j\to P\)。行列式连续性给
+
+\[
+0=\lim_j\det(r_je^{i\theta}I-P_j)
+=\det(e^{i\theta}I-P).
+\tag{351.35}
+\]
+
+于是极限随机矩阵含有单位模特征值 \(e^{i\theta}\)，与式（351.28）矛盾。因此对每个给定 \(D\)，都存在 \(r_D<1\)，使所有 \(r_D<r<1\) 的精确实现均需超过 \(D\) 态。这是趋于无穷的结论，不只是某条序列无界。
+
+此证明只给定性发散，未从紧性中产生速率。第351.8节的有理角上界显示，固定角度的算术性质在边界处确实改变容量结论，不能把无理角发散推广成全部角度发散。
+
+### 351.10 任意固定误差小于 \(1/2\) 仍不能阻止发散
+
+精确性并非式（351.34）的唯一原因。固定无理角和任意固定
+
+\[
+0\le\varepsilon<\frac12
+\]
+
+时，同样有
+
+\[
+d_\varepsilon(r,\theta)\longrightarrow\infty
+\qquad(r\uparrow1).
+\tag{351.36}
+\]
+
+先说明所需的无阻尼边界事实。第350.7节证明，对任意有限行随机矩阵 \(P\)，取 \(L=\operatorname{lcm}(1,\ldots,d)\)，则 \(P^{mL}\) 收敛；从而 \(g_{mL}\to c\in[0,1]\)。无理数 \(L\theta/(2\pi)\) 的正向旋转轨道在每个尾部稠密，故 \(h_{mL}^{1,\theta}\) 有分别趋于 0 和 1 的子序列。统一误差至少为 \(\max(c,1-c)\ge1/2\)，而一态公平输出达到 \(1/2\)。所以无阻尼无理目标的最佳有限经典误差恰为 \(1/2\)。
+
+现在反设存在 \(r_j\uparrow1\) 和至多 \(D\) 态的 \(\varepsilon\) 近似器。补齐维数后，全部三元组属于紧集
+
+\[
+\Delta_D
+\times\{\text{\(D\) 阶行随机矩阵}\}
+\times[0,1]^D.
+\tag{351.37}
+\]
+
+取子列
+
+\[
+(\alpha_j,P_j,b_j)\longrightarrow(\alpha,P,b).
+\]
+
+对每个固定整数 \(k\)，矩阵乘法与有限次幂连续，且 \(r_j^k\to1\)，因此
+
+\[
+\begin{aligned}
+|\alpha P^kb-h_k^{1,\theta}|
+&=\lim_j
+|\alpha_jP_j^kb_j-h_k^{r_j,\theta}|\\
+&\le\varepsilon.
+\end{aligned}
+\tag{351.38}
+\]
+
+同一个极限三元组满足每个 \(k\) 的不等式，故满足全时域误差不超过 \(\varepsilon<1/2\)。这与刚证明的无阻尼边界矛盾，式（351.36）得证。
+
+这里先对任意固定 \(k\) 取极限，得到同一实现的逐点不等式，再对全部 \(k\) 取上确界；没有假设阻尼目标在全时域上关于 \(r\uparrow1\) 一致收敛。也不能只把近似器的矩阵 \(P_j\) 取极限而忽略初态和效果，式（351.37）保留了完整共同实现。
+
+还可用固定容量的最佳误差表达这一边界。对给定 \(D\ge1\)，定义
+
+\[
+E_D(r,\theta)
+=\inf_{(\alpha,P,b)\in\mathcal K_D}
+\sup_{k\ge0}|\alpha P^kb-h_k^{r,\theta}|,
+\]
+
+其中 \(\mathcal K_D\) 是式（351.37）的紧三元组空间。对每个固定 \(k\)，误差是三元组的连续函数，其上确界下半连续，故该下确界实际取得。固定无理角下，
+
+\[
+\lim_{r\uparrow1}E_D(r,\theta)=\frac12
+\qquad\text{对每个固定 }D.
+\]
+
+上界由公平输出给出；若下极限严格小于 \(1/2\)，选择介于两者之间的 \(\varepsilon<1/2\)，便得到沿某列 \(r_j\uparrow1\) 的共同 \(D\) 态 \(\varepsilon\) 近似器，与式（351.36）矛盾。这个论证没有要求 \(E_D\) 随 \(r\) 单调。
+
+阈值 \(1/2\) 在发散结论中是准确的：当 \(\varepsilon\ge1/2\)，一态公平输出对所有 \(r,\theta,k\) 都满足误差要求，因此 \(d_\varepsilon(r,\theta)=1\)。对于每个固定严格阻尼参数，所需容量有限；对于逼近无阻尼无理边界的一族参数，固定小误差的容量没有共同有限上界。这两个量词必须同时保留。
+
+### 351.11 固定严格阻尼的有限计数近似上界
+
+除了精确多边形构造，还可直接截断已衰减的尾部。设 \(0<r<1\)、\(0<\varepsilon<1/2\)，取
+
+\[
+K=\left\lceil
+\frac{\log(1/(2\varepsilon))}{-\log r}
+\right\rceil.
+\tag{351.39}
+\]
+
+构造状态 \(0,\ldots,K\) 的计数器，初始为 0，每次 advance 加一，并在 \(K\) 吸收。状态 \(j<K\) 的终端成功率设置为 \(h_j^{r,\theta}\)，状态 \(K\) 的终端成功率设置为 \(1/2\)。
+
+在 \(k<K\) 时，该实现精确；在 \(k\ge K\) 时，
+
+\[
+|h_k^{r,\theta}-1/2|
+\le\frac{r^k}{2}
+\le\frac{r^K}{2}
+\le\varepsilon.
+\tag{351.40}
+\]
+
+所以
+
+\[
+d_\varepsilon(r,\theta)
+\le K+1,\qquad
+d_\varepsilon(r,\theta)\le
+\min\{m(r),K+1\}.
+\tag{351.41}
+\]
+
+对固定 \(r<1\)，计数器界是 \(O_r(\log(1/\varepsilon))\)；对固定 \(0<\varepsilon<1/2\)，当 \(r\uparrow1\) 时为 \(O_\varepsilon((1-r)^{-1})\)，因为 \(-\log r\sim1-r\)。它可能比精确多边形构造使用更多状态，因而不提供最优容量或匹配下界。
+
+\(r=0\) 时使用第351.8节的两态精确实现，不代入式（351.39）；\(\varepsilon=0\) 时使用精确构造，不以有限截断冒充准确尾部。\(\varepsilon\ge1/2\) 时一态公平输出已足够。这个计数器证明的是每个固定严格阻尼下的上界，不能用来否定上一节在 \(r\uparrow1\) 时的发散。
+
+### 351.12 阻尼改变了目标，容量不等于全部实现费用
+
+从 \(r=1\) 改到 \(r<1\)，已经改变需要复现的概率族。严格阻尼下的有限经典精确实现忠实于 \(h^{r,\theta}\)，不能被报告为忠实保持无阻尼的 \(h^{1,\theta}\)。所证结果也没有扩成“任意非零量子噪声都使任意量子过程具有有限经典精确模拟”：证明使用的是固定赤道旋转、各向同性赤道收缩、固定初态和单次终端效果这一完整结构。
+
+同样，连续状态坐标本身不是容量优势。式（351.27）把当前比较落实为同一实际随机矩阵、同一合法初态和同一效果；其容量边界来自正性允许的谱区域。第351.3节的多边形顶点只是一个可执行构造，不是依据顶点数量对一切竞争实现强加下界。
+
+状态数没有计入固定实参数的描述与物理实现精度。选择 \(\lambda\) 的凸分解、存储转移概率、实施相位门和阻尼通道，都可能随参数和精度改变费用；本节没有给这些费用一个与 \(r,\theta\) 无关的界。多边形更新每次接收一个 advance 并实施固定随机转移，不意味着相同的物理持续时间、能量消耗或门级电路长度。
+
+\(r\) 是每次 advance 的赤道收缩因子。未提供物理标定前，它不定义秒、热力学温度、时空曲率或任何能耗下界。外部词长度与内部可读时钟仍是不同资源；所有由内部保留并用于未来的计数记录，都已包含在状态合同中。
+
+### 351.13 当前结论与后续精细边界
+
+本节已经给出严格阻尼的有限精确构造、完整谱充要刻画、实相位的精确态数和有理角在无阻尼附近的精确容量，以及固定无理角下精确和任意固定误差 \(\varepsilon<1/2\) 的容量发散。等价的固定容量边界是 \(E_D(r,\theta)\to1/2\)。正多边形的角度一致阶数是充分界；Karpelevič 区域则给此特定目标的精确状态数准则。
+
+固定无理角下的具体发散速率、不同角度的精细差别、近似容量的匹配上下界，以及更一般量子更新的正实现判据，尚未由本节解决。精确谱区域与角度近似之间的定量连接需要另行证明；不能把式（351.19）的充分指数当作已有最优速率。
+
+不变多面锥和随机矩阵谱区域已有成熟文献。当前组合的作用是把这些对象接到一份明确的终端概率接口，并逐项证明状态、初态和输出的可实现性；没有据此认领文献认证的原创性。这些是纸面数学结论，不新增 Lean 核验或机器状态声明。
+
+[^damped_positive_cone]: Wojciech Czaja, Philippe Jaming and Máté Matolcsi, *An efficient algorithm for positive realizations*, [arXiv:math/0612551v2](https://arxiv.org/pdf/math/0612551v2)，后刊于 *Systems & Control Letters* 57(5) (2008), 436–441，[DOI](https://doi.org/10.1016/j.sysconle.2007.11.001)。PDF 第3页 Theorem 2.2以单位根正多边形控制正实现阶数，但带有非主导留数充分小的前提；Appendix A（第7—8页）使用多边形生成的不变多面锥。本节保留这一成熟方法联系，不删去留数条件套用该定理，也不使用其附录留数常数；完整随机实现由式（351.11）—（351.15）直接给出。
+
+[^damped_karpelevic]: Charles R. Johnson and Pietro Paparella, *A matricial view of the Karpelevič Theorem*, [arXiv:1611.06970v2](https://arxiv.org/pdf/1611.06970v2)。PDF 第2页 Theorem 2.1陈述随机矩阵单特征值区域位于单位圆盘、单位圆交点为相应有限阶单位根，以及连接这些点的边界弧；正文给边界弧的随机矩阵实现。该谱区域是成熟结果。本节的概率输出合同与谱容纳之间的两个方向，由第351.5—351.6节另证；角度一致的多边形上界不被称为完整谱区域。
+
+## 追加锚（本行以下为增补区）
