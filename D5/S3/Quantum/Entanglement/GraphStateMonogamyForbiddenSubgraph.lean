@@ -23,6 +23,7 @@ Direct frozen dependencies: none (pinned Mathlib only)
 -/
 
 import Mathlib.Algebra.Field.ZMod
+import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.LinearAlgebra.Matrix.Rank
 
@@ -58,10 +59,8 @@ private instance {V : Type} [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.
     Decidable (IsClaw G c i j k) := by unfold IsClaw; infer_instance
 
 /-- The graph on `Fin n` with the listed edges. -/
-private def ofEdges (n : ℕ) (E : List (ℕ × ℕ)) : SimpleGraph (Fin n) where
-  Adj a b := a ≠ b ∧ ((a.val, b.val) ∈ E ∨ (b.val, a.val) ∈ E)
-  symm := ⟨fun _ _ h => ⟨h.1.symm, h.2.symm⟩⟩
-  loopless := ⟨fun _ h => h.1 rfl⟩
+private def ofEdges (n : ℕ) (E : List (ℕ × ℕ)) : SimpleGraph (Fin n) :=
+  SimpleGraph.fromRel fun a b => (a.val, b.val) ∈ E
 
 private instance (n : ℕ) (E : List (ℕ × ℕ)) : DecidableRel (ofEdges n E).Adj :=
   fun a b => by unfold ofEdges; infer_instance
@@ -186,7 +185,7 @@ open Classical in
 /-- The adjacency block of `G` with rows in `A` and columns outside `A`, over `ZMod 2`. -/
 private noncomputable def cut {V : Type} [DecidableEq V] (G : SimpleGraph V) (A : Finset V) :
     Matrix {x // x ∈ A} {x // x ∉ A} (ZMod 2) :=
-  fun a b => if G.Adj a b then 1 else 0
+  (G.adjMatrix (ZMod 2)).submatrix Subtype.val Subtype.val
 
 /-- The entanglement entropy of `A` in the graph state of `G` (Fuentes et al., eq. `EEadj`): the
 rank over `ZMod 2` of the adjacency block with rows in `A` and columns outside `A`. -/
@@ -537,7 +536,8 @@ theorem result : claim := by
         (Equiv.subtypeEquivRight (fun x => Finset.mem_compl))
         (Equiv.subtypeEquivRight (fun x => by simp)) := by
       ext r c
-      simp only [cut, Matrix.submatrix_apply, Matrix.transpose_apply, Equiv.subtypeEquivRight_apply]
+      simp only [cut, SimpleGraph.adjMatrix_apply, Matrix.submatrix_apply, Matrix.transpose_apply,
+        Equiv.subtypeEquivRight_apply]
       by_cases h : G.Adj r c
       · rw [if_pos h, if_pos h.symm]
       · rw [if_neg h, if_neg (fun h' => h h'.symm)]
@@ -587,7 +587,7 @@ theorem result : claim := by
         ext a b
         rw [Matrix.add_mul, Matrix.one_mul, Matrix.add_apply, Matrix.mul_apply,
           Finset.sum_eq_single ⟨v, hv⟩]
-        · simp only [hN, cut, lc]
+        · simp only [hN, cut, Matrix.submatrix_apply, SimpleGraph.adjMatrix_apply, lc]
           have hab : (a : V) ≠ b := fun h => b.2 (h ▸ a.2)
           by_cases h1 : G.Adj a b <;> by_cases h2 : G.Adj v a <;> by_cases h3 : G.Adj v b <;>
             simp +decide [h1, h2, h3, hab]
@@ -623,7 +623,7 @@ theorem result : claim := by
       obtain ⟨b, hbA, hodd⟩ := h T hTA ⟨i.1, by simp [hT, hi]⟩
       have hz := congrFun hg ⟨b, hbA⟩
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply, Matrix.row,
-        Matrix.submatrix_apply, id, cut, hr] at hz
+        Matrix.submatrix_apply, id, cut, SimpleGraph.adjMatrix_apply, hr] at hz
       have h01 : ∀ x : ZMod 2, x ≠ 0 → x = 1 := by decide
       have hsum : (∑ j : {x // x ∈ A'}, g j * if G.Adj (j : V) b then (1 : ZMod 2) else 0) =
           ((T.filter (G.Adj · b)).card : ZMod 2) := by
@@ -852,10 +852,12 @@ theorem result : claim := by
       · rw [hR1 a ha, hC1 b hb]
         rfl
       · rw [hR1 a ha, hC2 b hb]
-        simp only [Matrix.fromBlocks_apply₁₂, Matrix.zero_apply, cut]
+        simp only [Matrix.fromBlocks_apply₁₂, Matrix.zero_apply, cut, Matrix.submatrix_apply,
+          SimpleGraph.adjMatrix_apply]
         rw [if_neg (hX _ ha _ hb)]
       · rw [hR2 a ha, hC1 b hb]
-        simp only [Matrix.fromBlocks_apply₂₁, Matrix.zero_apply, cut]
+        simp only [Matrix.fromBlocks_apply₂₁, Matrix.zero_apply, cut, Matrix.submatrix_apply,
+          SimpleGraph.adjMatrix_apply]
         rw [if_neg (fun h => hX _ hb _ ha h.symm)]
       · rw [hR2 a ha, hC2 b hb]
         rfl

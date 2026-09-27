@@ -104,11 +104,11 @@ The canonical source is
 Its public declarations are `lc`, `lcSeq`, `IsClaw`, `entropy`,
 `ViolatesMMI`, `IsGeneralizedStar`, `claim`, and `result`. The frozen module
 state has statement identity
-`sha256:b20280d3fc2848dcac2b11b0e726afdbc1aeb23d9e5342057048d12a1875c45e`.
+`sha256:81981077a3cd56f484109eb63008d9318f6a36c1c70e0df494f9f09515aef166`.
 The result declaration has statement identity
 `sha256:5685717741e6283d7382bd2db3f27e7d30d268b94ec809b0114eb4a1b0bdc566`.
 The Freeze event is
-`sha256:46fbacb3bc6534fbbf77e2a51c235cecfe02af183fb7f2072a7eead3bc7edf4f`.
+`sha256:327c0570404b9ac857e7ddd982af73a180197bbbc816d647781967cc4de43657`.
 It has no project-level frozen prerequisite. The proof uses only the standard
 axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
