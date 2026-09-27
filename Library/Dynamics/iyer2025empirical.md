@@ -6509,3 +6509,13 @@ Frédéric Ouimet，*A precise local limit theorem for the multinomial distribut
 这些经典概率方法不作原创声明；新增结果是对原完整计数实验逐前缀、初始时间及未知均值误差的定量连接。顺序极限的零假设是原替代的精确均值 Poisson 参考；任意有限均值下的有限样本随时有效检验尚未在本章建立。第 202 章固定终点的精确条件结论不因此扩大。未作 Lean 认证或全球原创性认定。
 
 ## 追加锚（本行以下为增补区）
+
+## 205. 较小共同能量阈值与完整后验方差范围
+
+对应 `PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md` 第 205 章。Francesco Cellarosi 与 Tariq Osman，*Bounds for Smooth Theta Sums with Rational Parameters* （[arXiv:2306.11119v2](https://arxiv.org/abs/2306.11119v2)）的原始 TeX 背景定义、Poisson 变换、统一界引理及两个推论提供 theta-sum 方法对照。该统一界使用固定维数 $k$、满足 $\eta>k$ 的正规权重、$y\ge1/2$ 和正的 $\theta_k(\xi_2)$；其格点和常数在相位趋近整数格时发散，cusp 推论仍保留同一个相位相关常数。因此它不能作为增长维数、经验相位的统一衰减前提。
+
+有限 Gauss 反演与 Gaussian Poisson 求和在本章只承担精确恒等式。实际统一衰减来自原数据律的共同能量下界：将证明阈值从 $e^{10\kappa Q^3}$ 降至 $e^{4\kappa Q^3}$，完整支付同一数组上的有理值、曲率、平移、实标记与全部频率后，仍保留 $e^{\kappa Q^3}$ 级能量。它把原完整选择后验的加权绝对方差轮廓推进到每个固定 $0<c<249c_q/500$，同时保留所有实际系数及全输出回接。
+
+上述成熟方法不作原创声明；原模型的较小阈值概率估计和完整物理连接归为仓内推导。端点、更大区间及较大分母事件仍未在本章结算。未作 Lean 认证或全球原创性认定。
+
+## 追加锚（本行以下为增补区）
