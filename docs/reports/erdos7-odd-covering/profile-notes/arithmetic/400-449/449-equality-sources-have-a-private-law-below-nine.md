@@ -7671,7 +7671,7 @@ Together with the full-root three-singleton theorem in SA.4 (bound503/56), the s
 
 In public-token-cost1 rows the public prefix is exactly one fine leaf y. Whole source containment gives the displayed {y,zi} constraints for the three private-cost1 children; the full private-cost0 child has entire nonempty fibre {y}. Other active cost2 or cost3 children are allowed arbitrary fibres by the corresponding supplier.
 
-These SA consumers supply six of the nine previously unsupplied t=3 shapes needed by the C76 root-cap test, and seven of the fourteen needed by the C75 test. The complete four-double gap theorem in G4 below additionally supplies gap/private2222, giving seven of nine and eight of fourteen respectively. Remaining C76 t=3 shapes are full/private11222 and full/public1/private11111. Remaining C75 t=3 shapes additionally include full/private11223, full/private12222, gap/private1233 and gap/private2223 at capacity81. One-/two-inactive cut branches, the entire cut74--76 classes and the outside-cofactor/common-law lift remain unresolved.
+These SA consumers supply six of the nine previously unsupplied t=3 shapes needed by the C76 root-cap test, and seven of the fourteen needed by the C75 test. The complete four-double gap theorem in G4 below additionally supplies gap/private2222, and FP1 supplies full/public1/private11111. Together they give eight of nine and nine of fourteen respectively. The remaining C76 t=3 shape is full/private11222. Remaining C75 t=3 shapes additionally include full/private11223, full/private12222, gap/private1233 and gap/private2223 at capacity81. One-/two-inactive cut branches, the entire cut74--76 classes and the outside-cofactor/common-law lift remain unresolved.
 
 ### SA.9. Exact controls on complete original sources
 
@@ -7850,4 +7850,147 @@ The checks remain active under Python -O. The program imports the adjacent actua
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/gap_four_double_actual_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/gap_four_double_actual_controls.json
 ```
 
-This supplies one more complete t3 support shape in the root-cap reduction. The remaining C76 t3 shapes are full/private11222 and full/public1/private11111. The one-/two-inactive branches and the complete cut74--76 problem retain their stated unresolved obligations.
+This supplies one more complete t3 support shape in the root-cap reduction. FP1 below also supplies full/public1/private11111, leaving full/private11222 as the remaining C76 t3 shape. The one-/two-inactive branches and the complete cut74--76 problem retain their stated unresolved obligations.
+
+## A public singleton and five private candidates at a full root
+
+Ordinary mathematics on one complete actual literal4555 source. The exact finite certificates below concern original numerical queries. No Lean verification, minimum-cut certification, arbitrary-height lift or settlement of unrestricted Erdos #7 is asserted.
+
+### FP1.1. Statement and inherited suppliers
+
+Retain the original source with one gap root having four occupied children and three full roots having five, all complete child fibres nonempty. Every pair of ORIGINAL legal restrictions at different roots has a union containing a ternary seven-tree: three distinct public columns, each with three distinct fine labels. A legal restriction selects two original gap children or three original full children.
+
+Suppose a full root R has complete actual fibres F_1,...,F_5 such that
+
+    F_i subset {y,z_i},  i=1,...,5,
+
+for one specified public fine label y and private candidate fine labels z_i. The candidates need not initially be distinct or actual. There is ONE probability law on this same source, fixed before all original numerical phase queries, with
+
+    Gamma_1225 <= 503/56 = 9-1/56.
+
+In particular this supplies the normalized full/public1/private11111 support shape at cut capacity80. The indicated cut need not be minimum. The proof uses no maximum-flow or standalone-five-tree premise.
+
+The existing complete-source suppliers used below are: a whole original legal restriction with at most two labels, bound328/37; a three-label nonmonochromatic whole restriction, bound249/28; a whole monochromatic restriction together with four distinct actual labels in that column assigned at at most two selected points per owner, bound249/28; three complete singleton children at a full root with the two other fibres arbitrary, bound503/56; the P0111 full-root supplier, bound249/28; and a four-label whole restriction of column type211 or1111, bound250/29. These are the IA.1 and SA.2--SA.7 consumers.
+
+### FP1.2. Reduction preserving all complete fibres
+
+If one complete fibre equals {y}, the P0111 full supplier applies using that child and any three of the other original children. Hence assume no fibre equals {y}. Nonemptiness and F_i subset {y,z_i} imply that z_i is actual at owner i and differs from y.
+
+If z_i=z_j=z for two different owners, consider the original legal triple {i,j,k} for each remaining owner k. Its complete projection has at most three labels. A projection of size at most two or of three nonmonochromatic labels invokes an existing supplier. Otherwise every such projection is exactly three labels in one column H. In particular y,z and every remaining private label lie in the same H, so all five complete fibres lie in H. If the source at R has at least four distinct H labels, select any four and give each an actual owner; no owner can receive more than two selected labels because every complete fibre has size at most two. The monochromatic supplier applies. If there are at most three labels in total, at most two differ from y; among the five private candidates three coincide. Their original legal triple then has at most two labels. Thus every repeated-private case is supplied.
+
+Assume therefore that the five z_i are distinct and all differ from y. Each fibre is either {z_i} or {y,z_i}. If at least three are singleton fibres, use the three-singleton full-root theorem. Otherwise at least three owners contain y, so EVERY original legal triple contains y. Its complete projection is exactly y together with the three selected distinct private labels.
+
+Let H be the public column of y. If at least three z_i lie in H, choose their three original owners: the complete legal projection lies in H and consists of four distinct labels, with at most two actual labels per owner. The monochromatic supplier applies. If the private labels outside H occupy at least two different public columns, choose one from each of two such columns and any third private owner. The complete four-label legal projection, including y, has type211 or1111. The spread supplier applies.
+
+It remains that all private labels lie in exactly two columns H and J, with
+
+    a = number of private labels in H in {0,1,2},
+    b = number of private labels in J = 5-a in {5,4,3}.
+
+At least three original owners contain y. This property is retained in every construction below; no complete fibre is shortened.
+
+### FP1.3. Two column punctures on original paired restrictions
+
+Choose any three of the b>=3 original J owners. Their COMPLETE legal projection is y and their three distinct J labels. For every other root Q and every ORIGINAL legal restriction at Q, choose a ternary tree in the union with that fixed complete R restriction. Delete the entire public column J and the single fine label y globally. A ternary tree loses at most three J leaves and one additional leaf, so at least five leaves remain. Choose five of them, each still in its original tree branch, and lift each to an actual owner in Q's selected restriction. Such an owner exists because every label of the COMPLETE R anchor was deleted.
+
+Make these five actual points uniform. Average over all original restrictions at Q, then give the three roots Q different from R equal mass. At a full Q the restriction average is over its ten triples; at the gap Q it is over its six pairs. The result is ONE law psi_J, chosen without reference to the future query. It is supported away from R and away from the entire column J, and it also avoids y.
+
+An included child occurs with probability3/5 at a full root and1/2 at the gap. Before the averaging, a chosen column has at most three of the five leaves and a chosen fine label has at most one. In divisor order
+
+    D=(1,5,7,25,35,49,175,245,1225),
+
+the same psi_J therefore has simultaneous cylinder caps
+
+    P=(1,1/3,3/5,1/5,1/5,1/5,3/25,1/15,1/25).       (1)
+
+For example the child-column cap is at most(1/3)(3/5)(3/5)=3/25, and the atom cap at most(1/3)(3/5)(1/5)=1/25. These products use the same restriction sampling and the pointwise conditional bounds; no independence of source events is asserted.
+
+When a=2, name the two H private labels h_1,h_2 and the three J private labels j_1,j_2,j_3. The original triple of owners of h_1,h_2,j_1 has complete projection {y,h_1,h_2,j_1}, since every legal triple contains y. Repeat the preceding procedure with this anchor, deleting the entire column H and the single fine label j_1. Again at most four tree leaves are lost, and all five retained leaves have actual owners at the original Q restriction. The resulting fixed law psi_H avoids R and the entire column H and satisfies the SAME cap vector(1).
+
+The two tree choices and averaging operations can be made independently in advance. Both laws are on the same unchanged actual source. They are not separate laws selected according to a query; a fixed convex combination will be used.
+
+### FP1.4. Four or five private labels in J
+
+For b=4 or5, let eta_b be uniform on the b distinct actual J private points at their b distinct original owners. It is supported at R and inside J, and has simultaneous caps
+
+    E_b(d)=1 for d in {1,5,7,35},
+    E_b(d)=1/b for all other d in D.                 (2)
+
+Every nonunit numerical cylinder can meet at most one of the supports of psi_J and eta_b. Indeed if its modulus has a factor5, its root coordinate separates R from all other roots; if it has no factor5, it has a factor7, and its column separates J from its complement. Some cylinders meet neither support, which only improves the bound.
+
+For an original query choose its one residue class for each d in D, and write I_d for the corresponding indicator; I_1=1. Let S be any set of the eight nonunit moduli which contains every query cylinder that can meet psi_J and contains none that can meet eta_b. Then for nu=alpha psi_J+(1-alpha)eta_b,
+
+    E_nu (sum_{d in D} I_d)^2
+      <= alpha sum_{d,e in {1} union S} P(lcm(d,e))
+       + (1-alpha) sum_{d,e in {1} union (D\({1} union S))} E_b(lcm(d,e)).   (3)
+
+For incompatible residue classes the actual intersection is empty; otherwise it is one original cylinder at lcm(d,e), bounded by(1) or(2). Thus dropping all remaining compatibility constraints in(3) is an upper bound. The law is fixed before S or the query is known.
+
+The [exact query certificate](../../../frontier/cover-geometry/height-two-small-anchors/public_singleton_query_controls.py) enumerates all256 subsets S for each b. With fixed weights it gives:
+
+| b | alpha | common-query bound |
+|---:|---:|---:|
+|5|35/48|103/12|
+|4|625/833|7333/833|
+
+For both choices the only maximizing partitions are S empty and S all eight moduli. Their component envelopes are respectively(1,29) and(57/5,1) for b5, and(1,129/4) and(57/5,1) for b4. The exact enumeration verifies all intermediate partitions; the endpoint calculation alone is not used as a proof of their optimality. Both bounds are strictly below9.
+
+### FP1.5. Two private H labels and three private J labels
+
+For a=2 let eta be uniform on all five distinct private points, at their five distinct original owners. Then eta is supported at R and in H union J. Its cap is1 for moduli1 and5; its H/J column caps, also for modulus35, are respectively2/5 and3/5; every other original cylinder has eta mass at most1/5.
+
+Set, once and for all,
+
+    nu=(104 psi_J + 50 psi_H + 63 eta)/217.          (4)
+
+It remains to bound all original queries jointly. Encode the root coordinate of each of the six labels whose modulus is divisible by5 as R or other. Encode the column coordinate of each of the six labels whose modulus is divisible by7 as H, J or outside. This gives exactly
+
+    2^6 * 3^6 = 46656
+
+coarse layouts. If two encoded root coordinates conflict, or two encoded column coordinates conflict, their query intersection is empty. Merging different other roots and different outside columns can only turn some empty intersections into potentially nonempty ones; it never excludes a nonempty intersection. Ignoring second-digit incompatibilities likewise only enlarges the upper bound.
+
+For each surviving ordered query pair let d be the lcm of its moduli. An unspecified root/column coordinate is treated as a wildcard. The integer component contributions, in units1/75, are determined as follows:
+
+* psi_J contributes P75(d)=(75,25,45,15,15,15,9,5,3), indexed by D, unless the merged pair specifies root R or column J, in which case it contributes0.
+* psi_H contributes P75(d), unless the merged pair specifies root R or column H, in which case it contributes0.
+* eta contributes0 if the merged pair specifies another root or an outside column. Otherwise it contributes75 for d=1 or5,30 for d=7 or35 with column H,45 for d=7 or35 with column J, and15 for every other d.
+
+The unit/unit pair contributes75 to each component. Sum the81 ordered-pair contributions to get an integer vector(A,B,C). The same exact query certificate checks all46656 coarse layouts, obtaining31410 distinct vectors, and verifies
+
+    104 A + 50 B + 63 C <= 136395.                  (5)
+
+Equality among these upper vectors occurs precisely at
+
+    (285,75,1635), (75,285,1815), (855,855,75).
+
+The certificate checks every vector; coordinatewise domination by only these three is not asserted. Equations(4)--(5) give, for EVERY original query under the SAME law,
+
+    E_nu (sum_{d in D} I_d)^2
+      <=136395/(75*217)=1299/155<9.
+
+This is a finite exact upper-bound certificate for all phase layouts under the two proved puncture cap tables. It is not an enumeration of actual sources, nor a claim that an actual source attains the upper bound.
+
+### FP1.6. Conclusion and limits
+
+The case reduction is exhaustive and keeps every complete fibre and original legal-pair premise. Previously supplied branches have bound at most503/56; the remaining b5, b4 and b3 branches have respectively103/12,7333/833 and1299/155, each smaller than503/56. Thus the entire stated full/public1/private11111 family has one actual law with Gamma_1225<=503/56.
+
+Both finite calculations use exact integer/rational arithmetic at fixed explicitly stated weights. The original root labels, column labels, child owners and numerical cylinder meanings supply the bridge to their finite encoding. Neither a subsource blocking assertion nor query-dependent choice of law is used. The proof does not by itself settle other normalized profiles, the one-/two-inactive-root cuts, the entire cut74--76 classes or the outside-cofactor/common-law height lift.
+
+### FP1.7. Exact query certificates and complete actual-source controls
+
+The [query program](../../../frontier/cover-geometry/height-two-small-anchors/public_singleton_query_controls.py) and [data](../../../frontier/cover-geometry/height-two-small-anchors/public_singleton_query_controls.json) check512 two-component partitions and46656 three-component coarse layouts in exact rational/integer arithmetic at the fixed weights above. All original phase queries map to these encodings by the root/column and intersection argument; retaining fewer compatibility constraints only increases these upper bounds.
+
+The [actual-source program](../../../frontier/cover-geometry/height-two-small-anchors/public_singleton_actual_controls.py) and [data](../../../frontier/cover-geometry/height-two-small-anchors/public_singleton_actual_controls.json) retain48 complete sources. For each a=0,1,2, they cover every choice of zero, one or two original owners whose fibre omits y. Every source has19 original occupied children,162--164 actual points, no individually robust root, and an actual standalone five-tree. The other-root complete fibres have five-column multiplicities2,2,3,2,2; they are not replaced by full49-point fibres.
+
+Across these sources,23040 original legal-pair tests,1664 original paired-tree puncture constructions and282720 original numerical cylinders pass. Every constructed tree actually loses four leaves and retains five actual other-root leaves. Each puncture averages the original six gap pairs and ten triples at each of the other two full roots; the measured inclusion probabilities are1/2 and3/5 respectively. Global exclusion of the removed column, the extra removed fine label and every label of the complete anchor is checked. The cap tables of both fixed punctures, actual eta incidences and single final mixture are measured using the original literal CRT coordinates. The displayed cut80 is an explicit complete-fibre cut witness, not a minimum-cut claim.
+
+The actual-source controls verify the hypotheses used by the separate complete query certificates; the scalar product of independent mixture cylinder maxima is not substituted for that joint query bound. For these fixtures, that independent-maxima envelope is1379/144 in the b5 case and24445/2499 in the b4 case, both above9. The finite common-query certificates give the required smaller bounds because all phase labels must be used in one query.
+
+Both programs retain their checks under Python -O and require explicit output paths:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/public_singleton_query_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/public_singleton_query_controls.json
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/public_singleton_actual_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/public_singleton_actual_controls.json
+```
+
+These actual-source fixtures are not an exhaustive source enumeration. The unrestricted quantifier over the stated source family is supplied by FP1.1--FP1.6 and the complete finite query encoding. All results remain ordinary mathematical and exact finite certificates at head1225, without a Lean or height-lift claim.

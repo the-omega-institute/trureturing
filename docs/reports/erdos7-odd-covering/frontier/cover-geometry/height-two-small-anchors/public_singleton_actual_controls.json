@@ -1,0 +1,6818 @@
+{
+  "result": "PASS",
+  "source_count": 48,
+  "original_pair_tests": 23040,
+  "paired_tree_controls": 1664,
+  "original_numerical_cylinders": 282720,
+  "controls": [
+    {
+      "name": "a0_omit_none",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [],
+      "complete_actual_points": 164,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_0",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        0
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_1",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        1
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_2",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        2
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_3",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        3
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_4",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        4
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_0_1",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        0,
+        1
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_0_2",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        0,
+        2
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_0_3",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        0,
+        3
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_0_4",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        0,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_1_2",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        1,
+        2
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_1_3",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        1,
+        3
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_1_4",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        1,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_2_3",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        2,
+        3
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_2_4",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        2,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a0_omit_3_4",
+      "private_H": 0,
+      "private_J": 5,
+      "y_omitted_owners": [
+        3,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/5",
+        "1",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "35/48",
+        "13/48"
+      ],
+      "mixture_caps": [
+        "1",
+        "13/48",
+        "7/16",
+        "7/72",
+        "13/48",
+        "7/72",
+        "7/120",
+        "13/240",
+        "13/240"
+      ],
+      "measured_independent_cap_envelope": "1379/144",
+      "uniform_joint_query_bound": "103/12",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_none",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [],
+      "complete_actual_points": 164,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_0",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        0
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_1",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        1
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_2",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        2
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_3",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        3
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_4",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        4
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_0_1",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        0,
+        1
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_0_2",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        0,
+        2
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_0_3",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        0,
+        3
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_0_4",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        0,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_1_2",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        1,
+        2
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_1_3",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        1,
+        3
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_1_4",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        1,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_2_3",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        2,
+        3
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_2_4",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        2,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a1_omit_3_4",
+      "private_H": 1,
+      "private_J": 4,
+      "y_omitted_owners": [
+        3,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            1,
+            2,
+            3
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "1",
+        "1/4",
+        "1",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "mixture_weights": [
+        "625/833",
+        "208/833"
+      ],
+      "mixture_caps": [
+        "1",
+        "625/2499",
+        "375/833",
+        "250/2499",
+        "208/833",
+        "250/2499",
+        "52/833",
+        "52/833",
+        "52/833"
+      ],
+      "measured_independent_cap_envelope": "24445/2499",
+      "uniform_joint_query_bound": "7333/833",
+      "numerical_cylinders": 5301
+    },
+    {
+      "name": "a2_omit_none",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [],
+      "complete_actual_points": 164,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_0",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        0
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_1",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        1
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_2",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        2
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_3",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        3
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_4",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        4
+      ],
+      "complete_actual_points": 163,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_0_1",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        0,
+        1
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_0_2",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        0,
+        2
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_0_3",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        0,
+        3
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_0_4",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        0,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_1_2",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        1,
+        2
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_1_3",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        1,
+        3
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_1_4",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        1,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_2_3",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        2,
+        3
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_2_4",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        2,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "a2_omit_3_4",
+      "private_H": 2,
+      "private_J": 3,
+      "y_omitted_owners": [
+        3,
+        4
+      ],
+      "complete_actual_points": 162,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_complete_fibre_cut": 80,
+      "cut_is_not_claimed_minimum": true,
+      "punctures": [
+        {
+          "which": "J",
+          "anchor": [
+            2,
+            3,
+            4
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        },
+        {
+          "which": "H",
+          "anchor": [
+            0,
+            1,
+            2
+          ],
+          "complete_anchor": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "original_restrictions": {
+            "0": 6,
+            "2": 10,
+            "3": 10
+          },
+          "child_inclusion_probabilities": {
+            "0": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "1/2"
+            ],
+            "2": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ],
+            "3": [
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5",
+              "3/5"
+            ]
+          },
+          "paired_trees": 26,
+          "deletion_counts": {
+            "4": 26
+          },
+          "whole_anchor_mass": "0",
+          "removed_column_mass": "0",
+          "removed_fine_mass": "0",
+          "measured_caps": [
+            "1",
+            "1/3",
+            "3/5",
+            "2/15",
+            "1/5",
+            "2/15",
+            "2/25",
+            "1/15",
+            "2/75"
+          ],
+          "numerical_cylinders": 1767
+        }
+      ],
+      "eta_caps": [
+        "1",
+        "1",
+        "3/5",
+        "1/5",
+        "3/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "mixture_weights": [
+        "104/217",
+        "50/217",
+        "9/31"
+      ],
+      "mixture_caps": [
+        "1",
+        "9/31",
+        "66/155",
+        "44/465",
+        "27/155",
+        "44/465",
+        "9/155",
+        "9/155",
+        "9/155"
+      ],
+      "measured_independent_cap_envelope": "4118/465",
+      "uniform_joint_query_bound": "1299/155",
+      "numerical_cylinders": 7068
+    }
+  ],
+  "scope": "Forty-eight complete nonrobust original sources, all choices omitting y at zero/one/two original owners, actual punctures and one common mixture. Query bounds use the separately verified complete finite partition/coarse-layout certificates. Not exhaustive source enumeration, a minimum-cut certificate, Lean verification or unrestricted covering result."
+}
