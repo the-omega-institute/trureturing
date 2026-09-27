@@ -36,9 +36,8 @@ internal sealed class GeneralInstrumentEffectClosureDocument : IScribeDocumentDe
                     + "completeness relation and d >= 1. Since A(I) = I minus the sum of the click effects and "
                     + "A applied to A^n(B_x) is A^{n+1}(B_x), the spaces satisfy V_{N+1} = V_1 + A(V_N); so one "
                     + "equality V_{k+1} = V_k persists for all later N, and it also shows A(V_k) inside V_k. Every "
-                    + "generator is Hermitian, and the real parts of the entries on and above the diagonal together "
-                    + "with the imaginary parts above the diagonal determine a Hermitian matrix, so every V_N has "
-                    + "real dimension at most d^2. As V_1 contains the identity and each strict step raises the "
+                    + "generator is Hermitian, and the Hermitian d by d matrices form a real space of dimension "
+                    + "d^2, so every V_N has real dimension at most d^2. As V_1 contains the identity and each strict step raises the "
                     + "dimension, some k between 1 and d^2 satisfies V_{k+1} = V_k.",
                 "effectSpace_closure", DescribeRole.Theorem))));
 

@@ -6,6 +6,7 @@
    utility: none
    digest: The first-event effect spaces of a general instrument stabilize within d squared steps and are invariant under the dual no-click map. -/
 
+import D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition
 import D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
@@ -121,48 +122,18 @@ theorem effectSpace_closure (hd : 1 ≤ d) (Q : α → Matrix (Fin d) (Fin d) �
     | smul r X _ hX =>
         rw [conjTranspose_smul, hX]
         congr 1
-  -- an injective real coordinate map on Hermitian matrices bounds the dimension by `d²`
-  let φ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℝ] (Fin d × Fin d → ℝ) :=
-    { toFun := fun X p => if p.1 ≤ p.2 then (X p.1 p.2).re else (X p.2 p.1).im
-      map_add' := fun X Y => by
-        funext p
-        split_ifs <;> simp [*]
-      map_smul' := fun r X => by
-        funext p
-        split_ifs <;> simp [*] }
-  have hφ : ∀ N, ∀ X ∈ V N, φ X = 0 → X = 0 := by
-    intro N X hX h0
-    have hXh := hherm N X hX
-    ext i j
-    have hsym : ∀ i j, X j i = star (X i j) := fun i j => by
-      rw [← congrFun (congrFun hXh j) i, conjTranspose_apply]
-    rcases lt_trichotomy i j with hij | rfl | hij
-    · have hre : (X i j).re = 0 := by
-        have := congrFun h0 (i, j); simpa [φ, hij.le] using this
-      have him : (X i j).im = 0 := by
-        have := congrFun h0 (j, i); simpa [φ, not_le.mpr hij] using this
-      exact Complex.ext hre him
-    · have hre : (X i i).re = 0 := by
-        have := congrFun h0 (i, i); simpa [φ] using this
-      have him : (X i i).im = 0 := by
-        have h := congrArg Complex.im (hsym i i)
-        simp only [Complex.star_def, Complex.conj_im] at h
-        linarith
-      exact Complex.ext hre him
-    · have hre : (X j i).re = 0 := by
-        have := congrFun h0 (j, i); simpa [φ, hij.le] using this
-      have him : (X j i).im = 0 := by
-        have := congrFun h0 (i, j); simpa [φ, not_le.mpr hij] using this
-      rw [hsym j i, show X j i = 0 from Complex.ext hre him, star_zero]
-      rfl
+  -- every effect space lies in the Hermitian matrices, of real dimension `d²`
   have hdim : ∀ N, Module.finrank ℝ (V N) ≤ d ^ 2 := by
     intro N
-    have hinj : Function.Injective (φ.comp (V N).subtype) := by
-      rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    have hle : V N ≤ D5.S3.Quantum.Measurement.BasisMeasurementProjection.HermitianSpace d := by
       intro X hX
-      exact Subtype.ext (hφ N X X.2 hX)
-    have := LinearMap.finrank_le_finrank_of_injective hinj
-    simpa [Module.finrank_fintype_fun_eq_card, Fintype.card_prod, Fintype.card_fin, sq] using this
+      change X ∈ selfAdjoint (Matrix (Fin d) (Fin d) ℂ)
+      rw [selfAdjoint.mem_iff, Matrix.star_eq_conjTranspose]
+      exact hherm N X hX
+    calc Module.finrank ℝ (V N)
+        ≤ Module.finrank ℝ (D5.S3.Quantum.Measurement.BasisMeasurementProjection.HermitianSpace d) :=
+          Submodule.finrank_mono hle
+      _ = d ^ 2 := D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition.hermitian_space_finrank d
   -- stabilization within `d²` steps
   have hexists : ∃ k, 1 ≤ k ∧ k ≤ d ^ 2 ∧ V (k + 1) = V k := by
     by_contra hne
