@@ -178,8 +178,8 @@ formal coverage.
 
 ## Information escape
 
-A **readout** is a way of observing a state. We are developing an
-**information-escape judge** around four questions:
+**Information escape**: some distinct states remain indistinguishable under
+chosen **readouts** (observation methods). Four questions guide the judge's development:
 
 - **Where did information escape?** Name the objects, assumptions and
   observations under which distinct states remain indistinguishable.
