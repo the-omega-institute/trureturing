@@ -6065,3 +6065,15 @@ Nico M. Temme，*Uniform Asymptotic Methods for Integrals*，[arXiv:1308.1547v1]
 精确恒等式 $\operatorname{erfc}(-z)=2-\operatorname{erfc}(z)$ 与本章的整线／补半线分离同形，但不自动提供三角数组、有限非中心谱、物理噪声及选择计数的统一界。本章独立给出系数为一的整线电荷积分、位于 $\Re s<-\xi/2$ 的合法局部能量变形、条件 Fourier 尾界及补半线的指数相对代价；未导入未经核对定义域的复 erfc 尾估计。原始计数误差中的同一个 $\sigma$ 仅在总振幅下界成立后约去。
 
 Gaussian、秩一线性代数、解析鞍点与 Rouché 方法保留经典归属。Temme 引用的 van der Waerden 论文和 De Bruijn 著作未在此次核对中作为独立原始来源使用。本章的模型综合保留第 169 章与第 166 章的原范围，不把实能量鞍点无折叠提升为复共存零曲线的全局延拓，不把辅助精度零点称为原有限配分函数的奇点。有限文献核对不表示检索穷尽或全球原创。
+
+## 谱边界第 172 章补充：固定超稀疏分母、解析值与实际双根分离
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 172 章在原始 $Q_n$ 上构造增长阶 Taylor 预测，证明二次项与整数保持至少 $1/(2D_n)$ 的距离，$D_n=Q_n^{o(1)}$。结合完整实际分组的定量相对比较，它给出双根均值最佳共同绝对对数界的对数指数一、与原始 $\vartheta$ 代数独立的根组合类，以及每个参数区间内紧致不可数的排除族。原始 $E_2$ 的存在或空性仍未解决。
+
+Boris Adamczewski，*Transcendance « à la Liouville » de certains nombres réels*，C. R. Acad. Sci. Paris, Ser. I 338 (2004), 511–514，[DOI 10.1016/j.crma.2004.02.002](https://doi.org/10.1016/j.crma.2004.02.002)，[四页原始 PDF](https://comptes-rendus.academie-sciences.fr/mathematique/item/10.1016/j.crma.2004.02.002.pdf)。其定理与证明研究 lacunary 幂级数在 Pisot 或 Salem 数倒数处的取值，使用代数高度和多处 Roth 定理。这里的固定输入 $\vartheta$ 超越，故该定理不证明本章的代数独立性。可借鉴的是同时控制逼近尾与逼近数高度的要求；本章以原始有理前缀上的整数多项式另给完整证明。原始 PDF 为 99,149 字节，SHA256 83997f1fdbe8312bb4e39504bdb1e3f92edd64e4fbca038c309c0014feb7592b；保留提取文本存在字体处理警告，原 PDF 是核对来源。
+
+Marques–Ramirez，*On transcendental analytic functions mapping an uncountable class of U-numbers into Liouville numbers*，[arXiv:1408.0844v2](https://arxiv.org/abs/1408.0844v2)，[原始 TeX](https://arxiv.org/e-print/1408.0844v2)。完整定义和证明中的 ultra-number 假设要求三重指数高度尺度的逼近；该条件未在本章固定输入上建立。论文控制代数参数处的像分母，并不直接给出本章原始分母下的二次项障碍。其印刷证明中的映射 $\psi(x)=x/[2(1+x^2)]$ 还存在明确的中间断言限制：$\psi(-1)=-1/4$，故不能将所有所述实代数数送入 $[0,1/2]$；若 $\alpha=(3+\sqrt5)/2$，则 $\alpha^2-3\alpha+1=0$ 且 $\psi(\alpha)=1/6$，故精确次数二并未保留。这些例子反驳的是相应中间范围与次数断言，不是对整篇存在定理的反驳。本章未导入或修补该论文的定理。保留原始对象为 9,691 字节，SHA256 0550d3332612d44e8ff013b703dc116f66c19c7e31cb48c4b1a8f0a46275f3a1。
+
+Diego Marques，*Mahler's Problem on Liouville Numbers*，[arXiv:2609.14202v2](https://arxiv.org/abs/2609.14202v2)，[原始 TeX](https://arxiv.org/e-print/2609.14202v2)。核对范围为局部定理陈述、双高度计数设置、安全中心证明和相关嵌套区间选择。预印本的陈述自由选取一个 Liouville 输入，使其解析像具有有界无理性指数；安全中心的既约分母位于 $Q\le q<2Q$ 的块内，后续源尺度也随构造选择。它不指定这里的 $\vartheta$ 或 $Q_n^2$，不能提供固定原始层的下界命中。完整行列式计数证明及预印本的全局结论未作独立核验，也未作本章前提。保留原始对象为 34,558 字节，SHA256 d8abf13acd7b51976f3257c2fe491be51f2be4482263f00e2a33f74935d2a536。
+
+有理根、整数整除、Taylor 展开、Liouville 逼近和紧致性保留经典归属。新的模型综合由第 172 章自给证明承担；有限文献核对不表示检索穷尽或全球原创。标量类的代数独立性并不排除同一参数的其他根组合满足既有障碍，也不证明同步参数不存在。

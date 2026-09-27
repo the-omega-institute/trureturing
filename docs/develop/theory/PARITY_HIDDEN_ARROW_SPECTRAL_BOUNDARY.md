@@ -51592,3 +51592,411 @@ Gaussian 积分、Stieltjes 单调性、秩一恒等式、实 Gaussian 尾界、
 来源的版本、实际适用条件与归属见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。本章的新增综合限于原模型的精确总量重组、固定无零矩形、相对误差与实际电荷集中，不声明全球原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 172. 原始层上的算术分离：增长阶 Taylor 预测与双根均值的共同尺度
+
+本章构造一类与原始 $\vartheta$ 代数独立的标量。若两个原始根的一个固定整数线性组合属于该类，则在每个充分晚的原始层，两个完整分组实际均值的最佳共同绝对对数界介于 $c_\beta Q_n/D_n$ 与 $C_\beta Q_n$ 之间，其中 $D_n=Q_n^{o(1)}$。因此这个共同尺度的对数除以 $\ln Q_n$ 趋于一，两个均值不能共同留在任何固定多项式带内。
+
+关键是保留原始分母上 Taylor 展开的二次项：前两项成为整数，二次项却在每个充分晚的层都保持可量化的非整数距离。每个参数开区间都含有满足该排除条件的紧致不可数子集，也含可计算的排除例子。双根同步集 $E_2$ 的存在或空性仍未解决；以下均为普通数学推导，未作 Lean 认证。
+
+### 172.1 原始模型、固定参数与共同对数尺度
+
+Use the original history
+
+$$
+e_1=1,\qquad e_{n+1}=10^{5e_n},\qquad
+Q_n=10^{e_n},\qquad
+P_n=\sum_{h\le n}10^{e_n-e_h},\qquad
+\vartheta=\sum_{h\ge1}10^{-e_h}.
+$$
+
+The original fixed amplitude and rate data remain
+
+$$
+\frac{\ln(1+r)}{-\ln(1-r)}=\vartheta,\quad
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\ln(1+r)+b\ln(1-r),
+$$
+$$
+I(x)=J_a(a+x)+J_b(b+\vartheta x),\qquad
+J_c(y)=y\ln(y/c)-y+c,\qquad
+F(x)=\frac{\phi}{\phi+I(x)}.
+$$
+
+For $Q=Q_n$, retain $\lambda=Q^3$, $N=Q^2$, and every original floor:
+
+$$
+k_0=\lfloor aQ^3\rfloor,\quad l_0=Q^3-k_0,\quad
+z_0=k_0\ln(1+r)+l_0\ln(1-r),
+$$
+$$
+L_0(\beta)=\left\lfloor\frac{\phi Q^3}{\beta\ln2}\right\rfloor,\quad
+M=2^{L_0(\beta)},\quad q=\lfloor Me^{-z_0}\rfloor,\quad
+\epsilon=\frac{rq}{M-q},\quad T=2MQ^3.
+$$
+
+Fix $\beta\in D=(\beta_*,1)$. Write
+
+$$
+u=x_+(\beta)>0>v=x_-(\beta)=\Psi(u),\quad
+I(u)=I(v)=c(\beta)=\phi(1/\beta-1),\quad
+A=I'(u)>0,\quad B=-I'(v)>0.
+$$
+
+Here $u_-=-b/\vartheta$, $I(u_*)=I(u_-)$, and
+$\beta_*=\phi/(\phi+I(u_-))$. Both roots are internal. The mean
+$\mu^{\mathcal E}_{Q,j}(\beta)$, $\mathcal E\in\{\mathrm{pair},\mathrm{path}\}$, is the actual mean of the **complete** score group containing
+$(k_0+Qj,l_0+P_nj)$, including remote collisions. The positive and negative groups always use the same $\beta,Q,M,q,L_0$.
+
+Let $\omega=(\omega_h)_{h\ge1}\in\{1,2\}^{\mathbb N}$ be any one fixed sequence. Define the analytic function and its value
+
+$$
+W_\omega(z)=\sum_{h\ge1}\omega_h z^{10e_h}\quad(|z|<1),
+\qquad \xi_\omega=W_\omega(\vartheta),
+$$
+$$
+\mathcal X=\{\rho+\sigma\xi_\omega:
+       \rho,\sigma\in\mathbb Q,\ \sigma\ne0,\quad
+       \omega\in\{1,2\}^{\mathbb N}\}. \tag{172.1}
+$$
+
+These are deterministic coordinates used to specify an excluded subset of the original parameters. They introduce no prior, randomization, new amplitude, or altered history.
+
+For $n\ge2$, set
+
+$$
+R=Q_{n-1},\quad t=P_{n-1}/R,\quad
+m=10e_{n-1},\quad D_n=R^{m-2}. \tag{172.2}
+$$
+
+In particular
+
+$$
+e_n=R^5,\qquad
+\frac{\ln D_n}{\ln Q_n}
+=\frac{(10e_{n-1}-2)e_{n-1}}{e_n}\longrightarrow0. \tag{172.3}
+$$
+
+The main conclusion is:
+
+**定理 172.1（完整实际分组的双根分离）。** If a fixed nonzero integer pair $(h,l)$ satisfies
+$$
+hu+lv\in\mathcal X, \tag{172.4}
+$$
+then there is $c_\beta>0$ such that for every sufficiently late original layer and every original pair of indices on fixed internal root neighborhoods,
+$$
+\max\{|\ln\mu^{\mathcal E}_{Q,j}(\beta)|,
+       |\ln\mu^{\mathcal E}_{Q,k}(\beta)|\}
+\ \ge\ c_\beta\,\frac{Q}{D_n},
+\qquad \mathcal E=\mathrm{pair},\mathrm{path}. \tag{172.5}
+$$
+A zero mean is assigned infinite absolute logarithm. Constants may depend on the fixed integer relation and parameter. For a fixed relation they can be uniform over compact parameter families constructed in Section 172.6.
+
+Consequently every $\beta\in E_2$ must satisfy
+$$
+hu+lv\notin\mathcal X
+\quad\text{for every }(h,l)\in\mathbb Z^2\setminus\{(0,0)\}. \tag{172.6}
+$$
+This argument does not select an auxiliary tangent denominator. It covers both the small- and large-denominator alternatives of Chapter 168 for the parameters satisfying (172.4).
+
+### 172.2 原始分母下的非整数二次预测项
+
+Write
+$$
+U_{\omega,n}(z)=\sum_{h<n}\omega_h z^{10e_h}\in\mathbb Z[z].
+$$
+Its degree is $m$, and its leading coefficient is $\omega_{n-1}\in\{1,2\}$.
+
+**引理 172.2（一致 Taylor 预测）。** Uniformly over all $\omega$,
+$$
+N\xi_\omega
+=Q^2U_{\omega,n}(t)+QU_{\omega,n}'(t)
+ +\frac12U_{\omega,n}''(t)
+ +\frac{W_\omega'''(\vartheta)}{6Q}+O(Q^{-2}). \tag{172.7}
+$$
+For all sufficiently large $n$, the first two terms on the right are integers.
+
+**Proof.** The original decimal series gives
+$$
+\vartheta=t+Q^{-1}+O(10^{-Q^5}),\qquad
+\gcd(P_{n-1},R)=1.
+$$
+The coprimality follows because $P_{n-1}$ ends in the digit 1. Also
+$1/10<\vartheta<1/9<1/8$.
+
+All derivatives through order four of $U_{\omega,n}$ and $W_\omega$ are uniformly bounded on $[0,1/8]$: dominate their coefficient sums by twice the corresponding derivatives of $\sum_{k\ge0}z^k$. The omitted powers start at $10e_n$. For each derivative of order at most four, their tail on that interval is at most
+$$
+C e_n^4\,8^{-10e_n}=O(Q^{-8}).
+$$
+Indeed $8^{10}=2^{30}>10^9$, and a fixed power of $\ln Q$ is eventually smaller than $Q$.
+
+Taylor's theorem for $U_{\omega,n}$ at $t$, through its cubic term, has a uniform fourth-order remainder. Multiply by $Q^2$, use the displayed expansion of $\vartheta-t$, and replace $U_{\omega,n}'''(t)$ with $W_\omega'''(\vartheta)+O(Q^{-1})$. The omitted analytic tail contributes only $O(Q^{-6})$ after multiplication. This proves (172.7).
+
+The rational denominators of $U_{\omega,n}(t)$ and $U_{\omega,n}'(t)$ divide $R^m$ and $R^{m-1}$, respectively. Since $R=10^{e_{n-1}}$, $Q=10^{e_n}$, and $e_n=10^{5e_{n-1}}>10e_{n-1}^2=m e_{n-1}$ eventually, $R^m$ divides $Q$. The first two terms in (172.7) are therefore integers. ∎
+
+**引理 172.3（二次预测项的非整数距离）。** For every fixed nonzero integer $b_0$, uniformly over $\omega$, all sufficiently large $n$ satisfy
+$$
+\|Q_n^2 b_0\xi_\omega\|\ge\frac1{2D_n}. \tag{172.8}
+$$
+Here $\|x\|=\operatorname{dist}(x,\mathbb Z)$.
+
+**Proof.** The polynomial
+$$
+V_{\omega,n}(X)=\frac{b_0}{2}U_{\omega,n}''(X)
+=b_0\sum_{h<n}\omega_h
+          \binom{10e_h}{2}X^{10e_h-2}
+$$
+has integer coefficients, degree $m-2$, and leading coefficient
+$b_0\omega_{n-1}\binom m2\ne0$.
+
+Suppose $V_{\omega,n}(P_{n-1}/R)$ were an integer $z$. Multiply
+$V_{\omega,n}(P_{n-1}/R)-z=0$ by $R^{m-2}$ and reduce modulo $R$. Coprimality of $P_{n-1}$ and $R$ would force
+$$
+R\mid b_0\omega_{n-1}\binom m2.
+$$
+This is impossible eventually, since
+$$
+0<\left|b_0\omega_{n-1}\binom m2\right|
+\le2|b_0|\binom{10e_{n-1}}2<R.
+$$
+Thus $V_{\omega,n}(t)\notin\mathbb Z$. Its denominator divides
+$R^{m-2}=D_n$, and consequently
+$$
+\|V_{\omega,n}(t)\|\ge D_n^{-1}. \tag{172.9}
+$$
+
+Multiply (172.7) by $b_0$. Its first two terms are integers, and all remaining terms after $V_{\omega,n}(t)$ have magnitude $O_{b_0}(Q^{-1})$, uniformly over $\omega$. The distance to the integers is a 1-Lipschitz function. Since $D_n/Q\to0$, (172.9) gives (172.8). ∎
+
+This is stronger than saying that a predictor has a small denominator. It proves that the predictor is nonintegral at **every** sufficiently late original layer. It also keeps the quadratic term that survives after the first two terms become integers. The required synchronized root errors are $O(\ln Q/Q)$ in unnormalized coordinates; (172.8) is larger than this by an unbounded factor.
+
+### 172.3 超出旧代数类的标量与代数独立性
+
+**引理 172.4（代数独立性）。** For every $\omega$, the two real numbers $\vartheta,\xi_\omega$ are algebraically independent over $\mathbb Q$. The same holds for $\vartheta,\rho+\sigma\xi_\omega$, where $\rho,\sigma\in\mathbb Q$ and $\sigma\ne0$.
+
+**Proof.** Suppose a nonzero polynomial $P(X,Y)\in\mathbb Z[X,Y]$ satisfies
+$P(\vartheta,\xi_\omega)=0$. Write
+$$
+P(X,Y)=\sum_{j=0}^{s}P_j(X)Y^j,\qquad P_s\ne0,
+$$
+and let $a_s\ne0$ be the leading coefficient of $P_s$. Form
+$$
+G_n(X)=P(X,U_{\omega,n}(X))\in\mathbb Z[X].
+$$
+For all sufficiently large $m$, the term $P_s(X)U_{\omega,n}(X)^s$ has strictly greater degree than every term with $j<s$. Hence $G_n\ne0$, its degree is
+$$
+d_n=sm+\deg P_s,
+$$
+and its leading coefficient is $a_s\omega_{n-1}^{\,s}$, with nonzero absolute value at most $|a_s|2^s$. This also covers $s=0$.
+
+The values $t,\vartheta,U_{\omega,n}(t),\xi_\omega$ stay in one fixed compact set, uniformly in $n,\omega$. The mean-value bound for the fixed polynomial $P$, the analytic derivative bound, and the omitted-tail estimate give
+$$
+|G_n(t)|=
+|P(t,U_{\omega,n}(t))-P(\vartheta,\xi_\omega)|
+\le C_P/Q.
+$$
+If $G_n(t)\ne0$, its rational denominator divides $R^{d_n}$, so
+$|G_n(t)|\ge R^{-d_n}$. But $d_n=O_P(e_{n-1})$ and
+$$
+\frac{\ln(R^{d_n})}{\ln Q}
+=O_P(e_{n-1}^2/e_n)\longrightarrow0.
+$$
+Thus $C_P/Q<R^{-d_n}$ eventually, forcing $G_n(t)=0$.
+
+Apply the same elementary reduction modulo $R$ used in Lemma 172.3 to this rational root. It forces
+$$
+R\mid a_s\omega_{n-1}^{\,s},
+$$
+which is impossible once $R>|a_s|2^s$. This contradiction proves algebraic independence. Substituting $Y=\rho+\sigma Z$ and clearing denominators proves the final assertion. ∎
+
+Each $\xi_\omega$ is also a Liouville number. Indeed the rational numbers
+$U_{\omega,n}(t)$ approach it strictly from below, have denominators at most $R^m$, and have error $O(Q^{-1})$. For every fixed positive integer $k$, eventually
+$$
+0<\xi_\omega-U_{\omega,n}(t)<(R^m)^{-k}.
+$$
+They are infinitely many distinct approximants; their denominators are unbounded because Lemma 172.4 makes the limit irrational. After reduction, the same inequality implies the usual Liouville approximation property.
+
+Thus unusually good rational approximation without prescribed denominators coexists here with the lower bound (172.8) on the **specific original denominators**. No unrestricted Liouville property is being substituted for the needed original-layer recurrence.
+
+Lemma 172.4 implies that $\mathcal X$ is disjoint not only from the real algebraic numbers and $\mathbb Q(\vartheta)$, but from all numbers algebraic over $\mathbb Q(\vartheta)$. The scalar condition (172.4) is therefore not an instance of Chapter 99's algebraic or rational-function root-combination condition. This does not assert that every resulting parameter escapes every other exclusion in the old prefix; a different root combination could satisfy a previous obstruction.
+
+### 172.4 较宽均值带上的完整实际分组比较
+
+The earlier results and Chapter 168 establish the full-group comparison, uniformly on fixed internal root arcs and compact parameter ranges,
+$$
+\mu^{\mathcal E}_{Q,j}(\beta)
+=2^{L_0(\beta)}\chi_{Q,j}(1+o(1))+O(M^{-10}),
+\qquad \mathcal E=\mathrm{pair},\mathrm{path}, \tag{172.10}
+$$
+where
+$$
+\chi_{Q,j}=2e^{-z_0}e^{-Q^3}
+\frac{(aQ^3)^{k_0+Qj}(bQ^3)^{l_0+P_nj}}
+     {(k_0+Qj)!(l_0+P_nj)!}.
+$$
+This compares the actual marked-row laws. The original matrix-PGF/saddle argument and exponential count tails give the relative point comparison and then bound **all** remote contributions to a complete group. They are not discarded by defining a truncated group. The pair and path estimates are separate; equality of their finite data laws is not asserted.
+
+More explicitly, (72.5)–(72.8) and (74.6)–(74.7) give, on the whole fixed count cutoff,
+$$
+|\mu^{\mathcal E}_{Q,j}-m_{Q,j}|
+\le C Q^9 M^{-1}m_{Q,j}+CM^{-10},\qquad
+m_{Q,j}=qf_{Q,j}+(M-q)f^0_{Q,j}
+=2^{L_0}\chi_{Q,j}(1+o(1)).
+$$
+The last comparison is relative even when the reference point probability is small; the original background coefficient $f^0_{Q,j}$, compensation, and $q$ floor are included. This quantitative estimate is the operative input for the larger band below.
+
+For the present result, (172.10) must be used beyond a fixed band. If an actual mean satisfies
+$$
+e^{-Q}\le\mu^{\mathcal E}_{Q,j}\le e^Q, \tag{172.11}
+$$
+then $M=\exp(\Theta(Q^3))$ makes $M^{-10}/\mu^{\mathcal E}_{Q,j}\to0$ uniformly. Solving (172.10) for its positive proxy shows that the proxy and actual mean compare relatively, and their logarithms differ by $o(1)$. This is a direct consequence of the full-group estimate, not an extrapolation of a pointwise logarithmic asymptotic.
+
+Keep the floor terms explicitly:
+$$
+\Delta_Q=\lfloor aQ^3\rfloor-aQ^3,\qquad
+\rho_Q=\left\{\frac{\phi Q^3}{\beta\ln2}\right\},\qquad
+\eta=\ln\frac{1+r}{1-r},
+$$
+$$
+A_Q(x)=-\ln(2\pi)-\frac12\ln[(a+x)(b+\vartheta x)]
++\Delta_Q\left[\ln\frac{b+\vartheta x}{b}-\ln\frac{a+x}{a}\right],
+$$
+$$
+C_Q(x;\beta)=(1-\rho_Q)\ln2-\Delta_Q\eta+A_Q(x).
+$$
+Their values and needed $x$-derivatives are uniformly bounded on the fixed arcs. The original Stirling formula and (172.10) give, under (172.11),
+$$
+\ln\mu^{\mathcal E}_{Q,j}
+=Q^3\{c(\beta)-I(j/N)\}-3\ln Q+C_Q(j/N;\beta)+o(1). \tag{172.12}
+$$
+
+If both actual means have absolute logarithm at most $Q$, the simplicity of the roots and (172.12) first give
+$$
+j-Nu=O(1),\qquad k-Nv=O(1).
+$$
+Taylor's theorem then has rate remainder $O(Q^{-1})$, and yields
+$$
+\begin{aligned}
+\ln\mu_+&=-QA(j-Nu)-3\ln Q+C_Q(u;\beta)+o(1),\\
+\ln\mu_-&= QB(k-Nv)-3\ln Q+C_Q(v;\beta)+o(1).
+\end{aligned} \tag{172.13}
+$$
+The estimates are uniform in the two indices satisfying this band and in each experiment. The signed displacement on a fixed finite band remains
+$$
+j-Nu=-\frac{3\ln Q}{QA}+O(Q^{-1}),\qquad
+k-Nv=\frac{3\ln Q}{QB}+O(Q^{-1}). \tag{172.14}
+$$
+
+No finite Gamma correction is dropped. It is retained in $C_Q$ and paid in the constants in (172.13). The two roots retain the same $\Delta_Q,\rho_Q$. The new arithmetic gap is much larger than all these bounded corrections after division by $Q$. This is why the proof can exclude the specified parameters without making an invalid approximation to the exact tangent intercept at $d\asymp Q$.
+
+### 172.5 实际双根均值的共同分离率
+
+Write (172.4), after clearing fixed rational denominators, as
+$$
+c_0(hu+lv)-a_0=b_0\xi_\omega,\qquad
+c_0\in\mathbb Z_{>0},\quad a_0,b_0\in\mathbb Z,\quad b_0\ne0.
+$$
+For any common pair of original indices define the integer
+$$
+J=c_0(hj+lk)-a_0N.
+$$
+It uses the same $N$ on both sides. Lemma 172.3 gives
+$$
+\left|J-Nb_0\xi_\omega\right|
+\ge\|Nb_0\xi_\omega\|\ge\frac1{2D_n}. \tag{172.15}
+$$
+
+Let $H_Q=\max\{|\ln\mu_+|,|\ln\mu_-|\}$. If $H_Q\le Q$, equation (172.13), with all floor terms bounded, gives a constant $C_0$ such that
+$$
+|J-Nb_0\xi_\omega|
+\le \frac{G_\beta}{Q}(H_Q+3\ln Q+C_0),
+\qquad
+G_\beta=c_0\left(\frac{|h|}{A}+\frac{|l|}{B}\right)>0.
+$$
+Together with (172.15),
+$$
+H_Q\ge\frac{Q}{2G_\beta D_n}-3\ln Q-C_0
+\ge\frac{Q}{4G_\beta D_n} \tag{172.16}
+$$
+eventually, because $Q/(D_n\ln Q)\to\infty$. If $H_Q>Q$, the required conclusion is immediate since $D_n\ge1$. Thus (172.5) holds, for example with
+$$
+c_\beta=\min\left\{\frac12,\frac1{4G_\beta}\right\}.
+$$
+This proves Theorem 172.1 separately for pair and path. All constants can be uniform on compact parameter sets where both roots remain internal; the arithmetic estimate was already uniform in $\omega$. ∎
+
+There is a matching logarithmic-scale upper estimate that describes the strength of this obstruction. For fixed internal root neighborhoods define
+$$
+\mathfrak H^{\mathcal E}_{Q,\beta}
+=\min_{j,k}\max\{|\ln\mu^{\mathcal E}_{Q,j}(\beta)|,
+                 |\ln\mu^{\mathcal E}_{Q,k}(\beta)|\},
+$$
+where $j/N$ and $k/N$ lie in the corresponding neighborhoods. These are finite sets of original indices.
+
+Choose $j$ nearest to $Nu$ and $k$ nearest to $Nv$. Both indices are legal and within the full-group bridge's internal arcs for large $Q$. Stirling gives both proxy logarithms $O(Q)$; (172.10) is relative on these $\exp(\pm C Q)$ bands since $M=\exp(\Theta(Q^3))$. Hence
+$$
+c_\beta Q/D_n
+\le \mathfrak H^{\mathcal E}_{Q,\beta}\le C_\beta Q. \tag{172.17}
+$$
+It follows from (172.3) that
+$$
+\lim_{n\to\infty}
+\frac{\ln\mathfrak H^{\mathcal E}_{Q_n,\beta}}{\ln Q_n}=1. \tag{172.18}
+$$
+
+The upper estimate does not claim bounded positive means: its band grows exponentially in $Q$. Equation (172.17) says at least one of the two actual means must eventually leave every common fixed polynomial band. It does not identify which side is small or large, and does not assert that the lower-bound constant is attained.
+
+### 172.6 每个参数区间中的紧致不可数排除集
+
+**定理 172.5（每个参数区间中的非空排除族）。** Every nonempty open interval $J\Subset D$ contains a compact uncountable set of fixed parameters excluded by Theorem 172.1 with $h=l=1$. Each has root sum in $\mathcal X$, hence root sum algebraically independent of $\vartheta$. The constants in (172.17) may be chosen uniformly on that set. A computable such parameter exists in every rational interval $J$, without claiming that every parameter in the uncountable set is computable.
+
+**Proof.** On the original positive-root interval,
+$$
+S(u)=u+\Psi(u),\qquad S'(u)=1+\Psi'(u)>0,
+$$
+using the strict original curvature result $-1<\Psi'<0$. Also $F'(u)<0$. Thus the parameter interval $J$ corresponds under the root-sum map to a nonempty open interval.
+
+The map $\omega\mapsto\xi_\omega$ is continuous in the product topology: the power-series tails tend uniformly to zero. It is injective. If two sequences first differ at index $h$, their leading difference has magnitude $\vartheta^{10e_h}$, whereas the sum of all subsequent possible differences is at most
+$$
+\sum_{k>h}\vartheta^{10e_k}
+\le\frac{\vartheta^{10e_h+1}}{1-\vartheta}
+<\vartheta^{10e_h}.
+$$
+Its image is therefore a compact uncountable set, with no isolated points.
+
+Choose rationals $\rho$ and $\sigma>0$, with $\sigma$ small enough that the whole compact set
+$\rho+\sigma\{\xi_\omega\}$ lies strictly inside the root-sum image of $J$. For each fixed sequence define the unique original parameter
+$$
+\beta_\omega=
+F\!\left(S^{-1}(\rho+\sigma\xi_\omega)\right). \tag{172.19}
+$$
+The root and sum maps are continuous and strictly monotone, so these parameters form a compact uncountable subset of $J$. Theorem 172.1 excludes every one, on every sufficiently late original layer. Compactness keeps the original derivatives, floor corrections and actual-mean bridge constants uniform. The arithmetic thresholds are uniform in $\omega$.
+
+For computable $\omega$, for example $\omega_h=1$ for all $h$, the original decimal tail bound computes $\vartheta$, and the explicit analytic tail bound computes $\xi_\omega$. The original monotone amplitude equation computes $r$. The strict monotone root and sum maps, with an interior margin, then compute $S^{-1}$ and (172.19) by rational enclosure. This supplies an existence proof of a terminating computation for the excluded parameter. Arbitrary noncomputable digit sequences are not asserted to give computable parameters. ∎
+
+Equation (172.19) selects one parameter once for each entire fixed sequence, not a new parameter on every layer. It is an actual original-family exclusion. It does not use a counterexample curve in place of $\Psi$.
+
+### 172.7 与既有切线、余数及同步边界的关系
+
+Chapter 99 excludes algebraic irrational root combinations, and treats combinations in $\mathbb Q(\vartheta)$ by fixed-degree rational Taylor predictors. An integer predictor can leave a tangent direction unexcluded. Here a growing but controlled degree, $m=10e_{n-1}$, makes the first two Taylor terms integral while forcing the quadratic term to remain nonintegral. The denominator $D_n=Q_n^{o(1)}$ then gives a quantitative obstruction on the entire late original sequence. Lemma 172.4 establishes that the resulting scalar class lies outside the earlier algebraic and $\mathbb Q(\vartheta)$ classes. Equations (172.17)–(172.18) strengthen a mere fixed-band exclusion to an actual joint separation rate.
+
+This synthesis is relative to the earlier results; no global originality claim is made. The elementary modular and rational-root arguments are classical. The parameter set's possible overlap with old exclusions based on other combinations has not been classified.
+
+The Chapter 168 results are retained unchanged:
+
+- Its exact parabolic residual representation has a converse for every thin-strip hit, with an auxiliary reduced denominator $d\le Q$.
+- Its joint intercept/residue test for $\sqrt Q\le d\le Q$ gives a single finite actual-mean bound when both conditions hold in the same realization.
+- Its badly-approximable-slope necessity and its fixed-parabola obstruction remain as stated.
+- Its conditional descendant implication does not establish recurrence.
+
+The present proof does not infer a new lower hit from any of these. It works directly with the common integer $J$, so no small-$d$ exception is omitted for the excluded family. For the remaining parameters, both Chapter 168 denominator alternatives and the original synchronization gap remain.
+
+Chapters 81/83 supply local paired cells and the exact Gamma geometry, not a fixed-parameter construction. Chapter 86 is an upper bound. Chapters 88/89/95 are marginal constructions. Chapter 91's fixed-tangent restrictions remain local to the stated rules. Chapter 97 constructs parameters avoiding the envelope on every sufficiently late layer; it is not a universal all-parameter exclusion. Chapter 93's algebraic and root-coordinate Fourier obstructions remain unchanged.
+
+### 172.8 来源归属与未解范围
+
+有理根分母整除、模整数约束、Taylor 余项、Liouville 逼近和紧致乘积空间属于经典方法。本章的新增综合是这些工具在原始超稀疏层上的非整数二次项、与 $\vartheta$ 的代数独立性及完整实际均值的联合分离率。较宽的 $\exp(\pm Q)$ 带由第 172.4 节中的定量完整分组比较支撑，不能仅从固定均值带的逐点渐近外推。
+
+Adamczewski 的 lacunary 级数定理使用 Pisot 或 Salem 数的倒数作为输入；Marques–Ramirez 的构造需要其 ultra-number 逼近条件；Marques 的近期预印本自由选取 Liouville 输入和后续分母块。这些假设均不能代替本章的固定输入、固定原始分母与非整数二次项，本文未导入这些论文的定理。原始来源、核对范围与中间断言的限制见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+本章未建立任何原始层上的正下界命中、后代区间或统一有限 $H$ 的无限分支。第 168 章的小分母与大分母两种可能在未被本章排除的参数上仍须保留。一个标量类超出旧代数类，并不意味着所构造的每个参数都避开基于其他根组合的旧排除条件；这些排除集的全部交叠关系未作分类。
+
+## 追加锚（本行以下为增补区）
