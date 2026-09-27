@@ -391,3 +391,195 @@ All tend to zero. Thus no uniform positive relative saving follows from these pa
 The exact effective gain in(D) separates forced occupancy from occupancy large enough to change the supplier minimum. An all-odd contradiction still requires a row set whose same-cover effective gains exceed the old cut slack, or further restrictions that provide an equally sufficient bound. Whole-class containment cannot recover the missing partial private intersections with zero-demand rows.
 
 The fixed1225-head results in[Report449](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/449-equality-sources-have-a-private-law-below-nine.md) and these original-label global cuts preserve different parts of the problem. The head law has not been lifted through every original outside-cofactor constraint; the global cut has not been shown to be violated for every distinct odd inventory. No unrestricted noncoverage conclusion, polyhedral independence from every earlier subset cut, or literature-originality claim follows from this increment.
+
+## Global top shadows and original top-shell pair capacities
+
+The following ordinary deductions combine the original phase-shell interface above with the proper-hyperplane form of [Balister–Bollobás–Morris–Sahasrabudhe–Tiba, Theorem1.2](balister2019erdos.md). They give necessary conditions for one actual distinct-odd whole cover, not an unrestricted contradiction, new Lean verification, or a claim of literature originality. Every numerical capacity below uses the SAME uniform probability on the original period. These capacities cannot be transferred to an independently chosen supported head law without a further measure-transport argument.
+
+### One original uniform source and its global top digits
+
+Fix one finite inclusion-minimal whole cover by original classes C_s=a_s mod m_s, with pairwise-distinct odd m_s>1. Let
+
+    L=product_p p^H_p, R=rad(L)=product_p p, N=L/R,
+    X=Z/LZ with uniform probability mu.
+
+Split each prime coordinate, as a SET, into its lower digits and one global top digit:
+
+    x_p=b_p+p^(H_p-1)y_p,
+    0<=b_p<p^(H_p-1), 0<=y_p<p.
+
+CRT gives X=B×Q, where B=product_p Z/p^(H_p-1)Z is identified with Z/NZ and Q=product_p F_p. Under the original uniform mu this is the product of uniform beta on B and uniform counting probability on Q. No additive-group splitting is asserted when H_p>1.
+
+For each original label define
+
+    T_s={p:v_p(m_s)=H_p}, P_A=product_(p in A)p,
+    bar_m_s=m_s/P_(T_s),
+    D_s={z in B:z=a_s mod bar_m_s}.
+
+Then bar_m_s divides N. For p in T_s let theta_(s,p) be the top p-digit of a_s modulo p^H_p. At lower source z the class is inactive unless z belongs to D_s; if active, its slice is the top hyperplane
+
+    H_s={y:y_p=theta_(s,p) for every p in T_s}.
+
+An active label with T_s empty fills the whole Q. Distinct original moduli with a fixed top support A have distinct lower indices, since m_s=P_A bar_m_s. This observation does not identify labels with different A or independently relabel their phases.
+
+The cited theorem says that a cover of the box formed by the first n odd-prime coordinate sizes by proper axis-parallel hyperplanes has two parallel members, meaning equal fixed-coordinate supports. Properness excludes the empty support; this is the exclusion of the modulus-one progression in its arithmetic interpretation and footnote2. The same conclusion holds for any n distinct odd primes q_1<...<q_n: restrict coordinate i to a subset of the size of the i-th odd prime. Discard empty intersections. Any presumed nonparallel cover restricts to another nonparallel cover with the same nonempty fixed-coordinate supports, contradicting the cited theorem.
+
+### A private source forces a same-support, different-phase collision
+
+For any selected family D of labels with T_t nonempty, write
+
+    U_D=disjoint union_(t in D) U_t, u_D=sum_(t in D)u_t,
+    Z_D=projection_B(U_D).
+
+If x=(z,y) is private to a selected t, no empty-support label can be active at z: it would cover x as well as t. Whole coverage makes all active top slices cover Q. Collapse identical top hyperplanes before applying the preceding proper-hyperplane theorem. Two DISTINCT resulting hyperplanes have the same nonempty support but different phase vectors. Hence, with each unordered original pair counted once,
+
+    U_D subset union_(s<t, T_s=T_t!=empty, theta_s!=theta_t)
+                    projection_B^(-1)(D_s intersect D_t).        (TS1)
+
+The collision occurs at the private point's OWN lower source. It need not involve that point's private owner, and the two phase vectors may differ at several primes.
+
+For such a pair put c_st=beta(D_s intersect D_t). Its exact original-label CRT capacity is
+
+    c_st=1/lcm(bar_m_s,bar_m_t)
+           if a_s=a_t mod gcd(bar_m_s,bar_m_t),
+         0 otherwise.                                          (TS2)
+
+There is a private-region saving. On the common lower shadow the two same-support different-phase top hyperplanes are disjoint, each of density1/P_A, where A=T_s=T_t. A point of U_D cannot lie in H_s unless s belongs to D; otherwise it is also covered by an unselected label. The same applies to t. Therefore
+
+    mu(U_D intersect projection_B^(-1)(D_s intersect D_t))
+      <= [1-(2-1_(s in D)-1_(t in D))/P_A] c_st.                (TS3)
+
+Combining(TS1) with this single-source bound gives
+
+    u_D <= sum_(s<t, T_s=T_t!=empty, theta_s!=theta_t)
+               [1-(2-1_(s in D)-1_(t in D))/P_(T_s)] c_st.     (TS4)
+
+The saving is2/P_A if neither endpoint is selected,1/P_A if exactly one is, and zero if both are. The RHS counts each original pair over its actual lower-shadow intersection, not over an independently chosen branch law. It may count one private point several times, which is permitted for this upper bound but supplies no independent copies of the corresponding capacity.
+
+A related phase-excess condition keeps distinct active phases rather than label multiplicity. Define
+
+    K_A(z)=#{theta_s:T_s=A, z in D_s}.
+
+At z in Z_D, choose one represented phase per support A. These hyperplanes are proper and nonparallel, so leave at least one top cell uncovered. All omitted distinct phases together cover that cell, because the complete active family covers Q. A union bound gives
+
+    sum_(A!=empty) (K_A(z)-1)_+/P_A >=1/R,
+    u_D/R <=sum_(A!=empty) (1/P_A)
+                       integral_(U_D)(K_A(projection_B x)-1)_+ dmu(x).  (TS5)
+
+Identical hyperplanes from different original labels are counted once in K_A. The density1/R is the density of one cell in the same finite Q, not an external resolution convention.
+
+### Changed top phases supply p-1 distinct original labels
+
+Fix p and select D subset{t:p in T_t}. At x=(z,y) in U_D change only its global top p-digit from y_p to a different a. The modified point leaves the private owner's class. Whole coverage supplies some original label s covering it. Privacy of x forces p in T_s: a label not fixing the global top p-digit would also cover x. It also forces
+
+    theta_(s,p)=a,
+    theta_(s,q)=y_q for q in T_s\{p},
+    x in E_(s,p,H_p-1).                                    (TS6)
+
+This is an original supplier shell with exponent v_p(m_s)=H_p and weight alpha=1. A fixed label cannot supply two different top p-phases, so the p-1 changes yield p-1 distinct suppliers. They all come from the same cover and the same private point. This elementary top-layer argument does not replace the full Lettl–Sun demand H_p(p-1), which also accounts for lower depths.
+
+Let sigma_p be the number of distinct global supports T_s containing p. For r>=0 and M>=1 write r=Mq+b,0<=b<M, and put
+
+    Pi(r,M)=b*q(q+1)/2+(M-b)*q(q-1)/2.
+
+This is the minimum equal-bin pair count for r objects in M bins: whenever two occupancies differ by at least2, moving one object from the larger to the smaller decreases the pair count; a minimizer therefore has b occupancies q+1 and M-b occupancies q. Sorting the p-1 actual suppliers by T_s yields at least Pi(p-1,sigma_p) same-support supplier pairs at every selected private point.
+
+Let R_p be the unordered original pairs(s,t) with equal top support A containing p, equal phases at every q in A\{p}, and different p-phases. For any pair in R_p, direct counting on the original product source gives
+
+    mu(E_(s,p,H_p-1) intersect E_(t,p,H_p-1))
+      =((p-2)/P_A)c_st.                                  (TS7)
+
+Indeed the lower source must be in D_s intersect D_t; all other coordinates in A have their common fixed phase; and the top p-coordinate must avoid both distinct endpoint phases. Exactly p-2 p-phases remain. Coordinates outside A are unrestricted. Formula(TS7), including a zero CRT capacity, retains both original numerical labels and their actual phases.
+
+Double-count selected private-point/supplier-pair incidences and then bound each incidence set by its full shell intersection. This proves
+
+    Pi(p-1,sigma_p) u_D
+       <= sum_((s,t) in R_p) ((p-2)/P_(T_s))c_st.           (TS8)
+
+The p-2 coefficient is zero at p=2 and positive for odd p. The top-shadow collision(TS1), in contrast, also uses the odd-prime proper-hyperplane theorem. A collision differing at several primes does not automatically belong to any R_p.
+
+If every selected target reaches both p and q at their global top heights, apply(TS8) twice to the SAME U_D and add. The LHS coefficient is Pi(p-1,sigma_p)+Pi(q-1,sigma_q), and the RHS is the sum of the two displayed pair capacities. This is an additive same-family consequence, not a product of separately optimized laws.
+
+### Relation to the complete shell accounting
+
+Every point on the left of(TS8) belongs to a target with p dividing m_t. Thus the double count uses positive-demand p-rows. It does not describe all other private points in those supplier columns. In particular the complete column identity above STILL contains the omitted-private term V from targets with p not dividing m_t, and its overlap term. Neither(TS8) nor the full-class containment reserves remove or recover V.
+
+These pair capacities can constrain the same original private regions as the earlier parent reserves and subset cuts. Their savings cannot simply be added: a point may satisfy both a parent reserve and a parallel-pair constraint. Any combined dual must account for that common service explicitly. No polyhedral independence from all earlier cuts is claimed.
+
+The unresolved implication is quantitative. One must force a selected D for which the RHS of(TS4) is smaller than u_D, or a choice of p and D for which the RHS of(TS8) is smaller than its LHS, or derive a comparably sufficient combined bound. The present hypotheses do not bound the unrestricted original pair inventory or total common-shadow capacity strongly enough. Also Pi(p-1,sigma_p)=0 whenever sigma_p>=p-1. A positive pair constraint is therefore not automatic from oddness alone. These necessary conditions do not yet overcome the earlier masked-slack obstruction or lift a freely chosen1225-head probability to the original uniform source.
+
+### An18-label odd noncover separates collision from one-prime shell visibility
+
+Take these original classes, with a private witness in the same row:
+
+|m|3|5|7|9|15|21|25|35|45|49|63|75|105|175|225|315|525|1575|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|a|2|2|3|1|10|12|16|29|9|0|27|18|63|124|30|111|195|735|
+|w|5|7|3|1|25|33|16|169|9|0|90|18|63|124|30|111|195|2310|
+
+The modulus inventory is exactly all nonunit divisors of1575, together with49. It is odd, numerically distinct and divisor-closed above one. Every displayed witness belongs only to its own class, so the family is irredundant. It is NOT a whole cover: its period is L=11025, and exactly2415 residues are uncovered;4 is the least uncovered residue. Here N=105.
+
+At lower source z=0 mod105 the only active labels are
+
+    0 mod49:       T={7},   theta=0;
+    30 mod225:     T={3,5}, theta=(1,1);
+    735 mod1575:   T={3,5}, theta=(2,2).
+
+The point0 is private to the modulus49 label. The unique active parallel pair is225 and1575, with common lower-shadow capacity1/105. The pair differs at BOTH top primes3 and5. Relative to point0 its endpoint defects are
+
+    225/gcd(225,30)=15,
+    1575/gcd(1575,735)=15.
+
+Each defect is mixed, so neither endpoint places0 in any one-prime supplier shell. Direct checks of all their prime/depth shells confirm this. Thus oddness, numerical distinctness, divisor closure, irredundancy and an actual same-support phase collision do not, by themselves, make that collision visible in a one-prime shell.
+
+The missing whole-cover premise is visible locally as well: changing only0's global top7-digit gives1575,3150,4725,6300,7875,9450, and all six are uncovered. There are no p-1 top7 suppliers at this point. The global top7 support inventory has only the modulus49 label, so sigma_7=1 and R_7 is empty. Its actual private mass is63/11025=1/175. Applying(TS8) WITHOUT whole coverage would falsely give3/35<=0. The program records the failed premise rather than claiming an odd-covering counterexample.
+
+### Computable rejection tests on the fixed original noncover
+
+The same literal eighteen-class family supplies an actual consumer for both necessary conditions. For a singleton D={t}, let C_t be the RHS of(TS4) divided by u_t. The test strictly rejects whole coverage precisely when C_t<1. No residue, numerical label, or probability law is optimized in computing these ratios.
+
+|original target modulus m_t|u_t|C_t=TS4 RHS/u_t|strict rejection by this singleton TS4|
+|---|---|---|---|
+|9|76/1575|9/38|yes|
+|25|34/2205|63/85|yes|
+|45|4/441|63/50|no|
+|49|1/175|2|no|
+|63|4/525|23/12|no|
+|75|11/1575|18/11|no|
+|175|2/1575|9|no|
+|225|34/11025|133/34|no|
+|315|4/1575|23/4|no|
+|525|2/1575|9|no|
+|1575|2/3675|133/6|no|
+
+These are exactly the top-touching labels; the remaining original labels have empty global top support and are outside this selected-target version. Selecting all eleven labels gives u_D=374/3675 and TS4 RHS=2/105, hence the ratio35/187<1.
+
+For(TS8), compare its coefficient Pi(p-1,sigma_p) with its RHS/u_t at each singleton target. The complete prime-specific data are:
+
+|p|sigma_p|Pi(p-1,sigma_p)|original target m_t : TS8 RHS/u_t|strict singleton rejection|
+|---|---|---|---|---|
+|3|2|0|9:5/76;45:7/20;63:5/12;225:35/34;315:5/4;1575:35/6|none|
+|5|2|2|25:0;75:0;175:0;225:0;525:0;1575:0|all six listed targets|
+|7|1|15|49:0|49|
+
+Thus the two displayed tests detect different failures at fixed selections: target9 fails singleton(TS4), while its only top-prime(TS8) has coefficient zero; target49 passes its singleton(TS4) numerical comparison but fails(TS8) for p=7. This is a finite test comparison, not a claim of polyhedral independence from every previous cut. A failed necessary inequality certifies noncoverage of this fixed family; it does not settle unrestricted Erdős #7.
+
+A reused even whole-cover control has period60 and literal classes
+
+    1 mod2, 2 mod4, 1 mod3, 2 mod6, 1 mod5,
+    2 mod10, 8 mod20, 0 mod15, 24 mod30.
+
+Its private witnesses, in that order, are3,18,4,20,36,12,48,0,24. This is the p=3,q=5,b=2 case of the original-class parent-reserve family above. Exact enumeration confirms whole coverage and distinct numerical moduli. It does NOT furnish a failure of the odd top-shadow conclusions: for every top-touching singleton and their full union, the collision inclusion and weighted phase-excess comparison hold; all the displayed(TS4) comparisons also hold. In particular its full selected private union has mass1/6 and TS4 RHS3/2. The top-prime supplier and shell-pair checks also hold, including the zero coefficient at p=2. Therefore this reused even control is not evidence that(TS1), (TS4), or(TS5) extends beyond odd moduli, and is not a counterexample witnessing the necessity of oddness. The odd-coordinate premise remains part of the cited hyperplane theorem and the corresponding deductions.
+
+### Exact reproduction and evidence boundary
+
+The [standard-library verifier](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_shadow_shell_pairs.py), with [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_shadow_shell_pairs.json), retains literal original labels and one uniform residue source per control. It checks the18-class inventory, every listed private witness, complete coverage counts, all class/lower/top slice identities, original-pair CRT capacities, private-region saving bounds, and top-shell intersection identities. The data include all2415 uncovered residues of the noncover, its six uncovered top7-neighbors, every displayed singleton ratio, and the period60 even-control comparisons. The odd top-shadow assertions are guarded by the oddness premise; the even control only records their actual truth values. All whole-cover controls still check the actual suppliers and shell-pair inequality.
+
+Positive whole-cover controls are the complete residue partitions modulo3,25 and225. Their numerical moduli are REPEATED; they are not candidates for Erdős #7. They check the conditional collision and phase-excess conclusions, p-1 distinct actual suppliers, same-support pair counts and(TS8). For the full selected private union the top-shell pair inequalities are exact:1=1 for p=3 and6=6 for p=5 in the relevant controls. The ordinary proofs use numerical distinctness only to record distinct lower indices at fixed support, so these repeated-label controls legitimately exercise the stronger common-source identities without pretending to witness a distinct odd cover.
+
+Reproduce the controls with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_shadow_shell_pairs.py
+```
+ These are exact finite controls and ordinary proofs; none is Lean verification or a proof that every unrestricted distinct-odd inventory violates a necessary inequality.
