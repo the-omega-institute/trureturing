@@ -16,7 +16,8 @@ open Finset Set
 open D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent
 open D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
 
-/-- The single-peak path variance is at most twice its accumulated information. -/
+/-- The forward and reverse single-peak path variances are at most twice their accumulated
+information, including for paths with no transitions. -/
 theorem uniform_single_peak_log_likelihood_variance_bound {X : Type*} [Fintype X]
     (chi : X → ℝ) (hchi : ∀ x, chi x = 1 ∨ chi x = -1) (z : X) (hz : chi z = 1)
     (r q : ℝ) (hr0 : 0 < r) (hr1 : r < 1) (M : ℕ) (hcard : Fintype.card X = 2 * M)
@@ -27,18 +28,26 @@ theorem uniform_single_peak_log_likelihood_variance_bound {X : Type*} [Fintype X
     let I := (phi r + k * phi q) / (Fintype.card X : ℝ)
     let J := (xi r - k * xi q) / (Fintype.card X : ℝ)
     let v := (psi r + k * psi q) / (Fintype.card X : ℝ) - I ^ 2
+    let Prev := Function.swap P
+    let Lrev : (s : ℕ) → (Fin (s + 1) → X) → ℝ :=
+      fun s x ↦ logLikelihoodSum chi z r q s (fun t ↦ x t.rev)
     (∀ u, |u| < 1 → psi u ≤ 2 * phi u) ∧
     J ≤ 0 ∧
     v ≤ 2 * I ∧
     0 ≤ I ∧
-    ∀ s, 1 ≤ s → pathVariance P s (logLikelihoodSum chi z r q s) ≤ 2 * s * I := by
+    (∀ s, pathVariance P s (logLikelihoodSum chi z r q s) ≤ 2 * s * I) ∧
+    ∀ s, pathVariance Prev s (Lrev s) ≤ 2 * s * I := by
   let P := kernel chi z r q (Fintype.card X)
   let k := (M : ℝ) - 1
   let I := (phi r + k * phi q) / (Fintype.card X : ℝ)
   let J := (xi r - k * xi q) / (Fintype.card X : ℝ)
   let v := (psi r + k * psi q) / (Fintype.card X : ℝ) - I ^ 2
+  let Prev := Function.swap P
+  let Lrev : (s : ℕ) → (Fin (s + 1) → X) → ℝ :=
+    fun s x ↦ logLikelihoodSum chi z r q s (fun t ↦ x t.rev)
   change (∀ u, |u| < 1 → psi u ≤ 2 * phi u) ∧ J ≤ 0 ∧ v ≤ 2 * I ∧ 0 ≤ I ∧
-    ∀ s, 1 ≤ s → pathVariance P s (logLikelihoodSum chi z r q s) ≤ 2 * s * I
+    (∀ s, pathVariance P s (logLikelihoodSum chi z r q s) ≤ 2 * s * I) ∧
+    ∀ s, pathVariance Prev s (Lrev s) ≤ 2 * s * I
   have hphi_even (u : ℝ) : phi (-u) = phi u := by
     simp only [phi]
     ring
@@ -254,14 +263,47 @@ theorem uniform_single_peak_log_likelihood_variance_bound {X : Type*} [Fintype X
     simpa only [P, k, I, J, v] using
       (exact_single_peak_log_likelihood_covariances chi hchi z hz r q hr0 hr1 M hcard hplus
         hM hq).2.2.2.2.2
-  refine ⟨hpsi_phi, hJ, hv, hI, ?_⟩
-  intro s hs
-  rw [hexact s hs]
-  have hsv : (s : ℝ) * v ≤ (s : ℝ) * (2 * I) :=
-    mul_le_mul_of_nonneg_left hv (Nat.cast_nonneg s)
-  have hcross : 2 * ((s - 1 : ℕ) : ℝ) * I * J ≤ 0 :=
-    mul_nonpos_of_nonneg_of_nonpos (mul_nonneg (by positivity) hI) hJ
-  nlinarith
+  have hforward : ∀ s, pathVariance P s (logLikelihoodSum chi z r q s) ≤ 2 * s * I := by
+    intro s
+    cases s with
+    | zero => simp [pathVariance, pathCovariance, pathExpectation, logLikelihoodSum]
+    | succ s =>
+        rw [hexact (s + 1) (Nat.succ_le_succ (Nat.zero_le s))]
+        have hsv : ((s + 1 : ℕ) : ℝ) * v ≤ ((s + 1 : ℕ) : ℝ) * (2 * I) :=
+          mul_le_mul_of_nonneg_left hv (Nat.cast_nonneg (s + 1))
+        have hcross : 2 * ((((s + 1 : ℕ) - 1 : ℕ)) : ℝ) * I * J ≤ 0 :=
+          mul_nonpos_of_nonneg_of_nonpos (mul_nonneg (by positivity) hI) hJ
+        nlinarith
+  have hweight_reverse (s : ℕ) (x : Fin (s + 1) → X) :
+      pathWeight Prev s x = pathWeight P s (fun t ↦ x t.rev) := by
+    unfold pathWeight
+    congr 1
+    rw [← Equiv.prod_comp Fin.revPerm
+      (fun t : Fin s ↦ P (x t.succ) (x t.castSucc))]
+    apply Finset.prod_congr rfl
+    intro t _
+    simp only [Fin.revPerm_apply, Fin.rev_castSucc, Fin.rev_succ]
+  have hexpectation_reverse (s : ℕ) (f : (Fin (s + 1) → X) → ℝ) :
+      pathExpectation Prev s (fun x ↦ f (fun t ↦ x t.rev)) = pathExpectation P s f := by
+    unfold pathExpectation
+    apply Fintype.sum_equiv (Fin.revPerm.arrowCongr (Equiv.refl X))
+    intro x
+    rw [hweight_reverse]
+    change (pathWeight P s (fun t ↦ x t.rev) * f (fun t ↦ x t.rev)) =
+      pathWeight P s (fun t ↦ x t.rev) * f (fun t ↦ x t.rev)
+    rfl
+  have hvariance_reverse (s : ℕ) :
+      pathVariance Prev s (Lrev s) =
+        pathVariance P s (logLikelihoodSum chi z r q s) := by
+    unfold pathVariance pathCovariance
+    rw [show Lrev s = fun x ↦ logLikelihoodSum chi z r q s (fun t ↦ x t.rev) by rfl]
+    rw [hexpectation_reverse s
+      (fun x ↦ logLikelihoodSum chi z r q s x * logLikelihoodSum chi z r q s x),
+      hexpectation_reverse s (logLikelihoodSum chi z r q s)]
+  refine ⟨hpsi_phi, hJ, hv, hI, hforward, ?_⟩
+  intro s
+  rw [hvariance_reverse]
+  exact hforward s
 
 #print axioms uniform_single_peak_log_likelihood_variance_bound
 

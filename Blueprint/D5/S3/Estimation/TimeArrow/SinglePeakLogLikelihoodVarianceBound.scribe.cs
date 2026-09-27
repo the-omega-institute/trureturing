@@ -30,9 +30,9 @@ internal sealed class SinglePeakLogLikelihoodVarianceBoundDocument : IScribeDocu
                         + "open unit interval. The odd correction J is nonpositive, the one-edge variance v "
                         + "is at most 2I, and I is nonnegative.")),
                 Paragraph(Text(
-                    "Consequently, every path of at least one transition has log-likelihood variance at most "
-                        + "2sI. The adjacent covariance contributes a nonpositive correction, while all longer "
-                        + "lag covariances vanish."))),
+                    "Consequently, for every nonnegative path length, both the forward path and the reversed "
+                        + "path have log-likelihood variance at most 2sI. Reversing the path preserves the "
+                        + "distribution of the log-likelihood sum, and the zero-length sum has zero variance."))),
             DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
@@ -65,13 +65,19 @@ internal sealed class SinglePeakLogLikelihoodVarianceBoundDocument : IScribeDocu
     private static Formula TheoremFormula()
     {
         Formula carrier = F.Id("X"), chi = F.Id("chi"), z = F.Id("z"), x = F.Id("x");
+        Formula y = F.Id("y"), t = F.Id("t"), path = F.Id("mathbf{x}");
         Formula r = F.Id("r"), q = F.Id("q"), m = F.Id("M"), u = F.Id("u"), s = F.Id("s");
         Formula p = F.Id("P"), k = F.Id("k"), information = F.Id("I");
         Formula correction = F.Id("J"), variance = F.Id("v");
+        Formula pReverse = new Formula.Power(p, Minus);
+        Formula reverseLog = new Formula.Power(F.Id("L"), Minus);
+        Formula reverseLogAt = new Formula.Apply(reverseLog, [s]);
         Formula positiveSet = Seq(
             OpenBrace, x, Sp, InMacro, Sp, carrier, Sp, Mid, Sp,
             Call("chi", x), Sp, Eq, Sp, D(1), CloseBrace);
         Formula logSum = Call("logLikelihoodSum", chi, z, r, q, s);
+        Formula reversedPath = Seq(t, Sp, Mapsto, Sp,
+            new Formula.Subscript(path, Seq(s, Sp, Minus, Sp, t)));
 
         return Disp(Seq(
             Begin, Sp, Grp(F.Id("aligned")),
@@ -100,6 +106,10 @@ internal sealed class SinglePeakLogLikelihoodVarianceBoundDocument : IScribeDocu
             Amp, Let(variance,
                 Seq(Fr(Seq(Call("psi", r), Sp, Plus, Sp, Mul(k, Call("psi", q))), Card(carrier)),
                     Sp, Minus, Sp, Square(information))), RowBreak, Sp,
+            Amp, Let(pReverse, Seq(Open, x, Comma, Sp, y, Close, Sp, Mapsto, Sp,
+                Call("P", y, x))), RowBreak, Sp,
+            Amp, Let(reverseLog, Seq(Open, s, Comma, Sp, path, Close, Sp, Mapsto, Sp,
+                Call("logLikelihoodSum", chi, z, r, q, s, reversedPath))), RowBreak, Sp,
             Amp, Open, Forall, Sp, u, Sp, InMacro, Sp, RealType(), Comma, Sp,
             Abs(u), Sp, Lt, Sp, D(1), Sp, Rightarrow, Sp,
             Call("psi", u), Sp, Leq, Sp, Mul(D(2), Call("phi", u)), Close, Sp, Land, Sp,
@@ -107,8 +117,10 @@ internal sealed class SinglePeakLogLikelihoodVarianceBoundDocument : IScribeDocu
             variance, Sp, Leq, Sp, Mul(D(2), information), Sp, Land, Sp,
             D(0), Sp, Leq, Sp, information, Sp, Land, Sp, RowBreak, Sp,
             Amp, Forall, Sp, s, Sp, InMacro, Sp, NatType(), Comma, Sp,
-            D(1), Sp, Leq, Sp, s, Sp, Rightarrow, Sp,
             Call("pathVariance", p, s, logSum), Sp, Leq, Sp,
+            Mul(Mul(D(2), s), information), Sp, Land, Sp, RowBreak, Sp,
+            Amp, Forall, Sp, s, Sp, InMacro, Sp, NatType(), Comma, Sp,
+            Call("pathVariance", pReverse, s, reverseLogAt), Sp, Leq, Sp,
             Mul(Mul(D(2), s), information),
             End, Sp, Grp(F.Id("aligned"))));
     }
