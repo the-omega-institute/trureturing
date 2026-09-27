@@ -7671,7 +7671,7 @@ Together with the full-root three-singleton theorem in SA.4 (bound503/56), the s
 
 In public-token-cost1 rows the public prefix is exactly one fine leaf y. Whole source containment gives the displayed {y,zi} constraints for the three private-cost1 children; the full private-cost0 child has entire nonempty fibre {y}. Other active cost2 or cost3 children are allowed arbitrary fibres by the corresponding supplier.
 
-Thus six of the nine previously unsupplied t=3 shapes needed by the C76 root-cap test are supplied, and seven of the fourteen needed by the C75 test. Remaining C76 t=3 shapes are full/private11222, gap/private2222, and full/public1/private11111. Remaining C75 t=3 shapes additionally include full/private11223, full/private12222, gap/private1233 and gap/private2223 at capacity81. One-/two-inactive cut branches, the entire cut74--76 classes and the outside-cofactor/common-law lift remain unresolved.
+These SA consumers supply six of the nine previously unsupplied t=3 shapes needed by the C76 root-cap test, and seven of the fourteen needed by the C75 test. The complete four-double gap theorem in G4 below additionally supplies gap/private2222, giving seven of nine and eight of fourteen respectively. Remaining C76 t=3 shapes are full/private11222 and full/public1/private11111. Remaining C75 t=3 shapes additionally include full/private11223, full/private12222, gap/private1233 and gap/private2223 at capacity81. One-/two-inactive cut branches, the entire cut74--76 classes and the outside-cofactor/common-law lift remain unresolved.
 
 ### SA.9. Exact controls on complete original sources
 
@@ -7690,3 +7690,164 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 ```
 
 All bounds concern a single fixed actual law at the original numerical head1225. Neither the outstanding one-/two-inactive branches, the entire cut74--76 classes, nor the arbitrary outside-cofactor common-law lift is supplied by this section.
+
+## Four complete double fibres at the gap admit one common law
+
+Ordinary mathematics on one actual source. No Lean verification, arbitrary-height lift, or settlement of unrestricted Erdos #7 is asserted.
+
+### G4.1. Statement and existing consumers
+
+Retain one actual literal4555 source: three full roots with five occupied children each and one gap root R with four. Every occupied child's COMPLETE actual fibre is nonempty. For every ORIGINAL legal pair of root restrictions, the union of their complete actual projections contains a ternary seven-tree: three public columns, three distinct fine labels in each. A full restriction selects three original children; a gap restriction selects two. Assume that each of R's four complete actual fibres E_1,...,E_4 has exactly two distinct fine labels.
+
+There is ONE probability law on this same source, fixed before all original numerical phase queries, with
+
+    Gamma_1225 <= 719/80 = 9 - 1/80.
+
+No network maximum, minimum-cut or standalone five-tree premise is used. In particular this supplies the normalized three-inactive-root gap2222 support shape at capacity79. If all four fibres merely have size at most two, the already supplied singleton-plus-two-doubles case and the at-most-two-label anchor cover the cases containing singleton fibres.
+
+We use the established actual-source consumers:
+
+* an entire original legal restriction with at most two fine labels has envelope at most328/37;
+* an entire legal restriction with three nonmonochromatic labels has envelope249/28;
+* an entire legal restriction with four labels of column type211 or1111 has envelope250/29.
+
+We also use two monochromatic consumers, recorded explicitly here. An entire legal restriction in column H gives the monochromatic puncture psi, supported away from H and away from R, with caps
+
+    (1,1/3,1/2,1/5,1/6,1/6,1/10,1/18,1/30)
+
+in divisor order (1,5,7,25,35,49,175,245,1225).
+
+If R has four distinct actual H labels that can be assigned with at most two selected points to each owner, let eta be uniform on them. The mixture(6/7)psi+(1/7)eta has caps
+
+    (1,2/7,3/7,6/35,1/7,1/7,3/35,1/21,1/28)
+
+and envelope249/28. Any selection of four labels from double fibres automatically has the required owner bound: one such owner has only two distinct labels available. Call this the four-H consumer.
+
+If three original double owners inside H form the three edges of a triangle on three fine labels, give each of the six incidences mass1/6. This eta has child and fine-label caps1/3 and atom cap1/6. Mixing it with the monochromatic puncture in proportions1/7 and6/7 gives envelope61/7, the established triangle consumer.
+
+### G4.2. A normalized puncture preserving all original pair conditions
+
+The following construction is used only after proving that every gap pair has at most three labels in any one column.
+
+Choose uniformly one of the six ORIGINAL pairs of gap owners. Let F be the COMPLETE actual union of its two double fibres. Thus |F|<=4. Independently, for each other full root Q, average over its ten ORIGINAL triples of occupied children. For every such pair of restrictions, use the original legal-pair premise to choose a ternary tree T in their actual union.
+
+Normalize T column by column. If a column C occurs in T, replace its three-label branch by a three-element subset of that same actual union which includes every label of F in C. This is possible because |F_C|<=3: start with F_C and retain enough of the old three labels outside F_C to reach three. For different columns the replacements are disjoint. The result is still a ternary tree in the SAME actual union. If C is absent from T, it remains absent.
+
+Delete every fine label in F, regardless of which root could also own that label. At least five tree leaves survive. Choose any five, make them uniform, and lift them to actual owners in the chosen Q restriction. Such owners exist because these labels lie outside the COMPLETE projection F of the gap restriction. Finally average all these choices, giving the three full roots equal mass. All choices are made in advance and define one law psi.
+
+No blocking or legal-pair premise is transferred to a shortened source. F is used only as a set to delete from the tree supplied by one original pair; all four complete gap fibres and all full-root fibres remain present.
+
+For each fixed gap pair and column C, normalization gives the pointwise bound
+
+    psi_pair(C) <= (3-|F_C|)/5.                       (NP1)
+
+This also holds if C is absent from the tree, because |F_C|<=3. Before any improved column estimate, every selected tree branch has at most three leaves; each fine label has at most one selected point. Averaging original full triples, in which a child appears with probability3/5, gives the baseline caps
+
+    psi: (1,1/3,3/5,1/5,1/5,1/5,3/25,1/15,1/25).  (NP2)
+
+A further bound holds for every actual gap fine label y. Choose any original gap owner that contains y. That owner is in a uniformly chosen legal gap pair with probability1/2. On that event y belongs to F and is removed completely, even if the other root also has y. Off that event its mass is at most1/5. Therefore the SAME psi satisfies
+
+    psi(y) <= 1/10                                  (NP3)
+
+for every gap fine label. Neither(NP1) nor(NP3) is a separate optimized law; both hold simultaneously for the law just constructed.
+
+### G4.3. Some double crosses two columns
+
+Use the three small-anchor consumers first whenever one applies. In the remaining case fix a cross-column fibre E_0={h,j}, with h in H and j in J, H different from J.
+
+Every other double is disjoint from E_0: equality gives an at-most-two-label legal anchor, while a one-label intersection gives a three-label nonmonochromatic anchor. If another double has any label outside H union J, its disjoint four-label union with E_0 has column type211 or1111, already supplied. Hence every double lies inside H union J and is either pure H, pure J, or crosses H and J.
+
+There cannot be two pure H doubles. If they are equal, their legal pair has two labels. Otherwise their complete legal pair is monochromatic with at least three H labels; the H label of E_0 is disjoint from both, so R has at least four distinct actual H labels. The four-H consumer applies. The same argument holds for J.
+
+Thus, after removing supplied cases, at most one double is pure in each column and at least two doubles cross. Every pair involving a cross double is fine-label disjoint, since any overlap again gives an at-most-two-label or nonmonochromatic three-label anchor. The only possible two pure doubles lie in different columns, so they too are disjoint. Consequently all eight actual gap fine labels are distinct.
+
+Writing m_H and m_J for their column counts, we have {m_H,m_J}={4,4} or{5,3}. Up to swapping columns and owner order the three support types are four crosses; two crosses plus one pure double in each column; and three crosses plus one pure double. Every legal gap pair has at most three labels in either column, so normalized puncturing applies.
+
+Each of the eight labels is present in F exactly when its unique gap owner is selected, with probability1/2. Averaging(NP1) therefore gives
+
+    psi(C) <= (6-m_C)/10,   C=H,J.                  (C1)
+
+Other columns retain the3/5 bound. Let eta be uniform on the eight actual gap incidences. It has child cap1/4, column cap5/8, fine-label and atom caps1/8, and child-column cap1/4. Define
+
+    nu = (25/33)psi + (8/33)eta.
+
+Root-dependent cylinders combine by maxima because psi and eta have disjoint root supports. For a pure public column outside H union J, nu has mass at most15/33. For C=H,J, (C1) gives
+
+    nu(C) <= [25(6-m_C)/10 + m_C]/33
+           = [15-(3/2)m_C]/33 <= 15/33.
+
+For a fine label outside the eight gap labels, nu has mass at most5/33. For a gap label, (NP3) gives at most25/330+1/33=7/66<5/33. Thus this ONE nu has caps
+
+    (1,25/99,5/11,5/33,5/33,5/33,1/11,5/99,1/33).
+
+Their ordered-LCM scalar product, with coefficients(1,3,3,5,9,5,15,15,25), is293/33<9.
+
+### G4.4. Every double is pure in its own column
+
+Repeated doubles give an at-most-two-label legal anchor, so assume distinct doubles whenever they lie in the same column.
+
+If a column H contains at least three double owners and their union has at least four labels, any pair of those owners is a whole monochromatic legal anchor and the four-H consumer applies. If the union has only three labels, three distinct two-element subsets form a triangle and the triangle consumer applies. A union of only two labels would mean repeated doubles, already handled.
+
+Thus in the remaining case each occupied gap column has at most two owners. If two owners in one column have disjoint doubles, their whole legal pair and their four labels give the four-H consumer. Otherwise their two distinct doubles share exactly one label. It follows that EVERY legal gap pair has at most three labels in each column. Normalized puncturing again applies.
+
+For every gap-occupied column C, fix one of its pure owners. It contributes its two distinct labels to F whenever selected, an event of probability1/2. Thus E|F_C|>=1, and averaging(NP1) gives
+
+    psi(C) <= 2/5                                  (P1)
+
+on every gap-occupied column. Gap-unoccupied columns retain the3/5 bound. The simultaneous fine-label estimate(NP3) still holds, including for labels shared by two gap owners.
+
+Construct eta as follows, independently in each gap-occupied column. A column with one owner gives mass1/8 to each of that owner's two actual points. A column with two owners has fibres {a,b} and {a,c}, where a,b,c are distinct. Give mass1/10 to each of the two actual incidences at a, and mass3/20 to each of the actual unique incidences at b and c.
+
+Every owner has total mass1/4, so eta is a probability on the original gap source. Its column cap is1/2, fine-label cap1/5, and atom cap3/20. Child and child-column caps are both1/4. Set
+
+    nu = (3/4)psi + (1/4)eta.
+
+For a gap-unoccupied column, nu(C)<=9/20. For a gap-occupied column, (P1) gives
+
+    nu(C) <= (3/4)(2/5)+(1/4)(1/2)=17/40<9/20.
+
+For a fine label outside the actual gap projection, nu has mass at most3/20. For a gap fine label, (NP3) and eta's fine cap give
+
+    nu(y) <= (3/4)(1/10)+(1/4)(1/5)=1/8<3/20.
+
+All root-dependent cylinders again combine by maxima. The SAME nu has caps
+
+    (1,1/4,9/20,3/20,3/20,3/20,9/100,1/20,3/80).
+
+Their ordered-LCM scalar product is719/80. This bounds every numerical phase query under one law.
+
+### G4.5. Conclusion and remaining scope
+
+Every excluded case has one of the explicitly listed smaller envelopes; the cross residual has293/33; the pure residual has719/80. Their maximum is719/80, proving the stated four-double gap theorem.
+
+The proof uses the complete actual legal-pair conditions throughout. It adds neither a subsource blocking hypothesis nor separate laws for different phase queries. It does not by itself settle other normalized profiles, all maximum74--76 sources, the height lift, or unrestricted #7.
+
+### G4.6. Complete actual controls without individually robust roots
+
+The [actual control program](../../../frontier/cover-geometry/height-two-small-anchors/gap_four_double_actual_controls.py) and [data](../../../frontier/cover-geometry/height-two-small-anchors/gap_four_double_actual_controls.json) construct seven complete original sources. Every one satisfies all480 original legal-pair tests and the standalone five-tree; no root in any control individually supplies a ternary tree for every one of its legal restrictions.
+
+| Actual residual profile | Actual points | Uniform theorem bound |
+|---|---:|---:|
+|four cross doubles|143|293/33|
+|two crosses and one pure double in each column|143|293/33|
+|three crosses and one pure double|128|293/33|
+|four pure doubles in four columns|218|719/80|
+|one overlapping pure pair and two single-owner columns|203|719/80|
+|two overlapping pure pairs|188|719/80|
+|four crosses, one gap label also present at a full root|148|293/33|
+
+In the first three cross controls, each other full root's complete child fibre consists of selected complements in the two gap columns and one outside column with five leaves. The shared-label control additionally places the actual gap label(0,0) at all five original children of full root1; that full root still has only two ternary branches and is not individually robust. In a pure control it consists of one complement point in each gap-occupied column and two outside columns with five leaves each. These complete fibres are repeated at all five owners of that root; neither construction uses a full49-point fibre. Different full roots use complementary outside-column arrangements so their original pair tests and the standalone condition hold. All original actual fibres remain present throughout law construction.
+
+For each source, the program constructs the same law by all6 original gap pairs, all3 other roots and all10 original full triples:180 actual tree selections per source and1260 total. It explicitly forces every F_C into each selected actual branch, deletes the COMPLETE F, verifies the per-column survivor inequality, and lifts each chosen point to an actual original owner. Of the1260 selected trees,1230 require a nontrivial change from their original branch choices.
+
+Independently, the program exhausts ALL original three-column/three-leaf tree choices for each distinct actual gap-pair/full-root projection in these fixtures. It checks22860 such replacements, preservation of the actual union, all F_C inclusions, five surviving other-root leaves and every column's survivor inequality. The five full-root fibres coincide in a fixture, so this quotient covers each of its ten original full triples without repeating identical trees.
+
+The final laws are checked against all1767 original numerical cylinders per source,12369 total, using literal CRT coordinates. The controls also measure the six complete-F exclusions before gap-pair averaging, the resulting1/10 mass bound on every original gap fine label, the simultaneous column bounds and actual eta incidences. In the shared-label source, psi actually assigns mass1/30 to the original gap label(0,0): this is positive and satisfies the common1/10 bound. Every selected-pair F exclusion is still exactly zero, so this control exercises the averaging step rather than accidental global disjointness from the entire gap projection. Thus the validation checks one common probability, not separately optimized marginals. The displayed cut79 is the explicit three-inactive-root/private2222 witness; its minimality is not claimed.
+
+The checks remain active under Python -O. The program imports the adjacent actual small-anchor helper and requires an explicit output path:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/gap_four_double_actual_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/gap_four_double_actual_controls.json
+```
+
+This supplies one more complete t3 support shape in the root-cap reduction. The remaining C76 t3 shapes are full/private11222 and full/public1/private11111. The one-/two-inactive branches and the complete cut74--76 problem retain their stated unresolved obligations.
