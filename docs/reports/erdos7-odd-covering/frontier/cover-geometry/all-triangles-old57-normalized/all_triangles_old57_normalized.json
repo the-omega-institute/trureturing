@@ -1,0 +1,289 @@
+{
+  "scope": "Fixed-schedule normalized comparison for rooted stars/triangles plus old57.\n\nInventory: every mixed modulus has support {3,q} or {3,p,q}, except arbitrary\n5^b*7^c are also allowed. All actual numerical moduli are distinct, residues\nare globally fixed and arbitrary, heights finite; arbitrary pure originals.\nNo parameter optimization and no Lean. Kernel and label-comparison proof\nobligations use the separately audited normalized physical-law construction.\n",
+  "parameters": {
+    "primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "thresholds": {
+      "5": 0,
+      "7": 1,
+      "11": 2,
+      "13": 4,
+      "17": 4,
+      "19": 6
+    },
+    "caps": {
+      "3": "2",
+      "5": "4/3",
+      "7": "3/2",
+      "11": "10/7",
+      "13": "12/7",
+      "17": "16/11",
+      "19": "18/11"
+    }
+  },
+  "rows": [
+    {
+      "prime": 5,
+      "threshold": 0,
+      "delta": "0",
+      "cap": "4/3",
+      "old_primes": [],
+      "rooted_count": "K3*(1+sum(old Kp))",
+      "full_mean": "1",
+      "low_atoms": {},
+      "hinge": "1",
+      "charge": "1/3",
+      "independent_retained_low_tuples": 0
+    },
+    {
+      "prime": 7,
+      "threshold": 1,
+      "delta": "1/5",
+      "cap": "3/2",
+      "old_primes": [
+        5
+      ],
+      "rooted_count": "K3*(1+sum(old Kp))+K5",
+      "full_mean": "5/3",
+      "low_atoms": {
+        "0": "11/45"
+      },
+      "hinge": "41/45",
+      "charge": "41/180",
+      "independent_retained_low_tuples": 1
+    },
+    {
+      "prime": 11,
+      "threshold": 2,
+      "delta": "2/9",
+      "cap": "10/7",
+      "old_primes": [
+        5,
+        7
+      ],
+      "rooted_count": "K3*(1+sum(old Kp))",
+      "full_mean": "19/12",
+      "low_atoms": {
+        "0": "1/3",
+        "1": "242/945"
+      },
+      "hinge": "1913/3780",
+      "charge": "1913/26460",
+      "independent_retained_low_tuples": 1
+    },
+    {
+      "prime": 13,
+      "threshold": 4,
+      "delta": "4/11",
+      "cap": "12/7",
+      "old_primes": [
+        5,
+        7,
+        11
+      ],
+      "rooted_count": "K3*(1+sum(old Kp))",
+      "full_mean": "145/84",
+      "low_atoms": {
+        "0": "1/3",
+        "1": "1474/6615",
+        "2": "153794/694575",
+        "3": "63319874/802234125"
+      },
+      "hinge": "801519881/3208936500",
+      "charge": "801519881/22462555500",
+      "independent_retained_low_tuples": 12
+    },
+    {
+      "prime": 17,
+      "threshold": 4,
+      "delta": "4/15",
+      "cap": "16/11",
+      "old_primes": [
+        5,
+        7,
+        11,
+        13
+      ],
+      "rooted_count": "K3*(1+sum(old Kp))",
+      "full_mean": "157/84",
+      "low_atoms": {
+        "0": "1/3",
+        "1": "116446/601965",
+        "2": "180233318/821682225",
+        "3": "1092106384814/12337558608375"
+      },
+      "hinge": "15294757690991/49350234433500",
+      "charge": "15294757690991/542852578768500",
+      "independent_retained_low_tuples": 17
+    },
+    {
+      "prime": 19,
+      "threshold": 6,
+      "delta": "6/17",
+      "cap": "18/11",
+      "old_primes": [
+        5,
+        7,
+        11,
+        13,
+        17
+      ],
+      "rooted_count": "K3*(1+sum(old Kp))",
+      "full_mean": "1811/924",
+      "low_atoms": {
+        "0": "1/3",
+        "1": "201134/1137045",
+        "2": "188209715222/870709264425",
+        "3": "6988554598005034/74084297763601125",
+        "4": "534348093935325784178/6303462475216001720625",
+        "5": "46270930900716095479591034/4826970942333781557594403125"
+      },
+      "hinge": "3304883745940030405587362321/19307883769335126230377612500",
+      "charge": "3304883745940030405587362321/212386721462686388534153737500",
+      "independent_retained_low_tuples": 135
+    }
+  ],
+  "constants": {
+    "beta": "151394965582137942235816821971/212386721462686388534153737500",
+    "survivor_probability_lower": "60991755880548446298336915529/212386721462686388534153737500",
+    "full_query_mean": "30720/5929",
+    "B5": "7247078934354555645408264629987543/4613074987956458806693241537456250",
+    "query_upper": "83225006696672104222677413623199303/7948506618108954070045565168654809",
+    "target": "565/51",
+    "query_gap": "246430897701281734219196225506802632/405373837523556657572323823601395259",
+    "exact_beta_limit": "20793180796361174356060458440824957/28040259730715730001468723070812500",
+    "extra_same_law_charge_budget": "30803862212660216777399528188350329/1072539934699876672556178657458578125",
+    "source_Haar_density_cap": "138240/5929",
+    "Haar_survivor_lower": "60991755880548446298336915529/4951988594198307699605568000000",
+    "fresh_23_29_relative_reserve": "30803862212660216777399528188350329/612035009594389463393508517986420293",
+    "fresh_23_29_Haar_lower": "30803862212660216777399528188350329/49691804130007859644462886504256000000"
+  },
+  "decimal": {
+    "beta": 0.7128268873849352,
+    "survivor_probability_lower": 0.28717311261506484,
+    "full_query_mean": 5.181312194299207,
+    "B5": 1.5709865877478248,
+    "query_upper": 10.470521155138995,
+    "target": 11.07843137254902,
+    "query_gap": 0.6079102174100256,
+    "exact_beta_limit": 0.741547367822132,
+    "extra_same_law_charge_budget": 0.028720480437196872,
+    "source_Haar_density_cap": 23.315904874346433,
+    "Haar_survivor_lower": 0.012316618812895828,
+    "fresh_23_29_relative_reserve": 0.05033022903881706,
+    "fresh_23_29_Haar_lower": 0.0006198982458368501
+  },
+  "extra_inventory_costs": {
+    "whole_old1119": "1/77",
+    "whole_old1719": "1/121"
+  },
+  "extra_cases": {
+    "arbitrary_weighted_extras_at_most_one_fortieth": {
+      "extra_cost_upper": "1/40",
+      "total_charge_upper": "313409267237410203898341330817/424773442925372777068307475000",
+      "survivor_probability_lower": "111364175687962573169966144183/424773442925372777068307475000",
+      "query_upper": "159530400911409520235314964940214231/14513090739830970498083157876072743",
+      "query_gap": "63845821522612799415920988030174014/740167627731379495402241051679709893",
+      "Haar_survivor_lower": "111364175687962573169966144183/9903977188396615399211136000000",
+      "fresh_23_29_relative_reserve": "31922910761306399707960494015087007/4470031947867938913409612625830404844",
+      "fresh_23_29_Haar_lower": "31922910761306399707960494015087007/397534433040062877155703092034048000000",
+      "remaining_same_law_charge_budget": "31922910761306399707960494015087007/8580319477599013380449429259668625000"
+    },
+    "whole_old1119_and_old1719": {
+      "extra_cost_upper": "18/847",
+      "total_charge_upper": "155908496852891608107853146971/212386721462686388534153737500",
+      "survivor_probability_lower": "56478224609794780426300590529/212386721462686388534153737500",
+      "query_upper": "80283967152992661772129184071574303/7360298709373065579935919258329809",
+      "query_gap": "64086445993156302285205993306052632/375375234178026344576731882174820259",
+      "Haar_survivor_lower": "56478224609794780426300590529/4951988594198307699605568000000",
+      "fresh_23_29_relative_reserve": "8010805749144537785650749163256579/566743000621726049655065782891395293",
+      "fresh_23_29_Haar_lower": "8010805749144537785650749163256579/49691804130007859644462886504256000000",
+      "remaining_same_law_charge_budget": "8010805749144537785650749163256579/1072539934699876672556178657458578125"
+    }
+  },
+  "extra_case_decimals": {
+    "arbitrary_weighted_extras_at_most_one_fortieth": {
+      "extra_cost_upper": 0.025,
+      "total_charge_upper": 0.7378268873849352,
+      "survivor_probability_lower": 0.2621731126150648,
+      "query_upper": 10.992172774995515,
+      "query_gap": 0.08625859755350396,
+      "Haar_survivor_lower": 0.011244389356877311,
+      "fresh_23_29_relative_reserve": 0.007141539732514126,
+      "fresh_23_29_Haar_lower": 8.030225335999828e-05,
+      "remaining_same_law_charge_budget": 0.0037204804371968703
+    },
+    "whole_old1119_and_old1719": {
+      "extra_cost_upper": 0.021251475796930343,
+      "total_charge_upper": 0.7340783631818655,
+      "survivor_probability_lower": 0.2659216368181345,
+      "query_upper": 10.907705016204577,
+      "query_gap": 0.17072635634444255,
+      "Haar_survivor_lower": 0.011405160479562497,
+      "fresh_23_29_relative_reserve": 0.014134811970075602,
+      "fresh_23_29_Haar_lower": 0.00016120979886715317,
+      "remaining_same_law_charge_budget": 0.007469004640266528
+    }
+  },
+  "independent_retained_low_tuples": 166,
+  "checks": {
+    "cap_5": true,
+    "valid_law_5": true,
+    "independent_low_5": true,
+    "positive_charge_5": true,
+    "cap_7": true,
+    "valid_law_7": true,
+    "special_q7_threshold": true,
+    "independent_low_7": true,
+    "positive_charge_7": true,
+    "cap_11": true,
+    "valid_law_11": true,
+    "independent_low_11": true,
+    "positive_charge_11": true,
+    "cap_13": true,
+    "valid_law_13": true,
+    "independent_low_13": true,
+    "positive_charge_13": true,
+    "cap_17": true,
+    "valid_law_17": true,
+    "independent_low_17": true,
+    "positive_charge_17": true,
+    "cap_19": true,
+    "valid_law_19": true,
+    "independent_low_19": true,
+    "positive_charge_19": true,
+    "beta_exact": true,
+    "q7_exact": true,
+    "unchanged_B5": true,
+    "beta_below_exact_limit": true,
+    "query_below_target": true,
+    "beta_simple_bound": true,
+    "B_simple_bound": true,
+    "query_simple_bound": true,
+    "Lambda_exact": true,
+    "Haar_positive": true,
+    "fresh_positive": true,
+    "old1119_full_inventory_cost": true,
+    "old1719_full_inventory_cost": true,
+    "two_extra_pair_inventory_cost": true,
+    "extra_cost_fits_general_allowance": true,
+    "general_allowance_fits_exact_budget": true,
+    "base_coarse_loss": true,
+    "coarse_extra_survival": true,
+    "coarse_extra_query": true,
+    "fresh_cancellation_1/40": true,
+    "extra_query_1/40": true,
+    "extra_positive_1/40": true,
+    "fresh_cancellation_18/847": true,
+    "extra_query_18/847": true,
+    "extra_positive_18/847": true
+  },
+  "passed_count": 50
+}

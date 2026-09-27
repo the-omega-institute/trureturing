@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "0cf59f694f25771f60f2687dc1e218d6b39a616ab29a9f42a7da0cede754c253",
+    "sha256": "69b14ea2c4b46f6e61af7264f62f8d85d2b00dade3098e030156a58ab054434e",
     "kind": "value"
   },
   "geometry": {
@@ -168,7 +168,7 @@
   },
   "prefix_ledger": {
     "path": "content/019-prefix_ledger.json",
-    "sha256": "900b8b4a4c7bec9150ec7606a01ba75c9e30d11dcfa3718022cc0fcd52357135",
+    "sha256": "5a44afa5fc840dc88828bdced4aeb6e4d1423e2b1ff18ff3c8cc475a4729b026",
     "kind": "object"
   },
   "residual_leaf_results": {

@@ -12,10 +12,10 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/wide_k_signed_tail_comparison.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/source-budgets/shared_loss_signed_k_comparison.py': '596b71d2baad3b354087adcca82e4d4c857e95f94747f4568f82c44e89eb5680',
-    'certificates/source_norms/source-budgets/shared_loss_signed_k_comparison.json': 'd406afba8a1dc7c0bb30b7826a1564ddfda41a14011d7b387f0588af7ca45fc1',
-    'frontier/retained-transport/uniform_shallow_indicator_transport.py': 'c30be3b622143fbd629eed504642faede14664abbfc393c0d1a93246e087a765',
-    'certificates/source_norms/retained-transport/uniform_shallow_indicator_transport.json': '07c1562ec4ef340c70dfa30c7b4e427d16d19e8e28190c09abb450f44c2ab0ee',
+    'frontier/source-budgets/shared_loss_signed_k_comparison.py': 'abbcf4145e4de98efb1594f186d4b186fcd17443a3006518c0d8ebb57fe62b17',
+    'certificates/source_norms/source-budgets/shared_loss_signed_k_comparison.json': 'cc6772db4d36f54a3326ca1d571f49d157f51b5a9fbd8fd21bf97690fef402a4',
+    'frontier/retained-transport/uniform_shallow_indicator_transport.py': 'a6fd7f1b920f520e960295ae14de0015da3c577d7415e0c7d23f21a74260f91a',
+    'certificates/source_norms/retained-transport/uniform_shallow_indicator_transport.json': '9d8c6c9f4ecc14e0feae30a33f78ecd4aa452a49ead7e1364a575438596884fa',
 }
 DELTA, RHO, A = F(1, 27), F(1, 100000), F(53, 360)
 

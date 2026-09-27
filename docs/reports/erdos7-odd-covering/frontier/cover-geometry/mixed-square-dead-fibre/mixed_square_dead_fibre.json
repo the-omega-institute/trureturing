@@ -1,0 +1,471 @@
+{
+  "scope": "Actual regression for first-root-marginal preservation and mass-only weighted query bounds; no global cover or all-law obstruction.",
+  "source": "rho is the product Haar law conditioned on x_p mod p != 1; eta_0=rho|J^c; nu_0=eta_0/eta_0(1). eta_0 is NOT the full-survivor eta of TC7 after square additions.",
+  "originals": [
+    [
+      3,
+      1
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      11,
+      1
+    ],
+    [
+      13,
+      1
+    ],
+    [
+      17,
+      1
+    ],
+    [
+      19,
+      1
+    ],
+    [
+      15,
+      0
+    ],
+    [
+      21,
+      0
+    ],
+    [
+      35,
+      0
+    ],
+    [
+      33,
+      0
+    ],
+    [
+      55,
+      0
+    ],
+    [
+      39,
+      0
+    ],
+    [
+      65,
+      0
+    ],
+    [
+      51,
+      0
+    ],
+    [
+      85,
+      0
+    ],
+    [
+      57,
+      0
+    ],
+    [
+      95,
+      0
+    ],
+    [
+      45,
+      2
+    ],
+    [
+      63,
+      23
+    ],
+    [
+      99,
+      35
+    ]
+  ],
+  "aligned_originals": [
+    [
+      3,
+      1
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      11,
+      1
+    ],
+    [
+      13,
+      1
+    ],
+    [
+      17,
+      1
+    ],
+    [
+      19,
+      1
+    ],
+    [
+      15,
+      0
+    ],
+    [
+      21,
+      0
+    ],
+    [
+      35,
+      0
+    ],
+    [
+      33,
+      0
+    ],
+    [
+      55,
+      0
+    ],
+    [
+      39,
+      0
+    ],
+    [
+      65,
+      0
+    ],
+    [
+      51,
+      0
+    ],
+    [
+      85,
+      0
+    ],
+    [
+      57,
+      0
+    ],
+    [
+      95,
+      0
+    ],
+    [
+      45,
+      2
+    ],
+    [
+      63,
+      2
+    ],
+    [
+      99,
+      2
+    ]
+  ],
+  "private_witnesses": [
+    [
+      3,
+      1,
+      1616617
+    ],
+    [
+      5,
+      1,
+      9053046
+    ],
+    [
+      7,
+      1,
+      9468747
+    ],
+    [
+      11,
+      1,
+      1910547
+    ],
+    [
+      13,
+      1,
+      4352427
+    ],
+    [
+      17,
+      1,
+      13503492
+    ],
+    [
+      19,
+      1,
+      8593587
+    ],
+    [
+      15,
+      0,
+      323325
+    ],
+    [
+      21,
+      0,
+      1154727
+    ],
+    [
+      35,
+      0,
+      9561125
+    ],
+    [
+      33,
+      0,
+      587862
+    ],
+    [
+      55,
+      0,
+      8994260
+    ],
+    [
+      39,
+      0,
+      5471622
+    ],
+    [
+      65,
+      0,
+      13878020
+    ],
+    [
+      51,
+      0,
+      9224217
+    ],
+    [
+      85,
+      0,
+      3081080
+    ],
+    [
+      57,
+      0,
+      13953942
+    ],
+    [
+      95,
+      0,
+      7810805
+    ],
+    [
+      45,
+      2,
+      2
+    ],
+    [
+      63,
+      23,
+      9699692
+    ],
+    [
+      99,
+      35,
+      4849847
+    ]
+  ],
+  "aligned_private_witnesses": [
+    [
+      3,
+      1,
+      1616617
+    ],
+    [
+      5,
+      1,
+      9053046
+    ],
+    [
+      7,
+      1,
+      9468747
+    ],
+    [
+      11,
+      1,
+      1910547
+    ],
+    [
+      13,
+      1,
+      4352427
+    ],
+    [
+      17,
+      1,
+      13503492
+    ],
+    [
+      19,
+      1,
+      8593587
+    ],
+    [
+      15,
+      0,
+      323325
+    ],
+    [
+      21,
+      0,
+      1154727
+    ],
+    [
+      35,
+      0,
+      4711280
+    ],
+    [
+      33,
+      0,
+      587862
+    ],
+    [
+      55,
+      0,
+      4144415
+    ],
+    [
+      39,
+      0,
+      5471622
+    ],
+    [
+      65,
+      0,
+      9028175
+    ],
+    [
+      51,
+      0,
+      9224217
+    ],
+    [
+      85,
+      0,
+      12780770
+    ],
+    [
+      57,
+      0,
+      13953942
+    ],
+    [
+      95,
+      0,
+      2960960
+    ],
+    [
+      45,
+      2,
+      9636707
+    ],
+    [
+      63,
+      2,
+      10052408
+    ],
+    [
+      99,
+      2,
+      2494208
+    ]
+  ],
+  "eta_0_mass": "2087/3072",
+  "eta_0_E": "1/480",
+  "nu_0_E": "32/10435",
+  "refill_E": "1/420",
+  "single_square_masses_both_families": [
+    "1/24",
+    "955/36864",
+    "25411/1658880"
+  ],
+  "square_union_masses_spread_aligned": [
+    "68753/829440",
+    "23167/331776"
+  ],
+  "E_survivor_masses_spread_aligned": [
+    "0",
+    "1/720"
+  ],
+  "R_eta_0": "145308365957/61152952320",
+  "R_nu_0": "145308365957/41544990720",
+  "restricted_R_per_mass": "431784355/14155776",
+  "finite_query_lower_bound_per_mass": 15,
+  "global_survivor": 3233232,
+  "checks": [
+    "base-mass",
+    "first-root-fibre-mass",
+    "equal-individual-square-masses",
+    "spread-kills-fibre",
+    "aligned-retains-two-thirds",
+    "different-joint-loss",
+    "complete-base-query",
+    "base-law-crosses-gate",
+    "complete-restricted-query",
+    "restricted-query-exceeds-gate",
+    "fifteen-label-witness",
+    "refill-fibre-mass",
+    "distinct-odd-labels-23",
+    "private-(3, 1)",
+    "private-(5, 1)",
+    "private-(7, 1)",
+    "private-(11, 1)",
+    "private-(13, 1)",
+    "private-(17, 1)",
+    "private-(19, 1)",
+    "private-(15, 0)",
+    "private-(21, 0)",
+    "private-(35, 0)",
+    "private-(33, 0)",
+    "private-(55, 0)",
+    "private-(39, 0)",
+    "private-(65, 0)",
+    "private-(51, 0)",
+    "private-(85, 0)",
+    "private-(57, 0)",
+    "private-(95, 0)",
+    "private-(45, 2)",
+    "private-(63, 23)",
+    "private-(99, 35)",
+    "distinct-odd-labels-2",
+    "private-(3, 1)",
+    "private-(5, 1)",
+    "private-(7, 1)",
+    "private-(11, 1)",
+    "private-(13, 1)",
+    "private-(17, 1)",
+    "private-(19, 1)",
+    "private-(15, 0)",
+    "private-(21, 0)",
+    "private-(35, 0)",
+    "private-(33, 0)",
+    "private-(55, 0)",
+    "private-(39, 0)",
+    "private-(65, 0)",
+    "private-(51, 0)",
+    "private-(85, 0)",
+    "private-(57, 0)",
+    "private-(95, 0)",
+    "private-(45, 2)",
+    "private-(63, 2)",
+    "private-(99, 2)",
+    "global-survivor"
+  ]
+}

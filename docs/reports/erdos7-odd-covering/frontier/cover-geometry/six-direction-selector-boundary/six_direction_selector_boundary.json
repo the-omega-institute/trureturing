@@ -1,0 +1,25 @@
+{
+  "scope": "Geometric selector and uniform-incidence complete-tail-cap certificate only; no obstruction to actual joint laws, weighted selectors or phase-sensitive estimates.",
+  "checks": [
+    "all modular root direction tests",
+    "every N1 coloring has a missing-color four-point slice",
+    "incidence gate permits exactly positive integers1 and2",
+    "M2 passes but M3 andM4 fail the retained direct lift",
+    "arbitrary pure source still fails the M4 cap envelope at H4",
+    "exact H4 relaxed lower"
+  ],
+  "check_count": 6,
+  "N1_colorings": 729,
+  "modular_progressions": 42,
+  "explicit_uniform_upper": 3125,
+  "universal_uniform_lower": 4,
+  "incidence_threshold": "62251906883410927926954/27706989537234114087851",
+  "direct_lift_values": {
+    "2": "6199418183523781383463/539719033471556471250",
+    "3": "8121877536304157219117/690840362843592283200",
+    "4": "478671849674596355617/39723320863506556284"
+  },
+  "pure_H4_A_lower": "31/32",
+  "pure_H4_theta_lower": "3/82",
+  "pure_H4_relaxed_certificate_lower": "380921733986167047569097/32239216932700973216000"
+}

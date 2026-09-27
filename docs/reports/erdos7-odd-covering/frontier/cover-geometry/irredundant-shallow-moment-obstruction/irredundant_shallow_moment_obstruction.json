@@ -1,0 +1,214 @@
+{
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "period": 4849845,
+  "original_count": 35,
+  "max_original_modulus": 4199,
+  "originals_with_private_witnesses": [
+    {
+      "modulus": 105,
+      "residue": 0,
+      "private_integer": 3972255
+    },
+    {
+      "modulus": 165,
+      "residue": 0,
+      "private_integer": 1263900
+    },
+    {
+      "modulus": 195,
+      "residue": 0,
+      "private_integer": 3705780
+    },
+    {
+      "modulus": 255,
+      "residue": 0,
+      "private_integer": 3157155
+    },
+    {
+      "modulus": 285,
+      "residue": 0,
+      "private_integer": 3097095
+    },
+    {
+      "modulus": 231,
+      "residue": 0,
+      "private_integer": 1679601
+    },
+    {
+      "modulus": 273,
+      "residue": 0,
+      "private_integer": 4121481
+    },
+    {
+      "modulus": 357,
+      "residue": 0,
+      "private_integer": 3572856
+    },
+    {
+      "modulus": 399,
+      "residue": 0,
+      "private_integer": 3512796
+    },
+    {
+      "modulus": 429,
+      "residue": 0,
+      "private_integer": 1413126
+    },
+    {
+      "modulus": 561,
+      "residue": 0,
+      "private_integer": 864501
+    },
+    {
+      "modulus": 627,
+      "residue": 0,
+      "private_integer": 804441
+    },
+    {
+      "modulus": 663,
+      "residue": 0,
+      "private_integer": 3306381
+    },
+    {
+      "modulus": 741,
+      "residue": 0,
+      "private_integer": 3246321
+    },
+    {
+      "modulus": 969,
+      "residue": 0,
+      "private_integer": 2697696
+    },
+    {
+      "modulus": 385,
+      "residue": 0,
+      "private_integer": 1032955
+    },
+    {
+      "modulus": 455,
+      "residue": 0,
+      "private_integer": 3474835
+    },
+    {
+      "modulus": 595,
+      "residue": 0,
+      "private_integer": 2926210
+    },
+    {
+      "modulus": 665,
+      "residue": 0,
+      "private_integer": 2866150
+    },
+    {
+      "modulus": 715,
+      "residue": 0,
+      "private_integer": 766480
+    },
+    {
+      "modulus": 935,
+      "residue": 0,
+      "private_integer": 217855
+    },
+    {
+      "modulus": 1045,
+      "residue": 0,
+      "private_integer": 157795
+    },
+    {
+      "modulus": 1105,
+      "residue": 0,
+      "private_integer": 2659735
+    },
+    {
+      "modulus": 1235,
+      "residue": 0,
+      "private_integer": 2599675
+    },
+    {
+      "modulus": 1615,
+      "residue": 0,
+      "private_integer": 2051050
+    },
+    {
+      "modulus": 1001,
+      "residue": 0,
+      "private_integer": 1182181
+    },
+    {
+      "modulus": 1309,
+      "residue": 0,
+      "private_integer": 633556
+    },
+    {
+      "modulus": 1463,
+      "residue": 0,
+      "private_integer": 573496
+    },
+    {
+      "modulus": 1547,
+      "residue": 0,
+      "private_integer": 3075436
+    },
+    {
+      "modulus": 1729,
+      "residue": 0,
+      "private_integer": 3015376
+    },
+    {
+      "modulus": 2261,
+      "residue": 0,
+      "private_integer": 2466751
+    },
+    {
+      "modulus": 2431,
+      "residue": 0,
+      "private_integer": 367081
+    },
+    {
+      "modulus": 2717,
+      "residue": 0,
+      "private_integer": 307021
+    },
+    {
+      "modulus": 3553,
+      "residue": 0,
+      "private_integer": 4608241
+    },
+    {
+      "modulus": 4199,
+      "residue": 0,
+      "private_integer": 2200276
+    }
+  ],
+  "private_membership_checks": 1225,
+  "full_period_enumerated": false,
+  "survivor_root_rule": "number of coordinates equal to 0 is at most 2",
+  "survivor_count": 4608000,
+  "survivor_Haar_mass": "307200/323323",
+  "reciprocal_original_sum": "113473/1616615",
+  "Euler_product": "323323/110592",
+  "uniform_complete_survivor_density": "323323/307200",
+  "uniform_complete_survivor_all_depth_R_upper": "68780825113/33973862400",
+  "query_rule": "phase 1 at every one of the 35 original numerical labels",
+  "query_load_rule": "binomial(number of coordinates equal to 1, 3)",
+  "load_at_survivor_1": 35,
+  "load_at_survivor_2": 0,
+  "exponential_moment_strict_rational_lower": "34359738368/4849845",
+  "five_one_root_count": 1872,
+  "pair_integral_lower": "432/24871",
+  "entropy_bridge": "rho=uniform(U) has KL(rho||rho)=0, R_unused(rho)<=R_P(rho)<3<log(H(U)/alpha); last inequality uses H(U)/alpha>27>exp(3)",
+  "thresholds_passed": {
+    "moment_above_76_8": true,
+    "pair_above_1over329": true,
+    "all_depth_query_below3": true,
+    "GD_unused_KL_budget": true
+  }
+}

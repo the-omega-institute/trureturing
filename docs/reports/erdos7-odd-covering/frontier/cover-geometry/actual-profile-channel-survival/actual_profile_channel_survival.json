@@ -1,0 +1,125 @@
+{
+  "scope": "Exact actual survival for the actual profile-threshold counterexample.\nEnumerates finite Q-channel atoms, never the original CRT period.\n",
+  "channel_atom_count": 240000,
+  "coordinate_atoms": {
+    "5": {
+      "denominator": 1171876,
+      "channel_numerator": 390000,
+      "digits": [
+        2,
+        3,
+        4
+      ],
+      "remainder_numerator": 1876
+    },
+    "7": {
+      "denominator": 28824006,
+      "channel_numerator": 5762400,
+      "digits": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "remainder_numerator": 12006
+    },
+    "11": {
+      "denominator": 1929229930,
+      "channel_numerator": 214344240,
+      "digits": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "remainder_numerator": 131770
+    },
+    "13": {
+      "denominator": 8973037932,
+      "channel_numerator": 815702160,
+      "digits": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "remainder_numerator": 1631718492
+    },
+    "17": {
+      "denominator": 104636361616,
+      "channel_numerator": 6975673920,
+      "digits": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "remainder_numerator": 41855296336
+    },
+    "19": {
+      "denominator": 288720571698,
+      "channel_numerator": 16983432720,
+      "digits": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "remainder_numerator": 135869677218
+    }
+  },
+  "root_region_counts": {
+    "zero": 2,
+    "base": 1458,
+    "extra5": 729,
+    "missing5": 366,
+    "missing5_extra7": 363,
+    "missing7": 363
+  },
+  "exact_conditional_survival": {
+    "zero": "14567261016937589286600344630647226193/15132480392968520912471934481931785153",
+    "base": "4875164262665522600755539424888651576753592899261/21297806535529092721396179998221072719279555117257",
+    "extra5": "2958318147937451257527587754477528160686334361761/21297806535529092721396179998221072719279555117257",
+    "missing5": "8235780356068660023164311688160989004262496876761/21297806535529092721396179998221072719279555117257",
+    "missing5_extra7": "6967165066830178052999820905718947148625898490761/21297806535529092721396179998221072719279555117257",
+    "missing7": "6404826620472678447333877540369256873253801083661/21297806535529092721396179998221072719279555117257"
+  },
+  "actual_pure_source_survival": "17173936624779018562508379164956196001660495079666053/69878103243070953218900866574163339591956220339720217",
+  "actual_decimal": 0.2457699311762869,
+  "profile_G": "11896353657900110917305940184050970099978148851942853/69878103243070953218900866574163339591956220339720217",
+  "actual_minus_G": "5277582966878907645202438980905225901682346227723200/69878103243070953218900866574163339591956220339720217",
+  "actual_minus_G_decimal": 0.0755255612551594,
+  "target": "19132074022251234990036997833948759259/112288364592048312861493806382908281250",
+  "uniform_survivor_query_bound": "13227171568516900436387142362547549992782799049600847717379282968938397762184223508528868/1435558255983065553201240431117183312760771443070327795213687596212600142640244301390625",
+  "query_bound_decimal": 9.213956670437577,
+  "passed_checks": 6,
+  "checks": {
+    "channel_atom_count": true,
+    "all_channel_weights_normalize": true,
+    "all_remainders_nonnegative": true,
+    "actual_survival_exceeds_failed_certificate": true,
+    "actual_survival_exceeds_target": true,
+    "same_uniform_law_query_crosses": true
+  }
+}

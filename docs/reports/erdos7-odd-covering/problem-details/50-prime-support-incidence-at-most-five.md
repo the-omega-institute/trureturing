@@ -127,7 +127,7 @@ which proves the full Haar result and density bound. If3 is absent, the stronger
 
 ## 5. Exact polynomial and actual arithmetic checks
 
-The [exact checker](../frontier/cover-geometry/support_degree_five.py)
+The [exact checker](../frontier/cover-geometry/support-degree-five/support_degree_five.py)
 retains the polynomial and actual-family checks below. It uses
 standard-library exact fractions and explicit exceptions that remain
 active under `python3 -B -I -S -O`.
@@ -174,5 +174,5 @@ contains all polynomial checks and the actual original labels. Replay it
 from the repository root with
 
 ```sh
-python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/support_degree_five.py --check
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/support-degree-five/support_degree_five.py --check
 ```

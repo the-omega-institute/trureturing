@@ -613,7 +613,7 @@ certificates. They are not a repository-wide claim that no other existing
 specialized derivation could prove this one palette noncovering. No historical
 priority claim or new Lean verification is made. The seven-support branch supplies the all-height conclusion above.
 
-[support_shearer_boundaries.py](../frontier/cover-geometry/support_shearer_boundaries.py) uses standard-library exact fractions and checks
+[support_shearer_boundaries.py](../frontier/cover-geometry/support-shearer-boundaries/support_shearer_boundaries.py) uses standard-library exact fractions and checks
 active under optimized Python. It verifies the counts, one ten-vertex graph
 block, cycle rank, union weight, both exact polynomials, and the independent
 one-edge replacement identity. It does not rerun the new global-budget proof.
@@ -621,8 +621,8 @@ one-edge replacement identity. It does not rerun the new global-budget proof.
 
 ## Exact original-family certificates
 
-The [six-support checker](../frontier/cover-geometry/predecessor_support_six.py)
-and [seven-support checker](../frontier/cover-geometry/predecessor_support_seven.py)
+The [six-support checker](../frontier/cover-geometry/predecessor-support-six/predecessor_support_six.py)
+and [seven-support checker](../frontier/cover-geometry/predecessor-support-seven/predecessor_support_seven.py)
 retain the complete exact scalar calculations and original CRT labels.
 They compress actual coordinate carriers only by the exact truth values
 of original cylinder predicates, then check every normalized kernel,
@@ -669,7 +669,7 @@ of that first-moment estimate; it does not establish failure of another
 avoidance criterion. These finite examples carry no literature-priority
 claim.
 
-The [support-Shearer boundary checker](../frontier/cover-geometry/support_shearer_boundaries.py)
+The [support-Shearer boundary checker](../frontier/cover-geometry/support-shearer-boundaries/support_shearer_boundaries.py)
 checks the seven-budget replacement identity and graph comparisons, and
 independently enumerates every matching monomial and all 65,535 proper
 subfamilies of the sixteen-support example. It also counts the exact
@@ -685,7 +685,7 @@ active under Python optimization. Their complete canonical outputs are
 From the repository root:
 
 ```sh
-python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/predecessor_support_six.py --check
-python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/predecessor_support_seven.py --check
-python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/support_shearer_boundaries.py --check
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/predecessor-support-six/predecessor_support_six.py --check
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/predecessor-support-seven/predecessor_support_seven.py --check
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/support-shearer-boundaries/support_shearer_boundaries.py --check
 ```

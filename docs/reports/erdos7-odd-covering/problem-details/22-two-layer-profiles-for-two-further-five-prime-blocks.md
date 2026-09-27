@@ -352,8 +352,8 @@ density. Other connected components combine by CRT.
 ## 7. Reproducible certificate and remaining scope
 
 The standard-library program
-[k5_two_layer_profile_certificate.py](../frontier/cover-geometry/k5_two_layer_profile_certificate.py)
-and its [exact data](../frontier/cover-geometry/k5_two_layer_profile_certificate.json)
+[k5_two_layer_profile_certificate.py](../frontier/cover-geometry/k5-two-layer-profile-certificate/k5_two_layer_profile_certificate.py)
+and its [exact data](../frontier/cover-geometry/k5-two-layer-profile-certificate/k5_two_layer_profile_certificate.json)
 record both descendant rectangles, all old and upper-box residuals, every
 support dominance and derivative bound, and all occupancy margins.
 Support polynomials are evaluated both by the coordinate recurrence and
@@ -363,7 +363,7 @@ methods agree on every residual used in the certificate.
 Run with Python 3.10 or later and assertions enabled:
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5_two_layer_profile_certificate.py
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5-two-layer-profile-certificate/k5_two_layer_profile_certificate.py
 ```
 
 The default JSON destination is beside the program; `--output PATH`

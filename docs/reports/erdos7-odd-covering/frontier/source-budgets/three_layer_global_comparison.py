@@ -11,7 +11,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/three_layer_global_comparison.json'
-PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/comparison-bounds/square_root_product_escape_comparison.py': 'ed2891bdbdc6d2c60714d2f3a75641ecbb4156b505ea52a9bcdaa9a9de951cd2', 'certificates/source_norms/comparison-bounds/square_root_product_escape_comparison.json': '81de01579295b662b6c133a5b81346298160f6a68fddbd1d5e644ae243cf366e', 'frontier/cover-geometry/three_layer_product_escape.py': 'a9a16fb44398c9bde3576f3adc9d4d496cb5accc162f40a371e30eb9032f5778', 'certificates/source_norms/cover-geometry/three_layer_product_escape.json': '3f1b933db608b59f0e6328e43919e3482bcd6c86138c1cfd8da6e82f8d09a1cb'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/comparison-bounds/square_root_product_escape_comparison.py': '1a85f22ab8c05f8b809e85d26100bccf142e71a192d0b69204f4f821b5464dde', 'certificates/source_norms/comparison-bounds/square_root_product_escape_comparison.json': 'b612ddf826d262d9cd4158eb7c4b0e541bd124665c3ffee73765c3bfa00a4095', 'frontier/cover-geometry/three_layer_product_escape.py': 'a9a16fb44398c9bde3576f3adc9d4d496cb5accc162f40a371e30eb9032f5778', 'certificates/source_norms/cover-geometry/three_layer_product_escape.json': '3f1b933db608b59f0e6328e43919e3482bcd6c86138c1cfd8da6e82f8d09a1cb'}
 
 
 def require(test, message):

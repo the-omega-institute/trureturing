@@ -13,17 +13,17 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json'
 HEAD_CERTIFICATE = 'certificates/source_norms/cover-geometry/residual_shell_original_heads.json'
 PINS = {
-    HEAD_CERTIFICATE: '39ba4181d8017340ac46dbdb4e8ddbb146a1b8aa568e27eda69a924484e2159d',
+    HEAD_CERTIFICATE: 'ad50ff43b52522e7d5bb085c3ca3f49bc27ace6777214f757dce7aac123688e2',
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/endpoint-bounds/k_neighborhood_radius_study.py': 'f5b6d2df57ee047a3d47660812e8fc3ff0a81239db15881634b4ad0b01633b0f',
+    'frontier/endpoint-bounds/k_neighborhood_radius_study.py': '5835b366a5c3c29e5b5da8a03e93ffe025860f0a626c4956d936f5fc4d4d9c71',
     'frontier/comparison-bounds/exposed_concentration_prices.py': '9c2e6d7ea0777df07559c90a506dcd19d40e2af6febadaee7833a0d66b20488a',
     'certificates/source_norms/comparison-bounds/exposed_concentration_prices.json': '4cbde5374198bbf645157ef6bb7765e3b8fed57569cd2c99b85c25741f38fd25',
-    'frontier/source-budgets/seven_pair_source_prices.py': '020dc470117d84f1a0646ad034ffc6bd2a10b1e18d17b20704f1bb99317c230f',
-    'certificates/source_norms/source-budgets/seven_pair_source_prices.json': '052e3376ed1b3b4fb46bbb032e8bc5156c7f468a807e496e05fb312f452110f1',
-    'frontier/comparison-bounds/wide_k_signed_tail_comparison.py': '248c4af165fc4e636c4f4a3c61947384afd9128cae6c652b07819e20a55da484',
-    'certificates/source_norms/comparison-bounds/wide_k_signed_tail_comparison.json': '4fa3ff52514576814c380e21caaeb2cc9341180815cab34e5b64c8c6e896bade',
-    'frontier/retained-transport/uniform_shallow_indicator_transport.py': 'c30be3b622143fbd629eed504642faede14664abbfc393c0d1a93246e087a765',
-    'certificates/source_norms/retained-transport/uniform_shallow_indicator_transport.json': '07c1562ec4ef340c70dfa30c7b4e427d16d19e8e28190c09abb450f44c2ab0ee',
+    'frontier/source-budgets/seven_pair_source_prices.py': 'd5bda7d977e845ce27584aca8c8c2b2668d3455cbbd6a3080d96e385acc30732',
+    'certificates/source_norms/source-budgets/seven_pair_source_prices.json': 'ded075eee6f158d3f82a63b3979ab352bd33306deb7ae74f4b2a40cb2e8e3271',
+    'frontier/comparison-bounds/wide_k_signed_tail_comparison.py': '90836c835232155b2d7380fae38807f2a5136a28773ae97098cbc7674778afc6',
+    'certificates/source_norms/comparison-bounds/wide_k_signed_tail_comparison.json': '65c7e1f09d160b6fda88e777aa5fd38da9fde912284257f210c6be37b2be499d',
+    'frontier/retained-transport/uniform_shallow_indicator_transport.py': 'a6fd7f1b920f520e960295ae14de0015da3c577d7415e0c7d23f21a74260f91a',
+    'certificates/source_norms/retained-transport/uniform_shallow_indicator_transport.json': '9d8c6c9f4ecc14e0feae30a33f78ecd4aa452a49ead7e1364a575438596884fa',
 }
 DELTA = F(1, 27)
 SHELLS = ((F(0), F(1, 20000)), (F(1, 20000), F(1, 1000)))

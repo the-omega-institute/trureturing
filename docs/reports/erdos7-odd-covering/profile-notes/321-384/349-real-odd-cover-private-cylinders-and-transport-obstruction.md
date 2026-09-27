@@ -98,7 +98,7 @@ root cannot be counted as separate unit demands in this argument.
 Use HSW arXiv:2104.00602v1, Theorem 4.2 and Figures 18–22, printed
 pages 11–12, with the tree conventions on pages 4–6. Choose the
 auxiliary closing prime 23. This is distinct from the prospective
-transport prime q=3 or 5. The [constructor](../../frontier/cover-geometry/hsw11_family.py)
+transport prime q=3 or 5. The [constructor](../../frontier/cover-geometry/hsw11-family/hsw11_family.py)
 gives the entire tree and literal residue family.
 
 The root is 11, with nonpure branches 0,1,2,3 and pure classes
@@ -239,7 +239,7 @@ moduli is outside this conclusion.
 
 ## 6. Verification scope and remaining problem
 
-The [independent checker](../../frontier/cover-geometry/hsw11_group_hall.py) traverses the
+The [independent checker](../../frontier/cover-geometry/hsw11-family/hsw11_group_hall.py) traverses the
 17 power nodes and 124 symbolic nonzero leaf paths, checks every
 exponent box and modulus-support collision, and exhaustively excludes
 the other represented labels from all seven private cylinders. It

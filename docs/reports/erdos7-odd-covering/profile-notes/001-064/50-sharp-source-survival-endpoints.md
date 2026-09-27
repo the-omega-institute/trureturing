@@ -415,7 +415,7 @@ CRT union on a period of1,157,625. Height6 exercises both the nonzero
 global correction and the strict-neighborhood inequality.
 
 The independent comparator checker
-[actual_cellwise_barrier_boundary.py](../../frontier/cover-geometry/actual_cellwise_barrier_boundary.py)
+[actual_cellwise_barrier_boundary.py](../../frontier/cover-geometry/actual-cellwise-barrier-boundary/actual_cellwise_barrier_boundary.py)
 reconstructs the theta404 constants, the limiting actual survivor
 vector and its weighted-cap support decomposition. These exact
 calculations check the numerical inputs of section4; the uniform
@@ -426,7 +426,7 @@ for exact rational JSON results:
 
 ```sh
 python3 -I -O docs/reports/erdos7-odd-covering/frontier/source-budgets/sharp_source_mass_endpoints.py
-python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/actual_cellwise_barrier_boundary.py
+python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/actual-cellwise-barrier-boundary/actual_cellwise_barrier_boundary.py
 ```
 
 The mass correction has not been inserted into the global K bound.

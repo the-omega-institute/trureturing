@@ -357,10 +357,10 @@ preserves the common-target error accounting. The two complete gaps
 are107.93272467245183... and108.1531268121857....
 
 The reproducible arithmetic is
-[`frontier/cover-geometry/deeper_absorption_credit.py`](../../frontier/cover-geometry/deeper_absorption_credit.py):
+[`frontier/cover-geometry/deeper_absorption_credit.py`](../../frontier/cover-geometry/deeper-absorption-credit/deeper_absorption_credit.py):
 
 ```sh
-python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/deeper_absorption_credit.py
+python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/deeper-absorption-credit/deeper_absorption_credit.py
 ```
 
 It reads pinned logical certificates and source modules, writes only

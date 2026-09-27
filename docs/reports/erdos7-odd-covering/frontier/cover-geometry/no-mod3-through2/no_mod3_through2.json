@@ -1,0 +1,1105 @@
+{
+  "B": {
+    "decimal": 5.003067549838209,
+    "exact": "432040125182653876501/86355045355449035400"
+  },
+  "K3": {
+    "decimal": 2.103111764658523,
+    "exact": "12019840537595758779003/5715264751774801992890"
+  },
+  "actual_27_zero_fibre_control": {
+    "actual_clipped_mass": {
+      "decimal": 0.9999875,
+      "exact": "85829615592956543/85830688476562500"
+    },
+    "actual_height_mixture_mean": {
+      "decimal": 0.2777777777777778,
+      "exact": "3311369154188368/11920928955078125"
+    },
+    "actual_height_mixture_third_hinge": {
+      "decimal": 0.000266666666666662,
+      "exact": "28610229492187/107288360595703125"
+    },
+    "common_period": 1609325408935546875,
+    "original_count": 27,
+    "original_definition": "Pure 1 mod9; 0 mod5; (t=0 mod3,x5=1 mod5); for the increasing 24 residues t_j mod27 with t_j mod9!=1, add (t=t_j mod27,x5=2 mod5^j) at numerical modulus27*5^j.",
+    "original_height_note": "This finite control has mixed ternary height3; the ordinary clipping proof supplies arbitrary finite higher original heights.",
+    "originals": [
+      {
+        "cofactor": 1,
+        "cofactor_phase": 0,
+        "modulus": 9,
+        "phase": 1,
+        "private_witness": 417232513427734378,
+        "ternary_exponent": 2,
+        "ternary_phase": 1
+      },
+      {
+        "cofactor": 5,
+        "cofactor_phase": 0,
+        "modulus": 5,
+        "phase": 0,
+        "private_witness": 1192092895507812500,
+        "ternary_exponent": 0,
+        "ternary_phase": 0
+      },
+      {
+        "cofactor": 5,
+        "cofactor_phase": 1,
+        "modulus": 15,
+        "phase": 6,
+        "private_witness": 1013278961181640626,
+        "ternary_exponent": 1,
+        "ternary_phase": 0
+      },
+      {
+        "cofactor": 5,
+        "cofactor_phase": 2,
+        "modulus": 135,
+        "phase": 27,
+        "private_witness": 655651092529296882,
+        "ternary_exponent": 3,
+        "ternary_phase": 0
+      },
+      {
+        "cofactor": 25,
+        "cofactor_phase": 2,
+        "modulus": 675,
+        "phase": 2,
+        "private_witness": 1192092895507812527,
+        "ternary_exponent": 3,
+        "ternary_phase": 2
+      },
+      {
+        "cofactor": 125,
+        "cofactor_phase": 2,
+        "modulus": 3375,
+        "phase": 1002,
+        "private_witness": 119209289550781377,
+        "ternary_exponent": 3,
+        "ternary_phase": 3
+      },
+      {
+        "cofactor": 625,
+        "cofactor_phase": 2,
+        "modulus": 16875,
+        "phase": 8752,
+        "private_witness": 417232513427735002,
+        "ternary_exponent": 3,
+        "ternary_phase": 4
+      },
+      {
+        "cofactor": 3125,
+        "cofactor_phase": 2,
+        "modulus": 84375,
+        "phase": 46877,
+        "private_witness": 1132488250732425002,
+        "ternary_exponent": 3,
+        "ternary_phase": 5
+      },
+      {
+        "cofactor": 15625,
+        "cofactor_phase": 2,
+        "modulus": 421875,
+        "phase": 203127,
+        "private_witness": 715255737304703127,
+        "ternary_exponent": 3,
+        "ternary_phase": 6
+      },
+      {
+        "cofactor": 78125,
+        "cofactor_phase": 2,
+        "modulus": 2109375,
+        "phase": 781252,
+        "private_witness": 1072883605957109377,
+        "ternary_exponent": 3,
+        "ternary_phase": 7
+      },
+      {
+        "cofactor": 390625,
+        "cofactor_phase": 2,
+        "modulus": 10546875,
+        "phase": 9375002,
+        "private_witness": 476837158203515627,
+        "ternary_exponent": 3,
+        "ternary_phase": 8
+      },
+      {
+        "cofactor": 1953125,
+        "cofactor_phase": 2,
+        "modulus": 52734375,
+        "phase": 39062502,
+        "private_witness": 1549720764162109377,
+        "ternary_exponent": 3,
+        "ternary_phase": 9
+      },
+      {
+        "cofactor": 9765625,
+        "cofactor_phase": 2,
+        "modulus": 263671875,
+        "phase": 87890627,
+        "private_witness": 298023223886718752,
+        "ternary_exponent": 3,
+        "ternary_phase": 11
+      },
+      {
+        "cofactor": 48828125,
+        "cofactor_phase": 2,
+        "modulus": 1318359375,
+        "phase": 244140627,
+        "private_witness": 1549720764208984377,
+        "ternary_exponent": 3,
+        "ternary_phase": 12
+      },
+      {
+        "cofactor": 244140625,
+        "cofactor_phase": 2,
+        "modulus": 6591796875,
+        "phase": 4882812502,
+        "private_witness": 596046447998046877,
+        "ternary_exponent": 3,
+        "ternary_phase": 13
+      },
+      {
+        "cofactor": 1220703125,
+        "cofactor_phase": 2,
+        "modulus": 32958984375,
+        "phase": 29296875002,
+        "private_witness": 1490116120605468752,
+        "ternary_exponent": 3,
+        "ternary_phase": 14
+      },
+      {
+        "cofactor": 6103515625,
+        "cofactor_phase": 2,
+        "modulus": 164794921875,
+        "phase": 152587890627,
+        "private_witness": 357627874755859377,
+        "ternary_exponent": 3,
+        "ternary_phase": 15
+      },
+      {
+        "cofactor": 30517578125,
+        "cofactor_phase": 2,
+        "modulus": 823974609375,
+        "phase": 671386718752,
+        "private_witness": 357627899169921877,
+        "ternary_exponent": 3,
+        "ternary_phase": 16
+      },
+      {
+        "cofactor": 152587890625,
+        "cofactor_phase": 2,
+        "modulus": 4119873046875,
+        "phase": 3662109375002,
+        "private_witness": 1192093048095703127,
+        "ternary_exponent": 3,
+        "ternary_phase": 17
+      },
+      {
+        "cofactor": 762939453125,
+        "cofactor_phase": 2,
+        "modulus": 20599365234375,
+        "phase": 19836425781252,
+        "private_witness": 1370907592773437502,
+        "ternary_exponent": 3,
+        "ternary_phase": 18
+      },
+      {
+        "cofactor": 3814697265625,
+        "cofactor_phase": 2,
+        "modulus": 102996826171875,
+        "phase": 68664550781252,
+        "private_witness": 476840972900390627,
+        "ternary_exponent": 3,
+        "ternary_phase": 20
+      },
+      {
+        "cofactor": 19073486328125,
+        "cofactor_phase": 2,
+        "modulus": 514984130859375,
+        "phase": 381469726562502,
+        "private_witness": 298042297363281252,
+        "ternary_exponent": 3,
+        "ternary_phase": 21
+      },
+      {
+        "cofactor": 95367431640625,
+        "cofactor_phase": 2,
+        "modulus": 2574920654296875,
+        "phase": 1621246337890627,
+        "private_witness": 238513946533203127,
+        "ternary_exponent": 3,
+        "ternary_phase": 22
+      },
+      {
+        "cofactor": 476837158203125,
+        "cofactor_phase": 2,
+        "modulus": 12874603271484375,
+        "phase": 2861022949218752,
+        "private_witness": 775337219238281252,
+        "ternary_exponent": 3,
+        "ternary_phase": 23
+      },
+      {
+        "cofactor": 2384185791015625,
+        "cofactor_phase": 2,
+        "modulus": 64373016357421875,
+        "phase": 45299530029296877,
+        "private_witness": 1075267791748046877,
+        "ternary_exponent": 3,
+        "ternary_phase": 24
+      },
+      {
+        "cofactor": 11920928955078125,
+        "cofactor_phase": 2,
+        "modulus": 321865081787109375,
+        "phase": 190734863281250002,
+        "private_witness": 190734863281250002,
+        "ternary_exponent": 3,
+        "ternary_phase": 25
+      },
+      {
+        "cofactor": 59604644775390625,
+        "cofactor_phase": 2,
+        "modulus": 1609325408935546875,
+        "phase": 1430511474609375002,
+        "private_witness": 1430511474609375002,
+        "ternary_exponent": 3,
+        "ternary_phase": 26
+      }
+    ],
+    "pure_ternary_survivor_mass": {
+      "decimal": 0.8888888888888888,
+      "exact": "8/9"
+    },
+    "scope": "An actual 27-original family; its role is third projected phase and positive-mass zero-fibre behavior. Its bare noncoverage is not claimed new.",
+    "selected_Q_phases": [
+      {
+        "modulus": 5,
+        "phases": [
+          0,
+          1
+        ]
+      }
+    ],
+    "source": "Uniform first five roots {2,3,4}, Haar higher five digits, independent Haar at the other Q coordinates; all later selected PA rows are unchanged.",
+    "source_RQ": {
+      "decimal": 1.2089164576903293,
+      "exact": "3008171/2488320"
+    },
+    "valuation_atoms": [
+      {
+        "Y": {
+          "decimal": 0.0,
+          "exact": "0"
+        },
+        "clipped_fraction": {
+          "decimal": 1.0,
+          "exact": "1"
+        },
+        "n": 0,
+        "source_mass": {
+          "decimal": 0.6666666666666666,
+          "exact": "2/3"
+        },
+        "survivor_fraction": {
+          "decimal": 1.0,
+          "exact": "1"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 0.6666666666666666,
+          "exact": "2/3"
+        },
+        "clipped_fraction": {
+          "decimal": 1.0,
+          "exact": "1"
+        },
+        "n": 1,
+        "source_mass": {
+          "decimal": 0.26666666666666666,
+          "exact": "4/15"
+        },
+        "survivor_fraction": {
+          "decimal": 0.9583333333333334,
+          "exact": "23/24"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 1.3333333333333333,
+          "exact": "4/3"
+        },
+        "clipped_fraction": {
+          "decimal": 1.0,
+          "exact": "1"
+        },
+        "n": 2,
+        "source_mass": {
+          "decimal": 0.05333333333333334,
+          "exact": "4/75"
+        },
+        "survivor_fraction": {
+          "decimal": 0.9166666666666666,
+          "exact": "11/12"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 2.0,
+          "exact": "2"
+        },
+        "clipped_fraction": {
+          "decimal": 1.0,
+          "exact": "1"
+        },
+        "n": 3,
+        "source_mass": {
+          "decimal": 0.010666666666666666,
+          "exact": "4/375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.875,
+          "exact": "7/8"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 2.6666666666666665,
+          "exact": "8/3"
+        },
+        "clipped_fraction": {
+          "decimal": 1.0,
+          "exact": "1"
+        },
+        "n": 4,
+        "source_mass": {
+          "decimal": 0.0021333333333333334,
+          "exact": "4/1875"
+        },
+        "survivor_fraction": {
+          "decimal": 0.8333333333333334,
+          "exact": "5/6"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 3.3333333333333335,
+          "exact": "10/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.9895833333333334,
+          "exact": "95/96"
+        },
+        "n": 5,
+        "source_mass": {
+          "decimal": 0.00042666666666666667,
+          "exact": "4/9375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.7916666666666666,
+          "exact": "19/24"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 4.0,
+          "exact": "4"
+        },
+        "clipped_fraction": {
+          "decimal": 0.9375,
+          "exact": "15/16"
+        },
+        "n": 6,
+        "source_mass": {
+          "decimal": 8.533333333333334e-05,
+          "exact": "4/46875"
+        },
+        "survivor_fraction": {
+          "decimal": 0.75,
+          "exact": "3/4"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 4.666666666666667,
+          "exact": "14/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.8854166666666666,
+          "exact": "85/96"
+        },
+        "n": 7,
+        "source_mass": {
+          "decimal": 1.7066666666666667e-05,
+          "exact": "4/234375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.7083333333333334,
+          "exact": "17/24"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 5.333333333333333,
+          "exact": "16/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.8333333333333334,
+          "exact": "5/6"
+        },
+        "n": 8,
+        "source_mass": {
+          "decimal": 3.4133333333333334e-06,
+          "exact": "4/1171875"
+        },
+        "survivor_fraction": {
+          "decimal": 0.6666666666666666,
+          "exact": "2/3"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 6.0,
+          "exact": "6"
+        },
+        "clipped_fraction": {
+          "decimal": 0.78125,
+          "exact": "25/32"
+        },
+        "n": 9,
+        "source_mass": {
+          "decimal": 6.826666666666666e-07,
+          "exact": "4/5859375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.625,
+          "exact": "5/8"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 6.666666666666667,
+          "exact": "20/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.7291666666666666,
+          "exact": "35/48"
+        },
+        "n": 10,
+        "source_mass": {
+          "decimal": 1.3653333333333334e-07,
+          "exact": "4/29296875"
+        },
+        "survivor_fraction": {
+          "decimal": 0.5833333333333334,
+          "exact": "7/12"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 7.333333333333333,
+          "exact": "22/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.6770833333333334,
+          "exact": "65/96"
+        },
+        "n": 11,
+        "source_mass": {
+          "decimal": 2.7306666666666665e-08,
+          "exact": "4/146484375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.5416666666666666,
+          "exact": "13/24"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 8.0,
+          "exact": "8"
+        },
+        "clipped_fraction": {
+          "decimal": 0.625,
+          "exact": "5/8"
+        },
+        "n": 12,
+        "source_mass": {
+          "decimal": 5.4613333333333335e-09,
+          "exact": "4/732421875"
+        },
+        "survivor_fraction": {
+          "decimal": 0.5,
+          "exact": "1/2"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 8.666666666666666,
+          "exact": "26/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.5729166666666666,
+          "exact": "55/96"
+        },
+        "n": 13,
+        "source_mass": {
+          "decimal": 1.0922666666666667e-09,
+          "exact": "4/3662109375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.4583333333333333,
+          "exact": "11/24"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 9.333333333333334,
+          "exact": "28/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.5208333333333334,
+          "exact": "25/48"
+        },
+        "n": 14,
+        "source_mass": {
+          "decimal": 2.1845333333333332e-10,
+          "exact": "4/18310546875"
+        },
+        "survivor_fraction": {
+          "decimal": 0.4166666666666667,
+          "exact": "5/12"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 10.0,
+          "exact": "10"
+        },
+        "clipped_fraction": {
+          "decimal": 0.46875,
+          "exact": "15/32"
+        },
+        "n": 15,
+        "source_mass": {
+          "decimal": 4.3690666666666664e-11,
+          "exact": "4/91552734375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.375,
+          "exact": "3/8"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 10.666666666666666,
+          "exact": "32/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.4166666666666667,
+          "exact": "5/12"
+        },
+        "n": 16,
+        "source_mass": {
+          "decimal": 8.738133333333334e-12,
+          "exact": "4/457763671875"
+        },
+        "survivor_fraction": {
+          "decimal": 0.3333333333333333,
+          "exact": "1/3"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 11.333333333333334,
+          "exact": "34/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.3645833333333333,
+          "exact": "35/96"
+        },
+        "n": 17,
+        "source_mass": {
+          "decimal": 1.7476266666666667e-12,
+          "exact": "4/2288818359375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.2916666666666667,
+          "exact": "7/24"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 12.0,
+          "exact": "12"
+        },
+        "clipped_fraction": {
+          "decimal": 0.3125,
+          "exact": "5/16"
+        },
+        "n": 18,
+        "source_mass": {
+          "decimal": 3.4952533333333334e-13,
+          "exact": "4/11444091796875"
+        },
+        "survivor_fraction": {
+          "decimal": 0.25,
+          "exact": "1/4"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 12.666666666666666,
+          "exact": "38/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.2604166666666667,
+          "exact": "25/96"
+        },
+        "n": 19,
+        "source_mass": {
+          "decimal": 6.990506666666666e-14,
+          "exact": "4/57220458984375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.20833333333333334,
+          "exact": "5/24"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 13.333333333333334,
+          "exact": "40/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.20833333333333334,
+          "exact": "5/24"
+        },
+        "n": 20,
+        "source_mass": {
+          "decimal": 1.3981013333333333e-14,
+          "exact": "4/286102294921875"
+        },
+        "survivor_fraction": {
+          "decimal": 0.16666666666666666,
+          "exact": "1/6"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 14.0,
+          "exact": "14"
+        },
+        "clipped_fraction": {
+          "decimal": 0.15625,
+          "exact": "5/32"
+        },
+        "n": 21,
+        "source_mass": {
+          "decimal": 2.7962026666666665e-15,
+          "exact": "4/1430511474609375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.125,
+          "exact": "1/8"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 14.666666666666666,
+          "exact": "44/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.10416666666666667,
+          "exact": "5/48"
+        },
+        "n": 22,
+        "source_mass": {
+          "decimal": 5.592405333333333e-16,
+          "exact": "4/7152557373046875"
+        },
+        "survivor_fraction": {
+          "decimal": 0.08333333333333333,
+          "exact": "1/12"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 15.333333333333334,
+          "exact": "46/3"
+        },
+        "clipped_fraction": {
+          "decimal": 0.052083333333333336,
+          "exact": "5/96"
+        },
+        "n": 23,
+        "source_mass": {
+          "decimal": 1.1184810666666667e-16,
+          "exact": "4/35762786865234375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.041666666666666664,
+          "exact": "1/24"
+        }
+      },
+      {
+        "Y": {
+          "decimal": 16.0,
+          "exact": "16"
+        },
+        "clipped_fraction": {
+          "decimal": 0.0,
+          "exact": "0"
+        },
+        "n": 24,
+        "source_mass": {
+          "decimal": 2.796202666666667e-17,
+          "exact": "1/35762786865234375"
+        },
+        "survivor_fraction": {
+          "decimal": 0.0,
+          "exact": "0"
+        }
+      }
+    ],
+    "zero_fibre_source_mass": {
+      "decimal": 2.796202666666667e-17,
+      "exact": "1/35762786865234375"
+    }
+  },
+  "alpha": {
+    "decimal": 0.1027477013678608,
+    "exact": "7575003978548161/73724315753088000"
+  },
+  "check_count": 266,
+  "checks": [
+    "source SHA256 pa_complete_suffix_debits.json",
+    "source SHA256 height_three_clipping_envelope.json",
+    "same source query budget in both inputs",
+    "exact source query constant",
+    "exact all-layout third hinge constant",
+    "exact source density denominator",
+    "positive uniform retained mass",
+    "normalized query formula",
+    "strict nine-prime query gate",
+    "Haar continuation exceeds one eighty-thousandth",
+    "complete pure query geometric sum",
+    "complete residual height-mixture coefficients sum to one",
+    "complete residual height cap",
+    "raw density after clipping",
+    "complete outside-prime density denominator",
+    "missing modulus-three complete pure loss budget",
+    "clipped complete positive-ternary query coefficient",
+    "raw query retains the Q-unit at every positive ternary height",
+    "same-law outside-prime continuation and density identity",
+    "exact retained mass constant",
+    "exact complete normalized query constant",
+    "exact nine-prime Haar lower constant",
+    "actual pure survivor consists of 24 depth-three cells",
+    "actual CRT phase at modulus 9",
+    "actual CRT phase at modulus 5",
+    "actual CRT phase at modulus 15",
+    "actual CRT phase at modulus 135",
+    "actual CRT phase at modulus 675",
+    "actual CRT phase at modulus 3375",
+    "actual CRT phase at modulus 16875",
+    "actual CRT phase at modulus 84375",
+    "actual CRT phase at modulus 421875",
+    "actual CRT phase at modulus 2109375",
+    "actual CRT phase at modulus 10546875",
+    "actual CRT phase at modulus 52734375",
+    "actual CRT phase at modulus 263671875",
+    "actual CRT phase at modulus 1318359375",
+    "actual CRT phase at modulus 6591796875",
+    "actual CRT phase at modulus 32958984375",
+    "actual CRT phase at modulus 164794921875",
+    "actual CRT phase at modulus 823974609375",
+    "actual CRT phase at modulus 4119873046875",
+    "actual CRT phase at modulus 20599365234375",
+    "actual CRT phase at modulus 102996826171875",
+    "actual CRT phase at modulus 514984130859375",
+    "actual CRT phase at modulus 2574920654296875",
+    "actual CRT phase at modulus 12874603271484375",
+    "actual CRT phase at modulus 64373016357421875",
+    "actual CRT phase at modulus 321865081787109375",
+    "actual CRT phase at modulus 1609325408935546875",
+    "actual 27 numerical original labels are distinct",
+    "actual original labels are odd nonunits",
+    "actual modulus three is absent and modulus nine is present",
+    "actual through-two selector has exactly the two five phases",
+    "actual through-three selector fails at cofactor five",
+    "actual other through-two projected phase sets are empty",
+    "actual private witness at modulus 9",
+    "actual private witness CRT coordinates at modulus 9",
+    "actual private witness at modulus 5",
+    "actual private witness CRT coordinates at modulus 5",
+    "actual private witness at modulus 15",
+    "actual private witness CRT coordinates at modulus 15",
+    "actual private witness at modulus 135",
+    "actual private witness CRT coordinates at modulus 135",
+    "actual private witness at modulus 675",
+    "actual private witness CRT coordinates at modulus 675",
+    "actual private witness at modulus 3375",
+    "actual private witness CRT coordinates at modulus 3375",
+    "actual private witness at modulus 16875",
+    "actual private witness CRT coordinates at modulus 16875",
+    "actual private witness at modulus 84375",
+    "actual private witness CRT coordinates at modulus 84375",
+    "actual private witness at modulus 421875",
+    "actual private witness CRT coordinates at modulus 421875",
+    "actual private witness at modulus 2109375",
+    "actual private witness CRT coordinates at modulus 2109375",
+    "actual private witness at modulus 10546875",
+    "actual private witness CRT coordinates at modulus 10546875",
+    "actual private witness at modulus 52734375",
+    "actual private witness CRT coordinates at modulus 52734375",
+    "actual private witness at modulus 263671875",
+    "actual private witness CRT coordinates at modulus 263671875",
+    "actual private witness at modulus 1318359375",
+    "actual private witness CRT coordinates at modulus 1318359375",
+    "actual private witness at modulus 6591796875",
+    "actual private witness CRT coordinates at modulus 6591796875",
+    "actual private witness at modulus 32958984375",
+    "actual private witness CRT coordinates at modulus 32958984375",
+    "actual private witness at modulus 164794921875",
+    "actual private witness CRT coordinates at modulus 164794921875",
+    "actual private witness at modulus 823974609375",
+    "actual private witness CRT coordinates at modulus 823974609375",
+    "actual private witness at modulus 4119873046875",
+    "actual private witness CRT coordinates at modulus 4119873046875",
+    "actual private witness at modulus 20599365234375",
+    "actual private witness CRT coordinates at modulus 20599365234375",
+    "actual private witness at modulus 102996826171875",
+    "actual private witness CRT coordinates at modulus 102996826171875",
+    "actual private witness at modulus 514984130859375",
+    "actual private witness CRT coordinates at modulus 514984130859375",
+    "actual private witness at modulus 2574920654296875",
+    "actual private witness CRT coordinates at modulus 2574920654296875",
+    "actual private witness at modulus 12874603271484375",
+    "actual private witness CRT coordinates at modulus 12874603271484375",
+    "actual private witness at modulus 64373016357421875",
+    "actual private witness CRT coordinates at modulus 64373016357421875",
+    "actual private witness at modulus 321865081787109375",
+    "actual private witness CRT coordinates at modulus 321865081787109375",
+    "actual private witness at modulus 1609325408935546875",
+    "actual private witness CRT coordinates at modulus 1609325408935546875",
+    "actual 25 valuation atoms normalize",
+    "actual incidence count at valuation atom 0",
+    "actual complete survivor mask at valuation atom 0",
+    "actual complete height-mixture loss at valuation atom 0",
+    "actual clipped mass defect at valuation atom 0",
+    "actual clipped weight finite at valuation atom 0",
+    "actual incidence count at valuation atom 1",
+    "actual complete survivor mask at valuation atom 1",
+    "actual complete height-mixture loss at valuation atom 1",
+    "actual clipped mass defect at valuation atom 1",
+    "actual clipped weight finite at valuation atom 1",
+    "actual valuation tail probability from atom 1",
+    "actual incidence count at valuation atom 2",
+    "actual complete survivor mask at valuation atom 2",
+    "actual complete height-mixture loss at valuation atom 2",
+    "actual clipped mass defect at valuation atom 2",
+    "actual clipped weight finite at valuation atom 2",
+    "actual valuation tail probability from atom 2",
+    "actual incidence count at valuation atom 3",
+    "actual complete survivor mask at valuation atom 3",
+    "actual complete height-mixture loss at valuation atom 3",
+    "actual clipped mass defect at valuation atom 3",
+    "actual clipped weight finite at valuation atom 3",
+    "actual valuation tail probability from atom 3",
+    "actual incidence count at valuation atom 4",
+    "actual complete survivor mask at valuation atom 4",
+    "actual complete height-mixture loss at valuation atom 4",
+    "actual clipped mass defect at valuation atom 4",
+    "actual clipped weight finite at valuation atom 4",
+    "actual valuation tail probability from atom 4",
+    "actual incidence count at valuation atom 5",
+    "actual complete survivor mask at valuation atom 5",
+    "actual complete height-mixture loss at valuation atom 5",
+    "actual clipped mass defect at valuation atom 5",
+    "actual clipped weight finite at valuation atom 5",
+    "actual valuation tail probability from atom 5",
+    "actual incidence count at valuation atom 6",
+    "actual complete survivor mask at valuation atom 6",
+    "actual complete height-mixture loss at valuation atom 6",
+    "actual clipped mass defect at valuation atom 6",
+    "actual clipped weight finite at valuation atom 6",
+    "actual valuation tail probability from atom 6",
+    "actual incidence count at valuation atom 7",
+    "actual complete survivor mask at valuation atom 7",
+    "actual complete height-mixture loss at valuation atom 7",
+    "actual clipped mass defect at valuation atom 7",
+    "actual clipped weight finite at valuation atom 7",
+    "actual valuation tail probability from atom 7",
+    "actual incidence count at valuation atom 8",
+    "actual complete survivor mask at valuation atom 8",
+    "actual complete height-mixture loss at valuation atom 8",
+    "actual clipped mass defect at valuation atom 8",
+    "actual clipped weight finite at valuation atom 8",
+    "actual valuation tail probability from atom 8",
+    "actual incidence count at valuation atom 9",
+    "actual complete survivor mask at valuation atom 9",
+    "actual complete height-mixture loss at valuation atom 9",
+    "actual clipped mass defect at valuation atom 9",
+    "actual clipped weight finite at valuation atom 9",
+    "actual valuation tail probability from atom 9",
+    "actual incidence count at valuation atom 10",
+    "actual complete survivor mask at valuation atom 10",
+    "actual complete height-mixture loss at valuation atom 10",
+    "actual clipped mass defect at valuation atom 10",
+    "actual clipped weight finite at valuation atom 10",
+    "actual valuation tail probability from atom 10",
+    "actual incidence count at valuation atom 11",
+    "actual complete survivor mask at valuation atom 11",
+    "actual complete height-mixture loss at valuation atom 11",
+    "actual clipped mass defect at valuation atom 11",
+    "actual clipped weight finite at valuation atom 11",
+    "actual valuation tail probability from atom 11",
+    "actual incidence count at valuation atom 12",
+    "actual complete survivor mask at valuation atom 12",
+    "actual complete height-mixture loss at valuation atom 12",
+    "actual clipped mass defect at valuation atom 12",
+    "actual clipped weight finite at valuation atom 12",
+    "actual valuation tail probability from atom 12",
+    "actual incidence count at valuation atom 13",
+    "actual complete survivor mask at valuation atom 13",
+    "actual complete height-mixture loss at valuation atom 13",
+    "actual clipped mass defect at valuation atom 13",
+    "actual clipped weight finite at valuation atom 13",
+    "actual valuation tail probability from atom 13",
+    "actual incidence count at valuation atom 14",
+    "actual complete survivor mask at valuation atom 14",
+    "actual complete height-mixture loss at valuation atom 14",
+    "actual clipped mass defect at valuation atom 14",
+    "actual clipped weight finite at valuation atom 14",
+    "actual valuation tail probability from atom 14",
+    "actual incidence count at valuation atom 15",
+    "actual complete survivor mask at valuation atom 15",
+    "actual complete height-mixture loss at valuation atom 15",
+    "actual clipped mass defect at valuation atom 15",
+    "actual clipped weight finite at valuation atom 15",
+    "actual valuation tail probability from atom 15",
+    "actual incidence count at valuation atom 16",
+    "actual complete survivor mask at valuation atom 16",
+    "actual complete height-mixture loss at valuation atom 16",
+    "actual clipped mass defect at valuation atom 16",
+    "actual clipped weight finite at valuation atom 16",
+    "actual valuation tail probability from atom 16",
+    "actual incidence count at valuation atom 17",
+    "actual complete survivor mask at valuation atom 17",
+    "actual complete height-mixture loss at valuation atom 17",
+    "actual clipped mass defect at valuation atom 17",
+    "actual clipped weight finite at valuation atom 17",
+    "actual valuation tail probability from atom 17",
+    "actual incidence count at valuation atom 18",
+    "actual complete survivor mask at valuation atom 18",
+    "actual complete height-mixture loss at valuation atom 18",
+    "actual clipped mass defect at valuation atom 18",
+    "actual clipped weight finite at valuation atom 18",
+    "actual valuation tail probability from atom 18",
+    "actual incidence count at valuation atom 19",
+    "actual complete survivor mask at valuation atom 19",
+    "actual complete height-mixture loss at valuation atom 19",
+    "actual clipped mass defect at valuation atom 19",
+    "actual clipped weight finite at valuation atom 19",
+    "actual valuation tail probability from atom 19",
+    "actual incidence count at valuation atom 20",
+    "actual complete survivor mask at valuation atom 20",
+    "actual complete height-mixture loss at valuation atom 20",
+    "actual clipped mass defect at valuation atom 20",
+    "actual clipped weight finite at valuation atom 20",
+    "actual valuation tail probability from atom 20",
+    "actual incidence count at valuation atom 21",
+    "actual complete survivor mask at valuation atom 21",
+    "actual complete height-mixture loss at valuation atom 21",
+    "actual clipped mass defect at valuation atom 21",
+    "actual clipped weight finite at valuation atom 21",
+    "actual valuation tail probability from atom 21",
+    "actual incidence count at valuation atom 22",
+    "actual complete survivor mask at valuation atom 22",
+    "actual complete height-mixture loss at valuation atom 22",
+    "actual clipped mass defect at valuation atom 22",
+    "actual clipped weight finite at valuation atom 22",
+    "actual valuation tail probability from atom 22",
+    "actual incidence count at valuation atom 23",
+    "actual complete survivor mask at valuation atom 23",
+    "actual complete height-mixture loss at valuation atom 23",
+    "actual clipped mass defect at valuation atom 23",
+    "actual clipped weight finite at valuation atom 23",
+    "actual valuation tail probability from atom 23",
+    "actual incidence count at valuation atom 24",
+    "actual complete survivor mask at valuation atom 24",
+    "actual complete height-mixture loss at valuation atom 24",
+    "actual clipped mass defect at valuation atom 24",
+    "actual clipped weight finite at valuation atom 24",
+    "actual valuation tail probability from atom 24",
+    "actual zero fibre has positive source mass",
+    "actual terminal fibre is entirely discarded",
+    "actual third hinge satisfies uniform source bound",
+    "actual clipped mass exceeds uniform lower bound",
+    "actual mean height load includes complete finite inventory",
+    "actual selected PA source complete query cost below B"
+  ],
+  "formula_contract": {
+    "density": "eta<=27/(2*alpha)*H_P; mu<=27/(2*alpha*s)*H_P.",
+    "height_mixture": "Y=sum_(e>=3)18*3^(-e)L_e; each L_e uses its actual fixed original phases and numerical labels; E(Y-3)+<=K3 and1-c<=Y/15.",
+    "law": "eta=chi*u*nu/max(c,4/5), c=integral chi du; Q marginal beta*nu with beta=c/max(c,4/5). Normalize once by s=eta(1).",
+    "marginal_scope": "The final Q marginal can change; this is not lossless compression of the supplied marginal.",
+    "mass": "s>=1-K3/12; zero fibres are discarded with no division by zero.",
+    "nine_prime_continuation": "Arbitrary additional distinct originals touching23 or29 within P union{23,29}; H>=alpha*(566s-49R_P(eta))/8316.",
+    "normalized_query": "R_P(mu)<=(21B+9)/(12-K3).",
+    "pure_source": "u is Haar conditioned on the complete actual pure3 survivor; its Haar mass is at least5/6, u<=6H3/5, and R3(u)<=3/5.",
+    "raw_query": "R_P(eta)<=B+(3/4)(1+B)=(7B+3)/4; all positive ternary heights include the Q-unit once.",
+    "reuse": "Report574 complete-layout hinge and clipped conditional construction; Report578 PT12 with A=3/5,theta=1/15,t=3.",
+    "source": "ONE actual selected PA law nu throughout; the third hinge holds for every finite partial nonunit one-phase Q query layout, not just actual layers."
+  },
+  "schema": "no-mod3-through2-v1",
+  "scope": "Ordinary corollary of the same-source clipping proof. No actual modulus3 original; arbitrary pure3^e originals for e>=2; at most two selected Q phases through ternary exponent2. All higher original phases/heights and complete query heights are retained. No residual-load or positive-fibre assumption. No new Lean or unrestricted odd-covering conclusion.",
+  "sources": [
+    {
+      "path": "pa_complete_suffix_debits.json",
+      "sha256": "b1b204f8728c64ed9265e91d78d3072a2e77f64f6efca57512f3e58f0bdf3ccc"
+    },
+    {
+      "path": "height_three_clipping_envelope.json",
+      "sha256": "276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685"
+    }
+  ],
+  "target": {
+    "decimal": 11.551020408163266,
+    "exact": "566/49"
+  },
+  "uniform_certificate": {
+    "nine_prime_Haar_lower": {
+      "decimal": 1.2851938923656707e-05,
+      "exact": "1426785259442099308757287/111017121067685733201100800000"
+    },
+    "normalized_density_upper": {
+      "decimal": 159.31043882797007,
+      "exact": "1001236661865852572160000/6284815164855762792853"
+    },
+    "normalized_query_margin": {
+      "decimal": 0.02573934665931224,
+      "exact": "1426785259442099308757287/55432069754027827832963460"
+    },
+    "normalized_query_upper": {
+      "decimal": 11.525281061503954,
+      "exact": "13038167015021694163818497/1131266729674037302713540"
+    },
+    "raw_density_upper": {
+      "decimal": 131.38980065030208,
+      "exact": "995278262666688000/7575003978548161"
+    },
+    "raw_query_upper": {
+      "decimal": 9.505368212216867,
+      "exact": "3283346012344924241707/345420181421796141600"
+    },
+    "retained_mass_lower": {
+      "decimal": 0.8247406862784564,
+      "exact": "18854445494567288378559/22861059007099207971560"
+    }
+  }
+}

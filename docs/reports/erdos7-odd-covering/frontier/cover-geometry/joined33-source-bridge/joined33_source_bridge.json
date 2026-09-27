@@ -1,0 +1,112 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/clustered109-joined-allone-joined-input/clustered109_joined_allone_joined_input.json",
+      "field": "allone",
+      "source_states": 2125830,
+      "retained_mass": "305684996597/646498195200",
+      "central_cells": 80,
+      "unary_tables": 7,
+      "joint_pair_tables": 21,
+      "central_source": [
+        {
+          "prime": 3,
+          "enumerated_residues": 729,
+          "actual_pure_survivors": 365,
+          "weak_capacity": "41/729",
+          "weak_assigned_mass": "1/9",
+          "normal_reference_density": "2",
+          "weak_gamma": "81/82"
+        },
+        {
+          "prime": 5,
+          "enumerated_residues": 15625,
+          "actual_pure_survivors": 11719,
+          "weak_capacity": "469/15625",
+          "weak_assigned_mass": "1/25",
+          "normal_reference_density": "4/3",
+          "weak_gamma": "1875/1876"
+        }
+      ],
+      "outside_pair_originals": 40,
+      "pure_pair_originals": 10,
+      "contained_nonpure_pair_originals": 30,
+      "source_scope": "All109 original phases, actual central pure-survivor capacities and assigned leaf reference reconstructed; all relevant projections of ONE explicit retained tensor. The declared reference assigns the published leaf masses uniformly on each actual surviving leaf; no claim for arbitrary marginal inputs.",
+      "field_scope": "NPZ exact field bounds and byte/coordinate pins verified; sign definition and512 original screens read/audited but not rerun here.",
+      "seconds": 1.0874842500779778
+    },
+    {
+      "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/clustered109-joined-sign-joined-input/clustered109_joined_sign_joined_input.json",
+      "field": "sign",
+      "source_states": 2125830,
+      "retained_mass": "4658484373519/45254873664000",
+      "central_cells": 80,
+      "unary_tables": 7,
+      "joint_pair_tables": 21,
+      "central_source": [
+        {
+          "prime": 3,
+          "enumerated_residues": 729,
+          "actual_pure_survivors": 365,
+          "weak_capacity": "41/729",
+          "weak_assigned_mass": "1/9",
+          "normal_reference_density": "2",
+          "weak_gamma": "81/82"
+        },
+        {
+          "prime": 5,
+          "enumerated_residues": 15625,
+          "actual_pure_survivors": 11719,
+          "weak_capacity": "469/15625",
+          "weak_assigned_mass": "1/25",
+          "normal_reference_density": "4/3",
+          "weak_gamma": "1875/1876"
+        }
+      ],
+      "outside_pair_originals": 40,
+      "pure_pair_originals": 10,
+      "contained_nonpure_pair_originals": 30,
+      "source_scope": "All109 original phases, actual central pure-survivor capacities and assigned leaf reference reconstructed; all relevant projections of ONE explicit retained tensor. The declared reference assigns the published leaf masses uniformly on each actual surviving leaf; no claim for arbitrary marginal inputs.",
+      "field_scope": "NPZ exact field bounds and byte/coordinate pins verified; sign definition and512 original screens read/audited but not rerun here.",
+      "seconds": 1.0809835840482265
+    },
+    {
+      "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/clustered109-joined-smooth20-joined-input/clustered109_joined_smooth20_joined_input.json",
+      "field": "smooth20",
+      "source_states": 2125830,
+      "retained_mass": "706731553882185319/6779024915300352000",
+      "central_cells": 80,
+      "unary_tables": 7,
+      "joint_pair_tables": 21,
+      "central_source": [
+        {
+          "prime": 3,
+          "enumerated_residues": 729,
+          "actual_pure_survivors": 365,
+          "weak_capacity": "41/729",
+          "weak_assigned_mass": "1/9",
+          "normal_reference_density": "2",
+          "weak_gamma": "81/82"
+        },
+        {
+          "prime": 5,
+          "enumerated_residues": 15625,
+          "actual_pure_survivors": 11719,
+          "weak_capacity": "469/15625",
+          "weak_assigned_mass": "1/25",
+          "normal_reference_density": "4/3",
+          "weak_gamma": "1875/1876"
+        }
+      ],
+      "outside_pair_originals": 40,
+      "pure_pair_originals": 10,
+      "contained_nonpure_pair_originals": 30,
+      "source_scope": "All109 original phases, actual central pure-survivor capacities and assigned leaf reference reconstructed; all relevant projections of ONE explicit retained tensor. The declared reference assigns the published leaf masses uniformly on each actual surviving leaf; no claim for arbitrary marginal inputs.",
+      "field_scope": "NPZ exact field bounds and byte/coordinate pins verified; sign definition and512 original screens read/audited but not rerun here.",
+      "seconds": 1.1939705829136074
+    }
+  ],
+  "checks": 12973,
+  "no_lean": true
+}

@@ -14,7 +14,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/complete_retained_row_transport.json'
-PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/retained-transport/retained_pair_row_transport.py': 'e56a18d6bde9430a508115c01724b4055488bbcab09ea82929cd2666e706e82f', 'certificates/source_norms/retained-transport/retained_pair_row_transport.json': 'e76c1c73d95337a966178379cad6998ac10128265154262b60d9730d7b5a7970', 'frontier/retained-transport/retained135125_survival_comparison.py': 'ba1911ccd385f22d2156e46c41620427af1330d92fa82806760dc02c1b8a774c', 'certificates/source_norms/retained-transport/retained135125_survival_comparison.json': '51e1c09c96c819b1fb292762dbc082f293d9ba3f6c22a504959f04ae508ca47e'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/retained-transport/retained_pair_row_transport.py': 'ef46d462312f2988cc5e8a0e11a5c17e57afef9e06c7e279189f28fb5a3fd9e4', 'certificates/source_norms/retained-transport/retained_pair_row_transport.json': 'e556d49a0dcb565d00411d66022fc9d6d8899cecdf00e4308fffa319fb428bd3', 'frontier/retained-transport/retained135125_survival_comparison.py': 'ed1131069b653505aaa3d5fa6b919427ec79cbb8d51112c2b3e075709a51a571', 'certificates/source_norms/retained-transport/retained135125_survival_comparison.json': '6776cdc71b1c9f371cbe990ea976a7c71e1072c1909d37523273af77b3b5729b'}
 
 
 def require(condition, message):

@@ -327,7 +327,7 @@ handles one cycle per component by paying all cyclic constraints under
 one common joint source.
 
 The companion
-[incidence_forest.py](../frontier/cover-geometry/incidence_forest.py)
+[incidence_forest.py](../frontier/cover-geometry/incidence-forest/incidence_forest.py)
 uses only the Python standard library and exact rational arithmetic.
 Its finite regressions pass with optimization enabled, using explicit
 exceptions rather than removable assertions. It independently
@@ -352,5 +352,5 @@ The retained exact output is
 From the repository root, replay it with
 
 ```sh
-python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/incidence_forest.py --check
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/incidence-forest/incidence_forest.py --check
 ```

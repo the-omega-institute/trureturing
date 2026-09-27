@@ -13,7 +13,7 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/shared_budget_affine_tail.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/comparison-bounds/complete_off_face_cost.py': '0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8',
+    'frontier/comparison-bounds/complete_off_face_cost.py': '9aecea9f4424bdfd26be82ebb643d72dffe35b5a57d80e6730faaf471eebe986',
 }
 FAMILIES = ('pure3', 'pure5', 'root5', 'cell5')
 DEFECTS = ('E5', 'E15', 'E3', 'E5d', 'E15d', 'omega')

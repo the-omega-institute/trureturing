@@ -1,0 +1,2614 @@
+{
+  "status": "PASS",
+  "scope": "Exact finite implementation audit; no source optimization or unrestricted theorem.",
+  "producer_family": "GPT-6 same-family independent reader/auditor; not diverse-model review",
+  "controls": [
+    {
+      "physical_atoms": [
+        0,
+        1
+      ],
+      "integer_weights": [
+        2,
+        3
+      ],
+      "central_layouts_exhausted": 10935,
+      "distinct_root_indicator_tuples": 2187,
+      "maximum": 825
+    },
+    {
+      "physical_atoms": [
+        7,
+        232
+      ],
+      "integer_weights": [
+        1,
+        4
+      ],
+      "central_layouts_exhausted": 960,
+      "distinct_root_indicator_tuples": 972,
+      "maximum": 1180
+    },
+    {
+      "physical_atoms": [
+        0,
+        225,
+        450
+      ],
+      "integer_weights": [
+        0,
+        2,
+        5
+      ],
+      "central_layouts_exhausted": 960,
+      "distinct_root_indicator_tuples": 4096,
+      "maximum": 1535
+    }
+  ],
+  "results": [
+    {
+      "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/clustered109-joined-allone-joined-input/clustered109_joined_allone_joined_input.json",
+      "result": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33-allone-result/joined33_allone_result.json",
+      "root_tuples_exhausted": 4849845,
+      "unpruned_maximizers": 1485,
+      "value": "13532790460667/1740572064000",
+      "literal_factors": 121,
+      "selected_screens": 33,
+      "arithmetic": "int64",
+      "conditional_layouts_verified": 15,
+      "conditional_maximum_scope": "Returned literal rows verified; central optimality relies on Report392 plus independent tiny exhaustive controls.",
+      "source_scope": "Input provenance separately audited from explicit field; pair marginal consistency alone is insufficient.",
+      "outside_matching": {
+        "outside_atoms": [
+          {
+            "kind": "unary",
+            "labels": [
+              7
+            ],
+            "weight": 3,
+            "value": "120079908809/1292996390400",
+            "maximum": "120079908809/1292996390400"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              11
+            ],
+            "weight": 3,
+            "value": "213692262137/4114079424000",
+            "maximum": "213692262137/4114079424000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              13
+            ],
+            "weight": 3,
+            "value": "21158706941/497306304000",
+            "maximum": "21158706941/497306304000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              17
+            ],
+            "weight": 3,
+            "value": "16645457251/532410278400",
+            "maximum": "16645457251/532410278400"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              19
+            ],
+            "weight": 3,
+            "value": "9393903479/340262208000",
+            "maximum": "9393903479/340262208000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              21
+            ],
+            "weight": 3,
+            "value": "7177787093/143666265600",
+            "maximum": "7177787093/143666265600"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              33
+            ],
+            "weight": 3,
+            "value": "39921761543/1371359808000",
+            "maximum": "39921761543/1371359808000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              35
+            ],
+            "weight": 3,
+            "value": "237359/6998400",
+            "maximum": "237359/6998400"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              39
+            ],
+            "weight": 3,
+            "value": "1330149481/55256256000",
+            "maximum": "1330149481/55256256000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              51
+            ],
+            "weight": 3,
+            "value": "3172809781/177470092800",
+            "maximum": "3172809781/177470092800"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              55
+            ],
+            "weight": 3,
+            "value": "26723/1399680",
+            "maximum": "26723/1399680"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              57
+            ],
+            "weight": 3,
+            "value": "598830307/37806912000",
+            "maximum": "598830307/37806912000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              65
+            ],
+            "weight": 3,
+            "value": "109691/6998400",
+            "maximum": "109691/6998400"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              77
+            ],
+            "weight": 3,
+            "value": "1512515929/146931408000",
+            "maximum": "1512515929/146931408000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              85
+            ],
+            "weight": 3,
+            "value": "80779/6998400",
+            "maximum": "80779/6998400"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              91
+            ],
+            "weight": 3,
+            "value": "2092378259/248653152000",
+            "maximum": "2092378259/248653152000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              95
+            ],
+            "weight": 3,
+            "value": "2855/279936",
+            "maximum": "2855/279936"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              119
+            ],
+            "weight": 3,
+            "value": "1173217361/190146528000",
+            "maximum": "1173217361/190146528000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              133
+            ],
+            "weight": 3,
+            "value": "463177303/85065552000",
+            "maximum": "463177303/85065552000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              143
+            ],
+            "weight": 3,
+            "value": "742998157/158233824000",
+            "maximum": "742998157/158233824000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              187
+            ],
+            "weight": 3,
+            "value": "416872363/121002336000",
+            "maximum": "416872363/121002336000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              209
+            ],
+            "weight": 3,
+            "value": "10288241/3383289000",
+            "maximum": "10288241/3383289000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              221
+            ],
+            "weight": 3,
+            "value": "72178801/25596648000",
+            "maximum": "72178801/25596648000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              247
+            ],
+            "weight": 3,
+            "value": "32576671/13087008000",
+            "maximum": "32576671/13087008000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              323
+            ],
+            "weight": 3,
+            "value": "9850387/5388768000",
+            "maximum": "9850387/5388768000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              7
+            ],
+            "weight": 2,
+            "value": "7177787093/143666265600",
+            "maximum": "7177787093/143666265600"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              11
+            ],
+            "weight": 2,
+            "value": "39921761543/1371359808000",
+            "maximum": "39921761543/1371359808000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              13
+            ],
+            "weight": 2,
+            "value": "1330149481/55256256000",
+            "maximum": "1330149481/55256256000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              17
+            ],
+            "weight": 2,
+            "value": "3172809781/177470092800",
+            "maximum": "3172809781/177470092800"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              19
+            ],
+            "weight": 2,
+            "value": "598830307/37806912000",
+            "maximum": "598830307/37806912000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              21
+            ],
+            "weight": 2,
+            "value": "7177787093/143666265600",
+            "maximum": "7177787093/143666265600"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              33
+            ],
+            "weight": 2,
+            "value": "39921761543/1371359808000",
+            "maximum": "39921761543/1371359808000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              39
+            ],
+            "weight": 2,
+            "value": "1330149481/55256256000",
+            "maximum": "1330149481/55256256000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              51
+            ],
+            "weight": 2,
+            "value": "3172809781/177470092800",
+            "maximum": "3172809781/177470092800"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              57
+            ],
+            "weight": 2,
+            "value": "598830307/37806912000",
+            "maximum": "598830307/37806912000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              7
+            ],
+            "weight": 2,
+            "value": "237359/6998400",
+            "maximum": "237359/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              11
+            ],
+            "weight": 2,
+            "value": "26723/1399680",
+            "maximum": "26723/1399680"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              13
+            ],
+            "weight": 2,
+            "value": "109691/6998400",
+            "maximum": "109691/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              17
+            ],
+            "weight": 2,
+            "value": "80779/6998400",
+            "maximum": "80779/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              19
+            ],
+            "weight": 2,
+            "value": "2855/279936",
+            "maximum": "2855/279936"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              35
+            ],
+            "weight": 2,
+            "value": "237359/6998400",
+            "maximum": "237359/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              55
+            ],
+            "weight": 2,
+            "value": "26723/1399680",
+            "maximum": "26723/1399680"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              65
+            ],
+            "weight": 2,
+            "value": "109691/6998400",
+            "maximum": "109691/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              85
+            ],
+            "weight": 2,
+            "value": "80779/6998400",
+            "maximum": "80779/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              95
+            ],
+            "weight": 2,
+            "value": "2855/279936",
+            "maximum": "2855/279936"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              11
+            ],
+            "weight": 2,
+            "value": "1512515929/146931408000",
+            "maximum": "1512515929/146931408000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              13
+            ],
+            "weight": 2,
+            "value": "2092378259/248653152000",
+            "maximum": "2092378259/248653152000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              17
+            ],
+            "weight": 2,
+            "value": "1173217361/190146528000",
+            "maximum": "1173217361/190146528000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              19
+            ],
+            "weight": 2,
+            "value": "463177303/85065552000",
+            "maximum": "463177303/85065552000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              21
+            ],
+            "weight": 2,
+            "value": "7177787093/143666265600",
+            "maximum": "7177787093/143666265600"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              35
+            ],
+            "weight": 2,
+            "value": "237359/6998400",
+            "maximum": "237359/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              77
+            ],
+            "weight": 2,
+            "value": "1512515929/146931408000",
+            "maximum": "1512515929/146931408000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              91
+            ],
+            "weight": 2,
+            "value": "2092378259/248653152000",
+            "maximum": "2092378259/248653152000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              119
+            ],
+            "weight": 2,
+            "value": "1173217361/190146528000",
+            "maximum": "1173217361/190146528000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              133
+            ],
+            "weight": 2,
+            "value": "463177303/85065552000",
+            "maximum": "463177303/85065552000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              13
+            ],
+            "weight": 2,
+            "value": "742998157/158233824000",
+            "maximum": "742998157/158233824000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              17
+            ],
+            "weight": 2,
+            "value": "416872363/121002336000",
+            "maximum": "416872363/121002336000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              19
+            ],
+            "weight": 2,
+            "value": "10288241/3383289000",
+            "maximum": "10288241/3383289000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              33
+            ],
+            "weight": 2,
+            "value": "39921761543/1371359808000",
+            "maximum": "39921761543/1371359808000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              55
+            ],
+            "weight": 2,
+            "value": "26723/1399680",
+            "maximum": "26723/1399680"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              77
+            ],
+            "weight": 2,
+            "value": "1512515929/146931408000",
+            "maximum": "1512515929/146931408000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              143
+            ],
+            "weight": 2,
+            "value": "742998157/158233824000",
+            "maximum": "742998157/158233824000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              187
+            ],
+            "weight": 2,
+            "value": "416872363/121002336000",
+            "maximum": "416872363/121002336000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              209
+            ],
+            "weight": 2,
+            "value": "10288241/3383289000",
+            "maximum": "10288241/3383289000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              17
+            ],
+            "weight": 2,
+            "value": "72178801/25596648000",
+            "maximum": "72178801/25596648000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              19
+            ],
+            "weight": 2,
+            "value": "32576671/13087008000",
+            "maximum": "32576671/13087008000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              39
+            ],
+            "weight": 2,
+            "value": "1330149481/55256256000",
+            "maximum": "1330149481/55256256000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              65
+            ],
+            "weight": 2,
+            "value": "109691/6998400",
+            "maximum": "109691/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              91
+            ],
+            "weight": 2,
+            "value": "2092378259/248653152000",
+            "maximum": "2092378259/248653152000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              143
+            ],
+            "weight": 2,
+            "value": "742998157/158233824000",
+            "maximum": "742998157/158233824000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              221
+            ],
+            "weight": 2,
+            "value": "72178801/25596648000",
+            "maximum": "72178801/25596648000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              247
+            ],
+            "weight": 2,
+            "value": "32576671/13087008000",
+            "maximum": "32576671/13087008000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              19
+            ],
+            "weight": 2,
+            "value": "9850387/5388768000",
+            "maximum": "9850387/5388768000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              51
+            ],
+            "weight": 2,
+            "value": "3172809781/177470092800",
+            "maximum": "3172809781/177470092800"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              85
+            ],
+            "weight": 2,
+            "value": "80779/6998400",
+            "maximum": "80779/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              119
+            ],
+            "weight": 2,
+            "value": "1173217361/190146528000",
+            "maximum": "1173217361/190146528000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              187
+            ],
+            "weight": 2,
+            "value": "416872363/121002336000",
+            "maximum": "416872363/121002336000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              221
+            ],
+            "weight": 2,
+            "value": "72178801/25596648000",
+            "maximum": "72178801/25596648000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              323
+            ],
+            "weight": 2,
+            "value": "9850387/5388768000",
+            "maximum": "9850387/5388768000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              57
+            ],
+            "weight": 2,
+            "value": "598830307/37806912000",
+            "maximum": "598830307/37806912000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              95
+            ],
+            "weight": 2,
+            "value": "2855/279936",
+            "maximum": "2855/279936"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              133
+            ],
+            "weight": 2,
+            "value": "463177303/85065552000",
+            "maximum": "463177303/85065552000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              209
+            ],
+            "weight": 2,
+            "value": "10288241/3383289000",
+            "maximum": "10288241/3383289000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              247
+            ],
+            "weight": 2,
+            "value": "32576671/13087008000",
+            "maximum": "32576671/13087008000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              323
+            ],
+            "weight": 2,
+            "value": "9850387/5388768000",
+            "maximum": "9850387/5388768000"
+          }
+        ],
+        "outside_atom_count": 85,
+        "outside_atoms_at_own_maximum": 85,
+        "outside_atomic_upper": "12151095362401/3771239472000",
+        "central_upper": "154916847841/34026220800",
+        "selected_central_value": "154916847841/34026220800",
+        "extra_sharing_saving_beyond_central": "0"
+      },
+      "old_gate": "-102747178320681648015183928043/1862325532039825870617600000000",
+      "actual_factorwise_envelope": "13741199492267/1740572064000",
+      "selected_original_screen_fee": "13741199492267/1740572064000",
+      "joined_gate": "-101545929867032596135512328043/1862325532039825870617600000000",
+      "joined_gate_decimal": -0.05452641233770135,
+      "seconds": 0.7629655830096453
+    },
+    {
+      "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/clustered109-joined-sign-joined-input/clustered109_joined_sign_joined_input.json",
+      "result": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33-sign-result/joined33_sign_result.json",
+      "root_tuples_exhausted": 4849845,
+      "unpruned_maximizers": 8,
+      "value": "37386512449123/22627436832000",
+      "literal_factors": 121,
+      "selected_screens": 33,
+      "arithmetic": "int64",
+      "conditional_layouts_verified": 15,
+      "conditional_maximum_scope": "Returned literal rows verified; central optimality relies on Report392 plus independent tiny exhaustive controls.",
+      "source_scope": "Input provenance separately audited from explicit field; pair marginal consistency alone is insufficient.",
+      "outside_matching": {
+        "outside_atoms": [
+          {
+            "kind": "unary",
+            "labels": [
+              7
+            ],
+            "weight": 3,
+            "value": "139961047321/6464981952000",
+            "maximum": "139961047321/6464981952000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              11
+            ],
+            "weight": 3,
+            "value": "12547219/995904000",
+            "maximum": "12547219/995904000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              13
+            ],
+            "weight": 3,
+            "value": "398883679/39558456000",
+            "maximum": "36896656591/3481144128000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              17
+            ],
+            "weight": 3,
+            "value": "9447580381/1331025696000",
+            "maximum": "9447580381/1331025696000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              19
+            ],
+            "weight": 3,
+            "value": "2191265773/340262208000",
+            "maximum": "2191265773/340262208000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              21
+            ],
+            "weight": 3,
+            "value": "373661/34992000",
+            "maximum": "805283/69984000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              33
+            ],
+            "weight": 3,
+            "value": "247691/34992000",
+            "maximum": "247691/34992000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              35
+            ],
+            "weight": 3,
+            "value": "272303/34992000",
+            "maximum": "58223/6998400"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              39
+            ],
+            "weight": 3,
+            "value": "64967/13996800",
+            "maximum": "861082781/158233824000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              51
+            ],
+            "weight": 3,
+            "value": "1117/291600",
+            "maximum": "1117/291600"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              55
+            ],
+            "weight": 3,
+            "value": "48829/11664000",
+            "maximum": "48829/11664000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              57
+            ],
+            "weight": 3,
+            "value": "5503/1749600",
+            "maximum": "1121042333/340262208000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              65
+            ],
+            "weight": 3,
+            "value": "35237/8748000",
+            "maximum": "35237/8748000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              77
+            ],
+            "weight": 3,
+            "value": "23401459/7346570400",
+            "maximum": "23401459/7346570400"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              85
+            ],
+            "weight": 3,
+            "value": "44519/17496000",
+            "maximum": "44519/17496000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              91
+            ],
+            "weight": 3,
+            "value": "430979017/165768768000",
+            "maximum": "430979017/165768768000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              95
+            ],
+            "weight": 3,
+            "value": "71293/34992000",
+            "maximum": "38537/17496000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              119
+            ],
+            "weight": 3,
+            "value": "2186909/1382883840",
+            "maximum": "2186909/1382883840"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              133
+            ],
+            "weight": 3,
+            "value": "625061/475891200",
+            "maximum": "121570351/85065552000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              143
+            ],
+            "weight": 3,
+            "value": "335459477/316467648000",
+            "maximum": "411335017/316467648000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              187
+            ],
+            "weight": 3,
+            "value": "29896301/34572096000",
+            "maximum": "29896301/34572096000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              209
+            ],
+            "weight": 3,
+            "value": "16351871/21653049600",
+            "maximum": "28356259/36088416000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              221
+            ],
+            "weight": 3,
+            "value": "4266613/6205248000",
+            "maximum": "18664759/25596648000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              247
+            ],
+            "weight": 3,
+            "value": "36076321/61072704000",
+            "maximum": "120080153/183218112000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              323
+            ],
+            "weight": 3,
+            "value": "9859183/23351328000",
+            "maximum": "21228587/46702656000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              7
+            ],
+            "weight": 2,
+            "value": "373661/34992000",
+            "maximum": "805283/69984000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              11
+            ],
+            "weight": 2,
+            "value": "247691/34992000",
+            "maximum": "247691/34992000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              13
+            ],
+            "weight": 2,
+            "value": "64967/13996800",
+            "maximum": "861082781/158233824000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              17
+            ],
+            "weight": 2,
+            "value": "1117/291600",
+            "maximum": "1117/291600"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              19
+            ],
+            "weight": 2,
+            "value": "5503/1749600",
+            "maximum": "1121042333/340262208000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              21
+            ],
+            "weight": 2,
+            "value": "373661/34992000",
+            "maximum": "805283/69984000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              33
+            ],
+            "weight": 2,
+            "value": "247691/34992000",
+            "maximum": "247691/34992000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              39
+            ],
+            "weight": 2,
+            "value": "64967/13996800",
+            "maximum": "861082781/158233824000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              51
+            ],
+            "weight": 2,
+            "value": "1117/291600",
+            "maximum": "1117/291600"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              57
+            ],
+            "weight": 2,
+            "value": "5503/1749600",
+            "maximum": "1121042333/340262208000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              7
+            ],
+            "weight": 2,
+            "value": "272303/34992000",
+            "maximum": "58223/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              11
+            ],
+            "weight": 2,
+            "value": "48829/11664000",
+            "maximum": "48829/11664000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              13
+            ],
+            "weight": 2,
+            "value": "35237/8748000",
+            "maximum": "35237/8748000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              17
+            ],
+            "weight": 2,
+            "value": "44519/17496000",
+            "maximum": "44519/17496000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              19
+            ],
+            "weight": 2,
+            "value": "71293/34992000",
+            "maximum": "38537/17496000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              35
+            ],
+            "weight": 2,
+            "value": "272303/34992000",
+            "maximum": "58223/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              55
+            ],
+            "weight": 2,
+            "value": "48829/11664000",
+            "maximum": "48829/11664000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              65
+            ],
+            "weight": 2,
+            "value": "35237/8748000",
+            "maximum": "35237/8748000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              85
+            ],
+            "weight": 2,
+            "value": "44519/17496000",
+            "maximum": "44519/17496000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              95
+            ],
+            "weight": 2,
+            "value": "71293/34992000",
+            "maximum": "38537/17496000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              11
+            ],
+            "weight": 2,
+            "value": "139196029/73465704000",
+            "maximum": "23401459/7346570400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              13
+            ],
+            "weight": 2,
+            "value": "430979017/165768768000",
+            "maximum": "430979017/165768768000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              17
+            ],
+            "weight": 2,
+            "value": "2186909/1382883840",
+            "maximum": "2186909/1382883840"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              19
+            ],
+            "weight": 2,
+            "value": "625061/475891200",
+            "maximum": "121570351/85065552000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              21
+            ],
+            "weight": 2,
+            "value": "373661/34992000",
+            "maximum": "805283/69984000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              35
+            ],
+            "weight": 2,
+            "value": "272303/34992000",
+            "maximum": "58223/6998400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              77
+            ],
+            "weight": 2,
+            "value": "0",
+            "maximum": "23401459/7346570400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              91
+            ],
+            "weight": 2,
+            "value": "430979017/165768768000",
+            "maximum": "430979017/165768768000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              119
+            ],
+            "weight": 2,
+            "value": "2186909/1382883840",
+            "maximum": "2186909/1382883840"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              133
+            ],
+            "weight": 2,
+            "value": "625061/475891200",
+            "maximum": "121570351/85065552000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              13
+            ],
+            "weight": 2,
+            "value": "335459477/316467648000",
+            "maximum": "411335017/316467648000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              17
+            ],
+            "weight": 2,
+            "value": "29896301/34572096000",
+            "maximum": "29896301/34572096000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              19
+            ],
+            "weight": 2,
+            "value": "16351871/21653049600",
+            "maximum": "28356259/36088416000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              33
+            ],
+            "weight": 2,
+            "value": "247691/34992000",
+            "maximum": "247691/34992000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              55
+            ],
+            "weight": 2,
+            "value": "48829/11664000",
+            "maximum": "48829/11664000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              77
+            ],
+            "weight": 2,
+            "value": "23401459/7346570400",
+            "maximum": "23401459/7346570400"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              143
+            ],
+            "weight": 2,
+            "value": "335459477/316467648000",
+            "maximum": "411335017/316467648000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              187
+            ],
+            "weight": 2,
+            "value": "29896301/34572096000",
+            "maximum": "29896301/34572096000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              209
+            ],
+            "weight": 2,
+            "value": "16351871/21653049600",
+            "maximum": "28356259/36088416000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              17
+            ],
+            "weight": 2,
+            "value": "4266613/6205248000",
+            "maximum": "18664759/25596648000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              19
+            ],
+            "weight": 2,
+            "value": "36076321/61072704000",
+            "maximum": "120080153/183218112000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              39
+            ],
+            "weight": 2,
+            "value": "64967/13996800",
+            "maximum": "861082781/158233824000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              65
+            ],
+            "weight": 2,
+            "value": "35237/8748000",
+            "maximum": "35237/8748000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              91
+            ],
+            "weight": 2,
+            "value": "430979017/165768768000",
+            "maximum": "430979017/165768768000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              143
+            ],
+            "weight": 2,
+            "value": "335459477/316467648000",
+            "maximum": "411335017/316467648000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              221
+            ],
+            "weight": 2,
+            "value": "4266613/6205248000",
+            "maximum": "18664759/25596648000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              247
+            ],
+            "weight": 2,
+            "value": "36076321/61072704000",
+            "maximum": "120080153/183218112000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              19
+            ],
+            "weight": 2,
+            "value": "9859183/23351328000",
+            "maximum": "21228587/46702656000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              51
+            ],
+            "weight": 2,
+            "value": "1117/291600",
+            "maximum": "1117/291600"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              85
+            ],
+            "weight": 2,
+            "value": "44519/17496000",
+            "maximum": "44519/17496000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              119
+            ],
+            "weight": 2,
+            "value": "2186909/1382883840",
+            "maximum": "2186909/1382883840"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              187
+            ],
+            "weight": 2,
+            "value": "29896301/34572096000",
+            "maximum": "29896301/34572096000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              221
+            ],
+            "weight": 2,
+            "value": "4266613/6205248000",
+            "maximum": "18664759/25596648000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              323
+            ],
+            "weight": 2,
+            "value": "9859183/23351328000",
+            "maximum": "21228587/46702656000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              57
+            ],
+            "weight": 2,
+            "value": "5503/1749600",
+            "maximum": "1121042333/340262208000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              95
+            ],
+            "weight": 2,
+            "value": "71293/34992000",
+            "maximum": "38537/17496000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              133
+            ],
+            "weight": 2,
+            "value": "625061/475891200",
+            "maximum": "121570351/85065552000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              209
+            ],
+            "weight": 2,
+            "value": "16351871/21653049600",
+            "maximum": "28356259/36088416000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              247
+            ],
+            "weight": 2,
+            "value": "36076321/61072704000",
+            "maximum": "120080153/183218112000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              323
+            ],
+            "weight": 2,
+            "value": "9859183/23351328000",
+            "maximum": "21228587/46702656000"
+          }
+        ],
+        "outside_atom_count": 85,
+        "outside_atoms_at_own_maximum": 38,
+        "outside_atomic_upper": "52512012089/68257728000",
+        "central_upper": "41997455368877/45254873664000",
+        "selected_central_value": "12883933/13996800",
+        "extra_sharing_saving_beyond_central": "339982414273/7542478944000"
+      },
+      "old_gate": "-193459418637765538178368619920769/3410538824342267777724364800000000",
+      "actual_factorwise_envelope": "456428513909/257129964000",
+      "selected_original_screen_fee": "456428513909/257129964000",
+      "joined_gate": "-27314684615333513400416820520967/487219832048895396817766400000000",
+      "joined_gate_decimal": -0.056062341511156556,
+      "seconds": 0.7677558329887688
+    },
+    {
+      "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/clustered109-joined-smooth20-joined-input/clustered109_joined_smooth20_joined_input.json",
+      "result": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33-smooth20-result/joined33_smooth20_result.json",
+      "root_tuples_exhausted": 4849845,
+      "unpruned_maximizers": 8,
+      "value": "79418227357867605617/47453174407102464000",
+      "literal_factors": 121,
+      "selected_screens": 33,
+      "arithmetic": "arbitrary_integer",
+      "conditional_layouts_verified": 15,
+      "conditional_maximum_scope": "Returned literal rows verified; central optimality relies on Report392 plus independent tiny exhaustive controls.",
+      "source_scope": "Input provenance separately audited from explicit field; pair marginal consistency alone is insufficient.",
+      "outside_matching": {
+        "outside_atoms": [
+          {
+            "kind": "unary",
+            "labels": [
+              7
+            ],
+            "weight": 3,
+            "value": "9305161549897/423689057206272",
+            "maximum": "9305161549897/423689057206272"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              11
+            ],
+            "weight": 3,
+            "value": "13770352952363011/1078481236525056000",
+            "maximum": "13770352952363011/1078481236525056000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              13
+            ],
+            "weight": 3,
+            "value": "18590310348903289/1825122092580864000",
+            "maximum": "38836708581929651/3650244185161728000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              17
+            ],
+            "weight": 3,
+            "value": "20128706307761411/2791363200417792000",
+            "maximum": "20128706307761411/2791363200417792000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              19
+            ],
+            "weight": 3,
+            "value": "4044252047523529/624383873777664000",
+            "maximum": "4044252047523529/624383873777664000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              21
+            ],
+            "weight": 3,
+            "value": "6688069063/611529523200",
+            "maximum": "212496569839/18345885696000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              33
+            ],
+            "weight": 3,
+            "value": "87612074437/12230590464000",
+            "maximum": "87612074437/12230590464000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              35
+            ],
+            "weight": 3,
+            "value": "288964384061/36691771392000",
+            "maximum": "304406929729/36691771392000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              39
+            ],
+            "weight": 3,
+            "value": "345846159521/73383542784000",
+            "maximum": "4994385257728249/912561046290432000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              51
+            ],
+            "weight": 3,
+            "value": "15926622139/4076863488000",
+            "maximum": "15926622139/4076863488000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              55
+            ],
+            "weight": 3,
+            "value": "2186461961/509607936000",
+            "maximum": "2186461961/509607936000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              57
+            ],
+            "weight": 3,
+            "value": "11654427193/3669177139200",
+            "maximum": "152814941127059/46250657316864000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              65
+            ],
+            "weight": 3,
+            "value": "6192493807/1528823808000",
+            "maximum": "6192493807/1528823808000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              77
+            ],
+            "weight": 3,
+            "value": "110203403498219/34237499572224000",
+            "maximum": "110203403498219/34237499572224000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              85
+            ],
+            "weight": 3,
+            "value": "3792150397/1467670855680",
+            "maximum": "3792150397/1467670855680"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              91
+            ],
+            "weight": 3,
+            "value": "41100519570517/15801922879488000",
+            "maximum": "41100519570517/15801922879488000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              95
+            ],
+            "weight": 3,
+            "value": "1884600551/917294284800",
+            "maximum": "40591442449/18345885696000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              119
+            ],
+            "weight": 3,
+            "value": "213040351590589/132922057162752000",
+            "maximum": "213040351590589/132922057162752000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              133
+            ],
+            "weight": 3,
+            "value": "42907868022853/32435525910528000",
+            "maximum": "101804628978653/71358157003161600"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              143
+            ],
+            "weight": 3,
+            "value": "357733786009549/331840380469248000",
+            "maximum": "432896770194037/331840380469248000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              187
+            ],
+            "weight": 3,
+            "value": "37395567346003/42293381824512000",
+            "maximum": "37395567346003/42293381824512000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              209
+            ],
+            "weight": 3,
+            "value": "86038916842717/113524340686848000",
+            "maximum": "982253902279/1247520227328000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              221
+            ],
+            "weight": 3,
+            "value": "7503315270371/10736012309299200",
+            "maximum": "157236312161851/214720246185984000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              247
+            ],
+            "weight": 3,
+            "value": "3816343058483/6403937166950400",
+            "maximum": "31491108706151/48029528752128000"
+          },
+          {
+            "kind": "unary",
+            "labels": [
+              323
+            ],
+            "weight": 3,
+            "value": "15612726640507/36728463163392000",
+            "maximum": "1669023859883/3672846316339200"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              7
+            ],
+            "weight": 2,
+            "value": "6688069063/611529523200",
+            "maximum": "212496569839/18345885696000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              11
+            ],
+            "weight": 2,
+            "value": "87612074437/12230590464000",
+            "maximum": "87612074437/12230590464000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              13
+            ],
+            "weight": 2,
+            "value": "345846159521/73383542784000",
+            "maximum": "4994385257728249/912561046290432000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              17
+            ],
+            "weight": 2,
+            "value": "15926622139/4076863488000",
+            "maximum": "15926622139/4076863488000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              19
+            ],
+            "weight": 2,
+            "value": "11654427193/3669177139200",
+            "maximum": "152814941127059/46250657316864000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              21
+            ],
+            "weight": 2,
+            "value": "6688069063/611529523200",
+            "maximum": "212496569839/18345885696000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              33
+            ],
+            "weight": 2,
+            "value": "87612074437/12230590464000",
+            "maximum": "87612074437/12230590464000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              39
+            ],
+            "weight": 2,
+            "value": "345846159521/73383542784000",
+            "maximum": "4994385257728249/912561046290432000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              51
+            ],
+            "weight": 2,
+            "value": "15926622139/4076863488000",
+            "maximum": "15926622139/4076863488000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              3,
+              57
+            ],
+            "weight": 2,
+            "value": "11654427193/3669177139200",
+            "maximum": "152814941127059/46250657316864000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              7
+            ],
+            "weight": 2,
+            "value": "288964384061/36691771392000",
+            "maximum": "304406929729/36691771392000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              11
+            ],
+            "weight": 2,
+            "value": "2186461961/509607936000",
+            "maximum": "2186461961/509607936000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              13
+            ],
+            "weight": 2,
+            "value": "6192493807/1528823808000",
+            "maximum": "6192493807/1528823808000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              17
+            ],
+            "weight": 2,
+            "value": "3792150397/1467670855680",
+            "maximum": "3792150397/1467670855680"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              19
+            ],
+            "weight": 2,
+            "value": "1884600551/917294284800",
+            "maximum": "40591442449/18345885696000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              35
+            ],
+            "weight": 2,
+            "value": "288964384061/36691771392000",
+            "maximum": "304406929729/36691771392000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              55
+            ],
+            "weight": 2,
+            "value": "2186461961/509607936000",
+            "maximum": "2186461961/509607936000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              65
+            ],
+            "weight": 2,
+            "value": "6192493807/1528823808000",
+            "maximum": "6192493807/1528823808000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              85
+            ],
+            "weight": 2,
+            "value": "3792150397/1467670855680",
+            "maximum": "3792150397/1467670855680"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              5,
+              95
+            ],
+            "weight": 2,
+            "value": "1884600551/917294284800",
+            "maximum": "40591442449/18345885696000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              11
+            ],
+            "weight": 2,
+            "value": "1197700398790271/616274992300032000",
+            "maximum": "110203403498219/34237499572224000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              13
+            ],
+            "weight": 2,
+            "value": "41100519570517/15801922879488000",
+            "maximum": "41100519570517/15801922879488000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              17
+            ],
+            "weight": 2,
+            "value": "213040351590589/132922057162752000",
+            "maximum": "213040351590589/132922057162752000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              19
+            ],
+            "weight": 2,
+            "value": "42907868022853/32435525910528000",
+            "maximum": "101804628978653/71358157003161600"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              21
+            ],
+            "weight": 2,
+            "value": "6688069063/611529523200",
+            "maximum": "212496569839/18345885696000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              35
+            ],
+            "weight": 2,
+            "value": "288964384061/36691771392000",
+            "maximum": "304406929729/36691771392000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              77
+            ],
+            "weight": 2,
+            "value": "0",
+            "maximum": "110203403498219/34237499572224000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              91
+            ],
+            "weight": 2,
+            "value": "41100519570517/15801922879488000",
+            "maximum": "41100519570517/15801922879488000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              119
+            ],
+            "weight": 2,
+            "value": "213040351590589/132922057162752000",
+            "maximum": "213040351590589/132922057162752000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              7,
+              133
+            ],
+            "weight": 2,
+            "value": "42907868022853/32435525910528000",
+            "maximum": "101804628978653/71358157003161600"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              13
+            ],
+            "weight": 2,
+            "value": "357733786009549/331840380469248000",
+            "maximum": "432896770194037/331840380469248000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              17
+            ],
+            "weight": 2,
+            "value": "37395567346003/42293381824512000",
+            "maximum": "37395567346003/42293381824512000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              19
+            ],
+            "weight": 2,
+            "value": "86038916842717/113524340686848000",
+            "maximum": "982253902279/1247520227328000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              33
+            ],
+            "weight": 2,
+            "value": "87612074437/12230590464000",
+            "maximum": "87612074437/12230590464000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              55
+            ],
+            "weight": 2,
+            "value": "2186461961/509607936000",
+            "maximum": "2186461961/509607936000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              77
+            ],
+            "weight": 2,
+            "value": "110203403498219/34237499572224000",
+            "maximum": "110203403498219/34237499572224000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              143
+            ],
+            "weight": 2,
+            "value": "357733786009549/331840380469248000",
+            "maximum": "432896770194037/331840380469248000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              187
+            ],
+            "weight": 2,
+            "value": "37395567346003/42293381824512000",
+            "maximum": "37395567346003/42293381824512000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              11,
+              209
+            ],
+            "weight": 2,
+            "value": "86038916842717/113524340686848000",
+            "maximum": "982253902279/1247520227328000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              17
+            ],
+            "weight": 2,
+            "value": "7503315270371/10736012309299200",
+            "maximum": "157236312161851/214720246185984000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              19
+            ],
+            "weight": 2,
+            "value": "3816343058483/6403937166950400",
+            "maximum": "31491108706151/48029528752128000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              39
+            ],
+            "weight": 2,
+            "value": "345846159521/73383542784000",
+            "maximum": "4994385257728249/912561046290432000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              65
+            ],
+            "weight": 2,
+            "value": "6192493807/1528823808000",
+            "maximum": "6192493807/1528823808000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              91
+            ],
+            "weight": 2,
+            "value": "41100519570517/15801922879488000",
+            "maximum": "41100519570517/15801922879488000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              143
+            ],
+            "weight": 2,
+            "value": "357733786009549/331840380469248000",
+            "maximum": "432896770194037/331840380469248000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              221
+            ],
+            "weight": 2,
+            "value": "7503315270371/10736012309299200",
+            "maximum": "157236312161851/214720246185984000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              13,
+              247
+            ],
+            "weight": 2,
+            "value": "3816343058483/6403937166950400",
+            "maximum": "31491108706151/48029528752128000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              19
+            ],
+            "weight": 2,
+            "value": "15612726640507/36728463163392000",
+            "maximum": "1669023859883/3672846316339200"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              51
+            ],
+            "weight": 2,
+            "value": "15926622139/4076863488000",
+            "maximum": "15926622139/4076863488000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              85
+            ],
+            "weight": 2,
+            "value": "3792150397/1467670855680",
+            "maximum": "3792150397/1467670855680"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              119
+            ],
+            "weight": 2,
+            "value": "213040351590589/132922057162752000",
+            "maximum": "213040351590589/132922057162752000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              187
+            ],
+            "weight": 2,
+            "value": "37395567346003/42293381824512000",
+            "maximum": "37395567346003/42293381824512000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              221
+            ],
+            "weight": 2,
+            "value": "7503315270371/10736012309299200",
+            "maximum": "157236312161851/214720246185984000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              17,
+              323
+            ],
+            "weight": 2,
+            "value": "15612726640507/36728463163392000",
+            "maximum": "1669023859883/3672846316339200"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              57
+            ],
+            "weight": 2,
+            "value": "11654427193/3669177139200",
+            "maximum": "152814941127059/46250657316864000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              95
+            ],
+            "weight": 2,
+            "value": "1884600551/917294284800",
+            "maximum": "40591442449/18345885696000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              133
+            ],
+            "weight": 2,
+            "value": "42907868022853/32435525910528000",
+            "maximum": "101804628978653/71358157003161600"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              209
+            ],
+            "weight": 2,
+            "value": "86038916842717/113524340686848000",
+            "maximum": "982253902279/1247520227328000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              247
+            ],
+            "weight": 2,
+            "value": "3816343058483/6403937166950400",
+            "maximum": "31491108706151/48029528752128000"
+          },
+          {
+            "kind": "pair",
+            "labels": [
+              19,
+              323
+            ],
+            "weight": 2,
+            "value": "15612726640507/36728463163392000",
+            "maximum": "1669023859883/3672846316339200"
+          }
+        ],
+        "outside_atom_count": 85,
+        "outside_atoms_at_own_maximum": 38,
+        "outside_atomic_upper": "12273828168837462379/15817724802367488000",
+        "central_upper": "8877313543413873637/9490634881420492800",
+        "selected_central_value": "3797044428493/4076863488000",
+        "extra_sharing_saving_beyond_central": "17045951102039521/451934994353356800"
+      },
+      "old_gate": "-144080606382238388538083616714136738243/2600879387835285656214620759654400000000",
+      "actual_factorwise_envelope": "84965735573627896951/47453174407102464000",
+      "selected_original_screen_fee": "84965735573627896951/47453174407102464000",
+      "joined_gate": "-142442637622714107367215361050937042243/2600879387835285656214620759654400000000",
+      "joined_gate_decimal": -0.05476710619067547,
+      "seconds": 2.3288814169354737
+    }
+  ],
+  "checks": 2511,
+  "no_lean": true
+}

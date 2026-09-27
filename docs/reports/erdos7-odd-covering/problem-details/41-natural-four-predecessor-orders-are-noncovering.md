@@ -341,11 +341,11 @@ is attributed to
 [Schroeder's pinned Proposition 3.2](../../../../Library/Arith/schroeder2026noncoverage.md#conditional-comparison-and-the-unrestricted-positive-part-bound).
 
 The program
-[`four_predecessor_schedule_certificate.py`](../frontier/cover-geometry/four_predecessor_schedule_certificate.py)
+[`four_predecessor_schedule_certificate.py`](../frontier/cover-geometry/four-predecessor-schedule-certificate/four_predecessor_schedule_certificate.py)
 produces the adjacent
-[`exact output`](../frontier/cover-geometry/four_predecessor_schedule_certificate.json).
+[`exact output`](../frontier/cover-geometry/four-predecessor-schedule-certificate/four_predecessor_schedule_certificate.json).
 Its `--helper` argument points to the existing
-[`spine_book_density_certificate.py`](../frontier/cover-geometry/spine_book_density_certificate.py),
+[`spine_book_density_certificate.py`](../frontier/cover-geometry/spine-book-density-certificate/spine_book_density_certificate.py),
 whose SHA-256 is checked before importing its mass and moment functions.
 It evaluates all 22 finite fees, the complete third moment and the
 infinite-tail bound, the endpoint inequalities sufficient for all-depth

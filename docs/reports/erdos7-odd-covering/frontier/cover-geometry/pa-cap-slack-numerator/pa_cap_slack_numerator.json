@@ -1,0 +1,179 @@
+{
+  "rows": [
+    {
+      "q": 11,
+      "cap": "5/3",
+      "EZ": "891/640",
+      "P1": "2967/4199",
+      "P2": "21492961/88158005",
+      "eta": "641451990131/13653911814400",
+      "eta_decimal": 0.04697935645479248,
+      "finite": [
+        {
+          "height": 1,
+          "eta": "16703/461890"
+        },
+        {
+          "height": 2,
+          "eta": "28644497/627477565"
+        },
+        {
+          "height": 3,
+          "eta": "1215233423193/25931765328755"
+        },
+        {
+          "height": 6,
+          "eta": "10913432729788240922344601/232303138331759606388493645"
+        }
+      ]
+    },
+    {
+      "q": 13,
+      "cap": "3/2",
+      "EZ": "99/80",
+      "P1": "258/323",
+      "P2": "93598/521645",
+      "eta": "130632977/5642112320",
+      "eta_decimal": 0.02315320390502258,
+      "finite": [
+        {
+          "height": 1,
+          "eta": "379/20995"
+        },
+        {
+          "height": 2,
+          "eta": "1981596/88158005"
+        },
+        {
+          "height": 3,
+          "eta": "8552003638/370175462995"
+        },
+        {
+          "height": 6,
+          "eta": "634535515997333725496/27405974680712522874005"
+        }
+      ]
+    },
+    {
+      "q": 17,
+      "cap": "2",
+      "EZ": "11/10",
+      "P1": "86/95",
+      "P2": "162/1805",
+      "eta": "118307/16692640",
+      "eta_decimal": 0.007087375034745852,
+      "finite": [
+        {
+          "height": 1,
+          "eta": "9/1615"
+        },
+        {
+          "height": 2,
+          "eta": "3564/521645"
+        },
+        {
+          "height": 3,
+          "eta": "238330/33698267"
+        },
+        {
+          "height": 6,
+          "eta": "40241148770304/5677865994016445"
+        }
+      ]
+    },
+    {
+      "q": 19,
+      "cap": "9/5",
+      "EZ": "1",
+      "P1": "1",
+      "P2": "0",
+      "eta": "1/6498",
+      "eta_decimal": 0.0001538935056940597,
+      "finite": [
+        {
+          "height": 1,
+          "eta": "0"
+        },
+        {
+          "height": 2,
+          "eta": "0"
+        },
+        {
+          "height": 3,
+          "eta": "1/6859"
+        },
+        {
+          "height": 6,
+          "eta": "7240/47045881"
+        }
+      ]
+    }
+  ],
+  "corner_deficit": "6168733163201163811/542935350932041267200",
+  "sample_slacks": {
+    "11": "1/6",
+    "13": "1/8",
+    "17": "1/10"
+  },
+  "sample_D": "468306539809/40961735443200",
+  "sample_margin": "3502514252639023/49357759175640115200",
+  "first11_only_corner_gap": "26345565509485633/28575544785896908800",
+  "scope": "Exact coefficients; sample slack thresholds are sufficient assumptions, not claimed jointly attained or universal. Ordinary mathematics, no Lean.",
+  "checks": {
+    "coefficient_11": true,
+    "piecewise_expectation_11": true,
+    "finite_mass_11_1": true,
+    "finite_bound_11_1": true,
+    "finite_mass_11_2": true,
+    "finite_bound_11_2": true,
+    "finite_monotone_11_2": true,
+    "finite_mass_11_3": true,
+    "finite_bound_11_3": true,
+    "finite_monotone_11_3": true,
+    "finite_mass_11_6": true,
+    "finite_bound_11_6": true,
+    "finite_monotone_11_6": true,
+    "coefficient_13": true,
+    "piecewise_expectation_13": true,
+    "finite_mass_13_1": true,
+    "finite_bound_13_1": true,
+    "finite_mass_13_2": true,
+    "finite_bound_13_2": true,
+    "finite_monotone_13_2": true,
+    "finite_mass_13_3": true,
+    "finite_bound_13_3": true,
+    "finite_monotone_13_3": true,
+    "finite_mass_13_6": true,
+    "finite_bound_13_6": true,
+    "finite_monotone_13_6": true,
+    "coefficient_17": true,
+    "piecewise_expectation_17": true,
+    "finite_mass_17_1": true,
+    "finite_bound_17_1": true,
+    "finite_mass_17_2": true,
+    "finite_bound_17_2": true,
+    "finite_monotone_17_2": true,
+    "finite_mass_17_3": true,
+    "finite_bound_17_3": true,
+    "finite_monotone_17_3": true,
+    "finite_mass_17_6": true,
+    "finite_bound_17_6": true,
+    "finite_monotone_17_6": true,
+    "coefficient_19": true,
+    "piecewise_expectation_19": true,
+    "finite_mass_19_1": true,
+    "finite_bound_19_1": true,
+    "finite_mass_19_2": true,
+    "finite_bound_19_2": true,
+    "finite_monotone_19_2": true,
+    "finite_mass_19_3": true,
+    "finite_bound_19_3": true,
+    "finite_monotone_19_3": true,
+    "finite_mass_19_6": true,
+    "finite_bound_19_6": true,
+    "finite_monotone_19_6": true,
+    "sample_strict_margin": true,
+    "eleven_only_insufficient": true
+  },
+  "check_count": 54
+}

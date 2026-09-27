@@ -18,7 +18,7 @@ PINS={
  'profile-notes/257-320/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md':'cb1d7434b43a9e8d6091ff691cd022d479f9c898c7c5678a81e546d34659662f',
  'certificates/source_norms/cover-geometry/common_deleted_measure_coupling.json':'97e24c96d6fcea0e47f335d0f3ab18680df2d8ce1ecc1a03fbc4f3478a6dff51',
  'certificates/source_norms/j-geometry/j_face_alignment.json':'75433cab317fb492b5e8a9b36bc9b8d8671f5bcfe450cc7a2e37efe5378108d5',
- 'certificates/source_norms/j-geometry/j_leading_alignment_surplus.json':'8be57ff7cc2565cc53a5eaf5db9ad8360e30fc9673b76dd55bca48c3dfc7e2af',
+ 'certificates/source_norms/j-geometry/j_leading_alignment_surplus.json':'a4c328aaa3465f56086cd3a3813f0e70b546c3975f90d408f4986b7e73b1addc',
 }
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--base',type=Path,default=Path(__file__).resolve().parents[2])

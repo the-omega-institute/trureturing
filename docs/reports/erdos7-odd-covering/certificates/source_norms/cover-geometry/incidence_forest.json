@@ -61,8 +61,8 @@
   "schema": "incidence-forest-v1",
   "source_sha256": {
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
-    "problem-details/48-incidence-forests-with-arbitrary-original-heights.md": "38158e0d64ca8449b127d4fe0636eddeafaff4304408f9a073820021f599f9c4",
+    "problem-details/48-incidence-forests-with-arbitrary-original-heights.md": "203c21ced86a69fbe6123926ac75d9d7a7f871cafe985c2969353cd3b20d68fb",
     "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9"
   },
-  "producer_sha256": "ee8b752b6a1b4b712c3e0f23ddaa6d75d811f33bdbaacfa8912f263a236b9ecf"
+  "producer_sha256": "c99b3f8f73781bfe3b4c7fa516180a3bb3867225fa5c9093ca39611c11540d06"
 }

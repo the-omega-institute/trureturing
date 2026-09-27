@@ -1,0 +1,1564 @@
+{
+  "status": "PASS",
+  "scope": "Fixed actual109 unretained source central mod225 marginal; existing original-label cluster mechanism. No all-state field optimization, no positive gate or unrestricted covering assertion.",
+  "source_sha256": {
+    "clustered_exact_actual_source.json": "31d7d2b20a4a72805222c7c7782506d3b9babd37c36f7cfb0d287260ba4b1905",
+    "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
+    "clustered_higher_pure_capacity_obstruction.json": "bbf9d977613f469b387cf60b7024092a9903b17bbac4374316c87d87c442bb99",
+    "remaining33_global_root_exclusion_certificate.json": "36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4"
+  },
+  "source_mass": "305684996597/646498195200",
+  "denominator": 3232490976000,
+  "central_mass_numerators": [
+    0,
+    0,
+    0,
+    23320826100,
+    0,
+    0,
+    1849407560,
+    35622804360,
+    0,
+    0,
+    0,
+    0,
+    23320826100,
+    17811402180,
+    0,
+    0,
+    20482993152,
+    0,
+    13243310080,
+    0,
+    0,
+    6809182380,
+    17811402180,
+    0,
+    0,
+    35622804360,
+    0,
+    9932482560,
+    0,
+    0,
+    0,
+    5630188122,
+    0,
+    23320826100,
+    0,
+    0,
+    924703780,
+    0,
+    0,
+    0,
+    17811402180,
+    0,
+    23320826100,
+    35622804360,
+    0,
+    0,
+    0,
+    0,
+    23320826100,
+    0,
+    0,
+    0,
+    26717103270,
+    0,
+    0,
+    0,
+    0,
+    23320826100,
+    17811402180,
+    0,
+    0,
+    20482993152,
+    0,
+    13243310080,
+    0,
+    0,
+    6809182380,
+    17811402180,
+    0,
+    0,
+    35622804360,
+    0,
+    13243310080,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23320826100,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    17811402180,
+    0,
+    23320826100,
+    35622804360,
+    0,
+    0,
+    0,
+    0,
+    23320826100,
+    0,
+    0,
+    6809182380,
+    35622804360,
+    0,
+    0,
+    0,
+    0,
+    17490619575,
+    17811402180,
+    0,
+    0,
+    11260376244,
+    0,
+    13243310080,
+    0,
+    0,
+    6809182380,
+    17811402180,
+    0,
+    0,
+    35622804360,
+    0,
+    13243310080,
+    0,
+    0,
+    0,
+    10241496576,
+    0,
+    23320826100,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    17811402180,
+    0,
+    23320826100,
+    35622804360,
+    0,
+    0,
+    0,
+    0,
+    23320826100,
+    0,
+    0,
+    6809182380,
+    35622804360,
+    0,
+    0,
+    0,
+    0,
+    23320826100,
+    17811402180,
+    0,
+    0,
+    0,
+    0,
+    13243310080,
+    0,
+    0,
+    1849407560,
+    17811402180,
+    0,
+    0,
+    35622804360,
+    0,
+    13243310080,
+    0,
+    0,
+    0,
+    10241496576,
+    0,
+    23320826100,
+    0,
+    0,
+    924703780,
+    0,
+    0,
+    0,
+    17811402180,
+    0,
+    17490619575,
+    35622804360,
+    0,
+    0,
+    0,
+    0,
+    23320826100,
+    0,
+    0,
+    6809182380,
+    35622804360,
+    0,
+    0,
+    0,
+    0,
+    23320826100,
+    17811402180,
+    0,
+    0,
+    20482993152,
+    0,
+    13243310080,
+    0,
+    0,
+    0,
+    13358551635,
+    0,
+    0,
+    35622804360,
+    0,
+    13243310080,
+    0,
+    0,
+    0,
+    10241496576,
+    0,
+    23320826100,
+    0,
+    0,
+    924703780,
+    0,
+    0,
+    0,
+    17811402180,
+    0,
+    23320826100,
+    35622804360,
+    0
+  ],
+  "marginal_maxima": {
+    "3": "19938190667/71833132800",
+    "5": "122669/699840",
+    "9": "19938190667/107749699200",
+    "15": "32413/349920",
+    "25": "122669/3499200",
+    "45": "6427/116640",
+    "75": "32413/1749600",
+    "225": "6427/583200"
+  },
+  "pairs": [
+    {
+      "labels": [
+        3,
+        5
+      ],
+      "independent": "998058579029/646498195200",
+      "joint_maximum": "328385689183/215499398400",
+      "defect": "6983/349920",
+      "maximizing_phases": [
+        1,
+        3
+      ]
+    },
+    {
+      "labels": [
+        3,
+        9
+      ],
+      "independent": "19938190667/11342073600",
+      "joint_maximum": "19938190667/11342073600",
+      "defect": "0",
+      "maximizing_phases": [
+        1,
+        7
+      ]
+    },
+    {
+      "labels": [
+        3,
+        15
+      ],
+      "independent": "837755959409/646498195200",
+      "joint_maximum": "89500242301/71833132800",
+      "defect": "6983/139968",
+      "maximizing_phases": [
+        1,
+        10
+      ]
+    },
+    {
+      "labels": [
+        3,
+        25
+      ],
+      "independent": "630276634213/646498195200",
+      "joint_maximum": "209232110639/215499398400",
+      "defect": "6983/1749600",
+      "maximizing_phases": [
+        1,
+        3
+      ]
+    },
+    {
+      "labels": [
+        3,
+        45
+      ],
+      "independent": "238815056603/215499398400",
+      "joint_maximum": "238815056603/215499398400",
+      "defect": "0",
+      "maximizing_phases": [
+        1,
+        25
+      ]
+    },
+    {
+      "labels": [
+        3,
+        75
+      ],
+      "independent": "598216110289/646498195200",
+      "joint_maximum": "65751706061/71833132800",
+      "defect": "6983/699840",
+      "maximizing_phases": [
+        1,
+        7
+      ]
+    },
+    {
+      "labels": [
+        3,
+        225
+      ],
+      "independent": "191317984123/215499398400",
+      "joint_maximum": "191317984123/215499398400",
+      "defect": "0",
+      "maximizing_phases": [
+        1,
+        7
+      ]
+    },
+    {
+      "labels": [
+        5,
+        9
+      ],
+      "independent": "176060939/147804800",
+      "joint_maximum": "176060939/147804800",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        7
+      ]
+    },
+    {
+      "labels": [
+        5,
+        15
+      ],
+      "independent": "692137/699840",
+      "joint_maximum": "692137/699840",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3
+      ]
+    },
+    {
+      "labels": [
+        5,
+        25
+      ],
+      "independent": "122669/174960",
+      "joint_maximum": "122669/174960",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3
+      ]
+    },
+    {
+      "labels": [
+        5,
+        45
+      ],
+      "independent": "20771/25920",
+      "joint_maximum": "20771/25920",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        43
+      ]
+    },
+    {
+      "labels": [
+        5,
+        75
+      ],
+      "independent": "432833/699840",
+      "joint_maximum": "432833/699840",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3
+      ]
+    },
+    {
+      "labels": [
+        5,
+        225
+      ],
+      "independent": "135523/233280",
+      "joint_maximum": "135523/233280",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        43
+      ]
+    },
+    {
+      "labels": [
+        9,
+        15
+      ],
+      "independent": "11292369029/11972188800",
+      "joint_maximum": "98405943391/107749699200",
+      "defect": "6983/233280",
+      "maximizing_phases": [
+        7,
+        10
+      ]
+    },
+    {
+      "labels": [
+        9,
+        25
+      ],
+      "independent": "24507114169/35916566400",
+      "joint_maximum": "24507114169/35916566400",
+      "defect": "0",
+      "maximizing_phases": [
+        7,
+        3
+      ]
+    },
+    {
+      "labels": [
+        9,
+        45
+      ],
+      "independent": "89500242301/107749699200",
+      "joint_maximum": "89500242301/107749699200",
+      "defect": "0",
+      "maximizing_phases": [
+        7,
+        25
+      ]
+    },
+    {
+      "labels": [
+        9,
+        75
+      ],
+      "independent": "22725973951/35916566400",
+      "joint_maximum": "67532846279/107749699200",
+      "defect": "6983/1166400",
+      "maximizing_phases": [
+        7,
+        7
+      ]
+    },
+    {
+      "labels": [
+        9,
+        225
+      ],
+      "independent": "65751706061/107749699200",
+      "joint_maximum": "65751706061/107749699200",
+      "defect": "0",
+      "maximizing_phases": [
+        7,
+        7
+      ]
+    },
+    {
+      "labels": [
+        15,
+        25
+      ],
+      "independent": "1470049/3499200",
+      "joint_maximum": "1470049/3499200",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3
+      ]
+    },
+    {
+      "labels": [
+        15,
+        45
+      ],
+      "independent": "1793/3240",
+      "joint_maximum": "122113/233280",
+      "defect": "6983/233280",
+      "maximizing_phases": [
+        10,
+        25
+      ]
+    },
+    {
+      "labels": [
+        15,
+        75
+      ],
+      "independent": "32413/87480",
+      "joint_maximum": "32413/87480",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3
+      ]
+    },
+    {
+      "labels": [
+        15,
+        225
+      ],
+      "independent": "971/2916",
+      "joint_maximum": "73241/233280",
+      "defect": "4439/233280",
+      "maximizing_phases": [
+        3,
+        3
+      ]
+    },
+    {
+      "labels": [
+        25,
+        45
+      ],
+      "independent": "113729/388800",
+      "joint_maximum": "113729/388800",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        43
+      ]
+    },
+    {
+      "labels": [
+        25,
+        75
+      ],
+      "independent": "692137/3499200",
+      "joint_maximum": "692137/3499200",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3
+      ]
+    },
+    {
+      "labels": [
+        25,
+        225
+      ],
+      "independent": "20771/129600",
+      "joint_maximum": "20771/129600",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        178
+      ]
+    },
+    {
+      "labels": [
+        45,
+        75
+      ],
+      "independent": "5903/24300",
+      "joint_maximum": "276361/1166400",
+      "defect": "6983/1166400",
+      "maximizing_phases": [
+        25,
+        10
+      ]
+    },
+    {
+      "labels": [
+        45,
+        225
+      ],
+      "independent": "6427/29160",
+      "joint_maximum": "6427/29160",
+      "defect": "0",
+      "maximizing_phases": [
+        25,
+        25
+      ]
+    },
+    {
+      "labels": [
+        75,
+        225
+      ],
+      "independent": "1793/16200",
+      "joint_maximum": "122113/1166400",
+      "defect": "6983/1166400",
+      "maximizing_phases": [
+        7,
+        7
+      ]
+    }
+  ],
+  "triangles": [
+    {
+      "labels": [
+        3,
+        5,
+        9
+      ],
+      "independent": "87760521461/34026220800",
+      "joint_maximum": "29027164847/11342073600",
+      "defect": "6983/349920",
+      "maximizing_phases": [
+        1,
+        3,
+        7
+      ],
+      "maximizer_count": 1
+    },
+    {
+      "labels": [
+        3,
+        5,
+        15
+      ],
+      "independent": "472417771663/215499398400",
+      "joint_maximum": "453065504443/215499398400",
+      "defect": "6983/77760",
+      "maximizing_phases": [
+        1,
+        3,
+        13
+      ],
+      "maximizer_count": 1
+    },
+    {
+      "labels": [
+        3,
+        5,
+        25
+      ],
+      "independent": "1135331732761/646498195200",
+      "joint_maximum": "223969983797/129299639040",
+      "defect": "6983/291600",
+      "maximizing_phases": [
+        1,
+        3,
+        3
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        3,
+        5,
+        45
+      ],
+      "independent": "1247418209549/646498195200",
+      "joint_maximum": "411505566023/215499398400",
+      "defect": "6983/349920",
+      "maximizing_phases": [
+        1,
+        3,
+        43
+      ],
+      "maximizer_count": 1
+    },
+    {
+      "labels": [
+        3,
+        5,
+        75
+      ],
+      "independent": "1081897526221/646498195200",
+      "joint_maximum": "70664330447/43099879680",
+      "defect": "118711/3499200",
+      "maximizing_phases": [
+        1,
+        3,
+        13
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        3,
+        5,
+        225
+      ],
+      "independent": "1047930505133/646498195200",
+      "joint_maximum": "115003221517/71833132800",
+      "defect": "6983/349920",
+      "maximizing_phases": [
+        1,
+        3,
+        43
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        3,
+        9,
+        15
+      ],
+      "independent": "79323541481/34026220800",
+      "joint_maximum": "25875324727/11342073600",
+      "defect": "6983/139968",
+      "maximizing_phases": [
+        1,
+        7,
+        10
+      ],
+      "maximizer_count": 2
+    },
+    {
+      "labels": [
+        3,
+        9,
+        25
+      ],
+      "independent": "65403761893/34026220800",
+      "joint_maximum": "21755985503/11342073600",
+      "defect": "6983/1749600",
+      "maximizing_phases": [
+        1,
+        7,
+        3
+      ],
+      "maximizer_count": 9
+    },
+    {
+      "labels": [
+        3,
+        9,
+        45
+      ],
+      "independent": "8104307009/3780691200",
+      "joint_maximum": "8104307009/3780691200",
+      "defect": "0",
+      "maximizing_phases": [
+        1,
+        7,
+        25
+      ],
+      "maximizer_count": 2
+    },
+    {
+      "labels": [
+        3,
+        9,
+        75
+      ],
+      "independent": "63716365897/34026220800",
+      "joint_maximum": "782430277/420076800",
+      "defect": "6983/699840",
+      "maximizing_phases": [
+        1,
+        7,
+        7
+      ],
+      "maximizer_count": 14
+    },
+    {
+      "labels": [
+        3,
+        9,
+        225
+      ],
+      "independent": "20813136739/11342073600",
+      "joint_maximum": "20813136739/11342073600",
+      "defect": "0",
+      "maximizing_phases": [
+        1,
+        7,
+        7
+      ],
+      "maximizer_count": 14
+    },
+    {
+      "labels": [
+        3,
+        15,
+        25
+      ],
+      "independent": "38146217221/25859927808",
+      "joint_maximum": "305413682411/215499398400",
+      "defect": "202507/3499200",
+      "maximizing_phases": [
+        1,
+        13,
+        3
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        3,
+        15,
+        45
+      ],
+      "independent": "1087115589929/646498195200",
+      "joint_maximum": "351620603743/215499398400",
+      "defect": "6983/139968",
+      "maximizing_phases": [
+        1,
+        10,
+        25
+      ],
+      "maximizer_count": 2
+    },
+    {
+      "labels": [
+        3,
+        15,
+        75
+      ],
+      "independent": "921594906601/646498195200",
+      "joint_maximum": "19562445997/14366626560",
+      "defect": "6983/109350",
+      "maximizing_phases": [
+        1,
+        10,
+        10
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        3,
+        15,
+        225
+      ],
+      "independent": "887627885513/646498195200",
+      "joint_maximum": "285124702271/215499398400",
+      "defect": "6983/139968",
+      "maximizing_phases": [
+        1,
+        10,
+        25
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        3,
+        25,
+        45
+      ],
+      "independent": "822639777757/646498195200",
+      "joint_maximum": "273353158487/215499398400",
+      "defect": "6983/1749600",
+      "maximizing_phases": [
+        1,
+        3,
+        43
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        3,
+        25,
+        75
+      ],
+      "independent": "47607705427/43099879680",
+      "joint_maximum": "234168073691/215499398400",
+      "defect": "6983/388800",
+      "maximizing_phases": [
+        1,
+        3,
+        28
+      ],
+      "maximizer_count": 9
+    },
+    {
+      "labels": [
+        3,
+        25,
+        225
+      ],
+      "independent": "680148560317/646498195200",
+      "joint_maximum": "225856086007/215499398400",
+      "defect": "6983/1749600",
+      "maximizing_phases": [
+        1,
+        3,
+        178
+      ],
+      "maximizer_count": 9
+    },
+    {
+      "labels": [
+        3,
+        45,
+        75
+      ],
+      "independent": "790579253833/646498195200",
+      "joint_maximum": "87125388677/71833132800",
+      "defect": "6983/699840",
+      "maximizing_phases": [
+        1,
+        25,
+        10
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        3,
+        45,
+        225
+      ],
+      "independent": "255439031971/215499398400",
+      "joint_maximum": "255439031971/215499398400",
+      "defect": "0",
+      "maximizing_phases": [
+        1,
+        25,
+        25
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        3,
+        75,
+        225
+      ],
+      "independent": "648088036393/646498195200",
+      "joint_maximum": "213879093551/215499398400",
+      "defect": "6983/699840",
+      "maximizing_phases": [
+        1,
+        7,
+        7
+      ],
+      "maximizer_count": 14
+    },
+    {
+      "labels": [
+        5,
+        9,
+        15
+      ],
+      "independent": "570380483653/323249097600",
+      "joint_maximum": "184751198101/107749699200",
+      "defect": "6983/139968",
+      "maximizing_phases": [
+        3,
+        7,
+        13
+      ],
+      "maximizer_count": 1
+    },
+    {
+      "labels": [
+        5,
+        9,
+        25
+      ],
+      "independent": "17953176755/12929963904",
+      "joint_maximum": "17953176755/12929963904",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        7,
+        3
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        9,
+        45
+      ],
+      "independent": "169908362951/107749699200",
+      "joint_maximum": "169908362951/107749699200",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        7,
+        43
+      ],
+      "maximizer_count": 1
+    },
+    {
+      "labels": [
+        5,
+        9,
+        75
+      ],
+      "independent": "84422463121/64649819520",
+      "joint_maximum": "27925795849/21549939840",
+      "defect": "6983/699840",
+      "maximizing_phases": [
+        3,
+        7,
+        13
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        9,
+        225
+      ],
+      "independent": "27332082443/21549939840",
+      "joint_maximum": "27332082443/21549939840",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        7,
+        43
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        15,
+        25
+      ],
+      "independent": "2101841/1749600",
+      "joint_maximum": "2101841/1749600",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3,
+        3
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        15,
+        45
+      ],
+      "independent": "962071/699840",
+      "joint_maximum": "77263/58320",
+      "defect": "6983/139968",
+      "maximizing_phases": [
+        3,
+        13,
+        43
+      ],
+      "maximizer_count": 1
+    },
+    {
+      "labels": [
+        5,
+        15,
+        75
+      ],
+      "independent": "3914467/3499200",
+      "joint_maximum": "3914467/3499200",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3,
+        3
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        15,
+        225
+      ],
+      "independent": "3730619/3499200",
+      "joint_maximum": "730699/699840",
+      "defect": "6427/291600",
+      "maximizing_phases": [
+        3,
+        3,
+        43
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        25,
+        45
+      ],
+      "independent": "1747277/1749600",
+      "joint_maximum": "1747277/1749600",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3,
+        43
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        25,
+        75
+      ],
+      "independent": "161509/194400",
+      "joint_maximum": "161509/194400",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3,
+        3
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        25,
+        225
+      ],
+      "independent": "1361657/1749600",
+      "joint_maximum": "1361657/1749600",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3,
+        178
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        45,
+        75
+      ],
+      "independent": "3205339/3499200",
+      "joint_maximum": "132101/145800",
+      "defect": "6983/699840",
+      "maximizing_phases": [
+        3,
+        43,
+        13
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        45,
+        225
+      ],
+      "independent": "1024673/1166400",
+      "joint_maximum": "1024673/1166400",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        43,
+        43
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        5,
+        75,
+        225
+      ],
+      "independent": "2434099/3499200",
+      "joint_maximum": "16661/24300",
+      "defect": "6983/699840",
+      "maximizing_phases": [
+        3,
+        13,
+        88
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        9,
+        15,
+        25
+      ],
+      "independent": "357991267757/323249097600",
+      "joint_maximum": "115674994333/107749699200",
+      "defect": "118711/3499200",
+      "maximizing_phases": [
+        7,
+        13,
+        3
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        9,
+        15,
+        45
+      ],
+      "independent": "143191259681/107749699200",
+      "joint_maximum": "46655293937/35916566400",
+      "defect": "6983/233280",
+      "maximizing_phases": [
+        7,
+        10,
+        25
+      ],
+      "maximizer_count": 2
+    },
+    {
+      "labels": [
+        9,
+        15,
+        75
+      ],
+      "independent": "68392201159/64649819520",
+      "joint_maximum": "7312433207/7183313280",
+      "defect": "6983/174960",
+      "maximizing_phases": [
+        7,
+        10,
+        10
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        9,
+        15,
+        225
+      ],
+      "independent": "21988661789/21549939840",
+      "joint_maximum": "4268717243/4309987968",
+      "defect": "6983/233280",
+      "maximizing_phases": [
+        7,
+        10,
+        25
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        9,
+        25,
+        45
+      ],
+      "independent": "35193955477/35916566400",
+      "joint_maximum": "35193955477/35916566400",
+      "defect": "0",
+      "maximizing_phases": [
+        7,
+        3,
+        43
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        9,
+        25,
+        75
+      ],
+      "independent": "257631069533/323249097600",
+      "joint_maximum": "84801897221/107749699200",
+      "defect": "6983/699840",
+      "maximizing_phases": [
+        7,
+        3,
+        28
+      ],
+      "maximizer_count": 9
+    },
+    {
+      "labels": [
+        9,
+        25,
+        225
+      ],
+      "independent": "81833330191/107749699200",
+      "joint_maximum": "81833330191/107749699200",
+      "defect": "0",
+      "maximizing_phases": [
+        7,
+        3,
+        178
+      ],
+      "maximizer_count": 9
+    },
+    {
+      "labels": [
+        9,
+        45,
+        75
+      ],
+      "independent": "33412815259/35916566400",
+      "joint_maximum": "99593370203/107749699200",
+      "defect": "6983/1166400",
+      "maximizing_phases": [
+        7,
+        25,
+        10
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        9,
+        45,
+        225
+      ],
+      "independent": "19562445997/21549939840",
+      "joint_maximum": "19562445997/21549939840",
+      "defect": "0",
+      "maximizing_phases": [
+        7,
+        25,
+        25
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        9,
+        75,
+        225
+      ],
+      "independent": "76489909537/107749699200",
+      "joint_maximum": "25281611321/35916566400",
+      "defect": "6983/1166400",
+      "maximizing_phases": [
+        7,
+        7,
+        7
+      ],
+      "maximizer_count": 14
+    },
+    {
+      "labels": [
+        15,
+        25,
+        45
+      ],
+      "independent": "2511223/3499200",
+      "joint_maximum": "12461/18225",
+      "defect": "118711/3499200",
+      "maximizing_phases": [
+        13,
+        3,
+        43
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        15,
+        25,
+        75
+      ],
+      "independent": "2639/4800",
+      "joint_maximum": "2639/4800",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        3,
+        3
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        15,
+        25,
+        225
+      ],
+      "independent": "1739983/3499200",
+      "joint_maximum": "1662859/3499200",
+      "defect": "6427/291600",
+      "maximizing_phases": [
+        3,
+        3,
+        178
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        15,
+        45,
+        75
+      ],
+      "independent": "1168847/1749600",
+      "joint_maximum": "122113/194400",
+      "defect": "6983/174960",
+      "maximizing_phases": [
+        10,
+        25,
+        10
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        15,
+        45,
+        225
+      ],
+      "independent": "367729/583200",
+      "joint_maximum": "700543/1166400",
+      "defect": "6983/233280",
+      "maximizing_phases": [
+        10,
+        25,
+        25
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        15,
+        75,
+        225
+      ],
+      "independent": "783227/1749600",
+      "joint_maximum": "294647/699840",
+      "defect": "31073/1166400",
+      "maximizing_phases": [
+        3,
+        3,
+        3
+      ],
+      "maximizer_count": 10
+    },
+    {
+      "labels": [
+        25,
+        45,
+        75
+      ],
+      "independent": "284963/699840",
+      "joint_maximum": "4633/11664",
+      "defect": "6983/699840",
+      "maximizing_phases": [
+        3,
+        43,
+        28
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        25,
+        45,
+        225
+      ],
+      "independent": "86233/233280",
+      "joint_maximum": "86233/233280",
+      "defect": "0",
+      "maximizing_phases": [
+        3,
+        43,
+        178
+      ],
+      "maximizer_count": 5
+    },
+    {
+      "labels": [
+        25,
+        75,
+        225
+      ],
+      "independent": "962071/3499200",
+      "joint_maximum": "77263/291600",
+      "defect": "6983/699840",
+      "maximizing_phases": [
+        3,
+        28,
+        178
+      ],
+      "maximizer_count": 9
+    },
+    {
+      "labels": [
+        45,
+        75,
+        225
+      ],
+      "independent": "186661/583200",
+      "joint_maximum": "122113/388800",
+      "defect": "6983/1166400",
+      "maximizing_phases": [
+        25,
+        10,
+        160
+      ],
+      "maximizer_count": 10
+    }
+  ],
+  "positive_pair_count": 10,
+  "positive_triangle_count": 39,
+  "selected_pair": {
+    "labels": [
+      3,
+      5
+    ],
+    "independent": "998058579029/646498195200",
+    "joint_maximum": "328385689183/215499398400",
+    "defect": "6983/349920",
+    "maximizing_phases": [
+      1,
+      3
+    ],
+    "direct_maximizing_phases": [
+      1,
+      3
+    ]
+  },
+  "selected_triangle": {
+    "labels": [
+      3,
+      5,
+      15
+    ],
+    "independent": "472417771663/215499398400",
+    "joint_maximum": "453065504443/215499398400",
+    "defect": "6983/77760",
+    "maximizing_phases": [
+      1,
+      3,
+      13
+    ],
+    "maximizer_count": 1
+  },
+  "all_one_gate": {
+    "fullmode8_complete_gate": "-102747178320681648015183928043/1862325532039825870617600000000",
+    "gate_decimal": -0.055171438372614436,
+    "pair35_correction": "6983/349920",
+    "pair_head_gate_increment": "7570500739/70420420224000",
+    "pair_corrected_gate": "-102546970245073472701905328043/1862325532039825870617600000000",
+    "triangle3515_correction": "6983/77760",
+    "triangle_head_gate_increment": "7570500739/15648982272000",
+    "triangle_increment_decimal": 0.00048376952618481436,
+    "triangle_corrected_gate": "-101846241980444859105430228043/1862325532039825870617600000000",
+    "triangle_corrected_gate_decimal": -0.05468766884642962,
+    "triangle_pays_193_over_100000": false,
+    "scope": "All-one retention of actual109 source, exact inherited full-height screens and fullmode8 fees. Uses680 outside root/deep domination; no field search. Pair and triangle are alternative corrections, never added."
+  },
+  "checks": 338,
+  "program_sha256": "b98b47a47215282e192b645cbe1794a7e614836d0200383343fceca2a898c8e9"
+}

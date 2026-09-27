@@ -1,0 +1,268 @@
+{
+  "scope": "Ordinary exact controls, not Lean. General construction is odd, distinct, divisor closed and irredundant; it is an explicit noncover.",
+  "cases": [
+    {
+      "p": 3,
+      "q": 5,
+      "period": 75,
+      "classes": [
+        {
+          "modulus": 3,
+          "residue": 0
+        },
+        {
+          "modulus": 5,
+          "residue": 1
+        },
+        {
+          "modulus": 25,
+          "residue": 5
+        },
+        {
+          "modulus": 15,
+          "residue": 10
+        },
+        {
+          "modulus": 75,
+          "residue": 50
+        }
+      ],
+      "private_witnesses": [
+        0,
+        1,
+        5,
+        10,
+        50
+      ],
+      "comparable_pairs": 7,
+      "holes": 33,
+      "source_cofactor": 0,
+      "complete_p_fibre": [
+        0,
+        25,
+        50
+      ],
+      "original_cofactor_matching_rank": 2,
+      "ordinary_support_assignment_cost": 1,
+      "maximal_possible_assignment_cost": 1,
+      "prime_private_mass": "19/75",
+      "full_private_cofactor_cylinder_mass": "19/25",
+      "pure_owner_defect": "19/75",
+      "pure_owner_defect_lower_bound": "19/75",
+      "boundary": "Full p-fibre coverage and synchronized matching hold at the specified cofactor, not throughout the actual R_p."
+    },
+    {
+      "p": 5,
+      "q": 3,
+      "period": 405,
+      "classes": [
+        {
+          "modulus": 5,
+          "residue": 0
+        },
+        {
+          "modulus": 3,
+          "residue": 1
+        },
+        {
+          "modulus": 9,
+          "residue": 3
+        },
+        {
+          "modulus": 27,
+          "residue": 9
+        },
+        {
+          "modulus": 81,
+          "residue": 27
+        },
+        {
+          "modulus": 15,
+          "residue": 6
+        },
+        {
+          "modulus": 45,
+          "residue": 27
+        },
+        {
+          "modulus": 135,
+          "residue": 108
+        },
+        {
+          "modulus": 405,
+          "residue": 324
+        }
+      ],
+      "private_witnesses": [
+        0,
+        1,
+        3,
+        9,
+        189,
+        6,
+        72,
+        243,
+        324
+      ],
+      "comparable_pairs": 26,
+      "holes": 142,
+      "source_cofactor": 0,
+      "complete_p_fibre": [
+        0,
+        81,
+        162,
+        243,
+        324
+      ],
+      "original_cofactor_matching_rank": 4,
+      "ordinary_support_assignment_cost": 6,
+      "maximal_possible_assignment_cost": 6,
+      "prime_private_mass": "41/405",
+      "full_private_cofactor_cylinder_mass": "41/81",
+      "pure_owner_defect": "82/135",
+      "pure_owner_defect_lower_bound": "82/135",
+      "boundary": "Full p-fibre coverage and synchronized matching hold at the specified cofactor, not throughout the actual R_p."
+    },
+    {
+      "p": 7,
+      "q": 3,
+      "period": 5103,
+      "classes": [
+        {
+          "modulus": 7,
+          "residue": 0
+        },
+        {
+          "modulus": 3,
+          "residue": 1
+        },
+        {
+          "modulus": 9,
+          "residue": 3
+        },
+        {
+          "modulus": 27,
+          "residue": 9
+        },
+        {
+          "modulus": 81,
+          "residue": 27
+        },
+        {
+          "modulus": 243,
+          "residue": 81
+        },
+        {
+          "modulus": 729,
+          "residue": 243
+        },
+        {
+          "modulus": 21,
+          "residue": 15
+        },
+        {
+          "modulus": 63,
+          "residue": 9
+        },
+        {
+          "modulus": 189,
+          "residue": 108
+        },
+        {
+          "modulus": 567,
+          "residue": 81
+        },
+        {
+          "modulus": 1701,
+          "residue": 243
+        },
+        {
+          "modulus": 5103,
+          "residue": 4374
+        }
+      ],
+      "private_witnesses": [
+        0,
+        1,
+        3,
+        90,
+        27,
+        810,
+        972,
+        15,
+        72,
+        297,
+        648,
+        1944,
+        4374
+      ],
+      "comparable_pairs": 57,
+      "holes": 2005,
+      "source_cofactor": 0,
+      "complete_p_fibre": [
+        0,
+        729,
+        1458,
+        2187,
+        2916,
+        3645,
+        4374
+      ],
+      "original_cofactor_matching_rank": 6,
+      "ordinary_support_assignment_cost": 15,
+      "maximal_possible_assignment_cost": 15,
+      "prime_private_mass": "365/5103",
+      "full_private_cofactor_cylinder_mass": "365/729",
+      "pure_owner_defect": "1825/1701",
+      "pure_owner_defect_lower_bound": "1825/1701",
+      "boundary": "Full p-fibre coverage and synchronized matching hold at the specified cofactor, not throughout the actual R_p."
+    }
+  ],
+  "higher_pure_control": {
+    "classes": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        27,
+        2
+      ]
+    ],
+    "period": 27,
+    "first_digit_line_occupancies": {
+      "3": 1,
+      "1": 6,
+      "2": 2
+    },
+    "exact_defect": "8/27",
+    "lower_bound": "7/27"
+  },
+  "repeated_pure_boundary": {
+    "classes": [
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "period": 3,
+    "designated_prime_private_mass": "1/3",
+    "exact_defect": "0",
+    "multiplicity_counted_T": "1",
+    "invalid_collapsed_T": "1/3",
+    "invalid_collapsed_positive_bound": "1/3",
+    "scope": "Repeated numerical modulus; this rejects omitting the explicit pure-modulus uniqueness premise."
+  }
+}

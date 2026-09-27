@@ -1,0 +1,297 @@
+{
+  "scope": "Two method obstructions and the existing22-original same-law profile; no unrestricted noncoverage claim and no Lean.",
+  "positive_mass_zero_query_debit": {
+    "primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "Q_cofactor": 1616615,
+    "haar_query_norm": "212731/110592",
+    "families": [
+      {
+        "height": 2,
+        "originals": [
+          {
+            "modulus": 14549535,
+            "residue": 0,
+            "ternary_residue": 0
+          }
+        ],
+        "deleted_mass": "1/14549535",
+        "survivor_mass": "14549534/14549535"
+      },
+      {
+        "height": 3,
+        "originals": [
+          {
+            "modulus": 14549535,
+            "residue": 0,
+            "ternary_residue": 0
+          },
+          {
+            "modulus": 43648605,
+            "residue": 38798760,
+            "ternary_residue": 3
+          }
+        ],
+        "deleted_mass": "4/43648605",
+        "survivor_mass": "43648601/43648605"
+      },
+      {
+        "height": 4,
+        "originals": [
+          {
+            "modulus": 14549535,
+            "residue": 0,
+            "ternary_residue": 0
+          },
+          {
+            "modulus": 43648605,
+            "residue": 38798760,
+            "ternary_residue": 3
+          },
+          {
+            "modulus": 130945815,
+            "residue": 24249225,
+            "ternary_residue": 12
+          }
+        ],
+        "deleted_mass": "1/10072755",
+        "survivor_mass": "10072754/10072755"
+      },
+      {
+        "height": 5,
+        "originals": [
+          {
+            "modulus": 14549535,
+            "residue": 0,
+            "ternary_residue": 0
+          },
+          {
+            "modulus": 43648605,
+            "residue": 38798760,
+            "ternary_residue": 3
+          },
+          {
+            "modulus": 130945815,
+            "residue": 24249225,
+            "ternary_residue": 12
+          },
+          {
+            "modulus": 392837445,
+            "residue": 373438065,
+            "ternary_residue": 39
+          }
+        ],
+        "deleted_mass": "8/78567489",
+        "survivor_mass": "78567481/78567489"
+      },
+      {
+        "height": 6,
+        "originals": [
+          {
+            "modulus": 14549535,
+            "residue": 0,
+            "ternary_residue": 0
+          },
+          {
+            "modulus": 43648605,
+            "residue": 38798760,
+            "ternary_residue": 3
+          },
+          {
+            "modulus": 130945815,
+            "residue": 24249225,
+            "ternary_residue": 12
+          },
+          {
+            "modulus": 392837445,
+            "residue": 373438065,
+            "ternary_residue": 39
+          },
+          {
+            "modulus": 1178512335,
+            "residue": 1028167140,
+            "ternary_residue": 120
+          }
+        ],
+        "deleted_mass": "11/107137485",
+        "survivor_mass": "107137474/107137485"
+      },
+      {
+        "height": 7,
+        "originals": [
+          {
+            "modulus": 14549535,
+            "residue": 0,
+            "ternary_residue": 0
+          },
+          {
+            "modulus": 43648605,
+            "residue": 38798760,
+            "ternary_residue": 3
+          },
+          {
+            "modulus": 130945815,
+            "residue": 24249225,
+            "ternary_residue": 12
+          },
+          {
+            "modulus": 392837445,
+            "residue": 373438065,
+            "ternary_residue": 39
+          },
+          {
+            "modulus": 1178512335,
+            "residue": 1028167140,
+            "ternary_residue": 120
+          },
+          {
+            "modulus": 3535537005,
+            "residue": 2992354365,
+            "ternary_residue": 363
+          }
+        ],
+        "deleted_mass": "4/38852055",
+        "survivor_mass": "38852051/38852055"
+      }
+    ],
+    "bounded_congruence_checks": 45906,
+    "general_claim": "For every finite H>=2 and every nonunit P-smooth query modulus, phase1 has unchanged Haar mass; see the ordinary proof."
+  },
+  "fibre_uniformization": {
+    "originals": [
+      {
+        "modulus": 3,
+        "residue": 2
+      },
+      {
+        "modulus": 15,
+        "residue": 1
+      }
+    ],
+    "before": {
+      "10": "1/2",
+      "6": "1/2"
+    },
+    "after": {
+      "0": "1/4",
+      "10": "1/4",
+      "6": "1/2"
+    },
+    "before_profile": [
+      {
+        "modulus": 1,
+        "maximum": "1",
+        "tail_weight": "1"
+      },
+      {
+        "modulus": 5,
+        "maximum": "1/2",
+        "tail_weight": "5/4"
+      },
+      {
+        "modulus": 3,
+        "maximum": "1/2",
+        "tail_weight": "3/2"
+      },
+      {
+        "modulus": 15,
+        "maximum": "1/2",
+        "tail_weight": "15/8"
+      }
+    ],
+    "after_profile": [
+      {
+        "modulus": 1,
+        "maximum": "1",
+        "tail_weight": "1"
+      },
+      {
+        "modulus": 5,
+        "maximum": "1/2",
+        "tail_weight": "5/4"
+      },
+      {
+        "modulus": 3,
+        "maximum": "3/4",
+        "tail_weight": "3/2"
+      },
+      {
+        "modulus": 15,
+        "maximum": "1/2",
+        "tail_weight": "15/8"
+      }
+    ],
+    "before_R": "37/16",
+    "after_R": "43/16",
+    "increase": "3/8",
+    "realizing_Q_weights": {
+      "0": "1/3",
+      "1": "2/3"
+    },
+    "raw_survivor_mass": "2/3"
+  },
+  "shared_ternary": {
+    "E": "362074193/147806208",
+    "F": "360872258383/314088192000",
+    "C": "28672/75735",
+    "ternary_mass": "3/41",
+    "ternary_query_norm": "81/82",
+    "survivor_mass": "987982/1035045",
+    "raw_query_norm": "98378082487523/25755231744000",
+    "normalized_query_norm": "98378082487523/24584153702400",
+    "deleted_mass": "47063/1035045",
+    "query_debit": "106677864071/2146269312000",
+    "debit_per_deleted_mass": "106677864071/97589836800",
+    "joint_gate": "534947350215869/1515013632000"
+  },
+  "checks": {
+    "full_Q_cofactor": true,
+    "distinct_odd_labels_2": true,
+    "pairwise_disjoint_2": true,
+    "private_CRT_witnesses_2": true,
+    "geometric_mass_2": true,
+    "distinct_odd_labels_3": true,
+    "pairwise_disjoint_3": true,
+    "private_CRT_witnesses_3": true,
+    "geometric_mass_3": true,
+    "distinct_odd_labels_4": true,
+    "pairwise_disjoint_4": true,
+    "private_CRT_witnesses_4": true,
+    "geometric_mass_4": true,
+    "distinct_odd_labels_5": true,
+    "pairwise_disjoint_5": true,
+    "private_CRT_witnesses_5": true,
+    "geometric_mass_5": true,
+    "distinct_odd_labels_6": true,
+    "pairwise_disjoint_6": true,
+    "private_CRT_witnesses_6": true,
+    "geometric_mass_6": true,
+    "distinct_odd_labels_7": true,
+    "pairwise_disjoint_7": true,
+    "private_CRT_witnesses_7": true,
+    "geometric_mass_7": true,
+    "bounded_phase_one_diagnostics": true,
+    "before_actual_survivor": true,
+    "before_probability": true,
+    "before_same_Q_marginal": true,
+    "after_actual_survivor": true,
+    "after_probability": true,
+    "after_same_Q_marginal": true,
+    "exact_query_increase": true,
+    "product_delete_realization": true,
+    "actual_ternary_source": true,
+    "shared_allheight_formula": true,
+    "shared_exact_mass": true,
+    "shared_debit": true,
+    "shared_rate_bound": true,
+    "shared_joint_gate": true
+  },
+  "check_count": 40
+}

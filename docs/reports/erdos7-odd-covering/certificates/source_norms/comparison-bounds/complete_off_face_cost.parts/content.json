@@ -8,7 +8,7 @@
     "value": {
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "frontier/retained-transport/finite_source_face_transport.py": "04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291",
-      "frontier/retained-transport/joint_deep_mean_transport.py": "efbb0825f227e5cc97a0fc24b71acf3e16a35f6b3db662f0e4b392afb8e3d0d0",
+      "frontier/retained-transport/joint_deep_mean_transport.py": "d98c3ed06d3deaa3651655c0b0d119add0ac17c10f6fcb99c706bef2630c76db",
       "frontier/cover-geometry/complete_off_face_omitted_tails.py": "33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
       "frontier/endpoint-bounds/broad_weighted_identity_source.py": "bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6",

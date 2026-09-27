@@ -12,8 +12,8 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/uniform_ap_survival_denominator.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
-    'frontier/comparison-bounds/uniform_mean_cost_portfolio.py': 'ac23f83b0b99ff97bbff947826aff3c170aa4279517d3f440550f9277b769238',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '41cf0ee10fc00ef29278ee8329085cb20c365a73008313c10b1bc888f737af6c',
+    'frontier/comparison-bounds/uniform_mean_cost_portfolio.py': 'faf6b22a757a191b323df3f7a0c9db83ec5963edc496bf33446f5cf6788fe117',
     'certificates/source_norms/moments-survival/whole_block_mean_survival.json': 'cbccfcf1f81cf5d2185494f1a3a46674148a9d574ab3abebba0f6f0f3ba7eabd',
     'certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json': '59202ce65324295b32b028f6b67f90e4a7b8bbba5f62608a43f9bc4979dc8e79',
 }

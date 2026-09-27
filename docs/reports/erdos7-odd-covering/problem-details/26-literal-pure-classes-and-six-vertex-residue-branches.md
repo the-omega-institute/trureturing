@@ -273,8 +273,8 @@ probability interpretation.
 ## 5. Exact certificate and prior structure
 
 The standard-library program
-[six_vertex_pure_residue_certificate.py](../frontier/cover-geometry/six_vertex_pure_residue_certificate.py)
-and its [exact data](../frontier/cover-geometry/six_vertex_pure_residue_certificate.json)
+[six_vertex_pure_residue_certificate.py](../frontier/cover-geometry/six-vertex-pure-residue-certificate/six_vertex_pure_residue_certificate.py)
+and its [exact data](../frontier/cover-geometry/six-vertex-pure-residue-certificate/six_vertex_pure_residue_certificate.json)
 consume the explicitly supplied Chapter 25 certificate. They check its
 fifty distinct ordered prime tuples and record its SHA256. For both
 modifications on every tuple, all 31 nonempty residuals are evaluated
@@ -292,7 +292,7 @@ Python 3.10 or later is required; optimized `-O` execution is rejected.
 From the repository root run:
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/six_vertex_pure_residue_certificate.py --frontier docs/reports/erdos7-odd-covering/frontier/cover-geometry/six_vertex_conditional_kernel_certificate.json --output /tmp/six-vertex-pure-residue-certificate.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/six-vertex-pure-residue-certificate/six_vertex_pure_residue_certificate.py --frontier docs/reports/erdos7-odd-covering/frontier/cover-geometry/six-vertex-conditional-kernel-certificate/six_vertex_conditional_kernel_certificate.json --output /tmp/six-vertex-pure-residue-certificate.json
 ```
 
 The missing or incompatible original-cofactor mechanism and the need

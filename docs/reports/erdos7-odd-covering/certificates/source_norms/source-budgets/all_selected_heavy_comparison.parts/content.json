@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "35fe09404e4029587b33e8a9b81b781ec3ac2a5af7aae445a29ed0b1d270b942",
+    "sha256": "49dfddb189fdde209463a921582e590bb69958674fc5f54b5233d97552a52c90",
     "kind": "value"
   },
   "faces": {
@@ -97,7 +97,7 @@
   },
   "rational_dual_certificates": {
     "path": "content/013-rational_dual_certificates.json",
-    "sha256": "b943d12a4f573e2262bb81c572fd2941470edb36dc474d551a7b20552884a94e",
+    "sha256": "c3798533c48d1620549848e5784026d53db6c951b44ed5b726eecfa308cca7fa",
     "kind": "object"
   },
   "heavy_results": {

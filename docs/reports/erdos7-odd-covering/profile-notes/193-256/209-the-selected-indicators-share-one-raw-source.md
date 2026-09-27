@@ -230,7 +230,7 @@ The [canonical helper](../../frontier/source-budgets/joint_selected_source_compa
 and [certificate](../../certificates/source_norms/source-budgets/joint_selected_source_comparison.json)
 retain the exact bounds, all rational duals, source pins, complete
 branch counts and52-cost consumer. The
-[proposal generator](../../frontier/cover-geometry/propose_joint_selected_duals.py)
+[proposal generator](../../frontier/cover-geometry/propose-joint-selected-duals/propose_joint_selected_duals.py)
 exists for regenerating numerical suggestions followed by exact repair.
 
 ```sh

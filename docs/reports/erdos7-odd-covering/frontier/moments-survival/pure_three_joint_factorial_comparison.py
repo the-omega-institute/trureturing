@@ -12,7 +12,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/pure_three_joint_factorial_comparison.json'
-PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/moments-survival/pure_three_joint_moments.py': '0831f231c4d0d0d6cad5c9f4eb730365ac6c3fcebe968b4aee9d56f3fa82aed6', 'certificates/source_norms/moments-survival/pure_three_joint_moments.json': '5507ea245acf3f9a28a49201c0365b94980e1c9019d464db36a656291c0e74cf', 'frontier/moments-survival/pure_five_joint_factorial_comparison.py': '6940c0405e968e3ca6ee864f32a51832286d39f03fbfb3c17f1ae6c9e0f71593', 'certificates/source_norms/moments-survival/pure_five_joint_factorial_comparison.json': 'bc8786df3001b76ff69bd5c3e3fc475ec2e4222a60abb70b64c501c9bd3e6ae7'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/moments-survival/pure_three_joint_moments.py': '90574ee7836c76645d47f590f29c59ea0603c81f9f42377f17a2464632bb77db', 'certificates/source_norms/moments-survival/pure_three_joint_moments.json': '8e7414e483cecc7f452117a8ba2d0cc1ae893e2726d27a5b0f136ba337cff588', 'frontier/moments-survival/pure_five_joint_factorial_comparison.py': 'bc0b8e1c8220dd3d76269de5a48064c7d68afa493877f9aa8bbd8cb5cc030bb7', 'certificates/source_norms/moments-survival/pure_five_joint_factorial_comparison.json': '214fb1ac16b658de3c8d8054a345df72c65f6dad2011b2002cbc16b0ea057b78'}
 
 
 def require(condition, message):

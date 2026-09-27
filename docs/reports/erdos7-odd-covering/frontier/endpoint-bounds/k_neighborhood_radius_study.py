@@ -13,8 +13,8 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/k_neighborhood_radius_study.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/comparison-bounds/uniform_complete_k_comparison.py': '75db40896f9a0fb1d7cd6ee17f6f8b7af5ef4c2bf074811b6df8ca3327809fd3',
-    'certificates/source_norms/comparison-bounds/uniform_complete_k_comparison.json': '0df6d4d58c94097993ac4f424d6c11a4be3197f483f5a61ad6bf840abf2af4ad',
+    'frontier/comparison-bounds/uniform_complete_k_comparison.py': '021f21fb3f95f6bb45f4333be0a4ec9b5a09ca31897e06f6108f93ab57293f5a',
+    'certificates/source_norms/comparison-bounds/uniform_complete_k_comparison.json': '7a3066fa483877cf71a0c67b0055c5509f4b897e4960e38e58f608b11043d3be',
     'frontier/source-budgets/carrier_mass_residual_bound.py': 'b455566fe256dac370d3afb97c6e357d2c75296a2e36f483e6f189fda436141c',
 }
 

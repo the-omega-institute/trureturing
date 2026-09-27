@@ -1,0 +1,1764 @@
+{
+  "scope": "exact full individual-and-shared axis/mixed capacity relaxation; finite all-height profile classification follows the proved monotonic cutoff; actual old-survivor point existence is a separate hypothesis",
+  "natural_budget_triples_checked": 23821,
+  "rational_grid_descent_and_mixed_checks": 595525,
+  "cutoff_controls": [
+    {
+      "Qx": 20,
+      "Qy": 37,
+      "N": 38,
+      "minimum_scaled_survivor": "7",
+      "minimizer": [
+        "20",
+        "29/2"
+      ]
+    },
+    {
+      "Qx": 20,
+      "Qy": 38,
+      "N": 39,
+      "minimum_scaled_survivor": "4/3",
+      "minimizer": [
+        "20",
+        "52/3"
+      ]
+    },
+    {
+      "Qx": 20,
+      "Qy": 39,
+      "N": 40,
+      "minimum_scaled_survivor": "0",
+      "minimizer": [
+        "39/2",
+        "20"
+      ]
+    }
+  ],
+  "complete_additional_positive_edges": [
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 19,
+      "Qx": 20,
+      "Qy": 20,
+      "N": 21,
+      "minimum_scaled_survivor": "201",
+      "minimizer": [
+        "1",
+        "20"
+      ],
+      "pair_survival_lower": "201/616",
+      "former_pair_survival_lower": "201/616"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 20,
+      "Qx": 20,
+      "Qy": 21,
+      "N": 22,
+      "minimum_scaled_survivor": "172",
+      "minimizer": [
+        "1",
+        "20"
+      ],
+      "pair_survival_lower": "43/154",
+      "former_pair_survival_lower": "43/154"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 21,
+      "Qx": 20,
+      "Qy": 22,
+      "N": 23,
+      "minimum_scaled_survivor": "145",
+      "minimizer": [
+        "20",
+        "1"
+      ],
+      "pair_survival_lower": "145/616",
+      "former_pair_survival_lower": "145/616"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 22,
+      "Qx": 20,
+      "Qy": 23,
+      "N": 24,
+      "minimum_scaled_survivor": "120",
+      "minimizer": [
+        "20",
+        "1"
+      ],
+      "pair_survival_lower": "15/77",
+      "former_pair_survival_lower": "15/77"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 23,
+      "Qx": 20,
+      "Qy": 24,
+      "N": 25,
+      "minimum_scaled_survivor": "97",
+      "minimizer": [
+        "20",
+        "1"
+      ],
+      "pair_survival_lower": "97/616",
+      "former_pair_survival_lower": "97/616"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 24,
+      "Qx": 20,
+      "Qy": 25,
+      "N": 26,
+      "minimum_scaled_survivor": "76",
+      "minimizer": [
+        "20",
+        "1"
+      ],
+      "pair_survival_lower": "19/154",
+      "former_pair_survival_lower": "19/154"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 25,
+      "Qx": 20,
+      "Qy": 26,
+      "N": 27,
+      "minimum_scaled_survivor": "57",
+      "minimizer": [
+        "20",
+        "1"
+      ],
+      "pair_survival_lower": "57/616",
+      "former_pair_survival_lower": "57/616"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 26,
+      "Qx": 20,
+      "Qy": 27,
+      "N": 28,
+      "minimum_scaled_survivor": "40",
+      "minimizer": [
+        "20",
+        "1"
+      ],
+      "pair_survival_lower": "5/77",
+      "former_pair_survival_lower": "5/77"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 27,
+      "Qx": 20,
+      "Qy": 28,
+      "N": 29,
+      "minimum_scaled_survivor": "424/13",
+      "minimizer": [
+        "20",
+        "22/13"
+      ],
+      "pair_survival_lower": "53/1001",
+      "former_pair_survival_lower": "25/616"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 28,
+      "Qx": 20,
+      "Qy": 29,
+      "N": 30,
+      "minimum_scaled_survivor": "91/3",
+      "minimizer": [
+        "20",
+        "17/6"
+      ],
+      "pair_survival_lower": "13/264",
+      "former_pair_survival_lower": "1/28"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 29,
+      "Qx": 20,
+      "Qy": 30,
+      "N": 31,
+      "minimum_scaled_survivor": "28",
+      "minimizer": [
+        "20",
+        "4"
+      ],
+      "pair_survival_lower": "1/22",
+      "former_pair_survival_lower": "19/616"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 30,
+      "Qx": 20,
+      "Qy": 31,
+      "N": 32,
+      "minimum_scaled_survivor": "128/5",
+      "minimizer": [
+        "20",
+        "26/5"
+      ],
+      "pair_survival_lower": "16/385",
+      "former_pair_survival_lower": "2/77"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 31,
+      "Qx": 20,
+      "Qy": 32,
+      "N": 33,
+      "minimum_scaled_survivor": "208/9",
+      "minimizer": [
+        "20",
+        "58/9"
+      ],
+      "pair_survival_lower": "26/693",
+      "former_pair_survival_lower": "13/616"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 32,
+      "Qx": 20,
+      "Qy": 33,
+      "N": 34,
+      "minimum_scaled_survivor": "41/2",
+      "minimizer": [
+        "20",
+        "31/4"
+      ],
+      "pair_survival_lower": "41/1232",
+      "former_pair_survival_lower": "5/308"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 33,
+      "Qx": 20,
+      "Qy": 34,
+      "N": 35,
+      "minimum_scaled_survivor": "124/7",
+      "minimizer": [
+        "20",
+        "64/7"
+      ],
+      "pair_survival_lower": "31/1078",
+      "former_pair_survival_lower": "1/88"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 34,
+      "Qx": 20,
+      "Qy": 35,
+      "N": 36,
+      "minimum_scaled_survivor": "44/3",
+      "minimizer": [
+        "20",
+        "32/3"
+      ],
+      "pair_survival_lower": "1/42",
+      "former_pair_survival_lower": "1/154"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 35,
+      "Qx": 20,
+      "Qy": 36,
+      "N": 37,
+      "minimum_scaled_survivor": "56/5",
+      "minimizer": [
+        "20",
+        "62/5"
+      ],
+      "pair_survival_lower": "1/55",
+      "former_pair_survival_lower": "1/616"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 36,
+      "Qx": 20,
+      "Qy": 37,
+      "N": 38,
+      "minimum_scaled_survivor": "7",
+      "minimizer": [
+        "20",
+        "29/2"
+      ],
+      "pair_survival_lower": "1/88",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 37,
+      "Qx": 20,
+      "Qy": 38,
+      "N": 39,
+      "minimum_scaled_survivor": "4/3",
+      "minimizer": [
+        "20",
+        "52/3"
+      ],
+      "pair_survival_lower": "1/462",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 20,
+      "Qx": 21,
+      "Qy": 21,
+      "N": 22,
+      "minimum_scaled_survivor": "152",
+      "minimizer": [
+        "1",
+        "21"
+      ],
+      "pair_survival_lower": "19/77",
+      "former_pair_survival_lower": "19/77"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 21,
+      "Qx": 21,
+      "Qy": 22,
+      "N": 23,
+      "minimum_scaled_survivor": "124",
+      "minimizer": [
+        "21",
+        "1"
+      ],
+      "pair_survival_lower": "31/154",
+      "former_pair_survival_lower": "31/154"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 22,
+      "Qx": 21,
+      "Qy": 23,
+      "N": 24,
+      "minimum_scaled_survivor": "98",
+      "minimizer": [
+        "21",
+        "1"
+      ],
+      "pair_survival_lower": "7/44",
+      "former_pair_survival_lower": "7/44"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 23,
+      "Qx": 21,
+      "Qy": 24,
+      "N": 25,
+      "minimum_scaled_survivor": "74",
+      "minimizer": [
+        "21",
+        "1"
+      ],
+      "pair_survival_lower": "37/308",
+      "former_pair_survival_lower": "37/308"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 24,
+      "Qx": 21,
+      "Qy": 25,
+      "N": 26,
+      "minimum_scaled_survivor": "52",
+      "minimizer": [
+        "21",
+        "1"
+      ],
+      "pair_survival_lower": "13/154",
+      "former_pair_survival_lower": "13/154"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 25,
+      "Qx": 21,
+      "Qy": 26,
+      "N": 27,
+      "minimum_scaled_survivor": "32",
+      "minimizer": [
+        "21",
+        "1"
+      ],
+      "pair_survival_lower": "4/77",
+      "former_pair_survival_lower": "4/77"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 26,
+      "Qx": 21,
+      "Qy": 27,
+      "N": 28,
+      "minimum_scaled_survivor": "14",
+      "minimizer": [
+        "21",
+        "1"
+      ],
+      "pair_survival_lower": "1/44",
+      "former_pair_survival_lower": "1/44"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 27,
+      "Qx": 21,
+      "Qy": 28,
+      "N": 29,
+      "minimum_scaled_survivor": "38/7",
+      "minimizer": [
+        "21",
+        "11/7"
+      ],
+      "pair_survival_lower": "19/2156",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 28,
+      "Qx": 21,
+      "Qy": 29,
+      "N": 30,
+      "minimum_scaled_survivor": "56/13",
+      "minimizer": [
+        "21",
+        "35/13"
+      ],
+      "pair_survival_lower": "1/143",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 29,
+      "Qx": 21,
+      "Qy": 30,
+      "N": 31,
+      "minimum_scaled_survivor": "19/6",
+      "minimizer": [
+        "21",
+        "23/6"
+      ],
+      "pair_survival_lower": "19/3696",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 30,
+      "Qx": 21,
+      "Qy": 31,
+      "N": 32,
+      "minimum_scaled_survivor": "2",
+      "minimizer": [
+        "21",
+        "5"
+      ],
+      "pair_survival_lower": "1/308",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 31,
+      "Qx": 21,
+      "Qy": 32,
+      "N": 33,
+      "minimum_scaled_survivor": "4/5",
+      "minimizer": [
+        "21",
+        "31/5"
+      ],
+      "pair_survival_lower": "1/770",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 21,
+      "vb": 21,
+      "Qx": 22,
+      "Qy": 22,
+      "N": 23,
+      "minimum_scaled_survivor": "934/9",
+      "minimizer": [
+        "28/27",
+        "22"
+      ],
+      "pair_survival_lower": "467/2772",
+      "former_pair_survival_lower": "103/616"
+    },
+    {
+      "C": 1,
+      "va": 21,
+      "vb": 22,
+      "Qx": 22,
+      "Qy": 23,
+      "N": 24,
+      "minimum_scaled_survivor": "2074/27",
+      "minimizer": [
+        "593/27",
+        "1"
+      ],
+      "pair_survival_lower": "1037/8316",
+      "former_pair_survival_lower": "19/154"
+    },
+    {
+      "C": 1,
+      "va": 21,
+      "vb": 23,
+      "Qx": 22,
+      "Qy": 24,
+      "N": 25,
+      "minimum_scaled_survivor": "1400/27",
+      "minimizer": [
+        "593/27",
+        "1"
+      ],
+      "pair_survival_lower": "25/297",
+      "former_pair_survival_lower": "51/616"
+    },
+    {
+      "C": 1,
+      "va": 21,
+      "vb": 24,
+      "Qx": 22,
+      "Qy": 25,
+      "N": 26,
+      "minimum_scaled_survivor": "260/9",
+      "minimizer": [
+        "593/27",
+        "1"
+      ],
+      "pair_survival_lower": "65/1386",
+      "former_pair_survival_lower": "1/22"
+    },
+    {
+      "C": 1,
+      "va": 21,
+      "vb": 25,
+      "Qx": 22,
+      "Qy": 26,
+      "N": 27,
+      "minimum_scaled_survivor": "214/27",
+      "minimizer": [
+        "593/27",
+        "1"
+      ],
+      "pair_survival_lower": "107/8316",
+      "former_pair_survival_lower": "1/88"
+    },
+    {
+      "C": 1,
+      "va": 22,
+      "vb": 22,
+      "Qx": 23,
+      "Qy": 23,
+      "N": 24,
+      "minimum_scaled_survivor": "2074/27",
+      "minimizer": [
+        "55/27",
+        "23"
+      ],
+      "pair_survival_lower": "1037/8316",
+      "former_pair_survival_lower": "19/154"
+    },
+    {
+      "C": 1,
+      "va": 22,
+      "vb": 23,
+      "Qx": 23,
+      "Qy": 24,
+      "N": 25,
+      "minimum_scaled_survivor": "1400/27",
+      "minimizer": [
+        "593/27",
+        "1"
+      ],
+      "pair_survival_lower": "25/297",
+      "former_pair_survival_lower": "51/616"
+    },
+    {
+      "C": 1,
+      "va": 22,
+      "vb": 24,
+      "Qx": 23,
+      "Qy": 25,
+      "N": 26,
+      "minimum_scaled_survivor": "260/9",
+      "minimizer": [
+        "593/27",
+        "1"
+      ],
+      "pair_survival_lower": "65/1386",
+      "former_pair_survival_lower": "1/22"
+    },
+    {
+      "C": 1,
+      "va": 22,
+      "vb": 25,
+      "Qx": 23,
+      "Qy": 26,
+      "N": 27,
+      "minimum_scaled_survivor": "214/27",
+      "minimizer": [
+        "593/27",
+        "1"
+      ],
+      "pair_survival_lower": "107/8316",
+      "former_pair_survival_lower": "1/88"
+    },
+    {
+      "C": 1,
+      "va": 23,
+      "vb": 23,
+      "Qx": 24,
+      "Qy": 24,
+      "N": 25,
+      "minimum_scaled_survivor": "1400/27",
+      "minimizer": [
+        "82/27",
+        "24"
+      ],
+      "pair_survival_lower": "25/297",
+      "former_pair_survival_lower": "51/616"
+    },
+    {
+      "C": 1,
+      "va": 23,
+      "vb": 24,
+      "Qx": 24,
+      "Qy": 25,
+      "N": 26,
+      "minimum_scaled_survivor": "260/9",
+      "minimizer": [
+        "593/27",
+        "1"
+      ],
+      "pair_survival_lower": "65/1386",
+      "former_pair_survival_lower": "1/22"
+    },
+    {
+      "C": 1,
+      "va": 23,
+      "vb": 25,
+      "Qx": 24,
+      "Qy": 26,
+      "N": 27,
+      "minimum_scaled_survivor": "214/27",
+      "minimizer": [
+        "593/27",
+        "1"
+      ],
+      "pair_survival_lower": "107/8316",
+      "former_pair_survival_lower": "1/88"
+    },
+    {
+      "C": 1,
+      "va": 24,
+      "vb": 24,
+      "Qx": 25,
+      "Qy": 25,
+      "N": 26,
+      "minimum_scaled_survivor": "260/9",
+      "minimizer": [
+        "109/27",
+        "25"
+      ],
+      "pair_survival_lower": "65/1386",
+      "former_pair_survival_lower": "1/22"
+    },
+    {
+      "C": 1,
+      "va": 24,
+      "vb": 25,
+      "Qx": 25,
+      "Qy": 26,
+      "N": 27,
+      "minimum_scaled_survivor": "214/27",
+      "minimizer": [
+        "593/27",
+        "1"
+      ],
+      "pair_survival_lower": "107/8316",
+      "former_pair_survival_lower": "1/88"
+    },
+    {
+      "C": 1,
+      "va": 25,
+      "vb": 25,
+      "Qx": 26,
+      "Qy": 26,
+      "N": 27,
+      "minimum_scaled_survivor": "214/27",
+      "minimizer": [
+        "136/27",
+        "26"
+      ],
+      "pair_survival_lower": "107/8316",
+      "former_pair_survival_lower": "1/88"
+    },
+    {
+      "C": 2,
+      "va": 9,
+      "vb": 9,
+      "Qx": 20,
+      "Qy": 20,
+      "N": 22,
+      "minimum_scaled_survivor": "190",
+      "minimizer": [
+        "2",
+        "20"
+      ],
+      "pair_survival_lower": "95/308",
+      "former_pair_survival_lower": "95/308"
+    },
+    {
+      "C": 2,
+      "va": 9,
+      "vb": 10,
+      "Qx": 20,
+      "Qy": 22,
+      "N": 24,
+      "minimum_scaled_survivor": "136",
+      "minimizer": [
+        "20",
+        "2"
+      ],
+      "pair_survival_lower": "17/77",
+      "former_pair_survival_lower": "17/77"
+    },
+    {
+      "C": 2,
+      "va": 9,
+      "vb": 11,
+      "Qx": 20,
+      "Qy": 24,
+      "N": 26,
+      "minimum_scaled_survivor": "90",
+      "minimizer": [
+        "20",
+        "2"
+      ],
+      "pair_survival_lower": "45/308",
+      "former_pair_survival_lower": "45/308"
+    },
+    {
+      "C": 2,
+      "va": 9,
+      "vb": 12,
+      "Qx": 20,
+      "Qy": 26,
+      "N": 28,
+      "minimum_scaled_survivor": "52",
+      "minimizer": [
+        "20",
+        "2"
+      ],
+      "pair_survival_lower": "13/154",
+      "former_pair_survival_lower": "13/154"
+    },
+    {
+      "C": 2,
+      "va": 9,
+      "vb": 13,
+      "Qx": 20,
+      "Qy": 28,
+      "N": 30,
+      "minimum_scaled_survivor": "91/3",
+      "minimizer": [
+        "20",
+        "17/6"
+      ],
+      "pair_survival_lower": "13/264",
+      "former_pair_survival_lower": "1/28"
+    },
+    {
+      "C": 2,
+      "va": 9,
+      "vb": 14,
+      "Qx": 20,
+      "Qy": 30,
+      "N": 32,
+      "minimum_scaled_survivor": "128/5",
+      "minimizer": [
+        "20",
+        "26/5"
+      ],
+      "pair_survival_lower": "16/385",
+      "former_pair_survival_lower": "2/77"
+    },
+    {
+      "C": 2,
+      "va": 9,
+      "vb": 15,
+      "Qx": 20,
+      "Qy": 32,
+      "N": 34,
+      "minimum_scaled_survivor": "41/2",
+      "minimizer": [
+        "20",
+        "31/4"
+      ],
+      "pair_survival_lower": "41/1232",
+      "former_pair_survival_lower": "5/308"
+    },
+    {
+      "C": 2,
+      "va": 9,
+      "vb": 16,
+      "Qx": 20,
+      "Qy": 34,
+      "N": 36,
+      "minimum_scaled_survivor": "44/3",
+      "minimizer": [
+        "20",
+        "32/3"
+      ],
+      "pair_survival_lower": "1/42",
+      "former_pair_survival_lower": "1/154"
+    },
+    {
+      "C": 2,
+      "va": 9,
+      "vb": 17,
+      "Qx": 20,
+      "Qy": 36,
+      "N": 38,
+      "minimum_scaled_survivor": "7",
+      "minimizer": [
+        "20",
+        "29/2"
+      ],
+      "pair_survival_lower": "1/88",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 2,
+      "va": 10,
+      "vb": 10,
+      "Qx": 22,
+      "Qy": 22,
+      "N": 24,
+      "minimum_scaled_survivor": "1268/13",
+      "minimizer": [
+        "27/13",
+        "22"
+      ],
+      "pair_survival_lower": "317/2002",
+      "former_pair_survival_lower": "12/77"
+    },
+    {
+      "C": 2,
+      "va": 10,
+      "vb": 11,
+      "Qx": 22,
+      "Qy": 24,
+      "N": 26,
+      "minimum_scaled_survivor": "620/13",
+      "minimizer": [
+        "285/13",
+        "2"
+      ],
+      "pair_survival_lower": "155/2002",
+      "former_pair_survival_lower": "23/308"
+    },
+    {
+      "C": 2,
+      "va": 10,
+      "vb": 12,
+      "Qx": 22,
+      "Qy": 26,
+      "N": 28,
+      "minimum_scaled_survivor": "76/13",
+      "minimizer": [
+        "285/13",
+        "2"
+      ],
+      "pair_survival_lower": "19/2002",
+      "former_pair_survival_lower": "1/154"
+    },
+    {
+      "C": 2,
+      "va": 11,
+      "vb": 11,
+      "Qx": 24,
+      "Qy": 24,
+      "N": 26,
+      "minimum_scaled_survivor": "620/13",
+      "minimizer": [
+        "53/13",
+        "24"
+      ],
+      "pair_survival_lower": "155/2002",
+      "former_pair_survival_lower": "23/308"
+    },
+    {
+      "C": 2,
+      "va": 11,
+      "vb": 12,
+      "Qx": 24,
+      "Qy": 26,
+      "N": 28,
+      "minimum_scaled_survivor": "76/13",
+      "minimizer": [
+        "285/13",
+        "2"
+      ],
+      "pair_survival_lower": "19/2002",
+      "former_pair_survival_lower": "1/154"
+    },
+    {
+      "C": 2,
+      "va": 12,
+      "vb": 12,
+      "Qx": 26,
+      "Qy": 26,
+      "N": 28,
+      "minimum_scaled_survivor": "76/13",
+      "minimizer": [
+        "79/13",
+        "26"
+      ],
+      "pair_survival_lower": "19/2002",
+      "former_pair_survival_lower": "1/154"
+    },
+    {
+      "C": 3,
+      "va": 6,
+      "vb": 6,
+      "Qx": 21,
+      "Qy": 21,
+      "N": 24,
+      "minimum_scaled_survivor": "134",
+      "minimizer": [
+        "3",
+        "21"
+      ],
+      "pair_survival_lower": "67/308",
+      "former_pair_survival_lower": "67/308"
+    },
+    {
+      "C": 3,
+      "va": 6,
+      "vb": 7,
+      "Qx": 21,
+      "Qy": 24,
+      "N": 27,
+      "minimum_scaled_survivor": "62",
+      "minimizer": [
+        "21",
+        "3"
+      ],
+      "pair_survival_lower": "31/308",
+      "former_pair_survival_lower": "31/308"
+    },
+    {
+      "C": 3,
+      "va": 6,
+      "vb": 8,
+      "Qx": 21,
+      "Qy": 27,
+      "N": 30,
+      "minimum_scaled_survivor": "8",
+      "minimizer": [
+        "21",
+        "3"
+      ],
+      "pair_survival_lower": "1/77",
+      "former_pair_survival_lower": "1/77"
+    },
+    {
+      "C": 3,
+      "va": 6,
+      "vb": 9,
+      "Qx": 21,
+      "Qy": 30,
+      "N": 33,
+      "minimum_scaled_survivor": "4/5",
+      "minimizer": [
+        "21",
+        "31/5"
+      ],
+      "pair_survival_lower": "1/770",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 3,
+      "va": 7,
+      "vb": 7,
+      "Qx": 24,
+      "Qy": 24,
+      "N": 27,
+      "minimum_scaled_survivor": "1088/25",
+      "minimizer": [
+        "128/25",
+        "24"
+      ],
+      "pair_survival_lower": "136/1925",
+      "former_pair_survival_lower": "41/616"
+    },
+    {
+      "C": 4,
+      "va": 4,
+      "vb": 4,
+      "Qx": 20,
+      "Qy": 20,
+      "N": 24,
+      "minimum_scaled_survivor": "168",
+      "minimizer": [
+        "4",
+        "20"
+      ],
+      "pair_survival_lower": "3/11",
+      "former_pair_survival_lower": "3/11"
+    },
+    {
+      "C": 4,
+      "va": 4,
+      "vb": 5,
+      "Qx": 20,
+      "Qy": 24,
+      "N": 28,
+      "minimum_scaled_survivor": "76",
+      "minimizer": [
+        "20",
+        "4"
+      ],
+      "pair_survival_lower": "19/154",
+      "former_pair_survival_lower": "19/154"
+    },
+    {
+      "C": 4,
+      "va": 4,
+      "vb": 6,
+      "Qx": 20,
+      "Qy": 28,
+      "N": 32,
+      "minimum_scaled_survivor": "128/5",
+      "minimizer": [
+        "20",
+        "26/5"
+      ],
+      "pair_survival_lower": "16/385",
+      "former_pair_survival_lower": "2/77"
+    },
+    {
+      "C": 4,
+      "va": 4,
+      "vb": 7,
+      "Qx": 20,
+      "Qy": 32,
+      "N": 36,
+      "minimum_scaled_survivor": "44/3",
+      "minimizer": [
+        "20",
+        "32/3"
+      ],
+      "pair_survival_lower": "1/42",
+      "former_pair_survival_lower": "1/154"
+    },
+    {
+      "C": 4,
+      "va": 5,
+      "vb": 5,
+      "Qx": 24,
+      "Qy": 24,
+      "N": 28,
+      "minimum_scaled_survivor": "118/3",
+      "minimizer": [
+        "37/6",
+        "24"
+      ],
+      "pair_survival_lower": "59/924",
+      "former_pair_survival_lower": "9/154"
+    },
+    {
+      "C": 5,
+      "va": 3,
+      "vb": 3,
+      "Qx": 20,
+      "Qy": 20,
+      "N": 25,
+      "minimum_scaled_survivor": "157",
+      "minimizer": [
+        "5",
+        "20"
+      ],
+      "pair_survival_lower": "157/616",
+      "former_pair_survival_lower": "157/616"
+    },
+    {
+      "C": 5,
+      "va": 3,
+      "vb": 4,
+      "Qx": 20,
+      "Qy": 25,
+      "N": 30,
+      "minimum_scaled_survivor": "52",
+      "minimizer": [
+        "20",
+        "5"
+      ],
+      "pair_survival_lower": "13/154",
+      "former_pair_survival_lower": "13/154"
+    },
+    {
+      "C": 5,
+      "va": 3,
+      "vb": 5,
+      "Qx": 20,
+      "Qy": 30,
+      "N": 35,
+      "minimum_scaled_survivor": "124/7",
+      "minimizer": [
+        "20",
+        "64/7"
+      ],
+      "pair_survival_lower": "31/1078",
+      "former_pair_survival_lower": "1/88"
+    },
+    {
+      "C": 5,
+      "va": 4,
+      "vb": 4,
+      "Qx": 25,
+      "Qy": 25,
+      "N": 30,
+      "minimum_scaled_survivor": "376/23",
+      "minimizer": [
+        "189/23",
+        "25"
+      ],
+      "pair_survival_lower": "47/1771",
+      "former_pair_survival_lower": "3/154"
+    },
+    {
+      "C": 6,
+      "va": 3,
+      "vb": 3,
+      "Qx": 24,
+      "Qy": 24,
+      "N": 30,
+      "minimum_scaled_survivor": "340/11",
+      "minimizer": [
+        "91/11",
+        "24"
+      ],
+      "pair_survival_lower": "85/1694",
+      "former_pair_survival_lower": "13/308"
+    },
+    {
+      "C": 7,
+      "va": 2,
+      "vb": 2,
+      "Qx": 21,
+      "Qy": 21,
+      "N": 28,
+      "minimum_scaled_survivor": "98",
+      "minimizer": [
+        "7",
+        "21"
+      ],
+      "pair_survival_lower": "7/44",
+      "former_pair_survival_lower": "7/44"
+    },
+    {
+      "C": 8,
+      "va": 2,
+      "vb": 2,
+      "Qx": 24,
+      "Qy": 24,
+      "N": 32,
+      "minimum_scaled_survivor": "112/5",
+      "minimizer": [
+        "52/5",
+        "24"
+      ],
+      "pair_survival_lower": "2/55",
+      "former_pair_survival_lower": "2/77"
+    },
+    {
+      "C": 10,
+      "va": 1,
+      "vb": 1,
+      "Qx": 20,
+      "Qy": 20,
+      "N": 30,
+      "minimum_scaled_survivor": "102",
+      "minimizer": [
+        "10",
+        "20"
+      ],
+      "pair_survival_lower": "51/308",
+      "former_pair_survival_lower": "51/308"
+    },
+    {
+      "C": 11,
+      "va": 1,
+      "vb": 1,
+      "Qx": 22,
+      "Qy": 22,
+      "N": 33,
+      "minimum_scaled_survivor": "682/17",
+      "minimizer": [
+        "198/17",
+        "22"
+      ],
+      "pair_survival_lower": "31/476",
+      "former_pair_survival_lower": "3/56"
+    },
+    {
+      "C": 12,
+      "va": 1,
+      "vb": 1,
+      "Qx": 24,
+      "Qy": 24,
+      "N": 36,
+      "minimum_scaled_survivor": "5",
+      "minimizer": [
+        "59/4",
+        "24"
+      ],
+      "pair_survival_lower": "5/616",
+      "former_pair_survival_lower": "0"
+    }
+  ],
+  "new_edges_over_axis_individual_caps": [
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 36,
+      "Qx": 20,
+      "Qy": 37,
+      "N": 38,
+      "minimum_scaled_survivor": "7",
+      "minimizer": [
+        "20",
+        "29/2"
+      ],
+      "pair_survival_lower": "1/88",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 19,
+      "vb": 37,
+      "Qx": 20,
+      "Qy": 38,
+      "N": 39,
+      "minimum_scaled_survivor": "4/3",
+      "minimizer": [
+        "20",
+        "52/3"
+      ],
+      "pair_survival_lower": "1/462",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 27,
+      "Qx": 21,
+      "Qy": 28,
+      "N": 29,
+      "minimum_scaled_survivor": "38/7",
+      "minimizer": [
+        "21",
+        "11/7"
+      ],
+      "pair_survival_lower": "19/2156",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 28,
+      "Qx": 21,
+      "Qy": 29,
+      "N": 30,
+      "minimum_scaled_survivor": "56/13",
+      "minimizer": [
+        "21",
+        "35/13"
+      ],
+      "pair_survival_lower": "1/143",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 29,
+      "Qx": 21,
+      "Qy": 30,
+      "N": 31,
+      "minimum_scaled_survivor": "19/6",
+      "minimizer": [
+        "21",
+        "23/6"
+      ],
+      "pair_survival_lower": "19/3696",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 30,
+      "Qx": 21,
+      "Qy": 31,
+      "N": 32,
+      "minimum_scaled_survivor": "2",
+      "minimizer": [
+        "21",
+        "5"
+      ],
+      "pair_survival_lower": "1/308",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 1,
+      "va": 20,
+      "vb": 31,
+      "Qx": 21,
+      "Qy": 32,
+      "N": 33,
+      "minimum_scaled_survivor": "4/5",
+      "minimizer": [
+        "21",
+        "31/5"
+      ],
+      "pair_survival_lower": "1/770",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 2,
+      "va": 9,
+      "vb": 17,
+      "Qx": 20,
+      "Qy": 36,
+      "N": 38,
+      "minimum_scaled_survivor": "7",
+      "minimizer": [
+        "20",
+        "29/2"
+      ],
+      "pair_survival_lower": "1/88",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 3,
+      "va": 6,
+      "vb": 9,
+      "Qx": 21,
+      "Qy": 30,
+      "N": 33,
+      "minimum_scaled_survivor": "4/5",
+      "minimizer": [
+        "21",
+        "31/5"
+      ],
+      "pair_survival_lower": "1/770",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "C": 12,
+      "va": 1,
+      "vb": 1,
+      "Qx": 24,
+      "Qy": 24,
+      "N": 36,
+      "minimum_scaled_survivor": "5",
+      "minimizer": [
+        "59/4",
+        "24"
+      ],
+      "pair_survival_lower": "5/616",
+      "former_pair_survival_lower": "0"
+    }
+  ],
+  "complete_edge_depth_maxima": [
+    {
+      "C": 1,
+      "depth_pairs": {
+        "19": 37,
+        "20": 31,
+        "21": 25,
+        "22": 25,
+        "23": 25,
+        "24": 25,
+        "25": 25
+      }
+    },
+    {
+      "C": 2,
+      "depth_pairs": {
+        "9": 17,
+        "10": 12,
+        "11": 12,
+        "12": 12
+      }
+    },
+    {
+      "C": 3,
+      "depth_pairs": {
+        "6": 9,
+        "7": 7
+      }
+    },
+    {
+      "C": 4,
+      "depth_pairs": {
+        "4": 7,
+        "5": 5
+      }
+    },
+    {
+      "C": 5,
+      "depth_pairs": {
+        "3": 5,
+        "4": 4
+      }
+    },
+    {
+      "C": 6,
+      "depth_pairs": {
+        "3": 3
+      }
+    },
+    {
+      "C": 7,
+      "depth_pairs": {
+        "2": 2
+      }
+    },
+    {
+      "C": 8,
+      "depth_pairs": {
+        "2": 2
+      }
+    },
+    {
+      "C": 10,
+      "depth_pairs": {
+        "1": 1
+      }
+    },
+    {
+      "C": 11,
+      "depth_pairs": {
+        "1": 1
+      }
+    },
+    {
+      "C": 12,
+      "depth_pairs": {
+        "1": 1
+      }
+    }
+  ],
+  "smallest_additional_pair_survival": "1/770",
+  "literal_CRT_controls": [
+    {
+      "vx": 3,
+      "vy": 3,
+      "nonternary_profile": [
+        1,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_nonternary_profile": [
+        1,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "C": 6,
+      "other_C": 6,
+      "intersection": 6,
+      "CRT_period": 32081724675,
+      "reference_a": 0,
+      "reference_b": 12278190925,
+      "old_x": 25562655405,
+      "old_y": 20627868835,
+      "labels_checked": 960,
+      "Qx": 24,
+      "Qy": 24,
+      "N": 30,
+      "minimum_scaled_survivor": "340/11",
+      "minimizer": [
+        "91/11",
+        "24"
+      ],
+      "pair_survival_lower": "85/1694",
+      "former_pair_survival_lower": "13/308"
+    },
+    {
+      "vx": 1,
+      "vy": 1,
+      "nonternary_profile": [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_nonternary_profile": [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "C": 11,
+      "other_C": 11,
+      "intersection": 11,
+      "CRT_period": 142085302734375,
+      "reference_a": 0,
+      "reference_b": 31574511718750,
+      "old_x": 118607724609375,
+      "old_y": 31981123046875,
+      "labels_checked": 1152,
+      "Qx": 22,
+      "Qy": 22,
+      "N": 33,
+      "minimum_scaled_survivor": "682/17",
+      "minimizer": [
+        "198/17",
+        "22"
+      ],
+      "pair_survival_lower": "31/476",
+      "former_pair_survival_lower": "3/56"
+    },
+    {
+      "vx": 3,
+      "vy": 5,
+      "nonternary_profile": [
+        4,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_nonternary_profile": [
+        4,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "C": 5,
+      "other_C": 5,
+      "intersection": 5,
+      "CRT_period": 736570209375,
+      "reference_a": 0,
+      "reference_b": 602189087500,
+      "old_x": 264838072500,
+      "old_y": 40650107500,
+      "labels_checked": 1344,
+      "Qx": 20,
+      "Qy": 30,
+      "N": 35,
+      "minimum_scaled_survivor": "124/7",
+      "minimizer": [
+        "20",
+        "64/7"
+      ],
+      "pair_survival_lower": "31/1078",
+      "former_pair_survival_lower": "1/88"
+    },
+    {
+      "vx": 1,
+      "vy": 1,
+      "nonternary_profile": [
+        2,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_nonternary_profile": [
+        2,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "C": 12,
+      "other_C": 12,
+      "intersection": 12,
+      "CRT_period": 124762262625,
+      "reference_a": 0,
+      "reference_b": 69312368125,
+      "old_x": 47731296900,
+      "old_y": 81600120175,
+      "labels_checked": 960,
+      "Qx": 24,
+      "Qy": 24,
+      "N": 36,
+      "minimum_scaled_survivor": "5",
+      "minimizer": [
+        "59/4",
+        "24"
+      ],
+      "pair_survival_lower": "5/616",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "vx": 19,
+      "vy": 37,
+      "nonternary_profile": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_nonternary_profile": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "C": 1,
+      "other_C": 1,
+      "intersection": 1,
+      "CRT_period": 2183807149565924105958735,
+      "reference_a": 0,
+      "reference_b": 1602496480751423093291455,
+      "old_x": 1023521434556779846207521,
+      "old_y": 2037182101858450416639772,
+      "labels_checked": 2496,
+      "Qx": 20,
+      "Qy": 38,
+      "N": 39,
+      "minimum_scaled_survivor": "4/3",
+      "minimizer": [
+        "20",
+        "52/3"
+      ],
+      "pair_survival_lower": "1/462",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "vx": 20,
+      "vy": 31,
+      "nonternary_profile": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_nonternary_profile": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "C": 1,
+      "other_C": 1,
+      "intersection": 1,
+      "CRT_period": 2995620232600718938215,
+      "reference_a": 0,
+      "reference_b": 2835276542639180284645,
+      "old_x": 2728498107280268583261,
+      "old_y": 2157423845028684612382,
+      "labels_checked": 2112,
+      "Qx": 21,
+      "Qy": 32,
+      "N": 33,
+      "minimum_scaled_survivor": "4/5",
+      "minimizer": [
+        "21",
+        "31/5"
+      ],
+      "pair_survival_lower": "1/770",
+      "former_pair_survival_lower": "0"
+    },
+    {
+      "vx": 9,
+      "vy": 9,
+      "nonternary_profile": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_nonternary_profile": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "C": 2,
+      "other_C": 2,
+      "intersection": 1,
+      "CRT_period": 3341082469725,
+      "reference_a": 0,
+      "reference_b": 1309296488500,
+      "old_x": 1274473954755,
+      "old_y": 895363372477,
+      "labels_checked": 1584,
+      "Qx": 20,
+      "Qy": 20,
+      "N": 31,
+      "minimum_scaled_survivor": "91",
+      "minimizer": [
+        "11",
+        "20"
+      ],
+      "pair_survival_lower": "13/88",
+      "former_pair_survival_lower": "13/88"
+    }
+  ],
+  "Lean_rerun": false,
+  "actual_old_survivor_pair_existence_proved": false
+}

@@ -67,9 +67,9 @@
   "schema": "incidence-unicyclic-v1",
   "source_sha256": {
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
-    "problem-details/48-incidence-forests-with-arbitrary-original-heights.md": "38158e0d64ca8449b127d4fe0636eddeafaff4304408f9a073820021f599f9c4",
-    "problem-details/49-incidence-pseudoforests-with-arbitrary-original-heights.md": "45c5e514d4c948efb5f47971eb273d78f519ff53eb21c630fc3fc38714f4719f",
+    "problem-details/48-incidence-forests-with-arbitrary-original-heights.md": "203c21ced86a69fbe6123926ac75d9d7a7f871cafe985c2969353cd3b20d68fb",
+    "problem-details/49-incidence-pseudoforests-with-arbitrary-original-heights.md": "04cce5b9f9e57ec3c876a6a76b897309e027c3dc0bb5d9e5e7ca4f471b37fc2d",
     "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9"
   },
-  "producer_sha256": "56267be9848b31bfc4f27c70395ff09fb1c5afb51209c62c218c756a21f1d599"
+  "producer_sha256": "b2cf316c5812c24f9583a5af1e89e24ccdcead9be943d943a447194a9cd56e5d"
 }

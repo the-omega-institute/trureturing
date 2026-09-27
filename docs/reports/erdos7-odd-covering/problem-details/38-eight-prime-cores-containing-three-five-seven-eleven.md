@@ -304,7 +304,7 @@ No new local replay of its whole arbitrary-height Lean theorem is
 claimed.
 
 The portable producer
-[`variable_eight_core_certificate.py`](../frontier/cover-geometry/variable_eight_core_certificate.py)
+[`variable_eight_core_certificate.py`](../frontier/cover-geometry/spine-book-certificate/variable_eight_core_certificate.py)
 accepts `--geometry`, `--helper`, `--source-helper`, and `--output`.
 It checks the input SHA-256 identities before importing either project
 helper and rejects execution with assertions disabled. The ordinary
@@ -315,7 +315,7 @@ The calculation verifies eleven fixed-cutoff rows and all 704 residuals,
 three source families at all 32 vertices, 576 upward-rounded stage
 losses, the applicable parent-cap comparisons, four distinct-minimum
 budgets, and the uniform strict Haar bound. Its
-[`JSON`](../frontier/cover-geometry/variable_eight_core_certificate.json)
+[`JSON`](../frontier/cover-geometry/spine-book-certificate/variable_eight_core_certificate.json)
 contains the exact values and input identities. The Chapter 35 baseline
 is an inherited result, not a new replay within this calculation.
 

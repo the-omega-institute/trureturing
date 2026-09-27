@@ -15,8 +15,8 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/joint_deletion_row_transport.json'
 PINS = {
-    'frontier/retained-transport/selected_deletion_mask_row_transport.py': '7d9c35291258c338b6eea2a84ad14c2fc10ceb8549fdea932b4cae94d0c9f6a4',
-    'certificates/source_norms/retained-transport/selected_deletion_mask_row_transport.json': '37be2a35823937ee9d9ff810636b1ef38845ec38d578af704e8f92c42f1daa4c',
+    'frontier/retained-transport/selected_deletion_mask_row_transport.py': 'c458f977c98afed08ca8770cd9214b9a4464c3a03a00e34b1c7ad543840556d0',
+    'certificates/source_norms/retained-transport/selected_deletion_mask_row_transport.json': '209d41634ece43ca4cc140dfead52f61b0ca66b7f97fceb4d5adde46066bbba4',
 }
 
 

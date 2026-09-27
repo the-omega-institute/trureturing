@@ -1,10 +1,10 @@
 {
   "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
-  "frontier/j-geometry/j_face_joint_selected_heads.py": "77c34ea38b4f11aabe721d401dddb1f70d992f991094bd29393f9f0aa4be921b",
-  "certificates/source_norms/j-geometry/j_face_joint_selected_heads.json": "67c0c79696a723ebdee9e8745c111c1da678f2916582498d61a5befecf45b0bf",
+  "frontier/j-geometry/j_face_joint_selected_heads.py": "3fd533ce6b8e5d8736c2d6aa6636898212cee26f522720bb48cac971d348ed2f",
+  "certificates/source_norms/j-geometry/j_face_joint_selected_heads.json": "c556c9dea7f0249db22c8134789f7207f5693b8ce03a5811fe7987f33d1998ab",
   "frontier/j-geometry/j_face_complete_survival_linear_heads.py": "f12ecd020ae71506c7f7bc53316cae85159845e97ee75328b5991888b01fa4ff",
   "certificates/source_norms/j-geometry/j_face_complete_survival_linear_heads.json": "fe797751e87e2226327294b12d6b80a1e0476ad1d08a429a1064e5fd50afd67b",
-  "profile-notes/193-256/244-three-complete-j-heads-share-raw-survivor-and-marked-deletion.md": "56f83856783c4e3c68ac919a6bed36a0d00e41f19d1d78f3d83b3cc950c66118",
+  "profile-notes/193-256/244-three-complete-j-heads-share-raw-survivor-and-marked-deletion.md": "e87f41fb473e7d964cf2dc110f3c9ff56685f33df8b240fc5f6b80936e7397c7",
   "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
   "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
   "frontier/j-geometry/j_face_coupled_seven_heads.py": "78b6846a4eaa01ed568eb96e8c49dca67d0a19df094bc1e28ba5214100dc70a0",
@@ -41,8 +41,8 @@
   "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
   "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
   "certificates/source_norms/source-budgets/shared_source_deficits.json": "85c042b5b790cb21b491deb22ab095a11a98ef49b1bb170890ee342aed0633b2",
-  "frontier/source-budgets/joint_selected_source_comparison.py": "849ecfdffec509678ace0ab6e059450a72959a44641a46715bcb489a5d376db8",
-  "frontier/retained-transport/retained_deletion_heavy_comparison.py": "553c281d5de5a9bcd9098ea933f6cccf046b587132e6fa49ec4aa8b44b4ec86f",
+  "frontier/source-budgets/joint_selected_source_comparison.py": "6ab7c405b01bce450c5633e0ee5401c305b930c53ef71770ea582f15382a8d50",
+  "frontier/retained-transport/retained_deletion_heavy_comparison.py": "b5c823b78f082228be4a2ec71eecde1b29b220dcf680fb3f1e478270af4c77d7",
   "profile-notes/193-256/211-all-four-selected-labels-can-be-retained-above-the-first-hinge.md": "a57b7a5e6d531412b5cebc11d42c1ce2617cc8d3f19651887447b30fe0f13781",
   "profile-notes/193-256/222-deep-five-deletion-retains-the-selected-observation-masks.md": "75f2e13689ba09637307ef2eea60d055d8bd4312dd2ebe7062d6fef8664f123c"
 }

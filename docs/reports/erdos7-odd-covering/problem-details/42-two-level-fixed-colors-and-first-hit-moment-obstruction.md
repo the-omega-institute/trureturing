@@ -254,12 +254,12 @@ suffice for the unrestricted task.
 
 ## 5. Reproduction
 
-The self-contained [producer](../frontier/cover-geometry/two_level_colored_first_hit.py)
-and deterministic [JSON](../frontier/cover-geometry/two_level_colored_first_hit.json)
+The self-contained [producer](../frontier/cover-geometry/two-level-colored-first-hit/two_level_colored_first_hit.py)
+and deterministic [JSON](../frontier/cover-geometry/two-level-colored-first-hit/two_level_colored_first_hit.json)
 use Python 3.9 or later and only its standard library. From the repository root run
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_level_colored_first_hit.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_level_colored_first_hit.json
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two-level-colored-first-hit/two_level_colored_first_hit.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/two-level-colored-first-hit/two_level_colored_first_hit.json
 ```
 
 The producer checks the literal original residues on all 144 old fibres

@@ -142,8 +142,8 @@ in that unrestricted source class remain unresolved here.
 ### Exact finite witness
 
 The standard-library producer
-[`fixed_stationary_boundary.py`](../frontier/cover-geometry/fixed_stationary_boundary.py)
-and its [exact output](../frontier/cover-geometry/fixed_stationary_boundary.json)
+[`fixed_stationary_boundary.py`](../frontier/cover-geometry/balanced-prefix-budget/fixed_stationary_boundary.py)
+and its [exact output](../frontier/cover-geometry/balanced-prefix-budget/fixed_stationary_boundary.json)
 give every literal modulus and residue in (FA40). The producer uses
 the adjacent `balanced_prefix_budget.py` only for CRT, prefix
 partitions and clipping, and rebuilds this source's probability law.
@@ -158,7 +158,7 @@ words. For the default thresholds it verifies:
 | \(1/5\) | \(1/675000\) | \(1/675000\) | \(6479/6643012500\) |
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/fixed_stationary_boundary.py --output /tmp/fixed-stationary-boundary.json
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/balanced-prefix-budget/fixed_stationary_boundary.py --output /tmp/fixed-stationary-boundary.json
 ```
 
 Repeating `--delta` selects other exact rational thresholds. The

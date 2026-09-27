@@ -1,0 +1,231 @@
+{
+  "schema": "supported-unit-mixture-input-v1",
+  "old_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "R": [
+    23
+  ],
+  "S": [
+    29,
+    31
+  ],
+  "unit_originals": [
+    {
+      "modulus": 23,
+      "residue": 0
+    },
+    {
+      "modulus": 29,
+      "residue": 0
+    },
+    {
+      "modulus": 31,
+      "residue": 0
+    },
+    {
+      "modulus": 667,
+      "residue": 1
+    },
+    {
+      "modulus": 713,
+      "residue": 2
+    },
+    {
+      "modulus": 20677,
+      "residue": 11225
+    },
+    {
+      "modulus": 15341,
+      "residue": 24
+    },
+    {
+      "modulus": 19343,
+      "residue": 4
+    },
+    {
+      "modulus": 529,
+      "residue": 5
+    },
+    {
+      "modulus": 841,
+      "residue": 6
+    },
+    {
+      "modulus": 14617054496157554107,
+      "residue": 47
+    },
+    {
+      "modulus": 235994460398047850347,
+      "residue": 8
+    }
+  ],
+  "cutoffs": [
+    0,
+    12
+  ],
+  "old_source": {
+    "period": 45,
+    "weights": [
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90",
+      "1/90",
+      "2/45",
+      "1/90"
+    ]
+  },
+  "test_originals": [
+    {
+      "modulus": 23,
+      "residue": 0,
+      "weight": "616"
+    },
+    {
+      "modulus": 29,
+      "residue": 0,
+      "weight": "616"
+    },
+    {
+      "modulus": 31,
+      "residue": 0,
+      "weight": "616"
+    },
+    {
+      "modulus": 667,
+      "residue": 1,
+      "weight": "616"
+    },
+    {
+      "modulus": 713,
+      "residue": 2,
+      "weight": "616"
+    },
+    {
+      "modulus": 20677,
+      "residue": 11225,
+      "weight": "616"
+    },
+    {
+      "modulus": 15341,
+      "residue": 24,
+      "weight": "616"
+    },
+    {
+      "modulus": 19343,
+      "residue": 4,
+      "weight": "616"
+    },
+    {
+      "modulus": 529,
+      "residue": 5,
+      "weight": "616"
+    },
+    {
+      "modulus": 841,
+      "residue": 6,
+      "weight": "616"
+    },
+    {
+      "modulus": 14617054496157554107,
+      "residue": 47,
+      "weight": "616"
+    },
+    {
+      "modulus": 235994460398047850347,
+      "residue": 8,
+      "weight": "616"
+    },
+    {
+      "modulus": 3,
+      "residue": 1,
+      "weight": "616"
+    },
+    {
+      "modulus": 115,
+      "residue": 4,
+      "weight": "1/2"
+    },
+    {
+      "modulus": 7569,
+      "residue": 8,
+      "weight": "615"
+    },
+    {
+      "modulus": 219255817442363311605,
+      "residue": 47,
+      "weight": "616"
+    },
+    {
+      "modulus": 10619750717912153265615,
+      "residue": 8,
+      "weight": "616"
+    },
+    {
+      "modulus": 1587,
+      "residue": 24,
+      "weight": "17"
+    },
+    {
+      "modulus": 51303143564793010945,
+      "residue": 8,
+      "weight": "616"
+    },
+    {
+      "modulus": 4536327257428206447,
+      "residue": 47,
+      "weight": "616"
+    },
+    {
+      "modulus": 1395,
+      "residue": 2,
+      "weight": "600"
+    }
+  ],
+  "purpose": "Exact supported decomposition and simultaneous response control on literal distinct arithmetic labels, including nested low R cylinders and both assigned high-tail directions. CRT inclusion-exclusion avoids enumeration of the huge outside period. Scalar theorem constants are evaluated exactly."
+}
