@@ -632,6 +632,17 @@ public sealed class JudgeSeedTests
     }
 
     [Fact]
+    public void MissingDotnetRootDiscoversTheResolvedSdkFromDotnet()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new JudgeSeedFixture();
+
+        var result = fixture.ReadDiscoveredSdkMaterial();
+
+        Assert.Contains("fake-dotnet/sdk/10.0.400/declared/compiler.dll", result.Text, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void DeclaredCompilerBytesChangeIdentityAndUndeclaredSdkFilesDoNot()
     {
         using var fixture = new JudgeSeedFixture();
