@@ -66,9 +66,13 @@ change the inversion count by more than `4`, or if the clause gave more than
 Exact breadth-first search over the `715` vertices at `L = 4`, `N = 13`
 gives central eccentricity `12` in both conventions; the reversal is at
 distance `12` with left rotations and `9` with right rotations. With
-`⌈(t + 1)/4⌉` in place of `⌊(t + 1)/4⌋` the clause matches every value
-computed for `L = 4`, `13 ≤ N ≤ 18`, which points to a misprint in the
-source. Independently, the `k = 4` clause of Conjecture 15 disagrees at
+`⌈(t + 1)/4⌉` in place of `⌊(t + 1)/4⌋` the clause matches the central
+eccentricity under left rotations for `L = 4`, `13 ≤ N ≤ 18`
+(`12, 12, 12, 13, 16, 16`), which points to a misprint in the source. It does
+not match the other readings: under right rotations the central eccentricity
+is `13` at `N = 14` against `12`, and the largest directed distance between
+two vertices at `L = 4`, `N = 13` is `15` in both conventions. Independently,
+the `k = 4` clause of Conjecture 15 disagrees at
 `(l, n) = (2, 7)`: `5` with left rotations, `6` with right rotations, formula
 `4`.
 
@@ -98,7 +102,7 @@ proof path. Its admission basis is `open-problem-resolution`.
 
 ## ASSUMED-UNVERIFIED
 
-Whether the ceiling form of the `k = 5` clause holds for all `L ≥ 4`,
-`N ≥ L + 9` is not settled here. The bounded literature check does not
-establish exhaustive worldwide novelty, priority, or the absence of an
-independent proof.
+Whether the ceiling form of the `k = 5` clause holds, for the central
+eccentricity under left rotations, for all `L ≥ 4`, `N ≥ L + 9` is not settled
+here. The bounded literature check does not establish exhaustive worldwide
+novelty, priority, or the absence of an independent proof.
