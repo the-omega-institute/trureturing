@@ -44,7 +44,7 @@ internal sealed class PronkoMotzkinRaisingLoweringDocument : IScribeDocumentDefi
                 "ket", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("proj", "Half projectors", Disp(Equal(Call("proj", F.Id("w")),
                     Times(new Formula.Fraction(D(1), D(2)), Call("vecMulVec", F.Id("w"), F.Id("w"))))),
-                "proj(w) = (1/2)|w><w|, one half of the outer product of w with itself.",
+                "proj(w) = (1/2) w w^T, one half of the product of w with its transpose (Matrix.vecMulVec, no complex conjugation); for the three real vectors in piProj this is (1/2)|w><w|.",
                 "proj", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("pi", "The local projector Pi", PiFormula(),
                 "piProj is Pi = U + D + F of eq. UDF, with U = (1/2)(|uf> - |fu>)(<uf| - <fu|), D = (1/2)(|df> - |fd>)(<df| - <fd|) and F = (1/2)(|ud> - |ff>)(<ud| - <ff|), where u, f, d are the basis vectors 0, 1, 2.",
@@ -133,17 +133,22 @@ internal sealed class PronkoMotzkinRaisingLoweringDocument : IScribeDocumentDefi
             IfThenElse(agree, new Formula.Apply(mat, [Call("a", i), Call("b", i)]), D(0))));
     }
 
+    private static Formula FiniteSum(Formula index, Formula set, Formula term) =>
+        Seq(Sum, Underscore, Grp(index, Sp, InMacro, Sp, set), Sp, term);
+
     private static Formula SigFormula()
     {
-        Formula r = F.Id("r"), e = F.Id("e");
-        Formula index = And(Call("in", r, new Formula.Power(Call("Fin", D(5)), F.Id("N"))),
-            Equal(Call("sum", Call("rv", Call("r", F.Id("i")))), e));
-        Formula product = Call("prod", Call("ofFn", Call("site", F.Id("i"), Call("spow", Call("r", F.Id("i"))))));
-        return Disp(Equal(Call("Sig", F.Id("N"), e), Call("sum", index, product)));
+        Formula r = F.Id("r"), e = F.Id("e"), i = F.Id("i"), n = F.Id("N");
+        Formula total = Equal(FiniteSum(i, Call("Fin", n), Call("rv", Call("r", i))), e);
+        Formula vectors = Seq(OpenBrace, r, Sp, InMacro, Sp, new Formula.Power(Call("Fin", D(5)), n), Sp, Mid, Sp,
+            total, CloseBrace);
+        Formula product = Call("prod", Call("ofFn",
+            Seq(Open, i, Sp, Mapsto, Sp, Call("site", i, Call("spow", Call("r", i))), Close)));
+        return Disp(Equal(Call("Sig", n, e), FiniteSum(r, vectors, product)));
     }
 
     private static Formula HeightFormula() =>
-        Disp(Equal(Call("S", F.Id("a")), Call("sum", Call("ht", Call("a", F.Id("i"))))));
+        Disp(Equal(Call("S", F.Id("a")), FiniteSum(F.Id("i"), Call("Fin", F.Id("N")), Call("ht", Call("a", F.Id("i"))))));
 
     private static Formula PiFormula()
     {
@@ -164,7 +169,8 @@ internal sealed class PronkoMotzkinRaisingLoweringDocument : IScribeDocumentDefi
     }
 
     private static Formula HFormula() => Disp(Equal(Call("H", F.Id("N")),
-        Call("sum", Call("twoSite", F.Id("i"), Call("finRotate", F.Id("N"), F.Id("i")), F.Id("piProj")))));
+        FiniteSum(F.Id("i"), Call("Fin", F.Id("N")),
+            Call("twoSite", F.Id("i"), Call("finRotate", F.Id("N"), F.Id("i")), F.Id("piProj")))));
 
     private static Formula VFormula() => Disp(Equal(new Formula.Apply(Call("v", F.Id("N"), F.Id("m")), [F.Id("a")]),
         IfThenElse(Equal(Call("S", F.Id("a")), F.Id("m")), D(1), D(0))));
@@ -176,11 +182,11 @@ internal sealed class PronkoMotzkinRaisingLoweringDocument : IScribeDocumentDefi
         Formula commute = And(Equal(Times(sp, h), Times(h, sp)), Equal(Times(sm, h), Times(h, sm)));
         Formula up = All("m", Integers(), Implies(And(AtMost(Neg(n), m), Less(m, n)),
             Ex("c", Seq(Mathbb, Grp(F.Id("C"))), And(Call("ne", c, D(0)),
-                Equal(Times(sp, Call("v", n, m)), Times(c, Call("v", n, Add(m, D(1)))))))));
+                Equal(Call("mulVec", sp, Call("v", n, m)), Times(c, Call("v", n, Add(m, D(1)))))))));
         Formula down = All("m", Integers(), Implies(And(Less(Neg(n), m), AtMost(m, n)),
             Ex("c", Seq(Mathbb, Grp(F.Id("C"))), And(Call("ne", c, D(0)),
-                Equal(Times(sm, Call("v", n, m)), Times(c, Call("v", n, Subtract(m, D(1)))))))));
-        Formula ends = And(Equal(Times(sp, Call("v", n, n)), D(0)), Equal(Times(sm, Call("v", n, Neg(n))), D(0)));
+                Equal(Call("mulVec", sm, Call("v", n, m)), Times(c, Call("v", n, Subtract(m, D(1)))))))));
+        Formula ends = And(Equal(Call("mulVec", sp, Call("v", n, n)), D(0)), Equal(Call("mulVec", sm, Call("v", n, Neg(n))), D(0)));
         return Disp(Iff(F.Id("claim"), All("N", Naturals(), Implies(AtMost(D(2), n),
             And(commute, And(up, And(down, ends)))))));
     }

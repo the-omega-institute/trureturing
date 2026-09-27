@@ -63,7 +63,8 @@ def S {N : ℕ} (a : Fin N → Fin 3) : ℤ := ∑ i, ht (a i)
 /-- The basis vector `|x y⟩` of `ℂ³ ⊗ ℂ³`. -/
 def ket (x y : Fin 3) : Fin 3 × Fin 3 → ℂ := Pi.single (x, y) 1
 
-/-- `½ |w⟩⟨w|`. -/
+/-- `½ w wᵀ` (`Matrix.vecMulVec`, no complex conjugation); for the real vectors in `piProj`
+this is `½ |w⟩⟨w|`. -/
 noncomputable def proj (w : Fin 3 × Fin 3 → ℂ) : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
   (1 / 2 : ℂ) • Matrix.vecMulVec w w
 

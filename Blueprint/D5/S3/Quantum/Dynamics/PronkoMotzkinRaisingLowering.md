@@ -78,7 +78,7 @@ site(i, A) acts as the 3 x 3 matrix A on the i-th tensor factor and as the ident
 
 **Definition 1.7 (The operators Sigma^+ and Sigma^-).**
 
-$$\operatorname{Sig}\left(N, e\right) = \operatorname{sum}\left(\operatorname{in}\left(r, \operatorname{Fin}\left(5\right)^{N}\right) \land \operatorname{sum}\left(\operatorname{rv}\left(\operatorname{r}\left(i\right)\right)\right) = e, \operatorname{prod}\left(\operatorname{ofFn}\left(\operatorname{site}\left(i, \operatorname{spow}\left(\operatorname{r}\left(i\right)\right)\right)\right)\right)\right)$$
+$$\operatorname{Sig}\left(N, e\right) = \sum_{r \in \{r \in \operatorname{Fin}\left(5\right)^{N} \mid \sum_{i \in \operatorname{Fin}\left(N\right)} \operatorname{rv}\left(\operatorname{r}\left(i\right)\right) = e\}} \operatorname{prod}\left(\operatorname{ofFn}\left((i \mapsto \operatorname{site}\left(i, \operatorname{spow}\left(\operatorname{r}\left(i\right)\right)\right))\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/PronkoMotzkinRaisingLowering.Sig` (`✓ std3`).
 
@@ -90,7 +90,7 @@ Sig(N, 1) is Sigma^+ and Sig(N, -1) is Sigma^- of eq. Sigmapmsum: the sum, over 
 
 **Definition 1.8 (The height S^z of a word).**
 
-$$\operatorname{S}\left(a\right) = \operatorname{sum}\left(\operatorname{ht}\left(\operatorname{a}\left(i\right)\right)\right)$$
+$$\operatorname{S}\left(a\right) = \sum_{i \in \operatorname{Fin}\left(N\right)} \operatorname{ht}\left(\operatorname{a}\left(i\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/PronkoMotzkinRaisingLowering.S` (`✓ std3`).
 
@@ -122,7 +122,7 @@ $$\operatorname{proj}\left(w\right) = \frac{1}{2} \cdot \operatorname{vecMulVec}
 
 *Commentary.*
 
-proj(w) = (1/2)|w><w|, one half of the outer product of w with itself.
+proj(w) = (1/2) w w^T, one half of the product of w with its transpose (Matrix.vecMulVec, no complex conjugation); for the three real vectors in piProj this is (1/2)|w><w|.
 
 **Definition 1.11 (The local projector Pi).**
 
@@ -150,7 +150,7 @@ twoSite(i, j, P) acts as the 9 x 9 matrix P with its first factor on site i and 
 
 **Definition 1.13 (The periodic Hamiltonian).**
 
-$$\operatorname{H}\left(N\right) = \operatorname{sum}\left(\operatorname{twoSite}\left(i, \operatorname{finRotate}\left(N, i\right), piProj\right)\right)$$
+$$\operatorname{H}\left(N\right) = \sum_{i \in \operatorname{Fin}\left(N\right)} \operatorname{twoSite}\left(i, \operatorname{finRotate}\left(N, i\right), piProj\right)$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/PronkoMotzkinRaisingLowering.H` (`✓ std3`).
 
@@ -174,7 +174,7 @@ v_m is the sum of the paths from (0, 0) to (N, m) with steps in {-1, 0, 1} (Conj
 
 **Definition 1.15 (Conjecture 2).**
 
-$$claim \Leftrightarrow (\forall N \in \mathbb{N},\; 2 \le N \Rightarrow (\left(\operatorname{Sig}\left(N, 1\right) \cdot \operatorname{H}\left(N\right) = \operatorname{H}\left(N\right) \cdot \operatorname{Sig}\left(N, 1\right) \land \operatorname{Sig}\left(N, -1\right) \cdot \operatorname{H}\left(N\right) = \operatorname{H}\left(N\right) \cdot \operatorname{Sig}\left(N, -1\right)\right) \land \left(\left(\forall m \in \mathbb{Z},\; \left(-N \le m \land m < N\right) \Rightarrow (\exists c \in \mathbb{C},\; \operatorname{ne}\left(c, 0\right) \land \operatorname{Sig}\left(N, 1\right) \cdot \operatorname{v}\left(N, m\right) = c \cdot \operatorname{v}\left(N, m + 1\right))\right) \land \left(\left(\forall m \in \mathbb{Z},\; \left(-N < m \land m \le N\right) \Rightarrow (\exists c \in \mathbb{C},\; \operatorname{ne}\left(c, 0\right) \land \operatorname{Sig}\left(N, -1\right) \cdot \operatorname{v}\left(N, m\right) = c \cdot \operatorname{v}\left(N, m - 1\right))\right) \land \left(\operatorname{Sig}\left(N, 1\right) \cdot \operatorname{v}\left(N, N\right) = 0 \land \operatorname{Sig}\left(N, -1\right) \cdot \operatorname{v}\left(N, -N\right) = 0\right)\right)\right)))$$
+$$claim \Leftrightarrow (\forall N \in \mathbb{N},\; 2 \le N \Rightarrow (\left(\operatorname{Sig}\left(N, 1\right) \cdot \operatorname{H}\left(N\right) = \operatorname{H}\left(N\right) \cdot \operatorname{Sig}\left(N, 1\right) \land \operatorname{Sig}\left(N, -1\right) \cdot \operatorname{H}\left(N\right) = \operatorname{H}\left(N\right) \cdot \operatorname{Sig}\left(N, -1\right)\right) \land \left(\left(\forall m \in \mathbb{Z},\; \left(-N \le m \land m < N\right) \Rightarrow (\exists c \in \mathbb{C},\; \operatorname{ne}\left(c, 0\right) \land \operatorname{mulVec}\left(\operatorname{Sig}\left(N, 1\right), \operatorname{v}\left(N, m\right)\right) = c \cdot \operatorname{v}\left(N, m + 1\right))\right) \land \left(\left(\forall m \in \mathbb{Z},\; \left(-N < m \land m \le N\right) \Rightarrow (\exists c \in \mathbb{C},\; \operatorname{ne}\left(c, 0\right) \land \operatorname{mulVec}\left(\operatorname{Sig}\left(N, -1\right), \operatorname{v}\left(N, m\right)\right) = c \cdot \operatorname{v}\left(N, m - 1\right))\right) \land \left(\operatorname{mulVec}\left(\operatorname{Sig}\left(N, 1\right), \operatorname{v}\left(N, N\right)\right) = 0 \land \operatorname{mulVec}\left(\operatorname{Sig}\left(N, -1\right), \operatorname{v}\left(N, -N\right)\right) = 0\right)\right)\right)))$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/PronkoMotzkinRaisingLowering.claim` (`✓ std3`).
 
