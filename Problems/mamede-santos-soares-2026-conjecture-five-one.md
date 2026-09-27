@@ -31,12 +31,18 @@ the positive, fixed length of `deletedExcursion`. The existing
 the all-source shape and onto directions. This is a conditional count-preserving
 step, not a verified resolution of Conjecture 5.1. KPI: 0.
 
+`MamedeExtremalOrientation.extremal_orientation` derives attained generator
+extrema, exterior fixedness, an endpoint orientation, and a full extremal run
+from any nonempty reduced consecutive word. It supplies the extremal part of
+the source adapter; strict internal endpoints and the `j<i` uniqueness step
+remain unproved. This intermediate result does not change KPI.
+
 ## Gap
 
 The reflected orientation, oscillating and involutive branches, and a global
 count argument for every permutation remain unproved. The induction also needs
 to derive the exact endpoint and exterior hypotheses from an arbitrary
-nonoscillating source, up to reflection, and handle the terminating cases.
+nonoscillating source, up to permutation inversion, and handle the terminating cases.
 The class-to-word correspondence and the paper's upper bound still require
 formal justification in this adjacent-word model before the full conjecture
 can be claimed. Research target: [#10285](https://github.com/the-omega-institute/trureturing/issues/10285).

@@ -4,13 +4,14 @@ authors: Ricardo Mamede, Jose Luis Santos, Diogo Soares
 year: 2026
 title: Maximum number of one-element commutation classes of a permutation
 doi: 10.48550/arXiv.2601.09395
-claim: Lemma 3.6 gives a first-orientation source-word shape, and Proposition 3.8 constructs an injection by deleting part of its excursion.
+claim: Lemmas 2.4 and 3.1 give exterior support and extremal orientation; Lemma 3.6 gives a source-word shape, and Proposition 3.8 gives deletion injectivity.
 strata_touched:
   - D5/S1/Words/Permutations/MamedeAdjacentWords
   - D5/S1/Words/Permutations/MamedeSourceAction
   - D5/S1/Words/Permutations/MamedeConditionalConverse
   - D5/S1/Words/Permutations/MamedeShapeExtraction
   - D5/S1/Words/Permutations/MamedeDeletionEquiv
+  - D5/S1/Words/Permutations/MamedeExtremalOrientation
 license: citation-only
 triage: anchor
 ---
@@ -21,8 +22,8 @@ triage: anchor
 
 DOI [10.48550/arXiv.2601.09395](https://doi.org/10.48550/arXiv.2601.09395)
 identifies [arXiv:2601.09395v1](https://arxiv.org/html/2601.09395v1).
-The cited scope is Definition 3.1, Lemma 3.6 (first orientation), and
-Proposition 3.8. The conditional converse below is a new formal claim, not a
+The cited scope is Definition 3.1, Lemmas 2.4 and 3.1, Lemma 3.6 (first
+orientation), and Proposition 3.8. The conditional converse below is a new formal claim, not a
 result asserted by those source passages.
 
 [Mamede, Santos and Soares, arXiv:2601.09395v1](https://arxiv.org/html/2601.09395v1)
@@ -85,3 +86,19 @@ Proposition 3.8 of the paper; the conditional converse and resulting
 equivalence are repository-derived.
 This result does not settle the reflected orientation, oscillation and
 involution cases, or the global count in Conjecture 5.1.
+
+## Extremal orientation
+
+Lemma 3.1 and the exterior support observation of Lemma 2.4 also support
+`MamedeExtremalOrientation.extremal_orientation`. Its inputs are only a
+nonempty reduced consecutive word. It chooses the attained minimum and maximum
+generator indices, proves exterior fixedness, and derives either an endpoint
+map from the minimum position to the position above the maximum, with a full
+descending run, or the opposite endpoint map with a full ascending run.
+The proof uses reversed words to represent inverse permutations. This is a
+formalization of a published intermediate result, not a new resolution.
+
+The nonoscillating source-admissibility implication still requires strict
+internal endpoint extraction, the other endpoint equations, nonoscillation
+under reversal, and whole-fiber uniqueness when `j<i`. The extremal theorem
+does not assume or establish `i<=j`, and does not settle Conjecture 5.1.
