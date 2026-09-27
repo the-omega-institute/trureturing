@@ -13429,3 +13429,274 @@ AHH 在于：**“未来”不是单一对象；它至少要标明接口词是�
 **来源与边界 182.2。** 本批在有限维线性效果空间、有限接口族、概率调度与严格收敛的折扣参数下推导合同扩张单调性、逐词/平均调度闭包差异、resolvent 尾误差及带权边界阶梯。没有把抽象负接口自动解释为物理量子仪器，没有把折扣参数解释为物理钟速率，没有推广到无限维谱或未知接口识别；没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
 
 ## 追加锚（本行以下为增补区）
+## 183. 双侧响应的 Hankel 秩是递归边界的下界
+
+前两批主要从效果一侧构造闭包。本节固定一个接口反复调用，并同时保留可进入的初始边界族，研究这份双侧响应本身需要多少状态坐标。
+
+**定义 183.1（固定接口的双侧响应）。** 令 $\mathcal X$ 为有限维状态空间，$T:\mathcal X\to\mathcal X$ 为一个固定接口，$A=T^*$ 为其效果拉回。取有限初始族
+
+$$
+\mathcal B=\{b_1,\ldots,b_s\}\subseteq\mathcal X
+$$
+
+和有限终端效果族
+
+$$
+\mathcal F=\{f_1,\ldots,f_t\}\subseteq\mathcal X^*.
+$$
+
+定义响应序列
+
+$$
+ h_{ij}(k)=f_i(T^k b_j),
+ \qquad k\ge0,
+$$
+
+以及有限 Hankel 块
+
+$$
+\mathsf H_{N,M}
+\bigl[(i,n),(j,m)\bigr]
+=
+ f_i(T^{n+m}b_j),
+\quad
+0\le n\le N,\ 0\le m\le M.
+$$
+
+令
+
+$$
+ r_{\mathrm H}
+=
+\sup_{N,M}\operatorname{rank}\mathsf H_{N,M}.
+$$
+
+因为 $\mathcal X$ 有限维，该上确界是有限整数。
+
+**定理 183.2（Hankel 秩的摘要下界）。** 设 $S:\mathcal X\to Y$ 是线性边界摘要，并假定对每个 $i,n$ 都存在 $\widetilde f_{i,n}\in Y^*$ 使
+
+$$
+ f_i\circ T^n=\widetilde f_{i,n}\circ S.
+$$
+
+也就是说，摘要对这组初始源和固定接口的所有有限 horizon 终端读数充分。则
+
+$$
+\boxed{
+ r_{\mathrm H}\le\dim Y.
+}
+\tag{183.1}
+$$
+
+### 证明
+
+对任意 $N,M$，定义行算子和列算子
+
+$$
+\mathsf O_N[(i,n),y]=\widetilde f_{i,n}(y),
+$$
+
+$$
+\mathsf R_M[y,(j,m)]=S(T^m b_j).
+$$
+
+由摘要因子化假设，
+
+$$
+\mathsf H_{N,M}=\mathsf O_N\mathsf R_M.
+$$
+
+所以
+
+$$
+\operatorname{rank}\mathsf H_{N,M}
+\le\dim Y.
+$$
+
+对所有 $N,M$ 取上确界即得（183.1）。证毕。
+
+这个下界同时依赖输入侧和输出侧：只有终端效果的数量并不能代替可达初始方向，只有初始状态的数量也不能代替未来读数。它是指定合同下的线性状态维数下界，不自动等同于物理记忆的 Hilbert 维数。
+
+---
+
+## 184. 可达—可观测商给出固定接口的最小线性实现
+
+Hankel 秩可以进一步写成一个商空间维数，从而把“哪些内部方向真正参与响应”分开。
+
+**定义 184.1（可达空间与不可观测核）。** 令
+
+$$
+\mathcal R
+=\operatorname{span}\{T^m b_j:m\ge0,\ 1\le j\le s\}
+\subseteq\mathcal X,
+$$
+
+并定义
+
+$$
+\mathcal N
+=
+\mathcal R
+\cap
+\bigcap_{i,n}\ker(f_i\circ T^n).
+$$
+
+称 $\mathcal R$ 为可达空间，称 $\mathcal N$ 为在该源族和效果族下的可达不可观测方向。
+
+**定理 184.2（最小商实现与 Hankel 等式）。** 有：
+
+$$
+T\mathcal R\subseteq\mathcal R,
+\qquad
+T\mathcal N\subseteq\mathcal N.
+$$
+
+因此 $T$ 在商空间
+
+$$
+\overline{\mathcal R}=\mathcal R/\mathcal N
+$$
+
+上诱导线性映射 $\overline T$。令 $\overline b_j=b_j+\mathcal N$，并令 $\overline f_i$ 为 $f_i$ 在商上的观测泛函。则
+
+$$
+ f_i(T^k b_j)
+=
+\overline f_i(\overline T^k\overline b_j)
+$$
+
+对所有 $i,j,k$ 成立，而且
+
+$$
+\boxed{
+ r_{\mathrm H}
+=\dim\overline{\mathcal R}
+=\dim\mathcal R-\dim\mathcal N.
+}
+\tag{184.1}
+$$
+
+任何能够产生同一组双侧响应的有限维线性状态实现，其状态维数都不小于 $r_{\mathrm H}$；上述商实现达到该维数。
+
+### 证明
+
+$T\mathcal R\subseteq\mathcal R$ 直接来自生成式。若 $x\in\mathcal N$，则 $Tx\in\mathcal R$，且
+
+$$
+(f_i\circ T^n)(Tx)=f_i\circ T^{n+1}(x)=0
+$$
+
+对所有 $i,n$ 成立，故 $T\mathcal N\subseteq\mathcal N$，商上的 $\overline T$ 定义良好。由于每个 $f_iT^k$ 在 $\mathcal N$ 上为零，响应在商上保持不变。
+
+令
+
+$$
+\mathcal O
+=\operatorname{span}\{(f_i\circ T^n)|_{\mathcal R}:i,n\}
+\subseteq\mathcal R^*.
+$$
+
+Hankel 的所有行生成 $\mathcal O$，所有列生成 $\mathcal R$ 的像；其条目正是自然配对
+
+$$
+\mathcal O\times\mathcal R\longrightarrow\mathbb R.
+$$
+
+该配对的右核正是 $\mathcal N$，所以其秩为
+
+$$
+\dim\mathcal R-\dim\mathcal N.
+$$
+
+有限维性保证取足够大的 $N,M$ 已包含 $\mathcal O$ 和 $\mathcal R$ 的基，故有限块秩的上确界就是该配对秩，得到（184.1）。任意另一线性实现的每个有限响应块都可分解为“输出矩阵乘状态矩阵”，因此其状态维数至少为 $r_{\mathrm H}$；这是定理 183.2 所用因子化下界的同一矩阵论证。商实现本身达到等号。证毕。
+
+这里的最小性只针对声明的源族、固定接口和终端效果族。扩大任一族都会改变 $\mathcal R$ 或 $\mathcal N$，从而可能增加最小实现维数。
+
+---
+
+## 185. 最小商把全部响应序列压进一个共同递推
+
+最小实现不仅给出维数，还给出所有 horizon 响应共享的代数递推；这比保存某一个折扣值更强。
+
+**定理 185.1（共同最小多项式递推）。** 令 $\mu_{\overline T}(z)$ 为 $\overline T$ 的最小多项式，次数记为 $\mu$。写
+
+$$
+\mu_{\overline T}(z)
+=z^\mu+c_{\mu-1}z^{\mu-1}+\cdots+c_0.
+$$
+
+则每个响应序列 $h_{ij}(k)=f_i(T^k b_j)$ 都满足
+
+$$
+\boxed{
+ h_{ij}(k+\mu)
++c_{\mu-1}h_{ij}(k+\mu-1)
++\cdots
++c_0h_{ij}(k)=0
+}
+\tag{185.1}
+$$
+
+对所有 $i,j,k\ge0$ 成立。特别地，Cayley–Hamilton 定理给出一个次数不超过 $r_{\mathrm H}$ 的共同递推。
+
+反过来，若一个非零首一多项式 $q$ 使全部响应序列都满足由 $q$ 给出的同样线性递推，则
+
+$$
+q(\overline T)=0,
+$$
+
+所以 $\deg q\ge\mu_{\overline T}$。因此共同递推的最小次数正是最小商转移的最小多项式次数。
+
+### 证明
+
+由最小多项式恒等式
+
+$$
+\overline T^\mu+c_{\mu-1}\overline T^{\mu-1}+\cdots+c_0I=0
+$$
+
+左乘任意 $\overline T^k$，再作用于 $\overline b_j$ 并由 $\overline f_i$ 读取，得到（185.1）。Cayley–Hamilton 给出次数上界。
+
+反过来，设 $q$ 使全部序列满足递推。对任意 $m,j$，把递推式移位 $m$ 步，得到
+
+$$
+\overline f_i\,\overline T^n q(\overline T)\overline T^m\overline b_j=0
+$$
+
+对所有 $i,n$ 成立。可达向量 $\overline T^m\overline b_j$ 张成整个 $\overline{\mathcal R}$，而商的定义已经删去了所有对全部 $\overline f_i\overline T^n$ 不可观测的方向，所以
+
+$$
+q(\overline T)\overline T^m\overline b_j=0
+$$
+
+对所有 $m,j$。故 $q(\overline T)=0$，最小多项式的定义给出次数下界。证毕。
+
+这份递推只说明精确代数响应的有限维闭合；从有限带噪读数估计递推系数，还需要额外的谱间隔、样本量和数值稳定性合同。
+
+---
+
+## 186. AHH：全息最小性是双侧响应的商，而非终端输出的数量
+
+**关系结论 186.1（可达—可观测—递推三层边界）。** 对固定接口和指定源、效应族：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{层级}&\text{保存的关系}&\text{可保证的内容}\\
+\hline
+\text{终端效果族}&\{f_i\}&\text{当前读数}\\
+\text{Hankel 响应}&\{f_iT^{n+m}b_j\}&\text{双侧续接的秩下界}\\
+\text{可达—可观测商}&\mathcal R/\mathcal N&\text{固定接口的最小线性实现}\\
+\text{最小多项式}&\mu_{\overline T}&\text{全部响应序列的共同递推}
+\end{array}
+}
+\tag{186.1}
+$$
+
+AHH 在于：**一个边界是否足够，不只由“有多少终端输出”决定；它由哪些初始方向能够进入、哪些方向能够被未来读出，以及两者在商空间中留下多少共同响应决定。Hankel 秩是这份双侧关系的不可压缩维数，最小多项式则是其 horizon 方向的共同代数记忆。**
+
+因此，保存一个折扣 resolvent、保存一个终端通道或保存一个单次读数，都可能只覆盖双侧响应的投影；只有在目标任务族上给出因子化，才能把它们称为充分边界。这里的最小线性实现也不等同于最小物理 Hilbert 空间：正性、完全正性、仪器归一化和不可访问环境仍需另行纳入合同。
+
+**来源与边界 186.2。** 本批在有限维线性状态空间、固定重复接口、有限初始源族与终端效果族下推导 Hankel 秩下界、可达—可观测商、最小线性实现及共同多项式递推。没有把抽象状态实现自动解释为量子仪器，没有把递推系数的可估计性混同于精确代数存在，没有推广到无限维谱、未知接口识别、带噪统计或物理钟标定；没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
+
+## 追加锚（本行以下为增补区）
