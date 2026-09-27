@@ -1,0 +1,18 @@
+**定理158.4（极限支撑与最终返回间隔）。** 有
+
+$$
+\operatorname{supp}\nu=h(G).
+\tag{158.10}
+$$
+
+进一步，对任意实开区间 $J$ 满足 $J\cap h(G)\ne\varnothing$，存在整数 $n_0\ge1$、$M\ge0$，使每个 $n\ge n_0$ 都满足
+
+$$
+\boxed{
+\exists m\in\{n,n+1,\ldots,n+M\},\qquad e_m\in J.
+}
+\tag{158.11}
+$$
+
+因此这些终端的下密度至少为 $1/(M+1)$。
+

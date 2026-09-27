@@ -1,0 +1,42 @@
+**227.4.3 转成真实输出事件并与任意 Kraus 比较。**
+
+$T(s)$ 正半定且两个本征值不同，故 $\lambda_+(s)>0$。定义
+$$
+r(v)=\frac{W_vq(v)}{\sqrt{\lambda_+(s(v))}}.
+\tag{227.GD.20}
+$$
+则 $r(v)$ 连续、单位，且
+$$
+\Gamma(P_v)r(v)=\lambda_+(s(v))r(v),
+$$
+$$
+\boxed{
+ r(e^{i\theta}v)=e^{i(1+\epsilon)\theta}r(v).
+}
+\tag{227.GD.21}
+$$
+输入自身贡献相位一，Gram 主向量贡献相位 $\epsilon$；这一显式纤维映射固定了符号。$\epsilon=-1$ 给相位零，$\epsilon=1$ 给相位二。
+
+对任意 $m\times2$ 候选单 Kraus $C$，在闭圆盘取
+$$
+v(z)=\sqrt{1-|z|^2}f_0+zf_1,
+\qquad F(z)=\langle r(v(z)),Cv(z)\rangle.
+$$
+在 $|z|=1$ 上，
+$$
+F(z)=z^{-\epsilon}h,
+\qquad h=\langle r(f_1),Cf_1\rangle.
+\tag{227.GD.22}
+$$
+若 $h=0$，边界已有零点；否则假设圆盘无零会使 $F/|F|$ 将绕数 $-\epsilon\ne0$ 的边界映射延拓到圆盘，矛盾。因此存在 $v$ 使候选在事件 $P_{r(v)}$ 上概率为零，而目标结果1在同一事件上的概率为 $\lambda_+(s(v))\ge\alpha$。
+
+与完整标签效果 $|1\rangle\langle1|\otimes P_{r(v)}$ 配对，得到任意结果1秩至多一竞争者的完整半 diamond 下界 $\alpha$。圆周不可延拓性采用 Hatcher《Algebraic Topology》§1.1、第29页定理1.7与第32页定理1.9证明中的标准工具。[官方章节 PDF](https://pi.math.cornell.edu/~hatcher/AT/ATch1.pdf#page=9)。
+
+另一方面，输入尾谱始终给下界 $\beta$：选使 $\lambda_-(s)=\beta$ 的输入，若 $Cv\ne0$，读取输出效果 $I-P_{Cv/\|Cv\|}$；目标概率至少为第二大本征值 $\beta$，候选为零。若 $Cv=0$，整个结果1即可见证该下界。因此（227.GD.12）给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge\max(\alpha,\beta)=\delta
+\tag{227.GD.23}
+$$
+对任意结果1 Choi 秩至多一的竞争者成立。
+

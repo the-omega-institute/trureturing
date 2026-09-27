@@ -1,0 +1,1 @@
+- $\mathbf R$ 是全部合法有限词的真实延拓特征函数，$R(\sigma)=1$ 当且仅当 $K\cap[\sigma]\ne\varnothing$；非法词返回零。

@@ -1,0 +1,52 @@
+**定理 176.2（有限拉回的乘积望远镜误差界）。** 对任意范数不超过一的终端效果 $H\in V$ 和任意接口词 $\Phi_1,\ldots,\Phi_n$，令
+
+$$
+G_n=P_{\Phi_1}\circ\cdots\circ P_{\Phi_n}(H)\in V.
+$$
+
+则
+
+$$
+\boxed{
+\left\|
+(\Phi_1^*\circ\cdots\circ\Phi_n^*)(H)-G_n
+\right\|
+\le
+n\eta M^{n-1}.
+}
+\tag{176.1}
+$$
+
+更一般地，若第 $j$ 个精确拉回和近似代表的范数上界分别为 $a_j,b_j$，则右侧可替换为
+
+$$
+\eta\sum_{j=1}^{n}
+\left(\prod_{i<j}a_i\right)
+\left(\prod_{i>j}b_i\right).
+$$
+
+在 $M=1$ 时式（176.1）为 $n\eta$；当 $0\le M<1$ 时，所有 horizon 的上界统一不超过 $\eta/(1-M)^2$；当 $M>1$ 时，该界显示出最坏情形的指数放大因子。
+
+### 证明
+
+记 $A_j=\Phi_j^*$、$B_j=P_{\Phi_j}$。乘积的望远镜恒等式给出
+
+$$
+A_1\cdots A_n-B_1\cdots B_n
+=
+\sum_{j=1}^{n}
+A_1\cdots A_{j-1}(A_j-B_j)B_{j+1}\cdots B_n.
+$$
+
+作用于 $H$ 后取范数，并使用
+
+$$
+\|A_j-B_j\|\le\eta,
+\qquad
+\|A_i\|,\|B_i\|\le M,
+\qquad
+\|H\|\le1,
+$$
+
+每一项至多为 $\eta M^{n-1}$，求和即得（176.1）。若使用不等的 $a_j,b_j$，同一估计逐项给出所述乘积和。证毕。
+

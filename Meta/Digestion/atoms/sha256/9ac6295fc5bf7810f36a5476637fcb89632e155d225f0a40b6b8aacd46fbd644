@@ -1,0 +1,27 @@
+**定义 148.1（初始事件向量测度）。** 定义列向量值测度
+
+$$
+\boldsymbol\nu_w(dt)
+=
+\begin{pmatrix}
+w_0\nu_0(dt)\\
+w_1\nu_1(dt)
+\end{pmatrix},
+$$
+
+以及矩阵值核
+
+$$
+K_{ba}(dt)=T_{ba}\nu_b(dt).
+$$
+
+对 $m\ge1$，置
+
+$$
+\boldsymbol\mu_m(dt)
+=
+K^{*(m-1)}*\boldsymbol\nu_w(dt).
+$$
+
+其 $b$ 分量是第 $m$ 次事件发生在扇区 $b$ 且总历时落在 $dt$ 的概率测度。
+

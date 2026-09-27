@@ -1,0 +1,49 @@
+**定理74.1（一致尺度轮廓）。** 在整个开压缩参数区间上，有
+
+$$
+\lim_{\varepsilon\downarrow0}
+\sup_{0<a<1}
+\left|
+\frac{e(R_{a,\varepsilon})}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|=0.
+\tag{74.3}
+$$
+
+因此，对任意随 $\varepsilon\downarrow0$ 变化的合法参数 $a_\varepsilon$，如果
+
+$$
+\frac{1-a_\varepsilon}{\varepsilon}\longrightarrow r\in[0,\infty),
+$$
+
+则 $e(R_{a_\varepsilon,\varepsilon})/\varepsilon\to\gamma_r$；如果该比值趋于无穷，则误差比趋于一。
+
+整个候选族的最坏比例也具有准确极限：
+
+$$
+\lim_{\varepsilon\downarrow0}
+\sup_{0<a<1}\frac{e(R_{a,\varepsilon})}{\varepsilon}
+=\Gamma.
+\tag{74.4}
+$$
+
+若 $a_\varepsilon$ 渐近达到同一族的最坏比例，即
+
+$$
+\sup_{0<a<1}\frac{e(R_{a,\varepsilon})}{\varepsilon}
+-\frac{e(R_{a_\varepsilon,\varepsilon})}{\varepsilon}
+\longrightarrow0,
+\tag{74.5}
+$$
+
+则必有
+
+$$
+\operatorname{dist}\left(
+\frac{1-a_\varepsilon}{\varepsilon},\mathcal A
+\right)\longrightarrow0.
+\tag{74.6}
+$$
+
+特别地，这些参数满足 $1-a_\varepsilon=\Theta(\varepsilon)$。这并未断言最优尺度唯一。
+

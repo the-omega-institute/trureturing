@@ -1,0 +1,26 @@
+**定理163.3（两个误差区间的显式频率下界）。** 对任意 $0<u<1$、任意 $q\ge1$ 和 $0\le r<q$，有
+
+$$
+\boxed{
+\underline d_{q,r}
+\left(\left\{n:
+e_n>\frac34+\frac{\Delta}{2}(1-u)-b
+\right\}\right)
+\ge\frac2\pi\arcsin u,
+}
+\tag{163.25}
+$$
+
+以及
+
+$$
+\boxed{
+\underline d_{q,r}
+\left(\left\{n:
+e_n<\frac34+\frac18(1-u)+b
+\right\}\right)
+\ge\frac2\pi\arccos u.
+}
+\tag{163.26}
+$$
+

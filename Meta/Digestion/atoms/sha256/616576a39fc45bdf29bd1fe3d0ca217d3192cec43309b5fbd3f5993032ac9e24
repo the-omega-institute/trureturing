@@ -1,0 +1,25 @@
+**定理197.1（远端响应及其极小点）。** 令 $(x_h,y_h)$ 为第190节圆盘问题的唯一极小点。当 $h\to\infty$ 时，
+
+$$
+\boxed{
+x_h=\frac{g\delta}{2h}
++\frac{\beta\Sigma g\delta}{4h^2}+O(h^{-3}),
+\qquad
+y_h=1-\frac{g^2\delta^2}{8h^2}+O(h^{-3}),
+}
+\tag{197.1}
+$$
+
+$$
+\boxed{
+\Phi_h
+=\Phi_\infty
+-\frac{g^2\delta^2}{16h}
+-\frac{\beta\Sigma g^2\delta^2}{32h^2}
++O(h^{-3}).
+}
+\tag{197.2}
+$$
+
+当 $g=0$ 时，$h\ge\beta R$ 已有 $x_h=0,y_h=1,\Phi_h=\Phi_\infty$，所以这两式仍成立。
+

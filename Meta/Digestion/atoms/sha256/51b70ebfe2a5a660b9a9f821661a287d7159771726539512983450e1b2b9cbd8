@@ -1,0 +1,13 @@
+**证明。** $C\perp B$ 已证。反设 $\langle A,C\rangle\ne0$。由 $UA\subset V_0K$、$WC\subset V_1K$，跨位正交给 $U\perp W$；由 $vA=V_1p$、$LC\subset V_0K$，又给 $v\perp L$。
+
+另一方面，$B\perp C$ 与固定同位等距给
+$$
+U\perp J,\qquad H_2\perp S.
+\tag{64.47}
+$$
+特别地 $U\perp T$，再加 $v\perp T$，使
+$$
+Q_{\mathrm{early}}:=\operatorname{span}(u,v,w)\perp T.
+$$
+而 $S=H_4+H_5\subset T\oplus W$、$P_WS=W$。$H_2\subset Q_{\mathrm{early}}$ 已正交于 $T$，又由（64.47）正交于 $S$，所以 $H_2\perp W$。由于 $a^2u+bv\in H_2$、$u\in U\perp W$、$b\ne0$，得到 $v\perp W$。因此整个三维 $Q_{\mathrm{early}}$ 正交于五维 $T\oplus W$，需要至少八维接收器，矛盾。故（64.46）成立。证明完毕。
+

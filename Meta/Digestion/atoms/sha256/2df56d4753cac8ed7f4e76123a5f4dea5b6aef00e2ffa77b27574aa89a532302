@@ -1,0 +1,68 @@
+**定理 250.3（两个端部的过零方向与共同最优间隙）。** 记
+$g_h=g(h)$、$p_h=g'(h)>0$、$C=c+h^2$，
+以及 $m_j(\gamma)=\min F_j$。在已取过 $s\downarrow0$ 的限制问题中，$\gamma\downarrow0$ 时
+
+$$
+\begin{aligned}
+h-z_j&=\frac j2\,c p_h\gamma+O(\gamma^2),\\
+m_j(\gamma)
+&=c+jcg_h\gamma+
+\left[\frac{j(j+1)}2cg_h^2-\frac{j^2}{4}c^2p_h^2\right]\gamma^2
++O(\gamma^3),\\
+G_\gamma&=\frac{c^2p_h^2}{8}\gamma^2+O(\gamma^3).
+\end{aligned}
+\tag{250.11}
+$$
+
+而 $\gamma\to\infty$ 时
+
+$$
+\begin{aligned}
+z_j&=\frac{2h}{jC\gamma}+O(\gamma^{-2}),\\
+m_j(\gamma)&=C-\frac{2h^2}{jC\gamma}+O(\gamma^{-2}),\\
+G_\gamma&=\frac{h^2}{3C\gamma}+O(\gamma^{-2}).
+\end{aligned}
+\tag{250.12}
+$$
+
+其中 $G_\gamma$ 正是第249.6式的共同最优间隙。
+
+证明。 小 $\gamma$ 时，极小点的唯一性及（250.9）使 $z_j\to h$。在 $r=h-z$ 中将驻点条件写成
+$rD=(j/2)\gamma A g'$，其在 $(r,\gamma)=(0,0)$ 对 $r$ 的导数为一。因此解关于 $\gamma$ 解析，首阶为 $r=(j/2)cp_h\gamma$。展开
+
+$$
+A=c+r^2,\qquad
+D=1-\gamma g_h+\gamma p_h r+O(\gamma r^2)
+\tag{250.13}
+$$
+
+并代回 $A/D^j$，得到（250.11）的前两行。对于 $F_1+F_2$，其唯一最优点由定理250.2的等权切线给出，同一局部解析计算得到
+$r=(3/4)cp_h\gamma+O(\gamma^2)$，
+以及
+
+$$
+\min(F_1+F_2)
+=2c+3cg_h\gamma+
+\left(4cg_h^2-\frac98c^2p_h^2\right)\gamma^2
++O(\gamma^3).
+\tag{250.14}
+$$
+
+减去 $m_1+m_2$，得到间隙系数 $1/8$。
+
+大 $\gamma$ 时，令 $\varepsilon=1/\gamma$。由（250.9），$z_j\to0$；而
+$g(z)=z^2/2+O(z^4)$、
+$H_j'(0)=jC/(2h)>0$。
+隐函数定理给出 $z_j=2h\varepsilon/(jC)+O(\varepsilon^2)$。用
+
+$$
+A=C-2hz+z^2,\qquad
+D=1-\frac{z^2}{2\varepsilon}
++O(z^4/\varepsilon)
+\tag{250.15}
+$$
+
+代入，便得（250.12）的前两行。对等权和式，同一计算给出
+$z=4h\varepsilon/(3C)+O(\varepsilon^2)$，
+其最小值为 $2C-8h^2\varepsilon/(3C)+O(\varepsilon^2)$。减去两项独立最小值之和 $2C-3h^2\varepsilon/C+O(\varepsilon^2)$，即得第三行。证毕。
+

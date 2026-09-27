@@ -1,0 +1,152 @@
+**定理142.1（全参数半代数性与六终端端点幂界）。** 对任意固定有限 $D,N$，$\varepsilon_{D,N}:\Theta\to[0,1]$ 是连续半代数函数。对 $D=7,N=6$，其零集恰为 $Z$，并存在同一正常数 $C>0$ 和正整数 $r\ge1$，使所有 $\theta\in\Theta$ 满足
+
+$$
+\boxed{
+C\,d(\theta)^r
+\le\varepsilon_7(\theta)
+\le\min\{1,12d(\theta)\}.
+}
+\tag{142.3}
+$$
+
+$C,r$ 统一于整个复参数球面，包括所有相位。式（142.3）的左端是存在性幂界；本文不提供它们的数值。
+
+### 142.1 有限参考、实际装置与迹范数的半代数图
+
+把复矩阵的实部、虚部分别作为实坐标。第140.1节已经证明：参考维数二足够，初态固定为标准基向量 $e_0$ 不损失装置，且有限装置优化的最小值取得。下面补足半代数性所需的有限实公式。
+
+对固定 $D,N$，所有装置组成同一个紧半代数集 $\mathscr A_{D,N}$。接收通道与各终端解码器用 Hermitian Choi 矩阵表示，CPTP 条件是矩阵正半定及固定偏迹等于恒等矩阵。有限大小的 Hermitian 正半定条件等价于所有主子式非负，所以这些条件是实多项式等式和不等式。第 $n$ 个解码器的输出维数为 $2^n$；有限 $N$ 保证这里仅有有限多个有限矩阵。
+
+来源与二维参考的输入集为
+
+$$
+\mathscr P=\{\rho\in\operatorname{Herm}(\mathbb C^2_R\otimes\mathbb C^2_M):
+\rho\succeq0,\ \operatorname{Tr}\rho=1\},
+\tag{142.4}
+$$
+
+同样紧且半代数。来源发射等距的矩阵元为 $a,b,1,0$。从 $\rho\otimes|e_0\rangle\langle e_0|$ 出发，重复固定通道有限次，再施加第 $n$ 个解码器，所得状态矩阵元都是来源实坐标、装置 Choi 坐标和输入坐标的多项式；未经接收的真实目标同样如此。
+
+因此每个终端的 Hermitian 差矩阵
+
+$$
+X_n(\theta,\mathfrak A,\rho)
+=(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\sigma_n^{\theta,\mathfrak A}(\rho)-\Omega_n^\theta(\rho)
+\tag{142.5}
+$$
+
+具有多项式矩阵元。其矩阵大小为 $4\cdot2^n$，包括二维参考、二维活动记忆和全部原档案。
+
+迹范数虽非多项式，但它的图是半代数的。对任意给定的 Hermitian $X$，引入同尺寸 Hermitian 变量 $Y$，有
+
+$$
+s=\frac12\|X\|_1
+\quad\Longleftrightarrow\quad
+\exists Y:\quad Y\succeq0,\qquad Y^2=X^2,\qquad
+2s=\operatorname{Tr}Y.
+\tag{142.6}
+$$
+
+因为 $X^2\succeq0$ 的正半定平方根唯一，右侧强制 $Y=|X|$。该描述同样适用于零特征值和秩变化，不要求选取连续本征基。右侧全部是有限实多项式条件；消去 $Y$ 后，$s=\frac12\|X\|_1$ 的图为半代数集。
+
+将（142.5）代入，记这个单终端误差为 $e_n(\theta,\mathfrak A,\rho)$。它连续且半代数。有限终端最大值与输入最大值的图可写成有限实量词公式：
+
+$$
+\begin{aligned}
+t=E(\theta,\mathfrak A)
+\quad\Longleftrightarrow\quad&
+\bigwedge_{n=1}^N
+\forall\rho\in\mathscr P:\ e_n(\theta,\mathfrak A,\rho)\le t,\\
+&\text{且}\quad
+\bigvee_{n=1}^N
+\exists\rho\in\mathscr P:\ e_n(\theta,\mathfrak A,\rho)=t.
+\end{aligned}
+\tag{142.7}
+$$
+
+输入紧性保证最大值确实取得。式中 $e_n$ 可替换为（142.6）的图公式，故只包含有限个实变量、多项式条件和量词。实闭域量词消去，即 Tarski–Seidenberg 定理，给出 $E$ 的半代数图。
+
+再利用装置最小值取得，写
+
+$$
+\begin{aligned}
+t=\varepsilon_{D,N}(\theta)
+\quad\Longleftrightarrow\quad&
+\exists\mathfrak A\in\mathscr A_{D,N}:\ E(\theta,\mathfrak A)=t,\\
+&\text{且}\quad
+\forall\mathfrak A'\in\mathscr A_{D,N}:\ E(\theta,\mathfrak A')\ge t.
+\end{aligned}
+\tag{142.8}
+$$
+
+再次量词消去，得到 $\varepsilon_{D,N}$ 为半代数函数。第140.2节已经给出
+
+$$
+|\varepsilon_{D,N}(\theta)-\varepsilon_{D,N}(\theta')|
+\le2N\|\theta-\theta'\|_2,
+\tag{142.9}
+$$
+
+所以它在整个 $\Theta$ 上连续，包括所有退化来源。这里没有把半代数性误当成自动连续；连续性单独由实际来源扰动界提供。
+
+### 142.2 精确零集与经典 Łojasiewicz 工具
+
+最小值取得保证 $\varepsilon_7(\theta)=0$ 当且仅当同一装置可以精确服务前六终端。第139节排除全部非退化七维装置，第10节的二维和三维退化装置经第140.4节嵌入七维。因此
+
+$$
+\varepsilon_7^{-1}(0)=Z.
+\tag{142.10}
+$$
+
+按第140.4节，
+
+$$
+d(a,b)=\sqrt{2-2\max\{|a|,|b|\}},
+\qquad
+0\le d\le\sqrt{2-\sqrt2}<1.
+\tag{142.11}
+$$
+
+模长、有限最大值和非负平方根均有半代数图，故 $d$ 连续且半代数。
+
+现在复用经典 Łojasiewicz 不等式的紧图版本：若 $f,g$ 在一个集合上具有紧的次解析图，且 $f^{-1}(0)\subseteq g^{-1}(0)$，则存在 $c>0$、$q>0$，使 $|f|\ge c|g|^q$。[^phase_lojasiewicz_compact_graphs] 连续半代数函数在紧半代数集上的图是紧半代数集，因而满足这个定理的次解析图条件。
+
+在实解析环境空间 $\mathbb R^4\cong\mathbb C^2$ 中取定义域 $\Theta$，并取
+
+$$
+f=\varepsilon_7,\qquad g=d.
+$$
+
+式（142.10）给出正确方向的零集包含，实际上两零集相等；两图的紧性由 $\Theta$ 紧及连续性给出。因此存在统一于整个 $\Theta$ 的 $C>0,q>0$，使
+
+$$
+\varepsilon_7(\theta)\ge C d(\theta)^q.
+$$
+
+取 $r=\max\{1,\lceil q\rceil\}$。由（142.11）的 $0\le d<1$，有 $d^r\le d^q$，所以
+
+$$
+\varepsilon_7(\theta)\ge C d(\theta)^r.
+\tag{142.12}
+$$
+
+右侧上界是第140节已有的 $\varepsilon_7\le\min\{1,12d\}$。合并即得（142.3），定理142.1得证。
+
+### 142.3 本例给出的关系与边界
+
+本节的几何机制是：有限维、有限期限的实际装置有紧半代数参数集；全参考最优误差的零集恰是该容量可精确实现的来源集合；经典 Łojasiewicz 不等式再以距这个零集的有限幂控制误差。在本例中，精确分类把这个零集确定为退化两圆。
+
+这比单独的逐点正性进一步限制了近端点行为。对任意非空紧集 $L\subset\Theta\setminus Z$，令 $\delta_L=\min_{\theta\in L}d(\theta)>0$，则
+
+$$
+\min_{\theta\in L}\varepsilon_7(\theta)\ge C\delta_L^r>0.
+\tag{142.13}
+$$
+
+同一对 $C,r$ 服务全部这样的紧集；它们仍是存在性常数。本文没有给出 $C,r$ 的有效数值、最佳指数、最优误差曲线或实用认证算法，也没有把不等式方向不同的上界当成误差下界。第20、35节的392轮显式数值界与本节六轮端点幂界各有自己的期限和合同，不互相替代。
+
+半代数集合与函数、量词消去和 Łojasiewicz 不等式都是既有工具。本节的工作是核对实际全参考误差优化满足这些工具的条件，并连接第139节的精确零集；不作工具原创或 Lean kernel 核验声明，也不把有限期限结论外推为全时域幂界。
+
+[^phase_lojasiewicz_compact_graphs]: Edward Bierstone and Pierre D. Milman, “Semianalytic and subanalytic sets,” *Publications Mathématiques de l’IHÉS* **67** (1988), 5–42, [原文 PDF](https://www.numdam.org/item/PMIHES_1988__67__5_0.pdf), [doi:10.1007/BF02699126](https://doi.org/10.1007/BF02699126)。Theorem 6.4，印刷第34页，假设 $f,g$ 的图紧且次解析、$f^{-1}(0)\subseteq g^{-1}(0)$，结论为 $|f(x)|\ge c|g(x)|^r$；Remark 6.5 明列距零集的形式。本文使用连续半代数函数的特例，原文的正实指数再按（142.11）上取整，不引用任何有效指数或系数估计。
+

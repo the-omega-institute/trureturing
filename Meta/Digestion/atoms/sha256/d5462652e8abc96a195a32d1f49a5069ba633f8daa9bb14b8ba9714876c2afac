@@ -1,0 +1,12 @@
+### 141.3 满秩附加态强制相干子系统运输
+
+固定同一个 Stinespring 等距
+
+$$
+V:K\otimes B\longrightarrow K\otimes E,\qquad
+\mathcal C(Y)=\operatorname{Tr}_E(VYV^*).
+\tag{141.10}
+$$
+
+$E$ 表示每轮使用后丢弃的新环境。以下所有轮次使用同一环境坐标空间和同一个 $V$，没有把旧环境重新接回接收器。
+

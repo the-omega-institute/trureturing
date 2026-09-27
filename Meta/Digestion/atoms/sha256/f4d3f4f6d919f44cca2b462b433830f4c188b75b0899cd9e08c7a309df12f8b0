@@ -1,0 +1,50 @@
+**定理168.1（退相干与独立标签）。** 存在一份固定的接收端酉
+$V_{\mathrm{loc}}$，使对所有逻辑算子 $\sigma$，
+
+$$
+\boxed{
+V_{\mathrm{loc}}\,
+\mathcal N_{\mathrm{loc}}(\sigma)\,
+V_{\mathrm{loc}}^*
+=\mathcal D_\kappa(\sigma)\otimes\frac{I_R}{2}.
+}
+\tag{168.6}
+$$
+
+因此 $\mathcal N_{\mathrm{loc}}$ 与 $\mathcal D_\kappa$ 可以互相通过 CPTP 后处理模拟；等式也在张量任意逻辑参考后成立。
+
+**证明。** 实对称 qubit 密度矩阵满足
+
+$$
+Y\rho_*Y=I-\rho_*.
+\tag{168.7}
+$$
+
+因此两矩阵对易。选择 $\rho_*$ 的接收端本征坐标，使
+$\rho_*=\operatorname{diag}(r,\ell)$。在这个坐标中，
+
+$$
+\mathcal N_{\mathrm{loc}}(\sigma)
+=\frac12\left(
+\mathcal D_\kappa(\sigma)\otimes|0\rangle\langle0|_R
++
+Z\mathcal D_\kappa(\sigma)Z\otimes|1\rangle\langle1|_R
+\right).
+\tag{168.8}
+$$
+
+再施加接收端受控酉
+
+$$
+V_{\mathrm c}
+=I_Q\otimes|0\rangle\langle0|_R
++Z_Q\otimes|1\rangle\langle1|_R
+\tag{168.9}
+$$
+
+便得到（168.6）。$V_{\mathrm{loc}}$ 是先进入上述 $R$ 本征坐标、再执行 $V_{\mathrm c}$ 的固定酉。
+
+由 $\mathcal N_{\mathrm{loc}}$ 得到 $\mathcal D_\kappa$，只需施加该酉并迹掉 $R$；反过来，向 $\mathcal D_\kappa$ 的输出添加 $I_R/2$，再施加逆酉即可得到 $\mathcal N_{\mathrm{loc}}$。全部恒等式对输入算子线性成立，故保留任意外部参考。证毕。
+
+标准形中的均匀标签就是原接收寄存器 $R$ 的坐标，不是新添持久控制。纠正可以用受控酉完成，不要求将标签写入额外档案。
+

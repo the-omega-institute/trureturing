@@ -1,0 +1,81 @@
+## 417. 五射线两份原始记录的单向恢复最大成功率
+
+操作约定。固定已知的有限实数 $r>0$，取系统 $S=\mathbb C^5$ 及正交基 $\{|i\rangle\}_{i=1}^5$。两份原始记录及其制备为
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&
+s_1&=|0\rangle,&s_2&=|1\rangle,&
+s_{3+j}&=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}\quad(j=0,1,2),\\
+R_A&=\mathbb C^2,&R_B&=\mathbb C^2,&R_2&=R_A\otimes R_B,&
+q_i&=s_i\otimes s_i,\\
+J&:S\longrightarrow S\otimes R_2,&
+J|i\rangle&=|i\rangle\otimes q_i&&&(1\le i\le5).
+\end{aligned}
+$$
+
+这里 $J$ 就是第 416 节的 $J_2$。Alice 持有 $R_A$，Bob 持有 $R_B$；制备后的完整原始空间始终为 $R_2$。记
+
+$$
+\begin{aligned}
+e_0&=|00\rangle,&e_1&=\frac{|01\rangle+|10\rangle}{\sqrt2},&e_2&=|11\rangle,\\
+W_2&=\operatorname{span}\{e_0,e_1,e_2\},&
+e_-&=\frac{|01\rangle-|10\rangle}{\sqrt2},&R_2&=W_2\oplus\mathbb C e_-.
+\end{aligned}
+$$
+
+$W_2$ 只用于描述准备向量的数学张成空间，不授予将原始两因子物理压缩到 $W_2$ 的操作，也不省略任何原始记录。
+
+Alice 先作一次有限完全正仪器，报告实际标签 $a\in\mathsf A$；Bob 收到 $a$ 后，作一次有限完全正仪器，报告实际标签 $b\in\mathsf B_a$，随即结束记录操作。各标签集有限非空，输出空间 $O_{A,a}$、$O_{B,ab}$ 有限维且非零。允许的局部映射及有限隐藏 Kraus 表示为
+
+$$
+\begin{aligned}
+\mathcal A_a&:\mathcal L(R_A)\longrightarrow\mathcal L(O_{A,a}),&
+\mathcal A_a(Z)&=\sum_\mu A_{a\mu}ZA_{a\mu}^\dagger,&
+A_{a\mu}&:R_A\longrightarrow O_{A,a},\\
+\mathcal B_{b\mid a}&:\mathcal L(R_B)\longrightarrow\mathcal L(O_{B,ab}),&
+\mathcal B_{b\mid a}(Z)&=\sum_\nu B_{b\mid a,\nu}ZB_{b\mid a,\nu}^\dagger,&
+B_{b\mid a,\nu}&:R_B\longrightarrow O_{B,ab}.
+\end{aligned}
+$$
+
+全部实际结果满足完整的迹保持条件
+
+$$
+\sum_{a\in\mathsf A}\operatorname{Tr}\mathcal A_a(Z_A)=\operatorname{Tr}Z_A,
+\qquad
+\sum_{b\in\mathsf B_a}\operatorname{Tr}\mathcal B_{b\mid a}(Z_B)=\operatorname{Tr}Z_B
+\quad\text{对每个 }a,
+$$
+
+其中等式分别对全部 $Z_A\in\mathcal L(R_A)$、$Z_B\in\mathcal L(R_B)$ 成立。局部有限辅助态与未知输入及其参考独立，初始两方辅助态为乘积态；将其准备、局部处理及丢弃吸收进上述映射。Bob 只能依赖实际 $a$，不能依赖隐藏指标 $\mu$；没有共享纠缠、量子通信或 Bob 结果控制的再次 Alice 记录操作。
+
+令 $\mathsf Y=\{(a,b):a\in\mathsf A, b\in\mathsf B_a\}$，则实际记录分支和迹掉全部输出记录后的系统分支为
+
+$$
+\begin{aligned}
+\mathcal I_{ab}&=\mathcal A_a\otimes\mathcal B_{b\mid a},\\
+\mathcal M_{ab}(X)&=\operatorname{Tr}_{O_{A,a}\otimes O_{B,ab}}
+ \left[(\operatorname{id}_S\otimes\mathcal I_{ab})(JXJ^\dagger)\right]
+ \qquad(X\in\mathcal L(S)).
+\end{aligned}
+$$
+
+固定接受集合 $\mathsf Y_{\mathrm s}\subseteq\mathsf Y$，全部失败标签仍在完整仪器内。每个实际 $(a,b)$ 的两个标签都传至终端系统反馈端，控制一个预先指定、作用于整个 $S$ 的酉算子 $U_{ab}$；同一实际标签下的全部隐藏指标共用该算子。在此之前不操作系统。仪器、接受集合及反馈可依赖已知的 $r$，不得依赖未知输入。精确恢复要求同一个协议及同一个输入无关的 $p\in[0,1]$ 满足
+
+$$
+\begin{aligned}
+\mathcal T&:=\sum_{(a,b)\in\mathsf Y_{\mathrm s}}
+                  \operatorname{Ad}_{U_{ab}}\circ\mathcal M_{ab}
+                  =p\operatorname{id}_S,\\
+\operatorname{Ad}_{U_{ab}}(X)&=U_{ab}XU_{ab}^\dagger,\\
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})&=pX_{FS}
+ \qquad\text{对每个有限维未操作参考 }F
+ \text{ 及全部 }X_{FS}\in\mathcal L(F\otimes S).
+\end{aligned}
+$$
+
+第一行是在全部系统矩阵上的等式，与第三行由矩阵张量基展开相互等价；对密度矩阵取迹，$p$ 就是接受概率。空接受集合允许 $p=0$。每个协议的结果数和空间维数均有限，不要求所有候选协议共用一个有限上界。记这些 $p$ 的上确界为 $\eta_{\to}(r)$。
+
+上述单向次序沿用 Chitambar 等，[arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.2–2.3 的局部仪器、条件复合及粗粒化区分。它是第 416 节有限局部操作与经典通信类别的子类，该有限类别允许双方交替操作；展开每棵有限树的局部 Kraus 算子又给出可分操作。仍以 $\eta_{\mathrm{fin}}(r)$、$\eta_{\mathrm{SEP}}(r)$ 表示第 416 节在同一原始分割和同一恢复等式下的两类上确界。
+

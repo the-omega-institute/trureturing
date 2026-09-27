@@ -1,0 +1,4 @@
+- `D5/S0/Automata/BinaryZeckendorfLanguage.lean` 的 `base_success_iff_noAdjacentOnes` 对应成功运行与无相邻一；`BinaryZeckendorfBlockSkeleton.lean` 的 `eval_extractSkeleton` 与 `eval_extractSkeleton_start` 给 skeleton 的精确输出对应。这些声明不自动包括本节全部费用、相位、时长和熵率结论。
+
+本节的新增组织包括：一般整数区间归纳、编码前缀与模数读取的整除判据、可逆权重相位状态、终态剪枝边界、首返费用与 iid 块熵率运输，以及有限窗口与无限完成的量词区分。它们在所列模型中由正文证明支持；没有声称原创性，没有把数学编码层直接等同为物理空间、物理时间或量子过程。
+

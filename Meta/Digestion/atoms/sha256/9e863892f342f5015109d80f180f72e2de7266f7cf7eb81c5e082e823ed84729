@@ -1,0 +1,61 @@
+### 114.2 首轮采用第三条射线时的纯方向与混合方向
+
+现在设
+
+$$
+\eta_1=\alpha A+\beta B,\qquad \alpha\beta\ne0,
+\tag{114.5}
+$$
+
+并保持这个真实首轮向量 $p$。若 $p\in U$，式（114.3）中可减去 $\alpha p\otimes A$，得到
+
+$$
+R_0=(U\otimes A)\oplus((W+\mathbb Cp)\otimes B).
+$$
+
+若 $p\in W$ 同样得到两纯方向分解；若 $p$ 同时属于两者，新增向量本已在尾像中。因此这些情形的 $R_1$ 也全部乘积生成。
+
+剩下假设
+
+$$
+p\notin U,\qquad p\notin W.
+\tag{114.6}
+$$
+
+此时 $p\otimes\eta_1$ 不在两个尾块之和中，由（114.1）有
+
+$$
+\dim U+\dim W=6.
+\tag{114.7}
+$$
+
+直接对（114.3）的三个生成部分取正交条件，得到完整 $R_1$ 接收纤维：
+
+$$
+\mathcal G_1([A])=U^\perp\cap p^\perp=:F_A,
+\qquad
+\mathcal G_1([B])=W^\perp\cap p^\perp=:F_B.
+\tag{114.8}
+$$
+
+对于同时具有非零 $A,B$ 分量的环境 $z$，先须使接收因子正交于 $U+W$，再检验首轮乘积向量。因此
+
+$$
+\mathcal G_1([z])=
+\begin{cases}
+(U+W)^\perp,&[z]=[\eta_1^\perp],\\
+(U+W+\mathbb Cp)^\perp,&[z]\ne[\eta_1^\perp],
+\end{cases}
+\quad [z]\notin\{[A],[B]\}.
+\tag{114.9}
+$$
+
+式（114.8）的两侧维数分别为 $6-\dim U$、$6-\dim W$，因为（114.6）使对 $p$ 的正交条件在对应正交补上非零。故由纯方向乘积向量生成的空间
+
+$$
+Z=(F_A\otimes A)\oplus(F_B\otimes B)
+\tag{114.10}
+$$
+
+维数恰为六。环境混合并不自动产生新的接收方向；是否增加第七个乘积生成维数，由 $p$ 相对 $U+W$ 的位置决定。
+

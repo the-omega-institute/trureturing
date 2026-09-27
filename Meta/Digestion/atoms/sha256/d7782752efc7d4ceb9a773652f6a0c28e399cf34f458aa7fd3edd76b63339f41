@@ -1,0 +1,20 @@
+### 54.2 边缘矩不足以恢复联合策略
+
+存在两个历史族，它们具有相同的 $\Pr(Y=y)$、相同的 $\mathbb E\Delta$ 和相同的当前目标后验，但具有不同的 $\Pr(Y,\Delta)$ 或不同的 $\Pr(A_{t+1}\mid Y,\Delta)$. 任何只保存三个边缘量的摘要都会把这两族合并；下一步依赖联合记录的策略可能因此选择不同动作。
+
+Context 第52.4节的 `\mu_{\rm const},\mu_{\rm once},\mu_{\rm alt}` 是有限明确见证：三者所有单时刻均值相同，但相邻联合矩不同。把 $Δ$ 取作相邻变更指示或路径费用后，同样说明边缘时钟均值不能恢复联合协议律。
+
+精确边界应保存一个对声明任务充分的联合 profile，例如
+
+$$
+\Psi(c)=\bigl(
+ b_c,
+ \{K_a\}_{a\in A(c)},
+ \operatorname{Record}(a,y,\Delta),
+ \operatorname{Update}(c,a,y,\Delta)
+\bigr),
+\tag{54.3}
+$$
+
+或一个与它在实际像上等价的摘要。`CanonicalPredictiveStateSufficiency.canonical_predictive_state_is_sufficient`、`ConditionalProbabilityProfileMinimality.conditional_probability_profile_is_minimal` 和 `CompletionInformationCost.completion_information_cost` 分别承担条件未来律、最小 profile 和条件熵成本的有限接口；后者只约束正质量支持，不供应零质量名义状态的全域因式分解。
+

@@ -1,0 +1,40 @@
+#### 2.4.5 有限动态规划与无限可延伸核心
+
+令 $t_e$ 为 $\varphi_e(e+1)$ 的停机步数，未停机时为 $\infty$，并定义既有有限模拟层
+
+$$
+H_n=
+\{h\in\{0,\ldots,3^n-1\}:
+\forall e<n,\ t_e\le n\Longrightarrow
+h\not\equiv a_e\pmod{3^{e+1}}\}.
+\tag{TM.508}
+$$
+
+每层可由有界模拟给出完整列表；模 $3^n$ 约化把 $H_{n+1}$ 映入 $H_n$。同时
+
+$$
+|H_n|\ge\frac{3^n+1}{2},
+\qquad
+K=\varprojlim_n H_n.
+\tag{TM.509}
+$$
+
+对 $m\ge n$，定义深度 $m$ 所见的第 $n$ 层可达核心及其精确极限
+
+$$
+B_{n,m}
+=\{h<3^n:\exists y\in H_m,\ y\bmod3^n=h\},
+\qquad
+R_n=q_n(K).
+\tag{TM.510}
+$$
+
+$B_{n,m}$ 可计算，可用有限枚举或从第 $m$ 层向下回传可达标记的动态规划求出。随着 $m$ 增大，它们满足
+
+$$
+B_{n,m+1}\subseteq B_{n,m},
+\qquad
+R_n=\bigcap_{m\ge n}B_{n,m}.
+\tag{TM.511}
+$$
+

@@ -1,0 +1,19 @@
+### 229.1 标准工具及其范围
+
+令 $H\to\mathbb {CP}^{d-1}$ 为重言线丛，即其在 $[v]$ 上的纤维是复直线 $\mathbb Cv\subset\mathbb C^d$。定义
+$$
+h=c_1(H^*)=-c_1(H).
+\tag{229.NC.2}
+$$
+该定义固定本文的生成元符号，不依赖不同教材对重言线丛第一陈类正负号的命名。
+
+采用以下已核对的标准结果。
+
+- $H^*(\mathbb {CP}^{d-1};\mathbb Z)=\mathbb Z[h]/(h^d)$，其中 $h$ 的上同调次数为二。因此 $h^k\ne0$ 对 $0\le k\le d-1$ 成立，而且相应偶次上同调群为自由整数群。
+- 复线丛的张量积满足 $c_1(L\otimes M)=c_1(L)+c_1(M)$；对偶取负。因此整数张量幂满足 $c_1(L^{\otimes q})=q\,c_1(L)$，负幂解释为对偶的正幂。
+- 总陈类满足 Whitney 直和公式 $c(E\oplus E')=c(E)c(E')$，并且 $c_j(E)=0$ 当 $j$ 大于 $E$ 的复秩。平凡丛的正次陈类为零。
+
+原始来源分别为 Hatcher《Algebraic Topology》第3章定理3.19，第220页，[章节 PDF 第36页](https://pi.math.cornell.edu/~hatcher/AT/ATch3.pdf#page=36)；以及 Hatcher《Vector Bundles and K-Theory》Version 2.2（2017年11月）定理3.2，第78页，及命题3.10，第86页，[官方 PDF 第82页](https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf#page=82)、[第90页](https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf#page=90)。后两处分别给陈类的直和、秩及归一化公理，以及线丛张量积下第一陈类的加法。
+
+只用这些事实即可证明所需零点结论，不需要声称任意非零陈类都给完全分类，也不需要把整数类降到模二。
+

@@ -1,0 +1,13 @@
+**定理172.2（不能由任何常值通道消去的残留）。** 有
+
+$$
+\boxed{
+\inf_\sigma d_\diamond(\Theta_L,\mathcal C_\sigma)
+=\frac{d_L}{2},
+\qquad
+\sigma_{\mathrm{mid}}=\frac{\tau_0+\tau_1}{2}
+\ \text{达到最小值}.
+}
+\tag{172.16}
+$$
+

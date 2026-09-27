@@ -1,0 +1,8 @@
+**定理 33.2（原始端点的显式两步链）。** 有
+
+$$
+\boxed{A=PV,\qquad C=VP=V\widehat P,\qquad B=\widehat PV.}
+$$
+
+因此 A→C→B 是一条长度二的实际 N[C2] SSE 链。A、B 严格正，C 虽有一个零条目，但每行每列非零，故全部图 essential。它给出原时间 H 共轭、完整滞后二证书及正向预见二、逆向记忆二的明确编码。
+

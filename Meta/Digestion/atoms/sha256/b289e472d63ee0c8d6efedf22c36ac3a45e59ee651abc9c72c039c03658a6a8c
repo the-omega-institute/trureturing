@@ -1,0 +1,36 @@
+#### 2.6.4 仿射局部分裂及其有限性条件
+
+转到整数的 profinite 完成化 $\widehat{\mathbb Z}$，写
+
+$$
+C(a,m)=a+m\widehat{\mathbb Z},\qquad a\in\mathbb Z,\ m\ge1.
+\tag{TM.616}
+$$
+
+映射
+
+$$
+\theta_{a,m}:\widehat{\mathbb Z}\longrightarrow C(a,m),
+\qquad t\longmapsto a+mt
+\tag{TM.617}
+$$
+
+是同胚。乘以 $m$ 的单射性可直接从有限商看出：若 $mt=0$，在模 $mn$ 上读取便得到 $t=0\pmod n$，这对每个 $n$ 成立，故 $t=0$。像是模 $m$ 读数的零核；反过来，若 $x=0\pmod m$，则把 $x\pmod {mn}$ 的可被 $m$ 整除的代表除以 $m$，得到相容的模 $n$ 剩余类，从而得到 $x=mt$。连续双射从紧空间到 Hausdorff 子空间自动为同胚。
+
+对任意指标族 $(b_j,r_j)$，其中 $b_j\in\mathbb Z$、$r_j\ge1$，有逐项等式
+
+$$
+\theta_{a,m}\bigl(C(b_j,r_j)\bigr)
+=C(a+mb_j,mr_j).
+\tag{TM.618}
+$$
+
+所以对任意有限或无限族，都有
+
+$$
+C(a,m)=\bigcup_j C(a+mb_j,mr_j)
+\quad\Longleftrightarrow\quad
+\widehat{\mathbb Z}=\bigcup_j C(b_j,r_j).
+\tag{TM.619}
+$$
+

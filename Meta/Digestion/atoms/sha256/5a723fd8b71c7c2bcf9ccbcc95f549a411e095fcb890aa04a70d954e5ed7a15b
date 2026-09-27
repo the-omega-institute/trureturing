@@ -1,0 +1,21 @@
+**定理 30.2（有滞后分解对全部秩差的约束）。** 设 T:V→V、Q:W→W 幂零，R:W→V、S:V→W，并且对整数 l≥1 有
+
+$$
+TR=RQ,\qquad QS=ST,\qquad RS=T^l,\qquad SR=Q^l.
+$$
+
+则对每个 j≥1，
+
+$$
+\boxed{w_{j+l}(T)\le w_j(Q),\qquad
+       w_{j+l}(Q)\le w_j(T).}
+$$
+
+若两端的块长分拆为 λ、μ，补零后进一步有
+
+$$
+\boxed{\max_i|\lambda_i-\mu_i|\le l.}
+$$
+
+V、W 不必同维。
+

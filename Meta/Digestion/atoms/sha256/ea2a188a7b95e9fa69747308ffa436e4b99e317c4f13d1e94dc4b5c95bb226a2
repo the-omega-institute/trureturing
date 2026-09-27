@@ -1,0 +1,103 @@
+**定理 390.2（有限测量下的总精确恢复边界）。** 在定义 389.1–389.2 的完整记录接口下，$\eta(C)$ 恰为所有有限协议的最大总成功概率，而且最大值可以取得。取得最大值的协议可用至多 $d^2-d+1$ 个非零成功结果及一个失败结果。特别地，
+
+$$
+\eta(C)=1\quad\Longleftrightarrow\quad C\in\mathcal P_d.
+$$
+
+最后这个确定恢复判据是环境辅助酉混合判据在 Schur 通道上的应用；它在本定理中作为总成功边界的端点，出处为定义 389.2 所引 Gregoratti–Werner，以及 Buscemi–Chiribella–D’Ariano，[*Inverting Quantum Decoherence by Classical Feedback from the Environment*, quant-ph/0504195v5](https://arxiv.org/abs/quant-ph/0504195v5)，Theorem 1 后的环境反馈讨论与 Theorem 2（PDF 第 2 页；[Phys. Rev. Lett. 95, 090501](https://doi.org/10.1103/PhysRevLett.95.090501)）。
+
+证明。先建立 POVM 与正矩阵分解之间的精确对应。若记录测量结果 $y$ 的 Kraus 算子为 $M_{yk}$，则 $D_y=\sum_kM_{yk}^\dagger M_{yk}$。对系统矩阵单位，记录的偏迹系数为
+
+$$
+\sum_k\operatorname{Tr}(M_{yk}|r_i\rangle\langle r_j|M_{yk}^\dagger)
+ =\langle r_j|D_y|r_i\rangle
+ =(RD_y^{\mathsf T}R^\dagger)_{ij}.
+$$
+
+这里 $\mathsf T$ 是普通转置，不能用伴随替换。因此
+
+$$
+\mathcal M_y(X)=C_y\circ X,\qquad
+C_y=RD_y^{\mathsf T}R^\dagger\succeq0,\qquad
+\sum_yC_y=C.
+$$
+
+转置保持 Hermitian 正半定性：对 $D\succeq0$，$x^\dagger D^{\mathsf T}x=\overline{\bar x^\dagger D\bar x}\ge0$。上述分支公式与选择哪一组实现同一效果的 Kraus 算子无关。
+
+反之，设有限正矩阵族满足 $\sum_yC_y=C$。由 $0\preceq C_y\preceq C$，若 $v\in\ker C$，则 $0\le v^\dagger C_yv\le v^\dagger Cv=0$，故 $C_yv=0$。于是 $\operatorname{ran}C_y\subseteq\operatorname{ran}C=\operatorname{ran}R$。定义满列秩矩阵的左伪逆及辅助效果
+
+$$
+R^+=(R^\dagger R)^{-1}R^\dagger,\qquad
+T_y=R^+C_y(R^+)^\dagger,\qquad D_y=T_y^{\mathsf T}.
+$$
+
+有 $T_y\succeq0$，且
+
+$$
+\sum_yT_y=R^+RR^\dagger(R^+)^\dagger=I_E.
+$$
+
+又 $P=RR^+$ 是 $\operatorname{ran}R$ 上的正交投影，故
+
+$$
+RD_y^{\mathsf T}R^\dagger=RT_yR^\dagger=PC_yP=C_y.
+$$
+
+这给出所需 POVM。取每个结果的 Kraus 算子为 $D_y^{1/2}$ 即可实现它；若原环境比最小记录张成空间更大，将其正交补并入任一结果，不改变任何输入分支。
+
+接着证明成功分支必须具有相位秩一形式。设某协议的成功和为 $t\operatorname{id}_S$。取未归一化最大纠缠向量 $|\Omega\rangle=\sum_i|i\rangle\otimes|i\rangle$，记 Choi 矩阵
+
+$$
+\mathfrak J(\mathcal T)=
+(\operatorname{id}_S\otimes\mathcal T)(|\Omega\rangle\langle\Omega|).
+$$
+
+每个 $\mathfrak J(\mathcal T_y)$ 正半定，并且
+
+$$
+\sum_{y\in Y_{\mathrm{s}}}\mathfrak J(\mathcal T_y)
+=t|\Omega\rangle\langle\Omega|.
+$$
+
+对任意与 $\Omega$ 正交的向量，左侧各项的非负二次型之和为零，故各项都将该向量送至零。每项的值域因此包含于 $\mathbb C\Omega$，从而存在 $p_y\ge0$ 使 $\mathfrak J(\mathcal T_y)=p_y|\Omega\rangle\langle\Omega|$。Choi 矩阵的 $(i,j)$ 块就是 $\mathcal T_y(|i\rangle\langle j|)$，所以
+
+$$
+\mathcal T_y=p_y\operatorname{id}_S,\qquad
+\sum_{y\in Y_{\mathrm{s}}}p_y=t.
+$$
+
+这一步排除了“若干不可校正分支在成功和中互相抵消”的可能。
+
+对于 $p_y>0$，在 $|i\rangle\langle i|$ 上应用此等式得到
+
+$$
+(C_y)_{ii}U_y|i\rangle\langle i|U_y^\dagger
+=p_y|i\rangle\langle i|.
+$$
+
+取迹得 $(C_y)_{ii}=p_y$，所以 $U_y|i\rangle=u_{yi}|i\rangle$，其中 $|u_{yi}|=1$。再比较任意 $(i,j)$ 矩阵单位，得到
+
+$$
+(C_y)_{ij}u_{yi}\overline{u_{yj}}=p_y.
+$$
+
+令 $(z_y)_i=\overline{u_{yi}}$，便有 $C_y=p_yz_yz_y^\dagger$。若 $p_y=0$，则 $\mathcal T_y=0$，由酉反馈可逆知 $C_y=0$。因此任意协议给出 $Q=\sum_{y\in Y_{\mathrm{s}}}p_yz_yz_y^\dagger\preceq C$，其总成功率不超过定义 390.1 的上确界。
+
+反向构造也成立：给定可行 $Q$，以各 $p_yz_yz_y^\dagger$ 为成功分支矩阵，以 $C-Q$ 为失败分支矩阵，用前述 POVM 实现，并对成功结果取
+
+$$
+U_y=\operatorname{diag}(\overline{(z_y)_1},\ldots,\overline{(z_y)_d}).
+$$
+
+逐项相乘直接给出 $\mathcal T_y=p_y\operatorname{id}_S$。对参考空间张量恒等映射后仍成立，故恢复包括未知输入的纠缠。
+
+最后证明上确界确实取得。由 $Q_{ii}\le C_{ii}=1$，可行权重在 $[0,1]$ 内。Hermitian 矩阵的实维数为 $d^2$，固定全部对角元为 $1$ 的仿射空间维数为 $d^2-d$。相位向量集合紧致，映射 $z\mapsto zz^\dagger$ 连续；Carathéodory 定理将其凸包中的每一点写成至多 $d^2-d+1$ 点的凸组合。因此 $\mathcal P_d$ 是紧集：它是有限个紧相位集合与紧权重单纯形的连续像。集合
+
+$$
+\{(t,H):t\in[0,1],\ H\in\mathcal P_d,\ C-tH\succeq0\}
+$$
+
+非空且闭，因而紧。连续目标 $t$ 在其上取得最大值；$t=0$ 时任选 $H$，而 $t>0$ 时 $Q=tH$。Carathéodory 分解及一个剩余失败分支即给出所述有限结果数界。
+
+若 $C\in\mathcal P_d$，取 $Q=C$ 得 $\eta(C)=1$。反之，由取得性，$\eta(C)=1$ 给出 $Q\preceq C$ 且 $\operatorname{Tr}(C-Q)=0$。正半定矩阵的本征值均非负，迹为零迫使矩阵为零，所以 $C=Q\in\mathcal P_d$。证毕。
+

@@ -1,0 +1,58 @@
+### 73.4 完整负响应与正响应
+
+式（73.4）等于 $Z_\delta+\delta|z'\rangle\langle z'|+\rho J$。因为 $E\succeq0$，在负响应上可以舍去非正贡献 $-\delta\langle z'|E|z'\rangle$。式（73.6）、（73.12）于是给
+
+$$
+\begin{aligned}
+-\operatorname{Tr}(Y_{r,\delta}E)
+&\le F_\delta-p s+4\rho\sqrt s\\
+&\le F_\delta+\frac{4\rho^2}{p}.
+\end{aligned}
+\tag{73.13}
+$$
+
+最后一步是完成平方：$-p s+4\rho\sqrt s=-p(\sqrt s-2\rho/p)^2+4\rho^2/p$。
+
+由
+
+$$
+\rho=\frac{\sqrt r\,\delta}{1+\sqrt p},
+\qquad1+\sqrt p\ge2\sqrt p,
+$$
+
+以及 $p\ge3/4$，有
+
+$$
+\frac{4\rho^2}{p}
+\le\frac{r\delta^2}{p^2}
+\le\frac{16}{9}r\delta^2\le2r\delta^2.
+$$
+
+式（73.11）中 $\delta^2/[2(1-2\delta)]\le\delta^2$。取全部 tester 最大值，得到
+
+$$
+\max_{C,E}-\operatorname{Tr}(Y_{r,\delta}E)
+\le\frac98-\frac34\delta+(1+2r)\delta^2.
+\tag{73.14}
+$$
+
+正响应也须控制。第 72 节已准确计算 $\max_{C,E}\operatorname{Tr}(Y_*E)=1$。式（73.4）中的 $-\delta|w\rangle\langle w|$ 对正响应不增益，而两个新增对角元满足
+
+$$
+\langle h|E|h\rangle+\langle z'|E|z'\rangle
+\le C_{01,01}+C_{11,11}=1.
+$$
+
+再用式（73.6）及 $s\le1$，便有
+
+$$
+\begin{aligned}
+\max_{C,E}\operatorname{Tr}(Y_{r,\delta}E)
+&\le1+\delta+4\rho\\
+&\le1+\delta(1+4\sqrt r).
+\end{aligned}
+\tag{73.15}
+$$
+
+最后一步只用 $\rho\le\sqrt r\,\delta$。正负响应界分别对全部合法事件成立，故可以共同用于 $N$。
+

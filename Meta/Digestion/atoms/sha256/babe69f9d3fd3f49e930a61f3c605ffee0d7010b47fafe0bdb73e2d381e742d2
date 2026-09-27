@@ -1,0 +1,4 @@
+**命题 15.1（经典标签合并）。** 对正交记录下的分支 $K_j$，将已读标签仅保留为“$j\in A$”时，条件分支为 $\Phi_A(\rho)=\sum_{j\in A}K_j\rho K_j^\dagger$，效果为 $\sum_{j\in A}K_j^\dagger K_j$。
+
+证明。对已区分的记录求部分迹会消去不同标签的交叉项，故不能一般替换成 $(\sum_jK_j)\rho(\sum_jK_j)^\dagger$。$\square$
+

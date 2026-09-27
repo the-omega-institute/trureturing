@@ -1,0 +1,11 @@
+**完整 \(n=1\)。** 每块测量反对称投影，得到实际
+\[
+Y\sim\operatorname{Bernoulli}(p_F(c)),\qquad
+p_F(c)=\frac{1-c}{4}.
+\]
+定义已知函数
+\[
+h_F(t)=F_\eta(1-4t),\qquad0\le t\le1.
+\]
+因此 \(h_F(p_F(c))=F_\eta(c)\)。不同块给独立 Bernoulli 记录。
+

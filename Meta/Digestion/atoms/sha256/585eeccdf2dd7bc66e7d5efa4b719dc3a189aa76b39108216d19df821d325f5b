@@ -1,0 +1,8 @@
+**定义 428.1（持续检验的候选集合）。** 设 $\Theta$ 为有限非空候选集，各 $\theta$ 在同一可观测路径空间上给出概率律 $P_\theta$。对每个 $\theta$，预先给定一个只要求在 $P_\theta$ 下有效的非负超鞅 $E_n^\theta$，初始期望至多一。固定 $0<\alpha<1$，定义
+
+$$
+C_n=\left\{\theta\in\Theta:\max_{0\le t\le n}E_t^\theta<1/\alpha\right\}.
+$$
+
+这是保留尚未越过拒绝阈值的候选集合，不是给候选分配后验概率。它按定义递减，$C_{n+1}\subseteq C_n$，允许为空。
+

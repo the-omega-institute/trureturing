@@ -1,0 +1,28 @@
+#### 8.1.1 对象、合法动作与带标签响应
+
+固定正整数 $L$，置 $X_L=\mathbb Z/L\mathbb Z$。当前实际幸存集合是任意子集 $H\subseteq X_L$。剩余允许模数是有限集合
+$$
+M\subseteq\{m\in\mathbb N_{>0}:m\mid L\},
+\qquad D=\operatorname{lcm}(M),\qquad\operatorname{lcm}(\varnothing)=1.
+\tag{ER8.FH.1}
+$$
+因此 $D\mid L$。每个 $m\in M$ 最多使用一次；使用时可任选余数 $a\in\mathbb Z/m\mathbb Z$，删除 $a\bmod m$，随后从 $M$ 中移除 $m$。不要求必须使用所有模数，顺序任意，空续接也合法。
+
+一条合法续接可由子集 $T\subseteq M$ 及各 $m\in T$ 的余数 $a_m$ 表示；删除交换，所以终态基数不依赖该子集的执行顺序。定义
+$$
+R_{T,a}(H)
+=\#\{x\in H:\forall m\in T,\ x\not\equiv a_m\pmod m\}.
+\tag{ER8.FH.2}
+$$
+特别地，$R_\varnothing(H)=|H|$。这里观察是**按动作标签索引的完整响应函数**，不是把所有读数丢掉标签后得到的无序多重集。
+
+定义未来等价
+$$
+H\equiv_M H'
+\quad\Longleftrightarrow\quad
+\forall T\subseteq M\ \forall(a_m)_{m\in T},\quad
+R_{T,a}(H)=R_{T,a}(H').
+\tag{ER8.FH.3}
+$$
+全部中间读数已包含其中，因为每个前缀本身也是合法续接。若后续动作按已读基数自适应选择，同一 $M$ 下未来等价还使任一确定性策略的动作与读数轨迹相同：按执行步数归纳即可。这个说明不额外开放模数重用、未知新模数或非计数读数。
+

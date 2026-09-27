@@ -1,0 +1,9 @@
+#### 8.1.2 完整直方图恰刻画未来等价
+
+定义
+$$
+N_c(H)=\#\{x\in H:x\equiv c\pmod D\},
+\qquad c\in\mathbb Z/D\mathbb Z.
+\tag{ER8.FH.4}
+$$
+

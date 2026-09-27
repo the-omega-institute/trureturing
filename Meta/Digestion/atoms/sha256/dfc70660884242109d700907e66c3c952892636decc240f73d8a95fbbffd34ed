@@ -1,0 +1,11 @@
+**定理 22.2（稳定恢复与残余误差下界）。** 以下条件等价：$\alpha>0$；效果张成全部 Hermitian 空间；该 POVM 在全部密度矩阵上可识别。此时
+
+$$
+\frac12\|\rho-\sigma\|_1
+\le\frac{\sqrt d}{2\alpha}\|\mathsf M(\rho)-\mathsf M(\sigma)\|_{\ell^2}.
+$$
+
+若 $\alpha=0$，则存在两不同状态具有完全相同记录，且任何只读取该记录概率向量的恢复法对其中一态的半迹距离误差至少为两态半迹距离的一半。
+
+证明。迹零 Hermitian 单位球紧，故 $\alpha>0$ 等价于 $\mathsf M$ 在该空间的核为零。POVM 完备性使 $I$ 属于效果张成，因而该核为零等价于满张成。对 $\Delta=\rho-\sigma$ 使用 $\|\Delta\|_1\le\sqrt d\|\Delta\|_2$ 与 $\|\mathsf M\Delta\|_{\ell^2}\ge\alpha\|\Delta\|_2$ 得到上界。若核非零，取 $\rho_\pm=I/d\pm a\Delta$，任意相同输入的恢复输出相同，由三角不等式得到下界。$\square$
+

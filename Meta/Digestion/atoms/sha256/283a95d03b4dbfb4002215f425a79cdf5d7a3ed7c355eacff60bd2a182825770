@@ -1,0 +1,24 @@
+**定理 18.3（永久暗方向与流入暗区的概率不同）。** 对任意 $0<a<1$，存在二维仪器，其永久无点击效果为
+
+$$
+F=|0\rangle\langle0|+a|1\rangle\langle1|,
+$$
+
+因而 $F^2\ne F$；其确定永不点击的纯态方向却仅为 $\mathbb C|0\rangle$。
+
+证明。取
+
+$$
+Q_1=|0\rangle\langle0|,
+\quad Q_2=\sqrt a\,|0\rangle\langle1|,
+\quad L=\sqrt{1-a}\,|1\rangle\langle1|.
+$$
+
+完备性由 $Q_1^\dagger Q_1+Q_2^\dagger Q_2+L^\dagger L=I$ 得到。对任意 $X$，
+
+$$
+\mathcal N(X)=(X_{00}+aX_{11})|0\rangle\langle0|.
+$$
+
+一次未点击即进入永不点击的 $|0\rangle$，故 $S_N=F$ 对所有 $N\ge1$ 成立。输入 $|1\rangle$ 时，以概率 $1-a$ 首轮点击，以概率 $a$ 进入暗区；初态的暗空间投影权重为零，永不点击概率却为 $a$。归一化向量的 $F$ 期望等于一当且仅当其 $|1\rangle$ 分量为零。$\square$
+

@@ -1,0 +1,35 @@
+**命题 493.2（严格正模型中的显式半径与极限）。** 对定义 493.1，
+
+$$
+\rho^\varepsilon=\frac{1-\alpha}{k}-\varepsilon,
+\qquad
+\rho_r^\varepsilon=1-\alpha-\varepsilon-\frac{(k-1)\varepsilon}{r}.
+$$
+
+因此
+
+$$
+\frac{j_{\mathrm{exact}}^\varepsilon}{j_{\mathrm{free}}^\varepsilon}
+=\frac{2\left[1-\alpha-\varepsilon-(k-1)\varepsilon/r\right]}
+{(1-\alpha)/k-\varepsilon}
+\longrightarrow2k\qquad(\varepsilon\downarrow0).
+$$
+
+证明：仍可按状态标签置换平均中心，写成 $R(\circ)=t$、$R(x)=(1-t)/k$。若 $t\le\alpha$，特别标记坐标上的正差至少为 $(1-\alpha)/k-\varepsilon$；若 $\alpha\le t\le1-k\varepsilon$，公共坐标与特别标记坐标共同给出的 TV 恰为
+
+$$
+\frac{1-\alpha}{k}-\varepsilon+\frac{k-1}{k}(t-\alpha).
+$$
+
+这个区间内其余标签的差非正。若 $t\ge1-k\varepsilon$，公共坐标差 $t-\alpha$ 已不小于在 $t=\alpha$ 取得的值。故无约束最优中心为 $t=\alpha$，得到第一式。
+
+容量条件要求 $r(1-t)/k\le\varepsilon$ 与 $rt\le\alpha$，即
+
+$$
+1-\frac{k\varepsilon}{r}\le t\le\frac\alpha r.
+$$
+
+概率条件另给 $0\le t\le1$。由参数范围，左端 $t_*=1-k\varepsilon/r$ 严格大于 $\alpha$，且不超过 $1-k\varepsilon$；又因 $r<\alpha$，右端大于一，故 $t_*$ 可行。在 $[\alpha,1-k\varepsilon]$ 上距离按上述正斜率增长，在更大的 $t$ 上距离为 $t-\alpha$ 并继续增长，所以受限最优点是 $t_*$。代入上式即得第二式。
+
+命题 485.3 给出两个联合最优值。分母由参数范围严格为正；固定 $k,r,\alpha$ 后令 $\varepsilon$ 趋于零，得到所述极限。证毕。
+

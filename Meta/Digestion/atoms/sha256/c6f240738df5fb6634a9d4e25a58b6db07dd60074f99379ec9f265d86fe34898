@@ -1,0 +1,48 @@
+**定理149.1（Bell 档案的四个权重及端点主阶）。** 对每个 $n\ge3$，$\rho_{H_n}|_{S_n}$ 的四个本征值为
+
+$$
+\boxed{
+\frac{1\pm\sqrt{1-4p w_{i,n}(1-w_{i,n})}}4,
+\qquad i=0,1.
+}
+\tag{149.4}
+$$
+
+特别地，在 $0<p\le1/2$ 上，定义最小混合参数
+
+$$
+u_3=u_4=p(1-p),\qquad
+u_5=u_6=p(1-p)(1+p^2).
+\tag{149.5}
+$$
+
+则对 $n=3,4,5,6$，
+
+$$
+\boxed{
+\lambda_n
+=\frac{1-\sqrt{1-4p u_n(1-u_n)}}4
+=\frac{p u_n(1-u_n)}{1+\sqrt{1-4p u_n(1-u_n)}}.
+}
+\tag{149.6}
+$$
+
+这些终端满足
+
+$$
+\lambda_3=\lambda_4\le\lambda_5=\lambda_6,
+\qquad
+\lambda_n\sim\frac12p^2=\frac12|b|^4
+\quad(p\downarrow0),
+\tag{149.7}
+$$
+
+并有共同显式下界
+
+$$
+\lambda_n\ge\frac12p^2(1-p)(1-p+p^2)
+\ge\frac3{16}p^2
+\qquad(3\le n\le6,\ 0<p\le1/2).
+\tag{149.8}
+$$
+

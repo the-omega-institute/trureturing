@@ -1,0 +1,9 @@
+**定义 20.5（续接任务的最小闭合效果空间）。** 给定有限族允许分支 $\{\Phi_j\}$，所有操作对全部状态合法，相关记录与设置均可读。从需保留的效果空间 $\mathcal Z_0\supseteq\mathbb RI$ 出发定义
+
+$$
+\mathcal Z_{k+1}=\operatorname{span}_{\mathbb R}
+\left(\mathcal Z_k\cup\bigcup_j\Phi_j^*(\mathcal Z_k)\right).
+$$
+
+定义中的边界载体是状态限制到效果空间的实际像；不把任意坐标组合都视为可实现状态。线性闭合不要求效果空间对算子乘法闭合，也不在此指定较小 Hilbert 空间上的量子通道实现。
+

@@ -1,0 +1,12 @@
+### 证明
+
+对每个非预见策略 $\pi$，来源集扩大使下确界不增：
+
+$$
+\inf_{\omega\in\mathfrak J^{\square}}G_\pi(\omega)
+\le
+\inf_{\omega\in\mathfrak J}G_\pi(\omega).
+$$
+
+再对同一策略类取上确界即得。证毕。
+

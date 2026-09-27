@@ -1,0 +1,38 @@
+## ST16．相同定态响应可以隐藏不同的闭路相位
+
+### 定理 ST16.1：一个完全可算的不可识别性见证
+
+取 $c>a$、$b>0$，在固定环境基中令
+
+$$
+H(\theta)=
+\begin{pmatrix}a&be^{-i\theta}\\be^{i\theta}&c\end{pmatrix},
+\qquad
+E_-=\frac{a+c-\sqrt{(c-a)^2+4b^2}}2,
+\qquad r=\frac b{c-E_-}.
+$$
+
+对应归一化基态可取
+
+$$
+U(\theta)=\frac{(1,-re^{i\theta})^{\mathsf T}}{\sqrt{1+r^2}},
+\quad Z=\frac1{1+r^2},\quad p=1-Z.
+$$
+
+只从第一分量驱动并读取，其全部冻结参数响应为
+
+$$
+\boxed{
+\chi_{00}(z;\theta)
+=\frac{z-c}{(z-a)(z-c)-b^2},
+}
+\tag{ST16.1}
+$$
+
+与 $\theta$ 无关，但完整绕行 $0\le\theta\le2\pi$ 的几何相位为
+
+$$
+\boxed{\gamma=-2\pi p=-2\pi(1-Z)\pmod{2\pi}.}
+\tag{ST16.2}
+$$
+

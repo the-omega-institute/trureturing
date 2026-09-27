@@ -1,0 +1,10 @@
+**定义 471.2（边缘误差与保留记录的联合误差）。** 对有限概率向量取 $\operatorname{TV}(p,q)=\frac12\sum_z|p(z)-q(z)|$，定义
+
+$$
+m(T)=\max_\theta\operatorname{TV}\bigl((G_{T,\theta})_X,S_{e,\theta}\bigr),
+\qquad
+j(T)=\max_\theta\operatorname{TV}\bigl(G_{T,\theta},J_\theta\bigr).
+$$
+
+前者只看新增坐标，后者在保留的两个坐标上逐项比较。投影是共同随机通道，故项目 [TotalVariation/DataProcessing](../../../D5/S3/TotalVariation/DataProcessing.lean) 的 total_variation_channel_le 作为已有前置给出 $m(T)\le j(T)$。这只是一项基本下界；以下推导将给出更强且可达到的预算关系。
+

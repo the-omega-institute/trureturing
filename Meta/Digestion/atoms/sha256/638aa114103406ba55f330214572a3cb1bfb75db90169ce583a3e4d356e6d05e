@@ -1,0 +1,53 @@
+**定理259.2（纤维直径）。** 在（259.1）、（259.5）下，令
+$$
+G=(\rho+K)\#(\rho-K).
+\tag{259.21}
+$$
+则
+$$
+\boxed{
+\max_{\Omega,\Xi\in\mathfrak S(\rho,K)}d(\Omega,\Xi)
+=\operatorname{Tr}G.
+}
+\tag{259.22}
+$$
+最大值由同一数据下的两个来源
+$$
+\boxed{
+\Omega_\pm
+=\frac12\begin{pmatrix}\rho\pm G&K\\K&\rho\mp G\end{pmatrix}
+}
+\tag{259.23}
+$$
+取得。
+
+**证明。** 引理259.1保证 $H=\pm G$ 可行，故（259.23）正半定且迹一，并保留相同边缘和响应。
+
+先证明一个迹范数界。若 $T=T^\dagger$ 且 $-G\preceq T\preceq G$，令 $P_+$、$P_-$ 分别为 $T$ 的正、负谱投影。则
+$$
+\begin{aligned}
+\|T\|_1
+&=\operatorname{Tr}(P_+T)-\operatorname{Tr}(P_-T)\\
+&\le\operatorname{Tr}(P_+G)+\operatorname{Tr}(P_-G)\\
+&\le\operatorname{Tr}G.
+\end{aligned}
+\tag{259.24}
+$$
+对任意两个可行填充，$T=(H_1-H_2)/2$ 满足这一序界。由（259.7）得到
+$$
+d(\Omega_{H_1},\Omega_{H_2})
+=\frac12\|H_1-H_2\|_1
+\le\operatorname{Tr}G.
+\tag{259.25}
+$$
+取 $H_1=G,H_2=-G$，正性给 $\|2G\|_1=2\operatorname{Tr}G$，故上界达到。$\square$
+
+在同一数据纤维内，半迹距离也是所有终端效果检验的最大概率差：
+$$
+d(\Omega,\Xi)=
+\sup_{0\preceq F\preceq I}
+|\operatorname{Tr}[F(\Omega-\Xi)]|.
+\tag{259.26}
+$$
+因此（259.22）量化的是完整源态在某些后续检验中仍可具有的最大差别，而不是现有固定响应之间的差别；后者对整个纤维本来就相同。
+

@@ -1,0 +1,64 @@
+**（二）紧参数族上的统一严格间隙。** 若 $v:\Theta\to\mathbb R$ 连续且
+
+$$
+ p_n(\theta)<v(\theta)\qquad(\theta\in\Theta),
+$$
+
+则存在 $\varepsilon>0$ 与 $\delta_0\in(0,2]$，使得
+
+$$
+\eta_n(\delta,\theta)\le v(\theta)-\varepsilon
+\qquad(\theta\in\Theta,\ 0\le\delta\le\delta_0).
+$$
+
+证明。由 $p_n$ 上半连续，$v-p_n$ 下半连续；紧性和处处严格正性给出
+
+$$
+\gamma=\min_{\theta\in\Theta}(v(\theta)-p_n(\theta))>0.
+$$
+
+置 $\varepsilon=\gamma/2$。若不存在统一的闭误差区间，则对每个 $j$ 可取 $0<\delta_j\le1/j$、$\theta_j\in\Theta$ 及近似可行最大化元 $(T_j,p_j)$，满足
+
+$$
+ p_j>v(\theta_j)-\gamma/2,
+\qquad
+\|T_j-p_j\operatorname{id}\|_\diamond\le\delta_jp_j.
+$$
+
+取子列使 $\theta_j\to\theta$、$p_j\to p$、$T_j\to T$。因 $0\le p_j\le1$，右端不超过 $\delta_j$，故第一项所引定理 422.1 的范数连续性估计给出 $T=p\operatorname{id}$；根图闭性给出 $p\le p_n(\theta)$。另一方面连续性给出
+
+$$
+ p\ge v(\theta)-\gamma/2,
+$$
+
+这与
+
+$$
+ p\le p_n(\theta)\le v(\theta)-\gamma
+$$
+
+矛盾。因此某个 $\delta_0>0$ 成立，并可将其截到 $2$ 以内。
+
+作为同一接口的五射线应用，取 $A\subset(1/\sqrt2,\sqrt2)$ 非空紧集、$d=5$、$k=2$、$d_1=d_2=2$、$D_R=4$、$B_1=B_2=629$，取第 420 节的连续源
+
+$$
+\omega=e^{2\pi i/3},\quad s_1=|0\rangle,\quad s_2=|1\rangle,\quad
+s_{3+j}(r)=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}
+\ (j=0,1,2),\quad q_i(r)=s_i(r)\otimes s_i(r),
+$$
+
+并令
+
+$$
+\kappa(r)=\frac{\sqrt{4+2(r^2+r^{-2})}}3,
+\qquad U(r)=\frac1{3\kappa(r)}.
+$$
+
+定理 422.1 的精确最大化元是一棵实际有限树，其原始两因子、全参考条件、局部操作权限和按实际标签共用的终端反馈均属于定理 420.1 的接口。对这棵树应用定理 420.1 的逐协议严格界，才得到 $p_n(r)<U(r)$。五个源向量及 $U$ 在 $A$ 上连续，所以应用前半部得到某个统一正间隙。若存在 $r_j\in A$、$\delta_j\to0$ 及近似协议使
+
+$$
+ p_j\ge U(r_j)-e_j,\qquad e_j\ge0,\quad e_j\to0,
+$$
+
+则对每个固定 $n$，充分大的 $j$ 满足 $\delta_j\le\delta_0$、$e_j<\varepsilon$。若此时深度仍至多 $n$，便同时有 $p_j\le\eta_n(\delta_j,r_j)\le U(r_j)-\varepsilon$ 和 $p_j\ge U(r_j)-e_j>U(r_j)-\varepsilon$，矛盾。因此深度最终超过每个固定整数。这里没有断言这样的近似列存在，也没有把结论延伸到开区间端点。证毕。
+

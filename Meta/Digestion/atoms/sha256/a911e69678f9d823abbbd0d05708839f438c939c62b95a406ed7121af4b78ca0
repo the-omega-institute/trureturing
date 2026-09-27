@@ -1,0 +1,59 @@
+### 255.3 量子角谱强制一个共同 Pauli 因子
+
+在 $QE$ 上，$J=\kappa I$。定义
+$$
+Z_E=\frac{\ell}{2\sqrt A}(H_a+H_b),
+\qquad
+X_E=\frac{\ell}{2b_0}(H_a-H_b),
+\tag{255.19}
+$$
+这里仅取两个符号在 $QE$ 上的限制。由
+$$
+(H_a+H_b)^2=2(1+\kappa)I,
+\qquad
+(H_a-H_b)^2=2(1-\kappa)I,
+\tag{255.20}
+$$
+以及 $1+\kappa=2A/\ell^2$、$1-\kappa=2B/\ell^2$，得到
+$$
+Z_E^2=X_E^2=I_{QE}.
+\tag{255.21}
+$$
+又因
+$$
+(H_a+H_b)(H_a-H_b)+(H_a-H_b)(H_a+H_b)
+=2(H_a^2-H_b^2)=0,
+\tag{255.22}
+$$
+有 $Z_EX_E+X_EZ_E=0$。$Z_E,X_E$ 都为 Hermitian；$b_0$ 的原符号完整保留。
+
+为明确给出分解，置
+$$
+\mathcal M=\ker(Z_E-I_{QE}),
+\qquad
+V:\mathbb C^2\otimes\mathcal M\longrightarrow QE,
+\quad
+V(|0\rangle\otimes z)=z,
+\quad V(|1\rangle\otimes z)=X_Ez.
+\tag{255.23}
+$$
+反对易性使 $X_E$ 等距交换 $Z_E$ 的正负本征空间，因此 $V$ 是酉同构，并满足
+$$
+V^\dagger Z_EV=Z\otimes I_{\mathcal M},
+\qquad
+V^\dagger X_EV=X\otimes I_{\mathcal M},
+\qquad
+V^\dagger H_wV=\frac{A_w^{\mathsf T}}\ell\otimes I_{\mathcal M}.
+\tag{255.24}
+$$
+最后一式使用当前输入基中 $A_w^{\mathsf T}=A_w$。这也是§248两 Pauli 表示的显式构造，此处完全由候选数据生成。
+
+因为 $M$ 与 $Z_E,X_E$ 交换，变换后的量子幅度先由 $Z$ 交换关系成为块对角，再由 $X$ 交换关系使两对角块相同。因此存在 $\mathcal M$ 上的严格正矩阵 $K$，使
+$$
+\boxed{
+V^\dagger QMQV=I_2\otimes K.
+}
+\tag{255.25}
+$$
+这是共同幅度对量子重数的约束。它没有把候选源已经具有 Bell 因子作为前提。
+

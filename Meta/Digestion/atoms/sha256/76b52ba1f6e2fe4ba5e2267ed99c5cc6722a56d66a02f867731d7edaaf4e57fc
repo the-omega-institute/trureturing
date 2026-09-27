@@ -1,0 +1,30 @@
+**定理 215.2（同时置信盒）。** 在定义 215.1 的独立有界样本合同下，
+
+$$
+\boxed{
+\Pr_{\mathrm{data}}
+\left\{
+\theta_j\in I_j\text{ 对所有 }j
+\right\}
+\ge1-\delta.
+}
+\tag{215.1}
+$$
+
+### 证明
+
+对每个 $j$，Hoeffding 不等式给出
+
+$$
+\Pr_{\mathrm{data}}
+\left\{
+|\widehat\theta_j-\theta_j|>r_j
+\right\}
+\le
+2e^{-2n_jr_j^2}
+=
+\frac{\delta}{K}.
+$$
+
+对 $K$ 个坐标使用并集界，所有坐标同时落入未截断区间的概率至少为 $1-\delta$。截断到 $[0,1]$ 不会排除真实参数，故得到（215.1）。证毕。
+

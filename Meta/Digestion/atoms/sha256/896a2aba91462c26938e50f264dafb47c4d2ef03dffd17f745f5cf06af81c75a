@@ -1,0 +1,10 @@
+**$XXYXZ$。** $G_2,G_3\subset U$ 的后继分别是正交的 $X,Y$，所以它们正交并张成 $U$。实际 $G_5\subset U$ 的后继是普通 $Z$，由（132.6）得 $Q_3=Q_4=Q$。
+
+$G_3,G_4$ 的后继为 $Y,X$，所以 $G_3\perp G_4$。相应的后期平面满足
+
+$$
+H_3\subset G_3\oplus Q,\qquad H_4\subset G_4\oplus Q.
+$$
+
+两个零位像 $V_0H_3=G_4\otimes Y$、$V_0H_4=G_5\otimes X$ 却使 $H_3\perp H_4$，违反第132.2节共同满投影事实。
+

@@ -1,0 +1,6 @@
+**证明。** Riccati 方程给出块等式 $HL=LK$。$L^\dagger HL$ 为 Hermitian，故 $GK=K^\dagger G$。正定平方根给出 $U^\dagger U=I$。共轭 $K$ 得到 $h$ 并验证交织式；将交织式逐次相乘，再代入矩阵指数的绝对收敛幂级数，得到(ST12.3)。∎
+
+### 推论 ST12.3：实际效果与全部叠加态一同转移
+
+映射 $\rho\mapsto U\rho U^\dagger$ 为 CPTP 编码，$O\mapsto U^\dagger OU$ 为幺完全正的效果拉回。对任意密度态 $\rho$、效果 $O$ 和实数 $t$，完整编码态与有效态给出相同的该时刻读数。
+

@@ -1,0 +1,39 @@
+### 250.3　三份边界矩阵恢复全部联合态
+
+记 $Q=Q_{\mathrm{ent}}$、$P_{\mathrm{prod}}=I_E-Q$。量子块上由（250.6）构造§248的 $Z_E,X_E$ 及任意相应酉同构
+$$
+V:\mathbb C^2\otimes M\longrightarrow E_{\mathrm{ent}}.
+\tag{250.12}
+$$
+在产品块中 $H_a,H_b$ 是交换的 Hermitian 对合。对符号对 $s=(s_a,s_b)$，定义
+$$
+Q_s=\frac14P_{\mathrm{prod}}
+(I_E+s_aH_a)(I_E+s_bH_b).
+\tag{250.13}
+$$
+这些是两两正交的共同本征投影。若 $A>B$，只有同号对可能非零；若 $A=B$，允许全部四对。记允许集合为 $\Sigma$，则
+$$
+\sum_{s\in\Sigma}Q_s=P_{\mathrm{prod}},
+\qquad
+Q_s\rho_EQ_s=q_s\tau_s.
+\tag{250.14}
+$$
+在原环境中书写时，$P_{\mathrm{prod}}$ 必须取占用投影减去 $Q$；不能用整个环境恒等算子减去 $Q$，否则未占用方向上的零符号会产生错误分块。
+
+对应的唯一产品输入方向为
+$$
+r_s=
+\begin{cases}
+s_a u,&s_a=s_b,\\
+s_a\operatorname{sgn}(b_0)v,&s_a=-s_b\text{ 且 }A=B.
+\end{cases}
+\tag{250.15}
+$$
+令未归一化重数矩阵为
+$$
+\omega_M=\operatorname{Tr}_{\mathbb C^2}
+[V^\dagger Q\rho_EQV]=\theta\sigma_M.
+\tag{250.16}
+$$
+Bell 边缘的 $I_2/2$ 在偏迹中迹为一，所以此式包含完整的 $\theta$ 权重。
+

@@ -1,0 +1,10 @@
+**定理 401.2（边缘误差的收缩预算）。** 在上述条件下，记 $\alpha=\alpha(Q)$，则
+
+$$
+d_{t+1}\le\varepsilon+\alpha d_t,
+\qquad
+d_t\le\alpha^t d_0+\varepsilon\sum_{j=0}^{t-1}\alpha^j.
+$$
+
+特别地，若 $\alpha<1$ 且 $d_0=0$，有 $d_t\le\min\{1,\varepsilon(1-\alpha^t)/(1-\alpha)\}$。这是通常的有限核收缩论证在第 400 节近似下降上的应用，不是完整路径的统一收缩结论。
+

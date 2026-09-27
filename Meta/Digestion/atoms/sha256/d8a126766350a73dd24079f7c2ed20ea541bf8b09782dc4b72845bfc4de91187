@@ -1,0 +1,41 @@
+**证明。** Schatten Cauchy不等式给
+$$
+\mathsf F_{\mathrm{in}}^2
+\le\operatorname{Tr}\Lambda\,\operatorname{Tr}A_h
+=1-t_h,
+\tag{267.14}
+$$
+证明上界。
+
+对下界，置
+$$
+u=h^2\le1/64,\qquad
+a_*=\frac{225}{4096},\qquad
+v_*=\frac{21}{256}u+\frac{87}{32}u^2.
+\tag{267.15}
+$$
+此时 $v_*/a_*\le17/480<1$，且（267.11）给
+$\det B_h\ge a_*-v_*$。由
+$$
+\sqrt{a_*-v_*}\ge\sqrt{a_*}-\frac{v_*}{\sqrt{a_*}},
+\tag{267.16}
+$$
+代入（267.12）得到
+$$
+\begin{aligned}
+\mathsf F_{\mathrm{in}}^2
+&\ge1-\frac65u-\frac{186}{5}u^2\\
+&\ge1-\left(\frac65+\frac{186}{320}\right)u
+=1-\frac{57}{32}u.
+\end{aligned}
+\tag{267.17}
+$$
+$\square$
+
+特别地，$1-\mathsf F_{\mathrm{in}}=\Theta(h^2)$。精确式（267.12）还给
+$$
+\mathsf F_{\mathrm{in}}(h)=1-\frac{17}{40}h^2+O(h^4),
+\tag{267.18}
+$$
+但下述副本界使用整个声明区间内的（267.13），不依赖未控制的渐近余项。
+

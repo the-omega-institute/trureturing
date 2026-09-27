@@ -1,0 +1,28 @@
+**定理188.1（可行族的完整参考斜率）。** 对固定
+$h\ge0$、$\beta>0$、$\gamma\in\mathbb R$、$R>1$，有
+
+$$
+\boxed{
+e_\epsilon(m,n)=\frac34+F_h(m,n)\epsilon+O(\epsilon^2),
+}
+\tag{188.7}
+$$
+
+其中
+
+$$
+\boxed{
+F_h(m,n)
+=\frac{7h}{12}-\frac{\beta(R-1)}8
+-\frac{4h}{3}m
++\left(\frac h3+\beta R\right)m^2
++\frac{R-1}{2}(\beta n^2-\gamma n).
+}
+\tag{188.8}
+$$
+
+余项可对闭半圆盘 $m\ge0$、$m^2+n^2\le1/4$ 一致选取。
+因此全 CPTP 最优误差满足
+$h_{1-2h\epsilon}(\epsilon,R)\le
+3/4+\epsilon\min_{m,n}F_h(m,n)+O(\epsilon^2)$。
+

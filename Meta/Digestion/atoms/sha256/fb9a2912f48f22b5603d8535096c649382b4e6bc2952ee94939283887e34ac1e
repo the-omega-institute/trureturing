@@ -1,0 +1,17 @@
+**证明：忠实输入的支撑涵盖任意初始输入。** 初始活动记忆空间记为 $S\cong\mathbb C^2$，令 $\pi_S=I_S/2$。对原接收器，记从初始 $S$ 状态到第 $n$ 轮接收前 $H$ 边缘的固定 CPTP 映射为 $\mathcal T_n$。它包括此前所有来源和接收操作、独立纯初始化，以及对其他系统取偏迹。最大纠缠测试输入的 $S$ 边缘就是 $\pi_S$，故
+
+$$
+\rho_n=\mathcal T_n(\pi_S).
+$$
+
+任意初始状态 $\sigma_S$ 满足 $0\preceq\sigma_S\preceq I_S=2\pi_S$。由正性，
+
+$$
+0\preceq\mathcal T_n(\sigma_S)\preceq2\rho_n,
+\qquad
+\operatorname{supp}\mathcal T_n(\sigma_S)\subset U_n.
+\tag{89.11}
+$$
+
+如果初始 $S$ 与任意参考 $R_0$ 关联，其接收前 $H$ 边缘仍是 $\mathcal T_n(\sigma_S)$；把参考、活动记忆及其他未受接收器作用的系统一并记为 $R$，引理89.2的（89.3）给该完整接收前状态的支撑包含于 $R\otimes U_n$。所以（89.11）没有丢弃参考关联所携带的限制。
+

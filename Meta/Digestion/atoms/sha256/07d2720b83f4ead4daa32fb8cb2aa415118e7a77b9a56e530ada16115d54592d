@@ -1,0 +1,11 @@
+**定义 96.1（同一装置的慢尺度与首次点击律）。** 继续固定定义 87.1 的完整二维仪器、名义装置与齐次重复合同。本批使用第 91—95 节的最近失效集合 $\mathfrak F_R$、未点击伴随 $\mathcal A_\Gamma$、主特征值 $r_\Gamma=r(\Gamma)$ 及其秩一谱投影 $\Pi_\Gamma$。对附近不失效的装置，令
+
+$$
+\epsilon_\Gamma=1-r_\Gamma>0,\qquad
+s_{\Gamma,\rho}(n)=\Pr_\rho^\Gamma(\mathsf N>n)
+=\operatorname{Tr}[\rho\mathcal A_\Gamma^n(I)].
+\tag{96.1}
+$$
+
+$\mathsf N\in\{1,2,\ldots\}$ 包括首次点击那一轮。$\epsilon_\Gamma$ 是当前实际装置的谱泄漏量，与定义 94.1 对整个校准球优化后的 $\varepsilon(u)$ 分开。以下的分布极限缩放调用次数，不改变内部钟标定。
+

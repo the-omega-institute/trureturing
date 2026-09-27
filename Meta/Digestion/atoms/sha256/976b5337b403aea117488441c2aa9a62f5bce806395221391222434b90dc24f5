@@ -1,0 +1,10 @@
+**证明：必要性。** 对实际复合 Kraus $F_{ba}=A_bE_a$ 用定理12.3，得 $A_bE_a=z_{ba}I$。由恢复归一性，
+
+$$
+E_a^\dagger E_c
+=\sum_b(A_bE_a)^\dagger(A_bE_c)
+=\left(\sum_b\overline{z_{ba}}z_{bc}\right)I_d.
+$$
+
+取迹确定标量即为(12.5)中的归一迹。这不需要预先假定复合 Kraus 的标量性。
+

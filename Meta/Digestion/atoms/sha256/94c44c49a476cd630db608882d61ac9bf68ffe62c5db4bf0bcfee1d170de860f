@@ -1,0 +1,11 @@
+**Proof, from $S$ to $R$.** On input a word $s$ of depth $d$, determine the finite set
+
+$$
+S\cap\{1,\ldots,d\}.
+\tag{TM.660}
+$$
+
+For every depth $h$ in this set, simulate the event presentation until its unique depth-$h$ cylinder is announced. These finitely many waits all terminate because $B_h$ is a raw member. Return that $s\notin R$ exactly when one of these cylinders contains $[s]$.
+
+To check completeness of this test, if $s\notin R$ then $[s]\subseteq U$. Along the finite chain of ancestors of $[s]$, choose the shortest one contained in $U$. Since $U\ne X$, its depth is positive and at most $d$. It is canonical and therefore appears in the finite list used by the procedure. Conversely, any such forbidden ancestor plainly makes $[s]$ disjoint from $E$. The empty word is always extendible.
+

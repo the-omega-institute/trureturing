@@ -1,0 +1,37 @@
+## 114. 正交两尾的乘积生成缺陷只可能为一维
+
+沿用第89、112节的同一实际七维六终端合同：来源为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1,
+$$
+
+接收器独立纯启动，每轮使用同一个固定全域接收通道，完整参考—活动记忆—原档案终端都按原合同恢复。第112节给已执行零位域 $I_0=K$，故同一个完整零位像由实际向量张成：
+
+$$
+R_0=E_0=\mathbb C(p\otimes\eta_1)
++\sum_{i=2}^6G_i\otimes\eta_i,
+\qquad \dim R_0=7.
+\tag{114.1}
+$$
+
+本节假设五个尾环境恰使用两条不同射线。第94节推论94.3使它们正交，取正交单位代表 $A,B$。定义同一实际尾部的接收跨度
+
+$$
+U=\sum_{\substack{2\le i\le6\\[\eta_i]=[A]}}G_i,
+\qquad
+W=\sum_{\substack{2\le i\le6\\[\eta_i]=[B]}}G_i.
+\tag{114.2}
+$$
+
+$U,W$ 不预设正交。沿环境的正交分解给
+
+$$
+R_0=(U\otimes A)\oplus(W\otimes B)
++\mathbb C(p\otimes\eta_1).
+\tag{114.3}
+$$
+
+记 $R_1=R_0^\perp=\operatorname{ran}V_1$。以下首先完全计算该正交补的乘积生成空间，再回接真实初态及来源续接。
+

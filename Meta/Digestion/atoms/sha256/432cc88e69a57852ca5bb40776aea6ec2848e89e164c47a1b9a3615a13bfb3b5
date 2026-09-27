@@ -1,0 +1,9 @@
+**定义 104.1（可维持范围的递推）。** 取有限状态集合 $X$。在状态 $x$ 可采用的行动为 $A(x)$，每个行动的可能后继集合 $R(x,a)$ 非空；没有可采用行动的状态也允许存在。先假定策略能读出当前状态，并令
+
+$$
+\operatorname{CPre}(K)=\{x:\exists a\in A(x),\ R(x,a)\subseteq K\},\qquad
+V_0=S,\qquad V_{n+1}=S\cap\operatorname{CPre}(V_n).
+$$
+
+这复用项目[有限视界控制系统](../../../D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.lean)中的行动、非空后继与受控前驱；当前的行动集表示模型已经承认可以采用的选择，不自行裁定某种戒律或道德标准。对环境的要求是每个列入 $R(x,a)$ 的后继都须满足条件，而非只选择其中最有利者。
+

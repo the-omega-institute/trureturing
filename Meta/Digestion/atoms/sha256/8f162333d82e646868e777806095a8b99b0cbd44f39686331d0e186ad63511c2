@@ -1,0 +1,25 @@
+### 303.11 端点、量词与经典序贯背景
+
+- \(C=h=1\) 时参考币 \(q=0\)，两批精校准样本全为零；（303.40）不作除零，而使用零误差直接结算。（303.38）、（303.43）仍保留 \(w_h=\kappa\) 的成本。
+- \(g=k-k^2\) 时 \(l=k\)，两条风险边 \(r=1,k\) 均合法；零增益不终止界仍成立。
+- \(g>0\) 保证 \(\bar\eta,\delta,\epsilon>0\)，各阶段整数有限。\(g=0\) 不属于本结果，应使用第302节有限停止不可达结论。
+- \(h=0\) 只作为换测度分析律，协议无需在它下停止；（303.11）反而证明它必须留下不终止质量。这与每个合法正增益世界几乎必然有限输出相容。
+- 下界（303.5）的量词是：对每个固定合法 \(B,C,\kappa,g\) 和固定协议，沿 \(h\downarrow0\) 有该 limsup 必要性。它没有证明对 \(\kappa,g,h\) 同时变化的任意对角序列都统一出现迭代对数损失。
+- 每个 \(h\) 的（303.3）、（303.4）与子序列（303.5）共同排除固定参数下全增益范围的常数倍已知尺度成本；不能写成所有小 \(h\) 上的
+  \(M(h)=\Theta(\mathcal O(h)+h^{-2}\ell(h))\)。
+- 即使三阶段上界足够取得（303.3），其常数未优化。额外迭代对数项不带 \(\kappa^{-2}H\) 的乘法因子；零增益参照下单次信息为 \(O(h^2)\)，正是相应必要性证明的尺度。
+- 本节给解析结论，未作 Lean 形式化或任何 kernel-verified 声明。
+
+未知尺度的迭代对数成本有经典序贯背景。Jamieson、Malloy、Nowak、Bubeck 的
+[*lil’ UCB: An Optimal Exploration Algorithm for Multi-Armed Bandits*](https://arxiv.org/pdf/1312.7308)，第3页 Theorem 1 重述 Farrell 的正态未知符号检验结论：对 iid \(N(\Delta,1)\)、全部 \(\Delta\ne0\) 的逐参数单独错误至多 \(\delta<1/2\)，有
+$$
+\limsup_{\Delta\to0}
+\frac{\mathbb E_\Delta T}
+{\Delta^{-2}\log\log(\Delta^{-2})}
+\ge2-4\delta.
+$$
+对应原文为 R. H. Farrell，
+[*Asymptotic Behavior of Expected Sample Size in Certain One Sided Tests*](https://doi.org/10.1214/aoms/1177703731)，Annals of Mathematical Statistics 35(1)，36—72（1964）。本节的增益只取正值，还有未知任务参数与同参数平均风险，不能直接套用该未知符号检验；第303.3—303.4节完成了本模型自己的非终止质量与窗口证明。
+
+本节新增连接是：把第301节带严格风险余量的实际概率表接到参考流的未知尺度发现与方差精校准，以无条件缺额矩保留稀有背景成本；把第302节同参数风险链接到零增益辅助律，得到沿正增益路径的子序列必要性。所用 Hoeffding、Bernstein、Chernoff、有限链式 KL、Pinsker 及二元数据处理均为成熟方法。这里没有声称新的标准序贯不等式、经文献核定的原创性、Lean 形式验证或实际仪器实验。
+

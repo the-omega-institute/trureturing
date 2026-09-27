@@ -1,0 +1,127 @@
+**证明。** 取达到 $e_\varepsilon$ 的因果修复 $S$，并写
+
+$$
+p=\sigma_{11},\qquad S_{uv}=\langle u|S|v\rangle.
+$$
+
+先用两个事件测量 $x,z$ 间的实矩阵元。令
+
+$$
+C_+=|0,0\rangle\langle0,0|+|1,1\rangle\langle1,1|.
+$$
+
+它满足 $\operatorname{Tr}_A C_+=I_B$，而
+
+$$
+E_\pm=\left|\frac{x\pm z}{\sqrt2}\right\rangle
+\left\langle\frac{x\pm z}{\sqrt2}\right|
+\preceq C_+\otimes I_D
+$$
+
+是合法事件。令 $J=S-R_\varepsilon$，两个事件各满足
+$|\operatorname{Tr}(JE_\pm)|\le e_\varepsilon$，相减的配对为 $2\operatorname{Re}J_{xz}$，故
+
+$$
+|\operatorname{Re}J_{xz}|\le e_\varepsilon,
+\qquad
+\operatorname{Re}S_{xz}\ge\sqrt\varepsilon-e_\varepsilon.
+\tag{58.17}
+$$
+
+因果偏迹给 $S_{xx}\le1$、$S_{zz}\le p$。$S\succeq0$ 的 $xz$ 主子式因此给
+
+$$
+p\ge S_{zz}\ge |S_{xz}|^2
+\ge (\sqrt\varepsilon-e_\varepsilon)_+^2.
+\tag{58.18}
+$$
+
+这里若式（58.17）的右端为负，最后一项按正部取零，未对负下界直接平方。定理 58.1 给 $e_\varepsilon\le9\varepsilon/8$；在 $\varepsilon\le1/4$ 时，
+$\sqrt\varepsilon-9\varepsilon/8>0$，于是
+
+$$
+p\ge\left(\sqrt\varepsilon-\frac98\varepsilon\right)^2
+=\varepsilon-\frac94\varepsilon^{3/2}
++\frac{81}{64}\varepsilon^2.
+\tag{58.19}
+$$
+
+再固定一个同时读取全部相关块的事件。记
+$B_{ab}=|a,b\rangle\langle a,b|\otimes I_D$，取
+
+$$
+\begin{aligned}
+C_*&=\operatorname{diag}(1/4,1,3/4,0),\\
+w&=\frac14x-\frac34y,\\
+E_*&=|w\rangle\langle w|
++\frac14(B_{00}-|x\rangle\langle x|)
++\frac34(B_{10}-|y\rangle\langle y|)
++B_{01}.
+\end{aligned}
+\tag{58.20}
+$$
+
+$C_*$ 满足 $\operatorname{Tr}_A C_*=I_B$。在 $xy$ 子空间，$w$ 是
+$\operatorname{diag}(1/2,\sqrt3/2)$ 作用于单位向量
+$(1/2,-\sqrt3/2)$ 所得，所以
+
+$$
+|w\rangle\langle w|
+\preceq\frac14|x\rangle\langle x|
++\frac34|y\rangle\langle y|.
+$$
+
+其他项支撑正交，故 $0\preceq E_*\preceq C_*\otimes I_D$。这个事件把 $00$、$10$ 块中 $x,y$ 以外的质量也计入，未把修复限制在 $\operatorname{span}\{x,y,z,h_0\}$。
+
+利用因果偏迹，$B_{00}$ 和 $B_{10}$ 的响应都为 $1-p$，$B_{01}$ 的响应为 $p$。因此准确计算得到
+
+$$
+\begin{aligned}
+\operatorname{Tr}(SE_*)
+&=1-\frac3{16}(S_{xx}+S_{yy})-\frac38\operatorname{Re}S_{xy},\\
+\operatorname{Tr}(R_\varepsilon E_*)
+&=\frac1{16}+\frac9{16}(1-\varepsilon)-\frac38c.
+\end{aligned}
+$$
+
+相减即
+
+$$
+\operatorname{Tr}((S-R_\varepsilon)E_*)
+=\frac3{16}\bigl[2+3\varepsilon+2c
+-S_{xx}-S_{yy}-2\operatorname{Re}S_{xy}\bigr].
+\tag{58.21}
+$$
+
+正性与因果偏迹给
+
+$$
+\operatorname{Re}S_{xy}\le\sqrt{S_{xx}S_{yy}}
+\le\frac{S_{xx}+S_{yy}}2,
+\qquad S_{xx},S_{yy}\le1-p.
+$$
+
+将其代入式（58.21），得到对任意因果修复均成立的事件下界
+
+$$
+\begin{aligned}
+D(R_\varepsilon,S)
+&\ge\operatorname{Tr}((S-R_\varepsilon)E_*)\\
+&\ge\frac34p+\frac9{16}\varepsilon+\frac38(c-1)\\
+&=\frac34p+\frac38\varepsilon
+-\frac{3\varepsilon^2}{16(1+c)^2}.
+\end{aligned}
+\tag{58.22}
+$$
+
+最后一个等号使用
+$c-1=-\varepsilon/2-\varepsilon^2/[2(1+c)^2]$。代入式（58.19），有
+
+$$
+e_\varepsilon
+\ge\frac98\varepsilon-\frac{27}{16}\varepsilon^{3/2}
++\left(\frac{243}{256}-\frac{3}{16(1+c)^2}\right)\varepsilon^2.
+$$
+
+括号为正，丢掉最后一项便得式（58.15）的下界。式（58.15）的上界来自定理 58.1，两边除以 $\varepsilon$ 并令 $\varepsilon\downarrow0$，得到式（58.16）。$\square$
+

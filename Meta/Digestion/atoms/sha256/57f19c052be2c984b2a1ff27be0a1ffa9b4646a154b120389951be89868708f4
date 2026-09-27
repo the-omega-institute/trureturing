@@ -1,0 +1,71 @@
+**第二种：$k\notin S$ 且 $\operatorname{rank}B_\lambda=1$。** 此时可写
+
+$$
+\lambda(q\otimes z)=\ell(q)\beta(z),
+\qquad 0\ne\ell\in Q^*,\quad0\ne\beta\in F^*.
+$$
+
+取 $0\ne q_0\in\ker\ell$，取 $q_1\in Q$ 满足 $\ell(q_1)=1$，并取
+$0\ne\rho\in\ker\beta$。记 $M$ 的非零乘积支持射线集合为 $\mathcal Z$，以及
+
+$$
+D_z=\{r\in S:r\otimes z\in M\},\qquad m_z=\dim D_z.
+$$
+
+命题104.1给 $|\mathcal Z|\in\{1,2\}$，且 $\sum_{[z]}m_z=2$。
+
+乘积生成性还迫使
+
+$$
+\lambda|_{D_\rho\otimes\rho}=0.
+\tag{104.11}
+$$
+
+确切地说，$\lambda$ 在 $Q\otimes F$ 上非零，所以 $E=\ker\lambda$ 投影到 $M$ 是满射：任意 $m\in M$ 都可以用一个 $Q\otimes F$ 向量补偿其 $\lambda$ 值。另一方面，$E$ 由实际乘积向量生成；将这些向量投影到 $M$，仍为具有同一环境因子的乘积向量，且张成 $M$。命题104.1中不同支持射线的乘积纤维在 $M$ 中代数直和，因此投影到每个 $D_z\otimes z$ 的生成向量须张成该整个纤维。在 $[\rho]$ 上，$\lambda$ 的 $Q$ 部分恒零；若其 $D_\rho\otimes\rho$ 部分非零，这些投影只能张成一个真超平面，矛盾。这证明（104.11）。
+
+现在从命题104.1选择乘积基 $r_j\otimes z_j$，$j=1,2$。两个接收因子 $r_1,r_2$ 线性独立，而两个环境因子允许共线。置
+
+$$
+h_j=
+\begin{cases}
+r_j-\dfrac{\lambda(r_j\otimes z_j)}{\beta(z_j)}q_1,
+&\beta(z_j)\ne0,\\[6pt]
+r_j,&\beta(z_j)=0.
+\end{cases}
+$$
+
+式（104.11）保证第二种情形也满足 $h_j\otimes z_j\in E$。接收向量
+$q_0,q_1,h_1,h_2$ 线性独立，所以以下空间是五维代数直和：
+
+$$
+\boxed{
+E=(\mathbb Cq_0\otimes F)
+\dotplus\mathbb C(q_1\otimes\rho)
+\dotplus\mathbb C(h_1\otimes z_1)
+\dotplus\mathbb C(h_2\otimes z_2).
+}
+\tag{104.12}
+$$
+
+所有显示的向量属于 $E$，维数相同，故等式成立。这个分解给准确的逐方向完整纤维公式
+
+$$
+\boxed{
+\dim\{y:y\otimes z\in E\}
+=1+m_z+\mathbf 1_{[z]=[\rho]}.
+}
+\tag{104.13}
+$$
+
+因此四个实际后继均满足
+
+$$
+[\eta_3],[\eta_4],[\eta_5],[\eta_6]
+\in\mathcal Z\cup\{[\rho]\}.
+\tag{104.14}
+$$
+
+若 $M=D\otimes\rho$，该集合只有一条射线，违反第71节，故这一情形已排除。余下环境支持只有以下三种：
+
+| $M$ 的支持与 $[\rho]$ 的关系 | 允许后继方向上的完整纤维维数 |
+|---|---|

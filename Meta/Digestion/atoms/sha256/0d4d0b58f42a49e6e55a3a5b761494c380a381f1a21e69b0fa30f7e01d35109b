@@ -1,0 +1,29 @@
+### 22.1 明确的非奇异椭圆曲线
+
+把 (59) 的第二式乘以 `kappa` 并完成平方，再用第一式，得到
+\[
+2(\kappa A+3kd)^2=8\kappa Z^3+9kZ-\kappa k.
+\]
+置
+\[
+X=4\kappa Z,\qquad Y=4\kappa(\kappa A+3kd).
+\]
+则 `X,Y` 均为正整数，并且
+\[
+\boxed{Y^2=X^3+18\kappa kX-8\kappa^3k.}
+\tag{62}
+\]
+右侧三次多项式的判别式是
+\[
+-864\kappa^3k^2(2\kappa^3+27k)\ne0.
+\]
+因此每个正整数对 `(k,kappa)` 都给出非奇异的椭圆曲线；不需要假设其秩或拥有完整的 Mordell–Weil 基。
+
+反向筛选必须保留原题条件。对 (62) 的整数点，先要求
+\[
+Z=\frac X{4\kappa}\in\mathbb Z_{>0},\quad
+\frac{Z-\kappa}{2k}=d^2\text{ 为正整数平方},\quad
+A=\frac{Y/(4\kappa)-3kd}{\kappa}\in\mathbb Z_{>0}.
+\]
+再要求 `A=c2^a`、`B=A/2-Z` 为整数、`gcd(A,B)=1`、`0<B<A/2`、`Bd>3`，以及规范化系数整性和 (22) 的所有奇素数、全部高位条件。单有椭圆曲线整数点不构成反例。
+

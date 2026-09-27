@@ -1,0 +1,14 @@
+### 214.3 二阶调谐下的来源平方尺度
+
+为区别第213节的一阶尺度参数，本节用 $\zeta$ 表示二阶偏移，取
+
+$$
+\nu=(3R+1)x+x^2\zeta,\qquad
+H=x\kappa,\qquad h=\beta x\kappa,\qquad
+\ell=x^2\kappa.
+\tag{214.11}
+$$
+
+$\zeta\in\mathbb R$ 和 $\kappa\ge0$ 限于任意固定紧集。
+对充分小正 $x$，这些参数满足第213节的物理合法性范围。
+

@@ -1,0 +1,26 @@
+**命题 4.7.10（实际时钟、一步操作与位置权重）。** 令 $S$ 删除一个块符号，$\sigma$ 删除一个原始位，$T(x)=\sigma^{(\Psi_kx)_0+1}x$。沿用第 1.4.4 节的操作，有
+$$
+\Phi_kS=T\Phi_k,\qquad
+\Phi_k(S^ny)=\sigma^{L_n(y)}\Phi_k(y),\qquad
+L_n(y)=\sum_{i<n}(y_i+1),
+$$
+$$
+n\le L_n(y)\le kn,\qquad
+L_{m+n}(y)=L_m(y)+L_n(S^my).
+$$
+原始单位步运输到块坐标后是
+$$
+D(y_0,y_1,\ldots)=
+\begin{cases}
+(y_1,y_2,\ldots),&y_0=0,\\
+(y_0-1,y_1,y_2,\ldots),&y_0>0,
+\end{cases}
+\qquad \Phi_kD=\sigma\Phi_k.
+$$
+对任意指定原始位置权重 $(\omega_i)$，有限词 $w=W(a)1^j$ 的加权数值为
+$$
+\sum_{i<|a|}\sum_{h=0}^{a_i-1}\omega_{L_i(a)+h}
++\sum_{h=0}^{j-1}\omega_{L_{|a|}(a)+h},
+\qquad L_i(a)=\sum_{t<i}(a_t+1).
+$$
+

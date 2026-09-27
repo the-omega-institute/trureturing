@@ -1,0 +1,6 @@
+## 276. 图来源的可分性判据与同负性下的两种恢复深度
+
+§275以单位圆谱和最长Jordan链分类了图来源的完整数据唯一性与局部恢复指数。本节将该分类与低秩PPT来源的标准可分性结构结合，构造相同纠缠负性下具有不同锐恢复指数的二维来源。
+
+作为该构造的中间步骤，以下在图坐标中写出已知的低秩PPT分解及其加权正规形式。低秩PPT可分性和局部过滤后的正规图矩阵见 Horodecki、Lewenstein、Vidal、Cirac，*Operational criterion and constructive checks for the separability of low rank density matrices*，Phys. Rev. A 62, 032310 (2000)，[原文](https://arxiv.org/abs/quant-ph/0002089)，§III、Lemma 3与Theorem 1。随后结合§275，在相同 $2\otimes2$ 接口、联合秩、参考边缘和负性下，得到锐指数 $1/2$ 与 $1/4$ 的精确比较。
+

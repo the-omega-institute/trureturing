@@ -1,0 +1,24 @@
+**命题 223.5（输入端口精确补齐第 222 节的输出核间隙）。** 对定理 222.3 的合法族
+
+$$
+A_u=\sqrt a\,\operatorname{diag}(1,u),
+\qquad
+B_u=\sqrt b\,X\operatorname{diag}(1,u),
+$$
+
+$$
+0<b<a,\qquad a+b<1,\qquad0\le u\le1,
+$$
+
+有
+
+$$
+\gamma_{\rm in}=b,
+\qquad
+\gamma_{\rm out}=\min(b,au^2),
+\qquad
+\delta_{\rm rot}=b.
+$$
+
+因此两个端口中至少一个给出完整最优删除值，即使另一个端口的压缩核值为零或严格较小。
+

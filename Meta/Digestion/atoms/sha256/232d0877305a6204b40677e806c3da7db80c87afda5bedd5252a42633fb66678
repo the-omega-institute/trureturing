@@ -1,0 +1,18 @@
+### 256.3 可实现数据的完整分类
+
+对任意复矩阵 $K$，定义
+$$
+\Gamma(K)=\frac12
+\begin{pmatrix}
+\sqrt{KK^\dagger}&K\\
+K^\dagger&\sqrt{K^\dagger K}
+\end{pmatrix}.
+\tag{256.17}
+$$
+由引理256.1，
+$$
+\Gamma(K)\succeq0,\qquad
+\operatorname{Tr}\Gamma(K)=\|K\|_1.
+\tag{256.18}
+$$
+

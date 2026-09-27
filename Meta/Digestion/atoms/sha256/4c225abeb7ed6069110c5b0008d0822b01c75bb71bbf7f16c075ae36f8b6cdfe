@@ -1,0 +1,36 @@
+#### 3.6.2 代入固定共同档案与上下文边缘
+
+固定有限非空的合法完整档案集合 $A$、有限非空的上下文集合 $E$。每个上下文 $e\in E$ 有有限非空读数集合 $B_e$ 和固定读数映射 $\pi_e:A\to B_e$。这里全部上下文读取同一份档案；动作、历史、来源或共享变量的合法性已经包含在 $A$ 及其读数定义中。暂定所有支撑于 $A$ 的概率混合都是允许的来源律，令
+$$
+\begin{aligned}
+\Delta_A&=\{p\in\mathbb R^A:p(a)\ge0,\ \sum_{a\in A}p(a)=1\},\\
+(M_ep)(b)&=\sum_{a:\,\pi_e(a)=b}p(a),\qquad
+Mp=(M_ep)_{e\in E}.
+\end{aligned}
+\tag{TM.68}
+$$
+
+边缘映射按同一公式线性延拓到整个 $\mathbb R^A$。在源空间和目标乘积空间上分别指定
+$$
+\|v\|_{\rm src}=\tfrac12\sum_{a\in A}|v(a)|,\qquad
+\|z\|_{\rm obs}=\max_{e\in E}\tfrac12\sum_{b\in B_e}|z_e(b)|.
+\tag{TM.69}
+$$
+
+二者都是其整个有限维空间上的范数。对概率律之差，源范数就是总变差距离；目标范数就是全部上下文总变差中的最大值。
+
+取任意当前来源律 $q\in\Delta_A$ 与真实可行目标 $y\in M(\Delta_A)$，记目标纤维 $F_y=\{p\in\Delta_A:Mp=y\}$，剩余量 $\delta(q,y)=\max_{e\in E}\operatorname{TV}(M_eq,y_e)$。式(TM.67)取 $R=\Delta_A$、$C=M$、$x=q$、$d=y$，直接给出
+$$
+\boxed{
+\min_{p\in\Delta_A,\,Mp=y}\operatorname{TV}(p,q)
+\le H_A\max_{e\in E}\operatorname{TV}(M_eq,y_e),
+\qquad q\in\Delta_A,\ y\in M(\Delta_A),
+}
+\qquad H_A=\widetilde H(M\mid\Delta_A)<\infty.
+\tag{TM.70}
+$$
+
+下标 $A$ 省略了已经固定的 $M$ 和两份范数，不表示常数只由档案数量决定。$\Delta_A$ 紧，$F_y$ 是其中非空闭集，总变差是连续函数，故最小值确实由某个 $p_*=p_*(q,y)$ 达到。又因任意两份概率律的总变差至多为一，该最小值还不超过 $\min\{1,H_A\delta(q,y)\}$。至此已给出完整的应用证明：成熟定理供应统一常数，指定范数将其转为式(TM.70)，紧性供应达到最小值的同一个修复来源律。
+
+这份修复保留合法档案支持，并让所有上下文同时达到 $y$。它不逐边选择互不相干的来源。若实际概率协议另有限制，允许律只是 $\Delta_A$ 的某个固定非空多面体 $R$，应以该 $R$ 替换参考多面体并重新计算常数；不能先在全部混合中取得修复，再省略原协议的约束。
+

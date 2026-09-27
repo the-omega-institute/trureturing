@@ -1,0 +1,69 @@
+**定理 96.2（统一幂余项与正谱权重）。** 可以缩小定理 93.1 的共同邻域，使存在与装置、初态和轮数无关的 $C<\infty$、$0<q<1$，且其中 $r_\Gamma>q$，对所有 $n\ge0$ 有
+
+$$
+\left\|\mathcal A_\Gamma^n-r_\Gamma^n\Pi_\Gamma\right\|_{\infty\to\infty}
+\le Cq^n.
+\tag{96.2}
+$$
+
+存在连续的密度矩阵 $\sigma_\Gamma$ 和正算子 $G_\Gamma=\Pi_\Gamma(I)$，满足
+
+$$
+\begin{aligned}
+\mathcal N_\Gamma(\sigma_\Gamma)&=r_\Gamma\sigma_\Gamma,&
+\mathcal A_\Gamma(G_\Gamma)&=r_\Gamma G_\Gamma,\\
+\operatorname{Tr}(G_\Gamma\sigma_\Gamma)&=1,&
+\Pi_\Gamma^*(X)&=\operatorname{Tr}(G_\Gamma X)\sigma_\Gamma.
+\end{aligned}
+\tag{96.3}
+$$
+
+这里 $\Pi_\Gamma^*$ 是迹配对下的状态侧伴随。特别地，令 $a_{\Gamma,\rho}=\operatorname{Tr}(\rho G_\Gamma)\ge0$，则
+
+$$
+\begin{aligned}
+\bigl|s_{\Gamma,\rho}(n)-a_{\Gamma,\rho}r_\Gamma^n\bigr|&\le Cq^n,\\
+\left\|\mathcal N_\Gamma^n(\rho)
+-a_{\Gamma,\rho}r_\Gamma^n\sigma_\Gamma\right\|_1&\le Cq^n.
+\end{aligned}
+\tag{96.4}
+$$
+
+若 $\Gamma\to\Gamma_*\in\mathfrak F_R$，则 $G_\Gamma\to F_*$、$\sigma_\Gamma\to P_*$。对不失效的固定 $\Gamma$，从实际初态 $\sigma_\Gamma$ 出发，条件于未点击的后继始终是 $\sigma_\Gamma$，且 $\mathsf N$ 准确服从成功参数 $\epsilon_\Gamma$ 的几何分布。
+
+证明。第 93 节给紧致闭邻域上的连续投影，以及其余特征值的统一模长上界 $b<1$。缩小邻域并取 $b<q<\inf_\Gamma r_\Gamma$。置
+
+$$
+\mathcal B_\Gamma=\mathcal A_\Gamma(\operatorname{id}-\Pi_\Gamma).
+$$
+
+其谱由三个稳定特征值与零组成，故每个 $\mathcal B_\Gamma/q$ 的谱半径严格小于一。有限 Jordan 展开保证它的幂趋零。对每个装置选一个整数 $m_i\ge1$，使相应幂的范数小于 $1/2$；由连续性，此不等式在该装置的一个邻域内仍成立。紧性允许有限覆盖。取这些 $m_i$ 的共同倍数 $m$，则每个装置至少落入其中一个邻域，从而
+
+$$
+\left\|(\mathcal B_\Gamma/q)^m\right\|
+\le(1/2)^{m/m_i}\le1/2.
+$$
+
+前 $m$ 次幂在紧集上共同有界，按长度 $m$ 分块得到所有幂的统一有界性。利用对易及互补性，准确地有
+
+$$
+\mathcal A_\Gamma^n-r_\Gamma^n\Pi_\Gamma
+=\mathcal B_\Gamma^n(\operatorname{id}-\Pi_\Gamma)
+\qquad(n\ge0).
+$$
+
+将 $\operatorname{id}-\Pi_\Gamma$ 的共同范数界吸收进 $C$，得到式（96.2），包括 $n=0$。这一步处理非正规矩阵与稳定 Jordan 块，没有把谱半径本身当成算子范数。
+
+由于 $r_\Gamma>q$，式（96.2）给 $r_\Gamma^{-n}\mathcal A_\Gamma^n\to\Pi_\Gamma$。每一项完全正，有限维完全正锥闭合，因此 $\Pi_\Gamma$ 及其伴随也完全正。置
+
+$$
+\sigma_\Gamma=
+\frac{\Pi_\Gamma^*(I)}{\operatorname{Tr}[\Pi_\Gamma^*(I)]}.
+$$
+
+分母为正：在边界它等于 $\operatorname{Tr}F_*=1+q_*\ge1$，连续性及紧性保证缩小后的邻域内仍不为零。投影秩一使每个 $\Pi_\Gamma^*(X)$ 都是 $\sigma_\Gamma$ 的标量倍；取迹确定该标量恰为 $\operatorname{Tr}(G_\Gamma X)$。投影恒等式再给 $\operatorname{Tr}(G_\Gamma\sigma_\Gamma)=1$，主特征方程给式（96.3）。
+
+对式（96.2）取迹对偶得到状态侧 $1\to1$ 范数界，再作用于密度矩阵并取迹，得到式（96.4）。第 93.6 式给边界投影，因而两份连续极限分别为 $F_*$ 与 $P_*$。最后，$\mathcal N_\Gamma^n(\sigma_\Gamma)=r_\Gamma^n\sigma_\Gamma$ 同时给条件后继不变与几何等待律。$\square$
+
+$G_\Gamma$ 在子临界处只保证为正算子，未断言 $G_\Gamma\preceq I$；相应的 $a_{\Gamma,\rho}$ 也未必小于一。因此式（96.4）是带有统一余项的谱分解，不能在有限参数处直接当成两个概率分布的凸混合。边界极限 $F_*\preceq I$ 才保证下一节混合权重的概率意义。
+

@@ -1,0 +1,36 @@
+**命题 67.2（阻尼后仍保留严格间隙的充分条件）。** 若 $\lambda c>\mu+\eta/\sqrt a$，则 $e(R_\lambda)>\varepsilon$。
+
+**证明。** 反设存在因果 $S$，其完整事件误差至多 $\varepsilon$。第64节两个总事件 $C_+,C_-$ 及其饱和压缩保持原样：$R_+=uu^*+vv^*$、$R_-=c^2yy^*$ 都不依赖 $\lambda$。同一支撑、偏迹和归一化论证给
+
+$$
+S_{x,x}=\mu a,\quad S_{x',x'}=\mu(1-a),\quad
+c^2\le s:=S_{y,y}\le\mu,\quad
+k:=S_{x,y}/\sqrt a,\quad |k|^2\le\mu s\le\mu^2.
+$$
+
+对 $C_q=\operatorname{diag}(q,1,1-q,0)$，$0<q<1$，加权 $x,y$ 主块变为
+
+$$
+B_q=\begin{pmatrix}
+apq&\sqrt{aq(1-q)}(\lambda c-k)\\
+\sqrt{aq(1-q)}(\lambda c-\overline k)&(c^2-s)(1-q)
+\end{pmatrix}.
+$$
+
+取该块正谱投影加 $x'$ 投影，再取其互补事件。其总响应仍为 $-\varepsilon(1-q)$，故同样得到
+
+$$
+\max\{0,\lambda_{\max}(B_q)\}\le q(\eta+ap).
+$$
+
+由 $q(\eta+ap)I-B_q\succeq0$ 的行列式非负，除以 $q$ 并令 $q\downarrow0$，得到
+
+$$
+a|\lambda c-k|^2\le\eta(s-c^2)\le\eta^2.
+$$
+
+而假设 $\lambda c>\mu+\eta/\sqrt a$ 及 $|k|\le\mu$ 给
+$\sqrt a|\lambda c-k|\ge\sqrt a(\lambda c-\mu)>\eta$，矛盾。
+
+因果修复集合紧、误差连续，最优值达到；所以不可能达到误差 $\varepsilon$ 意味着最优值严格大于它。
+

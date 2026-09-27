@@ -1,0 +1,16 @@
+### 38.5 refinement 是表示之间的箭头，而不是另一个状态坐标
+
+若接口 $r_1:X\to R_1$ 能由接口 $r_2:X\to R_2$ 解码，记
+
+$$
+ r_1\preceq r_2
+ \iff
+ \exists h:R_2\to R_1,\quad r_1=h\circ r_2.
+ \tag{38.9}
+$$
+
+恒等解码给出自反性，解码复合给出传递性。于是接口表示形成一个预序；互相可解码的表示在反对称化后成为同一 refinement 类。仓内 RefinementCompositionStructure 给出了因子化范畴、恒等、结合律和互相细化后的预序。
+
+在这个预序中：
+
+* global profile 商是恢复指定局部读出族的最小类；

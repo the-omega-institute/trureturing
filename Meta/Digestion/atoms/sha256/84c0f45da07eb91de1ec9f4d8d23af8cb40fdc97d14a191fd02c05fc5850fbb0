@@ -1,0 +1,39 @@
+**定理 216.1（单调风险泛函的最小坐标上界）。** 令
+
+$$
+\mathcal B=
+\prod_{i=1}^{m}
+[\underline\beta_i,\overline\beta_i]
+\times
+[\underline\alpha_i,\overline\alpha_i]
+\times
+[\underline\alpha_\infty,\overline\alpha_\infty].
+$$
+
+对
+
+$$
+F(\beta,\alpha,\alpha_\infty)
+=
+\sum_i\beta_i\alpha_i+\alpha_\infty
+$$
+
+有
+
+$$
+\boxed{
+\sup_{\mathcal B}F
+=
+\sum_i\overline\beta_i\,\overline\alpha_i
++
+\overline\alpha_\infty.
+}
+\tag{216.1}
+$$
+
+任何只使用坐标区间而声称对整个盒子 sound 的风险上界都不小于右端。
+
+### 证明
+
+在 $[0,1]$ 上，$F$ 对每个坐标单调不减，因此最大值在所有上端点同时取得。若另一个上界小于该端点值，就在盒子中的上端点处失效。证毕。
+

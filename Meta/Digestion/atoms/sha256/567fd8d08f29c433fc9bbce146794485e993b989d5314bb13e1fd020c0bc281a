@@ -1,0 +1,72 @@
+### 175.4 全相位误差下界与经验分布的分离
+
+令
+
+$$
+m_L=\min_\varphi e_L(\varphi)
+=\min_{\zeta\in\mathbb T}h_L(\zeta).
+\tag{175.22}
+$$
+
+连续性保证最小值达到。对任意相位和任意解码器，第174节的 Bell 输入检验给
+
+$$
+d_\diamond\!\left(
+(\operatorname{id}_M\otimes\mathcal D)\mathcal N_{L,\varphi},
+\mathcal V_*
+\right)
+\ge1-\frac{f_0+f_1}{4}
+\ge1-\frac{S_L}{4}.
+$$
+
+故
+
+$$
+\boxed{
+\liminf_{L\to\infty}
+\frac{m_L-3/4}{w_0}
+\ge\frac{\beta}{4},
+\qquad
+\liminf_{L\to\infty}
+4^{L-1}(m_L-3/4)
+\ge\frac{27}{2353}>0.
+}
+\tag{175.23}
+$$
+
+特别地，存在有限整数 $L_0$，使对全部 $L\ge L_0$ 和全部相位，
+
+$$
+\boxed{
+e_L(\varphi)\ge\frac34+\frac{\beta w_0}{8}>\frac34.
+}
+\tag{175.24}
+$$
+
+现在令
+$\nu_L=(h_L)_\#m_{\mathbb T}$ 为第170节的真实共同经验分布。
+圆上的 Haar 测度对每个非空开弧都为正，$h_L$ 连续，故其像中的每一点都属于 $\nu_L$ 的支持。圆连通且紧，从而
+
+$$
+\operatorname{supp}\nu_L
+=\left[\min_{\mathbb T}h_L,\ \max_{\mathbb T}h_L\right].
+\tag{175.25}
+$$
+
+当 $L\ge L_0$ 时，该支持的下端由（175.24）严格高于 $3/4$。
+第166节常值比较分布在本来源 $\Delta=1/9$ 下的支持下端恰为
+$3/4$，且每个右侧邻域都有正质量。因此
+
+$$
+\boxed{
+\nu_L\ne\nu_{1/9}^{\mathrm{comparison}}
+\qquad(L\ge L_0).
+}
+\tag{175.26}
+$$
+
+第170节已经把所有有限等差运行子序列的真实经验律识别为同一个
+$\nu_L$，故这里的分布分离也适用于那些实际误差序列的共同极限律。
+
+本节没有给 $L_0$ 的可计算上界，所以不能将（175.24）—（175.26）直接套到指定的十维或三十四维实例。对每个有限 $L\ge3$ 已成立的是第174节的同相位严格差异；对所有足够大的有限 $L$，本节进一步给全相位统一分离与经验分布支持分离。证明保留了真实输入依赖、同一个接收端解码器和全部参考系统边界，不作 Lean 核验或原创性声明。
+

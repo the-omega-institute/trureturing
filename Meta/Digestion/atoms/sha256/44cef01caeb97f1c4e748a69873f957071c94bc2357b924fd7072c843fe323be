@@ -1,0 +1,35 @@
+**定理 222.3（满秩 Kraus 族中的三个精确读数）。** 固定
+
+$$
+0<b<a,\qquad a+b<1,\qquad 0\le u\le1,
+$$
+
+并令
+
+$$
+D_u=\operatorname{diag}(1,u),\qquad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+$$
+
+$$
+A_u=\sqrt a\,D_u,\qquad B_u=\sqrt b\,XD_u,
+$$
+
+$$
+K_{0,u}=\operatorname{diag}
+\left(\sqrt{1-a-b},\sqrt{1-(a+b)u^2}\right).
+$$
+
+以 $(K_{0,u},A_u,B_u)$ 定义共同记录通道。它对整个参数范围具有严格的记录块 Choi 秩 $(1,2)$，且
+
+$$
+\boxed{
+\delta_{\rm rot}=b,\qquad
+\gamma=\min(b,au^2),\qquad
+q_0=1-(a+b)u^2,\qquad
+d_2=\min\bigl(b,1-(a+b)u^2\bigr).
+}
+$$
+
+当 $u>0$ 时两个结果一 Kraus 矩阵均可逆、结果一总输入效应正定；其两个非零 Choi 根始终互异。因此 $0<u<\sqrt{b/a}$ 给出具有可逆 Kraus 算子的严格极小极大间隙。
+

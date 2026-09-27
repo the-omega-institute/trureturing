@@ -1,0 +1,45 @@
+**定义 69.1（同一组电荷上的隐藏测量噪声）。** 保持定义 68.1 的原实际模型、固定振幅与
+固定 $\beta\in(1/2,1)$。所有原始数据、完整窗口、精确后验中心、组电荷 $A_j$、
+原对角统计量 $T_M$ 与偶极 $D_M$ 均取同一支持标签实现。记
+
+```math
+\rho(x)=c_0e^{-\kappa x^2/2},\quad
+c_0=(4\pi\sqrt{ab})^{-1},\quad \kappa=a^{-1}+\alpha^2/b,
+\quad\gamma=\int\rho,\quad g_0=\int\rho^2,
+\quad c_q=\phi(1-\beta)/\beta.
+```
+
+式 (69.1)。
+
+取固定 $D_*=8/\kappa$，定义对称核心与独立测量噪声
+
+```math
+R_c=\sqrt{D_*\log Q},\qquad
+\mathcal K_M=\{j\in\mathbb Z:|j\delta|\le R_c\},\qquad m_M=|\mathcal K_M|,
+\qquad X_j=A_j+\sigma_M\xi_j,
+```
+
+```math
+\xi_j\overset{\mathrm{iid}}\sim N(0,1),\qquad
+\sigma_M=Q^{-2}\quad\text{或}\quad \sigma_M=e^{-c_q\lambda/100}.
+```
+
+式 (69.2)。
+
+两种噪声分别给出两个观测实验。噪声独立于原始数据及支持，其实现值不另行提供。
+在原全行截断事件上，完整等分数组恰为原计数线的组，标记 $x_j=j\delta$。
+在任意数据上，可将核心坐标定义为相应计数元组中属于原窗口的精确中心化标签和，缺组补零；
+这样定义在截断成功时与原组电荷一致。原完整 $T_M,D_M$ 在失败数据上仍按原定义取值。
+令
+
+```math
+T_M^{\mathrm{sm}}=\delta^{-1/2}
+       \left(\sum_{j\in\mathcal K_M}X_j^2-V_M\right),\qquad
+V_M=B^{-2}\sum_{i\in J}p_i(1-p_i).
+```
+
+式 (69.3)。
+
+$V_M$ 是与原对角坐标相同的原始数据可测辅助方差中心；它不被替换为实际后验平方能量期望。
+新的标量由带噪核心重新计算。
+

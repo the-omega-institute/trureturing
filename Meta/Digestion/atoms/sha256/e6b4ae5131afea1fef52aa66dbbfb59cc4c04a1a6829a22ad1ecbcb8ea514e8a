@@ -1,0 +1,42 @@
+**定义 60.1（临界共振与双场）。** 保持定义 54.1 的原始实际模型、精确中心与有限截距。
+取确定性序列
+
+```math
+\eta_M=2m_M\longrightarrow\infty,\qquad
+\zeta_M=\eta_M^2\delta\longrightarrow\zeta\in(0,\infty),
+\qquad s_M=\log(\eta_M/\delta),\qquad
+z_M(\theta)=s_M+\theta/\eta_M^3.
+```
+
+式 (60.1)。
+
+定义实际过程
+
+```math
+\mathcal R_M(\theta)=\eta_M^{3/2}e^{z_M(\theta)/2}
+ \{\mathcal Z_M(z_M(\theta)\sqrt\delta)-\mathcal J_M
+                          -2z_M(\theta)\sqrt\delta T_M\}.
+```
+
+式 (60.2)。
+
+现在 $`s_M=(3/4)\log Q+O(1)`$，因此任意固定参数紧区间的取值点最终落在原 $`[0,U]`$ 内。
+令 $`W_\rho`$ 是旧噪声，$`W_\rho'`$ 是它的独立副本；
+在 $`m_M`$ 全为偶数的子列上令 $`W_\sigma=W_\rho`$，
+在全为奇数的子列上令 $`W_\sigma=W_\rho'`$。
+定义连续对称核
+
+```math
+q_{\zeta,\theta}(x,y)=
+\begin{cases}
+ \displaystyle\frac{2\sqrt\zeta}{\omega}
+       \frac{\sin(\omega\theta|x-y|/\zeta)}{|x-y|},&x\ne y,\\[4pt]
+ 2\theta/\sqrt\zeta,&x=y,
+\end{cases}
+\qquad \omega=\pi/2.
+```
+
+式 (60.3)。
+
+它属于 $`L^2(\rho\otimes\rho)`$；对角值是连续延拓，不改变二重 Wiener 积分。
+

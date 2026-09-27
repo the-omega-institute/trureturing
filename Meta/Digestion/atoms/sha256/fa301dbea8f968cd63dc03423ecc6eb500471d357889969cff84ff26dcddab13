@@ -1,0 +1,203 @@
+**定理 308.1（奇异支撑的半径分离与两条曲率）。** 固定正半径六态模型。若第305节的候选坐标通过奇异支撑判据，将该坐标写在最后，沿用该节的 $p=(p_1,p_2)$、$z$、$r=\sqrt{p_1^2+p_2^2+z^2}$、$q$、$K$、$u$、$E$，并记
+
+$$
+U=p_1^2,\qquad V=p_2^2,\qquad L=r+z,
+\qquad
+\Delta=(z^2+U)(z^2+V)=z^2r^2+UV,
+\qquad t=\sqrt{UV/\Delta}.
+\tag{308.1}
+$$
+
+则
+
+$$
+z^2>U+V,\qquad 0<t<\frac13,
+\tag{308.2}
+$$
+
+而第300节的两条端点二阶系数具有精确表达
+
+$$
+\begin{aligned}
+\Gamma_a&=-\frac{UV(1-t)}{2r^2q^3}<0,\\
+\Gamma_a+\Theta_a
+&=\frac{UV(1-t)}{2r^2q^3}
+\left(\frac1t-\frac zL\right)>0.
+\end{aligned}
+\tag{308.3}
+$$
+
+特别地，
+
+$$
+\frac{\Gamma_a+\Theta_a}{-\Gamma_a}
+=\frac1t-\frac zL>\frac52,
+\qquad
+\Gamma_a+\Theta_a>\frac{5UV}{6r^2q^3}.
+\tag{308.4}
+$$
+
+这里不要求 $p_1=p_2$，也包括最后一列范数恰好饱和的奇异支撑临界点。式（308.4）仅给出明确的比较界，不声称其中常数最优。
+
+证明。先将范数判据转成无量纲限制。由 $U,V,z>0$ 可知 $0<t<1$。第305节的 $q$ 公式给出
+
+$$
+\begin{aligned}
+q^2
+&=\frac{U(z^2+U)+V(z^2+V)+2\sqrt{UV\Delta}}{r^2}\\
+&=U+V+\frac{2\Delta(t-t^2)}{r^2}
+=U+V+\frac{2z^2t}{1+t}.
+\end{aligned}
+\tag{308.5}
+$$
+
+最后一步使用 $\Delta(1-t^2)=z^2r^2$。通过的候选满足 $\|u\|_2^2+q^2\le z^2$，从而 $q^2\le z^2$。式（308.5）的最后一项严格为正，故 $z^2>U+V$。又由 $UV\le(U+V)^2/4$，以及 $y\mapsto y/(z^2r^2+y)$ 的单调性，
+
+$$
+t\le\frac{U+V}{r^2+z^2}<\frac13.
+\tag{308.6}
+$$
+
+第二个严格不等式正是 $U+V<z^2$ 的结果。这证明式（308.2）。
+
+下面计算曲率。记
+
+$$
+H=\operatorname{diag}(h_1,h_2),\qquad
+h_1=\frac{p_1}{r\sqrt{z^2+U}},\qquad
+h_2=\frac{p_2}{r\sqrt{z^2+V}}.
+\tag{308.7}
+$$
+
+第305节给出
+
+$$
+Q=\begin{pmatrix}K&u\\0&q\end{pmatrix},
+\qquad M_*=Q/q,\qquad
+D_a=r^2q,\qquad \lambda=zr,
+\qquad v=\frac{(p,L)}{\sqrt{2rL}}.
+\tag{308.8}
+$$
+
+由于 $K=G_0H$、$G_0p=r^2p$、$Kp+zu=qp$，
+
+$$
+2q\Omega_*b
+=\begin{pmatrix}(r^2H-qI_2)p\\ u\cdot p\end{pmatrix},
+\qquad
+u\cdot p=z(Vh_1+Uh_2).
+\tag{308.9}
+$$
+
+第二个等式可由
+$q=z^2(h_1+h_2)+Uh_1+Vh_2$ 代入 $zu=qp-Kp$ 得到。令
+
+$$
+\begin{aligned}
+\mathcal N
+&=\|(r^2H-qI_2)p\|_2^2+(u\cdot p)^2\\
+&=UV(r^2+z^2)(h_1-h_2)^2\\
+&\quad+z^2\left[V(z^2+V)h_1^2
++U(z^2+U)h_2^2+2UVh_1h_2\right].
+\end{aligned}
+\tag{308.10}
+$$
+
+将前两个分量写为 $p_1[V(h_1-h_2)-z^2h_2]$ 与
+$p_2[U(h_2-h_1)-z^2h_1]$ 后平方展开，即得第二式。
+
+这个平方和实际上大幅简化。写 $q_1=z^2+U$、$q_2=z^2+V$，则
+
+$$
+h_1h_2=\frac t{r^2},\qquad
+h_1^2+h_2^2=\frac{z^2(U+V)+2UV}{r^2\Delta}.
+\tag{308.11}
+$$
+
+代入式（308.10），得到
+
+$$
+\begin{aligned}
+\frac{\mathcal N}{UV}
+&=\frac{(r^2+z^2)[z^2(U+V)+2UV]+z^2(q_1^2+q_2^2)}{r^2\Delta}-2t\\
+&=2(1-t).
+\end{aligned}
+\tag{308.12}
+$$
+
+最后一步仅需把 $q_1,q_2$ 展开，并使用 $r^2=U+V+z^2$，分式的分子恰为 $2r^2\Delta$。由此
+
+$$
+\|\Omega_*b\|_2^2=\frac{UV(1-t)}{2q^2}.
+\tag{308.13}
+$$
+
+第301节的 $\Gamma_a=-\|\Omega_*b\|_2^2/D_a$ 立即给出式（308.3）的第一式。
+
+令 $d_1,d_2$ 为 $S_*=\operatorname{sym}M_*$ 的两个较小特征值。第298节给出第三个特征值 $d_3=d_1+d_2$，故 $\mathcal C(S_*)$ 的谱为 $2d_1,2d_2,0$，单位核向量为 $v$。其左上二阶主子式一方面是 $\det E/q^2$，另一方面是 $4d_1d_2v_3^2$。由 $v_3^2=L/(2r)$，
+
+$$
+d_1d_2=\frac{r\det E}{2Lq^2}.
+\tag{308.14}
+$$
+
+接着由 $E=(\operatorname{Tr}K+q)I_2-K-K^{\mathsf T}$ 计算行列式：
+
+$$
+\begin{aligned}
+\det E
+&=-V(z^2+U)h_1^2-U(z^2+V)h_2^2
++2(UV+zr^2L)h_1h_2\\
+&=\frac{2UV(t-1)}{r^2}+2zLt.
+\end{aligned}
+\tag{308.15}
+$$
+
+为核对第一式，可写 $K_{11}=r(r-V/L)h_1$、$K_{22}=r(r-U/L)h_2$、
+$K_{12}+K_{21}=rp_1p_2(h_1+h_2)/L$，再使用
+$\det E=q^2-(K_{11}-K_{22})^2-(K_{12}+K_{21})^2$。
+第二式则使用 $V(z^2+U)h_1^2=U(z^2+V)h_2^2=UV/r^2$ 和式（308.11）。
+
+第301节的 $\Theta_a=\lambda d_1d_2/(2D_a)$ 与式（308.12）至（308.15）遂给出
+
+$$
+\Gamma_a+\Theta_a
+=\frac{\mathcal F}{4r^2q^3},
+\qquad
+\mathcal F=\frac{zr^2}{L}\det E-2UV(1-t).
+\tag{308.16}
+$$
+
+将行列式代入，并使用 $z^2r^2=UV(1-t^2)/t^2$，
+
+$$
+\begin{aligned}
+\mathcal F
+&=-2UV(1-t)\left(1+\frac zL\right)+2z^2r^2t\\
+&=2UV(1-t)\left(\frac1t-\frac zL\right).
+\end{aligned}
+\tag{308.17}
+$$
+
+这正是式（308.3）的第二式。由于 $r>z>0$，有 $0<z/L<1/2$；再结合 $t<1/3$，
+
+$$
+\frac1t-\frac zL>3-\frac12=\frac52,
+\qquad 1-t>\frac23.
+$$
+
+因此两条曲率严格异号，并得到式（308.4）的两个严格下界。证毕。
+
+由第300节的两条二阶展开，对于上述任一固定模型，当 $\delta>0$ 充分小时，
+
+$$
+F_a^{(2)}\bigl(\eta(1-\delta)\bigr)
+<\kappa_a\delta
+<\widehat G_a\bigl(\eta(1-\delta)\bigr).
+\tag{308.18}
+$$
+
+这个邻域允许依赖于固定的半径，不据此宣称跨退化半径的统一邻域。
+
+本节把第302节的奇异轴向例子扩展到了第305节的整个奇异支撑分支，并给出两条曲率的精确比例。结合第306节，严格正受限曲率覆盖全部轴向模型及全部奇异支撑模型；一般三个不同半径的正定支撑分支仍需另行判定。本节不把端点二阶结论延伸为整条有限预算曲线的显式解。
+

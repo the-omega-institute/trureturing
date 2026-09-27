@@ -1,0 +1,23 @@
+**定理 220.2（顺序风险证书）。** 在定理 219.2 的时间一致事件上，对所有有限 $n$ 同时有
+
+$$
+R_{\mathrm{worst}}^\pi
+\le
+\widehat R_n^+.
+$$
+
+因此在事件 $\{\tau_\alpha<\infty\}$ 上，
+
+$$
+\boxed{
+R_{\mathrm{worst}}^\pi\le\alpha
+}
+\tag{220.1}
+$$
+
+以数据概率至少 $1-\delta$ 成立。
+
+### 证明
+
+时间一致事件给出每个 $n$ 的真实参数盒包含关系。风险泛函在盒上的上确界因此同时支配真实风险。若 $\tau_\alpha<\infty$，取 $n=\tau_\alpha$ 即有 $\widehat R_{\tau_\alpha}^+\le\alpha$，从而得到（220.1）。证毕。
+

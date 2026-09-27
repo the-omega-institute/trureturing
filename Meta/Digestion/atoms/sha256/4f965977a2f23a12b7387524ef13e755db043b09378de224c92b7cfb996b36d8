@@ -1,0 +1,11 @@
+## 定理 ST38.2：处处有隙、处处可编码，却没有全局可恢复的二态寄存器
+
+沿用ST25规范，$p(\boldsymbol n)=(I+\boldsymbol n\cdot\boldsymbol\sigma)/2$在$S^2$上是$C_1=-1$的秩一投影。令
+
+$$
+P_{\rm bad}(\boldsymbol n)=p(\boldsymbol n)\oplus1\in M_3,
+\qquad H_{\rm bad}=\Delta(2P_{\rm bad}-I_3),\quad\Delta>0.
+$$
+
+其支持秩为二、第一Chern数为$-1$，Hamiltonian能隙恒为$2\Delta$。每个点可选一个秩二等距编码，但不存在以该支持为像、来自同一个逻辑量子比特的全局光滑可恢复通道族。
+

@@ -1,0 +1,14 @@
+### 21.4 定理：每一步只有一个旧柱集被真正分裂
+
+令 $\beta=\{-(n+1)\alpha\}$。对全部 $x,y\in[0,1)$，有
+\[
+\boxed{O_{n+1}(x)=O_{n+1}(y)
+\iff O_n(x)=O_n(y)\ \land\ (\beta\leq x\iff\beta\leq y).}
+\tag{21.5}
+\]
+存在唯一 $j$ 使 $q_j<\beta<q_{j+1}$。这一旧柱集变为 $[q_j,\beta)$ 与 $[\beta,q_{j+1})$，其余旧柱集保持不变。两侧都非空，且可以明确选择
+\[
+x=(q_j+\beta)/2,\qquad y=\beta
+\]
+使 $O_n(x)=O_n(y)$、$O_{n+1}(x)\neq O_{n+1}(y)$。
+

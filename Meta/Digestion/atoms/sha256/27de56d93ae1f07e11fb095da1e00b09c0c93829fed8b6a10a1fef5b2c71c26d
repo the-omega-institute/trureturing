@@ -1,0 +1,8 @@
+**推论 244.3（任务扩展必细化边界）。** 若 $\mathcal T\subseteq\mathcal T'$，则
+
+$$
+\sim_{\mathcal T'}\subseteq\sim_{\mathcal T}.
+$$
+
+增加未来任务只能细分最小全息商，不能由旧商自动恢复新任务中区分的模型。
+

@@ -1,0 +1,48 @@
+### 266.3 固定完整数据就是一个非齐次仿射切片
+
+令 $\dim H=2$，参考空间 $E$ 有限维，记 $m=\dim E$。固定一组可实现数据
+$$
+\rho\succeq0,\qquad\operatorname{Tr}\rho=1,\qquad
+K\in\mathcal L(E).
+\tag{266.12}
+$$
+所有块矩阵均使用同一输入 $Y$ 本征基，且
+$$
+\mathscr K(X)=2X_{+-}.
+\tag{266.13}
+$$
+定义
+$$
+A_{\rho,K}=
+\begin{pmatrix}\rho/2&K/2\\K^\dagger/2&\rho/2\end{pmatrix},
+\qquad
+L=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{266.14}
+$$
+固定完整数据的仿射集为
+$$
+\mathcal L_{\rho,K}=A_{\rho,K}+L.
+\tag{266.15}
+$$
+它与正半定锥的交集恰为合法来源纤维
+$$
+\mathfrak S(\rho,K)
+=\left\{\Xi\succeq0:
+\operatorname{Tr}_H\Xi=\rho,\ \mathscr K(\Xi)=K\right\}.
+\tag{266.16}
+$$
+其中归一化自动来自 $\operatorname{Tr}\rho=1$。
+
+白化后的Ando形式也属于同一结构：将偏移中的 $\rho,K$ 换成 $I_S,Z$，就得到
+$$
+A_{I,Z}+L
+=\left\{
+\begin{pmatrix}F&Z/2\\Z^\dagger/2&I_S-F\end{pmatrix}
+:F=F^\dagger
+\right\}.
+\tag{266.17}
+$$
+这里联合矩阵的迹为 $\dim S$。这只改变归一化尺度与所需范数界，不改变其作为固定非齐次仿射切片的性质。
+
+对实际含边缘误差的竞争态，可以直接在整个 $H\otimes E$ 上使用（266.14），即使 $\rho$ 有核，也不必先缩支撑或对白化边缘求逆。相应链必须属于这个已声明完整空间中的切片。只有精确共同边缘已经排除参考核外方向时，才可直接改用§263的支撑内问题。
+

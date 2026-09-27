@@ -1,0 +1,21 @@
+**定义 300.1（端点二阶系数）。** 固定正半径六态，沿用第298、299节的正角点规范。记 $\alpha_i=1/a_i$、$A=\sum_i\alpha_i^2$、$b=\alpha$、$\eta=A^{-1/2}$，唯一端点最优矩阵为 $M_*=S_*-\Omega_*$。令
+
+$$
+0<d_1\le d_2<d_3=d_1+d_2
+$$
+
+为 $S_*$ 的特征值，$v$ 为严格正的单位最大特征向量，$Z_*=\lambda vv^{\mathsf T}$ 为唯一对偶矩阵，$\lambda>0$。定义向量 $\omega$ 使 $\Omega_*x=\omega\times x$，并记
+
+$$
+\begin{aligned}
+J_a&=\|M_*^{\mathsf T}b\|_2^2
+   +2b^{\mathsf T}(M_*^{\mathsf T})^2b,\\
+L_a&=\frac{3A-J_a}{2},\qquad
+\mu_a=\frac1{2D_a},\qquad
+\zeta_a=\frac\lambda{2D_a},\\
+\Gamma_a&=\mu_a L_a+\zeta_a(v\cdot\omega)^2,\\
+\Theta_a&=\zeta_a d_1d_2>0.
+\end{aligned}
+\tag{300.1}
+$$
+

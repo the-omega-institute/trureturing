@@ -1,0 +1,51 @@
+**证明。** 先设 $c<1$。不纠缠纯探针对应 $t=1$，定理242.1给其方向最优值
+$$
+F(1;c)=\frac12\sqrt{\frac{1+c}{2}}
+=\frac12-\varepsilon_0(c).
+\tag{242.26}
+$$
+所以当 $\varepsilon\ge\varepsilon_0(c)$ 时，（242.18）中 $t=1$ 的产品探针已满足要求，最小熵为零。
+
+现在设 $0\le\varepsilon<\varepsilon_0(c)$。由于 $\varepsilon_0(c)<1/2$，所需阈值 $1/2-\varepsilon$ 为正，以下平方是等价变形。对任意 $t$，存在满足（242.21）的方向，当且仅当
+$$
+F(t;c)\ge\frac12-\varepsilon
+\quad\Longleftrightarrow\quad
+1-\frac{1-c}{2}t^2\ge(1-2\varepsilon)^2.
+$$
+因此恰好要求
+$$
+t^2\le\frac{8\varepsilon(1-\varepsilon)}{1-c}
+=:t_\varepsilon^2.
+\tag{242.27}
+$$
+阈值的恒等式
+$$
+8\varepsilon_0(c)(1-\varepsilon_0(c))=1-c
+\tag{242.28}
+$$
+及 $\varepsilon(1-\varepsilon)$ 在 $[0,1/2]$ 上严格增加，保证当前分支中 $0\le t_\varepsilon<1$。
+
+纯态纠缠熵随 $t$ 严格下降；在 $0<t<1$，导数为
+$$
+\frac{d}{dt}H_2\left(\frac{1+t}{2}\right)
+=\frac12\log_2\frac{1-t}{1+t}<0.
+\tag{242.29}
+$$
+所以满足要求的最小熵在最大允许的 $t=t_\varepsilon$ 处取得，正是（242.24）的第一分支。选择（242.16）的共同最优方向及（242.18）的纯化，实际达到 $f=1/2-\varepsilon$ 和该熵值。这同时证明必要性与可实现性。
+
+最后，若 $c=1$，两轴平行或反平行。选共同轴方向的纯输入，$t=1$，定理242.1给 $f=1/2$，不需纠缠便满足任意 $\varepsilon\ge0$。这个端点单独处理，不对 $1-c$ 作除法。$\square$
+
+同一证明还给出纯探针所需的最小 Schmidt 秩、也即最小参考支撑维数：
+$$
+\boxed{
+r_{\min}(\varepsilon;c)=
+\begin{cases}
+2,&c<1,\quad0\le\varepsilon<\varepsilon_0(c),\\
+1,&c<1,\quad\varepsilon\ge\varepsilon_0(c),\\
+1,&c=1.
+\end{cases}
+}
+\tag{242.30}
+$$
+因为第一种情形迫使 $t<1$，输入边缘秩为二，而最优纯化确实只用二维参考；其余两种情形已有实际产品探针。
+

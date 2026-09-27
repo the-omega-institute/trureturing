@@ -1,0 +1,31 @@
+### 154.4 有限个极限 SDP 控制全部后续终端
+
+固定该物理装置，沿用第150、153节的单终端最优误差 $e_n$。对 $n\ge3$，将实际档案坐标改为（154.3）后，
+
+$$
+e_n=
+\min_{\mathcal D:\mathcal L(K)\to\mathcal L(H_{\mathrm{can}})\ {\rm CPTP}}
+\frac12\|
+(\operatorname{id}_M\otimes\mathcal D)\mathcal R_n-\mathcal V_n
+\|_\diamond.
+\tag{154.18}
+$$
+
+这与恢复完整原档案的最优值严格相等：第153节先把解码输出压到 $S_n$，再用等距同构 $F_n$ 双向换坐标。此处没有改变实际接收通道。
+
+对任意通道 $\mathcal R:\mathcal L(M_{\mathrm{in}})
+\to\mathcal L(M\otimes K)$，定义
+
+$$
+\mathfrak h(\mathcal R)=
+\min_{\mathcal D:\mathcal L(K)\to\mathcal L(H_{\mathrm{can}})\ {\rm CPTP}}
+\frac12\|
+(\operatorname{id}_M\otimes\mathcal D)\mathcal R-\mathcal V_*
+\|_\diamond,
+\qquad
+h_r=\mathfrak h(\mathcal R_*^{(r)}).
+\tag{154.19}
+$$
+
+由于极限接收与目标均为 CPTP，第153节的精确 SDP、最小值取得及强对偶直接适用。每个 $h_r$ 使用 $4D$ 阶解码器 Choi 矩阵和 $16$ 阶距离证书矩阵。
+

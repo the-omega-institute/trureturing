@@ -1,0 +1,21 @@
+### 62.3 一个控制全部 tester 的多项式证书
+
+令
+
+$$
+\beta=\sqrt p-\sqrt{\varepsilon(1-p)},
+\qquad
+\gamma=c\sqrt p-\sqrt{\varepsilon(1-p)}.
+$$
+
+对任意 $q,t\in[0,1]$，主块的迹及秩二特征多项式常数项可写为
+
+$$
+\begin{aligned}
+T&=p-\varepsilon+\varepsilon q+(\varepsilon-p)t,\\
+Q&=b^2q(1-q)+\beta^2qt+\gamma^2(1-q)t,\\
+\lambda(p;q,t)&=\frac{T+\sqrt{T^2+4Q}}2.
+\end{aligned}
+\tag{62.15}
+$$
+

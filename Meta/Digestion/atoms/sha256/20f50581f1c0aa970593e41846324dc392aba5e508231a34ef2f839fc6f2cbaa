@@ -1,0 +1,31 @@
+**定义 200.1（事件后的先验平均）。** 令 $\mu$ 是 $\mathfrak R$ 上的概率测度，且
+
+$$
+\bar p=\int_{\mathfrak R}p_\Phi(\rho)\,d\mu(\rho)>0.
+$$
+
+定义事件后的先验平均态
+
+$$
+\boxed{
+\bar\rho_{\Phi,\mu}
+=
+\frac{\int_{\mathfrak R}\Phi(\rho)\,d\mu(\rho)}{\bar p}.
+}
+\tag{200.1}
+$$
+
+若 $\tau_\rho=\Phi(\rho)/p_\Phi(\rho)$，则令
+
+$$
+ d\nu(\rho)=\frac{p_\Phi(\rho)}{\bar p}\,d\mu(\rho),
+$$
+
+便有
+
+$$
+\bar\rho_{\Phi,\mu}=\int_{\mathfrak R}\tau_\rho\,d\nu(\rho).
+$$
+
+这里的 $\nu$ 是取得事件以后对来源的更新权重，不是原来的 $\mu$.
+

@@ -1,0 +1,12 @@
+**推论 225.6（标量夹界恢复尖锐性的参数阈值）。** 令 $g=(2+\sqrt2)/4$。在定理 225.5 的全合法区间，第 224 节的旧标量下界为
+$$
+L_{\mathrm{port}}(\kappa)=\min(g\kappa,1-\kappa).
+$$
+因此
+$$
+L_{\mathrm{port}}(\kappa)=d_2
+\quad\Longleftrightarrow\quad
+\kappa\ge\frac1{1+g}=\frac4{6+\sqrt2}.
+\tag{225.CT.25}
+$$
+

@@ -1,0 +1,17 @@
+**定理282.1（独立未记录相位与两尺度取得预算）。** 在（282.1）—（282.12）的实际来源、已知标定和重置访问合同下，存在与 $n,\delta,r$ 无关的正常数 $c,C$，使
+$$
+\boxed{
+\frac{c}{\Delta^2/(ns)+\Delta^2/\sqrt s}
+\le N_{\mathrm{noise}}(n,\delta,r)
+\le\frac{C}{\Delta^2/(ns)+\Delta^2/\sqrt s}.
+}
+\tag{282.26}
+$$
+等价地，
+$$
+N_{\mathrm{noise}}(n,\delta,r)
+\asymp\frac{s}{\Delta^2(1/n+\sqrt s)}.
+\tag{282.27}
+$$
+下界允许所有已声明的经典自适应控制和旧量子记忆；上界只需在对齐与临界两个固定方向中选择一个。
+

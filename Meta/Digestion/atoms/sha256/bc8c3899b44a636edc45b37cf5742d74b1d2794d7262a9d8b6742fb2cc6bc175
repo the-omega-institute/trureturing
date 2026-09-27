@@ -1,0 +1,23 @@
+### 265.2 精确同边缘的严格正来源族
+
+取
+$$
+0<h\le\frac18,\qquad
+D_h=\begin{pmatrix}0&2h^2\\2h^2&h\end{pmatrix},
+\qquad
+\delta_h=64h^4,
+$$
+$$
+F_h=F+D_h,\qquad Z_h=(1-\delta_h)Z,
+$$
+$$
+T_h=
+\begin{pmatrix}
+F_h&Z_h/2\\
+Z_h^\dagger/2&I_2-F_h
+\end{pmatrix},
+\qquad
+\Omega_h=\frac12T_h.
+\tag{265.6}
+$$
+

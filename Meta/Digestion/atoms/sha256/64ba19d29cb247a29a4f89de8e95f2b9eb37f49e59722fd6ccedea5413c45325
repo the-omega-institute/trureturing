@@ -1,0 +1,45 @@
+### 定理 12.9：任意实际左逆保证计算出的谱恢复候选正确
+
+在定理12.4的保迹条件下，以下三者等价：存在有限 Kraus 左逆；式(12.5)的标量交叉积条件成立；定义12.1计算出的同一个 $\mathcal R_E$ 满足 $\mathcal R_E\mathcal N=\mathrm{id}$。
+
+**证明。** 前两者由定理12.4等价；第三者提供显式有限 Kraus 左逆，反向立即成立。为证明任意左逆都保证该特定候选正确，取式(12.4)中的实际 $A_b$，定义恢复伴随的观测量
+
+$$
+Y_X=\sum_bA_b^\dagger X A_b.
+$$
+
+定理12.3给出 $A_bE_a=z_{ba}I$，故
+
+$$
+Y_XE_a=\sum_bA_b^\dagger X(A_bE_a)
+=\sum_bA_b^\dagger(A_bE_a)X=E_aX.
+$$
+
+伴随关系 $Y_{X^\dagger}=Y_X^\dagger$ 进一步给出 $E_a^\dagger Y_X=XE_a^\dagger$。于是
+
+$$
+QY_X=Y_XQ=\mathcal N(X).
+\tag{12.10}
+$$
+
+有限 Hermitian 矩阵的函数演算保持其交换子代数，所以 $WY_X=Y_XW$。用定理12.2中实际谱函数的恒等式得到
+
+$$
+W\mathcal N(X)W=WQWY_X=PY_X.
+$$
+
+原通道输出支持在 $P$，恢复的补空间项为零。因此
+
+$$
+\mathcal R_E\mathcal N(X)
+=\sum_aE_a^\dagger P Y_XE_a
+=\sum_aE_a^\dagger PE_aX
+=\left(\sum_aE_a^\dagger E_a\right)X=X.
+$$
+
+这证明了预先计算的谱候选正确，而不需要在结论中再选择一个未指定的恢复器。∎
+
+这里 $Y_X$ 是实际恢复的 Heisenberg 伴随；上述证明只使用其在错误像上的交织。它没有断言 $X\mapsto Y_X$ 在整个物理空间上保乘法。谱候选的具体构造和其精确恢复性质仍归于既有恢复理论。[QREC-BK][QREC-NS]
+
+[QREC-MD]: https://doi.org/10.1088/1751-8113/42/24/245303 "M.-D. Choi, N. Johnston and D. W. Kribs, The multiplicative domain in quantum error correction, Journal of Physics A: Mathematical and Theoretical 42, 245303 (2009); arXiv:0811.0947."
+[QREC-Kato]: https://doi.org/10.1143/JPSJ.5.435 "T. Kato, On the Adiabatic Theorem of Quantum Mechanics, Journal of the Physical Society of Japan 5(6), 435–439 (1950)."

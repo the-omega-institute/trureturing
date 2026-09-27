@@ -1,0 +1,9 @@
+**定义 27.4（词边的整数循环量）。** 以下缩写 $W=W_n$。取顶点集 $V=A^n$、带不同词标签的边集 $E=A^{n+1}$；词 $e=e_0\cdots e_n$ 从前缀 $p(e)=e_0\cdots e_{n-1}$ 指向后缀 $s(e)=e_1\cdots e_n$。当 $n=0$，$V=\{\epsilon\}$，每个字母各给一条有标签的自环。对每条边给出现次数 $c_e\in\mathbb Z_{\ge0}$，称其平衡若
+
+$$
+\sum_{e:p(e)=v}c_e=\sum_{e:s(e)=v}c_e\qquad(v\in V).
+\tag{27.19}
+$$
+
+每个出现副本分别计数；自环在两边各计一次。经典平衡与环分解机制见 Bang-Jensen–Gutin，*Digraphs: Theory, Algorithms and Applications*，2007年8月15日稿，定理6.8.1（第318页）。下文直接给出含自环、平行副本的状态对应。
+

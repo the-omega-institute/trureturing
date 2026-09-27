@@ -1,0 +1,66 @@
+**（一）联合紧性与上半连续性。** 对每个 $m\le n$，集合
+
+$$
+\mathfrak G_m=\{(\theta,\rho,Z):\theta\in\Theta,\ \rho\in\mathcal D,\ Z\in\mathcal K_m(\theta,\rho)\}
+$$
+
+是紧集且每个 $(\theta,\rho)$ 的纤维非空；根集合
+
+$$
+\mathfrak A_n=\{(\theta,T):T\in\mathcal A_n(\theta)\}
+$$
+
+也是紧集。$p_n(\theta)$ 和 $\eta_n(\delta,\theta)$ 的最大值均由允许的有限协议取得，分支数可取各 $B_a$。函数 $p_n:\Theta\to[0,1]$ 上半连续。逐点地，定理 422.1 给出的固定源结论仍有
+
+$$
+\eta_n(0,\theta)=p_n(\theta),
+\qquad
+\lim_{\delta\downarrow0}\eta_n(\delta,\theta)=p_n(\theta).
+$$
+
+证明。深度零时，$\Theta\times\mathcal D\times\mathcal U(d)$ 是紧集，映射
+
+$$
+(\theta,\rho,U)\longmapsto
+ C(\operatorname{Ad}_U\circ\Phi_{(\theta,\otimes_a\rho_a)})
+$$
+
+连续；再并入恒为零的图，得到紧的 $\mathfrak G_0$。由于
+
+$$
+\operatorname{Tr}C(\operatorname{Ad}_U\circ\Phi_{(\theta,\otimes_a\rho_a)})
+=\sum_i\langle q_i(\theta)|\otimes_a\rho_a|q_i(\theta)\rangle\le d,
+$$
+
+因每个密度矩阵的算子范数至多一，所以上述迹界成立；完全正性给出 Choi 矩阵非负，故非零部分确实落在 $\mathcal H$ 中。凸权重和保留正性及迹界，所以每层递归仍落在同一个 $\mathcal H$ 中。
+
+假设 $\mathfrak G_m$ 紧。固定持有者 $a$，考虑紧集
+
+$$
+\Theta\times\mathcal D\times\Delta_{B_a}
+ \times(\mathcal D_a\times\mathcal H)^{B_a},
+$$
+
+并以有限个闭条件
+
+$$
+\sum_j\lambda_j\sigma_j=\rho_a,
+\qquad
+(\theta,\rho[a\leftarrow\sigma_j],Z_j)\in\mathfrak G_m
+$$
+
+截取其子集，再用连续映射 $(\lambda_j,Z_j)_j\mapsto\sum_j\lambda_jZ_j$。零权重和奇异密度均被闭条件保留，所以每个 $\mathfrak G_{m+1}^a$ 紧；有限持有者并集仍紧，且每个纤维非空：取 $\lambda_1=1$、$\sigma_j=\rho_a$、全部 $Z_j=0$ 即得零元，其余权重为零。归纳至 $n$，再限制 $\rho=\rho_\star$ 并乘以 $D_R$，再通过 Choi 线性同构的连续逆得到紧的 $\mathfrak A_n$。对于任意线性映射 $F$ 和有限参考矩阵 $X=\sum_{i,j}X_{ij}\otimes E_{ij}$，块压缩给出 $\|X_{ij}\|_1\le\|X\|_1$，因而
+
+$$
+\begin{aligned}
+\|(\operatorname{id}\otimes F)(X)\|_1
+&\le\sum_{i,j}\|X_{ij}\otimes F(E_{ij})\|_1\\
+&=\sum_{i,j}\|X_{ij}\|_1\|F(E_{ij})\|_1\\
+&\le\|X\|_1\sum_{i,j}\|F(E_{ij})\|_1.
+\end{aligned}
+$$
+
+这一定理 422.1 中使用的 Choi 坐标连续性估计说明 Choi 坐标收敛蕴含钻石范数收敛，其界对全部参考维数一致。因而在 $\mathfrak A_n\times[0,1]$ 上施加 $T=p\operatorname{id}$，或固定 $\delta$ 后施加 $T^*(I)=pI$ 及 $\|T-p\operatorname{id}\|_\diamond\le\delta p$，均得到含 $(0,0)$ 的非空紧可行集，两个最大值都取得。再由定理 422.1 的反向实现，每个最大化映射由同深度的允许有限树实现，持有者 $a$ 的每个节点至多有 $B_a$ 个实际结果。
+
+取任意 $\theta_j\to\theta$，并令 $p_j=p_n(\theta_j)$。先取子列使 $p_j\to\bar p=\limsup_jp_n(\theta_j)$，再由根图紧性，从相应最大化映射中取进一步子列 $(\theta_j,T_j)\to(\theta,T)$。闭图给出 $T=\bar p\operatorname{id}\in\mathcal A_n(\theta)$，故 $\bar p\le p_n(\theta)$。这正是上半连续性。最后两条逐点等式和极限直接应用定理 422.1 的固定源结论。证毕。
+

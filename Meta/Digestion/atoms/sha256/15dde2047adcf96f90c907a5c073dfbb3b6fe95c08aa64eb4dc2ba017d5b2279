@@ -1,0 +1,59 @@
+### 269.7 精确共同边缘下的匹配误差阶
+
+两个对角块之和始终为 $I_n$。因此（269.54）给出的 $\Omega_h$ 是正定密度态，且
+$$
+\rho_h=\frac1nI_n=\rho_*,
+\qquad
+K_h=(1-\delta_h)\frac1nZ.
+\tag{269.55}
+$$
+完整数据误差精确为
+$$
+\boxed{
+\varepsilon_h
+=\|\rho_h-\rho_*\|_1+\|K_h-K_*\|_1
+=\frac{k\|Z\|_1}{n}h^{2n}.
+}
+\tag{269.56}
+$$
+$Z=2QM$ 可逆，因此该系数严格正。
+
+取算子范数为一的Hermitian可观测量
+$$
+B_{\mathrm{test}}=\operatorname{diag}(E_{nn},-E_{nn}).
+\tag{269.57}
+$$
+由 $(D_h)_{nn}=sh$，
+$$
+\operatorname{Tr}\bigl(B_{\mathrm{test}}(\Omega_h-\Omega_*)\bigr)
+=\frac2n(D_h)_{nn}=\frac{2s}{n}h.
+\tag{269.58}
+$$
+迹范数对偶性给态差下界
+$$
+\|\Omega_h-\Omega_*\|_1\ge\frac{2s}{n}h.
+\tag{269.59}
+$$
+
+对 $0<h\le h_0\le1$，$\|S_h\|=1$，故
+$\|D_h\|_1\le h\|C\|_1$。非对角扰动的迹范数为
+$\delta_h\|Z\|_1/n$，从而
+$$
+\begin{aligned}
+\|\Omega_h-\Omega_*\|_1
+&\le\frac2n\|D_h\|_1+\frac{\delta_h}{n}\|Z\|_1\\
+&\le\frac{2\|C\|_1+k\|Z\|_1}{n}h.
+\end{aligned}
+\tag{269.60}
+$$
+合并得到
+$$
+\boxed{
+\|\Omega_h-\Omega_*\|_1=\Theta(h),
+\qquad
+\varepsilon_h=\Theta(h^{2n}).
+}
+\tag{269.61}
+$$
+上下界常数对应同一个固定 $(n,t,Q)$，且 $\Omega_h\to\Omega_*$。真值秩为 $n$，竞争态严格正、秩为 $2n$；证明保留了这一支撑变化。
+

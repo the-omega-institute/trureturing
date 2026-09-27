@@ -1,0 +1,39 @@
+### 236.1 目标、预算与精确平台
+
+固定输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$、$m\ge d$，以及 $N$ 个指定经典标签。各标签固定一个单位输出 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j.
+\tag{236.MP.1}
+$$
+这些输出向量不必互相正交，可以相同。
+
+候选遍历同接口全部 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\sum_{a=1}^{k_j}C_{j,a}XC_{j,a}^\dagger,
+\qquad \sum_{j,a}C_{j,a}^\dagger C_{j,a}=I_d.
+\tag{236.MP.2}
+$$
+各分支采用最小 Kraus 表示，故总容量
+$$
+K(\mathcal S)=\sum_jk_j=\operatorname{rank}J_{\mathcal S}.
+\tag{236.MP.3}
+$$
+允许零分支和任意量子输出方向，保留经典记录块结构。对整数 $R\ge1$，定义
+$$
+D_R=\inf_{K(\mathcal S)\le R}\frac12\|\mathcal R-\mathcal S\|_\diamond.
+\tag{236.MP.4}
+$$
+该误差包括全部记录、量子输出及任意外部参考。$m\ge d$ 允许将一个等距通道放入单标签，从而保证每个上述候选集非空。
+
+主定理固定
+$$
+N\ge3,\qquad d\ge N-1,
+\qquad
+R_0=(N-1)d-\left\lfloor\frac d{N-1}\right\rfloor
+=\left\lceil\frac{N(N-2)d}{N-1}\right\rceil.
+\tag{236.MP.5}
+$$
+两种写法相同，因为 $N(N-2)=(N-1)^2-1$。
+

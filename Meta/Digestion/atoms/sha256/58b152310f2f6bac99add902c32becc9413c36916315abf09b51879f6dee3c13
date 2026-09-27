@@ -1,0 +1,26 @@
+**定理 216.3（物理风险与数据置信度的双层结论）。** 对任意数据集，令
+
+$$
+\widehat R^+_\delta
+=
+\sum_i\overline\beta_i\,\overline\alpha_i
++\overline\alpha_\infty
+$$
+
+则
+
+$$
+\boxed{
+\Pr_{\mathrm{data}}
+\left\{
+R^\pi_{\mathrm{worst}}\le\widehat R^+_\delta
+\right\}
+\ge1-\delta.
+}
+\tag{216.2}
+$$
+
+这不等于对未来事件说“以概率 $1-\delta$ 安全”；未来风险的量词仍由 $R^\pi_{\mathrm{worst}}$ 的定义给出。
+
+若实际数据给出 $\widehat R^+_\delta\le\alpha$，则同一置信事件进一步给出 $R^\pi_{\mathrm{worst}}\le\alpha$。
+

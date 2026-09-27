@@ -1,0 +1,6 @@
+**引理55.3（排除 AAAB）。** 不可能存在单位向量 $A\in F$、$B\not\parallel A$，使
+$$
+\eta_3=\eta_4=\eta_5=A,\qquad\eta_6=B.
+$$
+这一排除只使用 $A\in F$ 及 $B\not\parallel A$，不使用 $A\perp B$。
+

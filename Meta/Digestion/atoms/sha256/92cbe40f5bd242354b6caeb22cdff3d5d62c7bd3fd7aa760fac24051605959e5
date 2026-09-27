@@ -1,0 +1,12 @@
+**引理252.2（核内定量注入）。** 任意 Hermitian 算子 $T=\Pi T\Pi$ 满足
+$$
+\boxed{
+\|T\|_1
+\le\frac{k^2}{\sqrt B}
+\bigl(\|\mathcal R_a(T)\|_1+\|\mathcal R_b(T)\|_1\bigr)
+\le\frac{25}{\sqrt B}
+\bigl(\|\mathcal R_a(T)\|_1+\|\mathcal R_b(T)\|_1\bigr).
+}
+\tag{252.20}
+$$
+

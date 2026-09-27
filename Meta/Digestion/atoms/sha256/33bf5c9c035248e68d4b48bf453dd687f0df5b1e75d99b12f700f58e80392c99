@@ -1,0 +1,37 @@
+**证明。** 逐点使用 Frobenius Cauchy–Schwarz 与 $2ab\le a^2+b^2$：
+
+$$
+\left|\operatorname{tr}i(N_1^\dagger N_2-N_2^\dagger N_1)\right|
+\le2\|N_1\|_F\|N_2\|_F
+\le\|N_1\|_F^2+\|N_2\|_F^2.
+$$
+
+由曲率分解积分并使用三角不等式。∎
+
+环境平直时，$\mathscr B=0$，得到 $\mathscr E_N\ge2\pi|C_1|$。这一平直形式与已有量子度量拓扑界相容。[ST19-MO] 非平直环境中若漏掉 $\mathscr B$，结论一般错误，ST25给出等式见证。
+
+### 推论 ST24.3：无跃迁生成元的面积积分界
+
+定义每个单位参数方向上的法向控制生成元
+
+$$
+H_{{\rm cd},a}=i\hbar[\nabla_{e_a}P,P].
+$$
+
+则
+
+$$
+\sum_a\|H_{{\rm cd},a}\|_F^2
+=2\hbar^2\sum_a\|N_a\|_F^2,
+$$
+
+从而
+
+$$
+\boxed{
+\mathscr C_2:=\int_\Sigma\sum_a\|H_{{\rm cd},a}\|_F^2dA
+\ge2\hbar^2|2\pi C_1(E)-\mathscr B|.
+}
+\tag{ST24.2}
+$$
+

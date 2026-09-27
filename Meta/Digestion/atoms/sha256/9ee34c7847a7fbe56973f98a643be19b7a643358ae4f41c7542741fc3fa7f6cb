@@ -1,0 +1,8 @@
+**定理 4.2（严格层级下吸收全局最优，literature-attested 的二原子先例见第 7 章；本卷对任意原子数重证）。** 数据支撑于 $\{0,u,u+v\}$，$p_A,p_{AB}>0$，$0<\lambda<1$。则在所有单位范数字典（任意原子数）上
+$$
+\min_D\mathcal J(D)=p_A\big(\lambda-\tfrac12\lambda^2\big)+p_{AB}\big(\sqrt2\lambda-\tfrac12\lambda^2\big),
+$$
+极小点集恰为同时含原子 $u$ 与 $w$ 的字典；在每个极小点上 $x=u+v$ 的最优码只落在与 $w$ 相等的原子上。忠实字典 $D_F=[u,v]$ 严格次优，差额恰为 $p_{AB}\lambda(2-\sqrt2-\lambda/2)>0$。
+
+证明。对每个数据点用引理 4.1：$\|u\|=1$、$\|u+v\|=\sqrt2$，下界之和即右端，等号当且仅当两原子都在，且等号情形的码只用对齐原子。对 $D_F$，原子正交，$\operatorname{cost}(u+v;D_F)=\min_{c\ge0}\tfrac12[(1-c_1)^2+(1-c_2)^2]+\lambda(c_1+c_2)$ 按坐标分离，各在 $1-\lambda$ 取到 $\lambda-\tfrac12\lambda^2$，合计 $2\lambda-\lambda^2$；减去 $\sqrt2\lambda-\tfrac12\lambda^2$ 得 $\lambda(2-\sqrt2-\lambda/2)$，因 $2-\sqrt2>\tfrac12$ 而对 $\lambda<1$ 为正。证毕。
+

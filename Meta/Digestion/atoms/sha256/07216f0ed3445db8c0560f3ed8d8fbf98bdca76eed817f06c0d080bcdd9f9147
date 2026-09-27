@@ -1,0 +1,25 @@
+**命题 473.1（保留记录的二元预算公式）。** 设 $\eta\ge0$，并置
+
+$$
+\beta=(r/2-e)_+,\qquad\kappa=r(1/2-e),\qquad z_+=\max(0,z).
+$$
+
+存在满足 $m(T)\le\eta$ 的生成器，当且仅当 $\eta\ge\beta$。在可行时，
+
+$$
+\min_{T:\,m(T)\le\eta}j(T)
+=\kappa+(\kappa-\eta)_+.
+$$
+
+证明：先取 $r<1$。第 472 节允许对称化，并将可行性化为在规定的 $t$ 区间内满足 $|t+\kappa|\le\eta$。这个区间平移 $\kappa$ 后就是 $[r/2-e,\,1-r/2-e]$，右端非负，因此其与零的最短距离是 $\beta$。这给出必要且充分的预算条件，也说明 $\beta\le\kappa$。
+
+任意可行 $t$ 都满足 $|t|\ge\kappa-\eta$，再结合 $|t|\ge0$，得到 $j\ge\kappa+(\kappa-\eta)_+$。若 $\eta\ge\kappa$，选 $a=e$，即 $t=0$，达到 $m=j=\kappa$。若 $\beta\le\eta<\kappa$，选
+
+$$
+a=\frac{e-r/2+\eta}{1-r}.
+$$
+
+可行条件保证分子非负，$\eta<\kappa$ 又保证 $a<e\le1/2$，故这是合法的随机生成器。它给出 $t=\eta-\kappa$，于是 $m=\eta$、$j=2\kappa-\eta$，达到下界。
+
+若 $r=1$，旧记录恒为 $\star$，保留的联合距离就是新增边缘距离。任意不依赖状态的位分布，在两个状态下的最大 TV 至少为 $1/2-e$，公平位达到该值。因此可行当且仅当 $\eta\ge\kappa=\beta$，最优值为 $\kappa$，同样符合公式。$r=0$ 或 $e=1/2$ 时 $\kappa=\beta=0$，直接使用相应精确生成器即可；不需要除以零。证毕。
+

@@ -1,0 +1,82 @@
+### 208.1 两个谱切换点与完整目标
+
+固定 $\beta>0,\gamma>0,R>1$，置
+
+$$
+D=\beta^2+\gamma^2,\qquad \delta=R-1,\qquad s=\sqrt R,
+\qquad 0<\epsilon<\frac{\beta}{RD}.
+\tag{208.1}
+$$
+
+来源取第187节的 $\ell=0$，不可访问记忆固定为 $|0\rangle_M$。
+正旗标下的两个接收态为
+
+$$
+\rho_j=P_0+c_j\epsilon(-\beta Z+\gamma Y),
+\qquad c_0=1,\quad c_1=R.
+\tag{208.2}
+$$
+
+两态在（208.1）内严格正定；负旗标态为其 $Z$ 共轭。
+共同接收端权限、原输入全部外部参考及目标均与第187节一致。
+记其最优半 diamond 误差为 $\mathscr E(0,\epsilon)$。
+
+对同一个效果 $0\preceq F\preceq I$，置
+
+$$
+a_0=\operatorname{Tr}(F\rho_0),\qquad
+ a_1=\operatorname{Tr}[(I-F)\rho_1].
+$$
+
+定理187.1直接给
+
+$$
+\begin{gathered}
+\mathscr E(0,\epsilon)=1-\max_F\frac{a_0a_1}{a_0+a_1}
+=1-\min_{0\le q\le1}g(q),\\
+g(q)=(1-q)^2+\operatorname{Tr}C(q)_+
+=\frac{q^2+(1-q)^2+\|C(q)\|_1}{2},\\
+C(q)=q^2\rho_0-(1-q)^2\rho_1.
+\end{gathered}
+\tag{208.3}
+$$
+
+这里 $q$ 是完整参考优化的权重。
+最终构造仍先测量、写入输出标签并重制备目标纯态，
+不是把实际未知输入预先当作可访问标签。
+
+置
+
+$$
+A=\frac{\beta^2}{D},\qquad
+u=A-\beta\epsilon,\qquad w=A-\beta R\epsilon,
+\qquad r=\sqrt{\frac{u}{w}}>1,
+\qquad
+q_L=\frac1{1+r},\quad q_U=\frac{s}{1+s}.
+\tag{208.4}
+$$
+
+有 $u>w>0$ 及 $q_L<1/2<q_U$。
+直接计算广义特征式：
+
+$$
+\det(\rho_0-z\rho_1)
+=\epsilon(1-Rz)[\beta(1-z)-D\epsilon(1-Rz)].
+\tag{208.5}
+$$
+
+两个广义本征值是 $1/R$ 与 $r^2$。
+将 $z=(1-q)^2/q^2$ 代入，并利用 $\rho_1\succ0$，得到
+
+$$
+\begin{cases}
+C(q)\preceq0,&0\le q\le q_L,\\
+C(q)\text{ 有一正一负两个本征值},&q_L<q<q_U,\\
+C(q)\succeq0,&q_U\le q\le1.
+\end{cases}
+\tag{208.6}
+$$
+
+因此 $g(q)=(1-q)^2$ 在左区间严格下降，
+$g(q)=q^2$ 在右区间严格上升。
+

@@ -1,0 +1,28 @@
+**证明。** 令 $P_0$ 为有效输出中记录 $(0,-1)$ 与参考 $e_1$ 上的一维投影。由（277.10）、（277.19），
+$$
+\operatorname{Tr}(P_0\sigma_{0,*})=0,
+\qquad
+\operatorname{Tr}(P_0\sigma_{0,h})=\frac{\delta}{4n}.
+\tag{277.22}
+$$
+逐份读实际记录，并在该记录中测量参考投影。若有任一次点击则判 $h$，否则判 $*$。该方案的等先验平均错误为
+$$
+P_{\rm err}=\frac12\left(1-\frac{\delta}{4n}\right)^N
+\le\frac12\exp\left(-\frac{N\delta}{4n}\right).
+\tag{277.23}
+$$
+于是（277.21）的整数上界足够。
+
+另一方面，直和核范数可加，式（277.10）给精确单次半迹距离
+$$
+d(\sigma_{0,h},\sigma_{0,*})=C_n\delta.
+\tag{277.24}
+$$
+$\|H_w(0)\|_1\le n$ 给 $C_n\le1/2$；$H_0(0)e_1=e_1$ 给 $C_n>0$。对张量幂作逐项差分，并用密度态核范数一，得到
+$$
+d(\sigma_{0,h}^{\otimes N},\sigma_{0,*}^{\otimes N})
+\le NC_n\delta.
+\tag{277.25}
+$$
+Holevo–Helstrom公式使平均错误不超过 $1/3$ 必须满足左侧至少为 $1/3$，故给（277.21）的下界。它适用于任意集体POVM。$\square$
+

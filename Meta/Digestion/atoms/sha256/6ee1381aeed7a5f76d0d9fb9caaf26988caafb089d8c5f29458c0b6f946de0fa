@@ -1,0 +1,75 @@
+### 264.5 保持全部响应不变的匹配阶下界
+
+现在取参考空间 $\mathbb C^2$，并设
+$$
+0<p<\frac12,\qquad q=1-p,\qquad
+\psi_p=\sqrt p\,|y_+\rangle\otimes e_0
++\sqrt q\,|y_-\rangle\otimes e_1.
+\tag{264.35}
+$$
+理想边缘为 $\rho_p=\operatorname{diag}(p,q)$，且
+$$
+K_{P_{\psi_p}}=2\sqrt{pq}\,|e_0\rangle\langle e_1|.
+\tag{264.36}
+$$
+选取
+$$
+0<t<q-p,\qquad
+\delta=\frac{pt}{q-t}.
+\tag{264.37}
+$$
+在有序基 $(|y_+e_0\rangle,|y_+e_1\rangle,
+|y_-e_0\rangle,|y_-e_1\rangle)$ 中，定义
+$$
+\Xi_{p,t}=
+\begin{pmatrix}
+p+\delta&0&0&\sqrt{pq}\\
+0&t-\delta&0&0\\
+0&0&0&0\\
+\sqrt{pq}&0&0&q-t
+\end{pmatrix}.
+\tag{264.38}
+$$
+这是合法密度态。确实，其迹为一；原有的二维相干块具有正对角元且
+$$
+(p+\delta)(q-t)-pq
+=\delta(q-t)-pt=0.
+\tag{264.39}
+$$
+该块正半定。余下权重满足
+$$
+t-\delta
+=\frac{t(q-p-t)}{q-t}>0.
+\tag{264.40}
+$$
+因此整个矩阵正半定。
+
+与理想纯源相减后，所有非对角项相消：
+$$
+\Xi_{p,t}-P_{\psi_p}
+=\operatorname{diag}(\delta,t-\delta,0,-t).
+\tag{264.41}
+$$
+故
+$$
+\|\Xi_{p,t}-P_{\psi_p}\|_1=2t,
+\qquad
+\Delta K=0,
+\qquad
+\Delta\rho=\operatorname{diag}(\delta,-\delta).
+\tag{264.42}
+$$
+完整数据误差为 $\varepsilon=2\delta$，于是
+$$
+\boxed{
+\frac{\|\Xi_{p,t}-P_{\psi_p}\|_1}
+{\|\Delta\rho\|_1+\|\Delta K\|_1}
+=\frac{t}{\delta}
+=\frac{q-t}{p}
+\xrightarrow[t\downarrow0]{}
+\frac{1-p}{p}.
+}
+\tag{264.43}
+$$
+这个下界来自趋近同一固定理想源的任意小竞争扰动，不需要在比较对内把源换掉。它保持 $K$ 精确，因此在既有可信坐标转换下也保持两条完整响应精确；误差只来自参考边缘。
+

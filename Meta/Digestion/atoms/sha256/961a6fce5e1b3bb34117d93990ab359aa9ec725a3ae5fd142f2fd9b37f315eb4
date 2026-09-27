@@ -1,0 +1,28 @@
+**定义33.1（相干长度来源与完整联合恢复）。**
+
+固定有限 $m$ 态 primitive 行随机矩阵 $P$，其支持图有 $s$ 条边。每条支持边有独立相位，$\theta\in\mathbb T^s$。将第31节的完整边标签累计等距作固定张量因子重排，把活动记忆写在前方，记为
+$$
+T_{\theta,n}:M\longrightarrow M\otimes B^{\otimes n}.
+$$
+取整数 $N\ge1$、$1\le W\le N+1$，置
+$$
+\mathcal I_{N,W}=\{N,\ldots,N+W-1\},\qquad
+\mathcal A_{N,W}=\bigoplus_{n\in\mathcal I_{N,W}}B^{\otimes n}.
+$$
+令 $\iota_n$ 为长度层的等距嵌入，定义新的相干来源
+$$
+\mathcal T_{\theta;N,W}
+=\frac1{\sqrt W}\sum_{n\in\mathcal I_{N,W}}
+(I_M\otimes\iota_n)T_{\theta,n}.
+\tag{33.1}
+$$
+各长度层正交，所以 $\mathcal T_{\theta;N,W}^*\mathcal T_{\theta;N,W}=I_M$。式 （33.1） 是等距叠加，输出保留不同长度之间的相干项。长度标签属于待恢复档案 $\mathcal A_{N,W}$，不是免费经典旁信息。
+
+初始 $M$ 输入任意，允许与任意不可访问参考纠缠。编码 $\mathcal E:\mathcal L(\mathcal A_{N,W})\to\mathcal L(K)$ 和解码 $\mathcal D:\mathcal L(K)\to\mathcal L(\mathcal A_{N,W})$ 只作用于档案或接收寄存器，不访问参考、活动记忆。它们共同固定，不能依赖实际 $\theta$，但可依赖已知 $P,N,W,\epsilon$。记完整联合恢复半迹误差至多 $\epsilon$ 所需的最小 $\dim K$ 为 $k_{N,W}^{\epsilon,\mathrm{coh}}$。
+
+令 $D$ 为支持图关联矩阵、$A=[D;\mathbf1^T]$，并置
+$$
+r=s-m=\dim\ker_{\mathbb R}A.
+$$
+这里支持图来自行随机矩阵，非空；primitive 性保证所用的强连通与统一长度结论。
+

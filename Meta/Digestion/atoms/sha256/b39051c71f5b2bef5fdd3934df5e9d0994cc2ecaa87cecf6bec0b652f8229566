@@ -1,0 +1,55 @@
+### 198.2 冻结 instrument 的统一一阶导数
+
+先作第189节不增误差的输出标签与旗标对称化。以正旗标上的共同二结果 CP 映射
+$\Gamma=(\Gamma_0,\Gamma_1)$ 为变量，负旗标按
+$\Gamma_{j,-}=\operatorname{Ad}_Z\circ\Gamma_j\circ\operatorname{Ad}_Z$ 定义。
+其共同 Choi 约束形成固定紧集
+
+$$
+\mathcal K=\{(J_0,J_1):J_j\succeq0,\
+\operatorname{Tr}_{\mathrm{out}}(J_0+J_1)=I\}.
+$$
+
+在正旗标 Kraus 表示
+$K_{j,\alpha}=\begin{psmallmatrix}a&b\\c&d\end{psmallmatrix}$
+中，保持第189节的 Choi 矩记号
+
+$$
+A_j=\sum|a|^2,\quad B_j=\sum|b|^2,\quad
+C_j=\sum|c|^2,\quad D_j=\sum|d|^2,\quad
+N_j=\sum a\overline b,\quad M_j=\sum a\overline d.
+$$
+
+这些量不依赖 Kraus 表示。令
+$e_\epsilon(h,\Gamma)$ 为这一冻结 instrument 的完整半 diamond 误差。
+在 $A_0,A_1$ 的一个固定小邻域 $A_j\approx1/2$ 中，定义
+
+$$
+s_A=A_0+A_1,\qquad
+q=\frac{A_1}{s_A},\qquad
+\lambda=1-\frac{A_0A_1}{s_A},
+$$
+
+$$
+L_j=c_j^{\mathrm{in}}
+[\beta(B_j-A_j)+2\gamma\operatorname{Im}N_j],
+\qquad c_0^{\mathrm{in}}=1,\quad c_1^{\mathrm{in}}=R.
+$$
+
+置
+
+$$
+\mathcal N(\Gamma)=-q^2L_0-(1-q)^2L_1,
+$$
+
+$$
+\boxed{
+\mathcal P(\Gamma)
+=-\lambda+
+\frac{
+q|1-qM_0|^2+(1-q)|1-(1-q)M_1|^2
+}{\lambda}.
+}
+\tag{198.3}
+$$
+

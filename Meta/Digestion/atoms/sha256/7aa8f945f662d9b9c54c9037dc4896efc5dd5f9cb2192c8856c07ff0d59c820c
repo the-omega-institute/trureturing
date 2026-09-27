@@ -1,0 +1,16 @@
+**定义 23.1（保留实际中心的二阶尺度）。** 沿用定义 21.1 的两个实际平稳实验、
+固定参数 $`r\in(0,1)`$、$`\beta\in(1/2,1)`$、整数基数
+$`q=M^{1-\beta+o(1)}`$ 与四种极小极大风险。假设 $`c_M\to c\in\mathbb R`$，置
+
+```math
+z_M=\frac{\tau_M-\lambda\phi}{\sqrt{\lambda v}},\qquad
+\varphi(z)=\frac{e^{-z^2/2}}{\sqrt{2\pi}},\qquad
+z_*=-\frac{c\phi}{\sqrt{V_A}}.
+```
+
+式 (23.1)。
+
+于是 $`\lambda\sim\alpha_A\ell`$、$`z_M\to z_*`$。
+这里保留实际的 $`\tau_M=\log(M/q)`$ 与 $`\lambda=s/n`$；
+只用一阶等价式替换它们，不保证保留下述余项精度。
+

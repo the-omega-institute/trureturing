@@ -1,0 +1,40 @@
+### 191.3 Rayleigh 修正的定量形式
+
+在（189.10）取 $q=F_1/s$，上块最高单位向量为 $u_q$，最高根为（191.4）的 $\lambda$。其满足 $\lambda=3/4+O(\epsilon)$；同时
+$|q-1/2|=|d|/(2s)$。记非对角大块为 $B$。由（189.9）及有界 $h$，
+
+$$
+T_j=M_j+O(\epsilon),\qquad
+\frac{\|B^\dagger u_q\|^2}{\lambda}
+=\epsilon\frac{2h}{3}\sum_{j=0}^1
+\left|1-\frac{M_j}{2}\right|^2
++O\bigl(\epsilon|d|+\epsilon^2\bigr).
+\tag{191.6}
+$$
+
+所有余项均对当前 instrument 一致：左式除去 $r\ell=h\epsilon(1-h\epsilon)$ 后，是在 $q$、$T_j$、$\lambda$ 的固定紧邻域中的光滑有界函数；$q-1/2=O(|d|)$、$T_j-M_j=O(\epsilon)$、$\lambda-3/4=O(\epsilon)$ 分别给出所写误差。$h=0$ 时两侧的来源项都为零，仍满足相同界。
+
+（189.14）的 Rayleigh 商余项为 $O(\ell^2)=O(\epsilon^2)$。将（191.4）—（191.6）合并，并利用（191.5）展开 $L_0+L_1$，得到
+
+$$
+e\ge\frac34+\epsilon\mathcal G_h
++\frac{\mathfrak c}{8}+\frac{d^2}{16}
+-C\epsilon t-C\epsilon^2,
+\tag{191.7}
+$$
+
+其中当前 Choi 矩的函数为
+
+$$
+\begin{aligned}
+\mathcal G_h={}&\frac{7h}{12}+\frac{\beta(R+1)}8
+-\frac\beta4(B_0+RB_1)
++\frac{\gamma(R-1)}2\operatorname{Im}N_0\\
+&-\frac{2h}{3}\operatorname{Re}(M_0+M_1)
++\frac h6(|M_0|^2+|M_1|^2).
+\end{aligned}
+\tag{191.8}
+$$
+
+这里仍然使用当前 instrument 的矩，尚未取 Choi 极限。式（191.7）保留了泄漏和正确概率不平衡两项代价。
+

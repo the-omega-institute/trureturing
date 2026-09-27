@@ -1,0 +1,14 @@
+**维数二。** 编码完整保留二态寄存器 $I$，丢弃 $J,C$；解码准备
+$I_J/2\otimes\operatorname{diag}b$。任意 $\rho_{RI}$ 都原样保留，目标与恢复态分别是
+
+$$
+\rho_{RI}\otimes|\Phi_\theta\rangle\langle\Phi_\theta|_{MJ}
+\otimes|\psi^a_\theta\rangle\langle\psi^a_\theta|_C,
+\qquad
+\rho_{RI}\otimes\frac{I_{MJ}}4\otimes\operatorname{diag}b.
+\tag{49.29}
+$$
+
+张量相同的密度矩阵 $\rho_{RI}$ 不改变半迹距离。在 $MJ$ 的目标 Bell 方向上，差算子为
+$|\psi^a_\theta\rangle\langle\psi^a_\theta|-(1/4)\operatorname{diag}b$；其余三个端点方向均给非正块。因此引理49.2给误差恰为 $e_2$，对每个相位、每个来源初态和参考都成立。
+

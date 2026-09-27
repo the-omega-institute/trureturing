@@ -1,0 +1,23 @@
+**定理 247.1（最优取等强制正交参考旗标）。** 对任意 $\Omega\in\mathcal C_\theta$，它的每个有限最优纯态分解都只含取得 $D$ 的最大纠缠分量与取得 $U$ 的产品分量，两类总权重为 $\theta$ 与 $1-\theta$，且两类分量的参考支撑相互正交。
+
+具体地，对所选最优分解令
+$$
+E_{\mathrm{ent}}=\sum_{j\in J_1}L_j,
+\qquad
+E_{\mathrm{prod}}=\operatorname{span}\{z_k:k\in J_0\}.
+\tag{247.30}
+$$
+则 $E_{\mathrm{ent}}\perp E_{\mathrm{prod}}$，整个联合态具有真正的参考正交分块
+$$
+\boxed{
+\Omega=\theta\Omega_{\mathrm{ent}}
+\oplus(1-\theta)\Omega_{\mathrm{prod}}.
+}
+\tag{247.31}
+$$
+这里两项均归一化，分别是上述最大纠缠纯分量与产品纯分量的混合，位于 $H\otimes E_{\mathrm{ent}}$、$H\otimes E_{\mathrm{prod}}$。
+
+**证明。** 端点分量与权重由（247.10）—（247.12）给出。全部参考支撑的正交性由（247.29）给出；按两组分量求和，即为（247.31）。有限最优分解原本任意，故结论对每个这样的分解成立。$\square$
+
+在参考上投影读取这两个子空间，不改变未条件化的联合态，并以概率 $\theta$、$1-\theta$ 报告所属块。因此可读取旗标由响应取等条件推出，没有把分解的抽象标签预先当作免费经典记录。
+

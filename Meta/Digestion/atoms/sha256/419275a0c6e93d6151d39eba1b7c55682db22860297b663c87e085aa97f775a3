@@ -1,0 +1,32 @@
+### 58.2 两个全域位像同时饱和
+
+式（58.1）、（58.5）、（58.8）现在饱和两个七维位像：
+$$
+V_0K=(A_0\otimes F)+(R\otimes\eta),\qquad
+V_1K=(B_0\otimes F)+(W\otimes\eta).
+\tag{58.9}
+$$
+两项都是代数直和；未声称它们在同一个位像内正交。
+
+由于 $V_0K\perp V_1K$，有 $A_0\perp B_0$、$R\perp W$。式（58.4）的非零环境交叠还给
+$$
+A_0\perp W,\qquad R\perp B_0.
+$$
+所以接收子空间
+$$
+L_0=A_0+R,\qquad L_1=B_0+W
+$$
+满足
+$$
+L_0\perp L_1,\qquad
+V_0K\subseteq L_0\otimes E,\qquad
+V_1K\subseteq L_1\otimes E.
+\tag{58.10}
+$$
+$W$ 三维使 $\dim L_1\ge3$，故
+$$
+\dim L_0\le4.
+\tag{58.11}
+$$
+这些已经是整个固定通道的位像约束，不只对后面三个纯终端成立。
+

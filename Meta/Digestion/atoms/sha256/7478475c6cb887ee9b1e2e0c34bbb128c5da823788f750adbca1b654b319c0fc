@@ -1,0 +1,144 @@
+**定理 79.4（典型输出的残差与信息条件 CDF）。** 令 $N$ 为用于描述目标核的标准正态，
+$a_0(y)=c+y^2/(2\nu)$，并定义可测距离
+
+$$
+\begin{aligned}
+D_M^G(x,y)&=\sup_{z\in\mathbb Q}
+ \left|\Pr_x(G\le z\mid Y=y)-\Phi(z)\right|,\\
+D_M^H(x,y)&=\sup_{z\in\mathbb Q}
+ \left|\Pr_x(H_M\le z\mid Y=y)
+            -\Pr\{a_0(y)-N^2/2\le z\}\right|.
+\end{aligned}
+\tag{79.13}
+$$
+
+则在相同一致原数据概率意义下，
+
+$$
+\int D_M^G(x,y)f_x(y)dy\longrightarrow0,\qquad
+\int D_M^H(x,y)f_x(y)dy\longrightarrow0.
+\tag{79.14}
+$$
+
+证明。输出边缘密度收敛不足以证明此式，需要保留计数向量与参考标量的联合关系。
+取第 77 章同一分位耦合中的完整乘积向量 $R$、精确非中心 Gaussian 标量
+$T^{\rm G}$ 和独立测量正态 $G_0$。设 $\mathsf B_x$ 是
+$(R,Y_g)$ 的联合律，其中 $Y_g=T^{\rm G}+\sigma_MG_0$。
+$T^{\rm G}$ 依赖构造该 $R$ 的分位随机数，不能另行独立抽取。
+记第 77 章的 $D_M(x)=\mathbb E|T-T^{\rm G}|$、
+$a_x=\|L_x-1\|_{L^2(\mathsf Q_x)}$，则完整向量变换及 Gaussian 平移界给
+
+$$
+\epsilon_x:=d_{\rm TV}(\mathcal L_x(R,Y),\mathsf B_x)
+ \le\tfrac12a_x+\frac{D_M(x)}{\sqrt{2\pi}\sigma_M}\longrightarrow0.
+\tag{79.15}
+$$
+
+TV 采用半 $L^1$ 约定。第一项仅改变完整计数律而保持精确通道，
+第二项条件于同一耦合后改变平滑标量。
+在两种联合律上使用相同可测映射 $h_x(n,y)=(y-t_x(n))/\sigma_M$。
+实际律下它恰为 $G$；参考律下为 $G_0+\Delta_x$，其中
+
+$$
+\Delta_x=(T^{\rm G}-t_x(R))/\sigma_M,\qquad
+\mathbb E_{\mathsf B_x}|\Delta_x|\le D_M(x)/\sigma_M.
+\tag{79.16}
+$$
+
+令 $g_x^0$ 为第 77 章的无噪声参考密度、$g_x=g_x^0*\varphi_{\sigma_M}$。
+参考 $(G_0,Y_g)$ 的密度为 $\varphi_1(u)g_x^0(y-\sigma_Mu)$。
+由于 $\varphi_\nu'\in L^1$，有
+
+$$
+\begin{aligned}
+\beta_x&:=d_{\rm TV}(\mathcal L_{\mathsf B_x}(G_0,Y_g),
+                         N(0,1)\otimes N(0,\nu))\\
+ &\le\tfrac12\|g_x^0-\varphi_\nu\|_1
+       +\tfrac12\sigma_M\mathbb E|G_0|\,\|\varphi_\nu'\|_1\longrightarrow0,\\
+\int g_x(y)d_{\rm TV}(\mathcal L_{\mathsf B_x}(G_0\mid Y_g=y),N(0,1))dy
+ &\le2\beta_x.
+\end{aligned}
+\tag{79.17}
+$$
+
+最后一式把联合律与其实际参考输出边缘的乘积作比较，边缘收缩再付一次 $\beta_x$。
+它尚未断言实际残差给定输出后正态。
+
+为明确条件核转移，记实际与参考有限计数／输出联合密度为 $p_n(y),b_n(y)$，
+边缘为严格正的 $f_x,g_x$。积分
+$|p_n-f_xb_n/g_x|\le|p_n-b_n|+|1-f_x/g_x|b_n$ 并求和得到
+
+$$
+\int f_x(y)d_{\rm TV}(P_x(R\in\cdot\mid y),
+                   \mathsf B_x(R\in\cdot\mid y))dy\le2\epsilon_x.
+\tag{79.18}
+$$
+
+逐输出经映射 $h_x$ 推前不增 TV；把 $[0,1]$ 值参考距离的输出积分从 $g_x$
+换到 $f_x$ 再至多付出 $\epsilon_x$。在 $|\Delta_x|\le b$ 上，
+残差 CDF 夹在 $G_0$ 的两个平移 CDF 之间；补集的平均概率至多 $D_M/(b\sigma_M)$。
+所以对每个固定 $b>0$，
+
+$$
+\int D_M^G(x,y)f_x(y)dy
+ \le3\epsilon_x+2\beta_x+\frac b{\sqrt{2\pi}}
+                         +\frac{D_M(x)}{b\sigma_M}.
+\tag{79.19}
+$$
+
+第 77 章已证 $D_M/\sigma_M^2\to0$，足以支付这里的位移项。
+先取原序列极限，再令 $b\downarrow0$，得 (79.14) 第一式。
+多项式后验密度误差没有除以噪声。
+
+精确恒等式 (79.6) 还给
+$H_M=a_x^{shift}(Y)-G^2/2$，其中
+$a_x^{shift}(y)=-\tfrac12\ln(2\pi)-\ln f_x(y)$，
+$a_x^{shift}(y)-a_0(y)=-\Lambda_x(y)$。
+若一个实随机变量的 CDF 距离 $\Phi$ 至多 $d$，其负半平方的 CDF 距离
+$-N^2/2$ 的 CDF 至多 $2d$：用对称区间的两个端点；有原子时取左极限。
+后者的统一连续模满足
+
+$$
+\omega_-(b)\le\min\{1,2\sqrt{b/\pi}\}.
+\tag{79.20}
+$$
+
+因为 $N^2/2$ 的一个长度 $b$ 区间的原像总长度至多 $2\sqrt{2b}$，
+再乘标准正态密度上界即可。故 (79.5) 给有限界
+
+$$
+\int D_M^H(x,y)f_x(y)dy
+ \le2\int D_M^G(x,y)f_x(y)dy
+    +\omega_-(b)+\frac{\|f_x-\varphi_\nu\|_1}{1-e^{-b}}.
+\tag{79.21}
+$$
+
+依次令 $M\to\infty$、$b\downarrow0$ 证明第二式。
+有限计数 Gaussian 混合核与有理 CDF 上确界保证可测性；右连续性使有理上确界等于实数上确界。
+给定数据后再用 Markov，得到先验预测输出中坏 CDF 距离的质量趋零。证毕。
+
+每个有限纤维、固定输出 $y$ 的实际残差只取有限个值
+$\{(y-t_x(n))/\sigma_M:n\in\mathcal F_x\}$。
+因此它与连续标准正态的 TV 距离恰为 $1$，与 (79.14) 的 CDF 结论并不矛盾。
+参考连续残差的 TV 比较和实际有限残差的 CDF 比较承担不同作用。
+
+本章信息矩结论均是纤维内积分作为原数据函数的收敛；未增加全原数据无界期望、
+实际指数矩收敛、任意 $T,Y$ 高阶混合矩或大偏差结论。
+输出条件结论使用 $f_x$，不等于已知固定真实支持下给定数据的单个 Gaussian 通道。
+对有界联合测试或典型输出失败事件，原支持置换的传递作用保持计数、标量与信息不变，
+可先在均匀先验上平均，再转为每个固定支持的无条件联合实验结论。
+这不把其给定数据条件律改为先验条件律。
+
+有限 Bayes 公式仍给第 77 章的
+$\int H_2(p_x(\cdot\mid y))f_x(y)dy=h_x-\mathbb E_xi_x/\ln2$。
+(79.7) 恢复平均信息的常数项，但典型输出的信息条件 CDF
+不自动给逐输出后验 Shannon 熵集中；后者还涉及原先验惊奇度给定输出的条件均值。
+精确 $h_x$ 不由其 $Q^5$ 主项代替。
+已知反向按原方式对齐；未知方向只在原共同判向相等事件上转移，失败概率只进入概率界。
+没有零噪声、$L_M\asymp Q^3$ 边界分类、计算效率或任意旧场的新增联合极限定理。
+
+乘积正态分布及 Gaussian 信息密度的这种表示是经典结果。
+本章新增连接是第 77 章的实际密度控制与同向量耦合如何同时支持
+原模型的信息联合律、全部固定信息矩及典型输出条件 CDF；
+不是一种新分布、通用连续性原则或全球原创性声明。
+

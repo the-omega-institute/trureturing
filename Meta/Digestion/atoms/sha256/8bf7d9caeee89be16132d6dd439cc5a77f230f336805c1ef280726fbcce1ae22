@@ -1,0 +1,73 @@
+## 6. 时钟评价的行列商与双侧恢复
+
+第5节的协议回拉可以用一个双侧评价核完全刻画。令
+
+$$
+E:X\times P\to L,
+$$
+
+并定义状态行与协议列
+
+$$
+R_x(p)=E(x,p),qquad C_p(x)=E(x,p).
+$$
+
+完整协议 signature 为
+
+$$
+\Sigma_E(x):P\to L,qquad \Sigma_E(x)(p)=E(x,p).
+$$
+
+仓内 `UnifiedObserverRepresentation.unified_observer_representation` 给出两个实际像判据。首先，
+
+$$
+X/\ker(\Sigma_E)
+$$
+
+在实际像上与 $\operatorname{im}(\Sigma_E)$ 唯一等价；其次，任意摘要 $r:X\to A$ 能恢复每个固定协议的时钟读出，当且仅当
+
+$$
+ r(x)=r(y)\Longrightarrow
+\forall p\in P,\quad E(x,p)=E(y,p).
+\tag{TM.466}
+$$
+
+等价地，$\ker(r)\subseteq\ker(\Sigma_E)$。所以“一个时钟摘要足以支持所有声明协议”不是看它是否包含某个标量，而是看它是否切开了完整协议行的所有差异。实际像上的因子是唯一的；名义陪域中不可达的读数不构成额外状态。
+
+若还要把另一接口 $(X',P',E')$ 证明为同一双侧时钟结构的改写，取状态映射 $f:X\to X'$、协议映射 $g:P\to P'$，并要求存在满射映射与评价因式分解
+
+$$
+E(x,p)=E'(f(x),g(p)).
+\tag{TM.467}
+$$
+
+若目标状态和目标协议分别由全部评价行、列分离，即
+
+$$
+\bigl(\forall p',,E'(x'_1,p')=E'(x'_2,p')\bigr)\Longrightarrow x'_1=x'_2,
+$$
+
+$$
+\bigl(\forall x',,E'(x',p'_1)=E'(x',p'_2)\bigr)\Longrightarrow p'_1=p'_2,
+$$
+
+则仓内 `DoubleExtensionalQuotientUniversality.double_extensional_quotient_universal_minimality` 给出状态行商与 $X'$、协议列商与 $P'$ 的唯一双侧等价，并使评价方格交换。这里的状态满射与协议满射是得到商上双射的条件；式 (TM.467) 本身只给评价保持和正向下降。
+
+因此，时钟、空间切面和记忆若都来自同一个评价 $E$，它们的关系层次是：
+
+$$
+\boxed{
+\text{完整协议行/列}
+\longrightarrow
+\text{行商与列商}
+\longrightarrow
+\text{各自的实际像表示}
+}
+$$
+
+单边摘要只须满足 (TM.466) 的核包含；双侧等价还须满足满射和行列分离。若某个协议读取隐藏档案、失败标签或权限，必须把它们放入 $L$，否则 row kernel 会错误地把不同未来协议合并。
+
+这个双侧结构与边界卷的动态完成相接：把协议词扩展为有限或无限的动作索引，就得到共同未来 profile；把协议限制为某个时钟族，就得到本节的时钟行。动态更新仍需另证交换式 $q\circ F=\bar F\circ q$，静态行列商不能代替授权和后继的下降条件。
+
+本节直接对应仓内 `UnifiedObserverRepresentation` 与 `DoubleExtensionalQuotientUniversality` 的既有形式化结果；理论中的跨接口运输和时钟专门化仍为 open，没有新增 Lean 声明。
+

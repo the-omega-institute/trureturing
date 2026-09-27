@@ -1,0 +1,61 @@
+**定理 314.2（严格可分间隙的首个非零阶）。** 定义坐标不变的量
+
+$$
+\Xi_a=(\Omega_*v)^{\mathsf T}(d_3I-S_*)(\Omega_*v).
+\tag{314.4}
+$$
+
+则对每个固定模型，在 $t\downarrow0$ 时，
+
+$$
+\log\frac{s_3(t)^2}{\det T_t}
+=\frac{\Xi_a}{6}t^3+O(t^4),
+\qquad
+\frac{s_3(t)^2}{\det T_t}
+=1+\frac{\Xi_a}{6}t^3+O(t^4).
+\tag{314.5}
+$$
+
+$\Xi_a>0$ 恰当且仅当三个半径不全相等。特别地，不等半径端点生成元虽满足耗散锥的等号，其固定半群在每个正时间严格满足可分奇异值条件，而相应间隙从三阶开始。
+
+证明。这里直接使用既有的短时间半群范数定理，而不将三次衰减的一般机制作为新结论。Achleitner、Arnold 与 Carlen，*The hypocoercivity index for the short time behavior of linear time-invariant ODE systems*，Journal of Differential Equations 371 (2023)，[arXiv v5 定理2.7及式（2.9）](https://arxiv.org/abs/2109.10784v5)，DOI [10.1016/j.jde.2023.06.027](https://doi.org/10.1016/j.jde.2023.06.027)，给出了下述适用情形：若 $B$ 的对称部分 $B_H\succeq0$，其 hypocoercivity index 为一，则
+
+$$
+\|e^{-tB}\|_{\rm op}
+=1-c_Bt^3+O(t^4),\qquad
+c_B=\frac1{12}\min_{\substack{x\in\ker B_H\\\|x\|_2=1}}
+(Bx)^{\mathsf T}B_H(Bx).
+\tag{314.6}
+$$
+
+将它接到本模型，取
+
+$$
+B=d_3I-M_*=(d_3I-S_*)+\Omega_*,\qquad
+B_H=D:=d_3I-S_*,\qquad B_A=\Omega_*.
+\tag{314.7}
+$$
+
+这里 $D\succeq0$、$\ker D=\mathbb Rv$，而 $D$ 在 $v^\perp$ 上正定。对不等半径，第299、301节给出 $\Omega_*v\ne0$。于是 $D$ 本身不正定，但
+
+$$
+D+\Omega_*D\Omega_*^{\mathsf T}\succ0.
+\tag{314.8}
+$$
+
+具体地，若它在 $x$ 上的二次型为零，第一项使 $x\in\mathbb Rv$。第二项随后等于 $x$ 沿 $v$ 的系数平方乘以 $\Xi_a$，而 $\Xi_a>0$；故 $x=0$。这正是所引文献定义2.1在 $m=1$ 处的正定条件，而 $m=0$ 不成立，所以 index 恰为一。
+
+所引定理允许复向量；实矩阵在实、复欧氏空间上的算子范数相同，复单位核向量 $e^{i\theta}v$ 也都给出相同二次型值。因此可直接使用这里的实空间表述。又因 $Bv=\Omega_*v$，实单位核向量 $\pm v$ 的二次型值均为 $\Xi_a$。因此该定理在本模型上精确给出
+
+$$
+e^{-d_3t}\|e^{tM_*}\|_{\rm op}
+=1-\frac{\Xi_a}{12}t^3+O(t^4).
+\tag{314.9}
+$$
+
+这里精确地有 $s_3(t)^2/\det T_t=\|e^{-tB}\|_{\rm op}^{-2}$。取对数便得到式（314.5）的第一式；再取指数得到第二式。
+
+最后，$\Omega_*v\perp v$，所以 $D$ 在该方向上的正定性说明 $\Xi_a=0$ 恰好要求 $\Omega_*v=0$。定理314.1证明中已将这个条件等价为三个半径相等。等半径时不使用 index 一的定理：直接由显式半群可知比值恒为一，$\Xi_a=0$，故式（314.5）仍成立。证毕。
+
+能量估计与 hypocoercivity 短时间范数定理都是既有结果。本节给出的是它们在唯一端点解上的精确作用：必要的旋转把轨道带离最大耗散轴，使生成元处的等号不再沿有限时间半群保留。这个可分性间隙与第312、313节的恢复误差超额是两个不同读数；三阶奇异值间隙本身不证明三阶恢复误差差距，也不决定有限预算最优通道。
+

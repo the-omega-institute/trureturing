@@ -1,0 +1,28 @@
+### 42.2 相容 section、global frame 与 holonomy 固定点
+
+在一个有限连通图上，给每个顶点 $i$ 一个纤维 $B_i$，给每条有向边 $e:i\to j$ 一个可逆运输 $T_e:B_i\simeq B_j$，逆边运输为 $T_e^{-1}$。取根 $v$ 和一棵生成树；令 $P_i:B_v\simeq B_i$ 为树路径运输。对每条非树边 $e:i\to j$ 定义根纤维上的 holonomy
+
+$$
+H_e:=P_j^{-1}\circ T_e\circ P_i\in\operatorname{Aut}(B_v).
+\tag{42.5}
+$$
+
+所有运输相容的 section 组成
+
+$$
+\Gamma(T)=\{(b_i)_i:\ T_e(b_i)=b_j\text{ 对所有边 }e:i\to j\}.
+$$
+
+根评价给出一个规范双射
+
+$$
+\boxed{
+\Gamma(T)\simeq
+\bigcap_{e\notin\mathrm{Tree}}\operatorname{Fix}(H_e).
+}
+\tag{42.6}
+$$
+
+树边强制 $b_i=P_i(b_v)$，非树边恰好变成根值的固定点方程。由此得到三个不同结论：
+
+* 相容 section 存在，当且仅当 holonomy 共同固定点非空；

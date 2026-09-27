@@ -1,0 +1,19 @@
+**证明。** 有 $HL=L(A+BX)+(0,\mathcal R_X)^{\mathsf T}$。左乘 $I-\Pi$ 后第一项为零，得到(ST14.1)。$G\ge I$ 给出范数界。对 $e^{-i(t-s)H/\hbar}Ue^{-ish/\hbar}$ 求导并积分：
+
+$$
+e^{-itH/\hbar}U-Ue^{-ith/\hbar}
+=-\frac{i}{\hbar}\int_0^t
+ e^{-i(t-s)H/\hbar}D e^{-ish/\hbar}\,ds.
+$$
+
+两侧演化均酉，故积分范数至多 $|t|r/\hbar$；两个等距映射之差另有上界2。∎
+
+### 推论 ST14.2：Born 记录的统一误差预算
+
+从同一输入态出发，比较以上两种编码演化，再实施任意共同的 CPTP 实验并保留全部结果。允许初始态与一个不参与演化的有限参考系统纠缠。最终联合记录分布满足
+
+$$
+\boxed{\operatorname{TV}(p,q)\le\min\{1,|t|r/\hbar\}.}
+\tag{ST14.3}
+$$
+

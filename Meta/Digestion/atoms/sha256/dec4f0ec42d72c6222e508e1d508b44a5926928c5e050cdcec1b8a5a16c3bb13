@@ -1,0 +1,29 @@
+### 153.1 固定物理接收与实际目标通道
+
+固定本卷已知非退化来源 $T|i\rangle=m_i\otimes|i\rangle_B$，其中 $M=B=\mathbb C^2$、$m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$、$ab\ne0$ 且 $|a|^2+|b|^2=1$。固定接收空间 $K=\mathbb C^D$、与来源独立的纯初态 $\omega_K$，以及每轮重复的全域 CPTP 通道
+
+$$
+\mathcal C:\mathcal L(K\otimes B)\longrightarrow\mathcal L(K).
+$$
+
+用 $M_{\rm in}$ 标记初始活动记忆，用 $M_{\rm out}$ 标记终端活动记忆，两者均为二维。终端 $n$ 的实际保留过程是同一个固定装置诱导的通道
+
+$$
+\mathcal R_n:\mathcal L(M_{\rm in})
+\longrightarrow\mathcal L(M_{\rm out}\otimes K).
+\tag{153.1}
+$$
+
+来源未接收的累计等距为
+$T^{(n)}:M_{\rm in}\to M_{\rm out}\otimes H_n$，$H_n=B^{\otimes n}$。取第141节的实际档案支撑 $S_n\subseteq H_n$，自然嵌入记为 $\iota_n$。由该支撑包含全部允许输入的档案，有等距
+
+$$
+\widetilde T_n=(I_{M_{\rm out}}\otimes\iota_n^*)T^{(n)}
+:\ M_{\rm in}\longrightarrow M_{\rm out}\otimes S_n,
+\qquad
+T^{(n)}=(I_{M_{\rm out}}\otimes\iota_n)\widetilde T_n.
+\tag{153.2}
+$$
+
+记 $s_n=\dim S_n$；本卷来源满足 $s_1=2$、$s_2=3$、$s_n=4$ 对所有 $n\ge3$ 成立。
+

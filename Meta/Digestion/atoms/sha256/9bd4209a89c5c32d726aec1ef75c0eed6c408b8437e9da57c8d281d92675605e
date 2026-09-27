@@ -1,0 +1,22 @@
+**推论100.2（同一固定酉的延拓）。** 设 $I_0,I_1\subset K$，并已给定等距
+
+$$
+J_i:I_i\longrightarrow X,
+\qquad E_i=J_i(I_i),\qquad E_0\perp E_1.
+$$
+
+存在固定酉 $W:K\otimes\mathbb C^2\to X$，同时满足
+
+$$
+W(x\otimes|i\rangle)=J_ix\quad(x\in I_i),
+$$
+
+以及
+
+$$
+W(K\otimes|0\rangle)\cap S_z=0,
+\tag{100.4}
+$$
+
+当且仅当（100.3）成立。
+

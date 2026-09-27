@@ -1,0 +1,19 @@
+### 173.3 秩一差矩阵给出精确最小最大公式
+
+引入一个仅用于匹配标签块的二维空间 $C$，定义
+
+$$
+|u_q\rangle
+=\sqrt q\,|0\rangle_C|\Xi\rangle
++\sqrt{1-q}\,|1\rangle_C|\Xi\rangle,
+$$
+
+$$
+B_{\mathcal D}(q)
+=qP_0^C\otimes\sigma_{00}
++(1-q)P_1^C\otimes\sigma_{11},
+\qquad
+f_{\mathcal D}(q)=\lambda_{\max}\bigl(P_{u_q}-B_{\mathcal D}(q)\bigr).
+\tag{173.6}
+$$
+

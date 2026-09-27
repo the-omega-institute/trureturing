@@ -1,0 +1,10 @@
+**定义 45.1（允许来源的初始支撑）。** 保留第 40.1 条的非空紧参数空间 $\Theta$、连续完整仪器族 $\mathfrak I_\theta$ 及共同有限终端读出。另给非空允许初态集合 $\Gamma\subseteq\mathcal S(\mathcal H)$，置
+
+$$
+W=\operatorname{span}\{\operatorname{supp}\rho:\rho\in\Gamma\},
+\qquad P_W\text{ 为 }W\text{ 的正交投影},
+\qquad r=\dim W\ge1.
+$$
+
+这里 $W$ 只限定初始准备，后续演化可以离开 $W$；不在每一轮额外插入 $P_W$ 投影。对通道 $\Phi$，记 $\Phi|_W$ 为先将 $\mathcal L(W)$ 自然嵌入 $\mathcal L(\mathcal H)$、再作用 $\Phi$ 的通道。其半 diamond 距离仍允许初态与任意有限参考系统纠缠。这是把通道的数学输入域扩到全部支撑于 $W$ 的状态；若某个相干叠加不属于 $\Gamma$，这个定义并不赋予实际制备它的权限。
+

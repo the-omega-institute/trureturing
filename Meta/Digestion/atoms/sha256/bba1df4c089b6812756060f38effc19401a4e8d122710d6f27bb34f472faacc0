@@ -1,0 +1,10 @@
+**命题 225.2（最小支持与来源割集）。** 令有限来源全集为 $R$，$D(S)$ 表示来源集 $S\subseteq R$ 足以在固定规则下推出目标，假定它对集合包含单调：可调用的来源增加，不撤销已有推导。最小支持是满足 $D(U)$、而其任何真子集都不满足 $D$ 的 $U$。删除集 $C\subseteq R$ 使剩余来源不再足够，当且仅当 $C$ 与每个最小支持相交：
+
+$$
+\neg D(R\setminus C)
+\quad\Longleftrightarrow\quad
+\forall U\in\operatorname{MinSupp}(D),\ C\cap U\ne\varnothing.
+$$
+
+若某个最小支持未被击中，它仍包含于剩余来源，单调性保证推导仍在。反过来，若剩余来源足够，有限性允许从中取一个基数最小的足够子集，它就是没有被击中的最小支持。这对应项目 [SourceCutsetHittingDuality](../../../D5/S3/ConceptDynamics/Provenance/SourceCutsetHittingDuality.lean) 的 `source_cutset_hitting_duality`。
+

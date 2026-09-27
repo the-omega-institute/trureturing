@@ -1,0 +1,44 @@
+### 112.5 ABAAA 的首轮环境被真实列固定
+
+尾词为 $ABAAA$。$G_2$ 的一位后继为 $B$，$G_4,G_5$ 的一位后继均为 $A$，而三者当前环境均为 $A$。因此
+
+$$
+G_2\perp(G_4+G_5),\qquad
+G_2,G_4,G_5\subset P_A.
+$$
+
+四维预算给
+
+$$
+G_4=G_5=T,\qquad P_A=G_2\oplus T,
+\tag{112.10}
+$$
+
+此处直和正交。第3轮采用小纤维，故 $G_3=P_B$。
+
+实际零位像 $V_0H_2=P_B\otimes B$、$V_0H_4=T\otimes A$ 使 $H_2\perp H_4$。另一方面，
+$H_4\subset T\oplus Q_4$，$Q_4\perp P_A$，而真实 $u\in G_2\perp T$，故 $u\perp H_4$。用同一个早期向量
+
+$$
+a^2u+bv\in H_2,\qquad b\ne0
+$$
+
+可得 $v\perp H_4$。又 $v\perp P_A\supset T$，而 $H_4$ 满投影到 $Q_4$，所以 $v\perp Q_4$。
+
+实际一位像为
+
+$$
+V_1p=v\otimes A,\qquad V_1G_3=Q_4\otimes A.
+$$
+
+同一个等距 $V_1$ 因而给 $p\perp G_3=P_B$。由首轮零位像及（112.3），首轮环境不能是 $B$ 或第三条射线，故 $\eta_1$ 必为 $A$，且 $p\in P_A$。
+
+再比较 $V_1p$ 的环境 $A$ 与 $V_1G_2$ 的环境 $B$，得到 $p\perp G_2$。式（112.10）于是给 $p\in T$。但
+
+$$
+V_0p=u\otimes A,\qquad V_0H_4=T\otimes A,\qquad u\perp T
+$$
+
+使 $p\perp H_4$。这与 $p\ne0$、$p\in T=G_4$ 及满投影
+$P_{G_4}H_4=G_4$ 冲突。该词排除。
+

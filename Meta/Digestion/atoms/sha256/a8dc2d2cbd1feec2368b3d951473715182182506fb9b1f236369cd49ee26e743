@@ -1,0 +1,2 @@
+- D5/S3/Factorization/PrimePowers/FiniteCompatibleCrt.lean:112，
+  finite_crt_gluing：有限非互素同余族的成对 gcd 相容性、普通整数共同实现及模 LCM 的唯一剩余类；不把有限剩余类唯一性误作整数代表唯一性。

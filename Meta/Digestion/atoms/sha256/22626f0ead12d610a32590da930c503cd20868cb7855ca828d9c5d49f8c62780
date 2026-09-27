@@ -1,0 +1,23 @@
+**推论 62.2（最优参数的解析展开）。** 写唯一最优边缘参数为 $p_\varepsilon=\bar p_\varepsilon$。存在实解析函数 $\kappa(\delta)$，在零附近满足 $\kappa(0)=3/4$，并对充分小的正 $\varepsilon$ 有
+
+$$
+p_\varepsilon=\varepsilon-\kappa(\sqrt\varepsilon)\varepsilon^{3/2}.
+\tag{62.8}
+$$
+
+特别地，
+
+$$
+\begin{aligned}
+p_\varepsilon
+&=\varepsilon-\frac34\varepsilon^{3/2}
++\frac{65}{64}\varepsilon^2+O(\varepsilon^{5/2}),\\
+e_\varepsilon
+&=\frac98\varepsilon-\frac9{16}\varepsilon^{3/2}
++\frac{255}{256}\varepsilon^2+O(\varepsilon^{5/2}).
+\end{aligned}
+\tag{62.9}
+$$
+
+唯一性指边缘参数，不宣称完整最优修复算符唯一。准确交点公式覆盖整个 $0<\varepsilon\le1/16$；幂级数展开描述 $\varepsilon\downarrow0$。
+

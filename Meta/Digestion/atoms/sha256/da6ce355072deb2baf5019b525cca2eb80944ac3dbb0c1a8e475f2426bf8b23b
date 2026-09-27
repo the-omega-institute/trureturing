@@ -1,0 +1,19 @@
+**定义 276.1（正半径三轴模型）。** 令 $0<a_i\le1$，$i=1,2,3$，并以 $\sigma_1=X,\sigma_2=Y,\sigma_3=Z$ 定义六态模型
+
+$$
+\mathcal R_a=\{(I_2\pm a_i\sigma_i)/2:i=1,2,3\}.
+\tag{276.1}
+$$
+
+记
+
+$$
+\alpha_i=\frac1{a_i},\qquad
+S=\alpha_1+\alpha_2+\alpha_3,\qquad
+\Delta=\frac1S,
+\qquad B=\max\left\{\Delta,\max_{i<j}\frac1{2(\alpha_i+\alpha_j)}\right\}.
+\tag{276.2}
+$$
+
+沿用第272、275节的共轭缺口 $\delta$、恢复误差 $e$、非实残差 $r$ 及完全实输出恢复误差 $e_{\mathbb R}$。对非负预算 $R$，令 $F_a(R)$ 为在所有有限输出维数、所有复线性 CPTP 编码、解码及共同输出基底上，满足 $r\le R$ 时的最小恢复误差；下述达到构造保证最小值存在。
+

@@ -1,0 +1,58 @@
+### 43.1 安全前驱与反复更新核
+
+设 $S$ 是有限配置集。对每个 $s$，$A(s)$ 是非空合法动作集；动作 $a$ 的对手后继集合记为
+
+$$
+\operatorname{Succ}(s,a)\subseteq S,
+\qquad
+\operatorname{Succ}(s,a)\ne\varnothing.
+$$
+
+对 $Y\subseteq S$ 定义鲁棒控制前驱
+
+$$
+\operatorname{CPre}(Y)
+=
+\{s:\exists a\in A(s),
+\operatorname{Succ}(s,a)\subseteq Y\}.
+\tag{43.1}
+$$
+
+安全核是最大的前向不变集合
+
+$$
+\operatorname{Safe}:=\nu Z.\operatorname{CPre}(Z).
+\tag{43.2}
+$$
+
+再指定一个 renewal 集 $R\subseteq S$，它表示校准、取得新端口、写入必要记录或其它允许循环的状态。对固定 $X$ 定义相对吸引子
+
+$$
+\operatorname{Attr}_{X}(G)
+:=
+\mu Y.\bigl(G\cup(X\cap\operatorname{CPre}(Y))\bigr),
+\tag{43.3}
+$$
+
+并定义反复更新核
+
+$$
+\boxed{
+\operatorname{Live}(R)
+:=
+\nu X.\operatorname{Attr}_{X}\bigl(R\cap\operatorname{CPre}(X)\bigr).
+}
+\tag{43.4}
+$$
+
+在有限状态、有限分支和非空合法动作的条件下，$\operatorname{Live}(R)$ 中的配置有一个位置策略，使所有对手路径满足
+
+$$
+\square\operatorname{Safe}
+\quad\land\quad
+\square\Diamond R.
+\tag{43.5}
+$$
+
+这里 $\square\Diamond R$ 的量词是“对每个路径、任意 $N$，存在 $n\ge N$ 使状态落在 $R$”；它不是一个有限窗口里已经发生一次 renewal 的声明。仓内 `BuchiAgencyKernel.live_agency_buchi_kernel` 在有限控制模型中给出 live 到安全策略、秩下降和无限 renewal 的对应结构；本节把其条件改写成边界语言，未把它外推到无限状态或无限分支。
+

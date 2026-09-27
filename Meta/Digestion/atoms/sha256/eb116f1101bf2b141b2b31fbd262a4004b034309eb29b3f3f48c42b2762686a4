@@ -1,0 +1,10 @@
+**定义 60.1（依任务选择必须保留的差别）。** 项目的 [`deterministic_safe_policy_exists_iff`](../../../D5/S3/ConceptDynamics/Agency/DeterministicSafePolicyExistence.lean)给定读数及各状态的合法行动集，以纤维内的共同合法行动刻画确定策略。本卷第 52 节与它的对应是：把源码中的合法行动集取为 $G_K(x)$，便同时纳入本卷的合宜、可实施与达标要求。源码里的集合论选择没有额外承诺可测性或实际计算成本；本卷的有限行动次序使选择步骤可以直接说明。
+
+进一步，[`minimum_safe_observation_alphabet`](../../../D5/S3/ConceptDynamics/Agency/MinimumSafeObservationAlphabet.lean)比较使用恰好 $m$ 个实际标签的安全观察与安全相容分割。对应本卷时，分割 $X$ 的每一块 $B$ 都须满足
+
+$$
+\bigcap_{x\in B}G_K(x)\ne\varnothing.
+$$
+
+因此，选择观察语言可以从行动目标倒推：哪些状态必须分开，哪些可以共用一个标签。原声明把“$m$ 确为最小值”的两种表述联系起来，并不无条件断言存在某个有限最小值。对于本卷有限非空 $X$，若每个 $G_K(x)$ 非空，每块均为单元素集的离散分割提供一个可行方案，故有限最小值存在；若某个状态没有成功行动，增加标签也不能补出一个。
+

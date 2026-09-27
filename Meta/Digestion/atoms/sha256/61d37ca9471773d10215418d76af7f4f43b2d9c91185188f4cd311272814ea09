@@ -1,0 +1,31 @@
+## ST14．由 Riccati 残差控制全部最终记录
+
+### 定理 ST14.1：非精确图子空间的动力学误差
+
+不再假设 Riccati 方程。仍由任意 $X$ 构造 $L,G,U,\Pi$，并令 $h=U^\dagger HU$。定义
+
+$$
+\mathcal R_X=B^\dagger+CX-X(A+BX),\quad
+D=HU-Uh.
+$$
+
+则
+
+$$
+\boxed{
+D=(I-\Pi)\begin{pmatrix}0\\\mathcal R_X\end{pmatrix}G^{-1/2},
+\qquad r:=\|D\|\le\|\mathcal R_X\|.
+}
+\tag{ST14.1}
+$$
+
+并且
+
+$$
+\boxed{
+\|e^{-itH/\hbar}U-Ue^{-ith/\hbar}\|
+\le\min\{2,|t|r/\hbar\}.
+}
+\tag{ST14.2}
+$$
+

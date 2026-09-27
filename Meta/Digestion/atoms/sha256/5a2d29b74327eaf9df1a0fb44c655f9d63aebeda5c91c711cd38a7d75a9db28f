@@ -1,0 +1,67 @@
+### 191.4 近可行圆盘及缺陷的平方吸收
+
+置
+
+$$
+n=|N_0|,\qquad
+m=\sqrt{\frac{|M_0|^2+|M_1|^2}{2}}.
+$$
+
+Choi 正性给
+$B_j\ge|N_j|^2/A_j$、$D_j\ge|M_j|^2/A_j$。
+结合 $A_j\ge1/4$、（191.5）与全部矩的一致有界性，得到
+
+$$
+B_0\ge2n^2-Ct,\qquad
+B_1\ge2n^2-Ct,\qquad
+D_0+D_1\ge4m^2-Ct.
+\tag{191.9}
+$$
+
+因为 $B_0+B_1+D_0+D_1=1$，有
+
+$$
+m^2+n^2\le\frac14+Ct,
+\qquad
+B_0+RB_1\le R-4Rm^2-2(R-1)n^2+Ct.
+\tag{191.10}
+$$
+
+此外
+$\operatorname{Re}(M_0+M_1)\le2m$、
+$\gamma\operatorname{Im}N_0\ge-|\gamma|n$。
+因此（191.8）至少为第189节圆盘二次式在 $(m,n)$ 的值减去 $Ct$。
+
+若 $(m,n)$ 在半径 $1/2$ 的非负圆盘外，就作径向投影；（191.10）保证投影距离不超过 $Ct$。该二次式在当前统一有界区域上对 $(m,n)$ 一致 Lipschitz，故无论点是否在圆盘内都有
+
+$$
+\mathcal G_h\ge\Phi_h-Ct.
+\tag{191.11}
+$$
+
+代回（191.7），吸收 $t$ 中的 $\epsilon$ 项：
+
+$$
+\boxed{
+e\ge\frac34+\epsilon\Phi_h
++\frac{\mathfrak c}{8}+\frac{d^2}{16}
+-C\epsilon\bigl(\sqrt{\mathfrak c}+|d|\bigr)-C\epsilon^2.
+}
+\tag{191.12}
+$$
+
+令 $u=\sqrt{\mathfrak c}$、$v=|d|$。完成平方给
+
+$$
+\frac{u^2}{8}-C\epsilon u\ge-2C^2\epsilon^2,
+\qquad
+\frac{v^2}{16}-C\epsilon v\ge-4C^2\epsilon^2.
+$$
+
+所以所有当前近优 instrument 的误差都至少为
+$3/4+\epsilon\Phi_h-C'\epsilon^2$。
+
+反向，第188节的谱展开对 $h\in[0,H]$ 以及整个闭圆盘一致成立：正确块在 $\sqrt\epsilon$ 中有共同解析邻域，基点最高根及其 $q$ 极大点有统一间隙，矩系数在该紧参数集有界。即使 $h=0$，出现的 $\sqrt h$ 也只作为有界连续系数，不破坏该统一展开。对每个 $h$ 取圆盘极小点，就有
+$E_\epsilon(h)\le3/4+\epsilon\Phi_h+C''\epsilon^2$。
+两界证明定理191.1。证毕。
+

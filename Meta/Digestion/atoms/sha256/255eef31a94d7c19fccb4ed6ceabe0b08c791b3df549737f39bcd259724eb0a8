@@ -1,0 +1,126 @@
+**定理 47.1（七维以下的二步回归刚性）。** 若 $D\le7$ 且上述正交交替环境合同服务前五个终端，则 $k\parallel w$。
+
+证明：第25节定理25.2已经排除同一确定正交交替环境合同下的 $D\le6$，所以只需处理 $D=7$。分 $k$ 相对 $H,G$ 的位置。
+
+#### 47.2.1 情形甲：$k\notin H$ 且 $k\notin G$
+
+此时 $\dim H_A^0=\dim G_A^0=3$。初始环境 $A$ 的接收像维数为六，所以 $p,q$ 在 $K/L_3$ 中线性独立。于是
+
+$$
+\dim H_B=4,\qquad \dim G_B=3.
+\tag{47.13}
+$$
+
+$H_A\perp H_B$ 及 $H_A\supset H_A^0$ 强制 $H_A=H_A^0$，维数三。环境 $B$ 的两类像饱和七维：
+
+$$
+K=U_B\oplus W_B,\qquad \dim U_B=4,\quad\dim W_B=3.
+\tag{47.14}
+$$
+
+第五轮一位输入使 $G_A\supset G+G_4=U_B$。又 $G_A\perp G_B$，故
+
+$$
+G_A=U_B=G_B^\perp,\qquad \dim G_A=4.
+\tag{47.15}
+$$
+
+环境 $A$ 的零位像为
+
+$$
+U_A=\operatorname{span}(p,S)=G_B.
+\tag{47.16}
+$$
+
+所以 $W_A=G_A$。固定 $V_1$ 在 $G_A$ 上去掉环境 $A$ 后，给 $G_A$ 到自身的酉 $T$。有
+
+$$
+Tk=q,\qquad T(G)=R.
+\tag{47.17}
+$$
+
+$k,w$ 是 $G_A$ 中两个线性独立向量。因 $H_3\subset H_B=(H_A^0)^\perp$，且 $s,t\in S\subset G_B\perp G_A$，对 $cs+br,a^2t+bj$ 分别取与 $k,w$ 的内积，得到
+
+$$
+R\perp\operatorname{span}\{k,w\}.
+\tag{47.18}
+$$
+
+两边余维恰好给
+
+$$
+R=G_A\cap\operatorname{span}\{k,w\}^\perp.
+\tag{47.19}
+$$
+
+但 $q=Tk\in G_A$，且 $q\in H_B$，所以 $q\perp k,w$，即 $q\in R=T(G)$。$T$ 单射于是强制 $k\in G$，矛盾。
+
+#### 47.2.2 情形乙：$k\in G\setminus H$
+
+此时 $\dim H_A^0=3,\dim G_A^0=2$，且 $q\in R$。环境 $A$ 的初始像维数五，所以 $p\notin L_3$。由于 $H_3\cap R=0$，
+
+$$
+\dim H_B=4,\qquad \dim G_B=3.
+\tag{47.20}
+$$
+
+与情形甲相同的饱和论证给
+
+$$
+H_A=H_A^0=L,\quad H_B=L^\perp,\quad
+G_A=U_B=G_B^\perp,\quad W_B=G_B,\quad W_A=G_A.
+\tag{47.21}
+$$
+
+特别地 $v\in W_B=G_B$。$H_3\perp v$，其中 $r,j\in R\subset G_A\perp v$，所以 $s,t\perp v$。因 $S$ 二维、$G_B$ 三维，
+
+$$
+S=G_B\cap v^\perp.
+\tag{47.22}
+$$
+
+而 $p\in G_B$ 且 $p\perp L$，所以 $p\perp v$，从而 $p\in S\subset L_3$，与 $p\notin L_3$ 矛盾。
+
+#### 47.2.3 情形丙：$k\in H\setminus G$
+
+这时 $H_A^0=H$、$G_A^0=L$，且 $p\in S$。初始环境 $A$ 像维数五，所以 $q\notin L_3$。由于 $H_3\cap S=0$，
+
+$$
+\dim H_B=4,\qquad G_B=S,\qquad\dim G_B=2.
+\tag{47.23}
+$$
+
+于是 $\dim U_B=4,\dim W_B=2$，且 $v\in W_B$，从而 $U_B\perp v$。利用 $U_B=G+G_4$，
+
+$$
+G_A=L+G_4=U_B\oplus\mathbb Cv,\qquad \dim G_A=5.
+\tag{47.24}
+$$
+
+环境 $A$ 的接收像维数不超过七，而 $H_A\supset H$ 二维，所以
+
+$$
+H_A=H.
+\tag{47.25}
+$$
+
+因此第四轮零系数空间 $H_4\subset H\subset L\subset G_A$。
+
+另一方面，在相应环境 $B$ 的输入域上记 $\widehat V_i x=(I_K\otimes\langle B|)V(xi)$。第四轮两个零系数明确为
+
+$$
+\begin{aligned}
+X_4^0&=a^2\widehat V_0(cs+br)+bc\widehat V_1s,\\
+X_4^1&=a\widehat V_0(a^2t+bj)+ab\widehat V_1t.
+\end{aligned}
+\tag{47.26}
+$$
+
+左侧均在 $H_4\subset G_A$，右侧第一项均在 $G_4\subset U_B\subset G_A$。分别相减并用 $bc,ab\ne0$，得到 $\widehat V_1s,\widehat V_1t\in G_A$，即 $W_B=\widehat V_1S\subset G_A$。这要求正交和 $U_B\oplus W_B$ 的六维空间包含在五维 $G_A$ 中，矛盾。
+
+#### 47.2.4 唯一余下位置
+
+只能 $k\in H\cap G=\mathbb Cw$。两者单位，所以 $k\parallel w$。证明完毕。
+
+本证明只在 $D=7$ 的维数饱和处排除三类自由度。不能将这一步结论推广到 $D\ge8$。
+

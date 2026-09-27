@@ -1,0 +1,58 @@
+**定理149.2（忠实纯态的定量通道桥）。** 设归一化纯态
+
+$$
+|\Psi\rangle_{RS}
+=\sum_{j=1}^{\dim S}\sqrt{\gamma_j}|r_j\rangle_R|s_j\rangle_S,
+\qquad \gamma:=\min_j\gamma_j>0
+\tag{149.9}
+$$
+
+在 $S$ 上满 Schmidt 秩。对任意线性映射
+$\Delta:\mathcal L(S)\to\mathcal L(Y)$，有
+
+$$
+\boxed{
+\left\|(\operatorname{id}_R\otimes\Delta)(|\Psi\rangle\langle\Psi|)\right\|_1
+\le\|\Delta\|_\diamond
+\le\frac1\gamma
+\left\|(\operatorname{id}_R\otimes\Delta)(|\Psi\rangle\langle\Psi|)\right\|_1.
+}
+\tag{149.10}
+$$
+
+特别地，若 $\Delta=\mathcal A-\mathcal B$ 为两通道之差，且这份测试态的半迹误差为 $e$，则
+
+$$
+\boxed{
+e\le d_\diamond(\mathcal A,\mathcal B)
+\le\min\{1,e/\gamma\}.
+}
+\tag{149.11}
+$$
+
+**证明。** 记
+$Z=(\operatorname{id}_R\otimes\Delta)(|\Psi\rangle\langle\Psi|)$。
+对任意辅助空间 $A$ 及单位向量 $\phi,\chi\in A\otimes S$，存在参考侧线性映射 $F,G:R\to A$，使
+
+$$
+|\phi\rangle=(F\otimes I_S)|\Psi\rangle,\qquad
+|\chi\rangle=(G\otimes I_S)|\Psi\rangle,
+\qquad
+\|F\|_{\rm op},\|G\|_{\rm op}\le\gamma^{-1/2}.
+\tag{149.12}
+$$
+
+确切地，把 $\phi$ 在 $S$ 的 Schmidt 基中写成系数矩阵 $C$，有
+$F=C\operatorname{diag}(\gamma_j^{-1/2})$，并在参考支撑外取零。由 $\|C\|_{\rm HS}=1$ 得所报算子范数界；$G$ 同理。
+
+于是
+
+$$
+(\operatorname{id}_A\otimes\Delta)(|\phi\rangle\langle\chi|)
+=(F\otimes I_Y)Z(G^*\otimes I_Y),
+$$
+
+迹范数至多 $\|Z\|_1/\gamma$。对任意输入算子作奇异值分解，逐项应用此界并求和，得到完整诱导迹范数界。对辅助空间取上确界，即为（149.10）的右侧。左侧以 $|\Psi\rangle\langle\Psi|$ 代入 diamond 范数定义即得。两通道的半 diamond 距离至多一，故（149.11）成立。证毕。
+
+该证明没有额外付出 $\dim S$ 因子。对一般两通道，系数 $1/\gamma$ 可以达到：取最小权重对应的输入基向量 $s_r$，令 $\mathcal A$ 测量该基，仅在结果 $r$ 输出经典态 $|1\rangle$，其余结果输出 $|0\rangle$；令 $\mathcal B$ 恒输出 $|0\rangle$。则测试态误差为 $e=\gamma$，而 $d_\diamond=1$。这个例子证明通用两通道界的锐性，不证明在“另一通道固定为恒等嵌入”的恢复子类内该系数最优。
+

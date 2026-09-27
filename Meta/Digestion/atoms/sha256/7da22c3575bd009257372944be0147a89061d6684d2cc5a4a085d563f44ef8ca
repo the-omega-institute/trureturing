@@ -1,0 +1,12 @@
+**定义 141.1（三个可分别检查的条件）。** 项目的[实体强度三条件](../../../D5/S3/ConceptDynamics/Identity/EntityStrengthThreeConditions.lean)把一个读数 $q:X\to C$ 相对于过程族 $\mathcal T\subseteq X^X$ 与目标 $a:X\to A$ 的性质分开：
+
+$$
+\begin{aligned}
+\text{过程稳定：}&\quad \forall T\in\mathcal T\;\forall x,\ q(Tx)=q(x),\\
+\text{目标忠实：}&\quad \exists d:C\to A,\ a=d\circ q,\\
+\text{非平凡区分：}&\quad \exists x,y,\ q(x)\ne q(y).
+\end{aligned}
+$$
+
+稳定性回答选定变化是否改变读数；目标忠实性回答读数能否决定所问答案；非平凡区分回答读数是否至少区分两个状态。三个条件涉及不同关系，不能用“这个概念很稳定”替代其余两个。
+

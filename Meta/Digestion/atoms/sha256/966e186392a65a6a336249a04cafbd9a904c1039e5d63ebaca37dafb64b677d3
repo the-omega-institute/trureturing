@@ -1,0 +1,11 @@
+#### 2.7.8 Binary and finite-cover boundaries
+
+For $p=2$, the ancestor estimate gives only
+$$
+p^{-d}-\sum_{h>d}p^{-h}=0.
+\tag{TM.601}
+$$
+Thus the positive gap used to turn a local mass approximation into an extension decision disappears. A concrete binary example forbids $[2^n]_{n+1}$ for every $n\ge0$: the complement is the singleton $\{0\}$, so its root cylinder is extendible while its mass is zero. The reverse geometric tail bound remains valid, and the localization lemma remains valid. The failure of this positive-gap proof does not assert that no other binary criterion or implication is possible.
+
+All equivalences here concern an infinite, fixed, effectively presented inventory and exact Haar mass as a real number. Finite-stage candidate counts do not determine the final extension sets without an additional oracle or a termination guarantee for the relevant absence questions. A supplied finite congruence family remains decidable by checking a finite common period. No reduction to the finite distinct odd covering problem, solution of that problem, formal independence statement, or research-priority claim follows from these results.
+

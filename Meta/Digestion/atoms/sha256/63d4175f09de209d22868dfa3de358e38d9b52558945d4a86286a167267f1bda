@@ -1,0 +1,26 @@
+**证明。** 微分交织式并投影到补空间，得到 Sylvester 方程
+
+$$
+H_\perp N_i-N_i h=-(I-\Pi)(\partial_iH)U.
+$$
+
+分别选择 $H_\perp,h$ 的正交本征基，每个矩阵元被相应能量差除，绝对值分母至少为 $\Delta$。对平方求和即得 Frobenius 界；再用(ST15.2)及 $\|N\|\le\|N\|_F$。没有把任意交错谱下的该 Frobenius 论证误当成同常数的算子范数逆 Sylvester 定理。∎
+
+### 定理 ST15.4：移动编码的生成元与确切控制项
+
+沿光滑时间路径，编码内方程的 Hermitian 生成元是
+
+$$
+\boxed{h_{\mathrm{mov}}=U^\dagger HU-i\hbar U^\dagger\dot U
+=h-\hbar\mathcal A_t.}
+\tag{ST15.5}
+$$
+
+相对于完整 Schrödinger 方程，它的法向残差为
+
+$$
+D_t=(I-\Pi)HU-i\hbar N_t.
+$$
+
+对应传播子的等距交织误差至多 $\hbar^{-1}\int\|D_t\|dt$。
+

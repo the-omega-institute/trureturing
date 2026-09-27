@@ -1,0 +1,82 @@
+### 204.3 带明确余项的误差平方分解
+
+第200节的冻结谱与参考极大点由统一简单根和非零曲率确定。
+它们在相关紧集附近的环境实 Choi 坐标中解析，
+故二阶冻结系数 $R_h$ 的一阶导数有统一界。
+因此原来的连续性估计可以强化为
+
+$$
+|R_h(\Gamma)-Q_0(h)|\le C_I\mathfrak d.
+\tag{204.9}
+$$
+
+这个环境延拓只用于 Taylor 估计；实际操作仍在合法 Choi 集中。
+同样，沿 $A_0,A_1$ 展开的（200.20）可以定量写成
+
+$$
+L_h(\Gamma)
+=G_h(\Gamma)+\alpha(h)\epsilon x
++O_{I,K}(\epsilon^2+\epsilon\mathfrak d).
+\tag{204.10}
+$$
+
+确实，占据列位移为 $O(\epsilon)$，二阶 Taylor 余项为
+$O(\epsilon^2)$；其共同平移 $-C/2$ 也是 $O(\epsilon^2)$。
+一阶偏置导数与规范点的 $\alpha(h)$ 相差
+$O(\mathfrak d)$，相乘后给（204.10）的剩余项。
+
+令
+
+$$
+\begin{gathered}
+W=\sum_{j,\alpha}|c/\epsilon+itd|^2,\qquad
+M_{\mathrm{def}}=\sum_j|M_j-m|^2,\\
+\Delta=e_\epsilon(h,\Gamma)
+-\left[\frac34+\epsilon\Phi_h+\epsilon^2Q(h)\right].
+\end{gathered}
+$$
+
+结合（200.11）的精确 Gram 恒等式、两个平方完成和
+（204.9）—（204.10），得到
+
+$$
+\begin{aligned}
+\Delta={}&
+\epsilon^2\left[\left(x+\frac{a_{\mathrm{eff}}}{2}\right)^2+\frac W4\right]
++\epsilon\left[\frac{\beta\delta}4U+\frac{\beta R}4V
++\frac h6M_{\mathrm{def}}\right]+\mathcal R,\\
+|\mathcal R|\le{}&C_{I,K}(\epsilon^3+\epsilon^2\mathfrak d)
+\le C'_{I,K}(\epsilon^3+\epsilon^2\sqrt S).
+\end{aligned}
+\tag{204.11}
+$$
+
+其中泄漏平方产生的
+$\epsilon^2t^2(m^2-(D_0+D_1)/4)$ 由
+$|D_0+D_1-4m^2|=O(\mathfrak d)$ 控制。
+基点恒等式中的
+$\epsilon^2x^2/(1-C)-\epsilon^2x^2$ 是 $O(\epsilon^4)$；
+Gram 恒等式中其余含 $C$ 的项为 $O(\epsilon^3)$。
+冻结解析余项本来就是 $O_I(\epsilon^3)$。
+因此（204.11）没有隐藏尚未取得的稀少列收敛速率。
+
+置 $k=\min\{\beta\delta/4,\beta R/4\}>0$。
+Young 不等式给
+
+$$
+C'_{I,K}\epsilon^2\sqrt S
+\le\frac k2\epsilon S+C''_{I,K}\epsilon^3.
+$$
+
+从而
+
+$$
+\boxed{
+\Delta\ge
+\epsilon^2\left[\left(x+\frac{a_{\mathrm{eff}}}{2}\right)^2+\frac W4\right]
++\frac k2\epsilon S+\frac a6\epsilon M_{\mathrm{def}}
+-C''_{I,K}\epsilon^3.
+}
+\tag{204.12}
+$$
+

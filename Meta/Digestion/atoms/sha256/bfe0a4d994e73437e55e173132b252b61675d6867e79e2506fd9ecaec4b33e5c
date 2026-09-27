@@ -1,0 +1,76 @@
+### 303.7 两批参考样本的方差自适应精校准
+
+条件于已完成的第一阶段记录，\(H_0\in(0,1]\) 已知。令
+$$
+q=\frac{1-h/C}{B},\qquad
+\epsilon=\frac{H_0\kappa}{BC}>0.
+\tag{303.29}
+$$
+\(q\) 只是分析记号，协议不知道它。先取一批新的参考样本，
+$$
+m_0=\lceil A_6\Lambda/\epsilon\rceil,\qquad
+S_0\sim\operatorname{Bin}(m_0,q),\qquad
+\widehat q_0=S_0/m_0.
+\tag{303.30}
+$$
+再根据第一批参考均值选择下一批参考样本数
+$$
+m_1=\left\lceil
+A_7\Lambda\,\frac{\widehat q_0+\epsilon}{\epsilon^2}
+\right\rceil,
+\tag{303.31}
+$$
+并记该批新样本均值为 \(\widehat q_1\)。给定第一阶段及第二阶段第一批记录，这第二批由 \(m_1\) 枚新的独立 \(\operatorname{Bernoulli}(q)\) 构成。
+
+最后输出供主表使用的增益下界候选
+$$
+\widehat h= C(1-B\widehat q_1),\qquad
+a=\min\{1,\max\{H_0,\widehat h-H_0\kappa\}\}.
+\tag{303.32}
+$$
+无论校准是否成功，总有
+$$
+0<H_0\le a\le1.
+\tag{303.33}
+$$
+
+第一批的有利事件为
+$$
+q\le2\widehat q_0+\epsilon.
+\tag{303.34}
+$$
+当 \(q\le\epsilon\) 时它自动成立；当 \(q>\epsilon\) 时，其失败包含于
+\(\{\widehat q_0<q/2\}\)，乘法 Chernoff 给出失败概率至多
+\(\exp(-m_0q/8)\le\exp(-A_6\Lambda/8)\le\delta/3\)。
+这里按固定 \(H_0\) 给界，因此无条件也成立。
+
+在（303.34）上有 \(q+\epsilon\le2(\widehat q_0+\epsilon)\)，故
+$$
+m_1\ge A_7\Lambda(q+\epsilon)/(2\epsilon^2).
+$$
+对新第二批使用双边 Bernstein，
+$$
+\Pr\bigl(|\widehat q_1-q|>\epsilon
+\mid H_0,\widehat q_0\bigr)
+\le2\exp\!\left[-\frac{m_1\epsilon^2}{2(q+\epsilon/3)}\right]
+\le\delta/3
+\tag{303.35}
+$$
+在（303.34）上成立，只需 \(A_7\) 取足够大的绝对常数。
+
+由停止记录事件 \(G_1\)、（303.34）及（303.35）的好事件，合计概率至少 \(1-\delta\)。在它们共同成立时，
+$$
+H_0\le h,\qquad |\widehat h-h|\le BC\epsilon=H_0\kappa,
+$$
+故
+$$
+a\le h,\qquad
+a\ge h-2H_0\kappa\ge(1-2\kappa)h,
+\qquad
+w(a)\le w_h+2h\kappa\le3w_h.
+\tag{303.36}
+$$
+最后的截到一保持这些结论，因真实 \(h\le1\)。
+
+仅有高概率（303.36）不足以证明需要的期望成本。下一节对所有失败分支也作估计。
+

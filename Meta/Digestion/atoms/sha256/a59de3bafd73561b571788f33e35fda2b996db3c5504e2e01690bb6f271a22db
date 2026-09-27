@@ -1,0 +1,12 @@
+**命题 4.5.2（有限层和整体距离的界）。** 对 $N\ge1$，
+$$
+T_n\le T_{n+1}\le d_{\mathrm{TV}}(\alpha,\beta),\qquad
+d_{\mathrm{obs}}\le d_{\mathrm{TV}}(\alpha,\beta),
+$$
+$$
+2^{-N}T_N\le d_{\mathrm{obs}}
+\le(1-2^{-N})T_N+2^{-N},\qquad T_N\le2^N d_{\mathrm{obs}}.
+$$
+
+**证明。** 对任意可测推前 $f$，推前中的事件差就是原空间中 $f^{-1}(E)$ 的事件差，所以总变差不增加。$Q_n$ 是 $Q_{n+1}$ 的进一步推前，给第一组界。以权重 $2^{-n}$ 求和得到 $d_{\mathrm{obs}}\le d_{\mathrm{TV}}$。和式保留第 $N$ 项给下界；前 $N$ 项各不超过 $T_N$，权重和为 $1-2^{-N}$，余项不超过 $\sum_{n>N}2^{-n}=2^{-N}$，给上界。最后一式由下界重排。证毕。
+

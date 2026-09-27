@@ -1,0 +1,44 @@
+### 80.1 合同与最小系数秩
+
+沿用第76节的有限维复 Hilbert 空间 $Q,F$、可逆 $A:F\to F$ 及
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}.
+$$
+令 $M:Q\otimes J\to Q\otimes F$ 为收缩，并在四条不同射线上保持二次纤维。第76节引理76.1给全部射线保持及加权块式。取 $A^*A$ 的正交单位特征基，记正特征值为 $\mu,\nu$，置
+$$
+s=\mu+\nu,\qquad \Delta=s^2-\mu\nu.
+$$
+则
+$$
+M=\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt s&0\\
+0&L_0/\sqrt s&L_1/\sqrt\nu
+\end{pmatrix},
+\qquad
+M(\xi\otimes Az\otimes z)=(z_0L_0+z_1L_1)\xi\otimes z.
+\tag{80.1}
+$$
+设完整正缺陷 $\mathscr D=I-MM^*$ 的秩为正整数 $d$，并假设
+$$
+q=\dim Q=3d-1,\qquad d\ge1.
+\tag{80.2}
+$$
+
+写 $\mathscr D=HH^*$，$H=(H_0,H_1):\mathbb C^d\to Q\oplus Q$ 单射。记 $X=L_0L_0^*$、$Y=L_1L_1^*$，则
+$$
+X/\mu+Y/s=I-H_0H_0^*,\qquad
+X/s+Y/\nu=I-H_1H_1^*,\qquad
+L_1L_0^*=-sH_0H_1^*.
+\tag{80.3}
+$$
+第76节的秩估计给
+$$
+\operatorname{rank}L_i\ge q-d=2d-1,\qquad
+\operatorname{rank}L_0+\operatorname{rank}L_1\le q+d=4d-1.
+$$
+两个整数秩不可能都至少为 $2d$，所以至少一个恰为 $2d-1$。必要时交换两个环境特征方向及 $\mu,\nu$，下文可设
+$$
+\operatorname{rank}L_0=2d-1=q-d.
+\tag{80.4}
+$$
+

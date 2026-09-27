@@ -1,0 +1,40 @@
+**定义 183.1（固定接口的双侧响应）。** 令 $\mathcal X$ 为有限维状态空间，$T:\mathcal X\to\mathcal X$ 为一个固定接口，$A=T^*$ 为其效果拉回。取有限初始族
+
+$$
+\mathcal B=\{b_1,\ldots,b_s\}\subseteq\mathcal X
+$$
+
+和有限终端效果族
+
+$$
+\mathcal F=\{f_1,\ldots,f_t\}\subseteq\mathcal X^*.
+$$
+
+定义响应序列
+
+$$
+ h_{ij}(k)=f_i(T^k b_j),
+ \qquad k\ge0,
+$$
+
+以及有限 Hankel 块
+
+$$
+\mathsf H_{N,M}
+\bigl[(i,n),(j,m)\bigr]
+=
+ f_i(T^{n+m}b_j),
+\quad
+0\le n\le N,\ 0\le m\le M.
+$$
+
+令
+
+$$
+ r_{\mathrm H}
+=
+\sup_{N,M}\operatorname{rank}\mathsf H_{N,M}.
+$$
+
+因为 $\mathcal X$ 有限维，该上确界是有限整数。
+

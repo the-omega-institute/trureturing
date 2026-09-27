@@ -1,0 +1,62 @@
+**定理169.1（信息量对额外损失的上界）。** 有
+
+$$
+\boxed{
+\chi\ge-\log(1-u),\qquad
+u\le1-e^{-\chi}\le\chi,
+}
+\tag{169.12}
+$$
+
+以及
+
+$$
+\boxed{
+a\le\frac{\beta}{1-\beta}(1-e^{-\chi})
+\le\frac{\beta}{1-\beta}\chi.
+}
+\tag{169.13}
+$$
+
+**证明。** 先证明所需的标准保真度—相对熵不等式。设密度矩阵
+$b$ 在所用空间上正定，$a$ 的非零谱为 $a_i$，$b$ 的谱为 $b_l$。在各自本征基中令
+
+$$
+w_{il}=a_i|\langle i|l\rangle|^2.
+$$
+
+这些数构成概率分布，并有
+
+$$
+D(a\|b)=\sum_{i,l}w_{il}\log\frac{a_i}{b_l},
+$$
+
+$$
+\operatorname{Tr}\sqrt a\sqrt b
+=\sum_{i,l}w_{il}
+\exp\left(-\frac12\log\frac{a_i}{b_l}\right)
+\ge e^{-D(a\|b)/2}.
+\tag{169.14}
+$$
+
+最后一步是指数函数的 Jensen 不等式。另一方面，
+
+$$
+\operatorname{Tr}\sqrt a\sqrt b
+\le\|\sqrt a\sqrt b\|_1=\sqrt{F(a,b)}.
+$$
+
+于是 $D(a\|b)\ge-\log F(a,b)$。在（169.1）的共同支撑上取
+$a=\rho_j,b=\rho$，再用 $-\log$ 的凸性，得到
+
+$$
+\chi\ge\sum_jp_j(-\log F_j)
+\ge-\log\left(\sum_jp_jF_j\right)
+=-\log(1-u).
+\tag{169.15}
+$$
+
+指数运算及 $1-e^{-x}\le x$ 给（169.12），与（169.6）组合得到（169.13）。证明也表明 $\chi=0$ 强制 $u=0$；反向在 $\rho_j=\rho$ 时直接成立。证毕。
+
+这条界的方向是“小 Holevo 信息蕴含小额外损失”。它没有给出不依赖谱或规模的线性反向结论。
+

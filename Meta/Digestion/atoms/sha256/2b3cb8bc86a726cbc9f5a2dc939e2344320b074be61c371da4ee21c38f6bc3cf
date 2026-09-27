@@ -1,0 +1,63 @@
+### 145.1 来源角谱与独立对齐问题
+
+固定第143节的非退化已知来源，
+
+$$
+x=|a|^2,\qquad y=|b|^2,\qquad x+y=1,\qquad 0<x,y<1.
+$$
+
+沿用
+
+$$
+t_0=1,\qquad t_j=1-yt_{j-1},\qquad
+\lambda_j=x\frac{t_{j-1}}{t_j},\qquad
+\vartheta_j=\arccos\sqrt{\lambda_j}\quad(j\ge1).
+\tag{145.1}
+$$
+
+其中 $\lambda_1=1$，故 $\vartheta_1=0$；对 $j\ge2$，$0<\lambda_j<1$。固定附加秩 $r\ge1$，令
+
+$$
+\theta_{n,1}\le\cdots\le\theta_{n,2r}
+\tag{145.2}
+$$
+
+为将 $\vartheta_n,\vartheta_{n-1}$ 各重复 $r$ 次后按非降次序排列所得的角列表，$n\ge2$。第143节命题143.1说明，它恰为第 $n+1$ 轮实际输入的两个位块之间的主角列表。
+
+固定 $n,m\ge2$ 和一个接收空间 $K$，满足
+
+$$
+\dim K\ge\max(s_n,s_m)r,\qquad
+s_2=3,\quad s_j=4\ (j\ge3).
+\tag{145.3}
+$$
+
+将两个附加空间分别识别为 $\mathbb C^r$。允许相互独立地选择
+
+$$
+W_n:S_n\otimes\mathbb C^r\longrightarrow K,\qquad
+W_m:S_m\otimes\mathbb C^r\longrightarrow K
+$$
+
+为等距映射。两份正定附加态可任意给定；本节只使用它们的支撑秩。每份实际接收前支撑必须仍按第141节的来源嵌入构造：
+
+$$
+\mathcal U_j(W_j)
+=\operatorname{ran}\!\left[
+(W_j\otimes I_B)\Pi_j(F_j\otimes I_r)\right],
+\qquad j\in\{n,m\}.
+\tag{145.4}
+$$
+
+定义独立对齐距离
+
+$$
+d^{\mathrm{geom}}_{n,m}(r,K)
+=\inf_{W_n,W_m}
+\left\|P_{\mathcal U_n(W_n)}
+      -P_{\mathcal U_m(W_m)}\right\|_{\mathrm{op}}.
+\tag{145.5}
+$$
+
+两份支撑均在同一个 $K\otimes B$ 中，比较时保留相同的物理位基。这里的独立选择不包括另行改变 $F_j$、在两份表示中采用不同的位标签，或假定存在实现这两份选择的固定接收通道。
+

@@ -1,0 +1,31 @@
+**定义 64.1（可比载波与细相位关系）。** 保留第 63 章的实际实验、有限截距和同一后验标签向量，固定载波数 $p$。取确定性参考量 $\eta_{*,M}\to\infty$，令
+
+$$
+L_M=\eta_{*,M}^2,\qquad L_M\delta_M\to0,\qquad
+\eta_{a,M}^2/L_M\to c_a\in(0,\infty),\qquad
+\phi_{a,M}=\omega\eta_{a,M},\qquad\omega=\pi/2.
+\tag{64.1}
+$$
+
+每个 $D_{a,M}$ 仍由 (63.2) 定义，先放大再在零点锚定。以 $\langle t\rangle\in(-\pi,\pi]$ 表示模 $2\pi$ 的代表，假定
+
+$$
+\frac{L_M}{\omega}\langle\phi_{a,M}\rangle,\quad
+\frac{L_M}{\omega}\langle\phi_{a,M}-\pi\rangle,\quad
+\frac{L_M}{\omega}\langle\phi_{a,M}-\phi_{b,M}\rangle,\quad
+\frac{L_M}{\omega}\langle\phi_{a,M}+\phi_{b,M}\rangle
+\tag{64.2}
+$$
+
+各自具有有限实极限或绝对值趋于无穷，包括 $a=b$。后两类有限极限记为 $d^-_{ab},d^+_{ab}$。有限差或有限和关系确定共同别名簇。零类与 $\pi$ 类的偏移分别是前两类有限极限 $b_a$；其余每类选代表相位 $q_{C,M}$，取相容符号 $\sigma_a\in\{-1,1\}$ 与偏移
+
+$$
+\frac{L_M}{\omega}
+\langle\phi_{a,M}-\sigma_a q_{C,M}\rangle\longrightarrow b_a.
+\tag{64.3}
+$$
+
+相位关系的相容性与第 63 章相同，分辨率改为 $\omega/L_M$。特别是一般类满足
+$L_M\operatorname{dist}(q_{C,M},\pi\mathbb Z)\to\infty$。
+参考量 $\eta_{*,M}$ 仅规定尺度，不要求它本身是某个预先固定相位的载波。
+

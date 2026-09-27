@@ -1,0 +1,26 @@
+**theorem 25.2: 当前空间投影对隐藏档案时间域不充分；Claim status: open.** 在 `HiddenArchiveTemporalDomain.hidden_archive_preserves_current_changes_temporal_domain` 的有限构造中，$U$ 与 $U_{\rm old}$ 具有相同的 current/selected 数据和空间投影：
+
+$$
+\pi_{\rm sp}(U)=\pi_{\rm sp}(U_{\rm old})=(0,\delta_0).
+\tag{25.6}
+$$
+
+但 $U_{\rm old}$ 还含有一个 inactive archived event $e$，满足
+
+$$
+\tau(e)=2,\qquad \operatorname{position}(e)=0.
+$$
+
+令 $Y=\operatorname{shiftRich}(U,1)$，使右侧事件 $f$ 的时间为 $1$。则已有构造精确给出
+
+$$
+\operatorname{Guard}(U,Y),
+\qquad
+\neg\operatorname{Guard}(U_{\rm old},Y),
+\tag{25.7}
+$$
+
+因为在后一份档案中需要检查 $\tau(e)<\tau(f)$，即 $2<1$，该条件失败。于是存在同一空间纤维中的两个实际状态，它们对同一个后续时间接续给出不同合法性；式（25.4）对目标 $T=\operatorname{Guard}(-,Y)$ 失败。
+
+这个反例不说明空间投影没有用，而说明它没有截住所有仍影响联合实现的关系。要恢复该时间域，边界至少要保留 inactive archive 的时间资料，或保留一个对所有声明时间协议充分的未来行为摘要。把 archived event 当作“当前不显示所以不存在”，正是把必要的联合约束从边界删掉。
+

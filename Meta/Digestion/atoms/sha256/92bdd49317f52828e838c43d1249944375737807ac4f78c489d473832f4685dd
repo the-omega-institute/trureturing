@@ -1,0 +1,23 @@
+**固定二能级也没有统一线性反向常数。** 取两个正交纯边缘，概率为
+$(1-\varepsilon,\varepsilon)$，其中 $0<\varepsilon<1/2$。同样使用上述正交产品纯分支。此时
+
+$$
+\rho=\operatorname{diag}(1-\varepsilon,\varepsilon),
+\qquad
+u=2\varepsilon(1-\varepsilon),
+\qquad
+\chi=h_2(\varepsilon).
+\tag{169.28}
+$$
+
+当 $\varepsilon\downarrow0$，
+
+$$
+\frac{\chi}{u}
+\sim\frac12\log\frac1\varepsilon\longrightarrow\infty.
+$$
+
+因此即便 $k=r=2$ 固定，也不存在适用于所有平均边缘的有限常数
+$C$，使 $\chi\le Cu$；由（169.6），对固定输入维数同样不存在统一正数 $c$，使 $a\ge c\chi$。这与定理169.2一致，因为其谱常数
+$\lambda=\varepsilon$ 正在趋零。
+

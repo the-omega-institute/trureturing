@@ -1,0 +1,11 @@
+**定理 12.1。** 对任意整数 `2 <= i < j <= n/2`，令
+\[
+g=\gcd\left(\binom ni,\binom nj\right).
+\]
+则无须反例假设就有
+\[
+\boxed{g^4i^i\ge[2(n-1)]^i},\qquad
+\boxed{g\ge\left(\frac{2(n-1)}i\right)^{i/4}}.
+\tag{23}
+\]
+

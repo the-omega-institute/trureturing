@@ -1,0 +1,14 @@
+### 199.2 最优器的来源斜率收敛
+
+为处理阈值的移动，沿用第198节远离零的临界紧区间
+$I=[a,b]$，$h_c\in(a,b)$，并沿用纯来源最优面
+$\mathcal F$ 及冻结操作的系数 $\mathcal N,\mathcal P$。
+记
+
+$$
+\mathcal A_\epsilon(h)
+=\operatorname{Argmin}_{\Gamma\in\mathcal K}
+e_\epsilon(h,\Gamma),\qquad
+F_\epsilon(h)=\mathscr E(h\epsilon,\epsilon).
+$$
+

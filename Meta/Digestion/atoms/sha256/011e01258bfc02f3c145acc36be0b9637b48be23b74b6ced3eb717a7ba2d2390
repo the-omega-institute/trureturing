@@ -1,0 +1,4 @@
+**定义 436.2（仓内两端与中间接口）。** 项目的 `ZeroBayesResidualCriterion.statistical_residual_eq_zero_iff_mutually_singular` 将定义为 $(P\wedge Q)(\Omega)/2$ 的残余与相互奇异联系起来；源码通过测度格的不交性得到零值判据，该声明本身不承担从所有分类规则的优化推出 Bayes 风险公式的工作。`EquivalentMeasuresExcludePerfectSeparator.equivalent_probability_laws_exclude_perfect_separator` 排除等价概率律之间的满测／零测分离事件。`EquivalentLawPosteriorInterior.equivalent_law_posterior_stays_interior` 则在相互绝对连续与内部先验条件下，给出完整记录的 Radon–Nikodym 后验严格位于零与一之间的结论；其陈述没有建立一个随时间更新的后验过程。
+
+`SingularPosteriorCollapse.mutually_singular_laws_have_collapsing_posterior` 处理另一端：在相互奇异、内部先验且过滤生成全部记录信息时，分离事件的条件期望趋于各自的一或零。这里需要生成性，不能把始终丢失分离事件的观察也当作完整探究。本批要连接的是这些接口之间的情形：完整记录既可能明确来源，也可能留下真实的共同部分；前缀上的组合又必须与生成完整记录的关系相容。
+

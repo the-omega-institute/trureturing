@@ -1,0 +1,19 @@
+**定义 78.1（正根均值的通用子序列集）。** 保持第 72、74 章的原幅度、合法规模、
+全部取整和补偿、完整得分组及两种实际实验。
+以 $\bar c_{Q,j}^{\mathcal E}(\beta)$ 表示包含原计数线点
+$(k_0+jQ,l_0+jP)$ 的完整组之实际占据均值；它不是后验标签中心。
+仍用 $\vartheta$ 表示原 Liouville 斜率，$\theta$ 专指目标 Poisson 均值。
+定义 $\mathcal U$ 为满足以下性质的固定 $\beta\in(1/2,1)$ 的集合：
+对每个实数 $\theta>0$，存在原合法层的严格递增子序列及正根侧索引 $j_n$，使
+
+$$
+\bar c_{Q_n,j_n}^{pair}(\beta)\longrightarrow\theta,
+\qquad
+\bar c_{Q_n,j_n}^{path}(\beta)\longrightarrow\theta.
+\tag{78.1}
+$$
+
+同一个参数、子序列和索引用于两种确定均值；这不把两种不同数据实验耦合为一次观测。
+由 (74.6)，只用其中任一种实验定义的集合也等于 $\mathcal U$。
+本章将构造一个明确的稠密 $G_\delta$ 子集 $\mathcal U_0\subset\mathcal U$。
+

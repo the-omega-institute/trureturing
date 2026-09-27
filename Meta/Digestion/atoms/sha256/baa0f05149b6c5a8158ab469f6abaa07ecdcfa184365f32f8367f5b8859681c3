@@ -1,0 +1,18 @@
+**定理185.2（显式区间上的单输入精确最优性）。** 对
+$0<w\le1/10$，
+
+$$
+\boxed{
+\min_{\Gamma_+,\Gamma_-\ {\rm CPTP}}
+D\left(
+\frac12\sum_{s=\pm1}
+(\operatorname{id}_M\otimes\Gamma_s)(\eta_s(w)),
+P_\Xi
+\right)
+=d(w,t_\circ(w)).
+}
+\tag{185.27}
+$$
+
+最优值由 $U_s(t_\circ(w))$ 取得。
+

@@ -1,0 +1,19 @@
+**定理 27.2（四个映射与两条兼容等式的完整实现）。** 定义 27.1 的剥离给出保端点与总群标记的双射
+
+$$
+\psi_0:E_RE_S\longrightarrow E_{A_0}^{L},\qquad
+\psi_L:E_SE_R\longrightarrow E_{A_L}^{L}.
+$$
+
+逐层把一条 A_0 边穿过 U_0,…,U_(L-1) 的因子路径，给出 phi_R:E_A0 E_R→E_R E_AL；反向穿过 V_(L-1),…,V_0 给出 phi_S:E_AL E_S→E_S E_A0。它们全部有逐步反演的实际逆，且
+
+$$
+\varphi_R^{(L)}=(\operatorname{id}_R\times\psi_L)
+ (\psi_0^{-1}\times\operatorname{id}_R),
+\qquad
+\varphi_S^{(L)}=(\operatorname{id}_S\times\psi_0)
+ (\psi_L^{-1}\times\operatorname{id}_S).
+$$
+
+因此这些数据构成滞后恰为 L 的完整 compatible 路径证书。
+

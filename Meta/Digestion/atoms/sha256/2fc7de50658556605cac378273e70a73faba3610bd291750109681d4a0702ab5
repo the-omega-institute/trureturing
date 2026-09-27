@@ -1,0 +1,4 @@
+**Proof.** If $S$ is $A$-decidable, its finite partial sums approximate $F(S)$ with error at most $w_n\le2^{-n}$. Conversely, if the expansion is unique, apply the extraction procedure relative to $A$. If it is ambiguous, the actual support $S$ is finite or cofinite and is therefore computable without an oracle. This latter assertion is nonuniform: the appropriate finite prefix and tail choice can be constants in a program. No procedure selecting them from the real name has been asserted. $\square$
+
+This proof establishes the pointwise statement directly, without giving an algorithm a final-exception index for the radix sequence.
+

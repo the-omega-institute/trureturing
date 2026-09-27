@@ -1,0 +1,41 @@
+**命题 16.69（非和任务可非分裂而仅按任务类精确胶合）。** 保持命题16.67的来源 $S=(\mathbb Z/4\mathbb Z)^2\times\mathbb Z/2\mathbb Z$、已知零制备、全部公开平移及封闭访问条件，但将指定校准读出改为
+
+$$
+f(a,b)=\operatorname{hi}(a),\qquad
+\ell=\operatorname{hi}(a)+h.
+\tag{16.54}
+$$
+
+这是指定任务的改变；不把原来的 $\operatorname{hi}(a+b)+h$ 作为读出随坐标运输。两个局部任务仍分别输出己方位置与这个新的 $\ell$。令 $\rho=a+2h\pmod4$，只钟任务有四个最小状态；两个局部最小可达空间分别为
+
+$$
+W_A^{\rm reach}=\{(a,\rho)\in(\mathbb Z/4\mathbb Z)^2:a\equiv\rho\pmod2\},
+\quad |W_A^{\rm reach}|=8;
+\qquad
+W_B^{\rm reach}=(\mathbb Z/4\mathbb Z)^2,
+\quad |W_B^{\rm reach}|=16.
+\tag{16.55}
+$$
+
+这些空间上的固定闭合律为
+
+$$
+\begin{aligned}
+\mathrm{Init}_{\ell}&=0,&\mathrm{Update}_{\ell}(\rho;(u,v,k))&=\rho+u+2k,&
+\mathrm{Decode}_{\ell}(\rho)&=\operatorname{hi}(\rho),\\
+\mathrm{Init}_A&=(0,0),&\mathrm{Update}_A((a,\rho);(u,v,k))&=(a+u,\rho+u+2k),&
+\mathrm{Decode}_A(a,\rho)&=(a,\operatorname{hi}(\rho)),\\
+\mathrm{Init}_B&=(0,0),&\mathrm{Update}_B((b,\rho);(u,v,k))&=(b+v,\rho+u+2k),&
+\mathrm{Decode}_B(b,\rho)&=(b,\operatorname{hi}(\rho)).
+\end{aligned}
+\tag{16.56}
+$$
+
+对任意单独可达的局部状态，只要 $\rho_A=\rho_B$ 就恰好同源。全部三十二个任务类匹配对都是实际对，每个对恢复唯一 $h$。任务群仍为带标记的非分裂扩张 $0\to\mathbb Z/2\mathbb Z\xrightarrow{h\mapsto2h}\mathbb Z/4\mathbb Z\to\mathbb Z/2\mathbb Z\to0$，其中商记录 $a\bmod2$。
+
+证明。$\operatorname{hi}(a)+h=\operatorname{hi}(a+2h)$，全部未来只钟输出由 $\rho$ 决定，式(16.56)只使用状态与标记。任意 $\rho$ 由 $(a,b,h)=(\rho,0,0)$ 达到。若 $\rho\ne\rho'$，取共同未来 $u=-\rho$，把第一相位化为零。若差为二或三，高位立即不同；若差为一，改取 $u=1-\rho$，两相位分别为一与二，高位也不同；均可令 $v=k=0$。所以四相位全部未来可分。
+
+$A$ 的奇偶约束由 $\rho=a+2h$ 得到，且在更新中保持。满足它时有唯一 $h\in\mathbb Z/2\mathbb Z$ 使 $2h=\rho-a$，任取 $b$ 即达到该 $A$ 状态。$B$ 的任意 $(b,\rho)$ 可由 $(a,b,h)=(\rho,b,0)$ 达到。$A$ 的不同 $a$、$B$ 的不同 $b$ 由当前己方位置输出区别；己方位置相同而 $\rho$ 不同时，由上段的共同未来标记区别。定理16.61证明中的历史满射论证只用确定性更新、可达性与未来区分，因此在这个改变后的任务中分别给八、十六的下界；式(16.56)达到它们。
+
+现在令两个可达局部状态的相位相等为 $\rho$。$A$ 的可达域已经保证 $2h=\rho-a$ 有唯一解，配上任意所给 $b$ 就是一个共同来源。反向，实际同源显然给相等 $\rho$。每个相位有两个 $A$ 状态、四个 $B$ 状态，形成 $2\times4$ 完整矩形；四个矩形共三十二个对，并各自对应八个来源。任务映射 $S\to\mathbb Z/4\mathbb Z$ 为 $(a,b,h)\mapsto a+2h$，满射且核为 $\{(a,b,h):a+2h=0\}$，故任务群与所示模四群同构。它的核标记为 $h\mapsto2h$、商标记为奇偶；模二非零元的两个模四提升均为四阶，不能给群同态截面，所以非分裂。此例中任务类在 $A$ 的可达域上已约束己方位置奇偶，不能用和校准中 $E\times\widehat Q$ 的全乘积假设替代。证毕。
+

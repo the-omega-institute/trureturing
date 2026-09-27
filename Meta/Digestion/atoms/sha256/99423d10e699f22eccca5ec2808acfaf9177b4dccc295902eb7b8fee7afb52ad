@@ -1,0 +1,58 @@
+**结果1的精确剩余标量。**
+
+主 Kraus 驻定后，（211.9）、（211.12）精确等价于
+
+$$
+e_c^\dagger S_1w=0,\qquad e_d^\dagger S_1w=0.
+\tag{211.27}
+$$
+
+在 $t=0$，这由已证解析除法延拓得到，
+不是把自动为零的 $t$ 倍方程误当约束。
+变动额外权重，使用主 Kraus 驻定及 TP，精确得到
+
+$$
+w^\dagger S_1w=\partial_t\mathcal V
+=\epsilon\mu(\epsilon,h,t).
+\tag{211.28}
+$$
+
+因此在可逆基矩阵 $(k_1,e_c,e_d,w)$ 中，
+$S_1$ 的合同矩阵严格为
+
+$$
+S_1\ \sim\
+\begin{pmatrix}
+0&0&0\\
+0&B_1&0\\
+0&0&\epsilon\mu
+\end{pmatrix},
+\tag{211.29}
+$$
+
+其中 $B_1$ 为 $2\times2$ Hermitian 矩阵。
+$c$ 快对角在基点为 $1/4$，
+$d$ 慢对角除以 $\epsilon$ 后为 $\beta R/4$，
+交叉项是 $O(\epsilon)$。
+整面消失（211.25）和 Schur 补给：
+固定缩小邻域后，$B_1\succ0$ 对小 $\epsilon>0$ 成立。
+
+同理，在 $(k_0,e_c,e_b,e_d)$ 基中，
+$S_0$ 的首行首列为零，其余块有一个固定快正方向、
+两个 $\epsilon$ 阶慢正方向；
+由（211.26）及 Schur 补，它严格正定。
+对（211.23）的物理候选，因此
+
+$$
+\boxed{
+S_0\succeq0,\quad\ker S_0=\mathbb Ck_0,\qquad
+S_1\succeq0.
+}
+\tag{211.30}
+$$
+
+$\mu>0$ 时，$\ker S_1=\mathbb Ck_1$；
+$\mu=0$ 时，$\ker S_1=\operatorname{span}_{\mathbb C}\{k_1,w\}$。
+候选精确满足 $S_jJ_j^\sharp=0$，
+包括临界点 $t=\mu=0$。
+

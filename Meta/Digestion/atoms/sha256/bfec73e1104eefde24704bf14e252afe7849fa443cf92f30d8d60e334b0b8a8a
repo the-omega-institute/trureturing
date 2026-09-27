@@ -1,0 +1,40 @@
+**定理107.2（六维一重已执行像的三尾结构）。** 若
+
+$$
+d_0=6,\qquad \kappa_0=1,\qquad |\mathcal T|=3,
+\tag{107.7}
+$$
+
+则存在接收单线 $P\subset S_0$，使
+
+$$
+P\otimes F\subset E_0.
+\tag{107.8}
+$$
+
+将三条尾射线命名为 $A,B,C$，使 $f(A)=3$。存在
+$D_A, D_B,D_C\subset S_0\cap P^\perp$，分别为二维、一维、一维，满足
+
+$$
+S_0=P\oplus(D_A\dotplus D_B\dotplus D_C),
+\tag{107.9}
+$$
+
+$$
+\boxed{
+E_0=(P\otimes F)\oplus
+\bigl((D_A\otimes A)\dotplus(D_B\otimes B)\dotplus(D_C\otimes C)\bigr).
+}
+\tag{107.10}
+$$
+
+外层直和正交；三个 $D$ 之间只断言代数直和。其完整接收纤维为
+
+$$
+P_A=P\oplus D_A,\quad
+P_B=P\oplus D_B,\quad
+P_C=P\oplus D_C,
+\qquad P_z=P\quad([z]\notin\{A,B,C\}).
+\tag{107.11}
+$$
+

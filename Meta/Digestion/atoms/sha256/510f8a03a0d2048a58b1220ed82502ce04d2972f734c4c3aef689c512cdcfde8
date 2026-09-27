@@ -1,0 +1,57 @@
+**命题97.2（三维纤维在固定酉合同内处处可达）。** 存在固定酉
+
+$$
+W:K\otimes\mathbb C^2\longrightarrow K\otimes F
+$$
+
+使两位像分别为 $\mathcal R_0,\mathcal R_1$，并且对每条非零环境射线 $[z]$，两个纯环境纤维的维数都恰为三。相应七阶线性铅笔在每条射线上的零度都为三，而两个位等距各自都没有共同输入核。
+
+**证明。** 定义 $V_0:K\to\mathcal R_0$，依次将输入基 $u_0,\ldots,u_6$ 送至
+
+$$
+u_0\otimes e_0,\quad u_0\otimes e_1,\quad
+u_1\otimes e_0,\quad u_1\otimes e_1,\quad
+u_2\otimes e_0,\quad u_2\otimes e_1,\quad \psi.
+$$
+
+这里每行的 $u_j$ 均为上述接收单位基。定义 $V_1$ 将同一输入基依次送至
+
+$$
+u_5\otimes e_0,\quad u_5\otimes e_1,\quad
+u_6\otimes e_0,\quad u_6\otimes e_1,\quad
+u_3\otimes e_1,\quad u_4\otimes e_0,\quad
+\frac{u_3\otimes e_0-u_4\otimes e_1}{\sqrt2}.
+$$
+
+这十四个向量构成 $K\otimes F$ 的正交单位基，所以
+$W(x\otimes|i\rangle)=V_ix$ 给固定酉。特别地，每个 $V_i$ 都为等距，沿环境拆成的两个系数不可能具有共同非零输入核。
+
+对任意非零 $z$，若 $y\otimes z\in\mathcal R_0$，向 $P^\perp\otimes F$ 作投影得到
+
+$$
+(P_{P^\perp}y)\otimes z=c\psi.
+$$
+
+若 $c\ne0$，左侧是单纯张量，而右侧在 $E\otimes F$ 上的矩阵秩为二，不可能。因此 $c=0$ 且 $y\in P$。反向包含显然，故
+
+$$
+\{y:y\otimes z\in\mathcal R_0\}=P.
+$$
+
+对 $\mathcal R_1$，条件 $y\otimes z\perp P\otimes F$ 先给 $y\in E\oplus Q$。写 $z=z_0e_0+z_1e_1$ 及 $y=y_3u_3+y_4u_4+y_Q$，再与 $\psi$ 正交，得到
+
+$$
+z_0y_3+z_1y_4=0.
+$$
+
+因 $z\ne0$，这是 $E$ 上一个非零线性条件。因此
+
+$$
+\{y:y\otimes z\in\mathcal R_1\}
+=Q\oplus\mathbb C(-z_1u_3+z_0u_4),
+$$
+
+也恰为三维。由第90节核配对公式，相应铅笔在每条射线上的零度为三。证明完毕。
+
+上述例子没有例外环境射线：零度处处相同。因此即使没有正则余块导致的特殊降秩点，单个酉的完备性与两个位等距均无共同输入核，也不能将通用零度三排除。
+

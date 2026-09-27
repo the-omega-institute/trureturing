@@ -1,0 +1,27 @@
+**定理 70.2（固定正阶的次阶熵差与完整支持熵）。** 对每个固定
+$\nu\in(0,\infty)\setminus\{1\}$，两种实际实验分别满足
+
+```math
+H_{\nu,M}-\widetilde H_{\nu,M}=O_{\mathbb P,\nu}(Q^{-5/2}),\qquad
+\frac{H_{\nu,M}-H_{\infty,M}}{Q^2}
+ \longrightarrow\frac{\ell\log\nu}{2(\nu-1)\log2}.
+```
+
+式 (70.2)。
+
+在概率趋一的数据集上，完整实际后验支持精确为
+$\prod_{j\in K_M}\{0,\ldots,C_j\}$，故
+
+```math
+H_{0,M}=\sum_{j\in K_M}\log_2(C_j+1)=\widetilde H_{0,M},\qquad
+\frac{H_{0,M}}{Q^5}\longrightarrow2\mathscr H.
+```
+
+式 (70.3)。
+
+收敛在先验数据概率下成立，亦一致于所有大小 $q$ 确定支持的抽样律；
+后一表述评价同一均匀先验后验函数，不改用点质量先验。
+每个固定正阶的 $Q^5$ 主系数因而都是 $\mathscr H$。
+阶数一的差及阶数无穷的主项分别已由定理 68.7、68.6 给出。
+常数不要求一致于 $\nu\to1$ 或 $\nu\to\infty$。
+

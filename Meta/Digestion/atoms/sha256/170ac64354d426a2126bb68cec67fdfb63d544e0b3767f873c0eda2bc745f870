@@ -1,0 +1,14 @@
+**推论 219.3（停止时刻安全代入）。** 令 $\tau$ 是由样本过滤生成的任意停止时刻，允许 $\tau=\infty$；在 $\tau<\infty$ 时有
+
+$$
+\boxed{
+\Pr_{\mathrm{data}}
+\left\{
+|\widehat\theta_\tau-\theta|
+\le r_\tau(\delta)
+\right\}
+\ge1-\delta.
+}
+\tag{219.2}
+$$
+

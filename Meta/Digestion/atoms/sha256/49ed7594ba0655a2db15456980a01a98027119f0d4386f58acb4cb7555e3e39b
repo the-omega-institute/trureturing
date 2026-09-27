@@ -1,0 +1,86 @@
+**定理 139.2（有限事件数的矩阵生成式）。** 设
+
+$$
+\widehat{\mathbf T}^{(m)}_\Lambda(s)(\rho)
+=
+\int_0^\infty e^{-st}\mathbf T^{(m)}_\Lambda(dt)(\rho).
+$$
+
+则对每个 $m\ge1$，
+
+$$
+\boxed{
+\widehat{\mathbf T}^{(m)}_\Lambda(s)(\rho)
+=
+\mathsf R\!\left(D(s)\,[T D(s)]^{m-1}w\right).
+}
+\tag{139.1}
+$$
+
+因此，对 $0\le z<1$ 定义事件数生成响应
+
+$$
+\mathcal G_\rho(z,s)
+=
+\sum_{m\ge1}z^{m-1}
+\widehat{\mathbf T}^{(m)}_\Lambda(s)(\rho),
+$$
+
+有
+
+$$
+\boxed{
+\mathcal G_\rho(z,s)
+=
+\mathsf R\!\left(
+D(s)\,[I-zT D(s)]^{-1}w
+\right).
+}
+\tag{139.2}
+$$
+
+其标量迹版本为
+
+$$
+\boxed{
+\operatorname{Tr}\mathcal G_\rho(z,s)
+=
+\mathbf 1^{\mathsf T}
+D(s)\,[I-zT D(s)]^{-1}w.
+}
+\tag{139.3}
+$$
+
+### 证明
+
+由式（136.1），每条扇区路径 $\mathbf a$ 的总时间测度为 $\gamma_{|\mathbf a|}$。而
+
+$$
+\int_0^\infty e^{-st}\gamma_k(dt)
+=(1+s)^{-k}
+$$
+
+对 $k=0$ 也成立。于是路径中每出现一次慢扇区，就在其对应位置贡献一个 $(1+s)^{-1}$；把所有路径权重按矩阵乘法排列，正好得到
+
+$$
+D(s)[TD(s)]^{m-1}w.
+$$
+
+再施加 $\mathsf R$ 得式（139.1）。
+
+当 $0\le z<1$ 时，在扇区权重上的诱导 $1$ 范数中，$T$ 的列和为一且 $D(s)$ 的算子范数不超过一，所以
+
+$$
+\|zTD(s)\|\le z<1.
+$$
+
+Neumann 级数收敛：
+
+$$
+\sum_{m\ge1}z^{m-1}D(s)[TD(s)]^{m-1}
+=
+D(s)[I-zTD(s)]^{-1}.
+$$
+
+这给出式（139.2）；取迹得到式（139.3）。证毕。
+

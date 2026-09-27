@@ -1,0 +1,125 @@
+**定理42.3（同一荷轴上的相干窗口容量）。** 对（42.16），全部 $N\ge1$、$1\le W\le N+1$ 满足
+
+$$
+\boxed{k_{N,W}^{0,\mathrm{coh}}=4(N+W-1).}
+\tag{42.17}
+$$
+
+对每个 $0<\epsilon<1$，有显式界
+
+$$
+\boxed{
+\frac{1-\epsilon}{12}(\sqrt N+W)
+\le k_{N,W}^{\epsilon,\mathrm{coh}}
+\le 2W+\frac8\epsilon\sqrt N+3.
+}
+\tag{42.18}
+$$
+
+因此固定正误差容量为 $\Theta_\epsilon(\sqrt N+W)$，常数统一于所列全部 $N,W$。这一模型的 $\mathcal H=\mathcal H_0=\{0\}$；长度相干没有增加相位商维数。
+
+证明。对每个起点 $i$，终态 $j$ 决定最后一位，而此前 $n-1$ 位可以任意选择，所以
+
+$$
+C_n(i,0)=\{0,\ldots,n-1\},\qquad
+C_n(i,1)=\{1,\ldots,n\}.
+\tag{42.19}
+$$
+
+相同终态的荷集随 $n$ 嵌套，窗口并集分别为 $\{0,\ldots,M_*-1\}$ 和 $\{1,\ldots,M_*\}$。两种初态各有这两份集合，定理42.1立即给精确值 $4M_*$。此外，（32.7）的两个格基在 $G$ 下分别变为 $-1,1$，故 $\Lambda=\mathbb Z$，并且 $\Lambda_0=\mathbb Z$，得到两个平凡子群。
+
+近似下界用 Bell 参考输入。按总荷合成完整联合向量后，目标及其 Haar 平均为
+
+$$
+|\Psi_\theta\rangle=\sum_k e^{ik\theta}|\beta_k\rangle,
+\qquad
+\overline\rho=\int_{\mathbb T}|\Psi_\theta\rangle\langle\Psi_\theta|\,d\theta
+=\sum_k|\beta_k\rangle\langle\beta_k|.
+\tag{42.20}
+$$
+
+这里 $\beta_k=2^{-1/2}\sum_{i,j}|i\rangle_J|j\rangle_M\otimes b_{ij,k}^{\mathcal I}$，不同 $k$ 正交。求和包括全部端点与同荷长度分量。准确的非零特征值是
+
+$$
+\nu(k)=\|\beta_k\|^2
+=\frac1W\sum_{n=N}^{M_*}\binom nk2^{-n},
+\tag{42.21}
+$$
+
+约定不可达的二项系数为零。其等式可直接从
+$\Pr_i(S_n=k,X_n=j)=2^{-n}\binom{n-1}{k-j}$ 求和得到；初态数二与 Bell 归一化因子相消。
+
+对每个 $n\ge1$，Fourier 反演及 $\cos u\le e^{-u^2/2}$（$0\le u\le\pi/2$）给
+
+$$
+\begin{aligned}
+\max_k\binom nk2^{-n}
+&\le\frac1{2\pi}\int_{-\pi}^{\pi}|\cos(t/2)|^n\,dt\\
+&\le\sqrt{\frac2{\pi n}}\le n^{-1/2}.
+\end{aligned}
+\tag{42.22}
+$$
+
+另一方面，二项生成函数给每个 $k\ge0$ 的恒等式
+$\sum_{n=k}^{\infty}\binom nk2^{-n}=2$。所以
+
+$$
+\|\overline\rho\|=\max_k\nu(k)
+\le\min\{N^{-1/2},2/W\}
+\le\frac3{\sqrt N+W}.
+\tag{42.23}
+$$
+
+最后一步来自：若一个非负数同时不超过 $a/x$ 和 $b/y$，则不超过 $(a+b)/(x+y)$。
+
+设共同编码维数为 $D_K$、共同解码为 $\mathcal D$，置 $\tau=\mathcal D(I_K)$，故 $\operatorname{Tr}\tau=D_K$。编码后的联合态不超过 $I_{JM}\otimes I_K$，解码正性使恢复态不超过 $I_{JM}\otimes\tau$。完整半迹误差至多 $\epsilon$ 给每个纯目标的投影概率至少 $1-\epsilon$。Haar 平均后，用 $\dim(JM)=4$ 得
+
+$$
+1-\epsilon
+\le\operatorname{Tr}[\overline\rho(I_{JM}\otimes\tau)]
+\le\frac{12D_K}{\sqrt N+W}.
+\tag{42.24}
+$$
+
+这证明下界，没有测量长度或相位。
+
+上界只保留整数荷带
+
+$$
+\mathcal B_{\rm good}
+=\mathbb Z\cap
+\left[\frac N2-\frac{\sqrt N}{\epsilon},\,
+\frac{M_*}2+\frac{\sqrt N}{\epsilon}\right].
+\tag{42.25}
+$$
+
+令 $\mathcal W_{\rm good}$ 是所有 $i,j$ 及 $k\in\mathcal B_{\rm good}$ 的完整跨长度向量 $b_{ij,k}^{\mathcal I}$ 的张成，$\Pi$ 为其投影。对窗口中任一长度，$\mathbb E_iS_n=n/2$ 位于荷带的中心区间，而
+$\operatorname{Var}_i S_n=n/4\le N/2$。荷落在带外必有 $|S_n-n/2|>\sqrt N/\epsilon$，故 Chebyshev 不等式给每个初态、每个长度的漏出概率至多 $\epsilon^2/2$。
+
+投影在实际来源支撑上保留或删去整个总荷分量，所以跨长度的总漏出是这些概率的等权平均。投影还保持初态首边标签扇区，因此严格有
+
+$$
+\mathcal T_{\theta;N,W}^*[I_M\otimes(I-\Pi)]
+\mathcal T_{\theta;N,W}
+\preceq\frac{\epsilon^2}{2}I_M
+\tag{42.26}
+$$
+
+对全部相位成立，并可张量任意参考。
+
+荷带内整数个数至多 $(W-1)/2+2\sqrt N/\epsilon+1$。每个荷至多有四个端点向量，所以将 $\mathcal W_{\rm good}$ 等距编码、再加一维失败旗标，所需维数不超过
+$2W+8\sqrt N/\epsilon+3$。明确地，取等距 $F:\mathcal W_{\rm good}\to K_{\rm good}$ 并在正交补以零延拓，定义
+
+$$
+\begin{aligned}
+\mathcal E(X)&=F\Pi X\Pi F^*
++\operatorname{Tr}[(I-\Pi)X]|\perp\rangle\langle\perp|,\\
+\mathcal D(Y)&=F^*YF+\langle\perp|Y|\perp\rangle\tau_0,
+\end{aligned}
+\tag{42.27}
+$$
+
+其中 $\tau_0$ 是任一预定档案态。两者全域 CPTP；成功项是一个整体 Kraus 算子，保留所有选中向量之间的相干，包括不同长度与不同荷。对任意参考纯化，令纯目标的漏出为 $d\le\epsilon^2/2$，解码后的目标重叠至少 $(1-d)^2$，故半迹误差至多 $\sqrt{2d}\le\epsilon$。这证明上界和定理。证明完毕。
+
+在此实例中，窗口均值由 $N/2$ 移到 $M_*/2$，仍在同一条总荷轴上。宽度 $W\ll\sqrt N$ 时，已有 $\sqrt N$ 波动尺度控制近似容量；宽度 $W\gg\sqrt N$ 时，均值区间长度控制容量。精确容量则始终计数合并后的荷值，不能把每个长度分别编码的维数相加作为必要下界。
+

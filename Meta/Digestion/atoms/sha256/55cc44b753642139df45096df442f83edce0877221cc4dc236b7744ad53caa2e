@@ -1,0 +1,16 @@
+**227.7.3 同一候选集上的距离连续性。**
+
+所有目标使用同一个固定候选集 $\mathfrak C_2$。由三角不等式，
+$$
+|d_2(\mathcal R_\varepsilon)-d_2(\mathcal R)|
+\le\frac12\|\mathcal R_\varepsilon-\mathcal R\|_\diamond
+\longrightarrow0.
+\tag{227.GD.31}
+$$
+$q_{0,\varepsilon}\to q_0$ 是算子范数连续性。$\delta_\varepsilon\to\delta$ 则来自单位系数球面上的一致收敛及紧集取最小值的连续性。对非退化目标已有
+$$
+d_2(\mathcal R_\varepsilon)
+=\min(\delta_\varepsilon,q_{0,\varepsilon}).
+$$
+取极限便得到一般目标的（227.GD.3）。推论 227.6的显式修复上界对原目标本身仍有效，所以距离下确界确实取得。证明完毕。
+

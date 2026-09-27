@@ -1,0 +1,92 @@
+### 189.5 保留非负缺陷项的 Rayleigh 修正
+
+对每个这样的 instrument，取
+
+$$
+q_\epsilon=\frac{F_1}{F_0+F_1}
+=\frac12+O(\sqrt\epsilon).
+$$
+
+式（189.10）的上方二维块在此权重的最高单位向量恰为
+$u=u_{q_\epsilon}$，最高根为
+
+$$
+\lambda=r\left(1-\frac{F_0F_1}{F_0+F_1}\right)
+=\frac34+O(\epsilon).
+$$
+
+将完整偶块写成 $\begin{psmallmatrix}A&B\\B^\dagger&D\end{psmallmatrix}$。
+由（189.9）及 $0\le G_j\le1$，
+$\|B\|=O(\sqrt\ell)$、$\|D\|=O(\ell)$，常数独立于 instrument。
+对试探向量 $(u,B^\dagger u/\lambda)$ 作 Rayleigh 商，严格得到
+
+$$
+\lambda_{\max}
+\begin{pmatrix}A&B\\B^\dagger&D\end{pmatrix}
+\ge\lambda+\frac{\|B^\dagger u\|^2}{\lambda}
+-C\ell^2.
+\tag{189.14}
+$$
+
+确实，若 $\nu=\|B^\dagger u\|^2$，该 Rayleigh 商减去 $\lambda$ 等于
+
+$$
+\frac{\nu/\lambda+
+(B^\dagger u/\lambda)^\dagger D(B^\dagger u/\lambda)}
+{1+\nu/\lambda^2}.
+$$
+
+$\lambda$ 有统一正下界，$\nu=O(\ell)$，所以（189.14）的余项一致。
+当 $h=0$ 时，$\ell=0$、$B=0$，该式直接退化为原压缩下界。
+
+取一列 $\epsilon\downarrow0$ 的最优 instrument。
+其两份 Choi 矩阵属于同一紧集，故任意子列都有 Choi 收敛的子列。
+以下用上标 $*$ 表示某个这样的极限矩。
+由（189.13）与正性，
+
+$$
+A_j^*=\frac12,\qquad C_j^*=0,\qquad P_j^*=0,
+\qquad N_0^*+N_1^*=0.
+\tag{189.15}
+$$
+
+最后一式使用共同保迹条件。
+这时（189.9）只需 $T_j\to M_j^*$，不要求 Choi 偏差为
+$o(\epsilon)$ 或 $O(\epsilon)$。
+从（189.10）直接计算，
+
+$$
+\frac{\|B^\dagger u\|^2}{\epsilon\lambda}
+\longrightarrow
+\frac{2h}{3}\sum_{j=0}^1
+\left|1-\frac{M_j^*}{2}\right|^2.
+\tag{189.16}
+$$
+
+对上方最高根则使用（189.12）的精确分解：
+
+$$
+\lambda-\frac34
+=-\frac{3h}{4}\epsilon
+-\frac{r\epsilon(L_0+L_1)}4
++r\left[\frac{\mathcal C}{4}+\frac{D_F^2}{4S_F}\right].
+\tag{189.17}
+$$
+
+方括号内两项始终非负，故可以在下界中删去。
+这一步没有把未知的 $O(\sqrt\epsilon)$ Choi 偏差吸收到
+$o(\epsilon)$ 里。
+
+结合（189.14）—（189.17），任何相应的极限下斜率至少为
+
+$$
+\begin{aligned}
+\frac{7h}{12}+\frac{\beta\Sigma}{8}
+&-\frac\beta4(B_0^*+RB_1^*)
++\frac{\gamma\delta}{2}\operatorname{Im}N_0^*\\
+&-\frac{2h}{3}\operatorname{Re}(M_0^*+M_1^*)
++\frac h6(|M_0^*|^2+|M_1^*|^2).
+\end{aligned}
+\tag{189.18}
+$$
+

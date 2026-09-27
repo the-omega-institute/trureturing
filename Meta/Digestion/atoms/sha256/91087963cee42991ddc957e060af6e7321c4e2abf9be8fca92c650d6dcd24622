@@ -1,0 +1,52 @@
+**引理61.1（内部尾的射线分类与非正交性）。** 用相同字母表示同一射线、不同字母表示不同射线，三个纯尾环境只可能为
+$$
+AAA,\qquad AAB,\qquad ABA.
+\tag{61.4}
+$$
+在后两种模式中，取不同射线的单位代表 $\alpha,\beta$，必有
+$$
+0<|\langle\alpha,\beta\rangle|<1.
+\tag{61.5}
+$$
+
+**证明。** 若 $\eta_4\parallel\eta_5$，则直接得到 $AAA$ 或 $AAB$。以下设它们不同。
+
+固定 $V_1$ 将 $A_0=G_3$ 和 $G_4$ 分别送到不同环境射线，因此
+$$
+A_0\cap G_4=0.
+$$
+于是 $A_0\otimes F+G_4\otimes\eta_4$ 六维。对接收空间取商 $\pi:K\to K/A_0$。包含于 $V_0K$ 的空间
+$$
+A_0\otimes F+G_4\otimes\eta_4+G_5\otimes\eta_5
+$$
+在此商上的像为
+$$
+\pi(G_4)\otimes\eta_4+\pi(G_5)\otimes\eta_5.
+$$
+两环境向量独立，故维数为 $2+\dim\pi(G_5)$。核恰为四维 $A_0\otimes F$，七维位像给 $\dim\pi(G_5)\le1$。所以
+$$
+A_0\cap G_5\ne0.
+$$
+固定 $V_1$ 在这两个域上分别使用 $\eta_4$、$\eta_6$；单射性迫使它们共线。得到 $ABA$。
+
+再排除正交。若存在 $j\in\{5,6\}$ 使 $\eta_4\perp\eta_j$，式（61.2）和固定等距给
+$$
+A_0\perp G_{j-1},\qquad H_3\perp H_{j-1}.
+\tag{61.6}
+$$
+因为所有尾环境属于 $F$，旧块（61.1）与跨位正交给全部 $n=4,5,6$ 的
+$$
+B_0\perp G_n,\qquad A_0\perp Q_n.
+\tag{61.7}
+$$
+对 $h\in H_3\subset A_0\oplus B_0$、$h'\in H_{j-1}\subset G_{j-1}\oplus Q_{j-1}$，式（61.6）、（61.7）使
+$$
+0=\langle h,h'\rangle
+=\langle P_{B_0}h,P_{Q_{j-1}}h'\rangle.
+$$
+两个投影满射，故 $B_0\perp Q_{j-1}$。于是
+$$
+C_3=A_0\oplus B_0\ \perp\ C_{j-1}=G_{j-1}\oplus Q_{j-1},
+$$
+七维空间不可能包含两个正交四维空间，矛盾。在 $AAB$ 中取 $j=6$，在 $ABA$ 中取 $j=5$，即得（61.5）。证明完毕。
+

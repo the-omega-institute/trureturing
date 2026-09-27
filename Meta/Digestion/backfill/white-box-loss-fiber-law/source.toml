@@ -1,0 +1,5 @@
+source_id = "white-box-loss-fiber-law"
+path = "docs/develop/theory/WHITE_BOX_LOSS_FIBER_LAW.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

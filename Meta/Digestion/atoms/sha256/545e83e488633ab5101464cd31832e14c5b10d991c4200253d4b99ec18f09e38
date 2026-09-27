@@ -1,0 +1,28 @@
+**适配 6.7.4（直接消费第 4 章的非 iid 接口）。** 定义 4.2.1 已明确不要求数字独立或柱质量有理。这里取其 $\Sigma_j=A$、参考律为实际 $\mu_q$ 或 $\mu_\alpha$、$K_s=E_s$ 为前 $s$ 个计算步骤所见有限禁柱并的补、$K=E$、$p_s=f_s=\mu(E_s)$、$M=\mu(E)>0$、$\nu_s=\mu(\,\cdot\cap E_s)/f_s$、$\nu=\mu(\,\cdot\cap E)/M$。即使该阶段没有新公告，也必须在有限计算时间结束；阶段与词深度不是同一个索引。
+
+供应实际参考柱的统一可计算名字、完整有限字母列表及同一 c.e. 呈示。正隐藏发射、更新及初态的全部可计算名字可实现矩阵乘积柱名；或直接供应输出律名字即可。非可计算准备的语义 gap 本身不满足这项输入。所有名字和呈示允许相对于同一个 oracle，不能隐去参考律或呈示的 oracle。于是按定义 4.2.1，$\mathbf M$ 是 $M$ 的误差 $2^{-t}$ Cauchy 名，$\mathbf C$ 是每柱条件概率的同精度名，$\mathbf T$ 是所指定同一阶段序列的总变差合格阶段选择器，$\mathbf S$ 使用公平 iid 位、有限输出只读有限输入、字母不可撤回，并以概率一持续输出无限串且律恰为 $\nu$。该 sampler 合同不是正概率成功或允许正概率有限停止；不供应一般逐位等待或平均运行时间。$\mathbf R$ 是全部真实非空切片的特征函数，非法词返回零。
+
+定理 4.2.3–4.2.5 以这些替换直接给
+$$
+\mathbf M\longleftrightarrow\mathbf T\longrightarrow\mathbf C\longleftrightarrow\mathbf S,
+\qquad d_{\rm TV}(\nu_s,\nu)=(f_s-M)/f_s.
+$$
+无需再建立非 iid 通用接口。仅靠归一化没有反向恢复 $M$；为 $\mathbf C\to\mathbf M$，在定义 4.1.1 中具体取完整标准层分割 $\mathcal D_n=\{[v]:|v|=n\}$，实际权 $w_{n,v}=\mu[v]>0$，以及真实
+$$
+\mathcal R_n=\{v:E\cap[v]\ne\varnothing\},\quad
+A_n=\bigcup_{v\in\mathcal R_n}[v],\quad a_n=\sum_{v\in\mathcal R_n}\mu[v].
+$$
+命题 4.3.6 的包含在此保持原量词：若 $x\in A_n\setminus E$，同一个深度 $n$ 柱还有幸存者；删掉 $x$ 的任何短禁词也会删掉该幸存者，故其禁词必长于 $n$。按最终不同词预算或其前缀极小族求并集界，得到
+$$
+0\le a_n-M\le\mu\!\left(\bigcup_{|w|>n,w\in F}[w]\right)\le\epsilon_n,
+$$
+这里 $\epsilon_n$ 可用已证明有效的原律 $W_n$ 或 $T_n$；辅助头尾 $R_n$ 不充当此处 $\epsilon_n$。不得把真延拓换成“当前没见禁祖先”。
+
+有了有效层选择器，定理 4.1.4 以 $D_n=\max_{|v|=n}\nu[v]/\mu[v]$ 给 $M\le D_n^{-1}\le a_n$；计算所有实际权及条件柱而不查询 $\mathbf R$，就有 $\mathbf C\to\mathbf M$。命题 4.3.1 则以真延拓查询和实际加权和给 $\mathbf R\to\mathbf M$，此方向不需库存枚举。相同层的柱不等权时，不能替换成 $|\mathcal R_n|d^{-n}$。
+
+要加上指向 $\mathbf R$ 的箭头，必须另供全部查询的局部合同，或命题 4.3.3 的独立支撑承诺 $E=\operatorname{supp}\nu$。第 6.3.3 节的移位预算、无最终禁祖先及条件律给有数值下界的查询；所有查询都履约才供应全部 $\mathbf R$。例如一词 iid 的第 5.5.1–5.5.4 节以 $d\ge3$、同一 iid 尾给所有查询；一般预算则逐项使用第 5.5.5 节的 $b^{[h]}$、$B^{[h]}<1$ 和有效移位模量。若从第 5.6.1 节取得 $0<\gamma_h\le\eta_{b^{[h]}}(p)$，再取正坐标下界 $\ell_a<p_a$，严格有理供应可取
+$$
+g_v=(\gamma_h/2)\prod_{i\le h}\ell_{v_i},
+$$
+空词用空积一。历史类或隐藏情形可取已取得的严格条件 gap 下界与实际柱正下界相乘，例如 $g_v=\delta_0^h\gamma_h/2$，其中 $0<\delta_0\le\delta$ 且 $\gamma_h$ 不超过对应类 gap。后验加权数值界可替代更粗的最小状态界，但须实际可计算其所用数据。只拿一个查询的供应不能宣布全接口等价。
+

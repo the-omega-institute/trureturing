@@ -1,0 +1,54 @@
+### 122.7 最后正交回返与真实早期一位向量矛盾
+
+在剩余 $ABCCC$、$B\perp C$ 的分支，（122.10）给
+
+$$
+E=(Y_B\otimes B)\oplus(Y_C\otimes C),
+\qquad \dim Y_B=2,\quad\dim Y_C=3.
+$$
+
+这里的直和由 $B\perp C$ 而正交。真实 $V_1G_2=Q_3\otimes B$，且 $\dim Q_3=\dim Y_B=2$，所以 $Q_3=Y_B$。
+
+同一个真实首轮零位向量 $p$ 属于 $S_0$，因此 $V_1p=v\otimes A\in E$。$A$ 不同于正交的 $B,C$，可写 $A=\alpha B+\beta C$，其中 $\alpha\beta\ne0$。沿同一个 $E$ 的两环境分量读取 $v\otimes A$，得到
+
+$$
+v\in Y_B\cap Y_C,\qquad \boxed{v\in Q_3.}
+\tag{122.12}
+$$
+
+这里固定的是实际 $V_1p$ 的同一个单位向量 $v$，没有从两个纤维中另选公共向量。
+
+实际一位像满足
+
+$$
+V_1G_2=Q_3\otimes B,\qquad
+V_1G_3=Q_4\otimes C.
+$$
+
+环境正交及 $V_1$ 等距给 $G_2\perp G_3$。另一方面，$G_2\otimes A\subset R_0$ 与 $Q_3\otimes B\subset R_1$ 跨位正交；由于 $B^\perp=C$ 而 $A\ne C$，有 $\langle A,B\rangle\ne0$，故 $G_2\perp Q_3$。后期来源合同给 $H_3\subset G_3\oplus Q_3$，于是
+
+$$
+G_2\perp H_3,\qquad u\perp H_3.
+\tag{122.13}
+$$
+
+再看实际零位像
+
+$$
+V_0H_2=G_3\otimes B,\qquad
+V_0H_3=G_4\otimes C.
+$$
+
+它们使 $H_2\perp H_3$。真实早期列 $a^2u+bv\in H_2$ 与 $b\ne0$，结合（122.13），给
+
+$$
+v\perp H_3.
+\tag{122.14}
+$$
+
+可是（122.12）使 $v\in Q_3$，而后期满投影满足 $P_{Q_3}H_3=Q_3$。对任意 $q_3\in Q_3$，选 $h\in H_3$ 使 $P_{Q_3}h=q_3$，便有 $\langle v,q_3\rangle=\langle v,h\rangle=0$。所以 $v\perp Q_3$，与非零 $v\in Q_3$ 矛盾。最后正交回返也不可能，定理122.1得证。
+
+这一短证明只使用前四轮的已执行映射，以及前文从完整六终端合同取得的同一个五维 $E$；不需要进一步使用 $H_3=H_4$ 或比较来源主角行列式。
+
+结合第117节的 $N=N_{\mathrm{prod}}$、第119节的支持分割，以及第121节的单支持三维禁阻，二重纤维分支的三维剩余空间只可能保留支持分割 $2+1$。该剩余形态尚未构造或排除；一般容量区间仍为 $7\le d_{\mathrm{CPTP},6}(a,b)\le8$。
+

@@ -1,0 +1,48 @@
+**证明中的标准可逆编码事实。** 以下回顾精确纠错的 Kraus 正交分解，并给出所需的证明，以明确处理第一步接收态可能混合的情形。这是 Knill–Laflamme 精确纠错条件及其张量因子结构的应用，参见 [Knill–Laflamme, *Theory of Quantum Error-Correcting Codes*, Theorems 3.2、3.5，式（19）—（20）](https://arxiv.org/abs/quant-ph/9604034)，不作为本节新结论。设纯态
+$`|\Omega\rangle\in R\otimes S`$ 在 $`S`$ 上满 Schmidt 秩
+$`s=\dim S`$。设编码通道
+$`\mathcal E:\mathcal L(S)\to\mathcal L(K)`$ 有本地解码通道
+$`\mathcal D`$，满足
+
+$$
+(\operatorname{id}_R\otimes\mathcal D\mathcal E)
+(|\Omega\rangle\langle\Omega|)
+=|\Omega\rangle\langle\Omega|.
+\tag{23.2}
+$$
+
+则存在正数 $`p_1,\ldots,p_r`$ 和等距映射
+$`W_\alpha:S\to K`$，使
+
+$$
+\mathcal E(X)=\sum_{\alpha=1}^r p_\alpha
+W_\alpha XW_\alpha^\dagger,
+\qquad
+\sum_\alpha p_\alpha=1,
+\qquad
+W_\alpha^\dagger W_\beta=\delta_{\alpha\beta}I_S.
+\tag{23.3}
+$$
+
+特别地，$`sr\le\dim K`$。若 $`\dim K<2s`$，则 $`r=1`$，编码在此支撑上是单个等距映射，编码后的联合态为纯态。
+
+为验证这一标准事实，将（23.2）按 Schmidt 基展开。各 Schmidt 系数均非零，逐矩阵块比较即得
+$`\mathcal D\mathcal E=\operatorname{id}`$ 在
+$`\mathcal L(S)`$ 上成立。取编码 Kraus 算子 $`A_\alpha`$ 和解码 Kraus 算子 $`B_\beta`$。恒等通道的 Choi 矩阵秩为一，因此它的每个 Kraus 算子均为恒等嵌入的标量倍数，即
+$`B_\beta A_\alpha=\lambda_{\beta\alpha}I_S`$；若解码输出含更大的档案空间，这里的 $`I_S`$ 解释为该支撑的自然嵌入。由解码的保迹性，
+
+$$
+A_\alpha^\dagger A_\gamma
+=\sum_\beta (B_\beta A_\alpha)^\dagger
+(B_\beta A_\gamma)
+=c_{\alpha\gamma}I_S,
+\qquad
+c_{\alpha\gamma}=\sum_\beta
+\overline{\lambda_{\beta\alpha}}\lambda_{\beta\gamma}.
+\tag{23.4}
+$$
+
+对半正定矩阵 $`c`$ 作酉对角化，相应酉混合 Kraus 算子，再删去零算子，得到
+$`F_\alpha^\dagger F_\beta=p_\alpha\delta_{\alpha\beta}I_S`$，其中 $`p_\alpha>0`$。置
+$`W_\alpha=F_\alpha/\sqrt{p_\alpha}`$，便得（23.3）。各等距映射有两两正交的 $`s`$ 维像空间，因此 $`sr\le\dim K`$。
+

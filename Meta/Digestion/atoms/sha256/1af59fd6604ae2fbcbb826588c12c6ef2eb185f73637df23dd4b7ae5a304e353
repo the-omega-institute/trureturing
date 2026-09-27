@@ -1,0 +1,11 @@
+**推论 247.3（多段串联）。** 对 $n$ 个带共同接口合同的关系体，若第 $i$ 段的统一接口误差不超过 $\varepsilon_i$，则整体终端误差不超过
+
+$$
+D_{\mathrm{TV}}(\Lambda_1\star\cdots\star\Lambda_n,
+\bar\Lambda_1\star\cdots\star\bar\Lambda_n)
+\le
+\sum_{i=1}^{n}\varepsilon_i.
+$$
+
+若每段后续作用有增益 $g_i$，则第 $i$ 段误差项按其后续增益乘积传播。
+

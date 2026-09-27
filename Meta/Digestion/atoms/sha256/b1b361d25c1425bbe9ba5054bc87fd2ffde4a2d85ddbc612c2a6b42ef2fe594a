@@ -1,0 +1,46 @@
+**定理210.2（近最优操作的法向 Kraus 缺陷）。**
+可进一步缩小上述固定矩形并取常数 $c>0$，使对（210.2）内全部参数、
+任意 $\Gamma\in\mathcal K$ 及其任意 Kraus 表示
+$J_j=\sum_\alpha|k_{j,\alpha}\rangle\langle k_{j,\alpha}|$，有
+
+$$
+\boxed{
+\sum_{j,\alpha}\left\|
+(I-\Pi_j)k_{j,\alpha}\right\|^2
+\le
+\frac{e(\ell,\ell\tau,\Gamma)-\mathscr E(\ell,\ell\tau)}{c\ell},
+\qquad
+\Pi_j=\frac{|k_j^\sharp\rangle\langle k_j^\sharp|}{\|k_j^\sharp\|^2}.
+}
+\tag{210.14}
+$$
+
+证明。第209节在候选核的正交补上给出实际块矩阵
+
+$$
+\begin{pmatrix}
+H_j&\ell B_j^\dagger\\
+\ell B_j&\ell T_j
+\end{pmatrix},
+\qquad H_j(0,0)=1/4,\quad
+T_j(0,0)=\operatorname{diag}(1/2,1/4).
+\tag{210.15}
+$$
+
+所有系数解析有界。先取固定矩形使 $H_j,T_j$ 都有统一正下界，
+再缩小 $\ell_0$，以配方吸收交叉项：
+对任意标量 $u$、二维向量 $z$，
+
+$$
+H_j|u|^2+2\ell\operatorname{Re}(u^*B_j^\dagger z)
++\ell z^\dagger T_jz
+\ge c_1|u|^2+c_2\ell\|z\|^2.
+\tag{210.16}
+$$
+
+由 $0<\ell\le\ell_0$，可取一个固定 $c>0$ 使
+$S_j\succeq c\ell(I-\Pi_j)$。
+代入第209节的全 Choi 支持不等式，再逐 Kraus 展开迹，得到（210.14）。
+该左侧也等于 $\sum_j\operatorname{Tr}[(I-\Pi_j)J_j]$，
+因此不依赖 Kraus 表示。证毕。
+

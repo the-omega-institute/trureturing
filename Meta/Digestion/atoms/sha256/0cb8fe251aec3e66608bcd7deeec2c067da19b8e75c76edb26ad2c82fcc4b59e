@@ -1,0 +1,11 @@
+**定义 237.1（以未来回应补充当前读数）。** 给定允许的输入集 $U$、确定更新 $F_u:X\to X$ 与读数 $q:X\to Q$，定义状态 $x$ 的行为轮廓为
+
+$$
+\mathcal B(x):U^*\to Q,\qquad
+\mathcal B(x)(w)=q(T_wx),
+$$
+
+其中 $U^*$ 是全部有限输入词，空词代表当前读数。两个状态行为相同，指它们在每一条所允许的有限输入词后都给出相同读数。这比仅有当前 $q(x)=q(y)$ 更强，也始终相对于指定输入集、更新与读数。
+
+项目 [BehaviorUpdateWordAction](../../../D5/S3/ObserverMemory/RefinementClosure/BehaviorUpdateWordAction.lean) 的 `behavior_update_well_defined` 给出关键稳定性：若 $\mathcal B(x)=\mathcal B(y)$，则对任意 $u$，$\mathcal B(F_ux)=\mathcal B(F_uy)$；所以输入更新可以良定义地作用于实际实现的行为轮廓，并按有限词复合。证明的结构是把任意后续词 $w$ 接在首个输入 $u$ 后，用原来的行为相等比较词 $uw$。
+

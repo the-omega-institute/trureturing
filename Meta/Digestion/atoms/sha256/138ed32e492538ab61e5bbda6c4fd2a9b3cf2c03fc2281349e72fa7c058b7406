@@ -1,0 +1,27 @@
+#### 233.5.3 记录块与输入转置
+
+候选保持经典记录块结构，加上 $Q\preceq P_{\rm tar}$，可写
+$$
+J=\sum_{j=1}^NB_j\otimes|j\rangle\langle j|\otimes P_j,
+\qquad B_j\succeq0,
+\tag{233.FF.37}
+$$
+并有
+$$
+Q=\sum_{j=1}^NQ_j\otimes|j\rangle\langle j|\otimes P_j,
+\qquad Q_j=\operatorname{supp}B_j.
+\tag{233.FF.38}
+$$
+每个 $Q_j$ 是输入 Choi 因子上的正交投影。式（233.FF.36）恰为
+$$
+\sum_jQ_j=\frac RdI_d.
+\tag{233.FF.39}
+$$
+按照（233.FF.3）的约定，实际输入分支效应为 $B_j^{\mathsf T}$，其支撑投影为 $\Pi_j=Q_j^{\mathsf T}$。转置保持正交投影，并保持上述实标量恒等式，故
+$$
+\sum_j\Pi_j=\frac RdI_d.
+$$
+必要性成立。投影和条件本身不依赖所选输入基；这里的转置只固定 Choi 坐标与实际输入效应的对应。
+
+结合最优候选存在性与普适下界，若不存在这些投影，就不能有等号，故（233.FF.8）为严格不等式。这完成定理233.1。
+

@@ -1,0 +1,13 @@
+**命题 4.5（部分吸收是通有的，repo-derived）。** 固定 $d_1=u$，令 $d_2(\alpha)=\cos\alpha\,u+\sin\alpha\,v$，$\alpha\in[\pi/4,\pi/2]$（$\alpha=\pi/4$ 为 $D_A$，$\alpha=\pi/2$ 为 $D_F$）。若 $0<\lambda<1/\sqrt2$、$p_{AB}>0$、$p_B>0$，则 $\mathcal J(\alpha)$ 在两端点附近可微且
+$$
+\mathcal J'(\pi/4^+)=-\,p_B\frac{1/\sqrt2-\lambda}{\sqrt2}<0,\qquad
+\mathcal J'(\pi/2^-)=p_{AB}\,\lambda(1-\lambda)>0 ,
+$$
+故 $[\pi/4,\pi/2]$ 上的每个极小点都是内点：子事件的原子严格介于 $v$ 与 $w$ 之间。本命题不断言极小点唯一，也不断言它随 $p_B/p_{AB}$ 连续或单调变化。
+
+证明。$x=u$ 的费用与 $\alpha$ 无关（取 $c=(1-\lambda,0)$，残差 $\lambda u$ 与 $d_2$ 的相关 $\lambda\cos\alpha\le\lambda$）。在 $\pi/4$ 附近，$x=u+v$ 与 $x=v$ 都只用 $d_2$：对 $u+v$，取 $c_2=\cos\alpha+\sin\alpha-\lambda$，残差与 $u$ 的相关为 $1-c_2\cos\alpha$，在 $\alpha=\pi/4$ 处等于 $\lambda/\sqrt2<\lambda$，由连续性在一个邻域内 $u$ 不活跃；对 $v$，残差与 $u$ 的相关为 $-c_2\cos\alpha\le0$。单原子费用为 $\tfrac12\|x\|^2-\tfrac12(\langle x,d_2\rangle-\lambda)^2$，故该邻域内
+$$
+\mathcal J(\alpha)=\text{常数}-\tfrac12p_{AB}(\cos\alpha+\sin\alpha-\lambda)^2-\tfrac12p_B(\sin\alpha-\lambda)^2 ,
+$$
+求导并在 $\pi/4$ 代入：第一项导数含因子 $\cos\alpha-\sin\alpha=0$，第二项给 $-p_B(1/\sqrt2-\lambda)\cos(\pi/4)$。在 $\pi/2$ 附近，$x=v$ 仍只用 $d_2$，其费用 $\tfrac12-\tfrac12(\sin\alpha-\lambda)^2$ 在 $\pi/2$ 处导数为零；$x=u+v$ 两原子同时活跃：记 $g=\cos\alpha$、$m=(1-\lambda,\ \cos\alpha+\sin\alpha-\lambda)$，无约束极小 $c=(D^\top D)^{-1}m$ 在 $\alpha$ 接近 $\pi/2$ 时两坐标都接近 $1-\lambda>0$，故可行，费用为 $1-\tfrac12Q(\alpha)$，$Q=(m_1^2-2gm_1m_2+m_2^2)/(1-g^2)$。在 $\alpha=\pi/2$：$g=0$，$g'=-1$，$m_2'=-1$，分母导数为零，分子导数为 $-2g'm_1m_2+2m_2m_2'=2(1-\lambda)^2-2(1-\lambda)=-2\lambda(1-\lambda)$，故 $Q'(\pi/2)=-2\lambda(1-\lambda)$，费用导数为 $+\lambda(1-\lambda)$，乘 $p_{AB}$ 即得。两端导数符号相反，连续函数在闭区间的极小点不在端点。证毕。
+

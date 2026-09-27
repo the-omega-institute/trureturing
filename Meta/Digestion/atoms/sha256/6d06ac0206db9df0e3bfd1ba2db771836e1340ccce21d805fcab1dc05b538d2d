@@ -1,0 +1,6 @@
+### 7.5 来源与未覆盖范围
+
+本节是第6.11节主动传感器费用公式和饱和决策树的仓内综合推导；承重新增为固定调度与隐藏调度两种终端访问合同的严格字母表差距及统一解码。已读取 BinaryProtocolDepthLowerBound.lean 的 adaptive_binary_protocol_depth_lower_bound，它承担有限二元协议的通用容量下界；已读取 PassiveAdaptiveTranscriptUpperBound.lean 的 passive_adaptive_transcript_upper_bound，其适用面是固定来源上指定被动实验族的完整联合读数。源文件分别位于 D5/S3/ConceptDynamics/Coding/ 和 D5/S3/ConceptDynamics/Experiment/，它们都不是本节具体完成时刻公式或隐藏调度下界的新增形式核验。
+
+这里不把“时钟步数等于预测深度”作为前提，因而不与 ClockTimeVersusRefinementDepth.clock_time_does_not_determine_refinement_depth 的有限反例冲突。时钟在本模型中成为记忆，是由指定协议建立的关联，不是时间的一般定义。当前结论限于无噪声二幂模型、最终查询瞬间、已知初始高位和实际可读事件计数；未处理有噪声计时、未知 $b$、连续时钟误差或采集阶段最小工作空间。未新增 Lean、冻结或消化结算，也未据此宣称文献原创。
+

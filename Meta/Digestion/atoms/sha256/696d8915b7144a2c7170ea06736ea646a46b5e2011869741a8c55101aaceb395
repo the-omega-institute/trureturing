@@ -1,0 +1,49 @@
+### 7.1 原始评价层的两条交换式
+
+令
+
+$$
+E:X\times P\to L,
+\qquad F:X\to X,
+\qquad \delta:P\to P,
+$$
+
+并假设
+
+$$
+\boxed{
+E(Fx,p)=E(x,\delta p)
+\qquad(x\in X,p\in P).
+}
+\tag{TM.468}
+$$
+
+定义状态行与协议列
+
+$$
+\Sigma(x):=E(x,-):P\to L,
+\qquad
+\Gamma(p):=E(-,p):X\to L.
+$$
+
+在函数空间上令
+
+$$
+S_\delta(r):=r\circ\delta,
+\qquad
+T_F(c):=c\circ F.
+$$
+
+逐点展开 (TM.468) 得到两个交换式
+
+$$
+\boxed{
+\Sigma\circ F=S_\delta\circ\Sigma,
+\qquad
+\Gamma\circ\delta=T_F\circ\Gamma.
+}
+\tag{TM.469}
+$$
+
+第一式把状态更新写成协议坐标的回拉，第二式把协议续接写成状态坐标的回拉。这是同时运输两条轴的充分条件；只要求商上的动态下降时，分别保持状态行 kernel 与协议列 kernel 即可，(TM.468) 不必是必要条件。
+

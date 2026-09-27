@@ -1,0 +1,40 @@
+**命题 54.4（正下包络的严格损失）。** 存在满足式（54.1）的候选，其最小反馈响应 $\ell>0$，但所有正下包络 $L\succeq0$、$L\otimes I_A\preceq R$ 都只能取 $L=0$。
+
+**证明。** 取 $A=B=\mathbb C^2$，令 $\rho_0,\rho_1$ 为两个不同且不正交的纯态，并定义
+
+$$
+R=\rho_0\otimes|0\rangle\langle0|
+ +\rho_1\otimes|1\rangle\langle1|,
+\qquad
+\delta=\frac12\|\rho_0-\rho_1\|_1\in(0,1).
+\tag{54.17}
+$$
+
+只有 $C$ 的两个 $A$ 对角块 $C_0,C_1$ 参与响应，而它们遍历全部 $C_0,C_1\succeq0$、$C_0+C_1=I_B$。对 $\rho_0-\rho_1$ 取正负谱分解，得到
+
+$$
+u=1+\delta,\qquad \ell=1-\delta,\qquad\Delta(R)=\delta.
+\tag{54.18}
+$$
+
+若 $L\succeq0$ 且 $L\otimes I_A\preceq R$，则 $L\preceq\rho_0,\rho_1$。被秩一正算符支配的正算符，其支撑包含于该秩一支撑。两条不同纯态射线的交为零，故 $L=0$，于是
+
+$$
+\max\{\operatorname{Tr}L:L\succeq0,\ L\otimes I_A\preceq R\}
+=0<\ell.
+\tag{54.19}
+$$
+
+例如取 $\rho_0=|0\rangle\langle0|$、$\rho_1=|+\rangle\langle+|$，则 $\delta=1/\sqrt2$，式（54.8）的一对最优解为
+
+$$
+L=\frac{\rho_0+\rho_1-\delta I_B}{2},
+\qquad
+U=\frac{\rho_0+\rho_1+\delta I_B}{2}.
+\tag{54.20}
+$$
+
+其中 $L$ 有一个负特征值。$\square$
+
+因此，经典逐点正下包络不能仅把大小关系换成 Loewner 序便保留相同最优质量。定理 54.2 使用厄米下界，并通过同一次正压缩取得 $L\preceq\sigma\preceq U$；命题 54.4 不反驳尖锐修复等式。
+

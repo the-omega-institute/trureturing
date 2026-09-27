@@ -1,0 +1,140 @@
+**定理103.1（末轮之前的实际跨度下界）。** 置
+
+$$
+L=\mathbb Cp+G_2+G_3+G_4+G_5.
+$$
+
+则
+
+$$
+\boxed{\dim L\ge5.}
+\tag{103.1}
+$$
+
+这里 $p$ 为真实首轮零位单位接收向量，$G_i$ 为真实第 $i$ 轮的二维零位接收平面。结论仍使用完整六终端合同，但下界中的空间不包含 $G_6$。
+
+**证明。** 反设 $\dim L\le4$，记 $W=L$。第97节命题97.3排除 $G_2+G_3+G_4+G_5$ 的维数至多三，所以
+
+$$
+G_2+G_3+G_4+G_5=W,\qquad \dim W=4,\qquad p\in W.
+\tag{103.2}
+$$
+
+先给第98节各局部禁阻所需的共同接口。至少有两条不同的已见后继环境，否则违反第71节。从中选 $B,C$，对应二维接收平面为 $Q_B,Q_C$，便有
+
+$$
+V_1W=(Q_B\otimes B)\dotplus(Q_C\otimes C).
+\tag{103.3}
+$$
+
+它在 $B,C$ 上的完整接收纤维分别为 $Q_B,Q_C$，在第三条射线上为 $Q_B\cap Q_C$。每个实际后继像均二维，故填满对应完整纤维。于是
+
+$$
+[\eta_{i+1}]=[\eta_{j+1}]\Longrightarrow G_i=G_j
+\quad(2\le i,j\le5),
+$$
+
+$$
+[\eta_2]=[\eta_{j+1}]\Longrightarrow p\in G_j.
+\tag{103.4}
+$$
+
+第二式使用 $p\in W$ 与真实 $V_1p=v\otimes\eta_2$。若四个已见后继中至少出现三条射线，（103.3）给共同二维 $Q_0$，满足
+
+$$
+V_1W=Q_0\otimes F,\qquad Q_3=Q_4=Q_5=Q_6=Q_0.
+$$
+
+每个 $G_i\otimes\eta_i\subset\operatorname{ran}V_0$，$2\le i\le5$，均与 $Q_0\otimes F$ 跨位正交。由（103.2），得到 $Q_0\perp W$。此外，$p\in W$ 给 $v\in Q_0$，实际来源列因而满足
+
+$$
+H_2,\ldots,H_5\subset W\oplus Q_0,\qquad
+P_WH_2=G_2,
+$$
+
+$$
+P_WH_n=G_n,\qquad H_n\cap W=0
+\quad(3\le n\le5).
+\tag{103.5}
+$$
+
+特别地，$H_5$ 的包含关系来自同轮 $G_5,Q_5$，没有使用 $G_6\subset W$。
+
+第74节与第69节引理69.1仍给第98.2节列出的全部二十六个两射线、三射线候选词。第98.2节的直接矛盾和第98.3节的前缀禁阻只使用（103.4）、实际早期 $p,u,v,w$、$H_n\cap G_n=0$ 及严格来源主角差值。具体覆盖如下：
+
+| 局部禁阻 | 排除的完整词组 |
+|---|---|
+| 相同后继给相同平面，再用早期 $w$ 或严格主角差值 | AAAAB, ABBBA, ABBBC, AABAB, ABABA, ABCBC, AABBB, ABAAA, ABCCC |
+| 相同零位像识别 $H_1=H_4$ 或 $H_1=H_3$，再用（103.4）的 $p$ | AABAA, ABAAB, ABBAB, ABABB |
+| 四个后继共线 | ABBBB |
+| 三后继的（103.5）与 $p\in W\cap H_1$ | ABABC, ABCAB |
+| $p\in H_1=H_2$ 且 $p\in G_2$，故 $p\parallel w$；真实第三轮列违反 $H_2\cap H_3=0$ | AAABA, AAABB, AAABC |
+
+这些十九个词的证明不涉及末轮接收平面。剩下七个词需要的接口如下。
+
+对于 $AABCC$，以 $U=V_1|_W:W\to Q_0\otimes F$ 定义 $UT_D=Q_0\otimes D$。同一实际域满足
+
+$$
+G_2=T_A,\quad G_3=T_B,\quad G_4=G_5=T_C,
+$$
+
+$$
+V_0(H_2+H_3+H_4)
+=(T_B\otimes A)+(T_C\otimes F).
+$$
+
+右侧六维，左侧输入按（103.5）包含于六维 $W\oplus Q_0$，所以 $H_2+H_3+H_4=W\oplus Q_0$。现在 $H_5$ 也在此域中，故从右侧在 $C$ 上的完整纤维推出 $G_6=T_C$。于是 $H_4=H_5$、$G_4=G_5$，违反实际 $\delta_4\ne\delta_5$。这里 $G_6$ 的位置是结论。
+
+对于 $AABAC,ABCBA$，第98.5节的统一记号为
+
+$$
+(\beta,\beta,C,\beta,D)
+\quad\text{或}\quad(D,\beta,C,\beta,D),
+$$
+
+$$
+T=G_2=G_4=T_\beta,\qquad G_3=T_C,\qquad G_5=T_D.
+$$
+
+同一 $H_2+H_3+H_4$ 的像为六维
+
+$$
+(W\otimes\beta)+(T\otimes F).
+\tag{103.6}
+$$
+
+由（103.5），该输入和恰为 $W\oplus Q_0$，故 $H_5$ 也在其中。读取（103.6）的 $D$ 纤维才推出 $G_6=T$。再置
+
+$$
+J=(F\otimes\beta)+(\beta\otimes F),\quad
+T_0=(U\otimes I)V_0|_{W\oplus Q_0},\quad
+M=(UP_W)T_0^{-1}.
+$$
+
+得到与第98.5节相同的同一余等距 $MM^*=I$。实际 $H_3,H_4,H_5$ 分别给第66节引理66.1的三个纤维条件；实际 $H_2$ 的输出 $Q_0\otimes\beta^\perp$ 分量秩为零。该引理给 $H_3$ 或 $H_5$ 上非零保范数方向，违反（103.5）。仍未预设 $G_6$ 位于 $W$。
+
+对于 $ABAAC,ABACA$，第98.6节的两个严格投影矛盾只使用 $H_2,H_3,H_4$、$G_2,G_3,G_4,G_5$、（103.4）、（103.5）以及同一实际向量 $w$。前者迫使 $A\perp B$ 后使 $0\ne p\in G_3$ 正交于满投影到 $G_3$ 的 $H_3$；后者迫使 $B\perp C$ 后使单位 $v\in Q_0$ 正交于满投影到 $Q_0$ 的 $H_4$。两者均矛盾，不涉及 $G_6$。
+
+对于 $ABBCB$，第98.7节只使用
+
+$$
+G_2=G_3=G_5=T,\quad G_4=L_0,
+\quad Q_3=Q_4=Q_6=Q_B,\quad Q_5=Q_C.
+$$
+
+这些识别由（103.4）及固定 $V_1$ 得到。实际第三轮给 $T\perp Q_B$；对 $w\in H_2\cap T$ 的投影夹逼迫使 $B\perp C$，进而 $H_2\perp H_3$，违反 $P_TH_3=T$。第98.7节没有使用末轮 $G_6$。
+
+最后，对于 $ABCBB$，由（103.4）得
+
+$$
+G_2=G_4=G_5=T,\quad G_3=L_0,\quad W=L_0+T,
+$$
+
+$$
+Q_3=Q_5=Q_6=Q_B,\quad Q_4=Q_C.
+$$
+
+第98.8节的正交环境分支仍给 $H_2\perp H_4$ 与真实 $w$ 的满投影矛盾。非正交分支中，$W\otimes B\subset\operatorname{ran}V_0$ 来自两个已执行平面 $G_3,G_5$，所以 $Q_B,Q_C\perp W$。这逐项满足第86节引理86.2。该引理保留实际 $V_0H_5=G_6\otimes B$，但不要求 $G_6\subset W$，因而仍给局部矩阵矛盾。
+
+全部十九加七个候选均被排除。反设不成立，得到（103.1）。证明完毕。
+

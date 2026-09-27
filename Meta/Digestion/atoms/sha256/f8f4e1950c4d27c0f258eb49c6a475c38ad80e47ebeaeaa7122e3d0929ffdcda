@@ -1,0 +1,106 @@
+### 307.2 任意正阶逆矩与未知尺度发现
+
+从同次完成记录计算
+$$
+W=\mathbf1_{\{X=Z\}},\qquad V=8W-4\in\{-4,4\},
+\qquad \mathbb EV=h^\beta.
+\tag{307.8}
+$$
+\(V\) 的分布只依赖 \(h,\beta\)，其宽度 \(d=8\) 固定。只使用参考调用作校准。设 \(t=h^\beta\in(0,1]\)，并沿用
+$$
+\eta=\frac{\log(l/k^2)}{\kappa},\quad
+\bar\eta=\min(\eta,1/2),\quad
+\delta=\bar\eta/288,\quad
+\Lambda=\log(A_1/\delta)\ge8.
+$$
+已有 \(1+\log(1/\bar\eta)\asymp\Lambda\asymp H\)。令 \(\widehat t_s\) 是前 \(n_s\) 个 \(V\) 的平均，累计参考调用数及停止规则为
+$$
+n_s=2^s,\quad L_s=\Lambda+2\log(s+1),\quad
+r_s=d\sqrt{L_s/(2n_s)},
+$$
+$$
+J=\inf\{s:\widehat t_s\ge2r_s\},\qquad
+t_0=\min(1,\widehat t_J/2),\qquad a=t_0^{1/\beta}.
+\tag{307.9}
+$$
+强大数律保证 \(J<\infty\) 几乎必然。每条停止记录都给 \(0<t_0\le1\)、\(0<a\le1\)；上截断不可删去，因为坏记录的 \(\widehat t_J/2\) 可以超过一。
+
+Hoeffding 和并合界给
+$$
+\Pr\{\exists s:|\widehat t_s-t|>r_s\}
+\le\sum_s2e^{-L_s}\le\delta/3.
+$$
+停止时 \(\widehat t_J\ge2r_J\)，因此实际停止记录上的事件
+$$
+G=\{t/3\le t_0\le t\}
+\tag{307.10}
+$$
+满足 \(\Pr(G^c)\le\delta/3\)。在 \(G\) 上，
+$$
+\frac{h}{3^{1/\beta}}\le a\le h.
+\tag{307.11}
+$$
+后续只以已取得停止记录条件化；全时置信事件仅用于证明式（307.10）的失败概率。
+
+以下无条件逆矩对每个固定 \(q>0\) 成立：
+$$
+\boxed{\mathbb E t_0^{-q}\le A_qt^{-q}.}
+\tag{307.12}
+$$
+证明：令 \(s_\star\) 为首个 \(r_s\le t/4\) 的级别，并记 \(n_\star,L_\star\)。由于 \(L_{s+1}<2L_s\)，比值 \(n_s/L_s\) 严格增加。前一级最小性与当前阈值分别给
+$$
+n_\star/L_\star\le16d^2/t^2,\qquad
+n_\star t^2/d^2\ge8L_\star\ge64.
+\tag{307.13}
+$$
+若 \(J\ge s_\star+m\)、\(m\ge1\)，上一级均值小于 \(2r_{s_\star+m-1}\le t/2\)，故
+$$
+\Pr(J\ge s_\star+m)
+\le\exp[-2^{m-1}n_\star t^2/(2d^2)].
+\tag{307.14}
+$$
+停止条件还给
+$$
+t_0^{-q}\le1+r_J^{-q}
+=1+(2/d^2)^{q/2}(n_J/L_J)^{q/2}.
+$$
+对 \(J\le s_\star\) 用单调性；对 \(J=s_\star+m\) 用
+$$
+(n_J/L_J)^{q/2}
+\le2^{mq/2}(n_\star/L_\star)^{q/2}.
+$$
+式（307.14）的尾和于是至多
+$$
+A_q(n_\star/L_\star)^{q/2}
+\le A_qt^{-q},
+$$
+因为
+$$
+1+\sum_{m\ge1}2^{mq/2}
+\exp[-2^{m-1}n_\star t^2/(2d^2)]
+$$
+在式（307.13）的下界下仅依赖 \(q\) 而统一有界。这证明式（307.12），包括全部失败记录；没有需要 \(q\) 为整数的步骤，也没有置信对数因子。
+
+同一尾和及第303.6节的阈值反解给
+$$
+\mathbb En_J
+\le At^{-2}\{\Lambda+\ell_+(t)\},\qquad
+\ell_+(u)=\log\log(e^e/u).
+\tag{307.15}
+$$
+该反解使用固定 \(d=8\)；可取 dyadic \(n\asymp
+t^{-2}[\Lambda+\log(e+\log(e/t))]\) 直接满足 \(r_s\le t/4\)，随后按最小性估计 \(n_\star\)。第一阶段实际费用是累计的 \(n_J\)。
+
+取 \(q=2/\beta\)，式（307.12）给
+$$
+\mathbb Ea^{-2}
+=\mathbb Et_0^{-2/\beta}\le A_\beta h^{-2}.
+\tag{307.16}
+$$
+对固定 \(0<\beta<1\)，\(\ell_+(h^\beta)\le\ell_+(h)\)，故
+$$
+\mathbb En_J\le Ah^{-2\beta}\{H+\ell_+(h)\}.
+\tag{307.17}
+$$
+固定 \(\beta\) 的任意正阶逆矩没有遗漏；常数对 \(q\) 并不一致，也不应声称对 \(\beta\downarrow0\) 一致。
+

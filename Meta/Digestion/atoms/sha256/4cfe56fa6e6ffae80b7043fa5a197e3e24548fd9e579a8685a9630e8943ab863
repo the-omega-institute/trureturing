@@ -1,0 +1,61 @@
+**证明：前三步的固定记号。**
+
+记 $`D=\dim K`$。若 $`D<6`$，可把 $`K`$ 等距嵌入六维空间，并将固定 Stinespring 等距映射在额外输入子空间上等距延拓；必要时扩大未使用的环境空间。初态和实际轨迹均保留，因此反证只需设 $`D=6`$。以下也直接保留 $`D\le6`$ 的维数计数。
+
+初态为单位向量 $`k`$。确定纯环境使每个初始基态的实际 $`MK`$ 态为纯向量，且同轮两列具有同一个环境向量。第一轮定义
+$$
+V(k0)=p\eta_0,\qquad V(k1)=q\eta_0,
+\tag{25.2}
+$$
+故 $`p,q`$ 正交归一，第一轮两列为 $`m_0p,m_1q`$。第二轮定义
+$$
+V(p0)=u\eta_1,\quad V(p1)=v\eta_1,\quad
+V(q0)=w\eta_1.
+\tag{25.3}
+$$
+由于 $`p0,p1,q0`$ 正交，$`u,v,w`$ 正交归一，第二轮两列为
+$$
+a m_0u+b m_1v,\qquad m_0w.
+\tag{25.4}
+$$
+上述逐向量映射由 $`m_0,m_1`$ 线性独立及非零系数逐项抽出，并不额外假设输入位可以任意独立制备。
+
+置
+$$
+c=\sqrt{|a|^4+|b|^2},\quad
+z=\frac{a^2u+bv}{c},\quad
+y_0=\frac{-\overline b\,u+\overline{a}^{2}v}{c},
+\tag{25.5}
+$$
+并记
+$$
+H=\operatorname{span}\{z,w\},\quad
+G=\operatorname{span}\{u,w\},\quad
+L=\operatorname{span}\{u,v,w\}=H+G.
+\tag{25.6}
+$$
+$`H,G`$ 均二维，$`H\cap G=\operatorname{span}\{w\}`$。第三轮定义
+$$
+V(z0)=s\eta_0,\quad V(u1)=r\eta_0,\quad
+V(w0)=t\eta_0,\quad V(w1)=j\eta_0.
+\tag{25.7}
+$$
+四个输入正交，故 $`s,r,t,j`$ 正交归一。第三轮两列为
+$$
+c m_0s+ab m_1r,\qquad a m_0t+b m_1j.
+\tag{25.8}
+$$
+记
+$$
+S=\operatorname{span}\{s,t\},\quad
+R=\operatorname{span}\{r,j\},\quad
+L_3=S\oplus R.
+\tag{25.9}
+$$
+四轮所需的零位和一位接收输入空间分别为
+$$
+H_3=\operatorname{span}\{cs+br,\ a^2t+bj\},\qquad G_3=S.
+\tag{25.10}
+$$
+（25.10）的零位首向量略去非零公因子 $`a`$，不改变支撑。
+

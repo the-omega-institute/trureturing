@@ -1,0 +1,92 @@
+**定理 88.1（最坏成本的取得、连续性与代数图）。** 对每个 $0\le u<R$，存在同一个实际仪器 $\Gamma_u\in\mathfrak B_u$ 与纯初态 $P_u$，使
+
+$$
+\mathscr K(u)=\mathbb E_{P_u}^{\Gamma_u}\mathsf N<\infty.
+\tag{88.1}
+$$
+
+函数 $\mathscr K:[0,R)\to\mathbb R$ 连续、非减，其图为有理半代数集。每个实代数参数 $u\in[0,R)$ 都给实代数数 $\mathscr K(u)$。
+
+证明。令 $\mathcal A_\Gamma=\mathcal N_\Gamma^*$。对无永久失效的固定仪器，第 66、71 节给出唯一有限成本势
+
+$$
+T_\Gamma=\sum_{n\ge0}\mathcal A_\Gamma^n(I),
+\qquad T_\Gamma\succeq0,\qquad
+T_\Gamma-\mathcal A_\Gamma(T_\Gamma)=I.
+\tag{88.2}
+$$
+
+反过来，有限 Hermitian 矩阵 $T\succeq0$ 满足最后一个方程时，正性给 $T\succeq I$。令 $M=\|T\|_\infty\ge1$，则
+
+$$
+0\preceq\mathcal A_\Gamma(T)=T-I
+\preceq(1-M^{-1})T.
+$$
+
+反复作用正映射，得到
+
+$$
+0\preceq\mathcal A_\Gamma^n(I)
+\preceq\mathcal A_\Gamma^n(T)
+\preceq(1-M^{-1})^nT\qquad(n\ge1).
+\tag{88.3}
+$$
+
+若 $M=1$，右侧对 $n\ge1$ 为零。有限和望远镜恒等式
+
+$$
+T=\sum_{j=0}^{n-1}\mathcal A_\Gamma^j(I)
++\mathcal A_\Gamma^n(T)
+$$
+
+因此收敛到式（88.2），同时保证所有初态终止与均值有限。任意 Hermitian 固定差 $X=\mathcal A_\Gamma(X)$ 满足
+$-\|X\|_\infty I\preceq X\preceq\|X\|_\infty I$；迭代并用式（88.3）可知 $X=0$，故该正解唯一。这个双向论证使有限方程承载实际无限尾和，而不只是一个成本上界证书。
+
+对每个固定 $v<R$，定理 80.2 给 $\mathfrak B_v$ 上共同的指数尾。因此式（88.2）的连续有限部分和在整个 $\mathfrak B_v$ 上一致收敛，$\Gamma\mapsto T_\Gamma$ 与
+
+$$
+M(\Gamma)=\lambda_{\max}(T_\Gamma)
+=\max_\rho\operatorname{Tr}(\rho T_\Gamma)
+$$
+
+都连续。紧性使 $M$ 在 $\mathfrak B_u$ 上取得最大值；取最大本征值的一个纯本征态即得式（88.1）。
+
+接着核对参数连续性。非减性来自校准球嵌套。若 $u_j\to u<R$，取 $v<R$ 使充分大的 $j$ 都有 $u_j\le v$。相应最优仪器的收敛子列及 $\delta$ 的连续性给
+$\limsup_j\mathscr K(u_j)\le\mathscr K(u)$。若 $u>0$，取 $\Gamma_u$，并令
+
+$$
+t_j=\min\{1,u_j/u\},\qquad
+\widehat\Gamma_j=t_j\Gamma_u+(1-t_j)\Gamma_0.
+$$
+
+逐分支凸混合仍是同接口合法仪器，且
+$\delta(\widehat\Gamma_j)=t_j\delta(\Gamma_u)\le u_j$。
+又 $\widehat\Gamma_j\to\Gamma_u$，所以
+$\liminf_j\mathscr K(u_j)\ge M(\Gamma_u)=\mathscr K(u)$。
+$u=0$ 时使用球嵌套即可得到同一下半连续性。故 $\mathscr K$ 连续。
+
+最后写出准确有限图关系。对实数 $m$，记
+
+$$
+\mathsf W(\Gamma,T,m):\quad
+T=T^\dagger\succeq0,\quad
+T-\mathcal A_\Gamma(T)=I,\quad
+mI-T\succeq0,\quad\det(mI-T)=0.
+\tag{88.4}
+$$
+
+正性和行列式条件准确给 $m=\lambda_{\max}(T)$。取迹对偶只使 $\mathcal A_\Gamma(T)$ 的坐标成为仪器坐标与 $T$ 坐标的双线性式；所以 $\mathsf W$ 是有理多项式条件。对 $0\le u<R$，$k=\mathscr K(u)$ 等价于
+
+$$
+\begin{aligned}
+&\exists\Gamma,T:\quad
+\mathsf B(\Gamma,u)\ \wedge\ \mathsf W(\Gamma,T,k),\\
+&\forall\Gamma',T',m:\quad
+[\mathsf B(\Gamma',u)\ \wedge\ \mathsf W(\Gamma',T',m)]
+\Longrightarrow m\le k.
+\end{aligned}
+\tag{88.5}
+$$
+
+存在量词合法使用了已证明的最大值取得性。$R$ 可用式（87.7）消去；对余下有限实量词应用同一量词消去定理，就得到有理半代数图。固定代数 $u$ 时，用其有理最小多项式和隔离区间指定该参数，再沿用定理 87.2 的单点论证，得到 $\mathscr K(u)$ 为实代数数。$\square$
+

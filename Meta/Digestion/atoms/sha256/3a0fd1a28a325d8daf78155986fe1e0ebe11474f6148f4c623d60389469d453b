@@ -1,0 +1,57 @@
+**引理 117.2（相干点击的完整校准修正只有 $O(k)$）。** 在 $(t,k)\to(0,0)$、$k\ge0$ 时，完整名义距离满足
+
+$$
+\boxed{
+\delta(\Gamma_{t,k}^{\rm coh})
+=\delta(\widehat\Gamma_{-t})+O(k)
+=R-\kappa t+O(t^2+k).
+}
+\tag{117.2}
+$$
+
+这里比较的是两份到同一名义仪器的距离之差，不声称这两个实际仪器之间的距离为 $O(k)$。
+
+证明。对任意系统密度矩阵 $\rho$，取其归一化纯化。实际与名义仪器的每个分支都只有一个 Kraus 算子，所以每个联合输出块是两个向量投影之差。其迹范数由式（103.4）准确给出。令
+
+$$
+p=\operatorname{Tr}(\rho P),\quad
+q=\operatorname{Tr}(\rho P_1),\quad
+\alpha_t=\operatorname{Tr}[\rho(|\psi\rangle\langle\psi_t|)Q_0],
+\quad
+\beta_0=\operatorname{Tr}(\rho B_0^\dagger L_0),
+$$
+
+其中 $Q_0=|0\rangle\langle1|$、$L_0=P_0$ 仍是名义装置。关键恒等式是
+
+$$
+B_k^\dagger L_0=B_0^\dagger L_0=|\eta\rangle\langle0|.
+$$
+
+因此完整输出的半迹距离准确为
+
+$$
+\mathcal F(t,k;\rho)=\frac12\left[
+\sqrt{((1-k)p+q)^2-4(1-k)|\alpha_t|^2}
++\sqrt{(1-p+kp+1-q)^2-4|\beta_0|^2}
+\right].
+\tag{117.3}
+$$
+
+对全部 $\rho$ 最大化就是完整半钻石距离：任意参考输入可纯化，系统边缘决定上述所有内积，二维参考已足够取得最大值。
+
+在 $t=k=0$ 时，第 103 节已经把全部最大化边缘态描述为 $x=x_*,v=0$，其中 $x=q_0-\operatorname{Re}\rho_{01}$、$q_0=\rho_{00}$。在这整个最大化集合上，两根号内的量分别为
+
+$$
+\frac54-x_*>0,\qquad \frac14+x_*-x_*^2>0.
+$$
+
+密度矩阵集合紧，函数 $\mathcal F$ 联合连续。因此充分小的 $(t,k)$ 的全部最大化点都落在上述集合的任意预定邻域内；否则取收敛子列会在基点产生新的最大化点。选取其中一个邻域，使两个根号内的量都有共同正下界。
+
+在该邻域中，式（117.3）的两个根号内部对 $k$ 的变化都是一致的 $O(k)$，平方根因远离零而具有共同 Lipschitz 常数。于是
+
+$$
+|\mathcal F(t,k;\rho)-\mathcal F(t,0;\rho)|\le Ck
+$$
+
+在两种参数的全部最大化点上同时成立。分别代入两边的最大化点，得到两个最大值之差的绝对值至多 $Ck$。$k=0$ 时仪器准确为 $\widehat\Gamma_{-t}$，再用定理 103.2 得式（117.2）。$\square$
+

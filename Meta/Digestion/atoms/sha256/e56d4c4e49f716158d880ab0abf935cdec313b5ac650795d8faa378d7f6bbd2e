@@ -1,0 +1,8 @@
+### 36.6 适用范围与未解决边界
+
+本节使用的是集合、关系和有限或可数动作词上的普通数学推导。仓内 `IdentityFuturePastGap`、`FiniteBilateralTrajectory`、`CanonicalRowColumnSeparation`、`DoubleExtensionalEvaluationDescent`、`DynamicProfileCausalClosure` 及相关模块是可引用的形式化支点；本节没有新增 Lean 声明，也没有把这些支点包装成新的形式定理。
+
+仍需单独证明的内容包括：无限任务族的实际来源存在性、带概率或量子权重时的正性与归一化、近似边界的误差预算、以及具体系统的有限可取得性。若这些条件缺失，(36.7) 只能作为目标判据，不能报作已经成立的物理统一或全局恢复。
+
+本节的 Claim status 为 open。
+

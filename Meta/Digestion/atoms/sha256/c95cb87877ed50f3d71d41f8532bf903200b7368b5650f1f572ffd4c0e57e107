@@ -1,0 +1,9 @@
+### 131.4 ABBAB：两种小侧平面关系都不相容
+
+此词中 $G_2,G_5\subset U_A$ 的后继均为 $B$，$G_3,G_4\subset U_B$ 的后继分别为 $B,A$。因此
+
+$$
+U_B=G_3\oplus G_4,\qquad G_3\perp G_4.
+\tag{131.12}
+$$
+

@@ -1,0 +1,44 @@
+### 151.1 固定物理通道，只优化终端解码
+
+先取正实振幅，置
+
+$$
+0<p<1,\qquad x=1-p,\qquad a=\sqrt x,\qquad b=\sqrt p.
+\tag{151.1}
+$$
+
+来源仍为
+
+$$
+T|0\rangle=(a|0\rangle+b|1\rangle)_M|0\rangle_B,\qquad
+T|1\rangle=|0\rangle_M|1\rangle_B.
+\tag{151.2}
+$$
+
+固定第148节的七维接收空间 $K$、独立纯初态 $w$，以及表（148.7）确定的全域酉 $V_p:K\otimes B\to K\otimes E$。每轮重复使用的实际接收通道为
+
+$$
+\mathcal C_p(Y)=\operatorname{Tr}_E(V_pYV_p^*).
+\tag{151.3}
+$$
+
+接收器只访问 $K$ 与最新发出位，所有持久控制都在七维 $K$ 内；环境逐轮新取并立即丢弃。以下不改变 $w,V_p$ 或任何早期接收步骤。
+
+对初始参考—活动态 $\rho_{RM}$，记 $\sigma_{n,p}(\rho)$ 为运行这一固定装置后实际保留的 $RMK$ 态，$\Omega_{n,p}(\rho)$ 为来源直接发射所得的完整 $RM B^{\otimes n}$ 态。定义
+
+$$
+\begin{aligned}
+e_{148}(p)
+=
+\inf_{\mathcal D_1,\ldots,\mathcal D_6}
+\max_{1\le n\le6}\sup_{R,\rho_{RM}}
+\frac12\left\|
+(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\sigma_{n,p}(\rho)-\Omega_{n,p}(\rho)
+\right\|_1 .
+\end{aligned}
+\tag{151.4}
+$$
+
+每个 $\mathcal D_n:\mathcal L(K)\to\mathcal L(B^{\otimes n})$ 可以是任意全域 CPTP 通道，可依赖已知来源和终端编号，但不依赖未知输入或不可访问参考。上确界保留全部初始密度矩阵与全部有限维参考。本节没有把输入限制为经典混合，也没有把第六终端误差替代前六终端最大误差。
+

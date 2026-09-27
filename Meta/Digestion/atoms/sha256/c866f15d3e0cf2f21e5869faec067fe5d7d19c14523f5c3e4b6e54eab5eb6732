@@ -1,0 +1,31 @@
+### 120.3 三支持必形成一对正交后继与独有第二轮
+
+现在 $|\mathcal Z|=3$，由（120.7）有
+
+$$
+\mathcal Z=\mathcal T^\perp.
+$$
+
+每个实际 $Q_n$ 二维，故其后继环境属于 $\mathcal Z$。因此
+
+$$
+\{[\eta_3],\ldots,[\eta_6]\}
+\subset\mathcal T\cap\mathcal T^\perp.
+$$
+
+后四轮不能全部同线，否则违反第71节。射影正交映射是无不动点的对合，故三元素 $\mathcal T$ 与其正交像的交只可能含零条或一对射线。这里必须恰为一对正交射线 $X,Y$，且后四轮将二者都使用。余下尾方向记为 $C$，令 $D=C^\perp$，便有
+
+$$
+\mathcal T=\{X,Y,C\},\qquad
+\mathcal Z=\{X,Y,D\},\qquad
+X\perp Y,\qquad D\notin\mathcal T,
+$$
+
+$$
+[\eta_2]=C,\qquad
+\{[\eta_3],\ldots,[\eta_6]\}=\{X,Y\}.
+\tag{120.11}
+$$
+
+特别地，$C$ 与 $X,Y$ 都不正交。完整一位 $C$ 纤维为 $Q$，所以真实 $V_1p=v\otimes C$ 给 $v\in Q$。
+

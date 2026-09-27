@@ -1,0 +1,58 @@
+**定理 77.19（完整历史到原等待尾的层计数）。** 取 $p=3$、任意整数 $P>1,h\ge1$，不再限制 $J$。对每个整数 $k\ge2$，以完整森林的原字面等待定义
+
+$$
+\begin{aligned}
+B_k^{\mathrm{lit}}&=\#\{H\text{ 二元}:\delta_H\ge k\},\\
+A_k^{\mathrm{lit}}&=\#\{H\text{ 一元}:\delta_H\ge k\},\\
+Q_k^{\mathrm{lit}}&=\#\{q\ne q_0:L_q\ge k\},\qquad
+D=J+\Xi,\qquad t=r-1-N+s.
+\end{aligned}
+\tag{77.17}
+$$
+
+这里 $A_k^{\mathrm{lit}}$ 包括单点继续，$D$ 仅为本层计数的记号；$t$ 恰是无二元到达的非首读实际目标数，故非负。则
+
+$$
+E\ge\sum_{k\ge2}\max\left\{
+0,\ B_k^{\mathrm{lit}}-s,\
+\left\lceil\frac{2B_k^{\mathrm{lit}}+A_k^{\mathrm{lit}}-D}{3}\right\rceil,\
+A_k^{\mathrm{lit}}-2t-D\right\}.
+\tag{77.18}
+$$
+
+证明。固定非首读目标 $q$，记其使用数字槽数为 $n_q\le3$，一元历史到达数为 $a_q$，并置 $X_q=\sum_{e\text{ 进入 }q}(\nu_e-1)$。实际进入边数为 $n_q+J_q$；每条边的完整森林原像补上 $X_q$，而二元历史贡献两条森林边、一元历史贡献一条。因此
+
+$$
+2m_q+a_q=n_q+J_q+X_q,\qquad
+\sum_{q\ne q_0}(J_q+X_q)=D.
+\tag{77.19}
+$$
+
+无根入边保证该求和没有遗漏根费用。$\mathcal B$ 的目标数为 $N-s$，所以另外的目标数为 $r-1-(N-s)=t$。
+
+令 $\mathcal L_k=\{q:L_q\ge k\}$，其大小为 $Q_k^{\mathrm{lit}}$。所有选出的长历史都进入该集合。在这些目标上，每个选定二元到达相对于第一个的重复次数，总共不超过完整共享重数 $s$，故 $Q_k^{\mathrm{lit}}\ge B_k^{\mathrm{lit}}-s$。又把（77.19）在 $\mathcal L_k$ 上相加，得到
+
+$$
+2B_k^{\mathrm{lit}}+A_k^{\mathrm{lit}}
+\le3Q_k^{\mathrm{lit}}+D.
+\tag{77.20}
+$$
+
+对于二元目标，$m_q\ge1$ 使 $a_q\le1+J_q+X_q$；其他目标有 $a_q\le3+J_q+X_q$。长一元历史只是这些完整到达的子集，而长目标中无二元者至多 $t$ 个，所以
+
+$$
+A_k^{\mathrm{lit}}\le Q_k^{\mathrm{lit}}+2t+D.
+\tag{77.21}
+$$
+
+结合非负性及整数上取整，得到（77.18）每一层括号内四项都不超过 $Q_k^{\mathrm{lit}}$。最后
+
+$$
+E=\sum_{q\ne q_0}(L_q-1)=\sum_{k\ge2}Q_k^{\mathrm{lit}}.
+\tag{77.22}
+$$
+
+所有字面尾有限；$k$ 超过最大尾长后，三个层计数全为零且括号最大值为零，故总和有限。不同 $k$ 收的是同一尾上的不同距离位置，不是把一个最大尾重复收取。每个量都来自同一原表的完整森林和实际槽边，允许环及历史边重数。$\square$
+
+$\mathcal Q_T$ 使用模 $P$ 的代表和截断历史，$Q_k^{\mathrm{lit}}$ 则数原字面长尾，二者不能混用。整周期提升可保持低位分割，却增加字面层数；（77.18）保留了这项信息。该式与（77.9）、（77.14）是同一个 $E$ 的不同下界，可以取最大，不能整体相加。层条件只是必要条件，并未保证满足它们的历史安排有共同物理相位、原标签及后继闭合实现。
+

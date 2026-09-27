@@ -1,0 +1,33 @@
+**定理256.3（任意球面源的稳定性）。** 对上述任意球面源及任意合法竞争态，
+$$
+\boxed{
+\|\Xi-\Omega_0\|_1
+\le\min\{2,\ \delta+2\sqrt{2\delta}\}.
+}
+\tag{256.38}
+$$
+它不依赖参考维数、非零奇异值下界或响应饱和假设。
+
+若原始误差写为
+$$
+\varepsilon=
+\|\mathcal R_a(\Xi)-\mathcal R_a(\Omega_0)\|_1+
+\|\mathcal R_b(\Xi)-\mathcal R_b(\Omega_0)\|_1,
+\tag{256.39}
+$$
+则（256.2）给
+$$
+\delta\le
+\left(\frac1{2\sqrt A}+\frac1{2\sqrt B}\right)\varepsilon.
+\tag{256.40}
+$$
+这里仅在范数估计中使用 $|b_0|=\sqrt B$，不改变坐标恢复时的符号。
+
+平方根阶仍不可统一改进。对§252的固定三维参考族，记产品权重为 $q=1-\theta$，其理想源位于球面，而微扰满足
+$$
+\delta=2qz^2,\qquad
+\|\Omega_z-\Omega_0\|_1=2qz=\sqrt{2q\,\delta}.
+\tag{256.41}
+$$
+固定 $q>0$ 后令 $z\to0$，便排除了统一的 $o(\sqrt\delta)$ 误差模量。
+

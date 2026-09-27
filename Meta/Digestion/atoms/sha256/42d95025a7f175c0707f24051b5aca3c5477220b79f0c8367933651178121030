@@ -1,0 +1,4 @@
+**定义 483.1（项目前置与新增综合的分工）。** 本批使用项目 TotalVariation 的 Convexity、DataProcessing，Estimation/DecisionRisk 的 GarblingIncreasesBayesRisk，以及 SequentialDecisionRisk 的 FiniteDeficiencyRiskTransfer、FiniteDeficiencyTriangle。实际引用处给出源码链接。它们分别承担 TV 对称平均、共同通道收缩、精确后处理的风险单调、统一模拟误差到有界损失风险的转移，以及模拟器复合的误差界。
+
+TV 的绝对值表示、二元等先验检验风险、凸平均和分支分解是经典数学前置，没有在此作为新创通用定理发布。本批的综合在于将这些前置接入同一个保留记录问题，连接新增边缘预算、指定联合误差、实验等价类、共同容量与重复历史：第 473 节给出完整二元预算曲线，第 476 节给出有限对称目标的容量最优式，第 477—479 节给出锐利比例范围、不同目标下的具体变化及完整历史的实现条件。这些是本卷的普通数学推导，不申报外部数学原创性。
+

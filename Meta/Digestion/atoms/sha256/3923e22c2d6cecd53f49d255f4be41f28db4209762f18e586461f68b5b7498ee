@@ -1,0 +1,36 @@
+### 31.2 协议扩展才会产生新的分辨率
+
+设 $\mathscr P_0\subseteq\mathscr P_1$ 是两组允许协议，定义协议联合核
+
+$$
+K_{\mathscr P}(x,y)
+\iff
+\forall p\in\mathscr P,\quad E(x,p)=E(y,p).
+$$
+
+则
+
+$$
+\mathscr P_0\subseteq\mathscr P_1
+\Longrightarrow
+K_{\mathscr P_1}\subseteq K_{\mathscr P_0}.
+\tag{31.5}
+$$
+
+若存在 $x,y$ 使 $K_{\mathscr P_0}(x,y)$ 成立而某个新增 $p\in\mathscr P_1$ 区分二者，则包含严格。反之，若新增协议在旧核的每条纤维上恒定，协议扩展不会改变动态边界；它只是对已有资料的重排或重复读取。
+
+同理，若观测族按
+
+$$
+\mathscr Q_0\subseteq\mathscr Q_1\subseteq\cdots
+$$
+
+扩展，则其联合 kernel 形成反向链
+
+$$
+K_{\mathscr Q_0}\supseteq K_{\mathscr Q_1}\supseteq\cdots.
+\tag{31.6}
+$$
+
+空间、时间、边界和记忆可以被理解为四个协议/读出子族；它们的联合恢复只需检查链的交是否达到完整 profile kernel。`QueryKernelHierarchy.query_kernel_hierarchy` 给出观察、干预和反事实查询按可因子化关系形成 kernel 链，并保留严格性见证；它说明“加入更强协议”不是一句信息更多的比喻，而是一个核包含关系。
+

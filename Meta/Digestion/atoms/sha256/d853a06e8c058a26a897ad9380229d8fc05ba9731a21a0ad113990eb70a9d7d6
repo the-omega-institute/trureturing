@@ -1,0 +1,30 @@
+**定理 184.4（生成与读取的严格信息比）。** 对同一条通道，最大单次可读 SLD 信息量为 $I_{\rm read}(a,u)=1/(1-u^2)$，而
+$$
+\frac{\mathfrak C(a,u)}{I_{\rm read}(a,u)}
+=1+\frac{a^2(1-u)}{1+u-2a^2}>1.
+\tag{184.13}
+$$
+特别地，对第179节的二步接口，以未知配对参数 $w$ 求导、令 $\varepsilon=1-r$，有
+$$
+\sup_{0\le w\le\delta(r)}
+\left|\frac{\mathfrak C_w(r,w)}{\varepsilon^3}-12\right|\longrightarrow0,
+\qquad
+\sup_{0\le w\le\delta(r)}
+\left|\frac{\mathfrak C_w(r,w)}{I_1^{(2)}(r,w)}-\frac43\right|\longrightarrow0.
+\tag{184.14}
+$$
+这里 $\mathfrak C_w$ 仍指对同一二步终端通道逐点优化的有限经典程序成本；生成所用程序标签不属于查询者可访问的输出。
+
+证明。 第181节的实 Stinespring 标架在全部 $0<a<h<1$ 的同一范围内给出可读值 $1/(1-u^2)$，且均衡输入达到它。将（184.3）相除，利用
+$(1-a^2)(1+u)-(1+u-2a^2)=a^2(1-u)$，即得（184.13）。
+
+二步接口中 $a=\beta^2$、$u=u_2(w)$、$u_2'(w)=2J$。第178—179节给出在全部允许 $w$ 上统一成立的
+$$
+1-a^2=4\varepsilon+O(\varepsilon^2),\qquad
+\ell=\varepsilon+O(\varepsilon^2),\qquad
+h-a^2=3\varepsilon+O(\varepsilon^2),\qquad
+J/\varepsilon^2\longrightarrow3.
+\tag{184.15}
+$$
+因此 $\mathfrak C(a,u)\sim1/(3\varepsilon)$。重新参数化将程序信息量乘以 $(2J)^2$，得到 $\mathfrak C_w\sim12\varepsilon^3$；由第181节 $I_1^{(2)}\sim9\varepsilon^3$，再得比值 $4/3$，两者都为一致极限。第179节系数18的程序仍是合法上界；（184.14）求出了这个接口的最小经典程序成本，而可读信息的精确系数仍为9。证毕。
+

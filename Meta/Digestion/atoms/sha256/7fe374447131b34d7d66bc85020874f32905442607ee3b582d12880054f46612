@@ -1,0 +1,90 @@
+**定理 166.2（小于半距的预测必须保留三个稳定纯态）。** 对固定 $0<r<1$ 和任意三维 CPTP 通道 $\mathcal F$，若
+$$
+W_r(\mathcal F)<\frac12,
+\tag{166.3}
+$$
+则 $m(\mathcal F)=p(\mathcal F)=3$，且存在一组正交归一基 $u_0,u_1,u_2$ 与相关矩阵 $B\succeq0$、$B_{ii}=1$，使
+$$
+\mathcal F(|u_i\rangle\langle u_j|)
+=B_{ij}|u_i\rangle\langle u_j|,
+\qquad |B_{ij}|<1\quad(i\ne j).
+\tag{166.4}
+$$
+因此 $\mathcal F$ 是该基下的严格衰减 Schur 通道，固定三个正交纯态，且 $\mathcal F(I)=I$。设 $\Delta_U$ 为这组基下的完全去相干通道，则
+$$
+\mathcal F^N\longrightarrow\Delta_U,
+\qquad
+d_{\rm ref}(\Delta_U,\Delta)\le W_r(\mathcal F).
+\tag{166.5}
+$$
+更一般地，在本模型内只要 $m(\mathcal F)\ne3$ 或 $p(\mathcal F)\ne3$，便有 $W_r(\mathcal F)\ge1/2$。式（166.4）是低风险的必要结构，不是所有此类 Schur 通道都低风险的充分条件；也不要求 $u_i$ 等于原计算基。
+
+证明。 先说明所用的有限维秩障碍。若两个 CPTP 幂等算子 $\mathcal P,\mathcal Q$ 的复秩不同，不妨设 $\operatorname{rank}\mathcal P>\operatorname{rank}\mathcal Q$。二者保 Hermitian，其 Hermitian 像空间的实维数等于复秩，因此存在非零 Hermitian 矩阵
+$$
+A\in\operatorname{ran}\mathcal P\cap\ker\mathcal Q.
+$$
+于是 $(\mathcal P-\mathcal Q)A=A$。将 $A$ 的正负部分分别归一化为态，用 $d_{\rm ref}$ 所包含的无参考输入距离，得到
+$$
+\|A\|_1
+=\|(\mathcal P-\mathcal Q)A\|_1
+\le2d_{\rm ref}(\mathcal P,\mathcal Q)\|A\|_1.
+$$
+故
+$$
+\operatorname{rank}\mathcal P\ne\operatorname{rank}\mathcal Q
+\quad\Longrightarrow\quad
+d_{\rm ref}(\mathcal P,\mathcal Q)\ge\frac12.
+\tag{166.6}
+$$
+这只是不同秩的投影不能在算子范数一以内相互逼近的标准有限维事实在全参考距离下的归一化。
+
+通道幂的有界性保证 Cesàro 极限存在：
+$$
+\mathcal E_{\mathcal F}
+=\lim_{M\to\infty}\frac1M\sum_{N=1}^{M}\mathcal F^N.
+\tag{166.7}
+$$
+逐个 Jordan 块看，模长小于一的块平均后消失，模长为一但不等于一的特征值平均后也消失，而特征值一的空间保留。因此 $\mathcal E_{\mathcal F}$ 是投影到 $\operatorname{Fix}(\mathcal F)$ 的幂等算子；它是 CPTP 通道的平均之极限，所以也是 CPTP。
+
+相位零属于允许源族，且 $\mathcal M_{r,0}^N\to\Delta$。对平均应用距离的凸性，再取极限，得到
+$$
+d_{\rm ref}(\mathcal E_{\mathcal F},\Delta)
+\le W_r(\mathcal F).
+\tag{166.8}
+$$
+由于 $\operatorname{rank}\Delta=3$，式（166.6）已证明：若 $m(\mathcal F)\ne3$，则风险至少为 $1/2$；在假设（166.3）下，$m(\mathcal F)=3$。
+
+接下来使用任意有限维 CPTP 通道的成熟固定空间结构。Blume-Kohout、Ng、Poulin、Viola，[*Information-preserving structures: A general framework for quantum zero-error information*](https://arxiv.org/abs/1006.1358)，定义10及定理5，给出在固定态共同支撑上的分解
+$$
+\mathcal H=
+\left(\bigoplus_a\mathcal A_a\otimes\mathcal B_a\right)\oplus\mathcal K,
+\qquad
+\operatorname{Fix}(\mathcal F)=
+\left(\bigoplus_a M(\mathcal A_a)\otimes\tau_a\right)\oplus0_{\mathcal K},
+\tag{166.9}
+$$
+其中 $\tau_a$ 为固定的非零正矩阵，可归一化为密度矩阵；$\mathcal K$ 是固定态共同支撑之外的空间。该结构适用于非 unital 通道，不要求预先存在满秩固定态。因而
+$$
+m(\mathcal F)=\sum_a(\dim\mathcal A_a)^2.
+\tag{166.10}
+$$
+当此和等于三时，只能有三个一维 $\mathcal A_a$。物理 Hilbert 空间本身也只有三维，故每个 $\mathcal B_a$ 都一维、$\mathcal K=0$。于是存在三个正交纯态投影 $|u_i\rangle\langle u_i|$ 被 $\mathcal F$ 固定。这也证明了一个后面要用的事实：仅有 $m(\mathcal F)=3$，已经足以推出某个基下的 Schur 形式，不必先假设（166.3）。
+
+取任意 Kraus 表示 $\mathcal F(A)=\sum_\ell K_\ell A K_\ell^\dagger$。纯态固定条件意味着每个 $K_\ell u_i$ 都在 $\mathbb C u_i$ 中，否则正算子之和会在该直线之外产生非零支撑。写 $K_\ell u_i=a_{\ell i}u_i$，便得到 Schur 系数
+$$
+B_{ij}=\sum_\ell a_{\ell i}\overline{a_{\ell j}}.
+$$
+它是 Gram 矩阵，且保持迹给出 $B_{ii}=1$。这证明式（166.4）除严格模长外的部分，同时证明 unital 性。上述外部固定空间定理只承担这个结构步骤；本节的误差门槛由式（166.6）与真实源极限共同给出。
+
+最后处理周边模式。设 $\lambda_1,\ldots,\lambda_s$ 是全部周边特征值。有限个单位圆相位的同时回归给出整数 $N_j\to\infty$，使每个 $\lambda_a^{N_j}\to1$。这可由环面上的同时有理逼近得到；若回归取值有有限公共周期，则取其不断增大的整数倍。幂有界排除了周边非平凡 Jordan 块，其余广义特征空间在这些幂下趋于零。因此
+$$
+\mathcal F^{N_j}\longrightarrow\mathcal P_{\rm per},
+\tag{166.11}
+$$
+其中 $\mathcal P_{\rm per}$ 为周边空间上的 CPTP 幂等投影，秩为 $p(\mathcal F)$。与同一序列上的 $\mathcal M_{r,0}^{N_j}\to\Delta$ 比较，得到
+$$
+d_{\rm ref}(\mathcal P_{\rm per},\Delta)\le W_r(\mathcal F).
+\tag{166.12}
+$$
+式（166.6）故也给出 $p(\mathcal F)\ne3$ 时的半距下界；在（166.3）下，周边空间恰好三维。固定空间已经占满这三维，故 Schur 系数 $B_{ij}$ 在 $i\ne j$ 时都必须满足 $|B_{ij}|<1$。其幂于是收敛至 $\Delta_U$，再用式（166.8）得到（166.5）。证毕。
+

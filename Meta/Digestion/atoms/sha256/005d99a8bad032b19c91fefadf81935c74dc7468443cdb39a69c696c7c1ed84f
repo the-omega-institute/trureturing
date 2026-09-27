@@ -1,0 +1,31 @@
+**定义 238.1（两个固定比例的全域预算）。** 固定第236、237节的实际分界任务、共同四维处理器、共轭 $C$ 和内部窗口 $K$。固定 $\lambda,\mu\ge0$，且 $\lambda^2+\mu^2>0$。允许全域解析复密度准备，要求全部信号输入精确、完整尖锐集合恰为 $\{u_1,u_3\}$、两节点最优普通双侧曲率，以及
+
+$$
+\sup_{u\in J_a}I_R^C(\rho_u)\le\lambda\varepsilon,
+\qquad
+\sup_{u\in J_a}J(\rho_u)\le\mu\varepsilon,
+\qquad J(\rho)=\sqrt{2(1-\operatorname{Tr}\rho^2)}.
+\tag{238.1}
+$$
+
+记这一类为 $\mathcal D_s^{\lambda,\mu}(\varepsilon)$，并定义
+
+$$
+Q_s^{\lambda,\mu}(\varepsilon)
+=\inf_{\rho\in\mathcal D_s^{\lambda,\mu}(\varepsilon)}
+\sup_{u\in K}I_Q(\rho_u),
+\qquad
+E_s^{\lambda,\mu}(\varepsilon)
+=\inf_{\rho\in\mathcal D_s^{\lambda,\mu}(\varepsilon)}
+\int_K I_Q(\rho_u)\,du.
+\tag{238.2}
+$$
+
+仍沿用 $L,\gamma,\kappa,\kappa_{\rm mix}$，置
+
+$$
+\kappa_{\lambda,\mu}
+=\lambda^2\kappa+\mu^2\kappa_{\rm mix}.
+\tag{238.3}
+$$
+

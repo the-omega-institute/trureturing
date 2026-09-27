@@ -1,0 +1,1 @@
+| Xu, Vardi, Safran, *To Grok Grokking: Provable Grokking in Ridge Regression*, ICML 2026, arXiv:2601.19791（库内条目 [xuvardisafran2026grok](../../../Library/Dynamics/xuvardisafran2026grok.md)） | `literature-attested`：岭回归梯度下降的可证延迟泛化，定理 A.2 给零空间分量递推 $(1-\eta\lambda)^t$，式 (8) 给人口阈值时刻关于初始化方差对数的下界；评注 3.2 所记的对数平移律是其连续时间精确形式 

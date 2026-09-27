@@ -1,0 +1,15 @@
+### 187.3 显式共同测量与最优首项
+
+置 $g=|\gamma|$，定义
+
+$$
+G(\beta,\gamma)=
+\begin{cases}
+\dfrac{\beta^2+\gamma^2}{2\beta},&g\le\beta,\\[4pt]
+g,&g\ge\beta.
+\end{cases}
+\tag{187.4}
+$$
+
+两式在 $g=\beta$ 相同。
+

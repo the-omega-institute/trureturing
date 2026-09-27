@@ -1,0 +1,11 @@
+**定义 171.1（效果空间的因果闭合）。** 令 $\mathcal X$ 为有限维边界状态空间，$\mathcal X^*$ 为其线性效果空间。给定终端任务族 $\mathcal F_{\mathrm{term}}\subseteq\mathcal X^*$ 和允许接口映射族 $\mathcal C$。称子空间 $V\subseteq\mathcal X^*$ 对该任务族因果闭合，若
+
+$$
+\mathcal F_{\mathrm{term}}\subseteq V,
+\qquad
+\Phi^*(V)\subseteq V
+\quad\forall\Phi\in\mathcal C.
+$$
+
+这里 $\Phi^*$ 是接口映射对效果的伴随拉回。
+

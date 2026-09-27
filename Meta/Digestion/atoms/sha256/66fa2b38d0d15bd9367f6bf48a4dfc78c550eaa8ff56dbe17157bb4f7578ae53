@@ -1,0 +1,17 @@
+**定义 235.1（固定参数窗口上的 Fisher 代价）。** 固定第234节允许的充分小 $s>0$，取 $a=a_{\rm c}(s)$，并固定相应的四维处理器和共同共轭 $C$。记两个尖锐节点为 $u_1=2h_1-1<u_3=2h_3-1$。再固定
+
+$$
+K=[u_1,u_1+\ell],\qquad 0<\ell<u_3-u_1.
+\tag{235.1}
+$$
+
+对 $\varepsilon>0$，令 $\mathcal A_s(\varepsilon)$ 为定义234.1中满足 $\sup_{u\in J_a}I_R^C(\rho_u)\le\varepsilon$ 的曲线，定义
+
+$$
+Q_s(\varepsilon)=\inf_{\rho\in\mathcal A_s(\varepsilon)}\ \sup_{u\in K}I_Q(\rho_u),\qquad
+E_s(\varepsilon)=\inf_{\rho\in\mathcal A_s(\varepsilon)}\ \int_K I_Q(\rho_u)\,du.
+\tag{235.2}
+$$
+
+$I_Q$ 沿原任务参数 $u$ 求导。窗口 $K$ 先固定，不随 $\varepsilon$ 缩小；虚性约束则施加于整个 $J_a$。
+

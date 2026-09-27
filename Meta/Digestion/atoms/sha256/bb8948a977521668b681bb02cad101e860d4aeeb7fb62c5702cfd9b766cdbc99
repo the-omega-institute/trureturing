@@ -1,0 +1,51 @@
+**定理193.1（全尺度统一首项）。** 有
+
+$$
+\boxed{
+\lim_{\epsilon\downarrow0}
+\sup_{0\le\ell\le1/2}
+\left|
+\frac{\mathscr E(\ell,\epsilon)-3/4}{\epsilon}
+-\Phi_{\ell/\epsilon}
+\right|=0.
+}
+\tag{193.2}
+$$
+
+等价地，设
+
+$$
+z=\frac{\ell}{\ell+\epsilon},
+$$
+
+则
+
+$$
+\mathscr E(\ell,\epsilon)
+=\frac34+\epsilon\Psi(z)+o(\epsilon),
+\tag{193.3}
+$$
+
+其中余项对 $\ell\in[0,1/2]$ 一致。
+
+**证明。** 若（193.2）不成立，存在 $a>0$、$\epsilon_n\downarrow0$ 与
+$\ell_n\in[0,1/2]$，使绝对差始终至少为 $a$。令
+$h_n=\ell_n/\epsilon_n$。
+
+若这列比例有有界子列，就在该子列上取共同上界 $H$。第191节的一致估计直接给
+
+$$
+\left|
+\frac{\mathscr E(\ell_n,\epsilon_n)-3/4}{\epsilon_n}
+-\Phi_{h_n}\right|\le C_H\epsilon_n\longrightarrow0,
+$$
+
+矛盾。
+
+若没有有界子列，则 $h_n\to\infty$，故最终 $\ell_n>0$ 且
+$\epsilon_n/\ell_n\to0$。第192节给归一化误差趋于 $\Phi_\infty$；
+第190节又给 $\Phi_{h_n}\to\Phi_\infty$，绝对差仍趋零，矛盾。
+两种情况穷尽全部比例序列，故结论成立。证毕。
+
+这里的一致余项只有 $o(\epsilon)$。第191节的 $O(\epsilon^2)$ 仅在 $\ell/\epsilon$ 有界时统一，本节没有把它扩张到整个 $\ell$ 区间。
+

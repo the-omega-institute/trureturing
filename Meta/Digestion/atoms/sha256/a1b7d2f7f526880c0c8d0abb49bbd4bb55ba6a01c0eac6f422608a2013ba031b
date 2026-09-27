@@ -1,0 +1,14 @@
+**定义 76.1（有限调用的归一化占据态）。** 对任一同接口实际仪器 $\Gamma$，记未点击、点击分支为 $\mathcal N,\mathcal C$。给定初态 $\rho$、整数 $n\ge1$，置
+
+$$
+\rho_j=\mathcal N^j(\rho),\qquad
+s_j=\operatorname{Tr}\rho_j,\qquad
+\mu_n=\sum_{j=0}^{n-1}s_j=\mathbb E_\rho\min(\mathsf N,n),
+$$
+
+$$
+\sigma_n=\frac1{\mu_n}\sum_{j=0}^{n-1}\rho_j.
+$$
+
+由于 $s_0=1$，有 $\mu_n\ge1$，且 $\sigma_n$ 是归一化密度矩阵。它把前 $n$ 轮的活动态按实际活动质量组合；定义不使用无限运行的收敛性。
+

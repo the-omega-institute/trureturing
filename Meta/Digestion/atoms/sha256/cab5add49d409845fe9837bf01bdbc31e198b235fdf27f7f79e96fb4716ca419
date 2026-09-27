@@ -1,0 +1,60 @@
+**命题99.4（正则铅笔不能有 $ABABA$ 尾词）。** 在本节实际合同与正则假设下，尾词 $ABABA$ 不可能。
+
+**证明。** 先讨论 $[\eta_1]\notin\{[A],[B]\}$。由于 $A,B$ 是二维环境中的正交对，四条射线
+
+$$
+[A],\ [B],\ [\eta_1],\ [\eta_1^\perp]
+$$
+
+两两不同。实际首轮的两个非零位像及第90节的正交配对给
+$g_0([\eta_1]),g_0([\eta_1^\perp])\ge1$。引理99.3与正则七次行列式预算于是给
+
+$$
+7\ge\alpha+\beta+g_0([\eta_1])+g_0([\eta_1^\perp])
+\ge r+s+2\ge8,
+$$
+
+矛盾。
+
+若 $[\eta_1]=[B]$，完整六轮环境为 $B,A,B,A,B,A$，满足纯正交交替环境合同。第47节推论47.3给接收维数至少八，与七维矛盾。
+
+只剩 $[\eta_1]=[A]$。实际 $V_0k=p\otimes A$ 给 $p\in P_A$，而 $O\subset P_B$ 及 $P_A\cap P_B=0$ 给 $p\notin O$。由（99.9）和 $V_1p=v\otimes A$，同一个 $V_1$ 把 $\mathbb Cp+O$ 映入纯环境 $A$，所以
+
+$$
+s+1=\dim(\mathbb Cp+O)\le g_1([A])=\beta.
+\tag{99.12}
+$$
+
+结合 $\alpha\ge r\ge3$、$s\ge3$ 和 $\alpha+\beta\le7$，只能
+
+$$
+r=s=3,\qquad\alpha=3,\quad\beta=4,\qquad e\in\{2,3\}.
+\tag{99.13}
+$$
+
+若 $e=2$，则 $G_2=G_4=E$，同一个 $V_0$ 给 $H_1=H_3$，特别 $p\in H_3$。由于 $v,Q_4\perp E$，实际 $H_2,H_4$ 是共同域 $E$ 上的两个线性图。前者的图映射为
+
+$$
+T_2:E\longrightarrow\mathbb Cv,\qquad
+T_2u=(b/a^2)v,\quad T_2w=0,
+$$
+
+后者的图映射 $T_4:E\to Q_4$ 由（99.5）的两个同构投影而为同构。图和向 $E$ 的投影满射，其核恰对应 $(T_4-T_2)E$，所以
+
+$$
+\dim(H_2+H_4)=\dim E+\operatorname{rank}(T_4-T_2).
+\tag{99.14}
+$$
+
+左侧为 $s=3$，$\dim E=2$，故差映射秩一。若 $v\notin Q_4$，则 $T_4x=T_2x$ 的共同值只能为零；$T_4$ 单射给 $x=0$，会使差映射秩二，矛盾。因此 $v\in Q_4$。实际
+
+$$
+V_1p=v\otimes A\in Q_4\otimes A=V_1G_3
+$$
+
+和 $V_1$ 单射给 $p\in G_3$。此前 $p\in H_3$，违反 $p\ne0$ 与 $H_3\cap G_3=0$。
+
+若 $e=3$，则 $E\subset R_A\subset P_A$ 三者均三维，所以 $E=R_A=P_A$，特别 $p\in E$。但 $V_1p=v\otimes A$ 与 $V_1E=Q_B\otimes B$ 正交，同一个 $V_1$ 等距给 $p\perp E$，又与 $p\ne0$ 矛盾。至此全部首轮射线均被排除。证明完毕。
+
+这里完整复用了实际图关系；未把外置首轮定理直接应用于内置首轮。
+

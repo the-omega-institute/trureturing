@@ -1,0 +1,74 @@
+### 230.4 达到阈值的实际 CPTP 通道
+
+以下构造适用于任意整数 $d\ge1$、$r\ge1$、$m\ge r$，不受 $r<d$ 限制。令
+$$
+t=\left\lceil\frac d r\right\rceil,
+\qquad d=(t-1)r+s,\qquad 1\le s\le r.
+\tag{230.HR.20}
+$$
+将输入的一组正交基分成 $t$ 个非空块：
+$$
+\{f_{j,i}:1\le j<t,\ 1\le i\le r\}
+\ \cup\ \{f_{t,i}:1\le i\le s\}.
+\tag{230.HR.21}
+$$
+在输出中选正交向量 $e_1,\ldots,e_r$，令 $P_0$ 为它们张成空间的正交投影。置 $n_j=r$ 对 $j<t$，$n_t=s$，并定义
+$$
+K_j=\sum_{i=1}^{n_j}|e_i\rangle\langle f_{j,i}|,
+\qquad
+\mathcal T(X)=\sum_{j=1}^t K_jXK_j^\dagger.
+\tag{230.HR.22}
+$$
+各输入块互相正交且完整覆盖输入，所以
+$$
+\sum_{j=1}^tK_j^\dagger K_j
+=\sum_{j=1}^t\sum_{i=1}^{n_j}|f_{j,i}\rangle\langle f_{j,i}|
+=I_d.
+\tag{230.HR.23}
+$$
+因此 $\mathcal T$ 是实际 CPTP 通道，且 $P_0K_j=K_j$ 给
+$$
+\operatorname{Tr}\bigl[P_0\mathcal T(P_v)\bigr]=1
+\quad\text{对全部单位 }v.
+\tag{230.HR.24}
+$$
+
+这组 Kraus 不仅数量为 $t$，而且线性独立：
+$$
+\operatorname{Tr}(K_j^\dagger K_\ell)
+=\begin{cases}n_j,&j=\ell,\\0,&j\ne\ell.\end{cases}
+\tag{230.HR.25}
+$$
+所有 $n_j$ 均正，故它们是非零的 Hilbert–Schmidt 正交族。由
+$$
+J_{\mathcal T}=\sum_{j=1}^t
+|K_j\rangle\!\rangle\langle\!\langle K_j|,
+\tag{230.HR.26}
+$$
+Choi 矩阵的像等于这些独立向量的张成，因而
+$$
+\boxed{\operatorname{rank}J_{\mathcal T}=t.}
+\tag{230.HR.27}
+$$
+这也证明不存在更短 Kraus 表示：含 $u$ 个 Kraus 的表示使 Choi 秩至多为 $u$。
+
+同一通道有显式等距扩张。用所选基 $e_1,\ldots,e_r$ 将 $\operatorname{im}P_0$ 识别为 $\mathbb C^r$；令 $g_1,\ldots,g_t$ 是 $\mathbb C^t$ 的正交基，定义
+$$
+V:\mathbb C^d\longrightarrow\mathbb C^r\otimes\mathbb C^t,
+\qquad Vf_{j,i}=e_i\otimes g_j.
+\tag{230.HR.28}
+$$
+不同 $(j,i)$ 的像互相正交，因此 $V^\dagger V=I_d$。令 $\iota:\mathbb C^r\hookrightarrow\mathbb C^m$ 为上述输出嵌入，并置 $W=(\iota\otimes I_t)V$，则
+$$
+\boxed{\mathcal T(X)=\operatorname{Tr}_{\mathbb C^t}(WXW^\dagger).}
+\tag{230.HR.29}
+$$
+
+对常值事件 $P([v])=P_0$，像丛 $L$ 为平凡秩 $r$ 丛，故
+$$
+E\cong(H^*)^{\oplus r},\qquad
+c(E)=(1+h)^r,\qquad c_r(E)=h^r.
+\tag{230.HR.30}
+$$
+在 $r<d$ 时，$\nu=1$、$\alpha=1$，目标容量恰好达到（230.HR.19）。因此 $\lceil d/r\rceil$ 这一普适下界不能提高。这是整个允许事件族中的可达实例，不断言每一个非平凡事件丛都能在相同阈值实现统一正概率。
+

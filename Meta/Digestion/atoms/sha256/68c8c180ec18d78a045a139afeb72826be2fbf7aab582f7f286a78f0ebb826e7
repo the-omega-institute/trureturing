@@ -1,0 +1,49 @@
+### 220.4 旋转输出事件与全部预算候选的检验
+
+取 $z\in\mathbb C$、$|z|<1$，令
+$$
+r(z)=\begin{pmatrix}s\\z\end{pmatrix},\qquad
+s=\sqrt{1-|z|^2}.
+$$
+两个投影 Kraus 行为
+$$
+\alpha_z=\langle r(z)|K_1
+=(sa+\overline zc,\ sb+\overline zd),
+\qquad
+\omega_z=\langle r(z)|W
+=(\overline zu,\ s+\overline zv).
+\tag{220.15}
+$$
+结果一在输出事件 $P_{r(z)}$ 下的输入效应是
+$$
+B_z=\alpha_z^\dagger\alpha_z+t\omega_z^\dagger\omega_z.
+$$
+其精确迹与行列式为
+$$
+T_z=\|\alpha_z\|^2+t\|\omega_z\|^2,\qquad
+\det B_z=tQ_z,\qquad
+Q_z=\left|\det\begin{pmatrix}\alpha_z\\\omega_z\end{pmatrix}\right|^2.
+\tag{220.16}
+$$
+在 $(p,t,z)=0$，两根为一、零，$Q_z=1/2$。大根 $b_+(p,t,z)$ 在联合邻域正且解析，小根因此精确因子化为
+$$
+b_-(p,t,z)=t\eta_z(p,t,z),\qquad
+\eta_z=Q_z/b_+.
+$$
+定义解析比值
+$$
+\gamma_{\mathrm{ev}}(p,t,z)=\frac{\eta_z(p,t,z)}{\eta(p,t)}.
+\tag{220.17}
+$$
+下标用于区别模型参数 $\gamma$。定义在 $t=0$ 仍成立；先因子化，再取正解析因子的商。
+
+对物理正谱侧，在固定足够小的联合邻域及输出图内，引理219.4给
+$$
+d_2(p)\ge b_-(p,t^\sharp,z)
+=\lambda(p)\gamma_{\mathrm{ev}}(p,t^\sharp,z).
+\tag{220.18}
+$$
+具体地，若竞争者结果一的 Choi 秩至多一，则其 Kraus $K_{1,\mathrm{comp}}$ 的行 $\langle r(z)|K_{1,\mathrm{comp}}$ 有核输入。在该输入下，竞争者对事件“结果一且量子输出为 $r(z)$”的概率为零，而目标概率至少为 $\lambda_{\min}(B_z)$。若竞争者结果一秩为二，则结果零缺失；目标结果零有统一远离零的可取得概率。在本小箱内，该概率大于 $b_-$。因此（220.18）覆盖全部总秩二候选。
+
+这里输入可以依赖被检验的候选；每个输入和输出事件都属于合法 diamond 检验。不要求该事件族给出完整 diamond 最大值。
+

@@ -1,0 +1,15 @@
+**证明。** 在 $D$ 后添加一个有限维辅助空间 $F$，取 $R$ 的纯化 $|\Psi\rangle_{ABDF}$。因为 $|\Psi\rangle$ 对 $DF$ 的偏迹也是 $M$，可写
+
+$$
+|\Psi\rangle=\sum_{j=1}^r\sqrt{\lambda_j}|m_j\rangle|f_j\rangle,
+\qquad\langle f_i|f_j\rangle=\delta_{ij}.
+$$
+
+具体可取 $|f_j\rangle=\lambda_j^{-1/2}(\langle m_j|\otimes I)|\Psi\rangle$，其正交性直接由偏迹等于 $M$ 得到。令等距 $W:E\to D\otimes F$ 满足 $W|j\rangle=|f_j\rangle$，并定义
+
+$$
+\Lambda(X)=\operatorname{Tr}_F(WXW^*).
+$$
+
+它完全正且保持迹，且 $(I_{AB}\otimes W)|\Omega\rangle=|\Psi\rangle$，所以式（57.6）成立。$\square$
+

@@ -1,0 +1,10 @@
+**定理 399.3（两层近似须分别承担误差）。** 设有限 Markov 核 $P$ 在 $X$ 上，满射 $q:X\to B$ 与 $s:B\to D$，核 $Q$ 在 $B$ 上、$R$ 在 $D$ 上。若
+
+$$
+\sup_x\operatorname{TV}(q_*P_x,Q_{q(x)})\le\varepsilon_1,
+\qquad
+\sup_b\operatorname{TV}(s_*Q_b,R_{s(b)})\le\varepsilon_2,
+$$
+
+则合成表达满足 $\sup_x\operatorname{TV}((s\circ q)_*P_x,R_{s(q(x))})\le\min(1,\varepsilon_1+\varepsilon_2)$。
+

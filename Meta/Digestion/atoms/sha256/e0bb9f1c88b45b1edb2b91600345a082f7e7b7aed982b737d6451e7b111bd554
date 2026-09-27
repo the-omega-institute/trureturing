@@ -1,0 +1,9 @@
+**引理204.2（不依赖跳跃余量的定量 Gram 恢复）。** 在（204.3）的整个类上一致有
+
+$$
+\boxed{
+\mathfrak d\le C_{I,K}(\epsilon+\sqrt U+\sqrt V).
+}
+\tag{204.5}
+$$
+

@@ -1,0 +1,33 @@
+**排除共同环境射线。**
+
+现在反设 $`\eta_3\parallel\eta_4\parallel\eta_5`$，吸收相位后写为共同单位向量 $`\eta`$。令
+
+$$
+H_\Sigma=H_2+H_3+H_4,\qquad
+G_\Sigma=G_2+G_3+G_4.
+\tag{30.16}
+$$
+
+固定等距在同一环境方向上给 $`\dim H_\Sigma+\dim G_\Sigma\le6`$。两项均至少为三：若 $`\dim G_\Sigma=2`$，则 $`G_2=G_3=G_4`$，由（30.6）得 $`H_2=H_3`$，违反 $`\dim C_2=3`$、$`\dim C_3=4`$；若 $`\dim H_\Sigma=2`$，则 $`H_2=H_3=H_4`$、$`G_3=G_4`$，违反第26节式（26.20）的主角度行列式严格变化。因此
+
+$$
+\dim H_\Sigma=\dim G_\Sigma=3.
+\tag{30.17}
+$$
+
+去掉共同环境因子，写
+
+$$
+V_0x=f(x)\otimes\eta\quad(x\in H_\Sigma),\qquad
+V_1y=g(y)\otimes\eta\quad(y\in G_\Sigma).
+$$
+
+$`f,g`$ 为等距，其像 $`U=fH_\Sigma`$、$`W=gG_\Sigma`$ 正交且均三维，故
+
+$$
+K=U\oplus W,\qquad
+fH_2=G_3,\quad fH_3=G_4,\quad fH_4=G_5,
+\quad gG_2=Q_3,\quad gG_3=Q_4,\quad gG_4=Q_5.
+\tag{30.18}
+$$
+

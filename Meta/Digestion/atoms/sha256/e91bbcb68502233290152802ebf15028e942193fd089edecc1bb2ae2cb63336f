@@ -1,0 +1,40 @@
+**命题 52.8（两轮反馈缺陷与字母表放大）。** 取 $T=2$，$A_1,Y_2$ 为单点，记 $A=A_2$、$Y=Y_1$，并写 $r_a(y)=P(y\mid a)$。每列 $r_a$ 是 $Y$ 上的概率分布。令
+
+$$
+L_y=\min_{a\in A}r_a(y),\qquad
+U_y=\max_{a\in A}r_a(y).
+$$
+
+则全部反馈 $a=f(y)$ 的缺陷精确为
+
+$$
+\Delta(r)=
+\max\left\{
+\sum_{y\in Y}U_y-1,\;
+1-\sum_{y\in Y}L_y
+\right\}.
+\tag{52.15}
+$$
+
+对每个整数 $m\ge2$ 和 $0\le\varepsilon\le1$，取 $A=Y=\{1,\ldots,m\}$ 及
+
+$$
+r_a(y)=\frac{1-\varepsilon}{m}
++\varepsilon\,\mathbf1_{\{y=a\}}.
+\tag{52.16}
+$$
+
+则
+
+$$
+\max_{a,b}\operatorname{TV}(r_a,r_b)=\varepsilon,\qquad
+\Delta(r)=(m-1)\varepsilon.
+\tag{52.17}
+$$
+
+因此不存在独立于动作、输出字母表大小的有限常数 $C$，使所有这类表都满足 $\Delta(r)\le C\max_{a,b}\operatorname{TV}(r_a,r_b)$。
+
+**证明。** 每个输出 $y$ 上的动作 $f(y)$ 可独立选择，故反馈质量的最大值为 $\sum_yU_y$，最小值为 $\sum_yL_y$。常策略给出质量一，所以 $\sum L_y\le1\le\sum U_y$，得到式（52.15）。
+
+式（52.16）中，两个不同动作列只在对应的两个坐标相差 $\varepsilon$，故总变差为 $\varepsilon$。逐行有 $L_y=(1-\varepsilon)/m$、$U_y=(1-\varepsilon)/m+\varepsilon$，代入式（52.15）得式（52.17）。选择 $a=y$ 给出质量 $1+(m-1)\varepsilon$；在每行选择任一 $a\ne y$ 给出质量 $1-\varepsilon$。特别地，令 $\varepsilon=1/(m-1)$、$m\to\infty$，列间总变差趋于零，而反馈缺陷恒为一。$m\ge3$ 时这些表仍严格为正。$\square$
+

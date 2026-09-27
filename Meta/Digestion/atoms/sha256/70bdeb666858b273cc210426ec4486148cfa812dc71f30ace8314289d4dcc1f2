@@ -1,0 +1,34 @@
+**证明。** 令 $W_P=(I_K\otimes P)W$，其像维数为 $m<r$。选择像空间的一组基 $z_1,\ldots,z_m\in K\otimes E_{\mathrm{new}}$。将任意纯输入展开后，投影输出都可写成
+$$
+|\Omega_P\rangle
+=\sum_{j=1}^m c_j\otimes z_j,
+\qquad c_j\in B\otimes E_{\mathrm{old}}.
+\tag{62.9}
+$$
+因此它在切分
+$$
+(B\otimes E_{\mathrm{old}}) \big| (K\otimes E_{\mathrm{new}})
+\tag{62.10}
+$$
+上的 Schmidt 秩至多 $m$。
+
+另一方面，$P$ 仅作用于新环境，与接收器解码 $U_K$ 对易。式（62.6）的同一实际投影输出在解码后为
+$$
+|\psi\rangle_{BQ}\otimes|\tau_P\rangle,
+\qquad |\tau_P\rangle=(I_{\Gamma,E_{\mathrm{old}}}\otimes P)|\tau\rangle.
+\tag{62.11}
+$$
+$U_K$ 只作用于（62.10）的右侧，故保持该切分的 Schmidt 秩。若 $|\tau_P\rangle\ne0$，迹掉解码后的整个右侧 $Q\otimes\Gamma\otimes E_{\mathrm{new}}$，左侧未归一化约化态为
+$$
+\rho_B\otimes\sigma_{E_{\mathrm{old}}},
+\qquad
+\rho_B=\operatorname{Tr}_Q|\psi\rangle\langle\psi|,
+\quad
+\sigma_{E_{\mathrm{old}}}
+=\operatorname{Tr}_{\Gamma,E_{\mathrm{new}}}|\tau_P\rangle\langle\tau_P|.
+\tag{62.12}
+$$
+前因子秩为 $r$，后因子是非零正算子，秩至少一。所以（62.10）的 Schmidt 秩至少 $r$，与（62.9）冲突。因此 $|\tau_P\rangle=0$，即（62.8）。证明完毕。
+
+这里使用的是包含旧环境的联合切分（62.10）。没有以终端接收器边缘秩代替该切分的 Schmidt 秩，也未要求新旧环境独立。
+

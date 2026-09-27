@@ -1,0 +1,24 @@
+### 262.1 可行填充及其极值方向
+
+设 $S$ 为非零有限维复Hilbert空间，给定 $Z\in\mathcal L(S)$。定义
+$$
+w(Z)=\max_{\|x\|=1}|x^\dagger Zx|,
+\qquad
+\mathcal F(Z)=
+\left\{
+F=F^\dagger:
+T_Z(F)=\begin{pmatrix}F&Z/2\\Z^\dagger/2&I_S-F\end{pmatrix}\succeq0
+\right\}.
+\tag{262.1}
+$$
+本节讨论 $w(Z)=1$ 且 $\mathcal F(Z)\ne\varnothing$ 的情形。正块的对角压缩自动给 $0\preceq F\preceq I_S$。
+
+令
+$$
+\mathcal M(Z)=\{x\in S:\|x\|=1,\ |x^\dagger Zx|=1\},
+\qquad
+W(Z)=\operatorname{span}_{\mathbb C}\mathcal M(Z).
+\tag{262.2}
+$$
+$W(Z)$ 只收集当前数值半径等式的极值向量，不预先把整个联合块矩阵的核投影都算入其中。
+

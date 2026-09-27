@@ -1,0 +1,21 @@
+## 220. 小谱方向的相干结构与容量距离的精确二次修正
+
+第219节证明新增小谱权重与合法容量距离在联合端点一阶相同。本节进一步确定它们在正来源方向上的第一项差别：小谱方向本身跨输入—输出的结构，使实际距离比谱权重严格更小；转动输出检验后，可以求出这个差别的精确二次系数。
+
+固定 $\beta>0,R>1$，继续使用第213、217—219节的实际恢复模型、合法入口与共同来源。记
+$$
+p=(\epsilon,h,\nu),\qquad
+\gamma=\beta\sqrt{1-\nu},\qquad
+\ell=\epsilon h,\qquad
+\Delta(p)=\nu-\nu_b(\epsilon,h).
+\tag{220.1}
+$$
+物理参数取固定联合小箱中的 $\epsilon>0,h\ge0$，并保留原来的来源与入口约束。实际最优正旗标条件记录通道为 $\mathcal R^\sharp(p)$。沿用未归一化 Choi 约定，输入维数为二，结果标签为二元经典记录，每个标签内的量子输出也是二维。设
+$$
+\lambda(p)=\lambda_2^\sharp(p),\qquad
+d_2(p)=\min_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R^\sharp(p)-\mathcal S\|_\diamond,
+\tag{220.2}
+$$
+其中 $\mathfrak C_2$ 包含同接口的全部总 Choi 秩至多二经典记录 CPTP 通道，包括缺失某个结果的候选，不限制其量子输出为重制备态。diamond 范数保留任意外部参考。本节给出纸面推导，未作 Lean 核验。
+

@@ -1,0 +1,12 @@
+**引理 233.2。** 设 $H,A$ 是同一有限维空间上的 Hermitian 矩阵。对足够小的正负实数 $t$，令
+$$
+S_t=(I+tA)^{1/2}.
+$$
+则
+$$
+\boxed{\left.\frac d{dt}\right|_{t=0}\|S_tHS_t\|_1
+=\operatorname{Tr}(A|H|).}
+\tag{233.FF.20}
+$$
+不要求 $H$ 可逆、无重根，也不要求 $A$ 与 $H$ 交换。
+
