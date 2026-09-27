@@ -14232,3 +14232,216 @@ AHH 在于：**每一段局部都压到最优，不等于整个递归关系全�
 **来源与边界 194.2。** 本批在有限维赋范阶段空间、线性串联响应、局部谱截断和幂律压缩成本模型下推导乘积望远镜误差、谱尾串联界、因果权重预算分配及阶段合同 AHH。没有把局部秩截断自动解释为全局最优递归仪器，没有把成本幂律宣称为现实实验定律，没有推广到非线性组合、未知增益、无限阶段或物理钟标定；没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
 
 ## 追加锚（本行以下为增补区）
+## 195. 不确定阶段本身也是边界关系
+
+确定性近似合同给出一个中心响应和一个误差半径；当阶段存在多个合法实现时，真正需要保存的是一族响应及其组合规则，而不是任意挑选一条名义路径。
+
+**定义 195.1（集合值阶段合同）。** 对每个阶段 $i$，令
+
+$$
+\mathfrak R_i
+\subseteq
+\mathcal L(\mathcal U_{i-1},\mathcal U_i)
+$$
+
+为非空紧的合法响应集合。定义串联响应集合
+
+$$
+\mathfrak R_{[k]}
+=
+\mathfrak R_k\cdots\mathfrak R_1
+=
+\{R_k\circ\cdots\circ R_1:R_i\in\mathfrak R_i\}.
+$$
+
+若有名义响应 $\widehat R_i$ 和半径 $\delta_i$，满足
+
+$$
+\mathfrak R_i
+\subseteq
+\{R:\|R-\widehat R_i\|\le\delta_i\},
+$$
+
+则称 $(\widehat R_i,\delta_i)$ 是该阶段的球形不确定性合同。另记
+
+$$
+\gamma_i
+\ge
+\sup_{R\in\mathfrak R_i}\|R\|,
+\qquad
+\widehat\gamma_i\ge\|\widehat R_i\|.
+$$
+
+**定义 195.2（集合间的响应距离）。** 对两个非空紧响应集合 $\mathfrak A,\mathfrak B$，定义 Hausdorff 距离
+
+$$
+d_{\mathrm H}(\mathfrak A,\mathfrak B)
+=
+\max\left\{
+\sup_{A\in\mathfrak A}\inf_{B\in\mathfrak B}\|A-B\|,
+\sup_{B\in\mathfrak B}\inf_{A\in\mathfrak A}\|A-B\|
+\right\}.
+$$
+
+它衡量两份合同在最坏合法实现下能否彼此匹配，不是某一个平均响应的距离。
+
+---
+
+## 196. 集合值串联的 Hausdorff 误差界
+
+**定理 196.1（不确定合同的组合稳定性）。** 设对每个阶段有两个非空紧响应集合 $\mathfrak A_i,\mathfrak B_i$，满足
+
+$$
+d_{\mathrm H}(\mathfrak A_i,\mathfrak B_i)\le\delta_i,
+$$
+
+并取共同增益界
+
+$$
+\gamma_i
+\ge
+\sup_{R\in\mathfrak A_i\cup\mathfrak B_i}\|R\|.
+$$
+
+则
+
+$$
+\boxed{
+d_{\mathrm H}
+\left(
+\mathfrak A_k\cdots\mathfrak A_1,
+\mathfrak B_k\cdots\mathfrak B_1
+\right)
+\le
+\sum_{i=1}^{k}
+\left(\prod_{j\ne i}\gamma_j\right)\delta_i.
+}
+\tag{196.1}
+$$
+
+### 证明
+
+任取
+
+$$
+A=A_k\cdots A_1
+\in
+\mathfrak A_k\cdots\mathfrak A_1.
+$$
+
+由 Hausdorff 距离，对每个 $i$ 可选取 $B_i\in\mathfrak B_i$ 使
+
+$$
+\|A_i-B_i\|\le\delta_i.
+$$
+
+乘积望远镜恒等式给出
+
+$$
+A_k\cdots A_1-B_k\cdots B_1
+=
+\sum_{i=1}^{k}
+A_k\cdots A_{i+1}
+(A_i-B_i)
+B_{i-1}\cdots B_1.
+$$
+
+每一项范数至多为
+
+$$
+\left(\prod_{j>i}\gamma_j\right)
+\delta_i
+\left(\prod_{j<i}\gamma_j\right).
+$$
+
+这给出从第一集合到第二集合的单向距离界。交换 $\mathfrak A_i$ 与 $\mathfrak B_i$，得到反向同样的界；取二者最大值即得（196.1）。证毕。
+
+当每个 $\mathfrak B_i$ 是名义单点 $\{\widehat R_i\}$ 时，式（196.1）退化为一个集合值的全局误差半径。与单一名义读数相比，集合合同还保留了“哪些实现仍然合法”的外层关系。
+
+---
+
+## 197. 忘掉相关性会制造不可逆的鲁棒过度估计
+
+逐阶段边缘集合不总能决定串联集合；如果多个阶段共享同一个隐藏校准参数，相关性本身就是边界的一部分。
+
+**定理 197.1（相同边缘、不同串联未来）。** 取标量阶段、$0\le\delta<1$，并考虑两个联合合同：
+
+$$
+\mathfrak J_{\mathrm{shared}}
+=
+\{(1+\theta,1-\theta):-\delta\le\theta\le\delta\},
+$$
+
+$$
+\mathfrak J_{\mathrm{ind}}
+=
+[1-\delta,1+\delta]
+\times
+[1-\delta,1+\delta].
+$$
+
+两者的每个阶段边缘集合完全相同，但串联响应集合分别为
+
+$$
+\boxed{
+\mathcal C_{\mathrm{shared}}
+=
+[1-\delta^2,1],
+}
+\tag{197.1}
+$$
+
+以及
+
+$$
+\boxed{
+\mathcal C_{\mathrm{ind}}
+=
+[(1-\delta)^2,(1+\delta)^2].
+}
+\tag{197.2}
+$$
+
+当 $0<\delta<1$ 时，二者严格不同。
+
+### 证明
+
+共享合同的串联响应为
+
+$$
+(1+\theta)(1-\theta)=1-\theta^2.
+$$
+
+随着 $\theta\in[-\delta,\delta]$ 变化，其值域为 $[1-\delta^2,1]$。独立合同的两个因子可以分别取区间端点，且因子均为正，所以乘积值域为 $[(1-\delta)^2,(1+\delta)^2]$。当 $\delta>0$ 时，后者包含严格大于 $1$ 的值，而前者不含，故严格不同。证毕。
+
+因此任何只保存两个阶段边缘集合、而忘掉它们是否由同一个 $\theta$ 共同实现的摘要，都不能在这两个联合模型上同时恢复正确的串联响应集合。后处理只能重新计算被保存的边缘信息，不能从相同边缘中补回未保存的联合约束。
+
+这不是把“独立实现的最优值”拼成一次实验；它恰好说明联合来源必须先声明：共享校准、独立扰动和可相干控制是三种不同的关系合同。
+
+---
+
+## 198. AHH：鲁棒全息需要保存集合、增益和相关来源
+
+**关系结论 198.1（从名义误差到联合不确定性）。** 对多阶段关系：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{边界层}&\text{保存的对象}&\text{可保证的内容}\\
+\hline
+\text{名义阶段}&(\widehat R_i,\delta_i)&\text{相对于中心的局部误差}\\
+\text{集合值阶段}&\mathfrak R_i,\gamma_i&\text{每段合法响应与增益}\\
+\text{串联集合}&\mathfrak R_{[k]}&\text{全部合法整体未来}\\
+\text{联合来源}&\mathfrak J\subseteq\prod_i\mathfrak R_i&\text{阶段之间的相关性约束}\\
+\end{array}
+}
+\tag{198.1}
+$$
+
+AHH 在于：**鲁棒边界不只是“中心加半径”；它还要保存每一段的合法响应集合、组合增益以及阶段之间的共同来源。忘掉集合会漏掉最坏方向，忘掉增益会低估传播，忘掉相关性则会把同一个联合过程误写成独立过程。**
+
+式（196.1）给出了在信息已被保守地集合化之后仍可组合的误差合同；定理 197.1 则说明，若联合相关性对目标响应有作用，单纯保存各边缘集合已经不可逆。扩大未来任务、允许新校准或允许跨阶段相干控制时，必须重新声明联合合同，而不能沿用旧的边缘摘要。
+
+**来源与边界 198.2。** 本批在有限维赋范线性阶段、非空紧响应集合、算子范数 Hausdorff 距离和有限串联下推导集合值组合界、共享/独立不确定性的成对反例及鲁棒边界层级。没有把集合值响应自动解释为概率分布，没有把共享标量扰动推广为所有物理相关噪声，没有推广到无限阶段、非紧集合或物理钟标定；没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
+
+## 追加锚（本行以下为增补区）
