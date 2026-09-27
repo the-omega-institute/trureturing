@@ -495,7 +495,7 @@ theorem paired_angle_demand
     dsimp [T, q]
     rw [htan_eta, htan_relation_eq]
     field_simp [hL.ne', (by linarith : r + 1 ≠ 0), hk.ne', hM.ne']
-    ring
+    rw [hsqP]
   have hcos_eta_sq : Real.cos eta ^ 2 = 1 / (1 + T) := by
     have hone := Real.one_add_tan_sq_mul_cos_sq_eq_one (ne_of_gt hcos_eta)
     dsimp [T] at hone ⊢
@@ -508,9 +508,9 @@ theorem paired_angle_demand
         (t + 2 * q - 1) / ((1 + t) * (1 + T)) := by
       rw [hcos_eta_sq]
       field_simp [hden1.ne', hden2.ne']
-      nlinarith [htan_eta_sq]
-    rw [heq]
-    positivity
+      nlinarith only [htan_eta_sq]
+    rw [← sub_pos, heq]
+    exact div_pos (by linarith only [hkey]) (mul_pos hden1 hden2)
   by_cases htheta : Real.pi / 2 ≤ theta
   · change 2 * theta + beta + delta > Real.pi
     linarith only [htheta, hbeta_pos, hdelta_pos]
