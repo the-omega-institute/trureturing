@@ -42,7 +42,7 @@ The vertex c is adjacent to three distinct vertices i, j, k that are pairwise no
 
 **Definition 1.4 (Entanglement entropy of a graph state).**
 
-$$(\operatorname{entropy}\left(G, A\right) = \operatorname{rank}\left(M\right)) \land (\forall x \in A,\; \forall y \in \operatorname{compl}\left(A\right),\; M\left(x, y\right) = \operatorname{if} \operatorname{Adj}\left(G, x, y\right) \operatorname{then} 1 \operatorname{else} 0)$$
+$$\forall M \in \operatorname{Matrix}\left(A, \operatorname{compl}\left(A\right), \operatorname{ZMod}\left(2\right)\right),\; (\forall x \in A,\; \forall y \in \operatorname{compl}\left(A\right),\; M\left(x, y\right) = \operatorname{if} \operatorname{Adj}\left(G, x, y\right) \operatorname{then} 1 \operatorname{else} 0) \Rightarrow (\operatorname{entropy}\left(G, A\right) = \operatorname{rank}\left(M\right))$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.entropy` (`✓ std3`).
 
@@ -50,7 +50,7 @@ $$(\operatorname{entropy}\left(G, A\right) = \operatorname{rank}\left(M\right)) 
 
 *Commentary.*
 
-The entropy of a set A of qubits in the graph state of G is the rank over Z_2 of the matrix M with rows indexed by A and columns by the complement of A, whose entry at x, y is 1 when x and y are adjacent and 0 otherwise.
+The entropy of a set A of qubits in the graph state of G is the rank of the adjacency block of A: every matrix M over Z_2 with rows indexed by A and columns by the complement of A whose entry at x, y is 1 when x and y are adjacent and 0 otherwise has rank S(G, A).
 
 **Definition 1.5 (Violation of MMI).**
 
@@ -66,7 +66,7 @@ The graph state violates an instance of monogamy of mutual information: pairwise
 
 **Definition 1.6 (Generalized star).**
 
-$$\operatorname{IsGeneralizedStar}\left(H, C, P\right) \Leftrightarrow (\left(\forall p \in \operatorname{Fin}\left(k\right),\; \operatorname{Nonempty}\left(\operatorname{P}\left(p\right)\right)\right) \land \left(\left(\forall p \in \operatorname{Fin}\left(k\right),\; \forall q \in \operatorname{Fin}\left(k\right),\; p \ne q \Rightarrow (\operatorname{Disjoint}\left(\operatorname{P}\left(p\right), \operatorname{P}\left(q\right)\right))\right) \land \left(\left(\forall p \in \operatorname{Fin}\left(k\right),\; \operatorname{Disjoint}\left(C, \operatorname{P}\left(p\right)\right)\right) \land \left(\operatorname{union}\left(C, \operatorname{biUnion}\left(P\right)\right) = V \land \left(\left(\forall p \in \operatorname{Fin}\left(k\right),\; \forall q \in \operatorname{Fin}\left(k\right),\; p \ne q \Rightarrow ((\forall x \in \operatorname{P}\left(p\right),\; \forall y \in \operatorname{P}\left(q\right),\; \neg (\operatorname{Adj}\left(H, x, y\right))))\right) \land \left(\forall p \in \operatorname{Fin}\left(k\right),\; \exists x \in \operatorname{P}\left(p\right),\; \exists z \in C,\; \operatorname{Adj}\left(H, x, z\right)\right)\right)\right)\right)\right))$$
+$$\operatorname{IsGeneralizedStar}\left(H, C, P\right) \Leftrightarrow (\left(\forall p \in \operatorname{Fin}\left(k\right),\; \operatorname{Nonempty}\left(\operatorname{P}\left(p\right)\right)\right) \land \left(\left(\forall p \in \operatorname{Fin}\left(k\right),\; \forall q \in \operatorname{Fin}\left(k\right),\; p \ne q \Rightarrow (\operatorname{Disjoint}\left(\operatorname{P}\left(p\right), \operatorname{P}\left(q\right)\right))\right) \land \left(\left(\forall p \in \operatorname{Fin}\left(k\right),\; \operatorname{Disjoint}\left(C, \operatorname{P}\left(p\right)\right)\right) \land \left(\operatorname{union}\left(C, \operatorname{biUnion}\left(\operatorname{univ}, P\right)\right) = \operatorname{univ} \land \left(\left(\forall p \in \operatorname{Fin}\left(k\right),\; \forall q \in \operatorname{Fin}\left(k\right),\; p \ne q \Rightarrow ((\forall x \in \operatorname{P}\left(p\right),\; \forall y \in \operatorname{P}\left(q\right),\; \neg (\operatorname{Adj}\left(H, x, y\right))))\right) \land \left(\forall p \in \operatorname{Fin}\left(k\right),\; \exists x \in \operatorname{P}\left(p\right),\; \exists z \in C,\; \operatorname{Adj}\left(H, x, z\right)\right)\right)\right)\right)\right))$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.IsGeneralizedStar` (`✓ std3`).
 
@@ -74,11 +74,11 @@ $$\operatorname{IsGeneralizedStar}\left(H, C, P\right) \Leftrightarrow (\left(\f
 
 *Commentary.*
 
-H is a generalized star with centre C and parts P_1, ..., P_k: the parts are nonempty and pairwise disjoint, the centre is disjoint from every part, the centre and the parts cover all vertices, no edge joins two different parts, and every part has a vertex adjacent to a vertex of the centre.
+H is a generalized star with centre C and parts P_1, ..., P_k: the parts are nonempty and pairwise disjoint, the centre is disjoint from every part, the centre and the parts cover all vertices (univ), no edge joins two different parts, and every part has a vertex adjacent to a vertex of the centre.
 
 **Definition 1.7 (The forbidden-subgraph conjecture).**
 
-$$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall G \in \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right),\; \operatorname{ViolatesMMI}\left(G\right) \Rightarrow (\exists s \in \operatorname{List}\left(\operatorname{Fin}\left(n\right)\right),\; \exists c \in \operatorname{Fin}\left(n\right),\; \exists i \in \operatorname{Fin}\left(n\right),\; \exists j \in \operatorname{Fin}\left(n\right),\; \exists k \in \operatorname{Fin}\left(n\right),\; \operatorname{IsClaw}\left(\operatorname{lcSeq}\left(G, s\right), c, i, j, k\right) \land \operatorname{IsGeneralizedStar}\left(\operatorname{lcSeq}\left(G, s\right), \operatorname{sdiff}\left(V, \{i,j,k\}\right), (\{i\},\{j\},\{k\})\right)))$$
+$$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall G \in \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right),\; \operatorname{ViolatesMMI}\left(G\right) \Rightarrow (\exists s \in \operatorname{List}\left(\operatorname{Fin}\left(n\right)\right),\; \exists c \in \operatorname{Fin}\left(n\right),\; \exists i \in \operatorname{Fin}\left(n\right),\; \exists j \in \operatorname{Fin}\left(n\right),\; \exists k \in \operatorname{Fin}\left(n\right),\; \operatorname{IsClaw}\left(\operatorname{lcSeq}\left(G, s\right), c, i, j, k\right) \land \operatorname{IsGeneralizedStar}\left(\operatorname{lcSeq}\left(G, s\right), \operatorname{sdiff}\left(\operatorname{univ}, \{i,j,k\}\right), (\{i\},\{j\},\{k\})\right)))$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.claim` (`✓ std3`).
 
@@ -86,7 +86,7 @@ $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall G \in \operatorname
 
 *Commentary.*
 
-For every number n of qubits and every graph G on the vertices 0, ..., n - 1 whose graph state violates MMI, some graph H = lcSeq(G, s) has an induced four-star c; i, j, k, and H is a generalized star with centre the vertices other than i, j, k and parts {i}, {j}, {k}.
+For every number n of qubits and every graph G on the vertices 0, ..., n - 1 whose graph state violates MMI, some graph H = lcSeq(G, s) has an induced four-star c; i, j, k, and H is a generalized star with centre univ \ {i, j, k}, the vertices other than i, j, k, and parts {i}, {j}, {k}.
 
 **Theorem 1.8 (Proof of the conjecture).**
 
