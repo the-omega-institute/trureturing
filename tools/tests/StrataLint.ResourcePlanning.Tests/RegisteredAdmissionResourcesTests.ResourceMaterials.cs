@@ -5,6 +5,56 @@ namespace StrataLint.ResourcePlanning.Tests;
 public sealed partial class RegisteredAdmissionResourcesTests
 {
     [Fact]
+    public void DeclaredTemplateNativeInputsCoverReportAndProducerContracts()
+    {
+        var result = Python(basis.Path, """
+            import functools, importlib.util, json, pathlib, re, subprocess, sys
+            source = pathlib.Path(sys.argv[1])
+            spec = importlib.util.spec_from_file_location('selection', source / 'tools/scripts/report/lean-report-selection.py')
+            selection = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(selection)
+            inputs = selection.Selection(source)
+            inputs.validate('lean-report')
+            paths = subprocess.check_output(['git', '-C', str(source), 'ls-files', '-z']).decode().split('\0')
+            projects = {row['path']: row for row in json.loads(
+                (source / 'Meta/engineering-projects.json').read_text())['projects']}
+            def expand(patterns, excludes=()):
+                include = re.compile('|'.join(selection.compile_glob(p, 'test input').pattern for p in patterns) or '(?!)')
+                exclude = re.compile('|'.join(selection.compile_glob(p, 'test exclude').pattern for p in excludes) or '(?!)')
+                return {path for path in paths if path and include.fullmatch(path) and not exclude.fullmatch(path)}
+            @functools.cache
+            def compiled(path):
+                row = projects[path]
+                return ({path} | expand(row['include'], row['exclude']) | expand(row['build_inputs'])
+                    | set().union(*(compiled(ref) for ref in row['references'])))
+            project = 'tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj'
+            row = projects[project]
+            runtime = expand(row['execution_inputs'], row['execution_excludes'])
+            compile_inputs = compiled(project)
+            # Default Fourier evidence invokes the canonical cache wrapper and native
+            # facets. Native preparation consumes all registered source coordinates,
+            # not just the two selected modules' direct imports. Reuse the existing
+            # report contract here; do not approximate Lean's dependency graph.
+            required = set(inputs.producer_paths('lean-report'))
+            for group in ('report_modules', 'inspector_sources', 'dependency_sources', 'config_inputs'):
+                required.update(inputs.expand(group))
+            required.update(compiled('tools/StrataLint.Lean/StrataLint.Lean.csproj'))
+            required.update(['tools/scripts/worktree/lean-cache-run.sh',
+                'tools/scripts/worktree/lean_cache_release.py', 'tools/scripts/worktree/cache_material.py'])
+            assert required <= runtime | compile_inputs, ('untracked native inputs', sorted(required - runtime - compile_inputs))
+            for path in ('README.md', 'D5/README.md', 'docs/develop/theory/native-input-control.md',
+                    'tools/lean-inspector/tests/test_native.py', 'tools/scripts/workflow/truth_release.py'):
+                assert not any(selection.compile_glob(pattern, 'control').fullmatch(path)
+                    for pattern in row['execution_inputs']), ('unrelated runtime input', path)
+            print(json.dumps({'required_native_inputs': len(required), 'runtime_inputs': len(runtime),
+                'compile_inputs': len(compile_inputs), 'native_inputs_outside_compile': len(required - compile_inputs)}, sort_keys=True))
+            """);
+
+        Assert.True(result.Exit == 0, result.Text);
+        output.WriteLine(result.Text);
+    }
+
+    [Fact]
     public void RegisteredResourceMaterialsSelectPolicyReadersAndCoverTheirExecutionInputs()
     {
         var result = Python(basis.Path, """
