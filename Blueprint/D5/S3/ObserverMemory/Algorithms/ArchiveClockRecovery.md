@@ -6,7 +6,7 @@ Finite synchronized executions characterize archive-clock recovery and bound its
 
 **Definition 1.1 (Finite partial-action systems).**
 
-$$\begin{aligned}\forall X, A, Y: Type,\\\operatorname{System}\left(X, A, Y\right) = \{D: A \to X \to Prop, F: A \to X \to X,\\{}ell: A \to X \to Y, c: A \to X \to \mathbb{Z},\\{}\forall a, x, \operatorname{Decidable}\left(\operatorname{D}\left(a, x\right)\right)\}.\end{aligned}$$
+$$\begin{aligned}\forall X, A, Y: Type,\\\operatorname{System}\left(X, A, Y\right) = \{D: A \to X \to Prop, F: A \to X \to X,\\{}ell: \forall a: A, \forall x: X, \operatorname{D}\left(a, x\right) \to Y, c: A \to X \to \mathbb{Z},\\{}\forall a, x, \operatorname{Decidable}\left(\operatorname{D}\left(a, x\right)\right)\}.\end{aligned}$$
 
 *Formalization.* `D5/S3/ObserverMemory/Algorithms/ArchiveClockRecovery.System` (`✓ std3`).
 
@@ -14,7 +14,7 @@ $$\begin{aligned}\forall X, A, Y: Type,\\\operatorname{System}\left(X, A, Y\righ
 
 *Commentary.*
 
-A system assigns to each action a decidable domain, a successor on configurations, a visible reading, and an integer cost. The successor, reading, and cost are total functions, while executions use them only where the domain holds.
+A system assigns to each action a decidable domain, a total successor and integer cost, and a reading defined only on that action's domain. Values outside the domain never enter a legal execution, so this preserves the source partial-map model, including empty reading types and empty domains.
 
 **Definition 1.2 (State after an action word).**
 
@@ -42,7 +42,7 @@ The empty execution is legal. A nonempty execution is legal exactly when its fir
 
 **Definition 1.4 (Visible archives).**
 
-$$\begin{aligned}\forall X, A, Y: Type, \forall S: \operatorname{System}\left(X, A, Y\right), \forall x: X,\\\operatorname{visibleArchive}\left(S, x, []\right) = [],\\\forall a: A, \forall w: \operatorname{List}\left(A\right), \operatorname{visibleArchive}\left(S, x, \operatorname{cons}\left(a, w\right)\right) = \operatorname{cons}\left(\operatorname{pair}\left(a, \operatorname{reading}\left(S, a, x\right)\right), \operatorname{visibleArchive}\left(S, \operatorname{successor}\left(S, a, x\right), w\right)\right).\end{aligned}$$
+$$\begin{aligned}\forall X, A, Y: Type, \forall S: \operatorname{System}\left(X, A, Y\right), \forall x: X,\\\operatorname{visibleArchive}\left(S, x, []\right) = [],\\\forall a: A, \forall w: \operatorname{List}\left(A\right), \operatorname{visibleArchive}\left(S, x, \operatorname{cons}\left(a, w\right)\right) = \operatorname{dite}\left(\operatorname{domain}\left(S, a, x\right), \lambda h \mapsto \operatorname{cons}\left(\operatorname{pair}\left(a, \operatorname{reading}\left(S, a, x, h\right)\right), \operatorname{visibleArchive}\left(S, \operatorname{successor}\left(S, a, x\right), w\right)\right), \lambda h \mapsto []\right).\end{aligned}$$
 
 *Formalization.* `D5/S3/ObserverMemory/Algorithms/ArchiveClockRecovery.visibleArchive` (`✓ std3`).
 
@@ -66,7 +66,7 @@ The clock of an execution is the sum of the integer costs of its actions at thei
 
 **Definition 1.6 (Synchronized edges).**
 
-$$\forall X, A, Y: Type, \forall S: \operatorname{System}\left(X, A, Y\right), \forall p: \operatorname{Prod}\left(X, X\right), \forall a: A, (\operatorname{SynchronizedEdge}\left(S, p, a\right)) \iff (((\operatorname{domain}\left(S, a, \operatorname{fst}\left(p\right)\right)) \land (\operatorname{domain}\left(S, a, \operatorname{snd}\left(p\right)\right))) \land (\operatorname{reading}\left(S, a, \operatorname{fst}\left(p\right)\right) = \operatorname{reading}\left(S, a, \operatorname{snd}\left(p\right)\right))).$$
+$$\forall X, A, Y: Type, \forall S: \operatorname{System}\left(X, A, Y\right), \forall p: \operatorname{Prod}\left(X, X\right), \forall a: A, (\operatorname{SynchronizedEdge}\left(S, p, a\right)) \iff (\exists h: \operatorname{domain}\left(S, a, \operatorname{fst}\left(p\right)\right), \exists h': \operatorname{domain}\left(S, a, \operatorname{snd}\left(p\right)\right), \operatorname{reading}\left(S, a, \operatorname{fst}\left(p\right), h\right) = \operatorname{reading}\left(S, a, \operatorname{snd}\left(p\right), h'\right)).$$
 
 *Formalization.* `D5/S3/ObserverMemory/Algorithms/ArchiveClockRecovery.SynchronizedEdge` (`✓ std3`).
 

@@ -47,8 +47,8 @@ internal sealed class FiberwiseEqualDistanceLiftDocument : IScribeDocumentDefini
         Formula liftable = ExistsLift(RhoP, F.Id("Q"), includeDistance: false);
         Formula close = ExistsLift(RhoP, F.Id("Q"), includeDistance: true);
         Formula body = Seq(
-            Open, liftable, Close, Sp, Iff, Sp, Open, support, Close, Sp, Land, RowBreak, Grp(),
-            Open, support, Close, Sp, Rightarrow, Sp, close, Dot);
+            Open, Open, liftable, Close, Sp, Iff, Sp, Open, support, Close, Close, Sp, Land, RowBreak, Grp(),
+            Open, Open, support, Close, Sp, Rightarrow, Sp, close, Close, Dot);
         Formula quantified = Seq(
             Forall, Sp, F.Id("W"), Comma, Sp, F.Id("Z"), Colon, Sp, F.Id("Type"), Comma, Sp,
             OpenBracket, Call("Fintype", F.Id("W")), CloseBracket, Sp,
