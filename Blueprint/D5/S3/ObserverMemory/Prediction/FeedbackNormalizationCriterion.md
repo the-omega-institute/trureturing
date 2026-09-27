@@ -6,7 +6,7 @@ Finite feedback normalization is equivalent to prefix causality and sequential k
 
 **Definition 1.1 (Dependent output and action prefixes).**
 
-$$\forall T: \mathbb {N}, X: (\operatorname {Fin}(T)) \to \operatorname {Type}, n: \mathbb {N},\\{}\operatorname {Prefix}(X, n) = (i: \operatorname {Below}(\operatorname {Fin}(T), n)) \to X_{i}.$$
+$$\forall T: \mathbb {N}, X: (\operatorname {Fin}(T)) \to \operatorname {Type}, n: \mathbb {N},\\{}\operatorname {Prefix}(X, n) = (i: \{i: \operatorname {Fin}(T) // i.val < n\}) \to X(i.1).$$
 
 *Formalization.* `D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.Prefix` (`✓ std3`).
 
@@ -18,7 +18,7 @@ A prefix of length n is a dependent word on precisely the rounds whose indices a
 
 **Definition 1.2 (Restriction to an initial prefix).**
 
-$$\forall T: \mathbb {N}, X: (\operatorname {Fin}(T)) \to \operatorname {Type}, x: (t: \operatorname {Fin}(T)) \to X_{t}, n: \mathbb {N}, i: \operatorname {Below}(\operatorname {Fin}(T), n),\\{}\operatorname {restrictPrefix}(x, n)(i) = x(i).$$
+$$\forall T: \mathbb {N}, X: (\operatorname {Fin}(T)) \to \operatorname {Type}, x: (t: \operatorname {Fin}(T)) \to X(t), n: \mathbb {N}, i: \{i: \operatorname {Fin}(T) // i.val < n\},\\{}\operatorname {restrictPrefix}(x, n)(i) = x(i.1).$$
 
 *Formalization.* `D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.restrictPrefix` (`✓ std3`).
 
@@ -30,7 +30,7 @@ A complete dependent word restricts to a prefix by evaluation at the underlying 
 
 **Definition 1.3 (Splicing at a round cut).**
 
-$$\forall T: \mathbb {N}, X: (\operatorname {Fin}(T)) \to \operatorname {Type}, n: \mathbb {N}, u: \operatorname {Prefix}(X, n), v: (i: \operatorname {From}(\operatorname {Fin}(T), n)) \to X_{i},\\{}\forall i: \operatorname {Fin}(T), \operatorname {spliceWords}(n, u, v)(i) = \operatorname {if} i<n \operatorname {then} u_{i} \operatorname {else} v_{i}.$$
+$$\forall T: \mathbb {N}, X: (\operatorname {Fin}(T)) \to \operatorname {Type}, n: \mathbb {N}, u: \operatorname {Prefix}(X, n), v: (i: \{i: \operatorname {Fin}(T) // n \leq i.val\}) \to X(i.1),\\{}\forall i: \operatorname {Fin}(T), \operatorname {spliceWords}(n, u, v)(i) = \text{if} i.val < n \text{then} u(\langle i, i.val < n\rangle) \text{else} v(\langle i, n \leq i.val\rangle).$$
 
 *Formalization.* `D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.spliceWords` (`✓ std3`).
 
@@ -42,7 +42,7 @@ A prefix and a suffix beginning at the cut determine a complete dependent word.
 
 **Definition 1.4 (Actions selected by causal feedback).**
 
-$$\forall T: \mathbb {N}, A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type}, f: (t: \operatorname {Fin}(T)) \to (\operatorname {Prefix}(Y, t)) \to A_{t}, y: (t: \operatorname {Fin}(T)) \to Y_{t},\\{}\forall t: \operatorname {Fin}(T), \operatorname {feedbackActions}(f, y)(t) = f(t)(\operatorname {restrictPrefix}(y, t)).$$
+$$\forall T: \mathbb {N}, A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type}, f: (t: \operatorname {Fin}(T)) \to (\operatorname {Prefix}(Y, t.val)) \to A(t), y: (t: \operatorname {Fin}(T)) \to Y(t),\\{}\forall t: \operatorname {Fin}(T), \operatorname {feedbackActions}(f, y)(t) = f(t)(\operatorname {restrictPrefix}(y, t.val)).$$
 
 *Formalization.* `D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.feedbackActions` (`✓ std3`).
 
@@ -54,7 +54,7 @@ At round t, the feedback action is the strategy value on the output prefix stric
 
 **Definition 1.5 (Fed-back total mass).**
 
-$$\forall T: \mathbb {N}, A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type}, [\operatorname {FintypeFamily}(Y)], P: ((t: \operatorname {Fin}(T)) \to Y_{t}) \to ((t: \operatorname {Fin}(T)) \to A_{t}) \to \mathbb {R}, f: (t: \operatorname {Fin}(T)) \to (\operatorname {Prefix}(Y, t)) \to A_{t},\\{}\operatorname {feedbackMass}(P, f) = \sum _{y} P(y)(\operatorname {feedbackActions}(f, y)).$$
+$$\forall T: \mathbb {N}, A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type}, [\forall t: \operatorname {Fin}(T), \operatorname {Fintype}(Y(t))], P: ((t: \operatorname {Fin}(T)) \to Y(t)) \to ((t: \operatorname {Fin}(T)) \to A(t)) \to \mathbb {R}, f: (t: \operatorname {Fin}(T)) \to (\operatorname {Prefix}(Y, t.val)) \to A(t),\\{}\operatorname {feedbackMass}(P, f) = \sum _{y: (t: \operatorname {Fin}(T)) \to Y(t)} P(y)(\operatorname {feedbackActions}(f, y)).$$
 
 *Formalization.* `D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.feedbackMass` (`✓ std3`).
 
@@ -66,7 +66,7 @@ The fed-back mass sums the response table over output words after substituting t
 
 **Definition 1.6 (Point prefix marginal).**
 
-$$\forall T: \mathbb {N}, A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type}, [\operatorname {FintypeFamily}(Y)], [\operatorname {DecidableEqFamily}(Y)], P: ((t: \operatorname {Fin}(T)) \to Y_{t}) \to ((t: \operatorname {Fin}(T)) \to A_{t}) \to \mathbb {R}, n: \mathbb {N}, x: \operatorname {Prefix}(Y, n), a: (t: \operatorname {Fin}(T)) \to A_{t},\\{}\operatorname {prefixMarginal}(P, n, x, a) = \sum _{y} mathbf_{{\operatorname {restrictPrefix}(y, n)=x}} P(y)(a).$$
+$$\forall T: \mathbb {N}, A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type}, [\forall t: \operatorname {Fin}(T), \operatorname {Fintype}(Y(t))], [\forall t: \operatorname {Fin}(T), \operatorname {DecidableEq}(Y(t))], P: ((t: \operatorname {Fin}(T)) \to Y(t)) \to ((t: \operatorname {Fin}(T)) \to A(t)) \to \mathbb {R}, n: \mathbb {N}, x: \operatorname {Prefix}(Y, n), a: (t: \operatorname {Fin}(T)) \to A(t),\\{}\operatorname {prefixMarginal}(P, n, x, a) = \sum _{y: (t: \operatorname {Fin}(T)) \to Y(t)} \text{if} \operatorname {restrictPrefix}(y, n) = x \text{then} P(y)(a) \text{else} 0.$$
 
 *Formalization.* `D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.prefixMarginal` (`✓ std3`).
 
@@ -78,7 +78,7 @@ The point prefix marginal sums the response table over complete output words wit
 
 **Definition 1.7 (Event prefix marginal).**
 
-$$\forall T: \mathbb {N}, A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type}, [\operatorname {FintypeFamily}(Y)], [\operatorname {DecidableEqFamily}(Y)], P: ((t: \operatorname {Fin}(T)) \to Y_{t}) \to ((t: \operatorname {Fin}(T)) \to A_{t}) \to \mathbb {R}, n: \mathbb {N}, E: \operatorname {Set}(\operatorname {Prefix}(Y, n)), a: (t: \operatorname {Fin}(T)) \to A_{t},\\{}\operatorname {prefixEventMarginal}(P, n, E, a) = \sum _{y} mathbf_{{\operatorname {restrictPrefix}(y, n) \in E}} P(y)(a).$$
+$$\forall T: \mathbb {N}, A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type}, [\forall t: \operatorname {Fin}(T), \operatorname {Fintype}(Y(t))], [\forall t: \operatorname {Fin}(T), \operatorname {DecidableEq}(Y(t))], P: ((t: \operatorname {Fin}(T)) \to Y(t)) \to ((t: \operatorname {Fin}(T)) \to A(t)) \to \mathbb {R}, n: \mathbb {N}, E: \operatorname {Set}(\operatorname {Prefix}(Y, n)), a: (t: \operatorname {Fin}(T)) \to A(t),\\{}\operatorname {prefixEventMarginal}(P, n, E, a) = \sum _{y: (t: \operatorname {Fin}(T)) \to Y(t)} \text{if} \operatorname {restrictPrefix}(y, n) \in E \text{then} P(y)(a) \text{else} 0.$$
 
 *Formalization.* `D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.prefixEventMarginal` (`✓ std3`).
 
@@ -90,7 +90,7 @@ The event prefix marginal sums over complete output words whose restriction belo
 
 **Definition 1.8 (Single-cut feedback switch).**
 
-$$\forall T: \mathbb {N}, A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type}, n: \mathbb {N}, u: \operatorname {Prefix}(A, n), v: \operatorname {Suffix}(A, n), w: \operatorname {Suffix}(A, n), E: \operatorname {Set}(\operatorname {Prefix}(Y, n)),\\{}\forall t: \operatorname {Fin}(T), x: \operatorname {Prefix}(Y, t), \operatorname {singleCutSwitch}(n, u, v, w, E)(t)(x) = \operatorname {if} t<n \operatorname {then} u_{t} \operatorname {else} \operatorname {if} \operatorname {restrictPrefix}(x, n) \in E \operatorname {then} v_{t} \operatorname {else} w_{t}.$$
+$$\forall T: \mathbb {N}, A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type}, n: \mathbb {N}, u: \operatorname {Prefix}(A, n), v: (i: \{i: \operatorname {Fin}(T) // n \leq i.val\}) \to A(i.1), w: (i: \{i: \operatorname {Fin}(T) // n \leq i.val\}) \to A(i.1), E: \operatorname {Set}(\operatorname {Prefix}(Y, n)),\\{}\forall t: \operatorname {Fin}(T), history: \operatorname {Prefix}(Y, t.val), \operatorname {singleCutSwitch}(n, u, v, w, E)(t)(history) = \text{if} t.val < n \text{then} u(\langle t, t.val < n\rangle) \text{else} \text{let} x: \operatorname {Prefix}(Y, n) := \lambda i \mapsto history(\langle i.1, i.1.val < t.val\rangle); \text{if} x \in E \text{then} v(\langle t, n \leq t.val\rangle) \text{else} w(\langle t, n \leq t.val\rangle).$$
 
 *Formalization.* `D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.singleCutSwitch` (`✓ std3`).
 
@@ -102,7 +102,7 @@ Before the cut the strategy follows u; from the cut onward it selects v or w acc
 
 **Theorem 1.9 (Feedback normalization, prefix causality, and sequential kernels).**
 
-$$\forall T: \mathbb {N}, 1 \leq T,\\{}A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type},\\{}[\operatorname {FintypeFamily}(A)], [\operatorname {NonemptyFamily}(A)], [\operatorname {DecidableEqFamily}(A)],\\{}[\operatorname {FintypeFamily}(Y)], [\operatorname {NonemptyFamily}(Y)], [\operatorname {DecidableEqFamily}(Y)],\\{}P: ((t: \operatorname {Fin}(T)) \to Y_{t}) \to ((t: \operatorname {Fin}(T)) \to A_{t}) \to \mathbb {R}, (\forall y: (t: \operatorname {Fin}(T)) \to Y_{t}, a: (t: \operatorname {Fin}(T)) \to A_{t}, 0 \leq P(y)(a)),\\{}(\forall a: (t: \operatorname {Fin}(T)) \to A_{t}, \sum _{y: (t: \operatorname {Fin}(T)) \to Y_{t}} P(y)(a) = 1),\\{}\operatorname {TFAE}([(\forall f: (t: \operatorname {Fin}(T)) \to (\operatorname {Prefix}(Y, t)) \to A_{t}, \operatorname {feedbackMass}(P, f) = 1),\\{}(\forall n: \mathbb {N}, (1 \leq n \land n<T) \Rightarrow \forall u: \operatorname {Prefix}(A, n), v: \operatorname {Suffix}(A, n), w: \operatorname {Suffix}(A, n), E: \operatorname {Set}(\operatorname {Prefix}(Y, n)), \operatorname {feedbackMass}(P, \operatorname {singleCutSwitch}(n, u, v, w, E)) = 1),\\{}(\forall n: \mathbb {N}, n \leq T \Rightarrow \forall x: \operatorname {Prefix}(Y, n), a: (t: \operatorname {Fin}(T)) \to A_{t}, b: (t: \operatorname {Fin}(T)) \to A_{t}, (\forall t: \operatorname {Fin}(T), t<n \Rightarrow a(t) = b(t)) \Rightarrow \operatorname {prefixMarginal}(P, n, x, a) = \operatorname {prefixMarginal}(P, n, x, b)),\\{}(\exists q: (t: \operatorname {Fin}(T)) \to (\operatorname {Prefix}(A, t+1)) \to (\operatorname {Prefix}(Y, t)) \to (Y_{t}) \to \mathbb {R}, (\forall t: \operatorname {Fin}(T), a: \operatorname {Prefix}(A, t+1), h: \operatorname {Prefix}(Y, t), z: Y_{t}, 0 \leq q(t)(a)(h)(z)) \land (\forall t: \operatorname {Fin}(T), a: \operatorname {Prefix}(A, t+1), h: \operatorname {Prefix}(Y, t), \sum _{z: Y_{t}} q(t)(a)(h)(z) = 1) \land (\forall y: (t: \operatorname {Fin}(T)) \to Y_{t}, a: (t: \operatorname {Fin}(T)) \to A_{t}, P(y)(a) = \prod _{t: \operatorname {Fin}(T)} q(t)(\operatorname {restrictPrefix}(a, t+1))(\operatorname {restrictPrefix}(y, t))(y(t))))]).$$
+$$\forall T: \mathbb {N}, 1 \leq T,\\{}A: (\operatorname {Fin}(T)) \to \operatorname {Type}, Y: (\operatorname {Fin}(T)) \to \operatorname {Type},\\{}[\forall t: \operatorname {Fin}(T), \operatorname {Fintype}(A(t))], [\forall t: \operatorname {Fin}(T), \operatorname {Nonempty}(A(t))], [\forall t: \operatorname {Fin}(T), \operatorname {DecidableEq}(A(t))],\\{}[\forall t: \operatorname {Fin}(T), \operatorname {Fintype}(Y(t))], [\forall t: \operatorname {Fin}(T), \operatorname {Nonempty}(Y(t))], [\forall t: \operatorname {Fin}(T), \operatorname {DecidableEq}(Y(t))],\\{}P: ((t: \operatorname {Fin}(T)) \to Y(t)) \to ((t: \operatorname {Fin}(T)) \to A(t)) \to \mathbb {R}, (\forall y: (t: \operatorname {Fin}(T)) \to Y(t), a: (t: \operatorname {Fin}(T)) \to A(t), 0 \leq P(y)(a)),\\{}(\forall a: (t: \operatorname {Fin}(T)) \to A(t), \sum _{y: (t: \operatorname {Fin}(T)) \to Y(t)} P(y)(a) = 1),\\{}List.TFAE([(\forall f: (t: \operatorname {Fin}(T)) \to (\operatorname {Prefix}(Y, t.val)) \to A(t), \operatorname {feedbackMass}(P, f) = 1),\\{}(\forall n: \mathbb {N}, (1 \leq n) \Rightarrow ((n < T) \Rightarrow (\forall u: \operatorname {Prefix}(A, n), v: (i: \{i: \operatorname {Fin}(T) // n \leq i.val\}) \to A(i.1), w: (i: \{i: \operatorname {Fin}(T) // n \leq i.val\}) \to A(i.1), E: \operatorname {Set}(\operatorname {Prefix}(Y, n)), \operatorname {feedbackMass}(P, \operatorname {singleCutSwitch}(n, u, v, w, E)) = 1))),\\{}(\forall n: \mathbb {N}, (n \leq T) \Rightarrow (\forall x: \operatorname {Prefix}(Y, n), a: (t: \operatorname {Fin}(T)) \to A(t), b: (t: \operatorname {Fin}(T)) \to A(t), (\forall i: \operatorname {Fin}(T), (i.val < n) \Rightarrow (a(i) = b(i))) \Rightarrow (\operatorname {prefixMarginal}(P, n, x, a) = \operatorname {prefixMarginal}(P, n, x, b)))),\\{}(\exists q: (t: \operatorname {Fin}(T)) \to (\operatorname {Prefix}(A, t.val + 1)) \to (\operatorname {Prefix}(Y, t.val)) \to (Y(t)) \to \mathbb {R}, (\forall t: \operatorname {Fin}(T), a: \operatorname {Prefix}(A, t.val + 1), h: \operatorname {Prefix}(Y, t.val), z: Y(t), 0 \leq q(t)(a)(h)(z)) \land (\forall t: \operatorname {Fin}(T), a: \operatorname {Prefix}(A, t.val + 1), h: \operatorname {Prefix}(Y, t.val), \sum _{z: Y(t)} q(t)(a)(h)(z) = 1) \land (\forall y: (t: \operatorname {Fin}(T)) \to Y(t), a: (t: \operatorname {Fin}(T)) \to A(t), P(y)(a) = \prod _{t: \operatorname {Fin}(T)} q(t)(\operatorname {restrictPrefix}(a, t.val + 1))(\operatorname {restrictPrefix}(y, t.val))(y(t))))]).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.feedback_normalization_prefix_causality_sequential_kernels` (`✓ std3`). ∎
 
