@@ -1,0 +1,109 @@
+{
+  "Boolean_weight_one_multiplicities": [
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "all_classes_have_private_points": true,
+  "all_nonzero_boolean_identity_checks": 5760,
+  "all_private_prime_rows_checked": 56535,
+  "by_prime": [
+    {
+      "PS1_failures": [
+        {
+          "owner_modulus": 3,
+          "point": 10011,
+          "service": 2
+        }
+      ],
+      "minimum_slack": 0,
+      "positive_demand_private_rows": 8075,
+      "prime": 3
+    },
+    {
+      "PS1_failures": [
+        {
+          "owner_modulus": 5,
+          "point": 9010,
+          "service": 6
+        }
+      ],
+      "minimum_slack": 0,
+      "positive_demand_private_rows": 6690,
+      "prime": 5
+    },
+    {
+      "PS1_failures": [
+        {
+          "owner_modulus": 7,
+          "point": 4291,
+          "service": 10
+        }
+      ],
+      "minimum_slack": 0,
+      "positive_demand_private_rows": 6225,
+      "prime": 7
+    },
+    {
+      "PS1_failures": [
+        {
+          "owner_modulus": 11,
+          "point": 13651,
+          "service": 18
+        }
+      ],
+      "minimum_slack": 0,
+      "positive_demand_private_rows": 4852,
+      "prime": 11
+    },
+    {
+      "PS1_failures": [
+        {
+          "owner_modulus": 13,
+          "point": 8086,
+          "service": 22
+        }
+      ],
+      "minimum_slack": 0,
+      "positive_demand_private_rows": 4854,
+      "prime": 13
+    }
+  ],
+  "class_count": 4198,
+  "distinct_modulus_count": 14,
+  "holes": [
+    1
+  ],
+  "modulus_multiplicities": {
+    "3": 1,
+    "5": 1,
+    "7": 1,
+    "11": 1,
+    "13": 1,
+    "105": 9,
+    "165": 3,
+    "273": 5,
+    "715": 9,
+    "1001": 20,
+    "1365": 11,
+    "2145": 1,
+    "5005": 55,
+    "15015": 4080
+  },
+  "overlap_point_count": 3707,
+  "period": 15015,
+  "positive_demand_private_rows_checked": 30696,
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13
+  ],
+  "private_point_count": 11307,
+  "result": "PASS",
+  "scope": "Every actual private point and every support-prime row, including zero-demand rows, checked on the complete period. Moduli are squarefree, so all divisor-cut rows are either these rows or zero-demand rows. All moduli odd and nonunit, prime classes normalized, no identical APs, but numerical moduli repeat. This is not a distinct-odd counterexample or a Lean proof.",
+  "zero_demand_private_rows_checked": 25839
+}
