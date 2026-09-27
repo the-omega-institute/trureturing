@@ -47701,3 +47701,575 @@ Bennett、Howls、Nemes 与 Olde Daalhuis 对完整陡降轮廓的解析域、�
 结论在共同紧性类上对固定有界输出与固定切分紧集一致，再经原 pair/path 数据律的紧性耗尽返回对确定支撑一致的概率结论。全局最近零点、虚轴处实际转换、最大计数域及 Lee–Yang 型结论仍未解决。有限文献核对不构成全球原创性认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 163. 精确约束率、负分数供给与有限频带的闭式边界
+
+本章把有限频带构造中的率、分数、隐藏分配和校准条件合并为同一可实现约束。精确 Poisson 约束率具有唯一、正且有限的极小点；原 Liouville 幅度还给出一个负分数总数对，使整个所需分数范围具有统一供给余量。
+
+在保留原 $\kappa=c_q/1000$、物理占据块及标量观测的严格构造中，至多 $n$ 个频带可行，当且仅当
+
+$$
+0<c<\left(\frac{c_q}{2}-5\kappa\right)(1-2^{-n}).
+$$
+
+每个内部目标都由固定有限个频带在同一实际数组上实现，并返回原完整选择后验的加权 $L^1$ 方差轮廓。所得充分范围为每个固定 $0<c<99c_q/200$。这个边界刻画指定构造，不是原后验的必要阈值；端点和更宽物理范围仍未定。下列为普通数学推导，未作 Lean 认证。
+
+### 163.1 有限频带边界与完整原后验定理
+
+**定理 163.1（有限频带可行边界与完整后验极限）。** For the explicitly specified strict finite-band mechanism below, write
+
+$$
+ \gamma={c_q\over2}-5\kappa={99c_q\over200},\qquad
+ C_n=\gamma(1-2^{-n}),\quad n\ge1.                       \tag{163.1}
+$$
+
+The equality uses the unchanged original kappa=c_q/1000. With either sign of the lawful pair score permitted, a target c>0 is feasible with at most n fixed bands IF AND ONLY IF c<C_n. The exact constrained Poisson rate has a unique positive finite minimizer. On the original amplitude it imposes no additional restriction in the needed score range; a negative-score construction proves that fact analytically. Every strict interior point of(163.1) has an explicit jointly attainable band/score/width construction, not just an infimum or a diagonal assertion.
+
+Consequently the SAME original full selected full-q weighted-L1 posterior-varentropy theorem holds for
+
+$$
+ \rho_Q\asymp e^{-cQ^3},\qquad0<c<\gamma={99c_q\over200}.
+                                                               \tag{163.2}
+$$
+
+For each such fixed c only finitely many views are used, independently of Q. For example c=49c_q/100 is attained with seven bands, since C_7-c=29c_q/25600>0. The gain over Chapter 161's sufficient endpoint183c_q/400 is3c_q/80 in the open frontier. Even four bands have the exact strict frontier C_4=297c_q/640>183c_q/400. These fractions illustrate the structural theorem; they are not its substitute.
+
+Retain exactly
+
+$$
+ \lambda=Q^3,\quad\delta=Q^{-1/2},\quad B^2=q/Q^{5/2},
+ \quad\mathcal B=q/Q^{11/4},\quad\rho=\sigma\mathcal B,
+$$
+$$
+ T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V/\sqrt\delta,
+ \quad Y=T+\sigma G,\quad A=V_H/\sqrt\delta,
+$$
+$$
+ \nu_0=2\sum_{j\in H}w_j^2,\quad\kappa_3=8\sum_{j\in H}w_j^3,
+ \quad\Lambda=\nu_0+\sigma^2,\quad
+ C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2,
+$$
+$$
+ D_x(y)=Vpost_x(y)-Vprior_x+A^2/\Lambda-C_xy,
+ \quad R_*(y)=29/6-3\sqrt2+(3\sqrt2+8/\sqrt3-9)y^2/\nu,
+ \quad\nu=2g_0.                                         \tag{163.3}
+$$
+
+For each fixed c in(163.2) and fixed0<c_-<=rho exp(cQ^3)<=c_+<infinity, in original support-uniform raw-data probability,
+
+$$
+ \int_{\mathbb R}f_x(y)|D_x(y)-R_*(y)|\,dy\longrightarrow0,
+ \qquad E_xY^2\longrightarrow\nu,
+$$
+$$
+ \int f_x(y)Vpost_x(y)\,dy-Vprior_x+A^2/\Lambda-C_xm_x
+       \longrightarrow8/\sqrt3-25/6,\qquad m_x=E_xY.    \tag{163.4}
+$$
+
+The full-q prior, complete count multiplicities, empirical centers, exact finite A,Lambda,C_x,m_x, original physical H/scalar, low and outside tuples, SAME G and both normalized real marks remain. No physical selection or independently randomized phase is introduced. The endpoint gamma is a boundary of the specified construction, not a proved posterior threshold. No necessity, zero-noise or optimality claim is made for the physical theorem.
+
+### 163.2 同一总数对上的精确约束率与实际极小点
+
+Use the original constants
+
+$$
+ A_s=\log(1+r)>0,\quad B_s=\log(1-r)<0,\quad
+ v_+=1+r,\quad v_-=1-r,\quad
+ \phi=(v_+A_s+v_-B_s)/2,
+$$
+$$
+ c_q=\phi(1-\beta)/\beta,\quad c_M=\phi/\beta,
+ \quad0<c_q<\phi<\log2<1,\quad\beta\in(1/2,1).
+$$
+
+Set s_+=A_s/2, s_-=B_s/2. For one positive finite total pair x=(x_+,x_-), define its rate and signed score by
+
+$$
+ I(x)=\sum_{e=+,-}J_{v_e}(x_e),\quad
+ J_v(x)=x\log(x/v)-x+v,\quad
+ D(x)=\sum_es_e(x_e-v_e).                              \tag{163.5}
+$$
+
+The actual rounded totals floor(lambda x_e) will have score D(x)lambda+O_x(1), with the same x determining their joint rate. Define the centered Poisson cumulant
+
+$$
+ K(\theta)=\sum_ev_e(e^{\theta s_e}-1-\theta s_e),
+ \quad K''(\theta)=\sum_ev_es_e^2e^{\theta s_e}>0.       \tag{163.6}
+$$
+
+Its derivative increases continuously from minus infinity to plus infinity: the negative s_- term dominates as theta tends to minus infinity, and the positive s_+ term dominates as theta tends to plus infinity. Hence for EVERY finite real d there is a unique finite theta_d with K'(theta_d)=d. Define
+
+$$
+ x_e(d)=v_e e^{\theta_d s_e}>0,\qquad
+ \mathcal I(d)=\theta_d d-K(\theta_d).                  \tag{163.7}
+$$
+
+This pair is the UNIQUE minimizer of I(x) subject to D(x)=d on x_+,x_->0. Indeed for any such x,
+
+$$
+ I(x)-\mathcal I(d)=\sum_eJ_{x_e(d)}(x_e)\ge0.          \tag{163.8}
+$$
+
+To verify the equality, subtract the two J expressions; log(x_e(d)/v_e)=theta_d s_e and the score constraint cancels the linear terms. Each J_a(z)>=0, with equality only z=a. This proves existence, uniqueness, positivity, finiteness, global optimality and the common-score condition without a boundary compactness assumption. It also proves the dual supremum over theta directly. No unrestricted infimum is left uninstantiated.
+
+The inverse-function theorem gives mathcal I'(d)=theta_d and mathcal I''(d)=1/K''(theta_d)>0. Thus I_+(ell)=mathcal I(ell) and I_-(ell)=mathcal I(-ell) are continuous, strictly increasing for ell>0, vanish at0 and tend to infinity. The latter assertion also follows from mathcal I(d)>=theta d-K(theta) for any fixed theta of the sign of d. For a nonempty permitted sign set E contained in{+,-}, put
+
+$$
+ R_E(\ell)=\min_{\epsilon\in E}\mathcal I(\epsilon\ell),
+ \quad R_E(\ell_E)=c_q,
+ \quad S_E=\min(c_q,\ell_E).                            \tag{163.9}
+$$
+
+The root ell_E exists and is unique. The minimum of these two increasing branches is strictly increasing: choose the minimizing branch at the larger argument and compare on that same branch at the smaller argument. For each fixed ell, an attaining sign and its unique x(epsilon ell) exist; a deterministic tie rule suffices. Every finite collection of such pairs has a positive minimum coordinate and finite maximum coordinate. This supplies exactly the compact, positive total-region hypotheses needed later, with constants depending only on the fixed choices.
+
+Classical exponential-family duality explains this calculation, but(163.8) is the full proof for this two-total model. Neither a marginal rate minimum nor a separately optimized response is combined with another pair.
+
+### 163.3 原幅度关系给出的负分数供给
+
+The original definition 68.1 fixes alpha_L=A_s/(-B_s), where d_1=1, d_{n+1}=10^(5d_n), and alpha_L=sum_n10^-d_n. Chapter 161 proved A_s>17/25 from that relation. We need a little more information from the same prescribed amplitude, not a new hypothesis.
+
+The first term gives alpha_L>1/10. Since d_n>=n+2 for n>=2,
+
+$$
+ {1\over10}<\alpha_L\le {1\over10}+{1\over9000}
+                                      <{101\over1000}.        \tag{163.10}
+$$
+
+It follows that -B_s=A_s/alpha_L>680/101>13/2. Since e>8/3 and exp(1/2)>3/2,
+exp(13/2)>(8/3)^6(3/2)=393216/729>500. Therefore r>499/500. Also log2>56/81, and log(999/1000)>-1/999, so
+
+$$
+ A_s>\log(999/500)>{56\over81}-{1\over999}>{69\over100}.
+$$
+
+The last cross-multiplied difference is2889>0. With a_0=v_+/2 and b_0=v_-/2,
+
+$$
+ \phi=A_s(a_0-b_0/\alpha_L)
+      >{69\over100}(a_0-10b_0)
+      >{69\over100}{989\over1000}
+      ={68241\over100000}>{17\over25}.                 \tag{163.11}
+$$
+
+Now take the concrete positive total pair y=(1,alpha_L). Its rate and score simplify TOGETHER:
+
+$$
+ D(y)=-\phi,\qquad
+ I(y)=1-\alpha_L+\alpha_L\log\alpha_L.                 \tag{163.12}
+$$
+
+The score identity is A_s+B_s alpha_L=0. In the rate, -A_s-alpha_L B_s cancels exactly. Since1-z+z log z decreases on(0,1) and alpha_L>1/10,
+I(y)<9/10-(log10)/10. An analytic lower bound for log10 is obtained without numerical evaluation: the first three positive terms of log2=2atanh(1/3) give log2>842/1215, while log(5/4)>=2/9. Hence
+
+$$
+ \log10=3\log2+\log(5/4)>{932\over405}>{23\over10},
+ \quad I(y)<{67\over100},\quad {I(y)\over\phi}<{67\over68}.
+                                                               \tag{163.13}
+$$
+
+For any0<ell<=c_q<phi, use the SAME interpolated total pair
+
+$$
+ \bar x(\ell)=(1-u)(v_+,v_-)+u(1,\alpha_L),
+ \qquad u=\ell/\phi\in(0,1).                           \tag{163.14}
+$$
+
+It is positive and finite, has D(bar x)=-ell, and strict convexity (or just convexity) of I gives
+
+$$
+ \mathcal I(-\ell)\le I(\bar x(\ell))\le uI(y)
+                      <{67\over68}\ell\le{67\over68}c_q.
+                                                               \tag{163.15}
+$$
+
+This proves a supply margin c_q/68 on the ENTIRE needed score range. The actual construction can use the exact minimizing pair x(-ell) from(163.7);(163.14) is an explicit lawful witness bounding its rate. Both the minimizer and witness use one pair for score and rate. There is no independently favorable marginal choice. In particular ell_{+,-}>c_q and S_{+,-}=c_q in(163.9). Rare supply cannot bind the signed mechanism before its geometric ceiling.
+
+The sign is useful, not merely notational. For comparison, K(2)=2(r^2-phi) exactly, since exp(2s_e)=v_e. If1/2<beta<=50/99, then c_q>=49phi/50 and
+
+$$
+ \mathcal I(99c_q/100)-c_q
+ \ge {49\over50}c_q+2\phi-2r^2
+ \ge {7401\over2500}\phi-2r^2
+ >{817\over62500}>0.                                  \tag{163.16}
+$$
+
+We used(163.11) and r^2<1. Thus the positive-score rate ceiling is strictly below99c_q/100 for this actually admissible beta interval, EVEN AFTER exact minimization. Negative scores bypass that particular restriction by(163.15). Conversely for beta>=2/3 the old positive-only pair has I(c_q)<=c_q^2/(a_0A_s^2)<25c_q/34, so positive supply is already nonbinding there. These statements delimit the rate branches; neither is a physical counterexample.
+
+### 163.4 严格频带构造的充要条件与闭式递推
+
+We characterize the following strict finite-band mechanism, retaining the original kappa, occupied block and physical Fourier scales. It uses fixed n and a chain of exponents
+0=b_0<b_1<...<b_n=c. Band i runs from exp(b_{i-1}lambda) to exp(b_i lambda), with original integer endpoint floors, first lower endpoint1 and final upper endpoint N=exp(c lambda+O_c(Q+log Q)). For each band choose a permitted sign epsilon_i, a positive finite total pair x_i with signed score D(x_i)=epsilon_i ell_i, and a positive fixed hidden split width h_i. Use one totals-only selected pool for each band and the original per-view three-deletion calibration. Its strict rate/geometry requirements are
+
+$$
+ I(x_i)<c_q,\quad0<\ell_i<\min(c_q,\phi)=c_q,\quad h_i>0,
+$$
+$$
+ 2b_i<\ell_i-h_i,\quad2b_i<\min(c_q,\phi),\quad
+ b_i+5\kappa<c_q/2,\quad
+ \ell_i+5\kappa<c_q/2+b_{i-1}.                          \tag{163.17}
+$$
+
+These are the denominator-sensitive rational-location and exact-response strip conditions, now proved for either sign in Section 163.7. They define a sufficient construction, not necessary conditions for the posterior theorem. The forthcoming necessity is ONLY for satisfying this specified mechanism with fixed positive margins. Arbitrary changes to the energy threshold, physical block or response representation are outside that necessity claim.
+
+For any permitted sign set E, a single band with lower exponent a and upper exponent b can satisfy(163.17) if and only if
+
+$$
+                    2b<\min(a+\gamma,S_E),\qquad b<\gamma.
+                                                               \tag{163.18}
+$$
+
+Necessity follows from ell>2b, ell<a+gamma, ell<c_q and the exact lower bound I(x)>=R_E(ell). Conversely choose ell strictly between2b and min(a+gamma,S_E), take its attaining sign and minimizer from(163.7–9), and choose0<h<ell-2b. Positivity, finite coordinates and all rate conditions are then fulfilled, while2b<c_q follows from S_E<=c_q. Thus eliminating x, sign, score and width loses no feasible strict interior point.
+
+Starting with a=0, define
+
+$$
+ r_0=0,\quad r_i=\min\{S_E/2,(r_{i-1}+\gamma)/2\}.
+ \quad\text{Then}\quad
+ r_n=\min\{S_E/2,\gamma(1-2^{-n})\}.                   \tag{163.19}
+$$
+
+The formula follows by induction. If the cap S_E/2 is reached, it remains a cap because then S_E/2<=gamma; if S_E/2>gamma, it is never reached. A target c is feasible with at most n bands if and only if0<c<r_n.
+
+For necessity, each band has b_i<(b_{i-1}+gamma)/2 and b_i<S_E/2; induction gives b_i<gamma(1-2^-i) and the rate cap. For sufficiency, let alpha=c/r_n<1 and choose provisional endpoints b_i=alpha r_i. Omit repeated endpoints if the cap has already been reached. For every remaining step,2b_i<=alpha b_{i-1}/alpha+alpha gamma=b_{i-1}+alpha gamma<b_{i-1}+gamma, and2b_i<S_E. Also b_i<gamma. Equation(163.18) supplies all totals and widths. There are at most n steps. This is a constructive finite proof of attainability; no limit of Q-dependent views is taken.
+
+One can allow overlapping intervals without enlarging this frontier for the same strict inequalities: start with an interval covering exponent0, then retain successive intervals that extend the covered right endpoint, truncating their lower endpoint up to the previous right endpoint. That only relaxes ell<a+gamma, and truncating the final upper endpoint down to c only relaxes the other inequalities. The resulting increasing chain uses no more intervals. This reduction concerns the exponent-covering version of the specified mechanism; it makes no claim about a different representation of Fourier modes.
+
+For E={+,-},(163.15) gives S_E=c_q and c_q/2>gamma. Therefore(163.19) reduces exactly to C_n in(163.1). The union over all finite n is0<c<gamma. No finite n attains its own boundary C_n under the strict recipe, and no finite n reaches gamma. These are sharp feasibility statements for this construction, not endpoint statements for(163.4).
+
+For positive scores only, the exact frontier instead is
+
+$$
+ C_n^+=\min\{\ell_+/2,\gamma(1-2^{-n})\},\qquad
+ \mathcal I(\ell_+)=c_q.                               \tag{163.20}
+$$
+
+The additional c_q/2 cap can be omitted since the geometric term is smaller. Equation(163.16) proves that the signed improvement is strict over this fully optimized positive-only construction for1/2<beta<=50/99 and sufficiently many bands. Thus the new representation removes a genuine rate limitation of that recipe, not merely a loose upper estimate.
+
+### 163.5 每个内部目标的显式参数与共同规模预算
+
+For fixed0<c<gamma choose, for example,
+
+$$
+ n=1+\left\lfloor\log_2{\gamma\over\gamma-c}\right\rfloor,
+ \quad z={c\over C_n}\in(0,1),\quad
+ b_i=z\gamma(1-2^{-i}),\quad d=(1-z)\gamma>0.
+                                                               \tag{163.21}
+$$
+
+Then b_n=c and every step has b_{i-1}+gamma-2b_i=d. Choose
+
+$$
+ \ell_i=2b_i+d/2,\quad h_i=d/4,\quad
+ \epsilon_i=-1,\quad x_i=x(-\ell_i).                  \tag{163.22}
+$$
+
+The exact minimizing pair is defined by the unique root K'(theta_i)=-ell_i, a complete analytic specification with no numerical solver. We have ell_i<2gamma=c_q-10kappa<c_q, since ell_i<=2z gamma+(1-z)gamma/2<2gamma. All margins are explicit:
+
+$$
+ \ell_i-h_i-2b_i=d/4,\quad
+ b_{i-1}+\gamma-\ell_i=d/2,\quad
+ \gamma-b_i\ge\gamma-c>0,
+$$
+$$
+ c_q-2b_i\ge c_q-2c>10\kappa,\quad
+ c_q-\ell_i>10\kappa,\quad
+ I(x_i)=\mathcal I(-\ell_i)<67c_q/68.                 \tag{163.23}
+$$
+
+The phi margins are larger because phi>c_q. These fixed positive constants absorb every O_{c,i}(Q+log Q) logarithmic error in rational spacing and exact strips. Band endpoints are P_i=floor(exp(b_i lambda)), i<n; use[1,P_1],(P_1,P_2],...,(P_{n-1},N]. They are nonempty eventually because b_i strictly increase. Nothing here changes the physical cutoff N or original floor laws.
+
+For each x_i set D_v(x)=max(|log(x/(2v))|,|log(x/v)|), k_v(x)=exp(-D_v(x))/(3sqrt x), and k_i=product_e k_v_e(x_i,e). The finite Stirling bound with n_e=floor(lambda x_i,e) gives
+
+$$
+ P\{Pois(v_e\lambda)=n_e\}\ge k_{v_e}(x_{i,e})
+                  \lambda^{-1/2}e^{-\lambda J_{v_e}(x_{i,e})}.
+                                                               \tag{163.24}
+$$
+
+Indeed lambda>=2/x implies n_e in[lambda x/2,lambda x]; n_e!<=3sqrt(n_e)(n_e/e)^n_e and J_v'=log(x/v) bound the floor correction by D_v(x). Thus prescribed pair totals have probability at least k_i lambda^-1 exp(-I(x_i)lambda), including the exact rounded point and prefactor. No tail theorem is substituted.
+
+Reserve n disjoint deterministic trial blocks with
+
+$$
+ m_i=\lceil k_i^{-1}\lambda Q^2e^{I(x_i)\lambda}\rceil,
+ \quad m=\sum_{i=1}^n m_i,\quad
+ \log m\le {67\over68}c_q\lambda+5\log Q+O_{c,n,\beta,r}(1).
+                                                               \tag{163.25}
+$$
+
+Here n is fixed; the O(1) contains log n and the fixed finite point-prefactors. Therefore2m=o(q/Q^3), m/M tends to zero exponentially, and one common anchor remains available. This pays the number of views, all trial blocks, exact rate overhead and support availability simultaneously. No finite-n constant is claimed uniform for n growing with Q or c tending to gamma along Q.
+
+### 163.6 原始联合选择及全部频带的隐藏核
+
+The sampled-fraction comparison of Chapter 155, used in Chapter 161, applies ONCE to the full4m-dimensional departure-count vector, separately for each original experiment:
+
+$$
+ \tau_m\le8m/M+\sqrt{48m/M},\qquad
+ P\{\hbox{some block has no prescribed totals}\}
+                         \le n e^{-Q^2}+\tau_m=o(1).   \tag{163.26}
+$$
+
+Its hypotheses have not changed: selected labels are distinct true labels,2m<=q, and the original parity/transition conditioning is used. Conditional on parity, the selected-total comparison has the SAME multinomial allocation kernel in both categorical and independent-Poisson descriptions. Its per-type error is of order the selected fraction, not dimension times a fixed error. The exact joint Poisson affinity handles the random parity means; the path parity-type counts are1-dependent with variance at most3T_obs, T_obs=2Mlambda. Original arrivals and terminal path labels remain in their lawful conditional kernels. These results from Chapters 155 and 161 require m/M small, which(163.25) supplies; negative prescribed totals add no new premise. The displayed bound is unconditional over the original parity record, not a conditional independence claim about actual rows.
+
+Reveal that full parity record, all trial-pair masks, all labels outside their union, and original arrivals or terminal path label. Call this H_0. Each first successful index is selected using ONLY its revealed pair totals in its predetermined block. Conditional on H_0, the complete internal allocation kernel is exactly product_{j<=m}[Bin(K_j,+,1/2) tensor Bin(K_j,-,1/2)]. This follows from equality of the two true labels' slot weights; the original common-data slot disintegration includes the terminal conditioning.
+
+Reveal all nonselected allocations. Partition into the finitely many n-tuples of selected indices, whose cells are H_0-measurable. On each cell integrate a bounded test against the product kernel, keeping its selected coordinates and integrating the rest. Sum the partition and use a monotone class. The n retained pairs have exactly2n joint independent fair-binomial count factors conditional on the resulting F_0. No factor equal to the number of index tuples is introduced. Fixed fallback indices are used only on the charged failure event.
+
+For band i reveal the other n-1 retained allocations, obtaining F_i; its own two binomials remain exact. The calibrated responses across views can be dependent. Their fixed-band bad-event estimates concern the SAME data array and are added, not multiplied as independent events. Pool selection never uses its hidden split.
+
+On the original occupancy event there are order q/Q^3 central labels. Since2m=o(q/Q^3), choose one H_0-measurable canonical central anchor outside ALL trial labels. In view i delete just this anchor and its selected pair: exactly THREE labels, independently of n and m. All other selected pairs, unsuccessful trials and outside labels remain in that view's exact outside coefficients. This keeps the full-q expansion offsets[-2,1]. It is not a2n+1-deletion or growing-deletion expansion.
+
+The original full-array environment failure is the retained b_env=C[q^-1/2+CQ^9 sqrt(q)/M+M^-8 q^-3/2+Q^3/q+Q/M+M^-9]=o(1). On its event the Bernoulli calibration variance is comparable q; deleting three terms changes the mean by at most3 and log multiplier by O(q^-1). Every F_i-measurable enlarged outside condition follows from this SAME array event. Conditional estimates are applied on those measurable enlargements and the original environment failure is charged afterwards. No marginal kernel is conditioned on an unauthorized favorable hidden event.
+
+With the original compensated slopes a_s=log((1+r)/(1-epsilon_M)), b_s=log((1-r)/(1+epsilon_M)), epsilon_M=rq/(M-q), B_0=(M-q)/q, the actual flagged totals satisfy
+
+$$
+ t_{raw}=(a_sK_++b_sK_-)/2-\log B_0
+                                  =-\ell_i\lambda+O_i(1),
+$$
+$$
+ X_i=a_s(k-K_+/2)+b_s(l-K_-/2),\quad
+ P(|X_i|>h_i\lambda\mid F_i)\le2e^{-2h_i^2\lambda/V_i},
+ \quad V_i=2(A_s^2x_{i,+}+B_s^2x_{i,-}+1).             \tag{163.27}
+$$
+
+The floors cost O_i(1); score compensation costs O_i(lambda q/M)=o(1). The tail is the direct fair-binomial exponential-moment bound. Each h_i=d/4 is fixed positive, so its failure vanishes; all n tails are paid after selection, without an exponential hidden-trial union. Constants are finite for the minimizing totals by Section 163.2.
+
+### 163.7 带符号的精确响应与同一调和事件
+
+The only new response issue is its sign. It can be checked algebraically before any probability estimate. If z_+=t_oL_u, z_-=t_oL_v, t=one-half log(z_+z_-), X=one-half log(z_+/z_-), then for logistic g(z)=e^z/(1+e^z),
+
+$$
+ g(t+X)+g(t-X)-1={\sinh t\over\cosh t+\cosh X}=f_t(X),
+ \quad f_{-t}(X)=-f_t(X).                              \tag{163.28}
+$$
+
+The fixed-offset full-q expansion is a positive finite average and uses this identity for arbitrary positive z_+,z_-. It does not assume t>0. Consequently equation (161.23) holds unchanged, now with t_i=-ell_i lambda+O_i(1):
+
+$$
+ p_*={L_0\sum_{z=0}^2c_zE_{q-1-z}\over
+                 \sum_{z=0}^2c_z(E_{q-z}+L_0E_{q-1-z})}
+       =p_{ref}-{v_o\over D_o}f_{t_i}(X_i)+O(q^{-2}),
+$$
+$$
+ (c_0,c_1,c_2)=(1,L_u+L_v,L_uL_v),\quad
+ p_{ref}=p_o+{v_o(a_3-1)\over2D_o},\quad D_o\asymp q,
+ \quad p_o\in[1/4,3/4],\quad v_o=p_o(1-p_o).             \tag{163.29}
+$$
+
+Small selected odds cause no division loss: the positive average of the same offsets[-2,1] is uniform for all odds, and the O(q^-2) error is not multiplied by m. The central group still has all three memberships n_0,n_0+1,n_0+2, n_0 comparable q/Q^3, and actual mean mu_0=n p_*.
+
+Keep EVERY preimage of Z_i=Ql-Pk, with Z_i^0=(QK_--PK_+)/2 and bar X_i=(b_s/Q)(Z_i-Z_i^0). The coprime projection and original score approximation give
+
+$$
+ |X_i-\bar X_i|\le\Delta_i=C_iQ^3(q/M+e^{-c_1Q^5}),
+ \qquad\sup_zP(Z_i=z\mid F_i)\le C_iQ^{-5/2}.          \tag{163.30}
+$$
+
+The proof is unchanged for these positive finite minimizing totals: fixed Z_i fixes k modulo Q, of mass at most Q^-1(1+Ce^-c_2Q), and each k allows one l, of atom at most C_iQ^-3/2. Sum all k. The defect uses the full O_i(Q^3) hidden ranges. There is no selected representative or Gaussian whole-law substitution.
+
+For epsilon_i=sign(t_i), eventually equal to the prescribed sign, epsilon_i f_{t_i}=f_|t_i|. Thus on |X_i|<=h_i lambda,
+
+$$
+ |f_{t_i}(\bar X_i)-\epsilon_i|
+                      \le C_i e^{-(\ell_i-h_i)\lambda},
+ \quad-\partial_{Z_i}^2[\epsilon_i f_{t_i}(\bar X_i)]
+                      \ge\chi_i=c_iQ^{-2}e^{-\ell_i\lambda}.   \tag{163.31}
+$$
+
+This follows by exact differentiation of f_|t|; its negative second derivative has numerator sinh(|t|)[cosh(|t|)cosh(X)-cosh(X)^2+2], with denominator(cosh(|t|)+cosh(X))^3. Since ell_i>h_i and Delta_i vanishes exponentially, it is at least a fixed multiple of exp(-ell_i lambda), including the(b_s/Q)^2 factor. Multiplying the target by epsilon_i converts the negative response to the same concavity argument. Plateau localization never replaces this exact curvature at the thin-strip scale.
+
+Retain the original occupied block and all full-axis parameters:
+
+$$
+ H_I=2/a_0+2\alpha_L^2/b_0,\quad
+ a_{occ}=\min(1/4,a_0/4,b_0/(4\alpha_L),\sqrt{\kappa/(4H_I)}),
+$$
+$$
+ \mathcal C=\{|j|\le\lfloor a_{occ}Q^2\rfloor\},\quad d_*=qe^{-\kappa\lambda},
+ \quad b_{occ}\le CQ^2(q^{-1}e^{\kappa\lambda/4}+Q^9/M),
+$$
+$$
+ \eta=e^{-(c\lambda+2Q^2)/(a_{occ}Q^2)},\quad
+ \mathfrak a=(400/\eta)^2,\quad\mathfrak b=\lceil\mathfrak a\rceil,
+ \quad U=e^{10\kappa\lambda},\quad V_R=c\lambda+\log\mathfrak b+\log Q,
+$$
+$$
+ N=\lceil1000\mathfrak b\rho^{-1}\sqrt{V_R}\rceil,\quad
+ \mathcal E(p)={4\pi^2\over\mathfrak b^2}
+       \sum_{j\in\mathcal C}d_j\,dist(2p\mu_j,\mathbb Z)^2.
+                                                               \tag{163.32}
+$$
+
+The unchanged exact row-rate estimate gives d_j>=d_* on C, with the stated actual pair/path failure. Log mathfrak b=O_c(Q), log N=c lambda+O_c(Q+log Q). The block and all physical groups are unchanged.
+
+For a band with endpoints L_i,H_i, low actual energy implies, for each of the nine membership/plateau candidates n p_z with z=-1,0,1 and p_z=p_ref-v_o z/D_o,
+
+$$
+ |k/(2p)-np_z|\le A_i+B_i/|p|,\quad
+ A_i=C_iQ^{-3}[e^{-(\ell_i-h_i)\lambda}+q^{-1}+\Delta_i],
+ \quad B_i=C_i\mathfrak b Q^{3/2}e^{5\kappa\lambda}/\sqrt q.
+                                                               \tag{163.33}
+$$
+
+We retain all signs/candidates although the construction uses z=-1. Distinct rational VALUES k/(2p),k'/(2p') differ by at least1/(4|pp'|). Thus8A_iH_i^2+8B_iH_i<1 permits at most one value per candidate throughout the band. Its four exponent conditions are exactly2b_i-(ell_i-h_i)<0,2b_i-c_q<0,2b_i-phi<0,b_i-gamma<0, all strictly paid by(163.23). No numerator bound, primitive restriction or harmonic union is needed.
+
+For a fixed rational value r_0 and its membership, return to the exact response target zeta=(D_o/v_o)(p_ref-r_0/n). All representations have that SAME target and
+
+$$
+ |f_{t_i}(\bar X_i)-\zeta|\le e_i,
+ \quad e_i=C_i\left[
+ {\mathfrak b Q^{9/2}e^{5\kappa\lambda}\over L_i\sqrt q}
+                                    +q^{-1}+\Delta_i\right].  \tag{163.34}
+$$
+
+Its three ratios to chi_i have rates ell_i-gamma-b_{i-1},ell_i-c_q,ell_i-phi, strictly negative by(163.23). Three distinct integer projection sites cannot all lie in this strip: apply concavity to epsilon_i f_{t_i} and epsilon_i zeta; the middle-point chord gap is at least chi_i/2, while the strip allows at most2e_i. The retained allowance54 sites per band therefore suffices, and their FULL atoms cost C_iQ^-5/2. This proves the signed extension of the finite-band interface of Chapters 159 and 161.
+
+Apply each conditional estimate on its F_i-measurable outside enlargement, then charge the common selection/regularity events. For each original experiment separately, uniformly in true support,
+
+$$
+ P\{\min_{1\le|p|\le N}\mathcal E(p)\le U\}
+ \le n e^{-Q^2}+\tau_m+
+       \sum_{i=1}^n[2e^{-2h_i^2\lambda/V_i}+C_iQ^{-5/2}]
+                  +C_n'(b_{env}+b_{reg}+b_{occ})=o(1). \tag{163.35}
+$$
+
+Here C_n' is a finite constant, not the frontier C_n; b_reg is the unchanged count/center regularity failure. Every quantity refers to one actual array, one common anchor and its lawful conditional descriptions. The exact-rate minimizing pools, all floors, signs, memberships, projection preimages and rational values have been accounted for jointly. This is the new arithmetic input to the unchanged physical array.
+
+### 163.8 完整频率轴与两阶标记的假设回接
+
+An arithmetic event alone would not prove(163.4). We use the return in (161.30)–(161.41) only after checking its original-law hypotheses here. The physical array remains J={j:d_j>=Q^3600}, E=J^c, original H, all count multiplicities, empirical centers, scalar T, exact intercept and SAME G. The comparison Q_lat uses normalized integer Gaussians on J and EXACT binomials on E, on the same count-tuple space. With exactly centered surprise s_lat, both real derivatives are those of the SAME normalized tilt exp(uW), W=s_lat+G^2/2, at u=0 and fixed physical y.
+
+The sign of a proof-pool score and the number of its conditional descriptions are absent from this physical array. The analytic proof requires the unchanged original regularity/occupied block, a fixed c with positive q-scale margins, and the single actual event E(p)>U for ALL1<=|p|<=N. Equation(163.35) supplies exactly that event. The fixed n chosen in(163.21) does not enter a determinant, a prior, a physical Fourier product or a mark. No independent environments are substituted.
+
+The retained quadratic-sum estimate is uniform in real linear twist:
+
+$$
+ |F_{d,m,\mu}(p/b+v)|\le100[b^{-1/2}(1+d^2v^2)^{-1/4}+d^{-1/4}],
+ \quad b\le\lfloor\sqrt d\rfloor,\quad
+ |v|\le[b\lfloor\sqrt d\rfloor]^{-1}.                  \tag{163.36}
+$$
+
+Here log mathfrak b=O_c(Q), whereas log d_*=(c_q-kappa)lambda+O(1), so mathfrak b<sqrt(d_*)/2 eventually and100d_*^-1/4<=eta/4. Its phase-independent off-arc contraction therefore holds at every fixed c in(163.2). The reduced arcs have centers2pi(p/b)mathcal B, b<=mathfrak b, and halfwidth S=2pi mathfrak a mathcal B/d_*. Their width/spacing ratio is exp[-(c_q-kappa)lambda+O_c(Q)], hence they are disjoint. Log S=kappa lambda+O_c(Q+log Q). All numerator signs are included, with one zero arc0/1 and no lcm grid.
+
+On a nonzero arc, the exact hybrid identities (159.35) and (161.31) expands ONLY the occupied C. It keeps every other coordinate K exact, including noncentral shifts and all physical coordinates containing proof-pool labels. Its factors are the finite quadratic Gauss coefficients gamma_p,b(r), the integer-Gaussian normalization c_C(u), the original phase(2pi ip/b)(sum_all mu_j^2-B^2V), exact H_K(u,s), and the SAME residual factor exp[-(2pi p rho/b+sigma s)^2/(2(1-u))]. At zero the identity expands the WHOLE J with E exact, producing the complete continuous-J reference as its zero mode. No label is removed from the physical law merely because its allocation was revealed in a proof view.
+
+The exact identity is differentiated over real u through order2. It gives
+
+$$
+ |\partial_u^k\Psi_h(0,s)|\le C Q^{12}|P_C(s)|
+   e^{-[A_h(s)+(2\pi p\rho/b+\sigma s)^2]/4},\quad k\le2,
+$$
+$$
+ P_C(s)=\prod_C(1-2isw_j)^{-1/2},\quad
+ A_h(s)=\sum_C{(\xi_{h,j}-2sw_ja_j)^2\over1+4s^2w_j^2},\quad
+ \xi_{h,j}=(2\pi\sqrt{d_j}/b)(h_j-2p\mu_j).             \tag{163.37}
+$$
+
+The normalized K marks cost at most C Q^4; fixed energy polynomials from differentiation are absorbed into Gaussian decay. Normalization derivatives cost C Q^4 exp(-c_1d_*) beyond the continuous normalization. The inverse Fourier phase at fixed physical y has no u derivative. This is direct real differentiation of an exact identity, not differentiation of a C0 estimate or an unproved complex zero-free assertion.
+
+For |s|<=S, the translated dual precision is at least
+
+$$
+ C^{-1}\mathfrak b^{-2}\min(qe^{-\kappa\lambda},
+                       qQ^3e^{-2\kappa\lambda}/\mathfrak a^2)
+                             \ge e^{(c_q-3\kappa)\lambda}.    \tag{163.38}
+$$
+
+Its positive Q^3 margin is unchanged. Even when a_occ is a small fixed model constant, the denominators and widths consume only O_c(Q). Summing positive translated Gaussian factors after extracting half the minimum energy costs at most2 over O(Q^2) coordinates, not b^|C|. The central product envelope still has integral_R|P_C(s)|ds<=C.
+
+On(163.35), unchanged same-array bounds ||wa||<=Ca_x, a_x=O_P(Q^-5/2), max w_j comparable Q^-1/4 imply
+
+$$
+ \|2swa\|\le\sqrt U/4,\quad
+ 1+4S^2\max w_j^2\le e^{3\kappa\lambda},\quad
+ \min_h A_h(s)\ge e^{7\kappa\lambda}/4,
+ \quad\sigma S\le e^{-(c+c_q-\kappa)\lambda+O_c(Q)}\to0.       \tag{163.39}
+$$
+
+The zero-arc expansion on full J has nonzero-mode and normalization error C Q^14 exp(-c_1Q^3600). The ONE restored full-reference tail outside S costs at most exp(-c_2kappa Q^(7/2)), with no inverse rho. These are unchanged hypotheses and estimates; the new signed calibration only proves the input E event.
+
+The two inverse-noise costs in the full real-axis proof are exactly
+
+$$
+ C Q^{20}(1+\rho^{-1})\eta^{a_{occ}Q^2}
+                                      \le C Q^{20}e^{-2Q^2},
+$$
+$$
+ C\mathfrak b^2(1+\rho^{-1})
+    [e^{-e^{7\kappa\lambda}/32}
+                 +e^{-\rho^2N^2/(100\mathfrak b^2)}],\qquad
+ \rho^2N^2/\mathfrak b^2\ge10^6V_R.                    \tag{163.40}
+$$
+
+The first uses the original16-envelope/two-mark reservations and remaining a_occ Q^2 eta-contractions off all arcs. Its period integral is C/(q/Q^3), physical Jacobian costs Q^1/4, and Gaussian G^2,G^4 marks sum over periods with factor C(1+rho^-1). The second sums every numerator for every reduced denominator; its volume has logarithm c lambda+O_c(Q), absorbed by the displayed terms. These estimates remain strict for our fixed c. Raw-data failure probabilities in(163.35) are never multiplied by inverse rho or the number of Fourier aliases.
+
+All regions, exact normalization and both marks therefore give
+
+$$
+ \max_{k\le2}\|\partial_u^k(f_{lat,u}-g_u)|_{u=0}\|_\infty
+                                                   \le C Q^{-400}. \tag{163.41}
+$$
+
+Finite Q with sigma>0 and Gaussian tuple tails permits real differentiation, and the stated integrated bounds justify sums and inversion. There is no Q-dependent local expansion order. Increasing n as a function of a FIXED target c changes only fixed raw-data proof constants, not the physical estimate. A sequence c_Q tending to gamma is not asserted.
+
+### 163.9 选择计数、实商及全部输出
+
+The sigma-free transport in (161.37)–(161.41) applies on the identical count tuples and T. Its hypotheses are original compact inclusion probabilities, d_j>=Q^3600 on J, fixed-order Stirling on |n-m_j|<=d_j^(5/8), and fixed surprise moments through order4. None is altered by the sign or finite number of proof pools. Keeping E exact and every intermediate centering exact, the complete signed tuple telescope gives
+
+$$
+ \|\eta_k^Q-\eta_k^{lat}\|_{TV}\le C Q^{-444},\quad k\le2,
+ \quad\eta_k(n)=Q_x(n)s_Q(n)^k,
+ \quad |Vprior_Q-Vprior_{lat}|\le C Q^{-448}.            \tag{163.42}
+$$
+
+For the SAME residual, K_r(n,y)=((y-T(n))/sigma)^(2r)phi_sigma(y-T(n)) has integral EG^(2r), r<=2. These kernels contract signed L1 independently of sigma. The k-mark difference is exactly sum_{r=0}^k binom(k,r)2^-r K_r(eta_{k-r}^Q-eta_{k-r}^lat), so all marked integrated errors remain C Q^-444 at our bandwidth. No polynomial signed-mass error is inflated by rho^-1.
+
+For the nonlinear conditional mean, q_1^2/q_0=sup_z(2zq_1-z^2q_0). Clipping |z|<=Q^10 costs O(Q^-16) by EW^4<=C Q^4, and the clipped signed error is O(Q^-424). The exact Vprior=O(Q^2), A^2/Lambda=O(Q^1/2), C_x=O(Q^1/4) and quadratic R_* use the same moments. This is a marked return, not a deduction of conditional variance from unmarked TV.
+
+The original selected full-q density h remains0<=h<=C with ||h-1||_2=a_x=O_P(Q^-5/2). Its exact log h surprise term is retained. The common-kernel and clipping result in (101.9), (101.15), and (111.16)–(111.17) costs C a_xQ^2=o_P(1) for EVERY sigma>0, on the same tuples and residual. It gives
+
+$$
+ \|f_xD_x-f_{lat}D_{lat}\|_1=o_P(1),\qquad
+ \int(1+y^2)|f_x-f_{lat}|\,dy=o_P(1).                   \tag{163.43}
+$$
+
+The proof labels and their known ordering belong only to the raw-data probability argument. No known-support posterior or modified selected density is used.
+
+On |y|<=sqrt(100nu log Q), the same full reference has real density g_0(y)>=c_1Q^-60 and first two normalized real marks bounded by C Q^4. Its assumptions sigma<=mathcal B^-1 and sigma->0 hold. For Delta_k=partial_u^k(f_lat,u-g_u)|0 and F=f_lat,u/g_u, the exact real identities are
+
+$$
+ F-1=\Delta_0/g_0,\quad F'=\Delta_1/g_0-\Delta_0g_1/g_0^2,
+$$
+$$
+ F''=\Delta_2/g_0-2\Delta_1g_1/g_0^2
+                   +\Delta_0(2g_1^2/g_0^3-g_2/g_0^2). \tag{163.44}
+$$
+
+Here g_k are tilt derivatives, distinct from the constant in nu=2g_0. The largest coefficient costs C Q^188. Equation(163.41) first proves F>=1/2 and only then bounds the real second log derivative by C Q^-200. At fixed physical y, Vpost(y)-Vprior=1/2+partial_u^2 log f_u(y)|0 because Var(W)=Vprior+1/2. The correct denominator, normalization and conditional-mean square are all included.
+
+For output tails, real square completion at |z|<=C sqrt(log Q) gives the unchanged full reference log mgf
+
+$$
+ -zV/\sqrt\delta-\tfrac12\sum_J\log(1-2zw_j)
+ +\sum_J{zw_ja_j^2\over1-2zw_j}+\sigma^2z^2/2
+                                       +\log E_Ee^{zT_E}.      \tag{163.45}
+$$
+
+The trace cancels the ORIGINAL intercept. The mean is O(a_x^2/sqrt delta)+O(Q^7202/mathcal B), variance tends to nu, and higher fixed terms are bounded by C[epsilon|z|^3+a_x^2z^2+sigma^2z^2+|z|Q^7202/mathcal B]. Lattice normalization differs by1+O(Q^2exp(-c_1Q^3600)) uniformly in shifted mean. Chernoff yields reference and lattice output tails at most C Q^-40 beyond sqrt(100nu log Q); conditional Jensen/Cauchy–Schwarz with EW^4<=C Q^4 pays posterior-variance tails C Q^-18. Exact prior, coefficient, mean and residual-polynomial tails vanish as before, with no tail quotient.
+
+Finally condition on the ORIGINAL outside coordinates and SAME G in the reference return of Chapter 101, Sections 101.2–101.3. Translate outside ENERGY inside the independent core density BEFORE separating surprise. The retained Cdelta^-1/2 derivative estimate costs O(Q^-199.5) for the unchanged energy error, and Q^10 clipping costs O(Q^-7). Only then does outside surprise decouple and cancel its exact prior variance. The noncentral return costs O(Q^-1/4(1+(log Q)^(3/4))). These estimates are sigma-free and require the unchanged H, centers and physical scalar, which we retained.
+
+The fixed reference calculation uses exact finite A,Lambda=nu_0+sigma^2,C_x and yields integral g|D_g-R_*|->0. Equation(163.41), the real quotient and all-output tails return the lattice conclusion; then(163.43) adds ||f_xD_x-f_latD_lat||_1 and integral |R_*||f_x-f_lat|, both vanishing. Weighted density convergence gives E_xY^2->nu. Integrating R_* yields8/sqrt3-25/6, retaining exact C_xm_x. This proves the full(163.4), not only an arithmetic sufficient event.
+
+### 163.10 构造边界、方法归属与未解范围
+
+约束率的极小点、分数、分配方差和取整标记均属于同一总数对；共同供给和 $2n$ 个条件二项分量把全部频带同时放入一组实际数据。每个视图仍只删除自己的标签对与共同锚，物理数组、完整先验、外部坐标及同一个噪声变量均保持原定义。不同视图可以相关，坏事件按同一实际律求和。
+
+在 $1/2<\beta\le50/99$ 时，(163.16) 表明即使精确最优化，正分数供给在 $99c_q/100$ 处仍不足；负分数构造的率在整个 $0<\ell\le c_q$ 内小于 $67c_q/68$。这是对正分数构造的一项实质突破。对其他 $\beta$，正分数限制可以已经不承重，例如正文证明了 $\beta\ge2/3$ 的情形；完整带符号边界仍对每个原固定 $\beta$ 成立。
+
+剩余限制是同一响应必须同时满足的 $2b_i<\ell_i<\gamma+b_{i-1}$。它使每一新端点严格小于旧端点与 $\gamma$ 的中点；增加任意固定数量的频带都不能越过这一构造边界。固定频带数可以依赖固定内部目标，但没有让频带数随 $Q$ 增长，也没有声明趋近端点的一致结果。不同响应表示是否能跨过此界、原后验在端点或界外的行为，均未解决。
+
+凸散度、指数族对偶、有限 Stirling、条件多项分配、Poisson 亲和度、有限 Gauss 反演及 Gaussian Poisson 求和均为成熟工具。第 155、159、161 章提供共同数组与完整标记回接；这里新增的是精确可行率消元、负分数合法供给、可实现的闭式递推及其完整物理回接。Györfi–Harremoës–Tusnády 的上尾／格点定理不自动覆盖负倾斜、Liouville 加权标量或指数多试验池，本章分别直接证明。原文版本与迁移边界见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。有限文献核对不构成全球原创性认证。
+
+## 追加锚（本行以下为增补区）
