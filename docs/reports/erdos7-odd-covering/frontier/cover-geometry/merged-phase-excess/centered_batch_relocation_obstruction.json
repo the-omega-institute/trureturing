@@ -1,0 +1,146 @@
+{
+  "all_same_prime_batches_excluded": true,
+  "blockers_sha256": "f59f8b34a52802a1f71e07824a1d49a091c294265f5bc0b74ff3c2807a1bf6b9",
+  "by_prime": [
+    {
+      "checked_deletions": 298,
+      "conditional_passes": [],
+      "option_count": 298,
+      "original_child_count": 299,
+      "plain_layers": [
+        71,
+        78,
+        68,
+        22,
+        58,
+        1
+      ],
+      "prime": 3,
+      "private_points_used": 122,
+      "remaining": 0,
+      "remaining_after_plain": 0
+    },
+    {
+      "checked_deletions": 233,
+      "conditional_passes": [],
+      "option_count": 233,
+      "original_child_count": 237,
+      "plain_layers": [
+        46,
+        70,
+        17,
+        15,
+        16,
+        7,
+        18,
+        41,
+        3
+      ],
+      "prime": 5,
+      "private_points_used": 146,
+      "remaining": 0,
+      "remaining_after_plain": 0
+    },
+    {
+      "checked_deletions": 4453,
+      "conditional_passes": [
+        {
+          "plain_followup_layers": [
+            3
+          ],
+          "remaining": 0,
+          "seeds_excluded": 115,
+          "seeds_tested": 118
+        }
+      ],
+      "option_count": 203,
+      "original_child_count": 205,
+      "plain_layers": [
+        34,
+        47,
+        4
+      ],
+      "prime": 7,
+      "private_points_used": 220,
+      "remaining": 0,
+      "remaining_after_plain": 118
+    },
+    {
+      "checked_deletions": 231,
+      "conditional_passes": [],
+      "option_count": 231,
+      "original_child_count": 231,
+      "plain_layers": [
+        74,
+        128,
+        27,
+        2
+      ],
+      "prime": 11,
+      "private_points_used": 231,
+      "remaining": 0,
+      "remaining_after_plain": 0
+    },
+    {
+      "checked_deletions": 231,
+      "conditional_passes": [],
+      "option_count": 231,
+      "original_child_count": 231,
+      "plain_layers": [
+        102,
+        74,
+        23,
+        9,
+        8,
+        2,
+        13
+      ],
+      "prime": 13,
+      "private_points_used": 231,
+      "remaining": 0,
+      "remaining_after_plain": 0
+    },
+    {
+      "checked_deletions": 231,
+      "conditional_passes": [],
+      "option_count": 231,
+      "original_child_count": 231,
+      "plain_layers": [
+        108,
+        88,
+        32,
+        3
+      ],
+      "prime": 17,
+      "private_points_used": 231,
+      "remaining": 0,
+      "remaining_after_plain": 0
+    },
+    {
+      "checked_deletions": 231,
+      "conditional_passes": [],
+      "option_count": 231,
+      "original_child_count": 231,
+      "plain_layers": [
+        113,
+        30,
+        72,
+        15,
+        1
+      ],
+      "prime": 19,
+      "private_points_used": 231,
+      "remaining": 0,
+      "remaining_after_plain": 0
+    }
+  ],
+  "checked_deletions": 5908,
+  "option_count": 1658,
+  "original_count": 463,
+  "original_hole": 170272916129,
+  "original_membership_checks": 397254,
+  "originals_sha256": "427138d17d61f284dff84c2143b90b3b5b3997af6c26e9a8c17f4ab790aa1e11",
+  "period": 481225870125,
+  "scope": "Any nonempty batch of distinct cofactor parents, with one fixed prime and actual child-induced centers sharing a common CRT point; even retaining every child cannot preserve the old covered union.",
+  "validated_private_points": 858
+}
