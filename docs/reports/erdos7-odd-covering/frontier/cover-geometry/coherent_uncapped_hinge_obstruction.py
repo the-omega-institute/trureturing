@@ -98,6 +98,54 @@ def rank_colored_check(profiles, event_mass, uncapped_hinge):
         'private_rule': 'CRT(p^e mod p^3 for every p; rank mod23)',
     }
 
+def rank_continuation_check(r_infty, actual_hinge):
+    """Apply existing killed-row/query accounting to the fixed rank head."""
+    delta, next_prime = F(1, 2), 29
+    for rank in range(15):
+        alpha = F(rank, CURRENT)
+        theta = min(alpha, delta)
+        row_mass = (1 - alpha) / (1 - theta)
+        require(row_mass == 1 - max(F(0), (alpha - delta) / (1 - delta)),
+                'rank killed row mass identity')
+        require(0 <= row_mass <= 1 and 1 / (1 - theta) <= 2,
+                'rank killed marginal and prefix caps')
+    live_mass = 1 - actual_hinge
+    query_numerator = r_infty + (r_infty + 1) / ((1 - delta) * (CURRENT - 1))
+    next_query_upper = query_numerator / live_mass
+    query_gap = next_prime - 2 - next_query_upper
+    deletion_upper = (next_query_upper + 1) / (next_prime - 1)
+    normalized_reserve = 1 - deletion_upper
+    unnormalized_reserve = live_mass * normalized_reserve
+    ah9_numerator = A + (A + 1) / ((1 - delta) * (CURRENT - 1))
+    hinge_threshold = 1 - ah9_numerator / (next_prime - 2)
+    require(0 < live_mass <= 1 and query_gap > 0, 'rank continuation query budget')
+    require(0 < normalized_reserve < 1, 'rank arbitrary29 continuation reserve')
+    require(unnormalized_reserve ==
+            ((next_prime - 2) * live_mass - query_numerator) / (next_prime - 1),
+            'rank one-normalization reserve identity')
+    require(hinge_threshold == F(49516, 334125) and actual_hinge < hinge_threshold,
+            'AH9 sufficient actual-hinge threshold')
+    exact = {
+        'delta23': delta, 'actual_hinge23': actual_hinge, 'old_R_infty': r_infty,
+        'killed_mass23': live_mass, 'query_numerator': query_numerator,
+        'R_new_upper': next_query_upper, '27_minus_R_new_upper': query_gap,
+        'arbitrary29_deletion_upper': deletion_upper,
+        'normalized29_survivor_lower': normalized_reserve,
+        'unnormalized_joint_survivor_lower': unnormalized_reserve,
+        'AH9_actual_hinge_threshold': hinge_threshold,
+        'AH9_threshold_minus_actual_hinge': hinge_threshold - actual_hinge,
+    }
+    return {
+        'scope': 'all 2186 rank-coloured23 originals fixed; add only distinct29-bearing numerical originals d*29^k, k>=1, d supported on old P and23, arbitrary finite heights and fixed phases; no additional old-only or23-only blockers; not canonical467 source; no Lean claim',
+        'source': 'the same original all-height old mixture and its actual23 killed kernel, normalized once',
+        'measure': 'the joint survivor lower bound is under the unnormalized killed23 law tensor Haar29, not Haar on the full carrier',
+        'next_prime': next_prime, 'rank_rows_checked': 15,
+        'exact': {key: str(value) for key, value in exact.items()},
+        'decimals': {key: float(exact[key]) for key in
+                     ('R_new_upper', '27_minus_R_new_upper', 'normalized29_survivor_lower',
+                      'unnormalized_joint_survivor_lower', 'AH9_actual_hinge_threshold')},
+    }
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output')
@@ -177,6 +225,8 @@ def main():
         'decimals': {key: float(rational[key]) for key in ('R_infty', 'density_max', 'uncapped_hinge')},
     }
     result['rank_colored'] = rank_colored_check(profiles, event_mass, hinge)
+    result['rank_colored']['continuation23_29'] = rank_continuation_check(
+        r_infty, F(result['rank_colored']['actual_union_hinge']))
     rendered = json.dumps(result, indent=2, ensure_ascii=False) + '\n'
     if args.output:
         with open(args.output, 'w', encoding='utf-8') as handle:

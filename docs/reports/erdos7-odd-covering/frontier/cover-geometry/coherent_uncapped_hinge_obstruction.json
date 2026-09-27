@@ -75,6 +75,34 @@
     "max_actual_union_fraction": "14/23",
     "max_pointwise_union_hinge": "5/23",
     "uncapped_additive_hinge": "2581992950434626793746299/2535373939370931457423625",
-    "private_rule": "CRT(p^e mod p^3 for every p; rank mod23)"
+    "private_rule": "CRT(p^e mod p^3 for every p; rank mod23)",
+    "continuation23_29": {
+      "scope": "all 2186 rank-coloured23 originals fixed; add only distinct29-bearing numerical originals d*29^k, k>=1, d supported on old P and23, arbitrary finite heights and fixed phases; no additional old-only or23-only blockers; not canonical467 source; no Lean claim",
+      "source": "the same original all-height old mixture and its actual23 killed kernel, normalized once",
+      "measure": "the joint survivor lower bound is under the unnormalized killed23 law tensor Haar29, not Haar on the full carrier",
+      "next_prime": 29,
+      "rank_rows_checked": 15,
+      "exact": {
+        "delta23": "1/2",
+        "actual_hinge23": "1219830493798061/585086293700984182482375",
+        "old_R_infty": "1414458544322632571/69970656525004800",
+        "killed_mass23": "585086292481153688684314/585086293700984182482375",
+        "query_numerator": "1420289432366382971/64139768481254400",
+        "R_new_upper": "119402070620261085687104569495/5392155271506312394914637824",
+        "27_minus_R_new_upper": "26186121710409348975590651753/5392155271506312394914637824",
+        "arbitrary29_deletion_upper": "124794225891767398082019207319/150980347602176747057609859072",
+        "normalized29_survivor_lower": "26186121710409348975590651753/150980347602176747057609859072",
+        "unnormalized_joint_survivor_lower": "26186121710409348975590651753/150980347916951566321211904000",
+        "AH9_actual_hinge_threshold": "49516/334125",
+        "AH9_threshold_minus_actual_hinge": "7023304851229592494429127/47391989789779718781072375"
+      },
+      "decimals": {
+        "R_new_upper": 22.143663267861687,
+        "27_minus_R_new_upper": 4.856336732138314,
+        "normalized29_survivor_lower": 0.17344059757636837,
+        "unnormalized_joint_survivor_lower": 0.1734405972147668,
+        "AH9_actual_hinge_threshold": 0.14819603441825663
+      }
+    }
   }
 }

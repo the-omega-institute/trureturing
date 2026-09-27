@@ -19,6 +19,11 @@ cofactors instead form an antichain at each current height, the existing
 antichain mechanism gives H_(1/2)(f)<=R_M(mu)/(q-1), hence below one at
 q=23 under AH9. Full CRT coherence with irredundancy is one sufficient
 source of this structure; it is not required by the bound itself.
+For the fixed rank-coloured head, actual-union updating also controls the
+complete next query budget: any additional finite family of distinct
+29-bearing moduli supported on these old primes and23 leaves strictly
+positive survivor probability. This continuation forbids additional old-only
+or23-only blockers.
 All deductions here are ordinary mathematics with exact finite checks, not
 new Lean verification.
 
@@ -372,6 +377,119 @@ sufficient stronger form of coherence through an additional same-source
 comparison accounting for those current-phase conflicts. CU15 supplies no
 such missing deletion comparison.
 
+## The actual rank union also preserves the next complete-query budget
+
+Keep the SAME old law CU1 and all2186 rank-coloured23 originals CU10.
+One may add any finite family of originals of the form
+
+    c mod d*29^k,  k>=1,
+
+where d is supported on P union{23}, all numerical moduli are distinct,
+and all residues and finite exponents are arbitrary. This permits pure29
+powers and arbitrary mixed old/23/29 labels. It does not permit adding
+further old-only or23-only forbidden classes. For every such29 family,
+one fixed supported23 law gives joint survivor probability at least
+
+    26186121710409348975590651753
+    /150980347602176747057609859072
+      =0.17344059757636837...>0.                   (CU17)
+
+This is an application of the actual killed row in
+[report327](../321-384/327-actual-two-prime-survival-needs-a-masked-moment.md),
+TS7, and the complete-query accounting in
+[report463](463-two-actual-prime-extensions-preserve-a-common-core-law.md),
+PE5. [Report546](546-dense-irredundant-families-separate-stage-debits-from-actual-unions.md),
+DU9--DU10, uses the same cylinder-cap and one-normalization mechanism for
+a different fixed family. No new generic transfer theorem or Lean result
+is asserted here.
+
+Use Haar on the23-coordinate and retain its higher digits for all later
+queries. Let B_x be the actual rank-coloured forbidden union, let
+alpha=alpha_rank from CU13, and put theta=min(alpha,1/2). Define the
+unnormalized live measure and its one normalization by
+
+    xi(dx,dy)=mu(dx) H23(dy) 1_(y notin B_x)/(1-theta(x)),
+    h=H_(1/2)(alpha),  s=xi(1)=1-h,  mu'=xi/s.     (CU18)
+
+The identity for s is the actual killed-row formula: at each x its row
+mass is (1-alpha)/(1-theta)=1-(2alpha-1)_+. The old marginal of xi is
+at most mu, whereas every old cylinder C and every23-prefix J of depth e
+satisfy
+
+    xi(C times J)<=2*23^-e*mu(C).                 (CU19)
+
+The old-only nonunit query labels therefore contribute at most R=R_infty(mu).
+At each positive23 exponent e, all old query labels INCLUDING1 contribute
+at most2*23^-e*(R+1). Sum every positive exponent and then normalize once:
+
+    R_(P union{23})(mu')
+       <=[R+(R+1)/11]/(1-h).                      (CU20)
+
+Every maximum here concerns the same xi or mu'. There is no independent
+choice of source for different queries. The higher-digit extension of CU1
+and CU18 supplies these bounds at arbitrary depths; equivalently one can
+project that law to a finite period resolving the entire chosen29 family
+and its query depths. No unresolved old or23 exponent is discarded.
+
+Insert CU5 and CU14. Exact arithmetic gives
+
+    R+(R+1)/11=1420289432366382971/64139768481254400,
+
+    R_(P union{23})(mu')
+       <=119402070620261085687104569495
+          /5392155271506312394914637824
+        =22.143663267861687...<27.                 (CU21)
+
+In particular the small ACTUAL union hinge controls a complete subsequent
+query budget, although the uncapped additive hinge exceeds one. The next
+step is not inferred merely from positive23 survival.
+
+To process the additional29 originals, use this fixed mu' times Haar29.
+For a fixed k>=1, numerical-modulus distinctness gives at most one original
+per old label d; its actual phase has mu'-mass at most that label's query
+maximum. Include d=1. Consequently the actual29 forbidden union has mass
+at most
+
+    sum_(k>=1)29^-k*[1+R_(P union{23})(mu')]
+      =[1+R_(P union{23})(mu')]/28<1.              (CU22)
+
+The complement lower bound obtained from CU21 is exactly CU17. The same probability law and the same numerical lower bound apply to
+each finite29 family in the stated scope, with its one original phase
+fixed at each numerical label; no branch reselects an original residue.
+Positive mass on that family's resolved finite CRT carrier yields an
+uncovered integer, which may depend on the family. No one integer is
+asserted to survive every such family at once.
+
+Without the normalization in CU18, the same combined survivors have mass
+under xi times Haar29 at least
+
+    26186121710409348975590651753
+    /150980347916951566321211904000
+      =0.17344059721476679...>0.                   (CU23)
+
+CU17 is a probability under mu' times Haar29; CU23 is an unnormalized
+distorted-measure bound. Neither number is asserted to be the full Haar
+survivor density.
+
+For reuse with the scalar AH9 value A alone, the very same accounting
+shows exactly what extra actual-union estimate would suffice:
+
+    h<1-[A+(A+1)/11]/27
+      =49516/334125=0.14819603441825663...          (CU24)
+
+implies the strict query target in CU21. CU14 satisfies this threshold
+for the fixed rank head. AH9 itself does not assert CU24 for an arbitrary
+actual23 family. Thus this application does not remove the quantitative
+actual-union obligation, identify CU1 with report467's selected source,
+allow extra old/23-only blockers, or prove unrestricted Erdős #7.
+
+The existing verifier's `rank_colored.continuation23_29` output applies
+the checked CU5/CU14 values to CU18--CU24, checks the15 possible rank-row
+mass and density identities, and verifies all displayed rational gaps.
+The arbitrary-height and all29-family assertions rely on the ordinary
+cylinder and original-label argument above, not finite enumeration of
+those families. No Lean verification is claimed.
+
 ## Precisely which proposed bridge fails
 
 There cannot be a theorem using only the three displayed AH9 properties,
@@ -402,8 +520,10 @@ A separate repair is to work with the clipped majorant min(1,f_C). Its hinge
 is bounded by one, and report473's good set can bound it strictly below one
 in the specified seven-old-prime/23 coherent case. That is a different
 quantity from the uncapped H in the proposed Nyx interpolation. It needs an
-explicit rewritten consumer and quantitative tail budget. No unrestricted
-support, arbitrary-phase or all-stage gain is established by this note.
+explicit rewritten consumer and quantitative tail budget. CU18--CU24
+supply that continuation for the fixed rank-coloured head; they do not
+bound the actual hinge for an arbitrary head. No unrestricted support,
+arbitrary-head or all-stage gain is established by this note.
 
 ## Reproduction and references
 
