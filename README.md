@@ -89,8 +89,9 @@ Proofs supply premises; counterexamples refute claims within their stated scope.
 When identical readings hide different target values, no function of those
 readings recovers the target in both cases.
 [Seek new observations or relations](docs/VISION.md#how-ai-can-find-its-next-direction).
-Evaluate on questions unused in method design, against a stated baseline
-with matched information and resources.
+
+Evaluate research selection against stated baselines on questions excluded
+from method design, matching information and resources.
 
 ![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
 
