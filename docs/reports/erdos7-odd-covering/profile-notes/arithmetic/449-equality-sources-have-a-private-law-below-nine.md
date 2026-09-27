@@ -10,6 +10,8 @@ This result allows incidence five at every full root. It uses actual private poi
 
 The next cut values66/63 and67/63 force actual nineteen-point laws with bound159/19. The68/63 and69/63 strata have eighteen-point laws with bound79/9. The saturated-block transport theorem below controls every cut78/63, with the sharp local refinement giving bound233/26. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate.
 
+The complete classifications below also control every70/63,71/63 and72/63 source, with bounds643/72,79/9 and643/72 respectively. The remaining general fixed-head cut window is73/63 through77/63; several specified profiles within that window are separately controlled.
+
 These are ordinary proofs with exact construction controls, not new Lean-certified declarations. They do not prove that every remaining source contains this structure, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
 
 ## Exact description of the equality sources
@@ -3476,9 +3478,13 @@ The [cut-supplier checker](../../frontier/cover-geometry/height_two_cut77_public
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut77_public_two_leaf_supplier.py
 ```
 
-## Cut72: all partial profiles and the fully active public6 stratum
+## Every cut72 source admits one actual law below nine
 
-This section gives ordinary source proofs for thirteen of the fourteen necessary cut72 profile families, counting full-root permutations as one family. A controlled family has a single actual law below nine; an impossible family has no source satisfying the literal premises. The only remaining family is fully active4555 with public4/private22, containing22 necessary private shapes. This is not a complete cut72 theorem or an original-cofactor lift.
+Under the original literal height-two occupancy4555 and standalone-tree premises, every source whose actual-child network has raw minimum cut72 admits one probability on its actual points, chosen before every numerical phase query, with
+
+    Gamma_1225(nu) <=643/72<9.                         (C72-law)
+
+The proof covers all fourteen necessary cut72 profile families, counting full-root permutations as one family. A controlled family has a single actual law below nine; an impossible family has no source satisfying the literal premises. The last fully active public4/private22 family has22 necessary private shapes; its finite-public and whole-prefix realizations all have an actual eighteen-point law with bound79/9. These are ordinary proofs with exact construction controls, not Lean verification or an original-cofactor lift.
 
 ### Complete necessary profile inventory
 
@@ -3506,7 +3512,7 @@ For each two active roots the sums of their cheapest legal selected private cost
 |4455|1|9|1|3|643/72 or1603/195 law|
 |4555|0|0|36|3|impossible|
 |4555|0|2|29|3|impossible|
-|4555|0|4|22|22|not settled here|
+|4555|0|4|22|22|79/9 law|
 |4555|0|6|15|3|two impossible; one26/3 law|
 
 The family0005 has three labelled positions,0055 has three, and each4455 family has three. Other displayed families have one. The proof below retains actual owners and common numerical labels throughout; relabeling full-root roles is only the stated classification symmetry.
@@ -3972,19 +3978,282 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut72_full_k6.py
 ```
 
+### Every fully active public4/private22 cut72 source has an actual eighteen-point law
+
+#### A 26-occurrence / 25-actual-leaf selection lemma
+
+Ordinary combinatorial proof; no Lean verification is claimed.
+
+There are 19 occupied child owners. Owner e has a finite private candidate set C_e, and every actual leaf at e belongs to P union C_e. There are four public candidate occurrences, labelled by P, and 22 private candidate occurrences in total, partitioned by their owners. Occurrences are distinguished even if their labels agree. At most one owner has no private occurrence. Every owner has an actual leaf. The actual source projection contains a fixed set T of 25 distinct leaves, five in each of five distinct columns.
+
+Then 18 actual points can be selected at distinct owners, with distinct leaf labels and at most five selected leaves in any column.
+
+For every t in T, assign one candidate occurrence carrying t. If t is public, use one public occurrence carrying it. Otherwise choose an actual owner of t; containment supplies a private occurrence at that owner carrying t. These assignments are injective because T has distinct labels. Every assigned private occurrence is therefore actual at its assigned owner. Exactly 25 of the 26 occurrences are used, so at most one private owner can have none of its occurrences assigned.
+
+If there is no zero owner, at least 18 of the 19 owners have assigned private occurrences. Choose one such occurrence per owner. Its label lies in T, so all the desired bounds hold.
+
+Suppose there is one zero owner e0; there are 18 nonzero owners. Choose any actual leaf t0 at e0. Containment gives t0 in P.
+
+* If t0 belongs to T, require the public occurrence assigned to t0 to be supplied by the actual point (e0,t0). At least 17 nonzero owners have an assigned private occurrence. Choose one assigned private occurrence from 17 such owners, and add (e0,t0). Their labels are distinct members of T, because the chosen public occurrence and all private occurrences are part of the same injective assignment.
+* If t0 is not in T, at least one public occurrence carrying t0 is unused. This already accounts for the unique unused occurrence, so every private occurrence is assigned. Thus every one of the 18 nonzero owners supplies an assigned actual T-leaf. Choose one at each.
+
+This proves the conclusion. No candidate is presumed actual merely because it lies on the cut. The actual-owner assignment is made separately for each chosen nonpublic tree leaf, and is what proves ownership. Repeated public/private labels cause no problem: only one occurrence is assigned to a tree leaf, and distinct tree leaves cannot consume the same occurrence.
+
+Application: every full cut72 k4/Z22 shape has 19 occupied children, at most one cost-zero child, four public leaf occurrences, and 22 private leaf occurrences whenever every cost3 private prefix is finite. The standalone five-tree supplies T. Thus all 22 such finite-public/finite-private cases admit one uniform 18-point law, with the already-established LCM envelope 79/9. This paragraph does not cover a public whole column or a private whole column.
+
+Ordinary mathematical proofs, not Lean verification. Together the following arguments cover every whole-public shape and every finite-public realization containing a private whole-column cut. The finite occurrence lemma above handles finite public4 with entirely finite private cuts. The separate A and V arguments below complete the22-shape classification.
+
+All 19 child owners are occupied. Each actual child fibre is contained in the public support P plus its private cut support. Costs1,2 are respectively one or two finite candidate leaves; cost3 is three finite leaves or one whole column. Every legal pair of root restrictions (two occupied gap children or three full-root children) contains an actual ternary tree: three distinct columns, each with three distinct leaves. The full actual source contains a five-tree: five columns, each with five distinct leaves. No candidate is presumed actual at its owner.
+
+For P=G union{y}, G is a whole column and y is a leaf outside G. A legal selected pair with exactly five private finite candidates has at most six outside-G leaves. Its ternary tree uses G, and all six outside candidates are distinct actual leaves in two columns of three. Every private candidate is actual at its owner because it is different from P and the other selected private candidates. The actual y occurrence can be at either selected root: it is NOT asserted to belong to a gap restriction alone.
+
+For finite P4, the same five-private test has exactly nine candidate occurrences, all distinct and actual, arranged in three columns of three.
+
+#### Locked singleton families
+
+With at least two gap singleton children and a full root having at least four singleton children, vary its singleton triple against a fixed gap pair. The 0-or-3 column-count vector changes by the difference of two singleton unit vectors, so the varying singleton labels have the same column H. Tightness makes them distinct and actual. With whole public G+y, the other three candidates y,z,z' lie in one column K different from G,H. If there are further gap singleton children, the same tests put all in K. Every full singleton family of at least three then locks into its own H using a gap pair. Distinct full H columns differ: two singleton triples in the same H, together with P, could use only G,H as three-leaf branches.
+
+For finite P with at least THREE gap singleton children, exchanging gap labels likewise puts all gap singletons in K. Tightness forces P to have one leaf y in K and three in a second column G. Thus all the preceding column and ownership conclusions hold. Here G has only the three public leaves; statements using it as an upper support remain valid. This finite-public rule is only invoked with at least three gap singletons. A gap with exactly two singletons can instead leave a finite public2+2 pattern; case Q below avoids assuming otherwise.
+
+A full root with at least three singleton labels W in its locked H and a double child E has an actual H-leaf at E outside ALL W. Test E and any two W-children against a gap singleton pair. The possible outside-G leaves are y,z,z' in K, the selected W-pair in H, and two E candidates. Only K,H can support the two outside-G branches, so E supplies an H-leaf outside the selected pair. If all its actual H-leaves lay in W, their size at most2 would fit in some selected pair, contradiction. This is an ownership statement at E, not merely a candidate count.
+
+#### Seventeen singleton points can be extended
+
+Suppose 17 distinct singleton-private actual points have been selected at distinct owners, with at most five selected labels in any column. All selected owner fibres are contained in P plus their selected singleton. Let F be the columns containing five selected labels. If no unused owner supplies an actual leaf outside P, the 17 selected labels, and F, the whole source lies in the union of these sets.
+
+Any five-tree meets the selected-label/F part in at most17 leaves: replacing five selected labels in a full column by that entire column still contributes at most five tree leaves. Finite P contributes at most4 further tree leaves; whole G+y contributes at most6. Thus such a tree has at most21 or23 leaves, contradicting25. An unused owner therefore supplies a new leaf outside P, the chosen labels, and the already full columns. Add it to obtain18 distinct-owner/distinct-leaf points, still with column cap5.
+
+#### Exceptional zero roots and four-point facts
+
+With a gap singleton pair and locked clean columns H1,H2 available, a root01222 supplies four actual points outside G,K,H1,H2. Write w for its singleton and E_i for its doubles. Tests (zero,w,E_i) against a gap pair are tight: w and both E_i leaves are actual, distinct, and in a common H. Tests against the clean triples exclude H1,H2. Every E_i avoids w. Tests (zero,E_i,E_j) against a gap pair force pairwise unions of size at least3. Hence the three two-element E_i sets have a three-set SDR; add w.
+
+At01223, w,E1,E2 obey the same rules and |E1 union E2|>=3. For the cost3 owner W, tests (zero,w,W) against the gap pair require a third branch outside G,K. If W is finite, it and w have at most four candidates, so only one column can contain that branch. Tests against each clean triple exclude the clean columns: if the three-leaf branch were the tested clean H, outside it only y plus at most one exceptional candidate would remain, insufficient for another branch. If W is a whole column L, the gap test excludes L=G,K, and a clean test excludes L=H1,H2; the third branch supplies at least two actual W-leaves different from w, or three if w is not in L. Thus in both realizations W has at least two eligible actual leaves outside w,G,K,H1,H2. The three sets E1,E2,W-minus-w have an SDR: each has at least2 members and E1 union E2 has at least3. Add w for four points, with at most4 in any new column.
+
+At02222, test (zero,E_i,E_j) against the gap pair. Its at most four private candidates must have an actual three-leaf branch outside G,K; that branch is unique among those candidates. Testing the same restriction against either clean H excludes that H, since at most one other private candidate plus y cannot form a third branch. Therefore the actual eligible sets U_i outside G,K,H1,H2, each of size at most2, satisfy |U_i union U_j|>=3 for every pair. Four such sets have a four-element SDR. Indeed their singleton and pair Hall conditions hold; any triple union has at least3; and a total union of size3 would force four different two-subsets of a three-set (or, if a singleton occurs, identical complementary pairs), impossible.
+
+At11222, take the two singleton children and each double E_j, and test against the gap pair and each clean H1,H2. The same unique-branch argument shows that S union A_j contains three actual leaves in one column outside G,K,H1,H2, where S is the set of actual eligible singleton labels and A_j is E_j's actual eligible set of size at most2. In particular S is nonempty.
+
+If |S|=1, all A_j consist of two distinct leaves in that singleton's column, avoiding S. Testing all three double children against the gap pair forces their total union to have at least3 leaves. Their SDR plus S gives4 points. If |S|=2 and its leaves lie in different columns, each A_j has two new leaves in one of those columns and avoids S; two different double owners supply distinct representatives, giving4 with S. If |S|=2 in one column H, every B_j=(A_j intersect H) minus S is nonempty. If their union has size at least2, two different double owners give two distinct new representatives. Otherwise all B_j={h}. Then H has only the three eligible actual leaves S union{h}; each double has at most one further actual leaf outside H, so all other outside columns together have at most3 leaves. The gap and clean roots are contained in G,K,H1,H2. No fifth column can have five actual leaves, contradicting the standalone five-tree. Thus four exceptional points exist.
+
+#### B: 0223 /11111 /11111 /11111
+
+For whole P, a zero+double gap restriction against every clean triple tightly locks both actual double sets in K=col(y), avoiding y, and the 15 clean singleton points in distinct H1,H2,H3. Test zero+W for the cost3 owner against each clean triple. If W is finite, y plus its at most three candidates must contain a three-leaf branch outside G and the tested H; uniqueness among at most4 candidates excludes all clean H columns. Thus W supplies at least2 actual eligible leaves other than y (or3 in a column not containing y). If W is whole, its column must avoid G and all three H's and the same two-or-three count holds. Select any actual point at the zero owner, one actual double leaf e, and one eligible W-leaf different from e; all are distinct. Together with the clean15 these give18, with gap contribution at most3 in a column.
+
+For finite P and finite W use the occurrence lemma. For finite P and whole W, zero+double against varying clean triples locks the clean H's and makes P plus each double into two full three-leaf branches. The possibilities are P3+1 with the double2 beside the singleton public leaf, or P2+2 with one double leaf in each public column. In the P2+2 case, zero+whole-W against a clean triple cannot have three three-leaf columns: the two public columns each have only two leaves, and adding one whole column can upgrade at most one of them. This is impossible. Hence P3+1 holds, and the preceding proof applies with G the public three-leaf column.
+
+#### C–J: gap1111
+
+Singleton locking supplies four gap points. The exceptional facts above and the new-double fact yield the following counts, in shape order:
+
+| row | shape | selected counts |
+|---|---|---|
+| C |1111/01222/11111/11112|4,4,5,5|
+| D |1111/01223/11111/11111|4,4,5,5|
+| E |1111/02222/11111/11111|4,4,5,5|
+| F |1111/11111/11111/11123|4,5,5,4|
+| G |1111/11111/11111/11222|4,5,5,4|
+| H |1111/11111/11112/11113|4,5,5,4|
+| I |1111/11111/11112/11122|4,5,5,4|
+| J |1111/11112/11112/11112|4,5,5,4|
+
+In F,H the cost3 child is ignored. J uses singleton exchanges at its four-singleton full families; it does not need a11111 root. Different locked families and the eligible-set exclusions make the selected labels disjoint across roots. Each count is at most5, and a nonlocked exceptional root contributes at most4 outside the other selected columns.
+
+#### K: 1112 /01222 /11111 /11111
+
+The three gap singleton points lie in K with public y; the exceptional four-point construction lies in H, and all its private candidates lie in H. The clean ten lie in H1,H2. Only the gap double can supply any new column outside G,K,H,H1,H2, and it has at most2 leaves. The standalone five-tree must therefore use exactly these five columns. K must have five actual leaves, whereas its already identified labels y and the three gap singleton labels total only4. A new actual K-leaf outside those4 is supplied by the gap double. The counts4,4,5,5 give18. This row has no private whole prefix, so finite P is independently covered by the occurrence lemma.
+
+#### L: 1112 /11111 /11111 /11113
+
+Lock the 17 singleton points: three gap, two clean fives, and four exceptional. Apply the seventeen-singleton extension lemma to the unused gap-double/cost3 owners. This gives18, regardless of whether cost3 is finite or whole and whether P is finite or whole.
+
+#### M: 1112 /11111 /11111 /11122
+
+Lock a16-point base: three gap singleton labels in K, ten clean labels in H1,H2, and three exceptional singleton labels in H. Each exceptional double E1,E2 supplies an actual H-leaf outside the exceptional singleton family. Define eligible leaves to exclude G,H1,H2,y and all16 base labels. Both E_i have nonempty eligible actual sets.
+
+If their union has at least2 labels, select distinct eligible representatives at the two exceptional double owners. Otherwise both eligible sets equal{h}. If the unused gap double has an eligible actual leaf different from h, select that and one exceptional h. If it does not, all actual source points outside G,H1,H2 lie in K's at most four labels (y plus the three gap singletons) and H's at most four labels (three exceptional singletons plus h). No fifth five-leaf column exists, a contradiction. Thus18 points are obtained. Adding two labels to the base H-count3, or one to gap-count3, cannot exceed column cap5.
+
+#### N: 1112 /11111 /11112 /11112
+
+Take the three gap singletons, the clean5 and the new-double extension to5 at both four-singleton full roots. Counts3,5,5,5 give18.
+
+#### O: 1113 /11111 /11111 /11112
+
+Ignore the cost3 gap child. Take its three singleton siblings, both clean fives and all five exceptional points supplied by the new-double fact. Counts3,5,5,5 give18. The proof handles finite P as gap has three singleton children.
+
+#### P: 1122 /11111 /11111 /11112
+
+This row's finite P is covered by the occurrence lemma. For whole P lock the two gap singleton labels in K with y, the ten clean labels in H1,H2, and the exceptional five selected labels in H3. This gives17 actual points at17 owners; the exceptional double has at most one remaining candidate outside H3.
+
+If neither unused gap double supplies an actual leaf outside P, the17 selected labels and H1,H2,H3, then outside G,H1,H2,H3 the actual source has only K's labels y,z1,z2 and at most one extra candidate from the exceptional double. Thus every such column has at most4 leaves. The standalone tree cannot exist. Hence one unused gap double supplies a new eligible label, giving18 without increasing any full selected column.
+
+#### Q: 1123 /11111 /11111 /11111
+
+The gap singleton pair tested against varying clean triples locks all15 clean points, and makes the two gap singleton labels distinct actual leaves outside every clean H. This holds with either public form; a finite public2+2 pattern is allowed. These17 singleton points have column cap5. Apply the seventeen-singleton extension lemma to the unused gap-double/cost3 children. It gives18 for finite or whole cost3.
+
+#### Zero/singleton full roots: R,S,U
+
+A full root with zero and at least three singleton children, tested via zero+two singleton children against a clean triple, locks all its singleton labels in one H0 together with public y. For finite P, singleton exchanges force exactly P3 in G plus y in H0; for whole P the conclusion is the same with whole G. The singleton labels are actual and distinct from y. A gap singleton z together with any gap double, tested against this zero+two-singleton restriction, is tightly locked into an actual three-leaf column K outside G,H0. Tests against other full singleton triples exclude their H columns from K. Each double's two leaves avoid z.
+
+R =1222/01111/11111/11112: the other full root's four singletons lock in H2 by testing against zero+two singletons at the01111 root. Its double supplies a fifth actual H2-leaf, using the same tests with two of its own singleton siblings. Select the four01111 private points plus any actual point at its zero child (in G or y), all5 clean and all5 exceptional points, and z plus two distinct representatives from two gap doubles. Counts3,5,5,5 give18. The two chosen gap representatives exist even if their two-sets coincide.
+
+U =1223/01111/11111/11111: exactly the same selection uses the01111 zero point, its four singletons, both clean fives, and z plus representatives at both gap doubles. Ignore the cost3 child. Thus18 in every finite/whole realization.
+
+S =1222/01112/11111/11111: lock the three01112 singleton labels in H0 with y, and all gap private candidates in K; clean columns are H1,H2. The only private candidates outside G,K,H0,H1,H2 can come from the single01112 double, hence there are at most2 and no additional five-leaf column. The standalone five-tree must use the five known columns, so H0 has five actual leaves. Its known y plus three singletons total4, and only that double can supply a new H0-leaf outside them. Select it, the three singleton points, any actual zero-child point, both clean fives, and z plus two distinct gap-double representatives. Counts3,5,5,5 give18. Finite P here has no whole private prefix and is also covered independently by the occurrence lemma.
+
+#### T: 1222 /11111 /11111 /11111
+
+Finite P is covered by the occurrence lemma. Suppose P=G union{y}, and put K=col(y). We first classify the full singleton families, without assuming their private candidates are actual.
+
+##### Column-pattern lemma for two full singleton families
+
+Let A and B each have five singleton candidate occurrences. For EVERY triple of A owners and EVERY triple of B owners, assume their candidate union with G and y contains a ternary tree. There are at most seven candidate leaves outside G, so every such tree uses G and has two other three-leaf branches. Then each of A and B has one of two forms:
+
+* all five occurrences lie in one column H different from G,K;
+* at least four occurrences lie in K, with at most one arbitrary outlier.
+
+Here is a direct count proof for A; the statement for B is symmetric.
+
+If A has an occurrence in G, fix that owner and any two other A owners. At most six outside-G occurrences remain: y, the two other A candidates, and the three B candidates. All six must be distinct outside-G leaves arranged in two three-leaf columns. Vary the B triple. Exchanging one B owner changes a 0-or-3 column vector by the difference of two unit vectors, which forces all five B candidates into one common column H. They cannot lie in G, and H cannot be K because the complementary three-candidate branch includes y. Thus the two chosen A candidates and y lie in K. This holds for every pair among the other four A owners, proving all four lie in K. In particular A cannot have a second G occurrence.
+
+Now suppose A has no G occurrence but has a K occurrence. If at least two A occurrences r,s are outside K, select the triple (K,r,s). Including y, its column counts are K2 plus r,s. If r and s lie in different columns R,S, a B triple can complete two three-leaf branches only by having exactly one occurrence in K and two in R or two in S. Thus EVERY B triple would have exactly one K occurrence. This is impossible for five owners: exchanging one member of a triple forces the K indicators of all five owners equal, whereas a triple of equal 0/1 indicators has K-count0 or3. If r,s lie in one column R, a completing B triple must contain at least one K occurrence and at least one R occurrence. For every B triple to meet K, at least three of B's five owners must lie in K; for every triple to meet R, at least three must lie in R. These disjoint requirements exceed five. Thus A has at most one occurrence outside K.
+
+Finally suppose A has no occurrences in G or K. A triple using three distinct columns gives four singleton columns after adding y; three B occurrences cannot raise two of those columns to size3 (four increments would be necessary), nor create a fresh three-leaf column and another full branch. Such a triple is impossible. If A is not monochromatic, it therefore uses exactly two columns, and has a triple with two occurrences in H and one in J. After adding y in K, completing two three-leaf branches with only three B occurrences requires exactly one B occurrence in H and two in J or K. Every B triple would have exactly one H occurrence, impossible by the same exchange argument. Hence A is monochromatic in H different from G,K.
+
+Among three pairwise compatible full families, at most one can be K-dominant: two K-dominant families could both select three K owners, giving only one outside-G branch. The remaining pure-H families have distinct H columns, since two pure families in the same H would again give only one outside-G branch. There are therefore exactly two possibilities: three distinct pure-H families; or two distinct pure-H families and one K-dominant family.
+
+##### Three pure-H families
+
+Pair any two full singleton triples. Their only possible outside-G branches are the two distinct H columns, so all six private leaves are distinct and actual at their owners. Varying triples makes all15 clean singleton points distinct and actual.
+
+Fix any gap pair. Its private support has at most four finite leaves. With y and a clean triple there are at most eight outside-G candidates, so the tree uses G. At most five candidates lie outside the tested clean H, so the tree also uses H. Its third branch contains three actual leaves among y and the selected gap private candidates. Only one column can have three of those at most five candidate labels. Testing the SAME gap pair against all three clean H's therefore places that column outside G,H1,H2,H3.
+
+Let U_e be each gap owner's actual private leaves outside G,H1,H2,H3,y. Every gap pair has |U_e union U_f|>=2: the third branch has three actual leaves and at most one is y, and any other eligible branch leaf can only be supplied by a selected gap owner. The standalone tree has a five-leaf column outside G,H1,H2,H3, all supplied by gap private leaves except possibly y. Hence |union U_e|>=4.
+
+Adjoin one common new symbol * to all four U_e. These four enlarged sets satisfy Hall: singleton subfamilies contain *, every pair has union size at least3, every triple has union size at least3 by containing a pair, and all four have union size at least5. A four-set SDR uses * at most once, so at least three of its representatives are distinct actual private gap leaves at different owners. Add those three points to the15 clean points. They lie outside the clean columns and contribute at most3 to any new column, giving18 with column cap5.
+
+##### One K-dominant family
+
+The two pure-H families H1,H2 supply ten distinct actual singleton points by their mutual tests. At the K-dominant family, select any three of its at least four K owners. Pair this with the gap singleton z and any gap double E_i. The only outside-G support of the chosen full restriction is K, while the gap has at most three private candidates. Therefore the second outside-G branch must use ALL three gap private candidates. They are distinct actual leaves in one column L different from G,K. The shared z fixes L for all three gap doubles, and each E_i consists of two actual leaves avoiding z. Pair z+E_i with a pure-H triple to exclude L=H1,H2: if they agreed, y alone in K could not form another branch.
+
+All source points are now in G,K,H1,H2,L except possibly the K-dominant family's single outlier leaf. An additional column has at most one leaf, so the standalone five-tree must use exactly these five named columns.
+
+K must have five actual leaves. Apart from y, those can only be private singleton leaves at the K-dominant root; hence at least four distinct actual private K-leaves exist at four distinct owners. Select four of them.
+
+L must also have five actual leaves. Its possible labels are z, the union of the three actual E_i two-sets, and at most the single outlier. Thus |E1 union E2 union E3|>=3. Three two-element sets whose total union has size at least3 satisfy Hall, so select distinct representatives at all three double owners. Together with z these give four gap points in L.
+
+The ten pure-H points, four private K points and four gap L points give18 distinct-owner/distinct-leaf points, with column counts5,5,4,4.
+
+This completes T and all22 full k4/Z22 shapes when combined with the finite occurrence lemma and the A,V arguments below. The result is one uniform law on18 actual points with column cap5; its already-derived numerical LCM envelope is79/9. No exact-mincut controls, exhaustive actual-source enumeration, Lean verification or unrestricted odd-covering conclusion are inferred from this ordinary proof.
+
+#### A: 0222 /11111 /11111 /11112
+
+Assume the complete literal4555 source and its standalone five-ary seven-tree, a fully active prefix-normalized cut with public cost4, and this sorted private shape. The gap has one private-zero child and three cost2 children E1,E2,E3. Two full roots are clean11111, and the last has four singleton children plus one cost2 child D. All statements concern actual source incidences; the proof is ordinary mathematics, not Lean verification.
+
+##### Finite public4 does not automatically mean three leaves in one common column
+
+For any gap pair(zero,E_i) and any clean full-root triple, there are at most4+2+3=9 candidate leaves. A ternary tree forces all nine labels distinct and actual in the selected union, with each occupied column containing exactly3. Each private label is outside public P and all other selected private labels, so it is actual at its own private owner; a public label need only occur somewhere in the selected union. Singleton exchange puts each clean root's five private labels in one column H. The same test with triples of the exceptional full root's four singleton children locks its four labels into H3. The three full anchor columns are pairwise different: two singleton triples in the same column, together with only four public leaves, cannot supply three ternary branches.
+
+For each i the fixed six-leaf set P union E_i is exactly two columns with three leaves each, and it avoids H1,H2,H3. The column-count vectors of E_i are equal: their differences have coordinates between-2 and2 and are divisible by3. Their common vector can be2e_A or e_A+e_B. Accordingly P can have the forms3+1 or2+2 across the two complementary columns. In particular a2+2 public pattern is not excluded by the tight tests, and no common three-leaf G branch may be presumed.
+
+##### Whole public G plus y
+
+If P is a whole column G and one leaf y outside it, the same selected test has at most six candidate leaves outside G. Its ternary tree must use G and all six external candidates. Singleton exchanges lock H1,H2,H3 as above. The two actual E_i leaves and y make one three-leaf branch K=col(y), outside G and all H_j. In particular every E_i consists of two distinct actual leaves at its owner, avoiding y. The three full anchor columns remain pairwise distinct.
+
+##### The exceptional full double supplies the fifteenth private full point
+
+Fix one gap restriction(zero,E_i). Pair it with any two exceptional full singleton children and D. In the finite case, all candidates outside H3 other than D lie in the two complementary public/gap columns. D has only two candidates and cannot create a third branch by itself; therefore it must supply an actual H3 leaf outside the selected singleton pair. In the whole-public case the external candidates outside G are at most seven; G and the gap K branch are needed, and again D must complete the H3 branch.
+
+If D had no actual H3 leaf outside the four singleton labels, its at most two H3 leaves could be included in a chosen singleton pair, contradicting the preceding conclusion. Select a new actual H3 leaf at D. There are now fifteen full private points, one per full-root child, at distinct full-seven leaves in the three separate H columns. At most ONE other exceptional-double candidate remains outside these selected full anchors.
+
+##### Standalone forces a three-point gap transversal
+
+Each E_i is an actual two-element set, at its original child, outside all H_j. If their total union had at most two elements, all three sets would coincide.
+
+For finite public P, P union E_i then has exactly six actual leaves in two columns, three per column. Every other actual source point is in H1,H2,H3 except possibly the sole remaining exceptional-double candidate. Thus neither complementary column can have five actual leaves (their counts are at most4 and3), and any further column has at most1. A standalone five-column five-leaf tree is impossible.
+
+For whole public G plus y, the coincident E_i sets together with y give at most3 leaves in K. The sole remaining exceptional-double candidate raises that to at most4. Apart from G,H1,H2,H3 no column then has5 leaves, again contradicting standalone.
+
+Therefore |E1 union E2 union E3|>=3. Each E_i has2 elements, every pair union has at least2, and the full union at least3. Hall supplies three distinct representatives, one at each actual gap-double child. They avoid the full anchor columns.
+
+Add them to the fifteen full private points. The eighteen points have distinct actual children and full-seven leaves; each root or seven column contains at most5. Their uniform law has Gamma_1225<=79/9 for all original phase queries under the same law.
+
+This proof covers both finite public patterns, including2+2, and the whole-column public form. It uses standalone only for the gap three-set transversal. It does not infer blocker inheritance after selecting the eighteen points.
+
+#### V: 2222 /01111 /11111 /11111
+
+Use the original actual literal4555 source, a fully active normalized cut with public cost4 and private shape2222/01111/11111/11111. Call the exceptional full root R0: it has one private-zero child and four singleton children. The other full roots are clean. The gap has four cost2 children. This is an ordinary actual-support proof, not Lean verification or an original outside-cofactor lift.
+
+##### A common public column is forced in this shape
+
+Pair R0's zero child and any two singleton children with any clean full-root triple. For four finite public leaves this has exactly nine candidate occurrences. Literal blocking makes all nine leaves actual and distinct; singleton exchanges put all four R0 private labels in one H0 and each clean root's five private labels in H1 or H2. The column-count identity is
+
+    2e_H0+3e_Hj+v_P=3e_A+3e_B+3e_C.
+
+H0 cannot equal Hj. Hence v_P=e_H0+3e_G for a G different from H0,Hj. The fixed public vector gives the same G for both clean roots. Thus P has three actual leaves in G and one public leaf y in H0. In the other public form, P is already a whole G plus one y; the outside-G tight-six argument forces col(y)=H0 and the same anchor conclusion. All private points are actual at their OWN singleton children and distinct within their roots; they avoid y and G.
+
+The clean H1,H2 differ: if they agreed, their selected triple pair together with P would have only the common G and H1 as complete branches, while y alone cannot supply a third. Thus the fourteen full private points have distinct full-seven leaves in three separate columns, with root counts4,5,5.
+
+##### Every gap pair supplies a branch outside all full anchors
+
+For any fixed pair of gap children, let A be its actual private-leaf union. It has at most4 candidates; all other gap points lie in G or at y in H0. Test this gap pair against R0's zero child and two singleton children. There are at most seven candidate leaves outside G: at most four from A and the three H0 labels consisting of y and the two singletons. The ternary tree therefore uses G. Outside G it must also use H0, since A alone cannot supply two disjoint three-leaf branches. Its third branch is a column K different from G,H0 with at least three ACTUAL leaves from A. It is unique among columns of A, since |A|<=4.
+
+Now test the SAME gap pair against a clean triple in H1. There are at most eight outside-G candidates, namely A, y and the three H1 private leaves; the tree again uses G. If K=H1, at least three of A's at most four leaves are in H1. The at most one remaining A leaf plus y cannot fill another branch. This contradicts the required second non-G branch. Thus K differs from H1. The same argument excludes H2.
+
+At gap child i let U_i be its actual private leaves outside G,H0,H1,H2. Each U_i has size at most2. The preceding pair argument gives
+
+    |U_i union U_j|>=3  for every distinct i,j.
+
+In particular each U_i is nonempty. Every triple union has at least3. The full four-set union has at least4: if a singleton {z} occurs, every other set has two leaves avoiding z, and two such sets have union at least3; otherwise the four sets are distinct two-element sets, and only three distinct two-element sets fit on a three-element union. Hall therefore selects four distinct actual representatives at four gap children, all outside the full anchor columns.
+
+##### Uniform18 and the common-G boundary
+
+Together with the fourteen full private points, these give eighteen actual points at distinct children and full-seven leaves. Every first-five root and first-seven column contains at most5, so the standard numerical cap vector gives
+
+    Gamma_1225 <=79/9<9.
+
+No public flow or common-G pair law is needed for this selector. The proof establishes G's existence from the tight exceptional/clean tests and then keeps complete actual gap support in the subsequent tests; it does not assume that selected private points preserve blocking. Standalone is not used in the law argument.
+
+Under the full standalone premise the finite-public form can additionally be excluded. The unique gap-pair branch columns all agree: if K12 and K13 differed, child1 would split its two candidates between them, forcing child2 to put both leaves in K12 and child3 both in K13, contrary to their pair test. Thus one common K serves every pair. At most one gap child can have only one actual K-leaf, because two such children could not supply three K-leaves together. Consequently at most one actual gap private leaf lies outside K. With finite public G's three leaves, G can have at most4 actual leaves, and every new column outside G,H0,H1,H2,K at most1. Only H0,H1,H2,K can support five leaves, contradicting standalone. This optional exclusion is not needed for the universal18-point law.
+
+#### Actual-source controls of all22 k4 shapes
+
+The [fully active public4 constructor](../../frontier/cover-geometry/height_two_cut72_full_k4.py) and [exact data](../../frontier/cover-geometry/height_two_cut72_full_k4.json) contain32 actual sources: one whole-public/finite-private representative for each of the22 shapes, all eight cost3 whole-private variants, and two additional T controls with respectively four K candidates plus an outlier and five K candidates at its dominant root.
+
+Every source has matching actual maximum flow and displayed cut72, satisfies480 selected pair tests,10000 complete literal tests and standalone, and admits an actual owner-to-leaf-to-column matching of size18 with column cap5. The selected points define one uniform law, checked against1767 original numerical cylinders and all81 ordered LCM terms. The universal separate-cylinder bound is79/9; some actual controls have the smaller envelope149/18. The matching selects actual incidences and does not infer actualness from a cut candidate.
+
+The same program checks the22 finite-occurrence profiles, the column-pattern lemma's462 candidate vectors,90 compatible ordered pairs and80 compatible unordered triples, and the exact rational maximum over the full fourteen-family bound table. This finite column enumeration supports the direct count proof of T; it does not replace it or enumerate arbitrary actual sources. The finite-public occurrence argument is universal conditional on its actual standalone tree, not a claim that every necessary profile has a finite-public realization.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut72_full_k4.py
+```
+
+#### The complete cut72 bound
+
+The k4 selectors have eighteen distinct actual child owners and full-seven leaves, with at most five selected points at each root or seven-column. Their uniform law therefore has numerical cap vector
+
+    (1,5/18,5/18,1/18,5/18,1/18,1/18,1/18,1/18)
+
+in divisor order(1,5,7,25,35,49,175,245,1225), and the original81-term LCM envelope is79/9. Selecting these points does not assert that their subset still blocks all literal trees; the proof uses blocking of the ORIGINAL source to justify the selection.
+
+Across the fourteen families the possible displayed bounds are
+
+    33/4,173/21,1214/139,3473/393,643/72,1603/195,79/9,26/3.
+
+Their maximum is643/72, with strict margin5/72 below nine. This proves(C72-law). The bound is a common uniform upper bound, not a claimed sharp optimum over every source or phase layout.
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
 The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. The public-column/two-public-leaf cut supplier also gives T3 for its distinguished mass20 block under the exact matched-cut hypothesis; it can be combined with the simultaneous consumer only when the other dangerous blocks of that same flow also have T3. Excluding every remaining terminal trap, or supplying a further global reroute, remains missing.
-The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. Thus thirteen of fourteen necessary cut72 families are controlled or impossible; the sole remaining family is fully active4555 with public4/private22, comprising22 necessary private shapes. General high-incidence sources in the remaining
-range72/63 through77/63 are not thereby controlled: their high root/column incidence
+The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. The fully active public4/private22 family also has an actual eighteen-point law for every one of its22 necessary shapes and every finite or whole-prefix realization. This completes all fourteen cut72 families and proves(C72-law) with bound643/72. General high-incidence sources in the remaining
+range73/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
 whole-column shapes at75/63 and77/63 are controlled by(WC1), but this
 does not settle all sources at those numerical cut values. Some may contain
 the private structure, but its existence has not been proved for every
 remaining source. Other occupancy patterns retain their own stated
-premises and are not classified by this remaining six-value window.
+premises and are not classified by this remaining five-value window.
 
 The theorem is at the fixed head1225. An actual full odd-covering residual must also carry every original outside-cofactor constraint under one common lift, as in439. A head law alone does not supply that lift, and a uniform complete-Gamma bound below nine for arbitrary free cofactors is already ruled out there. The next arithmetic obligation remains a bound for the actual original test family and its same-law deletion correlations. No unrestricted noncoverage conclusion follows from this finite head theorem alone.
