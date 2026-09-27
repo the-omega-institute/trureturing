@@ -12,7 +12,8 @@ internal sealed class ContinuationEffectClosureDocument : IScribeDocumentDefinit
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Starting from an r-dimensional real space of Hermitian d by d matrices, the spaces closed step by step "
-            + "under the duals of finitely many Kraus branches stop growing after d^2 - r steps, at the least "
+            + "under the duals of an arbitrary family of branches, each with a finite Kraus family, stop growing "
+            + "after d^2 - r steps, at the least "
             + "space that contains the start and is invariant under every branch dual.",
         H("Finite Closure of Continuation Effect Spaces"),
         Blocks(
@@ -32,9 +33,8 @@ internal sealed class ContinuationEffectClosureDocument : IScribeDocumentDefinit
             Node("closure", "Finite closure and minimality", TheoremFormula(),
                 "Let Z_0 be a real space of Hermitian d by d matrices of dimension r. If Z_{k+1} = Z_k, then Z_k is "
                     + "invariant under every branch dual and all later spaces equal it. Branch duals preserve "
-                    + "Hermiticity, so every Z_k consists of Hermitian matrices, and the real parts of the entries "
-                    + "on and above the diagonal together with the imaginary parts above the diagonal determine "
-                    + "such a matrix; hence every Z_k has real dimension at most d^2. If the chain still grew at "
+                    + "Hermiticity, so every Z_k lies in the real space of Hermitian d by d matrices, which has "
+                    + "dimension d^2; hence every Z_k has real dimension at most d^2. If the chain still grew at "
                     + "step d^2 - r, all earlier steps would be strict and the dimension would exceed d^2. Finally, "
                     + "every invariant space W containing Z_0 contains each Z_k by induction.",
                 "continuationSpace_closure", DescribeRole.Theorem))));
