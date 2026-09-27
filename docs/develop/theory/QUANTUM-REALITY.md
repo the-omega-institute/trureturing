@@ -63322,3 +63322,316 @@ $$
 这里的紧性只用于 $I\times\mathbb S^2\times\mathbb S^2$ 中的联合坏集；不需要 $e_*(r)$ 的连续性，不需要移动平坦集的连续选择，也不使用协议族的紧性。端点 $r^2=1/2,2$ 上 $\kappa=1$、$H=0$，不满足本证明所用的正阈值和正间隙条件。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 426. $r=1$ 时五射线边界、首边界树与有限取得判据
+
+### 426.0 继承的操作与坐标
+
+沿用第421节的完整操作约定，取
+
+$$
+\omega=e^{2\pi i/3},\qquad
+s_1=|0\rangle,\quad s_2=|1\rangle,\quad
+s_{3+j}=\frac{|0\rangle+\omega^j|1\rangle}{\sqrt2}\quad(0\le j\le2),
+$$
+
+$$
+S=\mathbb C^5,\qquad R_A=R_B=\mathbb C^2,\qquad R=R_A\otimes R_B,
+\qquad q_i=s_i\otimes s_i,
+$$
+
+并令 $J|i\rangle=|i\rangle\otimes q_i$。第421节的累计效果树以根效果
+
+$$
+E_{\varnothing}=I_R=4\,\rho(0)\otimes\rho(0),
+$$
+
+故以下根权归一化带有同一物理因子 $4$。Alice 与 Bob 持有原始的两个因子；$W=\operatorname{span}\{e_0,e_1,e_2\}$ 和 $\mathbb C e_-$ 仍只是完整四维 $R$ 中的数学子空间。允许的协议是第421节的各自有限局部 CP 操作树：局部私有量子与经典记忆、独立的乘积辅助态、双向经典通信、重复访问、重置、丢弃、粗粒结果、遗忘的实际历史、提前停止、零分支和单结果通道均保留；每一个局部仪器节点均按第421节计数，所有失败历史均保留，且每棵仪器在完整四维 $R$ 上完备；实际标签下的真实历史及隐藏 Kraus 指标共用同一个原定终端反馈。禁止共享纠缠、量子通信以及终端反馈以前对 $S$ 的操作。对每个有限维未操作参考 $H_{\mathrm{ref}}$，同一个协议须满足第421节的全矩阵等式
+
+$$
+(\operatorname{id}_{H_{\mathrm{ref}}}\otimes\mathcal T)(X)=pX
+\qquad(X\in\mathcal L(H_{\mathrm{ref}}\otimes S)),
+\qquad \mathcal T^*(I_S)=pI_S.
+$$
+
+记录输出和剩余私有记忆全部迹掉后，真实历史 $\ell$ 的系统映射记为 $\mathcal M_\ell$，同一最终实际标签下的映射为 $\mathcal M_y=\sum_{\ell:y(\ell)=y}\mathcal M_\ell$，并
+
+$$
+\mathcal T(X)=\sum_{y\in Y_{\mathrm s}}U_y\mathcal M_y(X)U_y^\dagger.
+$$
+
+以下使用固定计算基的标准 Pauli 矩阵，特别是
+
+$$
+\sigma_2=\begin{pmatrix}0&-i\\ i&0\end{pmatrix},\qquad
+\rho(a)=\frac{I_2+a\cdot\sigma}{2},\qquad
+D=\{a\in\mathbb R^3:|a|\le1\}.
+$$
+
+令 $H_{\mathrm{ref}}$ 只表示未操作参考，不与下述半径混淆。置
+
+$$
+\begin{gathered}
+h=3-2\sqrt2,
+\qquad R_{\perp}=2(\sqrt2-1),
+\qquad \zeta=\sqrt{8\sqrt2-11},\\
+\theta=\arccos\frac{\sqrt2-1}{2},
+\qquad m_k=\frac{(2k+1)\pi}{3}\quad(k=0,1,2).
+\end{gathered}
+$$
+
+于是 $R_{\perp}^2=4h$、$\zeta^2+R_{\perp}^2=1$，且 $\cos(2\theta)=\frac12-\sqrt2$。对 $\epsilon,\sigma\in\{\pm1\}$ 定义
+
+$$
+ x_{k,\epsilon,\sigma}
+ =\bigl(R_{\perp}\cos(m_k+\epsilon\theta),
+        R_{\perp}\sin(m_k+\epsilon\theta),
+        \sigma\zeta\bigr),
+$$
+
+$$
+X=\{x_{k,\epsilon,\sigma}:0\le k\le2,\ \epsilon,\sigma\in\{\pm1\}\},
+\qquad
+\pi(x_{k,\epsilon,\sigma})=x_{k,-\epsilon,-\sigma}.
+$$
+
+令 $\mathbb S^2=\{a:|a|=1\}$。对纯方向 $y\in\mathbb S^2$ 定义
+
+$$
+\ell(b;y)=\max\{\lambda\ge0:\rho(b)-\lambda\rho(y)\succeq0\},
+\qquad b\in D,
+$$
+
+并约定边界报酬 $B_{\mathrm{partial}}$ 在 $\partial(D^2)=(\mathbb S^2\times D)\cup(D\times\mathbb S^2)$ 上如下定义：若 $a\in X$，则
+
+$$
+B_{\mathrm{partial}}(a,b)=h\,\ell(b;\pi(a));
+$$
+
+若 $b\in X$，则
+
+$$
+B_{\mathrm{partial}}(a,b)=h\,\ell(a;\pi(b));
+$$
+
+两式在交集上相等；若边界坐标不属于 $X$，相应的报酬为零。记第421节在 $r=1$ 的函数 $V_\infty$ 为 $F$，并令 $V_1$ 仍表示该节的第一步递推。
+
+### 定理426.1（十二射线平坦匹配、精确边界函数与有限取得判据）
+
+在上述约定下，以下结论成立。
+
+1. 五个源方向的单位乘积对 $(x,y)\in\mathbb S^2\times\mathbb S^2$ 具有相同平方响应，当且仅当
+
+$$
+(x,y)=(x,\pi(x))\quad(x\in X).
+$$
+
+因此平坦有序对集合正是 $\{(x,\pi(x)):x\in X\}$；$X$ 含有十二个互异方向，$\pi$ 将它们配成六个无序平坦对；每一对的共同响应是 $h$，两个高度均可取，且第416节列出的六个乘积只是一个达到构造，并非穷尽证明。
+
+2. 对 $b\in D$ 与 $y\in\mathbb S^2$，$\ell$ 的完整分段式为
+
+$$
+\ell(b;y)=
+\begin{cases}
+\displaystyle\frac{1-|b|^2}{2(1-b\cdot y)},& |b|<1,\\[6pt]
+1,& |b|=1\text{ 且 }b=y,\\
+0,& |b|=1\text{ 且 }b\ne y.
+\end{cases}
+$$
+
+这里没有在纯重合情形代入 $0/0$。在整个边界上
+
+$$
+\boxed{F=V_1=B_{\mathrm{partial}}}.
+$$
+
+达到该值的规范实现至多再用一个局部仪器节点；其余谱残量作为失败保留。
+
+3. $F$ 的零点恰为
+
+$$
+\boxed{
+\bigl((\mathbb S^2\setminus X)\times D\bigr)
+\cup\bigl(D\times(\mathbb S^2\setminus X)\bigr)
+\cup\bigl\{(x,y)\in X^2:y\ne\pi(x)\bigr\}.
+}
+$$
+
+$F$ 在纯根处不连续：若 $a_j\in\mathbb S^2\setminus X$ 且 $a_j\to x\in X$，则
+
+$$
+F(a_j,0)=0,\qquad F(x,0)=\frac h2.
+$$
+
+4. 设 $\mathscr T_{\partial}$ 为如下有限首边界树：根为 $(0,0)$，所有正权内部节点在 $\operatorname{int}(D)\times\operatorname{int}(D)$，每个内部节点只对一个坐标作有限重心分裂，所有叶在 $\partial(D^2)$；根权为 $1$，子权为父权乘以相应的重心系数。零权项可从等式中删去，但失败叶、零报酬叶、硬币和单结果通道均保留。则
+
+$$
+\boxed{
+F(0,0)=\sup_{T\in\mathscr T_{\partial}}
+ \sum_{\ell\in\operatorname{Leaves}(T)}w_\ell B_{\mathrm{partial}}(z_\ell)
+ =\frac{\eta_{\mathrm{fin}}(1)}4.
+}
+$$
+
+这里的上确界遍历所有有限树，不作固定深度的断言。
+
+5. 对 $T\in\mathscr T_{\partial}$，设内部节点 $v$ 的位置为 $z_v$，分裂子节点为 $z_{vj}$、系数为 $\lambda_{vj}$，并定义
+
+$$
+\Delta_v=F(z_v)-\sum_j\lambda_{vj}F(z_{vj}).
+$$
+
+则 $\Delta_v\ge0$，并有加权 Jensen 缺陷恒等式
+
+$$
+\boxed{
+F(0,0)-\sum_{\ell}w_\ell B_{\mathrm{partial}}(z_\ell)
+ =\sum_{v\in\operatorname{Int}(T)}w_v\Delta_v.
+}
+$$
+
+存在达到 $\eta_{\mathrm{fin}}(1)$ 的有限物理协议，当且仅当存在一棵有限首边界树，使其每一个正权内部节点都满足 $\Delta_v=0$。这是关于未知函数 $F$ 的判据，不给出存在性结论或算法。
+
+#### 426.1 证明
+
+先证平坦方向的穷尽性。五个源的 Bloch 方向为
+
+$$
+ u_1=(0,0,1),\qquad u_2=(0,0,-1),\qquad
+ u_{3+j}=(\cos(2\pi j/3),\sin(2\pi j/3),0).
+$$
+
+令 $x,y\in\mathbb S^2$，并令
+
+$$
+ f_i(x,y)=\frac{(1+x\cdot u_i)(1+y\cdot u_i)}4.
+$$
+
+若五个 $f_i$ 相同，前两个极点给出
+
+$$
+(1+x_z)(1+y_z)=(1-x_z)(1-y_z),
+\qquad x_z+y_z=0.
+$$
+
+置 $R_0^2=1-x_z^2=1-y_z^2$。若 $R_0=0$，则极点共同值为零，而三条赤道方向的响应为 $1/4$，不可能平坦；故 $R_0>0$。写
+
+$$
+ x_\perp=R_0(\cos\alpha,\sin\alpha),\qquad
+ y_\perp=R_0(\cos\beta,\sin\beta).
+$$
+
+三条赤道方向的离散 Fourier 系数为零，等价于
+
+$$
+1+\frac{R_0^2}{2}\cos(\alpha-\beta)-R_0^2=0,
+$$
+
+以及
+
+$$
+\frac{R_0}{2}(e^{i\alpha}+e^{i\beta})
+ +\frac{R_0^2}{4}e^{-i(\alpha+\beta)}=0.
+$$
+
+第二式的模给出 $|\cos((\alpha-\beta)/2)|=R_0/4$。令
+$\mu=(\alpha+\beta)/2$、$\delta=(\alpha-\beta)/2$；乘以 $e^{2i\mu}$ 后，第二式还给出
+$e^{3i\mu}=-1$（若 $\cos\delta<0$，同时把 $\mu$ 加 $\pi$、把 $\delta$ 减 $\pi$）。于是模 $2\pi$ 意义下
+
+$$
+\mu=m_k,\qquad \delta=\epsilon\theta,
+\qquad \cos\theta=\frac{R_0}{4},
+$$
+
+其中 $k=0,1,2$、$\epsilon=\pm1$。将 $\cos(2\delta)=R_0^2/8-1$ 代入第一式，得到
+
+$$
+R_0^4-24R_0^2+16=0.
+$$
+
+因为 $0<R_0^2\le1$，唯一可取的根是
+
+$$
+R_0^2=12-8\sqrt2=R_{\perp}^2,
+\qquad
+\cos\theta=\frac{\sqrt2-1}{2},
+\qquad
+\cos(2\theta)=\frac12-\sqrt2.
+$$
+
+极点约束再给 $x_z=\sigma\zeta$、$y_z=-\sigma\zeta$，其中 $\sigma=\pm1$。这正是 $(x,y)=(x_{k,\epsilon,\sigma},x_{k,-\epsilon,-\sigma})$。反向代入两条 Fourier 等式和极点等式，立即得到五个响应都为
+
+$$
+\frac{R_{\perp}^2}{4}=h.
+$$
+
+方向的互异性来自 $\zeta>0$ 及 $\cos(2\theta)=\frac12-\sqrt2\notin\{1,-\frac12\}$；故六个 $k,\epsilon$ 横向方向各不相同，两个高度也各不相同。上面的穷尽性同时说明每个方向只有一个伙伴，且 $\pi^2=\operatorname{id}$。第416节的六个乘积分支提供一个构造，但不替代这一步穷尽枚举。
+
+再证 $\ell$ 的分段式。若 $|b|<1$，则
+
+$$
+\det\bigl(\rho(b)-\lambda\rho(y)\bigr)
+ =\frac{1-|b|^2-2\lambda(1-b\cdot y)}4.
+$$
+
+矩阵在 $\lambda=0$ 时正定，且 $1-b\cdot y>0$；最大允许值正是行列式首次为零的根
+$\lambda=(1-|b|^2)/(2(1-b\cdot y))$。它不超过 $1$，因为
+$|b-y|^2=1+|b|^2-2b\cdot y\ge0$。若 $b=y$ 为纯态，差为 $(1-\lambda)\rho(y)$，故最大值为 $1$；若 $b\ne y$ 为纯态，两个秩一支撑不同，任意正的 $\lambda$ 都破坏正性，故最大值为 $0$。这三种情形互斥，公式没有未定义的分式。
+
+在 $0<\ell(b;y)<1$ 时，余项
+
+$$
+\rho(b)-\ell(b;y)\rho(y)=(1-\ell(b;y))\rho(c),
+\qquad
+c=\frac{b-\ell(b;y)y}{1-\ell(b;y)},
+$$
+
+行列式为零而余项非零，因而 $|c|=1$ 且 $c\ne y$；纯非重合情形的余项本身也是非零秩一项。该余项在规范完成中作为失败保留。
+
+现在证明边界值。第421节的输入效果树中，若一个坐标已经是纯态 $x$，则其正性支撑包含关系使所有正权后继仍在同一纯支撑上。因此当 $x\notin X$ 时没有平坦成功后继，$F(x,b)=0$；当 $x\in X$ 时，平坦性穷尽性迫使唯一可能的成功伙伴为 $\pi(x)$。若成功后继的总归一化权重为 $s$，完整失败和成功效果的和给出
+
+$$
+\rho(b)\succeq s\rho(\pi(x)),
+$$
+
+故 $s\le\ell(b;\pi(x))$，任何有限树的报酬至多为 $h\ell(b;\pi(x))$。反之，将
+$\rho(b)$ 按上式分成 $\ell(b;\pi(x))\rho(\pi(x))$ 与余项，并在前一支接受、在余项上失败，正是一个至多一个局部仪器节点的规范完成。这里得到的是从原始输入重新构造的一份新的规范协议（canonical protocol）：终端叶各自取得自己的实际标签；对每个实际标签指定一个且仅一个符合第421节共同标签约束的反馈，同一标签下的全部真实历史与隐藏 Kraus 项共用该反馈；完整四维仪器、原始两因子、根权的物理因子 $4$、所有失败和全矩阵/未操作参考等式均按第421节保留。它不是在丢弃的记忆之后继续运行；只有重放一棵未改变且已指定的效果树时，才沿用该树原有的实际标签与反馈，本次边界替换不声称保留任意早先协议的标签。故 $F(x,b)=V_1(x,b)=h\ell(b;\pi(x))$。交换两方得另一面。两面在交集上由纯态分段式相等，遂得 $F=V_1=B_{\mathrm{partial}}$。
+
+若 $a,b$ 均在 $\operatorname{int}D$，任取 $x\in X$。由已经证明的内点公式，两个分子 $1-|a|^2$ 与 $1-|b|^2$ 为正；又因 $|x|=|\pi(x)|=1$ 且 $|a|,|b|<1$，两个分母 $2(1-a\cdot x)$ 与 $2(1-b\cdot\pi(x))$ 均为正，故 $\ell(a;x)>0$ 与 $\ell(b;\pi(x))>0$；先分别抽取 $x$ 与 $\pi(x)$ 的两坐标分支，得到正报酬
+
+$$
+ h\,\ell(a;x)\ell(b;\pi(x))>0.
+$$
+
+结合边界值，零点恰为定理第3项所列集合。取任意 $a_j\in\mathbb S^2\setminus X$ 趋于 $x\in X$，边界公式给
+$F(a_j,0)=0$，而
+$F(x,0)=h\ell(0;\pi(x))=h/2$，故确有纯根不连续；这里不作更强的整体正则性断言。
+
+最后证明首边界树表示。由第421节，$F(0,0)=V_\infty(0,0)=\eta_{\mathrm{fin}}(1)/4$。这些 $w_\ell$ 是累计输入效果的迹权重，不是未知输入下的结果概率；累计效果也不是操作后的输出态。谱分裂只是在效果树上的代数重写，不是对已丢弃记录的继续操作。任取一棵有限效果树，在每条根到叶路径第一次到达 $\partial(D^2)$ 处截断。被截断的内部后继报酬至多为该边界点的 $F$，而边界值等于 $B_{\mathrm{partial}}$，故替换不会降低报酬。若原树在内部点提前停止且报酬为零，则把该点的第一坐标作有限谱分裂为纯点；得到的叶在边界，且新增报酬非负。这样得到一棵 $\mathscr T_{\partial}$ 中的树，保留全部失败和零报酬叶，并且其报酬不低于原树。因此任意有限协议的归一化报酬都不超过右端上确界。
+
+反过来，对任意 $\mathscr T_{\partial}$，在每个边界叶使用前面构造的至多一个节点的局部谱分裂；匹配的纯对接受，非匹配项和余项均作为失败保留。由此从原始输入重新构造一份新的规范协议（canonical protocol）：每个终端叶拥有自己的实际标签；对每个实际标签指定一个且仅一个符合第421节共同标签约束的反馈，同一标签下的全部真实历史与隐藏 Kraus 项共用该反馈。第421节的规范实现把这棵效果树接回同一原始两量子比特分割，保持完整四维仪器、原始两因子、根权的物理因子 $4$、所有真实失败和 $H_{\mathrm{ref}}$ 的全矩阵等式。这里构造的是新协议，不是继续执行被丢弃的记忆；不声称把变换或优化得到的无标签重心树保留为任意早先协议的标签，只有重放未改变且已指定的效果树时才沿用其原标签与反馈。因此该树的加权边界报酬不超过 $F(0,0)$，两边即得
+
+$$
+F(0,0)=\sup_{T\in\mathscr T_{\partial}}\sum_\ell w_\ell B_{\mathrm{partial}}(z_\ell)
+ =\frac{\eta_{\mathrm{fin}}(1)}4.
+$$
+
+对任意 $T\in\mathscr T_{\partial}$，$F$ 分别凹，所以每个内部节点的 $\Delta_v\ge0$。把每个父节点项
+$w_vF(z_v)$ 替换为
+$w_v\sum_j\lambda_{vj}F(z_{vj})+w_v\Delta_v$，在有限树上逐层相消；叶值为 $B_{\mathrm{partial}}$，得到
+
+$$
+F(0,0)-\sum_\ell w_\ell B_{\mathrm{partial}}(z_\ell)
+=\sum_v w_v\Delta_v.
+$$
+
+若有限物理协议达到 $\eta_{\mathrm{fin}}(1)$，设其成功率为 $p=\eta_{\mathrm{fin}}(1)$，并按第421节的真实历史效果分解记 $Q$ 为整棵完整效果树所有叶子的 $V_0$ 加权报酬。所有接受叶的合计报酬为 $p/4$；拒绝的平坦叶仍是物理失败，但在数学的 $V_0$ 记账中可以带有非负报酬。因此
+
+$$
+\frac p4\le Q\le F(0,0).
+$$
+
+当 $p=\eta_{\mathrm{fin}}(1)=4F(0,0)$ 时，$Q=F(0,0)$。把其内部停止点替换为首边界谱分裂后，所得首边界树的报酬至少为 $Q$，而首边界树表示给出它至多为 $F(0,0)$，故恰为 $F(0,0)$。恒等式右侧各项非负且权重为正，遂每个 $\Delta_v=0$。
+
+反之，若存在有限首边界树且所有正权内部节点满足 $\Delta_v=0$，恒等式给出其报酬为 $F(0,0)$；附接边界规范完成即产生成功率 $4F(0,0)=\eta_{\mathrm{fin}}(1)$ 的有限物理协议。故有限达到性与所述零缺陷树判据等价。证毕。
+
+## 追加锚（本行以下为增补区）
