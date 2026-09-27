@@ -21475,7 +21475,7 @@ $$
 证明。在 $\delta=0$，
 
 $$
-a_0=(1-\rho)^2,quad B_0=1-\rho^2,quad D_0=(1+\rho)^2,
+a_0=(1-\rho)^2,\quad B_0=1-\rho^2,\quad D_0=(1+\rho)^2,
 $$
 
 且 $D_0-3a_0=2(-1+4\rho-\rho^2)>0$、$D_0>B_0>0$。正面行列式为 $8\rho(1-\rho)>0$。$T,S\to0$，故所有严格预算、正格及正面条件在充分小邻域保持。二态构造的全正补量也由正面条件保持正值。相同下界和等号链遂适用。这里的邻域依赖于固定的 $\rho$，没有把它说成统一跨越临界点的窗口。
@@ -21492,8 +21492,8 @@ $$
 保持 $A,D$，令 $\beta_{ij}=B-s_ww_{ij}$，再令
 
 $$
-\alpha_1=\frac{\beta_{12}\beta_{13}}D,quad
-\alpha_2=\frac{\beta_{12}\beta_{23}}D,quad
+\alpha_1=\frac{\beta_{12}\beta_{13}}D,\quad
+\alpha_2=\frac{\beta_{12}\beta_{23}}D,\quad
 \alpha_3=\frac{\beta_{13}\beta_{23}}D.
 $$
 
@@ -21569,8 +21569,8 @@ $$
 三个必要约束写成 $g_i(q)=\beta_{ij}\beta_{ik}-d\alpha_i\le0$，在 $q^*$ 全取等。取绝对值函数的一个支持向量
 
 $$
-v_D=\frac12,quad v_{B_{ij}}=-\frac12,quad
-v_{a_i}=d\lambda-\mu,quad v_A=-\mu.
+v_D=\frac12,\quad v_{B_{ij}}=-\frac12,\quad
+v_{a_i}=d\lambda-\mu,\quad v_A=-\mu.
 $$
 
 逐坐标检查可得
@@ -21640,7 +21640,7 @@ $$
 此时 $0<\delta\le a_0$ 是完整合法范围，且
 
 $$
-A=2+\delta,quad a=a_0-\delta,quad B=B_0+\delta,quad D=D_0-\delta.
+A=2+\delta,\quad a=a_0-\delta,\quad B=B_0+\delta,\quad D=D_0-\delta.
 $$
 
 尤其 $D-3a=2\delta$。令 $K=D+3a$、$J=K+4B=4\sqrt3$。对预算 $s$ 的任意候选，其有利增加量满足 $X+y\le s$，因此
@@ -21804,7 +21804,7 @@ $$
 **定理 912.1（三个固定相关区域的局部距离）。** 对每个固定 $0<\rho<1$，令
 
 $$
-a_0=(1-\rho)^2,quad B_0=1-\rho^2,quad D_0=(1+\rho)^2.
+a_0=(1-\rho)^2,\quad B_0=1-\rho^2,\quad D_0=(1+\rho)^2.
 $$
 
 则当 $\delta\downarrow0$，
