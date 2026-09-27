@@ -26,8 +26,8 @@ run_cmd do
   -- The source-bound contract adds Registry.SourceScope, SourceOperands and
   -- SourceContract through Assessment, plus Interface.SourceSelection through Records.
   -- The infinite-domain support adds one D5/Impl module to that closure.
-  -- Relative to the split closure (102 = 97 D5/Impl + 5 Interface), no owners leave:
-  -- the intended closure is 107 = 101 D5/Impl + 6 Interface.
+  -- Finite catalog projection remains co-located in SourceContract, so it adds
+  -- no separate module. The current closure is 107 = 101 D5/Impl + 6 Interface.
   let interface := modules.filter ((`LeanInformationAuditInterface).isPrefixOf ·)
   let unchanged := modules.size == 107 && interface.size == 6
   (if unchanged then logInfo else logError) m!"[{if unchanged then "PASS" else "FAIL"}] finite_seal_family_closure_unchanged"

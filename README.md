@@ -77,9 +77,10 @@ alternatives. Keep reusable results with their assumptions.
 
 > The last line of the ledger is always the first line of the next round.
 
-A proof supplies a premise; a counterexample refutes a claim within its stated
-scope. An obstruction can suggest [what to investigate next](docs/VISION.md#how-ai-can-find-its-next-direction).
-When progress stalls, check whether the representation misses a needed distinction.
+Proofs supply premises; counterexamples refute claims within their stated scope.
+When identical readings hide different target values, no function of those
+readings recovers the target in both cases.
+[Seek new observations or relations](docs/VISION.md#how-ai-can-find-its-next-direction).
 Evaluate on questions unused in method design, against a stated baseline
 with matched information and resources.
 
@@ -96,14 +97,14 @@ and limits of local observation.
 ## Three places to look
 
 **01 · Refute a conjecture.**
-For positive n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
-Greathouse's conjectured formula for OEIS A175406 was
+For positive integers n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
+Greathouse conjectured for OEIS A175406 that
 `a(n) = floor((n + 1/2) log 2)`. At `n = 1121626023352383`, the formula gives
 `777451915729368`, while the actual value is one less.
 The [Lean refutation](D5/S0/Certificates/GreathouseLogTwoFloorRefutation.lean)
-establishes `result : ¬ claim` using certified bounds on logarithms.
-This refutes the literal universal formula; neither minimality of the witness
-nor priority is claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
+uses certified logarithm bounds to refute the literal universal formula.
+What characterizes the inputs where it fails? Witness minimality and priority
+are not claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
 [Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
 
 **02 · Find what observations cannot tell you.**
@@ -137,8 +138,8 @@ between an arithmetic algorithm and an exact bound, however large the inputs.
 
 ## Toward holographic spacetime
 
-We study **holographic spacetime geometry** as a question about time, space and
-observation: when do partial records support reconstruction and action?
+We study **holographic spacetime geometry** by asking when partial records
+of time and space support reconstruction and action.
 
 Theory inputs study
 [event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
@@ -149,9 +150,10 @@ composition, shared sources and targets; and
 defined through allowed experiments and responses. Their prose does not certify
 formal coverage.
 
-A [finite-archive counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
-leaves the current spatial readout unchanged when an inactive event is added,
-while making a specified temporal composition illegal.
+The [finite-archive counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
+adds an inactive event at time `2`, preserving the current spatial readout
+but blocking composition before an archive at time `1`: every left event
+must precede every right event.
 
 A positive [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
 applies to nonempty local record sets on a finite tree: each recorded variable
@@ -160,10 +162,9 @@ joint assignments on their full overlap. Then any allowed local record extends
 to a record on the union of the local variable sets, satisfying every local
 constraint.
 
-This establishes a compatible completion; uniqueness, original-history recovery
-and computational cost require further results. Reconstruction with stated
-resolution and error bounds, and links to physical spacetime or holographic
-duality, remain research questions.
+Uniqueness, original-history recovery, computational cost, and reconstruction
+with resolution and error bounds require further results. Links to physical
+spacetime or holographic duality remain research questions.
 
 ## A continuing research program
 
@@ -189,33 +190,29 @@ We are developing an **information-escape judge** around four questions:
   indistinguishable pair, prove none remain within the stated scope, or mark
   the boundary open.
 
-A **readout** is a way of observing a state; several readouts can observe
-the same states. Fix one current catalog of registered theorem occurrences
-and one shared state space, then remove just one occurrence. Pairs of distinct
-states that the full catalog distinguished but the remaining readouts cannot
-distinguish are that occurrence's **unique captures**. The
+A **readout** is a way of observing a state. Fix a catalog of registered theorem
+occurrences and their readouts on one shared state space. Remove one occurrence
+while keeping the others fixed. Its **unique captures** are the pairs of distinct
+states that were distinguishable before removal and indistinguishable afterward. The
 [EscapePairs definitions and proofs](D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean)
 formalize this comparison.
 
-For a **finite arena with at least two states**,
+For a **finite state space with at least two states**,
 [StructuralNovelty](D5/S3/ConceptDynamics/InformationEscape/StructuralNovelty.lean)
-connects a strict reduction in indistinguishability to a strict decrease in
-the escape rate: the fraction of ordered distinct-state pairs left
-indistinguishable. A unique capture witnesses that reduction. Zero unique
-capture does not mean worthlessness: another occurrence can carry the same
-distinction. Information here is contextual; this supplies neither a universal
-value score nor a historical novelty judgment.
+shows that removing an occurrence strictly increases the **escape rate** exactly
+when it has a unique capture. The rate is the fraction of ordered distinct-state
+pairs left indistinguishable. Zero unique capture does not mean worthlessness:
+another occurrence can carry the same distinction. This comparison supplies
+neither a universal value score nor a historical novelty judgment.
 
-The judge is **under development**. Its current **declared-template findings
-are Observe warnings and do not block admission**, as specified in
-[A5.5 of the repository specification](docs/develop/spec/golden-ledger-repo-spec.md)
-and implemented in the
-[rule source](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs).
-Other admission checks retain their own effects. The rule's delta selection
-determines which modules to inspect; it is separate from the mathematical
-comparison within one current catalog above. The wider design is described
-in the [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md);
-its proposed system is not a claim of completed implementation.
+The judge is **under development**. Its declared-template findings are
+**Observe warnings that do not block admission**
+([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
+[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
+Other admission checks still apply. Module selection for this rule is
+separate from the fixed-catalog comparison above.
+The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
+describes a wider design whose implementation remains incomplete.
 
 [Example 02](#three-places-to-look) adds `X⊗X` expectations to separate a locally
 indistinguishable pair. Which pairs, if any, remain indistinguishable after
