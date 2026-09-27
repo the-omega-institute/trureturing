@@ -46,15 +46,6 @@ private theorem partials_commute (p : Fock) (i j : ℕ) :
   have he := DFunLike.congr_fun h p
   simpa [Derivation.commutator_apply, sub_eq_zero] using he
 
-private theorem derivative_creation (i j : ℕ) (p : Fock) :
-    pderiv i (X j * p) - X j * pderiv i p = if i = j then p else 0 := by
-  classical
-  rw [pderiv_mul]
-  by_cases hij : i = j
-  · subst j
-    simp
-  · simp [hij]
-
 private theorem positive_vanish (p : Fock) (m : ℤ)
     (hm : ((p.vars.sup id : ℕ) + 1 : ℤ) < m) : mode m p = 0 := by
   cases m with
@@ -173,7 +164,7 @@ private theorem mode_ccr (m n : ℤ) :
           simp only [Nat.cast_add, Nat.cast_one] at hsum
           apply LinearMap.ext
           intro p
-          simp [mode, hsum, LinearMap.comp_apply, derivative_creation]
+          simp [mode, hsum, LinearMap.comp_apply]
           rw [show (-1 + -↑i : ℚ) = -(↑i + 1) by ring, neg_smul]
         · have hsum : Int.negSucc i + (↑(j + 1) : ℤ) ≠ 0 := by omega
           simp only [Nat.cast_add, Nat.cast_one] at hsum
