@@ -166,16 +166,6 @@ Uniqueness, original-history recovery, computational cost, and reconstruction
 with resolution and error bounds require further results. Links to physical
 spacetime or holographic duality remain research questions.
 
-## A continuing research program
-
-The [research directions](docs/VISION.md#research-directions) ask:
-
-- Can AI choose questions that yield reusable knowledge?
-- Which maps connect proof dependencies and observational distinctions?
-- Which historical relations support reconstruction and legal composition?
-
-The guide states what would advance each question.
-
 ## Information escape
 
 We are developing an **information-escape judge** around four questions:
@@ -296,6 +286,15 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 Start with one of the examples above. Reproduce it, improve its explanation,
 report a mismatch between prose and a statement, or explore a precise open
 question. Contributions in English and Chinese are welcome.
+
+### A continuing research program
+
+The [research directions](docs/VISION.md#research-directions) specify evidence
+of progress for each question:
+
+- Can AI choose questions that yield reusable knowledge?
+- Which maps connect proof dependencies and observational distinctions?
+- Which historical relations support reconstruction and legal composition?
 
 The [contribution guide](docs/CONTRIBUTING.md) walks you through forks, isolated
 worktrees, checks and pull requests to `dev`.
