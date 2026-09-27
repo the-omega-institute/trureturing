@@ -11,8 +11,8 @@
 
 trureturing develops a scientific method for AI to turn gaps in knowledge into
 questions, test conjectures, expose limits in its representations, and return
-checked results to a reusable library. We want those results to guide the next
-investigation; autonomous research selection remains a goal to evaluate.
+checked results to a reusable library. Autonomous research selection remains a
+goal to evaluate.
 
 The name expresses **true · return · Turing**. Truth guides the search;
 verified knowledge returns as a premise for the next inquiry; computation
