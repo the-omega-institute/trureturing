@@ -8330,3 +8330,424 @@ $$
 第 108 节的任意终端态构造仍成立；它没有要求达到第 113 节的最优首系数。本批仍未确定每个子临界半径上的全部最优仪器、最坏均值的完整闭式、次主项和最小分数次指数，也未把齐次二维结论推广到任意时变控制或无限维记忆。
 
 ## 追加锚（本行以下为增补区）
+
+## 115. 临界终端通道由快分支与归一化慢点击后继共同确定
+
+第 108 节说明：临界附近，终端态可以趋向任意预定密度矩阵。第 113 节又准确求出最坏均值的首系数。现在把这两种自由放到同一个实际装置上比较：达到最坏等待的首阶，是否还允许终端量子后继任意改变？
+
+以下继续使用原名义装置、完整二维活动记忆、两种实际记录和齐次重复合同。保留全部参考输入；终端通道丢弃首次点击轮数，但保留点击后的量子系统。
+
+**定义 115.1（最坏均值占比与终端距离）。** 对 $0<h<R$ 和任意 $\Gamma\in\mathfrak B_{R-h}$，定义
+
+$$
+\Xi_\Gamma=\sum_{n\ge1}\mathcal C_\Gamma\mathcal N_\Gamma^{n-1}
+=\mathcal C_\Gamma(\operatorname{id}-\mathcal N_\Gamma)^{-1},
+\qquad
+\mathcal T_0(X)=\operatorname{Tr}(X)P_0,
+$$
+
+$$
+\lambda_h(\Gamma)=\frac{M(\Gamma)}{\mathscr K(R-h)}\in(0,1],
+\qquad
+ d_\Gamma=\frac12\|\Xi_\Gamma-\mathcal T_0\|_\diamond\in[0,1].
+\tag{115.1}
+$$
+
+该球内所有装置全状态终止，有限维谱半径小于一，所以级数收敛并定义 CPTP 通道。这里 $\lambda_h$ 比较同一装置的最大平均等待与整个球的最坏平均等待；$d_\Gamma$ 比较同一装置的完整终端作用与固定准备 $P_0$ 的通道。
+
+对最近失效集合附近的装置，沿用 $\mathcal N(\sigma)=(1-\epsilon)\sigma$，定义实际慢点击后继
+
+$$
+\zeta_\Gamma=\frac{\mathcal C_\Gamma(\sigma_\Gamma)}{\epsilon_\Gamma}.
+\tag{115.2}
+$$
+
+完整性使分子正半定且迹恰为 $\epsilon_\Gamma$，故 $\zeta_\Gamma$ 是密度矩阵。它使用原始点击分支，不是第 112 节检验中辅助重置后的分支。
+
+**定理 115.2（终端通道的共同极限分解）。** 若不失效的 $\Gamma_j\to\Gamma_*\in\mathfrak F_R$，且沿所取子列有 $\zeta_j\to\zeta_*$，则在完整 diamond 范数中
+
+$$
+\boxed{
+\Xi_{\Gamma_j}(X)\longrightarrow
+\operatorname{Tr}(P_*X)\zeta_*
++\operatorname{Tr}[(I-P_*)X]P_0.
+}
+\tag{115.3}
+$$
+
+其中 $P_*$ 是该边界装置的暗态投影。因而，即使沿原序列 $\zeta_j$ 没有极限，仍有
+
+$$
+\boxed{d_{\Gamma_j}-D(\zeta_j,P_0)\longrightarrow0,\qquad
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.}
+\tag{115.4}
+$$
+
+式（115.4）也对趋近整个最近失效集合的序列成立，不要求预选唯一边界相位。
+
+证明。令状态侧谱投影为
+
+$$
+\mathcal P_\Gamma(X)=\sigma_\Gamma\operatorname{Tr}(G_\Gamma X),
+\qquad
+\mathcal B_\Gamma=\mathcal N_\Gamma(\operatorname{id}-\mathcal P_\Gamma),
+\qquad
+\mathcal R_\Gamma=(\operatorname{id}-\mathcal B_\Gamma)^{-1}
+(\operatorname{id}-\mathcal P_\Gamma).
+$$
+
+第 93、96 节保证该投影及稳定部分连续，后者的谱与一一致分离。分解主谱空间与其补空间，准确得到
+
+$$
+(\operatorname{id}-\mathcal N_\Gamma)^{-1}
+=\epsilon_\Gamma^{-1}\mathcal P_\Gamma+\mathcal R_\Gamma,
+$$
+
+$$
+\Xi_\Gamma(X)
+=\zeta_\Gamma\operatorname{Tr}(G_\Gamma X)
++\mathcal C_\Gamma\mathcal R_\Gamma(X).
+\tag{115.5}
+$$
+
+在边界，定理 106.1 给
+
+$$
+\mathcal N_* =\mathcal P_*:X\mapsto P_*XP_*,
+\quad G_*=P_*,\quad
+\mathcal B_*=0,\quad
+\mathcal R_* =\operatorname{id}-\mathcal P_*,
+$$
+
+$$
+\mathcal C_*\mathcal R_*(X)
+=\operatorname{Tr}[(I-P_*)X]P_0.
+$$
+
+因此式（115.5）的两项分别收敛，得到式（115.3）。这里先准确分离 $\epsilon^{-1}$ 主项，再对有界稳定部分取极限；没有把一个未控制的点击映射误差除以 $\epsilon$。
+
+输入、输出维数固定，线性映射空间中的范数等价，故矩阵元收敛也是 diamond 范数收敛。极限通道与 $\mathcal T_0$ 之差为
+
+$$
+X\longmapsto\operatorname{Tr}(P_*X)(\zeta_*-P_0).
+$$
+
+对任意归一化参考联合输入，其输出是一个迹至多一的正参考算子张量 $\zeta_*-P_0$；输入 $P_*$ 达到迹一。因此极限完整半钻石距离恰为 $D(\zeta_*,P_0)$。
+
+密度矩阵和最近失效集合都紧。若式（115.4）不成立，取差值远离零的子列，再取装置与 $\zeta_j$ 的共同收敛子列，刚才的极限计算给矛盾。这也处理不同边界相位。$\square$
+
+## 116. 最坏等待占比限制终端量子后继的偏离
+
+**定理 116.1（等待占比与终端距离的平方关系）。** 对任意 $h_j>0$、$h_j\to0$ 及任意实际 $\Gamma_j\in\mathfrak B_{R-h_j}$，有
+
+$$
+\boxed{
+\limsup_{j\to\infty}
+\left[\lambda_{h_j}(\Gamma_j)+d_{\Gamma_j}^{\,2}\right]
+\le1.
+}
+\tag{116.1}
+$$
+
+这比较同一个装置的实际最大均值和最终完整通道，不将不同装置各自达到的值拼成共同结论。
+
+证明。只需考虑 $\lambda_j\to\lambda$ 的任意子列。若 $\lambda=0$，由 $d_j\le1$ 直接成立。设 $\lambda>0$。定理 113.1 给 $\mathscr K(R-h_j)\sim\kappa^2h_j^{-2}$，故 $M(\Gamma_j)\to\infty$。仪器紧性、子临界均值的局部有界性及校准约束迫使每个装置聚点属于 $\mathfrak F_R$。于是可用第 111—112 节的共同估计，以及
+
+$$
+\epsilon_jM(\Gamma_j)\longrightarrow1,
+\qquad
+\frac{h_j^2}{\kappa^2\epsilon_j}\longrightarrow\lambda.
+\tag{116.2}
+$$
+
+在当前准平稳态本征基中，保留式（112.6）里 $g_j$ 的实部，不先用其模替换。其他可能降低检验值的项仍为 $o(\sqrt{\epsilon_j})$，且 $H_{cb}\to-\kappa/2$。因 $L(a,z_0)\ge R$，有
+
+$$
+h_j\le R-\delta(\Gamma_j)
+\le(\kappa+o(1))\operatorname{Re}g_j
++o(\sqrt{\epsilon_j}).
+$$
+
+$|g_j|/\sqrt{\epsilon_j}$ 有界，结合式（116.2）得到
+
+$$
+\liminf_j\frac{\operatorname{Re}g_j}{\sqrt{\epsilon_j}}
+\ge\sqrt\lambda.
+\tag{116.3}
+$$
+
+点击效果 $E_j=\mathcal C_j^*(I)$ 的矩阵元满足
+
+$$
+(E_j)_{\psi\eta}=-g_j-\sum_\ell\overline{f_\ell}a_\ell,
+\qquad
+\left|\sum_\ell\overline{f_\ell}a_\ell\right|
+\le\sqrt{F_jv_j}=o(\sqrt{\epsilon_j}),
+$$
+
+$$
+(E_j)_{\psi\psi}\le\ell_{\psi,j}
+=\epsilon_j(1+o(1)),\qquad
+(E_j)_{\eta\eta}\longrightarrow1.
+\tag{116.4}
+$$
+
+现在必须回到原始点击后继。取该点击 CP 映射的任一 Kraus 表示 $B_\ell$，在本装置的辅助空间中置
+
+$$
+x_j=\sum_\ell B_\ell\psi_j\otimes|\ell\rangle,
+\qquad
+z_j=\sum_\ell B_\ell\eta_j\otimes|\ell\rangle,
+\qquad A=P_0\otimes I.
+$$
+
+这些辅助标签只用于证明，不是新可读记录。由式（116.4），
+
+$$
+\langle x_j,z_j\rangle=(E_j)_{\psi\eta},
+\qquad \|x_j\|/\sqrt{\epsilon_j}=O(1),
+\qquad \|z_j\|\to1.
+$$
+
+定理 106.1 对原始点击分支的分类给 $\mathcal C_j(P_{\eta,j})\to P_0$。因此
+
+$$
+\|(I-A)z_j\|\to0,\qquad \|Az_j\|\to1.
+$$
+
+把内积分成 $A$ 与 $I-A$ 两部分，Cauchy–Schwarz 给
+
+$$
+\frac{|(E_j)_{\psi\eta}|}{\sqrt{\epsilon_j}}
+\le\frac{\|Ax_j\|}{\sqrt{\epsilon_j}}\|Az_j\|
++\frac{\|x_j\|}{\sqrt{\epsilon_j}}\|(I-A)z_j\|.
+\tag{116.5}
+$$
+
+第二项趋零，第一项的最后因子趋一；结合式（116.3）—（116.4），得到
+
+$$
+\liminf_j
+\frac{\langle0|\mathcal C_j(P_j)|0\rangle}{\epsilon_j}
+\ge\lambda.
+$$
+
+实际准平稳态为 $\sigma_j=(1-y_j)P_j+y_jP_{\eta,j}$，$y_j\to0$。两个点击输出均正，所以
+
+$$
+\liminf_j\langle0|\zeta_j|0\rangle
+=\liminf_j
+\frac{(1-y_j)\langle0|\mathcal C_j(P_j)|0\rangle
++y_j\langle0|\mathcal C_j(P_{\eta,j})|0\rangle}{\epsilon_j}
+\ge\lambda.
+\tag{116.6}
+$$
+
+对任意量子比特密度矩阵 $\zeta=\begin{pmatrix}q&b\\\overline b&1-q\end{pmatrix}$，正性给 $|b|^2\le q(1-q)$，直接求 $\zeta-P_0$ 的两本征值可得
+
+$$
+D(\zeta,P_0)^2=(1-q)^2+|b|^2\le1-q.
+$$
+
+结合式（116.6）与定理 115.2，得到 $\limsup d_j^2\le1-\lambda$。每一条 $\lambda_j$ 的收敛子列都满足相同结论，故成立式（116.1）。$\square$
+
+**推论 116.2（首阶最坏等待强制终端通道趋向固定后继）。** 若同一序列满足
+
+$$
+\frac{M(\Gamma_j)}{\mathscr K(R-h_j)}\longrightarrow1,
+$$
+
+则
+
+$$
+\boxed{\frac12\|\Xi_{\Gamma_j}-\mathcal T_0\|_\diamond\longrightarrow0.}
+\tag{116.7}
+$$
+
+尤其，任意精确最坏装置选择都满足此结论。任意初态和参考关联下，丢弃首次点击时间后的输出趋向参考边缘张量 $P_0$。
+
+证明。将 $\lambda_j\to1$ 代入定理 116.1，利用 $d_j^2\ge0$。diamond 范数控制所有参考输入，再用重置通道的定义得到后一句。$\square$
+
+这不与第 108.4 条的任意终端态相冲突：该构造允许很长的等待，却没有要求其均值占整个球的最坏均值趋于一。终端量子作用的自由与等待达到最坏首阶不能分别取得后再直接合并。
+
+## 117. 相干点击构造使平方关系的每个边界点都可实现
+
+**定义 117.1（保持点击相干项的同接口仪器）。** 固定
+
+$$
+\psi=|+\rangle,\quad P=P_\psi,\quad
+\eta=\frac{-|0\rangle+|1\rangle}{\sqrt2},\quad
+\psi_t=\cos t\,\psi-\sin t\,\eta.
+$$
+
+对充分小的 $t>0$ 及 $0\le k<1$，取
+
+$$
+Q_{t,k}=\sqrt{1-k}\,|\psi_t\rangle\langle\psi|,
+\qquad
+B_k=|0\rangle\langle\eta|+\sqrt k\,|1\rangle\langle\psi|,
+$$
+
+$$
+\Gamma_{t,k}^{\rm coh}
+=(X\mapsto Q_{t,k}XQ_{t,k}^\dagger,
+  X\mapsto B_kXB_k^\dagger).
+\tag{117.1}
+$$
+
+$Q_{t,k}^\dagger Q_{t,k}=(1-k)P$，而 $B_k^\dagger B_k=I-P+kP$，故这是完整仪器。它仍只有未点击与点击两个可读结果。点击映射包含交叉项，不是第 107 节两个制备项的经典相加。
+
+**引理 117.2（相干点击的完整校准修正只有 $O(k)$）。** 在 $(t,k)\to(0,0)$、$k\ge0$ 时，完整名义距离满足
+
+$$
+\boxed{
+\delta(\Gamma_{t,k}^{\rm coh})
+=\delta(\widehat\Gamma_{-t})+O(k)
+=R-\kappa t+O(t^2+k).
+}
+\tag{117.2}
+$$
+
+这里比较的是两份到同一名义仪器的距离之差，不声称这两个实际仪器之间的距离为 $O(k)$。
+
+证明。对任意系统密度矩阵 $\rho$，取其归一化纯化。实际与名义仪器的每个分支都只有一个 Kraus 算子，所以每个联合输出块是两个向量投影之差。其迹范数由式（103.4）准确给出。令
+
+$$
+p=\operatorname{Tr}(\rho P),\quad
+q=\operatorname{Tr}(\rho P_1),\quad
+\alpha_t=\operatorname{Tr}[\rho(|\psi\rangle\langle\psi_t|)Q_0],
+\quad
+\beta_0=\operatorname{Tr}(\rho B_0^\dagger L_0),
+$$
+
+其中 $Q_0=|0\rangle\langle1|$、$L_0=P_0$ 仍是名义装置。关键恒等式是
+
+$$
+B_k^\dagger L_0=B_0^\dagger L_0=|\eta\rangle\langle0|.
+$$
+
+因此完整输出的半迹距离准确为
+
+$$
+\mathcal F(t,k;\rho)=\frac12\left[
+\sqrt{((1-k)p+q)^2-4(1-k)|\alpha_t|^2}
++\sqrt{(1-p+kp+1-q)^2-4|\beta_0|^2}
+\right].
+\tag{117.3}
+$$
+
+对全部 $\rho$ 最大化就是完整半钻石距离：任意参考输入可纯化，系统边缘决定上述所有内积，二维参考已足够取得最大值。
+
+在 $t=k=0$ 时，第 103 节已经把全部最大化边缘态描述为 $x=x_*,v=0$，其中 $x=q_0-\operatorname{Re}\rho_{01}$、$q_0=\rho_{00}$。在这整个最大化集合上，两根号内的量分别为
+
+$$
+\frac54-x_*>0,\qquad \frac14+x_*-x_*^2>0.
+$$
+
+密度矩阵集合紧，函数 $\mathcal F$ 联合连续。因此充分小的 $(t,k)$ 的全部最大化点都落在上述集合的任意预定邻域内；否则取收敛子列会在基点产生新的最大化点。选取其中一个邻域，使两个根号内的量都有共同正下界。
+
+在该邻域中，式（117.3）的两个根号内部对 $k$ 的变化都是一致的 $O(k)$，平方根因远离零而具有共同 Lipschitz 常数。于是
+
+$$
+|\mathcal F(t,k;\rho)-\mathcal F(t,0;\rho)|\le Ck
+$$
+
+在两种参数的全部最大化点上同时成立。分别代入两边的最大化点，得到两个最大值之差的绝对值至多 $Ck$。$k=0$ 时仪器准确为 $\widehat\Gamma_{-t}$，再用定理 103.2 得式（117.2）。$\square$
+
+**定理 117.3（全部极限边界点由实际仪器达到）。** 对每个 $\lambda\in[0,1]$，存在 $t_j\to0$ 的上述实际仪器和正间隙
+
+$$
+h_j=R-\delta(\Gamma_{t_j,k_j}^{\rm coh})\longrightarrow0,
+$$
+
+使该仪器属于 $\mathfrak B_{R-h_j}$，并且
+
+$$
+\boxed{
+\frac{M(\Gamma_{t_j,k_j}^{\rm coh})}{\mathscr K(R-h_j)}
+\longrightarrow\lambda,
+\qquad
+ d_{\Gamma_{t_j,k_j}^{\rm coh}}\longrightarrow\sqrt{1-\lambda}.
+}
+\tag{117.4}
+$$
+
+因而定理 116.1 的整个边界曲线都在同一物理接口与同一校准定义内实现。
+
+证明。先取固定 $a\ge0$，令 $k=at^2$。未点击动力学与第 107 节相同，其准平稳态为 $S_t=P_{\psi_t}$，且
+
+$$
+\epsilon_{t,k}=k+(1-k)\sin^2t,
+\qquad
+M(\Gamma_{t,k}^{\rm coh})=1+\frac{1-k}{\epsilon_{t,k}}.
+\tag{117.5}
+$$
+
+直接作用点击算子得到
+
+$$
+B_k\psi_t=-\sin t\,|0\rangle+\sqrt k\cos t\,|1\rangle,
+\qquad
+\zeta_{t,k}=
+\frac{|B_k\psi_t\rangle\langle B_k\psi_t|}{\epsilon_{t,k}}.
+\tag{117.6}
+$$
+
+从任意输入第一次点击时输出 $B_kXB_k^\dagger$；若第一次未点击，未归一化后继是 $(1-k)\operatorname{Tr}(PX)S_t$。从 $S_t$ 出发的最终点击后继准确为 $\zeta_{t,k}$，所以
+
+$$
+\Xi_{t,k}(X)=B_kXB_k^\dagger
++(1-k)\operatorname{Tr}(PX)\zeta_{t,k}.
+\tag{117.7}
+$$
+
+令 $t\to0$，有
+
+$$
+\epsilon_{t,at^2}\sim(1+a)t^2,
+\qquad
+\zeta_{t,at^2}\longrightarrow P_{\xi_a},
+\qquad
+\xi_a=\frac{-|0\rangle+\sqrt a\,|1\rangle}{\sqrt{1+a}}.
+$$
+
+引理 117.2 给 $h_t=\kappa t+O(t^2)>0$。由定理 113.1，
+
+$$
+\mathscr K(R-h_t)\sim t^{-2},\qquad
+\frac{M(\Gamma_{t,at^2}^{\rm coh})}{\mathscr K(R-h_t)}
+\longrightarrow\frac1{1+a}.
+$$
+
+定理 115.2 或式（117.7）直接给
+
+$$
+d_{\Gamma_{t,at^2}^{\rm coh}}
+\longrightarrow D(P_{\xi_a},P_0)=\sqrt{\frac a{1+a}}.
+$$
+
+每个 $0<\lambda\le1$ 都可取 $a=(1-\lambda)/\lambda$ 达到，包括 $a=0$ 对应的原旋转族。
+
+最后处理 $\lambda=0$：另取 $k=t^{3/2}$。引理 117.2 仍给 $h_t=\kappa t+o(t)>0$，而 $\epsilon_{t,k}\sim t^{3/2}$、$M\sim t^{-3/2}$。所以 $M/\mathscr K(R-h_t)\to0$。式（117.6）给 $\zeta_{t,k}\to P_1$，故 $d\to1$。所有正 $t$ 的装置都终止，结论来自真实子临界序列。$\square$
+
+## 118. 最坏等待与终端自由之间的关系是共同约束
+
+**关系结论 118.1（AHH：长等待的首阶与交给未来的状态不能独立安排）。** 第 108 节的任意终端态自由没有消失；新的约束是，它与最坏均值占比共同满足
+
+$$
+\boxed{\lambda+d^2\le1\quad\text{的临界极限关系}.}
+$$
+
+若等待达到最坏首阶，$\lambda\to1$ 就迫使完整终端通道趋向准备 $P_0$。若要保持非零终端距离，就必须让最坏均值占比离开一。第 117 节同时给每个边界点的真实实现，不能再统一收紧这条曲线。
+
+这一步依赖原始点击后继的完整分类：只知道未点击映射的边界极限，还不能控制点击 Kraus 向量 $z_j$ 的输出方向。它也依赖准确首系数；只有确定 $c=\kappa^2$，等待占比才能回接到式（116.3）中同一个装置的相干量。
+
+相干点击构造还显示，第 107 节经典制备混合所得的关系不必是最强边界。保留一个点击 Kraus 算子中的交叉项，可以在相同未点击动力学下把终端距离提高到平方根曲线。但校准必须重新证明：式（117.2）来自完整参考输入上的范数分析，不能由“只加了一点点击振幅”直接宣称。
+
+**来源与边界 118.2。** 本批是同一有限矩阵模型内的纸面推导，复用第 93、96、106、111—113 节的谱投影、原始点击分类、统一检验与精确首系数。终端分解由准确 resolvent 恒等式给出；距离上界由正性、Cauchy–Schwarz 和二维迹范数公式给出；锐性由具体 Kraus 算子和全部参考输入的校准推导承担。
+
+量子准平稳概念的相关原始文献还有 A. Dhahri、F. Fagnola、F. Girotti、H. J. Yoo，*Quasi-stationary normal states for quantum Markov semigroups*，[arXiv:2508.06396](https://arxiv.org/abs/2508.06396)。其 Theorem 1 将准平稳态与约化半群的正特征态联系起来；该文研究连续时间量子 Markov 半群，本批研究离散仪器的未点击分支。这里将其作为相关背景，不将其定理直接充作本批平方关系或锐性证明，也不额外引入不可约性或忠实态假设。
+
+全部结论仍限于固定名义装置、二维完整活动记忆与齐次重复；终端通道丢弃时间，未声称完整时间记录也趋向同一个固定输出。平方关系是临界极限，不是未经余项控制的有限 $h$ 不等式。未声称达到边界曲线的内部实现唯一，也未求每个有限半径的全部最优仪器。本批不主张文献原创性，未新增或编译 Lean，未进入消化、覆盖或冻结链。
+
+## 追加锚（本行以下为增补区）
