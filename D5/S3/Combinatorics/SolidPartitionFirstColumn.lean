@@ -19,6 +19,7 @@ Direct frozen dependencies: none (pinned Mathlib only)
 -/
 
 import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+import Mathlib.Data.DFinsupp.Defs
 import Mathlib.Data.Set.Card
 
 set_option autoImplicit false
@@ -169,13 +170,9 @@ theorem result : claim := by
   -- the d axis extensions are distinct
   have axis_inj : ∀ (v : Fin d → ℕ) (I : Finset (Fin d → ℕ)), (∀ i, 0 < v i) →
       (∀ i, Pi.single i (v i) ∉ I) → Function.Injective fun i => insert (Pi.single i (v i)) I := by
-    intro v I hv hnot i i' h
-    have := (Finset.insert_inj (hnot i)).1 h
-    by_contra hne
-    have := congrFun this i
-    simp only [Pi.single_eq_same, Pi.single_eq_of_ne hne] at this
-    have := hv i
-    omega
+    intro v I hv hnot i j h
+    exact DFinsupp.single_left_injective (fun k => (hv k).ne')
+      (DFunLike.coe_injective ((Finset.insert_inj (hnot i)).1 h))
   -- Step 2: d extensions force a box.
   have ext_box : ∀ (n : ℕ) (I : Finset (Fin d → ℕ)), 1 ≤ n → IsSolidPartition n I →
       extensions n I = d → ∃ v : Fin d → ℕ, (∀ i, 0 < v i) ∧ I = box v := by
