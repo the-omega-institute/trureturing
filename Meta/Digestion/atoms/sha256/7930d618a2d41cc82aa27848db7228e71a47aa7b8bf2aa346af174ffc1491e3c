@@ -1,0 +1,23 @@
+**定义 225.1（共同负签名趋近单位圆的双点族）。** 固定 $0<a<1/2$，置
+
+$$
+b=2a,\qquad \sigma=\sqrt{1-4a^2},\qquad c=a+2a^2.
+\tag{225.1}
+$$
+
+对充分接近一且小于一的 $r$，令 $h_1(r)<h_2(r)<h_3(r)$ 为第214节 $P_{a,r}$ 在 $(a,1)$ 中的三个根，取
+$S_r=\{2h_1(r)-1,2h_3(r)-1\}$。记 $\lambda=\lambda_+(h_1)$、$\mu=\lambda_+(h_3)$，以及 $s_t=\sqrt{1-t^2}$。固定实坐标中的共同处理器为
+
+$$
+V_r=\begin{pmatrix}
+0&s_\lambda&-\lambda s_\mu&\lambda\mu s_r\\
+0&\lambda&s_\lambda s_\mu&-\mu s_\lambda s_r\\
+0&0&\mu&s_\mu s_r\\
+0&0&0&-r
+\end{pmatrix},\qquad
+q=e_1,\quad P=I-qq^{\mathsf T},\quad T_r=V_r^{\mathsf T}.
+\tag{225.2}
+$$
+
+其 CPTP 通道按第211.18式由 $P,T_r$ 确定。实准备指密度矩阵在这组固定坐标中为实矩阵；复准备允许复矩阵元素。两者都要求实际状态纯且全输入精确。
+

@@ -1,0 +1,18 @@
+**定义 6.1.1（同一树上的四种质量）。** 沿用定义 5.1.1：实际字母表 $A$ 有 $d\ge2$ 个字母，$b_n\in\mathbb N$ 是每个正深度的不同禁词数上界。$\mathcal C_b$ 是满足 $|F\cap A^n|\le b_n$ 的无空词前缀码族，允许空族和跳层。令
+$$
+U_F=\bigcup_{w\in F}[w],\quad E_F=A^{\mathbb N}\setminus U_F,
+\quad S_\mu(F)=\sum_{w\in F}\mu[w]=\mu(U_F).
+$$
+有限截断 $F_{\le N}$ 的补集 $E_{F,N}$ 是 clopen，且 $E_{F,N}\downarrow E_F$。原始库存可以重复公告或含祖先后代；取最终前缀极小不同词保持柱并、减少各层词数，正如第 5.5 节。有限阶段能有效做此操作，最终极小族不因此可枚举，最终无禁祖先也不因此可判。
+
+固定正归一 iid 向量 $p$，写 $p(w)=\prod_i p_{w_i}$、$m=\max_a p_a<1$，并定义
+$$
+M_N(p,b)=\max_{F\in\mathcal C_b,\ |w|\le N}S_p(F),\qquad
+M_b(p)=\sup_{F\in\mathcal C_b}S_p(F).
+$$
+有限候选保证第一个最大值存在，$M_0=0$。固定 $0<\delta\le1/d$，$\mathcal Q_\delta$ 为每个有限历史 $v$ 的行 $q(a\mid v)\ge\delta$ 的所有过程，令 $r=1-(d-1)\delta$。其柱质量为沿实际路径的行乘积，每行坐标在 $[\delta,r]$ 中；不要求平稳、混合、有限记忆或可计算。定义
+$$
+\Gamma(d,\delta,b)=1-\sup_{q\in\mathcal Q_\delta,F\in\mathcal C_b}\mu_q(U_F).
+$$
+固定隐藏模型的 $\eta_b(p,K)$ 在定义 6.3.1 中另定；指定库存的 $\mu_q(E_F)$ 又与这些优化值不同。记 $B_N=\sum_{1\le n\le N}b_nd^{-n}$、$B=\sum_{n\ge1}b_nd^{-n}$，可取无穷。预算增长率约定为 $\beta=\limsup_n n^{-1}\log\max(1,b_n)$，故零预算和有限支撑的 $\beta=0$；对严格正熵的低增长条件，用 $\log0=-\infty$ 给同一判定。
+

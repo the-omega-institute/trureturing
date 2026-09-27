@@ -1,0 +1,30 @@
+**定理 66.3（完整仪器校准对全状态成本的乘积界）。** 两仪器具有第 63.1 条的共同接口，完整单轮半 diamond 距离为 $\delta$，并各自满足定义 66.1。则
+
+$$
+\boxed{
+\|T_I-T_J\|_\infty\le\delta M_I M_J.
+}
+$$
+
+证明。由 $(\operatorname{id}-\mathcal A_I)T_I=I$ 及对 $J$ 的同一等式，
+
+$$
+T_I-T_J
+=\mathcal R_I(\mathcal A_I-\mathcal A_J)(T_J).
+$$
+
+因为 $I\le T_J\le M_JI$，在完整带记录输出上取效果：未点击块为 $T_J/M_J$，所有点击块为零。它是合法的 $[0,I]$ 效果，所以对每个共同输入态 $\rho$，
+
+$$
+\left|\operatorname{Tr}\rho(\mathcal A_I-\mathcal A_J)(T_J)\right|
+\le M_J\delta.
+$$
+
+对全部输入态取上确界，得到 Hermitian 算子的范数界
+
+$$
+\|(\mathcal A_I-\mathcal A_J)(T_J)\|_\infty\le M_J\delta.
+$$
+
+再用引理 66.2。这里没有额外的因子二：所用的是完整输出上的一个效果，其概率差受半迹距离控制。该效果只用于证明界，不假设实验者已取得未知的 $T_J$。$\square$
+

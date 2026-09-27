@@ -1,0 +1,11 @@
+**定理 230.1（秩 $r$ 事件的共同零点）。** 在（230.HR.1）—（230.HR.5）及 $\nu\ne0$ 下，给定任意 $k\ge1$ 个复线性映射
+$$
+C_j:\mathbb C^d\to\mathbb C^m\quad(1\le j\le k).
+$$
+若 $rk<d$，则存在单位输入 $v$，使
+$$
+\boxed{P([v])C_jv=0\qquad(1\le j\le k).}
+\tag{230.HR.10}
+$$
+这些映射不必构成保迹通道。
+

@@ -1,0 +1,40 @@
+### 257.2 根保真度的 Gram 恒等式与单调性
+
+后续证明需要两个有限维事实，这里给出所需形式。
+
+首先，对任意可以是非方阵的线性映射 $G,H$，只要其输出空间相同，就有
+$$
+\boxed{
+\mathsf F(GG^\dagger,HH^\dagger)=\|G^\dagger H\|_1.
+}
+\tag{257.4}
+$$
+为证明它，记 $X=GG^\dagger$、$Y=HH^\dagger$，用极分解写
+$$
+G=\sqrt X\,U,\qquad H=\sqrt Y\,V,
+\tag{257.5}
+$$
+其中 $U,V$ 为部分等距，$UU^\dagger=P_X$、$VV^\dagger=P_Y$ 是 $X,Y$ 的支撑投影。置 $A_0=\sqrt X\sqrt Y$，则 $P_XA_0P_Y=A_0$，并有
+$$
+G^\dagger H=U^\dagger A_0V,
+\qquad
+A_0=U(G^\dagger H)V^\dagger.
+\tag{257.6}
+$$
+$U,V$ 及其伴随均为收缩。迹范数的理想性质分别给两方向不等式，故两边迹范数相同，得到（257.4）。这个证明也覆盖秩亏与零矩阵。
+
+其次，根保真度在每个正半定参数上对 Loewner 偏序单调：
+$$
+X\succeq X_0\succeq0,\quad Y\succeq Y_0\succeq0
+\quad\Longrightarrow\quad
+\mathsf F(X,Y)\ge\mathsf F(X_0,Y_0).
+\tag{257.7}
+$$
+事实上，
+$$
+\mathsf F(X,Y)=
+\operatorname{Tr}\sqrt{\sqrt Y\,X\sqrt Y}.
+\tag{257.8}
+$$
+当 $X\succeq X_0$ 时，根号内矩阵按相同偏序排列；特征值最小最大原理使各有序特征值单调，因而其平方根之和也单调。根保真度又对两个参数对称，所以可依次降低两个参数，得到（257.7）。
+

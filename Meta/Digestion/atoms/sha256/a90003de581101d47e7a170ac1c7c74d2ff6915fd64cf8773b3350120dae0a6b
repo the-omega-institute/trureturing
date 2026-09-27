@@ -1,0 +1,83 @@
+### 156.3 两个运行扇区与全域局部通道
+
+取互相正交的运行扇区
+
+$$
+K_A=Q\otimes R,\quad \dim K_A=4,
+\qquad
+K_B=R,\quad\dim K_B=2.
+\tag{156.14}
+$$
+
+其中 $Q\cong\mathbb C^2$。两扇区使用各自的 $R$ 副本，公式中的自然同构均固定。
+
+从 $K_A$ 到 $K_B$ 的接收步骤定义为：先测量并丢弃 $Q$ 标签 $j$，对 $R$ 与新发射位作用 $U$，再对保留的 $R$ 作用 $Y^j$，最后丢弃新位。其全域 Kraus 算子可写为
+
+$$
+L_{j,s}=Y^j(I_R\otimes\langle s|_B)
+U(\langle j|_Q\otimes I_{RB}),
+\qquad j,s\in\{0,1\},
+$$
+
+$$
+\mathcal C_A(X)=\sum_{j,s}L_{j,s}XL_{j,s}^*,
+\qquad
+\sum_{j,s}L_{j,s}^*L_{j,s}=I_{K_A\otimes B}.
+\tag{156.15}
+$$
+
+所以 $\mathcal C_A$ 是整个八维输入 $Q\otimes R\otimes B$ 到二维 $K_B$ 的 CPTP 通道。其实际作用为
+
+$$
+|j\rangle_Q|\Xi\rangle_{MR}
+\ \xrightarrow{\ T\;\text{及}\;\mathcal C_A\ }\
+|\psi_j\rangle_{MR}.
+\tag{156.16}
+$$
+
+从 $K_B$ 到 $K_A$ 的步骤直接使用酉
+
+$$
+V:R\otimes B\longrightarrow Q\otimes R,
+\qquad
+V=\mathsf S U,
+\qquad
+\mathsf S(|r\rangle_R|j\rangle_B)=|j\rangle_Q|r\rangle_R.
+\tag{156.17}
+$$
+
+令 $\mathcal C_B=\operatorname{Ad}_V$。式（156.10）给出
+
+$$
+|\psi_j\rangle_{MR}
+\ \xrightarrow{\ T\;\text{及}\;\mathcal C_B\ }\
+|j\rangle_Q|\Xi\rangle_{MR}.
+\tag{156.18}
+$$
+
+两个步骤都只操作持久接收空间和本轮新发射位；$M$ 从未受接收器控制。
+
+对原始输入空间定义两个通道
+
+$$
+\begin{aligned}
+\mathsf A(X)
+&=\sum_{j=0}^1X_{jj}|j\rangle\langle j|_Q
+\otimes|\Xi\rangle\langle\Xi|_{MR},\\
+\mathsf B(X)
+&=\sum_{j=0}^1X_{jj}|\psi_j\rangle\langle\psi_j|_{MR}.
+\end{aligned}
+\tag{156.19}
+$$
+
+输出分别嵌入 $M\otimes K_A$、$M\otimes K_B$。来源发射和相应接收步骤的合成记为 $\mathcal F$，则
+
+$$
+\mathcal F\mathsf A=\mathsf B,
+\qquad
+\mathcal F\mathsf B=\mathsf A.
+\tag{156.20}
+$$
+
+这些是通道恒等式，故张量任意外部参考后同样成立。理想通道已丢弃原始输入的基间相干；两相位所保留的经典标签可访问性仍不同。
+

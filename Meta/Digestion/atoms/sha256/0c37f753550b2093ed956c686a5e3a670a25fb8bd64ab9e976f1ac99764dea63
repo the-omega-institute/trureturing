@@ -1,0 +1,44 @@
+## 38. 指定纯输入前三终端的二维障碍与精确容量
+
+本节研究与保真度不变量 $\Delta_D$ 相同的指定来源输入 $|0\rangle_M$。同一个二维全域 CPTP 接收器不能同时精确恢复第二、第三终端，而一个明确的三维固定接收器可以恢复前三个终端，所以这个指定输入任务的精确最小容量是三。二维障碍还把原来用于排除零点的 $32=8D^2$ 步缩短到三步，并给出相应的显式全局有理证书。这里的容量结算只要求指定输入，不等同于完整参考输入族的合同。
+
+**模型与纯输出必要性。**
+
+取来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+|a|^2+|b|^2=1,\quad ab\ne0,\qquad
+T|i\rangle=m_i\otimes|i\rangle_{\mathcal B}.
+\tag{38.1}
+$$
+
+这里只将来源记忆排在张量因子前面。接收器 $K=\mathbb C^2$ 从独立纯态 $e$ 启动，重复使用同一个全域 CPTP 通道
+$\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$。
+固定其一份 Stinespring 等距
+
+$$
+V:K\otimes\mathcal B\longrightarrow K\otimes E.
+\tag{38.2}
+$$
+
+环境每步可立即丢弃，不要求环境空白，不限制 Choi 秩。来源初态固定为 $|0\rangle_M$。接收后的联合态记为 $\sigma_n$。
+
+置 $p=|b|^2\in(0,1)$。真实来源边缘通道为
+
+$$
+\mathcal E(\rho)=\rho_{00}|m_0\rangle\langle m_0|
++\rho_{11}|0\rangle\langle0|.
+$$
+
+所以
+
+$$
+\rho_2=(1-p)|m_0\rangle\langle m_0|
++p|0\rangle\langle0|,\qquad
+\det\rho_2=p^2(1-p)>0.
+\tag{38.3}
+$$
+
+又有 $(\rho_2)_{11}=p(1-p)\in(0,1)$，故 $\rho_3$ 也是正定矩阵。
+

@@ -1,0 +1,1 @@
+| `D5/S3/ConceptDynamics/DecisionValue/FiniteHorizonOptimalActionDescent.lean` 中 `finite_horizon_optimal_actions_descend` | 上述精确条件下，全体最优动作集合精确下降，比单纯值下降更强 | 连续最优选择、近似策略性能或未经保持的状态依赖合法性 

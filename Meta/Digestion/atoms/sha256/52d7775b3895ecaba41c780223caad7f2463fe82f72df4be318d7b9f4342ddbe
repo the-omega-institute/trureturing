@@ -1,0 +1,27 @@
+**定义 11.1（有限仿射模网络）。** 固定正整数 $m$、非空有限有向多重图 $(V,E)$，令 $N=|V|$。每个顶点 $v$ 的实际相位来源为整个 $\mathbb Z/m\mathbb Z$，其已声明端口读出为
+
+$$
+ o_v(t)=t\bmod d_v,\qquad d_v\mid m,\quad d_v\ge1.
+ \tag{11.1}
+$$
+
+每条具名边 $e:v\to w$ 在该顶点的所有相位上都合法，并实施
+
+$$
+ T_e(t)=a_e t+c_e\pmod m,
+ \qquad a_e\in\mathbb N,\quad c_e\in\mathbb Z/m\mathbb Z.
+ \tag{11.2}
+$$
+
+顶点、所选边及其身份公开；动作只能依据已获端口记录和内部控制选择。未来任务保留任意有限合法路径上各端口的读数。边若另有固定费用，该费用可由已保留的边词计算；这里不额外加入随隐藏相位变化的守卫、费用或参考。这些额外接口会改变下文行为核。
+
+对路径 $\gamma=e_1\cdots e_k:v\to w$，写
+
+$$
+ T_\gamma(t)=A_\gamma t+C_\gamma\pmod m,
+ \qquad A_\gamma=\prod_{i=1}^k a_{e_i}.
+ \tag{11.3}
+$$
+
+空路径有 $A_\varnothing=1,C_\varnothing=0$。读数来自同一份被连续更新的相位，而非为各条边另取独立来源；允许全体路径作为区分实验，不表示观察者已同时执行它们或免费取得完整相位。
+

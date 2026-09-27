@@ -1,0 +1,40 @@
+**定理 4.6.2（倾斜前缀族的 Hölder 界）。** 若有限或可数词族 $\mathcal F$ 无前缀冲突、不含空词、每个正长度至多一词，则
+$$
+\sum_{w\in\mathcal F}p(w)\le
+B_q:=\left(\frac{r_q}{1-r_q}\right)^{(q-1)/q}.
+$$
+这个估计对全部 $q>1$ 成立；它是否小于一是另一个条件。
+
+**证明。** 定义辅助概率
+$$
+\widehat p_a=\frac{p_a^q}{c_q},\qquad
+\widehat p(w)=\prod_{i<|w|}\widehat p_{w_i}
+=\frac{p(w)^q}{c_q^{|w|}}.
+$$
+各项正且和为一，所以确实给出一个辅助 iid 概率律。前缀自由使这些辅助柱两两不交，故对每个有限子族有总质量至多一；取非负和的极限得
+$$
+\sum_{w\in\mathcal F}\widehat p(w)\le1.
+$$
+在可数索引集 $\mathcal F$ 上，取
+$$
+f(w)=\widehat p(w),\quad g(w)=r_q^{|w|},\quad
+\alpha=1/q,\quad\beta=(q-1)/q.
+$$
+$f,g$ 非负，$\alpha,\beta>0$ 且 $\alpha+\beta=1$。上式证明 $f$ 可和；长度映射在 $\mathcal F$ 上单射且值为正整数，故
+$$
+\sum_{w\in\mathcal F}g(w)\le\sum_{n\ge1}r_q^n=\frac{r_q}{1-r_q}<\infty,
+$$
+证明了第二个可和性前提。逐项又有
+$$
+f(w)^\alpha g(w)^\beta
+=\widehat p(w)^{1/q}c_q^{|w|/q}=p(w).
+$$
+因此可应用非负可和实函数的可数加权 Hölder 不等式，得到
+$$
+\sum_w p(w)
+\le\left(\sum_w f(w)\right)^{1/q}
+   \left(\sum_w g(w)\right)^{(q-1)/q}
+\le B_q.
+$$
+对应的仓内通用声明是 `CountableWeightedHolderInterpolation.countable_weighted_holder_interpolation`；上面逐项履行了它的非负性、两项可和性和互补正指数条件。等价地，可先对每个有限子族使用指数 $q,q/(q-1)$ 的 Hölder，再取非负和极限。辅助柱的加法性是在实际倾斜概率中证明的，不是有限均匀二元 Kraft 公式的无条件替换。证毕。
+

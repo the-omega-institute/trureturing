@@ -1,0 +1,31 @@
+**定理 244.3（资源反解及全部端点）。** 若 $B=0$，则所有 $\epsilon\ge0$ 都有
+$$
+E_{\min}(\epsilon;p,c)=0,
+\qquad r_{\min}(\epsilon;p,c)=1.
+\tag{244.25}
+$$
+若 $B>0$，则
+$$
+\boxed{
+E_{\min}(\epsilon;p,c)=
+\begin{cases}
+H_2\!\left(
+\dfrac{1+\sqrt{4\epsilon(\sqrt{A+B}-\epsilon)/B}}2
+\right),&0\le\epsilon<\delta_p,\\[6pt]
+0,&\epsilon\ge\delta_p,
+\end{cases}
+}
+\tag{244.26}
+$$
+且
+$$
+\boxed{
+r_{\min}(\epsilon;p,c)=
+\begin{cases}
+2,&0\le\epsilon<\delta_p,\\
+1,&\epsilon\ge\delta_p.
+\end{cases}
+}
+\tag{244.27}
+$$
+

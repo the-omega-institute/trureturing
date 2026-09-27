@@ -1,0 +1,13 @@
+### 217.7 缺结果候选与总秩预算
+
+本段单独证明一个比逐结果预算更强的接口结论，而不将两个集合当成相同。
+
+对正旗标条件 instrument，定义保留结果标签的记录通道
+$$
+\mathcal R_+(X)
+=\sum_{j=0}^1 |j\rangle\langle j|^{Q_{\mathrm{out}}}
+\otimes\Gamma_{j,+}(X).
+\tag{217.25}
+$$
+其 Choi 矩阵经固定因子重排为 $J_0\oplus J_1$。
+

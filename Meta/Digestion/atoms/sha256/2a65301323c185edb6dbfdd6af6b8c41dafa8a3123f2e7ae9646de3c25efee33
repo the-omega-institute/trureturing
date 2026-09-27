@@ -1,0 +1,37 @@
+**证明。** 由（152.2）及 $F\preceq I$，
+
+$$
+1-\operatorname{Tr}(F\varrho_0)
+\ge\ell_p(1-\langle h,Fh\rangle).
+\tag{152.11}
+$$
+
+又由（152.6）、$F\succeq0$ 和（152.9），
+
+$$
+s_p\operatorname{Tr}(F\Pi_S)
+\le\operatorname{Tr}(F\varrho_1)\le e.
+\tag{152.12}
+$$
+
+写 $h=h_S+h_\perp$ 为相对于 $S$ 的正交分解。
+因为 $h_S/\sqrt{\alpha_p}$ 是 $S$ 中单位向量，
+
+$$
+\|\sqrt Fh_S\|^2
+\le\alpha_p\operatorname{Tr}(F\Pi_S)
+\le\frac{\alpha_pe}{s_p}.
+$$
+
+同时 $F\preceq I$ 给
+$\|\sqrt Fh_\perp\|^2\le\|h_\perp\|^2=\beta_p$。于是
+
+$$
+\langle h,Fh\rangle
+=\|\sqrt F(h_S+h_\perp)\|^2
+\le\left(\sqrt{\frac{\alpha_pe}{s_p}}+\sqrt{\beta_p}\right)^2.
+\tag{152.13}
+$$
+
+结合（152.9）、（152.11）即得结论。证明保留了 $F$ 在 $S$ 与其正交补之间的全部交叉项；没有假定解码效果与 $\Pi_S$ 对易。证毕。
+

@@ -1,0 +1,19 @@
+**定义 220.1（顺序风险上界）。** 对每个 $n$，由时间一致区间构造参数盒 $\mathcal B_n$，并令
+
+$$
+\widehat R_n^+
+=
+\sup_{\vartheta\in\mathcal B_n}
+F(\vartheta),
+$$
+
+其中 $F$ 是定理 216.1 的风险泛函。定义停止规则
+
+$$
+\tau_\alpha
+=
+\inf\{n\ge1:\widehat R_n^+\le\alpha\},
+$$
+
+若从未达到阈值则置 $\tau_\alpha=\infty$。停止规则必须对当前样本过滤可测。
+

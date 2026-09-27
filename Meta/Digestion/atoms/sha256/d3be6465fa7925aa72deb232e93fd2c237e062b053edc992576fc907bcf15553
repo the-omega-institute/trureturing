@@ -1,0 +1,10 @@
+### 197.1 过渡函数的远端展开
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，记
+
+$$
+g=|\gamma|,\quad \delta=R-1,\quad\Sigma=R+1,\quad
+a=\frac{g\delta}{4},\quad
+\Phi_\infty=\frac{\beta\Sigma}{8}.
+$$
+

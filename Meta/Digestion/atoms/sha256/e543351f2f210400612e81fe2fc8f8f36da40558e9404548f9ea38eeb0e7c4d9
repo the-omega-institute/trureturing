@@ -1,0 +1,25 @@
+**定理 77.3（统一轮廓存在正幂次速率）。** 存在正有理数 $\alpha>0$、常数 $C>0$ 及 $\varepsilon_0>0$，使
+
+$$
+\sup_{0<a<1}
+\left|
+\frac{e(a,\varepsilon)}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|
+\le C\varepsilon^\alpha
+\qquad(0<\varepsilon<\varepsilon_0).
+\tag{77.6}
+$$
+
+证明。引理 77.2 与定理 76.3 给式（77.5）中被取上确界函数的半代数性；除法只在 $\varepsilon>0$ 上使用，可通过乘法等式定义。对固定 $\varepsilon$，上确界有限：候选过程和修复的迹固定，完整 tester 集紧，而 $\gamma_r\le9/8$。
+
+有限上确界仍有半代数图。具体地，$d=D(\varepsilon)$ 由“$d$ 是所有上述值的上界，且不存在更小的上界”这一有限实变量量词公式定义；Tarski–Seidenberg 消元适用于这份公式。这里没有把开区间 $0<a<1$ 上的上确界偷换为必然达到的最大值。
+
+第 74 节已经独立证明 $D(\varepsilon)\to0$。因此对 $D$ 应用引理 77.1，得到式（77.6），其中可取 $\alpha=1/m$。$\square$
+
+记完整压缩族的最坏归一化误差为
+
+$$
+E_*(\varepsilon)=\sup_{0<a<1}\frac{e(a,\varepsilon)}{\varepsilon}.
+$$
+

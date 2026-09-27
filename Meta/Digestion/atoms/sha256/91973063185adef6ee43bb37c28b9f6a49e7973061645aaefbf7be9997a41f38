@@ -1,0 +1,209 @@
+**定理67.2（内置首轮的中间分叉排除）。** 内置首轮的 $ABCBD$ 模式不能实现七维六终端合同。
+
+**证明。** 以下穷尽交维数与末轮平面相对于共同接收器的全部可能。
+
+#### 67.2.1 只可能有一维或二维输入交
+
+记 $j=\dim(U\cap P)$。（67.18）的维数为 $8-j$，至多七，故
+$$
+j=1\quad\hbox{或}\quad j=2.
+\tag{67.19}
+$$
+跨位正交给 $P\perp Q$、$U\perp Q$。此外，$U\otimes F$ 与
+$V_1G_3=Q_4\otimes C$、$V_1G_5=Q_6\otimes D$ 的跨位正交给
+$$
+U\perp Q_4,\qquad U\perp Q_6.
+\tag{67.20}
+$$
+
+#### 67.2.2 排除 $j=1$
+
+此时（67.18）已七维，所以
+$$
+V_0K=P\otimes B+U\otimes F.
+\tag{67.21}
+$$
+每条非 $B$ 环境射线的接收纤维恰为 $U$：投影到环境 $B^\perp$ 后，非零环境坐标要求接收向量属于 $U$；反向包含来自 $U\otimes F$。由于 $D\ne B$，有
+$$
+G_6=U.
+\tag{67.22}
+$$
+置 $R=P+U$，则 $\dim R=5$，$R\perp Q$ 给
+$$
+K=R\oplus Q.
+\tag{67.23}
+$$
+
+若 $B$ 与 $C,D$ 均非正交，则 $P\otimes B$ 和对应一位像跨位正交给 $P\perp Q_4,Q_6$。结合（67.20）、（67.23），得 $Q_4=Q_6=Q$。因此
+$$
+V_1P=Q\otimes F\supset Q\otimes B=V_1U.
+$$
+固定单射性强迫 $U\subset P$，违反 $j=1$。所以恰有 $C,D$ 中的一条正交于 $B$。$A$ 与这两条及 $B$ 均不同，故 $A$ 不正交于 $B$。
+
+现在 $V_1p=v\otimes A$ 与 $P\otimes B$ 跨位正交，得 $v\perp P$；与整个 $U\otimes F$ 正交，得 $v\perp U$。由（67.23），
+$$
+v\in Q.
+\tag{67.24}
+$$
+
+若 $C\perp B$，固定 $V_1$ 在 $G_3,U$ 上使用正交环境，给 $G_3\perp U$。由于 $H_3\subset G_3\oplus Q$，有 $u\perp H_3$。同时固定零位像
+$V_0H_2=G_3\otimes B$、$V_0H_3=U\otimes C$ 正交，故 $H_2\perp H_3$。实际向量 $a^2u+bv\in H_2$、$b\ne0$ 于是给 $v\perp H_3$。但 $v\in Q$，且实际满投影 $P_QH_3=Q$，只能有 $v=0$，矛盾。
+
+若 $D\perp B$，则 $C$ 不正交于 $B$，同前跨位论证给 $Q_4=Q$。因此
+$$
+H_2,H_4\subset U\oplus Q.
+$$
+它们的零位像分别为 $G_3\otimes B,G_5\otimes B$，总和四维，故
+$$
+H_2+H_4=U\oplus Q.
+\tag{67.25}
+$$
+而 $V_0H_5=U\otimes D$ 与 $P\otimes B$ 正交，故
+$H_5\perp H_2+H_4$，特别 $H_5\perp Q$。这与实际满投影 $P_QH_5=Q$ 矛盾。
+
+两种环境形状均不可能，所以 $j=1$ 被排除。
+
+#### 67.2.3 $U\subset P$ 给共同接收矩形及后期六维域
+
+只余 $j=2$，即 $U\subset P$。固定一位块给
+$$
+V_1P=(Q_4\otimes C)\dotplus(Q_6\otimes D),
+\qquad V_1U=Q\otimes B.
+$$
+$B$ 在 $C,D$ 基中的两个坐标均非零，故逐坐标比较给
+$Q\subset Q_4\cap Q_6$。各空间均二维，所以
+$$
+Q_3=Q_4=Q_5=Q_6=Q,\qquad
+V_1P=Q\otimes F,\qquad P\perp Q.
+\tag{67.26}
+$$
+记满等距 $\mathcal U=V_1|_P$。于是
+$$
+\mathcal UU=Q\otimes B,\quad
+\mathcal UG_3=Q\otimes C,\quad
+\mathcal UG_5=Q\otimes D.
+\tag{67.27}
+$$
+
+实际三个后期域的零位像为
+$$
+V_0H_3=U\otimes C,\qquad
+V_0H_4=G_5\otimes B,\qquad
+V_0H_5=G_6\otimes D.
+\tag{67.28}
+$$
+这三个二维块代数直和，合为六维。确实，在环境基 $B,D$ 中，$C$ 两个坐标均非零；任何和为零的关系，其 $B$ 坐标使 $U$ 中的向量落入 $G_5$。而（67.27）使 $U\cap G_5=0$，所以该向量为零，随后其余两项均零。
+
+三个实际 $H_n$ 均包含于 $P\oplus Q$，因为 $G_3,G_4,G_5\subset P$。因此
+$$
+S_*:=H_3+H_4+H_5=P\oplus Q,\qquad\dim S_*=6.
+\tag{67.29}
+$$
+这一饱和不要求先证明 $G_6=U$，也不要求 $v\in Q$。
+
+#### 67.2.4 排除 $\dim T=3$
+
+反设 $\dim T=3$。将（67.18）与 $G_6\otimes D$ 合并，并在不同的环境射线 $B,D$ 中表达，得到
+$$
+V_0K=(P\otimes B)\dotplus(T\otimes D).
+\tag{67.30}
+$$
+右侧维数 $4+3=7$，故是全域等式。
+
+先证此反设下 $v\notin Q$。若 $v\in Q$，则实际 $H_2\subset U\oplus Q\subset S_*$。连同 $H_4\subset S_*$，其零位像给
+$P\otimes B\subset V_0S_*$。再加 $V_0H_3=U\otimes C$，已六维，所以
+$$
+V_0S_*=P\otimes B+U\otimes C.
+$$
+$G_6\otimes D=V_0H_5$ 也在其中，而 $D\ne B$，逐 $B,C$ 坐标比较即给 $G_6\subset U$，违反 $\dim T=3$。故
+$$
+v\notin Q,\qquad p\notin P.
+\tag{67.31}
+$$
+后一结论来自 $V_1p=v\otimes A$ 及 $V_1P=Q\otimes F$。
+
+置 $R=P+T$。由（67.26）、（67.30）的跨位正交，$R\perp Q$。又 $U\subset P\cap T$，所以 $\dim R\le5$。若 $T\subset P$，则（67.30）使整个 $V_0K\subset P\otimes F$；首轮 $V_0k=p\otimes\eta_1$ 便迫使 $p\in P$，违反（67.31）。所以
+$$
+\dim R=5,\qquad P\cap T=U,\qquad K=R\oplus Q.
+\tag{67.32}
+$$
+
+首轮环境在二维 $F$ 中。比较 $p\otimes\eta_1$ 与（67.30）：若 $\eta_1\parallel B$，就有 $p\in P$；若它既不同于 $B$ 也不同于 $D$，两个环境坐标都非零，就有 $p\in P\cap T=U$。两者都违反（67.31）。因此
+$$
+\eta_1\parallel D,\qquad p\in T\setminus P.
+\tag{67.33}
+$$
+
+还必须有 $D\not\perp B$。否则 $A$ 与两条正交射线 $B,D$ 均不同，故与它们均非正交。$V_1p=v\otimes A$ 与（67.30）的两个零位块跨位正交，给 $v\perp P$ 和 $v\perp T$。由（67.32）得 $v\in Q$，违反（67.31）。
+
+现在 $V_1k=q\otimes\eta_1$ 的环境属于 $D$。它与（67.30）正交，加上 $D\not\perp B$，给
+$$
+q\perp P,\qquad q\perp T,\qquad q\in Q.
+\tag{67.34}
+$$
+而 $V_1G_5=Q\otimes D$，固定单射性立即给
+$$
+k\in G_5\subset P\subset S_*.
+\tag{67.35}
+$$
+
+（67.28）的六维像在环境 $D$ 上的接收纤维恰为 $G_6$。确实，若
+$p'\otimes D=x\otimes C+y\otimes B+z\otimes D$，其中
+$x\in U,y\in G_5,z\in G_6$，比较 $B$ 坐标并使用 $U\cap G_5=0$，得到 $x=y=0$，于是 $p'=z\in G_6$。由 $k\in S_*$ 及 $V_0k=p\otimes\eta_1$，遂有 $p\in G_6$。再用 $V_0H_5=G_6\otimes D$ 与固定单射性，得到 $k\in H_5$。
+
+结合（67.35），非零 $k$ 同时属于 $G_5$ 和 $H_5$，违反实际来源的 $H_5\cap G_5=0$。因此 $\dim T=3$ 被排除。
+
+#### 67.2.5 最后二维形状命中共同退化纤维禁阻
+
+只余
+$$
+G_2=G_4=G_6=U\subset P.
+\tag{67.36}
+$$
+（67.18）此时恰为六维全部尾像。因此结合（67.29），
+$$
+S_0=H_1+\cdots+H_5=S_*=P\oplus Q,\qquad
+V_0S_0=P\otimes B+U\otimes F.
+\tag{67.37}
+$$
+这里没有假定 $v\in Q$；实际 $H_2$ 只保证 $v\in P\oplus Q$。
+
+取单位向量 $\beta$ 表示 $B$，令
+$$
+J=(F\otimes\beta)+(\beta\otimes F),\qquad
+T_0=(\mathcal U\otimes I)V_0|_{S_0},\qquad
+M=(\mathcal U P_P)T_0^{-1}.
+\tag{67.38}
+$$
+$T_0:S_0\to Q\otimes J$ 是满等距，$MM^*=I_{Q\otimes F}$。三个实际后期切面给
+$$
+\begin{aligned}
+M(Q\otimes(\beta\otimes C))&=Q\otimes C,\\
+M(Q\otimes(D\otimes\beta))&=Q\otimes\beta,\\
+M(Q\otimes(\beta\otimes D))&=Q\otimes D.
+\end{aligned}
+\tag{67.39}
+$$
+并且实际 $H_3,H_5$ 均与 $P$ 交零，故 $M$ 在第一或第三切面上都不能保持任何非零输入的范数。
+
+另一方面，实际第二轮
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad u,w\in U
+$$
+向 $P\cap U^\perp$ 的投影秩至多一；而
+$$
+T_0H_2=Q\otimes(C\otimes\beta).
+\tag{67.40}
+$$
+这正是引理66.1所需的秩亏第四切面：通过满等距 $\mathcal U$，投影到 $P\cap U^\perp$ 对应值域 $Q\otimes\beta^\perp$，秩至多一，严格小于 $\dim Q=2$。引理66.1因此在 $T_0H_3$ 或 $T_0H_5$ 中给出非零保范数向量 $x$。
+
+令 $h=T_0^{-1}x$。由 $T_0,\mathcal U$ 满等距和（67.38），有
+$$
+\|P_Ph\|=\|Mx\|=\|x\|=\|h\|.
+$$
+正交投影的等号迫使 $h\in P$，但 $h$ 非零且属于实际 $H_3$ 或 $H_5$，与（67.39）后的交零条件矛盾。
+
+所以最后二维形状也不可能。结合引理67.1的 $\dim(G_2+G_4)=3$ 排除，内置首轮 $ABCBD$ 的所有分支均被排除。证明完毕。
+
+该结论与外置首轮的 $ABCBD$ 排除可合并，得到在二维尾环境中四射线分叉词 $ABCBD$ 无论首轮是否内置均不可能。其他二维尾词仍需各自核验，一般容量区间保持 $7\le d_{\mathrm{CPTP},6}\le8$。
+

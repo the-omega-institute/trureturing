@@ -1,0 +1,56 @@
+### 86.4 非正交分支被三维补空间压成局部禁阻
+
+以下取 $\langle A,B\rangle\ne0$。首先
+
+$$
+v\notin R.
+\tag{86.12}
+$$
+
+否则实际 $V_1p=v\otimes A\in V_1L$ 将给 $p\in L=G_3$。又 $p\in H_1=H_3$，与 $H_3\cap G_3=0$ 及 $p\ne0$ 矛盾。
+
+因为 $P\otimes B\subset V_0K$，它与实际一位像 $R\otimes A$、$\mathbb Cv\otimes A$ 的跨位正交以及 $\langle A,B\rangle\ne0$ 给
+
+$$
+R,v\perp P.
+$$
+
+另一方面，实际零位像 $T\otimes A$ 与相同一位像正交，给 $R,v\perp T$。于是
+
+$$
+N:=R+\mathbb Cv
+$$
+
+为三维，且 $N\perp P,T$。七维预算与 $\dim P=4$ 强制
+
+$$
+K=P\oplus N,\qquad P=N^\perp,\qquad T\subset P.
+\tag{86.13}
+$$
+
+现在
+
+$$
+V_1P=(R\otimes A)\dotplus(Q\otimes B),\qquad
+V_1T=S\otimes B.
+$$
+
+读取 $B$ 纤维得到 $S\subset Q$，二维性使 $S=Q$；固定单射性再给 $T=U$。因此
+
+$$
+G_2=G_4=G_5=T,\qquad G_3=L,\qquad
+Q_3=Q_5=Q_6=Q,\qquad Q_4=R.
+\tag{86.14}
+$$
+
+此外 $Q\perp P$ 来自相同环境 $B$ 上的跨位正交，$R\perp P$ 已由非正交分支得到。第3至第6轮环境为 $(B,A,B,B)$，其中 $A,B$ 不同且内积非零；早期向量满足（86.3）。于是（86.14）及上述正交关系正好满足引理86.2，取其中 $C=A$ 即得矛盾。
+
+正交与非正交两个分支均被排除，定理86.1证明完毕。
+
+这里使矩阵禁阻能够复用的关键，是实际 $H_3=H_1$ 先迫出 $v\notin R$，随后三维补空间将 $T$ 压入同一四维 $P$，而固定一位映射再识别全部必要平面。没有将“射线名字不同”当作矩阵矛盾的数学条件。一般接收容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{86.15}
+$$
+

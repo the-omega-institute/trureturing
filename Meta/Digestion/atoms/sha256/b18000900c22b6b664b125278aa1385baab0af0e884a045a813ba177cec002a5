@@ -1,0 +1,7 @@
+## ST34–ST42 文献
+
+[ST34-BK]: https://arxiv.org/abs/quant-ph/0004088 "H. Barnum and E. Knill, Reversing quantum dynamics with near-optimal quantum and classical fidelity, J. Math. Phys. 43, 2097–2106 (2002), DOI 10.1063/1.1459754. Prior transpose-channel construction; the general approximate-fidelity theorem is not reproved here."
+[ST34-NS]: https://arxiv.org/abs/quant-ph/0605041 "Ashwin Nayak and Pranab Sen, Invertible Quantum Operations and Perfect Encryption of Quantum States, Quantum Information and Computation 7(1&2), 103–110 (2007), DOI 10.26421/QIC7.1-2-6. Theorem 2.1 and its proof give the classical reversible-channel normal form."
+[ST34-Control]: https://arxiv.org/abs/1309.7976 "Mateus Araújo, Adrien Feix, Fabio Costa and Časlav Brukner, Quantum circuits cannot control unknown operations, New J. Phys. 16, 093026 (2014), DOI 10.1088/1367-2630/16/9/093026. General no-control result; ST41.2 gives its elementary phase obstruction."
+
+---

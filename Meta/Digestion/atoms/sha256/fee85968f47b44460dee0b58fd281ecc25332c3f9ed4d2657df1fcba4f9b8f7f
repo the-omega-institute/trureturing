@@ -1,0 +1,76 @@
+### 56.3 正方向压缩的精细概率界
+
+令
+
+$$
+\rho=Q_+SQ_+,\qquad
+q=\frac{x+\sqrt\varepsilon\,z}{\sqrt{1+\varepsilon}},
+\qquad P=Q_+-|q\rangle\langle q|,
+\qquad k=\operatorname{Tr}(P\rho).
+$$
+
+由式（56.8），$\rho\succeq0$、$\operatorname{Tr}\rho=1$。算符
+
+$$
+H_+=Q_+(R_\varepsilon-S)Q_+
+=(1+\varepsilon)|q\rangle\langle q|-\rho
+$$
+
+的迹为 $\varepsilon$。其正谱事件合法，式（56.9）给
+
+$$
+\operatorname{Tr}(H_+)_-
+=\operatorname{Tr}(H_+)_+-\varepsilon\le\eta.
+$$
+
+因为 $Pq=0$，
+
+$$
+k=-\operatorname{Tr}(PH_+)
+\le\operatorname{Tr}(H_+)_-\le\eta.
+\tag{56.10}
+$$
+
+令 $B_{00}=|0,0\rangle\langle0,0|\otimes I_D$，并记
+
+$$
+s=\sigma_{00}=\operatorname{Tr}(B_{00}\rho),
+\qquad t=\langle q|B_{00}|q\rangle=\frac1{1+\varepsilon}.
+$$
+
+$B_{00}$ 是包含于 $Q_+$ 的投影，因此
+
+$$
+\|PB_{00}q\|^2=t(1-t).
+$$
+
+按 $q\oplus q^\perp$ 对 $\rho$ 分块。其 $q$ 对角块为 $1-k$，正的补块迹为 $k$。正性矩阵元界给交叉项的绝对值不超过
+$\sqrt{(1-k)t(1-t)k}$，而补块对 $B_{00}$ 的响应不超过 $k$。因此
+
+$$
+\begin{aligned}
+s
+&\le(1-k)t+2\sqrt{(1-k)t(1-t)k}+k\\
+&\le t+(1-t)\eta+2\sqrt{t(1-t)\eta}\\
+&=t+\frac{\varepsilon\eta}{1+\varepsilon}
++\frac{2\sqrt{\varepsilon\eta}}{1+\varepsilon}.
+\end{aligned}
+\tag{56.11}
+$$
+
+交叉项界可直接写成
+$|\langle q|\rho PB_{00}|q\rangle|^2
+\le\langle q|\rho|q\rangle
+\langle PB_{00}q|\rho|PB_{00}q\rangle
+\le(1-k)t(1-t)k$；不需要对补块作交换性假设。
+
+另一个关键界保留了实际坐标 $x$。$B_{00}-|x\rangle\langle x|$ 是 $q$ 正交补内的投影，故
+
+$$
+0\le s-\langle x|S|x\rangle
+\le k\le\eta.
+\tag{56.12}
+$$
+
+因果偏迹仍给 $S_{xx},S_{yy}\le s$，因此 $|S_{xy}|\le s$。
+

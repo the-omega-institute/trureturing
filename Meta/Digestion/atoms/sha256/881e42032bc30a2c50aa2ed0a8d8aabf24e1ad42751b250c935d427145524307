@@ -1,0 +1,80 @@
+## 422. 任意有限源记录的接受映射递归、紧性与固定深度零误差极限
+
+操作与坐标约定。固定整数 $d\ge1$、$k\ge1$ 和 $d_a\ge1$，令
+
+$$
+S=\mathbb C^d,\qquad R_a=\mathbb C^{d_a},\qquad
+R=\bigotimes_{a=1}^kR_a,\qquad D_R=\prod_{a=1}^kd_a.
+$$
+
+在原始物理记录空间 $R$ 中固定归一化向量 $q_1,\ldots,q_d$，并以
+
+$$
+J:S\longrightarrow S\otimes R,\qquad
+J|i\rangle=|i\rangle\otimes q_i
+$$
+
+完成记录准备。各 $q_i$ 可以纠缠、重复，也不必张成 $R$。准备本身所提供的记录纠缠属于这个固定输入，不是另行供应的共享辅助资源。未知系统输入可与任意有限维参考 $F$ 纠缠，准备为 $(\operatorname{id}_F\otimes J)X_{FS}(\operatorname{id}_F\otimes J)^\dagger$；下述协议与反馈不依赖这个未知输入。记录的物理分割始终是原来的 $R_a$，不因源向量的张成空间较小而获得联合压缩或联合测量权限。
+
+每个协议是一棵各自有限的树，每个非终端节点由一位持有者在当前有限维可访问工作空间上执行有限实际结果的 CP instrument，其总和在整个工作空间上保迹。允许任意有限私有经典或量子记忆、重复访问、局部丢弃、粗粒 CP 结果、实际取得后又被遗忘的结果、零 CP 结果、单结果通道、提前停止和不等叶深。初始辅助态与整个未知输入及参考独立，并在持有者之间为乘积态；禁止额外共享纠缠及量子通信。下一操作方和设置由固定策略根据真正取得且当时可用的信息选择。在记录树结束前不操作 $S$，参考始终不被操作。
+
+最终实际标签 $y$ 指定是否接受，以及一个作用于整个 $S$ 的酉矩阵 $U_y\in U(d)$。并入同一标签的真实历史、隐藏 Kraus 指标和任何数学分解项共用这一反馈。逐历史迹掉全部记录输出及记忆后，在系统矩阵空间中相加，得到聚合接受映射 $\mathcal T$；所有失败仍属于完整仪器。没有免费的初始策略抽签、首位持有者抽签或终端接受／反馈抽签；若使用局部硬币，其 instrument 也占一个节点。深度定义为每条根至叶路径上的局部 instrument 节点数的最大值，单结果通道也计数；纯经典通信、记账与最后一次系统酉反馈不另加这种节点。零深度协议可以直接拒绝，或直接施加一个固定终端酉矩阵。
+
+记 $\mathcal A_n$ 为上述深度至多 $n\in\mathbb N_0$ 的协议所能给出的全部聚合接受系统映射。对原始记录空间上的任意 $E\succeq0$，定义
+
+$$
+\Phi_E(E_{ij})=\langle q_j|E|q_i\rangle E_{ij},
+\qquad E_{ij}=|i\rangle\langle j|,
+\qquad \operatorname{Ad}_U(X)=UXU^\dagger.
+$$
+
+使用未归一化 Choi 坐标
+
+$$
+\begin{aligned}
+C(\mathcal T)&=\sum_{i,j=1}^dE_{ij}\otimes\mathcal T(E_{ij}),\\
+|\Omega\rangle&=\sum_{i=1}^d|ii\rangle,\qquad
+C(\operatorname{id}_S)=|\Omega\rangle\langle\Omega|,\qquad
+M=\dim_{\mathbb R}\operatorname{Herm}(\mathbb C^{d^2})=d^4.
+\end{aligned}
+$$
+
+这里保留整个接受 Choi 矩阵，不只保留某个成功率或保真度。线性映射等式均指全部 $\mathcal L(S)$ 上的等式，因而也指张量上每个有限维 $\operatorname{id}_F$ 后的等式。
+
+为给出递归，令
+
+$$
+\mathcal D_a=\{\rho_a\in\operatorname{Herm}(R_a):\rho_a\succeq0,
+                    \operatorname{Tr}\rho_a=1\},\qquad
+\mathcal D=\prod_{a=1}^k\mathcal D_a,
+\qquad B_a=d^4+d_a^2.
+$$
+
+用 $\rho[a\leftarrow\sigma]$ 表示只将元组 $\rho=(\rho_1,\ldots,\rho_k)$ 的第 $a$ 项换成 $\sigma$，用 $\Delta_B$ 表示 $B$ 项概率单纯形。定义集合值递归
+
+$$
+\begin{aligned}
+K_0(\rho)
+ &=\{0\}\cup
+   \{C(\operatorname{Ad}_U\circ\Phi_{\bigotimes_a\rho_a}):U\in U(d)\},\\
+K_n^a(\rho)
+ &=\left\{\sum_{j=1}^{B_a}\lambda_jZ_j:
+     \lambda\in\Delta_{B_a},\ \sigma_j\in\mathcal D_a,
+     \ \sum_{j=1}^{B_a}\lambda_j\sigma_j=\rho_a,
+     \ Z_j\in K_n(\rho[a\leftarrow\sigma_j])\right\},\\
+K_{n+1}(\rho)&=\bigcup_{a=1}^kK_n^a(\rho).
+\end{aligned}
+$$
+
+零权重用于补齐短列表。$K_0$ 没有取凸包，操作方的并集也没有取凸包；只有同一位持有者一次实际分支内的上述重心组合得到许可。
+
+对于一个非零正乘积效果，写
+
+$$
+E=\bigotimes_aA_a=t\bigotimes_a\rho_a,\qquad
+\alpha_a=\operatorname{Tr}A_a>0,\qquad
+\rho_a=A_a/\alpha_a,\qquad t=\operatorname{Tr}E=\prod_a\alpha_a.
+$$
+
+以这些因子为根的完整效果树，是每次只将一个因子作有限正分裂 $A_a=\sum_jA_{a,j}$、其他因子保持不变，并在终端指定接受与一个系统酉矩阵的有限树；零效果节点只须终止。根边界在这里是形式累计边界，不宣称任意 $E$ 都能免费准备或已被某个物理前缀到达。其接受 Choi 值是接受叶子 $\ell$ 的 $C(\operatorname{Ad}_{U_\ell}\circ\Phi_{E_\ell})$ 之和。完整性包括全部失败叶子，并在整个原始 $R$ 上成立。
+

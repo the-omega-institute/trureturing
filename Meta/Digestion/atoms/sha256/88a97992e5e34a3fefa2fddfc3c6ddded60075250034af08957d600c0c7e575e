@@ -1,0 +1,2 @@
+**定义 401.1（边缘规律的收缩系数）。** 对有限核 $Q$ 定义 $\alpha(Q)=\max_{b,b'}\operatorname{TV}(Q_b,Q_{b'})$。设 $\nu_t=\mathcal L(Y_t)$、$\widehat\nu_t=\mathcal L(\widehat Y_t)$、$d_t=\operatorname{TV}(\nu_t,\widehat\nu_t)$，仍采用第 400 节的共同模型和一步误差假设。这里比较的是时刻 $t$ 的分布，过去路径不在目标之内。
+

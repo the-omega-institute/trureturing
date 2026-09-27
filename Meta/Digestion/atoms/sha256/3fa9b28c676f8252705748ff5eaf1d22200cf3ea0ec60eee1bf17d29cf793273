@@ -1,0 +1,47 @@
+**引理 233.2。** 设 $H,A$ 是同一有限维空间上的 Hermitian 矩阵。对足够小的正负实数 $t$，令
+$$
+S_t=(I+tA)^{1/2}.
+$$
+则
+$$
+\boxed{\left.\frac d{dt}\right|_{t=0}\|S_tHS_t\|_1
+=\operatorname{Tr}(A|H|).}
+\tag{233.FF.20}
+$$
+不要求 $H$ 可逆、无重根，也不要求 $A$ 与 $H$ 交换。
+
+**证明。** 将 $H$ 分为正负部 $H=H_+-H_-$，两者均正半定。由三角不等式，
+$$
+\begin{aligned}
+\|S_tHS_t\|_1
+&\le\operatorname{Tr}(S_tH_+S_t)+\operatorname{Tr}(S_tH_-S_t)\\
+&=\operatorname{Tr}(S_t^2|H|)\\
+&=\operatorname{Tr}|H|+t\operatorname{Tr}(A|H|).
+\end{aligned}
+\tag{233.FF.21}
+$$
+这是精确线性上界。
+
+令 $Z=\operatorname{sign}H$，在 $H$ 的零本征空间上取零。于是 $\|Z\|_{\rm op}\le1$、$ZH=HZ=|H|$。迹范数对偶性给
+$$
+\|S_tHS_t\|_1\ge\operatorname{Tr}(ZS_tHS_t).
+\tag{233.FF.22}
+$$
+在 $A$ 的固定本征基中逐项展开平方根，可得算子范数意义下
+$$
+S_t=I+\frac t2A+O(t^2).
+$$
+因此
+$$
+\begin{aligned}
+\operatorname{Tr}(ZS_tHS_t)
+&=\operatorname{Tr}(ZH)
++\frac t2\operatorname{Tr}[Z(AH+HA)]+O(t^2)\\
+&=\operatorname{Tr}|H|+t\operatorname{Tr}(A|H|)+O(t^2).
+\end{aligned}
+\tag{233.FF.23}
+$$
+（233.FF.21）与（233.FF.22）—（233.FF.23）在 $t$ 的两侧夹出同一个一阶项，故导数存在并等于（233.FF.20）。零本征空间已包含在符号算子定义中，没有遗漏其可能的贡献。$\square$
+
+这一证明只对正定因子 $I+tA$ 展开；没有对 $|H|$ 在零本征值处求通常的标量导数。
+

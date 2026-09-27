@@ -1,0 +1,93 @@
+### 162.5 从共同投影和统一稳定收缩取得合同
+
+下面给出固定来源的一组有限矩阵足够条件，使（162.3）及联合连续读出可以直接由物理装置得到。它们比仅有装置维数相同或特征值连续更强。
+
+保持同一非退化来源 $T$ 和同一 $K=\mathbb C^D$。假设
+$t\mapsto\omega_t$ 是连续的独立纯初态族，
+$t\mapsto J(\mathcal C_t)$ 是连续的全域 CPTP 接收通道族。
+记实际演化与初始化为
+
+$$
+\mathcal F_t=
+(\operatorname{id}_M\otimes\mathcal C_t)
+\operatorname{Ad}_{T\otimes I_K},
+\qquad
+\mathcal E_t(X)=X\otimes\omega_t.
+\tag{162.15}
+$$
+
+所有矩阵均可直接放在固定空间
+$\mathscr V=\mathcal L(M\otimes K)$ 上；也可使用一个对全部参数不变、包含全部初始化像的共同不变子空间。
+
+设已经给出连续投影族 $P_j(t)$ 和连续相位 $\lambda_j(t)$，满足
+
+$$
+P_i(t)P_j(t)=\delta_{ij}P_j(t),
+\qquad
+|\lambda_j(t)|=1,
+$$
+
+$$
+\mathcal F_tP_j(t)=P_j(t)\mathcal F_t
+=\lambda_j(t)P_j(t).
+\tag{162.16}
+$$
+
+投影不要求正交。置
+$\Pi_t=\sum_jP_j(t)$、
+$Q_t=I-\Pi_t$。
+要求存在与参数无关的整数 $L\ge1$ 及 $0<\kappa<1$，使
+
+$$
+\|\mathcal F_t^L X\|_{\mathrm{HS}}
+\le\kappa\|X\|_{\mathrm{HS}}
+\quad
+(t\in P,\ X\in\operatorname{ran}Q_t).
+\tag{162.17}
+$$
+
+这是明确的有限矩阵不等式。例如在固定 Hilbert–Schmidt 坐标下，它等价于
+
+$$
+Q_t^*
+\left[\kappa^2I-(\mathcal F_t^L)^*\mathcal F_t^L\right]
+Q_t\succeq0
+\quad(t\in P),
+\tag{162.18}
+$$
+
+这里星号表示线性算子的 Hilbert–Schmidt 伴随。
+
+最后要求完整共同相位关系已经核实：
+
+$$
+g_t=(\lambda_1(t),\ldots,\lambda_s(t)),
+\qquad
+\overline{\{g_t^n:n\ge0\}}=G
+\quad\text{对同一个固定 }G.
+\tag{162.19}
+$$
+
+按第157节，这等价于完整整数关系格
+$\{k:\prod_j\lambda_j(t)^{k_j}=1\}$
+与参数无关。仅展示若干共同关系不够，还须排除参数点上新增的关系。
+
+定义
+
+$$
+\Phi_j(t)=P_j(t)\mathcal E_t,
+\qquad
+\mathcal R_{t,z}=\sum_jz_j\Phi_j(t),
+$$
+
+$$
+B=
+\sup_{t\in P}\max_{0\le r<L}
+\left\|
+J\!\left(\mathcal F_t^rQ_t\mathcal E_t\right)
+\right\|_{\mathrm{HS}}.
+\tag{162.20}
+$$
+
+这里 Choi 矩阵仍按第153节不归一化。连续性与紧性保证 $B<\infty$；实际定量使用可以给出并证明一个上界代替其精确值。
+

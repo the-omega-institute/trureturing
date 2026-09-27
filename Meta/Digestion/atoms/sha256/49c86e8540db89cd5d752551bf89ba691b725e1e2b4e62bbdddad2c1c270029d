@@ -1,0 +1,83 @@
+### 272.6 产品端点及其锐平方根恢复界
+
+当 $t=0$，
+$$
+M_0=I_n,\qquad Q(0)=\frac12I_n,
+$$
+$$
+\Omega_0=|a\rangle\langle a|\otimes\frac1nI_n,
+\qquad
+|a\rangle=\frac{|y_+\rangle+|y_-\rangle}{\sqrt2},
+\qquad \rho_0=K_0=\frac1nI_n.
+\tag{272.47}
+$$
+$a$ 在当前输入 $Y$ 基中的坐标为 $(1,1)/\sqrt2$，并非 $Y$ 的正本征态；沿用既定基相位，它对应原 $Z$ 基的 $|0\rangle$。
+
+对任意合法竞争态 $\Xi$，令
+$$
+\varepsilon=
+\|\rho_\Xi-\rho_0\|_1+\|K_\Xi-\rho_0\|_1,
+\qquad
+P=|a\rangle\langle a|\otimes I_n.
+\tag{272.48}
+$$
+理想输入支撑外的质量为
+$$
+u=\operatorname{Tr}((I-P)\Xi)
+=\frac{1-\operatorname{Re}\operatorname{Tr}K_\Xi}{2}
+\le\frac{\varepsilon}{2}.
+\tag{272.49}
+$$
+直接压缩得到
+$$
+P\Xi P=|a\rangle\langle a|\otimes A,
+\qquad
+A=\frac{\rho_\Xi+\operatorname{Re}K_\Xi}{2},
+\qquad
+\operatorname{Re}K=\frac{K+K^\dagger}{2}.
+\tag{272.50}
+$$
+所以 $\|A-\rho_0\|_1\le\varepsilon/2$。§265的未归一化投影估计给
+$$
+\begin{aligned}
+\|\Xi-\Omega_0\|_1
+&\le\|\Xi-P\Xi P\|_1+\|A-\rho_0\|_1\\
+&\le2\sqrt u+\frac{\varepsilon}{2}\\
+&\le\sqrt{2\varepsilon}+\frac{\varepsilon}{2}.
+\end{aligned}
+\tag{272.51}
+$$
+当 $\varepsilon\le1$ 时，右侧至多为 $2\sqrt\varepsilon$；更大误差使用状态迹距上界二。因此
+$$
+\boxed{
+\|\Xi-\Omega_0\|_1\le\min\{2,2\sqrt\varepsilon\}.
+}
+\tag{272.52}
+$$
+这个上界允许任意边缘噪声和全部合法竞争态。
+
+为证明指数最优，取与 $a$ 正交的
+$$
+|b\rangle=\frac{|y_+\rangle-|y_-\rangle}{\sqrt2},
+\qquad
+|\phi_h\rangle=\sqrt{1-h^2}|a\rangle+h|b\rangle,
+$$
+$$
+\Xi_h=|\phi_h\rangle\langle\phi_h|\otimes\frac1nI_n,
+\qquad0<h<1.
+\tag{272.53}
+$$
+它们具有精确共同边缘，且
+$$
+K_{\Xi_h}=(1-2h^2)\rho_0,\qquad
+\varepsilon_h=2h^2,\qquad
+\|\Xi_h-\Omega_0\|_1=2h.
+\tag{272.54}
+$$
+最后一个等式来自纯输入态的重叠
+$|\langle a,\phi_h\rangle|^2=1-h^2$ 及参考态迹一。任何大于 $1/2$ 的局部指数都被该族排除。结合（272.52），得到
+$$
+\boxed{\Omega_0\text{ 的完整数据最优局部指数为 }1/2.}
+\tag{272.55}
+$$
+

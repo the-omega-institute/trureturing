@@ -1,0 +1,67 @@
+**定理 231.2（策略轨迹的占用加权失配界）。** 对长度为 $H$ 的策略轨迹分布 $\mathbb P^\pi$ 与 $\bar{\mathbb P}^\pi$，有
+
+$$
+\boxed{
+D_{\mathrm{TV}}(\mathbb P^\pi,\bar{\mathbb P}^\pi)
+\le
+\sum_{t=0}^{H-1}
+\int_{\mathsf H_t}
+\mu_t(dh)
+\sum_a\pi_t(a\mid h)\kappa_{t,h,a}.
+}
+\tag{231.1}
+$$
+
+因此，对任意终端记录函数 $F$ 满足 $0\le F\le1$，有
+
+$$
+\boxed{
+\left|
+\mathbb E_{\mathbb P^\pi}F
+-
+\mathbb E_{\bar{\mathbb P}^\pi}F
+\right|
+\le
+\sum_{t=0}^{H-1}
+\mathbb E_{h\sim\mu_t}
+\sum_a\pi_t(a\mid h)\kappa_{t,h,a}.
+}
+\tag{231.2}
+$$
+
+### 证明
+
+把真实与名义轨迹核写成乘积，并作望远镜展开：
+
+$$
+\begin{aligned}
+&\mu_0K_0^\pi\cdots K_{H-1}^\pi
+-
+\mu_0\bar K_0^\pi\cdots\bar K_{H-1}^\pi\\
+&=
+\sum_{t=0}^{H-1}
+\mu_0K_0^\pi\cdots K_{t-1}^\pi
+(K_t^\pi-\bar K_t^\pi)
+\bar K_{t+1}^\pi\cdots\bar K_{H-1}^\pi.
+\end{aligned}
+$$
+
+概率核在迹范数或全变差距离下是收缩的，所以第 $t$ 项的范数不超过
+
+$$
+\int\mu_t(dh)
+D_{\mathrm{TV}}(K_t^\pi(h,\cdot),\bar K_t^\pi(h,\cdot)).
+$$
+
+全变差的凸性给出
+
+$$
+D_{\mathrm{TV}}(K_t^\pi(h,\cdot),\bar K_t^\pi(h,\cdot))
+\le
+\sum_a\pi_t(a\mid h)\kappa_{t,h,a}.
+$$
+
+对 $t$ 求和即得（231.1）。对 $[0,1]$ 值函数，积分差的绝对值不超过全变差距离，得到（231.2）。证毕。
+
+式（231.1）中的权重是由真实前缀产生的策略占用，而不是事后挑选的最坏动作。若目标任务要求所有来源、所有历史同时成立，则可以把积分替换为对应的上确界；那是量词变强后的合同，不是同一个统计读数。
+

@@ -1,0 +1,102 @@
+**证明。**
+令 $\Delta\Phi''=\Phi_I''(h_b)-\Phi_A''(h_b)$，
+$\Delta Q'=Q_I'(h_b)-Q_A'(h_b)$。
+在 $\epsilon=0$，内侧分支消去自由的 $t$，
+外侧分支固定 $t=0$。
+由（211.20），约化 Hessian 的 Schur 补直接给
+
+$$
+\begin{aligned}
+\Delta\Phi''
+&=-\frac{q_{ht}(0,h_b,0)^2}{q_{tt}(0,h_b,0)}
+=-\frac{4(m_bm_b')^2}{D_b}\\
+&=-\frac{s^2(R-1)(4-s)^4}
+{72\beta R\,\mathcal D}<0.
+\end{aligned}
+\tag{211.39}
+$$
+
+最后一步使用
+$D_b=\mathcal D/[8\beta R(R-1)]$。
+这独立保证位移分母非零。
+
+为核对完整二阶系数的导数差，记 $g=\gamma/\beta$，
+并把第206节的 $Q$ 暂看成光滑变量 $(h,m,n)$ 的函数：
+在其中使用
+$\theta=\gamma(R+1)/2+\beta(R-1)n$
+和 $\Phi=F_h(m,n)$。
+接触点满足 $m_b=s/2,n_b=g/2$，且
+$\partial_mF_h=\partial_nF_h=0$。
+
+令
+$\alpha=s(4-s)/(8\beta R)$、
+$\zeta=g/[\beta(R-1)]$。
+对（211.17）在 $t=0$ 微分，得到
+
+$$
+\rho_A'(h_b)=\frac{s(R-1)(4-s)^2}{3\mathcal D},\qquad
+m_I'-m_A'=\alpha\rho_A',\qquad
+n_I'-n_A'=\zeta\rho_A'.
+\tag{211.40}
+$$
+
+两侧共同的显式 $h$ 偏导相消，所以
+$\Delta Q'=\rho_A'(\alpha Q_m+\zeta Q_n)$。
+直接微分（206.7）—（206.8），在接触点得到
+
+$$
+\begin{aligned}
+Q_m&=\frac{\beta^2Rs}{3(4-s)}
+\left[-4(R-1)-4(R+1)s-2(R+1)s^2+(R+2)s^3\right],\\
+Q_n&=-\frac{\beta^2g(R-1)}8
+\left[(R-1)s^2+6R+2\right].
+\end{aligned}
+\tag{211.41}
+$$
+
+例如 $n$ 偏导中
+$L_{s,n}=L_{d,n}=0$、
+$T_{s,n}=\beta g(R-1)s$、
+$a_{{\rm eff},n}=-\beta(R-1)g$、
+$\theta_n=\beta(R-1)$；
+这些直接给第二式。
+第一式由同一 $Z-a_{\rm eff}^2/4-\theta^2m^2$ 的 $m$ 偏导取得。
+使用 $g^2=1-s^2$ 合并，即得
+
+$$
+\alpha Q_m+\zeta Q_n=-\frac{\beta}{24}P_R(s),\qquad
+\Delta Q'
+=-\frac{\beta s(R-1)(4-s)^2}{72\mathcal D}P_R(s).
+\tag{211.42}
+$$
+
+令 $h_b(\epsilon)=h_b+k\epsilon+O(\epsilon^2)$。
+将（211.35）的 $h$ 导数代入精确相接（211.34）。
+两侧 $\Phi'$ 在接触点相同，故
+
+$$
+0=\epsilon^2(\Delta\Phi''\,k+\Delta Q')+O(\epsilon^3).
+$$
+
+于是 $k=-\Delta Q'/\Delta\Phi''$；
+代入（211.39）、（211.42）得到（211.37）。
+
+最后，严格正性来自恒等分解
+
+$$
+\begin{aligned}
+P_R(s)
+={}&s^2\left[
+4(R-1)+4(R+1)s+2(R+1)s^2-(R+2)s^3
+\right]\\
+&+3(1-s^2)\left[(R-1)s^2+6R+2\right].
+\end{aligned}
+\tag{211.43}
+$$
+
+第一行括号中的最后两项为
+$s^2[2(R+1)-(R+2)s]>Rs^2>0$，
+其余项也为正。因此 $P_R(s)>0$，
+有限小噪声下的精确秩切换位置严格向较小 $h$ 移动。
+乘以 $\epsilon$ 得（211.38）。证毕。
+

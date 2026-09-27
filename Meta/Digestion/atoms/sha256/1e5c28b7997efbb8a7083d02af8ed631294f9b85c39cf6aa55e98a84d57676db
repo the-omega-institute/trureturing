@@ -1,0 +1,29 @@
+**定义 162.1（单步最优通道的重复使用）。** 沿用定义161.1的已校准三标签记录源、固定未知相位、新鲜空白记录单元与无中间控制合同，以及定义161.2的距离 $d_{\rm ref}$ 和逐视界预测半径 $\mathcal R_N(r)$。所有预测通道均作用于同一个系统代数 $B(\mathbb C^3)$，没有额外的持久记忆寄存器。令
+$$
+\mathfrak F_1(r)=
+\left\{\mathcal F\ \mathrm{CPTP}:
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi},\mathcal F)
+=\mathcal R_1(r)\right\}.
+\tag{162.1}
+$$
+该集合由定理161.3非空。定义
+$$
+\mathcal E_N(r)=
+\inf_{\mathcal F\in\mathfrak F_1(r)}
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F^{N}),
+\qquad N\ge1,\qquad \mathcal E_0(r)=0.
+\tag{162.2}
+$$
+下确界允许 $\mathcal F$ 随 $(r,N)$ 选择，但每次必须达到单步最优，并在这 $N$ 步中重复使用同一通道。真实源也在全部步骤保留同一个 $\phi$。本定义没有给未知参数赋予概率先验。
+
+对 $1/\sqrt3<r<1$，简记
+$$
+\alpha=\alpha(r)\in(0,\pi/2),\qquad
+c=\cos\alpha=\frac{3r^2-1}{2r^3}\in(0,1),\qquad
+\mathcal F_*(A)=C(r,c)\odot A.
+\tag{162.3}
+$$
+由式（161.8），$\mathcal F_*\in\mathfrak F_1(r)$。它等于 $\mathcal M_{r,\alpha}$ 与 $\mathcal M_{r,-\alpha}$ 的等权混合。这里的混合给出一个合法预测器，并不把真实未知源改成每步独立抽样的源。
+

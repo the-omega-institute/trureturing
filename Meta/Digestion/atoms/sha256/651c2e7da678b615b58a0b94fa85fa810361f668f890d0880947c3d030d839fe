@@ -1,0 +1,156 @@
+**证明。** 先证明增长核心维数下的有限反射 TV 界。
+在 $R_c$ 核心内，(69.11) 的精度给
+
+```math
+f_j=\frac{e^{-\kappa x_j^2/2}}{2\pi\lambda\sqrt{ab}}
+ \left[1+O\{\lambda^{-1/2}(1+R_c)^3+(\alpha-P/Q)(1+R_c)^2\}\right].
+```
+
+式 (69.19)。
+
+最小期望占据数至少为 $c(q/\lambda)e^{-CR_c^2}\ge e^{c_q\lambda/2}$，最终成立。
+对相对误差阈值 $Q^{-10}$ 使用 (69.7) 及 $m_M=O(\sqrt Q\sqrt{\log Q})$ 次并集界，
+其失败概率至多
+$CQ^{20}m_M\{(\min_j\overline C_j)^{-1}+\lambda^3/M\}=o(1)$。
+共同 logistic 倾斜满足 $|\theta_M|\le1$ 的概率趋一；
+$|\log[p_j(1-p_j)]-\log[p_{-j}(1-p_{-j})]|\le|W_j-W_{-j}|$，
+所以该共同倾斜不会制造额外反射误差。
+在好数据集上可取
+
+```math
+\min_{\mathcal K_M}d_j\ge e^{c_q\lambda/3},\quad
+\sum_{\mathcal K_M}v_j\le C,\quad
+\max_{\mathcal K_M}|v_j/v_{-j}-1|\le C\alpha_M,
+```
+
+```math
+\alpha_M=\lambda^{-1/2}(1+R_c)^3+Q^{-10}
+            +(\alpha-P/Q)(1+R_c)^2+\chi_M,
+\qquad m_M\alpha_M^2\to0,\qquad m_Me_M^2\to0.
+```
+
+式 (69.20)。
+
+最后两个界分别至多为 $O(Q^{-5/2}(1+\log Q)^{7/2})+o(1)$
+与 $O(Q^{-9/2}\sqrt{1+\log Q})+o(1)$。
+仅有逐坐标方差比趋一不足以代替它们。
+
+给出所需的定量 Gaussian 耦合。
+方差为 $d\ge1$ 的标准化 Bernoulli 和 $Z$ 由局部 CLT 及在 $[-d^{1/6},d^{1/6}]$
+上的格点求和得到 Kolmogorov 误差 $Cd^{-1/3}$；区间外用 Chebyshev，且 $\mathbb EZ^4\le4$。
+对其单调分位数耦合的标准 Gaussian $G$，若 $\epsilon=Cd^{-1/3}$，
+积分分布函数差并用四阶尾界给
+$\mathbb E|Z-G|\le2T\epsilon+CT^{-3}$。
+取 $T=\epsilon^{-1/4}$，再在 $L^1,L^4$ 间插值得
+$\mathbb E|Z-G|^2\le Cd^{-1/6}$。
+独立地耦合辅助核心群组，得到同一空间上的独立 $G_j\sim N(0,v_j)$，满足
+
+```math
+\mathbb E_{\mathsf Q}\|U-G\|_2^2
+ \le C\sum_{\mathcal K_M}v_jd_j^{-1/6}\le Ce^{-c_q\lambda/18},
+\qquad \mathbb E_{\mathsf Q}\|U-G\|_2\le Ce^{-c_q\lambda/36}.
+```
+
+式 (69.21)。
+
+维数已由总方差和支付。
+Gaussian 平移公式和混合凸性给任意有限维耦合 $H,K$ 的经典平滑界
+
+```math
+d_{\mathrm{TV}}(\mathcal L(H+\sigma\xi),\mathcal L(K+\sigma\xi))
+ \le\frac{\mathbb E\|H-K\|_2}{\sqrt{2\pi}\sigma}.
+```
+
+式 (69.22)。
+
+精确中心位移在两端都保留：取 $H=U-e,K=G-e$。
+设 $\nu_M=\mathcal L(X\mid\mathscr X_M)$，参考律为
+
+```math
+P_M^G=\bigotimes_{j\in\mathcal K_M}N(-e_j,v_j+\sigma_M^2),\qquad
+ d_{\mathrm{TV}}(\nu_M,P_M^G)\le\tau_M+\eta_M^{\mathrm{sm}},
+\quad \eta_M^{\mathrm{sm}}=C\sigma_M^{-1}e^{-c_q\lambda/36}\to0.
+```
+
+式 (69.23)。
+
+指数噪声时，剩余指数为 $1/36-1/100=4/225>0$。
+若把精确中心误差直接除以该噪声，则本证明不成立；(69.23) 没有作这种替换。
+
+一维正方差 Gaussian 的亲和度为
+
+```math
+\operatorname{Aff}(N(\mu,w),N(\mu',w'))
+ =\left(\frac{2\sqrt{ww'}}{w+w'}\right)^{1/2}
+          \exp\left[-\frac{(\mu-\mu')^2}{4(w+w')}\right].
+```
+
+式 (69.24)。
+
+独立乘积的亲和度相乘。
+增加共同噪声方差只减小相对方差差，(69.20) 使反射方差的总负对数亲和度为 $O(m_M\alpha_M^2)$。
+精确均值的反射差则满足
+
+```math
+\sum_{\mathcal K_M}
+ \frac{(e_j-e_{-j})^2}{v_j+v_{-j}+2\sigma_M^2}
+ \le C m_M e_M^2.
+```
+
+式 (69.25)。
+
+由 $d_{\mathrm{TV}}\le\sqrt{1-\operatorname{Aff}^2}$ 及三角不等式，
+
+```math
+\Delta_M:=d_{\mathrm{TV}}(\nu_M,\mathcal R_\#\nu_M)
+ \le2\tau_M+2\eta_M^{\mathrm{sm}}
+                 +C\sqrt{m_M}(\alpha_M+e_M)\to0.
+```
+
+式 (69.26)。
+
+坏数据上只用 $\Delta_M\le1$，所以数据概率与先验平均收敛同时成立。
+
+还须将带噪核心符号接回原完整偶极。
+令 $D_X=\sum_{\mathcal K_M}x_jX_j$，
+$L_M^{(2)}=\sum_{j\notin\mathcal K_M}x_j^2v_j$ 与
+$N_M^{(2)}=\sigma_M^2\sum_{\mathcal K_M}x_j^2$。
+实际数据尾界给 $L_M^{(2)}\to0$，而
+$N_M^{(2)}\le C\sigma_M^2\delta^{-1}(1+R_c)^3\to0$。
+辅助律中的差平方期望由
+$H_M^{\mathrm{sgn}}=(1+Ce_M^2)L_M^{(2)}+N_M^{(2)}$ 控制。
+只转移 Chebyshev 事件，得到
+
+```math
+\mathbb P(|D_M-D_X|>h\mid\mathscr X_M)
+ \le\tau_M+H_M^{\mathrm{sgn}}/h^2.
+```
+
+式 (69.27)。
+
+参考律下 $D_X$ 是方差趋于 $\int x^2\rho=\gamma/\kappa>0$ 的 Gaussian，
+无论其均值如何，在 $[-h,h]$ 的概率均至多 $Ch$。
+经 (69.23) 转移并优化 $h$，得到
+
+```math
+r_M^{\mathrm{sgn}}:=\mathbb P(\operatorname{sgn}D_M\ne\operatorname{sgn}D_X
+                                      \mid\mathscr X_M)
+ \le C(H_M^{\mathrm{sgn}})^{1/3}+2\tau_M+\eta_M^{\mathrm{sm}}\to0.
+```
+
+式 (69.28)。
+
+此处符号在零点取 $+1$；测量噪声使 $D_X$ 连续，原 $D_M$ 的零原子也由这些界趋零。
+
+给定数据，$f(x)=\delta^{-1/2}(\|x\|_2^2-V_M)$ 精确反射不变，$D_X$ 在反射下变号。
+任一确定二值解码器的成功集
+$A=\{x:d_M(\mathscr X_M,f(x))=\operatorname{sgn}\sum_jx_jj\delta\}$
+被反射变成其补集，除去一个 $\nu_M$ 零测超平面。
+于是 $|2\nu_M(A)-1|\le\Delta_M$。
+独立随机化可先固定随机种子再积分；任意反射不变可测观测同理。
+将目标符号由 $D_X$ 换成 $D_M$，得到 (69.18)，其中好数据上可取
+$b_M=\min(1,\Delta_M/2+r_M^{\mathrm{sgn}})$，其余取一。
+所有界均不依赖解码器，所以覆盖随规模改变的任意可测规则。
+这一步依靠有限 TV 与符号耦合，未从弱收敛推断解码风险。
+带噪 Fourier 场反射后成为其共轭，故功率不变；偶部也逐点不变，所列观测都符合假设。证毕。
+

@@ -1,0 +1,37 @@
+### 90.3 六轮实际终端给同一个铅笔的双侧核约束
+
+现在加入同一非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1,
+$$
+
+以及独立纯初态、全部持久资源计入 $K$、不可访问活动来源和参考、前六个完整参考—活动记忆—档案纯终端合同。所有实际环境 $\eta_1,\ldots,\eta_6$ 都属于同一 $F$。
+
+记
+
+$$
+r([z])=\operatorname{nullity}\mathcal P(z).
+$$
+
+实际首轮 $V_0k=p\otimes\eta_1$、$V_1k=q\otimes\eta_1$，其中 $p,q$ 非零；第二轮 $V_0H_1=G_2\otimes\eta_2$，$\dim H_1=\dim G_2=2$，且 $V_1p=v\otimes\eta_2$、$v\ne0$；后续实际位像为
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n\qquad(3\le n\le6),
+$$
+
+其中各 $G_n,Q_n$ 均二维。由定理90.1，得到同一个铅笔的约束
+
+$$
+\begin{aligned}
+r([\eta_1])&\ge1,&r([\eta_1^\perp])&\ge1,\\
+r([\eta_2])&\ge2,&r([\eta_2^\perp])&\ge1,\\
+r([\eta_n])&\ge2,&r([\eta_n^\perp])&\ge2\qquad(3\le n\le6).
+\end{aligned}
+\tag{90.6}
+$$
+
+这里只从实际域给出全域纤维的下界，不将某个实际二维平面自动认作完整全域纤维。
+

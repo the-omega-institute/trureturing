@@ -1,0 +1,17 @@
+**定理153.3（完整参考最优解码 SDP）。** 固定实际接收器后，第 $n$ 个终端的最优误差恰为
+
+$$
+\boxed{
+\begin{aligned}
+\text{最小化}\quad&t,\\
+\text{满足}\quad&X\succeq0,\qquad
+\operatorname{Tr}_{S_n}X=I_K,\\
+&Y\succeq0,\qquad Y-J_n(X)\succeq0,\\
+&tI_{M_{\rm in}}-\operatorname{Tr}_{O_n}Y\succeq0.
+\end{aligned}
+}
+\tag{153.10}
+$$
+
+其中 $Y\in\operatorname{Herm}(O_n\otimes M_{\rm in})$。该半定规划最小值取得，且与其拉格朗日对偶之间没有间隙。
+

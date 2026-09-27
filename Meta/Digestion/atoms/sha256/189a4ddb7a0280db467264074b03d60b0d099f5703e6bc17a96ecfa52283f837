@@ -1,0 +1,14 @@
+**Proof.** The canonical identity $1-M=F(S)$ and the support theorem equate computability of $M$ with decidability of $S$. Proposition C卷第2.9.2节 equates decidability of $S$ with decidability of $R$. All statements use the same presentation. $\square$
+
+For each fixed presentation, there exists a functional that computes its extension characteristic function from every valid Cauchy name of its mass. At an ambiguous support value, that functional may instead hardcode the actual finite or cofinite support and ignore the mass input. The existence of this functional does not supply its index uniformly from presentation indices.
+
+One can alternatively prove the eventual-binary case by choosing a finite depth $d$ after the last nonbinary radix and setting
+
+$$
+\beta=
+\frac{1-M-\sum_{n\le d,\ n\in S}w_n}{w_d}
+=\sum_{r\ge1}\mathbf1_S(d+r)2^{-r}.
+$$
+
+Its binary digits determine the tail except for the terminating/full-tail ambiguity. Here $d$ and the actual finite prefix support are nonuniform constants, and the dyadic test concerns $\beta$, not the global mass $M$. The preceding proof avoids requiring an algorithm to find either constant.
+

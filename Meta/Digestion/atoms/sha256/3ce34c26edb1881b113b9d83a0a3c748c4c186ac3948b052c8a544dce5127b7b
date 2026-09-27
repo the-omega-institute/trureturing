@@ -1,0 +1,4 @@
+**定义 411.2（预测表示论文的版本与限度）。** 采用 NeurIPS 所链接 [*Predictive Representations of State* PDF](https://proceedings.neurips.cc/paper_files/paper/2001/file/1e4d36177d71bbb3558e43af9577d70e-Paper.pdf)，其标题页列 Michael L. Littman、Richard S. Sutton、Satinder Singh 三位作者；网页元数据只列前两位，本批依 PDF 的作者行引用。页面归于 *Advances in Neural Information Processing Systems 14*，NIPS 2001；此处版本定位依会议年份与原文件，不把网页字段当成作者名单的最终依据。
+
+该文件共十四个 PDF 页面，其中偶数页面为空白；正文、结论与参考文献均在所读范围。引用集中于 PDF 第 7 页式（3）与定理 1、第 9 页引理 1、第 11 页的表示构造及负投影系数例子。论文把学习优势、泛化与进一步紧凑性的若干论述列为待探索方向，本批没有把这些展望当成已经证明的有限数据保证，也未将可控系统的全部结论无条件转给真实宗教实践。
+

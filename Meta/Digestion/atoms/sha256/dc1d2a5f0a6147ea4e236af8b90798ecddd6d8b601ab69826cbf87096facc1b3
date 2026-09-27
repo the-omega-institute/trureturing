@@ -1,0 +1,43 @@
+**命题 27.1（秩二附加态的后续环境限制）。** 在上述分支中，若精确服务全部五个终端，则
+
+$$
+\boxed{\eta_4,\eta_5\in F,
+\qquad C_4\ne C_3,
+\qquad C_5\ne C_3.}
+\tag{27.8}
+$$
+
+因此第四、第五轮的纯环境都必须落在第三轮排出附加因子的同一个二维环境空间内。两者仍可非正交，也可共线；本结论没有排除这两种剩余情形。
+
+证明。使用实际来源的记忆系数，写第三、第四终端的纯联合态为
+
+$$
+|\Psi_m\rangle
+=\frac1{\sqrt2}\sum_{i=0}^1|i\rangle_J
+\bigl(|0\rangle_Mx_m^i+|1\rangle_My_m^i\bigr),
+\quad
+H_m=\operatorname{span}\{x_m^0,x_m^1\},\quad
+G_m=\operatorname{span}\{y_m^0,y_m^1\},
+\qquad m=3,4.
+\tag{27.9}
+$$
+
+已知来源的实际档案列及等距编码给
+
+$$
+\dim H_m=\dim G_m=2,
+\qquad H_m+G_m=C_m,
+\qquad \dim C_m=4.
+\tag{27.10}
+$$
+
+下一次发射后的接收输入因此为
+
+$$
+L_{m+1}=(H_m\otimes|0\rangle)
+\oplus(G_m\otimes|1\rangle).
+\tag{27.11}
+$$
+
+这里同时使用参考与活动记忆的独立系数；未把活动记忆当成可访问的控制。
+

@@ -1,0 +1,17 @@
+**定理206.1（任意固定正比例区间上的统一三阶展开）。**
+存在只依赖固定模型和 $I$ 的 $C_I,\epsilon_I>0$，使
+
+$$
+\boxed{
+\sup_{h\in I}
+\left|\mathscr E(h\epsilon,\epsilon)-\frac34
+-\epsilon\Phi_h-\epsilon^2Q(h)\right|
+\le C_I\epsilon^3
+\qquad(0<\epsilon<\epsilon_I).
+}
+\tag{206.9}
+$$
+
+即使 $h$ 随 $\epsilon$ 穿过接触点，上式仍在当前 $h$ 处统一成立。
+该断言由包含接触点的单一估计证明，不拼接两侧可能发散的常数。
+

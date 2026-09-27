@@ -1,0 +1,65 @@
+### 237.3 Fourier 等模列给出 $d+1$ 个投影的基本构造
+
+固定整数 $k\in\{0,\ldots,d\}$。在输入的标准正交基中，取坐标秩 $k$ 投影
+$$
+P^{(k)}=\operatorname{diag}(
+\underbrace{1,\ldots,1}_{k},
+\underbrace{0,\ldots,0}_{d-k}).
+\tag{237.FL.8}
+$$
+置
+$$
+\alpha=\frac{d+k}{d},
+\qquad T=\alpha I_d-P^{(k)}.
+\tag{237.FL.9}
+$$
+它是正对角矩阵，且
+$$
+\operatorname{Tr}T=\alpha d-k=d.
+\tag{237.FL.10}
+$$
+具体地，当 $1\le k<d$ 时，像方向的本征值为 $k/d$，核方向为 $1+k/d$；$k=0$ 和 $k=d$ 时均有 $T=I_d$。因此两个端点也合法。
+
+令 $\zeta=e^{2\pi i/d}$，取归一化 Fourier 矩阵
+$$
+F_{ab}=\frac1{\sqrt d}\zeta^{ab},
+\qquad0\le a,b\le d-1.
+\tag{237.FL.11}
+$$
+几何级数求和给
+$$
+(F^\dagger F)_{bc}
+=\frac1d\sum_{a=0}^{d-1}\zeta^{a(c-b)}
+=\begin{cases}1,&b=c,\\0,&b\ne c,\end{cases}
+\tag{237.FL.12}
+$$
+所以 $F$ 酉，并且每个矩阵元的模都是 $1/\sqrt d$。
+
+定义 $d$ 个向量
+$$
+w_b=\sqrt T\,Fe_b,
+\qquad0\le b\le d-1.
+\tag{237.FL.13}
+$$
+由于 $T$ 在上述基中对角，每个向量的范数恰为
+$$
+\|w_b\|^2=\sum_{a=0}^{d-1}T_{aa}|F_{ab}|^2
+=\frac1d\operatorname{Tr}T=1.
+\tag{237.FL.14}
+$$
+因此 $W_b=|w_b\rangle\langle w_b|$ 是真实的秩一正交投影，无需再对向量逐一重归一化。又有
+$$
+\sum_{b=0}^{d-1}W_b
+=\sqrt T\,FF^\dagger\sqrt T=T.
+\tag{237.FL.15}
+$$
+于是 $P^{(k)}$ 与这 $d$ 个秩一投影组成 $d+1$ 个投影的共同实现：
+$$
+\boxed{P^{(k)}+\sum_{b=0}^{d-1}W_b
+=\frac{d+k}{d}I_d,}
+\qquad
+\boxed{\operatorname{rank}P^{(k)}+\sum_b\operatorname{rank}W_b=d+k.}
+\tag{237.FL.16}
+$$
+这覆盖全部整数总秩 $d,d+1,\ldots,2d$。当 $k=0$，第一投影为零；当 $k=d$，第一投影为恒等，其余投影为一组正交基的秩一投影。零投影仍占据一个允许为空分支的原记录位置。
+

@@ -1,0 +1,37 @@
+### 220.2 整张纯来源面上的解析消失
+
+第213节的实际驻点族在带符号 $t$ 的固定邻域中联合实解析，写成
+$$
+J_0=k_0k_0^\dagger,\qquad
+J_1=k_1k_1^\dagger+tww^\dagger,
+\qquad
+k_1=(a,c,b,d)^{\mathsf T},\quad w=(0,u,1,v)^{\mathsf T}.
+\tag{220.6}
+$$
+明确采用输入优先的向量化约定
+$$
+\operatorname{vec}_{\mathrm{in}}(K)
+=(K_{00},K_{10},K_{01},K_{11})^{\mathsf T},
+\qquad
+K_1=\begin{pmatrix}a&b\\c&d\end{pmatrix},\quad
+W=\begin{pmatrix}0&1\\u&v\end{pmatrix}.
+\tag{220.7}
+$$
+实际权重为
+$$
+t^\sharp=a_{\mathrm{wt}}(p)[\Delta(p)]_+,
+\qquad a_{\mathrm{wt}}>0,\quad a_{\mathrm{wt}}(0)=1.
+\tag{220.8}
+$$
+用 $a_{\mathrm{wt}}$ 区别于 Kraus 条目 $a$。带符号 $t$ 只用于解析延拓；实际 CPTP 比较使用 $t=t^\sharp\ge0$。
+
+第216节的纯来源重制备结论适用于整个固定带符号 $t$ 驻点族：在 $h=0$、正小 $\epsilon$ 及全部邻近 $(\nu,t)$ 上，有 $c=d=u=v=0$。将这些坐标限制到 $h=0$ 后，仍是 $(\epsilon,\nu,t)$ 的解析函数，并在一个开子箱为零。解析恒等式使其延伸为完整零来源参数面上的零函数。因此存在联合实解析函数，使
+$$
+\boxed{
+c=h\widehat c,\quad d=h\widehat d,\quad
+u=h\widehat u,\quad v=h\widehat v.
+}
+\tag{220.9}
+$$
+这是固定联合邻域上的精确整除。条目 $a,b$ 不要求关于 $h$ 偶对称，也未从一个没有统一控制的余项中求导。
+

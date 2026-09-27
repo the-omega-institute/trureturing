@@ -38,11 +38,10 @@ universe. It supplies no algorithm enumerating or deciding every truth.
 Computation still constructs counterexamples, searches for proofs and checks
 them. What truth is and how its proofs are obtained remain different questions.
 
-In practice, returning a result means making it available as a premise. A
+Return a result to shared knowledge for reuse as a premise, with inspectable
+objects, conditions and evidence. A
 theorem can be reused where its assumptions hold; a counterexample refutes a
 claim within its stated scope and can suggest which conditions to investigate next.
-An AI's output can support further reasoning when it returns to shared
-knowledge with inspectable objects, conditions and evidence.
 
 [Fixed-point philosophy](develop/theory/FIXED_POINT_PHILOSOPHY.md) outlines
 a discipline: beauty and intuition guide questions, logic tests

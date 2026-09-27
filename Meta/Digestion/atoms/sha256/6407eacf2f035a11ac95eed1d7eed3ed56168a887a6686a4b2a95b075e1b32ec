@@ -1,0 +1,27 @@
+**命题 57.5（精确后缀超额与全局深度超额的最小值相同）。** 考虑上面区间规则产生的有限历史树，根有 $n$ 个候选，叶均为单点，后首读叶深 $m_x\le D$；在这个松弛中允许单点继续经历一元读取。令
+$$
+\begin{aligned}
+\kappa(T)&=\sum_x2^{-m_x},\\
+\mathcal C(T)&=\sum_x\sum_{\ell=1}^{m_x}\delta_{x,\ell}2^{-(m_x-\ell)},\\
+\mathcal E(T)&=\sum_x\sum_{\ell=1}^{m_x}(\delta_{x,\ell}-1)2^{-(m_x-\ell)},\\
+\mathcal E_D(T)&=\sum_x\sum_{\ell=1}^{m_x}(\delta_{x,\ell}-1)2^{\ell-D}.
+\end{aligned}
+\tag{57.14}
+$$
+各等待取 $1,\ldots,P$。则
+$$
+\mathcal C(T)-\mathcal E(T)=2n-2\kappa(T),
+\qquad
+\min_T\mathcal E(T)=\min_T\mathcal E_D(T)=G_D([0,P))
+\tag{57.15}
+$$
+在第二式中根取 $n=P,I=[0,P)$；等价地，第一项最小值可写为 $\min_T(\mathcal C(T)-2P+2\kappa(T))$。
+
+证明。每个叶的差额为有限几何和
+$$
+\sum_{\ell=1}^{m_x}2^{-(m_x-\ell)}=2-2^{1-m_x},
+$$
+包括 $m_x=0$ 时的零，求和给第一式。因超额系数非负，任一 $T$ 有 $\mathcal E(T)\ge\mathcal E_D(T)$，从而 $\min\mathcal E\ge\min\mathcal E_D=G_D$；全局深度费用中，单点后的继续读取可删掉，正是（57.12）的单点基例。
+
+反向，取达到 $G_D$ 的历史树，把每个提前出现的单点叶用单位等待补至深度 $D$。新加等待的超额项为零；原有祖先项的精确后缀权重却从 $2^{\ell-m_x}$ 变为 $2^{\ell-D}$。因此补齐树 $\widehat T$ 满足 $\mathcal E(\widehat T)=\mathcal E_D(T)=G_D$，给 $\min\mathcal E\le G_D$。这没有断言 $\mathcal E(\widehat T)=\mathcal E(T)$；补齐可严格降低原来的精确后缀超额。两种费用的最小值相等，不表示每棵树的数值相等，更不表示补齐保留驻定控制器状态数。$\square$
+

@@ -1,0 +1,33 @@
+### 22.3 定理：保序数值读出的完整权重分类
+
+对任意实权重 $w_0,\ldots,w_m$，定义非空有限读出
+\[
+V_w(\alpha,x)=\sum_{j=0}^m w_j s_j(\alpha,x).
+\]
+对每个固定无理 $\alpha\in(0,1)$，以下两项等价：
+\[
+\exists r>0,\quad \alpha+r<1,\quad
+\forall\delta\in[0,r],\ \forall x\in[0,1),\quad
+V_w(\alpha+\delta,x)\geq V_w(\alpha,x);
+\]
+\[
+\boxed{w_0\geq w_1\geq\cdots\geq w_m\geq0.}
+\tag{22.5}
+\]
+
+**必要性证明。** 将任何声称有效的正半径与第 22.2 节的正半径取较小值的一半，得到严格正扰动。每个扫过区间都非空，可选择其中点。对第 $k$ 个区域，实际数值变化为 $w_{k-1}-w_k$，$1\leq k\leq m$；最后一个区域的变化为 $w_m$。因此保序性强制全部列出的不等式。若任一条件失败，同一构造给出任意小参数扰动下的真实反例相位，没有假设任意二元模式均能由旋转实现。
+
+**充分性证明。** 对任意 $\alpha\leq\beta$ 和同一实相位 $x$，令
+\[
+D_k=\lfloor x+k\beta\rfloor-\lfloor x+k\alpha\rfloor\geq0,\qquad D_0=0.
+\]
+从实际机械词展开，有限求和分部恒等式给
+\[
+V_w(\beta,x)-V_w(\alpha,x)
+=w_mD_{m+1}+\sum_{k=1}^m(w_{k-1}-w_k)D_k\geq0.
+\tag{22.6}
+\]
+该恒等式可按观察长度归纳：增加最后一项后，中间边界项恰好抵消。它还证明满足式 (22.5) 的权重在整个斜率顺序上保序。取任意 $r\in(0,1-\alpha)$ 得到所需局部命题。
+
+Lean 定理 `MechanicalReadoutOrder.local_order_iff_decreasing_weights` 给出这一等价，必要性直接消费已构造的实际错误区域，充分性在证明内推出真实累计取整的求和分部恒等式。求和分部方法本身属于已有数学。
+

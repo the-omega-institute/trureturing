@@ -1,0 +1,17 @@
+**命题 52.6（前缀总变差被反馈质量缺陷控制）。** 对满足式（52.1）的任意非负整表，定义
+
+$$
+\Delta(P)=\max_f|Z_f(P)-1|.
+\tag{52.11}
+$$
+
+策略族有限，故最大值存在。对任意 $1\le t<T$、$u\in A_{1:t}$ 与 $v,w\in A_{t+1:T}$，有
+
+$$
+\operatorname{TV}\bigl(P_{\le t}(\cdot\mid u,v),
+P_{\le t}(\cdot\mid u,w)\bigr)\le\Delta(P).
+\tag{52.12}
+$$
+
+并且存在两个单切口事件开关，其质量分别为 $1+\operatorname{TV}$ 与 $1-\operatorname{TV}$，其中总变差取式（52.12）左侧的两个边缘。
+

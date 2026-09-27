@@ -1,0 +1,26 @@
+**定理 57.3（固定边缘的纯化上界达到）。** 对式（57.2）的每个有限维扩展，
+
+$$
+\mathfrak r_D(R)\le\mathfrak r_E(R^{\mathrm{pur}}).
+\tag{57.8}
+$$
+
+因此，在允许任意有限晚输出空间时，固定早期边缘 $M$ 的最大最优修复误差由最小纯化达到；寻找最困难扩展可将晚输出维数限制为 $r=\operatorname{rank}M\le(\dim A)(\dim B)$。
+
+**证明。** 取引理 57.1 的 $\Lambda$。每个 $S_E\in\mathcal S_E$ 的像都在 $\mathcal S_D$，所以
+
+$$
+\begin{aligned}
+\mathfrak r_D(R)
+&\le\inf_{S_E\in\mathcal S_E}
+D_D\bigl((\operatorname{id}\otimes\Lambda)R^{\mathrm{pur}},
+(\operatorname{id}\otimes\Lambda)S_E\bigr)\\
+&\le\inf_{S_E\in\mathcal S_E}D_E(R^{\mathrm{pur}},S_E)
+=\mathfrak r_E(R^{\mathrm{pur}}).
+\end{aligned}
+$$
+
+$R^{\mathrm{pur}}$ 本身是一个允许的扩展，故上界达到。$\square$
+
+比较方向是：对末输出做通道后处理，只会使最优修复问题更容易或同样困难。它没有声称每个最优修复都能从某个纯化最优修复获得。
+

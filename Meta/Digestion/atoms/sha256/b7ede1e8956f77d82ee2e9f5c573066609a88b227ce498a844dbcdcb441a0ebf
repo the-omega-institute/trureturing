@@ -1,0 +1,30 @@
+**定义 74.1（固定参数的集中例外）。** 保持第 72 章的实际均值中心
+$d_M^{\mathcal E}$，其中 $\mathcal E$ 为原平稳对或连续路径实验。
+每个 $\beta\in(1/2,1)$ 都使用原固定幅度、原合法规模、全部取整、补偿和完整窗口。
+定义
+
+$$
+E_{\mathcal E}=\{\beta:h_M(\mathscr X)-d_M^{\mathcal E}
+\text{ 不依数据概率收敛于零}\}.
+\tag{74.1}
+$$
+
+概率可以取任意大小 $q$ 的确定支持的实际抽样律；被评价的后验熵仍由均匀支持先验定义。
+原支持置换使这个熵函数的分布精确地不依赖支持，所以也等价于先验数据律与支持上一致的概率表述。
+本章的 Lebesgue 测度、类别与 Hausdorff 维数均取在参数区间上，不给 $\beta$ 新增先验。
+
+记原 Liouville 斜率为 $\vartheta$，有限逼近为 $P/Q$。
+合法序列满足
+
+$$
+Q_{n+1}=10^{Q_n^5},\qquad \lambda=Q^3,\qquad
+L_0(\beta)=\left\lfloor\frac{\phi Q^3}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0(\beta)},\quad q=\lfloor Me^{-z_0}\rfloor.
+\tag{74.2}
+$$
+
+这里 $\phi,z_0,k_0,l_0$ 均为原定义。对固定紧区间
+$J\Subset(1/2,1)$，取一个统一足够大的证明截断 $k+l\le C_0\lambda$。
+其窗口计数线为 $(k_j,l_j)=(k_0+jQ,l_0+jP)$，索引集 $K_Q$ 与 $\beta$ 无关，且 $|K_Q|=O_J(Q^2)$。
+截断不改变观测或完整得分组。
+

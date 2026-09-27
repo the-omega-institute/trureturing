@@ -1,0 +1,27 @@
+**命题 506.2（近似覆盖的加性损失）。** 对任意上述权重及任意概率 $R$，
+
+$$
+1-M\le W\max_i\operatorname{TV}(R,Q_i)+B.
+$$
+
+在定义 498.2 的可行正比值范围内，从而有
+
+$$
+\frac{j_{\mathrm{exact}}}{j_{\mathrm{free}}}
+\le2\left(W+\frac B\rho\right).
+$$
+
+证明：若 $R(x)-l(x)\le\epsilon_x$，则下式因右侧剩余项非负而成立。若 $R(x)-l(x)>\epsilon_x$，每个近似见证都满足
+
+$$
+(R(x)-Q_i(x))_+\ge R(x)-l(x)-\epsilon_x>0.
+$$
+
+见证权重至少为一，故在两种情形都得到
+
+$$
+R(x)-l(x)\le\epsilon_x+\sum_iw_i(R(x)-Q_i(x))_+.
+$$
+
+求和即得第一式；取最优自由中心，并使用 $\rho_r\le1-M$，再除以正的 $\rho$ 得第二式。证毕。
+

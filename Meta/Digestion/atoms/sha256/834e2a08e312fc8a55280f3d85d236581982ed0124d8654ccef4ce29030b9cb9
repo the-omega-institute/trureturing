@@ -1,0 +1,7 @@
+**定理59.1（交替外部尾环境不可能）。** 在上述合同下，不可能有第53节的 $OFO$ 模式：
+$$
+\eta_4\parallel\eta_6,\qquad
+\eta_4\notin F,\qquad \eta_5\in F.
+\tag{59.4}
+$$
+

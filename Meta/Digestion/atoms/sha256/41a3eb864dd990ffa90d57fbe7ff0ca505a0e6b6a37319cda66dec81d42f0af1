@@ -1,0 +1,2 @@
+**Proof of the stated properties.** These are precisely C卷第2.2.2节 applied to its unchanged set $K$; the depth $e+1$ in (TM.586) is the depth of $C_e$ in (TM.478). No new diagonal construction is being chosen. $\square$
+

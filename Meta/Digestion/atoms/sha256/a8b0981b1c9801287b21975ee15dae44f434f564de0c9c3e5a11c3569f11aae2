@@ -1,0 +1,8 @@
+**定义 207.2（历史条件边界）。** 给定初始来源集 $\mathfrak R\subseteq\Omega$，历史 $h$ 的条件边界为
+
+$$
+\mathfrak R_h=\mathfrak R\cap\Omega_h.
+$$
+
+若 $h'$ 满足 $q_t(h')=h$，则 $\mathfrak R_{h'}\subseteq\mathfrak R_h$。记 $\mathcal A_t(h)$ 为历史 $h$ 上允许的动作集合，记 $G_\pi(\omega)$ 为非预见策略 $\pi$ 在完整来源 $\omega$ 上的总收益。
+

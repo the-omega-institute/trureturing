@@ -1,0 +1,38 @@
+### 284.3 固定请求的完整两参考响应
+
+令 $r=(w,\eta)$ 为真实记录，$w\in\{0,1\}$、$\eta\in\{+1,-1\}$，并记
+$$
+\xi(r,\theta)=\eta i^w e^{i\theta},
+\qquad \operatorname{Re}X=(X+X^\dagger)/2.
+$$
+略去共同纯reset因子，给定相位的单记录参考块准确为
+$$
+S_{a,\phi}(r;\theta)
+=\frac{I_n+a\operatorname{Re}(e^{-i\phi}\xi(r,\theta)Z_n)}{4n}.
+\tag{284.7}
+$$
+对暂时固定的两个角度与记录，设 $\xi_j=\xi(r_j,\theta_j)$。共同相位平均给
+$$
+\begin{aligned}
+A_a(r_1,r_2;\theta_1,\theta_2)
+&=\int S_{a,\phi}(r_1;\theta_1)\otimes
+S_{a,\phi}(r_2;\theta_2)\,\frac{d\phi}{2\pi}\\
+&=\frac{I_{n^2}+a^2 B(r_1,r_2;\theta_1,\theta_2)}{16n^2},
+\end{aligned}
+\tag{284.8}
+$$
+其中
+$$
+B(r_1,r_2;\theta_1,\theta_2)
+=\tfrac12\operatorname{Re}(\xi_1\overline{\xi_2}\,Z_n\otimes Z_n^\dagger).
+\tag{284.9}
+$$
+线性相位项积分为零，二次项只留下正负频率相消的两项，因此（284.8）精确成立。由（284.5），
+$$
+\|B(r_1,r_2;\theta_1,\theta_2)\|\le\kappa.
+\tag{284.10}
+$$
+对第二记录的四种值求和，$B$ 相消，第一记录的参考边缘为 $I_n/(4n)$，与第二角度及 $a$ 无关。
+
+这些固定角度算子还不足以直接宣称自适应协议等价。下面给出一个可以按真实请求顺序执行的模拟器，并逐实际中间干预核对。
+

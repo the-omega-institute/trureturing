@@ -1,0 +1,35 @@
+**229.2.1 明确等价关系，核对关联线丛符号。**
+
+在 $S^{2d-1}\times\mathbb C$ 上取等价关系
+$$
+(v,z)\sim(av,a^qz),\qquad a\in U(1),
+$$
+并定义复线丛
+$$
+E_q=(S^{2d-1}\times\mathbb C)/\sim
+\longrightarrow\mathbb {CP}^{d-1},
+\qquad[v,z]\longmapsto[v].
+\tag{229.NC.5}
+$$
+Hopf 纤维化的局部单位代表给出局部平凡化；相邻局部代表只差一个连续单位相位，其在纤维上的作用为该相位的 $q$ 次幂，所以这确为复线丛。
+
+符号可用 $q=-1$ 直接核对。映射
+$$
+E_{-1}\longrightarrow H,
+\qquad[v,z]\longmapsto zv
+\tag{229.NC.6}
+$$
+良定，因为 $(a^{-1}z)(av)=zv$，且逐纤维为线性同构。因而 $E_{-1}\cong H$。
+
+共同单位代表下的纤维乘法给
+$$
+E_p\otimes E_q\cong E_{p+q},
+\qquad E_0\cong\underline{\mathbb C}.
+$$
+于是 $E_1\cong H^*$，对全部整数 $q$ 有
+$$
+\boxed{E_q\cong(H^*)^{\otimes q},\qquad c_1(E_q)=q h.}
+\tag{229.NC.7}
+$$
+这里使用的是（229.NC.5）的明确约定；若换用带逆角色的另一种关联丛记号，必须同时改变截面约定，不能只改陈类符号。
+

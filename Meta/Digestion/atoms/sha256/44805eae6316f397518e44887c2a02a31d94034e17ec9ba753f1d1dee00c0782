@@ -1,0 +1,24 @@
+**定理 18.2（仪器商下的首次事件与最大固定效果）。** 定义 18.1 的可读首次事件概率为
+
+$$
+p(n,x)=\operatorname{Tr}[\mathcal C_x\mathcal N^{n-1}(\rho)]
+=\operatorname{Tr}(\rho E_{n,x}).
+$$
+
+有限分解仍满足 $\sum_{n=1}^N\sum_xE_{n,x}+S_N=I$。算子列 $S_N$ 单调下降并在范数下收敛到 $F$，其中
+
+$$
+0\le F\le I,\qquad \mathcal A(F)=F,
+\qquad p(\text{永不点击})=\operatorname{Tr}(\rho F).
+$$
+
+$F$ 是所有满足 $0\le H\le I$、$\mathcal A(H)=H$ 的效果中最大的一个；它不依赖 Kraus 表示。
+
+证明。迹对偶给出首式。由 $\sum_xB_x=I-\mathcal A(I)$，
+
+$$
+\sum_xE_{n,x}=S_{n-1}-S_n.
+$$
+
+$\mathcal A$ 为正映射且 $\mathcal A(I)\le I$，故 $0\le S_{N+1}\le S_N\le I$。有限维中，各向量二次型的单调极限经极化确定唯一 Hermitian 算子 $F$，矩阵元收敛等价于范数收敛。连续性给出 $\mathcal A(F)=F$。未点击事件随 $N$ 递减，其交为永久无点击事件，概率的从上连续性给出迹公式。若 $H$ 为上述固定效果，则 $H=\mathcal A^N(H)\le\mathcal A^N(I)=S_N$，取极限得 $H\le F$。全部公式仅取决于映射，故对 Kraus 表示不变。$\square$
+

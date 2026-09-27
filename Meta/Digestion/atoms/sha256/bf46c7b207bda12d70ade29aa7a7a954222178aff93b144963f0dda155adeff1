@@ -1,0 +1,12 @@
+**命题 474.1（生成副本的等价类与不变模拟缺口）。** 对定义 471.1 中的任意 $T$，实验 $G_T$ 与 $E_r$ 双向精确可模拟，且
+
+$$
+d(G_T\longrightarrow J)=d(E_r\longrightarrow J)=\kappa.
+$$
+
+因此，命题 473.1 中 $j(T)$ 的最优取舍，不是同一来源的信息能力随着选择 $T$ 而增加或减少。
+
+证明：从 $E_r$ 保留 $Y$ 并运行 $T$，可精确生成 $G_T$；从 $G_T$ 投影至第一坐标，精确取得 $E_r$。项目 [GarblingIncreasesBayesRisk](../../../D5/S3/Estimation/DecisionRisk/GarblingIncreasesBayesRisk.lean) 的 BlackwellDominates 及 bayesRisk_le_of_blackwellDominates 因而给出二者在相同先验、相同行动与损失下的最优风险相等。
+
+对模拟误差，也可在任一方向先接上上述精确模拟，再运行已有的近似模拟器。项目 [FiniteDeficiencyTriangle](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyTriangle.lean) 的 finite_deficiency_triangle 在两个零误差方向上给出相反的不等式，故两个到 $J$ 的缺口相等。第 451.2 项已给出 $d(E_r\longrightarrow J)=\kappa$；其上界保留实际 $Y$，下界来自等先验零一风险差，覆盖全部随机后处理。证毕。
+

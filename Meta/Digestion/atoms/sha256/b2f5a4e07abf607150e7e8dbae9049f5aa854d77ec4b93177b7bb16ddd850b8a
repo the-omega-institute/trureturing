@@ -1,0 +1,19 @@
+**定理 68.1（对称压缩的二阶间隙）。** 对整个 $0<\varepsilon\le1/16$，有显式严格下界
+
+$$
+e_\varepsilon>\varepsilon+\frac{\varepsilon^2}{1024}.
+\tag{68.2}
+$$
+
+与第66节的二阶修复上界合并，得到
+
+$$
+\frac{\varepsilon^2}{1024}
+<e_\varepsilon-\varepsilon
+\le\left(2+\frac1{\sqrt2}\right)\varepsilon^2
++\frac1{\sqrt2}\varepsilon^{5/2}+O(\varepsilon^3).
+\tag{68.3}
+$$
+
+因此 $e_\varepsilon-\varepsilon=\Theta(\varepsilon^2)$；差值的二阶量级已定，而尖锐系数及有限参数准确最优值仍未由这些界确定。
+

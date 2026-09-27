@@ -1,0 +1,13 @@
+**定义 13.1（与未来终端无关的门序列）。** 回到定义1.1的来源，取 $`\Theta=\mathbb R/(2\pi\mathbb Z)`$、$`c_t=1`$、$`p=\alpha^2`$ 和 $`\mu=p/(1+p)`$。对固定 $`0<\epsilon<1`$，允许预先给定一列有限维寄存器及全域 CPTP 映射
+
+$$
+K_0=\mathbb C,\qquad
+\mathcal C_n:\mathcal L(K_{n-1}\otimes B)\longrightarrow\mathcal L(K_n)
+\quad(n\ge1),
+\qquad
+\mathcal D_n:\mathcal L(K_n)\longrightarrow\mathcal L(H_n).
+\tag{13.1}
+$$
+
+门可以依赖当前编号、已知来源和误差要求，但不能依赖实际相位、输入、参考或未来选择的终端。全部持久且与来源有关的接收系统计入 $`K_n`$；每轮新环境可立即丢弃。不访问活动 $`M`$ 与参考 $`J`$，也不反馈来源。要求每个确定终端的全部参考完整联合态满足（5.1）的半迹误差界。这里不要求固定维数或同一个门，也不增加可依赖未知状态的停止策略合同。
+

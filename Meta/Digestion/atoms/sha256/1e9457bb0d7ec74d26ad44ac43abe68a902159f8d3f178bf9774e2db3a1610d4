@@ -1,0 +1,10 @@
+**命题 248.2（可求和 Gramian 恰好保留可达范围）。** 若算子级数
+
+$$
+W=\sum_{k=0}^{\infty}A^kBB^*(A^*)^k
+$$
+
+可求和，则 $\operatorname{range}W=\mathcal R$。这对应项目 [ControllabilityGramianReachableRange](../../../D5/S3/Observer/Dynamics/ControllabilityGramianReachableRange.lean) 的 `controllability_gramian_range_eq_reachable`，包括有限维实或复空间以及所列级数的可求和假设。符号 $*$ 表示内积伴随。
+
+其关系可以由零方向理解：$\langle v,Wv\rangle$ 的实部等于 $\sum_k\|B^*(A^*)^kv\|^2$，因而为零恰好意味着 $v$ 正交于每个输入迭代方向。于是 $\ker W=\mathcal R^\perp$；利用 $W$ 的自伴随性和有限维中的正交补关系，得到所列范围等式。级数不收敛时仍可谈原先的有限步可达空间，但不能把这个无穷和公式当成已经定义并满足同一结论的普通 Gramian。
+

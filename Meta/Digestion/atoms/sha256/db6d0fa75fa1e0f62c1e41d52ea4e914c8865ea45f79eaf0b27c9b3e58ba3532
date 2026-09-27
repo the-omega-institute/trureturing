@@ -1,0 +1,10 @@
+**命题 66.4（乘积形式可取等号）。** 一维仪器每轮以概率 $0<\gamma_i\le1$ 点击，否则继续，其未点击分支为 $(1-\gamma_i)\operatorname{id}$、点击分支为 $\gamma_i\operatorname{id}$。两个这样的模型满足
+
+$$
+\delta=|\gamma_I-\gamma_J|,\qquad
+M_i=T_i=\frac1{\gamma_i},\qquad
+\boxed{|T_I-T_J|=\delta M_I M_J.}
+$$
+
+证明。单轮带记录通道是两点概率律，半迹距离就是成功概率之差；等待为几何分布，均值为 $1/\gamma_i$。取两个倒数之差即可。$\square$
+

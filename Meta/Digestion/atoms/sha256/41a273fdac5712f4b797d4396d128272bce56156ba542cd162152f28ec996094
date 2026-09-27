@@ -1,0 +1,14 @@
+**定理 228.3（重置与等距记录通道的精确预算曲线）。**
+$$
+\boxed{
+d_R(\mathcal R_\kappa)=
+\begin{cases}
+\kappa,&1\le R<d,\\
+\min(\kappa,1-\kappa),&R=d,\\
+0,&R\ge d+1.
+\end{cases}
+}
+\tag{228.HC.8}
+$$
+每个预算上的下确界都有显式合法通道取得。
+

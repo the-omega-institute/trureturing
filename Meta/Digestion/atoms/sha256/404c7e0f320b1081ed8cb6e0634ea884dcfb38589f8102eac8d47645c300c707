@@ -1,0 +1,43 @@
+* 精确边界的语义条件是 $\ker r=K_{\infty}$，而在只给 $K_{\mathrm{cur}}$ 时，还必须另证 $K_{\mathrm{cur}}$ 对每个动作的纤维保持。
+
+因此，§39.1 的 `Sem ∧ Dyn` 是一个防止把当前核误报成未来核的分解写法；若 $K_*$ 已明确取 $K_{\infty}$，则 `Dyn` 应引用第36节的残余闭合结论，而不是再次当作独立假设。
+
+同时，边界更新的唯一性只应在实际像上声称。令
+
+$$
+\bar R:=\operatorname{im}(r),
+\qquad
+\bar r:S\to\bar R,
+\qquad
+\bar r(s)=r(s).
+\tag{41.1}
+$$
+
+若完整操作以总的 tagged successor 表示
+
+$$
+\widehat T_a:S\to S_a^{\mathrm{ok}}\sqcup S_a^{\mathrm{fail}},
+\tag{41.2}
+$$
+
+并把合法性、指定输出和记录一并放入总标签 $\widehat L_a$，则动态下降应写成
+
+$$
+\bar r_a\circ\widehat T_a
+=
+\bar T_a\circ\bar r,
+\qquad
+\widehat L_a=\bar L_a\circ\bar r,
+\tag{41.3}
+$$
+
+其中 $\bar T_a:\bar R\to\overline{R_a}$、$\bar L_a:\bar R\to L_a$ 只要求在实际像上定义。若动作由内生选择器 $\pi:S\to A$ 产生，还要加入策略下降条件
+
+$$
+\operatorname{Policy}(r):\Longleftrightarrow
+r(s)=r(t)\Longrightarrow \pi(s)=\pi(t),
+\tag{41.3a}
+$$
+
+或更弱地要求存在 $\bar\pi:\bar R\to A$ 使 $\pi=\bar\pi\circ\bar r$。此时内生观察者的可运行性应写成 $\operatorname{Sem}_{K_*}(r)\land\operatorname{Dyn}(r)\land\operatorname{Policy}(r)$；若动作序列是外部预先固定的，才可以省略这一项。若仍使用只在合法域上的偏函数，则 (41.3) 必须分别写在合法分支和失败分支，不能把 $r\circ T_a$ 当作全域函数。陪域 $R\setminus\operatorname{im}(r)$ 上可以任意延拓，所以那里没有唯一性内容。
+

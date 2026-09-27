@@ -1,0 +1,90 @@
+### 69.2 近饱和、支撑方向与核方向
+
+固定 $a$ 和式（69.4）的参数范围。反设存在因果修复 $S$ 满足
+
+$$
+N(R_{a,\varepsilon}-S)\le\varepsilon+g,
+\qquad0\le g\le\kappa_a\varepsilon^2.
+\tag{69.8}
+$$
+
+因为 $0<a<1$，以下始终有 $\varepsilon\le1/16$、$m\le1/2$、$g\le\varepsilon^2$。取
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad\Pi_+=C_+\otimes I_D,
+$$
+
+并记 $R_+=\Pi_+R_{a,\varepsilon}\Pi_+$、$S_+=\Pi_+S\Pi_+$、$X=R_+-S_+$。因果归一化给
+
+$$
+\operatorname{Tr}R_+=1+\varepsilon,\qquad
+\operatorname{Tr}S_+=1,\qquad\operatorname{Tr}X=\varepsilon.
+$$
+
+$X$ 的正谱投影是合法事件，所以正谱和至多 $\varepsilon+g$，负谱绝对值之和至多 $g$。在 $\operatorname{ran}\Pi_+$ 上，
+
+$$
+X+gI\succeq0,
+\qquad\langle\xi|X|\xi\rangle\le\varepsilon+g
+\quad\text{对每个单位向量 }\xi.
+\tag{69.9}
+$$
+
+若 $K$ 是该四维空间中 $R_+$ 的核投影，则
+
+$$
+\operatorname{Tr}(KS_+)=-\operatorname{Tr}(KX)\le g.
+\tag{69.10}
+$$
+
+令
+
+$$
+\alpha=a+\varepsilon b^2,\qquad
+\beta=b^2+\varepsilon a.
+$$
+
+在同一四维空间内取正交归一基
+
+$$
+\begin{aligned}
+\xi_0&=\frac{\sqrt a\,x+\sqrt\varepsilon b\,z}{\sqrt\alpha},
+&\nu_0&=\frac{\sqrt\varepsilon b\,x-\sqrt a\,z}{\sqrt\alpha},\\
+\xi_1&=\frac{b x'-\sqrt{\varepsilon a}\,z'}{\sqrt\beta},
+&\nu_1&=\frac{\sqrt{\varepsilon a}\,x'+b z'}{\sqrt\beta}.
+\end{aligned}
+\tag{69.11}
+$$
+
+$\xi_0,\xi_1$ 张成 $R_+$ 的像，$\nu_0,\nu_1$ 张成其核。定义
+
+$$
+m_j=\langle\xi_j|S|\xi_j\rangle,\qquad
+k_j=\langle\nu_j|S|\nu_j\rangle,\qquad
+f_j=\langle\xi_j|S|\nu_j\rangle,
+\qquad\omega=k_0+k_1.
+$$
+
+正性、总迹与式（69.10）给
+
+$$
+0\le\omega\le g,\qquad m_0+m_1=1-\omega.
+\tag{69.12}
+$$
+
+$X+gI$ 在 $\xi_j,\nu_j$ 上的二阶主子式给
+
+$$
+|f_j|^2\le(\varepsilon+2g)(g-k_j).
+$$
+
+从而，记 $L=|f_0|+|f_1|$，有
+
+$$
+L\le2\sqrt{(\varepsilon+2g)g}\le3\sqrt{\varepsilon g}.
+\tag{69.13}
+$$
+
+最后一步使用 $g\le\varepsilon^2$、$\varepsilon\le1/16$，故 $\varepsilon+2g\le(9/8)\varepsilon$。这些估计全部作用于同一个实际修复；其他矩阵元仍可任意。
+

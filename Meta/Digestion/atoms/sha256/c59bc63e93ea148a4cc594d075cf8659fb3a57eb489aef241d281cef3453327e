@@ -1,0 +1,38 @@
+**全部终端的本地精确解码。** 还须证明运行编码在完整档案支撑上等距，而不只在各个单独输入上保持概率。对 $`n\ge L`$ 递归定义
+
+$$
+C_{n+1}
+=A(C_n\otimes I_{\mathcal B})\big|_{S_{n+1}}.
+\tag{15.24}
+$$
+
+假设 $`C_n`$ 是等距，且实际接收后的等距为 $`(I_M\otimes C_n)W_n`$。由（15.20）—（15.21），对每个源输入 $`v`$，下一次发射后的向量属于 $`M\otimes\operatorname{ran}P`$。对其活动来源系数逐个取内积，并用（15.12）张成定义，得到
+
+$$
+(C_n\otimes I_{\mathcal B})S_{n+1}
+\subseteq\operatorname{ran}P.
+\tag{15.25}
+$$
+
+在这个子空间上 $`A`$ 等距，所以（15.24）是整个 $`S_{n+1}`$ 上的等距，且继续给出相同的实际编码恒等式。由（15.14）开始归纳，每个 $`n`$ 都得到一个与输入、参考无关的共同等距 $`C_n:S_n\to K`$。将 $`C_n`$ 在 $`S_n`$ 的正交补上延零；目标 $`\Omega_n`$ 本来支撑于 $`JM\otimes S_n`$。于是
+
+$$
+\sigma_n(\rho)
+=(I_{JM}\otimes C_n)\Omega_n(\rho)(I_{JM}\otimes C_n^\dagger)
+\quad\text{对全部 }J,\rho_{JM}.
+\tag{15.26}
+$$
+
+将 $`C_n^\dagger`$ 的值域 $`S_n`$ 嵌回完整档案空间，记所得算子为 $`R_n:K\to\mathcal B^{\otimes n}`$。取任意固定档案态 $`\zeta_n`$，则
+
+$$
+\mathcal D_n(X)
+=R_nXR_n^\dagger
++\operatorname{Tr}[(I_K-C_nC_n^\dagger)X]\,\zeta_n
+\tag{15.27}
+$$
+
+是只作用于接收器的全域 CPTP 解码器，并由（15.26）恢复完整 $`JM\mathcal B^{\otimes n}`$ 联合态。参考完整性来自统一线性等距恒等式，不需要逐输入选择恢复映射。
+
+等价地，对 $`n>L`$ 可反复施加 $`A^\dagger`$ 恢复后续发出系统，再逆启动编码；$`AA^\dagger=I`$ 保证反向运行本身等距，且在实际像上回到正确的历史支撑。早期接收操作与后续只作用于活动来源的发射可交换位置，因此整个解码电路不访问活动来源。
+

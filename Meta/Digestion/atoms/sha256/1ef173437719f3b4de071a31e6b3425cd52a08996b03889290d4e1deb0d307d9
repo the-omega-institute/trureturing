@@ -1,0 +1,14 @@
+### 77.3 全压缩范围的统一幂次误差
+
+定义实际统一偏差
+
+$$
+D(\varepsilon)
+=\sup_{0<a<1}
+\left|
+\frac{e(a,\varepsilon)}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|.
+\tag{77.5}
+$$
+

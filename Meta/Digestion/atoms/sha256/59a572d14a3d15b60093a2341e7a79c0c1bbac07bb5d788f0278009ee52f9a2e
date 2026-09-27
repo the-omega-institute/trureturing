@@ -1,0 +1,48 @@
+### 178.2 经典标签与完整档案恢复给出相反的任务排序
+
+对两个等先验原始输入 $P_0,P_1$，只读取 $K$ 的最佳二元判别成功率为
+
+$$
+p_{\mathrm{bit}}(\mathcal P)
+=\frac12\left(1+D\bigl(\operatorname{Tr}_M\mathcal P(P_0),
+\operatorname{Tr}_M\mathcal P(P_1)\bigr)\right).
+$$
+
+第172节给 $d_L=D(\tau_0,\tau_1)>0$，在当前相位有
+
+$$
+\boxed{
+p_{\mathrm{bit}}(\mathcal N_L)
+=\frac12+\frac{d_L}{2}\sqrt{\frac{1329}{2353}}
+>\frac12
+=p_{\mathrm{bit}}(\mathcal S).
+}
+\tag{178.3}
+$$
+
+其中 $1329=(5/9)48^2+7^2$，直接来自第172节的局部距离公式。
+
+另一方面，对原输入及全部参考的来源恢复，令
+
+$$
+e(\mathcal P)=
+\min_{\mathcal D:K\to Q_{\mathrm{out}}R_{\mathrm{out}}\ {\rm CPTP}}
+d_\diamond\bigl((\operatorname{id}_M\otimes\mathcal D)\mathcal P,
+\mathcal V_*\bigr),
+\qquad
+\mathcal V_*(X)=X\otimes P_\Xi.
+$$
+
+第165、174节分别给
+
+$$
+\boxed{
+e(\mathcal S)=\frac34,
+\qquad
+e(\mathcal N_L)=h_L(i)>\frac34.
+}
+\tag{178.4}
+$$
+
+这些任务排序都在相同的接收端权限下成立。第一项要求区分一个经典输入标签；第二项同时要求恢复输入与参考的关系，以及记忆与档案之间的目标纯化关系。
+

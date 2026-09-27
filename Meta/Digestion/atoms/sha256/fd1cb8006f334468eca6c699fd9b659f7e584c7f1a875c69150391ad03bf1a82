@@ -1,0 +1,10 @@
+**命题 6.4（经典占据的恢复障碍）。** 令 $\rho_\pm=|\pm\rangle\langle\pm|$，$\mathcal M_Z(\rho)=\sum_x\rho_{xx}|x\rangle\langle x|$。任何恢复通道 $\mathcal R$ 对 $\rho_+,\rho_-$ 的最坏半迹距离误差至少为 $1/2$。
+
+证明。$\mathcal M_Z(\rho_+)=\mathcal M_Z(\rho_-)$，故两次恢复输出为同一 $\sigma$。两正交输入的半迹距离为一，三角不等式给出
+
+$$
+1\le\frac12\|\rho_+-\sigma\|_1+\frac12\|\sigma-\rho_-\|_1.
+$$
+
+至少一项不小于 $1/2$。$\square$
+

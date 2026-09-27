@@ -1,0 +1,90 @@
+**引理 226.4（闭圆盘上的连续主向量与边界相位）。**
+
+以下取（226.WP.4）的输入，所以 $x=\sqrt{1-|z|^2}\ge0$、$y=z$。在 $0<|z|<1$ 上，
+$$
+k=x\left(\frac1{10}z+\frac{19}{50}\overline z\right)\ne0,
+\tag{226.WP.12}
+$$
+因为 $19/50>1/10$。记
+$$
+\lambda=\lambda_+(v(z)),\qquad
+\Delta=\lambda_+(v(z))-\lambda_-(v(z))>0.
+$$
+对 $z\ne0$ 定义单位相位
+$$
+d(z)=\frac{\frac{19}{50}z+\frac1{10}\overline z}
+{\left|\frac{19}{50}z+\frac1{10}\overline z\right|}.
+\tag{226.WP.13}
+$$
+再令
+$$
+s(z)=\sqrt{\frac{\lambda-B}{\Delta}},
+\qquad
+t(z)=d(z)\sqrt{\frac{\lambda-A}{\Delta}}\quad(z\ne0),
+$$
+并在中心取 $s(0)=1,t(0)=0$。
+
+所有根号中的量均非负。中心处 $\lambda-A=0$，故 $t(z)\to0$；$d(z)$ 虽然在中心未定义，其单位模长保证这个乘积连续。$s$ 本身在全盘连续。圆盘边界处
+$$
+A=\frac{361}{400},\qquad B=\frac{401}{100},\qquad k=0,
+$$
+所以 $s=0$、$t=d$。这也证明 $s,t$ 在边界连续。
+
+在内部，由特征方程
+$$
+(\lambda-A)(\lambda-B)=|k|^2
+$$
+以及 $d=\overline k/|k|$，直接得
+$$
+T_v\binom{s}{t}=\lambda\binom{s}{t},
+\qquad |s|^2+|t|^2=1.
+\tag{226.WP.14}
+$$
+同式在中心和边界由刚才的显式值成立。定义
+$$
+\boxed{
+ r(z)=\frac{s(z)Mv(z)+t(z)Nv(z)}{\sqrt{\lambda}}.
+}
+\tag{226.WP.15}
+$$
+它在闭圆盘上连续。由（226.WP.14）可知 $\|r(z)\|=1$，且
+$$
+\Gamma(P_{v(z)})r(z)=\lambda r(z),
+\qquad
+\langle r(z),\Gamma(P_{v(z)})r(z)\rangle=\lambda\ge1.
+\tag{226.WP.16}
+$$
+没有在中心或边界通过零向量归一化。
+
+令
+$$
+r_b=\frac{Nf_1}{\|Nf_1\|}
+=\frac{\frac1{10}e_0+2e_2}{\sqrt{401/100}}.
+$$
+当 $|z|=1$，$v(z)=zf_1$，因此
+$$
+r(z)=zd(z)r_b=p(z)r_b,
+$$
+$$
+\boxed{
+ p(z)=\frac{\frac1{10}+\frac{19}{50}z^2}
+ {\left|\frac1{10}+\frac{19}{50}z^2\right|}.
+}
+\tag{226.WP.17}
+$$
+其绕数恰为二：同伦
+$$
+p_\tau(z)=
+\frac{\frac{\tau}{10}+\frac{19}{50}z^2}
+ {\left|\frac{\tau}{10}+\frac{19}{50}z^2\right|},
+\qquad0\le\tau\le1,
+$$
+分母从不为零，因 $\tau/10<19/50$，并将 $p_1=p$ 连到 $p_0(z)=z^2$。
+
+等价地，（226.WP.13）在圆周上是正定实线性映射
+$$
+z\longmapsto\frac{12}{25}\operatorname{Re}z
++i\frac7{25}\operatorname{Im}z
+$$
+的径向归一化，所以 $d:S^1\to S^1$ 为绕数一的圆周自同胚。任意候选的边界配对恰为 $F(z)=\overline{d(z)}h$，绕数为负一；若 $F$ 无零，$d^{-1}(\overline{F/h}/|F/h|)$ 将直接成为从圆盘到边界圆周的缩回。
+

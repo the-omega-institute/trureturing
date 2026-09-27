@@ -1,0 +1,24 @@
+### 158.6 有限字符近似给出定量平均证书
+
+对一个 Lipschitz 函数 $\varphi:[0,1]\to\mathbb R$，记其常数为 $K_\varphi$。假设已经取得有限字符多项式
+
+$$
+P(z)=\sum_{k\in F}c_k\chi_k(z),\qquad F\subset\mathbb Z^s\text{ 有限},
+$$
+
+以及经过证明的一致误差
+
+$$
+\sup_{z\in G}|P(z)-\varphi(h(z))|\le\eta.
+\tag{158.13}
+$$
+
+定义有限常数
+
+$$
+A_\zeta=
+\frac{C_pp^2}{1-p}
++\frac{\sqrt D\,BL}{1-\kappa}.
+\tag{158.14}
+$$
+

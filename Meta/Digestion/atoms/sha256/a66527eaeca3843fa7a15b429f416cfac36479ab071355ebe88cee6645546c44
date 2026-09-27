@@ -1,0 +1,22 @@
+**定义 213.1（同时尖锐校准及其维数）。** 固定 $`0<a<1`$，考虑第187节在 $`J_a=(2a-1,1)`$ 上全输入精确的固定 CPTP 程序，要求实际准备 $`\rho_u`$ 为 $`C^1`$ 纯态曲线。沿用定义211.1的双侧下极限曲率及定理211.2的最优值，置
+
+```math
+\mathcal E_*(\rho)=\{t\in J_a:I_Q(\rho_t)=I_r(t),\quad
+                         \kappa(\rho,t)=\kappa_*(a,t)\}.
+\tag{213.1}
+```
+
+称其中的点为尖锐校准点。对非空有限集合 $`S=\{t_1,\ldots,t_m\}\subset J_a`$，令 $`d_r(a,S)`$ 为满足 $`S\subseteq\mathcal E_*(\rho)`$ 的此类程序的最小联合支持维数，其中 $`r=1,\infty,\omega`$ 分别要求准备曲线为 $`C^1`$、$`C^\infty`$、实解析；实解析允许矩阵元素为复数。以下实向量构造是该类中的特例。对 $`h\in(a,1)`$ 定义
+
+```math
+\begin{gathered}
+ b(h)=\sqrt{\frac{h^2-a^2}{h-a^2}},\qquad
+ s(h)=\frac ah\bigl(2h-1-b(h)\bigr),\\[0pt]
+ \lambda_\pm(h)=\frac{s(h)\pm\sqrt{s(h)^2+4b(h)}}2,\qquad
+ N(a,S)=1+m+\#\{\lambda_-((1+t_i)/2):1\le i\le m\}.
+ \end{gathered}
+\tag{213.2}
+```
+
+负特征值按不同取值计数，不预设它随 $`h`$ 单调或逐点不同。
+

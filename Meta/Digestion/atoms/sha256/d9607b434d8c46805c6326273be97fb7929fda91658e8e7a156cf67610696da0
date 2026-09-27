@@ -1,0 +1,11 @@
+**推论193.3（振荡比例也由同一响应控制）。** 对任意
+$\epsilon_n\downarrow0$、$\ell_n\in[0,1/2]$，令
+$z_n=\ell_n/(\ell_n+\epsilon_n)$。归一化误差序列的所有聚点恰为
+
+$$
+\boxed{
+\{\Psi(z):z\text{ 是 }(z_n)\text{ 的聚点}\}.
+}
+\tag{193.5}
+$$
+

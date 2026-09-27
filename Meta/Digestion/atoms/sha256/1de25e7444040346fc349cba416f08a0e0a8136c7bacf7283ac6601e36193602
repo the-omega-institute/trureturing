@@ -1,0 +1,57 @@
+## ST23．非零 Chern 数阻止单一全局图编码
+
+### 假设 ST23.1
+
+令 $\Sigma$ 为紧致、无边界、定向光滑曲面，$P(x)$ 是固定平凡丛 $\Sigma\times\mathbb C^n$ 上的光滑秩 $r$ 正交投影，$1\le r<n$。记 $E_x=\operatorname{Ran}P(x)$。本文采用物理连接规范
+
+$$
+\mathcal A=iU^\dagger dU,\qquad
+\mathcal F=d\mathcal A-i\mathcal A\wedge\mathcal A,\qquad
+C_1(E)=\frac1{2\pi}\int_\Sigma\operatorname{tr}\mathcal F.
+$$
+
+标准第一 Chern 数的整数性作为向量丛背景使用；下述障碍证明实际只需要这个积分非零。度量拓扑界的既有讨论见[ST19-MO]。
+
+### 定理 ST23.2：单一固定可见空间的障碍
+
+若 $C_1(E)\ne0$，则对每个固定秩 $r$ 投影 $P_0$，存在 $x\in\Sigma$ 与单位向量 $v\in E_x$，使 $P_0v=0$。特别地，
+
+$$
+\boxed{\max_{x\in\Sigma}\|(I-P_0)P(x)\|=1.}
+\tag{ST23.1}
+$$
+
+**证明。** 若 $P_0:E_x\to\operatorname{Ran}P_0$ 处处单射，则因秩相同而处处可逆。局部矩阵求逆说明其逆光滑，把固定目标基拉回就得到 $E$ 的全局框，正交化后得到全局等距 $U$。此时 $\operatorname{tr}\mathcal F=d\operatorname{tr}\mathcal A$，因为交换子迹为零。由 Stokes 定理积分为零，矛盾。存在被完全消去的单位向量时范数至少为1，而正交投影范数至多为1。∎
+
+在横截的图坐标区域，$U=(I,X)^{\mathsf T}(I+X^\dagger X)^{-1/2}$，所以
+
+$$
+\lambda_{\min}(U^\dagger P_0U)=\frac1{1+\|X\|^2}.
+\tag{ST23.2}
+$$
+
+因此全局障碍可表现为图坐标发散。它不要求完整 Hamiltonian 的物理能隙闭合。这里 $\|(I-P_0)P(x)\|^2$ 是不同子空间间的丢失量，应与 ST19 的一次实际仪器漏出参数分别命名。
+
+### 定理 ST23.3：有限图册与一致的局部模型
+
+每个 $x_\alpha\in\Sigma$ 处选择 $E_{x_\alpha}$ 的等距基 $W_\alpha$。在
+$W_\alpha^\dagger P(x)W_\alpha>0$ 的邻域内定义
+
+$$
+U_\alpha(x)=P(x)W_\alpha
+[W_\alpha^\dagger P(x)W_\alpha]^{-1/2}.
+\tag{ST23.3}
+$$
+
+这些是光滑局部等距框，紧致性给出有限子覆盖。在交叠区，
+
+$$
+g_{\alpha\beta}=U_\alpha^\dagger U_\beta,\quad
+U_\beta=U_\alpha g_{\alpha\beta},\quad
+g_{\alpha\beta}g_{\beta\gamma}=g_{\alpha\gamma}.
+$$
+
+**证明。** 基点处括号内为恒等矩阵，正定性在邻域中保持；直接计算 $U_\alpha^\dagger U_\alpha=I$，其像为 $E_x$。交叠区用 $U_\alpha U_\alpha^\dagger=P$ 验证三式。∎
+
+局部态、Hamiltonian、仪器和连接必须使用同一过渡函数。ST21.3保证仪器预算不依赖局部框。沿路径切换图册时，精确的过渡函数是坐标运输，不是额外物理投影；实际重新测量并丢弃结果则是另一种有扰动的操作。
+

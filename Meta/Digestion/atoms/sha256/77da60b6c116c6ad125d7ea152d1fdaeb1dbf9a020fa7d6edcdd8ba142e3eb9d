@@ -1,0 +1,56 @@
+### 243.2 用标准代数分解写出全部取等边缘
+
+令
+$$
+\mathcal A=\operatorname{Alg}^{*}(I_H,\Pi_1,\ldots,\Pi_N)
+\subseteq\mathcal L(H)
+\tag{243.6}
+$$
+为投影生成的有限维含幺 $C^*$ 代数，$\mathcal A'$ 为其对易代数。采用已有的有限维结构定理，存在酉坐标使
+$$
+H\cong\bigoplus_{z\in Z}
+\left(\mathbb C^{n_z}\otimes\mathbb C^{m_z}\right),
+\tag{243.7}
+$$
+$$
+\mathcal A\cong\bigoplus_{z\in Z}
+\left(M_{n_z}(\mathbb C)\otimes I_{m_z}\right),
+\qquad
+\mathcal A'\cong\bigoplus_{z\in Z}
+\left(I_{n_z}\otimes M_{m_z}(\mathbb C)\right).
+\tag{243.8}
+$$
+这里 $Z$ 为有限中心块集合，$n_z,m_z$ 为正整数：$n_z$ 是不可约作用维数，$m_z$ 是重数。该标准分解只用于本节证明，不单列为新定理。
+
+下文在上述酉坐标中书写边缘。由（243.4），全部取等边缘恰为 $\mathcal A'$ 中的密度矩阵，因此唯一具有形式
+$$
+\boxed{
+\rho=\bigoplus_{z\in Z}
+p_z\left(\frac{I_{n_z}}{n_z}\otimes\sigma_z\right),
+\qquad p_z\ge0,\quad\sum_zp_z=1,
+}
+\tag{243.9}
+$$
+其中在 $p_z>0$ 的块上，$\sigma_z$ 是 $m_z$ 维密度矩阵；$p_z=0$ 时该块为零，$\sigma_z$ 的选择不影响 $\rho$。
+
+具体地，$\mathcal A'$ 中的正矩阵块为 $I_{n_z}\otimes\tau_z$，$\tau_z\succeq0$。设 $p_z=n_z\operatorname{Tr}\tau_z$，在非零块上取 $\sigma_z=\tau_z/\operatorname{Tr}\tau_z$，就得到（243.9）。不同中心块之间没有非对角项，因为取等边缘必须与 $\mathcal A$ 的中心投影对易；这不是额外施加的输入限制。
+
+设 $\sigma_z$ 的正本征值为 $\mu_{z,a}$。则 $\rho$ 在该块的正本征值为 $p_z\mu_{z,a}/n_z$，每个重复 $n_z$ 次。直接计数并计算熵，得到全部取等纯探针的资源式
+$$
+\boxed{
+\operatorname{rank}\rho
+=\sum_{z:p_z>0}n_z\operatorname{rank}\sigma_z,
+}
+\tag{243.10}
+$$
+$$
+\boxed{
+S(\rho)=H(p)+\sum_zp_z\bigl(\log_2n_z+S(\sigma_z)\bigr),
+\qquad H(p)=-\sum_zp_z\log_2p_z.
+}
+\tag{243.11}
+$$
+零权重项按零处理。
+
+中心块标签可以置换，坐标也可酉变换，但这些变化不改变（243.10）—（243.11）及其最小值。不同中心块即使具有相同的 $n_z$，也不因此合并为同一个重数因子：相应中心投影属于 $\mathcal A$，仍可区分这些块。
+

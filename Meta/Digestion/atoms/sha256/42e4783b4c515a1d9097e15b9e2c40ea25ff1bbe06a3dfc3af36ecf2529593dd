@@ -1,0 +1,16 @@
+**命题 2.25（sparse extendibility computes total mass）。** The characteristic function of $R$ uniformly computes a rational Cauchy name for $M$.
+
+**Proof.** Given a binary accuracy request $m\ge0$, choose the least $n\ge0$ satisfying
+$$
+\frac{p^{-n}}{p-1}\le2^{-m}.
+\tag{TM.582}
+$$
+Query $(n,b)\in R$ for all $0\le b<p^n$, count the positive answers, and output $a_n$. The tail bound gives $|a_n-M|\le2^{-m}$. $\square$
+
+**Quantitative form.** This procedure uses exactly $p^n$ Boolean extension queries at depth $n$, followed by finite counting and division by $p^n$. For $n\ge1$, minimality of $n$ gives
+$$
+\frac{2^m}{p-1}\le p^n<\frac{p}{p-1}2^m.
+\tag{TM.583}
+$$
+For $n=0$ it uses one query. A standard representative $b$ needs at most $\lceil n\log_2p\rceil$ binary digits, apart from the representation of the depth itself. Thus the stated query count is generally exponential in the requested number $m$ of binary accuracy bits for this procedure. These are query and representation bounds; they are neither an optimality assertion nor a polynomial-time claim.
+

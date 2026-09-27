@@ -1,0 +1,71 @@
+### 207.4 完整全类三阶下界
+
+在（207.5）中使用独立 $(\epsilon,\ell)$ 作第200、206节的 Schur 展开，
+再代 $\ell=h\epsilon$，规范点处固定参考权重 $1/2$ 的二阶系数为
+
+$$
+\frac{hL_s}{4}-\frac{2hzT_s}{3}
+-\frac{4h^2z^2}{3}+\frac{16h^2z^2(1-m^2)}9
+-\frac{16hz^2\Phi_h}{9}+\frac{L_d^2}{16}.
+$$
+
+参考最大点移动再贡献 $3L_d^2/16$，由（207.7）的曲率与
+首项参考导数 $-3L_d/4$ 得到。
+因此全区间有 $R_h(\Gamma^*(h))=Z(h)$，
+在 $h=0$ 时直接得到 $Z(0)=L_d(0)^2/4$。
+
+由（207.9）的 Choi 导数界，
+$|R_h(\Gamma)-Z(h)|\le C_H\mathfrak d$。
+占据列反对称位移在规范点的一阶导数为 $L_d-\beta\delta/4$；
+来源部分因 $M_0=M_1=m$ 而在该方向导数为零。
+与（207.10）的偏置项合并后，系数正是
+$a_{\mathrm{eff}}=L_d-\beta\delta(1/4+n^2)$。
+
+令
+
+$$
+x=\frac{A_0-A_1}{2\epsilon},\qquad
+W_\theta=\sum_{j,\alpha}|c/\epsilon+i\theta d|^2,\qquad
+\Delta=e_\epsilon-[3/4+\epsilon\Phi_h+\epsilon^2Q(h)].
+$$
+
+完成偏置与泄漏平方，有
+
+$$
+\begin{aligned}
+\Delta={}&\epsilon^2[(x+a_{\mathrm{eff}}/2)^2+W_\theta/4]\\
+&+\epsilon[k_0U_0+k_1U_1+k_dV+hM_{\mathrm{def}}/6]+\mathcal R,\\
+|\mathcal R|\le{}&C_{H,K}(\epsilon^3+\epsilon^2\mathfrak d)
+\le C'_{H,K}(\epsilon^3+\epsilon^2\sqrt{U_0+V}).
+\end{aligned}
+\tag{207.16}
+$$
+
+具体地，基点恒等式为
+$\lambda-3/4=C/4+\epsilon^2x^2/(1-C)$，
+与 $C/4+\epsilon^2x^2$ 的差为 $O(\epsilon^4)$。
+（207.10）中含共同平移 $A_0+A_1-1=-C$ 的项为 $O(\epsilon^3)$。
+泄漏平方留下的
+$\epsilon^2\theta^2[m^2-(D_0+D_1)/4]$ 由（207.15）控制。
+余项还包括冻结解析三阶项与占据列 Taylor 余项，均满足所写界。
+
+取 $k=\min\{\beta\delta/4,\beta R/4\}>0$。
+Young 不等式给
+
+$$
+C'_{H,K}\epsilon^2\sqrt{U_0+V}
+\le\frac k2\epsilon(U_0+V)+C''_{H,K}\epsilon^3.
+\tag{207.17}
+$$
+
+对全部精确最优器取 $K=0$，删去剩余非负项，即得
+
+$$
+\mathscr E(h\epsilon,\epsilon)
+\ge\frac34+\epsilon\Phi_h+\epsilon^2Q(h)-C_H\epsilon^3
+\qquad(0\le h\le H).
+\tag{207.18}
+$$
+
+该下界覆盖任意复数、多 Kraus 共同 CPTP 操作。
+

@@ -1,0 +1,20 @@
+**定理161.3（固定维数内的长期误差不连续）。** 上述 $38$ 维装置族满足
+
+$$
+\mathcal C_{\theta_k}\longrightarrow\mathcal C_0,
+\qquad
+e_n(\theta_k)\longrightarrow e_n(0)\quad\text{对每个固定 }n,
+\tag{161.9}
+$$
+
+但对每个 $k\ge3$，
+
+$$
+\boxed{
+E_\infty(\theta_k)-E_\infty(0)
+\ge\frac1{36}-\frac3{256}
+=\frac{37}{2304}>0.
+}
+\tag{161.10}
+$$
+

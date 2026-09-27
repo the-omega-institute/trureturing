@@ -1,0 +1,37 @@
+**定理165.1（完整参考最优误差的闭式）。** 有
+
+$$
+\boxed{
+\mathfrak e(v)=
+\frac{3+\sqrt{9+4\Delta(1-s)(7-s)}}8 .
+}
+\tag{165.4}
+$$
+
+最小值由接收端 CPTP 解码器达到。公式包括 $q=0,1$ 的退化端点。
+
+第163节的正交纯分支表示为
+
+$$
+\Omega_v=\frac12P_{\zeta_+}+\frac12P_{\zeta_-},
+\qquad
+\rho_\pm:=\operatorname{Tr}_{QR}P_{\zeta_\pm}
+=\rho_*\mp q\sqrt\Delta\,Y.
+\tag{165.5}
+$$
+
+若 $\langle v|Z|v\rangle<0$，交换两个分支名称即可得到此式。两个分支的接收侧 Schmidt 支撑正交。定义
+
+$$
+\mathcal K_q=
+\left\{
+\bar\sigma=\frac{\sigma_++\sigma_-}{2}:
+\sigma_\pm\succeq0,
+\operatorname{Tr}_{R_{\mathrm{out}}}\sigma_\pm=\rho_\pm
+\right\}.
+\tag{165.6}
+$$
+
+这是非空紧凸密度矩阵集，且恰好等于接收端从 $\Omega_v$ 能产生的全部 $MR_{\mathrm{out}}$ 状态。必要性来自局部通道不改变分支的 $M$ 边缘。充分性可直接由纯化证明：给任意指定扩张 $\sigma_\pm$，取其在
+$MR_{\mathrm{out}}E_\pm$ 上的纯化；它与 $\zeta_\pm$ 纯化同一个 $\rho_\pm$，所以在接收侧实际 Schmidt 支撑上存在等距将后者变为前者。迹掉 $E_\pm$ 就得到所需扩张。先测两个正交支撑、再执行对应通道，并在支撑外补固定输出，便能同时实现任意一对扩张。这个结论也覆盖秩一的 $\rho_\pm$。
+

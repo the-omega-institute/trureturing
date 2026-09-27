@@ -1,0 +1,9 @@
+**推论 63.2 的证明。** 若 $R=|r\rangle\langle r|$ 且 $\dim D=2$，则
+
+$$
+\operatorname{rank}(\operatorname{Tr}_D|r\rangle\langle r|)
+\le\dim D=2.
+$$
+
+定理 63.1 给同系数等式。因此严格间隙排除了纯 $R$，也排除了任何秩至多二的早边缘，得到式（63.5）。$\square$
+

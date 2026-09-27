@@ -1,0 +1,27 @@
+#### 8.5.3 全部中间读数下的同一锐见证
+
+固定目标 $c^*\in X$，定义
+$$
+w_i(c)=
+\begin{cases}2m_i-3,&c=c_i^*,\\-1,&c\ne c_i^*,\end{cases}
+\qquad w=\bigotimes_i w_i.
+$$
+有 $\sum_c w_i(c)=m_i-2$，且
+$$
+\sum_{c\ne a_i}w_i(c)=
+\begin{cases}-(m_i-1),&a_i=c_i^*,\\m_i-1,&a_i\ne c_i^*.\end{cases}
+$$
+于是
+$$
+|R_{T,a}(w)|=
+\prod_{i\in T}(m_i-1)\prod_{i\notin T}(m_i-2)
+\le t:=\prod_i(m_i-1).
+$$
+完整续接达到绝对值 $t$，而
+$$
+\|w\|_\infty=q:=\prod_i(2m_i-3),\qquad q/t=\kappa(M).
+$$
+因此 ER8.FC.1 在保留空续接和所有中间读数的观察范数中也精确。所有响应由同一明确整数向量产生，已经满足全部联合约束。
+
+空模数族采用空乘积一，唯一读数是总数，常数一。模数二的因子恰为一；若有 $r$ 个互异奇素数，每个因子至少 $3/2$，故 $\kappa(M)\ge(3/2)^r$。这只描述计数反演的数值稳定性。
+

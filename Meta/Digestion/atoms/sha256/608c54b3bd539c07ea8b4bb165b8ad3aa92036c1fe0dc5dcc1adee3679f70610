@@ -1,0 +1,60 @@
+### 58.3 准确差算符与谱
+
+令
+
+$$
+k=\frac{c}{1+c},\qquad b=\frac{\sqrt\varepsilon}{1+c},
+\qquad X_\varepsilon=\frac{S_\varepsilon-R_\varepsilon}{\varepsilon}.
+$$
+
+直接展开式（58.2），使用 $1-c=\varepsilon/(1+c)$，得到
+
+$$
+X_\varepsilon
+=-|x\rangle\langle x|
+-k(|x\rangle\langle y|+|y\rangle\langle x|)
+-b(|x\rangle\langle z|+|z\rangle\langle x|)
++|h_0\rangle\langle h_0|.
+\tag{58.8}
+$$
+
+对固定 $C$，完整正区间的支持函数是
+
+$$
+\max_{0\preceq E\preceq C\otimes I_D}\operatorname{Tr}(X_\varepsilon E)
+=\operatorname{Tr}\left[
+\sqrt{C\otimes I_D}X_\varepsilon\sqrt{C\otimes I_D}
+\right]_+.
+\tag{58.9}
+$$
+
+式（58.9）在奇异 $C$ 时亦成立：在其支撑上写 $E=\sqrt{C\otimes I_D}F\sqrt{C\otimes I_D}$，$0\preceq F\preceq I$，再选正谱投影。
+
+对式（58.7），压缩算符在 $\operatorname{span}\{x,y,z\}$ 上的矩阵为
+
+$$
+\begin{pmatrix}
+-q&-k\sqrt{q(1-q)}&-b\sqrt{qr}\\
+-k\sqrt{q(1-q)}&0&0\\
+-b\sqrt{qr}&0&0
+\end{pmatrix}.
+$$
+
+其特征值是零与
+
+$$
+\lambda_\pm(q,r)=
+\frac{-q\pm\sqrt{q^2+4k^2q(1-q)+4b^2qr}}2.
+\tag{58.10}
+$$
+
+另外，$h_0$ 方向的特征值为 $1-r\ge0$。因此
+
+$$
+\begin{aligned}
+h(X_\varepsilon)&=\max_{q,r}\bigl[1-r+\lambda_+(q,r)\bigr],\\
+h(-X_\varepsilon)&=\max_{q,r}\bigl[-\lambda_-(q,r)\bigr].
+\end{aligned}
+\tag{58.11}
+$$
+

@@ -1,0 +1,94 @@
+**推论166.4（实际分布的可计算约束）。** 对每个实数 $x$，有
+
+$$
+\boxed{
+F_\Delta(x-b)
+\le F_{q,r}(x^-)
+\le F_{q,r}(x)
+\le F_\Delta(x+b).
+}
+\tag{166.21}
+$$
+
+对 $0<p<1$，实际下分位数
+$Q_{q,r}(p)=\inf\{x:F_{q,r}(x)\ge p\}$ 满足
+
+$$
+\boxed{
+|Q_{q,r}(p)-Q_\Delta(p)|\le b.
+}
+\tag{166.22}
+$$
+
+真实阈值处的原子满足
+
+$$
+\boxed{
+\mu_{q,r}(\{x\})
+\le F_\Delta(x+b)-F_\Delta(x-b).
+}
+\tag{166.23}
+$$
+
+**证明。** 在（166.17）的耦合中记坐标为 $X,Y$。由
+$Y<x-b\Rightarrow X<x$、
+$X\le x\Rightarrow Y\le x+b$，
+并用 $\nu_\Delta$ 无原子，得到（166.21）。
+
+对（166.22），因为比较 CDF 在支撑区间连续严格递增，
+$F_\Delta(Q_\Delta(p))=p$。式（166.21）给
+$F_{q,r}(Q_\Delta(p)+b)\ge p$，从而
+$Q_{q,r}(p)\le Q_\Delta(p)+b$。
+若 $x<Q_\Delta(p)-b$，则
+$F_{q,r}(x)\le F_\Delta(x+b)<p$，所以
+$Q_{q,r}(p)\ge Q_\Delta(p)-b$。这个证明允许真实分布有原子。
+
+最后，事件 $X=x$ 蕴含
+$Y\in[x-b,x+b]$；比较分布无原子，故该区间质量恰为
+$F_\Delta(x+b)-F_\Delta(x-b)$，得到（166.23）。证毕。
+
+实际经验分布的弱收敛并不在每个阈值自动给出计数收敛。若
+
+$$
+A_K^{q,r}(x)=
+\frac1K\#\{1\le k\le K:e_{qk+r}\le x\},
+$$
+
+则始终有
+
+$$
+\boxed{
+F_\Delta(x-b)
+\le F_{q,r}(x^-)
+\le\liminf_K A_K^{q,r}(x)
+\le\limsup_K A_K^{q,r}(x)
+\le F_{q,r}(x)
+\le F_\Delta(x+b).
+}
+\tag{166.24}
+$$
+
+中间不等式由弱收敛对开、闭半线的界得到。只有在
+$\mu_{q,r}(\{x\})=0$ 时，才能据此断言
+$A_K^{q,r}(x)\to F_{q,r}(x)$。对于严格计数
+$\#\{e_{qk+r}<x\}/K$，同样的上下包络仍成立。特别地，对任意
+$0<p<1$，
+
+$$
+\boxed{
+\begin{aligned}
+\liminf_K\frac1K
+\#\{k\le K:e_{qk+r}>Q_\Delta(p)-b\}
+&\ge1-p,\\
+\liminf_K\frac1K
+\#\{k\le K:e_{qk+r}<Q_\Delta(p)+b\}
+&\ge p.
+\end{aligned}
+}
+\tag{166.25}
+$$
+
+第一式对（166.24）的非严格计数取补集；第二式使用严格计数的下包络。两式均不要求真实阈值无原子。
+
+因此，一份无原子的比较密度可以给真实阈值的占比区间和原子质量上界，但不能替代真实分布的原子判定，更不能直接赋予真实分布同一个密度。
+

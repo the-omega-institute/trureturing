@@ -1,0 +1,40 @@
+### 288.5 未知漂移只进入稀有读数的方差
+
+因为 $u,v$ 正交且记分的绝对值不超过一，
+$$
+L^2=P_v+\left(\frac{16}{17}\right)^2P_u
+\preceq P_u+P_v\preceq P_2.
+\tag{288.15}
+$$
+由§286（286.21），在理想与扰动假设下分别有
+$$
+\operatorname{Tr}(P_2\sigma_{0,r})\le1-r\le w,
+\qquad
+\operatorname{Tr}(P_2\sigma_{\delta,r})\le1-r+\delta\le w+\delta.
+$$
+所以
+$$
+\operatorname{Var}_{0,r}X\le w,\qquad
+\operatorname{Var}_{\delta,r}X\le w+\delta.
+\tag{288.16}
+$$
+这比仅使用 $|X|\le1$ 强：读数所在的两个方向，在没有漂移也没有扰动时都不发生，真实二阶矩随背景和任务扰动一起缩小。
+
+独立测量 $K$ 个完整块，以阈值 $\delta/544$ 比较 $X$ 的样本均值。由（288.13）—（288.16），每个假设在每个允许 $r$ 下的错误都至多
+$$
+\frac{4\cdot272^2(w+\delta)}{K\delta^2}.
+\tag{288.17}
+$$
+因此取
+$$
+K=\left\lceil12\cdot272^2\frac{w+\delta}{\delta^2}\right\rceil
+\tag{288.18}
+$$
+就达到（287.2）的逐假设一致目标。全部位置计费，且 $(w+\delta)/\delta^2\ge4$，故
+$$
+N_{\rm unk}^{\rm full}(2,\delta;w)
+\le(24\cdot272^2+1)\frac{w+\delta}{\delta^2}.
+\tag{288.19}
+$$
+显示常数没有优化。方案只使用已知 $\delta,w$ 设预算，阈值不依赖实际 $r$。
+

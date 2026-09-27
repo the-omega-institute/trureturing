@@ -1,0 +1,20 @@
+**引理155.6（相位变化的统一误差界）。** 对所有 $z,w\in G$，
+
+$$
+\boxed{|h(z)-h(w)|\le C_{\mathrm{ph}}\,d_G(z,w).}
+\tag{155.17}
+$$
+
+**证明。** $\mathcal R_z-\mathcal R_w$ 是两个 CPTP 通道之差，故可再次使用（154.17）。由 Choi 线性性及三角不等式，
+
+$$
+\begin{aligned}
+|h(z)-h(w)|
+&\le\tfrac12\|\mathcal R_z-\mathcal R_w\|_\diamond\\
+&\le\sqrt D\left\|\sum_j(z_j-w_j)J(\Phi_j)\right\|_{\mathrm{HS}}\\
+&\le C_{\mathrm{ph}}\,d_G(z,w).
+\end{aligned}
+$$
+
+这里只对整个物理通道之差应用厄米保持界，没有假定每个复谱分量 $\Phi_j$ 自身为通道或保持厄米性。证毕。
+

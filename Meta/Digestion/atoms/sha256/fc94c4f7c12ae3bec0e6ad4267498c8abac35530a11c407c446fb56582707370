@@ -1,0 +1,35 @@
+**定理 175.2（规范商的充分性与最小性）。** 对任意两个边界状态 $x,y$，以下条件等价：
+
+$$
+\mathsf q_{V_\infty}(x)=\mathsf q_{V_\infty}(y);
+$$
+
+$$
+F(x)=F(y)
+\quad\text{对所有 }F\in V_\infty;
+$$
+
+$$
+H\bigl(\Phi_n\circ\cdots\circ\Phi_1(x)\bigr)
+=
+H\bigl(\Phi_n\circ\cdots\circ\Phi_1(y)\bigr)
+$$
+
+对所有有限接口词 $\Phi_1,\ldots,\Phi_n$ 和所有终端效果 $H\in\mathcal F_{\mathrm{term}}$ 成立。
+
+此外，任何线性摘要 $S:\mathcal X\to Y$ 若对全部有限续接任务充分，则存在唯一线性映射 $\widetilde q$ 使
+
+$$
+\mathsf q_{V_\infty}=\widetilde q\circ S
+$$
+
+在 $S(\mathcal X)$ 上成立。因此 $\mathsf q_{V_\infty}$ 是所有线性充分接口的规范商。
+
+### 证明
+
+前两条是有限维线性空间中“对基相等”等价于“对整个张成空间相等”。第三条中的每个复合效果都属于 $V_\infty$，所以第二条推出第三条。
+
+反过来，取空接口词就得到所有 $H\in\mathcal F_{\mathrm{term}}$ 的相等；再对有限接口词逐层取拉回，$V_\infty$ 的定义说明这些复合效果张成整个 $V_\infty$，故第三条推出第二条。
+
+若 $S(x)=S(y)$，充分性迫使 $x,y$ 对 $V_\infty$ 的所有效果相等。因此 $\mathsf q_{V_\infty}$ 在每个 $S$ 的纤维上为常值，有限维线性因子化定理给出 $\widetilde q$；若限制到 $S(\mathcal X)$，因子化唯一。证毕。
+

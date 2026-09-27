@@ -1,0 +1,10 @@
+**定理 17.1。** 对所有 `4<=i<j<=n/2`，若
+\[
+g_i=\gcd\left(\binom ni,\binom nj\right),
+\]
+则
+\[
+\boxed{n^7<4000\binom i4^6g_i^6}.
+\tag{50}
+\]
+

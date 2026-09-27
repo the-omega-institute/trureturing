@@ -1,0 +1,42 @@
+### 240.6 单纯形的有限参考下界与未结算的中间曲线
+
+以下仍固定§239的同一单纯形候选 $\mathcal S^{\triangle}$，并使用（240.20）的参考维数限制。对每个整数 $1\le h\le d$，有实际达到的下界
+$$
+\boxed{
+D_h(\mathcal S^{\triangle})\ge
+1-\frac{h+1}{Nh}.
+}
+\tag{240.28}
+$$
+证明如下。在 $V=\mathbf1^\perp\subset\mathbb C^{d+1}$ 中，选 $h+1$ 个活跃坐标组成集合 $J$，令
+$$
+H_J=\{x\in V:x_j=0\ \text{对 }j\notin J\},
+\qquad \dim H_J=h.
+\tag{240.29}
+$$
+以 $H_J$ 和 $h$ 维参考之间的最大纠缠态为输入。对于 $j\in J$，投影 $P_{H_J}e_j$ 的范数平方为 $h/(h+1)$，候选参考块为
+$$
+\frac1h|P_{H_J}e_j\rangle\langle P_{H_J}e_j|,
+\tag{240.30}
+$$
+在选择相同基时可整体带转置，谱不变。其唯一非零本征值为 $1/(h+1)$。对全部原标签，目标参考块都是 $I_h/(Nh)$；对 $j\notin J$，候选块为零。
+
+候选减目标的正本征值仅出现在 $j\in J$，每块恰为 $1/(h+1)-1/(Nh)$，因此完整输出差的半迹范数为
+$$
+(h+1)\left(\frac1{h+1}-\frac1{Nh}\right)
+=1-\frac{h+1}{Nh}.
+\tag{240.31}
+$$
+这证明（240.28），且每个下界都有明确的 Schmidt 秩 $h$ 纯输入。
+
+两端已经精确结算：§239给 $D_1(\mathcal S^{\triangle})=1-2/N$，而（240.27）给 $D_d(\mathcal S^{\triangle})=1-(d+1)/(Nd)$。对中间整数 $1<h<d$，本节严格证明的范围是
+$$
+\boxed{
+1-\frac{h+1}{Nh}
+\le D_h(\mathcal S^{\triangle})
+<1-\frac{d+1}{Nd}.
+}
+\tag{240.32}
+$$
+左端是否总为精确值，在本节未证明；以下将缺少的统一上界写成一个等价的明确矩阵不等式。
+

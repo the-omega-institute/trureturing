@@ -1,0 +1,9 @@
+**定理 4.4（两典型字典的精确比较，repo-derived）。** 在约定 1.3 的四点支撑上，对 $0<\lambda<1$，
+$$
+\mathcal J(D_A)-\mathcal J(D_F)=p_B\,\Delta_v(\lambda)-p_{AB}\,\lambda\Big(2-\sqrt2-\frac\lambda2\Big),\qquad
+\Delta_v(\lambda)=\begin{cases}\tfrac14-\big(1-\tfrac1{\sqrt2}\big)\lambda,&\lambda\le\tfrac1{\sqrt2},\\[2pt]\tfrac12-\lambda+\tfrac12\lambda^2,&\tfrac1{\sqrt2}\le\lambda<1.\end{cases}
+$$
+故当 $p_{AB}>0$ 时，在两者之间吸收字典更优当且仅当 $p_B/p_{AB}<\rho^\ast(\lambda)=\lambda(2-\sqrt2-\lambda/2)/\Delta_v(\lambda)$；$\rho^\ast(0.1)\approx0.2428$，$\rho^\ast(0.3)\approx0.8064$。
+
+证明。目标关于 $c\ge0$ 严格凸，KKT 条件充分：活跃原子的相关 $\langle x-Dc,d_k\rangle=\lambda$，非活跃原子的相关 $\le\lambda$。$D_F$ 下三点费用分别为 $\lambda-\tfrac12\lambda^2$（$u$）、$2\lambda-\lambda^2$（$u+v$）、$\lambda-\tfrac12\lambda^2$（$v$）。$D_A=[u,w]$ 下：$x=u$ 取 $c=(1-\lambda,0)$，残差 $\lambda u$ 与 $w$ 的相关 $\lambda/\sqrt2\le\lambda$，费用 $\lambda-\tfrac12\lambda^2$；$x=u+v=\sqrt2w$ 取 $c=(0,\sqrt2-\lambda)$，残差 $(\lambda/\sqrt2)(u+v)$ 与 $u$ 的相关 $\lambda/\sqrt2\le\lambda$，费用 $\sqrt2\lambda-\tfrac12\lambda^2$；$x=v$ 时 $u$ 恒不活跃（残差与 $u$ 的相关为 $-c_2/\sqrt2\le0$），沿 $w$ 的一维问题在 $\lambda<1/\sqrt2$ 时取 $c_2=1/\sqrt2-\lambda$，费用 $\tfrac12-\tfrac12(1/\sqrt2-\lambda)^2=\tfrac14+\lambda/\sqrt2-\tfrac12\lambda^2$，否则 $c=0$ 费用 $\tfrac12$。逐点相减并按概率加权即得公式；两段在 $\lambda=1/\sqrt2$ 处连续。数值由代入得到。证毕。
+

@@ -1,0 +1,65 @@
+**定理 144.1（平稳时间方差率）。** 令扇区链以平稳分布 $\pi$ 开始，且每个慢扇区独立附加一个单位指数变量 $Y_r$，置
+
+$$
+\tau_r=A_rY_r,
+\qquad
+S_m=\sum_{r=1}^m\tau_r.
+$$
+
+若 $T$ primitive，则极限
+
+$$
+\sigma^2
+=\lim_{m\to\infty}\frac{\operatorname{Var}(S_m)}m
+$$
+
+存在，并且
+
+$$
+\boxed{
+\sigma^2
+=
+2\pi_1-\pi_1^2
++2\sum_{k\ge1}
+\left(\pi_1(T^k)_{11}-\pi_1^2\right).
+}
+\tag{144.1}
+$$
+
+同一个量是第 143 节谱函数的二阶导数：
+
+$$
+\boxed{
+\psi''(0)=\sigma^2.
+}
+\tag{144.2}
+$$
+
+### 证明
+
+单位指数变量满足 $\mathbb E Y_r=1$、$\mathbb E Y_r^2=2$。故
+
+$$
+\operatorname{Var}(\tau_r)
+=\mathbb E[A_rY_r^2]-\mathbb E[A_rY_r]^2
+=2\pi_1-\pi_1^2.
+$$
+
+当 $k\ge1$ 时，独立的 $Y_r$ 给出
+
+$$
+\operatorname{Cov}(\tau_r,\tau_{r+k})
+=\operatorname{Cov}(A_r,A_{r+k})
+=\pi_1(T^k)_{11}-\pi_1^2.
+$$
+
+primitive 性使 $T^k$ 指数趋近于 $\pi\mathbf1^{\mathsf T}$，上述协方差级数绝对收敛。将方差展开为方差项与两倍协方差和，除以 $m$ 后得到式（144.1）。
+
+另一方面，$F_m(s;\pi)$ 是 $S_m$ 的 Laplace 变换。有限维 primitive 矩阵的简单 Perron 根在 $s=0$ 附近解析，因此
+
+$$
+\frac1m\log F_m(s;\pi)\longrightarrow\psi(s)
+$$
+
+可在 $s=0$ 的二阶导数上逐项取极限。Laplace 对数的二阶导数在零点等于方差，故得到式（144.2）。证毕。
+

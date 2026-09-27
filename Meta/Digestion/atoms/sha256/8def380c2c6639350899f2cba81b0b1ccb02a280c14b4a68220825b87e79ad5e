@@ -1,0 +1,16 @@
+**证明。**
+
+确实，第189节的对称化约定是
+$$
+\Gamma_{j,-}
+=\operatorname{Ad}_Z\circ\Gamma_{j,+}\circ\operatorname{Ad}_Z.
+$$
+若 $J_j=0$，则 $\Gamma_{j,+}=\Gamma_{j,-}=0$。两个真实旗标都从不输出标签 $j$。
+
+第173节的目标通道在原输入 $|j\rangle\langle j|$ 上输出
+$$
+|j\rangle\langle j|^{Q_{\mathrm{out}}}\otimes P_\Xi.
+$$
+第188节的实际入口是
+$\omega_j=\frac12\sum_sP_s\otimes\eta_s(w_j)$，两旗标上的该结果映射均为零，因此实际恢复输出完全支撑于标签 $1-j$。两份归一化输出态的标签支撑正交，半迹距离为一。这个无外部参考的合法输入已经给完整半 diamond 误差下界一；两通道差的半 diamond 范数不超过一，故误差恰为一。该论证适用于全部合法参数，不只邻近中心。证毕。
+

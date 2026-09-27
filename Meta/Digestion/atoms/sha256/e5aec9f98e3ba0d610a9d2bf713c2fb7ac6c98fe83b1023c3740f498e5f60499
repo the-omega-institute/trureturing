@@ -1,0 +1,51 @@
+### 11.1 有类型的跨接口合同
+
+令接口 $i$ 具有状态端 $X_i$、协议端 $P_i$ 和评价
+
+$$
+E_i:X_i\times P_i\to\Lambda.
+$$
+
+一条从 $i$ 到 $j$ 的合法运输由
+
+$$
+F_e:X_i\to X_j,
+\qquad
+\delta_e:P_j\to P_i
+$$
+
+给出。协议映射从目标端回到源端，是因为评价的第二个参数在运输中以回拉方式使用。相容律写成
+
+$$
+\boxed{
+E_j(F_e x,p)=E_i(x,\delta_e p).
+}
+\tag{11.1}
+$$
+
+若各端取自己的评价核商 $q_i^X:X_i\twoheadrightarrow\bar X_i$、$q_i^P:P_i\twoheadrightarrow\bar P_i$，则 (11.1) 给出
+
+$$
+q_j^X\circ F_e=\bar F_e\circ q_i^X,
+\qquad
+q_i^P\circ\delta_e=\bar\delta_e\circ q_j^P.
+\tag{11.2}
+$$
+
+这里的商映射满射只是规范商的性质，不是 $F_e$ 或 $\delta_e$ 的动态满射假设。反射和双向恢复仍需第10节的像分离、模等价满射或更强的源端满射条件。
+
+若先走 $e:i\to j$，再走 $f:j\to k$，则状态端协变复合为
+
+$$
+F_{f\circ e}=F_f\circ F_e,
+$$
+
+而协议端反变复合为
+
+$$
+\delta_{f\circ e}=\delta_e\circ\delta_f:P_k\to P_i.
+\tag{11.3}
+$$
+
+把两式写成相同次序会把回拉方向隐藏，并可能在三段以上的路径中得到错误的协议箭头。
+

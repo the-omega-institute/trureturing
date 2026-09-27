@@ -1,0 +1,22 @@
+**定义 270.1（模型可恢复实编码）。** 设 $\mathcal R$ 是 $\mathbb C^d$ 上的非空密度矩阵族，且
+
+$$
+\mathcal R'=\mathbb C I_d.
+\tag{270.1}
+$$
+
+给定正整数 $D$，一个模型可恢复实编码由两个完全正保迹复线性映射
+
+$$
+\mathcal E:M_d(\mathbb C)\longrightarrow M_D(\mathbb C),
+\qquad
+\mathcal D:M_D(\mathbb C)\longrightarrow M_d(\mathbb C)
+\tag{270.2}
+$$
+
+组成，满足 $\mathcal D\mathcal E(\rho)=\rho$ 对全部 $\rho\in\mathcal R$ 成立，并且整个 $\mathcal E(\mathcal R)$ 在同一个固定正交基底中均为实矩阵。输出可以有从未占用的维数。熵使用自然对数，约定 $0\log0=0$。
+
+若 $\mathcal R$ 有共同反酉对称，任意两个这样的对称之商是共同复线性酉对称，由标量交换子假设必为单位相位。对一个共同反酉 $T$，其平方也属于该交换子，故 $T^2=\lambda I_d$，其中 $|\lambda|=1$。结合律 $T(T^2)=(T^2)T$ 与反线性给出 $\overline\lambda=\lambda$，所以 $\lambda=\pm1$。给 $T$ 乘上单位相位不改变它的平方，因此平方符号为整个族唯一确定。
+
+以下将平方符号为正一和负一的族分别称为正型和负型；没有共同反酉对称时称为无反酉型。这是经典实型、四元数型与复型区分在本节状态族上的用法；共轭与负平方反酉结构的标准定义见 Uhlmann，*Anti- (Conjugate) Linearity*，[arXiv:1507.06545v2](https://arxiv.org/pdf/1507.06545v2)，式（114）—（115）。
+

@@ -1,0 +1,23 @@
+**推论 55.4。** 对每个 $0<\varepsilon\le1/4$，令
+
+$$
+V_\varepsilon|0\rangle=|0,0\rangle,
+\qquad
+V_\varepsilon|1\rangle
+=\sqrt{1-\varepsilon}|0,1\rangle
++\sqrt\varepsilon|1,2\rangle,
+\qquad
+R_\varepsilon=|x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z\rangle
+\langle x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z|.
+\tag{55.22}
+$$
+
+则
+
+$$
+\Delta(R_\varepsilon)=\varepsilon,
+\qquad
+\min_{S\text{ 因果}}D(R_\varepsilon,S)>\varepsilon.
+\tag{55.23}
+$$
+

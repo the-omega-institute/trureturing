@@ -1,0 +1,15 @@
+### 103.3 二重纤维的一位实际域至多六维
+
+现在假设第101节的通常纤维维数为二。该节给同一个五维空间
+
+$$
+S=\mathbb Cp+G_2+G_3+G_4+G_5+G_6,
+\quad Q=S^\perp,\quad \dim Q=2,
+$$
+
+$$
+R_1=(Q\otimes F)\oplus N,\qquad
+N\subset S\otimes F,\quad \dim N=3.
+\tag{103.8}
+$$
+

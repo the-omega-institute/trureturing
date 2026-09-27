@@ -1,0 +1,65 @@
+### 271.1 多链真值与完整竞争合同
+
+固定有限非空指标集 $\mathcal B$，为每个 $b\in\mathcal B$ 指定正整数 $r_b$。令
+$$
+E=\bigoplus_{b\in\mathcal B}E_b,
+\qquad E_b=\mathbb C^{r_b},
+\qquad N=\sum_b r_b,
+\qquad m=\max_b r_b.
+\tag{271.1}
+$$
+各块具有标准正交基 $e_{b,1},\ldots,e_{b,r_b}$。约定 $e_{b,0}=0$，并定义
+$$
+Je_{b,1}=0,
+\qquad Je_{b,j}=e_{b,j-1}\quad(j\ge2),
+\qquad M=I_E+tJ,
+\qquad t=\frac14.
+\tag{271.2}
+$$
+因此 $J=\bigoplus_bJ_{r_b}$，且 $\|J\|\le1$。记 $M_b=I_{E_b}+tJ_{r_b}$。
+
+由§268的正定构造，各块存在唯一Hermitian解 $Q_b$，满足
+$$
+Q_b+M_b^\dagger Q_bM_b=I_{E_b},
+\qquad
+\frac7{23}I_{E_b}\preceq Q_b\preceq\frac{16}{23}I_{E_b}.
+\tag{271.3}
+$$
+取 $Q=\bigoplus_bQ_b$，则
+$$
+Q+M^\dagger QM=I_E,
+\qquad Q\succ0.
+\tag{271.4}
+$$
+全局方程的唯一性也由§268的同一Neumann估计保证，因为全局移位仍满足 $\|J\|\le1$。因此分块解没有遗漏另一份带跨块条目的Hermitian解。
+
+定义
+$$
+G=\begin{bmatrix}I_E&M\end{bmatrix},
+\qquad Z=2QM=\bigoplus_b Z_b,
+\qquad Z_b=2Q_bM_b,
+$$
+$$
+T_*=G^\dagger QG
+=\begin{pmatrix}Q&QM\\M^\dagger Q&I_E-Q\end{pmatrix},
+\qquad \Omega_*=\frac1N T_*.
+\tag{271.5}
+$$
+$G$ 满行秩，故 $T_*$ 正半定、秩为 $N$、迹为 $N$。输入 $H$ 为qubit，块矩阵采用固定输入 $Y$ 本征基，并沿用
+$$
+\mathscr K(X)=2X_{+-},
+\qquad \rho_*=\frac1NI_E,
+\qquad K_*=\frac1NZ.
+\tag{271.6}
+$$
+所以 $\Omega_*$ 是该完整接口上的实际来源；$N>1$ 时为混合态。
+
+竞争者是 $H\otimes E$ 上任意密度态 $\Xi$。完整数据误差定义为
+$$
+\varepsilon(\Xi)
+=\|\operatorname{Tr}_H\Xi-\rho_*\|_1
++\|\mathscr K(\Xi)-K_*\|_1.
+\tag{271.7}
+$$
+两项和态差均使用未除以二的迹范数；非Hermitian矩阵使用同一核范数，无下标的范数为算子范数。
+

@@ -1,0 +1,55 @@
+**命题 414.2（两个三维拓扑边界）。**
+
+(a) 取 $q=3,n=1,k=6$，令
+
+$$
+\begin{aligned}
+v_1&=e_0,&v_2&=e_1,&v_3&=\frac{e_0+e_1}{\sqrt2},\\
+v_4&=\frac{e_0+i e_1}{\sqrt2},&
+ v_5&=\frac{e_0-e_1}{\sqrt2},&
+ v_6&=\frac{e_0-i e_1}{\sqrt2}.
+\end{aligned}
+$$
+
+六条射线彼此不同。该配置不属于 $\mathcal E_{3,6,1}$，但对每个 $0<\varepsilon<1$，定义
+
+$$
+ v_j(\varepsilon)=\sqrt{1-\varepsilon^2}\,v_j+\varepsilon e_2
+$$
+
+后所得配置属于 $\mathcal E_{3,6,1}$，并收敛到上述失败配置。因此成功集在此参数处不相对闭，全部失败集也不必开。
+
+(b) 取 $q=3,n=1,k=5$，用前四个向量再加 $v_5=e_2$。该配置不在成功集的相对闭包中，所以有相对开失败邻域；另一方面定理 414.1 在同一参数下给出非空相对开成功集。
+
+证明。
+
+(a) 先证六条射线不同。前两条的支撑分别为 $\mathbb Ce_0$、$\mathbb Ce_1$；其余四条的两个坐标均非零，而四个坐标比 $1,-1,i,-i$ 两两不同。若有单位见证 $b$ 和共同正水平，置
+
+$$
+ a=\langle b|e_0\rangle,\qquad h=\langle b|e_1\rangle.
+$$
+
+前四条的等水平条件给出
+
+$$
+|a|^2=|h|^2=t>0,
+\qquad
+\operatorname{Re}(a\overline h)=0,
+\qquad
+\operatorname{Im}(a\overline h)=0.
+$$
+
+最后两个等式分别来自 $v_3,v_4$ 的平方模；故 $a\overline h=0$，与 $|a\overline h|=t$ 矛盾。$b$ 的 $e_2$ 分量在这四个平面记录上的响应中不可见，不能消除矛盾。由定理 414.1 的物理等价，这排除了所有完整接口中的正概率协议；这里使用的是直接正见证矛盾，而非把确定性不可能性当作正概率结论。这个四元组的已知环境反馈背景见 Buscemi、Chiribella 与 D'Ariano，*Inverting Quantum Decoherence by Classical Feedback from the Environment*, [arXiv:quant-ph/0504195v5](https://arxiv.org/abs/quant-ph/0504195v5)，式 (9)（PDF 第 3 页）；第 392、410 节已保留该四元组作为二维障碍；其余两条射线只用于构成当前六射线配置。
+
+对 $0<\varepsilon<1$，各 $v_j(\varepsilon)$ 为单位向量。它们有相同的非零 $e_2$ 坐标；若两条射线成比例，比较该坐标即知比例因子为 $1$，再由平面分量知两向量相同，故射线仍彼此不同。取 $b=e_2$，每个重叠平方为 $\varepsilon^2$。在完整 $R_1=\mathbb C^3$ 上使用投影 $|e_2\rangle\langle e_2|$ 及其补投影，接受第一结果并取恒等终端反馈，便在每个系统矩阵及每个未操作参考上得到 $\varepsilon^2\operatorname{id}$。因此这些成功配置趋于失败配置，命题 (a) 得证。
+
+(b) 前四条记录仍迫使 $a\overline h=0$，所以该五条记录不存在正水平见证。它们连同 $e_2$ 张成 $\mathbb C^3$。若有成功配置序列趋于该点，取对应单位纯见证的秩一投影 $B_\ell$ 与水平 $t_\ell\in(0,1]$。紧性给出子列
+
+$$
+(B_\ell,t_\ell)\longrightarrow(B,t)\in\mathcal P_3\times[0,1].
+$$
+
+若 $t>0$，连续性给出极限正见证，和前四条的矛盾冲突；若 $t=0$，则单位见证同时正交于 $e_0,e_1,e_2$，因而为零，也矛盾。故该配置不在相对闭包中，闭包补集给出相对开失败邻域。另一方面这里 $D=2M-1=5$，定理 414.1 的 $k\le D$ 情形给出另一个非空相对开成功集。两个开集均有正 Fubini--Study 测度，故成功既非普遍，也不能由此参数推出稠密或满测度。证毕。
+
+本节只处理有限维、有限结果、全原始记录联合可访问的存在性与维数。它不主张低于阈值时的最优概率、统一正下界、一般充分的泛型性、未知状态复制、LOCC 或局部等价、鲁棒性、算法、物理成本或成功性的单调性。Lieb 与 Solovej，*Proof of the Wehrl-type Entropy Conjecture for Symmetric SU(N) Coherent States*, [arXiv:1506.07633v2](https://arxiv.org/abs/1506.07633v2)，第 2--4 页，在此仅提供对称 $SU(q)$ coherent-state、Husimi、复射影空间与 Fubini--Study 模型的背景（其 $N=q$、张量指数 $M=n$）；本节不使用该文的熵定理。Basu、Pollack 与 Roy，*Algorithms in Real Algebraic Geometry* [作者稿](https://www.math.purdue.edu/~sbasu/bpr-posted1.pdf) 则提供半代数投影（Theorem 2.76，PDF 第 76 页）、维数（Theorem 5.25、Propositions 5.28--5.29、Lemma 5.30，第 178--180 页）、frontier 分层（Theorem 5.38，第 185 页）及 Hardt 平凡化（Theorem 5.45，第 194 页）。这里的证明将这些已知工具作为中间步骤，不把它们改写成新的独立工具定理。
+

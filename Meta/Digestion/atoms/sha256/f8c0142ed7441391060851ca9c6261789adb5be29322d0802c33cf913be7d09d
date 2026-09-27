@@ -1,0 +1,112 @@
+**定理 76.1a（切向修复的准确十实参数表示）。** 在定理 76.1 的实块空间内，全部因果线性约束可以完全消去。具体地，令
+
+$$
+\theta=(p,t,\zeta,\alpha,\beta,d,e,f,\ell,m)\in\mathbb R^{10},
+$$
+
+相对于有序块 $(x,y,z)$、$(x',h,z')$、$(j)$、$(k)$ 定义
+
+$$
+\begin{aligned}
+K(\theta)&=M_0(\theta)\oplus M_1(\theta)\oplus[\alpha]\oplus[\beta],\\
+M_0(\theta)&=
+\begin{pmatrix}
+-p-t&d&e\\
+d&-p-\alpha&f\\
+e&f&\zeta
+\end{pmatrix},\\
+M_1(\theta)&=
+\begin{pmatrix}
+t&\ell&-e\\
+\ell&p-\beta&m\\
+-e&m&p-\zeta
+\end{pmatrix}.
+\end{aligned}
+\tag{76.4a}
+$$
+
+则 $\mathcal T$ 与实块空间的交恰由这些矩阵中满足
+
+$$
+\alpha\ge0,\qquad\beta\ge0,\qquad M_1(\theta)\succeq0,
+\qquad
+\begin{pmatrix}
+-2p-t-\alpha-2d&e-f\\
+e-f&\zeta
+\end{pmatrix}\succeq0
+\tag{76.4b}
+$$
+
+者构成；每个这样的矩阵对应唯一的 $\theta$。因此完整 tester 系数也准确等于
+
+$$
+\gamma_{u^2}
+=\min_{\theta\text{ 满足（76.4b）}}N(H(u)-K(\theta)),
+\tag{76.4c}
+$$
+
+且这个最小值达到。没有对两个正块的秩作限制。
+
+证明。先取任意实块矩阵 $K\in\mathcal T$。因果偏迹为 $I_A\otimes\dot\sigma$；由四阶相位不变性，$\dot\sigma$ 对角且迹零，所以可唯一写为 $\operatorname{diag}(-p,p)$。定义
+
+$$
+\begin{gathered}
+t=K_{x'x'},\quad\zeta=K_{zz},\quad
+\alpha=K_{jj},\quad\beta=K_{kk},\\
+d=K_{xy},\quad e=K_{xz},\quad f=K_{yz},
+\quad\ell=K_{x'h},\quad m=K_{hz'}.
+\end{gathered}
+$$
+
+所有这些数均实。偏迹在四个 $AB$ 对角位置的约束分别为
+
+$$
+K_{xx}+t=-p,\qquad
+K_{hh}+\beta=p,\qquad
+\alpha+K_{yy}=-p,\qquad
+\zeta+K_{z'z'}=p.
+$$
+
+在非对角位置，实块形使除 $AB=00,11$ 及其转置外的所有偏迹项自动为零；该剩余位置的因果条件恰为
+
+$$
+K_{xz}+K_{x'z'}=0.
+$$
+
+这五条等式给出式（76.4a）的全部指定矩阵元。反向，逐项取 $D$ 偏迹可直接验证，式（76.4a）对任意实参数都满足
+
+$$
+\operatorname{Tr}_D K(\theta)=I_A\otimes\operatorname{diag}(-p,p).
+$$
+
+因此没有剩余的因果线性条件。上述各条矩阵元及任一因果对角和又可恢复全部参数，故参数表示唯一。
+
+再核对核压缩正性。因为 $w=x+y$，有正交子空间分解
+
+$$
+w^\perp
+=\operatorname{span}(x-y,z)
+\oplus\operatorname{span}(x',h,z')
+\oplus\mathbb Cj\oplus\mathbb Ck.
+$$
+
+实块形使核压缩在这四个子空间之间没有耦合。第一块在基 $(x-y,z)$ 中的二次型矩阵正是
+
+$$
+\begin{pmatrix}
+K_{xx}+K_{yy}-2K_{xy}&K_{xz}-K_{yz}\\
+K_{zx}-K_{zy}&K_{zz}
+\end{pmatrix}
+=
+\begin{pmatrix}
+-2p-t-\alpha-2d&e-f\\
+e-f&\zeta
+\end{pmatrix}.
+$$
+
+向量 $x-y$ 未归一化，但基变换为可逆合同变换，因此该矩阵半正定与对应子空间上的正性等价。其余三个块分别为 $M_1(\theta)$、$[\alpha]$、$[\beta]$。所以 $P_0KP_0\succeq0$ 恰等价于式（76.4b）。由第 70 节的准确切锥刻画，得到双向参数化。
+
+最后应用定理 76.1 的最优值保持及达到性，即得式（76.4c）。此处只消去了已明确的线性等式；块内相干以及核压缩的所有允许秩均保留。$\square$
+
+这一表示使修复变量从实块空间的十四维降为十个实参数，并把它自身的正性要求准确化为一个二阶正块、一个三阶正块及两个非负标量。事件范数 $N$ 仍取全部合法复 tester，后面的双向半定上界算子 继续承担其完整约束。
+

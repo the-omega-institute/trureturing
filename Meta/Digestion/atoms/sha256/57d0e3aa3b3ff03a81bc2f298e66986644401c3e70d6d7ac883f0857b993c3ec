@@ -1,0 +1,6 @@
+**推论 5.4（最小证书滞后与最小链长的比较）。** 设 A≠B 且 A、B SSE，令 ell=ell(A,B)≥1，c 为完整 compatible concrete shift 的最小正滞后。则
+
+$$
+\left\lceil\frac{\operatorname{ell}+1}{2}\right\rceil\le c\le\operatorname{ell}.
+$$
+

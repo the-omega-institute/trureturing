@@ -1,0 +1,8 @@
+**定义 283.1（非金钱条件与支付条件）。** 设 $F\subseteq Y$ 是某人在指定时刻满足非金钱条件的可选项，$c:Y\to\mathbb R$ 是各选项需要支付的数额，$w$ 是其预算。定义
+
+$$
+A(w)=\{y\in F:c(y)\le w\}.
+$$
+
+项目 [ThresholdAccess](../../../D5/S3/ResourceOrder/PriceCoordinates/ThresholdAccess.lean) 的 `thresholdSet` 使用这一交集结构，实际声明还允许任意带序的门槛域。$F$ 可以包括身体条件、地点、资格和取得程序；它不因被命名为 feasible 就已接受道德上的认可。生产可行、法律许可和公平正当，仍可以是三个不同判断。
+

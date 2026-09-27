@@ -1,0 +1,56 @@
+### 283.6 真实校准与按实际设置分组
+
+构造一个仅依赖允许记录的块统计量 $V_B$，目标是
+$$
+\mathbb E_aV_B=a^2,
+\qquad
+\operatorname{Var}_aV_B\le C_V
+\left(\frac{1-a}{B}+\frac1{B^2}\right),
+\qquad C_V:=30000.
+\tag{283.27}
+$$
+先设 $B\ge32$，取
+$$
+m=\lfloor B/2\rfloor,\qquad L=B-m.
+\tag{283.28}
+$$
+前 $m$ 次固定角度零，每份记录生成
+$$
+W_i=(2\eta_i{\bf1}_{w_i=0},2\eta_i{\bf1}_{w_i=1}).
+\tag{283.29}
+$$
+从（283.4）计算得
+$$
+\mathbb E_aW_i=a(\cos\phi,\sin\phi),\qquad\|W_i\|_2^2=4.
+$$
+以样本均值的方向估计 $\phi$；均值零时固定方向 $(1,0)$，角度采用固定可测代表。记估计为 $\widehat\phi$、残角为 $e=\widehat\phi-\phi$。独立样本均值方差及归一化不等式给
+$$
+\mathbb E_a\|\widehat v-au_\phi\|_2^2\le4/m,
+\qquad
+\|\widehat u-u_\phi\|_2\le2\|\widehat v-au_\phi\|_2/a,
+$$
+$$
+\mathbb E_a(1-\cos e)\le\frac8{a^2m},
+\qquad
+\boxed{\mathbb E_a\sin^2e\le\frac{16}{a^2m}<\frac{32}{m}.}
+\tag{283.30}
+$$
+该保证逐固定相位成立，因而也对Haar平均成立。校准不先区分两假设。
+
+后 $L$ 次全部请求实际角度 $\theta=\widehat\phi$。按真实设置标签分组：$k$ 次 $w=0$、$l=L-k$ 次 $w=1$。这些标签是独立公平币，与校准记录及相位无关。条件于校准和全部设置，两组内符号分别独立，其均值为
+$$
+\mu_0=a\cos e,\qquad\mu_1=-a\sin e.
+\tag{283.31}
+$$
+设
+$$
+G=\{k,l\ge L/4\},\qquad\kappa_L=\Pr(G).
+\tag{283.32}
+$$
+$\kappa_L$ 由已知公平二项分布准确计算，参数无关。标准Bernoulli尾界给
+$$
+1-\kappa_L\le2e^{-L/8},\qquad\kappa_L>1/2\quad(L\ge16).
+\tag{283.33}
+$$
+例如将设置编码为独立公平符号，使用 $\cosh t\le e^{t^2/2}$ 的矩母函数界，对其和超过 $L/2$ 的事件取指数Markov界，再对两端求和，即得（283.33）。
+

@@ -1,0 +1,11 @@
+**定理277.1（完整输出的统一范数界）。** 对任意实数 $\theta$ 及任意两个同维来源，
+$$
+\boxed{
+\frac13\varepsilon_{\mathcal D}(\Xi,\Omega)
+\le\|\sigma_\theta(\Xi)-\sigma_\theta(\Omega)\|_1
+\le\varepsilon_{\mathcal D}(\Xi,\Omega).
+}
+\tag{277.14}
+$$
+两个常数与角度和参考维数均无关。
+

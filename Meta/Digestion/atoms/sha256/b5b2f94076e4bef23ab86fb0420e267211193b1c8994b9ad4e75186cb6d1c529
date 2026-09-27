@@ -1,0 +1,8 @@
+**第一词 $ABCAB$。** 三个当前字母的后继依次为
+
+$$
+A\longmapsto B,\qquad B\longmapsto C,\qquad C\longmapsto A.
+$$
+
+三条后继射线两两不同。无论哪条当前射线具有三维纤维，其余两个二维纤维的已见后继都不同，直接违反（108.6）。
+

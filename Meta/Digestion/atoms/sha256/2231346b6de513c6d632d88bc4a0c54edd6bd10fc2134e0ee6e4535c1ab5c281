@@ -1,0 +1,55 @@
+### 74.3 切锥距离的紧参数一致收敛
+
+定义
+
+$$
+d_\varepsilon(H)=\operatorname{dist}_N(H,\mathcal D_\varepsilon),
+\qquad d_0(H)=\operatorname{dist}_N(H,\mathcal T).
+$$
+
+第70节已证明 $\mathcal D_\varepsilon$ 随 $\varepsilon\downarrow0$ 扩大，且对每个固定 $H$，
+
+$$
+d_\varepsilon(H)\downarrow d_0(H).
+\tag{74.10}
+$$
+
+所有这些距离函数都具有同一个 $1$-Lipschitz 界。$r\mapsto H_r$ 连续，故 $\{H_r:0\le r\le R\}$ 紧。这使（74.10）在该参数集上一致。
+
+具体地，给定 $\xi>0$，取有限个 $r_1,\ldots,r_k$，使每个 $H_r$ 都与某个 $H_{r_j}$ 的 $N$ 距离小于 $\xi$。对有限多个中心同时应用（74.10），充分小的 $\varepsilon$ 满足
+
+$$
+d_\varepsilon(H_{r_j})-d_0(H_{r_j})<\xi
+\quad\text{对所有 }j.
+$$
+
+因为 $\mathcal D_\varepsilon\subset\mathcal T$，结合两个距离函数的 Lipschitz 性，有
+
+$$
+0\le d_\varepsilon(H_r)-d_0(H_r)<3\xi
+\quad(0\le r\le R).
+\tag{74.11}
+$$
+
+另一方面，范数正齐次性给准确等式
+
+$$
+\frac{e(R_{1-r\varepsilon,\varepsilon})}{\varepsilon}
+=d_\varepsilon\left(
+\frac{R_{1-r\varepsilon,\varepsilon}-R_0}{\varepsilon}
+\right).
+\tag{74.12}
+$$
+
+结合（74.9）、（74.11）和 $d_0(H_r)=\gamma_r$，得到
+
+$$
+\sup_{0\le r\le R}
+\left|
+\frac{e(R_{1-r\varepsilon,\varepsilon})}{\varepsilon}-\gamma_r
+\right|\longrightarrow0.
+\tag{74.13}
+$$
+
+这一步证明有界尺度中的共同变化结论，不依赖先后交换两个未验证的极限。
+

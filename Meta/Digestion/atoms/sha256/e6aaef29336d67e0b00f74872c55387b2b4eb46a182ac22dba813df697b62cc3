@@ -1,0 +1,69 @@
+**引理 258.2（互不重叠的转弯区间）。** 固定 $n\ge2$、$L>0$、$B>1$，置
+
+$$
+N=n-1,\qquad
+\lambda=2B,\qquad
+A=\frac{B+1}{2},\qquad
+c=\frac{L(B-1)}2.
+\tag{258.5}
+$$
+
+定义非负偶函数
+
+$$
+\phi_B(x)=
+\begin{cases}
+1,& |x|\le1,\\
+(B-|x|)/(B-1),&1<|x|<B,\\
+0,&|x|\ge B.
+\end{cases}
+\tag{258.6}
+$$
+
+它满足 $\int_0^\infty\phi_B=A$，且 Lipschitz 常数为 $1/(B-1)$。任取 $R>0$，令
+
+$$
+t_i=R\lambda^{-i}\quad(0\le i<N),\qquad
+S_j=\sum_{i=0}^{N-1}\lambda^{-ji}\quad(j=1,2),
+\tag{258.7}
+$$
+
+并设
+
+$$
+q_i(t)=c t_i^2\left(A-\int_0^{t/t_i}\phi_B(x)\,dx\right),
+\qquad
+q_*(t)=1-\sum_{i=0}^{N-1}q_i(t).
+\tag{258.8}
+$$
+
+若 $2cAR^2S_2\le1$，则 $\rho^{(0)}(t)=\operatorname{diag}(q_*(t),q_0(t),\ldots,q_{N-1}(t))$ 是实轴上的 $C^{1,1}$ 密度曲线，且其弱二阶导数几乎处处满足
+
+$$
+\|(\rho^{(0)})''(t)\|_1\le L,
+\qquad
+\|(\rho^{(0)})''(t)\|_{\rm op}\le L/2.
+\tag{258.9}
+$$
+
+证明。 由（258.6）及其偶性，
+
+$$
+\begin{aligned}
+0&\le q_i(t)\le2cAt_i^2,\\
+q_i(0)&=cAt_i^2,\\
+q_i'(t)&=-ct_i\phi_B(t/t_i),\\
+q_i''(t)&=-c\phi_B'(t/t_i)\quad\text{几乎处处}.
+\end{aligned}
+\tag{258.10}
+$$
+
+因此 $q_*\ge0$，所有分量之和为一。导数 $q_i'$ 是 Lipschitz 函数，弱二阶导数没有额外的点质量。它的非零部分只可能位于
+
+$$
+t_i<|t|<Bt_i.
+\tag{258.11}
+$$
+
+因 $t_{i+1}=t_i/(2B)$，这些区间两两不相交。几乎每个 $t$ 至多有一个 $q_i''(t)$ 非零；$q_*''$ 恰为它的相反数。故整个对角二阶导数的迹范数至多为 $2c/(B-1)=L$，算子范数至多为 $c/(B-1)=L/2$。这同时证明了两个界。证毕。
+

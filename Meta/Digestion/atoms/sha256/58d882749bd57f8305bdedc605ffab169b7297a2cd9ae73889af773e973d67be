@@ -1,0 +1,29 @@
+**定义 87.1（纤维内的信息方差）。** 保持第 77、82、84 章的固定幅度、固定
+$\beta\in(1/2,1)$、原合法规模、全部得分组、均匀支持先验后验 $P_x$、精确中心及
+同一个 $Y=T+\sigma_MG$。仍令
+
+$$
+L_M=\ln(1/\sigma_M)\longrightarrow\infty,\qquad
+L_M=o(Q^3),\qquad \delta=Q^{-1/2},\qquad \nu=2g_0.
+\tag{87.1}
+$$
+
+$G$ 在给定原始数据 $x$ 后独立标准正态，未另行提供给观察者。
+$\varphi_\sigma$ 表示标准差为 $\sigma$ 的正态密度；$\varphi_\nu$ 则沿用前文，
+表示方差为 $\nu$ 的中心正态密度。对同一个原计数向量 $R$，定义自然单位变量
+
+$$
+\begin{aligned}
+S&=-\ln P_x(R),& h&=\mathbb E_xS=h_x^{\rm nat},\\
+J&=-\ln p_x(R\mid Y),& H_x(y)&=\mathbb E_x[J\mid Y=y],\\
+\mathcal V_{{\rm prior},x}&=\operatorname{Var}_x S,&
+\mathcal V_{{\rm post},x}(y)&=\operatorname{Var}_x(J\mid Y=y).
+\end{aligned}
+\tag{87.2}
+$$
+
+这里的方差不含跨输出的 $H_x(Y)$ 波动。每个有限纤维的计数字母表有限，
+预测密度 $f_x(y)>0$；这些对象在每个实输出处均有定义。
+以下仍分别对原平稳对与连续路径实验，在确定真实支持的数据概率下一致收敛。
+不把均匀先验核换成已知真实支持的点质量核。
+

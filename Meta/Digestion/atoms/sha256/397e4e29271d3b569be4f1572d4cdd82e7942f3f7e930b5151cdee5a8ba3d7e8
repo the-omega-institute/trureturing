@@ -1,0 +1,5 @@
+## 32. 本轮核验、来源比较与剩余目标
+
+新增检查器：`tools/scripts/agent/openproblem/erdos699-dyadic-height-ceiling-check.py`。实际运行 `--nmax 200 --amax 80 --symbolic` 后通过：
+
+- 9409 个实际二项式有理参数对的三次判别式恒等式，其中 403 个光滑约分分母对验证 (75)–(76)，337 个中点正的参数对验证耦合不等式；未将这些对称作假想反例。

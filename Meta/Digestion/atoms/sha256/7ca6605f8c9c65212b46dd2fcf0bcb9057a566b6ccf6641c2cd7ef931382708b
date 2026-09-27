@@ -1,0 +1,32 @@
+**推论166.4（实际分布的可计算约束）。** 对每个实数 $x$，有
+
+$$
+\boxed{
+F_\Delta(x-b)
+\le F_{q,r}(x^-)
+\le F_{q,r}(x)
+\le F_\Delta(x+b).
+}
+\tag{166.21}
+$$
+
+对 $0<p<1$，实际下分位数
+$Q_{q,r}(p)=\inf\{x:F_{q,r}(x)\ge p\}$ 满足
+
+$$
+\boxed{
+|Q_{q,r}(p)-Q_\Delta(p)|\le b.
+}
+\tag{166.22}
+$$
+
+真实阈值处的原子满足
+
+$$
+\boxed{
+\mu_{q,r}(\{x\})
+\le F_\Delta(x+b)-F_\Delta(x-b).
+}
+\tag{166.23}
+$$
+

@@ -1,0 +1,13 @@
+### 129.3 四个短排除与 AABAA 的首轮回接
+
+保留实际早期列
+
+$$
+H_1=\operatorname{span}(p,q),\quad
+G_2=\operatorname{span}(u,w),\quad
+H_2=\operatorname{span}(a^2u+bv,w),
+\tag{129.6}
+$$
+
+其中 $p,q$ 以及 $u,v,w$ 分别正交归一，$ab\ne0$。因为第二轮采用 $A$，$v\in U^\perp$。后期始终保留 $H_n\subset G_n\oplus Q_n$、两份正交投影均为同构，以及 $H_n\cap G_n=0$。
+

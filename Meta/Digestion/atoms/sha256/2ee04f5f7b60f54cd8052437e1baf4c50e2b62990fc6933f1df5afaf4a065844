@@ -1,0 +1,30 @@
+**命题 488.1（一般有限族的二至二倍状态数界）。** 设 $0<r<1$、$r\le M$ 且 $\rho>0$。则
+
+$$
+2\le\frac{j_{\mathrm{exact}}}{j_{\mathrm{free}}}\le2k.
+$$
+
+这里 $j_{\mathrm{free}}$ 也等于通常的 $d(E_r\longrightarrow J)$。
+
+证明：受容量约束的中心集合包含在无约束概率单纯形中，故 $\rho_r\ge\rho$，立即给出下界。为得上界，先用可行中心 $R=l/M$。因 $M\le1$，有 $R\ge l$，而每个 $Q_i\ge l$，所以 $\sum_x\min(R(x),Q_i(x))\ge M$，即
+
+$$
+\rho_r\le\max_i\operatorname{TV}(l/M,Q_i)\le1-M.
+$$
+
+另一方面，对任意概率向量 $R$，逐坐标有
+
+$$
+R(x)-\min_iQ_i(x)=\max_i(R(x)-Q_i(x))
+\le\sum_i(R(x)-Q_i(x))_+.
+$$
+
+左端在某个坐标上可以为负，所用不等式仍成立，不能把它偷偷当作每点非负量。求和并使用概率差的正部总和等于 TV，得到
+
+$$
+1-M\le\sum_i\operatorname{TV}(R,Q_i)
+\le k\max_i\operatorname{TV}(R,Q_i).
+$$
+
+在最优中心处取值，得到 $\rho_r\le1-M\le k\rho$。命题 485.3 给出比值 $2\rho_r/\rho$，命题 487.1 给出其通常模拟解释。证毕。
+

@@ -1,0 +1,62 @@
+**定理 213.5（一条全局解析曲线的同时尖锐实现）。** 定义213.1中的维数满足
+
+```math
+N(a,S)\le d_1(a,S)\le d_\infty(a,S)
+             \le d_\omega(a,S)\le3m.
+\tag{213.26}
+```
+
+右端存在一个实际固定处理器与一条全区间实解析纯态曲线达到，并且其完整校准集合与尖锐集合都恰为 $`S`$。两个不同指定点的边界具体为
+
+```math
+\begin{cases}
+ 5\le d_1\le d_\omega\le6,
+       &\lambda_-(h_1)\ne\lambda_-(h_2),\\[0pt]
+ 4\le d_1\le d_\omega\le6,
+       &\lambda_-(h_1)=\lambda_-(h_2).
+ \end{cases}
+\tag{213.27}
+```
+
+这些不等式不判定两点情况下五维或四维是否足够。
+
+证明。 对每个 $`t_i`$，取定理211.3的全域实解析归一化实向量 $`\psi_i(u)`$ 及其固定处理器。令
+
+```math
+L_i(u)=\prod_{j\ne i}\frac{u-t_j}{t_i-t_j},\qquad
+ g_i(u)=\frac{L_i(u)^3}{\sqrt{\sum_jL_j(u)^6}},\qquad
+ \Psi_u=\bigoplus_{i=1}^m g_i(u)\psi_i(u).
+\tag{213.28}
+```
+
+$`\sum_iL_i=1`$ 保证分母在实轴处处严格为正，故 $`g_i`$ 和 $`\Psi`$ 均实解析，且 $`\sum_i g_i^2=1`$。处理器先去除程序块间相干，再在第 $`i`$ 块使用对应的固定处理器；每一块都对全部信号输入实现相同的 $`\mathcal T_u`$，因此其归一化加权和仍精确。
+
+记 $`G_i(u)=I_Q(\psi_i\psi_i^\dagger)-I_r(u)`$。实向量的归一化保证 $`\langle\psi_i,\psi'_i\rangle=0`$，所以实际纯态准备的信息差值为
+
+```math
+I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)
+   =\sum_i g_i(u)^2G_i(u)+4\sum_i g_i'(u)^2.
+\tag{213.29}
+```
+
+其中第二项保留了参数相关块权重的准备成本，未将去相干后混合态的信息当作实际纯态的信息。若 $`u\notin S`$，所有 $`G_i(u)>0`$，故总差值严格为正。在 $`u=t_i`$ 附近置 $`\delta=u-t_i`$，则
+
+```math
+\begin{gathered}
+ g_j=O(\delta^3),\quad g_j'=O(\delta^2)\quad(j\ne i),\\[0pt]
+ g_i=1+O(\delta^6),\quad g_i'=O(\delta^5).
+ \end{gathered}
+\tag{213.30}
+```
+
+非名义块的 $`G_j`$ 在此内点有界，因而总差值在 $`t_i`$ 为零，并满足
+
+```math
+I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)=G_i(u)+O(\delta^4),\qquad
+ \lim_{u\to t_i}\frac{I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)}{(u-t_i)^2}
+       =\kappa_*(a,t_i).
+\tag{213.31}
+```
+
+故两种完整集合均恰为 $`S`$。实际程序空间为 $`3m`$ 维，联合支持维数至多 $`3m`$，不要求总等于 $`3m`$。其余维数不等式来自定理213.3与准备正则性类别的包含关系。证毕。
+

@@ -1,0 +1,6 @@
+**证明。** $\dim B=6$，故 $\dim(S/B)\le1$。映射
+$$
+W\longrightarrow S/B,\qquad z\longmapsto[z\otimes\eta]
+$$
+的核恰为 $W\cap\bigcap_{c_j\ne0}U_j$：逐独立环境坐标比较即可。这一核的余维至多一，得到（64.5）。证明不要求 $S\subseteq K\otimes\operatorname{span}(e_1,e_2,e_3)$，亦不要求环境基正交。
+

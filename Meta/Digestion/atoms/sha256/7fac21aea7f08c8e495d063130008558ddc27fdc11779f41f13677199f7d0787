@@ -1,0 +1,58 @@
+**定理264.2（逆Schmidt权上界）。** 在（264.1）—（264.5）的合同下，
+$$
+\boxed{
+\|\Xi-P_\psi\|_1
+\le
+\min\left\{2,\,
+\left(\frac2p+2\right)\varepsilon\right\}
+\le
+\min\left\{2,\frac3p\varepsilon\right\}.
+}
+\tag{264.29}
+$$
+常数不依赖参考空间维数，也不要求竞争态的边缘或参考支撑精确。
+
+**证明。** 由 $\Xi=P_\psi+H_D+X\succeq0$，对任意 $0\preceq Q\preceq I$，
+$$
+-\operatorname{Tr}\bigl(Q(P_\psi+H_D)\bigr)
+=\operatorname{Tr}(QX)-\operatorname{Tr}(Q\Xi)
+\le\operatorname{Tr}(QX)
+\le\operatorname{Tr}X_+.
+\tag{264.30}
+$$
+而 $\operatorname{Tr}X=0$ 给
+$$
+n=\nu(P_\psi+H_D)
+\le\operatorname{Tr}X_+
+=\frac12\|X\|_1.
+\tag{264.31}
+$$
+引理264.1因此推出
+$$
+\|H_D\|_1=2m
+\le2\left(\frac2p+1\right)n
+\le\left(\frac2p+1\right)\|X\|_1.
+\tag{264.32}
+$$
+从而
+$$
+\|\Delta\|_1
+\le\|H_D\|_1+\|X\|_1
+\le\left(\frac2p+2\right)\|X\|_1
+\le\left(\frac2p+2\right)\varepsilon.
+\tag{264.33}
+$$
+$p\le1/2$ 给 $2+2p\le3$；两态归一化给独立上界二。$\square$
+
+该估计直接控制测量核中的误差，不再把暴露算子与切向逆界的条件数损耗相乘。全数据噪声可沿任意方向出现，且竞争态中的参考核外相干未被删除。
+
+§261的合法凸估计器也直接继承改进常数：若真源对经典估计的目标值不超过 $\eta$，其任意合法最小解 $\widehat\Omega$ 满足
+$$
+\|\widehat\Omega-P_\psi\|_1
+\le
+\min\left\{2,\,
+2\left(\frac2p+2\right)\eta\right\}.
+\tag{264.34}
+$$
+这里继续只使用该估计器的存在性与数据三角不等式，不添加求解效率或有限样本保证。
+

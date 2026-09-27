@@ -1,0 +1,47 @@
+**命题 67.19（二元等待、共享折减与精确尾和）。** 在全部 $n=M-p$ 个二元出现上保留实际进入等待，令其总和为 $B$。对承载 $m_q^{\rm bin}\ge1$ 个二元出现的目标，定义
+
+$$
+\begin{aligned}
+\gamma_q&=\sum_{H\text{ 二元进入 }q}\delta_H
+-\max_{H\text{ 二元进入 }q}\delta_H-(m_q^{\rm bin}-1),\\
+\Gamma&=\sum_{q\text{ 二元宿主}}\gamma_q,\\
+b_q&=\begin{cases}\max_{H\text{ 二元进入 }q}\delta_H,&q\text{ 二元宿主},\\1,&q\text{ 无二元出现},\end{cases}\\
+\omega_q&=L_q-b_q\ge0,\qquad \Omega=\sum_{q\ne q_0}\omega_q.
+\end{aligned}
+\tag{67.57}
+$$
+
+这里的 $b_q$ 是二元尾基准，不是第58节同字母的关联剩余。则有精确记账恒等式及原名义容量界
+
+$$
+\begin{aligned}
+\sum_{q\ne q_0}L_q&=B-\Gamma+(r-1-(M-p))+\Omega,\\
+C&\ge2r+p-1+\ell+B-\Gamma+\Omega.
+\end{aligned}
+\tag{67.58}
+$$
+
+对 $p\le3$ 的饱和纯解析槽集 $\mathcal S$，置 $D_{\rm sat}=\sum_{v\in\mathcal S}(\delta(v)-1)$，则 $\Omega\ge D_{\rm sat}$，亦有 $E\ge D_{\rm sat}$。可以统一用 $K=1$，或统一用 $`K^*=1`$ 定义此集；同槽不重复计入。
+
+证明。设二元宿主数为 $t_0$。逐宿主由定义得到 $\sum_{q\text{ 二元宿主}}b_q=B-\Gamma-(n-t_0)$。其余 $r-1-t_0$ 个目标各有基准一，故全部基准和为 $B-\Gamma+r-1-n$。再逐目标加 $\omega_q$，得到第一式；与（67.42）的原表状态注入相接，得到第二式。命题67.16使饱和纯解析槽的目标互异且无二元出现，所以每个相应 $b_q=1$、$\omega_q=L_q-1\ge\delta(v)-1$；相加即得。全部数值都来自同一实现，未把共享出现的延迟和误当最长尾链。$\square$
+
+当 $p=3,P=9,h=5,r=25+e$，特别有
+
+$$
+C\ge52+2e+\ell+B-\Gamma+\Omega
+\ge52+2e+\ell+B-\Gamma+D_{\rm sat}.
+\tag{67.59}
+$$
+
+对质量大于 $3/4$ 的未饱和纯解析槽，虽有目标单射，却只能向剩余尾资源收取 $\max(0,\delta(v)-b_{\tau(v)})$。若它进入已有长二元尾，不能再次加收完整的 $\delta(v)-1$。
+
+事件对也可在同一剩余资源中表达。令
+
+$$
+\widehat g_a=\max\left(0,g_a-\sum_qm_{a,q}(b_q-1)\right),
+\qquad \widehat g_a\le\sum_qm_{a,q}\omega_q.
+\tag{67.60}
+$$
+
+这是（67.55）逐目标减去已计基准，再用右端非负得到的行。饱和槽行是 $\delta(v)-1\le\omega_{\tau(v)}$；近饱和槽行如上一段。若将这些行一同加权，每个目标上的“事件对系数和 + 解析槽系数和”必须至多一，才能作为 $\Omega$ 的一个共同下界。分开最大化两组再相加没有此保证；（67.58）本身只是记账，并未提供所缺的统一数值估计。
+

@@ -1,0 +1,28 @@
+**推论 24.2（固定涨落网的阶乘精度界）。** 定义
+
+$$
+K_\epsilon
+=\min\{k\in\mathbb N:k\ge1,\;2^kk!\ge4/\epsilon^2\}.
+\tag{24.19}
+$$
+
+则
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta)
+\le\min\{2n-1,\;4K_\epsilon P(\Theta,n^{-1/2})\}.
+}
+\tag{24.20}
+$$
+
+而且当 $`\epsilon\downarrow0`$ 时，
+
+$$
+K_\epsilon\sim
+\frac{2\log(1/\epsilon)}{\log\log(1/\epsilon)}.
+\tag{24.21}
+$$
+
+证明。在定理24.1中取 $`h=n^{-1/2}`$，误差上界为 $`2/\sqrt{2^kk!}`$。（24.19）保证其不超过 $`\epsilon`$。最后使用 $`\log(k!)=k\log k-k+O(\log k)`$，对（24.19）的最小整数条件取对数即得（24.21）。证明完毕。
+

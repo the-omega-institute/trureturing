@@ -1,0 +1,32 @@
+**定理 18.40（分裂切法与共同标签的多余组合）。** 在定义18.10的全部合法切法中，记各端最小状态数之积为 $P(L)$。则
+
+$$
+P(L)=q_0^r\prod_{i=1}^r|\pi_iD_L|,\qquad
+\min_LP(L)=q_0^r|D|=Nq_0^{r-1}.
+\tag{18.21}
+$$
+
+达到最小值恰好要求坐标分裂 $D_L=\prod_i\pi_iD_L$，亦恰好要求实际局部载体仅凭完整钟标签一致即可精确胶合。任意切法的乘积超额与未检出的共同标签组合有同一个精确比值：
+
+$$
+\frac{P(L)}{\min_{L'}P(L')}
+=\frac{|B_1(D_L)|}{|D_L|}
+=|B_1(D_L)/D_L|
+=\frac{\#\mathrm{Acc}_1}{|J|},
+\tag{18.22}
+$$
+
+其中 $\mathrm{Acc}_1$ 始终限于共同 $Q_{\mathrm{clock}}$ 标签。各端重复保存的标签仍分别计费。
+
+证明。定理18.11给出乘积式。因 $D_L\subseteq\prod_i\pi_iD_L=B_1(D_L)$，有限集合的阶给下界 $q_0^r|D|$，且取等恰为两个集合相等。分裂存在性只需主卷 [axiom 54.1](RECURSIVE_RELATIONAL_OBSERVATION.md) 的整数 Smith 标准形，沿用定理17.20所引 Elman，*Lectures on Abstract Algebra*，Appendix D，[Theorem D.2](https://www.math.ucla.edu/~rse/algebra_book.pdf#page=862) 作为中间工具：当 $n>1$ 时令
+
+$$
+\widetilde D=\{a\in\mathbb Z^r:a\bmod n\in D\},\qquad
+n\mathbb Z^r\subseteq\widetilde D.
+\tag{18.23}
+$$
+
+用 $D$ 的整数代表和 $ne_1,\ldots,ne_r$ 生成这个满秩格。Smith 标准形给左幺模矩阵 $U$，使 $U\widetilde D=\bigoplus_i s_i\mathbb Ze_i$，其中 $s_i>0$。右幺模变换只换生成元；关键是左变换满足 $U(n\mathbb Z^r)=n\mathbb Z^r$。于是各 $s_i\mid n$，$U$ 模 $n$ 是合法的 $GL_r(R)$ 元素，并把 $D$ 送到 $\prod_i(s_i\mathbb Z/n\mathbb Z)$。这给达到下界的切法；$n=1$ 时空间平凡，直接达到。由式(18.11)的共同标签计数和 $B_1=\prod_i\pi_iD_L$，得到式(18.22)及胶合等价。
+
+这里优化的任务随 $L$ 改变。若只被动重写为 $y=Lx$，同时把原任务运输为 $((L^{-1}y)_i,h+f(L^{-1}y))$，则来源与公共输入的可逆重标记在两方向运输每个竞争实现，不改变任何可达状态计数或最小值。本定理要求的新己方输出是 $y_i$，不由该被动运输取得，也不保证可从旧的最小局部状态直接算出。证毕。
+

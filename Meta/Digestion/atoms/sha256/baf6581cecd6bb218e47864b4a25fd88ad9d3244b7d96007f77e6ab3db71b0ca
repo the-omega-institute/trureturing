@@ -1,0 +1,104 @@
+## 424. 固定深度参数稳定性与有效代数恢复
+
+操作与记号。采用第 422 节的完整操作接口及定理 422.1 的接受映射识别。固定整数 $d,k,d_a\ge1$，固定局部仪器树的路径深度上界 $n\ge0$，并令
+
+$$
+S=\mathbb C^d,\qquad R_a=\mathbb C^{d_a},\qquad
+R=\bigotimes_{a=1}^kR_a,\qquad D_R=\prod_{a=1}^kd_a.
+$$
+
+取非空紧致度量空间 $\Theta$。对 $i=1,\ldots,d$，给定连续单位向量族 $q_i:\Theta\to R$，以 $J_\theta|i\rangle=|i\rangle\otimes q_i(\theta)$ 准备记录。各 $q_i$ 可以纠缠、重复或不张成 $R$；物理分割始终为完整的原始因子 $R_a$，不从较小的张成空间取得联合压缩权限。同一个外部已知参数 $\theta$ 在全部后代描述符中保持不变，它不是额外的源寄存器。未知系统输入可以与任意有限维参考纠缠；所有协议及反馈均不依赖这一未知输入，参考始终不被操作，系统 $S$ 在终端反馈以前不被操作。
+
+每个协议各自为有限树，每个非终端节点由一位持有者在当前有限维工作空间上执行有限实际结果的完全正仪器，总和在整个工作空间上保迹。允许有限私有经典或量子记忆、重复访问、局部丢弃、粗粒 CP 结果、实际取得后又遗忘的结果、零 CP 结果、单结果通道、提前停止及不等叶深。初始辅助态与未知输入及参考独立，并在持有者之间为乘积态；允许经典通信，禁止额外共享纠缠和量子通信。下一操作方和设置只由固定策略按当时实际可用的信息选择。隐藏 Kraus 指标不是实际结果，遗忘的历史不能重新成为控制信息。
+
+最终实际标签 $y$ 决定接受与否以及一个作用于整个 $S$ 的酉反馈 $U_y$；并入同一标签的历史、隐藏 Kraus 项及数学分解项共用这个反馈。逐历史迹掉全部记录输出及记忆后，将接受项在系统矩阵空间内相加，得到 $T$；失败和提前停止仍保留在完整仪器内。记 $\mathcal A_n(\theta)$ 为深度至多 $n$ 的这些聚合接受映射。深度按每条路径上的局部仪器节点计数，局部硬币和单结果通道都占节点，纯经典通信、记账和最终系统酉反馈不另占节点。初始策略、首位持有者及终端接受或反馈均无免费抽签。所有映射等式都在全部系统矩阵上成立，等价地在张量上每个有限参考的恒等映射后成立。
+
+记
+
+$$
+\mathcal D_a=\{\rho_a\in\operatorname{Herm}(R_a):\rho_a\succeq0,\ \operatorname{Tr}\rho_a=1\},\qquad
+\mathcal D=\prod_{a=1}^k\mathcal D_a,\qquad
+\rho_\star=(I_{d_a}/d_a)_a,
+$$
+
+并置 $B_a=d^4+d_a^2$、
+
+$$
+\mathcal H=\{Z\in\operatorname{Herm}(\mathbb C^d\otimes\mathbb C^d):Z\succeq0,\ \operatorname{Tr}Z\le d\}.
+$$
+
+用 $\rho[a\leftarrow\sigma]$ 表示只替换第 $a$ 个局部密度的元组，$\Delta_B$ 为 $B$ 项概率单纯形，$E_{ij}=|i\rangle\langle j|$，$\operatorname{Ad}_U(X)=UXU^*$。对输入先写的未归一化 Choi 矩阵采用
+
+$$
+C(T)=\sum_{i,j=1}^dE_{ij}\otimes T(E_{ij}),\qquad
+\Omega=\sum_{i=1}^d|ii\rangle.
+$$
+
+令
+
+$$
+\Phi_{(\theta,\mathcal E)}(E_{ij})
+ =\langle q_j(\theta)|\mathcal E|q_i(\theta)\rangle E_{ij}.
+$$
+
+在 $\mathcal U(d)$ 上定义
+
+$$
+\mathcal K_0(\theta,\rho)
+=\{0\}\cup
+\{C(\operatorname{Ad}_U\circ
+ \Phi_{(\theta,\otimes_a\rho_a)}):U\in\mathcal U(d)\}.
+$$
+
+对 $m<n$，令 $\mathcal K_{m+1}^a(\theta,\rho)$ 由所有
+
+$$
+\sum_{j=1}^{B_a}\lambda_jZ_j
+$$
+
+组成，其中
+
+$$
+\lambda_j\ge0,\quad \sum_j\lambda_j=1,\quad
+\sigma_j\in\mathcal D_a,\quad
+\sum_j\lambda_j\sigma_j=\rho_a,
+$$
+
+且
+
+$$
+Z_j\in
+\mathcal K_m(\theta,\rho[a\leftarrow\sigma_j])
+\quad(1\le j\le B_a).
+$$
+
+置
+
+$$
+\mathcal K_{m+1}(\theta,\rho)=\bigcup_{a=1}^k
+\mathcal K_{m+1}^a(\theta,\rho),
+$$
+
+零权重补齐短列表，不对持有者并集或 $\mathcal K_0$ 作凸化。定理 422.1 的识别在每个固定 $\theta$ 上给出
+
+$$
+C(\mathcal A_n(\theta))=D_R\mathcal K_n(\theta,\rho_\star).
+$$
+
+定义固定深度的精确成功率与相对钻石误差成功率
+
+$$
+ p_n(\theta)=\max\{p\in[0,1]:p\,\operatorname{id}\in\mathcal A_n(\theta)\},
+$$
+
+$$
+\eta_n(\delta,\theta)=
+\max\left\{p\in[0,1]:\begin{array}{l}
+\exists T\in\mathcal A_n(\theta),\quad T^*(I)=pI,\\[-2pt]
+\|T-p\,\operatorname{id}\|_\diamond\le\delta p
+\end{array}\right\},
+\qquad 0\le\delta\le2.
+$$
+
+这里 $T^*$ 是 Hilbert--Schmidt 伴随，使用未除以二的钻石范数，并保留 $(T,p)=(0,0)$；只有 $p>0$ 时才把 $T/p$ 解释为归一化通道。
+

@@ -1,0 +1,37 @@
+**证明。** 先纯化输入，并对带结果仪器作保留 Kraus 标签的 Stinespring 等距扩张。其输出为单位向量 $|\Psi\rangle$。在输出系统上投影到 $P'$，并在参考和环境上张量恒等，记投影后的向量为 $|v\rangle$，被删去向量为 $|w\rangle$。于是
+
+$$
+\langle v,w\rangle=0,\quad\|v\|^2=1-q,\quad\|w\|^2=q.
+$$
+
+在 $v,w$ 张成的至多二维空间中，算子
+$|\Psi\rangle\langle\Psi|-|v\rangle\langle v|$ 的迹为 $q$，行列式为 $-q(1-q)$，所以
+
+$$
+\bigl\||\Psi\rangle\langle\Psi|-|v\rangle\langle v|\bigr\|_1
+=\sqrt{q(4-3q)}.
+$$
+
+偏迹及经典化保持迹范数收缩。补全中额外加入的复位项是一个迹为 $q$ 的正算子，即使输入与参考纠缠也成立。因此三角不等式给出 $b(q)$。端点直接连续延拓；在 $0<q<1$ 上
+
+$$
+b''(q)=-\frac{2}{[q(4-3q)]^{3/2}}<0,\qquad b'(1)=0,
+$$
+
+故 $b$ 单调递增，且 $q\le\lambda$。这个论证对所有参考系统成立，给出通道差的钻石范数界。最后 $\sqrt{q(4-3q)}\le2\sqrt q$。∎
+
+### 例 ST20.2：此复位补全家族的界可达到
+
+取完整空间的正交基 $|0\rangle,|1\rangle,|e\rangle$，输入和输出编码均保留前两维。完整操作为酉矩阵：
+
+$$
+K_q|0\rangle=\sqrt{1-q}|0\rangle+\sqrt q|e\rangle,
+\quad K_q|e\rangle=-\sqrt q|0\rangle+\sqrt{1-q}|e\rangle,
+\quad K_q|1\rangle=|1\rangle.
+$$
+
+选择复位态 $|1\rangle\langle1|$。此时 $\lambda=q$。输入 $|0\rangle$ 时，补全输出为
+$(1-q)|0\rangle\langle0|+q|1\rangle\langle1|$，与真实输出的迹距离恰为 $b(q)$。二维块的范数贡献为 $\sqrt{q(4-3q)}$，独立的复位块贡献为 $q$。这证明(ST20.3)作为所述补全家族的统一界是尖锐的；它没有声称这种复位在所有可选模拟方法中最优。
+
+只保留一维编码时，真实输出 $\sqrt{1-q}|0\rangle+\sqrt q|e\rangle$ 与任何归一编码输出的迹距离为 $\sqrt q$。因此无法对所有模型以固定常数把最坏误差改成 $O(q)$。
+

@@ -1,0 +1,50 @@
+### 261.1 任意竞争态的完整数据合同
+
+沿用§256的同一有限维联合接口 $H\otimes E$，其中 $\dim H=2$。以下块矩阵均写在固定的输入 $Y$ 本征基中；回到原输入基的酉共轭不改变迹范数。
+
+对任意Hermitian联合算子 $X$，定义
+$$
+\mathscr K(X)=2X_{+-},
+\qquad
+\mathcal M(X)=\bigl(\operatorname{Tr}_H X,\mathscr K(X)\bigr),
+$$
+$$
+\|\mathcal M(X)\|_{\oplus}
+=\|\operatorname{Tr}_H X\|_1+\|\mathscr K(X)\|_1.
+\tag{261.1}
+$$
+这里 $\mathscr K$ 对态给出的矩阵就是由两份可信、已标定完整响应合成的
+$$
+K_\Omega=
+\frac{\mathcal R_a(\Omega)+\mathcal R_b(\Omega)}{2\sqrt A}
+-i\,\frac{\mathcal R_a(\Omega)-\mathcal R_b(\Omega)}{2b_0},
+\qquad A\ge B>0,\quad b_0^2=B.
+\tag{261.2}
+$$
+所有核范数与联合态迹范数均未除以二。
+
+固定归一化纯纠缠理想源
+$$
+\Omega_\psi=P_\psi,\qquad
+|\psi\rangle=|y_+\rangle\otimes u+|y_-\rangle\otimes v,
+$$
+$$
+\rho=uu^\dagger+vv^\dagger,\qquad
+S=\operatorname{supp}\rho,\qquad
+p=\lambda_{\min}(\rho|_S)>0.
+\tag{261.3}
+$$
+纯纠缠与qubit输入使 $\dim S=2$，且 $0<p\le1/2$。$S^\perp$ 可以非零。
+
+竞争态 $\Xi$ 为整个已声明 $H\otimes E$ 上任意归一化正半定态。记
+$$
+\Delta=\Xi-\Omega_\psi,\qquad
+\Delta\rho=\operatorname{Tr}_H\Xi-\rho,\qquad
+\Delta K=\mathscr K(\Xi)-K_{\Omega_\psi},
+$$
+$$
+\varepsilon=\|\Delta\rho\|_1+\|\Delta K\|_1.
+\tag{261.4}
+$$
+不要求竞争态与理想源具有相同边缘、支撑或秩，也不要求竞争态纯或纠缠。
+

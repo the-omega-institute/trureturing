@@ -1,0 +1,35 @@
+### 42.2 相容 section、global frame 与 holonomy 固定点
+
+在一个有限连通图上，给每个顶点 $i$ 一个纤维 $B_i$，给每条有向边 $e:i\to j$ 一个可逆运输 $T_e:B_i\simeq B_j$，逆边运输为 $T_e^{-1}$。取根 $v$ 和一棵生成树；令 $P_i:B_v\simeq B_i$ 为树路径运输。对每条非树边 $e:i\to j$ 定义根纤维上的 holonomy
+
+$$
+H_e:=P_j^{-1}\circ T_e\circ P_i\in\operatorname{Aut}(B_v).
+\tag{42.5}
+$$
+
+所有运输相容的 section 组成
+
+$$
+\Gamma(T)=\{(b_i)_i:\ T_e(b_i)=b_j\text{ 对所有边 }e:i\to j\}.
+$$
+
+根评价给出一个规范双射
+
+$$
+\boxed{
+\Gamma(T)\simeq
+\bigcap_{e\notin\mathrm{Tree}}\operatorname{Fix}(H_e).
+}
+\tag{42.6}
+$$
+
+树边强制 $b_i=P_i(b_v)$，非树边恰好变成根值的固定点方程。由此得到三个不同结论：
+
+* 相容 section 存在，当且仅当 holonomy 共同固定点非空；
+* 每个根值都能延拓，当且仅当所有 holonomy 恒等；
+* 若把“full frame”定义为根评价 $\Gamma(T)\to B_v$ 的双射（有限连通图、每条边运输可逆，并且每个根值都有唯一相容 section），则一整套 transport-compatible frame 才需要后一个更强条件。
+
+所以“有一个全局 profile”与“局部接口之间存在可逆的全局 frame”不是同一命题。取三角形图、纤维 $\{0,1,2\}$，两条边为恒等、第三条边交换 $1,2$ 而固定 $0$，则只有全零 section，却没有 transport-compatible full frame。
+
+若运输只有有向箭头而没有逆，闭路测试也不充分。取菱形 $v\to a\to w$ 与 $v\to b\to w$，令一条路径的复合为交换、另一条为恒等。图中没有有向闭路，但两条平行路径作用不同；正确条件是对声明的平行路径直接要求复合相等。
+

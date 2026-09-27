@@ -1,0 +1,14 @@
+### 19.1 定义：两组概率分布的含噪矩比较
+
+固定 $0\leq a<b<1$。令 $\mu,\nu$ 为 Borel 概率测度，满足
+\[
+\operatorname{supp}\mu\subseteq[a,1],\qquad
+\operatorname{supp}\nu\subseteq[a,b],\qquad
+\left|\int x^k\,d\mu-\int x^k\,d\nu\right|\leq\varepsilon
+\quad(k=1,2),\quad\varepsilon\geq0.
+\tag{19.1}
+\]
+定义 $W(\varepsilon)$ 为全部可行对中的最大 $\mu(\{1\})$。对开区间 $(l,r)\subset[a,1)$，再要求 $\mu((l,r))=0$，得到最大值 $W_{l,r}(\varepsilon)$。下面给出的上界对任意上述测度成立，且由有限原子测度取得，所以将模型类限制为任意有限原子数的并集不改变这些最大值。
+
+此处 $\varepsilon$ 比较两种真实模型的矩。若它们分别与同一读数相差至多 $\delta$，则应使用 $\varepsilon=2\delta$。当 $a>0$、$x=e^{-hE}$ 且 $h>0$ 时，两矩分别对应 $h,2h$ 时刻的 Laplace 读数。式 (19.1) 没有假设其他时间的读数相近。一般矩极值的多项式对偶背景见 [19-A]。
+

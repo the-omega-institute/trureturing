@@ -1,0 +1,2 @@
+**定义 413.1（局部等价与有限报告）。** 在同一可测空间上给定概率 $P_0,P_1$ 和递增信息族 $(\mathcal F_n)_{n\ge0}$。假定每个有限时刻都有 $P_0|_{\mathcal F_n}\sim P_1|_{\mathcal F_n}$，即对每个 $A\in\mathcal F_n$，$P_0(A)=0$ 当且仅当 $P_1(A)=0$。设 $\tau$ 是取值于 $\mathbb N\cup\{\infty\}$ 的停止时刻，$D\in\{0,1\}$ 是停止后报告；要求 $\{\tau=n,D=i\}\in\mathcal F_n$。在 $\tau=\infty$ 时不给报告，$D$ 在那里的形式取值不计入判断。
+

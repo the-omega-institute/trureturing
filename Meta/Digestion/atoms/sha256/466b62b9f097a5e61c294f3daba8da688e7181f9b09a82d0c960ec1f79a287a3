@@ -1,0 +1,16 @@
+**定理 5.5.1（原始公告的全局及局部余量）。** 固定 $d\ge3$ 及第 5.1 节的同一正 iid 律。允许原始禁词库存 $\mathcal P$ 重复公告同一词，也允许包含已有禁祖先的冗余后代；要求最终每个正长度至多一个不同词，且不含空词。令
+$$
+U=\bigcup_{w\in\mathcal P}[w],\quad E=X\setminus U,\quad
+M=\mu_p(E),\quad m_v=\mu_p(E\cap[v]).
+$$
+则 $M\ge\eta(p)>0$，而每个有限词 $v$ 满足完整二分
+$$
+\begin{cases}
+E\cap[v]=\varnothing,\quad m_v=0,
+&\text{若存在最终禁词 }w\preceq v,\\
+m_v\ge\eta(p)p(v)>0,
+&\text{若不存在这样的最终禁词。}
+\end{cases}
+$$
+前缀关系包括等号。根对应空词，因根公告被禁止而总属于第二分支。
+

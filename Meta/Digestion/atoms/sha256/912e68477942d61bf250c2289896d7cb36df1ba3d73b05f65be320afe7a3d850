@@ -1,0 +1,24 @@
+**定义 84.1（同一输出上的精确熵余量）。** 沿用定义 82.1 的原计数向量、
+精确后验中心标量 $T$、同一个测量噪声 $G$、$Y=T+\sigma_MG$、
+先验预测密度 $f_x$ 及自然单位熵 $h_x^{\rm nat},\mathsf H_{{\rm post},x}$。
+仍假定 $L_M=\ln(1/\sigma_M)\to\infty$、$L_M=o(Q^3)$，且
+$\delta=Q^{-1/2}$、$\nu=2g_0$、$c=\tfrac12\ln\nu$。令
+
+$$
+\begin{aligned}
+g_3&=\int_{\mathbb R}\rho(t)^3dt,
+&A_M^\sigma&=\frac\gamma{\sqrt\delta(\nu+\sigma_M^2)},\\
+C_*&=\nu-\frac{4\gamma g_3}{\nu},
+&b_{\rm sur}&=\frac{C_*}{\nu^2},\qquad
+b_{\rm ent}=b_{\rm sur}-\frac1{2\nu},\\
+\mathcal H(y)&=b_{\rm ent}(y^2-\nu)-c,
+&R_M^\sigma(y)&=\mathsf H_{{\rm post},x}(y)-h_x^{\rm nat}+L_M-A_M^\sigma y.
+\end{aligned}
+\tag{84.1}
+$$
+
+所有数据函数的收敛仍指：对每个 $\varepsilon>0$，在两种原实际实验中分别有
+$\sup_{S:|S|=q}\Pr_S^{\mathscr X}(|F_M(\mathscr X)|>\varepsilon)\to0$。
+条件期望始终使用均匀支持先验定义的纤维核，输出积分使用 $f_x(y)dy$。
+本章精化第 82 章的首阶响应；其精确熵中心不换成 $Q^5$ 阶等价式。
+

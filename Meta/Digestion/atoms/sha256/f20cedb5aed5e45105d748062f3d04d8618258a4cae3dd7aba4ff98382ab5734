@@ -1,0 +1,15 @@
+**定理 12.3（不可约块给出的精确指数与更短停止界）。** 上述记号下，
+
+$$
+\boxed{\tau(A)=\max_{\rho\ne1}\nu(A_\rho).}
+$$
+
+因此
+
+$$
+A\text{ inert}\quad\Longleftrightarrow\quad
+A^{n d_*}\in u_H M_n(N),
+$$
+
+并且 inert 时 tau(A)≤n d_*。若 H 为非平凡有限阿贝尔群，d_*=1，所以只需检查 A^n。特别 n=1 且 H 阿贝尔时，inert 等价于 A 本身已经为 c u_H。
+

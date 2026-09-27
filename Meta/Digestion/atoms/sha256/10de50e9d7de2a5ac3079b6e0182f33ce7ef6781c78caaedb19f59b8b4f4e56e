@@ -1,0 +1,35 @@
+**全域通道及累计成功分支。** 记 $`P_n`$ 为 $`W_n`$ 的正交投影、$`r_n=\dim W_n`$。对 $`n\ge1`$，取
+
+$$
+K_n=\mathbb C^{r_n}\oplus\mathbb C|\bot_n\rangle,
+$$
+
+并选等距编码 $`F_n:W_n\to\mathbb C^{r_n}\subseteq K_n`$。将 $`F_n`$ 在 $`W_n^\perp`$ 上以零延拓，故 $`F_n^*F_n=P_n`$、$`F_nF_n^*=I_{K_n}-|\bot_n\rangle\langle\bot_n|`$；取 $`F_0=P_0=I_{\mathbb C}`$。定义
+
+$$
+L_n=F_nP_n(F_{n-1}^*\otimes I_B),
+\qquad
+\mathcal C_n(X)=L_nXL_n^*
++\operatorname{Tr}[(I-L_n^*L_n)X]
+|\bot_n\rangle\langle\bot_n|.
+\tag{28.20}
+$$
+
+由（28.19），$`L_n^*L_n`$ 是输入空间上的正交投影，故（28.20）在整个输入载体上完全正且保迹。旧旗标被 $`F_{n-1}^*`$ 消去，因而其后始终留在失败块。各轮可采用立即丢弃的新环境实现此通道，并附加独立纯空白作为清除后的发出位；无其他持久接收系统。
+
+这些通道仅作用于已发档案与接收器，和之后作用于活动记忆的来源等距可交换。将全部发射先展开后，连续成功 Kraus 算子的乘积由
+
+$$
+P_n(P_{n-1}\otimes I_B)=P_n
+$$
+
+逐步化为
+
+$$
+L_n(L_{n-1}\otimes I_B)\cdots
+(L_1\otimes I_{B^{\otimes(n-1)}})=F_nP_n,
+\tag{28.21}
+$$
+
+其中各因子的恒等延拓按其所剩档案位解释。因而某终端此前全部步骤成功的分支，恰为原档案在 $`W_n`$ 上的投影后编码；失败总质量恰是这个终端投影的漏出质量。
+

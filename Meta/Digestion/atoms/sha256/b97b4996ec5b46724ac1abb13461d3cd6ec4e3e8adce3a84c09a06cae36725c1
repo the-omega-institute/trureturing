@@ -1,0 +1,2 @@
+**推论 2.20（terminal optimization）。** Any optimization of a fixed function of terminal observation, additional cost, and additional duration over legal continuation tests factors through the weighted continuation quotient. This includes a fixed duration constraint and a terminal reward minus a fixed function of accumulated resource cost.
+

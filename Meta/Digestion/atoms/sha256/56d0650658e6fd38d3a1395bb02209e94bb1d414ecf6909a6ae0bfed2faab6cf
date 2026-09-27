@@ -1,0 +1,72 @@
+**定理 115.2（终端通道的共同极限分解）。** 若不失效的 $\Gamma_j\to\Gamma_*\in\mathfrak F_R$，且沿所取子列有 $\zeta_j\to\zeta_*$，则在完整 diamond 范数中
+
+$$
+\boxed{
+\Xi_{\Gamma_j}(X)\longrightarrow
+\operatorname{Tr}(P_*X)\zeta_*
++\operatorname{Tr}[(I-P_*)X]P_0.
+}
+\tag{115.3}
+$$
+
+其中 $P_*$ 是该边界装置的暗态投影。因而，即使沿原序列 $\zeta_j$ 没有极限，仍有
+
+$$
+\boxed{d_{\Gamma_j}-D(\zeta_j,P_0)\longrightarrow0,\qquad
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.}
+\tag{115.4}
+$$
+
+式（115.4）也对趋近整个最近失效集合的序列成立，不要求预选唯一边界相位。
+
+证明。令状态侧谱投影为
+
+$$
+\mathcal P_\Gamma(X)=\sigma_\Gamma\operatorname{Tr}(G_\Gamma X),
+\qquad
+\mathcal B_\Gamma=\mathcal N_\Gamma(\operatorname{id}-\mathcal P_\Gamma),
+\qquad
+\mathcal R_\Gamma=(\operatorname{id}-\mathcal B_\Gamma)^{-1}
+(\operatorname{id}-\mathcal P_\Gamma).
+$$
+
+第 93、96 节保证该投影及稳定部分连续，后者的谱与一一致分离。分解主谱空间与其补空间，准确得到
+
+$$
+(\operatorname{id}-\mathcal N_\Gamma)^{-1}
+=\epsilon_\Gamma^{-1}\mathcal P_\Gamma+\mathcal R_\Gamma,
+$$
+
+$$
+\Xi_\Gamma(X)
+=\zeta_\Gamma\operatorname{Tr}(G_\Gamma X)
++\mathcal C_\Gamma\mathcal R_\Gamma(X).
+\tag{115.5}
+$$
+
+在边界，定理 106.1 给
+
+$$
+\mathcal N_* =\mathcal P_*:X\mapsto P_*XP_*,
+\quad G_*=P_*,\quad
+\mathcal B_*=0,\quad
+\mathcal R_* =\operatorname{id}-\mathcal P_*,
+$$
+
+$$
+\mathcal C_*\mathcal R_*(X)
+=\operatorname{Tr}[(I-P_*)X]P_0.
+$$
+
+因此式（115.5）的两项分别收敛，得到式（115.3）。这里先准确分离 $\epsilon^{-1}$ 主项，再对有界稳定部分取极限；没有把一个未控制的点击映射误差除以 $\epsilon$。
+
+输入、输出维数固定，线性映射空间中的范数等价，故矩阵元收敛也是 diamond 范数收敛。极限通道与 $\mathcal T_0$ 之差为
+
+$$
+X\longmapsto\operatorname{Tr}(P_*X)(\zeta_*-P_0).
+$$
+
+对任意归一化参考联合输入，其输出是一个迹至多一的正参考算子张量 $\zeta_*-P_0$；输入 $P_*$ 达到迹一。因此极限完整半钻石距离恰为 $D(\zeta_*,P_0)$。
+
+密度矩阵和最近失效集合都紧。若式（115.4）不成立，取差值远离零的子列，再取装置与 $\zeta_j$ 的共同收敛子列，刚才的极限计算给矛盾。这也处理不同边界相位。$\square$
+

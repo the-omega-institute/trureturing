@@ -1,0 +1,14 @@
+**命题 390.1（有限决策中的充分性及其反向）。** 设 $\Theta$ 有限非空，$b,b'$ 为概率分布，行动集 $A$ 有限非空，损失 $\ell:\Theta\times A\to\mathbb R$ 为同一个有限值函数。若 $b=b'$，则对每个行动的风险、最小风险和全部最优行动集合都相同：
+
+$$
+R_b(a)=\sum_\theta b(\theta)\ell(\theta,a),\qquad
+V_b=\min_{a\in A}R_b(a),\qquad
+\mathcal A_b=\{a:R_b(a)=V_b\}.
+$$
+
+反过来，若对每个有限非空行动集及每个这样的损失，二者的最小风险都相同，则 $b=b'$。
+
+证明：正向由逐项相等及对同一有限非空集合取最小值得到；最优行动至少有一个。反向取只有一个行动的集合，对每个 $\theta_0$ 使用损失 $\ell(\theta,*)=\mathbf1_{\{\theta_0\}}(\theta)$，其唯一风险分别为 $b(\theta_0)$ 与 $b'(\theta_0)$。逐个坐标相等给出结论。
+
+项目 [PosteriorUniversalSufficiency](../../../D5/S3/Estimation/DecisionRisk/PosteriorUniversalSufficiency.lean) 的 `posterior_universal_sufficiency` 给出相同全定义后验下的一步条件 Bayes 值相同。源码允许更一般行动类型并使用实数下确界；本文为确保最优行动存在和普通概率语义，明确采用有限非空行动、有限损失与正质量历史。反向刻画由本段的指标损失论证承担，不借源码名称宣称它已在同一声明中出现。
+

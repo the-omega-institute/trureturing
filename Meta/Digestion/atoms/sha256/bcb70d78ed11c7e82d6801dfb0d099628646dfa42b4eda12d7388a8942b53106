@@ -1,0 +1,116 @@
+**定理163.1（局部恢复重叠的完整相位谱）。** 有
+
+$$
+\boxed{
+f(v)=1-2\Delta\bigl(1-s(v)\bigr).
+}
+\tag{163.4}
+$$
+
+最大值由只作用于 $Q,R$ 的 CPTP 解码器达到。
+
+**证明。** 在 $R$ 到 $Q\otimes R$ 上定义通道
+
+$$
+\mathcal A_v(X)
+=\frac12\left(P_v\otimes X+P_{Zv}\otimes YXY\right).
+\tag{163.5}
+$$
+
+于是 $\Omega_v=(\operatorname{id}_M\otimes\mathcal A_v)(P_\Xi)$。对其两个 Kraus 算子作 Hadamard 换基，得到
+
+$$
+A_\pm=\frac12
+\left(|v\rangle_Q\otimes I_R
+\ \pm\ |Zv\rangle_Q\otimes Y_R\right).
+\tag{163.6}
+$$
+
+因为 $t=\langle v|Zv\rangle$ 为实数，
+
+$$
+A_+^*A_-=0,\qquad
+A_\pm^*A_\pm=\frac12(I_R\pm tY_R).
+\tag{163.7}
+$$
+
+因此 $\operatorname{ran}A_+$ 与 $\operatorname{ran}A_-$ 正交。接收端可以用这两个支撑的投影区分分支，而不改变已经处于对应支撑的分支态。
+
+令
+
+$$
+|\zeta_\pm\rangle
+=\sqrt2\,(I_M\otimes A_\pm)|\Xi\rangle.
+\tag{163.8}
+$$
+
+由于 $\rho_*$ 实对称，$\operatorname{Tr}(\rho_*Y)=0$，两向量均归一化，并有
+
+$$
+\Omega_v=\frac12P_{\zeta_+}+\frac12P_{\zeta_-}.
+\tag{163.9}
+$$
+
+利用 $Y^{\mathsf T}=-Y$ 及二维实对称正矩阵的恒等式
+$\sqrt{\rho_*}Y\sqrt{\rho_*}=\sqrt{\Delta}\,Y$，两份归一化分支在活动记忆上的边缘为
+
+$$
+\rho_\pm
+:=\operatorname{Tr}_{QR}P_{\zeta_\pm}
+=\rho_*\mp t\sqrt{\Delta}\,Y.
+\tag{163.10}
+$$
+
+在本节采用平方保真度
+
+$$
+F(\omega,\rho)=
+\left(\operatorname{Tr}
+\sqrt{\sqrt{\rho}\,\omega\sqrt{\rho}}\right)^2.
+\tag{163.11}
+$$
+
+任何接收端 CPTP 映射均不改变 $\rho_\pm$。保真度在取边缘下的单调性给出每支的恢复重叠上界
+
+$$
+\langle\Xi|
+(\operatorname{id}_M\otimes\mathcal D)(P_{\zeta_\pm})
+|\Xi\rangle
+\le F(\rho_\pm,\rho_*).
+\tag{163.12}
+$$
+
+这个上界可以分别达到：$\zeta_\pm$ 与 $\Xi$ 都是各自活动记忆边缘的纯化，普通纯化保真度定理给出接收侧等距，使两纯化的重叠平方等于 $F(\rho_\pm,\rho_*)$。每个支撑 $\operatorname{ran}A_\pm$ 的维数至多为二，故可等距映入 qubit $R_{\mathrm{out}}$。先测两个正交支撑，再执行各自的等距，并在支撑外用固定态替换，便得到一份全域 CPTP 解码器，同时达到两支上界。它没有访问活动记忆或掩码环境。
+
+所以
+
+$$
+f(v)=\frac12F(\rho_+,\rho_*)+
+\frac12F(\rho_-,\rho_*).
+\tag{163.13}
+$$
+
+对二维密度矩阵，两个非负本征值的平方根展开给
+
+$$
+F(\omega,\rho)
+=\operatorname{Tr}(\omega\rho)
++2\sqrt{\det\omega\,\det\rho}.
+\tag{163.14}
+$$
+
+由（163.10），
+
+$$
+\operatorname{Tr}(\rho_\pm\rho_*)
+=\operatorname{Tr}(\rho_*^2)=1-2\Delta,
+\qquad
+\det\rho_\pm=\Delta(1-t^2).
+\tag{163.15}
+$$
+
+两支的保真度因此相同，代入（163.13）即得
+$f(v)=1-2\Delta+2\Delta\sqrt{1-t^2}$。以上证明包括 $t=\pm1$ 时的一维支撑退化情形。证毕。
+
+这条公式把接收端可恢复性写成了来源 $\rho_*$ 与标签对 $(v,Zv)$ 的连续函数。它并不声称观察者已经通过有限样本取得这些精确参数。
+

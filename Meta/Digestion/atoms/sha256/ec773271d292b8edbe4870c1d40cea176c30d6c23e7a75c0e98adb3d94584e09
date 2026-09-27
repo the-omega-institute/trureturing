@@ -1,0 +1,65 @@
+**定理 182.2（选定偏置先验的精确全局最优风险）。** 在（182.1）—（182.2）的实验中，均衡 $02$ 输出的最小风险为 $\pi_1$，而允许任意信号—参考输入时的最小风险为
+$$
+P_{\rm err}^*=\pi_1-k\frac{a^2}{1+2a}<\pi_1.
+\tag{182.4}
+$$
+令 $d=1+2a$、$\nu_*=a^2/d$。达到等号的输入与猜测 $H_1$ 的测量效应分别为
+$$
+|\psi_*\rangle=
+\sqrt{\frac{1+a}{2d}}(|0\rangle+|2\rangle)+\sqrt{\frac ad}|1\rangle,
+\qquad
+M_1=|\chi_*\rangle\langle\chi_*|,
+\quad
+|\chi_*\rangle=
+\sqrt{\frac{1+a}{2d}}(|0\rangle+|2\rangle)-\sqrt{\frac ad}|1\rangle.
+\tag{182.5}
+$$
+另一个效应为 $M_0=I-M_1$；无需参考系统。
+
+证明。 由先验的选法，$\pi_1h_1=\pi_0h_0$，故均衡输出的加权差为 $-k|-\rangle\langle-|$。其正部为零，始终猜 $H_0$ 已达到风险 $\pi_1$。对一般输入，通道的加权差满足
+$$
+\Delta:=\pi_1\mathcal T_{u_1}-\pi_0\mathcal T_{u_0}
+=-k\,\mathcal S_{F_-},\qquad F_-:=F(a,-1),
+\quad \mathcal S_C(X):=C\odot X.
+\tag{182.6}
+$$
+这里 $\mathcal S_{F_-}$ 只是 Hermitian 保持线性映射，并不假定它为通道。
+
+先将任意混合信号—参考输入纯化；丢弃额外纯化系统不增加 Hermitian 迹范数，因此求上界只需纯输入。写 $|\Psi\rangle=\sum_i|i\rangle|v_i\rangle$，令 $p_i=\lVert v_i\rVert^2$、$D_p=\operatorname{diag}(\sqrt{p_i})$。信号标签保证 $|i\rangle|v_i\rangle/\sqrt{p_i}$ 两两正交，零人口处任选参考单位向量即可补成等距映射 $V$。对任意 Hermitian 矩阵 $C$，
+$$
+(\mathcal S_C\otimes\operatorname{Id})(|\Psi\rangle\langle\Psi|)
+=VD_pCD_pV^\dagger.
+\tag{182.7}
+$$
+因此迹范数只依赖 $p$，同样的值可由信号纯态 $\sum_i\sqrt{p_i}|i\rangle$ 达到。
+
+以下正半定分解同时控制所有人口分布，无须先假定最优输入对称。令 $q=(1,-1,1)^{\mathsf T}$、$z=(a,1+a,a)^{\mathsf T}$，则直接逐项计算得
+$$
+C:=F_-+\nu_*qq^{\mathsf T}
+=2|-\rangle\langle-|+\frac{zz^{\mathsf T}}d\succeq0.
+\tag{182.8}
+$$
+由于 $C$ 的每个对角元为 $1+\nu_*$，而 $q$ 的分量平方均为一，矩阵
+$D_pF_-D_p=D_pCD_p-\nu_*D_pqq^{\mathsf T}D_p$ 的右侧两项分别正半定，迹为 $1+\nu_*$ 与 $\nu_*$。迹范数三角不等式遂给出
+$$
+\lVert D_pF_-D_p\rVert_1\le1+2\nu_*.
+\tag{182.9}
+$$
+
+取（182.5）的输入人口 $p_*=(\frac{1+a}{2d},\frac ad,\frac{1+a}{2d})$，令 $s=a/d$、$t=1-s$。在 $|-\rangle$ 方向，$D_{p_*}F_-D_{p_*}$ 的特征值为 $t>0$；在 $|+\rangle,|1\rangle$ 张成的空间内，其矩阵为
+$$
+\begin{pmatrix}0&a\sqrt{st}\\a\sqrt{st}&s\end{pmatrix}.
+\tag{182.10}
+$$
+向量 $\sqrt t|+\rangle-\sqrt s|1\rangle=|\chi_*\rangle$ 的特征值为 $-a s=-\nu_*$，另一个特征值为正。因此（182.9）达到等号，而 $M_1$ 正是加权输出差 $-kD_{p_*}F_-D_{p_*}$ 的正谱投影。使用二元 Helstrom 公式 $P_{\rm err}=(1-\lVert\Delta(\rho)\rVert_1)/2$，得到（182.4）。
+
+也可直接核对两种条件概率：
+$$
+m_j:=\Pr(M_1\mid H_j)
+=\frac{(1+a)^2h_j}{d^2}-\frac{a^2}d,
+\qquad
+\pi_1m_1-\pi_0m_0=k\nu_*.
+\tag{182.11}
+$$
+所以 $\pi_0m_0+\pi_1(1-m_1)=\pi_1-k\nu_*$，与谱计算一致。证毕。
+

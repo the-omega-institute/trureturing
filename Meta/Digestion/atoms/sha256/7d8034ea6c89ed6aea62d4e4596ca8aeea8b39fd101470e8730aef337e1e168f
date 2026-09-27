@@ -1,0 +1,52 @@
+### 288.4 实际三结果分布精确分开任务与漂移
+
+记 $a=1-\delta$，$\varepsilon=1-r$。§286的真实平均态展开为
+$$
+\sigma_{\delta,r}
+=a^2\sigma_{0,r}+\delta aR+\delta^2\tau^{\otimes2},
+\qquad
+\sigma_{0,r}=r\sigma_{0,1}+\varepsilon D\otimes D.
+\tag{288.10}
+$$
+由于 $P_u,P_v$ 都消去 $\sigma_{0,1}$，表格给真实概率
+$$
+\begin{aligned}
+p_u(\delta,r)
+&=\frac{\varepsilon a^2}{16}+\frac{\delta a}{8}+\frac{\delta^2}{16}
+=\frac{1-ra^2}{16},\\
+p_v(\delta,r)
+&=\frac{\varepsilon a^2}{17}+\frac{33\delta a}{272}+\frac{\delta^2}{16}
+=\frac{1-ra^2}{17}+\frac\delta{272}.
+\end{aligned}
+\tag{288.11}
+$$
+这是对有限扰动的准确恒等式，没有略去 $O(\delta^2)$ 余项。
+
+测量三结果POVM
+$$
+\{P_u,P_v,I-P_u-P_v\},
+\tag{288.12}
+$$
+分别记分 $-16/17,1,0$，得到真实随机变量 $X$。它对应已知Hermitian算子
+$$
+L=P_v-\frac{16}{17}P_u.
+$$
+于是
+$$
+\boxed{
+\mathbb E_{0,r}X=0,\qquad
+\mathbb E_{\delta,r}X=\frac\delta{272}
+\quad\text{对所有允许的 }r.
+}
+\tag{288.13}
+$$
+未知漂移的消去依靠两个实际方向的固定权重组合，不依靠事先估计 $r$，也不把隐藏噪声标签当成可访问数据。
+
+在响应概率已给定的数学层面，还能反向恢复
+$$
+\delta=272\left(p_v-\frac{16}{17}p_u\right),\qquad
+r=\frac{1-16p_u}{(1-\delta)^2}.
+\tag{288.14}
+$$
+当前区间内分母非零，所以该概率接口分离两个参数。公式不表示观察者已经免费知道这些概率；有限实际记录需要多少份，仍由下面的方差和预算证明承担。
+

@@ -1,0 +1,9 @@
+**充分性。** 因每个 $m\mid D$，一个点是否被任一允许类删除只取决于其模 $D$ 余数。故
+$$
+R_{T,a}(H)
+=\sum_{c\bmod D}N_c(H)
+  \prod_{m\in T}\bigl(1-\mathbf1_{c\equiv a_m\ (m)}\bigr).
+\tag{ER8.FH.6}
+$$
+相同直方图给相同的全部读数。
+

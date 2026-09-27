@@ -1,0 +1,22 @@
+### 195.1 同一来源的熵与有效比例
+
+固定此前的 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，保持第193节的全部操作权限与完整参考任务。来源边缘态及其熵为
+
+$$
+\sigma_\ell=\operatorname{diag}(1-\ell,\ell),\qquad
+s(\ell)=S(\sigma_\ell)
+=-\ell\log_2\ell-(1-\ell)\log_2(1-\ell),
+\quad0\le\ell\le\frac12,
+\tag{195.1}
+$$
+
+取 $0\log_2 0=0$。因为联合来源 $P_{\Xi_\ell}$ 是纯态，$s(\ell)$ 也是这份纯化跨 $M:R$ 切口的纠缠熵。
+
+对 $0<\epsilon<1/2$，定义
+
+$$
+L_\epsilon=\log_2\frac1\epsilon,\qquad
+h_S(\ell,\epsilon)=\frac{s(\ell)}{\epsilon L_\epsilon}.
+\tag{195.2}
+$$
+

@@ -1,0 +1,5 @@
+source_id = "erdos-699-binomial-common-prime"
+path = "docs/develop/theory/ERDOS_699_BINOMIAL_COMMON_PRIME.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

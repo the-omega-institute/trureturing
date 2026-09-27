@@ -1,0 +1,15 @@
+**命题 6.4.1（单层与跨层的信息谱）。** 固定正 iid $p$，令 $I_n=-\log p(X_{\le n})$、$h=H(p)$，$Z_n=I_n-nh$。设 $L_n(m)$ 是长度 $n$ 至多 $m$ 个词可有的最大质量，$L_n(0)=0$；$m\ge1,t\ge0$ 时
+$$
+\Pr(I_n\le\log m)\le L_n(m)\le\Pr(I_n\le\log m+t)+e^{-t}.
+$$
+**证明。** 质量至少 $1/m$ 的词至多 $m$ 个，全部选入给下界。对任意所选集合，把自信息超过 $\log m+t$ 的词分出，每个质量小于 $e^{-t}/m$，至多 $m$ 个给 $e^{-t}$；其余质量不超过所示事件概率，给上界。
+
+更一般，禁用 $n<N$ 的预算记为 $b^{\langle N\rangle}$，其删除容量 $D_N=M_{b^{\langle N\rangle}}(p)$。令 $J_N=\{n\ge N:b_n>0\}$，任取 $t_n\ge0$，则
+$$
+\Pr\!\left(\bigcup_{n\in J_N}\{I_n\le\log b_n\}\right)
+\le D_N\le
+\min\!\left(1,\Pr\!\left(\bigcup_{n\in J_N}\{I_n\le\log b_n+t_n\}\right)+\sum_{n\in J_N}e^{-t_n}\right),
+\qquad M_b(p)\le\min\left(1,\sum_nL_n(b_n)\right).
+$$
+左边把各层高质量候选全部前缀极小化；每条进入路径有最早的有限进入深度，故并集保持，层预算只减，确实是一份码。右边先固定同一 $F$，按首次命中词分高、低自信息；高质量部分落入所示事件并，低质量部分逐层不超过 $e^{-t_n}$，用并集界后才对 $F$ 取上确界。最后一式也是对同一码逐层相加。这没有深度事件独立性或各层最优同时可达的前提；发散的误差和只给平凡界。证毕。
+

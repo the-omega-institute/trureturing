@@ -1,0 +1,6 @@
+### 4.6 静态切分与因果容量：完整历史流、末端法与可压缩记忆
+
+改变一个证明的切分顺序，不等于改变一个随机过程的合法执行顺序。本节在有限坐标、确定条件容量的模型中，把这一区别写成两个不同的可行域：静态柱集容量只限制末端法的一组边缘质量；逐步归一化、完整档案条件化和合法调度则组成一个有限历史流多面体。后者投影恰好给出可实现的末端联合律，前者一般严格更大。
+
+以下为普通数学定义与纸面推导，不是新增 Lean 声明或形式核验结论。全局柱集界及静态证书与采样顺序的区分，复用不可变版本 `e25dea7a9919fcae53bb797f7740b0f5c99668ac` 的 [Erdős 7 第59篇 B.1—B.3](https://github.com/the-omega-institute/trureturing/blob/e25dea7a9919fcae53bb797f7740b0f5c99668ac/docs/reports/erdos7-odd-covering/problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md)。有限状态动态规划、占用流和保行为商均为成熟结构；这里明确给出它们接入当前条件容量模型所需的映射、两方向证明及档案边界，不主张这些一般原理的新颖性。
+

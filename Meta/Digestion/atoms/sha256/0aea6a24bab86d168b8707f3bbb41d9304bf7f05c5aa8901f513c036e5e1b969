@@ -1,0 +1,28 @@
+**定理97.1（三维纤维半空间的两种几何形式）。** 在上述合同下，$\mathcal R$ 必具有以下至少一种形式。
+
+第一种形式：存在三维 $P\subset K$ 和单位向量 $\psi\in P^\perp\otimes F$，使
+
+$$
+\mathcal R=(P\otimes F)\oplus\mathbb C\psi.
+\tag{97.1}
+$$
+
+$\psi$ 的 Schmidt 秩为一或二。若为二，所有接收纤维都等于 $P$；若 $\psi=u\otimes z_*$ 为秩一，则只有 $[z_*]$ 的纤维为 $P\oplus\mathbb Cu$，其他纤维都等于 $P$。
+
+第二种形式：存在正交的二维空间 $I,E\subset K$，以及 Schmidt 秩二的单位向量 $\psi\in E\otimes F$，使
+
+$$
+\mathcal R=(I\otimes F)\oplus
+\bigl((E\otimes F)\cap\psi^\perp\bigr).
+\tag{97.2}
+$$
+
+此时所有纤维都恰为三维。若 $Q=(I\oplus E)^\perp$，则 $\dim Q=3$，并且
+
+$$
+\mathcal R^\perp=(Q\otimes F)\oplus\mathbb C\psi.
+\tag{97.3}
+$$
+
+因此第二种形式是第一种中纠缠单线情形的正交补，不需要 Kronecker 标准形作为前提。
+

@@ -1,0 +1,34 @@
+**商像二维与共同的一位张量块。**
+
+以下 $m=2$。令
+$$
+S=U+G_3+G_5,\qquad\dim S=4.
+$$
+由于 $U\cap G_3=U\cap G_5=0$，有
+$$
+S=U+G_3=U+G_5.
+\tag{55.15}
+$$
+固定 $V_1$ 给
+$$
+V_1S=(Q_3\otimes A)+(Q_4\otimes B).
+$$
+将 $C$ 写成 $C=\alpha A+\beta B$，三射线互异使 $\alpha\beta\ne0$。由 $G_5\subset S$ 及 $V_1G_5=Q_6\otimes C$，逐个 $A,B$ 分量比较给 $Q_6\subset Q_3\cap Q_4$。三者均二维，因此
+$$
+Q_3=Q_4=Q_6=:Q,\qquad
+V_1S=Q\otimes F.
+\tag{55.16}
+$$
+跨位正交于是使
+$$
+U,G_3,G_4,G_5,G_6\subset Q^\perp.
+\tag{55.17}
+$$
+特别地 $S\perp Q$。
+
+此外，$V_1G_4=Q_5\otimes A$，其与 $V_1S=Q\otimes F$ 的交落在 $Q\otimes A=V_1U$。固定等距单射性给
+$$
+G_4\cap S=G_4\cap U.
+\tag{55.18}
+$$
+

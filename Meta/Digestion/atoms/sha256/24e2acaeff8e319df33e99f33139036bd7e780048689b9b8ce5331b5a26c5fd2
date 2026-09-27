@@ -1,0 +1,22 @@
+### 255.6 必要性及完整充要定理
+
+反向，设 $R_a,R_b$ 确由§248的某个内点饱和态 $\Omega$ 产生，形成纠缠为 $\theta\in(0,1)$。在其正常形坐标中，量子块响应为
+$$
+R_w\big|_{\mathrm{ent}}
+=\frac\theta2V(A_w^{\mathsf T}\otimes\sigma_{\mathcal M})V^\dagger,
+\tag{255.38}
+$$
+产品块为 $p_s s_w\sqrt A\,\tau_s$。因为 $|A_a|=|A_b|=\ell I_2$，两份响应的绝对值均等于
+$$
+M\big|_{\mathrm{ent}}
+=\frac{\theta\ell}{2}V(I_2\otimes\sigma_{\mathcal M})V^\dagger,
+\qquad
+M\big|_{E_s}=p_s\sqrt A\,\tau_s.
+\tag{255.39}
+$$
+这给条件一。
+
+量子块的符号算子为 $A_w^{\mathsf T}/\ell$，其反对易子的一半为 $\kappa I$。产品块的 $J$ 值为 $s_as_b$：当 $A>B$ 时只有一；当 $A=B$ 时允许正负一。故条件二成立，而且 $Q$ 恰是原量子参考旗标。
+
+最后将（255.39）代入（255.10），$\rho_*$ 恰为原参考边缘，$\theta_*\! =\theta$。因此条件三成立。
+

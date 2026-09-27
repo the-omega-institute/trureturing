@@ -1,0 +1,52 @@
+#### 2.9.1 The common tree, probability law, and event presentation
+
+Fix a computable sequence of integers
+
+$$
+b_n\ge2\qquad(n\ge1),
+\qquad B_0=1,
+\qquad B_n=\prod_{i=1}^n b_i,
+\qquad w_n=B_n^{-1}.
+$$
+
+The ambient space and its probability law are
+
+$$
+X=\prod_{n\ge1}\{0,1,\ldots,b_n-1\},
+\qquad
+\mu=\bigotimes_{n\ge1}\operatorname{Unif}\{0,\ldots,b_n-1\}.
+$$
+
+A finite word $s=(s_1,\ldots,s_d)$ with $0\le s_i<b_i$ defines a depth-$d$ cylinder $[s]$, with
+
+$$
+\mu([s])=w_d.
+$$
+
+The root has depth zero and mass one. The term *spherically symmetric* means that every node at a given depth has the same number of children, regardless of its earlier digits. No arithmetic primality assumption is imposed on $b_n$.
+
+Fix a computably enumerable presentation $\mathcal P$ that contains at most one final forbidden cylinder at every positive depth. Repetition of the same announcement is allowed; competing cylinders at the same depth are not. The root is not permitted as a forbidden cylinder. Define
+
+$$
+U=\bigcup_{C\in\mathcal P}C,
+\qquad
+E=X\setminus U,
+\qquad
+M=\mu(E),
+\qquad
+R=\{s:E\cap[s]\ne\varnothing\}.
+$$
+
+All objects refer to this one final event inventory and this one product measure. A small-depth event may arrive arbitrarily late.
+
+Since $b_n\ge2$,
+
+$$
+w_{d+r}\le2^{-r}w_d,
+\qquad
+\sum_{r=1}^{N}w_{d+r}
+\le w_d(1-2^{-N})<w_d.
+$$
+
+Consequently $U\ne X$. Otherwise compactness would yield a finite subcover, whose distinct positive depths give total mass strictly below one. In particular, every permitted complement $E$ is nonempty, although its mass may be zero in the all-binary case.
+

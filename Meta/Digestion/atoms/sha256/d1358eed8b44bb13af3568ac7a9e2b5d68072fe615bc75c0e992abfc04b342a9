@@ -1,0 +1,4 @@
+### 证明
+
+定理 215.3 表明，同时置信事件发生时 $R^\pi_{\mathrm{worst}}\le\widehat R^+_\delta$，其数据概率至少为 $1-\delta$。若观测到的上界不超过 $\alpha$，则在该事件上也有 $R^\pi_{\mathrm{worst}}\le\alpha$。最后一句只是区分数据随机性与未来物理随机性。证毕。
+

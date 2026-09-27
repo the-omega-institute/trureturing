@@ -1,0 +1,26 @@
+**proposition 25.1: 有限联合边界的目标充分性；Claim status: open.** 设 $T:X\to Y$ 是要由该接口回答的目标。存在唯一的实际像映射
+
+$$
+D_N:\operatorname{im}(Q_N)\to\operatorname{im}(T),
+\qquad T=D_N\circ Q_N,
+\tag{25.3}
+$$
+
+当且仅当
+
+$$
+Q_N(x)=Q_N(y)\Longrightarrow T(x)=T(y).
+\tag{25.4}
+$$
+
+这就是“先取空间与有限时间边界，再恢复目标”的准确判据。它只要求目标在 $Q_N$ 的纤维上恒定；不要求 $Q_N$ 反演完整状态。`UniversalSufficiencyFactorization.universal_sufficiency_factorization` 提供相应的有限像因子化支点，`causal_state_factorization` 则说明在实际像上因子是唯一的。
+
+若要说空间摘要与完整时间摘要互相恢复，必须在实际像上同时有两个方向的因子化，等价地满足
+
+$$
+\ker(\pi_{\rm sp})=\ker(\operatorname{TP}_\infty).
+\tag{25.5}
+$$
+
+相同的值域大小、相同的当前读数，或存在一个单向编码，都不足以推出式（25.5）。若只需恢复某一项时间合法性 $L_y(x)$，要求可以弱化为 $L_y$ 在 $\pi_{\rm sp}$ 的纤维上恒定；但这是针对一个指定测试的充分性，不是对全部未来协议的充分性。
+

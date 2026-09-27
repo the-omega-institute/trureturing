@@ -1,0 +1,76 @@
+### 300.2 固定增益子模型的全策略必要界
+
+固定合法子模型 $h=h_0$，记一枚任务币为
+$$
+P_c=\mathrm{Bernoulli}\!\left(\frac{C-h_0c}{BC}\right).
+$$
+此时参考分布已知且不依赖 $c$。任意最多 $N$ 次总调用策略，均能由 $N$ 枚预取任务币和独立的已知分布参考随机流模拟：按原策略需要逐次消耗任务币或生成参考样本。未用任务币忽略即可。于是模拟输出是 $P_c^{\otimes N}$ 的一个不依赖 $c$ 的共同后处理。
+
+这一步给策略免费参考随机流只强化接收者，因此任务样本必要界仍约束原付费总预算；它没有把实际参考调用改为免费上界。
+
+直接计算
+$$
+\chi^2(P_c\Vert P_z)
+=\frac{h_0^2(c-z)^2}
+{(C-h_0z)\,[C(B-1)+h_0z]}.
+\tag{300.3}
+$$
+对 $z=kl,k^2,k$，有 $z\in[k^3,k]$，所以
+$$
+c_1\kappa\le1-z\le3\kappa
+$$
+可取固定 $c_1=e^{-3\kappa_0}>0$。因此
+$$
+C-h_0z=(C-h_0)+h_0(1-z)\asymp_{h_\star}w.
+$$
+第二因子位于 $[1,3C_\star+1]$。于是统一有
+$$
+D_{\rm KL}(P_1\Vert P_{kl})\le A\kappa^2/w,
+\tag{300.4}
+$$
+$$
+D_{\rm KL}(P_l\Vert P_{k^2})\le A g^2/w,\qquad
+D_{\rm KL}(P_1\Vert P_k)\le A\kappa^2/w.
+\tag{300.5}
+$$
+这里只需上界，不需声称三个 KL 都有双侧渐近式。
+
+令 $f(c)$ 为模拟策略输出零的概率。风险条件给
+$f(r)-f(kr)\ge1/3$ 对全部 $r\in[l,1]$ 成立。$1,k,l$ 都是合法参数；三式相加：
+$$
+1\le f(1)-f(kl)+f(l)-f(k^2).
+$$
+因而
+$$
+1-\mathrm{TV}(P_1^{\otimes N},P_{kl}^{\otimes N})
+\le\mathrm{TV}(P_l^{\otimes N},P_{k^2}^{\otimes N}).
+\tag{300.6}
+$$
+标准检验重叠界和 Pinsker 分别给
+$$
+1-\mathrm{TV}(P_1^{\otimes N},P_{kl}^{\otimes N})
+\ge\tfrac12 e^{-A N\kappa^2/w},
+$$
+$$
+\mathrm{TV}(P_l^{\otimes N},P_{k^2}^{\otimes N})
+\le A g\sqrt{N/w}.
+$$
+置 $t=N\kappa^2/w$，得到
+$$
+\frac g\kappa\ge a\,t^{-1/2}e^{-At}.
+\tag{300.7}
+$$
+
+还需正基线。合法简单对 $r=1$ 成功要求
+$\mathrm{TV}(P_1^{\otimes N},P_k^{\otimes N})\ge1/3$；
+由（300.5）及 Pinsker，
+$$
+1/3\le A\sqrt{N\kappa^2/w}=A\sqrt t.
+$$
+故 $t\ge a_0>0$。对（300.7）取负对数，利用 $\log t\le t$，并用正基线吸收固定常数，得到
+$$
+t\ge a\,[1+\log(\kappa/g)].
+\tag{300.8}
+$$
+这证明定理300.1的下界。
+

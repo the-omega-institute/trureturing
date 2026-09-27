@@ -1,0 +1,6 @@
+**定理263.3（每个非空纤维都有低秩成员）。** 若 $\mathcal F(Z)\ne\varnothing$，则存在 $F_0\in\mathcal F(Z)$，使
+$$
+\boxed{\operatorname{rank}T_Z(F_0)\le n.}
+\tag{263.28}
+$$
+

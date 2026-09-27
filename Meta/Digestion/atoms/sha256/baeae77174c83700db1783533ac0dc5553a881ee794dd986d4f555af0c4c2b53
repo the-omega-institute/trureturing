@@ -1,0 +1,66 @@
+### 285.3 每个相位都成立的零点击与扰动质量
+
+由（285.7）及共同相位对易性，对每个 $\phi$，
+$$
+\operatorname{Tr}[P_n(\Omega_{n,\phi}\otimes\Omega_{n,\phi})]=0.
+\tag{285.8}
+$$
+这里不需要先平均相位。$P_n$ 消去整个实际图像支撑，包括其中由 $Q\otimes Q$ 给出的全部权重。
+
+更具体地，$P_n$ 恰是共同Haar平均理想两份态的完整核投影。三个总相位扇区分别保留 $V\otimes V$ 的分量 $I_{n^2}$、$C_n$ 和 $M^\dagger\otimes M^\dagger$；相位积分消去不同扇区之间的交叉项。因为 $Q\otimes Q\succ0$，且首末分量可逆、中间分量单射，每个扇区块的秩都是 $n^2$。平均态总秩为 $3n^2$，其 $n^2$ 维核正是（285.6）的投影范围。
+
+考虑扰动后的两份乘积：
+$$
+\begin{aligned}
+\Omega_{n,\delta,\phi}^{\otimes2}
+&=(1-\delta)^2\Omega_{n,\phi}^{\otimes2}\\
+&\quad+\delta(1-\delta)
+(\Omega_{n,\phi}\otimes\tau_n+\tau_n\otimes\Omega_{n,\phi})
++\delta^2\tau_n^{\otimes2}.
+\end{aligned}
+\tag{285.9}
+$$
+在中间扇区中，第一交叉项的压缩准确为
+$$
+\Pi_{\rm mid}(\Omega_{n,\phi}\otimes\tau_n)\Pi_{\rm mid}
+=\frac1{2n^2}
+\begin{pmatrix}
+Q\otimes I_n&0\\0&(I_n-Q)\otimes I_n
+\end{pmatrix}.
+\tag{285.10}
+$$
+原因是第一输入的非对角块改变总相位扇区，压缩后消失；保留的两个对角块分别为 $Q$ 与 $M^\dagger QM=I_n-Q$。第二交叉项同理给
+$$
+\Pi_{\rm mid}(\tau_n\otimes\Omega_{n,\phi})\Pi_{\rm mid}
+=\frac1{2n^2}
+\begin{pmatrix}
+I_n\otimes(I_n-Q)&0\\0&I_n\otimes Q
+\end{pmatrix}.
+\tag{285.11}
+$$
+两式均与相位无关，并均至少为 $q_-I_{\rm mid}/(2n^2)$。因为 $\operatorname{Tr}P_n=n^2$，
+$$
+\operatorname{Tr}[P_n(\Omega_{n,\phi}\otimes\tau_n)]\ge q_-/2,
+\qquad
+\operatorname{Tr}[P_n(\tau_n\otimes\Omega_{n,\phi})]\ge q_-/2.
+\tag{285.12}
+$$
+同时，
+$$
+\operatorname{Tr}(P_n\tau_n^{\otimes2})=\frac14.
+\tag{285.13}
+$$
+因此实际扰动点击概率满足
+$$
+\begin{aligned}
+p_\delta
+&:=\operatorname{Tr}(P_n\Omega_{n,\delta,\phi}^{\otimes2})\\
+&\ge q_-\delta(1-\delta)+\delta^2/4
+\ge\frac{21}{92}\delta.
+\end{aligned}
+\tag{285.14}
+$$
+最后一步使用 $\delta\le1/4$。该界同时独立于参考维数和实际相位；Haar平均保持它。
+
+共同相位的总荷扇区分解是标准参考系工具，其一般机制见§282所引 Bartlett、Rudolph、Spekkens，[quant-ph/0610030](https://arxiv.org/abs/quant-ph/0610030)，式（2.7）—（2.9）。这里使用它确定当前规范图来源的中间支撑 $\operatorname{ran}C_n$；（285.10）—（285.14）另行计算了该支撑正交补上维数一致的实际扰动质量。
+

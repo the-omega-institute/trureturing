@@ -1,0 +1,24 @@
+**定义 203.1（临界二次型及其对偶长度）。** 固定定义202.1的允许临界点，沿用 $A_0,\beta_*,x_*,q_*,\gamma,b,R_0$，并记
+$$
+\begin{gathered}
+\nu=-\frac{2x_*(b)}{q_*'(b)}>0,\qquad
+ d=\frac{2aA_0-1-b}{\beta_*^3},\qquad
+ k=\frac{1+t}{\beta_*}>0,\\
+ D_0=(1-t^2)q_*(t)>0,\qquad
+ c_0=\frac{2}{(1-t)(1+t)^2}>0,\\
+ E_0=1+\frac{td}{k}
+ =\frac{1-tb}{(1+t)\beta_*^2}>0,\\
+ \mathcal J=\nu^2\left(
+ \frac{\gamma^2E_0^2}{c_0}+\frac{d^2D_0}{k^2}\right)>0.
+\end{gathered}
+\tag{203.1}
+$$
+$E_0$ 的第二个表达式使用 $A_0(1+t)=2at$；其正性由 $|t|,|b|<1$ 保证。另设
+$$
+\xi(u)=\left.\frac{\partial}{\partial A}
+\frac{2a-A(1+u)}{\sqrt{1-A^2}}\right|_{A=A_0}
+=\frac{2aA_0-1-u}{\beta_*^3},
+\qquad \xi(b)=d.
+\tag{203.2}
+$$
+

@@ -1,0 +1,80 @@
+**定理 301.1（最优生成元的固定方向与旋转轴）。** 固定正半径六态模型，沿用第298节正角点规范下唯一的端点矩阵 $M_*=S_*-\Omega_*$、$b=(1/a_1,1/a_2,1/a_3)$ 与唯一对偶矩阵 $Z_*=\lambda vv^{\mathsf T}$。选择 $\|v\|_2=1$、$v_i>0$，并定义 $\omega\in\mathbb R^3$ 使 $\Omega_*x=\omega\times x$。则
+
+$$
+M_*b=b,
+\qquad v\cdot\omega=0.
+\tag{301.1}
+$$
+
+不等半径时，第299节所必需的非零一阶旋转，其轴因而总在 $v^\perp$ 内。在第296节采用的主轴 Lindblad 表示中，$v$ 是耗散系数为零的方向。两个结论都包括对偶列支撑中出现零列的情形。
+
+证明。记 $A=\|b\|_2^2$，将归一化最优矩阵正数缩放为第298节最大化问题的达到点
+
+$$
+Q=\frac{D_a}{A}M_*,
+\qquad G=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T}.
+\tag{301.2}
+$$
+
+互补松弛与列支撑给出
+
+$$
+(Q+Q^{\mathsf T})v=\operatorname{Tr}(Q)v,
+\qquad
+Qe_i=\frac{\alpha_i}{\|Ge_i\|_2}Ge_i
+\quad\text{当 }Ge_i\ne0.
+\tag{301.3}
+$$
+
+因为 $G$ 对称，逐列展开乘积可得
+
+$$
+QG
+=\sum_{i:Ge_i\ne0}
+\frac{\alpha_i}{\|Ge_i\|_2}(Ge_i)(Ge_i)^{\mathsf T}.
+\tag{301.4}
+$$
+
+零列对应的项是 $(Qe_i)(Ge_i)^{\mathsf T}=0$，不要求 $Qe_i=0$。因此 $QG$ 对称，亦即 $QG=GQ^{\mathsf T}$。这一步统一保留了全部零乘子情形。
+
+令 $B=b\cdot v>0$、$\ell=\operatorname{Tr}(Q)$、$w=Qv$。式（301.3）给出 $Q^{\mathsf T}v=\ell v-w$ 与 $v\cdot w=\ell/2$，而 $Gv=Bb-\lambda v$。把 $QG=GQ^{\mathsf T}$ 作用到 $v$，两侧分别为
+
+$$
+QGv=BQb-\lambda w,
+$$
+
+以及
+
+$$
+\begin{aligned}
+GQ^{\mathsf T}v
+&=\ell(Bb-\lambda v)-Gw\\
+&=\ell Bb-b(b\cdot w)-\lambda w,
+\end{aligned}
+$$
+
+其中最后一步使用 $2v\cdot w=\ell$ 抵消 $v$ 方向的项。于是
+
+$$
+BQb=(\ell B-b\cdot w)b.
+\tag{301.5}
+$$
+
+由于 $B>0$，$Qb$ 与 $b$ 平行；再由 $b^{\mathsf T}Qb=D_a$ 得
+
+$$
+Qb=\frac{D_a}{A}b.
+$$
+
+正数缩放后即为 $M_*b=b$。
+
+为证明旋转约束，令 $K=Q-Q^{\mathsf T}$、$P=I-vv^{\mathsf T}$。展开同一个对称乘积等式，得到
+
+$$
+0=QG-GQ^{\mathsf T}
+=Qb\,b^{\mathsf T}-b(Qb)^{\mathsf T}+\lambda PKP.
+\tag{301.6}
+$$
+
+这里使用 $Qv=(\ell v+Kv)/2$ 与 $v^{\mathsf T}K=-(Kv)^{\mathsf T}$。已证的 $Qb\parallel b$ 使前两项抵消，因此 $PKP=0$。在以 $v$ 为第三轴的任意正向正交标架内，这意味着 $K$ 在前两轴平面上的反对称块为零；等价地，$\Omega_Q=(Q^{\mathsf T}-Q)/2$ 的旋转轴向量满足 $v\cdot\omega_Q=0$。再正数缩放回 $M_*$，得到式（301.1）。证毕。
+

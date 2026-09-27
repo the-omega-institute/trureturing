@@ -1,0 +1,83 @@
+**定理 79.12（同目标带符号阈值界）。** 在定义79.11下，进一步取 $P\ge5$、$T=P-2$。沿用第78.12节的修正权：二元节点收 $\beta(d)=2d-\mathbf1_{d\ge T}$；非单点一元节点收 $\mathbf1_{d\ge T,\ l+d<P}$；单点继续收零。记三个首读纤维的总权为 $Q^\sharp$，单个全块、至多 $h-1$ 次进一步读取的最小权为 $G^\sharp(P,T,h-1;0,P)$。
+
+对 $m_q\ge2$ 的实际目标置
+
+$$
+B_q=\#\{i:d_i\ge T\},\qquad
+\lambda_q=2\gamma_q+n_q-2m_q-B_q,\qquad
+\Lambda=\sum_{m_q\ge2}\lambda_q.
+\tag{79.7}
+$$
+
+$\Lambda$ 是带符号数，不取正部。令 $z$ 数满足 $m_q=0,L_q=1,\Delta_q=-1$ 的目标。则
+
+$$
+\begin{aligned}
+Q^\sharp&\le2(E+N)+\Lambda+z,\\
+E&\ge\left\lceil\frac{3G^\sharp(P,P-2,h-1;0,P)-\Lambda-z}{2}\right\rceil-N,\\
+\Lambda&\le(2P-7)s,\qquad 0\le z\le\min(e+s,J).
+\end{aligned}
+\tag{79.8}
+$$
+
+证明。被一元权计数的历史必须满足 $u-l\ge2$、$d\ge P-2$、$u+d\le P$，所以恰有 $d=P-2,[l,u)=[0,2)$。同一实际源槽不能容纳两条这样的历史，因为支持会相交；该槽也不能是生产槽，因为其二元切口在低位二，跨切口的整数区间必与 $[0,2)$ 相交。因此这些历史注入不同的非生产实际源槽。若 $a_q^\sharp$ 数进入目标 $q$ 的这类历史，（79.2）给
+
+$$
+a_q^\sharp\le k_q+c_q,\qquad
+ a_q^\sharp-\Delta_q\le n_q-2m_q.
+\tag{79.9}
+$$
+
+这里数的是实际源槽；即使一条实际边有多个历史原像，也没有引入 $\Xi$ 的额外额度。
+
+固定目标，略下标。若 $m=0$，则 $\Delta\ge-1$：$k=0,1$ 时由 $j\ge0$ 得到；$k\ge2$ 时由（79.2）得 $\Delta\ge k+c-3\ge-1$。若 $a^\sharp>0$，原长入口使 $L\ge T\ge3$，故 $a^\sharp\le3+\Delta\le2(L-1)+\Delta$。若 $a^\sharp=0$，同一上界除 $L=1,\Delta=-1$ 外都非负；此唯一例外加一即可。
+
+若 $m=1$，则 $\Delta\ge0$：$k=0$ 时直接成立，$k\ge1$ 时 $\Delta\ge k+c-1\ge0$。又 $a^\sharp-\Delta\le1$。长二元代表给 $\beta(d)+a^\sharp\le2d+\Delta\le2L+\Delta$。短二元且 $a^\sharp=0$ 时直接用 $d\le L$；短二元且 $a^\sharp>0$ 时 $L\ge T\ge d+1$，仍有 $2d+a^\sharp\le2L+\Delta$。这三种情形给目标额度 $2(L-1)+2+\Delta$。
+
+若 $m\ge2$，令 $D=\max_i d_i$，用同一原尾 $L\ge D$ 及（79.9）得到
+
+$$
+\begin{aligned}
+&\sum_i\beta(d_i)+a^\sharp-igl(2(L-1)+2m+\Delta\bigr)\\
+&\qquad=2\gamma-B+a^\sharp-\Delta+2(D-L)\\
+&\qquad\le2\gamma+n-2m-B=\lambda.
+\end{aligned}
+\tag{79.10}
+$$
+
+负的 $\lambda$ 也满足这个不等式，不能把它解释成另一笔可加的状态资源。对全部原目标各求和一次，$\sum m_q=N$、$\sum\Delta_q=J-\#\{\text{纯解析槽}\}=0$，即得第一式。三个实际低位投影均属于 $G^\sharp$ 的树域，即使存在共同前缀，各首读纤维的当前低位仍是完整 $[0,P)$。所以 $Q^\sharp\ge3G^\sharp$；利用 $E$ 为整数得到第二式。
+
+为证明粗界，在每个共享目标去掉一个最大代表。若最大代表达到 $T$，其余每项 $2(d_i-1)-\mathbf1_{d_i\ge T}$ 至多 $2P-5$，再用 $n\le3$ 得 $\lambda\le(2P-7)(m-1)$。若最大代表小于 $T$，各代表至多 $P-3$，得到 $\lambda\le(2P-10)(m-1)+1\le(2P-7)(m-1)$。求和即得 $\Lambda$ 的界。$z$ 至多为无二元到达目标数 $e+s$；每个例外的 $\Delta=-1$ 要求至少一个纯解析前驱，不同目标的前驱不同，故还满足 $z\le J$。证毕。
+
+把每个目标的 $n_q$ 放宽为三，会得到修正数
+
+$$
+\eta_q=\sum_i\beta(d_i)-2\max_i d_i+5-4m_q
+       =\lambda_q+3-n_q.
+\tag{79.11}
+$$
+
+因此采用实际使用数字的 $\Lambda$ 保留了这个放宽丢失的余量；本节只使用（79.8），不另列重复下界。与旧权的 $J+\Xi$ 项不同，$\sum\Delta_q=0$ 是原表实际源槽与目标的有符号抵消。
+
+$P=9,h=5$ 时，第78.12节的有限递推给 $G^\sharp=35$，其深度三前段、后段值分别为
+
+$$
+(0,2,4,16,19,31,46,61),\qquad
+(0,2,4,6,11,25,42,59).
+\tag{79.12}
+$$
+
+根代表一至八的全部候选为 $(61,48,35,35,35,47,61,76)$；代表九留下三次读数，不能区别九个标签，故不可行。于是（79.8）准确整数化为
+
+$$
+\begin{aligned}
+E&\ge29-\left\lceil\frac{\Lambda+z}{2}\right\rceil,\\
+\Lambda+z\le4e+2\ell&\ \Longrightarrow\ E+2e+\ell\ge29,\\
+E&\ge29-\left\lceil\frac{11s+z}{2}\right\rceil,\\
+C&\ge105+\left\lfloor\frac{3e}{2}\right\rfloor+\ell-6s.
+\end{aligned}
+\tag{79.13}
+$$
+
+最后一式只用了 $z\le e+s$；可直接使用 $z\le\min(e+s,J)$ 保留更多信息。这些是同一个 $E$ 的下界，只能与其他有效下界取最大，不能整体相加。此定理未把占用记录判为可实现控制器。
+

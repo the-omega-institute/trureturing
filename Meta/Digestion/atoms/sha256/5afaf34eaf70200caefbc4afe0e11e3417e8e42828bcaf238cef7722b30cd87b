@@ -1,0 +1,23 @@
+**证明。** 单位环面的紧性给出一个收敛子列 $g^{n_k}$，可以进一步令 $n_{k+1}-n_k\to\infty$。于是
+
+$$
+g^{n_{k+1}-n_k}\longrightarrow1.
+$$
+
+因此 $g^{-1}$ 是非负整数幂的极限。非负整数幂闭包对乘法封闭，既包含 $g$ 也包含 $g^{-1}$，故与整个循环群的闭包相同；后者是紧群。这也涵盖有限周期情形。
+
+对固定 $N$，尾部幂的闭包为 $g^NG=G$，得到（155.5）。逐次从第 $k$ 个尾部选择趋近给定 $z$ 的点，即可令 $n_k\to\infty$ 且 $g^{n_k}\to z$。
+
+在外围空间上，半单性给
+
+$$
+\mathcal F^n\Pi\mathcal E_\omega
+=\sum_j\lambda_j^n\Phi_j.
+\tag{155.7}
+$$
+
+而 $\mathcal A$ 在 $\ker\Pi$ 上的谱半径严格小于一，故
+$\mathcal F^n(I_{\mathscr V}-\Pi)\mathcal E_\omega\to0$。将这两部分相加即得（155.6）。每个实际 $\mathcal R_{n_k}$ 均为 CPTP，有限维 Choi 正性及固定偏迹在极限下保留，故 $\mathcal R_z$ 为 CPTP。证毕。
+
+这份正性来自整个共同相位点的实际实现，不能按（155.4）的每一项单独解释。
+

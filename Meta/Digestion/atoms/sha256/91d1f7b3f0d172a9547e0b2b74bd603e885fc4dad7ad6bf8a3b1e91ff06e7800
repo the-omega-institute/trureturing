@@ -1,0 +1,86 @@
+**定理 70.2（共同后继余量控制全部合法自适应策略）。** 在定义 70.1 下，任意上述控制策略与任意初态 $\rho$ 都满足
+
+$$
+\boxed{
+\mathbb E_{\rho,\pi}\mathsf N
+\le\frac{\operatorname{Tr}(\rho B_{\emptyset})}{c},\qquad
+\mathbb E_{\rho,\pi}[(\mathsf N-m)_+]
+\le\frac{\operatorname{Tr}(\rho B_{\emptyset})}{c}
+\left(1-\frac cb\right)^m.
+}
+$$
+
+因此该策略最终点击的概率为一，且上界同时覆盖所有合法策略，不要求从头固定同一个控制。这里的共同证书条件不能只由每个固定控制各自的有限成本预算替代；下面附上已有反例在本节接口中的计算。
+
+证明。固定 $(h,a)$，在完整输出的继续标签 $z$ 上置效果 $B_{h(a,z)}/b$，点击块置零。正交经典记录使其为一个合法效果，校准距离遂给
+
+$$
+B_h-\sum_z\mathcal N_{h,a,z}^{*}\bigl(B_{h(a,z)}\bigr)\ge cI. \tag{70.1}
+$$
+
+若控制随机化，对控制概率加权后该不等式仍成立。对一个固定策略，记经过 $n$ 次调用仍活动的历史 $h$ 的未归一化态为 $\sigma_h$。定义
+
+$$
+s_n=\sum_{|h|=n}\operatorname{Tr}\sigma_h
+=\mathbb P(\mathsf N>n),\qquad
+V_n=\sum_{|h|=n}\operatorname{Tr}(\sigma_h B_h).
+$$
+
+由式 (70.1)，
+
+$$
+V_n-V_{n+1}\ge cs_n,\qquad
+cs_n\le V_n\le bs_n.
+$$
+
+第二式左侧使用 $B_h\ge cI$，由式 (70.1) 的继续项正性得到。于是
+
+$$
+V_{n+1}\le V_n-cs_n\le(1-c/b)V_n,
+\qquad V_0=\operatorname{Tr}(\rho B_{\emptyset}).
+$$
+
+对任意有限 $k>m$，望远镜相加给
+
+$$
+c\sum_{n=m}^{k-1}s_n\le V_m-V_k\le V_m.
+$$
+
+先令 $k\to\infty$，再使用 $V_m\le(1-c/b)^mV_0$，得到两条尾和界。均值有限排除正概率的无限活动轨迹。所有不等式在策略选择之前已经对全部合法 $(h,a)$ 成立，所以量词可以覆盖任意同权限策略。$\square$
+
+附引：证明中的正性、线性期望与漂移求和沿用第 68.1 条引用的运行时间上界方法。本条把同一误差余量作用于实际记录分支上的后继算子，并保留“对全部合法控制同时成立”的量词；单个控制的终止证明不能履行该量词。
+
+附引与反例计算：Shenggang Ying、Mingsheng Ying，[*Reachability Analysis of Quantum Markov Decision Processes*，arXiv:1406.6146v2](https://arxiv.org/abs/1406.6146v2)，定义 2.2 将调度器建立在实际操作与测量记录上；例 2.3 已给出两个分别流向吸收态、交替后却可避开吸收的通道。以下构造将其三维空间中的吸收态改记为终端点击标签、交换两个控制的命名，并以二维空间保留停止前活动状态；对应的是停止前转移和吸收概率，不把不同的点击后量子输出声明为相同通道。该反例属于已有构造在定理 70.2 量词核对中的应用，不另立新增命题。
+
+在 $\mathbb C^2$ 上取：
+
+$$
+Q_a=|1\rangle\langle0|,\quad L_a=|0\rangle\langle1|,
+\qquad
+Q_b=|0\rangle\langle1|,\quad L_b=|1\rangle\langle0|.
+$$
+
+每个控制都满足仪器完备关系。若始终使用 $a$ 或始终使用 $b$，任何初态至多两轮点击，两者全状态最大平均等待均为二；但从 $|0\rangle$ 出发，依次使用 $a,b,a,b,\ldots$ 时，永不点击的概率为一。
+
+证明。直接计算 $Q_a^\dagger Q_a+L_a^\dagger L_a=I$，$b$ 同理。又 $Q_a^2=Q_b^2=0$，所以两轮未点击概率为零。两固定仪器的成本势分别为
+
+$$
+T_a=I+|0\rangle\langle0|,\qquad
+T_b=I+|1\rangle\langle1|,
+$$
+
+均具有最大本征值二。而 $Q_a|0\rangle=|1\rangle$、$Q_b|1\rangle=|0\rangle$，每次对应点击振幅均为零。归纳得到全部轮次都未点击。$\square$
+
+对这两个控制，不存在 $B\ge0$ 与 $c>0$ 同时满足
+
+$$
+B-Q_a^\dagger BQ_a\ge cI,\qquad
+B-Q_b^\dagger BQ_b\ge cI.
+$$
+
+也不存在覆盖全部控制历史、具有统一有限上界与正余量的定义 70.1 型证书族，即使两仪器的校准误差为零。
+
+证明。记 $b_j=\langle j|B|j\rangle$。第一条不等式在 $|0\rangle$ 上给 $b_0-b_1\ge c$，第二条在 $|1\rangle$ 上给 $b_1-b_0\ge c$，相加矛盾。若有更一般的历史证书族，定理 70.2 会给交替策略有限均值，与上述交替轨迹矛盾。$\square$
+
+该例中的每次操作都合法，问题不在单次完备性，而在新的控制把后继送回另一控制的活动方向。固定控制预算分别成立，不能作为同一个自适应过程的共同预算。
+

@@ -1,0 +1,14 @@
+**定义 398.1（近似恢复成功率的上确界）。** 对相关矩阵 $C$ 及 $0\le\delta\le2$，在定义 395.1 的有限协议范围内定义
+
+$$
+\eta_\delta(C)
+ =\sup\left(\{0\}\ \cup
+ \left\{t\in(0,1]:
+ \begin{array}{l}
+ \text{存在协议满足 }\mathcal T_{\mathrm s}^{*}(I_S)=tI_S,\\
+ \|\mathcal T_{\mathrm s}-t\operatorname{id}_S\|_\diamond\le t\delta
+ \end{array}\right\}\right).
+$$
+
+加入 $0$ 使没有任何正成功协议时上确界仍为零，不表示对零成功映射作条件归一化。此处只定义上确界，不主张近似最优协议取得该值。$\delta=0$ 时由定理 390.2 有 $\eta_0(C)=\eta(C)$；精确情形的取得性不被默默推广到正误差情形。
+

@@ -1,0 +1,19 @@
+**定义 230.1（可迁移 provenance 边界）。** 对策略族 $\Pi$，定义
+
+$$
+\boxed{
+\eta_{\mathrm{tr}}
+=
+\left(
+\mathcal A_\Pi,
+\{\kappa_a,g_a,\bar g_a\}_{a\in\mathcal A_\Pi},
+\{\kappa_{a,y},p_{*,a,y,h}\}_{a,y,h},
+\text{历史动作许可},
+\text{模型适用域与风险阈值}
+\right).
+}
+\tag{230.1}
+$$
+
+$\mathcal A_\Pi$ 是策略族的真实动作支持；动作—结果概率下界和失配半径按历史记录，而不是按一个未标注平均值保存。
+

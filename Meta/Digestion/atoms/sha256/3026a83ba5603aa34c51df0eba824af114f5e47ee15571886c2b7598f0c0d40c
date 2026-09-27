@@ -1,0 +1,44 @@
+### 269.4 Vandermonde反演的损失与全态上界
+
+令
+$$
+V=\begin{bmatrix}x_0&\cdots&x_{n-1}\end{bmatrix}.
+\tag{269.21}
+$$
+节点 $z_\ell$ 两两不同，故 $V$ 可逆。其逆矩阵的第 $\ell$ 行是Lagrange多项式
+$$
+p_\ell(z)=
+\prod_{k\ne\ell}\frac{z-z_k}{z_\ell-z_k}
+\tag{269.22}
+$$
+按幂次排列的系数行，因为该行乘 $V$ 正好给出
+$p_\ell(z_k)=\delta_{\ell k}$。
+
+对 $\ell\ne k$，$0<|\ell-k|\theta<\pi$，所以
+$$
+|z_\ell-z_k|
+=\frac{2\sin(|\ell-k|\theta/2)}{t}
+\ge\frac{2|\ell-k|\theta}{\pi t}.
+\tag{269.23}
+$$
+分子多项式的系数绝对值之和不超过
+$\prod_{k\ne\ell}(1+|z_k|)\le2^{n-1}$。分母绝对值至少为
+$[2\theta/(\pi t)]^{n-1}\prod_{k\ne\ell}|\ell-k|$，
+最后的整数乘积至少为一。因此每个逆矩阵元素的绝对值都不超过
+$(\pi t)^{n-1}\theta^{1-n}$，从而
+$$
+\|V^{-1}\|\le n(\pi t)^{n-1}\theta^{1-n}.
+\tag{269.24}
+$$
+$n=1$ 时这些式子按空积为一解释；$V=[1]$，无需不同节点。
+
+由 $\|DV\|\le\sqrt n\max_\ell\|Dx_\ell\|$，得
+$$
+\boxed{
+\|D\|\le
+n^{3/2}(\pi t)^{n-1}A
+\theta^{1-n}(\theta^n+\sqrt\varepsilon).
+}
+\tag{269.25}
+$$
+

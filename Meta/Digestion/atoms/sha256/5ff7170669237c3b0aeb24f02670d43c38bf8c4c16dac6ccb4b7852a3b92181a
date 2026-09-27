@@ -1,0 +1,60 @@
+#### 4.6.5 分数覆盖的直接对偶是支持次概率 packing
+
+全部部分赋值只有有限多个。记最小分数柱覆盖价格为
+
+$$
+\mathsf C(S)=
+\min_{w_a\ge0}
+\left\{\sum_a c_aw_a:
+\sum_{a:v\in C_a}w_a\ge1\ \forall v\in S\right\}.
+\tag{TM.226}
+$$
+
+非负权重自动使 $S$ 外的覆盖不等式成立，因此它等价于式(TM.217)。空柱给有限可行价格1；$S=\varnothing$ 时零权重给价格零。
+
+有限线性规划对偶给出
+
+$$
+\mathsf C(S)=
+\max_{\nu_v\ge0\ (v\in S)}
+\left\{\sum_{v\in S}\nu_v:
+\sum_{v\in S\cap C_a}\nu_v\le c_a\ \forall a\right\}.
+\tag{TM.227}
+$$
+
+这是支持在 $S$ 上的非负质量 packing。空柱约束只要求总质量至多1，而非恰为1。两边有限、可行且有界，有限 LP 强对偶适用。
+
+对 $\mu\in\mathcal G$，其限制 $\nu_v=\mu_v\mathbf1_S(v)$ 是式(TM.227)的可行点，所以
+
+$$
+\max_{\mu\in\mathcal A}\mu(S)
+\le\max_{\mu\in\mathcal G}\mu(S)
+\le\mathsf C(S).
+\tag{TM.228}
+$$
+
+若直接对式(TM.222)中的归一化概率 LP 写对偶，则归一化等式具有一个自由乘子 $\lambda$。删去冗余空柱约束后，该对偶为
+
+$$
+\begin{aligned}
+\max_{\mu\in\mathcal G}\mu(S)
+=\min_{\lambda\in\mathbb R,\ w_a\ge0\ (a\ne\varnothing)}
+&\left[\lambda+\sum_{a\ne\varnothing}c_aw_a\right],\\
+\text{约束}\quad
+&\lambda+\sum_{\substack{a\ne\varnothing\\v\in C_a}}w_a
+\ge\mathbf1_S(v)\quad\forall v\in\Omega.
+\end{aligned}
+\tag{TM.229}
+$$
+
+式(TM.226)允许的是非负空柱权重，式(TM.229)的 $\lambda$ 却可取负值。不能仅凭二者都使用柱集，就略过这个对偶区别；这里不假设任意支持次概率 packing 都可在保容量下扩充成概率律。
+
+对A卷命题4.5的相等事件，式(TM.224)本身具有总质量1并支持在 $S$ 上，因而是式(TM.227)的价格1见证。空柱又给上界1，所以
+
+$$
+\mathsf C(\{00,11\})=1>\frac34.
+\tag{TM.230}
+$$
+
+因此穷尽该静态松弛的所有分数柱覆盖，仍不能证明真实的 $3/4$ 上界。
+

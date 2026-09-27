@@ -1,0 +1,10 @@
+**定义 20.1（一般仪器的事件边界坐标）。** 令
+
+$$
+\mathcal V=\operatorname{span}_{\mathbb R}\{I,\mathcal A^nB_x:n\ge0,x\},
+\qquad
+b_\rho(H)=\operatorname{Tr}(\rho H)\quad(H\in\mathcal V).
+$$
+
+来源类为全部密度矩阵。$b_\rho$ 是 $\mathcal V$ 上的实线性泛函，其可实现集合为全部状态限制到 $\mathcal V$ 的像。
+

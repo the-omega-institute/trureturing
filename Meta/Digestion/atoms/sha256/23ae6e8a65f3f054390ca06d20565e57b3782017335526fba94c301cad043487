@@ -1,0 +1,67 @@
+### 273.1 可变参数下的实际多链来源
+
+固定有限非空指标集 $\mathcal B$ 与正整数 $n_b$，令
+$$
+E=\bigoplus_{b\in\mathcal B}\mathbb C^{n_b},
+\qquad
+N=\sum_b n_b,
+\qquad m=\max_b n_b,
+\qquad r=\#\{b:n_b\ge2\}.
+\tag{273.1}
+$$
+其中 $r$ 只计非平凡链。取各块标准上移Jordan矩阵 $J_{n_b}$，并对同一个参数 $t$ 定义
+$$
+J=\bigoplus_bJ_{n_b},
+\qquad M(t)=I_E+tJ,
+\qquad 0\le t\le\frac14.
+\tag{273.2}
+$$
+令 $M_b(t)=I+tJ_{n_b}$。§272的Neumann构造在整个区间给出唯一Hermitian解
+$$
+Q_b(t)+M_b(t)^\dagger Q_b(t)M_b(t)=I_{n_b},
+$$
+$$
+\frac7{23}I_{n_b}\preceq Q_b(t)\preceq\frac{16}{23}I_{n_b}.
+\tag{273.3}
+$$
+因此 $Q(t)=\bigoplus_bQ_b(t)$ 严格正，并满足
+$$
+Q(t)+M(t)^\dagger Q(t)M(t)=I_E.
+\tag{273.4}
+$$
+
+在固定qubit输入 $Y$ 本征基下，定义
+$$
+T(t)=
+\begin{pmatrix}
+Q(t)&Q(t)M(t)\\
+M(t)^\dagger Q(t)&I_E-Q(t)
+\end{pmatrix}
+=\begin{bmatrix}I_E\\M(t)^\dagger\end{bmatrix}
+Q(t)\begin{bmatrix}I_E&M(t)\end{bmatrix},
+$$
+$$
+\Omega(t)=\frac1NT(t).
+\tag{273.5}
+$$
+每个 $T(t)$ 正半定、迹为 $N$、秩为 $N$，所以这是实际联合密度态的连续参数族。沿用完整数据映射
+$$
+\mathcal D(\Xi)=\bigl(\operatorname{Tr}_H\Xi,\mathscr K(\Xi)\bigr),
+\qquad \mathscr K(\Xi)=2\Xi_{+-},
+\tag{273.6}
+$$
+则
+$$
+\rho(t)=\frac1NI_E,
+\qquad K(t)=\frac2NQ(t)M(t).
+\tag{273.7}
+$$
+对每个固定真值 $\Omega(t)$，其完整误差是
+$$
+\varepsilon_t(\Xi)
+=\|\operatorname{Tr}_H\Xi-I_E/N\|_1
++\|\mathscr K(\Xi)-K(t)\|_1.
+\tag{273.8}
+$$
+竞争者仍为同一 $H\otimes E$ 上的任意密度态，包括具有跨参考块相干的态。态距离和完整数据误差均使用未除以二的迹范数；无下标的范数仍为算子范数。
+

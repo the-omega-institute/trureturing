@@ -1,0 +1,45 @@
+### 247.3 全部分量共享两个迹范数见证
+
+对实向量 $w$，定义参考上的 Hermitian 算子
+$$
+R_w(\Omega)=\operatorname{Tr}_H[(w\cdot\sigma\otimes I_E)\Omega].
+\tag{247.13}
+$$
+偏迹对被迹掉的输入因子具有循环性，故该算子确为 Hermitian。四标签正交及共同纯输出给
+$$
+g(\Omega)=\frac14\left(
+\|R_a(\Omega)\|_1+\|R_b(\Omega)\|_1
+\right).
+\tag{247.14}
+$$
+式（247.10）第一步的取等，配合两个分别非负的迹范数凸性缺口，强制对 $w=a,b$ 各自成立
+$$
+\|R_w(\Omega)\|_1
+=\sum_j\lambda_j
+\|R_w(|\psi_j\rangle\langle\psi_j|)\|_1.
+\tag{247.15}
+$$
+
+分别为 $R_a(\Omega)$、$R_b(\Omega)$ 选择 Hermitian 收缩 $H_a,H_b$，满足
+$$
+\|H_w\|\le1,
+\qquad
+\operatorname{Tr}(H_wR_w(\Omega))=\|R_w(\Omega)\|_1.
+\tag{247.16}
+$$
+例如取相应算子的谱符号，并在核上取零。对每个 Hermitian 算子 $X$ 都有 $\operatorname{Tr}(H_wX)\le\|X\|_1$。将（247.15）代入（247.16），得到各正权重分量的非负缺口之和为零，因此逐项成立
+$$
+\operatorname{Tr}\left[H_wR_w(|\psi_j\rangle\langle\psi_j|)\right]
+=\|R_w(|\psi_j\rangle\langle\psi_j|)\|_1,
+\quad w=a,b.
+\tag{247.17}
+$$
+所以同一对 $H_a,H_b$ 同时见证全部纯分量的范数取等。
+
+下面使用一个直接的取等事实。若 $H$ 为 Hermitian 收缩、$X$ 为 Hermitian，且 $\operatorname{Tr}(HX)=\|X\|_1$，则对 $X$ 的每个非零本征值 $\lambda$ 及对应单位本征向量 $x$，
+$$
+Hx=\operatorname{sgn}(\lambda)x.
+\tag{247.18}
+$$
+因为在 $X$ 的本征基中，每项 $|\lambda|-\lambda\langle x,Hx\rangle$ 非负，取等强制期望达到 $+1$ 或 $-1$；$I-H$ 或 $I+H$ 的正性继而强制相应向量属于其核。这还排除了 $H$ 作用后离开该本征子空间的分量。
+

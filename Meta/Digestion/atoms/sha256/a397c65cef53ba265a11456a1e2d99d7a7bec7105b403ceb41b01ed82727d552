@@ -1,0 +1,21 @@
+#### Nicolas 2024：全部整数上的 totient 阈值
+
+\(p_j\) 为第 \(j\) 个素数，\(P_k=\prod_{j\le k}p_j\)，\(k=120568\)。定义
+
+\[
+A=P_k\frac{p_{k+1}p_{k+2}}{p_kp_{k-10}},\qquad
+\delta=e^{\gamma_E}(4+\gamma_E-\log(4\pi)),
+\]
+
+\[
+C_\varphi(n)=\left(\frac n{\varphi(n)}-e^{\gamma_E}\log\log n\right)\sqrt{\log n},\quad n\ge2.
+\]
+
+| ID | 与 RH 等价的陈述 |
+| --- | --- |
+| A088 | 对所有整数 \(n>A\)，\(C_\varphi(n)<\delta\)。 |
+| A089 | \(\limsup_{n\to\infty}C_\varphi(n)=\delta\)。 |
+| A090 | 存在实数 \(B\) 与整数 \(N\ge2\)，使全部 \(n\ge N\) 满足 \(C_\varphi(n)\le B\)。 |
+
+[E11, Theorem 1.1、Eqs. (1.5)–(1.12)] 给出 RH 下的阈值及 limsup，非 RH 下 limsup 为正无穷。原文 \(C_\varphi(A)>\delta\)，所以输入必须是 \(n>A\)。这些全部整数的精细误差不能由原 primorial 判据 A047 直接替换。
+

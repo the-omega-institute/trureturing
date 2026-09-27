@@ -1,0 +1,33 @@
+**定理 75.3（平移后的典型输出信息谱）。** 定义
+
+$$
+D_M^{\rm shift}(x,y)=\sup_{z\in\mathbb Q}
+ \left|P_x\left(\frac{J_x(R,y)-c_M(x)}Q\le z\,\middle|\,y\right)
+             -\Phi_v(z)\right|.
+\tag{75.21}
+$$
+
+在 (75.2) 下，$\int D_M^{\rm shift}(x,y)f_x(y)dy\to0$，
+收敛为原数据概率收敛并一致于确定支持；因而也成立于典型先验预测输出。
+
+证明。令 $Z_x=(-\log_2P_x(R)-h_x)/Q$。有限 Bayes 恒等式给
+
+$$
+\frac{J_x(R,Y)-c_M(x)}Q
+ =Z_x-\frac{i_x(R,Y)-L_M}{Q\ln2}.
+\tag{75.22}
+$$
+
+对每个固定 $b>0$，在给定输出的同一实现上夹逼阈值，然后积分，得
+
+$$
+\int D_M^{\rm shift}(x,y)f_x(y)dy
+ \le\overline D_M^A(x)+\omega_v(b)+b_{M,b\ln2}(x).
+\tag{75.23}
+$$
+
+第 73 章第一条条件 CDF 定理适用于整个 $L_M=o(Q^3)$ 范围，
+故首项趋零；定理 75.2 给末项趋零。
+先取规模极限再令 $b\downarrow0$ 即得结论。
+这里使用原惊奇量给定输出的分布结论，不能只用其边缘 CLT。证毕。
+

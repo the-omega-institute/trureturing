@@ -1,0 +1,4 @@
+**定义 274.1（可凭读数实行的规则）。** 设状态域为 $X$、行动域为 $J$，两种读数为 $q:X\to Q$ 与 $r:X\to R$，且存在 $d:R\to Q$ 使 $q=d\circ r$。项目 [PolicyCapabilityMonotonicity](../../../D5/S3/ConceptDynamics/PolicyCapabilityMonotonicity.lean) 将 `policyCapability q J` 定义为所有形如 $\pi\circ q$ 的状态到行动函数。其 `policy_capability_monotone` 说明：每个旧规则都能通过先恢复 $q$ 再作原决定，在细读数 $r$ 下实行。
+
+这里的 capability 是确定规则能否通过指定信息实行，不是已经取得身体、资源与制度条件。它不检查规则选择的行动在每个状态是否合法，也没有自动计算推理时间或成本。要与第 270 节的实际机会相接，必须补上这些约束。
+

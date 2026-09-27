@@ -1,0 +1,59 @@
+**定理 484.8（索引字段的每项费用、平均及 Boltzmann 质量）。** 在假设 484.7 下，各值准确为：
+
+| 索引 $i$ | 低位在先的 $\zeta(i)$ | $L(i)$ | $L(L(i)+1)$ | $f(i)$ | $d_i$ |
+| --- | --- | --- | --- | --- | --- |
+| 索引 $1$ | $1$ | $1$ | $2$ | $4$ | $9$ |
+| 索引 $2$ | $01$ | $2$ | $3$ | $6$ | $13$ |
+| 索引 $3$ | $001$ | $3$ | $3$ | $7$ | $15$ |
+| 索引 $4$ | $101$ | $3$ | $3$ | $7$ | $15$ |
+| 索引 $5$ | $0001$ | $4$ | $4$ | $9$ | $19$ |
+| 索引 $6$ | $1001$ | $4$ | $4$ | $9$ | $19$ |
+| 索引 $7$ | $0101$ | $4$ | $4$ | $9$ | $19$ |
+
+对每条原词，索引 $i$ 的条件分布均匀于七个位置，故
+$$
+\mathbb E_\nu[d_i\mid\gamma]=\frac{109}{7},\qquad
+\mathbb E_\nu[\widehat J-J(\gamma)\mid\gamma]
+=\frac{109}{7}
++\frac1{105}\sum_{\substack{J\subseteq B,\ |J|=3\\i\in J}}
+R(\gamma,J,i)
+\ge\frac{109}{7}.
+\tag{484.10}
+$$
+对任意 $\beta>0$，令
+$$
+H_\beta=
+\frac{e^{-9\beta}+e^{-13\beta}+2e^{-15\beta}+3e^{-19\beta}}7,
+\qquad 0<H_\beta<1.
+\tag{484.11}
+$$
+每词的原及扩张 Boltzmann 质量满足
+$$
+\begin{aligned}
+\widehat{\mathcal Z}_\gamma
+&=\sum_{\substack{J\subseteq B,\ |J|=3\\i\in J}}
+\frac{w(\gamma)}{105}
+e^{-\beta\widehat J(\gamma,J,i)}\\
+&\le w(\gamma)e^{-\beta J(\gamma)}H_\beta
+<w(\gamma)e^{-\beta J(\gamma)}.
+\end{aligned}
+\tag{484.12}
+$$
+若该词的全部 $R(\gamma,J,i)=0$，第一个不等式是等式，准确乘因子为 $H_\beta$，平均新增费准确为 $109/7$。
+
+对任意非空原词子集 $A\subseteq\Gamma_{5040}$，沿同一词观察汇聚，定义
+$$
+\mathcal Z_A=\sum_{\gamma\in A}w(\gamma)e^{-\beta J(\gamma)},
+\qquad
+\widehat{\mathcal Z}_A=\sum_{\gamma\in A}\widehat{\mathcal Z}_\gamma,
+\qquad
+F_A=-\beta^{-1}\log\mathcal Z_A,\quad
+\widehat F_A=-\beta^{-1}\log\widehat{\mathcal Z}_A.
+$$
+则
+$$
+\widehat F_A-F_A\ge-\beta^{-1}\log H_\beta>0.
+\tag{484.13}
+$$
+全部相关 $R=0$ 时此非严格界取等。原概率的词质量始终保持 $w(\gamma)$，所以上述严格损失来自已计的实际正费用。第 484.6 条对概率的置换不变性一般不适用于这里带索引费用的 Boltzmann 质量。
+

@@ -1,0 +1,30 @@
+### 63.3 为什么标准族覆盖全部低秩量子比特边缘
+
+采用已发表的量子比特通道标准形。Ruskai、Szarek、Werner 的《An Analysis of Completely-Positive Trace-Preserving Maps on $M_2$》，[arXiv:quant-ph/0101003v2](https://arxiv.org/abs/quant-ph/0101003v2)，定理 12（PDF 第 18 页）证明以下条件等价：量子比特通道的 Choi 秩至多二；存在至多两个 Kraus 算符；经输入、输出酉基变换后可化成其式（17）。该文第 1.4 节式（18）（PDF 第 10 页）给出一个对角和一个反对角的 Kraus 表示。本文只使用这些标准形事实，不把它们作为新分类结论。
+
+在通常的 $K\rho K^*$ 约定下，必要时将该文 $A^*\rho A$ 约定中的 Kraus 算符取伴随，可以写成
+
+$$
+K_0=\begin{pmatrix}a&0\\0&d\end{pmatrix},
+\qquad
+K_1=\begin{pmatrix}0&c\\b&0\end{pmatrix},
+\qquad a^2+b^2=c^2+d^2=1,
+\tag{63.19}
+$$
+
+其中四个系数可取非负。具体而言，对角、反对角表示先给四个可能带相位的系数；把它们写入纯化向量的 $000,011,101,110$ 四个位置后，整体相位和 $A,B,D$ 三个局部对角相位可以分别消去四个相位。例如四个相位依次为 $\phi_a,\phi_b,\phi_c,\phi_d$ 时，取整体相位 $-\phi_a$，以及三个局部相位
+
+$$
+\theta_A=\frac{\phi_a+\phi_b-\phi_c-\phi_d}{2},\qquad
+\theta_B=\frac{\phi_a-\phi_b+\phi_c-\phi_d}{2},\qquad
+\theta_D=\frac{\phi_a-\phi_b-\phi_c+\phi_d}{2}.
+$$
+
+这些相位消去全部四项的相位；零系数的相位可以任意指定，不添条件。故无需假设通道本来是实的。
+
+这些 Kraus 算符给出 $M$ 的一个至多二维纯化，其向量正是式（63.7）的 $r$。若 $a<c$，同时交换 $A$ 和 $D$ 的两个基向量，会把 $(a,b,c,d)$ 变为 $(c,d,a,b)$。这样总能达到式（63.6）的次序 $a\ge c,d\ge b$。秩一边界可以给第二个 Kraus 算符补零，仍包含于同一结论；例如 $a=d=1,b=c=0$ 时 $\Delta=3$，不应把它排除为小缺陷区间之外的例外。
+
+输入、早输出和晚输出上的局部酉变换都保持因果集合及完整 tester 集合，因而保持 $e_D$ 与 $\Delta$。例如把 $X$ 共轭为 $(U_A\otimes U_B\otimes U_D)X(U_A\otimes U_B\otimes U_D)^*$ 时，对 tester 作相同共轭即可保持配对及两项偏迹归一化；Choi 输入基变换所出现的共轭酉仍属于同一个允许的局部酉集合。
+
+因此每个秩至多二的量子比特早边缘，都存在一个末输出为量子比特的纯扩张，其修复误差由引理 63.3 准确等于 $\Delta(M)$。同一 $M$ 的任意其他纯化，仅在纯化支撑上相差等距；这也保持最优误差。
+

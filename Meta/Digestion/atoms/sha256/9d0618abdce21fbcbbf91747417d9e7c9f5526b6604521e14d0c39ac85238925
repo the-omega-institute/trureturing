@@ -1,0 +1,28 @@
+#### 3.1.2 有限实例、统一证明生成与一致性反思是不同断言
+
+对具有标准可检验证明编码、足够算术表达能力且一致的 $T$，每个具体有限长度界可以逐一排除有限个矛盾证明候选，从而得到
+$$
+\forall n\in\mathbb N,\qquad T\vdash\operatorname{Con}_T(\bar n).
+$$
+Pudlák 的定理在规定的理论类中进一步改善其证明大小和生成方法。这个元层陈述与理论内断言
+$$
+T\vdash\forall x\,\operatorname{Con}_T(x)
+$$
+不同。普通一阶证明系统不含把无穷多已得实例一次提升为全称命题的无限 $\omega$-规则。
+
+尤其不能把 Theorem 4.8 的“统一证明生成器可验证”删弱成“根本不可能存在统一生成器”。作者明确给出统一且可证明句法正确的生成。真正仍然缺失的是把“$D_n$ 是证明”转成所证句子的统一真值反思：
+$$
+\operatorname{Prf}_T(D_n,\ulcorner\operatorname{Con}_T(\bar n)\urcorner)
+\quad\not\Longrightarrow\quad
+\operatorname{Con}_T(\bar n)
+$$
+作为一个未经额外前提的理论内规则。关于标准自然数的外部逐项判断也不自动给出理论内部的全称证明。
+
+这里缺的是对变量 $n$ 的统一反思。对每个固定的标准数 $n$，已有对应 $\operatorname{Con}_T(\bar n)$ 证明，故不能将这句读成每个固定实例的蕴含在 $T$ 中也不可证。
+
+当 $T$ 还满足第二不完备定理的标准条件，且所用 $\operatorname{Con}_T$ 确实来自该标准可证谓词时，有
+$$
+T\nvdash\forall x\,\operatorname{Con}_T(x).
+$$
+这与有限实例的有效证明、乃至对生成器句法正确性的内部证明相容。2020 年第 23 页 Proposition 4.9 正是通过加入 $\operatorname{Con}_T$ 后可取得的反思，说明某种更强的统一证明序列认证会违反第二不完备定理；它没有否认 Theorem 4.8 的生成器。
+

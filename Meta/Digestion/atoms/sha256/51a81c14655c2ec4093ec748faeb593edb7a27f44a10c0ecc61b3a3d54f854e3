@@ -1,0 +1,44 @@
+## 定理 386.1（实际可见频率）
+
+$$
+f_F(t)=\sum_{\omega\in\Omega}c_\omega e^{i\omega t},\qquad
+c_\omega=\sum_{E_a-E_b=\hbar\omega}
+\operatorname{Tr}(\rho_0P_aFP_b).
+$$
+
+因此 $f_F$ 恒定，当且仅当所有 $\omega\ne0$ 的 $c_\omega$ 均为零；给定 $T>0$，
+
+$$
+f_F(t+T)=f_F(t)\ \forall t
+\Longleftrightarrow
+(e^{i\omega T}-1)c_\omega=0
+\quad\text{对每个 }\omega\in\Omega.
+$$
+
+### 证明
+
+谱分解直接给出有限指数和。不同实频率的指数函数线性独立，可由 Vandermonde 导数矩阵验证；将 $f_F(t+T)-f_F(t)$ 展开后再使用线性独立性即得周期判据。零频率项是 DC 项，不影响恒定性或周期性判据。∎
+
+### 离散时钟嵌入
+
+给定校准时刻
+
+$$
+0=t_0<t_1<\cdots<t_N,
+$$
+
+定义
+
+$$
+U_n=\exp\!\left[-\frac{iH(t_{n+1}-t_n)}{\hbar}\right],\qquad
+V_n=\exp\!\left[-\frac{iHt_n}{\hbar}\right].
+$$
+
+于是 $V_0=I$ 且 $V_{n+1}=U_nV_n$。以 $\rho(0)=\rho_0$ 为初态时，历史态的条件切片为 $\rho_n=V_n\rho_0V_n^\dagger$，并满足
+
+$$
+\operatorname{Tr}(\rho_nF)=f_F(t_n).
+$$
+
+若时间原点任取 $t_0$，则以 $\rho(t_0)$ 为初态并使用 $V_n=\exp[-iH(t_n-t_0)/\hbar]$；相应条件响应仍是同一 $f_F(t_n)$ 的取样。
+

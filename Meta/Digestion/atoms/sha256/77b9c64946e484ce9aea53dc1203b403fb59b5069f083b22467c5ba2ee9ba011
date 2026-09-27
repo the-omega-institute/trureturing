@@ -1,0 +1,41 @@
+**精确结论。**
+$$
+\boxed{d_2=\kappa.}
+\tag{225.CT.18}
+$$
+证明下界。若竞争者的结果1分支秩至多一，则（225.CT.10）、（225.CT.14）应用于缩放分支 $\kappa\Gamma$，由（225.CT.4）得到距离至少为 $\kappa$。这一步覆盖任意 $3\times2$ Kraus $C_1$，不要求 $C_1\in\operatorname{span}\{M,N\}$，也不限制它和结果0分支之间如何共同满足 TP。
+
+若竞争者的结果1分支秩为二，则（225.CT.17）迫使它的结果0分支为零。在输入 $P_{f_1}$ 下，目标的结果0概率为
+$$
+\langle f_1,K_0^\dagger K_0f_1\rangle=1-\kappa>\kappa,
+$$
+竞争者为零，故完整半 diamond 距离至少为 $1-\kappa>\kappa$。两类穷尽总 Choi 秩至多二的候选，得到 $d_2\ge\kappa$。
+
+证明上界。删除结果1的 $\sqrt\kappa M$，保留 $K_0,\sqrt\kappa N$，取
+$$
+H=(I_2-\kappa M^\dagger M)^{-1/2}
+=\operatorname{diag}((1-\kappa)^{-1/2},1).
+$$
+定义
+$$
+\mathcal S(X)=
+|0\rangle\langle0|\otimes K_0HXHK_0^\dagger
++
+|1\rangle\langle1|\otimes\kappa NHXHN^\dagger.
+\tag{225.CT.19}
+$$
+每个结果分支恰有一个非零 Kraus，而
+$$
+H(K_0^\dagger K_0+\kappa N^\dagger N)H
+=H(I_2-\kappa M^\dagger M)H=I_2,
+$$
+所以这是合法结果秩 $(1,1)$ 的 CPTP 记录通道。
+
+使用第 219 节已证明的全缺失范数右 Gram 修复定理：若从 CPTP 通道删除完全正项 $L$，且 $\delta=\|L^*(I)\|_\infty<1$，则对保留项共同右乘 $(I-L^*(I))^{-1/2}$ 得到的 CPTP 修复通道满足完整半 diamond 误差不超过 $\delta$。这里
+$$
+L(X)=|1\rangle\langle1|\otimes\kappa MXM^\dagger,
+\qquad
+\delta=\kappa,
+$$
+故（225.CT.19）的完整半 diamond 误差至多为 $\kappa$。结合下界即得（225.CT.18），且下确界由显式候选取得。定理 224.5 的全部旋转规范修复结论进一步表明，每个旋转删除加共同右修复候选都同样达到这一全局最优值。证毕。
+

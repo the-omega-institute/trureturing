@@ -1,0 +1,29 @@
+**定义 54.1（完整反馈 tester）。** 反馈归一化算符及其事件集合为
+
+$$
+\mathcal C=
+\{C\succeq0:\operatorname{Tr}_A C=I_B\},
+\qquad C\in\mathcal C,\quad 0\preceq E\preceq C.
+\tag{54.3}
+$$
+
+统一采用配对 $\operatorname{Tr}(RE)$。具体地，若反馈通道 $\Lambda:B\to A$ 的标准 Choi 算符为 $J_\Lambda$，则先交换其张量因子，再取**全转置**，得到式（54.3）的 $C$。全转置保持正性及对应的偏迹条件；该约定吸收量子梳 Born 规则中的全转置，不使用部分转置保持正性的错误推断。
+
+$E$ 与 $C-E$ 正是某个二结果量子 instrument 的两个 Choi 元素。它可以通过辅助态、量子记忆、与 $B$ 的相互作用、输出 $A$ 和最后的测量实现；反过来，每个式（54.3）的正分解都可这样实现。因此，量词已经包含任意有限辅助参考和量子记忆。这个对应是 [Chiribella–D’Ariano–Perinotti，arXiv:0904.4483v2](https://arxiv.org/abs/0904.4483v2) 定义 11、引理 8 与定理 11–12（PDF 第 17–18 页）的本接口特例。
+
+对非因果候选，$\operatorname{Tr}(RC)$ 不必为一，故 $\operatorname{Tr}(RE)$ 称为事件**响应**，不预先称为概率。定义
+
+$$
+\begin{aligned}
+\Delta(R)
+&=\max_{C\in\mathcal C}
+\left|\operatorname{Tr}(RC)-1\right|,\\
+D(R,S_\sigma)
+&=\max_{\substack{C\in\mathcal C\\0\preceq E\preceq C}}
+\left|\operatorname{Tr}\bigl((R-S_\sigma)E\bigr)\right|.
+\end{aligned}
+\tag{54.4}
+$$
+
+式（54.3）给 $\operatorname{Tr}C=\dim B$，故归一化算符与事件的联合可行集紧，以上最大值均能达到。每个因果替代表都满足 $\operatorname{Tr}(S_\sigma C)=1$。
+

@@ -1,0 +1,44 @@
+### 218.2 秩二 Choi 支撑给出下界
+
+先取 $\Delta(p)>0$。实际最优 Choi 秩模式是 $(1,2)$。在中心，两枚主本征值都等于一，小本征值为零。由联合连续性，可统一缩小参数箱，使 $J_0$ 的唯一正本征值及 $J_1$ 的大本征值均大于 $3/4$，且
+$$
+0<\lambda_2^\sharp<1/4.
+\tag{218.6}
+$$
+于是完整记录 Choi 矩阵 $\mathsf J^\sharp=J_0^\sharp\oplus J_1^\sharp$ 的三枚正本征值中，最小者确为 $\lambda_2^\sharp$。
+
+任取 $\mathcal S\in\mathfrak C_2$。归一化 Choi 态为
+$$
+\rho_{\mathsf J}=\mathsf J^\sharp/2,\qquad
+\sigma_{\mathsf J}=\mathsf J(\mathcal S)/2.
+$$
+令 $P$ 为 $\sigma_{\mathsf J}$ 的支撑投影，则 $\operatorname{rank}P\le2$。迹距离的效果测试下界给
+$$
+\frac12\|\rho_{\mathsf J}-\sigma_{\mathsf J}\|_1
+\ge
+\operatorname{Tr}\bigl[(I-P)(\rho_{\mathsf J}-\sigma_{\mathsf J})\bigr]
+=
+\operatorname{Tr}[(I-P)\rho_{\mathsf J}].
+\tag{218.7}
+$$
+秩至多二的投影从 $\mathsf J^\sharp$ 中取得的迹不超过其最大两枚本征值之和。具体地，在本征基中，$p_i=\langle e_i,Pe_i\rangle$ 满足
+$0\le p_i\le1$、$\sum_i p_i\le2$，故按非增本征值加权时，最大值由前两项取一得到。因此
+$$
+\operatorname{Tr}[(I-P)\mathsf J^\sharp]\ge\lambda_2^\sharp.
+\tag{218.8}
+$$
+
+输入维数为二，归一化最大纠缠输入的两份输出恰为
+$\rho_{\mathsf J},\sigma_{\mathsf J}$，至多相差固定因子排列。它是 diamond 优化中的一个合法测试，故
+$$
+\begin{aligned}
+\frac12\|\mathcal R_+^\sharp-\mathcal S\|_\diamond
+&\ge \frac12\|\rho_{\mathsf J}-\sigma_{\mathsf J}\|_1\\
+&\ge\frac{\lambda_2^\sharp}{2}.
+\end{aligned}
+\tag{218.9}
+$$
+对 $\mathcal S$ 取最小值即得下界。式中的 $1/2$ 来自输入维数对应的 Choi 归一化；半 diamond 与半迹距离的因子没有再额外丢失。
+
+此下界事实上对同输出空间上全部 Choi 秩至多二的 CPTP 通道都成立，不依赖候选是否保留经典标签。本文的最优化集合仍为（218.4）指定的记录通道集合。
+

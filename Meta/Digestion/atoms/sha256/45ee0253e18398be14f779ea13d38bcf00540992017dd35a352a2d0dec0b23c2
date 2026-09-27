@@ -1,0 +1,25 @@
+## 28. 本轮交付、核验范围与未闭合部分
+
+当前定理将旧的全域成立阈值 `400000` 降到 `325`。它真正排除了所有 `325<=i<400000` 的无限多 `n,j`，并保留更大指标的证明。全题剩余指标现在可以限制为 `3<=i<=324`。
+
+其中 `i=3` 的无界商 `k>=33` 仍未在本轮获得统一上界或排除；`c=3` 的已有 `k>=83` 边界不变。`4<=i<=120` 的有限异常仍含 §18 的非有效截止；`121<=i<=324` 的 204 个指标已有显式截止但尚未全排除。没有把有限集说成空集，没有把无界 `k` 的工作改报为成功，也没有扩大旧的 `k<=31` 周期搜索。
+
+本轮实际执行
+
+```text
+python tools/scripts/agent/openproblem/erdos699-hermite-bound-check.py \
+  --nmax 70 --symbolic --gap-controls --prime-gap
+
+g++ -x c++ -O3 -std=c++17 -Wall -Wextra -Werror \
+  tools/scripts/agent/openproblem/erdos699-prime-gap-sieve.txt -o /tmp/erdos699-gap
+/tmp/erdos699-gap 2147483648
+```
+
+准确范围：12529 个真实三元组检验 (69) 的保留 `j(n-j)` 的整数形式；Hermite 次数 2–12 的导数、微分方程及判别式恒等式由符号运算检查；2675 项 (74) 和所有有理常数通过；两套全区间素数筛匹配；30 项试除法小区间对照通过。前三类是代数自审；引理 26.1 和有限比较 (74) 是定理 27.1 明确使用的有限计算部分。两者角色不能混淆。
+
+最终执行的 Python 文件 SHA-256 为 `ac6081f14f6df3cdb09f0fa8006a018ad5ff9a6a5562efd9790a48d9b9990204`，Git blob 为 `612a1fee319ad06c20ac25c5ed950d04c638782a`；C++ 文本源码 SHA-256 为 `b63230ac007dbf285b951d887e1379525f81a3ab07e2dcd04fbd57784a517388`，Git blob 为 `afb61838c4b48a682f8ce7d44808558cf3e8c009`。新完整检查报告 SHA-256 为 `d80b445a9c0ffa57e93e7f53f731d9c5cb7284b5cd72fa59de1a92fc1d4cd0df`。
+
+原 #9723 已合并，因此本轮从最新已读取 dev 建立续接 PR，仍追加本文件并回写 #9670，不改写已合并 PR 的历史。没有 Lean/Scribe 真值声明、整题解决计数、CI 或治理规则变更。独立书面评审和形式化核验仍待进行；当前结论是带明确计算引理的区域定理，不是 Erdős 699 的完整解答。
+
+[12] NIST Digital Library of Mathematical Functions, §18.9，经典正交多项式的递推与导数公式，https://dlmf.nist.gov/18.9 。仅作 Hermite 背景参考；(67) 的极值、归一化与判别式在 §25.1 内给出自包含证明。解析外部前提仍只有 [8]。
+

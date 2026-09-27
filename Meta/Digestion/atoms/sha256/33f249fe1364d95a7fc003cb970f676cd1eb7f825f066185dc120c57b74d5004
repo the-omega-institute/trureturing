@@ -1,0 +1,34 @@
+#### 8.8.1 一般多模数的自洽局部风险
+
+保持真实来源 $p\in\Delta_X$、全部带标签的部分及完整读数 $F(p)$ 和已知总质量一。现在额外要求观测本身是某个合法概率来源的精确响应：
+$$
+\widehat y=F(\widetilde p),\qquad \widetilde p\in\Delta_X,\qquad
+\|\widehat y-F(p)\|_\infty\le\varepsilon.
+$$
+这是对同一个完整观测施加共同来源约束，比仅要求存在真实来源及逐格合法噪声更强。空读数自动为一；各部分读数也必须属于同一个 $\widetilde p$，不是分别存在来源。
+
+取完整读数子向量 $\widehat y^{\rm full}$，使用完整逆矩阵输出
+$$
+\mathcal A(\widehat y)=B\widehat y^{\rm full}=\widetilde p.
+$$
+该输出自动非负且总质量一。由于 $\widetilde p-p$ 零和，ER8.CM.2 给出
+$$
+\|\mathcal A(\widehat y)-p\|_\infty
+\le C_0(M)\|F(\widetilde p)-F(p)\|_\infty
+\le C_0(M)\varepsilon.
+$$
+这同时适用于含模数二的分支，无需假定对任意外部实向量存在不扩张的归一化映射。合法观测域外可任意输出固定概率律，使估计器处处有定义。
+
+下界沿用 ER8.CM.7 中同一个 $b,p^+,p^-$。在 $0\le\varepsilon\le t/(P-h)$ 内，它们都是概率来源，共同观测 $F(b)$ 本身满足这里的自洽合同，且两侧所有完整、部分及空读数的噪声仍由同一个 $F(v)$ 控制。两来源相距 $2C_0(M)\varepsilon$，因此任何概率输出估计器至少在一侧产生误差 $C_0(M)\varepsilon$。结合自动概率输出的上界，对非空模数族得到
+$$
+\boxed{
+\mathcal R_{\Delta_X}^{\rm consistent}(\varepsilon)
+=C_0(M)\varepsilon,\qquad
+0\le\varepsilon\le\frac{t}{P-h}.
+}
+\tag{ER8.CM.9}
+$$
+这里的风险与 ER8.CM.8 使用相同的最坏坐标误差，只把输出域改为 $\Delta_X$ 并将输入限制为上述自洽观测。空模数族的概率来源唯一，风险恒为零。
+
+单模数时，ER8.CM.9 给出 $0\le\varepsilon\le1/2$ 上的自洽观测概率输出风险 $\varepsilon$。ER8.SO.1 中 $m>2$ 时的严格放大属于任意逐格有界噪声合同，其共同下界观测不属于这里的自洽输入类。ER8.CM.9 不延伸至该更大的噪声类，也不确定超出给定充分半径后的全尺度风险。
+

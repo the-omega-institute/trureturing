@@ -1,0 +1,10 @@
+### 232.9 标准工具与来源
+
+平衡纯态框架对应标准 square-root measurement。S. M. Barnett 与 S. Croke，*Quantum state discrimination*，[arXiv:0810.1970v1](https://arxiv.org/abs/0810.1970v1)，§3.1.b 的式（22）给
+$$
+E_j=p_j\bar\rho^{-1/2}\rho_j\bar\rho^{-1/2};
+$$
+同节式（23）—（27）讨论由有限阶酉生成的等先验对称纯态，[PDF 第8—9页](https://arxiv.org/pdf/0810.1970v1#page=8)。对（232.UC.22）的 $M$ 态集合，$p_j=1/M$、$\bar\rho=I_2/2$，该标准构造就是 $E_j=(2/M)P_j^{(M)}$。本稿已用等比求和直接证明所需恒等式（232.UC.23），不把文献中的态区分最优性当作本节通道容量最优性的证明。
+
+仓内 `UniversalReplacementCapacityGrowth.lean` 的精确 no-hiding 容量结果，以及第231节的归一化 Choi 秩与事件振幅核机制，是相邻已有结果；前者处理精确普遍重置，不直接给出本节全部预算的近似曲线。本稿定向检索未在 D5 量子声明及钉版 Mathlib 对应目录定位到（232.UC.6）的完整接口。公共 CP 部分、平坦谱秩下界及框架构造的组合已在正文逐项证明；本稿不据此宣称文献原创性。
+

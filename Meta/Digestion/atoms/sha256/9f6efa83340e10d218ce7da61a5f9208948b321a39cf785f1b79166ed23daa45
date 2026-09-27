@@ -1,0 +1,26 @@
+### 273.2 负性的直和加权恒等式
+
+对输入作部分转置，记为 $\Gamma_H$。采用未加倍负性
+$$
+\operatorname{Neg}(\Xi)
+=\frac{\|\Xi^{\Gamma_H}\|_1-1}{2}
+=\operatorname{Tr}(\Xi^{\Gamma_H})_-.
+\tag{273.9}
+$$
+对每个块，令
+$$
+T_b(t)=
+\begin{bmatrix}I_{n_b}\\M_b(t)^\dagger\end{bmatrix}
+Q_b(t)\begin{bmatrix}I_{n_b}&M_b(t)\end{bmatrix},
+\qquad
+\Omega_b(t)=\frac1{n_b}T_b(t).
+\tag{273.10}
+$$
+每个 $\Omega_b(t)$ 均为归一化的真实块来源。在自然分解
+$H\otimes E\cong\bigoplus_b(H\otimes\mathbb C^{n_b})$ 中，（273.5）精确成为
+$$
+\Omega(t)=\bigoplus_b\frac{n_b}{N}\Omega_b(t).
+\tag{273.11}
+$$
+权重来自整个矩阵的迹归一化，和为一。
+

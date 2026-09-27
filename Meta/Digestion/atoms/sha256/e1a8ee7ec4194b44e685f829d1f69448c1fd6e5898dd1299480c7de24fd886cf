@@ -1,0 +1,26 @@
+**命题 42.2（所有效应来自同一完整仪器）。** 上述仪器合法，且完整带记录通道随 $\varepsilon\in[0,1]$ 连续。它满足
+
+$$
+\boxed{
+R_\varepsilon=\varepsilon P_u+P_v,
+\qquad
+H_{m,\varepsilon}=\varepsilon[1-(1-\varepsilon)^m]P_u+P_v,
+\qquad
+R_{m,\varepsilon}=\varepsilon(1-\varepsilon)^mP_u\quad(m\ge1).
+}
+$$
+
+证明。四个效果在 $u$ 方向之和为
+
+$$
+(1-\varepsilon)+\varepsilon(1-\varepsilon)+\varepsilon^2=1,
+$$
+
+在 $d,v$ 方向分别为一，所以完整性成立。Kraus 算子是同一有限维空间上的连续矩阵族，故对应通道连续。总点击效果是 $B_\varepsilon=\varepsilon^2P_u+P_v$，并且对对角效果有
+
+$$
+\mathcal A_\varepsilon(aP_u+bP_v)=(1-\varepsilon)aP_u.
+$$
+
+于是第一轮的 $v$ 点击效果为 $P_v$，$u$ 的第 $n$ 轮首次点击效果为 $\varepsilon^2(1-\varepsilon)^{n-1}P_u$。有限几何和与其极限给出方框式；$\varepsilon=0$ 时 $u$ 点击始终为零，单独代入得到同一效果公式。$\square$
+

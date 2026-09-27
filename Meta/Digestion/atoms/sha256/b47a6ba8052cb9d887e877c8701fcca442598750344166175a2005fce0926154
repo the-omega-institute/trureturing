@@ -1,0 +1,12 @@
+### 51.4 准备缺陷与同时锐容量
+
+先约定准备的一个二值缺陷：令 $h=0$ 当且仅当存在
+
+$$
+c_A:p_A(P)\to\mathcal C_A,\qquad c_B:p_B(P)\to\mathcal C_B,
+\qquad [x]_{E_A}=c_A(p_Ax),\quad [x]_{E_B}=c_B(p_Bx)\quad(x\in P);
+\tag{51.9}
+$$
+
+否则令 $h=1$。这仅是在实际初始投影像上的因子化；A 端失败恰指存在 $x,y\in P$，满足 $p_Ax=p_Ay$ 而 $x\not E_Ay$，B 端对称。
+

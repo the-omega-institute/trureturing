@@ -1,0 +1,17 @@
+### 271.2 跨链竞争态下的来源唯一性
+
+对每条链定义核向量
+$$
+q_{b,j}=(-Me_{b,j},e_{b,j})
+=(-e_{b,j}-te_{b,j-1},e_{b,j}).
+\tag{271.8}
+$$
+它们的下半部分构成 $E$ 的标准基，因此全部线性独立，且
+$$
+\mathcal N:=\ker T_*
+=\ker G
+=\operatorname{span}\{q_{b,j}:b\in\mathcal B,\ 1\le j\le r_b\}.
+\tag{271.9}
+$$
+$T_*$ 在 $\mathcal N^\perp$ 上严格正。
+

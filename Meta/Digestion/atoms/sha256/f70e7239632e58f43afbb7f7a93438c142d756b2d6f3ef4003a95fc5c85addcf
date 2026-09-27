@@ -1,0 +1,18 @@
+**定义 233.1（连续校准成本模型）。** 对有限活动动作集 $\mathcal A_+$，令 $n_a>0$ 是动作 $a$ 的校准资源，$c_a>0$ 是单份资源成本，$\sigma_a>0$ 是该动作的误差尺度。设策略证书中动作 $a$ 的合并权重为 $w_a>0$，其中可以包含占用、后续增益和覆盖系数。采用理想化半径
+
+$$
+\kappa_a(n_a)=\frac{\sigma_a}{\sqrt{n_a}}.
+$$
+
+给定总预算 $B>0$，考虑
+
+$$
+\min_{n_a>0}
+\sum_{a\in\mathcal A_+}
+\frac{w_a\sigma_a}{\sqrt{n_a}}
+\quad\text{subject to}\quad
+\sum_{a\in\mathcal A_+}c_an_a=B.
+$$
+
+这里的 $n_a$ 是连续松弛；整数样本、置信预算和模型偏差必须在实际证书中另行声明。
+

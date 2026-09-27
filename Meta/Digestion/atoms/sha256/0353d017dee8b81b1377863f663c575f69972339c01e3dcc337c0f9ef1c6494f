@@ -1,0 +1,36 @@
+### 157.6 从最大极限值到全时域上确界
+
+现在完成定理157.1。引理157.3、157.7已经给出每个 $e_n$ 和 $h_G$ 的代数性。第155节则给出
+
+$$
+\limsup_{n\to\infty}e_n=h_G.
+\tag{157.18}
+$$
+
+由于 $0\le e_n\le1$，$E_\infty$ 有限，且 $E_\infty\ge h_G$。
+
+若 $E_\infty=h_G$，由引理157.7即得 $E_\infty\in\mathbb A$。
+
+若 $E_\infty>h_G$，置
+
+$$
+\epsilon=\frac{E_\infty-h_G}{2}>0.
+$$
+
+由（157.18），存在有限整数 $N\ge2$，使
+
+$$
+e_n\le h_G+\epsilon<E_\infty
+\qquad(n\ge N).
+\tag{157.19}
+$$
+
+因此整个尾部的上确界严格低于 $E_\infty$，从而
+
+$$
+E_\infty=\max_{1\le n<N}e_n.
+\tag{157.20}
+$$
+
+有限最大值由某个终端 $n_0<N$ 取得，所以 $E_\infty=e_{n_0}\in\mathbb A$。这同时证明（157.6）和（157.7）。证毕。
+

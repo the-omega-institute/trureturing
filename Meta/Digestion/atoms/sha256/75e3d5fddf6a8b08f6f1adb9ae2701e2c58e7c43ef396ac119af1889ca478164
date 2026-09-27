@@ -1,0 +1,11 @@
+**定义 254.1（原尾窗上的混合预算补偿）。** 保持第253节的实际任务，固定有限正极限 $\gamma_s\to\gamma\in(0,\infty)$。允许将混合预算由 $\zeta_s$ 增加到 $\widetilde\zeta_s$，但要求
+
+$$
+\zeta_s\le\widetilde\zeta_s\le\delta_s=F_s+e_s,
+\qquad
+\frac{\widetilde\zeta_s-\zeta_s}{e_s}\longrightarrow r.
+\tag{254.1}
+$$
+
+原虚性预算 $\eta_s$ 保持不变；所选准备额外要求完全实。代价 $P_s,Q_s$ 仍在原来的 $T_s(\delta_s)$ 上计量，不改用放宽后合成预算的尾窗。原任务的精确矩、固定处理器和共轭、支持、尖锐集合、曲率及节点数据也都保持。称 $r$ 为领先混合补偿量。
+

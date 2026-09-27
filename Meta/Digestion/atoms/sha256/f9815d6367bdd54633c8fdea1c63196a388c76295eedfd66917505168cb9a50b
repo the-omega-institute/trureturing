@@ -1,0 +1,29 @@
+## 99. 七维实际接收器的正则铅笔完整禁阻
+
+固定同一非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1,
+$$
+
+独立纯接收初态 $k$、七维持久接收空间 $K$、固定全域 CPTP 接收通道，以及前六个完整参考—活动记忆—原档案纯终端合同。全部持久资源计入 $K$，活动来源与参考不可访问。
+
+按第89节选取任意一个保持全部实际六轮轨迹的固定替代酉
+
+$$
+W:K\otimes\mathbb C^2\longrightarrow K\otimes F,
+\qquad \dim K=7,\quad\dim F=2,
+$$
+
+并令 $V_i x=W(x\otimes|i\rangle)$。两个位块等距，像正交互补；所有实际环境 $\eta_1,\ldots,\eta_6$ 都属于 $F$。取环境正交单位基，写
+
+$$
+V_0x=A_0x\otimes e_0+A_1x\otimes e_1,\qquad
+\mathcal P(z)=z_1A_0-z_0A_1,\qquad
+D(z)=\det\mathcal P(z).
+\tag{99.1}
+$$
+
+本节证明 $D$ 必须恒零。全部全域纤维与铅笔论断只针对这个固定替代酉，不反推原始 Stinespring 实现在未执行输入上的作用。
+

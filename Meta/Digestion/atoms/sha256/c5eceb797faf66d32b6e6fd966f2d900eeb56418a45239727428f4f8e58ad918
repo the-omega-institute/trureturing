@@ -1,0 +1,75 @@
+### 245.1 同一实际通道与两种探针类
+
+固定§244的量子比特输入及四个报告标签。原 Bloch 轴满足 $n\cdot m=c\in[0,1]$，设置标签独立翻转概率为已标定的 $p\in[0,1]$。所有量子输出重置为同一固定纯态 $P$；原设置的额外副本和翻转种子均不在取得接口中。
+
+两条有效轴、候选效应与目标为
+$$
+\begin{aligned}
+a_p&=(1-p)n+pm,& b_p&=pn+(1-p)m,\\
+E^{(p)}_{0,s}&=\frac{I_2+s\,a_p\cdot\sigma}{4},&
+E^{(p)}_{1,s}&=\frac{I_2+s\,b_p\cdot\sigma}{4},
+\qquad s\in\{+1,-1\},\\
+\mathcal S_p(X)&=\sum_{a,s}|a,s\rangle\langle a,s|
+\otimes\operatorname{Tr}(E^{(p)}_{a,s}X)P,\\
+\mathcal R(X)&=\sum_{a,s}|a,s\rangle\langle a,s|
+\otimes\frac14\operatorname{Tr}(X)P.
+\end{aligned}
+\tag{245.1}
+$$
+沿用标量
+$$
+A=\frac{1+c}{2},\qquad
+B=(1-2p)^2\frac{1-c}{2},\qquad
+D=\frac12\sqrt{A+B},\qquad
+U=\frac12\sqrt A,\qquad
+\delta=D-U.
+\tag{245.2}
+$$
+§244已经证明 $D$ 为完整半 diamond 距离，$U$ 为无参考输入的最大半迹距离。纯联合探针的输入边缘 Bloch 长度为 $t\in[0,1]$ 时，其最大实际半迹距离及纠缠熵分别是
+$$
+F(t)=\frac12\sqrt{A+B-Bt^2},
+\qquad
+e(t)=H_2\left(\frac{1+t}{2}\right).
+\tag{245.3}
+$$
+这里 $H_2$ 为以二为底的二元熵。最大值由共同轴
+$$
+u=\frac{n+m}{\sqrt{2(1+c)}}
+\tag{245.4}
+$$
+上的边缘及其纯化取得。该分母在本节范围内始终非零，$c=1$ 时 $u=n=m$。
+
+现在对任意有限维参考 $E$ 和任意密度矩阵 $\Omega\in\mathcal D(\mathbb C^2\otimes E)$，定义
+$$
+g(\Omega)=\frac12
+\left\|[(\mathcal S_p-\mathcal R)\otimes\operatorname{id}_E](\Omega)\right\|_1.
+\tag{245.5}
+$$
+输入—参考形成纠缠定义为
+$$
+\boxed{
+E_F(\Omega)=
+\inf_{\Omega=\sum_j\lambda_j|\psi_j\rangle\langle\psi_j|}
+\sum_j\lambda_j
+S\!\left(\operatorname{Tr}_E|\psi_j\rangle\langle\psi_j|\right),
+}
+\tag{245.6}
+$$
+其中 $\lambda_j\ge0$、$\sum_j\lambda_j=1$，$|\psi_j\rangle$ 为归一化向量，熵单位为比特。有限维情形可在有限纯态系综上取该下确界；下文不需要预设某个最优分解已经存在。
+
+因为输入是量子比特，$0\le E_F(\Omega)\le1$。混合态的单侧边缘熵 $S(\operatorname{Tr}_E\Omega)$ 没有被代入（245.6）；两者是不同量。纯态时形成纠缠则等于（245.3）的 $e(t)$。
+
+对指定缺额 $\epsilon\ge0$，求
+$$
+C_{\mathrm{mix}}(\epsilon)=
+\inf\left\{
+E_F(\Omega):
+\begin{array}{l}
+E\text{ 为有限维参考},\ \Omega\in\mathcal D(\mathbb C^2\otimes E),\\
+g(\Omega)\ge D-\epsilon
+\end{array}
+\right\}.
+\tag{245.7}
+$$
+参考维数可以自由选择，但其实际保留的信息均计入同一联合探针。本节没有把原标签噪声的隐藏种子作为新参考提供。
+

@@ -1,0 +1,92 @@
+### 250.4　响应谱隙下的定量旗标恢复
+
+以下对象仍是真正饱和态，变化只在矩阵读数取得有误差。实际支撑 $E$ 已知，$A,B,b_0$ 校准视为精确。假设
+$$
+\min\{s_{\min}(R_a),s_{\min}(R_b)\}\ge\mu>0,
+\tag{250.22}
+$$
+且 Hermitian 估计矩阵满足
+$$
+\|\widetilde R_w-R_w\|\le\eta<\mu,
+\qquad w=a,b.
+\tag{250.23}
+$$
+这里全部误差与谱隙都用算子范数及最小奇异值计量。扰动后的矩阵在 $E$ 上也可逆，其最小奇异值至少为 $\mu-\eta$。
+
+在证明内使用标准矩阵符号函数的预解式表示。对可逆 Hermitian 矩阵 $T$，逐谱积分得
+$$
+\operatorname{sign}T
+=\frac1\pi\int_0^\infty
+\left[(T-itI)^{-1}+(T+itI)^{-1}\right]\,dt.
+\tag{250.24}
+$$
+括号内的和可积；正负谱均允许。若 $T$ 的谱隙至少 $\mu$，$\widetilde T$ 与它相距至多 $\eta<\mu$，预解式恒等式给
+$$
+\begin{aligned}
+\|\operatorname{sign}\widetilde T-\operatorname{sign}T\|
+&\le\frac{2\eta}{\pi}\int_0^\infty
+\frac{dt}{\sqrt{(\mu^2+t^2)((\mu-\eta)^2+t^2)}}\\
+&\le\frac{2\eta}{\pi}\int_0^\infty
+\frac{dt}{(\mu-\eta)^2+t^2}
+=\frac\eta{\mu-\eta}.
+\end{aligned}
+\tag{250.25}
+$$
+差积分的范数绝对可积，所以在此使用积分三角不等式合法。
+
+置
+$$
+\widetilde H_w=\operatorname{sign}\widetilde R_w,
+\qquad
+d=\frac\eta{\mu-\eta},
+\qquad
+\widetilde C=[\widetilde H_a,\widetilde H_b].
+\tag{250.26}
+$$
+两个精确和估计符号算子的范数都至多一。交换子差拆成两个项，得到
+$$
+\|\widetilde C-C\|\le4d,
+\qquad
+\|C\|=\gamma,
+\qquad
+\|\widetilde C\|\le\gamma+4d.
+\tag{250.27}
+$$
+定义
+$$
+\widetilde Q=-\frac{\widetilde C^2}{\gamma^2}.
+\tag{250.28}
+$$
+$\widetilde C$ 为反 Hermitian，因此 $\widetilde Q\succeq0$，但它不必是投影。平方差恒等式给
+$$
+\boxed{
+\|\widetilde Q-Q\|
+\le\frac{8d}{\gamma}+\frac{16d^2}{\gamma^2}
+=:\epsilon_Q.
+}
+\tag{250.29}
+$$
+
+若 $\epsilon_Q<1/2$，谱扰动把 $\widetilde Q$ 的本征值限制在距零或一至多 $\epsilon_Q$ 的区域。故阈值投影
+$$
+\widetilde P=\mathbf1_{[1/2,\infty)}(\widetilde Q)
+\tag{250.30}
+$$
+具有与 $Q$ 相同的秩，且阈值处没有本征值。对 $2Q-I$ 和 $2\widetilde Q-I$ 再应用（250.25），其精确谱隙为一、扰动至多 $2\epsilon_Q<1$，得到
+$$
+\boxed{
+\|\widetilde P-Q\|
+\le\frac{\epsilon_Q}{1-2\epsilon_Q}.
+}
+\tag{250.31}
+$$
+若参考边缘 $\rho_E$ 本身精确，则恢复的旗标权重满足
+$$
+\boxed{
+|\operatorname{Tr}(\widetilde P\rho_E)-\theta|
+\le\frac{\epsilon_Q}{1-2\epsilon_Q}.
+}
+\tag{250.32}
+$$
+这里只量化旗标投影与其权重的恢复；没有据此给出 Bell 解码误差或完整联合态重建误差。支撑识别、参考边缘误差以及校准误差也没有被纳入（250.22）—（250.32）的合同。
+

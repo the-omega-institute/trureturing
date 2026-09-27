@@ -1,0 +1,46 @@
+### 289.3 旧核内三种响应的共同坐标
+
+记
+$$
+R=I-Q=M^\dagger QM,\qquad N=M^\dagger M,\qquad T=I+N,
+$$
+$$
+D=\frac1n\operatorname{diag}(Q,R),\qquad\tau=I_{2n}/(2n).
+\tag{289.9}
+$$
+这里 $R$ 是参考矩阵，下面 $D\otimes\tau+\tau\otimes D$ 才表示两份白噪声交叉响应。仍按 $H_1H_2E_1E_2$ 重排张量因子。
+
+设 $P_n$ 为§285的完整共同相位理想核投影。在中间总荷扇区定义
+$$
+Gx=\begin{pmatrix}I\otimes M^\dagger\\M^\dagger\otimes I\end{pmatrix}x,
+\qquad
+Kx=\begin{pmatrix}-(M\otimes I)x\\(I\otimes M)x\end{pmatrix}.
+\tag{289.10}
+$$
+$G^\dagger K=0$，故 $P_nK=K$。此外
+$$
+K^\dagger K=N\otimes I+I\otimes N,
+\qquad\|K\|^2\le25/8.
+\tag{289.11}
+$$
+将两份态的漂移背景、白噪声交叉项与双白噪声项压到这个同一核内，分别记为
+$$
+\mathsf A=P_n(D\otimes D)P_n,
+\quad
+\mathsf B=P_n(D\otimes\tau+\tau\otimes D)P_n,
+\quad
+\mathsf C=P_n\tau^{\otimes2}P_n.
+$$
+它们在 $K$ 坐标下满足准确合同恒等式
+$$
+\boxed{
+\begin{aligned}
+K^\dagger\mathsf AK&=\frac2{n^2}R\otimes R,\\
+K^\dagger\mathsf BK&=\frac1{2n^2}(R\otimes T+T\otimes R),\\
+K^\dagger\mathsf CK&=\frac1{4n^2}(N\otimes I+I\otimes N).
+\end{aligned}
+}
+\tag{289.12}
+$$
+例如第一式的两个直和分量分别给 $M^\dagger QM\otimes R$ 与 $R\otimes M^\dagger QM$，都等于 $R\otimes R$；第二式展开四项后合并成 $R\otimes(I+N)+(I+N)\otimes R$；第三式由单位矩阵与（289.11）直接得到。$K$ 不等距，因此这些是合同矩阵，不把其条目直接解释为归一化概率。
+

@@ -1,0 +1,252 @@
+**$ABCAB$。** 有 $G_2=G_5=T_B$，相同零位像给 $H_1=H_4$。又 $p\in T_A=G_4$，违反 $p\ne0$ 与 $H_4\cap G_4=0$。
+
+因此只剩
+
+$$
+\boxed{AABAC,\quad AABCC,\quad ABAAC,\quad ABACA,\quad ABCBA.}
+\tag{110.9}
+$$
+
+### 110.3 ABAAC 的严格投影矛盾
+
+此时
+
+$$
+G_2=T_B,\qquad G_3=G_4=T_A,\qquad G_5=T_C,
+\qquad Q_3=Q_B.
+$$
+
+令 $r=|\langle A,B\rangle|$，环境代表均取单位。由于
+
+$$
+V_0H_2=T_A\otimes B,\qquad
+V_0H_3=T_A\otimes A,
+$$
+
+同一个单位 $w\in H_2$ 满足
+
+$$
+\|P_{H_3}w\|=r.
+\tag{110.10}
+$$
+
+另一方面，$w\in G_2=T_B$，而
+$V_1T_B=Q_B\otimes B$、$V_1T_A=Q_A\otimes A$，固定等距性给
+
+$$
+\|P_{G_3}w\|\le r.
+\tag{110.11}
+$$
+
+这里只使用投影到 $Q_A$ 的范数至多一，没有假设 $Q_A=Q_B$。
+
+若 $r>0$，实际零位像 $w\otimes A$ 与 $Q_B\otimes B$ 跨位正交，给 $w\perp Q_B$。由 $H_3\subset G_3\oplus Q_B$，
+
+$$
+P_{H_3}w=P_{H_3}P_{G_3}w.
+$$
+
+式（110.10）使 $P_{G_3}w\ne0$。后期 $H_3\cap G_3=0$ 因而使这个投影严格缩短范数：
+
+$$
+r=\|P_{H_3}P_{G_3}w\|
+<\|P_{G_3}w\|\le r,
+$$
+
+矛盾。因此 $A\perp B$。
+
+固定 $V_1$ 遂给 $G_2\perp G_3$。又 $p\in T_A=G_3$，实际 $V_0p=u\otimes A$，而
+$V_0H_3=G_3\otimes A$、$u\in G_2$，所以 $p\perp H_3$。这与 $p\ne0$、$p\in G_3$ 及实际满投影 $P_{G_3}H_3=G_3$ 冲突。该词排除。
+
+### 110.4 ABACA 的同环境一位纤维回接
+
+此时
+
+$$
+G_2=T_B,\qquad G_3=G_5=T_A,\qquad G_4=T_C,
+\qquad Q_4=Q_A.
+$$
+
+令 $r=|\langle B,C\rangle|$。实际零位像
+
+$$
+V_0H_2=T_A\otimes B,\qquad
+V_0H_4=T_A\otimes C
+$$
+
+给同一个单位 $w$ 的读数 $\|P_{H_4}w\|=r$。固定一位像
+$V_1T_B=Q_B\otimes B$、$V_1T_C=Q_C\otimes C$ 则给
+
+$$
+\|P_{G_4}w\|\le r.
+$$
+
+实际 $w\otimes A\in\operatorname{ran}V_0$，而 $Q_A\otimes A\subset\operatorname{ran}V_1$，所以
+
+$$
+w\perp Q_A.
+\tag{110.12}
+$$
+
+由 $H_4\subset G_4\oplus Q_A$、$H_4\cap G_4=0$，若 $r>0$，便有
+
+$$
+r=\|P_{H_4}P_{G_4}w\|
+<\|P_{G_4}w\|\le r,
+$$
+
+矛盾。故 $B\perp C$，进而 $G_2\perp G_4$、$H_2\perp H_4$。
+
+同环境 $A$ 上的跨位正交也给 $u\perp Q_A$。由于 $u\in G_2\perp G_4$，可知 $u\perp H_4$。而 $a^2u+bv\in H_2$、$b\ne0$，所以 $v\perp H_4$。
+
+完整二维 $A$ 纤维的回接（110.4）给 $v\in Q_A=Q_4$。实际满投影 $P_{Q_4}H_4=Q_4$ 遂迫使单位 $v$ 为零，矛盾。该词排除。
+
+### 110.5 AABCC 的七维零位像已经由四个输入平面填满
+
+此时
+
+$$
+G_2=T_A,\qquad G_3=T_B,\qquad G_4=G_5=T_C.
+$$
+
+置 $D=T_A+T_B$、$L=T_C$。由（110.2）、（110.5），
+
+$$
+\dim D=4,\qquad \dim L=2,\qquad D+L=S,\qquad
+\dim(D\cap L)=1.
+$$
+
+必须同时使用 $H_1,H_2,H_3,H_4$ 的四个已执行零位像：
+
+$$
+\begin{aligned}
+V_0H_1&=T_A\otimes A,&V_0H_2&=T_B\otimes A,\\
+V_0H_3&=L\otimes B,&V_0H_4&=L\otimes C.
+\end{aligned}
+$$
+
+因为 $B,C$ 独立，
+
+$$
+V_0(H_1+H_2+H_3+H_4)
+=(D\otimes A)+(L\otimes F).
+\tag{110.13}
+$$
+
+两个显示子空间的交为 $(D\cap L)\otimes A$，一维，故右侧维数为 $4+4-1=7$。它已经包含于七维完整零位像 $R_0=\operatorname{ran}V_0$，因此
+
+$$
+R_0=(D\otimes A)+(L\otimes F).
+\tag{110.14}
+$$
+
+在任何不同于 $A$ 的环境射线上，这个空间的完整接收纤维恰为 $L$：模去接收子空间 $L$ 后，剩余像只沿环境 $A$，不能产生另一方向上的非零乘积向量。
+
+末轮环境为 $C\ne A$，所以实际 $G_6\otimes C\subset R_0$ 迫使 $G_6=L$。结合 $G_4=G_5=L$，固定 $V_0$ 给 $H_4=H_5$，进而
+
+$$
+(H_4,G_4)=(H_5,G_5).
+$$
+
+这与同一来源的严格主角差值
+
+$$
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0,
+\qquad x=|a|^2,\quad y=|b|^2,\quad
+t_0=1,\quad t_j=1-yt_{j-1}
+\tag{110.15}
+$$
+
+冲突。$G_6$ 的位置由七维实际像推出，没有预设末轮平面等于此前平面。该词排除。
+
+### 110.6 AABAC 与 ABCBA 的唯一例外一位方向
+
+统一将这两个词写为
+
+$$
+(\beta,\beta,C,\beta,D)
+\quad\text{或}\quad
+(D,\beta,C,\beta,D),
+$$
+
+其中 $\beta,C,D$ 三条射线不同。完整后继纤维给
+
+$$
+T=G_2=G_4=T_\beta,\qquad G_3=T_C,\qquad G_5=T_D.
+$$
+
+置 $D_0=T_C+T_D$。于是
+
+$$
+\dim D_0=4,\qquad \dim T=2,\qquad
+D_0+T=S,\qquad \dim(D_0\cap T)=1.
+\tag{110.16}
+$$
+
+实际三个中间零位像为
+
+$$
+V_0H_2=T_C\otimes\beta,\qquad
+V_0H_3=T\otimes C,\qquad
+V_0H_4=T_D\otimes\beta.
+$$
+
+还须加入同一个实际 $H_1$ 的零位像。第一词给 $V_0H_1=T\otimes\beta$，它与 $T\otimes C$ 张成 $T\otimes F$；第二词给 $V_0H_1=T\otimes D$，它与 $T\otimes C$ 同样张成 $T\otimes F$。因此两词均有
+
+$$
+V_0(H_1+H_2+H_3+H_4)
+=(D_0\otimes\beta)+(T\otimes F).
+$$
+
+由（110.16），右侧维数为 $4+4-1=7$。它恰是完整零位像：
+
+$$
+R_0=(D_0\otimes\beta)+(T\otimes F)
+=(S\otimes\beta)\dotplus(T\otimes\beta^\perp).
+\tag{110.17}
+$$
+
+最后一个直和沿两个正交环境方向，因此可直接读取完整一位像 $R_1=R_0^\perp$：
+
+$$
+\{y:y\otimes z\in R_1\}
+=
+\begin{cases}
+T^\perp,&[z]=[\beta^\perp],\\
+Q=S^\perp,&[z]\ne[\beta^\perp].
+\end{cases}
+\tag{110.18}
+$$
+
+确切地说，在 $z$ 的 $\beta$ 分量非零时，与 $S\otimes\beta$ 正交迫使 $y\perp S$；$T\subset S$ 使其自动满足另一块。只有 $z$ 与 $\beta$ 正交时，条件才放宽为 $y\perp T$。所以唯一例外一位方向的完整纤维为五维，其余方向均恰为固定二维 $Q$。
+
+三个实际后继方向为 $\beta,C,D$，其中至少两个不同于 $[\beta^\perp]$。在这两个方向上，完整 $E$ 纤维二维且包含于完整 $R_1$ 纤维 $Q$，故都等于 $Q$。它们一起使
+
+$$
+Q\otimes F\subset E.
+$$
+
+第三条实际方向的完整 $E$ 纤维现在也已包含 $Q$，又按假设恰二维，因而仍等于 $Q$。因此全部实际 $Q_3,\ldots,Q_6$ 都为 $Q$。
+
+两词的第二轮方向分别为 $\beta$ 或 $D$，均在这三个方向中。真实 $V_1p=v\otimes\eta_2\in E$ 进一步给 $v\in Q$。由（110.1）的完整实际生成式，
+
+$$
+E\subset Q\otimes F.
+$$
+
+右侧只有四维，与 $\dim E=5$ 矛盾。两词全部排除。
+
+这里的七维像使用 $H_1+H_2+H_3+H_4$，没有从三个二维输入平面的和冒领七维，也没有在读取完整纤维前更换固定实现。
+
+### 110.7 第104节剩余接口的收缩
+
+十三个必要三尾词先由实际后继数和三项早期回接筛为（110.9），随后两个严格投影禁阻与两类七维实际像禁阻排除全部五词。定理110.1得证。
+
+因此在第104.4节的秩一分支中，只剩两种后继支持关系：一个二维 $M$ 纤维的方向与 $\rho$ 不同，或两个单维 $M$ 支持之一与 $\rho$ 重合。它们的两个允许后继方向的完整 $E$ 纤维尺寸均为三维、二维，而且两个方向都必须实际使用。第104.4节包含整个固定四维块的第一种情形也仍未结算。
+
+本节只排除了三条完整二维后继方向，没有排除全部 $\kappa_1=2$ 候选，也没有构造任何七维实际接收器。一般容量区间保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

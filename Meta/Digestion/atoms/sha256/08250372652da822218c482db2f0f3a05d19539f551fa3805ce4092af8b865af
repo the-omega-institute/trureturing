@@ -1,0 +1,13 @@
+**定理80.1（差一情形的缺陷投影与三块谱）。** 在（80.1）—（80.2）下，$\mathscr D$ 是秩 $d$ 的正交投影。令
+$$
+E_0=\ker L_0^*,\qquad E_1=\ker L_1^*,\qquad
+E_c=(E_0\oplus E_1)^\perp.
+$$
+则 $E_0\perp E_1$，维数分别为 $d,d,d-1$，并且
+$$
+X=\mu P_{E_1}+\frac{\mu^2s}{\Delta}P_{E_c},
+\qquad
+Y=\nu P_{E_0}+\frac{\nu^2s}{\Delta}P_{E_c}.
+\tag{80.5}
+$$
+

@@ -1,0 +1,84 @@
+**定理 212.2（标量控制的解析纯三维程序）。** 定义212.1的 $K$ 为严格压缩算子。令
+$$
+ W_0=\binom{I_3}{0},\qquad W_2=\binom{Z}{0},\qquad
+ W_1=\binom{K}{\sqrt{I_3-K^\dagger K}}.
+\tag{212.3}
+$$
+这些固定等距映射定义受控 CPTP 处理器。记
+$$
+ p=\frac{1+u}{2},\quad q=1-p,\quad
+ R(p)=\sqrt{\frac a\lambda}\sqrt{\frac qp},\quad
+ \gamma=\frac\lambda{2\delta},\quad s_c=\frac\lambda L,
+ \qquad
+ G(s)=s^2+\gamma^2\left(s+s^{-1}-2\right)^2\quad(s>0).
+\tag{212.4}
+$$
+若 $s:(a,1)\to(0,\infty)$ 为实解析函数，且
+$$
+ R(p)^2G(s(p))<1\qquad(a<p<1),
+\tag{212.5}
+$$
+则下式定义同一个三维处理器的全区间、全输入精确纯态程序：
+$$
+ \begin{gathered}
+ r=Rs,\qquad y=\gamma R\frac{(s-1)^2}{s},\qquad
+ z=\sqrt{1-r^2-y^2},\qquad v=(r,y+iz)^{\mathsf T},\\
+ \psi_u=(\sqrt p\,r,\sqrt p\,(y+iz),\sqrt q)^{\mathsf T},
+ \qquad \rho_u=\psi_u\psi_u^\dagger.
+ \end{gathered}
+\tag{212.6}
+$$
+其校准条件恰为
+$$
+ I_Q(\rho_u)=I_r(u)
+ \quad\Longleftrightarrow\quad
+ s(p)=1,\qquad \frac{ds}{dp}(p)=\frac1{2p(1-p)}.
+\tag{212.7}
+$$
+常数选择 $s=s_c$ 在全区间严格可行，且没有校准点。
+
+证明。 $KK^\dagger$ 的 $P$ 块为
+$$
+ \begin{pmatrix}
+ (a+\lambda)^2+\delta^2&\delta(2a-\lambda)\\
+ \delta(2a-\lambda)&a^2+\delta^2
+ \end{pmatrix}.
+\tag{212.8}
+$$
+$I_2-(KK^\dagger)_{PP}$ 的两个对角元分别至少为 $\delta$ 与 $(1-a^2)/2$：前者等于 $2\delta(1-\delta)$，后者等于 $1-a^2-\delta^2$。又有 $|2a-\lambda|<2$，所以
+$$
+ \det\bigl[I_2-(KK^\dagger)_{PP}\bigr]
+ \ge\frac{\delta(1-a^2)}2-4\delta^2
+ >\frac{\delta(1-a^2)}4>0.
+\tag{212.9}
+$$
+因此 $KK^\dagger<I_3$，所有（212.3）均为等距映射；程序空间维数为三，等距映射的六维值域是随后被取偏迹的环境。
+
+由（212.5）有 $z>0$，第212.6式为归一化实解析向量。$K_{PP}$ 为实对称矩阵，其第三列只与实坐标 $r$ 耦合，所以期望 $f=\psi_u^\dagger K\psi_u$ 为实数。直接配方得到
+$$
+ f-a=p\bigl[2\delta r y-\lambda(r-R)^2\bigr]=0.
+\tag{212.10}
+$$
+这里使用 $y=\gamma(r-R)^2/r$。又有 $\psi_u^\dagger Z\psi_u=u$、$ZK=K$。因此受控等距映射后取环境偏迹的三个非对角 Schur 系数为 $u,a,a$，对角系数为一；这逐个核对全部信号矩阵单位，故在全部输入上精确产生 $\mathcal T_u$。
+
+以下点表示 $u$ 导数。由纯态信息公式 $I_Q=4(\|\dot\psi\|^2-|\psi^\dagger\dot\psi|^2)$，得到
+$$
+ I_Q(\rho_u)-I_r(u)
+ =4p\left(\|\dot v\|^2-p|v^\dagger\dot v|^2\right)
+ \ge4p(1-p)\|\dot v\|^2.
+\tag{212.11}
+$$
+最后一步使用 $\|v\|=1$。这保留了复相位导数的成本，且校准当且仅当 $\dot v=0$。
+
+用 $p$ 作自变量时，$v'=0$ 蕴含 $r'=y'=0$。在 $r'=0$ 处微分 $y=\gamma(r-R)^2/r$，得到
+$y'=-2\gamma(r-R)R'/r$。因为 $R'\ne0$，必须 $r=R$。反过来，$r=R$、$r'=0$ 给出 $y'=0$，再由 $z>0$ 得 $z'=0$。因此校准等价于 $s=1$、$R'+Rs'=0$，而 $-R'/R=1/(2p(1-p))$，证明（212.7）。
+
+函数 $s+s^{-1}-2$ 在正半轴非负且凸，故它的平方也凸；所以 $G$ 为凸函数，严格次水平集在正半轴为区间。常数 $s_c$ 满足
+$$
+ R(p)^2\le\frac1{s_c},\qquad
+ G(s_c)=s_c^2+\frac{(1-s_c)^2}{4},\qquad
+ R(p)^2G(s_c)\le s_c+\frac{(1-s_c)^2}{4s_c}<1,
+\tag{212.12}
+$$
+因为 $3/4<s_c<1$。这个严格余量对 $p\in[a,1]$ 一致成立，其中仅在本式将 $R(1)$ 连续定义为零。常数 $s_c\ne1$，由（212.7）没有校准点。证毕。
+

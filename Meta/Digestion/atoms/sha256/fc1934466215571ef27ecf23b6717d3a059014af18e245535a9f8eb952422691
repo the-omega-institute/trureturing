@@ -1,0 +1,40 @@
+**定理 16.65（任务坐标分裂的精确条件）。** 定义16.60的任务扩张(16.44)作为带标记交换群扩张分裂，当且仅当 $\chi:D\to H$ 延拓为同态 $\alpha:E\to H$。等价地，存在这样的同态和函数 $\bar g:B_0\to C$，使
+
+$$
+g(x)=\alpha(x)+\bar g([x])\qquad(x\in E).
+\tag{16.46}
+$$
+
+只要求 $\alpha$ 取值于较大的 $C$ 不足。分裂时，一个保标记的群坐标同构及其闭合任务律为
+
+$$
+\begin{gathered}
+\widehat Q\longrightarrow B_0\times H,\qquad
+[(x,h)]\longmapsto\bigl([x],h+\alpha(x)\bigr),\\
+\mathrm{Init}=(0,0),\qquad
+\mathrm{Update}((y,r);(u,v,k))=
+\bigl(y+[u+v],r+k+\alpha(u+v)\bigr),\\
+\mathrm{Decode}(y,r)=\bar g(y)+r.
+\end{gathered}
+\tag{16.47}
+$$
+
+这仍有 $|\widehat Q|$ 个状态；局部预测器再加上所计的己方位置，按式(16.33)运输该位置。
+
+证明。先在本任务商中使用交换群扩张的标准机制：$\widehat Q$ 是 $0\to D\to E\to B_0\to0$ 沿 $\chi:D\to H$ 的推出，其关系正是 $(d,-\chi(d))=0$。推出及对应的 Hom–Ext 正合段见 Stacks Project，§12.6 “Extensions”，[tag 010I](https://stacks.math.columbia.edu/tag/010I)，推出构造与 Lemma 12.6.4；在该引理中取 $(M_1,M_2,M_3,N)=(D,E,B_0,H)$。连接映射把 $\chi$ 送至这里的扩张类，以下显式核查本校准所需的延拓与分裂对应。
+
+若 $\alpha$ 存在，定义收缩同态
+
+$$
+r_\alpha:\widehat Q\to H,\qquad
+r_\alpha([(x,h)])=\alpha(x)+h,
+\qquad r_\alpha\iota=\operatorname{id}_H.
+\tag{16.48}
+$$
+
+其在 $K$ 上为零，所以良定义。同时 $j([x])=[(x,-\alpha(x))]$ 与代表元无关，且 $\sigma j=\operatorname{id}_{B_0}$。式(16.47)第一行的逆是 $(y,r)\mapsto j(y)+\iota(r)$，得到带标记分裂。
+
+反向，分裂给出一个同态截面 $j:B_0\to\widehat Q$。由 $\ker\sigma=\operatorname{im}\iota$，可定义唯一的收缩同态 $r:\widehat Q\to H$，使 $\iota(r(q))=q-j(\sigma(q))$，于是 $r\iota=\operatorname{id}_H$。令 $\alpha(x)=r([(x,0)])$；它是 $E\to H$ 的同态，而对 $d\in D$，$[(d,0)]=[(0,\chi(d))]$，故 $\alpha(d)=\chi(d)$。
+
+若 $\alpha$ 延拓 $\chi$，则 $g-\alpha$ 在每个 $D$ 陪集上恒定，得到式(16.46)。反之，式(16.46)在 $x$ 与 $x+d$ 的差强制 $\alpha(d)=\chi(d)$。运输 $x\mapsto x+u+v$、$h\mapsto h+k$ 给式(16.47)的更新，解码等于 $g(x)+h$。由于 $\alpha(0)=0$、$\bar g(0)=g(0)$，初始输出也正确。证毕。
+

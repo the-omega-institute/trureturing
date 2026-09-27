@@ -1,0 +1,36 @@
+**定义 172.1（自主经典相位选择器）。** 沿用第171节的源族、终端风险、$\varepsilon=1-r$、$\alpha=\alpha(r)$、$H(r)$、$L$ 和 $t_*$。取非空有限状态集 $V$、相位标记 $\theta_v\in[-\alpha,\alpha]$、时间齐次随机矩阵 $T$ 及初始概率分布 $\pi$。每步在当前状态 $v$ 上应用系统通道 $\mathcal M_{r,\theta_v}$，随后按 $T(v,u)$ 更新私有状态。联合通道明确为
+$$
+\Lambda(X)=\sum_{v,u\in V}T(v,u)
+\mathcal M_{r,\theta_v}(X_{vv})\otimes|u\rangle\langle u|,
+\qquad
+\sigma=\sum_v\pi(v)|v\rangle\langle v|.
+\tag{172.1}
+$$
+其中 $X_{vv}$ 为记忆基上的系统对角块，故记忆的任意初始相干也在定义域内。$V,T,\pi,\theta$ 可依赖已知的 $r$，不依赖实际未知相位、使用视界或系统输入；记忆更新不读取系统输出，不另给外置时钟。条件通道的 Kraus 算符与 $\sqrt{T(v,u)}|u\rangle\langle v|$ 的张量积直接证明（172.1）为 CPTP。
+
+称此选择器可遗忘，当
+$$
+\delta_n(T):=\max_{v,w\in V}
+\operatorname{TV}\bigl(T^n(v,\cdot),T^n(w,\cdot)\bigr)
+\longrightarrow0.
+\tag{172.2}
+$$
+这要求私有记忆对任意初始化的依赖消失，不仅针对指定分布 $\pi$。这是有限经典链的标准遗忘条件，方向与第171节所引记忆通道定义一致；它不要求已经发出的系统遗忘初始化。
+
+令 $d_{\rm fg}(r)$ 为全部满足（172.2）且全视界终端风险精确等于 $H(r)$ 的选择器中，$|V|$ 的最小值；若无这样的选择器，定义其值为 $+\infty$。所有演化状态都计入 $V$，包括计时与吸收状态。以下只研究这个明确限定的经典选择器域，不将其最小值等同于任意量子记忆的最小 Hilbert 空间维数。
+
+记
+$$
+B_N(r)=\frac{r^N}{2}m(N\alpha),\qquad
+n_*(r)=\max\operatorname*{arg\,max}_{N\ge1}B_N(r),
+\tag{172.3}
+$$
+其中 $m$ 为式（169.6）的函数。由 $B_1>0$、$B_N\to0$，最大点集合非空且有限。定理169.3的严格晚视界间隙表明，充分接近一时，$\sup_NB_N=H$，所有最大点都满足 $N\alpha<\pi/2$，且此集合也等于逐视界半径 $\mathcal R_N$ 的最大点集合。定理161.6又给出
+$$
+\varepsilon n_*(r)\longrightarrow t_*,
+\qquad n_*(r)\ge2
+\quad\text{最终成立}.
+\tag{172.4}
+$$
+下面统一限于满足这些性质的 $r$ 邻域。
+

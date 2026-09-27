@@ -1,0 +1,9 @@
+**说明 39.4（文献、接口与结论范围）。** 标准工具与本批的连接范围如下。
+
+- John Watrous，[*The Theory of Quantum Information*，第 3 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf)：第 3.4 定理给出 Holevo–Helstrom 二态判别；第 3.3 节讨论带辅助系统的通道距离与判别。第 35 节和第 37 节使用这些成熟工具，逐轮替换论证也复用仓内相位边界卷第 161.1 条的方法。
+- Gus Gutoski、John Watrous，[*Toward a General Theory of Quantum Games*](https://arxiv.org/abs/quant-ph/0611234v2)：给出保留量子记忆的多轮策略及其正算子表示。第 37 节的访问合同属于此类多轮量子交互；精确错误率由本文具体通道凸分解直接证明，不把一般策略表示冒称为该例的现成闭式。
+- Ruoyu Yin、Qingyuan Wang、Eli Barkai，[*Instability in the quantum restart problem*](https://arxiv.org/abs/2301.06100v2)：研究重复监测量子游走的重启优化不稳定。其目标是最优重启时间及平均击中时间，不直接提供第 36 节的最终点击效果不连续定理。
+- 第 38 节使用有限前缀加共同尾项的稳定性方法；第 39.2 条是自包含的有限维谱投影扰动估计。本批在首次事件接口上连接这些工具及两个显式反例，不主张文献原创性。
+
+所有距离结论均依赖声明的共同记录、量子后继、参考系统和重复调用合同。本批没有取得实验校准置信区间，没有认证某个实际装置的共同尾界或谱隙，也没有新增 Lean、消化覆盖或冻结结果。
+

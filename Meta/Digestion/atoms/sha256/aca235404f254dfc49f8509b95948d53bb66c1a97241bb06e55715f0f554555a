@@ -1,0 +1,30 @@
+**推论 140.2（二状态参数化）。** 若
+
+$$
+T=
+\begin{pmatrix}
+1-a&b\\
+a&1-b
+\end{pmatrix},
+\qquad a,b>0,
+$$
+
+则
+
+$$
+\pi=
+\frac1{a+b}
+\begin{pmatrix}
+b\\a
+\end{pmatrix},
+\qquad
+\lim_{m\to\infty}\frac{\mathbb E[S_m]}m
+=
+\frac{a}{a+b}.
+\tag{140.3}
+$$
+
+这里 $a$ 是从快速扇区转入慢扇区的概率，$b$ 是从慢扇区转入快速扇区的概率。长期内部时间率因此由后继反馈决定，而非由第一轮指数律单独决定。
+
+---
+

@@ -1,0 +1,38 @@
+### 220.8 保秩修复与任意失谐下的精确夹逼
+
+物理正谱侧，删除 CP 项 $\lambda L(\cdot)L^\dagger$，其输入效应为 $\lambda L^\dagger L$，算子范数为 $\delta=\lambda s_+<1$。剩下两个结果各有一个 Choi 方向。定理219.3的共同输入修复
+$$
+\mathcal S=\mathcal B\circ
+\operatorname{Ad}_{(I-\lambda L^\dagger L)^{-1/2}}
+$$
+恢复 TP，分别保持两个结果的秩，并给完整 diamond 界
+$$
+d_2\le\lambda s_+
+=\lambda(1-h^2G(p,t^\sharp)).
+\tag{220.30}
+$$
+这里使用的是对全部 $\delta<1$ 成立的修复定理；不需要单独正滤波范数公式的额外阈值。
+
+结合（220.21），得到
+$$
+\boxed{
+h^2G(p,t^\sharp)
+\le1-\frac{d_2(p)}{\lambda(p)}
+\le h^2F_{\mathrm{opt}}(p,t^\sharp),
+\qquad G(0,0)=F_{\mathrm{opt}}(0,0)=c_*.
+}
+\tag{220.31}
+$$
+两侧来自不同的合法构造，不需要它们在有限参数上实现同一最优器。
+
+在正谱侧，$t^\sharp=\widehat t(p)=a_{\mathrm{wt}}(p)\Delta(p)$ 是联合解析函数的物理限制，且 $\widehat t(0)=0$。因此 $|t^\sharp|\le C_0\|p\|_1$。由于 $G,F_{\mathrm{opt}}$ 在固定联合邻域解析并具有相同中心值，在更小紧箱有
+$$
+|G(p,t^\sharp)-c_*|
++|F_{\mathrm{opt}}(p,t^\sharp)-c_*|
+\le C_1\|p\|_1.
+\tag{220.32}
+$$
+将它直接代入（220.31），即得（220.3）—（220.5）。没有在估计步骤除以一个未经控制的 detuning 余项。
+
+$h=0$ 时精确夹逼给 $d_2=\lambda$。$h>0,\lambda>0$ 时 $G>0$，给严格上界 $d_2<\lambda$；再取小箱使 $1-h^2F_{\mathrm{opt}}>0$，得到 $d_2>0$。非正谱侧真实通道已经属于 $\mathfrak C_2$，所以 $d_2=\lambda=0$，未除法公式也成立。定理220.1证毕。
+

@@ -1,0 +1,52 @@
+### 298.5 任务计数和校准计数的实际联合系数
+
+固定取得 $K$ 个任务样本和 $K$ 个参考样本。令
+$$
+I\sim\operatorname{Bin}(K,p_x),\quad
+J\sim\operatorname{Bin}(K,p_y),\qquad
+x=hc,\ y=h,
+$$
+$$
+p_x=(1-x/C)/B,\quad p_y=(1-y/C)/B.
+$$
+两计数条件独立。定义经验坐标
+$$
+X_i=C(1-Bi/K),\qquad Y_j=C(1-Bj/K),
+$$
+以及
+$$
+S_i=\sum_{m=1}^{d}\frac{B^m}{m}\frac{(i)_m}{(K)_m},
+\qquad
+\lambda_i=\log C-S_i.
+$$
+联合实系数为
+$$
+\beta_{ij}=1+\frac{\lambda_i-\lambda_j}{A}
+=1+\frac{S_j-S_i}{A}.
+\tag{298.6}
+$$
+它不含未知 $h$，也未对非正经验坐标取对数。
+
+阶乘矩恒等式给
+$$
+\mathbb E\lambda_I=\log x+R_d(x),\qquad
+\mathbb E\lambda_J=\log y+R_d(y),
+$$
+$$
+R_d(z)=\sum_{m>d}\frac{(1-z/C)^m}{m}.
+$$
+真实 $0<x\le y$ 蕴含 $R_d(x)\ge R_d(y)$。因此
+$$
+0\le\mathbb E_{c,h}\beta_{IJ}-L(c)
+=\frac{R_d(x)-R_d(y)}A
+\le T e^{-a_1K},
+\tag{298.7}
+$$
+其中可取
+$$
+z_*=1-h_0k^3/C_*\in(0,1),\quad
+a_1=\zeta|\log z_*|,\quad
+T=\frac{C_*}{A_*h_0k^3}.
+$$
+这里只使用两个真实计数的联合期望，未要求任何一个样本均值单独达到 $g$ 精度。
+

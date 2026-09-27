@@ -1,0 +1,64 @@
+**定理258.1（固定边缘的可实现性）。** 给定密度矩阵 $\rho$ 与任意复矩阵 $K$，（258.4）有解，当且仅当
+$$
+\boxed{
+K=P_\rho KP_\rho,
+\qquad w(Z_\rho)\le1.
+}
+\tag{258.14}
+$$
+
+**证明。** 有解时，§258.2给支撑条件与（258.11）。将 Ando 定理用于 $X=Z_\rho/2$，由数值半径的齐次性得到 $w(Z_\rho)\le1$。
+
+反向，支撑条件使（258.10）有定义。由 Ando 定理选择满足（258.11）的 $F$，并在 $S$ 上定义
+$$
+P=\rho_S^{1/2}F\rho_S^{1/2},
+\qquad
+Q=\rho_S^{1/2}(I_S-F)\rho_S^{1/2},
+\tag{258.15}
+$$
+再在 $S^\perp$ 上补零。同余保持正性，并将非对角块恢复为 $K/2$；对角块之和为 $\rho$，所以得到迹一的合法来源。$\square$
+
+全部填充亦有一个精确参数合同：令
+$$
+\mathcal F(Z_\rho)=
+\left\{
+F=F^\dagger:
+\begin{pmatrix}
+F&Z_\rho/2\\
+Z_\rho^\dagger/2&I_S-F
+\end{pmatrix}\succeq0
+\right\}.
+\tag{258.16}
+$$
+（258.15）与固定非对角块给出 $\mathcal F(Z_\rho)$ 到全部合法来源的一一对应。唯一来源等价于这个集合为单点，不能仅由数值半径的一个边界等式替代。
+
+还有一个不显式使用逆矩阵的等价合同：
+$$
+\boxed{
+\rho-\operatorname{Re}(e^{i\varphi}K)\succeq0
+\quad\text{对每个 }\varphi\in\mathbb R,
+}
+\tag{258.17}
+$$
+其中 $\operatorname{Re}T=(T+T^\dagger)/2$。它又等价于
+$$
+|\langle x,Kx\rangle|\le\langle x,\rho x\rangle
+\quad\text{对每个 }x\in E.
+\tag{258.18}
+$$
+有支撑条件时，对（258.17）作 $\rho_S^{-1/2}$ 同余，正好得到 $w(Z_\rho)\le1$ 的全角度表述。反向，单独由（258.17）中 $\varphi=0,\pi,\pi/2,3\pi/2$ 的四个正性条件，先得到
+$$
+-\rho\preceq R_Z\preceq\rho,\qquad
+-\rho\preceq R_X\preceq\rho.
+\tag{258.19}
+$$
+对 $x\in\ker\rho$，$\rho\pm R_Z$ 与 $\rho\pm R_X$ 的二次型均为零，故这些正算子都消去 $x$，从而 $R_Zx=R_Xx=0$。由于两者 Hermitian，$K$ 的左右支撑都落在 $S$。再白化即可应用定理258.1。这证明（258.17）已经隐含所需支撑约束。
+
+由（258.1），全角度算子为
+$$
+\operatorname{Re}(e^{i\varphi}K)
+=\cos\varphi\,R_Z+\sin\varphi\,R_X.
+\tag{258.20}
+$$
+所以固定边缘要求所有这些方向的正性约束能由同一个联合源实现；Ando 定理恰好保证该全角度条件的充分性。
+

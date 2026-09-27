@@ -1,0 +1,16 @@
+**命题 516.2（同一任务区分边缘与联合的最低代价）。** 对定义 516.1，记 $d(K\longrightarrow H)$ 为从实验 $K$ 模拟实验 $H$ 的最小最坏状态 TV 误差，则
+
+$$
+d(E_r\longrightarrow Q)=\beta:=c(r-\alpha)_+,
+\qquad
+d(E_r\longrightarrow J)=\lambda:=cr(1-\alpha).
+$$
+
+证明：没有观察时，任一固定标签落在均匀随机 $S$ 中的概率都是 $p/n$，所以最优风险是 $c$；随机化行动不会降低它。观察 $Q$ 的非公共标签时，该标签必在 $S$ 中，可以零损失行动；观察 $\circ$ 时后验仍为原先验，因此 $Q$ 的最优风险为 $\alpha c$。观察 $E_r$ 时，揭示分支可从已知 $S$ 中任选一个标签，擦除分支的风险为 $c$，故风险为 $rc$。观察目标联合 $J$ 时，只在旧记录擦除且新增输出为 $\circ$ 时仍无有效标签，风险为 $r\alpha c$。
+
+项目 [FiniteDeficiencyRiskTransfer](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean) 的 deficiency_risk_bound 以归一化先验、行随机实验和 $[0,1]$ 损失，把风险差界于模拟误差之下；其 finiteDeficiency 参数顺序为目标、来源。本例的四项风险计算给出边缘误差下界 $\beta$ 与联合误差下界 $\lambda$。这项联合下界也约束允许重生成整个记录的模拟器，不只约束保留记录者。
+
+为取得边缘上界，先设 $r\le\alpha$ 且 $r<1$。擦除分支输出 $\circ$；揭示 $S$ 时以概率 $(\alpha-r)/(1-r)$ 输出 $\circ$，其余均匀输出 $S$ 中标签，所得边缘精确等于 $Q_S$。若 $r>\alpha$，擦除分支以概率 $\alpha/r$ 输出 $\circ$，其余均匀输出全部 $n$ 个标签；揭示分支均匀输出 $S$。目标之外的 $q$ 个标签获得总质量 $c(r-\alpha)$，公共质量仍是 $\alpha$，允许标签合计短缺相同质量，故 TV 恰为 $\beta$。$r=\alpha=1$ 时直接输出 $\circ$ 即可。
+
+为取得联合上界，揭示分支按 $Q_S$ 生成，擦除分支按 $R(\circ)=\alpha$、$R(x)=(1-\alpha)/n$ 生成。后者到每个 $Q_S$ 的 TV 为 $c(1-\alpha)$，所以保留实际记录的联合误差是 $\lambda$。它同时给出通常模拟的上界。上下界相合，得到两式。证毕。
+

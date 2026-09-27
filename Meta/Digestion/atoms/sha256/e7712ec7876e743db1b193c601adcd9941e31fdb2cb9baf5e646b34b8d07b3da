@@ -1,0 +1,90 @@
+## ST25．恒定物理能隙下的完整二图册例子
+
+### 定理 ST25.1：单图发散、Chern 数与拓扑界同时可算
+
+取单位球面参数 $\boldsymbol n=(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta)$，
+
+$$
+H(\boldsymbol n)=\Delta\,\boldsymbol n\cdot\boldsymbol\sigma,\qquad
+\Delta>0,\qquad P=(I+\boldsymbol n\cdot\boldsymbol\sigma)/2.
+$$
+
+这是正能级 $+\Delta$ 的投影，完整能隙恒为 $2\Delta$。北、南局部框分别为
+
+$$
+U_N=\begin{pmatrix}\cos(\theta/2)\\e^{i\phi}\sin(\theta/2)\end{pmatrix},
+\qquad
+U_S=e^{-i\phi}U_N.
+$$
+
+它们分别在去掉南极、去掉北极的区域光滑。北图相对于 $|0\rangle$ 的图坐标为
+
+$$
+X_N=e^{i\phi}\tan(\theta/2),\quad
+G_N=\sec^2(\theta/2),\quad Z_N=\cos^2(\theta/2).
+$$
+
+所以南极处 $Z_N=0$、$X_N$ 发散，同时完整物理能隙不变。局部连接、曲率为
+
+$$
+\mathcal A_N=-\sin^2(\theta/2)d\phi,\quad
+\mathcal A_S=\cos^2(\theta/2)d\phi,
+$$
+
+$$
+\mathcal F=-\tfrac12\sin\theta\,d\theta\wedge d\phi,
+\qquad C_1=-1.
+$$
+
+**证明。** Pauli 恒等式 $(\boldsymbol n\cdot\boldsymbol\sigma)^2=I$ 给出能谱。直接乘法验证 $PU=U$、$U^\dagger U=1$。微分两个框得到连接；过渡函数 $e^{-i\phi}$ 恰好给出 $\mathcal A_S=\mathcal A_N+d\phi$。积分曲率得到 $-2\pi$，图坐标由上下分量相除得到。∎
+
+平直环境下，参数量子度量为
+
+$$
+g_{\theta\theta}=\frac14,\qquad g_{\phi\phi}=\frac14\sin^2\theta,
+\qquad g_{\theta\phi}=0.
+$$
+
+采用单位球面的标准参数度量，得到
+
+$$
+\boxed{\mathscr E_N=2\pi,\qquad\mathscr C_2=4\pi\hbar^2.}
+\tag{ST25.1}
+$$
+
+它达到ST24的平直界。
+
+### 定理 ST25.2：同一投影的曲率可以由环境运输承担
+
+在同一个平凡秩二环境丛上，指定全局光滑连接
+
+$$
+\Gamma_\kappa=\kappa(\boldsymbol n\times d\boldsymbol n)\cdot\boldsymbol\sigma,
+\quad\nabla=d-i\Gamma_\kappa,\quad\kappa\in\mathbb R.
+$$
+
+上述 $P$ 与能谱均不变。则
+
+$$
+N^{(\kappa)}=(1+2\kappa)N^{(0)},\quad
+F^{\rm full}_{\theta\phi}
+=2\kappa(1+\kappa)\sin\theta\,\boldsymbol n\cdot\boldsymbol\sigma,
+$$
+
+$$
+\mathscr E_N=2\pi(1+2\kappa)^2,\quad
+\mathscr B=8\pi\kappa(1+\kappa),\quad C_1=-1.
+\tag{ST25.2}
+$$
+
+因此对全部 $\kappa$，ST24.1 都取等号。特别地，$\kappa=-1/2$ 时
+
+$$
+\boxed{N=0,\quad\mathscr E_N=0,\quad C_1=-1,\quad\mathscr B=-2\pi.}
+\tag{ST25.3}
+$$
+
+**证明。** 用 $[\boldsymbol a\cdot\boldsymbol\sigma,\boldsymbol b\cdot\boldsymbol\sigma]=2i(\boldsymbol a\times\boldsymbol b)\cdot\boldsymbol\sigma$ 和 $\boldsymbol n\cdot d\boldsymbol n=0$，得到 $\nabla P=(1+2\kappa)dP$，故法向项具有该缩放。连接外微分贡献 $2\kappa\sin\theta\,\boldsymbol n\cdot\boldsymbol\sigma$，交换子贡献 $2\kappa^2\sin\theta\,\boldsymbol n\cdot\boldsymbol\sigma$。又 $U^\dagger\Gamma_\kappa U=0$，有效连接仍等于前式，因此Chern数不变。逐项积分即可。∎
+
+这说明同一个有效 Berry 曲率与同一能谱，不能单独识别几何来自环境运输还是保留空间的法向变化。改变 $\Gamma_\kappa$ 是改变物理上所指定的比较/运输规则；若它只是某个表示变换，其他动力学与探针项必须一起运输。本命题没有把这种参数连接直接认作引力时空。
+

@@ -1,0 +1,10 @@
+**说明 67.1（成熟结果、对应关系与未覆盖范围）。** 第 62.2 条的通用插值步骤对应仓内 `CountableWeightedHolderInterpolation` 的 `countable_weighted_holder_interpolation`：对剩余质量 $u_n$，取 $f_n=(n-1)^pu_n$、$g_n=u_n$、权重 $1/p$ 与 $1-1/p$。两列的非负性和可和性分别由矩预算及有限剩余质量给出。本文另外使用共同部分分解和相等剩余质量消去常数成本；未新增或编译这份精确应用的 Lean 声明。
+
+第 63 节直接保留第 35.2 条逐轮替换证明中的实际活动质量；第 66 节使用正映射级数和预解恒等式。正映射表示它保持正算子锥，不表示其作为 Hilbert–Schmidt 空间上的线性算子是自伴的；因此这里没有把自伴正矩阵的谱下界定理直接套给一般 CP 演化。
+
+Charles M. Grinstead、J. Laurie Snell 的 [*Introduction to Probability*，第 11.2 节](https://math.dartmouth.edu/~prob/prob/prob.pdf) 定理 11.4 给吸收 Markov 链的基本矩阵 $N=(I-Q)^{-1}=\sum_{m\ge0}Q^m$，定理 11.5 给平均吸收时间 $t=Nc$，其中 $c$ 为全一列。在经典对角子类中，$Q$ 对应未点击的函数演化 $\mathcal A$，$c$ 对应 $I$，基本矩阵对应 $\mathcal R$，吸收时间向量对应 $T$。一般 CP 情况以正算子锥替代逐坐标非负性；带记录半 diamond 距离的乘积估计由第 66.3 条证明，不归为书中原定理。
+
+第 64 节所用的截断、Bernstein 集中和 $\ell^{-(p-1)/p}$ 均值估计指数属于成熟稳健统计工具。Sébastien Bubeck、Nicolò Cesa-Bianchi、Gábor Lugosi 的 [*Bandits with heavy tail*，arXiv:1209.1727](https://arxiv.org/abs/1209.1727)，第 2.1 节引理 1，在有限 $1+\varepsilon$ 原始矩条件下用截断经验均值得到相应置信指数。其变量可有正负值，截断阈值随样本指标变化，并使用阈值外置零的估计器；本文针对正整数等待，实际执行固定轮数截止并记录 $\min(\mathsf N,m)$，故估计器、物理取得方式和常数由第 64.1 条单独证明。原文的 bandit 遗憾下界不被当作本文固定记录数下界；第 64.2 条用实际二维仪器给出两点检验论证。
+
+本批没有把固定记录数的指数结论升级为任意量子查询或确定总调用预算下的最优性。也没有从有限数据认证矩预算、完整仪器距离、重置合同或所有后继状态的成本上界。全部结果是指定模型和权限下的纯理论推导，不宣称文献原创性、Lean 核验、消化覆盖或冻结。
+

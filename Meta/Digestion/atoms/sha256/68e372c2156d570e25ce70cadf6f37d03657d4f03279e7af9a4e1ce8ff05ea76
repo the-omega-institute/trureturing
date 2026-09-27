@@ -1,0 +1,36 @@
+### 63.1 合同与结论
+
+固定晚输入 $A=\mathbb C^2$、早输出 $B=\mathbb C^2$，晚输出 $D$ 可以是任意非零有限维空间，张量次序为 $A\otimes B\otimes D$。早边缘与它的扩张满足
+
+$$
+M\succeq0,\quad\operatorname{Tr}_B M=I_A,
+\qquad
+R\succeq0,\quad\operatorname{Tr}_D R=M.
+\tag{63.1}
+$$
+
+因果修复与全部量子 tester 合同为
+
+$$
+\begin{aligned}
+\mathcal S_D&=\{S\succeq0:\operatorname{Tr}_D S=I_A\otimes\sigma,
+\quad\sigma\succeq0,\ \operatorname{Tr}\sigma=1\},\\
+C&\succeq0,\quad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+\end{aligned}
+\tag{63.2}
+$$
+
+采用吸收全转置的配对约定，记
+
+$$
+\begin{aligned}
+N_D(X)&=\max_{C,E}|\operatorname{Tr}(XE)|,\\
+e_D(R)&=\min_{S\in\mathcal S_D}N_D(R-S),\\
+\Delta(M)&=\max_C|\operatorname{Tr}(MC)-1|.
+\end{aligned}
+\tag{63.3}
+$$
+
+事件量词包含任意有限量子参考、记忆和最终测量。即使候选在部分反馈下没有归一化，式（63.3）仍是事件响应误差；这里没有把它当作两个归一化分布的总变差距离。
+

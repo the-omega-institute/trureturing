@@ -1,0 +1,14 @@
+## 9. 有限精确核验的实际范围
+
+有限整数核验覆盖二进制延迟证书 m=1 至 5；两组带不同端点维数的基本二分图证书，各延迟到 m=1 至 3；零遗忘、非平凡端点置换、单侧零遗忘以及命题 7.2 的两步复合证书，共 16 个结构化实例。检查包括每一步 C=UV、C^+=VU，菱形 PD、DP 的两个乘积，首末顶点重排后的完整链，以及阶数和条目上界。命题 7.2 的实例返回 d_L=1、d_R=2，输出链阶数为 3、2、1。
+
+另以种子 20260917 生成 500 个有限入边提升表，基顶点数在 1 至 3 之间，每个基纤维大小在 1 至 3 之间，基图含每个顶点的一条自环并加至多三条边。逐路径遗忘检测与递归分划检测一致：146 例达到基纤维，354 例在到达前稳定。未将随机样本未发现反例解释为无限全称证明。
+
+在 7 组同时具有左右提升的实例上，又检查了周期长度 1 至 4 的全部闭边词。正向和逆向各 1296 个测试输入均满足两次复合恢复原词。该检查按方块图相同起终点的实际边建立标签配对，验证第 6.2 条的双提升构造；不另行宣称它验证每个输入证书原指定的全部 psi 表。
+
+这些结果只覆盖所列有限输入，不能替代正文中的全称证明。
+
+[^rrosft-volume]: 固定输入为 [RECURSIVE_RELATIONAL_OBSERVATION](https://github.com/the-omega-institute/trureturing/blob/e984c77223b55a3cda565c7694098e436926183d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。本卷只按所列章节解释问题接口，不修改原文件。
+
+[^rrosft-bdr]: Boris Bilich, Adam Dor-On, Efren Ruiz, *Shift equivalence relations through the lens of C*-correspondences*, Mathematische Annalen 396, article 29 (2026), published 4 September 2026, [DOI:10.1007/s00208-026-03544-z](https://doi.org/10.1007/s00208-026-03544-z)。核对范围为期刊正文第 3 节定义 3.1 至 3.3、定理 3.5、推论 3.7、注 3.8，以及例 5.8；另对照 [arXiv:2411.05598v1](https://arxiv.org/abs/2411.05598v1) 的对应数学陈述。矩阵重边计数和路径复合在本文重新规定端点与方向，避免依赖 PDF 抽取中的换行或符号误读。
+

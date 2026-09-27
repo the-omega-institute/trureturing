@@ -1,0 +1,54 @@
+**环境解耦的有限矩阵表达。** 定义
+
+$$
+h_n=
+\operatorname{Tr}\sigma_{K,n}^2
++\operatorname{Tr}\rho_n^2\operatorname{Tr}\sigma_n^2
+-2\operatorname{Tr}\bigl[(\rho_n\otimes I_K)\sigma_n^2\bigr].
+\tag{20.5}
+$$
+
+取 $`\sigma_n`$ 的任意纯化 $`|\chi_n\rangle_{MKE}`$，则
+
+$$
+h_n=
+\|\rho_{ME,n}-\rho_n\otimes\rho_{E,n}\|_{\rm HS}^2\ge0.
+\tag{20.6}
+$$
+
+为核对交叉项，暂时略去 $`n`$，写
+
+$$
+|\chi\rangle
+=\sum_{i,\alpha,e}c_{i\alpha,e}|i,\alpha,e\rangle,
+\quad
+\sigma_{i\alpha,j\beta}
+=\sum_e c_{i\alpha,e}\overline{c_{j\beta,e}},
+\quad
+(\rho_E)_{ef}
+=\sum_{r,\beta}c_{r\beta,e}\overline{c_{r\beta,f}}.
+\tag{20.7}
+$$
+
+这里 $`i,j,r`$ 是来源指标，$`\alpha,\beta`$ 是接收指标，$`e,f`$ 是纯化环境指标。于是
+
+$$
+\begin{aligned}
+\operatorname{Tr}[\rho_{ME}(\rho_M\otimes\rho_E)]
+&=\langle\chi|\rho_M\otimes I_K\otimes\rho_E|\chi\rangle\\
+&=\sum_{i,j,\alpha,e,f}
+\overline{c_{i\alpha,e}}(\rho_M)_{ij}
+(\rho_E)_{ef}c_{j\alpha,f}\\
+&=\sum_{i,j,\alpha,r,\beta}
+(\rho_M)_{ij}\sigma_{r\beta,i\alpha}
+\sigma_{j\alpha,r\beta}\\
+&=\operatorname{Tr}[(\rho_M\otimes I_K)\sigma^2].
+\end{aligned}
+\tag{20.8}
+$$
+
+纯化两侧边缘具有相同非零谱，另外给出
+ $`\operatorname{Tr}\rho_{ME}^2=\operatorname{Tr}\sigma_K^2`$
+及 $`\operatorname{Tr}\rho_E^2=\operatorname{Tr}\sigma^2`$。
+展开（20.6）的平方范数即得（20.5）。因而（20.5）仅需 $`2D`$ 维联合接收态，虽然其零点检验的是与全部累计环境的解耦。
+

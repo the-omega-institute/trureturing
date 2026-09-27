@@ -1,0 +1,13 @@
+**定理 230.4（精确预算阶梯）。** 对（230.HR.22）的目标，
+$$
+\boxed{
+D_R=
+\begin{cases}
+1,&1\le R<t,\\
+0,&R\ge t,
+\end{cases}
+\qquad t=\left\lceil\frac d r\right\rceil.
+}
+\tag{230.HR.33}
+$$
+

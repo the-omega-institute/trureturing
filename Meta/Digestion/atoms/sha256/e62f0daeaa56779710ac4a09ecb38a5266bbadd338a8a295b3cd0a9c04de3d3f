@@ -1,0 +1,20 @@
+**定义 193.1（纯二维邻域精确生成的逐点成本）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$，令
+$$
+F(a,u)=\begin{pmatrix}1&a&u\\a&1&a\\u&a&1\end{pmatrix},\qquad
+\mathcal T_u=\mathcal S_{F(a,u)},\qquad
+B(a,u)=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{193.1}
+$$
+一个局部纯二维程序由包含 $t$ 的非空开区间 $U\subset J_a$、$U$ 上的 $C^1$ 秩一密度矩阵曲线 $\rho_u\in M_2$，以及与 $u$ 无关的 CPTP 映射
+$$
+\mathcal G:M_3\otimes M_2\longrightarrow M_3
+\tag{193.2}
+$$
+组成，要求对每个 $u\in U$ 和每个信号态 $\omega$ 都有 $\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega)$。不同程序允许使用不同的 $U$。成本取关于 $u$ 的 SLD 信息量，记
+$$
+\mathfrak P_{2,\mathrm{loc}}(a,t)
+=\inf_{(U,\rho,\mathcal G)}I_Q(\rho_t).
+\tag{193.3}
+$$
+这里要求整个 $U$ 上的严格等式；仅在 $t$ 匹配值和一阶导数的程序不属于此定义。第191节给出了每个这种程序都不能达到 $I_{\rm read}(t)=1/(1-t^2)$ 的结论。以下求出整个程序类的下确界。
+

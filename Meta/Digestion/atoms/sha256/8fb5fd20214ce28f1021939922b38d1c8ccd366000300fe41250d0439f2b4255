@@ -1,0 +1,18 @@
+### 104.3 六维已执行像中的超平面秩至多一
+
+当 $k\notin S$ 时，$\dim E_1=6$，$\dim E=5$。选任一非零复线性泛函 $\lambda:E_1\to\mathbb C$，使
+
+$$
+E=\ker\lambda.
+$$
+
+用其在固定四维块上的限制定义线性映射
+
+$$
+B_\lambda:F\longrightarrow Q^*,\qquad
+(B_\lambda z)(q)=\lambda(q\otimes z).
+\tag{104.8}
+$$
+
+更换定义同一超平面的非零泛函只会作非零标量倍乘，所以 $\operatorname{rank}B_\lambda$ 与该选择无关。
+

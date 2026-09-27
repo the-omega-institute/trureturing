@@ -1,0 +1,19 @@
+**定义 171.1（可遗忘记忆的终端合同）。** 沿用定义169.1的时间齐次联合 CPTP 通道合同、一次初始化及终端距离 $d_{\rm ref}=\frac12\|\cdot\|_\diamond$。真实相位 $\phi$ 在一条运行中固定，真实环境逐步新鲜；预测器的初始私有记忆与真实相位无关。记
+$$
+\varepsilon=1-r,\qquad \alpha=\alpha(r),\qquad
+H(r)=\sup_{N\ge1}\mathcal R_N(r),\qquad
+t_* =\frac\pi{3\sqrt3},\qquad L=\frac{\sqrt3}{4}e^{-t_*}.
+\tag{171.1}
+$$
+以下取 $1/\sqrt3<r<1$。记忆的遗忘只指丢弃系统输出之后，最终私有记忆对其初始化的依赖消失；它不要求已经输出的系统或已保存的实验记录丢失初始化信息。对本节的自主记忆更新，还将证明包含任意有限惰性参考 $R$ 的具体迹范数界。有关标准有限记忆通道与遗忘性的定义，见 Kretschmann、Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C 的全局经典开关，以及§V定义3、命题9。该文§VI B式(79)还给出有限步后精确消除初始记忆依赖的严格遗忘定义。该文丢弃消息输出后的记忆遗忘与本节所用方向一致；下面另行计算同一系统反复使用时的约化通道，不把不同接线方式等同。
+
+取 $0<p\le1/2$。在记忆基 $s=\pm1$ 上，令 $T_p(s,s)=1-p$、$T_p(s,-s)=p$，并定义
+$$
+\Lambda_{r,p}^{\rm mix}(X)=
+\sum_{s,u=\pm1}T_p(s,u)
+\mathcal M_{r,s\alpha}(X_{ss})\otimes|u\rangle\langle u|,
+\qquad X_{ss}=(I\otimes\langle s|)X(I\otimes|s\rangle).
+\tag{171.2}
+$$
+初始记忆为 $\sigma=I_2/2$。也就是每一步先使用当前标签的端点通道，再以概率 $p$ 翻转标签；标签不是每步重新读取的真实源参数。以 $\mathcal P_{r,N}^{\rm mix}$ 表示其终端系统通道，$W_r^{\rm mix}$ 表示定义169.1的全视界风险。$p$ 随 $r$ 变化时均指这同一个构造族。
+

@@ -1,0 +1,101 @@
+### 186.3 结果条件反馈的匹配构造
+
+在 Schmidt 坐标令 $H=-X$，所以
+$i\operatorname{Tr}(\rho HY)=\kappa$。
+采用结果条件反馈
+
+$$
+K_{j,s}=e^{is u_jH}(p_jI+st_jY)^{1/2},
+\quad p_0=\frac12+r_1\epsilon,\quad p_1=1-p_0,
+\quad t_0=b\epsilon,\quad t_1=-b\epsilon.
+\tag{186.4}
+$$
+
+取
+
+$$
+r_1=-\frac{\beta\delta}{8},\qquad
+b
+=-\frac{\gamma\delta(1+\kappa^2)}{2(1-\kappa^2)},
+$$
+
+$$
+u_0=\kappa(b+\gamma)\epsilon,\qquad
+u_1=\kappa(-b+\gamma R)\epsilon.
+\tag{186.5}
+$$
+
+这些参数对固定 $\kappa<1$ 及充分小 $\epsilon$ 合法。
+对每个旗标，
+$\sum_jK_{j,s}^{\dagger}K_{j,s}=\sum_j(p_jI+st_jY)=I$，
+所以任意所选实反馈角度都保持共同保迹条件。
+原输入 $j$ 未被提供给解码器；实际运行按取得的输出结果选择相应 Kraus 分支。
+记这一构造的完整半 diamond 误差为 $e$，其正确输出块为
+$\sigma_{jj}=\frac12\sum_s(I\otimes K_{j,s})\eta_s(w_j)(I\otimes K_{j,s}^\dagger)$。
+
+为核对二阶系数，暂令 $u_j=v_j\epsilon$，
+$a_0=r_1,a_1=-r_1$、$b_0=b,b_1=-b$、
+$c_0=1,c_1=R$。均匀旗标平均后的正确块满足
+
+$$
+\sigma_{jj}=\frac12P_\Xi+
+\epsilon\left[a_jP_\Xi+\frac{\beta c_j}{2}(P_\psi-P_\Xi)\right]
++O(\epsilon^2),
+$$
+
+$$
+\begin{aligned}
+f_j:=\langle\Xi|\sigma_{jj}|\Xi\rangle
+={}&\frac12+\left(a_j-\frac{\beta c_j}{2}\right)\epsilon\\
+&+\left[-\beta c_ja_j-\frac{b_j^2+v_j^2}{2}
++\kappa v_jb_j+\gamma c_jb_j+\kappa\gamma c_jv_j\right]
+\epsilon^2+O(\epsilon^3).
+\end{aligned}
+\tag{186.6}
+$$
+
+该式直接由
+$\operatorname{Tr}(\rho H)=\operatorname{Tr}(\rho Y)=0$、
+$i\operatorname{Tr}(\rho HY)=\kappa$ 展开有序乘积（186.4）得到。
+正确块的纯化正交耦合从 $O(\epsilon^2)$ 开始。
+对任意参考权重 $q$，第173节的匹配标签矩阵在两个目标方向上的压缩为
+
+$$
+M_q=
+\begin{pmatrix}
+q(1-f_0)&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&(1-q)(1-f_1)
+\end{pmatrix}.
+$$
+
+其正交块半负定，耦合范数 $O(\epsilon^2)$，
+且 $\lambda_{\max}(M_q)\ge1-\max_jf_j\ge1/4$ 对全部 $q$ 一致成立。
+Rayleigh 商的分块界因此使实际最高根与压缩最高根相差
+$O(\epsilon^4)$。利用压缩矩阵的精确调和最大值，得到
+
+$$
+e=1-\frac{f_0f_1}{f_0+f_1}+O(\epsilon^4).
+\tag{186.7}
+$$
+
+代入（186.6），四变量二次系数为
+
+$$
+\frac{\beta^2\delta^2}{16}+\frac{\beta\delta r_1}{4}+r_1^2
++\frac{\gamma\delta b}{4}+\frac{b^2}{4}
++\frac{v_0^2+v_1^2}{8}
+-\frac\kappa4[b(v_0-v_1)+\gamma(v_0+Rv_1)].
+$$
+
+先对两个反馈变量优化，得到
+$v_0=\kappa(b+\gamma)$、$v_1=\kappa(-b+\gamma R)$；
+关于 $b$ 的部分化为
+
+$$
+\frac{1-\kappa^2}{4}b^2
++\frac{\gamma\delta(1+\kappa^2)}4b
+-\frac{\kappa^2\gamma^2(1+R^2)}8,
+$$
+
+其极小值与 $r_1$ 的独立优化给出上述 $Q_{\min}$。
+

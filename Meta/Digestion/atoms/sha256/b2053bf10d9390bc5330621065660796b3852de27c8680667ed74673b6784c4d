@@ -1,0 +1,30 @@
+**定理 63.4（别名结构的实际可实现性与失谐压缩）。** 任给有限个正数 $\zeta_a$、至多一个零相位类、至多一个 $\pi$ 相位类及有限多个 proper 类，任给类内有限偏移和 proper 类内符号，均可由原 $\delta_M$ 序列上的确定性临界载波实现。有限失谐的单窗口结论则是第 60 章临界过程的确定性时间平移。
+
+证明。为各 proper 类选取模符号彼此分离且不等于 $0,\pi$ 的固定相位 $\alpha_L$。在零类、$\pi$ 类和 proper 类分别设置相位目标 $\delta_Mb_a$、$\pi+\delta_Mb_a$ 和 $\epsilon_a\alpha_L+\delta_Mb_a$。选择整数 $n_{a,M}$ 使
+
+$$
+\eta_{a,M}=\frac{2\pi n_{a,M}+\text{相位目标}}\omega
+=\sqrt{\zeta_a/\delta_M}+O(1).
+\tag{63.18}
+$$
+
+最近整数选择即可做到，且最终 $\eta_{a,M}>0$。于是 $\eta_{a,M}^2\delta_M\to\zeta_a$，同时完整实现指定关系。整数整周部分调节临界宽度，模 $2\pi$ 部分调节载波关系，两者并不冲突。
+
+若 $\omega\eta_M=\pi m_M+\delta_Mb_M$ 且 $b_M\to b$，在 $m_M$ 奇偶性固定的子列上令 $\eta_{0,M}=2m_M$ 及
+
+$$
+t_M(\theta)=\eta_{0,M}^3\log(\eta_M/\eta_{0,M})
++(\eta_{0,M}/\eta_M)^3\theta.
+$$
+
+在同一有限谱分辨率处有精确恒等式
+
+$$
+D_{\eta_M}(\theta)=
+(\eta_M/\eta_{0,M})^{3/2}
+\left[V_{\eta_{0,M}}(t_M(\theta))-V_{\eta_{0,M}}(t_M(0))\right].
+\tag{63.19}
+$$
+
+$t_M(0)\to\zeta b/\omega$，且 $t_M(\theta)-t_M(0)\to\theta$ 在紧区间上一致。第 60 章的相应奇偶共同连续过程极限可以直接代入；随机常数项抵消，留下 (63.7) 中相应实类的移频积分。这个等式解释有限失谐边缘律的复用，但不能决定不同 proper 类之间的联合关系；后者由 (63.8) 的两套 Gram 极限给出。
+

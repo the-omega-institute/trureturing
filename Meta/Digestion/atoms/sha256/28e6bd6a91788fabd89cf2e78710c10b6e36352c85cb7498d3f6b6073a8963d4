@@ -1,0 +1,3 @@
+**定理 41.1（紧族上的支撑、秩与正谱隙）。** 在定义 40.1 下，额外假设 $R_\theta$ 连续，置 $P_\theta=\operatorname{supp}R_\theta$。以下条件等价：
+
+- $\theta\mapsto P_\theta$ 在算子范数下连续。
