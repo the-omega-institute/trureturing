@@ -64951,3 +64951,140 @@ $$
 等半径时，$S_*=(I+nn^{\mathsf T})/2$、$\Omega_*=0$、$d_1=d_2=1/2$、$\lambda=1/a^2$、$D_a=3\sqrt2/a^3$，而 $J_a=3A$。所以 $\Gamma_a=0$、$\Theta_a=a/(24\sqrt2)$，式（300.3）还原第297节的 $1/(8\sqrt2a)$。一般半径的系数由同一个唯一端点原、对偶解决定；本节仍不求出整条有限预算曲线，也不声称实际最优通道在端点具有唯一二阶矩阵。
 
 ## 追加锚（本行以下为增补区）
+
+## 301. 端点生成元的固定角点方向、横向旋转与曲率符号
+
+**定理 301.1（最优生成元的固定方向与旋转轴）。** 固定正半径六态模型，沿用第298节正角点规范下唯一的端点矩阵 $M_*=S_*-\Omega_*$、$b=(1/a_1,1/a_2,1/a_3)$ 与唯一对偶矩阵 $Z_*=\lambda vv^{\mathsf T}$。选择 $\|v\|_2=1$、$v_i>0$，并定义 $\omega\in\mathbb R^3$ 使 $\Omega_*x=\omega\times x$。则
+
+$$
+M_*b=b,
+\qquad v\cdot\omega=0.
+\tag{301.1}
+$$
+
+不等半径时，第299节所必需的非零一阶旋转，其轴因而总在 $v^\perp$ 内。在第296节采用的主轴 Lindblad 表示中，$v$ 是耗散系数为零的方向。两个结论都包括对偶列支撑中出现零列的情形。
+
+证明。记 $A=\|b\|_2^2$，将归一化最优矩阵正数缩放为第298节最大化问题的达到点
+
+$$
+Q=\frac{D_a}{A}M_*,
+\qquad G=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T}.
+\tag{301.2}
+$$
+
+互补松弛与列支撑给出
+
+$$
+(Q+Q^{\mathsf T})v=\operatorname{Tr}(Q)v,
+\qquad
+Qe_i=\frac{\alpha_i}{\|Ge_i\|_2}Ge_i
+\quad\text{当 }Ge_i\ne0.
+\tag{301.3}
+$$
+
+因为 $G$ 对称，逐列展开乘积可得
+
+$$
+QG
+=\sum_{i:Ge_i\ne0}
+\frac{\alpha_i}{\|Ge_i\|_2}(Ge_i)(Ge_i)^{\mathsf T}.
+\tag{301.4}
+$$
+
+零列对应的项是 $(Qe_i)(Ge_i)^{\mathsf T}=0$，不要求 $Qe_i=0$。因此 $QG$ 对称，亦即 $QG=GQ^{\mathsf T}$。这一步统一保留了全部零乘子情形。
+
+令 $B=b\cdot v>0$、$\ell=\operatorname{Tr}(Q)$、$w=Qv$。式（301.3）给出 $Q^{\mathsf T}v=\ell v-w$ 与 $v\cdot w=\ell/2$，而 $Gv=Bb-\lambda v$。把 $QG=GQ^{\mathsf T}$ 作用到 $v$，两侧分别为
+
+$$
+QGv=BQb-\lambda w,
+$$
+
+以及
+
+$$
+\begin{aligned}
+GQ^{\mathsf T}v
+&=\ell(Bb-\lambda v)-Gw\\
+&=\ell Bb-b(b\cdot w)-\lambda w,
+\end{aligned}
+$$
+
+其中最后一步使用 $2v\cdot w=\ell$ 抵消 $v$ 方向的项。于是
+
+$$
+BQb=(\ell B-b\cdot w)b.
+\tag{301.5}
+$$
+
+由于 $B>0$，$Qb$ 与 $b$ 平行；再由 $b^{\mathsf T}Qb=D_a$ 得
+
+$$
+Qb=\frac{D_a}{A}b.
+$$
+
+正数缩放后即为 $M_*b=b$。
+
+为证明旋转约束，令 $K=Q-Q^{\mathsf T}$、$P=I-vv^{\mathsf T}$。展开同一个对称乘积等式，得到
+
+$$
+0=QG-GQ^{\mathsf T}
+=Qb\,b^{\mathsf T}-b(Qb)^{\mathsf T}+\lambda PKP.
+\tag{301.6}
+$$
+
+这里使用 $Qv=(\ell v+Kv)/2$ 与 $v^{\mathsf T}K=-(Kv)^{\mathsf T}$。已证的 $Qb\parallel b$ 使前两项抵消，因此 $PKP=0$。在以 $v$ 为第三轴的任意正向正交标架内，这意味着 $K$ 在前两轴平面上的反对称块为零；等价地，$\Omega_Q=(Q^{\mathsf T}-Q)/2$ 的旋转轴向量满足 $v\cdot\omega_Q=0$。再正数缩放回 $M_*$，得到式（301.1）。证毕。
+
+**定理 301.2（无限制端点曲率的精确符号）。** 在第300节的记号下，任意固定正半径都有
+
+$$
+\Gamma_a=-\frac{\|\Omega_*b\|_2^2}{D_a}\le0,
+\qquad
+\Theta_a=\frac{\lambda d_1d_2}{2D_a}>0.
+\tag{301.7}
+$$
+
+而且
+
+$$
+\Gamma_a=0
+\quad\Longleftrightarrow\quad a_1=a_2=a_3.
+\tag{301.8}
+$$
+
+因此，对每个固定的不等正半径模型，当 $\delta>0$ 充分小时，无限制实际最优误差严格低于其端点一阶切线：
+
+$$
+F_a^{(2)}\bigl(\eta(1-\delta)\bigr)<\kappa_a\delta.
+\tag{301.9}
+$$
+
+证明。由 $M_*b=b$ 与 $M_*^{\mathsf T}=M_*+2\Omega_*$，
+
+$$
+M_*^{\mathsf T}b=b+2\Omega_*b,
+\qquad
+b^{\mathsf T}(M_*^{\mathsf T})^2b
+=b^{\mathsf T}M_*^2b=A.
+$$
+
+反对称性给出 $b\cdot\Omega_*b=0$，故定义300.1中的量满足
+
+$$
+J_a=3A+4\|\Omega_*b\|_2^2.
+\tag{301.10}
+$$
+
+再将定理301.1的 $v\cdot\omega=0$ 代入该定义，得到
+
+$$
+\Gamma_a=\frac{3A-J_a}{4D_a}
+=-\frac{\|\Omega_*b\|_2^2}{D_a}.
+$$
+
+$\Theta_a$ 的表达与严格正性直接由第300节给出。
+
+若 $\Omega_*b=0$，则 $\omega\times b=0$，故 $\omega$ 平行于 $b$。但 $v\cdot\omega=0$ 且 $v\cdot b>0$，所以 $\omega=0$，即 $\Omega_*=0$。反方向显然成立。结合定理299.1，$\Omega_*=0$ 恰好等价于三个半径相等，证明式（301.8）。最后，对不等半径使用定理300.2的 $o(\delta^2)$ 余项与 $\Gamma_a<0$，得到式（301.9）。证毕。
+
+这些关系来自任务最优解的共同列支撑与耗散锥互补条件。它们不要求全部列约束具有严格正乘子，也不是一般量子比特生成元的分类。式（301.7）本身尚未确定一般半径下受限系数 $\Gamma_a+\Theta_a$ 的符号；端点的固定方向也不意味着有限预算最优通道具有完全相同的特征向量。
+
+## 追加锚（本行以下为增补区）
