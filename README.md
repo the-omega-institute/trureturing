@@ -137,8 +137,8 @@ between an arithmetic algorithm and an exact bound, however large the inputs.
 
 ## Toward holographic spacetime
 
-We study **holographic spacetime geometry** as a question about time, space and
-observation: when do partial records support reconstruction and action?
+We study **holographic spacetime geometry** by asking when partial records
+of time and space support reconstruction and action.
 
 Theory inputs study
 [event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
@@ -149,9 +149,10 @@ composition, shared sources and targets; and
 defined through allowed experiments and responses. Their prose does not certify
 formal coverage.
 
-A [finite-archive counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
-leaves the current spatial readout unchanged when an inactive event is added,
-while making a specified temporal composition illegal.
+The [finite-archive counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
+adds an inactive event at time `2`, preserving the current spatial readout
+but blocking composition before an archive at time `1`: every left event
+must precede every right event.
 
 A positive [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
 applies to nonempty local record sets on a finite tree: each recorded variable
@@ -160,10 +161,9 @@ joint assignments on their full overlap. Then any allowed local record extends
 to a record on the union of the local variable sets, satisfying every local
 constraint.
 
-This establishes a compatible completion; uniqueness, original-history recovery
-and computational cost require further results. Reconstruction with stated
-resolution and error bounds, and links to physical spacetime or holographic
-duality, remain research questions.
+Uniqueness, original-history recovery, computational cost, and reconstruction
+with resolution and error bounds require further results. Links to physical
+spacetime or holographic duality remain research questions.
 
 ## A continuing research program
 
