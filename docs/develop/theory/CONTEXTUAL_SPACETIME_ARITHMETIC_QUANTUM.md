@@ -69670,3 +69670,216 @@ $Q(\varepsilon,\delta)=Q(0,0)+O(|\varepsilon|+\delta)$，得到式（325.2）及
 结论只针对固定对称参考半径 $a$ 和固定非零扰动方向 $u$ 的对称点邻域。不宣称跨零半径退化、任意改变的扰动方向或所有有限预算统一成立，也不宣称编码、解码因子对唯一。
 
 ## 追加锚（本行以下为增补区）
+
+## 326. 接近对称点时两类最优通道的首个矩阵差
+
+第325节确定了两类实际最优值在联合极限中的差距。标量误差相差二次小量，并不说明最优通道本身也只相差二次小量。本节在同一个正角点规范下计算通道矩阵的首个差项。
+
+**定理 326.1（最优恢复矩阵的联合位移）。** 固定第325节的 $0<a<1$、非零零和向量 $u$ 及半径族 $a_i(\varepsilon)=a/(1+\varepsilon u_i)$。记
+
+$$
+n_0=(1,1,1)^{\mathsf T}/\sqrt3,\qquad
+P=n_0n_0^{\mathsf T},\qquad U=\operatorname{diag}(u),
+\qquad
+R_u=\frac{-U+3PU-2UP}{288}.
+\tag{326.1}
+$$
+
+在第325节的共同参数邻域内，取唯一正角点最优复合矩阵，并写其归一化主衰减对数为
+
+$$
+T_G=e^{-\delta M_G(\varepsilon,\delta)},\qquad
+T_H=e^{-\delta M_H(\varepsilon,\delta)}.
+$$
+
+缩小该邻域后，有一致展开
+
+$$
+\begin{aligned}
+M_G-M_H
+&=\varepsilon\delta^2R_u
++O\bigl(|\varepsilon|\delta^2(|\varepsilon|+\delta)\bigr),\\
+T_G-T_H
+&=-\varepsilon\delta^3R_u
++O\bigl(|\varepsilon|\delta^3(|\varepsilon|+\delta)\bigr).
+\end{aligned}
+\tag{326.2}
+$$
+
+矩阵余项可用任一固定矩阵范数理解，常数可以依赖于 $a,u$。特别地，$R_u\ne0$，首项系数不依赖共同参考半径 $a$。若按 $M_j=S_j-\Omega_j$ 分解，则
+
+$$
+\Omega_G-\Omega_H
+=\frac{5\varepsilon\delta^2}{576}(UP-PU)
++O\bigl(|\varepsilon|\delta^2(|\varepsilon|+\delta)\bigr).
+\tag{326.3}
+$$
+
+证明。第324、325节给出两类实际最优矩阵、目标变量和五个乘子的共同解析性。以下将它们合记为 KKT 解，并沿用第324节的不等式向量。两类约束仅在最后一个分量不同：
+
+$$
+F^G_{\varepsilon,\delta}(W)
+=F^H_{\varepsilon,\delta}(W)-e_5q_\delta(M),
+\qquad
+q_\delta(M)=\frac{\delta^2}{6}\Xi(M)+O(\delta^3).
+\tag{326.4}
+$$
+
+这里 $e_5$ 是五维约束空间的最后一个坐标向量，$W=(M,z)$。最大对称特征值简单，故 $\Xi$ 和式（326.4）所用解析分支都在对称点附近解析；第320节的系数恒等式由解析性延续到 $\Xi=0$ 的对称点。
+
+因为两套系统的零阶及一阶 $\delta$ 系数相同，且端点 KKT 线性化可逆，两套解的对应系数相同。于是它们的差解析地含有因子 $\delta^2$。等半径时两类实际最优矩阵完全相同，所以矩阵差也含有因子 $\varepsilon$。共同幂级数因此给出
+
+$$
+M_G-M_H=\varepsilon\delta^2\mathcal R(\varepsilon,\delta)
+\tag{326.5}
+$$
+
+且 $\mathcal R$ 共同解析。剩下计算 $\mathcal R(0,0)$。
+
+固定小 $\varepsilon$，令 $V(\varepsilon)$ 为两套 $W$ 解之差的 $\delta^2$ 系数，$\ell(\varepsilon)$ 为相应乘子差的系数。所有以下端点对象均在同一 $\varepsilon$ 的唯一端点解处求值。记约束 Jacobian 为 $J$、端点拉格朗日 Hessian 为 $\mathcal H$、最后一个乘子为 $\zeta$。展开活跃等式和平稳性方程得
+
+$$
+JV=e_5\frac{\Xi(M_*)}{6},\qquad
+\mathcal HV+J^{\mathsf T}\ell
+=\frac\zeta6\nabla_W\Xi(M_*).
+\tag{326.6}
+$$
+
+这些是 $\delta^2$ 的系数等式，没有再乘二阶导数的阶乘。公共的低阶解项在相减时消去，式（326.4）的负号使第二个等式右侧为正。
+
+在 $\varepsilon=0$，$M_0=(I+P)/2$，其反对称部分为零，故 $\Xi(M_0)=0$、$\nabla\Xi(M_0)=0$。KKT 线性化可逆使 $V(0)=0$、$\ell(0)=0$。令
+
+$$
+V'(0)=(E,h).
+$$
+
+由第323节的展开，$\Xi(M_*(\varepsilon))=O(\varepsilon^2)$。对式（326.6）求 $\varepsilon$ 导数，所有乘以 $V(0)$ 或 $\ell(0)$ 的变化项消失，得到 $J_0(E,h)=0$，并且对每个切向量 $(F,k)\in\ker J_0$，
+
+$$
+\mathcal H_0[(E,h),(F,k)]
+=\frac{\zeta_0}{6}
+\left\langle
+\left.\frac{d}{d\varepsilon}\nabla_M\Xi(M_*(\varepsilon))\right|_0,F
+\right\rangle_F.
+\tag{326.7}
+$$
+
+严格正的切空间 Hessian 使这个方程具有唯一解。其矩阵部分正是 $\mathcal R(0,0)$。
+
+先计算式（326.7）的右端。记 $q=Un_0$，则 $q\perp n_0$。第323节给出
+
+$$
+\Omega_*(\varepsilon)
+=\frac\varepsilon4(UP-PU)+O(\varepsilon^2).
+$$
+
+在对称点，$dI-S=(I-P)/2$，所以 $\Xi$ 关于反对称部分的首个二次项是 $\|\Omega n_0\|_2^2/2$。按照 $\Omega=-\operatorname{skew}M$ 的约定，对任意矩阵变化 $F$，
+
+$$
+D_M\Xi(M_*(\varepsilon))[F]
+=-\frac\varepsilon8(q^{\mathsf T}Fn_0-n_0^{\mathsf T}Fq)
++O(\varepsilon^2)\|F\|_F.
+$$
+
+对称部分及最大特征向量的微分只贡献 $O(\varepsilon^2)$，因为这些项均含两个反对称因子。因此
+
+$$
+\nabla_M\Xi(M_*(\varepsilon))
+=\frac\varepsilon8(PU-UP)+O(\varepsilon^2),
+\qquad \zeta_0=\frac{a}{6\sqrt2}.
+\tag{326.8}
+$$
+
+再计算切空间及其 Hessian。置 $m_i=M_0e_i$，则 $\|m_i\|_2=1/\sqrt2$。残差与锥切向等式给出
+
+$$
+n_0^{\mathsf T}En_0=0,\qquad \operatorname{Tr}E=0.
+$$
+
+三个列切向等式是 $a\langle m_i,Ee_i\rangle/\sqrt2=h$。将其求和，使用
+$\sum_i\langle m_i,Ee_i\rangle=(\operatorname{Tr}E+n_0^{\mathsf T}En_0)/2=0$，得到
+
+$$
+h=0,\qquad \langle m_i,Ee_i\rangle=0\quad(i=1,2,3).
+\tag{326.9}
+$$
+
+反过来，这些等式连同残差及迹等式描述全部切空间。对其中的任意 $E$，第324节的三个列 Hessian，取乘子 $\pi_i=1/3$，共同贡献 $a\|E\|_F^2/(3\sqrt2)$。最大特征值与两个较小特征值之间的间隔为 $1/2$，故锥项的 Hessian 贡献为 $4a\|(I-P)\operatorname{sym}(E)n_0\|_2^2/(3\sqrt2)$。于是
+
+$$
+\mathcal H_0[(E,0),(E,0)]
+=\frac{a}{3\sqrt2}
+\left[\|E\|_F^2+4\|(I-P)\operatorname{sym}(E)n_0\|_2^2\right].
+\tag{326.10}
+$$
+
+去掉公共正因子 $a/(3\sqrt2)$，式（326.7）的右端成为
+
+$$
+\frac1{96}\langle PU-UP,F\rangle_F.
+\tag{326.11}
+$$
+
+因此该线性响应不依赖 $a$。
+
+下面完整求解这个切向线性问题。它在同时置换 $u$ 的坐标与共轭矩阵时不变，而解唯一，故 $u\mapsto E$ 是置换等变的线性映射。零和向量到三阶矩阵的每个此类映射都可写成
+
+$$
+E=\alpha U+\beta PU+\gamma UP.
+\tag{326.12}
+$$
+
+为核对这个表述，固定一个对角位置，其系数在另外两个坐标交换下不变，利用 $\sum_i u_i=0$ 后只能正比于 $u_i$；固定一个非对角位置 $(i,j)$，它是 $u_i,u_j$ 的线性组合，剩余坐标由零和关系消去。三个系数恰由式（326.12）表示。坐标置换的共轭作用仍可用正向正交矩阵实现，理由与第325节相同。
+
+式（326.12）自动使迹和 $n_0^{\mathsf T}En_0$ 为零，而
+
+$$
+\langle m_i,Ee_i\rangle
+=\frac{u_i}{6}(4\alpha+2\beta+\gamma).
+$$
+
+因为 $u\ne0$，列切向条件恰好为 $\gamma=-4\alpha-2\beta$。令 $k_u=\|u\|_2^2/3=\|q\|_2^2>0$，直接内积计算得到
+
+$$
+\begin{aligned}
+\|E\|_F^2+4\|(I-P)\operatorname{sym}(E)n_0\|_2^2
+&=k_u(15\alpha^2+18\alpha\beta+6\beta^2),\\
+\langle PU-UP,E\rangle_F
+&=k_u(4\alpha+3\beta).
+\end{aligned}
+\tag{326.13}
+$$
+
+这些等式可由 $PU=n_0q^{\mathsf T}$、$UP=qn_0^{\mathsf T}$、$n_0^{\mathsf T}q=0$ 直接展开；相应 Hessian 双线性型由极化获得。唯一响应已知属于这一等变子空间，所以把式（326.7）限制到其两个切向系数，便得到
+
+$$
+\begin{pmatrix}15&9\\9&6\end{pmatrix}
+\begin{pmatrix}\alpha\\\beta\end{pmatrix}
+=\frac1{96}\begin{pmatrix}4\\3\end{pmatrix}.
+\tag{326.14}
+$$
+
+这里左侧是 Hessian 双线性型，不再把式（326.13）的二次型求导而额外乘二。该矩阵行列式为九，解为
+
+$$
+\alpha=-\frac1{288},\qquad
+\beta=\frac1{96},\qquad
+\gamma=-\frac1{144}.
+\tag{326.15}
+$$
+
+所以 $\mathcal R(0,0)=R_u$。由于 $q\ne0$ 且 $q\perp n_0$，$PU-UP=n_0q^{\mathsf T}-qn_0^{\mathsf T}\ne0$；$R_u$ 的反对称部分非零，从而 $R_u\ne0$。
+
+共同解析性使 $\mathcal R(\varepsilon,\delta)=R_u+O(|\varepsilon|+\delta)$，与式（326.5）结合即得第一个展开。矩阵指数的标准微分或其收敛幂级数，在有界的 $M_G,M_H$ 邻域内给出
+
+$$
+e^{-\delta M_G}-e^{-\delta M_H}
+=-\delta(M_G-M_H)+O\bigl(\delta^2\|M_G-M_H\|\bigr).
+\tag{326.16}
+$$
+
+它不要求两个矩阵交换。代入第一个展开，得到第二个展开。最后用 $\Omega_j=(M_j^{\mathsf T}-M_j)/2$ 取反对称部分，就得到式（326.3）。证毕。
+
+本节使用的 KKT 灵敏度、解析隐函数定理和矩阵指数微分是标准工具。新增内容是同一恢复任务的显式响应矩阵 $R_u$：两类最优通道在不对称参数的一阶已经分开，而第325节的最优误差差值直到该参数的二阶才出现。这个比较在共同正角点规范中进行，并不宣称编码、解码因子对唯一，也不扩展到奇异支撑分支或任意有限预算。
+
+## 追加锚（本行以下为增补区）
