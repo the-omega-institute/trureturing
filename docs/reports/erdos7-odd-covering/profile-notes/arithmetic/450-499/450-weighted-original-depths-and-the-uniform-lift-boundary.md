@@ -1206,3 +1206,138 @@ The [weighted-phase control program](../../../frontier/cover-geometry/merged-pha
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/weighted_phase_rows_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/weighted_phase_rows_controls.json
 ```
+
+## 12. A literal noncover forbids every unconditional low-excess law
+
+The unrestricted supplier suggested in sections9 and11 cannot hold for
+every original odd-distinct family. There is a452-class family with an
+explicit integer hole for which EVERY outside survivor satisfies
+
+    F_S(y)>=256/735=1/3+11/735,
+    F_H(y)>=(5/16)F_S(y)>=16/147=5/48+11/2352.       (UC1)
+
+Consequently no probability supported on its actual outside-only avoiding
+set gives either strict reverse of PE2 or PE3. This is an obstruction to
+an unconditional sufficient criterion, not an odd covering system. The
+necessary whole-cover implications PE2/PE3 and the conditional suppliers
+AP1--AP8 and WR1--WR10 remain valid. A supplier restricted by consequences
+of a hypothetical whole cover or justified minimality is still a separate
+open question.
+
+### 12.1. Complete numerical original classes
+
+Let B={3,5,7}, A={11,13,17,19}, and Q=46189. The retained numerical moduli
+are
+
+    D={3,5,7,9,15,21,25,27,35,45,49,63,75,81,
+       105,125,135,147,175,189,225,243,245,315,
+       343,375,405,441}.
+
+The [original-class input](../../../frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_originals.json)
+specifies every class solely by its full integer modulus and residue. It
+has four outside-only classes0 modp, p in A; one pure retained class1 modd
+for every d in D; and one mixed class at each modulus db, for every d in D
+and every nonempty squarefree divisor b of Q. Thus the class count is
+
+    4+28+28(2^4-1)=452.
+
+For clarity, those outside cofactors in increasing support size and then
+numerical order are
+
+    b_j=(11,13,17,19,143,187,209,221,247,323,
+         2431,2717,3553,4199,46189),  j=0,...,14.
+
+Each mixed class has retained phase2+(j mod(d-2)), hence a nonzero phase
+different from1. Its complete residue, including the actual outside
+phase, is fixed by the numerical input. No choice of a residue is made
+separately for different outside points or probability laws.
+
+Unique prime factorization separates all pairs(d,b), as well as the
+outside-only and pure retained classes. All452 original numerical moduli
+are therefore distinct, odd, and greater than one. Their common period
+and the retained period are
+
+    L_B=lcm(D)=10418625,
+    L=L_B Q=481225870125.
+
+The literal integer
+
+    h=64366265250,   h=0 modL_B,   h=1 modQ          (UC2)
+
+avoids every original class: its outside coordinate avoids all0 modp
+classes, and its retained coordinate0 avoids every pure or mixed retained
+phase. The numerical verifier also checks h against each full original
+pair(m,a). No irredundancy or inclusion-minimality property is asserted.
+
+### 12.2. Exact pointwise merged-phase certificate
+
+The actual outside-only avoiding set is exactly
+
+    V_A={0<=y<Q: y modp!=0 for each p in A},
+    |V_A|=10*12*16*18=34560.
+
+At each retained numerical d and actual y, form the SET
+
+    P_d(y)={a modd: (m,a) an original class,
+                    B-part(m)=d, y mod(m/d)=a mod(m/d)}.
+
+It always contains1, by the pure retained original. Set R_d(y)=|P_d(y)|.
+Repeated equal phases from different original cofactors are merged before
+counting. With the same retained weights as PE3, put
+
+    omega_B(d)=product_(p^e||d) (p-1)/((p-2)p^e),
+    W_d=L_B omega_B(d),
+    N(y)=sum_(d in D) W_d (|P_d(y)|-1).             (UC3)
+
+Every W_d is an integer. Evaluation of UC3 at ALL34560 actual outside
+survivors gives
+
+    min N(y)=3628800,
+    {y in V_A:N(y)=3628800}={19802},
+    min F_S=3628800/10418625=256/735.              (UC4)
+
+The [checker](../../../frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_obstruction.py)
+starts from the numerical(m,a) pairs, factors out their B-parts, and
+reconstructs every retained phase and outside congruence. It enumerates
+the entire nonzero CRT carrier, constructs a bitset for each outside
+coordinate event, and unions the original events at the same(d,phase)
+before adding their integer weights. Thus it computes UC3 without using
+projected labels or heuristic search scores as premises. Its
+[exact result](../../../frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_obstruction.json)
+includes the minimum, unique minimizer, literal hole, input hash, and
+hash of all numerical-survivor/score pairs. A separate direct-set
+computation agreed at every one of those34560 pairs. All substantive
+checks use explicit exceptions and remain active with Python optimization.
+
+Finally
+
+    d omega_B(d)
+       =product_(p|d) (p-1)/(p-2)<=2*(4/3)*(6/5)=16/5.
+
+The excesses are nonnegative, so F_S<=(16/5)F_H. Combining this with UC4
+proves UC1 pointwise. Integrating UC1 against ANY supported probability
+gives the same lower bounds. The obstruction survives all changes of the
+outside law, including nonproduct laws and point masses; it is not merely
+a failure of the uniform law or an upper estimate.
+
+### 12.3. The remaining whole-cover obligation
+
+This example has a retained zero hole above every outside survivor, while
+its number of other active phases exceeds both scalar reserve thresholds.
+It shows exactly what the phase-count scalar omits: the actual position
+of the uncovered retained set relative to the additional phases. A
+sufficient upper-bound test need not recognize every noncover.
+
+Therefore the unrestricted task cannot be reduced to proving a strict
+PE2/PE3 reverse for all original families. A continuation must either use
+additional structure of a hypothetical whole cover to supply that
+reverse, or preserve more of the joint retained-phase geometry in a
+different contradiction. Sections9--11 supply conditional tools for that
+task, not the missing universal statement. Erdős #7 remains open here.
+
+This is an ordinary finite certificate, not new Lean verification.
+Reproduce it from the repository root with explicit input and output:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_obstruction.py --input docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_originals.json --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_obstruction.json
+```
