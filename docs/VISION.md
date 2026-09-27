@@ -128,9 +128,9 @@ The method links five steps:
    and proofs or counterexamples to settle mathematical claims. When a
    representation cannot express a needed distinction, investigate new
    relations, languages or forms of observation.
-5. **Return results to the next inquiry.** Reuse known theorems, preserve new
-   reusable content, and state the conditions still to be met. Let the next
-   question begin from an explicit boundary.
+5. **Return results to the next inquiry.** Reuse known theorems and preserve new
+   reusable content. Show which conclusions supply needed premises, checking
+   assumptions and identifying the remaining gaps.
 
 A [circle theorem](../D5/S3/ConceptDynamics/Topology/CircleDoubleCoverNoSection.lean)
 rules out choosing a square root continuously around the whole complex unit circle.
