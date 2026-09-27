@@ -47376,3 +47376,328 @@ The fixed reference computation (101.25)–(101.31), retaining exact finite A,La
 结论分别适用于原独立配对和平稳路径实验，对确定真支撑与合法取整一致。常数可以依赖固定幅度、固定 $\beta$ 和区间内部的固定 $c$；未给出趋近端点或 $\beta\to1$ 的统一阈值。本章的 $183c_q/400$ 是充分构造的端点，未声明必要性、最优性、零噪声极限或物理相变。扩大候选供给或单独优化某个频带都不自动扩大原后验定理。
 
 ## 追加锚（本行以下为增补区）
+
+## 162. 固定切分区域的复零点与总零点延拓的真实缺口
+
+第 160 章在固定小复场域内建立了原始选择计数的简单零点与精确计数。本章进一步把精确有限驻点相位延拓到显式条带的每个紧子域，并证明：固定切分所产生的边界区域，在总相位候选曲线到达虚轴之前就会出现自身的复零点。因此，原先逐区域取非零振幅比的表示不能沿整个候选曲线原样延续。
+
+这个障碍依赖切分位置；相邻区域的共享切口项在总和中抵消。下面给出原计数区域的双端点展开、同时简单零点与无额外零点计数，以及 $O(t^{-2})$ 的未缩放相位精度。它们没有确定总零点曲线的非局部终点。总和的轮廓系数、抵消后的相对余项与非局部零点计数仍待证明；以下均为普通数学推导，未作 Lean 认证。
+
+### 162.1 精确有限剖面、区域划分与原始计数
+
+Keep the sole original full-q selected count law P_x, every group, floor, multiplicity, outside label, original mu and actual noncentral e. In the notation of Chapter 160,
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,\quad C_2=\delta^{-1}\sum_jv_j^2,
+$$
+$$
+ x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B,\quad
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ T=(E-V)/\sqrt\delta,\quad H_y=V+\sqrt\delta\cdot y.
+ \tag{162.1}
+$$
+Let a=(2V)^-1+eta, eta->0, t=eta/sqrt(delta)->infinity arbitrarily slowly, and sigma>0 tend to zero subject ONLY to the original strict margin limsup log(1/sigma)/Q^3<c_q/2. The exact sum remains
+$$
+ N_P^-(h,y)=\sum_{D<0}P_x(n)
+     e^{aD^2+hD-(T-y)^2/(2\sigma^2)}.
+ \tag{162.2}
+$$
+Write m=sqrt(2V^4/C2), w0=sqrt(2/3), kappa_c=2w0/3, r_s=m sqrt(eta/delta), h_s=eta r_s, and $\mathcal T=h_sr_s=m^2t^2$. This large parameter is distinct from the physical T. For xi in a fixed compact X contained in(0,w0), put s=xi r_s, B_xi={0<-D<=s}, I_xi={-D>s}. Keep the ACTUAL h0=h_equal^P and actual mean gap d from Chapter 160, including their finite data/output/separator dependence. Thus d/r_s->w0 and h0/h_s->kappa_c, but these limiting values are not substituted into finite predictions.
+
+All estimates below are simultaneous on each inherited common tight-constant data class, uniformly for |y|<=R and xi in X. Exhausting the classes gives the original actual-data probability statement, separately for pair and path and uniformly over deterministic size-q supports. No deterministic limit of m is used. No field chosen from the data is treated as independent.
+
+We reuse the exact profile g(r) from Chapter 160, including its finite selection quadratic. Explicitly, with beta=a-epsilon, epsilon=B^2/(2d_c), ell0=onehalf log(d_all/d_c), the exact low tuple has probability p_L, shifts c_L and energy u_L; put V_H=sum_H v_j, v=(v_j)_H and A0=diag(v)-vv^T/V_H. Then
+$$
+ g(r)=e^{\ell_0+\beta r^2}\sum_{n_L}p_L(n_L)
+ {e^{-(r+c_L)^2/(2V_H)}\over\sqrt{2\pi V_H}}
+ E_{Z\sim N(0,A_0)}
+ e^{-[u_L+\|Z-(r+c_L)v/V_H-e_H\|^2-H_y]^2/(2\delta\sigma^2)}.
+ \tag{162.3}
+$$
+This is a comparator definition on the real charge line, not a replacement of P. Its analytic continuation and nonvanishing on EVERY fixed disk |r/r_s|<=M, with uniform fixed scaled derivatives, were proved by Chapter 160's sector energy contour. Let L(r)=log(g(r)/g(0)), with L(0)=0, on such a disk. It retains finite sigma, actual e and exact lows before any expansion. The inherited results used here are
+$$
+ f_Q(x,\kappa)={L(r_sx)\over\mathcal T}-\kappa x
+     \longrightarrow f(x,\kappa)=x^2-x^4/2-\kappa x
+ \tag{162.4}
+$$
+holomorphically and in every fixed derivative on smaller compact disks; g(0) comparable to sigma; the global real-charge tail bound of Chapter 160, equation (160.30); and the exponentially accurate ORIGINAL selected-count comparison
+$$
+ G_J(h)=\int_Jg(r)e^{-hr}dr,\qquad
+ |N_P^J(h)-G_J(h)|\le\sigma P(Q)e^{-bQ^3+C_Ht^2},
+ \quad |h|\le Hh_s,
+ \tag{162.5}
+$$
+for J=B,I,-. Its full-q identity is still P_x(n)=Q_x(n)[z^(q-k)]A_c(z)/[z^q]A_all(z), with BD=k-m_J0. The outside Bernoulli coefficient, original count-cell lift, exact low sum, cutoff/excluded tuples and same residual are included in(162.5). The comparison keeps the full finite noncentral action. New divisions below use explicit lower bounds at the raw sigma scale.
+
+### 162.2 候选驻点相位的显式解析延拓域
+
+The limiting interior branch has an explicit analytic expression. For a complex phase parameter omega define
+$$
+ U(\omega)=\sqrt{\frac{1+\sqrt{1-6i\omega}}3},\qquad
+ K_*(\omega)=2U(\omega)-2U(\omega)^3.
+ \tag{162.6}
+$$
+Both square roots are chosen with positive real part on the strip
+$$
+ \mathcal S=\{\omega:|\Im\omega|<1/12\}.
+ \tag{162.7}
+$$
+Indeed Re(1-6i omega)>1/2 there, so Re sqrt(1-6i omega)>1/sqrt(2). In particular Re U^2>(1+1/sqrt(2))/3>1/2 and Re U>0. The defining identities are
+$$
+ A(U):=-U^2+\tfrac32U^4=-i\omega,\qquad
+ f_x(U,K_*)=0,\qquad K_*'(\omega)=i/U(\omega).
+ \tag{162.8}
+$$
+The last identity follows by differentiating A and the stationary equation; neither denominator vanishes. Because Re(1/U)>0, the function -i K_* has derivative with strictly positive real part on the convex strip. Integrating that derivative along the straight segment between any two points proves injectivity: the difference quotient has positive real part. Hence K_* is one-to-one on this EXPLICIT strip, not just an unnamed neighborhood of omega=0.
+
+The stationary curvature has no zero on this domain: 6U^2-2 has positive real part. Also K_* never vanishes. A zero would require U^2=1 or U=0; the second is impossible for our root, and the first would force omega=i/2, outside(162.7). Thus an endpoint slope factor and the interior quadratic factor both admit analytic logarithms on each simply connected field domain K_*(S'), S' a rectangle compactly contained in(162.7).
+
+The exact finite-array version below gives an analytic-domain theorem; amplitude control is a separate obligation. Fix any finite W and 0<b<1/12, and take a slightly enlarged rectangle around |Re omega|<=W, |Im omega|<=b. All U(omega) lie in one fixed charge disk. On it (162.4) and its analytic derivatives apply to the SAME exact g. The roots U remain uniformly separated from the other roots of f_x, since the curvature is nonzero and the parameter rectangle is compact. On uniformly small circles about U, Rouché applied to f_Q,x gives one simple root U_Q(omega); local analytic inverses patch by uniqueness. Uniform Cauchy estimates show U_Q->U with fixed derivatives. This proves continuation on the whole rectangle without assuming that real convexity supplies a uniform radius.
+
+Let h=h_s K_*(omega), r_I=r_s U_Q(omega), q0=h-L'(0), and K_Q=-L''(r_I). The exact branch equation is L'(r_I)=h. On this domain K_Q/eta converges to 6U^2-2, q0/h_s to K_*, and both are bounded away from zero. Continue their logarithms from omega=0 along this simply connected rectangle. Then
+$$
+ \Theta_Q(h)=-L(r_I)+hr_I-\log q_0-\tfrac12\log(2\pi/K_Q)
+ \tag{162.9}
+$$
+is analytic there, and
+$$
+ {\Theta_Q(h_sK_*(\omega))\over\mathcal T}\longrightarrow i\omega
+ \tag{162.10}
+$$
+uniformly with derivatives on a smaller rectangle. The prefactor logarithm contains log(h_s/sqrt(eta))=log(m t), whose ratio to mathcalT vanishes even for arbitrarily slow t. There is no discarded log Q. Multiplying the derivative of(162.10) by -i gives a function uniformly close to1, so the same straight-segment proof gives univalence of the exact finite phase on the smaller rectangle for large Q.
+
+This retains all finite profile corrections in(162.9); it only uses(162.10) to certify the analytic domain and inverse. Solving Theta_Q=(2k+1)pi i on this enlarged domain defines a regular analytic CANDIDATE for zero continuation. Without a regional or regrouped amplitude comparison it is NOT a theorem about N_P^- there. This distinction will matter below: analytic continuation succeeds past a point at which Chapter 160's original regionwise approximation cannot continue.
+
+### 162.3 共存曲线上的真正退化与坐标边界
+
+For real omega>=0 write U=a-ib, a>0, b>=0, and set p=Re U^2 and q=-Im U^2. Equations(162.8) give
+$$
+ p\ge2/3,\quad q=\sqrt{p(p-2/3)},\quad
+ \omega=q(3p-1),\quad S=|U|^2=\sqrt{2p^2-2p/3},
+$$
+$$
+ a^2=(S+p)/2,\quad b^2=(S-p)/2,
+$$
+$$
+ \Re K_*=2a(1+S-2p),\qquad
+ \Im K_*=2b(S+2p-1).
+ \tag{162.11}
+$$
+p increases strictly from2/3 to infinity as omega increases. The derivative identity in(162.8) gives particularly transparent signs:
+$$
+ {d\over d\omega}\Re K_*=-b/S<0,\qquad
+ {d\over d\omega}\Im K_*=a/S>0\quad(\omega>0).
+ \tag{162.12}
+$$
+Thus the upper coexistence arc is simple and regular for every finite positive omega. Its interior curvature has real part 6p-2>=2 and its phase derivative never vanishes.
+
+The stationary fold of the cubic occurs at U^2=1/3, K_*=+/-4/(3sqrt(3)). Its action is A=-1/6, which has nonzero real part. It is NOT on Re A=0 on our arc. The branch point in the formula(162.6) occurs at omega=-i/6, not on the real omega axis. Endpoint-slope degeneracy K_*=0 likewise is not on our arc. A saddle chart collision at these values cannot be called an endpoint of this coexistence curve.
+
+The arc does reach the imaginary field axis, but regularly. Solving 1+S-2p=0 gives
+$$
+ p_A={5+\sqrt7\over6},\quad
+ q_A=\sqrt{p_A(p_A-2/3)},\quad
+ \omega_A=q_A(3p_A-1).
+ \tag{162.13}
+$$
+At omega_A, Re K_*=0 and Im K_*>0; neither the saddle curvature nor K_* nor the phase derivative vanishes. Hence loss of the CONVENIENT positive-real endpoint slope is not itself a degeneracy. A local endpoint path can rotate because the full complex slope remains nonzero. The exact finite phase theorem in Section 162.2 crosses a neighborhood of this point; it does not establish the contour coefficients or the total zeros there.
+
+As omega tends to infinity only in this limiting algebraic description, arg U tends to -pi/8 and arg K_* tends to5pi/8. This follows from U^4 asymptotic to -2i omega/3. It is NOT an assertion of a growing-domain finite-array theorem; all finite-array results here use a fixed W before taking Q to infinity.
+
+### 162.4 其他鞍点的相位对齐及原计数包络约束
+
+The other stationary points of f are
+$$
+ V_+(\omega)={-U+\sqrt{4-3U^2}\over2},\qquad
+ V_-(\omega)={-U-\sqrt{4-3U^2}\over2},
+ \tag{162.14}
+$$
+with the root continued from positive sqrt(2) at omega=0. For omega>0 its imaginary part is positive and its real part positive. No collision occurs on the real omega arc. Put rho_j=V_j/U. They satisfy rho_j^2+rho_j+1=1/U^2. Both have Re rho_j<1 for all omega>=0. To prove this without computation, start at omega=0, where rho_+=(sqrt(3)-1)/2<1 and rho_-=-(sqrt(3)+1)/2<1. A crossing Re rho=1 would give rho=1+iv and 1/U^2=3-v^2+3iv. But |1/U^2|<=3/2 implies |v|<=1/2, whereas Re(1/U^2)<=3/2 contradicts 3-v^2>=11/4. Continuity and absence of root collisions complete the proof.
+
+For any stationary branch Z, dA(Z)/domega=-Z K_*'(omega). Therefore
+$$
+ {d\over d\omega}\Im[A(V_j)-A(U)]=1-\Re\rho_j>0.
+ \tag{162.15}
+$$
+The difference starts real at omega=0. Thus neither other saddle ever phase-aligns with U for omega>0. This excludes a necessary saddle-to-saddle connection condition involving U along that arc; it does not by itself construct its integration cycle.
+
+The endpoint alignments can also be classified. For V_- the principal root in rho_- has positive real part, so Re rho_-<-1/2. Hence Im A(V_-)=-integral_0^omega Re rho_- is positive. For V_+=c+id, d>0 by(162.14). The imaginary part of the stationary field gives 1-3c^2+d^2>0 because Im K_*>0. Thus c^2-d^2<1/3 and
+$$
+ \operatorname{sign}\Im A(V_+)=-\operatorname{sign}c,
+ \quad
+ \operatorname{sign}\Re K_*=
+ \operatorname{sign}[2c(1-c^2+3d^2)]=\operatorname{sign}c.
+ \tag{162.16}
+$$
+The second factor is strictly positive by the same inequality. Consequently the only endpoint/other-saddle phase alignment on the positive omega arc is V_+ at omega_A. There V_+=iB_A, with
+$$
+ B_A^2={\sqrt7-1\over3},\qquad A(iB_A)=B_A^2+\tfrac32B_A^4=1.
+ \tag{162.17}
+$$
+For example, at the purely imaginary field the three roots have the form a-ib, -a-ib and2ib, so B_A=2b; substituting S=2p_A-1 proves the first identity. The second is direct algebra. The two other saddle actions have real part zero there, while the upper imaginary saddle has real action1.
+
+This alignment is not license to insert an exp(mathcalT) term into the original normalizer. There is a direct original-model exclusion. At purely imaginary h, positivity of the real finite weights gives |N_P^-(h,y)|<=N_P^-(0,y). Equations(162.4),(162.5) and Chapter 160's full real-charge tails give
+$$
+ \limsup {1\over\mathcal T}
+ \log {N_P^-(0,y)\over\sigma r_s}\le {1\over2},
+ \tag{162.18}
+$$
+uniformly on our classes. To verify the normalization, integrate the exact real profile over x=r/r_s. On a fixed compact its log ratio to g(0) divided by mathcalT converges uniformly to x^2-x^4/2, whose maximum on x>=0 is1/2. The tail can have an arbitrarily large negative speed exponent, and g(0)/sigma is bounded. The count error in(162.5), divided by sigma r_s, is exponentially negligible in Q^3. No polynomial Q prefactor is discarded after division by slow mathcalT.
+
+A nonzero, bounded algebraic saddle coefficient times the V_+ amplitude at this field would have size (sigma/sqrt(eta)) exp(mathcalT[1+o(1)]). After division by sigma r_s its prefactor is only of order1/t. It cannot be an isolated contribution with all remaining terms of scale exp(o(mathcalT)): that would contradict(162.18). Thus any proposed decomposition must either exclude this saddle on the original contour or exhibit a separately proved cancellation of the SAME exponential size. The stationary roots U,V_- and the endpoint, whose real actions are zero, cannot provide that cancellation. This is a rigorous exclusion of an unsupported contour assignment, not a proof that N_P^- has or lacks a zero at the alignment. Finite noncentral/noise corrections are o(mathcalT) in this gap comparison; they are still retained exactly in every precision-level formula below.
+
+### 162.5 先于虚轴对齐的固定切分障碍
+
+For a fixed permitted separator xi define
+$$
+ c_\xi=\xi-\xi^3/2.
+ \tag{162.19}
+$$
+It increases strictly on(0,w0), and 0<c_xi<kappa_c. On the real cut x=xi,
+$$
+ \Re f(\xi,K_*(\omega))=\xi[c_\xi-\Re K_*(\omega)].
+ \tag{162.20}
+$$
+By(162.12)--(162.13), there is a UNIQUE omega_xi in(0,omega_A) at which Re K_*(omega_xi)=c_xi. This is an explicit implicit description: solve the monotone formula(162.11) for p in(2/3,p_A), then omega_xi=sqrt(p(p-2/3))(3p-1). It involves no unspecified small constant. On a separator compact, omega_xi is bounded away from both endpoints. Write kappa_xi=K_*(omega_xi) and beta_xi=Im kappa_xi>0.
+
+This crossing is not a fold. At the CUT endpoint,
+$$
+ \Re f_x(\xi,\kappa_\xi)=\xi(1-3\xi^2/2)>0,
+ \quad \Re\kappa_\xi=c_\xi>0.
+ \tag{162.21}
+$$
+At the principal interior saddle all the factors from Section 162.2 remain nonzero as well. What fails is the negative REAL action gap at the fixed cut used in Chapter 160's separate regional deformations. Equation(162.20) changes sign. For omega>omega_xi sufficiently close, the cut endpoint has positive real action although the proposed principal endpoint/interior coexistence actions still have equal real part zero. This is an actual contribution to a regional integral, and the next section returns it to the original selected counts.
+
+The finite cut height is NOT centered by bare c_xi when phase precision is required. Its exact field is
+$$
+ h_C(Q,y,\xi)=L(s)/s,\qquad s=\xi r_s,
+ \tag{162.22}
+$$
+so h_C/h_s->c_xi but all finite empirical, noncentral and noise terms remain in L(s). Corrections to h_C/h_s may be much larger than mathcalT^-1. No assumption that they are smaller is made.
+
+### 162.6 原始边界区域的双端点振幅定理
+
+**定理 162.1（原始边界区域的双端点展开）。** This theorem concerns N_P^B, not N_P^-. Fix a bounded positive imaginary-field interval [v1,v2] containing the beta_xi values of interest, with a fixed surrounding margin. On a uniform small real-width rectangle
+$$
+ |\Re(h/h_s)-c_\xi|<a_X,\qquad
+ v_1-a_X<\Im(h/h_s)<v_2+a_X,
+ \tag{162.23}
+$$
+the exact factors
+$$
+ q_0(h)=h-L'(0),\quad q_\xi(h)=L'(s)-h,\quad
+ A_0(h)=g(0)/q_0(h),\quad
+ A_\xi(h)=g(0)e^{L(s)-hs}/q_\xi(h)
+ \tag{162.24}
+$$
+have q0/h_s and q_xi/h_s with positive real parts bounded below. Indeed their limiting real parts at the center are c_xi and xi(1-3xi^2/2), uniformly positive on X. The constants also bound their moduli above. Both A factors are nonzero and
+$$
+ |A_0|\asymp\sigma/h_s,\qquad
+ |A_\xi|\asymp(\sigma/h_s)e^{L(s)-s\Re h}.
+ \tag{162.25}
+$$
+
+We claim the uniform, analytic, ORIGINAL-law expansion
+$$
+ N_P^B(h,y)=A_0(h)+A_\xi(h)+\mathcal E_B(h),
+$$
+$$
+ |\mathcal E_B(h)|\le C\mathcal T^{-1}(|A_0(h)|+|A_\xi(h)|)
+                   +\sigma P(Q)e^{-bQ^3+Ct^2}.
+ \tag{162.26}
+$$
+There is a plus sign between the two endpoints: the interval is oriented from0 to s and the exponential grows toward its right endpoint in the corresponding endpoint chart.
+
+Here is a proof with all error scales. At Re kappa=c_xi,
+$$
+ \Re f(x,\kappa)=x[(x-x^3/2)-c_\xi]<0\quad(0<x<\xi),
+ \tag{162.27}
+$$
+because x-x^3/2 is strictly increasing up to w0. The action is zero at BOTH interval endpoints. Choose short fixed endpoint intervals and a middle interval, uniformly for xi in X. The middle has a fixed negative gap; a_X can be chosen small enough that the gap remains relative to the larger endpoint action, uniformly for the whole imaginary interval, since the imaginary field does not change the real action on real x. Equation(162.4) gives the same assertion for the exact finite f_Q, including its derivatives.
+
+On the left interval set x=r/r_s and integrate the exact exponent mathcalT f_Q(x,kappa). Its linear slope is -q0/h_s with real part strictly negative; its remaining scaled derivatives are uniformly bounded by the exact analytic-profile estimates. After x=u/mathcalT, Taylor expansion of the exponent on bounded u has error O(u^2/mathcalT). The real-slope envelope exp(-cu) pays every such polynomial. A fixed small endpoint interval is treated by first using that envelope up to u of order mathcalT and then splitting at a subpower cutoff; the discarded part is exponentially small. This gives its integral A0 with relative O(mathcalT^-1). Equivalently the local analytic coordinate v=-f_Q has a uniformly bounded Jacobian and a nonzero derivative, as established directly by the same slope bounds. No inverse noise width is differentiated.
+
+At the right endpoint set x=xi-u/mathcalT. The exact exponent is mathcalT f_Q(xi,kappa)-(q_xi/h_s)u+O(u^2/mathcalT). The same positive-real slope bound gives A_xi and relative O(mathcalT^-1). The compact middle costs at most C sigma r_s exp(-gamma mathcalT) times the larger endpoint exponential. Dividing by the endpoint scale sigma/h_s costs only r_s h_s=mathcalT, so this remainder is smaller than every fixed inverse power of mathcalT for arbitrarily slow t. This proves(162.26) for the comparator interval integral, without any unknown polynomial Q factor. Finally apply the exact region version of(162.5). Its additive count error includes the physical sigma and, by(162.25), is exponentially small relative to at least A0. If division by A_xi is desired on the fixed-width box it costs at most exp(C mathcalT) and polynomial scales; Q^3 still wins. This proves(162.26) for the SAME original selected count box, including floor and cut-cell strips, low tuples, excluded counts, actual e, finite selection and the same residual.
+
+This is also a region-dominance theorem away from competition. If L(s)-s Re h>=epsilon mathcalT within the box, then N_P^B/A_xi=1+O(mathcalT^-1)+O(exp(-epsilon mathcalT)). If it is <=-epsilon mathcalT, then N_P^B/A0 has that conclusion. These are uniformly relative statements about an original count REGION at finite noise, not a total-law contiguity assertion.
+
+### 162.7 区域零点的同时定位与有限相位交叉
+
+Define the exact finite two-endpoint phase
+$$
+ \Xi_Q(h)=hs-L(s)-\log q_0(h)+\log q_\xi(h).
+ \tag{162.28}
+$$
+Use the individual logarithms with positive-real branches provided by(162.23)--(162.24). Thus A_xi/A0=exp(-Xi_Q), and(162.26) gives
+$$
+ {N_P^B(h,y)\over A_0(h)}=1+e^{-\Xi_Q(h)}
+       +O(\mathcal T^{-1})(1+|e^{-\Xi_Q(h)}|),
+ \tag{162.29}
+$$
+with the exponentially small original error absorbed. Unlike a ratio of unknown regional integrals, (162.28) uses the exact point profile and its endpoint derivatives. Every finite correction is kept.
+
+Exact differentiation yields
+$$
+ \Xi_Q'(h)=s-1/q_0(h)-1/q_\xi(h),\qquad
+ {\partial_\kappa\Xi_Q\over\mathcal T}=\xi+O(\mathcal T^{-1}).
+ \tag{162.30}
+$$
+The rectangle(162.23) is convex. After a uniform shrink, its derivative is close to the positive real xi, so the straight-segment argument proves injectivity, quantitative inverse bounds and an image containing the needed phase rectangles. The real coordinate is centered by the EXACT h_C in(162.22), with the bounded complex log ratio in(162.28) retained, rather than by c_xi alone.
+
+For specificity take fixed 0<v1<v2 in the imaginary interval and keep a margin around it in(162.23). Put
+$$
+ n_- =\left\lceil{\mathcal T\xi v_1\over2\pi}\right\rceil,
+ \qquad n_+=\left\lfloor{\mathcal T\xi v_2\over2\pi}\right\rfloor.
+ \tag{162.31}
+$$
+For any fixed A>0 the inverse image under Xi_Q of |Re zeta|<A and 2pi n_-<Im zeta<2pi n_+ is well defined for all sufficiently large Q. It contains exactly n_+-n_- zeros of N_P^B, all simple. For every j=n_-,...,n_+-1, let hat h_j^B=Xi_Q^-1((2j+1)pi i). The actual regional zero obeys
+$$
+ |h_j^B-\widehat h_j^B|\le {C\over s\mathcal T},\qquad
+ |d(h_j^B-\widehat h_j^B)|\le C\mathcal T^{-1}=o(1).
+ \tag{162.32}
+$$
+These are simultaneous statements about order-t-squared many regional zeros on one realization. The proof is explicit: on the vertical phase sides, |1+exp(-zeta)|/(1+|exp(-zeta)|)>=tanh(A/2); on the horizontal sides Im zeta=2pi n it equals1. On a circle of radius C1/mathcalT about an odd-pi site it is at least c C1/mathcalT. Choose C1 larger than the uniform error constant in(162.29). Rouché gives the outer count and one zero counting multiplicity in every disjoint small disk; hence simplicity and no extras. The inverse bound(162.30) gives(162.32). This use of Rouché is classical; the new content is the two-endpoint original-count expansion(162.26) and its consequence for the obstruction.
+
+There is an exact finite connection to the candidate TOTAL coexistence phase, not just a picture of two limiting curves crossing. In a fixed neighborhood of kappa_xi, consider the two real equations
+$$
+ \Re\Theta_Q(h)=0,\qquad \Re\Xi_Q(h)=0,
+ \tag{162.33}
+$$
+where Theta_Q is the analytic continuation proved in Section 162.2, NOT asserted here to approximate total amplitudes. Divide both equations by mathcalT and differentiate in Re kappa, Im kappa. Their limiting Jacobian is
+$$
+ \begin{pmatrix} a&b\\ \xi&0\end{pmatrix},\qquad
+ U(\omega_\xi)=a-ib,\quad b>0,
+ \tag{162.34}
+$$
+whose determinant is -b xi. On a separator compact it is bounded away from zero. The real implicit theorem with the uniform C1 convergence from(162.4),(162.9),(162.28) therefore gives a unique finite intersection h_dagger in a fixed small neighborhood, h_dagger/h_s->kappa_xi. This defines the intersection using the exact finite functions; no uncontrolled centering error is set to zero.
+
+Choose the odd-pi site nearest Im Xi_Q(h_dagger). By(162.30)--(162.32) there is an ACTUAL original boundary-region zero at distance at most C/r_s from h_dagger. Its Re Theta_Q is bounded by a fixed constant and its scaled field approaches kappa_xi. Consequently a continuation on a fixed scaled-field neighborhood of this intersection, or on a Theta strip of sufficiently large fixed width containing it, encounters zeros of N_P^B itself. No assertion that every arbitrarily narrow phase strip must contain a regional zero is needed or made. A uniform N_P^B/A0=1+o(1) on the indicated domains is impossible. This is a proven limitation of that regional representation on the SAME original law, not merely an insufficient-error witness or a comparator zero.
+
+### 162.8 共享切口的抵消与总零点的未解接口
+
+The finite sum identity N_P^-=N_P^B+N_P^I is exact and the total is independent of xi. In contrast, omega_xi varies strictly with xi: c_xi increases, Re K_* decreases, so omega_xi decreases. This separator dependence alone forbids calling all these intersections an intrinsic endpoint of the same total zero curve.
+
+The cut contribution has the opposite sign on the neighboring interval. Let F(r)=L(r)-hr. On a small real interval containing s, F' is nonzero by(162.21) and its finite counterpart. Ordinary integration by parts is the exact identity
+$$
+ \int_a^b g(0)e^{F(r)}dr
+ =\left[{g(0)e^{F(r)}\over F'(r)}\right]_a^b
+  +\int_a^b g(0)e^{F(r)}{F''(r)\over F'(r)^2}dr.
+ \tag{162.35}
+$$
+Thus the upper boundary term for(0,s) is +A_xi and the lower boundary term for(s,b) is -A_xi. These cancel before any relative estimate on the total. Equation(162.35) is not being used to assert that this short interval dominates I, whose farther saddle contributions remain to be controlled; it proves the sign and the common origin of the artificial endpoint terms. In the counts the partition into the two regions is exact, and(162.5) preserves the comparison after regrouping. One must combine the shared-cut terms before dividing by a small total amplitude. Dividing separate relative errors by a cancellation would repeat the regional cancellation obstruction.
+
+The substantive missing step for the TOTAL nonlocal theorem is now precise. After this regrouping one needs a global contour or equivalent decomposition of the finite profile over the original half-line, with the actual accessible saddle coefficients, lower bounds for its retained sum and a remainder small relative to that sum on counting boundaries. Section 162.4 shows no main-saddle phase collision before omega_A, but that necessary condition alone does not prove contour accessibility. At omega_A there is a real endpoint/other-saddle phase alignment, but(162.18) excludes blindly assigning its large upper saddle to the original contour. Our proof has not determined the relevant global cycle coefficients across that alignment or established a new total two-amplitude formula there.
+
+Accordingly no new nonlocal total-zero count, endpoint of the total curve, Airy or other transition scale, global nearest zero or Lee-Yang statement is claimed. These regional zeros certify an original-model obstruction to extending Chapter 160's regional nonvanishing unchanged and identify a required regrouping. The analytic-domain theorem shows that a bare implicit-function failure is not the culprit. The total-zero continuation remains open beyond Chapter 160's proved local domain.
+
+### 162.9 结论层次与方法归属
+
+解析驻点分支、候选相位对齐、区域实际零点与总和实际零点是四种不同结论。(162.6)–(162.10) 证明前两者的显式延拓；(162.26)–(162.34) 把区域零点带回原始完整选择计数；(162.35) 给出共享切口项的精确符号和抵消关系。它们不提供抵消后总振幅的非局部相对下界，也不确定新的总零点转换尺度。
+
+代数驻点、解析隐函数、端点展开、分部积分和 Rouché 定理均为经典工具。本章的组合内容是保留原选择系数、低计数组、非中心向量与物理噪声，证明一个发生在原始区域计数上的切分障碍，并把它与总和的内在几何区分开。所有有限预测保持精确作用量，原始误差一直携带 $\sigma$ 因子；$t\to\infty$ 可以任意缓慢，没有另加经验量的确定极限。
+
+Bennett、Howls、Nemes 与 Olde Daalhuis 对完整陡降轮廓的解析域、无穷远增长、邻接鞍点、收敛角区间及余项可积性的假设，比驻点代数方程更强。其附录 C 使用适当作用量曲面上的逆映射奇点确定轮廓边界；临界值对齐不能单独确定原始积分所在的分支。精确有限剖面目前只有已证紧域上的解析非零性，尚未满足该文完整全局域假设，因此没有直接援引其定理作为本模型的总振幅延拓。版本和检查范围见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+结论在共同紧性类上对固定有界输出与固定切分紧集一致，再经原 pair/path 数据律的紧性耗尽返回对确定支撑一致的概率结论。全局最近零点、虚轴处实际转换、最大计数域及 Lee–Yang 型结论仍未解决。有限文献核对不构成全球原创性认证。
+
+## 追加锚（本行以下为增补区）
