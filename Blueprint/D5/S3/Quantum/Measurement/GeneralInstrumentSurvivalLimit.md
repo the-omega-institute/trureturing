@@ -6,7 +6,7 @@ The survival effects of a general no-click instrument decrease in the Loewner or
 
 **Theorem 1.1 (Monotone limit and maximal fixed effect).**
 
-$$\sum_{a \in \alpha} Q_{a}^{*} Q_{a} + \sum_{i \in \iota} L_{i}^{*} L_{i} = I \Rightarrow \exists F,\\{}\forall N, 0 \leq S_{N+1} \leq S_{N} \leq I,\quad F \leq S_{N},\quad S_{N} \to F,\\{}0 \leq F \leq I,\quad \mathcal{A}(F) = F,\\{}\forall H, 0 \leq H \leq I \land \mathcal{A}(H) = H \Rightarrow H \leq F,\\{}\forall \rho, \operatorname{Tr}(\rho S_{N}) \to \operatorname{Tr}(\rho F).$$
+$$\sum_{a \in \alpha} Q_{a}^{*} Q_{a} + \sum_{i \in \iota} L_{i}^{*} L_{i} = I \Rightarrow \exists F,\\{}\forall N, 0 \leq S_{N},\quad S_{N+1} \leq S_{N} \leq I,\quad F \leq S_{N},\quad S_{N} \to F,\\{}0 \leq F \leq I,\quad \mathcal{A}(F) = F,\\{}\forall H, 0 \leq H \leq I \land \mathcal{A}(H) = H \Rightarrow H \leq F,\\{}\forall \rho, \operatorname{Tr}(\rho S_{N}) \to \operatorname{Tr}(\rho F).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/GeneralInstrumentSurvivalLimit.survival_tendsto_maximal_fixed_effect` (`✓ std3`). ∎
 
