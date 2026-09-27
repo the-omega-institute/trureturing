@@ -6,9 +6,9 @@ Cumulative cost on a finite deterministic action graph is bounded exactly when e
 
 **Definition 1.1 (Finite action words determine terminal states).**
 
-$$\begin{gathered}\forall Q, \mathcal{F}, T: \mathcal{F} \to \left(Q \to Q\right),\\{}\forall m\in Q, \operatorname{run}(T, m, []) = m,\\{}\forall f\in \mathcal{F}, \forall u\in \operatorname{List}(\mathcal{F}), \operatorname{run}(T, m, \operatorname{cons}(f, u)) = \operatorname{run}(T, \operatorname{T}(f, m), u).\end{gathered}$$
+$$\begin{gathered}\forall Q, \mathcal{F}, T: \mathcal{F} \to \left(Q \to Q\right),\\{}\forall m\in Q, \operatorname{runWord}(T, [], m) = m,\\{}\forall f\in \mathcal{F}, \forall u\in \operatorname{List}(\mathcal{F}), \operatorname{runWord}(T, \operatorname{cons}(f, u), m) = \operatorname{runWord}(T, u, \operatorname{T}(f, m)).\end{gathered}$$
 
-*Formalization.* `D5/S3/ObserverMemory/Prediction/ActionGraphCommunicationBound.run` (`✓ std3`).
+*Formalization.* `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.runWord` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -40,9 +40,9 @@ $$\forall Q, \mathcal{F}, T: \mathcal{F} \to \left(Q \to Q\right), w: Q \to \lef
 
 The total cost of an infinite action word is the supremum in the extended natural numbers of the costs of all its finite prefixes.
 
-**Definition 1.4 (The maximal edge cost).**
+**Definition 1.4 (The finite supremum of edge costs).**
 
-$$\forall Q, \mathcal{F}, [\operatorname{Fintype} Q], [\operatorname{Fintype} \mathcal{F}], w: Q \to \left(\mathcal{F} \to \mathbb{N}\right),\\\operatorname{maxEdgeCost}(w) = \max_{m\in Q, f\in \mathcal{F}} \operatorname{w}(m, f).$$
+$$\forall Q, \mathcal{F}, [\operatorname{Fintype} Q], [\operatorname{Fintype} \mathcal{F}], w: Q \to \left(\mathcal{F} \to \mathbb{N}\right),\\\operatorname{maxEdgeCost}(w) = \operatorname{sup}_{m\in Q, f\in \mathcal{F}} \operatorname{w}(m, f).$$
 
 *Formalization.* `D5/S3/ObserverMemory/Prediction/ActionGraphCommunicationBound.maxEdgeCost` (`✓ std3`).
 
@@ -50,11 +50,11 @@ $$\forall Q, \mathcal{F}, [\operatorname{Fintype} Q], [\operatorname{Fintype} \m
 
 *Commentary.*
 
-For finite state and action carriers, W_max is the largest cost among all labelled edges.
+For finite state and action carriers, W_max is the finite supremum of all labelled-edge costs; its value is zero if either carrier is empty.
 
 **Theorem 1.5 (Cumulative communication criterion).**
 
-$$\begin{gathered}\forall Q, \mathcal{F}: \operatorname{Type}, [\operatorname{Fintype} Q], [\operatorname{Nonempty} Q],\\{}[\operatorname{Fintype} \mathcal{F}], [\operatorname{Nonempty} \mathcal{F}], I: \operatorname{Set}(Q),\\T: \mathcal{F} \to \left(Q \to Q\right), w: Q \to \left(\mathcal{F} \to \mathbb{N}\right),\\\forall m\in Q, \exists m_{0}\in I, \exists p\in \operatorname{List}(\mathcal{F}), \operatorname{run}(T, m_{0}, p) = m,\\W_{max} = \operatorname{maxEdgeCost}(w),\\a: \forall m_{0}\in I, \forall \omega: \mathbb{N} \to \mathcal{F}, \operatorname{InfiniteComm}(T, w, m_{0}, \omega) \neq \infty,\\b: \exists B\in \mathbb{N}, \forall m_{0}\in I, \forall u\in \operatorname{List}(\mathcal{F}), \operatorname{Comm}(T, w, m_{0}, u) \leq B,\\c: \forall m\in Q, \forall v\in \operatorname{List}(\mathcal{F}), v \neq [] \land \operatorname{run}(T, m, v) = m \Rightarrow \operatorname{Comm}(T, w, m, v) = 0,\\(a \iff b \iff c) \land\\(c \Rightarrow \forall m_{0}\in I, \forall u\in \operatorname{List}(\mathcal{F}), \operatorname{Comm}(T, w, m_{0}, u) \leq (\operatorname{card}(Q) - 1) W_{max}).\end{gathered}$$
+$$\begin{gathered}\forall Q, \mathcal{F}: \operatorname{Type}, [\operatorname{Fintype} Q], [\operatorname{Nonempty} Q],\\{}[\operatorname{Fintype} \mathcal{F}], [\operatorname{Nonempty} \mathcal{F}], I: \operatorname{Set}(Q),\\T: \mathcal{F} \to \left(Q \to Q\right), w: Q \to \left(\mathcal{F} \to \mathbb{N}\right),\\\forall m\in Q, \exists m_{0}\in I, \exists p\in \operatorname{List}(\mathcal{F}), \operatorname{runWord}(T, p, m_{0}) = m,\\W_{max} = \operatorname{maxEdgeCost}(w),\\a: \forall m_{0}\in I, \forall \omega: \mathbb{N} \to \mathcal{F}, \operatorname{InfiniteComm}(T, w, m_{0}, \omega) \neq \infty,\\b: \exists B\in \mathbb{N}, \forall m_{0}\in I, \forall u\in \operatorname{List}(\mathcal{F}), \operatorname{Comm}(T, w, m_{0}, u) \leq B,\\c: \forall m\in Q, \forall v\in \operatorname{List}(\mathcal{F}), v \neq [] \land \operatorname{runWord}(T, v, m) = m \Rightarrow \operatorname{Comm}(T, w, m, v) = 0,\\\operatorname{List.TFAE}([a, b, c]) \land\\(c \Rightarrow \forall m_{0}\in I, \forall u\in \operatorname{List}(\mathcal{F}), \operatorname{Comm}(T, w, m_{0}, u) \leq (\operatorname{card}(Q) - 1) W_{max}).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Prediction/ActionGraphCommunicationBound.cumulative_communication_criterion` (`✓ std3`). ∎
 
@@ -74,4 +74,5 @@ Conversely, a reachable positive-cost cycle can be repeated after a prefix leadi
 - Truth anchor: `D5/S3/ObserverMemory/Prediction/ActionGraphCommunicationBound.InfiniteComm`
 - Truth anchor: `D5/S3/ObserverMemory/Prediction/ActionGraphCommunicationBound.cumulative_communication_criterion`
 - Truth anchor: `D5/S3/ObserverMemory/Prediction/ActionGraphCommunicationBound.maxEdgeCost`
-- Truth anchor: `D5/S3/ObserverMemory/Prediction/ActionGraphCommunicationBound.run`
+- Truth anchor: `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.runWord`
+- Dependency: [D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality](ControlledBehaviorUniversality.md)
