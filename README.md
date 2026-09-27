@@ -2,7 +2,7 @@
 
 **A scientific method for AI to discover truth and find its next question.**
 
-[Vision](docs/VISION.md) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
+[Vision](docs/VISION.md) · [Film](#film) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
 [Truth and computation](#truth-and-computation) · [Examples](#three-places-to-look) ·
 [Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
 [First run](#first-run) ·
@@ -24,6 +24,14 @@ The project combines philosophical inquiry, theory, experiments and Lean 4
 formalization. Each proof establishes its exact statement under declared
 assumptions. The [vision and research guide](docs/VISION.md) connects this work
 to open directions.
+
+## Film
+
+[![TRURETURING — Truth Is Discovered: download Film 001](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_cover.jpg)](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4)
+
+**TRURETURING — Truth Is Discovered** · English AI narration · Chinese and English subtitles.
+[Download MP4](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4) ·
+[Film source and releases](https://github.com/the-omega-institute/trureturing-film).
 
 ## Truth and computation
 
@@ -168,7 +176,8 @@ spacetime or holographic duality remain research questions.
 
 ## Information escape
 
-We are developing an **information-escape judge** around four questions:
+A **readout** is a way of observing a state. We are developing an
+**information-escape judge** around four questions:
 
 - **Where did information escape?** Name the objects, assumptions and
   observations under which distinct states remain indistinguishable.
@@ -180,10 +189,19 @@ We are developing an **information-escape judge** around four questions:
   indistinguishable pair, prove none remain within the stated scope, or mark
   the boundary open.
 
-A **readout** is a way of observing a state. Fix a catalog of registered theorem
-occurrences and their readouts on one shared state space. Remove one occurrence
-while keeping the others fixed. Its **unique captures** are the pairs of distinct
-states that were distinguishable before removal and indistinguishable afterward. The
+The current rule checks declared-template bindings; its findings are
+**Observe warnings that do not block admission**
+([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
+[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
+Other admission checks still apply. Module selection for this rule is
+separate from the mathematical comparison below.
+The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
+describes a wider design whose implementation remains incomplete.
+
+Fix a catalog of registered theorem occurrences and their readouts on one
+shared state space. Remove one occurrence while keeping the others fixed.
+Its **unique captures** are the pairs of distinct states that were
+distinguishable before removal and indistinguishable afterward. The
 [EscapePairs definitions and proofs](D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean)
 formalize this comparison.
 
@@ -194,15 +212,6 @@ when it has a unique capture. The rate is the fraction of ordered distinct-state
 pairs left indistinguishable. Zero unique capture does not mean worthlessness:
 another occurrence can carry the same distinction. This comparison supplies
 neither a universal value score nor a historical novelty judgment.
-
-The judge is **under development**. Its declared-template findings are
-**Observe warnings that do not block admission**
-([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
-[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
-Other admission checks still apply. Module selection for this rule is
-separate from the fixed-catalog comparison above.
-The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
-describes a wider design whose implementation remains incomplete.
 
 [Example 02](#three-places-to-look) adds `X⊗X` expectations to separate a locally
 indistinguishable pair. Which pairs, if any, remain indistinguishable after
