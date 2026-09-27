@@ -331,6 +331,9 @@ notices.
 
 ### Optional maintainer session queue
 
+<details>
+<summary>Usage and limits</summary>
+
 Maintainers can take a read-only snapshot of external contributions with Python
 3 and an authenticated [GitHub CLI](https://cli.github.com/):
 
@@ -405,7 +408,9 @@ Observations are not atomic and must be refreshed before acting.
 
 The command makes only GitHub GET requests and fetches no blob contents. It executes no contribution text,
 changes no PR or Issue metadata, and starts no builds, writes, daemon or merge.
-It is an optional session tool and adds no required admission gate.
+It adds no required admission gate.
+
+</details>
 
 ## Research boundaries
 
