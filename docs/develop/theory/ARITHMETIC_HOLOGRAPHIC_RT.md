@@ -2364,9 +2364,15 @@ q_*:=\min_{p\in\Delta_N}p^{\mathsf T}Kp.
 
 **定理 36.1（全操作最优谱粗化）。** 在上述有限模型中，
 \[
-\boxed{\inf_{\Lambda_X,\Lambda_Y}
+\begin{aligned}
+\delta_{\rm prod}&:=\inf_{\Lambda_X,\Lambda_Y}
 \| (\Lambda_X\otimes\Lambda_Y)\circ\mathcal J_\lambda
-       -\mathcal J_d\|_\diamond=2(1-q_*).}
+       -\mathcal J_d\|_\diamond,\\
+\delta_{\rm mix}&:=\inf_{\Phi\in\operatorname{conv}_{\rm fin}
+\{\Lambda_X\otimes\Lambda_Y:\Lambda_X,\Lambda_Y\text{ are CPTP}\}}
+\|\Phi\circ\mathcal J_\lambda-\mathcal J_d\|_\diamond,\\
+&\boxed{\delta_{\rm prod}=\delta_{\rm mix}=2(1-q_*).}
+\end{aligned}
 \tag{36.3}
 \]
 一对同时适用于全部扇区的局部拆分映射达到下确界。允许乘积映射的共享
@@ -2462,7 +2468,7 @@ T=\sum_i\tanh\bigl((\ell_{i+1}-\ell_i)/4\bigr).
 $p_*=(2/5,1/5,2/5)$、$q_*=3/5$、$\delta_*=4/5$。
 §35 的条件性动量窗口必要界可在上述全操作模型下使用，而不再要求
 竞争映射精确输出每个基扇区；有限调节器、平坦且为整数的实际秩比、
-秩匹配 $|\log m_s-\mathsf S(P_s)-C_0|\le\eta$ 与两侧独立局部操作仍
+秩匹配 $|\log m_s-\log\mathsf S(P_s)-C_0|\le\eta$ 与两侧独立局部操作仍
 必须保留。由这些条件得到同一必要界
 $\delta_*\ge1-\exp[-\max(0,\pi Q\Delta P-\eta)]$。
 连续 Virasoro 密度不是整数 Hilbert 空间维数；这里没有构造这些
