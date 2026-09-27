@@ -25,9 +25,9 @@ internal sealed class GeneralInstrumentEffectClosureDocument : IScribeDocumentDe
                 "clickEffect", DescribeRole.Definition),
             Node("effect-space", "Effect spaces",
                 Disp(Seq(Sub("V", N), Sp, Eq, Sp, Operatorname, Grp(F.Id("span")), Underscore, Grp(Mathbb,
-                    Grp(F.Id("R"))), OpenBrace, F.Id("I"), CloseBrace, Sp, Cup, Sp, OpenBrace,
+                    Grp(F.Id("R"))), Open, OpenBrace, F.Id("I"), CloseBrace, Sp, Cup, Sp, OpenBrace,
                     Mathcal, Grp(F.Id("A")), Caret, Grp(F.Id("n")), Open, Sub("B", X), Close, Sp, Mid, Sp,
-                    F.Id("n"), Sp, Lt, Sp, N, CloseBrace)),
+                    F.Id("n"), Sp, Lt, Sp, N, Comma, Sp, X, Sp, InMacro, Sp, Xi, CloseBrace, Close)),
                 "The real linear span, inside the complex d by d matrices, of the identity and the effects of all "
                     + "first clicks within the first N rounds.",
                 "effectSpace", DescribeRole.Definition),
