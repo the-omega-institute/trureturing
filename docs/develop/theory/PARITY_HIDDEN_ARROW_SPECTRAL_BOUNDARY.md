@@ -48273,3 +48273,383 @@ The fixed reference calculation uses exact finite A,Lambda=nu_0+sigma^2,C_x and 
 凸散度、指数族对偶、有限 Stirling、条件多项分配、Poisson 亲和度、有限 Gauss 反演及 Gaussian Poisson 求和均为成熟工具。第 155、159、161 章提供共同数组与完整标记回接；这里新增的是精确可行率消元、负分数合法供给、可实现的闭式递推及其完整物理回接。Györfi–Harremoës–Tusnády 的上尾／格点定理不自动覆盖负倾斜、Liouville 加权标量或指数多试验池，本章分别直接证明。原文版本与迁移边界见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。有限文献核对不构成全球原创性认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 164. 总积分的矩形变形与原始计数零点的非局部延拓
+
+第 162 章发现的切分障碍来自区域积分的非零性失效。把区域重新合为总积分后，可以在一个显式场域内选择下降的竖直段和穿过内部鞍点的水平段；下面的作用量恒等式同时控制它们的公共转角、整条水平路径以及回接段。因此，总量的两个主要振幅可以跨过全部固定切分障碍，并继续越过虚场轴。
+
+本章保留第 158、160 章的精确有限非中心剖面、完整选择系数、低计数组和原始物理噪声。结论在显式开放域的每个固定紧子域上一致，并覆盖任意固定有限的正相位区间；原始总量的零点同时简单，具有精确的无额外零点计数及 $O(t^{-2})$ 未缩放相位误差。随数组增长的场域、其他全局零点族和最大延拓范围仍未确定。以下为普通数学推导，未作 Lean 认证。
+
+### 164.1 原始总量、显式场域与有限振幅
+
+**定理 164.1（原始总量的有限两振幅展开）。** Retain the original full-q selected law P_x, complete count tuple, outside labels, floors and low groups. With the original mu and actual e, use
+
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,\quad
+ C_2=\delta^{-1}\sum_jv_j^2,
+$$
+
+$$
+ x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B,\quad
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ T=(E-V)/\sqrt\delta,\quad H_y=V+\sqrt\delta\,y.
+ \tag{164.1}
+$$
+
+The exact finite entire normalizer is
+
+$$
+ N_P^-(h,y)=\sum_{D<0}P_x(n)
+ e^{[(2V)^{-1}+\eta]D^2+hD-(T-y)^2/(2\sigma^2)}.
+ \tag{164.2}
+$$
+
+Keep eta->0, t=eta/sqrt(delta)->infinity arbitrarily slowly, sigma>0 tending to zero with ONLY limsup log(1/sigma)/Q^3<c_q/2. Write
+
+$$
+ m=\sqrt{2V^4/C_2},\quad w_0=\sqrt{2/3},\quad
+ r_s=m\sqrt{\eta/\delta},\quad h_s=\eta r_s,\quad
+ \mathcal T=h_sr_s=m^2t^2,\quad \kappa=h/h_s.
+ \tag{164.3}
+$$
+
+The physical statistic T is distinct from the large parameter mathcalT. The coordinate of the zero-location estimate is z=d(h-h0), with actual $h_0=h_{\mathrm{equal}}^P(y,\xi)$ and actual regional mean gap $d$ from Chapter 160; d/r_s->w0 uniformly for the original separator compacts. No deterministic limit of m or independence of these empirical choices is imposed.
+
+Here is the explicit upper-field domain. Introduce a complex SADDLE coordinate u=alpha-i beta; alpha and beta in this definition are real and are unrelated to the posterior coefficient or any low-tuple variable. Put
+
+$$
+ \mathcal A=\{u=\alpha-i\beta:\ \beta>0,\quad
+                   \alpha>\sqrt{2\beta^2+2/3}\},\qquad
+ k(u)=2u-2u^3,\qquad \mathcal D=k(\mathcal A).
+ \tag{164.4}
+$$
+
+Every assertion about this unbounded open domain is uniform on a FIXED compact subset with a surrounding compact margin inside it, chosen before Q. No compact is allowed to grow with Q. The theorem holds simultaneously for compact outputs |y|<=R on each inherited common tight-constant data class. Exhausting these classes gives the original actual pair/path probability statements separately, uniformly over deterministic size-q supports. All original noise and eta sequences are covered. Constants can depend on the fixed compact and tight class, never on sigma^-1.
+
+Let g(r) be the exact profile of Chapter 160 specified in Section 164.2, and L(r)=log(g(r)/g(0)). For kappa in D there is a uniquely continued finite saddle r_I(h) near r_s u, satisfying L'(r_I)=h. Define
+
+$$
+ q_0=h-L'(0),\quad K=-L''(r_I),\quad
+ A_0=g(0)/q_0,\quad
+ A_I=g(0)e^{L(r_I)-hr_I}\sqrt{2\pi/K}.
+ \tag{164.5}
+$$
+
+The square root has positive real part; the branches and all nonvanishing assertions are proved below. On every fixed compact of D,
+
+$$
+ |N_P^-(h,y)-A_0(h)-A_I(h)|
+ \le {C\over\mathcal T}(|A_0|+|A_I|)
+       +\sigma P(Q)e^{-bQ^3+C t^2}.
+ \tag{164.6}
+$$
+
+In particular the count error can be absorbed into the first bound. This is a TOTAL amplitude statement. It makes no claim that the old fixed B_xi or I_xi integrals remain nonzero there.
+
+Set, using the specified branches,
+
+$$
+ \Theta_Q(h)=-L(r_I)+hr_I-\log q_0
+                      -\tfrac12\log(2\pi/K).
+ \tag{164.7}
+$$
+
+Thus A_I/A_0=exp(-Theta_Q) exactly. The predictor uses exact finite profile values and derivatives, not an integral ratio or a definition by unknown zeros. Section 164.7 gives one-to-one simple-zero localization, O(t^-2) unscaled phase error, and exact no-extra counts in inverse-Theta rectangles on ANY fixed phase interval 0<omega_L<omega_U<infinity. The conjugate statement holds below the real field axis. Together with Chapter 160 this continues the SAME local curve across every separator obstruction and across the imaginary field axis. An explicit example is omega in[omega_A/2,2omega_A], with omega_A defined in(164.25); the uniform amplitude theorem applies on a fixed open neighborhood of that whole arc.
+
+### 164.2 保持原始选择律的精确剖面接口
+
+The authenticated exact selection identity is
+
+$$
+ P_x(n)=Q_x(n)\,
+ {[z^{q-k}]\prod_{i\notin J0}(1-p_i+p_i z)
+       \over[z^q]\prod_i(1-p_i+p_i z)},\quad
+ k=\sum_j n_j,\quad BD=k-m_{J0}.
+ \tag{164.8}
+$$
+
+Its uniform finite coefficient expansion retains epsilon=B^2/(2d_c) and ell_sel=onehalf log(d_all/d_c). They are not replaced by zero. Write a=(2V)^-1+eta and a_eff=a-epsilon. With the SAME high block, V_H=sum_H v_j, v=(v_j)_H, and A_c=diag(v)-vv^T/V_H, the exact low tuple has probability p_L, charge c_L and energy u_L. The retained profile is
+
+$$
+ g(r)=e^{\ell_{sel}+a_{eff}r^2}\sum_{n_L}p_L(n_L)
+ {e^{-(r+c_L)^2/(2V_H)}\over\sqrt{2\pi V_H}}
+ E_{Z\sim N(0,A_c)}
+ \exp\left[-{(u_L+\|Z-(r+c_L)v/V_H-e_H\|^2-H_y)^2
+                         \over2\delta\sigma^2}\right].
+ \tag{164.9}
+$$
+
+Formula(164.9) is defined first for real r. Its legitimate holomorphic continuation, including bilinear rather than Hermitian squares in complex formulas, was established by Chapter 160's exact noncentral energy resolvent and sector contour. We use that established result, not an unsupported continuation of real C6 bounds. For each fixed charge disk it gives nonzero g, a unique L normalized by L(0)=0, and
+
+$$
+ c_R\sigma\le g(0)\le C_R\sigma,\qquad
+ f_Q(x,\kappa):=L(r_sx)/\mathcal T-\kappa x
+       \longrightarrow f(x,\kappa):=x^2-x^4/2-\kappa x
+ \tag{164.10}
+$$
+
+holomorphically with every fixed derivative on smaller compact disks. The large finite corrections eta mathcalT, sigma^2 mathcalT, and output terms can diverge; they remain in L in(164.5)--(164.7). Equation(164.10) is used only for fixed contour gaps, branch existence and scaled geometry.
+
+The inherited faithful TOTAL return is
+
+$$
+ G_-(h)=\int_0^\infty g(r)e^{-hr}\,dr,\quad
+ |N_P^-(h)-G_-(h)|\le\sigma P(Q)e^{-bQ^3+C_Ht^2},
+ \qquad |h|\le Hh_s,
+ \tag{164.11}
+$$
+
+for each fixed H. It includes the full count-cell lift, high/low split, every low tuple, floor and sign-boundary strip, excluded counts, cutoff, actual e, finite outside coefficient and SAME measurement residual. It is not a polynomial real-envelope comparison. Finally, Chapter 160's real-tail estimate implies that, for each fixed H and prescribed B1, choosing M large gives
+
+$$
+ \int_{Mr_s}^\infty |g(r)e^{-hr}|dr
+        \le C\sigma r_s e^{-B_1t^2},\qquad |\Re h|\le Hh_s.
+ \tag{164.12}
+$$
+
+One can increase B1 at will by increasing the fixed M. There is no polynomial Q prefactor in(164.12). These are the exact inherited interfaces used below. Their proofs and scopes are not re-presented as new work.
+
+### 164.3 全体水平路径上的共同作用量间隙
+
+The set A is convex: alpha>sqrt(2 beta^2+2/3) is the strict epigraph of a convex function, intersected with beta>0. For u in A,
+
+$$
+ \Re[-k'(u)]=6(\alpha^2-\beta^2)-2>2,
+\quad \Im k(u)=2\beta(3\alpha^2-\beta^2-1)>0.
+ \tag{164.13}
+$$
+
+Integrating -k' along straight segments in the convex set proves that -k, and hence k, is injective. In particular D is a simply connected explicitly parametrized domain and u(kappa) is analytic. Its stationary curvature 6u^2-2 has positive real part greater than2. kappa never vanishes and its principal argument lies in(0,pi).
+
+Write
+
+$$
+ A(u)=f(u,k(u))=-u^2+\tfrac32u^4,\qquad
+ \gamma(u)=\tfrac32\alpha^2-3\beta^2-1>0.
+ \tag{164.14}
+$$
+
+The decisive identity, valid for EVERY real x>=0, is
+
+$$
+ \Re\{f(x-i\beta,k(u))-A(u)\}
+   =-(x-\alpha)^2[\gamma(u)+\alpha x+x^2/2].
+ \tag{164.15}
+$$
+
+To check it by ordinary algebra, expand at the stationary point u with x=alpha+v. The real part of the difference is
+-(3(alpha^2-beta^2)-1)v^2-2 alpha v^3-v^4/2. Substituting v=x-alpha gives(164.15). Thus the entire horizontal half-line at depth beta has a UNIQUE strict maximum at the saddle, with a gap at least gamma(x-alpha)^2. This is a joint path estimate, not separate extrema of unrelated marginals.
+
+The vertical segment from0 to-i beta is equally controlled. For 0<=v<=beta,
+
+$$
+ \Re f(-iv,k(u))=-v^2-v^4/2-\Im k(u)\,v,\quad
+ {d\over dv}\Re f(-iv,k(u))=-2v-2v^3-\Im k(u)<0.
+ \tag{164.16}
+$$
+
+It has the unique endpoint maximum0. At their common corner the horizontal gap relative to its saddle is alpha^2 gamma>0, while(164.16) gives a strict gap relative to the endpoint. Both inequalities are uniform on every compact of A. They are valid even when Re kappa<0; a positive REAL endpoint slope is not required.
+
+Choose M larger than all alpha on a compact, with a margin. Along the right connector x=M-iv, 0<=v<=beta,
+
+$$
+ \Re f(M-iv,\kappa)
+ =-M^4/2+(1+3v^2)M^2-\Re\kappa\,M
+                          -v^2-v^4/2-\Im\kappa\,v.
+ \tag{164.17}
+$$
+
+Taking M sufficiently large makes this uniformly below both0 and Re A(u) by any prescribed fixed constant. All these are bounded paths in one charge disk. For the exact finite integrand the rectangular Cauchy identity is therefore legal:
+
+$$
+ \int_0^{Mr_s}g(r)e^{-hr}dr
+ =\int_{0}^{-i\beta r_s}g(r)e^{-hr}dr
+  +\int_{-i\beta r_s}^{(M-i\beta)r_s}g(r)e^{-hr}dr
+  +\int_{(M-i\beta)r_s}^{Mr_s}g(r)e^{-hr}dr.
+ \tag{164.18}
+$$
+
+There is no contour at complex infinity. The remaining tail stays on the real axis and is paid by(164.12). Equation(164.18) regroups the WHOLE original comparison integral before its asymptotics. No artificial xi endpoint is left. On a local parameter patch the corner may also be fixed inside the same negative-gap region, making the pieces holomorphic; global holomorphy of our error follows directly from its definition as G_- minus the analytic amplitudes and does not require a holomorphic choice of beta=minus Im u.
+
+### 164.4 有限鞍点、局部坐标与实际轮廓系数
+
+For kappa in any compact subset of D, the simple stationary root u has a fixed nonzero curvature and is uniformly separated from the other cubic roots. Uniform analytic convergence in(164.10) and the implicit theorem, or Rouché on fixed small circles, give a UNIQUE root u_Q(kappa) near u of f_Q,x=0, uniformly with fixed derivatives. Local branches patch by uniqueness on a slightly larger compact domain. Thus r_I=r_s u_Q is an analytic finite-profile definition. Re(K/eta) is bounded below by a positive constant, q0/h_s has positive imaginary part bounded below, and both have bounded modulus. These facts prove every nonzero elementary factor in(164.5). Choose sqrt(K) with positive real part and log q0 with argument in(0,pi); these agree with the upper continuation of Chapter 160's real branches. No logarithm of N_P^- or of the old regional masses is taken.
+
+The vertical integral in(164.18) has its leading contribution at zero. In its coordinate r=-i r_s v, the exact exponent is
+
+$$
+ \mathcal T f_Q(-iv,\kappa)
+      =i(q_0/h_s)\mathcal T v+O(\mathcal T v^2).
+ \tag{164.19}
+$$
+
+The derivative of its real part, divided by mathcalT, is strictly negative on the whole bounded segment by(164.10),(164.16). Rescale v=w/mathcalT. The limiting complex linear coefficient has real part -Im(q0/h_s)<0, bounded away from zero; the uniformly bounded second derivative and the decreasing real envelope give an integrable error C mathcalT^-1 w^2 exp(-c w). Truncate at a small fixed v and use the fixed gap for the remainder. The orientation supplies
+(-i r_s)/[-i q0 r_s]=1/q0. Consequently this piece is
+
+$$
+ A_0[1+O(\mathcal T^{-1})].
+ \tag{164.20}
+$$
+
+This is an ordinary complex endpoint expansion with its full shifted q0. There is no expansion in h about a real field and no inverse-sigma differentiation.
+
+On the horizontal segment, outside a fixed small neighborhood of u, (164.15) and(164.10) give a strict gap relative to Re f_Q(u_Q,kappa). In that neighborhood define the exact Morse coordinate
+
+$$
+ v=(x-u_Q)\sqrt{\frac{2[f_Q(u_Q,\kappa)-f_Q(x,\kappa)]}{(x-u_Q)^2}}.
+ \tag{164.21}
+$$
+
+The square root at u_Q is sqrt(-f_Q,xx(u_Q)), with positive real part. Uniform analytic derivatives give a fixed inverse disk, bounded inverse derivatives and no dependence on sigma^-1. Its phase is exactly f_Q(u_Q)-v^2/2.
+
+A contour detail matters here because this is NOT just Chapter 160's small real neighborhood. The original horizontal tangent maps near the saddle to the direction sqrt(-f_Q,xx), whose argument lies strictly between -pi/4 and pi/4, uniformly away from the boundaries on a compact. The two ends of a sufficiently short horizontal interval map into the opposite cones around the positive and negative real v axes. Join each to a fixed symmetric real v interval by radial segments and circular arcs in those cones. On the annular connectors Re(v^2)>=c|v|^2>0. Their action therefore has a uniform negative gap. The local inverse makes the deformation legal. This explicit construction fixes the orientation from left to right and the saddle coefficient +1. It does not infer accessibility from the equation f_Q,x=0 alone.
+
+On the real symmetric v segment, integrate exp(-mathcalT v^2/2) times the analytic inverse Jacobian. Its odd linear term integrates to zero; the remaining bounded quadratic term gives relative O(mathcalT^-1). Since x_v(0)=1/sqrt(-f_Q,xx), the horizontal contribution is
+
+$$
+ A_I[1+O(\mathcal T^{-1})].
+ \tag{164.22}
+$$
+
+The compact horizontal remainder and annular connectors are relatively at most C sqrt(mathcalT) exp(-c mathcalT). The vertical remainder in(164.20) costs at most C mathcalT exp(-c mathcalT). These are smaller than the displayed errors for arbitrarily slow t. Their prefactors are only powers of t, not powers of Q.
+
+For completeness, the other limiting cubic roots are
+
+$$
+ v_\pm=(-u\pm\sqrt{4-3u^2})/2.
+ \tag{164.23}
+$$
+
+The principal square root in(164.23) has positive real and positive imaginary parts because Im(4-3u^2)=6 alpha beta>0. Hence v_+ has strictly positive imaginary part, whereas v_- has strictly negative real part. Neither is in the lower-right rectangular deformation. On a compact these separations persist for the finite roots. Rouché on a larger fixed charge disk bounds all finite critical points there by the three cubic roots; extra remote finite-profile roots cannot enter this compact contour. More fundamentally, (164.15)--(164.22) account for every piece of the exact integration path. Thus there is no omitted comparable contribution from another saddle, regardless of whether a different global steepest-descent basis would assign it a compensating coefficient. In this explicit decomposition the only leading coefficients are the endpoint +1 and the interior +1. The right connector is exponentially small. The upper imaginary saddle from Chapter 162 has coefficient zero in this decomposition, including at its endpoint action alignment. No global thimble theorem is assumed.
+
+### 164.5 携带物理噪声的相对余项与原计数返回
+
+On a fixed compact of D the exact amplitudes obey
+
+$$
+ |A_0|\asymp\sigma/h_s,\qquad
+ |A_I|\asymp {\sigma\over\sqrt\eta}
+                  e^{\Re[L(r_I)-hr_I]},\qquad
+ |L(r_I)-hr_I|\le C\mathcal T.
+ \tag{164.24}
+$$
+
+The right connector(164.17) is bounded by C sigma r_s exp(-B2 mathcalT) with B2 as large as required; convergence(164.10) preserves the selected fixed gap. The real tail(164.12) has the same property in t^2. Divide by either amplitude only AFTER these estimates. The endpoint width costs r_s h_s=mathcalT, and the interior width costs r_s sqrt(eta)=sqrt(mathcalT), followed by at most exp(C mathcalT). Choose B2 and B1 large first. There is no lost log Q divided by slow t^2. Combining(164.18),(164.20),(164.22) with these pieces proves(164.6) for G_-.
+
+Now use(164.11) on the same compact, choosing H>sup|kappa|. Its error divided by |A0|+|AI| is at most h_s P(Q)exp(-bQ^3+C t^2). All scale factors are polynomially bounded and t^2=o(Q^1/2), whereas the retained noise factor sigma cancels EXACTLY. It is exponentially small in Q^3 and in particular o(mathcalT^-1). This proves(164.6) for the literal original counts with the full noise margin. No delta^4 envelope is divided by an oscillatory amplitude; no untilted TV or inverse-minority estimate is used. The same exact noncentral and low-mixture profile appears throughout.
+
+After division by the nonzero A0, the analytic error is bounded by C mathcalT^-1(1+|exp(-Theta_Q)|). Analyticity follows from (164.2),(164.5),(164.7), not from differentiating an approximation. This is enough on counting contours; no nonvanishing assertion for the total is assumed near cancellation.
+
+### 164.6 跨过切分障碍和虚轴的非局部区域
+
+Recall the explicitly continued limiting branch from Chapter 162:
+
+$$
+ U(\omega)=\sqrt{[1+\sqrt{1-6i\omega}]/3},\quad
+ K_*(\omega)=k(U(\omega)),\quad A(U)=-i\omega.
+$$
+
+For real omega>0 write U=alpha-i beta, p=Re U^2 and S=|U|^2. Then p>2/3, S=sqrt(2p^2-2p/3), and
+
+$$
+ \gamma(U)=(9p-3S-4)/4>0.
+$$
+
+The last inequality is exact: 3p-4/3>0 and
+
+$$
+ (3p-4/3)^2-S^2=(p-2/3)(7p-8/3)>0.
+$$
+
+Therefore U(omega) belongs to A for EVERY finite omega>0. The explicit domain(164.4) contains the entire positive limiting arc, compact by compact. It is not a renamed small neighborhood or a limit statement replacing a finite predictor.
+
+For comparison with Chapter 162 put
+
+$$
+ p_A=(5+\sqrt7)/6,\quad
+ \omega_A=\sqrt{p_A(p_A-2/3)}(3p_A-1).
+ \tag{164.25}
+$$
+
+At omega_A the field crosses Re kappa=0. The domain inequality remains STRICT there and on either side. Each old cut obstruction omega_xi satisfies 0<omega_xi<omega_A. Thus, for any original separator compact, the theorem extends through all its obstruction points and to, for example, omega=2omega_A beyond the imaginary axis. Compactness supplies a common fixed margin. Any desired positive lower endpoint omega_L may be chosen; connecting toward0 uses overlapping intervals of this theorem and Chapter 160's already established local neighborhood. No Q-dependent neighborhood or stronger physical sequence is introduced.
+
+The domain boundary gamma=0 is only a sufficient-contour boundary: the horizontal corner loses its uniform gap relative to the saddle there. The boundary beta=0 removes the descending vertical segment. Neither is claimed to be an intrinsic zero-curve endpoint. In fact the finite positive arc meets neither boundary. At omega_A the upper imaginary saddle's action alignment, though genuine algebraically, causes NO change in the two amplitudes of the original total in this domain. Equations(164.18)--(164.24) prove this directly. There is no replacement transition scale to introduce at that regular crossing. The known off-locus cubic folds remain off-locus. Statements for omega growing with Q or for another component of the field plane remain unresolved.
+
+### 164.7 精确有限相位的逆映射与同时零点计数
+
+**定理 164.2（同时简单零点、精确计数与未缩放误差）。** Fix ANY 0<omega_L<omega_U<infinity and a phase-strip half-width A_*>0. Choose an enlarged real interval inside(0,infinity) and a fixed thin complex rectangle around it such that U(omega) lies in A. This is a fully specified domain condition through the radicals above: use any rectangle compactly contained in {omega: |Im omega|<1/12, U(omega) in A}. Its width is positive by the strict inequalities just proved and need not be chosen numerically. The field domain D itself is the explicit fixed region(164.4).
+
+On this rectangle the exact phase satisfies, uniformly with analytic derivatives,
+
+$$
+ {\Theta_Q(h_sK_*(\omega))\over\mathcal T}\longrightarrow i\omega.
+ \tag{164.26}
+$$
+
+To see the prefactor scale exactly, combine log q0 and onehalf log(2pi/K) in(164.7): their joint real size is log(h_s/sqrt(eta))+O(1)=log(sqrt(mathcalT))+O(1), not log Q. The finite saddle action in(164.7) remains exact; (164.10) implies its scaled limit. Cauchy on slightly enlarged compact domains gives the derivative convergence. Hence the derivative of -i Theta_Q/mathcalT in omega is uniformly close to1. Integrating along segments in the convex rectangle proves univalence and a quantitative inverse; the image contains every smaller rectangle around the segment i[omega_L,omega_U] after multiplication by mathcalT, for large Q. A boundary Rouché argument against i omega proves the image inclusion if desired.
+
+Define
+
+$$
+ n_- =\lceil\mathcal T\omega_L/(2\pi)\rceil,\qquad
+ n_+ =\lfloor\mathcal T\omega_U/(2\pi)\rfloor,
+$$
+
+$$
+ \mathfrak D_Q=\Theta_Q^{-1}
+   \{\zeta:|\Re\zeta|<A_*,\ 2\pi n_-<\Im\zeta<2\pi n_+\}.
+ \tag{164.27}
+$$
+
+For sufficiently large Q this domain and a fixed surrounding phase margin lie inside the proved compact field domain. There are exactly n_+-n_- ORIGINAL zeros in it, all simple, with one for each j=n_-,...,n_+-1. Set
+
+$$
+ \widehat h_j=\Theta_Q^{-1}((2j+1)\pi i).
+$$
+
+The simultaneous estimate is
+
+$$
+ \sup_j|h_j-\widehat h_j|\le C/(r_s\mathcal T),\qquad
+ \sup_j|d(h_j-h_0)-d(\widehat h_j-h_0)|
+           \le C/\mathcal T=O(t^{-2})=o(1).
+ \tag{164.28}
+$$
+
+Every coefficient in the predictor is a legitimate exact finite quantity. In particular neither h0 nor d nor the nonlinear finite phase is centered by the limiting quartic.
+
+Here is the count argument with its lower bounds. The total approximation is 1+exp(-zeta) plus an error at most C mathcalT^-1(1+|exp(-zeta)|). On Re zeta=+/-A_* the ratio of the leading modulus to the latter envelope is at least tanh(A_*/2); on Im zeta=2pi n it equals1. Thus Rouché gives exactly n_+-n_- zeros counted with multiplicity and no boundary zero. On circles of radius C1/mathcalT about each odd-pi site the same ratio is at least c C1/mathcalT. Choose C1 above the uniform error constant. There is exactly one zero counting multiplicity per circle, hence simplicity and no extras. Exact differentiation of(164.7) gives Theta'_Q=r_I+O(h_s^-1), so |Theta'_Q|>=c r_s and its local inverse converts these radii to(164.28). No union bound or separate field realization is involved: one analytic estimate holds simultaneously for every index.
+
+Compact subsets away from these small phase disks contain no zeros, by the same lower bounds. Domains with other boundaries are covered only when their phase images maintain a specified margin from the sites. There is no claim of an exact count for a boundary placed through a zero, for all of the unbounded D at finite Q, or for global nearest zeros. Conjugation of the actual real weights yields the lower-field theorem with conjugate branches.
+
+### 164.8 切分无关性与同一零点曲线的延续
+
+The proof used G_-(h) as one integral and (164.11) as one total-count comparison. Thus there is no xi in g, r_I, q0, K, A0, AI or Theta_Q. Nor is there xi in the count domain(164.27), its predicted roots or its actual roots. For each finite Q these quantities are exactly separator-independent. The coordinate z=d(h-h0) does depend on the prescribed regional definition; estimate(164.28) is uniform for separator compacts because the inherited d/r_s->w0 is uniform. The claimed independence concerns physical h and the total normalizer, not an artificial claim that h0,d are identical for different cuts.
+
+Chapter 162's regional zeros remain true: N_P^B can vanish where this theorem gives a regular total two-amplitude formula. In (164.18) the +A_xi and -A_xi terms never arise; the original integrals are recombined exactly FIRST. The replacement vertical and horizontal pieces have their own corner at-i beta r_s, where(164.15),(164.16) prove simultaneous negative gaps. Any terms from cutting there are exponentially small relative to their respective leading amplitudes. This is the controlled cancellation missing from simply adding inaccurate regional expansions across the old real cut.
+
+Only after(164.28), let omega_j=(2j+1)pi/mathcalT. Uniformly for these labels in any fixed positive interval,
+
+$$
+ {h_j\over h_s}-K_*(\omega_j)\longrightarrow0,
+\quad
+ {d(h_j-h_0)\over t^2}
+ -m_Q^2w_0[K_*(\omega_j)-\kappa_c]\longrightarrow0,
+ \quad\kappa_c=2w_0/3.
+ \tag{164.29}
+$$
+
+These scaled geometric limits are weaker than and do not replace the finite-array precision(164.28). The arbitrary empirical m_Q is retained. The same labeled curve from Chapter 160 continues by overlapping inverse-phase charts; branches of q0 and K agree on the overlap, so labels cannot silently shift by a multiple of2pi. On the upper arc arg q0 is the continuous argument in(0,pi), and Re K>0 fixes the square-root sign. Thus the continuation follows the same zero family of the finite original normalizer.
+
+### 164.9 适用边界与方法归属
+
+矩形恒等式 (164.18) 先处理整个原积分，因而不产生第 162 章的人工切口振幅。新转角同时低于端点和内部鞍点；(164.15) 控制全体水平路径，(164.16) 控制整个竖直段，(164.17) 和原实尾界控制回接与无穷实尾。精确局部 Morse 坐标的方向固定内部系数为 $+1$，端点方向也给 $+1$。上方鞍点的代数相位对齐不改变这一分解中的系数；虚轴穿越在此区域内没有产生新的总零点转换尺度。
+
+原始误差在除以振幅前始终保留 $\sigma$ 因子。有限作用量、实际相等质量场 $h_0$ 和实际均值间隙 $d$ 均不换成极限四次模型；$t\to\infty$ 可以任意缓慢，噪声条件仍是原条件。物理 $h$ 中的总量、预测根和计数域与切分无关；坐标 $d(h-h_0)$ 仍保留其区域定义的切分依赖，误差只是在固定切分紧集上一致。
+
+显式域的 $\gamma=0$ 边界使当前水平轮廓失去统一间隙，$\beta=0$ 边界使下降竖直段退化；这些是该充分构造的边界，没有被证明是原始零点曲线的内在终点。任意有限正相位弧均留在显式域内。接近域边界、随 $Q$ 增长的相位窗口、其他零点族、全局最近零点及最大延拓仍未解决。不存在由这里的渐近零点直接推出的动力学亚稳性或无条件 Lee–Yang 结论。
+
+Cauchy 变形、解析隐函数、端点与 Gaussian 积分、局部 Morse 坐标和 Rouché 定理均为经典工具。Bennett、Howls、Nemes 与 Olde Daalhuis 的全局超渐近方法要求更强的无穷远轮廓、邻接及余项条件；本章没有假定精确数组满足这些未证条件，而是逐段验证有界复轮廓，并将无穷尾留在已有估计的实轴上。新增组合是显式总轮廓域、共同作用量间隙和保持原选择律的相对振幅返回。来源与条件比较见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。有限来源核对不构成全球原创性认证。
+
+## 追加锚（本行以下为增补区）
