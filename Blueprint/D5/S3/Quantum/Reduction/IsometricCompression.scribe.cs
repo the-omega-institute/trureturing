@@ -6,25 +6,17 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Reduction;
 internal sealed class IsometricCompressionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Exact rectangular-matrix compression, positive leakage, and finite operator-word transport. Analytic norm estimates are outside these declarations.",
+        "A one-step matrix intertwining extends through every finite operator word.",
         H("IsometricCompression"),
         Blocks(new[]
         {
-                "multiplication_defect",
-                "normal_gram",
-                "hermitian_multiplication_defect",
-                "commutator_defect",
-                "compressed_gram_add_leakage",
-                "instrument_mass_balance",
-                "compressed_instrument_iff",
-                "word_intertwines",
-                "branch_intertwines"
+                "word_intertwines"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Reduction/IsometricCompression." + name),
             H(name.Replace('_', ' ')),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("Exact rectangular-matrix compression, positive leakage, and finite operator-word transport. Analytic norm estimates are outside these declarations."))),
+            Blocks(Paragraph(Text("A one-step matrix intertwining extends through every finite operator word."))),
             DescribeRole.Theorem)).ToArray())));
 }

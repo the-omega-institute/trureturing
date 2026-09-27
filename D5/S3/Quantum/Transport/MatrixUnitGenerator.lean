@@ -61,9 +61,15 @@ theorem matrix_unit_transport_generator (F D : d → d → Matrix n n ℂ)
   let R := ∑ i, ∑ j, D i j * F j i
   let Z := averagedVelocity F D
   have hn : (Fintype.card d : ℂ) ≠ 0 := by exact_mod_cast Fintype.card_ne_zero
-  obtain ⟨hPstar, hPP⟩ := unit_support_projection F hmul hstar
-  have hPF (i j : d) : P * F i j = F i j := (unit_support_action F hmul i j).1
-  have hFP (i j : d) : F i j * P = F i j := (unit_support_action F hmul i j).2
+  have hPstar : Pᴴ = P := by
+    simp only [P, unitSupport, Matrix.conjTranspose_sum, hstar]
+  have hPP : P * P = P := by
+    simp only [P, unitSupport, Matrix.sum_mul, Matrix.mul_sum, hmul]
+    simp
+  have hPF (i j : d) : P * F i j = F i j := by
+    simp [P, unitSupport, Matrix.sum_mul, hmul]
+  have hFP (i j : d) : F i j * P = F i j := by
+    simp [P, unitSupport, Matrix.mul_sum, hmul]
   have hVstar : Vᴴ = V := by simp only [V, supportVelocity, Matrix.conjTranspose_sum, hDstar]
   have hright (i j : d) : D i j * P + F i j * V = D i j := by
     calc

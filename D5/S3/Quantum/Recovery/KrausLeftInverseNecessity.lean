@@ -117,29 +117,8 @@ theorem left_inverse_error_products (E : s → Matrix n d ℂ)
             Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, smul_smul]
           rw [mul_comm]
 
-/-- The scalar is forced to be the normalized trace, so the error defect is determined by E alone. -/
-theorem left_inverse_normalized_trace_condition (E : s → Matrix n d ℂ)
-    (A : t → Matrix d n ℂ)
-    (hA : (∑ b, (A b)ᴴ * A b) = 1)
-    (hleft : ∀ X : Matrix d d ℂ,
-      (∑ b, A b * (∑ a, E a * X * (E a)ᴴ) * (A b)ᴴ) = X)
-    (j₀ : d) (a c : s) :
-    (E a)ᴴ * E c =
-      (Matrix.trace ((E a)ᴴ * E c) / (Fintype.card d : ℂ)) • (1 : Matrix d d ℂ) := by
-  letI : Nonempty d := ⟨j₀⟩
-  have hn : (Fintype.card d : ℂ) ≠ 0 := by exact_mod_cast Fintype.card_ne_zero
-  let z := ∑ b, star ((A b * E a) j₀ j₀) * ((A b * E c) j₀ j₀)
-  have hz : (E a)ᴴ * E c = z • (1 : Matrix d d ℂ) :=
-    left_inverse_error_products E A hA hleft j₀ a c
-  have hc : Matrix.trace ((E a)ᴴ * E c) / (Fintype.card d : ℂ) = z := by
-    rw [hz, Matrix.trace_smul]
-    simp [hn, smul_eq_mul]
-  rw [hc]
-  exact hz
-
 #print axioms identity_kraus_commute
 #print axioms identity_kraus_scalar
 #print axioms left_inverse_error_products
-#print axioms left_inverse_normalized_trace_condition
 
 end D5.S3.Quantum.Recovery.KrausLeftInverseNecessity

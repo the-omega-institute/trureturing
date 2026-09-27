@@ -10,10 +10,6 @@ internal sealed class SpectralTransposeRecoveryDocument : IScribeDocumentDefinit
         H("SpectralTransposeRecovery"),
         Blocks(new[]
         {
-            "spectral_support_projection",
-            "spectral_inverse_sqrt_adjoint",
-            "spectral_support_mul",
-            "inverse_sqrt_sandwich",
             "spectral_support_on_kraus",
             "spectral_transpose_candidate"
         }.Select(name => Describe.Lean(

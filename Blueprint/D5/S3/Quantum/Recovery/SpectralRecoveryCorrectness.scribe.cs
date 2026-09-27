@@ -10,10 +10,7 @@ internal sealed class SpectralRecoveryCorrectnessDocument : IScribeDocumentDefin
         H("SpectralRecoveryCorrectness"),
         Blocks(new[]
         {
-            "left_inverse_observable_intertwines",
-            "computed_recovery_of_kraus_left_inverse",
-            "canonical_spectral_left_inverse",
-            "scalar_condition_iff_spectral_left_inverse"
+            "computed_recovery_of_kraus_left_inverse"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/SpectralRecoveryCorrectness." + name),

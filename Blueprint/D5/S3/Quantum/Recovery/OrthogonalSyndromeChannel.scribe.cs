@@ -11,14 +11,8 @@ internal sealed class OrthogonalSyndromeChannelDocument : IScribeDocumentDefinit
         Blocks(new[]
         {
                 "logical_representation_mul",
-                "logical_representation_star",
                 "logical_representation_on_copy",
-                "logical_representation_restrict",
-                "logical_representation_injective",
                 "logical_action_on_encoding",
-                "code_support_projection",
-                "code_support_on_copy",
-                "code_support_on_encoding",
                 "full_syndrome_decoder",
                 "encoding_kraus_gram",
                 "encoding_kraus_action",

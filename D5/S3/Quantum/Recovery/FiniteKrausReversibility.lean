@@ -95,17 +95,6 @@ private theorem rotated_action (E : s → Matrix n d ℂ) (V : Matrix s s ℂ)
       simp only [Finset.sum_smul]
     _ = _ := by simp_rw [hcoeff]; simp
 
-private theorem sum_on_positive {M : Type*} [AddCommMonoid M]
-    (lam : s → ℝ) (f : s → M) (hz : ∀ j, ¬ 0 < lam j → f j = 0) :
-    (∑ j, f j) = ∑ j : {j : s // 0 < lam j}, f j := by
-  classical
-  have h := Fintype.sum_subtype_add_sum_subtype (fun j => 0 < lam j) f
-  have hc : (∑ j : {j : s // ¬ 0 < lam j}, f j) = 0 := by
-    apply Finset.sum_eq_zero
-    intro j hj
-    exact hz j j.property
-  simpa only [hc, add_zero] using h.symm
-
 /-- The scalar criterion builds a finite, normalized, actual left inverse. All zero eigenvalue errors are explicitly eliminated. -/
 theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
     (hTP : (∑ a, (E a)ᴴ * E a) = 1) (v : d) (c : Matrix s s ℂ)
@@ -187,15 +176,30 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
   have hsigmatrace : Matrix.trace sigma = 1 := by
     dsimp only [sigma]
     rw [Matrix.trace_diagonal]
-    rw [← sum_on_positive lam (fun j => (lam j : ℂ)) (fun j hj => by
-      have hl : lam j = 0 := le_antisymm (le_of_not_gt hj) (hlam j)
-      simp [hl])]
+    have hsplit := Fintype.sum_subtype_add_sum_subtype (fun j => 0 < lam j)
+      (fun j => (lam j : ℂ))
+    have hz : (∑ j : {j : s // ¬ 0 < lam j}, (lam j : ℂ)) = 0 := by
+      apply Finset.sum_eq_zero
+      intro j hj
+      have hl : lam j = 0 := le_antisymm (le_of_not_gt j.property) (hlam j)
+      simp [hl]
+    have hpositive : (∑ j, (lam j : ℂ)) = ∑ j : J, (lam j : ℂ) := by
+      simpa only [hz, add_zero] using hsplit.symm
+    rw [← hpositive]
     exact hlamSum
   have hnoise (X : Matrix d d ℂ) :
       (∑ a, E a * X * (E a)ᴴ) = syndromeEncoding S sigma X := by
     calc
       _ = ∑ j, F j * X * (F j)ᴴ := (rotated_action E V hV X).symm
-      _ = ∑ j : J, F j * X * (F j)ᴴ := sum_on_positive lam _ (fun j hj => by rw [hzero j hj]; simp)
+      _ = ∑ j : J, F j * X * (F j)ᴴ := by
+        have hsplit := Fintype.sum_subtype_add_sum_subtype (fun j => 0 < lam j)
+          (fun j => F j * X * (F j)ᴴ)
+        have hz : (∑ j : {j : s // ¬ 0 < lam j}, F j * X * (F j)ᴴ) = 0 := by
+          apply Finset.sum_eq_zero
+          intro j hj
+          rw [hzero j j.property]
+          simp
+        simpa only [hz, add_zero] using hsplit.symm
       _ = ∑ j : J, (lam j : ℂ) • (S j * X * (S j)ᴴ) := by
         apply Finset.sum_congr rfl
         intro j hj
@@ -223,21 +227,54 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
         · simp
   let P := codeSupport S
   let A₀ : J ⊕ n → Matrix d n ℂ := completeKraus (fun j => (S j)ᴴ) P v
-  obtain ⟨hP, hPP⟩ := code_support_projection S hS
+  have hP : Pᴴ = P := by
+    simp [P, codeSupport, logicalRepresentation, Matrix.conjTranspose_sum,
+      Matrix.conjTranspose_mul, Matrix.mul_assoc]
+  have hPP : P * P = P := by
+    simpa [P, codeSupport] using logical_representation_mul S hS (1 : Matrix d d ℂ) 1
   have hbase : (∑ j, ((S j)ᴴ)ᴴ * (S j)ᴴ) = P := by
     simp [P, codeSupport, logicalRepresentation]
-  have hA₀ : (∑ b, (A₀ b)ᴴ * A₀ b) = 1 :=
-    complete_kraus_normalised (fun j => (S j)ᴴ) P v hP hPP hbase
+  have hA₀ : (∑ b, (A₀ b)ᴴ * A₀ b) = 1 := by
+    have hRowUnit :
+        (∑ j : n, (Matrix.single v j (1 : ℂ))ᴴ * Matrix.single v j (1 : ℂ)) =
+          (1 : Matrix n n ℂ) := by
+      calc
+        _ = ∑ j : n, Matrix.single j j (1 : ℂ) := by
+          apply Finset.sum_congr rfl
+          intro j hj
+          simpa only [Matrix.conjTranspose_single, star_one, one_mul] using
+            (Matrix.single_mul_single_same (c := (1 : ℂ)) j v j (1 : ℂ))
+        _ = 1 := Matrix.sum_single_one
+    have hRowGram :
+        (∑ j : n, (rowReset v (1 - P) j)ᴴ * rowReset v (1 - P) j) =
+          (1 - P)ᴴ * (1 - P) := by
+      calc
+        _ = (1 - P)ᴴ * (∑ j : n,
+            (Matrix.single v j (1 : ℂ))ᴴ * Matrix.single v j (1 : ℂ)) *
+            (1 - P) := by
+          simp only [rowReset, Matrix.conjTranspose_mul, Matrix.mul_sum,
+            Matrix.sum_mul, Matrix.mul_assoc]
+        _ = (1 - P)ᴴ * (1 - P) := by rw [hRowUnit, Matrix.mul_one]
+    have hComp : (1 - P)ᴴ * (1 - P) = 1 - P := by
+      simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hP,
+        Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one,
+        hPP, sub_self, sub_zero]
+    simp only [A₀, completeKraus, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr]
+    rw [hbase, hRowGram, hComp]
+    abel
   have hrec (X : Matrix d d ℂ) :
       (∑ b, A₀ b * (∑ a, E a * X * (E a)ᴴ) * (A₀ b)ᴴ) = X := by
     change (∑ b, completeKraus (fun j => (S j)ᴴ) P v b *
       (∑ a, E a * X * (E a)ᴴ) * (completeKraus (fun j => (S j)ᴴ) P v b)ᴴ) = X
     rw [complete_kraus_action _ P v hP hPP, hnoise X]
+    have hsupport : P * syndromeEncoding S sigma X = syndromeEncoding S sigma X := by
+      simpa only [P, codeSupport, Matrix.one_mul] using
+        logical_action_on_encoding S hS 1 X sigma
     have hz : (1 - P) * syndromeEncoding S sigma X = 0 := by
-      rw [Matrix.sub_mul, Matrix.one_mul, code_support_on_encoding S hS, sub_self]
+      rw [Matrix.sub_mul, Matrix.one_mul, hsupport, sub_self]
     rw [hz, Matrix.trace_zero, zero_smul, add_zero]
-    simpa only [syndromeDecoding, Matrix.conjTranspose_conjTranspose] using
-      trace_one_syndrome_recovery S hS sigma hsigmatrace X
+    simpa only [syndromeDecoding, Matrix.conjTranspose_conjTranspose,
+      hsigmatrace, one_smul] using orthogonal_syndrome_recovery S hS sigma X
   let e := (Fintype.equivFin (J ⊕ n)).symm
   refine ⟨Fintype.card (J ⊕ n), fun b => A₀ (e b), ?_, fun X => ?_⟩
   · calc

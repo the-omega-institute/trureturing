@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Finite checks for ST19-ST26. These tests are not substitutes for the proofs.
 Run: python check_ST19_ST26.py --out checks_ST19_ST26.json
-Requires NumPy, SciPy, SymPy. Deterministic seed; no network or repository writes.
+Requires NumPy, SciPy, SymPy. Deterministic seed; no network access. Writes the requested JSON result.
 """
 from __future__ import annotations
 import argparse

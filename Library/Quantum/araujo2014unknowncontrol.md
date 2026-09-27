@@ -5,8 +5,7 @@ year: 2014
 title: Quantum circuits cannot control unknown operations
 doi: 10.1088/1367-2630/16/9/093026
 claim: An unknown quantum operation cannot be coherently controlled by an ordinary fixed circuit using only its black-box channel action.
-strata_touched:
-  - D5/S3/Quantum/Recovery/TwoSyndromePhaseDefect
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

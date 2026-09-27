@@ -43,19 +43,6 @@ def syndromeDecoding (S : s → Matrix n d ℂ)
     (state : Matrix n n ℂ) : Matrix d d ℂ :=
   ∑ i, (S i)ᴴ * state * S i
 
-private theorem decoding_sum {t : Type*} [Fintype t]
-    (S : s → Matrix n d ℂ) (state : t → Matrix n n ℂ) :
-    syndromeDecoding S (∑ a, state a) =
-      ∑ a, syndromeDecoding S (state a) := by
-  simp only [syndromeDecoding, Matrix.mul_sum, Matrix.sum_mul]
-  rw [Finset.sum_comm]
-
-private theorem decoding_smul (S : s → Matrix n d ℂ)
-    (c : ℂ) (state : Matrix n n ℂ) :
-    syndromeDecoding S (c • state) = c • syndromeDecoding S state := by
-  simp only [syndromeDecoding, Matrix.mul_smul, Matrix.smul_mul,
-    Finset.smul_sum]
-
 /-- Off-diagonal syndrome blocks disappear, while diagonal blocks preserve
 exactly the original logical matrix. -/
 theorem decoding_syndrome_block (S : s → Matrix n d ℂ)
@@ -82,18 +69,19 @@ theorem orthogonal_syndrome_recovery (S : s → Matrix n d ℂ)
     (sigma : Matrix s s ℂ) (rho : Matrix d d ℂ) :
     syndromeDecoding S (syndromeEncoding S sigma rho) =
       Matrix.trace sigma • rho := by
+  have hsum (state : s → Matrix n n ℂ) :
+      syndromeDecoding S (∑ a, state a) =
+        ∑ a, syndromeDecoding S (state a) := by
+    simp only [syndromeDecoding, Matrix.mul_sum, Matrix.sum_mul]
+    rw [Finset.sum_comm]
+  have hsmul (c : ℂ) (state : Matrix n n ℂ) :
+      syndromeDecoding S (c • state) = c • syndromeDecoding S state := by
+    simp only [syndromeDecoding, Matrix.mul_smul, Matrix.smul_mul,
+      Finset.smul_sum]
   unfold syndromeEncoding
-  simp_rw [decoding_sum, decoding_smul,
+  simp_rw [hsum, hsmul,
     decoding_syndrome_block S hS rho]
   simp [smul_ite, Matrix.trace, Matrix.diag_apply, Finset.sum_smul]
-
-/-- A trace-one syndrome is exactly irrelevant to the recovered logical state. -/
-theorem trace_one_syndrome_recovery (S : s → Matrix n d ℂ)
-    (hS : OrthogonalSyndromes S)
-    (sigma : Matrix s s ℂ) (hTrace : Matrix.trace sigma = 1)
-    (rho : Matrix d d ℂ) :
-    syndromeDecoding S (syndromeEncoding S sigma rho) = rho := by
-  rw [orthogonal_syndrome_recovery S hS, hTrace, one_smul]
 
 /-- Logical unitary transport within each syndrome preserves orthogonality.
 This constructs the corrected decoding frame for a known syndrome history. -/
@@ -115,7 +103,6 @@ theorem syndrome_transport_orthogonal (S : s → Matrix n d ℂ)
 
 #print axioms decoding_syndrome_block
 #print axioms orthogonal_syndrome_recovery
-#print axioms trace_one_syndrome_recovery
 #print axioms syndrome_transport_orthogonal
 
 end D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding

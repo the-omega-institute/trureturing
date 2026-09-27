@@ -10,9 +10,7 @@ internal sealed class KrausCompletionDocument : IScribeDocumentDefinition
         H("KrausCompletion"),
         Blocks(new[]
         {
-                "row_reset_gram",
                 "row_reset_action",
-                "complete_kraus_normalised",
                 "complete_kraus_action",
                 "complete_quantum_channel"
         }.Select(name => Describe.Lean(
@@ -20,7 +18,7 @@ internal sealed class KrausCompletionDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/KrausCompletion." + name),
             H(name.Replace('_', ' ')),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/knilllaflamme1997correction")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/knilllaflamme1997correction")),
             Blocks(Paragraph(Text("Explicit row-reset Kraus operators complete the input effect and produce the repository canonical CPTP channel. Spectral inverse construction is a separate obligation."))),
             DescribeRole.Theorem)).ToArray())));
 }

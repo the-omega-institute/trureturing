@@ -28,19 +28,7 @@ Lean statement: `D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.orthogonal_sy
 
 Finite orthogonal syndrome copies preserve the complete logical matrix. The decoder here is support-restricted; complete-positive extension and global bundle statements are not asserted by these declarations.
 
-**Theorem 1.3 (trace one syndrome recovery).**
-
-Lean statement: `D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.trace_one_syndrome_recovery`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.trace_one_syndrome_recovery` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Finite orthogonal syndrome copies preserve the complete logical matrix. The decoder here is support-restricted; complete-positive extension and global bundle statements are not asserted by these declarations.
-
-**Theorem 1.4 (syndrome transport orthogonal).**
+**Theorem 1.3 (syndrome transport orthogonal).**
 
 Lean statement: `D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.syndrome_transport_orthogonal`
 
@@ -57,4 +45,3 @@ Finite orthogonal syndrome copies preserve the complete logical matrix. The deco
 - Truth anchor: `D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.decoding_syndrome_block`
 - Truth anchor: `D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.orthogonal_syndrome_recovery`
 - Truth anchor: `D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.syndrome_transport_orthogonal`
-- Truth anchor: `D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.trace_one_syndrome_recovery`

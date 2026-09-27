@@ -5127,7 +5127,7 @@ $$
 
 **范围。** 本增订固定有限维、正定内积的复 Hilbert 空间和确定的实验权限。ST27–ST31给出矩阵与通道证明；ST32给出一个球面子丛和全局 CPTP 编码的显式构造。所有通道等式允许张量任意不参与控制的有限参考系统。概率不依赖未知逻辑输入，除非明确写出相反情况。钻石距离一律采用一半钻石范数的约定，不做后选择。
 
-**来源与证明状态。** 正交 syndrome 恢复和 Knill–Laflamme 条件是既有纠错理论；读取环境标签后纠正随机酉噪声也有既有文献。本增订把它们接到ST19的漏出、ST15的路径连接和ST23的全局图障碍上，并推导有损经典记录下的精确误差公式。没有全球新颖性主张。`OrthogonalSyndromeDecoding` 与 `TwoSyndromePhaseDefect` 的公开矩阵声明已在固定 Lean 工具链上构建；钻石范数最优性、CPTP 扩展及 Chern 数并未因此形式化。
+**来源与证明状态。** 正交 syndrome 恢复和 Knill–Laflamme 条件是既有纠错理论；读取环境标签后纠正随机酉噪声也有既有文献。本增订把它们接到ST19的漏出、ST15的路径连接和ST23的全局图障碍上，并推导有损经典记录下的精确误差公式。没有全球新颖性主张。`OrthogonalSyndromeDecoding` 的公开矩阵声明已在固定 Lean 工具链上构建；有限 syndrome 通道构造另见 `OrthogonalSyndromeChannel`。相位缺陷恒等式、钻石范数最优性、全局物理实现及 Chern 数并未因此形式化。
 
 仓内 `FiniteKrausInstrumentBornMarginal` 提供真实 Kraus/Born 边缘公式；`FutureStatisticsEquivalence` 给出未来算子系统的不可区分性判据。它们没有自动证明本增订的恢复与全局通道结论。
 
@@ -5362,7 +5362,7 @@ $$
 \tag{ST30.5}
 $$
 
-这条精确代数式及$0<p<1$时的单位可见度判据由 `TwoSyndromePhaseDefect.lean` 承载；(ST30.3) 的完整优化仍未形式化。
+这条精确代数式及$0<p<1$时的单位可见度判据在此按普通代数证明；(ST30.3) 的完整优化仍未形式化。
 
 ## ST31．有限记录分辨率与后续实验预算
 
@@ -5462,9 +5462,9 @@ Lanka等2026年预印本使“记录syndrome并调整几何路径”成为直接
 
 **形式化覆盖。**
 
-`D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.lean`：公开5个声明，证明真实矩阵和构造的syndrome编码/解码恒等式，以及逐syndrome酉运输后的恢复。它对任意矩阵成立，物理CP延拓仍由ST27普通证明承担。
+`D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.lean`：公开3个声明，证明真实矩阵和构造的syndrome编码/解码恒等式，以及逐syndrome酉运输后的恢复。相邻的 `OrthogonalSyndromeChannel` 另构造有限 CPTP 解码与编码通道；更广的物理实现仍由正文讨论。
 
-`D5/S3/Quantum/Recovery/TwoSyndromePhaseDefect.lean`：公开3个声明，证明两相位可见度缺陷、非零权重时单位可见度与相位相等的等价，以及相反相位例子。
+两相位可见度缺陷及相反相位例子属于本卷普通证明，不计入当前 Lean 覆盖。
 
 对应的 Scribe 与 Blueprint 阅读稿逐项列出声明和边界。数学最优性、参考系统上的通道范数、全局丛与 Chern 数只在正文中证明，不能据局部 Lean 覆盖把整章称为 kernel-verified。
 

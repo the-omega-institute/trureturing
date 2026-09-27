@@ -47,38 +47,6 @@ variable {s t n d : Type*} [Fintype s] [DecidableEq s] [Fintype t]
 def leftInverseObservable (A : t → Matrix d n ℂ) (X : Matrix d d ℂ) :
     Matrix n n ℂ := ∑ b, (A b)ᴴ * X * A b
 
-private theorem observable_star (A : t → Matrix d n ℂ) (X : Matrix d d ℂ) :
-    (leftInverseObservable A X)ᴴ = leftInverseObservable A Xᴴ := by
-  simp only [leftInverseObservable, Matrix.conjTranspose_sum,
-    Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
-
-/-- A genuine left inverse's observable map intertwines every original error. -/
-theorem left_inverse_observable_intertwines (E : s → Matrix n d ℂ)
-    (A : t → Matrix d n ℂ) (hA : (∑ b, (A b)ᴴ * A b) = 1)
-    (hleft : ∀ X : Matrix d d ℂ,
-      (∑ b, A b * (∑ a, E a * X * (E a)ᴴ) * (A b)ᴴ) = X)
-    (v : d) (X : Matrix d d ℂ) (a : s) :
-    leftInverseObservable A X * E a = E a * X := by
-  let F : t × s → Matrix d d ℂ := fun p => A p.1 * E p.2
-  have hF : ∀ Y : Matrix d d ℂ, (∑ p, F p * Y * (F p)ᴴ) = Y := by
-    intro Y
-    simpa only [F, Fintype.sum_prod_type, Matrix.conjTranspose_mul,
-      Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc] using hleft Y
-  have hs (b : t) : A b * E a = (A b * E a) v v • (1 : Matrix d d ℂ) :=
-    identity_kraus_scalar F hF v (b, a)
-  have hterm (b : t) : (A b)ᴴ * X * (A b * E a) =
-      (A b)ᴴ * (A b * E a) * X := by
-    rw [hs b]
-    simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one,
-      Matrix.one_mul, Matrix.mul_assoc]
-  calc
-    _ = ∑ b, (A b)ᴴ * X * (A b * E a) := by
-      simp only [leftInverseObservable, Matrix.sum_mul, Matrix.mul_assoc]
-    _ = ∑ b, (A b)ᴴ * (A b * E a) * X := by simp_rw [hterm]
-    _ = (∑ b, (A b)ᴴ * A b) * E a * X := by
-      simp only [Matrix.sum_mul, Matrix.mul_assoc]
-    _ = E a * X := by rw [hA, Matrix.one_mul]
-
 /-- The explicit formula of the previously constructed spectral CPTP candidate. -/
 def spectralRecoveryAction (E : s → Matrix n d ℂ) (v : d) (X : Matrix n n ℂ) :
     Matrix d d ℂ :=
@@ -102,13 +70,34 @@ theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
   let NX := ∑ a, E a * X * (E a)ᴴ
   have hQ : Q.PosSemidef := Matrix.nonneg_iff_posSemidef.mp
     (Finset.sum_nonneg fun a _ => (Matrix.posSemidef_self_mul_conjTranspose (E a)).nonneg)
-  have hYE (a : s) : Y * E a = E a * X :=
-    left_inverse_observable_intertwines E A hA hleft v X a
+  have hIntertwines (T : Matrix d d ℂ) (a : s) :
+      leftInverseObservable A T * E a = E a * T := by
+    let F : t × s → Matrix d d ℂ := fun p => A p.1 * E p.2
+    have hF : ∀ Z : Matrix d d ℂ, (∑ p, F p * Z * (F p)ᴴ) = Z := by
+      intro Z
+      simpa only [F, Fintype.sum_prod_type, Matrix.conjTranspose_mul,
+        Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc] using hleft Z
+    have hs (b : t) : A b * E a = (A b * E a) v v • (1 : Matrix d d ℂ) :=
+      identity_kraus_scalar F hF v (b, a)
+    have hterm (b : t) : (A b)ᴴ * T * (A b * E a) =
+        (A b)ᴴ * (A b * E a) * T := by
+      rw [hs b]
+      simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one,
+        Matrix.one_mul, Matrix.mul_assoc]
+    calc
+      _ = ∑ b, (A b)ᴴ * T * (A b * E a) := by
+        simp only [leftInverseObservable, Matrix.sum_mul, Matrix.mul_assoc]
+      _ = ∑ b, (A b)ᴴ * (A b * E a) * T := by simp_rw [hterm]
+      _ = (∑ b, (A b)ᴴ * A b) * E a * T := by
+        simp only [Matrix.sum_mul, Matrix.mul_assoc]
+      _ = E a * T := by rw [hA, Matrix.one_mul]
+  have hYE (a : s) : Y * E a = E a * X := hIntertwines X a
   have hEY (a : s) : (E a)ᴴ * Y = X * (E a)ᴴ := by
     have h := congrArg Matrix.conjTranspose
-      (left_inverse_observable_intertwines E A hA hleft v Xᴴ a)
-    simpa only [Matrix.conjTranspose_mul, observable_star,
-      Matrix.conjTranspose_conjTranspose] using h
+      (hIntertwines Xᴴ a)
+    simpa only [Y, leftInverseObservable, Matrix.conjTranspose_mul,
+      Matrix.conjTranspose_sum, Matrix.conjTranspose_conjTranspose,
+      Matrix.mul_assoc] using h
   have hQY : Q * Y = NX := by
     simp only [Q, NX, Matrix.sum_mul, Matrix.mul_assoc, hEY]
   have hYQ : Y * Q = NX := by
@@ -116,13 +105,43 @@ theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
   have hcomm : Commute Q Y := hQY.trans hYQ.symm
   have hWY : W * Y = Y * W :=
     (hcomm.cfc_real (fun q : ℝ => (Real.sqrt q)⁻¹)).eq
+  have hSandwich : W * Q * W = P := by
+    change spectralInverseSqrt Q * Q * spectralInverseSqrt Q = spectralSupport Q
+    have hcont (f : ℝ → ℝ) : ContinuousOn f (spectrum ℝ Q) := by
+      rw [continuousOn_iff_continuous_domRestrict]
+      fun_prop
+    have hmul (f g : ℝ → ℝ) :
+        cfc f Q * cfc g Q = cfc (fun x => f x * g x) Q :=
+      (cfc_mul f g Q (hcont f) (hcont g)).symm
+    calc
+      _ = cfc (fun x : ℝ => (Real.sqrt x)⁻¹) Q * cfc (fun x : ℝ => x) Q *
+          cfc (fun x : ℝ => (Real.sqrt x)⁻¹) Q := by
+        rw [cfc_id' ℝ Q hQ.isHermitian.isSelfAdjoint]; rfl
+      _ = cfc (fun x : ℝ => (Real.sqrt x)⁻¹ * x * (Real.sqrt x)⁻¹) Q := by
+        rw [hmul, hmul]
+      _ = spectralSupport Q := by
+        apply cfc_congr
+        intro x hx
+        rw [hQ.isHermitian.spectrum_real_eq_range_eigenvalues] at hx
+        obtain ⟨i, rfl⟩ := hx
+        by_cases h : hQ.isHermitian.eigenvalues i = 0
+        · simp [h]
+        · have hx := hQ.eigenvalues_nonneg i
+          have hs : Real.sqrt (hQ.isHermitian.eigenvalues i) ≠ 0 :=
+            ne_of_gt (Real.sqrt_pos.2 (lt_of_le_of_ne hx (Ne.symm h)))
+          change (Real.sqrt (hQ.isHermitian.eigenvalues i))⁻¹ *
+            hQ.isHermitian.eigenvalues i *
+            (Real.sqrt (hQ.isHermitian.eigenvalues i))⁻¹ =
+            (if hQ.isHermitian.eigenvalues i = 0 then 0 else 1)
+          rw [if_neg h]
+          field_simp [hs] <;> nlinarith [Real.sq_sqrt hx]
   have hWN : W * NX * W = P * Y := by
     calc
       _ = W * (Q * Y) * W := by rw [hQY]
       _ = (W * Q) * (Y * W) := by simp only [Matrix.mul_assoc]
       _ = (W * Q) * (W * Y) := by rw [← hWY]
       _ = (W * Q * W) * Y := by simp only [Matrix.mul_assoc]
-      _ = P * Y := by rw [inverse_sqrt_sandwich Q hQ]
+      _ = P * Y := by rw [hSandwich]
   have hPE (a : s) : P * E a = E a := spectral_support_on_kraus E a
   have hPN : P * NX = NX := by
     simp only [NX, Matrix.mul_sum, ← Matrix.mul_assoc, hPE]
@@ -141,72 +160,6 @@ theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
   simp_rw [hterm]
   rw [← Matrix.sum_mul, hTP, Matrix.one_mul]
 
-/-- Under the scalar criterion the same canonical channel has the computed formula and is an exact left inverse. -/
-theorem canonical_spectral_left_inverse (E : s → Matrix n d ℂ)
-    (hTP : (∑ a, (E a)ᴴ * E a) = 1) (v : d)
-    (hE : ∀ a b, (E a)ᴴ * E b =
-      (Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) • (1 : Matrix d d ℂ)) :
-    ∃ recovery : QuantumChannel n d,
-      (∀ Y : Matrix n n ℂ, CStarMatrix.ofMatrix.symm
-        (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix Y)) = spectralRecoveryAction E v Y) ∧
-      (∀ X : Matrix d d ℂ, CStarMatrix.ofMatrix.symm
-        (recovery.toCompletelyPositiveMap
-          (CStarMatrix.ofMatrix (∑ a, E a * X * (E a)ᴴ))) = X) := by
-  obtain ⟨r, A, hA, hleft⟩ := scalar_products_construct_left_inverse E hTP v
-    (fun a b => Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) hE
-  obtain ⟨recovery, hr⟩ := spectral_transpose_candidate E v
-  have haction : ∀ Y : Matrix n n ℂ, CStarMatrix.ofMatrix.symm
-      (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix Y)) = spectralRecoveryAction E v Y := by
-    intro Y
-    simpa only [spectralRecoveryAction] using hr Y
-  refine ⟨recovery, haction, fun X => ?_⟩
-  rw [haction]
-  exact computed_recovery_of_kraus_left_inverse E hTP A hA hleft v X
-
-/-- The normalized-trace scalar criterion is equivalent to exactness of the computed spectral formula, completing the three-way finite-Kraus criterion. -/
-theorem scalar_condition_iff_spectral_left_inverse (E : s → Matrix n d ℂ)
-    (hTP : (∑ a, (E a)ᴴ * E a) = 1) (v : d) :
-    (∀ a b, (E a)ᴴ * E b =
-      (Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) • (1 : Matrix d d ℂ)) ↔
-    (∀ X : Matrix d d ℂ, spectralRecoveryAction E v (∑ a, E a * X * (E a)ᴴ) = X) := by
-  constructor
-  · intro hE
-    obtain ⟨r, A, hA, hleft⟩ := scalar_products_construct_left_inverse E hTP v
-      (fun a b => Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) hE
-    exact computed_recovery_of_kraus_left_inverse E hTP A hA hleft v
-  · intro hspec
-    let Q := ∑ a, E a * (E a)ᴴ
-    let P := spectralSupport Q
-    let W := spectralInverseSqrt Q
-    let K : s → Matrix d n ℂ := fun a => (E a)ᴴ * W
-    let G : s ⊕ n → Matrix d n ℂ := completeKraus K P v
-    have hQ : Q.PosSemidef := Matrix.nonneg_iff_posSemidef.mp
-      (Finset.sum_nonneg fun a _ => (Matrix.posSemidef_self_mul_conjTranspose (E a)).nonneg)
-    have hW : Wᴴ = W := spectral_inverse_sqrt_adjoint Q
-    obtain ⟨hP, hPP⟩ := spectral_support_projection Q
-    have hK : (∑ a, (K a)ᴴ * K a) = P := by
-      calc
-        _ = W * Q * W := by
-          simp only [K, Q, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
-            hW, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
-        _ = P := inverse_sqrt_sandwich Q hQ
-    have hG : (∑ b, (G b)ᴴ * G b) = 1 := complete_kraus_normalised K P v hP hPP hK
-    have hGaction (Y : Matrix n n ℂ) :
-        (∑ b, G b * Y * (G b)ᴴ) = spectralRecoveryAction E v Y := by
-      change (∑ b, completeKraus K P v b * Y * (completeKraus K P v b)ᴴ) = _
-      rw [complete_kraus_action K P v hP hPP]
-      simp only [K, spectralRecoveryAction, Matrix.conjTranspose_mul,
-        Matrix.conjTranspose_conjTranspose, hW, Matrix.mul_assoc]
-      rfl
-    have hleft : ∀ X : Matrix d d ℂ,
-        (∑ b, G b * (∑ a, E a * X * (E a)ᴴ) * (G b)ᴴ) = X := by
-      intro X
-      rw [hGaction, hspec]
-    exact fun a b => left_inverse_normalized_trace_condition E G hG hleft v a b
-
-#print axioms left_inverse_observable_intertwines
 #print axioms computed_recovery_of_kraus_left_inverse
-#print axioms canonical_spectral_left_inverse
-#print axioms scalar_condition_iff_spectral_left_inverse
 
 end D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness
