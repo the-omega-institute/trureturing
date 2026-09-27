@@ -102,7 +102,6 @@ theorem cumulative_communication_criterion
             Nat.add_le_add (edge_le_max state action) (ih (T action state))
           _ = (word.length + 1) * maxEdgeCost w := by
             simp [Nat.add_mul, Nat.add_comm]
-  have hCardPositive : 0 < Fintype.card Q := Fintype.card_pos
   have bound_of_zero_cycles
       (zeroCycles : ∀ state : Q, ∀ cycle : List F, cycle ≠ [] →
         run T state cycle = state → Comm T w state cycle = 0) :
