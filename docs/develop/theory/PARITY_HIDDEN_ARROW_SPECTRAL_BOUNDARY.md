@@ -59368,3 +59368,344 @@ $$
 固定参数 theta 和的非共振上界不能直接提供这里随数据变化且可趋近格点的相位常数。相关原始来源及其适用条件见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。本章为普通数学推导，未作 Lean 核验证明，也不主张文献检索穷尽或全球原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 191. 无计数上截断的联合 Poisson 信息近似：逐行支付整个尾部
+
+第 189 章在每个固定总计数截止内控制全部原始群的联合相对熵。本章去掉该上截断。困难不只是尾部出现概率小：某个极罕见计数组的参考质量可以更小，故其负对数和直方图阶乘仍须支付。把每个尾部群的信息代价归给产生它的同一实际行，可以避免尾部群数的额外因子；再用联合熵链式身份接回第 189 章的核心估计。
+
+**定理 191.1（整条非负计数线的精确均值联合信息界）。** 固定紧区间 $J=[\beta_0,\beta_1]\Subset D$。保留原始振幅、补偿、历史、取整和观察时长，令
+
+$$
+\mathcal J_Q=\{j\in\mathbb Z:K_j=k_0+Qj\ge0,\ B_j=l_0+Pj\ge0\}.
+$$
+
+对每个预先确定、大小为 $q$ 的原始支持，分别在实际 pair 与平稳依赖 path 实验中，令 $C_j$ 为完整原始计数组的经验计数，$\mu_j=\mathbb E C_j$ 为该实验自己的精确实际均值。则一致有
+
+$$
+D\!\left(\mathcal L((C_j)_{j\in\mathcal J_Q})\,\middle\|\,
+       \bigotimes_{j\in\mathcal J_Q}\operatorname{Pois}(\mu_j)\right)
+\le \mathcal E_{Q,C_*}(q)+\mathcal E_{Q,C_*}(M-q)
+       +V_Qe^{-2\lambda}
+=O_{J,r}(Q^{-1})\longrightarrow0,
+\tag{191.1}
+$$
+
+其中
+
+$$
+\lambda=Q^3,\qquad \gamma_{\rm tail}=(e-1)/2,\qquad
+C_*=4\left(\gamma_{\rm tail}+\frac{\phi}{\beta_0}+2\right),
+\qquad
+V_Q=1+(1+\phi)\lambda+\log2+\frac{32}{b\lambda}.
+\tag{191.2}
+$$
+
+$\mathcal E_{Q,C}(s)$ 表示第 189 章 (189.30) 中取 $C_0=C$ 的同一有限参数函数，适用该章的有限层条件。不对实际均值增加上限或正下界。$C_*$ 只划分证明中的核心和尾部；定理保留整条非负计数线。超过原有限观察时长的坐标在实际律和精确均值参考律下均为确定零。
+
+### 191.2 原始对象、完整群及有限支持
+
+沿用第 189 章的原始序列和参数：
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,
+$$
+$$
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0,
+$$
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,\quad
+M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,\quad
+s_0=M-q,\quad \epsilon=\frac{rq}{s_0},\quad T=2M\lambda.
+\tag{191.3}
+$$
+
+在一致充分晚的原始层上，$1\le q<M/2$、$s_0\ge1$ 且 $0<\epsilon<r<1$。两个奇偶类 $\mathcal C_+,\mathcal C_-$ 各有 $M$ 个状态。固定任意 $S\subset\mathcal C_+$、$|S|=q$，原核为
+
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+b_S(x)=
+\begin{cases}
+r,&x\in S,\\
+-\epsilon,&x\in\mathcal C_+\setminus S,\\
+0,&x\in\mathcal C_-,
+\end{cases}
+\tag{191.4}
+$$
+
+其中 $\chi$ 在两类分别取 $+1,-1$。path 从均匀平稳分布开始，有 $T$ 次转移；pair 由 $T$ 个独立平稳相邻对组成。对每个正类行 $x$，$N_{x,+},N_{x,-}$ 分别计数其下一状态为正、负的出发次数，$N_x=N_{x,+}+N_{x,-}$。
+
+完整分数是
+
+$$
+W(K,B)=K\log\frac{1+r}{1-\epsilon}
+       +B\log\frac{1-r}{1+\epsilon}.
+$$
+
+第 175 章的全局单射性适用于所有非负整数对，无计数截止。其适用关系为：$c=q/(M-q)\in(0,1)$ 是有理数，原 $r$ 超越；两个分数相等时
+
+$$
+\left(\frac{1+r}{1-cr}\right)^u
+\left(\frac{1-r}{1+cr}\right)^v=1,\qquad u,v\in\mathbb Z.
+$$
+
+清除分母后，超越性迫使相应有理函数恒等；在 $-1,1,1/c,-1/c$ 的不同零极点迫使 $u=v=0$。因此完整群恰是单个计数对群：
+
+$$
+t_j=K_j+B_j=\lambda+(Q+P)j,\qquad
+C_j=\sum_{x\in\mathcal C_+}
+ \mathbf1_{\{(N_{x,+},N_{x,-})=(K_j,B_j)\}}.
+\tag{191.5}
+$$
+
+每行至多属于一个目标群，故 $\sum_jC_j\le M$、$\sum_j\mu_j\le M$。
+
+令
+
+$$
+j_{\min}=\max\{\lceil-k_0/Q\rceil,\lceil-l_0/P\rceil\},\qquad
+j_{\max}=\left\lfloor\frac{T-\lambda}{Q+P}\right\rfloor,\qquad
+\mathcal F_Q=\{j_{\min},\ldots,j_{\max}\}.
+\tag{191.6}
+$$
+
+因为 $P,Q>0$，$\mathcal J_Q=\{j\ge j_{\min}\}$，而 $\mathcal F_Q=\mathcal J_Q\cap\{t_j\le T\}$ 是有限集。两种实验中的每行均满足 $N_x\le T$，所以 $\mathcal F_Q$ 外 $C_j=\mu_j=0$。删去这些确定零坐标，在共同支撑子空间上是可测双射，直接比较概率质量可得
+
+$$
+D\!\left(\mathcal L(C_{\mathcal J_Q})\,\middle\|\,
+       \bigotimes_{\mathcal J_Q}\operatorname{Pois}(\mu_j)\right)
+=D\!\left(\mathcal L(C_{\mathcal F_Q})\,\middle\|\,
+       \bigotimes_{\mathcal F_Q}\operatorname{Pois}(\mu_j)\right).
+\tag{191.7}
+$$
+
+$\mathcal F_Q$ 内也允许 path 无法达到的坐标。若 $\mu_j=0$，由非负性知 $C_j=0$ 几乎处处，仍可同样删除。其余坐标的 Poisson 参考质量处处为正。实际直方图位于有限集 $\{0,\ldots,M\}^{\mathcal F_Q}$，下文使用的熵和正参数参考相对熵均有限，不涉及符号不定的无限级数。
+
+### 191.3 同一实际行的指数矩
+
+**引理 191.2（实际依赖 path 的行尾控制）。** 对任意原正类行 $x$、$u\ge0$、任一合法支持及两种实验，均有
+
+$$
+\log\mathbb E e^{uN_x}\le\frac{\lambda}{2}(e^{2u}-1).
+\tag{191.8}
+$$
+
+证明：精确补偿给 $\sum_xb_S(x)=qr-s_0\epsilon=0$，并有 $\sum_x\chi(x)b_S(x)=0$、$\sum_x\chi(x)=0$。展开 (191.4) 得到 $P_S^2(x,y)=1/(2M)$，且均匀分布平稳。
+
+对于 path，偶数时刻抽样链的核为常值均匀核；Markov 性和逐次条件化表明其状态序列联合独立且均匀。奇数时刻序列也如此，但不声称两个序列之间独立。出发时刻为 $0,\ldots,T-1$，两类时刻各有 $T/2$ 个。写 $N_x=E_x+O_x$，两个加数各自服从 $\operatorname{Bin}(T/2,1/(2M))$，故 Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+\mathbb E e^{uN_x}
+&\le(\mathbb E e^{2uE_x})^{1/2}
+     (\mathbb E e^{2uO_x})^{1/2}\\
+&=\left(1+\frac{e^{2u}-1}{2M}\right)^{T/2}
+\le\exp\{\lambda(e^{2u}-1)/2\}.
+\end{aligned}
+$$
+
+对于 pair，出发行标签独立均匀，先得到更强的 $\log\mathbb E e^{uN_x}\le\lambda(e^u-1)$；由 $2(e^u-1)\le e^{2u}-1$ 即得 (191.8)。证毕。
+
+在 $u=1/2$ 时，$\mathbb E e^{N_x/2}\le e^{\gamma_{\rm tail}\lambda}$。对于比较变量 $Y\sim\operatorname{Pois}(\lambda)$，因 $e^{1/2}-1\le\gamma_{\rm tail}$，同一界成立。指数级数给 $n^2\le32e^{n/4}$，所以对任一这样的 $N$ 和 $C\ge1$，
+
+$$
+\Pr\{N>C\lambda\}\le e^{(\gamma_{\rm tail}-C/4)\lambda},
+\qquad
+\mathbb E[N^2\mathbf1_{\{N>C\lambda\}}]
+\le32e^{(\gamma_{\rm tail}-C/4)\lambda}.
+\tag{191.9}
+$$
+
+确切地，在 $n>C\lambda$ 时，$n^2\le32e^{-C\lambda/4}e^{n/2}$，且 $1\le e^{-C\lambda/4}e^{n/2}$；积分即可。这里没有把小概率事件直接换成对任意无界量的估计。
+
+### 191.4 整个尾部的交叉熵
+
+对于任意非负计数对 $(K,B)$，定义比较质量
+
+$$
+f_1(K,B)=e^{-\lambda}\frac{(a\lambda)^K(b\lambda)^B}{K!\,B!},
+\qquad
+f_0(K,B)=e^{-\lambda}
+ \frac{((1-\epsilon)\lambda/2)^K((1+\epsilon)\lambda/2)^B}{K!\,B!},
+$$
+$$
+m_j=qf_1(K_j,B_j)+s_0f_0(K_j,B_j)>0,\qquad j\in\mathcal F_Q.
+\tag{191.10}
+$$
+
+两个比较行的总强度都是 $\lambda$。这些是确定的参考参数，不是实际行独立或 Poisson 的断言。对固定 $C\ge1$ 令
+
+$$
+I_C=\mathcal J_Q\cap\{t_j\le C\lambda\},\qquad
+\mathcal T_C=\mathcal F_Q\cap\{t_j>C\lambda\},\qquad
+R_{\mathcal T_C}=\bigotimes_{j\in\mathcal T_C}\operatorname{Pois}(m_j).
+\tag{191.11}
+$$
+
+若 $C\le2M$，则 $I_C,\mathcal T_C$ 划分 $\mathcal F_Q$。尾部引理本身不需要这一附加条件。
+
+**引理 191.3（逐行支付联合尾部信息）。** 记 $L_Q=\log(M/q)+\lambda$，则
+
+$$
+\mathbb E[-\log R_{\mathcal T_C}(C_{\mathcal T_C})]
+\le M\left(1+L_Q+\frac{32}{b\lambda}\right)
+              e^{(\gamma_{\rm tail}-C/4)\lambda}.
+\tag{191.12}
+$$
+
+同一结论也适用于任意确定的、总计数位于 $(C\lambda,T]$ 的有限互异计数对族；这不主张稠密核心的 Poisson 近似。
+
+证明：互异计数对对应比较行的不交事件。因此
+
+$$
+\sum_{j\in\mathcal T_C}m_j
+\le(q+s_0)\Pr\{Y>C\lambda\}
+\le M e^{(\gamma_{\rm tail}-C/4)\lambda}.
+\tag{191.13}
+$$
+
+对 $t=K+B>0$，有 $K!B!\le t^t$、$a\ge b$，故
+
+$$
+-\log f_1(K,B)
+\le\lambda+t\log\frac{t}{b\lambda}
+\le\lambda+\frac{t^2}{b\lambda}.
+\tag{191.14}
+$$
+
+最后一步用 $\log z\le z$。该式适用于任意大计数，不把核心内的固定上界移到尾部。
+
+每个实际 $c_j\le M$，于是 $\log(c_j!)\le c_j\log M$，并取 $0!=1$。由 $m_j\ge qf_1(K_j,B_j)$，
+
+$$
+\begin{aligned}
+-\log R_{\mathcal T_C}(c)
+&=\sum_{j\in\mathcal T_C}
+       [m_j-c_j\log m_j+\log(c_j!)]\\
+&\le\sum_{j\in\mathcal T_C}m_j
+ +\sum_{j\in\mathcal T_C}c_j
+       \left[L_Q+\frac{t_j^2}{b\lambda}\right].
+\end{aligned}
+\tag{191.15}
+$$
+
+括号均非负。在同一实际实现上，每行至多产生一个目标群，且此时 $N_x=t_j$，所以
+
+$$
+\sum_{j\in\mathcal T_C}C_j
+       \left[L_Q+\frac{t_j^2}{b\lambda}\right]
+\le\sum_{x\in\mathcal C_+}
+       \left[L_Q+\frac{N_x^2}{b\lambda}\right]
+       \mathbf1_{\{N_x>C\lambda\}}.
+\tag{191.16}
+$$
+
+对右侧 $M$ 行逐一应用 (191.9)，利用期望线性性及 (191.13)，即得 (191.12)。既不要求各行独立，也不要求核心、尾部或原四个总数独立。证毕。
+
+尾部群数可以随层数迅速增长，但 (191.13) 用不交事件求和，(191.16) 把实际代价归到同一批 $M$ 行，故没有额外的群数乘子。极小参考质量的负对数及全部直方图阶乘已经同时支付。
+
+### 191.5 联合熵链与精确均值投影
+
+固定 $C\le2M$，记 $\mathsf P$ 为实际向量在 $\mathcal F_Q=I_C\sqcup\mathcal T_C$ 上的联合律，$R_I,R_T$ 为 (191.10) 参数对应的两部分 Poisson 乘积参考律。有限熵链式身份给
+
+$$
+\begin{aligned}
+D(\mathsf P\|R_I\otimes R_T)
+&=D(\mathsf P_I\|R_I)
+  +\mathbb E[-\log R_T(C_{\mathcal T_C})]
+  -H(C_{\mathcal T_C}\mid C_{I_C})\\
+&\le D(\mathsf P_I\|R_I)
+  +\mathbb E[-\log R_T(C_{\mathcal T_C})].
+\end{aligned}
+\tag{191.17}
+$$
+
+把实际联合质量写成边缘质量乘条件质量，再取对数积分即可验证；条件 Shannon 熵非负。这是一条共同实际律上的联合身份，不是逐群边缘相对熵的相加。
+
+这里必须复用第 189 章精确均值投影之前的 (189.32)：
+
+$$
+D(\mathsf P_I\|R_I)
+\le\mathcal E_{Q,C}(q)+\mathcal E_{Q,C}(s_0).
+\tag{191.18}
+$$
+
+其指标集恰是全部 $I_C$，中间参数恰是 (191.10)，并在原四个总数的同一实际联合律下比较信号、背景两类直方图后逐坐标相加。仅有第 189 章最终精确均值结论，不能直接替换 (191.18) 的参考参数。应用 (191.12)、(191.17) 和这个中间结论，得到
+
+$$
+D\!\left(\mathsf P\,\middle\|\,
+         \bigotimes_{\mathcal F_Q}\operatorname{Pois}(m_j)\right)
+\le\mathcal E_{Q,C}(q)+\mathcal E_{Q,C}(s_0)
+ +M\left(1+L_Q+\frac{32}{b\lambda}\right)
+      e^{(\gamma_{\rm tail}-C/4)\lambda}.
+\tag{191.19}
+$$
+
+对于有限非负整数向量的任意实际律、精确均值 $\mu_j$ 及正参考参数 $m_j$，Poisson 质量的期望对数比给
+
+$$
+\begin{aligned}
+D\!\left(\mathsf P\,\middle\|\,
+         \bigotimes_j\operatorname{Pois}(m_j)\right)
+={}&D\!\left(\mathsf P\,\middle\|\,
+         \bigotimes_j\operatorname{Pois}(\mu_j)\right)\\
+&+\sum_j\left[\mu_j\log\frac{\mu_j}{m_j}-\mu_j+m_j\right].
+\end{aligned}
+\tag{191.20}
+$$
+
+当 $\mu_j>0$ 时，消去阶乘并使用 $\mathbb EC_j=\mu_j$ 即得；当 $\mu_j=0$ 时，先删去确定零坐标，该坐标贡献 $m_j$，约定 $0\log0=0$。各括号由 $z\log z-z+1\ge0$ 非负。因此投影到精确实际均值只会降低相对熵。对 (191.19) 应用此身份，再用 (191.7)，即得完整可数向量的同一上界。此处没有对极小 $\mu_j$ 施加正下界，也没有从总变差推断无界熵量。
+
+### 191.6 固定证明分界支付全部尾部
+
+原 $M$ 的取整给 $\log M\le\phi\lambda/\beta_0$。另一处取整满足
+
+$$
+z_0=\phi\lambda+(k_0-a\lambda)\log\frac{1+r}{1-r}
+\le\phi\lambda.
+$$
+
+对于 $y=Me^{-z_0}\ge1$，$\lfloor y\rfloor\ge y/2$，故
+
+$$
+\log(M/q)\le z_0+\log2\le\phi\lambda+\log2,\qquad
+L_Q\le(1+\phi)\lambda+\log2.
+\tag{191.21}
+$$
+
+取 (191.2) 的固定 $C=C_*$。一致充分晚时 $1<C_*\le2M$，而
+
+$$
+M e^{(\gamma_{\rm tail}-C_*/4)\lambda}\le e^{-2\lambda}.
+\tag{191.22}
+$$
+
+将 (191.21)–(191.22) 代入 (191.19)–(191.20)，即得 (191.1) 的显式界。
+
+第 189 章的有限层条件包括其 (189.9)、(189.23) 及对应概率和、强度与整数总数条件；此处统一代入固定 $C_0=C_*$。原取整仍给
+
+$$
+\log M=\phi\lambda/\beta+O_r(1),\qquad
+\log q=\phi(1/\beta-1)\lambda+O_r(1),\qquad s_0\sim M.
+\tag{191.23}
+$$
+
+因为 $\beta_1<1$，两类规模在 $J$ 上以一致正指数增长。第 189 章中的 $\overline F,\delta_*,\kappa,\tau,W/\lambda$ 都是 $O_{J,r}(Q^{-1})$；含 $1/\sqrt{s}$、$e^{-c_0s\tau/4}$、$e^{-s\kappa}$、$e^{-s/(8\lambda)}$ 的项小于任意固定逆幂。于是相同有限参数函数满足
+$\mathcal E_{Q,C_*}(q)+\mathcal E_{Q,C_*}(s_0)=O_{J,r}(Q^{-1})$，而 $V_Qe^{-2\lambda}$ 指数消失。这完成定理 191.1 的普通数学证明。
+
+### 191.7 新增关系、归属与边界
+
+精确两步重置、可调行尾界及核心联合近似已有原模型和第 189 章依据；熵链式身份与精确均值投影是经典信息论关系。本章新增的是 (191.12) 的联合信息支付：参考负对数的二次行代价吸收在实际指数矩内，不交计数组共享同一行集合，因此可以把整个尾部接到核心联合律，保留所有计数和所有实际均值尺度。
+
+核心稀疏性仍承担第 189 章的 $O(Q^2)$ 维数与 $\lambda=Q^3$ 比例。尾部引理虽适用于任意互异计数对族，却不证明稠密全计数对核心的联合近似。常数依赖固定 $J,r$；不声称 $\beta$ 随 $Q$ 逼近边界时一致，也不改变振幅、时长、支持或先验。该计数直方图结论不解决 E2，也不等于完整数据后验熵的近似。
+
+Poisson 点过程的 Poisson 对 Poisson 信息公式提供相关归属，但其第一个概率律也须是 Poisson，不能直接作为本章依赖直方图的误差界。上述有限质量身份已在正文给出所需推导；原始来源与适用边界见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。本章是普通数学推导，未作 Lean 核验证明，不主张检索穷尽或全球原创性。
+
+## 追加锚（本行以下为增补区）

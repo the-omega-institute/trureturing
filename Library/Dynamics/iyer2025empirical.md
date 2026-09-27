@@ -6308,3 +6308,19 @@ Introduction 中的光滑权重主定理要求至少一对参数等于 $(a/(2m),
 第 190 章实际下界由正文的有限鸽巢证明和仓内原模型关系推出。经典逼近工具、既有原模型关系及本章的新组合分别归属；不宣称新的 theta 定理、原始物理阈值、检索穷尽或 Lean 认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 谱边界卷第 191 章补充：无上截断的联合计数信息
+
+对应 [谱边界卷第 191 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 repo-derived：将原实际行的指数矩、参考质量负对数的二次计数界、直方图阶乘代价及不交群的逐行求和结合，支付整条非负计数线的尾部交叉熵，再接回第 189 章的联合核心估计和精确均值投影。两种原实际 pair/path 律分别成立，保留全部计数、补偿、取整和精确实际均值。固定证明分界不删除目标坐标。结论为联合相对熵 $O_{J,r}(Q^{-1})$；不推断 E2 或完整数据后验熵。
+
+Lasse Leskelä，*Information divergences and likelihood ratios of Poisson processes and point patterns*，[arXiv:2404.00294v2](https://arxiv.org/abs/2404.00294v2)，2024-08-04 版本，[原始 TeX](https://arxiv.org/src/2404.00294v2)。核对其点型和 Poisson 定义、有限强度似然比定理 the:PoissonDensityFinite 及完整证明、the:PPPRenyi 与 the:PoissonKL、有限强度散度引理 the:PoissonRenyiFinite 的完整证明，以及 the:PPPRenyi 的完整分割证明。
+
+有限强度似然比证明把 Poisson 点型展开为 Poisson 个独立位置；散度证明比较两个 Poisson 律，通过共同控制强度及零密度支撑处理绝对连续性，并由 Rényi 极限得到 KL。其一般强度扩展使用两个 Poisson 过程在不交区域上的独立限制和张量化。KL 被积函数为 $f\log(f/g)+g-f$；在有限离散指标集上，它给出 (191.20) 的 Poisson 参考之间的括号和。
+
+该来源的第一个概率律也必须是 Poisson。原依赖直方图不满足这个前提，因此不能把上述括号和当成其近似误差。本章的尾部交叉熵、实际联合熵链和精确均值投影由正文有限质量计算承担；该论文用于文献关系和适用范围定位，不承担 (191.1) 的原实际律误差界。
+
+固定版本原始 TeX 有以下字面差异：Measures 段落在说明 $\lambda\ll\mu$ 时反写了零集蕴含方向；同段密度定义写成 $\mu(A)=\int_A f\,d\mu$，但所描述的是 $\lambda$ 对 $\mu$ 的密度。后续有限绝对连续性证明使用通常方向。有限散度证明的 $\alpha=1$ 交叉引用有两处混用强度与 Poisson 律参数；分割证明的一处标量质量写成 $e^{-sk}s^k/k!$，而前面定义为 $e^{-s}s^k/k!$。这些显示式不被导入为本章身份，也不据此否定整个来源的定理。
+
+Cauchy–Schwarz、Poisson 指数矩、阶乘估计、熵链式身份和均值投影归于经典工具。原两步重置、核心联合信息界与本章新增尾部连接分别归属，不把重新组合自动称为文献原创，也不声称 Lean 认证。
+
+## 追加锚（本行以下为增补区）
