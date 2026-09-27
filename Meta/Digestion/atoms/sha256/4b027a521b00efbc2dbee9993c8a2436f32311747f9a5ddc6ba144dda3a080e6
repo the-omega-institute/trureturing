@@ -1,0 +1,5 @@
+## 14. Exact lifting in the golden residue ring
+
+For a positive integer $q$, let $R_q=(\mathbb Z/q\mathbb Z)[\phi]$ with
+$\phi^2=\phi+1$. The order below is multiplicative order in $R_q$.
+

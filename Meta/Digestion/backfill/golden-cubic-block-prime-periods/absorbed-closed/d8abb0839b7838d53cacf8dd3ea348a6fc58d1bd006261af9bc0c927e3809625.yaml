@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d8abb0839b7838d53cacf8dd3ea348a6fc58d1bd006261af9bc0c927e3809625
+  normalized_sha256: sha256:d8abb0839b7838d53cacf8dd3ea348a6fc58d1bd006261af9bc0c927e3809625
+cas_ref: sha256:d8abb0839b7838d53cacf8dd3ea348a6fc58d1bd006261af9bc0c927e3809625
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenPrimePowerOrder.golden_prime_power_order
+    target_statement_id: sha256:019fbbbf1eb442864b5dde5d682ba0e8e731a857ffcedb156673337c700adf83
+receipts:
+  unresolved_subitems: []

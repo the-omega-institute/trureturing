@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/GoldenPrimePowerOrder.golden_prime_power_order`
 
 *Commentary.*
 
-For a prime p and a golden residue whose two coordinates are not both divisible by p, the element 1+p^m u has order p^n modulo p^(m+n) under the stated depth inequality. This supplies the prime-power lifting step used in PCL2; identifying the first Fibonacci matrix return and its original depth remains a separate obligation.
+For a prime p and a golden residue whose two coordinates are not both divisible by p, the element 1+p^m u has order p^n modulo p^(m+n) when m is positive and m+2 is at most p*m. A return at an earlier p-power would make both coordinates vanish modulo p, while the binomial expansion gives the return at p^n.
 
 ## References
 

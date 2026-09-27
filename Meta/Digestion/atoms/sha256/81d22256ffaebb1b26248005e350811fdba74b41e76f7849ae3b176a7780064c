@@ -1,0 +1,7 @@
+## Erratum to Section 2
+
+In the Cassini factorization in Theorem 2.1, read "the factors
+$F_{t-1}+1$ and $F_t-F_{t-1}$" in place of "the latter two factors".
+The right-hand factor $F_t$ is divisible by $p$ and is not one of the
+units used in that argument.
+

@@ -768,3 +768,24 @@ In the Cassini factorization in Theorem 2.1, read "the factors
 $F_{t-1}+1$ and $F_t-F_{t-1}$" in place of "the latter two factors".
 The right-hand factor $F_t$ is divisible by $p$ and is not one of the
 units used in that argument.
+
+## 追加锚（本行以下为增补区）
+
+## 14. Exact lifting in the golden residue ring
+
+For a positive integer $q$, let $R_q=(\mathbb Z/q\mathbb Z)[\phi]$ with
+$\phi^2=\phi+1$. The order below is multiplicative order in $R_q$.
+
+**Theorem 14.1 (two-coordinate prime-power order).** Let $p$ be prime,
+$m\geq1$, $n\geq0$, and $m+2\leq pm$. If $a,b\in\mathbb Z$ are not both
+divisible by $p$, then
+
+$$
+\operatorname{ord}_{R_{p^{m+n}}}
+  \bigl(1+p^m(a+b\phi)\bigr)=p^n.
+$$
+
+The prime-power binomial expansion supplies the return after $p^n$
+powers. If an earlier $p$-power returned, cancellation modulo the next
+power of $p$ in each golden coordinate would force both $p\mid a$ and
+$p\mid b$. This contradicts the hypothesis and gives the exact order.
