@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: Survival beyond the dark weight has a geometric operator tail and finite mean. -/
-import D5.S3.Quantum.Measurement.FiniteDetectionDarkBlockContraction
 import D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Logic.Equiv.Fin.Basic
@@ -16,7 +15,6 @@ noncomputable section
 namespace D5.S3.Quantum.Measurement.FiniteDetectionTailBound
 open Filter Matrix Metric
 open scoped BigOperators ComplexOrder Matrix.Norms.L2Operator MatrixOrder Topology
-open D5.S3.Quantum.Measurement.FiniteDetectionDarkBlockContraction
 open D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit
 theorem finite_detection_tail_bound {d : ℕ} {ι : Type*} [Fintype ι]
     (Q : Matrix (Fin d) (Fin d) ℂ) (L : ι → Matrix (Fin d) (Fin d) ℂ)
@@ -42,35 +40,17 @@ theorem finite_detection_tail_bound {d : ℕ} {ι : Type*} [Fintype ι]
   letI : NeZero d := ⟨hd⟩
   let P := darkProjection Q L
   let Pc := 1 - P
-  obtain ⟨g, c, hgpos, hgle, hc_nonneg, hc_le_one, hc_step, hP_le, _hfactor,
-    hPc_nonneg, hcontraction, _hsurvival_norm, _hgap, _hblock⟩ :=
+  obtain ⟨g, _c, hgpos, hgle, _hc_nonneg, _hc_le_one, _hc_step, hP_le, _hfactor,
+    _hPc_nonneg, _hcontraction, _hsurvival_norm, _hgap, _hblock, _hc_iter, _hc_bound,
+    _hiterated, hquotient⟩ :=
     dark_block_contraction Q L hcomp hd
   change ∀ N, P ≤ (Qᴴ) ^ N * Q ^ N at hP_le
-  change 0 ≤ Pc at hPc_nonneg
-  change ∀ N, (Qᴴ) ^ N * Q ^ N - P ≤ c N • Pc at hcontraction
+  change ∀ N, (Qᴴ) ^ N * Q ^ N - P ≤ (1 - g) ^ (N / d) • Pc at hquotient
   let a : ℝ := 1 - g
   have ha_nonneg : 0 ≤ a := by
     exact sub_nonneg.mpr hgle
   have ha_lt : a < 1 := by
     exact sub_lt_self 1 hgpos
-  have hc_iter : ∀ n k, c (n + k * d) ≤ a ^ k := by
-    intro n k
-    induction k with
-    | zero => simpa only [Nat.zero_mul, add_zero, pow_zero] using hc_le_one n
-    | succ k ih =>
-        calc
-      c (n + k.succ * d) = c ((n + k * d) + d) := by
-            rw [Nat.succ_mul, add_assoc]
-          _ ≤ a * c (n + k * d) := by simpa only [a] using hc_step (n + k * d)
-          _ ≤ a * a ^ k := mul_le_mul_of_nonneg_left ih ha_nonneg
-          _ = a ^ k.succ := by rw [pow_succ']
-  have hc_block : ∀ N, c N ≤ a ^ (N / d) := by
-    intro N
-    have hdecomp : N = N % d + (N / d) * d := by
-      rw [Nat.mul_comm, Nat.mod_add_div]
-    calc
-      c N = c (N % d + (N / d) * d) := congrArg c hdecomp
-      _ ≤ a ^ (N / d) := hc_iter (N % d) (N / d)
   have htail : ∀ N, 0 ≤ (Qᴴ) ^ N * Q ^ N - P ∧
       (Qᴴ) ^ N * Q ^ N - P ≤ a ^ (N / d) • Pc := by
     intro N
@@ -79,8 +59,7 @@ theorem finite_detection_tail_bound {d : ℕ} {ι : Type*} [Fintype ι]
       exact (sub_nonneg.mpr (hP_le N)).posSemidef
     constructor
     · exact hHpos.nonneg
-    · refine (hcontraction N).trans (smul_le_smul_of_nonneg_right ?_ hPc_nonneg)
-      exact hc_block N
+    · simpa only [a] using hquotient N
   refine ⟨g, hgpos, hgle, ?_, ?_⟩
   · intro m
     have hm := htail (m * d)
