@@ -68,21 +68,14 @@ answered? Existing work gives this picture several mathematical entry points.
   its smallest open neighborhood in this topology. This describes dependencies, not
   physical distance.
 
-- **Observation and recovery.** Which states share a reading, and does that reading
-  determine a target?
-
-  The [target recovery criterion](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean), on a
-  nonempty state space, says a target can be recovered exactly when states with the same
-  reading have the same target value. Existence does not establish computability or a
-  cost bound.
-
 - **Local and joint information.** Which correlations remain unknown after observing
   each part separately?
 
   The [local marginal correlation blind spot](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) gives two
   distinct two-qubit states: a Bell pure state and the equal classical mixture of `00`
-  and `11`. They have the same two single-qubit reduced states. This counterexample
-  limits claims of recovering a joint state from local readings alone.
+  and `11`. They have the same two single-qubit reduced states. A
+  [joint expectation](../README.md#three-places-to-look) separates this pair without
+  establishing recovery of arbitrary joint states.
 
 - **Space and history.** Does a current spatial reading preserve the historical
   conditions needed for later operations?
@@ -94,10 +87,10 @@ answered? Existing work gives this picture several mathematical entry points.
 
 Both counterexamples hide different target values behind equal readings.
 Separating one pair need not make recovery possible.
-Recovery requires separating **every pair with different target values**:
-the target must be constant on each observation fiber. On a nonempty state
-space, this condition ensures a recovery function exists but supplies no
-algorithm or cost bound.
+[Recovery](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
+requires that **any two states with the same reading have the same target value**.
+On a nonempty state space, this condition ensures a recovery function exists
+but supplies no algorithm or cost bound.
 Connections to proof dependencies or physical spacetime require maps and checks
 of the relations, operations and error bounds they preserve.
 
@@ -127,9 +120,9 @@ The method links five steps:
    and proofs or counterexamples to settle mathematical claims. When a
    representation cannot express a needed distinction, investigate new
    relations, languages or forms of observation.
-5. **Return results to the next inquiry.** Reuse known theorems, preserve new
-   reusable content, and state the conditions still to be met. Let the next
-   question begin from an explicit boundary.
+5. **Return results to the next inquiry.** Reuse known theorems and preserve new
+   reusable content. Show which conclusions supply needed premises, checking
+   assumptions and identifying the remaining gaps.
 
 A [circle theorem](../D5/S3/ConceptDynamics/Topology/CircleDoubleCoverNoSection.lean)
 rules out choosing a square root continuously around the whole complex unit circle.
@@ -165,10 +158,25 @@ uses three windows onto variables: one permits pairs with `x=y`, another
 `y=z`, and the third `x≠z`. Their allowed records agree on every overlap:
 either value of the shared variable is permitted. Yet no joint record
 satisfies all three constraints. Finding relations that make local agreement
-sufficient is the task; the tree criterion below gives one answer. Connecting
-these record models to physical spacetime remains a research question.
+sufficient is the task; the tree criterion below gives one answer.
 
-Existing work offers several connected routes:
+The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+assumes nonempty local record sets on a finite tree: each recorded variable's
+occurrences form a connected subtree, and neighbors allow exactly the same
+joint assignments on their full overlap. Every allowed local record extends
+across all recorded variables, satisfying every local constraint.
+Do all completions of a fixed local record agree on the target value?
+Additional global constraints can exclude every extension.
+Unique completion, original-history recovery and computational cost require
+further results.
+
+Here, holography names a research direction concerning wholes and observations.
+This guide establishes no physical holographic duality, area law or model of
+the universe. Correspondences between discrete event times, logical dependency
+depth and physical spacetime coordinates require their own definitions,
+proofs and, where applicable, empirical tests.
+
+Theory inputs explore several routes:
 
 - [Contextual spacetime arithmetic](develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
   begins with finite event archives that retain time labels, positions, causal
@@ -190,21 +198,6 @@ Existing work offers several connected routes:
   explore correspondences between observation structures. Each transfer must
   check the specific conditions on quantum states, probability laws, training
   data and allowed operations.
-
-The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
-gives one criterion for compatible completion. Arrange nonempty sets of allowed
-local records on a finite tree. Each recorded variable must occur on a connected
-subtree, and neighbors must allow exactly the same joint assignments on their
-full overlap. Every allowed local record then extends to a record on the union
-of the local variable sets, satisfying every local constraint. This establishes
-existence; uniqueness, original-history recovery and computational cost require
-further results.
-
-Here, holography names a research direction concerning wholes and observations.
-This guide establishes no physical holographic duality, area law or model of
-the universe. Correspondences between discrete event times, logical dependency
-depth and physical spacetime coordinates require their own definitions,
-proofs and, where applicable, empirical tests.
 
 ## What can serve as the next premise
 
