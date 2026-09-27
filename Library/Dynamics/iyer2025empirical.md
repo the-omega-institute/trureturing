@@ -3690,3 +3690,72 @@ Agamemnon Zafeiropoulos、Evgeniy Zorin，
 有限的论文检索和版本核对不构成全球原创性认证。
 本章贡献是成熟工具在原实际模型中的定量对应，以及其对熵过渡项与可行研究路线的限制；
 不把测度工具换成新概率先验，不从数论下界推断可变分母的有效统一常数。
+
+## 原文对照：第 94 章的逐输出平滑与紧区间覆盖
+
+[理论卷第 94 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+将指数分辨率范围内的精确熵中心三阶覆盖加强为每个固定紧输出区间的一致式。
+其关键前提是逐输出未归一化测度、中心一阶矩密度及可观测量位移的定量控制，
+再以正密度下界条件化。输出积分误差本身不提供这种上确界控制。
+
+**高固定阶量化的来源。** 第 92 章核对的 Bonis
+[arXiv:1905.13615v2](https://arxiv.org/abs/1905.13615v2)，Theorem 1、式 (9)，
+直接给每个固定运输阶 $m\ge2$ 的有限界。
+标准化 Bernoulli 且 $p\in[1/4,3/4]$ 时所需矩一致有界，
+所以同一单调量化可在任意高但固定的阶数支付指数小的坏位移事件。
+阶数可依赖严格噪声间隙，不能让它随规模增长而忽略原常数的依赖。
+Serov–Zubkov 的紧参数量化核对及其未用印刷公式缺陷仍保持第 92 章所列范围。
+
+**正态密度与逆导数矩。** Yaozhong Hu、Fei Lu、David Nualart，
+*Convergence of densities of some functionals of Gaussian processes*，
+[arXiv:1302.6962v2](https://arxiv.org/abs/1302.6962v2)，2013 年 8 月 29 日版本。
+55 页 PDF 第 10 页 Theorem 3.1 要求 $F\in\mathbb D^{2,s}$、
+$\mathbb E|F|^{2p}<\infty$、$\mathbb E\|DF\|^{-2r}<\infty$，
+其中 $p,r,s>1$、$1/p+1/r+1/s=1$；其散度表示给密度及一致／Hölder 界。
+第 3.2、4、5 节的导数与向量比较另有各自非退化假设。
+第 94 章使用这一成熟演算机制，但为自己的二维信息量／能量对
+明确证明秩、行列式小值概率、逆矩及带权导数；没有将标量定理直接当成向量定理。
+固定块的全积分导数界经另一个独立块卷积后才变成切片上确界。
+
+**直接涵盖正态参考密度的超收敛。** Ronan Herry、Dominique Malicet、Guillaume Poly，
+*Superconvergence phenomenon in Wiener chaoses*，
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)，
+[原 TeX](https://arxiv.org/e-print/2303.02628v3)，2024 年 3 月 19 日版本。
+40 页 PDF 第 3 页 Theorems 1–2 对固定 Wiener chaos 内趋标准正态的序列
+给密度及其导数的强收敛。第 9–10 页 Theorem 9、Corollary 10(a)
+处理有限 chaos 和：最高阶投影趋标准正态且全序列 $L^2$ 有界保证负导数矩控制；
+若低阶余项在 $L^2$ 中趋零、全变量趋标准正态，则得到正态密度超收敛。
+原 super-fmt.tex 的 main-negative-moments-sum-chaos 与
+cor:densitysumofchaos:remainder 条目核对相同条件。
+
+第 94 章的正态核心参考归一化后是二阶 chaos 加趋零的一阶及常数余项，
+因此参考密度收敛被该经典结果直接涵盖，正文 Fourier 估计给本证明需要的具体分块界。
+该定理没有给原离散二项计数在指数小噪声下的逐输出替换误差，
+也没有给完整后验中心信息量的一阶矩密度控制；这些仍由正文桥接。
+原文还给 $G+(n+1)^{-1}G^2$ 的反例，说明有限 chaos 和趋正态
+若未核对最高阶投影条件，并不自动具有连续密度。
+
+**不能直接用于实际二项能量的二次型定理。** 同三位作者，
+*Regularity of laws via Dirichlet forms — Application to quadratic forms in independent and identically distributed random variables*，
+[arXiv:2303.09488v2](https://arxiv.org/abs/2303.09488v2)，
+[原 TeX](https://arxiv.org/e-print/2303.09488v2)，2024 年 6 月 20 日版本。
+34 页 PDF 第 2 页 Theorem A 与精确 Theorem 2.10 要求 iid 中心单位方差输入，
+输入位于 $\mathbb D^\infty$ 且 carré du champ 有某个有限负矩；
+系数算子对角为零，$\operatorname{tr}A^2=1$，
+$\mathcal R_{128q+18}(A)>d$ 且 influence 足够小，方得到 $W^{q,1}$ 正则性。
+原 reg-ptrf.tex 的 small-ball-gamma 假设、前置零对角设定及
+regularity-quadratic-form 定理核对这些要求。
+二项量化图像不满足该输入正则性，而当前能量是对角二次型；
+故该结果只提供相关方法视角，不能直接承接实际后验。
+
+**计数与边界。** 第 90、92 章已归属的源编码排序、Gamma 的
+Edgeworth／Cornish–Fisher 展开与负半对数项仍为经典内容。
+本章使用新证的 $o(1/Q)$ 紧区间条件 CDF 误差，
+通过总变差为二的计数核和截止并列质量界得到常数精度。
+精确条件熵没有被其主阶近似替换，也没有宣称阈值锐性、全输出一致性、
+熵响应或条件方差的自动扩展。
+
+文献核对限于所列原版与关系检索；部分 PDF 数学字形提取不完整，
+Herry–Malicet–Poly 的承重条件据原 TeX 核对。
+一个元数据检索响应为 HTTP 429，不计作已取得文献。
+该检索范围不证明全球原创性；正文的新增结论为原模型中上述关系的完整组合。

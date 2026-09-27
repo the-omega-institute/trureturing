@@ -115604,3 +115604,481 @@ $$
 [^lorentz_tensor_obstruction]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363，[DOI](https://doi.org/10.1007/s00365-010-9108-5)，[arXiv:0808.1936v3](https://arxiv.org/abs/0808.1936v3)，[PDF](https://arxiv.org/pdf/0808.1936v3)。§4式（27）—（29）定义并展开 Lorentz 算子，Lemma 14给多项式再生，Corollary 16给修正项的 Bernstein 系数界；§5 Lemma 23及 Steps 4—5、式（47）—（49）说明完整正性构造另需概率余量、迭代残余控制和相容正校正。
 
 ## 追加锚（本行以下为增补区）
+
+## 344. 低次数 Bernstein 系数余项与公共高阶中心
+
+第343节证明，原始 Lorentz 任务算子对非负尺度增量可能产生 \(n^{1-a}/m\) 的负系数。若改用所有参考系数共用的 HNP 迭代中心，还须控制该中心与原始算子之间的真正系数差；函数一致逼近不能代替这一步。
+
+本节先对低次数 Bernstein 多项式证明逐系数余项界，再对公共中心的多尺度增量求和。所得桥梁给出非负尺度增量经过公共中心后的负部上界。本节不构造完整高阶两来源程序，也不申报其费用。
+
+### 344.1 系数范数与主引理
+
+固定非整数
+\[
+\beta>2,\qquad a=\beta/2,\qquad
+r=\lfloor\beta\rfloor\ge2,\qquad
+\theta=\beta-r\in(0,1).
+\tag{344.1}
+\]
+采用完整范数
+\[
+\|f\|_{C^\beta([0,1])}
+=\sum_{j=0}^r\|f^{(j)}\|_\infty
+ +[f^{(r)}]_{C^\theta([0,1])}.
+\tag{344.2}
+\]
+
+记归一化 Bernstein 基与系数范数为
+\[
+b_{d,i}(x)=\binom di x^i(1-x)^{d-i},\qquad
+P(x)=\sum_{i=0}^d c_i b_{d,i}(x),\qquad
+\|P\|_{\mathrm{coef},d}=\max_i|c_i|.
+\tag{344.3}
+\]
+多项式次数可以小于其表示次数 \(d\)。令 \(C_{D,J}(P)\) 表示次数 \(D\) 的第 \(J\) 个系数，\(E_d^D\) 表示次数提升；后者对最大绝对系数范数为压缩。
+
+HNP 的 Lorentz 算子为
+\[
+Q_{m,r}f(x)
+=\sum_{i=0}^m\sum_{\nu=0}^r
+ f^{(\nu)}(i/m)m^{-\nu}\tau_\nu(x,m)b_{m,i}(x),
+\tag{344.4}
+\]
+输出统一写成次数 \(m+r\) 的 Bernstein 多项式。其中
+\(\tau_0=1,\tau_1=0\)，\(\deg\tau_\nu\le\nu\)，并且
+\[
+Q_{m,r}P=P\qquad(\deg P\le r).
+\tag{344.5}
+\]
+这些分别是 HNP 式（28）—（29）和 Lemma 14 的接口。[^low_degree_coefficient_bridge]
+
+**定理344.1（低次数多项式的系数余项）。** 对每个固定整数 \(r\ge2\)，存在仅依 \(r\) 的常数 \(C_r<\infty\)，使全部整数 \(m\ge d\ge1\) 及次数不超过 \(d\) 的多项式 \(P\) 满足
+\[
+\boxed{
+\|(I-Q_{m,r})P\|_{\mathrm{coef},m+r}
+\le C_r\left(\frac dm\right)^{(r+1)/2}
+       \|P\|_{\mathrm{coef},d}.}
+\tag{344.6}
+\]
+左侧的 \(P\) 按次数提升解释。若 \(d\le r\)，余项恰为零。本定理不要求 \(m\gg d^2\)。
+
+证明将直接使用原系数的复域界、有限总体中心乘积矩和式（344.4）的局部系数范围，不通过一般的函数范数到系数范数逆估计。
+
+### 344.2 由原系数控制复半径
+
+以下置
+\[
+B=\|P\|_{\mathrm{coef},d},\qquad
+v=p(1-p),\qquad
+\Delta_N(p)=\max\left\{\sqrt{\frac{p(1-p)}N},\,\frac1N\right\}.
+\tag{344.7}
+\]
+对任意复数 \(z\)，原 Bernstein 展开直接给
+\[
+|P(z)|\le B(|z|+|1-z|)^d.
+\tag{344.8}
+\]
+
+**引理344.2（适配导数阶的复半径）。** 对 \(p\in[0,1]\)、\(1\le\ell\le d\)，令
+\[
+R_{d,\ell}(p)
+=\max\left\{\sqrt{\frac{\ell v}{d}},\,\frac{\ell}{d}\right\}.
+\]
+则
+\[
+\boxed{
+\frac{|P^{(\ell)}(p)|}{\ell!}
+ \le B\left(\frac{e^6}{R_{d,\ell}(p)}\right)^\ell.}
+\tag{344.9}
+\]
+此外，在 \(|z-p|\le\Delta_d(p)\) 上有 \(|P(z)|\le e^6B\)，从而每个固定阶 \(j\ge0\) 满足
+\[
+|P^{(j)}(p)|\le e^6j!B\,\Delta_d(p)^{-j}.
+\tag{344.10}
+\]
+
+**证明。** 对 \(|z-p|\le R\)，先证明
+\[
+|z|+|1-z|\le1+\frac{6R^2}{v+R}.
+\tag{344.11}
+\]
+若 \(v\ge2R\)，则 \(p,1-p\ge2R\)。写 \(z=p+w\)，对两项使用
+\(\sqrt{u^2+t^2}\le u+t^2/(2u)\)，可得
+\[
+|p+w|+|1-p-w|
+\le1+R^2\left(\frac1p+\frac1{1-p}\right)=1+R^2/v.
+\]
+由于 \(v+R\le3v/2\)，得到式（344.11）。若 \(v<2R\)，三角不等式给左侧至多 \(1+2R\)，而 \(6R^2/(v+R)>2R\)，同样成立。端点 \(p=0,1\) 属于后一情形。
+
+设 \(\varepsilon=\ell/d\)。当 \(v\ge\varepsilon\) 时，
+\(R_{d,\ell}=\sqrt{\varepsilon v}\)，所以
+\(R_{d,\ell}^2/(v+R_{d,\ell})\le\varepsilon\)；当 \(v\le\varepsilon\) 时，\(R_{d,\ell}=\varepsilon\)，仍有同一结论。由式（344.8）、（344.11），相应圆盘上
+\[
+|P(z)|\le B(1+6\ell/d)^d\le Be^{6\ell}.
+\]
+Cauchy 公式给式（344.9）。取 \(\ell=1\) 时半径为 \(\Delta_d(p)\)，其圆盘界再给式（344.10）。证毕。
+
+### 344.3 次数提升的中心乘积矩
+
+固定 \(D\ge d\) 和 \(0\le J\le D\)，令 \(p=J/D\)。在含 \(J\) 个一和 \(D-J\) 个零的总体中无放回抽取 \(\ell\) 个变量，定义
+\[
+\mu_{D,J,\ell}
+=\mathbb E\prod_{i=1}^\ell(X_i-p),\qquad
+\mu_{D,J,0}=1.
+\tag{344.12}
+\]
+这是中心化变量的乘积矩，不是样本均值的普通中心矩。
+
+**引理344.3（升阶中心系数界）。** 对 \(0\le\ell\le D\)，
+\[
+C_{D,J}((x-p)^\ell)=\mu_{D,J,\ell}.
+\tag{344.13}
+\]
+存在绝对常数 \(C_\mu\)，使 \(1\le\ell\le D\) 时
+\[
+\boxed{
+|\mu_{D,J,\ell}|
+\le\left[
+C_\mu\max\left\{\sqrt{\frac{\ell p(1-p)}D},\,\frac{\ell}{D}\right\}
+\right]^\ell.}
+\tag{344.14}
+\]
+
+**证明。** 用下降阶乘记号 \((q)_k=q(q-1)\cdots(q-k+1)\)。单项式升阶系数为
+\[
+C_{D,J}(x^k)=\frac{(J)_k}{(D)_k}.
+\]
+分别展开 \((x-p)^\ell\) 和中心乘积，得到同一有限和，证明式（344.13）。
+
+把总体值中心化为 \(y_1,\ldots,y_D\)，则
+\[
+\sum_i y_i=0,\qquad \sum_i y_i^2=Dp(1-p),\qquad |y_i|\le1.
+\]
+其生成多项式为
+\[
+F(t)=\prod_{i=1}^D(1+t y_i)
+=\sum_{\ell=0}^D\binom D\ell\mu_{D,J,\ell}t^\ell.
+\tag{344.15}
+\]
+当 \(|t|\le1/2\)，由对数展开，
+\[
+\log|1+t y_i|\le\Re(t y_i)+|t y_i|^2.
+\]
+线性项求和为零，故
+\[
+|F(t)|\le \exp(Dv|t|^2),\qquad v=p(1-p).
+\]
+
+取 Cauchy 半径
+\[
+q=\min\{1/2,\sqrt{\ell/(2Dv)}\},
+\]
+其中 \(v=0\) 时取 \(q=1/2\)。若平方根项较小，
+\[
+|[t^\ell]F|\le (C\sqrt{Dv/\ell})^\ell.
+\]
+否则 \(Dv\le2\ell\)，从而 \(|[t^\ell]F|\le C^\ell\)。再用
+\[
+\binom D\ell\ge(D/\ell)^\ell,
+\]
+即得式（344.14）。在 \(J=0,D\) 时全部正阶中心乘积矩实际为零；上界仍成立。证毕。
+
+### 344.4 高次数下的 Taylor 余项系数
+
+令 \(T_{p,r}P\) 为 \(P\) 在 \(p\) 的 \(r\) 阶 Taylor 多项式。有限 Taylor 恒等式、引理344.2及引理344.3给
+\[
+\begin{aligned}
+|C_{D,J}(P-T_{p,r}P)|
+&\le
+\sum_{\ell=r+1}^d
+ \frac{|P^{(\ell)}(p)|}{\ell!}|\mu_{D,J,\ell}|\\
+&\le B\sum_{\ell=r+1}^d
+ \left(C_\mu e^6\sqrt{\frac dD}\right)^\ell.
+\end{aligned}
+\tag{344.16}
+\]
+这里使用了
+\[
+R_{D,\ell}(p)\le\sqrt{d/D}\,R_{d,\ell}(p).
+\]
+平方根项按该倍率变化，线性项按更小的 \(d/D\) 变化，故取最大值仍成立。
+
+因此，存在绝对 \(A\ge1\)，使 \(D\ge Ad\) 时
+\[
+\boxed{
+|C_{D,J}(P-T_{p,r}P)|
+\le C_r B(d/D)^{(r+1)/2}.}
+\tag{344.17}
+\]
+例如取 \(A\ge4(C_\mu e^6)^2\)，式（344.16）中的几何比至多 \(1/2\)。所有高阶导数和中心乘积矩的常数均已控制为一个共同几何因子，没有对未受控的阶数常数求和。
+
+### 344.5 Lorentz 系数的局部加权
+
+令 \(D=m+r\)、\(p=J/D\)。将 \(\tau_\nu/m^\nu\) 写成次数 \(r\) 的 Bernstein 系数 \(t_{\nu,\ell}^{(r)}\)，式（344.4）中第 \(\nu\) 阶项的第 \(J\) 个输出系数为
+\[
+\sum_{\ell=0}^r
+\frac{\binom r\ell\binom m{J-\ell}}{\binom D J}
+t_{\nu,\ell}^{(r)}
+f^{(\nu)}((J-\ell)/m).
+\tag{344.18}
+\]
+无效编号的二项系数取零。这也重现第343节的局部范围：只有 \(J-r\le i\le J\) 的格点参与。
+
+**引理344.4（局部导数到输出系数）。** 假设 \(D\ge2r\)。若上述全部有效局部格点满足
+\[
+|f^{(\nu)}(i/m)|\le A_0\Delta_m(p)^{-\nu}
+\qquad(0\le\nu\le r),
+\tag{344.19}
+\]
+则
+\[
+|C_{D,J}(Q_{m,r}f)|\le C_rA_0.
+\tag{344.20}
+\]
+
+**证明。** HNP Corollary 16和系数对称性给本次数 \(\nu\) 的归一化系数界
+\[
+|t_{\nu,h}^{(\nu)}|
+\le C_\nu\min\{m^{-h},m^{h-\nu}\}.
+\tag{344.21}
+\]
+原文先使用未归一化基；除以固定二项系数转为归一化 Bernstein 基后，上式仍成立。
+
+式（344.18）的权重是
+\(H_r\sim\operatorname{Hypergeom}(D,J,r)\) 的概率。次数提升从 \(\nu\) 到 \(r\) 本身也是超几何平均。先取 \(r\) 个位置再从中取 \(\nu\) 个位置，仍为直接取 \(\nu\) 个位置，故
+\[
+\mathbb E|t_{\nu,H_r}^{(r)}|
+\le\mathbb E|t_{\nu,H_\nu}^{(\nu)}|,
+\qquad H_\nu\sim\operatorname{Hypergeom}(D,J,\nu).
+\tag{344.22}
+\]
+又因为 \(D\ge2r\)，
+\[
+\Pr(H_\nu=h)
+=\binom\nu h\frac{(J)_h(D-J)_{\nu-h}}{(D)_\nu}
+\le C_r\binom\nu h p^h(1-p)^{\nu-h}.
+\tag{344.23}
+\]
+
+由绝对系数对称性只须考虑 \(p\le1/2\)。当 \(h\le\nu/2\)，式（344.21）的加权项至多
+\(m^{-\nu}(mp)^h\)；当 \(h\ge\nu/2\)，至多为 \((p/m)^h\)。
+若 \(mp\le1\)，各项由 \(m^{-\nu}\) 控制；若 \(mp\ge1\)，各项由 \((p/m)^{\nu/2}\) 控制。有限求和并用 \(p/2\le p(1-p)\le p\)，得到
+\[
+\mathbb E|t_{\nu,H_r}^{(r)}|
+\le C_r\max\{m^{-\nu},(p/m)^{\nu/2}\}
+\le C_r\Delta_m(p)^\nu.
+\tag{344.24}
+\]
+\(\nu=0\) 时平均为一，\(\nu=1\) 时为零，也满足所需界。将式（344.19）代入式（344.18），再对有限个 \(\nu\) 求和，得到式（344.20）。证毕。
+
+这个引理只使用指定局部格点的导数，不要求式（344.19）在整个区间成立。
+
+### 344.6 主系数引理的证明
+
+先设 \(d>r\) 且 \(m\ge A_rd\)，其中固定 \(A_r\) 足以应用式（344.17），并满足 \(A_r\ge2r\)。对每个输出位置置
+\[
+p=J/(m+r),\qquad
+\rho=\Delta_d(p),\qquad
+R_p=P-T_{p,r}P.
+\]
+将局部格点写成 \(i=J-\ell\)、\(0\le\ell\le r\)，则
+\[
+|i/m-p|=\frac{|rp-\ell|}{m}\le r/m\le\rho/2,
+\tag{344.25}
+\]
+因为 \(\rho\ge1/d\)。
+
+引理344.2在半径 \(\rho\) 的圆盘上给 \(|P|\le e^6B\)。Cauchy系数界、Taylor余项逐项求导及几何求和因而给
+\[
+|R_p^{(\nu)}(p+h)|
+\le C_rB\,\rho^{-(r+1)}|h|^{r+1-\nu}
+\quad(0\le\nu\le r,\ |h|\le\rho/2).
+\tag{344.26}
+\]
+确切地，Taylor系数按 \(e^6B\rho^{-\ell}\) 控制后，剩余和为固定常数乘
+\[
+\sum_{\ell\ge r+1}(\ell)_\nu(|h|/\rho)^{\ell-r-1},
+\]
+在 \(|h|/\rho\le1/2\) 时共同有界。\(h=0\) 时所有这些导数余项恰为零。
+
+又因 \(|h|\le r/m\le r\Delta_m(p)\) 及
+\[
+\Delta_m(p)/\Delta_d(p)\le\sqrt{d/m},
+\]
+式（344.26）蕴含
+\[
+|R_p^{(\nu)}(i/m)|
+\le C_rB(d/m)^{(r+1)/2}\Delta_m(p)^{-\nu}.
+\tag{344.27}
+\]
+引理344.4控制 \(Q_{m,r}R_p\) 的输出系数，式（344.17）控制 \(R_p\) 的输出系数。由于 \(Q_{m,r}\) 精确再生 \(T_{p,r}P\)，相减后得到定理344.1在 \(m\ge A_rd\) 上的界。
+
+为覆盖剩余比例，先证
+\[
+\|Q_{m,r}P\|_{\mathrm{coef},m+r}\le C_rB
+\qquad(m\ge d).
+\tag{344.28}
+\]
+\(d\le r\) 时由再生与次数提升压缩成立。若 \(d>r\)，则 \(D=m+r\ge2r\)。对局部格点 \(t=i/m\)，有 \(|p-t|\le r/m\)；函数 \(x(1-x)\) 在 \([0,1]\) 上为1-Lipschitz，所以
+\[
+\Delta_m(p)^2\le(r+1)\Delta_m(t)^2.
+\]
+再用 \(\Delta_d(t)\ge\Delta_m(t)\) 和式（344.10），取得
+\[
+|P^{(\nu)}(t)|\le C_rB\Delta_m(p)^{-\nu}.
+\]
+引理344.4遂给式（344.28）。
+
+升阶后的 \(P\) 系数范数不超过 \(B\)，故余项范数至多 \(C_rB\)。当 \(d\le m<A_rd\)，因
+\((d/m)^{(r+1)/2}\ge A_r^{-(r+1)/2}\)，只须放大依 \(r\) 的固定常数，就恢复式（344.6）。\(d\le r\) 时余项为零。因此全部 \(m\ge d\ge1\) 均成立。证毕。
+
+证明中包括 \(p=0,1\)：复半径始终至少为 \(1/d\)，中心乘积矩在端点为零，局部估计也没有除以 \(p(1-p)\)。
+
+### 344.7 公共 HNP 中心及端点尺度
+
+固定一个 HNP 允许的二幂整数 \(b\ge2\)，并固定共同整数起点 \(m_0\ge r\)。对全部函数使用同一网格
+\[
+\Lambda=\{m_0b^j:j\ge0\}.
+\]
+定义线性中心
+\[
+S_{m_0}f=Q_{m_0,r}f,\qquad
+S_mf=S_{m/b}f+Q_{m,r}(f-S_{m/b}f)
+\quad(m>m_0,\ m\in\Lambda).
+\tag{344.29}
+\]
+输出按次数 \(D_m=m+r\) 的 Bernstein 系数解释；旧多项式先提升到新次数。所有函数共用 \(m_0,b,r\)。
+
+HNP §5 Steps 1—3 给出残差导数界
+\[
+|(f-S_{t/b}f)^{(j)}(x)|
+\le C\|f\|_{C^\beta}\Delta_{t/b}(x)^{\beta-j},
+\qquad 0\le j\le r.
+\tag{344.30}
+\]
+这些估计的证明不使用概率函数离零一的余量；该余量在随后保证完整中心系数位于概率区间时才使用。因此这里可用于一般实 \(C^\beta\) 函数。
+
+尺度转换必须在端点也成立。由两个max分量直接比较，
+\[
+\boxed{
+\sqrt b\,\Delta_t(x)\le\Delta_{t/b}(x)\le b\,\Delta_t(x).}
+\tag{344.31}
+\]
+在 \(x=0\) 处比值恰为 \(b\)，不能把右侧统一改为 \(\sqrt b\)。
+
+因为 \(\beta-j>0\)，式（344.30）至多为
+\[
+Cb^{\beta-j}\|f\|_{C^\beta}\Delta_t(x)^{\beta-j}
+\le Cb^\beta\|f\|_{C^\beta}\Delta_t(x)^{\beta-j}.
+\]
+应用 HNP Lemma 24，再用 \(\Delta_t(x)\le t^{-1/2}\)，得到真实的逐尺度系数界
+\[
+\boxed{
+\|S_tf-E S_{t/b}f\|_{\mathrm{coef},t+r}
+\le C_{\beta,b}\|f\|_{C^\beta}t^{-a}.}
+\tag{344.32}
+\]
+固定的 \(b^\beta\) 只进入常数，不改变 \(t^{-a}\) 阶。
+
+初始中心另有
+\[
+\|S_{m_0}f\|_{\mathrm{coef},m_0+r}
+\le C_r\|f\|_{C^\beta}.
+\tag{344.33}
+\]
+这可由式（344.4）、Corollary 16及完整范数中的有限阶导数界直接取得；不把初始项误作 \(O(m_0^{-a})\)。
+
+### 344.8 公共中心与原始算子的系数桥
+
+**定理344.5（公共中心系数桥）。** 对上述固定 \(b,m_0\)，存在
+\(C_{\beta,b,m_0}<\infty\)，使全部实函数 \(f\in C^\beta([0,1])\) 与 \(m\in\Lambda\) 满足
+\[
+\boxed{
+\|S_mf-Q_{m,r}f\|_{\mathrm{coef},m+r}
+\le C_{\beta,b,m_0}\|f\|_{C^\beta}m^{-a}.}
+\tag{344.34}
+\]
+
+**证明。** 当 \(m=m_0\) 时左端为零。其余情形由线性递推有精确恒等式
+\[
+S_mf-Q_{m,r}f=(I-Q_{m,r})S_{m/b}f.
+\tag{344.35}
+\]
+把 \(S_{m/b}f\) 写成初始中心与各旧尺度增量之和。设
+\[
+s=(r+1)/2>a.
+\]
+尺度 \(\mu\le m/b\) 的增量在次数 \(d_\mu=\mu+r\) 有式（344.32）的界，并且
+\[
+d_\mu\le2\mu\le m,
+\]
+因为 \(\mu\ge m_0\ge r\)、\(b\ge2\)。由定理344.1，各非初始增量的余项总和至多
+\[
+C\|f\|_{C^\beta}m^{-s}
+\sum_{\substack{\mu\in\Lambda\\m_0<\mu\le m/b}}\mu^{s-a}
+\le C_{\beta,b}\|f\|_{C^\beta}m^{-a}.
+\tag{344.36}
+\]
+这里 \(s-a>0\)，故几何和由最大旧尺度控制。
+
+对初始中心使用式（344.33）及定理344.1，贡献至多
+\[
+C_r\|f\|_{C^\beta}
+ \left(\frac{m_0+r}{m}\right)^s
+\le C_{\beta,b,m_0}\|f\|_{C^\beta}m^{-a}.
+\tag{344.37}
+\]
+这一常数允许有 \(m_0^a\) 的依赖。两项相加得到结论。证毕。
+
+这是次数 \(m+r\) 下的系数范数界。求和使用实际增量的系数估计，没有把函数一致逼近升级为系数界。由于定理344.1已覆盖全部 \(m\ge d\)，此处无需为了辅助证明中的大比例常数另行增大公共倍率 \(b\)。
+
+### 344.9 非负尺度增量的负部界
+
+**推论344.6（公共中心的尺度负部）。** 固定上述共同 \(b,m_0\)。设 \(n\ge1\)，非负 \(g\in C^\beta([0,1])\) 满足
+\[
+\|g^{(j)}\|_\infty\le A_j n^{j/2-a}
+\quad(0\le j\le r),\qquad
+[g^{(r)}]_{C^\theta}\le A_\theta,
+\tag{344.38}
+\]
+其中常数对所考虑的尺度族共同。则对 \(m\in\Lambda\)、\(m\ge n\)，
+\[
+\boxed{
+\min_i C_{m+r,i}(S_mg)
+\ge-C\left(n^{1-a}/m+m^{-a}\right).}
+\tag{344.39}
+\]
+常数可依正则阶、固定公共网格及式（344.38）的常数，不依 \(n,m\)。
+
+**证明。** 因 \(j/2-a\le0\)，完整 \(C^\beta\) 范数在 \(n\ge1\) 上共同有界。第343.7节由 Corollary 16 证明
+\[
+\min_i C_{m+r,i}(Q_{m,r}g)\ge-C_1n^{1-a}/m
+\qquad(m\ge n).
+\]
+再以定理344.5控制 \(S_mg-Q_{m,r}g\) 的每个系数，得到式（344.39）。证毕。
+
+例如预定 \(0<\eta\le1\)，在已固定共同中心后选取网格次数
+\(m\ge M n/\eta\)，则
+\[
+n^{1-a}/m\le M^{-1}n^{-a}\eta,\qquad
+m^{-a}\le M^{-a}n^{-a}\eta^a
+       \le M^{-a}n^{-a}\eta.
+\tag{344.40}
+\]
+因此固定足够大的 \(M\) 可以把单个非负增量的负部压到任意预定固定倍数的 \(n^{-a}\eta\) 以下。选择顺序是先固定 \(b,m_0\) 和桥梁常数，再选择后续 \(M\)，不以 \(M\) 反向重选共同中心。
+
+式（344.40）只结算单个增量的符号预算。它不等于同级上下顺序、两方向相邻相容及整个实际程序都已成立，也没有恢复第343节已否定的 \(m\asymp n\eta^{-1/a}\) 通用吸收。
+
+### 344.10 范围与来源
+
+本节得到三个系数层面的结果：低次数多项式的式（344.6）、公共 HNP 中心与原始算子的式（344.34），以及非负尺度族的式（344.39）。常数允许依固定共同起点；不对变化的 \(m_0\) 冒领统一常数。
+
+低次数估计直接使用原 Bernstein 系数的复域控制和无放回中心乘积矩，局部 Lorentz 项再通过有限阶超几何权重控制。一般的函数sup到系数逆估计及其 \(m\gg d^2\) 要求不承担本证明。
+
+HNP原文提供算子、再生、修正系数界、残差导数和迭代增量接口；本节证明把它们连接起来所需的低次数系数余项。第343节关于原始算子的负部障碍仍成立。完整高阶张量构造仍须另外汇合同级顺序、两方向相容、真实共同尾和重新计算的来源费用，本节没有将这些后续结论视为已证明。
+
+上述是纸面数学结论，不认领 Lean 核验、数值实验、完整高阶工厂或未经文献核定的原创性。
+
+[^low_degree_coefficient_bridge]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363，[DOI](https://doi.org/10.1007/s00365-010-9108-5)，[arXiv:0808.1936v3](https://arxiv.org/abs/0808.1936v3)，[PDF](https://arxiv.org/pdf/0808.1936v3)。§4式（27）—（29）、Lemma 14和Corollary 16分别提供Lorentz算子、再生及修正系数界；Lemmas 19、24与§5 Steps 1—4提供共同迭代的残差和系数增量估计。本节在尺度转换中使用对端点也有效的式（344.31）。
+
+## 追加锚（本行以下为增补区）

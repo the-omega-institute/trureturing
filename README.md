@@ -56,7 +56,7 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-Search [existing proofs](#three-places-to-look) and literature for your target. Identify missing
+Search [Lean source](D5/) and literature for your target. Identify missing
 premises, distinctions or connections; choose questions addressing them.
 Specify supporting and refuting outcomes before designing discriminating tests.
 Keep results with their assumptions; check those against your objects before reuse.
