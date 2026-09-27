@@ -7255,7 +7255,7 @@ R_{N+1}=\ker q\cap(F\times F)^{-1}(R_N),\qquad
 R_{N+1}\subseteq R_N.
 $$
 
-因此一旦 $R_N=R_{N+1}$，把同一个递推算子再作用一次就得到 $R_{N+1}=R_{N+2}$，归纳可知以后永久不变。项目 [FiniteHorizonKernelRecurrence](../../../D5/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence.lean) 提供这一有限前缀关系的递推、反单调和完整未来交集结构。
+因此一旦 $R_N=R_{N+1}$，把同一个递推算子再作用一次就得到 $R_{N+1}=R_{N+2}$，归纳可知以后永久不变。项目 [FiniteHorizonKernelRecurrence](../../../D5/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence.lean) 直接给出等价的末坐标递推 $R_{N+1}=R_N\cap\ker(q\circ F^{N+1})$，以及反单调和完整未来交集结构。本段显示的首步递推由分离时刻零得到，也可由第 371 节的受控关系递推取单点输入得到；两种表达不要混为源码中逐字相同的陈述。
 
 **命题 370.2（稳定深度的基数界）。** 若 $X$ 有限非空，设 $m=|X|$、$k=|q[X]|$、$r=|X/{\sim_\infty}|$，令 $d$ 为首次满足 $R_d=R_{d+1}$ 的深度，则
 
@@ -7286,7 +7286,7 @@ $$
 R_{N+1}^U=\ker q\cap\bigcap_{u\in U}(F_u\times F_u)^{-1}(R_N^U).
 $$
 
-同一个固定递推算子使“一步不再细分”推出永久稳定，类数增长再给出第 370 节同样的 $d\le r-k\le m-k$ 界。此时 $r$ 计算全部有限输入字的行为类，不能用一条被动轨迹的类数替代。项目 [ControlledSignatureStabilization](../../../D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.lean) 还用“当前读数加每个后继的前一层标签”构造递归签名，并把其相等与有界字行为对应起来。
+同一个固定递推算子使“一步不再细分”推出永久稳定，这个条件结论不需要状态集有限。若进一步要求 $X$ 有限非空，令 $m=|X|$、$k=|q[X]|$、$r$ 为全部有限输入字的行为等价类数，$d$ 为首次满足 $R_d^U=R_{d+1}^U$ 的深度，则类数增长给出 $d\le r-k\le m-k$。应用所引有限稳定定理时，输出仍限制到实际像 $q[X]$，使读数满射；不能用一条被动轨迹的类数替代这里的 $r$。项目 [ControlledSignatureStabilization](../../../D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.lean) 还用“当前读数加每个后继的前一层标签”构造递归签名，并把其相等与有界字行为对应起来。
 
 **定义 371.2（未做的行动可能显出不同）。** 取 $X=\{0,1\}^2$，$q(v,h)=v$。允许两个行动：$F_a(v,h)=(v,h)$，$F_b(v,h)=(h,h)$。从 $(0,0)$ 和 $(0,1)$ 出发，只做 $a$，任意长的读数都相同；做一次 $b$ 就分别读到零与一。被动相似没有因此被伪造，它只是没有涵盖第二个行动。
 
@@ -7592,9 +7592,9 @@ $$
 
 ## 381. 动态充分性与记忆的来源和结论范围
 
-**定义 381.1（项目成果承担的具体关系）。** 本批的仓内数学来源分为三组。`ItineraryCompletion`、`PredictionCompletion` 与 `PredictiveSufficiencyDescent` 提供完整未来、商状态和唯一诱导更新、读数；`FiniteHorizonKernelRecurrence` 提供有限前缀的关系递推；`ControlledBehaviorUniversality`、`ControlledSignatureStabilization`、`ControlledRelationRecursion` 与 `ControlledFiniteStability` 提供全部输入字的行为、递归签名、关系递推和有限稳定界。`LinearDescentCriterion` 则把可见下降与隐藏到可见的零交叉块对应起来。正文各处链接到这些实际源码，并按所用状态、输出范围和操作条件解释迁移。
+**定义 381.1（项目成果承担的具体关系）。** 本批的仓内数学来源分为四组。`ItineraryCompletion`、`PredictionCompletion` 与 `PredictiveSufficiencyDescent` 提供完整未来、商状态和唯一诱导更新、读数；`FiniteHorizonKernelRecurrence` 提供有限前缀的关系递推；`ControlledBehaviorUniversality`、`ControlledSignatureStabilization`、`ControlledRelationRecursion` 与 `ControlledFiniteStability` 提供全部输入字的行为、递归签名、关系递推和有限稳定界。`LinearDescentCriterion` 则把可见下降与隐藏到可见的零交叉块对应起来。正文各处链接到这些实际源码，并按所用状态、输出范围和操作条件解释迁移。
 
-完整未来商与动态闭包在本卷第 143 节已经出现，本批补充有限深度、实际取得条件和消去后的记忆结构。普通集合论证明、有限分区计数、分块消去、协方差计算与范数误差估计属于已有数学方法的应用和综合，不申报原创数学，也不声称全部新增文字已在所引项目模块中逐字形式化。此次为纯理论文本，没有进行 Lean 编译、公理闭包核验或理论消化；源码阅读不替代这些验证。
+完整未来商与动态闭包在本卷第 143 节已经出现，本批补充有限深度、实际取得条件和消去后的记忆结构。普通集合论证明、有限分区计数、分块消去、协方差计算与范数误差估计属于已有数学方法的应用和综合，不申报原创数学，也不声称全部新增文字已在所引项目模块中逐字形式化。所引声明支持的是逐项指定的抽象关系，不为每条散文命题和人文解释提供形式认证；源码阅读与 Lean kernel、公理闭包核验是不同的证据。
 
 **定义 381.2（数学文献与实际使用范围）。** Mori，Hazime，“Transport, Collective Motion, and Brownian Motion”，*Progress of Theoretical Physics* 33(3)，1965，423—455，DOI [10.1143/PTP.33.423](https://doi.org/10.1143/PTP.33.423)；Zwanzig，Robert，“Memory Effects in Irreversible Thermodynamics”，*Physical Review* 124(4)，1961，983—992，DOI [10.1103/PhysRev.124.983](https://doi.org/10.1103/PhysRev.124.983)。本批核对这两篇经典的书目信息，没有核读原论文全文，不借其名称为本文所有公式和解释作整体背书。
 
