@@ -1,0 +1,9 @@
+**Theorem 2.1 (mode-to-locality with sharp first-order obstruction).** For every rational vector
+space $V$, every $A:\operatorname{VertexOperator}(\mathbb Q,V)$ and
+$K\in\operatorname{End}_{\mathbb Q}(V)$, suppose that for every $m,n\in\mathbb Z$,
+$C_A(m,n)=mK$ when $m+n=0$, and $C_A(m,n)=0$ otherwise. This is the Heisenberg
+mode-relation form of the bracket in Chu--Lin [1, Section 3.1]. Then
+$(\Delta^2C_A)(m,n)=0$ for every $m,n$,
+$(\Delta C_A)(0,-1)=K$, and
+$[\forall m,n,\ (\Delta C_A)(m,n)=0]\iff K=0$.
+

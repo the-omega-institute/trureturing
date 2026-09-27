@@ -1,0 +1,10 @@
+## References
+
+[1] Y. Chu and Z. Lin, *Moduli spaces of conformal structures on Heisenberg vertex
+algebras*, arXiv:1812.11378v1 (2018), Section 3.1,
+https://arxiv.org/abs/1812.11378v1. The cited section displays the Heisenberg
+bracket and $Y(h,z)=\sum_n h(n)z^{-n-1}$; the coefficient-shift consequence is proved above.
+
+[2] V. Kac, *Vertex Algebras for Beginners*, AMS University Lecture Series 10
+(1998), DOI: 10.1090/ulect/010.
+

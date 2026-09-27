@@ -1,0 +1,7 @@
+**Proof.** The two arguments of $C_A$ in $(\Delta C_A)(m,n)$ have the same index sum
+$m+n+1$. Off its zero locus both terms vanish. On that locus their scalar coefficients are
+$m+1$ and $m$, whose difference is one. Thus $(\Delta C_A)(m,n)$ is $K$ precisely when
+$m+n+1=0$, and zero otherwise. Applying $\Delta$ again subtracts two equal values because
+$(m+1)+n+1=m+(n+1)+1$. The pair $(0,-1)$ lies on the nonzero locus and recovers $K$;
+the resulting coefficient identity gives both directions of the stated equivalence.
+

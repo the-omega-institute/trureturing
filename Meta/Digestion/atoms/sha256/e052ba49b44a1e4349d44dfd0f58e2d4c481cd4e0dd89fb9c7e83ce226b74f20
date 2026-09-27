@@ -1,0 +1,6 @@
+**Convention 1.2 (coefficient shift).** For an endomorphism-valued function
+$F:\mathbb Z^2\to\operatorname{End}_{\mathbb Q}(V)$ define
+$(\Delta F)(m,n)=F(m+1,n)-F(m,n+1)$. With the normalized exponents in Convention 1.1,
+this is the coefficient of $z^{-m-1}w^{-n-1}$ in $(z-w)\sum_{i,j}F(i,j)z^{-i-1}w^{-j-1}$.
+Write $C_A(m,n)=A_m\circ A_n-A_n\circ A_m$.
+

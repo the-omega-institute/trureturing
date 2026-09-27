@@ -1,0 +1,7 @@
+**Convention 1.1 (modes).** Let $V$ be a rational vector space, let
+$A:\operatorname{VertexOperator}(\mathbb Q,V)$, and write its normalized modes as
+$A_m=A[[m]]\in\operatorname{End}_{\mathbb Q}(V)$, so formally
+$A(z)=\sum_{m\in\mathbb Z}A_mz^{-m-1}$. This indexing agrees with the Heisenberg-field
+expansion in Chu--Lin [1, Section 3.1]; Kac [2] is background on vertex algebras.
+Let $K\in\operatorname{End}_{\mathbb Q}(V)$, with no assumption that $K$ is nonzero.
+

@@ -1,0 +1,4 @@
+**Remark 2.2.** The theorem is conditional on the stated mode relation. It does not assert
+the existence of $A$ with $K\ne0$. When $K=0$, the first coefficient shift vanishes;
+when $K\ne0$, the coefficient at $(0,-1)$ shows that the first shift does not vanish.
+

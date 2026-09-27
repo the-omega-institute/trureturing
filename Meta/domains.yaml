@@ -203,6 +203,9 @@ domains:
   Tower:
     stratum: S0
     definition: Radix name towers and their normalized approximation arms.
+  VertexAlgebra:
+    stratum: S3
+    definition: Formal vertex-operator modes, coefficientwise locality, and algebraic field relations.
   Weil:
     stratum: S3
     definition: Classical zeta conventions, Weil test functions, and Fourier-Laplace analysis.
