@@ -452,7 +452,167 @@ Consequently R+sum L_rc>=5/3. If R=k/9>=10/9, the cut cost is at least
 
     R+(2/7)(5/3-R)=(30+5k)/63>=80/63.
 
-Therefore fully active cuts in the remaining low window never have R>1. For R=1, cuts below79/63 have Z=6 or7, giving75/63 or77/63, and no top cost. Covering all five complete branches of the standalone tree with public/private prefixes of total unweighted integer cost9+Z<=16 forces a first-prefix edge in each branch: replacing a first-prefix cost3 by its five required leaf edges costs5, already exceeding the possible slack1. Thus the public cut has three whole columns, the private cut has two further whole columns, and at77/63 it has one extra private leaf. The two private whole columns are first-prefix cut cylinders, each in one child tree; this does not assert that the child has all seven leaves as actual points. This excludes other fully active R=1 low-cut structures. It does not yet supply a law for those75/77 shapes or justify deleting their exceptional children.
+Therefore fully active cuts in the remaining low window never have R>1. For R=1, cuts below79/63 have Z=6 or7, giving75/63 or77/63, and no top cost. Covering all five complete branches of the standalone tree with public/private prefixes of total unweighted integer cost9+Z<=16 forces a first-prefix edge in each branch: replacing a first-prefix cost3 by its five required leaf edges costs5, already exceeding the possible slack1. Thus the public cut has three whole columns, the private cut has two further whole columns, and at77/63 it has one extra private leaf. The two private whole columns are first-prefix cut cylinders, each in one child tree; this does not assert that the child has all seven leaves as actual points. This excludes other fully active R=1 low-cut structures. The public/private construction below supplies a law for these fully active R=1 shapes. It uses the precise pair-projection property retained after excluding the owner children, without asserting that deletion preserves product blocking.
+
+## Whole-column75/63 and77/63 shapes admit one mixed law
+
+Suppose the same literal source admits the fully active, bridge-free
+R=1 cut shape just classified: three whole public first-seven columns,
+two further whole private first-seven columns, and at77/63 one additional
+private leaf. There is one actual supported probability with
+
+    Gamma_1225(nu)<=491/55=9-4/55<9.                 (WC1)
+
+This statement allows the two private columns to belong to the same child,
+two children at one root, or children at different roots. It is a theorem
+about the specified cut witness, which need not be a minimum cut. It does
+not classify every source whose minimum cut numerically equals75/63 or
+77/63: other public costs and partially active cuts remain separate.
+
+### Actual private mass and the public projection left after restriction
+
+Let P be the three public columns and U,V the two private columns, with
+owner children e_U,e_V. At77/63 let w be the extra private leaf with owner
+e_w. Actual path containment says
+
+    F_e subset P
+                union ([U] if e=e_U)
+                union ([V] if e=e_V)
+                union ({w} if e=e_w).
+
+At75/63 omit the last term. The actual standalone tree requires five
+columns with five leaves each. The one extra leaf cannot supply a whole
+branch, so the tree uses exactly the three public columns and U,V;
+these five column labels must all be distinct. Among its five leaves
+in U, every leaf other than possibly w must occur in e_U itself.
+Thus e_U contains at least four actual leaves in U, and e_V contains at
+least four in V. Select four in each and put mass1/44 on each selected
+point. This gives one private measure pi of total mass2/11, with mass1/11
+in each private column. The eight points remain distinct when the owners
+coincide, since U and V are different columns.
+
+Let D={e_U,e_V} be the set of distinct owner children. For the public
+construction alone exclude D. At each root r, let m_r be its remaining
+child count and delta_r=q_r/m_r. Always m_r>=q_r. Choose any q_r remaining
+children at r and q_s at a different root s. The original literal test
+provides a ternary seven-tree in their actual union. That union lies in
+P union{w}. A column outside P can contain only w and cannot supply three
+leaves. Consequently the selected actual public projection contains the
+whole ternary tree in P. This proves pairwise public projected-law
+feasibility for every such selection. It does not assert arbitrary
+product-blocker inheritance after deleting D.
+
+### Six budgets and one common public law
+
+Reserve public mass W=9/11. Order roots as gap a, then full b,c,d;
+permute the three full labels as needed. Use the following public root
+budgets A and public root-prefix coefficients B:
+
+| owners of U,V | delta | A | B |
+|---|---|---|---|
+| same gap child | (2/3,3/5,3/5,3/5) | (12/55,1/3,1/3,1/3) | (9/22,9/22,9/22,9/22) |
+| same full child | (1/2,3/4,3/5,3/5) | (2/5,12/55,1/3,1/3) | (1/2,4/11,17/44,17/44) |
+| two gap children | (1,3/5,3/5,3/5) | (1/5,1/3,1/3,1/3) | (3/11,5/11,5/11,5/11) |
+| two children at one full root | (1/2,1,3/5,3/5) | (2/5,1/5,1/3,1/3) | (1/2,3/11,19/44,19/44) |
+| one gap and one full child | (2/3,3/4,3/5,3/5) | (3/10,4/15,1/3,1/3) | (9/22,4/11,19/44,19/44) |
+| children at two full roots | (1/2,3/4,3/4,3/5) | (2/5,4/15,4/15,1/3) | (1/2,4/11,4/11,9/22) |
+
+For every subset S of roots the table satisfies
+
+    sum_(r outside S) A_r>=W                         if |S|<=1,
+    sum_(r outside S) A_r+(1/2)sum_(r in S) B_r>=W    if |S|>=2,
+    sum_(r outside S) A_r+sum_(r in S,r!=j) B_r>=W    if |S|>=2, j in S.
+
+These are exactly [445's weighted pair-cut conditions](445-occupied-branch-restrictions-and-weighted-root-caps.md)
+with alpha=A/W and beta=B/W. Their minimum slacks, in the three displayed
+families and table order, are respectively
+
+    (1/15,0,47/330), (1/15,0,79/660), (8/165,0,4/33),
+    (8/165,0,4/33), (9/110,0,59/330), (8/165,0,41/330).
+
+Independently and uniformly choose a q_r-subset of the m_r remaining
+children at every root. For each complete selection, apply445's weighted
+row/tree theorem to its actual public projection, with seven-prefix caps
+3^(-j). Lift each projected point to a selected actual child and scale
+by W. Average these conditional laws over all selections. This is one
+actual public measure mu; the separate pair witnesses are only feasibility
+premises for the common flow, and are never pasted together as laws.
+
+A fixed remaining child is selected with probability delta_r. Its
+conditional mass is at most the whole corresponding root or root-prefix
+mass even though the conditional law depends on all selections. The
+restriction averaging of[444](444-uniform-subtree-restrictions-couple-two-prefix-trees.md)
+therefore gives, for each seven-prefix Y_v of depth j=1,2,
+
+    mu(r)<=A_r,               mu(r,c)<=delta_r A_r,
+    mu(Y_v)<=W 3^(-j),
+    mu(r,Y_v)<=B_r 3^(-j),    mu(r,c,Y_v)<=delta_r B_r 3^(-j).
+
+Owner children have zero mu mass. All mu points lie in P.
+
+### All numerical cylinders under the same mixed law
+
+Set nu=mu+pi. The two measures have disjoint first-seven columns and total
+mass one. Let rho_r be pi's root mass; it is1/11 times the number of
+private columns owned at r. The maximum private child mass is2/11 if
+the owners coincide and1/11 otherwise. Thus
+
+    q5<=max_r(A_r+rho_r)<=2/5,
+    q25<=max(max_r delta_r A_r, maximum private child mass)<=1/5.
+
+At the seven prefixes the disjoint public/private columns give
+
+    q7<=max(W/3,1/11)=3/11,
+    q49<=max(W/9,1/44)=1/11.
+
+The joint cylinders similarly give
+
+    q35<=max(max_r B_r/3,1/11)<=1/6,
+    q175<=max(max_r delta_r B_r/3,1/11)<=1/11,
+    q245<=max(max_r B_r/9,1/44)<=1/18,
+    q1225<=max(max_r delta_r B_r/9,1/44)<=1/33.
+
+Every independently phased pair of original divisor queries is either
+incompatible or intersects in a numerical LCM cylinder. The complete
+ordered-pair sum is bounded by
+
+    1+3*(2/5)+3*(3/11)+5*(1/5)+9*(1/6)
+      +5*(1/11)+15*(1/11)+15*(1/18)+25*(1/33)
+    =491/55<9.
+
+The source, private points and public law are fixed before the phases.
+An extra private leaf used only to complete the standalone tree need not
+receive mass. No claim is made that the selected probability support is
+itself a product blocker.
+
+### Exact budgets and actual-source constructions
+
+The [whole-column constructor](../../frontier/cover-geometry/height_two_whole_column_law.py)
+and [exact results](../../frontier/cover-geometry/height_two_whole_column_law.json)
+check all264 rational budget inequalities and construct actual laws using
+the existing weighted coupling and restriction programs. They cover all
+six owner placements at both cut costs, plus an irregular public-fibre
+control. Every control checks480 selected pair tests,10000 complete
+literal five-tree tests,1767 numerical cylinders and81 ordered LCM pairs.
+
+In the twelve basic controls, every nonowner child has the first five
+leaves in each of the three public columns. At75/63 each private owner
+has five leaves in its private column. At77/63 the U owner has only four,
+and one nonowner supplies its fifth leaf as w; the V owner still has five.
+This verifies the case where four actual U-owner leaves is the full
+available guarantee. The irregular control changes public leaf sets by
+child and requires three distinct restricted projection flows with their
+original multiplicities. All thirteen laws have the bound(WC1).
+The reported75/77 cut is an explicit fully active cut witness; no minimum
+cut value is claimed for these controls.
+
+These are ordinary mathematical deductions and finite exact constructions,
+not new Lean results. The theorem does not supply an original odd-covering
+realization or the same-source lift through arbitrary outside cofactors.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_whole_column_law.py
+```
 
 ## One67/63 cut structure is also impossible
 
@@ -933,7 +1093,9 @@ All sources with a literal65/63,66/63,67/63 or68/63 minimum cut are controlled w
 For occupancy4555, the large-cut estimate also handles every cut at
 least79/63. General high-incidence sources in the remaining range69/63
 through78/63 are not thereby controlled: their high root/column incidence
-can still invalidate the earlier mixed-cap estimate. Some may contain
+can still invalidate the earlier mixed-cap estimate. The fully active R=1
+whole-column shapes at75/63 and77/63 are controlled by(WC1), but this
+does not settle all sources at those numerical cut values. Some may contain
 the private structure, but its existence has not been proved for every
 remaining source. Other occupancy patterns retain their own stated
 premises and are not classified by this ten-value reduction.
