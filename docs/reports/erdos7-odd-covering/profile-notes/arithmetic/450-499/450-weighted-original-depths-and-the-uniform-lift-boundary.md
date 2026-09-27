@@ -1650,3 +1650,137 @@ rule out consequences of exact whole coverage, justified extremality
 among whole covers, or a threshold depending on the particular support
 and period. The extension and limit statements follow from the
 displayed CRT and product proofs, not from finite enumeration.
+
+### 13.6. Every centered two-parent contraction is blocked in the same family
+
+The same463-class family defeats a further proposed repair: selecting
+two original children above the same prime, moving their two original
+parents to the compatible child cofactor classes, and deleting the
+children. This holds for all original child heights and for prime as
+well as composite parents. It persists under every extension in13.5.
+
+The two successful joint reductions in
+[385, sections6--8](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#6-a-mixed-root-cross-permits-a-joint-composite-parent-contraction)
+show that this operation can reduce an irredundant divisor-closed odd
+family. The result here checks its complete specified domain on the
+actual463 family, rather than only looking for those two sufficient
+patterns. It is an obstruction to this repair class, not a claim that
+the463 family is globally extremal or a whole cover.
+
+#### The operation and a literal obstruction
+
+Fix a support prime P and two original child labels
+
+    d=P^e m,  f=P^h n,
+    e,h>=1,  m,n>1,  P not dividing mn,  m!=n.       (CP1)
+
+Divisor closure makes m,n original labels. Define their actual child
+cofactor residues c=a_d mod m and b=a_f mod n. Require that they can
+refer to one common cofactor point:
+
+    c=b modulo gcd(m,n).                            (CP2)
+
+The operation moves A_m to c mod m and A_n to b mod n, removes A_d
+and A_f, and keeps every other original class unchanged. It uses461
+classes, with the two parents' original numerical labels. No equality
+or inequality of the children's first P-roots is imposed. We also do
+not require the common cofactor to avoid every P-free original: checking
+all CP2 candidates includes those that satisfy this additional source
+condition. Both children are contained in their new parents.
+
+If w is an original private integer for parent m and
+
+    w != b modulo n,                                (CP3)
+
+then w becomes uncovered. Indeed no unchanged original covers w, and
+the new m-class cannot cover it: comparable-original disjointness gives
+c!=a_m mod m. CP3 excludes the other new parent. The analogous test
+with the two parents reversed is equally valid. Thus a legal operation
+must rescue EVERY private integer of each old parent using the other
+new parent. Rescuing one selected witness is insufficient.
+
+The [eight additional private integers](../../../frontier/cover-geometry/merged-phase-excess/centered_pair_contraction_blockers.json),
+together with the463 witnesses already in the original input, rule out
+every CP1--CP2 candidate. These additional points are:
+
+| Original private owner | Integer |
+| ---: | ---: |
+| 3 | 38225498559 |
+| 5 | 154233623140 |
+| 7 | 409475178392 |
+| 9 | 23803106923 |
+| 21 | 435127539118 |
+| 33 | 409205747369 |
+| 39 | 291456798179 |
+| 135 | 449637875486 |
+
+The [standalone verifier](../../../frontier/cover-geometry/merged-phase-excess/centered_pair_contraction_obstruction.py)
+checks every one of these471 integers directly against all463 originals,
+reconstructs all child decompositions from the original numerical labels,
+and enumerates all pairs of different parents for each P. Its
+[exact output](../../../frontier/cover-geometry/merged-phase-excess/centered_pair_contraction_obstruction.json)
+gives:
+
+| Pair scope | All nonunit parents | Both parents composite |
+| --- | ---: | ---: |
+| Same-prime child pairs with different parents | 199127 | 179031 |
+| Compatible cofactor centers | 46201 | 34870 |
+| Excluded by an original chosen private witness | 46188 | 34864 |
+| Further excluded by the eight extra points | 13 | 6 |
+| Compatible pairs not excluded | 0 | 0 |
+
+The pair counts retain original child labels and heights; two child
+assignments with the same resulting center pair remain separate rows.
+The152926 incompatible pairs in the first column are outside CP2.
+Their coverage-preservation behavior is not asserted here.
+
+For the13 cases that pass both original chosen-witness tests, the
+verifier also constructs the entire changed461-class family and checks
+that the supplied lost integer has no new covering class. For example,
+at P=11, children99 and165 have parents9 and15 and centers4 modulo
+both parents. Their original chosen witnesses are rescued, but23803106923
+is private to9 and is not4 modulo15, so the full replacement loses it.
+This demonstrates why one witness per parent does not suffice for the
+rejection certificate, even though a single LOST witness suffices to
+refute an individual operation.
+
+The canonical input is unchanged, with SHA256
+427138d17d61f284dff84c2143b90b3b5b3997af6c26e9a8c17f4ab790aa1e11.
+The verifier reads only its three explicit paths, uses no stored pair
+list or solver, and keeps all checks active under optimization. Normal
+and optimized runs give identical output bytes; an independent raw-input
+enumeration agrees on all199127 pair assignments and all rejection counts.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/centered_pair_contraction_obstruction.py --originals docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/irredundant_divisor_closed_phase_obstruction_originals.json --blockers docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/centered_pair_contraction_blockers.json --output /tmp/e7_centered_pair_contraction_obstruction.json
+```
+
+#### Pure-prime tails preserve the complete obstruction
+
+In13.5 every added label is a pure new-prime power l^j. If it were an
+eligible child P^e m with P not dividing m, then P=l and e=j, forcing
+m=1, which CP1 excludes. A new pure-prime label also cannot be a
+cofactor parent of an old child, since its prime divides no old modulus.
+Consequently the ENTIRE list of eligible(P,parent,child) triples and
+their compatible pairs remains exactly the old list.
+
+CRT extends every old blocking private integer w to an integer equal
+to w modulo the old full period and equal to c_(l,H_l+1) modulo
+l^H_l for every new prime. As proved in13.5, this avoids every new
+class. It preserves w's unique old owner and its failure to lie in
+either new parent class of the associated operation. Every candidate
+therefore still loses an actual private integer in the extended family.
+
+It follows that IC9's arbitrarily near-covering irredundant families
+can ALSO exclude every operation CP1--CP2, with arbitrary new prime
+heights and arbitrarily many initial odd support primes. Their two
+low-phase-excess obstructions remain unchanged. Thus adding resistance
+to these two-parent contractions does not supply either low-excess law,
+even at an arbitrarily high fixed density below one.
+
+This leaves three-or-more-parent operations, incompatible new centers,
+children over different primes, other edits and consequences of exact
+whole coverage outside the result. In particular it does not prove
+minimality under all covered-union-preserving changes. The finite
+certificate and the tail-extension proof are ordinary mathematics,
+not new Lean verification or a resolution of unrestricted Erdős#7.
