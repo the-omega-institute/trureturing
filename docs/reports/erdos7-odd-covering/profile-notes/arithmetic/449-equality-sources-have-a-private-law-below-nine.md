@@ -3407,13 +3407,286 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 
 These programs use no external solver or unpublished fixture. The eleven/eight private-cost inventory and225 overlap controls from the prior shape program are reused, not recounted as new independent cases. These finite checks support the ordinary proofs and actual examples; they do not constitute Lean verification.
 
+## Cut72: sparse laws, partial public cuts, and local support obstructions
+
+This section gives ordinary source proofs for ten of the fourteen necessary cut72 profile families, counting full-root permutations as one family. A controlled family has a single actual law below nine; an impossible family has no source satisfying the literal premises. The four other families remain outside these results. This is not a complete cut72 theorem or an original-cofactor lift.
+
+### Complete necessary profile inventory
+
+Use root order gap/full/full/full, N=(4,5,5,5) and selected counts q=(2,3,3,3). A node-minimal normalized minimum cut has active counts from (0,2,3,4) at the gap and (0,3,4,5) at a full root. If a root is inactive its top cost is21; otherwise each inactive occupied child costs7. Write T for this top cost divided by7, k for the public antichain cost divided by7, and Z for private cost divided by2. Then
+
+    7(T+k)+2Z=72.
+
+Each active child's integer private cost is between0 and3; when k=0 nonemptiness requires at least1. Replacing an active root subtree by its source-root edge gives the strict node-minimal inequality
+
+    7(N_r-a_r)+2Z_r <21.
+
+For each two active roots the sums of their cheapest legal selected private costs obey p_r+p_s>=9-k. If all roots and children are active, standalone also requires k+Z>=15. The [profile enumerator](../../frontier/cover-geometry/height_two_cut72_profiles.py) and [exact inventory](../../frontier/cover-geometry/height_two_cut72_profiles.json) exhaust these bounded integer conditions:24 labelled profiles,14 families under full-root permutations,76 labelled shape rows and54 canonical shape rows. Within each labelled active profile, permutations of full roots with the same active count have already been quotiented in the private-shape rows. They are necessary possibilities; the enumerator does not assume their actual realizability.
+
+| Active counts | T | k | Z | Canonical private shapes | Result in this section |
+|---|---:|---:|---:|---:|---|
+|0005|9|1|1|1|33/4 law|
+|0055|6|0|15|1|173/21 law|
+|0555|3|3|15|1|1214/139 law|
+|3555|1|3|22|7|not settled here|
+|3555|1|5|15|1|impossible|
+|3555|1|9|1|2|643/72 or1603/195 law|
+|4000|9|1|1|1|33/4 law|
+|4455|1|3|22|5|not settled here|
+|4455|1|5|15|1|impossible|
+|4455|1|9|1|3|643/72 or1603/195 law|
+|4555|0|0|36|3|impossible|
+|4555|0|2|29|3|impossible|
+|4555|0|4|22|22|not settled here|
+|4555|0|6|15|3|not settled here|
+
+The family0005 has three labelled positions,0055 has three, and each4455 family has three. Other displayed families have one. The proof below retains actual owners and common numerical labels throughout; relabeling full-root roles is only the stated classification symmetry.
+
+### Four sparse cut72 profiles have same-source laws below nine
+
+Scope: the actual literal4555 height-two source and Report449's prefix-normalized minimum cut, with raw minimum72. Root order is gap4/full5/full5/full5. This is an ordinary proof with finite exact construction controls, not Lean verification or a common outside-cofactor lift. All atoms remain at their original actual owners. Every law is selected before the numerical query phases.
+
+Use numerical divisor order `(1,5,7,25,35,49,175,245,1225)` and LCM multiplicities `(1,3,3,5,9,5,15,15,25)`.
+
+#### Single active root:0005 or4000, public1/private1
+
+There is one public leaf y. Four of the five active full-root children, or three of the four active gap children, have private cost zero. Their nonempty actual fibres are exactly `{y}`. Fix a legal triple or pair among these zero-cost children. Its projection is exactly `{y}`; the one cost1 child and all its points remain in the source but are not used.
+
+At any other root s, pair this fixed selection with ANY legal q_s-child restriction. Literal blocking supplies a ternary seven-tree. Removing y leaves at least8 actual leaves from the selected children at s. Uniform mass on those8 or9 leaves has column cap3/8 and leaf cap1/8. Lift each leaf to any actual owner among the selected children, average over all legal restrictions at s, and then mix the other three roots equally. A fixed child is included with probability at most3/5 (a gap child has the smaller probability1/2). Thus the simultaneous cap vector is
+
+    (1,1/3,3/8,1/5,1/8,1/8,3/40,1/24,1/40).
+
+Its LCM envelope is33/4. This is the existing punctured-tree construction applied to an actual zero-cost restriction, rather than an assumption that the entire active root has singleton projection. Standalone is not used.
+
+#### Two active full roots:0055, public0/private15
+
+The sorted private shapes are11111 and22222. Call the singleton root A and the doubled root B. Any triple from each has exactly9 candidate occurrences, so a required ternary tree makes them all actual at their own owners, distinct within the selection, and gives a column-count vector with entries0 or3.
+
+Exchanging one singleton forces all five A labels into one column H, pairwise distinct. Exchanging one doubled child forces each B child's column-count vector to be the same two-vector; pairing with A makes it one leaf in each of two distinct columns J,K outside H. In each of J,K its five labels are distinct. This is the same tight-nine exchange as the cut71 three-full-root stratum; only one doubled root is needed here.
+
+Let C be the other full root and D the gap root. For every legal triple at C or pair at D, pair it with a fixed A triple. A ternary tree in the combined projection has at least two three-leaf branches outside H. Select two such branches. Their six leaves are all actual at the selected C or D children, since the A triple lies entirely in H. The uniform six-leaf law has column cap1/2 and leaf cap1/6.
+
+Apply Report443's one-flow theorem to these ACTUAL outside-H incidences. At C use `(m,q)=(5,3)` and at D use `(4,2)`. It yields one local probability at each root with child cap1/3, column cap1/2 and leaf cap1/6. At C the joint child/column and child/leaf caps are3/10 and1/10; at D they are1/4 and1/12. These are simultaneous caps on one probability per actual root, not separate marginal optimizations.
+
+Mix the uniform five-point A law with weight1/7, the uniform ten-point B law with weight2/7, and the C,D laws with weight2/7 each. Every law except A is supported outside H. The resulting cap vector is
+
+    (1,2/7,3/7,2/21,1/7,13/105,3/35,1/21,1/35).
+
+For example, outside H the leaf cap is `(2/7)(1/10+1/6+1/6)=13/105`; the H leaf cap is only1/35. Child/column cap3/35 comes from C. The envelope is
+
+    173/21 <9.
+
+Neither standalone nor any additional relation between J,K and the other-root supports is used.
+
+#### Three active full roots:0555, public3/private15
+
+The three active full roots have private shape11111. Tight pair tests and singleton exchange give fifteen actual private points, five distinct leaves in each of three different columns H1,H2,H3. They avoid the common column G. If the public cut is three leaves, tight-nine also forces those leaves into the same G. Otherwise the public cut is already a whole column G. Thus the ENTIRE three-full-root actual support lies in G,H1,H2,H3.
+
+The full source's standalone five-ary tree has five different columns, each with at least five actual leaves. At least one such column K is outside G,H1,H2,H3. Its five chosen distinct actual leaves must all occur at the inactive gap root. Select any actual gap owner of each leaf, allowing all five selected points to lie at ONE child. No false distribution among gap children is assumed.
+
+For every fixed choice of one triple at each full root, each pair of the three restricted roots has at least three actual leaves in G: its other two branches can only be the two distinct private columns. Apply Report443 at depth one on G with `(m,q)=(3,2)` and leaf cap1/3. This supplies one public probability with root cap1/2, leaf cap1/3 and root/leaf cap2/9. Lift atoms to actual selected children and average over all ten triples at each full root. Its child cap is3/10 and its point cap2/15. The public law uses only actual common points; an individual root need not support three such points on its own.
+
+Use total public weight W=30/139. Give each of the fifteen full private points weight x=20/417, and each of the five selected gap K points weight y=9/695. Then
+
+    W+15x+5y=1.
+
+The root-disjoint and column-disjoint support gives simultaneous caps
+
+    (1,145/417,100/417,47/417,100/417,
+       10/139,9/139,20/417,20/417).
+
+Their justifications are respectively
+
+    1,
+    max(5x+W/2,5y),
+    max(5x,W,5y),
+    max(x+3W/10,5y),
+    max(5x,W/2,5y),
+    max(x,W/3,y),
+    max(x,3W/10,5y),
+    max(x,2W/9,y),
+    max(x,2W/15,y).
+
+In particular the concentrated gap-child cost5y is included in every relevant child and child/column cap. Multiplying by the LCM multiplicities gives
+
+    Gamma_1225 <=1214/139 <9.
+
+The inactive gap is not deleted before invoking standalone. Its ACTUAL K leaves are precisely what improves this three-active-root branch.
+
+The [sparse-law constructor](../../frontier/cover-geometry/height_two_cut72_sparse_laws.py) and [exact controls](../../frontier/cover-geometry/height_two_cut72_sparse_laws.json) realize all four families, including both public forms at0555. The five actual sources have740,692,456,256,226 points respectively. Every source has a matching actual flow and cut72 and passes480 selected pair tests and10000 full literal tests. Every single constructed law is checked against1767 original numerical cylinders and81 ordered LCM terms. The selected five gap leaves at0555 all use one child, explicitly testing the concentrated-owner case. The actual whole-public0555 control has the stronger envelope5868/695; the uniform family statement is1214/139.
+
+### Two local support obstructions for fully active cut72
+
+Both arguments concern fixed actual sources and fixed normalized-cut candidate supports. These are ordinary proofs, with no Lean verification or closure of every cut72 source claimed.
+
+#### A local nine-leaf parity obstruction
+
+Let leaves carry a column map into an arbitrary set of columns. A ternary height-two tree means three distinct columns with at least three distinct leaves in each. Let I and J each contain at least three indices. Fix candidate sets A_i and B_j of at most two leaves each, and a fixed set E of at most one leaf. Suppose that for EVERY two distinct i,i' in I and EVERY two distinct j,j' in J,
+
+    A_i union A_i' union E union B_j union B_j'
+
+contains such a tree. These hypotheses are inconsistent.
+
+Proof. Each tested union has at most9 candidate occurrences and contains at least9 distinct leaves. Thus all five component sets have their maximum sizes, their occurrences are pairwise distinct, and their column-count sum has exactly three nonzero coordinates, all equal to3. Write v_i and u_j for the two-leaf column-count vectors and e for the unit column vector of E. Every tested vector is
+
+    v_i+v_i'+e+u_j+u_j'.
+
+Fix any two different indices i,i'. There is a third index t distinct from both. Fix a pair j,j'. Compare tests(i,t;j,j') and(i',t;j,j'). Their difference is v_i-v_i'. Every coordinate is divisible by3 since both test vectors are. Every coordinate also lies between-2 and2. Therefore the difference is zero. This proves that all v_i have the same vector v. The identical exchange on J proves that all u_j have the same vector u.
+
+Every test now has column vector2v+2u+e. Modulo2 this has exactly one odd coordinate. But three distinct coordinates equal to3 have exactly three odd coordinates. Contradiction.
+
+Only three indices from each side are needed: the nine cross-product choices of two out of three suffice. All vectors are on the same fixed column set; choosing a different column relabeling for each test would invalidate the argument.
+
+##### Application to the three fully active k0/Z36 shapes
+
+The necessary shapes, in gap/full/full/full order, are
+
+```text
+2222/12222/12222/12223
+2222/12222/12222/22222
+2223/12222/12222/12222
+```
+
+Each gap has at least three cost2 children. Each row has a full root of type12222, which supplies a fixed cost1 child and at least three cost2 children. More generally12223 would also suffice, since it still has three cost2 children. Public k=0 gives actual-fibre containment in the private candidates alone. Every cost1/2 prefix consists of finite leaves, so any selected gap pair and full triple of the displayed form is covered by exactly the five candidate sets in the lemma. Literal4555 blocking gives the ternary tree for every such pair/triple. Hence the lemma excludes all three shapes.
+
+No cost3 child is selected. Such a child's prefix may be three leaves or a whole column without affecting this argument. No assumptions about those unselected fibres, the other full roots, a probability law, or a maximum flow are needed beyond the normalized cut containment and the original legal pair tests. The gap/full selections use two occupied gap children and three full children, which are legal restrictions of the original literal hypothesis; no deletion of source roots is performed.
+
+##### Exact boundaries of the local lemma
+
+The requirement of at least three double children on EACH side cannot simply be dropped. Put E={(2,2)}. Take three double sets L_t={(0,t),(1,t)} for t=0,1,2 and two double sets
+
+    S_0={(0,3),(2,0)}, S_1={(1,3),(2,1)}.
+
+The union of E, both S sets and any two L sets has exactly three leaves in each of columns0,1,2. Thus all local tests hold when one side has only two indices. Interchanging the two sides gives the other boundary example. These are counterexamples to weakening the LOCAL lemma's cardinality hypothesis, not claims of complete literal4555 sources.
+
+#### A local public-two-leaf obstruction
+
+The earlier cut77/public2 proof is independent of its raw cut value and inactive-root status. The needed local hypotheses are only:
+
+1. A fixed public candidate set P with at most two leaves.
+2. A clean full root with at least four singleton-private children, with every legal clean triple available for the tests below.
+3. A gap root with at least three double-private children, with every pair available.
+4. One legal triple at another full root whose private candidates form a set Q of at most four finite leaves.
+5. Every relevant actual fibre is contained in P plus its fixed private candidates; every clean/gap, clean/exceptional and exceptional/gap selected test contains a ternary tree.
+
+These hypotheses are inconsistent. For the current applications the clean root has five children and the gap has four, so there is no minimal-cardinality issue.
+
+Proof. A clean triple and gap pair are covered by P2+clean3+gap4=9 candidate occurrences. Tightness forces all nine distinct and actual in the tested union, with column counts0 or3. Exchanging singleton clean children while retaining two others forces all clean singleton labels into one column H. Exchanging gap children while retaining a third gap child forces all gap two-leaf count vectors to equal one vector v, since coordinate differences lie in[-2,2] and are divisible by3.
+
+For every such test, the clean triple supplies3e_H. Hence P+2v has exactly two nonzero coordinates, each3, and has no H component. A double vector v concentrated in one column would contribute4 there and is impossible. Thus v=e_K+e_L for distinct K,L different from H, and the public vector is also e_K+e_L. All actual gap fibres lie in K union L by cut containment.
+
+Now test the exceptional triple against a clean triple. The candidate bound is again P2+Q4+clean3=9, so the same tightness applies. The clean branch H is full, while P already contributes in K and L. Thus Q contributes two leaves in each of K,L, and none anywhere else. The ENTIRE actual exceptional triple lies in K union L. Pairing it with any gap pair yields an actual source in only two columns, contradicting literal blocking.
+
+The proof uses fixed candidate containment and actual tests. It does not infer a tree from candidate costs alone, and no candidate is presumed actual before a tight test forces it.
+
+##### Application to fully active k2/Z29
+
+The three necessary shapes are
+
+```text
+2222/02222/02222/11111
+2222/02222/11111/11222
+2222/11111/11222/11222
+```
+
+Every row contains gap2222, a clean full11111, and another full root of type02222 or11222. At02222, choose its zero child and any two double children. At11222, choose both singleton children and any double. Each selected triple has total private candidate cost4, all finite. All hypotheses of the local public-two-leaf obstruction therefore hold. The remaining full root is unused; there is no need to assume it inactive. All three shapes are impossible.
+
+The [local-obstruction controls](../../frontier/cover-geometry/height_two_cut72_local_obstructions.py) and [exact data](../../frontier/cover-geometry/height_two_cut72_local_obstructions.json) independently re-enumerate the two private profiles, test833 exchange-vector pairs and5488 parity vectors, verify105 public-two-leaf patterns and22050 exceptional vectors, and check both labelled boundary counterexamples. The ordinary local arguments prove impossibility; these controls do not manufacture a source for an impossible profile.
+
+### Both partial public5/private15 profiles are impossible
+
+The shapes are111/01111/01111/01111 at3555 and1111/0111/01111/01111 at4455. Each of the THREE full roots has one zero-private child and at least three singleton-private children. At every full root select its zero child and any two singleton children. The resulting legal full/full pair has four private candidates, in addition to public cost5.
+
+If P consists of five public leaves, every such test has exactly nine candidate occurrences. They must all be distinct and actual, with column counts0 or3. Exchange one singleton while keeping another fixed; at least three singleton children make the exchange possible even at the partial0111 root. This locks all singleton candidates of full root r into one column H_r. Distinct roots cannot have the same H, since their four selected private leaves would then occupy one column. For every full-root pair r,s, the fixed public column vector must be
+
+    v_P=e_(H_r)+e_(H_s)+3e_(G_rs).
+
+Compare pairs(1,2) and(1,3). The difference e_(H2)-e_(H3) is divisible by3 coordinatewise, forcing H2=H3. Their own pair forbids this equality, a contradiction.
+
+The other possible public-cost5 antichain is one whole column G and two leaves outside G. Each selected full/full test has at most six outside-G candidates: those two public leaves and the four private candidates. A ternary tree must use G and all six distinct actual outside leaves, split into two three-leaf columns. The same exchange locks all private singleton columns H_r outside G. Pairwise H_r are distinct, and the fixed two-public-leaf vector is e_(H_r)+e_(H_s) for every pair. Comparing two pairs gives the same contradiction. Two public whole columns would already cost6 and are not a third case.
+
+Every private label used here becomes actual at its owner through a tight test and cut containment. Neither standalone nor a gap-root argument is needed. This excludes both displayed k5 families.
+
+### Every partial cut72 public9/private1 profile has one law below nine
+
+Scope: original actual literal4555 source and standalone five-ary seven-tree, minimum-cut profile3555 or4455, public integer cost9 and private cost1. There is exactly one original inactive occupied child u, and exactly one active child e with one private candidate leaf y; all other active fibres lie in the public antichain P. The proof concerns actual source laws at fixed head1225. It is ordinary mathematics, not Lean verification or an unrestricted outside-cofactor lift.
+
+Omit e ONLY from the law and child restrictions. Every root retains at least its legal number q_r of active children. Pair restrictions drawn from these retained sets are legal tests on the unchanged original source, and their entire projection lies in P. Each contains a ternary seven-tree. Since a ternary tree costs at least9 to cover, P has exactly three fixed first-seven columns G1,G2,G3, each covered by its whole-column edge or by exactly three leaf edges. Every retained-root pair has at least three actual leaves in EACH of these three columns.
+
+#### Three placements use the existing equal coupling directly
+
+If3555 has e at a full root, the remaining counts are3455 (gap first). If4455 has e at the gap root, they are3455 after full-root relabeling; if e is at a five-child full root, they are4445. In every case
+
+    delta=max_r q_r/(retained child count at r) <=3/4.
+
+For each fixed complete restriction and each G_j, apply Report443 with four rows and pair premise, obtaining root cap1/3, leaf cap1/3, root/leaf cap1/6. Average actual lifts over restrictions and mix the three branch laws equally. This is Report449's existing fixed-three-branch construction, whose proof does not require the original cut's private cost to be zero: it only requires that the retained fibres lie in P. Its caps are
+
+    (1,1/3,1/3,delta/3,1/9,1/9,delta/9,1/18,delta/18),
+
+and Gamma<=643/72<9.
+
+#### Two concentrated placements need the inactive child's actual external leaves
+
+The remaining placements are3555 with e at the gap root, and4455 with e at the four-child full root. After omitting e their survival factors are, with the exceptional root first,
+
+    (1,3/5,3/5,3/5), or (1,1/2,3/5,3/5).
+
+The exceptional root is precisely the root containing the original inactive child u.
+
+Apply Report445's weighted pair theorem on each G_j using
+
+    alpha=(3,5,5,5)/13,
+    beta =(3,5,5,5)/9,
+    kappa(leaf)=1/3.
+
+The44 sufficient cut inequalities hold exactly. Average the one actual coupling over retained child restrictions and mix the three branch laws. The resulting public-supported law psi has caps
+
+    (1,5/13,1/3,3/13,5/39,1/9,1/13,5/81,1/27).
+
+At the exceptional root itself the sharper root cap3/13 remains available. The LCM envelope of psi is3167/351, which is ABOVE9; this alone does not close the profile.
+
+The full standalone five-tree uses five first-seven columns, so at least two of its columns lie outside G1,G2,G3 and contribute ten distinct actual leaves. All source points outside these three columns are at u or at the sole private candidate y at e. Delete y if it appears among these ten labels. The other at least nine labels are actual at u. Choose exactly nine, with five in one external column and four in the other. Let eta be their uniform law, entirely at the same original child u. It has column cap5/9 and leaf cap1/9.
+
+Set
+
+    nu=(9/10)psi+(1/10)eta.
+
+The two parts occupy disjoint seven columns and disjoint actual children. Only their exceptional first-five root can overlap. Its mass is at most
+
+    (9/10)(3/13)+1/10=4/13 <9/26,
+
+while the other root caps are(9/10)(5/13)=9/26. Every other nonunit cap is at most9/10 times the displayed psi cap: the additional part's child mass1/10, column/child-column mass1/18, and leaf masses1/90 lie under the respective scaled caps. Hence nu has caps
+
+    (1,9/26,3/10,27/130,3/26,1/10,9/130,1/18,1/30).
+
+Its envelope is
+
+    Gamma_1225 <=1+(9/10)(3167/351-1)=1603/195<9.
+
+No actual point is invented from a cut leaf. The ninth-point supply uses the original inactive child's full source support and the original standalone tree. It does not assert that omitting e or u preserves standalone or blocking.
+
+#### Exact controls
+
+The companion constructs one actual source for each of the five placements. It verifies all44 rational weighted cut inequalities,480 pair tests and10000 full literal tests per source, standalone, matching actual flow/cut72, the actual public coupling on every complete retained-child restriction in all three branches, and all1767 numerical cylinders and81 ordered LCM terms. In the two weighted cases the nine additional atoms all lie at the original inactive child. The program is a construction control, not an exhaustive source search.
+
+The [partial-public9 constructor](../../frontier/cover-geometry/height_two_cut72_partial_public9.py) and [exact data](../../frontier/cover-geometry/height_two_cut72_partial_public9.json) realize all five placements on actual428-point sources. They reuse the sparse-law network helper and the existing integral flow implementation. Each displayed family bound is attained by the separate-cylinder envelope of its constructed law; no maximization over all phase layouts is asserted.
+
+The four programs reproduce these results with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut72_profiles.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut72_sparse_laws.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut72_local_obstructions.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut72_partial_public9.py
+```
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
 The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. Excluding every remaining terminal trap, or supplying a further global reroute, remains missing.
-The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. General high-incidence sources in the remaining
+The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. The unclassified72 families are3555 or4455 with public3/private22, and4555 with public4/private22 or public6/private15. General high-incidence sources in the remaining
 range72/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
 whole-column shapes at75/63 and77/63 are controlled by(WC1), but this
