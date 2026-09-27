@@ -10,17 +10,15 @@
 proof_shape: result: content
 escape_witness: form (2), the public conclusion `result` itself: a finite lower set of `ℕ^d` with
   exactly `d` extensions (`ext_box`), or with exactly one shrinking (`shrink_box`), is a box. The
-  extensions of a box are its `d` axis cells (`box_ext`); a non-box has a further extension, the
-  cell of least coordinate sum in its bounding box outside it; a non-box has two cells with nothing
-  above them, found by maximizing the coordinate sum; boxes of `n` cells correspond to ordered
+  extensions of a box are its `d` axis cells (`box_ext`); a non-box has a further extension, a
+  minimal cell of its bounding box outside it; a non-box has two maximal cells, a maximal cell and
+  a maximal cell above any cell not below it; boxes of `n` cells correspond to ordered
   factorizations of `n` into `d` factors (`box_inj`, `card_box`)
 admission_basis: escape-witness (issue #10404)
 Direct frozen dependencies: none (pinned Mathlib only)
 -/
 
 import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Finset.Max
 import Mathlib.Data.Set.Card
 
 set_option autoImplicit false
@@ -81,8 +79,6 @@ theorem result : claim := by
   have pos_of_prod : ∀ (v : Fin d → ℕ) (n : ℕ), 1 ≤ n → ∏ i, v i = n → ∀ i, 0 < v i :=
     fun v n hn hv i =>
       Nat.pos_of_ne_zero (Finset.prod_ne_zero_iff.1 (by omega) i (Finset.mem_univ i))
-  have sum_lt : ∀ a b : Fin d → ℕ, a < b → ∑ i, a i < ∑ i, b i :=
-    fun a b hab => Fintype.sum_strictMono hab
   -- a positive box is determined by its cells
   have box_inj : ∀ v w : Fin d → ℕ, (∀ i, 0 < v i) → (∀ i, 0 < w i) → box v = box w → v = w := by
     intro v w hv hw h
@@ -242,22 +238,18 @@ theorem result : claim := by
       rw [Finset.sdiff_nonempty]
       intro h
       exact hIbox (Finset.Subset.antisymm hsub h)
-    obtain ⟨c, hc, hmin⟩ := Finset.exists_min_image (box v \ I) (fun c => ∑ i, c i) hdiff
-    have hcbox : c ∈ box v := (Finset.mem_sdiff.1 hc).1
-    have hcI : c ∉ I := (Finset.mem_sdiff.1 hc).2
+    obtain ⟨c, hc⟩ := Finset.exists_minimal hdiff
+    have hcbox : c ∈ box v := (Finset.mem_sdiff.1 hc.1).1
+    have hcI : c ∉ I := (Finset.mem_sdiff.1 hc.1).2
     have hcmem : insert c I ∈ S := by
       refine ins_mem c hcI ?_
       intro a b hba ha
       rw [Finset.coe_insert, Set.mem_insert_iff] at ha ⊢
       rcases ha with rfl | ha
-      · by_cases hb : b = a
-        · exact Or.inl hb
-        · right
-          by_contra hbI
-          have hbbox : b ∈ box v := lower_box v hba hcbox
-          have := hmin b (Finset.mem_sdiff.2 ⟨hbbox, hbI⟩)
-          have := sum_lt b a (lt_of_le_of_ne hba hb)
-          omega
+      · by_cases hbI : b ∈ I
+        · exact Or.inr hbI
+        · exact Or.inl (le_antisymm hba
+            (hc.2 (Finset.mem_sdiff.2 ⟨lower_box v hba hcbox, hbI⟩) hba))
       · exact Or.inr (hIl hba ha)
     have hcne : ∀ i, insert c I ≠ insert (Pi.single i (v i)) I := by
       intro i h
@@ -307,12 +299,9 @@ theorem result : claim := by
         have : box v ⊆ I := fun x hx => hIl (le_top x hx) htI
         have := Finset.card_le_card this
         omega
-      apply Finset.eq_of_subset_of_card_le
-      · intro x hx
-        rw [Finset.mem_erase]
-        exact ⟨fun h => htI (h ▸ hx), hsub hx⟩
-      · rw [Finset.card_erase_of_mem htbox, hcard, hIc]
-        omega
+      apply Finset.eq_of_subset_of_card_le (Finset.subset_erase.2 ⟨hsub, htI⟩)
+      rw [Finset.card_erase_of_mem htbox, hcard, hIc]
+      omega
     · rintro rfl
       refine ⟨⟨?_, ?_⟩, Finset.erase_subset _ _⟩
       · rw [Finset.coe_erase]
@@ -328,42 +317,26 @@ theorem result : claim := by
     have hfin : S.Finite := Set.finite_of_ncard_ne_zero (by
       change shrinkings n J ≠ 0
       omega)
-    -- a cell of `J` with nothing of `J` strictly above it can be removed
-    have erase_mem : ∀ m ∈ J, (∀ z ∈ J, m ≤ z → z = m) → J.erase m ∈ S := by
-      intro m hm hmax
+    -- a maximal cell of `J` can be removed
+    have erase_mem : ∀ m, Maximal (· ∈ J) m → J.erase m ∈ S := by
+      intro m hm
       refine ⟨⟨?_, ?_⟩, Finset.erase_subset _ _⟩
       · rw [Finset.coe_erase]
-        exact hJl.erase hmax
-      · rw [Finset.card_erase_of_mem hm, hJc]
+        exact hJl.erase fun z hz hmz => le_antisymm (hm.2 hz hmz) hmz
+      · rw [Finset.card_erase_of_mem hm.1, hJc]
         omega
-    -- the maximum of the coordinate sum is such a cell
-    have top_of_max : ∀ (T : Finset (Fin d → ℕ)) (m : Fin d → ℕ), m ∈ T →
-        (∀ z ∈ T, ∑ i, z i ≤ ∑ i, m i) → (∀ z ∈ J, m ≤ z → z ∈ T) → ∀ z ∈ J, m ≤ z → z = m := by
-      intro T m hmT hmax hup z hz hmz
-      have hMF : MaximalFor (fun z => z ∈ T) (fun z : Fin d → ℕ => ∑ i, z i) m :=
-        ⟨hmT, fun z hz _ => hmax z hz⟩
-      have hM : Maximal (fun z => z ∈ T) m :=
-        hMF.maximal_of_strictMonoOn (Fintype.sum_strictMono.strictMonoOn _)
-      exact le_antisymm (hM.2 (hup z hz hmz) hmz) hmz
-    obtain ⟨m, hmJ, hmmax⟩ := Finset.exists_max_image J (fun c => ∑ i, c i) hne
-    have hmtop := top_of_max J m hmJ hmmax (fun z hz _ => hz)
+    obtain ⟨m, hm⟩ := Finset.exists_maximal hne
     have below_m : ∀ y ∈ J, y ≤ m := by
       intro y hy
       by_contra hym
-      have hTne : (J.filter fun z => y ≤ z).Nonempty := ⟨y, Finset.mem_filter.2 ⟨hy, le_refl y⟩⟩
-      obtain ⟨m', hm'T, hm'max⟩ :=
-        Finset.exists_max_image (J.filter fun z => y ≤ z) (fun c => ∑ i, c i) hTne
-      have hm'J : m' ∈ J := (Finset.mem_filter.1 hm'T).1
-      have hym' : y ≤ m' := (Finset.mem_filter.1 hm'T).2
-      have hm'top := top_of_max _ m' hm'T hm'max
-        (fun z hz hz' => Finset.mem_filter.2 ⟨hz, le_trans hym' hz'⟩)
+      obtain ⟨m', hym', hm'⟩ := J.exists_le_maximal hy
       have hdist : m' ≠ m := fun h => hym (h ▸ hym')
       have hpair : ({J.erase m, J.erase m'} : Set (Finset (Fin d → ℕ))) ⊆ S := by
         intro I hI
         rcases hI with rfl | rfl
-        · exact erase_mem m hmJ hmtop
-        · exact erase_mem m' hm'J hm'top
-      have hneq : J.erase m ≠ J.erase m' := fun h => hdist ((Finset.erase_inj J hmJ).1 h).symm
+        · exact erase_mem m hm
+        · exact erase_mem m' hm'
+      have hneq : J.erase m ≠ J.erase m' := fun h => hdist ((Finset.erase_inj J hm.1).1 h).symm
       have := Set.ncard_le_ncard hpair hfin
       rw [Set.ncard_pair hneq] at this
       change _ ≤ shrinkings n J at this
@@ -376,7 +349,7 @@ theorem result : claim := by
       have := Pi.le_def.1 (below_m x hx) i
       omega
     · intro hx
-      exact hJl (fun i => Nat.lt_succ_iff.1 (hx i)) hmJ
+      exact hJl (fun i => Nat.lt_succ_iff.1 (hx i)) hm.1
   -- counting
   constructor
   · have hset : {I : Finset (Fin d → ℕ) | IsSolidPartition n I ∧ extensions n I = d} =

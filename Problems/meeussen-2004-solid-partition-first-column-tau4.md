@@ -84,13 +84,13 @@ with `c_i < v_i` for all `i`.
    coordinate `i`, equal to `v_i`.
 3. A nonempty lower set `I` that is not a box has at least `d + 1` extensions.
    With `v_i` one more than the largest `i`-th coordinate in `I`, the `d` axis
-   cells `v_i e_i` can be added, and so can the cell of least coordinate sum in
-   `box v` outside `I`, which is not an axis cell.
+   cells `v_i e_i` can be added, and so can a minimal cell of `box v` outside
+   `I`, which is not an axis cell.
 4. The only partition of `n` inside a box of `n + 1` cells is the box
    without its top cell. A lower set `J` that is not a box has two cells with
-   nothing of `J` strictly above them: the cell `m` of largest coordinate sum,
-   and, above a cell of `J` not below `m`, the cell of largest coordinate sum;
-   removing either one leaves a partition of `n`. If every cell of `J` is
+   nothing of `J` strictly above them: a maximal cell `m`, and a maximal cell
+   above a cell of `J` not below `m`; removing either one leaves a partition of
+   `n`. If every cell of `J` is
    below `m`, then `J` is the box of `m + 1`.
 
 ## Falsifier
@@ -112,11 +112,11 @@ The canonical source is `D5/S3/Combinatorics/SolidPartitionFirstColumn.lean`.
 Its public declarations are `IsSolidPartition`, `extensions`, `shrinkings`,
 `firstColumn`, `shrinkColumn`, `tau`, `claim`, and `result`. The
 frozen module state has statement identity
-`sha256:afd74ac2e50cea051841ea0ae4f8f21408c72af21d17d08ab0f14859b07503fb`.
+`sha256:3946d9aac56cf366ea8551fac373c77432ac1154a934d36f39fb411bec12f31e`.
 The result declaration has statement identity
 `sha256:7b75193af7f63fa373cc5dd373fb23dfdb8e4e0202f313afe74e0e5f82db5424`.
 The Freeze event is
-`sha256:5440eb41086ddc5342de4a925fcba22fb2ad30167291ed485ee17be16f8f7c6f`
+`sha256:14db7d4c82e386112077cd806c3f5e41c8a78684f4507d9b2f8ad35134f14fa7`
 and has no project-level frozen prerequisites. The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
