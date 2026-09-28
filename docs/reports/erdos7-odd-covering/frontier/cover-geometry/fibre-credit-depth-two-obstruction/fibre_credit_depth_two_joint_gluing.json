@@ -1,0 +1,27 @@
+{
+  "boundary_checks": 2,
+  "conditional_response_supports": 16,
+  "cross_head_deep_coefficient": "61/300",
+  "evidence": "Ordinary proof and exact finite checks, not new Lean verification.",
+  "fixtures": [
+    {
+      "actual_avoidance_mass": "739/2520",
+      "marginal_atom_checks": 81,
+      "name": "actual caps",
+      "response_mass": "281/1008"
+    },
+    {
+      "actual_avoidance_mass": "1373/3024",
+      "marginal_atom_checks": 81,
+      "name": "inflated caps",
+      "response_mass": "1103/2688"
+    }
+  ],
+  "head_cells": 175,
+  "nonunit_modes": 431,
+  "outside_support_sum": "69/187",
+  "pointwise_union_checks": 2048,
+  "query_modes_including_unit": 432,
+  "scope": "Finite probability diagnostics and exact full-tail arithmetic for a conditional175-cell joint sufficient criterion; no uniform positive nine-prime gate asserted.",
+  "total_head_deep_tail": "17978/98175"
+}
