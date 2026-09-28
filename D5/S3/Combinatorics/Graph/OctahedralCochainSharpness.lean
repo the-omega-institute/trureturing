@@ -87,7 +87,7 @@ def path : Cochain := fun f =>
      f = ((2 : Fin 4), (true, true, false)) ∨
      f = ((3 : Fin 4), (true, true, true)) then 1 else 0
 
-/-- The octahedral witness has two defects, while every simplicial edge
+/-- The octahedral witness has exactly the two antipodal defects, while every simplicial edge
 coboundary repair has at least four triangular errors. -/
 theorem antipodal_repair_sharpness :
     Fintype.card Cube = 16 ∧ Fintype.card Face = 32 ∧
@@ -96,6 +96,8 @@ theorem antipodal_repair_sharpness :
     (∀ b : Cube, (tetraVertices b).card = 4 ∧
       ∀ i : Fin 4, triangleVertices (i, drop i b) ⊆ tetraVertices b) ∧
     weight path = 4 ∧ defects path = 2 ∧
+    (∀ b : Cube, d2 path b ≠ 0 ↔
+      b = (false, false, false, false) ∨ b = (true, true, true, true)) ∧
     (∀ e : EdgeCochain, 4 ≤ weight (path + d1 e)) := by
   have cut (H : Cochain) (i : Fin 4) :
       (∑ b : Cube, if bit b i = false then d2 H b else 0) =
@@ -146,7 +148,7 @@ theorem antipodal_repair_sharpness :
         Finset.sum_le_sum (fun i _ => lower i)
       _ = weight H := by simp [weight, Fintype.sum_prod_type]
   refine ⟨by decide, by decide, by decide, by decide, by decide,
-    by decide, by decide, ?_⟩
+    by decide, by decide, by decide, ?_⟩
   intro e
   exact barrier (path + d1 e) (repairDefect e)
 

@@ -102,7 +102,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/OctahedralCochainSharpness.antipodal_
 
 There are 16 tetrahedra and 32 triangular coordinate faces. The coordinate-face map is a bijection onto all valid unordered three-vertex faces; every tetrahedron has four vertices, and its four coordinate triangles are subsets of its vertex set.
 
-The path cochain P has weight four and defect count two. For every edge cochain e on unordered vertex pairs, the triangle cochain P+d1(e) has weight at least four. Equality is attained by e=0, so the minimum repair weight is four.
+The path cochain P has weight four, with defects exactly at the antipodal tetrahedra 0000 and 1111. For every edge cochain e on unordered vertex pairs, the triangle cochain P+d1(e) has weight at least four. Equality is attained by e=0, so the minimum repair weight is four.
 
 For each missing coordinate, summing tetrahedral defects on its zero side cancels all internal triangles in F2 and leaves the triangle sum in that direction. Exactly one antipodal defect lies on that side. The four disjoint direction classes therefore each contain an error. The identity d2(d1(e))=0 transfers this argument to every edge repair.
 

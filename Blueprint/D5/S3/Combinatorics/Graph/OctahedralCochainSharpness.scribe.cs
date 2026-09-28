@@ -99,7 +99,8 @@ internal sealed class OctahedralCochainSharpnessDocument : IScribeDocumentDefini
                         + "three-vertex faces; every tetrahedron has four vertices, and its "
                         + "four coordinate triangles are subsets of its vertex set.")),
                     Paragraph(Text(
-                        "The path cochain P has weight four and defect count two. For every "
+                        "The path cochain P has weight four, with defects exactly at the "
+                        + "antipodal tetrahedra 0000 and 1111. For every "
                         + "edge cochain e on unordered vertex pairs, the triangle cochain "
                         + "P+d1(e) has weight at least four. Equality is attained by e=0, "
                         + "so the minimum repair weight is four.")),
