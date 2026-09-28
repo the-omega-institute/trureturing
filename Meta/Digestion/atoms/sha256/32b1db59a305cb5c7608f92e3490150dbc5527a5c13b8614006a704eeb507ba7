@@ -1,0 +1,18 @@
+### 定理 41.2：秩四障碍与更高秩类的精确区域
+
+存在满足定义 41 且 $\mu=4$、$a=b=2$ 的任务，其个别任务预算区域恰为
+
+$$
+p\geq2,\qquad q\geq2,\qquad \max\{p,q\}\geq4. \tag{41.12}
+$$
+
+因而对每个整数 $s\geq4$，整个 $\mathcal R_s$ 的区域也恰为
+
+$$
+\boxed{
+(p,q)\in\mathcal B_s
+\quad\Longleftrightarrow\quad
+p\geq2,\quad q\geq2,\quad\max\{p,q\}\geq4.
+} \tag{41.13}
+$$
+

@@ -1,0 +1,2666 @@
+{
+  "scope": {
+    "node": [
+      2,
+      4,
+      1,
+      8,
+      1,
+      2,
+      1,
+      0,
+      13
+    ],
+    "xi7": [
+      1,
+      4,
+      7,
+      14
+    ],
+    "eta11": [
+      7,
+      8,
+      11,
+      13
+    ],
+    "eta13": 14,
+    "late_etas": [
+      1,
+      4,
+      7,
+      8,
+      11,
+      13,
+      14
+    ],
+    "thresholds": [
+      2,
+      4,
+      4,
+      8,
+      8,
+      16
+    ],
+    "query": 16
+  },
+  "current11": [
+    {
+      "xi11": [
+        1,
+        1,
+        2,
+        7
+      ],
+      "representative": [
+        1,
+        1,
+        2,
+        7
+      ],
+      "transport": "identity",
+      "cost": "38937585771/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        4,
+        7
+      ],
+      "representative": [
+        1,
+        1,
+        4,
+        7
+      ],
+      "transport": "identity",
+      "cost": "2163300393/500000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        5,
+        7
+      ],
+      "representative": [
+        1,
+        1,
+        2,
+        7
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "38937585771/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        7,
+        7
+      ],
+      "representative": [
+        1,
+        1,
+        7,
+        7
+      ],
+      "transport": "identity",
+      "cost": "22632152237/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        8,
+        7
+      ],
+      "representative": [
+        1,
+        1,
+        8,
+        7
+      ],
+      "transport": "identity",
+      "cost": "38838184573/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        2,
+        7
+      ],
+      "representative": [
+        1,
+        2,
+        2,
+        7
+      ],
+      "transport": "identity",
+      "cost": "20374470887/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        4,
+        7
+      ],
+      "representative": [
+        1,
+        2,
+        4,
+        7
+      ],
+      "transport": "identity",
+      "cost": "22461901859/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "representative": [
+        1,
+        2,
+        2,
+        7
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "20374470887/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        7,
+        7
+      ],
+      "representative": [
+        1,
+        2,
+        7,
+        7
+      ],
+      "transport": "identity",
+      "cost": "47368193697/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        8,
+        7
+      ],
+      "representative": [
+        1,
+        2,
+        8,
+        7
+      ],
+      "transport": "identity",
+      "cost": "40689760561/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        2,
+        7
+      ],
+      "representative": [
+        1,
+        3,
+        2,
+        7
+      ],
+      "transport": "identity",
+      "cost": "1242545997/312500000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        4,
+        7
+      ],
+      "representative": [
+        1,
+        3,
+        4,
+        7
+      ],
+      "transport": "identity",
+      "cost": "43449892907/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        5,
+        7
+      ],
+      "representative": [
+        1,
+        3,
+        2,
+        7
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "1242545997/312500000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        7,
+        7
+      ],
+      "representative": [
+        1,
+        3,
+        7,
+        7
+      ],
+      "transport": "identity",
+      "cost": "22696900377/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        8,
+        7
+      ],
+      "representative": [
+        1,
+        3,
+        8,
+        7
+      ],
+      "transport": "identity",
+      "cost": "9608951053/2500000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        2,
+        7
+      ],
+      "representative": [
+        1,
+        4,
+        2,
+        7
+      ],
+      "transport": "identity",
+      "cost": "1018549093/250000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        4,
+        7
+      ],
+      "representative": [
+        1,
+        4,
+        4,
+        7
+      ],
+      "transport": "identity",
+      "cost": "44831347887/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        5,
+        7
+      ],
+      "representative": [
+        1,
+        4,
+        2,
+        7
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "1018549093/250000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        7,
+        7
+      ],
+      "representative": [
+        1,
+        4,
+        7,
+        7
+      ],
+      "transport": "identity",
+      "cost": "46617920983/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        8,
+        7
+      ],
+      "representative": [
+        1,
+        4,
+        8,
+        7
+      ],
+      "transport": "identity",
+      "cost": "20341391253/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        2,
+        7
+      ],
+      "representative": [
+        2,
+        1,
+        2,
+        7
+      ],
+      "transport": "identity",
+      "cost": "43411936449/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        4,
+        7
+      ],
+      "representative": [
+        2,
+        1,
+        4,
+        7
+      ],
+      "transport": "identity",
+      "cost": "10090033539/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        5,
+        7
+      ],
+      "representative": [
+        2,
+        1,
+        2,
+        7
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "43411936449/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        7,
+        7
+      ],
+      "representative": [
+        2,
+        1,
+        7,
+        7
+      ],
+      "transport": "identity",
+      "cost": "8145391801/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        8,
+        7
+      ],
+      "representative": [
+        2,
+        1,
+        8,
+        7
+      ],
+      "transport": "identity",
+      "cost": "2079940451/500000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        2,
+        7
+      ],
+      "representative": [
+        2,
+        2,
+        2,
+        7
+      ],
+      "transport": "identity",
+      "cost": "19535626907/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        4,
+        7
+      ],
+      "representative": [
+        2,
+        2,
+        4,
+        7
+      ],
+      "transport": "identity",
+      "cost": "7681710417/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        5,
+        7
+      ],
+      "representative": [
+        2,
+        2,
+        2,
+        7
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "19535626907/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        7,
+        7
+      ],
+      "representative": [
+        2,
+        2,
+        7,
+        7
+      ],
+      "transport": "identity",
+      "cost": "41046251711/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        8,
+        7
+      ],
+      "representative": [
+        2,
+        2,
+        8,
+        7
+      ],
+      "transport": "identity",
+      "cost": "7447400949/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        2,
+        7
+      ],
+      "representative": [
+        2,
+        3,
+        2,
+        7
+      ],
+      "transport": "identity",
+      "cost": "2805691837/625000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        4,
+        7
+      ],
+      "representative": [
+        2,
+        3,
+        4,
+        7
+      ],
+      "transport": "identity",
+      "cost": "4967494981/1250000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        5,
+        7
+      ],
+      "representative": [
+        2,
+        3,
+        2,
+        7
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "2805691837/625000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        7,
+        7
+      ],
+      "representative": [
+        2,
+        3,
+        7,
+        7
+      ],
+      "transport": "identity",
+      "cost": "5035511813/1250000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        8,
+        7
+      ],
+      "representative": [
+        2,
+        3,
+        8,
+        7
+      ],
+      "transport": "identity",
+      "cost": "63896713/16000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        2,
+        7
+      ],
+      "representative": [
+        2,
+        4,
+        2,
+        7
+      ],
+      "transport": "identity",
+      "cost": "11319592053/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        4,
+        7
+      ],
+      "representative": [
+        2,
+        4,
+        4,
+        7
+      ],
+      "transport": "identity",
+      "cost": "40826502623/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        5,
+        7
+      ],
+      "representative": [
+        2,
+        4,
+        2,
+        7
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "11319592053/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        7,
+        7
+      ],
+      "representative": [
+        2,
+        4,
+        7,
+        7
+      ],
+      "transport": "identity",
+      "cost": "42099330549/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        8,
+        7
+      ],
+      "representative": [
+        2,
+        4,
+        8,
+        7
+      ],
+      "transport": "identity",
+      "cost": "21759275063/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        2,
+        8
+      ],
+      "representative": [
+        1,
+        1,
+        2,
+        8
+      ],
+      "transport": "identity",
+      "cost": "38948387529/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        4,
+        8
+      ],
+      "representative": [
+        1,
+        1,
+        4,
+        8
+      ],
+      "transport": "identity",
+      "cost": "2551616641/625000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        5,
+        8
+      ],
+      "representative": [
+        1,
+        1,
+        2,
+        8
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "38948387529/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        7,
+        8
+      ],
+      "representative": [
+        1,
+        1,
+        7,
+        8
+      ],
+      "transport": "identity",
+      "cost": "4256905001/1000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        8,
+        8
+      ],
+      "representative": [
+        1,
+        1,
+        8,
+        8
+      ],
+      "transport": "identity",
+      "cost": "37049065331/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        2,
+        8
+      ],
+      "representative": [
+        1,
+        2,
+        2,
+        8
+      ],
+      "transport": "identity",
+      "cost": "18865562843/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "representative": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "transport": "identity",
+      "cost": "10174905951/2500000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        5,
+        8
+      ],
+      "representative": [
+        1,
+        2,
+        2,
+        8
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "18865562843/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        7,
+        8
+      ],
+      "representative": [
+        1,
+        2,
+        7,
+        8
+      ],
+      "transport": "identity",
+      "cost": "42863975159/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        8,
+        8
+      ],
+      "representative": [
+        1,
+        2,
+        8,
+        8
+      ],
+      "transport": "identity",
+      "cost": "7297584071/2000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        2,
+        8
+      ],
+      "representative": [
+        1,
+        3,
+        2,
+        8
+      ],
+      "transport": "identity",
+      "cost": "5477386271/1250000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        4,
+        8
+      ],
+      "representative": [
+        1,
+        3,
+        4,
+        8
+      ],
+      "transport": "identity",
+      "cost": "21670776533/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        5,
+        8
+      ],
+      "representative": [
+        1,
+        3,
+        2,
+        8
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "5477386271/1250000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        7,
+        8
+      ],
+      "representative": [
+        1,
+        3,
+        7,
+        8
+      ],
+      "transport": "identity",
+      "cost": "45503287393/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        8,
+        8
+      ],
+      "representative": [
+        1,
+        3,
+        8,
+        8
+      ],
+      "transport": "identity",
+      "cost": "614683499/156250000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        2,
+        8
+      ],
+      "representative": [
+        1,
+        4,
+        2,
+        8
+      ],
+      "transport": "identity",
+      "cost": "40085369827/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        4,
+        8
+      ],
+      "representative": [
+        1,
+        4,
+        4,
+        8
+      ],
+      "transport": "identity",
+      "cost": "20737598749/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        5,
+        8
+      ],
+      "representative": [
+        1,
+        4,
+        2,
+        8
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "40085369827/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        7,
+        8
+      ],
+      "representative": [
+        1,
+        4,
+        7,
+        8
+      ],
+      "transport": "identity",
+      "cost": "42764136947/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        8,
+        8
+      ],
+      "representative": [
+        1,
+        4,
+        8,
+        8
+      ],
+      "transport": "identity",
+      "cost": "7712584917/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        2,
+        8
+      ],
+      "representative": [
+        2,
+        1,
+        2,
+        8
+      ],
+      "transport": "identity",
+      "cost": "48256268161/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        4,
+        8
+      ],
+      "representative": [
+        2,
+        1,
+        4,
+        8
+      ],
+      "transport": "identity",
+      "cost": "20971316769/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        5,
+        8
+      ],
+      "representative": [
+        2,
+        1,
+        2,
+        8
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "48256268161/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        7,
+        8
+      ],
+      "representative": [
+        2,
+        1,
+        7,
+        8
+      ],
+      "transport": "identity",
+      "cost": "42331028687/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        8,
+        8
+      ],
+      "representative": [
+        2,
+        1,
+        8,
+        8
+      ],
+      "transport": "identity",
+      "cost": "21775564443/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        2,
+        8
+      ],
+      "representative": [
+        2,
+        2,
+        2,
+        8
+      ],
+      "transport": "identity",
+      "cost": "44679774383/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        4,
+        8
+      ],
+      "representative": [
+        2,
+        2,
+        4,
+        8
+      ],
+      "transport": "identity",
+      "cost": "38910661549/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        5,
+        8
+      ],
+      "representative": [
+        2,
+        2,
+        2,
+        8
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "44679774383/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        7,
+        8
+      ],
+      "representative": [
+        2,
+        2,
+        7,
+        8
+      ],
+      "transport": "identity",
+      "cost": "9789044321/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        8,
+        8
+      ],
+      "representative": [
+        2,
+        2,
+        8,
+        8
+      ],
+      "transport": "identity",
+      "cost": "7942697697/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        2,
+        8
+      ],
+      "representative": [
+        2,
+        3,
+        2,
+        8
+      ],
+      "transport": "identity",
+      "cost": "1269982619/250000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        4,
+        8
+      ],
+      "representative": [
+        2,
+        3,
+        4,
+        8
+      ],
+      "transport": "identity",
+      "cost": "44961173831/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        5,
+        8
+      ],
+      "representative": [
+        2,
+        3,
+        2,
+        8
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "1269982619/250000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        7,
+        8
+      ],
+      "representative": [
+        2,
+        3,
+        7,
+        8
+      ],
+      "transport": "identity",
+      "cost": "45526857381/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        8,
+        8
+      ],
+      "representative": [
+        2,
+        3,
+        8,
+        8
+      ],
+      "transport": "identity",
+      "cost": "4572223193/1000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        2,
+        8
+      ],
+      "representative": [
+        2,
+        4,
+        2,
+        8
+      ],
+      "transport": "identity",
+      "cost": "9820420601/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        4,
+        8
+      ],
+      "representative": [
+        2,
+        4,
+        4,
+        8
+      ],
+      "transport": "identity",
+      "cost": "42572765719/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        5,
+        8
+      ],
+      "representative": [
+        2,
+        4,
+        2,
+        8
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "9820420601/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        7,
+        8
+      ],
+      "representative": [
+        2,
+        4,
+        7,
+        8
+      ],
+      "transport": "identity",
+      "cost": "43329051587/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        8,
+        8
+      ],
+      "representative": [
+        2,
+        4,
+        8,
+        8
+      ],
+      "transport": "identity",
+      "cost": "45396895909/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        2,
+        11
+      ],
+      "representative": [
+        1,
+        1,
+        2,
+        11
+      ],
+      "transport": "identity",
+      "cost": "40805311133/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        4,
+        11
+      ],
+      "representative": [
+        1,
+        1,
+        4,
+        11
+      ],
+      "transport": "identity",
+      "cost": "10806229763/2500000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        5,
+        11
+      ],
+      "representative": [
+        1,
+        1,
+        2,
+        11
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "40805311133/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        7,
+        11
+      ],
+      "representative": [
+        1,
+        1,
+        7,
+        11
+      ],
+      "transport": "identity",
+      "cost": "2809183879/625000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        8,
+        11
+      ],
+      "representative": [
+        1,
+        1,
+        8,
+        11
+      ],
+      "transport": "identity",
+      "cost": "40637126881/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        2,
+        11
+      ],
+      "representative": [
+        1,
+        2,
+        2,
+        11
+      ],
+      "transport": "identity",
+      "cost": "583559127/156250000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        4,
+        11
+      ],
+      "representative": [
+        1,
+        2,
+        4,
+        11
+      ],
+      "transport": "identity",
+      "cost": "20574685887/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        5,
+        11
+      ],
+      "representative": [
+        1,
+        2,
+        2,
+        11
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "583559127/156250000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        7,
+        11
+      ],
+      "representative": [
+        1,
+        2,
+        7,
+        11
+      ],
+      "transport": "identity",
+      "cost": "2165655811/500000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        8,
+        11
+      ],
+      "representative": [
+        1,
+        2,
+        8,
+        11
+      ],
+      "transport": "identity",
+      "cost": "18622075063/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        2,
+        11
+      ],
+      "representative": [
+        1,
+        3,
+        2,
+        11
+      ],
+      "transport": "identity",
+      "cost": "9765700181/2500000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        4,
+        11
+      ],
+      "representative": [
+        1,
+        3,
+        4,
+        11
+      ],
+      "transport": "identity",
+      "cost": "8349690391/2000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        5,
+        11
+      ],
+      "representative": [
+        1,
+        3,
+        2,
+        11
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "9765700181/2500000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        7,
+        11
+      ],
+      "representative": [
+        1,
+        3,
+        7,
+        11
+      ],
+      "transport": "identity",
+      "cost": "21958549819/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        8,
+        11
+      ],
+      "representative": [
+        1,
+        3,
+        8,
+        11
+      ],
+      "transport": "identity",
+      "cost": "37856655541/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        2,
+        11
+      ],
+      "representative": [
+        1,
+        4,
+        2,
+        11
+      ],
+      "transport": "identity",
+      "cost": "39654993441/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        4,
+        11
+      ],
+      "representative": [
+        1,
+        4,
+        4,
+        11
+      ],
+      "transport": "identity",
+      "cost": "41768084491/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        5,
+        11
+      ],
+      "representative": [
+        1,
+        4,
+        2,
+        11
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "39654993441/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        7,
+        11
+      ],
+      "representative": [
+        1,
+        4,
+        7,
+        11
+      ],
+      "transport": "identity",
+      "cost": "10753629001/2500000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        8,
+        11
+      ],
+      "representative": [
+        1,
+        4,
+        8,
+        11
+      ],
+      "transport": "identity",
+      "cost": "4916605907/1250000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        2,
+        11
+      ],
+      "representative": [
+        2,
+        1,
+        2,
+        11
+      ],
+      "transport": "identity",
+      "cost": "24068687793/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        4,
+        11
+      ],
+      "representative": [
+        2,
+        1,
+        4,
+        11
+      ],
+      "transport": "identity",
+      "cost": "8678264157/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        5,
+        11
+      ],
+      "representative": [
+        2,
+        1,
+        2,
+        11
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "24068687793/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        7,
+        11
+      ],
+      "representative": [
+        2,
+        1,
+        7,
+        11
+      ],
+      "transport": "identity",
+      "cost": "43736739367/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        8,
+        11
+      ],
+      "representative": [
+        2,
+        1,
+        8,
+        11
+      ],
+      "transport": "identity",
+      "cost": "11607571873/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        2,
+        11
+      ],
+      "representative": [
+        2,
+        2,
+        2,
+        11
+      ],
+      "transport": "identity",
+      "cost": "10741623521/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        4,
+        11
+      ],
+      "representative": [
+        2,
+        2,
+        4,
+        11
+      ],
+      "transport": "identity",
+      "cost": "4930369083/1250000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        5,
+        11
+      ],
+      "representative": [
+        2,
+        2,
+        2,
+        11
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "10741623521/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        7,
+        11
+      ],
+      "representative": [
+        2,
+        2,
+        7,
+        11
+      ],
+      "transport": "identity",
+      "cost": "7914768323/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        8,
+        11
+      ],
+      "representative": [
+        2,
+        2,
+        8,
+        11
+      ],
+      "transport": "identity",
+      "cost": "8227161513/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        2,
+        11
+      ],
+      "representative": [
+        2,
+        3,
+        2,
+        11
+      ],
+      "transport": "identity",
+      "cost": "12001931559/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        4,
+        11
+      ],
+      "representative": [
+        2,
+        3,
+        4,
+        11
+      ],
+      "transport": "identity",
+      "cost": "41772406953/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        5,
+        11
+      ],
+      "representative": [
+        2,
+        3,
+        2,
+        11
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "12001931559/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        7,
+        11
+      ],
+      "representative": [
+        2,
+        3,
+        7,
+        11
+      ],
+      "transport": "identity",
+      "cost": "21037634317/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        8,
+        11
+      ],
+      "representative": [
+        2,
+        3,
+        8,
+        11
+      ],
+      "transport": "identity",
+      "cost": "1732141279/400000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        2,
+        11
+      ],
+      "representative": [
+        2,
+        4,
+        2,
+        11
+      ],
+      "transport": "identity",
+      "cost": "24214333261/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        4,
+        11
+      ],
+      "representative": [
+        2,
+        4,
+        4,
+        11
+      ],
+      "transport": "identity",
+      "cost": "10676407789/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        5,
+        11
+      ],
+      "representative": [
+        2,
+        4,
+        2,
+        11
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "24214333261/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        7,
+        11
+      ],
+      "representative": [
+        2,
+        4,
+        7,
+        11
+      ],
+      "transport": "identity",
+      "cost": "43354874349/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        8,
+        11
+      ],
+      "representative": [
+        2,
+        4,
+        8,
+        11
+      ],
+      "transport": "identity",
+      "cost": "23328467437/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        2,
+        13
+      ],
+      "representative": [
+        1,
+        1,
+        2,
+        13
+      ],
+      "transport": "identity",
+      "cost": "38937585771/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        4,
+        13
+      ],
+      "representative": [
+        1,
+        1,
+        4,
+        13
+      ],
+      "transport": "identity",
+      "cost": "2163300393/500000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        5,
+        13
+      ],
+      "representative": [
+        1,
+        1,
+        2,
+        13
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "38937585771/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        7,
+        13
+      ],
+      "representative": [
+        1,
+        1,
+        7,
+        13
+      ],
+      "transport": "identity",
+      "cost": "22632152237/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        1,
+        8,
+        13
+      ],
+      "representative": [
+        1,
+        1,
+        8,
+        13
+      ],
+      "transport": "identity",
+      "cost": "38838184573/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        2,
+        13
+      ],
+      "representative": [
+        1,
+        2,
+        2,
+        13
+      ],
+      "transport": "identity",
+      "cost": "37836773019/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        4,
+        13
+      ],
+      "representative": [
+        1,
+        2,
+        4,
+        13
+      ],
+      "transport": "identity",
+      "cost": "21369075823/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        5,
+        13
+      ],
+      "representative": [
+        1,
+        2,
+        2,
+        13
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "37836773019/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        7,
+        13
+      ],
+      "representative": [
+        1,
+        2,
+        7,
+        13
+      ],
+      "transport": "identity",
+      "cost": "11169330913/2500000000"
+    },
+    {
+      "xi11": [
+        1,
+        2,
+        8,
+        13
+      ],
+      "representative": [
+        1,
+        2,
+        8,
+        13
+      ],
+      "transport": "identity",
+      "cost": "37780242217/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        2,
+        13
+      ],
+      "representative": [
+        1,
+        3,
+        2,
+        13
+      ],
+      "transport": "identity",
+      "cost": "21286487843/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        4,
+        13
+      ],
+      "representative": [
+        1,
+        3,
+        4,
+        13
+      ],
+      "transport": "identity",
+      "cost": "45707290991/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        5,
+        13
+      ],
+      "representative": [
+        1,
+        3,
+        2,
+        13
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "21286487843/5000000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        7,
+        13
+      ],
+      "representative": [
+        1,
+        3,
+        7,
+        13
+      ],
+      "transport": "identity",
+      "cost": "12033715047/2500000000"
+    },
+    {
+      "xi11": [
+        1,
+        3,
+        8,
+        13
+      ],
+      "representative": [
+        1,
+        3,
+        8,
+        13
+      ],
+      "transport": "identity",
+      "cost": "41460017983/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        2,
+        13
+      ],
+      "representative": [
+        1,
+        4,
+        2,
+        13
+      ],
+      "transport": "identity",
+      "cost": "1018549093/250000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        4,
+        13
+      ],
+      "representative": [
+        1,
+        4,
+        4,
+        13
+      ],
+      "transport": "identity",
+      "cost": "44831347887/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        5,
+        13
+      ],
+      "representative": [
+        1,
+        4,
+        2,
+        13
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "1018549093/250000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        7,
+        13
+      ],
+      "representative": [
+        1,
+        4,
+        7,
+        13
+      ],
+      "transport": "identity",
+      "cost": "46617920983/10000000000"
+    },
+    {
+      "xi11": [
+        1,
+        4,
+        8,
+        13
+      ],
+      "representative": [
+        1,
+        4,
+        8,
+        13
+      ],
+      "transport": "identity",
+      "cost": "20341391253/5000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        2,
+        13
+      ],
+      "representative": [
+        2,
+        1,
+        2,
+        13
+      ],
+      "transport": "identity",
+      "cost": "43411936449/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        4,
+        13
+      ],
+      "representative": [
+        2,
+        1,
+        4,
+        13
+      ],
+      "transport": "identity",
+      "cost": "10090033539/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        5,
+        13
+      ],
+      "representative": [
+        2,
+        1,
+        2,
+        13
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "43411936449/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        7,
+        13
+      ],
+      "representative": [
+        2,
+        1,
+        7,
+        13
+      ],
+      "transport": "identity",
+      "cost": "8145391801/2000000000"
+    },
+    {
+      "xi11": [
+        2,
+        1,
+        8,
+        13
+      ],
+      "representative": [
+        2,
+        1,
+        8,
+        13
+      ],
+      "transport": "identity",
+      "cost": "2079940451/500000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        2,
+        13
+      ],
+      "representative": [
+        2,
+        2,
+        2,
+        13
+      ],
+      "transport": "identity",
+      "cost": "39015231957/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        4,
+        13
+      ],
+      "representative": [
+        2,
+        2,
+        4,
+        13
+      ],
+      "transport": "identity",
+      "cost": "2286577209/625000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        5,
+        13
+      ],
+      "representative": [
+        2,
+        2,
+        2,
+        13
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "39015231957/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        7,
+        13
+      ],
+      "representative": [
+        2,
+        2,
+        7,
+        13
+      ],
+      "transport": "identity",
+      "cost": "37773789423/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        2,
+        8,
+        13
+      ],
+      "representative": [
+        2,
+        2,
+        8,
+        13
+      ],
+      "transport": "identity",
+      "cost": "1850667043/500000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        2,
+        13
+      ],
+      "representative": [
+        2,
+        3,
+        2,
+        13
+      ],
+      "transport": "identity",
+      "cost": "45158432761/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        4,
+        13
+      ],
+      "representative": [
+        2,
+        3,
+        4,
+        13
+      ],
+      "transport": "identity",
+      "cost": "5147688541/1250000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        5,
+        13
+      ],
+      "representative": [
+        2,
+        3,
+        2,
+        13
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "45158432761/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        7,
+        13
+      ],
+      "representative": [
+        2,
+        3,
+        7,
+        13
+      ],
+      "transport": "identity",
+      "cost": "344584889/80000000"
+    },
+    {
+      "xi11": [
+        2,
+        3,
+        8,
+        13
+      ],
+      "representative": [
+        2,
+        3,
+        8,
+        13
+      ],
+      "transport": "identity",
+      "cost": "40142016647/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        2,
+        13
+      ],
+      "representative": [
+        2,
+        4,
+        2,
+        13
+      ],
+      "transport": "identity",
+      "cost": "11319592053/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        4,
+        13
+      ],
+      "representative": [
+        2,
+        4,
+        4,
+        13
+      ],
+      "transport": "identity",
+      "cost": "40826502623/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        5,
+        13
+      ],
+      "representative": [
+        2,
+        4,
+        2,
+        13
+      ],
+      "transport": "prefix2_to5_mod9",
+      "cost": "11319592053/2500000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        7,
+        13
+      ],
+      "representative": [
+        2,
+        4,
+        7,
+        13
+      ],
+      "transport": "identity",
+      "cost": "42099330549/10000000000"
+    },
+    {
+      "xi11": [
+        2,
+        4,
+        8,
+        13
+      ],
+      "representative": [
+        2,
+        4,
+        8,
+        13
+      ],
+      "transport": "identity",
+      "cost": "21759275063/5000000000"
+    }
+  ],
+  "current13_D": [
+    {
+      "xi13": [
+        2,
+        3,
+        2,
+        14
+      ],
+      "cost": "13958019831/2500000000"
+    },
+    {
+      "xi13": [
+        2,
+        3,
+        5,
+        14
+      ],
+      "cost": "28238662159/5000000000"
+    },
+    {
+      "xi13": [
+        2,
+        4,
+        8,
+        14
+      ],
+      "cost": "57371194871/10000000000"
+    }
+  ],
+  "released_DC": {
+    "17": {
+      "1": "36514642621/10000000000",
+      "4": "36705901247/10000000000",
+      "7": "9279785031/2500000000",
+      "8": "1174967269/312500000",
+      "11": "37394691423/10000000000",
+      "13": "9279811933/2500000000",
+      "14": "942702289/250000000"
+    },
+    "19": {
+      "1": "41229919989/10000000000",
+      "4": "1293597843/312500000",
+      "7": "2607685211/625000000",
+      "8": "42243613359/10000000000",
+      "11": "42048675641/10000000000",
+      "13": "20861921477/5000000000",
+      "14": "21186989017/5000000000"
+    },
+    "29": {
+      "1": "2487611339/1250000000",
+      "4": "10007498411/5000000000",
+      "7": "2513635857/1250000000",
+      "8": "1014810517/500000000",
+      "11": "5054457903/2500000000",
+      "13": "2513635887/1250000000",
+      "14": "2028949433/1000000000"
+    }
+  }
+}

@@ -1,0 +1,766 @@
+{
+  "scope": "22 specified xi7 at one fixed missing23 A1 node; comparison-input reuse or proved coordinate transport, with each prefix loss kept separately. Every source covers all280^5 future labels. No Lean verification.",
+  "source_count": 22,
+  "comparison_groups": 16,
+  "future_parameter_tuples_per_source": 1721036800000,
+  "total_future_parameter_tuples": 37862809600000,
+  "prefix_pairs_covered": 1724800,
+  "worst_query_upper": "72492012073/2500000000",
+  "minimum_slack_lower_micro": 7424,
+  "groups": [
+    {
+      "index": 0,
+      "representative": [
+        1,
+        1,
+        7,
+        4
+      ],
+      "common_unconditioned_H16": "1794354814606882768068692967110046794018406110055458706889275196780901628890938492677951384230313415370199527747517489491/54755138532092926910419204445929581336248300233909013402196426725471823589630080674008514272927962663837012396000000000",
+      "full40_tables": 2,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            1,
+            1,
+            7,
+            4
+          ],
+          "current7": "90723367111/10000000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "2188975623/78125000",
+          "worst_query_decimal": 28.0188879744,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2517149,
+          "minimum_slack_lower_micro": 2469557,
+          "future_parameter_tuples": 1721036800000
+        },
+        {
+          "xi7": [
+            1,
+            4,
+            7,
+            1
+          ],
+          "current7": "92009095577/10000000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "143598353557/5000000000",
+          "worst_query_decimal": 28.7196707114,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2388576,
+          "minimum_slack_lower_micro": 669535,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "representative": [
+        1,
+        1,
+        7,
+        7
+      ],
+      "common_unconditioned_H16": "85395993419807462350505785052719458967202636068309652675489525027823678721006243463701426609647090426683113064387924295733/2600869080274414028244912211181655113471794261110678136604330269459911620507428832015404427964078226532258088810000000000",
+      "full40_tables": 0,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            1,
+            1,
+            7,
+            7
+          ],
+          "current7": "90723367111/10000000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "72390367531/2500000000",
+          "worst_query_decimal": 28.9561470124,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2352627,
+          "minimum_slack_lower_micro": 103140,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "representative": [
+        1,
+        1,
+        7,
+        11
+      ],
+      "common_unconditioned_H16": "9479448966006480171753209488639406649817358836046815346155322925053079169082732957766317633696110562093387375264795798599/288985453363823780916101356797961679274643806790075348511592252162212402278603203557267158662675358503584232090000000000",
+      "full40_tables": 1,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            1,
+            1,
+            7,
+            11
+          ],
+          "current7": "91285867951/10000000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "57246411933/2000000000",
+          "worst_query_decimal": 28.6232059665,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2407837,
+          "minimum_slack_lower_micro": 907205,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "representative": [
+        1,
+        1,
+        7,
+        13
+      ],
+      "common_unconditioned_H16": "85395993419807462350505785052719458967202636068309652675489525027823678721006243463701426609647090426683113064387924295733/2600869080274414028244912211181655113471794261110678136604330269459911620507428832015404427964078226532258088810000000000",
+      "full40_tables": 0,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            1,
+            1,
+            7,
+            13
+          ],
+          "current7": "90723367111/10000000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "72390367531/2500000000",
+          "worst_query_decimal": 28.9561470124,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2352627,
+          "minimum_slack_lower_micro": 103140,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "representative": [
+        1,
+        3,
+        7,
+        4
+      ],
+      "common_unconditioned_H16": "21326031717604761099587021718873359855817701435221865736320660531153124458897062098111548231786472702898626167594505976277/650217270068603507061228052795413778367948565277669534151082567364977905126857208003851106991019556633064522202500000000",
+      "full40_tables": 3,
+      "actual13_anchors": 0,
+      "joint_anchors": 4,
+      "joint_full40_tables": 1,
+      "members": [
+        {
+          "xi7": [
+            1,
+            3,
+            7,
+            4
+          ],
+          "current7": "22554953063/2500000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "278180287457/10000000000",
+          "worst_query_decimal": 27.8180287457,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2558762,
+          "minimum_slack_lower_micro": 3024351,
+          "future_parameter_tuples": 1721036800000
+        },
+        {
+          "xi7": [
+            1,
+            4,
+            7,
+            13
+          ],
+          "current7": "47209904931/5000000000",
+          "field_transport": "identity",
+          "routes": {
+            "ordinary": 78392,
+            "joint": 8
+          },
+          "worst_pair": [
+            [
+              2,
+              4,
+              2,
+              14
+            ],
+            [
+              2,
+              4,
+              2,
+              14
+            ]
+          ],
+          "worst_query_upper": "72492012073/2500000000",
+          "worst_query_decimal": 28.9968048292,
+          "worst_route": "joint",
+          "minimum_live_lower_micro": 2331069,
+          "minimum_slack_lower_micro": 7424,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "representative": [
+        1,
+        3,
+        7,
+        7
+      ],
+      "common_unconditioned_H16": "21341262828474473726238958929278031802649932395731522848821537635270859869600471012087006591773125321369980463334059882527/650217270068603507061228052795413778367948565277669534151082567364977905126857208003851106991019556633064522202500000000",
+      "full40_tables": 0,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            1,
+            3,
+            7,
+            7
+          ],
+          "current7": "22554953063/2500000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "286439319587/10000000000",
+          "worst_query_decimal": 28.6439319587,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2405590,
+          "minimum_slack_lower_micro": 856519,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "representative": [
+        1,
+        3,
+        7,
+        8
+      ],
+      "common_unconditioned_H16": "170352210292697492904726549628265991535934762411151612051812900721683670099627567287152355605675400771922029940015503727497/5201738160548828056489824422363310226943588522221356273208660538919823241014857664030808855928156453064516177620000000000",
+      "full40_tables": 2,
+      "actual13_anchors": 2,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            1,
+            3,
+            7,
+            8
+          ],
+          "current7": "93353146783/10000000000",
+          "field_transport": "identity",
+          "routes": {
+            "ordinary": 78396,
+            "actual13": 4
+          },
+          "worst_pair": [
+            [
+              2,
+              4,
+              2,
+              14
+            ],
+            [
+              2,
+              4,
+              5,
+              14
+            ]
+          ],
+          "worst_query_upper": "144737424753/5000000000",
+          "worst_query_decimal": 28.9474849506,
+          "worst_route": "actual13",
+          "minimum_live_lower_micro": 2348027,
+          "minimum_slack_lower_micro": 123284,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "representative": [
+        1,
+        3,
+        7,
+        13
+      ],
+      "common_unconditioned_H16": "170672888045180656403862881265572136210206579169289725601859645073379009531251259558898792931673478839499751765560592878911/5201738160548828056489824422363310226943588522221356273208660538919823241014857664030808855928156453064516177620000000000",
+      "full40_tables": 0,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            1,
+            3,
+            7,
+            13
+          ],
+          "current7": "22554953063/2500000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "143104483823/5000000000",
+          "worst_query_decimal": 28.6208967646,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2408850,
+          "minimum_slack_lower_micro": 913158,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "representative": [
+        1,
+        4,
+        4,
+        14
+      ],
+      "common_unconditioned_H16": "169807503253083997164072484757965849444177265456049942462393379723182657304241240653630253447227279130971587068976438685133/5201738160548828056489824422363310226943588522221356273208660538919823241014857664030808855928156453064516177620000000000",
+      "full40_tables": 0,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            1,
+            4,
+            4,
+            14
+          ],
+          "current7": "92009095577/10000000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "257182053207/10000000000",
+          "worst_query_decimal": 25.7182053207,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 3045692,
+          "minimum_slack_lower_micro": 9995310,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "representative": [
+        1,
+        4,
+        7,
+        4
+      ],
+      "common_unconditioned_H16": "170419062314480267333970927134163073395764911303606177917556207318212994296487555110173491349457331558660351177303376472661/5201738160548828056489824422363310226943588522221356273208660538919823241014857664030808855928156453064516177620000000000",
+      "full40_tables": 3,
+      "actual13_anchors": 0,
+      "joint_anchors": 4,
+      "joint_full40_tables": 1,
+      "members": [
+        {
+          "xi7": [
+            1,
+            4,
+            7,
+            4
+          ],
+          "current7": "47209904931/5000000000",
+          "field_transport": "identity",
+          "routes": {
+            "ordinary": 78392,
+            "joint": 8
+          },
+          "worst_pair": [
+            [
+              2,
+              4,
+              2,
+              14
+            ],
+            [
+              2,
+              4,
+              2,
+              14
+            ]
+          ],
+          "worst_query_upper": "144334862219/5000000000",
+          "worst_query_decimal": 28.8669724438,
+          "worst_route": "joint",
+          "minimum_live_lower_micro": 2350272,
+          "minimum_slack_lower_micro": 312616,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "representative": [
+        1,
+        4,
+        7,
+        7
+      ],
+      "common_unconditioned_H16": "21326031717604761099587021718873359855817701435221865736320660531153124458897062098111548231786472702898626167594505976277/650217270068603507061228052795413778367948565277669534151082567364977905126857208003851106991019556633064522202500000000",
+      "full40_tables": 3,
+      "actual13_anchors": 0,
+      "joint_anchors": 4,
+      "joint_full40_tables": 1,
+      "members": [
+        {
+          "xi7": [
+            1,
+            4,
+            7,
+            7
+          ],
+          "current7": "47209904931/5000000000",
+          "field_transport": "identity",
+          "routes": {
+            "ordinary": 78392,
+            "joint": 8
+          },
+          "worst_pair": [
+            [
+              2,
+              4,
+              2,
+              14
+            ],
+            [
+              2,
+              4,
+              2,
+              14
+            ]
+          ],
+          "worst_query_upper": "72492012073/2500000000",
+          "worst_query_decimal": 28.9968048292,
+          "worst_route": "joint",
+          "minimum_live_lower_micro": 2331069,
+          "minimum_slack_lower_micro": 7424,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "representative": [
+        2,
+        3,
+        2,
+        14
+      ],
+      "common_unconditioned_H16": "4566492883594127195387954224741749764237464110691695599265323445781734031356231000065097049333893329923038743751983560841/140114159206702439232049142689920814193766694201248653823802304078648437468413674452008319351600173819919627680000000000",
+      "full40_tables": 0,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            2,
+            3,
+            2,
+            14
+          ],
+          "current7": "47019633473/5000000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "262575041653/10000000000",
+          "worst_query_decimal": 26.2575041653,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2895065,
+          "minimum_slack_lower_micro": 7939679,
+          "future_parameter_tuples": 1721036800000
+        },
+        {
+          "xi7": [
+            2,
+            3,
+            5,
+            14
+          ],
+          "current7": "47019633473/5000000000",
+          "field_transport": "swap2_5",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "262575041653/10000000000",
+          "worst_query_decimal": 26.2575041653,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2895065,
+          "minimum_slack_lower_micro": 7939679,
+          "future_parameter_tuples": 1721036800000
+        },
+        {
+          "xi7": [
+            2,
+            4,
+            2,
+            8
+          ],
+          "current7": "93541873/9765625",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "134903609919/5000000000",
+          "worst_query_decimal": 26.9807219838,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2720304,
+          "minimum_slack_lower_micro": 5493025,
+          "future_parameter_tuples": 1721036800000
+        },
+        {
+          "xi7": [
+            2,
+            4,
+            5,
+            8
+          ],
+          "current7": "93541873/9765625",
+          "field_transport": "swap2_5",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "134903609919/5000000000",
+          "worst_query_decimal": 26.9807219838,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2720304,
+          "minimum_slack_lower_micro": 5493025,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "representative": [
+        2,
+        4,
+        2,
+        4
+      ],
+      "common_unconditioned_H16": "5815438402724337576564390974607304536740612799474265317058057973158868966089629853161212334706710975874659200945514006269/179370281398235450223787049047010697480813397317977802524436570307580111759133022897614098480281257002224695780000000000",
+      "full40_tables": 0,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            2,
+            4,
+            2,
+            4
+          ],
+          "current7": "46286296119/5000000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "63197645281/2500000000",
+          "worst_query_decimal": 25.2790581124,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 3154120,
+          "minimum_slack_lower_micro": 11736264,
+          "future_parameter_tuples": 1721036800000
+        },
+        {
+          "xi7": [
+            2,
+            4,
+            5,
+            4
+          ],
+          "current7": "46286296119/5000000000",
+          "field_transport": "swap2_5",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "63197645281/2500000000",
+          "worst_query_decimal": 25.2790581124,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 3154120,
+          "minimum_slack_lower_micro": 11736264,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "representative": [
+        2,
+        4,
+        4,
+        14
+      ],
+      "common_unconditioned_H16": "1359265823406455932460198719653407249717748053468504519350329019240186438188007245669467790121975653137127417919252306846973/41613905284390624451918595378906481815548708177770850185669284311358585928118861312246470847425251624516129420960000000000",
+      "full40_tables": 0,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            2,
+            4,
+            4,
+            14
+          ],
+          "current7": "92151972043/10000000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "256671704769/10000000000",
+          "worst_query_decimal": 25.6671704769,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 3062076,
+          "minimum_slack_lower_micro": 10205323,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "representative": [
+        2,
+        4,
+        7,
+        14
+      ],
+      "common_unconditioned_H16": "1355591609299253353060621621821691038931736285983759089470458765911390486573595762375857299567614189501619809274216347281157/41613905284390624451918595378906481815548708177770850185669284311358585928118861312246470847425251624516129420960000000000",
+      "full40_tables": 0,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            2,
+            4,
+            7,
+            14
+          ],
+          "current7": "19205397243/2000000000",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "268367779499/10000000000",
+          "worst_query_decimal": 26.8367779499,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2752051,
+          "minimum_slack_lower_micro": 5953265,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "representative": [
+        2,
+        4,
+        8,
+        14
+      ],
+      "common_unconditioned_H16": "34708164330414970784928250616569044367081679990726855224092053076276361116802677980265683745328289491144160680435113627031/1067023212420272421844066548177089277321761748147970517581263700291245793028688751596063355062185939090157164640000000000",
+      "full40_tables": 0,
+      "actual13_anchors": 0,
+      "joint_anchors": 0,
+      "joint_full40_tables": 0,
+      "members": [
+        {
+          "xi7": [
+            2,
+            4,
+            8,
+            14
+          ],
+          "current7": "93541873/9765625",
+          "field_transport": "identity",
+          "routes": {
+            "uniform": 78400
+          },
+          "worst_pair": null,
+          "worst_query_upper": "267665164991/10000000000",
+          "worst_query_decimal": 26.7665164991,
+          "worst_route": "uniform",
+          "minimum_live_lower_micro": 2764455,
+          "minimum_slack_lower_micro": 6174338,
+          "future_parameter_tuples": 1721036800000
+        }
+      ]
+    }
+  ],
+  "bounds_sha256": "a5209491bd8146f5630a1ad8e70f6120497c19ed479d44a0a372ec24782c023a",
+  "verification": "Exact rational routing and full source/label transport checks. Declared numeric geometry inputs are separately replayable; their hashes are not substituted for geometric reconstruction."
+}
