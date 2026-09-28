@@ -26,6 +26,7 @@ internal static class NativeReportFixture
             ReportFixture.setUpClass()
             fixture = ReportFixture()
             fixture.setUp()
+            fixture.capture_process_commands = True
             phases = fixture.root / 'native-phases.jsonl'
             fixture.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
             observation = {'processes': None, 'phase_lines': 0}

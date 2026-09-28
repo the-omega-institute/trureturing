@@ -859,8 +859,9 @@ def main():
             source = None
             if "lean-report" in plan["execution"]["steps"]:
                 source = report_seed(args.repository)
-            output({"needs_lake": bool("lake" in requirements["tools"]
-                and (source is None or plan["execution"]["lean_targets"]))})
+            # A donor is only a candidate: even report-only reuse needs the
+            # normal Lake entry's current semantic/export witness.
+            output({"needs_lake": "lake" in requirements["tools"]})
             output({"STRATALINT_LEAN_REPORT_REUSE": source or ""}, "GITHUB_ENV")
             return 0
         except (OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as error:

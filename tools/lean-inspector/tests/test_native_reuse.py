@@ -1,9 +1,56 @@
 """Normal inspect entry remains authoritative when a lightweight seed is available."""
+import contextlib
 from test_native_support import *
 from test_reuse import EXECUTION
 
 
 class NativeReportConsumerTests:
+    def prepare_report(self, seed, *, targets=(), report_required=True):
+        sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
+        sys.path.insert(0, str(ROOT / 'tools/scripts/workflow'))
+        import lean_actions, ci_plan
+        plan = dict(execution=dict(steps=['lean-report'] if report_required else ['filemap'],
+                                   lean_targets=list(targets)))
+        # Transport restoration and plan validation have their own tests. Feed
+        # an already restored seed to the actual prepare-report CLI and probe.
+        requirements = dict(cache_layers=[], tools=['lake'] if report_required else [])
+        with patch.dict(os.environ, dict(self.env, CANDIDATE_SHA='a' * 40,
+                CI_PLAN_PATH='plan.json', CI_CHANGES_PATH='changes.json', GITHUB_OUTPUT='', GITHUB_ENV='')), \
+             patch.object(sys, 'argv', ['lean_actions.py', 'prepare-report', '--repository',
+                str(self.root), '--stage', 'current']), \
+             patch.object(ci_plan, 'git', return_value=('a' * 40 + '\n').encode()), \
+             patch.object(ci_plan, 'validate_plan', return_value=plan), \
+             patch.object(ci_plan, 'stage_requirements', return_value=requirements), \
+             contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(lean_actions.main(), 0)
+        self.assertEqual(output.getvalue().splitlines(), [
+            'needs_lake=' + str(report_required).lower(), 'STRATALINT_LEAN_REPORT_REUSE=' + (str(seed) if seed else '')])
+        self.assertEqual(plan['execution']['lean_targets'], list(targets))
+        self.record_result('prepare-' + ('report' if report_required else 'no-report')
+            + ('-selected' if targets else '-no-targets') + ('-donor' if seed else '-miss'),
+            dict(needs_lake=report_required, donor=str(seed) if seed else None, targets=list(targets)))
+
+    def prepare_report_compiler(self):
+        self.ensure()
+        if self.compiler_seed is not None:
+            restored = self.guarded_command([self.lake, 'cache', 'unstage', self.compiler_seed, 'leanInspector'])
+            self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
+            self.compiler_seed = None
+        # The stage contains only compiler artifacts. The normal report entry
+        # must still compile this case's project and establish currentness.
+        self.check_cold_project(self)
+
+    def reset_report_project(self, compiler_seed):
+        shutil.rmtree(self.root / '.lake')
+        # Restore the same private dependency-only inputs used at case start.
+        # Recompiling the unchanged dependency cache tool adds no cold-project
+        # coverage; neither project outputs nor report data occur in this donor.
+        self.check_cold_project(self.donor)
+        shutil.copytree(self.donor.root / '.lake', self.root / '.lake', symlinks=True,
+                        copy_function=shutil.copy2)
+        self.compiler_seed = compiler_seed
+        self.prepare_report_compiler()
+
     def test_impl_resource_rebuilds_production_reg_on_warm_report(self):
         # Use the actual Impl resource selection, package target declarations,
         # report entry and Lake compiler. Only the mathematical inputs are tiny.
@@ -18,7 +65,7 @@ class NativeReportConsumerTests:
         execution = ci_plan.execution_selection(read, [resources[key] for key in selected], resources)
         self.assertIn('lean-report', execution['steps'])
         self.reg_package()
-        self.build()  # Restore the native fixture's private compiler stage.
+        self.prepare_report_compiler()
         self.copy('tools/scripts/workflow/ci_plan.py')
         self.copy('Meta/ci-resources.json')
         root_config = self.root / 'lakefile.toml'
@@ -114,11 +161,12 @@ class NativeReportConsumerTests:
                 if path.is_file():
                     logs.append(path.read_text())
         lines = '\n'.join(logs).splitlines()
+        paths = [path for path in Path(str(output) + '.logs').glob('*') if path.is_file()]
         self.record_result(phase, dict(elapsed_seconds=time.monotonic() - started,
             exit_code=result.returncode, phases=phases,
             work=list(dict.fromkeys(line for line in [*result.stdout.splitlines(), *lines]
                                     if line.startswith('LEAN_INSPECTOR_WORK '))),
-            lake_built_lines=sum('Built' in line.split() for line in lines)))
+            lake_built_lines=sum('Built' in line.split() for line in lines)), paths)
         if success:
             self.assertEqual(result.returncode, 0, '[FAIL] report_entry_success\n' + result.stdout + result.stderr)
         else:
@@ -138,7 +186,7 @@ class NativeReportConsumerTests:
             policy['producer_scopes']['lean-report']['include'].append(dict(pattern=path, optional=False))
         self.write('lean-report-inputs.json', json.dumps(policy))
         compiler_seed = self.compiler_seed
-        self.build()  # installs the collection's private compiler stage
+        self.prepare_report_compiler()
         # Observe the real entry's Lake calls without replacing compilation.
         calls = self.root / 'entry-lake-calls.jsonl'
         self.write('entry-tools/lake', '#!/usr/bin/env python3\nimport json, os, sys\n'
@@ -158,22 +206,35 @@ class NativeReportConsumerTests:
         self.assertIn('phase=report status=completed', first.stderr)
         self.assertTrue(publication.member(output, '.reuse.json').is_file(), '[FAIL] defaults_report_success_sealed')
         expected = output.read_bytes()
+        with patch.dict(self.env, LAKE_BIN=str(self.root / 'missing/lake')):
+            unavailable = self.inspect(success=False, phase='unavailable-lake')
+        self.assertIn('an absolute executable lake path is required', unavailable.stderr)
+        self.assertEqual(expected, output.read_bytes())
+        self.assertFalse(publication.member(output, '.reuse.json').exists())
         # An explicitly report-only resource must stay report-only on a miss too.
         # An invalid, unselected program proves the facet cannot demand defaults.
         self.write('Audit.lean', 'def audit : False := True.intro\n')
-        publication.member(output, '.reuse.json').unlink()
+        publication.member(output, '.reuse.json').unlink(missing_ok=True)
         clear_calls()
         report_only = self.inspect(phase='report-only-miss-with-unselected-invalid-program')
         self.assertEqual(builds(), [[*workspace, 'build', ':reportEntry']])
         self.assertIn('phase=report status=completed', report_only.stderr)
         self.assertEqual(expected, output.read_bytes())
         self.write('Audit.lean', 'def audit : Nat := 1\n')
-        seed = self.root / 'lightweight-seed' / output.name
-        seed.parent.mkdir()
+        seed_root = self.root / 'build/ci/current-check-seed'
+        relative = str(output.relative_to(self.root))
+        seed = seed_root / relative
+        seed.parent.mkdir(parents=True)
         for suffix in (*publication.SUFFIXES, '.reuse.json'):
             shutil.copyfile(publication.member(output, suffix), publication.member(seed, suffix))
         sealed = {suffix: publication.member(seed, suffix).read_bytes()
                   for suffix in (*publication.SUFFIXES, '.reuse.json')}
+        (seed_root / 'checks.json').write_text(json.dumps(dict(version=2, stage='current',
+            candidate='b' * 64, round='c' * 32, units=[])))
+        (seed_root / 'producer-report.json').write_text(json.dumps(dict(version=1,
+            candidate='b' * 64, round='c' * 32, report=relative,
+            materials=[dict(path=relative + suffix) for suffix in sealed])))
+        self.prepare_report(None, report_required=False)
         def probe(phase='report-probe'):
             started = time.monotonic()
             result = self.guarded_command([sys.executable, '-B', str(self.root / 'tools/lean-inspector/reuse.py'),
@@ -182,8 +243,9 @@ class NativeReportConsumerTests:
                 exit_code=result.returncode, output=result.stdout, phases=[], work=[], lake_built_lines=0))
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertTrue(json.loads(result.stdout)['candidate'], '[FAIL] probe_only_selects_candidates')
+            self.prepare_report(seed)
         probe()
-        shutil.rmtree(self.root / '.lake')
+        self.reset_report_project(compiler_seed)
         self.env['STRATALINT_LEAN_REPORT_REUSE'] = str(seed)
         clear_calls()
         reused = self.inspect(phase='metadata-reuse')
@@ -209,13 +271,9 @@ class NativeReportConsumerTests:
                     receipt['bundle']['.materials.zip'] = publication.digest(archive)
                     publication.member(seed, '.reuse.json').write_text(json.dumps(receipt))
                     probe()
-                shutil.rmtree(self.root / '.lake')
-                # Reuse only the class's read-only compiler stage. The damaged
-                # report still crosses the same normal fallback and validator.
-                if compiler_seed is not None:
-                    self.ensure()
-                    restored = self.guarded_command([self.lake, 'cache', 'unstage', compiler_seed, 'leanInspector'])
-                    self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
+                else:
+                    self.prepare_report(None)
+                self.reset_report_project(compiler_seed)
                 clear_calls()
                 recovered = self.inspect(phase=damage)
                 self.assertEqual(builds(), [[*workspace, 'build', ':reportEntry']])
@@ -229,6 +287,7 @@ class NativeReportConsumerTests:
         # This fixture now requests its explicitly registered program work.
         # Neither a valid nor invalid Audit edit changes report data.
         self.env.pop('STRATALINT_LEAN_BUILD_TARGETS')
+        self.prepare_report(seed, targets=targets)
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         probe(phase='valid-audit-probe')
         clear_calls()
@@ -248,6 +307,7 @@ class NativeReportConsumerTests:
         self.assertFalse(publication.member(output, '.reuse.json').exists())
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         publication.member(seed, '.reuse.json').unlink()
+        self.prepare_report(None, targets=targets)
         clear_calls()
         recovered = self.inspect(phase='programs-and-report-miss')
         self.assertEqual(builds(), [[*workspace, 'build', ':reportEntry', *targets]])

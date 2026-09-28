@@ -64,6 +64,44 @@ run_cmd do
         throwError "[FAIL] direct_trace_hash_{label}: accepted value={actual.toNat}"
       logInfo m!"[PASS] direct_trace_hash_{label} bytes={width}"))
 
+-- Completed compiler lookups have a memo entry even though Lake supplies no
+-- export trace for them. An absent entry still means the lookup has not run.
+run_cmd do
+  let exporters := (← getEnv).constants.toList.filter fun (name, _) =>
+    privateToUserName? name ==
+      some `LeanInformationAudit.TemplateAudit.NativeCoherence.exports
+  unless exporters.length == 1 do
+    throwError "[FAIL] export_memo: expected one production exporter"
+  let exporter := mkIdent exporters.head!.1
+  Elab.Command.elabCommand (← `(command| run_meta do
+    let compute := $exporter
+    let env ← getEnv
+    let (compiler, memo) ← compute env `Init {}
+    unless compiler.isNone do throwError "[FAIL] compiler_export_expected_none"
+    let some none := memo[`Init]?
+      | throwError "[FAIL] compiler_export_not_memoized"
+    let (again, repeated) ← compute env `Init memo
+    unless again.isNone && repeated.size == memo.size do
+      throwError "[FAIL] compiler_export_memo_reuse"
+    logInfo "[PASS] compiler_export_none_memoized_and_reused"
+    -- A missing package trace must not be confused with a validated compiler
+    -- module. The copy is private to this worktree and restored on every exit.
+    let package := `Mathlib.Data.Bool.Basic
+    let trace := (← findOLean package).withExtension "trace"
+    let backup := trace.addExtension "native-test-backup"
+    if ← backup.pathExists then throwError "[FAIL] export_trace_backup_exists"
+    IO.FS.rename trace backup
+    try
+      let reason ← try
+        discard <| compute env package {}
+        pure ""
+      catch error => pure (← error.toMessageData.toString)
+      unless reason == s!"incomplete_closure:E7.native_trace_missing:{package}" do
+        throwError "[FAIL] missing_package_trace_rejected: {reason}"
+      logInfo "[PASS] missing_package_trace_outside_compiler_prefix_rejected"
+    finally
+      IO.FS.rename backup trace))
+
 private def replaceNative (path : System.FilePath) (bytes : ByteArray) : IO Unit := do
   let temp := path.withExtension "dtr-module-temporary"
   IO.FS.writeBinFile temp bytes

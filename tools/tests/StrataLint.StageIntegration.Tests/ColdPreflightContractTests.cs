@@ -167,16 +167,54 @@ public sealed class ColdPreflightContractTests
     }
 
     [Fact]
+    public void FixtureSdkPathsDoNotLeakFromTheParentTestHost()
+    {
+        using var fixture = new ExecutionFixture();
+        var names = new[] { "MSBuildSDKsPath", "MSBuildExtensionsPath" };
+        var previous = names.ToDictionary(name => name, Environment.GetEnvironmentVariable);
+        var inherited = Path.Combine(fixture.Root, "build/parent-sdk");
+        try
+        {
+            foreach (var name in names) Environment.SetEnvironmentVariable(name, inherited);
+            var selected = EngineeringProcess.Process(fixture.Root, "python3", ["-c", """
+                import os
+                assert 'MSBuildSDKsPath' not in os.environ
+                assert 'MSBuildExtensionsPath' not in os.environ
+                """]);
+            Assert.True(selected.Exit == 0, selected.Text);
+            Assert.All(names, name => Assert.Equal(inherited, Environment.GetEnvironmentVariable(name)));
+
+            var explicitPaths = names.ToDictionary(name => name, _ => inherited);
+            var overridden = EngineeringProcess.Process(fixture.Root, "python3", ["-c", """
+                import os, sys
+                assert os.environ['MSBuildSDKsPath'] == sys.argv[1]
+                assert os.environ['MSBuildExtensionsPath'] == sys.argv[1]
+                """, inherited], explicitPaths);
+            Assert.True(overridden.Exit == 0, overridden.Text);
+        }
+        finally
+        {
+            foreach (var pair in previous) Environment.SetEnvironmentVariable(pair.Key, pair.Value);
+        }
+    }
+
+    [Fact]
     public void PrivateFixtureProfileRetainsLockedRestoreAndOfflinePackageFailures()
     {
         using var fixture = new ExecutionFixture();
         fixture.Write("global.json", File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "global.json")));
         const string project = "build/restore-probe/Probe.csproj";
         const string lockPath = "build/restore-probe/packages.lock.json";
-        const string projectPrefix = "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup>";
+        // The SDK can add local library-packs after NuGet.Config clears sources.
+        // This fixture deliberately tests an empty source set, including that
+        // implicit SDK source, rather than relying on the host's installed packs.
+        const string projectPrefix = "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework>"
+            + "<_WorkloadLibraryPacksFolder>$(MSBuildProjectDirectory)/library-packs</_WorkloadLibraryPacksFolder>"
+            + "<DisableImplicitLibraryPacksFolder>true</DisableImplicitLibraryPacksFolder></PropertyGroup>";
         const string initialLock = "{\"version\":1,\"dependencies\":{\"net10.0\":{}}}";
         fixture.Write(project, projectPrefix + "</Project>");
         fixture.Write(lockPath, initialLock);
+        fixture.Write("build/restore-probe/library-packs/.keep", "explicit empty local SDK source\n");
         var customPackages = Path.Combine(fixture.Root, "build/custom-empty-packages");
         var previousPackages = Environment.GetEnvironmentVariable("NUGET_PACKAGES");
         Dictionary<string, string> environment;
@@ -190,6 +228,12 @@ public sealed class ColdPreflightContractTests
         environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
         var restored = Restore();
         Assert.True(restored.Exit == 0, restored.Text);
+        using (var assets = JsonDocument.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/restore-probe/obj/project.assets.json"))))
+        {
+            // NuGet omits the sources member when the effective set is empty.
+            var restore = assets.RootElement.GetProperty("project").GetProperty("restore");
+            if (restore.TryGetProperty("sources", out var sources)) Assert.Empty(sources.EnumerateObject());
+        }
 
         fixture.Write(project, projectPrefix
             + "<ItemGroup><PackageReference Include=\"Fixture.Unavailable.Package\" Version=\"1.0.0\" /></ItemGroup></Project>");

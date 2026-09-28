@@ -634,18 +634,17 @@
         "tools/lean-inspector/reuse.py",
         "tools/lean-inspector/tests/**/*.py",
         "tools/scripts/lib/resource-observation-lib.sh",
+        "tools/scripts/report/dotnet_producer.py",
         "tools/scripts/report/lean-report-input.sh",
         "tools/scripts/report/lean-report-selection.py",
         "tools/scripts/report/lean-report.sh",
         "tools/scripts/report/report-supervisor.sh",
+        "tools/scripts/workflow/ci_plan.py",
         "tools/scripts/worktree/**",
         "tools/tests/StrataLint.Lean.Tests/Fixtures/**",
         "tools/tests/StrataLint.Lean.Tests/Native/*.py"
       ],
-      "execution_excludes": [
-        "tools/scripts/worktree/lean_actions.py",
-        "tools/scripts/worktree/lean_actions_report.py"
-      ],
+      "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ],

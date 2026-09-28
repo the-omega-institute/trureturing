@@ -88,7 +88,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                     self.assertEqual(0, owner.main())
                 self.assertEqual(["current"], restore.call_args.args[3])
                 self.assertEqual(int(report_required), probe.call_count)
-                self.assertIn("needs_lake=" + str(report_required and (not reusable or bool(targets))).lower(), result.getvalue())
+                self.assertIn("needs_lake=" + str(report_required).lower(), result.getvalue())
                 self.assertIn("STRATALINT_LEAN_REPORT_REUSE=" + (selected or ""), result.getvalue())
                 self.assertEqual(["lean-report"] if report_required else ["filemap"], plan["execution"]["steps"])
 

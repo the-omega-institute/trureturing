@@ -137,4 +137,3 @@ class NativeEntryConsumerTests:
         self.record_result('whole-entry-publisher-failure', dict(exit=failed.returncode,
             donor_unchanged=True, accepted_output_unchanged=True, native_rows_unchanged=True,
             output_receipt_removed=True))
-

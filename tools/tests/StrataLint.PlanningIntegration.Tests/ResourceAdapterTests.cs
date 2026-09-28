@@ -163,7 +163,7 @@ public sealed partial class ResourceAdapterTests
 
     [Theory]
     [InlineData(true, true, true)]
-    [InlineData(false, true, false)]
+    [InlineData(false, true, true)]
     [InlineData(true, false, true)]
     [InlineData(false, false, true)]
     public void ReportSeedCannotRemoveRegisteredInspectorBuildResources(bool compileInspector, bool seedAvailable, bool needsLake)

@@ -1,6 +1,7 @@
 using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
+using StrataLint.Engine;
 using StrataLint.TestSupport;
 
 namespace StrataLint.Lean.Tests;
@@ -23,6 +24,31 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [Fact]
     public void ReportConsumersStartWithPrivateColdProjects() => InspectorNativeTestRunner.Run(compiler,
         "test_native.NativeReportTests");
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(7)]
+    [InlineData(-1)]
+    public void CommandObservationsSurviveSuccessFailureAndGuard(int exit)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var observations = new StringWriter();
+        string[] arguments = ["python3", "-c", """
+            import sys, time
+            print('NATIVE_COMMAND_OBSERVATION stdout', flush=True)
+            print('NATIVE_COMMAND_OBSERVATION stderr', file=sys.stderr, flush=True)
+            if int(sys.argv[1]) < 0: time.sleep(30)
+            sys.exit(int(sys.argv[1]))
+            """, exit.ToString(System.Globalization.CultureInfo.InvariantCulture)];
+        if (exit < 0)
+            Assert.Throws<SkipException>(() => InspectorNativeTestRunner.RunObserved(arguments,
+                TestRepositoryLayout.FindRoot(), TimeSpan.FromSeconds(1), observations));
+        else
+            Assert.Equal(exit, InspectorNativeTestRunner.RunObserved(arguments,
+                TestRepositoryLayout.FindRoot(), TestBudgets.ScriptProcessHangGuard, observations).ExitCode);
+        Assert.Equal(new[] { "NATIVE_COMMAND_OBSERVATION stdout", "NATIVE_COMMAND_OBSERVATION stderr" },
+            observations.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries));
+    }
 }
 
 internal static class InspectorNativeTestRunner
@@ -39,26 +65,43 @@ internal static class InspectorNativeTestRunner
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "compiler-ready", suite,
             utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(prepared).TotalMilliseconds }));
         var executed = clock.GetTimestamp();
-        var result = TestProcessRunner.Run("env",
+        var result = RunObserved(
             [.. environment, "STRATALINT_NATIVE_COMMAND_OBSERVATION=1", "python3", "-B", "-m", "unittest", suite, "-v"],
-            Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+            Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard);
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "child-exit", suite,
             utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(executed).TotalMilliseconds, raw_exit = result.ExitCode,
             stdout_bytes = result.StandardOutput.Length, stderr_bytes = result.StandardError.Length }));
-        WriteCommandObservations(result.StandardOutput);
-        WriteCommandObservations(result.StandardError);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
             + Encoding.UTF8.GetString(result.StandardError));
     }
 
-    internal static void WriteCommandObservations(byte[] output)
+    internal static ProcessOutput RunObserved(string[] arguments, string directory, TimeSpan guard,
+        TextWriter? observations = null)
+    {
+        using var stdout = new MemoryStream();
+        using var stderr = new MemoryStream();
+        try
+        {
+            return TestProcessRunner.Run("env", arguments, directory, guard, 1024 * 1024,
+                standardOutput: stdout, standardError: stderr);
+        }
+        finally
+        {
+            // The guard throws before returning ProcessOutput. Its bounded
+            // stream copies still expose completed inner-command observations.
+            WriteCommandObservations(stdout.ToArray(), observations);
+            WriteCommandObservations(stderr.ToArray(), observations);
+        }
+    }
+
+    private static void WriteCommandObservations(byte[] output, TextWriter? observations)
     {
         try
         {
             using var reader = new StringReader(Encoding.UTF8.GetString(output));
             while (reader.ReadLine() is { } line)
                 if (line.StartsWith("NATIVE_COMMAND_OBSERVATION ", StringComparison.Ordinal))
-                    Console.WriteLine(line);
+                    (observations ?? Console.Out).WriteLine(line);
         }
         catch (Exception error) when (error is IOException or ObjectDisposedException)
         {
@@ -97,12 +140,10 @@ public sealed class InspectorCompilerFixture : IDisposable
     {
         using var source = new TemporaryDirectory();
         var root = TestRepositoryLayout.FindRoot();
-        var result = TestProcessRunner.Run("env",
+        var result = InspectorNativeTestRunner.RunObserved(
             ["STRATALINT_NATIVE_COMMAND_OBSERVATION=1", "python3", "-B", "test_native_support.py", source.Path],
             System.IO.Path.Combine(root, "tools/lean-inspector/tests"),
-            TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
-        InspectorNativeTestRunner.WriteCommandObservations(result.StandardOutput);
-        InspectorNativeTestRunner.WriteCommandObservations(result.StandardError);
+            TestBudgets.ReportSupervisorHangGuard);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
             + Encoding.UTF8.GetString(result.StandardError));
         var materials = Directory.GetFileSystemEntries(source.Path).Order(StringComparer.Ordinal).Select(path =>

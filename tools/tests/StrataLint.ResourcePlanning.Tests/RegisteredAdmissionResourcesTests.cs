@@ -188,7 +188,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         {
             "tools/scripts/preflight.sh" => new[] { "StrataLint.PlanningIntegration.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.WorkflowScript.Tests" },
             "tools/scripts/report/lean-report-selection.py" => ["StrataLint.LeanReportScript.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
-            "tools/scripts/workflow/ci_plan.py" => ["StrataLint.Cache.Tests", "StrataLint.BuildIntegration.Tests", "StrataLint.CliIntegration.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.ReleaseIntegration.Tests", "StrataLint.ResourcePlanning.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
+            "tools/scripts/workflow/ci_plan.py" => ["StrataLint.Cache.Tests", "StrataLint.BuildIntegration.Tests", "StrataLint.CliIntegration.Tests", "StrataLint.Lean.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.ReleaseIntegration.Tests", "StrataLint.ResourcePlanning.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
             "tools/scripts/worktree/lean_cache.py" => ["StrataLint.Cache.Tests", "StrataLint.Cache.Release.Tests", "StrataLint.BuildIntegration.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
             _ => [],
         };
@@ -890,13 +890,16 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     {
         using var temporary = new PlanningFixture();
         var prepared = Python(temporary.Path, """
-            import json, pathlib, sys
+            import json, pathlib, shutil, sys
             source, root = map(pathlib.Path, sys.argv[1:3])
             sys.path.insert(0, str(source / 'tools/scripts/workflow'))
             import ci_plan
             def git(*args):
                 return ci_plan.git(root, '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', *args).decode().strip()
-            git('clone', '--quiet', '--no-hardlinks', sys.argv[3], str(root))
+            # The base is already a complete private Git snapshot. Copy its
+            # files into this case without repeating clone's transfer and
+            # checkout; copy2 keeps writable files independent of the base.
+            shutil.copytree(sys.argv[3], root, dirs_exist_ok=True, symlinks=True)
             base = git('rev-parse', 'HEAD')
             assert base == sys.argv[4]
             paths = list(filter(None, sys.argv[5:7]))

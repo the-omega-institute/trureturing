@@ -696,7 +696,8 @@ private def moduleFile (env : Environment) (name : Name) : CoreM System.FilePath
 private structure Cache where
   snapshots : Std.HashMap Name Snapshot := {}
   closures : Std.HashMap Name (Array Name) := {}
-  exports : Std.HashMap Name ExportHash := {}
+  -- A stored none is a validated compiler import; an absent key is unvisited.
+  exports : Std.HashMap Name (Option ExportHash) := {}
   deriving Inhabited
 
 private initialize checked : EnvExtension Cache ← registerEnvExtension (pure {})
@@ -718,8 +719,9 @@ private def importHashes (value : ExportHash) (nonModule : Bool) (imported : Imp
 Compiler-owned imports have no Lake package trace and are pinned by the Lean
 version input. Package traces remain trusted upstream build metadata. -/
 private partial def exports (env : Environment) (name : Name)
-    (memo : Std.HashMap Name ExportHash) : CoreM (Option ExportHash × Std.HashMap Name ExportHash) := do
-  if let some value := memo[name]? then return (some value, memo)
+    (memo : Std.HashMap Name (Option ExportHash)) :
+    CoreM (Option ExportHash × Std.HashMap Name (Option ExportHash)) := do
+  if let some value := memo[name]? then return (value, memo)
   let artifact ← moduleFile env name
   let tracePath := artifact.withExtension "trace"
   if !(← tracePath.pathExists) then
@@ -731,7 +733,7 @@ private partial def exports (env : Environment) (name : Name)
     let lib ← getLibDir sysroot
     unless (← IO.FS.realPath artifact).toString.startsWith ((← IO.FS.realPath lib).toString ++ "/") do
       throwError "incomplete_closure:E7.native_trace_missing:{name}"
-    return (none, memo)
+    return (none, memo.insert name none)
   let trace ← ofExcept <| Json.parse (← IO.FS.readFile tracePath)
   unless trace.getObjValAs? String "schemaVersion" == .ok "2025-09-10" do
     throwError "incomplete_closure:E7.native_trace_version:{name}"
@@ -780,7 +782,7 @@ private partial def exports (env : Environment) (name : Name)
     metaTransitive := metaTransitive
     allTransitive := allTransitive
     transitive := transitive }
-  return (some value, memo.insert name value)
+  return (some value, memo.insert name (some value))
 
 
 private def unchanged (inputs : Array SourceInput) : IO Bool := do
@@ -857,7 +859,7 @@ private def loadedModuleParts (env : Environment) (name : Name) (artifact : Syst
   return (inputs, hashes)
 
 private def verifyImported (env : Environment) (name : Name)
-    (hashes : Std.HashMap Name ExportHash) : CoreM Snapshot := do
+    (hashes : Std.HashMap Name (Option ExportHash)) : CoreM Snapshot := do
   let some index := env.getModuleIdx? name | throwError "incomplete_closure:E7.native_module:{name}"
   let data := env.header.moduleData[index.toNat]!
   let artifact ← moduleFile env name
@@ -890,7 +892,7 @@ private def verifyImported (env : Environment) (name : Name)
   -- implementation must retain the ordered caption/value list, not only a count.
   let mut expectedImports : Array (String × UInt64) := #[]
   for imported in data.imports do
-    if let some dependency := hashes[imported.module]? then
+    if let some (some dependency) := hashes[imported.module]? then
       let (caption, transitive, artCaption, arts) := importHashes dependency (!data.isModule) imported
       expectedImports := expectedImports.push
         (s!"{imported.module} transitive imports ({caption})", transitive)

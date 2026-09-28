@@ -31,6 +31,11 @@ internal static class EngineeringProcess
         start.Environment["CANDIDATE_SHA"] = "";
         start.Environment["CI_WORKFLOW_INPUTS"] = "null";
         start.Environment.Remove("STRATALINT_CACHE_WRITES");
+        // dotnet test exports its SDK's paths. A fixture's global.json can
+        // select another SDK, whose MSBuild must load its own targets/tasks.
+        // Explicit test overrides below still exercise inherited-path defects.
+        start.Environment.Remove("MSBuildSDKsPath");
+        start.Environment.Remove("MSBuildExtensionsPath");
         foreach (var pair in environment ?? new Dictionary<string, string>()) start.Environment[pair.Key] = pair.Value;
         using var process = System.Diagnostics.Process.Start(start)!;
         using var limitedOutput = maximumOutputBytes is { } stdoutLimit

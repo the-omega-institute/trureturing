@@ -197,20 +197,27 @@ defaultFacets = ["static"]
         # this fixture. The compiler stage is restored separately after ensure.
         subprocess.run(['git', 'init', '--quiet', str(self.root)], check=True, capture_output=True)
     command_clock = staticmethod(time.monotonic)
+    capture_process_commands = False
 
     @staticmethod
-    def command_processes():
+    def command_processes(*, commands=True):
         # Same PID/start identity discipline as report-supervisor; ancestry and
         # sessions, rather than process groups, include its nested worker group.
-        output = subprocess.check_output(['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=,command='],
+        # Ownership needs only kernel metadata. Reading every process's argv
+        # on every sample is expensive, especially with parallel fixture guards.
+        # Detailed observers opt in; timeout diagnostics fetch owned arguments.
+        fields = 'pid=,ppid=,pgid=,lstart=,stat=' + (',command=' if commands else '')
+        output = subprocess.check_output(['ps', '-axo', fields],
             text=True, env=dict(os.environ, LC_ALL='C'), timeout=5)
         rows = {}
         for line in output.splitlines():
             fields = line.split(None, 9)
-            if len(fields) == 10:
+            if len(fields) == (10 if commands else 9):
                 pid, parent, group = map(int, fields[:3])
                 rows[pid] = dict(pid=pid, parent=parent, group=group,
-                    identity=' '.join(fields[3:8]), state=fields[8], command=fields[9])
+                    identity=' '.join(fields[3:8]), state=fields[8])
+                if commands:
+                    rows[pid]['command'] = fields[9]
         return rows
 
     def owned_processes(self, command, *, sessions=False):
@@ -240,17 +247,31 @@ defaultFacets = ["static"]
         return [rows[pid] for pid in owned if not rows[pid]['state'].startswith('Z')]
 
     def observed_processes(self):
+        return self.observe_process_scan(lambda: self.command_processes(commands=self.capture_process_commands))
+
+    def observe_process_scan(self, read):
         observation = getattr(self, '_command_observation', None)
         if observation is None:
-            return self.command_processes()
+            return read()
         started = observation_value(time.perf_counter)
         try:
-            return self.command_processes()
+            return read()
         finally:
             elapsed = observation_delta(started, observation_value(time.perf_counter))
             observation['process_scan_count'] += 1
             total = observation['process_scan_seconds']
             observation['process_scan_seconds'] = total + elapsed if total is not None and elapsed is not None else None
+
+    def describe_processes(self, processes):
+        if processes:
+            result = self.observe_process_scan(lambda: subprocess.run(
+                ['ps', '-p', ','.join(str(row['pid']) for row in processes),
+                '-o', 'pid=,command='], text=True, capture_output=True,
+                env=dict(os.environ, LC_ALL='C'), timeout=5))
+            commands = dict(line.strip().split(None, 1) for line in result.stdout.splitlines()
+                            if len(line.strip().split(None, 1)) == 2)
+            for row in processes:
+                row['command'] = commands.get(str(row['pid']))
 
     def command_diagnostics(self, command, args, stdout, stderr):
         roots = [self.root / '.lake/build/stratalint', self.root / 'tmp']
@@ -265,8 +286,10 @@ defaultFacets = ["static"]
                         logs[str(path.relative_to(self.root))] = path.read_bytes()[-16384:].decode('utf-8', 'replace')
                     except FileNotFoundError:
                         pass  # A live phase may be moving startup logs to final.
+        processes = self.owned_processes(command, sessions=True)
+        self.describe_processes(processes)
         diagnostic = dict(command=list(args), timeout_seconds=120, fixture=str(self.root),
-            processes=self.owned_processes(command, sessions=True), logs=logs,
+            processes=processes, logs=logs,
             stdout=stdout, stderr=stderr)
         self.last_command_diagnostic = diagnostic
         print('NATIVE_COMMAND_TIMEOUT ' + json.dumps(diagnostic), file=sys.stderr, flush=True)
@@ -877,7 +900,7 @@ class GuardedCommandTests(unittest.TestCase):
                 # Infrastructure guard for a broken cancellation path. The
                 # verdict below checks settled state, never elapsed time.
                 super().join(timeout=5)
-        ps = ['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=,command=']
+        ps = ['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=']
         sampling_error, cleanup_error, fixture_error = (
             subprocess.TimeoutExpired(ps, 5) for _ in range(3))
         failures = iter([sampling_error, cleanup_error, fixture_error])
@@ -1062,6 +1085,8 @@ for child in children: child.wait()
         self.assertIsNone(control.poll(), 'cleanup must not signal an unrelated process')
         diagnostic = self.fixture.last_command_diagnostic
         self.assertTrue(set(pids).issubset({row['pid'] for row in diagnostic['processes']}))
+        self.assertTrue(all('writer.py' in row['command'] for row in diagnostic['processes']
+                            if row['pid'] in pids))
         groups = {row['pid']: row['group'] for row in diagnostic['processes']}
         self.assertNotEqual(groups[pids[0]], groups[pids[1]])
         self.assertIn('report active', json.dumps(diagnostic))
