@@ -1,0 +1,21 @@
+### 命题 41.3：四种整位类删除与秩三的必要圈空间形状
+
+在定义 41 的原图中，令
+
+$$
+\begin{aligned}
+M_X^c&=\{x\in X:\ \forall y,\ (x,y)\in D\Rightarrow f(x,y)=c\},\\
+M_Y^d&=\{y\in Y:\ \forall x,\ (x,y)\in D\Rightarrow f(x,y)=d\},\\
+H_{cd}&=G-(M_X^c\cup M_Y^d)\qquad(c,d\in\mathbb B).
+\end{aligned} \tag{41.19}
+$$
+
+活跃性保证每个这样的顶点确有原关联边。若四个 $H_{cd}$ 中至少一个平衡，任务就有 $(3,3)$-协议。若四个 $H_{cd}$ 全不平衡，则 $\mu(D)\geq3$。在 $\mu(D)=3$ 时，后一条件还迫使圈空间的整个奇纤维恰由四个不同的简单圈 $C_{ij}$（$i,j\in\mathbb B$）组成；每个 $C_{ij}$ 都含原全局单色的两侧顶点，且它的原单色 $X$ 顶点全为位 $i$，原单色 $Y$ 顶点全为位 $j$。这些圈的边示性向量满足
+
+$$
+C_{00}\oplus C_{01}\oplus C_{10}\oplus C_{11}=0,\qquad
+\dim_{\mathbb F_2}\operatorname{span}\{C_{ij}:i,j\in\mathbb B\}=3. \tag{41.20}
+$$
+
+所以任何圈秩三的 $(3,3)$ 不可行任务都必须具有这个形状；该形状本身不是不可行性的充分条件。
+
