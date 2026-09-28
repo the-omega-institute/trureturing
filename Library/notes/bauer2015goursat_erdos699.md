@@ -97,3 +97,23 @@ phi_p的核为四次幂子群；phi_p(2)=1、phi_p(-1)=2。旧前提要求共同
 完整一般结论仍是带目标分离前提的支撑定理，不是全部Erdős699。反向控制S={5,29,53}在p5,q29处的K已充满112阶直积；2^21*53同时为1模5、2模29。这种局部相容不代表二项式反例，原参数仍有共同素数3。本輪沒有宣稱任意不相容支撑都已分类。
 
 形式化接口：受限指数映射及像、一般特征标分离、原题角色到目标的完整分支、独立二分之三整数排除、有限例子资格。新书面证明仍继承规范化和mixed-support的独立义务；没有借用旧群论源码或对偶性直接认证数论全链条，也没有新增私有Lean公理。旧来源与证明保留。
+
+## 精确算术收缩与可无限延拓的二次支撑
+
+续接已读取的 `f521fb0c00a26a56d39fc92768169c12717d5cde`。新完整英文证明、自审程序及形式化交接：`tools/scripts/agent/openproblem/erdos699-quadratic-collapse-check.py`。完整中文推导在 #9670 评论5874327352。本条追加，保留前述全部来源和边界。
+
+独立整数引理：D(n-j)(n-j-1)=x(n-1)(n-2) 蕴含 gcd(n,j)|2x 及 gcd(n-2,j)|2D。故theta=1/3、2/3分别强迫d|2、d|4，原反例的共同奇因子e消失。一般目标群K中原先允许的共享素数生成元，在这两个精确比值分支实际上不能出现。目标(1,-1)、(1,-4)只须由更小的H=<(2,2)>分离；目标(1,2)、(1/3,2/3)仍使用K。此加强依赖原始整数等式，不能无条件把K替换为H。
+
+由此得到局部二次同步引理：全部端点奇素数同属5或13模24时，若Legendre(e,p)在各活跃p处相同（允许-1），原题i=3成立。先用二次符号排除n-2角色；特殊比值1/3通过e=1回到纯2的四阶部分矛盾，2/3保留原始模4/模16反证。三倍分支以共同的Legendre(3,p)符号排除。无需四次相位同步。
+
+完整支撑推论：固定r∈{5,13}、epsilon∈{±1}，若有限素数S同属r模24且任意不同p,q的Legendre(q,p)=epsilon，则任意S支撑列及任意n满足i=3，不限制大小、指数或gcd。因为Legendre(e,p)=epsilon^(sum v_q(e))与p无关。S={5,29,149}是严格加强：四次相位矩阵非列常值，且2^10*29^3在(5,149)处等于(1,-1)，旧K目标条件也失败；新分支先证明e=1，排除了产生该目标的29生成元。
+
+新增的可延拓性使用经典CRT、Dirichlet与二次互反律。设M=24*product S，新增素数q取单位类q=r模24，并在每个p∈S下取1（epsilon=+1）或2（epsilon=-1）。Dirichlet提供任意大的q；p,q均1模4，互反律保留双向符号。故每个合格有限支撑都有无限多个单素数扩展，四种(r,epsilon)各给出无限递增序列，其任意有限支撑列均由本题新定理覆盖。这是保留前提的支撑归纳，不是对所有潜在反例的归纳。经典构造本身不作新颖性声明。
+
+本轮重新读取GeneralPowerCharacterLayer真源，blob仍为79c32483be14a2333e043f151744877c4ea30fb8。另实际读取dev `D5/S3/PrimeForms/Splitting/ThreeRingProfileFactorization.lean`，blob890daca76ead377cbe0be08032fc1a07e584bfaa；它已经导入PrimesInAP并调用 `Nat.forall_exists_prime_gt_and_eq_mod`。没有声称这一旧模60定理直接证明本轮原题应用，旧源也未在本环境重新编译。
+
+官方接口及读取范围：
+- https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/LSeries/PrimesInAP.html ：读取 `Nat.forall_exists_prime_gt_and_eq_mod` 的单位剩余类与任意下界结论。
+- https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/LegendreSymbol/QuadraticReciprocity.html ：读取 `legendreSym.quadratic_reciprocity_one_mod_four` 与二次补充律。上述经典定理已经在Mathlib中存在，本轮没有重证其解析或Gauss和底层。
+
+形式化顺序：两个原比值整除式；按分支缩小生成子群；局部二次同步反证；有限乘积；最后通过CRT及既有Dirichlet/互反接口延拓支撑。原规范化和mixed-support仍有独立形式化义务。未新增Lean公理、真值计数或CI规则。一般非同步支撑、完整i=3及原下标i4..324仍未闭合。
