@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/QuadripartiteH2Repair.universal_repai
 
 For all natural p and q, every triangular cochain admits an edge repair with q times repaired support at most p times its defect count exactly when 2*q <= p. The upper proof pairs the even defect set along coordinate geodesics, bounds the filling by twice its size, and uses local characteristic-two exactness; the antipodal witness proves sharpness.
 
-The exact equivalence preregistered in issue #11045 is not claimed here. Its matching-cost atoms remain residual open.
+The coefficient is optimal uniformly over all cochains. The theorem does not identify the minimum repair cost for each cochain.
 
 ## References
 

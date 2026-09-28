@@ -46,6 +46,6 @@ internal sealed class QuadripartiteH2RepairDocument : IScribeDocumentDefinition
                         + "the antipodal witness proves sharpness."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
-                "The exact equivalence preregistered in issue #11045 is not claimed here. "
-                    + "Its matching-cost atoms remain residual open.")))));
+                "The coefficient is optimal uniformly over all cochains. "
+                    + "The theorem does not identify the minimum repair cost for each cochain.")))));
 }
