@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3f056e0189a191e1023896f60f623156d336e55cad69e13d752c09816705d5ad
+  normalized_sha256: sha256:3f056e0189a191e1023896f60f623156d336e55cad69e13d752c09816705d5ad
+cas_ref: sha256:3f056e0189a191e1023896f60f623156d336e55cad69e13d752c09816705d5ad
+coverage_gids:
+  - gid: D5/S3/Fourier/Asymptotics/SingularRightGrid.result
+    target_statement_id: sha256:868c1782b19bfd3ef7379127bc2f36b38efecae8f64ef5aedbcb9c430141cd04
+receipts:
+  unresolved_subitems: []

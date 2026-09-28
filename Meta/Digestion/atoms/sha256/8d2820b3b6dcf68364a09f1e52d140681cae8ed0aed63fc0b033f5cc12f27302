@@ -1,0 +1,9 @@
+## 1. 统一对象与仓库接口
+
+所有对数取自然对数。$S(\rho)=-\operatorname{Tr}(\rho\log\rho)$，零本征值按连续延拓处理。$R_d=\mathbb Z/d\mathbb Z$，通常 $d\ge3$ 为奇数，$\omega_d=e^{2\pi i/d}$。循环环 $\mathbb Z/p^n\mathbb Z$ 与有限域 $\mathbb F_{p^n}$ 始终区分。$\operatorname{Ad}_U(\rho)=U\rho U^*$。
+
+图的内部顶点四价，悬空腿视为接到独立边界顶点的边，每条边承载 $\mathbb C^d$。对边界子集 $C$，$m(C)$ 是在所有内部顶点的二侧分配中将 $C$ 与其补集分开的最少割边数，允许割断边界边。割容量 $m(C)\log d$ 先由图定义，独立于网络态。对四方纯态，AME$(4,d)$ 表示任意二方约化态均为 $I_{d^2}/d^2$；它也称四腿完美张量。
+
+直接使用的既有仓库接口如下，均在提交 `280905f8378cd6ed5c3ba94076853d3814b139be` 已有：
+
+- `D5/S3/Quantum/Entanglement/QutritThresholdSharing.lean`：三 qutrit 编码、单份最大混合与两份恢复。

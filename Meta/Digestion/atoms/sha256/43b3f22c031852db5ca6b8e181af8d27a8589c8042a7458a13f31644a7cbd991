@@ -1,0 +1,6 @@
+**命题 709.1（参数值结构）。** 固定 $\mathcal F,L$，$\mu_{\mathcal F}$ 在 $[0,D]$ 上连续、凸、分段仿射、单调不减且为一 Lipschitz 函数。更明确地，$0\le E_1\le E_2\le D$ 时，
+
+$$
+0\le\mu_{\mathcal F}(E_2)-\mu_{\mathcal F}(E_1)\le E_2-E_1.
+$$
+

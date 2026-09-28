@@ -1,0 +1,10 @@
+## proposition 28.3: 原精度塔的自治生成元条件
+
+在数字分解 $W:\mathbb C^D\to\mathbb C^d\otimes\mathbb C^e$、$D=de$ 下，令 $Q=\operatorname{Tr}_e\operatorname{Ad}_W$。给定自伴 $H_D,H_d$，以下关系对所有输入矩阵成立，当且仅当存在自伴 $K_e$ 使
+
+$$
+Q(-i[H_D,\rho])=-i[H_d,Q\rho],
+\qquad
+WH_DW^*=H_d\otimes I_e+I_d\otimes K_e.
+$$
+

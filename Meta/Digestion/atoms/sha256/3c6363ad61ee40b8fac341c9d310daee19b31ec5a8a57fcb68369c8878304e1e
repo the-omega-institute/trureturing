@@ -1,0 +1,40 @@
+**命题 607.2（水位构造的质量与预算）。** 上述向量满足
+
+$$
+w^v\in\Delta(X),\quad w_0^v\le u_0,\quad
+\sum_i(w_i^v-u_i-v)_+\le H,
+$$
+
+因而通过全部状态的边缘预算。
+
+证明：令 $C_k(v)=U_k+kv$，即容量 $c_i=u_i+v$ 的最小部分和。由
+
+$$
+\sum_i(s-c_i)_+
+=\max_{0\le k\le n}(ks-C_k(v))
+$$
+
+可知 $a_0=\min_{1\le k\le n}(H+C_k(v))/k$ 恰满足 $\sum_i(a_0-c_i)_+=H$。$H=0$ 时该式给出最小容量，仍成立。因此
+
+$$
+\sum_i(a-c_i)_+\le H,\qquad na\le L.
+$$
+
+同时 $\sum_i y_i\ge L$：若 $a=a_0$，该和为 $\sum_i c_i+H\ge L$；若 $a=L/n$，每个 $y_i\ge L/n$。
+
+由于 $y_i$ 已升序，对任意 $s$ 有
+
+$$
+\sum_i\min(y_i,s)
+=\min_{0\le k\le n}
+\left(\sum_{i=1}^k y_i+(n-k)s\right).
+$$
+
+上水位公式使所有 $k<n$ 的右项至少为 $L$，并使其中至少一项等于 $L$；$k=n$ 项也至少为 $L$。故 $\sum_i\min(y_i,b(v))=L$。又因 $k=0$ 给出 $b(v)\ge L/n\ge a$，每个标签质量非负，且
+
+$$
+(w_i^v-c_i)_+=(a-c_i)_+.
+$$
+
+总超额因此不超过 $H$。公共质量由命题 606.1 保证合法，加上标签总和 $L$ 得到概率向量。证毕。
+

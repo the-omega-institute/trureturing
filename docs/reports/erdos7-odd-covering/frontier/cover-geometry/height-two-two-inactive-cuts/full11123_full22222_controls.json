@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "column_lock_solutions": 105,
+  "double_H_extension_solutions": 22,
+  "controls": [
+    {
+      "cost3": "three H leaves",
+      "points": 459,
+      "pair_tests": 480,
+      "maximum_flow": 78,
+      "matching_cut": 78,
+      "law_caps": [
+        "1",
+        "2/7",
+        "3/7",
+        "6/35",
+        "1/7",
+        "13/105",
+        "3/35",
+        "1/21",
+        "1/28"
+      ],
+      "measured_envelope": "739/84",
+      "uniform_bound": "249/28",
+      "scope": "Actual source control for the support theorem; this fixture has max78, not max77."
+    },
+    {
+      "cost3": "whole H column",
+      "points": 463,
+      "pair_tests": 480,
+      "maximum_flow": 78,
+      "matching_cut": 78,
+      "law_caps": [
+        "1",
+        "2/7",
+        "3/7",
+        "6/35",
+        "1/7",
+        "13/105",
+        "3/35",
+        "1/21",
+        "1/28"
+      ],
+      "measured_envelope": "739/84",
+      "uniform_bound": "249/28",
+      "scope": "Actual source control for the support theorem; this fixture has max78, not max77."
+    }
+  ],
+  "scope": "Finite arithmetic and two actual-source controls; universal support proof supplied separately; not Lean."
+}

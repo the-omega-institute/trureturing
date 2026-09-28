@@ -1,0 +1,2 @@
+记 $Lw=(r_{kl}^q)_{q,\{k,l\}\subseteq A_q}$。对于同一可实现成对剖面 $r$，不同的 $w,v\in\mathcal P$ 若 $Lw=Lv=r$，则 $W_w,W_v$ 两向都不可模拟。这里的不同指 $w\ne v$，不指某两个潜在实现律 $p\ne p'$。
+

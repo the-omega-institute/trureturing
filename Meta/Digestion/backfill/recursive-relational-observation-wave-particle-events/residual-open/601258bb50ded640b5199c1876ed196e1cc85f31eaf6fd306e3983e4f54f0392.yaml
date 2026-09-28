@@ -5,3 +5,23 @@ cas_ref: sha256:601258bb50ded640b5199c1876ed196e1cc85f31eaf6fd306e3983e4f54f0392
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Quantum/Measurement/GeneralInstrumentResidualTailContraction.residual_tail_contraction
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 12475de431590d2432bbcd3cf9610328844eab198eb63e59bd28713fccd87abd
+      - code: chain-migration-incomplete
+        detail: 2c285f283321f2737ae44836d5bfd06a97f25b1c8998f1b2c5b61909e300792a
+      - code: chain-migration-incomplete
+        detail: 8f3f41be5462584ae55d95de1aff176b0177fd554801acf239d11f80dc4186bc
+      - code: chain-migration-incomplete
+        detail: a44f80921914117a9ac9acb0fca01ccfe9befc2e9bded407272abe3ff8a4b00d
+  chain_atoms:
+    - 2c285f283321f2737ae44836d5bfd06a97f25b1c8998f1b2c5b61909e300792a
+    - 0e0de8aabc80aa7d6868600862b3afa8fc23dd293811b99b2e0fb8a47538468b
+    - 12475de431590d2432bbcd3cf9610328844eab198eb63e59bd28713fccd87abd
+    - 8f3f41be5462584ae55d95de1aff176b0177fd554801acf239d11f80dc4186bc
+    - 2ded8b2f00a369d155ca5e7186af328585f9daccf39304725212190e8617831b
+    - a44f80921914117a9ac9acb0fca01ccfe9befc2e9bded407272abe3ff8a4b00d

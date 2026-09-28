@@ -1,0 +1,25 @@
+**命题 845.1（任意有限状态数的条件熵界）。** 设 $m\ge1/2$、$q=1-m>0$，条件同分布均值满足 $\mathbb Ez_H=0$、$\mathbb Ez_H^2=\rho$，最大权重为 $m$。定义
+
+$$
+K_\rho(q)=(1-q)f\!\left(\frac{\rho q}{1-q}\right)
++qf\!\left(\frac{\rho(1-q)}q\right).
+$$
+
+则 $\mathbb E g(z_H)\le K_\rho(q)$。
+
+证明：继续使用第 844 节的 $u,w$，对其余状态按归一权重 $\lambda_h/q$ 使用 $f$ 的凹性，得到
+
+$$
+\mathbb E g(z_H)\le mf(u)+qf\!\left(\frac{\rho-mu}{q}\right)=L_m(u).
+$$
+
+令 $u_* =\rho q/m$，则 $u\le u_*\le\rho$，且 $w_* =\rho m/q\ge\rho$。从实际可行的 $u$ 增大到 $u_*$ 时，两个函数自变量始终在 $[0,1]$：第二个从实际 $w\le1$ 下降到 $w_*\le1$。在内部可微点，
+
+$$
+L_m'(u)=m\left[f'(u)-f'\!\left(\frac{\rho-mu}{q}\right)\right]>0
+$$
+
+只要两个自变量不同。严格凹性使 $f'$ 严格递减；这里前者不大于 $\rho$，后者不小于 $\rho$。在 $m=q$ 时二者仅于终点重合，区间内仍严格；在自变量等于 $1$ 处，以连续性取极限。因此 $L_m(u)\le L_m(u_*)=K_\rho(q)$。证毕。
+
+该证明只在实际可行的 $u$ 与 $u_*$ 之间比较，没有把 $f$ 延伸到大于一的数。它覆盖任意有限潜在状态数，而不是先假定二态后再计算二态中的最好答案。
+

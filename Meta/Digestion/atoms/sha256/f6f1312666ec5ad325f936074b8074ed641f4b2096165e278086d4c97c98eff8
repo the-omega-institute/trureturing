@@ -1,0 +1,14 @@
+**命题 801.1（增加两个坐标的最大乘积）。** 设 $0\le\alpha\le\beta$，可给这两个数增加非负量，总和至多 $t\ge0$。最大乘积为
+
+$$
+U_{\alpha,\beta}(t)=
+\begin{cases}
+\beta(\alpha+t),&0\le t\le\beta-\alpha,\\
+\big((\alpha+\beta+t)/2\big)^2,&t\ge\beta-\alpha.
+\end{cases}
+$$
+
+当 $\beta>0,t>0$ 时，最大化使用全部预算；在第一段全加给较小数，在第二段使最终两数相等。这些增加量唯一，两段交界的描述相合。
+
+证明：给定总增加量 $t$，以 $u$ 加给 $\alpha$、$t-u$ 加给 $\beta$，乘积为 $(\alpha+u)(\beta+t-u)$。它是关于 $u\in[0,t]$ 的严格凹二次式，无约束最大点为 $u=(\beta-\alpha+t)/2$。该点不超过 $t$ 当且仅当 $t\ge\beta-\alpha$；否则取端点 $u=t$。$\beta>0$ 保证尚未用完预算时可增加较小数而严格增大乘积。证毕。
+

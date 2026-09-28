@@ -33,6 +33,7 @@ import publication as public
 
 selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
+NATIVE_BATCH_MODULES = 100
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
 
@@ -245,8 +246,7 @@ def module(root, name, source, utility_path, executable, output):
         print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
 
 
-def produce_batch(requests):
-    requests = sorted(requests, key=lambda row: row[1])
+def produce_batch_chunk(requests):
     root = Path(requests[0][0])
     template_inputs = selection.Selection(root)
     executable = requests[0][4]
@@ -305,6 +305,21 @@ def produce_batch(requests):
             raise ValueError('unreferenced batch materials')
         activity('extract', len(requests))
         print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={sum(len(row["declarations"]) for row in raw["modules"])}')
+
+
+def produce_batch(requests):
+    requests = sorted(requests, key=lambda row: row[1])
+    if not requests:
+        return
+    root, executable = Path(requests[0][0]), requests[0][4]
+    if any(Path(row[0]) != root or row[4] != executable for row in requests):
+        raise ValueError('mixed native batch owners')
+    if any(left[1] == right[1] for left, right in zip(requests, requests[1:])):
+        raise ValueError('duplicate native batch module')
+    # A native join has a fixed heartbeat budget; Lake still validates every
+    # completed module facet and the full aggregate after these bounded calls.
+    for start in range(0, len(requests), NATIVE_BATCH_MODULES):
+        produce_batch_chunk(requests[start:start + NATIVE_BATCH_MODULES])
 
 
 @phase('native-batch')

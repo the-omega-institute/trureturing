@@ -1,0 +1,6 @@
+**定义 638.1（数学来源与新增综合）。** 本批数学从第 607—608 节的同时缺额最优性推得精确缺额包络，由此给出三变量容量系统、原问题中一个达到最优值的生成器构造、固定有限稀疏证据族、预算包络与敏感性、三维交点枚举界、自由中心及联合下限的不同阈值，并构造同一最优值下的连续生成器族。新内容是这些成分在指定异质实验中的连接与后果，不申报已获文献确认的原创优先权。
+
+经典对偶和扰动分析参照 Stephen Boyd、Lieven Vandenberghe，*Convex Optimization*，Cambridge University Press，2004，[作者提供的全文](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)：第 5.2.1—5.2.4 节中不等式形式线性规划的对偶、弱对偶、仿射约束下的强对偶与达到性，尤其印刷页 225—227；第 5.6.1—5.6.3 节关于右端扰动、全局支撑界及可微时的局部敏感性，印刷页 249—252。本批采用的是这些明确范围，没有把一般凸问题都视为无条件强对偶，也没有在预算折点假定可微。
+
+项目来源包括 [LinearObjectiveDual](../../../D5/S0/Certificates/LinearObjectiveDual.lean) 的有理上界证据与达到见证，[FiniteStrongDuality](../../../D5/S3/Analytic/Convexity/FiniteStrongDuality.lean) 的双可行达到接口，以及 [AnswerabilityCriterion](../../../D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean)、[JointFaithfulnessLeibnizCriterion](../../../D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean) 的观察纤维与联合分离关系。它们承担的形式域和本批的参数对应已分别说明。本文为纯理论文字，未新增 Lean、编译、公理闭包核验、消化覆盖、数值实验或实现性能结论。
+

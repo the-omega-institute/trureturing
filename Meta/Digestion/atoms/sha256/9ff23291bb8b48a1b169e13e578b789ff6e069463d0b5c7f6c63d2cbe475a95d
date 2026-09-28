@@ -1,0 +1,19 @@
+**命题 536.1（固定共同总量时的单调与连续界）。** 在命题 535.1 的固定参数下，若 $0<\varepsilon_1\le\varepsilon_2<M/n$，则对全部可行 $\eta\ge\beta$，
+
+$$
+0\le
+\mathcal J_{\varepsilon_1}(\eta)-\mathcal J_{\varepsilon_2}(\eta)
+\le2(1-r)p(\varepsilon_2-\varepsilon_1).
+$$
+
+同时，每个对应状态下两目标的距离为
+
+$$
+\operatorname{TV}(Q^{\varepsilon_1}_S,Q^{\varepsilon_2}_S)
+=n(\varepsilon_2-\varepsilon_1).
+$$
+
+证明：在完整预算公式中，$\beta,\lambda,c,D$ 均固定；仅第三条仿射函数的截距随 $\varepsilon$ 增加而减少，减少量是 $2(1-r)p(\varepsilon_2-\varepsilon_1)$。对相同的另外两条函数取最大值，最优曲线不会增加，下降也不会超过这项截距变化。
+
+目标在每个标签上的共同质量都增加 $\varepsilon_2-\varepsilon_1$，而公共符号质量减少 $n(\varepsilon_2-\varepsilon_1)$。正差与负差的总量相等，TV 为所列数值。证毕。
+

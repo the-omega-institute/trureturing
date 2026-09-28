@@ -1,0 +1,29 @@
+**Theorem 2.1 (First-orientation deletion equivalence).** Under the source
+condition above, let $\gamma$ be the adjacent-transposition product of $C$
+and let $\pi=\sigma\gamma^{-1}$. There is an equivalence
+$e:W_n(\sigma)\simeq W_n(\pi)$ such that, for every source word $a$ and every
+first-orientation shape $a=pFq$ with the stated prefix and suffix bounds,
+
+$$
+e(a)=pBq,\qquad |a|=|e(a)|+|C|,\qquad |C|>0.
+$$
+
+Proof. Every source singleton has the stated shape under the endpoint and
+exterior fixed-point equations. The source product factors as
+$\operatorname{prod}(pFq)=\operatorname{prod}(pBq)\gamma$: the deleted part
+commutes past each suffix generator, whose index lies in $(i,M)$. The full and
+retained blocks have the same first and last letters, so replacement preserves
+the two outer adjacency checks; the retained descending block is consecutive.
+Its letters are valid. If a shorter valid list $v$ represented $\pi$, then
+$vC$ would represent $\sigma$. The shape gives
+$|a|=|pBq|+|C|$, and the reducedness of $a$ rules out such a $v$. Thus
+$pBq\in W_n(\pi)$, with the displayed exact length drop.
+
+The image determines its decomposition: no prefix letter is $j$, while $B$
+starts with $j$, so the first $j$ determines $p$. Canceling this prefix and the
+fixed block $B$ determines $q$, even when $q$ contains $j$. The same argument
+with $F$ makes the source decomposition independent of the chosen shape.
+Therefore deletion is injective. The source condition supplies an actual
+singleton source, and the first-orientation lifting theorem inserts $F$ into
+each target singleton. This proves surjectivity and the equivalence. Finally,
+$A_{m+1,M}$ is nonempty, so $|C|>0$.

@@ -1,0 +1,21 @@
+## theorem 12.2: 全输入交换图和严格通道塔
+
+用第 7 节数字通道 $Q_{D,d}$ 定义
+
+$$
+\mathcal R_{D,d}=\operatorname{Ad}_{G_d}\circ Q_{D,d}^{\otimes2L}\circ\operatorname{Ad}_{G_D^*},
+\qquad\mathcal Q_{D,d}=Q_{D,d}^{\otimes(L+1)}.
+$$
+
+它们 CPTP。$\mathcal R_{D,d}$ 在全部边界输入上满射、非恒定，并且
+
+$$
+\boxed{\mathcal R_{D,d}\circ\mathcal E_D=\mathcal E_d\circ\mathcal Q_{D,d}.}
+$$
+
+对 $f\mid d\mid D$，还在全部边界矩阵上满足
+
+$$
+\boxed{\mathcal R_{d,f}\circ\mathcal R_{D,d}=\mathcal R_{D,f}.}
+$$
+

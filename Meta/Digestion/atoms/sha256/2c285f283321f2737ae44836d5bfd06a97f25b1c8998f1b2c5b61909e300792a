@@ -1,0 +1,11 @@
+**定理 19.3（条件等待时间与唯一瞬态解）。** 若 $r_\rho>0$，首次点击轮数在最终点击条件下满足
+
+$$
+\mathbb P(\mathsf N>n\mid\mathsf N<\infty)
+=\frac{\operatorname{Tr}(\rho R_n)}{r_\rho},
+\qquad
+\mathbb E[\mathsf N\mid\mathsf N<\infty]
+=\frac{\operatorname{Tr}(\rho T)}{r_\rho}
+\le\frac M{1-q}.
+$$
+

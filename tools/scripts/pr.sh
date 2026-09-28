@@ -19,7 +19,7 @@ PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID
     object(oid:$head) { ... on Commit { oid statusCheckRollup { contexts(first:100) {
       nodes { __typename
         ... on CheckRun { databaseId name status conclusion
-          checkSuite { databaseId commit { oid } workflowRun { databaseId runNumber workflow { id } }
+          checkSuite { databaseId commit { oid } workflowRun { databaseId runNumber runAttempt workflow { id } }
             checkRuns(first:100,filterBy:{checkType:LATEST}) {
               nodes { databaseId } pageInfo { hasNextPage }
             } } }
@@ -137,6 +137,7 @@ parse_snapshot() {
       (.checkSuite.workflowRun == null or
         ((.checkSuite.databaseId | database_id) and (.checkSuite.workflowRun.databaseId | database_id) and
          (.checkSuite.workflowRun.runNumber | database_id) and
+         (.checkSuite.workflowRun.runAttempt | database_id) and
          (.checkSuite.workflowRun.workflow.id | type == "string" and length > 0) and
          (.checkSuite.checkRuns.nodes | type == "array" and length > 0 and all(.[]; .databaseId | database_id)) and
          .checkSuite.checkRuns.pageInfo.hasNextPage == false))
@@ -155,6 +156,7 @@ parse_snapshot() {
     def evidence: {check:check_name, check_id:(.databaseId // .id),
       run_id:(.checkSuite.workflowRun.databaseId // null),
       workflow_id:producer, run_number:(.checkSuite.workflowRun.runNumber // null),
+      run_attempt:(.checkSuite.workflowRun.runAttempt // null),
       commit:(.checkSuite.commit.oid // .commit.oid), status:(.status // .state), conclusion:check_state} +
       (if producer == null then {membership:"commit-context"}
        else {membership:"workflow-run", event:(run_metadata | .event),
@@ -201,15 +203,19 @@ parse_snapshot() {
       # The workflow path must be known before selecting its PR identity policy.
       (.path | type == "string" and length > 0) and
       (.pull_requests | type == "array") and
+      # Non-native PR runs lack certified trigger identity. Even one association
+      # is a mutable open-head match, so reject before applicability or supersession.
       (if native_run then (associated_prs | length) == 1
-       elif (.event | pr_event) then (.pull_requests | length > 0) else true end) and
+       elif (.event | pr_event) then false else true end) and
       (.repository.id as $repository_id | all(.pull_requests[];
         type == "object" and (.id | database_id) and (.number | database_id) and
         .url == ("https://api.github.com/repos/" + $repo + "/pulls/" + (.number | tostring)) and
         .head.sha == $head and .base.repo.id == $repository_id)) and
       ([.pull_requests[].number] | length == (unique | length)))) |
     select(all($actions[]; . as $check | run_metadata |
-      .check_suite_id == $check.checkSuite.databaseId and .run_number == $check.checkSuite.workflowRun.runNumber)) |
+      .check_suite_id == $check.checkSuite.databaseId and
+      .run_number == $check.checkSuite.workflowRun.runNumber and
+      .run_attempt == $check.checkSuite.workflowRun.runAttempt)) |
     # Membership precedes producer obligations and latest-run selection. A different PR
     # or non-PR event cannot supply a job, create an obligation, or retire an execution.
     [$items[] | select(applicable)] as $items |

@@ -1,0 +1,11 @@
+**定义 717.1（源码接口及符号方向）。** 本批读取项目 `D5/S3/Analytic/Convexity/FiniteStrongDuality.lean` 中的 `ExtendedLP`、`ValidELP`、`dualize` 与 `ValidELP.strong_duality_of_both_feasible`。其中原问题为非负变量上的 $Ax\le b$、最小化 $c\cdot x$，对偶对象是 $(-A^{\mathsf T},c,b)$，两侧均采用最小化约定。声明在两侧可行时给出达到的有限相反值 $-r,r$；结合弱对偶才能将它们识别为各自的最小值。不能将这里的 $r$ 当成两个最小值相等。
+
+取实数域，以非负变量 $(u_i,\zeta)$ 最小化 $-\zeta$，约束为
+
+$$
+\zeta-\sum_{i\in S}u_i\le0\quad(S\in\mathcal F),\qquad
+u_i\le L,\qquad \sum_i u_i\le E,\qquad-\sum_i u_i\le-E.
+$$
+
+变量与约束指标都有限，所有系数均为普通有限实数，所以不会触发扩展数域中的正负无穷冲突条件。原问题可行点为 $u_i=E/n$、$\zeta=0$；其目标最小值是第 705 节最大最小子集和的相反数。
+

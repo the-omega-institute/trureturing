@@ -1,0 +1,9 @@
+**命题 705.2（任意族的值公式）。** 在第 703 节条件下，
+
+$$
+\mu_{\mathcal F}(E)
+=E-\max_{u\in A_{E,L}}\min_{S\in\mathcal F}u(S)
+=E-\min_{q\in P_{\mathcal F}}T_{E,L}(q),
+\qquad u(S)=\sum_{i\in S}u_i.
+$$
+

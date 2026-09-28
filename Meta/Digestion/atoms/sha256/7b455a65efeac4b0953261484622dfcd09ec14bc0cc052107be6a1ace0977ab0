@@ -1,0 +1,12 @@
+### 命题 534.4（被动共同律与干预条件核）
+
+在定义 534.1 的被动情形，两种模型的 $(X,H,Y)$ 都服从 $N(0,\Sigma)$，故被动联合资料对 $\theta$ 不可区分。给定任意历史、$R$ 和当前逐点许可动作 $(u_t,v_t)\in A_B$，新鲜重置保证
+
+$$
+H_t\mid(\text{历史},R,u_t,v_t),\theta=+1\sim N(\rho u_t,\sigma^2),
+$$
+
+$$
+H_t\mid(\text{历史},R,u_t,v_t),\theta=-1\sim N(\rho v_t,\sigma^2).
+$$
+

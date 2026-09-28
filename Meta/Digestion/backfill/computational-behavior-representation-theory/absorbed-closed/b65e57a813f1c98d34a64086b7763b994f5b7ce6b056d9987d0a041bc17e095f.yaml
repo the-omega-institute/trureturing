@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b65e57a813f1c98d34a64086b7763b994f5b7ce6b056d9987d0a041bc17e095f
+  normalized_sha256: sha256:b65e57a813f1c98d34a64086b7763b994f5b7ce6b056d9987d0a041bc17e095f
+cas_ref: sha256:b65e57a813f1c98d34a64086b7763b994f5b7ce6b056d9987d0a041bc17e095f
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/FinitePowerExtrapolationRisk.finite_power_extrapolation_risk
+    target_statement_id: sha256:35766434f7fac5411ccc8ba16f7b6ed21be675ca1012d2c0272b89c8ff477bab
+receipts:
+  unresolved_subitems: []

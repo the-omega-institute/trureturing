@@ -1,0 +1,28 @@
+**定理 630.1（自由中心的准确准入阈值）。** 定义
+
+$$
+h_c=\sum_{i=1}^{d}\left(\frac1n-u_i\right)_+,\qquad
+\eta_c=rD h_c.
+$$
+
+则在可行预算域内，
+
+$$
+F_*(h)=p/n\ \Longleftrightarrow\ h\ge h_c,
+\qquad \beta\le\eta_c<\lambda.
+$$
+
+并且
+
+$$
+\mathcal J(r,\eta)=2\lambda-\eta\quad(\eta_c\le\eta\le\lambda),
+\qquad
+\mathcal J(r,\eta)=\lambda\ \Longleftrightarrow\ \eta\ge\lambda.
+$$
+
+证明：由第 629 节，容量等号只可能由均匀残余达到。此时 $t_i=(1/n-u_i)_+$，并有 $t_i\le1/n<q$，所以超额表达中的截断不起作用。最坏障碍是 $d$ 个最大 $t_i$ 之和，正好来自 $d$ 个最小 $u_i$，即 $h_c$。因此均匀残余可行当且仅当 $h\ge h_c$；若最优容量等于上限，紧性保证达到，唯一性再强制这一残余。
+
+均匀残余在 $\eta_c$ 已可行，所以 $\eta_c\ge\beta$。每个 $u_i>0$，使 $(1/n-u_i)_+<1/n$，故 $h_c<d/n$，给出严格的 $\eta_c<\lambda$。在该中心已可行的区间，$A_*=\lambda$，代入第 621 节公式即得 $\max(\lambda,2\lambda-\eta)$。任何 $\eta<\lambda$ 都有 $A_*\ge\lambda$，因此 $2A_*-\eta>\lambda$，不可能更早达到联合下限。证毕。
+
+这两个阈值回答不同问题：$\eta_c$ 是最佳共同擦除中心开始可行的位置，$\lambda$ 是保留实际来源记录的联合误差停止下降的位置。中间区间仍须在揭示分支作补偿，只有从 $\eta=\lambda$ 起，配合均匀残余取 $T_S=Q_S$ 就达到下限。严格间隔使用了 $0<r<1$ 及全部底量为正；$r=0,1$ 应回到定理 609.2 各自的边界公式。
+

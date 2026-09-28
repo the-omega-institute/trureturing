@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ead3a6ead5fb3335a7bb6d96738001e8d7d9c610771f99e822804ac89546a665
+  normalized_sha256: sha256:ead3a6ead5fb3335a7bb6d96738001e8d7d9c610771f99e822804ac89546a665
+cas_ref: sha256:ead3a6ead5fb3335a7bb6d96738001e8d7d9c610771f99e822804ac89546a665
+coverage_gids:
+  - gid: D5/S3/Combinatorics/APIntersectionBoundaryEndgame.result
+    target_statement_id: sha256:6d236452aaa0f8276b1adc4e87bdd73239d3385e98f54f6303fc8640a80803b7
+receipts:
+  unresolved_subitems: []

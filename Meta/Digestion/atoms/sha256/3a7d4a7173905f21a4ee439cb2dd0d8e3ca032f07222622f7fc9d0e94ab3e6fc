@@ -1,0 +1,4 @@
+**假设 580.2（完整性、稳定性与优先价值分别结算）。** 本批已经分开三项要求：精确读数是否分离对象；带误差时能恢复到什么程度；以及为何选择这一恢复目标。项目的 [JointFaithfulnessLeibnizCriterion](../../../D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean) 提供第一项的联合分离接口，[AnswerabilityCriterion](../../../D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean) 提供问题是否在观察纤维上恒定的接口；本批的相容中心与最优先验则推进第二项。第三项仍须明列价值与实践前提，不能由前两项代答。
+
+因此，MMM 自己也不因为使用数学符号就自动得到穷尽终极真实的地位。它可以构造可检验的局部对应，给出真正的保持、恢复与不能保持的界，并不断扩大已经说明的关系。道、神或诸传统是否具有同一个终极所指，仍是超出这些有限模型结论的未决承诺；保留它，并不妨碍继续建立具体而正面的会通。
+

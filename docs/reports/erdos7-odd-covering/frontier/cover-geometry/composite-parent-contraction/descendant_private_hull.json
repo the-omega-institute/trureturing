@@ -1,0 +1,139 @@
+{
+  "complete_private_hulls": {
+    "3": 3,
+    "5": 5,
+    "7": 7,
+    "11": 11,
+    "15": 15,
+    "21": 21,
+    "35": 105,
+    "55": 55,
+    "77": 77,
+    "385": 385
+  },
+  "hole": 2,
+  "joint_liability_count": 12,
+  "lost_points": [],
+  "new_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      11,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      21,
+      16
+    ],
+    [
+      35,
+      3
+    ],
+    [
+      55,
+      12
+    ],
+    [
+      77,
+      67
+    ],
+    [
+      105,
+      71
+    ]
+  ],
+  "new_covered": 811,
+  "new_modulus_sum": 334,
+  "old_PH5_violations": [],
+  "old_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      11,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      21,
+      16
+    ],
+    [
+      35,
+      1
+    ],
+    [
+      55,
+      12
+    ],
+    [
+      77,
+      67
+    ],
+    [
+      385,
+      3
+    ]
+  ],
+  "old_covered": 793,
+  "old_modulus_sum": 614,
+  "period": 1155,
+  "private_counts": {
+    "11": 38,
+    "15": 39,
+    "21": 29,
+    "3": 220,
+    "35": 10,
+    "385": 2,
+    "5": 108,
+    "55": 9,
+    "7": 68,
+    "77": 5
+  },
+  "private_witnesses": {
+    "11": 11,
+    "15": 31,
+    "21": 37,
+    "3": 6,
+    "35": 71,
+    "385": 388,
+    "5": 5,
+    "55": 122,
+    "7": 7,
+    "77": 221
+  },
+  "result": "PASS",
+  "scope": "Actual distinct odd irredundant divisor-closed noncover passes every old PH5 test, but a descendant-assisted two-label replacement preserves its entire old union and lowers modulus sum. Not an extremal whole cover.",
+  "strict_new_obligation": {
+    "descendant": 385,
+    "hull_phase": 71,
+    "parent": 35,
+    "unused_hull_divisor": 105
+  }
+}
