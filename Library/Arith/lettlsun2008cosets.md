@@ -1994,3 +1994,141 @@ The missing #7 bridge is a theorem forcing a common-phase obstruction
 or sufficient integrated CB3 defect in every hypothetical extremal
 odd family. Exact marginal lower bounds, distinctness, irredundancy
 and divisor closure have not been shown here to force it.
+
+## Nonnegative integer two-prime margins retain a further covering condition
+
+Fix one actual original family with full period L=P Q B, where
+P=p^H, Q=q^G, p and q are distinct support primes, H,G>=1, and
+gcd(B,pq)=1. Fix ONE actual cofactor z modulo B. On its complete
+P-by-Q CRT slice let c_ij be the original multiplicity and put
+
+    F_ij=c_ij-1, r_i=sum_j F_ij, s_j=sum_i F_ij,
+    A_z=sum_(i,j) binom(c_ij,2)=sum_(i,j) g(F_ij),
+    g(t)=t(t+1)/2.
+
+The actual F is an integer matrix with entries at least -1. Whole
+coverage would make all its entries nonnegative. Negative row or
+column sums already fail the elementary prime-marginal bound. When
+r,s are nonnegative, define
+
+    T_Z(r,s)=min sum_(i,j) g(X_ij),
+      X_ij nonnegative integers,
+      sum_j X_ij=r_i, sum_i X_ij=s_j.                 (IT1)
+
+Their equal integer totals guarantee a feasible matrix, and only
+finitely many such matrices exist. A necessary covering condition is
+
+    A_z >= T_Z(r,s) for every actual cofactor z.      (IT2)
+
+This condition uses the row sums, column sums and overlap of the SAME
+original family. The overlap is available directly from its literal
+labels: write d_t=p^(e_t)q^(h_t)n_t and retain t exactly when
+z=a_t mod n_t. For each retained pair whose phases agree modulo both
+p^min(e_t,e_u) and q^min(h_t,h_u), add
+
+    P Q / (p^max(e_t,e_u) q^max(h_t,h_u))             (IT3)
+
+to A_z. All other pairs contribute zero. This is the exact number of
+their common points on that slice, not an independently optimized
+intersection bound. Neither the definition nor the computation assumes
+an observer can obtain a complete marginal table at small cost.
+
+### An exact separation from real-valued and pairwise conditions
+
+For arbitrary P,Q>=3 form the signed integer matrix F with corner
+F_00=-1, all other entries of its first row or first column equal to 1,
+and every interior entry equal to 2. Then
+
+    A=sum g(F_ij)=P+Q-2+3(P-1)(Q-1),
+    T_Z(r,s)=A+1.                                   (IT4)
+
+Here and below r,s are the actual sums of this F. To prove the lower
+bound, take any feasible nonnegative integer X and set t=X_00>=0.
+Relative to F, the corner changes by t+1; the first-row arm and the
+first-column arm each change in total by -(t+1); the interior total
+changes by t+1. For nonnegative integers x,
+
+    g(x)-g(1)>=x-1,
+    g(x)-g(2)>=3(x-2).
+
+Both differences reduce to products of two consecutive integers
+divided by 2. Summing over the three regions gives
+
+    sum g(X_ij)-A >= g(t)+(t+1)>=1.
+
+Increase the corner to 0, decrease one entry in each incident arm
+from 1 to 0, and increase their common interior entry from 2 to 3.
+This rectangle change preserves every margin and increases the cost
+by exactly 1, proving IT4. No bounded search is used for this minimum.
+
+The nonnegative REAL relaxation has a strictly smaller answer for
+distinct odd prime powers P,Q. Put
+
+    C=1/(P-1)+1/(Q-1)+1/((P-1)(Q-1)).
+
+For fixed corner 0<=t<=min(P,Q)-2, convexity bounds each arm and the interior by
+the cost of its constant average. Those averages are respectively
+1-(t+1)/(Q-1), 1-(t+1)/(P-1), and
+2+(t+1)/((P-1)(Q-1)). This is exactly the feasible corner range; these
+averages preserve every original row and column sum. The exact minimum at that t differs
+from A by
+
+    t^2/2-1/2+C(t+1)^2/2.
+
+This increases on t>=0, and t=0 is feasible. Thus
+
+    T_R(r,s)=A-1/2+C/2.                              (IT5)
+
+After exchanging the two axes if needed, distinct odd prime powers
+have P>=3 and Q>=5, so C<=7/8 and T_R<=A-1/16<A.
+The real relaxation therefore does not reject this actual F; the
+nonnegative integer condition does.
+
+For P=3,Q=5 the complete matrices are
+
+    F = [-1 1 1 1 1]      X = [0 0 1 1 1]
+        [ 1 2 2 2 2]          [0 3 2 2 2]
+        [ 1 2 2 2 2]          [1 2 2 2 2].
+
+Both have row sums (3,9,9) and column sums (1,5,5,5,5).
+Their costs are 30 and 31. The nonnegative real optimum is 479/16,
+attained by corner 0, first-row arms 3/4, first-column arms 1/2 and
+interior 17/8. The ordinary unconstrained row/column L2 bound is 446/15,
+also below 30. These values are exact rational arithmetic; the minimum
+claims are proved by IT4--IT5 rather than inferred from a solver result.
+
+### Realization by distinct odd numerical labels and the global boundary
+
+The separation is realizable on one actual arithmetic slice at every
+pair of distinct odd prime powers. For EACH of the c_ij=F_ij+1 copies
+at a nonzero cell choose a fresh odd prime ell_t, different from p,q
+and from every other tag. Take one original class with numerical
+modulus P Q ell_t and CRT phases i mod P, j mod Q, 0 mod ell_t.
+There are
+
+    N=2(P+Q-2)+3(P-1)(Q-1)
+
+such classes; N=36 for P=3,Q=5. All numerical moduli are odd, greater
+than 1 and pairwise distinct. On the SAME auxiliary cofactor where
+all tags equal 0, their multiplicity is exactly c. Each original has
+a private witness: give it its prescribed p,q phases and tag 0, and
+set every other tag to 1. Thus the family is irredundant as well.
+
+Every original has prime heights H,G. On the selected slice, the
+smallest p-marginal is 2(P-1)/P, with slack 1-2/P>=1/P; the q direction
+has the analogous bound. The strict CB4 inequality never holds in
+either slice graph. For P=3,Q=5 the p-marginals are
+(4/3,8/3,8/3,8/3,8/3), and the q-marginals are (8/5,14/5,14/5).
+Consequently IT2 rejects a slice whose ordinary marginal bounds and
+both slice CB4 graphs do not reject, even though the continuous
+transportation bound also passes.
+
+This comparison is limited to the specified slice. If all auxiliary
+tags instead equal 1, no original is active and the p- and q-marginals
+are zero. The control is NOT a family passing all complete prime
+marginal tests or all global CB4 constraints. It does not enlarge the
+known unrestricted noncoverage range. A bridge to Erdős #7 still needs
+an arithmetic argument forcing a marginal failure or an IT2 violation
+in every hypothetical distinct odd cover, or a stronger compatible
+condition if these tests can all pass. The inequalities and constructions
+here are ordinary proofs, not new Lean verification or a priority claim.
