@@ -1,0 +1,36 @@
+### 推论 53.2：局部着色只是联合剖面的投影
+
+由定理 51.1，
+
+$$
+\mathcal L_v(k)\ne\varnothing
+\quad\Longleftrightarrow\quad
+\chi\bigl(G_{A_v}(D,f)\bigr)\le k.
+$$
+
+所以
+
+$$
+\max_{v\in T}\min_{H}\kappa_{A_v}^D(H)\le k
+$$
+
+只说明每个投影集合 $\mathcal L_v(k)$ 非空；它没有说明这些投影能在联合像 $\mathcal J_T(D,f)$ 中由同一个 $H$ 同时实现。严格的共同延拓证书是交集
+
+$$
+\mathfrak C_T(k)
+=
+\mathcal J_T(D,f)\cap\prod_{v\in T}\mathcal L_v(k),
+$$
+
+而不是各冲突图的独立着色证书。
+
+在命题 52.1 的 $3\times3$ 表中，三个局部冲突图均允许 $k=2$，但
+
+$$
+\mathfrak C_T(2)=\varnothing,
+\qquad
+\mathfrak C_T(3)\ne\varnothing.
+$$
+
+这把 $2<3$ 的间隙从一个数值现象改写成了联合像与笛卡尔积的空交：局部着色的存在是投影级事实，共同树协议要求的是纤维级事实。
+

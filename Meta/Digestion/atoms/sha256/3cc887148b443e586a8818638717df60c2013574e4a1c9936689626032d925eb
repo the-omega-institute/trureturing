@@ -1,0 +1,30 @@
+### 定理 53.1：共同延拓的联合剖面判据
+
+在有限树模型中，对任意 $k\in\mathbb N$，有
+
+$$
+\boxed{
+P_T(D,f)\le k
+\quad\Longleftrightarrow\quad
+\mathcal J_T(D,f)
+\cap
+\prod_{v\in T}\mathcal L_v(k)
+\ne\varnothing.
+}
+$$
+
+因而
+
+$$
+\boxed{
+P_T(D,f)
+=
+\min\left\{
+k:\mathcal J_T(D,f)
+\cap
+\prod_{v\in T}\mathcal L_v(k)
+\ne\varnothing
+\right\}.
+}
+$$
+

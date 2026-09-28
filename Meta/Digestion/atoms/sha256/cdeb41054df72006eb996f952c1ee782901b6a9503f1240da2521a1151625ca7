@@ -1,0 +1,56 @@
+### 定义 53：延拓的活动剖面与联合像
+
+令
+
+$$
+U=X_I\setminus D,
+\qquad
+\mathcal H(D,f)=\operatorname{Ext}(D,f).
+$$
+
+把 $H\in\mathcal H(D,f)$ 限制到 $U$，得到一个双射
+
+$$
+\mathcal H(D,f)\cong O^U;
+$$
+
+因此未知部分确实只是非法格上的有限赋值。对任意切面 $A$，定义 $H$ 的活动剖面
+
+$$
+\rho_A(H)=
+\bigl(R_A^H(a)\bigr)_{a\in D_A}
+\in
+\left(O^{X_{I\setminus A}}\right)^{D_A},
+$$
+
+并令
+
+$$
+\lambda_A(H)=\operatorname{im}\rho_A(H),
+\qquad
+|\lambda_A(H)|=\kappa_A^D(H).
+$$
+
+固定树 $T$ 后，定义联合剖面像
+
+$$
+\mathcal J_T(D,f)
+=
+\left\{
+\bigl(\rho_{A_v}(H)\bigr)_{v\in T}:H\in\mathcal H(D,f)
+\right\}.
+$$
+
+对每个节点和整数 $k$，定义局部 $k$-剖面集合
+
+$$
+\mathcal L_v(k)=
+\left\{
+\rho_{A_v}(H):
+H\in\mathcal H(D,f),
+\ |\lambda_{A_v}(H)|\le k
+\right\}.
+$$
+
+这里的 $\mathcal L_v(k)$ 是单切面允许的全部剖面，而 $\mathcal J_T(D,f)$ 记录哪些剖面元组能够由同一个非法格赋值同时产生。
+
