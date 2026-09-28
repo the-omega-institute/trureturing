@@ -1458,3 +1458,210 @@ retaining arbitrary original support, phases and heights. A theorem
 forcing a hypothetical whole cover to violate these conditions remains
 missing. These are ordinary mathematical deductions and exact finite
 controls, not new Lean verification or a literature-priority claim.
+
+## 14. Deleting some old parents strengthens the shared repair constraint
+
+Keep the same hypothetical whole cover minimizing class count and then
+modulus sum. Fix an ML2-qualified h, its fresh repair count N and sum S,
+and put B=N-1. In particular, S<h*N^2. The parents below are original
+labels from this ONE family; numerical moduli and phases remain those
+of that family until the stated simultaneous replacement.
+This specializes the existing PH2 replacement rule using ML4--ML6;
+it is not a new general exchange principle. The finite example below
+separates the resulting constraints from the older descendant-only
+ML6 tests, not from PH2 itself.
+
+### A joint deletion and movement inequality
+
+Let P be any set of original labels with h|d and a_d=c mod h for
+every d in P. Partition P into R, the parents retained and moved, and
+E=P minus R, the parents deleted. Choose a new phase b_d for each d
+in R. Define
+
+    J=union_(d in R){M in D minus P:
+                     d|M, M>d, a_M=b_d mod d}.
+
+Then the stronger joint bound is
+
+    |E|+|J|<=B.                                      (MX1)
+
+Move each retained d to b_d, delete E and J, and add the N fresh
+classes repairing the entire c mod h. Every OLD class with label in P
+is contained in the repaired h-class. Every removed class in J is
+contained in a retained moved parent. All other originals stay. This
+preserves the whole old covered union, including points with several
+old owners; separate private regions do not replace joint liability.
+
+The sets E and J are disjoint and their labels are all multiples of h.
+If their total count exceeds N, the new family has fewer classes. If
+the count equals N, their quotients by h are N distinct positive odd
+integers, possibly including1. In increasing order they are at least
+1,3,...,2*N-1, so
+
+    sum_(M in E union J)M>=h*N^2>S.
+
+The class count is unchanged and the modulus sum strictly falls.
+Both alternatives contradict the two extremal objectives, proving MX1.
+Retained moved labels cancel from this sum comparison. Freshness at
+the p-coordinate prevents a duplicate with ANY retained original.
+
+Taking E empty recovers ML6. Taking R empty only gives the old-phase
+count cap, which already follows from ML6 and divisor closure.
+The added constraint keeps both terms: deleting old parents spends
+part of the same repair budget available for descendant deletions.
+
+### Old-phase occupancy limits cross-phase descendant groups
+
+Let
+
+    P_c={d in D:h|d,a_d=c mod h}, q_c=|P_c|,
+    S_u(b)={M in D:u|M,M>u,a_M=b mod u}.
+
+For u in P_c and b mod h different from c, every label in S_u(b)
+lies outside P_c. Apply MX1 with R={u} and E=P_c minus {u}. It gives
+
+    q_c-1+|S_u(b)|<=B.                              (MX2)
+
+The condition on b is necessary for this full-group formula: when
+b mod h=c, the descendants already belong to P_c and cannot also be
+counted as additional deleted labels.
+
+There is an actual-intersection form without that condition. Suppose
+P consists of q originals whose moduli are multiples of h and whose
+ACTUAL classes all contain the same integer x. No proper original
+descendant of u in P belongs to P, by comparable-class disjointness.
+Thus for every u in P and every descendant phase b,
+
+    q-1+|S_u(b)|<=B.                                (MX3)
+
+This concerns one actual source point. Intersections of projected
+shadows do not supply the premise.
+
+In particular, if |S_u(b)|=B, then u is the ONLY original label in
+its old h-phase:
+
+    P_(a_u mod h)={u}.                              (MX4)
+
+First recover the elementary cap |P_c|<=B. If P_c is nonempty,
+divisor closure puts h in D. At c=a_h, comparable disjointness gives
+P_c={h}; at every other c, P_c is the proper-descendant phase group
+of h, so ML6 applied to parent h gives the cap. If b mod h=a_u mod h,
+the distinct originals u and the B members of S_u(b) would give B+1
+members in one such group. Hence b has a different h-phase, and MX2
+forces q_c=1.
+
+The earlier restriction excluded two saturated incomparable parents.
+MX4 excludes every other original in this old h-phase, including a
+maximal label with no descendants. At h=u, comparable disjointness
+already gives isolation; the added force concerns proper interfaces h.
+
+For example, let p be an original support prime, H=v_p(Q), and let
+u have full p-height and a descendant group of size p-1. For EVERY
+other full-p-height original v, not assumed saturated,
+
+    A_u intersect A_v !=empty
+      ==> tau(gcd(u,v)/p^H)<=p-1.                    (MX5)
+
+Otherwise h=gcd(u,v) has a single-layer repair with N=p. An actual
+intersection makes u and v share the same old h-phase, contradicting
+MX4. Thus the second saturation premise in AQ4 is unnecessary.
+
+### A divisor-closed noncover separates the two constraints
+
+The following17 original classes have full period13125:
+
+| Original modulus | Original residue |
+| ---: | ---: |
+|3|0|
+|5|0|
+|7|0|
+|15|7|
+|21|4|
+|25|3|
+|35|3|
+|75|4|
+|105|8|
+|125|4|
+|175|4|
+|375|1|
+|525|1|
+|625|1|
+|875|1|
+|1875|2|
+|2625|2|
+
+The labels are distinct odd nonunits, divisor-closed above1, and the
+prime classes are normalized. All70 comparable pairs are disjoint.
+Every original has a nonempty complete private region. The original
+covered count is9065 out of13125, so this is a NONCOVER.
+
+It satisfies every ML6 shared-parent descendant-union cap. For a
+nonempty parent collection, its interface h is an original label by
+divisor closure. ML2 implies p<=tau(h), and the maximum tau(h) among
+these originals is16. Thus p in {3,5,7,11,13} exhausts all eligible
+odd primes, including primes absent from the original period. The
+exact interfaces and maximum descendant-union sizes are:
+
+| h | p | N | Maximum union over same-old-phase parents and all new phases |
+| ---: | ---: | ---: | ---: |
+|75|3|3|2|
+|105|3|3|1|
+|375|3|3|2|
+|525|3|3|1|
+|525|11|11|1|
+|875|3|11|1|
+|1875|3|3|0|
+|2625|3|3|0|
+|2625|7|7|0|
+|2625|11|11|0|
+|2625|13|13|0|
+
+At h=75,p=3 the fresh repair has N=3, B=2 and
+S=9+45+225=279. The old parents375 and525 share phase1 modulo75.
+Parent375 has the two-child group {1875,2625} at phase2 modulo375;
+parent525 has only child2625. Retaining and moving both removes at
+most those two children and passes the old bound. Instead delete525,
+move375 to phase2, delete1875 and2625, and add
+
+    1 mod9, 31 mod45, 151 mod225.
+
+These three fresh classes cover the whole old class1 mod75. The moved
+375 class covers both deleted children. This is MX1 with |E|+|J|=3>B;
+the removed modulus sum is5025, whereas the repair sum is279.
+
+This also separates MX5 from AQ4:375 is saturated and525 is not,
+their actual classes meet at integer1, and
+tau(gcd(375,525)/3)=tau(25)=3>2.
+
+Direct enumeration on the COMPLETE common period39375 gives:
+
+| Quantity | Original family | Replacement |
+| --- | ---: | ---: |
+| Class count |17|17|
+| Sum of numerical moduli |7491|2745|
+| Covered residues |27195|29395|
+
+No previously covered residue is lost;2200 new residues are covered.
+Both families miss integer11. Thus this is a union-preserving
+improvement and a strict separation from ALL the old ML6 caps on a
+divisor-closed irredundant input. It is not a whole cover, a globally
+minimal realization, or a counterexample to Erdős#7.
+
+The [exact checker](../../../frontier/cover-geometry/composite-parent-contraction/mixed_parent_exchange.py)
+reads the [literal original and replacement classes](../../../frontier/cover-geometry/composite-parent-contraction/mixed_parent_exchange_originals.json)
+and produces the [complete-period counts and old-cap checks](../../../frontier/cover-geometry/composite-parent-contraction/mixed_parent_exchange.json).
+It checks all11 eligible interfaces,25 nonempty same-old-phase parent
+subsets and39 descendant-phase group choices, including empty groups;
+phases with the same descendant group have identical union effects.
+From that program's directory, reproduce with Python3.9+ and its
+standard library:
+
+```sh
+python3 -I -S -B mixed_parent_exchange.py --input mixed_parent_exchange_originals.json --output mixed_parent_exchange.json
+```
+
+The unrestricted missing implication remains: whole coverage must
+force a violation of some available joint replacement constraint.
+MX1--MX5 strengthen those constraints without supplying that forcing
+theorem. These are ordinary proofs and finite arithmetic, not new
+Lean verification or a literature-priority claim.
