@@ -174,7 +174,7 @@ def checkProviderPin (info : ConstantInfo) (owner : Name) (fuel : Nat := 65536) 
 /-- Reflect imported ownership. Current declarations have no import index;
 `checkedProvider` retains the current-module fallback in that case. -/
 def declaringModuleOf (env : Environment) (name : Name) : Option Name :=
-  (env.getModuleIdxFor? name).bind (env.header.moduleNames[·]?)
+  (env.getModuleIdxFor? name).bind fun idx => (env.header.modules[idx]?).map (·.module)
 
 /-- Both insertion and persisted validation bind Name, raw type and declaring module.
 A namespace spelling, even with an identical type, is not module ownership. -/
