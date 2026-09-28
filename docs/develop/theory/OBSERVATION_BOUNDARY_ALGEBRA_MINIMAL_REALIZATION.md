@@ -5123,3 +5123,223 @@ $$
 三者只有在任务明确要求识别非法补全，或所有允许延拓在相关切面上容量相同，时才可以互相替代。本文增补仍是纸面理论；它没有取得新的 Lean 声明或冻结状态。
 
 ## 追加锚（本行以下为增补区）
+
+## 二十七、增补十二·共同延拓的联合剖面与树形 Helly 边界
+
+上一节已经把固定树的共同优化写成延拓集合的交条件。还可以把这个条件进一步压缩为一个有限的“联合剖面”问题，从而明确区分三件事：每个切面单独有可行着色、这些着色来自同一个全域延拓，以及该延拓是否真的给出一个树协议。这个区分对应项目中“可达行为的最小商”“规范最小实现”和“三叶因果峰值”三条已冻结路线之间尚未形式化的接口。
+
+### 定义 53：延拓的活动剖面与联合像
+
+令
+
+$$
+U=X_I\setminus D,
+\qquad
+\mathcal H(D,f)=\operatorname{Ext}(D,f).
+$$
+
+把 $H\in\mathcal H(D,f)$ 限制到 $U$，得到一个双射
+
+$$
+\mathcal H(D,f)\cong O^U;
+$$
+
+因此未知部分确实只是非法格上的有限赋值。对任意切面 $A$，定义 $H$ 的活动剖面
+
+$$
+\rho_A(H)=
+\bigl(R_A^H(a)\bigr)_{a\in D_A}
+\in
+\left(O^{X_{I\setminus A}}\right)^{D_A},
+$$
+
+并令
+
+$$
+\lambda_A(H)=\operatorname{im}\rho_A(H),
+\qquad
+|\lambda_A(H)|=\kappa_A^D(H).
+$$
+
+固定树 $T$ 后，定义联合剖面像
+
+$$
+\mathcal J_T(D,f)
+=
+\left\{
+\bigl(\rho_{A_v}(H)\bigr)_{v\in T}:H\in\mathcal H(D,f)
+\right\}.
+$$
+
+对每个节点和整数 $k$，定义局部 $k$-剖面集合
+
+$$
+\mathcal L_v(k)=
+\left\{
+\rho_{A_v}(H):
+H\in\mathcal H(D,f),
+\ |\lambda_{A_v}(H)|\le k
+\right\}.
+$$
+
+这里的 $\mathcal L_v(k)$ 是单切面允许的全部剖面，而 $\mathcal J_T(D,f)$ 记录哪些剖面元组能够由同一个非法格赋值同时产生。
+
+### 定理 53.1：共同延拓的联合剖面判据
+
+在有限树模型中，对任意 $k\in\mathbb N$，有
+
+$$
+\boxed{
+P_T(D,f)\le k
+\quad\Longleftrightarrow\quad
+\mathcal J_T(D,f)
+\cap
+\prod_{v\in T}\mathcal L_v(k)
+\ne\varnothing.
+}
+$$
+
+因而
+
+$$
+\boxed{
+P_T(D,f)
+=
+\min\left\{
+k:\mathcal J_T(D,f)
+\cap
+\prod_{v\in T}\mathcal L_v(k)
+\ne\varnothing
+\right\}.
+}
+$$
+
+**证明。** 若 $P_T(D,f)\le k$，取一个在 $D$ 上正确且峰值不超过 $k$ 的协议。由定理 52，存在延拓 $H\in\mathcal H(D,f)$，使得每个节点的活动容量不超过该协议在节点上的可达消息数，故
+
+$$
+\bigl(\rho_{A_v}(H)\bigr)_{v\in T}
+\in
+\mathcal J_T(D,f)\cap\prod_v\mathcal L_v(k).
+$$
+
+反过来，若交集非空，其元素按定义来自某个共同延拓 $H$，且每个节点的活动容量不超过 $k$。把 $H$ 的规范边界协议限制到 $D$，定理 52 给出一个峰值不超过 $k$ 的正确协议。因此两边等价；对 $k$ 取最小即得第二式。证毕。
+
+### 推论 53.2：局部着色只是联合剖面的投影
+
+由定理 51.1，
+
+$$
+\mathcal L_v(k)\ne\varnothing
+\quad\Longleftrightarrow\quad
+\chi\bigl(G_{A_v}(D,f)\bigr)\le k.
+$$
+
+所以
+
+$$
+\max_{v\in T}\min_{H}\kappa_{A_v}^D(H)\le k
+$$
+
+只说明每个投影集合 $\mathcal L_v(k)$ 非空；它没有说明这些投影能在联合像 $\mathcal J_T(D,f)$ 中由同一个 $H$ 同时实现。严格的共同延拓证书是交集
+
+$$
+\mathfrak C_T(k)
+=
+\mathcal J_T(D,f)\cap\prod_{v\in T}\mathcal L_v(k),
+$$
+
+而不是各冲突图的独立着色证书。
+
+在命题 52.1 的 $3\times3$ 表中，三个局部冲突图均允许 $k=2$，但
+
+$$
+\mathfrak C_T(2)=\varnothing,
+\qquad
+\mathfrak C_T(3)\ne\varnothing.
+$$
+
+这把 $2<3$ 的间隙从一个数值现象改写成了联合像与笛卡尔积的空交：局部着色的存在是投影级事实，共同树协议要求的是纤维级事实。
+
+### 推论 53.3：共同延拓问题是有限联合约束，而非新的边界商
+
+通过 $\mathcal H(D,f)\cong O^U$，$\mathfrak C_T(k)$ 的非空性可以等价写成：是否存在一个非法格赋值
+
+$$
+h:U\to O
+$$
+
+使每个节点的评价映射
+
+$$
+h\longmapsto\rho_{A_v}(H_h)
+$$
+
+落在 $\mathcal L_v(k)$ 中。故在有限配置域中，联合延拓障碍是一个有限变量的约束满足问题；当输出集有限时它还是有限域问题。它不产生一个新的规范商，也不允许把各节点的最小商未经相容性证明直接拼接。
+
+这个表述给出后续形式化的准确入口：首先形式化活动剖面和联合像，再分别研究哪些承诺域、树形切分或任务族使 $\mathfrak C_T(k)$ 具有 Helly 型交性质。当前项目已有结果只证明了联合判据和 $3\times3$ 的空交见证；尚未证明一般的 Helly 数、矩形承诺域的充分条件，或该有限约束问题的复杂度结论。本文增补仍是纸面理论；它没有取得新的 Lean 声明或冻结状态。
+
+## 二十八、增补十三·拒绝总化的范围勘误与上界方向
+
+前面同时使用了固定输出任务的延拓和带拒绝符号的总化任务。两者的输出陪域不同，必须在记号上分开。若 $O$ 是承诺任务的输出集，置
+
+$$
+O_\bot=O\sqcup\{\bot\},
+\qquad
+\widehat f=\operatorname{inl}\circ f:D\to O_\bot.
+$$
+
+把非法输入送到拒绝符号的函数应写成
+
+$$
+\widehat H_\bot:X_I\to O_\bot,
+$$
+
+它属于 $\operatorname{Ext}_{O_\bot}(D,\widehat f)$，而不属于前文固定陪域 $O$ 的 $\operatorname{Ext}(D,f)$。因此，拒绝总化的容量不能不加类型转换地当作承诺延拓的容量。
+
+由于 $D\ne\varnothing$，可取 $o_0\in f(D)$，定义收缩
+
+$$
+q:O_\bot\to O,
+\qquad
+q(\operatorname{inl}o)=o,
+\qquad
+q(\bot)=o_0.
+$$
+
+令
+
+$$
+H_0=q\circ\widehat H_\bot.
+$$
+
+则 $H_0\in\operatorname{Ext}_{O}(D,f)$。对每个切面 $A$，逐点应用 $q$ 到剩余响应，得到
+
+$$
+\kappa_A^D(H_0)
+\le
+\widehat\kappa_A^D(\widehat H_\bot),
+$$
+
+其中右侧表示在 $O_\bot$ 中统计活动响应类。结合定理 52，得到正确的方向
+
+$$
+\boxed{
+\max_{v\in T}\min_H\kappa_{A_v}^D(H)
+\le
+P_T(D,f)
+\le
+\max_{v\in T}\kappa_{A_v}^D(H_0)
+\le
+\max_{v\in T}\widehat\kappa_{A_v}^D(\widehat H_\bot).
+}
+$$
+
+所以拒绝总化是一个可行的上界构造；它不是承诺协议最优峰值的普遍下界。某个非最小协议当然可以发送多余状态，但这不能用来反驳上述上界。命题 52.1 的 $3\times3$ 空交仍然成立，因为它比较的是允许延拓之间的共同容量，而不是把 $\bot$ 任务误当成同一输出陪域中的延拓。
+
+同理，`ThreeLeafCausalPeak` 的已冻结结果应只用于它实际声明的通信模型：它给出各切面承诺通信代价小而固定树协议峰值大的族。Lean 中的 `peak` 统计三个叶消息和内部消息；根部布尔输出至多有两种，且参数满足 $K\ge2$，所以把根输出也计入不会改变该严格分离。该结果没有单独证明拒绝总化容量的统一上界或下界。
+
+还有两个实现边界需要显式保留。首先，内部节点的合法配对必须由 $a\sqcup c\in D$（或相应的局部投影 $D_{A\cup C}$）限定；不能把两个局部投影任意作笛卡尔积。其次，有限配置域不自动使 $\operatorname{Ext}(D,f)$ 成为有限集；若 $O$ 无限，延拓集合仍可能无限。不过对容量最小化可先把所有非法输出经上述 $q$ 收缩到有限集合 $f(D)$，因此无需把无限输出值误报成有限状态定理的前提。
+
+这条勘误把“总化失败标签”“承诺延拓”和“固定协议可达消息”恢复为三个不同的对象。本文仍是纸面理论，没有新增 Lean 声明或冻结状态。
+
+## 追加锚（本行以下为增补区）
