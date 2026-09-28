@@ -1812,7 +1812,7 @@ a whole-cover forcing theorem is still missing. These are ordinary
 proofs and exact finite computations, not new Lean verification, a
 literature-priority claim, or a solution of unrestricted Erdős#7.
 
-### Retained pure powers turn private-point demand into height bounds
+## 16. Retained pure powers turn private-point demand into height bounds
 
 Assume that a finite distinct odd nonunit whole cover exists, and choose
 ONE cover globally minimizing first the number of classes and then their
