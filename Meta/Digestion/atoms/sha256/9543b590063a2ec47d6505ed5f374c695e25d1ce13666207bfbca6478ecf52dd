@@ -1,0 +1,11 @@
+**结合律：**
+
+$$
+\mu_{A\cup C,D}^F
+\bigl(\mu_{A,C}^F(p,q),r\bigr) =
+\mu_{A,C\cup D}^F
+\bigl(p,\mu_{C,D}^F(q,r)\bigr),
+$$
+
+其中 $A,C,D$ 两两不交。
+

@@ -1,0 +1,43 @@
+### 定义 20：局部权重与边界权重表
+
+固定读取顺序：
+
+$$
+\pi=(i_1,\ldots,i_n),
+$$
+
+以及布尔任务：
+
+$$
+F=\mathbf 1_{\mathcal K}.
+$$
+
+取一个交换半环：
+
+$$
+(R,\oplus,\otimes,0_R,1_R),
+$$
+
+并为每个输入符号指定局部权重：
+
+$$
+w_i:X_i\to R.
+$$
+
+定义：
+
+$$
+D_k:\mathsf S_{A_k}(F)\to R.
+$$
+
+其含义为：所有到达该边界类型的已读入赋值，其权重的聚合。所有下文的和与积均为有限运算；空和取 $0_R$，空积取 $1_R$。
+
+由命题 18.1，终点有良定义的读出映射：
+
+$$
+\overline F:\mathsf S_I(F)\to\{0,1\},
+\qquad \overline F([x]_I)=F(x).
+$$
+
+定义接受类型集合为 $\mathsf{Acc}=\overline F^{-1}(\{1\})$。若 $\mathcal K=\varnothing$，则 $\mathsf{Acc}=\varnothing$。
+

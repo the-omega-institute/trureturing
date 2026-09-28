@@ -1,0 +1,33 @@
+**命题46.2（探针优化的唯一阈值）。** 存在唯一正数 $c$ 满足
+
+$$
+\sum_\ell\min\left\{a_\ell,\frac{\sqrt{a_\ell}}c\right\}
+=\epsilon.
+\tag{46.18}
+$$
+
+（46.17）的一个最大点为 $x_\ell=\min\{1,c\sqrt{a_\ell}\}$。置
+$H=\{\ell:c\sqrt{a_\ell}\ge1\}$、$h=|H|$、
+$d_H=\sum_{\ell\notin H}a_\ell$、$S_H=\sum_{\ell\in H}\sqrt{a_\ell}$，则
+
+$$
+c=\frac{S_H}{\epsilon-d_H},\qquad
+\boxed{\mathfrak L_a(\epsilon)
+=\frac{\epsilon S_H^2}{\epsilon-d_H}-\epsilon h.}
+\tag{46.19}
+$$
+
+证明。对非负数 $A$ 有 $A^2=\max_{t\ge0}(2tA-t^2)$。对 $x$ 和 $t$ 的两个最大值可以交换次序，因此（46.17）等于
+
+$$
+\max_{t\ge0}\left[
+-t^2+\sum_\ell
+\max_{0\le x\le1}(2t v_\ell x-\epsilon x^2)
+\right].
+\tag{46.20}
+$$
+
+内层最大点为 $x=\min\{1,tv_\ell/\epsilon\}$。所得外层函数连续可微；置 $t=\epsilon c>0$ 后，其导数的符号与
+$\sum_\ell\min\{a_\ell,v_\ell/c\}-\epsilon$ 相同。该和从一开始，越过初始常值区后严格下降到零，所以对 $0<\epsilon<1$ 有唯一根。导数先正后负，该根给全局最大。集合 $H$ 非空，且（46.18）等价于
+$\epsilon=d_H+S_H/c$，故 $d_H<\epsilon$。代回目标，得到（46.19）。证明完毕。
+

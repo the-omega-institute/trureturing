@@ -1,0 +1,51 @@
+### 定理 32：固定异常族的匹配切面乘积界与最小一致指数
+
+固定整数 $r\geq1$、非空有限集合 $X_j,Y_j$ 及指定构件
+
+$$
+\phi_j:X_j\times Y_j\longrightarrow Z_j=\operatorname{im}\phi_j
+\qquad(1\leq j\leq r),
+$$
+
+并先固定每个构件的方向为 $X_j$ 端点先于 $Y_j$ 端点。记
+
+$$
+S_{j,x}=\phi_j(\{x\}\times Y_j),
+\qquad
+\tau_j=\tau_{\mathrm r}(\phi_j)
+=\min\left\{\sum_{x\in X_j}\lambda_{j,x}:
+\lambda_{j,x}\geq0\ (x\in X_j),\quad
+\sum_{x:z\in S_{j,x}}\lambda_{j,x}\geq1\ (z\in Z_j)\right\},
+\qquad
+T=\prod_{j=1}^r\tau_j.
+$$
+
+这里的权重均为实数；因 $Z_j$ 非空，对任意 $z\in Z_j$，可行覆盖满足 $\sum_x\lambda_{j,x}\geq\sum_{x:z\in S_{j,x}}\lambda_{j,x}\geq1$，故每个 $\tau_j\geq1$。
+
+将定义 31 的比较框架扩展为含上述 $r$ 个指定构件的有限族：将全部构件编号为 $1,\ldots,n$（$n\geq r$），前 $r$ 个为指定构件；允许任意有限个其余构件，只要求每个其余构件存在一条满射行和一条满射列，不要求所有切片满射。指定构件本身也允许具有满射切片或单点有效像。全部端点是互不相同的原始坐标，输入遍历非空有限端点域的完整独立直积，构件输出集均取有效像；$O$ 为任意非空有限集，$G:\prod_{i=1}^nZ_i\to O$ 为任意全函数，$F=G((\phi_i)_i)$。对每个使全部 $X_j$ 端点先于相应 $Y_j$ 端点的端点顺序 $\pi$，都有
+
+$$
+W_F(\operatorname{cn}(\pi))\leq W_F(\pi)^T.
+$$
+
+更细地，在定义 26 的完成次序匹配所给出的每个切面 $B\subseteq A$ 中，沿用先读、后读端点坐标 $u_i,v_i$，定义构件指标集
+
+$$
+\mathcal E=\{i\in\{1,\ldots,n\}:u_i\in A\setminus B\},
+\qquad J=\mathcal E\cap\{1,\ldots,r\}.
+$$
+
+匹配保证 $A\setminus B=\{u_i:i\in\mathcal E\}$，且每个 $i\in\mathcal E$ 在 $B$ 中两端点均未读、在 $A$ 中仅先读端点已读。故 $J$ 恰为这些额外打开的指定构件指标，$\mathcal E\setminus J$ 恰为额外打开的其余构件指标。则
+
+$$
+\kappa_B(F)\leq\kappa_A(F)^{\prod_{j\in J}\tau_j},
+$$
+
+空乘积取 $1$。固定顺序下出现的这些跨越子集乘积只是一个上界；这里不声称某个固定顺序的最大跨越子集乘积必然达到全局最小指数。
+
+指数 $T$ 是一致的最小实指数，即使允许一个与变化的伴随构件、字母表、外层任务和读取顺序无关的固定正乘数，也不能把 $T$ 降低。外层输出甚至可以限制为标量布尔值。若每个指定构件的方向也可以选择，则相应的最小一致指数为
+
+$$
+\prod_{j=1}^r\max\{\tau_{\mathrm r}(\phi_j),\tau_{\mathrm c}(\phi_j)\}.
+$$
+

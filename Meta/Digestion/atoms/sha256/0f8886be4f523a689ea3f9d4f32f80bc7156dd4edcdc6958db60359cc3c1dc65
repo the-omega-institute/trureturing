@@ -1,0 +1,5 @@
+**证明。** 在 $A=I$ 时，补全域 $X_\varnothing$ 只有空赋值，所以 $a\sim_I^F a'$ 当且仅当 $F(a)=F(a')$。映射 $[a]_I\mapsto F(a)$ 因而给出 $\mathsf S_I(F)$ 与 $\operatorname{im}F$ 的双射。
+
+若 $F=\mathrm{id}_{X_I}$，则对任意 $a\neq a'$，选择任意 $b\in X_{I\setminus A}$；补全域非空保证这样的 $b$ 存在。合并赋值 $a\sqcup b$ 与 $a'\sqcup b$ 在 $A$ 上不同，其恒等任务的响应也不同。因此等价类均为单点，得到 $\mathsf S_A(F)\cong X_A$。∎
+
+

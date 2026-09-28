@@ -285,7 +285,7 @@ private def independentSource (name : Name) : CompileM Bool := do
   if sourceOwner == env.header.mainModule || sourceOwner == targetOwner ||
       judgePackageModule sourceOwner then
     return false
-  if (← get).independentOwners[sourceOwner]? == some true then return true
+  if let some independent := (← get).independentOwners[sourceOwner]? then return independent
   let some sourceIdx := env.getModuleIdx? sourceOwner | return false
   let some targetIdx := env.getModuleIdx? targetOwner | return true
   -- The importer appends a module only after visiting its imports.
@@ -298,7 +298,9 @@ private def independentSource (name : Name) : CompileM Bool := do
     charge
     let owner := pending.back!
     pending := pending.pop
-    if owner == targetOwner then return false
+    if owner == targetOwner then
+      modify fun s => { s with independentOwners := s.independentOwners.insert sourceOwner false }
+      return false
     if seen.contains owner then continue
     seen := seen.insert owner
     let some idx := env.getModuleIdx? owner | return false

@@ -1,0 +1,46 @@
+### 定义 541.1（精确块容量、CAR 背景与公开实现）
+
+沿用定义 540.1 的有限非空状态集 $A$，记 $n=|A|$、$\mathcal B=2^A\setminus\{\varnothing\}$。CAR 剖面及其规范实验满足
+
+$$
+w_B\ge0,\qquad \sum_{B\ni i}w_B=1,\qquad
+(W_w)_i(B)=\mathbf1_{\{i\in B\}}w_B,
+\qquad i\in A,\ B\in\mathcal B.
+\tag{541.1}
+$$
+
+记 $r_{ij}(w)=\sum_{B\supseteq\{i,j\}}w_B$。本章的有向缺损仍取半 $L^1$ 及最大状态误差：
+
+$$
+d(w\to v)=\inf_K\max_{i\in A}
+\frac12\sum_{C\in\mathcal B}
+\left|\sum_{B\in\mathcal B}(W_w)_i(B)K(C\mid B)-(W_v)_i(C)\right|.
+\tag{541.2}
+$$
+
+下确界遍历 $\mathcal B$ 到 $\mathcal B$ 的全部随机核；一个核须同时用于所有状态，可以输出目标零权重块，也可以把输入块送到不包含真实状态的块。后文的达到核只是这一允许集中的具体成员。
+
+在一个共同读数、无冲突的模型中，称剖面公开可实现，是指存在 $A$ 的分划集合 $\Pi(A)$ 上的一个概率律 $p$，使
+
+$$
+w_B=\sum_{P\in\Pi(A)}p_P\mathbf1_{\{B\in P\}}.
+\tag{541.3}
+$$
+
+每个状态共用同一个 $p$。这一条件比（541.1）强；不同实验可以有不同的分划律。CAR 行方程、分划混合与二者的区别均沿用定理 538.2，不作为新的定义理论。Gill–Grünwald, *An Algorithmic and a Geometric Characterization of Coarsening At Random*, [arXiv:math/0510276v3，§2、Example 1、§4](https://arxiv.org/html/math/0510276v3) 给出 CAR 方程、三角障碍及均匀多重覆盖表示；多重覆盖表示不等于（541.3）的分划混合。
+
+固定 $U\subseteq A$，$m=|U|\ge3$。对每个 $B\in\mathcal B$ 定义方向
+
+$$
+z_U(B)=
+\begin{cases}
+1,&B=U,\\
+m-2,&B=\{i\},\ i\in U,\\
+-1,&B\subseteq U,\ |B|=2,\\
+0,&\text{其他}.
+\end{cases}
+\tag{541.4}
+$$
+
+这里二点容量 $w_{\{i,j\}}$ 指输出恰为 $\{i,j\}$ 的权重，不能换成所有包含该对的块权重之和 $r_{ij}(w)$。共同背景允许任意满足（541.1）的其余质量，包括同时交于 $U$ 和 $A\setminus U$ 的块；没有分离背景与核心的假设。
+

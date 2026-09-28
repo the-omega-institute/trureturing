@@ -1,0 +1,31 @@
+### 定义 535.3（全局相容、实际交叠与局部和全局闭包）
+
+在 $K$ 上定义
+
+$$
+\begin{aligned}
+R(k,k')&\iff
+\forall\ell\in L,\quad
+k,k'\in K_\ell\ \Longrightarrow\ t(k,\ell)=t(k',\ell),\\
+O(k,k')&\iff\exists\ell\in L,\quad k,k'\in K_\ell,\\
+H&=R\cap O.
+\end{aligned}
+\tag{535.5}
+$$
+
+$R$ 自反、对称但不必传递；没有共同读数时相容条件真空成立。$O$ 记录实际共同出现，不能从两个边缘像推得某个共同组合。令 $C$ 为 $K$ 上包含 $H$ 的最小等价关系；令 $C_\ell$ 为 $K_\ell$ 上包含 $R|_{K_\ell\times K_\ell}$ 的最小等价关系。$C$ 的路径可以逐边更换见证交叠的旧读数，$C_\ell$ 的路径则始终留在 $K_\ell$，但其每条边仍须满足在所有实际读数上定义的 $R$。因此不能仅检验当前 $\ell$ 下两个目标相等就添加一条边。
+
+定义有限统计量
+
+$$
+\begin{aligned}
+\mathcal U&=\bigsqcup_{\ell\in L}\bigl(\{\ell\}\times(K_\ell/C_\ell)\bigr),
+&U(x)&=(q(x),[c(x)]_{C_{q(x)}}),\\
+\mathcal V&=L\times(K/C),
+&V(x)&=(q(x),[c(x)]_C).
+\end{aligned}
+\tag{535.6}
+$$
+
+$V$ 由有限确定性编码 $k\mapsto[k]_C$ 实现，故属于 $\Gamma_c$。$U$ 是实际对象上的抽象统计量；其公式使用当前 $q$ 选择商关系，尚不意味着存在只读 $c$ 的通道与之等价。$R$ 是成对相容关系，$C_\ell,C$ 是两种等价闭包，$\ker_A U,\ker_A V$ 才是相应确定性实验在实际对象上的观察等价；这些关系的定义域与作用不能互换。
+

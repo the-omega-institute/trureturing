@@ -1,0 +1,22 @@
+## theorem 29.1: 移动编码的精确生成元
+
+令 $V(t):\mathbb C^k\to\mathbb C^N$ 为光滑等距，$P=VV^*$、$Q=I-P$，给定物理自伴 $H_B(t)$。所有码内初态保持在随时间移动的码空间，当且仅当
+
+$$
+Q(H_BV-i\dot V)=0,
+$$
+
+等价地 $\dot P=-i[H_B,P]$。此时逻辑生成元是
+
+$$
+h(t)=V^*H_BV-iV^*\dot V.
+$$
+
+指定任意逻辑自伴 $h(t)$ 时，一个实际物理实现为
+
+$$
+H_B=i[\dot P,P]+V\bigl(h+iV^*\dot V\bigr)V^*+QH_\perp Q,
+$$
+
+其中 $H_\perp$ 自伴。
+
