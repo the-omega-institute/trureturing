@@ -12,8 +12,8 @@ open LeanInformationAudit
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Unit
-  State := fun _ => ℕ × ℕ × ℕ
+  Params := Σ _ : ℕ, ℕ
+  State := fun _ => ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -23,18 +23,18 @@ abbrev signature : Signature where
 
 def actual : Realization signature :=
   realize signature
-    (fun _ _ x =>
-      let C := (goldenLucas (3 ^ x.1) ^ 2 + 1).natAbs
-      let B := (goldenLucas (3 ^ x.1) ^ 2 + 3).natAbs
-      4 * 3 ^ (x.1 + 1) * C ^ (x.2.1 - 1) * B ^ (x.2.2 - 1))
+    (fun _ p b =>
+      let C := (goldenLucas (3 ^ p.1) ^ 2 + 1).natAbs
+      let B := (goldenLucas (3 ^ p.1) ^ 2 + 3).natAbs
+      4 * 3 ^ (p.1 + 1) * C ^ (p.2 - 1) * B ^ (b - 1))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature
-    (fun _ _ x =>
-      let C := (goldenLucas (3 ^ x.1) ^ 2 + 1).natAbs
-      let B := (goldenLucas (3 ^ x.1) ^ 2 + 3).natAbs
-      4 * 3 ^ (x.1 + 1) * C ^ (x.2.1 - 1) * B ^ (x.2.2 - 1) + 1)
+    (fun _ p b =>
+      let C := (goldenLucas (3 ^ p.1) ^ 2 + 1).natAbs
+      let B := (goldenLucas (3 ^ p.1) ^ 2 + 3).natAbs
+      4 * 3 ^ (p.1 + 1) * C ^ (p.2 - 1) * B ^ (b - 1) + 1)
     (fun e => nomatch e)
 
 def arena : Arena where
@@ -50,7 +50,7 @@ def arena : Arena where
     (∀ j a b : ℕ, 1 ≤ j → 1 ≤ a → 1 ≤ b →
       π (C j ^ a) = 4 * 3 ^ (j + 1) * C j ^ (a - 1) ∧
       π (B j ^ b) = 2 * 3 ^ (j + 1) * B j ^ (b - 1) ∧
-      π (C j ^ a * B j ^ b) = r.readout () () (j, a, b))
+      π (C j ^ a * B j ^ b) = r.readout () ⟨j, a⟩ b)
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -91,32 +91,35 @@ def registration : Registration arena
     · intro i
       exact nomatch i
   dependence := by
+    change ObservationalDependence signature actual
     intro i
-    refine ⟨(), (1, 1, 1), (2, 1, 1), ?_⟩
+    refine ⟨⟨1, 1⟩, 1, 2, ?_⟩
     change 4 * 3 ^ (1 + 1) *
         (goldenLucas (3 ^ 1) ^ 2 + 1).natAbs ^ (1 - 1) *
         (goldenLucas (3 ^ 1) ^ 2 + 3).natAbs ^ (1 - 1) ≠
-      4 * 3 ^ (2 + 1) *
-        (goldenLucas (3 ^ 2) ^ 2 + 1).natAbs ^ (1 - 1) *
-        (goldenLucas (3 ^ 2) ^ 2 + 3).natAbs ^ (1 - 1)
-    norm_num
+      4 * 3 ^ (1 + 1) *
+        (goldenLucas (3 ^ 1) ^ 2 + 1).natAbs ^ (1 - 1) *
+        (goldenLucas (3 ^ 1) ^ 2 + 3).natAbs ^ (2 - 1)
+    norm_num [goldenLucas, D5.S0.Carrier.trace, D5.S0.Carrier.phi, pow_succ]
 
 register_information_theorem
   _root_.D5.S3.Arith.Primes.GoldenCubicBlockNativePowerPeriods.cubic_block_native_power_periods
   in arena
   readout via (realize signature
-    (fun _ _ x =>
-      let C := (goldenLucas (3 ^ x.1) ^ 2 + 1).natAbs
-      let B := (goldenLucas (3 ^ x.1) ^ 2 + 3).natAbs
-      4 * 3 ^ (x.1 + 1) * C ^ (x.2.1 - 1) * B ^ (x.2.2 - 1))
+    (fun _ p b =>
+      let C := (goldenLucas (3 ^ p.1) ^ 2 + 1).natAbs
+      let B := (goldenLucas (3 ^ p.1) ^ 2 + 3).natAbs
+      4 * 3 ^ (p.1 + 1) * C ^ (p.2 - 1) * B ^ (b - 1))
     (fun e => nomatch e))
   realizes registration
   escape from source ({
     owner := `D5.S3.Arith.Primes.GoldenCubicBlockNativePowerPeriods
-    coordinates := #[]
+    coordinates := #[3, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 0 }] })
+      path := #["body", "body", "body", "arg", "arg", "arg",
+        "body", "body", "body", "body", "body", "body",
+        "arg", "arg", "arg"]
+      stateBinder := 5 }] })
   escape continues (open)
 
 end
