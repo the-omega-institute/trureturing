@@ -208,7 +208,10 @@ def assessJoined : MetaM (Array BindingRecord) := do
     | .ok joined => pure joined
     | .error reason => throwError reason
   for (event, _) in joined do validateEvent event
-  joined.mapM fun (event, claim) => assess event claim
+  -- The imported registration universe grows with the repository. A retained
+  -- assessment's currency check runs outside the template budget, so each
+  -- occurrence owns a fresh fixed budget rather than sharing one for the join.
+  joined.mapM fun (event, claim) => withCurrHeartbeats (assess event claim)
 
 /-- Export always starts by joining the entire loaded declaration universe. -/
 def exportSnapshot : MetaM JoinedRecords := do
