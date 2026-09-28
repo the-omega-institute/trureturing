@@ -198977,3 +198977,5 @@ N_{ij}^{U,k}=\sum_{a\in I_U}\frac{(S_U^{\mathrm{can}})_{ia}(S_U^{\mathrm{can}})_
 $$
 
 普通角色本身未必识别 $S_U^{\mathrm{can}}$：互不等价的互为逆变的 $U$-模具有相同的分次维数，因而可以有相同角色；限制到 $v=\mathbf1_U$ 会丢失插入态的区别。只有在额外识别前提成立时，普通角色观察才可用于上述公式。将公式用于从 $F_{\mathbb C}$ 到 $U$ 的路线，还须指定二者相容的 VOA 关系、相应的模与共形数据，以及把 Fock 侧观察同 $U$ 的带插入态迹函数及其典范 $S_U^{\mathrm{can}}$ 作用相联系的迹观察接口；这里尚未给出该接口。相同 $U$ 假设下的刚性、平衡性与非退化编织范畴结论来自 [Huang 2008b, abstract](https://arxiv.org/abs/math/0502533v2) [文献注](../../../Library/VertexAlgebra/huang2008rigidity.md)，并不由有理 Fock 对易关系单独推出。
+
+上述反常边界在复的一维 Heisenberg 真空模 $V=V_{\widehat{\mathfrak h}}(1,0)$ 已有具体例子：[Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md) 给出共形向量 $\omega_t=\omega_0+t a_{-2}\mathbf1$、中心荷 $c_t=1-12t^2$，且这些选择具有同一底层顶点代数和同一 $L_0$ 分次。因此 $t=0$ 与 $t=1$ 的未平移分次维数迹 $\sum_{n\geq0}\dim V_n q^n$ 相同，中心荷却分别为 $1$ 与 $-11$；取平凡作用群已足以说明这类分次迹不能单独恢复中心荷。这里比较的不是带真空能因子 $q^{-c_t/24}$ 的角色：后者随 $t$ 改变。该例也不证明本节的 $F_{\mathbb C}$ 与 $V$ 的态场同构，更不构造尚缺的 Monster 根空间、态场至分母的接口或满足融合定理前提的 $U$。

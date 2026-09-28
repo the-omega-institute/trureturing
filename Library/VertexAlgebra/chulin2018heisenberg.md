@@ -5,7 +5,7 @@ year: 2018
 title: Moduli spaces of conformal structures on Heisenberg vertex algebras
 doi: null
 url: https://arxiv.org/abs/1812.11378v1
-claim: Section 3.1 gives the complex Heisenberg bracket, charge-zero vacuum representation, and normalized field expansion.
+claim: Section 3.1 gives the Heisenberg vacuum representation and conformal vectors; Section 3.2 states their central charges and common conformal grading.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -30,10 +30,18 @@ does not make them new mathematical results. A future Lean construction of
 the pointwise Laurent field would be a formalization contribution, not a
 claim that Chu and Lin supply its Mathlib proof.
 
+For the rank-one complex vacuum module, Section 3.1 identifies the
+grading-preserving conformal vectors as
+$\omega_t=\omega_0+t h(-2)\mathbf1$. Section 3.2 states that their central
+charges are $1-12t^2$ and that the underlying vertex algebra and conformal
+grading are the same. Thus the unshifted graded dimension series is
+independent of $t$. The character including the vacuum-energy factor
+$q^{-c/24}$ is a different observable and does depend on $t$.
+
 ## Verified locator
 
-- arXiv:1812.11378v1, Section 3.1:
+- arXiv:1812.11378v1, Sections 3.1-3.2:
   https://arxiv.org/abs/1812.11378v1
-- The arXiv metadata and Section 3.1 source HTML were inspected on
+- The arXiv metadata and Sections 3.1-3.2 source HTML were inspected on
   28 September 2026. The source uses $\mathbb C$; the rational polynomial
   realization above is a specialization.
