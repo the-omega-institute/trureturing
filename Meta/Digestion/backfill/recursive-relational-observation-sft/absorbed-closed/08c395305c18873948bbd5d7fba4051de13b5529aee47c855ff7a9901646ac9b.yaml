@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:08c395305c18873948bbd5d7fba4051de13b5529aee47c855ff7a9901646ac9b
+  normalized_sha256: sha256:08c395305c18873948bbd5d7fba4051de13b5529aee47c855ff7a9901646ac9b
+cas_ref: sha256:08c395305c18873948bbd5d7fba4051de13b5529aee47c855ff7a9901646ac9b
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Partitions/PartitionLInftyGeodesic.partition_lInf_geodesic
+    target_statement_id: sha256:afa308ce81fe99f8a7c1e71549f7f92295beb29e4e1bfacdd1866d357933d59b
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 231ef37f9994f3c7eb5457efe0439596f019534a5ad4d400996656603ab329df
+    - bac5880674c500bb7cd10721b30b45a2a7c2d5a23725d1107cc589d9bbeb0a09

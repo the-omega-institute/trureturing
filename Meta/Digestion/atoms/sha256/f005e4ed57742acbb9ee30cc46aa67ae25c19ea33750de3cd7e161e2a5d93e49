@@ -1,0 +1,20 @@
+**证明。** 因为 $M^m$ 是整数可逆矩阵，$\mathcal D_{B_2}\cong(\mathbb Z/F_m\mathbb Z)^2$。第 38 节给出总群的 Smith 因子 $(F_m,5F_m)$。
+
+若 $\gcd(F_m,5)=1$，有限交换群的互素初等部分给出一个截面；等价地，$\mathbb Z/(5F_m)\cong\mathbb Z/5\oplus\mathbb Z/F_m$，于是总群与子群嵌入均可按 5-部分和其互补部分分解。
+
+若 $5\mid F_m$，写 $v_5(F_m)=a\ge1$。总群的 5-部分为
+
+$$
+\mathbb Z/5^a\mathbb Z\oplus\mathbb Z/5^{a+1}\mathbb Z,
+$$
+
+而分裂所需的 5-部分应为
+
+$$
+\mathbb Z/5\mathbb Z\oplus(\mathbb Z/5^a\mathbb Z)^2.
+$$
+
+两者的循环因子不同，故不可能分裂。证毕。 $\square$
+
+因此 $m=4,6$ 的扩张分裂，而 $m=10$（$F_{10}=55$）不分裂。这个判断来自缺陷扩张的 5-初等结构，不是来自总熵或总类别数。
+

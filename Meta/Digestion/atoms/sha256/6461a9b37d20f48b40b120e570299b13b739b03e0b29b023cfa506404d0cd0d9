@@ -1,0 +1,14 @@
+### definition 15.1 递归相容的线性操作
+
+在组成群 $V=\mathbb Z\alpha\oplus\mathbb Z\beta\cong\mathbb Z^2$ 上，令 $M=\begin{pmatrix}0&1\\1&1\end{pmatrix}$。称整数线性操作 $A:V\to V$ 与递归相容，若
+
+$$
+AM=MA.
+$$
+
+记相容操作环为
+
+$$
+\mathscr A_M=\{A\in\operatorname{Mat}_2(\mathbb Z):AM=MA\}.
+$$
+

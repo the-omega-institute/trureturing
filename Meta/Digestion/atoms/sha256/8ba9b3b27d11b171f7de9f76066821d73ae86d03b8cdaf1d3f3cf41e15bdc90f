@@ -1,0 +1,17 @@
+### theorem 28.2 受控进位修正后的层级分解
+
+对每个可提升的 $a$ 选定高层解 $b_0(a)$，定义受控置换
+
+$$
+U|a\rangle|b\rangle=|a\rangle|b-b_0(a)\rangle.
+$$
+
+在无效低层标签上任意延拓为全空间置换，则
+
+$$
+\boxed{
+U|\Psi_{de}\rangle
+=|\Psi_{Y_{d,e}}\rangle\otimes|\Psi_e\rangle.
+}
+$$
+

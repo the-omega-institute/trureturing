@@ -1,0 +1,17 @@
+### definition 15.5 共轭与范数
+
+定义
+
+$$
+\theta^*=1-\theta,qquad
+(a+b\theta)^*=(a+b)-b\theta,
+$$
+
+以及
+
+$$
+\mathcal N(a+b\theta)=a^2+ab-b^2.
+$$
+
+这分别对应仓内 `conj` 和 `norm`；已有源码证明共轭是对合环自同构，且 $\mathcal N(xy)=\mathcal N(x)\mathcal N(y)$。
+

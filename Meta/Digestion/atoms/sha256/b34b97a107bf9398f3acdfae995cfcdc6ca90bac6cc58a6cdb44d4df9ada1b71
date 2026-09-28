@@ -1,0 +1,11 @@
+### definition 18.3 组成状态的观察视界
+
+在组成状态空间 $V=\mathbb Z^2\cong R$ 上取 $q=q_{2,3}$ 和更新 $M$。本条的 $h\in\mathbb N$ 是观察视界，与第 17 节的环元素 $h$ 分属不同记号作用域。定义
+
+$$
+R_h(z,z')\iff
+\forall k\in\mathbb N,\ 0\le k\le h\Longrightarrow q(M^kz)=q(M^kz'),
+\qquad
+R_\infty=\bigcap_{h\ge0}R_h.
+$$
+

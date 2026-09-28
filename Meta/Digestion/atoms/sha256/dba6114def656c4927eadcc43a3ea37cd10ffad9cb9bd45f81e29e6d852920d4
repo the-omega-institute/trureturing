@@ -1,0 +1,24 @@
+### theorem 15.6 完整两层观察等价于范数单位
+
+令
+
+$$
+\mathcal O_{u,v}(x)=(q_{u,v}(x),q_{u,v}(\theta x)).
+$$
+
+其矩阵是 $H_{u,v}$，并满足
+
+$$
+\det H_{u,v}=u^2+uv-v^2=-\mathcal N((v-u)+u\theta).
+$$
+
+因此
+
+$$
+\mathcal O_{u,v}\in\operatorname{GL}_2(\mathbb Z)
+\iff
+\mathcal N((v-u)+u\theta)=\pm1.
+$$
+
+模 $m$ 时可逆当且仅当 $\gcd(\mathcal N(h),m)=1$。
+

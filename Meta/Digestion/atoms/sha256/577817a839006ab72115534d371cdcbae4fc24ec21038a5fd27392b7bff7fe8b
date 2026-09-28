@@ -1,0 +1,64 @@
+### theorem 22.1 递归保持一个签名为 ((1,1)) 的二次型
+
+定义
+
+$$
+Q(a,b)=a^2+ab-b^2.
+$$
+
+则
+
+$$
+\boxed{
+Q(Mx)=-Q(x),
+\qquad
+Q(M^2x)=Q(x).
+}
+$$
+
+在实对称二次型中，满足 (H(M^2x,M^2x)=H(x,x)) 的 (H) 都是 (Q) 的实数倍。
+
+**证明。**
+
+第一式直接展开，第二式由第一式应用两次得到。若
+
+$$
+H=\begin{pmatrix}r&s\\s&t\end{pmatrix},
+$$
+
+代入 $(M^2)^{\mathsf T}HM^2=H$ 得 $r=2s$、$t=-2s$，故 $H$ 与 $Q$ 成比例。其行列式为负，签名为 $(1,1)$。证毕。 $\square$
+
+令
+
+$$
+\xi=a+\frac b2,
+\qquad
+\tau=\frac{\sqrt5}{2}b.
+$$
+
+则
+
+$$
+Q=\xi^2-\tau^2,
+$$
+
+而 (M^2) 在这组坐标下为
+
+$$
+\begin{pmatrix}\xi'\\\tau'\end{pmatrix}
+=
+\begin{pmatrix}
+3/2&\sqrt5/2\\
+\sqrt5/2&3/2
+\end{pmatrix}
+\begin{pmatrix}\xi\\\tau\end{pmatrix}.
+$$
+
+这是代数上的 (1+1) 维 boost，满足
+
+$$
+\left(\frac32\right)^2-\left(\frac{\sqrt5}{2}\right)^2=1,
+\qquad
+\eta=2\log\varphi.
+$$
+

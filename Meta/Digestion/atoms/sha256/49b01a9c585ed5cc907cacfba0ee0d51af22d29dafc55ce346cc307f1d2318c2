@@ -1,0 +1,8 @@
+### theorem 4.4 内部自然数半环
+
+映射 $\eta(n)=ne$ 是从 $\mathbb N$ 到 $\mathcal N$ 的双射，并保持零、后继、加法和 $\otimes$；因此
+
+$$
+(\mathcal N,0,e,+,\otimes)\cong(\mathbb N,0,1,+,\times).
+$$
+
