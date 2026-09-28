@@ -199058,3 +199058,17 @@ $$
 **问题 2144.2（实际 Monster 分母的识别）。** 能否从同一个 $V^\natural$ 构造带 Monster 作用的根空间 $W_{m,n}$，证明其维数为 $J$-系数 $c(mn)$，并证明逐系数稳定的正双分次乘积是 Borcherds 完整 twined 分母除去 $n=-1$ Weyl 因子后的规范化部分？通过判据是给出实际根空间到定理 2144.1 的表示数据的映射，核对 Weyl 因子的规范化，并在同一构造中验证假设 2143.3 的分母等式；单独的形式迹恒等式或任意表示账本均不足以通过。$V^\natural$ 的构造见 [FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)，Monster Lie 代数及分母公式见 [Borcherds 1992, §§7–8](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。态场、反常、融合和完整边界 CFT 的另外几项判据仍见问题 2143.7。
 
 ## 追加锚（本行以下为增补区）
+
+## 2145. 秩一 Fock 正规序中心项的逐模数核验
+
+**问题 2145.1（具体 Sugawara 算子的完整 Virasoro 关系）。** 在假设 2143.4 的复多项式 Fock 空间 $F_{\mathbb C}=\mathbb C[X_0,X_1,\ldots]$ 上，取 $a_0=0$、$a_{k+1}=(k+1)\partial/\partial X_k$、$a_{-(k+1)}=X_k\cdot(-)$，并逐态以正规序定义 $L_n=\frac12\sum_{r\in\mathbb Z}:a_{n-r}a_r:$。先证明该和对每个态只有有限个非零项且不依赖足够大的截断，再对所有 $m,n,r\in\mathbb Z$ 和所有 $v\in F_{\mathbb C}$ 验证
+
+$$
+[L_m,a_r]v=-r a_{m+r}v,\qquad
+[L_m,L_n]v=(m-n)L_{m+n}v+\frac{m^3-m}{12}\delta_{m+n,0}v.
+\tag{2145.1}
+$$
+
+可将 $[L_m,L_n]-(m-n)L_{m+n}$ 先证为与所有 $a_r$ 对易，利用多项式 Fock 模的标量交换子性质化为标量算子；$L_0$ 权重排除 $m+n\ne0$ 的标量，剩余义务是在真空上对**每个** $m\in\mathbb Z$ 计算 $[L_m,L_{-m}]\mathbf1$ 的系数 $(m^3-m)/12$。单独核验 $m=2$ 所得 $1/2$，或只证明非对角情形，都不足以回答式 (2145.1) 的全称断言。秩一 Heisenberg 共形结构及中心荷 $c=1$ 的文献背景见 [Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；正规序与 Virasoro 约定见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。[Kytölä, VirasoroProject, 固定提交 `5ff4245`, `Sugawara.lean`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) 是 Lean 实现参考，不能代替本仓工具链下对上述具体算子的核验。
+
+即使式 (2145.1) 全部成立，它仍只履行问题 2143.7 的反常一部分：全态的态场映射、局域性与 OPE、满足融合定理假设的 $U$ 及其典范模变换，以及与 Monster 根空间和完整边界 CFT 的接口，仍须分别构造和验证。
