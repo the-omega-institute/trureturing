@@ -2287,6 +2287,125 @@ noncoverage. Universal #7 forcing still requires original-label
 arithmetic that violates a genuinely coverage-dependent condition.
 These are ordinary finite proofs, not new Lean verification.
 
+### Private-zero separation survives complete private rows and columns
+
+The IT11 example has a hole in the same row as its private point, so
+it does not pass the strong private-shell condition even on that
+selected two-prime slice. The following family separates the fixed-zero
+transport test after imposing that further local condition as well.
+
+For ANY integers P,Q>=3 define one actual residual table by
+
+    F_00=-1;
+    F_0j=F_i0=1 for i,j>0;
+    F_11=0;
+    F_ij=2 for every other i,j>0.
+
+It has exactly one hole, at(0,0), and exactly one private cell, at(1,1).
+They are in different rows AND columns, so both complete coordinate
+lines through the private point are covered. Thus the slice satisfies
+the no-private-to-hole-edge condition PS2 in both selected directions.
+Every residual margin is strictly positive:
+
+    r=(Q-2,2Q-3,2Q-1,...,2Q-1),
+    s=(P-2,2P-3,2P-1,...,2P-1).
+
+The actual overlap cost and both transport minima are
+
+    A=P+Q-2+3*((P-1)*(Q-1)-1),
+    T_Z(r,s)=A-1,
+    T_E(r,s)=A+1, E={(1,1)}.                       (IT12)
+
+Here T_E fixes the ONE actual residual zero. The claimed minima
+have exact primal and dual witnesses at every P,Q.
+
+For the ordinary minimum, change F_00 from-1 to0, F_01 and F_10
+from1 to0, and F_11 from0 to1. This rectangle move preserves all
+margins, makes the whole table nonnegative, and lowers its cost by1.
+Use additive potentials
+
+    alpha=(0,1,2,...,2), beta=(-1,0,1,...,1).
+
+Each positive entry x of this repaired table satisfies
+x<=alpha_i+beta_j<=x+1; each zero has alpha_i+beta_j<=1.
+These are equality conditions in g(x)>=k*x-h(k), so the feasible
+table and weak dual bound agree at A-1. No strong-duality assertion
+or numerical minimization is needed.
+
+For the fixed-zero minimum, instead repair the corner using rows0,2
+and columns0,2: F_00 rises to0, F_02 and F_20 fall to0, and F_22
+rises from2 to3. The private cell(1,1) remains zero. All margins
+are preserved and the cost rises by1. Take
+
+    alpha=(0,2,2,...,2), beta=(-1,1,1,...,1).
+
+The potential sum is-1 at the hole,1 on the two arms, and3 on the
+interior. Outside E every covered entry of the ORIGINAL F has zero
+Fenchel slack, while the hole contributes-1. Removing the conjugate
+penalty h(3)=3 at E therefore gives D_E=A+1 by IT7. Equivalently,
+the repaired nonnegative table attains equality at every allowed
+cell. These matching witnesses prove the fixed-zero minimum in IT12.
+
+For P=3,Q=5 this gives
+
+    F=[-1 1 1 1 1]
+      [ 1 0 2 2 2]
+      [ 1 2 2 2 2],
+    r=(3,7,9), s=(1,3,5,5,5),
+    T_Z=26 <= A=27 < T_E=28.
+
+The complete selected-slice prime marginals are
+M_3=(4/3,2,8/3,8/3,8/3) and M_5=(8/5,12/5,14/5), all strictly
+above1. Independent enumeration of all2909 feasible3-by-5 tables
+agrees with both minima; the universal result is proved by the
+witnesses above, not by this enumeration.
+
+To realize the family with original labels, take P=p^H and Q=q^G
+for distinct odd primes p,q and arbitrary H,G>=1. Reuse the
+[two-coordinate exponent-antichain construction, Report345 section5](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/345-fixed-prime-fourier-obstruction-and-digit-relation-masks.md).
+Choose just TWO further distinct odd primes r,s, neither equal to p,q,
+and enumerate the F_ij+1 multiplicity copies by t=1,...,N, where
+
+    N=sum_(i,j)(F_ij+1)=3P Q-P-Q-3.                 (IT13)
+
+Assign copy t the literal modulus P Q r^t s^(N+1-t), its prescribed
+p,q-cell, and zero phase on both auxiliary coordinates. These are
+distinct odd nonunits on EXACTLY FOUR support primes. On the SAME
+cofactor with auxiliary coordinates zero modulo r^N and s^N, the
+exact table is F+1. The unique class at(1,1) supplies the true private
+zero; its complete p- and q-lines are covered.
+
+Every original has a private witness. Give its auxiliary coordinates
+truncated valuations t and N+1-t, where valuation N means the zero
+coordinate modulo the Nth prime power. Copy u is active only if
+u<=t and N+1-u<=N+1-t, forcing u=t. Its assigned p,q-cell then gives
+a private point, including the endpoint exponents. Equivalently, let
+G_t=r^t s^(N+1-t) and let b_t mod P Q be its cell residue. With all
+inverses taken modulo P Q, the literal integer
+
+    w_t=G_t*(1+r*s*k_t),
+    k_t=((b_t*G_t^(-1)-1)*(r*s)^(-1)) mod P Q
+
+has the prescribed cell and exact auxiliary valuations, proving the
+same isolation. This is an application of the existing construction,
+not a new tagging principle. For P=3,Q=5 there are34 originals, with
+support {3,5,7,11} when r=7,s=11.
+
+The complete-row condition here applies only to the two selected
+prime directions on this actual slice. It is NOT the global PS1
+condition for all private points and all support primes. In particular,
+changing the r-coordinate from0 to1, while retaining the private
+p,q-cell and s-coordinate0, creates a hole. The cofactor r=s=1
+also has zero complete p- and q-marginals. The complete r-marginal
+is zero when the s-coordinate is1, and the complete s-marginal is
+zero when the r-coordinate is1. Therefore the construction is neither an all-marginals-passing
+noncover nor a global private-shell-saturated distinct-odd example.
+It proves that selected-slice marginal feasibility, ordinary optimized
+transport, and complete private lines together do not subsume the
+fixed-zero transport test. Unrestricted #7 still requires a global
+same-original-label forcing argument. These are ordinary proofs,
+not new Lean verification or a claim of literature priority.
+
 ## Existing survivor laws restrict simultaneous complete marginal feasibility
 
 The existing product and complete-survivor laws imply more than a
