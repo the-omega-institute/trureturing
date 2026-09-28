@@ -10,9 +10,7 @@ import Mathlib.Algebra.Ring.Invertible
 import Mathlib.Analysis.InnerProductSpace.Positive
 import Mathlib.Tactic.Abel
 import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Order
-import Mathlib.Tactic.Ring
+import D5.S3.Observer.BlockStructure.FourBlockDecomposition
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -275,10 +273,13 @@ theorem compressed_resolvent_remainder
     change (F.comp Q) x = 0
     rw [hFQ, zero_apply]
   have hVcross : V = (P.comp S).comp Q + (Q.comp S).comp P := by
-    dsimp only [V, S₀, Q]
-    simp only [ContinuousLinearMap.comp_sub, ContinuousLinearMap.sub_comp,
-      ContinuousLinearMap.one_def, ContinuousLinearMap.id_comp,
-      ContinuousLinearMap.comp_id, comp_assoc]
+    have hblocks :=
+      D5.S3.Observer.BlockStructure.FourBlockDecomposition.four_block_decomposition
+        P Q S rfl
+    simp only [ContinuousLinearMap.mul_def] at hblocks
+    dsimp only [V, S₀]
+    conv_lhs => arg 1; rw [hblocks]
+    simp only [ContinuousLinearMap.comp_assoc]
     abel
   have hFV : F.comp V = (F.comp S).comp Q := by
     ext x
