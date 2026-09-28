@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:98f8394da4488fe8032c79fca9dd95ab135c360dc70f56b846bc432bc5ea25cd
   normalized_sha256: sha256:98f8394da4488fe8032c79fca9dd95ab135c360dc70f56b846bc432bc5ea25cd
 cas_ref: sha256:98f8394da4488fe8032c79fca9dd95ab135c360dc70f56b846bc432bc5ea25cd
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/CompressedResolventRemainder.compressed_resolvent_remainder
+    target_statement_id: sha256:086551daa10880611d446953e40520a57345a268f7248ff166d5c0c2512880a0
 receipts:
   unresolved_subitems: []
