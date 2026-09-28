@@ -14,6 +14,7 @@ internal sealed partial class ProductionCliEnvironment
 
     private ExplicitCommandResult CheckStage(IReadOnlyList<string> arguments, bool delta)
     {
+        var timing = new AdmissionCheckTiming(timeProvider);
         var removedProjectOutput = string.Empty;
         TestProjectExecution[] acceptedBaseTests = [];
         ImmutableArray<Diagnostic> planeObservations = [];
@@ -39,48 +40,50 @@ internal sealed partial class ProductionCliEnvironment
                 throw new InvalidOperationException("check-current requires a candidate report and accepts no base; check-delta requires an explicit base and report");
             if (!reportRequired && options.CandidateLeanReport is not null)
                 throw new InvalidDataException("unrequested report cannot be current evidence");
-            var raw = repository.ReadCurrent();
+            var raw = timing.Measure("repository-read", () => repository.ReadCurrent());
             // Retain the actual delta observation even if report/common evidence later
             // fails. Reuse this preparation for all remaining cross-tree validation.
-            var prepared = delta ? repository.Prepare(options.ProtectedBase) : null;
-            var baselineRaw = prepared is null ? null : repository.ReadRevision(prepared.Revision);
+            var prepared = delta ? timing.Measure("repository-prepare", () => repository.Prepare(options.ProtectedBase)) : null;
+            var baselineRaw = prepared is null ? null : timing.Measure("repository-read-base", () => repository.ReadRevision(prepared.Revision));
+            ImmutableArray<Diagnostic> observedPlane = [];
             var planeFailure = prepared is null ? null
-                : EvaluateAdmissionPlane(raw, baselineRaw!, prepared.Changes, out planeObservations);
-            var current = Decode(raw);
+                : timing.Measure("admission-plane", () => EvaluateAdmissionPlane(raw, baselineRaw!, prepared.Changes, out observedPlane));
+            planeObservations = observedPlane;
+            var current = timing.Measure("snapshot-load", () => Decode(raw));
             var validation = new CommonExecutionEvidence.ValidationScope(current);
             var manifest = validation.CheckManifest();
             var selectedIds = resourcePlan?.CheckUnits.Except(CommonExecutionEvidence.EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray();
             if (!reportRequired && manifest.Any(check => selectedIds!.Contains(check.Id) && check.ReportInputs.Length != 0))
                 throw new InvalidDataException("selected current checks require Lean report evidence");
-            var report = !reportRequired ? null : !delta && commonRound is null
+            var report = !reportRequired ? null : timing.Measure("lean-report-load", () => !delta && commonRound is null
                 ? RawLeanReportArtifact.ReadFile(options.CandidateLeanReport!, current, validateMaterials: true)
-                : validation.Report(options.CandidateLeanReport!);
-            var policy = RepositoryPolicyLoader.Load(current) switch
+                : validation.Report(options.CandidateLeanReport!));
+            var policy = timing.Measure("policy-load", () => RepositoryPolicyLoader.Load(current) switch
             {
                 PolicyLoadOutcome.Accepted accepted => accepted.Policy,
                 PolicyLoadOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
-            };
-            var lean = report is null ? null : LeanClosureValidator.Validate(current, report) switch
+            });
+            var lean = report is null ? null : timing.Measure("lean-closure", () => LeanClosureValidator.Validate(current, report) switch
             {
                 LeanValidationOutcome.Accepted accepted => accepted.Capability,
                 LeanValidationOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
-            };
+            });
             RuleExecutionOutcome result;
             if (prepared is not null)
             {
-                var baseline = Decode(baselineRaw!);
+                var baseline = timing.Measure("snapshot-load-base", () => Decode(baselineRaw!));
                 var baseProjects = EngineeringProjectRegistry.ReadBase(baseline, current)
                     .Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal).ToArray();
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
                     .Select(path => $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(path)}\n"));
-                var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, validation, baseProjects, prepared.Revision);
+                var common = timing.Measure("common-evidence", () => CommonExecutionEvidence.ValidateCommon(repositoryRoot, validation, baseProjects, prepared.Revision));
                 acceptedBaseTests = common.Tests?.Projects
                     .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray() ?? [];
                 if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport!), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
                     throw new InvalidDataException("check-delta requires this round's canonical report");
                 if (planeFailure is not null)
                     return new(2, RenderPlaneObservations(planeObservations), planeFailure.Message + "\n");
-                var topology = RepositoryRules.EvaluateSnapshots(baseline, current);
+                var topology = timing.Measure("test-topology", () => RepositoryRules.EvaluateSnapshots(baseline, current), static outcome => !outcome.IsAccepted);
                 if (!topology.IsAccepted) return new(1, RenderPlaneObservations(planeObservations) + "TEST_PROJECT_TOPOLOGY " + topology.Message + "\n", "");
                 var meta = BootstrapGate.Evaluate(prepared.Changes) switch
                 {
@@ -88,8 +91,8 @@ internal sealed partial class ProductionCliEnvironment
                     BootstrapOutcome.ProtectedSurfaceVerificationRequired change => MetaEvaluationProfile.ForProtectedSurface(change.ChangeSet),
                     BootstrapOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
                 };
-                result = AdmissionPipeline.CheckDelta(DeltaRuleContext.Create(current, baseline, policy, lean!, prepared.Changes, meta, null,
-                    commonResults: new CandidateCommonResults(common.Current.Candidate, common.Current.Round)));
+                result = timing.Measure("rule-passes", () => AdmissionPipeline.CheckDelta(DeltaRuleContext.Create(current, baseline, policy, lean!, prepared.Changes, meta, null,
+                    commonResults: new CandidateCommonResults(common.Current.Candidate, common.Current.Round)), MeasureRule), Blocked);
             }
             else
             {
@@ -97,11 +100,12 @@ internal sealed partial class ProductionCliEnvironment
                 {
                     if (reportRequired && Path.GetFullPath(options.CandidateLeanReport!, repositoryRoot) != Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath))
                         throw new InvalidDataException("common current requires canonical report material");
-                    return ExecuteCommonCurrent(commonRound, validation, policy, lean, report, selectedIds, resourcePlan);
+                    return ExecuteCommonCurrent(commonRound, validation, policy, lean, report, selectedIds, resourcePlan, timing);
                 }
-                var verified = VerifyScribeForAdmission(scribeEmissionVerifier, current, report!);
-                result = AdmissionPipeline.CheckCurrent(CurrentRuleContext.Create(current, policy, lean!, verified));
-                if (RepositoryCanonicalizer.Validate(current, policy) is CanonicalizationOutcome.InfrastructureFailure failure)
+                var verified = timing.Measure("scribe-verify", () => VerifyScribeForAdmission(scribeEmissionVerifier, current, report!));
+                result = timing.Measure("rule-passes", () => AdmissionPipeline.CheckCurrent(CurrentRuleContext.Create(current, policy, lean!, verified), MeasureRule), Blocked);
+                if (timing.Measure("canonicalization", () => RepositoryCanonicalizer.Validate(current, policy),
+                        static outcome => outcome is CanonicalizationOutcome.InfrastructureFailure) is CanonicalizationOutcome.InfrastructureFailure failure)
                     return new(2, RenderStage(result).Output, "INFRASTRUCTURE_FAILURE " + failure.Message + "\n");
             }
             return RenderStage(result, acceptedBaseTests, planeObservations);
@@ -110,7 +114,15 @@ internal sealed partial class ProductionCliEnvironment
         {
             return new(2, removedProjectOutput + RenderPlaneObservations(planeObservations), "INFRASTRUCTURE_FAILURE " + exception.Message + "\n");
         }
+
+        ImmutableArray<RuleFinding> MeasureRule(RuleId ruleId, AdmissionEffect admissionEffect, Func<ImmutableArray<RuleFinding>> evaluate) =>
+            timing.Measure("rule-" + ruleId.Value.ToLowerInvariant(), evaluate,
+                findings => findings.Any(finding => (finding.Effect ?? admissionEffect) is AdmissionEffect.Block));
     }
+
+    private static bool Blocked(RuleExecutionOutcome outcome) =>
+        outcome is not RuleExecutionOutcome.Completed completed
+        || completed.Capability.Diagnostics.Any(diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block);
 
     private static string RenderPlaneObservations(ImmutableArray<Diagnostic> observations) =>
         observations.IsDefaultOrEmpty ? "" : JsonSerializer.Serialize(new { diagnostics = observations }) + "\n";
