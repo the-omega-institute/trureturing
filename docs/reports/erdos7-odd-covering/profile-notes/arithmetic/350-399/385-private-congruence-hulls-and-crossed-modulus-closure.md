@@ -1110,3 +1110,80 @@ two saturated parents satisfying the prohibited actual old-phase
 compatibility. Neither occurrence follows from the private-neighbour
 and owned top-shadow results currently used here. No bound on support
 or prime-power height is added to bypass that missing implication.
+
+## 12. Distinct odd quotient sums allow arbitrary repair primes and parent heights
+
+The shared repair SR1--SR2 extends to ANY odd prime, including a prime
+absent from Q, and to parents below its full global height. Keep the
+same lexicographically minimal hypothetical whole cover. Fix p, put
+H=v_p(Q), and choose a nonunit h|Q. Write
+
+    a=v_p(h), n=h/p^a, r=p^(H-a+1), tau(n)>=r.        (AQ1)
+
+Let P be a nonempty set of original parents satisfying h|d and
+a_d=c mod h for ONE actual old phase c. Choose the new residues b_d
+independently, and define the deleted descendant union J exactly as
+in SR1--SR2, excluding P from J. Then
+
+    |J|<=r-1.                                        (AQ2)
+
+Choose r distinct positive divisors e_k|n. With rho=c mod p^a,
+using rho=0 when a=0, define the repair classes by CRT:
+
+    B_k={x=c mod e_k,
+         x=rho+k*p^a mod p^(H+1)}, 0<=k<r.
+
+Their numerical moduli p^(H+1)e_k are distinct odd nonunits and are
+UNUSED because their p-height exceeds H. They cover the entire old
+class c mod h: the next H-a+1 digits of any such integer choose
+exactly one k, and all its cofactor congruences hold. Each new modulus
+is at most r*h. All old and new moduli divide p*Q, providing one
+finite common comparison period without discarding any integer lift.
+
+Move the parents, delete J, and add these repairs. Every old parent
+is covered by the B_k, every deleted child by at least one retained
+moved parent, and every other original is unchanged. Thus the whole
+old union remains covered, including joint liabilities. The new
+cardinality is |D|-|J|+r, so |J|>r contradicts minimum cardinality.
+
+If |J|=r, order the deleted labels M_1<...<M_r. Their quotients M_i/h
+are DISTINCT ODD integers greater than one. Consequently
+
+    M_i/h>=2*i+1,
+    sum_(i=1..r)M_i>=h*r*(r+2)>r^2*h
+                       >=sum_(k=0..r-1)p^(H+1)*e_k.  (AQ3)
+
+The class count stays fixed while the modulus sum drops by at least
+2*r*h. This contradicts the second extremal objective and proves AQ2.
+The argument compares TOTALS: an individual deleted label can be
+smaller than an individual repair label. Numerical distinctness and
+oddness supply the required strict joint inequality.
+
+When a=H, r=p, so DR8 and SR2 hold at every qualifying odd prime
+without the smallest-prime restriction. For p=5 this also constrains
+parents below the full global ternary height. When p=3 and a=H-1,
+at least nine cofactor divisors give r=9 and a joint eight-child cap.
+H=0 permits an unused prime; Report350 already forces the minimum's
+support to be an initial segment of the odd primes, so such a prime
+lies beyond that original support.
+
+The saturated-parent argument extends as well. Two incomparable
+original parents in the same old h-phase under AQ1 cannot BOTH have
+a descendant phase group of size r-1. AQ2 would identify the two
+groups and then their complete descendant sets. The divisor-lattice
+contradiction in SR3--SR4 uses only r-1>=2 and original divisor
+closure, so it applies unchanged. The parent labels themselves need
+not have the same p-height; their divisibility by h suffices. In the
+full-height specialization, distinct full-p-height originals that
+each have a phase group of p-1 descendants therefore satisfy
+
+    A_u intersect A_v !=empty
+      ==> tau(gcd(u,v)/p^H)<=p-1.                    (AQ4)
+
+These conditions hold simultaneously at every qualifying prime and
+parent on the SAME original numerical palette and actual phases.
+They do not identify original intersections with projected shadow
+intersections or combine independently executed replacements. No
+original exponent is bounded. A whole-cover theorem forcing a
+violation remains missing. This is ordinary mathematics, not new
+Lean verification or a literature-priority claim.
