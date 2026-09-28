@@ -1688,3 +1688,236 @@ $$
 每项损失与查询分子均向上取整到百万分之一后，最小严格 slack 仍为 `0.007424`。因此这 22 个来源共覆盖 `22×280⁵=37,862,809,600,000` 个后续标签元组。与前述 255 个统一来源、旧来源及 Q/Q′ 的范围合并，恰好补齐该固定 A1 节点的 280 个第一标签；各范围互不重叠，合共覆盖 $280^6=481\,890\,304\,000\,000$ 份完整六标签参数。
 
 完整输入、精确算术消费者及固定输入整数几何重放程序见[实验包及证明说明](../../../frontier/cover-geometry/finite-prefix-sources/missing23-xi7-remaining/README.md)与[精确路由核对](../../../frontier/cover-geometry/finite-prefix-sources/missing23-xi7-remaining/verify.py)。算术检查支持正常模式与 `-O`；整数几何重建另行核对。这是上述固定有限节点与阈值内的普通数学及计算证据，不计作新增 Lean 核验，也不扩张为其他 A1 节点或无界 Erdős #7 的结论。
+
+## 同一来源上的顶点运输与连续参数边
+
+The all-$280^6$ certificate above also applies to the source row $z=22$ and to the declared continuous edge between rows13 and22. This uses the same fixed chart $(a,b,c,r,d,k)=(2,4,1,8,2,1)$, caps, thresholds $(2,4,4,8,8,16)$ and query16. The current result does not supply all other source-budget vertices.
+
+The source is Schroeder, *Nine Prime Divisors in Odd Distinct Covering Systems*, edition1.0.1, Sections5 and9 and the terminal-state normalization in Section10; the [library entry](../../../../../../Library/Arith/schroeder2026nine.md) records its provenance. The inspected `paper/main.tex` has SHA256 `73f78621a297650176cb796f763b9279eae9533efedbbb58405efc885ef41bb9`. Its explicit vertex interpolation and compatible-screening arguments are reused here for the stated missing23 schedule, with the vertex inequalities supplied by the preceding packages. The original seven-core/query12 theorem and the missing19/query18 certificate do not supply missing23/query16 vertex inequalities merely by substitution.
+
+The physical domain remains $\Xi^6$, where $\Xi=\{1,2\}\times\{1,2,3,4\}\times\{2,4,5,7,8\}\times\{1,4,7,8,11,13,14\}$. Original terminal names A1 and B1 distinguish first-seven projections at the same budget vertex, so both are included in this domain. A3 and B3 use budget column $j=3$ and are not covered on that account.
+
+### One fixed common comparison functional
+
+Fix one actual completed family, its source chart and six physical projections,
+and fix its actual padded kernels before any complete query is supplied. The
+numerical weight interpolation below evaluates upper comparisons of this fixed
+construction; it does not choose a new probability or actual kernel at a vertex.
+
+On the fixed carrier
+
+    C={x mod135: x mod3!=0, x mod9!=1, x mod27!=4,
+                 x mod5!=0, x mod15!=2, x mod45!=8},
+
+there are44 cells. The continuous comparison parameters are
+
+    z_h>=0, sum_h z_h=1/2,
+    h in {2,5,7,8,11,13,14,16,17,20,22,23,25,26};
+    t_j>=0, sum_(j=1..4)t_j=1/20, 0<=e<=t_1.
+
+Put `B={x in C:x mod3=2,x mod5=1}` and `D_j=(1/5)1_(j=1)+t_j`.
+The zero-depth factors are
+
+    A3(x)=2/3-z_(x mod27),
+    A5(x)=4/5-D_(x mod5)-(1/5-e)1_B(x).
+
+In each of four zero/positive-depth regions use `A3*A5`, `A3`, `A5` or1,
+respectively. Positive depth masses `2/3^(u+1)` and `4/5^(v+1)` do not depend on
+these budgets. These are comparison weights, not indicators of an actual
+survivor set. The common finite carrier is C throughout; no union or intersection
+of two unrelated actual source survivor sets is used. Deeper source exclusions
+and the actual kernels remain those of the single family being bounded.
+
+For fixed physical data, outgoing charged fields are functions of the selected
+incidences on each cell. They do not depend on z,t,e. Their products, including
+joint zero11/zero13 factors, multiply the same cell weight. Each geometric
+functional has the form
+
+    max_l sum_x w(x) [load_(l,xi)(x)-threshold]_+,
+
+with fixed nonnegative load coefficients and physical heads. It is a maximum of
+linear functions of w and hence convex in the full vector of nonnegative
+weights. Positive multiplier expectations, positive region sums and positive
+omitted-depth majorants preserve convexity. The current and query comparison
+functions S_xi(w)=sum_p L_p(w) and H_xi(w)=H16(w) may therefore be defined from
+one finest positive comparison, so that
+
+    G_xi(w)=14*S_xi(w)+H_xi(w)
+
+is convex. This assertion concerns the positive definition, not an arbitrary
+subtraction of upper bounds. Different numerical routes may dominate this same
+G at different vertices; their pointwise minimum need not be convex.
+
+The source's first-hit and query comparison then give, for the one actual law,
+
+    D=R-S_xi(w),        135*mu(1)>=D,
+    135*integral (Q-16)_+ dmu <= H_xi(w)   for every complete query Q>=1.
+
+Thus `D>0` and `14D-H_xi(w)>0` imply that its normalized complete-query readout
+is at most `15+H_xi(w)/D<29`. Proving these domination statements for the fixed
+construction is indispensable: abstract convexity alone does not supply them.
+
+### The minimal vertex-extension lemma
+
+Let V be a finite joint vertex set. For each permitted parameter theta suppose
+there are common coefficients `lambda_v(theta)>=0`, summing to1, such that
+
+    w(theta)=sum_v lambda_v w_v,      R(theta)=sum_v lambda_v R_v.
+
+For every fixed physical tuple xi assume S_xi and H_xi are nonnegative convex
+functions on the common weight vectors and give the fixed-law domination above.
+For every v and xi, a numerical route may supply bounds
+
+    S_xi(w_v)<=s_(v,xi),       H_xi(w_v)<=h_(v,xi),
+    d_(v,xi)=R_v-s_(v,xi)>0,
+    delta_(v,xi)=14*d_(v,xi)-h_(v,xi)>0.
+
+Then, without changing the law, caps, threshold or physical tuple,
+
+    D(theta)>=sum_v lambda_v d_(v,xi)>0,
+    14D(theta)-H_xi(w(theta))>=sum_v lambda_v delta_(v,xi)>0.
+
+Proof: apply convexity separately to S and H and subtract their upper bounds
+from the affine reserve. Finite V and finite Xi^6 allow uniform minima if every
+pair has certified strict inequalities. Alternatively a direct upper estimate
+`G_xi(w_v)<=g_(v,xi)<14R_v` suffices for the slack; H>=0 then implies
+`D>0`. In particular a uniform slack delta gives `D>=delta/14>0`.
+
+The route may depend on `(v,xi)`; there is no requirement to use one numerical
+route on all vertices. A fixed finite list of routes is sufficient exactly
+when it covers all required vertex/physical tuples and every chosen route
+bounds this same finest common functional. Coverage of different actual laws,
+different thresholds or different caps does not meet the lemma's premise.
+
+If a uniform numerical query bound q0>=15 is wanted, interpolate
+`H+(q0-15)S <= (q0-15)R`, not the ratios H/D. This positive convex combination
+also yields `H(theta)/D(theta)<=q0-15` when the endpoint D bounds are positive.
+
+### Joint budget coefficients and what is still missing
+
+The pure-5/overlap vertices are `(j,i)=(1,0),(2,0),(3,0),(4,0),(1,1)`.
+The fourteen pure-3 vertices have `z_h=1/2` at one row h. Their70 joint weights
+are interpolated by
+
+    lambda_(h,j,0)=40*z_h*(t_j-e*1_(j=1)),
+    lambda_(h,1,1)=40*z_h*e.
+
+They are nonnegative, sum to1, and give the same interpolation for all four
+region weight vectors and for the reserve
+
+    gamma15=sum_(h mod3=2) z_h,
+    gamma45=sum_(h mod9=8) z_h,
+    B_eff=sum_(x in B)(1-z_(x mod27)),
+    R=135/4+gamma15+(9-gamma15)D_2
+      +gamma45+(3-gamma45)D_3+9/5-B_eff*(1/5-e).
+
+Multiplying the two simplex decompositions proves these identities. Weights
+and R are separately affine in z and (t,e), not jointly affine in their raw
+concatenated coordinates. The joint70-vertex lift is the relevant convex
+representation. The lemma is a reuse of source Section9, not new Lean content.
+
+For this fixed chart, finite prefix-tree automorphisms preserving the named
+anchor cylinders give the following row orbits:
+
+    {13,22}, {7,16,25}, {2,5,11,14,20,23}, {8,17,26}.
+
+Generators swap sibling leaves in each displayed mod9 branch and swap the
+whole mod9 branches2 and5. They fix the mod3 and mod5 coordinates, the removed
+27-row4 and the removed45 cylinder8, and transport every labelled physical
+projection. With the source parameter transported as `(sigma z)_(sigma h)=z_h`,
+each region satisfies `w_(sigma z,t,e)(sigma x)=w_(z,t,e)(x)`, and the reserve
+is unchanged. These identities compare transported source vertices. The
+standalone check verifies these statements for all70 vertices. Thus20
+representatives (four row orbits times five pure-5/overlap vertices) suffice
+under this verified symmetry reduction. The present certificate supplies one
+such representative: row orbit{13,22}, `(j,i)=(1,0)`. The other19 representative
+inequalities are not supplied by the present certificate. This is an explicit
+proof-obligation list, not a proof that19 new enumerations are necessary;
+uniform dominating screens or further proved relations may discharge several.
+
+For the canonical coarse triple `(2,4,1)` there are also eight r representatives
+`{4,7,8,11,16,22,31,34}` and seven allowed `(d,k)` pairs, hence56 discrete mixed
+charts. Before symmetry, their fully refined product domain has `56*5*14=3920`
+vertex descriptions. The original source's screens and the missing-19 screens
+do not certify this whole domain for the changed missing-23 schedule/query16.
+Other coarse triples must also either be uniformly screened in the changed
+schedule or separately treated. No new geometry for any of these was run here.
+
+### Free extension from z13 to z22 and their entire edge
+
+Define sigma27 to exchange13 and22 and fix the other25 residues modulo27.
+For all h>=3 extend it by
+
+    sigma_(3^h)(x)=sigma27(x mod27)+27*floor(x/27) (mod 3^h).
+
+Below depth3 use its induced prefix maps; here they are identity modulo3 and9.
+Leave the 5-adic and all other prime coordinates unchanged. These compatible
+finite bijections are measure-preserving prefix-tree automorphisms. Every
+prime-power cylinder at every finite height maps to one cylinder of the same
+height. Their CRT product therefore transports every queried numerical
+modulus, original label identity and phase together. It fixes45 residues,
+permutes27 leaves and135 cells, and transports arbitrary higher query labels;
+it is not merely a symmetry of the four physical incidence counts.
+
+The map fixes C and the chosen anchor/reference data. It sends the source
+weight vertex z13 to z22, preserves every current and query geometric domain,
+and fixes each physical xi coordinate modulo3,5,9,15 individually. Explicitly,
+for every region rho and cell x in C,
+
+    w_(22,rho)(sigma(x))=w_(13,rho)(x).
+
+This transports two different endpoint weight fields; it does not assert that
+sigma preserves the z13 weight field internally. Thus the
+existing all-Xi^6 inequalities transport to z22 with exactly the same bounds,
+without a new geometry computation. Actual kernels may be conjugated under
+the map for the transport proof. During the subsequent interpolation they
+remain those of the actual family, as stipulated above; endpoint weights are
+not independently chosen actual laws.
+
+For 0<=u<=1 take
+
+    z13=u/2, z22=(1-u)/2, all other z_h=0,
+    t1=1/20, t2=t3=t4=0, e=0.
+
+The common C still has44 cells. Explicitly,
+
+    A3^u(x)=2/3-(u/2)1_(x mod27=13)-((1-u)/2)1_(x mod27=22),
+    A5(x)=4/5-(1/4)1_(x mod5=1)-(1/5)1_B(x).
+
+Every region weight equals `u*w13+(1-u)*w22`. The reserve is identically
+`R=135/4`: gamma15=gamma45=0 and `B_eff=9`. Apply the common-functional lemma
+with the two endpoints. Every actual completed family whose budgets lie on
+this edge satisfies both `D>0` and `14D-H16>0`, uniformly over Xi^6 and all
+complete query layouts. The claim concerns actual families satisfying those
+budgets; it does not assert that every relaxed edge point is realized by a
+completed family. It neither expands the discrete chart nor changes t/e.
+
+Every certified endpoint slack is inherited along the entire edge for its
+physical tuple. Finiteness of Xi^6 and the certified route partition gives a
+strictly positive uniform minimum, without computing or displaying its value.
+The7424-millionth minimum belongs to the remaining22 subcertificate; it has
+not been shown here to be the minimum of all280 source rows. No global constant
+is inferred from it. The inherited strict inequalities already prove `<29`.
+
+### Finite obstructions to unjustified extensions
+
+1. One successful vertex does not certify a simplex. On theta in[0,1], let
+   `R=1,H=0`. Both `S_good(theta)=0` and `S_bad(theta)=2*theta` are nonnegative
+   affine functions and have identical certified data at theta0. The latter
+   has D=0 at1/2 and D=-1 at1. No information confined to theta0 decides this.
+2. Choosing different actual models at different vertices is invalid. With
+   `S1=2*theta,S2=2*(1-theta),R=1,H=0`, each endpoint has a successful model,
+   but at1/2 both have D=0. The minimum of the two affine costs is not convex.
+   This is not a counterexample to compatible routes bounding one convex G.
+3. Separate affinity is not joint affinity. `W(u,v)=uv` is zero at(0,1) and
+   (1,0), but is1/4 at their midpoint. One needs the joint product vertices,
+   not an arbitrary diagonal pair in raw budget coordinates.
+4. Normalized ratios cannot be averaged as convex functions: endpoint pairs
+   `(D,H)=(3,2),(1,0)` give mean ratio1/3, but midpoint ratio1/2. Interpolate
+   the unnormalized common slack, or the fixed-q0 inequality above.
+
+### Reproducibility and scope
+
+The [finite structural checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify.py) and its [exact results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/result.json) verify the ten prefix generators, all70 source-budget vertices under these maps, the280 physical labels, reserve identities, and exact examples of the joint interpolation and continuous edge. The general interpolation and arbitrary-height transport follow from the formulas above. Finite samples do not prove the whole continuous domain.
+
+The program reads only the adjacent pinned source model and writes stdout. Run `python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify.py`. Its ordinary and optimized outputs agree. No geometric maximum is newly computed, no new Lean statement is added, and no all-missing23 or unrestricted Erdős #7 conclusion is asserted.
