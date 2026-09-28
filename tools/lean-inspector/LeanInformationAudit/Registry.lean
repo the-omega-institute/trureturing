@@ -321,11 +321,22 @@ def reportJson (modules : Array (Name × Array TemplateOccurrenceKey)) : MetaM (
   let roots := #[`LeanInformationAudit.Registry] ++ modules.map Prod.fst ++
     (if modules.any (fun row => row.1 == env.header.mainModule) then
       env.header.imports.map (·.module) else #[])
+  let probeStart ← IO.getNumHeartbeats
+  let probeBudget := (← readThe Core.Context).maxHeartbeats
+  IO.eprintln s!"PROBE_TEMPLATE_JOIN phase=start modules={modules.size} init={(← readThe Core.Context).initHeartbeats} now={probeStart} budget={probeBudget}"
   TemplateAudit.NativeCoherence.validate roots
+  IO.eprintln s!"PROBE_TEMPLATE_JOIN phase=coherence used={(← IO.getNumHeartbeats) - probeStart}"
   let snapshot ← exportSnapshot
-  let rows ← modules.mapM fun (moduleName, registered) => moduleJson snapshot moduleName registered
+  IO.eprintln s!"PROBE_TEMPLATE_JOIN phase=snapshot used={(← IO.getNumHeartbeats) - probeStart}"
+  let rows ← modules.mapM fun (moduleName, registered) => do
+    let before ← IO.getNumHeartbeats
+    let row ← moduleJson snapshot moduleName registered
+    let after ← IO.getNumHeartbeats
+    IO.eprintln s!"PROBE_TEMPLATE_JOIN phase=module module={moduleName} registered={registered.size} used={after - before} cumulative={after - probeStart}"
+    return row
   -- Compare the original snapshots after all records have been read. A replacement during this transaction cannot renew them.
   TemplateAudit.NativeCoherence.validate roots
+  IO.eprintln s!"PROBE_TEMPLATE_JOIN phase=end cumulative={(← IO.getNumHeartbeats) - probeStart}"
   return rows
 
 end LeanInformationAudit.TemplateBinding
