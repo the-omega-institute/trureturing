@@ -1,0 +1,172 @@
+{
+  "arbitrary_nonternary_heights": {
+    "forbidden_union_upper": {
+      "decimal": 0.9593963607363107,
+      "exact": "2079681650265780992172098578960028491363471184/2167698081186884664204918646364638956980938125"
+    },
+    "full_haar_density_upper": {
+      "decimal": 28.193784228036755,
+      "exact": "1751777280/62133457"
+    },
+    "full_haar_survivor_lower": {
+      "decimal": 0.0014401628009663126,
+      "exact": "88016430921103672032820067404610465617466941/61115611972512329206704300212201763057254400000"
+    },
+    "nonunit_outside_price": {
+      "decimal": 0.10344827586206896,
+      "exact": "3/29"
+    },
+    "old_query_upper": {
+      "decimal": 9.241713321332838,
+      "exact": "25585241677563810650651525265027348808464564/2768452210966647080721479752700688323091875"
+    },
+    "old_source_alpha_lower": "2142533/15904350",
+    "outside_height_bounds": null,
+    "outside_inventory_bounds": [
+      "1/27",
+      "1/29",
+      "1/35"
+    ],
+    "outside_pure_source_caps": [
+      "28/27",
+      "30/29",
+      "36/35"
+    ],
+    "strict_surplus_over_1_over_700": "708413817514630308956781387179375535674941/61115611972512329206704300212201763057254400000",
+    "supported_probability_reserve": {
+      "decimal": 0.04060363926368927,
+      "exact": "88016430921103672032820067404610465617466941/2167698081186884664204918646364638956980938125"
+    },
+    "unit_mixed_outside_price": {
+      "decimal": 0.0033570516329137017,
+      "exact": "92/27405"
+    }
+  },
+  "boundary": "One old actual survivor law and three actual pure-outside masks are fixed before the remaining union is deleted. Only unit labels with singleton outside support vanish for free. The main result needs no global minimality or finite nonternary height bounds. Deeper ternary originals and unrestricted prime support are not settled.",
+  "core_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "finite_old_and_outside_profiles": {
+    "forbidden_union_upper": {
+      "decimal": 0.9583108497922738,
+      "exact": "251517835754349653000783419953436265490914969/262459551416817809217357909601136759475455720"
+    },
+    "full_haar_density_upper": {
+      "decimal": 28.141609016782414,
+      "exact": "9326448274428385284478027276440662139375/331411337172174594469764831650097872296"
+    },
+    "full_haar_survivor_lower": {
+      "decimal": 0.0014814060625625435,
+      "exact": "3647238554156052072191496549233497994846917/2462011359564062528038650437146933392655778125"
+    },
+    "nonunit_outside_price": {
+      "decimal": 0.10344470053540787,
+      "exact": "3450181330903/33352905591544"
+    },
+    "old_query_upper": {
+      "decimal": 9.23154125950097,
+      "exact": "72644530810195793920671528681368/7869166022025963372126998610755"
+    },
+    "old_source_alpha_lower": "7869166022025963372126998610755/58313734905966118372203626202336",
+    "outside_height_bounds": [
+      3,
+      3,
+      3
+    ],
+    "outside_inventory_bounds": [
+      "871/23518",
+      "993/28798",
+      "1407/49246"
+    ],
+    "outside_pure_source_caps": [
+      "24389/23518",
+      "29791/28798",
+      "50653/49246"
+    ],
+    "strict_surplus_over_1_over_700": "520317876258136699973697984665801164211793/9848045438256250112154601748587733570623112500",
+    "supported_probability_reserve": {
+      "decimal": 0.041689150207726205,
+      "exact": "10941715662468156216574489647700493984540751/262459551416817809217357909601136759475455720"
+    },
+    "unit_mixed_outside_price": {
+      "decimal": 0.0033568287229339727,
+      "exact": "111959991483/33352905591544"
+    }
+  },
+  "finite_old_profile_arbitrary_outside_heights": {
+    "forbidden_union_upper": {
+      "decimal": 0.9583440784778415,
+      "exact": "41334241624186292879067893536773548/43130898966724305242628079385548155"
+    },
+    "full_haar_density_upper": {
+      "decimal": 28.141700199824893,
+      "exact": "1284419923884119255956088386020000/45641162927750587558336591942379"
+    },
+    "full_haar_survivor_lower": {
+      "decimal": 0.001480220499343449,
+      "exact": "1796657342538012363560185848774607/1213776828070492696878503524788900000"
+    },
+    "nonunit_outside_price": {
+      "decimal": 0.10344827586206896,
+      "exact": "3/29"
+    },
+    "old_query_upper": {
+      "decimal": 9.23154125950097,
+      "exact": "72644530810195793920671528681368/7869166022025963372126998610755"
+    },
+    "old_source_alpha_lower": "7869166022025963372126998610755/58313734905966118372203626202336",
+    "outside_height_bounds": null,
+    "outside_inventory_bounds": [
+      "1/27",
+      "1/29",
+      "1/35"
+    ],
+    "outside_pure_source_caps": [
+      "28/27",
+      "30/29",
+      "36/35"
+    ],
+    "strict_surplus_over_1_over_700": "62690445294451368019466527647607/1213776828070492696878503524788900000",
+    "supported_probability_reserve": {
+      "decimal": 0.04165592152215845,
+      "exact": "1796657342538012363560185848774607/43130898966724305242628079385548155"
+    },
+    "unit_mixed_outside_price": {
+      "decimal": 0.0033570516329137017,
+      "exact": "92/27405"
+    }
+  },
+  "outside_primes": [
+    29,
+    31,
+    37
+  ],
+  "query_certificate_sha256": "019e8321d1c11458be92ba5b8ede28ff2dad998cd050846ac42870571ea9ba83",
+  "scope": "Same-law pure-outside continuation of the height-one common query.\n\nEvery original has v3(m)<=1 and uses the first eleven odd primes.\nOther heights and all original residues are arbitrary in the main result.\nThe optional finite profiles are upper height bounds, not main premises.\nThis consumes the checked source/query pair without rebuilding it.\nOrdinary proof and exact arithmetic; no Lean verification is claimed.\n",
+  "whole_family_ternary_height_upper": 1,
+  "without3_empty_core": {
+    "first_11_nonternary_primes": [
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41
+    ],
+    "haar_survivor_lower": "29127751/173015040",
+    "remaining_mass_lower": "29127751/66621555",
+    "source_density_cap": "1048576/403767"
+  }
+}
