@@ -1,0 +1,18 @@
+**Theorem 17.1 (Eisenstein cyclotomic equivalence).** Let
+$E=\mathbb Z[\omega]$ be the quadratic algebra with
+$\omega^2+\omega+1=0$, and let $\mathcal O_3$ be the ring of integers of
+$\mathbb Q(\zeta_3)$, where $\zeta_3$ is a primitive third root of unity.
+There exists an equivalence of $\mathbb Z$-algebras
+
+$$
+E\simeq_{\mathbb Z\text{-alg}}\mathcal O_3.
+$$
+
+Proof. The basis $(1,\omega)$ makes $E$ a power-basis algebra of degree
+two. A primitive third root gives an integral power basis of
+$\mathcal O_3$, also of degree two. Both generators satisfy the third
+cyclotomic polynomial $X^2+X+1$. Since their power bases have degree
+two, this polynomial is the minimal polynomial of each generator.
+The two power bases therefore give the claimed $\mathbb Z$-algebra
+equivalence.
+
