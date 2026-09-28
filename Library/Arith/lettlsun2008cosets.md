@@ -2741,6 +2741,94 @@ other original constraints. None of these necessary cases is claimed
 feasible, and the table does not assert a new unrestricted or bare
 noncoverage range.
 
+### Nine-support marginal feasibility requires both small primes
+
+A product-source calculation further restricts MF8. Any family on exactly
+NINE support primes which passes all complete support-prime marginals
+must contain BOTH3 and5. The original phases and finite heights remain
+arbitrary. The sufficient common-law statement is
+
+    p_i>=(3,7,11,13,17,19,23,29)_i, i=1,...,8
+      ==> some actual complete-survivor law mu has R(mu)<25. (MF9)
+
+Here the p_i are eight distinct increasing odd primes, and R sums the
+maximal cylinder mass over ALL nonunit numerical labels supported on
+these primes, at every depth. The one law is fixed before the query
+phases. This ordinary deduction uses the product-source query comparison
+in [Report528, FC10--FC11](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md),
+which attributes the ordered-increment comparison to the pinned
+Schroeder1.0.1 Lemma4.1. It uses no source geometry enumeration, new Lean
+result or assertion of literature originality. No ternary-height-one
+restriction from that report is imposed here: every pure-coordinate
+law below avoids its actual complete pure-power family.
+
+For each p use normalized Haar lambda_p on the set avoiding every actual
+pure-p-power original. Its cylinder caps are C_p*p^(-e), where
+C_p=(p-1)/(p-2). Set b_p=1/(p-2), take their independent product lambda,
+and let U be the complete actual original survivor. Summing the mixed
+original costs over the full numerical exponent inventory gives
+
+    alpha=lambda(U)>=2+sum_p b_p-product_p(1+b_p).
+
+Indeed the pure originals already have zero mass; each mixed numerical
+label occurs at most once and has its one original phase. Its product
+cap is summed once. For the least tuple in MF9 the right side is
+
+    a0=1508/35343>21/500.
+
+The mixed inventory product(1+b)-1-sum b increases in each b. Increasing
+any coordinate prime therefore preserves this lower bound. In particular
+U is nonempty, and mu=lambda restricted to U, divided by alpha, is a
+well-defined probability on the SAME actual survivors. Extend the finite
+source with Haar digits beyond its original period.
+
+For any finite complete query layout L, including the unit cylinder, the
+cited product comparison bounds E_lambda(L-4)_+ by E(M-4)_+, where
+
+    M=product_p(1+J_p),
+    Pr(J_p>=e)=C_p*p^(-e), e>=1,
+
+and the auxiliary J_p are independent. These auxiliary runs do not
+change the original or query phases. Every run tail decreases when p
+increases, so the least tuple suffices for this increasing hinge. Write
+u_p=1-C_p/p and v_p=C_p*(p-1)/p^2. For that tuple the exact products are
+
+| Quantity | Exact value | Strict upper bound |
+|---|---|---:|
+|EM|8192/2295|357/100|
+|Pr(M=1)=product u_p|11832238387771/63866647565721|93/500|
+|Pr(M=2)=(product u_p)sum v_p/u_p|72637191863928552052076/206598808689370566884415|44/125|
+|Pr(M=3)=(product u_p)sum v_p/(p*u_p)|12268544824377379531286911923212/133663091390368592953336191801045|23/250|
+
+Since M is a positive integer, its exact hinge value h0 satisfies
+
+    h0=EM-4+3Pr(M=1)+2Pr(M=2)+Pr(M=3)<231/250.
+
+Restriction to U and L-1<=3+(L-4)_+ consequently give
+
+    E_mu(L-1)<=3+h0/a0<3+(231/250)/(21/500)=25.
+
+The fixed upper bound 3+h0/a0 is independent of query heights and phases.
+After fixing mu, maximize each numerical query separately in any finite
+exponent box, then exhaust all boxes. Monotone convergence gives
+R(mu)<=3+h0/a0<25. Thus strictness is retained at the limit, and no
+independently chosen survivor laws are combined.
+
+If a nine-prime support omits3 or5, its eight smallest primes dominate
+the tuple in MF9, while its largest prime r is at least31. Apply that law
+to the actual r-free original subfamily, retaining all cofactor query
+depths. MF3, with the ENTIRE r-coordinate still Haar, proves
+
+    min_y M_r(y)<26/(r-1)<=13/15<1.
+
+Hence such a family cannot pass every complete marginal. This restricts
+the all-marginals search; it is not an enlarged bare noncoverage range.
+It does not provide the missing arbitrary eight-core query bound when
+both3 and5 are present. Nor does it settle the transport, root orientation
+or attachment obligations of
+[Chapter73](../../docs/reports/erdos7-odd-covering/problem-details/73-missing-anchor-eight-core-source-audit.md),
+whose candidate source rows serve a different block-gluing interface.
+
 ### Unrestricted fractional phases only recover the reciprocal test
 
 For a fixed nonempty inventory D of nonunit numerical labels, allow one probability vector z_(d,a)

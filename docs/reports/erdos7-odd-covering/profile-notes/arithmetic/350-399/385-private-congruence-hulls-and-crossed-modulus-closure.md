@@ -818,16 +818,108 @@ Normal and optimized execution give identical result bytes:
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/composite-parent-contraction/descendant_private_hull.py --output /tmp/e7_descendant_private_hull.json
 ```
 
+### One fresh prime digit supplies distinct legal repair labels
+
+The occupied divisors in DR4 need not themselves be used as repair
+labels. Let p be any odd prime and H=v_p(Q), allowing H=0 for a prime
+absent from the original period. Suppose
+
+    p^H divides Gamma_d,
+    tau(Gamma_d/p^H)>=p.
+
+Choose p distinct positive divisors e_0,...,e_(p-1) of Gamma_d/p^H,
+and choose w in the complete private region P_d. Put rho=w mod p^H,
+with rho=0 when H=0. Define p repair classes by CRT:
+
+    B_k={x=w mod e_k,
+         x=rho+k*p^H mod p^(H+1)}, 0<=k<p.
+
+Their numerical moduli p^(H+1)*e_k are pairwise distinct odd nonunits.
+Every one is UNUSED: its p-height exceeds v_p(Q), while every original
+label divides Q. This remains true if divisor closure occupies every
+e_k and every divisor of Gamma_d. No original shadow label is assumed
+free.
+
+Every integer in P_d is w modulo Gamma_d, hence satisfies the required
+cofactor congruence for every k and is rho modulo p^H. Its next p-digit
+selects exactly one B_k. Thus these p classes cover ALL integer lifts
+of P_d, not just its chosen representatives modulo Q. Applying DR2
+to the same original phase group gives
+
+    |J_c|<=p;
+    |J_c|=p ==> sum_(M in J_c)M
+                    <=p^(H+1)*sum_(k=0..p-1)e_k.      (DR7)
+
+For the strongest sum test, take the p smallest positive divisors of
+Gamma_d/p^H. The statement asserts no reason that every private hull
+must satisfy the two displayed hypotheses. It is a lawful additional
+repair within DR2's full palette, at arbitrary original heights.
+
+### At the smallest prime, a full-height parent allows at most p-1 copies
+
+There is a stricter consequence which uses the ORIGINAL parent label,
+without requiring any enlargement of its private hull. Let p be the
+SMALLEST prime dividing Q, H=v_p(Q), and suppose an original parent is
+
+    d=p^H*n, gcd(p,n)=1, tau(n)>=p.
+
+For every actual projected phase of its proper original multiples,
+
+    #{M in D:d|M,M>d,a_M=c mod d}<=p-1.              (DR8)
+
+To prove this, choose p distinct divisors e_k of n and use the fresh
+classes above with w=a_d. They cover the ENTIRE original A_d, since
+e_k divides n and every point of A_d has the required p^H-prefix.
+Each new modulus is at most p^(H+1)*n=p*d.
+
+For every proper original multiple M of d, the quotient M/d is an
+integer greater than1 and is coprime to p: d already has the full
+global p-height H. All prime divisors of that quotient belong to the
+original support and exceed its smallest prime p. Therefore
+
+    M>p*d >=p^(H+1)*e_k for every k.
+
+If a group J_c had more than p members, DR1 followed by this repair
+would reduce the class count. If it had exactly p, every new repair
+modulus would be smaller than every removed child modulus, strictly
+reducing the modulus sum at unchanged cardinality. Both contradict
+the specified lexicographic minimality. This proves DR8.
+
+In particular, if the smallest support prime is3, every original parent
+3^H*n with tau(n)>=3 has at most TWO proper descendants with the same
+phase modulo that parent. Here n is neither1 nor a prime. There is no
+bound on the other exponents, the support size, or the number of
+different descendant phases. The same actual original residues must
+satisfy DR8 simultaneously at every qualifying parent.
+
+The replacement mechanism has a small direct check on the NONCOVER
+
+    1 mod75, 2 mod525, 2 mod825, 2 mod975.
+
+Its smallest prime is3 and its global ternary height is1. Moving the
+75-class to phase2 and replacing the three children by
+
+    1 mod9, 31 mod45, 151 mod225
+
+retains the entire old union. The new75 class contains each old child;
+the three new classes cover every integer1 mod75, using its three
+extensions modulo9 and cofactor tags1,5,25. All new labels are unused
+odd nonunits. The class count stays four, and the modulus sum drops
+from2400 to354. This checks the construction without supplying a
+whole-cover example. DR7--DR8 use the general argument above, not an
+enumeration of finite covers. No new Lean verification is claimed.
+
 ### Remaining whole-cover obligation
 
-DR3--DR6 strengthen the phase and palette constraints enforced by the
+DR3--DR8 strengthen the phase and palette constraints enforced by the
 two extremal objectives. They expose repairs that use an unused or
 freed numerical modulus, outside Report450(13.8)'s fixed-parent-label,
 common-center relocation family. That noncover obstruction does not
 refute these deductions or test all their repair classes.
 
-The new conditions remain conditional. If every Gamma_d=d, their hull
-consequences reduce to existing divisor closure and create no repair.
+The new conditions remain conditional. If every Gamma_d=d, the
+hull-divisor consequences of DR3--DR6 reduce to existing divisor
+closure; DR8 can still restrict a full-height parent's phase groups.
 No argument here forces a missing divisor below M_d, a crowded phase
 containing a hull divisor, or a cheap multi-class repair of P_d in every
 hypothetical cover. Obtaining one of those concrete violations from
