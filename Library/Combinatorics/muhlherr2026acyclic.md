@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2609.02249v2
 claim: "Conjecture 1: for the following graphs G, the number psi(G) of acyclic orientations is congruent to 2 mod 4, and consequently G is not AO-Hamiltonian since G has an even number of edges: (1) the grid graphs P_n x P_m for m, n >= 3 both odd; (2) the triangular grid graphs for m, n >= 3 both odd; (3) the generalized Petersen graphs Pet(n,k) for n even and k odd; (4) the complete tripartite graphs K_{m,n,p} for n, m, p not all odd."
 strata_touched:
   - D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations
+  - D5/S3/Combinatorics/Graph/GridAcyclicOrientations
 license: citation-only
 triage: anchor
 ---
