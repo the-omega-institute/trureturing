@@ -2690,3 +2690,246 @@ They also evaluate the exact all-height tail constants and negative screens.
 Continuous sufficiency and the infinite tails follow from the displayed
 algebra and geometric sums, not finite sampling. No full source geometry
 or new Lean verification is claimed.
+
+## A uniform exchange surplus on the actual44-cell source
+
+Fix the missing23/query16 chart `(a,b,c,r,d,k)=(2,4,1,8,2,1)`,
+`t1=1/20`, other t zero and e=0. Let A have `z13=1/2` and B have
+`z7=1/2`. Every comparison below fixes the same complete physical tuple
+`xi=(xi7,xi11,xi13,xi17,xi19,xi29)` first. Let sigma exchange the ternary
+mod9 branches4 and7, including all three children, and transport the six
+physical mod9 projections accordingly. Extend weights by zero to all135
+cells when using this permutation; it does not preserve the native carrier.
+
+Use the same unrounded positive comparison `G=14 sum Lp+H16` as the old
+certificate. Split it by zero versus positive extra3 depth as `G0+Gplus`.
+Define its zero3 exchange surplus
+
+    J_xi=(4 G0_A(xi)+3 G0_A(sigma xi))/7-G0_B(xi).
+
+The branch-exchange proof gives `J_xi>=0` component by component. The stronger
+conclusion established here, for every physical xi, is
+
+    J_xi >= J_* = 17380330052871025/23681506976038912
+                = 0.7339199346754641... .
+
+This is a lower bound on a difference in one common comparison. No two
+unrelated numerical upper bounds are subtracted, and no physical label is
+optimized separately inside a component.
+
+### The shared-layout meaning of the surplus
+
+For one fixed region, depth, multiplier and charged field, write the geometry
+as a maximum of linear source-weight responses `F(w)=max_l L_l(w)`.
+If a is the old source weight and v=(4a+3 sigma a)/7, then the branch-summary
+identity gives `F(b)=F(v)`. Consequently the exact component surplus is
+
+    min_l [(4/7)(F(a)-L_l(a))+(3/7)(F(sigma a)-L_l(sigma a))].
+
+Both deficits use the same layout l. This formula explains why independent
+endpoint bounds alone discard useful information. It also specifies a valid
+interface for sharper bounds: a lower bound must control both losses of a
+common layout. Ordinary convexity by itself supplies only zero.
+
+### A positive comparison component that is independent of physical phases
+
+At current11 retain the positive-depth comparison component at7. At current13
+retain positive depth at7 and11. At current17,19,29 and H16 retain positive
+depth at all three charged primes7,11,13. Their charged cell field is q=1.
+These are nonnegative summands of the actual producer's positive comparison.
+The product multiplier laws are the comparison's tensor laws; this does not
+claim that the corresponding events in the underlying constructed measure
+are independent.
+
+For current p with threshold t retain only multiplier values m>=t. For H16
+retain m>=16. Then the baseline `m-t` and all head coefficients are
+nonnegative, so every positive-part hinge is linear. Write
+
+    h_g(w)=max_r sum_(x mod g=r) w(x).
+
+The unknown head phases are independent. The geometry is its linear baseline
+and fixed-offset contribution plus `sum_g c_g h_g(w)`. Thus its surplus is
+`sum_g c_g Gamma_g`, where
+
+    Gamma_g=(4 h_g(a)+3 h_g(sigma a))/7-h_g(b).
+
+All fixed offsets cancel: the actual b and synthetic v have exactly the same
+mass in every joint mod9/mod5 cell, and selected offsets use only mod3,5,9,15.
+This cancellation holds for every fixed xi, not just a favorable label.
+
+### Exact incidence on the full source
+
+The native carrier is
+
+    x in Z/135Z,
+    x mod3 !=0, x mod9 !=1, x mod27 !=4,
+    x mod5 !=0, x mod15 !=2, x mod45 !=8.
+
+It has44 cells. On zero3/zero5 the old weights are
+
+    (4-3 1_(x mod27=13))/6
+       * (16-5 1_(x mod5=1)-4 1_(x mod3=2,x mod5=1))/20.
+
+For positive5 replace the second factor by1. For B replace13 by7.
+The following are exact head maxima, with ordering `(3,9,27,5,15,45,135)`:
+
+| Region | A and sigma A | B |
+|---|---|---|
+| zero3/zero5 | `(101/10,59/10,59/30,106/15,24/5,8/5,8/15)` | same, except `h9=177/40` |
+| zero3/positive5 | `(16,8,8/3,53/6,6,2,2/3)` | same, except `h9=6` |
+
+Therefore Gamma9 is59/40 or2 respectively and all other Gamma values vanish.
+The complete positive5-depth law has mass1/5. Since c9 is independent of the
+extra5 depth, these regions combine into a coefficient
+
+    59/40+(1/5)*2=15/8.
+
+This includes every positive5 depth, not merely the finite checked prefix.
+
+### The complete multiplier tails
+
+For prime p and threshold t let `C=(p-1)/(p-1-t)`. The full comparison law is
+
+    P(M=1)=1-C/p,
+    P(M=m)=C(p-1)/p^m  for m>=2,
+    E M=1+C/(p-1).
+
+Its positive-depth part omits the m=1 atom and is a subprobability measure.
+Products retain their full mass and first moment. For a stage threshold t,
+let `pi_t=P(M>=t)` and `mu_t=E[M 1_(M>=t)]`, in that stage's specified
+comparison component. Its current-loss contribution to J is at least
+
+    (15/8) * 14/(p-1-t) * (mu_t-(p-1)/p*pi_t).
+
+For the four-selected-type comparison this is exact on the retained tail;
+the released route's larger modulo9 coefficient also obeys the inequality.
+The corresponding H16 contribution is `(15/8) mu_16`.
+
+| Term | Complete-tail contribution |
+|---|---:|
+| 14L11 | `1075/17248` |
+| 14L13 | `14145/36608` |
+| 14L17 | `522525/4978688` |
+| 14L19 | `1063395/11128832` |
+| 14L29 | `856652197979775/21989970763464704` |
+| H16 | `14081779822223475/307859590688505856` |
+
+For L11 only atoms2 and3 are removed from its7-positive component. At L13,
+the two positive factors ensure m>=4; at L17 and L19 the first three positive
+factors ensure m>=8. For L29 and H16 only atoms8 and12 lie below16. All other
+mass and first moment remain in the tail. The last four terms sum to
+`6754034823240945/23681506976038912`; all six give the stated J_*.
+
+The producer's omitted anchor-depth tails use a linear majorant. On the
+retained affine components, omitting the threshold adds a term linear in
+source mass, whose exchange surplus is zero. Its first-moment integration
+retains the same c9, which does not depend on extra5 depth. On discarded
+components, the earlier branch-exchange argument still gives nonnegative
+surplus for both finite hinge maxima and linear tail majorants. Thus the
+lower bound applies to the old certificate's same unrounded G, including its
+complete tails, rather than to a separately truncated surrogate.
+
+### What this closes and what it still needs
+
+Positive3 source weights are unchanged from A to B. With
+`dp=Gplus_A(xi)-Gplus_A(sigma xi)`, the exact comparison identity is
+
+    G_B(xi)=(4 G_A(xi)+3 G_A(sigma xi))/7+(3/7)dp-J_xi.
+
+If both old endpoints are at most `14*(135/4)-delta0`, where
+`delta0=116/15625`, the new point has strict margin whenever
+
+    dp < (7/3)(J_*+delta0)
+       = 91438237295110093139/52860506642944000000
+       = 1.7298025142427496... .
+
+An absolute bound on dp gives both orientations. No such bound for every
+physical tuple is proved here. The result supplies a uniform positive
+surplus and a precise remaining target; it does not close the new vertex's
+full280^6 physical domain by itself.
+
+### Reproduction and scope
+
+[The exact surplus checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-jensen.py) checks all stated incidence maxima on44
+cells, joint branch/column cancellation, and the exact prefix-law masses,
+first moments and removed atoms. Run with `python3 -I -S -B -O`.
+[Its results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/jensen.json) gives the rational results. Only finite
+single-head incidence maxima are computed; no simultaneous-head geometry or
+source-node enumeration is used. This is an ordinary mathematical proof with
+exact arithmetic checks, not a new Lean theorem.
+
+## A restricted counterexample to the paired mixed-bound criterion
+
+Fix one zero-extra5 column, column2, and the five live root1 leaves
+`(13,22,7,16,25)`. Use the source weights
+
+    OLD=(1/6,2/3,2/3,2/3,2/3),
+    NEW=(2/3,2/3,1/6,2/3,2/3),
+    positive3=(1,1,1,1,1).
+
+The source column's common4/5 factor is included in every number below.
+The extra3-positive law has atoms `2/3^(u+1)`, u>=1. All six current losses
+are multiplied by14, the query is H16, and all charged7/11/13 fields and
+positive multiplier components come from one fixed physical tuple.
+
+In prime order `(7,11,13,17,19,29)`, take
+
+    xi_p=(2,2,c_p,1),       c=(4,7,7,4,7,4).
+
+All these physical labels belong to the actual280-label domain. On the
+chosen column they have exactly one fixed3/5/15 hit, at5. Let sigma swap
+every c_p between4 and7. Set
+
+    d0=G0_A(xi)-G0_A(sigma xi),
+    dp=Gplus_A(xi)-Gplus_A(sigma xi).
+
+Exact evaluation gives
+
+    d0=-2053526494699792486201134611/22378901288614471273911638400,
+    dp=10436404416122259509377055663/67136703865843413821734915200.
+
+For general component values, the two mixed bounds are both at most the
+old pair maximum exactly when `d0*(4*d0+7*dp)>=0`. If d0 is positive, this
+says `dp>=-4*d0/7`; if d0 is negative the inequality reverses. If d0 is
+zero the two bounds equal the respective old values. These cases prove
+the criterion directly.
+
+In this example, `d0*(4*d0+7*dp)<0`. The two exchanged mixed upper bounds,
+minus `max(G_A(xi),G_A(sigma xi))`, are respectively
+
+    2053526494699792486201134611/52217436340100432972460489600 >0,
+    -48412512976458306731225774309/469956927060903896752144406400 <0.
+
+However, the actual NEW comparison minus that same old maximum is
+
+    -2359129875913692864591937543693/417739490720803463779683916800,
+    -678937693556913321213639481619/113928952014764581030822886400,
+
+both strictly negative. This counterexample invalidates a generic attempt
+to bound the mixed expression using only the old maximum. It does not
+invalidate actual new-source domination. It also is not an example on the
+complete44-cell source: other columns and root2 are omitted.
+
+The loss in the mixed argument is substantial here. The current7 component
+alone has exchange surplus8/5 in each orientation. Its hinges are positive,
+and the two branch heads9/45 have total coefficient8/7. Their largest branch
+mass decreases from2 to3/2, giving
+
+    (4/5)*(14/4)*(8/7)*(2-3/2)=8/5.
+
+This local surplus cannot be transferred as a lower bound on the full-source
+surplus: adding other cells can change which head layout maximizes the sum.
+
+The reproducer [the exact orientation control](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-orientation.py) evaluates
+only this preselected physical pattern and its swap. It retains m=1,2,3,4
+explicitly, and sums the entire affine m>=5 tail by mass and first moment.
+For extra3 depth u>=16 every leaf-hit hinge is affine and every unhit hinge
+is constant. Comparing the100 layout lines bounds every later crossover;
+in this example their maximum is affine from16. The infinite tail of a
+line au+b is exactly `3^(-16)*(a*(16+1/2)+b)`. Thus no numerical truncation
+or omitted positive-depth tail is used.
+
+[The JSON companion](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/orientation.json) contains both source comparisons, both mixed bounds,
+their exact differences and tail breakpoint. An independent checker using
+convex co-location and piecewise affine integration reproduces the old
+source values. These are exact finite-model results, not Lean claims.
