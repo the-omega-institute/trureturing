@@ -26,3 +26,12 @@ The source headers identify the contributors above. The copyright, exact
 revision, modifications, and full Apache-2.0 license text are retained in
 `docs/reports/licenses/finite-sector-channel-third-party.md`. Retire the port
 when this repository's pinned Mathlib supplies equivalent declarations.
+
+## Verified locator
+
+The pinned source is
+https://github.com/AIQ-Kitware/aiq-dkps-formalization/tree/64e234954217f3ca907ac980c8cbde2900109a66/ForTauCeti/Analysis/InnerProductSpace.
+The `KyFan`, `PositiveSqrt`, `SelfAdjointFunctionalCalculus`,
+`Polar/Decomposition`, `RectangularSingularValues`, `ZeroExtension`, and
+`CourantFischer` modules in that directory supply the rectangular
+singular-value and variational arguments cited here.
