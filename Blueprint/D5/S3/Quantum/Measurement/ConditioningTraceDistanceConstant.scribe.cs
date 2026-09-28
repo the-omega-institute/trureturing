@@ -40,7 +40,9 @@ internal sealed class ConditioningTraceDistanceConstantDocument : IScribeDocumen
                 StatementSource.FromAuthor(TheoremFormula()), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For a positive definite filter in dimension at least two, canonical density states obey the two-sided trace-distance bound.")),
-                    Paragraph(Text("Equal extreme eigenvalues make the bundled conditioned state equal to the input, and the condition number is the least upper bound of all nontrivial conditioned-to-unconditioned ratios."))),
+                    Paragraph(Text("Equal extreme eigenvalues make the bundled conditioned state equal to the input, and the condition number is the least upper bound of all nontrivial conditioned-to-unconditioned ratios.")),
+                    Paragraph(Text("The scoped hypothesis h_0 : 0 < d is derived from h_d : 2 <= d and supplies every positivity proof argument in the displayed statement.")),
+                    Paragraph(Text("Here Fin d models the source support space H_P; the construction of H_P and R from a general instrument (Convention 26.1), and the exact values along the sharpness family, are not part of the statement."))),
                 DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
@@ -73,25 +75,42 @@ internal sealed class ConditioningTraceDistanceConstantDocument : IScribeDocumen
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
 
+    private static Formula Lt(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+
     private static Formula NotEqual(Formula left, Formula right) =>
         Seq(left, Sp, Neq, Sp, right);
 
     private static Formula Mul(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
 
+    private static Formula Subtract(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
+
     private static Formula Div(Formula left, Formula right) =>
         new Formula.Fraction(left, right);
+
+    private static Formula Subscript(Formula value, Formula index) =>
+        Seq(value, Underscore, Grp(index));
 
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Complex() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Matrix(Formula d) =>
         Call("Matrix", Call("Fin", d), Call("Fin", d), Complex());
     private static Formula States(Formula d) => Call("DensityState", Call("Fin", d));
-    private static Formula Raw(Formula rho) => Call("ofMatrixSymm", Call("val", rho));
+    private static Formula Raw(Formula rho) =>
+        Apply(Seq(Operatorname, Grp(F.Id("CStarMatrix"), Dot, F.Id("ofMatrix"), Dot,
+            F.Id("symm"))), Call("val", rho));
     private static Formula Trace(Formula x) => Call("Tr", x);
     private static Formula Distance(Formula x, Formula y) => Call("traceDistance", x, y);
-    private static Formula Tau(Formula d, Formula hd, Formula r, Formula h, Formula rho) =>
-        Call("conditionedState", d, hd, r, h, rho);
+    private static Formula Tau(Formula hd, Formula r, Formula h, Formula rho) =>
+        Call("conditionedState", hd, r, h, rho);
+
+    private static Formula EigenvaluesZero() =>
+        Seq(Operatorname, Grp(F.Id("eigenvalues")), Underscore, Grp(D(0)));
+
+    private static Formula EigenvalueAt(Formula hermitian, Formula index) =>
+        Apply(Apply(EigenvaluesZero(), hermitian), index);
 
     private static Formula ForallTyped(Formula variable, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(variable, type), Comma, Sp, Scope(body));
@@ -101,57 +120,64 @@ internal sealed class ConditioningTraceDistanceConstantDocument : IScribeDocumen
 
     private static Formula RMaxFormula()
     {
-        Formula d = F.Id("d"), hd = F.Id("hd"), r = F.Id("R"), h = F.Id("hR");
-        return Disp(Seq(Call("rMax", d, hd, r, h), Sp, Colon, Eq, Sp,
-            Call("eigenvalueFirst", r, h), Dot));
+        Formula hd = Subscript(F.Id("h"), F.Id("d"));
+        Formula r = F.Id("R"), h = Subscript(F.Id("h"), F.Id("R"));
+        return Disp(Seq(Call("rMax", hd, r, h), Sp, Colon, Eq, Sp,
+            EigenvalueAt(h, D(0)), Dot));
     }
 
     private static Formula RMinFormula()
     {
-        Formula d = F.Id("d"), hd = F.Id("hd"), r = F.Id("R"), h = F.Id("hR");
-        return Disp(Seq(Call("rMin", d, hd, r, h), Sp, Colon, Eq, Sp,
-            Call("eigenvalueLast", r, h), Dot));
+        Formula d = F.Id("d"), hd = Subscript(F.Id("h"), F.Id("d"));
+        Formula r = F.Id("R"), h = Subscript(F.Id("h"), F.Id("R"));
+        Formula last = Subtract(Call("card", Call("Fin", d)), D(1));
+        return Disp(Seq(Call("rMin", hd, r, h), Sp, Colon, Eq, Sp,
+            EigenvalueAt(h, last), Dot));
     }
 
     private static Formula ConditionNumberFormula()
     {
-        Formula d = F.Id("d"), hd = F.Id("hd"), r = F.Id("R"), h = F.Id("hR");
-        return Disp(Seq(Call("conditionNumber", d, hd, r, h), Sp, Colon, Eq, Sp,
-            Div(Call("rMax", d, hd, r, h), Call("rMin", d, hd, r, h)), Dot));
+        Formula hd = Subscript(F.Id("h"), F.Id("d"));
+        Formula r = F.Id("R"), h = Subscript(F.Id("h"), F.Id("R"));
+        return Disp(Seq(Call("conditionNumber", hd, r, h), Sp, Colon, Eq, Sp,
+            Div(Call("rMax", hd, r, h), Call("rMin", hd, r, h)), Dot));
     }
 
     private static Formula ConditionedStateFormula()
     {
-        Formula d = F.Id("d"), hd = F.Id("hd"), r = F.Id("R"), h = F.Id("hR");
-        Formula rho = F.Id("rho"), raw = Raw(rho);
-        Formula numerator = Mul(Mul(Call("sqrt", r), raw), Call("sqrt", r));
+        Formula d = F.Id("d"), hd = Subscript(F.Id("h"), F.Id("d"));
+        Formula r = F.Id("R"), h = Subscript(F.Id("h"), F.Id("R"));
+        Formula rho = Rho, raw = Raw(rho);
+        Formula numerator = Mul(Scope(Mul(Call("sqrt", r), raw)), Call("sqrt", r));
         Formula denominator = Call("Re", Trace(Mul(r, raw)));
-        return Disp(Seq(Call("conditionedState", d, hd, r, h, rho), Sp, Colon, Eq, Sp,
-            Div(numerator, denominator), Dot));
+        Formula result = Typed(Call("conditionedState", hd, r, h, rho), States(d));
+        return Disp(Seq(result, Sp, Colon, Eq, Sp,
+            Div(Scope(numerator), Scope(denominator)), Dot));
     }
 
     private static Formula TheoremFormula()
     {
-        Formula d = F.Id("d"), hd = F.Id("hd"), r = F.Id("R"), h = F.Id("hR");
-        Formula rho = F.Id("rho"), sigma = F.Id("sigma"), x = F.Id("x");
+        Formula d = F.Id("d"), hd = Subscript(F.Id("h"), F.Id("d"));
+        Formula r = F.Id("R"), h = Subscript(F.Id("h"), F.Id("R"));
+        Formula h0 = Subscript(F.Id("h"), D(0));
+        Formula rho = Rho, sigma = SigmaLower, x = F.Id("x");
         Formula states = States(d);
-        Formula pos = Call("proofOfPositivity", d);
         Formula hermitian = Call("isHermitian", h);
-        Formula k = Call("conditionNumber", d, pos, r, hermitian);
-        Formula image = Distance(Tau(d, pos, r, h, rho), Tau(d, pos, r, h, sigma));
+        Formula k = Call("conditionNumber", h0, r, hermitian);
+        Formula image = Distance(Tau(h0, r, h, rho), Tau(h0, r, h, sigma));
         Formula source = Distance(rho, sigma);
         Formula twoSided = And(
-            Le(Mul(Call("inv", k), source), image),
-            Le(image, Mul(k, source)));
+            Le(Scope(Mul(Call("inv", k), source)), image),
+            Le(image, Scope(Mul(k, source))));
         Formula equalExtreme = ForallTyped(rho, states,
-            Imply(Equal(Call("rMin", d, pos, r, hermitian),
-                Call("rMax", d, pos, r, hermitian)),
-                Equal(Tau(d, pos, r, h, rho), rho)));
+            Imply(Equal(Call("rMin", h0, r, hermitian),
+                Call("rMax", h0, r, hermitian)),
+                Equal(Tau(h0, r, h, rho), rho)));
         Formula ratioBody = And(
             NotEqual(rho, sigma),
-            Equal(x, Div(
-                Distance(Tau(d, pos, r, h, rho), Tau(d, pos, r, h, sigma)),
-                source)));
+            Equal(x, Scope(Div(
+                Distance(Tau(h0, r, h, rho), Tau(h0, r, h, sigma)),
+                source))));
         Formula ratioSet = Seq(OpenBrace, x, Sp, Mid, Sp,
             ExistsTyped(rho, states, ExistsTyped(sigma, states, ratioBody)),
             CloseBrace);
@@ -163,6 +189,8 @@ internal sealed class ConditioningTraceDistanceConstantDocument : IScribeDocumen
             Typed(hd, Le(D(2), d)), Comma, Sp,
             Typed(r, Matrix(d)), Comma, Sp,
             Typed(h, Call("PosDef", r)), Comma, Sp,
+            Operatorname, Grp(F.Id("let")), Open,
+            Typed(h0, Lt(D(0), d)), Close, SemiSpace,
             body, Dot));
     }
 }
