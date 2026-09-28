@@ -2960,14 +2960,15 @@ bound. No compatibility between laws chosen for different K is claimed.
 |11|3,5,7,13,17,19,23,29|8|10237584019/168750000000|R_K<14|
 |13|3,5,7,11,17,19,23,29|8|13939935091/337500000000|R_K<18|
 |17|3,5,7,11,13,19,23,29|16|12314552263/675000000000|R_K<27|
-|19|3,5,7,11,13,17,23,29|24|290064917/30000000000|R_K<36|
+|19|3,5,7,11,13,17,23,29|18|6130736807/450000000000|R_K<34|
 
 The exact rational query upper bounds are approximately
-13.2626300884,17.0993737229,26.2093835488,35.6790383600, respectively.
-All rows retain the source deletion schedule (2,4,4,8,8,12) at the six
-nonanchor primes q, with caps C_q=(q-1)/(q-1-t_q). The missing11 mass
-agrees with Chapter68's source calculation. Its separate block
-attachment and graph-gluing assumptions are not used here.
+13.2626300884,17.0993737229,26.2093835488,33.3554002713, respectively.
+The first three rows use source deletion schedule (2,4,4,8,8,12);
+the missing19 row uses (2,4,4,8,12,16). At each nonanchor prime q
+the cap is C_q=(q-1)/(q-1-t_q). The missing19 caps have product77/2.
+The missing11 mass agrees with Chapter68's source calculation. Its
+separate block attachment and graph-gluing assumptions are not used here.
 
 Retain the normalized predeletion kernels as sigma, then restrict to
 the same source survivor event to obtain mu<=sigma. For a complete
@@ -2996,14 +2997,22 @@ mu(1)>=D/135>0 and normalization yields
     R_K(muhat)<=k-1+N(k)/D.                          (MF18)
 
 The cached anchor bounds have threshold nodes x=t/m for
-t in{2,4,8,12},1<=m<t. For the additional query ratios at k=16 or24,
-use a nonnegative secant between adjacent cached nodes; include x=1
+t in{2,4,8,12},1<=m<t. For additional source or query ratios, use
+a nonnegative secant between adjacent cached nodes; include x=1
 with bound W-A0. Beyond the largest node12, use F(12). The actual
 hinge is convex and nonincreasing in x, so these are upper bounds.
 Every fixed-node bound is convex in the continuous anchor parameter;
 the secant coefficients depend only on x, hence preserve that
 convexity. W is convex, A0 affine, and the coefficient of W in MF17
 is nonnegative. Thus N(k) remains convex in the anchor parameter.
+
+The same safe extension applies to source deletion losses, including
+the missing19 stage t=16. Chapter31 SV16 permits every integer
+1<=t_i<=q_i-2. With the preceding-coordinate multiplier in place of
+M, the source loss is bounded by N_i(t_i)/(q_i-1-t_i), a convex
+function of the same anchor parameter. All new thresholds satisfy
+this source-kernel condition; the source and query bounds therefore
+refer to one law throughout.
 
 For each row, use ONE k at all32 anchor vertices and check, with its
 coarse bound C,
@@ -3032,14 +3041,14 @@ r-cofactor queries. MF3 gives a marginal strictly below
 exclusions with MF9--MF14 proves MF15. Finite K already suffices for
 this implication; no inverse-limit law is needed.
 
-For omission of19, the same calculation excludes largest prime
-r>=41. At r=31 or37 the displayed exact query bound still exceeds
-the required r-2. Together with MF15 this leaves only the additions
-(23,29,31),(23,29,37),(23,31,37),(29,31,37) to the first six primes
-when19 is absent. These are unresolved supports under this bound,
-not supplied feasible families. The fixed source schedule does not
-certify positive mass at the minimum proxies omitting23 or29; that
-failure does not show the actual survivor empty.
+For omission of19, every largest prime r>=37 now gives
+min M_r<35/(r-1)<=35/36<1. Hence the largest prime must be31.
+The only nine-prime odd support below or equal to31 that omits19 is
+
+    (3,5,7,11,13,17,23,29,31).
+
+Its feasibility remains unresolved; the bound supplies no actual
+family passing all marginals and no exclusion of this last support.
 
 The existing [query-hinge consumer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/query_stoploss_completion.py)
 with `--eight-core-marginals` reproduces the four rows using exact

@@ -1,0 +1,6 @@
+得到二阶 resolvent 恒等式
+$$
+R_u-R_u^0
+=-R_u^0VR_u^0+R_u^0VR_uVR_u^0.
+$$
+定义 $D(u)=FR_uF^*-(A+uI_E)^{-1}$。

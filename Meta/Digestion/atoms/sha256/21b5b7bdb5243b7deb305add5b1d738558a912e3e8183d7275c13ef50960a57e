@@ -1,0 +1,35 @@
+### 推论 539.3（恢复整个公开种子与有界损失的转移）
+
+设 $E_w,E_v$ 为定义 539.1 中具有剖面 $w,v$ 的原始公开实验，种子和标签空间允许为标准 Borel 空间。若（539.3）成立，则存在一个可读取 $q$ 的状态无关核 $\widetilde R$，输出 $E_w$ 的整个原始种子和标签，满足
+
+$$
+\forall(k,q)\in S,\qquad
+\operatorname{TV}((E_v)_{k,q}\widetilde R,(E_w)_{k,q})\le e_k^q.
+\tag{539.11}
+$$
+
+对任意 $S$ 上概率先验 $\pi$、任意非空有限行动集 $D$ 和任意损失 $\lambda:S\times D\to[0,1]$，以 $\mathcal R_E(\pi,\lambda)$ 表示最小 Bayes 风险，有
+
+$$
+0\le\mathcal R_{E_v}(\pi,\lambda)-\mathcal R_{E_w}(\pi,\lambda)
+\le\sum_{(k,q)\in S}\pi_{k,q}e_k^q
+\le\max_{q,k}e_k^q
+\le\min\{1,\max_q b_q\}.
+\tag{539.12}
+$$
+
+这不要求原先验给每条实际行正质量；（539.11）仍约束先验质量为零的实际行。
+
+证明：记定理 538.2 的规范化核为 $C_v:E_v\to W_v$，重建核为 $J_w:W_w\to E_w$，取 $\widetilde R=C_vRJ_w$。为明确整个种子的重建，对输入 $(q,B)$ 且 $w_B^q>0$，令
+
+$$
+H_B^q=\{r\notin N_w:B\in P_r^w|_{A_q}\},\qquad
+\rho_{w,B}^q(dr)=\frac{\mathbf1_{H_B^q}(r)}{w_B^q}\rho_w(dr).
+$$
+
+$N_w$ 是对全部有限实际行统一选取的零集。$J_w$ 按此限制律抽取整个 $r$，并输出 $(q,r,f_w(r,k_B))$，$k_B$ 是 $B$ 的固定代表。在 $H_B^q$ 上所有 $k\in B$ 的标签相同，故没有读取未知状态。$w_B^q=0$ 时选定一个固定原始输出作为补全；这些核行处处定义、可测。定理 538.2 给 $(E_v)_{k,q}C_v=(W_v)_{k,q}$ 和 $(W_w)_{k,q}J_w=(E_w)_{k,q}$。TV 在同一 Markov 后处理下收缩，结合（539.6）得到（539.11）。其右端是规范行误差，因此得到（539.11）的上界。前向核同样通过 $C_wHJ_v$ 作用到原始实验，仍是精确模拟。
+
+对任意 $E_w$ 的决策核 $D_w$，把 $\widetilde R D_w$ 用于 $E_v$。固定状态 $s$，原输出 $y$ 上的条件期望损失 $g_s(y)=\sum_aD_w(a\mid y)\lambda(s,a)$ 位于 $[0,1]$。概率律间对任何这样的函数都满足 $|\int g_s\,d\mu-\int g_s\,d\nu|\le\operatorname{TV}(\mu,\nu)$；例如写成 $g_s(y)=\int_0^1\mathbf1_{\{g_s(y)>u\}}du$ 即得。由（539.11），搬运后逐态风险至多增加 $e_s$。乘以 $\pi_s$ 求和，再对决策取下确界，得到（539.12）的右侧。精确前向核使 $E_w$ 可以执行任意 $E_v$ 决策，故 $\mathcal R_{E_w}\le\mathcal R_{E_v}$，得到左侧。即使不预先使用最优规则的存在性，对任意接近下确界的规则应用同一论证并取极限也成立。证毕。
+
+这一步复用既有有界损失—缺损转移关系。仓内 [FiniteDeficiencyRiskTransfer](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean) 的接口把目标参数放在源参数之前：`finiteDeficiency target source` 对应本章 $d(\mathrm{source}\to\mathrm{target})$，其 `deficiency_risk_bound` 给源风险不超过目标风险加该缺损。这里为整种子核给出独立的纸面概率论推导；接口对应本身不构成对本章陈述的内核认证。
+

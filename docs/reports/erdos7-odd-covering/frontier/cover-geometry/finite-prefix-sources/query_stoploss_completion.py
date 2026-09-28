@@ -22,10 +22,14 @@ PINS = {
     'six_prime_prefix_certificate.py': '3077f18fd91bf8f3a45483690b5f2d1386f1f692dccd9a453c43c99a8746daf4',
 }
 EIGHT_CORE_CASES = (
-    (11, (7, 13, 17, 19, 23, 29), 8, 14, F(10237584019, 168750000000)),
-    (13, (7, 11, 17, 19, 23, 29), 8, 18, F(13939935091, 337500000000)),
-    (17, (7, 11, 13, 19, 23, 29), 16, 27, F(12314552263, 675000000000)),
-    (19, (7, 11, 13, 17, 23, 29), 24, 36, F(290064917, 30000000000)),
+    (11, (7, 13, 17, 19, 23, 29), (2, 4, 4, 8, 8, 12),
+     8, 14, F(10237584019, 168750000000), 31),
+    (13, (7, 11, 17, 19, 23, 29), (2, 4, 4, 8, 8, 12),
+     8, 18, F(13939935091, 337500000000), 31),
+    (17, (7, 11, 13, 19, 23, 29), (2, 4, 4, 8, 8, 12),
+     16, 27, F(12314552263, 675000000000), 31),
+    (19, (7, 11, 13, 17, 23, 29), (2, 4, 4, 8, 12, 16),
+     18, 34, F(6130736807, 450000000000), 37),
 )
 
 
@@ -113,8 +117,7 @@ def comparison_distributions(primes, caps, cutoff):
 
 def eight_core_marginals(helper, envelopes):
     summaries, cases, atom_checks = [], [], 0
-    schedule = tuple(helper.THRESHOLDS)
-    for omitted, primes, threshold, coarse, expected_mass in EIGHT_CORE_CASES:
+    for omitted, primes, schedule, threshold, coarse, expected_mass, parent in EIGHT_CORE_CASES:
         require(all(1 <= t <= p-2 for p, t in zip(primes, schedule)),
                 'eight-core source conditional-kernel range')
         caps = tuple(F(p-1, p-1-t) for p, t in zip(primes, schedule))
@@ -124,8 +127,7 @@ def eight_core_marginals(helper, envelopes):
         for node, reserve, mass, whole, hinges in envelopes:
             losses = []
             for p, t, distribution in zip(primes, schedule, distributions):
-                require(all(F(t, m) in hinges for m in distribution[0] if m < t),
-                        'unchanged cached source-stage formula')
+                # The same safe anchor hinge extension applies to source losses.
                 cost = query_hinge(t, distribution, mass, whole, hinges)/(p-1-t)
                 rounded = helper.ceil_decimal(cost)
                 require(cost <= rounded < cost+F(1, 10**10), 'upward source loss rounding')
@@ -144,7 +146,6 @@ def eight_core_marginals(helper, envelopes):
         minimum_mass = min(row['live_mass_lower_cell_units']/135 for row in rows)
         upper = max(row['normalized_query_upper'] for row in rows)
         require(minimum_mass == expected_mass and upper < coarse, 'exact eight-core result')
-        parent = 31 if omitted != 19 else 41
         marginal_bound = F(1+coarse, parent-1)
         require(marginal_bound < 1, 'deficient complete marginal via MF3')
         summaries.append(dict(omitted_prime=omitted, reference_primes=(3, 5)+primes,
@@ -158,14 +159,15 @@ def eight_core_marginals(helper, envelopes):
                               tight_vertices=[row['node'] for row in rows
                                               if row['normalized_query_upper'] == upper]))
         cases.append(dict(omitted_prime=omitted, rows=rows))
-    require(len(envelopes) == 32 and atom_checks == 420, 'eight-core verification scope')
+    require(len(envelopes) == 32 and atom_checks == 378, 'eight-core verification scope')
     return dict(scope='For each finite original family and fixed query carrier K, one law serves '
                 'all layouts. Conditional on the same attributed source construction, convex '
                 'comparison, cached anchor geometry and finite prefix transport as the earlier '
                 'common-law bounds. No compatibility between independently chosen K-laws.',
                 independent_multiplier_atom_checks=atom_checks, exact_vertex_query_rows=128,
-                missing19_boundary='This comparison excludes largest parent at least41; '
-                'it does not exclude largest parent31 or37.',
+                missing19_boundary='This comparison excludes largest parent at least37; '
+                'the remaining nine-prime support omitting19 is '
+                '(3,5,7,11,13,17,23,29,31), whose feasibility is unresolved.',
                 summaries=summaries, rows=cases)
 
 
