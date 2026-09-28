@@ -1,0 +1,7 @@
+**命题 707.1（不经约化也成立的证书）。** 取任意状态权重 $\lambda\in\Delta(\mathcal F)$，令 $q_i=\sum_{S\ni i}\lambda_S$，并取 $0\le\eta\le1$。对每个原始可行残余 $a$，
+
+$$
+\Phi_t^{\mathcal F}(R)\ge\sum_S\lambda_S\phi_S(a)
+\ge\eta E-L\sum_i(\eta+q_i-1)_+.
+$$
+

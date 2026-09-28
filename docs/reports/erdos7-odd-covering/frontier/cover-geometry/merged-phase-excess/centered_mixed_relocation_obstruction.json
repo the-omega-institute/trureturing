@@ -1,0 +1,133 @@
+{
+  "all_mixed_prime_centered_batches_excluded": true,
+  "blockers_sha256": "f59f8b34a52802a1f71e07824a1d49a091c294265f5bc0b74ff3c2807a1bf6b9",
+  "child_record_count": 1665,
+  "divisor_pair_checks": 5979,
+  "eligible_parent_count": 449,
+  "joint_original_membership_checks": 4630,
+  "joint_points": [
+    {
+      "owners": [
+        5,
+        7,
+        17
+      ],
+      "point": 412070210125,
+      "rescuer_options": 8
+    },
+    {
+      "owners": [
+        5,
+        9,
+        11,
+        13
+      ],
+      "point": 81127832500,
+      "rescuer_options": 3
+    },
+    {
+      "owners": [
+        11
+      ],
+      "point": 168172364921,
+      "rescuer_options": 16
+    },
+    {
+      "owners": [
+        5,
+        11,
+        13
+      ],
+      "point": 132084398875,
+      "rescuer_options": 6
+    },
+    {
+      "owners": [
+        5,
+        11
+      ],
+      "point": 250668554125,
+      "rescuer_options": 8
+    },
+    {
+      "owners": [
+        5,
+        11,
+        13,
+        17
+      ],
+      "point": 254458847500,
+      "rescuer_options": 6
+    },
+    {
+      "owners": [
+        5,
+        9
+      ],
+      "point": 30923151625,
+      "rescuer_options": 9
+    },
+    {
+      "owners": [
+        5,
+        9
+      ],
+      "point": 468401215375,
+      "rescuer_options": 7
+    },
+    {
+      "owners": [
+        3,
+        5,
+        17
+      ],
+      "point": 299488721625,
+      "rescuer_options": 4
+    },
+    {
+      "owners": [
+        3,
+        5,
+        13,
+        19
+      ],
+      "point": 282188731500,
+      "rescuer_options": 3
+    }
+  ],
+  "joint_points_sha256": "303a65095fe7321f52d06c3afe64694222a16fec61cb3b715aafa04fabf97808",
+  "joint_rescuer_membership_checks": 16030,
+  "option_count": 1603,
+  "original_count": 463,
+  "original_hole": 170272916129,
+  "originals_sha256": "427138d17d61f284dff84c2143b90b3b5b3997af6c26e9a8c17f4ab790aa1e11",
+  "period": 481225870125,
+  "private_only_regression": {
+    "all_supplied_private_points_retained": 858,
+    "final_owner_count": 0,
+    "lost_point": 481093572625,
+    "old_owners": [
+      5,
+      171
+    ],
+    "selected_parent_count": 5
+  },
+  "private_original_membership_checks": 397254,
+  "private_requirements_for_eligible_parents": 844,
+  "result": "CLOSED_CASE_TREE",
+  "scope": "Every nonempty batch of distinct original cofactor parents, using actual child-induced centers with one common CRT point, loses an old covered integer after simultaneous parent replacements. All other labels are retained; a child may itself be another selected parent. No unrestricted relocation or whole-cover theorem is claimed.",
+  "search": {
+    "conflict:conditional-option-demand": 9180,
+    "conflict:forced-options-incompatible": 6841,
+    "conflict:forced-rescue-empty": 19597,
+    "conflict_leaves": 35618,
+    "maximum_depth": 14,
+    "moved_unmoved_split_nodes": 8598,
+    "nodes": 49126,
+    "parent_center_choice_nodes": 3921,
+    "propagation_calls": 49126,
+    "propagation_rounds": 85047,
+    "rescuer_choice_nodes": 989
+  },
+  "validated_private_points": 858
+}

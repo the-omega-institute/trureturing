@@ -1,0 +1,46 @@
+**命题 650.1（目标扰动的全域传递）。** 在同一个输出空间和同一组状态上，另给概率目标 $\widetilde Q_S$，满足
+
+$$
+\max_S\operatorname{TV}(\widetilde Q_S,Q_S)\le\delta.
+$$
+
+以 $\widetilde\Phi_t$ 表示用这些目标定义的最坏正部障碍，并记两种目标下的最小值为 $\widetilde v_t,v_t$。则对所有概率行，
+
+$$
+|\widetilde\Phi_t(R)-\Phi_t(R)|\le\delta,\qquad
+|\widetilde v_t-v_t|\le\delta.
+$$
+
+若 $\widetilde\Phi_t(R)\le\widetilde v_t+\varepsilon$，则在 $M<t\le1$ 时有
+
+$$
+\operatorname{TV}(R,R^{,t})\le\frac n{tm}(\varepsilon+2\delta),
+$$
+
+在 $0<t\le M$ 时则有
+
+$$
+\operatorname{dist}_{\rm TV}(R,\mathcal K_t)
+\le\frac n{td}(\varepsilon+2\delta).
+$$
+
+证明：有限正部和具有事件表示
+
+$$
+\sum_x(tR_x-Q_x)_+=\max_{A\subseteq X}\{tR(A)-Q(A)\}.
+$$
+
+对每个固定事件，换成 $\widetilde Q$ 所造成的改变量不超过 $\operatorname{TV}(Q,\widetilde Q)$。先取事件最大值再取状态最大值，仍保持同一 $\delta$ 界。两种目标函数一致地相差不超过 $\delta$，因此它们的最小值也相差不超过 $\delta$；最小值在有限概率单纯形上由连续性达到。最后
+
+$$
+\Phi_t(R)\le\widetilde\Phi_t(R)+\delta
+\le\widetilde v_t+\varepsilon+\delta
+\le v_t+\varepsilon+2\delta,
+$$
+
+分别代入第 642、645 节即得。证毕。
+
+项目 [TotalVariation/Metric](../../../D5/S3/TotalVariation/Metric.lean) 的 total_variation_eq_sup_event_gap 对等质量有限函数给出全部事件差的上界及达到性；本节将该接口用于两个总量为一的目标 $Q_S,\widetilde Q_S$。没有把质量为 $t$ 的 $tR$ 与质量为一的目标直接代入等质量前提。正部和的事件表示单独写出，避免把两个不同关系混为一个 TV 等式。
+
+本节允许扰动后的目标失去原来的均匀子集形状，所以不能再宣称扰动问题本身具有唯一最优行。保证的是它的所有近最优行都靠近原来已经确定的中心或最优集合。$\delta$ 必须来自对实际目标误差的独立约束；模型内部的稳定性公式不提供它的经验数值。
+

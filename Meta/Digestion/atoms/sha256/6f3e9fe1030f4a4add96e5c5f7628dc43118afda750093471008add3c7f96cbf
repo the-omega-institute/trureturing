@@ -1,0 +1,12 @@
+**定义 585.1（标准化容量）。** 暂取 $0<r<1$，令
+
+$$
+u_0=\frac{(1-r)b}{rD},\quad
+u_i=\frac{(1-r)e_i}{rD},\quad
+C=\sum_{x=0}^n u_x,\quad
+\theta=1-C=\frac{r-M}{rD},\quad
+h=\frac{\eta}{rD}.
+$$
+
+下标 $0$ 表示公共符号 $\circ$。容量 $u_x$ 可以超过一，$\theta$ 可以为负；它们不是另一个概率分布。
+

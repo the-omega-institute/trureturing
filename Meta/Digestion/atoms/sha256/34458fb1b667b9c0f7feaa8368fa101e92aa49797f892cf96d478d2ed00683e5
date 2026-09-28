@@ -1,0 +1,8 @@
+**定义 779.1（模型距离）。** 对 $P\in\Delta(\mathcal Z)$，定义
+
+$$
+d_r(P)=\min_{Q\in\mathcal M_r}\operatorname{TV}(P,Q),
+\qquad
+\operatorname{TV}(P,Q)=\frac12\sum_z|P(z)-Q(z)|.
+$$
+

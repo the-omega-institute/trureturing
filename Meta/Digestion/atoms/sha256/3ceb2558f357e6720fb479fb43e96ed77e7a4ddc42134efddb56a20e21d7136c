@@ -1,0 +1,9 @@
+**命题 706.1（支撑函数的两种表达）。** 将 $q$ 的坐标按不增次序记为 $q_{(1)},\ldots,q_{(n)}$，令 $k=\lfloor E/L\rfloor$。则
+
+$$
+T_{E,L}(q)=L\sum_{j=1}^{k}q_{(j)}+(E-kL)q_{(k+1)}
+=\min_{0\le\theta\le1}\left[E\theta+L\sum_i(q_i-\theta)_+\right].
+$$
+
+这里 $0\le k\le p<n$，所以即使 $E=pL$，$q_{(k+1)}$ 也存在；对应系数为零。$E=0$ 时空和与剩余项都为零。
+

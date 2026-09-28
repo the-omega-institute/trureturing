@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:71d12ea96ae71aa0e457d4b3a7c0586a82acedd54d458f8a5e17fcbc666adb38
+  normalized_sha256: sha256:71d12ea96ae71aa0e457d4b3a7c0586a82acedd54d458f8a5e17fcbc666adb38
+cas_ref: sha256:71d12ea96ae71aa0e457d4b3a7c0586a82acedd54d458f8a5e17fcbc666adb38
+coverage_gids:
+  - gid: D5/S3/Fourier/GaussianIsometry.exists_gaussian_isometry
+    target_statement_id: sha256:de8f71422386b24b72aeda579588eeaa2e4f035143beea5547f0ac5ae800c672
+receipts:
+  unresolved_subitems: []

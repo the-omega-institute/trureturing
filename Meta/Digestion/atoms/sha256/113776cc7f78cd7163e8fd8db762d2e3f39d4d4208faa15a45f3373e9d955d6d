@@ -1,0 +1,19 @@
+**命题 741.1（任意有限概率目标族的原始表示）。** 本节允许更一般的有限非空概率目标族 $(Q_s)_{s\in\mathcal S}$，共享有限非空坐标集 $X$，不要求具有同样底量或均匀状态残余。固定 $0<t\le1$，令
+
+$$
+\Phi(R)=\max_s\sum_{x\in X}(tR_x-Q_{s,x})_+,\quad
+\mu=\min_{R\in\Delta(X)}\Phi(R),\quad K=\operatorname{Argmin}\Phi,
+\quad c_J=\min_s Q_s(J)\ (J\subseteq X).
+$$
+
+则 $K$ 非空紧凸，且
+
+$$
+\Phi(R)=\max_{J\subseteq X}\bigl[tR(J)-c_J\bigr],\qquad
+K=\{R\in\Delta(X):tR(J)\le c_J+\mu\ \text{对每个 }J\subseteq X\}.
+$$
+
+**证明。** 对任意实向量 $v$，正坐标的集合达到 $\sum_x(v_x)_+=\max_{J\subseteq X}\sum_{x\in J}v_x$。有限的两个最大值可以交换，进而得到第一式。目标是有限仿射函数的最大值，故连续凸，在非空紧单纯形上达到最小值；其最小值集合正是所列闭线性约束与单纯形的交，因而非空紧凸。证毕。
+
+把 $y=tR$ 作为总质量 $t$ 的非负向量，最优集合 $tK$ 的约束为：$y_x\ge0$、$\sum_xy_x=t$，以及全部 $y(J)\le c_J+\mu$。这些约束的左侧只包含坐标、总和与子集和；改变目标族、$t$ 或最优值，改变的是右侧。这个观察会给出下一节跨目标族的有限维误差保证。
+

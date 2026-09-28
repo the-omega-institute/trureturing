@@ -1,0 +1,15 @@
+**命题 741.1（任意有限概率目标族的原始表示）。** 本节允许更一般的有限非空概率目标族 $(Q_s)_{s\in\mathcal S}$，共享有限非空坐标集 $X$，不要求具有同样底量或均匀状态残余。固定 $0<t\le1$，令
+
+$$
+\Phi(R)=\max_s\sum_{x\in X}(tR_x-Q_{s,x})_+,\quad
+\mu=\min_{R\in\Delta(X)}\Phi(R),\quad K=\operatorname{Argmin}\Phi,
+\quad c_J=\min_s Q_s(J)\ (J\subseteq X).
+$$
+
+则 $K$ 非空紧凸，且
+
+$$
+\Phi(R)=\max_{J\subseteq X}\bigl[tR(J)-c_J\bigr],\qquad
+K=\{R\in\Delta(X):tR(J)\le c_J+\mu\ \text{对每个 }J\subseteq X\}.
+$$
+

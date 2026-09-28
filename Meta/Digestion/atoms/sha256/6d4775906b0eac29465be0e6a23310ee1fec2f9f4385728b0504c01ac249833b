@@ -1,0 +1,44 @@
+**定理 588.1（全部状态数与全部擦除率的解）。** 对定义 582.2 的全部参数与 $\eta\ge0$，可行域恰为 $\eta\ge\beta=c(r-M)_+$。在可行域内，令 $\lambda=crD$，则
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal J(r,\eta)=\max\Bigg\{&\lambda,\ 2\lambda-\eta,\\
+&\max_{1\le k<n}\left[
+2rD-\frac{2(1-r)E_k}{k}
+-\left(1+\frac2k\right)\eta
++\frac{2(n-k-1)}k(r-M-\eta)_+
+\right]\Bigg\}.
+\end{aligned}
+}
+$$
+
+证明：先取 $0<r<1$。命题 583.1—587.1 给出
+
+$$
+A_*=\min_{R:\,\mu_i\le\eta}\max_i a_i=rD(1-z_*),\qquad
+\mathcal J=\max(A_*,2A_*-\eta).
+$$
+
+任意残余概率向量都有 $\min_iw_i\le1/n$，结合命题 584.1 得到 $A_*\ge\lambda$。自由中心的残余取 $w_0=0,w_i=1/n$，对应 $R_*=l+(D/n)\sum_i\delta_i$；它的每个 $a_i=\lambda$，并且当 $\eta\ge\lambda$ 时该中心可行，给出 $A_*=\lambda$。这里用的是 $\mu_i\le a_i$，不把边缘可行性凭空加到自由中心上。
+
+若 $A_*>\lambda$，上述事实强制 $\eta<\lambda\le A_*$，故 $2A_*-\eta>A_*$；若 $A_*=\lambda$，保留常数项即可。因而
+
+$$
+\mathcal J=\max(\lambda,2A_*-\eta).
+$$
+
+将命题 587.1 的有限最小值代入 $A_*$，并用
+
+$$
+rDU_k=(1-r)E_k,\qquad
+rDh=\eta,\qquad
+rD(\theta-h)_+=(r-M-\eta)_+,
+$$
+
+逐项得到所列公式。
+
+$r=0$ 时来源总是揭示状态，取 $T_i=Q_i$ 得 $m=j=0$。公式中 $\lambda=0$，所有其余项非正。$r=1$ 时只有共同 $R$，所以 $m=j$，自由中心半径为 $cD$，可行当且仅当 $\eta\ge cD=\beta=\lambda$。对任意 $1\le k<n$，相应括号项在 $\eta$ 上递减，代入最小可行预算 $cD$ 得到 $cD$：此时 $(r-M-\eta)_+=D/n$。因此全部括号项在可行域不超过 $\lambda$，公式也成立。证毕。
+
+正部项只有在 $r>M$ 且 $\eta<r-M$ 时才可能贡献；系数又要求 $k<n-1$。所以它在二状态中恒为零，而从三个状态开始，可以使只按各部分和写出的旧式下界严格不够。这不是推翻第 534 或 549 节，二者分别属于均匀与二态的合法归约。
+

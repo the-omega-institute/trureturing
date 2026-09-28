@@ -1,0 +1,17 @@
+**定义 568.1（最大端点比例）。** 记
+
+$$
+R(\pi,\varepsilon)=
+\sup_{z:I_z\ne\varnothing}
+\frac{2u_z+D}{2\ell_z+D}.
+$$
+
+由命题 567.1，固定先验下原族实验恢复的最优最坏误差为
+
+$$
+E_{\mathrm{fam}}(\pi,\varepsilon)
+=\frac D2\bigl(1-R(\pi,\varepsilon)^{-1/2}\bigr).
+$$
+
+这里每个读数都采用自己的相容区间中心；没有以事后得知的真实参数来选择中心。
+

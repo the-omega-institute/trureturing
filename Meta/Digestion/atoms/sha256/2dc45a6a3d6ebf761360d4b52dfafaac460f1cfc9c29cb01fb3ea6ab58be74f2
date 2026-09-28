@@ -1,0 +1,62 @@
+**命题 571.1（不限制在原族内的相容纤维中心）。** 对非空相容区间 $I_z$，记 $\ell=\ell_z,u=u_z$。允许解码结果为任意有限输出二态实验时，最优最坏误差为
+
+$$
+\boxed{
+r_{\mathrm{all}}(I_z)
+=\frac{\gamma(\ell,u)}2
+=\frac D4\left(1-\frac{2\ell+D}{2u+D}\right).
+}
+$$
+
+达到它的六输出实验为
+
+$$
+H_{z,i}(0,x)=\frac12Q_{\ell,i}(x),\qquad
+H_{z,i}(1,x)=\frac12Q_{u,i}(x),
+\qquad x\in\{\circ,1,2\}.
+$$
+
+若 $\ell=u$，按同一公式取两个相同分支即可。
+
+证明：先设 $\ell<u$。从 $H_z$ 模拟任一 $Q_d$，其中 $d\in I_z$：分支零使用 $Q_\ell\to Q_d$ 的精确核，分支一使用 $Q_u\to Q_d$ 的近似核，最后丢弃分支标记。项目 [TotalVariation/Convexity](../../../D5/S3/TotalVariation/Convexity.lean) 的联合凸性给出
+
+$$
+\operatorname{def}(H_z\longrightarrow Q_d)
+\le\frac12\gamma(d,u)
+\le\frac12\gamma(\ell,u).
+$$
+
+从 $Q_d$ 模拟 $H_z$：先用状态无关的公平硬币选择分支，分支零使用 $Q_d\to Q_\ell$ 的近似核，分支一使用 $Q_d\to Q_u$ 的精确核，并保留标记。两个输出块不相交，逐块求 TV 得
+
+$$
+\operatorname{def}(Q_d\longrightarrow H_z)
+\le\frac12\gamma(\ell,d)
+\le\frac12\gamma(\ell,u).
+$$
+
+两条不等式分别使用 $\gamma(d,u)=D(u-d)/(2u+D)$ 的单调性和 $\gamma(\ell,d)=D(d-\ell)/(2d+D)$ 的单调性。同一个 $H_z$ 因此对整个相容区间同时达到上界；比较某个 $Q_d$ 时使用的模拟核可以依赖该待比较实验，这与 deficiency 的定义一致。
+
+反过来，若任意有限实验 $H$ 对全部 $d\in I_z$ 的双向误差至多为 $r$，取其中任意 $d_1<d_2$。项目 [FiniteDeficiencyTriangle](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyTriangle.lean) 的有限 deficiency 三角关系给出
+
+$$
+\gamma(d_1,d_2)
+=\operatorname{def}(Q_{d_2}\longrightarrow Q_{d_1})
+\le
+\operatorname{def}(Q_{d_2}\longrightarrow H)
++\operatorname{def}(H\longrightarrow Q_{d_1})
+\le2r.
+$$
+
+让两参数分别趋向相容区间端点，得到 $r\ge\gamma(\ell,u)/2$，即使端点并不都属于区间也成立。上界由固定六输出实验达到，所以不需要预先限制候选实验的输出数来取得最优值。单点情形两方向均可精确模拟，半径为零。证毕。
+
+这里的 $H_z$ 是解码器根据已知参数、读数及噪声预算构造出的实验描述。它没有再次观察未知的真实系统，也没有额外取得 $Q_\ell,Q_u$ 的实际样本；两端的概率行由模型公式给出。带标记的两分支属于输出实验的数学结构，不能误算成增加了两次查询。
+
+对非退化纤维，原族限制所增加的最优误差恰为
+
+$$
+r_{\mathrm{fam}}(I_z)-r_{\mathrm{all}}(I_z)
+=\frac D4\left(1-\sqrt{\frac{2\ell+D}{2u+D}}\right)^2>0.
+$$
+
+所以即使观测与比较损失完全相同，限制答案必须采用哪一种表达形式，仍会改变最佳可达误差。
+

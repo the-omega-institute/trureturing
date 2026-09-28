@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5f2f54b7e5aca9e08291a08adfe388231befc66f4bb95e987403fea829e70fc4
+  normalized_sha256: sha256:5f2f54b7e5aca9e08291a08adfe388231befc66f4bb95e987403fea829e70fc4
+cas_ref: sha256:5f2f54b7e5aca9e08291a08adfe388231befc66f4bb95e987403fea829e70fc4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d closes every propositional clause by instantiation and normalization; no repository GID exists for this closure. With the stated sign convention, phi_z has coordinate row (-nu_full(z), a_coordinates(z)). Expanding P_z A_Q - P_z, Matrix.trace_add, Matrix.vecMulVec_mul and Matrix.trace_vecMulVec reduce the trace to phi_z(U_Q z). Matrix.vecMul, Matrix.mulVec, Fintype.sum_sum_type, Finset.sum_comm and finite-sum normalization yield -nu(z)^T Q nu(z); the inactive G-r coordinates vanish in the zero-padded block. This works over an arbitrary commutative ring, without division. The entire atom is bind-only.
+    previous_atom_id: 4b11cc2ed2813cf90282a1ea4c7ffef31fc958e92313a7ae70d5453cab37a6d9
+    next_atom_id: c74a637975dc8f956cbfc2b0cdf60bf55d194132d26e13aa805632a15988c7ac
