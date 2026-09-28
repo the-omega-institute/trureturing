@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:a729d9f3d05095527095efe73acbae02ef4543030c1959d9b9abea65a52c7d17
   normalized_sha256: sha256:a729d9f3d05095527095efe73acbae02ef4543030c1959d9b9abea65a52c7d17
 cas_ref: sha256:a729d9f3d05095527095efe73acbae02ef4543030c1959d9b9abea65a52c7d17
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/TwoMomentSupportHole.two_moment_support_hole_sharp
+    target_statement_id: sha256:c24f1f681e56436f131ecea8b925b51db0fae8f0328191301f8da809fd35e005
 receipts:
   unresolved_subitems: []
   chain_atoms:
