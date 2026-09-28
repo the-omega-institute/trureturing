@@ -107,7 +107,9 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
       finiteDeficiency W V = ENNReal.ofReal ρ ∧
       ρ / ε = (n : ℝ) - 3 / 2 ∧
       (∀ C : ℝ, ρ ≤ C * ε → (n : ℝ) - 3 / 2 ≤ C) ∧
+      min 1 (R + (n : ℝ) / 2 * ε) = n / (6 * ((n : ℝ) - 1)) ∧
       min 1 (R + (n : ℝ) / 2 * ε) < ρ ∧
+      0 < (2 / n : ℝ) ∧ 2 / (n : ℝ) ≤ 1 ∧
       ∃ (p : Seed n → ℝ)
         (P Q : Seed n → Finpartition (Finset.univ : Finset (Fin n))),
         (∀ s, 0 ≤ p s) ∧ (∑ s, p s = 1) ∧
@@ -540,6 +542,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
   let mr (B : Block (Fin n)) : ℝ := if B.1.card = 1 then 0 else B.1.card / 2
   have reject_min (B : Block (Fin n)) (d : Option (Fin n)) :
       mr B ≤ ∑ i ∈ B.1, rejectLoss n i d := by
+    clear * - mr
     have hk : 1 ≤ B.1.card := B.2.card_pos
     cases d with
     | none =>
@@ -566,12 +569,14 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
         · positivity
         · exact div_le_self (by positivity) (by norm_num)
   have reject_att (B : Block (Fin n)) : ∃ d, (∑ i ∈ B.1, rejectLoss n i d) = mr B := by
+    clear * - mr
     by_cases h1 : B.1.card = 1
     · obtain ⟨i, hi⟩ := Finset.card_eq_one.mp h1
       refine ⟨some i, ?_⟩; simp [hi, rejectLoss, mr, h1]
     · refine ⟨none, ?_⟩; simp [rejectLoss, mr, h1]; ring
   have mr_eq (B : Block (Fin n)) : mr B =
       min ((B.1.card - 1 : ℕ) : ℝ) ((B.1.card : ℝ) / 2) := by
+    clear * - mr
     by_cases h : B.1.card = 1
     · simp [mr, h]
     · dsimp only [mr]; rw [if_neg h]
@@ -594,17 +599,20 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
   let ml (B : Block (Fin n)) : ℝ := (B.1.card - 2 : ℕ)
   have list_sum (B : Block (Fin n)) (D : ListAction n) :
       (∑ i ∈ B.1, listLoss n i D) = ((B.1 \ D.1).card : ℝ) := by
+    clear * -
     simp only [listLoss, Finset.sum_ite, Finset.sum_const_zero, zero_add,
       Finset.sum_const, nsmul_eq_mul, mul_one]
     congr 2
     ext i; simp
   have list_min (B : Block (Fin n)) (D : ListAction n) :
       ml B ≤ ∑ i ∈ B.1, listLoss n i D := by
+    clear * - ml list_sum
     rw [list_sum]
     dsimp only [ml]
     exact_mod_cast (show B.1.card - 2 ≤ (B.1 \ D.1).card by
       simpa only [D.2] using Finset.le_card_sdiff D.1 B.1)
   have list_att (B : Block (Fin n)) : ∃ D, (∑ i ∈ B.1, listLoss n i D) = ml B := by
+    clear * - hn ml list_sum
     by_cases hk : 2 ≤ B.1.card
     · obtain ⟨D, hD, hDc⟩ := Finset.exists_subset_card_eq hk
       refine ⟨⟨D, hDc⟩, ?_⟩
@@ -644,6 +652,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
     rw [weight_sum 2 (by omega), weight_sum (n-1) (by omega), cn, Nat.cast_choose_two]
   have rW : finiteBayesRisk (fun _ => 1 / (n : ℝ)) (rejectLoss n) (row (w n)) =
       ENNReal.ofReal (n / (6 * ((n : ℝ) - 1))) := by
+    clear * - hn hn0 hm0 hdr hw0 wprofile mr
     rw [(hdr (w n) hw0).2.2]
     congr 1
     change (1 / (n : ℝ)) * (∑ B, w n B * (if B.1.card = 1 then 0 else (B.1.card : ℝ) / 2)) = _
@@ -652,6 +661,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
     field_simp [ne_of_gt hn0, ne_of_gt hm0] <;> ring
   have rV : finiteBayesRisk (fun _ => 1 / (n : ℝ)) (rejectLoss n) (row (v n)) =
       ENNReal.ofReal (1 / 2) := by
+    clear * - hn hn0 hm0 hdr hv0 vprofile mr castm
     rw [(hdr (v n) hv0).2.2]
     congr 1
     change (1 / (n : ℝ)) * (∑ B, v n B * (if B.1.card = 1 then 0 else (B.1.card : ℝ) / 2)) = _
@@ -660,6 +670,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
     field_simp [ne_of_gt hn0, ne_of_gt hm0] <;> ring
   have lW : finiteBayesRisk (fun _ => 1 / (n : ℝ)) (listLoss n) (row (w n)) =
       ENNReal.ofReal (((n : ℝ) - 2) / (3 * ((n : ℝ) - 1))) := by
+    clear * - hn hn0 hm0 hdl hw0 wprofile ml
     rw [(hdl (w n) hw0).2.2]
     congr 1
     change (1 / (n : ℝ)) * (∑ B, w n B * ((B.1.card - 2 : ℕ) : ℝ)) = _
@@ -669,6 +680,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
     field_simp [ne_of_gt hn0, ne_of_gt hm0] <;> ring
   have lV : finiteBayesRisk (fun _ => 1 / (n : ℝ)) (listLoss n) (row (v n)) =
       ENNReal.ofReal (((n : ℝ) - 3) / (3 * ((n : ℝ) - 1))) := by
+    clear * - hn hn0 hm0 hdl hv0 vprofile ml castm
     rw [(hdl (v n) hv0).2.2]
     congr 1
     change (1 / (n : ℝ)) * (∑ B, v n B * ((B.1.card - 2 : ℕ) : ℝ)) = _
@@ -677,6 +689,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
       Nat.cast_sub (by omega : 2 ≤ n-1), castm, Nat.cast_ofNat]
     field_simp [ne_of_gt hn0, ne_of_gt hm0] <;> ring
   have prior : (∀ _ : Fin n, 0 ≤ (1 / (n : ℝ))) ∧ (∑ _ : Fin n, 1 / (n : ℝ)) = 1 := by
+    clear * - hn0
     refine ⟨fun _ => by positivity, ?_⟩
     simp [ne_of_gt hn0]
   have reject_bounded (i : Fin n) (d : Option (Fin n)) :
@@ -753,7 +766,8 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
     exact (D5.S3.TotalVariation.DataProcessing.total_variation_channel_le
       (T i) (channelOutput K.1 (U i)) J.1 J.2).trans
       (Finset.le_sup' (fun j => totalVariation (T j) (channelOutput K.1 (U j))) (Finset.mem_univ i))
-  have ht0 : 0 ≤ (2 / (n : ℝ)) := by positivity
+  have htpos : 0 < (2 / (n : ℝ)) := div_pos (by norm_num) hn0
+  have ht0 : 0 ≤ (2 / (n : ℝ)) := htpos.le
   have ht1 : 2 / (n : ℝ) ≤ 1 := (div_le_one hn0).mpr (by linarith only [hnR])
   have supplier := CARRevelationScaling.result (w n) (v n) hw0 hv0 hwrow hvrow
   obtain ⟨scaling, _, realization⟩ := supplier
@@ -793,31 +807,37 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
     rw [he, hΔ, mul_zero]
   have ratio : ((2 * n - 3) / (6 * ((n : ℝ) - 1))) /
       (1 / (3 * ((n : ℝ) - 1))) = (n : ℝ) - 3 / 2 := by
+    clear * - hm0
     field_simp [ne_of_gt hm0] <;> ring
   have coeff (C : ℝ) (h : (2 * n - 3) / (6 * ((n : ℝ) - 1)) ≤
       C * (1 / (3 * ((n : ℝ) - 1)))) : (n : ℝ) - 3 / 2 ≤ C := by
+    clear * - hm0 ratio h
     rw [← ratio]
     exact (div_le_iff₀ (by positivity)).mpr h
+  have he : (n : ℝ) / 2 * (1 / (3 * ((n : ℝ) - 1))) = n / (6 * ((n : ℝ) - 1)) := by
+    clear * - hm0
+    field_simp [ne_of_gt hm0] <;> ring
   have strict0 : (n : ℝ) / 2 * (1 / (3 * ((n : ℝ) - 1))) <
       (2 * n - 3) / (6 * ((n : ℝ) - 1)) := by
-    have he : (n : ℝ) / 2 * (1 / (3 * ((n : ℝ) - 1))) = n / (6 * ((n : ℝ) - 1)) := by
-      field_simp [ne_of_gt hm0] <;> ring
+    clear * - hnR hm0 he
     rw [he]
     exact (div_lt_div_iff_of_pos_right (by positivity)).mpr (by linarith only [hnR])
   have strict : min 1 ((n : ℝ) / 2 * (1 / (3 * ((n : ℝ) - 1)))) <
       (2 * n - 3) / (6 * ((n : ℝ) - 1)) := lt_of_le_of_lt (min_le_right _ _) strict0
   have pubratio : ((2 / (n : ℝ)) * ((2 * n - 3) / (6 * ((n : ℝ) - 1)))) /
       ((2 / n) * (1 / (3 * ((n : ℝ) - 1)))) = (n : ℝ) - 3 / 2 := by
+    clear * - hn0 hm0
     field_simp [ne_of_gt hn0, ne_of_gt hm0] <;> ring
   have pubstrict : min 1 ((n : ℝ) / 2 * ((2 / n) * (1 / (3 * ((n : ℝ) - 1))))) <
       (2 / n) * ((2 * n - 3) / (6 * ((n : ℝ) - 1))) := by
+    clear * - hn0 strict0 htpos
     apply lt_of_le_of_lt (min_le_right _ _)
     calc (n : ℝ) / 2 * ((2 / n) * (1 / (3 * ((n : ℝ) - 1)))) =
         (2 / n) * ((n : ℝ) / 2 * (1 / (3 * ((n : ℝ) - 1)))) := by ring
-      _ < _ := mul_lt_mul_of_pos_left strict0 (by positivity)
+      _ < _ := mul_lt_mul_of_pos_left strict0 htpos
   refine ⟨fun B => ⟨hw0 B, hv0 B⟩, hW, hV, hp, hΔ, hR, F, G, rfl, rfl,
-    ferror, gerror, blockr, blockl, ?_, rW, rV, ?_, lW, lV, defF, defG, ratio, coeff, ?_,
-    p, P, Q, hp0, hp1, hpw, hpv, ⟨Hw, Jw, hHw, hJw⟩, ⟨Hv, Jv, hHv, hJv⟩,
+    ferror, gerror, blockr, blockl, ?_, rW, rV, ?_, lW, lV, defF, defG, ratio, coeff, ?_, ?_,
+    htpos, ht1, p, P, Q, hp0, hp1, hpw, hpv, ⟨Hw, Jw, hHw, hJw⟩, ⟨Hv, Jv, hHv, hJv⟩,
     pubpair, ?_, pubF, pubG, pubratio, ?_⟩
   · refine ⟨dr, ?_⟩
     intro u hu e
@@ -831,6 +851,11 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
     · subst u; exact (hdl (w n) hw0).2.1 e
     · have h : u = v n := Finset.mem_singleton.mp h
       subst u; exact (hdl (v n) hv0).2.1 e
+  · rw [hR, zero_add, he]
+    have hsix0 : (0 : ℝ) < 6 * ((n : ℝ) - 1) := mul_pos (by norm_num) hm0
+    have hbound : (n : ℝ) / (6 * ((n : ℝ) - 1)) ≤ 1 :=
+      (div_le_one hsix0).mpr (by linarith only [hnR])
+    exact min_eq_right hbound
   · simpa only [hR, zero_add] using strict
   · simp only [pubpair, max_self, Finset.sum_const_zero, Finset.sup'_const, mul_zero]
   · simpa only [pubpair, max_self, Finset.sum_const_zero, Finset.sup'_const, mul_zero,

@@ -235,10 +235,13 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
 
     private static Formula ObstructionFormula() => AndInline(
         All(V("C"), Real(), Implies(LeF(V("rho"), Mul(V("C"), V("epsilon"))), LeF(Sub(V("n"), Div(D(3), D(2))), V("C")))),
+        Eqn(Call("min", D(1), Add(V("R"), Mul(Div(V("n"), D(2)), V("epsilon")))),
+            Div(V("n"), Mul(D(6), Sub(V("n"), D(1))))),
         LtF(Call("min", D(1), Add(V("R"), Mul(Div(V("n"), D(2)), V("epsilon")))), V("rho")));
 
     private static Formula PublicDefinition() => Lines(
-        Eqn(V("t"), Div(D(2), V("n"))), Eqn(Call("I", V("B")), Indicator(Eqn(Card(V("B")), D(1)))),
+        Eqn(V("t"), Div(D(2), V("n"))), LtF(D(0), V("t")), LeF(V("t"), D(1)),
+        Eqn(Call("I", V("B")), Indicator(Eqn(Card(V("B")), D(1)))),
         Eqn(V("wprime"), Add(Mul(Sub(D(1), V("t")), V("I")), Mul(V("t"), V("w")))),
         Eqn(V("vprime"), Add(Mul(Sub(D(1), V("t")), V("I")), Mul(V("t"), V("v")))),
         Eqn(V("Seed"), Product(Call("Option", V("Bset")), Call("Option", V("Bset")))),
