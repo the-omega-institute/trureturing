@@ -1,0 +1,16 @@
+**定理 61.2（任意平坦集合的暴露边）。** 若 $F\ne\varnothing$，则集合
+
+$$\mathcal E_{\rm exp}=
+\{e:\ m_e=1,\ n_e\in\{1,2\}\}$$
+
+非空，并满足严格定量界
+
+$$\boxed{
+\prod_{e\in\mathcal E_{\rm exp}}x_e^{\,3-n_e}>16^f,
+\qquad
+\prod_{e\in\mathcal E_{\rm exp}}x_e>4^f.
+} \tag{EB}
+$$
+
+称其中的边为本节的暴露 $\pi$ 边。“暴露”指实际全局出现计数，不能从一幅局部投影图的可见性判断。
+

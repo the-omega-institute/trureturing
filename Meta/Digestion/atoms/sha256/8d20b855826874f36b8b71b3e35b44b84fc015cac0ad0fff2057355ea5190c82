@@ -1,0 +1,10 @@
+**定义。** 取 $N\ge1$ 及 $u,v\in\mathbb Z/N\mathbb Z$，使 $\gcd(N,u,v)=1$。四面体编号为 $t\in\mathbb Z/N\mathbb Z$，每个四面体的低边均为 $12,23,34$。以 $f_j(t)$ 表示遗漏顶点 $j$ 的面。配对为
+
+$$f_1(t)\longleftrightarrow f_4(t+u),\quad p=(4,1,2,3),$$
+$$f_2(t)\longleftrightarrow f_3(t+v),\quad r=(4,3,1,2).$$
+
+排列列出顶点 $1,2,3,4$ 的像，反向使用逆排列。令
+
+$$a=\operatorname{ord}_N(2u-v),\quad b=\operatorname{ord}_N(u+2v),\quad
+h=\gcd(N,v-2u,v+3u).$$
+

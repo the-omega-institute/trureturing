@@ -1,0 +1,6 @@
+**定义。** 仍固定第 1 节的实际有限理想剖分。记 $t=|T|$、$e=|E|$。局部角度多面体为
+
+$$\mathcal B=\{a\in\mathbb R_{>0}^{6}:\ \sum_{j\ne i}a_{ij}<\pi\ (i=1,2,3,4)\}.$$
+
+令 $\mathcal A$ 为每个四面体的角向量属于 $\mathcal B$、每条全局边按出现求和为 $2\pi$ 的正角结构空间；$\overline{\mathcal A}$ 允许零角和局部顶点角和等于 $\pi$。以下先要求 $\mathcal A\ne\varnothing$。这仍是角度条件，未预设共同边长或几何实现。
+

@@ -1,0 +1,16 @@
+**引理 42.1（带正性界的严格化）。** 假设已有归一化角向量 $a^0$，满足 $a^0_o>0$、$Ma^0=k$ 和 $d^0_c=1-(Qa^0)_c\ge0$。对每个理想顶点令
+
+$$F_\nu=|\mathcal C_\nu|,\qquad D_\nu=\sum_{c\in\mathcal C_\nu}d^0_c.$$
+
+在固定 $Ma=k$ 的同一仿射空间中，存在任意接近 $a^0$ 的角向量使全部角严格正、全部局部顶点角和严格小于一，当且仅当每个 $D_\nu>0$。在此条件下，设
+
+$$m=\min_o a^0_o>0,\qquad D_* =\max_\nu D_\nu>0,\qquad
+0<\tau\le\min\{1/2,m/(6D_*)\}.$$
+
+可以显式构造满足
+
+$$Ma^\tau=k,\qquad a^\tau_o\ge m/2,$$
+$$\boxed{d^\tau_c=(1-\tau)d^0_c+\tau D_\nu/F_\nu\ge\tau D_\nu/F_\nu>0\quad(c\in\mathcal C_\nu)}$$
+
+的向量。若 $a^0$ 和 $\tau$ 为有理数，构造的全部归一化角也为有理数。
+

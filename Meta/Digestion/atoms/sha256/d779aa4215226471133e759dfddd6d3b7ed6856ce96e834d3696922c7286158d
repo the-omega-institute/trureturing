@@ -1,0 +1,2 @@
+**既有输入。** Luo–Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*, arXiv:1404.5365，Theorem 1.4 与 Theorem 6.3 给出：$\overline{\mathcal A}$ 上的体积极大角结构唯一；它由一个共同的正全局长度向量产生；每个四面体要么真正超理想，要么恰有一对相对的 $\pi$ 角、其余四角为零。后一种平坦角型的六角之和为 $2\pi$。这里使用原定理的超理想版本，不把理想四面体的三角变量版本混入。局部体积在 $\mathcal B$ 上严格凹且连续延拓到闭包。凹性使用该文 Proposition 6.7 在全部六条边的情形；对闭包的凹性由向任一内点作凸组合再取连续极限得到。
+

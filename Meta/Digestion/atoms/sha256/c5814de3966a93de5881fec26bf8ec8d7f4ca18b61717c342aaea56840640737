@@ -1,0 +1,7 @@
+**证明。** 每个显示的局部可行向量按角色平衡放回全局仍可行；上一证明把任意全局可行向量平均为不减体积的显示向量，所以两个最大值相等。最大点的严格性已在定理 37.1 中证明。局部 Schläfli 公式给出约化体积的两个偏导
+
+$$\partial_A\operatorname{vol}=l_{L,\mathrm{mid}}-l_{L,\mathrm{end}},\qquad
+\partial_C\operatorname{vol}=l_{H,\mathrm{mid}}-l_{H,\mathrm{end}}.$$
+
+内点极大使它们为零。各四面体的角向量相同、角度决定其形状，故两类长度各自一致。这些长度等式是变分结论，未被作为全局存在性的前提。
+

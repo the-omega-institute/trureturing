@@ -1,0 +1,2 @@
+**既有输入。** 设 $\ell\in\mathbb R_{>0}^{6}$ 是单个四面体的原六边长度，$\widetilde\alpha(\ell)$ 是按原六变量公式连续延拓的角向量。Luo–Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*, arXiv:1404.5365，Corollary 4.9、Proposition 4.10、Corollary 4.12 给出一个 $C^1$ 凸的延拓共体积函数 $C:\mathbb R^6\to\mathbb R$，满足 $\nabla C=\widetilde\alpha$。Proposition 4.4 与 Lemma 4.6 保证：在正长度正交域内，非几何角型恰为一对相对的 $\pi$ 角及四个零角，包括几何域边界。以下平均在真实长度 $\ell$ 上进行，不在 $\cosh\ell$ 上进行。
+
