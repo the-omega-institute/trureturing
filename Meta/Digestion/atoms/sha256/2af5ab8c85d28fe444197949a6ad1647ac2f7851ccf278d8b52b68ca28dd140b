@@ -1,0 +1,10 @@
+**引理 36.1。** 对任意 $a\in\overline{\mathcal A}$，定义四面体总角亏量
+
+$$D_\sigma(a)=2\pi-\sum_{o\subset\sigma}a_o.$$
+
+则
+
+$$D_\sigma(a)\ge0,\qquad \sum_{\sigma\in T}D_\sigma(a)=2\pi(t-e).$$
+
+正角结构的存在强制 $t>e$。在体积极大点，$D_\sigma>0$ 当且仅当该四面体真正超理想。
+

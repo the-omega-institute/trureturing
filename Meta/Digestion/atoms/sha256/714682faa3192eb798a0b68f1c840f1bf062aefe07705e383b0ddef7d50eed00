@@ -1,0 +1,4 @@
+**文献位置。** 角度、面积、边曲率的线性相容问题与 Luo–Tillmann, *Angle structures and normal surfaces*, Trans. Amer. Math. Soc. 360 (2008), 2849–2866，及 Ge–Jia–Zhang, *Angle structures on pseudo 3-manifolds*, arXiv:2502.11397 的框架相关。本卷给出保留实际面映射、带显式正性界的运输证明，未把一般角结构方法宣称为新发现。极大点唯一性、广义长度和真正/平坦二分继续使用 Luo–Yang, arXiv:1404.5365, Theorem 1.4、Theorem 6.3；严格凹性使用 Proposition 6.7。以上都是书面数学结论，本轮未改变任何形式化或验证状态。
+
+## 45. 固定平坦角型的凸性与对边长度均值不等式
+
