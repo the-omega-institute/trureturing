@@ -198979,3 +198979,42 @@ $$
 普通角色本身未必识别 $S_U^{\mathrm{can}}$：互不等价的互为逆变的 $U$-模具有相同的分次维数，因而可以有相同角色；限制到 $v=\mathbf1_U$ 会丢失插入态的区别。只有在额外识别前提成立时，普通角色观察才可用于上述公式。将公式用于从 $F_{\mathbb C}$ 到 $U$ 的路线，还须指定二者相容的 VOA 关系、相应的模与共形数据，以及把 Fock 侧观察同 $U$ 的带插入态迹函数及其典范 $S_U^{\mathrm{can}}$ 作用相联系的迹观察接口；这里尚未给出该接口。相同 $U$ 假设下的刚性、平衡性与非退化编织范畴结论来自 [Huang 2008b, abstract](https://arxiv.org/abs/math/0502533v2) [文献注](../../../Library/VertexAlgebra/huang2008rigidity.md)，并不由有理 Fock 对易关系单独推出。
 
 上述反常边界在复的一维 Heisenberg 真空模 $V=V_{\widehat{\mathfrak h}}(1,0)$ 已有具体例子：[Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md) 给出共形向量 $\omega_t=\omega_0+t a_{-2}\mathbf1$、中心荷 $c_t=1-12t^2$，且这些选择具有同一底层顶点代数和同一 $L_0$ 分次。因此 $t=0$ 与 $t=1$ 的未平移分次维数迹 $\sum_{n\geq0}\dim V_n q^n$ 相同，中心荷却分别为 $1$ 与 $-11$；取平凡作用群已足以说明这类分次迹不能单独恢复中心荷。这里比较的不是带真空能因子 $q^{-c_t/24}$ 的角色：后者随 $t$ 改变。该例也不证明本节的 $F_{\mathbb C}$ 与 $V$ 的态场同构，更不构造尚缺的 Monster 根空间、态场至分母的接口或满足融合定理前提的 $U$。
+
+**假设 2143.5（从 Moonshine 分母到边界 CFT 与 bulk 的额外接口）。** 在假设 2143.3 的实际 $V^\natural$、$W_{m,n}$、$D_g$ 之外，另指定完整的二维局域 CFT $\mathcal C_\partial$，包括其左右手征场、Hilbert 空间 $\mathcal H_\partial$ 与相关函数；指定 Monster 在 $\mathcal H_\partial$ 上保持全理论相关函数的作用 $\rho_\partial$，以及保持真空和共形向量的手征 VOA 嵌入 $\jmath:V^\natural\hookrightarrow V_L(\mathcal C_\partial)$，满足 $\rho_\partial(g)\jmath(v)=\jmath(gv)$。对要使用的 $g\in S$，指定含左右手征插入及缝合数据的 $g$-twined 全理论相关函数族 $\mathfrak C_g(\mathcal C_\partial)$ 和提取映射 $\Pi$，令 $\Theta(\mathcal C_\partial,g)=\Pi(\mathfrak C_g(\mathcal C_\partial))\in pq\mathbb C[[p,q]]$，并验证
+
+$$
+\Theta(\mathcal C_\partial,g)=-\log D_g(p,q)
+=\sum_{k\geq1}\frac1k H_{g^k}(p^k,q^k).
+\tag{2143.3}
+$$
+
+不得以右端直接定义 $\Theta$ 来代替此匹配；$\Pi$ 还须实际读取右手征数据，否则式 (2143.3) 只是一项左手征匹配，不构成全理论匹配。$V^\natural$ 的构造与 Monster Lie 分母公式分别见 [FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md) 与 [Borcherds 1992, §§7–8](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)；这些文献不提供这里所要求的 $\Theta$ 或完整边界 CFT 的同一性证明。尤其，假设 2143.4 的 Heisenberg 生成场不指定嵌入 $\jmath$。
+
+若进一步把该边界理论解释为弦论或 AdS/CFT 模型，还须给出一个具体 bulk 模型、其适用极限、bulk 态空间 $\mathcal H_{\mathrm{bulk,code}}$、等距编码 $E:\mathcal H_{\mathrm{bulk,code}}\to\mathcal H_\partial$，以及在指定 bulk 算子代数上的字典 $\iota$，并在共同定义域上验证 $EA=\iota(A)E$。这是待构造、待验证的数据，不由式 (2143.3)、VOA 公理或融合公式推出。[Maldacena 1998, abstract](https://arxiv.org/abs/hep-th/9711200v3) [文献注](../../../Library/Quantum/maldacena1998ads.md) 的对偶提议针对特定大 $N$ 系统及极限；若还主张区域相对熵或模流对应，须另指定边界区域、bulk 纠缠楔及邻近半经典态，并只在 [Jafferis–Lewkowycz–Maldacena–Suh 2016, abstract](https://arxiv.org/abs/1512.06431) [文献注](../../../Library/Quantum/jlms2016relativeentropy.md) 所论近似范围内使用相应结论。此处未断言满足上述接口的 $\mathcal C_\partial$ 或 bulk 模型存在。
+
+**定理 2143.6（真实表示账本上的单共轭类碰撞）。** 设 $G$ 为有限群，$g\in G$ 的阶 $r>1$，$N=|G|$，$c=N/r\in\mathbb N_{>0}$。定义正双分次的有理 $G$-表示账本 $A,B$：$A_{1,1}=\mathbb Q[G]$ 为左正规表示，其余次数为零表示；$B_{r,r}=\mathbb Q^c$ 为 $c$ 份平凡表示，其余次数为零表示。令 $H^A_h=\sum_{m,n\geq1}\operatorname{tr}(h\mid A_{m,n})p^mq^n$，$H^B_h$ 同理。对每个与 $g$ 共轭的 $h$，有
+
+$$
+(\Phi H^A)_h=(\Phi H^B)_h,
+\qquad [p^rq^r]H^A_h=0\ne c=[p^rq^r]H^B_h.
+\tag{2143.4}
+$$
+
+**证明。** $h$ 的阶也是 $r$，左乘 $h$ 将 $G$ 分成 $c$ 个长度为 $r$ 的循环。故其在正规表示上的特征迹为 $\operatorname{tr}(h^k\mid\mathbb Q[G])=N$ 当 $r\mid k$，否则为 $0$。于是
+
+$$
+(\Phi H^A)_h=\sum_{j\geq1}\frac{N}{rj}(pq)^{rj}
+=\sum_{j\geq1}\frac{c}{j}(pq)^{rj}
+=(\Phi H^B)_h.
+$$
+
+$A$ 只在 $(1,1)$ 次有非零空间，而 $B$ 在 $(r,r)$ 次的迹为 $c>0$，故原始迹不同。等价的纸笔行列式计算为 $\det(1-z h\mid\mathbb Q[G])=(1-z^r)^c=\det(1-z^r h\mid\mathbb Q^c)$，取 $z=pq$ 可得相同的 twined 分母因子。迹级碰撞已有针对实际有限维表示的 Lean 草稿证明；行列式恒等式和行列式到形式对数的桥梁尚无入库形式化证明。正规表示与有限群行列式的标准背景见 [Etingof et al. 2009, §4.2](https://arxiv.org/html/0901.0827#S4.SS2) [文献注](../../../Library/Quantum/etingof2009representation.md)；Moonshine 的等变行列式与迹展开见 [Borcherds 1992, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。这里不主张该简单碰撞是文献原创结果。
+
+式 (2143.4) 只比较 $g$ 的共轭类（更一般地可比较阶同为 $r$ 的元素）；在单位元或全部幂上不成立。$A,B$ 是可实现的表示账本，但没有固定假设 2143.3 的 Monster 根空间、其维数 $c(mn)$ 或 VOA 来源。因此它把定义 2143.1 的无约束反例推进到真实表示域，却不证明 Monster 专属观察的不可识别性。
+
+**问题 2143.7（理论接口核验问卷）。** 以下每问均以同一具体对象上的构造和等式为通过判据；前一问的迹等式不能代替后一问的结构。
+
+1. **Monster 根空间。** 能否在假设 2143.3 的同一批 $V^\natural$、$W_{m,n}$ 上证明 twined 行列式、维数和 $J$-分母三个等式，并判断固定根空间的迹观察是否存在式 (2143.4) 型纤维？需要证明到实际根空间的映射，不能把任意账本 $A,B$ 代入。依据：[FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)；[Borcherds 1992, §§7–8](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。
+2. **Fock 态场。** 能否把给定的有理 Heisenberg 模式和生成场二阶局域性扩张到 $F_{\mathbb C}$ 上每个态的 $Y_F$，验证真空、平移、局域性及相容的共形向量？仅生成场的系数对易不算通过。依据：[Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；[Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。
+3. **反常与融合。** 能否在指定的同一共形表示中证明应力张量 OPE、Virasoro 中心项和所需流代数；若主张融合，能否另外给出满足假设 2143.4 的 $U$、模范畴和带插入态迹函数的典范 $S_U^{\mathrm{can}}$？普通分次迹不足以回答两问。依据：[Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；[Huang 2008a, Theorems 5.2, 5.5](https://arxiv.org/abs/math/0406291v3) [文献注](../../../Library/VertexAlgebra/huang2008verlinde.md)。
+4. **完整边界与 bulk。** 能否构造读取左右手征数据的 $\Pi$ 并验证式 (2143.3)；若进一步声称弦论或 AdS/CFT 对偶，能否指定适用极限、bulk 态及算子字典并验证 $EA=\iota(A)E$？仅 VOA、分母或融合公式不回答这一问。依据：[Maldacena 1998](https://arxiv.org/abs/hep-th/9711200v3) [文献注](../../../Library/Quantum/maldacena1998ads.md)；区域相对熵的附加范围见 [JLMS 2016](https://arxiv.org/abs/1512.06431) [文献注](../../../Library/Quantum/jlms2016relativeentropy.md)。
