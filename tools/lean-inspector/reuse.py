@@ -72,18 +72,25 @@ def warn_mismatch(result, stream):
         print('WARNING ' + message, file=stream, flush=True)
 
 
-def capture(repository):
-    """Hash only the manifest's complete declared input population."""
-    inputs = publication.selection.Selection(repository)
-    inputs.validate('lean-report')  # Registration errors are not cache misses.
+def capture_execution(inputs):
+    """The shared, explicitly admitted report execution environment."""
     execution = inputs.data.get('report_execution')
     if execution is None:
         return dict(eligible=False, reason='execution-not-registered')
     environment = {name: os.environ.get(name, '') for name in execution['environment']}
-    # External search/sysroot paths and arbitrary option strings are not a
-    # registered file population. Their presence keeps the ordinary Lake path.
     if any(environment[name] for name in ('LEAN_PATH', 'LEAN_SRC_PATH', 'LEAN_SYSROOT', 'LEAN_OPTS')):
         return dict(eligible=False, reason='external-semantic-environment')
+    return dict(eligible=True, execution=dict(toolchain=execution['toolchain'], tools=execution['tools'],
+        platform={name: getattr(platform, name)() for name in execution['platform']}, environment=environment))
+
+
+def capture(repository):
+    """Hash only the manifest's complete declared input population."""
+    inputs = publication.selection.Selection(repository)
+    inputs.validate('lean-report')  # Registration errors are not cache misses.
+    execution = capture_execution(inputs)
+    if not execution['eligible']:
+        return execution
     # The authored toolchain pin is the tools' registered identity. It is a
     # required config input below. Revalidating report data does not execute
     # either compiler binary or require an installed toolchain.
@@ -97,9 +104,7 @@ def capture(repository):
         source = inputs.safe_file(path)
         files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
     return dict(eligible=True, semantic_version=inputs.data['report_cache_release_semantic_version'], files=files,
-        execution=dict(toolchain=execution['toolchain'], tools=execution['tools'],
-                       platform={name: getattr(platform, name)() for name in execution['platform']},
-                       environment=environment))
+        execution=execution['execution'])
 
 
 def bundle_hashes(report):
@@ -107,14 +112,20 @@ def bundle_hashes(report):
     return {suffix: publication.digest(publication.member(report, suffix)) for suffix in publication.SUFFIXES}
 
 
+def receipt_record(data):
+    """Decode the seal; callers must bind its inputs and bundle independently."""
+    receipt = publication.read_json(data)
+    materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
+    if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
+        raise ValueError('reuse receipt lacks complete entry success')
+    return receipt
+
+
 def read_receipt(report, captured):
     path = publication.member(report, SUFFIX)
     if path.is_symlink() or not path.is_file():
         raise ValueError('reuse receipt is absent or nonregular')
-    receipt = publication.read_json(path.read_bytes())
-    materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
-    if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
-        raise ValueError('reuse receipt lacks complete entry success')
+    receipt = receipt_record(path.read_bytes())
     if receipt['inputs'] != captured:
         raise InputMismatch(receipt['inputs'], captured)
     if receipt['bundle'] != bundle_hashes(report):

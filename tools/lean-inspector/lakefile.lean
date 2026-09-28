@@ -65,7 +65,11 @@ package_facet reportBatch (_pkg : Package) : ReportState := do
   Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← Std.Mutex.new ()⟩
 
 private def validateArtifact (pkg : Package) (args : Array String) : JobM UInt32 := do
-  return (← IO.Process.output (← nativeCommand pkg (#["validate"] ++ args))).exitCode
+  let result ← IO.Process.output (← nativeCommand pkg (#["validate"] ++ args))
+  unless result.stdout.isEmpty do logInfo result.stdout
+  unless result.stderr.isEmpty do logInfo result.stderr
+  if result.exitCode > 1 then error s!"Inspector validation/publication failed: {result.exitCode}"
+  return result.exitCode
 
 /-- Utility input is generated once per invocation by its existing .NET owner.
 This job deliberately has no content trace: each module traces its own record. -/
@@ -93,9 +97,88 @@ package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
     let names ← strings (← readJson path) "modules"
     return names.foldl (fun set name => set.insert name.toName) {}
 
+private structure SemanticInputs where
+  content : Std.HashSet String
+  programs : Std.HashSet String
+  reported : Std.HashSet String
+  pins : Json
+  common : String
+
+/-- Invocation-local registration data; its global membership is never mixed
+into an individual module trace. -/
+package_facet reportSemanticInputs (pkg : Package) : SemanticInputs := do
+  (← fetch <| pkg.facet `reportInputs).mapM fun path => do
+    let json ← readJson (path.withFileName "semantic-inputs.json")
+    return ⟨Std.HashSet.ofArray (← strings json "content"),
+      Std.HashSet.ofArray (← strings json "programs"),
+      Std.HashSet.ofArray (← strings json "reported"),
+      ← IO.ofExcept (json.getObjVal? "pins"),
+      (← IO.ofExcept (json.getObjVal? "common")).compress⟩
+
+private structure SemanticSource where
+  program : Bool
+  path : String
+  compilerConfig : String
+  validation : Job Unit
+
+-- Interned per resolved module: hash a shared source once, then compose Lake's
+-- actual import closures. No second import parser or persistent cache is used.
+module_facet reportSemanticSource (mod : Module) : SemanticSource := do
+  let pkg := (← getWorkspace).root
+  let registration ← (← fetch <| pkg.facet `reportSemanticInputs).await
+  let root ← repositoryDir pkg
+  let path := (relPathFrom root (← IO.FS.realPath mod.leanFile)).toString
+  let isProgram := registration.programs.contains path && !registration.reported.contains path
+  let pin := registration.pins.getObjVal? mod.pkg.baseName.toString
+  let external := path.startsWith ".lake/packages/" && !mod.pkg.remoteUrl.isEmpty && pin.isOk
+  unless registration.content.contains path || isProgram || external do
+    error s!"incomplete module semantic coverage: {mod.name} at {path}"
+  -- Custom native loaders can read undeclared files; no source-only seal can
+  -- certify those configurations until their semantic inputs are registered.
+  unless mod.plugins.isEmpty && mod.dynlibs.isEmpty &&
+      mod.lib.extraDepTargets.isEmpty && mod.pkg.extraDepTargets.isEmpty do
+    error s!"incomplete module semantic coverage: native loaders or extra targets for {mod.name}"
+  let fileArgs := #["--plugin", "--load-dynlib", "--setup", "--incr-load"]
+  if (mod.leanArgs ++ mod.weakLeanArgs).any (fun arg => fileArgs.any (fun flag => arg.startsWith flag)) then
+    error s!"incomplete module semantic coverage: external compiler inputs for {mod.name}"
+  let input ← mod.input.fetch
+  let source : Job Unit ← if isProgram then pure (Job.pure ()) else do
+    let file ← inputBinFile mod.leanFile
+    pure (file.map (fun _ => ()))
+  -- Validate the runtime owner once per resolved module after its required
+  -- compiler export succeeds. Program artifacts are awaited without tracing.
+  let exportJob ← mod.exportInfo.fetch
+  let validation ← exportJob.mapM fun _ => do
+    let search := (← getWorkspace).augmentedLeanPath ++ [(← getLeanInstall).leanLibDir]
+    let some actual ← Lean.SearchPath.findModuleWithExt search "olean" mod.name
+      | error s!"incomplete module semantic coverage: missing export {mod.name}"
+    unless (← IO.FS.realPath actual) == (← IO.FS.realPath mod.oleanFile) do
+      error s!"incomplete module semantic coverage: shadowed export {mod.name}"
+  source.mapM fun _ => do
+    let search := (← getWorkspace).augmentedLeanPath ++ [(← getLeanInstall).leanLibDir]
+    let info ← input.await
+    for imp in info.imports do
+      if imp.module?.isNone then
+        let core := Lean.modToFilePath (← getLeanInstall).leanLibDir imp.module "olean"
+        let some actual ← Lean.SearchPath.findModuleWithExt search "olean" imp.module
+          | error s!"incomplete module semantic coverage: unresolved import {imp.module}"
+        unless (← IO.FS.realPath actual) == (← IO.FS.realPath core) do
+          error s!"incomplete module semantic coverage: shadowed toolchain import {imp.module}"
+    let extra := (← getLeanOptOverrides).find? mod.pkg.baseName |>.getD {}
+    let options := (mod.leanOptions ++ extra).values.foldl (init := #[]) fun opts name value =>
+      opts.push (name.toString, value.asCliFlagValue)
+    let compilerConfig := (Lean.toJson (options, mod.leanArgs, mod.weakLeanArgs)).compress
+    unless isProgram do
+      addPureTrace (mod.name.toString, mod.pkg.baseName.toString, mod.lib.name.toString, path)
+        "semantic resolution"
+      if external then addPureTrace (pin.toOption.get!).compress "dependency pin"
+      addPureTrace mod.pkg.id? "semantic package identity"
+      addPureTrace compilerConfig "semantic compiler configuration"
+    return ⟨isProgram, path, compilerConfig, validation⟩
+
 /-- Trace semantic compatibility after validating registered inputs.
-Raw configuration identity belongs to the aggregate; module exports carry
-Lake's compiler dependencies. Producer compilation is a separate obligation. -/
+Module identity projects registered semantic inputs through Lake imports.
+Producer compilation is a separate obligation. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
   return Job.nil.mix (← inputBinFile ((← repositoryDir pkg) / ".lake/build/lean-inspector" / "compatibility"))
@@ -193,27 +276,34 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let some driver := (← getWorkspace).findModule? `LeanInformationAudit.Registry
     | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
   let driverBuild ← driver.exportInfo.fetch
+  sourceModules := sourceModules.push driver
   for name in claims do
     let some claim := (← getWorkspace).findModule? name.toName
       | error s!"utility claim module is not in the Lake workspace: {name}"
     exports := exports.push (← claim.exportInfo.fetch)
     sourceModules := sourceModules.push claim
-  -- Only production consumes this source whitelist. Warm artifacts still trace
-  -- the complete compiler exports below and cross the canonical validator.
-  -- Missing and rejected artifacts prepare the same Lake-owned closure before
-  -- extraction; no dependency parser or additional cache chooses its members.
-  let prepareProduction : JobM Unit := do
-    let reported ← (← JobM.runFetchM <| fetch <| pkg.facet `reportSourceModules).await
-    let mut dependencies := #[]
-    for source in sourceModules do
-      dependencies := dependencies.push source ++
-        (← (← JobM.runFetchM source.transImports.fetch).await)
-    let mut sourcePaths : Array String := #[]
-    for dependency in dependencies do
-      if dependency.name != mod.name && reported.contains dependency.name then continue
-      let path := (relPathFrom (← repositoryDir pkg) (← IO.FS.realPath dependency.leanFile)).toString
-      unless path.startsWith ".lake/" || path.startsWith "../" do
-        sourcePaths := sourcePaths.push path
+  let mut dependencies : OrdModuleSet := .empty
+  for source in sourceModules do
+    dependencies := dependencies.insert source
+    dependencies := dependencies.appendArray (← (← source.transImports.fetch).await)
+  let mut sourcePaths : Array String := #[]
+  let mut programConfigs : Std.HashSet String := {}
+  let semantic ← (← fetch <| pkg.facet `reportSemanticInputs).await
+  let reported ← (← fetch <| pkg.facet `reportSourceModules).await
+  for dependency in dependencies.toArray.qsort (fun a b => a.name.toString < b.name.toString) do
+    let job ← fetch <| dependency.facet `reportSemanticSource
+    let input ← job.await
+    deps := deps.add input.validation
+    if input.program then
+      deps := deps.add job
+      programConfigs := programConfigs.insert input.compilerConfig
+    else
+      deps := deps.mix job
+    if dependency.name != mod.name && reported.contains dependency.name then continue
+    let path := input.path
+    unless path.startsWith ".lake/" || path.startsWith "../" do
+      sourcePaths := sourcePaths.push path
+  let prepareProduction : JobM Unit :=
     writeBinFileIfChanged (utility.addExtension "sources.json")
       (String.toUTF8 (Lean.toJson sourcePaths).compress)
   -- Await without mixing: recompilation must succeed, but its implementation
@@ -223,13 +313,14 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let env := workspace.augmentedEnvVars
   let file := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
   (deps.add (Job.mixArray exports) |>.add inspector |>.add driverBuild).mapM fun _ => do
-    -- Inspector's private import mode reads transitive private values, also
-    -- through public imports. Lake's legacy trace follows that same closure;
-    -- allTransTrace follows each import's visibility and can omit those values.
-    -- Apply this to the module and every external utility claim.
-    for exportJob in exports do
-      let info ← exportJob.await
-      addTrace (info.allArtsTrace.mix info.legacyTransTrace)
+    -- Exports/programs must succeed, but their compiler artifact identities
+    -- do not enter report semantics. Private dependencies are already included
+    -- by transImports (not the visibility-limited allTransTrace).
+    addPureTrace semantic.common "report semantics"
+    addPureTrace (← getLeanInstall).githash "Lean toolchain revision"
+    -- Producer membership/bytes are version-governed; distinct execution
+    -- configurations remain inputs without counting identical helper modules.
+    addPureTrace (programConfigs.toArray.qsort (· < ·)) "producer compiler configurations"
     let executable ← inspector.await
     let args := #[(← repositoryDir pkg).toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
       utility.toString, executable.toString, file.toString]

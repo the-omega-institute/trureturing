@@ -7,6 +7,29 @@ namespace StrataLint.CliIntegration.Tests;
 
 public sealed partial class CommonCurrentEvidenceValidationTests
 {
+    [Fact]
+    public void CheckInvocationSharesAcceptanceThroughInputsCallbacksAndSeal()
+    {
+        using var fixture = new EvidenceFixture();
+        var previous = RawLeanReportArtifact.Reading.Value;
+        var reads = 0;
+        try
+        {
+            RawLeanReportArtifact.Reading.Value = () => reads++;
+            var checks = BeginRunChecks(fixture);
+            checks.Run("SL-001", () => PassingPredicate("SL-001"));
+            checks.Run("SL-002", () => PassingPredicate("SL-002"));
+            var sealedChecks = checks.Seal();
+            Assert.Equal(2, sealedChecks.Units.Length);
+            Assert.Equal(1, reads);
+            // A new authoritative consumer still performs complete acceptance.
+            CommonExecutionEvidence.ValidateChecks(fixture.Root, "current",
+                CommonExecutionEvidence.ValidateBuild(fixture.Root), ["SL-001", "SL-002"]);
+            Assert.Equal(2, reads);
+        }
+        finally { RawLeanReportArtifact.Reading.Value = previous; }
+    }
+
     [Theory]
     [InlineData("checks")]
     [InlineData("program-projects")]
@@ -73,7 +96,6 @@ public sealed partial class CommonCurrentEvidenceValidationTests
     public void CheckRunSharesSuccessfulReportButHashesEveryMaterialAfterEachCallback()
     {
         using var fixture = new EvidenceFixture();
-        var checks = BeginRunChecks(fixture);
         var previousReading = RawLeanReportArtifact.Reading.Value;
         var previousHashing = CommonExecutionEvidence.Hashing.Value;
         var reads = 0;
@@ -82,6 +104,8 @@ public sealed partial class CommonCurrentEvidenceValidationTests
         {
             RawLeanReportArtifact.Reading.Value = () => reads++;
             CommonExecutionEvidence.Hashing.Value = path => hashes[path] = hashes.GetValueOrDefault(path) + 1;
+            var checks = BeginRunChecks(fixture);
+            hashes.Clear();
             var first = checks.Run("SL-001", () => PassingPredicate("SL-001"));
             Assert.Equal(1, reads);
             AssertReportHashes(fixture, first, hashes);
@@ -106,13 +130,13 @@ public sealed partial class CommonCurrentEvidenceValidationTests
     {
         using var fixture = new EvidenceFixture();
         var snapshot = CommonExecutionEvidence.Snapshot(fixture.Root);
-        var first = BeginRunChecks(fixture, snapshot);
-        var second = BeginRunChecks(fixture, newSnapshot ? CommonExecutionEvidence.Snapshot(fixture.Root) : snapshot);
         var previous = RawLeanReportArtifact.Reading.Value;
         var reads = 0;
         try
         {
             RawLeanReportArtifact.Reading.Value = () => reads++;
+            var first = BeginRunChecks(fixture, snapshot);
+            var second = BeginRunChecks(fixture, newSnapshot ? CommonExecutionEvidence.Snapshot(fixture.Root) : snapshot);
             first.Run("SL-001", () => PassingPredicate("SL-001"));
             second.Run("SL-001", () => PassingPredicate("SL-001"));
             Assert.Equal(2, reads);

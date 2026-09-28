@@ -287,7 +287,29 @@ def _require_bundle_files(report):
             raise ValueError(f'missing bundle member: {path.name}')
 
 
-def validate_bundle(report, expected=None, repository=None, verified_materials=None, *, manifest=None):
+class _ReportValidation:
+    """One invocation's accepted immutable row bytes, bound afresh after copies.
+
+    Nothing is serialized as validation authority. Sidecars, repository binding
+    and membership still pass the complete bundle contract on every use.
+    """
+    def __init__(self, verified_materials=None):
+        self.materials = {} if verified_materials is None else verified_materials
+        self._last = None
+
+    def rows(self, report, archive, manifest):
+        data = Path(report).read_bytes()
+        identity = (hashlib.sha256(data).hexdigest(), digest(archive), materials.read_manifest_version(manifest))
+        if self._last is not None and self._last[0] == identity:
+            return read_json(self._last[1])['modules']
+        rows = validate_rows(report, archive, self.materials, manifest=manifest)
+        if digest(report) != identity[0] or digest(archive) != identity[1]:
+            raise ValueError('report snapshot changed during validation')
+        self._last = (identity, data)
+        return rows
+
+
+def validate_bundle(report, expected=None, repository=None, verified_materials=None, *, manifest=None, _scope=None):
     report = Path(report)
     _require_bundle_files(report)
     sha = digest(report)
@@ -319,8 +341,9 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
             'lean_config_sha256': expected['config']}
         if any(provenance[k] != v for k, v in wanted.items()) or lines[1] != 'repository_input_sha256=' + expected['repository']:
             raise ValueError('stale input/provenance')
-    rows = validate_rows(report, member(report, '.materials.zip'), verified_materials,
-        manifest=Path(repository) / 'lean-report-inputs.json' if repository is not None else manifest)
+    manifest = Path(repository) / 'lean-report-inputs.json' if repository is not None else manifest
+    rows = (validate_rows(report, member(report, '.materials.zip'), verified_materials, manifest=manifest)
+            if _scope is None else _scope.rows(report, member(report, '.materials.zip'), manifest))
     origins = provenance['module_origins']
     materials.require_keys(origins, {row['module'] for row in rows}, 'aggregate production origins')
     for row in rows:
@@ -357,7 +380,7 @@ def unpack(artifact, directory, suffixes=SUFFIXES):
     return Path(directory) / RAW
 
 
-def publish(report, destination, expected, repository=None, *, mode=None, manifest=None, expected_hashes=None):
+def publish(report, destination, expected, repository=None, *, mode=None, manifest=None, expected_hashes=None, _scope=None):
     report, destination = Path(report), Path(destination)
     _require_bundle_files(report)
     # Optional report reuse precedes ensure. A rejected seed must not create a
@@ -375,7 +398,7 @@ def publish(report, destination, expected, repository=None, *, mode=None, manife
         accepted = {suffix: digest(member(staged, suffix)) for suffix in SUFFIXES}
         if expected_hashes is not None and accepted != expected_hashes:
             raise ValueError('publication snapshot differs from sealed bundle')
-        validate_bundle(staged, expected, repository, manifest=manifest)
+        validate_bundle(staged, expected, repository, manifest=manifest, _scope=_scope)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed during validation')
 

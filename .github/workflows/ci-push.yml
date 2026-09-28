@@ -347,8 +347,17 @@ jobs:
       - id: keys
         if: steps.route.outputs.cache_layers != ''
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --stage current
+      # Search matching reports across visible scopes before any broad fallback.
+      - id: current_report
+        if: steps.keys.outputs.current_key != '' && steps.keys.outputs.current_report_prefix != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.current_path }}
+          key: ${{ steps.keys.outputs.current_key }}
+          restore-keys: ${{ steps.keys.outputs.current_report_prefix }}
       - id: current
-        if: steps.keys.outputs.current_key != ''
+        if: steps.keys.outputs.current_key != '' && steps.current_report.outputs.cache-matched-key == ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -359,7 +368,7 @@ jobs:
         name: Validate optional report seed and resolve remaining resources
         if: steps.route.outputs.cache_layers != ''
         env:
-          CURRENT_KEY: ${{ steps.current.outputs.cache-matched-key }}
+          CURRENT_KEY: ${{ steps.current_report.outputs.cache-matched-key || steps.current.outputs.cache-matched-key }}
         run: python3 tools/scripts/worktree/lean_actions.py prepare-report --repository "$GITHUB_WORKSPACE" --stage current --current-key "$CURRENT_KEY"
       - id: elan
         if: steps.keys.outputs.elan_key != '' && steps.report_resources.outputs.needs_lake == 'true'
@@ -425,7 +434,7 @@ jobs:
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.current_path }}
-          key: ${{ steps.keys.outputs.current_key }}
+          key: ${{ steps.snapshot_current.outputs.current_key }}
       - id: snapshot_project
         if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.project_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true

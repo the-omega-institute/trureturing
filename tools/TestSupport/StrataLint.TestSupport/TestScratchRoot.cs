@@ -334,10 +334,11 @@ internal static class ScriptHarnessScratch
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     internal static void WriteExecutableStub(string path, string body)
     {
-        File.WriteAllText(
+        // The kernel recognizes a shebang only at byte zero. A UTF-8 BOM
+        // instead makes env fall back to /bin/sh, which need not be Bash.
+        WriteScratchText(
             path,
-            "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n",
-            System.Text.Encoding.UTF8);
+            "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n");
         File.SetUnixFileMode(
             path,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);

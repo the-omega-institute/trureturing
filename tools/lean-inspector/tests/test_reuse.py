@@ -289,6 +289,29 @@ class ReuseTests(unittest.TestCase):
         self.assertTrue(result['needs_lake'] and result['reason'] == 'seed-rejected',
                         '[FAIL] semantic_version_bump_rejects_seed: ' + repr(result))
 
+    def test_module_semantic_registration_uses_shared_execution_contract(self):
+        import native
+        inputs = lambda: publication.selection.Selection(self.root)
+        before = native.semantic_inputs(inputs())
+        self.write('D5/Added.lean', 'def added := 3\n')
+        self.write('Inspector.lean', 'def changedInspector := 2\n')
+        self.write('producer.py', '# compatible implementation change\n')
+        after = native.semantic_inputs(inputs())
+        self.assertEqual(before['common'], after['common'])
+        self.assertIn('D5/Added.lean', after['reported'])
+        self.assertIn('Audit.lean', after['content'])
+        self.assertIn('Inspector.lean', after['programs'])
+        self.policy['report_cache_release_semantic_version'] += 1
+        self.write_policy()
+        self.assertNotEqual(after['common'], native.semantic_inputs(inputs())['common'])
+        with patch.dict(os.environ, LEAN_PATH='/unregistered/semantic/input'):
+            with self.assertRaisesRegex(ValueError, 'external-semantic-environment'):
+                native.semantic_inputs(inputs())
+        del self.policy['report_execution']
+        self.write_policy()
+        with self.assertRaisesRegex(ValueError, 'execution-not-registered'):
+            native.semantic_inputs(inputs())
+
     def test_legacy_and_corrupt_receipts_and_bundles_require_lake(self):
         api = self.receipt()
         suffixes = (*publication.SUFFIXES, '.reuse.json')

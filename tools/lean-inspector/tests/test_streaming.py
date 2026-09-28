@@ -212,6 +212,57 @@ class StreamingTests(unittest.TestCase):
 
 
 
+class CompressedMaterialsTests(unittest.TestCase):
+    def test_transfer_preserves_payloads_membership_crc_and_zip64_without_compression(self):
+        import zipfile
+        payloads = {'sha256/b': ('λ😀' * 20000).encode(), 'sha256/a': b'Nat' * 40000}
+        methods = [zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED]
+        if zipfile.bz2: methods.append(zipfile.ZIP_BZIP2)
+        if zipfile.lzma: methods.append(zipfile.ZIP_LZMA)
+        for method in methods:
+            with self.subTest(method=method), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                source, output = root / 'source.zip', root / 'output.zip'
+                with zipfile.ZipFile(source, 'w', compression=method) as archive:
+                    for name, data in payloads.items(): archive.writestr(name, data)
+                def transfer():
+                    with tempfile.TemporaryFile() as spool, materials.CompressedMaterials(spool) as copied:
+                        copied.add(source)
+                        copied.add(source)  # Equal addresses are deduplicated after byte comparison.
+                        with patch.object(zipfile, '_get_compressor', side_effect=AssertionError('recompression')):
+                            copied.write(output)
+                        with zipfile.ZipFile(source) as archive:
+                            self.assertEqual(copied.copied_bytes, sum(e.compress_size for e in archive.infolist()))
+                    with zipfile.ZipFile(output) as archive:
+                        self.assertEqual(archive.namelist(), sorted(payloads))
+                        self.assertIsNone(archive.testzip())
+                        self.assertEqual({n: archive.read(n) for n in archive.namelist()}, payloads)
+                        self.assertTrue(all(e.compress_type == method for e in archive.infolist()))
+                    return output.read_bytes()
+                expected = transfer()
+                self.assertEqual(transfer(), expected)
+                # Exercise the standard ZIP64 header and central-directory writer
+                # without allocating a multi-gigabyte fixture.
+                with patch.object(zipfile, 'ZIP64_LIMIT', 32):
+                    transfer()
+
+    def test_conflicting_duplicate_address_and_truncated_input_reject(self):
+        import zipfile
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            first, second = root / 'one.zip', root / 'two.zip'
+            for path, data in [(first, b'Nat'), (second, b'Int')]:
+                with zipfile.ZipFile(path, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
+                    archive.writestr('sha256/address', data)
+            with tempfile.TemporaryFile() as spool, materials.CompressedMaterials(spool) as copied:
+                copied.add(first)
+                with self.assertRaisesRegex(ValueError, 'address collision'):
+                    copied.add(second)
+                second.write_bytes(second.read_bytes()[:10])
+                with self.assertRaises(zipfile.BadZipFile):
+                    copied.add(second)
+
+
 class PublicationTests(unittest.TestCase):
     def test_pattern_cache_keeps_path_checks_live(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -684,13 +735,16 @@ class EntryPointTests(unittest.TestCase):
     def test_prebuilt_utility_producer_is_required_and_its_failure_stops_preparation(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            (root / 'lean-toolchain').write_text('fixture\n')
             (root / 'Trureturing.lean').write_text('def x : Nat := 1\n')
             loader = 'tools/scripts/report/lean-report-selection.py'
             (root / loader).parent.mkdir(parents=True)
             (root / loader).write_text(Path(native.selection.__file__).read_text())
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
             (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
-                report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
+                report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths('lean-toolchain'),
+                report_execution=dict(toolchain='lean-toolchain',
+                    **{name: list(values) for name, values in native.selection.REPORT_EXECUTION.items()}),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json', loader), 'scribe-content': paths()})))
             binary = root / 'candidate producer.dll'
             binary.write_bytes(b'fixture candidate producer')
@@ -725,7 +779,7 @@ class EntryPointTests(unittest.TestCase):
         cases = [('inputs', 2, [], False), ('utility-input-build', 37, ['build'], False),
                  ('ensure', 38, ['build', 'ensure'], False),
                  ('report', 39, ['build', 'ensure', 'report'], False),
-                 ('publish', 40, ['build', 'ensure', 'report', 'publish'], False),
+                 ('publication', 40, ['build', 'ensure', 'report', 'publish'], False),
                  ('report', 39, ['ensure', 'report'], True)]
         for phase, status, calls, prebuilt in cases:
             with self.subTest(phase=phase, prebuilt=prebuilt), tempfile.TemporaryDirectory() as directory:
@@ -752,6 +806,10 @@ class EntryPointTests(unittest.TestCase):
                 write('candidate producer.dll', 'fixture candidate producer')
                 shell_phase('tools/scripts/worktree/lean-cache-ensure.sh', 'ensure', 38 if phase == 'ensure' else 0)
                 shell_phase('bin/lake', 'report', 39 if phase == 'report' else 0)
+                if phase == 'publication':
+                    write('bin/lake', '#!/bin/sh\nprintf "report\\n" >> "$CALLS"\n'
+                        'test -n "$STRATALINT_INSPECTOR_PUBLISH_REPORT" || exit 41\n'
+                        'exec python3 tools/lean-inspector/native.py\n')
                 write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
                 write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
                 write('tools/lean-inspector/native.py',
@@ -771,7 +829,8 @@ class EntryPointTests(unittest.TestCase):
                 result = subprocess.run(['bash', str(root / 'tools/lean-inspector/inspect.sh'),
                     '--repository', str(root), '--output', str(report)], env=env, capture_output=True, text=True, timeout=30)
                 self.assertEqual(result.returncode, status, result.stdout + result.stderr)
-                self.assertIn(f'LEAN_INSPECTOR_FAILED phase={phase} exit={status}', result.stderr)
+                failure_phase = 'report' if phase == 'publication' else phase
+                self.assertIn(f'LEAN_INSPECTOR_FAILED phase={failure_phase} exit={status}', result.stderr)
                 self.assertEqual(record.read_text().splitlines() if record.exists() else [], calls)
                 self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes() for suffix in publication.SUFFIXES})
 

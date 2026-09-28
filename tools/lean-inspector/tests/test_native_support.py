@@ -173,9 +173,12 @@ defaultFacets = ["static"]
         (self.root / 'bin/dotnet').chmod(0o755)
         self.utility()
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
-            inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean'),
-            dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/Registry.lean'),
+        policy = dict(schema_version=1, report_cache_release_semantic_version=1,
+            report_execution=dict(toolchain='lean-toolchain', tools=['lake', 'lean'],
+                platform=['system', 'machine'], environment=['LEAN_PATH', 'LEAN_SRC_PATH', 'LEAN_SYSROOT', 'ELAN_TOOLCHAIN', 'LEAN_OPTS']), report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
+            inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
+                'LeanInformationAudit/**/*.lean'),
+            dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/**/*.lean'),
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json',
                 'Reg/lakefile.toml', 'Reg/lake-manifest.json'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',

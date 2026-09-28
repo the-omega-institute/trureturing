@@ -95,18 +95,26 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 也须 bump。例如从 `3` 增加到 `4` 会使全部模块报告及汇总失效，即使最终 report 和
 materials 的内容字节相同。版本是明确的兼容承诺，不是机器自动判定源码编辑是否兼容。
 
-[原生依赖](lakefile.lean)按以下输入决定报告工作：
-逐模块工件 trace 只取模块及 utility claim 的编译闭包与语义版本；固定 judge 驱动和 inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
-enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessment 消费编译信息，导入源码的纯注释编辑不改变它们。
+[原生依赖](lakefile.lean)由 Lake 的 `transImports` 选择模块、utility claim 和固定 Registry
+驱动的完整传递闭包，包括私有声明。模块报告绑定闭包中的登记内容源码、utility 记录、
+实际模块解析、有效 Lean 选项和参数、外部依赖 pin、工具链及登记执行环境。
+`inspector_sources` 显式登记的程序由语义版本约束；`report_modules` 优先于程序分类，
+因此登记内容不会因目录与程序重叠而被排除。程序和模块的编译义务仍须成功。
+未登记的本地依赖、外部语义搜索路径或尚无输入契约的自定义 native loader 拒绝复用入口。
 
 | 输入变化 | 失效范围 |
 | --- | --- |
 | `report_cache_release_semantic_version` 增加 | 所有模块报告及汇总。 |
-| 模块源文件、编译工件或传递 import 工件变化 | Lake 依赖 trace 对应的模块报告；模块自身源码逐字节追踪，导入模块只按编译工件追踪，注释不改变编译工件时复用导入者。 |
-| 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
-| 登记的 `config_inputs` 文件字节变化 | 通过 Lake 影响实际编译依赖；整体配置身份只影响聚合。 |
-| 登记的模块成员集合变化 | 汇总按当前集合重建，新成员执行所需报告工作，保留仍有效的模块工件。 |
-| 固定 Registry 驱动及其传递编译工件变化，语义版本不变 | 仅自身或 utility claim 的编译闭包实际导入该模块的报告失效；其他报告复用，驱动仍须构建成功。 |
+| 内容源码或私有传递依赖变化 | Lake 实际闭包包含该源的模块报告；源码按字节绑定，包括注释。 |
+| 模块 utility 记录或 claim 传递内容变化 | 对应模块报告，即使 claim 不在 result 的 import 闭包内。 |
+| 有效编译选项、解析、相关依赖 pin、工具链或执行环境变化 | 消费这些输入的模块报告；原始完整配置身份另外影响汇总。 |
+| 登记的模块成员集合变化 | 汇总按当前集合重建，新成员提取报告，不使无关旧模块失效。 |
+| 兼容的 producer 实现变化或同配置 helper 增加 | 保留有效报告；当前 producer、模块和固定驱动仍须编译成功。 |
+
+旧编译工件 trace 没有完整的源码语义绑定，完整报告收据也不绑定所有外部 utility
+传递源码及其历史输入。不能用输出相等补造新 trace；这些旧逐模块 trace 首次使用新
+输入契约时按 miss 重建，之后使用 Lake 原有存储与验证。此处不改变报告语义版本，
+也不据此裁决历史声明登记状态差异。
 
 `information_templates` 分区携带 occurrence inventory 和 BindingRecord，
 其 `compatibility_version` 等于 manifest 的缓存发布版本；复用验证检查结构，不重算当前源码摘要。
@@ -115,8 +123,8 @@ C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固
 binding evidence，不能通过声明模板的严格消费者。
 `InlineRealization.lean` 编译时要求实际导出的 inline provenance wire 等于它 import 的 `InlineProvenanceWire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；bump `report_cache_release_semantic_version` 时同步更新其中的 `compatibility_version`。
 
-Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
-包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，
+Lake 的 `transImports` 同时供语义 trace 与生产源码白名单使用。
+生产白名单写入模块输入旁的 `.sources.json`，
 由 [native producer](native.py) 检查本地路径均在上述登记范围内。
 报告行只保留自身的 `source_path`/`source_sha256`；
 导出证据和来源 sidecar 不重复存储导入源码的原始摘要。
