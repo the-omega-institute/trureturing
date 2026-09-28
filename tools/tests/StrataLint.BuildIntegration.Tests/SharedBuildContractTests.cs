@@ -155,6 +155,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
         Write("build/bin/dotnet", """
             #!/bin/bash
             set -euo pipefail
+            if [[ "$1" == help ]]; then exit 0; fi
             if [[ "$1" == *.EngineeringScope.dll ]]; then shift; exec "$CONTRACT_SCOPE" "$@"; fi
             if [[ "$1" == restore ]]; then
               [[ "$2" == *CompileFailProof.csproj ]] || exit 91

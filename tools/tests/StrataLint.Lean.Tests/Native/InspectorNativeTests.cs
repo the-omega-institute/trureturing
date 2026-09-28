@@ -37,6 +37,8 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
             import sys, time
             print('NATIVE_COMMAND_OBSERVATION stdout', flush=True)
             print('NATIVE_COMMAND_OBSERVATION stderr', file=sys.stderr, flush=True)
+            print('raw child stdout', flush=True)
+            print('raw child stderr', file=sys.stderr, flush=True)
             if int(sys.argv[1]) < 0: time.sleep(30)
             sys.exit(int(sys.argv[1]))
             """, exit.ToString(System.Globalization.CultureInfo.InvariantCulture)];
@@ -46,8 +48,51 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
         else
             Assert.Equal(exit, InspectorNativeTestRunner.RunObserved(arguments,
                 TestRepositoryLayout.FindRoot(), TestBudgets.ScriptProcessHangGuard, observations).ExitCode);
-        Assert.Equal(new[] { "NATIVE_COMMAND_OBSERVATION stdout", "NATIVE_COMMAND_OBSERVATION stderr" },
-            observations.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries));
+        if (exit < 0)
+        {
+            Assert.Contains("NATIVE_CHILD_STDOUT\nNATIVE_COMMAND_OBSERVATION stdout\nraw child stdout\n", observations.ToString(), StringComparison.Ordinal);
+            Assert.Contains("NATIVE_CHILD_STDERR\nNATIVE_COMMAND_OBSERVATION stderr\nraw child stderr\n", observations.ToString(), StringComparison.Ordinal);
+        }
+        else
+            Assert.Equal(new[] { "NATIVE_COMMAND_OBSERVATION stdout", "NATIVE_COMMAND_OBSERVATION stderr" },
+                observations.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries));
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(7)]
+    [InlineData(-1)]
+    public void DiagnosticWriterFailurePreservesChildVerdict(int exit)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var writer = new FailingDiagnosticWriter();
+        string[] arguments = ["python3", "-c", """
+            import sys, time
+            print('NATIVE_COMMAND_OBSERVATION stdout', flush=True)
+            print('NATIVE_COMMAND_OBSERVATION stderr', file=sys.stderr, flush=True)
+            if int(sys.argv[1]) < 0: time.sleep(30)
+            sys.exit(int(sys.argv[1]))
+            """, exit.ToString(System.Globalization.CultureInfo.InvariantCulture)];
+        if (exit < 0)
+        {
+            var error = Assert.Throws<SkipException>(() => InspectorNativeTestRunner.RunObserved(arguments,
+                TestRepositoryLayout.FindRoot(), TimeSpan.FromSeconds(1), writer));
+            Assert.Contains("env", error.Message, StringComparison.Ordinal);
+        }
+        else
+            Assert.Equal(exit, InspectorNativeTestRunner.RunObserved(arguments,
+                TestRepositoryLayout.FindRoot(), TestBudgets.ScriptProcessHangGuard, writer).ExitCode);
+        Assert.Equal(2, writer.Attempts);
+    }
+
+    private sealed class FailingDiagnosticWriter : StringWriter
+    {
+        public int Attempts { get; private set; }
+        public override void WriteLine(string? value)
+        {
+            Attempts++;
+            throw new IOException("diagnostic sink unavailable");
+        }
     }
 }
 
@@ -80,24 +125,35 @@ internal static class InspectorNativeTestRunner
     {
         using var stdout = new MemoryStream();
         using var stderr = new MemoryStream();
+        var returned = false;
         try
         {
-            return TestProcessRunner.Run("env", arguments, directory, guard, 1024 * 1024,
+            var result = TestProcessRunner.Run("env", arguments, directory, guard, 1024 * 1024,
                 standardOutput: stdout, standardError: stderr);
+            returned = true;
+            return result;
         }
         finally
         {
-            // The guard throws before returning ProcessOutput. Its bounded
-            // stream copies still expose completed inner-command observations.
-            WriteCommandObservations(stdout.ToArray(), observations);
-            WriteCommandObservations(stderr.ToArray(), observations);
+            // Exceptional exits have no ProcessOutput: preserve both bounded
+            // stream copies, including progress and inner timeout diagnostics.
+            WriteCommandObservations(stdout.ToArray(), observations, returned ? null : "NATIVE_CHILD_STDOUT");
+            WriteCommandObservations(stderr.ToArray(), observations, returned ? null : "NATIVE_CHILD_STDERR");
         }
     }
 
-    private static void WriteCommandObservations(byte[] output, TextWriter? observations)
+    private static void WriteCommandObservations(byte[] output, TextWriter? observations, string? rawLabel)
     {
         try
         {
+            if (rawLabel is not null)
+            {
+                var writer = observations ?? Console.Out;
+                writer.WriteLine(rawLabel);
+                writer.Write(Encoding.UTF8.GetString(output));
+                writer.WriteLine();
+                return;
+            }
             using var reader = new StringReader(Encoding.UTF8.GetString(output));
             while (reader.ReadLine() is { } line)
                 if (line.StartsWith("NATIVE_COMMAND_OBSERVATION ", StringComparison.Ordinal))

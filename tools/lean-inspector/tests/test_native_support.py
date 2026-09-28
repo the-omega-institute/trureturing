@@ -480,9 +480,11 @@ defaultFacets = ["static"]
         self.write('utility.json', json.dumps([dict(modulePath='Fixture.lean', claimGid='claim-gid', claimModule='External',
             claimSelector=claim, claimSourcePath='External.lean', claimSourceSha256='sha256:' + publication.digest(self.root / 'External.lean'),
             resultGid='result-gid', resultModule='Fixture', resultSelector='result')]))
-    def run_lake(self, *args, success=True):
-        self.ensure()
-        if self.compiler_seed is not None:
+    def run_lake(self, *args, success=True, restore_compiler=True):
+        # guarded_command routes every Lake call through the canonical cache
+        # entry, which admits current pins under its ownership guard. A second
+        # standalone ensure adds no check and releases ownership before use.
+        if restore_compiler and self.compiler_seed is not None:
             # The collection owns this read-only stage. Lake copies only its
             # registered producer outputs into this fixture's private cache;
             # current input traces still decide whether any artifact is usable.
@@ -758,6 +760,62 @@ class GuardedCommandTests(unittest.TestCase):
         self.fixture.root = Path(self.fixture.temporary.name)
         self.fixture.env = dict(os.environ)
         self.addCleanup(self.fixture.cleanup_fixture)
+
+    def test_lake_entry_checks_each_changed_input_once_and_preserves_seed_on_rejection(self):
+        # Both preparation and execution used to request the same admission.
+        # The canonical execution entry owns admission, including after edits;
+        # a rejected seed must remain pending and must not launch the build.
+        fixture = self.fixture
+        fixture.assertEqual = self.assertEqual
+        fixture.assertNotEqual = self.assertNotEqual
+        fixture.lake = str(fixture.root / 'lake')
+        fixture.compiler_seed = '/immutable/compiler-stage'
+        fixture.write('admitted', 'yes')
+        fixture.write('Makefile', 'lean-cache-ensure:\n\t@echo admission >> admissions\n'
+                      + '\t@echo \'LEAN_CACHE {}\'\n')
+        fixture.write('tools/scripts/worktree/lean-cache-run.sh', '''#!/bin/bash
+set -euo pipefail
+echo admission >> admissions
+[[ "$(cat admitted)" == yes ]] || exit 7
+exec "$@"
+''')
+        fixture.write('lake', '#!/bin/bash\nprintf "%s\\n" "$*" >> executions\n')
+        (fixture.root / 'lake').chmod(0o755)
+        fixture.write('admitted', 'no')
+        with self.assertRaises(AssertionError):
+            NativeTestSupport.run_lake(fixture, 'build', ':report')
+        self.assertEqual(fixture.compiler_seed, '/immutable/compiler-stage')
+        self.assertFalse((fixture.root / 'executions').exists())
+        fixture.write('admitted', 'yes')
+        self.assertEqual(NativeTestSupport.run_lake(fixture, 'build', ':report').returncode, 0)
+        self.assertIsNone(fixture.compiler_seed)
+        fixture.write('admitted', 'no')
+        self.assertEqual(NativeTestSupport.run_lake(fixture, 'build', ':report', success=False).returncode, 7)
+        self.assertEqual((fixture.root / 'executions').read_text().splitlines(),
+                         ['cache unstage /immutable/compiler-stage leanInspector', 'build :report'])
+        self.assertEqual((fixture.root / 'admissions').read_text().splitlines(),
+                         ['admission'] * 4, 'each attempted Lake command must admit exactly once')
+
+    def test_script_without_compiler_preserves_seed_for_later_build(self):
+        fixture = self.fixture
+        fixture.assertEqual = self.assertEqual
+        fixture.lake = '/fixture/lake'
+        fixture.compiler_seed = '/immutable/compiler-stage'
+        calls = []
+        def execute(args, **kwargs):
+            calls.append(args)
+            return subprocess.CompletedProcess(args, 0, '', '')
+        with patch.object(fixture, 'ensure'), \
+                patch.object(fixture, 'guarded_command', side_effect=execute):
+            NativeTestSupport.run_lake(fixture, '-d', 'tools/lean-inspector',
+                                       'script', 'run', 'probe', restore_compiler=False)
+            self.assertEqual(fixture.compiler_seed, '/immutable/compiler-stage')
+            self.assertEqual(calls, [[fixture.lake, '-d', 'tools/lean-inspector', 'script', 'run', 'probe']])
+            NativeTestSupport.run_lake(fixture, 'build', ':report')
+        self.assertIsNone(fixture.compiler_seed)
+        self.assertEqual(calls[1:], [
+            [fixture.lake, 'cache', 'unstage', '/immutable/compiler-stage', 'leanInspector'],
+            [fixture.lake, 'build', ':report']])
 
     def test_artifact_donor_cleanup_failure_fails_owning_suite(self):
         class Consumer(NativeArtifactTestSupport, unittest.TestCase):

@@ -90,7 +90,7 @@ public sealed partial class CurrentExecutionContractTests
             (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
             (Path: "tools/scripts/preflight.sh", Invalidates: generalScripts || project == "StrataLint.Tests"),
             (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: generalScripts),
-            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts || project is "StrataLint.Cache.Tests" or "StrataLint.Tests"),
+            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts || project is "StrataLint.Cache.Tests" or "StrataLint.Lean.Tests" or "StrataLint.Tests"),
             (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: project is "StrataLint.Lean.Tests" or "StrataLint.ScriptTests" or "StrataLint.Tests"),
             (Path: "Meta/FILEMAP.toml", Invalidates: false),
             (Path: "Meta/ci-cache-paths.json", Invalidates: cacheInvalidates),

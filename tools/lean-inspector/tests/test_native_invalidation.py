@@ -422,13 +422,18 @@ script semanticSetProbe do
   return 0
 """
         lakefile.write_text(source + probe)
-        self.run_lake('-d', 'tools/lean-inspector', 'script', 'run', 'semanticSetProbe')
+        # This script uses only the Lake configuration. Restoring the unused
+        # inspector binary would elaborate that changed configuration once in
+        # the root workspace and again in the script's package workspace.
+        self.run_lake('-d', 'tools/lean-inspector', 'script', 'run', 'semanticSetProbe',
+                      restore_compiler=False)
         # Force all key hashes to collide. Full atom values must still decide
         # set membership; an accidental hash-as-identity shortcut fails here.
         collision_source = source.replace('keyHash := hash values[0]!', 'keyHash := 0')
         self.assertNotEqual(collision_source, source)
         lakefile.write_text(collision_source + probe)
-        self.run_lake('-d', 'tools/lean-inspector', 'script', 'run', 'semanticSetProbe')
+        self.run_lake('-d', 'tools/lean-inspector', 'script', 'run', 'semanticSetProbe',
+                      restore_compiler=False)
 
     def test_program_import_diamonds_preserve_semantic_sets(self):
         # The same data arrives through different producer paths, with different
