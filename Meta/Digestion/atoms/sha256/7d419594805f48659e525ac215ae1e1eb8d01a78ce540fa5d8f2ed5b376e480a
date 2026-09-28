@@ -1,0 +1,12 @@
+**定义 2143.1（无约束的双变量等变对数观察）。** 设 $G$ 为任意群，$S\subseteq G$ 为任意子集，记其共轭饱和为 $A=\operatorname{Sat}_G(S)=\{hsh^{-1}:s\in S,\ h\in G\}$。令 $\mathcal C_G$ 为所有满足 $H_g(p,q)\in pq\mathbb Q[[p,q]]$ 且 $H_{hgh^{-1}}=H_g$ 的族 $H=(H_g)_{g\in G}$；正性仅指每个单项式的两个指数均为正，不限制有理系数的符号。定义
+
+$$
+(\Phi H)_g(p,q)=\sum_{k\geq1}\frac{1}{k}H_{g^k}(p^k,q^k),
+\qquad
+\operatorname{Rec}(S):\Longleftrightarrow
+\forall H_1,H_2\in\mathcal C_G,\quad
+\bigl((\Phi H_1)|_S=(\Phi H_2)|_S\bigr)\Longrightarrow H_1|_S=H_2|_S.
+$$
+
+这里的等式均为逐系数等式。对 $m,n\geq1$，$p^m q^n$ 的系数只涉及 $k\mid\gcd(m,n)$；任一指数为零时系数为零。所以群不必有限，级数也不需要解析收敛。量词遍历全部正双次数的有理系数类函数形式级数，并未限制为角色、实际群表示的迹或某个 VOA 的迹。
+
