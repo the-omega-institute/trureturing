@@ -606,3 +606,273 @@ The source file and geometry identities are recorded in the consumer and its
 result JSON. The finite integer maxima come from the pinned
 source enumerator; this verification does not upgrade the source theorem or
 ordinary comparison adaptation to a Lean theorem.
+
+## A fixed missing-23 comparison node closes under all eta14 phases
+
+The following is a **local comparison certificate**, under the same attributed
+source construction and completion hypotheses used above. The core is now
+`(3,5,7,11,13,17,19,29)`, with source thresholds `(2,4,4,8,8,16)`.
+Fix the finest comparison vertex and first selected projection
+
+    node=(2,4,1,8,1,2,1,0,13),    xi7=(1,4,7,14).
+
+The vertex specifies comparison weights; it is not an assertion that every
+actual source has these parameters. At each of the five later primes
+`11,13,17,19,29`, allow the actual projections of the four numerical labels
+`3p,5p,9p,15p` to vary independently over
+
+    E={1,2} x {1,2,3,4} x {2,4,5,7,8} x {14}.
+
+Thus `|E|=40`. A single fixed padding rule and source schedule, evaluated at
+this vertex, satisfy the strict target for all `40^5=102400000` parameter
+tuples. All comparisons use query threshold16 and retain the original
+selected label identities. Other vertices, other `xi7`, and other final
+`15p` projections are **not covered by this certificate**. In particular it
+does not exclude the entire missing-23 support or resolve unrestricted
+Erdos#7. These are ordinary source-comparison deductions and exact rational
+calculations, not new Lean verification.
+
+### The same source supplies every current and query estimate
+
+For each nonanchor prime `p>=7`, the sums over proper selected divisors of
+`3p,5p,9p,15p`, including pure powers and the anchor class15, are respectively
+
+    1/3+1/p, 1/5+1/p, 4/9+4/(3p), 3/5+23/(15p).
+
+Each is strictly less than1. Selected labels belonging to different such
+primes introduce no further divisibility. Thus the source completion lemma
+applies to this whole selected inventory. On a fixed anchor cell, the active
+selected first digits are nonzero after excluding the pure first digit.
+Pad these deterministically to exactly as many distinct nonzero digits as
+there are active selected labels, before any query, and charge all resulting
+forbidden fibres. This is possible even when selected digits coincide,
+since there are at most four selected labels and `p-1>=6` available digits.
+
+The finite core cells at this vertex are
+
+    C={x mod135: x mod3 !=0, x mod9 !=1, x mod27 !=4,
+                  x mod5 !=0, x mod15 !=2, x mod45 !=8}.
+
+The four selected projections at prime `p` define `s_p(x)` by counting the
+equalities modulo `3,5,9,15`. With `cap_p=(p-1)/(p-1-t_p)`, the remaining
+conditional mass is bounded by
+
+    S_s=min(1,cap_p*(p-1-s)/p).
+
+The ordered-increment zero component is `S_s-cap_p/p`; there is only one
+separately forbidden pure first digit. The first three charged comparisons
+therefore have zero components
+
+    kappa7  =(11,11,9,6,3)/14,
+    kappa11 =(28,28,28,28,25)/33,
+    kappa13 =(23,23,23,23,21)/26,          s=0,1,2,3,4.
+
+The accompanying positive components put, respectively, mass
+`9/7^m`, `50/(3*11^m)`, and `18/13^m` at each integer multiplier `m>=2`.
+These are positive components of one comparison functional. For example,
+the joint zero11/zero13 component multiplies
+`kappa11(s11(x))*kappa13(s13(x))` on the **same cell x**; no independent
+randomization of the two fields is introduced.
+
+For `p=17,19,29` the outgoing zero upper bounds are constant over every
+`0<=s_p<=4`, namely `15/17,86/95,80/87`. The ordinary full multipliers at
+these primes therefore bound the continuation of this same charged
+construction. Using an ordinary current bound also requires the head-release
+argument below; it does not mean changing to an unpadded actual process.
+
+Here is the exact release principle. At a fixed multiplier and fixed anchor
+depths, a selected numerical label contributes coefficient
+`c=(p-1)/p` inside an ordinary head whose **total** coefficient is `M>=c`.
+If its prescribed live residue is `s` and the remaining head chooses `r`,
+
+    (M-c)*1_r+c*1_s
+       =(1-c/M)*(M*1_r)+(c/M)*(M*1_s).
+
+The weights in this convex combination are scalars for the entire cell
+vector. A nonnegative weighted hinge is convex. Maximizing over every live
+residue consequently bounds this split head by the corresponding ordinary
+head. Apply this successively to any subset of the four selected heads.
+An empty selected intersection contributes zero and is handled by
+monotonicity. The geometry producer checks that nonempty selected residues belong to
+the full head domain. In particular, a `5`-head can have total coefficient
+`m(1+v)`; subtracting `c` from a bare `m`, or subtracting `m*c`, would be
+incorrect.
+
+For the finite current maxima, the seven ordinary category coefficients at
+anchor depths `u,v` are
+
+    m*(1,1,1+u,1+v,1+v,1+v,(1+u)(1+v))
+
+on categories `(3,9,27,5,15,45,135)`, with baseline `m`. Extract `c` once
+from the four selected categories and add `c*s_p(x)` to the spatial load.
+The current numerator is its hinge at `t_p`, divided by `p-1-t_p`.
+The prefix7 bound uses the source's equivalent baseline-zero form,
+threshold1 and divisor4. Its positive tail majorant also has baseline zero;
+the replay reproduces `L7<=10.4062667005` with that convention.
+
+Releasing all four heads justifies the ordinary current bounds in some
+routes. Releasing only the `3,5,9` heads retains the actual `15p` projection;
+this is the tighter final route used below. These operations change upper
+bounds on the same positive functional, not the source kernels, original
+phases or permissions to choose a different law for a query.
+
+### Three spatial fields and the positive transfer bound
+
+Only three members of `E` have a four-way intersection with the core:
+
+| Name | Projection | Four-way intersection in C |
+|---|---|---|
+| A | `(2,4,2,14)` | `{29,74,119}` |
+| B | `(2,4,5,14)` | `{14,59,104}` |
+| C | `(2,4,8,14)` | `{44,89,134}` |
+
+All other37 intersections are empty. The simultaneous prefix permutation
+`2 <-> 5 mod9`, preserving the mod5 coordinate, exchanges A and B. It
+preserves the full core, every source region weight and the fixed `xi7`.
+It transports each selected numerical label, including every later
+projection, rather than merely exchanging an unlabelled overlap count.
+
+The reference continuation has `(xi11,xi13)=(A,B)`. Complete current tables
+give the following uniform upper bounds, separately for every later member
+of `E`:
+
+    L17<=3.6986331854, L19<=4.1096457772, L29<=1.9678563744.
+
+Their maxima need not be attained by the same tuple: each is an upper bound
+valid for every tuple under the same comparison construction. The current17
+bound already releases the zero13 refinement and uses the full13 multiplier.
+
+Changing a zero11 field from its reference can increase it by at most
+`1/11` on its reference three cells. The analogous zero13 increase is at
+most `1/13`. In each correction retain the other prime's **full** multiplier.
+This bounds the cross term when both fields change; adding two independently
+optimized actual laws would not establish the estimate.
+
+The required three-cell hinge can be computed without new geometry. The
+three cells share their `3,9,5,15,45` residues; the `27` and singleton heads
+can both be placed on one cell. At anchor depths `u,v` and multiplier `m`,
+the maximizing loads are
+
+    m(6+3v), m(6+3v), m(6+3v)+m(1+u)(2+v).
+
+After integrating the actual four anchor regions, this restricted functional
+has mass3 and first-moment upper bound `189m/8`. Its exact positive-part
+correction to `189m/8-3t` is obtained from
+
+    2*max(0,t-m(6+3v))
+      +max(0,t-m(6+3v)-m(1+u)(2+v)).
+
+Only finitely many exceptional shallow-depth cases need enumeration; the
+remaining correction is a constant geometric tail, summed exactly along
+with the omitted masses and first moments. On these
+cells the charged7 component is `9/14` at multiplier1 plus `9/7^m` at
+`m>=2`, with total mass `6/7` and first moment `31/28`. The positive transfer uses
+this component, full13 for the zero11 correction, and full11 for the zero13
+correction. The zero11 addition to current17 is exactly
+
+    1243323/10250240=0.121296964753996... .
+
+No zero13 addition is charged again to current17, since its reference bound
+already used full13. Both additions remain in current19 and current29 when
+required. Numerical minima between this transfer and an ordinary bound are
+upper estimates for the same functional; no convexity of those minima is
+asserted.
+
+### A uniform query16 closes the remaining comparisons
+
+Release zero11 and zero13 to their full comparisons for the final query.
+Keep the same charged7 spatial field. With
+
+    cap_p=(p-1)/(p-1-t_p),
+    Pr(M_p=1)=1-cap_p/p,
+    Pr(M_p=m)=cap_p*(p-1)/p^m, m>=2,
+
+compose the full multipliers for `11,13,17,19,29`. For the charged7 positive
+part use mass `3/14` and first moment `13/28`; its zero part uses the stored
+integer numerator field `(11,11,9,6,3)` divided by14. This gives the single query bound
+
+    H16=32.37222665896469... <32.372227.
+
+The rational value is retained in the [coverage result](../../../frontier/cover-geometry/finite-prefix-sources/missing23-eta14/coverage.json).
+For multiplier `m<16`, positive secants between retained integer anchor
+hinges give an upper bound. For `m>=16`, the ordinary anchor load is at
+least1, so the hinge is affine and the exact omitted mass and first moment
+suffice. The special argument at thresholds at most1 is `whole-t*mass`.
+No infinite multiplier or anchor tail is dropped.
+
+For a row with six current losses `L_p`, put
+
+    D=135/4-sum_p L_p,
+    G16=14*sum_p L_p+H16.
+
+The source comparison supplies `R_query<=15+H16/D`. It is therefore enough
+to certify the **linear slack**
+
+    14*(135/4)-G16=14D-H16>0.
+
+The complete disjoint routing of the1600 ordered `(xi11,xi13)` pairs is:
+
+| Route | Number of pairs |
+|---|---:|
+| Earlier current tables and ordinary continuation |1562|
+| Same-source three-cell positive transfer |37|
+| `(C,C)`, current13 refinement and three released heads |1|
+
+The first1562 pairs have `D>=2.5265145827`; the common query16 bound already
+suffices. For the final `(C,C)` route the six losses are
+
+    (10.4062667005,5.0397006462,5.6643071239,
+       3.7563590447,4.2212861839,2.0223146834),
+
+giving `D=2.6397656174`. Its current17 calculation retains **both** zero11
+and zero13 fields on the same cells, as do its later calculations. Releasing
+the other three selected heads makes the late bounds uniform over all40
+projections at each of17,19,29; it does not require their Cartesian geometry
+enumeration.
+
+The worst retained row has query upper bound at most `28.9771304032<29`.
+Rounding every individual current loss and `H16` upward to units of
+`10^-6` still leaves, over the entire1600-pair domain,
+
+    D>=2.316082,    14D-H16>=0.052921>0.
+
+These are uniform bounds over the three remaining independent projection
+choices, hence cover all `1600*40^3=40^5` declared tuples. The final query
+threshold is16 throughout; the earlier query20 comparisons are used only
+to identify a disjoint reuse route. They are not interpolated with query16
+ratios. Future interpolation across continuous source weights must keep
+the same actual padded kernel and the common positive functional `G16` and
+prove the corresponding inequalities at the other vertices. This local
+certificate supplies none of those still-missing vertex inequalities.
+
+### Reproduction and verification boundary
+
+The [portable checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-eta14/verify.py)
+recomputes the multiplier products, exact tails, positive transfer and every
+label route from fixed numerical inputs. Its literal manifest pin checks
+those inputs and the retained source artifacts. The
+[geometry replay program](../../../frontier/cover-geometry/finite-prefix-sources/missing23-eta14/geometry_replay.py)
+reconstructs full geometry payloads and uses the attributed enumerator to
+reproduce their integer maxima. Reading a pinned table is not reported as
+independently recomputing that table.
+
+The ordinary and charged7 base envelopes were regenerated in the portable
+producer: eight batches and6048 integer maxima reproduce their masses,
+first moments and all integer thresholds1 through28. The remaining current
+bounds have a separate geometry replay surface. The full selected source,
+enumerator and MIT attribution are retained with the package. Ordinary
+arithmetic and the source-comparison argument, rather than Lean, carry this
+local certificate.
+
+From the repository root, the default checker prints its summary;
+an explicit `--output PATH` writes the complete1600-route result to that path:
+
+```sh
+python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/missing23-eta14/verify.py
+```
+
+The checker retains its checks under `-O`. The geometry replay uses normal
+Python and the pinned source model's active assertions; that source model
+deliberately rejects `-O`. Geometry regeneration requires a C++17 compiler
+and an explicit fresh-rebuild request. The declared local scope remains
+unchanged by either verification mode.
