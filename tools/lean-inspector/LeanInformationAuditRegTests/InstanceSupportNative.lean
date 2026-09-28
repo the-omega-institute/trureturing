@@ -302,6 +302,143 @@ theorem wideSource65 : wideClaim65 := by
   intro x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 x32 x33 x34 x35 x36 x37 x38 x39 x40 x41 x42 x43 x44 x45 x46 x47 x48 x49 x50 x51 x52 x53 x54 x55 x56 x57 x58 x59 x60 x61 x62 x63 d n
   exact Nat.le_add_left _ _
 
+
+-- Exact dictionary correspondence survives definitional equality.
+def eqRead (_d : DecidableEq Bool) (n : Nat) : Nat := n
+abbrev eqSig : Signature where
+  Params := DecidableEq Bool
+  State _ := Nat
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def eqFaithful : Realization eqSig :=
+  realize eqSig (fun _ d n => eqRead d n) (fun e => nomatch e)
+def eqReplacement : Realization eqSig :=
+  realize eqSig (fun _ _ n => eqRead instDecidableEqBool n) (fun e => nomatch e)
+def eqRejected : Realization eqSig :=
+  realize eqSig (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev eqArena : Arena where
+  signature := eqSig
+  Law r := ∀ [d : DecidableEq Bool] (n : Nat), n ≤ r.readout () d n
+theorem eqRejectedLaw : ¬ eqArena.Law eqRejected := by
+  intro h; exact Nat.not_succ_le_zero 0 (h 1)
+
+def dropDict (_ : Inhabited Nat) (n : Nat) := n
+abbrev swapSig : Signature where
+  Params := Σ _ : Inhabited Nat, Inhabited Nat
+  State _ := Nat
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def swapFaithful : Realization swapSig :=
+  realize swapSig (fun _ p n => dropDict p.1 n + @default Nat p.2) (fun e => nomatch e)
+def swapLambda : Realization swapSig :=
+  realize swapSig (fun _ p n =>
+    (fun (_ : Inhabited Nat) => dropDict p.2 n + @default Nat p.2) p.1) (fun e => nomatch e)
+def swapSigma : Realization swapSig :=
+  realize swapSig (fun _ p n =>
+    dropDict ((⟨p.1, p.2⟩ : Σ _ : Inhabited Nat, Inhabited Nat).2) n + @default Nat p.2)
+    (fun e => nomatch e)
+def swapRejected : Realization swapSig :=
+  realize swapSig (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev swapArena : Arena where
+  signature := swapSig
+  Law r := ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ r.readout () ⟨d1,d2⟩ n
+theorem swapRejectedLaw : ¬ swapArena.Law swapRejected := by
+  intro h; exact Nat.not_succ_le_zero 0 (@h ⟨7⟩ ⟨11⟩ 1)
+
+-- The original dictionary occurs solely in the source-derived State/Output
+-- type, never in the observation body. Its type-level use must still match.
+def stateBox (_ : Inhabited Nat) := Nat
+theorem typeOnlySource [d : Inhabited Nat] (n : stateBox d) : n = n := rfl
+abbrev typeOnlySig : Signature where
+  Params := Inhabited Nat
+  State d := stateBox d
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ d := stateBox d
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def typeOnlyActual : Realization typeOnlySig :=
+  realize typeOnlySig (fun _ _ n => n) (fun e => nomatch e)
+
+theorem eqSource : ∀ [d : DecidableEq Bool] (n : Nat), n ≤ eqRead d n := by intro d n; exact Nat.le_refl n
+def eqSourceRegistration : Registration eqArena (∀ [d : DecidableEq Bool] (n : Nat), n ≤ eqRead d n) where
+  actual := eqReplacement
+  bridge := Iff.rfl
+  variation := ⟨eqSource, eqRejected, eqRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨eqRejected, ?_, rfl, eqRejectedLaw⟩
+      intro j h
+      exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := by intro i; cases i; exact ⟨instDecidableEqBool, 0, 1, by decide⟩
+
+theorem eqFaithfulSource : ∀ [d : DecidableEq Bool] (n : Nat), n ≤ eqRead d n := by intro d n; exact Nat.le_refl n
+def eqFaithfulSourceRegistration : Registration eqArena (∀ [d : DecidableEq Bool] (n : Nat), n ≤ eqRead d n) where
+  actual := eqFaithful
+  bridge := Iff.rfl
+  variation := ⟨eqFaithfulSource, eqRejected, eqRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨eqRejected, ?_, rfl, eqRejectedLaw⟩
+      intro j h
+      exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := by intro i; cases i; exact ⟨instDecidableEqBool, 0, 1, by decide⟩
+
+theorem swapSource : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ dropDict d1 n + @default Nat d2 := by intro d1 d2 n; exact Nat.le_add_right _ _
+def swapSourceRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ dropDict d1 n + @default Nat d2) where
+  actual := swapFaithful
+  bridge := Iff.rfl
+  variation := ⟨swapSource, swapRejected, swapRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩
+      intro j h
+      exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := by intro i; cases i; exact ⟨⟨⟨7⟩, ⟨11⟩⟩, 0, 1, by decide⟩
+
+theorem swapLambdaSource : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ dropDict d1 n + @default Nat d2 := by intro d1 d2 n; exact Nat.le_add_right _ _
+def swapLambdaSourceRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ dropDict d1 n + @default Nat d2) where
+  actual := swapLambda
+  bridge := Iff.rfl
+  variation := ⟨swapLambdaSource, swapRejected, swapRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩
+      intro j h
+      exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := by intro i; cases i; exact ⟨⟨⟨7⟩, ⟨11⟩⟩, 0, 1, by decide⟩
+
+theorem swapSigmaSource : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ dropDict d1 n + @default Nat d2 := by intro d1 d2 n; exact Nat.le_add_right _ _
+def swapSigmaSourceRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ dropDict d1 n + @default Nat d2) where
+  actual := swapSigma
+  bridge := Iff.rfl
+  variation := ⟨swapSigmaSource, swapRejected, swapRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩
+      intro j h
+      exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := by intro i; cases i; exact ⟨⟨⟨7⟩, ⟨11⟩⟩, 0, 1, by decide⟩
+
 end D5.InstanceSupportFixture
 "####
 
@@ -506,6 +643,97 @@ run_meta do
   unless reason.contains "E8.source_binders" do
     throwError "combined 65-binder boundary failed for wrong reason: {reason}"
   logInfo "[PASS] combined_binders_64_accepted_65_rejected"
+
+
+
+register_information_theorem eqSource in eqArena
+  readout via (realize eqSig (fun _ _ n => eqRead instDecidableEqBool n) (fun e => nomatch e))
+  realizes eqSourceRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "arg"], stateBinder := 1}] })
+  escape continues (open)
+
+register_information_theorem eqFaithfulSource in eqArena
+  readout via (realize eqSig (fun _ d n => eqRead d n) (fun e => nomatch e))
+  realizes eqFaithfulSourceRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "arg"], stateBinder := 1}] })
+  escape continues (open)
+
+register_information_theorem swapSource in swapArena
+  readout via (realize swapSig (fun _ p n => dropDict p.1 n + @default Nat p.2) (fun e => nomatch e))
+  realizes swapSourceRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}] })
+  escape continues (open)
+
+register_information_theorem swapLambdaSource in swapArena
+  readout via (realize swapSig (fun _ p n => (fun (_ : Inhabited Nat) => dropDict p.2 n + @default Nat p.2) p.1) (fun e => nomatch e))
+  realizes swapLambdaSourceRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}] })
+  escape continues (open)
+
+register_information_theorem swapSigmaSource in swapArena
+  readout via (realize swapSig (fun _ p n => dropDict ((⟨p.1,p.2⟩ : Σ _ : Inhabited Nat, Inhabited Nat).2) n + @default Nat p.2) (fun e => nomatch e))
+  realizes swapSigmaSourceRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}] })
+  escape continues (open)
+
+run_meta do
+  for (name, valid) in #[(``eqSource, false), (``eqFaithfulSource, true),
+      (``swapSource, true), (``swapLambdaSource, false), (``swapSigmaSource, false)] do
+    let env ← getEnv
+    let some event := (TemplateBinding.inventory env).find? (·.key.theoremName == name)
+      | throwError "capture regression missing occurrence {name}"
+    let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
+      | throwError "capture regression missing claim {name}"
+    let record ← TemplateBinding.assess event (some claim)
+    match record.result with
+    | .declaredValidated _ => unless valid do throwError "accepted dictionary replacement {name}"
+    | .declaredUnresolved diagnostic =>
+      unless !valid && diagnostic.contains "source.actual_support_link" do
+        throwError "wrong capture regression outcome {name}: {diagnostic}"
+    | _ => throwError "missing capture regression outcome {name}"
+    logInfo m!"[PASS] exact_dictionary_capture {name} valid={valid}"
+  let (scope, _) ← (SourceScope.resolve (← getConstInfo ``typeOnlySource) {
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "arg"], stateBinder := 1}] }).run 524288
+  unless scope.support.size == 1 do throwError "type-only dictionary support missing"
+  discard <| (SourceScope.validateFields scope (mkConst ``typeOnlySig)
+    (mkConst ``typeOnlyActual)).run 524288
+  logInfo "[PASS] support_only_in_state_and_output_type"
+
+
+-- Pure encoder controls, separate from the admitted report inventory. Native
+-- bindingIdentity supplies the oracle for JSON escaping and structural Names.
+run_meta do
+  let env ← getEnv
+  let some event := (TemplateBinding.inventory env).find? (·.key.theoremName == ``source)
+    | throwError "encoding control occurrence missing"
+  let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
+    | throwError "encoding control claim missing"
+  let record ← TemplateBinding.assess event (some claim)
+  let .declaredValidated certificate := record.result | throwError "encoding control not validated"
+  let mut rows := #[]
+  for name in #[`plain, Name.str (Name.num `Name 17) "λ😀.\"\\\t\n\r"] do
+    let source := Json.mkObj [
+      ("z", toJson (String.singleton (Char.ofNat 1) ++ String.singleton (Char.ofNat 8) ++ "\t\n\r\"\\λ😀")),
+      ("a", toJson #["lp(ns(n0,7:u,type=))", "lp(ns(n0,7:λ,😀))"])]
+    let certificate := { certificate with
+      key := { certificate.key with root := name }
+      sourceBinding := some source }
+    let .ok (identity, _) := TemplateAudit.bindingIdentity event.statementIdentity certificate 524288
+      | throwError "encoding control exceeded existing budget"
+    rows := rows.push (← TemplateBinding.recordJson { record with
+      result := .declaredValidated { certificate with evidenceRef := identity } })
+  IO.FS.writeFile ((← Repository.root) / "binding-identity-controls.json") (Json.arr rows).compress
 
 end Reg.D5.InstanceSupportFixture
 "####

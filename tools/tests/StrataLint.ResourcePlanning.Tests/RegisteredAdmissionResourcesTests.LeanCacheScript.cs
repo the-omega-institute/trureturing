@@ -14,6 +14,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             "StrataLint.ArchitectureTests",
             "StrataLint.CoverBatch.Tests",
+            "StrataLint.DeclaredTemplate.Tests",
             "StrataLint.Lean.Tests",
             "StrataLint.LeanCacheScript.Tests",
             "StrataLint.NativeTransportIntegration.Tests",

@@ -237,6 +237,7 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       (if input.finiteBridge.isSome then some objectArena else none)
     debit work
     trace[InformationRegistration.check] "source phase=operands work={limit - (← get)}"
+    validateFields scope signature descriptor
     unless ← isDefEq descriptor rawActual do throwError "unclassified_form:source.descriptor_actual"
     let actualIdentity ← fingerprint scope.levels rawActual
     let descriptorIdentity ← fingerprint scope.levels descriptor

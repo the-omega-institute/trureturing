@@ -1,3 +1,6 @@
+using System.Globalization;
+using System.Text;
+using Trureturing.Truth;
 using System.Collections.Immutable;
 using System.Text.Json;
 
@@ -477,6 +480,13 @@ internal static class InformationTemplateEvidence
                 throw new FormatException("DTR-Evidence: realization dependency owner differs from declaration");
             if (selected.SourceOwner is { } sourceOwner)
             {
+                var bindingWire = report.Files[RepoPath.CreateKnown(selected.BindingSourcePath!)].InformationTemplates!.Value
+                    .GetProperty("records").EnumerateArray().Single(row =>
+                        InformationTemplateJson.ReadKey(row.GetProperty("key")) == key);
+                // Includes the mandatory empty support block. Per-entry material
+                // replay alone cannot authenticate completeness of the block.
+                InformationTemplateBindingIdentity.Check(bindingWire,
+                    realizationOwners.SelectMany(path => report.Files[path].Declarations));
                 var sourceOwners = realizationOwners.Where(path => report.Files[path].Declarations
                     .Any(declaration => declaration.Name == key.Theorem && declaration.Kind == "theorem")).ToArray();
                 if (sourceOwners.Length != 1 || ModuleForSource(sourceOwners[0].Value) != sourceOwner
@@ -564,5 +574,99 @@ internal static class InformationTemplateEvidence
             if (!names.Add(name)) throw new FormatException("DTR-Evidence: duplicate dependency");
         }
         return realizationOwners.ToImmutable();
+    }
+}
+
+// Replay Evidence.bindingIdentity, not Lean typing or expression conversion.
+// The report/material/import boundary supplies the current producer inputs.
+// This detects inconsistent certificates; it is not an adversarial signature.
+internal static class InformationTemplateBindingIdentity
+{
+    internal static void Check(JsonElement record, IEnumerable<LeanDeclaration> declarations)
+    {
+        if (Compute(record, declarations) != record.GetProperty("certificate").GetProperty("evidence_ref").GetString())
+            throw new FormatException("DTR-Evidence: binding identity differs from complete consumed certificate");
+    }
+
+    internal static string Compute(JsonElement record, IEnumerable<LeanDeclaration> declarations)
+    {
+        var certificate = record.GetProperty("certificate");
+        var bytes = new StringBuilder();
+        var byteCount = 0;
+        var names = declarations.GroupBy(d => d.Name, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.Select(d => d.NameKey).Distinct(StringComparer.Ordinal).ToArray(), StringComparer.Ordinal);
+        void Emit(string value)
+        {
+            var length = Encoding.UTF8.GetByteCount(value);
+            var prefix = length.ToString(CultureInfo.InvariantCulture);
+            byteCount = checked(byteCount + prefix.Length + 1 + length);
+            if (byteCount > 524288)
+                throw new FormatException("DTR-Evidence: binding identity work bound");
+            bytes.Append(prefix).Append(':').Append(value);
+        }
+        void Name(string? value)
+        {
+            (string Kind, string Value)[] parts;
+            if (value is null) parts = [];
+            else if (names.TryGetValue(value, out var keys) && keys.Length == 1
+                && (keys[0].StartsWith("ns(", StringComparison.Ordinal) || keys[0].StartsWith("nn(", StringComparison.Ordinal)))
+            {
+                parts = CanonicalLeanNameDecoder.ComponentsPrefix(keys[0], 0, out var consumed);
+                if (consumed != keys[0].Length) throw new FormatException("DTR-Evidence: binding Name material");
+            }
+            else parts = DisplayParts(InformationTemplateJson.Name(value));
+            foreach (var part in parts.Reverse()) Emit(part.Kind == "ns" ? "str" : "num");
+            Emit("anonymous");
+            foreach (var part in parts) Emit(part.Value);
+        }
+        static string S(JsonElement value, string field) => value.GetProperty(field).GetString()!;
+        Emit("DTR-binding-evidence-v2");
+        var key = certificate.GetProperty("key");
+        foreach (var field in new[] { "root", "registration_module", "theorem", "object_arena", "catalog" }) Name(S(key, field));
+        Emit(S(record, "statement_identity"));
+        foreach (var field in new[] { "plan_identity", "descriptor_identity", "actual_identity" }) Emit(S(certificate, field));
+        Emit(S(record, "bridge_kind"));
+        if (certificate.TryGetProperty("source_binding", out var source))
+        {
+            Emit("source-binding");
+            Emit(Encoding.UTF8.GetString(StructuredCanonicalWriter.WriteLeanJson(source)));
+        }
+        var origin = record.GetProperty("escape_from");
+        if (origin.ValueKind == JsonValueKind.Null) Emit("missing-from");
+        else { Name(S(origin, "name")); Emit(S(origin, "type_identity")); Emit(S(origin, "object_identity")); }
+        var residual = record.GetProperty("escape_continues");
+        if (residual.ValueKind == JsonValueKind.Null) Emit("missing-continuation");
+        else
+        {
+            Emit(S(residual, "kind")); Name(residual.GetProperty("declaration_name").GetString());
+            Emit(residual.GetProperty("statement_identity").GetString() ?? "");
+            Name(residual.GetProperty("chain_name").GetString());
+        }
+        foreach (var field in new[] { "argument_inputs", "extraction_inputs" })
+        {
+            var inputs = certificate.GetProperty(field);
+            Emit(inputs.GetArrayLength().ToString(CultureInfo.InvariantCulture));
+            foreach (var input in inputs.EnumerateArray())
+            { Name(S(input, "name")); Name(S(input, "owner")); Emit(S(input, "type_identity")); Emit(S(input, "body_identity")); }
+        }
+        return InformationTemplateJson.Sha256(Encoding.UTF8.GetBytes(bytes.ToString()));
+    }
+
+    // Used for the strict occurrence/module spellings. Generated declaration
+    // names instead use their imported structural NameKey above, because their
+    // display spelling need not be invertible (e.g. an embedded closing guillemet).
+    private static (string Kind, string Value)[] DisplayParts(string value)
+    {
+        var parts = new List<(string, string)>();
+        for (var start = 0; start < value.Length;)
+        {
+            var quoted = value[start] == '«';
+            var end = quoted ? value.IndexOf('»', start + 1) : value.IndexOf('.', start);
+            if (end < 0) end = value.Length;
+            var part = value[(start + (quoted ? 1 : 0))..end];
+            parts.Add((!quoted && part.All(char.IsAsciiDigit) ? "nn" : "ns", part));
+            start = end + (quoted ? 2 : 1);
+        }
+        return parts.ToArray();
     }
 }

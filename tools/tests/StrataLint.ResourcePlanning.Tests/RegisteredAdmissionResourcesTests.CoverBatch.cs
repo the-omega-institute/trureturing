@@ -103,7 +103,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
                 CoverBatchProject,
                 RepositoryFileMapProject,
             }.Concat(grammarConsumer
-                ? new[] { "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj" } : [])),
+                ? new[] { "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj" } : [])
+            .Concat(path is "tools/lean-inspector/LeanInformationAudit/Syntax.lean"
+                or "tools/lean-inspector/LeanInformationAudit/Registry/Entries.lean"
+                ? new[] { "tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj" } : [])),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 

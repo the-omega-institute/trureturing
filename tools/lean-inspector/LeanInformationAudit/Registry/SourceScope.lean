@@ -490,24 +490,84 @@ private partial def packedValue (type : Expr) (parameters : Array Expr) (i : Nat
 
 private def family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
+/-- Compare the original support at its source-derived syntax positions. Source
+heads are opaque during administrative exposure of the actual field: unfolding
+a dictionary-ignoring source function would destroy precisely this evidence.
+Unrelated subterms remain the responsibility of the ordinary kernel comparison.
+In particular, an occurrence in a discarded argument or another field cannot
+stand in for the dictionary operand at this position. -/
+private partial def capture (support : Array Expr) (source actual : Expr)
+    (depth : Nat := 0) : M Unit := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.source_capture_depth"
+  if !(source.find? (support.contains ·)).isSome then return
+  if source.equal actual then return
+  let heads := source.getUsedConstants
+  let actual ← withCanUnfoldPred (fun _ info => pure (!heads.contains info.name)) <|
+    whnf actual
+  if source.getAppFn.isConst then
+    unless source.getAppFn == actual.getAppFn do
+      throwError "unclassified_form:source.actual_support_link"
+  let next := fun a b => capture support a b (depth + 1)
+  match source, actual with
+  | .fvar a, .fvar b =>
+    unless a == b do throwError "unclassified_form:source.actual_support_link"
+  | .app f a, .app g b => next f g; next a b
+  | .lam n t b bi, .lam _ u c _ | .forallE n t b bi, .forallE _ u c _ =>
+    next t u
+    fun fuel => withLocalDecl n bi t fun x =>
+      (next (b.instantiate1 x) (c.instantiate1 x)).run fuel
+  | .mdata _ b, _ => next b actual
+  | .letE _ _ v b _, _ => next (b.instantiate1 v) actual
+  | .proj n i b, .proj m j c =>
+    unless n == m && i == j do throwError "unclassified_form:source.actual_support_link"
+    next b c
+  | _, _ => throwError "unclassified_form:source.actual_support_link"
+
+/-- Enter the packed telescope with the same rigid locals on both sides. This
+also checks dictionary uses in later dependent parameter domains. -/
+private partial def captureParameters (scope : Scope) (source actual : Expr)
+    (index : Nat := 0) (support : Array Expr := #[]) : M Unit := do
+  debit
+  if scope.support.isEmpty || index ≥ scope.parameters.size then return
+  if index + 1 == scope.parameters.size then
+    capture support source actual
+    return
+  let actual ← withCanUnfoldPred (fun _ info => pure (info.name != ``Sigma)) <| whnf actual
+  unless source.isAppOfArity ``Sigma 2 && actual.isAppOfArity ``Sigma 2 do
+    throwError "unclassified_form:source.params"
+  let left := source.getAppArgs
+  let right := actual.getAppArgs
+  capture support left[0]! right[0]!
+  let binder := scope.parameters[index]!
+  fun fuel => withLocalDecl binder.name binder.info left[0]! fun x => do
+    let support := if scope.support.any (fun b => b.path == binder.path) then support.push x else support
+    (captureParameters scope (mkApp left[1]! x).headBeta (mkApp right[1]! x).headBeta
+      (index + 1) support).run fuel
+
 /-- Every selected role is checked at the actual source occurrence and its type.
 Coordinate projection is inverted before this kernel equality is used. -/
 def validateFields (scope : Scope) (signature actual : Expr) : M Unit := do
   let params ← packedType scope.parameters 0 #[]
   unless ← isDefEq params (← mkAppM (family ++ `Signature.Params) #[signature]) do
     throwError "unclassified_form:source.params"
+  captureParameters scope params (← mkAppM (family ++ `Signature.Params) #[signature])
   let roles ← RegistrationGates.indices
     (← mkAppM (family ++ `Signature.Role) #[signature])
     (← mkAppM (family ++ `Signature.finiteRole) #[signature])
   unless roles.size == scope.readouts.size do throwError "unclassified_form:source.roles"
   inContext scope.parameters fun locals => do
     let parameter ← packedValue params locals 0
+    let support := (scope.parameters.zip locals).filterMap fun (binder, value) =>
+      if scope.support.any (fun b => b.path == binder.path) then some value else none
     for (role, readout) in roles.zip scope.readouts do
       debit
       let state := readout.state.instantiateRev locals
       let output := readout.output.instantiateRev locals
       checkWithKernel state
       checkWithKernel output
+      capture support state (← mkAppM (family ++ `Signature.State) #[signature, parameter])
+      capture support output (← mkAppM (family ++ `Signature.Output) #[signature, role, parameter])
       unless (← isType state) && (← isType output) &&
           (← isDefEq state (← mkAppM (family ++ `Signature.State) #[signature, parameter])) &&
           (← isDefEq output (← mkAppM (family ++ `Signature.Output) #[signature, role, parameter])) do
@@ -515,12 +575,7 @@ def validateFields (scope : Scope) (signature actual : Expr) : M Unit := do
       let observation := Expr.lam `state readout.state readout.projected .default
       let observation := observation.instantiateRev locals
       let actualReadout ← mkAppM (family ++ `Realization.readout) #[actual, role, parameter]
-      let rawReadout ← withTransparency .all <| whnf actualReadout
-      for (binder, index) in scope.parameters.zipIdx do
-        if scope.support.any (fun support => support.path == binder.path) &&
-            (observation.find? (· == locals[index]!)).isSome then
-          unless (rawReadout.find? (· == locals[index]!)).isSome do
-            throwError "unclassified_form:source.actual_support_link"
+      capture support observation actualReadout
       unless ← isDefEq observation actualReadout do
         throwError "unclassified_form:source.actual_observation"
 

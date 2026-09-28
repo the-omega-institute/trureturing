@@ -111,7 +111,7 @@ class InstanceSupportFixture(NativeTestSupport):
 
         self.record_result('native', dict(modules=[module for _, module in modules], release=16),
             [output / 'raw-lean-report.json', output / 'raw-lean-report.json.materials.zip',
-             output / 'lean-report-inputs.json', *sources.rglob('*.lean')])
+             output / 'lean-report-inputs.json', output / 'binding-identity-controls.json', *sources.rglob('*.lean')])
 
 
 if __name__ == '__main__':

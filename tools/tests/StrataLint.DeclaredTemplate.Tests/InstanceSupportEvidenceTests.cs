@@ -54,7 +54,7 @@ public sealed class InstanceSupportEvidenceTests
     {
         using var temporary = new TemporaryDirectory();
         var root = TestRepositoryLayout.FindRoot();
-        var produced = BoundedProcessRunner.Run("/bin/bash", ["tools/scripts/worktree/lean-cache-run.sh", "python3", "-B",
+        var produced = TestProcessRunner.Run("/bin/bash", ["tools/scripts/worktree/lean-cache-run.sh", "python3", "-B",
             Path.Combine(root, "tools/lean-inspector/tests/test_instance_support.py"), temporary.Path],
             root, TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
         Assert.True(produced.ExitCode == 0, System.Text.Encoding.UTF8.GetString(produced.StandardOutput)
@@ -83,10 +83,19 @@ public sealed class InstanceSupportEvidenceTests
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create(entries))).Snapshot;
         var report = RawLeanReportArtifact.ReadFile(reportPath!, snapshot, validateMaterials: true);
+        using var encodingControls = JsonDocument.Parse(File.ReadAllBytes(
+            Path.Combine(temporary.Path, "binding-identity-controls.json")));
+        Assert.Equal(2, encodingControls.RootElement.GetArrayLength());
+        foreach (var control in encodingControls.RootElement.EnumerateArray())
+            InformationTemplateBindingIdentity.Check(control, report.Files.Values.SelectMany(f => f.Declarations));
         var path = RepoPath.CreateKnown("Reg/D5/InstanceSupportFixture.lean");
         var evidence = InformationTemplateEvidence.Collect(snapshot, report, [path]);
-        Assert.Equal(6, evidence.Occurrences.Count);
-        Assert.All(evidence.Occurrences.Values, entry => {
+        Assert.Equal(11, evidence.Occurrences.Count);
+        var rejectedNames = new[] { "eqSource", "swapLambdaSource", "swapSigmaSource" };
+        var rejected = evidence.Occurrences.Where(pair => rejectedNames.Contains(pair.Key.Theorem.Split('.').Last())).ToArray();
+        Assert.Equal(3, rejected.Length);
+        Assert.All(rejected, pair => Assert.Equal(InformationTemplateBindingState.DeclaredUnresolved, pair.Value.State));
+        Assert.All(evidence.Occurrences.Except(rejected).Select(pair => pair.Value), entry => {
             Assert.Equal(InformationTemplateBindingState.DeclaredValidated, entry.State);
             Assert.True(entry.HasFourSlots);
         });
@@ -113,6 +122,36 @@ public sealed class InstanceSupportEvidenceTests
         Assert.Equal("D5.InstanceSupportFixture.namedClaim", named.SourceDefinitionName);
         Assert.Equal(0, named.SourceBinding!.Value.GetProperty("telescope_size").GetInt32());
         Assert.Single(named.SourceBinding.Value.GetProperty("support_entries").EnumerateArray());
+
+        foreach (var mutation in new[] { "empty-support", "omit-transitive-support", "evidence-reference" })
+        {
+            var raw = JsonNode.Parse(File.ReadAllBytes(reportPath))!;
+            var module = raw["modules"]!.AsArray().Single(m => m!["source_path"]!.GetValue<string>() == path.Value)!;
+            var theorem = "D5.InstanceSupportFixture." + (mutation == "omit-transitive-support" ? "transitiveSource" : "source");
+            var row = module["information_templates"]!["records"]!.AsArray()
+                .Single(r => r!["key"]!["theorem"]!.GetValue<string>() == theorem)!;
+            var certificate = row["certificate"]!;
+            var changed = certificate["source_binding"]!;
+            if (mutation == "evidence-reference") certificate["evidence_ref"] = new string('0', 64);
+            else
+            {
+                foreach (var field in new[] { "support", "support_paths", "support_entries" })
+                    if (mutation == "empty-support") changed[field] = new JsonArray();
+                    else changed[field]!.AsArray().RemoveAt(0);
+                changed["parameter_slots"] = mutation == "empty-support" ? new JsonArray(0) : new JsonArray(0, 2);
+                var tokens = changed["support_entries"]!.AsArray().Select(e =>
+                    e!["index"]!.ToJsonString() + ":" + string.Join("/", e["path"]!.AsArray().Select(n => n!.GetValue<string>()))
+                        + ":" + e["identity"]!.GetValue<string>());
+                changed["support_identity"] = InformationTemplateJson.Sha256(
+                    System.Text.Encoding.UTF8.GetBytes("DTR-source-support-v1:" + string.Join(",", tokens)));
+            }
+            var mutated = Path.Combine(temporary.Path, mutation + ".json");
+            File.WriteAllBytes(mutated, Trureturing.Truth.StructuredCanonicalWriter.WriteJson(raw.ToJsonString()).AsSpan());
+            File.Copy(reportPath + ".materials.zip", mutated + ".materials.zip");
+            var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(snapshot,
+                RawLeanReportArtifact.ReadFile(mutated, snapshot, validateMaterials: true), [path]));
+            Assert.Contains("binding identity differs", error.Message, StringComparison.Ordinal);
+        }
 
         foreach (var mutation in new[] { "support-order", "named-owner", "named-path", "named-body" })
         {

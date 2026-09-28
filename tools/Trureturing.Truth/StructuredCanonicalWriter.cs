@@ -9,6 +9,8 @@ namespace Trureturing.Truth;
 public static class StructuredCanonicalWriter
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+    private static readonly IComparer<string> LeanPropertyOrder = Comparer<string>.Create((left, right) =>
+        StrictUtf8.GetBytes(left).AsSpan().SequenceCompareTo(StrictUtf8.GetBytes(right)));
 
     private static readonly JsonSerializerOptions StringOptions = new()
     {
@@ -27,6 +29,16 @@ public static class StructuredCanonicalWriter
         WriteJsonValue(builder, element);
         builder.Append('\n');
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
+    }
+
+    // Lean's pinned Json.compress uses the same ordered JSON traversal, with
+    // no whitespace and scalar UTF-8 strings (including non-BMP characters).
+    // Binding identities consume these exact bytes, not the report file format.
+    public static byte[] WriteLeanJson(JsonElement element)
+    {
+        var builder = new StringBuilder();
+        WriteJsonValue(builder, element, leanCompact: true);
+        return StrictUtf8.GetBytes(builder.ToString());
     }
 
     public static ImmutableArray<byte> WriteYaml(string text)
@@ -51,26 +63,26 @@ public static class StructuredCanonicalWriter
         return JsonElement.DeepEquals(leftElement, rightElement);
     }
 
-    private static void WriteJsonValue(StringBuilder builder, JsonElement element)
+    private static void WriteJsonValue(StringBuilder builder, JsonElement element, bool leanCompact = false)
     {
         switch (element.ValueKind)
         {
             case JsonValueKind.Object:
-                WriteJsonObject(builder, element);
+                WriteJsonObject(builder, element, leanCompact);
                 break;
             case JsonValueKind.Array:
                 builder.Append('[');
                 var index = 0;
                 foreach (var child in element.EnumerateArray())
                 {
-                    if (index++ > 0) builder.Append(", ");
-                    WriteJsonValue(builder, child);
+                    if (index++ > 0) builder.Append(leanCompact ? "," : ", ");
+                    WriteJsonValue(builder, child, leanCompact);
                 }
 
                 builder.Append(']');
                 break;
             case JsonValueKind.String:
-                builder.Append(JsonSerializer.Serialize(element.GetString(), StringOptions));
+                WriteJsonString(builder, element.GetString()!, leanCompact);
                 break;
             case JsonValueKind.Number:
                 builder.Append(CanonicalNumber(element));
@@ -89,7 +101,24 @@ public static class StructuredCanonicalWriter
         }
     }
 
-    private static void WriteJsonObject(StringBuilder builder, JsonElement element)
+    private static void WriteJsonString(StringBuilder builder, string value, bool leanCompact)
+    {
+        if (!leanCompact) { builder.Append(JsonSerializer.Serialize(value, StringOptions)); return; }
+        builder.Append('"');
+        foreach (var rune in value.EnumerateRunes())
+            switch (rune.Value)
+            {
+                case '"': builder.Append("\\\""); break;
+                case '\\': builder.Append("\\\\"); break;
+                case '\n': builder.Append("\\n"); break;
+                case '\r': builder.Append("\\r"); break;
+                case < 32: builder.Append("\\u").Append(rune.Value.ToString("x4", CultureInfo.InvariantCulture)); break;
+                default: builder.Append(rune.ToString()); break;
+            }
+        builder.Append('"');
+    }
+
+    private static void WriteJsonObject(StringBuilder builder, JsonElement element, bool leanCompact)
     {
         var properties = element.EnumerateObject().ToArray();
         if (properties.Select(static property => property.Name).Distinct(StringComparer.Ordinal).Count()
@@ -100,11 +129,13 @@ public static class StructuredCanonicalWriter
 
         builder.Append('{');
         var index = 0;
-        foreach (var property in properties.OrderBy(static property => property.Name, StringComparer.Ordinal))
+        foreach (var property in properties.OrderBy(static property => property.Name,
+            leanCompact ? LeanPropertyOrder : StringComparer.Ordinal))
         {
-            if (index++ > 0) builder.Append(", ");
-            builder.Append(JsonSerializer.Serialize(property.Name, StringOptions)).Append(": ");
-            WriteJsonValue(builder, property.Value);
+            if (index++ > 0) builder.Append(leanCompact ? "," : ", ");
+            WriteJsonString(builder, property.Name, leanCompact);
+            builder.Append(leanCompact ? ":" : ": ");
+            WriteJsonValue(builder, property.Value, leanCompact);
         }
 
         builder.Append('}');

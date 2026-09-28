@@ -231,6 +231,12 @@ public sealed class InformationTemplateEvidenceTests
         var snapshot = Snapshot((PathA, TextA), (sourcePath, "-- source fixture\n"));
         var wire = SourceWire();
         if (wrongOwner) wire["records"]![0]!["certificate"]!["source_binding"]!["source_owner"] = "D5.Other";
+        // Issue a consistent synthetic certificate so these cases still reach
+        // their original independent import/owner checks. Native fixtures test
+        // the digest against the Lean producer, including omission mutations.
+        var row = wire["records"]![0]!;
+        row["certificate"]!["evidence_ref"] = InformationTemplateBindingIdentity.Compute(
+            JsonSerializer.SerializeToElement(row), []);
         var evidence = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
         var module = Module(evidence) with { Imports = absentImport ? [] : ["D5.S0.Carrier.Probe"] };
         var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> {
