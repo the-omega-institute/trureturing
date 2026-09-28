@@ -148,7 +148,7 @@ internal sealed class CompressedResolventRemainderDocument : IScribeDocumentDefi
             remainder, Sp, Colon, Eq, Sp, compressedDifference, Comma, RowBreak, Grp(),
             Open,
             Seq(resolvent, Sp, Minus, Sp, blockResolvent), Sp, Eq, Sp,
-            Neg, Sp, firstOrder, Sp, Plus, Sp, secondOrder,
+            Minus, Open, firstOrder, Close, Sp, Plus, Sp, secondOrder,
             Close, Sp, Land, RowBreak, Grp(),
             Open,
             remainder, Sp, Eq, Sp, hiddenRemainder,
