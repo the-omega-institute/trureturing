@@ -75,8 +75,8 @@ establish worldwide priority.
 
 The source proof has two live local deductions inside `result`.
 
-W1, `cyclic_reindexing_sum`, uses coprimality to reindex positions along the
-single cycle induced by multiplication by `k` modulo `n`. The width-`k` and
+W1, `cyclic_reindexing_sum`, uses multiplication by `k` modulo `n` to reindex
+the single cycle induced by addition of `k` modulo `n`. The width-`k` and
 width-`(n-k)` counts combine into the cyclic descent count minus `k`, and the
 permutation equivalence transports the whole Laurent sum.
 
