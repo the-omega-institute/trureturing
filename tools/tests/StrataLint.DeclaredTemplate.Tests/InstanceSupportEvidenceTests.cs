@@ -90,10 +90,12 @@ public sealed class InstanceSupportEvidenceTests
             InformationTemplateBindingIdentity.Check(control, report.Files.Values.SelectMany(f => f.Declarations));
         var path = RepoPath.CreateKnown("Reg/D5/InstanceSupportFixture.lean");
         var evidence = InformationTemplateEvidence.Collect(snapshot, report, [path]);
-        Assert.Equal(11, evidence.Occurrences.Count);
+        Assert.Equal(26, evidence.Occurrences.Count);
         var rejectedNames = new[] { "eqSource", "swapLambdaSource", "swapSigmaSource" };
-        var rejected = evidence.Occurrences.Where(pair => rejectedNames.Contains(pair.Key.Theorem.Split('.').Last())).ToArray();
-        Assert.Equal(3, rejected.Length);
+        var rejected = evidence.Occurrences.Where(pair => rejectedNames.Contains(pair.Key.Theorem.Split('.').Last())
+            || (pair.Key.Theorem.Contains(".wrapper_", StringComparison.Ordinal)
+                && !pair.Key.Theorem.EndsWith("_faithful", StringComparison.Ordinal))).ToArray();
+        Assert.Equal(13, rejected.Length);
         Assert.All(rejected, pair => Assert.Equal(InformationTemplateBindingState.DeclaredUnresolved, pair.Value.State));
         Assert.All(evidence.Occurrences.Except(rejected).Select(pair => pair.Value), entry => {
             Assert.Equal(InformationTemplateBindingState.DeclaredValidated, entry.State);
@@ -102,6 +104,38 @@ public sealed class InstanceSupportEvidenceTests
         var occurrence = evidence.Occurrences.Single(pair => pair.Key.Theorem == "D5.InstanceSupportFixture.source").Value;
         Assert.Equal(InformationTemplateBindingState.DeclaredValidated, occurrence.State);
         Assert.True(occurrence.HasFourSlots);
+        var originalRecord = JsonNode.Parse(report.Files[path].InformationTemplates!.Value.GetRawText())!["records"]!
+            .AsArray().Single(r => r!["key"]!["theorem"]!.GetValue<string>() == "D5.InstanceSupportFixture.source")!;
+        var declarations = report.Files.Values.SelectMany(f => f.Declarations).ToArray();
+        foreach (var mutation in new[] { "statement_identity", "plan_identity", "descriptor_identity",
+            "actual_identity", "bridge_kind", "source_binding", "escape_from", "escape_continues",
+            "argument_inputs", "extraction_inputs", "key" })
+        {
+            var changedRecord = originalRecord.DeepClone();
+            var certificate = changedRecord["certificate"]!;
+            switch (mutation)
+            {
+                case "statement_identity": changedRecord[mutation] = new string('0', 64); break;
+                case "bridge_kind": changedRecord[mutation] = "changed-proof-bridge"; break;
+                case "source_binding": certificate[mutation]!["telescope_size"] = 4; break;
+                case "escape_from": changedRecord[mutation]!["type_identity"] = new string('0', 64); break;
+                case "escape_continues": changedRecord[mutation]!["kind"] = "changed-residual"; break;
+                case "argument_inputs":
+                    Assert.Empty(certificate[mutation]!.AsArray());
+                    certificate[mutation]!.AsArray().Add(certificate["extraction_inputs"]![0]!.DeepClone());
+                    break;
+                case "extraction_inputs":
+                    Assert.NotEmpty(certificate[mutation]!.AsArray());
+                    certificate[mutation]![0]!["type_identity"] = new string('0', 64);
+                    break;
+                case "key": certificate[mutation]!["theorem"] = "D5.InstanceSupportFixture.changed"; break;
+                default: certificate[mutation] = new string('0', 64); break;
+            }
+            var changedElement = JsonSerializer.SerializeToElement(changedRecord);
+            Assert.NotEqual(certificate["evidence_ref"]!.GetValue<string>(),
+                InformationTemplateBindingIdentity.Compute(changedElement, declarations));
+            Assert.Throws<FormatException>(() => InformationTemplateBindingIdentity.Check(changedElement, declarations));
+        }
         var binding = occurrence.SourceBinding!.Value;
         Assert.Equal(3, binding.GetProperty("telescope_size").GetInt32());
         Assert.Equal(new[] { 0 }, binding.GetProperty("coordinates").EnumerateArray().Select(x => x.GetInt32()));

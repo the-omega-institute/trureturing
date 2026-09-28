@@ -70,17 +70,17 @@ run_meta do
     rejectsExactly "unclassified_form:source.actual_observation" do
       discard <| (SourceScope.validateFields scope (mkConst ``signature)
         (mkConst ``constantCF)).run 524288
-    -- Full assessment has its own ordering: the descriptor differs from the
-    -- valid record, while validateFields above isolates the observation check.
+    -- Full assessment checks the descriptor's source fields before comparing
+    -- it with the record, so the same observation mismatch rejects it here.
     let badReadout ← mkAppM ``Realization.readout #[mkConst ``constantCF]
     let badAnchor ← mkAppM ``Realization.anchor #[mkConst ``constantCF]
     let distorted ← mkAppM ``realize #[mkConst ``signature, badReadout, badAnchor]
     let changed ← TemplateBinding.assess event (some { claim with descriptor := some distorted })
     let .declaredUnresolved diagnostic := changed.result
       | throwError "[FAIL] altered descriptor was not rejected"
-    unless (diagnostic.splitOn "rule=source.descriptor_actual ").length == 2 do
+    unless (diagnostic.splitOn "rule=source.actual_observation ").length == 2 do
       throwError "[FAIL] altered descriptor diagnostic: {diagnostic}"
-    logInfo "[PASS] full_assessment_source.descriptor_actual"
+    logInfo "[PASS] full_assessment_source.actual_observation"
     if target == ``counterfactual_kernel_strictly_finer then
       -- Keep the existential pair verbatim but remove the universal inclusion.
       unless sourceInfo.type.isAppOfArity ``And 2 do

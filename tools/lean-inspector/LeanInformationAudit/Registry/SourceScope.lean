@@ -490,6 +490,33 @@ private partial def packedValue (type : Expr) (parameters : Array Expr) (i : Nat
 
 private def family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
+/-- Expose only administrative source structure. Mathematical definitions and
+class projections stay opaque; constructor projections transport their actual
+field. Every traversal/substitution shares the caller's cumulative budget. -/
+private partial def administrative (e : Expr) (depth : Nat) : M Expr := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.source_capture_depth"
+  let next := fun e => administrative e (depth + 1)
+  if let .const name _ := e.getAppFn then
+    if let some info ← getProjectionFnInfo? name then
+      let args := e.getAppArgs
+      if !info.fromClass && info.numParams < args.size then
+        let major ← next args[info.numParams]!
+        if let some field ← projectCore? major info.i then
+          return ← next (mkAppN field (args.extract (info.numParams + 1) args.size))
+  match e with
+  | .mdata _ b => next b
+  | .letE _ _ v b _ => next (b.instantiate1 v)
+  | .app f a =>
+    let f ← next f
+    if let .lam _ _ b _ := f then return ← next (b.instantiate1 a)
+    return .app f a
+  | .proj n i b =>
+    let b ← next b
+    if let some field ← projectCore? b i then return ← next field
+    return .proj n i b
+  | _ => return e
+
 /-- Compare the original support at its source-derived syntax positions. Source
 heads are opaque during administrative exposure of the actual field: unfolding
 a dictionary-ignoring source function would destroy precisely this evidence.
@@ -500,11 +527,16 @@ private partial def capture (support : Array Expr) (source actual : Expr)
     (depth : Nat := 0) : M Unit := do
   debit
   if depth > 256 then throwError "incomplete_closure:E8.source_capture_depth"
-  if !(source.find? (support.contains ·)).isSome then return
   if source.equal actual then return
+  -- Retain the raw heads even when beta/let transport removes a mention. In
+  -- particular an erased mention must not authorize unfolding a replacement.
   let heads := source.getUsedConstants
+  let source ← administrative source depth
   let actual ← withCanUnfoldPred (fun _ info => pure (!heads.contains info.name)) <|
     whnf actual
+  let actual ← administrative actual depth
+  if !(source.find? (support.contains ·)).isSome then return
+  if source.equal actual then return
   if source.getAppFn.isConst then
     unless source.getAppFn == actual.getAppFn do
       throwError "unclassified_form:source.actual_support_link"

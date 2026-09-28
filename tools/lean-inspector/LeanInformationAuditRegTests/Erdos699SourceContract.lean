@@ -98,7 +98,7 @@ run_meta do
   let changed ← TemplateBinding.assess event (some { claim with descriptor := some distorted })
   let .declaredUnresolved diagnostic := changed.result
     | throwError "[FAIL] accepted altered declared readout"
-  unless (diagnostic.splitOn "rule=source.descriptor_actual ").length == 2 do
+  unless (diagnostic.splitOn "rule=source.actual_observation ").length == 2 do
     throwError "[FAIL] unexpected altered-readout diagnostic: {diagnostic}"
   logInfo "[PASS] full_assessment_rejects_altered_descriptor"
   for name in #[target, ``registration, ``rejected_law] do

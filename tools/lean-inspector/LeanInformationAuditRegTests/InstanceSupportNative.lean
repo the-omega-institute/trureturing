@@ -123,7 +123,6 @@ theorem operandSource [d : Inhabited Nat] : @default Nat d ≤ @default Nat d + 
 
 theorem omittedData (k n : Nat) : n ≤ k + n := Nat.le_add_left _ _
 
-
 abbrev dependentArena : Arena where
   signature := dependentSignature
   Law r := ∀ (X : Type) [d : Fintype X] (x : Fin (@Fintype.card X d + 1)) (n : Nat),
@@ -233,7 +232,6 @@ def multipleRegistration : Registration multipleArena
     change Fintype.card Unit + 0 ≠ Fintype.card Unit + 1
     omega
 
-
 -- Enter only this exact closed Prop body; the original theorem remains a named reference.
 def namedClaim : Prop := ∀ (X : Type) [Fintype X] (n : Nat), n ≤ Fintype.card X + n
 theorem namedSource : namedClaim := source
@@ -302,7 +300,6 @@ theorem wideSource65 : wideClaim65 := by
   intro x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 x32 x33 x34 x35 x36 x37 x38 x39 x40 x41 x42 x43 x44 x45 x46 x47 x48 x49 x50 x51 x52 x53 x54 x55 x56 x57 x58 x59 x60 x61 x62 x63 d n
   exact Nat.le_add_left _ _
 
-
 -- Exact dictionary correspondence survives definitional equality.
 def eqRead (_d : DecidableEq Bool) (n : Nat) : Nat := n
 abbrev eqSig : Signature where
@@ -368,6 +365,24 @@ abbrev typeOnlySig : Signature where
   finiteAnchor := inferInstance
 def typeOnlyActual : Realization typeOnlySig :=
   realize typeOnlySig (fun _ _ n => n) (fun e => nomatch e)
+
+-- Abstract scalar actions retain their arbitrary type and original dictionary.
+theorem scalarSource (R X : Type) [d : SMul R X] (r : R) (x : X) :
+    ((fun d => @SMul.smul R X d r x) d) = r • x := rfl
+abbrev scalarSignature : Signature where
+  Params := Σ R : Type, Σ X : Type, Σ _ : SMul R X, R
+  State p := p.2.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := p.2.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def scalarActual : Realization scalarSignature :=
+  realize scalarSignature
+    (fun _ p x => @SMul.smul p.1 p.2.1 p.2.2.1 p.2.2.2 x) (fun e => nomatch e)
+def scalarErased : Realization scalarSignature :=
+  realize scalarSignature (fun _ _ x => x) (fun e => nomatch e)
 
 theorem eqSource : ∀ [d : DecidableEq Bool] (n : Nat), n ≤ eqRead d n := by intro d n; exact Nat.le_refl n
 def eqSourceRegistration : Registration eqArena (∀ [d : DecidableEq Bool] (n : Nat), n ≤ eqRead d n) where
@@ -439,6 +454,136 @@ def swapSigmaSourceRegistration : Registration swapArena (∀ [d1 : Inhabited Na
     · intro i; exact nomatch i
   dependence := by intro i; cases i; exact ⟨⟨⟨7⟩, ⟨11⟩⟩, 0, 1, by decide⟩
 
+-- Source-side administrative wrappers must preserve dictionary use positions.
+def keep (n : Nat) (_ _ : Inhabited Nat) := n
+def replacement (n : Nat) (_ : Inhabited Nat) := dropDict ⟨0⟩ n
+theorem wrapper_beta_faithful : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => keep n d d) d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_beta_faithfulRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => keep n d d) d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_beta_faithful, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_beta_descriptor : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => keep n d d) d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_beta_descriptorRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => keep n d d) d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_beta_descriptor, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_beta_actual : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => keep n d d) d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_beta_actualRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => keep n d d) d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => keep n p.2 p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_beta_actual, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_let_faithful : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((let f := fun d => keep n d d; f d1)) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_let_faithfulRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((let f := fun d => keep n d d; f d1)) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_let_faithful, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_let_descriptor : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((let f := fun d => keep n d d; f d1)) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_let_descriptorRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((let f := fun d => keep n d d; f d1)) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_let_descriptor, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_let_actual : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((let f := fun d => keep n d d; f d1)) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_let_actualRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((let f := fun d => keep n d d; f d1)) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => keep n p.2 p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_let_actual, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_projection_faithful : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ (((fun d => keep n d d, d2).1) d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_projection_faithfulRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ (((fun d => keep n d d, d2).1) d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_projection_faithful, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_projection_descriptor : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ (((fun d => keep n d d, d2).1) d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_projection_descriptorRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ (((fun d => keep n d d, d2).1) d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_projection_descriptor, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_projection_actual : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ (((fun d => keep n d d, d2).1) d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_projection_actualRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ (((fun d => keep n d d, d2).1) d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => keep n p.2 p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_projection_actual, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_quality_faithful : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_quality_faithfulRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => (fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_quality_faithful, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_quality_descriptor : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_quality_descriptorRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => (fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_quality_descriptor, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_quality_actual : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_quality_actualRegistration : Registration swapArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), n ≤ ((fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => replacement n p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_quality_actual, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+abbrev lexicalArena : Arena where
+  signature := swapSig
+  Law r := ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat),
+    let f := fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement
+    n ≤ r.readout () ⟨d1,d2⟩ (f d1)
+
+theorem wrapper_lexical_faithful : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), let f := fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement; n ≤ (f d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_lexical_faithfulRegistration : Registration lexicalArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), let f := fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement; n ≤ (f d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => (fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_lexical_faithful, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_lexical_descriptor : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), let f := fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement; n ≤ (f d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_lexical_descriptorRegistration : Registration lexicalArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), let f := fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement; n ≤ (f d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => (fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_lexical_descriptor, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+theorem wrapper_lexical_actual : ∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), let f := fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement; n ≤ (f d1) + @default Nat d2 := by
+  intro d1 d2 n; exact Nat.le_add_right n _
+def wrapper_lexical_actualRegistration : Registration lexicalArena (∀ [d1 : Inhabited Nat] [d2 : Inhabited Nat] (n : Nat), let f := fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement; n ≤ (f d1) + @default Nat d2) where
+  actual := realize swapSig (fun _ p n => replacement n p.1 + @default Nat p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨wrapper_lexical_actual, swapRejected, swapRejectedLaw⟩
+  sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
+  dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
+
 end D5.InstanceSupportFixture
 "####
 
@@ -476,7 +621,6 @@ run_meta do
   unless scope.parameterSlots == #[0, 1] && scope.support.size == 1 &&
       scope.coordinates.size == 1 do throwError "support fixture closure differs"
   logInfo m!"[PASS] original_fintype_support_declared_validated {certificate.sourceBinding.get!}"
-
 
 register_information_theorem dependentSource in dependentArena
   readout via (realize dependentSignature
@@ -623,7 +767,6 @@ run_meta do
     (.forallE x xt (.forallE d dt body .default) xb)
   logInfo "[PASS] dependent coordinate, shared ancestor, noncanonical and transitive support"
 
-
 run_meta do
   let owner := `D5.InstanceSupportFixture
   let boundary (count : Nat) (name claim : Name) : SourceScope.M SourceScope.Scope := do
@@ -645,7 +788,6 @@ run_meta do
   logInfo "[PASS] combined_binders_64_accepted_65_rejected"
 
 
-
 register_information_theorem eqSource in eqArena
   readout via (realize eqSig (fun _ _ n => eqRead instDecidableEqBool n) (fun e => nomatch e))
   realizes eqSourceRegistration
@@ -663,7 +805,7 @@ register_information_theorem eqFaithfulSource in eqArena
   escape continues (open)
 
 register_information_theorem swapSource in swapArena
-  readout via (realize swapSig (fun _ p n => dropDict p.1 n + @default Nat p.2) (fun e => nomatch e))
+  readout via (realize swapSig (fun _ p n => (fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) p.1 + @default Nat p.2) (fun e => nomatch e))
   realizes swapSourceRegistration
   escape from source ({
     owner := `D5.InstanceSupportFixture, coordinates := #[],
@@ -709,7 +851,16 @@ run_meta do
   discard <| (SourceScope.validateFields scope (mkConst ``typeOnlySig)
     (mkConst ``typeOnlyActual)).run 524288
   logInfo "[PASS] support_only_in_state_and_output_type"
-
+  let (scalarScope, _) ← (SourceScope.resolve (← getConstInfo ``scalarSource) {
+    owner := `D5.InstanceSupportFixture, coordinates := #[0,1,3],
+    readouts := #[{path := #["body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 4}] }).run 524288
+  unless scalarScope.parameterSlots == #[0,1,2,3] && scalarScope.support.size == 1 do
+    throwError "generic scalar support closure differs"
+  discard <| (SourceScope.validateFields scalarScope (mkConst ``scalarSignature)
+    (mkConst ``scalarActual)).run 524288
+  rejects "generic scalar dictionary erasure" <| SourceScope.validateFields scalarScope
+    (mkConst ``scalarSignature) (mkConst ``scalarErased)
+  logInfo "[PASS] generic_scalar_source_beta_faithful"
 
 -- Pure encoder controls, separate from the admitted report inventory. Native
 -- bindingIdentity supplies the oracle for JSON escaping and structural Names.
@@ -734,6 +885,130 @@ run_meta do
     rows := rows.push (← TemplateBinding.recordJson { record with
       result := .declaredValidated { certificate with evidenceRef := identity } })
   IO.FS.writeFile ((← Repository.root) / "binding-identity-controls.json") (Json.arr rows).compress
+
+-- Exercise descriptor and actual independently through production assessment.
+register_information_theorem wrapper_beta_faithful in swapArena
+  readout via (realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_beta_faithfulRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_beta_descriptor in swapArena
+  readout via (realize swapSig (fun _ p n => keep n p.2 p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_beta_descriptorRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_beta_actual in swapArena
+  readout via (realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_beta_actualRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_let_faithful in swapArena
+  readout via (realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_let_faithfulRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_let_descriptor in swapArena
+  readout via (realize swapSig (fun _ p n => keep n p.2 p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_let_descriptorRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_let_actual in swapArena
+  readout via (realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_let_actualRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_projection_faithful in swapArena
+  readout via (realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_projection_faithfulRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_projection_descriptor in swapArena
+  readout via (realize swapSig (fun _ p n => keep n p.2 p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_projection_descriptorRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_projection_actual in swapArena
+  readout via (realize swapSig (fun _ p n => keep n p.1 p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_projection_actualRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_quality_faithful in swapArena
+  readout via (realize swapSig (fun _ p n => (fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_quality_faithfulRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_quality_descriptor in swapArena
+  readout via (realize swapSig (fun _ p n => replacement n p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_quality_descriptorRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_quality_actual in swapArena
+  readout via (realize swapSig (fun _ p n => (fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_quality_actualRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_lexical_faithful in lexicalArena
+  readout via (realize swapSig (fun _ p n => (fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_lexical_faithfulRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_lexical_descriptor in lexicalArena
+  readout via (realize swapSig (fun _ p n => replacement n p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_lexical_descriptorRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+register_information_theorem wrapper_lexical_actual in lexicalArena
+  readout via (realize swapSig (fun _ p n => (fun d => (fun (_ : Nat → Inhabited Nat → Nat) => dropDict d n) replacement) p.1 + @default Nat p.2) (fun e => nomatch e))
+  realizes wrapper_lexical_actualRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "body", "arg"], stateBinder := 2}]})
+  escape continues (open)
+
+run_meta do
+  for name in #[``wrapper_beta_faithful, ``wrapper_beta_descriptor, ``wrapper_beta_actual, ``wrapper_let_faithful, ``wrapper_let_descriptor, ``wrapper_let_actual, ``wrapper_projection_faithful, ``wrapper_projection_descriptor, ``wrapper_projection_actual, ``wrapper_quality_faithful, ``wrapper_quality_descriptor, ``wrapper_quality_actual, ``wrapper_lexical_faithful, ``wrapper_lexical_descriptor, ``wrapper_lexical_actual] do
+    let env ← getEnv
+    let some event := (TemplateBinding.inventory env).find? (·.key.theoremName == name)
+      | throwError "wrapper occurrence absent {name}"
+    let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
+      | throwError "wrapper claim absent {name}"
+    let record ← TemplateBinding.assess event (some claim)
+    let valid := name.toString.endsWith "_faithful"
+    match record.result with
+    | .declaredValidated _ => unless valid do throwError "accepted wrong dictionary {name}"
+    | .declaredUnresolved diagnostic =>
+      unless !valid && diagnostic.contains "source.actual_support_link" do
+        throwError "wrong wrapper outcome {name}: {diagnostic}"
+    | _ => throwError "missing wrapper outcome {name}"
+    logInfo m!"[PASS] source_wrapper {name} valid={valid}"
 
 end Reg.D5.InstanceSupportFixture
 "####

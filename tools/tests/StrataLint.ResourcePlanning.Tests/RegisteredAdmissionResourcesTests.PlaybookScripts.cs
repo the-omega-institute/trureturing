@@ -140,6 +140,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
             "tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj",
+            "tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj",
             "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
             "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
             "tools/tests/StrataLint.LeanCacheScript.Tests/StrataLint.LeanCacheScript.Tests.csproj",
