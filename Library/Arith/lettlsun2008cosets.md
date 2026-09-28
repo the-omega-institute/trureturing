@@ -2242,6 +2242,93 @@ profile computation, residue enumeration, Lean theorem or noncoverage
 range. An old assertion that a hole merely exists would not imply MF1;
 the existing complete-survivor LAW and its cylinder caps are the input.
 
+### Exactly six support primes reduce to seventeen prime sets
+
+Suppose the original family has exactly six support primes and every
+complete support-prime marginal is at least 1. Then its support must be
+one of the following SEVENTEEN sets:
+
+    {3,5,7,11,13,r},  r prime, 17<=r<=71;             (MF5a)
+    {3,5,7,11,17,19}, {3,5,7,11,17,23};              (MF5b)
+    {3,5,7,13,17,19}.                               (MF5c)
+
+There are fourteen choices of r in MF5a. This is a necessary condition,
+not an assertion that any listed set admits such a family. Every
+finite exponent and every original residue remain unrestricted.
+
+Only five profile calculations are needed for the exclusion. In each
+row below, remove the target r and apply the existing P3--P4 recurrence
+to the five cofactor primes. It supplies the uniform probability on
+the complete survivors of the actual r-free original family, with
+nonunit cylinder-cap sum bounded by the displayed R. Its empty subset
+is the base case; each of its 31 nonempty indexed subsets has an
+admissible last-prime extension.
+
+| Ordered six-prime support | Target r | Cofactor profile bound R | (1+R)/(r-1) |
+|---|---:|---:|---:|
+| 3,5,11,13,17,19 | 3 | 58495/63454 | 121949/126908 |
+| 3,5,7,11,19,23 | 23 | 11159716533087/534598681841 | 5847157607464/5880585500251 |
+| 3,5,7,11,17,29 | 29 | 1652775682537/66859985411 | 429908916987/468019897877 |
+| 3,5,7,13,17,23 | 23 | 507203988220491/29060939613244 | 536264927833735/639340671491368 |
+| 3,5,7,11,13,73 | 73 | 814972792/11609325 | 826582117/835871400 |
+
+All five entries in the last column are strictly below 1. By MF3 each
+row forces a deficient complete marginal. The subset induction used
+above for MF4 applies without a restriction to four coordinates:
+if an ordered six-prime support is coordinatewise at least a displayed
+row, use the same indexed target. Its five-prime profile coefficients
+and envelope sum are no larger, and its target denominator is no
+smaller. Thus every such larger support is excluded too. This transports
+the bounds to the new family's OWN complete-survivor law; no old
+configuration, selected phase assignment, or optimized measure is
+substituted for the actual new one.
+
+Here is an exhaustive argument for the remaining supports, with no
+bound on the initially proposed primes. Avoiding the first row forces
+the three smallest primes to be 3,5,7: otherwise the third is at least
+11 and the support dominates that row. Write the other three as a<b<c.
+Avoiding the second row forces b<=17. If b=13, then a=11, and avoiding
+the last row gives c<=71, precisely MF5a. If b=17, then a is 11 or 13.
+For a=11, avoiding the third row gives c=19 or 23; for a=13, avoiding
+the fourth gives c=19. These are MF5b--MF5c. No further ordered prime
+cases remain.
+
+The [existing exact profile verifier](../../docs/reports/erdos7-odd-covering/elementary-checks/verify_uniform_head_profile.py)
+now checks these five parameters in addition to its original four-prime
+ones. It evaluates the full infinite envelope sums by finite cutoff
+cells and exact geometric tails. The all-residue, all-finite-height
+conclusion comes from the profile induction and MF3, not from enumerating
+residues or sampling heights. This is an ordinary proof and a restriction
+of the stronger marginal-feasibility search; it is not a Lean result or
+a settlement of unrestricted Erdős #7.
+
+### Disjoint prime components cannot repair a deficient marginal
+
+Join two support primes when an original numerical modulus contains
+both, and let S_j be the connected components of this graph. Every
+nonunit original belongs to exactly one component. In the actual CRT
+coordinates, write its component multiplicity as c_j(x_j). Then
+
+    c(x)=sum_j c_j(x_j),
+    min c=sum_j min c_j.
+
+For p in component j, complete uniform averaging in that p-coordinate
+and minimization over the independent remaining coordinates give
+
+    min M_p=min M_p^(j)+sum_(k!=j) min c_k.           (MF6)
+
+These identities concern the same original family. A noncover has
+min c=0, so every min c_k=0. Its complete marginals are therefore all
+at least 1 exactly when the complete marginals of every component
+are all at least 1. A nonempty odd-distinct NONCOVER passing the tests
+can consequently be reduced to one connected component that also
+passes. Every component of any such family must have at least six
+support primes by MF1; any component with exactly six must have a
+support in MF5. In particular, adding disjoint pure-prime tails to a
+known noncover cannot repair its deficient old marginals. This reduction
+does not assert that a connected family passes the tests, and supplies
+no unproved existence of a covering or noncovering family on MF5.
+
 ### Unrestricted fractional phases only recover the reciprocal test
 
 For a fixed nonempty inventory D of nonunit numerical labels, allow one probability vector z_(d,a)
