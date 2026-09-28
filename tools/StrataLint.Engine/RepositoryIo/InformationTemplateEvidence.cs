@@ -140,6 +140,7 @@ internal static class InformationTemplateEvidence
             }
             records.Add(new(key, registration, statement, state, reference, diagnostic, binding, unit, realization,
                 escapeFrom, escapeContinues, bridgeKind, sourceOwner, sourceDefinitionName, projectionOwners) {
+                BindingWire = record.Clone(),
                 RealizationDependencyOwners = realizationDependencyOwners,
                 SourceBinding = state == InformationTemplateBindingState.DeclaredValidated
                     && bridgeKind == "source-equivalence" && certificate.TryGetProperty("source_binding", out var source)
@@ -475,12 +476,11 @@ internal static class InformationTemplateEvidence
                 throw new FormatException("DTR-Evidence: realization dependency owner differs from declaration");
             if (selected.SourceOwner is { } sourceOwner)
             {
-                var bindingWire = report.Files[RepoPath.CreateKnown(selected.BindingSourcePath!)].InformationTemplates!.Value
-                    .GetProperty("records").EnumerateArray().Single(row =>
-                        InformationTemplateJson.ReadKey(row.GetProperty("key")) == key);
                 // Includes the mandatory empty support block. Per-entry material
                 // replay alone cannot authenticate completeness of the block.
-                InformationTemplateBindingIdentity.Check(bindingWire,
+                // Replay the row accepted by the selected strict read; excluded
+                // payloads must remain opaque throughout the join.
+                InformationTemplateBindingIdentity.Check(selected.BindingWire,
                     realizationOwners.SelectMany(path => report.Files[path].Declarations));
                 var sourceOwners = realizationOwners.Where(path => report.Files[path].Declarations
                     .Any(declaration => declaration.Name == key.Theorem && declaration.Kind == "theorem")).ToArray();

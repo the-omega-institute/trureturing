@@ -155,6 +155,52 @@ public sealed class SourceFamilyEvidenceTests
         }
     }
 
+    [Theory]
+    [InlineData("excluded-key", true, true)]
+    [InlineData("selected-key", true, false)]
+    [InlineData("excluded-key", false, false)]
+    [InlineData("selected-identity", true, false)]
+    [InlineData("selected-empty-support", true, false)]
+    public void theorem_selection_replays_only_strictly_read_binding_rows(
+        string mutation, bool filtered, bool accepted)
+    {
+        const string theorem = "D5.S1.Words.Patterns.CyclicStackPreimages.process_perm";
+        const string excluded = "D5.S1.Words.Patterns.CyclicStackPreimages.process_eq_run";
+        var wire = CompiledWire();
+        var module = wire.Single(w => w!["records"]!.AsArray().Any(r =>
+            r!["key"]!["theorem"]!.GetValue<string>() == theorem))!;
+        var row = module["records"]!.AsArray().Single(r =>
+            r!["key"]!["theorem"]!.GetValue<string>() == theorem)!;
+        var originalRow = row.ToJsonString();
+        var owner = RepoPath.CreateKnown(row["registration_source_path"]!.GetValue<string>());
+        var source = RepoPath.CreateKnown(owner.Value[4..]);
+        var names = ImmutableHashSet.Create(theorem);
+        var (snapshot, originalReport, _) = Inputs(wire);
+        var original = Assert.Single(InformationTemplateTheoremSelection.Collect(
+            snapshot, originalReport, source, owner, names).Occurrences.Values);
+        if (mutation == "excluded-key")
+            module["records"]!.AsArray().Single(r =>
+                r!["key"]!["theorem"]!.GetValue<string>() == excluded)!["key"]!["root"] = false;
+        else if (mutation == "selected-key") row["key"]!["root"] = false;
+        else if (mutation == "selected-identity") row["certificate"]!["evidence_ref"] = new string('0', 64);
+        else row["certificate"]!["source_binding"]!.AsObject().Remove("support_identity");
+        var (_, report, _) = Inputs(wire);
+        InformationTemplateUniverse Collect() => filtered
+            ? InformationTemplateTheoremSelection.Collect(snapshot, report, source, owner, names)
+            : InformationTemplateEvidence.Collect(snapshot, report, [owner]);
+        if (accepted)
+        {
+            Assert.Equal(originalRow, row.ToJsonString());
+            var selected = Assert.Single(Collect().Occurrences.Values);
+            Assert.Equal(original.Key, selected.Key);
+            Assert.Equal(original.StatementIdentity, selected.StatementIdentity);
+            Assert.Equal(original.EvidenceRef, selected.EvidenceRef);
+            Assert.Equal(InformationTemplateBindingState.DeclaredValidated, selected.State);
+            Assert.True(selected.HasFourSlots);
+        }
+        else Assert.Throws<FormatException>(() => Collect());
+    }
+
     // Opt in with a directory of the focused Lake :report module artifacts.
     // This consumes the production exports; it does not build or aggregate reports.
     [Theory]
