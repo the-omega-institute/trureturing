@@ -1,0 +1,14 @@
+### 假设 534.2（操作、历史与逐点许可）
+
+每轮以操作 $\operatorname{do}(X_t=u_t,Y_t=v_t)$ 替换两个端点方程而保留 $H$ 方程，并且只揭示 $H_t$。私有随机带 $R$ 取值于标准 Borel 空间，独立于 $\theta$ 与所有重置噪声；它包括终端随机化所需的全部随机性。第 $t$ 轮的 $(u_t,v_t)$ 是 $R$ 与此前动作—结果历史的 Borel 函数，终端判决也可使用完整历史和 $R$。不存在当前重置噪声、干预前同一单位的额外读数、额外结果或依赖 $\theta$ 的时序访问。
+
+给定有限预算 $B\ge0$，定义
+
+$$
+A_B=\{(u,v):u\ge a,\ v\ge a,\ u^2+v^2\le B\}.
+$$
+
+许可是逐个 $(R,\text{历史})$ 路径的许可：每个可能输入上动作都必须落在 $A_B$。等价地，指定的观测核在两种模型下的条件均值都至少为 $h$，且端点平方和不超过 $B$；该条件不对动作彩票、轮次平均或 $\theta$ 的后验取平均。
+
+这一区分只作受限的现代重构：亚里士多德《后分析篇》I.2 要求知识以原因作为原因并涉及不能否则，I.13 要求近接原因及互逆推理中的中项，并明确普遍理由并不保证对特殊事实的知识。因此下述均值目标和方向检验不被定义为 *episteme*，也不把历史天文学或医学例子当作现代经验前提。[Aristotle, *Posterior Analytics* I.2, I.13, G. R. G. Mure 英译](https://classics.mit.edu/Aristotle/posterior.1.i.html)；[Stanford Encyclopedia of Philosophy, “Aristotle’s Logic”, §6.1，实质修订 2022-11-22](https://plato.stanford.edu/entries/aristotle-logic/#AriSci)。
+

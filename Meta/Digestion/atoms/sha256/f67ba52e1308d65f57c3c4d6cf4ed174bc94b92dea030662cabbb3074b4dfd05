@@ -1,0 +1,20 @@
+### 假设 532.3（各情境对同一目标的局部充分性）
+
+假定
+
+$$
+\forall x,y\in A,\qquad
+c(x)=c(y)\ \land\ q(x)=q(y)\ \Longrightarrow\ T(x)=T(y).
+$$
+
+在此假设下定义情境相容关系
+
+$$
+R(k,k')\iff
+\forall x,y\in A,\quad
+\bigl(c(x)=k\ \land\ c(y)=k'\ \land\ q(x)=q(y)\bigr)
+\Longrightarrow T(x)=T(y).
+$$
+
+局部充分性给出 $R(k,k)$；交换 $x,y$ 给出 $R(k,k')\iff R(k',k)$。若两个情境没有共同出现的 $q$ 值，它们在此定义下相容。商掉目标分歧的任意做法并非假设的一部分；各情境都使用同一个 $T$。取 $z=\operatorname{id}_K$ 即有充分修复，故定义 532.2 的最小值非空且有限。
+
