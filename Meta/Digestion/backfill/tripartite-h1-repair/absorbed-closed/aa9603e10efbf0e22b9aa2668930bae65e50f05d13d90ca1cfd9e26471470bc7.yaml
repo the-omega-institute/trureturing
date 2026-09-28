@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:aa9603e10efbf0e22b9aa2668930bae65e50f05d13d90ca1cfd9e26471470bc7
+  normalized_sha256: sha256:aa9603e10efbf0e22b9aa2668930bae65e50f05d13d90ca1cfd9e26471470bc7
+cas_ref: sha256:aa9603e10efbf0e22b9aa2668930bae65e50f05d13d90ca1cfd9e26471470bc7
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/TripartiteH1Repair.ker_d1_eq_im_d0
+    target_statement_id: sha256:c486044cbef020eefc9ca94880789fca345a0d29fd83a07cb027dc42df1d84d4
+receipts:
+  unresolved_subitems: []
