@@ -1,0 +1,93 @@
+{
+  "seed": 88992609,
+  "checks": {
+    "input_state_covariance": 132,
+    "input_noise_covariance": 132,
+    "input_cross_zero": 132,
+    "observation_identity": 132,
+    "signal_reconstruction": 132,
+    "innovation_times_covariance": 132,
+    "innovation_cross_zero": 132,
+    "innovation_covariance": 132,
+    "gain_independent_schur_formula": 132,
+    "covariance_independent_schur_formula": 132,
+    "joint_measure_covariance": 132,
+    "reassembly_jacobian": 132,
+    "normalized_bayes_density_identity": 396,
+    "residual_data_characteristic_factorization": 396,
+    "exact_reconstruction": 10,
+    "exact_innovation_cross_zero": 10,
+    "exact_innovation_covariance": 10,
+    "quadrature_conditional_mass": 18,
+    "quadrature_conditional_mean": 18,
+    "quadrature_conditional_covariance": 18,
+    "original_input_bayes_risk": 56,
+    "bayes_lower_bound": 56,
+    "attained_bayes_minimum": 14,
+    "orthogonal_future_risk": 56,
+    "nonpolynomial_measurable_estimator": 18,
+    "infinite_risk_truncation_lower_bound": 6,
+    "no_placeholder": 3,
+    "no_new_axiom": 3,
+    "paired_scribe": 3,
+    "scribe_delimiters": 3,
+    "scribe_anchor": 32
+  },
+  "total_assertions": 2710,
+  "max_absolute_errors": {
+    "input_state_covariance": 0,
+    "input_noise_covariance": 0,
+    "input_cross_zero": 0,
+    "observation_identity": 0,
+    "signal_reconstruction": 5.88418203051333e-15,
+    "innovation_times_covariance": 8.881784197001252e-16,
+    "innovation_cross_zero": 8.881784197001252e-16,
+    "innovation_covariance": 5.329070518200751e-15,
+    "gain_independent_schur_formula": 2.609024107869118e-15,
+    "covariance_independent_schur_formula": 1.84297022087776e-14,
+    "joint_measure_covariance": 4.463096558993129e-14,
+    "reassembly_jacobian": 0,
+    "normalized_bayes_density_identity": 3.339550858072471e-13,
+    "residual_data_characteristic_factorization": 2.220446049250313e-16,
+    "quadrature_conditional_mass": 3.9968028886505635e-15,
+    "quadrature_conditional_mean": 7.438494264988549e-15,
+    "quadrature_conditional_covariance": 1.1102230246251565e-15,
+    "original_input_bayes_risk": 4.263256414560601e-14,
+    "attained_bayes_minimum": 4.440892098500626e-16,
+    "orthogonal_future_risk": 2.842170943040401e-14,
+    "nonpolynomial_measurable_estimator": 2.220446049250313e-16
+  },
+  "source_files": [
+    {
+      "path": "D5/S3/Observer/Linear/GaussianAffineDisintegration.lean",
+      "sha256": "7d04f57cbb1612c93a86a692cba4381402d27427379c6349d929a6418e156b3f",
+      "public_theorem_source_count": 12,
+      "principal_scribe_anchors": 8
+    },
+    {
+      "path": "D5/S3/Observer/Linear/GaussianObservationDisintegration.lean",
+      "sha256": "2f4ee26ffface690dda18cb8705121b349762e095abbe3c11c51d58db255f774",
+      "public_theorem_source_count": 13,
+      "principal_scribe_anchors": 10
+    },
+    {
+      "path": "D5/S3/Observer/Linear/GaussianPosteriorRisk.lean",
+      "sha256": "e84e3ebd2fd756a304aeb30aa439e87cbd1206225bae44574d6ba28f96ead312",
+      "public_theorem_source_count": 21,
+      "principal_scribe_anchors": 14
+    }
+  ],
+  "python": "3.13.5",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "sympy": "1.14.0",
+  "compiler_presence": {
+    "lean": null,
+    "lake": null
+  },
+  "risk_suite_seed": 88992610,
+  "lean_elaborated": false,
+  "kernel_verified": false,
+  "scribe_compiled": false,
+  "status": "EXECUTED_FINITE_CHECKS_ONLY"
+}

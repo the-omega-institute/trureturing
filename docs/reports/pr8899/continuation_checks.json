@@ -1,0 +1,86 @@
+{
+  "seed": 88992026,
+  "checks": {
+    "overlap_row_sum": 210,
+    "overlap_col_sum": 210,
+    "cross_trace": 210,
+    "klein_decomposition": 210,
+    "klein_nonnegative": 210,
+    "density_relative_entropy": 210,
+    "unsupported_totalized_boundary": 1,
+    "pressure_lipschitz": 140,
+    "expectation_norm": 140,
+    "free_energy_stability": 140,
+    "excess_identity": 140,
+    "excess_stability": 140,
+    "gibbs_positivity": 140,
+    "pressure_sharp_shift": 1,
+    "nonempty_small_window": 140,
+    "actual_exponential_remainder": 560,
+    "exact_lower_derivative_zeros": 560,
+    "uniform_scaled_layer_high_precision": 560,
+    "graded_hypothesis_counterexample": 1,
+    "precision_positive": 252,
+    "precision_inverse": 252,
+    "center_equation": 252,
+    "gaussian_complete_square": 252,
+    "quadratic_loss_gap": 252,
+    "quadratic_mode": 252,
+    "conditional_gaussian_covariance": 252,
+    "conditional_gaussian_mean": 252,
+    "prior_positivity_counterexample": 1,
+    "source_no_placeholders": 4,
+    "source_no_new_axioms": 4,
+    "scribe_anchor_present": 26
+  },
+  "total_assertions": 5974,
+  "max_absolute_errors": {
+    "overlap_row_sum": 1.3322676295501878e-15,
+    "overlap_col_sum": 1.3322676295501878e-15,
+    "cross_trace": 1.7763568394002505e-15,
+    "klein_decomposition": 3.9968028886505635e-15,
+    "unsupported_totalized_boundary": 0,
+    "excess_identity": 3.019806626980426e-14,
+    "pressure_sharp_shift": 0,
+    "precision_inverse": 5.614635824619458e-15,
+    "center_equation": 7.283063041541027e-14,
+    "gaussian_complete_square": 1.4210854715202004e-13,
+    "quadratic_loss_gap": 1.7053025658242404e-13,
+    "conditional_gaussian_covariance": 6.563846688401043e-14,
+    "conditional_gaussian_mean": 1.0047518372857667e-14
+  },
+  "source_files": [
+    {
+      "path": "D5/S3/Quantum/Divergence/SpectralKlein.lean",
+      "sha256": "b62b224c3aa1b9a1995976cc054ed1d5731bce7c09bb12996f12809851b0c65c",
+      "public_theorem_source_count": 11,
+      "principal_scribe_anchors": 5
+    },
+    {
+      "path": "D5/S3/Quantum/Thermal/GibbsFreeEnergyStability.lean",
+      "sha256": "4fd304630c34078177bc317e1d115d978932271df3d811606244e2c62c66ac0f",
+      "public_theorem_source_count": 11,
+      "principal_scribe_anchors": 9
+    },
+    {
+      "path": "D5/S3/Observer/Linear/GradedExponentialRemainder.lean",
+      "sha256": "e1fd2d5827ebadfc211905290750c14e912f581753b6e70e7dcdf1184368837d",
+      "public_theorem_source_count": 4,
+      "principal_scribe_anchors": 4
+    },
+    {
+      "path": "D5/S3/Observer/Linear/GaussianObservationPrecision.lean",
+      "sha256": "5d3782344a7b08dae588909181c441d85a6ad4020d0af1f23f80567bdba3d4b4",
+      "public_theorem_source_count": 12,
+      "principal_scribe_anchors": 8
+    }
+  ],
+  "python": "3.13.5",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "mpmath": "1.3.0",
+  "lean_elaborated": false,
+  "kernel_verified": false,
+  "scribe_compiled": false,
+  "status": "EXECUTED_FINITE_NUMERICAL_DIAGNOSTICS_ONLY"
+}
