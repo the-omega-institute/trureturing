@@ -4902,3 +4902,103 @@ Grebenkov 处理连续 Gaussian 二次型；Agostini–Améndola 提供真正离
 一般 Dirichlet/Beta 后验反集中和其他模型的周期结论不被当作可用桥梁；
 这不证明所需结果不存在，也不认证全局原创。
 新增成果是原模型中的完整相位公式与边界归约，剩余实际概率问题按正文保留。
+
+## 第 117 章：可微鞍点误差与 Shannon 差商的原计数回接
+
+[谱边界卷第 117 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在原严格半指数噪声范围内，将完整有限经验响应统一到闭区间 $[1,\infty]$。
+响应以一阶处的精确系数作锚；Shannon 值由有限系数的阶数导数给出。
+为支付趋于零的差商分母，正文证明了 Gaussian 密度比、原计数幂律和完整固定 $q$
+选择修正的共同一阶可微余项，保留实际中心、低组、二项系数和任意慢衰减噪声。
+
+Jesse Goodman，*Asymptotic accuracy of the saddlepoint approximation for maximum likelihood estimation*，
+[arXiv:2005.11028v3](https://arxiv.org/abs/2005.11028v3)。
+所读原 PDF 为 80 页，arXiv v3 印记为 2022 年 1 月 24 日，正文日期为 1 月 25 日；
+两者按原文保留，不更改版本归属。
+核对范围为 Section 2.2 的 standard asymptotic regime（SAR），
+Theorem 1 及条件 (2.9)–(2.10)，Section 4.2 的 Proposition 10、Corollary 12、
+式 (4.6)–(4.11) 与 Theorem 1 的证明。
+
+原 SAR 要求 $X$ 是固定参数律的 $n$ 个 iid 副本之和，$K=nK_0$、$x=ny$。
+条件 (2.9) 要求归一化倾斜特征函数有多项式衰减包络；条件 (2.10) 控制连续混合变换导数，
+其阶数为 $k\in\{0,1\}$、$1\le k+\ell\le6$，以及 $k=2$、$0\le\ell\le2$。
+Theorem 1 在归一化观察与参数的紧集上给出对数鞍点似然梯度误差 $O(1/n)$。
+Proposition 10 与 Corollary 12 提供其中使用的连续可微余项。
+核心步骤把精确指数倾斜因子提出，对剩下的 Fourier 积分求导，并在可积包络下控制导数。
+
+上述定理不直接涵盖随 $Q$ 变化的非同分布经验数组、完整计数后验的固定 $q$ 依赖，
+或指数小测量噪声。本章采用这一经典方法关系，实际验证当前二次数组的特征函数与导数包络，
+不把固定 iid 定理的常数视为已经对本章数组族一致。
+正文另外证明同一稀有输出下总偏差、模态惊讶与似然惊讶的联合矩，
+以插入势能的配分函数比较回接原计数，再用精确选择协方差公式支付导数。
+保留总偏差平方后，选择导数误差为
+$O(\delta^5(1+m_Q+\delta^{-1}))=O(\delta)$，而非凭零阶误差直接求导。
+
+第 115 章 Hu–Lu–Nualart 的 Theorem 6.5 仍只在其 Gaussian Sobolev 与逆梯度矩条件下
+提供零阶密度收敛；它不提供本章对熵阶数的导数。
+其既有应用用于远离一的阶数连接，本章另行验证包含一阶的可微桥梁。
+Kim–Kim 的条件插入统计量方法和 Butler–Paolella 的二次型变换保留既述
+iid 连续模型或固定维数边界，不替代本章原计数比较。
+
+原 PDF 文本提取有可选 fontTools/CFF 编码警告；上述条件与推导可读且已核对，
+不声称无警告提取或视觉核验。
+有限幂律微分、指数倾斜、Gaussian/Wick 矩公式、Stirling 界、Fourier 反演及均值定理
+均属经典工具。本章提供的是这些工具在原完整模型上的联合导数估计，
+不把一般可微鞍点理论称为新发现；有限检索不认证全局原创。
+结论不自动延伸至一阶以下、无界物理输出、输出平均熵或半指数边界等号。
+
+## 第 118 章：拒绝抽样的一阶修正与实际相位中心的精度预算
+
+[谱边界卷第 118 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+证明完整三标记周期泛函在共同相位平移后的中心稳定性，
+其自然距离为 $\rho^2=\sum_jd_j(\widetilde\mu_j-\mu_j)^2$。
+随后用经典拒绝抽样修正和精确双锚恒等式，分别将实际中心归约到可控精度。
+固定噪声间隙下该实际周期泛函是否趋零仍然开放；中心的低维表示不是独立随机相位假设。
+
+Hélène Boistard、Hendrik P. Lopuhaä、Anne Ruiz-Gazen，
+*Approximation of rejective sampling inclusion probabilities and application to high order correlations*，
+[arXiv:1207.5654v1](https://arxiv.org/abs/1207.5654v1)，
+[原始 TeX 来源](https://arxiv.org/src/1207.5654v1)。
+本章直接应用原 Lemma 1 以及 Theorem 1 证明中 `eq:expansion1` 的 $k=1$ 情形。
+原定义是独立 Bernoulli 变量在总数等于整数均值后条件化；
+要求总方差 $d\to\infty$，结论及余项对行指标一致。
+当前原始后验精确具有该表示，校准满足全 $M$ 行均值和为 $q$、$cq\le d\le q$。
+
+对照原系数，$c_2-c_1=(1-p_i)(p_i-\overline{\overline p})$，
+故所用包含概率修正的符号为正：
+$\pi_i=p_i+p_i(1-p_i)(p_i-\overline{\overline p})/d+O(d^{-2})$。
+这里 $d$ 与加权均值均取全行校准，不是选中组窗的方差或先验信号占比。
+原 Section 4.1 的固定阶累积量、删除坐标及 Edgeworth 证明也已核对；
+Bernoulli 二阶以上累积量由总方差一致控制，特征函数的正弦平方包络支付外频尾部，
+因而适用于本章变化的数组，毋须每个生成概率有正的统一下界。
+
+原后续高阶相关应用中的 $N/d$ 有界条件不属于上述 Lemma 1 的一阶应用；
+本章允许 $M/d\to\infty$。原累积量引理的字面陈述包含一阶，
+而其证明单列一阶为均值和；本章只使用二阶及以上的方差阶结论。
+此前记录的任意正幂高阶相关命题边界仍不用于本章。
+该一阶包含概率公式是 Hájek 路线上的经典结果，不作为本项目的新一般抽样定理。
+
+修正后每个实际中心的误差为 $O(C_jq^{-2})$，原数组给
+$\sum_jd_jC_j^2\le Cq^3Q^{-7}$，故完整算术距离为
+$O(q^{-1/2}Q^{-7/2})$。仅有 $O(C_jq^{-1})$ 的中心界不能支付同一精度预算。
+新增推导是此经典修正与完整非线性周期商式的连接，包含同一残差噪声标记、
+非大组惊讶及原物理输出必须保留的共同相位平移。
+
+Simon Ruetz、Karin Schnass，*Bounds for matrices of inclusion probabilities in rejective sampling*，
+[arXiv:2212.09391v2](https://arxiv.org/abs/2212.09391v2)，
+[原始 TeX 来源](https://arxiv.org/src/2212.09391v2)。
+核对原定义、Comparison bound 引理及 Operator norm and semi-definite order bounds 定理。
+比较引理要求生成权重之和等于样本数；矩阵定理控制同一固定权重条件 Bernoulli 设计的包含概率。
+它们不提供由实际 pair/path 数据生成的共同权重在模一意义下的细尺度概率律。
+本章未用矩阵界填补这个反集中缺口。
+
+另一归约直接复用 Recovery 卷式 (26.16) 的二行删除关系，再作一次有限初等对称多项式展开，
+得到共同精确 $p_*,\tau_*$ 和有界非负系数的二次余项。
+原确定分数逼近与共同补偿步长使该余项在每个 $\beta>1/2$ 的完整算术距离下趋零。
+这条路线不依赖拒绝抽样渐近展开，也不把两个共同后验量视为可独立干预或独立抽样。
+有限指数族协方差恒等式只描述形式似然干预，实际数据中的合法变动及其概率仍需另证。
+
+两份指定版本的原始源码已读；有界关系检索还筛到条件 Poisson 极限定理、调查抽样集中和
+有理函数反集中相关摘要，但未检查其原定理，故不作为正文前提。
+原计数与好事件来自第 68 章及既有校准结果；实际依赖行的概率范围保持不变。
+搜索未命中直接可用的经验中心模一律不意味着该结果不存在，也不认证全局原创。
