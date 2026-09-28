@@ -34,7 +34,10 @@ internal sealed class Rule54RowsDocument : IScribeDocumentDefinition
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the conjectures", Disp(F.Id("claim")),
                 "By induction on n, the cell at x of row n is ON exactly when |x| is at most n and x is congruent to n modulo 4 for even n, or x is not congruent to n + 1 modulo 4 for odd n: the rule table sends 100, 101, 001 and 010 to 1 and the other four neighbourhoods to 0. Hence the centre cell of row k is ON exactly when k is 0 or 1 modulo 4, so the centre column satisfies a(n+1) = 10 a(n) + c(n+1) with a period-4 digit c whose alternating sum over four consecutive steps vanishes, which gives its recurrence. The same invariant shows that digit j + 4 of row n + 2 equals digit j of row n and that the first four digits of row n + 2 are 1, 0, 0, 0 for even n and 1, 1, 1, 0 for odd n; reading the digits in base b, the value of row n + 2 is 1 or 1 + b + b^2 plus b^4 times the value of row n. For b = 10 this gives 9999 a(n) = 10000 * 100^n - 1 for even n and 11100 * 100^n - 111 for odd n, hence Keller's floor formula and Barker's recurrence for A118109. Every ON cell of row k lies in [-k, k], so with b = 1 the ON cells of row k number k/2 + 1 for even k and 3(k + 1)/2 for odd k; summing gives Hurt's formula, which equals Barker's closed form, and each is annihilated by (1 - x)^3 (1 + x)^2. The generating functions follow by comparing coefficients: from x^5 on they vanish by the recurrences, and the first five come from the values 1, 11, 110, 1100, 11001; 1, 111, 10001, 1110111, 100010001; and 1, 4, 6, 12, 15.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a259661-rule54-barker-keller-hurt"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
