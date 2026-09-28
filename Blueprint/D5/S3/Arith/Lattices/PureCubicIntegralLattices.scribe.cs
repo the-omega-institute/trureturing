@@ -37,8 +37,10 @@ internal sealed class PureCubicIntegralLatticesDocument : IScribeDocumentDefinit
                             + "(m n squared) squared. The two displayed changes of basis "
                             + "have determinants 1/n and v/(3n). Their nonzero discriminants "
                             + "also establish that both triples are rational bases. These are "
-                            + "discriminants of the specified integral lattices; no equality "
-                            + "with the field discriminant or maximality claim follows."))),
+                            + "discriminants of the specified integral lattices. The rational "
+                            + "power basis is assumed here; the theorem does not construct it "
+                            + "from irreducibility, identify the field discriminant, or prove "
+                            + "maximality."))),
                 DescribeRole.Theorem))));
 
     private static Formula LatticeFormula()
