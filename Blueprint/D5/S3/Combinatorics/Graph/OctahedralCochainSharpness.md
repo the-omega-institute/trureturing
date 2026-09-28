@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Four antipodal faces give two defects and a sharp edge-repair barrier.
+Four path faces give two antipodal defects and a sharp edge-repair barrier.
 
 The boundary of the four-dimensional cross-polytope has four opposite vertex pairs. A tetrahedron chooses one vertex from each pair. A triangle omits one pair and chooses one vertex from each remaining pair; faces and simplicial edges are unordered and have no repeated vertices.
 

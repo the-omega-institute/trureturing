@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Four antipodal faces give two defects and a sharp edge-repair barrier. -/
+   digest: Four path faces give two antipodal defects and a sharp edge-repair barrier. -/
 
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic

@@ -7,7 +7,7 @@ internal sealed class OctahedralCochainSharpnessDocument : IScribeDocumentDefini
     private const string Prefix = "D5/S3/Combinatorics/Graph/OctahedralCochainSharpness.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Four antipodal faces give two defects and a sharp edge-repair barrier.",
+        "Four path faces give two antipodal defects and a sharp edge-repair barrier.",
         H("Octahedral cochain sharpness"),
         Blocks(
             Paragraph(Text(
