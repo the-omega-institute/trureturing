@@ -2609,3 +2609,537 @@ $$
 这正是经典选择器与前缀余因子机制在固定投影族上的应用；其余因子和读序的残余函数区分可参见 R. E. Bryant，*Graph-Based Algorithms for Boolean Function Manipulation*，IEEE Transactions on Computers C-35(8), 677–691 (1986)，§3.2、§4.5，[DOI: 10.1109/TC.1986.1676819](https://doi.org/10.1109/TC.1986.1676819)。该推论只给出所列布尔族的精确宽度和指数锐利性，不把经典机制改述为新的全序定理。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 十九、固定端点骨架的精确包含指数与系数细化
+
+### 定义 33：带标签骨架与一致指数的量词
+
+固定整数 $r,s\geq1$、非空有限集合 $X_i,Y_i$ 和指定构件
+
+$$
+\phi_i:X_i\times Y_i\longrightarrow Z_i=\operatorname{im}\phi_i
+\qquad(1\leq i\leq r).
+$$
+
+其两个原始坐标标签分别记为 $\xi_i,\eta_i$；$X_i,Y_i$ 是字母表，不是坐标标签。另有 $s$ 对普通坐标标签 $a_j,b_j$。固定这些互异标签组成的集合
+
+$$
+I=\{\xi_i,\eta_i:1\leq i\leq r\}\sqcup\{a_j,b_j:1\leq j\leq s\}
+$$
+
+及其一个排列 $\pi$，要求 $\xi_i$ 先于 $\eta_i$，$a_j$ 先于 $b_j$。记 $\operatorname{pos}:I\to\{1,\ldots,2(r+s)\}$ 为标签在 $\pi$ 中的位置；它不作用于字母表集合。上述指定映射、字母表、方向、标签和排列在以下一致比较中全部固定。
+
+变化的是非空有限字母表 $A_j,B_j$、普通映射
+
+$$
+\psi_j:A_j\times B_j\longrightarrow V_j=\operatorname{im}\psi_j
+\qquad(1\leq j\leq s),
+$$
+
+以及非空有限集 $O$ 和任意全函数
+
+$$
+G:\left(\prod_{i=1}^r Z_i\right)\times\left(\prod_{j=1}^s V_j\right)\longrightarrow O.
+$$
+
+每个 $\psi_j$ 要求存在一条满射行和一条满射列；二者分别存在，不要求每条切片满射。坐标 $\xi_i,\eta_i,a_j,b_j$ 的字母表依次为 $X_i,Y_i,A_j,B_j$，统一写作 $U_v$，并令 $\Omega_Q=\prod_{v\in Q}U_v$。实际输入域为完整独立直积 $\Omega_I$，实际任务为
+
+$$
+F:\Omega_I\longrightarrow O,
+\qquad
+F(x,y,a,b)=G\bigl((\phi_i(x_i,y_i))_i,(\psi_j(a_j,b_j))_j\bigr).
+$$
+
+所有切面响应均是同一个 $F$ 在共同带标签后缀域上的函数。令 $\rho=\operatorname{cn}(\pi)$，沿用定义 14、17、26 的容量、宽度和完成次序规范化，计入初始层、半对层、终值层和常值响应。
+
+沿用定义 31 的 $\tau_i=\tau_{\mathrm r}(\phi_i)\geq1$，定义普通对的严格包含邻域及其权重
+
+$$
+\begin{aligned}
+N_j&=\{i:\operatorname{pos}(\xi_i)<\operatorname{pos}(a_j)
+ <\operatorname{pos}(b_j)<\operatorname{pos}(\eta_i)\},\\
+\theta_j&=\prod_{i\in N_j}\tau_i,
+\qquad \Theta=\max_{1\leq j\leq s}\theta_j,
+\qquad D=\prod_{i=1}^r|X_i||Y_i|.
+\end{aligned}
+$$
+
+空乘积取 $1$。对实数 $\beta$，性质 $\mathcal E_\beta$ 指：存在 $C>0$，仅依赖上述固定数据和 $\beta$，使每一种允许的普通有限族、每个非空有限 $O$ 和每个全函数 $G$ 均满足
+
+$$
+W_F(\rho)\leq C\,W_F(\pi)^\beta.
+$$
+
+特别地，$C$ 不依赖变化的普通字母表、普通映射或任务。若把普通有限映射也逐个固定，则不是这里的渐近量词问题。
+
+### 定理 33：固定骨架的加权包含分类
+
+对定义 33 中任意固定的指定族、$r,s$ 和带方向标签骨架 $\pi$，对所有允许变化的普通有限族和有限输出全任务，同一个实际 $F$ 满足
+
+$$
+W_F(\operatorname{cn}(\pi))\leq D\,W_F(\pi)^\Theta.
+$$
+
+$\Theta$ 是使 $\mathcal E_\beta$ 成立的最小实数，且把所有外层输出限制为标量布尔集 $\mathbb B=\{0,1\}$ 后，最小实指数仍为 $\Theta$。更明确地，对每个实数 $\alpha<\Theta$ 和每个固定 $C>0$，保持指定族和骨架不变，仅使一个普通加法构件及其外层任务变化，就能使
+
+$$
+W_F(\operatorname{cn}(\pi))>C\,W_F(\pi)^\alpha;
+$$
+
+其余普通构件可一直取固定且被任务忽略的布尔异或映射。
+
+这里的界与定理 32 的系数一全局乘积界互补。令 $T=\prod_i\tau_i$，则同时有
+
+$$
+W_F(\rho)\leq\min\{W_F(\pi)^T,\ D\,W_F(\pi)^\Theta\}.
+$$
+
+虽然 $\Theta\leq T$，带系数 $D$ 的较小幂界在有限宽度处不必较强。本定理不确定最佳乘法系数，不对各个固定普通映射分别给出最小指数，也不优化读取顺序。
+
+**证明。** 先建立一个同时保留系数信息的逐层界。设 $B\subseteq I$ 为 $\rho$ 的一个前缀标签集，令
+
+$$
+J_B=\{j:a_j\in B\}.
+$$
+
+若 $J_B=\varnothing$，取 $P=\varnothing$、$E=\varnothing$。此时 $B$ 只含指定坐标，前缀赋值数即给出下文的界。若 $J_B\ne\varnothing$，在所有已触及的普通对中选取 $k$，使
+
+$$
+p=\operatorname{pos}(a_k)=\max_{j\in J_B}\operatorname{pos}(a_j),
+\qquad P=\{v:\operatorname{pos}(v)\leq p\}.
+$$
+
+这个 $P$ 截止于所有已触及普通对中最晚的第一端点；当前半读对即使是普通对，其第一端点也不一定达到这个最大值。置
+
+$$
+E=\{i:\xi_i,\eta_i\notin B,\ \xi_i\in P\},
+\qquad t_E=\prod_{i\in E}\tau_i.
+$$
+
+完成次序给出 $E\subseteq N_k$：对 $i\in E$，不同标签的位置互异，故 $\operatorname{pos}(\xi_i)<p$；普通对 $k$ 已在 $B$ 触及而指定对 $i$ 尚未触及，故 $\operatorname{pos}(b_k)<\operatorname{pos}(\eta_i)$。于是
+
+$$
+\operatorname{pos}(\xi_i)<\operatorname{pos}(a_k)
+ <\operatorname{pos}(b_k)<\operatorname{pos}(\eta_i),
+\qquad t_E\leq\theta_k\leq\Theta.
+$$
+
+同一几何还给出以下坐标事实。每个已触及普通对的第一端点都在 $P$。未触及对的第二端点不在 $P$，因为其完成位置晚于 $b_k$。若 $B$ 有当前半读对，其第二端点也不在 $P$：当前对在已触及对中完成最晚，而 $p<\operatorname{pos}(b_k)$。因此指定坐标中 $P\setminus B$ 恰为 $\{\xi_i:i\in E\}$。这些事实同时容许当前半读对为指定对或普通对。
+
+记 $I_\Delta=\{\xi_i,\eta_i:1\leq i\leq r\}$，并定义
+
+$$
+Q=I_\Delta\cap(B\setminus P),
+\qquad d(B,P)=\prod_{v\in Q}|U_v|\leq D.
+$$
+
+只按 $Q$ 上已观察的指定原始值 $c\in\Omega_Q$ 对 $B$ 前缀分组，记该组为
+
+$$
+\mathcal C_c=\{b\in\Omega_B:b|_Q=c\}.
+$$
+
+指定坐标 $B\cap P$ 上的值可以随 $b$ 变化，不固定在组标记中。将证明
+
+$$
+\kappa_B(F)\leq d(B,P)\,\kappa_P(F)^{t_E}. \tag{33.1}
+$$
+
+若 $J_B=\varnothing$，已有 $Q=B$、$d(B,P)=|\Omega_B|$、$\kappa_P=1$，故该式直接成立，包括空初始层。
+
+下面设 $J_B\ne\varnothing$。定义一个共同的带标签域
+
+$$
+\mathcal D_B=\Omega_{I\setminus(B\cup\{\xi_i,\eta_i:i\in E\})},
+\qquad Z_E=\prod_{i\in E}Z_i.
+$$
+
+对 $b\in\mathcal C_c$ 和 $z\in Z_E$，令 $H_z^b:\mathcal D_B\to O$ 为如下函数：在 $b$ 与 $d\in\mathcal D_B$ 上计算全部普通输出及 $E$ 外的指定输出，把 $E$ 内指定输出设为 $z$，再代入同一个 $G$。实际有限关系取为
+
+$$
+R_c=\{(H_z^b)_{z\in Z_E}:b\in\mathcal C_c\}
+\subseteq\prod_{z\in Z_E}O^{\mathcal D_B}. \tag{33.2}
+$$
+
+此处属性是有效输出元组 $z$，属性值是同一域 $\mathcal D_B$ 上的残余函数。若两个这样的元组相等，把任一实际 $B$ 后缀中 $E$ 的输出代为 $z$，就得两个原始响应相等。反之，给定任意 $z,d$，各 $\phi_i$ 满射到 $Z_i$，且 $E$ 的两端点均在 $B$ 外，故可以同时选出原始端点对实现 $z$，并与 $d$ 合为同一个 $B$ 后缀；原始响应相等就推出每个 $H_z$ 相等。因此 $|R_c|$ 正好是该组实际 $B$ 响应的个数，不是自由指定的一族函数数目。
+
+对每个普通构件固定满射行、列及其截面
+
+$$
+a_j^{\mathrm R}\in A_j,\quad b_j^{\mathrm C}\in B_j,
+\quad R_j:V_j\to B_j,\quad C_j:V_j\to A_j,
+$$
+
+满足
+
+$$
+\psi_j(a_j^{\mathrm R},R_j(v))=v
+=\psi_j(C_j(v),b_j^{\mathrm C})\qquad(v\in V_j).
+$$
+
+这些有限选择可依赖当前普通映射，以下计数系数不依赖它们。固定任意 $x\in\prod_{i\in E}X_i$，令
+
+$$
+S_x=\prod_{i\in E}\phi_i(\{x_i\}\times Y_i)\subseteq Z_E.
+$$
+
+对每个 $b\in\mathcal C_c$ 构造一个实际 $P$ 前缀 $q_x(b)\in\Omega_P$。在指定坐标上，对 $i\in E$ 置 $\xi_i=x_i$；在 $I_\Delta\cap B\cap P$ 逐坐标复制 $b$ 的值。几何事实保证这已穷尽 $P$ 的指定坐标。普通坐标按以下互斥情形赋值：
+
+- 若普通对在 $B$ 已完整读取且 $b_j\in P$，复制它的两个原始值。
+- 若普通对在 $B$ 已完整读取且 $b_j\notin P$，记其已确定输出为 $v_j(b)$，在 $P$ 中置 $a_j=C_j(v_j(b))$。
+- 若普通对在 $B$ 半读，复制它的 $a_j$；其 $b_j$ 不在 $P$。
+- 若普通对在 $B$ 未触及而 $a_j\in P$，置 $a_j=a_j^{\mathrm R}$。若两端都不在 $P$，无需赋值。
+
+没有未触及的第二端点落入 $P$，故这些情形穷尽全部普通坐标。记该前缀的实际响应为
+
+$$
+T_x^b:\Omega_{I\setminus P}\longrightarrow O,
+\qquad T_x^b(s)=F(q_x(b),s).
+$$
+
+关键是一个与变化前缀 $b$ 无关的共同后缀回放。固定 $c,x,z,d$，其中 $z\in S_x$、$d\in\mathcal D_B$，构造 $s=s(c,x,z,d)\in\Omega_{I\setminus P}$ 如下。对 $i\in E$，选择 $\eta_i=y_i$ 使 $\phi_i(x_i,y_i)=z_i$。对其余指定坐标中位于 $P$ 外的每个标签，若在 $B$ 内就取 $c$ 中的值，若在 $B$ 外就取 $d$ 中的值；$B\cap P$ 的指定坐标已经随 $q_x(b)$ 复制，完全不进入这个后缀选择。普通坐标则与上述情形逐一配对：
+
+- 在 $B$ 已完整读取且 $b_j\in P$ 的对没有后缀坐标；两个原始值都已复制。
+- 在 $B$ 已完整读取但 $b_j\notin P$ 的对，统一置 $b_j=b_j^{\mathrm C}$，于是输出为 $v_j(b)$；后缀不需要知道这个随前缀变化的输出。
+- 在 $B$ 半读的普通对，置 $b_j=d_{b_j}$；前缀已复制 $a_j$，故输出保持。
+- 在 $B$ 未触及但被 $P$ 打开的普通对，置 $b_j=R_j(\psi_j(d_{a_j},d_{b_j}))$，由满射行保持 $d$ 中的输出。
+- 在 $B$ 未触及且在 $P$ 未打开的普通对，两端均复制 $d$。
+
+指定半对的未读第二端点属于 $d$，其已读第一端点或者已复制到 $P$，或者固定于 $c$，故同样保持其输出。所有选择属于互异原始坐标，完整独立直积保证它们能同时实现。逐对比较有效输出得到，对组内每个 $b$ 都有
+
+$$
+T_x^b(s(c,x,z,d))=H_z^b(d).
+$$
+
+特别地，若 $T_x^b=T_x^{b'}$，这个共同后缀对所有 $z\in S_x,d\in\mathcal D_B$ 同时给出 $H_z^b(d)=H_z^{b'}(d)$。故 $P$ 响应的相等强制 $R_c$ 在属性集 $S_x$ 上投影相等，于是
+
+$$
+|\operatorname{proj}_{S_x}R_c|\leq\kappa_P(F). \tag{33.3}
+$$
+
+这里只需这个方向；不要求 $q_x$ 在完整 $B$ 响应的等价类上给出双射，也不把各个投影的最优大小视为可以独立同时达到。
+
+若 $E\ne\varnothing$，对每个 $i\in E$ 取定义 31 的有理最优行覆盖 $\lambda_{i,u}$，令 $\lambda_x=\prod_{i\in E}\lambda_{i,x_i}$。对任意 $z\in Z_E$，
+
+$$
+\sum_{x:z\in S_x}\lambda_x
+=\prod_{i\in E}\sum_{u:z_i\in\phi_i(\{u\}\times Y_i)}\lambda_{i,u}\geq1,
+\qquad \sum_x\lambda_x=t_E.
+$$
+
+因此经典分数投影不等式直接作用于实际关系 $R_c$，给出
+
+$$
+|R_c|\leq\prod_x|\operatorname{proj}_{S_x}R_c|^{\lambda_x}
+\leq\kappa_P(F)^{t_E}.
+$$
+
+具体说，在 $R_c$ 上取均匀随机元组，对上述有理覆盖通分，再用 Shearer 熵不等式，即有 $\log|R_c|\leq\sum_x\lambda_x\log|\operatorname{proj}_{S_x}R_c|$。这是 Atserias、Grohe、Marx，*Size Bounds and Query Plans for Relational Joins*，SIAM Journal on Computing 42(4), 1737–1767 (2013)，[DOI: 10.1137/110859440](https://doi.org/10.1137/110859440)，[arXiv:1711.03860v1](https://arxiv.org/pdf/1711.03860v1) §3.1、引理 2–3（第 6–7 页）的经典工具。上述共同后缀回放提供了把该工具用于本题实际关系所需的式 (33.3)。
+
+若 $E=\varnothing$，$Z_E$ 是单点，$R_c$ 的唯一属性就是完整残余函数；同一回放直接使不同 $B$ 响应在所构造的 $P$ 响应中仍可区分，给出 $|R_c|\leq\kappa_P(F)$，无需分数覆盖。最后对 $d(B,P)$ 个组取并集，得到式 (33.1)；不同组的相同响应只会使计数减少。因 $\kappa_P\leq W_F(\pi)$、$W_F(\pi)\geq1$、$t_E\leq\Theta$，每层均有 $\kappa_B\leq D W_F(\pi)^\Theta$。初始层的容量为 $1$，最终层为 $|\operatorname{im}F|$；最后一层也在以上几何与回放的范围内。常数任务、单点像及 $\tau_i=1$ 均未被排除。
+
+为证指数下界，选取 $j_*$ 使 $\theta_{j_*}=\Theta$，只在 $N=N_{j_*}$ 上使用定理 32 的加权加法构造。对 $i\in N$ 取有理最优对偶 $w_{i,z_i}$，在 $Z_N=\prod_{i\in N}Z_i$ 上令
+
+$$
+w_z=\prod_{i\in N}w_{i,z_i}.
+$$
+
+每个乘积行 $S_x=\prod_{i\in N}\phi_i(\{x_i\}\times Y_i)$ 满足 $\sum_{z\in S_x}w_z\leq1$，总重为 $\sum_z w_z=\Theta$。乘积原覆盖也有总重 $\Theta$，故这是乘积行问题的最优对偶。若 $N=\varnothing$，用单点 $Z_N$、唯一权重 $w_z=1$ 解释同一公式。取共同分母 $L\geq1$，使
+
+$$
+\ell_z=Lw_z\in\mathbb Z_{\geq0},
+\qquad M=\sum_z\ell_z=L\Theta,
+\qquad \sum_{z\in S_x}\ell_z\leq L.
+$$
+
+有理对偶通分和按权重配置直积因子是上述 AGM 文献引理 4（第 7–8 页）的工具；以下指定实际构件和布尔任务。对整数 $m\geq2$，令
+
+$$
+K_z=\mathbb Z/(m^{\ell_z})\mathbb Z,
+\qquad K=\prod_{z\in Z_N}K_z,
+\qquad \psi_{j_*}:K\times K\to K,\quad(a,b)\mapsto a+b.
+$$
+
+$\ell_z=0$ 时 $K_z$ 是单点群。每条加法行、列均为双射。所有其他普通构件固定为布尔异或并被忽略，所有 $N$ 外指定输出也被忽略。记本实例的完整原始域为 $\Omega_I^{(m)}$。取全定义标量任务
+
+$$
+F_m:\Omega_I^{(m)}\longrightarrow\mathbb B,
+\qquad F_m(x,y,a,b,\ldots)
+=\mathbf1\!\left[(a+b)_{(\phi_i(x_i,y_i))_{i\in N}}=0\right],
+\qquad O=\mathbb B.
+$$
+
+这只改变普通对 $j_*$ 的字母表、映射和相应外层任务，不改变任何指定构件、方向或骨架。
+
+因为 $i\in N$ 均满足 $\xi_i<a_{j_*}<b_{j_*}<\eta_i$（不等号此处按 $\operatorname{pos}$ 解释），$\rho$ 在所有相关指定对之前读取加法对。就在 $\rho$ 读完 $a_{j_*}$ 的层，任意不同 $a,a'\in K$ 在某个 $z$ 上不同。对每个 $i\in N$ 选择完整指定端点对实现 $z_i$，再置 $b_z=-a_z$，其他坐标任取；同一个完整后缀使一个零检验为真、另一个为假。因此该层恰有 $|K|=m^M$ 个响应，特别地
+
+$$
+W_{F_m}(\rho)\geq m^{L\Theta}. \tag{33.4}
+$$
+
+逐一控制原顺序的所有原始端点层。令 $c_X=\prod_{i\in N}|X_i|$、$c_Y=\prod_{i\in N}|Y_i|$。在 $a_{j_*}$ 之前，相关已读值只是部分 $X$ 值，故容量至多 $c_X$。从读完 $a_{j_*}$ 到读入 $b_{j_*}$ 之前，所有 $X$ 均已读且所有 $Y$ 均未读；固定 $x$ 后，响应只依赖 $a|_{S_x}$，所以每层至多有
+
+$$
+\sum_x m^{\sum_{z\in S_x}\ell_z}\leq c_Xm^L
+$$
+
+个响应。读完 $b_{j_*}$ 后，包括只读完部分指定第二端点的每一层，响应由 $x$、已读的 $Y$ 原始值及 $S_x$ 内正权坐标的零标志决定。每个这样的正权坐标贡献至少一个单位到 $\sum_{z\in S_x}\ell_z\leq L$，故每层至多有
+
+$$
+c_Xc_Y2^L\leq c_Xc_Ym^L
+$$
+
+个响应。零权坐标恒为单点群，其零标志恒真，无额外选择。被任务忽略的原始端点，其非空独立字母表只给后缀函数作满射拉回，读取它不改变响应族；故穿插的所有无关层也受上述界控制。最终层至多为两个常值，初始层为一个响应；$m^L\geq2$。于是取固定常数 $C_0=c_Xc_Y\geq1$ 即有
+
+$$
+1\leq W_{F_m}(\pi)\leq C_0m^L. \tag{33.5}
+$$
+
+若 $0\leq\alpha<\Theta$，由上界的正确方向得到
+
+$$
+\frac{W_{F_m}(\rho)}{W_{F_m}(\pi)^\alpha}
+\geq C_0^{-\alpha}m^{L(\Theta-\alpha)}\longrightarrow\infty.
+$$
+
+若 $\alpha<0$，则 $W_{F_m}(\pi)\geq1$ 给出 $W_{F_m}(\pi)^\alpha\leq1$，所以该比值至少为 $m^{L\Theta}$，仍趋于无穷。这排除每个小于 $\Theta$ 的实指数及每个固定正系数。$N=\varnothing$ 时可取 $L=M=1$，任务就是单个循环群加法的零检验，两种宽度均为 $m$；$\Theta=1$、单点指定像和部分零对偶权重也都包含在证明内。上界以 $C=D$ 实现 $\mathcal E_\Theta$，且宽度至少为 $1$，故所有 $\beta\geq\Theta$ 也满足 $\mathcal E_\beta$；因此所得是最小值，而非仅为下确界。
+
+本条的固定骨架结论由式 (33.1) 的共同实现和式 (33.4) 的单邻域构造推得。与同函数重排有关的另一结果是 C. Berkholz、M. Micun，*Proof Systems Based on Structured Circuits*，[arXiv:2605.12378v2](https://arxiv.org/pdf/2605.12378v2)，引理 8（第 8 页；附录 A 证明在第 19 页）：两个等价 OBDD 之间可逐个移动变量，且中间图总大小至多为两个给定端图总大小的乘积。该结论同时使用源图与目标图的大小；这里则由原顺序的完整层宽度、指定行像和包含邻域控制目标宽度，并允许普通有限字母表变化，量词和计数对象不同。∎
+
+### 推论 33.1：布尔投影的系数与局部指数
+
+在定义 33 中令指定标签为 $t_i,d_i$，指定映射为
+
+$$
+\phi_i:\mathbb B\times D_i\to\mathbb B,
+\qquad \phi_i(t_i,d_i)=t_i,
+$$
+
+其中 $D_i$ 是固定的任意非空有限无关字母表。设
+
+$$
+H(\pi)=\max_j|N_j|,
+\qquad N_j=\{i:\operatorname{pos}(t_i)<\operatorname{pos}(a_j)
+ <\operatorname{pos}(b_j)<\operatorname{pos}(d_i)\}.
+$$
+
+则对所有允许的普通族和任意有限输出全任务，
+
+$$
+W_F(\operatorname{cn}(\pi))\leq2^r W_F(\pi)^{2^{H(\pi)}}.
+$$
+
+最小一致实指数为 $2^{H(\pi)}$，布尔输出已强制这个最小值。对定理 33 使用的每个 $B,P$（无普通对被触及时 $P=\varnothing$），令
+
+$$
+M_B=\{i:t_i\in B\setminus P\},
+\qquad E_B=\{i:t_i\in P\setminus B\}.
+$$
+
+更细地有
+
+$$
+\kappa_B(F)\leq2^{|M_B|}\kappa_P(F)^{2^{|E_B|}},
+\qquad \max_B|E_B|=H(\pi).
+$$
+
+**证明。** 将每个无关非空 $D_i$ 商为单点，但保留标签 $d_i$ 及其骨架位置。每个切面的原响应都是商后响应沿后缀直积投影的拉回；该投影满射，故不同商后函数仍不同，而每个商后前缀又有原前缀提升。因此商前商后的每一原始层容量相同。商后固定指定族的 $D$ 恰为 $2^r$，每个 $\tau_i=2$，定理 33 直接给出所称全局系数及指数。其布尔下界族也沿同一满射拉回恢复原固定虚端点字母表；无需另作锐利性证明。
+
+在式 (33.1) 中，商后 $B\setminus P$ 的指定坐标只有 $M_B$ 中的选择器贡献非平凡因子，故 $d(B,P)=2^{|M_B|}$；$E$ 恰为 $E_B$，从而同一回放给出局部界。共有的 $B\cap P$ 选择器随前缀复制，不进入组标记或共同后缀。已有 $E_B\subseteq N_k$；反向取达到 $H$ 的普通对 $j$，在 $\rho$ 刚读完 $a_j$ 的层，每个 $i\in N_j$ 尚未触及，而 $P$ 的终点至少为 $\operatorname{pos}(a_j)$，所以 $N_j\subseteq E_B$。故最大值恰为 $H$。∎
+
+### 定理 34：一个满射列伴随构件的系数一细化
+
+固定 $r\geq1$、$0\leq h\leq r$、布尔选择器 $t_1,\ldots,t_r$ 和非空有限无关字母表 $D_i$ 上的独立端点 $d_1,\ldots,d_r$，指定映射均为投影 $\phi_i(t_i,d_i)=t_i$。令 $A,B$ 为任意非空有限集，$\psi:A\times B\to Z=\operatorname{im}\psi$ 只要求存在 $b_0\in B$ 满足 $\psi(A,b_0)=Z$，不要求满射行。对任意非空有限 $O$ 和全函数 $G:\mathbb B^r\times Z\to O$，令 $F:\mathbb B^r\times A\times B\times\prod_iD_i\to O$ 为完整独立原始域上的任务 $F(t,a,b,d)=G(t,\psi(a,b))$。固定顺序
+
+$$
+\begin{aligned}
+\pi&=(t_1,\ldots,t_h,a,t_{h+1},\ldots,t_r,b,d_1,\ldots,d_r),\\
+\rho&=(a,b,t_1,d_1,\ldots,t_r,d_r)=\operatorname{cn}(\pi).
+\end{aligned}
+$$
+
+则
+
+$$
+W_F(\rho)\leq W_F(\pi)^{2^h}.
+$$
+
+固定这些投影及骨架，变化伴随有限映射与任务时，$2^h$ 是允许固定正乘数的最小一致实指数；标量布尔任务和具有双侧满射切片的加法构件已经给出锐利族。指数 $2^h$ 处的系数 $1$ 不能统一降低。
+
+**证明。** 无关端点的满射拉回按推论 33.1 保持所有层容量，故只在公式中略去它们，仍逐层计数。对 $0\leq q\leq r-h$ 定义原顺序前缀
+
+$$
+P_q=\{t_1,\ldots,t_h,a,t_{h+1},\ldots,t_{h+q}\},
+\qquad K_q=\kappa_{P_q}(F),\quad K=K_0,\quad W=W_F(\pi).
+$$
+
+去掉无关后缀坐标后，该层的响应是共同域 $\mathbb B^{r-h-q}\times B$ 上的函数
+
+$$
+R_{u,a,v}(w,b)=G(u,v,w,\psi(a,b)),
+\quad u\in\mathbb B^h,\quad v\in\mathbb B^q,
+\quad a\in A.
+$$
+
+每个 $K_q\leq W$。在 $\rho$ 读完 $a$ 的层，响应 $H_a(t,b)=G(t,\psi(a,b))$ 恰由 $2^h$ 个限制 $H_a(u,\cdot,\cdot)$ 确定；每个限制属于大小 $K$ 的原顺序 $P_0$ 响应族，故此层容量至多 $K^{2^h}$。这一步不需要满射列。
+
+选择截面 $\sigma:Z\to A$，使 $\psi(\sigma(z),b_0)=z$。将原 $P_0$ 响应统一限制在 $b=b_0$，得到共同域 $\mathbb B^{r-h}$ 上大小至多 $K$ 的函数族 $\mathcal S$。对每个 $u,z$，函数 $w\mapsto G(u,w,z)$ 都在 $\mathcal S$ 中，因为可取 $a=\sigma(z)$。
+
+在 $\rho$ 读完 $a,b$ 及前 $j$ 个选择器后，若 $0\leq j\leq h$，前缀决定某个 $p\in\mathbb B^j,z\in Z$，残余函数为 $(v,w)\mapsto G(p,v,w,z)$，其中 $v\in\mathbb B^{h-j}$、$w\in\mathbb B^{r-h}$。它由按全部 $v$ 标记的 $2^{h-j}$ 个 $\mathcal S$ 成员组成的元组唯一确定；即使 $p,z$ 同时变化，元组域也不变。因此该层至多有 $K^{2^{h-j}}$ 个响应。紧随其后的无关 $d_j$ 层保持同一数目，不假定元组各分量可自由组合。
+
+若 $j>h$，令 $q=j-h$。此时的每个残余函数 $w\mapsto G(u,v,w,z)$，都是原顺序 $P_q$ 层前缀 $(u,\sigma(z),v)$ 所给响应在同一个 $b=b_0$ 上的限制。因此整个残余函数族大小至多 $K_q\leq W$。这里必须使用晚读选择器对应的 $K_q$，不将任意有限输出的这些层一概限制为 $K_0$。每个选择器后的无关端点保持该容量。初始层为 $1$，最终层为 $|\operatorname{im}F|$，也是原最终容量；$W\geq1$、$2^h\geq1$，故所有 $2r+3$ 个原始层的容量均至多 $W^{2^h}$。这个直接证明只用了一个满射列，并非定理 33 双侧切片假设的直接特例。常数任务的两种宽度都是 $1$，故任何小于 $1$ 的统一系数都会失败。
+
+为给出锐利性及精确原始层计数，对 $m\geq2$ 取
+
+$$
+C_m=(\mathbb Z/m\mathbb Z)^{\mathbb B^r},
+\qquad A=B=C_m,\qquad \psi(a,b)=a+b,
+\qquad F_m(t,a,b,d)=\mathbf1[(a+b)_t=0].
+$$
+
+原顺序在 $a$ 之前、读完 $i$ 个选择器时，容量为 $2^i$（$0\leq i\leq h$）。读完 $a$ 及 $q$ 个晚选择器时，容量恰为
+
+$$
+2^{h+q}m^{2^{r-h-q}}\qquad(0\leq q\leq r-h). \tag{34.1}
+$$
+
+读完 $b$ 后及每个后续无关端点层均为 $2$。规范化顺序的初始容量为 $1$，读完 $a$ 为 $m^{2^r}$，读完 $b$ 为 $2^{2^r}$，而读完 $t_j$ 及紧随的 $d_j$ 后均为
+
+$$
+2^{2^{r-j}}\qquad(1\leq j\leq r). \tag{34.2}
+$$
+
+这些计数可以在同一加法表上直接得到。固定已读选择器前缀 $u\in\mathbb B^{h+q}$ 后，仅有 $2^{r-h-q}$ 个表项 $a_{(u,w)}$ 有关。不同向量在某个共同后缀 $w,b$ 下可由 $b_{(u,w)}=-a_{(u,w)}$ 区分。若两个已读选择器前缀不同，则固定同一剩余 $w$ 后所选 $b$ 坐标不同；可同时把一个零检验置真、另一个置假，故这两类响应不交。$a$ 之前的 $2^i$ 个前缀也由相同的独立表项选择区分。这证明式 (34.1) 和早期计数。规范化顺序读完 $a$ 后，任意不同表向量由某个共同 $t,b$ 区分。读完 $b$ 后，每个表项的零、非零状态可独立指定，因为 $m\geq2$；于是所有布尔真值表可达。固定任意 $j$ 个已读选择器后，恰剩任意一个 $r-j$ 位布尔真值表，得到式 (34.2)，包括最终两个常值。
+
+式 (34.1) 中相邻两层数目的比为 $2/m^{2^{r-h-q-1}}\leq1$（$q<r-h$），故其第一层最大；其余原层均不超过它。规范化顺序的后续各层均不超过 $m^{2^r}$。因此
+
+$$
+W_{F_m}(\pi)=2^h m^{2^{r-h}},
+\qquad W_{F_m}(\rho)=m^{2^r},
+$$
+
+并且对任意实数 $\alpha$，
+
+$$
+\frac{W_{F_m}(\rho)}{W_{F_m}(\pi)^\alpha}
+=2^{-h\alpha}m^{2^r-\alpha2^{r-h}}.
+$$
+
+恰在 $\alpha<2^h$ 时该比值趋于无穷，连同上界证明最小一致指数。公式包含 $h=0$、$h=r$、$r=1$ 和 $m=2$ 的边界情形；$h=0$ 时两种宽度相等且无界。这里布尔的是任务输出；随着 $m$ 变化的是加法字母表，并未声称固定骨架的所有原始字母表均为布尔而仍有无界渐近族。∎
+
+### 命题 34.1：相同标记区间交图仍可有不同一致指数
+
+取两个布尔投影 $P_i=(t_i,d_i)$ 和两个普通对 $O_j=(a_j,b_j)$，所有投影的两端字母表均为 $\mathbb B$。考虑
+
+$$
+\begin{aligned}
+\pi_A&=(t_1,a_1,t_2,b_1,d_1,a_2,b_2,d_2),\\
+\pi_B&=(t_1,t_2,a_1,b_1,d_1,a_2,b_2,d_2),\\
+\rho&=(a_1,b_1,t_1,d_1,a_2,b_2,t_2,d_2)
+=\operatorname{cn}(\pi_A)=\operatorname{cn}(\pi_B).
+\end{aligned}
+$$
+
+以每对两端位置之间的闭区间为顶点对象、非空相交为边，两种顺序有相同的带标签区间交图，边集都是
+
+$$
+\{P_1P_2,P_1O_1,P_2O_1,P_2O_2\}.
+$$
+
+二者最大同时打开的投影数都是 $2$，最大同时打开的全部对数都是 $3$，但 $H(\pi_A)=1$、$H(\pi_B)=2$，所以其最小一致指数分别为 $2$ 与 $4$。
+
+更具体地，对同一个实际任务族取 $a_1,b_1\in(\mathbb Z/m\mathbb Z)^{\mathbb B^2}$、$\psi_1(a_1,b_1)=a_1+b_1$，令 $\psi_2$ 为固定且被忽略的布尔异或，定义
+
+$$
+F_m=\mathbf1[(a_1+b_1)_{(t_1,t_2)}=0]\qquad(m\geq2).
+$$
+
+按层 $0,\ldots,8$，三个完整原始容量序列分别为
+
+$$
+\begin{aligned}
+\pi_A &: (1,2,2m^2,4m,2,2,2,2,2),\\
+\pi_B &: (1,2,4,4m,2,2,2,2,2),\\
+\rho &: (1,m^4,16,4,4,4,4,2,2).
+\end{aligned}
+$$
+
+其宽度依次为 $2m^2,4m,m^4$。
+
+**证明。** 按所列端点位置逐对检查交叠即得边集；在读完前三个端点时有三个打开的对。$\pi_A$ 中仅 $P_1$ 包含 $O_1$、仅 $P_2$ 包含 $O_2$；$\pi_B$ 中 $P_1,P_2$ 同时包含 $O_1$，而仍仅 $P_2$ 包含 $O_2$。故推论 33.1 给出两种一致指数，适用于所有允许的双普通构件任务，并不要求忽略第二构件。
+
+对所示同一任务，定理 34 的加法表计数在 $r=2,h=1$ 和 $r=2,h=2$ 时分别给出前两行的相关层；规范化顺序读完 $a_1$ 后四个表项独立，给出 $m^4$，读完 $b_1$ 后所有四位零标志表可达，给出 $16$，读完 $t_1$ 后为 $4$，读完 $t_2$ 后为 $2$。插入的 $d_i,a_2,b_2$ 均不改变相应容量，从而得到全部序列。$m\geq2$ 时取最大值得所述宽度。这表明带标签交图及上述打开数都不足以确定指数；没有对这个例子的规模作最小性断言。∎
+
+### 命题 34.2：一般布尔骨架不能统一取系数一
+
+令六个原始坐标 $a,b,t_1,t_2,d_1,d_2$ 均为布尔值，两个指定映射为投影，普通映射为 $\psi(a,b)=a\oplus b$。取
+
+$$
+F=t_2\wedge(t_1\oplus\psi(a,b)),
+\qquad
+\pi=(a,b,t_1,t_2,d_2,d_1),
+\qquad
+\rho=(a,b,t_2,d_2,t_1,d_1)=\operatorname{cn}(\pi).
+$$
+
+则 $H(\pi)=0$，但完整层容量分别为
+
+$$
+(1,2,2,2,2,2,2),
+\qquad (1,2,2,3,3,2,2).
+$$
+
+故 $W_F(\rho)=3>2=W_F(\pi)^{2^{H(\pi)}}$；该骨架指数一的任意统一系数至少为 $3/2$。
+
+**证明。** 异或每行每列满射，普通对在两个投影对之前完成且在它们之前开始，故包含邻域为空。记已读普通输出为 $z$。原顺序读完 $t_1$ 后，响应仅为 $0$ 或 $t_2$；规范化顺序读完 $t_2$ 后，在共同剩余 $t_1$ 域上的响应恰为 $0,t_1,1-t_1$。其他非初始层均为两个响应，无关端点保持容量，得到所列序列。此例只排除一般骨架上的系数一，不证明 $2^r$ 最佳。∎
+
+### 命题 34.3：删去满射列会破坏单伴随系数一界
+
+在定理 34 的 $r=1,h=0$ 骨架中，令 $A=\mathbb B$、$B=\mathbb B^2$，$\psi:A\times B\to B$ 为 $\psi(a,b)=b$，$t,d\in\mathbb B$，$F(t,a,b,d)=b_t$。每行满射而每列为常值，没有满射列。顺序 $\pi=(a,t,b,d)$、$\rho=(a,b,t,d)$ 的完整容量序列分别为
+
+$$
+(1,1,2,2,2),\qquad(1,1,4,2,2).
+$$
+
+因此 $W_F(\rho)=4>2=W_F(\pi)^{2^0}$。
+
+**证明。** $a,d$ 无关。原顺序读完 $t$ 后仅有两个坐标函数 $b\mapsto b_0,b\mapsto b_1$，读完 $b$ 后仅有两个常值。规范化顺序先读 $b$，所得 $t\mapsto b_t$ 遍历所有四个一位布尔函数，之后才降为两个常值。这证明删去满射列假设使所述统一系数一保证失效；不对每个固定映射或每个 $h$ 作必要性分类。∎
+
+### 命题 34.4：删去满射行会破坏包含指数保证
+
+取一个被忽略的布尔指定投影 $(t,d)$，以及两个普通构件
+
+$$
+\psi_1:\mathbb B^2\to\mathbb B,\quad\psi_1(a_1,b_1)=a_1,
+\qquad
+\psi_2:K_m\times K_m\to K_m,\quad\psi_2(a_2,b_2)=a_2+b_2,
+\quad K_m=(\mathbb Z/m\mathbb Z)^{\mathbb B}.
+$$
+
+第一普通构件每列满射而无满射行，第二个每行每列满射。令
+
+$$
+F_m=\mathbf1[(a_2+b_2)_{a_1}=0],
+\qquad
+\pi=(a_1,a_2,b_2,b_1,t,d),
+\qquad
+\rho=(a_2,b_2,a_1,b_1,t,d)=\operatorname{cn}(\pi).
+$$
+
+指定投影的包含邻域均为空，故 $H(\pi)=0$，但对 $m\geq2$ 有
+
+$$
+W_{F_m}(\pi)=2m,\qquad W_{F_m}(\rho)=m^2.
+$$
+
+所以删去普通满射行假设后，推论 33.1 的 $2^r=2$ 系数界在 $m>4$ 时失败，且在该指数一处任何固定正系数均失败。
+
+**证明。** $b_1,t,d$ 全被忽略。在原顺序中，读完 $a_1$ 有两个选择器响应；读完 $a_2$ 后，固定 $a_1$ 只留下一个表项的 $m$ 种平移，不同选择器对应不同的 $b_2$ 坐标，故共有 $2m$ 个响应；读完 $b_2$ 后为两个常值。规范化顺序读完 $a_2$ 后两个表项可独立变化，给出 $m^2$ 个响应；读完 $b_2$ 后有四个零标志表，读完 $a_1$ 后为两个常值。于是完整序列为
+
+$$
+(1,2,2m,2,2,2,2),\qquad(1,m^2,4,2,2,2,2),
+$$
+
+给出宽度和比值 $m/2\to\infty$。这是删去满射行后的一个统一保证反例，不是所有固定映射或骨架的必要条件分类。以上各定理及反例均在完整独立原始直积上讨论；其共同后缀选择不提供受约束或相关输入关系上的结论。∎
+
+## 追加锚（本行以下为增补区）
