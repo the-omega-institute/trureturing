@@ -1,0 +1,135 @@
+{
+  "status": "PASS",
+  "seed": 20260929,
+  "requested_indices": [],
+  "D": 2045861090389670400000000,
+  "failure_moduli": {
+    "2": 98304,
+    "3": 236196,
+    "5": 390625,
+    "7": 134456,
+    "11": 1610510
+  },
+  "standard_source": "F_0=0, F_1=1, F_(j+2)=F_(j+1)+F_j",
+  "direct_integer_prefix": [
+    1,
+    10000
+  ],
+  "direct_valuation_comparisons": 50000,
+  "first_prime_divisibility_indices_and_valuations": {
+    "2": [
+      3,
+      1
+    ],
+    "3": [
+      4,
+      1
+    ],
+    "5": [
+      5,
+      1
+    ],
+    "7": [
+      8,
+      1
+    ],
+    "11": [
+      10,
+      1
+    ]
+  },
+  "large_modular_indices": 208,
+  "large_modular_checks": 1040,
+  "max_tested_index": 563664242978019449657794351872000000000,
+  "index_shift_negative_control": "F_D is divisible by 2^17; F_(D+1) is odd",
+  "boundary_rows": [
+    {
+      "index": 2045861090389670400000000,
+      "n_valuations": {
+        "2": 21,
+        "3": 13,
+        "5": 9,
+        "7": 7,
+        "11": 6
+      },
+      "stopping_primes": [],
+      "all_five_fail": true
+    },
+    {
+      "index": 1022930545194835200000000,
+      "n_valuations": {
+        "2": 20,
+        "3": 13,
+        "5": 9,
+        "7": 7,
+        "11": 6
+      },
+      "stopping_primes": [
+        2
+      ],
+      "all_five_fail": false
+    },
+    {
+      "index": 681953696796556800000000,
+      "n_valuations": {
+        "2": 21,
+        "3": 12,
+        "5": 9,
+        "7": 7,
+        "11": 6
+      },
+      "stopping_primes": [
+        3
+      ],
+      "all_five_fail": false
+    },
+    {
+      "index": 409172218077934080000000,
+      "n_valuations": {
+        "2": 21,
+        "3": 13,
+        "5": 8,
+        "7": 7,
+        "11": 6
+      },
+      "stopping_primes": [
+        5
+      ],
+      "all_five_fail": false
+    },
+    {
+      "index": 292265870055667200000000,
+      "n_valuations": {
+        "2": 21,
+        "3": 13,
+        "5": 9,
+        "7": 6,
+        "11": 6
+      },
+      "stopping_primes": [
+        7
+      ],
+      "all_five_fail": false
+    },
+    {
+      "index": 185987371853606400000000,
+      "n_valuations": {
+        "2": 21,
+        "3": 13,
+        "5": 9,
+        "7": 7,
+        "11": 5
+      },
+      "stopping_primes": [
+        11
+      ],
+      "all_five_fail": false
+    }
+  ],
+  "source_sha256": "4028bdcdf8b99655136c7ef730ad835ef40b3d25a4079459f067d79c03d2094e",
+  "limits": [
+    "Finite diagnostics only; the infinite statement uses cited theorems.",
+    "No Lean compilation or kernel verification.",
+    "An arbitrary supplied integer needs a verified equality to 5040*F_j."
+  ]
+}
