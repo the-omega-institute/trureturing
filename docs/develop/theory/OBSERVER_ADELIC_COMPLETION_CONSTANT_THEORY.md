@@ -199034,3 +199034,27 @@ $$
 $$
 
 最后，若使用 Monster 名称，能否证明这里的 $W_{m,n}$ 与 $D_g$ 正是同一个 $V^\natural$ 所给的根空间与 twined 分母，并满足假设 2143.3 的维数及 $J$-分母等式？前两步是有限维行列式和局部有限形式乘积的代数接口，不能由任意指定的迹级数代替；最后一步还要求实际 Monster 构造。行列式、外幂与 Adams 迹展开的文献先例见 [Borcherds 1992, §8, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)；$V^\natural$ 的来源见 [FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)。
+
+## 2144. 有限盒行列式的迹系数与剩余识别问题
+
+**定理 2144.1（有限盒的公共除数迹公式）。** 设 $G$ 为有限群，$W_{m,n}$ 为正双分次的有限维有理 $G$-表示，$g\in G$，且
+
+$$
+D_{g,N}(p,q)=\prod_{1\leq m,n\leq N}\det(1-p^mq^n g\mid W_{m,n})\in\mathbb Q[[p,q]].
+$$
+
+若 $a,b\geq1$ 且 $N\geq\max(a,b)$，则
+
+$$
+[p^aq^b](-\log D_{g,N})
+=\sum_{k\mid\gcd(a,b)}\frac{\operatorname{tr}(g^k\mid W_{a/k,b/k})}{k}.
+\tag{2144.1}
+$$
+
+因此该系数对所有 $N\geq\max(a,b)$ 相同。这里的每个行列式均取自所给表示中的实际作用；这是有限维代数恒等式，不要求 $W_{m,n}$ 是 Monster 根空间。
+
+**证明。** 有限维矩阵的恒等式 $-\log\det(1-xA)=\sum_{k\geq1}\operatorname{tr}(A^k)x^k/k$ 对每个因子成立。有限乘积的形式对数可逐因子相加。第 $(m,n)$ 个因子的第 $k$ 项次数为 $(km,kn)$；它贡献 $(a,b)$ 系数当且仅当 $km=a$ 且 $kn=b$。这样的项与 $k\mid\gcd(a,b)$ 一一对应，此时 $(m,n)=(a/k,b/k)$，并自动落在 $[1,N]^2$ 内。相加得到式 (2144.1)，其右端与 $N$ 无关。行列式和等变迹展开的文献先例见 [Borcherds 1992, §8, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)；此处只是该已知代数计算的有限盒表述。
+
+**问题 2144.2（实际 Monster 分母的识别）。** 能否从同一个 $V^\natural$ 构造带 Monster 作用的根空间 $W_{m,n}$，证明其维数为 $J$-系数 $c(mn)$，并证明逐系数稳定的正双分次乘积是 Borcherds 完整 twined 分母除去 $n=-1$ Weyl 因子后的规范化部分？通过判据是给出实际根空间到定理 2144.1 的表示数据的映射，核对 Weyl 因子的规范化，并在同一构造中验证假设 2143.3 的分母等式；单独的形式迹恒等式或任意表示账本均不足以通过。$V^\natural$ 的构造见 [FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)，Monster Lie 代数及分母公式见 [Borcherds 1992, §§7–8](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。态场、反常、融合和完整边界 CFT 的另外几项判据仍见问题 2143.7。
+
+## 追加锚（本行以下为增补区）
