@@ -77,6 +77,8 @@ public sealed class EngineeringScopeProgramTests
             var environment = new Dictionary<string, string>(DotnetFixtureProfile.Create(root))
             {
                 ["CANDIDATE_SHA"] = "ambient-candidate",
+                ["DOTNET_CLI_HOME"] = Path.Combine(root, "build/cold-test-profile"),
+                ["XDG_DATA_HOME"] = Path.Combine(root, "build/cold-test-profile/data"),
             };
             var executable = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
             var result = EngineeringProcess.Capture(root, executable, ["--repository", root], environment);
@@ -90,6 +92,10 @@ public sealed class EngineeringScopeProgramTests
                 return;
             }
             Assert.Single(output.ToString().Split('\n'), line => line.StartsWith("ENGINEERING_TEST_PROJECT ", StringComparison.Ordinal));
+            Assert.Single(output.ToString().Split('\n'), line => line == "ENGINEERING_TEST_SDK_INITIALIZATION raw_exit=0");
+            Assert.Single(Directory.GetFiles(environment["DOTNET_CLI_HOME"], "*.dotnetFirstUseSentinel", SearchOption.AllDirectories));
+            if (!OperatingSystem.IsWindows())
+                Assert.True(File.Exists(Path.Combine(environment["XDG_DATA_HOME"], "NuGet/Migrations/1")));
             Assert.DoesNotContain("ENGINEERING_TEST_RETRY", output.ToString(), StringComparison.Ordinal);
             Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
             var trx = Assert.Single(Directory.GetFiles(Path.Combine(root, CommonExecutionEvidence.RootPath), "*.trx", SearchOption.AllDirectories));
@@ -116,6 +122,7 @@ public sealed class EngineeringScopeProgramTests
                 output.GetStringBuilder().Clear();
                 Assert.Equal(0, Program.Run(["--repository", root], TestResultEvidence.Load, output, error));
                 Assert.DoesNotContain("ENGINEERING_TEST_PROJECT ", output.ToString(), StringComparison.Ordinal);
+                Assert.DoesNotContain("ENGINEERING_TEST_SDK_INITIALIZATION", output.ToString(), StringComparison.Ordinal);
                 var reused = CommonExecutionEvidence.ValidateTests(root);
                 var row = Assert.Single(reused.Projects);
                 Assert.Equal("reused", row.Status);
