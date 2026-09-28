@@ -22,7 +22,10 @@ internal sealed class OctahedralPrecessionPeriodsDocument : IScribeDocumentDefin
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the conjecture", Disp(F.Id("claim")),
                 "Let t(k, j) = C(2k,k) C(2j,j) C(2k+j,k) 4^j and b(n) = sum of t(k, j) over k + j = n. Two ratio identities hold in the natural numbers: t(k, j+1)(j+1)(k+j+1) = 8 t(k, j)(2j+1)(2k+j+1) and 4 t(k+1, j)(k+1)^2(2j+1) = t(k, j+1)(2k+1)(j+1)(2k+j+2). Put n = N + 2 and G(k) = t(k, n-k) R(k) with R(k) = 2k^2 n(4kn - 4n^2 + 6n - 3)/((n+k)(n+k-1)(2n-2k-1)). By the ratio identities, 3n^2 t(k, j+2) - 4(28n^2 - 28n + 9) t(k, j+1) + 64(4n-5)(4n-3) t(k, j) = G(k+1) - G(k) for k + j = N, and the two boundary terms k = N+1, N+2 cancel against G(N+1); since G(0) = 0 the sum telescopes, so b satisfies the recurrence of the entry. As b(0) = 1 and b(1) = 12, induction gives a(n) = b(n). By Lucas' theorem at the prime 3, C(2k,k) with k = 3i + s is congruent to C(2s,s) C(2i,i), and C(2k+j,k) splits in the same way with a carry that only occurs when a factor C(2s,s) C(2e,e) C(2s+e,s) with 2s + e at least 3 already vanishes modulo 3; as 4 is congruent to 1, t(3i+s, 3a+e) is congruent to t(s, e) t(i, a) for s, e less than 3. Splitting each k in the sum for b(3m + r) into its last base-3 digit, the terms whose last digits carry vanish and the rest regroup to b(3m + r) congruent to b(r) b(m) modulo 3. Since b(1) = 12 and b(2) = 180 are divisible by 3 and b(0) = 1, strong induction on n gives that 3 divides b(n) for every n at least 1.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a318245-klee-octahedral-mod3"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
