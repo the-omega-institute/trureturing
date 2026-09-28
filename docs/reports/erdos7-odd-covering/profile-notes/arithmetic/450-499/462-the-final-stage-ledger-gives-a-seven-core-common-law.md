@@ -2933,3 +2933,193 @@ or omitted positive-depth tail is used.
 their exact differences and tail breakpoint. An independent checker using
 convex co-location and piecewise affine integration reproduces the old
 source values. These are exact finite-model results, not Lean claims.
+
+## Branch alignment extends the source face to a larger physical domain
+
+The five-leaf face and its pointwise-domination neighborhood are certified on
+
+    xi7 in Xi0, xi11 and xi13 in Xi_flat, xi17,xi19,xi29 in Xi,
+
+where Xi0 is the preceding168-label domain, and Xi_flat has272 labels. Define
+`j*=CRT(1 mod3,j mod5)` in `{1,4,7,13}` and remove from Xi exactly
+
+    {(1,j,r,j*): j in {1,2,3,4}, r in {4,7}}.
+
+These are eight labels; Xi_flat is their complement. Thus the new domain has
+
+    168*272^2*280^3=272848257024000
+
+physical tuples, a fraction `3468/6125`, approximately56.6204%, of Xi^6. This
+extends the five-leaf result from Xi0^6; it does not restrict or weaken the
+old z13/z22 endpoint certificate, which already covers all of Xi^6. All
+source charts, budgets, original numerical labels and query thresholds are
+as specified above.
+
+### Use the exact all-depth positive comparison throughout
+
+For this extension define `G_ex=14*sum Lp_ex+H16_ex` by integrating the original
+nonnegative hinge maxima at every anchor depth and multiplier, before any
+finite rectangle's omitted anchor depths are replaced by linear majorants.
+Keep the same jointly charged7/11/13 fields and the same position of the
+unknown-head maximum in each component. The exact comparison is finite:
+each hinge is bounded by its nonnegative linear load, whose coefficients are
+linear in the multiplier and affine separately in the two anchor depths.
+The fixed product comparison laws have finite mass and first moments.
+
+The source's all-height comparison bounds the one actual deletion process
+and every complete query by this exact functional. Each previously used
+numerical route bounds G_ex from above: its positive tail loads, convex
+threshold interpolation and upward rounding are upper estimates of these
+same exact components. Consequently the old certificate implies, for every
+complete physical tuple zeta,
+
+    G_ex,A(zeta)<=14*(135/4)-delta0, delta0=116/15625.
+
+No equality with the earlier tail-majorized G is required. In particular,
+this extension does not infer a difference bound by subtracting two unrelated
+upper estimates. It instead proves a direct inequality for G_ex.
+
+### Which charged fields survive physical alignment
+
+Let s_xi(x) be the number of selected3,5,9,15 incidences at x. The spatial
+zero-depth fields of the retained three stages are, for s=0,1,2,3,4,
+
+    q7(s) =(11,11,9,6,3)/14,
+    q11(s)=(28,28,28,28,25)/33,
+    q13(s)=(23,23,23,23,21)/26.
+
+Their positive-depth components are scalar laws. At17,19,29 the present
+comparison likewise uses the full scalar cap laws; it retains no additional
+spatial charged field from those three stages.
+
+Every xi7 in Xi0 gives equal q7 on root1 branches4 and7, column by column.
+For11 and13, the zero field is constant unless all four selected incidences
+hold. If physical9 is4 or7, a cell in root1 can have all four incidences only
+when physical3 is1 and physical15 is j* for the selected quinary column j.
+These are exactly the eight removed labels. If physical9 is outside root1,
+both root1 branches have at most three incidences. Therefore, for every
+xi in Xi_flat, both fields have equal values in those two branches.
+
+Let align(xi) replace a physical9 value4 by7 and leave all other coordinates
+unchanged. If xi is in Xi_flat, q11 and q13 at xi and align(xi) agree at
+**every** cell of the full135-cell carrier. On root1 this follows from the
+constant first four table entries; outside root1 both9 incidences are absent.
+This keeps the entire future joint product of the fields unchanged, including
+root2. Current11 or13 still has a moved fixed offset, handled below; invariance
+of its outgoing field alone would not suffice.
+
+Define one tuple zeta by leaving xi7 fixed and applying align to the other
+five physical labels. This same zeta is used for every current, query, depth
+and multiplier. In particular no favorable physical label is chosen separately
+for different positive components.
+
+### A simultaneous rearrangement of the unknown heads
+
+Use the earlier full135-cell extension and27/135 co-location lemma. At a fixed
+quinary column j, after co-locating the leaf heads, a root1 branch contributes
+
+    q_j*r_j*((W-M)*h(beta_j+t_j)+M*h(beta_j+t_j+l_j)),
+    h(v)=max(v,0).
+
+Here q_j*r_j is common and nonnegative in branches4 and7. The common baseline
+beta_j contains all3/5/15 contributions and may be negative. The nonnegative
+t_j contains9/45 increments and this current's fixed9 offset, if present;
+l_j contains27/135 increments. The source branch sums and maxima are
+
+| Source/depth | W4 | W7 | M4=M7 |
+| --- | ---: | ---: | ---: |
+| B, zero3 | 4/3 | 3/2 | 2/3 |
+| A, zero3 | 5/6 | 2 | 2/3 |
+| A or B, positive3 | 2 | 3 | 1 |
+
+Keep heads outside the two root1 branches fixed. Move every free head in
+branch4 into branch7, retaining its quinary column. Move a fixed9 offset
+from4 to7 by evaluating the current at zeta. An offset already in7 or outside
+root1 stays in place. The27/135 heads can share a maximum-weight leaf in7
+for all columns. Each numerical head is moved once, with its type intact.
+
+To prove this move is nondecreasing, put `Delta_d h(v)=h(v+d)-h(v)` for d>=0.
+In one column, after factoring out the common nonnegative factor q_j*r_j,
+gain minus loss is
+
+    (W7-W4)*Delta_t4 h(beta+t7)
+    +(W4-M)*(Delta_t4 h(beta+t7)-Delta_t4 h(beta))
+    +M*(Delta_(t4+l4) h(beta+t7+l7)-Delta_(t4+l4) h(beta)).
+
+All three terms are nonnegative: `W7>=W4>=M`, every increment is nonnegative,
+and a positive hinge increment is nondecreasing in its base. Summing columns
+therefore preserves the inequality. This also proves the move for a current11
+or13 offset, because the outgoing fields at xi and zeta were proved identical.
+
+Afterwards branch4 has no distinguishing increments. Passing from zero3
+source B to A transfers total mass1/2 from4 to7 and leaves both maximum leaf
+weights equal to2/3. The response changes by
+
+    (1/2)*sum_j q_j*r_j*(h(beta_j+t7_j)-h(beta_j))>=0.
+
+The leaf bonuses are unchanged. At positive3 the A and B weights already
+agree. Other branches have unchanged weights, fields and contributions.
+For each B layout this constructs an allowed A layout at the single tuple
+zeta with at least its value. Maximizing, then integrating all nonnegative
+components and complete tails, proves
+
+    G_ex,B(xi)<=G_ex,A(zeta)<=14*(135/4)-delta0.
+
+The head movement is a comparison of allowed maxima. It does not change the
+original covering's actual physical phases or combine probabilities from
+different sources. The old uniform certificate bounds every comparison
+parameter zeta, without requiring a newly realizable covering at zeta.
+
+### Consequences and the exact remaining restriction
+
+Sibling transport covers z16 and z25. Convexity with the old z13,z22 endpoints
+then covers the same face supported on `{7,13,16,22,25}`, with total pure3
+budget1/2, t1=1/20, all other t and e zero. Its reserve is135/4, its common
+margin is still delta0, and its complete-query bound remains below29.
+
+The earlier source domination and reserve identity apply to G_ex as well.
+Thus the uniform raw radius1/18000 keeps slack
+`255839334607/631125000000000`, and the15 additional prefix conditions at
+H3=12,H5=8 keep slack `87611182897/199691894531250`, now on this larger
+physical domain. The original joint higher-tail conditions are unchanged.
+Neither statement is a normalization theorem for arbitrary covers.
+
+The equality of column fields, equal maximum leaf weights and nonnegative
+increments are used explicitly. An extra charged field at a later stage
+would require its own invariance proof. The plateau argument for11/13 does
+not apply to q7: for example `(2,1,4,8)` is in Xi_flat, but replacing its9
+projection by7 changes q7. The eight excluded11/13 labels also change their
+corresponding fields. Failure of these premises alone does not disprove
+optimized domination or noncoverage outside the certified domain.
+
+There are actual positive-comparison components where moving a head to7
+decreases its response. At positive3 depth, extra5 depth zero, move only the
+135 head from native cell121 (`13 mod27,1 mod5`) to61 (`7 mod27,1 mod5`).
+Place the other3/9/27/5/15/45 heads at `(2,2,2,2,11,11)` respectively, and
+use current label `(2,2,2,8)`. Both target cells have zero selected offset and
+are missed by all other heads. Their common quinary factor is11/20.
+
+| Zero field | Its physical label | Current/threshold | Multiplier m | Extra3 depth u | Moved minus original response |
+| --- | --- | --- | ---: | ---: | ---: |
+| 7 | (2,1,7,11) | 11/4 | 1 | 3 | -11/140 |
+| 11 | (1,1,7,1) | 13/4 | 2 | 1 | -1/10 |
+| 13 | (1,1,7,1) | 17/8 | 4 | 1 | -11/65 |
+
+All other preceding charged coordinates use their positive components, so
+the displayed multipliers belong to their supports. The135 coefficient is
+`m*(1+u)` and the two backgrounds are `m-threshold`. The q values are,
+respectively, `(11,9)/14`, `(28,25)/33` and `(23,21)/26`; substitution gives
+the negative differences above. These are unintegrated spatial component
+responses. They refute extending this particular local head move without
+its field-symmetry premise, not the maximized G_ex inequality or noncoverage.
+
+[The exact local checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-rearrangement.py)
+and [retained results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/rearrangement.json)
+check49140 shared head layouts in36 cases, including signed backgrounds,
+zero column weights and heads outside root1. Each case uses1365 simultaneous
+layouts. They also check104664 field incidences and alignment identities,
+pin the existing source program and face certificate, and calculate the domain
+and inherited margins. They also recompute the three full44-cell obstruction
+responses. The general conclusion follows from the all-depth
+comparison proof above. These finite controls are not new full-source geometry
+or Lean verification, and unrestricted Erdős #7 remains unresolved.
