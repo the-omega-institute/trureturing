@@ -1614,7 +1614,7 @@ $$
 
 ### theorem 23.2 四腿相干态在奇数模数下为完美张量
 
-在独立加入 Hilbert 空间 $\mathbb C^n$、计算基和等权相干叠加后，定义
+对 $n\ge2$，在独立加入 Hilbert 空间 $\mathbb C^n$、计算基和等权相干叠加后，定义
 
 $$
 |T_n\rangle
@@ -1646,10 +1646,10 @@ $$
 
 ### proposition 23.3 四端口编码的成对恢复
 
-对奇数 (n)，定义
+对奇数 (n)，定义编码器
 
 $$
-V_n|s\rangle
+\mathcal V_n|s\rangle
 =
 \frac1{\sqrt n}\sum_{j\in R_n}|j,j+s,j+2s\rangle.
 $$
