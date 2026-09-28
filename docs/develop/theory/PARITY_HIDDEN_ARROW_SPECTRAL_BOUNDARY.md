@@ -19703,3 +19703,357 @@ $\Delta_M=\tfrac14\ln\ln Q$ 是未覆盖的合法序列，不是实际模型反�
 [Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
 
 ## 追加锚（第 106 章后续增补区）
+
+## 107. 最大后验原子的能量成本与无穷阶熵
+
+**定义 107.1（逐输出的最小熵）。** 保持第 103、105 章原幅度、
+固定 $\beta\in(1/2,1)$、全部合法规模与取整，使用原完整计数后验
+$\mathsf P_x$ 及同一输出 $Y=T+\sigma_MG$ 后的 $\mathsf P_x^y$。
+对有限计数律定义 $H_\infty(P)=-\ln\max_nP(n)$，单位为 nats。
+这是一份指定输出下的分布的熵，不是对输出平均最佳猜测概率后取负对数。
+仍记
+
+$$
+E(n)=\sum_j[(n_j-\mu_j)/B]^2,\quad
+T(n)=\delta^{-1/2}[E(n)-V],\quad
+v_* =\max_jv_j,\quad\rho_0=\rho(0),\quad
+c_\infty=\frac{\gamma}{2\rho_0}=\sqrt{\frac\pi{2\kappa}}.
+\tag{107.1}
+$$
+
+全部 $\mu_j,V,v_j,\rho,\gamma,\kappa$ 保持 (103.2)、(103.5) 的精确定义。
+
+**定理 107.2（实际最小熵端点）。** 若
+
+$$
+L_M=\ln(1/\sigma_M)\to\infty,\qquad
+\limsup_M L_M/Q^3<c_q/2,
+\tag{107.2}
+$$
+
+则对每个固定有限 $R$，
+
+$$
+\sup_{|y|\le R}\left|
+\delta[H_\infty(\mathsf P_x^y)-H_\infty(\mathsf P_x)+L_M]
+-c_\infty\right|\to0.
+\tag{107.3}
+$$
+
+收敛在原实际数据概率下，对全部规定大小的确定支持一致，原 pair/path 分别成立。
+固定支持采样仍评价原均匀支持先验定义的后验，输出没有平均。
+本定理直接计算最大原子，不从固定阶结果交换 $\alpha\to\infty$ 与规模极限。
+
+**证明：有限约束极小值。** 写 $P_* =\max_n\mathsf P_x(n)$、
+$S_P(n)=\ln[P_*/\mathsf P_x(n)]\ge0$、$h_y=V+\sqrt\delta y$、$u=\sigma^2$。
+在原全盒支持事件上，定义完整可行计数元组上的极小值
+
+$$
+A_x(y)=\min_n\left[S_P(n)+\frac{(E(n)-h_y)^2}{2\delta u}\right].
+\tag{107.4}
+$$
+
+精确 Bayes 公式给
+
+$$
+H_\infty(\mathsf P_x^y)-H_\infty(\mathsf P_x)+L_M
+=A_x(y)+\tfrac12\ln(2\pi)+\ln f_{\mathsf P_x,\sigma}(y).
+\tag{107.5}
+$$
+
+第 103 章的普通阶密度结论 (103.27) 已给
+$\sup_{|y|\le R}|\delta\ln f_{\mathsf P_x,\sigma}(y)|\to0$，
+所以只需证明 $\delta A_x(y)\to c_\infty$ 一致成立。
+大基准计数熵在 (107.5) 中严格抵消，无需另估先验最小熵。
+
+**对所有元组成立的离散曲率。** 对二项质量 $b_N(k)$，取任一众数 $k^\circ$。
+当 $N\ge2$，相邻对数比
+
+$$
+a_k=\ln\frac{b_N(k)}{b_N(k+1)}
+=\ln\frac{k+1}{N-k}-\ln\frac p{1-p}
+$$
+
+满足
+
+$$
+a_{k+1}-a_k
+\ge\frac1{k+2}+\frac1{N-k}\ge\frac4{N+2}.
+$$
+
+首个不等式用 $\ln(1+x)\ge x/(1+x)$。
+在众数两侧累加，从众数处相应符号的起始增量得到
+
+$$
+\ln\frac{b_N(k^\circ)}{b_N(k)}
+\ge\frac2{N+2}\ell(\ell-1),\qquad\ell=|k-k^\circ|.
+\tag{107.6}
+$$
+
+$N=0,1$ 直接成立，也覆盖众数并列。
+对原乘积计数律 $\mathsf Q_x$，令 $k^\circ=(k_j^\circ)$ 为众数向量，
+$Q_* =\mathsf Q_x(k^\circ)$，组数为 $m\le CQ^2$，$C_{\max}=\max C_j$。
+每个众数信息量非负，故 (107.6) 与 Cauchy–Schwarz 给全盒上的界
+
+$$
+S_Q(n):=\ln\frac{Q_*}{\mathsf Q_x(n)}
+\ge\frac2{C_{\max}+2}(\|n-k^\circ\|_2-\sqrt m)_+^2.
+\tag{107.7}
+$$
+
+当范数不小于 $\sqrt m$，使用
+$r^2-\sqrt m r\ge(r-\sqrt m)^2$；较小时只用非负性。
+这保留了向量误差，没有减掉会淹没目标尺度的 $O(m)$ 常数。
+众数满足 $|k_j^\circ-C_jp_j|\le1$，因此
+
+$$
+\delta S_Q(n)\ge a_x(\sqrt{E(n)}-b_x)_+^2,\quad
+ a_x=\frac{2B^2\delta}{C_{\max}+2},\quad
+ b_x=\|e\|_2+2\sqrt m/B.
+\tag{107.8}
+$$
+
+原校准近半及 (103.8) 的最大权重界给
+
+$$
+C_{\max}/(B^2\delta)\to4\rho_0,\qquad
+ a_x\to(2\rho_0)^{-1},\qquad b_x\to0.
+\tag{107.9}
+$$
+
+这里使用的是原实际数据的最大值估计，非仅一个标量中心极限定理。
+
+**原先验最大值的双向比较。** 写原选择修正
+$\mathsf P_x(n)=\mathcal L_x(\sum n_j)\mathsf Q_x(n)$，
+$D(n)=\sum_j(n_j-C_jp_j)$。沿用 (103.11) 的两侧界。
+在众数向量有 $|D(k^\circ)|\le m$，故令
+
+$$
+\ell_Q=C(m^2/q+q^{-1/2}),\quad
+u_Q=C(B^2V/q+q^{-1/2}),
+$$
+
+即得 $-\ell_Q\le\ln(P_*/Q_*)\le u_Q$，两者都趋零。
+因此对全部原元组，
+
+$$
+S_P(n)\ge S_Q(n)-\ell_Q-u_Q,
+\tag{107.10}
+$$
+
+而指定元组可用上界
+
+$$
+S_P(n)\le S_Q(n)+u_Q+C(D(n)^2/q+q^{-1/2}).
+\tag{107.11}
+$$
+
+并未把 $\mathcal L_x$ 在极远元组上的下界错当成统一正常数。
+
+**达到成本的可行整数构造。** 按固定规则选 $j_*$ 使 $v_{j_*}=v_*$，
+其余坐标保持众数。精确背景能量
+
+$$
+E_0=\sum_{j\ne j_*}(k_j^\circ-\mu_j)^2/B^2
+\le(\|e\|_2+\sqrt m/B)^2=o_{\mathbb P}(1).
+$$
+
+在概率趋一的共同事件上，所有紧输出均有 $h_y-E_0$ 正且远离零。
+令 $n_{j_*}$ 为 $\mu_{j_*}+B\sqrt{h_y-E_0}$ 的最近整数，其他坐标为 $k_j^\circ$。
+由 $C_{j_*}\asymp B^2\delta$、$p_{j_*}\to1/2$、$\|e\|_2\to0$，
+改动为 $O(B)$ 而 $C_{j_*}/B\asymp B\delta\to\infty$，故该整数严格位于计数范围内。
+原全盒支持保证它属于同一大小 $q$ 先验的可行元组。
+取整误差满足
+
+$$
+|E(n(y))-h_y|\le C/B,\qquad
+|T(n(y))-y|\le C/(B\sqrt\delta),\qquad
+(B\sqrt\delta\sigma)^{-1}\to0.
+\tag{107.12}
+$$
+
+最后一式由 (107.2) 的严格半指数余量成立，故原 Gaussian 惩罚本身趋零。
+
+只有最大权重坐标支付乘积众数信息量。在该坐标，标准化偏移
+$z=(n_{j_*}-C_{j_*}p_{j_*})/\sqrt{d_{j_*}}=O_{\mathbb P}(\delta^{-1/2})$
+只有多项式大小，而 $C_{j_*}$ 指数大。
+第 103 章一致 Stirling 余项 $O((1+|z|^3)/\sqrt{C_{j_*}})$ 因而趋零，给
+
+$$
+\delta S_Q(n(y))
+=\frac{[\sqrt{h_y-E_0}+e_{j_*}+O(B^{-1})]^2}{2(v_*/\delta)}
++o_{\mathbb P}(1)\to c_\infty
+\tag{107.13}
+$$
+
+一致成立。该元组的 $|D(n(y))|\le CB+m$，从而
+$D(n(y))^2/q\le C Q^{-5/2}+Cm^2/q=o(1)$。
+用 (107.11)–(107.13)，得到 $\sup_{|y|\le R}\delta A_x(y)\le c_\infty+o_{\mathbb P}(1)$。
+
+**所有极小元组的下界。** 对 (107.4) 的任一极小元组 $n_y$，
+$S_P\ge0$ 及刚证明的上界给
+$(E(n_y)-h_y)^2/(2u)\le C$，故
+$|E(n_y)-h_y|\le C'\sigma$。
+因此 $E(n_y)\to\gamma$，对紧输出及所有极小元组一致。
+现在才舍去非负惩罚，并用 (107.8)–(107.10)，得到
+
+$$
+\delta A_x(y)\ge a_x(\sqrt{E(n_y)}-b_x)_+^2-o_{\mathbb P}(1)
+=c_\infty-o_{\mathbb P}(1).
+\tag{107.14}
+$$
+
+这覆盖任意合法慢降噪序列，未在定位极小能量之前删除有限噪声。
+结合上界与 (107.5) 即证 (107.3)。所有共同事件保留原支持一致及 pair/path 范围。证毕。
+
+**定理 107.3（受控增长阶数）。** 在 (107.2) 下，对每个确定序列
+$a_Q\to\infty$、$a_Q\le\ln Q$，有
+
+$$
+\sup_{\substack{a_Q\le\alpha\le\ln Q\\|y|\le R}}
+\left|\delta[H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x)+L_M]
+-c_\infty\right|\to0
+\tag{107.15}
+$$
+
+于同一实际数据概率和支持口径成立。上限 $\ln Q$ 是充分范围，不声称最优。
+
+**证明：不用边界鞍点的密度界。** 选 $l<c_q/2$ 使最终 $L_M\le lQ^3$，
+选 $\epsilon>0$ 满足 $2\epsilon<c_q-l$，只为证明划分
+$H=\{j:C_j\ge e^{\epsilon Q^3}\}$，保留完整 $V$。
+这里的 $H$ 是本证明的高计数组，不是第 106 章对数核心。
+以 $g_{\alpha,\sigma'}$ 表示
+
+$$
+\delta^{-1/2}\left[\sum_H(\sqrt{v_j/\alpha}Z_j-e_j)^2-V\right]
++\frac{\sigma'}{\sqrt\alpha}G
+\tag{107.16}
+$$
+
+的密度，$\sigma'$ 允许核夹逼所需的邻近宽度。
+其能量乘 $\alpha$ 后的缩放累积量函数是
+
+$$
+F_{\alpha,x}(t)=C_x^{G}(t)+\alpha D_{x,\sigma'}^{G}(t),
+\quad C_x^{G}(t)=-\frac\delta2\sum_H\ln(1-2tv_j/\delta),
+$$
+
+$$
+D_{x,\sigma'}^{G}(t)=t\sum_H\frac{e_j^2}{1-2tv_j/\delta}
++\tfrac12(\sigma')^2t^2.
+\tag{107.17}
+$$
+
+上标仅避免与信息方差系数 $C_x$ 混淆。
+任取固定 $0<t<t_c=1/(2\rho_0)$，共同分母余量给
+$C_x^{G}(t)=O_{\mathbb P}(1)$、$D_{x,\sigma'}^{G}(t)\to0$。
+倾斜后标准化能量的特征函数模由
+$(1+b\delta\xi^2)^{-b'/\delta}$ 主控，常数不依赖 $\alpha$：
+非中心因子即使带 $\sqrt\alpha e_j$，其模仍至多一。
+该包络积分一致有界，故倾斜标准化密度处处有界。
+在目标能量 $\alpha h_y$ 处解除倾斜，得到
+
+$$
+g_{\alpha,\sigma'}(y)
+\le C\alpha\exp\left[-\frac{\alpha h_y t-C_x^{G}(t)
+-\alpha D_{x,\sigma'}^{G}(t)}\delta\right].
+\tag{107.18}
+$$
+
+乘对数以 $\delta/\alpha$，先用 $\alpha\ge a_Q\to\infty$，再令固定 $t\uparrow t_c$，
+给极限上界 $-\gamma t_c$。这里没有假定随 $\alpha$ 增长的鞍点保持内部紧性。
+
+反向界单独取最大权重坐标。其余平方能量 $R_\alpha$ 的期望至多
+$V/\alpha+\|e\|^2$，故以至少 $1/2$ 概率不超过
+$\epsilon_x=2(V/a_Q+\|e\|^2)\to0$。
+独立能量尺度噪声的标准差为 $s_E=\sqrt\delta\sigma'/\sqrt\alpha$，
+其绝对值不超过 $s_E$ 的概率为固定正常数。
+最大坐标平方 $X=(\sqrt{v_*/\alpha}Z-e_*)^2$ 的精确密度为
+
+$$
+p_X(z)=\frac{\sqrt{\alpha/(2\pi v_*)}}{2\sqrt z}
+\left[e^{-\alpha(\sqrt z+e_*)^2/(2v_*)}
++e^{-\alpha(\sqrt z-e_*)^2/(2v_*)}\right],\qquad z>0.
+$$
+
+在上述两个事件上，$z=h_y-R_\alpha-\mathrm{noise}$ 位于固定正紧区间。
+积分并乘能量到输出的 Jacobian $\sqrt\delta$，得到
+
+$$
+g_{\alpha,\sigma'}(y)\ge c\sqrt{\alpha\delta/v_*}
+\exp\left[-\frac\alpha{2v_*}(\sqrt{h_y+s_E}+|e_*|)^2\right].
+\tag{107.19}
+$$
+
+结合 (103.8) 和精确中心界，(107.18)–(107.19) 给
+
+$$
+\sup_{a_Q\le\alpha\le\ln Q,|y|\le R}
+\left|\frac\delta\alpha\ln g_{\alpha,\sigma'}(y)+c_\infty\right|\to0.
+\tag{107.20}
+$$
+
+这一步本身不需要阶数上限；上限用于下列实际计数回接。
+
+**显式支付增长阶数。** 对 $1\le\alpha\le\ln Q$、$N\ge e^{\epsilon Q^3}$，
+将二项 Stirling 展开的对数误差乘 $\alpha$。
+在 $|z|\le N^{1/12}$ 内误差至多 $C\alpha N^{-1/4}$；
+幂质量的外部 Gaussian 原子包络相对中央归一化至多
+$e^{C\alpha}\operatorname{poly}(\alpha)e^{-c\alpha N^{1/6}}$，仍一致可忽略。
+因此幂二项归一化为
+
+$$
+\sum_kb_{N,p}(k)^\alpha
+=(2\pi d)^{(1-\alpha)/2}\alpha^{-1/2}(1+o(1)),
+\tag{107.21}
+$$
+
+相对误差至多 $\operatorname{poly}(Q)e^{-\epsilon Q^3/4}$。
+单位取整格积分的对数误差至多
+$C\alpha(1+|z|)/\sqrt N+C\alpha/N$。
+故在共同盒 $|n_j-C_jp_j|/\sqrt{d_j}\le Q^2$ 上，
+完整高组 escort 与独立取整 $N(C_jp_j,d_j/\alpha)$ 的质量比为
+$1+O(\operatorname{poly}(Q)e^{-\epsilon Q^3/4})$，
+两律盒外概率至多 $\operatorname{poly}(Q)e^{-cQ^4}$。
+
+全部低组配置能量至多 $CQ^2e^{2\epsilon Q^3}/B^2$，原标量取整误差仍为
+$\Delta_Q\le\operatorname{poly}(Q)[B^{-1}+B^{-2}e^{2\epsilon Q^3}]$。
+对 $s=\sigma/\sqrt\alpha$ 用 (103.20)，
+$h=\sqrt\alpha\Delta_Q/\sigma\le\operatorname{poly}(Q)e^{-bQ^3}$，
+对应 $\sigma'=\sigma/\sqrt{1\pm h}$，(107.20) 对两宽度都成立。
+盒外加性密度至多 $\operatorname{poly}(Q)\sigma^{-1}e^{-cQ^4}$，
+而 (107.19) 给比较密度下界 $e^{-C\alpha/\delta}$。
+由于 $\alpha\le\ln Q$、$L_M=O(Q^3)$，加性误差相对下界仍指数小。
+于是 (107.20) 传给原乘积计数 escort 的稀有输出密度。
+
+同一质量比较给 $\sup_{1\le\alpha\le\ln Q}\mathbb E_{\mathsf Q_\alpha}E=O_{\mathbb P}(1)$。
+盒内用 Gaussian 能量均值与小组全范围界；盒外使用确定界
+$E\le N_J^2/B^2=O_{\mathbb P}(B^2)$ 乘 $e^{-cQ^4}$，而 $\ln B^2=O(Q^3)$。
+Gaussian 尾能量用其直接尾矩控制。
+第 103 章非负能量的稀有 Gaussian 重加权均值界遂对这些阶数一致。
+用 $D^2/q\le C\delta(E+\|e\|^2)$、Jensen 及 (103.11)，精确比值
+
+$$
+\frac{f_{\mathsf P_\alpha,\sigma/\sqrt\alpha}(y)}
+{f_{\mathsf Q_\alpha,\sigma/\sqrt\alpha}(y)}
+=\frac{\mathbb E_{\mathsf Q_\alpha,y}\mathcal L_x^\alpha}
+{\mathbb E_{\mathsf Q_\alpha}\mathcal L_x^\alpha}
+$$
+
+的对数绝对值至多 $O_{\mathbb P}(\alpha\delta)$。
+乘 $\delta/\alpha$ 后趋零，得到实际版本的 (107.20)。
+最后代入精确 (103.10)：$\alpha/(\alpha-1)\to1$ 一致，
+普通密度项由 (103.27) 消失，其余常数乘 $\delta$ 也消失，即得 (107.15)。证毕。
+
+作为一致性核对，固定阶系数中的 $t_\alpha\uparrow t_c$，
+而 $K(t_c-)$ 有限：原点附近只出现可积的 $\ln|s|$ 奇性。
+因此 $J_\alpha/(\alpha-1)\to\gamma t_c$，与本章一致。
+此核对不是上述任一证明中的极限交换步骤。
+
+本章未给常数阶输出响应、超过受控窗口的增长阶数、Shannon 延拓或输出平均熵。
+离散众数比、凸性、Stirling 和指数倾斜为成熟方法；原模型中的全元组下界、可行整数构造、
+实际完整选择修正和增长阶数的稀有密度回接构成本章连接。
+归属和经典最大猜测概率、Gaussian 二次型大偏差的对象差别见
+[Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（第 107 章后续增补区）
