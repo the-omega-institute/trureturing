@@ -30,7 +30,7 @@ A000990(n), the plane partitions of n whose cells all have first coordinate (row
 
 **Definition 1.3 (The sequence A381265).**
 
-$$\operatorname{a}\left(n\right) = \left|\{(P1, P2) \mid \left(\operatorname{IsSolidPartition}\left(n, P1\right) \land \operatorname{IsSolidPartition}\left(3, P2\right)\right) \land P2 \subseteq P1\}\right|$$
+$$\operatorname{a}\left(n\right) = \left|\{(P1, P2) \mid \operatorname{IsSolidPartition}\left(n, P1\right) \land \left(\operatorname{IsSolidPartition}\left(3, P2\right) \land P2 \subseteq P1\right)\}\right|$$
 
 *Formalization.* `D5/S3/Combinatorics/TwoLayerSolidPartitions.a` (`✓ std3`).
 
@@ -42,7 +42,7 @@ The pairs of a plane partition P1 of n (the first layer) and a plane partition P
 
 **Definition 1.4 (Meeussen's conjecture).**
 
-$$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \operatorname{a}\left(n\right) = 3 \cdot (2 \cdot \operatorname{planeCount}\left(n\right) - \operatorname{twoRowCount}\left(n\right) - 2 \cdot \left|\operatorname{Partition}\left(n\right)\right| + 1))$$
+$$claim \Leftrightarrow (\forall n \in \mathbb{N},\; (\operatorname{a}\left(n\right): \mathbb{Z}) = 3 \cdot (2 \cdot (\operatorname{planeCount}\left(n\right): \mathbb{Z}) - (\operatorname{twoRowCount}\left(n\right): \mathbb{Z}) - 2 \cdot (\left|\operatorname{Partition}\left(n\right)\right|: \mathbb{Z}) + 1))$$
 
 *Formalization.* `D5/S3/Combinatorics/TwoLayerSolidPartitions.claim` (`✓ std3`).
 
