@@ -1,0 +1,9 @@
+### theorem 15.13 黄金 Frobenius 给出回返上界
+
+设 $p$ 为奇素数且 $p\ne5$，令 $\chi=(5/p)\in\{1,-1\}$。则
+
+$$
+\theta^{p-\chi}=\chi\pmod {pR},
+\qquad r(p)\mid p-\chi.
+$$
+

@@ -1,0 +1,12 @@
+### definition 33.2 有限精度的核与余核
+
+固定素数 $p$ 和 $r\ge1$，令 $G_r=(\mathbb Z/p^r\mathbb Z)^d$，并记 $B_r$ 为模 $p^r$ 的约化。定义
+
+$$
+K_r=\ker B_r,
+\qquad
+C_r=G_r/\operatorname{im}B_r.
+$$
+
+$K_r$ 表示同一边界背后的内部混同，$C_r$ 表示没有任何内部来源的形式边界类别。
+

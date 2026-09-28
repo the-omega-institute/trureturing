@@ -1,0 +1,17 @@
+### proposition 15.14 模五是分歧观察，而非普通素数通道
+
+令 $\delta=2\theta-1$。模 $5$ 有 $\delta^2=0$，且
+
+$$
+R/5R\cong\mathbb F_5[\varepsilon]/(\varepsilon^2),
+\qquad \theta=3+\varepsilon.
+$$
+
+故任意多项式满足
+
+$$
+P(3+\varepsilon)=P(3)+P'(3)\varepsilon.
+$$
+
+这说明模五观察自然保留“值加一阶变化”两类信息；仓内 `GoldenPrimeSplitting` 与 `GoldenPrimeClassification` 已证明五的分歧平方和非分裂素数的模五分类。其状态机的最小状态数仍是另一项带读取合同的证明义务。
+

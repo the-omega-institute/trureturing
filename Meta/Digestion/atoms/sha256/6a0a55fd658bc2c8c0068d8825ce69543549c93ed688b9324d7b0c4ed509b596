@@ -1,0 +1,16 @@
+### definition 7.1 $k$ 原子替换
+
+取 $k$ 个原子 $\alpha_0,\ldots,\alpha_{k-1}$，在 $\mathbb Z^k$ 上令
+
+$$
+C_ke_i=e_{i+1}\ (0\le i<k-1),\qquad C_ke_{k-1}=\sum_{i=0}^{k-1}e_i.
+$$
+
+原始语法中用固定顺序和括号把最后一式接成 $k$ 个子结构，于是
+
+$$
+C_k^k=C_k^{k-1}+\cdots+C_k+I.
+$$
+
+令 $q_k(e_i)=2^i$，并记由这些初始位权和递推得到的序列为 $G_i^{(k)}$。
+

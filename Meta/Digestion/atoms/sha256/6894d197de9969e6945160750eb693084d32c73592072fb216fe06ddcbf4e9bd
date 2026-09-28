@@ -1,0 +1,22 @@
+### definition 28.1 均匀相容态
+
+在明确加入 Hilbert 空间和计算基后，定义
+
+$$
+|\Psi_n\rangle
+=
+\frac1{\sqrt{|\mathcal S_n|}}
+\sum_{x\in\mathcal S_n}|x\rangle.
+$$
+
+按 $x=\widetilde a+db$ 分解，细层态为
+
+$$
+|\Psi_{de}\rangle
+=
+\frac1{\sqrt{|Y_{d,e}|\,|\mathcal S_e|}}
+\sum_{a\in Y_{d,e}}
+\sum_{z\in\mathcal S_e}
+|a\rangle|b_0(a)+z\rangle.
+$$
+
