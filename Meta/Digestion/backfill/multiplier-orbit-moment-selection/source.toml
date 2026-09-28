@@ -1,0 +1,5 @@
+source_id = "multiplier-orbit-moment-selection"
+path = "docs/develop/theory/MULTIPLIER_ORBIT_MOMENT_SELECTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
