@@ -2594,6 +2594,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt",
         "tools/Architecture/BannedSymbols.Guid.txt",
         "tools/Architecture/BannedSymbols.txt",
+        "tools/StrataLint.Cli/Admission/AdmissionCheckTiming.cs",
         "tools/StrataLint.Cli/Admission/ProductionCliEnvironment.CurrentChecks.cs",
         "tools/StrataLint.Cli/Runtime/ScribeEmissionVerifier.cs",
         "tools/StrataLint.Engine/packages.lock.json",
