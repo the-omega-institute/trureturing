@@ -88,7 +88,7 @@ reducedness; the first `j` in the word recovers the prefix, including when
 the suffix contains `j`. The forward deletion/injection is supported by
 Proposition 3.8 of the paper; the conditional converse and resulting
 equivalence are repository-derived.
-This result does not settle the reflected orientation, oscillation and
+This result does not settle the reflected deletion construction, oscillation and
 involution cases, or the global count in Conjecture 5.1.
 
 ## Extremal orientation
@@ -118,8 +118,43 @@ data give the endpoint and exterior premises of `source_shape_for_every_singleto
 and the conditional deletion construction. If `j<i`, they give the premises
 of `singleton_fiber_unique_of_j_lt_i`. These consumer applications use the
 same permutation and actual source word; no additional source shape is an
-input. The reflected orientation, oscillation and involution cases, and the
-global count remain open.
+input. The reflected endpoint adapter below handles the other extremal map.
+The oscillation and involution cases and the global count remain open.
+
+`MamedeEndpointUniqueness.word_reversal_invariants` proves, for every `n`,
+permutation `sigma`, and natural-index list `a`, that
+`singletonWord n sigma^{-1} a.reverse` is equivalent to
+`singletonWord n sigma a`, and `oscillation a.reverse` is equivalent to
+`oscillation a`. The oscillation equivalence needs no validity, reducedness,
+consecutiveness, or nonempty premise. The strict internal peaks and valleys,
+the full spike list, and its absolute-difference segment lengths reverse
+exactly, exchanging the two weak-increasing alternatives of the existing
+definition. The structural list proof is extracted from the existing
+endpoint-oscillation proof and reused there; the permutation part reuses the
+existing inverse-product, reduced-word, and chain lemmas. Empty and singleton
+lists are covered symbolically.
+
+`MamedeNonoscSourceEndpoints.reflected_orientation_strict_endpoints` starts
+with the same actual nonoscillating singleton word, attained extrema, and
+support bounds, but assumes only `sigma(m)=M+1`. It proves `m<M`, constructs
+strict interior indices `m<i<M` and `m<j<M`, and returns
+`sigma(j+1)=m`, `sigma(M+1)=i`, and exterior fixedness in the original
+permutation convention. Thus `i` is the one-based image of `M+1`, and
+`j+1` is the one-based inverse image of `m`. The proof applies the first
+orientation to `sigma^{-1}` and `a.reverse`; neither a source shape nor
+either remaining position equation is assumed. The `m=M` case and all
+endpoint boundaries are excluded by that theorem, without an extra premise.
+
+If `i<=j`, the reflected data supply `exactSourceHypotheses` and the
+all-source shape/deletion inputs for `sigma^{-1}`. If `j<i`, the existing
+whole-fiber uniqueness theorem applies there, and reversal transfers equality
+back to singleton words of `sigma`. For the deletion branch, writing
+`gamma=wordProduct n (deletedExcursion m M i)`, the inverse target is
+`sigma^{-1} * gamma^{-1}`; its inverse is `gamma * sigma` in the original
+convention. This identifies the reflected branch, but no new public
+reflected deletion wrapper or global induction is delivered here. The
+oscillating and involutive cases, termination, class-to-word correspondence,
+upper bound in this model, and global count remain separate obligations.
 
 ## Extremal endpoint uniqueness
 
@@ -238,7 +273,7 @@ Proposition 3.7. The older frozen `endpointExteriorFixedSource` and
 its extraction theorems still require `i<=j`; the new argument uses
 independent interior bounds. The first-orientation endpoint theorem above
 derives those bounds and equations from an actual nonoscillating source;
-the reflected orientation and other branches of Conjecture 5.1 remain open.
+the reflected deletion assembly and other branches of Conjecture 5.1 remain open.
 The identification
 of the paper's commutation classes with `singletonWord` remains a
 source-translation judgment. KPI is 0.

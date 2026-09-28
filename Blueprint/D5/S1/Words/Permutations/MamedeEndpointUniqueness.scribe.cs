@@ -11,6 +11,34 @@ internal sealed class MamedeEndpointUniquenessDocument : IScribeDocumentDefiniti
         H("Extremal Endpoint Structure"),
         Blocks(
         Describe.Lean(
+            DescribeId.Create("mamede-word-reversal-invariants"),
+            DeclarationHandle.Create(
+                "D5/S1/Words/Permutations/MamedeEndpointUniqueness.word_reversal_invariants"),
+            H("Word reversal and inverse permutations"),
+            StatementSource.FromAuthor(Disp(Q(
+                Grp(Q(Call("SingletonWord", V("n"), Call("Inverse", V("sigma")),
+                    Call("Reverse", V("w"))), Iff,
+                    Call("SingletonWord", V("n"), V("sigma"), V("w")))), Land,
+                Grp(Q(Call("Oscillation", Call("Reverse", V("w"))), Iff,
+                    Call("Oscillation", V("w"))))))),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "For every n, permutation sigma, and list w of natural generator indices, "
+                + "singletonWord(n,inverse(sigma),reverse(w)) is equivalent to "
+                + "singletonWord(n,sigma,w), and oscillation(reverse(w)) is equivalent "
+                + "to oscillation(w). No validity, reducedness, consecutiveness, or "
+                + "nonempty-word premise is needed for the equivalences. The proof "
+                + "reuses the adjacent-swap inverse product and reduced-word reversal. "
+                + "Strict internal peaks and valleys reverse in order, as do the full "
+                + "spike list and its absolute-difference segment lengths. Reversal "
+                + "exchanges the two weak-increasing alternatives of the unchanged "
+                + "oscillation definition. Empty and singleton lists are included. "
+                + "The spike-reversal argument is extracted from the existing "
+                + "endpoint-oscillation proof and is now reused by that proof and the "
+                + "reflected source theorem. This is a symbolic invariance result, "
+                + "not a finite test or a singleton-class count."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
             DescribeId.Create("mamede-extremal-maximum-peel"),
             DeclarationHandle.Create(
                 "D5/S1/Words/Permutations/MamedeEndpointUniqueness.maximum_peel"),

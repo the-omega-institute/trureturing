@@ -451,4 +451,72 @@ register_information_theorem opposite_extremal_maps_oscillation in arena
 
 end OppositeExtremalMaps
 
+namespace WordReversal
+
+abbrev signature : Signature where
+  Params := Nat
+  State _ := List Nat
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ w => w) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => []) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law r := ∀ (n : Nat) (σ : Equiv.Perm (Fin (n + 1))) (w : List Nat),
+    (singletonWord n σ⁻¹ w.reverse ↔ singletonWord n σ w) ∧
+      (oscillation (r.readout () n w).reverse ↔ oscillation w)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := (h 0 1 [1, 2, 1, 3, 2]).2
+  simp [rejected, realize, oscillation, spikes, internalSpikes,
+    segmentLengths, weakIncreasing] at hh
+
+theorem sensitivity : Sensitivity arena actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    intro j hji
+    cases i
+    cases j
+    exact (hji rfl).elim
+  · intro i
+    exact nomatch i
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  exact ⟨0, [], [1], by decide⟩
+
+def registration : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨word_reversal_invariants, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+
+register_information_theorem word_reversal_invariants in arena
+  readout via (realize signature (fun _ _ w => w) (fun e => nomatch e))
+  realizes registration
+  escape from source ({
+    owner := `D5.S1.Words.Permutations.MamedeEndpointUniqueness
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "fn", "arg", "arg", "arg"]
+      stateBinder := 2 }] })
+  escape continues (open)
+
+#print axioms registration
+
+end WordReversal
+
 end Reg.D5.S1.Words.Permutations.MamedeEndpointUniqueness

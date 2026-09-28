@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Nonoscillating first-orientation words have strict interior source endpoints. -/
+   digest: Nonoscillating words have strict interior endpoints in both extremal orientations. -/
 
 import D5.S1.Words.Permutations.MamedeEndpointUniqueness
 
@@ -192,5 +192,37 @@ theorem first_orientation_strict_endpoints (n m M : Nat)
   exact ⟨hlt, i, j, hmi, hiLt, hmj', hjM, hjmap, himap, hfixedσ⟩
 
 #print axioms first_orientation_strict_endpoints
+
+/-- The opposite attained extremal map yields strict interior endpoints in the
+    original permutation convention, without a source shape or further maps. -/
+theorem reflected_orientation_strict_endpoints (n m M : Nat)
+    (σ : Equiv.Perm (Fin (n + 1))) (a : List Nat)
+    (ha : singletonWord n σ a) (hmem : m ∈ a) (hMem : M ∈ a)
+    (hm : 1 ≤ m) (hmM : m ≤ M) (hMn : M ≤ n)
+    (hb : ∀ k ∈ a, m ≤ k ∧ k ≤ M)
+    (hmin : σ (position n m) = position n (M + 1))
+    (hnon : ¬ oscillation a) :
+    m < M ∧ ∃ i j, m < i ∧ i < M ∧ m < j ∧ j < M ∧
+      σ (position n (j + 1)) = position n m ∧
+      σ (position n (M + 1)) = position n i ∧
+      (∀ x : Fin (n + 1),
+        x.val + 1 < m ∨ M + 1 < x.val + 1 → σ x = x) := by
+  have hinvariants := word_reversal_invariants n σ a
+  have ha' : singletonWord n σ⁻¹ a.reverse := hinvariants.1.mpr ha
+  have hnon' : ¬ oscillation a.reverse := fun h => hnon (hinvariants.2.mp h)
+  have hmax' : σ⁻¹ (position n (M + 1)) = position n m := by
+    rw [← hmin]
+    simp
+  obtain ⟨hlt, i, j, hmi, hiM, hmj, hjM, hjmap, himap, hfixed⟩ :=
+    first_orientation_strict_endpoints n m M σ⁻¹ a.reverse ha'
+      (List.mem_reverse.mpr hmem) (List.mem_reverse.mpr hMem) hm hmM hMn
+      (fun k hk => hb k (List.mem_reverse.mp hk)) hmax' hnon'
+  refine ⟨hlt, i, j, hmi, hiM, hmj, hjM, ?_, ?_, ?_⟩
+  · simpa using (congrArg σ hjmap).symm
+  · simpa using (congrArg σ himap).symm
+  · intro x hx
+    simpa using (congrArg σ (hfixed x hx)).symm
+
+#print axioms reflected_orientation_strict_endpoints
 
 end D5.S1.Words.Permutations.MamedeNonoscSourceEndpoints

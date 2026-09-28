@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Permutations;
 internal sealed class MamedeNonoscSourceEndpointsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A nonoscillating first-orientation word determines strict interior source endpoints.",
+        "A nonoscillating word determines strict interior source endpoints in either extremal orientation.",
         H("Nonoscillating Source Endpoints"),
         Blocks(Describe.Lean(
             DescribeId.Create("mamede-nonosc-first-orientation-endpoints"),
@@ -43,6 +43,41 @@ internal sealed class MamedeNonoscSourceEndpointsDocument : IScribeDocumentDefin
                 + "For i<=j its data satisfy the shape extractor's endpoint predicate; "
                 + "for j<i they satisfy the order-free fiber theorem's endpoint inputs. "
                 + "Neither case is a global singleton-class count."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
+            DescribeId.Create("mamede-nonosc-reflected-orientation-endpoints"),
+            DeclarationHandle.Create(
+                "D5/S1/Words/Permutations/MamedeNonoscSourceEndpoints.reflected_orientation_strict_endpoints"),
+            H("Strict endpoints in the reflected orientation"),
+            StatementSource.FromAuthor(Disp(Q(
+                Call("SingletonWord", V("n"), V("sigma"), V("a")), Land,
+                Call("AttainedGeneratorExtrema", V("m"), V("M"), V("a")), Land,
+                Call("GeneratorInterval", V("n"), V("m"), V("M"), V("a")), Land,
+                Call("ReflectedOrientationMap", V("n"), V("m"), V("M"), V("sigma")), Land,
+                Neg, Call("Oscillation", V("a")),
+                Implies, V("m"), Lt, V("M"), Land, Exists, V("i"), V("j"), Comma,
+                Call("StrictInterior", V("m"), V("i"), V("j"), V("M")), Land,
+                Call("ReflectedSourceMaps", V("n"), V("m"), V("M"), V("i"),
+                    V("j"), V("sigma")), Land,
+                Call("ExteriorFixed", V("n"), V("m"), V("M"), V("sigma"))))),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "Let a be a singleton reduced consecutive word for sigma, with attained "
+                + "minimum m and maximum M, 1<=m<=M<=n, and all letters in [m,M]. "
+                + "Assume sigma(m)=M+1 in one-based positions and a is nonoscillating. "
+                + "Then m<M and there are i,j with m<i<M and m<j<M, "
+                + "sigma(j+1)=m, sigma(M+1)=i, and fixed positions outside [m,M+1]. "
+                + "The witnesses correspond to i=sigma(M+1) and j+1=inverse(sigma)(m). "
+                + "The exact reversal-invariance theorem makes reverse(a) a "
+                + "nonoscillating singleton word for inverse(sigma). Applying the "
+                + "first-orientation theorem there and transporting its equations "
+                + "back proves the displayed maps. No source shape or further position "
+                + "equation is assumed; m=M and boundary witnesses are excluded by "
+                + "the same proof. For i<=j, the data feed the source shape and deletion "
+                + "theorems for inverse(sigma); for j<i, they feed whole-fiber uniqueness "
+                + "there, which word reversal transfers to sigma. A reflected deletion "
+                + "equivalence in the original convention and the global induction "
+                + "are separate obligations."))),
             DescribeRole.Theorem))));
 
     private static Formula Q(params Formula[] items)

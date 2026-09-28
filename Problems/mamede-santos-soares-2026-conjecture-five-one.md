@@ -38,6 +38,12 @@ from any nonempty reduced consecutive word. In the first orientation,
 strictly interior endpoint indices and both remaining position equations from
 an actual nonoscillating source. No source shape is assumed. The indices may
 occur in either order; the conditional `j<i` fiber step is proved below.
+The reflected theorem starts from `sigma(m)=M+1` with the same actual word
+and interval data, proves `m<M`, and returns strict interior `i,j` with
+`sigma(j+1)=m`, `sigma(M+1)=i`, and exterior fixedness. Its reusable
+`word_reversal_invariants` input preserves the exact singleton and oscillation
+predicates under word reversal and permutation inversion, including empty
+and singleton lists. No source shape or extra position equation is assumed.
 These source results do not change KPI.
 
 `MamedeEndpointUniqueness.extremal_endpoint_unique` proves that two reduced
@@ -96,22 +102,30 @@ theorems retain their `i<=j` telescope. KPI remains 0.
 
 ## Gap
 
-The first-orientation endpoint adapter is compiled. With attained `m,M`,
-support in `[m,M]`, nonoscillation, and `sigma(M+1)=m`, its indices satisfy
+Both extremal-orientation endpoint adapters are compiled. For the first
+orientation, with attained `m,M`, support in `[m,M]`, nonoscillation, and
+`sigma(M+1)=m`, the indices satisfy
 `m<i<M` and `m<j<M`, both required position maps, and exterior fixedness.
 For `i<=j`, these are the endpoint premises of the existing shape and deletion
 results; for `j<i`, they are the premises of the existing whole-fiber
-uniqueness theorem. The theorem does not order `i,j` or prove the reflected
-orientation, oscillating and involutive branches, terminating cases, or a
-global count argument for every permutation.
+uniqueness theorem. In the reflected orientation, assuming `sigma(m)=M+1`
+gives `sigma(j+1)=m` and `sigma(M+1)=i` with the same strict bounds.
+Those maps become the first-orientation inputs for `sigma^{-1}` and the
+nonoscillating word `a.reverse`. The `i<=j` branch supplies the exact
+inverse-permutation deletion hypotheses; the `j<i` branch supplies
+whole-fiber uniqueness, transported back by reversal. Neither adapter orders
+`i,j` or proves the oscillating and involutive branches, terminating cases,
+or a global count argument for every permutation.
 The class-to-word correspondence and the paper's upper bound still require
 formal justification in this adjacent-word model before the full conjecture
 can be claimed. Research target: [#10285](https://github.com/the-omega-institute/trureturing/issues/10285).
 
 ## Route
 
-Establish the reflected deletion branch and the oscillating and involutive
-cases, handle the terminating cases, justify the class-to-word correspondence
+Assemble the reflected deletion branch in the original permutation convention
+(the inverse deletion target `sigma^{-1} * gamma^{-1}` reverses to
+`gamma * sigma`, with `gamma` the deleted-excursion product), and the
+oscillating and involutive cases, handle the terminating cases, justify the class-to-word correspondence
 and upper bound in the formal model, and close the global induction.
 
 ## Falsifier
@@ -138,5 +152,6 @@ branch. The global conjecture remains open.
 
 The identification of the paper's commutation classes with the repository's
 `singletonWord` predicate is a source-translation judgment, not a Lean
-theorem. No formal proof of the reflected, oscillating, involutive, or global
-count cases is claimed here.
+theorem. The reflected endpoint extraction is compiled; the reflected
+deletion assembly, oscillating, involutive, and global count cases are not
+claimed as completed here.

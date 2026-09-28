@@ -207,6 +207,112 @@ private theorem rev_chain (v : List Nat) (hc : consecutive v) : consecutive v.re
   rw [chain, List.isChain_reverse]
   exact (chain v).mp hc |>.imp (fun _ _ h => h.symm)
 
+/-- Reversal represents the inverse singleton permutation and preserves the
+    exact broad-monotone spike-length predicate, for arbitrary words. -/
+theorem word_reversal_invariants (n : Nat) (σ : Equiv.Perm (Fin (n + 1)))
+    (w : List Nat) :
+    (singletonWord n σ⁻¹ w.reverse ↔ singletonWord n σ w) ∧
+      (oscillation w.reverse ↔ oscillation w) := by
+  have internalSpikes_snoc (p : List Nat) (x y z : Nat) :
+      internalSpikes (p ++ [x, y, z]) = internalSpikes (p ++ [x, y]) ++
+        (if (x < y ∧ z < y) ∨ (y < x ∧ y < z) then [y] else []) := by
+    induction p using List.twoStepInduction with
+    | nil => simp [internalSpikes]
+    | singleton a =>
+      simp only [List.cons_append, List.nil_append, internalSpikes]
+      split_ifs <;> simp
+    | cons_cons a b p _ ih =>
+      cases p with
+      | nil =>
+        simp only [List.cons_append, List.nil_append, internalSpikes]
+        split_ifs <;> simp
+      | cons c r =>
+        simp only [List.cons_append] at ih ⊢
+        conv_lhs => rw [internalSpikes]
+        conv_rhs => arg 1; rw [internalSpikes]
+        split_ifs <;> simp_all [List.cons_append]
+  have reverse_internalSpikes (w : List Nat) :
+      internalSpikes w.reverse = (internalSpikes w).reverse := by
+    induction w with
+    | nil => simp [internalSpikes]
+    | cons a w ih =>
+      cases w with
+      | nil => simp [internalSpikes]
+      | cons b w =>
+        cases w with
+        | nil => simp [internalSpikes]
+        | cons c r =>
+          have hturn : ((c < b ∧ a < b) ∨ (b < c ∧ b < a)) ↔
+              ((a < b ∧ c < b) ∨ (b < a ∧ b < c)) := by tauto
+          simp only [List.reverse_cons, List.append_assoc] at ih ⊢
+          simp only [List.singleton_append] at ih ⊢
+          rw [internalSpikes_snoc r.reverse c b a]
+          rw [internalSpikes]
+          split_ifs <;> simp_all [List.reverse_cons]
+  have reverse_spikes (w : List Nat) : spikes w.reverse = (spikes w).reverse := by
+    have cons_formula (z : Nat) (t : List Nat) (hne : t ≠ []) :
+        spikes (z :: t) = z :: internalSpikes (z :: t) ++ [(z :: t).getLast!] := by
+      cases t with
+      | nil => contradiction
+      | cons k t => rfl
+    cases w with
+    | nil => simp [spikes]
+    | cons a w =>
+      cases w with
+      | nil => simp [spikes]
+      | cons b r =>
+        cases r using List.reverseRecOn with
+        | nil => simp [spikes, internalSpikes]
+        | append_singleton r z =>
+          have hwr : (a :: b :: (r ++ [z])).reverse =
+              z :: ((b :: r).reverse ++ [a]) := by simp
+          have hlast : (a :: b :: (r ++ [z])).getLast! = z := by
+            change ((a :: b :: r) ++ [z]).getLast! = z
+            simp [List.getLast!]
+          have hfirst : (z :: ((b :: r).reverse ++ [a])).getLast! = a := by
+            rw [← List.cons_append]
+            simp [List.getLast!]
+          have hi := reverse_internalSpikes (a :: b :: (r ++ [z]))
+          rw [hwr] at hi ⊢
+          rw [cons_formula z ((b :: r).reverse ++ [a]) (by simp), hfirst]
+          rw [cons_formula a (b :: (r ++ [z])) (by simp), hlast]
+          rw [hi]
+          simp
+  have segmentLengths_snoc (p : List Nat) (x y : Nat) :
+      segmentLengths (p ++ [x, y]) =
+        segmentLengths (p ++ [x]) ++ [(x - y) + (y - x)] := by
+    induction p with
+    | nil => simp [segmentLengths]
+    | cons a p ih =>
+      cases p with
+      | nil => simp [segmentLengths]
+      | cons b p =>
+        simp only [List.cons_append] at ih ⊢
+        conv_lhs => rw [segmentLengths]
+        conv_rhs => arg 1; rw [segmentLengths]
+        rw [ih]
+        rfl
+  have reverse_segmentLengths (s : List Nat) :
+      segmentLengths s.reverse = (segmentLengths s).reverse := by
+    induction s with
+    | nil => simp [segmentLengths]
+    | cons a s ih =>
+      cases s with
+      | nil => simp [segmentLengths]
+      | cons b r =>
+        simp only [List.reverse_cons, List.append_assoc, List.singleton_append] at ih ⊢
+        rw [segmentLengths_snoc r.reverse b a, ih]
+        simp [segmentLengths, add_comm]
+  have singleton_rev (v : List Nat) (τ : Equiv.Perm (Fin (n + 1)))
+      (hv : singletonWord n τ v) : singletonWord n τ⁻¹ v.reverse :=
+    ⟨rev_reduced n v hv.1, rev_chain v hv.2.1, by rw [rev_product, hv.2.2]⟩
+  refine ⟨⟨?_, singleton_rev w σ⟩, ?_⟩
+  · intro hv
+    simpa using singleton_rev w.reverse σ⁻¹ hv
+  · unfold oscillation
+    rw [reverse_spikes, reverse_segmentLengths]
+    simp only [List.reverse_reverse, or_comm]
+
 /-- An attained generator extremum at either end forces the exact broad-monotone
     spike-length predicate, using reducedness in the adjacent-swap model. -/
 theorem extremal_endpoint_oscillation (n k : Nat) (w : List Nat)
@@ -393,96 +499,6 @@ theorem extremal_endpoint_oscillation (n k : Nat) (w : List Nat)
           simp only [List.map_cons, segmentLengths, hd]
           exact congrArg (List.cons ((a - b) + (b - a))) (ih ht)
     exact core (spikes w) bounds
-  have internalSpikes_snoc (p : List Nat) (x y z : Nat) :
-      internalSpikes (p ++ [x, y, z]) = internalSpikes (p ++ [x, y]) ++
-        (if (x < y ∧ z < y) ∨ (y < x ∧ y < z) then [y] else []) := by
-    induction p using List.twoStepInduction with
-    | nil => simp [internalSpikes]
-    | singleton a =>
-      simp only [List.cons_append, List.nil_append, internalSpikes]
-      split_ifs <;> simp
-    | cons_cons a b p _ ih =>
-      cases p with
-      | nil =>
-        simp only [List.cons_append, List.nil_append, internalSpikes]
-        split_ifs <;> simp
-      | cons c r =>
-        simp only [List.cons_append] at ih ⊢
-        conv_lhs => rw [internalSpikes]
-        conv_rhs => arg 1; rw [internalSpikes]
-        split_ifs <;> simp_all [List.cons_append]
-  have reverse_internalSpikes (w : List Nat) :
-      internalSpikes w.reverse = (internalSpikes w).reverse := by
-    induction w with
-    | nil => simp [internalSpikes]
-    | cons a w ih =>
-      cases w with
-      | nil => simp [internalSpikes]
-      | cons b w =>
-        cases w with
-        | nil => simp [internalSpikes]
-        | cons c r =>
-          have hturn : ((c < b ∧ a < b) ∨ (b < c ∧ b < a)) ↔
-              ((a < b ∧ c < b) ∨ (b < a ∧ b < c)) := by tauto
-          simp only [List.reverse_cons, List.append_assoc] at ih ⊢
-          simp only [List.singleton_append] at ih ⊢
-          rw [internalSpikes_snoc r.reverse c b a]
-          rw [internalSpikes]
-          split_ifs <;> simp_all [List.reverse_cons]
-  have reverse_spikes (w : List Nat) : spikes w.reverse = (spikes w).reverse := by
-    have cons_formula (z : Nat) (t : List Nat) (hne : t ≠ []) :
-        spikes (z :: t) = z :: internalSpikes (z :: t) ++ [(z :: t).getLast!] := by
-      cases t with
-      | nil => contradiction
-      | cons k t => rfl
-    cases w with
-    | nil => simp [spikes]
-    | cons a w =>
-      cases w with
-      | nil => simp [spikes]
-      | cons b r =>
-        cases r using List.reverseRecOn with
-        | nil => simp [spikes, internalSpikes]
-        | append_singleton r z =>
-          have hwr : (a :: b :: (r ++ [z])).reverse =
-              z :: ((b :: r).reverse ++ [a]) := by simp
-          have hlast : (a :: b :: (r ++ [z])).getLast! = z := by
-            change ((a :: b :: r) ++ [z]).getLast! = z
-            simp [List.getLast!]
-          have hfirst : (z :: ((b :: r).reverse ++ [a])).getLast! = a := by
-            rw [← List.cons_append]
-            simp [List.getLast!]
-          have hi := reverse_internalSpikes (a :: b :: (r ++ [z]))
-          rw [hwr] at hi ⊢
-          rw [cons_formula z ((b :: r).reverse ++ [a]) (by simp), hfirst]
-          rw [cons_formula a (b :: (r ++ [z])) (by simp), hlast]
-          rw [hi]
-          simp
-  have segmentLengths_snoc (p : List Nat) (x y : Nat) :
-      segmentLengths (p ++ [x, y]) =
-        segmentLengths (p ++ [x]) ++ [(x - y) + (y - x)] := by
-    induction p with
-    | nil => simp [segmentLengths]
-    | cons a p ih =>
-      cases p with
-      | nil => simp [segmentLengths]
-      | cons b p =>
-        simp only [List.cons_append] at ih ⊢
-        conv_lhs => rw [segmentLengths]
-        conv_rhs => arg 1; rw [segmentLengths]
-        rw [ih]
-        rfl
-  have reverse_segmentLengths (s : List Nat) :
-      segmentLengths s.reverse = (segmentLengths s).reverse := by
-    induction s with
-    | nil => simp [segmentLengths]
-    | cons a s ih =>
-      cases s with
-      | nil => simp [segmentLengths]
-      | cons b r =>
-        simp only [List.reverse_cons, List.append_assoc, List.singleton_append] at ih ⊢
-        rw [segmentLengths_snoc r.reverse b a, ih]
-        simp [segmentLengths, add_comm]
   have weakIncreasing_chain (l : List Nat) :
       weakIncreasing l ↔ l.IsChain (· ≤ ·) := by
     induction l with
@@ -635,9 +651,7 @@ theorem extremal_endpoint_oscillation (n k : Nat) (w : List Nat)
   · exact first w hr hc hh hext
   · have hrev := first w.reverse (rev_reduced n w hr) (rev_chain w hc)
       (by simpa only [List.head?_reverse] using hl) (by simpa using hext)
-    unfold oscillation at hrev ⊢
-    rw [reverse_spikes, reverse_segmentLengths] at hrev
-    simpa only [List.reverse_reverse, or_comm] using hrev
+    exact (word_reversal_invariants n (wordProduct n w) w).2.mp hrev
 
 theorem extremal_endpoint_unique (n k : Nat) (a b : List Nat)
     (ha : reducedWord n a) (hb : reducedWord n b)
@@ -1236,6 +1250,7 @@ theorem opposite_extremal_maps_oscillation (n m M : Nat)
     · exact Or.inr (fun k hk => (hb k hk).1)
 
 #print axioms opposite_extremal_maps_oscillation
+#print axioms word_reversal_invariants
 #print axioms extremal_endpoint_oscillation
 #print axioms extremal_endpoint_unique
 #print axioms symmetric_excursion_outer_empty
