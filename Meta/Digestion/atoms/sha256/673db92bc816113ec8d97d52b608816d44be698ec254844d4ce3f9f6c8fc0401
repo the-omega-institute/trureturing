@@ -1,0 +1,14 @@
+## theorem 22.1: 纯输入与任意混合输入的不同阈值
+
+对固定／自由连接码，
+
+$$
+\text{每个纯逻辑输入均有全部块区域的几何熵表示}
+\quad\Longleftrightarrow\quad w\le3,
+$$
+
+$$
+\text{每个逻辑密度矩阵均有该几何熵表示}
+\quad\Longleftrightarrow\quad w\le2.
+$$
+

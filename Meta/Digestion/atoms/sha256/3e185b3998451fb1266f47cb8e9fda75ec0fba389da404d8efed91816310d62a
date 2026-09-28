@@ -1,0 +1,2 @@
+**证明。** Pauli 交换子给出两个实方程，变参数公式给出带隐藏初值的卷积。二维生成矩阵的对称部是 $\operatorname{diag}(0,-\gamma)$，故传播矩阵的欧氏范数不超过一，特别是 $|\alpha_t|,|\beta_t|\le1$。从初态 $(z_0,y_0)=(1,0)$ 得 $y_t=-\beta_t$，其第二式给出 $\beta_t=\Omega\int_0^te^{-\gamma(t-s)}\alpha_sds$，因此 $|\beta_t|\le\Omega/\gamma$。代入定理 31.3 即得全部操作结论。证毕。
+
