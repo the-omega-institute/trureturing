@@ -1079,4 +1079,91 @@ register_information_theorem response_matrix_forgetting_reindexed in arena
 
 end ForgettingReindexed
 
+namespace MatrixFactorStep
+
+/-- Dependence is evaluation of a whole depth-indexed matrix family. -/
+abbrev signature : Signature where
+  Params := Σ p, Σ M : CountMat p p, Σ Q : Type, Σ _ : IncomingLift M Q, ℕ
+  State theta := (k : ℕ) → Matrix (Quotient (theta.2.2.2.1.response k))
+    (Quotient (theta.2.2.2.1.response k)) ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ theta := Matrix (Quotient (theta.2.2.2.1.response (theta.2.2.2.2 + 1)))
+    (Quotient (theta.2.2.2.1.response (theta.2.2.2.2 + 1))) ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ theta F => F (theta.2.2.2.2 + 1)) (fun e => nomatch e)
+
+def bad : Realization signature :=
+  realize signature (fun _ theta F i j => F (theta.2.2.2.2 + 1) i j + 1)
+    (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law rho := ∀ {p : ℕ} {M : CountMat p p} {Q : Type}
+    (L : IncomingLift M Q) (d : ℕ)
+    [Fintype (Quotient (L.response d))]
+    [Fintype (Quotient (L.response (d + 1)))],
+    rho.readout () ⟨p, M, Q, L, d⟩ (incomingResponseMatrix L) =
+      incomingResponseV L d * incomingResponseU L d
+
+theorem actual_law : arena.Law actual := by
+  intro p M Q L d inst0 inst1
+  exact incoming_response_matrix_factor_step L d
+
+theorem rejected_law : ¬ arena.Law bad := by
+  intro h
+  let f0 := responseFintype liftUnit 0
+  let f1 := responseFintype liftUnit 1
+  have changed := @h 1 U Unit liftUnit 0 f0 f1
+  have original := @incoming_response_matrix_factor_step 1 U Unit liftUnit 0 f0 f1
+  let q : Quotient (liftUnit.response 1) := Quotient.mk _ ()
+  have entry := congrArg (fun A => A q q) (changed.trans original.symm)
+  change incomingResponseMatrix liftUnit 1 q q + 1 =
+    incomingResponseMatrix liftUnit 1 q q at entry
+  omega
+
+def registration : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, bad, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (@Subsingleton.elim Unit _ j i)).elim
+    · intro i
+      exact nomatch i
+  dependence := by
+    intro i
+    refine ⟨⟨1, U, Unit, liftUnit, 0⟩, (fun _ _ _ => 0), (fun _ _ _ => 1), ?_⟩
+    intro h
+    let q : Quotient (liftUnit.response 1) := Quotient.mk _ ()
+    exact Nat.zero_ne_one (congrArg (fun A => A q q) h)
+
+register_information_theorem incoming_response_matrix_factor_step in arena
+  readout via (realize signature (fun _ theta F => F (theta.2.2.2.2 + 1))
+    (fun e => nomatch e))
+  realizes registration
+  escape from source ({
+    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
+    coordinates := #[0, 1, 2, 3, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateOperand := some #["fn"]
+      stateBinder := 0
+      functionOperand := false
+      booleanPredicate := false }] })
+  escape continues (open)
+
+#print axioms actual_law
+#print axioms rejected_law
+#print axioms registration
+
+end MatrixFactorStep
+
 end Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
