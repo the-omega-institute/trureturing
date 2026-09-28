@@ -1,0 +1,25 @@
+### 命题 24.1：可行性、计数与最小成本的半环取值
+
+在定义 20 的局部权重条件下，下列三种取值分别给出可行性、精确计数和局部加性成本的最优化。
+
+取布尔半环 $(\{0,1\},\lor,\land,0,1)$，且所有局部权重取 $1$，则 $Z_{\mathcal K}=1$ 当且仅当 $\mathcal K\neq\varnothing$。若局部权重本身是允许符号的指示值，则聚合结果判定是否存在一个属于 $\mathcal K$ 且所有局部权重均为 $1$ 的赋值。
+
+取自然数半环 $(\mathbb N,+,\cdot,0,1)$，且所有局部权重取 $1$，则 $Z_{\mathcal K}=|\mathcal K|$。
+
+取扩展非负实数集 $[0,+\infty]$，定义：
+
+$$
+u\oplus v=\min\{u,v\},
+\qquad u\otimes v=u+v,
+\qquad 0_R=+\infty,
+\qquad 1_R=0,
+$$
+
+其中扩展加法满足 $u+(+\infty)=+\infty$。这是交换半环。若 $w_i$ 是局部非负成本，则：
+
+$$
+Z_{\mathcal K}=\min_{x\in\mathcal K}\sum_{i\in I}w_i(x_i),
+$$
+
+空集合上的最小值约定为 $+\infty$。
+
