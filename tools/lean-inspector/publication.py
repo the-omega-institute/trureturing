@@ -23,6 +23,10 @@ import zipfile
 
 import materials
 
+
+class PublicationFailure(RuntimeError):
+    """Output commit failed; this is not an optional donor validation miss."""
+
 _selection_spec = importlib.util.spec_from_file_location('report_selection',
     Path(__file__).resolve().parent.parent / 'scripts/report/lean-report-selection.py')
 selection = importlib.util.module_from_spec(_selection_spec)
@@ -436,12 +440,14 @@ def publish(report, destination, expected, repository=None, *, mode=None, manife
             for suffix in (*SUFFIXES[1:], ''):
                 os.replace(member(staged, suffix), member(destination, suffix))
                 replaced.append(suffix)
-        except BaseException:
+        except BaseException as error:
             for suffix in reversed(replaced):
                 if suffix in backups:
                     os.replace(backups[suffix], member(destination, suffix))
                 else:
                     member(destination, suffix).unlink()
+            if isinstance(error, OSError):
+                raise PublicationFailure(str(error)) from error
             raise
 
 

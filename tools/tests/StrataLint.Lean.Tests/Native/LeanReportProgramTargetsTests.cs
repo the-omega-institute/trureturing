@@ -8,26 +8,26 @@ public sealed class LeanReportProgramTargetsTests
 {
     [Theory]
     [InlineData("valid", "both", 0, 0,
-        "ensure|build leanInspector/LeanInformationAudit leanInspector/reportInspector", true, true, null)]
+        "ensure|build :reportEntry leanInspector/LeanInformationAudit leanInspector/reportInspector", true, true, null)]
     [InlineData("valid", "audit", 42, 42,
-        "ensure|build leanInspector/LeanInformationAudit", false, false, null)]
+        "ensure|build :reportEntry leanInspector/LeanInformationAudit", false, false, null)]
     [InlineData("missing", "both", 42, 42,
-        "ensure|build :report leanInspector/LeanInformationAudit leanInspector/reportInspector", false, false, null)]
-    [InlineData("valid", "none", 0, 0, "", true, true, null)]
+        "ensure|build :reportEntry leanInspector/LeanInformationAudit leanInspector/reportInspector", false, false, null)]
+    [InlineData("valid", "none", 0, 0, "ensure|build :reportEntry", true, true, null)]
     [InlineData("corrupt", "audit", 42, 42,
-        "ensure|build :report leanInspector/LeanInformationAudit", false, false, null)]
+        "ensure|build :reportEntry leanInspector/LeanInformationAudit", false, false, null)]
     [InlineData("valid", "invalid", 0, 2, "", false, true, "lean_targets requires", true)]
     [InlineData("valid", "invalid", 0, 2, "", false, false, "lean_targets requires")]
     [InlineData("valid", "malformed", 0, 2, "", false, true, "JSONDecodeError", true)]
     [InlineData("valid", "non-list", 0, 2, "", false, true, "lean_targets requires", true)]
     [InlineData("valid", "invalid-registered", 0, 2, "", false, true, "lean_targets requires", true)]
-    [InlineData("valid", "registered", 0, 0, "ensure|build FixtureAudit", true, true, null)]
+    [InlineData("valid", "registered", 0, 0, "ensure|build :reportEntry FixtureAudit", true, true, null)]
     [InlineData("valid", "both", 0, 0,
-        "ensure|build leanInspector/LeanInformationAudit leanInspector/reportInspector", true, true, null, true)]
-    [InlineData("valid", "none", 0, 0, "", true, true, null, true)]
-    [InlineData("valid", "audit", 42, 42, "ensure|build leanInspector/LeanInformationAudit", false, true, null, true)]
+        "ensure|build :reportEntry leanInspector/LeanInformationAudit leanInspector/reportInspector", true, true, null, true)]
+    [InlineData("valid", "none", 0, 0, "ensure|build :reportEntry", true, true, null, true)]
+    [InlineData("valid", "audit", 42, 42, "ensure|build :reportEntry leanInspector/LeanInformationAudit", false, true, null, true)]
     [InlineData("corrupt", "audit", 42, 42,
-        "ensure|build :report leanInspector/LeanInformationAudit", false, true, null, true)]
+        "ensure|build :reportEntry leanInspector/LeanInformationAudit", false, true, null, true)]
     public void ReportEntryHonorsRegisteredProgramObligations(
         string seed, string selection, int buildExit, int expectedExit,
         string expectedCalls, bool receiptExists, bool identicalReports, string? error,

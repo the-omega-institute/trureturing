@@ -129,6 +129,6 @@ def report_seed(root):
             raise ValueError("report producer returned no cache resource decision")
         if result.stderr:
             print(result.stderr, end="", file=sys.stderr, flush=True)
-        if not outcome["needs_lake"]:
+        if not outcome["needs_lake"] or outcome.get("candidate") is True:
             return str(report)
     return None

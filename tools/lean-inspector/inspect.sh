@@ -42,6 +42,7 @@ finish() {
   local rc=$?
   trap - EXIT
   if [[ "$rc" != 0 || "$PROGRAM_BUILD_PENDING" == 1 ]]; then rm -f -- "${OUTPUT}.reuse.json"; fi
+  rm -f -- "$REPOSITORY/.lake/build/lean-inspector/entry-witness.json"
   rm -rf -- "$STARTUP_LOG_DIR" || true
   resource_observe lean-inspector-finish "$REPOSITORY" || true
   exit "$rc"
@@ -131,33 +132,13 @@ open_logs() {
   export STRATALINT_INSPECTOR_PHASES="$LOG_DIR/native-phases.jsonl"
   : > "$STRATALINT_INSPECTOR_PHASES"
 }
-reuse_report() {
-  local status=0
-  python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
-    --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" || status=$?
-  printf '%s\n' "$status" > "$STARTUP_LOG_DIR/reuse.status"
-  # An optional seed miss is normal. Parser/registration failures still block.
-  if [[ "$status" == 0 || "$status" == 3 ]]; then return 0; fi
-  return "$status"
-}
-run_phase reuse reuse_report
-if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
-  open_logs
-  if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
-    PROGRAM_BUILD_PENDING=1
-    run_phase programs "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" \
-      "$LAKE" "${workspace[@]}" build "${BUILD_TARGETS[@]}"
-    PROGRAM_BUILD_PENDING=0
-  fi
-  cat "$LOG_DIR/reuse.stdout.log"
-  exit 0
-fi
-cat "$LOG_DIR/reuse.stdout.log"
+# Whole-report reuse needs the current native semantic witness. The Lake entry
+# shares preparation with fallback and keeps program/export failures required.
 require_lake
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
   --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
-# A failed new default/report run must not leave an apparent successful seal.
-rm -f -- "${OUTPUT}.reuse.json"
+# The failure trap removes any old seal; keep it available to the native entry
+# until its current semantic witness can be compared.
 if [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   run_phase utility-input-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
     --configuration Release --nologo --verbosity quiet
@@ -169,8 +150,9 @@ open_logs
 # The package facet owns report modules; explicit targets own program checks.
 # The writer owns the private clonefile-seeded .lake through the native build.
 run_phase report env STRATALINT_INSPECTOR_PUBLISH_REPORT="$OUTPUT" \
-  "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
+  "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :reportEntry \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
-  --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json"
-awk '/LEAN_INSPECTOR_WORK |RAW_LEAN_REPORT path=/' "$LOG_DIR/report.stdout.log"
+  --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json" \
+  --witness "$REPOSITORY/.lake/build/lean-inspector/entry-witness.json"
+awk '/LEAN_INSPECTOR_REUSE |LEAN_INSPECTOR_WORK |RAW_LEAN_REPORT path=/' "$LOG_DIR/report.stdout.log"

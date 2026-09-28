@@ -63,27 +63,16 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 默认输出或日志目录，以保留新工作树的 donor 播种条件。
 
 程序编译义务由 FILEMAP 及其登记的 [ci-resources.json](../../Meta/ci-resources.json) 中 `lean_targets` 显式选择。
-正常入口校验可选 `.reuse.json`：报告语义版本号、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
-一致，并且报告五件套通过完整私有校验时，复用报告数据。选中的程序目标仍须通过 Lake 增量编译；未选程序目标的命中不恢复 Lean 重缓存。
-缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_cache_release_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。无 scope 的直接调用消费登记的全部程序目标。
-`:report` 只构建登记报告模块及实际依赖，不隐式追加包的默认目标；选中的程序目标在报告命中与未命中时均须执行。
-程序构建义务独立于模块报告失效；只影响这些构建义务、未改变报告依赖的编辑，不会因此重提取无关模块报告。实际缺失或失效的模块
-提取会合批以共享加载工作，失效选择仍由 Lake 决定。输出
-`LEAN_INSPECTOR_WORK extracted_modules=… aggregates=…` 分别表示本次实际提取模块数
-与汇总次数。输入未变且原生工件有效时，两者均为零；报告复用时仍履行选中的编译义务
-并校验报告材料，current/delta 检查继续执行。编译失败返回非零并清除该输出的 `.reuse.json`。
-这两个计数不表示 Lean 重编数量；进程 RSS 观测也不表示最低 RAM 要求。
+正常入口在同一次 Lake `:reportEntry` 调用中准备当前依赖和选中的程序目标，再比较可选 `.reuse.json`。
+收据 v3 包含每个报告行的 Lake 语义见证：报告源、固定 Registry、utility claim、private/transitive 数据、外部包实际源码、
+有效编译选项、解析结果和工具链。生产程序字节不进入数据 identity，当前导出验证和选中的程序编译仍必须成功。
+下载探针只返回候选资格，不能凭坐标、完整性或编译成功宣告报告当前有效。缺少历史见证的收据回退原生路径。
 
-[lean-report-inputs.json](../../lean-report-inputs.json) 是 FILEMAP 登记的唯一输入
-清单，声明 `report_modules`、`inspector_sources`、`config_inputs`、
-`producer_scopes`，并可声明 `dependency_sources` 和完整调用的 `report_execution` 环境。
-首次生成 `.reuse.json` 须成功完成选中的程序目标、report 和发布；命中后私有校验并重发布报告，
-同时履行选中的编译义务。该证据随 current 种子传输，不改变报告 schema、模块来源或远端 mathlib 分区。
-[读取器](../scripts/report/lean-report-selection.py) 只展开显式登记的路径集合；路径为
-大小写敏感的仓库相对 POSIX 路径，按 `include`（`pattern`、`optional`）及 `exclude`
-选择，报告模块必须能在 Lake workspace 中解析。`dependency_sources` 与 `report_modules`
-共同给出允许捕获的本地 Lean 源码范围；它是登记清单，不是另一套失效规划器。
-仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
+完整见证匹配时，正常私有发布验证后复用整份报告，提取数和聚合数为零；不匹配时，原生 `:report` 复用本次已准备的 Lake jobs。
+缺失行和修复行的源码白名单从同一解析图共享的本地投影取得；外部闭包与其他报告模块在投影前排除，共同闭包只展开一次。
+`:report` 与模块 `:report` 公共 facet 的验证、noBuild、损坏修复义务保持不变。
+选中程序、报告或发布失败均返回非零并撤去本次输出收据；发布提交失败回滚已替换的输出，不转为 donor miss。
+收据只在整个入口成功后封存。warm 调用仍需当前 Lake 图见证；本地数据复用不能冒称无需 Lake 或已取得 hosted 性能收益。
 
 清单中的单一正整数 `report_cache_release_semantic_version` 是开发者维护的报告语义兼容版本，
 其值以清单为准，与清单格式的 `schema_version` 分开。

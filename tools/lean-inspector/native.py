@@ -37,8 +37,7 @@ UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'cla
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
 
 
-class PublicationFailure(RuntimeError):
-    """A failed output operation must not request artifact repair/re-extraction."""
+PublicationFailure = public.PublicationFailure
 
 
 def activity(kind, count):
@@ -535,17 +534,33 @@ def publish(root, destination):
         publish_validated(root, report, destination, inputs)
 
 
+def entry_reuse(root, witness_path):
+    output = os.environ.get('STRATALINT_INSPECTOR_PUBLISH_REPORT')
+    if not output:
+        raise ValueError('report entry requires publication output')
+    donor = os.environ.get('STRATALINT_LEAN_REPORT_REUSE', output)
+    witness = public.read_json(Path(witness_path).read_bytes())
+    result = reuse.reuse(root, donor, output, witness)
+    print('LEAN_INSPECTOR_REUSE ' + json.dumps(result, separators=(',', ':')))
+    reuse.warn_mismatch(result, sys.stdout)
+    if result['needs_lake']:
+        return 3
+    print('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0')
+    print(f'RAW_LEAN_REPORT path={output} sha256={public.digest(Path(output))}')
+    return 0
+
+
 def main():
     actions = {'prepare': prepare, 'module': module, 'aggregate': lambda root, output, *paths: aggregate(root, output, paths),
-               'validate': validate, 'publish': publish, 'batch': batch}
+               'validate': validate, 'publish': publish, 'batch': batch, 'entry-reuse': entry_reuse}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, validate, or publish')
-    actions[sys.argv[1]](*sys.argv[2:])
+    return actions[sys.argv[1]](*sys.argv[2:])
 
 
 if __name__ == '__main__':
     try:
-        main()
+        raise SystemExit(main())
     except PublicationFailure as error:
         print(f'lean-inspector-publication: {error}', file=sys.stderr)
         raise SystemExit(2)

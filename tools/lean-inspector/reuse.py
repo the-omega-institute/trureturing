@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Validate optional evidence that the complete report entry has no new work.
 
-The report semantic version, the report-module and configuration inputs, the explicitly
-registered execution environment and the complete five-piece report are sealed
-only after defaults/report/publication succeed. Producer program bytes are not
-part of the seal; the semantic version is their compatibility contract. A receipt selects no rules and grants no check success. A miss returns
-to the normal Lake entry; malformed authored registration remains an error.
+The receipt binds the complete five-piece report to Lake's per-row semantic
+witness, explicit compatibility, registered coordinates and execution. Only the
+current native entry can supply a witness after all semantic/export jobs succeed.
+Producer program bytes are erased from data identity; required builds still run.
+A download probe selects candidates, never certifies currentness or check success.
+Missing historical witnesses fail closed; fallback shares Lake's prepared jobs.
 """
 import argparse
 import json
@@ -22,7 +23,7 @@ import zlib
 import materials
 import publication
 
-SCHEMA = 'stratalint-lean-report-reuse-v2'
+SCHEMA = 'stratalint-lean-report-reuse-v3'
 SUFFIX = '.reuse.json'
 COMPLETED = ['defaults', 'report', 'publication']
 INVALID_SEED = (OSError, UnicodeError, ValueError, KeyError, TypeError,
@@ -91,7 +92,7 @@ def capture_execution(inputs):
 
 
 def capture(repository):
-    """Hash only the manifest's complete declared input population."""
+    """Capture download coordinates; Lake owns complete semantic currentness."""
     inputs = publication.selection.Selection(repository)
     inputs.validate('lean-report')  # Registration errors are not cache misses.
     execution = capture_execution(inputs)
@@ -121,13 +122,26 @@ def bundle_hashes(report):
 def receipt_record(data):
     """Decode the seal; callers must bind its inputs and bundle independently."""
     receipt = publication.read_json(data)
-    materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
+    materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle', 'semantic_witness'}, 'reuse receipt')
     if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
         raise ValueError('reuse receipt lacks complete entry success')
+    witness = receipt['semantic_witness']
+    if (not isinstance(witness, dict) or set(witness) != {'schema', 'rows'}
+            or witness['schema'] != 'lake-report-semantic-witness-v1'
+            or not isinstance(witness['rows'], list)):
+        raise ValueError('reuse receipt lacks complete Lake semantic witness')
+    names = []
+    for row in witness['rows']:
+        if (not isinstance(row, list) or len(row) != 2 or not all(isinstance(x, str) for x in row)
+                or not row[0] or len(row[1]) != 16 or any(c not in '0123456789abcdef' for c in row[1])):
+            raise ValueError('invalid Lake semantic witness row')
+        names.append(row[0])
+    if names != sorted(set(names)):
+        raise ValueError('invalid Lake semantic witness population')
     return receipt
 
 
-def read_receipt(report, captured):
+def read_receipt(report, captured, witness=None):
     path = publication.member(report, SUFFIX)
     if path.is_symlink() or not path.is_file():
         raise ValueError('reuse receipt is absent or nonregular')
@@ -136,6 +150,10 @@ def read_receipt(report, captured):
         raise InputMismatch(receipt['inputs'], captured)
     if receipt['bundle'] != bundle_hashes(report):
         raise ValueError('reuse receipt bundle mismatch')
+    if witness is None:
+        raise ValueError('current Lake semantic witness is required')
+    if receipt['semantic_witness'] != witness:
+        raise ValueError('Lake semantic witness changed')
     return receipt
 
 
@@ -148,21 +166,31 @@ def miss(reason, error=None):
     return result
 
 
-def probe(repository, report):
+def probe(repository, report, witness=None):
     """Select optional downloads; only the normal entry validates publication."""
     captured = capture(repository)
     if not captured['eligible']:
         return miss(captured['reason'])
     try:
-        read_receipt(report, captured)
+        if witness is None:
+            path = publication.member(report, SUFFIX)
+            if path.is_symlink() or not path.is_file():
+                raise ValueError('reuse receipt is absent or nonregular')
+            receipt = receipt_record(path.read_bytes())
+            if receipt['inputs'] != captured:
+                raise InputMismatch(receipt['inputs'], captured)
+            if receipt['bundle'] != bundle_hashes(report):
+                raise ValueError('reuse receipt bundle mismatch')
+            return dict(needs_lake=True, reason='current-semantic-witness-required', candidate=True)
+        read_receipt(report, captured, witness)
     except INVALID_SEED as error:
         return miss('seed-rejected', error)
     return dict(needs_lake=False, reason='receipt-matched')
 
 
-def write_receipt(report, captured):
+def write_receipt(report, captured, witness):
     path = publication.member(report, SUFFIX)
-    record = dict(schema=SCHEMA, completed=COMPLETED, inputs=captured, bundle=bundle_hashes(report))
+    record = dict(schema=SCHEMA, completed=COMPLETED, inputs=captured, bundle=bundle_hashes(report), semantic_witness=witness)
     # Never write through cache hard links or leave a partially written receipt.
     fd, temporary = tempfile.mkstemp(prefix='.report-reuse.', dir=path.parent)
     try:
@@ -173,7 +201,7 @@ def write_receipt(report, captured):
         Path(temporary).unlink(missing_ok=True)
 
 
-def seal(repository, report, captured):
+def seal(repository, report, captured, witness=None):
     current = capture(repository)
     if current != captured:
         publication.member(report, SUFFIX).unlink(missing_ok=True)
@@ -183,28 +211,30 @@ def seal(repository, report, captured):
         return
     # The caller reaches this only after Lake's default+report facet and normal
     # private publication have succeeded. Bind the exact published five pieces.
-    write_receipt(report, captured)
+    if witness is None:
+        raise ValueError('current Lake semantic witness is required')
+    write_receipt(report, captured, witness)
 
 
-def reuse(repository, report, output):
+def reuse(repository, report, output, witness=None):
     captured = capture(repository)
     if not captured['eligible']:
         return miss(captured['reason'])
     try:
         # The normal entry never trusts a prior probe. Full validation occurs
         # in publication's private snapshot, with before/after material hashes.
-        receipt = read_receipt(report, captured)
+        receipt = read_receipt(report, captured, witness)
         coordinates = publication.coordinates(repository)
         publication.publish(report, output, coordinates, repository, mode='cached',
                             expected_hashes=receipt['bundle'])
         # Rebind source evidence after publication; a same-path republish may
         # only change publication mode, not the report or its material bytes.
         if Path(report).resolve() != Path(output).resolve():
-            if receipt != read_receipt(report, captured):
+            if receipt != read_receipt(report, captured, witness):
                 raise ValueError('reuse receipt changed during publication')
         if capture(repository) != captured:
             raise ValueError('registered inputs changed during reuse')
-        write_receipt(output, captured)
+        write_receipt(output, captured, witness)
     except INVALID_SEED as error:
         publication.member(output, SUFFIX).unlink(missing_ok=True)
         return miss('seed-rejected', error)
@@ -218,6 +248,7 @@ def main():
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
+    parser.add_argument('--witness', type=Path)
     parser.add_argument('--diagnostics', action='store_true',
                         help='emit probe mismatch warnings to stderr while retaining JSON stdout')
     args = parser.parse_args()
@@ -227,17 +258,18 @@ def main():
         parser.error('--output is required')
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
+    witness = publication.read_json(args.witness.read_bytes()) if args.witness else None
     if args.command == 'capture':
         args.snapshot.write_bytes(materials.canonical_json(capture(args.repository)))
     elif args.command == 'seal':
-        seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()))
+        seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()), witness)
     elif args.command == 'probe':
-        result = probe(args.repository, args.report)
+        result = probe(args.repository, args.report, witness)
         print(json.dumps(result, separators=(',', ':')))
         if args.diagnostics:
             warn_mismatch(result, sys.stderr)
     else:
-        result = reuse(args.repository, args.report, args.output)
+        result = reuse(args.repository, args.report, args.output, witness)
         print('LEAN_INSPECTOR_REUSE ' + json.dumps(result, separators=(',', ':')))
         warn_mismatch(result, sys.stdout)
         if result['needs_lake']:
@@ -250,6 +282,9 @@ def main():
 if __name__ == '__main__':
     try:
         raise SystemExit(main())
+    except publication.PublicationFailure as error:
+        print(f'lean-inspector-publication: {error}', file=sys.stderr)
+        raise SystemExit(2)
     except INVALID_SEED as error:
         print(f'lean-inspector-reuse: {error}', file=sys.stderr)
         raise SystemExit(1)

@@ -189,8 +189,8 @@ public sealed class LeanReportSelectionTests
         foreach (var buildProducer in new[] { false, true })
         foreach (var unavailableClock in new[] { false, true })
         foreach (var failedPhase in buildProducer
-                     ? new[] { "", "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "publish", "seal" }
-                     : new[] { "", "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" })
+                     ? new[] { "", "inputs", "capture", "utility-input-build", "ensure", "report", "publish", "seal" }
+                     : new[] { "", "inputs", "capture", "ensure", "report", "publish", "seal" })
             yield return [failedPhase, unavailableClock, buildProducer];
     }
 
@@ -281,8 +281,8 @@ public sealed class LeanReportSelectionTests
             $"attempted={string.Join(",", ScriptHarnessScratch.ReadRecordedCalls(phases))}\n" +
             $"stdout:\n{BoundedDiagnostic(result.StandardOutput)}\nstderr:\n{BoundedDiagnostic(result.StandardError)}");
         var allPhases = buildProducer
-            ? new[] { "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "seal" }
-            : new[] { "inputs", "reuse", "capture", "ensure", "report", "seal" };
+            ? new[] { "inputs", "capture", "utility-input-build", "ensure", "report", "seal" }
+            : new[] { "inputs", "capture", "ensure", "report", "seal" };
         // Publication now runs inside the native report command. Keep the
         // publication-failure case while observing the report phase boundary.
         var observedFailure = failedPhase == "publish" ? "report" : failedPhase;

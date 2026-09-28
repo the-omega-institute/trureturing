@@ -10,6 +10,7 @@ from test_native_publication import *
 from test_native_recovery import *
 from test_native_packaging import *
 from test_native_reuse import *
+from test_native_entry import *
 from test_native_interface import *
 from test_native_records import *
 from packages.reg import NativeRegTests, NativeRegConsumerTests, NativeRegSupport
@@ -31,6 +32,9 @@ class NativeRecoveryTests(NativeDependencyTestSupport, NativeRecoveryConsumerTes
     pass
 
 class NativeSemanticTests(NativeDependencyTestSupport, NativeSemanticConsumerTests, unittest.TestCase):
+    pass
+
+class NativeEntryTests(NativeDependencyTestSupport, NativeEntryConsumerTests, unittest.TestCase):
     pass
 
 class NativeCompilerTests(NativeDependencyTestSupport, NativeCompilerOptionsTests,

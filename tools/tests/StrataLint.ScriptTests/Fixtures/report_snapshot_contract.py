@@ -235,9 +235,9 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                     mock.patch.object(api.publication, "validate_bundle", side_effect=AssertionError("report decoded twice")):
                 key, _, _ = self.publish_seed(export, bounded=bounded)
                 self.assertEqual(expected, key)
-        self.assertFalse(api.probe(self.root, fixture.report)["needs_lake"])
+        self.assertTrue(api.probe(self.root, fixture.report)["candidate"])
         before = api.bundle_hashes(fixture.report)
-        self.assertFalse(api.reuse(self.root, fixture.report, fixture.output)["needs_lake"])
+        self.assertFalse(api.reuse(self.root, fixture.report, fixture.output, fixture.witness)["needs_lake"])
         self.assertNotEqual(before[".provenance.json"], api.bundle_hashes(fixture.output)[".provenance.json"])
         fixture.report = fixture.output
         self.assertEqual(expected, self.publish_seed(export)[0])

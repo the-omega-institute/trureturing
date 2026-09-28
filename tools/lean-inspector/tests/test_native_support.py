@@ -309,6 +309,8 @@ defaultFacets = ["static"]
 
     def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120,
                         observe_output=None):
+        if args and args[0] == getattr(self, 'lake', None):
+            args = ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-run.sh'), *args]
         if os.environ.get('STRATALINT_NATIVE_COMMAND_OBSERVATION') != '1':
             return self._guarded_command(args, cwd=cwd, env=env, text=text, capture_output=capture_output,
                 timeout=timeout, observe_output=observe_output)

@@ -87,7 +87,12 @@ private def writeBinFileIfChanged (path : FilePath) (contents : ByteArray) : IO 
   catch _ =>
     pure false
   unless unchanged do
-    IO.FS.writeBinFile path contents
+    let temporary := path.addExtension "tmp"
+    try
+      IO.FS.writeBinFile temporary contents
+      IO.FS.rename temporary path
+    finally
+      removeFileIfExists temporary
 
 private def strings (json : Json) (key : String) : IO (Array String) :=
   IO.ofExcept (json.getObjValAs? (Array String) key)
@@ -138,6 +143,9 @@ private structure SemanticArena where
   edges : Nat := 0
   allEdges : Nat := 0
   unionVisits : Nat := 0
+  localProjections : Lean.PersistentHashMap Nat (Array String) := {}
+  localProjectionBuilds : Nat := 0
+  localProjectionMembers : Nat := 0
   deriving Inhabited
 
 package_facet reportSemanticArena (_pkg : Package) : Std.Mutex SemanticArena := do
@@ -266,6 +274,25 @@ private structure SemanticSummary where
   id : Nat
   digest : UInt64
   validation : Job Unit
+  localId : Nat
+  path : String
+
+-- Enumerate only the already projected local set. External and other reported
+-- sources never enter this set; shared driver/claim closures flatten once.
+private partial def localSourcePaths (id : Nat) : StateM SemanticArena (Array String) := do
+  if id == 0 then return #[]
+  if let some paths := (← get).localProjections.find? id then return paths
+  let node := (← get).nodes[id]!
+  let paths ← if node.bit == 64 then pure (node.values.map (fun s => s.drop 11 |>.toString))
+    else do
+      let left ← localSourcePaths node.left
+      let right ← localSourcePaths node.right
+      pure (left ++ right)
+  modify fun arena => {arena with
+    localProjections := arena.localProjections.insert id paths
+    localProjectionBuilds := arena.localProjectionBuilds + 1
+    localProjectionMembers := arena.localProjectionMembers + paths.size}
+  return paths
 
 /-- Compose actual resolved direct imports once per module. The canonical set
 forgets producer membership/topology while retaining all data and configurations.
@@ -273,23 +300,29 @@ Validation follows the same shared jobs and remains required on report hits. -/
 module_facet reportSemanticSummary (mod : Module) : SemanticSummary := do
   let pkg := (← getWorkspace).root
   let arena ← (← fetch <| pkg.facet `reportSemanticArena).await
+  let reported ← (← fetch <| pkg.facet `reportSourceModules).await
   let source ← fetch <| mod.facet `reportSemanticSource
   let imports ← (← mod.imports.fetch).await
   let children ← imports.mapM fun child => fetch <| child.facet `reportSemanticSummary
   (source.zipWith Prod.mk (Job.collectArray children)).mapM fun (input, summaries) => do
     let atom := if input.program then "config:" ++ input.compilerConfig
       else "source:" ++ mod.name.toString ++ ":" ++ source.getTrace.hash.toString
-    let (id, digest) ← arena.atomically do
+    let (id, digest, localId) ← arena.atomically do
       modify fun state => {state with
         modules := state.modules + 1
         edges := state.edges + imports.size
         allEdges := state.allEdges + input.importCount}
       let mut id ← semanticLeaf #[atom]
-      for summary in summaries do id ← semanticUnion id summary.id
-      return (id, (← get).nodes[id]!.digest)
+      let mut localId := 0
+      unless reported.contains mod.name || input.path.startsWith ".lake/" || input.path.startsWith "../" do
+        localId ← semanticLeaf #["local-path:" ++ input.path]
+      for summary in summaries do
+        id ← semanticUnion id summary.id
+        localId ← semanticUnion localId summary.localId
+      return (id, (← get).nodes[id]!.digest, localId)
     let validation ← (Job.collectArray (summaries.map (·.validation))).add input.validation
       |>.mapM fun _ => pure ()
-    return ⟨id, digest, validation⟩
+    return ⟨id, digest, validation, localId, input.path⟩
 
 /-- Trace semantic compatibility after validating registered inputs.
 Module identity projects registered semantic inputs through Lake imports.
@@ -398,31 +431,24 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     exports := exports.push (← claim.exportInfo.fetch)
     sourceModules := sourceModules.push claim
   let summaries ← sourceModules.mapM fun source => fetch <| source.facet `reportSemanticSummary
-  -- Only extraction consumes the source whitelist. Hits do no closure flatten,
-  -- lexical sort, source-list serialization or per-member validation traversal.
-  let prepareProduction : JobM Unit := do
-    let reported ← (← JobM.runFetchM <| fetch <| pkg.facet `reportSourceModules).await
-    let mut dependencies : OrdModuleSet := .empty
-    for source in sourceModules do
-      dependencies := dependencies.insert source
-      dependencies := dependencies.appendArray (← (← JobM.runFetchM source.transImports.fetch).await)
-    let mut sourcePaths : Array String := #[]
-    for dependency in dependencies do
-      if dependency.name != mod.name && reported.contains dependency.name then continue
-      let path := (relPathFrom (← repositoryDir pkg) (← IO.FS.realPath dependency.leanFile)).toString
-      unless path.startsWith ".lake/" || path.startsWith "../" do
-        sourcePaths := sourcePaths.push path
-    writeBinFileIfChanged (utility.addExtension "sources.json")
-      (String.toUTF8 (Lean.toJson sourcePaths).compress)
   let semantic ← (← fetch <| pkg.facet `reportSemanticInputs).await
   let arena ← (← fetch <| pkg.facet `reportSemanticArena).await
   -- Finish the semantic set during preparation, independently of compilation.
   -- Only the small root list is joined here; shared subtrees stay interned.
   let roots ← (Job.collectArray summaries).await
-  let digest ← arena.atomically do
+  let (digest, localId) ← arena.atomically do
     let mut id := 0
-    for summary in roots do id ← semanticUnion id summary.id
-    return (← get).nodes[id]!.digest
+    let mut localId := 0
+    for summary in roots do
+      id ← semanticUnion id summary.id
+      localId ← semanticUnion localId summary.localId
+    return ((← get).nodes[id]!.digest, localId)
+  let some moduleSummary := roots[0]? | error "missing module semantic summary"
+  let prepareProduction : JobM Unit := do
+    let paths ← arena.atomically (localSourcePaths localId)
+    let paths := paths.push moduleSummary.path
+    writeBinFileIfChanged (utility.addExtension "sources.json")
+      (String.toUTF8 (Lean.toJson paths).compress)
   -- Await without mixing: recompilation must succeed, but its implementation
   -- identity is not a report-semantic dependency.
   let inspector ← reportInspector.fetch
@@ -554,13 +580,27 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
           let state ← get
           return Lean.Json.mkObj [("modules", Lean.toJson state.modules),
             ("direct_edges", Lean.toJson state.allEdges), ("resolved_edges", Lean.toJson state.edges), ("union_visits", Lean.toJson state.unionVisits),
-            ("set_nodes", Lean.toJson state.nodes.size), ("memoized_unions", Lean.toJson state.unionVisits)]
+            ("set_nodes", Lean.toJson state.nodes.size), ("memoized_unions", Lean.toJson state.unionVisits),
+            ("local_projection_builds", Lean.toJson state.localProjectionBuilds),
+            ("local_projection_members", Lean.toJson state.localProjectionMembers)]
         IO.FS.writeFile path counts.compress
     catch _ => logWarning "Inspector semantic work observation unavailable"
+    observePhase "lake-local-projection" "start"
     let requests ← artifacts.filterMapM fun request => do
       if request.artifact?.isSome then return none
       request.prepareProduction
       return some ("produce", request.args.set! 5 (request.file.addExtension "pending").toString)
+    observePhase "lake-local-projection" "finish"
+    try
+      if let some path ← IO.getEnv "STRATALINT_INSPECTOR_SEMANTIC_WORK" then
+        let arena ← (← JobM.runFetchM <| fetch <| pkg.facet `reportSemanticArena).await
+        let counts ← arena.atomically do
+          let state ← get
+          return Lean.Json.mkObj [("miss_rows", Lean.toJson requests.size),
+            ("projection_builds", Lean.toJson state.localProjectionBuilds),
+            ("projection_members", Lean.toJson state.localProjectionMembers)]
+        IO.FS.writeFile (FilePath.mk (path ++ ".projection.json")) counts.compress
+    catch _ => logWarning "Inspector local projection observation unavailable"
     unless requests.isEmpty do
       discard <| runBatch pkg requests
   let batch ← registerJob "Inspector native production batch" batch
@@ -640,3 +680,39 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
     finally
       removeFileIfExists pending
       for repair in (← repairFiles.get) do removeFileIfExists repair
+
+
+/-- The complete entry shares native preparation with fallback. Only Lake can
+supply a current semantic witness: every row includes its driver, utility and
+private/transitive data, effective options, resolution and required exports.
+The receipt compares these program-erased traces, never producer source bytes. -/
+package_facet reportEntry (owner : Package) : FilePath := withCurrPackage owner do
+  let pkg := (← getWorkspace).root
+  let root ← repositoryDir pkg
+  let inputs ← (← fetch <| pkg.facet `reportInputs).await
+  let names ← strings (← readJson inputs) "modules"
+  let mut prepared := #[]
+  observePhase "lake-entry-prepare" "start"
+  observePhase "lake-entry-register" "start"
+  for name in names do
+    let some mod := (← getWorkspace).findModule? name.toName
+      | error s!"registered report module is not in the Lake workspace: {name}"
+    prepared := prepared.push (← preparedModuleReport mod)
+  observePhase "lake-entry-register" "finish"
+  (Job.collectArray prepared).mapM fun rows => do
+    observePhase "lake-entry-prepare" "finish"
+    let witness := Lean.Json.mkObj [
+      ("schema", Lean.toJson "lake-report-semantic-witness-v1"),
+      ("rows", Lean.toJson ((names.zip rows).map fun (name, row) =>
+        (name, row.inputTrace.hash.toString)))]
+    let path := root / ".lake/build/lean-inspector/entry-witness.json"
+    writeBinFileIfChanged path (String.toUTF8 witness.compress)
+    let result ← IO.Process.output (← nativeCommand pkg #["entry-reuse", root.toString, path.toString])
+    unless result.stdout.isEmpty do logInfo result.stdout
+    unless result.stderr.isEmpty do logInfo result.stderr
+    if result.exitCode == 0 then
+      let some output ← IO.getEnv "STRATALINT_INSPECTOR_PUBLISH_REPORT"
+        | error "report entry requires publication output"
+      return FilePath.mk output
+    unless result.exitCode == 3 do error s!"Inspector entry reuse failed: {result.exitCode}"
+    return ← (← JobM.runFetchM <| fetch <| owner.facet `report).await
