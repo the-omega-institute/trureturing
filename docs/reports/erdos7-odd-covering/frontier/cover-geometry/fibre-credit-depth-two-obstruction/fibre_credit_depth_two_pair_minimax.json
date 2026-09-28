@@ -1,0 +1,175 @@
+{
+  "cases": [
+    {
+      "actual_survivor_count": 120,
+      "dual_cell_checks": 120,
+      "dual_terms": 58,
+      "exact_minimax": true,
+      "gap_to_scalar_target": "-502519/3252480",
+      "mode_budget_checks": 11,
+      "name": "pure-only control",
+      "originals": [
+        [
+          3,
+          0
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          7,
+          0
+        ]
+      ],
+      "primal_atoms": 96,
+      "query_minimum": "1339/768",
+      "query_minimum_decimal": 1.7434895833333333
+    },
+    {
+      "actual_survivor_count": 75,
+      "dual_cell_checks": 75,
+      "dual_terms": 43,
+      "exact_minimax": true,
+      "gap_to_scalar_target": "10484101/100826880",
+      "mode_budget_checks": 11,
+      "name": "opposite-root stars and three mixed originals",
+      "originals": [
+        [
+          3,
+          0
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          45,
+          2
+        ],
+        [
+          21,
+          1
+        ],
+        [
+          63,
+          58
+        ],
+        [
+          35,
+          3
+        ],
+        [
+          105,
+          74
+        ],
+        [
+          315,
+          187
+        ]
+      ],
+      "primal_atoms": 62,
+      "query_minimum": "47663/23808",
+      "query_minimum_decimal": 2.001974126344086
+    },
+    {
+      "actual_survivor_count": 85,
+      "dual_cell_checks": 85,
+      "dual_terms": 41,
+      "exact_minimax": true,
+      "gap_to_scalar_target": "6330773/36861440",
+      "mode_budget_checks": 11,
+      "name": "same-root stars and three mixed originals",
+      "originals": [
+        [
+          3,
+          0
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          45,
+          22
+        ],
+        [
+          21,
+          1
+        ],
+        [
+          63,
+          16
+        ],
+        [
+          35,
+          3
+        ],
+        [
+          105,
+          74
+        ],
+        [
+          315,
+          47
+        ]
+      ],
+      "primal_atoms": 52,
+      "query_minimum": "18015/8704",
+      "query_minimum_decimal": 2.0697380514705883
+    }
+  ],
+  "evidence": "Ordinary proof and exact certificate verification; no new Lean verification or covering counterexample.",
+  "method": "First-cylinder pigeonhole lower and simultaneous Haar-tail upper; exact rational primal and dual certificates without an optimizer.",
+  "outside_primes": [
+    11,
+    13,
+    17,
+    19,
+    23,
+    29
+  ],
+  "query_mode_fees": {
+    "105": "35/24",
+    "15": "5/4",
+    "21": "7/6",
+    "3": "1",
+    "315": "35/24",
+    "35": "35/24",
+    "45": "5/4",
+    "5": "5/4",
+    "63": "7/6",
+    "7": "7/6",
+    "9": "1"
+  },
+  "scalar_target": "8038/4235",
+  "scope": "All probability laws supported on the three specified modulo315 survivor sets, with every nonternary query height and ternary query height<=2. Obstruction only to the stated direct scalar continuation."
+}
