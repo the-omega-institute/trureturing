@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ce88b160b69e163f5883f1e0bc7b8f4702ef7febfeb4e0beef4f71864870ec89
   normalized_sha256: sha256:ce88b160b69e163f5883f1e0bc7b8f4702ef7febfeb4e0beef4f71864870ec89
 cas_ref: sha256:ce88b160b69e163f5883f1e0bc7b8f4702ef7febfeb4e0beef4f71864870ec89
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/QuadraticIdeals/EisensteinPrimaryAssociate.exists_primary_associate
+    target_statement_id: sha256:161b0c2ccaaa5e84a54c718a22fab8f16bddc4361c9a53fc122242dbd77bf15d
 receipts:
   unresolved_subitems: []
