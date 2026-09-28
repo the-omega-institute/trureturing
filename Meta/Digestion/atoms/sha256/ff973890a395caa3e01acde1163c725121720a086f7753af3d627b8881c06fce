@@ -1,0 +1,43 @@
+### 推论 50.1：切面最优与整树最优之间的共同延拓障碍
+
+定义
+
+$$
+L_T(D,f)
+=
+\max_{v\in T}c_{A_v}^D(f)
+=
+\max_{v\in T}\min_{H\in\operatorname{Ext}(D,f)}
+\kappa_{A_v}(H).
+$$
+
+则总有
+
+$$
+\boxed{
+L_T(D,f)\leq P_T(D,f).
+}
+$$
+
+对 \(k\in\mathbb N\)，令
+
+$$
+\mathcal E_v(k)
+=
+\{H\in\operatorname{Ext}(D,f):\kappa_{A_v}(H)\leq k\}.
+$$
+
+则
+
+$$
+\boxed{
+P_T(D,f)\leq k
+\Longleftrightarrow
+\bigcap_{v\in T}\mathcal E_v(k)\neq\varnothing.
+}
+$$
+
+所以每个切面都存在低容量延拓，并不推出存在一个同时对所有节点低容量的共同延拓。严格差距不是某个单切面“还不够小”，而是延拓选择之间没有共同交点。
+
+这给出定理 40 的精确解释：其列出的各叶和联合切面代价分别给出有限的 \(c_{A_v}^D(f)\)，而因果峰值却可随参数无界。对应的 \(\mathcal E_v(k)\) 可以逐个非空，但它们的交为空；树协议被迫选择一个共同全域行为，不能分别采用每个切面自己的最优延拓。
+

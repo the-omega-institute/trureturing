@@ -1,0 +1,28 @@
+**普遍替换条件下的因子化。** 若节点消息满足
+
+$$
+m_v(a)=m_v(a')\Longrightarrow
+\widehat R_{A_v,D}^{F}(a)=\widehat R_{A_v,D}^{F}(a')
+$$
+
+对所有 \(a,a'\in D_{A_v}\)，则存在唯一满射
+
+$$
+q_v:\operatorname{Reach}_{\Pi}(v)\twoheadrightarrow
+\mathsf S_{A_v,D}^{\bot}(F)
+$$
+
+使
+
+$$
+q_v(m_v(a))=[a]_{A_v,D}^{\bot}.
+$$
+
+特别地，
+
+$$
+|\operatorname{Reach}_{\Pi}(v)|\geq\kappa_{A_v,D}^{\bot}(F).
+$$
+
+等号成立，当且仅当消息恰好把总化边界等价类作为纤维。
+

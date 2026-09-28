@@ -1,0 +1,50 @@
+### 定义 46：承诺域的总化响应与仅承诺响应
+
+令 \(D\subseteq X_I\) 为非空承诺域，固定 \(I=A\sqcup B\)。记
+
+$$
+D_A=\{a\in X_A:\exists b\in X_B,\ a\sqcup b\in D\},
+$$
+
+以及合法后缀纤维
+
+$$
+D(a)=\{b\in X_B:a\sqcup b\in D\}.
+$$
+
+若把非法补全视为必须保留的失败，则取一个新的符号
+
+$$
+\bot\notin O,\qquad O_\bot=O\sqcup\{\bot\},
+$$
+
+定义总化响应
+
+$$
+\widehat R_{A,D}^{F}(a)(b)=
+\begin{cases}
+F(a\sqcup b),&b\in D(a),\\
+\bot,&b\notin D(a).
+\end{cases}
+$$
+
+在 \(D_A\) 上按总化响应相等取商，得到
+
+$$
+\mathsf S_{A,D}^{\bot}(F),\qquad
+\kappa_{A,D}^{\bot}(F).
+$$
+
+这是把合法性本身纳入任务读数的闭合模型。定理 17 的因子化和下界可以直接迁移到 \(D_A\) 与 \(\widehat R\)；定理 18、20 还需要 \(D\) 对所用坐标块满足合法拼接闭合，或改用下面定义的可达消息配对。一般承诺域不是直积，不能把任意 \(a\in D_A\) 与 \(c\in D_C\) 自动拼成合法输入。
+
+若承诺被视为外部保证，只要求在 \(D\) 内输出 \(F\)，则自然会尝试定义仅承诺关系
+
+$$
+a\approx_{A,D}^{F}a'
+\quad\Longleftrightarrow\quad
+\forall b\in D(a)\cap D(a'),\
+F(a\sqcup b)=F(a'\sqcup b).
+$$
+
+这个关系一般不是传递的，因此不能自动形成规范的商空间。
+
