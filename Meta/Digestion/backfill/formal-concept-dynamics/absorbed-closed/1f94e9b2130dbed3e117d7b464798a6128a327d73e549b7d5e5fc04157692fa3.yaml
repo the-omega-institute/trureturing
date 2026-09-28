@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:1f94e9b2130dbed3e117d7b464798a6128a327d73e549b7d5e5fc04157692fa3
   normalized_sha256: sha256:1f94e9b2130dbed3e117d7b464798a6128a327d73e549b7d5e5fc04157692fa3
 cas_ref: sha256:1f94e9b2130dbed3e117d7b464798a6128a327d73e549b7d5e5fc04157692fa3
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/LocalCARDeficiency.result
+    target_statement_id: sha256:b374ff1791a6b9e2fbb619c0390ef18eb98154362be2358a3e6754deddeadb85
 receipts:
   unresolved_subitems: []

@@ -12,7 +12,7 @@ namespace Reg.D5.S3.Estimation.ErrorExponents.ProbeThresholdOptimization
 universe u
 
 def signature : Signature where
-  Params := Σ ι : Type u, (ι → ℝ) × ℝ
+  Params := Σ ι : Type u, Σ _ : ι → ℝ, ℝ
   State p := p.1
   Role := Unit
   finiteRole := inferInstance
@@ -105,11 +105,11 @@ register_information_theorem probe_threshold_optimization in arena
   realizes registration
   escape from source ({
     owner := `D5.S3.Estimation.ErrorExponents.ProbeThresholdOptimization
-    coordinates := #[0, 3, 6]
+    coordinates := #[0, 2, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "value", "body"]
-      stateBinder := 9 }] })
+        "body", "value", "body"]
+      stateBinder := 8 }] })
   escape continues (open)
 
 #print axioms rejected_law
