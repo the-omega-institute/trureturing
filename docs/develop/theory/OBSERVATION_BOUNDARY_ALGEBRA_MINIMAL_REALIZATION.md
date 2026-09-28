@@ -2295,3 +2295,317 @@ $$
 按前缀余因子区分剩余函数、通过变量次序改变所需记忆，是经典机制，参见 R. E. Bryant，*Graph-Based Algorithms for Boolean Function Manipulation*，IEEE Transactions on Computers C-35(8), 677–691 (1986)，§3.2、图 2，[可读原文](https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf)，[DOI: 10.1109/TC.1986.1676819](https://doi.org/10.1109/TC.1986.1676819)。这里的计算将此机制用于一个固定投影、两个相等分支及其完成次序规范化，并在所有原始半对层保留常值响应。两个精确宽度的计算只涉及所列顺序，不断言它们在全体顺序中最优；其计量仍是完整层宽度，不是约简决策图总节点数、转移表大小或运行时间。∎
 
 ## 追加锚（本行以下为增补区）
+## 十八、固定异常族的乘积切片指数与全布尔多分支实现
+
+### 定理 32：固定异常族的匹配切面乘积界与最小一致指数
+
+固定整数 $r\geq1$、非空有限集合 $X_j,Y_j$ 及指定构件
+
+$$
+\phi_j:X_j\times Y_j\longrightarrow Z_j=\operatorname{im}\phi_j
+\qquad(1\leq j\leq r),
+$$
+
+并先固定每个构件的方向为 $X_j$ 端点先于 $Y_j$ 端点。记
+
+$$
+S_{j,x}=\phi_j(\{x\}\times Y_j),
+\qquad
+\tau_j=\tau_{\mathrm r}(\phi_j)
+=\min\left\{\sum_{x\in X_j}\lambda_{j,x}:
+\lambda_{j,x}\geq0\ (x\in X_j),\quad
+\sum_{x:z\in S_{j,x}}\lambda_{j,x}\geq1\ (z\in Z_j)\right\},
+\qquad
+T=\prod_{j=1}^r\tau_j.
+$$
+
+这里的权重均为实数；因 $Z_j$ 非空，对任意 $z\in Z_j$，可行覆盖满足 $\sum_x\lambda_{j,x}\geq\sum_{x:z\in S_{j,x}}\lambda_{j,x}\geq1$，故每个 $\tau_j\geq1$。
+
+将定义 31 的比较框架扩展为含上述 $r$ 个指定构件的有限族：将全部构件编号为 $1,\ldots,n$（$n\geq r$），前 $r$ 个为指定构件；允许任意有限个其余构件，只要求每个其余构件存在一条满射行和一条满射列，不要求所有切片满射。指定构件本身也允许具有满射切片或单点有效像。全部端点是互不相同的原始坐标，输入遍历非空有限端点域的完整独立直积，构件输出集均取有效像；$O$ 为任意非空有限集，$G:\prod_{i=1}^nZ_i\to O$ 为任意全函数，$F=G((\phi_i)_i)$。对每个使全部 $X_j$ 端点先于相应 $Y_j$ 端点的端点顺序 $\pi$，都有
+
+$$
+W_F(\operatorname{cn}(\pi))\leq W_F(\pi)^T.
+$$
+
+更细地，在定义 26 的完成次序匹配所给出的每个切面 $B\subseteq A$ 中，沿用先读、后读端点坐标 $u_i,v_i$，定义构件指标集
+
+$$
+\mathcal E=\{i\in\{1,\ldots,n\}:u_i\in A\setminus B\},
+\qquad J=\mathcal E\cap\{1,\ldots,r\}.
+$$
+
+匹配保证 $A\setminus B=\{u_i:i\in\mathcal E\}$，且每个 $i\in\mathcal E$ 在 $B$ 中两端点均未读、在 $A$ 中仅先读端点已读。故 $J$ 恰为这些额外打开的指定构件指标，$\mathcal E\setminus J$ 恰为额外打开的其余构件指标。则
+
+$$
+\kappa_B(F)\leq\kappa_A(F)^{\prod_{j\in J}\tau_j},
+$$
+
+空乘积取 $1$。固定顺序下出现的这些跨越子集乘积只是一个上界；这里不声称某个固定顺序的最大跨越子集乘积必然达到全局最小指数。
+
+指数 $T$ 是一致的最小实指数，即使允许一个与变化的伴随构件、字母表、外层任务和读取顺序无关的固定正乘数，也不能把 $T$ 降低。外层输出甚至可以限制为标量布尔值。若每个指定构件的方向也可以选择，则相应的最小一致指数为
+
+$$
+\prod_{j=1}^r\max\{\tau_{\mathrm r}(\phi_j),\tau_{\mathrm c}(\phi_j)\}.
+$$
+
+**证明。** 由定义 31 的有限线性规划对偶，对每个 $j$ 取有理最优原权重 $(\lambda_{j,x})_{x\in X_j}\in\mathbb R_{\geq0}^{X_j}$ 及有理最优对偶权重 $(w_{j,z})_{z\in Z_j}\in\mathbb R_{\geq0}^{Z_j}$，满足
+
+$$
+\sum_x\lambda_{j,x}=\sum_z w_{j,z}=\tau_j,
+\qquad
+\sum_{z\in S_{j,x}}w_{j,z}\leq1.
+$$
+
+在乘积输出集 $Z=\prod_jZ_j$ 上，乘积行 $S_{\mathbf x}=\prod_jS_{j,x_j}$ 的权重
+
+$$
+\lambda_{\mathbf x}=\prod_j\lambda_{j,x_j}
+$$
+
+覆盖每个 $\mathbf z$，因为
+
+$$
+\sum_{\mathbf x:\,\mathbf z\in S_{\mathbf x}}\lambda_{\mathbf x}
+=\prod_j\sum_{x_j:\,z_j\in S_{j,x_j}}\lambda_{j,x_j}\geq1.
+$$
+
+同时令 $w_{\mathbf z}=\prod_jw_{j,z_j}$，则每个乘积行满足
+
+$$
+\sum_{\mathbf z\in S_{\mathbf x}}w_{\mathbf z}
+=\prod_j\sum_{z_j\in S_{j,x_j}}w_{j,z_j}\leq1,
+$$
+
+而两组总权重都等于 $\prod_j\tau_j=T$。弱对偶性遂给出乘积覆盖问题的最优值正是 $T$。这一步只是有限线性规划的经典乘积计算；以下只使用一次由该覆盖给出的 AGM 界。对任意跨越子集 $J$，把同一乘积构造限制到 $j\in J$；下文的 $\lambda_{\mathbf x}$、$w_{\mathbf z}$ 均按这个限制解释。
+
+考虑任一上述匹配切面。设全部原始坐标的集合为 $I$，坐标 $v$ 的字母表为 $D_v$，并记 $\Omega_C=\prod_{v\in C}D_v$（$C\subseteq I$）。把 $J$ 中每个指定构件的两个端点都从 $B$ 的完整后缀中删去，定义一个对所有前缀共同的、带标签的完整后缀域
+
+$$
+\mathcal D=\prod_{v\in I\setminus(B\cup\{u_j,v_j:j\in J\})}D_v.
+$$
+
+它仍包含 $\mathcal E\setminus J$ 中其余构件的两个原始端点，以及当前半读的任何指定构件的未读端点。对每个 $B$ 前缀 $b$ 和 $\mathbf z\in\prod_{j\in J}Z_j$，令
+
+$$
+H_{\mathbf z}^{b}:\mathcal D\longrightarrow O
+$$
+
+表示将 $b$ 与 $d\in\mathcal D$ 合并，计算其余构件，并把 $J$ 中指定构件的输出替换为 $\mathbf z$ 后代入 $G$ 所得的函数。由于每个 $\phi_j$ 都满射到其有效像，且原始坐标是完整独立直积，$B$ 的响应恰好由元组
+
+$$
+R=\{(H_{\mathbf z}^{b})_{\mathbf z\in\prod_{j\in J}Z_j}:b\in\Omega_B\}
+$$
+
+给出；两个 $B$ 响应相等，当且仅当这一个元组的每个坐标函数相等。因此 $|R|=\kappa_B(F)$。
+
+固定任意 $\mathbf x=(x_j)_{j\in J}\in\prod_{j\in J}X_j$。对 $\mathcal E\setminus J$ 中每个其余构件固定一个具有满射切片的先读端点值，对所有 $b\in\Omega_B$ 使用同一组值。用这组值及 $J$ 中的先读端点值 $x_j$ 将 $b$ 扩展为 $A$ 前缀，并记所得响应为 $T_{\mathbf x}^{b}:\Omega_{I\setminus A}\to O$。令
+
+$$
+S_{\mathbf x}=\prod_{j\in J}S_{j,x_j}.
+$$
+
+则对任意 $b,b'\in\Omega_B$ 有单一的投影等价
+
+$$
+T_{\mathbf x}^{b}=T_{\mathbf x}^{b'}
+\quad\Longleftrightarrow\quad
+(H_{\mathbf z}^{b})_{\mathbf z\in S_{\mathbf x}}
+=(H_{\mathbf z}^{\,b'})_{\mathbf z\in S_{\mathbf x}}.
+$$
+
+从右到左只需求值：任取 $A$ 后缀 $s\in\Omega_{I\setminus A}$，用其中的 $y_j$ 得到 $\mathbf z=(\phi_j(x_j,y_j))_{j\in J}\in S_{\mathbf x}$；将 $s$ 与固定的额外端点合并后限制到 $\mathcal D$ 的坐标，得到 $d$。右侧的函数相等给出两次求值相同，故 $T_{\mathbf x}^{b}=T_{\mathbf x}^{b'}$。
+
+从左到右使用共同后缀回放：任取 $\mathbf z\in S_{\mathbf x}$ 与 $d\in\mathcal D$，逐个选择 $y_j$ 使 $\phi_j(x_j,y_j)=z_j$；再对 $\mathcal E\setminus J$ 的每个其余构件，利用其固定满射切片选择后读端点值，使该构件输出保持 $d$ 中原来的值。其余未读坐标照抄 $d$。这些额外打开的构件在 $B$ 中均完全未读，故选择不依赖前缀取 $b$ 还是 $b'$。所得同一个 $A$ 后缀 $s$ 同时实现
+
+$$
+T_{\mathbf x}^{b}(s)=H_{\mathbf z}^{b}(d),
+\qquad
+T_{\mathbf x}^{\,b'}(s)=H_{\mathbf z}^{\,b'}(d).
+$$
+
+这次回放只调整 $\mathcal E\setminus J$ 中具有所需满射切片的其余构件和 $J$ 中的指定构件；$J$ 之外的每个指定构件，包括当前半读的那个，始终保持不动。故若左侧相等，便对所有 $\mathbf z,d$ 得到右侧相等。于是 $R$ 在属性集 $S_{\mathbf x}$ 上的投影关系 $P_{\mathbf x}$ 满足
+
+$$
+|P_{\mathbf x}|\leq\kappa_A(F).
+$$
+
+对关系 $R$ 直接应用一次 AGM 分数覆盖界。因 $R$ 包含在由各 $P_{\mathbf x}$ 组成的自然连接中，
+
+$$
+\kappa_B(F)=|R|
+\leq\prod_{\mathbf x}|P_{\mathbf x}|^{\lambda_{\mathbf x}}
+\leq\kappa_A(F)^{\sum_{\mathbf x}\lambda_{\mathbf x}}
+=\kappa_A(F)^{\prod_{j\in J}\tau_j}.
+$$
+
+这里不假设各个 $H_{\mathbf z}$ 坐标独立，也不把该自然连接误认为就是 $R$；只使用投影包含关系。若 $J$ 为空，固定满射切片的同一回放给出普通单射 $\kappa_B\leq\kappa_A$。每个 $\tau_j\geq1$，故 $\prod_{j\in J}\tau_j\leq T$，而 $\kappa_A(F)\geq1$，所以每个匹配层都有 $\kappa_B(F)\leq W_F(\pi)^T$。定义 26 的奇、偶匹配覆盖规范化顺序的每个非初始层；两个顺序的初始层容量均为 $1$，终值层容量均为 $|\operatorname{im}F|$，且 $|\operatorname{im}F|\leq W_F(\pi)\leq W_F(\pi)^T$。取最大值即得全局上界。跨越子集的乘积在固定顺序中只提供这个上界。
+
+下面证明不能降低指数。取乘积对偶权重
+
+$$
+w_{\mathbf z}=\prod_{j=1}^r w_{j,z_j},
+$$
+
+取 $L\geq1$ 使 $\ell_{\mathbf z}=Lw_{\mathbf z}$ 全为整数，并令
+
+$$
+M=\sum_{\mathbf z}\ell_{\mathbf z}=LT,
+\qquad
+s_{\mathbf x}=\sum_{\mathbf z\in S_{\mathbf x}}\ell_{\mathbf z}\leq L.
+$$
+
+每个非零最优对偶因子至少有一条紧行；否则该因子可整体放大而提高目标值。因此存在乘积紧行使 $s_{\mathbf x}=L$。令
+
+$$
+K_{\mathbf z}=\mathbb Z/(m^{\ell_{\mathbf z}})\mathbb Z,
+\qquad
+K=\prod_{\mathbf z}K_{\mathbf z},
+$$
+
+其中 $\ell_{\mathbf z}=0$ 时 $K_{\mathbf z}$ 为单点群，并取一个伴随加法构件 $K\times K\to K$。外层标量任务为
+
+$$
+F(\mathbf x,\mathbf y,a,b)
+=\mathbf1\!\left[(a+b)_{(\phi_1(x_1,y_1),\ldots,\phi_r(x_r,y_r))}=0\right].
+$$
+
+写 $c_X=\prod_j|X_j|$、$c_Y=\prod_j|Y_j|$、$C_0=c_Xc_Y$。实际读取顺序取为
+
+$$
+\pi=(X_1,\ldots,X_r,a,b,Y_1,\ldots,Y_r),
+$$
+
+即先读全部指定构件的 $X$ 端点，再读加法构件的 $a,b$，最后逐个读 $Y$ 端点；规范化顺序为
+
+$$
+\operatorname{cn}(\pi)=(a,b,X_1,Y_1,\ldots,X_r,Y_r).
+$$
+
+保留每一个端点层的计数。原顺序在读完全部或部分 $X$ 端点时至多有 $c_X$ 个前缀响应；读完 $a$ 后，一个响应由 $\mathbf x$ 及 $a$ 在 $S_{\mathbf x}$ 上的限制决定，故至多
+
+$$
+\sum_{\mathbf x}m^{s_{\mathbf x}}\leq c_Xm^L
+$$
+
+个响应。读完 $b$ 后以及读任何一个 $Y$ 端点的前缀时，一个响应由 $\mathbf x$、该 $Y$ 前缀和其乘积行中各正权坐标的零标志决定，因而至多
+
+$$
+C_0 2^L
+$$
+
+个响应。一个紧行在读完 $a$ 的切面给出至少 $m^L$ 个不同响应：两种不同的 $a$ 限制在某个 $\mathbf z\in S_{\mathbf x}$ 上不同，选取实现该 $\mathbf z$ 的 $\mathbf y$，并令 $b_{\mathbf z}=-a_{\mathbf z}$ 即可用同一个后缀区分。因此对 $m\geq2$，并以 $C_0\geq c_X$ 吸收所有前缀层，
+
+$$
+m^L\leq W_F(\pi)\leq C_0m^L.
+$$
+
+规范化顺序的第一个 $a$ 层恰有 $m^M$ 个响应。若 $a\neq a'$，在某个坐标 $\mathbf z$ 上不同；完整独立直积和各 $\phi_j$ 的满射性允许为每个 $j$ 选择完整端点对 $(x_j,y_j)$ 使 $\phi_j(x_j,y_j)=z_j$，再取满足 $b_{\mathbf z}=-a_{\mathbf z}$ 的 $b\in K$（其余坐标任取）。这个共同的完整原始后缀 $(b,x_1,y_1,\ldots,x_r,y_r)$ 同时用于 $a,a'$，即分离两者。读完 $b$ 后及其后每一个单独的 $X_j$ 或 $Y_j$ 端点层，响应由端点前缀和 $D_+=\{\mathbf z:\ell_{\mathbf z}>0\}$ 上的零标志决定，故至多
+
+$$
+C_0 2^d,
+\qquad d=|D_+|\leq M.
+$$
+
+当 $m\geq2C_0$ 时，$C_0 2^d\leq m^M$；初始层为 $1$，终值层为 $2$，于是
+
+$$
+W_F(\operatorname{cn}(\pi))=m^M=m^{LT}
+\qquad(m\geq2C_0).
+$$
+
+这里的估计逐个保留端点层，没有把端点元组当作一个原子读取。于是，对 $0\leq\alpha<T$，
+
+$$
+\frac{W_F(\operatorname{cn}(\pi))}{W_F(\pi)^\alpha}
+\geq C_0^{-\alpha}m^{L(T-\alpha)}\longrightarrow\infty;
+$$
+
+对 $\alpha<0$，使用 $W_F(\pi)\geq m^L$ 得
+
+$$
+\frac{W_F(\operatorname{cn}(\pi))}{W_F(\pi)^\alpha}
+\geq m^{L(T-\alpha)}\longrightarrow\infty.
+$$
+
+所以任意固定正乘数都不能支持小于 $T$ 的一致指数。所有 $\tau_j=1$、单点有效像和某些 $\ell_{\mathbf z}=0$ 的情形均包含在构造中；零坐标只给出单点群，$M\geq L\geq1$ 仍保证标量输出的两个布尔值都可达到。若所有有效像均为单点，构造退化为同一个加法零检验，指定端点虽不影响输出，宽度仍由伴随加法构件给出指数一的下界。常数 $C_0$ 及 $m\geq2C_0$ 的门槛只依赖固定的指定族及所选对偶权重。
+
+若第 $j$ 个构件改为 $Y_j$ 端点先读，则对转置构件使用同一证明，指数变为 $\tau_{\mathrm c}(\phi_j)$。各方向可独立选择达到较大值的方向，乘积构造同时给出相应下界，故允许方向变化时的最小一致指数是
+
+$$
+\prod_{j=1}^r\max\{\tau_{\mathrm r}(\phi_j),\tau_{\mathrm c}(\phi_j)\}.
+$$
+
+分数覆盖和加权直积的中间步骤沿用 Atserias、Grohe、Marx，*Size Bounds and Query Plans for Relational Joins*，SIAM Journal on Computing 42(4), 1737–1767 (2013)，[DOI: 10.1137/110859440](https://doi.org/10.1137/110859440)，可读稿 [arXiv:1711.03860v1](https://arxiv.org/pdf/1711.03860v1)，引理 2–4；新增的是上述多异常构件的回放对应、完整端点层计数及其标量实现。∎
+
+### 推论 32.1：固定投影族的全布尔选择器锐利指数
+
+固定整数 $r\geq1$，令 $q=2^r$。对任意整数块长 $k\geq1$、每个 $s\in\mathbb B^r$ 和 $1\leq i\leq k$，取互不相同的二元相等构件，分别产生
+
+$$
+U_{s,i}=\mathbf1[u_{s,i}^0=u_{s,i}^1],
+\qquad
+V_{s,i}=\mathbf1[v_{s,i}^0=v_{s,i}^1],
+$$
+
+并写 $U_s,V_s\in\mathbb B^k$。再取 $r$ 个彼此独立的指定投影构件
+
+$$
+\phi_j(t_j,d_j)=t_j,
+\qquad(t_j,d_j)\in\mathbb B^2.
+$$
+
+外层标量任务为
+
+$$
+F=\mathbf1[U_t=V_t],
+\qquad t=(t_1,\ldots,t_r).
+$$
+
+共有 $2qk$ 个良好相等构件、$4qk+2r$ 个原始比特。固定字典序：先按 $s$ 再按 $i$ 读取每个相等对的两个端点，并令每个良好相等对连续出现。取原顺序
+
+$$
+\pi=(t_1,\ldots,t_r,\text{全部 }U\text{ 对},\text{全部 }V\text{ 对},d_1,\ldots,d_r),
+$$
+
+以及规范化顺序
+
+$$
+\rho=\operatorname{cn}(\pi)
+=(\text{全部 }U\text{ 对},\text{全部 }V\text{ 对},t_1,d_1,\ldots,t_r,d_r).
+$$
+
+则计入全部端点和选择器层，精确宽度为
+
+$$
+W_F(\pi)=q\,2^k,
+\qquad
+W_F(\rho)=2^{qk}.
+$$
+
+因此在这个全布尔范围内，指数 $q=2^r$ 是最小一致指数；这里只对所列两种顺序给出锐利族，不声称所有端点顺序中的全局最优性。
+
+**证明。** 先复用单个相等分支的逐层计数。若先读一个目标向量的 $r_0$ 个完整相等对，再读下一对的第一端点，已读端点与下一位目标比特只通过下一端点所需的一个极性进入响应，故这一层至多有 $2^{r_0+1}\leq2^k$ 个函数。进入核对向量后，若已完成 $\ell$ 个核对对，则匹配响应有 $2^{k-\ell}$ 个；当 $\ell>0$ 还要加入一次失配后的常值 $0$，得到 $2^{k-\ell}+1$，而 $\ell=k$ 时只剩常值 $0,1$。半读下一核对对时，极性和剩余目标位给出 $2^{k-\ell}$ 个匹配函数，若 $\ell>0$ 再加同一个失败常值；当 $\ell=0$ 没有失败分支。每个数都不超过 $2^k$。这些计数保留了半对的极性与失败常值，且没有以切面容量单调性替代逐层计算。
+
+在原顺序中，所有选择器读完以前尚未读入任何良好相等对，所以每一层只有至多 $q$ 个选择器前缀响应。选择器读完以后，每个分支在任意相等对层的响应族至多为 $2^k$，所有分支的并集至多为 $q2^k$；相同的常值在不同分支间只计一次。读完全部 $U$ 对的切面，每个分支给出其自身 $V_s$ 坐标上的 $2^k$ 个非恒等点指标。不同 $s$ 使用不相交的未读 $V$ 坐标，且 $k\geq1$，故这些非恒等函数族彼此不交；独立选择各个 $U_s$ 并选择相应的选择器值达到它们，遂该层恰有 $q2^k$ 个响应。选择器完成前的层、半读层、$V$ 阶段的层和末尾无关的 $d_j$ 层均已由上述计数控制，初始层为 $1$、最终层为 $2$，故第一式成立。
+
+在规范化顺序中，选择器尚未读取时，一个响应是定义在共同选择器域上的有序分支函数组。由于每个 $s$ 的良好端点互不相交，任一分支前缀的可达选择可以独立合并；总响应相等当且仅当每个分支函数都相等。因此每一层的响应数至多为各分支逐层上界的乘积 $2^{qk}$。读完全部 $U$ 对时，每个 $U_s$ 可独立取遍 $\mathbb B^k$，得到 $q$ 个独立的 $V_s$ 点指标，故该层恰有 $2^{qk}$ 个响应。
+
+随后读选择器。全部 $U,V$ 对完成后，各 $H_s=\mathbf1[U_s=V_s]$ 可独立取 $0$ 或 $1$，所以在选择器域 $\mathbb B^r$ 上可以达到任意布尔真值表。读完 $j$ 个选择器 $t_1,\ldots,t_j$ 后，剩余函数域有 $2^{r-j}$ 个点，响应数恰为
+
+$$
+2^{2^{r-j}}
+\qquad(0\leq j\leq r);
+$$
+
+读入紧随其后的无关端点 $d_j$ 不改变该数。这个数列从 $2^q$ 递减到最终的 $2$，不超过已经达到的 $2^{qk}$（$k\geq1$）；故 $W_F(\rho)=2^{qk}$。
+
+最后，对任意 $\alpha<q$，
+
+$$
+\frac{W_F(\rho)}{W_F(\pi)^\alpha}
+=q^{-\alpha}2^{(q-\alpha)k}\longrightarrow\infty.
+$$
+
+这正是经典选择器与前缀余因子机制在固定投影族上的应用；其余因子和读序的残余函数区分可参见 R. E. Bryant，*Graph-Based Algorithms for Boolean Function Manipulation*，IEEE Transactions on Computers C-35(8), 677–691 (1986)，§3.2、§4.5，[DOI: 10.1109/TC.1986.1676819](https://doi.org/10.1109/TC.1986.1676819)。该推论只给出所列布尔族的精确宽度和指数锐利性，不把经典机制改述为新的全序定理。∎
+
+## 追加锚（本行以下为增补区）
