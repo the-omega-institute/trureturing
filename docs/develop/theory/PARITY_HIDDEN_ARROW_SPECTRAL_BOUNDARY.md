@@ -20806,3 +20806,471 @@ $Q^{O(1)}e^{-c e^{2\Delta}}$，任意慢发散余量不足以使该界趋零。
 不据有限文献检索宣称全局原创，不推导零噪声或其他后验泛函。
 
 ## 追加锚（第 109 章后续增补区）
+
+## 110. 高阶 Rényi 输出响应的统一边界与有限阶修正
+
+**定理 110.1（从增长阶数到无穷阶的同纤维一致响应）。** 保持第 103、105、107、108 章的原实际模型、全部取整、完整计数后验、精确中心及同一 Gaussian 标量观测。信息量以 nats 计。令
+
+$$
+L=\ln(1/\sigma),\qquad L\to\infty,\qquad
+\limsup L/Q^3<c_q/2,
+\qquad b_x=\frac{\sqrt\delta}{2v_*},\quad v_*=\max_jv_j.
+\tag{110.1}
+$$
+
+这里 $v_j=C_jp_j(1-p_j)/B^2$、$\delta=Q^{-1/2}$；$v_*$ 是原完整数组的经验最大值。
+记 $\mathsf P_x^y$ 为原均匀大小 $q$ 支持先验下，给定数据及输出 $y$ 的完整计数后验，
+$\nu=2\int\rho(s)^2ds$。对每个固定 $c>0,K<\infty$，
+
+$$
+\sup_{\substack{\alpha\in[c/\sqrt\delta,\infty]\\|y|\le K}}
+\left|H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x^0)
+-\frac\alpha{\alpha-1}\left(b_xy-\frac{y^2}{2\nu}\right)\right|
+\longrightarrow0.
+\tag{110.2}
+$$
+
+无穷阶的因子约定为一。收敛是在原实际数据概率下，对所有规定大小的确定支持一致，
+pair/path 分别成立；整个双重上确界取在同一数据纤维 $x$ 上。
+该结论不把不同阶数的最优实现当作共同实现，也不排列两个输出熵之差。
+
+因此，对任意确定 $a_Q\sqrt\delta\to\infty$，
+
+$$
+\sup_{\substack{\alpha\in[a_Q,\infty]\\|y|\le K}}
+\left|H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x^0)-b_xy+\frac{y^2}{2\nu}\right|
+\longrightarrow0.
+\tag{110.3}
+$$
+
+若 $\alpha_Q\sqrt\delta\to c\in(0,\infty)$，则在同样范围内
+
+$$
+H_{\alpha_Q}(\mathsf P_x^y)-H_{\alpha_Q}(\mathsf P_x^0)-b_xy+\frac{y^2}{2\nu}
+\longrightarrow\frac{y}{2c\rho_0}
+\tag{110.4}
+$$
+
+一致于紧输出区间。有限阶因子在这一尺度留下真实常数项，不能直接删掉。
+本章未分类更慢增长的阶数、无界输出或 Shannon 端点。
+
+**证明：从原剖面取得缩小的谱隙。** 保持第 56 章
+
+$$
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\theta=\frac{\ln(1+r)}{-\ln(1-r)},\quad
+\kappa=1/a+\theta^2/b,
+$$
+
+$$
+\rho(s)=\rho_0e^{-\kappa s^2/2},\quad
+\rho_0=(4\pi\sqrt{ab})^{-1},\quad\gamma=\int\rho(s)ds.
+\tag{110.5}
+$$
+
+在同一个实际好事件上，原完整 $V\to\gamma>0$，组数 $m_Q\le CQ^2$，
+$\ln q=c_qQ^3+O(1)$，$\ln M=O(Q^3)$，以及
+
+$$
+e_j=(\mu_j-C_jp_j)/B,\qquad
+\|e\|_2=O_{\mathbb P}(Q^{-5/2}),\qquad
+\max_j|p_j-1/2|=O_{\mathbb P}(q^{-1/2}),\qquad
+\sum_jC_j=O_{\mathbb P}(B^2).
+\tag{110.6}
+$$
+
+取充分大固定 $K_0$，$R_Q=\sqrt{K_0\ln Q}$。第 56 章 (56.5)–(56.9) 的原有界取整与
+第 69 章 (69.6) 的精确补偿给
+
+$$
+\max_{|j\delta|\le R_Q}
+\left|\frac{v_j}{\delta\rho(j\delta)}-1\right|
+=O_{\mathbb P}(Q^{-3/2}(1+\ln Q)^{3/2})=o_{\mathbb P}(\delta^2),
+\qquad
+\sum_{|j\delta|>R_Q}v_j\le Q^{-60}.
+\tag{110.7}
+$$
+
+这里比较均值是原信号双 Poisson 点质量的 $2q$ 倍；原一、二行方差界给增长核心内的相对集中。
+两个计数偏差仍分别为 $\sqrt\lambda j\delta-\xi$ 和
+$(P/Q)\sqrt\lambda j\delta+\xi$，$\xi\in[0,1)$ 为原取整误差。
+保留这两项的 Stirling 展开给 (110.7)，未更换幅度或计数线，path 行也未被设为独立。
+
+对核心内非零 $j$，
+$1-e^{-\kappa j^2\delta^2/2}\ge c\min(j^2\delta^2,1)$。
+由于 (110.7) 的相对误差是 $o_{\mathbb P}(\delta^2)$，尾部又比 $v_0\asymp\delta$ 小，得到
+
+$$
+v_*=v_0\ \text{且唯一},\qquad
+1-v_j/v_0\ge c_1\min(j^2\delta^2,1)\quad(j\ne0),
+\qquad
+1-v_{\pm1}/v_0\sim\kappa\delta^2/2.
+\tag{110.8}
+$$
+
+这是从实际环境推出的缩小谱隙，不是新增正的固定谱隙假设。
+
+选 $\ell<c_q/2$ 使 $L\le\ell Q^3$ 最终成立，再选固定 $\epsilon>0$ 使
+$2\epsilon<c_q-\ell$。仅为证明分成
+$\mathcal H=\{j:C_j\ge e^{\epsilon Q^3}\}$ 与其补集；$0,\pm1$ 及上述增长核心最终属于 $\mathcal H$。
+对 $j\in\mathcal H\setminus\{0\}$ 置
+
+$$
+d_j^\circ=1-v_j/v_0,\qquad
+w_j=\frac{v_j}{\alpha d_j^\circ},\qquad
+m_j^\circ=-\frac{e_j}{d_j^\circ}.
+\tag{110.9}
+$$
+
+$d_j^\circ$ 表示谱亏损，不是二项方差。按 $|j|$ 递增排列非零指标，以 $i$ 为秩。
+核心内使用 $e^{-cx^2}/\min(x^2,1)\le C/x^2$，尾部使用 $v_j\le Q^{-60}$、$i\le CQ^2$，得
+
+$$
+w_i\le\frac{C}{\alpha\delta i^2},\qquad
+w_1,w_2\asymp(\alpha\delta)^{-1},\qquad
+\sum_{j\ne0}(m_j^\circ)^2\le C\delta^{-4}\|e\|_2^2=O_{\mathbb P}(Q^{-3}).
+\tag{110.10}
+$$
+
+删除不在 $\mathcal H$ 的指标只减小它们的秩，故该上界仍适用。
+
+**精确幂后验与临界能量分解。** 对有限 $\alpha>1$，令
+$\mathsf P_{x,\alpha}(n)=\mathsf P_x(n)^\alpha/\sum\mathsf P_x^\alpha$。
+在同一原标量 $T$ 上记其噪声 $\sigma/\sqrt\alpha$ 的预测密度为 $f_{\alpha}$。
+有限 Gaussian 似然求和给经典恒等式
+
+$$
+H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x^0)
+=\frac{-\ln[f_\alpha(y)/f_\alpha(0)]
++\alpha\ln[f_x(y)/f_x(0)]}{\alpha-1}.
+\tag{110.11}
+$$
+
+先验的大熵项在此精确消去。第 105、108 章已给原普通输出密度
+
+$$
+\sup_{|y|\le K}\left|\ln\frac{f_x(y)}{f_x(0)}+\frac{y^2}{2\nu}\right|\to0.
+\tag{110.12}
+$$
+
+现先在 $c/\sqrt\delta\le\alpha\le Q^6$ 上分析高组 Gaussian 比较。
+令
+
+$$
+E_\alpha^G=\sum_{j\in\mathcal H}(\sqrt{v_j/\alpha}Z_j-e_j)^2,
+\qquad c_*=1/(2v_0),\qquad h_y=V+\sqrt\delta y.
+\tag{110.13}
+$$
+
+$Z_j$ 是辅助独立标准 Gaussian；完整 $V$ 和精确中心保留。
+对每个非最大坐标的平方作 $e^{\alpha c_*X_j^2}$ 倾斜，因 $v_j<v_0$ 可积，
+新 Gaussian 的均值和方差恰为 (110.9)。写
+
+$$
+R_\alpha=\sum_{j\in\mathcal H\setminus\{0\}}(\sqrt{w_j}Z_j+m_j^\circ)^2,
+\qquad F_\alpha(h)=\Pr(R_\alpha\le h).
+$$
+
+最大坐标的平方密度保留为未归一化核，从而有限维精确分解为
+
+$$
+p_{E_\alpha^G}(h)=C_{x,\alpha}e^{-\alpha c_*h}r_\alpha(h),\qquad
+r_\alpha(h)=\mathbb E\!\left[
+\frac{\cosh(\alpha e_0\sqrt{h-R_\alpha}/v_0)}{\sqrt{h-R_\alpha}}
+\mathbf1_{R_\alpha<h}\right],\quad h>0.
+\tag{110.14}
+$$
+
+常数 $C_{x,\alpha}>0$ 与输出、噪声无关，未对它作近似。
+本式没有把最大坐标在不可积临界点归一化，也没有延拓内部鞍点定理。
+
+**有限数组的小球下界和对数凹性。** 置 $A=1/(\alpha\delta)$。
+对每个固定 $h_0>0$，(110.10) 给
+
+$$
+F_\alpha(h_0)\ge e^{-C_{h_0}(1+A)}.
+\tag{110.15}
+$$
+
+具体取 $N=\lceil K_1(1+A)\rceil$。在当前阶数范围内 $N=O(\delta^{-1/2})$，
+比可用核心坐标数小；必要时缺失坐标补零。
+尾部中心平方范数的均值至多 $CA/N$，由 Markov 至少以概率 $1/2$ 小于 $h_0/16$。
+前 $N$ 个独立标准坐标限制为 $|Z_i|\le\eta i/N$，其能量至多 $CA\eta^2/N$，
+而概率至少 $(c\eta)^NN!/N^N\ge e^{-CN}$。
+取 $K_1$ 大、$\eta$ 小，再用原非中心均值范数趋零及三角不等式，得到 (110.15)。
+
+$F_\alpha$ 关于正 $h$ 对数凹。确实，Gaussian 密度乘
+凸集合 $\{(h,z):\|z\|^2\le h\}$ 的指标是联合对数凹函数，经典 Prékopa 边缘定理适用。
+若采用光滑正函数版本，先用
+
+$$
+\varphi(z)\exp\{-n^{-1}\ln(1+e^{n^2(\|z\|^2-h)})\}
+\tag{110.16}
+$$
+
+逼近；它正、光滑、联合对数凹且被可积 Gaussian 主控。
+球面为 Gaussian 零测集，支配收敛及对数凹不等式的点态极限给所需指标版本。
+非中心、非等方差均不改变此论证；未声称平方和密度本身对数凹。
+
+$F_\alpha$ 在正能量区间光滑、递增。对数凹性和 $h/2$ 处的小球下界给，
+在任一固定正能量紧区间上
+
+$$
+0\le(\ln F_\alpha)'(h)\le\frac{2[-\ln F_\alpha(h/2)]}{h}
+\le D_\alpha:=C(1+1/(\alpha\delta)).
+\tag{110.17}
+$$
+
+从 $r_\alpha$ 中去掉 cosh 得 $r_\alpha^0$。分 $R_\alpha\le h/2$ 与其余部分，
+后者用 $F_\alpha'(t)\le D_\alpha F_\alpha(h)$ 积分平方根奇点，得到
+
+$$
+C^{-1}F_\alpha(h)\le r_\alpha^0(h)\le C(1+D_\alpha)F_\alpha(h),
+\qquad
+\alpha^{-1}\left|\ln\frac{r_\alpha(h)}{r_\alpha^0(h)}\right|
+\le C|e_0|/v_0=O_{\mathbb P}(Q^{-2}).
+\tag{110.18}
+$$
+
+这是每阶自由能的界，允许 $\alpha|e_0|/v_0$ 本身增大。
+对全局卷积尾部，指标 $\pm1$ 的二维 Gaussian 密度至多 $C\alpha\delta$；
+极坐标积分使这两个平方的和具有相同阶的密度上界，卷积其余非负平方不增大它。因此
+
+$$
+F_\alpha'(h)\le C\alpha\delta,\qquad
+r_\alpha(h)\le C\alpha\delta\sqrt h\,e^{\alpha|e_0|\sqrt h/v_0},\quad h>0.
+\tag{110.19}
+$$
+
+**噪声平方完成与输出差。** 对稍后所需的相邻噪声宽度 $\sigma'$，令
+$u'=(\sigma')^2$、$s^2=\delta u'/\alpha$、
+$z_y=h_y-\delta u'c_*$，以及 $\Phi_{u'}(h)=c_*h-\delta u'c_*^2/2$。
+将 $r_\alpha$ 在负能量处延拓为零。能量尺度上的 Gaussian 卷积精确给
+
+$$
+g_{\alpha,\sigma'}(y)=C_{x,\alpha}\sqrt\delta\,
+ e^{-\alpha\Phi_{u'}(h_y)}(r_\alpha*\varphi_s)(z_y).
+\tag{110.20}
+$$
+
+其中 $g$ 是 $(E_\alpha^G-V)/\sqrt\delta+(\sigma'/\sqrt\alpha)G$ 的密度。
+$V\to\gamma$、$\delta c_*$ 有界、$\sigma'\to0$，使紧输出的所有 $z_y$ 落在固定正能量紧区间。
+由 (110.17)–(110.19)，在此区间
+
+$$
+\left|\ln\frac{(r_\alpha*\varphi_s)(z)}{F_\alpha(z)}\right|
+\le C\{1+\ln(2+D_\alpha)+D_\alpha s+D_\alpha^2s^2
+ +\alpha|e_0|/v_0\}+o(1).
+\tag{110.21}
+$$
+
+证明是在稍大的正紧区间使用
+$e^{-D_\alpha|E-z|}\le F_\alpha(E)/F_\alpha(z)\le e^{D_\alpha|E-z|}$。
+上界用 $\mathbb E e^{D_\alpha s|G|}\le2e^{D_\alpha^2s^2/2}$，
+下界只积分 $|G|\le1$。
+区间外用 (110.19)，将 $\alpha|e_0|\sqrt E/v_0$ 吸收入 Gaussian 指数的固定比例：
+$\sqrt E/(E-z)^2$ 在那里有界，且 $(|e_0|/v_0)\delta u'\to0$。
+剩余尾部为多项式乘 $e^{-c/s^2}$，除以
+$F_\alpha(z)\ge e^{-C(1+1/(\alpha\delta))}$ 仍趋零，
+因为 $\alpha/(\delta u')$ 在整个指定阶数范围内压过该损失及多项式对数。
+
+现在 $z_y-z_0=\sqrt\delta y$，故
+
+$$
+\frac1\alpha\left|\ln
+\frac{(r_\alpha*\varphi_s)(z_y)}{(r_\alpha*\varphi_s)(z_0)}\right|
+\le\frac C\alpha\{D_\alpha\sqrt\delta K+1+\ln(2+D_\alpha)
+ +D_\alpha s+D_\alpha^2s^2\}+C|e_0|/v_0+o(1)\to0.
+\tag{110.22}
+$$
+
+例如 $\sqrt\delta D_\alpha/\alpha\le
+C(\sqrt\delta/\alpha+1/(\alpha^2\sqrt\delta))=O(\sqrt\delta)$，
+$\ln(2+D_\alpha)/\alpha=O(\sqrt\delta\ln Q)$，且 $D_\alpha s\to0$ 一致成立。
+(110.20) 在两个输出相减后归一化常数与有限噪声截距同时消失，得到
+
+$$
+-\alpha^{-1}\ln[g_{\alpha,\sigma'}(y)/g_{\alpha,\sigma'}(0)]
+=b_xy+o_{\mathbb P}(1).
+\tag{110.23}
+$$
+
+为支付整数舍入，还需噪声宽度的绝对比较。
+若 $|u'/u-1|\le h_Q$ 且 $h_Q$ 指数小，(110.20) 的同一个 $C_{x,\alpha}$ 精确消去。
+$\Phi$ 的变化至多 $C|u'-u|/\delta$，$z$ 的变化至多 $C|u'-u|$。
+再用 (110.17)、(110.21)，给
+
+$$
+\alpha^{-1}|\ln g_{\alpha,\sigma'}(y)-\ln g_{\alpha,\sigma}(y)|
+\le C|u'-u|/\delta+CD_\alpha|u'-u|/\alpha+o_{\mathbb P}(1)=o_{\mathbb P}(1).
+\tag{110.24}
+$$
+
+这里分别在两点使用的 (110.21) 除以 $\alpha$ 后趋零，未隐藏噪声前因子。
+
+**至 $Q^6$ 的原计数回接。** 对高组 $N=C_j$、$d=Np(1-p)$、
+$z=(n-Np)/\sqrt d$，Stirling 给
+
+$$
+\ln\Pr\{\operatorname{Bin}(N,p)=n\}
+=-\tfrac12\ln(2\pi d)-z^2/2+O((1+|z|^3)/\sqrt N).
+\tag{110.25}
+$$
+
+在 $|z|\le N^{1/12}$ 内乘 $\alpha\le Q^6$ 后误差至多 $CQ^6N^{-1/4}$。
+归一化 Gaussian 格点标准差 $\sqrt{d/\alpha}$ 仍为指数大；
+区域外的全局二项 Gaussian 原子包络除以中央归一化量，给
+$e^{C\alpha}\operatorname{poly}(\alpha)e^{-c\alpha N^{1/6}}$ 的尾界。
+在更小的联合高组盒 $|z_j|\le Q^2$，累计至多 $CQ^2$ 个对数余项和单元积分误差，
+归一化乘积幂律 $\mathsf Q_{x,\alpha}$ 与舍入 Gaussian $N(C_jp_j,d_j/\alpha)$ 满足
+
+$$
+\left|\frac{\mathsf Q_{x,\alpha}^{\mathcal H}(n)}
+ {\Pr\{\operatorname{round}N(C_jp_j,d_j/\alpha)=n_j,\ j\in\mathcal H\}}-1\right|
+\le\operatorname{poly}(Q)e^{-\epsilon Q^3/4}.
+\tag{110.26}
+$$
+
+两侧删去的概率至多
+
+$$
+\operatorname{poly}(Q)e^{-c\alpha Q^4+C\alpha}.
+\tag{110.27}
+$$
+
+保留尾指数中的 $\alpha$ 才能覆盖增长阶数：将统一原子包络升至 $\alpha$ 次方，
+除以 $\sqrt{N/\alpha}$ 级中央归一化，再求 Gaussian 格点尾和，便得此式。
+
+每个低组原元组的能量至多 $CQ^2e^{2\epsilon Q^3}/B^2$。
+高组盒的 Gaussian 原像上，舍入使电荷范数改变至多 $\sqrt{m_Q}/(2B)$，
+未舍入范数至多 $CQ^2$。于是对所有低组配置一致，原完整标量与比较标量相差至多
+
+$$
+\Delta_Q\le\operatorname{poly}(Q)(B^{-1}+B^{-2}e^{2\epsilon Q^3}),
+\qquad h_Q=\frac{\Delta_Q}{\sigma/\sqrt\alpha}
+\le\operatorname{poly}(Q)e^{-b_0Q^3}\to0.
+\tag{110.28}
+$$
+
+这里 $\ln B=c_qQ^3/2+O(\ln Q)$，$\ell<c_q/2$、$c_q-2\epsilon>\ell$；
+原半指数噪声条件正好支付此项。
+令 $s_{out}=\sigma/\sqrt\alpha$。对 $|d|\le\Delta_Q$ 的精确核夹逼为
+
+$$
+(1+h_Q)^{-1/2}e^{-(h_Q+h_Q^2)/2}
+\varphi_{s_{out}/\sqrt{1+h_Q}}(z)
+\le\varphi_{s_{out}}(z+d)
+\le(1-h_Q)^{-1/2}e^{h_Q/2}
+\varphi_{s_{out}/\sqrt{1-h_Q}}(z).
+\tag{110.29}
+$$
+
+对盒内原像和全部低组积分，(110.26)–(110.29) 给相邻宽度下 Gaussian 密度的相对夹逼。
+尾部必须在稀有输出密度尺度支付：紧输出下
+$g_{\alpha,\sigma'}(y)\ge e^{-C\alpha/\delta}$。
+可直接留最大平方不积分；其余未倾斜平方的均值为 $O(1/\alpha)+o(1)$，
+至少以概率 $1/2$ 处于固定小能量内。能量噪声在一个标准差内也有固定正概率，
+剩余正紧能量处的最大平方密度由精确公式给所需下界。
+故尾密度与此下界之比至多多项式乘
+$\sigma^{-1}e^{-c\alpha Q^4+C\alpha+C\alpha/\delta}\to0$，
+其中 $L=O(Q^3)$。结合 (110.24)，
+
+$$
+\sup_{\substack{c/\sqrt\delta\le\alpha\le Q^6\\|y|\le K}}
+\alpha^{-1}\left|\ln f_{\mathsf Q_{x,\alpha},\sigma/\sqrt\alpha}(y)
+-\ln g_{\alpha,\sigma}(y)\right|\to0.
+\tag{110.30}
+$$
+
+没有把加性多项式误差除以稀有密度，完整 $V$ 也没有被截断。
+
+**同一稀有输出下的固定总数修正。** 原精确选中律仍为
+$\mathsf P_x(n)=\mathscr L_x(\sum n_j)\mathsf Q_x(n)$，完整盒在原好事件上可行。沿用第 107、108 章的全局对数界
+
+$$
+-C(D(n)^2/q+q^{-1/2})\le\ln\mathscr L_x(n)
+\le C(B^2V/q+q^{-1/2}),\qquad D(n)=\sum_j(n_j-C_jp_j).
+\tag{110.31}
+$$
+
+(110.26)–(110.27) 同时给
+$\sup_{1\le\alpha\le Q^6}\mathbb E_{\mathsf Q_{x,\alpha}}E=O_{\mathbb P}(1)$。
+盒外用 $E\le O_{\mathbb P}(B^2)$ 乘 (110.27)，$Q^4$ 指数压过 $\ln B^2=O(Q^3)$；
+Gaussian 侧用直接尾矩。因此不沿用未核实的固定阶数矩常数。
+
+需要的稀有加权矩事实是：若 $E\ge0$、$\mathbb EE\le A$，以
+$e^{-(E-h)^2/(2w^2)}$ 重加权，$|h|\le H$、$0<w\le1$，则新均值仍由只依赖 $A,H$ 的常数控制。
+因 $\Pr(E\le2A)\ge1/2$，归一化分母至少为
+$\tfrac12e^{-(2A+H)^2/(2w^2)}$；在充分大固定 $R$ 之外，
+尾均值之比由 $2\sup_{u\ge R}u e^{-u^2/(8w^2)}$ 控制。
+该论证允许任意稀有的能量壳。
+
+原向量上的 Cauchy–Schwarz 给
+$D(n)^2/q\le C\delta(E(n)+\|e\|^2)$。
+相应幂后验的预测密度比精确为
+
+$$
+\frac{f_{\mathsf P_{x,\alpha},\sigma/\sqrt\alpha}(y)}
+ {f_{\mathsf Q_{x,\alpha},\sigma/\sqrt\alpha}(y)}
+=\frac{\mathbb E_{\mathsf Q_{x,\alpha},y}\mathscr L_x^\alpha}
+ {\mathbb E_{\mathsf Q_{x,\alpha}}\mathscr L_x^\alpha}.
+\tag{110.32}
+$$
+
+分子就是同一原 Gaussian 输出权重下的期望。
+由 (110.31)、上述矩界及 Jensen，两个期望的对数下界为 $-C\alpha\delta$，
+上界为 $C\alpha(B^2V/q+q^{-1/2})$。所以
+
+$$
+\sup_{\substack{c/\sqrt\delta\le\alpha\le Q^6\\|y|\le K}}
+\alpha^{-1}\left|\ln\frac{f_{\mathsf P_{x,\alpha},\sigma/\sqrt\alpha}(y)}
+ {f_{\mathsf Q_{x,\alpha},\sigma/\sqrt\alpha}(y)}\right|=O_{\mathbb P}(\delta)\to0.
+\tag{110.33}
+$$
+
+(110.23)、(110.30)、(110.33) 合起来证明
+$-\alpha^{-1}\ln[f_\alpha(y)/f_\alpha(0)]=b_xy+o_{\mathbb P}(1)$，
+一致于当前整个多项式阶数区间。这一步保留了原固定总数选择，未把实际后验设为乘积律。
+
+**与无穷阶的真正重叠。** 对任意 $N$ 原子概率向量和 $\alpha>1$，
+
+$$
+0\le H_\alpha-H_\infty\le\frac{H_\infty}{\alpha-1}
+\le\frac{\ln N}{\alpha-1}.
+\tag{110.34}
+$$
+
+它由 $p_{\max}^\alpha\le\sum p_i^\alpha\le p_{\max}^{\alpha-1}$ 直接推出。
+原计数后验的原子数至多 $(M+1)^{m_Q}$，故 $\ln N\le CQ^5$。
+分别在 $y$ 和零输出应用此界，再作三角不等式，得
+
+$$
+\sup_{\alpha\ge Q^6,\,y}
+\left|[H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x^0)]
+-[H_\infty(\mathsf P_x^y)-H_\infty(\mathsf P_x^0)]\right|\le CQ^{-1}.
+\tag{110.35}
+$$
+
+这不使用输出熵差关于阶数的单调性。
+计数／Gaussian 证明到达 $Q^6$，此界从 $Q^6$ 延伸到无穷阶；
+超多项式阶数不再要求有效噪声大于整数网格。
+
+将多项式区间的结论和 (110.12) 代入 (110.11)，得 (110.2) 的有限区间。
+对余下阶数用 (110.35) 与第 108 章已证端点响应，
+把一改为 $\alpha/(\alpha-1)$ 的代价至多 $C(1+|b_x|)/Q^6=o_{\mathbb P}(1)$。
+所以 (110.2) 覆盖整个区间。
+若 $a_Q\sqrt\delta\to\infty$，被删有限阶因子的贡献一致趋零，得到 (110.3)。
+若 $\alpha_Q\sqrt\delta\to c$，只在有界剩余系数中使用 $v_*/\delta\to\rho_0$，即
+$b_x/(\alpha_Q-1)\to1/(2c\rho_0)$，得到 (110.4)。
+从未把 $v_*$ 在放大的主中心中替换成极限。
+
+最后，噪声平方完成中的 $-\delta\sigma^2/(8v_*^2)$ 可以发散，
+但在两个输出之差中精确取消，其余影响已由 (110.21)–(110.24) 支付。
+所有估计位于同一实际数据好事件，原一、二行概率界对支持一致且对 pair/path 分别成立；
+穷尽紧常数即给声明的概率范围，证毕。
+
+经典 Gibbs/Rényi 恒等式、Prékopa 定理、Stirling 估计及有限支持熵界各归成熟理论。
+本章的模型内连接是实际缩小谱隙、非最大模的有限小球控制、稀有输出下的原计数回接和无穷阶重叠。
+没有典型单模凝聚、期望熵、全阶 Shannon 延拓、零噪声或全局原创结论。
+
+## 追加锚（第 110 章后续增补区）
