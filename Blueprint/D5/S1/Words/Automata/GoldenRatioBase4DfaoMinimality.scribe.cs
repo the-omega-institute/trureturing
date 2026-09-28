@@ -42,7 +42,7 @@ internal sealed class GoldenRatioBase4DfaoMinimalityDocument : IScribeDocumentDe
 
     private static Formula MainFormula() => Disp(Seq(
         Exists, Sp, F.Id("candidate"), Colon, Sp,
-        Call("AdmissibleDFAO", D(21)), Comma, Sp,
+        Call("AdmissibleDFAO", D(2, 1)), Comma, Sp,
         Call("EquivalentOnAdmissibleEncodings",
             Call("machine", F.Id("candidate")), F.Id("paperBase4DFAO")), Dot));
 }
