@@ -928,3 +928,262 @@ bridge. A single private witness or sampled gcd cannot certify the
 needed whole-private-region containment: its gcd is only an upper
 multiple of the true Gamma_d until all private points or a structural
 containment proof are supplied.
+
+## 11. Shared fresh-height repairs constrain several original parents at once
+
+Continue with the same hypothetical distinct-odd whole cover minimizing
+first class count and then modulus sum. Let its original classes be
+`A_m=a_m mod m`, its numerical palette be D, and its period be Q.
+Write p for the smallest support prime and H=v_p(Q). Divisor closure
+and disjointness of comparable originals are the consequences of
+Report350's stated global minimum. All heights and actual residues
+remain in the model.
+
+The following ordinary deductions extend DR8 from one parent to a
+joint collection of parents. They give an additional necessary
+condition, not an unrestricted covering contradiction or new Lean
+verification. No literature-priority claim is made.
+
+### Several old parents can share one fresh-height repair
+
+Fix a divisor
+
+    h=p^H*n | Q, gcd(p,n)=1, tau(n)>=p.
+
+Let P be a nonempty set of original parent labels such that, for one
+ACTUAL residue c modulo h,
+
+    h|d and a_d=c mod h for every d in P.              (SR1)
+
+Every complete old parent class is therefore contained in `c mod h`.
+Choose one new residue b_d modulo each d in P and put
+
+    J_d={M in D minus P:d|M,M>d,a_M=b_d mod d},
+    J=union_(d in P)J_d.
+
+Then simultaneous choices must satisfy
+
+    |J|<=p-1.                                        (SR2)
+
+The union counts a shared child label only once. The exclusion of P
+from every J_d is part of the condition: selected parents are retained
+and moved, while labels in J are removed. Empty groups cause no
+problem. If a group is nonempty, its selected phase differs from its
+parent's old phase by comparable-class disjointness.
+
+To prove SR2, choose p distinct positive divisors e_k of n, and let
+rho=c mod p^H. The p CRT classes
+
+    B_k={x=c mod e_k,
+         x=rho+k*p^H mod p^(H+1)}, 0<=k<p,
+
+have pairwise distinct numerical moduli p^(H+1)e_k. All are unused,
+odd and nonunit: their p-height is H+1, whereas every original label
+divides Q. Their union covers the ENTIRE class `c mod h`, including
+all integer lifts beyond Q. Its next p-digit chooses k and its
+cofactor congruence satisfies every e_k.
+
+Move each selected original parent to `b_d mod d`, delete the labels
+in J, retain all other originals, and add the B_k. Each deleted child
+is contained in at least one new parent. All old parents are covered
+by the B_k. Thus every previously covered integer remains covered.
+In particular, the new family is a whole cover.
+
+This argument covers the complete old parent union, including its
+intersections. It does not replace a joint liability by the union of
+individual private regions. Points covered by several removed
+parents or children are included in the same pointwise argument.
+
+The new cardinality is `|D|-|J|+p`. If |J|>p it is smaller. If |J|=p,
+the cardinality is unchanged and each fresh modulus is at most p*h.
+Every deleted M is a proper original multiple of h; M/h>1 is coprime
+to p and all its prime factors exceed the smallest support prime p.
+Therefore M>p*h, and
+
+    sum_k p^(H+1)e_k <= p^2*h < sum_(M in J)M.
+
+Moving parents changes no numerical label. The modulus sum therefore
+decreases strictly in the equality case. Both cases contradict the
+two extremal objectives, proving SR2.
+
+With P={h}, this recovers DR8. With several parents, their NEW phases
+may differ modulo h while the OLD phases in SR1 are the same. The
+bound is on the union of all removed children across those new
+phases; it is not obtained by granting each parent a separate repair
+budget or independently choosing its original source.
+
+### Two incomparable saturated parents cannot share a qualified old phase
+
+Call a full-p-height original parent saturated when one of its
+actual proper-descendant phase groups has p-1 labels. A parent
+divisible by a qualified h has enough cofactor divisors for DR8, so
+this is its largest permitted group size.
+
+If two incomparable original parents u,v are multiples of the same
+qualified h and have the same OLD phase modulo h, then
+
+    u and v cannot both be saturated.                (SR3)
+
+Suppose otherwise, with saturated groups A and B. Incomparability
+ensures neither group contains the other selected parent. Apply SR2
+with P={u,v}; since both groups have p-1 elements, their union bound
+forces A=B=S and |S|=p-1.
+
+Now fix u's saturated group and take any proper original multiple M
+of v. Use the actual phase a_M mod v as the second new phase. SR2
+forces M to belong to S, since adjoining a label outside its p-1
+elements would violate the bound. Reversing the roles gives equality
+of the COMPLETE numerical descendant sets:
+
+    Desc_D(u)=Desc_D(v)=S,
+    Desc_D(w)={M in D:w|M,M>w}.                       (SR4)
+
+This equality is impossible for incomparable u,v when |S|>=2. Put
+ell=lcm(u,v). It divides every element of S, so original divisor
+closure puts ell in D. It is a proper descendant of both parents,
+hence belongs to S. Since p is odd, |S|=p-1>=2; choose N in S other
+than ell and a prime r dividing N/ell. Both ur and vr divide ell*r,
+which divides N, so divisor closure puts both in D. SR4 then places
+both in S. Consequently v|ur and u|vr.
+
+Writing g=gcd(u,v), the integers u/g and v/g are coprime and both
+greater than one. The two divisibilities require both to divide the
+same prime r, a contradiction. This proves SR3. The step p-1>=2 and
+the use of divisor closure on N are essential; the argument is not
+an assertion about an arbitrary labelled graph.
+
+### A restriction on actual saturated-parent intersections
+
+If two distinct saturated full-p-height original classes A_u,A_v
+intersect, their labels are incomparable by irredundancy. Set
+h=gcd(u,v). Actual CRT compatibility gives a_u=a_v mod h, and h has
+the full p-height H. Applying SR3 whenever this h is qualified gives
+
+    A_u intersect A_v !=empty
+      ==> tau(gcd(u,v)/p^H)<=p-1.                    (SR5)
+
+At p=3 this becomes
+
+    A_u intersect A_v !=empty
+      ==> gcd(u,v)/3^H is 1 or a prime.              (SR6)
+
+Thus saturated ternary parents with a composite cofactor gcd, even
+a prime square, must be disjoint as ACTUAL original classes. This
+retains arbitrary global ternary height, all other heights and all
+support sizes. It does not impose the same restriction on parents
+whose descendant phase groups are not saturated.
+
+### The remaining whole-cover forcing question
+
+The new condition propagates a joint improvement obstruction through
+the actual numerical divisor lattice. It goes beyond counting
+additional private-neighbour suppliers outside one parent cone.
+It still does not prove that a hypothetical whole cover contains a
+violating collection of parents or a prohibited saturated pair.
+
+For the ternary case, a pair of original labels s,t can certify a
+saturated numerical parent when
+
+    b=gcd(m_s,m_t,a_s-a_t),
+    v_3(b)=H, tau(b/3^H)>=3,
+
+and b is a proper divisor of both labels. Divisor closure supplies
+the original b; the two endpoint classes project to the same phase
+modulo b, and DR8 makes that group saturated. A same-top-support,
+different-top-phase pair from the owned top-shadow argument has
+b<gcd(m_s,m_t), so the proper-divisor condition holds if the other
+two tests hold.
+
+However, an owned top-shadow collision need not preserve the full
+ternary phase or enough common cofactor information. Even when it
+supplies b, its common endpoint phase differs from the OLD a_b
+modulo b by comparable disjointness. It therefore does not establish the required OLD full-phase
+compatibility, or make two such old parents intersect. This does not
+assert that the old parent is absent from a projected lower fibre.
+These old/new phase relations must not be identified.
+
+SR5 concerns full original intersections, not projected lower-shadow
+intersections. Disjoint original top hyperplanes can still share a
+lower source, so SR5 alone cannot set an owned-shadow capacity to
+zero. The outstanding bridge is to force either |J|>=p in SR2, or
+two saturated parents satisfying the prohibited actual old-phase
+compatibility. Neither occurrence follows from the private-neighbour
+and owned top-shadow results currently used here. No bound on support
+or prime-power height is added to bypass that missing implication.
+
+## 12. Distinct odd quotient sums allow arbitrary repair primes and parent heights
+
+The shared repair SR1--SR2 extends to ANY odd prime, including a prime
+absent from Q, and to parents below its full global height. Keep the
+same lexicographically minimal hypothetical whole cover. Fix p, put
+H=v_p(Q), and choose a nonunit h|Q. Write
+
+    a=v_p(h), n=h/p^a, r=p^(H-a+1), tau(n)>=r.        (AQ1)
+
+Let P be a nonempty set of original parents satisfying h|d and
+a_d=c mod h for ONE actual old phase c. Choose the new residues b_d
+independently, and define the deleted descendant union J exactly as
+in SR1--SR2, excluding P from J. Then
+
+    |J|<=r-1.                                        (AQ2)
+
+Choose r distinct positive divisors e_k|n. With rho=c mod p^a,
+using rho=0 when a=0, define the repair classes by CRT:
+
+    B_k={x=c mod e_k,
+         x=rho+k*p^a mod p^(H+1)}, 0<=k<r.
+
+Their numerical moduli p^(H+1)e_k are distinct odd nonunits and are
+UNUSED because their p-height exceeds H. They cover the entire old
+class c mod h: the next H-a+1 digits of any such integer choose
+exactly one k, and all its cofactor congruences hold. Each new modulus
+is at most r*h. All old and new moduli divide p*Q, providing one
+finite common comparison period without discarding any integer lift.
+
+Move the parents, delete J, and add these repairs. Every old parent
+is covered by the B_k, every deleted child by at least one retained
+moved parent, and every other original is unchanged. Thus the whole
+old union remains covered, including joint liabilities. The new
+cardinality is |D|-|J|+r, so |J|>r contradicts minimum cardinality.
+
+If |J|=r, order the deleted labels M_1<...<M_r. Their quotients M_i/h
+are DISTINCT ODD integers greater than one. Consequently
+
+    M_i/h>=2*i+1,
+    sum_(i=1..r)M_i>=h*r*(r+2)>r^2*h
+                       >=sum_(k=0..r-1)p^(H+1)*e_k.  (AQ3)
+
+The class count stays fixed while the modulus sum drops by at least
+2*r*h. This contradicts the second extremal objective and proves AQ2.
+The argument compares TOTALS: an individual deleted label can be
+smaller than an individual repair label. Numerical distinctness and
+oddness supply the required strict joint inequality.
+
+When a=H, r=p, so DR8 and SR2 hold at every qualifying odd prime
+without the smallest-prime restriction. For p=5 this also constrains
+parents below the full global ternary height. When p=3 and a=H-1,
+at least nine cofactor divisors give r=9 and a joint eight-child cap.
+H=0 permits an unused prime; Report350 already forces the minimum's
+support to be an initial segment of the odd primes, so such a prime
+lies beyond that original support.
+
+The saturated-parent argument extends as well. Two incomparable
+original parents in the same old h-phase under AQ1 cannot BOTH have
+a descendant phase group of size r-1. AQ2 would identify the two
+groups and then their complete descendant sets. The divisor-lattice
+contradiction in SR3--SR4 uses only r-1>=2 and original divisor
+closure, so it applies unchanged. The parent labels themselves need
+not have the same p-height; their divisibility by h suffices. In the
+full-height specialization, distinct full-p-height originals that
+each have a phase group of p-1 descendants therefore satisfy
+
+    A_u intersect A_v !=empty
+      ==> tau(gcd(u,v)/p^H)<=p-1.                    (AQ4)
+
+These conditions hold simultaneously at every qualifying prime and
+parent on the SAME original numerical palette and actual phases.
+They do not identify original intersections with projected shadow
+intersections or combine independently executed replacements. No
+original exponent is bounded. A whole-cover theorem forcing a
+violation remains missing. This is ordinary mathematics, not new
+Lean verification or a literature-priority claim.
