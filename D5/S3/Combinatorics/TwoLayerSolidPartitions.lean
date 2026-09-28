@@ -228,7 +228,7 @@ theorem result : claim := by
       refine ⟨Fin.snoc v 0, hlow (?_ : (Fin.snoc v 0 : Fin 3 → ℕ) ≤ c) hc, Fin.init_snoc _ _⟩
       intro i
       refine Fin.lastCases ?_ (fun j => ?_) i
-      · show (Fin.snoc v 0 : Fin 3 → ℕ) (Fin.last 2) ≤ c (Fin.last 2)
+      · change (Fin.snoc v 0 : Fin 3 → ℕ) (Fin.last 2) ≤ c (Fin.last 2)
         rw [Fin.snoc_last]
         exact Nat.zero_le _
       · simpa [Fin.snoc_castSucc, Fin.init] using hvu j
