@@ -1,0 +1,38 @@
+### 定义 535.1（实际对象、固定目的与情境取得）
+
+设 $A$ 为有限非空的实际对象集，固定映射
+
+$$
+c:A\to K,\qquad q:A\to L,\qquad T:A\to Y,
+\qquad K=c(A),\quad L=q(A),\quad Y=T(A).
+$$
+
+所有有限集合赋予离散可测结构。$c$ 是辅助信息的取得端可读的情境，$q$ 是接收端已观察到的旧读数，$T$ 是本次比较始终保持的目标。假定局部一致性
+
+$$
+\forall x,x'\in A,\qquad
+c(x)=c(x')\ \land\ q(x)=q(x')\ \Longrightarrow\ T(x)=T(x').
+\tag{535.1}
+$$
+
+记实际联合支撑及各读数下的活动情境为
+
+$$
+S=\{(c(x),q(x)):x\in A\},\qquad
+K_\ell=\{k\in K:(k,\ell)\in S\}\quad(\ell\in L).
+$$
+
+式（535.1）使 $t:S\to Y$ 由 $t(c(x),q(x))=T(x)$ 良定义。允许不同对象具有相同的 $(c,q)$；不将 $A$ 默认为 $S$，也不补入 $K\times L\setminus S$ 中没有实际对象的组合。
+
+对每个非空标准 Borel 空间 $Z$，允许任意 Markov 核 $W:K\to\operatorname{Prob}(Z)$，记 $W_k=W(\cdot\mid k)$。它产生实际实验
+
+$$
+E_W(x)=\delta_{q(x)}\otimes W_{c(x)}\quad(x\in A),\qquad
+\Gamma_c=\{E_W:Z\text{ 非空标准 Borel},\ W:K\to\operatorname{Prob}(Z)\}.
+\tag{535.2}
+$$
+
+选择通道时可以使用固定的 $S,t$，运行时辅助取得只读 $c(x)$，不能再读 $q(x)$、$T(x)$ 或对象身份 $x$。编码器私有随机位已被边缘化进 $W_k$，没有额外揭示；若要把随机种子也交给观察者，必须把它计入输出并重新规定通道。接收端看到的是 $(q(x),z)$。
+
+这一目的限定只对应维特根斯坦《哲学研究》§§65–69 的一个局部问题。§§65–67 用游戏与纤维交叠反对未经考察就要求同名使用必有一个贯穿全部情形的本质；§68 允许给“数”等概念划定边界，也允许未封闭的使用；§69 明说可以“für einen besondern Zweck”划界，却不因此才使概念通常可用。本章将一个特定目的固定为 $T$，考察取得约束下的精确信息边界；这不是全部语言意义的模型，不将家族相似定义为图连通，也不推出所有概念都没有共同性质。下文的最小信息要求是附加的比较问题，既不是日常有用性的必要条件，也不是存在某个目的充分边界的必要条件。[Wittgenstein, *Philosophische Untersuchungen*, §§65–69，德文原文](https://www.wittgensteinproject.org/w/index.php/Philosophische_Untersuchungen#65)；[Stanford Encyclopedia of Philosophy, “Ludwig Wittgenstein”, §3.4，实质修订 2026-09-17](https://plato.stanford.edu/entries/wittgenstein/#LangGameFamiRese)。
+

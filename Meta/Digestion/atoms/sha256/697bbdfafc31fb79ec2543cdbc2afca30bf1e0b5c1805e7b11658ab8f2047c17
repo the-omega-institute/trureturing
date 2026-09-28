@@ -1,0 +1,59 @@
+### 引理 537.2（从按读数模拟直接组装共同核）
+
+对定义 537.1 中任意两个充分实验，有
+
+$$
+E_V\preceq E_W
+\quad\Longleftrightarrow\quad
+\exists K:Z_W\longrightarrow\operatorname{Prob}(Z_V),\qquad
+\nu_WK=\nu_V,\quad \mu_i^WK=\mu_i^V\quad(1\le i\le m).
+\tag{537.3}
+$$
+
+右侧的同一个核只读取辅助输出，不读取 $q$ 或情境；因此在这一支撑及充分族内，允许按 $q$ 后处理不会扩大模拟序。
+
+证明：设左侧成立。按式（535.10）及（536.4），从原全局核取目标辅助输出的边缘，在每个 $u_i$ 得到处处定义的可测核 $H_i:Z_W\to\operatorname{Prob}(Z_V)$，满足
+
+$$
+\nu_WH_i=\nu_V,\qquad \mu_i^WH_i=\mu_i^V.
+$$
+
+此归约只用实际行等式，没有把逐点保持 $q$ 加作原核的假设。令
+
+$$
+\tau_i=(\nu_W|_{D_i^W})H_i.
+$$
+
+因 $\nu_W|_{D_i^W}\le\nu_W$，有 $\tau_i\le\nu_V$；因 $\nu_W|_{D_i^W}\ll\mu_i^W$，有 $\tau_i\ll\mu_i^V$。后一个结论可直接检验：若 $\mu_i^V(B)=\int H_i(B\mid z)\mu_i^W(dz)=0$，非负被积函数在 $\mu_i^W$ 几乎处处为零，也在 $\nu_W|_{D_i^W}$ 几乎处处为零，所以 $\tau_i(B)=0$。
+
+取目标的共同叶分划 $D_i^V$。绝对连续性保证 $\tau_i$ 全部集中于 $D_i^V$，这些集合两两不交。故对每个可测 $B\subseteq Z_V$，
+
+$$
+\sum_i\tau_i(B)
+=\sum_i\tau_i(B\cap D_i^V)
+\le\sum_i\nu_V(B\cap D_i^V)
+\le\nu_V(B).
+\tag{537.4}
+$$
+
+这一求和必须使用目标叶载集的不交性；仅有每个 $\tau_i\le\nu_V$ 并不能推出其和仍被 $\nu_V$ 支配。于是
+
+$$
+\Delta=\nu_V-\sum_i\tau_i
+$$
+
+是正测度。每个 $H_i$ 都是概率核，故 $\tau_i(Z_V)=\lambda_i^W$，从而 $\Delta(Z_V)=s_W$。若 $s_W>0$，在整个源空间定义
+
+$$
+K(\cdot\mid z)=
+\begin{cases}
+H_i(\cdot\mid z),&z\in D_i^W,\quad 1\le i\le m,\\
+\Delta/s_W,&z\in D_0^W.
+\end{cases}
+\tag{537.5}
+$$
+
+有限个可测块上的核拼接仍可测。每个源叶集中于自己的 $D_i^W$，所以 $\mu_i^WK=\mu_i^V$；中心的像则为 $\sum_i\tau_i+\Delta=\nu_V$。若 $s_W=0$，正测度 $\Delta$ 的质量为零，故 $\Delta=0$；在 $D_0^W$ 上取任意固定目标点的 Dirac 律即可，这一行对源中心和所有源叶都未被使用。
+
+反向，给定右侧的 $K$，在 $(q,z)$ 上使用 $\delta_q\otimes K(\cdot\mid z)$ 即恢复每个实际行的目标律。有限读数空间保证此扩张可测。证毕。此引理的联合组装来自共同中心剩余质量与不交叶载集；其前置是第 535—536 章的实际支撑归约和测度分解，不需要另用耦合存在定理。
+
