@@ -75622,3 +75622,317 @@ $k=0,1$ 时取等，证明式（352.14）。这个界对全部 $k\ge0$ 一致，
 半正定秩与量子实现的关系、低普通秩与高半正定秩的分离均为成熟结果。上述来源第3.2节讨论量子信息解释，第5.2节给多边形下界；本节的用途是把这一工具接回完整的固定操作过程，并同时写出低维近似及其多次读取范围，不作全球原创性或 Lean 核验声明。这里的容量结论是可执行响应族的结果，没有从观察者存在重建量子公理，也不替代第349—351节仍缺少的一般近代数存在性证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 353. 周期读出的酉正规形与物理归一化障碍
+
+第352节把固定三维线性预测与无界精确量子记忆分开，但半正定分解只给出了容量下界。若要求一份装置用同一个推进操作实现全部响应，还必须处理动态相容性、态的归一化和读出效应的上界。本节先从严格周期的记录中提取一个不增加容量的有限阶酉实现，再给出一个尺寸三的等变半正定分解仍不足以使用三维量子记忆实现的具体例子。
+
+### 353.1 固定推进、周期记录与实际重置
+
+**定义 353.1（周期读取合同）。** 固定整数 $n\ge1$、非空有限结果集合 $Y$，以及满足
+
+$$
+p_y(k+n)=p_y(k),\qquad
+p_y(k)\ge0,\qquad
+\sum_{y\in Y}p_y(k)=1
+\quad(k\ge0)
+\tag{353.1}
+$$
+
+的一组概率。装置接受不输出的推进命令 $a$ 和读取命令 $b$；初态或上一次读取后推进 $k$ 次时，读取结果为 $y$ 的概率是 $p_y(k)$。目标在每个结果后重置，因此这也指定了全部有限自适应命令树的经典记录律。
+
+实现使用固定初态、一条与步数无关的 CPTP 推进映射及固定量子仪器。所有持续保存的经典与量子寄存器计入总 Hilbert 维数；不额外输入步数、时钟或历史。竞争者可以在内部使用不同的状态更新，只须匹配全部可访问记录。固定门参数可以依赖已知概率族；参数描述、精度与计算成本不由这里的维数计量。没有额外的终端量子输出或参考系统合同。
+
+**定理 353.2（不增维的有限阶酉正规形）。** 若定义353.1的目标有 $d$ 维精确量子实现，则存在 $D\le d$ 维精确实现，其初态纯、推进为一个满足 $U^n=I_D$ 的固定酉共轭，读取为固定 POVM 后实际重置到该纯初态。在初态的循环子空间上，还可令 $U$ 的特征值互异。因此，允许任意 CPTP 推进的最小持续维数，等于上述有限阶酉推进模型的最小持续维数。
+
+证明。取任意 $d$ 维实现的初态 $\rho$、推进 $\Phi$ 以及首次读出的效应 $F_y$，于是
+
+$$
+F_y\ge0,\qquad \sum_yF_y=I,\qquad
+\operatorname{tr}\!\left(F_y\Phi^k(\rho)\right)=p_y(k).
+\tag{353.2}
+$$
+
+先去除对记录不可见的瞬态。令
+
+$$
+r_M=\frac1M\sum_{\ell=0}^{M-1}\Phi^{\ell n}(\rho).
+\tag{353.3}
+$$
+
+密度矩阵集紧，取一条收敛子列，极限记为 $r$。由
+$\|\Phi^n(r_M)-r_M\|_1\le2/M$，得到 $\Phi^n(r)=r$。对每个 $k,y$，周期性使式（353.3）每一项在推进 $k$ 次后的读数均为 $p_y(k)$，故极限保持式（353.2）。置 $r_i=\Phi^i(r)$，下标按模 $n$ 解释。
+
+令
+
+$$
+\sigma=\frac1n\sum_{i=0}^{n-1}r_i,\qquad
+S=\operatorname{supp}\sigma.
+\tag{353.4}
+$$
+
+$\Phi(\sigma)=\sigma$，且 $\sigma$ 在 $S$ 上严格正。由固定 Kraus 表及 $\Phi(\sigma)$ 在 $S^\perp$ 上为零，每个 Kraus 算子都把 $S$ 送入 $S$，所以 $\Phi$ 限制到 $\mathcal L(S)$ 后仍完全正且保迹。所有 $r_i$ 都支撑于 $S$。以下逆矩阵、迹和单位均在 $S$ 上取。
+
+定义
+
+$$
+\begin{aligned}
+\Psi(X)&=\sigma^{-1/2}\Phi(\sigma^{1/2}X\sigma^{1/2})\sigma^{-1/2},\\
+\tau(X)&=\operatorname{tr}(\sigma X),\\
+X_i&=\sigma^{-1/2}r_i\sigma^{-1/2}.
+\end{aligned}
+\tag{353.5}
+$$
+
+$\Psi$ 完全正且保单位，$\tau$ 是忠实状态，$\tau\Psi=\tau$，并有 $\Psi(X_i)=X_{i+1}$、$X_i\ge0$、$\tau(X_i)=1$。不要求 $\Psi$ 对普通迹保迹。
+
+Schwarz 不等式给
+
+$$
+Z_i=\Psi(X_i^2)-X_{i+1}^2\ge0,\qquad
+\tau(Z_i)=\tau(X_i^2)-\tau(X_{i+1}^2).
+\tag{353.6}
+$$
+
+沿周期相加为零，每项又非负，因此 $\tau(Z_i)=0$。忠实性给 $Z_i=0$。这正是自伴 $X_i$ 的乘法域等号条件。具体地，写 $\Psi(X)=V^\dagger(X\otimes I)V$、$V^\dagger V=I$；式（353.6）的等号使
+$(I-VV^\dagger)(X_i\otimes I)V=0$。与其伴随一起使用，得到对任意 $B$ 的左右乘法恒等式。故 $\Psi$ 在
+
+$$
+A=C^*(I,X_0,\ldots,X_{n-1})\subseteq\mathcal L(S)
+\tag{353.7}
+$$
+
+上是一份保单位 $*$-同态。它循环置换生成元，且 $\Psi^n$ 固定全部生成元，所以 $\alpha=\Psi|_A$ 是满足 $\alpha^n=\operatorname{id}_A$ 的 $*$-自同构。
+
+写有限维代数的表示为
+
+$$
+A\simeq\bigoplus_j(M_{r_j}\otimes I_{m_j}),\qquad
+\sum_jr_jm_j=\dim S.
+\tag{353.8}
+$$
+
+每个简单块只保留一份，得到忠实表示
+$\pi:A\to\bigoplus_jM_{r_j}\subseteq M_D$，其中 $D=\sum_jr_j\le d$。自同构只置换同阶简单块并作块内酉共轭，因此由某个 $V_0\in U(D)$ 实现。$\alpha^n=\operatorname{id}$ 使 $V_0^n$ 属于 $\pi(A)'=Z(\pi(A))$。取谱分解并逐谱值选根：
+
+$$
+V_0^n=\sum_z zP_z,\qquad
+C=\sum_z c_zP_z,\qquad |c_z|=1,\qquad c_z^n=z^{-1}.
+\tag{353.8a}
+$$
+
+$C$ 是 $V_0^n$ 的谱函数，因此属于该中心并与 $V_0$ 对易。于是 $U=CV_0$ 仍实现 $\alpha$，且 $U^n=C^nV_0^n=I_D$。这里使用同一谱值上的一致选根，而非任意选取一个中心内的 $n$ 次根。
+
+还须恢复状态与效应的物理归一化。$\tau$ 在 $\pi(A)$ 上由唯一的块对角正定矩阵 $T$ 表示，满足
+
+$$
+\tau(a)=\operatorname{tr}(T\pi(a)),\qquad
+T>0,\qquad \operatorname{tr}T=1.
+\tag{353.9}
+$$
+
+$\tau\alpha=\tau$ 和迹配对的非退化性给 $U^\dagger TU=T$。对每个结果，在 $A$ 上取正泛函
+
+$$
+\varphi_y(a)=\operatorname{tr}(F_y\sigma^{1/2}a\sigma^{1/2}).
+\tag{353.10}
+$$
+
+其和为 $\tau$，故它们在 $\pi(A)$ 中的迹密度 $B_y$ 满足 $B_y\ge0$、$\sum_yB_y=T$。于是
+
+$$
+\rho'=T^{1/2}\pi(X_0)T^{1/2},\qquad
+E_y=T^{-1/2}B_yT^{-1/2}
+\tag{353.11}
+$$
+
+分别是密度矩阵和一份 POVM。由于 $T$ 与 $U$ 对易，直接计算得
+
+$$
+\operatorname{tr}(E_yU^k\rho'U^{-k})
+=\operatorname{tr}(B_y\pi(X_k))
+=\varphi_y(X_k)=p_y(k).
+\tag{353.12}
+$$
+
+最后可将初态取纯，而不再增加维数。在 $U$ 的一组本征基中令
+
+$$
+D_0=\operatorname{diag}(\rho'_{jj}),\qquad
+C_y=E_y\circ(\rho')^{\mathsf T},\qquad
+\psi_j=\sqrt{\rho'_{jj}},
+\tag{353.13}
+$$
+
+其中 $\circ$ 表示逐项乘积。Schur 乘积定理给 $C_y\ge0$，且 $\sum_yC_y=D_0$。删除 $\rho'_{jj}=0$ 的坐标；正半定性保证其对应行列没有响应贡献。剩余空间中
+$\widetilde E_y=D_0^{-1/2}C_yD_0^{-1/2}$ 是 POVM，$\|\psi\|=1$。若 $U$ 的本征值为 $\lambda_j$，则
+
+$$
+\begin{aligned}
+\operatorname{tr}(E_yU^k\rho'U^{-k})
+&=\sum_{i,j}(E_y)_{ij}\rho'_{ji}\overline{\lambda_i^k}\lambda_j^k\\
+&=\langle U^k\psi,\widetilde E_yU^k\psi\rangle.
+\end{aligned}
+\tag{353.14}
+$$
+
+再压缩到 $\operatorname{span}\{U^k\psi:k\ge0\}$，其维数不增、该子空间被 $U$ 保持，POVM 压缩仍和为单位；该循环子空间中每个不同本征值只保留一个方向。
+
+每个结果后的新分支取
+$\mathcal J_y(\omega)=\operatorname{tr}(\widetilde E_y\omega)|\psi\rangle\langle\psi|$，它们完全正且总和保迹。新装置实际重置，因此式（353.14）逐次给正确的条件概率，覆盖所有有限自适应经典记录。一般 CPTP 类包含这一酉实现类，而上述构造不增加维数，故两个最小值相等。证毕。
+
+上述正规形也给出一个准确的归一化条件。对 $K\subseteq\mathbb Z_n$，置
+$\chi_K(k)=(e^{2\pi\mathrm i tk/n})_{t\in K}$。最小持续维数恰为满足以下条件的最小 $|K|$：存在 $w_t>0$ 及 Hermitian 矩阵 $C_y$，使
+
+$$
+\sum_{t\in K}w_t=1,\qquad
+C_y\ge0,\qquad
+\sum_yC_y=\operatorname{diag}(w),\qquad
+p_y(k)=\chi_K(k)^\dagger C_y\chi_K(k)\quad(0\le k<n).
+\tag{353.14a}
+$$
+
+必要性来自纯初态、互异频率的正规形及式（353.13）。反向取
+$U=\operatorname{diag}(e^{2\pi\mathrm i t/n})$、$\psi_t=\sqrt{w_t}$，以及
+$E_y=\operatorname{diag}(w)^{-1/2}C_y\operatorname{diag}(w)^{-1/2}$，即得到合法 POVM 与所需酉实现。零权坐标可直接删除。对于二结果，式（353.14a）要求同一个对角概率矩阵满足 $0\le C_1\le\operatorname{diag}(w)$；分别为两个结果找到正半定分解，并未自动给出这个共同上界。固定 $K$ 后，这些是线性与半正定约束，但本节没有据此求得一般 $n$ 的最小 $K$。
+
+### 353.2 周期性给出的等变容量约束
+
+**推论 353.3（任意 CPTP 推进的对数下界）。** 第352节的最小精确记忆维数满足
+
+$$
+d_n\ge\ln(n/2)\qquad(n\ge3),
+\tag{353.15}
+$$
+
+其中 $\ln$ 是自然对数。这个必要界不要求原实现的推进预先酉、可逆或等变。
+
+证明。由定理353.2，取维数 $D\le d_n$、$U^n=I$ 的实现，初态记为 $\rho$，结果 $1$ 的效应记为 $F$。沿用第352节的 $\theta=2\pi/n$、$c=\cos(\pi/n)$，令
+
+$$
+A_i=U^i\rho U^{-i},\qquad
+B_j=(1+c)U^jFU^{-j}.
+\tag{353.16}
+$$
+
+它们给正多边形的松弛分解
+
+$$
+\operatorname{tr}(A_iB_j)
+=c-\cos((i-j)\theta-\pi/n)=S_{ij}.
+\tag{353.17}
+$$
+
+这是由同一个 $U$ 同时推进两族因子的旋转等变分解。为明确连接到提升定理，取面法向量
+$u_j=(\cos(j\theta+\pi/n),\sin(j\theta+\pi/n))$，定义
+
+$$
+\Pi(X)=-\frac2n\sum_j u_j\operatorname{tr}(B_jX),\qquad
+L=\{X:\operatorname{tr}(B_jX)=c-u_j\cdot\Pi(X)\ \text{对全部 }j\}.
+\tag{353.18}
+$$
+
+这里 $X$ 遍历 Hermitian 矩阵。由 $\sum_ju_j=0$ 及 $\sum_ju_ju_j^{\mathsf T}=(n/2)I_2$，每个 $A_i$ 位于 $L$，且 $\Pi(A_i)$ 正好是对应顶点。反向，对 $X\in L$ 且 $X\ge0$，全部多边形面不等式成立。因此 $\Pi(L\cap\mathbf H_D^+)$ 恰为正 $n$ 边形：一边由面不等式给出，另一边由包含全部顶点及凸性给出。$U$ 共轭保持 $L$，并在 $\Pi$ 下成为平面旋转，所以这是尺寸 $D$ 的旋转等变 Hermitian 半正定提升。
+
+Fawzi、Saunderson、Parrilo 的 *Equivariant semidefinite lifts of regular polygons*，[arXiv:1409.4379v1，定理9](https://arxiv.org/html/1409.4379v1#Thmthm9)证明每份此类提升的尺寸至少为 $\ln(n/2)$。故 $d_n\ge D\ge\ln(n/2)$。证毕。
+
+也可在 $U$ 的本征基中把
+
+$$
+(1+c)p_k=\|\sqrt{1+c}\,F^{1/2}U^k\rho^{1/2}\|_{\mathrm{HS}}^2
+$$
+
+写成共享至多 $D$ 个频率的 Hermitian 平方和，再使用该文第4节的频率稀疏性下界。这里获得的额外约束来自整条周期响应必须由同一个通道续接，没有把任意一份低秩分解宣布为物理实现。
+
+### 353.3 三维分解与四维装置的准确分界
+
+**命题 353.4（四周期响应的归一化阈值）。** 对 $0\le s\le1$，取定义353.1中的二结果响应
+
+$$
+(p_1(0),p_1(1),p_1(2),p_1(3))=(0,0,s,s),\qquad
+p_0(k)=1-p_1(k),\qquad n=4.
+\tag{353.19}
+$$
+
+令 $d(s)$ 为其最小总持续 Hilbert 维数，则
+
+$$
+s_*=\frac8{(2+\sqrt2)^2}=12-8\sqrt2,\qquad
+d(s)=\begin{cases}
+1,&s=0,\\
+3,&0<s\le s_*,\\
+4,&s_*<s\le1.
+\end{cases}
+\tag{353.20}
+$$
+
+而对每个 $s>0$，历史—未来矩阵 $(p_1(i-j))_{0\le i,j<4}$ 的实、复半正定秩均为 $3$，并允许尺寸 $3$ 的旋转等变分解。
+
+证明。先证明完整 CPTP 类的下界。由定理353.2，任何 $d\le3$ 维实现都可改为 $U^4=I$、纯初态 $\psi$ 和效果 $F$。两个零概率使 $F$ 同时消去 $\psi,U\psi$。这两向量必须线性独立，否则初态是 $U$ 的本征态，全部响应恒零。因此二维不可能；三维时 $F=\lambda|v\rangle\langle v|$，其中 $0<\lambda\le1$、$\|v\|=1$。
+
+在初态的循环子空间中，$U$ 有至多三个互异的四次单位根本征值。写
+
+$$
+g_k=\sqrt\lambda\langle v,U^k\psi\rangle
+=\sum_{j\in K}a_j\,\mathrm i^{jk},\qquad
+\sum_{j\in K}|a_j|\le1,\qquad |K|\le3.
+\tag{353.21}
+$$
+
+系数界来自
+$\sum_j|a_j|=\sqrt\lambda\sum_j|v_j||\psi_j|\le\sqrt\lambda\le1$。
+若 $|K|\le2$，$g_0=g_1=0$ 的 Vandermonde 方程强制 $g$ 恒零。故非零情形有三个频率；乘以一个单位模字符可将 $K$ 平移到 $\{0,1,2\}$，不改变概率或系数绝对值和。其二次多项式在 $1,\mathrm i$ 处为零，所以
+
+$$
+g(z)=t(z-1)(z-\mathrm i),\qquad
+|t|(2+\sqrt2)\le1.
+\tag{353.22}
+$$
+
+于是 $|g_2|^2=|g_3|^2=8|t|^2\le s_*$，证明三维不能达到更大幅度。
+
+这个界可达。令
+
+$$
+b=(\mathrm i,-(1+\mathrm i),1),\qquad L_0=2+\sqrt2,\qquad
+\psi_j=\sqrt{|b_j|/L_0},\qquad
+v_j=\overline{b_j/|b_j|}\sqrt{|b_j|/L_0},\qquad
+U=\operatorname{diag}(1,\mathrm i,-1).
+\tag{353.23}
+$$
+
+两向量归一化，且
+$\langle v,U^k\psi\rangle=(\mathrm i^k-1)(\mathrm i^k-\mathrm i)/L_0$。
+对 $0<s\le s_*$，取 $F=(s/s_*)|v\rangle\langle v|$，它满足 $0\le F\le I$，产生所需概率。读取后重置到 $\psi$ 即给合法仪器。对任意 $s\le1$，四个正交态上的循环置换及效果 $\operatorname{diag}(0,0,s,s)$ 给四维实现；$s=0$ 时一维足够。因此式（353.20）成立。
+
+最后核对分解的尺寸。置 $c=1/\sqrt2$，令 $v_i$ 为正方形顶点、$u_j$ 为其面法向量，沿用式（353.17）的方向。取实三维向量
+
+$$
+a_i=(1,v_i),\qquad b_j=(-c,u_j)/\sqrt{2c}.
+\tag{353.24}
+$$
+
+由于 $u_j\cdot v_i$ 只取 $\pm c$，有
+$(a_i\cdot b_j)^2=c-u_j\cdot v_i$。所以 $a_ia_i^{\mathsf T},b_jb_j^{\mathsf T}$ 给尺寸 $3$ 的实半正定分解，旋转由 $\operatorname{diag}(1,R_{\pi/2})$ 实现。将后一族因子乘以 $s/(2c)$ 就给式（353.19）的历史—未来矩阵。
+
+尺寸 $2$ 的复分解不可能。若存在，则每个非零列因子 $B_j$ 都与两条相邻非零行因子迹积为零。$B_j$ 满秩会迫使这两条行因子为零；故 $B_j$ 秩一，这两条行因子都支撑于它的一维核，于是互为正比例。对应矩阵两行就应成比例，但它们的零位置不同，矛盾。实分解是复分解的特例，结合三维实构造，两个半正定秩都恰为 $3$。证毕。
+
+第352节在 $n=4$ 时的幅度为
+
+$$
+s=2\sqrt2-2>12-8\sqrt2=s_*,
+\qquad d_4=4.
+\tag{353.25}
+$$
+
+因此即使保留旋转对称性，尺寸三的半正定分解也不能自动变为同维的归一化量子装置。式（353.21）的系数预算同时使用了初态归一化和 $F\le I$，正是单独的正因子化未要求的物理约束。
+
+### 353.4 来源、接口范围与未解决的上界
+
+有限维量子通道外围空间的块结构与可逆作用已有成熟理论，可对照 Wolf–Pérez-García，*The Inverse Eigenvalue Problem for Quantum Channels*，[arXiv:1005.4545v1，定理8](https://arxiv.org/html/1005.4545v1#Thmtheorem8)。该外围结构定理本身允许外围之外存在收缩模态。[相位边界卷第15节](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md)曾将其用于全部输入与参考的精确档案接收；那里的合同不同，并额外排除全部非零严格收缩谱。本节只要求指定读出概率严格周期，允许原通道存在不可见的收缩部分，以式（353.3）替换初态后再提取不增加维数的记录实现。证明中的 Schwarz 等号、乘法域、有限维代数分解及 Schur 乘积均是成熟工具。
+
+Fawzi–Saunderson–Parrilo 同文的定理2及第3节还给出正 $2^m$ 边形尺寸 $2m-1$ 的等变半正定提升。本节没有把它宣称为第352节过程的 $O(\log n)$ 维物理实现。命题353.4已在 $n=4$ 给出同尺寸直接转换失败的例子；它不排除用更大常数倍维数或不同构造完成对数维实现。该匹配上界仍缺归一化与实际通道构造。
+
+定理353.2保留的是一个固定推进、读出后重置的经典记录接口。它不把原系统的噪声、环境、量子输出或参考纠缠恢复出来；其纯初态化也没有扩展到多个非交换推进操作。严格周期的结论不附带近似周期下的稳定性界。上述结果不承担一般近代数问题、量子公理重建、全球原创性或 Lean 核验声明。
+
+## 追加锚（本行以下为增补区）
