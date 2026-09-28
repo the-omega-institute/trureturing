@@ -1,0 +1,59 @@
+### 定理 19：任务细化的自然性
+
+设在同一配置域上有两个任务：
+
+$$
+G:X_I\to O',
+\qquad
+F:X_I\to O,
+$$
+
+并且存在映射 $r:O'\to O$ 使：
+
+$$
+F=r\circ G.
+$$
+
+则对每个切面 $A$，存在规范满射：
+
+$$
+p_A:\mathsf S_A(G)\twoheadrightarrow\mathsf S_A(F),
+$$
+
+满足：
+
+$$
+p_A([a]_A^G)=[a]_A^F.
+$$
+
+而且这些映射与拼接相容：
+
+$$
+\boxed{
+p_{A\cup C}\circ\mu_{A,C}^{G} =
+\mu_{A,C}^{F}\circ(p_A\times p_C).
+}
+$$
+
+特别地：
+
+$$
+\kappa_A(F)\leq\kappa_A(G).
+$$
+
+#### 证明
+
+如果 $a,a'$ 对全部补全给出相同的 $G$-结果，那么应用 $r$ 后，也给出相同的 $F$-结果。因此细任务等价包含于粗任务等价，得到规范满射。
+
+拼接相容性在代表元上直接计算：
+
+$$
+\begin{aligned}
+p_{A\cup C}([a\sqcup c]^G)
+&=[a\sqcup c]^F\\
+&=\mu_{A,C}^F([a]^F,[c]^F).
+\end{aligned}
+$$
+
+∎
+
