@@ -911,3 +911,84 @@ verification boundary. This application adds no Lean certification.
 Unrestricted#7 still permits twelve or more small support primes and
 head-only originals of greater ternary height. Neither is excluded by
 these results.
+
+## The depth-two comparison still fails after query truncation
+
+The fixed comparison vertex in(DT1) remains an obstruction even when
+the whole-family height-two premise permits truncating J3 at2 and the
+outside23/29 law is pure-conditioned. This is a new exact certificate
+for that strengthened comparison. The old(DT6) certificate concerned
+the lower outside-Haar target and does not establish this variant.
+No actual family is asserted to realize the relaxed vertex.
+
+Keep its five leaf weights w, root maximum r and leaf maximum v. The
+truncated ternary factor has probabilities(1-r,r-v,v) at1,2,3. Let N
+be the product of the six complete nonternary factors in(FC10), with
+EN=2048/935. For H_j(t)=E(jN-t)_+, the complete hinge is
+
+    h_t=h0(t)+hr(t)r+hv(t)v,
+    h0=H_1, hr=H_2-H_1, hv=H_3-H_2.
+
+All three coefficients are nonnegative. The improved pure-conditioned
+query target is566/49, so put T=615/49. A successful normalized bound
+at weights with F2(w)>0 would require (T-t)F2(w)-h_t>0.
+
+For the57 supports D of size at least two in(DT1), set
+
+    c_l=G_l(empty)-sum_D b_D G_l(D),
+    u_D=max_r sum_(l in R_r)G_l(D)w_l,
+    z_D=max_l G_l(D)w_l.
+
+Then F2(w)=sum_l c_l w_l-sum_D b_D(u_D+z_D). For each integer
+t=1,...,12 maximize
+
+    (T-t)[sum_l c_l w_l-sum_D b_D(u_D+z_D)]
+      -hr*r-hv*v-h0.                                  (DT7)
+
+Use nonnegative variables, sum_l w_l=1, and the epigraph inequalities
+u_D>=sum_(l in R_r)G_l(D)w_l for both roots, z_D>=G_l(D)w_l for all
+leaves, r>=sum_(l in R_r)w_l and v>=w_l. Add x_k<=1 for every variable;
+the exact maxima satisfy these caps. Since T-t>0 and hr,hv>=0,
+choosing the exact epigraph minima never worsens the objective. This
+linear program covers every w, including the F2<=0 region that cannot
+be used as a normalization denominator. It has121 variables,
+527 inequalities and one equality.
+
+For Ax<=b, ex=1, x>=0 and objective c.x-h0, exact dual certificates
+y>=0 and A^T y+lambda e>=c give the upper bound b.y+lambda-h0.
+The twelve supplied rational certificates verify every one of the
+1452 column inequalities. All twelve integer upper bounds are below
+-7/40. The largest certified integer upper, at t8, is
+
+    -25220616066818896528630411/143948498727033000000000000.
+
+The feasible vector w* in(DT4) has t8 score approximately-0.175205829126,
+below this upper approximately-0.175205829098. Exact optimality or
+uniqueness is unnecessary and is not asserted.
+
+For fixed w with0<F2(w)<=1, the score is affine between consecutive
+integer thresholds. For t<=1 it equals T F2-EM+t(1-F2), so t1 dominates.
+For t>=T the score cannot be positive. On[12,T], affinity extends to13,
+whose score is nonpositive because13>T. Hence any positive score at a
+real threshold would force a positive score at an integer1,...,12.
+The exact duals exclude this. The integer margin-7/40 is not claimed
+as a uniform margin over every real threshold.
+
+The [standard-library verifier](../../../frontier/cover-geometry/fibre-credit-depth-two-obstruction/fibre_credit_depth_two_truncated.py),
+[exact duals](../../../frontier/cover-geometry/fibre-credit-depth-two-obstruction/fibre_credit_depth_two_truncated_duals.json)
+and [compact result](../../../frontier/cover-geometry/fibre-credit-depth-two-obstruction/fibre_credit_depth_two_truncated.json)
+reconstruct(DT7), its small product atoms through12 and its complete mean.
+Floating solver proposals were rationalized and column deficits repaired
+using the explicit unit-cap rows; all repair costs are included in the
+verified objective. Verification uses only exact arithmetic and rejects
+missing thresholds or certificates that fail the stated strict bound.
+Default replay also compares the retained compact result; a stale result
+is rejected. Explicit output mode regenerates it from the checked duals.
+Independent reconstruction of the rows and multiplicative atom types
+agrees with every dual column. Normal, optimized and different-directory
+execution agree; no solver is needed to replay the certificate.
+
+This excludes changing only leaf weights and the real threshold within
+this fixed comparison. Additional actual incidence, mixed-overlap credit
+or another source remain possible. It is an ordinary proof with exact
+finite certificates, not new Lean verification or a covering example.
