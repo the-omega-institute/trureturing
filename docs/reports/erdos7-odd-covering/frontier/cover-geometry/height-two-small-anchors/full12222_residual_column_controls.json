@@ -1,0 +1,2637 @@
+{
+  "classification": {
+    "counts": {
+      "column_five_labels": 50,
+      "column_four_owners": 12,
+      "two_column_punctures_eight_labels": 10,
+      "two_columns_four_owner_points": 12,
+      "whole_monochromatic": 44
+    },
+    "layouts": 128,
+    "residuals": [],
+    "rows": [
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          1,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            3,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          2,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          2,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          2,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            3,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          3,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "supplier": "two_column_punctures_eight_labels",
+        "witness": [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            2,
+            4
+          ]
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            1,
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            1,
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "supplier": "two_column_punctures_eight_labels",
+        "witness": [
+          [
+            0,
+            1,
+            4
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            3,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          3,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "supplier": "column_four_owners",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            3,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          3,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "supplier": "two_column_punctures_eight_labels",
+        "witness": [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            0,
+            2,
+            4
+          ]
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            1,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "supplier": "two_column_punctures_eight_labels",
+        "witness": [
+          [
+            0,
+            1,
+            4
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          3,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "supplier": "two_column_punctures_eight_labels",
+        "witness": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            1,
+            4
+          ]
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            1,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 0,
+          "owners": [
+            0,
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "supplier": "two_columns_four_owner_points",
+        "witness": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            1,
+            4
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "supplier": "two_column_punctures_eight_labels",
+        "witness": [
+          [
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            1,
+            3
+          ]
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            1,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            1,
+            3
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          1,
+          3,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          0,
+          3,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "supplier": "two_column_punctures_eight_labels",
+        "witness": [
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        "supplier": "two_column_punctures_eight_labels",
+        "witness": [
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          1,
+          2,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "supplier": "two_column_punctures_eight_labels",
+        "witness": [
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          1,
+          2,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        "supplier": "two_column_punctures_eight_labels",
+        "witness": [
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        "supplier": "column_five_labels",
+        "witness": {
+          "column": 1,
+          "owners": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          1,
+          2,
+          4
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "columns": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "supplier": "whole_monochromatic",
+        "witness": [
+          1,
+          2,
+          3
+        ]
+      }
+    ]
+  },
+  "dual_puncture": {
+    "layouts": 46656,
+    "maximizers": [
+      {
+        "columns": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "roots": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "maximum": "44/5",
+    "name": "two_column_punctures_eight_labels",
+    "weights": [
+      "3/8",
+      "3/8",
+      "1/4"
+    ]
+  },
+  "four_by_four": {
+    "layouts": 46656,
+    "maximizers": [
+      {
+        "columns": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "roots": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "maximum": "35/4",
+    "name": "two_columns_four_owner_points",
+    "weights": [
+      "31/50",
+      "1/5",
+      "9/50"
+    ]
+  },
+  "scope": "Necessary column layouts and exact common-query interface; source constructions require their separate proofs.",
+  "status": "PASS"
+}

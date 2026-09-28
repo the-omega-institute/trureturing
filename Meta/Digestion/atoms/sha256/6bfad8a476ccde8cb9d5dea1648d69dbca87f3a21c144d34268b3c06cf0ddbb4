@@ -1,0 +1,7 @@
+**命题 711.1（低质量区间的目标一致条件）。** 取 $0<t\le M$，仍以旧目标集 $K_t=\{R:tR\le l\}$ 衡量距离。第 710 节的实际零集等于 $K_t$，当且仅当每个共同核心标签都满足 $t\le e_i$；$C$ 为空时该条件自动成立。若有 $i\in C$ 满足 $e_i<t$，则不存在有限 $A\ge0$ 使
+
+$$
+\operatorname{dist}_{\mathrm{TV}}(R,K_t)\le A\Phi_t^{\mathcal F}(R)
+\quad\hbox{对所有原始概率行 }R\hbox{ 成立}.
+$$
+

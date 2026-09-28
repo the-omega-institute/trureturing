@@ -125,6 +125,40 @@ def main():
                     "survivor normalization is not certified")
     require(metrics[primes][1] < F(138877, 1000),
             "head bound exceeds the continuation seed")
+
+    # MF3 in Library/Arith/lettlsun2008cosets.md.  Each row excludes every
+    # ordered six-prime support dominating its listed support.  These are
+    # five-prime complete-survivor profiles, not residue enumerations.
+    marginal_cases = (
+        ((3, 5, 11, 13, 17, 19), 3, F(58495, 63454)),
+        ((3, 5, 7, 11, 19, 23), 23, F(11159716533087, 534598681841)),
+        ((3, 5, 7, 11, 17, 29), 29, F(1652775682537, 66859985411)),
+        ((3, 5, 7, 13, 17, 23), 23, F(507203988220491, 29060939613244)),
+        ((3, 5, 7, 11, 13, 73), 73, F(814972792, 11609325)),
+    )
+    marginal_bounds = []
+    for support, target, expected_r in marginal_cases:
+        cofactor = tuple(p for p in support if p != target)
+        five_profiles, five_metrics, five_deletions = recurrence(cofactor)
+        require(len(five_profiles) == 32,
+                "every five-prime cofactor subset needs a profile")
+        for subset, coefficients in five_profiles.items():
+            require(coefficients[()] == 1 and all(v > 0 for v in coefficients.values()),
+                    "invalid cofactor cylinder profile")
+            if subset:
+                require(any(v < 1 for v in five_deletions[subset].values()),
+                        "cofactor survivor normalization is not certified")
+        actual_r = five_metrics[cofactor][0]
+        require(actual_r == expected_r, "six-prime exclusion parameter mismatch")
+        ceiling = (1 + actual_r) / (target - 1)
+        require(ceiling < 1, "complete marginal exclusion must be strict")
+        marginal_bounds.append({
+            "ordered_support": support,
+            "target_prime": target,
+            "cofactor_cylinder_sum_bound": str(actual_r),
+            "complete_marginal_ceiling": str(ceiling),
+            "all_cofactor_subsets_admissible": True,
+        })
     print(json.dumps({
         "prime_support": primes,
         "cylinder_sum_bound": str(metrics[primes][0]),
@@ -135,6 +169,7 @@ def main():
                     for t, v in profiles[primes].items()},
         "last_prime_deletion_bounds": {str(p): str(b)
                                        for p, b in deletions[primes].items()},
+        "six_prime_marginal_exclusions": marginal_bounds,
         "scope": "Exact profile recurrence and infinite geometric sums. "
                  "Uniformity in residues and finite heights is established "
                  "by the accompanying mathematical proof, not by enumeration. "

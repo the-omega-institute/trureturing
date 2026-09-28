@@ -1,0 +1,30 @@
+**命题 844.1（主要权重与可行相关性）。** 对来源熵 $H(\lambda)\le\log2$ 的准确表示，令 $m=\max_h\lambda_h$，$q=1-m$。则
+
+$$
+\frac12\le m\le\frac1{1+\rho},\qquad
+\frac\rho{1+\rho}\le q\le\frac12.
+$$
+
+证明：因为每个正权重不超过 $m$，
+
+$$
+H(\lambda)=\sum_h\lambda_h\log\frac1{\lambda_h}\ge\log\frac1m.
+$$
+
+因此 $m\ge1/2$。正相关性排除只有一个乘积分量，故 $q>0$。先实施第 842 节改造，权重不变；取具有权重 $m$ 的状态，条件均值记为 $z_0$。令 $u=z_0^2$。由其余状态的加权 Cauchy–Schwarz 不等式，
+
+$$
+m^2u=\left(\sum_{h\ne0}\lambda_hz_h\right)^2
+\le q\sum_{h\ne0}\lambda_hz_h^2=q(\rho-mu).
+$$
+
+故 $u\le\rho q/m$，而其余状态的平均平方偏置满足
+
+$$
+w=\frac{\rho-mu}{q}\ge\frac{\rho m}{q}.
+$$
+
+所有 $z_h^2\le1$，所以 $w\le1$，于是 $\rho m/q\le1$，等价于所示上界。证毕。
+
+当 $m=1/2$ 且 $H(\lambda)\le\log2$ 时，恰有两个正权重且均为 $1/2$：上面的熵下界若取等，每个正权重必须等于最大权重。这个端点不能与拥有更多正权重的情形混为一谈。
+

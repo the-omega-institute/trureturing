@@ -1,0 +1,168 @@
+{
+  "input_sha256": "427138d17d61f284dff84c2143b90b3b5b3997af6c26e9a8c17f4ab790aa1e11",
+  "points": [
+    {
+      "owners": [
+        5,
+        7,
+        17
+      ],
+      "point": 412070210125,
+      "rescuer_options": 8
+    },
+    {
+      "owners": [
+        5,
+        9,
+        11,
+        13
+      ],
+      "point": 81127832500,
+      "rescuer_options": 3
+    },
+    {
+      "owners": [
+        11
+      ],
+      "point": 168172364921,
+      "rescuer_options": 16
+    },
+    {
+      "owners": [
+        5,
+        11,
+        13
+      ],
+      "point": 132084398875,
+      "rescuer_options": 6
+    },
+    {
+      "owners": [
+        5,
+        11
+      ],
+      "point": 250668554125,
+      "rescuer_options": 8
+    },
+    {
+      "owners": [
+        5,
+        11,
+        13,
+        17
+      ],
+      "point": 254458847500,
+      "rescuer_options": 6
+    },
+    {
+      "owners": [
+        5,
+        9
+      ],
+      "point": 30923151625,
+      "rescuer_options": 9
+    },
+    {
+      "owners": [
+        5,
+        9
+      ],
+      "point": 468401215375,
+      "rescuer_options": 7
+    },
+    {
+      "owners": [
+        3,
+        5,
+        17
+      ],
+      "point": 299488721625,
+      "rescuer_options": 4
+    },
+    {
+      "owners": [
+        3,
+        5,
+        13,
+        19
+      ],
+      "point": 282188731500,
+      "rescuer_options": 3
+    }
+  ],
+  "private_only_regression": {
+    "center": 445479489002,
+    "lost_point": 481093572625,
+    "old_owners": [
+      5,
+      171
+    ],
+    "selected": [
+      {
+        "center": 2,
+        "children": [
+          [
+            3,
+            45,
+            2
+          ],
+          [
+            7,
+            245,
+            2
+          ],
+          [
+            13,
+            65,
+            1
+          ]
+        ],
+        "parent": 5
+      },
+      {
+        "center": 2,
+        "children": [
+          [
+            3,
+            63,
+            2
+          ]
+        ],
+        "parent": 7
+      },
+      {
+        "center": 11,
+        "children": [
+          [
+            3,
+            153,
+            2
+          ]
+        ],
+        "parent": 17
+      },
+      {
+        "center": 119,
+        "children": [
+          [
+            3,
+            11583,
+            4
+          ]
+        ],
+        "parent": 143
+      },
+      {
+        "center": 92,
+        "children": [
+          [
+            17,
+            2907,
+            1
+          ]
+        ],
+        "parent": 171
+      }
+    ]
+  }
+}

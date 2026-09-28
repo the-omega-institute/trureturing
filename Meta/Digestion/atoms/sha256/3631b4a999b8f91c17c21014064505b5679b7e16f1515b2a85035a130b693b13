@@ -1,0 +1,8 @@
+**定义 680.1（平衡族）。** 写 $v_S=\mathbf1_S\in\mathbb R^n$、$u=(p/n)\mathbf1$，并令
+
+$$
+P_{\mathcal F}=\operatorname{conv}\{v_S:S\in\mathcal F\}.
+$$
+
+称 $\mathcal F$ 平衡，是指 $u\in P_{\mathcal F}$。等价地，存在 $w_S\ge0$，满足 $\sum_Sw_S=1$，且每个标签的加权出现率都为 $p/n$。这是关于一个数学表示的条件，不是关于群体中立、宗教平等或权威正当性的定义。
+

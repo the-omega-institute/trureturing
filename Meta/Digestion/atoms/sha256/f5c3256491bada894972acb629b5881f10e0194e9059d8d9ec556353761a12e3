@@ -1,0 +1,9 @@
+**命题 769.1（公平正载荷恢复的局部误差控制）。** 考虑第 763 节的两组合法三观察律，其三个二阶矩均在 $[\gamma,1]$ 内，其中 $\gamma>0$，对应矩的差绝对值不超过 $\eta$。则恢复载荷满足
+
+$$
+\left|\log\frac{\widehat a_i}{a_i}\right|\le\frac{3\eta}{2\gamma},\qquad
+|\widehat a_i-a_i|\le\exp\!\left(\frac{3\eta}{2\gamma}\right)-1.
+$$
+
+证明：载荷对数是两个二阶矩对数之和减第三个对数的一半。对数在 $[\gamma,1]$ 上的差由原差除以 $\gamma$ 控制，得第一式。两载荷均不超过一，指数换算给出第二式。证毕。
+

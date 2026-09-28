@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0b7c31589631c948f201a21ee89386894eb19b206a8f5629840f3a1991ecf08
+  normalized_sha256: sha256:d0b7c31589631c948f201a21ee89386894eb19b206a8f5629840f3a1991ecf08
+cas_ref: sha256:d0b7c31589631c948f201a21ee89386894eb19b206a8f5629840f3a1991ecf08
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d closes every propositional clause by instantiation and normalization; no repository GID exists for this closure. SymplecticGroup.fromBlocks_mem_iff gives preservation of the specified alternating form for the symmetric upper block; Matrix.fromBlocks_multiply gives U_Q squared equal to zero. The upper-unitriangular block map into matrix units is a monoid homomorphism from Multiplicative of the additive matrix group, so MonoidHom.map_zpow and toAdd_zpow give A_Q^n = I + n U_Q for every integer n, including negative n. Matrix.charpoly_fromBlocks_zero₂₁ and Matrix.charpoly_one give (X-1)^(2G); Matrix.trace and Fintype.sum_sum_type give trace 2G. Extending Q by a zero block from r to G preserves symmetry and the formulas. These are bind-only applications, with no new Lean declaration or freeze required.
+    previous_atom_id: 8d76650c6d9ac267baf6d324b3496900cf0ce9b058624b1595af2733e53a3bdb
+    next_atom_id: d474bafe25b3e41442a5caf107b174f51e9f662f8c9a0f7ab29c375d4514759f

@@ -1,0 +1,355 @@
+{
+  "all_parents": {
+    "blocked_by_extra": 13,
+    "blocked_by_primary": 46188,
+    "compatible_centers": 46201,
+    "distinct_parent_child_pairs": 199127,
+    "incompatible_centers": 152926
+  },
+  "blockers_sha256": "99a888218a96fd3be1b052381a8cc3c94bd18dec43dd40c0abaab2f37b352803",
+  "both_composite": {
+    "blocked_by_extra": 6,
+    "blocked_by_primary": 34864,
+    "compatible_centers": 34870,
+    "distinct_parent_child_pairs": 179031,
+    "incompatible_centers": 144161
+  },
+  "by_prime": {
+    "3": {
+      "blocked_by_primary": 10548,
+      "compatible_centers": 10548,
+      "distinct_parent_child_pairs": 44209,
+      "eligible_children": 299,
+      "incompatible_centers": 33661
+    },
+    "5": {
+      "blocked_by_extra": 1,
+      "blocked_by_primary": 6685,
+      "compatible_centers": 6686,
+      "distinct_parent_child_pairs": 27841,
+      "eligible_children": 237,
+      "incompatible_centers": 21155
+    },
+    "7": {
+      "blocked_by_extra": 2,
+      "blocked_by_primary": 5141,
+      "compatible_centers": 5143,
+      "distinct_parent_child_pairs": 20817,
+      "eligible_children": 205,
+      "incompatible_centers": 15674
+    },
+    "11": {
+      "blocked_by_extra": 2,
+      "blocked_by_primary": 5472,
+      "compatible_centers": 5474,
+      "distinct_parent_child_pairs": 26565,
+      "eligible_children": 231,
+      "incompatible_centers": 21091
+    },
+    "13": {
+      "blocked_by_extra": 4,
+      "blocked_by_primary": 5863,
+      "compatible_centers": 5867,
+      "distinct_parent_child_pairs": 26565,
+      "eligible_children": 231,
+      "incompatible_centers": 20698
+    },
+    "17": {
+      "blocked_by_extra": 3,
+      "blocked_by_primary": 6236,
+      "compatible_centers": 6239,
+      "distinct_parent_child_pairs": 26565,
+      "eligible_children": 231,
+      "incompatible_centers": 20326
+    },
+    "19": {
+      "blocked_by_extra": 1,
+      "blocked_by_primary": 6243,
+      "compatible_centers": 6244,
+      "distinct_parent_child_pairs": 26565,
+      "eligible_children": 231,
+      "incompatible_centers": 20321
+    }
+  },
+  "extra_witness_cases": [
+    {
+      "centers": [
+        8,
+        2
+      ],
+      "children": [
+        105,
+        1375
+      ],
+      "heights": [
+        1,
+        3
+      ],
+      "lost_integer": 435127539118,
+      "lost_private_owner": 21,
+      "parents": [
+        21,
+        11
+      ],
+      "prime": 5
+    },
+    {
+      "centers": [
+        4,
+        2
+      ],
+      "children": [
+        35,
+        63
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 154233623140,
+      "lost_private_owner": 5,
+      "parents": [
+        5,
+        9
+      ],
+      "prime": 7
+    },
+    {
+      "centers": [
+        4,
+        2
+      ],
+      "children": [
+        35,
+        147
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "lost_integer": 154233623140,
+      "lost_private_owner": 5,
+      "parents": [
+        5,
+        3
+      ],
+      "prime": 7
+    },
+    {
+      "centers": [
+        4,
+        4
+      ],
+      "children": [
+        99,
+        165
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 23803106923,
+      "lost_private_owner": 9,
+      "parents": [
+        9,
+        15
+      ],
+      "prime": 11
+    },
+    {
+      "centers": [
+        4,
+        4
+      ],
+      "children": [
+        99,
+        231
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 23803106923,
+      "lost_private_owner": 9,
+      "parents": [
+        9,
+        21
+      ],
+      "prime": 11
+    },
+    {
+      "centers": [
+        2,
+        4
+      ],
+      "children": [
+        39,
+        1625
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 38225498559,
+      "lost_private_owner": 3,
+      "parents": [
+        3,
+        125
+      ],
+      "prime": 13
+    },
+    {
+      "centers": [
+        11,
+        2
+      ],
+      "children": [
+        273,
+        715
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 435127539118,
+      "lost_private_owner": 21,
+      "parents": [
+        21,
+        55
+      ],
+      "prime": 13
+    },
+    {
+      "centers": [
+        2,
+        23
+      ],
+      "children": [
+        429,
+        1755
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 409205747369,
+      "lost_private_owner": 33,
+      "parents": [
+        33,
+        135
+      ],
+      "prime": 13
+    },
+    {
+      "centers": [
+        23,
+        2
+      ],
+      "children": [
+        1755,
+        7293
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 449637875486,
+      "lost_private_owner": 135,
+      "parents": [
+        135,
+        561
+      ],
+      "prime": 13
+    },
+    {
+      "centers": [
+        3,
+        92
+      ],
+      "children": [
+        85,
+        2907
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 154233623140,
+      "lost_private_owner": 5,
+      "parents": [
+        5,
+        171
+      ],
+      "prime": 17
+    },
+    {
+      "centers": [
+        3,
+        92
+      ],
+      "children": [
+        119,
+        2907
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 409475178392,
+      "lost_private_owner": 7,
+      "parents": [
+        7,
+        171
+      ],
+      "prime": 17
+    },
+    {
+      "centers": [
+        29,
+        3
+      ],
+      "children": [
+        663,
+        935
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 291456798179,
+      "lost_private_owner": 39,
+      "parents": [
+        39,
+        55
+      ],
+      "prime": 17
+    },
+    {
+      "centers": [
+        2,
+        1
+      ],
+      "children": [
+        57,
+        133
+      ],
+      "heights": [
+        1,
+        1
+      ],
+      "lost_integer": 38225498559,
+      "lost_private_owner": 3,
+      "parents": [
+        3,
+        7
+      ],
+      "prime": 19
+    }
+  ],
+  "original_count": 463,
+  "original_hole": 170272916129,
+  "originals_sha256": "427138d17d61f284dff84c2143b90b3b5b3997af6c26e9a8c17f4ab790aa1e11",
+  "period": 481225870125,
+  "unexcluded_compatible_pairs": 0,
+  "validated_private_points": 471
+}

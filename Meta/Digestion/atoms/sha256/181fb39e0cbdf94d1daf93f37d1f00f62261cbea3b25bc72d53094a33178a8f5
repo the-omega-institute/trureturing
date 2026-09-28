@@ -1,0 +1,9 @@
+**命题 704.1（存在约化最优行）。** 对每个原始可行残余 $a$，存在 $\widetilde a$ 满足
+
+$$
+\widetilde a_\circ=0,\qquad 0\le\widetilde a_i\le L,\qquad \sum_i\widetilde a_i=E,
+\qquad \phi_S(\widetilde a)\le\phi_S(a)\quad(S\in\mathcal F).
+$$
+
+因此至少有一个最优行落在上述截顶单纯形中。这个结论不声称每个原始最优行都已具有此形，也不声称构造保持到最优集合的距离。
+

@@ -67807,3 +67807,2320 @@ $$
 本节的有效性只针对给定有限 $n$ 和精确代数输入，不包含复杂度界、浮点数据的精确认证、任意实数输入算法、实际装置成本或已经算出的全深度截止。$\eta_{\mathrm{fin}}$ 的连续性、半代数性、有限全局取得性及额外有效误差证书不由这里决定；不作它们不可能成立的判断。所选树可以改变旧树的标签、遗忘机制和记录输出，不声称保持旧记录 CP 仪器；不把任意数学根视为独立可实施的滤波，也不把有限协议上确界解释为某个无限协议或协议闭包已经可达。这些陈述与证明为纯理论源文本，不构成 Lean、CAS 或其他机器验证结果。
 
 ## 追加锚（本行以下为增补区）
+
+## 436. 内点有理多项式对偶与五射线有限恢复的有效逼近
+
+本节的分别凹性始终针对整个向量块。解析结论允许任意实几何数据；有效结论则以精确编码的实代数数为输入。五射线部分沿用假设 430.2 的完整操作接口，使用定理 421.1 的最小分别凹上包络、定理 424.1（四）的固定深度代数优化及定理 430.3 的精确物理提升。
+
+**定理 436.1（闭积球上的有理多项式上主函数与内点对偶）。** 设
+
+$$
+K=\prod_{i=1}^k\overline B(b_i,R_i)\subseteq\prod_{i=1}^k\mathbb R^{m_i},
+\qquad k,m_i\ge1,\quad R_i>0,\quad |a_i-b_i|<R_i.
+$$
+
+设 $F:K\to[0,M]$，其中 $M<\infty$，且固定其余块的任意值（包括边界值）时，$F$ 对第 $i$ 个完整向量块凹。不假设 $F$ 在边界连续、半连续或可测。对每个 $\eta>0$，存在原始笛卡尔坐标中的有理系数多项式 $q$，满足
+
+$$
+q\ge F\quad\text{于 }K,\qquad q\text{ 在 }K\text{ 上分别凹},
+\qquad F(a)\le q(a)<F(a)+\eta.
+$$
+
+若 $F$ 是 $0\le f\le M$ 的最小实值分别凹上主函数，则
+
+$$
+F(a)=\inf\{q(a):q\in\mathbb Q[x],\ q\ge f\text{ 于 }K,\ q\text{ 在 }K\text{ 上分别凹}\}.
+$$
+
+把此处 $\mathbb Q[x]$ 换成 $\mathbb R[x]$，下确界不变。结论是保持整个闭域上的支配而逼近一个严格内点的值，不是对 $F$ 作全域一致逼近。
+
+证明。先建立卷积所需的内部正则性。对任一球上的凹函数 $0\le g\le M$，若 $x,y$ 到球边界的距离均至少为 $\delta>0$，且 $x\ne y$，令 $u=(y-x)/|y-x|$。点 $x-\delta u$、$y+\delta u$ 仍在球中。沿该直线的凹割线斜率单调，故
+
+$$
+-\frac M\delta
+\le\frac{g(y+\delta u)-g(y)}\delta
+\le\frac{g(y)-g(x)}{|y-x|}
+\le\frac{g(x)-g(x-\delta u)}\delta
+\le\frac M\delta.
+$$
+
+此界与固定的其他块无关。逐块改变坐标，在任一具有正边界距离 $\delta_i$ 的内球乘积上得到
+
+$$
+|F(x)-F(y)|\le\sum_i\frac M{\delta_i}|x_i-y_i|.
+$$
+
+所以 $F$ 在 $\operatorname{int}K$ 联合局部 Lipschitz，特别地在该开集连续且可测；没有为原边界另加可测性假设。
+
+固定 $0<c<1$，令 $(C_cx)_i=a_i+c(x_i-a_i)$。每次仅收缩一个块，由凹性及非负性有
+
+$$
+F(\ldots,a_i+c(x_i-a_i),\ldots)
+\ge cF(\ldots,x_i,\ldots)+(1-c)F(\ldots,a_i,\ldots)
+\ge cF(\ldots,x_i,\ldots).
+$$
+
+依次作用于 $k$ 个块，得到包括边界在内的支配
+
+$$
+F(C_cx)\ge c^kF(x)\quad(x\in K).
+$$
+
+令
+
+$$
+O_c=C_c^{-1}(\operatorname{int}K),\qquad G_c=c^{-k}F\circ C_c\quad\text{于 }O_c.
+$$
+
+这是一个开球乘积上的连续、有界、分别凹函数，并且
+
+$$
+K\subset O_c,\qquad G_c\ge F\text{ 于 }K,\qquad G_c(a)=c^{-k}F(a).
+$$
+
+确实，置 $\delta_i=R_i-|a_i-b_i|>0$，则 $C_cK$ 在第 $i$ 块到原球边界的距离至少为 $(1-c)\delta_i$。因此开集
+
+$$
+V=\prod_i B\left(b_i,R_i+\frac{(1-c)\delta_i}{2c}\right)
+$$
+
+满足 $K\subset V$ 且 $\overline V\subset O_c$。这里通过收缩取得真正的邻域函数，没有跨越 $F$ 的原边界作连续延拓。
+
+给定 $t>0$，取非负、积分为一的光滑紧支撑乘积核 $\varphi$，支撑充分小，使 $\overline V-\operatorname{supp}\varphi\subset O_c$。在 $V$ 上定义
+
+$$
+S(x)=\int G_c(x-z)\varphi(z)\,dz.
+$$
+
+紧邻域上的一致连续性允许进一步缩小核的支撑，使 $\|S-G_c\|_K<t$。若两个点只在一个向量块不同，每个固定平移后的 Jensen 不等式均在开积球 $O_c$ 内成立；以非负核积分后仍成立。因此 $S\in C^\infty(V)$ 分别凹，且
+
+$$
+D^2_{ii}S\preceq0\quad\text{于 }V\quad(1\le i\le k).
+$$
+
+这些是完整的 $m_i\times m_i$ Hessian 块。卷积不必保持上支配，稍后的常数余量将补足这一点。
+
+为使用二阶多项式逼近，取 $\chi\in C_c^\infty(V)$，使它在 $K$ 的某个邻域恒为一。把 $H=\chi S$ 在 $V$ 外延为零，得到 $H\in C_c^\infty(\mathbb R^m)$，其中 $m=\sum_i m_i$；它在 $K$ 附近与 $S$ 连同全部导数相同。在包含 $K$ 的立方体上作仿射重标定后，使用张量 Bernstein 多项式的二阶导数一致收敛。该工具适用的全局光滑前提已由截断满足，具体为 Veretennikov–Veretennikova，[*On partial derivatives of multivariate Bernstein polynomials*](https://arxiv.org/abs/1507.05235v2)，定理 3–4。
+
+所需的导数逼近也可由下式直接看出。在单位立方体坐标中记 $b_{n,j}(z)=\binom njz^j(1-z)^{n-j}$，则对 $|\alpha|\le2$ 及 $n\ge2$，
+
+$$
+D^\alpha B_nH(z)
+=\left(\prod_{j=1}^m(n)_{\alpha_j}\right)
+\sum_{0\le\nu_j\le n-\alpha_j}
+\Delta_{1/n}^{\alpha}H(\nu/n)
+\prod_{j=1}^m b_{n-\alpha_j,\nu_j}(z_j),
+$$
+
+其中 $(n)_s=n(n-1)\cdots(n-s+1)$，$\Delta_{1/n}^{\alpha}$ 是沿各坐标的前向差分。反复使用微积分基本定理，把 $n^{|\alpha|}\Delta_{1/n}^{\alpha}H(w)$ 写成 $D^\alpha H$ 在距 $w$ 为 $O(1/n)$ 的点上的平均。上式的乘积二项核质量为一；其节点 $\nu/n$ 相对于 $z$ 的偏差为 $O(1/n)$，方差为 $O(1/n)$，均匀于整个闭立方体。由导数的一致连续性以及 $(n)_s/n^s\to1$，得到每个 $|\alpha|\le2$ 的一致收敛，包括边界。仿射变换只带来固定的导数缩放因子，故可取实系数多项式 $p$，使
+
+$$
+\|p-S\|_K<t,\qquad
+\sup_K\|D^2_{ii}(p-S)\|_{\mathrm{op}}<t\quad(1\le i\le k).
+$$
+
+有限维下逐个 Hessian 元素的一致逼近保证这些算子范数界。此处只使用导数逼近，不使用 Bernstein 算子的保凹性。
+
+令
+
+$$
+Q(x)=\sum_i|x_i-a_i|^2,\qquad R_Q=\max_K Q,\qquad
+q_\star=p+3t+t(R_Q-Q).
+$$
+
+因为 $p\ge G_c-2t$ 且 $R_Q-Q\ge0$，故在 $K$ 上
+
+$$
+q_\star\ge G_c+t,\qquad
+D^2_{ii}q_\star\preceq-tI_{m_i},\qquad
+q_\star(a)\le c^{-k}F(a)+(R_Q+5)t.
+$$
+
+最后把 $q_\star$ 在原始笛卡尔坐标中的有限个系数同时换为足够接近的有理数。每个涉及的单项式及其二阶导数在 $K$ 上有有限上界，所以系数扰动可保证
+
+$$
+\|q-q_\star\|_K<t/2,\qquad
+\sup_K\|D^2_{ii}(q-q_\star)\|_{\mathrm{op}}<t/2.
+$$
+
+这一步即使在 $a,b_i,R_i$ 为任意实数时仍是成立的存在性论证：只有有限多个系数及有限个正误差容限。因而
+
+$$
+q\ge G_c+t/2\ge F,\qquad
+D^2_{ii}q\preceq-(t/2)I_{m_i},\qquad
+q(a)\le c^{-k}F(a)+(R_Q+11/2)t.
+$$
+
+固定其余块的任意边界或内部值，将 $q$ 限制到第 $i$ 块任意闭线段，其二阶导数为该 Hessian 块的二次型且非正；积分即得该闭线段上的凹性。因此分别凹性成立于完整的闭积球，而非仅内部。
+
+选择的次序为：先取 $c$ 充分接近一，使 $(c^{-k}-1)F(a)<\eta/2$；再取 $t>0$ 使 $(R_Q+11/2)t<\eta/2$；随后依次选择核支撑、实多项式逼近和有理系数误差。由此 $q(a)<F(a)+\eta$。这些选择不声称能从未编码的任意函数 $F$ 计算出来。
+
+对于最小上主函数的情形，常数 $M$ 本身分别凹且支配 $f$，故 $0\le f\le F\le M$。每个分别凹多项式 $q\ge f$ 均由最小性满足 $q\ge F$；上面构造的有理多项式又能使 $q(a)$ 任意接近 $F(a)$。两向不等式证明所述下确界公式。实系数多项式类包含有理系数类，且每个成员仍不小于 $F$，所以实系数下确界也等于 $F(a)$。证毕。
+
+内点条件不能删去。在一个一维闭球 $[-1,1]$ 上令 $f=F$，其中 $F(-1)=0$、$F(x)=1$（$x>-1$）。该函数非负、有界且凹：非平凡线段除左端点外的值均为一，满足 Jensen 不等式。每个连续上主函数却必须有 $q(-1)\ge\lim_{x\downarrow-1}F(x)=1$，而常数一可取到该界；故边界下确界为一，不等于 $F(-1)=0$。允许实系数也不能消除此障碍。最小性同样必要：若仅知 $F\ge f$，取 $f=0,F=1$，则只约束 $q\ge f$ 的下确界为零。
+
+完整块 Hessian 也不能换成对角元条件。在一个二维向量块内，$g(u,v)=uv$ 的两个对角二阶导数均为零，但 Hessian 为 $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，沿 $(t,t)$ 的限制为 $t^2$，并不凹。把两坐标视为两个标量块则是另一种条件。张量 Bernstein 算子也不保持一般向量块凹性：在 $[0,1]^2$ 上对 $g(u,v)=-(u+v)^2$，有
+
+$$
+B_ng=g-\frac{u(1-u)+v(1-v)}n,
+$$
+
+其 Hessian 沿 $(1,-1)$ 的特征值为 $2/n>0$。定理中的负二次项及上移余量同时修复了曲率误差和支配误差。
+
+五射线记号与操作接口。输入 $r$ 由整数多项式及有理隔离数据精确指定，要求
+
+$$
+r>0,\qquad \frac12<r^2<2,\qquad \varepsilon\in\mathbb Q_{>0}.
+$$
+
+这些输入条件可由代数数符号判定检查。取正平方根定义
+
+$$
+\kappa=\frac{\sqrt{4+2(r^2+r^{-2})}}3,\qquad h=\frac1{3(1+\kappa)},
+\qquad \omega=-\frac12+\frac{\sqrt3}{2}i,
+$$
+
+并取假设 430.2 的 $s_1=|0\rangle,s_2=|1\rangle$、$s_{3+j}=(|0\rangle+r\omega^j|1\rangle)/\sqrt{1+r^2}$（$j=0,1,2$）。为区别于多项式 $q$，将记录向量记为 $\chi_i=s_i\otimes s_i$，于是 $J|i\rangle=|i\rangle\otimes\chi_i$。
+
+系统仍是 $S=\mathbb C^5$，原始记录仍是 $R_A\otimes R_B=\mathbb C^2\otimes\mathbb C^2$，不物理压缩到其对称张成空间。每棵协议各自有限；局部完全正仪器在整个当前工作空间上完备，各分支迹不增且总和保迹。允许有限私有量子与经典记忆、非零有限维输出、独立于未知输入及参考的初始乘积辅助态、双向经典通信、重复操作、丢弃、粗粒实际结果、后来遗忘的真实历史、零分支、单结果通道及提前停止。控制只读取当时实际可用的信息，量子控制纳入行动方的完全正映射。禁止共享纠缠、量子通信及终端反馈前对 $S$ 的操作。路径深度按实际局部仪器节点计数，单结果节点也计数；纯经典记账、消息及最终系统酉反馈不计数，伴随的局部量子操作仍计数。
+
+逐真实历史迹掉全部记录输出及剩余记忆后得到 $\mathcal M_\ell$，再按最终实际标签求和为 $\mathcal M_y$。同一接受标签下全部真实历史及隐藏 Kraus 项共用唯一的全系统反馈 $U_y$。控制和反馈可依赖已知 $r$，不依赖未知输入或参考。完整恢复要求同一个 $p\in[0,1]$ 满足
+
+$$
+\mathcal T(X)=\sum_{y\text{ 接受}}U_y\mathcal M_y(X)U_y^\dagger=pX
+\quad(X\in\mathcal L(S)),
+$$
+
+$$
+(\operatorname{id}_{H_{\mathrm{ref}}}\otimes\mathcal T)(X)=pX
+\quad\bigl(X\in\mathcal L(H_{\mathrm{ref}}\otimes S)\bigr)
+$$
+
+对每个有限维未操作参考 $H_{\mathrm{ref}}$ 成立。所有失败历史保留在完整仪器中；被遗忘的历史只可为数学求和保留，隐藏 Kraus 指标从不成为实际控制结果。$p_n(r)$ 与 $\eta_{\mathrm{fin}}(r)$ 分别是在此完整类别中、深度至多 $n$ 和所有逐棵有限协议的成功率上确界。
+
+在固定 Pauli 坐标下令 $D=\{x\in\mathbb R^3:|x|^2\le1\}$、$\rho(x)=(I_2+x\cdot\sigma)/2$、$\Omega=(0,0)$。五个源 Bloch 向量为
+
+$$
+\begin{aligned}
+v_1&=(0,0,1),&v_2&=(0,0,-1),\\
+v_3&=\frac{(2r,0,1-r^2)}{1+r^2},&
+v_4&=\frac{(-r,\sqrt3r,1-r^2)}{1+r^2},&
+v_5&=\frac{(-r,-\sqrt3r,1-r^2)}{1+r^2}.
+\end{aligned}
+$$
+
+定义闭积球谓词及平坦谓词
+
+$$
+\begin{aligned}
+\mathsf B(x,y)&:\ |x|^2\le1\ \wedge\ |y|^2\le1,\\
+\mathsf S_r(x,y)&:\ |x|^2=|y|^2=1\ \wedge\
+\bigwedge_{i=1}^5(1+v_i\cdot x)(1+v_i\cdot y)=4h.
+\end{aligned}
+$$
+
+因为 $\langle s_i|\rho(x)|s_i\rangle=(1+v_i\cdot x)/2$，$\mathsf S_r$ 恰对应假设 430.2 的纯平坦乘积对。置 $f=h\mathbf1_{\mathsf S_r}$，$F=V_\infty$。定理 421.1 给出 $0\le F\le h$ 及 $F$ 对 $f$ 的最小分别凹上主函数性质；定理 430.3 在 $\rho(0)=I_2/2$ 的根上给出
+
+$$
+p_n(r)=4V_n(\Omega),\qquad
+\eta_{\mathrm{fin}}(r)=\sup_np_n(r)=4F(\Omega).
+$$
+
+这里的 $\rho(x),\rho(y)$ 是归一化累计输入效果，不是后测量条件态；坐标分裂权是效果的迹权重，不是一般未知输入下的条件概率。
+
+**定理 436.2（可判定多项式上证书与有限恢复的停机算法）。** 对上述精确代数输入，称 $q\in\mathbb Q[x_1,x_2,x_3,y_1,y_2,y_3]$ 为上证书，当且仅当下列四个全称句成立；所有向量量词均遍历 $\mathbb R^3$：
+
+$$
+\begin{aligned}
+&\forall x,y:\quad \mathsf B(x,y)\Rightarrow q(x,y)\ge0,\\
+&\forall x,y:\quad \mathsf S_r(x,y)\Rightarrow q(x,y)\ge h,\\
+&\forall x,y,u:\quad \mathsf B(x,y)\Rightarrow
+u^{\mathsf T}D^2_{xx}q(x,y)u\le0,\\
+&\forall x,y,u:\quad \mathsf B(x,y)\Rightarrow
+u^{\mathsf T}D^2_{yy}q(x,y)u\le0.
+\end{aligned}
+$$
+
+每个候选的证书条件可判定，并且
+
+$$
+\eta_{\mathrm{fin}}(r)=\inf_{q\text{ 为上证书}}4q(\Omega).
+$$
+
+存在一个 Turing 算法，对每个所述 $(r,\varepsilon)$ 停机，输出有理数 $L,U$、一个有限协议 $\Pi$ 的完整代数描述及其精确代数成功率 $p$，满足
+
+$$
+0\le L\le p\le\eta_{\mathrm{fin}}(r)\le U,\qquad
+U-L<\varepsilon,\qquad \eta_{\mathrm{fin}}(r)-p<\varepsilon.
+$$
+
+协议描述列出有限树的每个行动方、实际结果、后继、全部代数 Kraus 矩阵、仅依赖实际历史的有限控制器、所有接受与失败终端、各终端实际标签及其全系统酉反馈。所有复代数矩阵均由实部和虚部的实代数编码给出。该算法从而在精确代数参数输入上任意精度计算 $\eta_{\mathrm{fin}}$，并找出该输入及误差要求下足够的有限深度。
+
+证明。前两个全称句恰好表示 $q\ge f$ 于整个 $D\times D$。后两个句给出完整向量块 Hessian 非正，由闭线段上的二阶导数判据，蕴含包括边界切片在内的分别凹性。反过来，若多项式在闭积球上分别凹，固定其他块的任意值，在活动块内部由二阶方向导数得到该 Hessian 非正，再由 Hessian 的连续性延至活动块边界。因此四句与所需的支配及分别凹性等价。
+
+全部常数均为可有效表示的实代数数。例如 $\kappa,h$ 也可由
+
+$$
+9\kappa^2r^2=4r^2+2(r^4+1),\qquad \kappa>0,\qquad 3(1+\kappa)h=1
+$$
+
+刻画；$r$ 保留其隔离条件，$\sqrt3$ 取正根。清除的分母 $r^2$、$1+r^2$、$1+\kappa$ 均严格为正。四句于是属于精确代数系数的实闭域一阶理论。量词消去给出有限判定，所需代数运算、根隔离及符号判定在上述有限编码上均为 Turing 可执行步骤。这里使用 Basu–Pollack–Roy，[*On the Combinatorial and Algebraic Complexity of Quantifier Elimination*](https://www.math.purdue.edu/~sbasu/jacm95.ps)，JACM 43(6) (1996)，定理 1.3.1–1.3.2；不以仅充分的平方和检验替代四句的精确判定。
+
+将定理 436.1 取为 $k=2,m_1=m_2=3,K=D\times D,a=\Omega,M=h$，由 $F$ 的最小性得到 $F(\Omega)=\inf_q q(\Omega)$。乘以物理根因子四即得所述公式。平坦谓词中的四来自两个 Bloch 重叠的分母；此处的四来自两个原始根效果 $I_2$ 相对于归一化效果 $I_2/2$ 的缩放，两者分别保留。
+
+算法同时使用以下两个有限过程。首先按次数、系数分子绝对值和正分母的递增有限界，公平枚举六变量有理多项式，对每个候选判定四句。初置 $U=1$，每遇到一个上证书就令
+
+$$
+U\leftarrow\min\{U,4q(\Omega)\}.
+$$
+
+$q(\Omega)$ 为有理数，且始终 $U\ge\eta_{\mathrm{fin}}(r)$。初始上界一来自完整物理仪器的概率界。
+
+其次，依次对 $n=0,1,2,\ldots$ 使用定理 424.1（四）精确计算 $p_n(r)$，并保留其尚未消去的有限树存在变量。参数对应为
+
+$$
+d=5,\quad k=2,\quad d_A=d_B=2,\quad D_R=4,\quad
+B_A=B_B=d^4+d_A^2=629,\quad \Theta=\{r\}.
+$$
+
+单点参数空间紧；源坐标只涉及 $r,\sqrt3,\sqrt{1+r^2}$ 及其代数运算，满足精确代数前提。定理 424.1 的取得性和第四项给出可计算的代数 $p_n$；它们非负、单调，且由 421.1、430.3 有 $\sup_np_n=\eta_{\mathrm{fin}}$。不需要钻石误差优化或其他后续章节。
+
+每一阶段完成一个候选证书判定和一个新深度计算；每项均停机，故这是公平的 Turing 调度。阶段末精确判定
+
+$$
+U-p_n<\varepsilon/2.
+$$
+
+若不成立就进入下一阶段；若成立，取有理数 $L$ 满足 $0\le L\le p_n$、$p_n-L<\varepsilon/2$。例如取网格小于 $\varepsilon/2$ 的非负二进有理下舍入，通过代数数比较可有效取得；$p_n=0$ 时取 $L=0$。于是
+
+$$
+U-L=(U-p_n)+(p_n-L)<\varepsilon.
+$$
+
+停机只需两个有限见证。定理 436.1 以锚点误差 $\varepsilon/32$ 给出某个有理上证书，使
+
+$$
+4q(\Omega)<\eta_{\mathrm{fin}}+\varepsilon/8.
+$$
+
+上确界等式又给出某个有限 $n_0$，使 $p_{n_0}>\eta_{\mathrm{fin}}-\varepsilon/8$。公平搜索最终遇到此证书并计算到至少该深度；届时 $U-p_n<\varepsilon/4$，所以必通过 $\varepsilon/2$ 的严格停机判据。此论证不预设收敛率，也不判定任何涉及 $\eta_{\mathrm{fin}}$ 的精确等号。$\varepsilon/8$ 用于存在性见证；实际首次返回的迭代保证的是 $U-p_n<\varepsilon/2$。
+
+下面从返回深度的有限代数描述提取完整物理见证。沿第 424 节的 $\mathcal K_n$ 递归保留行动方选择、单纯形权重、全部局部密度坐标、子节点 Choi 矩阵及终端拒绝或酉接受选择。其零层是
+
+$$
+\mathcal K_0(r,\rho)
+=\{0\}\cup\{C(\operatorname{Ad}_U\circ\Phi_{r,\rho_A\otimes\rho_B}):U\in\mathcal U(5)\},
+$$
+
+其中 $\Phi_{r,E}(|i\rangle\langle j|)=\langle\chi_j|E|\chi_i\rangle|i\rangle\langle j|$。第 $m+1$ 层选择一位行动方，将其密度作至多 629 项重心分解，保持另一方密度，子 Choi 元素属于相应 $\mathcal K_m$，父 Choi 元素为权重和。行动方和终端选择均保留为有限析取，不对这些选择额外凸化。提前停止可用单例恒等节点补齐剩余深度；这不把任何实际局部操作记为免费。
+
+在归一化根 $\rho_A=\rho_B=I_2/2$ 施加
+
+$$
+4Z_{\mathrm{root}}=p_n\,|\operatorname{vec}I_5\rangle\langle\operatorname{vec}I_5|.
+$$
+
+展开到深度零后是一个有限存在公式，其无量词矩阵、权重和酉条件都是代数系数的实多项式条件。半正定性可由实化 Hermitian 矩阵的全部主子式非负表达，保留奇异密度与零权重。固定深度的最大值取得保证该公式有实解。实代数数域是实闭子域，量词消去保证同一公式有一个所有坐标均为实代数数的解。该解可以有效找到：公平枚举相应有限长度的实代数编码元组，逐个精确检验无量词条件及有限析取，遇到首个满足者返回。非空性保证这次搜索也停机。此步骤不假定可行成功率集合是区间，并保留拒绝选择；拒绝叶允许偶然为平坦叶。
+
+将所得坐标树按定义 430.1 变成加性效果树。写 $X_{v,i}=a_{v,i}P_{v,i}$，根取 $a_{\varnothing,i}=1$；在 $i$-分裂处置
+
+$$
+a_{vj,i}=a_{v,i}\lambda_{vj},\qquad X_{vj,i}=a_{vj,i}P_{vj,i},
+$$
+
+其他因子保持不变。这不除以零权重，且 $X_{v,i}=\sum_jX_{vj,i}$。再令
+
+$$
+A_v=2X_{v,A},\qquad B_v=2X_{v,B}.
+$$
+
+物理根成为 $(I_2,I_2)$，每个分裂仍加性完备，每个叶张量效果为归一化树相应效果的四倍。依递归展开的线性关系及上述根 Choi 等式，按样本中的终端接受和反馈求和，接受映射正是 $p_n\operatorname{id}$。
+
+精确物理实现使用定理 430.3 的支撑补全。若 Alice 节点满足 $A=\sum_jA_j\ne0$，令 $P$ 为 $A$ 的支撑投影，$A^{-1/2}$ 为支撑上的逆平方根并在核上取零，置
+
+$$
+L_j=\sqrt{A_j}A^{-1/2},\qquad Q=I_2-P,
+\qquad \Phi_j(Z)=L_jZL_j^\dagger+\mathbf1_{\{j=j_*\}}QZQ,
+$$
+
+其中 $j_*$ 是一个已有实际结果。正性给出 $\operatorname{supp}A_j\subseteq\operatorname{supp}A$，从而
+
+$$
+\sum_jL_j^\dagger L_j=P,\qquad
+L_j\sqrt A=\sqrt{A_j},\qquad Q\sqrt A=0.
+$$
+
+总 Kraus 效果是 $P+Q=I_2$，故仪器在整个量子比特上保迹，而非只在支撑上保迹。补全项是原实际结果内部的隐藏 Kraus 项；对任意附加系统及任意联合矩阵，其累计作用因 $Q\sqrt A=0$ 恒为零，随后任何完全正映射仍把它送为零。Bob 使用同样构造。保留指定的零结果及不可达子树；被分裂的累计因子为零时，任选同一有限结果形状的完整仪器，累计映射仍为零。由根递归，每个可达节点的累计分支实现指定的 $A_v\otimes B_v$，深度和实际结果数均不增加。
+
+代数正半定矩阵的特征值、谱投影、正平方根和支撑逆可由根隔离及代数线性运算有效给出，故上述全部 Kraus 矩阵都有精确代数编码。每个非零接受真实叶由 430.3 的正 Choi 秩一论证必有
+
+$$
+A_\ell\otimes B_\ell=t_\ell P_{\xi_\ell}\otimes P_{\zeta_\ell},
+\qquad t_\ell>0,\qquad (P_{\xi_\ell},P_{\zeta_\ell})\in\mathcal S_r.
+$$
+
+可为这两条代数射线选取代数单位代表，并显式指定
+
+$$
+z_{\ell i}=\frac{\langle\xi_\ell\otimes\zeta_\ell|\chi_i\rangle}{\sqrt h},\qquad
+|z_{\ell i}|=1,\qquad
+U_\ell=\operatorname{diag}(\overline z_{\ell1},\ldots,\overline z_{\ell5}).
+$$
+
+迹掉记录后的系统 Kraus 矩阵可写为 $K_\ell=\sqrt{t_\ell h}\operatorname{diag}(z_{\ell i})$，于是 $U_\ell K_\ell=\sqrt{t_\ell h}I_5$。该反馈与提取的精确恢复一致，每个接受叶贡献 $t_\ell h\operatorname{id}$，对全部系统矩阵及任意未操作有限参考成立；求和为 $p_n\operatorname{id}$。零接受叶贡献零，失败叶仍保留，失败反馈可取恒等。
+
+对这个新构造的见证，从一开始就为每个终端保留自己的实际历史标签；有限经典控制器只读取这些已取得的信息，同一标签的全部隐藏项共用一个 $U_\ell$。只需原始两个量子比特工作寄存器、平凡乘积初始辅助态和有限经典历史，实施仪器时允许有限局部辅助件。这个构造没有恢复旧协议遗忘的信息，也不声称再现其任意记录输出状态。对偶证明中的抽象收缩与坐标运输不成为物理上的免费操作。
+
+取输出协议的精确成功率 $p=p_n$。停机时
+
+$$
+0\le\eta_{\mathrm{fin}}-p\le U-p<\varepsilon/2<\varepsilon,
+$$
+
+连同有理下舍入及完整物理实现，得到全部输出条件。证毕。
+
+来源与适用边界。上述复用对应于不可变版本 [2a6201b77b78133ce70b081a57c53daa035e3ba1 的 QUANTUM-REALITY.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/2a6201b77b78133ce70b081a57c53daa035e3ba1/docs/develop/theory/QUANTUM-REALITY.md) 的 421.1、424.1（四）、430.1–430.3。428.1–428.2 和 429.1 的具体边界及连续误差结论以 $r=1$ 为前提；它们不提供一般 $r$ 的边界连续性。430.3 的统一有限深度存在结论仍不在这里附带有效统一速率。上面的停机证明新增了可判定上证书，不能仅由一致收敛推出：若 $s_n$ 是递增可计算有理列而极限不可计算，常值函数列 $x\mapsto s_n$ 仍一致收敛，却没有有效误差证书。任意未编码的常值报酬也不成为 Turing 算法输入。
+
+有限分裂与包络的背景可见 Beiglböck–Nutz，[*Martingale Inequalities and Deterministic Counterparts*](https://arxiv.org/abs/1401.4698v2)，定理 3.3、注 3.4 的最小支配不动点及有限支撑鞅表述；近期的有限阶 laminate 与二叉鞅关系见 Cassese，[*Martingales, laminates and minimal Korn inequalities*](https://arxiv.org/abs/2512.02784v2)，§2、定义 4。这些文献不直接给出本节的有理上主函数或五射线算法。Basu–Amini Khorasgani–Maji–Nguyen，[*Solving polynomial inequalities over spaces of convex sets and applications*](https://arxiv.org/abs/2608.07794v1)，定理 2 要求 $V=U\oplus\bigoplus_iW_i$、允许方向为 $\bigcup_i(U+W_i)$ 且每个 $\dim W_i=1$；第 10 页脚注 1 明确把无此维数限制的推广列为未知。两个独立三维 Bloch 块不满足该条件，把它们拆成标量轴会改变允许分裂方向。因此该精确有限集层合凸包结果不替代这里的近似求值论证，近似计算一个上确界也不判定精确层合成员关系。以上引用只取所列范围，不作首创性断言。
+
+定理 436.1 的任意实几何存在性不意味着其证书可有效检查；定理 436.2 的可计算性依赖特定报酬的精确代数半代数描述。结论不提供任意实数预言机或通用黑箱报酬算法，不判定 $\eta_{\mathrm{fin}}$ 的精确等号，不断言该极限值为代数数或关于参数为半代数函数，不给出所有深度上最大化的有限协议或可达无限协议。返回的是严格误差内的精确有限协议；没有数值求解结果、预先的统一次数或深度界、有效统一收敛率或实用复杂度估计。
+
+## 追加锚（本行以下为增补区）
+
+## 437. 代数根面上的多项式上证书与完整有限标量树
+
+本节把最小面限制、内点多项式上主函数和有限树的严格阈值判定接在一起。报酬允许带符号和不连续；下方见证始终是一棵实际有限树，上方见证是根面坐标中的有理多项式。分别凹性始终针对整个向量块。
+
+输入与树的约定。令 $I$ 为有限集，允许为空。对每个 $i\in I$，输入整数 $d_i\ge0$、以精确实代数系数多项式等式和不等式的有限 Boolean 组合描述的集合 $C_i\subseteq\mathbb R^{d_i}$，以及精确实代数点 $a_i$。实代数常数由整数多项式及有理隔离数据指定。输入还包括报酬图公式 $\mathsf G_f(x,y)$ 和 $\varepsilon\in\mathbb Q_{>0}$。承诺每个 $C_i$ 非空、紧且凸，$a_i\in C_i$，并且 $\mathsf G_f$ 在 $C=\prod_iC_i$ 上恰为一个处处有定义、单值、有界函数 $f:C\to\mathbb R$ 的图。报酬图不要求闭，也不要求 $f$ 上半连续。
+
+完整有限单块分裂树采用定义432.1、433.1及434.1的约定：节点标签 $x_\nu\in C$，根标签 $a=(a_i)_i$；每个内部节点选择 $i\in I$，声明有限非空子节点集，并满足
+
+$$
+\lambda_{\nu j}\ge0,\qquad \sum_j\lambda_{\nu j}=1,\qquad
+x_{\nu,i}=\sum_j\lambda_{\nu j}x_{\nu j,i},\qquad
+x_{\nu j,h}=x_{\nu,h}\quad(h\ne i).
+$$
+
+最后一式也约束零权边。所有已声明的零权、余项、失败及提前停止分支均保留。深度是根叶路径上内部节点数的最大值，单子节点和零权路径上的内部节点也计数。叶质量 $w_\ell$ 是路径边权之积，根叶的空乘积为一。置
+
+$$
+\operatorname{val}_f(\mathsf T)=\sum_\ell w_\ell f(x_\ell),\qquad
+\tau=T_{\mathrm{fin}}^f(a;C)
+=\sup_{\mathsf T\text{ 为上述完整有限树}}\operatorname{val}_f(\mathsf T).
+$$
+
+空积 $C$ 是只含空元组的单点集；$I=\varnothing$ 时没有可选块，只有根叶树。
+
+**定理 437.1（边界根的有效双侧证书与严格代数树见证）。** 对每个满足上述承诺的输入，存在一个停机的 Turing 算法，输出以下有限精确数据：各根最小面 $F_i$ 的半代数公式、其维数 $m_i$、实代数满列秩矩阵 $B_i\in\mathbb R^{d_i\times m_i}$ 及仿射图
+
+$$
+J_i(z_i)=a_i+B_i z_i,\qquad
+D_i=\{z_i\in\mathbb R^{m_i}:J_i(z_i)\in F_i\},\qquad
+J=\prod_iJ_i,\quad D=\prod_iD_i;
+$$
+
+一个整数 $B\ge1$，使 $|f|\le B$ 于 $C$；一个有理系数多项式 $q\in\mathbb Q[z]$；有理数 $L,U$；以及一棵以 $a$ 为根的完整有限树 $\mathsf T$ 和它的精确实代数值 $v$。其中 $J_i:D_i\to F_i$ 为仿射双射，$D_i$ 紧、凸且在 $\mathbb R^{m_i}$ 中满维，$0\in\operatorname{int}D_i$。令 $h=f\circ J$，证书满足
+
+$$
+q(z)\ge h(z)+B\quad(z\in D),\qquad
+u^{\mathsf T}D^2_{ii}q(z)u\le0
+\quad(z\in D,\ u\in\mathbb R^{m_i},\ i\in I),
+$$
+
+且
+
+$$
+\boxed{
+U=q(0)-B,\qquad
+L<v=\operatorname{val}_f(\mathsf T)\le\tau\le U,\qquad
+U-L<\varepsilon.
+}
+$$
+
+特别地，$0\le\tau-v<\varepsilon$。树的每个节点标签、边权及叶报酬都有实代数编码，每个 $i$-节点至多有 $m_i+1$ 个子节点；输出列出全部节点和后继，包括其所有零权和非获利分支。这里 $\mathbb R^0=\{()\}$ 非空，零维图的矩阵没有列，零维 Hessian 条件为空；所有根面均为单点及空积情形均在结论内。多项式系数的有理性是在所输出的代数仿射坐标中说的，拉回原仿射面后的系数一般仅为实代数数。
+
+**证明。**
+
+（一）有效根面与精确平移。定理432.2和引理433.2已经给出根最小面及根的相对内部性质。将其线段见证中的系数换为 $t=\lambda/(1-\lambda)$，得到可供量词消去的公式
+
+$$
+F_i=\{x\in C_i:\exists t>0,\ a_i+t(a_i-x)\in C_i\},\qquad
+a_i\in\operatorname{ri}F_i.
+$$
+
+还需确认所得面紧。若 $x\in C_i\cap\operatorname{aff}F_i$，相对内点性质允许取充分小的 $t>0$，使 $a_i+t(a_i-x)\in F_i$；上式遂给出 $x\in F_i$。反向包含直接成立，因此
+
+$$
+F_i=C_i\cap\operatorname{aff}F_i.
+$$
+
+有限维仿射子空间闭，$C_i$ 紧，故 $F_i$ 紧。这里没有把最小面换成其闭包。
+
+在精确实代数系数上消去 $t$，可得到 $F_i$ 的无量词公式。从方向空间的零子空间开始，判定是否存在 $x\in F_i$ 不在当前的 $a_i+\operatorname{span}\{b_1,\ldots,b_r\}$ 中；若存在，就有效选取一个实代数这样的 $x$，追加列 $x-a_i$。仿射成员关系由代数线性方程表示，判定属于实闭域的一阶问题；非空半代数集合的代数点提取也有效。每次秩严格增加，至多追加 $d_i$ 列后停止。无外点时所得列张成 $\operatorname{span}(F_i-a_i)$，从而给出所需 $B_i$、$m_i$ 和 $D_i$。满列秩保证 $J_i$ 在该方向空间上是同胚；紧性、凸性、满维及 $0\in\operatorname{int}D_i$ 随之成立。若一开始即无外点，则 $F_i=\{a_i\}$、$m_i=0$。
+
+枚举整数 $B=1,2,\ldots$，对每个候选判定
+
+$$
+\forall x,y:\quad
+\bigl(x\in C\ \wedge\ \mathsf G_f(x,y)\bigr)
+\Longrightarrow -B\le y\le B.
+$$
+
+输入的有界性承诺保证此过程停机。完整树的叶质量恒为一，这是432.2、433.3中逐子树归纳的恒等式。因此，对任何这样的树，精确地有
+
+$$
+\operatorname{val}_{f+B}(\mathsf T)
+=\operatorname{val}_f(\mathsf T)+B.
+$$
+
+将432.2、433.3的面限制用于非负报酬 $f+B$，再减去 $B$，得到每个固定深度和全部有限深度上的值均可限制到 $F=\prod_iF_i$。所复用的证明把第一条零权边下的整棵子树重标为其父标签，保留全部节点、边权和深度；并非删除零权分支。各 $J_i$ 保持重心及非活动坐标等式，故在 $F$ 与 $D$ 上又有逐树同值、同深度的仿射对应。于是
+
+$$
+T_n^f(a;C)=T_n^h(0;D),\qquad
+\tau=T_{\mathrm{fin}}^h(0;D).
+$$
+
+（二）带符号树值的最小上主函数。对 $z\in D$ 令
+
+$$
+E(z)=T_{\mathrm{fin}}^h(z;D),\qquad V(z)=E(z)+B.
+$$
+
+根叶树和叶质量恒等式给出 $h\le E$、$-B\le E\le B$，因而 $0\le V\le2B$。任给一个块的有限凸分解 $z_i=\sum_j\lambda_j y_{j,i}$，其他块固定。对每个子根选值大于 $E(y_j)-\delta$ 的实际有限树，再将这有限多个树嫁接到该分裂，得到
+
+$$
+E(z)\ge\sum_j\lambda_j E(y_j)-\delta.
+$$
+
+各子树各自有限，有限嫁接仍有限；零权子根也可选根叶树。令 $\delta\downarrow0$，即得 $E$ 在完整闭域上分别凹。反之，任何实值分别凹函数 $A\ge h$，沿一棵树从叶向根应用有限 Jensen 不等式，都给出 $A(z)\ge\operatorname{val}_h(\mathsf T)$。取上确界得到 $A\ge E$。所以 $E$ 是 $h$ 的最小实值分别凹上主函数，$V$ 是 $h+B$ 的同类最小上主函数。此处以近似树嫁接补齐421.1的包络机制在当前任意有界报酬类上的应用，没有使用最大值取得或上半连续性。
+
+（三）从闭积球的解析前置扩展到凸因子。先省去所有零维块，设余下块数为 $s>0$。任取 $0<c<1$，逐块使用凹性和 $V\ge0$，得到
+
+$$
+V(cz)\ge c^sV(z)\quad(z\in D).
+$$
+
+取 $r_i>0$ 使 $\overline B(0,r_i)\subseteq D_i$。凸性给出
+
+$$
+cD_i+B\bigl(0,(1-c)r_i\bigr)\subseteq\operatorname{int}D_i.
+$$
+
+确实，固定 $x\in D_i$ 后，$cx+(1-c)B(0,r_i)$ 是包含于 $D_i$ 的开球，故其每一点都是内点。于是
+
+$$
+O=\prod_i c^{-1}\operatorname{int}D_i,\qquad
+G(z)=c^{-s}V(cz)\quad(z\in O)
+$$
+
+在 $D$ 外还具有正宽度的定义域，且 $G\ge V$ 于 $D$、$G(0)=c^{-s}V(0)$。具体地，取
+
+$$
+0<\delta_i<\frac{(1-c)r_i}{4c},\qquad
+N_i=D_i+B(0,\delta_i),\qquad N=\prod_iN_i.
+$$
+
+各 $N_i$ 有界、开且凸，$D\subset N$，并且
+
+$$
+\overline N_i+\overline B(0,2\delta_i)
+\subset c^{-1}\operatorname{int}D_i.
+$$
+
+这同时给出闭邻域与平移核所需的缓冲，而不要求原边界上的连续延拓。
+
+函数 $G$ 在 $O$ 上分别凹且 $0\le G\le M:=2Bc^{-s}$。固定其他块，对具有 $\delta$ 线段延长余量的两点 $x,y$，沿单位方向 $u=(y-x)/|y-x|$ 比较 $x-\delta u,x,y,y+\delta u$ 的凹割线斜率，得到
+
+$$
+-M/\delta\le\frac{G(\ldots,y,\ldots)-G(\ldots,x,\ldots)}{|y-x|}
+\le M/\delta.
+$$
+
+上述缓冲使此界在 $\prod_i(\overline N_i+\overline B(0,\delta_i))$ 上逐块一致成立，常数取 $M/\delta_i$。逐块望远镜求和即得联合 Lipschitz 界，特别是紧邻域上的一致连续性。$G$ 在整个 $O$ 上的局部连续性同理由更小的局部缓冲得到；因此只在内部使用卷积已足够，不需要为 $V$ 的原边界添加可测性前提。
+
+给定 $t>0$，选非负、积分为一、支撑充分小的光滑乘积核 $\varphi$，使 $\overline N-\operatorname{supp}\varphi\subset O$。定义
+
+$$
+S(z)=\int G(z-w)\varphi(w)\,dw\quad(z\in N).
+$$
+
+缩小支撑使 $\|S-G\|_D<t$。平移后的每一条单块线段仍在开凸积域 $O$ 内，故将 $G$ 的单块 Jensen 不等式用非负核积分，得到 $S\in C^\infty(N)$ 且 $D^2_{ii}S\preceq0$ 于 $N$。
+
+至此已经满足436.1证明中截断及 $C^2$ 多项式逼近步骤的实际条件：取支撑于 $N$、在 $D$ 邻域恒为一的光滑截断，将截断后的 $S$ 延零至整个欧氏空间，在包含 $D$ 的立方体上应用该步骤，取得实多项式 $p$，使
+
+$$
+\|p-S\|_D<t,\qquad
+\sup_D\|D^2_{ii}(p-S)\|_{\mathrm{op}}<t.
+$$
+
+这里只复用全局光滑函数的二阶导数一致逼近，不使用 Bernstein 算子的保凹性，也没有把一般凸因子说成球。沿436.1的同一余量构造，置
+
+$$
+Q(z)=\sum_i|z_i|^2,\qquad R=\max_D Q,\qquad
+q_\star=p+3t+t(R-Q).
+$$
+
+在 $D$ 上有 $p\ge G-2t$ 和 $R-Q\ge0$，故
+
+$$
+q_\star\ge G+t,\qquad
+D^2_{ii}q_\star\preceq-tI_{m_i},\qquad
+q_\star(0)\le c^{-s}V(0)+(R+5)t.
+$$
+
+将有限多个系数同时扰动为有理数，紧集上单项式及其二阶导数有界，因而可使值误差及每个完整 Hessian 块的算子范数误差都小于 $t/2$。所得 $q\in\mathbb Q[z]$ 满足
+
+$$
+q\ge G+t/2\ge V,\qquad
+D^2_{ii}q\preceq-(t/2)I_{m_i},\qquad
+q(0)\le c^{-s}V(0)+(R+11/2)t.
+$$
+
+先取 $c$ 接近一，使 $(c^{-s}-1)V(0)<\eta/2$，再取 $t>0$ 使 $(R+11/2)t<\eta/2$，就得到 $q(0)<V(0)+\eta$。若 $s=0$，$D$ 是单点，直接取 $V(0)\le q<V(0)+\eta$ 的有理常数即可。全程只为密度证明选取参数，不要求算法先计算未知函数 $V$ 或它的连续模。
+
+在凸因子的任意闭线段上，完整块 Hessian 非正给出分别凹性，包括其他块的边界值。反过来，多项式的分别凹性在活动块内部给出该 Hessian 条件，再由连续性延至边界；零维块条件为空。由第二步的最小性以及刚证的任意精度上主函数，得到
+
+$$
+\tau
+=\inf\{q(0)-B:q\in\mathbb Q[z],\ q\ge h+B\text{ 于 }D,
+\ D^2_{ii}q\preceq0\text{ 于 }D\text{ 对所有 }i\}.
+$$
+
+（四）有限树的严格阈值公式。令 $\mathcal A_n$ 为原域 $C$ 上根为 $a$、深度至多 $n$ 的所有完整树的实际值集合。直接将定理434.2第一项用于 $D$ 上的有界带符号报酬 $h$：每棵树都被同根、深度不增、值不减的树支配，其 $i$-节点至多有 $m_i+1$ 个正权子节点。令 $\mathcal R_n$ 为 $D$ 上满足该分支数界、允许非负边权的树值集合，则
+
+$$
+\mathcal R_n\subseteq\mathcal A_n,\qquad
+\forall v\in\mathcal A_n\ \exists v'\in\mathcal R_n:\ v'\ge v.
+$$
+
+第一步的面限制及坐标对应用于这里的比较。这是向上的共尾子集，不断言 $\mathcal R_n=\mathcal A_n$；421.1证明中把报酬作为额外坐标的 $m_i+2$ 点压缩保持精确值，而此处只需434.2的 $m_i+1$ 点单侧优势。$I=\varnothing$ 时两类直接都只有根叶值，无须应用要求至少一个因子的434.2。
+
+固定 $n$ 后，这些树只有有限多个有序形状：每个内部节点有有限种活动块选择和 $1$ 至 $m_i+1$ 个子节点，路径长至多 $n$。对每个形状 $\sigma$，取节点变量 $z_\nu$、边变量 $\lambda_{\nu j}$ 及叶报酬变量 $y_\ell$。记 $\mathsf G_h(z,y):=\mathsf G_f(J(z),y)$。令 $\mathsf F_\sigma$ 为下列有限多项式条件的合取：
+
+$$
+\begin{aligned}
+&z_\nu\in D\quad\text{对每个节点},\qquad z_{\varnothing}=0,\\
+&\lambda_{\nu j}\ge0,\qquad \sum_j\lambda_{\nu j}=1,\\
+&z_{\nu,i}=\sum_j\lambda_{\nu j}z_{\nu j,i}
+\quad\text{在每个活动块为 }i\text{ 的节点},\\
+&z_{\nu j,h}=z_{\nu,h}\quad(h\ne i)\quad\text{对该节点的每条边},\\
+&\mathsf G_h(z_\ell,y_\ell)\quad\text{对每个叶},\\
+&v=\sum_\ell\left(\prod_{e\in\operatorname{path}(\varnothing,\ell)}\lambda_e\right)y_\ell.
+\end{aligned}
+$$
+
+域和图的 Boolean 公式原样保留；并未要求它们仅由合取组成。所有非活动坐标等式包括零权边，所有叶都要满足实际报酬图。根叶形状用空乘积一。于是
+
+$$
+\mathsf R_n(v):=\bigvee_\sigma\exists(z,\lambda,y)\,\mathsf F_\sigma,
+\qquad
+\Psi_n(L):=\exists v\,[\mathsf R_n(v)\wedge v>L]
+$$
+
+都是可有效构造的实代数系数公式。由共尾性，$\Psi_n(L)$ 为真当且仅当存在任意分支数、深度至多 $n$ 的原域树，其实际值严格大于 $L$。它使用 $f$ 的实际图，没有把报酬换成上半连续包络。
+
+量词消去判定每个 $\Psi_n(L)$。若为真，有限析取中至少一个形状可行。实代数数域是实闭域，带实代数系数的此有限存在公式在 $\mathbb R$ 与实代数数域中真值相同，故存在所有变量均为实代数数的解。可用半代数采样提取，也可公平枚举该形状的有限长度实代数编码元组，逐个精确检验无量词条件，直到找到满足者；存在性保证后者停机。提升 $x_\nu=J(z_\nu)$ 后得到原域上的完整代数树，$v$ 也因有限代数加乘而为实代数数。没有舍入标签、删去失败或零权后继，也没有把严格下见证改成上确界点。
+
+同一公式还给出一个不要求取得性的有限深度后果。$\mathcal R_n$ 非空、有界且半代数，$\sup\mathcal R_n=\sup\mathcal A_n=:s_n$；其中 $\mathcal R_0=\{f(a)\}$，即使坐标空间是 $\mathbb R^0$ 也不为空。其上确界由单点公式
+
+$$
+\operatorname{Sup}_n(t):=
+\bigl[\forall v\,(\mathsf R_n(v)\Rightarrow v\le t)\bigr]
+\ \wedge\
+\bigl[\forall\delta>0\ \exists v\,(\mathsf R_n(v)\wedge v>t-\delta)\bigr]
+$$
+
+刻画。量词消去与根隔离因而可计算实代数数 $s_n$，但 $s_n$ 未必属于 $\mathcal R_n$。这个后果不作为下述算法的必经步骤，亦不施加 $v=s_n$。
+
+（五）有限检验与公平搜索。对任一候选 $q\in\mathbb Q[z]$，它是上证书当且仅当以下全称句成立：
+
+$$
+\begin{aligned}
+&\forall z,y:\quad
+\bigl(z\in D\wedge\mathsf G_h(z,y)\bigr)\Rightarrow q(z)\ge y+B,\\
+&\forall z,u:\quad z\in D\Rightarrow
+u^{\mathsf T}D^2_{ii}q(z)u\le0\qquad(i\in I,\ u\in\mathbb R^{m_i}).
+\end{aligned}
+$$
+
+这些句子连同有限形状公式均属于精确实代数系数的实闭域一阶理论，可由量词消去有限判定。完整 Hessian 块包括块内混合导数。第一句借助总单值图保证支配全部实际报酬，第二句给出第三步所用的闭域分别凹性；这里没有用仅充分的代数证书替代这些精确条件。
+
+按多项式次数、系数分子绝对值、正分母、$n\in\mathbb N_0$ 以及有理数 $L$ 的编码长度的递增有限界，公平枚举三元组 $(q,n,L)$。令 $U=q(0)-B\in\mathbb Q$。依次检验
+
+$$
+U-L<\varepsilon,\qquad q\text{ 满足上述上证书句},\qquad\Psi_n(L).
+$$
+
+任一条件为假就继续枚举；全部为真时，按第四步提取一个满足 $v>L$ 的完整代数树，连同面坐标、$B,q,L,U,v$ 返回。每个候选的检验都停机，只在已经判定非空的公式上进行代数见证搜索。
+
+对返回的 $q$，逐树向后 Jensen 给出 $q(0)\ge\operatorname{val}_h(\mathsf T)+B$ 对所有完整树成立，因此 $U\ge\tau$。返回的树本身可行，故 $L<v\le\tau\le U$，并有
+
+$$
+0\le\tau-v\le U-v<U-L<\varepsilon.
+$$
+
+停机性只需存在两个有限见证。第三步以 $\eta=\varepsilon/4$ 给出某个有理上证书，满足 $U<\tau+\varepsilon/4$。再选有理数
+
+$$
+\tau-\varepsilon/4<L<\tau.
+$$
+
+由 $\tau$ 的上确界定义，某棵实际有限树的值严格大于 $L$；它有某个有限深度 $n$，第四步保证 $\Psi_n(L)$ 为真。该三元组满足 $U-L<\varepsilon/2$，故公平枚举终将检验并接受一个合格三元组。这个存在性论证不把 $\tau$ 当作算法可调用的实数预言机。
+
+若全部 $m_i=0$，第一步使每个正质量叶都在唯一根元组，故 $\tau=f(a)$。图在代数点 $a$ 上的单值性使 $f(a)$ 为可有效提取的实代数数；可直接用根叶树、严格有理下界和有理常数上证书返回，也可沿同一枚举停机。空积同理，所有空和及空乘积依前述约定解释。证毕。
+
+三种边界见证。第一，432.2证明第（七）步的 $C=[0,1]$、$a=0$、$f=\mathbf1_{(0,1]}$ 已说明错误定义域的障碍：$\tau=0$，而每个在整个 $C$ 上支配 $f$ 的连续多项式都因右侧极限满足 $q(0)\ge1$。先限制到根面 $\{0\}$ 才消除此间隙。
+
+第二，434节的紧域非取得性例在此仍适用：$C=[-1,1]$、$a=0$，令 $f(x)=|x|$ 当 $|x|<1$，而 $f(\pm1)=0$。这是有界半代数报酬，每一点的值严格小于一，故每棵有限树的值严格小于一；但一步等权分裂到 $\pm t$ 的值为 $t\uparrow1$。因此 $s_1=\tau=1$，没有任何有限树取得它。紧性不能补足缺失的上半连续性，424.1的特定物理取得性不能移作这里的前提。
+
+第三，取 $C=[-1,1]$、$a=0$、$f(x)=\mathbf1_{\{x^2=1/2\}}$。一步等权分裂到 $\pm1/\sqrt2$ 的值为一，而所有标签均有理的树值只能为零。故当 $\varepsilon<1$ 时，有效见证不能一律要求有理标签；精确代数采样与对等式定义报酬的精确检验不可由有理网格舍入取代。
+
+来源与适用条件。本节使用本卷不可变版本 [4c30752aef4fbd3a0efa3de1f87b03530396df63](https://raw.githubusercontent.com/the-omega-institute/trureturing/4c30752aef4fbd3a0efa3de1f87b03530396df63/docs/develop/theory/QUANTUM-REALITY.md) 的432.2、433.2–433.3作为最小面、相对内部、叶质量和完整树限制的来源；434.2第一项直接提供有符号报酬的 $m_i+1$ 分支优势。421.1提供包络与图点压缩的既有机制，其特定取得性未用于437.1。424.1第四项的有限代数描述是接口参照，437.1对一般报酬重新使用严格可行公式和上确界公式，未调用其物理最大值结论。解析前置是第436节《内点有理多项式对偶与五射线有限恢复的有效逼近》定理436.1及其证明中的截断、$C^2$ 逼近和有理余量步骤；436.1的原陈述仍限于闭积球，437.1第三步补出一般紧凸因子所需的邻域论证。
+
+外部工具的范围分别是：Stephan Weis，[*A note on faces of convex sets*，arXiv:2404.00832v3](https://arxiv.org/html/2404.00832v3#S4)，§4的 Proposition 4.1、Corollary 4.2、Theorem 4.5，提供生成面的线段描述和相对代数内部背景；有限维相对范数内点由432.2提供。A. Yu. Veretennikov、E. V. Veretennikova，[*On partial derivatives of multivariate Bernstein polynomials*，arXiv:1507.05235v2](https://arxiv.org/html/1507.05235v2)，Theorems 3–4，提供全局连续、相应阶连续可微函数在闭立方体上的函数值及导数一致逼近，应用前已作光滑截断；其结论不是一般向量块的保凹性。S. Basu、R. Pollack、M.-F. Roy，[*On the Combinatorial and Algebraic Complexity of Quantifier Elimination*](https://www.math.purdue.edu/~sbasu/jacm95.ps)，JACM 43(6) (1996)，Theorems 1.3.1–1.3.2，第1004–1005页，提供实闭域量词消去和句子判定；配合精确实代数运算、根隔离及上述代数点枚举，给出这里的有效有限步骤。这些来源各承担所列工具，不承担整个437.1的结论，也不构成首创性断言。
+
+输出对象仅为标量坐标树。一般半代数凸域及终端报酬本身不指定物理 instrument。任何物理特化还须另行满足430.2的完整空间完全正与保迹、实际可用控制信息、隐藏补全项、同一实际标签的共同反馈，以及全部系统矩阵和任意未操作有限参考上的恢复等式；共享资源和通信权限也须遵守该接口。本节不从坐标重心关系推出这些物理条件。
+
+本节只对所承诺的有限精确输入给出逐实例、逐精度的停机算法，不断言全深度上确界取得、$\tau$ 为代数数或其参数图半代数，不判定涉及 $\tau$ 的精确等号或精确阈值，也不给出预先的统一次数、深度、有效统一收敛率或复杂度界。固定 $n$ 的代数性与可判定性不改变这些边界。关键联系在于：根面把可用的边界几何变为相对内点几何，严格下阈值把上确界的逼近变为一个实际有限见证；可判定的上证书与这个下见证共同提供误差内停机条件。
+
+## 追加锚（本行以下为增补区）
+
+## 438. 五射线平坦对的参数分支、端点折叠与校准恢复值
+
+本节在同一原始两量子比特记录分割上，给出五射线平坦乘积对的完整参数分支及其定量运动，再将它代入定理 430.3。两种端点行为须分别陈述：可接受效果的集合具有锐利的平方根折叠，而重新校准后的最优恢复值由定理 416.1 的预算界作线性夹逼。
+
+第 417 节已证明正平坦伙伴唯一及单向最大值；第 419 节已给出一般参数下的高度、相对方位角和一个六有序对轨道；第 426 节已穷尽 $r=1$ 的平坦对。本节补充全参数的穷尽相位、全部碰合以及双向支撑距离估计。恢复值的运输使用第 430 节已有定理。
+
+### 438.1 源、操作合同与坐标
+
+**定义 438.1（五射线族与平坦集合）。** 对已知实数 $r>0$，令
+
+$$
+\begin{gathered}
+\omega=e^{2\pi i/3},\qquad
+s_1=|0\rangle,\quad s_2=|1\rangle,\quad
+s_{3+j}=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}
+\quad(j=0,1,2),\\
+S=\mathbb C^5,\qquad R_A=R_B=\mathbb C^2,\qquad
+q_i(r)=s_i\otimes s_i,\qquad
+\mathcal J_r|i\rangle=|i\rangle\otimes q_i(r),\\
+r_-={1\over\sqrt2},\qquad r_+=\sqrt2,\qquad
+I=(r_-,r_+),\qquad J=[r_-,r_+],\\
+a={2r\over1+r^2},\qquad q={1-r^2\over1+r^2},\qquad
+a^2+q^2=1,\qquad B=2\sqrt2,\qquad a_0={B\over3},\\
+\kappa={B\over3a}={\sqrt{4+2(r^2+r^{-2})}\over3},\qquad
+h={a\over3a+B}={1\over3(1+\kappa)},\qquad
+M={1\over3+2\sqrt2}.
+\end{gathered}
+$$
+
+以固定计算基的标准 Pauli 矩阵 $\boldsymbol\sigma$ 定义
+
+$$
+D=\{x\in\mathbb R^3:|x|\le1\},\qquad
+\rho(x)={I_2+x\cdot\boldsymbol\sigma\over2}.
+$$
+
+源的 Bloch 向量为
+
+$$
+\mathbf v_1=(0,0,1),\quad \mathbf v_2=(0,0,-1),\quad
+\mathbf v_{3+j}=(a\cos t_j,a\sin t_j,q),\quad t_j={2\pi j\over3}.
+$$
+
+在全部 $r>0$ 上定义有序平坦集合
+
+$$
+\mathcal S_r=\left\{(x,y)\in D^2:
+|x|=|y|=1,\quad
+(1+\mathbf v_i\cdot x)(1+\mathbf v_i\cdot y)=4h(r)
+\quad(1\le i\le5)\right\}.
+$$
+
+这里 $h$ 是单位乘积效果的共同响应。定理 413.1、416.1 及第 417 节的归一化计算已给出：在 $J$ 内，每个具有相等五响应的单位乘积向量，其响应必为 $h$；单位对称见证的响应则为 $1/3$。零水平也不产生遗漏的平坦对：两极零响应会迫使 $x,y$ 为相反两极，纬线乘积却为 $a^2>0$。在 $J$ 外，定理 413.1 排除正平坦对称见证，从而排除正平坦乘积见证。
+
+在有序对上取最大块距离及其非空紧集 Hausdorff 距离
+
+$$
+d_B((x,y),(x',y'))=\max\{|x-x'|,|y-y'|\},\qquad d_H^B.
+$$
+
+Bloch 嵌入满足精确的归一化关系
+
+$$
+\|\rho(x)-\rho(x')\|_{\mathrm{op}}={|x-x'|\over2}.
+$$
+
+仅在 $J$ 上再定义下列非负根与连续相位；标量 $v$ 不与源向量 $\mathbf v_i$ 混用：
+
+$$
+\begin{gathered}
+R=2\sqrt h,\qquad Z=\sqrt{1-R^2},\qquad
+u=\sqrt{{3a-B\over4a}},\qquad
+v=\sqrt{{a+B\over4a}}=\sqrt{1-u^2},\\
+\theta=\arccos u,\qquad w=qZv,\qquad
+\phi=\operatorname{atan2}(w,u)\in[-\pi/2,\pi/2].
+\end{gathered}
+$$
+
+有 $2/3\le R^2\le12-8\sqrt2<1$，故 $R,Z,v$ 严格为正。内部 $u>0$，取 $\phi=\arctan(w/u)$；端点取连续值 $\phi=\operatorname{sgn}(q)\pi/2$。下面的非零模恒等式保证这一相位定义始终有意义。
+
+操作合同采用假设 430.2 的完整接口。Alice、Bob 持有原始 $R_A,R_B$；每棵协议各自有限，每个局部节点是有限结果、分支完全正且迹不增、总和保迹的仪器，工作与输出空间有限维，输出非零。允许有限私有量子和经典记忆、与未知输入及参考独立的初始乘积辅助态、局部丢弃、粗粒结果、后来遗忘的实际历史、双方重复操作和双向经典通信。保留每个失败、余量、零分支、单例通道、提前停止和不等叶深。禁止共享纠缠、量子通信、向对称子空间的预设物理压缩，以及终端反馈前对 $S$ 的操作。各仪器须在完整原始输入空间上完备。
+
+下一操作只用当时实际可用的信息；隐藏 Kraus 指标不是实际结果，遗忘的历史只能为数学求和保留。若真实终端历史为 $\ell$，最终实际标签为 $y(\ell)$，迹掉全部记录输出与剩余记忆后置
+
+$$
+\mathcal M_\ell(X)=\operatorname{Tr}_{O_\ell}
+[(\operatorname{id}_S\otimes\mathcal I_\ell)
+(\mathcal J_rX\mathcal J_r^\dagger)],\qquad
+\mathcal M_y=\sum_{\ell:y(\ell)=y}\mathcal M_\ell.
+$$
+
+固定接受集合及每个实际标签的一个全系统终端酉 $U_y$；同一标签的全部历史和隐藏项共用它。精确恢复要求同一协议、同一 $p\in[0,1]$ 满足
+
+$$
+\begin{aligned}
+\mathcal T(X)&=\sum_{y\ \mathrm{accepted}}U_y\mathcal M_y(X)U_y^\dagger=pX
+&&\bigl(X\in\mathcal L(S)\bigr),\\
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})&=pX_{FS}
+&&\bigl(X_{FS}\in\mathcal L(F\otimes S)\bigr)
+\end{aligned}
+$$
+
+对每个有限维未操作参考 $F$ 成立。两行由矩阵张量基展开等价，仍显式保留同一协议和同一标量的要求。控制、接受规则及反馈可依赖已知 $r$，不可依赖未知输入或参考；空接受集合给出 $p=0$。
+
+深度是根至叶路径上的局部仪器节点数的最大值，单例通道也计数；纯经典通信、记账及最后的系统酉不计数，记账伴随的实际量子操作仍计数。令 $p_n(r)$ 为深度至多 $n\in\mathbb N_0$ 的成功概率上确界，$\eta_{\mathrm{fin}}(r)=\sup_n p_n(r)$。不同协议不共用结果数、记忆维数或深度上界。下文只在 $I$ 内引用 430.2 的物理桥；端点与外部物理值另由 416.1 给出。
+
+### 438.2 完整分支与定量几何
+
+**定理 438.1（全参数平坦分支及锐利端点折叠）。** 对 $r\in J$，$k\in\{0,1,2\}$、$\epsilon,\sigma\in\{+1,-1\}$，定义
+
+$$
+\begin{aligned}
+\mu_{k\epsilon\sigma}&={\pi+\epsilon\sigma\phi+2\pi k\over3},&
+\alpha_{k\epsilon\sigma}&=\mu_{k\epsilon\sigma}+\epsilon\theta,&
+\beta_{k\epsilon\sigma}&=\mu_{k\epsilon\sigma}-\epsilon\theta,\\
+x_{k\epsilon\sigma}&=(R\cos\alpha_{k\epsilon\sigma},
+R\sin\alpha_{k\epsilon\sigma},\sigma Z),\\
+y_{k\epsilon\sigma}&=(R\cos\beta_{k\epsilon\sigma},
+R\sin\beta_{k\epsilon\sigma},-\sigma Z).
+\end{aligned}
+$$
+
+一、$\mathcal S_r$ 恰为这些标签的像。在 $I$ 内有十二个互异有序对，十二个第一方向亦互异，每个方向有唯一伙伴；交换两因子的标签对合为
+
+$$
+(k,\epsilon,\sigma)\longmapsto(k,-\epsilon,-\sigma).
+$$
+
+所有分支在 $I$ 上实解析，包括 $r=1$。在 $r=1$ 时，公式精确成为定理 426.1 的十二方向及其配对。
+
+二、每个端点 $r_e\in\{r_-,r_+\}$ 恰有六个有序反足对，即三个无序对：
+
+$$
+\mathcal S_{r_e}=\left\{(x,-x):
+x=\left(\sqrt{2/3}\cos\alpha,\sqrt{2/3}\sin\alpha,
+{\sigma\over\sqrt3}\right),\quad
+e^{3i\alpha}=-\sigma\operatorname{sgn}(q(r_e)),\quad \sigma=\pm1\right\}.
+$$
+
+写 $\tau=\sigma\operatorname{sgn}(q(r_e))$，十二个连续标签在端点的全部碰合恰为
+
+$$
+(k,+1,\sigma)\sim
+\left(k+{3+\tau\over2}\pmod3,-1,\sigma\right).
+$$
+
+在正轴的其余参数 $r\notin J$，有 $\mathcal S_r=\varnothing$。
+
+三、对任意 $r,s\in J$，用 $\Delta R=R(r)-R(s)$ 等同样记号，置
+
+$$
+\mathscr D(r,s)^2=(\Delta R)^2+(\Delta Z)^2
++4R(r)R(s)\max_{e=\pm1}
+\sin^2\!\left({\Delta\phi/3+e\Delta\theta\over2}\right).
+$$
+
+则 $d_H^B(\mathcal S_r,\mathcal S_s)\le\mathscr D(r,s)$。这是显式上界，不要求同标签匹配实现最近距离。
+
+对每个紧区间 $K\subset I$，令
+
+$$
+\begin{aligned}
+L_K&=\max_{t\in K}\sqrt{{R'(t)^2\over Z(t)^2}
++R(t)^2\left({|\phi'(t)|\over3}+|\theta'(t)|\right)^2},\\
+H_K&=\max_{t\in K}|h'(t)|.
+\end{aligned}
+$$
+
+这些常数有限，且对 $r,s\in K$，
+
+$$
+d_H^B(\mathcal S_r,\mathcal S_s)\le L_K|r-s|,\qquad
+|h(r)-h(s)|\le H_K|r-s|.
+$$
+
+在整个 $J$ 上有 $|h'|\le\sqrt2/36$，并存在有限 $C_J$ 使
+
+$$
+d_H^B(\mathcal S_r,\mathcal S_s)\le C_J|r-s|^{1/2}
+\qquad(r,s\in J).
+$$
+
+四、端点的指数 $1/2$ 对集合本身是锐利的。对每个 $r\in I$ 和每个端点 $r_e$，
+
+$$
+d_H^B(\mathcal S_r,\mathcal S_{r_e})\ge R(r)u(r),
+$$
+
+且当 $t\downarrow0$ 时，
+
+$$
+u(r_-+t)^2={t\over2\sqrt2}+O(t^2),\qquad
+u(r_+-t)^2={t\over4\sqrt2}+O(t^2).
+$$
+
+因此两端的 Hausdorff 距离均为 $\Theta(\sqrt t)$，任何大于 $1/2$ 的端点 Hölder 指数均不成立；整个 $I$ 上也不存在统一的集合 Lipschitz 常数。这不对 $\eta_{\mathrm{fin}}$ 施加相同的下正则性限制。
+
+证明。先直接消去五个平坦方程。两极等式相减给出 $x_z+y_z=0$，共同水平再给 $1-x_z^2=4h=R^2$。所以
+
+$$
+x=(R\cos\alpha,R\sin\alpha,\sigma Z),\qquad
+y=(R\cos\beta,R\sin\beta,-\sigma Z).
+$$
+
+纬线方程的残量在 $t_j=2\pi j/3$ 上写为
+
+$$
+C_0+C_1e^{-it_j}+\overline{C_1}e^{it_j},
+$$
+
+其中
+
+$$
+\begin{aligned}
+C_0&=1-q^2Z^2+{a^2R^2\over2}\cos(\alpha-\beta)-R^2,\\
+C_1&={aR\over2}\left[(1-q\sigma Z)e^{i\alpha}
++(1+q\sigma Z)e^{i\beta}\right]
++{a^2R^2\over4}e^{-i(\alpha+\beta)}.
+\end{aligned}
+$$
+
+最后一项来自 $e^{2it_j}=e^{-it_j}$ 的三点混叠；不能删去。三点离散 Fourier 变换可逆，故三个纬线方程当且仅当 $C_0=C_1=0$，其中共轭模也同时为零。
+
+令 $\mu=(\alpha+\beta)/2$、$\delta=(\alpha-\beta)/2$。由 $a^2+q^2=R^2+Z^2=1$，
+
+$$
+C_0=a^2\left[Z^2+{R^2\over2}\cos(2\delta)\right],\qquad
+C_0=0\ \Longleftrightarrow\
+\cos^2\delta={3\over2}-{1\over R^2}={3a-B\over4a}=u^2.
+$$
+
+角提升的变换 $(\mu,\delta)\mapsto(\mu+\pi,\delta+\pi)$ 使 $\alpha$ 增加 $2\pi$、$\beta$ 不变，表示同一有序对。在 $I$ 中可据此选 $\cos\delta=u>0$，恰留下 $\delta=\epsilon\theta$ 模 $2\pi$ 的两个选择。剩余 Fourier 方程化为
+
+$$
+e^{3i\mu}(u-i\epsilon\sigma qZv)=-{aR\over4}.
+$$
+
+它的模条件恒成立且严格非零。确切地，$Z^2=(B-a)/(3a+B)$，所以
+
+$$
+\begin{aligned}
+u^2+q^2Z^2v^2
+&={(3a-B)(3a+B)+(1-a^2)(B^2-a^2)\over4a(3a+B)}\\
+&={a^4\over4a(3a+B)}={a^2R^2\over16}>0.
+\end{aligned}
+$$
+
+由于 $u-i\epsilon\sigma w=(aR/4)e^{-i\epsilon\sigma\phi}$，精确相位条件为
+
+$$
+e^{3i\mu}=-e^{i\epsilon\sigma\phi}.
+$$
+
+其三个立方根就是陈述中的 $k=0,1,2$。反向代入这些角，单位范数、两极方程以及 $C_0=C_1=0$ 全部成立；由 Fourier 反演恢复全部纬线方程。这同时证明必要性、充分性和相位穷尽性。
+
+不同 $\sigma$ 具有不同非零高度；固定 $\sigma$，若相反 $\epsilon$ 给出同一有序对，将两方位角同余相减便要求 $4\theta\in2\pi\mathbb Z$，与 $0<\theta<\pi/2$ 矛盾。固定 $\epsilon,\sigma$ 而改变 $k$ 则旋转 $2\pi/3$，三个有序对互异。正伙伴唯一性是第 417 节已有结果；这里也可直接看出其应用：正水平保证 $1+\mathbf v_i\cdot x>0$，故
+
+$$
+\mathbf v_i\cdot y={4h\over1+\mathbf v_i\cdot x}-1.
+$$
+
+五个源方向张成 $\mathbb R^3$，这些数唯一确定 $y$，于是十二个第一方向亦互异。改变 $\epsilon,\sigma$ 的符号保持 $\mu$ 不变并交换 $\alpha,\beta$，给出伙伴对合。
+
+为明确与第 419 节的重用关系，该节 $\delta_{419}$ 是从第一因子到第二因子的完整带符号方位角差；其被动共同坐标旋转不改变此差。在本节标签下
+
+$$
+\delta_{419}=\beta-\alpha=-2\epsilon\theta\pmod{2\pi},\qquad
+\cos\delta_{419}={1-3\kappa\over2},\qquad
+\sin^2\delta_{419}={3(1-\kappa)(1+3\kappa)\over4}.
+$$
+
+该节选第一因子高度为负时取 $\sigma=-1$。共同三等分旋转改变 $k$，交换伙伴同时反转 $\epsilon,\sigma$；因此固定 $\epsilon\sigma$ 就给出该类六有序对轨道。本节的两种 $\epsilon\sigma$ 穷尽十二对，未把已有高度或相对角重新当作新结论。
+
+在 $r=1$，
+
+$$
+q=\phi=0,\quad h=3-2\sqrt2,\quad
+R=2(\sqrt2-1),\quad Z=\sqrt{8\sqrt2-11},\quad
+u={\sqrt2-1\over2},\quad \mu={ (2k+1)\pi\over3}.
+$$
+
+这逐项对应定理 426.1 的 $R_\perp,\zeta,\theta,m_k$ 与伙伴标签。所有所需根在 $I$ 内有正被开方数，$\phi=\arctan(w/u)$ 在 $q=0$ 处也解析，所以 $r=1$ 没有分支切口或碰合。
+
+端点须直接使用方程，不能沿用 $u>0$ 的规范。此时
+
+$$
+a=a_0,\quad q(r_-)=1/3,\quad q(r_+)=-1/3,\quad
+h=1/6,\quad R=\sqrt{2/3},\quad Z=1/\sqrt3,\quad
+u=0,\quad v=1,\quad\theta=\pi/2.
+$$
+
+均值方程迫使 $\alpha-\beta=\pi$ 模 $2\pi$，故 $y=-x$。代入 $C_1=0$ 得
+
+$$
+-aRq\sigma Z e^{i\alpha}-{a^2R^2\over4}e^{-2i\alpha}=0,
+\qquad e^{3i\alpha}=-{aR\over4q\sigma Z}
+=-\sigma\operatorname{sgn}(q).
+$$
+
+每个高度有三个方位角，直接得到六个有序对及其充分性。将 $\phi=\operatorname{sgn}(q)\pi/2$ 代入连续标签，$\epsilon=+1$ 与 $-1$ 的 $\alpha$ 同余恰要求 $k'-k=(3+\tau)/2$ 模三；$\beta$ 同时相同。高度及三个不同根排除其余碰合。若 $r>0$ 在 $J$ 外，则 $a<a_0$；同一均值必要式要求 $\cos^2\delta<0$，所以 $\mathcal S_r$ 为空。
+
+下面证明两方向的距离估计。匹配同一个 $(k,\epsilon,\sigma)$，两个角差为
+
+$$
+\Delta\alpha=\epsilon(\sigma\Delta\phi/3+\Delta\theta),\qquad
+\Delta\beta=\epsilon(\sigma\Delta\phi/3-\Delta\theta).
+$$
+
+圆周弦长公式给出
+
+$$
+|x(r)-x(s)|^2=(\Delta R)^2+(\Delta Z)^2
++4R(r)R(s)\sin^2(\Delta\alpha/2),
+$$
+
+$y$ 的公式将 $\Delta\alpha$ 换成 $\Delta\beta$。对两坐标及两个符号取最大即得 $\mathscr D$。每边每一点都有一个标签；端点重复标签也各自存在于另一边。因此两个有向 Hausdorff 距离均受该界控制，碰合不破坏反向匹配。
+
+为给出可核对的内部常数，导数为
+
+$$
+\begin{aligned}
+a'&={2(1-r^2)\over(1+r^2)^2},&q'&={-4r\over(1+r^2)^2},&
+h'&={B a'\over(3a+B)^2},\\
+R'&={2h'\over R},& Z'&=-{RR'\over Z},&
+u'&={a'\over2\sqrt2\,a^2u},\\
+v'&=-{uu'\over v},&\theta'&=-{u'\over v},&
+w'&=q'Zv+qZ'v+qZv',\\
+\phi'&={uw'-wu'\over u^2+w^2}.
+\end{aligned}
+$$
+
+含 $u'$ 的公式仅用于 $I$。由 $R^2+Z^2=1$，一条分支的速度满足
+
+$$
+|x'|^2={R'^2\over Z^2}+R^2\alpha'^2,
+\qquad |y'|^2={R'^2\over Z^2}+R^2\beta'^2.
+$$
+
+积分并双向匹配给出 $L_K$，均值定理给出 $H_K$。在 $J$ 上，$|a'|\le4/9$、$3a+B\ge4\sqrt2$，所以 $|h'|\le\sqrt2/36$。
+
+全闭区间的估计不对奇异的 $u'$ 积分。写 $g=u^2$，则
+
+$$
+g'={1-r^2\over2\sqrt2\,r^2},\qquad
+|g'|\le G:={1\over2\sqrt2},\qquad
+|u(r)-u(s)|\le\sqrt{G|r-s|}.
+$$
+
+$R,Z,v=\sqrt{1-g},w=qZv$ 在 $J$ 的邻域光滑，且
+
+$$
+|u+iw|={aR\over4}\ge m:={1\over3\sqrt3}>0.
+$$
+
+对模长至少 $m$、实部非负的两个复数，先归一化到右半圆，再用弧长不超过 $\pi/2$ 倍弦长，得到本相位支路的估计
+
+$$
+|\phi(r)-\phi(s)|\le{\pi\over m}
+\bigl(|u(r)-u(s)|+|w(r)-w(s)|\bigr).
+$$
+
+给出一个全局常数的具体取法：令 $T=r_+-r_-$，$A_f=\max_J|f'|$（$f=R,Z,w$），$R_{\max}=\max_JR$，$v_{\min}=\min_Jv>0$。这些是光滑函数的有限最大值；计算端点 $v'$ 时使用 $v'=-g'/(2v)$。由 $|\Delta\theta|\le|\Delta u|/v_{\min}$ 及上述弦长式，可取
+
+$$
+C_J=\sqrt T\sqrt{A_R^2+A_Z^2}
++R_{\max}\left[
+{\pi\over3m}(\sqrt G+A_w\sqrt T)+{\sqrt G\over v_{\min}}
+\right].
+$$
+
+这证明全局 $1/2$-Hölder 上界，且明确排除了相位模消失造成的额外奇点。
+
+最后，对任一内部标签，横向向量求和给 $|x+y|=2R\cos\theta=2Ru$。任一端点对为 $(z,-z)$，三角不等式给
+
+$$
+2Ru=|x+y|\le|x-z|+|y+z|
+\le2\max\{|x-z|,|y+z|\}.
+$$
+
+这是对每一个端点对的下界，与如何重新标记无关，故给出所述集合距离下界。$g'(r_-)=1/(2\sqrt2)$、$g'(r_+)=-1/(4\sqrt2)$ 给出两个 Taylor 式；相应的 $Ru$ 下界首项系数分别为
+
+$$
+\sqrt{{1\over3\sqrt2}}\,\sqrt t,\qquad
+\sqrt{{1\over6\sqrt2}}\,\sqrt t.
+$$
+
+与上界合用即得锐利阶数。若整个 $I$ 有统一 Lipschitz 常数，让一参数趋于端点将给出端点 Lipschitz 界，与该下界矛盾。证毕。
+
+### 438.3 定理 430.3 的校准值应用及物理端点
+
+**推论 438.2（已有运输定理在五射线参数上的应用）。** 对 $r,s\in I$，定义
+
+$$
+\delta=d_H^B(\mathcal S_r,\mathcal S_s),\qquad
+b=\max\{\delta/2,|h(r)-h(s)|\},\qquad
+c=(1+2b)^{-1},\qquad
+E_n(r)=\eta_{\mathrm{fin}}(r)-p_n(r).
+$$
+
+则对每个 $n\in\mathbb N_0$，
+
+$$
+\begin{aligned}
+p_{n+2}(s)&\ge c^2p_n(r)-4b,\\
+|\eta_{\mathrm{fin}}(s)-\eta_{\mathrm{fin}}(r)|
+&\le4M(1-c^2)+4b,\\
+E_{n+2}(s)&\le E_n(r)+8M(1-c^2)+8b.
+\end{aligned}
+$$
+
+交换 $r,s$ 后亦成立。特别地，对紧区间 $K\subset I$，令 $B_K=\max\{L_K/2,H_K\}$，则 $\eta_{\mathrm{fin}}$ 在 $K$ 上的一个 Lipschitz 常数为 $(16M+4)B_K$。
+
+证明。令 $\iota(x,y)=(\rho(x),\rho(y))$，$X=\mathcal D_2\times\mathcal D_2$，$f_r=h(r)\mathbf1_{\iota(\mathcal S_r)}$。支撑闭而紧，故 $f_r:X\to[0,M]$ 上半连续。其截断下图集为
+
+$$
+K_{f_r}=(X\times\{0\})\cup
+\bigl(\iota(\mathcal S_r)\times[0,h(r)]\bigr).
+$$
+
+在第 430 节的最大块算子范数与高度最大积度量中，将支撑点匹配并把高度截到另一个高度区间，得到两个方向均成立的
+
+$$
+d_H(K_{f_r},K_{f_s})\le\max\{\delta/2,|h(r)-h(s)|\}=b.
+$$
+
+代入定理 430.3 的 $k=2$、局部维数 $(2,2)$、$r_*=2$、中心根 $\Omega=(I_2/2,I_2/2)$ 及报酬上界 $M$。其估计随距离上界单调，故可用 $b$ 替代真实下图距离。原始根 $(I_2,I_2)$ 的两个局部因子各为中心根的两倍，叶张量效果及成功标量因而乘以四；严格内部的物理桥准确给出
+
+$$
+p_n(r)=4T_n^{f_r}(\Omega),\qquad
+\eta_{\mathrm{fin}}(r)=4T_\infty^{f_r}(\Omega).
+$$
+
+于是得到三条估计。再用 $b\le B_K|r-s|$ 和 $1-(1+2b)^{-2}\le4b$ 得到局部常数。此处的坐标始终是归一化累计输入效果，树权是其迹权重，不是未知输入下的条件结果概率。所有上确界遍历各自有限的完整树，没有选取全深度最大化树。证毕。
+
+同一修补对指示报酬还有一个较紧的专用估计，仍是 430.3 构造的应用。置 $c_0=(1+\delta)^{-1}$。当 $\delta>0$，先把旧完整 Bloch 树的每个坐标乘以 $c_0$，保持中心根和全部加性分裂。在每个选中的旧成功叶 $(x,y)$，取距离不超过 $\delta$ 的 $(x',y')\in\mathcal S_s$，置
+
+$$
+z_A={x-x'\over\delta}\in D,\qquad
+z_B={y-y'\over\delta}\in D.
+$$
+
+由 $c_0x=c_0x'+(1-c_0)z_A$，先分裂 Alice，再在选中子节点分裂 Bob。三个终端位置及相对于旧叶的权重准确为
+
+$$
+\begin{array}{c|c}
+\text{终端位置}&\text{权重}\\ \hline
+(z_A,c_0y)&1-c_0\\
+(x',z_B)&c_0(1-c_0)\\
+(x',y')&c_0^2
+\end{array}
+\qquad (1-c_0)+c_0(1-c_0)+c_0^2=1.
+$$
+
+两项余量立即停止并保留，且可拒绝；即使偶然平坦也无须接受。全部旧失败、零分支、单例节点和提前停止仍在树内，不对成功质量重新归一化。每条路径至多增加两个节点。$\delta=0$ 时支撑相同，无需修补。指示报酬无竖直损失，故
+
+$$
+{p_{n+2}(s)\over h(s)}\ge c_0^2{p_n(r)\over h(r)}.
+$$
+
+这里及一般下图修补构造的是分别校准的新协议。其原始空间上的 CP/TP 实现由第 421、430 节给出：对非零局部父效果 $A=\sum_jA_j$，在其支撑上取逆，令
+
+$$
+L_j=\sqrt{A_j}A^{-1/2},\qquad Q_A=I_2-P_{\operatorname{ran}A}.
+$$
+
+把 $Q_A$ 作为某一个已有实际结果内部的隐藏 Kraus 项，则
+
+$$
+\sum_jL_j^\dagger L_j+Q_A=I_2,\qquad
+L_j\sqrt A=\sqrt{A_j},\qquad Q_A\sqrt A=0.
+$$
+
+这些等式保留完整原始空间的完备性，张量任何系统或参考后仍成立；补项只在累计分支上为零。零父效果不作除法，其不可达后续保持为完整有限仪器。新终端叶可取得自己的实际标签，每个标签只配一个校准反馈；它同时作用于该标签的所有历史及隐藏项。没有重新取得旧协议遗忘的信息，也不要求再现旧记录输出仪器。
+
+若新接受物理叶的效果为 $tP_\xi\otimes P_\zeta$，则
+
+$$
+z_i={\langle\xi\otimes\zeta|q_i(s)\rangle\over\sqrt{h(s)}},\quad
+|z_i|=1,\quad K=\sqrt{t h(s)}\operatorname{diag}(z_i),\quad
+U=\operatorname{diag}(\overline z_i),\quad UK=\sqrt{t h(s)}I_S.
+$$
+
+因此该叶在全部系统矩阵及每个未操作参考上给出 $t h(s)$ 倍恒等映射，全部保留的失败叶补全总仪器。该说明不增加深度修补之外的局部节点。
+
+令 $Q(r)=\eta_{\mathrm{fin}}(r)/(4h(r))$。完整树叶权之和为一，而第 417 节的已取得单向值为 $2h$，所以 $1/2\le Q(r)\le1$。取有限深度上确界并交换参数，得
+
+$$
+c_0^2Q(r)\le Q(s)\le c_0^{-2}Q(r),\qquad
+|\log Q(s)-\log Q(r)|\le2\log(1+\delta).
+$$
+
+由此 $|Q(s)-Q(r)|\le1-c_0^2$，进而
+
+$$
+|\eta_{\mathrm{fin}}(s)-\eta_{\mathrm{fin}}(r)|
+\le4|h(s)-h(r)|+4M[1-(1+\delta)^{-2}].
+$$
+
+利用 $1-(1+\delta)^{-2}\le2\delta$，紧内部的 Lipschitz 常数可改进为 $4H_K+8ML_K$。两种深度比较均是 $n\mapsto n+2$，不据此断言同深度 $p_n$ 的参数连续性。
+
+物理端点另行使用定理 416.1。在本节完整局部恢复合同下，该节给出
+
+$$
+2h(r)\le\eta_{\mathrm{fin}}(r)\le{1\over3\kappa(r)}
+\quad(r\in J),\qquad
+\eta_{\mathrm{fin}}(r_-)=\eta_{\mathrm{fin}}(r_+)={1\over3},\qquad
+\eta_{\mathrm{fin}}(r)=0\quad(r>0,\ r\notin J).
+$$
+
+端点等号由完整单向树取得；一般内部的单向最优值已由定理 417.1 确定为 $2h$，不能把它列为待定值。直接从上述局部夹界得到较精确的端点锚定估计
+
+$$
+{a(r)-a_0\over3a(r)+B}
+\le\eta_{\mathrm{fin}}(r)-{1\over3}
+\le{a(r)-a_0\over B}\qquad(r\in J).
+$$
+
+由于 $a'(r_-)=4/9$、$a'(r_+)=-2/9$，在可行侧趋近每个端点时，此差为正的线性阶并且是 $O(|r-r_e|)$。这给出上下界的阶数，不给出 $\eta_{\mathrm{fin}}$ 的端点导数，也不等于整个 $J$ 上的两点统一 Lipschitz 界。
+
+先在 $I$ 使用推论 438.2；定理 438.1 的支撑模和 $h$ 的 Lipschitz 界使其右端受 $C|r-s|^{1/2}$ 控制。对涉及端点的参数对，取内部逼近列，并用刚才 416.1 的夹逼确定物理极限为 $1/3$，再令参数趋于端点。因此 $\eta_{\mathrm{fin}}$ 在整个 $J$ 上 $1/2$-Hölder 连续；这没有把 430.2 的物理假设直接扩展到端点。结合外侧恒为零，在全部正轴上的不连续点恰为 $r_-,r_+$，两处跳跃幅度均为 $1/3$。集合的锐利 $1/2$ 指数不证明恢复值的指数也锐利。
+
+空支撑的边界也须按 430.1 的定义处理。外侧 $f_s=0$ 的下图集是非空紧集 $K_0=X\times\{0\}$。对任何非空 $\mathcal S_r$，有 $K_0\subseteq K_{f_r}$，且 $(z,t)$ 到 $K_0$ 的距离恰为 $t$，故
+
+$$
+d_H(K_{f_r},K_0)=h(r),\qquad
+d_H(K_{f_{r_e}},K_0)={1\over6}.
+$$
+
+失效的是与空集之间的非空支撑 Hausdorff 匹配，以及跨端点时下图距离趋零的条件；抽象下图比较本身仍适用。外侧物理零值来自 416.1，不来自对 430.2 的越域使用。
+
+### 438.4 两个必要的反例
+
+**例 438.1（校准最优值不保证固定仪器耐受失准）。** 固定任意 $(x,y)\in\mathcal S_1$，选单位 ket $\xi,\zeta$ 使 $P_\xi=\rho(x)$、$P_\zeta=\rho(y)$。Alice 使用投影仪器 $\{P_\xi,I_2-P_\xi\}$；在任一 Alice 结果后，Bob 均使用 $\{P_\zeta,I_2-P_\zeta\}$。保留四个实际联合结果，只接受 $(+,+)$，另外三个全部拒绝。两个局部仪器均完整，四个乘积效果之和为 $I_2\otimes I_2$。
+
+在 $r=1$，接受系统 Kraus 矩阵为
+
+$$
+K_1=\operatorname{diag}\bigl(\langle\xi\otimes\zeta|q_i(1)\rangle\bigr)_{i=1}^5.
+$$
+
+各对角元模平方均为 $h(1)$，按其相位作终端对角反馈便得 $h(1)\operatorname{id}_S$，张量任意未操作参考后同样成立。这是一个接受分支的值，未声称该四结果协议最优。
+
+现保持投影和接受规则，改用邻近 $s\in I\setminus\{1\}$ 的源。两极源不动，所以同一接受效果的两极响应仍为 $h(1)$。但 $a(s)<1$，故 $h(s)<h(1)$；若该效果仍平坦，416.1 的单位乘积水平必迫使其共同响应为 $h(s)$，矛盾。因此 $K_s^\dagger K_s$ 的对角元不全相等，$K_s$ 具有不等奇异值。任意终端酉 $V$ 都保持 $K_s^\dagger K_s$；若单分支在全部矩阵上为 $p\operatorname{id}$，正 Choi 秩一条件要求 $VK_s=\gamma I_S$，与不等奇异值矛盾。两极正响应也排除了零映射。故即使重新选终端酉，仍不能修复这一个固定投影分支；三个失败结果始终保留。变化的是仪器不能随源重新校准这一前提，未与优化值连续性冲突。
+
+**例 438.2（闭有限纤维不足以替代双向匹配）。** 对 $t\in[-1,1]$，令
+
+$$
+A_t=\{x\in[0,1]:x(x-1)=0,\ tx=0\}.
+$$
+
+其图在紧矩形 $[-1,1]\times[0,1]$ 内由多项式等式定义，因而紧；每个纤维非空、有限且紧。$t\ne0$ 时 $A_t=\{0\}$，而 $A_0=\{0,1\}$。对应是上半连续的：在非零参数附近恒定，在零点附近的纤维都包含于 $A_0$。但任意 $t\ne0$ 都有 $d_H(A_t,A_0)=1$。定理 438.1 的反向匹配依赖每条显式分支的延续，不能从闭图或有限性单独推出。
+
+### 438.5 来源与结论范围
+
+本节使用本卷[固定版本](https://github.com/the-omega-institute/trureturing/blob/4c30752aef4fbd3a0efa3de1f87b03530396df63/docs/develop/theory/QUANTUM-REALITY.md)中的如下精确接口：413.1 的两记录阈值与对称见证归一化；416.1 的单位乘积水平、完整原始空间预算及局部端点和外部值；417.1 证明中的一般正伙伴唯一性及其已取得单向最大值；419.1 证明中的一般高度、带符号完整相对角及选定轨道；426.1 的 $r=1$ 穷尽几何；421.1、430.2–430.3 的累计输入效果、实际标签共同反馈、中心根因子四与移位运输。434.2 已给出另构完整树的标量优势、秩平方分叉及统一近似规模，本节不另立一般运输或宽度结论。
+
+环境辅助校正的背景为 Gregoratti–Werner，[Quantum Lost and Found, quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Theorem 1、Proposition 2：前者在初始纯环境下实现 CP 分解，后者针对给定 Kraus 分解使用 $t_\alpha^\dagger t_\alpha=c_\alpha I$ 的校正条件；这些条件本身不授权两持有者的局部实现。例 438.1 所需障碍已由 $VK=\gamma I$ 直接证明。局部仪器、条件复合及粗粒标签的背景为 Chitambar 等，[Everything You Always Wanted to Know About LOCC, arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.1–2.3。该文定理 2、推论 3 的紧性固定有限维系统、轮数和最终结果数，不能据此推出本节全有限类的最优取得；其轮次也不替代这里逐局部节点的深度计数。
+
+本节的关键联系是：只有 $u^2=(3a-B)/(4a)$ 在可行端点出现简单零点，伴随相位模 $aR/4$ 始终远离零。因此端点折叠来自半角分支，内部 $r=1$ 正常；同时，416.1 的独立预算使标量恢复值可以比接受集合更平缓地趋于端点。
+
+这些有限维纸面推导不构成机器形式验证或原创优先权声明。它们没有确定一般内部 $\eta_{\mathrm{fin}}$ 的精确公式、全深度上确界是否由某棵有限树取得、同深度 $p_n$ 的参数连续性、整个 $J$ 上恢复值的两点统一 Lipschitz 界或端点导数。所比较的控制针对每个已知参数分别校准；结论不提供一个抗未知失准的共同协议、收敛速率、有效求值算法、硬件实现或总物理资源估计。
+
+## 追加锚（本行以下为增补区）
+
+## 439. 五射线有限恢复的可计算统一深度截止
+
+沿用第 416 节与假设 430.2 的五射线源、原始两量子比特分割及完整恢复合同：协议逐棵有限，深度计实际局部仪器节点，保留全部失败历史，同一实际标签共用全系统反馈，恢复等式对全部系统矩阵及任意未操作有限参考成立。对所有实数 $r>0$，以 $p_n(r)$、$\eta_{\mathrm{fin}}(r)$ 分别表示深度至多 $n$ 与所有有限协议的成功率上确界；第 430 节的物理桥只在严格内部使用。置
+
+$$
+A=1/\sqrt2,\qquad B=\sqrt2,\qquad I=(A,B),\qquad
+\kappa(r)=\frac{\sqrt{4+2(r^2+r^{-2})}}3,\qquad
+h(r)=\frac1{3(1+\kappa(r))},\qquad
+L(r)=2h(r),\quad U(r)=\frac1{3\kappa(r)}.
+$$
+
+**推论 439.1（有效统一截止）。** 存在一个 Turing 算法，输入任意有理数 $\varepsilon>0$，停机输出仅依赖 $\varepsilon$ 的整数 $N\ge2$，使
+
+$$
+\forall r\in\mathbb R_{>0}\ \forall n\in\mathbb N_0,\ n\ge N:\qquad
+0\le\eta_{\mathrm{fin}}(r)-p_n(r)<\varepsilon.
+$$
+
+该算法如下。令 $e=\min\{\varepsilon,1\}$，依次取 $t=2^{-j}$（$j=0,1,\ldots$），用实闭域判定找出首个满足
+
+$$
+2t<B-A,\qquad
+\forall r\in[A,A+t]\cup[B-t,B]:\quad U(r)-L(r)<e/4
+$$
+
+的 $t$，并置 $K=[A+t,B-t]$。令 $D=\{x\in\mathbb R^3:|x|^2\le1\}$，$\mathsf B(x,y)$ 表示 $(x,y)\in D^2$，$\mathsf S_r(x,y)$ 为第 436 节的纯平坦谓词，即 $|x|^2=|y|^2=1$ 且五个 Bloch 重叠乘积均为 $4h(r)$，并记 $\mathcal S_r=\{(x,y):\mathsf S_r(x,y)\}$。对六变量实多项式 $Q$，令 $\operatorname{Cert}_r(Q)$ 为下列四句的合取，所有向量量词均遍历 $\mathbb R^3$：
+
+$$
+\begin{aligned}
+&\forall x,y:\quad \mathsf B(x,y)\Rightarrow Q(x,y)\ge0,\\
+&\forall x,y:\quad \mathsf S_r(x,y)\Rightarrow Q(x,y)\ge h(r),\\
+&\forall x,y,u:\quad \mathsf B(x,y)\Rightarrow
+u^{\mathsf T}D^2_{xx}Q(x,y)u\le0,\\
+&\forall x,y,u:\quad \mathsf B(x,y)\Rightarrow
+u^{\mathsf T}D^2_{yy}Q(x,y)u\le0.
+\end{aligned}
+$$
+
+依次枚举整数 $m\ge2$。写 $Q_c(x,y)=\sum_{|\alpha|\le m}c_\alpha(x,y)^\alpha$，其中 $c\in\mathbb R^{d_m}$、$d_m=\binom{m+6}{6}$；用定理 435.2 的有效公式 $\operatorname{Graph}_m(r,v)$ 判定完整停机句
+
+$$
+\boxed{\displaystyle
+\forall r\in\mathbb R:\quad
+r\in K\ \Longrightarrow\
+\exists v\in\mathbb R\ \exists c\in\mathbb R^{d_m}:\quad
+\operatorname{Graph}_m(r,v)\ \land\
+\operatorname{Cert}_r(Q_c)\ \land\
+4Q_c(0,0)-v<e/2.}
+$$
+
+首次为真时返回 $N=m$。系数 $c$ 是实量词变量，不是实数预言机输入，也不施加一阶“系数为有理数”谓词。
+
+证明。固定 $m$ 时，435.2 有效生成的 $\operatorname{Graph}_m$ 恰表示 $v=p_m(r)$。证书的两个 Hessian 条件针对完整的三维块，等价于闭积球上的分别凹性。按 435–436 的正根约定，$\sqrt2,\sqrt3,\kappa,h$ 均由有理多项式与唯一正根条件表示；只清除已知正分母。因此两次搜索中的每个判定都是有效的实闭域一阶判定，不含未知的 $\eta_{\mathrm{fin}}$。
+
+在 $[A,B]$ 上，416.1、417.1 的完整单向树每条路径只有两个局部仪器节点，并实际达到 $L(r)$，故对 $n\ge2$ 有
+
+$$
+L(r)\le p_n(r)\le\eta_{\mathrm{fin}}(r)\le U(r),\qquad
+U(r)-L(r)=\frac{1-\kappa(r)}{3\kappa(r)(1+\kappa(r))}.
+$$
+
+右端连续且在 $A,B$ 为零，故二进端点带搜索必停机，带内误差小于 $e/4$。两个端点有 $p_2=\eta_{\mathrm{fin}}=1/3$；$r>0$ 且 $r\notin[A,B]$ 时，416.1 给出 $\eta_{\mathrm{fin}}=p_n=0$。这些结论不使用跨端点的物理运输。
+
+若停机句为真，任取 $r\in K$ 及其证书。沿完整坐标树逐层应用 Jensen 不等式，再用 421.1、430.3 的根归一化，得到
+
+$$
+p_m(r)\le\eta_{\mathrm{fin}}(r)\le4Q_c(0,0),\qquad
+0\le\eta_{\mathrm{fin}}(r)-p_m(r)<e/2.
+$$
+
+这证明停机的正确性；$p_n$ 随 $n$ 单调，再结合端点带与外部值，即得全正轴结论。
+
+还须证明某个 $m$ 必通过。固定任意实数 $r_0\in K$，以 421.1 的最小分别凹包络应用 436.1，再加充分小的正有理常数，得到一个有理多项式 $q$ 和 $\delta>0$，满足
+
+$$
+\operatorname{Cert}_{r_0}(q),\qquad
+q\ge h(r_0)+\delta\ \text{于 }\mathcal S_{r_0},\qquad
+4q(0,0)-\eta_{\mathrm{fin}}(r_0)<e/8.
+$$
+
+这里是任意实参数下的存在性论证，不要求 $r_0$ 有代数编码。支撑图由连续等式在固定紧域 $D^2$ 中闭定义，且 $h$ 连续，所以同一个 $q$ 在 $r_0$ 的某邻域仍支配平坦报酬。具体地，否则可取 $r_j\to r_0$、$z_j\in\mathcal S_{r_j}$，使 $q(z_j)<h(r_j)+\delta/2$；紧性给收敛子列，闭图使极限 $z\in\mathcal S_{r_0}$，于是 $q(z)\le h(r_0)+\delta/2$，矛盾。非负性及两个 Hessian 条件不依赖参数，故该邻域内 $\operatorname{Cert}_r(q)$ 始终成立。
+
+第 438 节的 438.1 给出严格内部支撑的双向 Hausdorff 连续性；其 438.2 以此应用 430.3，得到 $\eta_{\mathrm{fin}}$ 在 $I$ 连续。缩小上述邻域便有
+
+$$
+4q(0,0)-\eta_{\mathrm{fin}}(r)<e/4.
+$$
+
+闭图与紧环境在这里只供给支撑的上半连续性；恢复值的连续性另由上述双向匹配与运输保证。紧集 $K$ 可由有限个这样的邻域覆盖，所配多项式的次数因而有某个有限共同上界 $d$。另一方面，430.3 的非有效一致收敛给出某个有限 $n_0$，使所有 $r\in I$ 均有 $\eta_{\mathrm{fin}}(r)-p_{n_0}(r)<e/4$。于是对每个 $m\ge\max\{2,d,n_0\}$，逐参数选择覆盖中的一个多项式并补零高次系数，便有
+
+$$
+4q(0,0)-p_m(r)
+=\bigl[4q(0,0)-\eta_{\mathrm{fin}}(r)\bigr]
++\bigl[\eta_{\mathrm{fin}}(r)-p_m(r)\bigr]<e/2.
+$$
+
+所以停机句最终必真。有限覆盖和一致收敛只用于证明存在一个有限的可判定停机见证；枚举能求出共同深度，无须先计算该覆盖或未知极限。证毕。
+
+给定返回的 $N$，直接使用 435.2 在整个 $I$ 上的半代数最大化选择及完整物理提升，在 $r=A$ 与 $r=B$ 处分别接上按该端点参数校准的 416.1 树，并在 $r<A$ 或 $r>B$ 时采用全拒绝协议，得到深度至多 $N$、成功率距 $\eta_{\mathrm{fin}}$ 小于 $\varepsilon$ 的完整协议族。它具有有限分段半代数描述，保留完整空间上各分支完全正、总和保迹的仪器、实际标签、全部失败叶及全参考恢复等式。对由整数多项式和有理隔离数据给出的正实代数参数 $r$，参数代入与完整代数协议提取有效。任意实 $r$ 上的族是数学选择，不因此成为 Cauchy 名输入下的 Type-2 精确协议选择器。
+
+这里确实得到可计算的统一收敛截止；它不附带初等或实用深度率、运行复杂度或最小 $N$。结论也不判定极限的精确阈值，不给出全有限类上确界的取得性、可达无限协议或一个无需知道 $r$ 的共同仪器。
+
+本推论是既有接口的组合推导（repo-derived）：416.1、417.1、421.1、430.3、435.2、436.1–436.2 均取自本卷[固定版本 40fb7ec023342614dec1c13b19dd925932763dc9](https://github.com/the-omega-institute/trureturing/blob/40fb7ec023342614dec1c13b19dd925932763dc9/docs/develop/theory/QUANTUM-REALITY.md)。实闭域判定沿用 435–436 所引的量词消去工具。另仅使用[已发表第 438 节](https://github.com/the-omega-institute/trureturing/blob/d0c78e8e3ccca744b7cb96f8b56ce7e6093e6afb/docs/develop/theory/QUANTUM-REALITY.md)中严格内部的支撑与恢复值连续性，不依赖其端点正则性。以上为纸面推导，不作机器形式验证或原创优先权声明。
+
+## 追加锚（本行以下为增补区）
+
+## 440. 同一三结果恢复实验的二次系统误差与一次记录误差
+
+第 415 节的装置在校准点精确恢复全部未知输入。本节固定这套装置，改变实际制备参数：对实际结果求和后的系统误差是二次的，而保留同一实验的实际经典结果，在中央校准点已有一次误差。两种误差比较不同的输出，所用仪器与反馈完全相同。
+
+**定义 440.1（固定校准、完整仪器与两种输出）。** 令
+
+$$
+\begin{aligned}
+S&=\mathbb C^5,&
+R_2&=(\mathbb C^2)^{\otimes2}=W_2\oplus\mathbb C e_-,\\
+e_0&=|00\rangle,&
+e_1&=(|01\rangle+|10\rangle)/\sqrt2,\\
+e_2&=|11\rangle,&
+e_-&=(|01\rangle-|10\rangle)/\sqrt2,\\
+W_2&=\operatorname{span}\{e_0,e_1,e_2\},&
+I&=[\arctan(1/\sqrt2),\arctan\sqrt2],\qquad
+\omega=e^{2\pi i/3}.
+\end{aligned}
+$$
+
+保留第 413 节在 $r=\tan\theta$ 时的确切 ket 代表，实际制备等距映射为
+
+$$
+\begin{aligned}
+q_1(\theta)&=e_0,\qquad q_2(\theta)=e_2,\\
+q_{3+j}(\theta)&=\cos^2\theta\,e_0
+ +\sqrt2\sin\theta\cos\theta\,\omega^j e_1
+ +\sin^2\theta\,\omega^{2j}e_2\quad(j=0,1,2),\\
+J_\theta|i\rangle&=|i\rangle\otimes q_i(\theta),\qquad \theta\in I.
+\end{aligned}
+$$
+
+固定校准值 $u\in I$，任选第 413 节在 $r=\tan u$ 的一个归一化平衡见证 $b$。除去无关的共同相位，可写成
+
+$$
+b=\frac{e_0+e^{-i\beta}e_1+e^{-i\gamma}e_2}{\sqrt3},\qquad
+\sqrt2 e^{i(\beta+\gamma)}
+ +\sqrt2\tan^2u\,e^{i(2\gamma-\beta)}+\tan u=0.
+$$
+
+第 413 节的相位闭合判据保证整个闭区间内存在这样的 $b$。置 $De_\ell=\omega^\ell e_\ell$、$b_a=D^a b$，其中 $a=0,1,2$。这些向量在 $W_2$ 内正交归一，因为
+
+$$
+\langle b_a|b_c\rangle
+ =\frac13\sum_{\ell=0}^2\omega^{(c-a)\ell}
+ =\delta_{ac}.
+$$
+
+在完整四维 $R_2$ 上保持第 415 节的三个实际投影与仪器：
+
+$$
+\begin{aligned}
+Q_0&=|b_0\rangle\langle b_0|+|e_-\rangle\langle e_-|,\\
+Q_1&=|b_1\rangle\langle b_1|,\qquad
+Q_2=|b_2\rangle\langle b_2|,\\
+\mathcal I_a(Z)&=Q_aZQ_a,\qquad
+\sum_{a=0}^2Q_a=I_{R_2}.
+\end{aligned}
+$$
+
+两份原始记录联合可访问；在 $J_\theta$ 之后先作该记录测量，再按实际标签作终端系统酉反馈，接受全部三个结果。令
+
+$$
+\begin{aligned}
+h_{ai}(\theta)&=\langle b_a|q_i(\theta)\rangle,\\
+K_a(\theta)&=\operatorname{diag}\bigl(h_{a1}(\theta),\ldots,h_{a5}(\theta)\bigr),\\
+U_a(u)&=\operatorname{diag}\bigl(\sqrt3\,\overline{h_{a1}(u)},\ldots,
+                              \sqrt3\,\overline{h_{a5}(u)}\bigr),\\
+A_a(\theta)&=U_a(u)K_a(\theta).
+\end{aligned}
+$$
+
+两极的响应模长不变，纬线的响应仅将指标 $j$ 换为 $j-a\pmod3$，故平衡条件给出 $|h_{ai}(u)|^2=1/3$。因此 $U_a(u)$ 为酉，且 $A_a(u)=I_S/\sqrt3$。仪器与反馈一经选定即不随 $\theta$ 改变；也不要求各 $u$ 的见证选择连续或光滑。
+
+为明确被取迹的量子输出与被保留的经典输出，令 $C=\mathbb C^3$，其指定基 $\{|a\rangle_C\}$ 记录实际结果，并定义
+
+$$
+\begin{aligned}
+B_a(\theta)&=(U_a(u)\otimes Q_a)J_\theta:S\longrightarrow S\otimes R_2,\\
+\widehat{\mathcal Q}_{u,\theta}(X)
+ &=\sum_{a=0}^2|a\rangle\langle a|_C\otimes
+                B_a(\theta)XB_a(\theta)^\dagger,\\
+\mathcal Q_{u,\theta}(X)
+ &:=\operatorname{Tr}_{R_2}\widehat{\mathcal Q}_{u,\theta}(X)
+   =\sum_{a=0}^2|a\rangle\langle a|_C\otimes A_a(\theta)XA_a(\theta)^\dagger,\\
+\Phi_{u,\theta}(X)
+ &:=\operatorname{Tr}_C\mathcal Q_{u,\theta}(X)
+   =\sum_{a=0}^2 A_a(\theta)XA_a(\theta)^\dagger.
+\end{aligned}
+$$
+
+这里 $\widehat{\mathcal Q}$ 的输出次序是 $C\otimes S\otimes R_2$。由于 $Q_aq_i(\theta)=h_{ai}(\theta)b_a$，上述取迹等式对全部矩阵成立。反对称分量对所有已制备输入诱导零映射，但仍在实际 $Q_0$ 中，并与其余分量共用同一个 $U_0(u)$。因
+
+$$
+\sum_a A_a(\theta)^\dagger A_a(\theta)
+ =\operatorname{diag}\left(\sum_a|h_{ai}(\theta)|^2\right)_{i=1}^5=I_S,
+$$
+
+两种输出都是通道，总接受概率对每个输入恰为一。失配时单个标签的概率可以依赖输入。$C$ 是指定测量的经典结果寄存器，不是原始四维 $R_2$，也不代表未指定的其他观察者记忆。
+
+沿用定义 395.1 的未折半范数：对任意线性映射 $T$，
+
+$$
+\|T\|_\diamond
+ =\sup_{\dim F<\infty}\ \sup_{X\ne0}
+   \frac{\|(\operatorname{id}_F\otimes T)(X)\|_1}{\|X\|_1},
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X}.
+$$
+
+参考 $F$ 始终不被操作。令 $\mathcal D(C)$ 为 $C$ 上的密度矩阵集合，定义
+
+$$
+\begin{aligned}
+\varepsilon_S(u,\theta)&=\|\Phi_{u,\theta}-\operatorname{id}_S\|_\diamond,\\
+\varepsilon_C(u,\theta)&=\inf_{\tau\in\mathcal D(C)}
+ \|\mathcal Q_{u,\theta}-\mathcal T_\tau\|_\diamond,
+ &\mathcal T_\tau(X)&=\tau\otimes X.
+\end{aligned}
+$$
+
+这里允许任意 $\tau$，包括有非对角元的态；它可依赖 $\theta,u$ 与已固定的装置，但必须对所有未知输入相同。
+
+**定理 440.2（同一装置的两种误差阶）。** 在定义 440.1 的设置下，令 $\delta=\theta-u$、$x=\sin^2\delta$。对所有 $u,\theta\in I$ 及每个允许的平衡见证，
+
+$$
+\boxed{\quad
+x\le\varepsilon_S(u,\theta)\le4x-x^2\le4\delta^2,\qquad
+\varepsilon_C(u,\theta)\le2\sqrt2\,|\sin\delta|.
+\quad}
+$$
+
+固定 $u=\pi/4$ 时，每个这样的固定装置还满足
+
+$$
+\boxed{\quad
+\liminf_{\substack{\theta\to u\,,\ \theta\ne u\\\theta\in I}}
+ \frac{\varepsilon_C(u,\theta)}{|\theta-u|}
+ \ge\frac12\sqrt{\frac76}>0.
+\quad}
+$$
+
+于是同一实验在该校准点有 $\varepsilon_S=\Theta(\delta^2)$ 与 $\varepsilon_C=\Theta(|\delta|)$。
+
+证明。先对求和后的系统通道取一个数学 Kraus 环境 $E=\mathbb C^3$，写
+
+$$
+V_\theta=\sum_{a=0}^2|a\rangle_E\otimes A_a(\theta):S\longrightarrow E\otimes S,
+\qquad c=\frac{|0\rangle+|1\rangle+|2\rangle}{\sqrt3}.
+$$
+
+完备性给出 $V_\theta^\dagger V_\theta=I_S$。令 $P_{\rm pole}=|1\rangle\langle1|+|2\rangle\langle2|$、$P_{\rm lat}=I_S-P_{\rm pole}$，并取交叠算子 $G=(\langle c|\otimes I_S)V_\theta$。它是对角矩阵，且
+
+$$
+\begin{aligned}
+G_{ii}&=\sum_a\overline{h_{ai}(u)}h_{ai}(\theta)
+       =\langle q_i(u)|q_i(\theta)\rangle,\\
+\langle q_{3+j}(u)|q_{3+j}(\theta)\rangle
+ &=\cos^2u\cos^2\theta+2\sin u\cos u\sin\theta\cos\theta
+   +\sin^2u\sin^2\theta\\
+ &=(\cos u\cos\theta+\sin u\sin\theta)^2=1-x,\\
+G&=P_{\rm pole}+(1-x)P_{\rm lat},\qquad
+\|G\|=1,\quad \|I_S-G\|=x.
+\end{aligned}
+$$
+
+这里 $\|\cdot\|$ 是算子范数。分解 $V_\theta=|c\rangle\otimes G+W$，则 $(\langle c|\otimes I_S)W=0$，从而
+
+$$
+\begin{aligned}
+W^\dagger W&=I_S-G^2=(2x-x^2)P_{\rm lat},\\
+\Phi_{u,\theta}(X)&=GXG+\mathcal R(X),\qquad
+\mathcal R(X)=\operatorname{Tr}_E(WXW^\dagger).
+\end{aligned}
+$$
+
+环境取迹使两个交叉项消失，$\mathcal R$ 完全正。其完整 diamond 范数恰为
+
+$$
+\|\mathcal R\|_\diamond=\|W^\dagger W\|=2x-x^2.
+$$
+
+具体地，对任何有限参考和任意矩阵 $X$，左右乘法的迹范数界给出上界 $\|W\|^2\|X\|_1$；部分迹收缩可直接由对偶式
+$\|\operatorname{Tr}_E Y\|_1=\sup_{\|H\|\le1}|\operatorname{Tr}[(I_E\otimes H)Y]|\le\|Y\|_1$
+得到。取 $W^\dagger W$ 的单位最大特征向量作纯态输入，$\mathcal R$ 输出为正，其迹达到 $\|W^\dagger W\|$，故有等号。这也说明不需要假定 $\mathcal R$ 保迹。
+
+另一方面，恒等式 $GXG-X=(G-I_S)XG+X(G-I_S)$ 在张量任意参考后仍成立，故
+
+$$
+\|\operatorname{Ad}_G-\operatorname{id}_S\|_\diamond\le2x,
+\qquad \operatorname{Ad}_G(X)=GXG.
+$$
+
+加上完全正余项即得 $4x-x^2$ 的上界。两极的校正幅度向量均为 $c$，任一纬线的幅度向量与 $c$ 的交叠为 $1-x$，故极点与纬线之间的相干元被乘以 $1-x$，而其布居保持不变。在输入 $|\psi\rangle=(|1\rangle+|3\rangle)/\sqrt2$ 上，输出误差的非零块为
+
+$$
+\begin{pmatrix}0&-x/2\\-x/2&0\end{pmatrix},
+$$
+
+其迹范数为 $x$，给出下界。这些估计直接控制每个参考扩张，不经过 Choi 保真度推断。对 $E$ 中方向 $c$ 的分解只用于求和通道的证明；数学 Kraus 变换没有产生新的实际标签或控制权限。
+
+保留实际标签的上界也可在相同固定幅度上得到。由于系统基向量彼此正交、各 $U_a(u)$ 的对角元模长为一，且 $\{b_a\}$ 完备，
+
+$$
+\begin{aligned}
+\|V_\theta-V_u\|^2
+ &=\max_i\sum_a|h_{ai}(\theta)-h_{ai}(u)|^2\\
+ &=\max_i\|q_i(\theta)-q_i(u)\|^2=2x.
+\end{aligned}
+$$
+
+在指定基上将 $E$ 去相干并标识为 $C$，$V_\theta X V_\theta^\dagger$ 就变为 $\mathcal Q_{u,\theta}(X)$；在校准点则为 $\lambda_C\otimes X$，其中 $\lambda_C=I_C/3$。对任意参考，展开
+
+$$
+V_\theta X V_\theta^\dagger-V_uXV_u^\dagger
+ =(V_\theta-V_u)XV_\theta^\dagger
+  +V_uX(V_\theta-V_u)^\dagger
+$$
+
+给出迹范数上界 $2\|V_\theta-V_u\|\|X\|_1$。去相干是三个相位酉共轭的平均，故亦收缩迹范数。选取合法的 $\tau=\lambda_C$ 即得 $\varepsilon_C\le2\sqrt2|\sin\delta|$。
+
+现在固定 $u=\pi/4$，并始终保持同一 $b$。完整相位方程变为
+
+$$
+\sqrt2 e^{i(\beta+\gamma)}+\sqrt2 e^{i(2\gamma-\beta)}+1=0.
+$$
+
+前两项之和的平方模为一，所以
+
+$$
+4+4\cos(\gamma-2\beta)=1,
+\qquad \cos(\gamma-2\beta)=-\frac34.
+$$
+
+对纬线 $j$ 和实际标签 $a$，置 $\ell=j-a\pmod3$、$t_\ell=2\pi\ell/3$，其概率为 $p_a(\theta)=|f_{j-a}(\theta)|^2$，其中
+
+$$
+\begin{aligned}
+f_\ell(\theta)
+ &=\frac{\cos^2\theta+\sqrt2\sin\theta\cos\theta\,e^{i\beta}\omega^\ell
+                  +\sin^2\theta\,e^{i\gamma}\omega^{2\ell}}{\sqrt3},\\
+f_\ell(u)&=\frac{1+\sqrt2 e^{i\beta}\omega^\ell+e^{i\gamma}\omega^{2\ell}}{2\sqrt3},
+\qquad
+f'_\ell(u)=\frac{-1+e^{i\gamma}\omega^{2\ell}}{\sqrt3},\\
+v_\ell:=\left.\frac{d}{d\theta}|f_\ell(\theta)|^2\right|_{\theta=u}
+ &=\frac{\sqrt2}{3}
+   \bigl[\cos(\gamma-\beta+t_\ell)-\cos(\beta+t_\ell)\bigr].
+\end{aligned}
+$$
+
+三点 Fourier 正交性给出
+$\sum_\ell\cos(\alpha+t_\ell)=0$ 以及
+$\sum_\ell\cos(\alpha+t_\ell)\cos(\zeta+t_\ell)=\tfrac32\cos(\alpha-\zeta)$，因而
+
+$$
+\sum_\ell v_\ell=0,\qquad
+\sum_\ell v_\ell^2
+ =\frac23[1-\cos(\gamma-2\beta)]=\frac76.
+$$
+
+这个不变量适用于完整相位方程的每个解。设 $\lambda=(1/3,1/3,1/3)$；极点基态对所有 $\theta$ 的实际标签分布都是 $\lambda$，而该纬线基态的分布为
+
+$$
+p(\theta)=\lambda+\delta\,(v_{j-a})_{a=0}^2+O(\delta^2).
+$$
+
+对任意候选 $\tau$，记 $t_a=\langle a|\tau|a\rangle$。分别代入极点和纬线这两个输入，再取系统迹并对 $C$ 去相干，误差不会增大，所以
+
+$$
+\begin{aligned}
+\|\mathcal Q_{u,\theta}-\mathcal T_\tau\|_\diamond
+ &\ge\max\{\|\lambda-t\|_1,\|p(\theta)-t\|_1\}\\
+ &\ge\tfrac12\|p(\theta)-\lambda\|_1.
+\end{aligned}
+$$
+
+该式对每个 $\theta$、每个 $\tau$ 同时成立，故可先取 $\tau$ 的下确界，再除以 $|\delta|$ 并取下极限，得到
+
+$$
+\liminf_{\theta\to u,\,\theta\ne u}
+ \frac{\varepsilon_C(u,\theta)}{|\delta|}
+ \ge\frac12\sum_\ell|v_\ell|
+ \ge\frac12\sqrt{\sum_\ell v_\ell^2}
+ =\frac12\sqrt{\frac76}.
+$$
+
+这里的 $1/2$ 来自两个输入之间的三角不等式，不是范数折半；也没有对最优 $\tau$ 随参数的选择作正则性假设。证毕。
+
+**命题 440.3（仅改代表相位的物理边界）。** 保持定义 440.1 的仪器、反馈及恒等目标不变，仅将实际制备中的第一极点改成
+
+$$
+\widetilde q_1(\theta)=e^{i(\theta-u)}e_0,
+\qquad \widetilde q_i(\theta)=q_i(\theta)\quad(i\ne1).
+$$
+
+尽管每条记录射线不变，在 $|\psi_{12}\rangle=(|1\rangle+|2\rangle)/\sqrt2$ 上的系统恢复误差却恰为
+
+$$
+\left\|\widetilde\Phi_{u,\theta}(|\psi_{12}\rangle\langle\psi_{12}|)
+       -|\psi_{12}\rangle\langle\psi_{12}|\right\|_1
+ =2|\sin(\delta/2)|.
+$$
+
+证明。令 $Z_\delta=\operatorname{diag}(e^{i\delta},1,1,1,1)$，则
+$\widetilde J_\theta=J_\theta Z_\delta$、$\widetilde A_a=A_a Z_\delta$。原来的 $\Phi_{u,\theta}$ 在两极子空间上为恒等，故该输入的非对角元由 $1/2$ 变成 $e^{i\delta}/2$；误差矩阵的特征值是 $\pm|e^{i\delta}-1|/2$，即得所示迹范数。它在 $\delta=0$ 附近为一次量，因而不能沿用二次系统界。
+
+这改变了受控制备中两个系统分量的相对相位。若作联合表示运输，就必须同时运输制备、反馈与理想比较映射；仅以当前输入表示变换为例，目标也应变为 $\operatorname{Ad}_{Z_\delta}$，并有
+
+$$
+\|\Phi_{u,\theta}\circ\operatorname{Ad}_{Z_\delta}
+      -\operatorname{Ad}_{Z_\delta}\|_\diamond
+ =\|\Phi_{u,\theta}-\operatorname{id}_S\|_\diamond.
+$$
+
+等号由在 diamond 范数定义中对输入作可逆酉替换得到。因此，固定其他装置与目标的物理重定相，和对同一实验的联合表示运输，是不同的比较。证毕。
+
+系统边际中的一次项消失，并不意味着同一实验的经典结果也只在二次阶变化：结果分布已能在一次阶区分极点与纬线输入。只使用恢复后系统及未操作参考的后续通道可继承 $\varepsilon_S$ 上界；继续读取实际标签的比较须使用 $\mathcal Q$。本节的记录下界固定在 $u=\pi/4$，不推广为所有校准点或不同装置混合的下界，也不主张常数最优。本构造使用联合访问，不给出 LOCC 或局部协议结论，也不改动第 439 节的结论。
+
+本节的直接来源为[固定版本的本卷](https://github.com/the-omega-institute/trureturing/blob/c17f504816be4a1478f05c3de12ae9c7425d77c0/docs/develop/theory/QUANTUM-REALITY.md)：第 413、415 节提供代表与完整仪器，定义 395.1 提供求和输出及未折半范数，命题 395.2 只给必要 Choi 检验；ST28–ST31 已区分结果信息、恢复权限与最终系统输出，其半 diamond 约定不用于本节数值。
+
+所用成熟工具与接口见 Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/pdf/quant-ph/0209025v1)，Theorem 1、Proposition 2（PDF 第 4–5 页）：纯初始环境的测量实现通道分解，固定 Kraus 分支的精确校正要求 $K_a^\dagger K_a=c_aI$，同维时可用酉反馈。完全正余项的范数恒等式见 Kretschmann–Schlingemann–Werner，[*A Continuity Theorem for Stinespring's Dilation*, arXiv:0710.2495v1](https://arxiv.org/pdf/0710.2495v1)，第 2–3 页的 $\|T\|_{\rm cb}=\|T(I)\|=\|V\|^2$；在有限维取迹对偶即适用于本节不必保迹的 $\mathcal R$。同作者 [*The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation*, quant-ph/0605009v1](https://arxiv.org/pdf/quant-ph/0605009v1)，第 6 页式 (15)–(16) 给出固定共同等距表示的两倍范数上界。上述两个范数步骤在证明中已对全部有限参考直接展开；这里的具体误差阶还依赖确切实重叠与实际标签概率的计算。
+
+## 追加锚（本行以下为增补区）
+
+## 441. 同一固定装置的停止历史与平均调用误差
+
+保留第 440 节的全部实际标签后，可以让同一个控制器根据既有历史和可访问记忆决定是否继续调用。此时比较的是两个参数下的完整停止过程，调用次数及其分布均可能改变。本节以两条生存概率序列控制停止输出的误差，再由两端平均调用次数给出统一预算；确定次数和无界支持的几何停止都属于同一个结论。
+
+**定义 441.1（固定装置、共同控制与完整停止输出）。** 固定
+
+$$
+\begin{gathered}
+S=\mathbb C^5,\qquad R_2=(\mathbb C^2)^{\otimes2}=W_2\oplus\mathbb C e_-,\qquad
+I=[\arctan(1/\sqrt2),\arctan\sqrt2],\qquad \omega=e^{2\pi i/3},\\
+e_0=|00\rangle,\quad e_1=(|01\rangle+|10\rangle)/\sqrt2,\quad
+e_2=|11\rangle,\quad e_-=(|01\rangle-|10\rangle)/\sqrt2,\qquad
+W_2=\operatorname{span}\{e_0,e_1,e_2\}.
+\end{gathered}
+$$
+
+沿用定义 440.1 的确切 ket 代表及实际制备，亦即对 $t\in I$，
+
+$$
+\begin{aligned}
+q_1(t)&=e_0,\qquad q_2(t)=e_2,\\
+q_{3+j}(t)&=\cos^2t\,e_0+\sqrt2\sin t\cos t\,\omega^j e_1
+                      +\sin^2t\,\omega^{2j}e_2\quad(j=0,1,2),\\
+J_t|i\rangle&=|i\rangle\otimes q_i(t).
+\end{aligned}
+$$
+
+先固定校准点 $u\in I$ 及一个第 413 节的归一化平衡见证 $b$。可写成
+
+$$
+b=\frac{e_0+e^{-i\beta}e_1+e^{-i\gamma}e_2}{\sqrt3},\qquad
+\sqrt2 e^{i(\beta+\gamma)}+\sqrt2\tan^2u\,e^{i(2\gamma-\beta)}+\tan u=0.
+$$
+
+令 $De_\ell=\omega^\ell e_\ell$、$b_a=D^a b$。第 415 节的完整四维仪器和固定反馈为
+
+$$
+\begin{aligned}
+Q_0&=|b_0\rangle\langle b_0|+|e_-\rangle\langle e_-|,&
+Q_1&=|b_1\rangle\langle b_1|,& Q_2&=|b_2\rangle\langle b_2|,\\
+\mathcal I_a(Z)&=Q_aZQ_a,& \sum_{a=0}^2Q_a&=I_{R_2},\\
+h_{ai}(t)&=\langle b_a|q_i(t)\rangle,&
+U_a(u)&=\operatorname{diag}_{i=1}^5\bigl(\sqrt3\,\overline{h_{ai}(u)}\bigr),\\
+A_a(t)&=U_a(u)\operatorname{diag}_{i=1}^5h_{ai}(t).
+\end{aligned}
+$$
+
+$\langle b_a|b_c\rangle=\frac13\sum_{\ell=0}^2\omega^{(c-a)\ell}=\delta_{ac}$，故 $\{b_a\}$ 是 $W_2$ 的正交归一基。纬线指标在 $b_a$ 下只作 $j\mapsto j-a\pmod3$ 的替换，两极的响应模长不变，所以平衡性给出 $|h_{ai}(u)|^2=1/3$，故 $U_a(u)$ 为酉且 $A_a(u)=I_S/\sqrt3$。每次调用先作 $J_t$，再作上述完整仪器及反馈，取迹量子 $R_2$，保留三个实际结果中的每一个。记 $C=\mathbb C^3$，单次可见通道为
+
+$$
+\mathcal Q_t(X):=\mathcal Q_{u,t}(X)
+ =\sum_{a=0}^2|a\rangle\langle a|_C\otimes A_a(t)XA_a(t)^\dagger,
+\qquad \sum_aA_a(t)^\dagger A_a(t)=I_S.
+$$
+
+反对称方向始终属于实际 $Q_0$，虽在制备像上诱导零映射，仍共用同一个 $U_0(u)$。调用使用新鲜环境；已经取迹的记录和隐藏环境不可再次访问。
+
+固定有限维的全部变量输入空间 $A$。所有可变初始记忆都包括在 $A$ 内；若只有原系统可变，则 $A=S$。外部初始制备、固定辅助态、调用间的控制仪器、查询寄存器路由、停止决策与终端读出构成一个共同控制器。它们在 $t=u$ 与 $t=\theta$ 两实验中逐一相同，不依赖实际参数 $t$，可以依赖已固定的 $u,b$，以及此前的实际记录和可访问量子记忆。任意有限维参考 $F$ 始终不被操作。这里固定的是控制规则；同一规则作用于两个不同的状态和历史分布，并不要求产生同一个调用次数。
+
+历史树可数，完整保留每次调用的实际 $a\in\{0,1,2\}$ 及控制器实际产生的经典结果，包括继续、停止及指定失败结果。隐藏 Kraus 指标不是实际结果。每个有限历史前缀和终端历史都有预先指定的有限维可访问记忆块，所有控制仪器均正规；不要求各块维数有统一上界。两次查询之间的控制步骤在每条分支上有限完成，不允许以未计入的无限内部计算代替停止或下一次查询。
+
+每次可能调用之前，控制器已记录经典的 live/halt 标志。halt 为吸收状态，终端历史、该标志及全部最终可访问记忆一经形成即冻结。令 $T$ 为实际处于 live 状态时的调用总数；允许 $T=0$，若不终止则置 $T=\infty$。取所有允许的有限终端历史之集合 $\mathsf H_{\mathrm{stop}}$，包括概率为零的历史，定义共同输出空间
+
+$$
+\mathcal H_{\mathrm{stop}}=\bigoplus_{h\in\mathsf H_{\mathrm{stop}}}M_h.
+$$
+
+块指标包含完整实际历史与 halt 标志，$M_h$ 包含最终全部可访问量子记忆。记终端历史 $h$ 的分支映射为 $\mathcal S_{t,h}$，按原权重求和定义
+
+$$
+\mathcal S_t(X)=\bigoplus_{h\in\mathsf H_{\mathrm{stop}}}\mathcal S_{t,h}(X).
+$$
+
+这是有限终端分支的无条件和；不删去任何失败叶，也不对停止或成功作条件归一化。其迹类收敛和正规性将在证明中说明。一般它仅为完全正、迹不增映射；在几乎必然终止的输入上输出迹为一。
+
+对同一个输入密度算子 $\rho=\rho_{FA}$，写
+
+$$
+\begin{aligned}
+\sigma_t(\rho)&=(\operatorname{id}_F\otimes\mathcal S_t)(\rho),\\
+p_t(k;\rho)&=\Pr_{t,\rho}(T\ge k)\quad(k\ge1),\qquad
+m_t(\rho)=\mathbb E_{t,\rho}T.
+\end{aligned}
+$$
+
+本节使用未折半范数
+
+$$
+\|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X},\qquad
+\|\Lambda\|_\diamond
+ =\sup_{\dim F<\infty}\ \sup_{0\ne X\in\mathcal L(F\otimes A)}
+ \frac{\|(\operatorname{id}_F\otimes\Lambda)(X)\|_1}{\|X\|_1}.
+$$
+
+**定理 441.2（两条生存法则与两端平均调用界）。** 在定义 441.1 的同一固定装置及共同控制器下，固定 $u,\theta\in I$，令
+
+$$
+x=\sin^2(\theta-u),\qquad
+B(q)=\begin{cases}2\sqrt{2q-q^2},&0\le q\le1,\\2,&q>1.\end{cases}
+$$
+
+对每个有限未操作参考 $F$ 及同一个输入密度算子 $\rho_{FA}$，若
+$m_u(\rho)<\infty$ 且 $m_\theta(\rho)<\infty$，则两个实验均几乎必然停止，$\sigma_u(\rho),\sigma_\theta(\rho)$ 均为密度算子，并有
+
+$$
+\boxed{\quad
+\|\sigma_\theta(\rho)-\sigma_u(\rho)\|_1
+\le B\!\left(x\sum_{k\ge1}\sqrt{p_u(k;\rho)p_\theta(k;\rho)}\right)
+\le B\!\left(x\sqrt{m_u(\rho)m_\theta(\rho)}\right).
+\quad}
+$$
+
+若进一步存在有限常数 $M_u,M_\theta$，使整个固定输入域的每个密度算子 $\rho_A$ 都满足
+
+$$
+m_u(\rho_A)\le M_u,\qquad m_\theta(\rho_A)\le M_\theta,
+$$
+
+则 $\mathcal S_u,\mathcal S_\theta:\mathcal T_1(A)\to\mathcal T_1(\mathcal H_{\mathrm{stop}})$ 为正规完全正保迹映射，且
+
+$$
+\boxed{\quad
+\|\mathcal S_\theta-\mathcal S_u\|_\diamond
+\le B\!\left(x\sqrt{M_uM_\theta}\right).
+\quad}
+$$
+
+这里 $\mathcal T_1$ 表示迹类。状态特定的两个均值只给第一个结论；最后一个结论的预算须覆盖 $A$ 中每个可变初始记忆及其所有输入态。若再对一类控制器取上确界，还须在整个类别中使用同一对预算。
+
+证明。首先对保留实际标签的单次通道取共同膨胀
+
+$$
+V_t\psi=\sum_{a=0}^2|a\rangle_C\otimes A_a(t)\psi\otimes|a\rangle_E.
+$$
+
+取迹不可访问的 $E$ 恰得 $\mathcal Q_t$，完备性给出 $V_t^\dagger V_t=I_S$。第二份标签只负责去掉不同实际结果的交叉项；它不增加控制权限，$V_t$ 也不是物理制备 $J_t$。由于固定 $U_a(u)$ 为酉且 $\{b_a\}$ 是 $W_2$ 的正交归一基，
+
+$$
+\begin{aligned}
+V_u^\dagger V_\theta
+ &=\sum_a A_a(u)^\dagger A_a(\theta)
+   =\operatorname{diag}_i\sum_a\overline{h_{ai}(u)}h_{ai}(\theta)
+   =\operatorname{diag}_i\langle q_i(u)|q_i(\theta)\rangle,\\
+\langle q_{3+j}(u)|q_{3+j}(\theta)\rangle
+ &=\cos^2u\cos^2\theta+2\sin u\cos u\sin\theta\cos\theta
+     +\sin^2u\sin^2\theta\\
+ &=\cos^2(\theta-u)=1-x.
+\end{aligned}
+$$
+
+两极的内积为一，所以令 $P_{\mathrm{lat}}=\sum_{i=3}^5|i\rangle\langle i|$，便得精确恒等式
+
+$$
+V_u^\dagger V_\theta=I_S-xP_{\mathrm{lat}}.
+$$
+
+还需要整个膨胀在极点上的一致性，而不只是它的系统边际一致。对 $j=1,2$，$q_j(t)$ 固定，故 $h_{aj}(t)=h_{aj}(u)$，进而
+
+$$
+A_a(t)|j\rangle=|j\rangle/\sqrt3,\qquad
+V_t|j\rangle=\frac1{\sqrt3}\sum_{a=0}^2|a\rangle_C\otimes|j\rangle\otimes|a\rangle_E.
+$$
+
+现在固定输入 $\rho_{FA}$ 并一次纯化。只考察至多 $N$ 个查询槽的实验，对所有共同控制操作选取相同的等距膨胀，所有被丢弃系统只留在不可访问的证明环境中。这样的选择在当前可数历史模型中是合法的：每个有限维记忆块上的每个实际分支可取有限 Kraus 表示，可数实际分支的 Kraus 算子合成一个可数族；将其隐藏指标放入 $\ell^2$ 环境便得到等距表示。对不同历史取正交直和，保持历史的经典性质。每个槽间的有限控制路径也只有可数多个，因此可合并为同类正规操作。有限 $N$ 只需要有限次组合这些可分空间上的等距映射，不要求总输出空间有限维。
+
+在第 $k$ 槽之前完成通常的停止决策，记两实验的单位纯态为 $\psi_{t,k}$，并令 $L_k$ 为此时 live 标志的投影；对证明环境和参考均隐含张量恒等。于是
+
+$$
+\langle\psi_{t,k}|L_k|\psi_{t,k}\rangle=p_t(k;\rho).
+$$
+
+为使两实验可以使用相同的 $N$ 槽表示，在已停止分支上冻结终端数据，添加一个处于 $|1\rangle$ 的查询寄存器。以共同等距路由 $R_k$ 在 live 分支送入控制器所指定的查询系统，在 halt 分支送入这个极点。然后对查询系统无条件实施 $V_t$；调用后以共同路由将 live 分支的实际标签加入历史，将 halt 分支的补齐标签和查询输出放入独立废弃寄存器。由极点膨胀恒等式，补齐不会改变真实终端输出，且在两实验中产生完全相同的补齐态。这只需要已知经典标志控制的路由与普通调用，不要求相干受控访问未知通道。补齐调用不计入原过程的 $T$。
+
+令
+
+$$
+E_k=R_k^\dagger(P_{\mathrm{lat}}\otimes I)R_k.
+$$
+
+它是正压缩，满足 $0\le E_k\le I$。极点路由又给出
+
+$$
+(P_{\mathrm{lat}}\otimes I)R_k(I-L_k)=0,
+\qquad E_k=L_kE_kL_k,
+\qquad 0\le E_k\le L_k.
+$$
+
+最后一个不等式可由二次型直接看出：$\langle v,E_kv\rangle=\langle L_kv,E_kL_kv\rangle\le\|L_kv\|^2$。这里仅用正收缩及其支撑，不把等距压缩 $E_k$ 当作投影。
+
+共同等距控制保持交叠；一槽调用的交叉算子为
+
+$$
+R_k^\dagger(V_u^\dagger V_\theta\otimes I)R_k=I-xE_k.
+$$
+
+因此该槽造成的交叠增量是 $-x\langle\psi_{u,k}|E_k|\psi_{\theta,k}\rangle$。这个交叉矩阵元可以是复数，不作实数性或非负性假设。对 $E_k^{1/2}$ 使用 Cauchy–Schwarz 不等式及 $E_k\le L_k$，得到
+
+$$
+\begin{aligned}
+\bigl|\langle\psi_{u,k}|E_k|\psi_{\theta,k}\rangle\bigr|
+&\le\sqrt{\langle\psi_{u,k}|E_k|\psi_{u,k}\rangle
+             \langle\psi_{\theta,k}|E_k|\psi_{\theta,k}\rangle}\\
+&\le\sqrt{p_u(k;\rho)p_\theta(k;\rho)}.
+\end{aligned}
+$$
+
+初始纯化与初始控制相同，交叠从一开始。完成 $N$ 次补齐槽及通常的末次停止决策后，记所得单位纯态为 $\Psi_t^N$，交叠为 $z_N=\langle\Psi_u^N|\Psi_\theta^N\rangle$。逐槽相消和三角不等式给出
+
+$$
+\begin{aligned}
+|1-z_N|&\le q_N:=x\sum_{k=1}^N\sqrt{p_u(k;\rho)p_\theta(k;\rho)},\\
+q_N&\le x\sqrt{\left(\sum_{k=1}^Np_u(k;\rho)\right)
+                      \left(\sum_{k=1}^Np_\theta(k;\rho)\right)}\\
+&=x\sqrt{\mathbb E_{u,\rho}\min(T,N)\,
+                 \mathbb E_{\theta,\rho}\min(T,N)}.
+\end{aligned}
+$$
+
+末行使用整数值 $T$ 的点态恒等式 $\min(T,N)=\sum_{k=1}^N\mathbf1_{\{T\ge k\}}$，亦适用于 $T=\infty$。这里分别使用两实验的生存法则，没有构造共同实现的停止时间。结构上的关键正是：极点的整个膨胀响应一致，使 halt 分支交叠损失为零；纬线效应被 live 标志支配，使每一步的损失由两条生存概率的几何平均控制。
+
+对两个单位向量 $\alpha,\beta$，令 $z=\langle\alpha|\beta\rangle$。若 $|z|<1$，可写 $\beta=z\alpha+\sqrt{1-|z|^2}\,w$，其中 $w\perp\alpha$ 为单位向量。在 $\operatorname{span}\{\alpha,w\}$ 上，投影差的矩阵为
+
+$$
+|\alpha\rangle\langle\alpha|-|\beta\rangle\langle\beta|
+=\begin{pmatrix}
+1-|z|^2&-z\sqrt{1-|z|^2}\\
+-\overline z\sqrt{1-|z|^2}&-(1-|z|^2)
+\end{pmatrix}.
+$$
+
+它的迹为零、行列式为 $-(1-|z|^2)$，非零特征值为 $\pm\sqrt{1-|z|^2}$；正交补上为零。$|z|=1$ 时两个投影相同。因此在任意上述可分空间中都有
+
+$$
+\bigl\||\alpha\rangle\langle\alpha|-|\beta\rangle\langle\beta|\bigr\|_1
+=2\sqrt{1-|z|^2}.
+$$
+
+若 $q_N\le1$，则 $|z_N|\ge1-q_N$，纯态差的迹范数至多 $2\sqrt{2q_N-q_N^2}$；若 $q_N>1$，则使用密度算子差的普遍上界二。共同部分迹和读出对 Hermitian 差收缩迹范数：将该差作正负 Jordan 分解，正保迹性给出输出范数至多两部分迹之和。这说明丢弃证明环境及补齐数据之后，规范化的真实终端块加 timeout 块的截断输出 $\sigma_t^N(\rho)$ 满足
+
+$$
+\|\sigma_\theta^N(\rho)-\sigma_u^N(\rho)\|_1\le B(q_N).
+$$
+
+下面建立未截断输出及其迹范数极限。每个有限终端历史 $h$ 的正规完全正分支 $\mathcal S_{t,h}:\mathcal T_1(A)\to\mathcal T_1(M_h)$，由该有限路径上原始分支复合而成。不同终端叶互斥，故任意有限叶集合的总效果不超过 $I_A$。于是对 $X\ge0$，
+
+$$
+\sum_h\operatorname{Tr}\mathcal S_{t,h}(X)\le\operatorname{Tr}X.
+$$
+
+各块为正，其迹之和有限，故直和在迹类中收敛。分支映射的可加性使此定义在正锥上可加；对一般 $X$ 作实部、虚部的正负分解便得到线性延拓，且其输出范数至多 $\|\operatorname{Re}X\|_1+\|\operatorname{Im}X\|_1\le2\|X\|_1$，因而有界。张量任意有限参考后，同样的有限叶效果不等式保证正的直和收敛，故该延拓完全正且迹不增。
+
+正规性也可直接在伴随上确认。令 $\iota_h:M_h\to\mathcal H_{\mathrm{stop}}$ 为块嵌入，对有界正算子 $Y$，
+
+$$
+\mathcal S_t^{\dagger}(Y)
+=\sum_h\mathcal S_{t,h}^{\dagger}(\iota_h^\dagger Y\iota_h),
+$$
+
+其中作用于映射的 $\dagger$ 表示迹配对的伴随。右侧为有界正和。若 $Y_\lambda\uparrow Y$ 为有界递增网，对每个正输入作迹配对后，各叶的正规性允许取上确界，再将此上确界与非负级数的有限部分和上确界交换，即得 $\mathcal S_t^{\dagger}(Y_\lambda)\uparrow\mathcal S_t^{\dagger}(Y)$。所以 $\mathcal S_t$ 是正规映射的迹类前伴随。若每个输入都几乎必然终止，终端叶效果之和为 $I_A$，故保迹；若只在某个输入上终止，只在那个输入上断言输出迹为一。
+
+将所有截断输出放入同一个空间
+
+$$
+\mathcal H_{\mathrm{stop}}\oplus\mathcal H_{\mathrm{timeout}},
+$$
+
+其中 $\mathcal H_{\mathrm{timeout}}$ 是对所有 $N\ge0$ 及其未停前缀的有限维记忆块取正交直和，另含 $N$ 和 timeout 标识。它仍是可分空间。截断时先完成第 $N$ 次调用后的通常控制和停止决策；$N=0$ 时先完成初始控制和停止决策。只有尚未停止的前缀标为 timeout，其原有 live 标志保留，timeout 不冒充真实 halt。
+
+这样，$T\le N$ 的终端块与未截断输出完全相同。timeout 块的总迹为 $\Pr_{t,\rho}(T>N)$。在几乎必然停止的输入上，尚缺的 $T>N$ 的真实终端块也有同样总迹，并与 timeout 块正交。张量参考后各块仍为正，因此在上述共同嵌入中精确地有
+
+$$
+\|\sigma_t^N(\rho)-\sigma_t(\rho)\|_1
+=2\Pr_{t,\rho}(T>N).
+$$
+
+有限均值蕴含 $\Pr_{t,\rho}(T=\infty)=0$，故两端的这个差都趋于零。另一方面，由非负项单调收敛及尾和公式，
+
+$$
+q_N\uparrow q:=x\sum_{k\ge1}\sqrt{p_u(k;\rho)p_\theta(k;\rho)}
+\le x\sqrt{m_u(\rho)m_\theta(\rho)}<\infty.
+$$
+
+$B$ 在 $[0,\infty)$ 上连续且单调不减。对截断误差使用三角不等式并令 $N\to\infty$，便得所述两个状态界。这一极限只涉及真实迹类输出，不需要无限张量积纯化，也从未归一化任何终端子集合或超时子集合。
+
+最后处理完整 diamond 量词。事件 $T\ge k$ 在输入 $A$ 上有某个效果 $0\le G_{t,k}\le I_A$；它是前 $k-1$ 次查询及相应停止决策后 live 效果的拉回。因为 $F$ 始终不被操作，
+
+$$
+p_t(k;\rho_{FA})
+=\operatorname{Tr}[(I_F\otimes G_{t,k})\rho_{FA}]
+=\operatorname{Tr}(G_{t,k}\rho_A).
+$$
+
+求和知均值也只依赖 $\rho_A$。全输入统一预算因此使状态界对所有有限 $F$ 及所有 $\rho_{FA}$ 都有同一常数 $b=B(x\sqrt{M_uM_\theta})$，同时保证两停止映射在整个输入域上保迹。
+
+令 $\Delta=\mathcal S_\theta-\mathcal S_u$。为从密度算子扩展到 diamond 定义中的任意矩阵 $X\in\mathcal L(F\otimes A)$，在未操作参考中再添一个比特，构造 Hermitian 矩阵
+
+$$
+H=\frac12\begin{pmatrix}0&X\\X^\dagger&0\end{pmatrix}.
+$$
+
+其非零特征值是 $X$ 的奇异值的正负二分之一，所以 $\|H\|_1=\|X\|_1$。这一范数恒等式对任意迹类 $X$ 都成立，可由块矩阵平方为 $\frac14\operatorname{diag}(XX^\dagger,X^\dagger X)$ 后开正平方根取迹得到，因而也适用于可数输出空间。$\Delta$ 保持伴随，故对 $H$ 作用后的同型块矩阵满足
+
+$$
+\|(\operatorname{id}_{\mathbb C^2\otimes F}\otimes\Delta)(H)\|_1
+=\|(\operatorname{id}_F\otimes\Delta)(X)\|_1.
+$$
+
+将 $H=H_+-H_-$ 作 Jordan 分解；对每个非零正部分除以其迹而使用状态界，再乘回其迹，得到
+
+$$
+\|(\operatorname{id}_F\otimes\Delta)(X)\|_1
+\le b(\operatorname{Tr}H_++\operatorname{Tr}H_-)
+=b\|X\|_1.
+$$
+
+取所有有限参考及非零矩阵的上确界即得 diamond 界，没有额外的因子二。上述共同嵌入还给出统一的通道极限：由 $\Pr_{t,\rho}(T>N)\le M_t/(N+1)$ 及同一个块矩阵论证，$\|\mathcal S_t^N-\mathcal S_t\|_\diamond\le2M_t/(N+1)$；其中 $\mathcal S_t^N$ 为包含 timeout 输出的截断通道。证毕。
+
+**推论 441.3（有确定调用上限的情形）。** 若对整个输入域，两实验都满足 $T\le n$，其中 $n\ge0$ 为整数，则
+
+$$
+\boxed{\quad
+\|\mathcal S_\theta-\mathcal S_u\|_\diamond
+\le B\bigl(n\sin^2(\theta-u)\bigr)
+\le\min\{2,\,2\sqrt{2n}\,|\sin(\theta-u)|\}.
+\quad}
+$$
+
+证明。定理中直接取 $M_u,M_\theta\le n$，使用 $B$ 的单调性及 $B(q)\le\min\{2,2\sqrt{2q}\}$ 即得，$n=0$ 也成立。特别地，恰好调用 $n$ 次是同一推论的特例。证毕。
+
+作为同一输出的比较，第 440 节证明中实际得到的是 $\|\mathcal Q_\theta-\mathcal Q_u\|_\diamond\le2\sqrt2\,|\sin(\theta-u)|$。把全部记忆与经典控制包括在通道内，定理 73.2 的逐项累加给出 $\min\{2,2\sqrt2\,n|\sin(\theta-u)|\}$。该处一步误差定义为半 diamond 范数；先取每步 $\epsilon_i\le\sqrt2|\sin(\theta-u)|$，再将其式 (73.3) 两边乘二，才得到这里的未折半数值。对 $n>1$ 且 $n\sin^2(\theta-u)$ 小的范围，上述推论具有较好的 $\sqrt n$ 上界依赖；这不是最优性断言。
+
+**例 441.4（首次实际标签为二时停止）。** 取
+
+$$
+u=\pi/4,\qquad \gamma=0,\qquad
+\beta=\arccos\!\left(-\frac1{2\sqrt2}\right),\qquad
+b=\frac{e_0+e^{-i\beta}e_1+e_2}{\sqrt3}.
+$$
+
+此时平衡相位方程化为 $2\sqrt2\cos\beta+1=0$，故这是定义 441.1 中合法的固定见证。令 $W:A\to M$ 为到同维记忆的固定酉同构，共同初始制备把任意变量输入等距停放到 $M$，另备查询系统于 $|3\rangle$；即 $\psi_A\mapsto W\psi_A\otimes|3\rangle_S$。记忆 $M$ 此后不动，并保留它与任意参考的关联。
+
+每个 live 槽调用同一 $\mathcal Q_t$，首次实际标签 $a=2$ 时停止；$a=0,1$ 时继续。全部先前的 $0,1$、最终的 $2$、控制器继续与停止标志、$M$ 和最终 $S$ 都属于输出。由于 $A_a(t)$ 对角，任何有正概率的实际分支中查询系统仍为 $|3\rangle$ 的同一纯态，故新鲜调用的实际标签独立同分布。写 $r_a(t)=|h_{a3}(t)|^2$，停止概率为
+
+$$
+r_2(t)=\frac13\left|\cos^2t+\sqrt2\sin t\cos t\,e^{i\beta}\omega
+                         +\sin^2t\,\omega^2\right|^2,
+\qquad r_2(u)=\frac13.
+$$
+
+这里 $j-a=0-2\equiv1\pmod3$，固定了实际标签二对应的相位取向。为确认参数响应，令括号内的幅度除以 $\sqrt3$ 为 $f(t)$，则
+
+$$
+f(u)=\frac{1+\sqrt2 e^{i\beta}\omega+\omega^2}{2\sqrt3},\qquad
+f'(u)=\frac{-1+\omega^2}{\sqrt3},
+$$
+
+从而直接计算得
+
+$$
+\begin{aligned}
+r_2'(u)
+&=2\operatorname{Re}\bigl(\overline{f(u)}f'(u)\bigr)\\
+&=\frac{\sqrt2}{3}\left[\cos(2\pi/3-\beta)-\cos(2\pi/3+\beta)\right]\\
+&=\frac{2\sqrt2}{3}\sin\beta\sin(2\pi/3)=\frac{\sqrt{21}}6\ne0.
+\end{aligned}
+$$
+
+在 $u$ 处三个 $r_a$ 都为 $1/3$，故由连续性存在 $u$ 的双侧邻域 $J\subset I$，使每个 $t\in J$ 的三个概率都严格为正，特别是 $0<r_2(t)<1$。固定任意 $\theta\in J$。对于所有输入，两实验均有
+
+$$
+\Pr_{t,\rho}(T=n)=(1-r_2(t))^{n-1}r_2(t)\quad(n\ge1),\qquad
+\Pr_{t,\rho}(T>N)=(1-r_2(t))^N>0,
+$$
+
+以及
+
+$$
+m_t(\rho)=\sum_{k\ge1}(1-r_2(t))^{k-1}=\frac1{r_2(t)}<\infty.
+$$
+
+任意有限 $N$ 后仍有正尾概率，所以这里没有确定调用上限。更明确地，在终端历史 $(a_1,\ldots,a_{n-1},2)$ 的块内，其中各 $a_j\in\{0,1\}$，停止映射作用为
+
+$$
+X\longmapsto
+\left(\prod_{j=1}^{n-1}r_{a_j}(t)\right)r_2(t)
+\,WXW^\dagger\otimes|3\rangle\langle3|,
+$$
+
+继续与停止标志由这一历史确定。对所有这些块求和的总权重为一，因而这是保留完整历史及输入记忆的停止通道，并未只取最后一个标签或对某次成功归一化。
+
+预算与停放输入无关，故 $M_u=3$、$M_\theta=1/r_2(\theta)$ 在整个 $A$ 上统一成立。定理直接给出
+
+$$
+\|\mathcal S_\theta-\mathcal S_u\|_\diamond
+\le B\!\left(\sin^2(\theta-u)\sqrt{\frac3{r_2(\theta)}}\right).
+$$
+
+当 $\theta\to u$ 时右侧为 $O(|\theta-u|)$，在充分小的邻域内严格小于二。导数 $r_2'(u)\ne0$ 还表明同一停止规则在两端通常具有不同均值。这个例子由实际仪器标签触发停止，确实使用了有限均值而无确定上限的范围。
+
+上述比较始终是同一控制器下的 $\mathcal S_\theta$ 与 $\mathcal S_u$。即使单次 $\mathcal Q_u(X)=(I_C/3)\otimes X$，控制器仍可能测量输入、按历史更新记忆或改变停止概率，故不能据此把整个 $\mathcal S_u$ 换成未经证明的 $\tau\otimes\operatorname{id}$。两端有限均值是本定理的充分条件，不声称必要；本证明也不以一个均值或某条轨迹的调用次数代替显示的两法则预算。有正不终止概率的输入只得到次归一化的有限叶和，不能在删除不终止质量后称为这里的停止通道。
+
+保留实际历史不授予隐藏环境的访问权，装置内部对两份原始记录的联合访问也不给出 LOCC 结论。相关而非新鲜的环境、依赖实际参数的控制或改变确切 ket 代表相位，均需另行规定模型和证明；第 440 节的系统边际二次误差本身不能替代本节保留历史的误差。
+
+本节装置与相位计算的直接来源为[固定版本的本卷](https://github.com/the-omega-institute/trureturing/blob/513818b416f6a3a198a4f8216e019abe350df88e/docs/develop/theory/QUANTUM-REALITY.md)：定理 413.1 的平衡相位方程、定理 415.1 的完整四维三结果仪器、定义 440.1 与定理 440.2 证明中的确切幅度和交叠，以及定义、定理 73.2 的半 diamond 累加约定。
+
+交叠变化按查询逐项相消、以查询分量平方范数计费的先例见 Aleksandrs Belovs、Duyal Yolcu，[*One-Way Ticket to Las Vegas and the Quantum Adversary*, arXiv:2301.02003v1](https://arxiv.org/pdf/2301.02003v1)，Definition 4.1（PDF 第 12 页）及 Theorem 7.4、式 (7.4)（第 25 页）。共同膨胀的通道连续性工具见 Dennis Kretschmann、Dirk Schlingemann、Reinhard F. Werner，[*The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation*, quant-ph/0605009v1](https://arxiv.org/pdf/quant-ph/0605009v1)，第 6 页式 (15)–(18)。保真度与迹距离的一般关系见 Christopher A. Fuchs、Jeroen van de Graaf，[*Cryptographic Distinguishability Measures for Quantum Mechanical States*, quant-ph/9712042v2](https://arxiv.org/pdf/quant-ph/9712042v2)，Theorem 1、式 (46)（第 17 页）。这些是所用方法的先例；本节的完整停止输出界由上面的精确膨胀、秩二计算与迹类超时极限直接推出。
+
+## 追加锚（本行以下为增补区）
+
+## 442. 由有限控制器的名义证书取得完整停止输出预算
+
+第 441 节的完整停止输出界需要名义与实际两端的平均调用次数。本节固定第 440 节的装置，用一个有限活动空间上的名义算子不等式取得这两个预算，再直接代入定理 441.2。成本估计复用 [WAVE 卷第 68.1—68.3、70.1—70.2 条](https://github.com/the-omega-institute/trureturing/blob/fdde41e8bf565b35ce20bd7462d83e7b3a2c1b11/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md)的完整仪器漂移证书；装置、相位与停止输出均按[同一固定版本的本卷第 413、415、440、441 节](https://github.com/the-omega-institute/trureturing/blob/fdde41e8bf565b35ce20bd7462d83e7b3a2c1b11/docs/develop/theory/QUANTUM-REALITY.md)。
+
+**定义 442.1（固定装置与有限轮规则）。** 取 $S=\mathbb C^5$、$I=[\arctan(1/\sqrt2),\arctan\sqrt2]$，固定 $u\in I$ 及定理 413.1 在 $r=\tan u$ 给出的一个归一化平衡见证 $b$。完整采用定义 440.1 的确切 ket 代表 $q_i(t)$、制备 $J_t$、$b_a=D^ab$、四维原始记录空间 $R_2=(\mathbb C^2)^{\otimes2}$ 上的仪器及固定反馈 $U_a(u)$。特别地，实际 $Q_0$ 包括反对称方向，不能将装置改成只定义在三维制备像上的仪器。每次调用取迹量子 $R_2$，保留全部实际标签 $a=0,1,2$，得到
+
+$$
+\begin{aligned}
+\mathcal Q_t(X)&:=\mathcal Q_{u,t}(X)
+ =\sum_{a=0}^2|a\rangle\langle a|_C\otimes A_a(t)XA_a(t)^\dagger,
+ &C&=\mathbb C^3,\\
+A_a(t)&=U_a(u)\operatorname{diag}_{i=1}^5\langle b_a|q_i(t)\rangle,
+ &\sum_a A_a(t)^\dagger A_a(t)&=I_S,\qquad A_a(u)=I_S/\sqrt3.
+\end{aligned}
+$$
+
+这些恒等式及对任意未操作参考的有效性来自定理 415.1 和定义 440.1。各次调用使用新鲜隐藏环境；已取迹的量子记录与隐藏 Kraus 指标不再可访问。两参数下使用同一个控制器，其规则可依赖固定的 $u,b$，不依赖实际参数 $t$。
+
+固定一个有限维完整活动空间 $A$，包含查询系统 $S$、全部可变初始记忆以及后续会重读的所有有限控制摘要。输入允许 $A$ 上任意密度算子及其与任意有限维未操作参考 $F$ 的纠缠。每轮的共同前处理、后处理均完全正保迹，借助一个固定有限维辅助空间 $K$ 恰好调用一次 $\mathcal Q_t$，形成同一有限结果完整仪器
+
+$$
+\begin{aligned}
+\Gamma_t&=\mathcal R\circ(\mathcal Q_t\otimes\operatorname{id}_K)\circ\mathcal P,\\
+\Gamma_t(X)&=\bigoplus_{z\in Z}\mathcal N_{t,z}(X)
+                  \ \oplus\ \bigoplus_{y\in Y}\mathcal E_{t,y}(X),\\
+\mathcal N_{t,z}&:\mathcal L(A)\longrightarrow\mathcal L(A),
+&\mathcal E_{t,y}&:\mathcal L(A)\longrightarrow\mathcal L(M_y).
+\end{aligned}
+$$
+
+这里 $Z,Y$ 为固定有限标签集，$M_y$ 有限维；每个标签包含该轮实际 $a$、控制器实际测量结果及继续或停止标志，包括零概率标签。全部分支完全正，其完整直和保迹，终端集合 $Y$ 包含每一种失败和成功。共同的 $\mathcal P,\mathcal R$ 包含该轮的有限控制与记录操作，每轮在所有分支上有限完成。继续分支将全部仍可操作的量子记忆和有限摘要送回 $A$；终端分支保留全部最终可访问记忆，此后不再操作。
+
+每轮将实际结果按顺序追加到经典档案。旧档案始终保留，但下一轮只读取 $A$ 中的摘要与记忆，不重读旧档案；同一 $\Gamma_t$ 因而在每轮重复使用。所有会改变下一轮规则的可变数据都必须包括在 $A$ 内。只为成本计算记
+
+$$
+\mathcal N_t=\sum_{z\in Z}\mathcal N_{t,z}.
+$$
+
+从活动入口开始计数，每完成一轮计一次装置调用；$T\in\{1,2,\ldots,\infty\}$。完整停止映射 $\mathcal S_t$ 仍按定义 441.1 取全部终端历史的无条件直和。具体地，若 $h=(z_1,\ldots,z_n)$ 是继续历史，则终端块 $(h,y)$ 的映射为
+
+$$
+\mathcal S_{t,(h,y)}
+ =\mathcal E_{t,y}\circ\mathcal N_{t,z_n}\circ\cdots\circ\mathcal N_{t,z_1},
+\qquad n\ge0,
+$$
+
+空继续历史对应 $\mathcal E_{t,y}$，其调用数为一。块标签保留整个有序档案，块内保留 $M_y$；对所有 $h,y$ 求和不删除失败叶，也不作停止或成功的条件归一化。记
+
+$$
+\sigma_t(\rho)=(\operatorname{id}_F\otimes\mathcal S_t)(\rho_{FA}),\qquad
+m_t(\rho)=\mathbb E_{t,\rho}T.
+$$
+
+**命题 442.2（名义有限证书给出第 441 节的两端预算）。** 在定义 442.1 下，设 $W$ 是 $A$ 上的正半定算子，$\mathcal N_u^*$ 表示迹配对伴随，并满足单位漂移条件
+
+$$
+W-\mathcal N_u^*(W)\ge I_A.
+$$
+
+固定 $\theta\in I$，置
+
+$$
+w=\|W\|,\qquad L=2\sqrt2\,|\sin(\theta-u)|,\qquad
+c=1-\frac{wL}{2}>0,\qquad x=\sin^2(\theta-u),
+$$
+
+其中 $\|W\|$ 是算子范数。对每个 $\rho=\rho_{FA}$，令 $\rho_A=\operatorname{Tr}_F\rho$、$v=\operatorname{Tr}(W\rho_A)$，则
+
+$$
+\boxed{\quad m_u(\rho)\le v,\qquad m_\theta(\rho)\le\frac vc.\quad}
+$$
+
+因而两端均几乎必然停止，整个输入域上的统一预算可取 $M_u=w$、$M_\theta=w/c$。沿用定理 441.2 的函数，明确记作
+
+$$
+B_{441}(q)=
+\begin{cases}
+2\sqrt{2q-q^2},&0\le q\le1,\\
+2,&q>1,
+\end{cases}
+$$
+
+则完整停止输出满足未折半的界
+
+$$
+\boxed{\quad
+\|\sigma_\theta(\rho)-\sigma_u(\rho)\|_1
+ \le B_{441}\!\left(\frac{xv}{\sqrt c}\right),\qquad
+\|\mathcal S_\theta-\mathcal S_u\|_\diamond
+ \le B_{441}\!\left(\frac{xw}{\sqrt c}\right).
+\quad}
+$$
+
+这里的 diamond 范数与定义 441.1 相同，覆盖任意有限参考和任意输入矩阵；两停止映射均为到完整历史直和空间的正规完全正保迹映射。
+
+证明。先核对成本边际与真实历史。对固定 $t$ 和输入 $\rho_{FA}$，记 $\rho_{t,h}$ 为完成 $n$ 轮后仍活动、具有继续历史 $h\in Z^n$ 的未归一化 $FA$ 态，$\rho_{t,\emptyset}=\rho$。旧档案不参与下一轮，所以
+
+$$
+\rho_{t,hz}=(\operatorname{id}_F\otimes\mathcal N_{t,z})(\rho_{t,h}).
+$$
+
+在 $n=0$ 时，取迹空档案得到 $\rho$。若取迹 $n$ 轮档案所得为 $\sum_{h\in Z^n}\rho_{t,h}$，则下一轮的有限分支和给出
+
+$$
+\sum_{h\in Z^n,z\in Z}\rho_{t,hz}
+=(\operatorname{id}_F\otimes\mathcal N_t)
+  \left(\sum_{h\in Z^n}\rho_{t,h}\right).
+$$
+
+因此有限前缀归纳得到
+
+$$
+\operatorname{Tr}_{\mathrm{archive}}
+ \left(\bigoplus_{h\in Z^n}\rho_{t,h}\right)
+=(\operatorname{id}_F\otimes\mathcal N_t^n)(\rho),\qquad
+\Pr_{t,\rho}(T>n)
+=\operatorname{Tr}\bigl[(\operatorname{id}_F\otimes\mathcal N_t^n)(\rho)\bigr].
+$$
+
+这同时保留了与 $F$ 的关联。求总迹后也等于 $\operatorname{Tr}\mathcal N_t^n(\rho_A)$，故实际生存概率和均值只依赖 $\rho_A$。此处取迹仅用于识别成本法则；待比较的 $\mathcal S_t$ 仍保留每一个历史块，不能用这个边际替换。
+
+定理 440.2 证明中选择的是固定目标 $\mathcal Q_u(X)=(I_C/3)\otimes X$，其共同幅度计算直接给出
+
+$$
+\|\mathcal Q_\theta-\mathcal Q_u\|_\diamond\le L.
+$$
+
+这比只知道对所有 $\tau\otimes\operatorname{id}$ 取下确界的记录误差更具体。共同 CPTP 前后处理及辅助恒等映射的 diamond 收缩性于是给出完整轮仪器的校准
+
+$$
+\delta_\Gamma:=\frac12\|\Gamma_\theta-\Gamma_u\|_\diamond\le\frac L2.
+$$
+
+半因子使用的是完整仪器：在其每个继续块放置效果 $W/w$，所有终端块放零，所得 $E_W$ 满足 $0\le E_W\le I$。两完整输出态之差为迹零 Hermitian 算子，故对每个输入态 $\eta$，
+
+$$
+\left|\operatorname{Tr}\bigl[E_W(\Gamma_\theta-\Gamma_u)(\eta)\bigr]\right|
+\le\frac12\|(\Gamma_\theta-\Gamma_u)(\eta)\|_1
+\le\delta_\Gamma.
+$$
+
+其中 $w\ge1$，因为单位漂移与 $\mathcal N_u^*(W)\ge0$ 蕴含 $W\ge I_A$。上述效果正是 WAVE 第 70.2 条证明使用的继续后继效果；半因子不是把一个迹不增继续映射的范数界任意除以二。
+
+现在直接应用 WAVE 定理 70.2：在每个活动历史只有定义 442.1 这一轮规则，继续标签为 $z$，后继为 $hz$，取常值证书族 $B_h=W$、统一上界 $b_{\mathrm{WAVE}}=w$、名义余量 $\varepsilon=1$。各历史的名义后继和恰为 $\sum_z\mathcal N_{u,z}^*(W)=\mathcal N_u^*(W)$，完整仪器的半 diamond 校准可统一取 $\delta=L/2$。这逐项履行定义 70.1，而其成本一次恰为本节的一次 $\mathcal Q_t$ 调用。定理给出实际均值 $m_\theta(\rho_A)\le\operatorname{Tr}(W\rho_A)/c$；在名义仪器与自身的比较中取 $\delta=0$，同一定理给 $m_u(\rho_A)\le\operatorname{Tr}(W\rho_A)$。上面的历史归纳使这些就是完整过程的均值。张量任意 $I_F$ 后证书、算子范数上界与校准界也不变，因而没有遗漏纠缠参考或变量初始记忆。
+
+至此两端有限均值已由证书推出，不再是额外的实际终止假设。由 $v\le w$ 得全输入统一预算。把
+
+$$
+\sqrt{m_u(\rho)m_\theta(\rho)}\le\frac v{\sqrt c},\qquad
+\sqrt{M_uM_\theta}=\frac w{\sqrt c}
+$$
+
+代入定理 441.2，并用 $B_{441}$ 的单调性，即得两项完整停止输出界及停止通道的正规保迹性。证毕。
+
+**例 442.3（保持未知系统的模式 01 证书）。** 取 $A=\mathbb C^2_{\mathrm{mode}}\otimes S$。每轮先在指定基 $\{|0\rangle,|1\rangle\}$ 中测量模式，并将实际模式结果 $m$ 归档；随后对同一个 $S$ 调用 $\mathcal Q_t$，归档全部实际 $a$，按下表更新模式或停止：
+
+| 本轮测得的模式 | $a=0$ | $a=1$ | $a=2$ |
+|---|---|---|---|
+| $m=0$ | 继续，模式置 $1$ | 继续，模式置 $0$ | 继续，模式置 $0$ |
+| $m=1$ | 继续，模式置 $1$ | 停止，保留模式 $1$ | 继续，模式置 $0$ |
+
+从模式 $0$ 出发，这识别连续设备标签中的模式 $01$；表中规则也定义了所有模式初态。停止输出保留全部模式测量、设备标签、继续和停止标志以及最终模式和 $S$。$S$ 是跨轮持续保留的任意未知输入，不重置为已知探针，并允许初态在模式、$S$ 与参考之间纠缠。
+
+校准处每个实际设备分支都是 $X\mapsto X/3$。对任意块矩阵 $X=\sum_{m,n=0}^1|m\rangle\langle n|\otimes X_{mn}$，显式模式测量先消去 $m\ne n$ 的块；由表中全部继续分支得到
+
+$$
+\mathcal N_u(X)
+=|0\rangle\langle0|\otimes\frac{2X_{00}+X_{11}}3
+ +|1\rangle\langle1|\otimes\frac{X_{00}+X_{11}}3.
+$$
+
+于是取
+
+$$
+W=\operatorname{diag}(9,6)\otimes I_S
+$$
+
+便有完整算子恒等式
+
+$$
+\begin{aligned}
+\mathcal N_u^*(W)
+ &=\operatorname{diag}\!\left(\frac{2\cdot9+6}3,
+                              \frac{9+6}3\right)\otimes I_S
+ =\operatorname{diag}(8,5)\otimes I_S,\\
+W-\mathcal N_u^*(W)&=I_A,\qquad \|W\|=9.
+\end{aligned}
+$$
+
+该计算对任意 $X$ 成立；初始模式非对角块确由协议中的实际测量消去，因此并未把算子证书限于经典模式混合。张量任意参考后同样成立。若
+
+$$
+c=1-9\sqrt2\,|\sin(\theta-u)|>0,
+$$
+
+命题 442.2 给出统一预算 $M_u=9$、$M_\theta=9/c$ 及
+
+$$
+\|\mathcal S_\theta-\mathcal S_u\|_\diamond
+\le B_{441}\!\left(\frac{9\sin^2(\theta-u)}{\sqrt c}\right).
+$$
+
+失配处各设备标签的条件概率可以随未知 $S$ 及已发生历史而改变；此结论使用完整仪器证书，没有假设这些标签独立同分布。
+
+**边界例 442.4（一个已制备输入的有限均值不足）。** 另取模式 $g,\mathrm{bad}$ 与同一个 $S$，每轮实际测量并记录模式。模式 $g$ 中先调用 $\mathcal Q_t$ 并归档 $a$，随后作二结果投影测量
+
+$$
+P_-=|\psi_-\rangle\langle\psi_-|,\qquad I_S-P_-,\qquad
+|\psi_\pm\rangle=\frac{|1\rangle\pm|3\rangle}{\sqrt2}.
+$$
+
+记录测量结果，停止时保留模式和测量后的 $S$；得到 $P_-$ 就进入 $\mathrm{bad}$，否则停止。在 $\mathrm{bad}$ 中每轮继续调用同一装置、归档实际结果并留在 $\mathrm{bad}$，永不停止。取初态 $|g\rangle\otimes|\psi_+\rangle$。
+
+定义 440.1 的实际系统边际 $\Phi_{u,\theta}=\operatorname{Tr}_C\mathcal Q_\theta$ 保持 $|1\rangle,|3\rangle$ 的布居，并将两者的相干元乘以 $1-x$，这是定理 440.2 证明中的极点—纬线交叠计算。因此在这两个基向量上，
+
+$$
+\Phi_{u,\theta}(|\psi_+\rangle\langle\psi_+|)
+=\frac12\begin{pmatrix}1&1-x\\1-x&1\end{pmatrix},\qquad
+\Pr_\theta(\text{进入 }\mathrm{bad})
+=\operatorname{Tr}\!\left[P_-\Phi_{u,\theta}(|\psi_+\rangle\langle\psi_+|)\right]
+=\frac x2.
+$$
+
+这里对全部实际 $a$ 求和只是计算一个不按 $a$ 区分的事件概率；输出档案仍保留各 $a$，没有选取某个设备标签作条件化。在 $t=u$ 时该已制备输入必在一次调用后停止，均值为一；任意 $x>0$ 时却以概率 $x/2$ 永久进入坏模式，实际均值为无穷。
+
+这不满足命题 442.2 的全输入名义证书。事实上，名义坏模式输入 $\eta=|\mathrm{bad}\rangle\langle\mathrm{bad}|\otimes|1\rangle\langle1|$ 已满足 $\mathcal N_u(\eta)=\eta$；若有单位漂移证书，则
+
+$$
+1\le\operatorname{Tr}\bigl[(W-\mathcal N_u^*(W))\eta\bigr]
+=\operatorname{Tr}\bigl[W(\eta-\mathcal N_u(\eta))\bigr]=0,
+$$
+
+矛盾。对一个指定制备的名义均值估计，因而不能替代覆盖全部活动输入方向的算子条件。
+
+本节的有限证书只要求核对给定有限轮仪器的完备性、共同单次调用实现和一个有限维算子不等式；常值历史证书由这些条件统一产生。该范围不包括第 441 节允许的任意可数分支、无统一历史记忆维数的控制器，也不把未指定的无限历史证书族说成有限可核对。所给正余量是充分条件，不提供必要性、最优半径或证书搜索的效率保证。原始装置仍使用两份记录的联合访问，不由此推出 LOCC 实现；未知输入、全部实际停止历史与未操作参考均在显示的比较范围内。
+
+## 追加锚（本行以下为增补区）

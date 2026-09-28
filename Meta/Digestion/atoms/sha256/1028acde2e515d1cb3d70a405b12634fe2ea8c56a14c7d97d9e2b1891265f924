@@ -1,0 +1,2 @@
+项目 [TotalVariation/DataProcessing](../../../D5/S3/TotalVariation/DataProcessing.lean) 的后处理不增关系可直接用于此处：将任一生成器的 $R,T_i$ 都送入同一 $K_{12}$，新增边缘的 TV 不增；对联合输出施加 $\operatorname{id}_Y\times K_{12}$，实际旧记录保留，联合 TV 也不增。故旧族的每个可行预算都有新族的可行生成器，且新最优值不更大。命题 551.1 则在这个特定族内给出更强的等号：全部擦除率与预算的最优值实际上相同。证毕。
+

@@ -1,0 +1,6 @@
+**定义 625.2（项目证书接口的准确对应）。** 项目 [LinearObjectiveDual](../../../D5/S0/Certificates/LinearObjectiveDual.lean) 的 UpperBoundCertificate 要求非负行权重、加权行恰为目标、加权右端不超过所报上界；PrimalWitness 要求实际可行点与目标值相等。其 exact_upper_bound_of_certificate_and_witness 正好把两项合成精确端点。
+
+在本批参数全为有理数时，约束索引取上述 $n+10$ 行，变量索引取三个坐标，系数取 $A$、右端取 $b(h)$、目标取 $c$，就得到该接口的逐项数据对应。这个接口只接受有理数；任意实参数下的正文推导不能直接冒充它的一次实例。另一方面，[FiniteStrongDuality](../../../D5/S3/Analytic/Convexity/FiniteStrongDuality.lean) 的 ValidELP.strong_duality_of_both_feasible 对有效的有限扩展线性规划，以原始与对偶都可行为条件，给出有限的相反目标值及达到见证。它与前一个接口承担的职责不同：检查给定证据，不等于证明所有问题都有这样的证据。
+
+本批使用这些源码确认项目已有的关系和边界，不新增包装声明。源码阅读与数学上的参数对应，不是本批已完成 Lean 编译或公理闭包核验的声称。
+

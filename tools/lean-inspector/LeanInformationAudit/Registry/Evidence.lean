@@ -615,13 +615,23 @@ private structure Snapshot where
   inputs : Array SourceInput
   data : ModuleData
 
-private def parseHash (text : String) : Except String UInt64 := do
-  unless text.utf8ByteSize == 16 do throw "incomplete_closure:E7.native_trace_hash"
-  text.toUTF8.foldlM (init := 0) fun result byte => do
-    let digit ← if 48 ≤ byte && byte ≤ 57 then pure (byte - 48) else
-      if 97 ≤ byte && byte ≤ 102 then pure (byte - 87)
-      else throw "incomplete_closure:E7.native_trace_hash"
-    return result * 16 + digit.toUInt64
+-- Decode the fixed-width lowercase wire hash without allocating a monadic
+-- UInt64 fold step for every digit. Prefixes are exact Naturals; conversion at
+-- the end has the same modulo-2^64 result as the original UInt64 arithmetic.
+private def parseHash (text : String) : Except String UInt64 :=
+  if text.utf8ByteSize != 16 then .error "incomplete_closure:E7.native_trace_hash"
+  else
+    let bytes := text.toUTF8
+    let rec loop : Nat → Nat → Nat → Except String UInt64
+      | 0, _, result => .ok result.toUInt64
+      | remaining + 1, index, result =>
+        let byte := bytes[index]!
+        if 48 ≤ byte && byte ≤ 57 then
+          loop remaining (index + 1) (result * 16 + (byte - 48).toNat)
+        else if 97 ≤ byte && byte ≤ 102 then
+          loop remaining (index + 1) (result * 16 + (byte - 87).toNat)
+        else .error "incomplete_closure:E7.native_trace_hash"
+    loop 16 0 0
 
 private def binaryHash (bytes : ByteArray) : UInt64 := mixHash 1723 (hash bytes)
 private def textHash (text : String) : UInt64 := mixHash 1723 (hash text.crlfToLf)

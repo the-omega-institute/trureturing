@@ -1,0 +1,22 @@
+**定理 684.2（全切片锐利界）。** 若 $\tau_{\mathcal F}>0$，则对 $M<t\le1$ 和全部满足 $R_\circ=b/t$ 的原始行，
+
+$$
+\boxed{\operatorname{TV}(R,R^{(t)})
+\le\frac{1}{t\tau_{\mathcal F}}
+\bigl[\Phi_t^{\mathcal F}(R)-cE\bigr].}
+$$
+
+该系数最小，且不要求标签残余落在箱体内。
+
+证明：每个状态的正部至少为被排除标签的有符号和。因此置 $h_i=a_i-E/n$ 后，有
+
+$$
+\Phi_t^{\mathcal F}(R)-cE\ge g_{\mathcal F}(h)
+\ge\tau_{\mathcal F}\frac12\sum_i|h_i|
+=t\tau_{\mathcal F}\operatorname{TV}(R,R^{(t)}).
+$$
+
+取达到模量最小值的单位方向 $h$，再令 $a_i=E/n+sh_i$、$a_\circ=0$。足够小的 $s>0$ 保证箱体内部与概率合法性；这时所有事件下界都成为精确表达，差额为 $s\tau_{\mathcal F}$，而 $t\operatorname{TV}=s$，故取得所列比值。证毕。
+
+若平衡但模量为零，第 682 节已经给出不同的最优行，因而不存在有限系数用目标超额控制到这个特定中心的距离。仍可另问到整个最优集合的距离；那是另一项误差界，不应把失败的单点结论改名后当作已经证明。
+
