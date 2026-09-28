@@ -1,0 +1,74 @@
+{
+  "existing_X_cubic_upper": "87660407/1116882",
+  "method": "Same uniform pruned315 source; D2 at h=t^3; J3 from all sorted-histogram pairs.",
+  "ordinary_finite_verification_not_Lean": true,
+  "rows": [
+    {
+      "cubic_upper": "19573/256",
+      "distinct_sorted_histograms": 170,
+      "minimum_scaled_D2_slack": 27,
+      "old_survivors": 17,
+      "previous_grid_value": "4893/64",
+      "query_layouts": 4760,
+      "scope": "Upper certificate from D2 and sorted old-query coupling; no sharpness assertion.",
+      "shape": "root1_same_other_column",
+      "sorted_histogram_pairs": 28900
+    },
+    {
+      "cubic_upper": "19063/256",
+      "distinct_sorted_histograms": 135,
+      "minimum_scaled_D2_slack": 48,
+      "old_survivors": 17,
+      "previous_grid_value": "9531/128",
+      "query_layouts": 4760,
+      "scope": "Upper certificate from D2 and sorted old-query coupling; no sharpness assertion.",
+      "shape": "root1_other_same_column",
+      "sorted_histogram_pairs": 18225
+    },
+    {
+      "cubic_upper": "19063/256",
+      "distinct_sorted_histograms": 179,
+      "minimum_scaled_D2_slack": 48,
+      "old_survivors": 17,
+      "previous_grid_value": "9531/128",
+      "query_layouts": 4760,
+      "scope": "Upper certificate from D2 and sorted old-query coupling; no sharpness assertion.",
+      "shape": "root1_other_other_column",
+      "sorted_histogram_pairs": 32041
+    },
+    {
+      "cubic_upper": "9643/128",
+      "distinct_sorted_histograms": 139,
+      "minimum_scaled_D2_slack": 50,
+      "old_survivors": 16,
+      "previous_grid_value": "19285/256",
+      "query_layouts": 4480,
+      "scope": "Upper certificate from D2 and sorted old-query coupling; no sharpness assertion.",
+      "shape": "root2_same_other_column",
+      "sorted_histogram_pairs": 19321
+    },
+    {
+      "cubic_upper": "9671/128",
+      "distinct_sorted_histograms": 131,
+      "minimum_scaled_D2_slack": 40,
+      "old_survivors": 16,
+      "previous_grid_value": "19341/256",
+      "query_layouts": 4480,
+      "scope": "Upper certificate from D2 and sorted old-query coupling; no sharpness assertion.",
+      "shape": "root2_other_same_column",
+      "sorted_histogram_pairs": 17161
+    },
+    {
+      "cubic_upper": "9671/128",
+      "distinct_sorted_histograms": 162,
+      "minimum_scaled_D2_slack": 40,
+      "old_survivors": 16,
+      "previous_grid_value": "19341/256",
+      "query_layouts": 4480,
+      "scope": "Upper certificate from D2 and sorted old-query coupling; no sharpness assertion.",
+      "shape": "root2_other_other_column",
+      "sorted_histogram_pairs": 26244
+    }
+  ],
+  "uniform_cubic_upper": "19573/256"
+}

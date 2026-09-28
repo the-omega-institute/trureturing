@@ -1,0 +1,43 @@
+{
+  "evidence": "Ordinary proof and exact rational verification, not new Lean verification.",
+  "joint_star_mass_lower": "37/60",
+  "method": "Same fixed weights and t=2 across all100 inventory vertices; separate concavity and thinning to each actual profile own budget majorant. No mixture of corner carriers.",
+  "mixed_support_union_cap": "7/60",
+  "paired_score_lower": "1/700",
+  "primes": [
+    5,
+    7
+  ],
+  "query_upper": "9651/3220",
+  "query_upper_decimal": 2.997204968944099,
+  "scope": "All actual star profiles of the retained five-leaf interface, all finite nonternary heights, whole original ternary height<=2. This is a5x7 source/query interface, not the completed nine-prime continuation.",
+  "source_mass_lower": "1/2",
+  "threshold": 2,
+  "vertex_count": 100,
+  "weights": [
+    "1/4",
+    "1/4",
+    "1/6",
+    "1/6",
+    "1/6"
+  ],
+  "worst_vertex": {
+    "owners": [
+      9,
+      1
+    ],
+    "paired_score": "1/700",
+    "query_hinge_upper": "6431/6300",
+    "root_leaf_owners": [
+      [
+        1,
+        4
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "source_lower": "23/45"
+  }
+}
