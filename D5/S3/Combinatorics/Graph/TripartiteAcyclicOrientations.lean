@@ -261,13 +261,13 @@ theorem result : claim := by
     have hSP : ∀ d, P d → P (S d) := by
       intro d ⟨ho, hac⟩
       refine ⟨fun a b => ?_, fun x hx => ?_⟩
-      · show d (sw a) (sw b) = true ↔ G.Adj a b ∧ d (sw b) (sw a) = false
+      · change d (sw a) (sw b) = true ↔ G.Adj a b ∧ d (sw b) (sw a) = false
         rw [ho, autAdj]
       · exact hac (sw x) (Relation.TransGen.lift sw (fun a b h => h) x x hx)
     have hRP : ∀ d, P d → P (R d) := by
       intro d ⟨ho, hac⟩
       refine ⟨fun a b => ?_, fun x hx => ?_⟩
-      · show d b a = true ↔ G.Adj a b ∧ d a b = false
+      · change d b a = true ↔ G.Adj a b ∧ d a b = false
         rw [ho, G.adj_comm]
       · exact hac x (Relation.transGen_swap.mp hx)
     have hSS : ∀ d, S (S d) = d := by
@@ -347,10 +347,10 @@ theorem result : claim := by
         simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hd
         simp only [X, Finset.mem_filter, Finset.mem_univ, true_and]
         refine ⟨⟨fun a b => ?_, fun x hx => ?_⟩, ?_⟩
-        · show d (φ a) (φ b) = true ↔ G.Adj a b ∧ d (φ b) (φ a) = false
+        · change d (φ a) (φ b) = true ↔ G.Adj a b ∧ d (φ b) (φ a) = false
           rw [hd.1 (φ a) (φ b), adjφ]; rfl
         · exact hd.2 (φ x) (Relation.TransGen.lift φ (fun a b h => h) x x hx)
-        · funext a b; show d (φ (sw a)) (φ (sw b)) = d (φ a) (φ b); rw [φsw, φsw]
+        · funext a b; change d (φ (sw a)) (φ (sw b)) = d (φ a) (φ b); rw [φsw, φsw]
       · intro d hd
         simp only [X, Finset.mem_filter, Finset.mem_univ, true_and] at hd
         obtain ⟨⟨ho, _⟩, hS⟩ := hd
@@ -361,7 +361,7 @@ theorem result : claim := by
           · exact absurd (ho a b |>.mp hx).1 h
         have fixed : ∀ a b, d (sw a) (sw b) = d a b := fun a b => congrFun (congrFun hS a) b
         funext a b
-        show d (φ a).1 (φ b).1 = d a b
+        change d (φ a).1 (φ b).1 = d a b
         rw [φval, φval]
         by_cases ha : a = v <;> by_cases hb : b = v
         · simp only [if_pos ha, if_pos hb]
@@ -387,7 +387,7 @@ theorem result : claim := by
           apply Subtype.ext; rw [φval]; simp [show x.1 ≠ v from x.2]
         have hy : φ y.1 = y := by
           apply Subtype.ext; rw [φval]; simp [show y.1 ≠ v from y.2]
-        show d (φ x.1) (φ y.1) = d x y
+        change d (φ x.1) (φ y.1) = d x y
         rw [hx, hy]
     have split := Finset.card_filter_add_card_filter_not (s := X) (fun d => S d = d)
     have hX : acyclicOrientationCount G =
