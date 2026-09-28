@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6d397f30b22df0ab018f551d7cd609c8027b3bad4b95815dd3b5004a9910d2bf
+  normalized_sha256: sha256:6d397f30b22df0ab018f551d7cd609c8027b3bad4b95815dd3b5004a9910d2bf
+cas_ref: sha256:6d397f30b22df0ab018f551d7cd609c8027b3bad4b95815dd3b5004a9910d2bf
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/CompressedPowerDefect.compressed_power_defect
+    target_statement_id: sha256:009e0fd1834e4b53c8f7ae88c2e458afa03fcd24d42cca5f4c00dd34a97d92ea
+receipts:
+  unresolved_subitems: []

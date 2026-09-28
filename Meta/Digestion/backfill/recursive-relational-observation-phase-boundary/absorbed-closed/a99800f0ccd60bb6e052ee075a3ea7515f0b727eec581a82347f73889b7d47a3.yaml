@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a99800f0ccd60bb6e052ee075a3ea7515f0b727eec581a82347f73889b7d47a3
+  normalized_sha256: sha256:a99800f0ccd60bb6e052ee075a3ea7515f0b727eec581a82347f73889b7d47a3
+cas_ref: sha256:a99800f0ccd60bb6e052ee075a3ea7515f0b727eec581a82347f73889b7d47a3
+coverage_gids:
+  - gid: D5/S3/Estimation/ErrorExponents/ProbeThresholdOptimization.probe_threshold_optimization
+    target_statement_id: sha256:b46eeaade6dc8da08a45da1e5c6660eba15cdb492fe9b20ad36e4bc74e9e6661
+receipts:
+  unresolved_subitems: []

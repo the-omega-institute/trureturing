@@ -1,0 +1,19 @@
+**定理 44.3（离散压缩响应）。** 交换子展开给
+$$
+[P,S^k]=\sum_{j=0}^{k-1}S^j[P,S]S^{k-1-j},
+\qquad
+\|QS^kF^*\|\le k b^{k-1}\ell\quad(k\ge1).
+$$
+交换子求和由 $[P,XY]=[P,X]Y+X[P,Y]$ 归纳成立；又 $Q[P,S^k]F^*=-QS^kF^*$，从而每项范数至多 $b^{k-1}\ell$。置 $E_n=FS^nF^*-A^n$。由 $FF^*=I_E$ 及 $A=FSF^*$，端点 $E_0=E_1=0$。对 $n\ge2$ 插入 $P+Q$，得到
+$$
+E_n=AE_{n-1}+FSQ\,S^{n-1}F^*,\qquad E_1=0.
+$$
+因此
+$$
+\|E_n\|\le b\|E_{n-1}\|+(n-1)b^{n-2}\delta,
+$$
+归纳中 $E_1=0$，而 $b\binom{n-1}{2}b^{n-3}\delta+(n-1)b^{n-2}\delta=\binom n2 b^{n-2}\delta$，故得到
+$$
+\boxed{\|FS^nF^*-A^n\|
+\le {n\choose2}b^{n-2}\delta,\qquad n\ge2.}
+$$

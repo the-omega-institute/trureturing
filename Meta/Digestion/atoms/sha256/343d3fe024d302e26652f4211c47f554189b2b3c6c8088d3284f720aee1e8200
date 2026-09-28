@@ -1,0 +1,10 @@
+更精确地，在正向平稳路径下置
+$\ell_t=\log(nP_{b_z}(X_t,X_{t+1}))$，以及
+
+$$
+J=\frac{\xi(r)-k\xi(r/k)}n\le0,
+\qquad
+v=\frac{\psi(r)+k\psi(r/k)}n-I^2.
+\tag{11.4}
+$$
+

@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:4d9a97eee8b40685ef61086937b9c76fa3e6592d73e5bfc462c81aa9e9e16ce2
   normalized_sha256: sha256:4d9a97eee8b40685ef61086937b9c76fa3e6592d73e5bfc462c81aa9e9e16ce2
 cas_ref: sha256:4d9a97eee8b40685ef61086937b9c76fa3e6592d73e5bfc462c81aa9e9e16ce2
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Estimation/ErrorExponents/SymmetricBinomialChiSquare.symmetric_binomial_chi_square
+    target_statement_id: sha256:dd80a45ebd9c95fe140461d0eda1b05b53decf976aa89564665ae819a7e383aa
 receipts:
   unresolved_subitems: []
