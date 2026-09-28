@@ -1688,3 +1688,657 @@ $$
 每项损失与查询分子均向上取整到百万分之一后，最小严格 slack 仍为 `0.007424`。因此这 22 个来源共覆盖 `22×280⁵=37,862,809,600,000` 个后续标签元组。与前述 255 个统一来源、旧来源及 Q/Q′ 的范围合并，恰好补齐该固定 A1 节点的 280 个第一标签；各范围互不重叠，合共覆盖 $280^6=481\,890\,304\,000\,000$ 份完整六标签参数。
 
 完整输入、精确算术消费者及固定输入整数几何重放程序见[实验包及证明说明](../../../frontier/cover-geometry/finite-prefix-sources/missing23-xi7-remaining/README.md)与[精确路由核对](../../../frontier/cover-geometry/finite-prefix-sources/missing23-xi7-remaining/verify.py)。算术检查支持正常模式与 `-O`；整数几何重建另行核对。这是上述固定有限节点与阈值内的普通数学及计算证据，不计作新增 Lean 核验，也不扩张为其他 A1 节点或无界 Erdős #7 的结论。
+
+## 同一来源上的顶点运输与连续参数边
+
+The all-$280^6$ certificate above also applies to the source row $z=22$ and to the declared continuous edge between rows13 and22. This uses the same fixed chart $(a,b,c,r,d,k)=(2,4,1,8,2,1)$, caps, thresholds $(2,4,4,8,8,16)$ and query16. The current result does not supply all other source-budget vertices.
+
+The source is Schroeder, *Nine Prime Divisors in Odd Distinct Covering Systems*, edition1.0.1, Sections5 and9 and the terminal-state normalization in Section10; the [library entry](../../../../../../Library/Arith/schroeder2026nine.md) records its provenance. The inspected `paper/main.tex` has SHA256 `73f78621a297650176cb796f763b9279eae9533efedbbb58405efc885ef41bb9`. Its explicit vertex interpolation and compatible-screening arguments are reused here for the stated missing23 schedule, with the vertex inequalities supplied by the preceding packages. The original seven-core/query12 theorem and the missing19/query18 certificate do not supply missing23/query16 vertex inequalities merely by substitution.
+
+The physical domain remains $\Xi^6$, where $\Xi=\{1,2\}\times\{1,2,3,4\}\times\{2,4,5,7,8\}\times\{1,4,7,8,11,13,14\}$. Original terminal names A1 and B1 distinguish first-seven projections at the same budget vertex, so both are included in this domain. A3 and B3 use budget column $j=3$ and are not covered on that account.
+
+### One fixed common comparison functional
+
+Fix one actual completed family, its source chart and six physical projections,
+and fix its actual padded kernels before any complete query is supplied. The
+numerical weight interpolation below evaluates upper comparisons of this fixed
+construction; it does not choose a new probability or actual kernel at a vertex.
+
+On the fixed carrier
+
+    C={x mod135: x mod3!=0, x mod9!=1, x mod27!=4,
+                 x mod5!=0, x mod15!=2, x mod45!=8},
+
+there are44 cells. The continuous comparison parameters are
+
+    z_h>=0, sum_h z_h=1/2,
+    h in {2,5,7,8,11,13,14,16,17,20,22,23,25,26};
+    t_j>=0, sum_(j=1..4)t_j=1/20, 0<=e<=t_1.
+
+Put `B={x in C:x mod3=2,x mod5=1}` and `D_j=(1/5)1_(j=1)+t_j`.
+The zero-depth factors are
+
+    A3(x)=2/3-z_(x mod27),
+    A5(x)=4/5-D_(x mod5)-(1/5-e)1_B(x).
+
+In each of four zero/positive-depth regions use `A3*A5`, `A3`, `A5` or1,
+respectively. Positive depth masses `2/3^(u+1)` and `4/5^(v+1)` do not depend on
+these budgets. These are comparison weights, not indicators of an actual
+survivor set. The common finite carrier is C throughout; no union or intersection
+of two unrelated actual source survivor sets is used. Deeper source exclusions
+and the actual kernels remain those of the single family being bounded.
+
+For fixed physical data, outgoing charged fields are functions of the selected
+incidences on each cell. They do not depend on z,t,e. Their products, including
+joint zero11/zero13 factors, multiply the same cell weight. Each geometric
+functional has the form
+
+    max_l sum_x w(x) [load_(l,xi)(x)-threshold]_+,
+
+with fixed nonnegative load coefficients and physical heads. It is a maximum of
+linear functions of w and hence convex in the full vector of nonnegative
+weights. Positive multiplier expectations, positive region sums and positive
+omitted-depth majorants preserve convexity. The current and query comparison
+functions S_xi(w)=sum_p L_p(w) and H_xi(w)=H16(w) may therefore be defined from
+one finest positive comparison, so that
+
+    G_xi(w)=14*S_xi(w)+H_xi(w)
+
+is convex. This assertion concerns the positive definition, not an arbitrary
+subtraction of upper bounds. Different numerical routes may dominate this same
+G at different vertices; their pointwise minimum need not be convex.
+
+The source's first-hit and query comparison then give, for the one actual law,
+
+    D=R-S_xi(w),        135*mu(1)>=D,
+    135*integral (Q-16)_+ dmu <= H_xi(w)   for every complete query Q>=1.
+
+Thus `D>0` and `14D-H_xi(w)>0` imply that its normalized complete-query readout
+is at most `15+H_xi(w)/D<29`. Proving these domination statements for the fixed
+construction is indispensable: abstract convexity alone does not supply them.
+
+### The minimal vertex-extension lemma
+
+Let V be a finite joint vertex set. For each permitted parameter theta suppose
+there are common coefficients `lambda_v(theta)>=0`, summing to1, such that
+
+    w(theta)=sum_v lambda_v w_v,      R(theta)=sum_v lambda_v R_v.
+
+For every fixed physical tuple xi assume S_xi and H_xi are nonnegative convex
+functions on the common weight vectors and give the fixed-law domination above.
+For every v and xi, a numerical route may supply bounds
+
+    S_xi(w_v)<=s_(v,xi),       H_xi(w_v)<=h_(v,xi),
+    d_(v,xi)=R_v-s_(v,xi)>0,
+    delta_(v,xi)=14*d_(v,xi)-h_(v,xi)>0.
+
+Then, without changing the law, caps, threshold or physical tuple,
+
+    D(theta)>=sum_v lambda_v d_(v,xi)>0,
+    14D(theta)-H_xi(w(theta))>=sum_v lambda_v delta_(v,xi)>0.
+
+Proof: apply convexity separately to S and H and subtract their upper bounds
+from the affine reserve. Finite V and finite Xi^6 allow uniform minima if every
+pair has certified strict inequalities. Alternatively a direct upper estimate
+`G_xi(w_v)<=g_(v,xi)<14R_v` suffices for the slack; H>=0 then implies
+`D>0`. In particular a uniform slack delta gives `D>=delta/14>0`.
+
+The route may depend on `(v,xi)`; there is no requirement to use one numerical
+route on all vertices. A fixed finite list of routes is sufficient exactly
+when it covers all required vertex/physical tuples and every chosen route
+bounds this same finest common functional. Coverage of different actual laws,
+different thresholds or different caps does not meet the lemma's premise.
+
+If a uniform numerical query bound q0>=15 is wanted, interpolate
+`H+(q0-15)S <= (q0-15)R`, not the ratios H/D. This positive convex combination
+also yields `H(theta)/D(theta)<=q0-15` when the endpoint D bounds are positive.
+
+### Joint budget coefficients and what is still missing
+
+The pure-5/overlap vertices are `(j,i)=(1,0),(2,0),(3,0),(4,0),(1,1)`.
+The fourteen pure-3 vertices have `z_h=1/2` at one row h. Their70 joint weights
+are interpolated by
+
+    lambda_(h,j,0)=40*z_h*(t_j-e*1_(j=1)),
+    lambda_(h,1,1)=40*z_h*e.
+
+They are nonnegative, sum to1, and give the same interpolation for all four
+region weight vectors and for the reserve
+
+    gamma15=sum_(h mod3=2) z_h,
+    gamma45=sum_(h mod9=8) z_h,
+    B_eff=sum_(x in B)(1-z_(x mod27)),
+    R=135/4+gamma15+(9-gamma15)D_2
+      +gamma45+(3-gamma45)D_3+9/5-B_eff*(1/5-e).
+
+Multiplying the two simplex decompositions proves these identities. Weights
+and R are separately affine in z and (t,e), not jointly affine in their raw
+concatenated coordinates. The joint70-vertex lift is the relevant convex
+representation. The lemma is a reuse of source Section9, not new Lean content.
+
+For this fixed chart, finite prefix-tree automorphisms preserving the named
+anchor cylinders give the following row orbits:
+
+    {13,22}, {7,16,25}, {2,5,11,14,20,23}, {8,17,26}.
+
+Generators swap sibling leaves in each displayed mod9 branch and swap the
+whole mod9 branches2 and5. They fix the mod3 and mod5 coordinates, the removed
+27-row4 and the removed45 cylinder8, and transport every labelled physical
+projection. With the source parameter transported as `(sigma z)_(sigma h)=z_h`,
+each region satisfies `w_(sigma z,t,e)(sigma x)=w_(z,t,e)(x)`, and the reserve
+is unchanged. These identities compare transported source vertices. The
+standalone check verifies these statements for all70 vertices. Thus20
+representatives (four row orbits times five pure-5/overlap vertices) suffice
+under this verified symmetry reduction. The present certificate supplies one
+such representative: row orbit{13,22}, `(j,i)=(1,0)`. The other19 representative
+inequalities are not supplied by the present certificate. This is an explicit
+proof-obligation list, not a proof that19 new enumerations are necessary;
+uniform dominating screens or further proved relations may discharge several.
+
+For the canonical coarse triple `(2,4,1)` there are also eight r representatives
+`{4,7,8,11,16,22,31,34}` and seven allowed `(d,k)` pairs, hence56 discrete mixed
+charts. Before symmetry, their fully refined product domain has `56*5*14=3920`
+vertex descriptions. The original source's screens and the missing-19 screens
+do not certify this whole domain for the changed missing-23 schedule/query16.
+Other coarse triples must also either be uniformly screened in the changed
+schedule or separately treated. No new geometry for any of these was run here.
+
+### Free extension from z13 to z22 and their entire edge
+
+Define sigma27 to exchange13 and22 and fix the other25 residues modulo27.
+For all h>=3 extend it by
+
+    sigma_(3^h)(x)=sigma27(x mod27)+27*floor(x/27) (mod 3^h).
+
+Below depth3 use its induced prefix maps; here they are identity modulo3 and9.
+Leave the 5-adic and all other prime coordinates unchanged. These compatible
+finite bijections are measure-preserving prefix-tree automorphisms. Every
+prime-power cylinder at every finite height maps to one cylinder of the same
+height. Their CRT product therefore transports every queried numerical
+modulus, original label identity and phase together. It fixes45 residues,
+permutes27 leaves and135 cells, and transports arbitrary higher query labels;
+it is not merely a symmetry of the four physical incidence counts.
+
+The map fixes C and the chosen anchor/reference data. It sends the source
+weight vertex z13 to z22, preserves every current and query geometric domain,
+and fixes each physical xi coordinate modulo3,5,9,15 individually. Explicitly,
+for every region rho and cell x in C,
+
+    w_(22,rho)(sigma(x))=w_(13,rho)(x).
+
+This transports two different endpoint weight fields; it does not assert that
+sigma preserves the z13 weight field internally. Thus the
+existing all-Xi^6 inequalities transport to z22 with exactly the same bounds,
+without a new geometry computation. Actual kernels may be conjugated under
+the map for the transport proof. During the subsequent interpolation they
+remain those of the actual family, as stipulated above; endpoint weights are
+not independently chosen actual laws.
+
+For 0<=u<=1 take
+
+    z13=u/2, z22=(1-u)/2, all other z_h=0,
+    t1=1/20, t2=t3=t4=0, e=0.
+
+The common C still has44 cells. Explicitly,
+
+    A3^u(x)=2/3-(u/2)1_(x mod27=13)-((1-u)/2)1_(x mod27=22),
+    A5(x)=4/5-(1/4)1_(x mod5=1)-(1/5)1_B(x).
+
+Every region weight equals `u*w13+(1-u)*w22`. The reserve is identically
+`R=135/4`: gamma15=gamma45=0 and `B_eff=9`. Apply the common-functional lemma
+with the two endpoints. Every actual completed family whose budgets lie on
+this edge satisfies both `D>0` and `14D-H16>0`, uniformly over Xi^6 and all
+complete query layouts. The claim concerns actual families satisfying those
+budgets; it does not assert that every relaxed edge point is realized by a
+completed family. It neither expands the discrete chart nor changes t/e.
+
+Every certified endpoint slack is inherited along the entire edge for its
+physical tuple. Finiteness of Xi^6 and the certified route partition gives a
+strictly positive uniform minimum, without computing or displaying its value.
+The7424-millionth minimum belongs to the remaining22 subcertificate. By
+itself it does not give a lower bound for the whole280-source domain. The later
+positive-weight neighborhood proof explicitly aggregates all certificate
+parts and verifies that the same number is a safe uniform lower bound; it is
+not asserted to be the exact minimum of the actual slack. The inherited
+strict inequalities already prove `<29`.
+
+### Finite obstructions to unjustified extensions
+
+1. One successful vertex does not certify a simplex. On theta in[0,1], let
+   `R=1,H=0`. Both `S_good(theta)=0` and `S_bad(theta)=2*theta` are nonnegative
+   affine functions and have identical certified data at theta0. The latter
+   has D=0 at1/2 and D=-1 at1. No information confined to theta0 decides this.
+2. Choosing different actual models at different vertices is invalid. With
+   `S1=2*theta,S2=2*(1-theta),R=1,H=0`, each endpoint has a successful model,
+   but at1/2 both have D=0. The minimum of the two affine costs is not convex.
+   This is not a counterexample to compatible routes bounding one convex G.
+3. Separate affinity is not joint affinity. `W(u,v)=uv` is zero at(0,1) and
+   (1,0), but is1/4 at their midpoint. One needs the joint product vertices,
+   not an arbitrary diagonal pair in raw budget coordinates.
+4. Normalized ratios cannot be averaged as convex functions: endpoint pairs
+   `(D,H)=(3,2),(1,0)` give mean ratio1/3, but midpoint ratio1/2. Interpolate
+   the unnormalized common slack, or the fixed-q0 inequality above.
+
+### Reproducibility and scope
+
+The [finite structural checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify.py) and its [exact results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/result.json) verify the ten prefix generators, all70 source-budget vertices under these maps, the280 physical labels, reserve identities, and exact examples of the joint interpolation and continuous edge. The general interpolation and arbitrary-height transport follow from the formulas above. Finite samples do not prove the whole continuous domain.
+
+The program reads only the adjacent pinned source model and writes stdout. Run `python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify.py`. Its ordinary and optimized outputs agree. No geometric maximum is newly computed, no new Lean statement is added, and no all-missing23 or unrestricted Erdős #7 conclusion is asserted.
+
+## A complete query obstructs universal transport to the next row orbit
+
+Keep the same chart, `t1=1/20`, the other t coordinates zero, and `e=0`.
+The closed edge has `z13=u/2,z22=(1-u)/2`, with `0<=u<=1`; the next row
+orbit has representative `z7=1/2`. Both have reserve135/4 and equal total
+comparison mass. Equal total mass does not imply domination of the permitted
+queries. In particular, the following obstruction rules out a universal
+fixed-query transport, while leaving comparison of the full maximum G16 open.
+
+In ternary root1 the retained branches modulo9 are branch4, with leaves13,22
+and removed leaf4, and branch7, with leaves7,16,25. Their zero-extra-depth
+weights are `2/3-z_h` on retained leaves:
+
+| Source | Branch4 mass | Branch7 mass |
+| --- | ---: | ---: |
+| Any point on the closed13/22 edge | 5/6 | 2 |
+| Row7 vertex | 4/3 | 3/2 |
+
+These numbers omit the common quinary factor. After summing the positive
+ternary depths, the full retained weight in a leaf is `1-z_h`. The branch
+masses then become `(3/2,3)` on the closed edge and `(2,5/2)` at row7.
+The zero-depth masses alone must not be used to evaluate a finite cylinder
+query on the whole comparison submeasure.
+
+Define nu to be Haar measure restricted by the completed pure3 and pure5
+families and by the selected15,45,75 anchors. This selected-anchor comparison
+submeasure precedes the7,11,13,17,19,29 deletion kernels; it is not the final
+live law, and other mixed constraints are not imposed here.
+
+Take `K=27*5^8=10546875` and one query phase for each of its36 divisors
+`3^e*5^f`, with `0<=e<=3`, `0<=f<=8`, including the unit divisor. The
+quinary phase is2 modulo5^f. The ternary phase is4 modulo9 when e=2, and0
+modulo3^e otherwise, with no restriction when e=0. CRT combines these into
+one phase per numerical divisor. They are legal complete-query phases and do
+not replace the original covering phases.
+
+On the common carrier C, the e=1 and e=3 terms vanish. Put
+
+    M(x5)=sum_(f=0..8) 1_(x5=2 mod5^f),       1<=M<=9.
+
+The exact load and hinge are
+
+    Q(x)=M(x5)*(1+1_(x3=4 mod9)),
+    (Q(x)-16)_+=2*1_(x3=4 mod9)*1_(x5=2 mod5^8).
+
+Indeed M=9 precisely on the displayed deepest5-cylinder, and otherwise the
+load is at most16. The pure5 tail and selected75 hole lie in column1; column2
+is retained. The selected15,45,75 holes all lie in ternary root2, so none
+meets the root1 support of this hinge. The full retained branch4 masses give
+
+    integral (Q-16)_+ dnu_edge = 3/K,
+    integral (Q-16)_+ dnu_7    = 4/K.
+
+Thus one legal complete query at the target threshold has strictly larger
+readout at row7 than at every point on the certified edge. This does not
+compare the maxima over all queries: the closed edge has more mass in
+branch7, where a different query can have a larger readout. Nor does it
+evaluate the final G16, which also contains all current losses and later
+charged fields. It excludes the universal fixed-query domination that would
+otherwise have been used to transfer the source certificate without an
+additional argument.
+
+### The excluded positive transports
+
+Every tree automorphism preserving the named anchor leaf4 also preserves its
+parent branch4. A convex mixture of these automorphisms cannot increase its
+zero-depth mass from5/6 to4/3. Even if the removed leaf were initially allowed
+to move, the unique zero leaf and positivity force each automorphism in an
+exact mixture to put it back at4, with the same obstruction.
+
+A broader, explicitly restricted matrix class fails too. On the six leaves
+`(4,13,22,7,16,25)` at one fixed quinary coordinate, suppose P is nonnegative,
+has column sums1 and row sums at most1, and its pullback of the branch4
+indicator is constant on each source9 branch. The row-sum bound expresses
+that a27-leaf query pulls back to a subconvex combination of27-leaf queries;
+the last condition retains the9-cylinder type without splitting its leaves.
+
+Since P is square, all its row sums equal1. Let a be any closed-edge weight
+vector and b the row7 vector, both using the zero-depth weights above. If
+`b=P*a`, the unique zero of a and `b_4=0` force `P_(4,4)=1`. Consequently
+`P^T*1_branch4` is1 at source leaf4 and hence, by the branch-constancy
+condition, on all three leaves of its branch. Its total is3 by the row sums,
+so nonnegativity makes it zero on the other branch. Therefore
+
+    sum_branch4 b = sum_branch4 a = 5/6,
+
+contradicting the target mass4/3. A pointwise bound `b<=P*a` also fails: the
+total masses agree, so mass preservation would force equality. These are
+conditions on this proposed transport class, not necessary conditions on all
+possible proofs about G16. In particular, an estimate using the actual joint
+loss/query coefficients may still work without such a source transport.
+
+The [exact complete-query check](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-row7.py)
+and [rational results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/row7.json)
+check the36 CRT labels, all18 combinations of M and branch membership, the
+branch masses, and the strict integral difference1/K. The program writes only
+stdout and reads no external files. Its ordinary and optimized outputs agree.
+No geometry is evaluated. The general identities and matrix obstruction are
+proved above; neither a new source vertex nor a new Lean result is claimed.
+
+## An explicit continuous neighborhood from positive weight domination
+
+The fixed chart now has a certified region beyond the13/22 edge: from any
+point of that edge toward any permitted continuous budget of the same chart,
+raw-parameter interpolation by any fraction at most `1/50000` preserves the
+strict query bound29 for all `280^6` physical tuples. This conclusion reuses
+the existing complete-tail estimates; it does not evaluate a new geometry or
+close a full additional source vertex.
+
+### Aggregating a common strict margin
+
+The first-label partition is the disjoint union of ordinary255, the old
+source `(1,4,7,14)`, Q/Q′, and remaining22. Within the old source, its four
+disjoint prefix domains have1600,3200,6400 and67200 pairs, totaling280².
+Their retained lower bounds for `14D-H16` are:
+
+| Certified domain | Uniform lower bound for the slack |
+| --- | ---: |
+| Ordinary255 | greater than0.16291984 |
+| Old source, eta11=eta13=14 | 0.091827 |
+| Old source, eta11 in1,4 and eta13=14 | 0.187251 |
+| Old source, eta11 in7,8,11,13 and eta13=14 | 0.115893 |
+| Old source, eta13 different from14 | 0.839287 |
+| Q/Q′ | 0.074590 |
+| Remaining22 | 0.007424 |
+
+The ordinary255 entry is recomputed from each retained current7 bound, its
+declared continuation route and its full query bound; it is not inferred from
+the largest rounded query ratio. For the other entries, the previously checked
+millionth-rounded route certificates already give the displayed lower bounds.
+Their geometry inputs and proofs retain their earlier verification scope.
+
+Consequently
+
+    delta0=7424/1000000=116/15625,
+    R0=135/4,
+    G_xi(w_edge)<=14R0-delta0=14765393/31250
+
+hold uniformly over the whole physical domain and the entire certified edge.
+Here delta0 is a safe common lower bound obtained by aggregating all the
+certificate domains. It is not the exact minimum of the actual slack, nor of
+all possible sharper numerical routes. The edge extension uses the already
+proved transport and common-functional convexity.
+
+### Order and scaling of the common positive functional
+
+For one fixed actual construction, physical tuple and all declared interfaces,
+the finest common positive functional has nonnegative layout coefficients:
+
+    sum_x w(x)*c_(layout,x),        c_(layout,x)>=0.
+
+Maximizing over a fixed layout family, adding positive stage contributions and
+integrating the complete positive multiplier laws preserve monotonicity and
+positive homogeneity. Hence the same `G_xi=14*S_xi+H_xi` used in the edge
+proof satisfies
+
+    w<=v  =>  G_xi(w)<=G_xi(v),
+    G_xi(c*w)=c*G_xi(w)             for c>=0.
+
+The ordered weight vector contains all four zero/positive-depth source regions.
+Their complete tail measures are held fixed. No bounded-payoff approximation
+or tail cutoff is required. These properties concern this positive defining
+functional, not a minimum of route formulas or the subtraction of two upper
+bounds. A route using a negative credit remains usable only through its
+existing proof that it bounds the same positive functional.
+
+### A reference point on the closed edge for every legal budget
+
+Let theta=(z,t,e) be any allowed continuous budget in the fixed chart:
+
+    z_h>=0, sum_h z_h=1/2,
+    t_j>=0, sum_(j=1..4)t_j=1/20,       0<=e<=t1.
+
+Write s=z13+z22 and set
+
+    rho3=(8-6s)/5,
+    zbar_h=2/3-(2/3-z_h)/rho3          for h=13,22,
+    zbar_h=0                          otherwise.
+
+Since `0<=s<=1/2`, one has `1<=rho3<=8/5`. The two nonzero reference
+coordinates satisfy
+
+    zbar_h-z_h=(2/3-z_h)*(1-1/rho3)>=0,
+    zbar13+zbar22=4/3-(4/3-s)/rho3=1/2.
+
+Thus zbar lies on the already certified edge. On those two rows the ratio of
+the target zero-depth ternary factor to its reference factor equals rho3;
+on every other retained row that ratio is at most1.
+
+The reference quinary budget is `t0=(1/20,0,0,0), e0=0`. Its zero-depth
+column1 factors are11/20 in ternary root1 and7/20 in ternary root2. The
+corresponding target/reference ratios are
+
+    A=(12-20t1)/11,
+    B=(8-20t1+20e)/7.
+
+Both are at least1. In the other columns the target factors only decrease.
+The ternary increase can occur only on the two edge rows in root1. Therefore
+all four source regions satisfy the simultaneous pointwise bound
+
+    w(theta)<=rho(theta)*w(zbar,t0,0),
+    rho(theta)=max(rho3*A,B).
+
+This is also the exact maximum of these finite region-weight ratios: the
+first term is attained at an edge row in root1/column1, and the second in
+the positive-extra3 region at root2/column1. All reference weights are
+strictly positive on the common carrier. This statement is about comparison
+weights; it does not assert that each relaxed budget has an actual realizing
+cover or that different actual kernels have been identified.
+
+For `ga=sum_(h mod3=2)z_h` and `gr=sum_(h mod9=8)z_h`, the source reserve is
+
+    R(theta)=R0+(6/5)*ga+(9-ga)*t2+gr+(3-gr)*t3+(9-ga)*e >= R0.
+
+Indeed `B_eff=9-ga`, `D2=t2` and `D3=t3` in the earlier reserve formula.
+Every additional term is nonnegative because `0<=ga,gr<=1/2`.
+
+Monotonicity, scaling and the edge certificate now give the explicit
+sufficient condition
+
+    14R(theta)-rho(theta)*(14R0-delta0)>0.
+
+Whenever it holds, `14D-H16>0` for every physical tuple. Since `H16>=0`,
+it also gives `D>0`, so the actual complete-query readout remains below29.
+This condition defines a relative open region containing the entire closed
+edge, because the displayed expression is continuous and equals delta0 on
+that edge.
+
+### A uniform rational radius in raw parameter coordinates
+
+Take any edge point thetaE and any permitted target thetaV in this chart.
+For `0<=tau<=1`, interpolate their raw parameters:
+
+    theta_tau=(1-tau)*thetaE+tau*thetaV.
+
+This stays in the legal budget domain, including `e<=t1`. No joint affinity
+of the weights is assumed. Instead, the explicit ratios imply
+
+    rho3(theta_tau)<=1+3*tau/5,
+    A(theta_tau)<=1+tau/11,
+    B(theta_tau)<=1+tau/7.
+
+For the last inequality use `eV<=t1V`. Also
+
+    1+tau/7 <= (1+3*tau/5)*(1+tau/11)
+
+for every nonnegative tau. Thus, uniformly in both endpoints,
+
+    rho(theta_tau)<=(1+3*tau/5)*(1+tau/11).
+
+At `tau0=1/50000`, the right side is `137501900003/137500000000` and
+
+    14R0-rho_bound(tau0)*(14R0-delta0)
+      =3845709003821/4296875000000000
+      >0.000895001368.
+
+The weight-multiplier bound increases with tau, so this positive slack lower bound holds for
+all `0<=tau<=tau0`. This proves the claimed uniform neighborhood, including
+simultaneous changes in the pure3, pure5 and overlap budgets. The fraction is
+a radius in the stated interpolation, not an absolute Euclidean or TV radius.
+
+The factor is allowed to exceed1 and is paid for by the existing strict
+margin. Accordingly, the earlier row7 fixed-query obstruction does not
+contradict this result. At the full row7 vertex the factor is8/5, and this
+argument does not pay for that increase. Other discrete charts, the19
+remaining joint representatives and unrestricted Erdős #7 remain unresolved.
+
+The [portable exact checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-tube.py)
+and [results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/tube.json)
+pin the seven prior coverage files, check the complete first-label partition,
+aggregate the lower margins, and check840 rational parameter cases with147840
+cell/region comparisons. The continuous result follows from the formulas
+above, not from the finite samples. The checker writes only stdout and reads
+explicit adjacent project inputs. Normal and optimized modes agree; no new
+geometry or Lean verification is claimed.
+
+## Finite pure-power prefixes absorb arbitrary higher tails
+
+The continuous neighborhood has a finite sufficient membership test. In the
+same fixed chart,17 additional low-height pure-power phase conditions ensure
+that every legally completed higher tail satisfies the query bound29. This
+does not place an arbitrary odd cover in this subclass; the other prefix
+patterns and discrete charts still require separate arguments.
+
+### Budget coordinates are actual deletion masses
+
+Use the same source definitions from Section5 of the cited paper. Completion
+has one class at each pure-power height, and the pure classes for each prime
+are disjoint. Write their phases as `a_(3^n)` and `a_(5^n)`. The selected
+low classes are0 modulo3,1 modulo9,4 modulo27 and0 modulo5. The selected25
+class and the selected75 quinary child are distinct children in column1.
+Let `c75` be that actual75 phase modulo25, with its ternary root fixed at2.
+
+The budget coordinates therefore have the exact sums
+
+    z_h=sum_(n>=4) (27/3^n)*1_(a_(3^n) mod27=h),
+    t_j=sum_(n>=3) (5/5^n)*1_(a_(5^n) mod5=j),
+    e=sum_(n>=3) (5/5^n)*1_(a_(5^n) mod25=c75).
+
+Each higher cylinder lies wholly in one of the displayed prefix classes.
+In particular e is an overlap from this same completed source, measured in
+the same column units as t1. It cannot be chosen independently afterward.
+
+Put
+
+    bad3=1-2*(z13+z22),
+    bad5=1-20*(t1-e)=20*(sum_(j!=1)t_j+e).
+
+Both lie in `[0,1]` and vanish on the certified edge. For `0<=tau<=1`, a
+legal budget theta lies in
+
+    (1-tau)*{certified edge}+tau*{legal continuous budget domain}
+
+if and only if `max(bad3,bad5)<=tau`.
+
+Necessity follows because both functions are affine and at most1 on the
+domain. For sufficiency when `0<tau<1`, set `s=z13+z22>0` and choose an
+edge point with ternary coordinates `(z13,z22)/(2s)`. Subtract `(1-tau)`
+times this edge point and divide the remainder by tau. The ternary residual
+is nonnegative precisely when `2s>=1-tau` and sums to1/2. The quinary
+residual has
+
+    tV1=(t1-(1-tau)/20)/tau,
+    tVj=t_j/tau (j!=1),        eV=e/tau.
+
+It sums to1/20, and `0<=eV<=tV1` follows precisely from `bad5<=tau`.
+At tau=0 the hypotheses say theta itself is on the edge; at tau=1 every
+legal theta is allowed. This includes the case s=0. The edge point in this
+decomposition is an interpolation witness, distinct from the earlier zbar
+chosen to optimize the weight ratio.
+
+### The same tail must pay for both quinary alternatives
+
+For integers `H3>=3,H5>=2`, impose the following prefix conditions:
+
+* For `4<=n<=H3`, the actual completed3^n phase modulo27 lies in `{13,22}`.
+* For `3<=n<=H5`, the actual completed5^n phase lies in column1 and its
+  phase modulo25 differs from c75.
+
+Every off-edge ternary deletion then has height above H3. Hence
+
+    bad3 <= 2*sum_(n>H3) 27/3^n = 3^(3-H3)=alpha.
+
+A quinary deletion contributing to bad5 either lies outside column1 or lies
+inside c75, which is in column1. These alternatives are disjoint for the
+same actual cylinder. All such cylinders have height above H5, so
+
+    bad5 <= 20*sum_(n>H5) 5/5^n = 5^(2-H5)=beta.
+
+There is one tail budget here, not two independent copies. Arbitrarily
+large later heights and arbitrary legal later phases are included by the
+infinite geometric sums.
+
+The previous exact weight bound now implies
+
+    rho <= max((1+3*alpha/5)*(1+beta/11), 1+beta/7).
+
+Indeed `rho3=1+3*bad3/5`, while `A<=1+bad5/11` and `B=1+bad5/7`.
+With `R>=R0` and `M0=14R0-delta0`, a sufficient uniform slack is
+
+    delta_prefix=14R0-M0*max((1+3*alpha/5)*(1+beta/11),1+beta/7).
+
+Two explicit choices give:
+
+| H3 | H5 | Additional phase conditions | Certified slack lower bound |
+| ---: | ---: | ---: | --- |
+| 13 | 9 | 17 | `5479330098137/2642980957031250 > 0.00207316` |
+| 14 | 8 | 17 | `1625223077149/528596191406250 > 0.00307460` |
+
+For13/9 one also has `bad3<=1/59049` and `bad5<=1/78125`, both less than
+the uniform raw radius1/50000. The direct ratio calculation gives the stronger
+displayed margin. The14/8 choice uses the general sufficient region even
+though its quinary tail exceeds that uniform radius. In each case all
+`280^6` physical tuples, the same fixed source construction and all complete
+query tails remain covered.
+
+As a negative control,13/8 gives only
+`-22218238121/176198730468750` from this lower screen. That does not prove
+an actual failure, a query counterexample, or the necessity of17 conditions;
+it only means this particular worst-case tail bound gives no certificate.
+
+### The prefix hypotheses have legal realizations
+
+For all n>=4, choose pure3 phases
+
+    a_(3^n)=13+27*3^(n-4) mod3^n.
+
+They retain row13. At two distinct heights the first added nonzero ternary
+digit occurs in different positions, so the residues disagree modulo the
+smaller modulus and the cylinders are disjoint. They also avoid all three
+selected lower pure3 classes.
+
+Choose a third25 child gamma in column1, different from both the selected25
+child and c75, and set for all n>=3
+
+    a_(5^n)=gamma+25*5^(n-3) mod5^n.
+
+The same first-nonzero-digit argument gives disjoint pure5 cylinders. They
+remain in column1 and avoid the selected25 class and the75 child. Such a
+gamma exists because column1 has five children and only two were excluded.
+A concrete choice has selected25 phase1, c75=6, gamma=11, and selected mixed
+phases2 modulo15,8 modulo45,56 modulo75. The latter has ternary root2 and
+quinary child6; each selected mixed class avoids its selected proper-divisor
+classes.
+
+This proves consistency of the source-prefix hypotheses with an infinite
+completion. It is not a construction of an odd distinct cover, and it does
+not allow phases from a prescribed hypothetical cover to be changed. A use
+against such a cover must establish these conditions for its actual
+completed source or handle the complementary prefix cases.
+
+The [exact prefix checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-prefix.py)
+and [results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/prefix.json)
+reuse the pinned common-margin result, evaluate the rational infinite-tail
+bounds, check finite phase legality, and include the13/8 negative screen.
+The all-height conclusions follow from the displayed geometric series and
+disjointness arguments. No new geometry or Lean verification is claimed.
