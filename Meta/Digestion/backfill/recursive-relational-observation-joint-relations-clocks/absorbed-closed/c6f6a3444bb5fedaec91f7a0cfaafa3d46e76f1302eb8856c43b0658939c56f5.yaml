@@ -3,12 +3,8 @@ fingerprints:
   normalized_sha256: sha256:c6f6a3444bb5fedaec91f7a0cfaafa3d46e76f1302eb8856c43b0658939c56f5
 cas_ref: sha256:c6f6a3444bb5fedaec91f7a0cfaafa3d46e76f1302eb8856c43b0658939c56f5
 coverage_gids:
-  - gid: D5/S3/ObserverMemory/Realization/CanonicalMinimalRealization.canonical_minimal_realization
-    target_statement_id: sha256:1c03169062c42b73c0ddae32ed81e17339b8d51b1a8b5422d5a9598f4569a091
-  - gid: D5/S3/ObserverMemory/Refinement/GradedPredictionShift.stableCompletionEquiv
-    target_statement_id: sha256:65c6fa45a3e24837d39cab90dfb9deba91fc21ab8285870dee43d655e1cd68c3
-  - gid: D5/S3/ObserverMemory/Trajectories/FutureItineraryShift.future_itinerary_shift
-    target_statement_id: sha256:78e92a33352a77543701ac4de19a1fba8717ec08003964d4c885c551ba6bd6e6
+  - gid: D5/S3/ObserverMemory/Realization/CommutingReversibleRealization.commuting_reversible_realization
+    target_statement_id: sha256:c099d22d4df958b97e8063e7f14b6c172f15928d7c2213ec2fc0ac1b4de5d4c7
 receipts:
   unresolved_subitems: []
   chain_atoms:
