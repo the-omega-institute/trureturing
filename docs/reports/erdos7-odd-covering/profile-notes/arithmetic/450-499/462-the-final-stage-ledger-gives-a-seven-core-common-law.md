@@ -995,3 +995,147 @@ comparison domains. In particular no monotonicity in eta and no universal
 worst-eta claim follows from this result.
 
 Reproduction commands and verification layers are in the [extension package](../../../frontier/cover-geometry/finite-prefix-sources/missing23-late280/README.md).
+
+## Two earlier phase slices close by monotone reuse
+
+Keep the finest node `(2,4,1,8,1,2,1,0,13)`, `xi7=(1,4,7,14)`, source
+schedule `(2,4,4,8,8,16)` and query16. The following new domain changes
+only the last coordinate of xi11 to1 or4. For each of these two slices,
+xi11 has40 allowed first-three-coordinate choices, xi13 has40 eta14
+choices, and xi17,xi19,xi29 each independently range over all280 allowed
+projections. Thus the two disjoint slices contain3200 prefix pairs and
+`3200*280^3=70246400000` full tuples.
+
+This is a fixed-node ordinary comparison certificate. It does not cover
+another eta13, xi7 or anchor, or the whole missing23 support. Its current11
+numerical inputs are reused attributed source bounds; this extension
+requires no new geometry enumeration and adds no Lean verification.
+
+### Attributed current11 inputs and the unchanged incoming prefix
+
+The [source v1.0.1 archive](../../../../../../Library/Arith/schroeder2026nine.md)'s `nine-prime-support/certificate/closing.json`
+records the following exact upward current11 bounds for state A1:
+
+| eta11 | current11 upper |
+|---|---:|
+|1|`49538723779/10000000000`|
+|4|`12457528149/2500000000`|
+|7|`51353199569/10000000000`|
+|8|`10534248179/2000000000`|
+|11|`51724699137/10000000000`|
+|13|`51353199569/10000000000`|
+|14|`52980442211/10000000000`|
+
+In the byte-pinned source verifier, the `main` representative selection
+fixes A1 to the node above and xi7=(1,4,7,14); `fixed165` evaluates these
+seven phase choices. Its incoming law contains only the already charged7
+comparison. Its fixed current threshold is4 at11. Neither the later prime23
+in the source theorem nor its later thresholds enter this calculation.
+Replacing the later schedule with the already declared missing23 schedule
+therefore changes no current11 input.
+
+The source `fixed165` bound keeps the selected15 head and releases heads
+3,5,9. Apply the already proved convex-release argument to the four-label
+padded process, with the full class coefficient scalar across the cells.
+Its current11 loss is bounded by exactly that fixed15 functional for the
+physical eta11. Therefore the table above is uniform over the40 remaining
+physical label choices in each slice. The original selected labels are
+retained; a bound does not authorize changing them.
+
+The archive SHA256 is
+`9e674cf1665695945dc4d6d269ec27ad1567e9c5c236c2708b451de2a2a5196c`,
+and the extracted `closing.json` SHA256 is
+`2fc48ecf06bc7ca256f7107648158fe92bff2052368b438267e6541e3eb07b1b`.
+The source verifier SHA256 is
+`e3296d181686c0f1925e755583fdc4df2ffeb2bacbc36a77a2396bbe3b4a9135`.
+These identify the attributed numerical prerequisite, not a new independent
+rerun of its maxima.
+
+### One flat11 comparison controls current13 and later reads together
+
+For any physical xi11 and any anchor cell x, put
+
+$$
+ \rho_{11}(x)=\min\{1,(5/3)(10-s_{11}(x))/11\}-5/33.
+$$
+
+Since `0<=s11(x)<=4`,
+
+$$
+ 0\le\rho_{11}(x)\le28/33.
+$$
+
+The positive11 atoms remain `50/(3*11^m)` for `m>=2`. Replacing only its
+zero atom by28/33 gives one common upper comparison. It dominates every
+actual11 field pointwise on the same anchor cells, including the new
+nonempty intersections in eta11=1 and4. No independence assumption or
+random relabelling is used.
+
+Every current13 functional is a nonnegative weighted hinge maximum and
+is monotone in these spatial weights. Hence the earlier flat11 current13
+table applies to each actual xi13 in eta14. The selected13 projection
+is preserved in that lookup, and its padded current13 loss is fully paid.
+Thus the current11 cost from the source table and the current13 cost from
+the flat11 table are upper bounds for one process, not estimates assembled
+from two independently chosen source laws.
+
+The same domination persists through the later positive comparisons:
+products retain all factors at the same anchor x and every kernel and
+summand is nonnegative. In particular, the late280 `FA` table has exactly
+the flat11 field28/33 and the prescribed13 field A. It is therefore a
+valid continuation upper bound even when the actual xi11 field is not
+empty. By the preserved prefix permutation, its transported table applies
+to prescribed13 field B as well. No previous physical11 current label is
+changed by this use of the flat comparison.
+
+For other xi13, use the already established AB/B,A positive transfer:
+fill the reference11 deficit, fill the reference13 deficit when its field
+changes, and compare with the ordinary alternative. The reference17
+functional uses full13 and receives no extra13 charge; the19/29
+functionals retain the two zero fields and receive each applicable
+positive addition. This is the same transfer proof and same source
+schedule as the late280 certificate.
+
+### Uniform strict bounds
+
+For each of the3200 ordered prefix pairs, retain its actual label tuple
+and record its zero11 support. The source current11 upper depends only on
+eta11, while the current13 upper retains the actual xi13. Among the valid
+late continuations select the smaller numerical upper bound. The resulting
+disjoint routes consist of3040 transfer rows and160 flat11/A-or-B rows.
+Every chosen late comparison is uniform over all280 projections at each
+remaining prime.
+
+With `D=135/4-sum L`, the same H16 gives `R_query<=15+H16/D`.
+Exact rational calculation yields:
+
+| eta11 slice | upward query upper | minimum millionth-rounded slack `14D-H16` |
+|---|---:|---:|
+|1|`28.7472240926`|`0.595197`|
+|4|`28.9194656258`|`0.187251`|
+
+The least exact reserve lower bound over both slices is
+
+$$
+ \frac{46560119126441}{20020000000000},
+$$
+
+and the millionth-rounded reserve remains at least2.325677. Both slices
+therefore meet the strict query target29. The source schedule, padded
+construction and query16 are unchanged throughout.
+
+The [consumer](../../../frontier/cover-geometry/finite-prefix-sources/missing23-eta11-1-4/verify.py) pins the [source current11 input](../../../frontier/cover-geometry/finite-prefix-sources/missing23-eta11-1-4/source_current11.json) and the prior late280
+consumer, whose own pins validate the inherited bounds. It exhaustively
+checks all3200 rational inequalities; normal Python and optimized Python
+retain the same exception checks. The separate source-current11 producer
+uses the old pinned geometric engine and can rebuild each phase with an
+explicit request. No new raw geometry is needed to derive this reuse
+certificate from its stated numerical prerequisites.
+
+The remaining complete eta11 slices7,8,11,13 with eta13=14 are not closed
+by this certificate; other eta13 values are also unresolved. Their full
+physical zero fields must remain explicit. The16 nonempty support fields
+and one empty field offer a finite continuation index, while first-stage
+current costs still require the actual numerical labels.
+
+Reproduction commands and verification layers are in the [two-slice package](../../../frontier/cover-geometry/finite-prefix-sources/missing23-eta11-1-4/README.md).
