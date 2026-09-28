@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Factorization/GoldenCubicBlockNoncube
    mirror-E: none(waiver:finite-residue-obstruction)
-   anchors: [D5/S1/Scale/GoldenCubicBlockCongruences]
+   anchors: []
    utility: none
    digest: Every actual golden cubic block is a noncube, by its four-state orbit modulo seven. -/
 
