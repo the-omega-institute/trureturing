@@ -1,0 +1,16 @@
+**证明。** 数字分解精确满足 $W|+_D\rangle=|+_d\rangle\otimes|+_{D/d}\rangle$，故 $Q_{D,d}$ 把每个冻结历史态送到同一冻结态。自由历史上的作用正是 $Q$。空间偏迹对保留的冻结历史维持 $|+_d\rangle$，对被删冻结历史贡献迹一，对被删自由历史执行真实偏迹。因此作为历史通道有
+
+$$
+Q^{\otimes(L+1)}\operatorname{Ad}_{F_{D,L,\mathsf S}}
+=\operatorname{Ad}_{F_{d,L,\mathsf S}}Q^{\otimes|\mathsf S|},
+$$
+
+$$
+\operatorname{ret}_\Pi\operatorname{Ad}_{F_{d,L,\mathsf S}}
+=\operatorname{Ad}_{F_{d,r,\mathsf S_\Pi}}\operatorname{tr}^{\mathsf S}_{\Pi}.
+$$
+
+代入定理 12.2、16.2 已在全输入上证明的交织关系即得。全空间通道的严格复合和交换自动限制到此共同族；这一步使用的是已验证的子空间保持关系。固定边连通性在宏块收缩后仍成立，因为连通固定图的商图仍连通，所以每个非平凡粗块割的面积仍为正。证毕。
+
+这里得到的是一个共同码族，允许空间粗化按其保留的逻辑自由度改变码维数。没有声称任意丢弃自由寄存器的操作还能无损保存该寄存器。三进情况下仍沿用 $\alpha_L=L\bmod2$ 的局部相位调整；其作用只涉及已冻结的缝合历史，不破坏上述子空间保持性。
+

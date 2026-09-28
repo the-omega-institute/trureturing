@@ -70124,3 +70124,101 @@ $$
 本节的有限证书只要求核对给定有限轮仪器的完备性、共同单次调用实现和一个有限维算子不等式；常值历史证书由这些条件统一产生。该范围不包括第 441 节允许的任意可数分支、无统一历史记忆维数的控制器，也不把未指定的无限历史证书族说成有限可核对。所给正余量是充分条件，不提供必要性、最优半径或证书搜索的效率保证。原始装置仍使用两份记录的联合访问，不由此推出 LOCC 实现；未知输入、全部实际停止历史与未操作参考均在显示的比较范围内。
 
 ## 追加锚（本行以下为增补区）
+
+## 443. 有限记录的名义尾界与实际逃逸边界
+
+本节固定定义 441.1 的装置、校准点 $u$、见证 $b$ 及同一个不依赖实际参数的控制器。变量输入空间 $A$ 满足 $1\le\dim A<\infty$，包含全部可变初始记忆；参考空间 $R$ 任意有限且始终不操作。实际历史集合可数，每个有限历史的量子块及两次调用间的控制均有限。以下记
+$\mathcal F_t:=\mathcal S_t$，即按原权重对全部真实有限终端历史和最终可访问记忆求和的正规完全正迹不增映射；无限路径只留下缺失迹，不产生输出块，也不作归一化。
+
+对每个非负整数 $N$，截断在第 $N$ 次调用后的通常控制和停止决策完成后进行；$N=0$ 时先完成初始控制和通常停止决策，仅将仍未停止的前缀标为 timeout。令 $G_{t,N}$ 为输入空间 $A$ 上的生存效果：
+$\Pr_{t,\rho_A}(T>N)=\operatorname{Tr}(G_{t,N}\rho_A)$，$0\le G_{t,N}\le I_A$。置
+
+$$
+ g_N=\lVert G_{u,N}\rVert,\qquad x=\sin^2(\theta-u),\qquad
+ B_{441}(q)=\begin{cases}2\sqrt{2q-q^2},&0\le q\le1,\\2,&q>1.\end{cases}
+$$
+
+以下两条界不要求任一端的未截断过程几乎必然停止，也不要求任一端有有限均值；对每个非负整数 $N$ 都有
+
+$$
+\boxed{\quad
+ \lVert\mathcal F_\theta-\mathcal F_u\rVert_\diamond
+ \le \min\!\left\{2,\ B_{441}(Nx)+2g_N\right\},\qquad
+ \lVert I_A-\mathcal F_\theta^{\ast}(I)\rVert
+ \le \min\!\left\{1,\ g_N+\frac12B_{441}(Nx)\right\}.
+\quad}\tag{443.1}
+$$
+
+证明只使用第 441.2 节证明中的有限截断。把所有 $T\le N$ 的真实终端块记为 $\mathcal E_{t,N}$，把尚未停止的前缀连同 timeout 标志记为 $\mathcal U_{t,N}$，并置完整截断输出 $\mathcal C_{t,N}=\mathcal E_{t,N}\oplus\mathcal U_{t,N}$。它对两端都保迹。真实有限终端输出在同一空间中写成 $\mathcal F_t=\mathcal E_{t,N}\oplus\mathcal L_{t,N}$，其中 $\mathcal L_{t,N}$ 只含 $T>N$ 的有限终端叶。对任意带未操作参考 $R$ 的密度算子 $\rho$，记
+
+$$
+ p_t=\operatorname{Tr}\mathcal U_{t,N}(\rho),\qquad
+ \ell_t=\operatorname{Tr}\mathcal L_{t,N}(\rho),\qquad
+ a=\lVert\mathcal E_{\theta,N}(\rho)-\mathcal E_{u,N}(\rho)\rVert_1,\quad
+ d=\lVert\mathcal U_{\theta,N}(\rho)-\mathcal U_{u,N}(\rho)\rVert_1.
+$$
+
+第 441.2 节的有限槽交叠估计给出 $a+d\le B_{441}(Nx)$。两完整截断输出均迹为一，故 $a\ge|p_\theta-p_u|$；而 $d\ge|p_\theta-p_u|$，从而 $|p_\theta-p_u|\le B_{441}(Nx)/2$。又有
+
+$$
+ \lVert\mathcal F_\theta(\rho)-\mathcal F_u(\rho)\rVert_1
+ \le a+\ell_\theta+\ell_u
+ \le a+p_\theta+p_u
+ \le B_{441}(Nx)+2p_u,\qquad
+ p_u=\operatorname{Tr}[(I_R\otimes G_{u,N})\rho]\le g_N.
+$$
+
+同时，实际逃逸质量 $e_\theta(\rho)=1-\operatorname{Tr}\mathcal F_\theta(\rho)=p_\theta-\ell_\theta$ 满足
+
+$$
+ e_\theta(\rho)\le p_\theta\le p_u+|p_\theta-p_u|\le g_N+\tfrac12B_{441}(Nx).
+$$
+
+对任意有限参考的状态界用第 441.2 节末段的参考比特与 Jordan 分解提升到 diamond 范数；这里使用伴随保持，不把迹消灭当作前提。完全正迹不增映射给出第一项的上限 $2$，正算子 $I-\mathcal F_\theta^{\ast}(I)\le I$ 给出第二项的上限 $1$，于是得到 (443.1)。
+
+现在另加名义端全输入保迹假设：$\mathcal F_u$ 在 $A$ 的全部输入上保迹。令 $d_A=\dim A$；由 $1\le d_A<\infty$，名义保迹意味着
+
+$$
+ 0\le g_N\le\operatorname{Tr}G_{u,N}
+   =d_A\,\Pr_{u,I_A/d_A}(T>N)\longrightarrow0.
+$$
+
+因此先固定足够大的 $N$，再令 $\theta\to u$，(443.1) 给出 $\mathcal F_\theta$ 在 $u$ 处的 diamond 连续性，并同时给出逃逸缺陷趋于零。这里用到的只是名义端全输入几乎必然停止来消去 $g_N$；它没有提供名义有限均值、实际停止或任何有效的统一收敛速率。
+
+**边界例 443.2（已制备查询态的可读吸收模式）。** 固定等距嵌入 $W:A\to M$，仅将变量输入 $A$ 停放在此后不再操作的记忆 $M$。对任意可能相关的初态 $\rho_{RA}$，此操作由 $I_R\otimes W$ 给出，在 $R\otimes M$ 上得到 $(I_R\otimes W)\rho_{RA}(I_R\otimes W^{\ast})$；$R$ 仍为外部参考，不被操作，也不并入可访问记忆。查询寄存器与模式寄存器分别作为固定辅助系统制备，查询态为
+
+$$
+ |\psi_+\rangle=(|1\rangle+|3\rangle)/\sqrt2
+$$
+
+并将模式寄存器置于固定的 good 模式。good 模式每轮调用 $\mathcal Q_t$，保留实际设备标签 $a$，随后在 $S$ 上实施完备仪器 $\{P_-,I-P_-\}$，其中 $P_-=|\psi_-\rangle\langle\psi_-|$ 且 $|\psi_-\rangle=(|1\rangle-|3\rangle)/\sqrt2$。$P_-$ 结果进入永久 live 的 bad 模式；互补结果（即使某些输入使其不可达，也仍定义该结果）一律 halt。bad 模式每轮继续查询固定极点 $|1\rangle$，保留每个实际 $a$ 及测量、硬币标签，并永不停止。
+
+令 $\Phi_{u,\theta}=\operatorname{Tr}_C\mathcal Q_\theta$。由第 440.2 节的极点—纬线计算，
+
+$$
+ \Phi_{u,\theta}(|\psi_+\rangle\langle\psi_+|)
+ =\frac12\begin{pmatrix}1&1-x\\1-x&1\end{pmatrix},\qquad
+ \Pr_\theta(\mathrm{bad})=\operatorname{Tr}\!\left[P_-\,\Phi_{u,\theta}(|\psi_+\rangle\langle\psi_+|)\right]=\frac{x}{2}.
+$$
+
+在 $u$ 处 $x=0$，任意停放的变量初态都在一次调用后的互补结果停止；在任意 $x>0$ 时却有 $x/2$ 的质量进入永久 bad。这个 bad 状态是控制器内部的可读吸收模式，并非允许的任意初始活动态；该例也不是一般的非终止检测器，不能据此断言完整输出差等于逃逸质量。
+
+不带均值的范围可由一个仅依赖历史长度的控制器看清：第 $k$ 次 live 查询后独立以概率 $1/(k+1)$ halt，否则继续，并保留所有实际查询标签和硬币结果。于是
+
+$$
+ \Pr(T>N)=\frac1{N+1},\qquad \Pr(T=n)=\frac1{n(n+1)},\qquad
+ \mathbb ET=\sum_{N\ge0}\frac1{N+1}=\infty.
+$$
+
+这只说明在可数历史、逐分支有限控制的范围内，尾部可以没有有限均值；它超出固定齐次有限活动映射的范围，不是另一条模型依赖的误差率定理。
+
+最后，若实际逃逸质量 $e_t(\rho)=1-\operatorname{Tr}\mathcal F_t(\rho)>0$，在共同嵌入 $E\oplus L\oplus U$ 中有
+
+$$
+ \bigl\|\mathcal C_{t,N}(\rho)-(\mathcal F_t(\rho)\oplus0)\bigr\|_1
+ =p_t+\ell_t=2p_t-e_t(\rho)\longrightarrow e_t(\rho),
+$$
+
+而不是趋于零。因此截断到真实终端的极限只可在名义保迹端使用；实际端必须保留缺失迹的边界。
+
+## 追加锚（本行以下为增补区）

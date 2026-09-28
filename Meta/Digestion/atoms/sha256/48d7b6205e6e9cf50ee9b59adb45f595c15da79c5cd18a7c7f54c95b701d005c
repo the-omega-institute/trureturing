@@ -1,0 +1,10 @@
+## corollary 4.4: 精度斜率
+
+固定奇素数 $p,L$、整数 $\alpha,k$，把 $c_k$ 视为 $\mathbb Z_p$ 元素，$\nu=v_p(c_k)$，$v_p(0)=\infty$。则
+
+$$
+S_n(C)=[Ln-\min(n,\nu)]\log p.
+$$
+
+$c_k\ne0$ 时，$n\ge\nu$ 后绝对亏损稳定为 $\nu\log p$，且 $S_n(C)/(n\log p)\to L$；$c_k=0$ 时 $S_n(C)=(L-1)n\log p$。这是谱计数的精度渐近；与态和通道的精度相容关系在第 12 节另行构造。
+

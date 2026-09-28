@@ -1,0 +1,11 @@
+块矩阵还满足显式相似关系
+
+$$
+Q_i
+\begin{pmatrix}I_2&p/z\\0&1\end{pmatrix}
+=
+\begin{pmatrix}I_2&p/z\\0&1\end{pmatrix}
+\begin{pmatrix}K&0\\0&q\end{pmatrix}.
+\tag{305.15}
+$$
+

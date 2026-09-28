@@ -2741,6 +2741,323 @@ other original constraints. None of these necessary cases is claimed
 feasible, and the table does not assert a new unrestricted or bare
 noncoverage range.
 
+### Nine-support marginal feasibility requires both small primes
+
+A product-source calculation further restricts MF8. Any family on exactly
+NINE support primes which passes all complete support-prime marginals
+must contain BOTH3 and5. The original phases and finite heights remain
+arbitrary. The sufficient common-law statement is
+
+    p_i>=(3,7,11,13,17,19,23,29)_i, i=1,...,8
+      ==> some actual complete-survivor law mu has R(mu)<25. (MF9)
+
+Here the p_i are eight distinct increasing odd primes, and R sums the
+maximal cylinder mass over ALL nonunit numerical labels supported on
+these primes, at every depth. The one law is fixed before the query
+phases. This ordinary deduction uses the product-source query comparison
+in [Report528, FC10--FC11](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md),
+which attributes the ordered-increment comparison to the pinned
+Schroeder1.0.1 Lemma4.1. It uses no source geometry enumeration, new Lean
+result or assertion of literature originality. No ternary-height-one
+restriction from that report is imposed here: every pure-coordinate
+law below avoids its actual complete pure-power family.
+
+For each p use normalized Haar lambda_p on the set avoiding every actual
+pure-p-power original. Its cylinder caps are C_p*p^(-e), where
+C_p=(p-1)/(p-2). Set b_p=1/(p-2), take their independent product lambda,
+and let U be the complete actual original survivor. Summing the mixed
+original costs over the full numerical exponent inventory gives
+
+    alpha=lambda(U)>=2+sum_p b_p-product_p(1+b_p).
+
+Indeed the pure originals already have zero mass; each mixed numerical
+label occurs at most once and has its one original phase. Its product
+cap is summed once. For the least tuple in MF9 the right side is
+
+    a0=1508/35343>21/500.
+
+The mixed inventory product(1+b)-1-sum b increases in each b. Increasing
+any coordinate prime therefore preserves this lower bound. In particular
+U is nonempty, and mu=lambda restricted to U, divided by alpha, is a
+well-defined probability on the SAME actual survivors. Extend the finite
+source with Haar digits beyond its original period.
+
+For any finite complete query layout L, including the unit cylinder, the
+cited product comparison bounds E_lambda(L-4)_+ by E(M-4)_+, where
+
+    M=product_p(1+J_p),
+    Pr(J_p>=e)=C_p*p^(-e), e>=1,
+
+and the auxiliary J_p are independent. These auxiliary runs do not
+change the original or query phases. Every run tail decreases when p
+increases, so the least tuple suffices for this increasing hinge. Write
+u_p=1-C_p/p and v_p=C_p*(p-1)/p^2. For that tuple the exact products are
+
+| Quantity | Exact value | Strict upper bound |
+|---|---|---:|
+|EM|8192/2295|357/100|
+|Pr(M=1)=product u_p|11832238387771/63866647565721|93/500|
+|Pr(M=2)=(product u_p)sum v_p/u_p|72637191863928552052076/206598808689370566884415|44/125|
+|Pr(M=3)=(product u_p)sum v_p/(p*u_p)|12268544824377379531286911923212/133663091390368592953336191801045|23/250|
+
+Since M is a positive integer, its exact hinge value h0 satisfies
+
+    h0=EM-4+3Pr(M=1)+2Pr(M=2)+Pr(M=3)<231/250.
+
+Restriction to U and L-1<=3+(L-4)_+ consequently give
+
+    E_mu(L-1)<=3+h0/a0<3+(231/250)/(21/500)=25.
+
+The fixed upper bound 3+h0/a0 is independent of query heights and phases.
+After fixing mu, maximize each numerical query separately in any finite
+exponent box, then exhaust all boxes. Monotone convergence gives
+R(mu)<=3+h0/a0<25. Thus strictness is retained at the limit, and no
+independently chosen survivor laws are combined.
+
+If a nine-prime support omits3 or5, its eight smallest primes dominate
+the tuple in MF9, while its largest prime r is at least31. Apply that law
+to the actual r-free original subfamily, retaining all cofactor query
+depths. MF3, with the ENTIRE r-coordinate still Haar, proves
+
+    min_y M_r(y)<26/(r-1)<=13/15<1.
+
+Hence such a family cannot pass every complete marginal. This restricts
+the all-marginals search; it is not an enlarged bare noncoverage range.
+It does not provide the missing arbitrary eight-core query bound when
+both3 and5 are present. Nor does it settle the transport, root orientation
+or attachment obligations of
+[Chapter73](../../docs/reports/erdos7-odd-covering/problem-details/73-missing-anchor-eight-core-source-audit.md),
+whose candidate source rows serve a different block-gluing interface.
+
+### Nine-support marginal feasibility also requires seven
+
+The necessary condition in MF9 strengthens to: a family on exactly NINE
+support primes passing every complete support-prime marginal must contain
+ALL of3,5,7. The new sufficient common-law bound is
+
+    p_i>=(3,5,11,13,17,19,23,29)_i, i=1,...,8
+      ==> some actual complete-survivor law mu has R(mu)<51/2. (MF10)
+
+All original residues and finite heights remain arbitrary. The law is
+chosen before every query phase and controls every numerical query depth.
+This uses the existing P3--P4 uniform-survivor profile and the same
+product-source query comparison as MF9. The profile alone has envelope
+sum45.3823269762... at the least tuple, which does not give MF10. Its
+survivor mass, combined with a different query estimate, does.
+
+For a prime subset S let lambda_S be the product of normalized Haar on
+the ACTUAL complete pure-coordinate survivors. Write U_S for the complete
+actual survivor and alpha_S=lambda_S(U_S). Conditioning lambda_S on U_S
+gives precisely the uniform survivor law used by P3--P4: the product law
+has constant density on its pure-survivor product, which contains U_S.
+
+Let c_S be the P3--P4 profile, R(c_S) its full envelope sum, and
+C_p=(p-1)/(p-2). If A=S\{p} and b_(A,p)=R(c_A)/(p-2)<1, first condition
+lambda_A on U_A, then append lambda_p. All old-only and pure-p originals
+are already absent. The remaining mixed originals have total mass at
+most b_(A,p), by the same complete numerical-label sum used in P4. Thus
+
+    alpha_S>=alpha_A*(1-b_(A,p)).
+
+Define a_empty=1 and
+
+    a_S=max_p a_(S\{p})*(1-R(c_(S\{p}))/(p-2)),   (MF11)
+
+where the maximum is over admissible predecessor extensions. Then
+alpha_S>=a_S by induction. Every order describes the same original
+source and survivor, so no separately optimal laws are combined.
+For this specific recurrence there is also the identity
+
+    a_S=product_(p in S) C_p / c_S(S).             (MF12)
+
+Indeed the full-support instance of P4 is
+c_S(S)=min_p c_A(A)*C_p/(1-b_(A,p)); substitute the induction hypothesis.
+MF12 is a consequence of that construction, not a way to recover a
+pure-source mass lower bound from an arbitrary Haar density cap.
+
+At the least tuple in MF10, exact rational evaluation of all256 subsets
+gives
+
+    a_S=0.016392818285728736...>2/125.
+
+Use the independent auxiliary runs from MF9 on this tuple and put
+M=product_p(1+J_p). For the integer threshold16, its COMPLETE hinge is
+
+    h=E(M-16)_+
+     =product_p(1+1/(p-2))-16
+       +sum_(m=1..15)(16-m)*Pr(M=m)
+     =0.16778042796244585...<21/125.               (MF13)
+
+The atoms below16 are a finite multiplicative convolution of
+Pr(J_p=0)=1-C_p/p and
+Pr(J_p=j)=C_p*(p-1)/p^(j+1) for j>=1. The mean in MF13 includes the
+entire infinite tail; omitting atoms at16 or above does not truncate it.
+The existing exact profile verifier checks the reserve recurrence,
+MF12 at every subset, these two strict rational bounds, and the hinge
+convolution in both coordinate orders.
+
+For every finite complete query layout L including the unit cylinder,
+the product comparison gives E_lambda(L-16)_+<=h. For the ONE law
+mu=lambda_S restricted to U_S, divided by alpha_S, it follows that
+
+    E_mu(L-1)<=15+h/alpha_S
+              <=15+h/a_S<15+(21/125)/(2/125)=51/2.
+
+The fixed margin is independent of layout phases and depths. Maximizing
+the phases after fixing mu, and then exhausting finite exponent boxes,
+proves the all-depth bound in MF10 with its strict margin intact.
+
+Increasing the ordered primes does not increase any profile coefficient
+or envelope cost: use the indexed-subset induction from MF4--MF5.
+Every formerly admissible extension remains admissible. MF11 therefore
+has no smaller reserve, by another subset induction. The auxiliary run
+tails decrease as well, so MF13 has no larger hinge. These comparisons
+transport bounds to the new family's own law; they do not transport
+individual residues or combine sources from different families.
+
+An exactly-nine-prime support omitting7 has eight smaller primes
+dominating the tuple in MF10 and largest prime r>=31. Apply MF10 to its
+actual r-free family, including every required query depth. MF3 gives
+
+    min_y M_r(y)<(53/2)/(r-1)<=53/60<1.           (MF14)
+
+Together with MF9 this proves necessity of3,5,7. No feasible family on
+the remaining supports is supplied. The arbitrary eight-core query
+bound when all three primes are present remains unresolved here.
+[Chapter69](../../docs/reports/erdos7-odd-covering/problem-details/69-eight-prime-cores-omitting-seven.md)
+uses two exact omitted-seven cores in a different attachment interface;
+MF10 does not assert its gluing or transport obligations. This is an
+ordinary deduction and exact arithmetic verification, not a new Lean
+result, a literature-originality claim, or an enlarged bare noncoverage
+range for Erdős#7.
+
+
+### Common-query source laws force the first six odd support primes
+
+The nine-support necessary condition strengthens further: a family
+passing every complete support-prime marginal must contain
+
+    3,5,7,11,13,17.                                  (MF15)
+
+This deduction uses the same attributed ordinary source-construction,
+arbitrary-label convex-comparison and finite transport premises as
+[Report461](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md).
+Those premises are not re-proved by the exact arithmetic consumer.
+The original residues and all finite heights remain arbitrary.
+
+Fix ONE finite period K on the eight core primes resolving the original
+family and every cofactor query to be used. For a probability nu on its
+actual complete survivors, write
+
+    R_K(nu)=sum_(1<d|K) max_b nu(b mod d).
+
+For each proxy below, every coordinatewise larger ordered eight-prime
+core has one law chosen before the query phases, with the stated strict
+bound. No compatibility between laws chosen for different K is claimed.
+
+| Omitted prime | Eight-prime proxy | Fixed query threshold k | Source mass lower | Query bound |
+| --- | --- | ---: | --- | ---: |
+|11|3,5,7,13,17,19,23,29|8|10237584019/168750000000|R_K<14|
+|13|3,5,7,11,17,19,23,29|8|13939935091/337500000000|R_K<18|
+|17|3,5,7,11,13,19,23,29|16|12314552263/675000000000|R_K<27|
+|19|3,5,7,11,13,17,23,29|18|6130736807/450000000000|R_K<34|
+
+The exact rational query upper bounds are approximately
+13.2626300884,17.0993737229,26.2093835488,33.3554002713, respectively.
+The first three rows use source deletion schedule (2,4,4,8,8,12);
+the missing19 row uses (2,4,4,8,12,16). At each nonanchor prime q
+the cap is C_q=(q-1)/(q-1-t_q). The missing19 caps have product77/2.
+The missing11 mass agrees with Chapter68's source calculation. Its
+separate block attachment and graph-gluing assumptions are not used here.
+
+Retain the normalized predeletion kernels as sigma, then restrict to
+the same source survivor event to obtain mu<=sigma. For a complete
+query layout L including the unit cylinder,
+
+    mu(L-1)<=(k-1)*mu(1)+sigma((L-k)_+).              (MF16)
+
+Report461's ordered-increment comparison includes ALL six nonanchor
+coordinates in the auxiliary product M=product_q(1+J_q), where
+Pr(J_q>=e)=C_q/q^e. These independent runs are comparison variables,
+not independent actual source coordinates. Let pi(m)=Pr(M=m), A0 be
+the relaxed anchor carrier mass in135-cell units, W its full linear
+bound, and F(x) its safe anchor hinge bound. Then
+
+    135*sigma((L-k)_+)<=N(k),
+    N(k)=sum_(m<k) m*pi(m)*F(k/m)
+         +(E M-sum_(m<k)m*pi(m))*W
+         -k*(1-sum_(m<k)pi(m))*A0.                  (MF17)
+
+The mean E M=product_q(1+C_q/(q-1)) is complete. For m>=k the anchor
+load is at least one, so the remaining hinge is exactly linear and
+the tail mass and first moment suffice. No infinite tail is dropped.
+If D is the same anchor reserve minus its six source losses, then
+mu(1)>=D/135>0 and normalization yields
+
+    R_K(muhat)<=k-1+N(k)/D.                          (MF18)
+
+The cached anchor bounds have threshold nodes x=t/m for
+t in{2,4,8,12},1<=m<t. For additional source or query ratios, use
+a nonnegative secant between adjacent cached nodes; include x=1
+with bound W-A0. Beyond the largest node12, use F(12). The actual
+hinge is convex and nonincreasing in x, so these are upper bounds.
+Every fixed-node bound is convex in the continuous anchor parameter;
+the secant coefficients depend only on x, hence preserve that
+convexity. W is convex, A0 affine, and the coefficient of W in MF17
+is nonnegative. Thus N(k) remains convex in the anchor parameter.
+
+The same safe extension applies to source deletion losses, including
+the missing19 stage t=16. Chapter31 SV16 permits every integer
+1<=t_i<=q_i-2. With the preceding-coordinate multiplier in place of
+M, the source loss is bounded by N_i(t_i)/(q_i-1-t_i), a convex
+function of the same anchor parameter. All new thresholds satisfy
+this source-kernel condition; the source and query bounds therefore
+refer to one law throughout.
+
+For each row, use ONE k at all32 anchor vertices and check, with its
+coarse bound C,
+
+    (C-k+1)*(reserve-source_losses)-N(k)>0.          (MF19)
+
+The reserve is affine, the unrounded source losses are convex, and
+C-k+1>=0, so the left side is concave and the vertex inequalities
+extend over every anchor simplex. Upward-rounded losses only make
+the vertex checks conservative; rounding itself is not asserted to
+be convex. These are joint inequalities at one source parameter,
+not separately attained numerator and denominator optima.
+
+Report460's finite random prefix injections transport the bound to
+larger actual primes: each pulled-back query is empty or retains its
+numerical exponent vector. Construct and push forward unnormalized
+source laws, average, then normalize once. The inequality
+mu(L-1)<=C*mu(1) is linear before normalization. It therefore holds
+for one transported law and all layouts on the chosen K.
+
+If an exactly-nine-prime family omits11,13 or17, its largest prime
+r>=31 and the other eight primes dominate the corresponding proxy.
+Choose K to resolve the actual r-free originals AND all original
+r-cofactor queries. MF3 gives a marginal strictly below
+15/30,19/30 or28/30, respectively. Each is below one; combining these
+exclusions with MF9--MF14 proves MF15. Finite K already suffices for
+this implication; no inverse-limit law is needed.
+
+For omission of19, every largest prime r>=37 now gives
+min M_r<35/(r-1)<=35/36<1. Hence the largest prime must be31.
+The only nine-prime odd support below or equal to31 that omits19 is
+
+    (3,5,7,11,13,17,23,29,31).
+
+Its feasibility remains unresolved; the bound supplies no actual
+family passing all marginals and no exclusion of this last support.
+
+The existing [query-hinge consumer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/query_stoploss_completion.py)
+with `--eight-core-marginals` reproduces the four rows using exact
+rationals, the pinned source geometry and explicit geometric tails.
+This is an ordinary deduction and numerical verification, not new
+Lean verification, a literature-priority claim, or an enlarged bare
+noncoverage range for Erdős#7.
+
+
 ### Unrestricted fractional phases only recover the reciprocal test
 
 For a fixed nonempty inventory D of nonunit numerical labels, allow one probability vector z_(d,a)

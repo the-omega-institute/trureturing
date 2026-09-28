@@ -1,0 +1,21 @@
+**定义 24.1（原振幅的相空间表示）。** 令 $B:R_d^{L+1}\to R_d^{2L}$ 为第 4 节输出矩阵，$B_{2i,i}=B_{2i+1,i}=B_{2i,i+1}=1$、$B_{2i+1,i+1}=2$，其余为零。定义左逆 $T$：第零行在第零块为 $(2,-1)$，第 $i$ 行在第 $i-1$ 块为 $(-1,1)$，$1\le i\le L$，因此 $TB=I$。令对称矩阵 $Q$ 满足 $Q_{00}=2\alpha$、$Q_{0L}=Q_{L0}=1$，其余为零。对 $u,z\in R_d^n$，使用
+
+$$
+W(u,z)=\omega_d^{u\cdot z/2}X^uZ^z,
+\quad X^u|x\rangle=|x+u\rangle,
+\quad Z^z|x\rangle=\omega_d^{z\cdot x}|x\rangle.
+$$
+
+$1/2$ 是模 $d$ 的逆元。相空间配对为 $[(u,z),(u',z')]=z\cdot u'-u\cdot z'$。令 $N_i$ 在块 $i-1$ 取 $(-1,1)$、在块 $i$ 取 $(-2,1)$，其余为零，$1\le i<L$。取稳定子标签群
+
+$$
+\mathscr S=\operatorname{span}_{R_d}\{(Be_i,T^TQe_i):i\ne j\}
++\operatorname{span}_{R_d}\{(0,N_i):1\le i<L\}.
+$$
+
+逻辑 $X,Z$ 的标签可选
+
+$$
+\ell_X=(Be_j,0),\qquad \ell_Z=(0,T^Te_j).
+$$
+

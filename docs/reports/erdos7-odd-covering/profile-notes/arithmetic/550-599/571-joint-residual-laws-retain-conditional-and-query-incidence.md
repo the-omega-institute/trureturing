@@ -539,6 +539,107 @@ restriction increases its query norm, rather than preserving it.
 JB10 concerns sums of actual query maxima; it does not contradict
 report562's auxiliary query-hinge debit or report569's suffix payoff.
 
+### Complete new-prime fibres force only a sharp pure-prime debit
+
+Requiring some fibres to be completely deleted strengthens the hypothesis
+of JB10, but still need not reduce ANY query maximum with a nonunit old
+factor. This remains true when the old law uniquely minimizes its full
+query norm. The following construction retains arbitrary heights and
+one actual phase per distinct odd numerical label.
+
+First fix a nonempty finite old prime set P, an odd prime q outside P,
+and an old probability mu with finite R_P(mu). Let rho=mu times Haar_q,
+let D be the actual forbidden union and xi=rho|D^c, WITHOUT normalizing.
+Suppose S times the entire q-coordinate is contained in D. Write
+
+    t=mu(S), mu0=mu restricted to S^c,
+    Delta_S=R_P(mu)-R_P(mu0).
+
+For any finite positive old measure v, direct factorization and the full
+geometric sum over positive q-heights give
+
+    R_(P union{q})(v times Haar_q)
+      =q*R_P(v)/(q-1)+v(1)/(q-1).
+
+Since xi<=mu0 times Haar_q, monotonicity of every query maximum implies
+
+    R_(P union{q})(rho)-R_(P union{q})(xi)
+      >=q*Delta_S/(q-1)+t/(q-1).                    (JB10a)
+
+All these norms are finite, so the subtraction is legitimate. In
+particular complete fibre deletion forces the pure-q debit t/(q-1).
+It does not by itself force Delta_S to be positive.
+
+To attain this bound with Delta_S=0, let P consist of odd primes, choose
+p in P and an integer N>=1, and put
+
+    B=product_(r in P) r, d_i=B*p^(i*N), 0<=i<q.
+
+Take exactly q originals, with numerical moduli q*d_i and CRT phases
+
+    A_i={x=0 mod d_i, y=i mod q}.                   (JB10b)
+
+These moduli are distinct odd nonunits. Different q-roots make the
+originals pairwise disjoint, hence irredundant. For example the integer
+d_i*((i*d_i^(-1)) mod q) is private to A_i. There are no old-only
+originals. Use the one old Haar law mu=H_P throughout.
+
+The old cylinders form a nested decreasing chain. All q-roots are
+forbidden exactly over S=[0]_(d_(q-1)), so
+
+    t=1/d_(q-1)>0,
+    epsilon=rho(D)=(1/q)sum_(i=0..q-1)1/d_i>=1/(q*B)>0.
+
+Nevertheless, for EVERY nonunit old numerical query d and every e>=0,
+
+    max_a xi([a]_(d*q^e))=1/(d*q^e)
+                         =max_a rho([a]_(d*q^e)). (JB10c)
+
+Indeed choose the old query phase1 mod d. Some old prime r divides d,
+and every original requires root0 at r because B divides every d_i.
+This cylinder therefore misses every original, regardless of the chosen
+q-phase, and retains its full Haar mass. Deletion cannot increase a
+maximum. The same argument on the old coordinates gives Delta_S=0.
+
+A pure-q query at height e>=1, with first root i, has xi-mass
+q^(-e)*(1-1/d_i). Its maximum occurs at i=q-1. Thus the complete
+all-height debit is EXACTLY
+
+    R_(P union{q})(rho)-R_(P union{q})(xi)=t/(q-1). (JB10d)
+
+This attains JB10a, while every old-bearing query has zero debit.
+For fixed P,q,p and increasing N,
+
+    complete debit / epsilon
+      <=[q/(q-1)]*p^(-(q-1)*N) -->0.              (JB10e)
+
+The total deleted mass stays at least1/(q*B). The saturation mass t,
+however, tends to zero: this does NOT refute a lower bound proportional
+to t, and JB10d identifies that sharp guarantee. It refutes a uniformly
+positive fraction of the TOTAL deleted mass from these premises, even
+though every current root is blocked somewhere. In contrast, JB10 has
+a current root disjoint from the entire deletion.
+
+The old source here is also the UNIQUE minimizer of R_P among all old
+probabilities. Each numerical d partitions the old space into d residue
+cylinders, so its maximum mass is at least1/d. Haar attains equality at
+every label and R_P(H_P)=product_p p/(p-1)-1. Equality of that full sum
+forces equality term by term; all residues at every depth are uniform,
+which determines Haar. Optimality of the old law therefore does not
+repair the missing old-query debit.
+
+More generally, if mu minimizes the old query norm and v<=mu has mass
+u>0, normalization gives R_P(v)>=u*R_P(mu). Thus optimality supplies
+the UPPER bound R_P(mu)-R_P(v)<=(1-u)*R_P(mu) on a deletion debit,
+not a compulsory positive lower bound. The case u=0 has the same
+inequality directly.
+
+These are explicit noncovering, old-coherent families. They do not
+satisfy a hypothetical whole-cover premise, refute the existence of a
+good new survivor law, or prove anything about unrestricted Erdős#7.
+Their role is to delimit saturation and old-law optimality as proposed
+substitutes for the joint query incidence required by JB7--JB9.
+
 ## 6. An exact joint profile can still outperform additive mass charging
 
 For comparison, let nu_p be uniform on n_p allowed first roots with

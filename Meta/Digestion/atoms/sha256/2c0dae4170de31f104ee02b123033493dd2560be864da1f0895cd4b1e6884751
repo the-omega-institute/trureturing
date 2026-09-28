@@ -1,0 +1,4 @@
+## corollary 6.2: 普通高位偏迹
+
+若两侧使用 $W|a+db\rangle=|a\rangle|b\rangle$ 后丢弃高位，则输出有 $p^2$ 个本征值 $p^{-2}$，$S=2\log p$、$\operatorname{Tr}\rho^2=p^{-2}$。
+

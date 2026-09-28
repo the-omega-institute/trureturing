@@ -1,0 +1,46 @@
+### 定义 539.1（同一实际支撑上的比较方向与误差）
+
+固定定义 538.1 的有限非空实际行集 $S=\{(c(x),q(x)):x\in A\}$、活动情境集 $A_q$ 及原目标 $t(k,q)$，仍要求同一实际行具有唯一目标。令 $n_q=|A_q|\ge1$。编码器只读取情境与独立种子，观察者得到整个种子、编码标签和旧读数 $q$；原目标在每个实际行几乎必然恢复。每个实验分别由一个全局充分分划律实现，故其规范剖面属于
+
+$$
+\mathcal P=M\Delta(\Pi_G),\qquad
+W_w^q(C\mid k)=\mathbf1_{\{k\in C\}}w_C^q,
+\qquad \varnothing\ne C\subseteq A_q.
+\tag{539.1}
+$$
+
+所有读数的 $w^q$ 来自同一个分划律 $p_w$；另一个实验 $v$ 可以有自己的共同律 $p_v$。不要求存在源、目标种子的耦合，使两个随机全局分划逐次同时细化。允许的比较核可以读取已经公开的 $q$ 并重新抽样，不能读取未知实际状态；该核本身不必是一个只读情境的公开编码器。
+
+对同一状态集上的实验 $E,F$，定义从 $E$ 模拟 $F$ 的单向缺损
+
+$$
+d(E\longrightarrow F)
+=\inf_K\max_{s\in S}\operatorname{TV}(E_sK,F_s),\qquad
+\operatorname{TV}(\mu,\nu)=\sup_D|\mu(D)-\nu(D)|.
+\tag{539.2}
+$$
+
+上确界遍历输出可测集；有限输出时 $\operatorname{TV}=\tfrac12\sum_y|\mu(y)-\nu(y)|$。下确界遍历全部状态无关 Markov 核，包括会在某些输入上改变 $q$ 的核。有限输出时核集合紧、目标连续，故下确界达到。箭头始终从可用实验指向希望恢复的实验。固定一个 $q$ 时用同一记号表示状态集为 $A_q$ 的局部问题。
+
+下文的逆向上界另有承担结论的精确序假设：$W_v\preceq W_w$，即存在对全部实际行同时成立的精确前向核。按定理 538.3，等价地，对每个 $q$ 给定一组非负子集流
+
+$$
+\sum_{C\supseteq B}f_{BC}^q=w_B^q,
+\qquad
+\sum_{\substack{\varnothing\ne B\subseteq C\\k\in B}}f_{BC}^q=v_C^q
+\quad(k\in C),
+\qquad f_{BC}^q=0\quad\text{若 }B\nsubseteq C.
+\tag{539.3}
+$$
+
+所有块非空。它在 $w_B^q>0$ 时给出前向核 $f_{BC}^q/w_B^q$；零权重源块任意补成概率行。这个假设不由“分别存在每一对的模拟器”替代，也不由近似前向拟合替代。记成对损失
+
+$$
+\Delta_{kl}^q=r_{kl}^q(v)-r_{kl}^q(w),\qquad
+r_{kl}^q(w)=\sum_{C\supseteq\{k,l\}}w_C^q,
+\quad k\ne l.
+\tag{539.4}
+$$
+
+在（539.3）下这些差非负。它衡量成对碰撞增加量；对应等先验二态识别风险的增加量为 $\Delta_{kl}^q/2$。本章的常数均以（539.2）的半 $L^1$ 约定为准。
+

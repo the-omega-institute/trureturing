@@ -4479,3 +4479,183 @@ Theorem 2.3、Theorem 2.4 要求连续实符号 $f,g$ 且 $g\ge0$，
 结论保留原实际 pair/path、紧输出和确定支持一致的概率范围，
 不提供下一输出尺度、任意更快阶数、Shannon 阶或输出平均熵的结论。
 纯理论文本未进入消化或 Lean 冻结链。
+
+## 第 108 章：绝对众数成本与近端包络
+
+[谱边界卷第 108 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把最大后验原子的领先阶成本推进到绝对 $o(1)$ 精度。
+原完整经验最大方差 $v_*$ 保留在放大输出斜率中；
+有限噪声项在逐输出成本中可发散，却在两个输出相减时严格抵消。
+证明覆盖全部最小化元组，不预设唯一最大权重或唯一最优配置。
+
+Jean-Jacques Moreau，*Proximité et dualité dans un espace hilbertien*，
+Bulletin de la Société Mathématique de France **93** (1965)，273–299，
+[Numdam 原文](https://www.numdam.org/item/BSMF_1965__93__273_0/)。
+第 1 节的 $\Gamma_0(H)$ 是实 Hilbert 空间上适当、下半连续的凸扩展实函数。
+Proposition 3.a 给平方距离罚项加该函数的唯一极小点；
+Examples 3.c–3.e 分别处理仿射函数、非空闭凸集的示性函数和两者之和。
+Example 3.e 的答案是先按仿射系数平移再投影。
+取 $H=\mathbb R$、$C=[0,\infty)$、仿射系数 $\delta\sigma^2/(2v_*)$，
+直接得到本章 $e^\circ(h)=(h-\delta\sigma^2/(2v_*))_+$。
+这一步是经典定理的直接应用；它不证明原离散计数成本与仿射成本相差 $o(1)$，
+也不赋予离散实际极小元唯一性。
+原文完整 PDF 的提取含一项数值 token 替换警告；上述法文假设及公式可读，
+未把提取进程成功等同于所有字形无误。
+
+Philippe Mounaix、Satya N. Majumdar、Abhimanyu Banerjee，
+*Bose-Einstein Condensation of a Gaussian Random Field in the Thermodynamic Limit*，
+[arXiv:1111.3229v2](https://arxiv.org/abs/1111.3229v2)。
+Section II 的 (i)–(iii) 假设包括环面上中心齐次 Gaussian 场、归一化正定协方差、
+严格的零频最大协方差模、存在的极限谱、径向对称和谱边缘幂律。
+式 (21)–(24) 把临界强度写为谱亏损倒数的积分；
+边缘指数 $\zeta$ 小于维数 $d$ 时该积分有限，$\zeta\ge d$ 时无限。
+Section III.A 相应排除后者的有限强度凝聚转变。
+这些是热力学极限下条件场质量的结论，不是固定总数离散计数的最大原子公式。
+
+形式上的谱轮廓 $\rho(s)/\rho_0=e^{-\kappa s^2/2}$ 对应一维二次边缘，
+亏损倒数在零附近不可积。这与本卷 $K'(1/(2\rho_0)-)=\infty$ 的边界相容，
+但不构成原计数模型的凝聚或非凝聚定理。
+尤其不能从“单个最大方差坐标给可行上界”推导“典型后验质量凝聚于该坐标”。
+本章未采用严格最大值或谱间隙假设。
+所取版本横幅为 2012 年 1 月 30 日的 v2，PDF 内部日期为 2021 年 9 月 6 日；
+两种日期原样区分，不由内部日期推断另一个版本。
+
+本章的实际模型内容是完整有限经验系数比较、全元组离散曲率下界、
+同一数据纤维的整数上界构造，以及原噪声精度下的绝对成本拼接。
+普通密度归一化由第 105 章的实际相对鞍点比较推出，没有以弱收敛替代密度定理。
+经典包络法、二项对数凹性及 Stirling 展开分别归属其成熟来源；
+有限文献核查不认证全局原创。结论仍是纯理论文本，未进入 Lean 或消化链。
+
+## 第 109 章：半整数带、theta 标记与未闭合的方差抵消
+
+[谱边界卷第 109 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在 $\ln(1/\sigma)\to\infty$ 且任意 $\Delta=\ln(q/Q^{11/4})-\ln(1/\sigma)\to\infty$ 下证明实际标量输出的
+加权 $L^1$ 平滑，并将前两阶信息标记的剩余项定位于非零半整数共振带。
+原完整信息方差定理仍缺带内中心抵消和输出尾部控制，未由标量结果自动推出。
+
+Daniele Agostini、Carlos Améndola，*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)。
+Section 2 定义采用 $e(x)=\exp(2\pi x)$，复对称矩阵的实部正定；
+参数还必须避开 theta 零除子才能形成归一化分布。
+Proposition 4.1、Remark 4.2（PDF 第 11–12 页及对应原 TeX）
+把特征函数写成移位 theta 比，把矩写成 theta 导数、累积量写成对数导数；
+协方差分子是 $\theta\theta''-(\theta')^2$，并由热方程联系线性与二次倾斜。
+这些基本公式在原文亦归属此前离散 Gaussian 文献。
+
+本章一维 Gaussian 相位对应矩阵参数
+$B_{\rm theta}=1/(2\pi d)-2i\tau$、线性参数
+$u_{\rm theta}=m/(2\pi d)+ib/(2\pi)$，实部条件成立。
+但复杂经验相位处的 theta 分母未获一致非零保证；
+因此本章保留不除以单坐标因子的有限乘积标记公式。
+该文没有给原二项信息标记、固定总数选中律或增长数组下的统一二阶导数估计，
+也不支付条件方差比较的全输出尾部。
+
+J. P. Buhler、A. C. Gamst、R. L. Graham、A. W. Hales，
+*Explicit error bounds for lattice Edgeworth expansions*，
+[arXiv:1710.08845v1](https://arxiv.org/abs/1710.08845v1)。
+Theorem 1 与 Section 1（PDF 第 1–4 页）处理有界、非退化整数随机变量的 iid 和，
+固定格距与平移，给均值两侧概率差的一阶偏度及同余修正；
+归一化表述把格距设为一，允许实平移。
+版本横幅为 2017 年 10 月 24 日，内部标题日期为 2018 年 9 月 12 日，二者区分。
+这说明格点修正须保留自己的算术条件，
+并非直接适用于本章非同分布二次计数、经验实中心、Gaussian 平滑及两个信息标记。
+骰子例子也不构成原实际计数模型的反例。
+
+第 106 章已核对的 Cellarosi–Marklof [arXiv:1501.07661v2](https://arxiv.org/abs/1501.07661v2)
+的 theta 变换及 Lemmas 3.18–3.19 提供经典 cusp/移位包络关系；
+Baker [arXiv:2103.05555v1](https://arxiv.org/abs/2103.05555v1)
+Section 2、Lemma 3 的完整 Gauss 和界保持其互素条件。
+它们的分布性或最大估计不替代原共同环境的量化相位分离。
+本章另直接证明小分母收缩与单模宽度：分母一、二只有一个模为一的 Fourier 模，
+更大固定分母有严格收缩；使用全部可用中心因子将每个共振带物理积分宽度降至常数。
+
+条件方差的共同调制抵消和信息倾斜二阶导数是经典条件矩与指数族恒等式，
+不被另称为新通用定理。这里的模型内内容是实际标记 Fourier 定位、
+无逆噪声的选中标量回接，以及保留精确中心、完整外部相关性和同一测量残差的接口。
+原中心有理独立只排除精确共振，不给所需的近共振速率。
+有限原文检索未找到直接承担全部剩余估计的结果，不认证其不存在或全局原创。
+纯理论文本未进入 Lean、消化或冻结链。
+
+## 第 110 章：有限 Gibbs 响应、Prékopa 边缘与高阶端点
+
+[谱边界卷第 110 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在原半指数噪声条件、固定原幅度与固定 $\beta$ 下，把紧输出的 Rényi 熵差
+一致延伸到 $\alpha\ge a_Q$ 的整个无界区间，其中 $a_Q\sqrt\delta\to\infty$。
+更强的有限阶因子公式覆盖每个固定 $c>0$ 的 $\alpha\ge c/\sqrt\delta$；
+当 $\alpha\sqrt\delta\to c$，相对最小熵响应留下 $y/(2c\rho_0)$。
+经验最大方差保留在放大中心中，收敛仍为实际数据概率、支持一致、pair/path 分别成立。
+
+John C. Baez，*Rényi Entropy and Free Energy*，
+[arXiv:1102.2098v4](https://arxiv.org/abs/1102.2098v4)。
+完整五页原文的 Section 1 equations (1)–(2)、Section 2 equations (3)–(9)
+把有限正概率写成 Gibbs 分布，并将 Rényi 熵表示为自由能差商。
+原文注明 Beck–Schlögl 等已有相关恒等式；本章精确幂后验恒等式属于这一经典代数。
+计数元组保留原二项质量及乘数，不能换成微观标签的等概率状态。
+该文不给增长维数和阶数下的统一响应、稀有能量输出回接或实际路径行估计。
+版本横幅为 2022 年 5 月 17 日，内部标题日期为 5 月 18 日，两者区分。
+原 PDF 第 3 页与原 TeX 中，equation (9) 前一个未使用中间式缺少所需对数符号；
+这里使用可读的 (9) 与正文直接有限求和，不依赖该中间式。
+
+Dario Cordero-Erausquin，*On matrix-valued log-concavity and related Prékopa and Brascamp–Lieb inequalities*，
+[arXiv:1801.04862v1](https://arxiv.org/abs/1801.04862v1)。
+Theorem 1（PDF 第 2 页）对 $C^2$、正定、逐纤维可积的矩阵值 N-log-concave 函数，
+给边缘仍为 N-log-concave；矩阵维数一就是经典 Prékopa 对数凹边缘定理。
+Section 4（第 14–17 页）的 Proposition 10、Fact 11 及结尾证明已核对。
+本章用明确的光滑正函数逼近 Gaussian 密度乘凸球上图集指标，
+以支配收敛核对非中心、非等方差有限数组下的小球 CDF 对数凹性。
+该定理只给每个有限维度的定性凹性；维度一致的小球下界、对数导数界与卷积尾界由本章另证。
+不把平方和密度本身说成对数凹。
+原文 reference [8] 归属 Prékopa 1971 年论文；另查的 1973 年原文未取得，未冒称已读。
+两份当前原 PDF 的字体提取警告保留为来源边界，可读原命题与直接推导承担所用结论。
+
+第 108 章已核对的 Mounaix–Majumdar–Banerjee
+[arXiv:1111.3229v2](https://arxiv.org/abs/1111.3229v2)
+讨论不同的 Gaussian 场凝聚问题，其齐次性、维数和谱端条件不直接承担本章原计数定理。
+本章从原经验剖面证明 $v_*=v_0$ 及 $1-v_j/v_0\gtrsim\min(j^2\delta^2,1)$，
+再对非最大模作合法临界倾斜，保留最大平方的未归一化核。
+有限 CDF 控制全部非最大模，未由端点优化推出典型单模凝聚。
+
+本章新增综合连接是原缩小谱隙、逆平方权重的小球支付、
+至 $Q^6$ 的原计数幂律相对比较，以及由 $\ln N\le CQ^5$ 与无穷阶重叠。
+有限支持的 $H_\alpha-H_\infty$ 界分别用于两个输出，未推断熵差单调。
+有限文献检索不认证全局原创；未给无界输出、期望熵、Shannon 端点或更宽噪声结论。
+纯理论正文未进入 Lean、消化或冻结链。
+
+## 第 111 章：格点惊异比较、Gaussian 标记积分与条件方差接口
+
+[谱边界卷第 111 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+给出同整数坐标上的二项／离散 Gaussian 中心惊异比较，
+通过共同带噪通道的有符号核收缩，将原完整方差熵目标归约为格点大组问题。
+大组和原外部组都保留各自惊异与能量的共同实现；实际固定总数选择由原中心方差比较支付。
+归约不依赖输出密度下界或把能量误差除以噪声宽度。
+
+第 109 章已核对的 Agostini–Amendola，
+*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)，
+仍提供离散 Gaussian、theta 正规化和矩的经典背景。
+其既有 Proposition 4.1 与 Remark 4.2 不自动给出本章原二项中心惊异的有符号质量误差、
+增长数组的全输出条件方差比较或原 path 数据范围。
+本章的 $d^{-1/8}$ 比较明确给出 Stirling 中央余项、加权尾与精确中心的支付。
+共同正核的 $L^1$ 收缩和条件均值的截断变分公式属于成熟测度与条件期望方法。
+
+Denis S. Grebenkov，*Optimal and sub-optimal quadratic forms for non-centered Gaussian processes*，
+[arXiv:1307.0185v1](https://arxiv.org/abs/1307.0185v1)。
+原 TeX Section II 给 Gaussian 二次型特征函数、迹展开及非中心累积量。
+其模型是离散时间的连续值 Gaussian 向量，不能把 “discrete-time” 当作整数格点概率。
+本章以原有限 Gaussian 积分直接核对零、一、二阶惊异标记，
+保留复均值和方差后得到聚合扭转能量乘 Gaussian 衰减；
+再将所有实际 Poisson 模求和，逐坐标正规化接近一，故没有隐藏指数维数因子。
+Gaussian 平方完成和矩求导本身不主张新意。
+版本标识为 2013 年；当前 PDF 标题日期为 2018 年，原 TeX 使用日期宏，两者区分。
+
+完整补偿后，任意实扭转的非零半整数混叠绝对积分为
+$Ce^{-ce^{2\Delta}}+O(Q^{-400})$，不乘增长的 $Q$ 次幂。
+只减先验方差的弱补偿则在原渐近权重上留下 $A\asymp Q^{1/4}$ 的参考扭转项。
+所选参考扭转未被证明由原经验中心实现，故这个反例只限定估计方法。
+频率相关复中心与逐输出条件均值仍是不同对象，完整非线性条件方差和尾部接口保持开放。
+
+另检索 DOI [10.1214/aop/1176994310](https://doi.org/10.1214/aop/1176994310)
+的全文入口只得到 HTML 阻断，未将其计作已读原文或定理依据。
+有限文献检索不认证全局原创。
+本章是原模型中的综合推导，未进入 Lean、消化或冻结链；
+全余量下的实际方差熵极限仍未解决。
