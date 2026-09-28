@@ -399,6 +399,7 @@ $$
 可复用的项目接口包括 `SourceTreeEncoding`、`ControlledBehaviorUniversality`、`PrimeAxisEncoding`、`HFEncoding` 和 `FiniteGraphEncoding`。真正的形式化交付仍须先在消化账本中定位 atom，再依 §3.2 的准入规则判断是否存在新的逃逸内容；本卷本身不执行该流程。
 
 ## 追加锚（本行以下为增补区）
+
 ## 13. 与递归时空全息几何的关系
 
 本节把本卷的 Fibonacci 结构接到仓内已有的“动态充分边界”和“算术全息 RT”语言。这里的“体”“边界”“径向层”是一个有限关系模型中的角色名；它们不自动成为物理时空、引力体或 AdS/CFT 对偶。仓内 `RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md` 的动态充分边界判据，以及 `ARITHMETIC_HOLOGRAPHIC_RT.md` 对有限网络与物理 RT 的分界，都是本节的边界条件。
@@ -1755,5 +1756,800 @@ $$
 需要独立解决的开放桥梁包括：有限关系网络到项目行为商的正式 Lean 接口、记录路径的最小性合同、闭环熵公式的完整状态空间证明、算术标签到 Hilbert 张量的统一函子，以及任何物理解释所需的动力学和测量公理。
 
 本批状态：纯理论追加，保留精确适用条件和上述 open 边界。形式化、消化、冻结与远程合并状态以项目机器读数为准。
+
+## 25. 进位关系与层级连接
+
+本批把前面的端口关系继续提升到分辨率塔。低层坐标和高层坐标的集合分解是可逆的，但运算是否分层，取决于进位关系是否被保留。
+
+### definition 25.1 两层数字分解与进位
+
+令 $D=de$，把 $x\in\mathbb Z/D\mathbb Z$ 写成
+
+$$
+x=a+db,
+\qquad 0\le a<d,\quad 0\le b<e.
+$$
+
+这是集合双射
+
+$$
+\mathbb Z/D\mathbb Z
+\longleftrightarrow
+\{0,\ldots,d-1\}\times\{0,\ldots,e-1\}.
+$$
+
+对 $y=c+df$，定义低位进位
+
+$$
+\boxed{
+\kappa_d(a,c)=\frac{a+c-[a+c]_d}{d}.
+}
+$$
+
+于是
+
+$$
+x+y=[a+c]_d+d\bigl(b+f+\kappa_d(a,c)\bigr),
+$$
+
+其中高位结果再模 $e$。高层后继因此等于高层自己的加法和低层共同关系产生的进位。
+
+### theorem 25.2 进位满足接续相容律
+
+$$
+\boxed{
+\kappa_d(a,c)+\kappa_d([a+c]_d,z)
+=
+\kappa_d(c,z)+\kappa_d(a,[c+z]_d).
+}
+$$
+
+**证明。** 两边都等于
+
+$$
+\frac{a+c+z-[a+c+z]_d}{d}.
+$$
+
+所以不同的二元拼接顺序携带相同的总进位。证毕。 $\square$
+
+### proposition 25.3 层间加法分裂的互素条件
+
+对标准短序列
+
+$$
+0\longrightarrow\mathbb Z/e\mathbb Z
+\overset{\times d}{\longrightarrow}\mathbb Z/de\mathbb Z
+\longrightarrow\mathbb Z/d\mathbb Z
+\longrightarrow0
+$$
+
+存在保持加法的截面，当且仅当
+
+$$
+\boxed{\gcd(d,e)=1.}
+$$
+
+**证明。** 截面由 $1$ 的像 $t$ 决定，必须满足 $t\equiv1\pmod d$ 且 $dt\equiv0\pmod{de}$，即 $e\mid t$。这两个条件可同时满足恰当且仅当 $d,e$ 互素。证毕。 $\square$
+
+所以不同素数方向可以用 CRT 分离；同一素数的连续精度通常不能拆成独立层，而要由进位耦合。
+
+## 26. 递归操作的跨尺度运输
+
+### definition 26.1 整数操作的进位函数
+
+令 $T$ 为整数矩阵，低层代表为 $a$。定义
+
+$$
+\boxed{
+c_T(a)=\frac{Ta-[Ta]_d}{d}\pmod e.
+}
+$$
+
+则
+
+$$
+\boxed{
+T(a+db)\longleftrightarrow
+\bigl([Ta]_d,\,Tb+c_T(a)\bigr).
+}
+$$
+
+对 Fibonacci 更新 $M(a_0,a_1)=(a_1,a_0+a_1)$，其低层进位为
+
+$$
+\boxed{
+c_M(a_0,a_1)=left(0,\left\lfloor\frac{a_0+a_1}{d}\right\rfloor\right).
+}
+$$
+
+### theorem 26.2 操作复合的进位律
+
+对整数矩阵 $T,U$，有
+
+$$
+\boxed{
+c_{TU}(a)=T c_U(a)+c_T([Ua]_d)\pmod e.
+}
+$$
+
+**证明。** 先写 $Ua=[Ua]_d+d c_U(a)$，再施加 $T$ 并对 $T[Ua]_d$ 作同一低高分解。证毕。 $\square$
+
+低位取模与整数线性更新相容，因而低位动力学可以闭合；这不表示低层和高层独立，也不表示量子态在丢弃高层后仍保持纯态。仓库已有的联合进位修正正是为保留后一种联合关系。
+
+## 27. 线性关系网络的细层提升障碍
+
+### definition 27.1 模数关系网络
+
+令 $A\in\operatorname{Mat}_{r\times s}(\mathbb Z)$，并定义
+
+$$
+\mathcal S_n=\{x\in(\mathbb Z/n\mathbb Z)^s:Ax=0\}.
+$$
+
+$A$ 可以同时包含局部递推、共享端口一致性和闭环约束。取 $a\in\mathcal S_d$ 的整数代表 $\widetilde a$，于是 $A\widetilde a=d\,\kappa_A(a)$。
+
+### theorem 27.2 跨尺度提升障碍
+
+定义
+
+$$
+\boxed{
+\delta_{d,e}(a)=
+\left[\frac{A\widetilde a}{d}\right]
+\in
+\frac{(\mathbb Z/e\mathbb Z)^r}{\operatorname{im}(A\bmod e)}.
+}
+$$
+
+则
+
+$$
+\boxed{
+a\text{ 能提升为 }\mathcal S_{de}\text{ 中的状态}
+\iff
+\delta_{d,e}(a)=0.
+}
+$$
+
+该定义与代表选择无关：若 $\widetilde a'=\widetilde a+dt$，则商中的残差只增加 $At$。
+
+**证明。** 细层候选写成 $x=\widetilde a+db$。条件 $Ax=0\pmod{de}$ 等价于
+
+$$
+Ab=-\frac{A\widetilde a}{d}\pmod e,
+$$
+
+这恰好表示残差属于 $\operatorname{im}(A\bmod e)$。证毕。 $\square$
+
+令 $Y_{d,e}=\ker\delta_{d,e}\subseteq\mathcal S_d$。对每个 $a\in Y_{d,e}$，高层解是某个陪集 $b_0(a)+\mathcal S_e$，故
+
+$$
+\boxed{
+|\mathcal S_{de}|=|Y_{d,e}|\,|\mathcal S_e|.
+}
+$$
+
+相应地，以下序列在核与像处正合：
+
+$$
+0\longrightarrow\mathcal S_e
+\overset{\times d}{\longrightarrow}\mathcal S_{de}
+\longrightarrow\mathcal S_d
+\overset{\delta_{d,e}}{\longrightarrow}
+\operatorname{coker}(A\bmod e).
+$$
+
+因此每层分别存在合法状态，并不意味着任意粗层状态都能沿同一相容路径细化。
+
+## 28. 量子粗化与进位相干
+
+### definition 28.1 均匀相容态
+
+在明确加入 Hilbert 空间和计算基后，定义
+
+$$
+|\Psi_n\rangle
+=
+\frac1{\sqrt{|\mathcal S_n|}}
+\sum_{x\in\mathcal S_n}|x\rangle.
+$$
+
+按 $x=\widetilde a+db$ 分解，细层态为
+
+$$
+|\Psi_{de}\rangle
+=
+\frac1{\sqrt{|Y_{d,e}|\,|\mathcal S_e|}}
+\sum_{a\in Y_{d,e}}
+\sum_{z\in\mathcal S_e}
+|a\rangle|b_0(a)+z\rangle.
+$$
+
+### theorem 28.2 受控进位修正后的层级分解
+
+对每个可提升的 $a$ 选定高层解 $b_0(a)$，定义受控置换
+
+$$
+U|a\rangle|b\rangle=|a\rangle|b-b_0(a)\rangle.
+$$
+
+在无效低层标签上任意延拓为全空间置换，则
+
+$$
+\boxed{
+U|\Psi_{de}\rangle
+=|\Psi_{Y_{d,e}}\rangle\otimes|\Psi_e\rangle.
+}
+$$
+
+**证明。** 每个细层纤维恰为 $b_0(a)+\mathcal S_e$；减去受控代表后，所有高层求和都相同，因而分离。证毕。 $\square$
+
+这是均匀相容态的结论。对任意未知输入，$U$ 只是可逆坐标变换，并不自动把输入态变成两层乘积态；$b_0(a)$ 的取得也可能需要跨多个节点的联合操作。
+
+### proposition 28.3 $T_9$ 直接丢高层时的混合谱
+
+对四腿态
+
+$$
+|T_n\rangle=\frac1n\sum_{x,y\in\mathbb Z/n\mathbb Z}|x,y,x+y,x+2y|,
+$$
+
+取 $n=9$ 并写 $x=a+3b$、$y=c+3f$。输出进位为
+
+$$
+\kappa_1=\left\lfloor\frac{a+c}{3}\right\rfloor,
+\qquad
+\kappa_2=\left\lfloor\frac{a+2c}{3}\right\rfloor.
+$$
+
+九个低层输入的进位对计数为
+
+$$
+\begin{array}{c|cccc}
+(\kappa_1,\kappa_2)&(0,0)&(0,1)&(1,1)&(1,2)\\ \hline
+\text{次数}&4&2&2&1
+\end{array}
+$$
+
+直接对高层取偏迹时，低层约化态的非零谱为
+
+$$
+\boxed{\left\{\frac49,\frac29,\frac29,\frac19\right\}},
+$$
+
+从而
+
+$$
+\boxed{S(\rho_{\mathrm{low}})=2\log3-\frac43\log2.}
+$$
+
+按低位联合信息从输出高位减去 $\kappa_1,\kappa_2$ 后，则有
+
+$$
+|T_9\rangle\longmapsto|T_3\rangle\otimes|T_3\rangle.
+$$
+
+所以混合谱正是未处理的进位记录，而不是抽象的“层级信息损失”。
+
+## 29. 闭环隐藏核与相容极限
+
+### definition 29.1 三节点闭环的隐藏核
+
+令
+
+$$
+B=\begin{pmatrix}1&2&0\\0&1&2\\2&0&1\end{pmatrix},
+\qquad
+K_r=\ker(B\bmod3^r).
+$$
+
+$K_r$ 只记录边界看不见的内部差异，不是全部内部允许状态。
+
+### proposition 29.2 每层隐藏数稳定但不形成无限线程
+
+闭环递推给出 $x_{i+1}=-2^{-1}x_i$ 及 $9x_0=0\pmod{3^r}$，因此
+
+$$
+|K_r|=3^{\min(r,2)}.
+$$
+
+特别地，$|K_1|=3$、$|K_2|=9$，并且从 $K_{r+2}$ 自然约化到 $K_r$ 的像为零：高层核中的 $x_0$ 被 $3^r$ 整除。
+
+### theorem 29.3 相容隐藏线程的逆极限为零
+
+$$
+\boxed{
+\operatorname{im}(K_{r+2}\to K_r)=\{0\},
+\qquad
+\varprojlim_rK_r=\{0\}.
+}
+$$
+
+**证明。** 模 $3^{r+2}$ 的隐藏条件要求 $x_0$ 是 $3^r$ 的倍数，其余坐标由 $x_0$ 决定；约化模 $3^r$ 后整个向量为零。相容线程的每个分量都来自更高两层，故只能为零。证毕。 $\square$
+
+例如模9的隐藏差异 $(1,4,7)$ 满足 $B(1,4,7)=(9,18,9)$，但写成 $x=a+9b$ 提升到模27要求 $Bb=-(1,2,1)\pmod3$，右侧坐标和非零，而 $B\bmod3$ 的输出坐标和恒为零。因此它不能保持隐藏，只能在细边界暴露。
+
+## 30. 恢复精度滞后与 Smith 因子
+
+### theorem 30.1 三节点闭环需要两级三进精度
+
+若 $y=Bx$，则
+
+$$
+\begin{aligned}
+9x_0&=y_0-2y_1+4y_2,\\
+9x_1&=4y_0+y_1-2y_2,\\
+9x_2&=-2y_0+4y_1+y_2.
+\end{aligned}
+$$
+
+所以 $y\bmod3^{r+2}$ 能恢复 $x\bmod3^r$。只给 $y\bmod3^{r+1}$ 不够：
+
+$$
+\Delta x=3^{r-1}(4,-2,1)
+$$
+
+在模 $3^r$ 下非零，而 $B\Delta x=3^{r-1}(0,0,9)\equiv0\pmod{3^{r+1}}$。
+
+这里的两级是分辨率滞后，不是未经桥接的物理时间延迟。
+
+### theorem 30.2 一般整数矩阵的恢复滞后
+
+设方阵 $B$ 的行列式非零，Smith 标准形为
+
+$$
+UBV=\operatorname{diag}(s_1,\ldots,s_q),
+$$
+
+其中 $U,V$ 整数可逆，令 $\nu_i=v_p(s_i)$。则
+
+$$
+\boxed{
+|\ker(B\bmod p^r)|=p^{\sum_i\min(r,\nu_i)}.
+}
+$$
+
+从 $Bx\bmod p^{r+t}$ 统一恢复 $x\bmod p^r$ 所需的最小额外精度为
+
+$$
+\boxed{t_{\min}=\max_i\nu_i.}
+$$
+
+**证明。** 整数可逆换基不改变模 $p^r$ 的恢复性，故只需研究标量乘法 $z_i\mapsto s_i z_i$。其核大小为 $p^{\min(r,\nu_i)}$；已知输出多 $\max_i\nu_i$ 位足以逐项消去因子，不足该数时对应方向仍有不可见差异。证毕。 $\square$
+
+因此
+
+$$
+\sum_i\min(r,\nu_i)
+$$
+
+计量当前未区分的信息量，而 $\max_i\nu_i$ 计量最坏方向的恢复滞后。二者不能混同。
+
+## 31. 跨尺度全息的交换条件
+
+### definition 31.1 同一整体的跨尺度编码
+
+设 $\mathcal E_D$、$\mathcal E_d$ 是内部到边界的编码，$\mathcal Q_{D,d}$ 是内部粗化，$\mathcal R_{D,d}$ 是边界粗化。一个跨尺度编码系统要求对声明的全部输入满足
+
+$$
+\boxed{
+\mathcal R_{D,d}\circ\mathcal E_D
+=
+\mathcal E_d\circ\mathcal Q_{D,d}.
+}
+$$
+
+三个尺度还应满足
+
+$$
+\boxed{
+\mathcal R_{d,f}\circ\mathcal R_{D,d}=\mathcal R_{D,f}.
+}
+$$
+
+这两个等式把“属于同一个整体”写成交换图，而不是只比较每层状态数。对关系网络，首先还必须检查粗层状态的提升障碍是否为零。
+
+### definition 31.2 算术恢复谱
+
+对固定边界关系矩阵 $B$，定义
+
+$$
+\boxed{
+\mathfrak D(B)=\{(p;\nu_1(p),\ldots,\nu_q(p))\}_p,
+}
+$$
+
+其中 $\nu_i(p)$ 是 Smith 因子的 $p$-进指数。它同时记录素数方向上的碰撞数量、各层未区分信息量和最坏恢复精度滞后。
+
+该谱在整数可逆换基下不变，但依赖实际关系系数和边界选择，不能称为只由裸图拓扑决定的不变量。局部 Fibonacci 更新满足 $\det M=-1$，因而没有恢复滞后；三节点闭环满足 $\det B=9$，故产生两级三进滞后。
+
+## 32. 本批跨尺度结论与边界
+
+同一关系系统现在有三个彼此不同但必须相容的方向：
+
+$$
+\boxed{
+\text{事件方向：合法操作与记录接续};\quad
+\text{精度方向：进位与提升障碍};\quad
+\text{区域方向：局部拼接与闭环约束}.
+}
+$$
+
+本批证明或直接构造了进位接续律、操作复合进位律、线性网络的提升障碍、均匀相容态的受控分解、$T_9$ 的未修正混合谱、闭环隐藏核的零逆极限以及 Smith 因子给出的恢复滞后。它们仍分别依赖所声明的模数、关系矩阵、态、边界和精度合同。
+
+本批没有声称：
+
+- 各层局部合法就自动存在共同的无限相容整体；
+- 经典余数约化自动保留任意量子输入的相干性；
+- 每层隐藏状态的数量等于无限隐藏历史的数量；
+- 恢复精度滞后就是物理时间、曲率、引力或光速；
+- 算术恢复谱只由网络拓扑决定，或已经给出现实全息时空模型。
+
+新增的 Lean 接口、任意关系网络的统一量子函子、有限深度实现成本，以及物理动力学桥梁均保持 open。本批仍是纯理论追加，有限核验不替代 Lean 编译或项目冻结。
+
+## 33. 边界缺陷群：核与余核的共同来源
+
+本批把前两批的隐藏方向、合法边界、量子谱和恢复记录统一到一个整数缺陷群中。这里的边界矩阵是关系网络经消元和缝合后得到的模型数据；缺陷群不被解释为只由裸图拓扑决定的不变量。
+
+### definition 33.1 整数边界缺陷群
+
+令内部和形式边界均为整数格，取
+
+$$
+ y=Bx,
+ \qquad B\in\operatorname{Mat}_d(\mathbb Z),
+ \qquad \det B\ne0.
+$$
+
+定义
+
+$$
+\boxed{\mathcal D_B=\mathbb Z^d/B\mathbb Z^d.}
+$$
+
+它记录形式上可写出的边界与实际具有整数内部来源的边界之间的差别。由 Smith 标准形
+
+$$
+UBV=\operatorname{diag}(s_1,\ldots,s_d),
+\qquad s_i>0,\quad s_i\mid s_{i+1},
+$$
+
+得到
+
+$$
+\boxed{\mathcal D_B\cong\bigoplus_i\mathbb Z/s_i\mathbb Z,\qquad |\mathcal D_B|=|\det B|.}
+$$
+
+### definition 33.2 有限精度的核与余核
+
+固定素数 $p$ 和 $r\ge1$，令 $G_r=(\mathbb Z/p^r\mathbb Z)^d$，并记 $B_r$ 为模 $p^r$ 的约化。定义
+
+$$
+K_r=\ker B_r,
+\qquad
+C_r=G_r/\operatorname{im}B_r.
+$$
+
+$K_r$ 表示同一边界背后的内部混同，$C_r$ 表示没有任何内部来源的形式边界类别。
+
+### theorem 33.3 核与余核来自同一个缺陷群
+
+令 $\mathcal D_B[p^r]=\{z\in\mathcal D_B:p^rz=0\}$。则
+
+$$
+\boxed{K_r\cong\mathcal D_B[p^r],\qquad C_r\cong\mathcal D_B/p^r\mathcal D_B.}
+$$
+
+**证明。** 对 $x\in K_r$ 取整数代表 $\widetilde x$，定义
+
+$$
+\alpha_r(x)=\left[\frac{B\widetilde x}{p^r}\right]\in\mathcal D_B.
+$$
+
+更换代表只增加 $B\mathbb Z^d$，故无歧义；其像被 $p^r$ 消去。若像为零，$B$ 在整数格上单射，得到 $\widetilde x\in p^r\mathbb Z^d$，所以 $x=0$。反过来，$p^r[y]=0$ 恰好给出 $p^ry=Bx$ 的核原像。余核同构直接由
+
+$$
+G_r/\operatorname{im}B_r\cong\mathbb Z^d/(B\mathbb Z^d+p^r\mathbb Z^d)
+$$
+
+得到。证毕。 $\square$
+
+## 34. 相容极限消除内部混同，但保留边界约束
+
+### theorem 34.1 两种缺陷的跨尺度映射
+
+在定理 33.3 的识别下，核的自然约化对应
+
+$$
+\boxed{\mathcal D_B[p^{r+1}]\overset{\times p}{\longrightarrow}\mathcal D_B[p^r],}
+$$
+
+而余核对应商约化
+
+$$
+\mathcal D_B/p^{r+1}\mathcal D_B
+\longrightarrow
+\mathcal D_B/p^r\mathcal D_B.
+$$
+
+因为对同一代表有
+
+$$
+\left[\frac{B\widetilde x}{p^r}\right]
+=p\left[\frac{B\widetilde x}{p^{r+1}}\right].
+$$
+
+所以相邻精度的核即使有相同大小，也不必按恒等方式对应。
+
+### theorem 34.2 完整相容极限
+
+令 $\mathcal D_{B,p}$ 为 $\mathcal D_B$ 的 $p$-主子群，则
+
+$$
+\boxed{\varprojlim_rK_r=0,\qquad \varprojlim_rC_r\cong\mathcal D_{B,p}.}
+$$
+
+等价地，在 $p$-进整数上有
+
+$$
+\boxed{0\longrightarrow\mathbb Z_p^d\overset B\longrightarrow\mathbb Z_p^d\longrightarrow\mathcal D_{B,p}\longrightarrow0.}
+$$
+
+**证明。** 取 $t$ 使 $p^t\mathcal D_{B,p}=0$。相容核线程满足 $z_r=p^tz_{r+t}=0$。余核商在 $r$ 超过所有 $p$-幂阶后稳定为 $\mathcal D_{B,p}$。Smith 坐标中这分别是 $p$-进整数上非零标量乘法的单射性和有限商 $\mathbb Z_p/s_i\mathbb Z_p$。证毕。 $\square$
+
+因此“隐藏线程消失”不等于边界任意自由；准确说法是实际边界有唯一内部来源，但并非每个形式边界都可实现。
+
+### proposition 34.3 三节点环的模九边界条件
+
+取
+
+$$
+B=\begin{pmatrix}1&2&0\\0&1&2\\2&0&1\end{pmatrix}.
+$$
+
+其 Smith 因子为 $(1,1,9)$，所以 $\mathcal D_B\cong\mathbb Z/9\mathbb Z$。令 $s(y)=y_0-2y_1+4y_2$。由于
+
+$$
+(1,-2,4)B=(9,0,0),
+$$
+
+实际边界满足 $s(y)\equiv0\pmod9$；这也是充分条件，因为
+
+$$
+\begin{aligned}
+9x_0&=y_0-2y_1+4y_2,\\
+9x_1&=4y_0+y_1-2y_2,\\
+9x_2&=-2y_0+4y_1+y_2.
+\end{aligned}
+$$
+
+后三个分子模9分别为 $s(y),4s(y),-2s(y)$。所以闭环留下的是一条九值边界约束，而不是九条永远隐藏的内部线程。
+
+## 35. 相位校验与边界熵亏损
+
+令 $q=p^r$，$G=(\mathbb Z/q\mathbb Z)^d$，并定义
+
+$$
+Z_B=\ker(B^{\mathsf T}\bmod q).
+$$
+
+### theorem 35.1 合法边界的相位校验
+
+$$
+\boxed{
+\mathbf1_{\operatorname{im}B}(y)
+=\frac1{|Z_B|}\sum_{z\in Z_B}
+\exp\left(\frac{2\pi i}{q}z^{\mathsf T}y\right).
+}
+$$
+
+**证明。** 若 $y=Bx$，所有相位均为1。若 $y$ 不在像中，有限群字符对偶性给出一个 $z\in Z_B$ 使相位非平凡；把求和指标整体平移该 $z$，总和乘上一个不等于1的因子，故只能为零。证毕。 $\square$
+
+这把“边界合法”写成全部指定相位校验一致；它是编码合法性判据，不是一般整数的素数标签。
+
+### proposition 35.2 有限相干态的边界谱
+
+明确选择有限 Hilbert 空间和等权相干叠加，令
+
+$$
+|\Psi_B\rangle=\frac1{\sqrt{|G|}}\sum_{x\in G}|x\rangle|Bx\rangle.
+$$
+
+边界约化态为
+
+$$
+\rho_\partial=\frac{|\ker B|}{|G|}\sum_{y\in\operatorname{im}B}|y\rangle\langle y|,
+$$
+
+所以
+
+$$
+\boxed{S(\rho_\partial)=\log|G|-\log|\ker B|.}
+$$
+
+每个实际边界标签有同样多的内部原像，故偏迹后的非零本征值相等。对方阵而言 $|\ker B|=|\operatorname{coker}B|$，于是同一个整数缺陷同时给出内部混同、边界约束和相对于满边界空间的熵亏损。
+
+## 36. 记录容量与线性记录的分界
+
+### theorem 36.1 任意记录的最小容量
+
+考虑联合编码 $x\mapsto(Bx,\eta(x))$。在有限精度层，任意记录使其单射时都满足
+
+$$
+\boxed{|\mathcal R|\ge|\ker B|.}
+$$
+
+这个界可达到：逐个给每个边界纤维编号即可。
+
+量子计算基版本可写成
+
+$$
+V|x\rangle=|Bx\rangle|\eta(x)\rangle.
+$$
+
+同一纤维内的环境态必须正交，因此环境维数也至少为 $|\ker B|$；该构造保持任意叠加而不复制未知态。
+
+### theorem 36.2 加法记录的容量下界
+
+设 $UBV=\operatorname{diag}(s_1,\ldots,s_d)$，固定素数 $p$，令
+
+$$
+ b_p=\#\{i:p\mid s_i\}.
+$$
+
+若 $\eta:G_r\to H$ 是有限交换群上的加法同态，且 $x\mapsto(B_rx,\eta(x))$ 单射，则
+
+$$
+\boxed{|H|\ge p^{r b_p}.}
+$$
+
+**证明。** 在 Smith 坐标中取所有 $p\mid s_i$ 的坐标所成的子群 $W\cong(\mathbb Z/p^r\mathbb Z)^{b_p}$。若 $\eta|_W$ 有非零核，则其有限 $p$-群核含有一个非零、被 $p$ 消去的元素；该元素同时属于 $\ker B_r$，与联合编码单射矛盾。因此 $\eta|_W$ 必须单射，得到 $|H|\ge|W|$。直接记录这些坐标可达此界。证毕。 $\square$
+
+这给出一个编码分界：任意非线性记录只需区分当前纤维，而加法记录必须承载整条有缺陷坐标。进位正是后者压缩为前者所需要的非线性结构。
+
+对三节点环、$r\ge2$，有 $|\ker B_r|=9$ 且 $b_3=1$，所以任意记录最少9个值，而加法记录至少 $3^r$ 个值。一份达到九值下界的记录为
+
+$$
+\eta_r(x)=\left\lfloor\frac{[x_2]_{3^r}}{3^{r-2}}\right\rfloor\in\{0,\ldots,8\}.
+$$
+
+同一边界纤维内的差异是 $3^{r-2}t(4,-2,1)$。该记录一般不是加法同态；这正是进位的作用。
+
+## 37. 缺陷的递归拼接是扩张
+
+### theorem 37.1 顺序边界映射的短正合列
+
+若满秩整数映射先后为 $B_1$、$B_2$，整体为 $B_2B_1$，则
+
+$$
+\boxed{
+0\longrightarrow\mathcal D_{B_1}
+\overset\iota\longrightarrow\mathcal D_{B_2B_1}
+\overset\pi\longrightarrow\mathcal D_{B_2}
+\longrightarrow0,
+}
+$$
+
+其中 $\iota([v])=[B_2v]$，$\pi([w])=[w]$。$B_2$ 的整数单射性给出 $\iota$ 的单射性，$\ker\pi$ 正好是 $\iota$ 的像。因此
+
+$$
+|\mathcal D_{B_2B_1}|=|\mathcal D_{B_1}|\,|\mathcal D_{B_2}|,
+$$
+
+但一般没有自然直和分解。
+
+例如
+
+$$
+B_1=\begin{pmatrix}p&0\\0&1\end{pmatrix}.
+$$
+
+若 $B_2=B_1$，则整体缺陷为 $\mathbb Z/p^2\mathbb Z$；若 $\widetilde B_2=\operatorname{diag}(1,p)$，则整体缺陷为 $(\mathbb Z/p\mathbb Z)^2$。二者都有 $p^2$ 个类别，但前者需要两级恢复精度，后者只需一级。接续关系决定了缺陷深度。
+
+## 38. Fibonacci 周期闭合自然产生素数方向
+
+令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+\qquad M^2=M+I,
+$$
+
+并定义 $t$ 步闭合边界映射
+
+$$
+B_t=M^t-I,
+\qquad
+\mathcal D_t=\mathbb Z^2/(M^t-I)\mathbb Z^2.
+$$
+
+若 $L_t=\operatorname{tr}(M^t)$ 为 Lucas 数，则
+
+$$
+\boxed{\det(M^t-I)=1+(-1)^t-L_t.}
+$$
+
+### theorem 38.1 偶数步闭合缺陷分解
+
+对 $m\ge1$，有
+
+$$
+\boxed{
+\mathcal D_{2m}\cong
+\begin{cases}
+(\mathbb Z/L_m\mathbb Z)^2,&m\text{ 奇};\\[1mm]
+\mathbb Z/F_m\mathbb Z\oplus\mathbb Z/(5F_m)\mathbb Z,&m\text{ 偶}.
+\end{cases}}
+$$
+
+**证明。** 令 $X=M^m$。当 $m$ 奇时，$X-X^{-1}=L_mI$，故
+
+$$
+M^{2m}-I=L_mX,
+$$
+
+而 $X$ 整数可逆，Smith 因子为 $(L_m,L_m)$。当 $m$ 偶时，利用 $M^m=F_mM+F_{m-1}I$ 以及 $L_m=F_m+2F_{m-1}$，得到
+
+$$
+M^{2m}-I=F_mM^m(2M-I).
+$$
+
+矩阵 $2M-I$ 的 Smith 因子为 $(1,5)$，故结论为 $(F_m,5F_m)$。证毕。 $\square$
+
+例如 $t=4$ 给出 $\mathbb Z/5\mathbb Z$，$t=5$ 给出 $\mathbb Z/11\mathbb Z$，$t=6$ 给出 $(\mathbb Z/4\mathbb Z)^2$，$t=8$ 给出 $\mathbb Z/3\mathbb Z\oplus\mathbb Z/15\mathbb Z$，$t=10$ 给出 $(\mathbb Z/11\mathbb Z)^2$。
+
+这些素数方向只来自统一矩阵 $M$ 的周期闭合和整数可实现性，不是预先写入的素数标签。更一般地，对任意素数 $p$，有限群 $\operatorname{GL}_2(\mathbb F_p)$ 中的 $M\bmod p$ 有有限阶，故某个 $t$ 满足 $M^t\equiv I\pmod p$；于是 $p$ 必作为某个闭合缺陷的算术方向出现。这不要求该素数本身是 Fibonacci 数。
+
+## 39. 缺陷精度曲线与跨尺度几何
+
+对 Smith 因子的 $p$-进指数 $\nu_i=v_p(s_i)$，定义
+
+$$
+\boxed{h_r=\log_p|\ker(B\bmod p^r)|=\sum_i\min(r,\nu_i),\qquad h_0=0.}
+$$
+
+则
+
+$$
+\boxed{h_r-h_{r-1}=\#\{i:\nu_i\ge r\},}
+$$
+
+以及
+
+$$
+\boxed{(h_r-h_{r-1})-(h_{r+1}-h_r)=\#\{i:\nu_i=r\}.}
+$$
+
+逐项检查 $\min(r,\nu_i)$ 即得。故整条有限精度亏损曲线恢复
+
+$$
+\mathcal D_{B,p}\cong\bigoplus_i\mathbb Z/p^{\nu_i}\mathbb Z.
+$$
+
+这里总混同量 $\sum_i\min(r,\nu_i)$、最坏恢复滞后 $\max_i\nu_i$ 和有缺陷方向数 $\#\{i:\nu_i>0\}$ 是三个不同量；一个熵值不能决定另外两个。
+
+## 40. 本批统一结论与边界
+
+同一离散边界系统现在由一个共同对象连接：
+
+$$
+\boxed{
+\text{局部递归与闭合矩阵}
+\longrightarrow
+\text{整数缺陷群 }\mathcal D_B
+\longrightarrow
+\text{有限层核与余核}
+\longrightarrow
+\text{相位校验、熵亏损与记录容量}
+\longrightarrow
+\text{跨尺度恢复与 Fibonacci 素数方向}.
+}
+$$
+
+核描述当前边界看不见什么，余核描述哪些形式边界不能任意出现；完整相容极限可以消除前者，却保留后者。最短记录只需区分边界纤维，加法记录则可能必须保存整个有缺陷坐标；缺陷的顺序拼接形成群扩张，不能只按总数量相加。Fibonacci 递归的周期闭合还会自然产生素数方向，因此素数层可以来自关系而不来自标签。
+
+本批没有声称缺陷群只由图拓扑决定、量子相位校验等同于一般判素、有限层熵公式自动给出物理 RT、或 $p$-进极限就是物理空间。新增 Lean 接口、任意网络的统一量子实现、局部门成本和现实物理桥梁均保持 open；有限核验也不替代 Lean 编译和冻结。
+
+本批状态：纯理论追加，保留上述矩阵、模数、态、边界分割和精度条件。
 
 ## 追加锚（本行以下为增补区）
