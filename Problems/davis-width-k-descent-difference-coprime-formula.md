@@ -99,7 +99,7 @@ polynomials differ would refute the theorem. A mismatch between the formal
 definitions would invalidate the source-to-formal resolution claim even if
 the Lean theorem remained true. Non-coprime pairs are not counterexamples.
 
-## Formal Result
+## Evidence
 
 The formal source is
 [`DavisWidthDescentDifferenceCoprime.lean`](../D5/S1/Words/DavisWidthDescentDifferenceCoprime.lean).
