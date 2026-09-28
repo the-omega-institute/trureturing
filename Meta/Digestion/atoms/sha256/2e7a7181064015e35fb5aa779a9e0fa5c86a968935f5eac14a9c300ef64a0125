@@ -1,0 +1,22 @@
+### 假设 532.4（实际联合支撑中的共同锚）
+
+定义实际联合支撑
+
+$$
+S_A=\{(c(x),q(x),T(x)):x\in A\}\subseteq K\times L\times Y.
+$$
+
+假定存在 $\ell_\star\in L$、$y_\star\in Y$，使
+
+$$
+K\times\{\ell_\star\}\times\{y_\star\}\subseteq S_A.
+$$
+
+亦即对每个 $k\in K$，存在实际对象 $a_k\in A$ 满足
+
+$$
+c(a_k)=k,\qquad q(a_k)=\ell_\star,\qquad T(a_k)=y_\star.
+$$
+
+此假设指向联合支撑中的对象，不能用 $K=c(A)$、$\ell_\star\in q(A)$、$y_\star\in T(A)$ 这三个边缘事实代替；也不假定全部笛卡尔组合都存在。
+
