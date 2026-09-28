@@ -99,17 +99,19 @@ internal sealed class RareBranchConditionalErrorSharpnessDocument : IScribeDocum
     private static Formula TheoremFormula()
     {
         Formula epsilon = F.Id("epsilon"), rho = F.Id("rho"), sigma = F.Id("sigma");
-        Formula pm = F.Id("P"), k = F.Id("K"), f = F.Id("f"), p = F.Id("p"), q = F.Id("q");
+        Formula pm = F.Id("P"), k = F.Id("K"), f = F.Id("f");
         Formula fin3 = Call("Fin", D(3));
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
         Formula matrix = MatrixType(fin3, complex);
         Formula density = Call("DensityState", fin3);
-        Formula c = Call("diag", D(1), D(0), D(0));
-        Formula e0 = Call("diag", D(0), D(1), D(0));
-        Formula e1 = Call("diag", D(0), D(0), D(1));
-        Formula rhoM = Call("diag", Seq(D(1), Minus, epsilon), epsilon, D(0));
-        Formula sigmaM = Call("diag", Seq(D(1), Minus, epsilon), D(0), epsilon);
+        Formula c = Call("basisProjector", D(0));
+        Formula e0 = Call("basisProjector", D(1));
+        Formula e1 = Call("basisProjector", D(2));
+        Formula rhoM = Call("diagonalState", Seq(Open,
+            Seq(D(1), Sp, Minus, Sp, epsilon), Comma, Sp, epsilon, Comma, Sp, D(0), Close));
+        Formula sigmaM = Call("diagonalState", Seq(Open,
+            Seq(D(1), Sp, Minus, Sp, epsilon), Comma, Sp, D(0), Comma, Sp, epsilon, Close));
         Formula branch = Seq(e0, Sp, Plus, Sp, e1);
         Formula traceDistance = Call("traceDistance", rho, sigma);
         Formula cond(Formula state, Formula probability, Formula projector) =>
@@ -137,7 +139,6 @@ internal sealed class RareBranchConditionalErrorSharpnessDocument : IScribeDocum
                             cond(Call("matrix", rho), epsilon, e0),
                             cond(Call("matrix", sigma), epsilon, e1),
                             Eq(Seq(Call("traceNorm", Difference(e0, e1)), Sp, Slash, Sp, D(2)), D(1)),
-                            Eq(pm, branch),
                             Eq(weightedDistance, traceDistance));
         Formula firstWitness = Exists("rho", density,
             Exists("sigma", density,

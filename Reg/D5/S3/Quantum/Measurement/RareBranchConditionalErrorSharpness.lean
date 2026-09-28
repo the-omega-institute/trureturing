@@ -4,6 +4,7 @@ import Reg.Support.DependentFamily
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Foundation.FiniteStateChannel
 open _root_.D5.S3.Quantum.Foundation.FiniteTraceDistance
+open _root_.D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 open _root_.D5.S3.Quantum.Measurement.RareBranchConditionalErrorSharpness
 open Filter Lean Elab Command LeanInformationAudit Matrix
 open scoped ComplexOrder MatrixOrder Topology
@@ -31,16 +32,13 @@ def arena : Arena where
   signature := signature
   Law R :=
     (∀ ε : ℝ, 0 < ε → ε < 1 →
-      let C : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal (fun i =>
-        if i = 0 then 1 else 0)
-      let E0 : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal (fun i =>
-        if i = 1 then 1 else 0)
-      let E1 : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal (fun i =>
-        if i = 2 then 1 else 0)
-      let rhoM : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal (fun i =>
-        if i = 0 then (1 - ε : ℂ) else if i = 1 then (ε : ℂ) else 0)
-      let sigmaM : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal (fun i =>
-        if i = 0 then (1 - ε : ℂ) else if i = 2 then (ε : ℂ) else 0)
+      let C : Matrix (Fin 3) (Fin 3) ℂ := basisProjector 0
+      let E0 : Matrix (Fin 3) (Fin 3) ℂ := basisProjector 1
+      let E1 : Matrix (Fin 3) (Fin 3) ℂ := basisProjector 2
+      let rhoM : Matrix (Fin 3) (Fin 3) ℂ := diagonalState (fun i =>
+        if i = 0 then 1 - ε else if i = 1 then ε else 0)
+      let sigmaM : Matrix (Fin 3) (Fin 3) ℂ := diagonalState (fun i =>
+        if i = 0 then 1 - ε else if i = 2 then ε else 0)
       let P : Matrix (Fin 3) (Fin 3) ℂ := E0 + E1
       ∃ ρ σ : DensityState (Fin 3), ∃ Pm K : Matrix (Fin 3) (Fin 3) ℂ,
         CStarMatrix.ofMatrix.symm ρ.val = rhoM ∧
@@ -56,7 +54,6 @@ def arena : Arena where
         (1 / ε : ℝ) •
             (Pm * CStarMatrix.ofMatrix.symm σ.val * Pmᴴ) = E1 ∧
         traceNorm (E0 - E1) / 2 = 1 ∧
-        Pm = E0 + E1 ∧
         max ε ε * (traceNorm (
           (1 / ε : ℝ) • (Pm * CStarMatrix.ofMatrix.symm ρ.val * Pmᴴ) -
           (1 / ε : ℝ) • (Pm * CStarMatrix.ofMatrix.symm σ.val * Pmᴴ)) / 2) =
@@ -76,7 +73,7 @@ def arena : Arena where
 
 theorem actual_law : arena.Law actual := by
   simpa [arena, actual, realize, signature] using
-    (_root_.D5.S3.Quantum.Measurement.RareBranchConditionalErrorSharpness.rare_branch_conditional_error_sharpness)
+    rare_branch_conditional_error_sharpness
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -84,7 +81,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have hcase := h.1 (1 / 2 : ℝ) (by norm_num) (by norm_num)
   dsimp only at hcase
   obtain ⟨ρ, σ, Pm, K, _hρ, _hσ, _hP, _hK, _hinst, _hbound, hD,
-    _hp, _hq, hcondρ, hcondσ, hunit, _hP', hw⟩ := hcase
+    _hp, _hq, hcondρ, hcondσ, hunit, hw⟩ := hcase
   have hweight := hw
   rw [hcondρ, hcondσ, hunit, hD] at hweight
   simp [rejected, realize, signature] at hweight
@@ -111,7 +108,7 @@ def registration : Registration arena (arena.Law actual) where
       norm_num⟩
 
 register_information_theorem
-  _root_.D5.S3.Quantum.Measurement.RareBranchConditionalErrorSharpness.rare_branch_conditional_error_sharpness in arena
+  rare_branch_conditional_error_sharpness in arena
   readout via (realize signature (fun _ _ ε => ε) (fun e => nomatch e))
   realizes registration
   escape from source ({
