@@ -1,0 +1,14 @@
+**Theorem 18.2 (unit abscissa and positive ordinate valuation).** If
+$P=(x,y)$ is a nonsingular rational affine point on $E_b$ with $x\ne0$,
+$v_2(x)=0$, and $v_2(y)>0$, then $P$ has infinite additive order.
+
+Proof. The tangent formula gives
+
+$$
+X(2P)=\left(\frac{3x^2}{2y}\right)^2-2x.
+$$
+
+The first term has valuation $-2-2v_2(y)<0$, while the second has
+valuation $1$. Hence $v_2(X(2P))<0$. Theorem 18.1 applies to $2P$;
+finite order of $P$ would imply finite order of $2P$, a contradiction.
+

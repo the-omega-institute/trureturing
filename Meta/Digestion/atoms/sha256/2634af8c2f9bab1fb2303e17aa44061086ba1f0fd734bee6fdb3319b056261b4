@@ -1,0 +1,12 @@
+## 19. Explicit affine cubic-map obstruction
+
+Retain $B_j=L_{3^j}^2+3=d_jc_j^3$ and the two points $S_j^-$ and
+$S_j^+$ from Sections 11 and 12. For rational $b,X,Y$, let
+$\mathcal A_b(X,Y)$ mean that rational numbers $s,t$ exist with
+
+$$
+s\ne0,\qquad t^2=s^3-27b,\qquad
+X=\frac{s^3-108b}{9s^2},\qquad
+Y=\frac{t(s^3+216b)}{27s^3}.
+$$
+

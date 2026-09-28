@@ -1,0 +1,6 @@
+## 18. Binary valuation descent on integral Mordell curves
+
+For $b\in\mathbb Z$, write $E_b$ for the rational affine model
+$Y^2=X^3+b$. A point in this section is a nonsingular rational affine
+point, including when the full model has a singularity elsewhere.
+

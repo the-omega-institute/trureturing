@@ -1,0 +1,17 @@
+**Theorem 18.1 (negative binary abscissa valuation).** If $P=(x,y)$ is a
+nonsingular rational affine point on $E_b$ and $v_2(x)<0$, then $P$ has
+infinite additive order.
+
+Proof. Since $b$ is integral, both $x^3+b$ and $x^3-8b$ have valuation
+$3v_2(x)$, which is negative. Thus $y\ne0$, and the tangent formula gives
+
+$$
+X(2P)=\frac{x(x^3-8b)}{4(x^3+b)},\qquad
+v_2(X(2P))=v_2(x)-2.
+$$
+
+The same calculation applies to every successive double. Their
+abscissa valuations are $v_2(x)-2n$ for $2^nP$, so these points are
+pairwise distinct. A finite-order point cannot have infinitely many
+distinct multiples.
+

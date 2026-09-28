@@ -886,3 +886,86 @@ The two power bases therefore give the claimed $\mathbb Z$-algebra
 equivalence.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Binary valuation descent on integral Mordell curves
+
+For $b\in\mathbb Z$, write $E_b$ for the rational affine model
+$Y^2=X^3+b$. A point in this section is a nonsingular rational affine
+point, including when the full model has a singularity elsewhere.
+
+**Theorem 18.1 (negative binary abscissa valuation).** If $P=(x,y)$ is a
+nonsingular rational affine point on $E_b$ and $v_2(x)<0$, then $P$ has
+infinite additive order.
+
+Proof. Since $b$ is integral, both $x^3+b$ and $x^3-8b$ have valuation
+$3v_2(x)$, which is negative. Thus $y\ne0$, and the tangent formula gives
+
+$$
+X(2P)=\frac{x(x^3-8b)}{4(x^3+b)},\qquad
+v_2(X(2P))=v_2(x)-2.
+$$
+
+The same calculation applies to every successive double. Their
+abscissa valuations are $v_2(x)-2n$ for $2^nP$, so these points are
+pairwise distinct. A finite-order point cannot have infinitely many
+distinct multiples.
+
+**Theorem 18.2 (unit abscissa and positive ordinate valuation).** If
+$P=(x,y)$ is a nonsingular rational affine point on $E_b$ with $x\ne0$,
+$v_2(x)=0$, and $v_2(y)>0$, then $P$ has infinite additive order.
+
+Proof. The tangent formula gives
+
+$$
+X(2P)=\left(\frac{3x^2}{2y}\right)^2-2x.
+$$
+
+The first term has valuation $-2-2v_2(y)<0$, while the second has
+valuation $1$. Hence $v_2(X(2P))<0$. Theorem 18.1 applies to $2P$;
+finite order of $P$ would imply finite order of $2P$, a contradiction.
+
+## 追加锚（本行以下为增补区）
+
+## 19. Explicit affine cubic-map obstruction
+
+Retain $B_j=L_{3^j}^2+3=d_jc_j^3$ and the two points $S_j^-$ and
+$S_j^+$ from Sections 11 and 12. For rational $b,X,Y$, let
+$\mathcal A_b(X,Y)$ mean that rational numbers $s,t$ exist with
+
+$$
+s\ne0,\qquad t^2=s^3-27b,\qquad
+X=\frac{s^3-108b}{9s^2},\qquad
+Y=\frac{t(s^3+216b)}{27s^3}.
+$$
+
+**Theorem 19.1 (actual points have no affine cubic-map preimage).**
+For every $j\geq1$,
+
+$$
+\neg\mathcal A_{-3d_j^2}(d_jc_j,d_jL_{3^j})
+\quad\text{and}\quad
+\neg\mathcal A_{125d_j^2}(5d_jc_j,25d_jF_{3^j}).
+$$
+
+Proof. Since $B_j$ is not a cube, some prime $p$ divides $d_j$ to an
+exponent $e\in\{1,2\}$. The block congruences give $p>5$. Write
+$k=v_p(c_j)\geq0$. For either displayed point, $v_p(X)=e+k$ and
+$v_p(b)=2e$, while $v_p(9)=v_p(108)=0$. A putative affine preimage
+would satisfy
+
+$$
+s^3=9Xs^2+108b.
+$$
+
+Put $r=v_p(s)\in\mathbb Z$. The three terms have valuations
+$3r$, $e+k+2r$, and $2e$. If $r\leq0$, or if $e=2$ and $r=1$,
+the first valuation is strictly smaller than the other two. In every
+remaining case the last valuation is strictly smaller than the other
+two. A sum cannot have exactly one term of least $p$-adic valuation,
+so no such $s$ exists.
+
+The statement uses the displayed rational affine relation. Identifying
+that relation with the rational image of a global degree-three isogeny
+requires the separate map construction and image theorem of Section 13.
+
+## 追加锚（本行以下为增补区）
