@@ -10,15 +10,22 @@ internal sealed partial class ProductionCliEnvironment
 {
     private ExplicitCommandResult ExecuteCommonCurrent(string round, CommonExecutionEvidence.ValidationScope validation,
         ValidatedPolicy policy, AcceptedLeanClosure? lean, LeanAxiomReport? report, string[]? selectedIds = null,
-        ResourceExecutionPlan? resourcePlan = null)
+        ResourceExecutionPlan? resourcePlan = null, AdmissionCheckTiming? timing = null)
     {
+        timing ??= AdmissionCheckTiming.Disabled;
         using var trace = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         try
         {
             var snapshot = validation.Snapshot;
-            var build = CommonExecutionEvidence.ValidateBuild(repositoryRoot, validation, round);
-            CommonExecutionEvidence.ValidateExecutionPlan(repositoryRoot, build, resourcePlan, "current");
-            var checks = CommonExecutionEvidence.BeginChecks(repositoryRoot, "current", build, trace, selectedIds, validation);
+            var build = timing.Measure("common-build", () =>
+            {
+                var build = CommonExecutionEvidence.ValidateBuild(repositoryRoot, validation, round);
+                CommonExecutionEvidence.ValidateExecutionPlan(repositoryRoot, build, resourcePlan, "current");
+                return build;
+            });
+            var checks = timing.Measure("check-begin",
+                () => CommonExecutionEvidence.BeginChecks(repositoryRoot, "current", build, trace, selectedIds, validation));
+            CheckUnitResult Unit(string id, Func<CheckWork> work) => timing.Measure("unit-" + id, () => checks.Run(id, work));
             var assembly = typeof(DocumentAssembly).Assembly;
             CheckWork Scribe(string id, string[] arguments, bool capability = false)
             {
@@ -36,17 +43,17 @@ internal sealed partial class ProductionCliEnvironment
             }
             // The registered projection unit is the sole projection verification here.
             // ScribeEmitter issues the actual emission capability; shell status cannot issue it.
-            if (checks.Ids.Contains("scribe-projections")) checks.Run("scribe-projections", () => Scribe("scribe-projections",
+            if (checks.Ids.Contains("scribe-projections")) Unit("scribe-projections", () => Scribe("scribe-projections",
                 ["projections", "--check", "--report", CommonExecutionEvidence.ReportPath]));
-            if (checks.Ids.Contains("scribe-describe")) checks.Run("scribe-describe", () => Scribe("scribe-describe", ["describe-report", "--check"], capability: true));
-            if (checks.Ids.Contains("scribe-markdown")) checks.Run("scribe-markdown", () =>
+            if (checks.Ids.Contains("scribe-describe")) Unit("scribe-describe", () => Scribe("scribe-describe", ["describe-report", "--check"], capability: true));
+            if (checks.Ids.Contains("scribe-markdown")) Unit("scribe-markdown", () =>
             {
                 var scope = checks.MarkdownScope ?? throw new InvalidDataException("missing scribe-markdown inspection scope");
                 File.WriteAllText(Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths), string.Join("\0", scope.Paths) + "\0");
                 return Scribe("scribe-markdown", ["markdown-check", "--report", CommonExecutionEvidence.ReportPath,
                     "--paths-from", Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths)]);
             });
-            if (checks.Ids.Contains("filemap")) checks.Run("filemap", () =>
+            if (checks.Ids.Contains("filemap")) Unit("filemap", () =>
             {
                 CommonExecutionEvidence.Write(repositoryRoot, CommonExecutionEvidence.FileMapScopePath,
                     checks.FileMapScope ?? throw new InvalidDataException("missing filemap inspection scope"));
@@ -55,16 +62,17 @@ internal sealed partial class ProductionCliEnvironment
             });
             if (!checks.Ids.Any(id => id.StartsWith("SL-", StringComparison.Ordinal)))
             {
-                _ = checks.Seal();
+                _ = timing.Measure("check-seal", checks.Seal);
                 return new(0, trace + System.Text.Json.JsonSerializer.Serialize(new { accepted_units = checks.Ids }) + "\n", "");
             }
-            var combined = checks.ExecuteCurrentPredicates(policy, lean);
+            var combined = timing.Measure("current-predicates", () => checks.ExecuteCurrentPredicates(policy, lean, MeasureRule), Blocked);
             var rendered = RenderStage(combined);
             if (rendered.ExitCode != 0) return new(rendered.ExitCode, trace + rendered.Output, rendered.Error);
             if ((selectedIds is null || validation.CheckManifest().Where(check => check.Id.StartsWith("SL-", StringComparison.Ordinal)).All(check => checks.Ids.Contains(check.Id)))
-                && RepositoryCanonicalizer.Validate(snapshot, policy) is CanonicalizationOutcome.InfrastructureFailure failure)
+                && timing.Measure("canonicalization", () => RepositoryCanonicalizer.Validate(snapshot, policy),
+                    static outcome => outcome is CanonicalizationOutcome.InfrastructureFailure) is CanonicalizationOutcome.InfrastructureFailure failure)
                 return new(2, trace + RenderStage(combined).Output, "INFRASTRUCTURE_FAILURE " + failure.Message + "\n");
-            _ = checks.Seal();
+            _ = timing.Measure("check-seal", checks.Seal);
             var accepted = RenderStage(combined);
             return new(accepted.ExitCode, trace + accepted.Output, accepted.Error);
         }
@@ -72,5 +80,9 @@ internal sealed partial class ProductionCliEnvironment
         {
             return new(exception.Operation.Exit, trace.ToString(), exception.Message + "\n");
         }
+
+        ImmutableArray<RuleFinding> MeasureRule(RuleId ruleId, AdmissionEffect admissionEffect, Func<ImmutableArray<RuleFinding>> evaluate) =>
+            timing.Measure("rule-" + ruleId.Value.ToLowerInvariant(), evaluate,
+                findings => findings.Any(finding => (finding.Effect ?? admissionEffect) is AdmissionEffect.Block));
     }
 }
