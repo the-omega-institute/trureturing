@@ -8,7 +8,7 @@ while [ $# -gt 0 ]; do case "$1" in
   --manifest) manifest="$2"; shift 2;; --root) root="$2"; shift 2;; --delete) delete=1; shift;; --min-age-min) minage="$2"; shift 2;;
   *) echo "clean-runlocal: USAGE_ERROR: unknown option $1" >&2; exit 64;; esac; done
 [ -n "$manifest" ] && [ -f "$manifest" ] || { echo "clean-runlocal: USAGE_ERROR: --manifest required" >&2; exit 64; }
-case "$root" in /tmp/*|/private/tmp/*) ;; *) echo "clean-runlocal: USAGE_ERROR: root must be under /tmp" >&2; exit 64;; esac
+case "$root" in /tmp|/private/tmp|/tmp/*|/private/tmp/*) ;; *) echo "clean-runlocal: USAGE_ERROR: root must be /tmp or under it" >&2; exit 64;; esac
 python3 - "$manifest" "$root" "$delete" "$minage" <<'PY'
 import json,os,sys,shutil,time
 manifest,root,delete,minage=sys.argv[1],os.path.realpath(sys.argv[2]),sys.argv[3]=="1",float(sys.argv[4])

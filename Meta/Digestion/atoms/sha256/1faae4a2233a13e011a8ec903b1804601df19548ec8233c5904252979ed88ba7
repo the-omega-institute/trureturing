@@ -1,0 +1,60 @@
+### 定义 33：带标签骨架与一致指数的量词
+
+固定整数 $r,s\geq1$、非空有限集合 $X_i,Y_i$ 和指定构件
+
+$$
+\phi_i:X_i\times Y_i\longrightarrow Z_i=\operatorname{im}\phi_i
+\qquad(1\leq i\leq r).
+$$
+
+其两个原始坐标标签分别记为 $\xi_i,\eta_i$；$X_i,Y_i$ 是字母表，不是坐标标签。另有 $s$ 对普通坐标标签 $a_j,b_j$。固定这些互异标签组成的集合
+
+$$
+I=\{\xi_i,\eta_i:1\leq i\leq r\}\sqcup\{a_j,b_j:1\leq j\leq s\}
+$$
+
+及其一个排列 $\pi$，要求 $\xi_i$ 先于 $\eta_i$，$a_j$ 先于 $b_j$。记 $\operatorname{pos}:I\to\{1,\ldots,2(r+s)\}$ 为标签在 $\pi$ 中的位置；它不作用于字母表集合。上述指定映射、字母表、方向、标签和排列在以下一致比较中全部固定。
+
+变化的是非空有限字母表 $A_j,B_j$、普通映射
+
+$$
+\psi_j:A_j\times B_j\longrightarrow V_j=\operatorname{im}\psi_j
+\qquad(1\leq j\leq s),
+$$
+
+以及非空有限集 $O$ 和任意全函数
+
+$$
+G:\left(\prod_{i=1}^r Z_i\right)\times\left(\prod_{j=1}^s V_j\right)\longrightarrow O.
+$$
+
+每个 $\psi_j$ 要求存在一条满射行和一条满射列；二者分别存在，不要求每条切片满射。坐标 $\xi_i,\eta_i,a_j,b_j$ 的字母表依次为 $X_i,Y_i,A_j,B_j$，统一写作 $U_v$，并令 $\Omega_Q=\prod_{v\in Q}U_v$。实际输入域为完整独立直积 $\Omega_I$，实际任务为
+
+$$
+F:\Omega_I\longrightarrow O,
+\qquad
+F(x,y,a,b)=G\bigl((\phi_i(x_i,y_i))_i,(\psi_j(a_j,b_j))_j\bigr).
+$$
+
+所有切面响应均是同一个 $F$ 在共同带标签后缀域上的函数。令 $\rho=\operatorname{cn}(\pi)$，沿用定义 14、17、26 的容量、宽度和完成次序规范化，计入初始层、半对层、终值层和常值响应。
+
+沿用定义 31 的 $\tau_i=\tau_{\mathrm r}(\phi_i)\geq1$，定义普通对的严格包含邻域及其权重
+
+$$
+\begin{aligned}
+N_j&=\{i:\operatorname{pos}(\xi_i)<\operatorname{pos}(a_j)
+ <\operatorname{pos}(b_j)<\operatorname{pos}(\eta_i)\},\\
+\theta_j&=\prod_{i\in N_j}\tau_i,
+\qquad \Theta=\max_{1\leq j\leq s}\theta_j,
+\qquad D=\prod_{i=1}^r|X_i||Y_i|.
+\end{aligned}
+$$
+
+空乘积取 $1$。对实数 $\beta$，性质 $\mathcal E_\beta$ 指：存在 $C>0$，仅依赖上述固定数据和 $\beta$，使每一种允许的普通有限族、每个非空有限 $O$ 和每个全函数 $G$ 均满足
+
+$$
+W_F(\rho)\leq C\,W_F(\pi)^\beta.
+$$
+
+特别地，$C$ 不依赖变化的普通字母表、普通映射或任务。若把普通有限映射也逐个固定，则不是这里的渐近量词问题。
+

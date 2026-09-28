@@ -1,0 +1,102 @@
+### 定理 537.4（充分商中的上界与有条件的最大下界）
+
+在 $\mathcal P_m$ 中取任意 $[E_W],[E_V]$。它们总有最小共同上界，其曲线为
+
+$$
+\chi_i^{\,\vee}(t)=\min\{\chi_i^W(t),\chi_i^V(t)\}.
+\tag{537.23}
+$$
+
+充分共同下界存在当且仅当
+
+$$
+\sum_{i=1}^m\max\{\lambda_i^W,\lambda_i^V\}\le1.
+\tag{537.24}
+$$
+
+这一存在判据已经由定理 536.4 的私有极小元分类推出，以下明确复用。条件成立时，还存在最大充分共同下界。令
+
+$$
+f_i(t)=\max\{\chi_i^W(t),\chi_i^V(t)\},\qquad
+L_i=\max\{\lambda_i^W,\lambda_i^V\},
+$$
+
+则它的曲线是 $f_i$ 在整个 $[0,\infty)$ 上的最小凹上包络 $H_i$，具有公式
+
+$$
+H_i(t)=
+\sup\left\{
+\sum_{j=1}^n a_j f_i(t_j):
+\begin{array}{l}
+n\ge1,\quad a_j\ge0,\quad t_j\ge0,\\
+\sum_j a_j=1,\quad\sum_j a_jt_j=t
+\end{array}
+\right\}.
+\tag{537.25}
+$$
+
+这里只用有限混合，但 $t_j$ 不受任何统一上界限制；不声称该上确界必须由某个混合达到。整个充分商不是格。
+
+证明：先看（537.23）。凹函数的下图集 $\{(t,y):t\ge0,\ y\le\chi(t)\}$ 凸，两个下图集的交正是逐点最小值的下图集，所以 $\chi_i^{\,\vee}$ 凹。它连续、非减、在零点为零，且 $0\le\chi_i^{\,\vee}(t)\le t$，故零点右斜率不超过一。其极限为 $\min(\lambda_i^W,\lambda_i^V)$，这些极限之和不超过一。定理 537.3 于是联合实现这组曲线为充分实验 $J$。
+
+因为 $\chi_i^J\le\chi_i^W,\chi_i^V$，序判据给出 $E_W,E_V\preceq J$。若 $U$ 是另一个充分共同上界，则 $\chi_i^U\le\chi_i^W,\chi_i^V$，从而 $\chi_i^U\le\chi_i^J$，即 $J\preceq U$。这证明最小性及等价类意义下的唯一性。
+
+对共同下界的存在性，若充分 $B$ 满足 $B\preceq E_W,E_V$，定理 536.4 保证存在一个私有极小实验 $E_p\preceq B$。传递性给出 $E_p\preceq E_W,E_V$，再由式（536.13）得 $p_i\ge\lambda_i^W,\lambda_i^V$，而 $\sum_i p_i=1$，所以（537.24）必要。反之，若（537.24）成立，取任意 $a\in\Delta_{m-1}$ 并令
+
+$$
+p_i=L_i+\left(1-\sum_jL_j\right)a_i.
+$$
+
+则 $p\in\Delta_{m-1}$ 且 $p\ge\lambda^W,\lambda^V$。定理 536.4 直接给出充分共同下界 $E_p$。因此存在性没有被当作本章另一项独立发现；尚须构造的是其中最大的下界。
+
+固定一支并省略下标。因每条曲线非减且极限不超过 $L$，有 $0\le f(t)\le\min(t,L)$。公式（537.25）的可选混合非空，单点混合给出 $H(t)\ge f(t)$；对任何可选混合又有
+
+$$
+0\le\sum_j a_jf(t_j)\le\sum_j a_jt_j=t,\qquad
+\sum_j a_jf(t_j)\le L.
+$$
+
+所以
+
+$$
+0\le f(t)\le H(t)\le\min(t,L).
+\tag{537.26}
+$$
+
+取分别逼近 $H(t)$ 与 $H(u)$ 的有限混合，以比例 $\theta,1-\theta$ 拼接，得到均值为 $\theta t+(1-\theta)u$ 的有限混合；令逼近误差趋零，即得
+
+$$
+H(\theta t+(1-\theta)u)\ge\theta H(t)+(1-\theta)H(u).
+$$
+
+因此 $H$ 凹。若 $G$ 是任意凹函数且 $G\ge f$，有限 Jensen 不等式给出
+
+$$
+G(t)\ge\sum_j a_jG(t_j)\ge\sum_j a_jf(t_j)
+$$
+
+对全部可选混合成立，取上确界得到 $G\ge H$。这证明最小凹上包络性质，未把半轴截成紧区间。
+
+还须证明 $H$ 属于可实现曲线类。由（537.26），$H(0)=0$，且 $H(t)\to0$ 当 $t\downarrow0$，所以零点连续。有限凹函数在 $(0,\infty)$ 内连续；其零点右导数是 $\lim_{t\downarrow0}H(t)/t$，由凹性存在，并被（537.26）限制在 $[0,1]$。若存在 $0\le u<v$ 使割线斜率 $c=(H(v)-H(u))/(v-u)<0$，凹性使每个 $w>v$ 满足
+
+$$
+H(w)\le H(v)+c(w-v).
+$$
+
+右端终将为负，与 $H\ge0$ 矛盾。因此 $H$ 非减。又 $f(t)\to L$ 且 $f\le H\le L$，故 $\lim_{t\to\infty}H(t)=L$；当 $L=0$ 时这同时给出 $H=0$。
+
+对全部叶恢复下标，（537.24）保证 $\sum_i\lim H_i=\sum_iL_i\le1$，于是定理 537.3 用一条共同中心律实现 $(H_i)$ 为充分实验 $M$。因 $H_i\ge\chi_i^W,\chi_i^V$，有 $M\preceq E_W,E_V$。若 $B$ 是任意充分共同下界，则 $\chi_i^B\ge f_i$，且 $\chi_i^B$ 凹；最小凹上包络性质给出 $\chi_i^B\ge H_i$，故 $B\preceq M$。这证明最大性。
+
+最后，取两个不同的单纯形参数 $p,q\in\Delta_{m-1}$。其私有极小实验满足 $\lambda(E_p)=p$、$\lambda(E_q)=q$，而
+
+$$
+\sum_i\max(p_i,q_i)
+=\frac12\sum_i(p_i+q_i+|p_i-q_i|)
+=1+\frac12\|p-q\|_1>1.
+\tag{537.27}
+$$
+
+由（537.24），它们没有充分共同下界，故 $\mathcal P_m$ 不是格。证毕。
+
+本定理中的范围限定属于结论本身：上、下界在充分私有商 $\mathcal P_m$ 内取。本卷第 130 章、定理 443.1 的抽象交闭合准则不自动保证该允许族有交。经典二态格理论亦已存在：Bertschinger–Rauh, *The Blackwell relation defines no lattice*，Proposition 16、Lemma 17 给出有限二态情形的格结构，Theorem 19 给出一般多态情形的非格结论；它们的有限矩阵结果本身不承担这里标准 Borel 输出、无界半轴包络及共同中心预算的论证。[arXiv:1401.3146v1](https://arxiv.org/html/1401.3146v1)。
+

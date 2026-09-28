@@ -1,0 +1,34 @@
+### 定义 540.1（近似前向、成对剖面与联合表数据）
+
+固定有限非空状态集 $A$，$n=|A|$，以及两个同一子集字母表上的 CAR 剖面 $w,v$。写
+
+$$
+W_i(B)=\mathbf 1_{\{i\in B\}}w_B,
+\qquad
+V_i(C)=\mathbf 1_{\{i\in C\}}v_C,
+\qquad \varnothing\ne B,C\subseteq A .
+\tag{540.1}
+$$
+
+这里 $W_i,V_i$ 是状态 $i$ 的半 $L^1$ 概率行。给定一个对所有状态共用的状态无关随机核 $H(C\mid B)$，定义
+
+$$
+f_{BC}=w_BH(C\mid B),\qquad
+F_i(B,C)=\mathbf 1_{\{i\in B\}}f_{BC},\qquad
+Q_i(C)=\sum_BF_i(B,C),
+\tag{540.2}
+$$
+
+并令
+
+$$
+\varepsilon_i=\operatorname{TV}(Q_i,V_i),
+\qquad
+\eta=\max_{i\ne j}\left|\Delta_{ij}\right|,
+\qquad
+\Delta_{ij}=r_{ij}(v)-r_{ij}(w),
+\tag{540.3}
+$$
+
+其中 $r_{ij}(w)=\sum_{B\supseteq\{i,j\}}w_B$，$r_{ij}(v)$ 同理，且 $\varepsilon=\max_i\varepsilon_i$。本节约定空成对最大值为零，因此 $n=1$ 时 $\eta=0$；空和也取零。在近似情形 $\Delta_{ij}$ 可以为负；它不是单独的损失预算。假设只有这一份 $H$，而不是为每个 $i$ 另选一个核。有限字母表上的核集合是紧的，故前向缺损的下确界达到；若 $H$ 取到 $d(w\mathbin{\to}v)$，则 $\varepsilon=\max_i\varepsilon_i$ 可以正是该最优前向缺损（也可以只把它当作给定核的统一误差）。
+

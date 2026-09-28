@@ -1,0 +1,23 @@
+**Theorem 2 (antipodal defect fibers and their minimum representatives).**
+Let $x=(a,b,c)$ and $\bar x=(1-a,1-b,1-c)$. Define $w_x$ by its exact
+support: the AB edge $(1-a,1-b)$, the AC edge $(1-a,c)$, and the BC edge
+$(b,c)$, each with value one. Its defects are exactly $x$ and $\bar x$,
+so $\operatorname{wt}(w_x)=3$ and $T(w_x)=2$. For every $f$ whose defects
+are exactly this pair, every potential $g$ satisfies
+$3\leq\operatorname{wt}(f+d_0g)$, and some potential satisfies
+$f+d_0g=w_x$. Consequently $R(f)=3$ on this entire defect fiber.
+
+**Proof.** The three path edges have boundary $x+\bar x$: each intermediate
+dual cube vertex occurs twice. Summing defects over the half-cube with A
+coordinate $a$ gives the parity of the BC edge family, since every AB and
+AC term occurs twice. Exactly one of the two defects lies in that half-cube,
+so the BC family contains a nonzero edge. The analogous B and C cuts force
+nonzero AC and AB edges. Coboundaries preserve defects, giving the lower
+bound for every repair. Finally $d_1(f+w_x)=0$, and Theorem 1 gives a single
+potential attaining $w_x$.
+
+The choice $x=(1,0,0)$ gives the explicit cochain $w$ with
+$w_{AB}(0,1)=w_{AC}(0,0)=w_{BC}(0,0)=1$ and no other supported edges.
+Its defects are $(0,1,1)$ and $(1,0,0)$; every repair has weight at least
+three, and the zero potential attains three.
+

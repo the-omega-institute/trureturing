@@ -1,0 +1,39 @@
+## theorem 20.2: 同一码、全部块区域、全部输入
+
+对任意块区域 $A$，把自由边分为两端均在 $A$ 的 $I_A$、仅一端在 $A$ 的 $C_A$ 和两端均在补集的 $O_A$。令 $\Delta_{C_A}$ 为这些自由历史的计算基退相干，
+
+$$
+\tau_A=\Delta_{C_A}\operatorname{Tr}_{O_A}\rho,\qquad
+f_A=|\mathsf F\cap\delta A|.
+$$
+
+忽略区域内固定纯态及在实际支撑上的等距后，边界约化态为
+
+$$
+[\mathcal E^{\mathsf S}_{d,L}(\rho)]_A
+\simeq\tau_A\otimes I_{d^{f_A}}/d^{f_A}.
+$$
+
+其最大可恢复逻辑代数和非零面积项为
+
+$$
+\mathcal M_A=\mathcal B(\mathcal H_{I_A})\otimes
+\operatorname{Diag}(\mathcal H_{C_A})\otimes I_{O_A},\qquad
+\mathcal L_A=f_A\log d\ I_K,
+$$
+
+$$
+\boxed{S([\mathcal E^{\mathsf S}_{d,L}(\rho)]_A)
+=f_A\log d+S_{\mathcal M_A}(\rho).}
+$$
+
+两侧代数互为交换子，区域包含关系 $A\subseteq B$ 给出实际逻辑代数包含 $\mathcal M_A\subseteq\mathcal M_B$。对任意两输入，边界相对熵等于该区域代数相对熵，包含无穷值的支持约定。
+
+**证明。** 每条冻结割边在 $A$ 留下独立的 $I_d/d$，冻结内部边留下纯态，冻结外部边被完全丢弃。自由内部边保留重复等距的整个像，可逆恢复该逻辑因子；自由割边偏迹一份给出计算基退相干；自由外部边给出逻辑偏迹。这些操作在不同寄存器因子上作用，故对任意相关的 $\rho$ 仍给出同一个 $\tau_A$，而非仅对乘积输入成立。
+
+在 $I_A,C_A,O_A$ 的逻辑坐标中，补集压缩错误算符张成
+$ I_{I_A}\otimes\operatorname{Diag}(\mathcal H_{C_A})\otimes\mathcal B(\mathcal H_{O_A})$。
+取交换子并用 [BKK07] 得到最大代数；显式恢复保留 $I_A$ 的量子态、保留 $C_A$ 的经典块，给丢失因子准备固定态。区域增大时单条自由边的可见代数只按标量、对角、全矩阵三个层级增加，故满足包含关系。熵及相对熵由真实边缘态的张量因子计算，固定最大混合因子在相对熵中相消。证毕。
+
+这是一个相交区域共享的量子 RT 熵分解，面积在熵单位下由固定边图的割独立给定。它没有把量子态的全部熵都当作固定面积，也不等同于已指定 CFT 的引力面积。
+

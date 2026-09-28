@@ -1,0 +1,5 @@
+source_id = "observation-boundary-algebra-minimal-realization"
+path = "docs/develop/theory/OBSERVATION_BOUNDARY_ALGEBRA_MINIMAL_REALIZATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

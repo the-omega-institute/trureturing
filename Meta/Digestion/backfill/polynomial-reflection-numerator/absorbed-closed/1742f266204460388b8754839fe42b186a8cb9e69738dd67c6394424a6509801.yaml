@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1742f266204460388b8754839fe42b186a8cb9e69738dd67c6394424a6509801
+  normalized_sha256: sha256:1742f266204460388b8754839fe42b186a8cb9e69738dd67c6394424a6509801
+cas_ref: sha256:1742f266204460388b8754839fe42b186a8cb9e69738dd67c6394424a6509801
+coverage_gids:
+  - gid: D5/S3/Analytic/PolynomialReflectionNumerator.palindromic_numerator_of_reflection
+    target_statement_id: sha256:6fd7fcc8160b86f722790687b22d34d37148202329159b68a8b5e301604ff84b
+receipts:
+  unresolved_subitems: []

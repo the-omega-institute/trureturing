@@ -1,0 +1,29 @@
+## theorem 3.1: 核、双字符与谱
+
+设 $V,X,Y$ 为有限交换群，群同态 $A:V\to X$、$B:V\to Y$ 的联合映射单射。设 $q:V\to U(1)$、$q(0)=1$，且
+
+$$
+\beta(u,v)=q(u+v)/[q(u)q(v)]
+$$
+
+为双字符。定义
+
+$$
+|\psi\rangle=|V|^{-1/2}\sum_{v\in V}q(v)|Av\rangle|Bv\rangle,
+\quad K_A=\ker A,\quad K_B=\ker B,
+$$
+
+$$
+R_B=\{b\in K_B:\beta(a,b)=1\text{ 对所有 }a\in K_A\}.
+$$
+
+约化态的非零谱平坦，秩为
+
+$$
+r=\frac{|V|}{|K_A||R_B|}
+=\frac{|V|}{|K_A||K_B|}
+\left|\operatorname{im}\bigl(K_B\to\widehat{K_A},\ b\mapsto\beta(\cdot,b)\bigr)\right|.
+$$
+
+因此 $S(\rho_X)=\log r$，所有正阶 Rényi 熵也等于 $\log r$。不要求核为自由模或短正合列分裂。
+

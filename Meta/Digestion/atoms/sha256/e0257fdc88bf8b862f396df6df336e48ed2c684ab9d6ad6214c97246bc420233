@@ -1,0 +1,10 @@
+## 21. 共同子码在原两参数粗化下闭合
+
+本节沿用原 $\mathcal R^{(L)}_{D,d}$ 和 $\mathcal S_{\Pi,d}$，不为各区域重新选择通道。对空间分割 $0=t_0<\cdots<t_r=L$，定义粗自由集
+
+$$
+\mathsf S_\Pi=\{j\in\{1,\ldots,r-1\}:t_j\in\mathsf S\}.
+$$
+
+令 $\operatorname{tr}^{\mathsf S}_{\Pi}$ 从原自由寄存器中丢弃不在宏块边界的寄存器，并按 $t_j\mapsto j$ 重标。
+

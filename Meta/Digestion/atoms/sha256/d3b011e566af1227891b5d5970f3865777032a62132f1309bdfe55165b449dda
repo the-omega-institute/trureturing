@@ -1,0 +1,47 @@
+### 定义 532.2（只读情境的修复与两个核）
+
+允许的辅助读数为 $z\circ c$，其中 $z:K\to Z$，$Z$ 可为任意标签集；运行时 $z$ 只读取情境。记
+
+$$
+Q_z(x)=(q(x),z(c(x))),\qquad
+\Gamma_c=\{Q_z:z:K\to Z,\ Z\text{ 任意}\}.
+$$
+
+选择 $z$ 可以使用事先声明的任务及支撑资料；这不把任意状态标签或 $T(x)$ 自动变成运行时可读信息。称 $Q_z$ 对 $T$ 充分，是指存在仅定义在实际像上的恢复器
+
+$$
+r_z:Q_z(A)\to Y,\qquad r_z(Q_z(x))=T(x)\quad(x\in A).
+$$
+
+辅助编码的情境核与完整读数的实际观察核分别为
+
+$$
+E_z=\{(k,k')\in K^2:z(k)=z(k')\},\qquad
+\ker_A Q_z=\{(x,y)\in A^2:Q_z(x)=Q_z(y)\}.
+$$
+
+它们定义在不同集合上，且满足
+
+$$
+(x,y)\in\ker_A Q_z
+\iff q(x)=q(y)\ \land\ (c(x),c(y))\in E_z.
+$$
+
+对 $K$ 上任意等价关系 $E$，令 $Q_E(x)=(q(x),[c(x)]_E)$。任意 $Q_z$ 与 $Q_{E_z}$ 在实际像上互相重命名，因而具有同一观察核；反之，每个 $E$ 都由商映射 $z(k)=[k]_E$ 实现。因此允许修复可用情境等价关系参数化，但不同 $E$ 未必给出不同观察核。
+
+沿用定义 7.2 的概念等价，以实际像为值域时，两个读数概念等价当且仅当观察核相同；称 $Q$ 比 $Q'$ 粗，当且仅当 $\ker_A Q'\subseteq\ker_A Q$。所用核与因子化的对应见本卷第 7 节及[概念核序对偶中的实际像判据](../../../D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.lean)。称 $Q_\circ\in\Gamma_c$ 为最粗充分修复，要求它充分，且
+
+$$
+\forall Q_z\in\Gamma_c,\qquad
+Q_z\text{ 充分}\ \Longrightarrow
+\ker_A Q_z\subseteq\ker_A Q_\circ.
+$$
+
+这是充分修复族中最大的观察核，不只是一个无法继续粗化的极大核。最小辅助标签数则是另一个量：
+
+$$
+m_A=\min\{|z(K)|:Q_z\in\Gamma_c\text{ 对 }T\text{ 充分}\}.
+$$
+
+这里计数实际使用的辅助标签，不计未使用的 $Z$ 中元素，也不计完整读数 $Q_z(A)$ 的大小。
+

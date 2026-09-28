@@ -1,0 +1,60 @@
+### 定义 536.1（固定实际支撑与全部随机位的可见性）
+
+固定整数 $m\ge2$。情境集为 $K=\{b,a_1,\ldots,a_m\}$，其中 $b$ 称为中心，$a_i$ 称为叶。所有读数 $u_i$（$1\le i\le m$）和 $v_{ij}$（$1\le i<j\le m$）两两不同。实际对象集 $A$ 恰有下列 $(c,q,T)$ 行，每行一个对象：
+
+$$
+\begin{aligned}
+&(b,u_i,0),\ (a_i,u_i,0) &&(1\le i\le m),\\
+&(a_i,v_{ij},0),\ (a_j,v_{ij},1) &&(1\le i<j\le m).
+\end{aligned}
+\tag{536.1}
+$$
+
+因此 $|A|=2m+2\binom m2=m(m+1)$，$K=c(A)$，$L=q(A)$，$Y=T(A)=\{0,1\}$。每个读数只有两个活动情境；实际支撑没有补成 $K\times L$。编码端只读情境 $c(x)$。对任意非空标准 Borel 空间 $Z$ 和核 $W:K\to\operatorname{Prob}(Z)$，记
+
+$$
+\nu=W_b,\qquad \mu_i=W_{a_i},\qquad
+E_W(x)=\delta_{q(x)}\otimes W_{c(x)}.
+\tag{536.2}
+$$
+
+观察者看到 $(q,z)$。充分性指存在可随机化的解码核 $D:L\times Z\to\operatorname{Prob}(Y)$，使每个实际对象满足
+
+$$
+\int_Z D(\{T(x)\}\mid q(x),z)W_{c(x)}(dz)=1.
+\tag{536.3}
+$$
+
+没有先验平均的替代条件。沿用第 535 章的序：$F\preceq E$ 当且仅当存在一个不额外依赖实际对象的 Markov 核，将每条 $E_x$ 送到 $F_x$；左端信息较少。核可以读取源输出里的 $q$。互相支配写作 $E\simeq F$，$E\prec F$ 表示 $E\preceq F$ 且反向不成立。最小元须低于同一充分族的每个成员；极小元只要求低于自身的充分成员均与自身等价。以下分类均按实际实验的等价类理解。
+
+式（535.10）在这里提供一个可直接使用的归约。若 $E_F\preceq E_W$，从任意模拟核 $G:L\times Z\to\operatorname{Prob}(L\times Z')$ 取辅助输出的边缘，便得到
+
+$$
+G_\ell(B\mid z)=G(L\times B\mid\ell,z),\qquad
+F_k=\int_ZG_\ell(\cdot\mid z)W_k(dz)
+\quad\text{对每个实际 }(k,\ell).
+\tag{536.4}
+$$
+
+反之，把这些核拼成 $(\ell,z)\mapsto\delta_\ell\otimes G_\ell(\cdot\mid z)$ 就是一个全局核；$L$ 有限，故可测。这里没有假定原模拟器逐点保持 $q$，而是从实际行等式取边缘后，换得一个保持 $q$ 的代表。所有下文按读数构造的模拟器都由此归并为同一个状态无关核。
+
+在支撑（536.1）上，不同叶情境在相应 $v_{ij}$ 上目标相反，中心与任一叶的共同读数则只有 $u_i$，目标同为零。因此式（535.11）恰化为
+
+$$
+E_W\text{ 充分}\quad\Longleftrightarrow\quad
+\mu_i\perp\mu_j\quad(i\ne j).
+\tag{536.5}
+$$
+
+中心律 $\nu$ 没有其他充分性约束。互相奇异是可测分离条件，不是拓扑支撑不交。
+
+称全部这些充分 $E_W$ 组成私有允许族 $\mathcal F_{\mathrm{priv}}$：它允许编码器把自己的随机位隐藏在 $W_k$ 中，也允许输出更多内容。公开充分族 $\mathcal F_{\mathrm{pub}}$ 则要求辅助输出具有表示
+
+$$
+(R,f(R,k)),\qquad R\sim\rho,\qquad
+f:\mathcal R\times K\to Z\text{ 可测},
+\tag{536.6}
+$$
+
+其中 $\mathcal R,Z$ 是任意非空标准 Borel 空间，$\rho$ 对每个实际状态都是同一个概率律，且给定 $(R,k)$ 后 $f$ 是确定性的。整个 $R$ 被观察者看到；没有留在 $f$ 内的隐藏编码随机位。解码器和模拟器仍可使用自己的随机化。这是 $\mathcal F_{\mathrm{priv}}$ 的子族，两类并不互斥。“公开／私有”只描述编码种子的可见性，不表示隐私保证，也不借用某种通信复杂度中的额外约定。种子自身与状态独立，不表示它与消息合看时仍不提供状态信息。
+

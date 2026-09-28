@@ -1,0 +1,20 @@
+### 29.1 双曲模空间提供真实的几何共轭变量
+
+对第 17 节固定拓扑、固定外边界长度的曲面，在标记的 Fenchel–Nielsen 图册中使用内部长度 $\ell_e$ 与扭转 $\tau_e$。标准 Weil–Petersson 辛形式取归一化为
+
+$$
+\omega_{\rm WP}=\sum_e d\ell_e\wedge d\tau_e.
+$$
+
+这是 Wolpert 的既有公式。本节扭转采用 $\tau_e=-\tau_e^{\rm WP25}$，因为 [WP25] 式 (1) 写为 $\sum_e d\tau_e^{\rm WP25}\wedge d\ell_e$；这样上式及随后的 Hamilton 方程使用同一符号约定。[WP25] 给出一个新的证明，固定测地边界的模空间参照 [Do10]。带固定测地边界的情形使用对应的固定边界长度辛叶，不把可变外边界参数误当已配对的自由度。
+
+在第 17 节的短领圈开区间内，全部选定边界熵读数为 $s_A=\lambda^{-1}\min_C\sum_{e\in C}\ell_e$，与扭转无关。固定极小割组合的光滑子区间中，若自行选择的 Hamilton 函数仅依赖这些读数，即 $H=F((s_A))$，则
+
+$$
+\dot\ell_e=\partial_{\tau_e}H=0,
+\qquad\dot\tau_e=-\partial_{\ell_e}H,
+\qquad\dot s_A=0.
+$$
+
+这是 Hamilton 方程的直接后果，说明单靠这些面积读数作为能量函数不能生成长度变化。若选择 $H=\tfrac12\tau^TM^{-1}\tau+U(\ell)$，其中 $M>0$，则 $\dot\ell=M^{-1}\tau$，同一长度纤维上不同扭转可有不同速度。该几何 Hamilton 模型是一种明确选择，未从边界量子理论推导，也不能把 WP 扭转无证明地识别为量子态相位、Lorentz 时空的外曲率或 ADM 正则动量。
+

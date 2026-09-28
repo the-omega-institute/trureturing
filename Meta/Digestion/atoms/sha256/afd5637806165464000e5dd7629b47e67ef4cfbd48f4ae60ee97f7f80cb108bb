@@ -1,0 +1,27 @@
+**构造 28.4（原中心子码中的面积–相位动力学）。** 取第 18 节三维三角环的 $|Z|=9$，分为大小 $3$ 与 $6$ 的两组，均匀固定组内相干并将 $a,b$ 因子固定到一个计算基向量。所得二维子码仍在原物理空间内。其实际支撑坐标可写成
+
+$$
+J_c|0\rangle=3^{-1/2}\sum_{z=0}^{2}|z,z\rangle,\qquad
+J_c|1\rangle=6^{-1/2}\sum_{z=3}^{8}|z,z\rangle.
+$$
+
+这仅使用第 18 节的两侧局部支撑等距，不添加物理维数。对任意逻辑输入，$p=\rho_{11}$，有
+
+$$
+S_X=h_2(p)+a(p),\qquad
+\mathcal L=\operatorname{diag}(\log3,\log6),\qquad
+ a(p)=\log3+p\log2.
+$$
+
+取 $h=(\Omega/2)\sigma_x$。对纯态 $\sqrt{1-p}|0\rangle+e^{i\phi}\sqrt p|1\rangle$、$0<p<1$，Schrödinger 方程等价于
+
+$$
+\dot p=-\Omega\sqrt{p(1-p)}\sin\phi,\qquad
+\dot\phi=-\frac{\Omega(1-2p)}{2\sqrt{p(1-p)}}\cos\phi,
+\qquad\dot a=(\log2)\dot p.
+$$
+
+**证明。** 边缘态两组支持正交，谱为 $(1-p)/3$ 的三重值和 $p/6$ 的六重值。直接计算熵得到第一式。将两振幅代入 Schrödinger 方程，概率导数及相位比导数给出后式。它也是 $dp\wedge d\phi$ 与 $E=\Omega\sqrt{p(1-p)}\cos\phi$ 的 Hamilton 流，采用 $\iota_{X_E}\omega=dE$。证毕。
+
+这是非标量面积期望真实变化的有限模型。相同 $p$、不同 $\phi$ 可有不同面积速度，加入相位后闭合。生成元混合中心扇区，因而不保持两侧的对角恢复代数自治，符合命题 28.1。物理实现 $J_chJ_c^*$ 一般跨该划分非局部，未证明几何局域性或多区域动力学。非稳定子算子代数码可以有这种中心面积，并不与 [Magic26] 明确限定的子系统码近似恢复论证冲突。
+

@@ -1,0 +1,90 @@
+### 定理 18：边界拼接代数定理
+
+在不交坐标乘积与并集的规范识别下，上述映射良定义且满射，并满足：
+
+**结合律：**
+
+$$
+\mu_{A\cup C,D}^F
+\bigl(\mu_{A,C}^F(p,q),r\bigr) =
+\mu_{A,C\cup D}^F
+\bigl(p,\mu_{C,D}^F(q,r)\bigr),
+$$
+
+其中 $A,C,D$ 两两不交。
+
+**交换律：**
+
+$$
+\mu_{A,C}^F(p,q) =
+\mu_{C,A}^F(q,p),
+$$
+
+其中按坐标标签作规范识别。
+
+**单位律：** $\mathsf S_\varnothing(F)$ 的唯一元素是拼接单位。
+
+此外：
+
+$$
+\boxed{
+\kappa_{A\cup C}(F)
+\leq
+\kappa_A(F)\kappa_C(F).
+}
+$$
+
+#### 证明
+
+设：
+
+$$
+a\sim_A^F a',
+\qquad
+c\sim_C^F c'.
+$$
+
+任取剩余坐标上的赋值：
+
+$$
+b\in X_{I\setminus(A\cup C)}.
+$$
+
+由第一项等价：
+
+$$
+F(a,c,b)=F(a',c,b).
+$$
+
+再由第二项等价：
+
+$$
+F(a',c,b)=F(a',c',b).
+$$
+
+所以：
+
+$$
+a\sqcup c\sim_{A\cup C}^F a'\sqcup c'.
+$$
+
+因此拼接良定义。
+
+任意 $A\cup C$ 上的赋值都可以限制到 $A,C$，故拼接满射。
+
+结合律、交换律与单位律，都由互不重叠坐标赋值的合并规则得到。最后，满射给出基数不等式。∎
+
+定义 15 中的拼接映射由此组成一个规范对象：
+
+$$
+\boxed{
+\mathfrak B(F) =
+\left(
+\{\mathsf S_A(F)\}_{A\subseteq I},
+\{\mu_{A,C}^F\}_{A\cap C=\varnothing}
+\right).
+}
+$$
+
+称其为任务 $F$ 的**边界拼接代数**。
+

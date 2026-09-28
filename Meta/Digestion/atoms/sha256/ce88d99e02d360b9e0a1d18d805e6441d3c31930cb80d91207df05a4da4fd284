@@ -1,0 +1,53 @@
+### 定理 536.6（任意充分通道与全部公开实验的完整跨类序）
+
+令 $E_W$ 是定义 536.1 的任意充分实验，$\lambda,\beta,\kappa,d$ 如式（536.7），令 $r\in Q_m$。则
+
+$$
+\boxed{\quad E_W\preceq P_r\iff r\le\kappa,\qquad
+P_r\preceq E_W\iff r\ge d.\quad}
+\tag{536.18}
+$$
+
+向量不等式均逐坐标理解。因此 $E_W$ 之下的公开等价类、以及其上的公开等价类分别为
+
+$$
+\begin{aligned}
+\{[P_r]:P_r\preceq E_W\}
+&=\{[P_r]:r\ge d,\ \sum_ir_i\le1\},\\
+\{[P_r]:E_W\preceq P_r\}
+&=\{[P_r]:0\le r\le\kappa\}.
+\end{aligned}
+\tag{536.19}
+$$
+
+前者非空当且仅当 $\sum_id_i\le1$，后者总包含 $P_0$。$E_W$ 的等价类中存在公开代表当且仅当
+
+$$
+\kappa_i=d_i\quad\text{对全部 }i;
+\tag{536.20}
+$$
+
+成立时该代表的规范参数唯一，为 $P_\kappa$。两个实验的严格与不可比情形完整地写为
+
+$$
+\begin{aligned}
+E_W\prec P_r
+&\iff r\le\kappa\ \text{且 }r\not\ge d,\\
+P_r\prec E_W
+&\iff r\ge d\ \text{且 }r\not\le\kappa,\\
+E_W\simeq P_r
+&\iff r=\kappa=d,\\
+E_W\text{ 与 }P_r\text{ 不可比}
+&\iff r\not\le\kappa\ \text{且 }r\not\ge d.
+\end{aligned}
+\tag{536.21}
+$$
+
+证明：在每个实际读数 $u_i$ 上，$E_W$ 的两律是 $(\nu,\mu_i)$，$P_r$ 则与 $B_{r_i}$ 等价。引理 536.3 的第一式恰给出 $r_i\le\kappa_i$，第二式恰给出 $r_i\ge\max(\lambda_i,\beta_i)=d_i$。这些必要条件是逐读数从任何全局核边缘化得到的，未限制原全局核的形式。
+
+反向，若相应的逐坐标判据成立，引理 536.3 在每个 $u_i$ 给出同方向的局部核。在每个 $v_{ij}$，$E_W$ 的两叶律互相奇异，$P_r$ 的两叶输出也互相奇异；从任一源实验的分离集识别叶行，再抽样目标的对应行律，即得到所需局部核。读数只有有限个，将它们按输入 $q$ 拼成一个 Markov 核，附回该 $q$，便在（536.1）的每一实际行上得到正确目标律。核使用的是已经观察到的读数，不使用隐藏状态，也没有添加支撑外的等式义务。这同时证明两方向的充分性。
+
+第一集合有成员时必有 $\sum_id_i\le1$；反之取 $r=d$ 即可。因 $\sum_i\kappa_i\le1$，第二集合中的每个向量自动属于 $Q_m$。若两个方向同时成立，则 $d\le r\le\kappa$，再由 $\kappa\le d$ 得到 $r=\kappa=d$；反之这个等式直接给出等价。剩余三种情形是两个判据的其余真假组合，故无遗漏。证毕。
+
+这里 $\lambda,\beta,\kappa$ 的作用不同：$\lambda$ 决定可从 $E_W$ 取得哪些私有极小类，$d$ 决定它能模拟哪些公开实验，$\kappa$ 决定哪些公开实验能模拟它。这些量给出了本定理的全部公开比较，并不声称分类了任意两个私有通道之间的所有比较。
+

@@ -1,0 +1,33 @@
+{
+  "analytic_dependency": "Chapter33 SH11, with Rosser-Schoenfeld/source attribution; not proved by this rational computation",
+  "analytic_product_constant": "201/199",
+  "boundary": "No all-depth head query norm is assumed. The head-height condition applies only to head-only originals. Arbitrary deeper head exponents in tail originals enter the existing joint Haar moment. Positive mass gives an uncovered integer; this weighted reserve is not claimed as its natural-density lower bound.",
+  "complete_tail_loss_upper": "313147209759498591392330831/385594576415774972001458278400",
+  "cutoff": 100000,
+  "distorted_survivor_mass_lower": "1663915295841259580268266967/2699162034910424804010207948800",
+  "distorted_survivor_mass_lower_decimal": 0.0006164562461684442,
+  "head_joint_haar_cap": "1",
+  "head_mass_floor": "1/700",
+  "head_second_moment_upper": "61036374269/1970749440",
+  "head_seed_sha256": "2b6a70b1adda2bea55873433271367cb3b9ce7deb1c03c9f111c06015c290806",
+  "head_source": "Actual Haar restriction H|U at full-family head heights",
+  "integral_polynomial": "305593/125000",
+  "level": 10,
+  "reference_head_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37
+  ],
+  "scope": "Existing joint-moment tail bound applied to the eleven-prime density.\n\nThere are at most11 actual support primes at most100000. Only originals\nwholly on this head require v3(m)<=1. All tail-touching originals may have\narbitrary old and new finite exponents. The entire original family is\nfinite, but the number of tail primes has no uniform bound.\nThe final reserve is distorted-measure mass, not full Haar density.\nOrdinary proof using Chapter33's analytic premise; no new Lean claim.\n",
+  "surplus_over_1_over_2000": "1571671391930235891315814963/13495810174552124020051039744000",
+  "tau7": "16202267391964665023172/617896138521372358365262955",
+  "three_to_level": 59049
+}

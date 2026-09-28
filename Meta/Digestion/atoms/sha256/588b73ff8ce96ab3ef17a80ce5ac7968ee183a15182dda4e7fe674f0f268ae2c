@@ -1,0 +1,4 @@
+## proposition 28.1: 保持区域代数的连续流固定中心面积
+
+固定有限维逻辑 $*$-代数 $\mathcal M$ 及其中心内的自伴面积算符 $\mathcal L$。若 $U_t$ 为从恒等出发的连续单参数幺正群，且对全部 $t$ 有 $U_t^*\mathcal M U_t=\mathcal M$，则 $U_t^*\mathcal L U_t=\mathcal L$。
+

@@ -1,0 +1,44 @@
+### 推论 31.1：单个布尔投影的全布尔锐利指数
+
+将定义 31 的指定构件固定为 $\phi(t,d)=t$，其中 $t,d\in\mathbb B=\{0,1\}$，并进一步要求所有原始端点、所有构件有效输出以及外层输出均为布尔字母表。在任意有限个其余构件各有满射行与满射列的范围内，对所有端点顺序仍有
+
+$$
+W_F(\operatorname{cn}(\pi))\leq W_F(\pi)^2,
+$$
+
+而最小一致指数恰为 $2$；即使只考虑 $t$ 先于 $d$ 的顺序也不能降低此指数。
+
+具体地，对每个整数 $k\geq1$，用 $4k$ 个互不相交的二元相等构件定义四个向量 $U,P,V,Q\in\mathbb B^k$：
+
+$$
+U_i=\mathbf1[u_i^0=u_i^1],\quad
+P_i=\mathbf1[p_i^0=p_i^1],\quad
+V_i=\mathbf1[v_i^0=v_i^1],\quad
+Q_i=\mathbf1[q_i^0=q_i^1]
+\qquad(1\leq i\leq k).
+$$
+
+全部 $8k+2$ 个原始坐标 $t,d,u_i^0,u_i^1,p_i^0,p_i^1,v_i^0,v_i^1,q_i^0,q_i^1$ 在完整布尔直积上独立变化。令单个标量输出为
+
+$$
+H_0=\mathbf1[U=V],\qquad H_1=\mathbf1[P=Q],
+\qquad F_k=(\neg t\land H_0)\lor(t\land H_1).
+$$
+
+用 $\mathcal U=(u_1^0,u_1^1,\ldots,u_k^0,u_k^1)$ 表示整个 $U$ 端点块，类似定义 $\mathcal P,\mathcal V,\mathcal Q$。取
+
+$$
+\pi_k=(t,\mathcal U,\mathcal P,\mathcal V,\mathcal Q,d),
+\qquad
+\rho_k=(\mathcal U,\mathcal P,\mathcal V,\mathcal Q,t,d).
+$$
+
+则 $\rho_k=\operatorname{cn}(\pi_k)$，且计入全部 $8k+3$ 层的精确宽度为
+
+$$
+W_{F_k}(\pi_k)=2^{k+1},\qquad
+W_{F_k}(\rho_k)=2^{2k}.
+$$
+
+因此宽度比为 $2^{k-1}$，$k=1$ 时两者均为 $4$，$k\geq2$ 时严格增宽；变化的规模是良好伴随构件的数量，全部字母表始终为布尔集。
+

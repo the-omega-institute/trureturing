@@ -1,0 +1,23 @@
+**证明。** 对各顶点外腿偏迹留下环内两腿的 $I_{d^2}/d^2$，每条归一化边态迹为一，故 $Z$ 恒定。令 $F$ 为两副本交换。边的 Haar 二阶矩为
+
+$$
+\mathbb E[(|U\rangle\langle U|)^{\otimes2}]
+=\frac{I\otimes I+F\otimes F-d^{-1}(I\otimes F+F\otimes I)}{d^2(d^2-1)}.
+$$
+
+两端交换子空间由 $I,F$ 张成，四个迹约束为 $1,1/d,1/d,1$，解线性方程即得系数。半边交换标号用 $0,1$，边和顶点矩阵分别为
+
+$$
+M=\begin{pmatrix}1&-d^{-1}\\-d^{-1}&1\end{pmatrix},\qquad
+V_A=\begin{pmatrix}d^{-1}&d^{-2}\\d^{-2}&d^{-1}\end{pmatrix}.
+$$
+
+顶点条目来自选中 $1+s+t$ 条腿的 AME 纯度 $d^{-\min(1+s+t,3-s-t)}$。未归一化纯度分子 $N_A$ 满足
+
+$$
+\mathbb E N_A=[d^2(d^2-1)]^{-L}\operatorname{Tr}[(MV_A)^L],\qquad
+MV_A=(d^2-1)d^{-3}I_2.
+$$
+
+所以 $\mathbb E N_A=2d^{-5L}$，除以常数 $Z^2=d^{-4L}$ 得结论。这里没有用期望之比代替随机比值。证毕。
+

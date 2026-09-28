@@ -15,6 +15,8 @@ triage: anchor
 
 The error-product criterion and syndrome recovery are established quantum error-correction results. The theory supplement supplies the construction for the fixed finite input space and public-result conventions it uses. Neither the old theorem nor the finite candidate Lean identities independently establish a physical string model or a spacetime metric.
 
+For a fixed code, detecting every operator supported on fewer than the code distance gives scalar compressions of those operators. Applied to an exactly invariant code under a specified GKLS generator, this bounds the small-support jump terms; it does not address active correction, moving code spaces, or evolutions that leave the code temporarily. This use of the criterion is not a gravitational or spacetime statement.
+
 Source: https://doi.org/10.1103/PhysRevA.55.900
 
 ## Verified locator

@@ -7849,3 +7849,402 @@ $$
 最后，两周期所有相位的长四词依次为 $(0001,0010,0100,1000)$ 与 $(0011,0110,1100,1001)$，八词两两不同，故八个完整行程两两不同，$K=8$。原来源更新本身是置换，已经给出八状态交换可逆实现；定理27.3的全部来源下界排除更小的任何交换确定实现，也就排除更小的交换可逆实现。这里六、七、八计算的是同一来源、同一窗口任务在分别声明的条件下的总容量。证毕。
 
 ## 27.99 追加锚
+
+## 28. 有限内部粗时指针与随机时间联合仪器
+
+本节给出一个有限维、内部产生粗标签的条件接口，并把它直接接到本卷第 3.1 节的随机时间 instrument。它的消费者增益是：停止后的系统仍与任意有限参考一起保留在每个无条件标签分支中，同时由有限计数器产生一个可比较的粗时间标签。这里 $\hbar=1$。固定正整数 $m,J,r$ 以及 $\delta,\kappa>0$，置
+
+$$
+\nu=\frac r\delta,
+\qquad
+K=Jr.
+\tag{28.1}
+$$
+
+令 $\mathcal H_S\ne\{0\}$ 是有限维 Hilbert 空间，$H_S=H_S^\dagger$；$\mathcal H_R$ 是任意有限维、保持不动的参考空间。输入可以是 $\mathcal H_S\otimes\mathcal H_R$ 上的任意矩阵 $X_{SR}$，并不要求是纯态、乘积态或满秩态。引入两个内部寄存器
+
+$$
+\mathcal H_C=\operatorname{span}\{|c\rangle:0\le c\le m\},
+\qquad
+\mathcal H_D=\operatorname{span}\{|n\rangle:0\le n\le K\},
+$$
+
+并把它们独立准备为 $|0\rangle_C|0\rangle_D$；这个准备不依赖 $S$ 或 $R$。在 $C\otimes D\otimes S$ 上令
+
+$$
+P_{\rm run}=\sum_{c=0}^{m-1}|c\rangle\langle c|,
+\qquad
+H_{\rm total}=P_{\rm run}\otimes I_D\otimes H_S.
+\tag{28.2}
+$$
+
+时钟和计数器的跳跃算子分别为
+
+$$
+L_c=\sqrt\kappa\,|c+1\rangle\langle c|\otimes I_D\otimes I_S
+\quad(0\le c<m),
+$$
+
+$$
+A_n=\sqrt\nu\,P_{\rm run}\otimes|n+1\rangle\langle n|\otimes I_S
+\quad(0\le n<K).
+\tag{28.3}
+$$
+
+使用普通 GKLS 生成元
+
+$$
+\mathcal L(\rho)=-i[H_{\rm total},\rho]
++\sum_{c=0}^{m-1}\mathcal D[L_c](\rho)
++\sum_{n=0}^{K-1}\mathcal D[A_n](\rho),
+\qquad
+\mathcal D[B](\rho)=B\rho B^\dagger-\frac12\{B^\dagger B,\rho\}.
+\tag{28.4}
+$$
+
+$C=m$ 时没有 $L_c$ 再流出，$H_{\rm total}$ 也为零；$D=K$ 时没有 $A_n$ 再流出，但只要 $c<m$，时钟仍会运行而 $S$ 仍按 $H_S$ 演化。因此计数器饱和只冻结 $D$，从不冻结 $C$ 或 $S$；只有 $C=m$ 才冻结全部保留数据。没有外部开关或终端时刻，停止由第 $m$ 次时钟跳跃产生。
+
+### 28.1 对角不变扇区与精确联合块
+
+准备的 $C,D$ 对角扇区
+
+$$
+\rho(t)=\sum_{c=0}^{m}\sum_{n=0}^{K}|c,n\rangle\langle c,n|\otimes X_{c,n}(t),
+\tag{28.5}
+$$
+
+在式(28.4)下不变。取初值 $X_{0,0}(0)=X_{SR}$，其余块为零。这里 $X_{c,n}(t)$ 是 $S\otimes R$ 上的矩阵。约定不存在的下标块为零，即 $X_{-1,n}=0$、$X_{c,-1}=0$。对 $0\le c<m$、$0\le n<K$，前向方程为
+
+$$
+\dot X_{c,n}
+=-i[H_S,X_{c,n}]
++\kappa X_{c-1,n}-\kappa X_{c,n}
++\nu X_{c,n-1}-\nu X_{c,n}.
+\tag{28.6}
+$$
+
+所以左下角边界明确为
+
+$$
+\dot X_{0,0}=-i[H_S,X_{0,0}]-(\kappa+\nu)X_{0,0},
+$$
+
+而 $c=0$ 时没有钟流入，$n=0$ 时没有计数器流入。对 $0\le c<m$ 的饱和列 $n=K$，方程是
+
+$$
+\dot X_{c,K}
+=-i[H_S,X_{c,K}]
++\kappa X_{c-1,K}-\kappa X_{c,K}
++\nu X_{c,K-1},
+\tag{28.7}
+$$
+
+其中没有 $-\nu X_{c,K}$，因为 $D=K$ 后计数器不再跳跃。终止行 $c=m$ 对每个 $0\le n\le K$ 满足
+
+$$
+\dot X_{m,n}=\kappa X_{m-1,n},
+\tag{28.8}
+$$
+
+没有 Hamiltonian 项、钟流出项或计数器流出项。这些式子同时显示，终止行不是把计数器替换成一个未饱和的无限寄存器。
+
+令
+
+$$
+U_t=e^{-itH_S},
+\qquad
+V_t(X_{SR})=(U_t\otimes I_R)X_{SR}(U_t^\dagger\otimes I_R),
+$$
+
+$$
+ p_c(t)=e^{-\kappa t}\frac{(\kappa t)^c}{c!}\quad(0\le c<m),
+$$
+
+$$
+ q_n(t)=e^{-\nu t}\frac{(\nu t)^n}{n!}\quad(0\le n<K),
+\qquad
+ q_K(t)=1-\sum_{n=0}^{K-1}q_n(t).
+\tag{28.9}
+$$
+
+再令第 $m$ 次钟跳跃的 Erlang 密度为
+
+$$
+ f(t)=\frac{\kappa^m t^{m-1}e^{-\kappa t}}{(m-1)!},
+\qquad
+\int_0^\infty f(t)\,dt=1.
+\tag{28.10}
+$$
+
+则对每个有限 $T\ge0$，运行块和停止块的精确解分别为
+
+$$
+ X_{c,n}(T)=p_c(T)q_n(T)V_T(X_{SR})
+ \quad(0\le c<m,\ 0\le n\le K),
+ \tag{28.11}
+$$
+
+$$
+ X_{m,n}(T)=\int_0^T f(t)q_n(t)V_t(X_{SR})\,dt
+ \quad(0\le n\le K).
+ \tag{28.12}
+$$
+
+这里 $q_K$ 是饱和尾概率，因而式(28.11)保留了计数器已经溢出的全部运行质量。证明直接检验前向方程。对 $c<m$，有 $\dot p_c=\kappa p_{c-1}-\kappa p_c$（$c=0$ 时取 $p_{-1}=0$）；对 $n<K$，有 $\dot q_n=\nu q_{n-1}-\nu q_n$，而 $\dot q_K=\nu q_{K-1}$。共轭酉满足 $\frac d{dt}V_t(X)=-i[H_S,V_t(X)]$，所以乘积式(28.11)给出式(28.6)和式(28.7)。又 $\kappa p_{m-1}(t)=f(t)$，式(28.12)的导数正好是 $\kappa X_{m-1,n}(T)$，初值为零，给出式(28.8)。有限维线性 ODE 的唯一性完成证明。
+
+对任意矩阵 $X_{SR}$，$\|V_t(X_{SR})\|_1=\|X_{SR}\|_1$。于是
+
+$$
+\sum_{n=0}^{K}\int_0^\infty f(t)q_n(t)\|V_t(X_{SR})\|_1\,dt
+\le \|X_{SR}\|_1,
+\tag{28.13}
+$$
+
+故所有停止块和后面的标签积分绝对收敛。若输入归一化，有限时刻仍在运行的总质量为
+
+$$
+\Pr(\tau>T)=\sum_{c=0}^{m-1}p_c(T)
+=e^{-\kappa T}\sum_{c=0}^{m-1}\frac{(\kappa T)^c}{c!},
+\tag{28.14}
+$$
+
+而已停止质量为 $1-\Pr(\tau>T)$；这里 $\tau$ 是密度 $f$ 的停止时间。因而任意有限 $T$ 都可能有 live mass，完整仪器是 $T\to\infty$ 的无条件极限，不是一个确定的 deadline。
+
+### 28.2 有限标签、完整无条件 instrument 与准确消费增益
+
+令物理标签和理想粗时间标签分别为
+
+$$
+ a(n)=\min\left\{\left\lfloor\frac n r\right\rfloor,J\right\},
+ \qquad
+ b(t)=\min\left\{\left\lfloor\frac t\delta\right\rfloor,J\right\}.
+\tag{28.15}
+$$
+
+对 $0\le a<J$ 置
+
+$$
+ w_a(t)=\sum_{n=ar}^{(a+1)r-1}q_n(t),
+ \qquad
+ w_J(t)=q_K(t).
+\tag{28.16}
+$$
+
+物理停止分支把 $D$ 的所有原始计数值按式(28.15)合并，但不改变 $S\otimes R$ 的停止态，故
+
+$$
+ \mathsf P_a(X_{SR})
+ =\int_0^\infty f(t)w_a(t)V_t(X_{SR})\,dt
+ \quad(0\le a\le J).
+\tag{28.17}
+$$
+
+理想分支直接使用本卷第 3.1.1--3.1.3 节已有的随机时间 Borel instrument
+
+$$
+ \mathfrak J(B)(X_{SR})=\int_B f(t)V_t(X_{SR})\,dt.
+\tag{28.18}
+$$
+
+令 $B_b=[b\delta,(b+1)\delta)$（$b<J$），$B_J=[J\delta,\infty)$，则
+
+$$
+ \mathsf I_b(X_{SR})=\mathfrak J(B_b)(X_{SR})
+ =\int_{B_b}f(t)V_t(X_{SR})\,dt.
+\tag{28.19}
+$$
+
+物理模型和理想模型使用同一个随机停止时间 $\tau$ 以及同一个 $V_\tau$；理想标签只是 Borel instrument 的粗分支，并不表示实验者获得连续 timestamp。两者的完整、无条件、带参考输出可写成
+
+$$
+ \widehat{\mathsf P}(X)=\sum_{a=0}^{J}|a\rangle\langle a|\otimes\mathsf P_a(X),
+ \qquad
+ \widehat{\mathsf I}(X)=\sum_{b=0}^{J}|b\rangle\langle b|\otimes\mathsf I_b(X).
+\tag{28.20}
+$$
+
+由于 $\sum_{a=0}^{J}w_a(t)=1$、$\{B_b\}_{b=0}^{J}$ 分割 $[0,\infty)$，有
+
+$$
+ \sum_{a=0}^{J}\mathsf P_a(X)
+ =\sum_{b=0}^{J}\mathsf I_b(X)
+ =\int_0^\infty f(t)V_t(X)\,dt.
+\tag{28.21}
+$$
+
+所以两份 instrument 都是完整的 trace-preserving 无条件 instrument，并且**丢弃标签后的系统通道完全相等**。这个等式对任意 $X_{SR}$ 成立，因而保留任意参考输入的联合输出；它不是只对无参考系统或对角输入成立。物理分支中的 $w_J=q_K$ 是真实的 counter saturation，未把溢出事件删去，也没有对稀有分支做归一化。 若消费者只观察丢弃标签后的系统通道，这个新增接口的增量严格为零；实际增量是一个有限、内部产生、可与停止后的 $S\otimes R$ 联合使用的标签，而且每个分支保留其原始无条件权重。
+
+### 28.3 证明用耦合与全矩阵 diamond 界
+
+在证明中取与 $\tau$ 独立的速率 $\nu$ Poisson 过程 $N_t$，并令
+
+$$
+ D=\min\{N_\tau,K\},
+ \qquad
+ A=a(D),
+ \qquad
+ B=b(\tau).
+\tag{28.22}
+$$
+
+未饱和的 $N_\tau$ 只是在证明中使用的随机变量，装置没有访问一个无限计数器。由条件均值和方差
+
+$$
+ \mathbb E\!\left[\frac{N_\tau}{\nu}\,\middle|\,\tau\right]=\tau,
+ \qquad
+ \operatorname{Var}\!\left(\frac{N_\tau}{\nu}\,\middle|\,\tau\right)=\frac{\tau}{\nu},
+$$
+
+以及 $\mathbb E\tau=m/\kappa$，得到
+
+$$
+ \mathbb E\left[\left(\frac{N_\tau}{\nu}-\tau\right)^2\right]
+ =\frac{m}{\kappa\nu}.
+\tag{28.23}
+$$
+
+式(28.23)绝不能把 $N_\tau$ 换成饱和的 $D$；一般 $\mathbb E[(D/\nu-\tau)^2]\ne m/(\kappa\nu)$。
+
+令边界集合 $\mathcal B=\{\delta,2\delta,\ldots,J\delta\}$。若 $\operatorname{dist}(\tau,\mathcal B)>\varepsilon$ 且 $|N_\tau/\nu-\tau|\le\varepsilon$，则取整和最终饱和都会给出同一标签。因此对任意 $\varepsilon>0$，并对任意满足 $f(t)\le M$ 的密度上界，有
+
+$$
+\Pr(A\ne B)
+\le \min\left\{1,\ \Pr(\operatorname{dist}(\tau,\mathcal B)\le\varepsilon)
++\Pr\left(\left|\frac{N_\tau}{\nu}-\tau\right|>\varepsilon\right)\right\}
+\le \min\left\{1,\ 2JM\varepsilon+\frac{m}{\kappa\nu\varepsilon^2}\right\}.
+\tag{28.24}
+$$
+
+第一项由 $J$ 个长度至多 $2\varepsilon$ 的区间和密度上界给出，第二项是式(28.23)的 Chebyshev 界。对 Erlang 密度，写 $x=\kappa t$ 后 $e^{-x}x^{m-1}/(m-1)!\le1$，故可取 $M=\kappa$。
+
+现在取任意有限参考 $R$ 和任意 $S\otimes R$ 矩阵 $X$。在同一耦合样本 $(\tau,N_\tau)$ 上，两份输出使用相同的 $V_\tau(X)$；当 $A=B$ 时差为零，当 $A\ne B$ 时差是两个正交标签块上的
+
+$$
+ |A\rangle\langle A|\otimes V_\tau(X)
+ -|B\rangle\langle B|\otimes V_\tau(X),
+$$
+
+其迹范数恰为 $2\|X\|_1$。积分三角不等式因此给出完整无条件 instrument 的**未减半** diamond 界
+
+$$
+ \left\|\widehat{\mathsf P}-\widehat{\mathsf I}\right\|_\diamond
+ \le 2\Pr(A\ne B)
+ \le 2\min\left\{1,\ 2JM\varepsilon+\frac{m}{\kappa\nu\varepsilon^2}\right\}.
+\tag{28.25}
+$$
+
+这里的 diamond 范数按 $\sup_R\sup_{\|X\|_1=1}$ 取，故式(28.25)已经对每个有限参考和每个矩阵 $X$ 成立；若采用传统 trace distance，则相应数值要再除以二。固定 $m,J,\delta,\kappa$，取
+
+$$
+\varepsilon=\delta r^{-1/3},
+\qquad
+\nu=\frac r\delta,
+\qquad M=\kappa,
+$$
+
+得到
+
+$$
+ \left\|\widehat{\mathsf P}-\widehat{\mathsf I}\right\|_\diamond
+ \le 2\min\left\{1,
+ \left(2J\kappa\delta+\frac{m}{\kappa\delta}\right)r^{-1/3}\right\}
+ \xrightarrow[r\to\infty]{}0.
+\tag{28.26}
+$$
+
+这只是一个方便的精度选择，不是速率优化。它也不声称 $H_S$ 独立就意味着实现成本与 $H_S$ 无关；$H_S$ 独立来自比较中相同的实际运行时间和相同的 $V_\tau$，而不是来自一个与 Hamiltonian 无关的微观实现定理。
+
+### 28.4 资源合同与两个边界见证
+
+$C\otimes D$ 的有限维为
+
+$$
+ (m+1)(Jr+1).
+\tag{28.27}
+$$
+
+运行轨迹的最大总离开率为 $\kappa+\nu$；每条轨迹恰有 $m$ 次时钟跳跃，计数器跳跃数为 $\min\{N_\tau,Jr\}$，并满足
+
+$$
+\mathbb E[\min\{N_\tau,Jr\}]
+\le \min\left\{Jr,\frac{\nu m}{\kappa}\right\},
+\qquad
+\mathbb E\tau=\frac m\kappa.
+\tag{28.28}
+$$
+
+在本节的消费者目标下，所采用的充分接口只含一个 $m$ 段串联 Erlang 时钟和一个 $K+1$ 状态饱和计数器；没有再加入第二个时钟、连续时间读头或额外控制层。它给出一个明确而紧的声明面，但这里不把它声称为所有微观实现中的全局成本最优。在固定 $\delta$ 下提高标签精度会提高 $r$，从而同时提高计数器维数和独立 pointer 速率 $\nu$。本接口没有给出有限微观 bath、有限能量、热复位、校准、读出、相干停止或能量交换资源的实现；也没有确定性 deadline、精确 timestamp、bath/time 访问、postselection、terminal renormalization、任意 $C,D$ 相干或归一化稀有分支的保证。它是条件性的有限内部接口，不能把有限 GKLS clockwork 冒充为原先更强的 microscopic reservoir/recorder 问题的解。
+
+第一个边界见证取
+
+$$
+ m=J=r=\delta=\kappa=\nu=1,
+ \qquad H_S=0.
+$$
+
+此时 $K=1$，物理计数器溢出事件为 $N_\tau\ge1$，其概率为
+
+$$
+ \Pr(N_\tau\ge1)=\mathbb E[1-e^{-\tau}]=\frac12,
+$$
+
+而理想溢出事件为 $\tau\ge1$，概率为 $e^{-1}$。因此溢出不是 $\tau\ge J\delta$ 的证书；两份二标签 instrument 的未减半距离恰为
+
+$$
+ 2\left|\frac12-e^{-1}\right|=1-\frac2e.
+\tag{28.29}
+$$
+
+第二个见证只比较一个明确的能量分辨替代，不是对所有热实现的 no-go。一般终止边的能量分辨跳跃为
+
+$$
+L_E^{\rm fin}=\sqrt\kappa\,|m\rangle\langle m-1|\otimes I_D\otimes\Pi_E,
+\qquad
+[H_{\rm total},L_E^{\rm fin}]=-E L_E^{\rm fin},
+\tag{28.30a}
+$$
+
+因为终止行的 Hamiltonian 为零而运行行的该分量能量为 $E$。设 $m=1$，取 $H_S=\operatorname{diag}(0,E)$、$E>0$，并令系统输入为
+
+$$
+ |+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2}.
+$$
+
+相干的最终停止跳跃可按 $H_{\rm total}$ 的谱分解写成
+
+$$
+ L_{\rm fin}=\sqrt\kappa\,|1\rangle\langle0|\otimes I_D\otimes I_S
+ =\sum_E L_E,
+ \qquad
+ L_E=\sqrt\kappa\,|1\rangle\langle0|\otimes I_D\otimes\Pi_E,
+$$
+
+其中 $\Pi_E$ 是 $H_S$ 的能量投影。由于终止行的 Hamiltonian 为零而运行行的该分量能量为 $E$，有
+
+$$
+ [H_{\rm total},L_E]=-E L_E.
+\tag{28.30}
+$$
+
+这不是把所有边都称为裸系统能隙：只有穿过 $c=m-1\to m$ 的最终跳跃相对于式(28.2)带有这个总 Hamiltonian 变化；此前 $c<m-1$ 的边与 $H_{\rm total}$ 对易。相干跳跃的 $L_{\rm fin}\rho L_{\rm fin}^\dagger$ 保留不同 $E$、$F$ 之间的交叉项；能量分辨替代则用 $\sum_E\mathcal D[L_E]$，把这些交叉项删去。
+
+对 $|+\rangle$，相干停止分支的系统边缘非对角元为
+
+$$
+ \int_0^\infty \kappa e^{-\kappa t}\frac{e^{itE}}2\,dt
+ =\frac{\kappa}{2(\kappa-iE)},
+$$
+
+而能量分辨替代的相应非对角元为 $0$。两者的边缘差矩阵只有这一对共轭非对角元，故其未减半迹范数为
+
+$$
+ 2\left|\frac{\kappa}{2(\kappa-iE)}\right|
+ =\frac{\kappa}{\sqrt{\kappa^2+E^2}}>0.
+\tag{28.31}
+$$
+
+这个见证只说明“保留相干最终跳跃”和“逐能量分辨最终跳跃”是不同的选定比较；它不排除另一个带有额外热、复位或参考资源的微观实现。
+
+本节中可复用的成熟部分直接归于 Woods，*Autonomous Ticking Clocks from Axiomatic Principles*， [arXiv:2005.04628v3](https://arxiv.org/abs/2005.04628v3)，式(21)(c)及 Propositions 1--3 所给的 cutoff register、自治 ticking clockwork 和资源区别；也归于 Nurgalieva--Silva--Renner，*Tomography of clock signals using the simplest possible reference*， [arXiv:2406.12973v1](https://arxiv.org/abs/2406.12973v1)，式(14)--(16) 的 mixed-Poisson law。本节只把这些成熟成分放入第 3.1 节已有的联合随机时间 instrument：Woods 的 cutoff 等价性本身不证明停止时刻的 $S$ 块在 cutoff 被正确保留；这里的式(28.6)--(28.12)才是实际饱和量子块的前向方程和解。Woods 中 collective shift 与 separate edge jumps 在准备的 $D$ 对角不变扇区上给出相同计数规律，却不赋予任意相干 $D$ 输入同样的结论。Nurgalieva--Silva--Renner 的混合 Poisson 公式提供计数边缘律，但不单独提供本节的有限一次、带停止 $S$ 和任意参考的全 instrument diamond 界。本节不作原创性或 kernel 断言；新增的有限消费者接口及其边界只在上述明确的 GKLS、准备、独立性和资源前提下成立。
+
+## 28.99 追加锚

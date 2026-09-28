@@ -1,0 +1,38 @@
+### 定理 535.4（整个随机充分族的两种最大共同下界）
+
+在定义 535.1—535.3 下，$\mathcal F_T$ 非空，并有以下结论。
+
+1. 在 $A$ 上所有标准 Borel 输出实验中，$U$ 是 $\mathcal F_T$ 的最大共同下界，即
+
+$$
+\forall E\in\mathcal F_T,\quad U\preceq E,
+\qquad
+\forall F,\quad
+\bigl(\forall E\in\mathcal F_T,\ F\preceq E\bigr)\Longrightarrow F\preceq U.
+\tag{535.7}
+$$
+
+这里 $F$ 可以不保留 $q$。$U$ 本身对 $T$ 充分；在 $\Gamma_c$ 内，对 $T$ 充分和对 $U$ 充分是同一个实验条件。
+
+2. 对任意非空标准 Borel 空间 $Z$ 及任意 $W:K\to\operatorname{Prob}(Z)$，有完整分类
+
+$$
+\bigl(\forall E\in\mathcal F_T,\ E_W\preceq E\bigr)
+\iff
+\bigl(\forall k,k'\in K,\ kCk'\Longrightarrow W_k=W_{k'}\bigr)
+\iff E_W\preceq V.
+\tag{535.8}
+$$
+
+因此 $V$ 是限于 $\Gamma_c$ 的最大共同下界，但不保证充分。
+
+3. 最小充分允许实验存在的准确条件是
+
+$$
+\mathcal F_T\text{ 有最小元}
+\iff C\subseteq R.
+\tag{535.9}
+$$
+
+即没有一条 $H$ 路径连接不相容的两个情境。条件成立时 $V$ 最小且 $U\simeq V$；条件不成立时，$U$ 虽充分，却没有与之等价的 $\Gamma_c$ 成员。只允许确定性编码与允许全部标准 Borel 随机编码，最小充分实验存在的条件相同。
+

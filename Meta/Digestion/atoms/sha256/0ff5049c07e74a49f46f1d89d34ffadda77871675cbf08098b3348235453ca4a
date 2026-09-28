@@ -1,0 +1,11 @@
+## theorem 6.1: 最小输出熵
+
+对每个归一化纯态 $\varphi$，
+
+$$
+\lambda_{\max}(\rho)\le p^{-1},\qquad S(\rho)\ge\log p,
+\qquad\langle\varphi|\rho|\varphi\rangle\le p^{-1}.
+$$
+
+对每个 $p,n,\alpha$ 都有合法通道达到秩 $p$ 的平坦谱，故最大本征值和熵界同时尖锐。
+

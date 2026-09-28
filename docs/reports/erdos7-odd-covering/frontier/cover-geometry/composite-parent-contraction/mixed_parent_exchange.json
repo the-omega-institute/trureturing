@@ -1,0 +1,173 @@
+{
+  "comparable_pairs": 70,
+  "exchange": {
+    "B": 2,
+    "N": 3,
+    "added": 2200,
+    "class_count": 17,
+    "comparison_period": 39375,
+    "deleted_children": [
+      1875,
+      2625
+    ],
+    "deleted_parents": [
+      525
+    ],
+    "h": 75,
+    "lost": 0,
+    "new_covered": 29395,
+    "new_sum": 2745,
+    "old_covered": 27195,
+    "old_sum": 7491,
+    "p": 3,
+    "persistent_hole": 11,
+    "removed_sum": 5025,
+    "repair_sum": 279
+  },
+  "exhaustion": {
+    "candidate_primes": [
+      3,
+      5,
+      7,
+      11,
+      13
+    ],
+    "explicit_empty_menu_options": 28,
+    "max_tau": 16,
+    "parent_subsets": 25,
+    "phase_group_choices": 39,
+    "qualified_interfaces": 11
+  },
+  "old_ML6_interfaces": [
+    {
+      "N": 3,
+      "h": 75,
+      "max_deleted_union": 2,
+      "p": 3,
+      "parent_subsets": 7,
+      "phase_group_choices": 14
+    },
+    {
+      "N": 3,
+      "h": 105,
+      "max_deleted_union": 1,
+      "p": 3,
+      "parent_subsets": 3,
+      "phase_group_choices": 6
+    },
+    {
+      "N": 3,
+      "h": 375,
+      "max_deleted_union": 2,
+      "p": 3,
+      "parent_subsets": 4,
+      "phase_group_choices": 5
+    },
+    {
+      "N": 3,
+      "h": 525,
+      "max_deleted_union": 1,
+      "p": 3,
+      "parent_subsets": 2,
+      "phase_group_choices": 3
+    },
+    {
+      "N": 11,
+      "h": 525,
+      "max_deleted_union": 1,
+      "p": 11,
+      "parent_subsets": 2,
+      "phase_group_choices": 3
+    },
+    {
+      "N": 11,
+      "h": 875,
+      "max_deleted_union": 1,
+      "p": 3,
+      "parent_subsets": 2,
+      "phase_group_choices": 3
+    },
+    {
+      "N": 3,
+      "h": 1875,
+      "max_deleted_union": 0,
+      "p": 3,
+      "parent_subsets": 1,
+      "phase_group_choices": 1
+    },
+    {
+      "N": 3,
+      "h": 2625,
+      "max_deleted_union": 0,
+      "p": 3,
+      "parent_subsets": 1,
+      "phase_group_choices": 1
+    },
+    {
+      "N": 7,
+      "h": 2625,
+      "max_deleted_union": 0,
+      "p": 7,
+      "parent_subsets": 1,
+      "phase_group_choices": 1
+    },
+    {
+      "N": 11,
+      "h": 2625,
+      "max_deleted_union": 0,
+      "p": 11,
+      "parent_subsets": 1,
+      "phase_group_choices": 1
+    },
+    {
+      "N": 13,
+      "h": 2625,
+      "max_deleted_union": 0,
+      "p": 13,
+      "parent_subsets": 1,
+      "phase_group_choices": 1
+    }
+  ],
+  "original_covered": 9065,
+  "original_holes": 4060,
+  "original_period": 13125,
+  "private_counts": {
+    "3": 2690,
+    "5": 1375,
+    "7": 788,
+    "15": 625,
+    "21": 320,
+    "25": 200,
+    "35": 200,
+    "75": 100,
+    "105": 100,
+    "125": 25,
+    "175": 20,
+    "375": 16,
+    "525": 20,
+    "625": 5,
+    "875": 4,
+    "1875": 5,
+    "2625": 4
+  },
+  "private_witnesses": {
+    "3": 6,
+    "5": 5,
+    "7": 14,
+    "15": 22,
+    "21": 46,
+    "25": 53,
+    "35": 38,
+    "75": 79,
+    "105": 8,
+    "125": 254,
+    "175": 179,
+    "375": 376,
+    "525": 526,
+    "625": 626,
+    "875": 1751,
+    "1875": 1877,
+    "2625": 2627
+  },
+  "scope": "finite noncover control; ordinary exact arithmetic, not Lean verification"
+}

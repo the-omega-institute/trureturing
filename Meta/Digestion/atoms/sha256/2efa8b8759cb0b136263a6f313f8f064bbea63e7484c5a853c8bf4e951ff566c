@@ -1,0 +1,37 @@
+### 推论 33.1：布尔投影的系数与局部指数
+
+在定义 33 中令指定标签为 $t_i,d_i$，指定映射为
+
+$$
+\phi_i:\mathbb B\times D_i\to\mathbb B,
+\qquad \phi_i(t_i,d_i)=t_i,
+$$
+
+其中 $D_i$ 是固定的任意非空有限无关字母表。设
+
+$$
+H(\pi)=\max_j|N_j|,
+\qquad N_j=\{i:\operatorname{pos}(t_i)<\operatorname{pos}(a_j)
+ <\operatorname{pos}(b_j)<\operatorname{pos}(d_i)\}.
+$$
+
+则对所有允许的普通族和任意有限输出全任务，
+
+$$
+W_F(\operatorname{cn}(\pi))\leq2^r W_F(\pi)^{2^{H(\pi)}}.
+$$
+
+最小一致实指数为 $2^{H(\pi)}$，布尔输出已强制这个最小值。对定理 33 使用的每个 $B,P$（无普通对被触及时 $P=\varnothing$），令
+
+$$
+M_B=\{i:t_i\in B\setminus P\},
+\qquad E_B=\{i:t_i\in P\setminus B\}.
+$$
+
+更细地有
+
+$$
+\kappa_B(F)\leq2^{|M_B|}\kappa_P(F)^{2^{|E_B|}},
+\qquad \max_B|E_B|=H(\pi).
+$$
+

@@ -1,0 +1,16 @@
+**定义 4.2（单边相位缝合）。** 用幺正矩阵
+
+$$
+U_\alpha(u,v)=d^{-1/2}\omega_d^{uv+\alpha v^2},\qquad\alpha\in R_d,
+$$
+
+替代一条内部边的指标相等收缩。它是 Fourier 矩阵与对角二次相位的乘积，保持连接维数和最大纠缠性。精确归一化态为
+
+$$
+|\Psi^\alpha_{d,L}\rangle=d^{-(L+1)/2}
+\sum_{x_0,\ldots,x_L\in R_d}\omega_d^{x_0x_L+\alpha x_0^2}
+\bigotimes_{i=0}^{L-1}|x_i+x_{i+1}\rangle_{a_i}|x_i+2x_{i+1}\rangle_{b_i}.
+$$
+
+路径到全部输出单射。这里 $\Psi^{\mathrm{id}}$ 与 $\Psi^{\alpha=0}$ 不同，后者仍有 Fourier 缝合。未在邻接张量实施补偿，因此该相位操作改变全局态，并非内部基换名。
+

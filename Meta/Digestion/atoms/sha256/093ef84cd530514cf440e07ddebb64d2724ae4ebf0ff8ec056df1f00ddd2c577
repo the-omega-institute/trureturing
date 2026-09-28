@@ -1,0 +1,9 @@
+**Theorem 2 (antipodal defect fibers and their minimum representatives).**
+Let $x=(a,b,c)$ and $\bar x=(1-a,1-b,1-c)$. Define $w_x$ by its exact
+support: the AB edge $(1-a,1-b)$, the AC edge $(1-a,c)$, and the BC edge
+$(b,c)$, each with value one. Its defects are exactly $x$ and $\bar x$,
+so $\operatorname{wt}(w_x)=3$ and $T(w_x)=2$. For every $f$ whose defects
+are exactly this pair, every potential $g$ satisfies
+$3\leq\operatorname{wt}(f+d_0g)$, and some potential satisfies
+$f+d_0g=w_x$. Consequently $R(f)=3$ on this entire defect fiber.
+

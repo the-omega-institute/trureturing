@@ -1,0 +1,14 @@
+### 36.4 来源与边界
+
+第 36.1 节的无限制输出优化是本卷指定有限模型中的书面推导；仓内
+`CoherentHistorySchmidt.lean` 只证明上述合法历史的振幅和谱权重，
+尚未证明 (36.3)--(36.13) 的信道优化、Ky Fan 投影界或误差公式。
+Harrow, *Entanglement spread and clean resource inequalities* (2010),
+arXiv:0909.1557；Watrous, *Semidefinite Programs for Completely Bounded
+Norms*, Theory of Computing 5 (2009), 217--238，分别提供纠缠扩散与
+完全有界范数的既有背景。Lin, *Ryu-Takayanagi area from Virasoro modular
+data*, arXiv:2606.30723v1，及 Cao--Cheng--Karthikeyan--Li--Preskill,
+*State-dependent geometries from magic-enriched quantum codes*,
+arXiv:2603.13475v2，讨论不同的物理构造与恢复条件；本节没有把它们的
+条件或结论替换为本模型的全操作最优值。
+

@@ -1,0 +1,74 @@
+**证明。** 任取竞争映射的局部 Stinespring 等距，记源态 $J_\lambda|s\rangle$
+的扩张输出为 $\Xi_s$。它相对于
+$X_{\rm out}E_X\mid Y_{\rm out}E_Y$ 的非零 Schmidt 系数仍为
+$\sqrt{\lambda_{sj}/d_s}$，每项重复 $d_s$ 次。只为分析而投影到该扇区的
+理想目标，得到未必归一的环境向量
+\[
+\zeta_s=(\langle J_d s|\otimes I_{E_XE_Y})\Xi_s.
+\tag{36.4}
+\]
+此投影不属于允许的实现协议。令 $Z_s$ 为 $\zeta_s$ 的环境系数矩阵，
+$Q_s$ 为 $\Xi_s$ 的系数矩阵在目标扇区两侧物理支撑上的压缩。按目标
+物理索引分块，有
+$Z_s=d_s^{-1/2}\sum_{a=1}^{d_s}(Q_s)_{aa}$。对环境空间中任意秩 $k$
+部分等距 $W$，奇异值迹不等式和压缩的奇异值界依次给出
+\[
+|\operatorname{Tr}(W^*Z_s)|
+=d_s^{-1/2}|\operatorname{Tr}((I_{d_s}\otimes W)^*Q_s)|
+\le d_s^{-1/2}\sum_{i=1}^{d_sk}\sigma_i(Q_s)
+\le\sum_{j=1}^k\sqrt{\lambda_{sj}}.
+\tag{36.5}
+\]
+最后一步保留了每个源 Schmidt 系数恰重复 $d_s$ 次的结构。Ky Fan 变分
+公式遂给 $\sigma(Z_s)\prec_w v_s$。若非负递减向量 $a\prec_w b$，则对
+任意非负递减权重 $w$，前缀和的分部求和给 $a\cdot w\le b\cdot w$。
+先后对两侧使用，再用奇异值迹界，得到无需精确基输出假设的交叉界
+\[
+|\langle\zeta_t,\zeta_s\rangle|
+\le\sigma(Z_t)\cdot\sigma(Z_s)
+\le v_t\cdot v_s=K_{st}.
+\tag{36.6}
+\]
+
+任取 $p\in\Delta_N$，加入被动参考标签，输入
+$|\Omega_p\rangle=\sum_s\sqrt{p_s}|s\rangle_R|s\rangle_L$。理想联合输出
+$|\Theta_p\rangle=\sum_s\sqrt{p_s}|s\rangle_RJ_d|s\rangle$。实际输出
+通过理想纯态投影测试的概率为
+\[
+F_p=\bigl\|\sum_s p_s\zeta_s\bigr\|^2
+\le\sum_{s,t}p_sp_tK_{st}=p^{\mathsf T}Kp.
+\tag{36.7}
+\]
+参考标签使两次振幅匹配产生 $p_s$，所以错误旗标不能在另一逻辑标签下
+补偿。理想输出的该测试成功率为一；二元测试和迹距离收缩给竞争信道
+的钻石误差至少 $2(1-p^{\mathsf T}Kp)$。取 (36.2) 的最小点即得
+(36.3) 的下界。同一个测试对每个竞争乘积信道有效，对其共享经典
+随机混合也有效。
+
+为达到下界，两侧同时对所有扇区实行
+$|s,a,j\rangle\mapsto|s,a\rangle_{\rm out}|j\rangle_E$，再丢弃环境。
+环境态 $\eta_s=\sum_j\sqrt{\lambda_{sj}}|j,j\rangle$ 的 Gram 矩阵
+正是 $K$；诱导的逻辑信道为 $\rho\mapsto K\circ\rho$，随后作目标
+编码。带参考纯输入 $\sum_s|s\rangle|w_s\rangle$ 的各标签概率为
+$p_s=\|w_s\|^2$。输出差的非零谱等于
+\[
+B_p=D_{\sqrt p}(\mathbf1\mathbf1^{\mathsf T}-K)D_{\sqrt p}.
+\tag{36.8}
+\]
+$B_p$ 是秩一正矩阵减去正半定矩阵，迹为零且至多有一个正本征值，
+故 $\|B_p\|_1=2\lambda_{\max}(B_p)$。由于
+$\mathbf1\mathbf1^{\mathsf T}-K$ 逐项非负，最大 Rayleigh 向量可取
+非负。写 $y_s=\sqrt{p_s}x_s$，则 $\sum_s y_s\le1$；反过来对任意
+$y\in\Delta_N$ 取 $p=y$、$x_s=\sqrt{y_s}$ 可取等。因此
+\[
+\max_p\|B_p\|_1
+=2\max_{y\in\Delta_N}y^{\mathsf T}
+  (\mathbf1\mathbf1^{\mathsf T}-K)y
+=2(1-q_*).
+\tag{36.9}
+\]
+迹范数的最大化覆盖被动参考：混合输入可纯化到参考中，而上述计算
+对任意纯输入及其标签向量成立。这一共同局部构造达到下界。证明不需要
+$K$ 可逆。有限凸规划的最优性证书可写作
+$Kp\ge q\mathbf1$，在 $p_s>0$ 的支撑上取等，且 $q=p^{\mathsf T}Kp$。
+

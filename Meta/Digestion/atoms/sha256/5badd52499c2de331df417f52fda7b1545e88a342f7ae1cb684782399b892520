@@ -1,0 +1,12 @@
+### 536.9 来源范围与概念含义
+
+《哲学研究》§§65–67 要求考察具体使用中的交错相似，而不先认定同一名称背后必有一个贯穿全部使用的本质；§§68–69 允许为特定目的划出精确边界，同时否认概念只有经过这种划界才在通常使用中有用。这里沿用第 535 章的这条有限对应：固定目的 $T$ 后研究足够的区分，是一个可另行提出的精确问题，不是对日常语言有用性的先决要求。随机种子、概率一恢复和 Blackwell 后处理序都是本章增加的数学结构，不归于维特根斯坦的原文。家族相似也没有被定义成图连通。[Wittgenstein, *Philosophische Untersuchungen*, §§65–69](https://www.wittgensteinproject.org/w/index.php/Philosophische_Untersuchungen#65)；[Stanford Encyclopedia of Philosophy, “Ludwig Wittgenstein”, §3.4](https://plato.stanford.edu/entries/wittgenstein/#LangGameFamiRese)。
+
+公开选择与隐藏选择的区别已有一般理论。Arthur Américo、Mário S. Alvim、Annabelle McIver 的 *An Algebraic Approach for Reasoning About Information Flow*，Definitions 2–3，用带分支标签的输出与不带标签的混合分别定义 visible choice 和 hidden choice；Theorems 5.2–5.3、Corollary 1 给出可见选择下后验脆弱性的仿射公式、隐藏选择的界及相关比较。其 §2 的安全精化记号 $C_1\sqsubseteq_\circ C_2$ 表示存在 $D$ 使 $C_1D=C_2$，对应本章的信息序 $C_2\preceq C_1$，方向须换算。该文讨论有限通道，这些一般结果不是本章新增的结论，也不能替代这里任意标准 Borel 输出上的证明。[arXiv:1801.08090v4](https://arxiv.org/html/1801.08090v4)。
+
+Zichang Wang 的 *Complementary Information Sources*，§2.2 与 Lemma 2，在有限状态、标准 Borel 信号及紧信息源集合的框架中，以独立于状态的信息源抽签并揭示来源标签，定义 tagged mixture，并证明其决策价值对抽签律仿射。这是来源可见混合的直接相关文献。[arXiv:2609.29066v1，2026-09-24](https://arxiv.org/html/2609.29066v1)。这类可见分支选择允许被选中的通道本身仍随机；只揭示来源标签，不等于揭示编码器的所有随机位。定义 536.1 另要求给定整个 $R$ 与情境后输出确定，因此规范形定理的公开范围不能由一般 tagged mixture 的名称替代。
+
+仓内 [《递归关系观察与波粒事件》§393.3](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md) 已区分可见独立种子下平均风险和平均成本的仿射等式、正概率分支上的最坏路径成本最大值，以及最坏状态风险的上界；该条明确替代旧 §§325.3–325.4 的相应表述。[《数学与神话匹配》§437.2、§§448–449](MATH_MYTH_MATCH.md) 已分别区分共同子测度质量和有方向的绝对连续质量，并比较翻转与擦除实验。这里复用这些一般工具与区别，接到第 535 章的实际支撑和按读数模拟归约上；上述文献与既有章节提供的是这些明确范围内的先行成分。本章的工作是在（536.1）的支撑上给出私有极小元的穷尽、全可见种子的规范形，以及任意充分通道与公开族的完整双向比较，是在这里逐项证明的支撑特定综合，不据所列来源范围宣称全球原创。
+
+这组结果的概念含义是具体的：目标和实际对象不变时，观察者能否看见产生一个标签的随机选择，会改变哪些充分区分还能进一步删减。对非顶点 $p$，$P_p$ 在全可见种子的范围内已极小；允许把种子隐藏后，同一标签机制降为严格较少信息的 $E_p$，而仍逐态完成原目标。这种差别由实际模拟关系承担，不是由“信息较少”这一名称或一个平均分数决定。它既不证明所有概念都服从本章支撑，也不推出普遍相对主义，更不从可见性增加可区分性推出应当公开随机种子；披露是否合宜仍需要模型以外的用途和规范理由。
+

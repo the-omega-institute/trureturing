@@ -1,0 +1,16 @@
+**定义 16.1（真实空间分块）。** 取保留标记缝合的连续分割
+
+$$
+0=t_0<t_1<\cdots<t_r=L,\qquad r\ge3.
+$$
+
+第 $j$ 个宏块含细顶点 $t_j,\ldots,t_{j+1}-1$。在解码坐标中仅保留 $(u_{t_j},v_{t_{j+1}-1})$，偏迹该宏块内部的其余寄存器。这个全边界偏迹记为 $\operatorname{Ret}_{\Pi}$。逻辑空间上仅保留 $x_{t_0},\ldots,x_{t_r}$ 的偏迹记为 $\operatorname{ret}_{\Pi}$。定义
+
+$$
+\mathcal S_{\Pi,d}
+=\operatorname{Ad}_{G_{d,r}}\circ\operatorname{Ret}_{\Pi}\circ
+\operatorname{Ad}_{G_{d,L}^*}.
+$$
+
+这一次空间块数确实由 $L$ 降为 $r$，连接维数 $d$ 保持不变。
+

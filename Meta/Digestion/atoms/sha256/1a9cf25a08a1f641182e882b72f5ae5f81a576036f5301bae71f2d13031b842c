@@ -1,0 +1,30 @@
+### 命题 22.2：奇偶任务的边界与关系不可约性
+
+设 $I=\{1,\ldots,n\}$，$n\geq1$，各坐标为二进制位，令：
+
+$$
+F(x_1,\ldots,x_n)=x_1\oplus\cdots\oplus x_n.
+$$
+
+对任意非空已观察集合 $A$，边界类型恰由累积奇偶值决定：
+
+$$
+s_A=\bigoplus_{i\in A}x_i,
+\qquad \kappa_A(F)=2\quad(A\neq\varnothing).
+$$
+
+在空集合处只有累积值 $0$，故 $\kappa_\varnothing(F)=1$。在这些标识下，不交坐标的拼接为：
+
+$$
+\mu_{A,C}(s,t)=s\oplus t.
+$$
+
+此外，当 $n\geq2$ 时，对任意 $c\in\{0,1\}$，关系：
+
+$$
+\mathcal P_c=\left\{x\in\{0,1\}^n:
+\bigoplus_{i\in I}x_i=c\right\}
+$$
+
+不能沿任何两个非空坐标块的分割写成独立关系的乘积。与此相对，定理 22 的相等性关系可以分成 $n$ 个独立的局部匹配约束。
+

@@ -1,0 +1,65 @@
+### 定理 538.6（共同读数的仿射维数与一般边界纤维公式）
+
+先取无冲突的完整共同读数模型：$K=\{1,\ldots,n\}$、$n\ge1$，$Q=\{q_0\}$、$S=K\times\{q_0\}$，$t$ 为常量，没有其他读数引入的冲突。记其剖面多面体为 $\mathcal P_n$，$L$ 仍为全部成对碰撞投影。则
+
+$$
+\begin{aligned}
+\operatorname{aff}\mathcal P_n
+&=\left\{w\in\mathbb R^{2^n-1}:\sum_{C\ni i}w_C=1\ (i=1,\ldots,n)\right\},\\
+\dim\mathcal P_n&=2^n-n-1,\\
+\operatorname{rank}(L|_{\operatorname{dir}\mathcal P_n})&=\binom n2.
+\end{aligned}
+\tag{538.19}
+$$
+
+其中 $\operatorname{dir}P=\operatorname{span}(P-P)$。若且唯若 $r\in\operatorname{ri}L(\mathcal P_n)$，纤维 $\mathcal F_r$ 与 $\operatorname{ri}\mathcal P_n$ 相交；在此条件下
+
+$$
+\dim\mathcal F_r
+=2^n-1-\frac{n(n+1)}2.
+\tag{538.20}
+$$
+
+$\operatorname{ri}$ 始终相对于本身的仿射包取内部。一般实际支撑的 $\mathcal P$ 也有精确边界公式：对非空 $\mathcal F_r$，取 $w^\circ\in\operatorname{ri}\mathcal F_r$，令 $F$ 为 $\mathcal P$ 中含 $w^\circ$ 的最小面，则 $F$ 包含整个纤维，$w^\circ\in\operatorname{ri}F$，且
+
+$$
+\dim\mathcal F_r
+=\dim F-\operatorname{rank}(L|_{\operatorname{dir}F}).
+\tag{538.21}
+$$
+
+因此纤维是单点当且仅当右端为零；右端严格为正时它包含连续多个互不可比的实验类。非空条件不可省略。
+
+证明（538.19）。令 $e_C$ 为子集坐标单位向量，离散分划的剖面为 $w^0=\sum_i e_{\{i\}}$。对每个 $B\subseteq K$、$|B|\ge2$，取只有 $B$ 作为非单点块、其余为单点的分划，其剖面与 $w^0$ 的差为
+
+$$
+d_B=e_B-\sum_{i\in B}e_{\{i\}}.
+\tag{538.22}
+$$
+
+这些都是可实现点的差。在所有非单点坐标上，每个 $d_B$ 只在自己的 $B$ 坐标为一，故它们线性独立，共 $2^n-1-n$ 个。另一方面，$n$ 个行方程的系数矩阵在单点列上是单位矩阵，故独立，给出同一维数的上界。于是这些方向张成整个行方程仿射空间的方向，得到前两式。对 $B=\{i,j\}$，$Ld_B$ 正是该成对坐标的单位向量：单点项没有任何成对碰撞，二点块只贡献这一对。因此 $L$ 在方向空间上满秩到 $\mathbb R^{\binom n2}$，证明第三式；$n=1$ 时目标空间为零维，论证仍成立。
+
+相对内部和边界处的断言所需的凸几何事实可在这里直接证明。令任意非空有限多面体 $P=\operatorname{conv}\{u_1,\ldots,u_m\}$，容许生成点有重复。一个点在 $\operatorname{ri}P$ 中，当且仅当它有使用全部生成点的严格正凸组合表示。正组合给相对内部，是因为向量 $u_i-u_1$ 张成 $\operatorname{dir}P$，沿其中一组基作足够小的正负系数扰动并调整第一个系数，所有权重仍为正，因而在该点周围得到一个相对开邻域。反之，设 $x\in\operatorname{ri}P$，$b=m^{-1}\sum_i u_i$；若 $x=b$ 结论已得，否则可取小 $\varepsilon>0$ 使 $y=x+\varepsilon(x-b)\in P$，从
+
+$$
+x=\frac{1}{1+\varepsilon}y+
+  \frac{\varepsilon}{1+\varepsilon}b
+$$
+
+取得全部权重严格为正的表示。
+
+将此事实分别用于 $P$ 和 $LP=\operatorname{conv}\{Lu_i\}$。若 $x\in\operatorname{ri}P$，其正系数组合给 $Lx\in\operatorname{ri}LP$；若 $r\in\operatorname{ri}LP$，以相同正系数组合原来的 $u_i$，便得到 $x\in\operatorname{ri}P$ 且 $Lx=r$。这证明
+
+$$
+L(\operatorname{ri}P)=\operatorname{ri}(LP)
+\tag{538.23}
+$$
+
+而没有假设每个指定原像都在内部。选这样的 $x$，$P\cap L^{-1}(r)$ 在 $x$ 附近包含 $x+(\operatorname{dir}P\cap\ker L)$ 的相对开邻域，其全部点又在这个仿射空间内，故纤维维数为 $\dim P-\operatorname{rank}(L|_{\operatorname{dir}P})$。代入（538.19）即得（538.20）。特别地，正权重使用全部充分分划是得到内部点的一种充分方式；结论不要求某个已经给定的分划见证具有这项正性。
+
+对边界纤维，取 $w^\circ\in\operatorname{ri}\mathcal F_r$。多面体在其仿射包中由有限个线性不等式描述；把 $w^\circ$ 处取等的那些不等式同时取等，所得就是最小面 $F$。其余不等式在该点严格，因此 $w^\circ$ 在 $F$ 中有相对开邻域，即 $w^\circ\in\operatorname{ri}F$。若 $y\in\mathcal F_r$、$y\ne w^\circ$，相对内部性质允许选小 $\varepsilon>0$，使 $z=w^\circ+\varepsilon(w^\circ-y)\in\mathcal F_r$。于是 $w^\circ$ 位于 $y,z$ 之间的开线段上；某个支撑不等式在 $w^\circ$ 取等时，由两端都满足该不等式，它在 $y,z$ 上也取等。因此每个 $y$ 都在 $F$ 中。反过来 $F\subseteq\mathcal P$，故纤维正是 $F\cap L^{-1}(r)$。现在在 $F$ 的相对内部点重复上一段局部邻域论证，得到（538.21）。零维非空凸集恰为单点，正维凸集含非退化线段；定理 538.4 给这些不同点的不可比性。证毕。
+
+$\operatorname{aff}\mathcal P_n$ 与 CAR 的仿射空间相同，不意味着 $\mathcal P_n$ 是全部非负 CAR 行解；定理 538.2 的三角反例已经区分两者。式（538.19）中的 CAR 仿射维数在 Gill–Grünwald §6.1 已有，本章的（538.22）说明分划混合自身也张成该空间，然后对可观察剖面作成对投影和纤维切片。坐标 $w_C>0$ 也不是相对内部的替代判据：在三情境模型中，取 $w_{123}=1/10$、所有二点及单点权重均为 $3/10$，它由三种“二点块加剩余单点”的分划各权重 $3/10$ 及全合并分划权重 $1/10$ 实现，全部七个坐标都正。但令 $R=r_{12}+r_{13}+r_{23}$，对五种三点分划逐个计算可得 $1-R+2w_{123}$ 就是离散分划的权重，因而在 $\mathcal P_3$ 上非负；本例取零，离散分划则取一，故本例位于一个真支撑面上，不在 $\operatorname{ri}\mathcal P_3$。这与它所在的纤维可以另有内部点相容。
+
+成对像 $L(\mathcal P_n)$ 是已知的 clique-partition polytope：每个分划给出“是否同块”的 $0/1$ 成对向量，再取其凸包。Koike–Lin–Wang, *Invariant correlation under marginal transforms*，[arXiv:2306.11188v4，2024-08-15](https://arxiv.org/html/2306.11188v4)，Theorem 4 明确给出该凸包识别，Example 6 列出三情境的五个顶点及 triangular bipyramid。该几何对象的经典来源包括 Grötschel–Wakabayashi, *Facets of the clique partitioning polytope*，*Mathematical Programming* 47（1990），367–387，[DOI:10.1007/BF01580870](https://doi.org/10.1007/BF01580870)；此处只使用其题目、书目信息及定义层面的历史归属，不调用该文全文中的面分类。这里讨论的是已知成对多面体之上的可实现实验剖面纤维，不给它另起新多面体名称，也不把三情境五顶点几何认作新增结果。
+

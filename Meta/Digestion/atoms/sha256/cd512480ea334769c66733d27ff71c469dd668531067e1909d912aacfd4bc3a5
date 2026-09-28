@@ -1,0 +1,17 @@
+## 6. 双侧保留算术余数的尖锐粗化障碍
+
+固定奇素数 $p$、$n\ge1$、$d=p^n$、$D=pd$ 和整数 $\alpha$。缝合连接态为
+
+$$
+|\Omega_{D,\alpha}\rangle=D^{-1}\sum_{x,y\in R_D}
+ e^{2\pi i(xy+\alpha x^2)/D}|x,y\rangle.
+$$
+
+设局部 CPTP 通道 $\Phi_A,\Phi_B:M_D\to M_d$ 对每个计算基态均满足
+
+$$
+\Phi_j(|x\rangle\langle x|)=|x\bmod d\rangle\langle x\bmod d|.
+$$
+
+不使用通信或额外共享纠缠，输出 $\rho=(\Phi_A\otimes\Phi_B)(|\Omega\rangle\langle\Omega|)$。
+

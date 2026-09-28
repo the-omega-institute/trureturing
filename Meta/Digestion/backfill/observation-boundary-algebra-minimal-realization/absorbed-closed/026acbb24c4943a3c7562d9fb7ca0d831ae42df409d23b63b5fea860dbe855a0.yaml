@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:026acbb24c4943a3c7562d9fb7ca0d831ae42df409d23b63b5fea860dbe855a0
+  normalized_sha256: sha256:026acbb24c4943a3c7562d9fb7ca0d831ae42df409d23b63b5fea860dbe855a0
+cas_ref: sha256:026acbb24c4943a3c7562d9fb7ca0d831ae42df409d23b63b5fea860dbe855a0
+coverage_gids:
+  - gid: D5/S3/Observer/Separation/MissingRowWidthAmplifier.missing_row_width_amplifier
+    target_statement_id: sha256:794efd95566eaedd52c00bff79f1b68dde66f5eed3cd144e5593b7cf7dbe7759
+receipts:
+  unresolved_subitems: []

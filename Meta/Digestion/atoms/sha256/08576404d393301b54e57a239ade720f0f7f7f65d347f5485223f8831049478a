@@ -1,0 +1,247 @@
+### 定理 537.3（同一中心下的完整谱、联合实现与模拟序）
+
+对定义 537.1 的整个充分族，令
+
+$$
+\alpha_i^W=(r_i^W)_\#\mu_i^W,\qquad
+\chi_i^W(t)=\int_{[0,\infty)}\min(r,t)\,\alpha_i^W(dr)
+\quad(t\ge0).
+\tag{537.6}
+$$
+
+则 $\mathcal P_m$ 由带固定叶标签的完整曲线族 $(\chi_1,\ldots,\chi_m)$ 分类，并有下列联合结论。
+
+1. 每个实验等价于辅助空间
+
+$$
+Z^\circ=\{o\}\sqcup\bigsqcup_{i=1}^m\bigl(\{i\}\times[0,\infty)\bigr)
+$$
+
+上的规范实验，其叶 $i$ 只在标签 $i$ 上具有律 $\alpha_i$，中心律为
+
+$$
+\nu^\circ=\sum_{i=1}^m \bigl(r\,\alpha_i(dr)\bigr)\text{ 放在标签 }i
++s\delta_o,\qquad
+s=1-\sum_i\int r\,\alpha_i(dr).
+\tag{537.7}
+$$
+
+这里的等价由两个共同情境无关核达到。
+
+2. 可实现的完整曲线族恰为满足以下条件的族：每个 $\chi_i:[0,\infty)\to\mathbb R$ 连续、非减、凹，$\chi_i(0)=0$，零点右导数 $\chi'_{i,+}(0)\le1$，且有限极限
+
+$$
+\lambda_i=\lim_{t\to\infty}\chi_i(t),\qquad
+\sum_i\lambda_i\le1.
+\tag{537.8}
+$$
+
+相应概率律唯一，由
+
+$$
+\alpha_i((t,\infty))=\chi'_{i,+}(t)\quad(t\ge0),\qquad
+\alpha_i(\{0\})=1-\chi'_{i,+}(0)
+\tag{537.9}
+$$
+
+恢复。逐叶的这些条件加上一个共同质量预算即足以联合实现，不要求密度有界或辅助输出有限。
+
+3. 模拟序及等价类的判据分别为
+
+$$
+\begin{aligned}
+E_V\preceq E_W
+&\quad\Longleftrightarrow\quad
+\chi_i^W(t)\le\chi_i^V(t)
+\quad\text{对全部 }i,\ t\ge0,\\
+E_V\simeq E_W
+&\quad\Longleftrightarrow\quad
+\chi_i^V=\chi_i^W
+\quad\text{对全部 }i.
+\end{aligned}
+\tag{537.10}
+$$
+
+相等曲线唯一指定带标签的规范行律及等价类，不声称模拟核唯一。
+
+4. 在读数 $u_i$ 上，另加一个区分中心与叶 $i$ 的二元零一损失任务，令中心、叶的先验分别为 $1/(1+t),t/(1+t)$。其最优错误为
+
+$$
+\mathcal B_i^W(t)=\frac{\chi_i^W(t)}{1+t}.
+\tag{537.11}
+$$
+
+这是额外的区分任务；原 $T$ 在这两行上都为零，且仍在全部实际行上被精确恢复。第 536 章的有限指标是完整谱的下列读数：
+
+$$
+\lambda_i=\lim_{t\to\infty}\chi_i(t),\qquad
+\beta_i=\chi'_{i,+}(0),\qquad
+\kappa_i=\chi_i(1),\qquad
+d_i=\max\{\lambda_i,\beta_i\}.
+\tag{537.12}
+$$
+
+对既有私有极小实验 $E_p$ 与公开实验 $P_r$，相应代入为
+
+$$
+\chi_i^{E_p}(t)=\min(p_i,t),\qquad
+\chi_i^{P_r}(t)=r_i\min(1,t).
+\tag{537.13}
+$$
+
+证明：本定理把经典二态似然律、风险曲线和耦合工具接到引理 537.2 的共同实现关系上。二态的风险序、风险与似然律的唯一对应、加权似然律加一个奇异原子的实现，已见 Gushchin–Borzykh, *Integrated quantile functions: properties and applications*（2017），Definition 3、Proposition 2、Corollary 3、Proposition 3(iii) 及其证明。其 Definition 3 以检验区域包含定义信息序；下面另行构造本章标准 Borel 输出上的实际核，并不从区域包含的名称直接推出共同核存在。[原文](https://www.vmsta.org/journal/VMSTA/article/99/text)，[DOI:10.15559/17-VMSTA88](https://doi.org/10.15559/17-VMSTA88)。
+
+先证规范实现。省略 $W$ 上标，在 $D_i$ 上取映射 $z\mapsto(i,r_i(z))$，在 $D_0$ 上取 $z\mapsto o$。它可测，把叶送到标签 $i$ 上的 $\alpha_i$，把 $\nu|_{D_i}=r_i\mu_i$ 送到标签 $i$ 上的 $r\alpha_i(dr)$，把余下中心质量送到 $s\delta_o$。
+
+反向，在 $Z\sim\mu_i$ 下考虑 $(r_i(Z),Z)$ 的联合概率律。第一坐标空间 $[0,\infty)$ 可测，条件目标 $Z$ 为标准 Borel，故存在概率核 $Q_i(dz\mid r)$，满足对可测 $A\subseteq[0,\infty)$、$B\subseteq Z$，
+
+$$
+\int_A Q_i(B\mid r)\,\alpha_i(dr)
+=\mu_i\bigl(B\cap\{r_i\in A\}\bigr).
+\tag{537.14}
+$$
+
+这是经典的概率分解定理；所用条件及积分等式见 Cho–Jacobs, *Disintegration and Bayesian Inversion via String Diagrams*，Example 3.7、Theorem 3.12、Corollary 3.13。该文将存在定理归于 Pollard、Faden；这里采用的是 Cho–Jacobs 所陈述的版本。[arXiv:1709.00322v3](https://arxiv.org/html/1709.00322v3)，[DOI:10.1017/S0960129518000488](https://doi.org/10.1017/S0960129518000488)。
+
+式（537.14）由矩形推广到联合空间的可测集。原联合律集中在可测图集 $\{(r,z):z\in D_i,\ r_i(z)=r\}$，故
+
+$$
+Q_i\bigl(\{z\in D_i:r_i(z)=r\}\mid r\bigr)=1
+\quad\text{对 }\alpha_i\text{ 几乎所有 }r.
+\tag{537.15}
+$$
+
+图集可测是因为 $r_i$ 可测且实数对角线可测；对其指示函数沿核积分所得函数也可测。因此可以选取一个共同的可测参数零集，在它之外获得该条件载集等式。对任意有界非负可测 $g$，先从简单函数再取极限，由（537.14）得
+
+$$
+\int g(r)Q_i(B\mid r)\,\alpha_i(dr)
+=\int_B g(r_i(z))\,\mu_i(dz).
+$$
+
+再令 $g(r)=r\wedge n$ 并用单调收敛，得到无界但可积密度所需的恒等式
+
+$$
+\int r Q_i(B\mid r)\,\alpha_i(dr)
+=\int_B r_i\,d\mu_i
+=\nu(B\cap D_i).
+\tag{537.16}
+$$
+
+特别地，$\alpha_iQ_i=\mu_i$ 且 $(r\alpha_i)Q_i=\nu|_{D_i}$。任何 $\alpha_i$-零参数集也是 $r\alpha_i$-零集，所以在这类集合上统一换成一个固定点的 Dirac 律，不会改变任一实际行；可测完成不要求在不可达参数上保留图集条件。
+
+现在令反向核在 $(i,r)$ 上使用 $Q_i(\cdot\mid r)$；若 $s>0$，在 $o$ 上抽样 $\nu|_{D_0}/s$。若 $s=0$，中心与各叶均不给 $o$ 质量，其核值任取。有限标签拼接保证可测，（537.16）和各叶的等式保证同一个核同时恢复全部情境行。这证明第一项，而非只证明每个二态边缘分别存在一个反向核。
+
+再证曲线与联合可实现范围。从任意概率律 $\alpha$ 出发，$t\mapsto\min(r,t)$ 非减、凹且为 $1$-Lipschitz，积分后保留这些性质。支配收敛用于右差商，给出
+
+$$
+\chi'_+(t)=\alpha((t,\infty)).
+$$
+
+单调收敛给出 $\lim_{t\to\infty}\chi(t)=\int r\,\alpha(dr)$。实际规范中心的总质量恰为一，于是必须满足（537.8）。
+
+反向，给定所列函数 $\chi$，令 $g(t)=\chi'_+(t)$。凹性与非减性使 $g$ 非增且 $0\le g(t)\le g(0)\le1$。它右连续：若 $t_n\downarrow t$，则 $a=\lim_n g(t_n)\le g(t)$；任取 $h>0$，对充分大的 $n$，凹性给出
+
+$$
+g(t_n)\ge\frac{\chi(t+h)-\chi(t_n)}{t+h-t_n}.
+$$
+
+先令 $n\to\infty$，再令 $h\downarrow0$，得到 $a\ge g(t)$。这里在 $t=0$ 也使用了假设的连续性，故端点没有遗漏。若 $\lim_{t\to\infty}g(t)>0$，割线斜率的下界将迫使 $\chi(t)$ 至少线性增长，与有限极限矛盾；所以此极限为零。
+
+因而令 $F(t)=0$（$t<0$），$F(t)=1-g(t)$（$t\ge0$），便得到一个右连续、非减、两端极限为零和一的分布函数，唯一确定 $[0,\infty)$ 上的概率律 $\alpha$。其零点原子与正半轴尾概率正是（537.9）。凹函数的割线斜率介于零和一之间，故 $\chi$ 为 $1$-Lipschitz，局部绝对连续；右导数与导数几乎处处相同。因此由尾积分公式，
+
+$$
+\chi(t)=\int_0^t g(u)\,du
+=\int_0^t\alpha((u,\infty))\,du
+=\int\min(r,t)\,\alpha(dr),
+\qquad
+\int r\,\alpha(dr)=\lambda.
+\tag{537.17}
+$$
+
+这还证明有限一阶矩和唯一性；当 $\lambda=0$ 时 $\chi=0$、$\alpha=\delta_0$，无需剔除这个边界。对各叶分别取得 $\alpha_i$ 后，单一条件 $\sum_i\lambda_i\le1$ 恰保证（537.7）的中心是一条概率律；标签使叶两两奇异，故它在（537.1）上充分。这是经典一维对应的共同中心实现，不是另立的一维唯一性新定理。此时已经得到“曲线唯一确定规范律”，下文证明序判据后才把它提升为“唯一确定模拟等价类”。
+
+现证序判据的必要性。若 $E_V\preceq E_W$，取引理 537.2 的共同核 $K$，也可只取 $u_i$ 上的局部核。对每个 $t\ge0$，源测度
+
+$$
+C_{i,t}^W=\nu_W\wedge(t\mu_i^W)
+$$
+
+的质量为 $\chi_i^W(t)$。推前后 $C_{i,t}^WK\le\nu_V,t\mu_i^V$，所以由最大共同子测度的定义，
+
+$$
+C_{i,t}^WK\le\nu_V\wedge(t\mu_i^V),\qquad
+\chi_i^W(t)\le\chi_i^V(t).
+\tag{537.18}
+$$
+
+核保持有限测度的总质量；这里用的是测度的共同部分，不是实验序的下界。
+
+为证充分性，设全部这些曲线不等式成立，先在规范空间上构造一个共同核。对非负、有限一阶矩概率律 $\alpha$，定义整个实线上的 put 函数
+
+$$
+p_\alpha(t)=\int(t-r)^+\,\alpha(dr)
+=
+\begin{cases}
+t-\chi_\alpha(t),&t\ge0,\\
+0,&t<0.
+\end{cases}
+$$
+
+故每个 $i$ 都有 $p_{\alpha_i^V}\le p_{\alpha_i^W}$。Nutz–Stebegg, *Canonical Supermartingale Couplings*，§2 Proposition 2.1，对实线上具有有限一阶矩且总质量相等的有限测度，将 put 函数序与超鞅耦合存在性等价；它不要求均值相等。此处两律的质量均为一，均值分别为有限的 $\lambda_i^V,\lambda_i^W$，完全满足这些条件。[arXiv:1609.02867v2](https://arxiv.org/html/1609.02867v2)，*Annals of Probability* 46(6)（2018），3351–3398，[DOI:10.1214/17-AOP1249](https://doi.org/10.1214/17-AOP1249)。
+
+具体应用时，初始变量取目标 $Y\sim\alpha_i^V$，终止变量取来源 $X\sim\alpha_i^W$，取得联合概率律 $\Pi_i$ 满足
+
+$$
+\mathbb E_{\Pi_i}[X\mid Y]=e_i(Y)\le Y.
+\tag{537.19}
+$$
+
+两个边缘都集中在 $[0,\infty)$，故耦合也集中在那里。$e_i$ 可取非负可测版本，有限性及不等式在 $\alpha_i^V$ 几乎处处成立；在其可测例外零集上令 $e_i(y)=0$，即可处处满足 $0\le e_i(y)\le y$，不改变积分。这里没有把超鞅方向取成来源到目标。
+
+接着用（537.14）所引分解定理，对同一联合律按 $X$ 条件化，得到从来源到目标的概率核 $C_i(dy\mid x)$。其条件目标 $[0,\infty)$ 为标准 Borel，因此核存在；在 $\alpha_i^W$-零参数集上的值可统一补成 $\delta_0$，这类集合对 $x\alpha_i^W(dx)$ 也为零。两个方向的条件化属于同一个 $\Pi_i$，所以
+
+$$
+\alpha_i^WC_i=\alpha_i^V,\qquad
+\int x C_i(B\mid x)\,\alpha_i^W(dx)
+=\mathbb E_{\Pi_i}\!\left[X\mathbf1_{\{Y\in B\}}\right]
+=\int_B e_i(y)\,\alpha_i^V(dy).
+\tag{537.20}
+$$
+
+这些恒等式对非负截断 $X\wedge n$ 先成立，再由单调收敛得到；$X$ 的可积性保证所得有限测度。于是将源标签 $(i,x)$ 送到标签 $i$ 上按 $C_i(\cdot\mid x)$ 抽样的 $Y$，能够正确模拟叶 $i$，并将该分支的中心质量送到 $e_i(y)\alpha_i^V(dy)$。目标中心在此分支尚需的正测度是 $(y-e_i(y))\alpha_i^V(dy)$，质量为 $\lambda_i^V-\lambda_i^W$。
+
+所有分支共用的剩余测度定义为
+
+$$
+\Gamma
+=\sum_i \bigl((y-e_i(y))\alpha_i^V(dy)\bigr)\text{ 放在标签 }i
++s_V\delta_o.
+\tag{537.21}
+$$
+
+它非负，且
+
+$$
+\Gamma(Z^\circ)
+=\sum_i(\lambda_i^V-\lambda_i^W)+s_V
+=1-\sum_i\lambda_i^W=s_W.
+\tag{537.22}
+$$
+
+若 $s_W>0$，把源 $o$ 送到 $\Gamma/s_W$；若 $s_W=0$，则 $\Gamma=0$，所有分支差额和 $s_V$ 都为零，源 $o$ 的未使用行任取一个概率律。这给出一个定义在全部规范空间上的可测概率核，同时送对全部叶行及同一条中心行。不能为每个叶另花一次源剩余质量；（537.22）正是一次性支付全部差额的等式。将该核与已构造的两端规范化核复合，就得到一般标准 Borel 输出上的共同核，再由引理 537.2 得到 $E_V\preceq E_W$。因此没有有限字母表、密度有界或等均值的隐含限制。
+
+双向应用序判据给出曲线相等；由（537.9）各带标签概率律唯一，再由（537.8）剩余质量唯一。反之，相等曲线给出相同规范行律和双向模拟。这在序判据之后完成等价类的唯一性论证。
+
+最后证明风险及旧指标读数。令 $\delta(z)\in[0,1]$ 是在 $u_i$ 上报告中心的概率，额外任务的错误为
+
+$$
+\frac1{1+t}\int(1-\delta)\,d\nu
++\frac{t}{1+t}\int\delta\,d\mu_i.
+$$
+
+相对 $\nu+\mu_i$ 逐点选择较小成本的一端，得到最小值 $(\nu\wedge t\mu_i)(Z)/(1+t)=\chi_i(t)/(1+t)$；相等处任意随机化，所选阈值规则可测，所以该值确实达到。对应 Gushchin–Borzykh 的符号是 $P=\mu_i$、$P'=\nu$、似然比 $Z=r_i$（在 $P$ 几乎处处），$\pi=1/(1+t)$。其 Bayes 风险定义和式（26）给出同一公式；这里复用这一经典解释而不把原恢复目标换成中心识别。
+
+$\lambda_i$ 的极限公式已证；$\mu_i$ 相对 $\nu$ 的绝对连续部分是 $\mu_i|_{\{r_i>0\}}$，所以 $\beta_i=\alpha_i((0,\infty))=\chi'_{i,+}(0)$；共同质量为 $\kappa_i=\int\min(r,1)\alpha_i(dr)$，再代入 $d_i$ 的定义即得（537.12）。$E_p$ 的叶似然律是 $\delta_{p_i}$；$P_r$ 的叶似然律是 $(1-r_i)\delta_0+r_i\delta_1$，因为只有种子 $i$ 的共同输出具有中心与该叶相等的正质量。代入（537.6）得到（537.13），包括零权重。这些只是与第 536 章相容的代入式。证毕。
+
+本定理的联合部分限于（537.1）的一个中心和互相奇异的叶：经典二态成分提供单支曲线、规范化及序工具，引理 537.2 与（537.7）、（537.21）则保证所有分支确实属于同一条中心律，并由一个核同时模拟。[《数学与神话匹配》§437.2、§§447–449](MATH_MYTH_MATCH.md) 已给出共同质量、单个模拟器与完整决策比较的相关前置；这里补充的是本支撑上整族的精确实现与分类，不据这些列举作全面优先权断言。
+

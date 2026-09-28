@@ -1,0 +1,36 @@
+### 命题 533.6（同焦点、同方向与同边缘下重置后果仍可不同）
+
+令 $X=H=Y=\{1,2\}$，所有标签及角色类型固定，取
+
+$$
+\mu=\pi=\begin{pmatrix}1/2\\1/2\end{pmatrix},\qquad
+P=S=\begin{pmatrix}3/4&1/4\\1/4&3/4\end{pmatrix},
+$$
+
+$$
+P'=\begin{pmatrix}11/16&5/16\\5/16&11/16\end{pmatrix},\qquad
+S'=\begin{pmatrix}5/6&1/6\\1/6&5/6\end{pmatrix}.
+$$
+
+两实现具有相同数据
+
+$$
+M=\begin{pmatrix}5/8&3/8\\3/8&5/8\end{pmatrix},
+\qquad P\mu=P'\mu=\pi,
+$$
+
+而同一个“重置到标签 $1$”的操作
+
+$$
+K=\begin{pmatrix}1&1\\0&0\end{pmatrix}
+$$
+
+产生不同的端点通道
+
+$$
+SKP=\begin{pmatrix}3/4&3/4\\1/4&1/4\end{pmatrix},\qquad
+S'KP'=\begin{pmatrix}5/6&5/6\\1/6&1/6\end{pmatrix}.
+$$
+
+因此，即使焦点集合、两类关系的方向、类型、操作含义和焦点边缘都已固定，共同端点资料仍可遗失这些关系经焦点衔接所需的操作信息。在相同 $\pi$ 下，定理 533.5 的负端点 $\alpha=-1$ 则给出可识别的标签交换操作；重置到一个固定标签与重置到共同分布 $\pi$ 也属于不同操作。
+

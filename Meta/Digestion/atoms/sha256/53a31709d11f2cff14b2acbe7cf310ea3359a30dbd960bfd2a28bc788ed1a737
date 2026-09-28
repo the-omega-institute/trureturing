@@ -1,0 +1,18 @@
+### 定义 532.1（覆盖域、固定任务与目标残差）
+
+设 $\Omega$ 为有限对象全集，$\varnothing\ne A\subseteq\Omega$ 为本次分类的覆盖域，给定情境、分类读数与任务目标
+
+$$
+c:A\to K,\qquad q:A\to L,\qquad T:A\to Y,\qquad K=c(A).
+$$
+
+域外遗漏是 $\Omega\setminus A$；域内目标残差是
+
+$$
+\Delta_A(q,T)=\{(x,y)\in A^2:q(x)=q(y),\ T(x)\ne T(y)\}.
+$$
+
+目标 $T$ 的选择属于任务数据。比较覆盖域 $A_0\subseteq A_1$ 时，若称目标固定，意指先在 $A_1$ 给定同一个 $T$，再取其在 $A_0$ 上的限制；$q,c$ 同理。另换目标、成功关系或其版本属于任务变更，不能用新任务的成功消去旧 $\Delta_A(q,T)$。域外遗漏与域内残差可同时非空；它们与任务变更不是互斥事件。
+
+若标签还负有适用含义，另给关系 $\Phi\subseteq\Omega\times L$。称 $q$ 在 $A$ 上忠实，当且仅当 $\Phi(x,q(x))$ 对每个 $x\in A$ 成立；忠实完整覆盖还要求 $A=\Omega$。适用域为 $D_\Phi=\{x\in\Omega:\exists\ell\in L,\ \Phi(x,\ell)\}$，故忠实读数要求 $A\subseteq D_\Phi$。关系 $\Phi$、覆盖域 $A$ 与目标 $T$ 是不同输入。
+

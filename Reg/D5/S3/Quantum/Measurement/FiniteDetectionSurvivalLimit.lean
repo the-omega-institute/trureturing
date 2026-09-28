@@ -203,11 +203,10 @@ register_information_theorem dark_block_contraction in arena
     owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit
     coordinates := #[0, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "arg", "body",
-        "arg", "body", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "body",
-        "arg"]
-      stateBinder := 17 }] })
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg",
+        "fn", "arg", "body", "arg"]
+      stateBinder := 9 }] })
   escape continues (open)
 
 #print axioms actual_law

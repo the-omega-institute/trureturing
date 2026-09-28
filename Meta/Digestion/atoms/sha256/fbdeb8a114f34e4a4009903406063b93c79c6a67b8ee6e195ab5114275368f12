@@ -1,0 +1,23 @@
+**定义 20.1（冻结历史、保留自由连接）。** 取 $\mathsf S\subseteq\{1,\ldots,L-1\}$，允许这些历史寄存器任意取态，并将其余历史寄存器，包括 $x_0,x_L$，固定为 $|+_d\rangle$。记此等距嵌入为 $F_{d,L,\mathsf S}$，受约束编码为
+
+$$
+V_{d,L,\mathsf S}=J_{d,L}F_{d,L,\mathsf S},\qquad
+\mathcal E^{\mathsf S}_{d,L}(\rho)=V_{d,L,\mathsf S}\rho V_{d,L,\mathsf S}^*.
+$$
+
+其逻辑维数是 $K=d^{|\mathsf S|}$，物理边界空间仍为原来的 $2L$ 条 $d$ 维腿。把自由历史 $x_i$ 对应到块边 $e_i=(i-1,i)$，缝合边为 $e_0=(L-1,0)$。令 $\mathsf F=E(C_L)\setminus\mathsf S$，其中 $\mathsf S$ 也表示对应边集。解码各块的 $M_d$ 后，自由边采用重复等距
+
+$$
+D_e|x\rangle=|x\rangle_{e,u}|x\rangle_{e,v},
+$$
+
+冻结普通边为 $\Phi_d$，冻结缝合边为 $\Omega_{d,\alpha_L}$。由原 $J$ 的振幅直接得到
+
+$$
+(M_d^{\otimes L})^*V_{d,L,\mathsf S}|\psi\rangle
+=\left(\bigotimes_{e\in\mathsf F}|\phi_e\rangle\right)
+\otimes\left(\bigotimes_{e\in\mathsf S}D_e\right)|\psi\rangle.
+$$
+
+允许 $\psi$ 在不同自由历史间任意纠缠。等式中各边占据不同的半边寄存器；只有各块 $M_d$ 混合其本地两腿。
+

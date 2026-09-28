@@ -1,0 +1,77 @@
+### 定理 539.2（精确前向子集流的反向核与逐态误差）
+
+在定义 539.1 的精确序假设下，对 $v_C^q>0$ 定义
+
+$$
+R^q(B\mid C)=
+\begin{cases}
+\displaystyle\frac{|B|f_{BC}^q}{|C|v_C^q},&\varnothing\ne B\subseteq C,\\
+0,&B\nsubseteq C.
+\end{cases}
+\tag{539.5}
+$$
+
+对 $v_C^q=0$ 的输出任选一个同读数的概率行。按 $q$ 拼接所得 $R$ 是合法的状态无关反向核。对每个实际行 $(k,q)$，它的规范实验误差恰为
+
+$$
+e_k^q
+:=\operatorname{TV}(W_v^q(\cdot\mid k)R^q,W_w^q(\cdot\mid k))
+=\sum_{\substack{B\ni k\\C\supseteq B}}
+ f_{BC}^q\frac{|C|-|B|}{|C|}.
+\tag{539.6}
+$$
+
+令 $b_q=\tfrac12\max_{k\in A_q}\sum_{l\in A_q\setminus\{k\}}\Delta_{kl}^q$。则
+
+$$
+\begin{aligned}
+d(W_v\longrightarrow W_w)
+&\le\max_{q,k}e_k^q
+\le\min\{1,\max_q b_q\},\\
+b_q&\le\frac{n_q-1}{2}\max_{k\ne l\in A_q}\Delta_{kl}^q.
+\end{aligned}
+\tag{539.7}
+$$
+
+当 $n_q=1$ 时，空的成对最大值及空和均约定为零，相应误差为零。（539.6）是给定流与给定逆核的精确误差；（539.7）通常只是最优反向缺损的上界。
+
+证明：固定 $q$ 并省略上标。把（539.3）的第二个等式对 $k\in C$ 求和，得到
+
+$$
+|C|v_C=\sum_{\varnothing\ne B\subseteq C}|B|f_{BC}.
+\tag{539.8}
+$$
+
+所以正分母时（539.5）非负且总和为一。若 $v_C=0$，右侧各项非负而 $|B|>0$，故全部 $f_{BC}=0$；该 $C$ 在每条 $W_v$ 行中质量也为零，所选补全不影响任何恢复行。若 $w_B=0$，则由源流行和可知全部 $f_{BC}=0$。因此下面的有限和可以包括零权重块，无需给 $0/0$ 赋值。
+
+令 $Q_k=W_v(\cdot\mid k)R$。对任一包含 $k$ 的 $B$，只有 $C\supseteq B$ 的项能够贡献，且它们都包含 $k$，从而
+
+$$
+Q_k(B)=\sum_{C\supseteq B}\frac{|B|}{|C|}f_{BC}
+\le\sum_{C\supseteq B}f_{BC}=w_B.
+\tag{539.9}
+$$
+
+对不含 $k$ 的 $B$，原始行质量为零，$Q_k(B)\ge0$。因此原始质量所有亏损恰在含 $k$ 的块上，所有盈余恰在不含 $k$ 的块上；两条概率行的总质量相等，半 $L^1$ 等于亏损总和。将（539.9）从源流行和中相减，再对 $B\ni k$ 求和，就得到（539.6）。这一步同时证明 $0\le e_k\le1$，并不把逆核误差假定成其最优值。
+
+式（538.15）对固定 $k$ 的其他状态求和，有
+
+$$
+\begin{aligned}
+\sum_{l\ne k}\Delta_{kl}
+&=\sum_{\substack{B\ni k\\C\supseteq B}}
+ f_{BC}|C\setminus B|\\
+&=\sum_{\substack{B\ni k\\C\supseteq B}}
+ f_{BC}(|C|-|B|).
+\end{aligned}
+\tag{539.10}
+$$
+
+这里每个流项恰被 $l\in C\setminus B$ 计一次。也可直接把目标成对质量按状态 $k$ 的流展开，减去源成对质量，留下 $k\in B,l\notin B,l\in C$ 的项，再交换有限求和。故各项非负，且这确实是同一个共同流的各行关系。
+
+对角项 $B=C$ 在（539.6）、（539.10）中都为零。严格包含的项有 $|C|\ge2$，故 $1/|C|\le1/2$，逐项比较即得 $e_k\le\tfrac12\sum_{l\ne k}\Delta_{kl}$。取最大值并以一截断，得到第一行上界；一行至多有 $n_q-1$ 项，得到第二行。单态时仅有唯一非空块，权重为一，所有流都在对角上，结论照常成立。证毕。
+
+逐态不等式 $e_k\le\tfrac12\sum_{l\ne k}\Delta_{kl}$ 的等号条件也由该证明给出：对所有 $k\in B\subsetneq C$ 且 $f_{BC}>0$ 的项，须有 $|C|=2$；这些项自动满足 $|B|=1$。若没有这样的严格流，两边都为零。逐态等号不保证随后取最大值、取缺损下确界的每一步也取等；命题 539.4 的星形例子将区分它们。
+
+核（539.5）本身是经典贝叶斯反演。取 $A_q$ 上均匀状态先验，源块边缘概率为 $|B|w_B/n_q$，经前向核后的块概率为 $|C|v_C/n_q$，联合块质量为 $|B|f_{BC}/n_q$；贝叶斯公式正给（539.5）。此处的均匀先验只用于构造核，结论（539.6）逐态成立，不假定真实先验均匀。Cho–Jacobs, *Disintegration and Bayesian Inversion via String Diagrams*, Example 3.8 明确给出离散贝叶斯反演及零输出处任意补全；见 [arXiv:1709.00322v3](https://arxiv.org/html/1709.00322v3)，*Mathematical Structures in Computer Science* 29(7)（2019），938–971，[DOI:10.1017/S0960129518000488](https://doi.org/10.1017/S0960129518000488)。这里承担新增关系的是子集流所产生的单边行亏损、（539.10）的共同成对损失以及下文公开实现中的锐度和间隙，不把贝叶斯公式另作新定理。
+

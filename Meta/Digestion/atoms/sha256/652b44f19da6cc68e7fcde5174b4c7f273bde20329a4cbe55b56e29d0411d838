@@ -1,0 +1,8 @@
+**证明。** $Z_t$ 不交且 $\mathcal U$ 幺正，立即得到 $F$ 等距。将每个标签 $z$ 重排为组号及组内坐标，第 15 节的实际编码 $|z,a,b\rangle\mapsto|z,b\rangle|z,a\rangle$ 给出所列因子化。偏迹后，
+
+$$
+\rho_X\simeq\bigoplus_t p_t\rho_{b,t}\otimes\operatorname{diag}(\lambda_t).
+$$
+
+这是同一实际边缘态的谱分解，熵为 $H(p)+\sum_t p_t[S(\rho_{b,t})+H(\lambda_t)]$。压缩另一侧矩阵单位张成 $t$ 扇区内的 $a$ 完全矩阵代数，故其交换子恰为所称最大代数。相对熵中固定 $\lambda_t$ 因子相消，也得到边界与逻辑代数相对熵的等式。证毕。这里固定相干方向是子空间定义，不是由只读经典中心标签的后处理自动制备出来的操作。
+

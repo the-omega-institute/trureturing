@@ -1,0 +1,60 @@
+{
+  "source": {
+    "title": "Nine Prime Divisors in Odd Distinct Covering Systems",
+    "author": "Michael Schroeder",
+    "version": "1.0.1",
+    "doi": "10.5281/zenodo.22759614",
+    "archive_sha256": "9e674cf1665695945dc4d6d269ec27ad1567e9c5c236c2708b451de2a2a5196c",
+    "member": "nine-prime-support/certificate/closing.json",
+    "member_sha256": "2fc48ecf06bc7ca256f7107648158fe92bff2052368b438267e6541e3eb07b1b",
+    "verifier_sha256": "e3296d181686c0f1925e755583fdc4df2ffeb2bacbc36a77a2396bbe3b4a9135"
+  },
+  "state": "A1",
+  "node": [
+    2,
+    4,
+    1,
+    8,
+    1,
+    2,
+    1,
+    0,
+    13
+  ],
+  "xi7": [
+    1,
+    4,
+    7,
+    14
+  ],
+  "rows": [
+    {
+      "eta": 1,
+      "cost": "49538723779/10000000000"
+    },
+    {
+      "eta": 4,
+      "cost": "12457528149/2500000000"
+    },
+    {
+      "eta": 7,
+      "cost": "51353199569/10000000000"
+    },
+    {
+      "eta": 8,
+      "cost": "10534248179/2000000000"
+    },
+    {
+      "eta": 11,
+      "cost": "51724699137/10000000000"
+    },
+    {
+      "eta": 13,
+      "cost": "51353199569/10000000000"
+    },
+    {
+      "eta": 14,
+      "cost": "52980442211/10000000000"
+    }
+  ]
+}

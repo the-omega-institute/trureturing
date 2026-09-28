@@ -1,0 +1,53 @@
+{
+  "ambient": {
+    "ambient_dimension": 55,
+    "fixed_C5_commutator_rank": 8,
+    "phase_covariance_cases": 5,
+    "quotient_action_difference_rank": 4,
+    "quotient_dimension": 51,
+    "rational_rotation_cases": [
+      {
+        "cos": "1",
+        "lift_dependence_rank": 4,
+        "sin": "0"
+      },
+      {
+        "cos": "3/5",
+        "lift_dependence_rank": 4,
+        "sin": "4/5"
+      },
+      {
+        "cos": "0",
+        "lift_dependence_rank": 0,
+        "sin": "1"
+      },
+      {
+        "cos": "-1",
+        "lift_dependence_rank": 4,
+        "sin": "0"
+      },
+      {
+        "cos": "0",
+        "lift_dependence_rank": 0,
+        "sin": "-1"
+      }
+    ],
+    "turn_order": 4,
+    "turn_rank": 55
+  },
+  "arithmetic": "exact integers and fractions",
+  "operation_algebra": {
+    "generated_dimensions": [
+      20,
+      5
+    ],
+    "kernel_dimensions": [
+      4,
+      4
+    ],
+    "matrix_units": 25,
+    "physical_basis_rank": 55,
+    "scope": "Specified kernels and full position algebra M5(R) tensor I11."
+  },
+  "scope": "Linear constructions only; no positivity, execution-cost, or full controller equivalence claim."
+}

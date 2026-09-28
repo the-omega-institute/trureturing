@@ -1,0 +1,4 @@
+## lemma 5.1: 非剩余证书及其计数
+
+对奇素数 $p$，令 $a=2^{-L}\in\mathbb F_p^\times$。若 $\chi_p(\alpha^2-a)=-1$，则所有 $c_k\ne0\pmod p$。这样的 $\alpha$ 恰有 $(p-\chi_p(a))/2>0$ 个。
+

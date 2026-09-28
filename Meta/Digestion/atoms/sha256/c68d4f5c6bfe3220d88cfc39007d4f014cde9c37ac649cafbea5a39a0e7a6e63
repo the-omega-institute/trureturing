@@ -1,0 +1,28 @@
+**Theorem 3 (exact octahedral repair coefficient).** For natural numbers
+$p,q$, including $q=0$,
+
+$$
+\bigl(\forall f\;\exists g,\quad
+q\operatorname{wt}(f+d_0g)\leq pT(f)\bigr)
+\quad\Longleftrightarrow\quad 3q\leq2p.
+$$
+
+**Proof.** The upper estimate $2R(f)\leq3T(f)$ is prior literature:
+Dotterrer--Kahle, *Coboundary expanders* (2012), Proposition 5.5,
+DOI 10.1142/S1793525312500197, at $n=3,k=1$. Their norms count support;
+normalizing by the numbers of edges and triangles changes the coefficient.
+Here is a structural derivation of this premise in the present cochain
+coordinates. The total defect sum is zero because every edge belongs to
+two triangles. Hence the defect set has even cardinality. Remove two
+defective dual cube vertices and join them by a path changing each coordinate
+at most once. The path has at most three edges and boundary precisely the
+selected pair. Induction on the remaining defect set constructs a cochain
+$h$ with $d_1h=d_1f$ and $2\operatorname{wt}(h)\leq3T(f)$; adding paths
+cannot increase support beyond the sum of their lengths. Apply Theorem 1
+to $f+h$ to obtain a potential with $f+d_0g=h$. If $3q\leq2p$, multiply
+this upper estimate to obtain the claimed repair inequality. Conversely,
+apply any universal repair inequality to the explicit cochain $w$ above.
+Theorem 2 and $T(w)=2$ give $3q\leq2p$. Thus the published upper estimate
+and the cut obstruction determine the exact coefficient together.
+
+No claim is made here for a min-part coefficient on arbitrary finite parts.

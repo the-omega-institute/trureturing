@@ -1,0 +1,40 @@
+### 定理 31：分数切片覆盖给出的最小一致指数
+
+在定义 31 的范围内，令 $\tau=\tau_{\mathrm r}(\phi)$。对每个有限构件族、每个有限值全定义外层任务以及每个 $\xi$ 先于 $\eta$ 的端点顺序 $\pi$，均有
+
+$$
+W_F(\operatorname{cn}(\pi))\leq W_F(\pi)^\tau.
+$$
+
+更精确地，沿用定义 26 的 $A_k,B_\ell,q_j,t_i$，对每个 $1\leq j\leq n$ 分别匹配
+
+$$
+(B,A)=(B_{2j-1},A_{t_{q_j}-1})
+\quad\text{或}\quad
+(B,A)=(B_{2j},A_{t_{q_j}}).
+$$
+
+这些匹配均满足
+
+$$
+\kappa_B(F)\leq
+\begin{cases}
+\kappa_A(F)^\tau,&\xi\in A\setminus B,\\
+\kappa_A(F),&\xi\notin A\setminus B.
+\end{cases}
+$$
+
+幂次上界的乘法常数为 $1$。此外，对每个实数 $\alpha<\tau$ 和每个固定常数 $C>0$，仅增加一个具有满射行、满射列的有限加法构件，就存在布尔外层输出的任务和 $\xi$ 先读的顺序，使
+
+$$
+W_F(\operatorname{cn}(\pi))>C\,W_F(\pi)^\alpha.
+$$
+
+这里 $\phi$ 始终固定，锐利性族中变化的是伴随构件的有限字母表及相应任务。因此 $\tau$ 是该方向的最小一致指数，即使允许上述常数 $C$ 也不能降低它。若允许指定构件的两个方向和全部端点顺序，则最小一致指数为
+
+$$
+\max\{\tau_{\mathrm r}(\phi),\tau_{\mathrm c}(\phi)\}.
+$$
+
+总有 $\tau_{\mathrm r}(\phi)\geq1$，且 $\tau_{\mathrm r}(\phi)=1$ 当且仅当 $\phi$ 有满射行；转置后得到对应的满射列条件。特别地，单点有效像的两个指数都为 $1$。
+

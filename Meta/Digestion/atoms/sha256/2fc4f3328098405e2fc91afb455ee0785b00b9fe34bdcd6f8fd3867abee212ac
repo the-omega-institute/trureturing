@@ -1,0 +1,40 @@
+## theorem 27.2: 全部区域同谱、同一局部生成元、相反熵速度
+
+取第 20、24 节原单自由历史码 $V=V_{3,3,\{1\}}$，$\alpha=1$，六腿依次为 $(a_0,b_0,a_1,b_1,a_2,b_2)$。令逻辑
+
+$$
+Z=\operatorname{diag}(1,\omega_3,\omega_3^2),\quad
+h=|0\rangle\langle1|+|1\rangle\langle0|,
+$$
+
+$$
+|\psi\rangle=\frac{\sqrt3}{2}|0\rangle+\frac i2|1\rangle,
+\quad \rho=\frac12|\psi\rangle\langle\psi|+\frac16I_3,
+\quad\widetilde\rho=Z\rho Z^*.
+$$
+
+二者严格正定。对每个物理腿集合 $A$，$[V\rho V^*]_A$ 与 $[V\widetilde\rho V^*]_A$ 的完整谱相同。用同一逻辑演化 $\rho(t)=e^{-ith}\rho e^{ith}$ 及其带波浪版本，对区域 $B_0=\{a_0,b_0\}$，
+
+$$
+\left.\frac{dS_{B_0}(\rho(t))}{dt}\right|_0
+=\frac{\sqrt3}{4}\log\frac7{13}<0,
+\qquad
+\left.\frac{dS_{B_0}(\widetilde\rho(t))}{dt}\right|_0
+=-\frac{\sqrt3}{8}\log\frac7{13}>0.
+$$
+
+该演化可由仅支撑于前两个相邻顶点块的四腿 Hermitian 算符精确实现。
+
+**证明。** 原振幅给出 $\overline Z=Z_0^{-1}Z_1$、$\overline X=X_0X_1^2X_2X_3$ 满足 $\overline ZV=VZ$、$\overline XV=VX$。$\overline Z$ 是单腿幺正的乘积，所以所有区域的边缘态分别局部幺正等价。令
+
+$$
+\overline P_0=(I+\overline Z+\overline Z^2)/3,\qquad
+\overline H=\overline P_0\overline X^{-1}+\overline X\overline P_0.
+$$
+
+它是四腿 Hermitian 算符并满足 $\overline HV=Vh$，故实现同一实际物理演化，不只是给码空间取一个无局部性声明的压缩算符。
+
+由第 20.2 节或直接偏迹，$S_{B_0}(V\rho V^*)=\log3+H(\operatorname{diag}\rho)$。两输入具有相同的对角概率 $(13,7,4)/24$，但 $\rho_{01}=-i\sqrt3/8$，而 $\widetilde\rho_{01}=\omega_3^{-1}\rho_{01}$。$\dot p_0=-2\operatorname{Im}\rho_{01}$、$\dot p_1=-\dot p_0$、$\dot p_2=0$，所以 $\dot H=\dot p_0\log(p_1/p_0)$，代入得结论。证毕。
+
+因此，全部瞬时区域谱组成的读数也不足以定义自治几何速度；只对这些谱再作确定性图重建无法消除这个区别。这里只固定了同一个物理 Hamiltonian，没有同时将 Hamiltonian 作 $\overline Z$ 共轭；这是两种真实初态，不是改变整个实验坐标的规范等价。反例不排除时间历史、额外相位观测、随机动力学或更高阶状态表示。
+

@@ -1,0 +1,85 @@
+### 定理 17：最小充分边界定理
+
+设某个编码：
+
+$$
+m:X_A\to M
+$$
+
+能够支持全部外部补全的准确求值，即存在：
+
+$$
+d:M\times X_B\to O
+$$
+
+使：
+
+$$
+F(a\sqcup b)=d(m(a),b)
+\qquad
+\forall a,b.
+$$
+
+则存在唯一满射：
+
+$$
+h:m(X_A)\twoheadrightarrow\mathsf S_A(F)
+$$
+
+满足：
+
+$$
+\boxed{
+h(m(a))=\eta_A^F(a).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+|m(X_A)|\geq\kappa_A(F).
+}
+$$
+
+反过来，使用 $\mathsf S_A(F)$ 本身作为编码可以达到这个下界。
+
+#### 证明
+
+若：
+
+$$
+m(a)=m(a'),
+$$
+
+则对任意 $b$：
+
+$$
+\begin{aligned}
+F(a\sqcup b)
+&=d(m(a),b)\\
+&=d(m(a'),b)\\
+&=F(a'\sqcup b).
+\end{aligned}
+$$
+
+所以 $a\sim_A^F a'$。因此定义：
+
+$$
+h(m(a))=[a]_A
+$$
+
+不依赖代表元，故良定义。
+
+每个边界类型都有代表元，因此 $h$ 满射；等式又规定了 $h$ 在其整个定义域上的取值，因此唯一。
+
+反过来，令：
+
+$$
+d_*([a]_A,b)=F(a\sqcup b).
+$$
+
+由边界等价定义，$d_*$ 良定义，且准确实现 $F$。∎
+
+这种按全部后续响应取商的最小性论证属于经典行为等价方法。单向通信的确定性模型可参见 Tim Roughgarden，*Communication Complexity (for Algorithm Designers)*（2015），[第 13–15 页](https://arxiv.org/abs/1509.06257)；这里的消息对应 $m(a)$，接收方持有全部外部赋值 $b$。
+

@@ -1,0 +1,12 @@
+## lemma 9.1: 纯 AME 输出的因子化
+
+设 $D=de$，$\psi$ 为 AME$(4,D)$，$\varphi$ 为 AME$(4,d)$。四个独立局部 CPTP 通道能够把 $\psi$ 精确变成纯态 $\varphi$，当且仅当 $\psi$ 局部幺正等价于按参与方重组的 $\varphi\otimes\eta$，其中 $\eta$ 为某个 AME$(4,e)$。
+
+**证明。** 局部 Stinespring 等距 $V_i$ 给出纯化。纯输出迫使 $(\otimes_iV_i)|\psi\rangle=|\varphi\rangle\otimes|\eta\rangle$。单方约化态满足
+
+$$
+V_iV_i^*/D=(I_d/d)\otimes\eta_i.
+$$
+
+左侧为秩 $D$ 的归一化投影，故 $\eta_i$ 恰有 $e$ 个本征值 $1/e$。在其支撑内 $V_i$ 成为 $\mathbb C^D\simeq\mathbb C^d\otimes\mathbb C^e$ 的幺正。比较二方最大混合态，得到 $\eta_{ij}=I_{e^2}/e^2$。反向实施局部因子化再丢弃环境即得。证毕。
+

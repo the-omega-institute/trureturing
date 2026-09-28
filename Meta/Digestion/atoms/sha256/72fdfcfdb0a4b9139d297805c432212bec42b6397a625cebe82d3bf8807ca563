@@ -1,0 +1,55 @@
+### 定义 35：承诺二叶任务、可达消息与切面代价
+
+固定一个非空有限输出集 $O$，记 $r=|O|\geq1$。设 $X,Y$ 为有限集，$D$ 为非空承诺域
+
+$$
+D\subseteq X\times Y,
+$$
+
+而目标只定义在 $D$ 上：$f:D\to O$。删去不出现在任何承诺对中的原始符号，写
+
+$$
+X_D=\{x:\exists y, (x,y)\in D\},\qquad
+Y_D=\{y:\exists x, (x,y)\in D\}.
+$$
+
+一个 $(p,q)$-协议是三张确定性表
+
+$$
+\alpha:X_D\to A,\qquad \beta:Y_D\to B,\qquad \delta:A\times B\to O
+$$
+
+满足
+
+$$
+|\alpha(X_D)|\leq p,\qquad |\beta(Y_D)|\leq q,
+$$
+
+以及仅在承诺对上成立的正确性条件
+
+$$
+\delta(\alpha(x),\beta(y))=f(x,y)
+\qquad ((x,y)\in D).
+$$
+
+因此消息数是**至多**可达消息数；$\delta$ 在 $A\times B$ 中没有出现在 $D$ 上的点处可以任意填写，绝不要求非法元组输出拒绝。
+
+定义 Alice 一侧和 Bob 一侧的原始输入切面代价
+
+$$
+\begin{aligned}
+c_A(D,f)&=\min\bigl\{|e(X_D)|:\exists d, d(e(x),y)=f(x,y)\text{ 对所有 }(x,y)\in D\bigr\},\\
+c_B(D,f)&=\min\bigl\{|e(Y_D)|:\exists d, d(e(y),x)=f(x,y)\text{ 对所有 }(x,y)\in D\bigr\}.
+\end{aligned}
+$$
+
+在第一式中编码器看见完整的 $x$、解码器还看见原始的 $y$；第二式交换两边。它们是原始输入切面上的单向松弛，不是某棵树上实际可取得的子消息。
+
+对 $G_A(D,f)$ 定义顶点集 $X_D$，并在不同的 $x,x'$ 之间连边，当且仅当存在 $y$ 使 $(x,y),(x',y)\in D$ 且
+
+$$
+ f(x,y)\neq f(x',y).
+$$
+
+以同样方式定义 $G_B(D,f)$，交换 $x,y$。这正是带承诺域的特征冲突图；其一侧着色解释与 Witsenhausen 的零误差特征图观点以及 Charpenay–le Treust–Roumy 的受限支撑编码研究有历史联系。后者涉及块编码、期望前缀码率及边信息假设；这里始终是有限、一次、确定性且只在 $D$ 上判定的版本。
+

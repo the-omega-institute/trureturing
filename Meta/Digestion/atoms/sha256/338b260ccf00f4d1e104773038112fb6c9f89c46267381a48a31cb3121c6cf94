@@ -1,0 +1,38 @@
+### 283.2 不可见极化给出的精确块模拟
+
+设
+$$
+z=\sqrt{1-a^2},
+\qquad
+|\psi_{z,\phi}\rangle
+=\sqrt{\frac{1+z}{2}}|+Y\rangle
++e^{i\phi}\sqrt{\frac{1-z}{2}}|-Y\rangle.
+\tag{283.7}
+$$
+其密度矩阵为
+$$
+|\psi_{z,\phi}\rangle\langle\psi_{z,\phi}|
+=\frac12\begin{pmatrix}1+z&a e^{-i\phi}\\a e^{i\phi}&1-z\end{pmatrix}.
+\tag{283.8}
+$$
+与（283.1）相比，它只增加了垂直于允许测量平面的 $Y$ 极化。每个允许效果在 $Y$ 本征基中有相同对角，所以（283.1）与（283.8）对任意经典角度产生完全相同的四记录概率；固定纯reset因子也相同。$z$ 的正负同样不可见。
+
+因此可以作如下证明用替换：在一个块内，将混态来源换成倾斜纯态的 $B$ 份乘积，保持同一个Haar相位，再以相等概率选择共同极化符号 $+z$ 或 $-z$。条件于相位及符号，新的每份输入仍独立。任意已发生记录之后，下一份合法reset的完整输出仍相同；由逐次复合，整块对任意旧量子记忆产生相同通道。
+
+这里的等价依赖当前访问合同，是操作等价，不是来源密度矩阵相等。替代的倾斜态及其后面的经典程序只承担证明，不作为协议可以免费取得的新资源。
+
+令 $|D_k\rangle$ 为 $B$ 个qubit中恰有 $k$ 个 $|+Y\rangle$ 的归一化Dicke向量。倾斜纯乘积在这些向量上的展开为
+$$
+|\psi_{z,\phi}\rangle^{\otimes B}
+=\sum_{k=0}^B
+\sqrt{\binom Bk}
+\left(\frac{1+z}{2}\right)^{k/2}
+\left(\frac{1-z}{2}\right)^{(B-k)/2}
+e^{i(B-k)\phi}|D_k\rangle.
+\tag{283.9}
+$$
+Haar相位积分使不同 $k$ 的交叉项消失。再平均极化符号，得到
+$$
+\widetilde\rho_{a,B}
+=\sum_{k=0}^Bp_z(k)|D_k\rangle\langle D_k|,
+$$

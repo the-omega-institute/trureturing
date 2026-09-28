@@ -1,0 +1,22 @@
+### 定义 15：边界拼接
+
+对互不相交的：
+
+$$
+A,C\subseteq I,
+$$
+
+定义候选拼接：
+
+$$
+\mu_{A,C}^F:
+\mathsf S_A(F)\times\mathsf S_C(F)
+\to
+\mathsf S_{A\cup C}(F),
+$$
+
+$$
+\mu_{A,C}^F([a]_A,[c]_C) =
+[a\sqcup c]_{A\cup C}.
+$$
+

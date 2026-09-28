@@ -1,0 +1,9 @@
+逆变换为
+
+$$
+\tau_R^{-1}(\omega)
+=\frac{G^{-1}\omega G^{-1}}{\operatorname{Tr}(\omega R^{-1})}.
+$$
+
+它对应正算子 $R^{-1}$ 的归一化过滤，谱比仍是 $\kappa_R$；用合法缩放 $r_{\min}R^{-1}\le I_P$ 重复上界论证，得到下界。$\square$
+

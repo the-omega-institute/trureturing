@@ -1,0 +1,15 @@
+**定理 29.2（条件化的锐迹距离常数）。** 定义 29.1 下，
+
+$$
+\boxed{L_R=\kappa_R.}
+$$
+
+并且全部来源满足双向界
+
+$$
+\kappa_R^{-1}D(\rho,\sigma)
+\le D(\tau_R(\rho),\tau_R(\sigma))
+\le\kappa_RD(\rho,\sigma).
+$$
+
+证明。对迹不增过滤 $\mathcal E(X)=GXG/r_{\max}$，每个来源的成功概率至少为 $r_{\min}/r_{\max}$。由定理 25.2 的概率加权收缩界得到上界。若 $r_{\min}<r_{\max}$，取相应正交本征态 $P_-,P_+$，置 $\rho=P_-$、$\sigma_\varepsilon=(1-\varepsilon)P_-+\varepsilon P_+$，其中 $0<\varepsilon<1$。

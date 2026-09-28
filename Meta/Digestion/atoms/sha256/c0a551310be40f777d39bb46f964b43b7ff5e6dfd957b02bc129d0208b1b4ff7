@@ -1,0 +1,8 @@
+**定理 44.4（正二阶余项）。**
+
+令
+$$
+S_0=PSP+QSQ,\quad V=S-S_0,\quad
+R_u=(S+uI_R)^{-1},\quad R_u^0=(S_0+uI_R)^{-1}
+\quad(u\ge0).
+$$

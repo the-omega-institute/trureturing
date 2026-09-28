@@ -1,0 +1,32 @@
+### 定义 537.1（同一实际支撑上的充分私有商与中心质量）
+
+固定定义 536.1 的整数 $m\ge2$、情境 $K=\{b,a_1,\ldots,a_m\}$，以及彼此不同的读数 $u_i,v_{ij}$。实际对象仍恰为
+
+$$
+\begin{aligned}
+&(b,u_i,0),\ (a_i,u_i,0) &&(1\le i\le m),\\
+&(a_i,v_{ij},0),\ (a_j,v_{ij},1) &&(1\le i<j\le m),
+\end{aligned}
+\tag{537.1}
+$$
+
+每行一个对象，共 $m(m+1)$ 个，不添加笛卡尔积中的其他行。编码核 $W$ 只读情境，在任意非空标准 Borel 辅助空间 $Z_W$ 上给出中心律 $\nu_W=W_b$ 和叶律 $\mu_i^W=W_{a_i}$；实际实验是
+
+$$
+E_W(x)=\delta_{q(x)}\otimes W_{c(x)}.
+$$
+
+观察者读取 $(q,z)$，充分性仍要求对每个实际对象以概率一恢复原目标 $T$。由式（536.5），这恰等价于 $\mu_i^W\perp\mu_j^W$（$i\ne j$），而 $\nu_W$ 可为任意概率律。$E_V\preceq E_W$ 表示存在一个不额外读取实际状态的 Markov 核，把所有 $E_W(x)$ 同时送到 $E_V(x)$；核可以读取 $q$，不预先要求其逐输入保持 $q$。互相模拟定义 $E_V\simeq E_W$，充分私有商记为 $\mathcal P_m=\mathcal F_{\mathrm{priv}}/{\simeq}$，序的左端信息较少。叶标签 $i$ 固定，商不额外识别叶标签的置换。
+
+以下始终复用引理 536.2 的可测分划 $Z_W=D_0^W\sqcup D_1^W\sqcup\cdots\sqcup D_m^W$。取可测密度 $r_i^W$，使
+
+$$
+\mu_i^W(D_i^W)=1,\qquad
+\nu_W|_{D_i^W}=r_i^W\mu_i^W,\qquad
+\lambda_i^W=\int r_i^W\,d\mu_i^W,\qquad
+s_W=\nu_W(D_0^W)=1-\sum_i\lambda_i^W.
+\tag{537.2}
+$$
+
+密度非负且在 $\mu_i^W$ 几乎处处有限；在一个可测零集上改取零，并在 $D_i^W$ 外延为零，得到处处有限可测版本。该零集对 $\nu_W|_{D_i^W}$ 也为零，故此完成不改变任何测度等式。这里取的是中心相对各叶的绝对连续部分，不是拓扑支撑，也不是一个常数支配系数；同一个中心律要求 $\sum_i\lambda_i^W\le1$。
+

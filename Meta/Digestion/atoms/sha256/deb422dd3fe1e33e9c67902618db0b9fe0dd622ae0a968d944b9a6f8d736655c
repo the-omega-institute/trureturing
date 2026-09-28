@@ -1,0 +1,176 @@
+### 定理 535.4（整个随机充分族的两种最大共同下界）
+
+在定义 535.1—535.3 下，$\mathcal F_T$ 非空，并有以下结论。
+
+1. 在 $A$ 上所有标准 Borel 输出实验中，$U$ 是 $\mathcal F_T$ 的最大共同下界，即
+
+$$
+\forall E\in\mathcal F_T,\quad U\preceq E,
+\qquad
+\forall F,\quad
+\bigl(\forall E\in\mathcal F_T,\ F\preceq E\bigr)\Longrightarrow F\preceq U.
+\tag{535.7}
+$$
+
+这里 $F$ 可以不保留 $q$。$U$ 本身对 $T$ 充分；在 $\Gamma_c$ 内，对 $T$ 充分和对 $U$ 充分是同一个实验条件。
+
+2. 对任意非空标准 Borel 空间 $Z$ 及任意 $W:K\to\operatorname{Prob}(Z)$，有完整分类
+
+$$
+\bigl(\forall E\in\mathcal F_T,\ E_W\preceq E\bigr)
+\iff
+\bigl(\forall k,k'\in K,\ kCk'\Longrightarrow W_k=W_{k'}\bigr)
+\iff E_W\preceq V.
+\tag{535.8}
+$$
+
+因此 $V$ 是限于 $\Gamma_c$ 的最大共同下界，但不保证充分。
+
+3. 最小充分允许实验存在的准确条件是
+
+$$
+\mathcal F_T\text{ 有最小元}
+\iff C\subseteq R.
+\tag{535.9}
+$$
+
+即没有一条 $H$ 路径连接不相容的两个情境。条件成立时 $V$ 最小且 $U\simeq V$；条件不成立时，$U$ 虽充分，却没有与之等价的 $\Gamma_c$ 成员。只允许确定性编码与允许全部标准 Borel 随机编码，最小充分实验存在的条件相同。
+
+**证明。** 先固定实际比较序的一项归约。设 $E_F\preceq E_W$，其中两实验的辅助空间分别为 $Z',Z$，而一个任意模拟核为 $G:L\times Z\to\operatorname{Prob}(L\times Z')$。对每个源读数 $\ell$，取其输出辅助坐标的边缘
+
+$$
+G_\ell(B\mid z)=G(L\times B\mid\ell,z)
+\quad(B\subseteq Z'\text{ 可测}).
+$$
+
+这是定义在全部 $z$ 上的 Markov 核，且由实际行等式取边缘得
+
+$$
+\forall(k,\ell)\in S,\qquad
+F_k(B)=\int_ZG_\ell(B\mid z)W_k(dz).
+\tag{535.10}
+$$
+
+反之，给定满足式（535.10）的核族 $G_\ell$，令模拟器在输入 $(\ell,z)$ 上输出 $\delta_\ell\otimes G_\ell(\cdot\mid z)$，就得到原定义中的 $E_F\preceq E_W$。因为 $L$ 有限，该拼接可测。这个归约不是对原 $G$ 作条件化，不涉及在零概率输出上相除，也不要求原 $G$ 在每个输入点保持第一坐标；它证明总能换成一个保留已见 $\ell$ 的模拟器。后文若只在全测集上指定某个核或解码器，则在其余输入上统一取输出空间中一个固定点的 Dirac 律，将它扩成处处定义的核。
+
+现给出零误差分离这一中间事实。对任意 $Z,W$，
+
+$$
+E_W\in\mathcal F_T
+\iff
+\forall k,k'\in K,\quad \neg R(k,k')\Longrightarrow W_k\perp W_{k'}.
+\tag{535.11}
+$$
+
+右端的互相奇异指存在可测集 $B$ 使 $W_k(B)=1,W_{k'}(B)=0$，不是指某个拓扑支撑不相交。若 $\neg R(k,k')$，取共同实际读数 $\ell$，使 $y=t(k,\ell)\ne t(k',\ell)=y'$。式（535.3）及被积函数位于 $[0,1]$ 给出
+
+$$
+D(\{y\}\mid\ell,z)=1\quad W_k\text{-几乎处处},\qquad
+D(\{y'\}\mid\ell,z)=1\quad W_{k'}\text{-几乎处处}.
+$$
+
+这两个可测集合不交，因为一个概率律不能同时给不同单点质量一。故 $W_k\perp W_{k'}$。
+
+为证反向，取一个有限共同支配测度及可测 Radon–Nikodym 密度
+
+$$
+\mu=\sum_{k\in K}W_k,\qquad f_k=\frac{dW_k}{d\mu}.
+$$
+
+可取 $f_k\ge0$，且在一个 $\mu$-零集之外所有密度有限并满足 $\sum_k f_k=1$。对每个不相容对，奇异性给出 $f_kf_{k'}=0$ 几乎处处：在分离集上一个密度为零，在其补集上另一个为零。由于 $K$ 有限，把所有这些例外与密度恒等式的例外并入同一个可测零集 $N$。于是对每个 $z\notin N$，集合
+
+$$
+I(z)=\{k\in K:f_k(z)>0\}
+$$
+
+非空且任意两元素都 $R$-相容。固定 $K$ 的一个线性次序。在输入 $(\ell,z)$ 上，若 $z\notin N$ 且 $I(z)\cap K_\ell\ne\varnothing$，选其中第一个元素 $k_0$，输出 $t(k_0,\ell)$；其余情形输出固定 $y_0\in Y$。这是有限个可测判定给出的可测函数。候选元素都共享 $\ell$ 且两两 $R$-相容，故其目标值相同。对任一实际 $(k,\ell)$，有 $W_k(N)=0$ 及 $W_k(\{f_k=0\})=0$，所以 $k\in I(z)\cap K_\ell$ 几乎处处，输出恰为 $t(k,\ell)$。这证明式（535.11），并同时证明私有随机解码器不扩大充分类。
+
+这个冲突分离条件在有限输出下就是零误差侧信息编码的特征图条件；确定性情形退化为第 532 章的编码纤维包含于 $R$。经典起点为 Witsenhausen, *The zero-error side information problem and chromatic numbers*, IEEE Transactions on Information Theory 22(5), 592–593 (1976), [doi:10.1109/TIT.1976.1055607](https://doi.org/10.1109/TIT.1976.1055607)；这里特征图编码的具体表述参照可得全文 Charpenay–le Treust–Roumy, *Optimal Zero-Error Coding for Computing under Pairwise Shared Side Information*, Definition III.1 与 Theorem III.4，[arXiv:2211.03649v2](https://arxiv.org/html/2211.03649v2)。上面的有限支配测度论证把所需分离同时落实到本章允许的全部标准 Borel 输出，不以有限输出枚举替代该范围。
+
+式（535.1）保证恒等情境编码 $k\mapsto k$ 充分，故 $\mathcal F_T\ne\varnothing$。若取消式（535.1），两个相同 $(c,q)$ 而目标不同的实际对象具有完全相同的实验律，任何同一解码器都不可能分别概率一输出两个不同目标；所以这也正是存在允许充分修复所需的局部前提。
+
+证明第一项。对任一 $E_W\in\mathcal F_T$，沿用上述密度和同一个公共零集。在有效的 $(\ell,z)$ 上，$I(z)\cap K_\ell$ 中所有元素通过 $R|_{K_\ell\times K_\ell}$ 的边直接相连，故属于同一个 $C_\ell$ 类。用同一个首元素规则输出 $(\ell,[k_0]_{C_\ell})$，在无效输入上输出固定 $u_0\in\mathcal U$，便是从 $E_W$ 恢复 $U$ 的可测确定性核。于是 $U\preceq E_W$ 对整个随机充分族成立。
+
+在 $K_\ell$ 内，每条 $R$ 边保持 $t(\cdot,\ell)$，因而沿 $C_\ell$ 的每条有限路径也保持它。故映射
+
+$$
+(\ell,[k]_{C_\ell})\longmapsto t(k,\ell)
+$$
+
+良定义并恢复 $T$。这证明 $U$ 充分，也证明对 $U$ 充分的允许实验必对 $T$ 充分；刚构造的恢复核给出反向。
+
+还须证明 $U$ 支配任意共同下界，而不只支配确定性下界。令 $F=(F_x)_{x\in A}$ 是任意标准 Borel 输出实验，且对每个 $E\in\mathcal F_T$ 都有 $F\preceq E$。恒等情境实验 $x\mapsto(q(x),c(x))$ 属于 $\mathcal F_T$，所以其相同行在任一后处理下仍相同；因此
+
+$$
+c(x)=c(x'),\ q(x)=q(x')\quad\Longrightarrow\quad F_x=F_{x'}.
+\tag{535.12}
+$$
+
+这一步处理了实际对象的重复表示。接着，对不同的相容情境 $kRk'$，取唯一非单点块为 $\{k,k'\}$、其余为单点的分划，发送其块标签。每一块内元素都 $R$-相容，该确定性实验由式（535.11）充分。若 $k,k'\in K_\ell$，此实验在两条实际 $(k,\ell),(k',\ell)$ 行上相同，其后处理 $F$ 也相同。结合式（535.12），沿任意 $C_\ell$ 路径传播行相等，得到
+
+$$
+U(x)=U(x')\quad\Longrightarrow\quad F_x=F_{x'}.
+\tag{535.13}
+$$
+
+对每个 $u\in U(A)=\mathcal U$ 选择代表对象 $x_u$，从输入 $u$ 输出概率律 $F_{x_u}$。有限输入上的这一核可测；式（535.13）使选择无关并给出 $F\preceq U$。证明没有给 $F$ 添加 $q$ 坐标，也没有限制它的输出字母表，第一项成立。
+
+证明第二项的必要性。若 $E_W$ 是共同下界，对任一不同的 $H$ 相邻情境 $k,k'$，取它们的实际共同读数 $\ell$，再取刚才只合并此对的充分实验。其在这两行上的律相同，故后处理所得
+
+$$
+\delta_\ell\otimes W_k=\delta_\ell\otimes W_{k'}.
+$$
+
+取辅助坐标边缘得到 $W_k=W_{k'}$。沿 $C$ 的路径传播即得式（535.8）中间条件。这里需要 $O$ 所保证的实际共同读数；真空相容而没有交叠的一对不能直接强迫这项律相等。
+
+反向，每条 $C_\ell$ 路径都是 $H$ 路径，故 $C_\ell\subseteq C$。因此
+
+$$
+(\ell,[k]_{C_\ell})\longmapsto(\ell,[k]_C)
+$$
+
+是良定义的确定性后处理，给出 $V\preceq U$；第一项说明 $V$ 是共同下界。如果 $W$ 在每个 $C$ 类上恒定，从 $V$ 的输出 $(\ell,B)$ 保留 $\ell$，并按该类任一代表 $k_B$ 的律 $W_{k_B}$ 抽样，即模拟 $E_W$。这对全部 $(\ell,B)\in\mathcal V$ 定义了核，且在每条实际行上正确，故 $E_W\preceq V$。最后，由 $V$ 为共同下界和序的传递性，$E_W\preceq V$ 又推出 $E_W$ 为共同下界。完整分类及最大性成立。
+
+证明第三项。若 $C\subseteq R$，编码 $k\mapsto[k]_C$ 只合并相容情境，由式（535.11）充分；其实际实验 $V$ 已是共同下界，故最小。反之，若某个 $E_W$ 最小充分，第二项强迫 $W_k=W_{k'}$ 对所有 $kCk'$ 成立。若还有 $\neg R(k,k')$，充分性又要求 $W_k\perp W_{k'}$。同一个概率律不可能与自身奇异，矛盾。因此 $C\subseteq R$ 必须成立。
+
+当这个条件成立时，同一 $C$ 类中共享 $\ell$ 的两情境必 $R$-相容，故在 $K_\ell$ 内直接属于同一 $C_\ell$ 类。对每个实际 $V$ 值 $(\ell,B)$，在 $B\cap K_\ell$ 任选 $k$，输出 $(\ell,[k]_{C_\ell})$，便给出 $V$ 到 $U$ 的确定性后处理；在非实际值上取固定回退值即可。结合 $V\preceq U$ 得 $U\simeq V$。若条件失败却存在 $E_W\simeq U$，则 $E_W$ 由第一项充分且低于所有充分允许实验，成为最小元，与必要性矛盾。
+
+若比较范围只含确定性充分编码，恒等编码和每个相容对的合并编码仍在其中。对一个确定性最小元逐条重复第二项的必要性论证，同样强迫其标签在 $C$ 类上相等，再由充分性推出 $C\subseteq R$；满足此条件的有限确定性 $V$ 已低于全部随机充分实验。因此确定性与随机类的存在条件完全相同。
+
+这也准确接回第 532 章：其共同锚使 $O=K\times K$，于是 $C$ 是 $R$ 的等价闭包，$C\subseteq R$ 恰为自反对称关系 $R$ 的传递性。命题 532.6 的无锚域 $A_0$ 则只有 $a,c$ 实际交叠且互不相容，故 $H$ 没有非对角边，$C$ 为对角关系，仍有最小实际实验；不能仅凭该域 $R$ 不传递否定最小性。一般的允许 meet 讨论见第 130、443 章；这里式（535.7）和（535.8）分别识别两种比较范围的具体最大共同下界。Bertschinger–Rauh 的 Theorem 19 说明一般 Blackwell 实验序不是格，并不排除本充分族具有式（535.7）的特殊结构。[arXiv:1401.3146v1, §5](https://arxiv.org/html/1401.3146v1)。
+
+最后将存在条件与已有安全计算判据作精确对应。仅在此对应中，任选概率律 $\pi$，满足
+
+$$
+\pi(k,\ell)>0\iff(k,\ell)\in S,
+\qquad\sum_{(k,\ell)\in S}\pi(k,\ell)=1.
+$$
+
+令随机变量 $(\mathsf K,\mathsf L)$ 服从 $\pi$，并令
+
+$$
+\mathsf U=u(\mathsf K,\mathsf L),\qquad
+u(k,\ell)=(\ell,[k]_{C_\ell}),\qquad
+\operatorname{Law}(M\mid\mathsf K=k,\mathsf L=\ell)=W_k.
+$$
+
+$\pi$ 对实际单元满支撑，绝不要求 $S=K\times L$。消息 $M$ 只读 $\mathsf K$，所以 $M\perp(\mathsf L,\mathsf U)\mid\mathsf K$ 自动成立。对 $\mathsf U$ 正确恢复再加接收端隐私
+
+$$
+M\perp\mathsf K\mid(\mathsf L,\mathsf U)
+\tag{535.14}
+$$
+
+等价于该消息实验与 $U$ 互相支配。具体地，正确恢复给出 $U\preceq E_W$；由于 $\pi$ 在每个实际单元上为正，式（535.14）恰说在每个固定 $(\ell,u)$ 的实际纤维上所有 $W_k$ 相等，从而按该公共律模拟消息并附上 $\ell$，得到 $E_W\preceq U$。反之，$E_W\preceq U$ 强迫这些行相等，故有式（535.14）；恢复方向提供正确性。标准 Borel 消息在有限条件变量下的条件律可逐格给出，无需给零质量的非实际单元添加约束。第一项及第三项遂把“存在这种安全计算消息”与“存在最小充分允许实验”对应起来。
+
+在 Data, *Secure Computation of Randomized Functions*, Definitions 1–3、Theorem 1 中，取其输入 $X=\mathsf K$、侧信息 $Y=\mathsf L$、输出 $Z=\mathsf U$，并取确定性输出核 $p_{Z\mid XY}(\cdot\mid k,\ell)=\delta_{u(k,\ell)}$；这个输出核在 $(k,\ell)\in S$ 上按所示公式指定，在非实际单元可统一取固定 $\delta_{u_0}$，而不增添任何正概率单元。其 $Z$ 在此是计算目标，不能与本章辅助空间 $Z$ 混同。该文相邻关系添上对角后变为
+
+$$
+kJk'\iff\exists\ell,\quad
+k,k'\in K_\ell\ \land\ [k]_{C_\ell}=[k']_{C_\ell}.
+$$
+
+其等价闭包正是 $C$：$H\subseteq J$，而每条 $J$ 边本身可在某个 $K_\ell$ 内展开成 $H$ 路径，故 $J\subseteq C$。列单色条件是每个 $C$ 类在同一实际列 $\ell$ 上有相同的 $u(k,\ell)$。若该条件成立，$U$ 决定 $T$ 使 $kCk'$ 的每个共同列目标相等，故 $C\subseteq R$；反之，若 $C\subseteq R$，同类且共列的两点直接 $R$-相连，其 $C_\ell$ 类相同，列单色成立。Data 的定理及发送等价类标签的单消息构造因而给出式（535.9）的已有安全计算路线；其证明中的消息律沿闭包相等，正是这里应归属给既有理论的机制。[Deepesh Data, arXiv:1601.06562v2](https://arxiv.org/html/1601.06562v2)，ISIT 2016，[doi:10.1109/ISIT.2016.7541860](https://doi.org/10.1109/ISIT.2016.7541860)。
+
+这项对应须先识别整个充分族的 $U$；若直接把输出取为原目标 $T$ 并要求 $M\perp\mathsf K\mid(\mathsf L,T)$，则额外禁止了超出 $(q,T)$ 的所有情境披露，条件更强，命题 535.6 给出严格区别。Data–Prabhakaran, *Secure Computation of Randomized Functions: Further Results*, 条件（3）—（5）也分别列出只读发送端输入、正确计算与接收端隐私；其 Theorems 1–2 与 Remark 1 讨论带隐私和不带隐私的速率，不能以其中一个标量最优速率代替式（535.7）—（535.8）的实际实验序分类。[arXiv:1705.07081](https://arxiv.org/html/1705.07081)。证毕。
+

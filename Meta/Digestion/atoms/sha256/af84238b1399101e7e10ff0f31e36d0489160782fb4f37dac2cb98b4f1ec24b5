@@ -1,0 +1,11 @@
+**证明。** $Q$ 是数字分解后的偏迹。写 $x=a+eb+dc$，先丢弃 $c$ 再丢弃 $b$ 等价于丢弃 $b+(d/e)c$，故 $Q$ 复合律在矩阵单位上成立，中间共轭相消给出两族复合律。由
+
+$$
+|\Omega_{D,\alpha}\rangle=(D_{D,\alpha}\otimes F_D)|\Phi_D\rangle,
+\qquad |\Phi_D\rangle=D^{-1/2}\sum_x|x,x\rangle,
+$$
+
+两侧数字分解把 $\Phi_D$ 化为 $\Phi_d\otimes\Phi_{D/d}$，偏迹后施加低维共轭即得。任意 $\sigma$ 可由输入 $W^*(\sigma\otimes|0\rangle\langle0|)W$ 送到，故满射。证毕。
+
+$\mathcal C^Z$ 保留计算基余数，$\mathcal C^F$ 保留 Fourier 读出中的数字。例如 $\mathcal C^F_{9,3}(|3\rangle\langle3|)=|1\rangle\langle1|$，不满足普通余数条件。独立腿上的相容性受第 9 节约束；第 12 节构造允许块内及缝合邻块操作的全网络通道。
+

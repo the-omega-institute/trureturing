@@ -1,0 +1,69 @@
+### 定理 24：边界动态规划的正确性
+
+初始化：
+
+$$
+D_0(s_\varnothing)=1_R.
+$$
+
+按以下规则递推：
+
+$$
+\boxed{
+D_{k+1}(s') =
+\bigoplus_{\substack{
+s\in\mathsf S_{A_k}(F),\ a\in X_{i_{k+1}}\\
+\delta_{k+1}(s,a)=s'
+}}
+D_k(s)\otimes w_{i_{k+1}}(a).
+}
+$$
+
+则对每个 $k,s$：
+
+$$
+\boxed{
+D_k(s) =
+\bigoplus_{\substack{
+a\in X_{A_k}\\
+\eta_{A_k}^F(a)=s
+}}
+\ \bigotimes_{j=1}^{k}w_{i_j}(a_{i_j}).
+}
+$$
+
+因此，终点处对接受类型求和，得到：
+
+$$
+\boxed{
+\begin{aligned}
+Z_{\mathcal K}
+&=\bigoplus_{s\in\mathsf{Acc}}D_n(s)\\
+&=\bigoplus_{x\in\mathcal K}\ \bigotimes_{i\in I}w_i(x_i).
+\end{aligned}
+}
+$$
+
+#### 证明
+
+对 $k$ 归纳。
+
+$k=0$ 时只有空赋值，其空乘积为 $1_R$，结论成立。
+
+假设结论对 $k$ 成立。任意长度 $k+1$ 的赋值，都唯一拆成前 $k$ 个坐标赋值和当前符号 $a$。
+
+由边界转移的良定义性，前缀的具体代表元不影响新类型：
+
+$$
+\eta_{A_{k+1}}^F(a_{\mathrm{prefix}}\sqcup a) =
+\delta_{k+1}\bigl(
+\eta_{A_k}^F(a_{\mathrm{prefix}}),a
+\bigr).
+$$
+
+将前缀按旧边界类型分组，再利用半环分配律，恰好得到递推式。
+
+最后，终点类型决定 $F(x)$。各接受类型的纤维两两不交，并且其并恰为 $\mathcal K$，所以对这些类型求和即得到对 $\mathcal K$ 的聚合；交换乘法保证终式的乘积不依赖坐标的列举顺序。接受类型集合为空时，结果为 $0_R$。∎
+
+此递推的闭合条件是：同一层中属于同一个状态类的前缀，在读入相同符号后仍落入同一个新状态类；推论 20.1 已由拼接的良定义性给出该条件。半环上的聚合方法可参见 Joshua Goodman，*Semiring Parsing*（1999），[第 1–2 节](https://aclanthology.org/J99-4004/)。该文提供半环聚合的先例，这里的具体状态和递推正确性由定理 24 给出。
+

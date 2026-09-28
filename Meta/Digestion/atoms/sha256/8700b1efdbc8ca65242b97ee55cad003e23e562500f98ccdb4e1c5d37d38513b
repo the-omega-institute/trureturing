@@ -1,0 +1,12 @@
+### 46.4 探针下界的有限排序解
+
+令 $v_\ell=\sqrt{a_\ell}$。对 $0<\epsilon<1$ 定义
+
+$$
+\mathfrak L_a(\epsilon)
+=\max_{0\le x_\ell\le1}
+\left\{\left(\sum_\ell v_\ell x_\ell\right)^2
+-\epsilon\sum_\ell x_\ell^2\right\}.
+\tag{46.17}
+$$
+

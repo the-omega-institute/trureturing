@@ -1,0 +1,29 @@
+### 命题 34.4：删去满射行会破坏包含指数保证
+
+取一个被忽略的布尔指定投影 $(t,d)$，以及两个普通构件
+
+$$
+\psi_1:\mathbb B^2\to\mathbb B,\quad\psi_1(a_1,b_1)=a_1,
+\qquad
+\psi_2:K_m\times K_m\to K_m,\quad\psi_2(a_2,b_2)=a_2+b_2,
+\quad K_m=(\mathbb Z/m\mathbb Z)^{\mathbb B}.
+$$
+
+第一普通构件每列满射而无满射行，第二个每行每列满射。令
+
+$$
+F_m=\mathbf1[(a_2+b_2)_{a_1}=0],
+\qquad
+\pi=(a_1,a_2,b_2,b_1,t,d),
+\qquad
+\rho=(a_2,b_2,a_1,b_1,t,d)=\operatorname{cn}(\pi).
+$$
+
+指定投影的包含邻域均为空，故 $H(\pi)=0$，但对 $m\geq2$ 有
+
+$$
+W_{F_m}(\pi)=2m,\qquad W_{F_m}(\rho)=m^2.
+$$
+
+所以删去普通满射行假设后，推论 33.1 的 $2^r=2$ 系数界在 $m>4$ 时失败，且在该指数一处任何固定正系数均失败。
+

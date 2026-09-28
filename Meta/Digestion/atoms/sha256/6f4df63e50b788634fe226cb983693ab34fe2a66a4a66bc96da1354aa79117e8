@@ -1,0 +1,4 @@
+## proposition 16.3: 三进相位调整的必要性
+
+对 $d=3^n$，全区域 RT 条件要求：偶环 $\alpha\equiv0\pmod3$，奇环 $\alpha\not\equiv0\pmod3$。故一个不变的 $\alpha$ 不能同时覆盖奇、偶长度。
+

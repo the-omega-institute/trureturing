@@ -1,0 +1,22 @@
+### 命题 25.1：有限确定性系统的精确细化稳定性
+
+设 $Q$ 为非空有限状态集，$U$ 为有限操作集，每个 $u\in U$ 对应总转移函数 $T_u:Q\to Q$，输出函数为 $o:Q\to Y$。对有限操作词 $w=u_1\cdots u_\ell$，记 $T_w=T_{u_\ell}\circ\cdots\circ T_{u_1}$，空词的转移为恒等函数。定义第 $k$ 层精确等价关系：
+
+$$
+p\equiv_k q
+\quad\Longleftrightarrow\quad
+\forall w\in U^{\leq k},\quad o(T_w(p))=o(T_w(q)).
+$$
+
+则这些关系逐层细化；若某个 $k\geq0$ 满足 $\equiv_k=\equiv_{k+1}$，则：
+
+$$
+\boxed{
+p\equiv_k q
+\quad\Longleftrightarrow\quad
+\forall w\in U^*,\quad o(T_w(p))=o(T_w(q)).
+}
+$$
+
+并且由于 $Q$ 有限，总存在这样的稳定层。
+

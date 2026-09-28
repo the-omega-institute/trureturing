@@ -12,39 +12,35 @@ noncomputable section
 namespace Reg.D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance
 
 @[reducible] def graphDistanceSignature : Signature where
-  Params := Σ d : ℕ, {H : Matrix (Fin d) (Fin d) ℝ //
-    (∀ i j, H i j = H j i) ∧ (∀ i j, i ≠ j → 0 ≤ H i j)}
-  State p := Fin p.1 × Fin p.1
+  Params := Σ d : ℕ, Σ _ : Matrix (Fin d) (Fin d) ℝ, Σ _ : Fin d, Fin d
+  State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization graphDistanceSignature :=
   realize graphDistanceSignature
-    (fun _ p q =>
-      (q.1 ≠ q.2 ∧ (couplingGraph p.2.1).Reachable q.1 q.2) ∧
-        ((∀ n < (couplingGraph p.2.1).dist q.1 q.2,
-          (p.2.1 ^ n) q.2 q.1 = 0) ∧
-          0 < (p.2.1 ^ (couplingGraph p.2.1).dist q.1 q.2) q.2 q.1))
+    (fun _ p n => (p.2.1 ^ n) p.2.2.2 p.2.2.1)
     (fun e => nomatch e)
 
 def rejected : Realization graphDistanceSignature :=
   realize graphDistanceSignature
-    (fun _ _ _ => False)
+    (fun _ _ _ => (1 : ℝ))
     (fun e => nomatch e)
 
 def arena : Arena where
   signature := graphDistanceSignature
   Law R := ∀ {d : ℕ}
     (H : Matrix (Fin d) (Fin d) ℝ)
-    (hsym : ∀ i j, H i j = H j i)
-    (hoff : ∀ i j, i ≠ j → 0 ≤ H i j)
+    (_hsym : ∀ i j, H i j = H j i)
+    (_hoff : ∀ i j, i ≠ j → 0 ≤ H i j)
     {i j : Fin d} (_hne : i ≠ j)
     (_hreach : (couplingGraph H).Reachable i j),
-    R.readout () ⟨d, ⟨H, ⟨hsym, hoff⟩⟩⟩ ⟨i, j⟩
+    (∀ n < (couplingGraph H).dist i j, R.readout () ⟨d, H, i, j⟩ n = 0) ∧
+      0 < (H ^ (couplingGraph H).dist i j) j i
 
 run_cmd do
   let root := `Reg.D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance
@@ -61,17 +57,18 @@ run_cmd do
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have htest := h (d := 2)
-    (H := fun _ _ => (1 : ℝ))
-    (hsym := by simp)
-    (hoff := by simp)
-    (i := 0) (j := 1) (by decide)
-    (by exact ⟨SimpleGraph.Walk.cons (by simp [couplingGraph]) .nil⟩)
-  exact htest
+  let H : Matrix (Fin 2) (Fin 2) ℝ := fun _ _ => 1
+  have hadj : (couplingGraph H).Adj (0 : Fin 2) 1 := by
+    simp [couplingGraph, H]
+  have hdist : (couplingGraph H).dist (0 : Fin 2) 1 = 1 :=
+    SimpleGraph.dist_eq_one_iff_adj.mpr hadj
+  have htest := (h H (by simp [H]) (by simp [H])
+    (i := 0) (j := 1) (by decide) hadj.reachable).1 0 (by omega)
+  norm_num [rejected, realize, graphDistanceSignature] at htest
 
 theorem actual_law : arena.Law actual := by
   intro d H hsym hoff i j hne hreach
-  exact ⟨⟨hne, hreach⟩, first_nonzero_power_eq_graph_distance H hsym hoff hne hreach⟩
+  exact first_nonzero_power_eq_graph_distance H hsym hoff hne hreach
 
 theorem sensitivity_proof : Sensitivity arena actual := by
   constructor
@@ -88,25 +85,11 @@ theorem dependence_proof : ObservationalDependence graphDistanceSignature actual
   intro i
   cases i
   let H : Matrix (Fin 2) (Fin 2) ℝ := fun _ _ => 1
-  have hsym : ∀ i j, H i j = H j i := by simp [H]
-  have hoff : ∀ i j, i ≠ j → 0 ≤ H i j := by simp [H]
-  have hreach : (couplingGraph H).Reachable (0 : Fin 2) 1 := by
-    exact ⟨SimpleGraph.Walk.cons (by simp [couplingGraph, H]) .nil⟩
-  refine ⟨⟨2, ⟨H, ⟨hsym, hoff⟩⟩⟩, (⟨0, 0⟩ : Fin 2 × Fin 2),
-    (⟨0, 1⟩ : Fin 2 × Fin 2), ?_⟩
-  intro h
-  have htheorem := first_nonzero_power_eq_graph_distance H hsym hoff
-    (i := (0 : Fin 2)) (j := (1 : Fin 2)) (by decide) hreach
-  have hy : actual.readout () ⟨2, ⟨H, ⟨hsym, hoff⟩⟩⟩ (⟨0, 1⟩ : Fin 2 × Fin 2) := by
-    change ((0 : Fin 2) ≠ 1 ∧ (couplingGraph H).Reachable 0 1) ∧ _
-    exact ⟨⟨by decide, hreach⟩, htheorem⟩
-  have hxFalse : ¬ actual.readout () ⟨2, ⟨H, ⟨hsym, hoff⟩⟩⟩ (⟨0, 0⟩ : Fin 2 × Fin 2) := by
-    intro hx
-    simpa [actual, realize, graphDistanceSignature, H, couplingGraph] using hx
-  have hbad : actual.readout () ⟨2, ⟨H, ⟨hsym, hoff⟩⟩⟩ (⟨0, 0⟩ : Fin 2 × Fin 2) := by
-    rw [h]
-    exact hy
-  exact hxFalse hbad
+  let p : graphDistanceSignature.Params := ⟨2, H, 0, 1⟩
+  refine ⟨p, (0 : ℕ), (1 : ℕ), ?_⟩
+  change (H ^ (0 : ℕ)) (1 : Fin 2) (0 : Fin 2) ≠ (H ^ (1 : ℕ)) 1 0
+  rw [pow_zero, pow_one]
+  norm_num [Matrix.one_apply, H]
 
 def registration : Registration arena (arena.Law actual) where
   actual := actual
@@ -117,20 +100,16 @@ def registration : Registration arena (arena.Law actual) where
 
 register_information_theorem first_nonzero_power_eq_graph_distance in arena
   readout via (realize graphDistanceSignature
-    (fun _ p q =>
-      (q.1 ≠ q.2 ∧ (couplingGraph p.2.1).Reachable q.1 q.2) ∧
-        ((∀ n < (couplingGraph p.2.1).dist q.1 q.2,
-          (p.2.1 ^ n) q.2 q.1 = 0) ∧
-          0 < (p.2.1 ^ (couplingGraph p.2.1).dist q.1 q.2) q.2 q.1))
+    (fun _ p n => (p.2.1 ^ n) p.2.2.2 p.2.2.1)
     (fun e => nomatch e))
   realizes registration
   escape from source ({
     owner := `D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance
-    coordinates := #[0, 0]
+    coordinates := #[0, 1, 4, 5]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "arg", "fn", "arg"]
-      stateBinder := 6 }] })
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 8 }] })
   escape continues (open)
 
 #print axioms rejected_law

@@ -1,0 +1,61 @@
+### 定理 538.3（允许读取旧读数的精确子集流与等价判据）
+
+固定定义 538.1 的同一 $S,t$，取 $w,v\in\mathcal P$。有 $W_v\preceq W_w$，当且仅当对每个 $q\in Q$ 存在非负数
+
+$$
+f_{BC}^q\quad(\varnothing\ne B\subseteq C\subseteq A_q)
+$$
+
+满足
+
+$$
+\begin{aligned}
+\sum_{C\supseteq B}f_{BC}^q&=w_B^q
+&& (\varnothing\ne B\subseteq A_q),\\
+\sum_{\substack{\varnothing\ne B\subseteq C\\k\in B}}f_{BC}^q&=v_C^q
+&& (\varnothing\ne C\subseteq A_q,\ k\in C).
+\end{aligned}
+\tag{538.10}
+$$
+
+这里 $B$ 是源输出、$C$ 是目标输出；流可以依赖已经可见的 $q$，不依赖未知情境。进而
+
+$$
+W_v\simeq W_w\quad\Longleftrightarrow\quad v=w.
+\tag{538.11}
+$$
+
+所以整个充分公开族的实际实验等价类恰由 $\mathcal P$ 中的剖面 $w$ 唯一参数化。
+
+证明：设有任意状态无关模拟核 $H:\mathcal O\to\operatorname{Prob}(\mathcal O)$。先推导活跃输入上的 $q$ 保持性。固定 $q$ 和 $w_B^q>0$ 的源块，取 $k\in B$。在实际行 $(k,q)$，目标输出落在其他读数的总质量为零；它是源块上的非负和，因此
+
+$$
+w_B^qH(\{(q',C):q'\ne q\}\mid q,B)=0.
+$$
+
+所以该源块上的模拟必保持 $q$。再固定同读数目标块 $C$ 和 $k\notin C$，其目标行概率为零。若 $k\in B$ 且 $w_B^q>0$，同一非负和论证使 $H((q,C)\mid(q,B))=0$。因此任何正质量转移都满足 $B\subseteq C$。两项限制都是实际行等式的后果，未对原核额外设限。
+
+令 $f_{BC}^q=w_B^qH((q,C)\mid(q,B))$。核行和为一及刚得的支撑限制给出（538.10）第一式；对实际行 $(k,q)$ 计算目标块 $C$ 的质量给出第二式。源权重为零的块给零流，不需要辨认该处原核的值。
+
+反向，若（538.10）成立，在 $w_B^q>0$ 时定义
+
+$$
+H((q,C)\mid(q,B))=\frac{f_{BC}^q}{w_B^q}
+\quad(B\subseteq C),
+\tag{538.12}
+$$
+
+其他目标输出的概率为零。第一式保证该行为概率律，第二式保证每个 $k\in C$ 的目标质量正确。若 $k\notin C$，所有能到达 $C$ 的 $B$ 都不含 $k$，所以该实际行质量也正确地为零。对 $w_B^q=0$ 的源块任取一个固定输出概率律；它们在所有实际行都不出现。这样按有限个 $q,B$ 拼接成同一个可测、状态无关的核，证明充分性。
+
+为证唯一性，对每个 $q$ 定义 $J_q(w)=\sum_{\varnothing\ne B\subseteq A_q}w_B^q$。把（538.10）第二式对 $k\in C$ 求和后除以 $|C|$，再对 $C$ 求和，得到
+
+$$
+J_q(v)=\sum_{B\subseteq C}f_{BC}^q\frac{|B|}{|C|}
+\le\sum_{B\subseteq C}f_{BC}^q=J_q(w).
+\tag{538.13}
+$$
+
+全部求和只含非空子集。等号成立当且仅当每项满足 $f_{BC}^q>0\Rightarrow B=C$，因为真包含时 $|B|/|C|<1$。若双向模拟，每个 $q$ 上两向不等式迫使等号，取其中一向的流就只剩对角项；（538.10）随即给出 $v_C^q=f_{CC}^q=w_C^q$。反之 $v=w$ 使用恒等核。$J_q(w)$ 也等于随机局部分划的期望块数，但证明只依赖剖面和流，不依赖选择哪一个 $p$。证毕。
+
+本定理用有限规范输出直接完成多态共同核比较，不把各二态上分别存在的恢复核当作同一个核。一般统计实验比较与数据处理等号恢复有既有文献，不能将此类原则认作新发现。相关二态完整性结果见 Galke–van Luijk–Wilming, *Sufficiency of Rényi divergences*，[arXiv:2304.12989v6](https://arxiv.org/html/2304.12989v6)，Theorems 13–14 要求所列绝对连续条件，Appendix A Theorem 32 处理非正交而可能带奇异部分的情形；该文发表于 *IEEE Transactions on Information Theory* 70(7)（2024），5057–5076，[DOI:10.1109/TIT.2024.3376395](https://doi.org/10.1109/TIT.2024.3376395)。这些二态定理本身没有提供本章任意实际支撑上的统一多态模拟器；（538.10）承担的正是这里所需的全部同时行约束。
+

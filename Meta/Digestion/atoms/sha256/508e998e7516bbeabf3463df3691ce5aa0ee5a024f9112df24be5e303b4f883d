@@ -1,0 +1,6 @@
+**Theorem 2 (universal octahedral repair).** For every edge cochain $f$ there
+is a potential $g$ with $2\operatorname{wt}(f+d_0g)\leq3T(f)$. This is the
+unnormalized $n=3,k=1$ specialization of Dotterrer--Kahle, *Coboundary
+expanders* (2012), Proposition 5.5, DOI 10.1142/S1793525312500197.
+The normalized and unnormalized coefficients should not be identified.
+

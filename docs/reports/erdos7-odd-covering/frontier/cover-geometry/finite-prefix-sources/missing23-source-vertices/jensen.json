@@ -1,0 +1,158 @@
+{
+  "scope": "Exact uniform exchange-gap lower bound for the fixed full44-cell source.\n\nAt each stage retain the positive-depth comparison components of the\npreceding charged primes among7,11,13. Their cell field is1, their physical\ntuple remains fixed, and the later multiplier laws are those of\nmissing23/query16. No joint-head geometry is enumerated. Product laws here\nare comparator tensors, not a claim of independent actual prime events.\n",
+  "moduli": [
+    3,
+    9,
+    27,
+    5,
+    15,
+    45,
+    135
+  ],
+  "incidences": [
+    {
+      "positive5": false,
+      "A": [
+        "101/10",
+        "59/10",
+        "59/30",
+        "106/15",
+        "24/5",
+        "8/5",
+        "8/15"
+      ],
+      "sigmaA": [
+        "101/10",
+        "59/10",
+        "59/30",
+        "106/15",
+        "24/5",
+        "8/5",
+        "8/15"
+      ],
+      "B": [
+        "101/10",
+        "177/40",
+        "59/30",
+        "106/15",
+        "24/5",
+        "8/5",
+        "8/15"
+      ],
+      "gap": [
+        "0",
+        "59/40",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "positive5": true,
+      "A": [
+        "16",
+        "8",
+        "8/3",
+        "53/6",
+        "6",
+        "2",
+        "2/3"
+      ],
+      "sigmaA": [
+        "16",
+        "8",
+        "8/3",
+        "53/6",
+        "6",
+        "2",
+        "2/3"
+      ],
+      "B": [
+        "16",
+        "6",
+        "8/3",
+        "53/6",
+        "6",
+        "2",
+        "2/3"
+      ],
+      "gap": [
+        "0",
+        "2",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    }
+  ],
+  "joint_mod9_gap": "15/8",
+  "parts": [
+    {
+      "stage": 11,
+      "threshold": 4,
+      "tail_mass": "3/686",
+      "tail_mean": "25/1372",
+      "removed_atoms": {
+        "2": "9/49",
+        "3": "9/343"
+      },
+      "gain": "1075/17248"
+    },
+    {
+      "stage": 13,
+      "threshold": 4,
+      "tail_mass": "5/154",
+      "tail_mean": "13/88",
+      "removed_atoms": {},
+      "gain": "14145/36608"
+    },
+    {
+      "stage": 17,
+      "threshold": 8,
+      "tail_mass": "15/4004",
+      "tail_mean": "25/704",
+      "removed_atoms": {},
+      "gain": "522525/4978688"
+    },
+    {
+      "stage": 19,
+      "threshold": 8,
+      "tail_mass": "15/4004",
+      "tail_mean": "225/5632",
+      "removed_atoms": {},
+      "gain": "1063395/11128832"
+    },
+    {
+      "stage": 29,
+      "threshold": 16,
+      "tail_mass": "1198938045/1295879877292",
+      "tail_mean": "6204290603535/331745248586752",
+      "removed_atoms": {
+        "8": "696600/323646323",
+        "12": "216642600/323969969323"
+      },
+      "gain": "856652197979775/21989970763464704"
+    },
+    {
+      "stage": "H16",
+      "threshold": 16,
+      "tail_mass": "43299302505/37580516441468",
+      "tail_mean": "938785321481565/38482448836063232",
+      "removed_atoms": {
+        "8": "18576000/9385743367",
+        "12": "5777136000/9395129110367"
+      },
+      "gain": "14081779822223475/307859590688505856"
+    }
+  ],
+  "later_four_part_sum": "6754034823240945/23681506976038912",
+  "uniform_J_lower_bound": "17380330052871025/23681506976038912",
+  "uniform_J_decimal": 0.7339199346754641,
+  "sufficient_dplus_bound": "17380330052871025/10149217275445248",
+  "strict_margin_dplus_threshold": "91438237295110093139/52860506642944000000",
+  "boundary": "A uniform same-source Gplus difference bound below the displayed threshold is still missing; no full physical-tuple or unrestricted Erdos7 conclusion is asserted."
+}

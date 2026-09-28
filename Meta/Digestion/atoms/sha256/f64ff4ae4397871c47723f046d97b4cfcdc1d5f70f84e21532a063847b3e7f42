@@ -1,0 +1,10 @@
+**存在量化接口：**
+
+$$
+(a,b)\in\mathcal K
+\quad\Longleftrightarrow\quad
+\exists z\in Z,\ P(a,z)\land Q(z,b).
+$$
+
+这里仅断言一个中间见证存在，没有规定它能够在看到 $b$ 之前由 $a$ 独立生成。
+

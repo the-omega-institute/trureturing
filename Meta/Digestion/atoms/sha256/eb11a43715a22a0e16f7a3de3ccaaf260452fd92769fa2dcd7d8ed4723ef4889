@@ -1,0 +1,20 @@
+### 85.2 一整族乘积边缘空间与轨道响应模型
+
+设第一个寄存器有 $n\ge2$ 个位置，采用 $C_n$ 的正则循环；其余寄存器大小为 $m_1,\ldots,m_k\ge1$。记
+
+$$
+M=\prod_jm_j,\quad \ell=\sum_j(m_j-1),\quad h=M-1-\ell,
+\quad U_n=\mathbf1\oplus D_n.
+\tag{85.4}
+$$
+
+当 $k=0$ 时约定 $M=1,\ell=h=0$；退化的一点寄存器不贡献差异。$h\ge0$ 来自有限乘积的常数、单寄存器项和较高阶项分解。对全部单边缘为零的变化空间 $K_{n,\mathbf m}$，同第84节的分解直接给
+
+$$
+K_{n,\mathbf m}\simeq\mathbf1^h\oplus D_n^{M-1},\qquad
+\dim K_{n,\mathbf m}=n(M-1)-\ell.
+\tag{85.5}
+$$
+
+另一侧先只取一个轨道响应模型：$s\ge0$ 个固定点和 $t\ge0$ 个完整 $n$ 循环，其线性空间为 $V_{s,t}=\mathbf1^s\oplus U_n^t$。此处没有断言每个 $(s,t)$ 都由某个特定物理取得合同的最优控制器实现。
+

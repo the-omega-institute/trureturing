@@ -1,0 +1,33 @@
+## theorem 15.1: 相干单项编码的完整区域正规形
+
+设 $V,X,Y$ 为有限交换群，$A:V\to X$、$B:V\to Y$ 为群同态，$(A,B)$ 单射。允许任意相位函数 $q:V\to U(1)$，不要求二次。取全历史空间 $\mathbb C[V]$ 上的等距编码
+
+$$
+J|v\rangle=q(v)|Av\rangle_X|Bv\rangle_Y.
+$$
+
+记 $K_A=\ker A$、$K_B=\ker B$、$Z=V/(K_A+K_B)$。每个 $z\in Z$ 选代表元 $v_z$，则
+
+$$
+\mathcal U|z,a,b\rangle=\overline{q(v_z+a+b)}|v_z+a+b\rangle,
+\quad a\in K_A,\ b\in K_B
+$$
+
+是从 $\bigoplus_z\mathbb C[K_A]\otimes\mathbb C[K_B]$ 到实际历史空间的幺正。两侧在其实际像空间上分别换基后，编码恰为
+
+$$
+J\mathcal U|z,a,b\rangle=|z,b\rangle_X|z,a\rangle_Y.
+$$
+
+因此从 $X$、$Y$ 可精确恢复的最大含幺逻辑 $*$-代数分别为
+
+$$
+\mathcal M_X=\mathcal U\left[\bigoplus_{z\in Z}
+ I_{K_A}\otimes\mathcal B(\mathbb C[K_B])\right]\mathcal U^*,
+\qquad
+\mathcal M_Y=\mathcal U\left[\bigoplus_{z\in Z}
+ \mathcal B(\mathbb C[K_A])\otimes I_{K_B}\right]\mathcal U^*.
+$$
+
+两者互为交换子代数，交为 $|Z|$ 维中心。这里“恢复”指擦除另一侧后仍能恢复该代数的全部观测统计；不声称恢复全历史态。
+

@@ -1,0 +1,42 @@
+### 定义 533.2（固定标签的双通道实现与共同数据）
+
+固定有限带标签集合 $X,H,Y$，其大小分别为 $m,r,n$，其中 $m,n\ge r\ge2$；固定各集合的坐标顺序。记 $\mathbf1_d$ 为 $d$ 维全一列向量，$\Delta_d=\{u\in\mathbb R_{\ge0}^d:\mathbf1_d^Tu=1\}$。列随机矩阵指逐项非负且每列和为一的矩阵。固定严格正的概率列向量 $\mu\in\Delta_m$、$\pi\in\Delta_r$。
+
+一个实现是矩阵对 $(P,S)$，满足
+
+$$
+\begin{gathered}
+P\in\mathbb R_{>0}^{r\times m},\qquad
+S\in\mathbb R_{>0}^{n\times r},\qquad
+\operatorname{rank}P=\operatorname{rank}S=r,\\
+\mathbf1_r^TP=\mathbf1_m^T,\qquad
+\mathbf1_n^TS=\mathbf1_r^T,\qquad P\mu=\pi.
+\end{gathered}
+$$
+
+同一实现的联合律与端点通道分别规定为
+
+$$
+\Pr(x,h,y)=\mu_xP_{hx}S_{yh},\qquad M=SP.
+$$
+
+因此 $P$ 是从 $X$ 到 $H$ 的条件通道，$S$ 是从 $H$ 到 $Y$ 的条件通道，$\pi$ 是操作插入前的焦点边缘。这个共同联合律同时给出两类关系的衔接，不从两个各自可实现的边缘关系拼出未经规定的共同实现。
+
+设至少存在一个上述实现生成固定数据 $(M,\mu,\pi)$。其完整实现类定义为
+
+$$
+\mathcal F(M,\mu,\pi)=
+\left\{(P',S'):
+\begin{array}{l}
+P'\in\mathbb R_{>0}^{r\times m},\quad
+S'\in\mathbb R_{>0}^{n\times r},\\
+\operatorname{rank}P'=\operatorname{rank}S'=r,\\
+\mathbf1_r^TP'=\mathbf1_m^T,\quad
+\mathbf1_n^TS'=\mathbf1_r^T,\\
+S'P'=M,\quad P'\mu=\pi
+\end{array}
+\right\}.
+$$
+
+其中的 $X,H,Y,\mu,\pi,M$ 始终固定，不再加入已知零项、特定参数族或已知内部通道等限制。
+

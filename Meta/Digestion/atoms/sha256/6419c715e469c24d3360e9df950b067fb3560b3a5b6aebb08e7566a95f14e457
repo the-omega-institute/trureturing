@@ -1,0 +1,27 @@
+## theorem 27.2: 全部区域同谱、同一局部生成元、相反熵速度
+
+取第 20、24 节原单自由历史码 $V=V_{3,3,\{1\}}$，$\alpha=1$，六腿依次为 $(a_0,b_0,a_1,b_1,a_2,b_2)$。令逻辑
+
+$$
+Z=\operatorname{diag}(1,\omega_3,\omega_3^2),\quad
+h=|0\rangle\langle1|+|1\rangle\langle0|,
+$$
+
+$$
+|\psi\rangle=\frac{\sqrt3}{2}|0\rangle+\frac i2|1\rangle,
+\quad \rho=\frac12|\psi\rangle\langle\psi|+\frac16I_3,
+\quad\widetilde\rho=Z\rho Z^*.
+$$
+
+二者严格正定。对每个物理腿集合 $A$，$[V\rho V^*]_A$ 与 $[V\widetilde\rho V^*]_A$ 的完整谱相同。用同一逻辑演化 $\rho(t)=e^{-ith}\rho e^{ith}$ 及其带波浪版本，对区域 $B_0=\{a_0,b_0\}$，
+
+$$
+\left.\frac{dS_{B_0}(\rho(t))}{dt}\right|_0
+=\frac{\sqrt3}{4}\log\frac7{13}<0,
+\qquad
+\left.\frac{dS_{B_0}(\widetilde\rho(t))}{dt}\right|_0
+=-\frac{\sqrt3}{8}\log\frac7{13}>0.
+$$
+
+该演化可由仅支撑于前两个相邻顶点块的四腿 Hermitian 算符精确实现。
+

@@ -1,0 +1,483 @@
+{
+  "arithmetic": "exact integers and fractions",
+  "priced_bridge": {
+    "combined_control_table_states": 266,
+    "controller_record_product_states": 153,
+    "cost_vectors": [
+      [
+        4,
+        1,
+        3,
+        2,
+        3,
+        5
+      ],
+      [
+        4,
+        1,
+        3,
+        7,
+        3,
+        10
+      ],
+      [
+        4,
+        1,
+        3,
+        12,
+        3,
+        15
+      ],
+      [
+        4,
+        1,
+        3,
+        17,
+        3,
+        20
+      ],
+      [
+        4,
+        1,
+        3,
+        22,
+        3,
+        25
+      ],
+      [
+        4,
+        1,
+        3,
+        27,
+        3,
+        30
+      ],
+      [
+        4,
+        1,
+        3,
+        32,
+        3,
+        35
+      ],
+      [
+        4,
+        1,
+        3,
+        37,
+        3,
+        40
+      ],
+      [
+        4,
+        1,
+        3,
+        42,
+        3,
+        45
+      ],
+      [
+        4,
+        1,
+        3,
+        47,
+        3,
+        50
+      ],
+      [
+        4,
+        1,
+        4,
+        0,
+        4,
+        4
+      ],
+      [
+        4,
+        1,
+        4,
+        1,
+        4,
+        5
+      ],
+      [
+        4,
+        1,
+        4,
+        3,
+        6,
+        9
+      ],
+      [
+        4,
+        1,
+        4,
+        4,
+        6,
+        10
+      ],
+      [
+        4,
+        1,
+        4,
+        5,
+        4,
+        9
+      ],
+      [
+        4,
+        1,
+        4,
+        6,
+        4,
+        10
+      ],
+      [
+        4,
+        1,
+        4,
+        8,
+        6,
+        14
+      ],
+      [
+        4,
+        1,
+        4,
+        9,
+        6,
+        15
+      ],
+      [
+        4,
+        1,
+        4,
+        10,
+        4,
+        14
+      ],
+      [
+        4,
+        1,
+        4,
+        11,
+        4,
+        15
+      ],
+      [
+        4,
+        1,
+        4,
+        13,
+        6,
+        19
+      ],
+      [
+        4,
+        1,
+        4,
+        14,
+        6,
+        20
+      ],
+      [
+        4,
+        1,
+        4,
+        15,
+        4,
+        19
+      ],
+      [
+        4,
+        1,
+        4,
+        16,
+        4,
+        20
+      ],
+      [
+        4,
+        1,
+        4,
+        18,
+        6,
+        24
+      ],
+      [
+        4,
+        1,
+        4,
+        19,
+        6,
+        25
+      ],
+      [
+        4,
+        1,
+        4,
+        20,
+        4,
+        24
+      ],
+      [
+        4,
+        1,
+        4,
+        21,
+        4,
+        25
+      ],
+      [
+        4,
+        1,
+        4,
+        23,
+        6,
+        29
+      ],
+      [
+        4,
+        1,
+        4,
+        24,
+        6,
+        30
+      ],
+      [
+        4,
+        1,
+        4,
+        25,
+        4,
+        29
+      ],
+      [
+        4,
+        1,
+        4,
+        26,
+        4,
+        30
+      ],
+      [
+        4,
+        1,
+        4,
+        28,
+        6,
+        34
+      ],
+      [
+        4,
+        1,
+        4,
+        29,
+        6,
+        35
+      ],
+      [
+        4,
+        1,
+        4,
+        30,
+        4,
+        34
+      ],
+      [
+        4,
+        1,
+        4,
+        31,
+        4,
+        35
+      ],
+      [
+        4,
+        1,
+        4,
+        33,
+        6,
+        39
+      ],
+      [
+        4,
+        1,
+        4,
+        34,
+        6,
+        40
+      ],
+      [
+        4,
+        1,
+        4,
+        35,
+        4,
+        39
+      ],
+      [
+        4,
+        1,
+        4,
+        36,
+        4,
+        40
+      ],
+      [
+        4,
+        1,
+        4,
+        38,
+        6,
+        44
+      ],
+      [
+        4,
+        1,
+        4,
+        39,
+        6,
+        45
+      ],
+      [
+        4,
+        1,
+        4,
+        40,
+        4,
+        44
+      ],
+      [
+        4,
+        1,
+        4,
+        41,
+        4,
+        45
+      ],
+      [
+        4,
+        1,
+        4,
+        43,
+        6,
+        49
+      ],
+      [
+        4,
+        1,
+        4,
+        44,
+        6,
+        50
+      ],
+      [
+        4,
+        1,
+        4,
+        45,
+        4,
+        49
+      ],
+      [
+        4,
+        1,
+        4,
+        46,
+        4,
+        50
+      ],
+      [
+        4,
+        1,
+        4,
+        48,
+        6,
+        54
+      ],
+      [
+        4,
+        1,
+        4,
+        49,
+        6,
+        55
+      ]
+    ],
+    "dial_inputs": 25,
+    "dial_reads_in_preparation": 1,
+    "external_record_labels": 3,
+    "loader_state_kinds": {
+      "Qa": 3,
+      "Qb": 1,
+      "Qc": 1,
+      "Qd": 1,
+      "Ref": 1,
+      "Wa": 60,
+      "Wb": 8,
+      "Wc": 2,
+      "Wd": 1,
+      "Wrap": 35
+    },
+    "maximum_controller_unit_waits": 6,
+    "maximum_dial_reads_after_preparation": 4,
+    "maximum_preparation_unit_waits": 49,
+    "maximum_total_dial_reads": 5,
+    "maximum_total_unit_waits": 55,
+    "physically_reachable_combined_control_states": 251,
+    "physically_reachable_controller_record_pairs": 138,
+    "physically_unused_preparation_read_slots_completed": 2,
+    "reachable_preparation_control_states_excluding_handoff": 113,
+    "scope": "Requires one reset to dial0, persistent source coordinate queries, and additional finite control. Three record labels are optimal only when the final output is the old25 halt labels plus a fixed record. Loading paths are not asserted rotation-covariant.",
+    "source_configurations": 60,
+    "source_queries_on_every_path": 4,
+    "total_terminal_pairs": 75,
+    "used_terminal_pairs": 60
+  },
+  "scope": "No original-source query authorization, global controller optimum, or full operational equivalence is claimed.",
+  "source_queries": {
+    "adaptive_fixture_leaves": 26,
+    "cylinders_by_order": [
+      1,
+      12,
+      51,
+      92,
+      60
+    ],
+    "depth_three_first_digit_error_lower_bound": "1/60",
+    "depth_three_source_recovery_error_lower_bound": "1/15",
+    "first_digit_total_variation": "1/30",
+    "old_loader_first_digit_minus": [
+      "5/24",
+      "11/60",
+      "5/24",
+      "1/5",
+      "1/5"
+    ],
+    "old_loader_first_digit_plus": [
+      "23/120",
+      "13/60",
+      "23/120",
+      "1/5",
+      "1/5"
+    ],
+    "old_loader_first_digit_signed_contrast": [
+      -1,
+      2,
+      -1,
+      0,
+      0
+    ],
+    "positive_pair_minimum_mass": "1/120",
+    "proper_cylinders_checked": 156,
+    "query_span_dimensions": [
+      1,
+      9,
+      30,
+      52,
+      60
+    ],
+    "source_total_variation": "2/15"
+  }
+}

@@ -1,0 +1,10 @@
+**定义 32.1（明确的开放演化）。** 保持上述码，取 $\Omega>0$、$\gamma\ge0$，指定逻辑 Lindblad 生成元
+
+$$
+\mathcal G_\gamma(\rho)
+=-i[(\Omega/2)\sigma_x,\rho]
++\frac\gamma2(\sigma_z\rho\sigma_z-\rho).
+$$
+
+这是一项额外的物理噪声假设，不由静态 RT 公式推出。令 $P_c=J_cJ_c^*$，取 $H_B=J_c(\Omega\sigma_x/2)J_c^*$ 和 Hermitian involution $Z_B=J_c\sigma_zJ_c^*+(I-P_c)$，即给出在原物理空间上保持该子码的实际生成元。它一般跨原区域划分非局部，不声称几何局域性。
+

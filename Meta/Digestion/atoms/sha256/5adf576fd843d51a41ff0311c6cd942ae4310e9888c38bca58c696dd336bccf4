@@ -1,0 +1,137 @@
+### 定理 540.2（近似联合表与显式反向恢复率）
+
+在定义 540.1 的条件下，存在一个状态无关核 $R(B\mid C)$，使每个状态 $i$ 满足
+
+$$
+\operatorname{TV}(V_iR,W_i)\le
+b_i:=\frac12\sum_{j\ne i}
+\bigl(\Delta_{ij}+\varepsilon_i+\varepsilon_j\bigr).
+\tag{540.4}
+$$
+
+每一项 $\Delta_{ij}+\varepsilon_i+\varepsilon_j$ 都是非负数。因而
+
+$$
+ d(v\mathbin{\to}w)
+ \le \min\left\{1,\max_i b_i\right\}
+ \le \min\left\{1,\frac{(n-1)\eta}{2}+(n-1)\varepsilon\right\}.
+\tag{540.5}
+$$
+
+当 $n=1$ 时空和为零，恢复误差为零。
+
+证明：先对每个 $i$ 和 $C$ 定义
+
+$$
+ a_i(C)=
+ \begin{cases}
+ \min\{1,V_i(C)/Q_i(C)\},&Q_i(C)>0,\\
+ 1,&Q_i(C)=0,
+ \end{cases}
+ \qquad
+ t_i(B,C)=a_i(C)F_i(B,C).
+\tag{540.6}
+$$
+
+若 $Q_i(C)>0$，则 $0\le t_i$ 且 $\sum_Bt_i(B,C)=\min\{Q_i(C),V_i(C)\}$；若 $Q_i(C)=0$，这一和也为零。因此
+
+$$
+ u_i(B)=W_i(B)-\sum_Ct_i(B,C)\ge0,
+ \qquad
+ z_i(C)=V_i(C)-\sum_Bt_i(B,C)\ge0,
+\tag{540.7}
+$$
+
+并且
+
+$$
+ \sum_Bu_i(B)=\sum_Cz_i(C)=\operatorname{TV}(Q_i,V_i)=\varepsilon_i.
+\tag{540.8}
+$$
+
+$u_i$ 只在 $i\in B$ 时可能非零：若 $i\notin B$，则 $W_i(B)=F_i(B,C)=0$。同样，$z_i$ 只在 $i\in C$ 时可能非零：若 $i\notin C$，则 $V_i(C)=0$，而 $Q_i(C)>0$ 时（540.6）给出 $a_i(C)=0$，$Q_i(C)=0$ 时 $t_i$ 仍为零。定义联合表
+
+$$
+ g_i(B,C)=
+ \begin{cases}
+ t_i(B,C)+u_i(B)z_i(C)/\varepsilon_i,&\varepsilon_i>0,\\
+ t_i(B,C),&\varepsilon_i=0.
+ \end{cases}
+\tag{540.9}
+$$
+
+乘积补项非负，且由（540.8）可知 $g_i$ 的 $B$ 边缘为 $W_i$、$C$ 边缘为 $V_i$。上述支撑说明每个正质量格点都满足 $i\in B\cap C$。这是一个单状态表，不把 $i$ 交给最后的核读取。
+
+对 $i\ne j$，令
+
+$$
+ O_{ij}=\sum_{B,C}\min\{g_i(B,C),g_j(B,C)\}.
+\tag{540.10}
+$$
+
+$F_i,F_j$ 的公共部分恰是 $i,j\in B$ 的格点，质量为 $r_{ij}(w)$。从 $F_i$ 到 $t_i$ 删除的总质量是 $\varepsilon_i$，从 $F_j$ 到 $t_j$ 删除的总质量是 $\varepsilon_j$，故逐点不等式
+
+$$
+ \min(t_i,t_j)\ge \min(F_i,F_j)-(F_i-t_i)-(F_j-t_j)
+$$
+
+求和后，再用 $g_i\ge t_i,g_j\ge t_j$，得到
+
+$$
+ O_{ij}\ge r_{ij}(w)-\varepsilon_i-\varepsilon_j.
+\tag{540.11}
+$$
+
+对每个同时含 $i,j$ 的 $C$，$g_i,g_j$ 在该列的总质量都为 $v_C$；其他列没有共同支撑，而它们整体的 $C$ 边缘分别为 $V_i,V_j$。于是
+
+$$
+ \begin{aligned}
+ \frac12\sum_{C\supseteq\{i,j\}}\sum_B|g_i(B,C)-g_j(B,C)|
+ &=r_{ij}(v)-O_{ij}\\
+ &\le \Delta_{ij}+\varepsilon_i+\varepsilon_j.
+ \end{aligned}
+\tag{540.12}
+$$
+
+左侧非负，故这也证明了（540.4）中的每个有符号预算非负。注意这里只能把 $\Delta_{ij}$ 作为带两个边缘误差的项使用；近似前向并不保证 $\Delta_{ij}\ge0$。
+
+对 $v_C>0$ 定义
+
+$$
+ R(B\mid C)=\frac{1}{|C|v_C}\sum_{j\in C}g_j(B,C).
+\tag{540.13}
+$$
+
+由每个 $g_j$ 的 $C$ 边缘为 $v_C$，右式对 $B$ 求和为一。对 $v_C=0$ 的 $C$ 任取一个概率行；这不会被任何 $g_j$ 的正质量使用。该补全只依赖观测到的 $C$，所以 $R$ 是一个核而不是一族按状态选择的规则。
+
+把 $g_i$ 看成带有 $C$ 标签的联合律，$V_iR$ 是把同一个 $C$ 上的联合律按 $|C|^{-1}$ 平均后再忘掉 $C$。忘掉标签只会收缩 TV；对每个 $C\ni i$，凸性给出
+
+$$
+ \operatorname{TV}\!\left(g_i(\cdot,C),\frac1{|C|}\sum_{j\in C}g_j(\cdot,C)\right)
+ \le \frac1{|C|}\sum_{j\in C}\operatorname{TV}(g_i(\cdot,C),g_j(\cdot,C)).
+\tag{540.14}
+$$
+
+其中 $j=i$ 项为零，而 $i,j\in C$ 且 $j\ne i$ 时 $|C|\ge2$，所以 $|C|^{-1}\le1/2$。对 $C$ 求和并应用（540.12），得到
+
+$$
+ \operatorname{TV}(V_iR,W_i)
+ \le \frac12\sum_{j\ne i}
+ \frac12\sum_{C\supseteq\{i,j\}}\sum_B|g_i-g_j|
+ \le b_i.
+\tag{540.15}
+$$
+
+这里外层的 $1/2$ 来自 $i\ne j$ 且 $i,j\in C$ 时的 $1/|C|\le1/2$，内层的 $1/2$ 来自半 $L^1$ TV 定义，故最后正是（540.4）的系数。再由 $\Delta_{ij}\le|\Delta_{ij}|\le\eta$、$\varepsilon_i,\varepsilon_j\le\varepsilon$，每行至多有 $n-1$ 项，得（540.5），并以 $1$ 截断。
+
+若所有 $\varepsilon_i=0$，则 $Q_i=V_i$，故 $a_i=1$、$u_i=z_i=0$，从而 $g_i=F_i$。此时（540.13）化为
+
+$$
+ R(B\mid C)=\frac{|B|f_{BC}}{|C|v_C}\quad(B\subseteq C),
+\tag{540.16}
+$$
+
+在 $v_C=0$ 时仍任意补全，正是定理 539.2 的核（539.5）；（540.15）退化为其半成对和界。因而这里是在 $\varepsilon=0$ 处逐字恢复 539，而不是仅比较一个较弱的极限。证毕。
+
+定理中的补项是单个残差耦合：$u_i z_i/\varepsilon_i$ 的两个边缘分别补齐 $B$ 与 $C$，不需要任何正权重下界，也不需要 Hoffman 型误差常数。它只证明一个明确构造的恢复核的上界；（540.5）没有声称 $\eta$ 或 $\varepsilon$ 的系数最优。
+

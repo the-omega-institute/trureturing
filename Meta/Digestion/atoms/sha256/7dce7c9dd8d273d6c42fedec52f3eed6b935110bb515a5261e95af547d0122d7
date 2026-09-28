@@ -1,0 +1,41 @@
+### 定义 535.2（逐态恢复、实际实验序与最小性）
+
+称 $E_W$ 对 $T$ 充分，当且仅当存在 Markov 解码核 $D:L\times Z\to\operatorname{Prob}(Y)$，使
+
+$$
+\forall x\in A,\qquad
+\int_Z D(\{T(x)\}\mid q(x),z)\,W_{c(x)}(dz)=1.
+\tag{535.3}
+$$
+
+解码器允许独立的私有随机化，但不观察编码器未揭示的随机位。条件是每个实际对象上的概率一恢复，不使用先验。有限 $A$ 上，若另取对每个 $x$ 都严格正的先验，平均错误为零与式（535.3）等价，因为有限和中的非负错误项都必须为零；若先验给某个实际对象零质量，则平均条件不再要求该对象恢复正确。
+
+更一般地，$A$ 上的实验 $E$ 是一族取值于某个非空标准 Borel 空间 $\mathcal E$ 的概率律 $(E_x)_{x\in A}$。对输出空间为 $\mathcal F$ 的另一实验 $F$，定义
+
+$$
+F\preceq E
+\iff
+\exists G:\mathcal E\to\operatorname{Prob}(\mathcal F)\text{ Markov},\quad
+\forall x\in A,\quad F_x=\int_{\mathcal E}G(\cdot\mid e)E_x(de).
+\tag{535.4}
+$$
+
+同一个 $G$ 必须适用于所有实际对象，不能额外依赖 $x$。此序左端信息较少，允许模拟器使用整个源输出并随机化；特别地，源为 $E_W$ 时允许使用已经看到的 $q$，不要求它只作用于辅助坐标，也不预加逐输出保持 $q$ 的限制。记 $E\simeq F$ 表示互相支配。有限统计量 $h:A\to B$ 也用 $h$ 表示其 Dirac 实验；确定性统计量的实际纤维与因子化对应沿用第 7、532 章。对一般实验，目标充分性写作 $T\preceq E$；对 $U$ 的充分性同理写作 $U\preceq E$，其中有限目标的核因子化正是概率一恢复。
+
+记充分族
+
+$$
+\mathcal F_T=\{E\in\Gamma_c:E\text{ 对 }T\text{ 充分}\}.
+$$
+
+$E_\circ$ 是最小充分实验，意指 $E_\circ\in\mathcal F_T$ 且 $E_\circ\preceq E$ 对每个 $E\in\mathcal F_T$ 成立；若存在，它在 $\simeq$ 下唯一。$E_\circ$ 是极小充分实验，则只要求
+
+$$
+\forall F\in\mathcal F_T,\qquad
+F\preceq E_\circ\ \Longrightarrow\ E_\circ\preceq F.
+$$
+
+“最小”与“极小”分别对应 least 与 minimal，不以辅助字母表的大小或一个标量风险替代。实验 $B$ 是 $\mathcal F_T$ 的共同下界，是指 $B\preceq E$ 对每个 $E\in\mathcal F_T$ 成立；最大共同下界还须支配所有同一比较范围内的共同下界。
+
+式（535.4）采用 Blackwell 的参数无关后处理序；有限通道的标准表述及决策比较等价见 Bertschinger–Rauh, *The Blackwell relation defines no lattice*, Definitions 1–3、Theorem 4。本章直接以核因子化为序的定义，对任意标准 Borel 输出的下述推导不依赖把有限矩阵定理外推为无限输出定理。[arXiv:1401.3146v1](https://arxiv.org/html/1401.3146v1)。
+

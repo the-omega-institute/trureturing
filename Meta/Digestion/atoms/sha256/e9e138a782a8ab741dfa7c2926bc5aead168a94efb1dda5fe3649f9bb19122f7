@@ -1,0 +1,15 @@
+## 7. 单条连接的互补读出通道塔
+
+对 $d\mid D$，定义数字粗化
+
+$$
+Q_{D,d}(|a+db\rangle\langle a'+db'|)=\delta_{b,b'}|a\rangle\langle a'|.
+$$
+
+令 $F_d$ 为正指数归一化 Fourier 矩阵，$D_{d,\alpha}=\operatorname{diag}(\omega_d^{\alpha x^2})$，并定义
+
+$$
+\mathcal C^Z_{D,d}=\operatorname{Ad}_{D_{d,\alpha}}\circ Q_{D,d}\circ\operatorname{Ad}_{D_{D,\alpha}^*},\qquad
+\mathcal C^F_{D,d}=\operatorname{Ad}_{F_d}\circ Q_{D,d}\circ\operatorname{Ad}_{F_D^*}.
+$$
+

@@ -1,0 +1,92 @@
+## 参考文献
+
+[RT] S. Ryu, T. Takayanagi. Holographic Derivation of Entanglement Entropy from AdS/CFT. Phys. Rev. Lett. 96 (2006), 181602. arXiv:hep-th/0603001.
+
+[Lin26] J. Lin. Ryu-Takayanagi area from Virasoro modular data. arXiv:2606.30723v1 (2026). 式 (1.3) 用作第 35 节的条件性密度输入；有限维秩匹配另作假设。
+
+[LM] A. Lewkowycz, J. Maldacena. Generalized gravitational entropy. JHEP 08 (2013), 090. arXiv:1304.4926.
+
+[HaPPY] F. Pastawski, B. Yoshida, D. Harlow, J. Preskill. Holographic quantum error-correcting codes: Toy models for the bulk/boundary correspondence. JHEP 06 (2015), 149. arXiv:1503.06237.
+
+[Harlow] D. Harlow. The Ryu–Takayanagi Formula from Quantum Error Correction. Commun. Math. Phys. 354 (2017), 865–912. arXiv:1607.03901.
+
+[HMPS] M. Heydeman, M. Marcolli, S. Parikh, I. Saberi. Nonarchimedean Holographic Entropy from Networks of Perfect Tensors. Adv. Theor. Math. Phys. 25 (2021), 591–721. arXiv:1812.04057.
+
+[QMF] S. X. Cui, M. H. Freedman, O. Sattath, R. Stong, G. Minton. Quantum Max-flow/Min-cut. J. Math. Phys. 57 (2016), 062206. arXiv:1508.04644.
+
+[FixedArea] X. Dong, D. Harlow, D. Marolf. Flat entanglement spectra in fixed-area states of quantum gravity. JHEP 10 (2019), 240. arXiv:1811.05382.
+
+[Stabilizer] D. Fattal, T. S. Cubitt, Y. Yamamoto, S. Bravyi, I. L. Chuang. Entanglement in the stabilizer formalism. arXiv:quant-ph/0406168.
+
+[ModularClifford] E. Hostens, J. Dehaene, B. De Moor. Stabilizer states and Clifford operations for systems of arbitrary dimensions, and modular arithmetic. Phys. Rev. A 71 (2005), 042315. arXiv:quant-ph/0408190v2.
+
+[RRKL23] S. A. Rather, N. Ramadas, V. Kodiyalam, A. Lakshminarayan. Absolutely maximally entangled state equivalence and the construction of infinite quantum solutions to the problem of 36 officers of Euler. Phys. Rev. A 108 (2023), 032412. DOI: 10.1103/PhysRevA.108.032412. arXiv:2212.06737v2. 使用 Theorem 1。
+
+[TPTN26] G. Arora, M. Headrick, A. Lawrence, M. Sasieta, B. Swingle, C. Wolfe. Twirled Perfect Tensor Networks: Computationally covariant holographic tensor networks. arXiv:2605.23670v2 (2026-06-03). 使用第 5.1、5.2、7 节，保持预印本身份。
+
+[BZ24] W. Bruzda, K. Życzkowski. Two-unitary complex Hadamard matrices of order 36. Special Matrices 12 (2024), 20240010. DOI: 10.1515/spma-2024-0010. 使用第 4 节 Conjecture 1 和式 (10)–(15)。
+
+[Tan26] I. Tan. Transversal gates of the ((3,3,2)) qutrit code and local symmetries of the absolutely maximally entangled state of four qutrits. arXiv:2601.19677 (2026)。
+
+[Rather24] S. A. Rather. Construction of perfect tensors using biunimodular vectors. Quantum 8 (2024), 1528. DOI: 10.22331/q-2024-11-20-1528. arXiv:2309.01504v2. 第 5.2 节已有固定三个代表的局部不等价性。
+
+[StateRG05] F. Verstraete, J. I. Cirac, J. I. Latorre, E. Rico, M. M. Wolf. Renormalization-Group Transformations on Quantum States. Phys. Rev. Lett. 94 (2005), 140601. arXiv:quant-ph/0410227.
+
+[ER07] G. Vidal. Entanglement renormalization. Phys. Rev. Lett. 99 (2007), 220405. arXiv:cond-mat/0512165v2.
+
+[Aud07] K. M. R. Audenaert. A sharp continuity estimate for the von Neumann entropy. J. Phys. A 40 (2007), 8127–8136. arXiv:quant-ph/0610146. 标准界亦见 arXiv:2408.15306v4 式 (1)。
+
+[Cert26] G.-P. Nadon et al. Quantum State Certification via Effective Parent Hamiltonians from Local Measurement Data. arXiv:2603.04499 (2026). 仅作为局部能量认证方法的相关来源。
+
+[BKK07] C. Bény, A. Kempf, D. W. Kribs. Quantum Error Correction of Observables. Phys. Rev. A 76 (2007), 042303. arXiv:0705.1574. 使用可纠正代数的压缩错误算符交换子判据；较早简报为 Phys. Rev. Lett. 98 (2007), 100502，arXiv:quant-ph/0608071。
+
+[HJPW04] P. Hayden, R. Jozsa, D. Petz, A. Winter. Structure of states which satisfy strong subadditivity of quantum entropy with equality. Commun. Math. Phys. 246 (2004), 359–374. arXiv:quant-ph/0304007. 仅作为零条件互信息与短量子 Markov 结构的背景，式中当前网络的值由逐边计算得出。
+
+[HEC15] N. Bao, S. Nezami, H. Ooguri, B. Stoica, J. Sully, M. Walter. The Holographic Entropy Cone. JHEP 09 (2015), 130. arXiv:1505.07839. 使用第 3.2 节、Lemma 4、Theorem 5；扭转不唯一性亦已明确见于该节。
+
+[EPV23] M. Ebbens, H. Parlier, G. Vegter. Minimal Delaunay Triangulations of Hyperbolic Surfaces. Discrete Comput. Geom. 69 (2023), 568–592. DOI: 10.1007/s00454-022-00373-0. 使用第 2 节 Fenchel–Nielsen 坐标及 Lemma 2.1 的曲率 $-1$ 领圈宽度。
+
+[AR19] C. Akers, P. Rath. Holographic Renyi Entropy from Quantum Error Correction. JHEP 05 (2019), 052. arXiv:1811.05171v2. 使用固定辅助纠缠、面积扇区与 Rényi 谱的解释，不作为当前子码原创性证明。
+
+[HHM11] P. Hayden, M. Headrick, A. Maloney. Holographic Mutual Information is Monogamous. Phys. Rev. D 87 (2013), 046003. arXiv:1107.2940v2，初稿 2011 年。使用静态 RT 熵的 $I_3\le0$ 定理。
+
+[CSW25] B. Czech, S. Shuai, Y. Wang. Entropy Inequalities Constrain Holographic Erasure Correction. Phys. Rev. Lett. 135 (2025), 141603. DOI: 10.1103/dl3c-h3hg. arXiv:2502.12246. 使用熵不等式饱和对特定访问结构的约束作为比较背景。
+
+[CS26] B. Czech, S. Shuai. Renormalization group is the principle behind the holographic entropy cone. JHEP 07 (2026), 165. DOI: 10.1007/JHEP07(2026)165. arXiv:2601.02472v2. 核对第 2.1、2.2、4 节；文中饱和推导的收缩法范围及所讨论猜想的状态不省略。
+
+[PRR22] J. Pollack, P. Rall, A. Rocchetto. Understanding holographic error correction via unique algebras and atomic examples. JHEP 06 (2022), 056. DOI: 10.1007/JHEP06(2022)056. arXiv:2110.14691v2. 使用构造性可恢复代数与稳定子互补恢复的背景，不将一般结果重复认领。
+
+[Cao24] C. Cao. Non-trivial Area Operators Require Non-local Magic. JHEP 11 (2024), 105. DOI: 10.1007/JHEP11(2024)105. arXiv:2306.14996v2. 使用 Theorem 2.1 及局部幺正变换、稳定子串联的适用边界；“非平凡面积”在此指不与逻辑恒等成比例，而不是仅指非零。
+
+[CGL99] R. Cleve, D. Gottesman, H.-K. Lo. How to share a quantum secret. Phys. Rev. Lett. 83 (1999), 648–651. DOI: 10.1103/PhysRevLett.83.648. arXiv:quant-ph/9901025. 使用三份量子秘密共享及其纠错背景，奇数循环模环的具体解码在第 25 节直接给出。
+
+[AS97] A. Ashtekar, T. A. Schilling. Geometrical Formulation of Quantum Mechanics. arXiv:gr-qc/9706069 (1997). 使用射影量子态的 Kähler／Hamilton 表述背景。
+
+[WP25] N. Kawazumi. A topological proof of Wolpert's formula for the Weil-Petersson symplectic form in terms of the Fenchel-Nielsen coordinates. Geometriae Dedicata 219 (2025), 56. DOI:10.1007/s10711-025-01016-3. arXiv:2408.04937v2. 公式本身归于 Wolpert；本卷扭转坐标相对该文式 (1) 换号，固定测地边界的应用保持边界长度不变。
+
+[Berry09] M. V. Berry. Transitionless quantum driving. J. Phys. A 42 (2009), 365303. DOI:10.1088/1751-8113/42/36/365303. 使用既有无跃迁输运背景；本卷明确写出一般框架的连接项。
+
+[Magic26] C. Cao, G. Cheng, K. Karthikeyan, C. Li, J. Preskill. State-dependent geometries from magic-enriched quantum codes. arXiv:2603.13475v2 (2026-06-27), §1–2. 本文子系统码论证的范围不包括一般算子代数码；正文脚注明确保留后者的非平凡中心面积。
+
+[Bar15] C. Bär. Green-hyperbolic operators on globally hyperbolic spacetimes. Commun. Math. Phys. 333 (2015), 1585–1615. arXiv:1310.0738. 连续 Green 算子的函数空间与因果性不由有限矩阵 Schur 恒等式替代。
+
+[HK03] D. V. Vassilevich. Heat kernel expansion: user's manual. Phys. Rep. 388 (2003), 279–360. arXiv:hep-th/0306138v3. 使用标量线性曲率热核及共同正规化背景。
+
+[Cone95] S. N. Solodukhin. Conical singularity and quantum corrections to the entropy of a black hole. Phys. Rev. D 51 (1995), 609. DOI:10.1103/PhysRevD.51.609. 使用平滑锥几何与局部作用量熵变分。
+
+[NonMin97] S. N. Solodukhin. Nonminimal coupling and quantum entropy of a black hole. Phys. Rev. D 56 (1997), 4968. DOI:10.1103/PhysRevD.56.4968. 接触项与统计熵的解释须区分。
+
+[FGHMR14] T. Faulkner, M. Guica, T. Hartman, R. C. Myers, M. Van Raamsdonk. Gravitation from Entanglement in Holographic CFTs. JHEP 03 (2014), 051. arXiv:1312.7856v2. 使用 AdS 真空邻域、全体球区域和既定全息熵字典的限定推导。
+
+[LVR16] N. Lashkari, M. Van Raamsdonk. Canonical Energy is Quantum Fisher Information. JHEP 04 (2016), 153. arXiv:1508.00897. 使用全息真空附近相对熵 Hessian 与正则能量的条件化关系。
+
+[Do10] N. Do. The asymptotic Weil-Petersson form and intersection theory on M_{g,n}. arXiv:1010.4126 (2010). 固定测地边界长度的模空间辛结构背景。
+
+[Wat09] J. Watrous. Semidefinite Programs for Completely Bounded Norms. Theory of Computing 5 (2009), 217–238. DOI:10.4086/toc.2009.v005a011. 使用完全有界迹范数与带参考系统的信道距离框架；本卷不含二分之一。
+
+[ASR16] R. Azouit, A. Sarlette, P. Rouchon. Adiabatic elimination for open quantum systems with effective Lindblad master equations. arXiv:1603.04630v1 (2016). 使用开放系统约化的比较背景，保留其无退相干子空间前件及任意阶断言的猜想身份。
+
+[BO10] C. Bény, O. Oreshkov. General conditions for approximate quantum error correction and near-optimal recovery channels. Phys. Rev. Lett. 104 (2010), 120501. DOI:10.1103/PhysRevLett.104.120501. arXiv:0907.5391. 用于区分其最坏纠缠保真度恢复任务与第 31 节当前区域预测任务。
+
+第 27–35 节的来源条目分别存入 `Library/notes`。这些文献记录不指向尚不存在的 Lean 声明；本卷新增的纸面结果尚无 Lean 真源。
+

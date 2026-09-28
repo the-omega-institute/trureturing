@@ -1,0 +1,32 @@
+### 定理 28：阈值匹配的全部切面与全顺序最优值
+
+设 $n\geq1$、$1\leq t\leq n$，并令
+
+$$
+F_{n,t}(x,y)
+=\mathbf1\left[\sum_{i=1}^n\mathbf1[x_i=y_i]\geq t\right],
+\qquad x,y\in\{0,1\}^n.
+$$
+
+对定义 27 的切面，记 $c=|C|$、$p=|P|$、$d=n-c$，则
+
+$$
+\begin{aligned}
+L(c)&=\max\bigl(0,\min(c,t-1)-\max(0,t-d)+1\bigr)\\
+&=\min(c+1,n-c,t,n-t+1),\\
+\kappa(C,P)&=2^pL(c)+\mathbf1[c\geq t]+\mathbf1[c\geq n-t+1].
+\end{aligned}
+$$
+
+令 $r=\min(t,n-t+1)$。在所有 $2n$ 个端点的读取顺序中，
+
+$$
+\min_\pi W_{F_{n,t}}(\pi)
+=\begin{cases}
+2r,&n=2r-1,\\
+2r+1,&n\geq2r.
+\end{cases}
+$$
+
+每一种连续配对排列都达到此值，而分组顺序 $(x_1,\ldots,x_n,y_1,\ldots,y_n)$ 的宽度恰为 $2^n$。
+

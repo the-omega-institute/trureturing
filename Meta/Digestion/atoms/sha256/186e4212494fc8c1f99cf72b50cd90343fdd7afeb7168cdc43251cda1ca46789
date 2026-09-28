@@ -1,0 +1,20 @@
+### 注记 540.6（成对摘要的逃逸、原目的与全任务互换）
+
+在 CAR 类中，$r_{ij}$ 确实决定每一个单独二态实验的碰撞概率；保持全部 $r_{ij}$ 就保持这些分离的二态任务。它没有决定所有状态怎样共享同一个输出表。匹配实验和擦除实验的成对摘要相同，却在“返回一个含真实状态的二点列表”和“允许拒答的识别”两个任务上分别给出不同风险；故摘要逃逸是相对于所选摘要的联合表示缺口，不是说现实凭空产生了新信息，也不是把一个实验排成对所有任务都更好。原目的若为非恒定目标，直接复用命题 539.7 的嵌入；本族的常数目标只用于清楚地隔离比较任务。
+
+这一区别不能被解释为“定义任意所以现实任意”。第 538.1–538.4 节已经固定实际支撑、公开种子、观察权限和共同分划律；第 539.1–539.8 节固定有向缺损、风险和原目的。维特根斯坦《哲学研究》§§65–69 只提供一种解释性对应：可考察交错相似，并可为一个特定目的划界；这些段落不是概率论、CAR 或缺损定理。这里没有经验性性别结论、披露义务或必然无穷逃逸结论。
+
+后续的精确问题是：在同样的 CAR、共同 $H$、逐态 $\varepsilon_i\le\varepsilon$ 和 $\eta=\max|\Delta_{ij}|$ 条件下，是否总有
+
+$$
+ d(v\to w)\le
+ \min\left\{1,\frac12\max_i\sum_{j\ne i}(\Delta_{ij})_+ +\frac n2\varepsilon\right\}?
+\tag{540.31}
+$$
+
+式（540.30）说明其中的 $n/2$ 不能在这一公共族上降为维数无关的常数；它没有证明（540.31）的普适充分性。该问题与本章已证的 $n-1$ 系数界保持分开。
+
+来源边界如下。Torgersen, *Comparison of Experiments when the Parameter Space is Finite*, Z. Wahrscheinlichkeitstheorie verw. Geb. 16 (1970), 219–249, DOI [10.1007/BF00534598](https://doi.org/10.1007/BF00534598)，第 220 页说明有界损失与半 $L^1$ 约定之间的因子二转换；第 230 页的测试比较使用所有有符号线性组合，而不只是原始二态对；第 235 页给出比较性加逐对等价推出整体等价的定性结论及缺少比较性时的失败。这里的（540.9）–（540.15）是有限联合表的直接构造，未把那些定性条件当成当前速率。
+
+Peña、Vera、Zuluaga, *An algorithm to compute the Hoffman constant of a system of linear constraints*, arXiv:1804.08418v1 (2018), Proposition 5 的误差界要求非空解纤维并引入依赖约束矩阵的 Hoffman 常数；它不提供（540.5）的显式 $n$ 率，因此本章不以该一般误差界替代联合表证明。仓内 [第 538.2、538.4 节](FORMAL_CONCEPT_DYNAMICS.md)、[第 539.1–539.8 节](FORMAL_CONCEPT_DYNAMICS.md) 提供公共分划、精确映射、成对摘要和原目的接口；[D5/S3/Estimation/DecisionRisk/AsymmetricFamilyDeficiency.lean](../../../D5/S3/Estimation/DecisionRisk/AsymmetricFamilyDeficiency.lean) 及其风险注入模块讨论的是非 CAR 的不对称正似然列，不能替代本章的公共匹配/擦除族。以上是所用来源的范围，不构成全局优先性声明。
+

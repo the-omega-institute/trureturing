@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d12ac823dbdcd329ab4049e9f896a8b330a0051418d1a7d47fb499af5f125ce6
+  normalized_sha256: sha256:d12ac823dbdcd329ab4049e9f896a8b330a0051418d1a7d47fb499af5f125ce6
+cas_ref: sha256:d12ac823dbdcd329ab4049e9f896a8b330a0051418d1a7d47fb499af5f125ce6
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/ConditioningTraceDistanceConstant.conditioning_trace_distance_constant
+    target_statement_id: sha256:78eb5f13f4a4dbe4871715cad5bde890c4161c5708195389388382e758bc4d5e
+receipts:
+  unresolved_subitems: []

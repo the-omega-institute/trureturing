@@ -1,0 +1,18 @@
+**逐对顺序：**
+
+$$
+x_1,y_1,x_2,y_2,\ldots,x_n,y_n.
+$$
+
+则：
+
+$$
+\boxed{
+W_F(\pi_{\mathrm{group}})=2^n,
+\qquad
+W_F(\pi_{\mathrm{pair}})=3.
+}
+$$
+
+#### 证明
+

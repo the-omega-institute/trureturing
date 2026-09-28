@@ -1,0 +1,29 @@
+**假设 2143.3（分母的实际行列式接口）。** 取 Monster 的一个具体复 VOA $V^\natural$、从它构造的 $G$-等变 Monster Lie 根空间 $W_{m,n}$（$G$ 为 Monster，$m,n\geq1$，每个空间有限维），以及与这些根空间相同构造的 twined 分母 $D_g(p,q)\in1+pq\mathbb C[[p,q]]$。要求在形式幂级数的完成拓扑内同时成立
+
+$$
+D_g(p,q)=\prod_{m,n\geq1}\det(1-p^mq^n g\mid W_{m,n}),
+\qquad
+\dim W_{m,n}=c(mn),
+\qquad
+D_e(p,q)=\frac{J(p)-J(q)}{p^{-1}-q^{-1}}.
+\tag{2143.2}
+$$
+
+这里 $c(r)$ 是 $J(q)=q^{-1}+\sum_{r\geq1}c(r)q^r$ 的系数。三个等式要求同一批实际根空间和同一分母，不能以任意形式级数的因式分解替代。Monster 模块及 Monster Lie 代数的来源见 [FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)；[Borcherds 1992, (7.1), (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。Borcherds 的 (8.3) 含 $n=-1$ 的 Weyl 因子；式 (2143.2) 仅对除去该因子后的 $m,n\geq1$ 部分取行列式。
+
+在该接口内，令 $H_g(p,q)=\sum_{m,n\geq1}\operatorname{tr}(g\mid W_{m,n})p^mq^n$。作为定理 2143.2 的对数观察的具体来源，使用 [Borcherds 1992, §8, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md) 中已有的行列式／迹计算：对每个有限维根空间应用
+
+$$
+-\log\det(1-xg\mid W_{m,n})=\sum_{k\geq1}\frac{\operatorname{tr}(g^k\mid W_{m,n})}{k}x^k,
+$$
+
+再逐系数相加，得到
+
+$$
+-\log D_g(p,q)=\sum_{k\geq1}\frac{1}{k}H_{g^k}(p^k,q^k),
+\qquad
+-\log D_e(p,q)=\sum_{k\geq1}\frac{1}{k}H_e(p^k,q^k).
+$$
+
+由维数条件，$H_e=\sum_{m,n\geq1}c(mn)p^mq^n$；单位元处即为式 (126.2) 的对数展开。这是依赖假设 2143.3 的已有中间计算，不证明该接口的三个等式。若 $\operatorname{Sat}_G(S)$ 幂闭合，则定理 2143.2 的复系数充分性论证从 $(-\log D_g)_{g\in S}$ 恢复 $(H_g)_{g\in S}$；真实根空间的迹受表示论约束，因此无约束域的必要性不自动转移到此接口。
+

@@ -1,0 +1,11 @@
+**证明。** 各边半边寄存器互不重叠，冻结投影秩一，自由重复投影秩 $d$。零空间及全谱由独立因子的和直接给出，本地幺正不改变谱及零空间。证毕。对三维三环的一条自由边，重数为 $(3,54,288,384)$，地面简并三重，区别于第 13 节只认证一个纯态的 Hamiltonian。
+
+设实际态 $\sigma$ 的总能量至多 $\varepsilon\le1/4$，码投影为 $P_{\mathsf S}$。则 $\operatorname{Tr}(P_{\mathsf S}\sigma)\ge1-\varepsilon$。取归一化投影态 $\sigma_0=P_{\mathsf S}\sigma P_{\mathsf S}/\operatorname{Tr}(P_{\mathsf S}\sigma)$，存在同一个逻辑态 $\rho$ 使 $\sigma_0=\mathcal E^{\mathsf S}(\rho)$，且 $\tfrac12\|\sigma-\sigma_0\|_1\le\sqrt\varepsilon$。因此对每个非空块区域 $A$，物理维数 $N_A$，同时有
+
+$$
+|S(\sigma_A)-f_A\log d-S_{\mathcal M_A}(\rho)|
+\le\sqrt\varepsilon\log(N_A-1)+h_2(\sqrt\varepsilon).
+$$
+
+该界由谱隙、投影的纯化保真度及 [Aud07] 推出。认证允许未知且混合的逻辑输入；仅测总能量不会给出逻辑熵的数值，还需恢复或估计相关逻辑态。统计误差、测量样本数和高维门成本均需另行控制，未进行硬件验证。
+

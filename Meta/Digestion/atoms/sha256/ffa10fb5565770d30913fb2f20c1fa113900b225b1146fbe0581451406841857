@@ -1,0 +1,140 @@
+**证明。** 固定任一 $(P,S)\in\mathcal F(M,\mu,\pi)$。满秩使 $P:\mathbb R^m\to\mathbb R^r$ 满射、$S:\mathbb R^r\to\mathbb R^n$ 单射，故 $\operatorname{rank}M=r$。取左逆 $L\in\mathbb R^{r\times n}$ 与右逆 $R\in\mathbb R^{m\times r}$，使 $LS=I_r$、$PR=I_r$；它们仅用于代数消去，不要求非负。
+
+先使用满秩分解的经典基变换事实，其非负分解表述见 Laurberg et al., *Theorems on Positive Data: On the Uniqueness of NMF* (2008), [§3, doi:10.1155/2008/764206](https://doi.org/10.1155/2008/764206)。在这里，若 $S'P'=SP$，则 $\operatorname{im}S'=\operatorname{im}M=\operatorname{im}S$；$S,S'$ 的列都是这个像空间的基。因此存在唯一 $A\in\operatorname{GL}_r(\mathbb R)$ 使 $S'=SA$，再由 $S$ 单射消去得 $P=AP'$。置 $T=A^{-1}$，于是
+
+$$
+P'=TP,\qquad S'=ST^{-1}.
+\tag{533.3}
+$$
+
+由 $P,P'$ 的列和，
+
+$$
+(\mathbf1_r^TT-\mathbf1_r^T)P=0.
+$$
+
+右乘 $R$ 得 $\mathbf1_r^TT=\mathbf1_r^T$；共同焦点边缘给出 $T\pi=TP\mu=P'\mu=\pi$。因此全部分解变换属于
+
+$$
+G_\pi=\{T\in\operatorname{GL}_r(\mathbb R):
+\mathbf1_r^TT=\mathbf1_r^T,\ T\pi=\pi\}.
+$$
+
+反过来，只要 $T\in G_\pi$ 且 $TP,ST^{-1}$ 逐项严格正，式（533.3）就是合法竞争实现：其乘积为 $M$，其焦点边缘为 $\pi$，其秩保持为 $r$，而
+
+$$
+\mathbf1_r^TTP=\mathbf1_m^T,\qquad
+\mathbf1_n^TST^{-1}=\mathbf1_r^TT^{-1}=\mathbf1_r^T.
+$$
+
+$T$ 是分解之间的代数变换，不要求它或 $T^{-1}$ 非负或列随机；需要严格正且列随机的是变换后两个通道。随机分解中这一非负性区别亦见 Christopher Adams, *Stochastic Matrix Factorization*, [§§2–3, arXiv:1609.05772v1](https://arxiv.org/abs/1609.05772v1)。
+
+因为 $P,S$ 的全部有限个条目严格正，映射 $T\mapsto TP$、$T\mapsto ST^{-1}$ 在 $I_r$ 处连续，故 $G_\pi$ 中存在包含 $I_r$ 的相对开邻域 $U$，其中每个 $T$ 都给出严格正的竞争实现。严格正性在此提供的是所有满足两项线性约束的充分小可逆扰动，而非一条特选扰动曲线。
+
+若 $K$ 的后果恒定，则对每个 $T\in U$ 有
+
+$$
+ST^{-1}KTP=SKP.
+$$
+
+左乘 $L$、右乘 $R$，得到 $T^{-1}KT=K$，即
+
+$$
+KT=TK\qquad(T\in U).
+\tag{533.4}
+$$
+
+为求这一局部交换条件的全部解，令 $W=\ker(\mathbf1_r^T)$。由于 $\mathbf1_r^T\pi=1$，每个 $z\in\mathbb R^r$ 唯一分解为
+
+$$
+z=(\mathbf1_r^Tz)\pi+
+\bigl(z-(\mathbf1_r^Tz)\pi\bigr),
+\qquad\mathbb R^r=\mathbb R\pi\oplus W.
+$$
+
+在此直和下，$T\in G_\pi$ 恰有块式
+
+$$
+T=\begin{pmatrix}1&0\\0&D\end{pmatrix},
+\qquad D\in\operatorname{GL}(W).
+$$
+
+所以 $U$ 包含每个充分接近 $I_W$ 的 $D$ 所对应的变换。$K$ 的列和条件则恰给出
+
+$$
+K=\begin{pmatrix}1&0\\v&C\end{pmatrix},
+\qquad v\in W,\quad C\in\operatorname{End}(W).
+$$
+
+式（533.4）因而等价于 $v=Dv$ 与 $CD=DC$。取充分小非零 $t$ 及 $D=(1+t)I_W$，第一式给出 $v=0$。令 $d=\dim W=r-1\ge1$；若 $d=1$，$C$ 自为标量。若 $d\ge2$，固定 $W$ 的一组基，对每个 $i\ne j$ 取基矩阵 $E_{ij}$。$D=I_W+tE_{ij}$ 在充分小非零 $t$ 时落入上述邻域，故 $CD=DC$ 给出 $CE_{ij}=E_{ij}C$。逐项写成
+
+$$
+C_{ai}\delta_{jb}=\delta_{ai}C_{jb}.
+$$
+
+取 $a\ne i,b=j$ 得 $C_{ai}=0$，故全部非对角项为零；取 $a=i,b=j$ 得 $C_{ii}=C_{jj}$。于是 $C=\alpha I_W$。这里使用的是与初等剪切矩阵交换强制标量的经典步骤，亦见 [Matrix.mem_range_scalar_of_commute_transvectionStruct](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/Transvection.lean#L228)；本证明中的邻域条件通过非零 $t$ 消去给出它所需的全部基矩阵交换关系。
+
+回到原坐标，对任意 $z$ 有
+
+$$
+Kz=(\mathbf1_r^Tz)\pi+
+\alpha\bigl(z-(\mathbf1_r^Tz)\pi\bigr),
+$$
+
+即式（533.1）。$W\ne\{0\}$ 保证 $\alpha$ 唯一；特别地，$K\pi=\pi$ 是必要性推出的结论，并非对允许操作预加的限制。
+
+现确定非负性的准确范围。$r\ge2$ 与 $\pi$ 严格正给出 $0<\pi_i<1$。当 $i\ne j$ 时，$K_{ij}=(1-\alpha)\pi_i$，故全部非对角项非负当且仅当 $\alpha\le1$；对角项为
+
+$$
+K_{ii}=\pi_i+\alpha(1-\pi_i),
+$$
+
+故全部对角项非负当且仅当
+
+$$
+\alpha\ge\max_i\left(-\frac{\pi_i}{1-\pi_i}\right)
+=-\min_i\frac{\pi_i}{1-\pi_i}.
+$$
+
+式（533.1）的列和对每个实数 $\alpha$ 都是一，故这两个不等式既必要又充分，且两端点均包含在内。
+
+反向，若 $K$ 有式（533.1）的形式及上述范围，则对任意 $(P',S')\in\mathcal F(M,\mu,\pi)$，
+
+$$
+\begin{aligned}
+S'KP'
+&=\alpha S'P'+(1-\alpha)S'\pi\mathbf1_r^TP'\\
+&=\alpha M+(1-\alpha)(S'P'\mu)\mathbf1_m^T\\
+&=\alpha M+(1-\alpha)(M\mu)\mathbf1_m^T.
+\end{aligned}
+$$
+
+这既证明充分性，也证明恢复式（533.2）。
+
+最后证明非族操作的局部不可识别性。若 $K$ 不是式（533.1）的形式，则在上述块式中，或者 $v\ne0$，或者 $v=0$ 而 $C$ 非标量。第一种情形取 $B=I_W$，第二种情形取一个满足 $CB\ne BC$ 的基矩阵 $B=E_{ij}$；这样的基矩阵存在，否则刚才的逐项论证使 $C$ 成为标量。令 $N$ 在直和下为 $\operatorname{diag}(0,B)$，便有
+
+$$
+N\pi=0,\qquad \mathbf1_r^TN=0,\qquad KN-NK\ne0.
+$$
+
+对每个充分小非零 $\varepsilon$，$T_\varepsilon=I_r+\varepsilon N$ 可逆且属于 $U$，因此
+
+$$
+(P_\varepsilon,S_\varepsilon)
+=(T_\varepsilon P,ST_\varepsilon^{-1})
+\in\mathcal F(M,\mu,\pi),
+\qquad(P_\varepsilon,S_\varepsilon)\longrightarrow(P,S).
+$$
+
+其操作后果差恰为
+
+$$
+\begin{aligned}
+S_\varepsilon KP_\varepsilon-SKP
+&=ST_\varepsilon^{-1}(KT_\varepsilon-T_\varepsilon K)P\\
+&=\varepsilon ST_\varepsilon^{-1}(KN-NK)P\ne0.
+\end{aligned}
+$$
+
+若末项为零，左乘 $T_\varepsilon L$、右乘 $R$ 就会得到 $KN-NK=0$，矛盾。每个充分小非零扰动都保留共同数据而改变该固定后果，证明所述任意邻域结论。证毕。
+

@@ -1,0 +1,5 @@
+**证明。** 在 $M_+$ 中，$(X,H,Y)$ 是独立标准正态向量的线性像，均值为零；直接计算给出
+$\operatorname{Var}X=\operatorname{Var}H=\operatorname{Var}Y=1$、$\operatorname{Cov}(X,H)=\operatorname{Cov}(H,Y)=\rho$、$\operatorname{Cov}(X,Y)=\rho^2$。在 $M_-$ 中交换端点得到同一协方差矩阵，且同样是联合高斯。因此相同均值和协方差给出相同的完整高斯律，而非仅有相同矩。
+
+执行 $\operatorname{do}(X_t=u_t,Y_t=v_t)$ 后，$M_+$ 的中间方程成为 $H_t=\rho u_t+\sigma U_{1t}$，$M_-$ 成为 $H_t=\rho v_t+\sigma U_{1t}$。新鲜的 $U_{1t}$ 与过去、$R$ 和当前动作独立，故这些式子是对每个历史输入都定义的正则条件核，不依赖在零概率历史上选择条件期望的版本。证毕。
+

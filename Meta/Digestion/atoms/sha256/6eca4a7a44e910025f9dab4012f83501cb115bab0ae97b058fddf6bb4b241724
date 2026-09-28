@@ -1,0 +1,31 @@
+**定理 82.16（前缀需求的实际目标剩余收费）。** 在同一任意原表的每个非首读目标上选整数 $0\le b_q\le L_q-1$，置 $B=\sum_qb_q,R_q=L_q-1-b_q$。选有限族实际同行事件对及其实际首次分离路径；对第 $a$ 对和所选前缀长度 $1\le t\le k_a$，以 $n_{a,t,q}$ 数前 $t$ 个读取目标中 $q$ 的出现次数，重复访问照计。置
+
+$$
+\begin{aligned}
+T_{a,t}&=\begin{cases}A_t,&t<k_a,\\F_{k_a},&t=k_a,\end{cases}\\
+\kappa_{a,t}&=\max\left(0,T_{a,t}-t-\sum_q n_{a,t,q}b_q\right).
+\end{aligned}
+\tag{82.23}
+$$
+
+$A_t,F_{k_a}$ 使用该对自身的 $u,v,P$。对任意非负有理权 $\alpha_{a,t}$，若每个实际目标均满足 $\sum_{a,t}\alpha_{a,t}n_{a,t,q}\le1$，则
+
+$$
+\begin{aligned}
+E&\ge B+\left\lceil\sum_{a,t}\alpha_{a,t}\kappa_{a,t}\right\rceil,\\
+C&\ge M+2r-1+\ell+B+
+\left\lceil\sum_{a,t}\alpha_{a,t}\kappa_{a,t}\right\rceil.
+\end{aligned}
+\tag{82.24}
+$$
+
+证明。各次实际等待都不超过所进目标的原 $L_q$，故每个所选前缀同时满足
+
+$$
+T_{a,t}\le D_{a,t}\le\sum_q n_{a,t,q}L_q
+=t+\sum_qn_{a,t,q}b_q+\sum_qn_{a,t,q}R_q.
+\tag{82.25}
+$$
+
+$R_q\ge0$ 给 $\kappa_{a,t}\le\sum_qn_{a,t,q}R_q$。乘权求和，每个目标的系数至多一，于是右端至多 $\sum_qR_q=E-B$。后者为整数，得上取整；容量式由（82.1）给出。不同事件对可共享标签、历史或目标，前缀可嵌套，但所有权必须共同满足同一负载约束。特别不能把出现次数换成零一指标。$\square$
+

@@ -1,0 +1,10 @@
+**Theorem 3 (sharp three-edge witness).** Take $w_{AB}(0,1)=1$,
+$w_{AC}(0,0)=1$, and $w_{BC}(0,0)=1$, with all other edge values zero. Its
+only defects are the antipodal triangles $(0,1,1)$ and $(1,0,0)$. Thus
+$\operatorname{wt}(w)=3$ and $T(w)=2$. Every repair $w+d_0g$ has edge weight
+at least three. Indeed summing the defects on either side of each of the
+three coordinate cuts yields the parity of the corresponding edge family;
+the two antipodal defects force one nonzero edge in each family. Hence the
+coefficient $3/2$ in Theorem 2 is attained.
+
+No claim is made here for a min-part coefficient on arbitrary finite parts.

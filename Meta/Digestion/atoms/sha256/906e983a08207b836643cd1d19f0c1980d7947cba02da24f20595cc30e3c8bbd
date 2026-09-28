@@ -1,0 +1,10 @@
+**定义 8.1。** 对归一化四方态，令
+
+$$
+I(\psi)=\sum_{(z_{\ell,i})}\prod_{i=0}^3
+\psi_{z_{1,i},z_{2,i},z_{3,i},z_{4,i}}
+\overline{\psi_{z_{1,\sigma_1(i)},z_{2,\sigma_2(i)},z_{3,\sigma_3(i)},z_{4,\sigma_4(i)}}}.
+$$
+
+它等于四组局部副本置换的张量积 $W$ 对 $\rho^{\otimes4}$ 的迹。$W$ 与各 $U_\ell^{\otimes4}$ 交换，故任意四方局部幺正保持 $I$；按参与方重组的张量积满足 $I(\psi\otimes\varphi)=I(\psi)I(\varphi)$。复制不变量的方法背景见 [RRKL23]。
+

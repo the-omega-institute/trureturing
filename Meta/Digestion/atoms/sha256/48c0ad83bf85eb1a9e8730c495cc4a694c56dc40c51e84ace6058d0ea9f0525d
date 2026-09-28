@@ -1,0 +1,30 @@
+### 定义 534.3（记录、方向风险与目标推荐风险）
+
+令 $n\ge1$ 为固定轮数。对任一满足假设 534.2 的策略 $\pi$，记完整记录为
+
+$$
+L[n]=(R,(u_t,v_t,H_t)_{t=1}^n).
+$$
+
+若 $B\ge2a^2$，定义方向判决的精确有限资源风险
+
+$$
+R_n(B,h)=\inf_{\pi,\delta}\max_{\theta\in\{+1,-1\}}
+\mathbb P_\theta^\pi\bigl(\delta(L[n])\ne\theta\bigr),
+$$
+
+其中 $\delta$ 遍历所有可测的终端随机判决（其随机性已包含于 $R$）。再给定推荐预算 $C\ge0$，允许终端输出可测的 $w=(s,t)$，满足 $s^2+t^2\le C$，但不把推荐当作额外执行的干预。令
+
+$$
+\mu_+(w)=\rho s,\qquad \mu_-(w)=\rho t,
+$$
+
+并定义目标推荐失败风险
+
+$$
+F_n(B,C,h)=\inf_{\pi,w}\max_{\theta\in\{+1,-1\}}
+\mathbb P_\theta^\pi\bigl(\mu_\theta(w)<h\bigr),
+$$
+
+其中训练阶段仍严格使用同一 $A_B$ 和同一记录类。
+

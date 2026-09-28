@@ -1,0 +1,32 @@
+# Four-cube degree-two sharp repair law
+
+Let `Cube = Bool^4`, `Face = Fin 4 x Bool^3`, and let a binary triangular
+cochain be `F : Face -> ZMod 2`.  Write `weight` for triangular support,
+`d1` for the edge coboundary, and `defects F` for the number of tetrahedra
+where `d2 F` is nonzero.
+
+**Theorem (sharp Boolean four-cube degree-two repair law).** For all natural
+numbers `p` and `q`,
+
+```text
+(forall F : Cochain, exists e : EdgeCochain,
+  q * weight (F + d1 e) <= p * defects F) iff 2 * q <= p.
+```
+
+The upper bound constructs an even-defect filling by pairing defect
+tetrahedra and adding coordinate geodesics.  Each geodesic has boundary at
+its two endpoints, support at most four, and the resulting filling has weight
+at most twice the defect count.  A local characteristic-two exactness
+construction then turns the zero-defect cochain into an edge coboundary.
+The converse is the existing antipodal four-face witness, whose every edge
+repair has weight at least four while its defect count is two.  The argument
+includes `p = 0`, `q = 0`, the zero syndrome, and all intermediate defect
+sets.
+
+This settles the bounded coefficient-two law only.  The stronger exact
+matching-cost equivalence in issue #11045 remains residual open and is kept
+in the separate exact-budget source.
+
+Primary source: Dotterrer--Kahle, arXiv:1012.5316v2, Proposition 5.5, for
+the published coefficient bound; the Lean theorem supplies the finite
+four-cube construction and its sharp converse.

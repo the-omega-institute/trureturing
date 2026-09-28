@@ -1,0 +1,36 @@
+## corollary 30.2: 可计算的耦合响应
+
+对两场 $\mathsf M(b)=\left(\begin{smallmatrix}\mu&b\\b&\mu\end{smallmatrix}\right)$，$\mu=m^2>|b|$，有
+
+$$
+\mathcal I(b)=(\mu+b)\log(\mu+b)+(\mu-b)\log(\mu-b)-2\mu\log\mu,
+$$
+
+$$
+\mathcal I'(b)=\log\frac{\mu+b}{\mu-b},\qquad
+\mathcal I''(b)=\frac{2\mu}{\mu^2-b^2}>0.
+$$
+
+对 $b>0$，$\xi<1/6$ 时相对曲率系数严格递增；$\xi=1/6$ 时仅此线性曲率差为零。上述等式直接微分得到。慢变 $b$ 作为局域系数时，变化率需要同时计入面积形变和 $b$ 的变化，不能把二者合并为一项“观察产生曲率”。
+
+### 30.3 纳入控制器后才是一个自洽的几何动力学模型
+
+取上述耦合为实际标量控制场 $b(x)$，在低导数截断中另给定已重整化的 $Z(b)>0,U(b)$、基础引力系数及边界条件。考虑明确的 Lorentz 有效作用量
+
+$$
+S_{\rm eff}=\int\sqrt{-g}\left[\kappa(b)R-\frac12Z(b)(\nabla b)^2-U(b)\right]+S_{\rm probe}[g,b],
+$$
+
+其中 $\kappa(b)$ 的相对物质圈贡献由命题 30.1 决定，其他有限系数是模型输入，未由该谱差推导。对这一定义的局部模型，变分给出
+
+$$
+\kappa G_{\mu\nu}+(g_{\mu\nu}\Box-\nabla_\mu\nabla_\nu)\kappa
+=\tfrac12(T^{(b)}_{\mu\nu}+T^{\rm probe}_{\mu\nu}),
+$$
+
+$$
+Z\Box b+\tfrac12Z'(\nabla b)^2-U'+\kappa'R+\mathcal O_b^{\rm probe}=0.
+$$
+
+这里 $T^{(b)}_{\mu\nu}=Z\nabla_\mu b\nabla_\nu b-g_{\mu\nu}[Z(\nabla b)^2/2+U]$，$\mathcal O_b^{\rm probe}=(\sqrt{-g})^{-1}\delta S_{\rm probe}/\delta b$。这些是所选标量–张量作用量的 Euler–Lagrange 方程，不是从 RT 静态熵独立推出 Einstein 方程。
+

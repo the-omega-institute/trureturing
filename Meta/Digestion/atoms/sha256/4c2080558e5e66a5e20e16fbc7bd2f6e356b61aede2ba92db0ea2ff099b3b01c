@@ -1,0 +1,30 @@
+### 定理 30：继承完成次序的精确增宽与全顺序最优值
+
+对定义 30 的任务，有 $\rho_m=\operatorname{cn}(\pi_m)$、$\operatorname{cn}(\sigma_m)=\sigma_m$，且
+
+$$
+\begin{aligned}
+W_{F_m}(\pi_m)=W_{F_m}(\sigma_m)
+&=\min_{\tau}W_{F_m}(\tau)
+=\min_{\substack{\tau\text{ 中每对}\\\text{端点连续}}}W_{F_m}(\tau)
+=3\cdot2^{m-1},\\
+W_{F_m}(\rho_m)&=4\cdot3^{m-1}.
+\end{aligned}
+$$
+
+第一个极小值遍历全部 $6m$ 个端点的顺序，允许无关坐标放在任意位置。故继承 $\pi_m$ 的完成次序所产生的状态数比值恰为
+
+$$
+\frac{W_{F_m}(\rho_m)}{\min_\tau W_{F_m}(\tau)}
+=\frac43\left(\frac32\right)^{m-1}.
+$$
+
+在定义 30 的状态编码模型中，全顺序最优峰值位数和顺序 $\rho_m$ 的最优峰值位数分别为
+
+$$
+B_{\min}=m+1,\qquad
+B_{\rho_m}=2+\left\lceil(m-1)\log_2 3\right\rceil.
+$$
+
+此结论同时使用 $m$ 个投影构件和联合元组输出；所有顺序的终止层容量均为 $2^m$。当 $m=1$ 时，两种宽度分别为 $3,4$，但二者均只需 $2$ 位状态编码。
+

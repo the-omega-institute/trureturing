@@ -23,18 +23,18 @@ universe u
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization pathClockSignature :=
-  realize pathClockSignature
+def actual : Realization pathClockSignature.{u} :=
+  realize pathClockSignature.{u}
     (fun _ p h => pathClock p.2 h)
     (fun e => nomatch e)
 
-def rejected : Realization pathClockSignature :=
-  realize pathClockSignature
+def rejected : Realization pathClockSignature.{u} :=
+  realize pathClockSignature.{u}
     (fun _ _ _ => (0 : ℝ))
     (fun e => nomatch e)
 
 def arena : Arena where
-  signature := pathClockSignature
+  signature := pathClockSignature.{u}
   Law R := ∀ {A : Type u} [Fintype A] [Nonempty A]
       (c : List A -> A -> ℝ) (_hc : ∀ h x, 0 ≤ c h x),
     List.TFAE [
@@ -55,7 +55,7 @@ run_cmd do
   LeanInformationAudit.RootCatalogs.declare {
     rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
 
-theorem rejected_law : ¬ arena.{u}.Law rejected := by
+theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
   have htfae := h (A := ULift.{u} Unit) (fun _ _ => (1 : ℝ)) (by simp)
   have hpath : ∀ omega : ℕ -> ULift.{u} Unit,
@@ -71,22 +71,22 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
             (List.ofFn fun i : Fin n => omega i)) atTop atTop) ↔
       (∀ b : ℝ,
         {h : List (ULift.{u} Unit) |
-          rejected.readout () ⟨ULift.{u} Unit, fun _ _ => (1 : ℝ)⟩ h ≤ b}.Finite) :=
+          rejected.{u}.readout () ⟨ULift.{u} Unit, fun _ _ => (1 : ℝ)⟩ h ≤ b}.Finite) :=
     htfae.out 0 2
   have hfinite := hpath_iff_finite.mp hpath 0
   have huniv : (Set.univ : Set (List (ULift.{u} Unit))).Finite := by
     simpa [rejected, realize, pathClockSignature] using hfinite
   exact Set.infinite_univ.not_finite huniv
 
-theorem actual_law : arena.{u}.Law actual := by
+theorem actual_law : arena.{u}.Law actual.{u} := by
   intro A _ _ c hc
   simpa [actual, realize, pathClockSignature] using
     finite_branching_path_clock_criterion c hc
 
-theorem sensitivity_proof : Sensitivity arena.{u} actual := by
+theorem sensitivity_proof : Sensitivity arena.{u} actual.{u} := by
   constructor
   · intro i
-    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    refine ⟨rejected.{u}, ?_, rfl, rejected_law⟩
     intro j hji
     cases i
     cases j
@@ -103,15 +103,15 @@ theorem dependence_proof :
   refine ⟨p, [], [⟨()⟩], ?_⟩
   norm_num [actual, realize, pathClockSignature, pathClock]
 
-def registration : Registration arena.{u} (arena.{u}.Law actual) where
-  actual := actual
+def registration : Registration arena.{u} (arena.{u}.Law actual.{u}) where
+  actual := actual.{u}
   bridge := Iff.rfl
-  variation := ⟨actual_law, rejected, rejected_law⟩
+  variation := ⟨actual_law, rejected.{u}, rejected_law⟩
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
 register_information_theorem finite_branching_path_clock_criterion in arena
-  readout via (realize pathClockSignature
+  readout via (realize pathClockSignature.{u}
     (fun _ p h => pathClock p.2 h)
     (fun e => nomatch e))
   realizes registration
@@ -120,7 +120,7 @@ register_information_theorem finite_branching_path_clock_criterion in arena
     coordinates := #[0, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "arg", "arg",
-        "body", "fn", "arg", "arg"]
+        "fn", "arg", "body", "arg", "arg", "body", "fn", "arg"]
       stateBinder := 6 }] })
   escape continues (open)
 

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:da358b3ff62c017f7871666196610596fca1b35bd686ab2e8731e263ac0a3d9d
+  normalized_sha256: sha256:da358b3ff62c017f7871666196610596fca1b35bd686ab2e8731e263ac0a3d9d
+cas_ref: sha256:da358b3ff62c017f7871666196610596fca1b35bd686ab2e8731e263ac0a3d9d
+coverage_gids:
+  - gid: D5/S3/Observer/Separation/BooleanLowCycleBudgets.result
+    target_statement_id: sha256:63b77e5df3d1f87cc65b62176c0b91bc355171d896f192dfd82301e1ae606148
+receipts:
+  unresolved_subitems: []

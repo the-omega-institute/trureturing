@@ -1,0 +1,33 @@
+### 命题 534.9（动作彩票平均许可不保持定理 534.6）
+
+考虑不同的、更弱的合同：只要求在动作彩票抽取前、给定过去时
+$\mathbb E_\theta[H_t\mid\text{过去}]=h$，但仍要求每个实际动作满足 $u_t^2+v_t^2\le B$。取 $B=4a^2$，每轮独立公平抽取 $S_t\in\{+1,-1\}$，分别选择
+
+$$
+S_t=+1:(u_t,v_t)=(2a,0),\qquad
+S_t=-1:(u_t,v_t)=(0,2a).
+$$
+
+则两模型都满足该较弱均值合同，而每个实际动作在一个模型中违反原先的鲁棒均值许可。保留 $S_t$ 于记录，便有
+
+$$
+H_t=h+\theta hS_t+\sigma U_{1t},
+\qquad
+\frac{S_t(H_t-h)}{\sigma}\ \stackrel{\mathrm{i.i.d.}}\sim
+N\!\left(\theta\frac h\sigma,1\right).
+$$
+
+因此以 $\sum_tS_t(H_t-h)\ge0$ 判决时，两方向错误均为
+
+$$
+\Phi\!\left(-\sqrt n\,\frac h\sigma\right),
+$$
+
+严格小于定理 534.6 在 $B=4a^2$ 下的
+
+$$
+\Phi\!\left(-\sqrt n\,\frac{h(\sqrt3-1)}{2\sigma}\right).
+$$
+
+这只是较弱合同中的一个可达到风险反例，不声称该扩大策略类的精确极小风险。
+

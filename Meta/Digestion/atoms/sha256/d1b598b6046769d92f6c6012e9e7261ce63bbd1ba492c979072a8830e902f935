@@ -1,0 +1,18 @@
+## theorem 32.4: 全时间、带参考系统的 Markov 近似
+
+假设 $\gamma\ge4\Omega$，记 $\epsilon=\Omega/\gamma\le1/4$、$k=\Omega^2/\gamma$。则对所有 $t\ge0$，
+
+$$
+|\alpha_t-e^{-kt}|\le2\epsilon^2,
+$$
+
+$$
+\boxed{
+\|\mathcal N e^{t\mathcal G_\gamma}
+-\mathcal E T_{e^{-kt}}\Delta\|_\diamond
+=\sqrt{(\alpha_t-e^{-kt})^2+\beta_t^2}
+\le\epsilon\sqrt{1+4\epsilon^2}.}
+$$
+
+若初态在逻辑计算基上已退相干，包括与参考系统相关的经典-量子态，则相应完整误差至多 $2\epsilon^2$。一般输入的面积期望误差至多为右侧钻石界乘 $\Delta a/2$。
+

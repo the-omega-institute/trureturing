@@ -1,0 +1,22 @@
+### 推论 17.2：可区分见证给出下界证书
+
+若存在：
+
+$$
+a_1,\ldots,a_N\in X_A,
+$$
+
+并且对每个 $p\neq q$，都能找到补全 $b_{pq}$ 使：
+
+$$
+F(a_p\sqcup b_{pq})
+\neq
+F(a_q\sqcup b_{pq}),
+$$
+
+则：
+
+$$
+\kappa_A(F)\geq N.
+$$
+

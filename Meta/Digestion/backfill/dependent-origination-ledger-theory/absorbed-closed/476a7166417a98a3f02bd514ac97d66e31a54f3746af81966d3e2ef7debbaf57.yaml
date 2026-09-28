@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:476a7166417a98a3f02bd514ac97d66e31a54f3746af81966d3e2ef7debbaf57
+  normalized_sha256: sha256:476a7166417a98a3f02bd514ac97d66e31a54f3746af81966d3e2ef7debbaf57
+cas_ref: sha256:476a7166417a98a3f02bd514ac97d66e31a54f3746af81966d3e2ef7debbaf57
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DependencyTopology/SupportFamilyNotIntersectionClosed.result
+    target_statement_id: sha256:2dd62339f1096cce007d311bd9b027e53173598b26170ffdfa699ded2aecb213
+receipts:
+  unresolved_subitems: []

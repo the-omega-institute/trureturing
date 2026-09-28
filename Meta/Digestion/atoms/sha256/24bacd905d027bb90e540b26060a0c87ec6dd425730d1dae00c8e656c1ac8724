@@ -1,0 +1,47 @@
+### 引理 536.2（三种质量与共同叶分划）
+
+对任意充分 $E_W$，令 $\eta_i=\nu+\mu_i$，取非负 Radon–Nikodym 密度 $h_i=d\nu/d\eta_i$、$g_i=d\mu_i/d\eta_i$，定义
+
+$$
+\begin{aligned}
+\lambda_i&=\int_{\{g_i>0\}}h_i\,d\eta_i,
+&\beta_i&=\int_{\{h_i>0\}}g_i\,d\eta_i,\\
+\kappa_i&=\int_Z\min(h_i,g_i)\,d\eta_i,
+&d_i&=\max\{\lambda_i,\beta_i\}.
+\end{aligned}
+\tag{536.7}
+$$
+
+$\lambda_i$ 是 $\nu$ 相对于 $\mu_i$ 的绝对连续部分的总质量；$\beta_i$ 是反方向的绝对连续质量；$\kappa_i$ 是最大共同子测度 $\nu\wedge\mu_i$ 的质量。它们不依赖密度版本，并且
+
+$$
+0\le\kappa_i\le\min\{\lambda_i,\beta_i\}\le d_i\le1,
+\qquad \sum_{i=1}^m\lambda_i\le1,
+\qquad \sum_{i=1}^m\kappa_i\le1.
+\tag{536.8}
+$$
+
+还存在可测分划 $Z=D_0\sqcup D_1\sqcup\cdots\sqcup D_m$，满足
+
+$$
+\mu_i(D_i)=1,\qquad
+\nu|_{D_i}=\nu^{\mathrm{ac}(\mu_i)},\qquad
+\nu(D_i)=\lambda_i,\qquad
+\nu(D_0)=1-\sum_i\lambda_i.
+\tag{536.9}
+$$
+
+证明：在单对测度中，$\nu|_{\{g_i>0\}}\ll\mu_i$，因为 $\mu_i(B)=0$ 强迫 $g_i=0$ 在 $B$ 上 $\eta_i$ 几乎处处。其余部分集中在 $\mu_i$ 的零集 $\{g_i=0\}$ 上，故是奇异部分。Lebesgue 分解的唯一性识别出 $\lambda_i$；交换两律就得到 $\beta_i$。测度 $\min(h_i,g_i)\eta_i$ 同时不超过两律。若 $H\le\nu,\mu_i$，则 $H\ll\eta_i$，其密度同时不超过 $h_i,g_i$，从而 $H\le\min(h_i,g_i)\eta_i$。这证明共同子测度的最大性及前三个量的内在定义，也给出逐坐标不等式。
+
+为取得同一分划，使用 $\eta=\nu+\sum_i\mu_i$，记 $n=d\nu/d\eta$、$w_i=d\mu_i/d\eta$。叶律两两奇异，故 $w_iw_j=0$ 在 $\eta$ 几乎处处成立。把有限个这样的例外、密度非负有限及 $n+\sum_iw_i=1$ 的例外合入一个可测 $\eta$-零集 $N$，令
+
+$$
+D_i=\{z\notin N:w_i(z)>0\}\quad(1\le i\le m),
+\qquad D_0=Z\setminus\bigcup_iD_i.
+\tag{536.10}
+$$
+
+这些 $D_i$ 两两不交且 $\mu_i(D_i)=1$。与单对密度的论证相同，$\nu|_{D_i}\ll\mu_i$，$\nu|_{Z\setminus D_i}\perp\mu_i$，所以由同一个 Lebesgue 分解唯一性，$\nu|_{D_i}$ 正是式（536.7）定义的绝对连续部分。于是 $\sum_i\lambda_i=\nu(\bigcup_iD_i)\le1$；共同子测度质量的总和也不超过一。证毕。
+
+这些质量不是常数支配系数 $\sup\{c\ge0:\nu\ge c\mu_i\}$；绝对连续部分可以只占 $\mu_i$ 所承载区域的一部分，也可以有变化的密度。符号 $\nu\wedge\mu_i$ 在此只指测度的最大共同子测度，不表示 Blackwell 实验序中的格交，更不依赖另选一个拓扑后的“支撑交集”。
+

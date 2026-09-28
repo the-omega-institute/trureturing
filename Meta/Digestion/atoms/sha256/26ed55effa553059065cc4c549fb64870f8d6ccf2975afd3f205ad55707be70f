@@ -1,0 +1,56 @@
+**定理 2143.2（观察纤维的幂闭包判据）。** 对任意群 $G$ 和任意子集 $S\subseteq G$，在定义 2143.1 的无约束域中有
+
+$$
+\operatorname{Rec}(S)
+\quad\Longleftrightarrow\quad
+\forall g\in\operatorname{Sat}_G(S)\ \forall k\geq1,\ g^k\in\operatorname{Sat}_G(S).
+\tag{2143.1}
+$$
+
+**证明。** 先在全群上定义
+
+$$
+(\Psi L)_g(p,q)=\sum_{k\geq1}\frac{\mu(k)}{k}L_{g^k}(p^k,q^k),
+\qquad L\in\mathcal C_G.
+$$
+
+正双次数保证 $\Phi$ 与 $\Psi$ 的逐系数局部有限性；恒等式 $(hgh^{-1})^k=hg^kh^{-1}$ 保证二者仍为类函数族。把有限的逐系数双重和按 $N=k\ell$ 分组，Möbius 恒等式 $\sum_{d\mid N}\mu(d)=\mathbf1_{N=1}$ 给出
+
+$$
+\begin{aligned}
+(\Psi\Phi H)_g(p,q)
+&=\sum_{N\geq1}\frac{1}{N}\left(\sum_{d\mid N}\mu(d)\right)H_{g^N}(p^N,q^N)=H_g(p,q),\\
+(\Phi\Psi L)_g(p,q)
+&=\sum_{N\geq1}\frac{1}{N}\left(\sum_{d\mid N}\mu(d)\right)L_{g^N}(p^N,q^N)=L_g(p,q).
+\end{aligned}
+$$
+
+这一步使用的是已有的 Möbius 反演；Monster 的等变幂展开先例见 [Borcherds 1992, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。
+
+充分性：设 $A=\operatorname{Sat}_G(S)$ 对所有正整数幂闭合，且 $(\Phi H_1)|_S=(\Phi H_2)|_S$。类函数性使此等式延伸到 $A$。对每个 $s\in S$ 和 $k\geq1$ 都有 $s^k\in A$，故逆式逐项给出
+
+$$
+(H_1-H_2)_s(p,q)=\sum_{k\geq1}\frac{\mu(k)}{k}(\Phi H_1-\Phi H_2)_{s^k}(p^k,q^k)=0.
+$$
+
+必要性：设 $A$ 不对正整数幂闭合，取 $g\in A$ 和 $n\geq2$ 使 $g^n\notin A$。将 $n=r_1\cdots r_t$ 分解为素数的乘积（允许重复），令 $b_0=g$、$b_j=g^{r_1\cdots r_j}$。取最小的 $j$ 使 $b_j\notin A$；这是沿逐次素数幂的第一次退出，因而 $u=b_{j-1}\in A$，而 $u^r\notin A$，其中 $r=r_j$ 为素数。由 $u\in A$，可写 $u=hsh^{-1}$，其中 $s\in S$；共轭不变性于是给出 $s^r\notin A$。
+
+令 $C$ 为 $s^r$ 的共轭类，则 $C\cap A=\varnothing$。构造支撑于该类的对数观察
+
+$$
+\Delta L_x(p,q)=\mathbf1_{x\in C}\,pq\quad(x\in G),
+\qquad H_1=0,\qquad H_2=\Psi\Delta L.
+$$
+
+$\Delta L,H_1,H_2$ 都属于 $\mathcal C_G$。由 $\Phi\Psi=\mathrm{id}$，有 $\Phi H_2=\Delta L$，所以 $(\Phi H_1)|_S=(\Phi H_2)|_S=0$。另一方面
+
+$$
+(H_2)_s(p,q)=\sum_{k\geq1}\frac{\mu(k)}{k}\mathbf1_{s^k\in C}\,p^kq^k,
+\qquad
+[p^r q^r](H_2-H_1)_s=\frac{\mu(r)}{r}=-\frac1r\ne0.
+$$
+
+仅 $k=r$ 能贡献该双次数的系数；这是原始族 $H$ 在对角单项式 $p^r q^r$ 上的改变，并非只在对数观察上的改变。因此 $H_1|_S\ne H_2|_S$，否定 $\operatorname{Rec}(S)$，必要性得证。
+
+若 $S$ 本已共轭不变，则 $A=S$，判据化为 $S$ 的正整数幂闭包。证明中的反例属于无约束类函数域，不保证其系数为实际表示的角色，也不保证来自 VOA；在角色或 VOA 的较窄域中，幂闭包仍充分，但本证明不提供其必要性。该判据也不声称缺少幂闭包时每一组固定迹数据都不可恢复。同一反演和充分性论证可逐字在 $\mathbb C$ 上进行。
+

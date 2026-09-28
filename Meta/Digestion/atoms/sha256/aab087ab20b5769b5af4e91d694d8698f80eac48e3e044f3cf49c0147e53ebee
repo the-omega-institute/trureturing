@@ -1,0 +1,11 @@
+## 31. 当前区域读数的最优预测误差
+
+本节沿用构造 28.4 的同一个中心分组码，不另换物理载体。取 $\mathcal H_X=\mathbb C^3\oplus\mathbb C^6$ 为该区域的实际支撑，$\tau_0=I_3/3$、$\tau_1=I_6/6$ 放在两个正交块上。区域通道、面积算符及面积跨度为
+
+$$
+\mathcal N(\rho)=\rho_{00}\tau_0+\rho_{11}\tau_1,
+\qquad \mathcal L=\operatorname{diag}(\log3,\log6),\qquad \Delta a=\log2.
+$$
+
+令 $\Delta$ 为逻辑计算基退相干，$\mathcal E$ 为将两个经典标签准备成 $\tau_i$ 的通道，$\mathcal M$ 为读取两个正交支持的测量通道。因此 $\mathcal N=\mathcal E\Delta$，$\mathcal M\mathcal N=\Delta$。实际区域空间更大时，将 $\mathcal M$ 在支撑外任意保迹补全即可。钻石范数 $\|\cdot\|_\diamond$ 采用**不含二分之一**的完全有界迹范数，包含任意被动参考系统 [Wat09]。
+

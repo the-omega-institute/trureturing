@@ -1,0 +1,91 @@
+{
+  "scope": "Fixed A1 node. Actual Q K7 field, complete 280^5 future domain, plus a whole-source transport to Q-prime; no within-Q symmetry and no Lean verification.",
+  "xi7": [
+    2,
+    4,
+    2,
+    14
+  ],
+  "transported_xi7": [
+    2,
+    4,
+    5,
+    14
+  ],
+  "current7": "102215449381/10000000000",
+  "H16": "450346287870824601378180995882991509332625741534908784375369138997804970338248685453593602603886692511640950418003031376987/13871301761463541483972865126302160605182902725923616728556428103786195309372953770748823615808417208172043140320000000000",
+  "prefix_pairs": 78400,
+  "late_choices_per_prefix": 21952000,
+  "future_parameter_tuples_per_source": 1721036800000,
+  "certified_sources": 2,
+  "refined_phases": {
+    "11": [
+      4,
+      7,
+      8,
+      13
+    ],
+    "13": [
+      4,
+      7,
+      8,
+      13,
+      14
+    ]
+  },
+  "released_inputs": 35,
+  "full40_tables": 9,
+  "eta4_peaks": {
+    "11": {
+      "maximum": "26020817431/5000000000",
+      "runner_up": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "runner_up_value": "12094347953/2500000000",
+      "strict_gap": "73284861/200000000"
+    },
+    "13": {
+      "maximum": "29377801437/5000000000",
+      "runner_up": [
+        1,
+        3,
+        7,
+        4
+      ],
+      "runner_up_value": "11216360441/2000000000",
+      "strict_gap": "2673800669/10000000000"
+    }
+  },
+  "analytic_credit": "27/1144",
+  "pairs_requiring_credit": 1,
+  "late_loss_upper": [
+    "4755844807/1250000000",
+    "5349056703/1250000000",
+    "4093467453/2000000000"
+  ],
+  "worst_pair": [
+    [
+      1,
+      4,
+      7,
+      4
+    ],
+    [
+      1,
+      1,
+      2,
+      11
+    ]
+  ],
+  "worst_query_upper": "144839492873/5000000000",
+  "worst_query_decimal": 28.9678985746,
+  "minimum_live_lower": "23243327143/10000000000",
+  "minimum_slack_lower": "1034998766532341872885197768928476606964555637675942256849144974801401966018036712028861334608170103961994014030507811077/13871301761463541483972865126302160605182902725923616728556428103786195309372953770748823615808417208172043140320000000000",
+  "minimum_live_lower_micro": 2324331,
+  "minimum_slack_lower_micro": 74590,
+  "bounds_sha256": "0a910c1d2dfbf16ad6a5a65ca5d4b7640a835e432dfffce21648fcaed4645593",
+  "verification": "Exact rational combination of pinned bounds, arithmetic checks of the pointwise credit parameters, and finite source/label transport. Integer geometry has a separate replay; the uniform credit proof is in README.md."
+}

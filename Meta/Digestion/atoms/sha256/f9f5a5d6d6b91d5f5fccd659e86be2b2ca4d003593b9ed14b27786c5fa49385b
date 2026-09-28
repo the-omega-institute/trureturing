@@ -1,0 +1,62 @@
+**证明。** 先证缩放。对任意有限任务，完全揭示部分在两个剖面中相同，因而
+
+$$
+\mathcal R_{w^\lambda}-\mathcal R_{v^\lambda}
+ =\lambda(\mathcal R_w-\mathcal R_v).
+$$
+
+定理542.2证明内的经典有限随机化对偶（542.2）适用于任意有限状态集，在此立即给出两个方向的下界和上界，从而得到（542.11）。为显示共同核的达到性，设 $K$ 是从 $w$ 到 $v$ 的最优核。对 $w_B^\lambda>0$ 定义
+
+$$
+ K_\lambda(C\mid B)=
+ \frac{\lambda w_B}{w_B^\lambda}K(C\mid B)
+ +\frac{(1-\lambda)\mathbf1_{\{|B|=1\}}}{w_B^\lambda}
+   \mathbf1_{\{C=B\}}.
+\tag{542.12}
+$$
+
+两项系数和为一；若 $w_B^\lambda=0$，任取一个概率行补全。对状态 $i$，第一项传递 $\lambda(W_w)_iK$，第二项传递 $(1-\lambda)\delta_{\{i\}}$，故输出行为
+
+$$
+(W_{w^\lambda})_iK_\lambda
+ =\lambda(W_w)_iK+(1-\lambda)\delta_{\{i\}}.
+$$
+
+目标行为 $\lambda(W_v)_i+(1-\lambda)\delta_{\{i\}}$，行差正好是原行差的 $\lambda$ 倍。反向方向同理；零权重输入行不影响任何状态分布，也不应从核的定义域删除。
+
+完全揭示剖面的成对碰撞为零，因此
+
+$$
+ r_{ij}(w^\lambda)=\lambda r_{ij}(w),
+ \qquad
+ \Delta_{ij}^\lambda=\lambda\Delta_{ij},
+ \qquad
+ R^\lambda=\lambda R.
+$$
+
+再证普通分划实现。对 $n\ge2$，令
+
+$$
+ S_w=\sum_{|B|\ge2}w_B.
+$$
+
+由 $\sum_B|B|w_B=n$ 及 $|B|\ge2$（在非单点项上）得 $S_w\le n/2$。每个非单点 $B$ 定义分划 $P_B$：一个块为 $B$，其余状态各自成单点；另以 $P_0$ 表示离散分划。给出
+
+$$
+ p_w(P_B)=\lambda w_B\quad(|B|\ge2),
+ \qquad
+ p_w(P_0)=1-\lambda S_w.
+\tag{542.13}
+$$
+
+当 $0\le\lambda\le2/n$ 时这些数非负且总和为一。非单点块 $B$ 的诱导权正是 $\lambda w_B$；状态 $i$ 的单点块权为
+
+$$
+1-\lambda S_w+\lambda\sum_{\substack{|B|\ge2\\i\notin B}}w_B
+ =1-\lambda+\lambda w_i,
+$$
+
+这里用了 CAR 行方程 $w_i+\sum_{B\ni i,|B|\ge2}w_B=1$。这正是 $w^\lambda$ 的单点权。对 $v$ 使用同一构造得到 $p_v$。若两端需要共同公开概率空间，取乘积种子 $(P,Q)\sim p_w\times p_v$，前一实验使用 $P$ 的块、后一实验使用 $Q$ 的块，并按第538章的全种子规范映射揭示共同种子；这只提供共同状态无关的实现，不把两个端点认作同一类实验。
+
+当 $n=1$ 时唯一 CAR 行就是单点完全揭示，所有方向的缺损为零；此时只需 $0\le\lambda\le1$，不使用 $2/n$ 的普通分划陈述。$\lambda=0$ 时两端都为 $I$，缩放式成立但后续等价论证不作除以 $\lambda$ 的操作。证毕。
+

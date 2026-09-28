@@ -1,0 +1,11 @@
+## 10. 随机修饰单环：精确纯度与谱非平坦性
+
+[TPTN26] 第 5.1 节在完美张量每条腿上施加独立 Haar 幺正；内部相邻变换可以合并成每条边独立的 Haar 幺正。以下使用其单环实例，边界局部幺正不影响区域谱。每个顶点为归一化 AME$(4,d)$，每条环边用
+
+$$
+|U\rangle=(U\otimes I)|\Phi_d\rangle,\quad U\sim\mathrm{Haar}(U(d)),\quad
+|\Phi_d\rangle=d^{-1/2}\sum_j|j,j\rangle
+$$
+
+收缩。记未归一化网络态 $V$、$Z=\langle V|V\rangle$，区域 $A$ 每顶点选一条外腿。
+

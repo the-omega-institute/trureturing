@@ -1,0 +1,2 @@
+**证明附引。** 这里的核归纳与任意自适应历史的全记录支配可与 Song, *Pre-Disclosure Experiment Menus*, v1, Theorem 2.1 的递归核机制比较；高斯组合的参数形式与 Dong–Roth–Su, *Gaussian Differential Privacy*, Theorem 3.2、Corollary 3.3 相容。那些结果是一般中间工具；本定理的内容是带逐点因果许可、共同实现和目标约束的这一特定前沿，而非把通用自适应定理改名重述。[Song, arXiv:2608.22905v1](https://arxiv.org/html/2608.22905v1)；[Dong, Roth and Su, arXiv:1905.02383](https://arxiv.org/html/1905.02383)。
+

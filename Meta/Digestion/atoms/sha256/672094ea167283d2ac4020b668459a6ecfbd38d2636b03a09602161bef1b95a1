@@ -1,0 +1,55 @@
+### 定义 18：独立关系块的剩余集合
+
+设：
+
+$$
+I=I_1\sqcup\cdots\sqcup I_m,
+$$
+
+并且非空关系具有独立分解：
+
+$$
+\mathcal K =
+\mathcal K_1\times\cdots\times\mathcal K_m,
+\qquad
+\varnothing\neq\mathcal K_j\subseteq X_{I_j}.
+$$
+
+这里不要求 $\mathcal K_j$ 是不可约关系块。通常取 $m\geq1$；也允许 $m=0$，此时约定 $I=\varnothing$，关系的空乘积为包含空赋值的单点集合。任务为：
+
+$$
+F=\mathbf 1_{\mathcal K}.
+$$
+
+对于切面 $A$，记：
+
+$$
+A_j=A\cap I_j,
+\qquad
+B_j=I_j\setminus A_j.
+$$
+
+局部已观察赋值 $a_j$ 的剩余合法集合为：
+
+$$
+H_j(a_j) =
+\{b_j\in X_{B_j}:a_j\sqcup b_j\in\mathcal K_j\}.
+$$
+
+令：
+
+$$
+r_j=
+\left|
+\{H_j(a_j):H_j(a_j)\neq\varnothing\}
+\right|.
+$$
+
+另令 $\varepsilon_A=1$，当且仅当至少一个块存在 $a_j$ 使：
+
+$$
+H_j(a_j)=\varnothing;
+$$
+
+否则令 $\varepsilon_A=0$。特别地，$m=0$ 时没有空剩余集合，故 $\varepsilon_A=0$；后文数值空乘积取 $1$。
+

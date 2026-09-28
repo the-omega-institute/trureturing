@@ -1,0 +1,18 @@
+**定理 2.1（四面支集与二处缺陷）。** There is a triangular cochain $P$ supported on
+exactly four faces such that $T(P)=2$ and, for every edge cochain $e$,
+$\operatorname{wt}(P+d_1e)\geq4$. In fact $R(P)=4$, so the coefficient $2$ in
+the preceding inequality is attained.
+
+Take the four cube edges of the path
+$0000\to1000\to1100\to1110\to1111$ as the support of $P$. Every interior
+tetrahedron meets the path in two edges and the endpoints meet it in one;
+therefore $d_2P$ is supported precisely at $0000$ and $1111$. Each simplicial
+edge lies in two triangles of a tetrahedron, so $d_2d_1e=0$. For any cochain
+$H$ with $d_2H=d_2P$, sum $d_2H$ over tetrahedra with coordinate $i$ equal to
+zero. Every triangle whose missing coordinate differs from $i$ occurs twice
+and cancels. A triangle whose missing coordinate is $i$ occurs once. Exactly
+one endpoint is on that side, hence the direction-$i$ triangle values sum to
+one. Each of the four disjoint direction classes therefore contains a
+supported triangle, giving $\operatorname{wt}(H)\geq4$. Apply this to
+$H=P+d_1e$; choosing $e=0$ gives equality.
+

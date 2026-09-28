@@ -1,0 +1,5 @@
+source_id = "arithmetic-holographic-rt"
+path = "docs/develop/theory/ARITHMETIC_HOLOGRAPHIC_RT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

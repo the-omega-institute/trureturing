@@ -1,0 +1,3 @@
+**证明。** 非空性由 $u,v\ge a$ 与 $u^2+v^2\le B$ 的最小平方和立即给出。若 $u\ge v\ge a$，则
+$u\le\sqrt{B-v^2}\le\sqrt{B-a^2}$，故 $u-v\le\sqrt{B-a^2}-a$；交换 $u,v$ 处理另一情形。证毕。
+

@@ -1,0 +1,150 @@
+{
+  "cases": [
+    {
+      "additional_pure_phase_conditions": 16,
+      "bad3_upper": "1/59049",
+      "bad5_upper": "1/15625",
+      "height3": 13,
+      "height5": 8,
+      "screen_certifies": false,
+      "slack_lower": "-22218238121/176198730468750",
+      "weight_multiplier_upper": "5638449472/5638359375"
+    },
+    {
+      "additional_pure_phase_conditions": 17,
+      "bad3_upper": "1/59049",
+      "bad5_upper": "1/78125",
+      "height3": 13,
+      "height5": 9,
+      "screen_certifies": true,
+      "slack_lower": "5479330098137/2642980957031250",
+      "weight_multiplier_upper": "84576348416/84575390625"
+    },
+    {
+      "additional_pure_phase_conditions": 17,
+      "bad3_upper": "1/177147",
+      "bad5_upper": "1/15625",
+      "height3": 14,
+      "height5": 8,
+      "screen_certifies": true,
+      "slack_lower": "1625223077149/528596191406250",
+      "weight_multiplier_upper": "16915233832/16915078125"
+    }
+  ],
+  "general_tail_identity": "bad3<=3^(3-H3); bad5<=5^(2-H5), with outside-column and75-overlap events disjoint",
+  "negative_control_boundary": "The13/8 lower screen fails; this is not infeasibility, a query counterexample, or a lower bound on the required prefix length.",
+  "prefix3_example": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      27,
+      4
+    ],
+    [
+      81,
+      40
+    ],
+    [
+      243,
+      94
+    ],
+    [
+      729,
+      256
+    ],
+    [
+      2187,
+      742
+    ],
+    [
+      6561,
+      2200
+    ],
+    [
+      19683,
+      6574
+    ],
+    [
+      59049,
+      19696
+    ],
+    [
+      177147,
+      59062
+    ],
+    [
+      531441,
+      177160
+    ],
+    [
+      1594323,
+      531454
+    ],
+    [
+      4782969,
+      1594336
+    ]
+  ],
+  "prefix5_example": [
+    [
+      5,
+      0
+    ],
+    [
+      25,
+      1
+    ],
+    [
+      125,
+      36
+    ],
+    [
+      625,
+      136
+    ],
+    [
+      3125,
+      636
+    ],
+    [
+      15625,
+      3136
+    ],
+    [
+      78125,
+      15636
+    ],
+    [
+      390625,
+      78136
+    ],
+    [
+      1953125,
+      390636
+    ]
+  ],
+  "raw_mixture_criterion": "For 0<tau<1: theta in (1-tau)*edge+tau*legal_domain iff max(1-2*(z13+z22),1-20*(t1-e))<=tau",
+  "scope": "Fixed source chart and unchanged complete-query schedule. Conditions are on one completed source, not a reduction of every odd cover to this prefix.",
+  "selected_anchors_example": [
+    [
+      15,
+      2
+    ],
+    [
+      45,
+      8
+    ],
+    [
+      75,
+      56
+    ]
+  ],
+  "tube_result_sha256": "10cc4fb16f5c4db94fbdb227c9a6a524ca7bc34e52ba3881d6f9dcfda30a0b64",
+  "verification": "Exact rational tails and finite prefix legality. General arbitrary-height statements follow from geometric series and same-source disjointness, not finite sampling. No geometry or Lean verification."
+}

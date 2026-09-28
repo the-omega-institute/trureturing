@@ -1,0 +1,20 @@
+**证明。** CAR 全域蕴含公开子类。反向设公开命题成立，给任意 CAR 对取一个正的 $\lambda\le2/n$，例如取有理的 $\lambda=1/n$；定理542.3把两端送到公开剖面，并给出
+
+$$
+ d(v^\lambda\to w^\lambda)=\lambda d(v\to w),
+ \qquad
+ R^\lambda=\lambda R,
+ \qquad
+ d(w^\lambda\to v^\lambda)=\lambda\varepsilon.
+$$
+
+公开不等式于是给出
+
+$$
+ \lambda d(v\to w)\le
+ \min\{1,\lambda(R+n\varepsilon/2)\}
+ \le\lambda(R+n\varepsilon/2).
+$$
+
+除以正的 $\lambda$ 得到未截断界。原始缺损又满足 $d(v\to w)\le1$，故同时得到带最小值的 CAR 界。若 $\lambda=0$，不作此除法；这正是定理542.3中单独列出的零端点。若 $w,v$ 的权重有理，所取有理 $\lambda$ 使两份分划律权重仍有理；任何严格违反在正齐次缩放下保持严格，且可选 $\lambda<1$ 使公开端的截断不掩盖严格性。因此有理 CAR 反例会转成同一状态数的有理公开反例。证毕。
+

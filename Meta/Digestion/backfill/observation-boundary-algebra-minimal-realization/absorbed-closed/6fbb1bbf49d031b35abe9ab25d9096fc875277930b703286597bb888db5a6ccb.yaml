@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6fbb1bbf49d031b35abe9ab25d9096fc875277930b703286597bb888db5a6ccb
+  normalized_sha256: sha256:6fbb1bbf49d031b35abe9ab25d9096fc875277930b703286597bb888db5a6ccb
+cas_ref: sha256:6fbb1bbf49d031b35abe9ab25d9096fc875277930b703286597bb888db5a6ccb
+coverage_gids:
+  - gid: D5/S3/Observer/Separation/ThreeLeafCausalPeak.result
+    target_statement_id: sha256:ff7d493256e2e0815cae023ce841c2cc9db9d3b5ea35a1e9803c4709f0f207d8
+receipts:
+  unresolved_subitems: []

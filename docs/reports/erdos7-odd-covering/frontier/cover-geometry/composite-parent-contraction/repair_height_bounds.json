@@ -1,0 +1,2933 @@
+{
+  "bucket_rows": [
+    {
+      "support_count": 4,
+      "bounds": {
+        "5": 5,
+        "7": 4,
+        "11": 3
+      }
+    },
+    {
+      "support_count": 5,
+      "bounds": {
+        "5": 7,
+        "7": 5,
+        "11": 3,
+        "13": 3
+      }
+    },
+    {
+      "support_count": 9,
+      "bounds": {
+        "5": 14,
+        "7": 9,
+        "11": 6,
+        "13": 5,
+        "17": 4,
+        "19": 4,
+        "23": 3,
+        "29": 3
+      }
+    },
+    {
+      "support_count": 11,
+      "bounds": {
+        "5": 17,
+        "7": 11,
+        "11": 7,
+        "13": 6,
+        "17": 5,
+        "19": 4,
+        "23": 4,
+        "29": 3,
+        "31": 3,
+        "37": 3
+      }
+    }
+  ],
+  "scope": "Exact parameter consequences of existing QC2 and RP2--RP4, conditional on one lexicographically minimum distinct odd whole cover. Ordinary proof/arithmetic, no Lean claim.",
+  "rows": [
+    {
+      "repair_prime": 3,
+      "repair_height": 0,
+      "targets": {
+        "5": {
+          "retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "7": {
+          "retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "11": {
+          "retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "13": {
+          "retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "17": {
+          "retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "19": {
+          "retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "23": {
+          "retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "29": {
+          "retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "31": {
+          "retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "43": {
+          "retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 2,
+            "a": 2,
+            "N": 3,
+            "layers": [
+              3
+            ],
+            "R": 3,
+            "a_min": 2,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        }
+      },
+      "R": 3,
+      "a_min": 2,
+      "a_max": 2
+    },
+    {
+      "repair_prime": 3,
+      "repair_height": 1,
+      "targets": {
+        "5": {
+          "retained": {
+            "bound": 5,
+            "a": 4,
+            "N": 8,
+            "layers": [
+              5,
+              3
+            ],
+            "R": 6,
+            "a_min": 4,
+            "candidate_a_count": 2
+          },
+          "without_retained": {
+            "bound": 8,
+            "a": 6,
+            "N": 13,
+            "layers": [
+              7,
+              6
+            ],
+            "R": 9,
+            "a_min": 6,
+            "candidate_a_count": 3
+          },
+          "initial_support_compatible": true
+        },
+        "7": {
+          "retained": {
+            "bound": 5,
+            "a": 4,
+            "N": 8,
+            "layers": [
+              5,
+              3
+            ],
+            "R": 6,
+            "a_min": 4,
+            "candidate_a_count": 2
+          },
+          "without_retained": {
+            "bound": 7,
+            "a": 6,
+            "N": 13,
+            "layers": [
+              7,
+              6
+            ],
+            "R": 9,
+            "a_min": 6,
+            "candidate_a_count": 3
+          },
+          "initial_support_compatible": true
+        },
+        "11": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 8,
+            "layers": [
+              5,
+              3
+            ],
+            "R": 6,
+            "a_min": 4,
+            "candidate_a_count": 2
+          },
+          "without_retained": {
+            "bound": 7,
+            "a": 6,
+            "N": 13,
+            "layers": [
+              7,
+              6
+            ],
+            "R": 9,
+            "a_min": 6,
+            "candidate_a_count": 3
+          },
+          "initial_support_compatible": true
+        },
+        "13": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 8,
+            "layers": [
+              5,
+              3
+            ],
+            "R": 6,
+            "a_min": 4,
+            "candidate_a_count": 2
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 13,
+            "layers": [
+              7,
+              6
+            ],
+            "R": 9,
+            "a_min": 6,
+            "candidate_a_count": 3
+          },
+          "initial_support_compatible": true
+        },
+        "17": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 8,
+            "layers": [
+              5,
+              3
+            ],
+            "R": 6,
+            "a_min": 4,
+            "candidate_a_count": 2
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 13,
+            "layers": [
+              7,
+              6
+            ],
+            "R": 9,
+            "a_min": 6,
+            "candidate_a_count": 3
+          },
+          "initial_support_compatible": true
+        },
+        "19": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 8,
+            "layers": [
+              5,
+              3
+            ],
+            "R": 6,
+            "a_min": 4,
+            "candidate_a_count": 2
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 13,
+            "layers": [
+              7,
+              6
+            ],
+            "R": 9,
+            "a_min": 6,
+            "candidate_a_count": 3
+          },
+          "initial_support_compatible": true
+        },
+        "23": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 8,
+            "layers": [
+              5,
+              3
+            ],
+            "R": 6,
+            "a_min": 4,
+            "candidate_a_count": 2
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 13,
+            "layers": [
+              7,
+              6
+            ],
+            "R": 9,
+            "a_min": 6,
+            "candidate_a_count": 3
+          },
+          "initial_support_compatible": true
+        },
+        "29": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 8,
+            "layers": [
+              5,
+              3
+            ],
+            "R": 6,
+            "a_min": 4,
+            "candidate_a_count": 2
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 13,
+            "layers": [
+              7,
+              6
+            ],
+            "R": 9,
+            "a_min": 6,
+            "candidate_a_count": 3
+          },
+          "initial_support_compatible": true
+        },
+        "31": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 8,
+            "layers": [
+              5,
+              3
+            ],
+            "R": 6,
+            "a_min": 4,
+            "candidate_a_count": 2
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 13,
+            "layers": [
+              7,
+              6
+            ],
+            "R": 9,
+            "a_min": 6,
+            "candidate_a_count": 3
+          },
+          "initial_support_compatible": true
+        },
+        "43": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 8,
+            "layers": [
+              5,
+              3
+            ],
+            "R": 6,
+            "a_min": 4,
+            "candidate_a_count": 2
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 13,
+            "layers": [
+              7,
+              6
+            ],
+            "R": 9,
+            "a_min": 6,
+            "candidate_a_count": 3
+          },
+          "initial_support_compatible": true
+        }
+      },
+      "R": 6,
+      "a_min": 4,
+      "a_max": 5
+    },
+    {
+      "repair_prime": 3,
+      "repair_height": 2,
+      "targets": {
+        "5": {
+          "retained": {
+            "bound": 15,
+            "a": 10,
+            "N": 25,
+            "layers": [
+              11,
+              11,
+              3
+            ],
+            "R": 15,
+            "a_min": 10,
+            "candidate_a_count": 5
+          },
+          "without_retained": {
+            "bound": 29,
+            "a": 19,
+            "N": 43,
+            "layers": [
+              20,
+              20,
+              3
+            ],
+            "R": 27,
+            "a_min": 18,
+            "candidate_a_count": 9
+          },
+          "initial_support_compatible": true
+        },
+        "7": {
+          "retained": {
+            "bound": 13,
+            "a": 10,
+            "N": 25,
+            "layers": [
+              11,
+              11,
+              3
+            ],
+            "R": 15,
+            "a_min": 10,
+            "candidate_a_count": 5
+          },
+          "without_retained": {
+            "bound": 25,
+            "a": 19,
+            "N": 43,
+            "layers": [
+              20,
+              20,
+              3
+            ],
+            "R": 27,
+            "a_min": 18,
+            "candidate_a_count": 9
+          },
+          "initial_support_compatible": true
+        },
+        "11": {
+          "retained": {
+            "bound": 12,
+            "a": 10,
+            "N": 25,
+            "layers": [
+              11,
+              11,
+              3
+            ],
+            "R": 15,
+            "a_min": 10,
+            "candidate_a_count": 5
+          },
+          "without_retained": {
+            "bound": 23,
+            "a": 18,
+            "N": 53,
+            "layers": [
+              19,
+              19,
+              15
+            ],
+            "R": 27,
+            "a_min": 18,
+            "candidate_a_count": 9
+          },
+          "initial_support_compatible": true
+        },
+        "13": {
+          "retained": {
+            "bound": 11,
+            "a": 10,
+            "N": 25,
+            "layers": [
+              11,
+              11,
+              3
+            ],
+            "R": 15,
+            "a_min": 10,
+            "candidate_a_count": 5
+          },
+          "without_retained": {
+            "bound": 22,
+            "a": 18,
+            "N": 53,
+            "layers": [
+              19,
+              19,
+              15
+            ],
+            "R": 27,
+            "a_min": 18,
+            "candidate_a_count": 9
+          },
+          "initial_support_compatible": true
+        },
+        "17": {
+          "retained": {
+            "bound": 11,
+            "a": 10,
+            "N": 25,
+            "layers": [
+              11,
+              11,
+              3
+            ],
+            "R": 15,
+            "a_min": 10,
+            "candidate_a_count": 5
+          },
+          "without_retained": {
+            "bound": 21,
+            "a": 18,
+            "N": 53,
+            "layers": [
+              19,
+              19,
+              15
+            ],
+            "R": 27,
+            "a_min": 18,
+            "candidate_a_count": 9
+          },
+          "initial_support_compatible": true
+        },
+        "19": {
+          "retained": {
+            "bound": 11,
+            "a": 10,
+            "N": 25,
+            "layers": [
+              11,
+              11,
+              3
+            ],
+            "R": 15,
+            "a_min": 10,
+            "candidate_a_count": 5
+          },
+          "without_retained": {
+            "bound": 20,
+            "a": 18,
+            "N": 53,
+            "layers": [
+              19,
+              19,
+              15
+            ],
+            "R": 27,
+            "a_min": 18,
+            "candidate_a_count": 9
+          },
+          "initial_support_compatible": true
+        },
+        "23": {
+          "retained": {
+            "bound": 11,
+            "a": 10,
+            "N": 25,
+            "layers": [
+              11,
+              11,
+              3
+            ],
+            "R": 15,
+            "a_min": 10,
+            "candidate_a_count": 5
+          },
+          "without_retained": {
+            "bound": 20,
+            "a": 18,
+            "N": 53,
+            "layers": [
+              19,
+              19,
+              15
+            ],
+            "R": 27,
+            "a_min": 18,
+            "candidate_a_count": 9
+          },
+          "initial_support_compatible": true
+        },
+        "29": {
+          "retained": {
+            "bound": 10,
+            "a": 10,
+            "N": 25,
+            "layers": [
+              11,
+              11,
+              3
+            ],
+            "R": 15,
+            "a_min": 10,
+            "candidate_a_count": 5
+          },
+          "without_retained": {
+            "bound": 19,
+            "a": 18,
+            "N": 53,
+            "layers": [
+              19,
+              19,
+              15
+            ],
+            "R": 27,
+            "a_min": 18,
+            "candidate_a_count": 9
+          },
+          "initial_support_compatible": true
+        },
+        "31": {
+          "retained": {
+            "bound": 10,
+            "a": 10,
+            "N": 25,
+            "layers": [
+              11,
+              11,
+              3
+            ],
+            "R": 15,
+            "a_min": 10,
+            "candidate_a_count": 5
+          },
+          "without_retained": {
+            "bound": 19,
+            "a": 18,
+            "N": 53,
+            "layers": [
+              19,
+              19,
+              15
+            ],
+            "R": 27,
+            "a_min": 18,
+            "candidate_a_count": 9
+          },
+          "initial_support_compatible": true
+        },
+        "43": {
+          "retained": {
+            "bound": 10,
+            "a": 10,
+            "N": 25,
+            "layers": [
+              11,
+              11,
+              3
+            ],
+            "R": 15,
+            "a_min": 10,
+            "candidate_a_count": 5
+          },
+          "without_retained": {
+            "bound": 19,
+            "a": 18,
+            "N": 53,
+            "layers": [
+              19,
+              19,
+              15
+            ],
+            "R": 27,
+            "a_min": 18,
+            "candidate_a_count": 9
+          },
+          "initial_support_compatible": true
+        }
+      },
+      "R": 15,
+      "a_min": 10,
+      "a_max": 14
+    },
+    {
+      "repair_prime": 3,
+      "repair_height": 3,
+      "targets": {
+        "5": {
+          "retained": {
+            "bound": 46,
+            "a": 30,
+            "N": 68,
+            "layers": [
+              31,
+              31,
+              6
+            ],
+            "R": 42,
+            "a_min": 28,
+            "candidate_a_count": 14
+          },
+          "without_retained": {
+            "bound": 89,
+            "a": 60,
+            "N": 121,
+            "layers": [
+              61,
+              60
+            ],
+            "R": 81,
+            "a_min": 54,
+            "candidate_a_count": 27
+          },
+          "initial_support_compatible": true
+        },
+        "7": {
+          "retained": {
+            "bound": 41,
+            "a": 29,
+            "N": 78,
+            "layers": [
+              30,
+              30,
+              18
+            ],
+            "R": 42,
+            "a_min": 28,
+            "candidate_a_count": 14
+          },
+          "without_retained": {
+            "bound": 79,
+            "a": 60,
+            "N": 121,
+            "layers": [
+              61,
+              60
+            ],
+            "R": 81,
+            "a_min": 54,
+            "candidate_a_count": 27
+          },
+          "initial_support_compatible": true
+        },
+        "11": {
+          "retained": {
+            "bound": 36,
+            "a": 28,
+            "N": 90,
+            "layers": [
+              29,
+              29,
+              29,
+              3
+            ],
+            "R": 42,
+            "a_min": 28,
+            "candidate_a_count": 14
+          },
+          "without_retained": {
+            "bound": 71,
+            "a": 55,
+            "N": 171,
+            "layers": [
+              56,
+              56,
+              56,
+              3
+            ],
+            "R": 81,
+            "a_min": 54,
+            "candidate_a_count": 27
+          },
+          "initial_support_compatible": true
+        },
+        "13": {
+          "retained": {
+            "bound": 35,
+            "a": 28,
+            "N": 90,
+            "layers": [
+              29,
+              29,
+              29,
+              3
+            ],
+            "R": 42,
+            "a_min": 28,
+            "candidate_a_count": 14
+          },
+          "without_retained": {
+            "bound": 69,
+            "a": 55,
+            "N": 171,
+            "layers": [
+              56,
+              56,
+              56,
+              3
+            ],
+            "R": 81,
+            "a_min": 54,
+            "candidate_a_count": 27
+          },
+          "initial_support_compatible": true
+        },
+        "17": {
+          "retained": {
+            "bound": 33,
+            "a": 28,
+            "N": 90,
+            "layers": [
+              29,
+              29,
+              29,
+              3
+            ],
+            "R": 42,
+            "a_min": 28,
+            "candidate_a_count": 14
+          },
+          "without_retained": {
+            "bound": 65,
+            "a": 55,
+            "N": 171,
+            "layers": [
+              56,
+              56,
+              56,
+              3
+            ],
+            "R": 81,
+            "a_min": 54,
+            "candidate_a_count": 27
+          },
+          "initial_support_compatible": true
+        },
+        "19": {
+          "retained": {
+            "bound": 32,
+            "a": 28,
+            "N": 90,
+            "layers": [
+              29,
+              29,
+              29,
+              3
+            ],
+            "R": 42,
+            "a_min": 28,
+            "candidate_a_count": 14
+          },
+          "without_retained": {
+            "bound": 64,
+            "a": 55,
+            "N": 171,
+            "layers": [
+              56,
+              56,
+              56,
+              3
+            ],
+            "R": 81,
+            "a_min": 54,
+            "candidate_a_count": 27
+          },
+          "initial_support_compatible": true
+        },
+        "23": {
+          "retained": {
+            "bound": 32,
+            "a": 28,
+            "N": 90,
+            "layers": [
+              29,
+              29,
+              29,
+              3
+            ],
+            "R": 42,
+            "a_min": 28,
+            "candidate_a_count": 14
+          },
+          "without_retained": {
+            "bound": 62,
+            "a": 55,
+            "N": 171,
+            "layers": [
+              56,
+              56,
+              56,
+              3
+            ],
+            "R": 81,
+            "a_min": 54,
+            "candidate_a_count": 27
+          },
+          "initial_support_compatible": true
+        },
+        "29": {
+          "retained": {
+            "bound": 31,
+            "a": 28,
+            "N": 90,
+            "layers": [
+              29,
+              29,
+              29,
+              3
+            ],
+            "R": 42,
+            "a_min": 28,
+            "candidate_a_count": 14
+          },
+          "without_retained": {
+            "bound": 61,
+            "a": 54,
+            "N": 207,
+            "layers": [
+              55,
+              55,
+              55,
+              42
+            ],
+            "R": 81,
+            "a_min": 54,
+            "candidate_a_count": 27
+          },
+          "initial_support_compatible": true
+        },
+        "31": {
+          "retained": {
+            "bound": 30,
+            "a": 28,
+            "N": 90,
+            "layers": [
+              29,
+              29,
+              29,
+              3
+            ],
+            "R": 42,
+            "a_min": 28,
+            "candidate_a_count": 14
+          },
+          "without_retained": {
+            "bound": 60,
+            "a": 54,
+            "N": 207,
+            "layers": [
+              55,
+              55,
+              55,
+              42
+            ],
+            "R": 81,
+            "a_min": 54,
+            "candidate_a_count": 27
+          },
+          "initial_support_compatible": true
+        },
+        "43": {
+          "retained": {
+            "bound": 30,
+            "a": 28,
+            "N": 90,
+            "layers": [
+              29,
+              29,
+              29,
+              3
+            ],
+            "R": 42,
+            "a_min": 28,
+            "candidate_a_count": 14
+          },
+          "without_retained": {
+            "bound": 58,
+            "a": 54,
+            "N": 207,
+            "layers": [
+              55,
+              55,
+              55,
+              42
+            ],
+            "R": 81,
+            "a_min": 54,
+            "candidate_a_count": 27
+          },
+          "initial_support_compatible": true
+        }
+      },
+      "R": 42,
+      "a_min": 28,
+      "a_max": 41
+    },
+    {
+      "repair_prime": 5,
+      "repair_height": 0,
+      "targets": {
+        "3": {
+          "retained": {
+            "bound": 5,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 5,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": true
+        },
+        "7": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "11": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "13": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "17": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "19": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "23": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "29": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "31": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "43": {
+          "retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 4,
+            "a": 4,
+            "N": 5,
+            "layers": [
+              5
+            ],
+            "R": 5,
+            "a_min": 4,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        }
+      },
+      "R": 5,
+      "a_min": 4,
+      "a_max": 4
+    },
+    {
+      "repair_prime": 5,
+      "repair_height": 1,
+      "targets": {
+        "3": {
+          "retained": {
+            "bound": 28,
+            "a": 19,
+            "N": 20,
+            "layers": [
+              20
+            ],
+            "R": 20,
+            "a_min": 16,
+            "candidate_a_count": 4
+          },
+          "without_retained": {
+            "bound": 35,
+            "a": 24,
+            "N": 25,
+            "layers": [
+              25
+            ],
+            "R": 25,
+            "a_min": 20,
+            "candidate_a_count": 5
+          },
+          "initial_support_compatible": true
+        },
+        "7": {
+          "retained": {
+            "bound": 21,
+            "a": 16,
+            "N": 32,
+            "layers": [
+              17,
+              15
+            ],
+            "R": 20,
+            "a_min": 16,
+            "candidate_a_count": 4
+          },
+          "without_retained": {
+            "bound": 26,
+            "a": 20,
+            "N": 41,
+            "layers": [
+              21,
+              20
+            ],
+            "R": 25,
+            "a_min": 20,
+            "candidate_a_count": 5
+          },
+          "initial_support_compatible": true
+        },
+        "11": {
+          "retained": {
+            "bound": 19,
+            "a": 16,
+            "N": 32,
+            "layers": [
+              17,
+              15
+            ],
+            "R": 20,
+            "a_min": 16,
+            "candidate_a_count": 4
+          },
+          "without_retained": {
+            "bound": 23,
+            "a": 20,
+            "N": 41,
+            "layers": [
+              21,
+              20
+            ],
+            "R": 25,
+            "a_min": 20,
+            "candidate_a_count": 5
+          },
+          "initial_support_compatible": true
+        },
+        "13": {
+          "retained": {
+            "bound": 18,
+            "a": 16,
+            "N": 32,
+            "layers": [
+              17,
+              15
+            ],
+            "R": 20,
+            "a_min": 16,
+            "candidate_a_count": 4
+          },
+          "without_retained": {
+            "bound": 23,
+            "a": 20,
+            "N": 41,
+            "layers": [
+              21,
+              20
+            ],
+            "R": 25,
+            "a_min": 20,
+            "candidate_a_count": 5
+          },
+          "initial_support_compatible": true
+        },
+        "17": {
+          "retained": {
+            "bound": 17,
+            "a": 16,
+            "N": 32,
+            "layers": [
+              17,
+              15
+            ],
+            "R": 20,
+            "a_min": 16,
+            "candidate_a_count": 4
+          },
+          "without_retained": {
+            "bound": 22,
+            "a": 20,
+            "N": 41,
+            "layers": [
+              21,
+              20
+            ],
+            "R": 25,
+            "a_min": 20,
+            "candidate_a_count": 5
+          },
+          "initial_support_compatible": true
+        },
+        "19": {
+          "retained": {
+            "bound": 17,
+            "a": 16,
+            "N": 32,
+            "layers": [
+              17,
+              15
+            ],
+            "R": 20,
+            "a_min": 16,
+            "candidate_a_count": 4
+          },
+          "without_retained": {
+            "bound": 22,
+            "a": 20,
+            "N": 41,
+            "layers": [
+              21,
+              20
+            ],
+            "R": 25,
+            "a_min": 20,
+            "candidate_a_count": 5
+          },
+          "initial_support_compatible": true
+        },
+        "23": {
+          "retained": {
+            "bound": 17,
+            "a": 16,
+            "N": 32,
+            "layers": [
+              17,
+              15
+            ],
+            "R": 20,
+            "a_min": 16,
+            "candidate_a_count": 4
+          },
+          "without_retained": {
+            "bound": 21,
+            "a": 20,
+            "N": 41,
+            "layers": [
+              21,
+              20
+            ],
+            "R": 25,
+            "a_min": 20,
+            "candidate_a_count": 5
+          },
+          "initial_support_compatible": true
+        },
+        "29": {
+          "retained": {
+            "bound": 17,
+            "a": 16,
+            "N": 32,
+            "layers": [
+              17,
+              15
+            ],
+            "R": 20,
+            "a_min": 16,
+            "candidate_a_count": 4
+          },
+          "without_retained": {
+            "bound": 21,
+            "a": 20,
+            "N": 41,
+            "layers": [
+              21,
+              20
+            ],
+            "R": 25,
+            "a_min": 20,
+            "candidate_a_count": 5
+          },
+          "initial_support_compatible": true
+        },
+        "31": {
+          "retained": {
+            "bound": 17,
+            "a": 16,
+            "N": 32,
+            "layers": [
+              17,
+              15
+            ],
+            "R": 20,
+            "a_min": 16,
+            "candidate_a_count": 4
+          },
+          "without_retained": {
+            "bound": 21,
+            "a": 20,
+            "N": 41,
+            "layers": [
+              21,
+              20
+            ],
+            "R": 25,
+            "a_min": 20,
+            "candidate_a_count": 5
+          },
+          "initial_support_compatible": true
+        },
+        "43": {
+          "retained": {
+            "bound": 16,
+            "a": 16,
+            "N": 32,
+            "layers": [
+              17,
+              15
+            ],
+            "R": 20,
+            "a_min": 16,
+            "candidate_a_count": 4
+          },
+          "without_retained": {
+            "bound": 20,
+            "a": 20,
+            "N": 41,
+            "layers": [
+              21,
+              20
+            ],
+            "R": 25,
+            "a_min": 20,
+            "candidate_a_count": 5
+          },
+          "initial_support_compatible": true
+        }
+      },
+      "R": 20,
+      "a_min": 16,
+      "a_max": 19
+    },
+    {
+      "repair_prime": 5,
+      "repair_height": 2,
+      "targets": {
+        "3": {
+          "retained": {
+            "bound": 140,
+            "a": 94,
+            "N": 95,
+            "layers": [
+              95
+            ],
+            "R": 95,
+            "a_min": 76,
+            "candidate_a_count": 19
+          },
+          "without_retained": {
+            "bound": 185,
+            "a": 124,
+            "N": 125,
+            "layers": [
+              125
+            ],
+            "R": 125,
+            "a_min": 100,
+            "candidate_a_count": 25
+          },
+          "initial_support_compatible": true
+        },
+        "7": {
+          "retained": {
+            "bound": 104,
+            "a": 78,
+            "N": 163,
+            "layers": [
+              79,
+              79,
+              5
+            ],
+            "R": 95,
+            "a_min": 76,
+            "candidate_a_count": 19
+          },
+          "without_retained": {
+            "bound": 137,
+            "a": 104,
+            "N": 205,
+            "layers": [
+              105,
+              100
+            ],
+            "R": 125,
+            "a_min": 100,
+            "candidate_a_count": 25
+          },
+          "initial_support_compatible": true
+        },
+        "11": {
+          "retained": {
+            "bound": 94,
+            "a": 78,
+            "N": 163,
+            "layers": [
+              79,
+              79,
+              5
+            ],
+            "R": 95,
+            "a_min": 76,
+            "candidate_a_count": 19
+          },
+          "without_retained": {
+            "bound": 124,
+            "a": 103,
+            "N": 213,
+            "layers": [
+              104,
+              104,
+              5
+            ],
+            "R": 125,
+            "a_min": 100,
+            "candidate_a_count": 25
+          },
+          "initial_support_compatible": true
+        },
+        "13": {
+          "retained": {
+            "bound": 91,
+            "a": 78,
+            "N": 163,
+            "layers": [
+              79,
+              79,
+              5
+            ],
+            "R": 95,
+            "a_min": 76,
+            "candidate_a_count": 19
+          },
+          "without_retained": {
+            "bound": 120,
+            "a": 103,
+            "N": 213,
+            "layers": [
+              104,
+              104,
+              5
+            ],
+            "R": 125,
+            "a_min": 100,
+            "candidate_a_count": 25
+          },
+          "initial_support_compatible": true
+        },
+        "17": {
+          "retained": {
+            "bound": 88,
+            "a": 77,
+            "N": 191,
+            "layers": [
+              78,
+              78,
+              35
+            ],
+            "R": 95,
+            "a_min": 76,
+            "candidate_a_count": 19
+          },
+          "without_retained": {
+            "bound": 116,
+            "a": 102,
+            "N": 241,
+            "layers": [
+              103,
+              103,
+              35
+            ],
+            "R": 125,
+            "a_min": 100,
+            "candidate_a_count": 25
+          },
+          "initial_support_compatible": true
+        },
+        "19": {
+          "retained": {
+            "bound": 86,
+            "a": 78,
+            "N": 163,
+            "layers": [
+              79,
+              79,
+              5
+            ],
+            "R": 95,
+            "a_min": 76,
+            "candidate_a_count": 19
+          },
+          "without_retained": {
+            "bound": 114,
+            "a": 103,
+            "N": 213,
+            "layers": [
+              104,
+              104,
+              5
+            ],
+            "R": 125,
+            "a_min": 100,
+            "candidate_a_count": 25
+          },
+          "initial_support_compatible": true
+        },
+        "23": {
+          "retained": {
+            "bound": 85,
+            "a": 76,
+            "N": 219,
+            "layers": [
+              77,
+              77,
+              65
+            ],
+            "R": 95,
+            "a_min": 76,
+            "candidate_a_count": 19
+          },
+          "without_retained": {
+            "bound": 112,
+            "a": 102,
+            "N": 241,
+            "layers": [
+              103,
+              103,
+              35
+            ],
+            "R": 125,
+            "a_min": 100,
+            "candidate_a_count": 25
+          },
+          "initial_support_compatible": true
+        },
+        "29": {
+          "retained": {
+            "bound": 83,
+            "a": 76,
+            "N": 219,
+            "layers": [
+              77,
+              77,
+              65
+            ],
+            "R": 95,
+            "a_min": 76,
+            "candidate_a_count": 19
+          },
+          "without_retained": {
+            "bound": 110,
+            "a": 100,
+            "N": 297,
+            "layers": [
+              101,
+              101,
+              95
+            ],
+            "R": 125,
+            "a_min": 100,
+            "candidate_a_count": 25
+          },
+          "initial_support_compatible": true
+        },
+        "31": {
+          "retained": {
+            "bound": 83,
+            "a": 76,
+            "N": 219,
+            "layers": [
+              77,
+              77,
+              65
+            ],
+            "R": 95,
+            "a_min": 76,
+            "candidate_a_count": 19
+          },
+          "without_retained": {
+            "bound": 109,
+            "a": 100,
+            "N": 297,
+            "layers": [
+              101,
+              101,
+              95
+            ],
+            "R": 125,
+            "a_min": 100,
+            "candidate_a_count": 25
+          },
+          "initial_support_compatible": true
+        },
+        "43": {
+          "retained": {
+            "bound": 81,
+            "a": 76,
+            "N": 219,
+            "layers": [
+              77,
+              77,
+              65
+            ],
+            "R": 95,
+            "a_min": 76,
+            "candidate_a_count": 19
+          },
+          "without_retained": {
+            "bound": 107,
+            "a": 100,
+            "N": 297,
+            "layers": [
+              101,
+              101,
+              95
+            ],
+            "R": 125,
+            "a_min": 100,
+            "candidate_a_count": 25
+          },
+          "initial_support_compatible": true
+        }
+      },
+      "R": 95,
+      "a_min": 76,
+      "a_max": 94
+    },
+    {
+      "repair_prime": 7,
+      "repair_height": 0,
+      "targets": {
+        "3": {
+          "retained": {
+            "bound": 8,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 8,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": true
+        },
+        "5": {
+          "retained": {
+            "bound": 7,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 7,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": true
+        },
+        "11": {
+          "retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "13": {
+          "retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "17": {
+          "retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "19": {
+          "retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "23": {
+          "retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "29": {
+          "retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "31": {
+          "retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        },
+        "43": {
+          "retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "without_retained": {
+            "bound": 6,
+            "a": 6,
+            "N": 7,
+            "layers": [
+              7
+            ],
+            "R": 7,
+            "a_min": 6,
+            "candidate_a_count": 1
+          },
+          "initial_support_compatible": false
+        }
+      },
+      "R": 7,
+      "a_min": 6,
+      "a_max": 6
+    },
+    {
+      "repair_prime": 7,
+      "repair_height": 1,
+      "targets": {
+        "3": {
+          "retained": {
+            "bound": 61,
+            "a": 41,
+            "N": 42,
+            "layers": [
+              42
+            ],
+            "R": 42,
+            "a_min": 36,
+            "candidate_a_count": 6
+          },
+          "without_retained": {
+            "bound": 71,
+            "a": 48,
+            "N": 49,
+            "layers": [
+              49
+            ],
+            "R": 49,
+            "a_min": 42,
+            "candidate_a_count": 7
+          },
+          "initial_support_compatible": true
+        },
+        "5": {
+          "retained": {
+            "bound": 51,
+            "a": 40,
+            "N": 48,
+            "layers": [
+              41,
+              7
+            ],
+            "R": 42,
+            "a_min": 36,
+            "candidate_a_count": 6
+          },
+          "without_retained": {
+            "bound": 59,
+            "a": 48,
+            "N": 49,
+            "layers": [
+              49
+            ],
+            "R": 49,
+            "a_min": 42,
+            "candidate_a_count": 7
+          },
+          "initial_support_compatible": true
+        },
+        "11": {
+          "retained": {
+            "bound": 43,
+            "a": 36,
+            "N": 72,
+            "layers": [
+              37,
+              35
+            ],
+            "R": 42,
+            "a_min": 36,
+            "candidate_a_count": 6
+          },
+          "without_retained": {
+            "bound": 50,
+            "a": 42,
+            "N": 85,
+            "layers": [
+              43,
+              42
+            ],
+            "R": 49,
+            "a_min": 42,
+            "candidate_a_count": 7
+          },
+          "initial_support_compatible": true
+        },
+        "13": {
+          "retained": {
+            "bound": 41,
+            "a": 36,
+            "N": 72,
+            "layers": [
+              37,
+              35
+            ],
+            "R": 42,
+            "a_min": 36,
+            "candidate_a_count": 6
+          },
+          "without_retained": {
+            "bound": 48,
+            "a": 42,
+            "N": 85,
+            "layers": [
+              43,
+              42
+            ],
+            "R": 49,
+            "a_min": 42,
+            "candidate_a_count": 7
+          },
+          "initial_support_compatible": true
+        },
+        "17": {
+          "retained": {
+            "bound": 40,
+            "a": 36,
+            "N": 72,
+            "layers": [
+              37,
+              35
+            ],
+            "R": 42,
+            "a_min": 36,
+            "candidate_a_count": 6
+          },
+          "without_retained": {
+            "bound": 47,
+            "a": 42,
+            "N": 85,
+            "layers": [
+              43,
+              42
+            ],
+            "R": 49,
+            "a_min": 42,
+            "candidate_a_count": 7
+          },
+          "initial_support_compatible": true
+        },
+        "19": {
+          "retained": {
+            "bound": 39,
+            "a": 36,
+            "N": 72,
+            "layers": [
+              37,
+              35
+            ],
+            "R": 42,
+            "a_min": 36,
+            "candidate_a_count": 6
+          },
+          "without_retained": {
+            "bound": 46,
+            "a": 42,
+            "N": 85,
+            "layers": [
+              43,
+              42
+            ],
+            "R": 49,
+            "a_min": 42,
+            "candidate_a_count": 7
+          },
+          "initial_support_compatible": true
+        },
+        "23": {
+          "retained": {
+            "bound": 39,
+            "a": 36,
+            "N": 72,
+            "layers": [
+              37,
+              35
+            ],
+            "R": 42,
+            "a_min": 36,
+            "candidate_a_count": 6
+          },
+          "without_retained": {
+            "bound": 45,
+            "a": 42,
+            "N": 85,
+            "layers": [
+              43,
+              42
+            ],
+            "R": 49,
+            "a_min": 42,
+            "candidate_a_count": 7
+          },
+          "initial_support_compatible": true
+        },
+        "29": {
+          "retained": {
+            "bound": 38,
+            "a": 36,
+            "N": 72,
+            "layers": [
+              37,
+              35
+            ],
+            "R": 42,
+            "a_min": 36,
+            "candidate_a_count": 6
+          },
+          "without_retained": {
+            "bound": 44,
+            "a": 42,
+            "N": 85,
+            "layers": [
+              43,
+              42
+            ],
+            "R": 49,
+            "a_min": 42,
+            "candidate_a_count": 7
+          },
+          "initial_support_compatible": true
+        },
+        "31": {
+          "retained": {
+            "bound": 38,
+            "a": 36,
+            "N": 72,
+            "layers": [
+              37,
+              35
+            ],
+            "R": 42,
+            "a_min": 36,
+            "candidate_a_count": 6
+          },
+          "without_retained": {
+            "bound": 44,
+            "a": 42,
+            "N": 85,
+            "layers": [
+              43,
+              42
+            ],
+            "R": 49,
+            "a_min": 42,
+            "candidate_a_count": 7
+          },
+          "initial_support_compatible": true
+        },
+        "43": {
+          "retained": {
+            "bound": 37,
+            "a": 36,
+            "N": 72,
+            "layers": [
+              37,
+              35
+            ],
+            "R": 42,
+            "a_min": 36,
+            "candidate_a_count": 6
+          },
+          "without_retained": {
+            "bound": 43,
+            "a": 42,
+            "N": 85,
+            "layers": [
+              43,
+              42
+            ],
+            "R": 49,
+            "a_min": 42,
+            "candidate_a_count": 7
+          },
+          "initial_support_compatible": true
+        }
+      },
+      "R": 42,
+      "a_min": 36,
+      "a_max": 41
+    },
+    {
+      "repair_prime": 7,
+      "repair_height": 2,
+      "targets": {
+        "3": {
+          "retained": {
+            "bound": 428,
+            "a": 286,
+            "N": 287,
+            "layers": [
+              287
+            ],
+            "R": 287,
+            "a_min": 246,
+            "candidate_a_count": 41
+          },
+          "without_retained": {
+            "bound": 512,
+            "a": 342,
+            "N": 343,
+            "layers": [
+              343
+            ],
+            "R": 343,
+            "a_min": 294,
+            "candidate_a_count": 49
+          },
+          "initial_support_compatible": true
+        },
+        "5": {
+          "retained": {
+            "bound": 357,
+            "a": 285,
+            "N": 293,
+            "layers": [
+              286,
+              7
+            ],
+            "R": 287,
+            "a_min": 246,
+            "candidate_a_count": 41
+          },
+          "without_retained": {
+            "bound": 427,
+            "a": 341,
+            "N": 349,
+            "layers": [
+              342,
+              7
+            ],
+            "R": 343,
+            "a_min": 294,
+            "candidate_a_count": 49
+          },
+          "initial_support_compatible": true
+        },
+        "11": {
+          "retained": {
+            "bound": 300,
+            "a": 250,
+            "N": 509,
+            "layers": [
+              251,
+              251,
+              7
+            ],
+            "R": 287,
+            "a_min": 246,
+            "candidate_a_count": 41
+          },
+          "without_retained": {
+            "bound": 359,
+            "a": 299,
+            "N": 607,
+            "layers": [
+              300,
+              300,
+              7
+            ],
+            "R": 343,
+            "a_min": 294,
+            "candidate_a_count": 49
+          },
+          "initial_support_compatible": true
+        },
+        "13": {
+          "retained": {
+            "bound": 292,
+            "a": 250,
+            "N": 509,
+            "layers": [
+              251,
+              251,
+              7
+            ],
+            "R": 287,
+            "a_min": 246,
+            "candidate_a_count": 41
+          },
+          "without_retained": {
+            "bound": 349,
+            "a": 299,
+            "N": 607,
+            "layers": [
+              300,
+              300,
+              7
+            ],
+            "R": 343,
+            "a_min": 294,
+            "candidate_a_count": 49
+          },
+          "initial_support_compatible": true
+        },
+        "17": {
+          "retained": {
+            "bound": 281,
+            "a": 250,
+            "N": 509,
+            "layers": [
+              251,
+              251,
+              7
+            ],
+            "R": 287,
+            "a_min": 246,
+            "candidate_a_count": 41
+          },
+          "without_retained": {
+            "bound": 336,
+            "a": 299,
+            "N": 607,
+            "layers": [
+              300,
+              300,
+              7
+            ],
+            "R": 343,
+            "a_min": 294,
+            "candidate_a_count": 49
+          },
+          "initial_support_compatible": true
+        },
+        "19": {
+          "retained": {
+            "bound": 278,
+            "a": 250,
+            "N": 509,
+            "layers": [
+              251,
+              251,
+              7
+            ],
+            "R": 287,
+            "a_min": 246,
+            "candidate_a_count": 41
+          },
+          "without_retained": {
+            "bound": 332,
+            "a": 299,
+            "N": 607,
+            "layers": [
+              300,
+              300,
+              7
+            ],
+            "R": 343,
+            "a_min": 294,
+            "candidate_a_count": 49
+          },
+          "initial_support_compatible": true
+        },
+        "23": {
+          "retained": {
+            "bound": 273,
+            "a": 250,
+            "N": 509,
+            "layers": [
+              251,
+              251,
+              7
+            ],
+            "R": 287,
+            "a_min": 246,
+            "candidate_a_count": 41
+          },
+          "without_retained": {
+            "bound": 326,
+            "a": 299,
+            "N": 607,
+            "layers": [
+              300,
+              300,
+              7
+            ],
+            "R": 343,
+            "a_min": 294,
+            "candidate_a_count": 49
+          },
+          "initial_support_compatible": true
+        },
+        "29": {
+          "retained": {
+            "bound": 268,
+            "a": 250,
+            "N": 509,
+            "layers": [
+              251,
+              251,
+              7
+            ],
+            "R": 287,
+            "a_min": 246,
+            "candidate_a_count": 41
+          },
+          "without_retained": {
+            "bound": 320,
+            "a": 299,
+            "N": 607,
+            "layers": [
+              300,
+              300,
+              7
+            ],
+            "R": 343,
+            "a_min": 294,
+            "candidate_a_count": 49
+          },
+          "initial_support_compatible": true
+        },
+        "31": {
+          "retained": {
+            "bound": 266,
+            "a": 250,
+            "N": 509,
+            "layers": [
+              251,
+              251,
+              7
+            ],
+            "R": 287,
+            "a_min": 246,
+            "candidate_a_count": 41
+          },
+          "without_retained": {
+            "bound": 319,
+            "a": 298,
+            "N": 661,
+            "layers": [
+              299,
+              299,
+              63
+            ],
+            "R": 343,
+            "a_min": 294,
+            "candidate_a_count": 49
+          },
+          "initial_support_compatible": true
+        },
+        "43": {
+          "retained": {
+            "bound": 262,
+            "a": 247,
+            "N": 671,
+            "layers": [
+              248,
+              248,
+              175
+            ],
+            "R": 287,
+            "a_min": 246,
+            "candidate_a_count": 41
+          },
+          "without_retained": {
+            "bound": 313,
+            "a": 297,
+            "N": 715,
+            "layers": [
+              298,
+              298,
+              119
+            ],
+            "R": 343,
+            "a_min": 294,
+            "candidate_a_count": 49
+          },
+          "initial_support_compatible": true
+        }
+      },
+      "R": 287,
+      "a_min": 246,
+      "a_max": 286
+    }
+  ],
+  "classical_count_profile": {
+    "heights": {
+      "3": 1,
+      "5": 6,
+      "7": 1,
+      "11": 1
+    },
+    "n_lower": 43,
+    "n_upper": 55,
+    "status": "Parameter comparison only; actual cover existence is not asserted."
+  },
+  "finite_noncover_star": {
+    "Q": 1875,
+    "aps": {
+      "3": 0,
+      "5": 0,
+      "25": 6,
+      "125": 7,
+      "625": 8,
+      "15": 1,
+      "75": 52,
+      "375": 253,
+      "1875": 4
+    },
+    "private_counts": {
+      "3": 469,
+      "5": 250,
+      "25": 25,
+      "125": 10,
+      "625": 2,
+      "15": 100,
+      "75": 25,
+      "375": 5,
+      "1875": 1
+    },
+    "private_witnesses": {
+      "3": 3,
+      "5": 5,
+      "25": 56,
+      "125": 7,
+      "625": 8,
+      "15": 1,
+      "75": 52,
+      "375": 253,
+      "1875": 4
+    },
+    "holes": 807,
+    "first_hole": 2,
+    "reciprocal_sum": "1249/1875",
+    "source_star": [
+      {
+        "digit": 1,
+        "point": 1,
+        "label": 15
+      },
+      {
+        "digit": 2,
+        "point": 1252,
+        "label": 75
+      },
+      {
+        "digit": 3,
+        "point": 628,
+        "label": 375
+      },
+      {
+        "digit": 4,
+        "point": 4,
+        "label": 1875
+      }
+    ],
+    "boundary": "An actual divisor-closed comparable-disjoint irredundant noncover; no whole-cover or global-minimality premise."
+  }
+}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ba7d30b55d31ae902dcc6dc7f1efa09961308cd64409900bb24a1ced2e241c3
+  normalized_sha256: sha256:1ba7d30b55d31ae902dcc6dc7f1efa09961308cd64409900bb24a1ced2e241c3
+cas_ref: sha256:1ba7d30b55d31ae902dcc6dc7f1efa09961308cd64409900bb24a1ced2e241c3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d closes the complete three-way equivalence by instantiation, projection and normalization; no repository GID exists for this closure. MulAction.mem_orbit_iff, MulAction.mem_orbit, MulAction.mem_stabilizer_iff, mul_smul, inv_smul_smul, map_mul and map_inv turn C-orbit inclusion into f(C) <= f(Stab(alpha)). MonoidHom.normal_ker and Subgroup.Normal.map make f(C) normal; Subgroup.Normal.eq_bot_or_eq_top (IsSimpleGroup.eq_bot_or_eq_top_of_normal) and the proper stabilizer image exclude the top case, and Subgroup.map_eq_bot_iff gives ker(a) <= ker(f). MonoidHom.ker_rangeRestrict, MonoidHom.rangeRestrict_surjective, MonoidHom.liftOfSurjective and MonoidHom.liftOfRightInverse_comp_apply give a homomorphism theta from the actual range a(Lambda), with f = theta.comp a.rangeRestrict; surjectivity follows by reusing each preimage under f. Conversely, this factorization, MonoidHom.mem_ker and map_one give kernel inclusion and hence orbit inclusion. List.TFAE regrouping covers all three conditions, retaining the finite noncommutative simple target hypotheses. The entire atom is bind-only.
+    previous_atom_id: f2b04bfb98cffc67b1128b56f77b0e7705902532216ed184a73f044b4ea1188b
+    next_atom_id: c3537e660550f71267cd453f92a68d830aba9f68df2dfe03db0104b101d17303

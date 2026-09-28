@@ -1,0 +1,363 @@
+{
+  "closed_edge_query_integral": "1/3515625",
+  "closed_edge_samples": [
+    {
+      "full_short": "3/2",
+      "query_integral": "1/3515625",
+      "u": "0",
+      "zero_short": "5/6"
+    },
+    {
+      "full_short": "3/2",
+      "query_integral": "1/3515625",
+      "u": "1/2",
+      "zero_short": "5/6"
+    },
+    {
+      "full_short": "3/2",
+      "query_integral": "1/3515625",
+      "u": "1",
+      "zero_short": "5/6"
+    }
+  ],
+  "complete_divisor_count": 36,
+  "finite_patterns": [
+    {
+      "M": 1,
+      "Q": 2,
+      "hinge16": 0,
+      "row": 13
+    },
+    {
+      "M": 2,
+      "Q": 4,
+      "hinge16": 0,
+      "row": 13
+    },
+    {
+      "M": 3,
+      "Q": 6,
+      "hinge16": 0,
+      "row": 13
+    },
+    {
+      "M": 4,
+      "Q": 8,
+      "hinge16": 0,
+      "row": 13
+    },
+    {
+      "M": 5,
+      "Q": 10,
+      "hinge16": 0,
+      "row": 13
+    },
+    {
+      "M": 6,
+      "Q": 12,
+      "hinge16": 0,
+      "row": 13
+    },
+    {
+      "M": 7,
+      "Q": 14,
+      "hinge16": 0,
+      "row": 13
+    },
+    {
+      "M": 8,
+      "Q": 16,
+      "hinge16": 0,
+      "row": 13
+    },
+    {
+      "M": 9,
+      "Q": 18,
+      "hinge16": 2,
+      "row": 13
+    },
+    {
+      "M": 1,
+      "Q": 1,
+      "hinge16": 0,
+      "row": 7
+    },
+    {
+      "M": 2,
+      "Q": 2,
+      "hinge16": 0,
+      "row": 7
+    },
+    {
+      "M": 3,
+      "Q": 3,
+      "hinge16": 0,
+      "row": 7
+    },
+    {
+      "M": 4,
+      "Q": 4,
+      "hinge16": 0,
+      "row": 7
+    },
+    {
+      "M": 5,
+      "Q": 5,
+      "hinge16": 0,
+      "row": 7
+    },
+    {
+      "M": 6,
+      "Q": 6,
+      "hinge16": 0,
+      "row": 7
+    },
+    {
+      "M": 7,
+      "Q": 7,
+      "hinge16": 0,
+      "row": 7
+    },
+    {
+      "M": 8,
+      "Q": 8,
+      "hinge16": 0,
+      "row": 7
+    },
+    {
+      "M": 9,
+      "Q": 9,
+      "hinge16": 0,
+      "row": 7
+    }
+  ],
+  "fixed_parameters": "(a,b,c,r,d,k)=(2,4,1,8,2,1); t1=1/20, other t=0, e=0",
+  "geometry_batches": 0,
+  "query_identity": "(Q-16)+ = 2*1_(x mod9=4)*1_(x mod5^8=2) on C",
+  "query_layout": [
+    {
+      "e3": 0,
+      "e5": 0,
+      "modulus": 1,
+      "phase": 0
+    },
+    {
+      "e3": 0,
+      "e5": 1,
+      "modulus": 5,
+      "phase": 2
+    },
+    {
+      "e3": 0,
+      "e5": 2,
+      "modulus": 25,
+      "phase": 2
+    },
+    {
+      "e3": 0,
+      "e5": 3,
+      "modulus": 125,
+      "phase": 2
+    },
+    {
+      "e3": 0,
+      "e5": 4,
+      "modulus": 625,
+      "phase": 2
+    },
+    {
+      "e3": 0,
+      "e5": 5,
+      "modulus": 3125,
+      "phase": 2
+    },
+    {
+      "e3": 0,
+      "e5": 6,
+      "modulus": 15625,
+      "phase": 2
+    },
+    {
+      "e3": 0,
+      "e5": 7,
+      "modulus": 78125,
+      "phase": 2
+    },
+    {
+      "e3": 0,
+      "e5": 8,
+      "modulus": 390625,
+      "phase": 2
+    },
+    {
+      "e3": 1,
+      "e5": 0,
+      "modulus": 3,
+      "phase": 0
+    },
+    {
+      "e3": 1,
+      "e5": 1,
+      "modulus": 15,
+      "phase": 12
+    },
+    {
+      "e3": 1,
+      "e5": 2,
+      "modulus": 75,
+      "phase": 27
+    },
+    {
+      "e3": 1,
+      "e5": 3,
+      "modulus": 375,
+      "phase": 252
+    },
+    {
+      "e3": 1,
+      "e5": 4,
+      "modulus": 1875,
+      "phase": 627
+    },
+    {
+      "e3": 1,
+      "e5": 5,
+      "modulus": 9375,
+      "phase": 6252
+    },
+    {
+      "e3": 1,
+      "e5": 6,
+      "modulus": 46875,
+      "phase": 15627
+    },
+    {
+      "e3": 1,
+      "e5": 7,
+      "modulus": 234375,
+      "phase": 156252
+    },
+    {
+      "e3": 1,
+      "e5": 8,
+      "modulus": 1171875,
+      "phase": 390627
+    },
+    {
+      "e3": 2,
+      "e5": 0,
+      "modulus": 9,
+      "phase": 4
+    },
+    {
+      "e3": 2,
+      "e5": 1,
+      "modulus": 45,
+      "phase": 22
+    },
+    {
+      "e3": 2,
+      "e5": 2,
+      "modulus": 225,
+      "phase": 202
+    },
+    {
+      "e3": 2,
+      "e5": 3,
+      "modulus": 1125,
+      "phase": 877
+    },
+    {
+      "e3": 2,
+      "e5": 4,
+      "modulus": 5625,
+      "phase": 3127
+    },
+    {
+      "e3": 2,
+      "e5": 5,
+      "modulus": 28125,
+      "phase": 3127
+    },
+    {
+      "e3": 2,
+      "e5": 6,
+      "modulus": 140625,
+      "phase": 31252
+    },
+    {
+      "e3": 2,
+      "e5": 7,
+      "modulus": 703125,
+      "phase": 312502
+    },
+    {
+      "e3": 2,
+      "e5": 8,
+      "modulus": 3515625,
+      "phase": 3125002
+    },
+    {
+      "e3": 3,
+      "e5": 0,
+      "modulus": 27,
+      "phase": 0
+    },
+    {
+      "e3": 3,
+      "e5": 1,
+      "modulus": 135,
+      "phase": 27
+    },
+    {
+      "e3": 3,
+      "e5": 2,
+      "modulus": 675,
+      "phase": 27
+    },
+    {
+      "e3": 3,
+      "e5": 3,
+      "modulus": 3375,
+      "phase": 1377
+    },
+    {
+      "e3": 3,
+      "e5": 4,
+      "modulus": 16875,
+      "phase": 8127
+    },
+    {
+      "e3": 3,
+      "e5": 5,
+      "modulus": 84375,
+      "phase": 25002
+    },
+    {
+      "e3": 3,
+      "e5": 6,
+      "modulus": 421875,
+      "phase": 109377
+    },
+    {
+      "e3": 3,
+      "e5": 7,
+      "modulus": 2109375,
+      "phase": 1796877
+    },
+    {
+      "e3": 3,
+      "e5": 8,
+      "modulus": 10546875,
+      "phase": 3906252
+    }
+  ],
+  "query_period": 10546875,
+  "ratio": "4/3",
+  "row7_query_integral": "4/10546875",
+  "scope": "One selected-anchor comparison measure and one complete query; not the final live law and not a counterexample to max-query G16 domination.",
+  "strict_difference": "1/10546875",
+  "transport_obstruction": "A mixture of named-anchor-preserving tree automorphisms cannot increase branch4 mass; the companion note also gives an obstruction for a specified broader positive cylinder-preserving matrix class.",
+  "zero_depth_short_mass_closed_edge": "5/6",
+  "zero_depth_short_mass_row7": "4/3"
+}

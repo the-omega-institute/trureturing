@@ -1,0 +1,29 @@
+## theorem 31.3: 同一中心码的精确预测缺陷
+
+设 $\Phi_t$ 是一个保单位的逻辑信道，且它的区域可见坐标满足
+
+$$
+z_t=\alpha_tz_0+\beta_ty_0,
+\quad z=\operatorname{Tr}(\sigma_z\rho),\quad
+ y=\operatorname{Tr}(\sigma_y\rho)=-2\operatorname{Im}\rho_{01}.
+$$
+
+则 $|\alpha_t|\le1$，并且
+
+$$
+\boxed{\delta(t)=|\beta_t|.}
+$$
+
+一个达到下确界的实际预测器是 $\mathcal C_t=\mathcal E T_{\alpha_t}\mathcal M$，其中对角二态信道
+
+$$
+T_c=\frac12\begin{pmatrix}1+c&1-c\\1-c&1+c\end{pmatrix}
+\qquad(-1\le c\le1)
+$$
+
+采用列概率约定。在给定当前 $p=\rho_{11}$ 的全部相容逻辑密度矩阵中，仅依赖 $p$ 的实数面积预测器的精确 minimax 绝对风险是
+
+$$
+\boxed{\mathcal R_t(p)=\Delta a\,\sqrt{p(1-p)}\,|\beta_t|.}
+$$
+

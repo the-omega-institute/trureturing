@@ -1,0 +1,45 @@
+### 定义 542.1（CAR 剖面、缺损与有界任务风险）
+
+令 $A$ 为有限非空状态集，$n=|A|$，输出字母表取所有非空子集 $\mathcal B=2^A\setminus\{\varnothing\}$。CAR 剖面 $w$ 是满足
+
+$$
+ w_B\ge0,
+ \qquad \sum_{B\ni i}w_B=1\quad(i\in A),
+ \qquad (W_w)_i(B)=\mathbf 1_{\{i\in B\}}w_B
+$$
+
+的权重族。成对摘要和有向缺损分别为
+
+$$
+ r_{ij}(w)=\sum_{B\supseteq\{i,j\}}w_B,
+ \qquad
+ d(w\to v)=\inf_K\max_{i\in A}\operatorname{TV}\bigl((W_w)_iK,(W_v)_i\bigr),
+$$
+
+其中 $K$ 是一个对所有状态共用的随机核，允许把质量送到目标零权重字母或不含真实状态的字母，且
+
+$$
+\operatorname{TV}(p,q)=\frac12\sum_C|p(C)-q(C)|.
+$$
+
+写
+
+$$
+\Delta_{ij}=r_{ij}(v)-r_{ij}(w),
+\qquad
+\varepsilon=d(w\to v),
+\qquad
+R=\frac12\max_{i\in A}\sum_{j\ne i}(\Delta_{ij})_+.
+$$
+
+有限决策任务由有限非空行动集 $D$、先验 $\pi$ 和损失 $\ell:A\times D\to[0,1]$ 给出。对实验 $X=(X_i)_i$ 定义 Bayes 风险
+
+$$
+\mathcal R_X(\pi,\ell)
+ =\min_{\delta}
+ \sum_{i\in A}\pi_i\sum_xX_i(x)\sum_{d\in D}\delta(d\mid x)\ell(i,d)
+ =\sum_x\min_{d\in D}\sum_i\pi_iX_i(x)\ell(i,d).
+$$
+
+最后一个等号来自有限行动单纯形上的逐字母最小化。缺损的方向约定是 $X\to Y$ 表示用 $X$ 的观察模拟 $Y$；因此风险差的方向是源风险减目标风险。
+

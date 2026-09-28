@@ -1,0 +1,24 @@
+### 定义 534.1（共同高斯因果实现与比较空间）
+
+固定参数 $0<\rho<1$、$\sigma=\sqrt{1-\rho^2}$、$h>0$，并令 $a=h/\rho$。对每次全新重置 $t$，在同一个乘积噪声空间上取相互独立的标准正态变量 $(U_{0t},U_{1t},U_{2t})$。未知参数 $\theta\in\{+1,-1\}$ 在整个实验中固定。两种结构模型为
+
+$$
+\begin{array}{lll}
+M_+:&X_t=U_{0t},&H_t=\rho X_t+\sigma U_{1t},\quad Y_t=\rho H_t+\sigma U_{2t},\\
+M_-:&Y_t=U_{0t},&H_t=\rho Y_t+\sigma U_{1t},\quad X_t=\rho H_t+\sigma U_{2t}.
+\end{array}
+$$
+
+在没有干预时，$(X_t,H_t,Y_t)$ 的共同协方差矩阵为
+
+$$
+\Sigma=
+\begin{pmatrix}
+1&\rho&\rho^2\\
+\rho&1&\rho\\
+\rho^2&\rho&1
+\end{pmatrix}.
+$$
+
+这里的同一噪声空间只是比较两种模型的耦合；观察者只能得到规定的观测记录，不能访问未观测的 $U_{it}$，也不能把两个模型的潜在样本同时取得。
+

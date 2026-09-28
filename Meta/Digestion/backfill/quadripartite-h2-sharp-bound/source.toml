@@ -1,0 +1,5 @@
+source_id = "quadripartite-h2-sharp-bound"
+path = "docs/develop/theory/QUADRIPARTITE_H2_SHARP_BOUND.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

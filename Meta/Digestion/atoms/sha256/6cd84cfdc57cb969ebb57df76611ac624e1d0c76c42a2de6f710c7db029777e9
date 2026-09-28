@@ -1,0 +1,51 @@
+## theorem 3.1: 核、双字符与谱
+
+设 $V,X,Y$ 为有限交换群，群同态 $A:V\to X$、$B:V\to Y$ 的联合映射单射。设 $q:V\to U(1)$、$q(0)=1$，且
+
+$$
+\beta(u,v)=q(u+v)/[q(u)q(v)]
+$$
+
+为双字符。定义
+
+$$
+|\psi\rangle=|V|^{-1/2}\sum_{v\in V}q(v)|Av\rangle|Bv\rangle,
+\quad K_A=\ker A,\quad K_B=\ker B,
+$$
+
+$$
+R_B=\{b\in K_B:\beta(a,b)=1\text{ 对所有 }a\in K_A\}.
+$$
+
+约化态的非零谱平坦，秩为
+
+$$
+r=\frac{|V|}{|K_A||R_B|}
+=\frac{|V|}{|K_A||K_B|}
+\left|\operatorname{im}\bigl(K_B\to\widehat{K_A},\ b\mapsto\beta(\cdot,b)\bigr)\right|.
+$$
+
+因此 $S(\rho_X)=\log r$，所有正阶 Rényi 熵也等于 $\log r$。不要求核为自由模或短正合列分裂。
+
+**证明。** $K_A\cap K_B=0$。将 $V$ 按 $K_A+K_B$ 的陪集分块。不同陪集在两侧局部空间分别正交：例如 $A(v_0)+A(K_B)$ 与 $A(v_1)+A(K_B)$ 相交便推出 $v_0-v_1\in K_A+K_B$。每块唯一写成 $v_0+a+b$，并有
+
+$$
+q(v_0+a+b)=q(v_0)q(a)q(b)\beta(v_0,a)\beta(v_0,b)\beta(a,b).
+$$
+
+去除分别依赖 $a,b$ 的局部对角相位后，归一化系数矩阵是
+
+$$
+M_{a,b}=\beta(a,b)/\sqrt{|K_A||K_B|}.
+$$
+
+$A|_{K_B}$、$B|_{K_A}$ 单射，故这些是原态的正交局部基。字符正交性给出
+
+$$
+(M^*M)_{b,b'}=|K_B|^{-1}\mathbf1_{b'-b\in R_B}.
+$$
+
+按 $K_B/R_B$ 分块，非零本征值为 $|R_B|/|K_B|$，数量为 $|K_B|/|R_B|$。全态有 $N=|V|/(|K_A||K_B|)$ 个等权正交陪集块，得到所述秩和本征值 $1/r$。证毕。
+
+稳定子平坦谱和模算术已有 [Stabilizer]、[ModularClifford] 基础；此处使用实际系数矩阵证明，避免把合数模环的核当作域上线性空间。
+

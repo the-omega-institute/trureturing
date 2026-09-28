@@ -1,0 +1,17 @@
+### 命题 534.5（可行集合的精确分离）
+
+$A_B=\varnothing$ 当且仅当 $B<2a^2$。当 $B\ge2a^2$，对任意 $(u,v)\in A_B$，令
+
+$$
+ m=\rho\frac{u+v}{2},\qquad
+ k=\frac{\rho(u-v)}{2\sigma}.
+$$
+
+则 $|k|\le k_*$，其中
+
+$$
+ d_* =\sqrt{B-a^2}-a,\qquad k_* =\frac{\rho d_*}{2\sigma}.
+$$
+
+等号由 $(u,v)=(\sqrt{B-a^2},a)$ 及其交换取得。
+

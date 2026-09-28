@@ -1,0 +1,52 @@
+### 定义 39：三叶因果实现与实际峰值
+
+令 $T=((X,Y),Z)$ 为固定树。对有限非空 $D\subseteq X\times Y\times Z$ 和 Boolean 目标 $f:D\to\mathbb B$，记 $X_D,Y_D,Z_D$ 为 $D$ 的各坐标投影。一个确定性因果实现由下列总表
+
+$$
+\alpha:X_D\to A,\qquad \beta:Y_D\to B,\qquad \gamma:Z_D\to C,
+$$
+
+$$
+\tau:A\times B\to M,\qquad \rho:M\times C\to\mathbb B
+$$
+
+组成，并要求在每个合法三元组上
+
+$$
+\rho\bigl(\tau(\alpha(x),\beta(y)),\gamma(z)\bigr)=f(x,y,z).
+$$
+
+实际消息链是
+
+$$
+\alpha(x),\quad \beta(y),\quad \gamma(z),\quad
+\tau(\alpha(x),\beta(y)),\quad
+\rho\bigl(\tau(\alpha(x),\beta(y)),\gamma(z)\bigr).
+$$
+
+令共同可达的子消息对及内部消息像分别为
+
+$$
+L_{XY}(\Pi)=\{(\alpha(x),\beta(y)):(x,y)\in\pi_{XY}(D)\},
+\qquad R_{XY}(\Pi)=\tau(L_{XY}(\Pi)).
+$$
+
+定义其峰值为前三个叶消息和 $XY$ 内部消息的最大可达基数：
+
+$$
+\operatorname{peak}(\Pi)=\max\{|\alpha(X_D)|,|\beta(Y_D)|,|\gamma(Z_D)|,
+|R_{XY}(\Pi)|\},
+$$
+
+并定义
+
+$$
+P_T(D,f)=\min_\Pi\operatorname{peak}(\Pi).
+$$
+
+因为 $D\neq\varnothing$，可取 $m_*\in R_{XY}(\Pi)$。把 $\tau$ 在 $(A\times B)\setminus L_{XY}(\Pi)$ 上的表项全部改填 $m_*$，得到总表 $\tau'$。合法三元组访问的表项不变，故正确性与实际峰值均不变，而且
+$\tau'(\alpha(X_D)\times\beta(Y_D))=R_{XY}(\Pi)$。
+对任意协议，实际内部像包含于笛卡儿像 $\tau(\alpha(X_D)\times\beta(Y_D))$，所以实际峰值不大于用笛卡儿像计数的峰值；反过来，上述归一化使笛卡儿像峰值等于原协议的实际峰值。因此在全部正确协议上取最小值时，两种计数方式给出相同结果；未经归一化的单个协议代价则不必相等。
+
+对任意 $S\subseteq\{X,Y,Z\}$，令 $c_S(D,f)$ 为一台切面编码器 $e_S$ 的最小可达消息数：编码器看见合法投影 $\pi_S(D)$ 的完整原始元，解码器看见互补投影 $\pi_{S^c}(D)$，且只在 $D$ 上正确。特别地，$c_{\{X,Y,Z\}}(D,f)=|f(D)|$；当 $S$ 是一个内部子树时，$c_S$ 把该子树的全部原始输入交给编码器，是对实际子消息链的切面松弛。根的 Boolean 输出可以直接作为最终输出；把任何更大的根消息表后合成为该 Boolean 输出不会增加峰值。
+

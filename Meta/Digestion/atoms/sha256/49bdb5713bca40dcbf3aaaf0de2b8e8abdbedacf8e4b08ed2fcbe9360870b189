@@ -1,0 +1,19 @@
+### 定义 27：共同标记域上的余因子和平移
+
+设 $x_i,y_i\in\{0,1\}$、$\phi_i(x_i,y_i)=\mathbf1[x_i=y_i]$，外层任务为任意 $G:\{0,1\}^n\to O$。固定一个端点切面，将构件指标划分为已完成集 $C$、只读了一个端点的悬置集 $P$ 以及未读集 $U$。令 $R=[n]\setminus C=P\sqcup U$，并定义不同余因子的集合
+
+$$
+\mathcal H_C
+=\left\{g_\alpha:\{0,1\}^{R}\to O\;:\;
+g_\alpha(z)=G(\alpha\sqcup z),\ \alpha\in\{0,1\}^{C}\right\}.
+$$
+
+这里相同函数只保留一次；所有函数都保留同一个标记域 $\{0,1\}^{R}$，包括其不依赖的坐标。记 $V_P=\{s\in\{0,1\}^{R}:s_i=0\text{ 对 }i\notin P\}$，定义平移
+
+$$
+(T_sg)(z)=g(z\oplus s),\qquad
+\operatorname{Stab}_P(g)=\{s\in V_P:T_sg=g\}.
+$$
+
+当 $i\in R$ 时，以 $T_i=T_{e_i}$ 表示只翻转坐标 $i$。记 $\operatorname{Ess}(g)$ 为本质坐标集：$i\in\operatorname{Ess}(g)$ 当且仅当存在仅在第 $i$ 个坐标不同的两个输入，令 $g$ 取不同值。
+

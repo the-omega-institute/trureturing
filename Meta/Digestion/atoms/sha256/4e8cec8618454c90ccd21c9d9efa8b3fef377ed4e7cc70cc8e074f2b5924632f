@@ -1,0 +1,28 @@
+### 86.5 连改变旋转基准都不够时：完整读取代数的障碍
+
+下面检验能否在共同环境中保留整套位置操作，同时允许这些操作通过共轭重新组织。用第84节的自然物理分解
+
+$$
+\mathcal W=U\otimes B_{\rm rest},\qquad
+B_{\rm rest}=L\oplus H,\qquad \dim L=4,\quad\dim H=7.
+\tag{86.9}
+$$
+
+$B_{\rm rest}$ 是其余三个寄存器的十一维非恒定空间；$L$ 包含它们的单寄存器差异，$H$ 包含它们之间的关联。固定非零 $h_0\in H$ 以及包含它的基。选取前面两个商的核
+
+$$
+N_K=\mathbf1\otimes L,\qquad N_V=D\otimes\operatorname{span}(h_0).
+\tag{86.10}
+$$
+
+这实现（86.1）：$B=N_K$、$A=N_V$，$S$ 取其余七个常数方向和十份 $D$。第二个核对应选择哪一个形式五循环被合并为公共起点；这是一种已指定的模型嵌入，不能冒充控制器天然携带的全部读取代数。
+
+在这同一个 $\mathcal W$ 上，对第一个寄存器作全部位置筛选及循环移动生成
+
+$$
+\mathscr A=\operatorname{End}(U)\otimes I_{B_{\rm rest}}.
+\tag{86.11}
+$$
+
+这是第84—85节的完整位置操作代数。定义 $\mathscr A N$ 为所有 $av$（$a\in\mathscr A,v\in N$）的线性张成。
+

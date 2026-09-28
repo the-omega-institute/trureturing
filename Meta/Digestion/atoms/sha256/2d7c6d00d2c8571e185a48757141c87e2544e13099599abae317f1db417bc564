@@ -1,0 +1,16 @@
+得到二阶 resolvent 恒等式
+$$
+R_u-R_u^0
+=-R_u^0VR_u^0+R_u^0VR_uVR_u^0.
+$$
+定义 $D(u)=FR_uF^*-(A+uI_E)^{-1}$。
+压缩到 $P$ 后首项消失；余项半正定，而且
+$$
+0\le FR_uF^*-(A+uI_E)^{-1},\qquad
+\|FR_uF^*-(A+uI_E)^{-1}\|
+\le\frac{\delta}{(a+u)^3}.
+$$
+更具体地，余项为
+$$
+(A+uI_E)^{-1}FSQ\,R_u\,QSF^*(A+uI_E)^{-1},
+$$

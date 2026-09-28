@@ -1,0 +1,12 @@
+## corollary 35.1: 条件化动量窗口的必要预算
+
+令 $\Delta P=\max_sP_s-\min_sP_s$。在上述额外前提下，
+
+$$
+\delta_*\ge1-\exp[-\max(0,\pi Q\Delta P-\eta)].
+$$
+
+若要求 $\delta_*\le\epsilon<1$，则必须有 $\Delta P\le[\eta-\log(1-\epsilon)]/(\pi Q)$。证明是 $d\log S(P)/dP=2\pi b\coth(2\pi bP)+2\pi b^{-1}\coth(2\pi P/b)\ge2\pi Q$。取动量两端点，并计入各自的匹配误差，得到 $R\ge\max(0,2\pi Q\Delta P-2\eta)$；代入推论 34.2 左界并反解。固定误差和匹配预算时，窗口上界按 $c^{-1/2}$ 缩小。
+
+这并未证明未知共形块的主导性、准概率正性、实际 CFT 粗化的两侧独立 CPTP 实现、连续引力字典或原始引力 RT。定理 34.1 和这些条件推论目前是纸面证明，尚未由 Lean kernel 验证。
+

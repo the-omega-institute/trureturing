@@ -1,0 +1,22 @@
+### 定理 542.3（完全揭示混合的精确缩放与普通分划实现）
+
+记 $I$ 为完全揭示剖面，$I_{\{i\}}=1$。对 $0\le\lambda\le1$ 定义
+
+$$
+ w^\lambda=(1-\lambda)I+\lambda w,
+ \qquad
+ v^\lambda=(1-\lambda)I+\lambda v.
+\tag{542.10}
+$$
+
+则两个方向均有精确缩放
+
+$$
+ d(w^\lambda\to v^\lambda)=\lambda d(w\to v),
+ \qquad
+ d(v^\lambda\to w^\lambda)=\lambda d(v\to w).
+\tag{542.11}
+$$
+
+当 $n\ge2$ 时，每个 $0\le\lambda\le2/n$ 的 $w^\lambda$ 都可由一个状态无关的普通分划律实现；同样适用于 $v^\lambda$。两个实验可放在同一个状态无关种子空间上。这里 $0\le\lambda\le1$ 是精确缩放的混合范围，$0\le\lambda\le2/n$ 是对任意 CAR 剖面保证普通分划实现的范围；$n=1$ 单独只有 $0\le\lambda\le1$ 且双向缺损恒为零。
+

@@ -1,0 +1,32 @@
+**引理 82.13（一步生产分裂的准确支持）。** 在 $p=3,J=s=1$ 的同一原表中，设正剩余路径只有 $w\to v$，$w$ 为生产槽。两相撞历史在 $w$ 的索引为 $i_A,i_B$，支持为 $[P-\rho,P)$、$[0,\sigma)$。以 $c,t$ 分别记 $w,v$ 的正代表。
+
+若后段分裂，则
+
+$$
+\begin{gathered}
+1\le c<\rho,\qquad
+v\text{ 的支持为 }[P-\rho+c,P),\ [c,c+\sigma),\\
+\rho-c\le t\le P-c-\sigma,\\
+\rho-c\le2^{h-i_A-2},\quad \sigma\le2^{h-i_B-2},\quad
+c\le2^{h-i_A-1}.
+\end{gathered}
+\tag{82.11}
+$$
+
+若前段分裂，置 $k=P-c$，则
+
+$$
+\begin{gathered}
+1\le k<\sigma,\qquad
+v\text{ 的支持为 }[c-\rho,c),\ [0,\sigma-k),\\
+k+\rho\le t\le P-\sigma+k,\\
+\rho\le2^{h-i_A-2},\quad \sigma-k\le2^{h-i_B-2},\quad
+k\le2^{h-i_B-1}.
+\end{gathered}
+\tag{82.12}
+$$
+
+以上指数非负，否则相应正大小历史不可行。
+
+证明。固定等待在一个数字块内只有一个切口。未分裂历史与留在共同路径的孩子必须具有同一进位，另一孩子被剥离；逐区间平移便给两组支持。$v$ 纯解析，两条历史各一元且下一数字不同，故它的切口必须位于这两个支持之间，得到 $t$ 的范围。再经过 $v$ 的一元读取后，各所留历史仍须区别自己的全部标签，只剩 $h-i-2$ 读；剥离孩子剩 $h-i-1$ 读。每读至多二分，得大小界。这些是同一实际路径上的约束，未给流边收费。$\square$
+

@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:5a97fdbeef4a40eb321bfc368da317ccfb457b8c3a7a90e1274dadf655e95209
+  normalized_sha256: sha256:5a97fdbeef4a40eb321bfc368da317ccfb457b8c3a7a90e1274dadf655e95209
+cas_ref: sha256:5a97fdbeef4a40eb321bfc368da317ccfb457b8c3a7a90e1274dadf655e95209
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Realization/FreeWindowRealizationCapacity.free_window_realization_capacity
+    target_statement_id: sha256:2cc16206d41ef7599d84bf78df6f09d8c29a412b7ff30462fb4eafb253fc1e43
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 6629c4b31b91f3e223a712de8437dfab00ab21994781fa27e1d7380556d20584
+    - 89753a527515f3825d284c3d53c89a1e2d5675dafdd6e25c7134b23eaafaad4e
+    - 7bebedf81d78ef90a3920f309cf81a970ae41b13ca3ef4304401c3796079d6a3
+    - 5a66466dae9d02ba77876658fc56725e0ed34830bae3d97ca47d36aecb74934a

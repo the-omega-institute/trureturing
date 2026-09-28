@@ -1,0 +1,12 @@
+## theorem 5.2: 全奇数维数
+
+对任意奇数 $d\ge3$、$L\ge3$，存在一个与边界区域无关的 $\alpha\in R_d$，使 $\Psi^\alpha_{d,L}$ 对全部 $C$ 同时满足
+
+$$
+S(\rho_C)=m(C)\log d.
+$$
+
+对固定 $p,L$，一个整数 $\alpha$ 可同时用于全部 $d=p^n$。
+
+**证明。** 对每个 $p\mid d$ 用引理 5.1 选 $\alpha_p$，再用 CRT 取 $\alpha\equiv\alpha_p\pmod p$。所有 $c_k$ 不被任何 $p\mid d$ 整除，故在 $R_d$ 中为单位，应用定理 4.3。固定 $p,L$ 时任一整数提升在所有 $p^n$ 中仍满足同一单位判据。证毕。
+

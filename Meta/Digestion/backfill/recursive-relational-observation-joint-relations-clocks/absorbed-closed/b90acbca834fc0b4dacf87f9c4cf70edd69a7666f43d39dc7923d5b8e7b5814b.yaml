@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b90acbca834fc0b4dacf87f9c4cf70edd69a7666f43d39dc7923d5b8e7b5814b
+  normalized_sha256: sha256:b90acbca834fc0b4dacf87f9c4cf70edd69a7666f43d39dc7923d5b8e7b5814b
+cas_ref: sha256:b90acbca834fc0b4dacf87f9c4cf70edd69a7666f43d39dc7923d5b8e7b5814b
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassification.period_classification
+    target_statement_id: sha256:4cb63990e81942a32aabb29e9b86757d5fc515a3801be9f9d647c774622a1df9
+receipts:
+  unresolved_subitems: []
