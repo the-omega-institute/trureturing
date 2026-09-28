@@ -58,9 +58,9 @@ A267581. `not-found-in-searched-scope`.
    when `|x| ≥ 2`, or `x = 0` and `n` is even.
 2. Hence the window of row `n ≥ 1` in base `b` is
    `Σ_{j < 2n+1} b^j − b^{n+1} − b^{n−1} − [n odd] b^n`.
-3. With `(b − 1) Σ_{j<k} b^j = b^k − 1` and `2 [n odd] = 1 − (−1)^n`, twice
-   `(b − 1)` times the window is a combination of `b^{2n}`, `b^n`, `(−b)^n`
-   and `1`, each annihilated by `(1 − x)(1 − bx)(1 + bx)(1 − b²x)`; this
+3. With `(b − 1) Σ_{j<k} b^j = b^k − 1` and `2 [n odd] = 1 − (−1)^n`, for
+   every base `b ≥ 1` twice `(b − 1)` times the window is a combination of
+   `b^{2n}`, `b^n`, `(−b)^n` and `1`, each annihilated by `(1 − x)(1 − bx)(1 + bx)(1 − b²x)`; this
    gives both recurrences, and for `b = 2` step 2 is Hasler's formula.
 4. The generating functions follow by comparing coefficients: from `x^5` on
    they vanish by the recurrence, and the first five come from the values
