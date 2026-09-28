@@ -1,7 +1,126 @@
 """Stable declaration ownership and import persistence without the judge."""
+import os
+from pathlib import Path
 import re
+import subprocess
+import tempfile
+import unittest
 
 from test_native_support import ROOT
+
+
+class AxiomClosureTests(unittest.TestCase):
+    def probe(self, body, modules=None):
+        # Recursive unsafe functions provide real self/mutual graph edges. They
+        # are inspected, never evaluated or exported to a repository report.
+        with tempfile.TemporaryDirectory(prefix='inspector-axioms.') as directory:
+            root = Path(directory)
+            (root / 'lean-toolchain').write_bytes((ROOT / 'lean-toolchain').read_bytes())
+            lean = subprocess.check_output(['elan', 'which', 'lean'], cwd=ROOT, text=True).strip()
+            env = dict(os.environ, LEAN_PATH=str(root))
+            for name, source in (modules or {}).items():
+                (root / (name + '.lean')).write_text(source)
+                result = subprocess.run([lean, '-o', name + '.olean', name + '.lean'],
+                                        cwd=root, env=env, capture_output=True, text=True, timeout=120)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            imports = 'import Diamond\n' if modules else ''
+            (root / 'Probe.lean').write_text(imports +
+                (ROOT / 'tools/lean-inspector/Inspector.lean').read_text() +
+                '\nopen Lean LeanInformationAudit.InspectorProducer\n' + body)
+            result = subprocess.run([lean, 'Probe.lean'], cwd=root, env=env,
+                                    capture_output=True, text=True, timeout=120)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_scc_closures_preserve_all_edges_across_query_orders_and_partitions(self):
+        self.probe('''
+namespace ClosureFixture
+axiom Z : Type
+axiom a : Z
+def free : Nat := 0
+def singleton (x : Z) : Z := x
+unsafe def self (x : Z) : Z := self x
+mutual
+  unsafe def mutualLeft (x : Z) : Z := mutualRight x
+  unsafe def mutualRight (x : Z) : Z := mutualLeft x
+end
+noncomputable def left : Z := a
+noncomputable def right : Z := a
+noncomputable def diamond : Z × Z := (left, right)
+noncomputable opaque concealed : Z := a
+end ClosureFixture
+
+run_cmd do
+  let env ← getEnv
+  let cases := #[
+    (`ClosureFixture.Z, #[`ClosureFixture.Z]),
+    (`ClosureFixture.a, #[`ClosureFixture.a, `ClosureFixture.Z]),
+    (`ClosureFixture.free, #[]),
+    (`ClosureFixture.singleton, #[`ClosureFixture.Z]),
+    (`ClosureFixture.self, #[`ClosureFixture.Z]),
+    (`ClosureFixture.mutualLeft, #[`ClosureFixture.Z]),
+    (`ClosureFixture.mutualRight, #[`ClosureFixture.Z]),
+    (`ClosureFixture.left, #[`ClosureFixture.a, `ClosureFixture.Z]),
+    (`ClosureFixture.right, #[`ClosureFixture.a, `ClosureFixture.Z]),
+    (`ClosureFixture.diamond, #[`ClosureFixture.a, `ClosureFixture.Z]),
+    (`ClosureFixture.concealed, #[`ClosureFixture.a, `ClosureFixture.Z])]
+  for ordered in #[cases, cases.reverse, cases.extract 5 cases.size ++ cases.extract 0 5] do
+    for partitionSize in #[1, 3, cases.size] do
+      let mut cache ← IO.mkRef ({} : AxiomClosureState)
+      for i in [:ordered.size] do
+        if i % partitionSize == 0 then cache ← IO.mkRef {}
+        let (name, expected) := ordered[i]!
+        let expected := expected.qsort Name.lt
+        let actual ← collectAxiomsShared env cache name
+        unless actual == expected do
+          throwError "closure {name}: expected {expected}, got {actual}"
+        unless (← collectAxiomsShared env cache name) == expected do
+          throwError "cached closure {name} changed"
+''')
+
+    def test_import_diamond_retains_private_opaque_and_constructor_axioms(self):
+        self.probe('''
+run_cmd do
+  let env ← getEnv
+  let some (hidden, _) := env.constants.toList.find? (fun (name, _) =>
+      privateToUserName name == `AxiomFixture.hidden)
+    | throwError "private axiom missing"
+  let cases := #[(`AxiomFixture.privateValue, #[hidden]), (`AxiomFixture.opaqueValue, #[hidden]),
+    (`left, #[hidden]), (`right, #[hidden]), (`diamond, #[hidden]),
+    (`AxiomFixture.Tree, #[`AxiomFixture.Payload]),
+    (`AxiomFixture.Tree.leaf, #[`AxiomFixture.Payload]),
+    (`AxiomFixture.Tree.branch, #[`AxiomFixture.Payload]),
+    (`AxiomFixture.Even, #[`AxiomFixture.Payload]),
+    (`AxiomFixture.Even.step, #[`AxiomFixture.Payload]),
+    (`AxiomFixture.Odd, #[`AxiomFixture.Payload]),
+    (`AxiomFixture.Odd.step, #[`AxiomFixture.Payload])]
+  for ordered in #[cases, cases.reverse] do
+    let cache ← IO.mkRef ({} : AxiomClosureState)
+    for (name, expected) in ordered do
+      let actual ← collectAxiomsShared env cache name
+      unless actual == expected.qsort Name.lt do
+        throwError "closure {name}: expected {expected}, got {actual}"
+''', modules={
+            'Base': '''namespace AxiomFixture
+axiom Payload : Type
+private axiom hidden : Nat
+noncomputable def privateValue : Nat := hidden
+noncomputable opaque opaqueValue : Nat := hidden
+inductive Tree where
+  | leaf : Payload → Tree
+  | branch : Tree → Tree
+mutual
+  inductive Even where
+    | step : Odd → Even
+    | leaf : Payload → Even
+  inductive Odd where
+    | step : Even → Odd
+end
+end AxiomFixture
+''',
+            'Left': 'import Base\nnoncomputable def left : Nat := AxiomFixture.privateValue\n',
+            'Right': 'import Base\nnoncomputable def right : Nat := AxiomFixture.opaqueValue\n',
+            'Diamond': 'import Left\nimport Right\nnoncomputable def diamond : Nat := left + right\n',
+        })
 
 
 class NativeRecordTests:

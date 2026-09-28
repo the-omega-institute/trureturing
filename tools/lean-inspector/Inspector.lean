@@ -278,7 +278,10 @@ partial def strongConnect (environment : Environment)
     for member in members do
       if (environment.find? member) matches some (.axiomInfo _) then
         axioms := axioms.insert member
-      for dependency in (((environment.find? member).map declarationDependencies).getD #[]) do
+      -- The root's immutable dependency array is still live in this DFS frame.
+      let memberDependencies := if member == constant then dependencies
+        else ((environment.find? member).map declarationDependencies).getD #[]
+      for dependency in memberDependencies do
         if !(memberSet.contains dependency) then
           for entry in ((s.closure.find? dependency).getD #[]) do
             axioms := axioms.insert entry
