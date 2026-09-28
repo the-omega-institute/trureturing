@@ -1,0 +1,2329 @@
+{
+  "base": {
+    "analysis": {
+      "G": 2,
+      "H": 3,
+      "M": 3,
+      "Q": 600,
+      "active_pass": true,
+      "joint_pass": true,
+      "keep": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "low": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "original": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          23,
+          40
+        ],
+        [
+          7,
+          24
+        ],
+        [
+          119,
+          200
+        ],
+        [
+          119,
+          120
+        ],
+        [
+          399,
+          600
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          7,
+          20
+        ],
+        [
+          4,
+          25
+        ],
+        [
+          9,
+          50
+        ],
+        [
+          39,
+          100
+        ]
+      ],
+      "private_counts": [
+        228,
+        78,
+        21,
+        10,
+        1,
+        1,
+        1,
+        1,
+        10,
+        10,
+        10,
+        1,
+        1,
+        1
+      ],
+      "q": 5,
+      "r": 2,
+      "rows": [
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 0,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 1,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 2,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 3,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 4,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 5,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 6,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            20,
+            21,
+            22
+          ],
+          "essential_low_indices": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            20,
+            21,
+            22
+          ],
+          "live_M": [
+            0,
+            2
+          ],
+          "private_projection": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            20,
+            21,
+            22
+          ],
+          "u": 7,
+          "witnesses": {
+            "0": [
+              [
+                0,
+                375,
+                [
+                  8
+                ]
+              ],
+              [
+                2,
+                575,
+                [
+                  8
+                ]
+              ]
+            ],
+            "1": [
+              [
+                0,
+                351,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                551,
+                [
+                  9
+                ]
+              ]
+            ],
+            "2": [
+              [
+                0,
+                327,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                527,
+                [
+                  10
+                ]
+              ]
+            ],
+            "4": [
+              [
+                0,
+                279,
+                [
+                  11
+                ]
+              ]
+            ],
+            "5": [
+              [
+                0,
+                255,
+                [
+                  8
+                ]
+              ],
+              [
+                2,
+                455,
+                [
+                  8
+                ]
+              ]
+            ],
+            "6": [
+              [
+                0,
+                231,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                431,
+                [
+                  9
+                ]
+              ]
+            ],
+            "7": [
+              [
+                0,
+                207,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                407,
+                [
+                  10
+                ]
+              ]
+            ],
+            "9": [
+              [
+                0,
+                159,
+                [
+                  12
+                ]
+              ]
+            ],
+            "10": [
+              [
+                0,
+                135,
+                [
+                  8
+                ]
+              ],
+              [
+                2,
+                335,
+                [
+                  8
+                ]
+              ]
+            ],
+            "11": [
+              [
+                0,
+                111,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                311,
+                [
+                  9
+                ]
+              ]
+            ],
+            "12": [
+              [
+                0,
+                87,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                287,
+                [
+                  10
+                ]
+              ]
+            ],
+            "14": [
+              [
+                0,
+                39,
+                [
+                  13
+                ]
+              ]
+            ],
+            "15": [
+              [
+                0,
+                15,
+                [
+                  8
+                ]
+              ],
+              [
+                2,
+                215,
+                [
+                  8
+                ]
+              ]
+            ],
+            "16": [
+              [
+                0,
+                591,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                191,
+                [
+                  9
+                ]
+              ]
+            ],
+            "17": [
+              [
+                0,
+                567,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                167,
+                [
+                  10
+                ]
+              ]
+            ],
+            "20": [
+              [
+                0,
+                495,
+                [
+                  8
+                ]
+              ],
+              [
+                2,
+                95,
+                [
+                  8
+                ]
+              ]
+            ],
+            "21": [
+              [
+                0,
+                471,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                71,
+                [
+                  9
+                ]
+              ]
+            ],
+            "22": [
+              [
+                0,
+                447,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                47,
+                [
+                  10
+                ]
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    "transport": {
+      "event_digest": "ae1671df189d8b8765b6373d23902824e82c4f5bf85cdef0242d81de5647fb51",
+      "holes": [],
+      "input_count": 14,
+      "input_sum": 1208,
+      "live_discarded_hits": 0,
+      "output": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          7,
+          16
+        ],
+        [
+          7,
+          24
+        ],
+        [
+          15,
+          32
+        ],
+        [
+          47,
+          48
+        ],
+        [
+          63,
+          96
+        ]
+      ],
+      "output_count": 8,
+      "output_period": 96,
+      "output_sum": 230,
+      "retained_event_checks": 768,
+      "theta": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            19,
+            8,
+            24
+          ]
+        ]
+      ],
+      "transport_period": 96,
+      "uncovered_source": []
+    }
+  },
+  "private_union_failure": {
+    "analysis": {
+      "G": 2,
+      "H": 3,
+      "M": 3,
+      "Q": 600,
+      "active_pass": true,
+      "joint_pass": true,
+      "keep": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "low": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "original": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          23,
+          40
+        ],
+        [
+          7,
+          24
+        ],
+        [
+          119,
+          200
+        ],
+        [
+          119,
+          120
+        ],
+        [
+          399,
+          600
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          7,
+          20
+        ],
+        [
+          4,
+          25
+        ],
+        [
+          9,
+          50
+        ],
+        [
+          39,
+          100
+        ],
+        [
+          0,
+          15
+        ],
+        [
+          5,
+          30
+        ]
+      ],
+      "private_counts": [
+        228,
+        78,
+        21,
+        10,
+        1,
+        1,
+        1,
+        1,
+        0,
+        10,
+        10,
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "q": 5,
+      "r": 2,
+      "rows": [
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 0,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 1,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 2,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 3,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 4,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 5,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 6,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            20,
+            21,
+            22
+          ],
+          "essential_low_indices": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "joint_only_points": [
+            375,
+            575,
+            255,
+            455,
+            135,
+            335,
+            15,
+            215,
+            495,
+            95
+          ],
+          "joint_pass": true,
+          "joint_projection": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            20,
+            21,
+            22
+          ],
+          "live_M": [
+            0,
+            2
+          ],
+          "private_projection": [
+            1,
+            2,
+            4,
+            6,
+            7,
+            9,
+            11,
+            12,
+            14,
+            16,
+            17,
+            21,
+            22
+          ],
+          "u": 7,
+          "witnesses": {
+            "0": [
+              [
+                0,
+                375,
+                [
+                  8,
+                  14
+                ]
+              ],
+              [
+                2,
+                575,
+                [
+                  8,
+                  15
+                ]
+              ]
+            ],
+            "1": [
+              [
+                0,
+                351,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                551,
+                [
+                  9
+                ]
+              ]
+            ],
+            "2": [
+              [
+                0,
+                327,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                527,
+                [
+                  10
+                ]
+              ]
+            ],
+            "4": [
+              [
+                0,
+                279,
+                [
+                  11
+                ]
+              ]
+            ],
+            "5": [
+              [
+                0,
+                255,
+                [
+                  8,
+                  14
+                ]
+              ],
+              [
+                2,
+                455,
+                [
+                  8,
+                  15
+                ]
+              ]
+            ],
+            "6": [
+              [
+                0,
+                231,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                431,
+                [
+                  9
+                ]
+              ]
+            ],
+            "7": [
+              [
+                0,
+                207,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                407,
+                [
+                  10
+                ]
+              ]
+            ],
+            "9": [
+              [
+                0,
+                159,
+                [
+                  12
+                ]
+              ]
+            ],
+            "10": [
+              [
+                0,
+                135,
+                [
+                  8,
+                  14
+                ]
+              ],
+              [
+                2,
+                335,
+                [
+                  8,
+                  15
+                ]
+              ]
+            ],
+            "11": [
+              [
+                0,
+                111,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                311,
+                [
+                  9
+                ]
+              ]
+            ],
+            "12": [
+              [
+                0,
+                87,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                287,
+                [
+                  10
+                ]
+              ]
+            ],
+            "14": [
+              [
+                0,
+                39,
+                [
+                  13
+                ]
+              ]
+            ],
+            "15": [
+              [
+                0,
+                15,
+                [
+                  8,
+                  14
+                ]
+              ],
+              [
+                2,
+                215,
+                [
+                  8,
+                  15
+                ]
+              ]
+            ],
+            "16": [
+              [
+                0,
+                591,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                191,
+                [
+                  9
+                ]
+              ]
+            ],
+            "17": [
+              [
+                0,
+                567,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                167,
+                [
+                  10
+                ]
+              ]
+            ],
+            "20": [
+              [
+                0,
+                495,
+                [
+                  8,
+                  14
+                ]
+              ],
+              [
+                2,
+                95,
+                [
+                  8,
+                  15
+                ]
+              ]
+            ],
+            "21": [
+              [
+                0,
+                471,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                71,
+                [
+                  9
+                ]
+              ]
+            ],
+            "22": [
+              [
+                0,
+                447,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                47,
+                [
+                  10
+                ]
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    "invalid_transport": {
+      "event_digest": "40ff8b3769db91b5bbdde77b296239977837ae45dc7c6c5729202738672e2e75",
+      "holes": [
+        23,
+        39,
+        71,
+        87
+      ],
+      "input_count": 16,
+      "input_sum": 1253,
+      "live_discarded_hits": 8,
+      "output": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          7,
+          24
+        ]
+      ],
+      "output_count": 5,
+      "output_period": 48,
+      "output_sum": 54,
+      "retained_event_checks": 768,
+      "theta": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3,
+            5,
+            8
+          ]
+        ]
+      ],
+      "transport_period": 96,
+      "uncovered_source": [
+        455,
+        375,
+        575,
+        255
+      ]
+    },
+    "valid_transport": {
+      "event_digest": "2943774c9c4fb0b3c2c5e85e339db018a9b0481df41f3806bb5691204aab1d21",
+      "holes": [],
+      "input_count": 16,
+      "input_sum": 1253,
+      "live_discarded_hits": 0,
+      "output": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          7,
+          16
+        ],
+        [
+          7,
+          24
+        ],
+        [
+          15,
+          32
+        ],
+        [
+          47,
+          48
+        ],
+        [
+          63,
+          96
+        ]
+      ],
+      "output_count": 8,
+      "output_period": 96,
+      "output_sum": 230,
+      "retained_event_checks": 768,
+      "theta": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            19,
+            8,
+            24
+          ]
+        ]
+      ],
+      "transport_period": 96,
+      "uncovered_source": []
+    }
+  },
+  "scope": "Finite EVEN whole-cover controls. Base14 is irredundant. Strict15 and negative16 deliberately contain redundant classes. No assertion of an irredundant strict separation, odd covering counterexample, unrestricted noncoverage, Lean verification, or literature priority.",
+  "strict": {
+    "analysis": {
+      "G": 2,
+      "H": 3,
+      "M": 3,
+      "Q": 600,
+      "active_pass": false,
+      "joint_pass": true,
+      "keep": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "low": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "original": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          23,
+          40
+        ],
+        [
+          7,
+          24
+        ],
+        [
+          119,
+          200
+        ],
+        [
+          119,
+          120
+        ],
+        [
+          399,
+          600
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          7,
+          20
+        ],
+        [
+          4,
+          25
+        ],
+        [
+          9,
+          50
+        ],
+        [
+          39,
+          100
+        ],
+        [
+          3,
+          15
+        ]
+      ],
+      "private_counts": [
+        208,
+        68,
+        16,
+        5,
+        1,
+        1,
+        1,
+        1,
+        10,
+        10,
+        10,
+        1,
+        1,
+        1,
+        0
+      ],
+      "q": 5,
+      "r": 2,
+      "rows": [
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 0,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 1,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 2,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 3,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 4,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 5,
+          "witnesses": {}
+        },
+        {
+          "active_pass": true,
+          "active_projection": [],
+          "essential_low_indices": [],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [],
+          "live_M": [],
+          "private_projection": [],
+          "u": 6,
+          "witnesses": {}
+        },
+        {
+          "active_pass": false,
+          "active_projection": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            20,
+            21,
+            22,
+            23
+          ],
+          "essential_low_indices": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "joint_only_points": [],
+          "joint_pass": true,
+          "joint_projection": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            20,
+            21,
+            22
+          ],
+          "live_M": [
+            0,
+            2
+          ],
+          "private_projection": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            20,
+            21,
+            22
+          ],
+          "u": 7,
+          "witnesses": {
+            "0": [
+              [
+                0,
+                375,
+                [
+                  8
+                ]
+              ],
+              [
+                2,
+                575,
+                [
+                  8
+                ]
+              ]
+            ],
+            "1": [
+              [
+                0,
+                351,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                551,
+                [
+                  9
+                ]
+              ]
+            ],
+            "2": [
+              [
+                0,
+                327,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                527,
+                [
+                  10
+                ]
+              ]
+            ],
+            "4": [
+              [
+                0,
+                279,
+                [
+                  11
+                ]
+              ]
+            ],
+            "5": [
+              [
+                0,
+                255,
+                [
+                  8
+                ]
+              ],
+              [
+                2,
+                455,
+                [
+                  8
+                ]
+              ]
+            ],
+            "6": [
+              [
+                0,
+                231,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                431,
+                [
+                  9
+                ]
+              ]
+            ],
+            "7": [
+              [
+                0,
+                207,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                407,
+                [
+                  10
+                ]
+              ]
+            ],
+            "9": [
+              [
+                0,
+                159,
+                [
+                  12
+                ]
+              ]
+            ],
+            "10": [
+              [
+                0,
+                135,
+                [
+                  8
+                ]
+              ],
+              [
+                2,
+                335,
+                [
+                  8
+                ]
+              ]
+            ],
+            "11": [
+              [
+                0,
+                111,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                311,
+                [
+                  9
+                ]
+              ]
+            ],
+            "12": [
+              [
+                0,
+                87,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                287,
+                [
+                  10
+                ]
+              ]
+            ],
+            "14": [
+              [
+                0,
+                39,
+                [
+                  13
+                ]
+              ]
+            ],
+            "15": [
+              [
+                0,
+                15,
+                [
+                  8
+                ]
+              ],
+              [
+                2,
+                215,
+                [
+                  8
+                ]
+              ]
+            ],
+            "16": [
+              [
+                0,
+                591,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                191,
+                [
+                  9
+                ]
+              ]
+            ],
+            "17": [
+              [
+                0,
+                567,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                167,
+                [
+                  10
+                ]
+              ]
+            ],
+            "20": [
+              [
+                0,
+                495,
+                [
+                  8
+                ]
+              ],
+              [
+                2,
+                95,
+                [
+                  8
+                ]
+              ]
+            ],
+            "21": [
+              [
+                0,
+                471,
+                [
+                  9
+                ]
+              ],
+              [
+                2,
+                71,
+                [
+                  9
+                ]
+              ]
+            ],
+            "22": [
+              [
+                0,
+                447,
+                [
+                  10
+                ]
+              ],
+              [
+                2,
+                47,
+                [
+                  10
+                ]
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    "transport": {
+      "event_digest": "9ffaf83a87b81b26f946bbab903f8415e5b2be17c596b70c2a1b3e36dd363e4a",
+      "holes": [],
+      "input_count": 15,
+      "input_sum": 1223,
+      "live_discarded_hits": 2,
+      "output": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          7,
+          16
+        ],
+        [
+          7,
+          24
+        ],
+        [
+          15,
+          32
+        ],
+        [
+          47,
+          48
+        ],
+        [
+          63,
+          96
+        ]
+      ],
+      "output_count": 8,
+      "output_period": 96,
+      "output_sum": 230,
+      "retained_event_checks": 768,
+      "theta": [
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            19,
+            8,
+            24
+          ]
+        ]
+      ],
+      "transport_period": 96,
+      "uncovered_source": []
+    }
+  }
+}

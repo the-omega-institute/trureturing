@@ -74691,3 +74691,934 @@ $$
 最后，$P=(E|_W)^{-1}E$ 是到 $W$ 的复线性投影，范数至多为 $2$。投影界由上述构造得到，没有作为前提使用。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 350. 相容酉操作族的同时修正与代数近包含
+
+**定义 350.1（矩阵读数空间与单向近包含）。** 设 $d\ge1$，$V\subseteq\operatorname{Herm}_d$ 是包含 $I$ 的实线性空间，$W=V+iV$。以下范数均为 $M_d(\mathbb C)$ 的算子范数；$U_1$ 表示线性空间 $U$ 的闭单位球。沿用第80.4节的乘法缺陷，并定义其复单位球版本：
+
+$$
+\eta=\sup_{a,b\in V_1}\operatorname{dist}(ab,W),
+\qquad
+\mu=\sup_{x,y\in W_1}\operatorname{dist}(xy,W).
+$$
+
+对含单位的环境 $C^*$-子代数 $A\subseteq M_d(\mathbb C)$，记
+
+$$
+\nu(A,W)=\sup_{a\in A_1}\operatorname{dist}(a,W),
+\qquad
+D(A,W)=\max\left\{
+\sup_{a\in A_1}\operatorname{dist}(a,W_1),
+\sup_{w\in W_1}\operatorname{dist}(w,A_1)
+\right\}.
+$$
+
+$\nu$ 的目标为整个线性空间，$D$ 比较两个完整复单位球；二者均未取矩阵放大后的上确界。
+
+**定理 350.2（紧群表示与代数近包含的统一修正）。** 在定义350.1下，设 $\eta\le1/500$。若 $G$ 是紧 Hausdorff 群，$\rho:G\to U(d)$ 是连续酉表示，且
+
+$$
+\sup_{g\in G}\operatorname{dist}(\rho(g),W)
+\le\delta\le\frac1{2000},
+$$
+
+则存在酉矩阵 $S$，令 $\rho'(g)=S\rho(g)S^*$，有
+
+$$
+\begin{aligned}
+\sup_{g\in G}\|\rho'(g)-\rho(g)\|&\le52\delta,\\
+\sup_{g\in G}\operatorname{dist}(\rho'(g),W)&\le4240\eta,\\
+\|S-I\|&\le104\delta.
+\end{aligned}
+\tag{350.1}
+$$
+
+因此，若已给定的含单位环境代数 $A$ 满足 $\nu(A,W)\le\delta$，则可取 $A'=SAS^*$，使
+
+$$
+D(A,A')\le52\delta,
+\qquad
+\nu(A',W)\le4240\eta.
+\tag{350.2}
+$$
+
+式(350.2)不要求 $A,W$ 同维。若另外有 $\dim_{\mathbb C}A=\dim_{\mathbb C}W$ 及 $b=4240\eta<1$，则
+
+$$
+D(W,A')\le\frac{2b}{1-b},
+\tag{350.3}
+$$
+
+并存在复线性投影 $P:M_d\to W$，满足
+
+$$
+P|_W=\operatorname{id}_W,
+\qquad
+\|P\|\le\frac{1+b}{1-b}.
+\tag{350.4}
+$$
+
+全部常数与 $d$、群及代数的块数无关。结论以已给定的表示或代数为前提，不断言小 $\eta$ 单独保证存在同维的起始代数。 当 $4240\eta\ge\delta$ 时，直接取 $S=I$ 已满足式(350.1)；严格小于初始近包含上界的改进对应 $4240\eta<\delta$。
+
+证明。本定理的目标 $W$ 仅为含单位自伴线性空间。Kitaev 的 [*Almost-idempotent quantum channels and approximate C*-algebras*, arXiv:2405.02434v2](https://arxiv.org/abs/2405.02434v2) 中的近似代数误差修正以给定内部双线性乘法为前提；Christensen 的 [*Near inclusions of C*-algebras*, Acta Mathematica 144 (1980)](https://doi.org/10.1007/BF02392125) 中相关嵌入结论以目标为精确代数为前提。以下直接控制环境乘积到 $W$ 的距离，不先赋予 $W$ 这两类结构。
+
+将 $x,y\in W_1$ 各分成实部和虚部，所得四个自伴分量均在 $V_1$。展开乘积并使用 $W$ 的线性性，得到
+
+$$
+\eta\le\mu\le4\eta\le\frac1{125},
+\qquad
+\operatorname{dist}(xy,W)\le\mu\|x\|\|y\|
+\quad(x,y\in W).
+\tag{350.5}
+$$
+
+先说明所需的连续近邻选择。若 $F:G\to M_d$ 连续，且 $\operatorname{dist}(F(g),W)\le a$，则对每个 $\varepsilon>0$，存在连续的 $f:G\to W$，使 $\|f-F\|_\infty\le a+\varepsilon$。事实上，在有限开覆盖的中心 $g_j$ 选择最近点 $w_j\in W$，使对应开集内 $\|F(g)-F(g_j)\|<\varepsilon$。紧 Hausdorff 空间上的从属连续单位分解 $\phi_j$ 给出 $f(g)=\sum_j\phi_j(g)w_j$，其误差由凸性估计。若 $a=0$，闭性已给 $F(G)\subseteq W$，可直接取 $f=F$。
+
+下面证明一个与初始近酉误差无关的极分解估计：
+
+$$
+x\in W,\quad
+\|x^*x-I\|\le\frac14,\quad
+\mu\le\frac1{100}
+\quad\Longrightarrow\quad
+\operatorname{dist}\bigl(x(x^*x)^{-1/2},W\bigr)\le4\mu.
+\tag{350.6}
+$$
+
+置 $z=I-x^*x$。由式(350.5)及取近邻的自伴部分，可选 $y=y^*\in W$，满足
+
+$$
+\|z-y\|\le\frac54\mu,
+\qquad
+q=\|y\|\le\frac14+\frac54\mu\le\frac13,
+\qquad
+\|x\|\le\frac54.
+$$
+
+写 $F_0(t)=(1-t)^{-1/2}=\sum_{k\ge0}c_kt^k$，其中 $c_k\ge0$。从 $t_0=x$ 开始，在 $W$ 中递归选择
+
+$$
+\|t_{k+1}-t_ky\|\le\mu\|t_k\|q.
+$$
+
+归纳得到
+
+$$
+\begin{aligned}
+\|t_k\|&\le\|x\|((1+\mu)q)^k,\\
+\|t_k-xy^k\|&\le\|x\|q^k\bigl((1+\mu)^k-1\bigr).
+\end{aligned}
+$$
+
+因 $(1+\mu)q<1/2$，级数 $v=\sum_kc_kt_k$ 在 $W$ 中收敛。利用 $F_0'(t)\le2$ 在 $[0,1/2]$ 上成立，得到
+
+$$
+\|v-xF_0(y)\|
+\le\|x\|\bigl(F_0((1+\mu)q)-F_0(q)\bigr)
+\le2\|x\|\mu q.
+$$
+
+无需假设 $y,z$ 交换：恒等式
+
+$$
+z^k-y^k=\sum_{j=0}^{k-1}z^{k-1-j}(z-y)y^j
+$$
+
+同样给 $\|F_0(z)-F_0(y)\|\le2\|z-y\|$。于是
+
+$$
+\begin{aligned}
+\|xF_0(z)-v\|
+&\le2\|x\|\bigl(\|z-y\|+\mu q\bigr)\\
+&\le\frac{95}{24}\mu\le4\mu.
+\end{aligned}
+$$
+
+这证明式(350.6)，包括 $\mu=0$。该证明中的近邻只用于点态距离估计；极分解本身在可逆矩阵上连续。
+
+现在对任意连续映射 $u:G\to U(d)$，定义
+
+$$
+e(u)=\sup_{g,h}\|u_gu_h-u_{gh}\|,
+\qquad
+A_g=\int_G u_x^*u_{xg}\,dx,
+$$
+
+其中 $dx$ 是归一化 Haar 测度。以下群平均的二次修正取自 McKenney–Vignati 的紧群平均方法，其原始形式使用可逆元的逆；此处酉元的逆即伴随。相关先例见 [*Ulam stability for some classes of C*-algebras*, arXiv:1601.05445v2](https://arxiv.org/abs/1601.05445v2) 中构造 $\widetilde\rho(u)=\int\rho(x)^{-1}\rho(xu)\,dx$ 的命题。为同时控制距 $W$ 的距离，这里保留所需估计的推导。
+
+令 $e=e(u)$，$r_g=A_g-u_g$，$E_{x,h}=u_xu_h-u_{xh}$。有 $\|A_g\|\le1$、$\|r_g\|\le e$。由展开及 Haar 测度的右平移不变性，
+
+$$
+A_gA_h-A_{gh}
+=r_gr_h+
+\int_G
+\bigl(u_{xg^{-1}}^*-u_gu_x^*\bigr)E_{x,h}\,dx.
+\tag{350.7}
+$$
+
+积分中第一个因子可写为
+
+$$
+u_{xg^{-1}}^*
+\bigl(u_x-u_{xg^{-1}}u_g\bigr)u_x^*,
+$$
+
+故两个因子的范数均不超过 $e$，从而乘法误差至多 $2e^2$。固定 $g$，置 $X_x=u_x^*u_{xg}$。矩阵方差恒等式给出
+
+$$
+\begin{aligned}
+0\le I-A_g^*A_g
+&=\int_G(X_x-A_g)^*(X_x-A_g)\,dx\\
+&=\int_G(X_x-u_g)^*(X_x-u_g)\,dx-r_g^*r_g\\
+&\le e^2I.
+\end{aligned}
+\tag{350.8}
+$$
+
+当 $e<1$ 时，$A_g$ 可逆，其极分解酉因子 $Q_g$ 满足
+
+$$
+\|Q_g-A_g\|\le1-\sqrt{1-e^2}\le e^2.
+$$
+
+比较三个位置上的替换误差可得
+
+$$
+e(Q)\le5e^2,
+\qquad
+\|Q-u\|_\infty\le e+e^2.
+\tag{350.9}
+$$
+
+$A,Q$ 均连续。若 $e\le1/100$，重复式(350.9)使每轮缺陷至多减半、移动至多为当前缺陷的两倍，故一致收敛到连续的精确酉表示 $\pi$，并有
+
+$$
+\|\pi-u\|_\infty\le4e(u).
+\tag{350.10}
+$$
+
+极限的乘法性及酉性使其单位元像自动等于 $I$。
+
+为了在迭代中保留对 $W$ 的距离，进一步设 $e(u)\le1/100$ 且 $\sup_g\operatorname{dist}(u_g,W)\le4\mu$。逐点取距 $u_g$ 不超过 $a=4\mu$ 的 $w_g\in W$。由式(350.5)，
+
+$$
+\begin{aligned}
+\operatorname{dist}(u_x^*u_{xg},W)
+&\le a(2+a)+\mu(1+a)^2\\
+&=(9+24\mu+16\mu^2)\mu\le10\mu.
+\end{aligned}
+$$
+
+在商空间 $M_d/W$ 中积分，得到 $\operatorname{dist}(A_g,W)\le10\mu$；该积分没有使用 $w_g$ 的可测性。若 $\mu>0$，用连续近邻选择取连续的 $x_g\in W$，满足 $\|x_g-A_g\|\le11\mu$。于是
+
+$$
+\|x_g-u_g\|\le e+11\mu\le0.098,
+\qquad
+\|x_g^*x_g-I\|\le2(0.098)+(0.098)^2<\frac14.
+$$
+
+令 $u_g^+=\operatorname{polar}(x_g)$。式(350.6)恢复同一个距离上界
+
+$$
+\sup_g\operatorname{dist}(u_g^+,W)\le4\mu.
+\tag{350.11}
+$$
+
+由式(350.8)，$A_g$ 的奇异值属于 $[\sqrt{1-e^2},1]$。扰动 $11\mu$ 后，$x_g$ 的奇异值落在相应扩张区间内，故
+
+$$
+\|u_g^+-x_g\|\le e^2+11\mu,
+\qquad
+\|u_g^+-A_g\|\le e^2+22\mu.
+$$
+
+结合式(350.7)及 $A_g,u_g^+$ 均为收缩，得到
+
+$$
+e(u^+)\le5e(u)^2+66\mu,
+\qquad
+\|u^+-u\|_\infty\le e(u)+e(u)^2+22\mu.
+\tag{350.12}
+$$
+
+若 $\mu=0$，则 $W$ 已对乘法闭合，$A_g\in W$，直接取 $x_g=A_g$，上述结论仍成立。
+
+若 $\delta=0$，原表示已在 $W$ 中，可取 $S=I$。以下令 $\delta>0$，连续选择 $f:G\to W$，满足 $\|f-\rho\|_\infty\le2\delta$，并取 $u^{(0)}=\operatorname{polar}(f)$。奇异值扰动及式(350.6)给
+
+$$
+\|u^{(0)}-\rho\|_\infty\le4\delta,
+\qquad
+e_0=e(u^{(0)})\le12\delta\le0.006,
+\qquad
+\sup_g\operatorname{dist}(u_g^{(0)},W)\le4\mu.
+$$
+
+这里应用式(350.6)合法，因为 $\|f_g^*f_g-I\|\le4\delta+4\delta^2<1/4$。
+
+当 $\mu>0$ 时，只在 $e_n>264\mu$ 时执行式(350.12)的修正。此时
+
+$$
+e_{n+1}<0.3e_n\le\frac12e_n,
+\qquad
+\|u^{(n+1)}-u^{(n)}\|_\infty<2e_n.
+$$
+
+所以在有限步 $N$ 后，$e_N\le264\mu$，且始终 $e_N\le1/100$。最后使用式(350.10)的环境修正，取得精确表示 $\rho'$。由式(350.11)，
+
+$$
+\sup_g\operatorname{dist}(\rho'_g,W)
+\le4\mu+4e_N\le1060\mu\le4240\eta.
+$$
+
+移动误差包括这最后一步。利用 $2e_n\le4(e_n-e_{n+1})$，有
+
+$$
+\begin{aligned}
+\|\rho'-\rho\|_\infty
+&\le4\delta+\sum_{n<N}2e_n+4e_N\\
+&\le4\delta+4e_0\le52\delta.
+\end{aligned}
+$$
+
+若 $\mu=0$，直接在 $W$ 中进行一致收敛的修正，仍有相同移动估计。
+
+置
+
+$$
+T=\int_G\rho'_g\rho_g^*\,dg.
+$$
+
+Haar 测度的左平移不变性给 $\rho'_hT=T\rho_h$，而 $\|T-I\|\le52\delta<1$ 保证 $T$ 可逆。$T^*T$ 与原表示的全部像交换，故 $T$ 的酉极分解因子 $S$ 仍交织两个表示。于是 $\rho'_h=S\rho_hS^*$，且奇异值扰动给 $\|S-I\|\le2\|T-I\|\le104\delta$。这证明式(350.1)；同一个共轭也保留全部不可约表示的重数。
+
+对给定代数 $A$，取 $G=U(A)$ 及包含表示。每个 $a\in A_1$ 都是 $A$ 内两个酉元的平均：在每个矩阵块中，将其极分解部分等距延拓成酉元 $u$，令 $c=|a|$、$v=c+i\sqrt{I-c^2}$，则 $a=(uv+uv^*)/2$。各块直和仍在 $A$ 内。因此式(350.1)对全部酉元的统一估计给出
+
+$$
+\sup_{a\in A_1}\|SaS^*-a\|\le52\delta,
+\qquad
+\nu(SAS^*,W)\le4240\eta.
+$$
+
+共轭把 $A_1$ 双射到 $(SAS^*)_1$，故式(350.2)成立。
+
+最后证明同维时的双向控制。一般地，若 $\nu(B,W)\le b<1$，其中 $B$ 是与 $W$ 同维的含单位环境代数，取范数一的条件期望 $E:M_d\to B$。它可由标准块分解上的压缩与归一化偏迹构造。对 $a\in B$，先选 $w_0\in W$，满足 $\|w_0-a\|\le b\|a\|$；然后对残差 $a-Ew_0$ 重复选择。第 $n$ 步残差的范数至多为 $b^n\|a\|$。所得级数在 $W$ 中收敛到一个 $\widetilde a$，且
+
+$$
+E\widetilde a=a,
+\qquad
+\|\widetilde a\|\le\frac{1+b}{1-b}\|a\|,
+\qquad
+\|\widetilde a-a\|\le\frac{2b}{1-b}\|a\|.
+$$
+
+因此 $E|_W$ 满射；相同的有限维数使它成为双射。上面构造的原像遂唯一，等于线性映射 $L=(E|_W)^{-1}$ 的值。于是 $P=LE$ 是到 $W$ 的投影，具有式(350.4)的界。
+
+对 $w\in W_1$，$Ew\in B_1$，且唯一性给 $\|w-Ew\|\le2b/(1-b)$。反向对 $a\in B_1$，取距它不超过 $b$ 的 $w\in W$，再将 $w$ 除以 $1+b$，可得 $\operatorname{dist}(a,W_1)\le2b$。故 $D(W,B)\le2b/(1-b)$。代入 $B=A'$ 即得式(350.3)。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 351. 近似闭合读数空间的条件扩张与有界提取限制
+
+第350节修正一个已经给定的相容代数，并保持其维数。本节处理两种能够增加维数的条件：在与已有代数对易的重数空间中分裂一个投影，或者在两个中心角之间加入相容的非对角连接。两种构造都直接控制新增代数的完整复单位球。最后给出一个精确矩阵例子，说明从一个指定残余生成整个代数，仍不保证固定预算的多项式能取得扩张所需的平均读数。
+
+**定义 351.1（近包含、平均与误差参数）。** 设 $d\ge1$，$V\subseteq\operatorname{Herm}_d$ 是包含 $I$ 的实线性子空间，$W=V+iV$，并令
+
+$$
+\mu=\sup_{u,v\in W_1}\operatorname{dist}(uv,W),
+\qquad
+\nu(B,W)=\sup_{b\in B_1}\operatorname{dist}(b,W).
+$$
+
+所有范数均为普通算子范数，$B_1$ 表示完整复单位球；距离的目标是整个线性空间 $W$。沿用第350节的自伴乘法缺陷时，$\mu\le4\eta$。设 $A\subseteq M_d(\mathbb C)$ 是含单位的精确 $C^*$-子代数，$\nu(A,W)\le\alpha$，记
+
+$$
+\gamma=\alpha(2+\alpha)
++\mu(2+\mu)(1+\alpha)^2.
+\tag{351.1}
+$$
+
+因此 $\alpha,\mu\le\gamma/2$。$E_A,E_{A'}$ 分别表示到 $A$ 及其交换子代数 $A'$ 的保迹条件期望。它们是范数一映射，可分别写成 $U(A')$ 与 $U(A)$ 上的酉共轭平均，因而彼此交换。
+
+**定理 351.2（可见重数残余给出严格扩张）。** 在定义351.1下，假设 $\gamma\le1/400000$，并存在 $a\in V_1$ 满足
+
+$$
+E_A(a)=0,
+\qquad \|E_{A'}(a)\|\ge\frac12.
+\tag{351.2}
+$$
+
+则存在含单位的环境代数 $B\supsetneq A$，使
+
+$$
+\nu(B,W)\le200\gamma.
+\tag{351.3}
+$$
+
+具体地，若所分裂的表示块为 $M_n\otimes I_m$，则 $\dim_{\mathbb C}B=\dim_{\mathbb C}A+n^2$。常数不依赖环境维数、块尺寸或表示重数。
+
+证明。对 $A$ 的任意最小中心投影 $r$，定义
+
+$$
+T_r(x)=rE_{A'}(x)r
+=\int_{U(A)}(ru)x(ru)^*\,du.
+$$
+
+它是到 $rA'r$ 的收缩投影。对 $x\in W_1$，每个 $ru\in A_1$ 可由某个 $v\in W$ 以误差 $\alpha$ 近似，且 $\|v\|\le1+\alpha$。先替换两侧因子，再两次近似乘积，得到
+
+$$
+\operatorname{dist}((ru)x(ru)^*,W)
+\le\alpha(2+\alpha)+\mu(2+\mu)(1+\alpha)^2=\gamma.
+$$
+
+在商空间 $M_d/W$ 中对原来的连续共轭映射积分，遂有
+
+$$
+\operatorname{dist}(T_r(x),W)\le\gamma\|x\|
+\qquad(x\in W).
+\tag{351.4}
+$$
+
+这一步不要求最近点选择具有可测性。
+
+令 $c=E_{A'}(a)$。由两期望交换，$E_A(c)=0$。在表示
+
+$$
+A=\bigoplus_j(M_{n_j}\otimes I_{m_j}),
+\qquad
+c=\bigoplus_j(I_{n_j}\otimes c_j)
+$$
+
+中，每个 $c_j$ 自伴且归一化迹为零。由式(351.2)，可选一个块使 $\|c_j\|\ge1/2$；令 $r$ 为该块的中心投影，$c_r=T_r(a)$。若 $m,M$ 是 $c_r$ 在 $r\mathcal H$ 上的极端特征值，则
+
+$$
+m\le0\le M,
+\qquad \Delta=M-m\ge\frac12.
+$$
+
+该块非零且无迹，两个端点不同。矩阵
+
+$$
+x_0=\frac{c_r-mr}{\Delta}
+$$
+
+属于 $rA'r$，在该角中具有精确谱端点 $0,1$，并满足 $\operatorname{dist}(x_0,W)\le2\gamma+\alpha\le4\gamma$。
+
+设一般的 $x\in rA'r$ 自伴，$0\le x\le r$，谱端点为 $0,1$，且到 $W$ 的距离不超过 $\epsilon=4\gamma$。取 $v\in V$ 以误差 $\epsilon$ 近似 $x$，再取 $t\in V$ 以误差 $\mu\|v\|^2$ 近似 $v^2$。取厄米部分保证这两次选择合法。于是
+
+$$
+\|t-x^2\|\le h,
+\qquad
+h=\epsilon(2+\epsilon)+\mu(1+\epsilon)^2\le9\gamma.
+$$
+
+令 $y=T_r(t)$。由于 $T_r$ 固定 $x^2$，式(351.4)给出
+
+$$
+\|y-x^2\|\le h,
+\qquad
+\operatorname{dist}(y,W)\le\gamma(1+h).
+$$
+
+若 $m_y,M_y$ 是 $y$ 在该角中的极端特征值，则 $|m_y|\le h$、$|M_y-1|\le h$。重新归一化
+
+$$
+x_+=\frac{y-m_yr}{M_y-m_y}
+$$
+
+恢复精确端点，且
+
+$$
+\begin{aligned}
+\operatorname{dist}(x_+,W)
+&\le\frac{\gamma(1+h)+\alpha h}{1-2h}
+\le2\gamma,\\
+\|x_+-x^2\|
+&\le\frac{4h}{1-2h}\le45\gamma.
+\end{aligned}
+\tag{351.5}
+$$
+
+所以这一步可以反复执行，而距离界不会逐轮累加。令 $\kappa=45\gamma$，以 $\theta_{i,k}$ 表示第 $k$ 步按大小排序的特征值。Weyl 不等式给出
+
+$$
+\theta_{i,k+1}\le\theta_{i,k}^2+\kappa,
+\qquad 0\le\theta_{i,k}\le1.
+$$
+
+当 $\gamma>0$ 时，区间 $[0,2\kappa]$ 在这个上界递推下不变；在 $[2\kappa,1-2\kappa]$ 中，每步至少下降 $\kappa/2$。每个有序指标若曾进入 $[0,1-2\kappa]$，就在有限步后进入低端区间并留在那里；否则始终位于高端。指标只有有限个，故存在同一个有限步 $N$，使全部特征值位于
+
+$$
+[0,2\kappa]\cup[1-2\kappa,1].
+$$
+
+迭代步数可以依赖维数和谱，本结论只要求误差界与维数无关。两个精确端点始终保留，因此 $q=1_{[1/2,1]}(x_N)$ 是 $r$ 的非零真子投影，属于 $A'$，并满足
+
+$$
+\operatorname{dist}(q,W)\le90\gamma+4\gamma=94\gamma.
+\tag{351.6}
+$$
+
+若 $\gamma=0$，则 $A\subseteq W$ 且 $W$ 已为精确有限维 $C^*$-代数。对非零无迹块 $c_r$ 作角内谱分解，直接得到这样的 $q\in W$，距离为零。
+
+置 $B=C^*(A,q)$。在所选块中，$q=I_n\otimes p$ 将重数空间分成两个非零部分，故 $M_n\otimes I_m$ 扩大成两个独立的 $M_n$ 系数块，维数增加 $n^2$。对任意 $b\in B_1$，将其中一个系数复制到另一重数部分，并保留所有未改变的块，可写成
+
+$$
+b=a_0+dq,
+\qquad a_0\in A_1,\quad d\in A,\quad\|d\|\le2.
+$$
+
+以误差 $\alpha,2\alpha,\epsilon_q=94\gamma$ 分别近似 $a_0,d,q$，再近似一次乘积，得到
+
+$$
+\begin{aligned}
+\operatorname{dist}(b,W)
+&\le3\alpha+2(1+\alpha)\epsilon_q
++2\mu(1+\alpha)(1+\epsilon_q)\\
+&\le\gamma(190.5+188.5\gamma+47\gamma^2)
+\le200\gamma.
+\end{aligned}
+$$
+
+这控制的是全部复收缩，没有按块数求和。证毕。
+
+**引理 351.3（有谱间隙的符号函数仍接近读数空间）。** 设 $s=s^*$、$\|s\|\le1$，并有参数 $0<\tau\le1$ 满足
+
+$$
+\min|\operatorname{spec}(s)|\ge\tau,
+\qquad \operatorname{dist}(s,W)\le\epsilon,
+\qquad
+\epsilon\le\frac\tau2,\quad
+\mu\le\frac{\tau^2}{128}.
+$$
+
+则
+
+$$
+\operatorname{dist}(\operatorname{sign}(s),W)
+\le\frac{2\epsilon}{\tau}+\frac{192\mu}{\tau^3}.
+\tag{351.7}
+$$
+
+证明。取 $v\in V$ 满足 $\|v-s\|\le\epsilon$，并置 $w=v/2$。由 $0<\tau\le1$，有 $\|w\|\le3/4$，且最小奇异值至少为 $\tau/4$。令 $\delta=\tau^2/16$、$z=I-w^2$，则 $0\le z\le(1-\delta)I$。取自伴 $y\in W$ 使 $\|y-z\|\le\mu$，记 $q=\|y\|$。假设保证
+
+$$
+(1+\mu)q\le1-\delta+2\mu+\mu^2
+\le1-\frac\delta2=:r<1.
+$$
+
+沿第350节的幂级数构造，令 $F(t)=(1-t)^{-1/2}=\sum c_kt^k$，其中 $c_k\ge0$。从 $t_0=w$ 出发，在 $W$ 中选择
+
+$$
+\|t_{k+1}-t_ky\|\le\mu\|t_k\|q.
+$$
+
+归纳给出 $\|t_k\|\le\|w\|((1+\mu)q)^k$ 及
+
+$$
+\|t_k-wy^k\|\le\|w\|q^k((1+\mu)^k-1).
+$$
+
+因此 $b=\sum c_kt_k\in W$ 收敛，且
+
+$$
+\|b-wF(y)\|\le\|w\|F'(r)\mu q.
+$$
+
+对 $z^k-y^k$ 使用保持因子次序的伸缩求和，不要求 $z,y$ 对易，得到 $\|F(z)-F(y)\|\le F'(r)\mu$。由 $wF(z)=\operatorname{sign}(v)$，
+
+$$
+\operatorname{dist}(\operatorname{sign}(v),W)
+\le2\mu F'(r)
+=\frac{128\sqrt2\,\mu}{\tau^3}
+\le\frac{192\mu}{\tau^3}.
+$$
+
+最后，对可逆自伴矩阵使用对称积分
+
+$$
+\operatorname{sign}(X)
+=\lim_{R\to\infty}\frac1\pi
+\int_{-R}^{R}(X-itI)^{-1}\,dt.
+$$
+
+$s,v$ 的谱均避开 $(-\tau/2,\tau/2)$；预解式恒等式将两积分之差的被积函数范数界定为 $\epsilon/((\tau/2)^2+t^2)$。积分后得到 $\|\operatorname{sign}(v)-\operatorname{sign}(s)\|\le2\epsilon/\tau$，从而证明式(351.7)。上述估计也包含 $\epsilon=0$ 或 $\mu=0$ 的情形。证毕。
+
+**定理 351.4（有谱间隙的相容连接给出严格扩张）。** 在定义351.1下，假设 $\gamma\le10^{-8}$。设 $P,Q\in Z(A)$ 是非零互补中心投影，且某个 $a\in V_1$ 的角块 $h=PaQ:Q\mathcal H\to P\mathcal H$ 为双射，全部奇异值至少为 $1/4$。令 $x$ 为 $h$ 的极分解部分，并额外要求
+
+$$
+x(QAQ)x^*=PAP.
+\tag{351.8}
+$$
+
+则 $B=C^*(A,x)\supsetneq A$，并且
+
+$$
+\dim_{\mathbb C}B=\dim_{\mathbb C}A+2\dim_{\mathbb C}(QAQ),
+\qquad
+\nu(B,W)\le12500\gamma\le\frac1{8000}.
+\tag{351.9}
+$$
+
+奇异值不必彼此接近；双射、谱间隙及式(351.8)都是本定理的明确前提。
+
+证明。与式(351.4)的两侧因子近似相同，对全部 $u\in W$ 有
+
+$$
+\operatorname{dist}(PuQ,W)\le\gamma\|u\|.
+\tag{351.10}
+$$
+
+故 $\operatorname{dist}(h,W)\le\gamma$。令 $s=h+h^*$，则 $\|s\|\le1$、$\min|\operatorname{spec}(s)|\ge1/4$，并且 $\operatorname{dist}(s,W)\le2\gamma$。引理351.3给出
+
+$$
+\operatorname{dist}(\operatorname{sign}(s),W)
+\le16\gamma+12288\mu\le6160\gamma=:e.
+$$
+
+由于 $\operatorname{sign}(s)=x+x^*$，再对一个范数不超过 $1+e$ 的 $W$ 近邻使用式(351.10)，得到
+
+$$
+\operatorname{dist}(x,W)
+\le e+\gamma(1+e)\le6200\gamma=:e_x.
+$$
+
+令 $C=QAQ$。从 $Q\mathcal H\oplus Q\mathcal H$ 到 $\mathcal H$ 的映射 $(\xi,\zeta)\mapsto x\xi+\zeta$ 为酉映射。它将 $M_2(C)$ 识别为
+
+$$
+B=\{xc_{11}x^*+xc_{12}+c_{21}x^*+c_{22}:c_{ij}\in C\}.
+$$
+
+两个对角角块恰为 $A=PAP\oplus QAQ$，两个非对角角块各增加 $\dim C$ 个复维数。若 $b\in B_1$，四个角系数都是收缩。两个对角项各到 $W$ 的距离不超过 $\alpha$；对 $c\in C_1$，近似 $x,c$ 并使用乘法缺陷，得到
+
+$$
+\operatorname{dist}(xc,W)
+\le e_x+(1+e_x)\alpha
++\mu(1+e_x)(1+\alpha).
+$$
+
+取伴随给出另一非对角项的相同界。因此
+
+$$
+\begin{aligned}
+\nu(B,W)
+&\le2e_x+(4+2e_x)\alpha
++2\mu(1+e_x)(1+\alpha)\\
+&\le12403\gamma+12400.5\gamma^2+3100\gamma^3
+\le12500\gamma.
+\end{aligned}
+$$
+
+弱不等式包含 $\gamma=0$，并控制全部复单位球。证毕。
+
+### 351.5 两个扩张条件仍不能覆盖全部残余
+
+若 $a\in V_1$ 自伴且 $\|a\|=1$，记其中心压缩为 $D_Z(a)=\sum_jz_jaz_j$。当 $\|D_Z(a)\|\le1/2$ 时，中心符号酉 $s=\sum_j\varepsilon_jz_j$ 的平均给出某个 $s$ 满足 $\|a-sas\|\ge1/2$。取 $P=(I+s)/2,Q=(I-s)/2$，由 $a-sas=2(PaQ+QaP)$ 得到 $\|PaQ\|\ge1/4$。这提供一个整体角块，避免逐条矩阵元的维数损失，但范数下界只控制最大奇异值。
+
+例如取 $W=M_4$、$A=\mathbb CP\oplus\mathbb CQ$，其中 $P,Q$ 均秩二。令 $h=PhQ$ 的奇异值为 $1,0$，$a=h+h^*$。此时 $\eta=\alpha=0$，$E_A(a)=E_{A'}(a)=0$，而 $\|h\|=1$。它不是满支撑连接；对任意满支撑部分等距 $x:Q\mathcal H\to P\mathcal H$ 及实数 $t\ge0$，
+
+$$
+\|h-tx\|\ge\max\{|1-t|,t\}\ge\frac12.
+$$
+
+这只限制该指定角块的近似方式，没有证明支撑分裂是所有扩张方法的必要步骤。
+
+小交换子代数平均也不保证小中心压缩。取 $W=M_4$、$A=M_2\otimes I_2$，以及无迹自伴酉 $s,r$，令 $a=s\otimes r$。则 $E_A(a)=E_{A'}(a)=0$，但 $Z(A)=\mathbb CI$，故 $D_Z(a)=a$。这个残余位于一个因子内部，没有可用的非平凡中心分割。上述两个例子中的 $A$ 都不是最大近包含代数；它们不排除实质利用最大性的构造。
+
+**命题 351.5（一个生成残余的有界多项式平均仍可趋零）。** 对 $n\ge2$，令 $\mathcal H=\mathbb C^n\otimes\mathbb C^n$、$V=\operatorname{Herm}(\mathcal H)$、$W=M_{n^2}$、$A=M_n\otimes I_n$，并置
+
+$$
+\Omega=\frac1{\sqrt n}\sum_i e_i\otimes e_i,
+\quad p=|\Omega\rangle\langle\Omega|,
+\quad t=n^{-2},
+\quad a=\frac{p-tI}{1-t},
+\quad q_n=\frac{1+t}{1-t}.
+$$
+
+记 $\tau_m=\operatorname{Tr}/m$ 为归一化迹。则 $\eta=\nu(A,W)=0$，$\|a\|=1$，$E_A(a)=E_{A'}(a)=0$，$\operatorname{dist}(a,A)\ge1/2$，而 $C^*(A,a)=W$。定义
+
+$$
+R=E_{A'}(\operatorname{Id}-E_A)
+=E_{A'}-\tau_{n^2}(\,\cdot\,)I.
+$$
+
+对所有有限和
+
+$$
+z=\sum_j\lambda_j u_{j,0}a u_{j,1}\cdots a u_{j,k_j},
+\qquad
+u_{j,l}\in A_1,\quad k_j\le K,\quad
+\sum_j|\lambda_j|\le L,
+$$
+
+都有
+
+$$
+\|R(z)\|\le\frac{2L}{n^2}q_n^K.
+\tag{351.11}
+$$
+
+若 $y=(\operatorname{Id}-E_A)z$ 还满足 $\|y\|\ge c>0$，则
+
+$$
+\left\|E_{A'}\!\left(\frac{y}{\|y\|}\right)\right\|
+\le\frac{2L}{cn^2}q_n^K.
+\tag{351.12}
+$$
+
+因此，对不随 $n$ 改变的 $K,L,c$，这类构造无法统一保证定理351.2所需的 $1/2$ 门槛。
+
+证明。$p$ 的两个归一化偏迹均为 $I/n^2$；$a$ 的特征值为 $1$ 及 $-1/(n^2-1)$，从而得到所列范数与平均恒等式。对任意 $b\in A$，条件期望的收缩性给出 $\|b\|=\|E_A(b-a)\|\le\|b-a\|$，故 $1=\|a\|\le\|a-b\|+\|b\|\le2\|a-b\|$，证明所列距离下界。对任意收缩 $b,c\in M_n$，矩阵单位展开给出
+
+$$
+\begin{aligned}
+p(b\otimes I)p&=\tau_n(b)p,\\
+E_{A'}((b\otimes I)p(c\otimes I))
+&=\frac1{n^2}I\otimes(cb)^{\mathsf T},\\
+\|R((b\otimes I)p(c\otimes I))\|
+&=\frac1{n^2}\|(cb)^{\mathsf T}-\tau_n(cb)I\|
+\le\frac2{n^2}.
+\end{aligned}
+$$
+
+含至少一个 $p$ 的乘积因此缩成模长不超过一的标量乘以 $(b\otimes I)p(c\otimes I)$；不含 $p$ 的乘积属于 $A$，被 $R$ 消去。将一个含 $k$ 次 $a$ 的词按 $a=(p-tI)/(1-t)$ 展开，其绝对系数总和不超过
+
+$$
+(1-t)^{-k}\sum_{l=0}^k\binom kl t^{k-l}=q_n^k.
+$$
+
+三角不等式证明式(351.11)，归一化即得式(351.12)。这些估计也适用于保持相同次数及总变差预算的范数极限和平均。
+
+另一方面，$p=(1-t)a+tI$，且
+
+$$
+(E_{ij}\otimes I)p(E_{kl}\otimes I)
+=\frac1n|i,j\rangle\langle l,k|.
+$$
+
+这些元素张成全部矩阵单位，故 $C^*(A,a)=M_{n^2}$。恢复归一化矩阵单位时出现的系数 $n$，说明精确生成与固定系数预算没有矛盾。证毕。
+
+### 351.6 最大性路线的当前边界与来源
+
+对 $\delta_*=1/2000$，在所有满足 $\nu(A,W)\le\delta_*$ 的环境代数中选择最大维数者是合法的：$\mathbb CI$ 给出非空候选；第350节的条件期望残差级数在使用同维唯一性之前，已经证明 $E_A|_W$ 满射，故每个候选都满足 $\dim A\le\dim W$。可能维数是有限非空集合。
+
+当 $\eta$ 足够小时，定理350.2可将这个最大候选共轭到 $\nu(A,W)\le4240\eta$。若还未同维，就存在 $V\cap\ker E_A$ 中的自伴范数一残余。定理351.2与351.4分别排除这个最大候选上满足其额外前提的两种配置，因为它们都会构造更大、仍处于粗近包含门槛内的代数。但这里尚未证明所有残余必落入这两类，也未证明 $E_A|_W$ 单射。
+
+命题351.5的例子已经满足零乘法缺陷及精确近包含。它排除的仅是从一个预先指定残余出发、保持所列次数与系数预算的平均提取路线；其中 $A$ 并不最大。选择其他残余、实质利用最大性，或者证明另一种允许放大误差的控制机制，仍在该命题之外。这里的次数与系数预算只定义所列矩阵表达式的范围，不直接等同于一般量子算法或物理控制的成本。
+
+最大维数、投影分裂与矩阵角合并的策略可与 Kitaev，*Almost-idempotent quantum channels and approximate $C^*$-algebras*，[arXiv:2405.02434v2，第8、9节](https://arxiv.org/abs/2405.02434v2)比较。该文的标量主定理以内部双线性乘法及相应近似代数公理为前提；矩阵层范数属于后续扩张版本。本节使用环境乘积距离、精确条件期望及实际矩阵的谱函数，逐项给出所需估计，没有将缺少的内部乘法或压缩空间同构作为已知输入。引理351.3复用第350节的幂级数方法，并显式跟踪谱间隙对误差的影响。
+
+这些是所声明条件下的解析构造与路线限制，不承担一般非交换稳定性、复量子规则重建或时空构造的结论，也不据此提出文献原创性声明。
+
+## 追加锚（本行以下为增补区）
+
+## 352. 三维预测接口与无界精确量子记忆
+
+第73、77节的预测维数衡量线性响应需要多少个方向，第79、345节另要求物理编码和合法续接。本节给出一个固定初态、固定两种命令的过程族：其全部预测始终只需三个实线性坐标，精确实现所需的量子记忆维数却趋于无穷。与此同时，一个 qubit 的终端读出误差可以趋于零。下界使用已有的半正定秩理论；这里将它接到同一个可执行续接接口，并区分精确容量、近似容量与允许读出的次数。
+
+### 352.1 固定操作、初态与容量合同
+
+**定义 352.1（多边形循环读出）。** 固定整数 $n\ge3$，记
+
+$$
+\theta_n=\frac{2\pi}{n},\qquad
+c_n=\cos\frac\pi n,\qquad
+p_k^{(n)}=
+\frac{c_n-\cos(k\theta_n-\pi/n)}{1+c_n}
+\quad(k\ge0).
+\tag{352.1}
+$$
+
+装置从一份固定初态开始，接受两种命令：$a$ 推进一步而不输出，$b$ 读取一个比特，并在两种结果后都重置到初态。从初态或重置态执行 $a^kb$ 时，输出 $1$ 的概率规定为 $p_k^{(n)}$。各次读出后重置，因而这也指定了全部有限命令树的联合输出律，允许测试者根据已得结果选择后续命令。
+
+$n$ 是已知的设计参数；每个 $n$ 可以选用自己的固定初态、门与读出。这里计量持续记忆的 Hilbert 维数，不计这些固定实参数的描述长度或实现精度成本。
+
+竞争实现必须使用固定的、与步数和未输入历史无关的操作：$a$ 是一条 CPTP 映射，$b$ 是一份二结果量子仪器。所有跨命令保留的内部寄存器都计入记忆，包括经典控制态和计数器。允许每步使用随后丢弃的新鲜辅助系统；不提供免费的持久环境、外部钟、预共享持久随机标签或额外历史输入。测试者可以保存自己的输出历史并据此选择 $a$ 或 $b$，但装置只接收当前命令。比较对象是这些实验的经典输出记录，未要求保留额外的终端量子输出或参考系统接口。
+
+记 $d_n$ 为在此合同下精确实现全部有限实验的最小持续 Hilbert 维数。直和中的经典标签同样占据这个总维数。竞争者不必在物理上使用与目标相同的重置方式；只要全部可访问记录相同即可。
+
+式（352.1）确实给合法概率。它以 $n$ 为周期，在这些离散角上余弦的最大值是 $c_n$，最小值不小于 $-1$，故
+
+$$
+0\le p_k^{(n)}\le1,\qquad
+p_0^{(n)}=p_1^{(n)}=0.
+\tag{352.2}
+$$
+
+### 352.2 预测维数固定，精确量子容量无界
+
+**定理 352.2（三维预测的量子实现分离）。** 对定义352.1的每个 $n\ge3$，全部未归一化分支概率具有最小实线性维数恰为 $3$ 的表示。精确量子实现存在，并满足
+
+$$
+\frac12\operatorname{rank}_{\mathrm{psd}}^{\mathbb R}(S_n)
+\le d_n\le n,
+\qquad
+\lim_{n\to\infty}d_n=\infty,
+\tag{352.3}
+$$
+
+其中 $S_n$ 是正 $n$ 边形的松弛矩阵，$\operatorname{rank}_{\mathrm{psd}}^{\mathbb R}$ 使用实对称正半定因子。因此不存在一个只由线性预测维数决定、覆盖这整个过程族的有限精确量子记忆上界。
+
+证明。先给实际实现。取 $\{|j\rangle:0\le j<n\}$，令循环酉矩阵 $V_n$ 把 $|j\rangle$ 送到 $|j+1\bmod n\rangle$。初态取 $|0\rangle\langle0|$，推进使用 $\rho\mapsto V_n\rho V_n^\dagger$。令
+
+$$
+D_1=\sum_{j=0}^{n-1}p_j^{(n)}|j\rangle\langle j|,
+\qquad D_0=I-D_1,
+\qquad
+\mathcal J_r(\rho)=\operatorname{tr}(D_r\rho)
+|0\rangle\langle0|.
+\tag{352.4}
+$$
+
+式（352.2）使 $D_0,D_1$ 成为 POVM；两条测量后制备映射完全正，且其和保迹。这给出对所有输入矩阵合法、在指定初态上实现目标的 $n$ 维装置，故 $d_n\le n$。
+
+线性预测使用 $v=(t,x,y)\in\mathbb R^3$，初始向量为 $v_0=(1,1,0)$。推进固定 $t$，并把 $(x,y)$ 旋转 $\theta_n$。读出泛函及分支更新为
+
+$$
+\begin{aligned}
+\ell_1(t,x,y)
+&=\frac{c_nt-\cos(\pi/n)x-\sin(\pi/n)y}{1+c_n},\\
+\ell_0(t,x,y)&=t-\ell_1(t,x,y),\\
+B_rv&=\ell_r(v)v_0.
+\end{aligned}
+\tag{352.5}
+$$
+
+允许的未归一化向量落在
+
+$$
+C_n=\operatorname{cone}\{
+(1,\cos(j\theta_n),\sin(j\theta_n)):0\le j<n
+\}.
+\tag{352.6}
+$$
+
+推进置换这些生成射线；两项 $\ell_r$ 在 $C_n$ 上非负，且和为 $t$。所以式（352.5）保持这个锥，并正确给出零质量分支以及任意有限分支的概率。测试者的自适应选择只决定接下来复合哪一个固定线性映射，不增加装置的预测坐标。
+
+这三个坐标也是必要的。取实际历史 $a^i$ 和后续事件 $a^jb_1$，其中 $b_1$ 表示读取结果为 $1$，得到有限 Hankel 块
+
+$$
+H_n=\bigl(p_{i+j}^{(n)}\bigr)_{0\le i,j<n}.
+\tag{352.7}
+$$
+
+式（352.1）展开后恰有 $1,e^{i\theta_n},e^{-i\theta_n}$ 三个不同且系数非零的 Fourier 频率。长度 $n$ 的对应字符线性独立，故 $H_n$ 的复秩及实秩均为 $3$。任意 $r$ 维实线性表示都把这个历史—未来矩阵分解经过 $\mathbb R^r$，于是 $r\ge3$。这证明最小值恰为 $3$；其中 $t$ 是质量坐标，归一化截面上的自由坐标只有两个。
+
+再看任意 $d$ 维量子实现。令其固定初态为 $\rho$、推进通道为 $\Phi$，读出 $1$ 的效应为 $F$。由于历史 $a^i$ 与未来 $a^jb_1$ 使用同一装置，必须有
+
+$$
+p_{i+j}^{(n)}
+=\operatorname{tr}(\rho_iF_j),
+\qquad
+\rho_i=\Phi^i(\rho),\qquad
+F_j=(\Phi^*)^j(F).
+\tag{352.8}
+$$
+
+$\rho_i,F_j$ 都是 $d$ 阶复 Hermitian 正半定矩阵。这一步只使用首次读出，所以即使竞争者读出后采用另一种内部状态更新，该必要条件仍成立。
+
+把式（352.7）的列按 $j\mapsto-j\bmod n$ 重排，再乘正数 $1+c_n$，得到
+
+$$
+(S_n)_{ij}
+=c_n-\cos((i-j)\theta_n-\pi/n).
+\tag{352.9}
+$$
+
+它正是顶点 $v_i=(\cos(i\theta_n),\sin(i\theta_n))$、面法向量
+$u_j=(\cos(j\theta_n+\pi/n),\sin(j\theta_n+\pi/n))$
+对应的松弛矩阵：正 $n$ 边形的全部面不等式为 $u_j\cdot v\le c_n$。正比例缩放和列置换不改变半正定秩，所以式（352.8）给出
+
+$$
+\operatorname{rank}_{\mathrm{psd}}^{\mathbb C}(S_n)\le d.
+\tag{352.10}
+$$
+
+这里不能把复因子直接当成实因子。对复矩阵 $A$ 定义
+
+$$
+\mathfrak R(A)=
+\begin{pmatrix}
+\operatorname{Re}A&-\operatorname{Im}A\\
+\operatorname{Im}A&\operatorname{Re}A
+\end{pmatrix}.
+\tag{352.11}
+$$
+
+若 $A$ Hermitian 正半定，则 $\mathfrak R(A)$ 实对称正半定；并且对两个 Hermitian 因子，
+
+$$
+\operatorname{tr}(\mathfrak R(A)\mathfrak R(B))
+=2\operatorname{tr}(AB).
+\tag{352.12}
+$$
+
+对式（352.8）的两族因子作此变换，再把其中一族乘 $1/2$，就得到尺寸 $2d$ 的实半正定分解。因此
+
+$$
+\operatorname{rank}_{\mathrm{psd}}^{\mathbb R}(S_n)\le2d.
+\tag{352.13}
+$$
+
+最后使用 Fawzi、Gouveia、Parrilo、Robinson、Thomas 的 *Positive Semidefinite Rank*，[arXiv:1407.4095v1，推论5.13、例5.14](https://arxiv.org/html/1407.4095v1#S5.SS2)：固定平面维数时，多边形面的数量趋于无穷，松弛矩阵的实半正定秩必趋于无穷。该结论来自有限尺寸半正定提升的代数边界次数界，并不要求多边形顶点一般位置或代数独立；因此适用于这里的正多边形。结合式（352.13）即得式（352.3）。实、复半正定秩的比较也见该文第2.2节。
+
+半正定分解在本证明中只提供必要下界；任意一份分解不自动给出把全部 $\rho_i$ 按同一循环送到后继的 CPTP 映射。因此这里没有把 $d_n$ 宣称为 $S_n$ 的半正定秩，也没有确定 $d_n$ 的精确增长率。证毕。
+
+### 352.3 一个 qubit 的趋零误差及其视界范围
+
+**命题 352.3（同一低维近似的完整记录误差）。** 对每个 $n\ge3$，存在一个定义352.1接口下的 qubit 装置，使任意次数推进后的一次终端读出，其最坏总变差误差恰为
+
+$$
+\delta_n=\frac{1-\cos(\pi/n)}2
+\sim\frac{\pi^2}{4n^2}.
+\tag{352.14}
+$$
+
+对这个指定装置，允许任意有限自适应命令树、每条分支至多 $H$ 次读出时，完整经典记录的最坏总变差误差恰为
+
+$$
+1-(1-\delta_n)^H.
+\tag{352.15}
+$$
+
+证明。用 Pauli 矩阵 $X,Y,Z$，取
+
+$$
+\rho_0=\frac{I+X}{2},\qquad
+U_n=e^{-i\theta_nZ/2},\qquad
+N_n=\cos(\pi/n)X+\sin(\pi/n)Y,
+\qquad F_q=\frac{I-N_n}{2}.
+\tag{352.16}
+$$
+
+推进为 $U_n$ 共轭，读取效应为 $F_q,I-F_q$，任一结果后都制备 $\rho_0$。这些是合法的量子操作，产生
+
+$$
+q_k^{(n)}=\frac{1-\cos(k\theta_n-\pi/n)}2.
+\tag{352.17}
+$$
+
+对离散可达角逐项相减，得到
+
+$$
+0\le q_k^{(n)}-p_k^{(n)}
+=\frac{(1-c_n)(1+\cos(k\theta_n-\pi/n))}{2(1+c_n)}
+\le\frac{1-c_n}{2}=\delta_n.
+\tag{352.18}
+$$
+
+$k=0,1$ 时取等，证明式（352.14）。这个界对全部 $k\ge0$ 一致，不随推进次数累积；它以式（352.16）的固定精确门为前提，没有另行估计门实现噪声。
+
+对于一棵允许的命令树，在两份输出历史仍相同的时候，使用相同的测试者随机性和命令，并最大耦合下一次读出的两个 Bernoulli 变量。此前每次读出后两边分别回到各自初态，所以当前条件概率仍是一对式（352.18），不因旧历史变成另一种未知状态。每次读出条件于尚未分歧的历史，保持相同输出的概率至少 $1-\delta_n$。至多 $H$ 次读出后，分歧概率至多式（352.15）；耦合不等式给相同的完整记录总变差上界。允许提前停止时，可用不产生分歧的虚拟末步补齐这个估计。
+
+反向取连续 $H$ 次命令 $b$，中间不推进。目标由 $p_0^{(n)}=0$ 总是输出全零，qubit 装置则每次重置后以概率 $\delta_n$ 输出 $1$，故全零记录的概率为 $(1-\delta_n)^H$。对一个点质量的总变差正好是其余记录的总质量，得到式（352.15）的等号。证毕。
+
+上述两个精确误差值属于式（352.16）的指定实现，未声称它在所有 qubit 装置中最优。它们已经足以区分两种极限：固定 $H$ 时，近似误差随 $n\to\infty$ 趋零；固定 $n$ 时，同一实现的最坏记录误差随 $H\to\infty$ 趋于 $1$。因此一次终端查询的统一近似，不自动成为任意多次读出的统一近似。
+
+### 352.4 正性几何承担的额外容量
+
+本例的三维预测表示保存质量与两个旋转坐标。精确物理实现还要求同一批可达态、未来效应及固定推进通道共同合法；正多边形的每条面约束都进入有限历史—未来矩阵的正因子化。矩阵的普通秩只数线性方向，半正定秩则限制这些方向能否同时由低维密度矩阵和正效应实现。这给出了超出预测坐标计数的容量约束。这里的容量包括所有持续保存的经典和量子寄存器；若把经典存储视为免费资源，本定理不提供不可约相干记忆的下界。
+
+[相位边界卷第350节](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md)的正弦平方过程已有三维线性预测与无界经典状态数的分离，但始终允许一个 qubit 精确实现。本节改变的概率剖面使同一类推进／读出接口出现无界的精确量子容量；证明依靠式（352.9）的整个松弛矩阵，不由经典随机矩阵的周期下界推断量子下界。两处的固定初态量词都不要求竞争者实现一个事先指定的完整制备多面体。
+
+半正定秩与量子实现的关系、低普通秩与高半正定秩的分离均为成熟结果。上述来源第3.2节讨论量子信息解释，第5.2节给多边形下界；本节的用途是把这一工具接回完整的固定操作过程，并同时写出低维近似及其多次读取范围，不作全球原创性或 Lean 核验声明。这里的容量结论是可执行响应族的结果，没有从观察者存在重建量子公理，也不替代第349—351节仍缺少的一般近代数存在性证明。
+
+## 追加锚（本行以下为增补区）

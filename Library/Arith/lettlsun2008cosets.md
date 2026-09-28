@@ -1475,3 +1475,1285 @@ condition for line coverage in this repeated-modulus class. Whether
 numerical distinctness together with the actual arithmetic constraints
 of a hypothetical minimal odd cover closes this gap remains unresolved.
 The example does not settle that stronger question.
+
+## Complete prime-coordinate averages identify distinct original labels
+
+The following is an ordinary finite Fourier and arithmetic argument, not
+Lean verification or a literature-priority claim. It uses the
+primitive-character isolation mechanism of
+[Report336](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/336-maximal-label-fourier-overlap-and-uncovered-density.md)
+and adds reduction in characteristic p and exact height-by-height
+subtraction. Its conclusion concerns complete, exactly valued marginal
+functions of one fixed original family. It does not turn scalar
+Lettl–Sun inequalities into a proof of unrestricted odd noncoverage.
+
+The layer-uniqueness statement is established prior work: Zhi-Wei Sun,
+*On the range of a covering function*, Theorem 1.2,
+[J. Number Theory 111 (2005), 190–196](https://doi.org/10.1016/j.jnt.2004.11.004),
+[final preprint, arXiv math/0409279v2, p. 3](https://arxiv.org/pdf/math/0409279v2).
+It states that two systems, each with distinct numerical moduli, are
+identical if their multiplicity functions agree modulo an integer that
+does not divide their joint least common multiple. For the layers below,
+take that integer to be p: their moduli divide B and p does not divide B.
+Positive moduli in the source include 1. Empty or singleton layers can
+be handled by adding to BOTH systems the same two classes
+0 mod(pB+1) and 0 mod(2pB+1), applying Sun's theorem, then removing them.
+These two new numerical labels exceed B, are distinct and prime to p,
+so each enlarged system still satisfies the source hypotheses. The
+height-by-height reconstruction is consequently a short application
+of this existing theorem. The finite-field calculation retained below
+also specifies the coefficients used by the recognition procedure;
+it is not a new uniqueness theorem or a new Lean formalization.
+
+### Complete marginal and original-label reconstruction
+
+Let A and A' be finite families of literal congruence classes, each
+containing at most one class at every positive numerical modulus. Their inventories
+may differ. Fix a common period Q divisible by every modulus in BOTH
+families. For a prime p write Q=p^H B, with gcd(p,B)=1, and use the actual
+CRT coordinates (u,y) in Z/(p^H) times Z/B. Let c_A be the multiplicity
+function of A. Define
+
+    M_p^A(y) = p^(-H) sum_(u mod p^H) c_A(u,y)
+             = sum_(d=p^e m present in A) p^(-e) 1_(y=a_d mod m),
+    L_p^A(y) = p^H M_p^A(y).                            (MR1)
+
+Every m divides B; the second equality follows by counting the p^(H-e)
+values of u meeting the original p-condition. The complete function
+retains the label y of each cofactor residue and its exact rational
+value. A histogram of values, a sampled subset of cofactors, a total
+mean or only lower bounds on M_p are different observations.
+
+If M_p^A=M_p^(A') pointwise, then the two numerical inventories are equal,
+and for every original modulus d=p^e m their phases agree modulo m.
+A single p-average does not recover the phase modulo p^e: the distinct
+classes 0 mod p and 1 mod p have the same constant average 1/p.
+
+Here is the finite-field uniqueness needed for the proof. Let p not
+divide B, and let C,C' be families of classes at divisors of B with at
+most one class per numerical modulus. Modulus 1 is allowed. If their
+multiplicity functions agree pointwise modulo p, then C=C'. Choose a
+finite field K of characteristic p containing a primitive B-th root
+omega. For B>1 such a field exists because B divides p^f-1 for some f;
+for B=1 use the prime field and omega=1. Suppose the families differ,
+and select an m maximal under divisibility among their differing
+numerical moduli. Absence is one possible difference. Set
+eta=omega^(B/m), of exact order m. For an original class a mod n,
+
+    sum_(y mod B) 1_(y=a mod n) eta^(-y)
+      = 0                         if m does not divide n,
+      = (B/n) eta^(-a)             if m divides n.       (MR2)
+
+This is the finite geometric-sum identity. Every strict multiple of m
+has identical data in C,C', so its difference cancels. The only remaining
+contribution is either a signed nonzero root times B/m, or
+
+    (B/m)(eta^(-a)-eta^(-a')).
+
+The scalar B/m is nonzero in characteristic p. Distinct residues modulo
+m give distinct roots because eta has exact order m. Thus this
+coefficient cannot vanish, a contradiction. For m=1 the only possible
+difference is presence versus absence; the constant character gives
+the same nonzero contradiction. This proves the finite-field claim.
+
+Now multiply the hypothesized equality in MR1 by p^H and reduce modulo
+p. All terms of height e<H vanish. The surviving terms are the
+multiplicity functions of the cofactor classes belonging to originals
+of height H. There is at most one such class for each m: two would have
+the same original numerical modulus p^H m. The finite-field claim
+recovers this entire height, including absent labels and all p-free
+phases. Its two exact rational contributions to M_p therefore coincide;
+subtract them over the rationals, and repeat at height H-1. Continuing
+to height 0 proves the reconstruction assertion. This exact subtraction
+is essential: merely retaining congruence information would not justify
+ignoring carries between heights. Pure p-power labels have m=1, so their
+presence is recovered while their p-phase remains unobserved.
+
+The argument also gives a finite recognition and reconstruction procedure
+from the full integer table L_p, p, H and a field K with the stated root.
+At each height, process m dividing B in decreasing numerical order in
+the current table reduced modulo p. Subtract each already recovered
+larger-modulus indicator. Its next coefficient in MR2 must be 0 or
+(B/m)eta^(-a) for exactly one a modulo m, specifying absence or the
+unique phase. Reject any other coefficient. After all m, check that the
+ENTIRE residual function on Z/B is zero; checking just one coefficient
+per conductor does not replace this step. Subtract the recovered layer's
+actual integer multiplicity from the integer table, divide by p, and
+continue. After height 0 the final integer residual must be zero. If
+unit original moduli are forbidden, reject a recovered label with
+e=0,m=1. These tests recognize the exact one-prime marginal images;
+the original p-phases remain free. This procedure requires the whole
+B-entry input table and exact finite-field arithmetic. No small-cost
+bound or efficient access to an unavailable table is asserted.
+
+An equivalent cyclotomic proof reduces a primitive m-th root modulo a
+prime ideal over p after isolating the largest differing p-denominator.
+There is no loss of distinct m-th roots when p does not divide m: the
+reduction of X^m-1 is separable, and its factorization into all m roots
+therefore has no repeated reductions. Passing to a finite extension
+field is permitted and required when the roots do not lie in the prime
+field. The finite-field argument above avoids this ideal notation.
+
+For TWO different primes p and q, equality of both complete marginals
+forces equality of the full original families. Each marginal identifies
+the numerical inventory. At a fixed original modulus d, they recover
+its phase modulo
+
+    d/p^(v_p(d)) and d/q^(v_q(d)),
+
+whose least common multiple is d. Hence the original phase modulo d is
+uniquely determined. One may choose p and q from the prime support of Q
+when it contains two primes. The proof also permits H=0 for a prime
+outside the support: its coordinate is trivial and M_p=c_A on Z/Q.
+No oddness, coverage, irredundancy or divisor closure is used.
+
+### Exact arithmetic restrictions and the remaining covering gap
+
+For any actual distinct-modulus family, L_p mod p must itself be the
+multiplicity function, in characteristic p, of a family having at most
+one cofactor class per numerical modulus. It is the top-height family.
+After subtracting that exact layer and dividing the residual integer
+function by p, the same restriction holds at the next height. Thus
+arbitrary proposed exact marginal functions do not automatically have
+an original distinct-modulus realization. Two prime marginals must
+additionally reconstruct compatible phases of the SAME original labels.
+Separate realization or separate optimization does not establish a
+shared realization.
+
+There is an exact converse once each proposed table passes the single-prime
+recognition procedure. Let their recovered numerical inventories be D_p
+and D_q. A common original distinct-modulus realization exists if and only if
+
+    D_p=D_q, and for each d in this inventory,
+    a_(p,d)=a_(q,d) mod gcd(d/p^(v_p(d)),d/q^(v_q(d))). (MR5)
+
+Necessity follows from single-prime uniqueness. For sufficiency, apply
+the generalized CRT separately at each original d to its two recovered
+prime-free phases. Their moduli have lcm d, so MR5 produces exactly one
+phase a_d modulo d. MR1 then verifies that this SAME assembled family
+has both prescribed complete functions. Classes at different numerical
+labels may overlap; no extra cross-label constraint is part of the
+realization problem. Pure prime powers, an optional unit label, and
+H=0 obey the same argument. The common realization is unique.
+
+For example, at Q=105 the p=3 average of {0 mod105} and the q=5 average
+of {1 mod105} are separately realizable and recover the same inventory.
+Their recovered phases are0 modulo35 and1 modulo21, which disagree
+modulo7, so they have no common distinct-label realization. MR5 decides
+common realization of the exact tables; it does not decide whether that
+realization covers all integers.
+
+If the original family covers, MR1 necessarily gives M_p(y)>=1 for every
+p and every y. A prime-owner Lettl–Sun row or weighted line inequality
+can constrain these values; it does not specify their exact values.
+Even knowing the exact complete functions would only identify the
+family, not by itself exclude a covering family. The reconstruction
+argument must not be applied to an inequality as though that inequality
+supplied the function.
+
+MR1 averages uniformly over the COMPLETE original p-coordinate, with
+every actual cofactor y retained. A vector denoted `phase_weights`, when
+formed after conditioning on survivors, a private region, a selected
+head or any other event, is not MR1 merely because its entries are
+weights on phases. Applying reconstruction to such conditional weights
+requires a separate proof recovering all MR1 values, including removed
+cofactors and the original averaging law. This section supplies no such
+transport. Nor does it apply to independent fractional phase choices:
+for a cofactor modulus m>1, convexifying one residue class uniformly over
+all its phases erases its nontrivial primitive Fourier coefficient,
+while an actual single class has a nonzero root coefficient in MR2.
+
+A distinct-modulus control separates all NONTRIVIAL prime-coordinate
+lower bounds, for the support primes p dividing Q, from whole coverage.
+At period 24 take the classes
+
+    0 mod2, 0 mod3, 1 mod4, 5 mod6,
+    1 mod8, 11 mod12, 13 mod24.                       (MR3)
+
+Their holes are exactly 7 and 19 modulo 24. In natural cofactor order,
+complete uniform line averages are
+
+    M_2 = [15,8,13]/8,
+    M_3 = [4,8,4,3,4,6,4,3]/3.                       (MR4)
+
+Every displayed value is at least 1, covering both support primes 2,3,
+yet these are actual noncovering original classes with pairwise distinct
+nonunit moduli. For p not dividing 24, H=0 and M_p=c_A, so its values at
+7 and 19 are zero. The control does NOT satisfy the lower bound for
+every prime including those outside the support. This example has EVEN
+moduli and is REDUNDANT; it does not settle the same sufficiency question
+under oddness, irredundancy or the full extremal hypotheses. In
+particular it is not a counterexample to Erdős #7.
+
+### Exact finite checks and hypothesis boundaries
+
+The [standard-library program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_reconstruction.py),
+with its [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_reconstruction.json),
+enumerates every optional residue choice at every nonunit divisor of
+three fixed periods. Marginals use integer scaling by p^H throughout.
+
+|Q|primes|original families|distinct single-prime functions|distinct paired functions|
+|---:|:---:|---:|:---:|---:|
+|12|2,3|5460|256,450|5460|
+|45|3,5|176640|864,3200|176640|
+|15|3,5|384|72,32|384|
+
+Every one-prime collision has the same presence and p-free phase at
+EVERY original numerical modulus. Every paired marginal identifies the
+full family. The finite-field claim, now including optional modulus 1,
+is also exhausted at (B,p)=(6,5),(10,3),(15,2),(9,2), respectively over
+168,396,768,80 families. These checks do not replace the general proof.
+
+The same consumer verifies MR3–MR4 both from original AP contributions
+and from literal multiplicity counts on all 24 points. It also checks
+that the outside-support p=5 marginal equals the full multiplicity table
+and is zero at both holes. The program exhausts the stated finite
+families; it does not implement the constructive decoder above. It retains the
+following exact boundary controls:
+
+* Repeated numerical labels allow a complete set of children to replace
+  its parent: {0 mod5} and {0 mod15,5 mod15,10 mod15} have the same
+  complete p=3 marginal at period 15.
+* Repeated numerical labels also destroy two-prime identification:
+  {0 mod15,1 mod15} and {6 mod15,10 mod15} have equal complete p=3 and
+  p=5 marginals, while the original classes differ.
+* Coprimality is essential in the isolated finite-field claim. At B=6
+  and characteristic 2, {0 mod3,0 mod6} and {3 mod6} have equal
+  multiplicity functions modulo 2, despite different distinct-label
+  inventories. Here p divides B, outside that claim's hypothesis.
+
+Reproduce the deterministic JSON with an explicit output path:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_reconstruction.py --output /tmp/e7_exact_prime_marginal_reconstruction.json
+```
+
+Normal and optimized runs give identical output bytes. All validation
+uses explicit checked conditions, not optimization-removable assertions.
+An [independent C++ enumeration](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_direct.cpp) instead constructs each literal integer
+multiplicity table and sums its residue fibres directly. It agrees on
+all182484 families, all six single-prime counts, and all three paired
+counts. It also checks MR5 on all2882304 pairs of individually realizable
+tables across the three periods, comparing the phase-compatibility test
+with the independently enumerated set of actual paired tables. Exactly
+182484 pairs are jointly realizable. These three periods have no nontrivial
+common cofactor for the two selected primes. A separate period105 control
+allows only the optional numerical label105: its106 families produce
+36 and22 marginal tables. Of their792 pairs,106 have a common realization;
+630 pairs have matching present inventories but conflicting phases modulo7,
+and56 have different inventories. Every verdict agrees with literal
+multiplicity enumeration. This checks the nontrivial common-cofactor
+branch of MR5 without claiming an enumeration of all period105 inventories.
+Neither checker implements the finite-field recognition procedure
+described above; its general correctness follows from the ordinary proof.
+
+```sh
+c++ -std=c++17 -O2 docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_direct.cpp -o /tmp/e7_exact_prime_marginal_direct
+/tmp/e7_exact_prime_marginal_direct
+```
+
+The unresolved #7 step is a uniform obstruction to actual odd distinct
+whole-cover families. Injectivity of an exact observation and feasibility
+of its lower-bound inequalities do not supply that obstruction.
+
+## Common original phases can obstruct all tight rows
+
+An exact prime average can identify the original labels while leaving
+their phases in that prime direction free. These phases must work at
+every actual cofactor simultaneously. The following ordinary
+coloring application gives a joint obstruction and an exact defect
+inside the tight-row region. It does not prove a new unrestricted
+noncoverage range, and no Lean verification or literature priority is
+claimed.
+
+### From actual row slack to a shared phase constraint
+
+Fix one original family and Q=p^H B, with H>=1 and gcd(p,B)=1. For
+each original d_i=p^(e_i)m_i define its actual cofactor and prime events
+
+    C_i={y mod B : y=a_i mod m_i},
+    A_i={u mod p^H : u=a_i mod p^(e_i)},
+    c(u,y)=sum_i 1_(A_i)(u)1_(C_i)(y).
+
+Let S_p(y) be the fraction of missing p-coordinate values in the full
+row at y, and E_p(y) the average of (c-1)_+ on that same row. Counting
+excess and holes gives
+
+    E_p(y)-S_p(y)=M_p(y)-1.
+
+If y belongs to C_i intersect C_j and the actual prime prefixes A_i,A_j
+are compatible, their intersection has measure p^(-max(e_i,e_j)).
+Multiplicity is at least two there, hence
+
+    S_p(y)>=p^(-max(e_i,e_j))-(M_p(y)-1).             (CB3)
+
+This uses one actual row and needs no covering hypothesis. Define a
+graph on the original numerical labels by putting an edge ij when
+there is an actual cofactor witness y_ij in C_i intersect C_j with
+
+    M_p(y_ij)-1<p^(-max(e_i,e_j)).                   (CB4)
+
+Whole coverage would force incompatible prime prefixes at every edge.
+Different edge witnesses can have different cofactors, but the prime
+phase of one original class cannot vary between them.
+
+A clique with sum_i p^(-e_i)>1 therefore certifies noncoverage: its
+prime cylinders cannot all be pairwise disjoint, and a compatible
+pair gives a positive lower bound in CB3 at its fixed witness. This
+is the usual disjointness/Kraft argument. If all vertices of a
+subgraph have one height h, their residues modulo p^h must instead
+give a proper p^h-coloring of that entire subgraph. Bounding its clique
+sizes does not in general establish such a coloring.
+
+These statements also give quantitative bounds. If fixed witnesses
+on a finite obstruction graph have positive gaps gamma_ij in CB3,
+some violated edge implies a full-period hole density at least
+min_ij gamma_ij/B. When an edge condition holds on a larger set of
+cofactors, its CB3 bound can be integrated on that actual set, using
+the same original uniform law.
+
+Explicitly, choose any cofactor set T and any subset of original labels
+all at one height 1<=h<=H, with s=p^h. Other original labels can have arbitrary
+heights. Define
+
+    w_ij(T)=(1/B) sum_(y in T intersect C_i intersect C_j)
+                       (1+1/s-M_p(y))_+.
+
+Let G_T have exactly the edges with w_ij(T)>0. If G_T is not
+s-colorable, then
+
+    Pr(hole and cofactor in T)>=min_(ij in G_T)w_ij(T)>0. (CB4a)
+
+For any actual original phases, some edge has equal phases. Its prime
+cylinders coincide, so CB3 and S_p>=0 imply the positive-part integrand
+bound on every common cofactor. Integrating gives CB4a. The weights
+use the same complete-family M_p and original Haar source throughout;
+they do not arise from separately optimized laws.
+
+### Scalar overlap tests are relaxations of the shared-phase constraint
+
+The full CB4 constraint already contains a useful pair-overlap scalar
+test. This test does not supply an additional obstruction when that
+shared-phase constraint is satisfiable. For t>=0, put k=floor(t) and
+
+    Phi(t)=k(k-1)/2+k(t-k).
+
+This is convex, is zero on [0,1], and agrees with binom(n,2) at every
+nonnegative integer n. Fix the original cofactor classes and heights,
+and let G be either the CB4 graph or its exact-row subgraph, whose
+edges have a common cofactor y with M_p(y)=1. Suppose ONE assignment
+of the original prime phases makes the prime cylinders disjoint at
+every edge of G. Its actual multiplicity c has the prescribed M_p,
+whether or not this assignment covers. On that same uniform CRT source,
+
+    average_y Phi(M_p(y)) <= Omega_2
+      := average_(u,y) binom(c(u,y),2)
+       = sum_(i<j) Pr(original_i intersect original_j)
+      <= sum_(i<j, ij notin G, C_i intersect C_j nonempty)
+                                      1/lcm(d_i,d_j).       (CB6)
+
+The first inequality is convexity on each full prime row; it does not
+assume c>=1. The last inequality holds because graph edges and
+cofactor-incompatible pairs have zero intersection, while every
+remaining pair contributes either zero or exactly 1/lcm(d_i,d_j).
+Thus violation of CB6 certifies that G has no satisfying prime-prefix
+assignment. It cannot exclude a table whose CB4 constraints already
+have such an assignment. Using the full low-slack CB4 graph can reduce
+the upper bound relative to the exact-row graph, but is still a scalar
+relaxation of the same constraint. Rows with M_p<1 independently fail
+the existing elementary marginal test.
+
+A related active-label count also adds no new phase condition. If a
+finite row contains n weights p^(-e_i), one selected weight is p^(-h),
+and 1<=M_p<1+p^(-h), then n>=1+h(p-1). Indeed, removing that weight
+leaves a sum S with 1-p^(-h)<=S<1. Carrying p equal-depth terms into
+one term at the preceding depth never increases the term count. The
+finite base-p expansion of S has its first h digits equal to p-1,
+since floor(p^h S)=p^h-1. At least h(p-1) original remaining terms
+are therefore required; h=0 is immediate. This consequence uses only
+the already required M_p>=1 and reciprocal prime-power weights,
+not a further private-point or whole-cover phase hypothesis.
+
+These are ordinary consequences and limitations of existing conditions,
+not new Lean declarations or an unrestricted noncoverage argument.
+
+### A complete arithmetic obstruction with every clique budget valid
+
+For any odd p and H>=1, put s=p^H. Let W_s be the join of a complete
+graph on s-2 central vertices and a five-cycle of rim vertices. Its
+largest clique has s vertices; a coloring needs s+1 colors, since
+the central vertices use s-2 distinct colors and the rim needs three
+additional colors. Every edge lies in a largest clique. There are
+exactly five largest cliques, each containing all central vertices
+and one rim edge.
+
+Realize this complete compatibility graph with actual congruences.
+For every nonedge {i,j}, choose a separate odd prime ell_ij different
+from p, and impose conflicting residues0 and1 at its two endpoints.
+Give each vertex its own further odd tag prime t_i with residue0.
+All these primes are distinct. Let m_i be the product of the primes
+assigned to i and b_i their CRT residue. For C_i=b_i mod m_i,
+
+    C_i intersects C_j iff ij is an edge of W_s.
+
+Every actual active set is therefore a clique. Conversely every
+clique is an exact active set: satisfy its nonedge-coordinate
+conditions, set its tags to0, and set every other tag to1. The
+conditions are compatible because two members of a clique never
+share a conflicting coordinate. CRT supplies one actual cofactor
+point. This accounts for the COMPLETE cofactor domain, not a chosen
+subgraph of additional unrecorded conflicts.
+
+Take the original moduli d_i=p^H m_i with arbitrary phases alpha_i
+modulo s and cofactor phases b_i. The tag primes make the numerical
+moduli distinct and incomparable. They are all odd and nonunit.
+The exact singleton active patterns give a private integer for each
+original class under every phase assignment. The complete marginal is
+
+    M_p(y)=#{i:y in C_i}/s<=1.
+
+The tight rows M_p=1 are exactly the five largest-clique active
+patterns. Each row separately admits a cover by assigning its s
+active originals all s phases. Every clique of the COMPLETE tight-row
+conflict graph has total prime weight at most one. The graph itself
+is W_s, however, and its coloring obstruction shows that no common
+assignment of original phases covers all tight rows.
+
+For each largest clique K_j, put
+
+    R_j=intersection_(i in K_j) C_i,
+    mu_B(R_j)=1/lcm(m_i : i in K_j).
+
+No other vertex can be active there, since it would enlarge a largest
+clique. The five regions are pairwise disjoint. Every phase assignment
+leaves at least one missing phase on at least one region. Thus
+
+    Pr(hole and cofactor in union_j R_j)
+       >=(1/s) min_j 1/lcm(m_i : i in K_j).           (CB5)
+
+This is sharp over all original phase choices. Assign distinct
+central phases and alternate the remaining two phases around the
+rim, placing its unique equal-phase edge at a region of smallest
+mass. Every other tight region is covered exactly once. The chosen
+one has precisely one missing phase, attaining CB5. This argument
+retains arbitrary H, the full original numerical labels and one
+phase per label throughout.
+
+### Exact finite control and the unrestricted boundary
+
+The [tight-row program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.py)
+and [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.json)
+use p=3,H=1, nonedge primes5,7,11,13,17 and tags19,23,29,31,37,41.
+The actual cofactors and phases are
+
+    m=(19,805,4147,2635,2849,9061),
+    b=(0,0,0,1581,925,5084),
+    d=3m=(57,2415,12441,7905,8547,27183).
+
+The cofactor period is50708377254535 and the original period is
+152125131763605. No enumeration of that full period is claimed.
+The program checks all15 pairwise generalized-CRT conditions,
+constructs all22 exact clique active patterns including the empty
+one, and checks the complete list of five tight patterns. All729
+original phase assignments are evaluated using literal congruences
+at representatives of their fifteen p-fibre points. Every tight
+row is independently coverable; every common assignment leaves
+at least one of the fifteen points uncovered. The minimum is one,
+attained by30 assignments. Exact CRT masses give the sharp minimum
+over the ENTIRE tight region,
+
+    1/1471442973.
+
+An attaining phase vector is (0,1,2,1,2,2), giving literal original
+residues (0,805,8294,4216,6623,5084) at the six displayed moduli.
+It leaves zero missing phases on four tight regions and one on the
+fifth. Normal and optimized
+runs have identical result bytes, and all checks remain active with
+Python optimization enabled:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.py --output /tmp/e7_tight_row_phase_obstruction.json
+```
+
+The generalized-CRT clique criterion is already used in
+[Report433](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/433-chordal-overlap-certificates-and-their-exact-finite-limits.md).
+Coloring and Kraft bounds here are applications of existing
+mathematics, not new general graph theorems. The quantitative result
+concerns joint phase choices on the specified actual tight region.
+
+Other cofactor rows in this construction have M_p=0,1/s,...,(s-1)/s.
+It does not satisfy the whole-table lower bound M_p>=1, or that bound
+for every support prime. Its overall noncoverage also follows from
+the elementary density bound and its antichain inventory. What the
+control separates is precise: every tight row is separately coverable
+and every clique budget on their COMPLETE conflict graph passes,
+yet a common phase assignment still leaves the exact positive defect
+CB5. It does not enlarge the known unrestricted noncoverage range.
+
+The missing #7 bridge is a theorem forcing a common-phase obstruction
+or sufficient integrated CB3 defect in every hypothetical extremal
+odd family. Exact marginal lower bounds, distinctness, irredundancy
+and divisor closure have not been shown here to force it.
+
+## Nonnegative integer two-prime margins retain a further covering condition
+
+Fix one actual original family with full period L=P Q B, where
+P=p^H, Q=q^G, p and q are distinct support primes, H,G>=1, and
+gcd(B,pq)=1. Fix ONE actual cofactor z modulo B. On its complete
+P-by-Q CRT slice let c_ij be the original multiplicity and put
+
+    F_ij=c_ij-1, r_i=sum_j F_ij, s_j=sum_i F_ij,
+    A_z=sum_(i,j) binom(c_ij,2)=sum_(i,j) g(F_ij),
+    g(t)=t(t+1)/2.
+
+The actual F is an integer matrix with entries at least -1. Whole
+coverage would make all its entries nonnegative. Negative row or
+column sums already fail the elementary prime-marginal bound. When
+r,s are nonnegative, define
+
+    T_Z(r,s)=min sum_(i,j) g(X_ij),
+      X_ij nonnegative integers,
+      sum_j X_ij=r_i, sum_i X_ij=s_j.                 (IT1)
+
+Their equal integer totals guarantee a feasible matrix, and only
+finitely many such matrices exist. A necessary covering condition is
+
+    A_z >= T_Z(r,s) for every actual cofactor z.      (IT2)
+
+This condition uses the row sums, column sums and overlap of the SAME
+original family. The overlap is available directly from its literal
+labels: write d_t=p^(e_t)q^(h_t)n_t and retain t exactly when
+z=a_t mod n_t. For each retained pair whose phases agree modulo both
+p^min(e_t,e_u) and q^min(h_t,h_u), add
+
+    P Q / (p^max(e_t,e_u) q^max(h_t,h_u))             (IT3)
+
+to A_z. All other pairs contribute zero. This is the exact number of
+their common points on that slice, not an independently optimized
+intersection bound. Neither the definition nor the computation assumes
+an observer can obtain a complete marginal table at small cost.
+
+### An exact separation from real-valued and pairwise conditions
+
+For arbitrary P,Q>=3 form the signed integer matrix F with corner
+F_00=-1, all other entries of its first row or first column equal to 1,
+and every interior entry equal to 2. Then
+
+    A=sum g(F_ij)=P+Q-2+3(P-1)(Q-1),
+    T_Z(r,s)=A+1.                                   (IT4)
+
+Here and below r,s are the actual sums of this F. To prove the lower
+bound, take any feasible nonnegative integer X and set t=X_00>=0.
+Relative to F, the corner changes by t+1; the first-row arm and the
+first-column arm each change in total by -(t+1); the interior total
+changes by t+1. For nonnegative integers x,
+
+    g(x)-g(1)>=x-1,
+    g(x)-g(2)>=3(x-2).
+
+Both differences reduce to products of two consecutive integers
+divided by 2. Summing over the three regions gives
+
+    sum g(X_ij)-A >= g(t)+(t+1)>=1.
+
+Increase the corner to 0, decrease one entry in each incident arm
+from 1 to 0, and increase their common interior entry from 2 to 3.
+This rectangle change preserves every margin and increases the cost
+by exactly 1, proving IT4. No bounded search is used for this minimum.
+
+The nonnegative REAL relaxation has a strictly smaller answer for
+distinct odd prime powers P,Q. Put
+
+    C=1/(P-1)+1/(Q-1)+1/((P-1)(Q-1)).
+
+For fixed corner 0<=t<=min(P,Q)-2, convexity bounds each arm and the interior by
+the cost of its constant average. Those averages are respectively
+1-(t+1)/(Q-1), 1-(t+1)/(P-1), and
+2+(t+1)/((P-1)(Q-1)). This is exactly the feasible corner range; these
+averages preserve every original row and column sum. The exact minimum at that t differs
+from A by
+
+    t^2/2-1/2+C(t+1)^2/2.
+
+This increases on t>=0, and t=0 is feasible. Thus
+
+    T_R(r,s)=A-1/2+C/2.                              (IT5)
+
+After exchanging the two axes if needed, distinct odd prime powers
+have P>=3 and Q>=5, so C<=7/8 and T_R<=A-1/16<A.
+The real relaxation therefore does not reject this actual F; the
+nonnegative integer condition does.
+
+For P=3,Q=5 the complete matrices are
+
+    F = [-1 1 1 1 1]      X = [0 0 1 1 1]
+        [ 1 2 2 2 2]          [0 3 2 2 2]
+        [ 1 2 2 2 2]          [1 2 2 2 2].
+
+Both have row sums (3,9,9) and column sums (1,5,5,5,5).
+Their costs are 30 and 31. The nonnegative real optimum is 479/16,
+attained by corner 0, first-row arms 3/4, first-column arms 1/2 and
+interior 17/8. The ordinary unconstrained row/column L2 bound is 446/15,
+also below 30. These values are exact rational arithmetic; the minimum
+claims are proved by IT4--IT5 rather than inferred from a solver result.
+
+### Realization by distinct odd numerical labels and the global boundary
+
+The separation is realizable on one actual arithmetic slice at every
+pair of distinct odd prime powers. For EACH of the c_ij=F_ij+1 copies
+at a nonzero cell choose a fresh odd prime ell_t, different from p,q
+and from every other tag. Take one original class with numerical
+modulus P Q ell_t and CRT phases i mod P, j mod Q, 0 mod ell_t.
+There are
+
+    N=2(P+Q-2)+3(P-1)(Q-1)
+
+such classes; N=36 for P=3,Q=5. All numerical moduli are odd, greater
+than 1 and pairwise distinct. On the SAME auxiliary cofactor where
+all tags equal 0, their multiplicity is exactly c. Each original has
+a private witness: give it its prescribed p,q phases and tag 0, and
+set every other tag to 1. Thus the family is irredundant as well.
+
+Every original has prime heights H,G. On the selected slice, the
+smallest p-marginal is 2(P-1)/P, with slack 1-2/P>=1/P; the q direction
+has the analogous bound. The strict CB4 inequality never holds in
+either slice graph. For P=3,Q=5 the p-marginals are
+(4/3,8/3,8/3,8/3,8/3), and the q-marginals are (8/5,14/5,14/5).
+Consequently IT2 rejects a slice whose ordinary marginal bounds and
+both slice CB4 graphs do not reject, even though the continuous
+transportation bound also passes.
+
+This comparison is limited to the specified slice. If all auxiliary
+tags instead equal 1, no original is active and the p- and q-marginals
+are zero. The control is NOT a family passing all complete prime
+marginal tests or all global CB4 constraints. It does not enlarge the
+known unrestricted noncoverage range. A bridge to Erdős #7 still needs
+an arithmetic argument forcing a marginal failure or an IT2 violation
+in every hypothetical distinct odd cover, or a stronger compatible
+condition if these tests can all pass. The inequalities and constructions
+here are ordinary proofs, not new Lean verification or a priority claim.
+
+### Private residual zeros do not rescue nonnegative transport potentials
+
+Keep the SAME actual two-prime slice and F=c-1 from IT1. For an
+integer k define the elementary discrete conjugate
+
+    h(k)=max_(n>=0 integer)(k*n-g(n))
+        =0 if k<=1, and k*(k-1)/2 if k>=2.
+
+This follows from the successive differences g(n+1)-g(n)=n+1.
+For arbitrary integer row and column potentials alpha_i,beta_j put
+k_ij=alpha_i+beta_j. If E is a set of cells with ACTUAL F_ij=0, set
+
+    D_E=alpha*r+beta*s-sum_((i,j) notin E) h(k_ij).
+
+Any nonnegative integer table with the same margins and zeros on E
+has cost at least D_E, by summing g(n)>=k*n-h(k). Thus a whole cover
+with these actual zeros necessarily satisfies A_z>=D_E. No assertion
+of strong duality or a new transportation theorem is needed here.
+Write T_E(r,s) for the corresponding minimum cost, taking +infinity
+when its feasible set is empty.
+
+However, if EVERY cell has k_ij>=0, then
+
+    A_z>=D_E                                       (IT6)
+
+holds for EVERY actual multiplicity table, including tables with holes.
+To prove this, write the exact difference as
+
+    A_z-D_E=sum_((i,j) notin E)
+                [g(F_ij)-k_ij*F_ij+h(k_ij)].        (IT7)
+
+Covered cells have F_ij>=0 and nonnegative bracket by the defining
+maximum for h. At a hole F_ij=-1, the bracket is k_ij+h(k_ij), again
+nonnegative when k_ij>=0. Cells in E contribute zero because both
+F and g(F) vanish and their conjugate penalties have been omitted.
+This proves IT6 without using whole coverage, oddness or distinctness.
+
+In particular, fix one literal original cylinder
+C_t=I_t times J_t times K_t and its actual private region Pi_t.
+On each cofactor z in K_t take
+
+    alpha_i=a*1_(i in I_t), beta_j=b*1_(j in J_t), a,b>=0 integers,
+    E_z={(i,j): (i,j,z) belongs to Pi_t}.
+
+All these k are nonnegative. Summing IT6 over the SAME K_t therefore
+gives, for any actual family, covering or not,
+
+    sum_(z in K_t) A_z
+      >=a*sum_(z in K_t) r_z(I_t)+b*sum_(z in K_t) s_z(J_t)
+        -|K_t|*[|I_t||J_t|h(a+b)
+                +|I_t|(Q-|J_t|)h(a)
+                +(P-|I_t|)|J_t|h(b)]
+        +|Pi_t|h(a+b).                              (IT8)
+
+With a=b=1 this becomes
+
+    Delta_t=sum_(z in K_t)[A_z-r_z(I_t)-s_z(J_t)]
+                 +|K_t||I_t||J_t| >= |Pi_t|.         (IT9)
+
+Every irredundant family, even a noncover, has |Pi_t|>=1 for each
+original t. Consequently the target Delta_t<=0 is already impossible
+for an irredundant family without assuming whole coverage. The private
+point bonus does not supply a new covering obstruction. Expanding all
+terms into exact original-label CRT intersection counts leaves this
+conclusion unchanged; such an expansion changes no inequality.
+
+There is an exact sign criterion for a potentially useful certificate.
+Allow arbitrary signed integer alpha_i,beta_j, keep
+k_ij=alpha_i+beta_j, and put
+
+    H_-={(i,j): F_ij=-1 and k_ij<0}.
+
+For these cells h(k_ij)=0. Partitioning IT7 gives
+
+    A_z-D_E=P_E-sum_((i,j) in H_-) (-k_ij),          (IT10)
+
+where P_E is the sum of the nonnegative brackets over covered cells
+outside E and over holes with k_ij>=0. Hence D_E>A_z holds exactly
+when the weighted negative-potential holes exceed P_E. In particular
+negative k at an ACTUAL hole is necessary, not merely a negative
+alpha or beta somewhere. Such negativity alone is not sufficient:
+the covered-cell slack can still pay for it. IT10 is an identity on
+the original table, not a way to obtain unknown hole locations for free.
+
+Forced zeros can nevertheless strengthen the OPTIMIZED transportation
+test even when every marginal and the ordinary optimized test pass.
+Consider the actual integer residual table
+
+    F = [0 2 -1]       r=(1,10,10), s=(12,8,1),
+        [6 3  1]       A=sum g(F_ij)=59,
+        [6 3  1]       E={(0,0)}.
+
+All multiplicities F+1 are nonnegative, every residual margin is
+strictly positive, and E is an actual residual zero. The two tables
+
+    X = [1 0 0]       X_E = [0 1 0]
+        [5 4 1]             [6 4 0]
+        [6 4 0]             [6 3 1]
+
+have the same margins and costs58 and60, respectively; X_E is zero
+on E. For the unrestricted problem, alpha=(0,4,4), beta=(2,0,-3)
+give alpha*r+beta*s=101 and sum h(k)=43, hence D_empty=58.
+For the fixed-zero problem, alpha=(0,2,2), beta=(5,2,-1) give
+alpha*r+beta*s=115 and sum_(notin E) h(k)=55, hence D_E=60.
+Feasible tables and weak duality prove both minima exactly:
+
+    T_Z(r,s)=58 <= A=59 < T_E(r,s)=60.              (IT11)
+
+The fixed-zero certificate uses only r,s,A,E. It does not need the
+hole location as an input. At the displayed actual hole its k is -1;
+every covered cell outside E has zero bracket in IT7. Thus IT10
+has P_E=0 and a negative-hole contribution of1, exactly matching
+A-D_E=-1. The point of IT11 is the strict separation from the
+ordinary optimized transport test, not merely T_E>T_Z.
+
+This separation has a literal distinct-odd AP realization on one
+common slice. Append two columns of F=0 to get a 3-by-5 table.
+The new column margins are zero, forcing those columns to be zero
+in EVERY feasible nonnegative table. Both minima and A are unchanged.
+The dual beta vectors extend by (-4,-4) and (-2,-2), respectively,
+without adding any conjugate penalty. All complete3- and5-marginals
+on this slice are at least1; the new columns attain equality.
+
+There are36 multiplicity copies in F+1. Give each one a different odd
+prime tag ell_t outside{3,5}, and use the literal numerical modulus
+15*ell_t with that cell's3- and5-phases and tag phase0. The moduli
+are pairwise distinct odd nonunits. At the SAME cofactor where all
+tags are0, the original multiplicity table is exactly the padded
+table. The cell(0,0) has a unique original and is its actual private
+point, supplying E. Every original also has a private witness with
+its own tag0 and all other tags1, so the family is irredundant.
+
+This is only a selected-slice separation. When all tags are1, no
+original is active and the complete3- and5-marginals are zero. Each
+tag prime also has a zero complete marginal: hold the3- and5-cell
+different from its original's cell and all other tags at1. Hence
+this is NOT a noncover passing all complete prime marginals, and it
+does not enlarge the unrestricted noncoverage range. The exact
+minimum proofs above use the explicit primal and dual witnesses;
+independent enumeration of the43 feasible3-by-3 tables agrees.
+
+For an inclusion-minimal whole cover, each original t must have SOME
+actual private position (i,j,z) in its cylinder. A valid further test
+may therefore reject all candidate positions by comparing A_z with
+the corresponding fixed-zero transport minimum, keeping each slice's
+own margins and actual overlap. Excluding every position for just
+one t rules out that family's being an inclusion-minimal whole cover.
+For a general family the conclusion is only that it does not cover
+OR t is redundant. Under whole coverage the exclusion therefore
+forces redundancy; with t independently known essential it forces
+noncoverage. Universal #7 forcing still requires original-label
+arithmetic that violates a genuinely coverage-dependent condition.
+These are ordinary finite proofs, not new Lean verification.
+
+### Private-zero separation survives complete private rows and columns
+
+The IT11 example has a hole in the same row as its private point, so
+it does not pass the strong private-shell condition even on that
+selected two-prime slice. The following family separates the fixed-zero
+transport test after imposing that further local condition as well.
+
+For ANY integers P,Q>=3 define one actual residual table by
+
+    F_00=-1;
+    F_0j=F_i0=1 for i,j>0;
+    F_11=0;
+    F_ij=2 for every other i,j>0.
+
+It has exactly one hole, at(0,0), and exactly one private cell, at(1,1).
+They are in different rows AND columns, so both complete coordinate
+lines through the private point are covered. Thus the slice satisfies
+the no-private-to-hole-edge condition PS2 in both selected directions.
+Every residual margin is strictly positive:
+
+    r=(Q-2,2Q-3,2Q-1,...,2Q-1),
+    s=(P-2,2P-3,2P-1,...,2P-1).
+
+The actual overlap cost and both transport minima are
+
+    A=P+Q-2+3*((P-1)*(Q-1)-1),
+    T_Z(r,s)=A-1,
+    T_E(r,s)=A+1, E={(1,1)}.                       (IT12)
+
+Here T_E fixes the ONE actual residual zero. The claimed minima
+have exact primal and dual witnesses at every P,Q.
+
+For the ordinary minimum, change F_00 from-1 to0, F_01 and F_10
+from1 to0, and F_11 from0 to1. This rectangle move preserves all
+margins, makes the whole table nonnegative, and lowers its cost by1.
+Use additive potentials
+
+    alpha=(0,1,2,...,2), beta=(-1,0,1,...,1).
+
+Each positive entry x of this repaired table satisfies
+x<=alpha_i+beta_j<=x+1; each zero has alpha_i+beta_j<=1.
+These are equality conditions in g(x)>=k*x-h(k), so the feasible
+table and weak dual bound agree at A-1. No strong-duality assertion
+or numerical minimization is needed.
+
+For the fixed-zero minimum, instead repair the corner using rows0,2
+and columns0,2: F_00 rises to0, F_02 and F_20 fall to0, and F_22
+rises from2 to3. The private cell(1,1) remains zero. All margins
+are preserved and the cost rises by1. Take
+
+    alpha=(0,2,2,...,2), beta=(-1,1,1,...,1).
+
+The potential sum is-1 at the hole,1 on the two arms, and3 on the
+interior. Outside E every covered entry of the ORIGINAL F has zero
+Fenchel slack, while the hole contributes-1. Removing the conjugate
+penalty h(3)=3 at E therefore gives D_E=A+1 by IT7. Equivalently,
+the repaired nonnegative table attains equality at every allowed
+cell. These matching witnesses prove the fixed-zero minimum in IT12.
+
+For P=3,Q=5 this gives
+
+    F=[-1 1 1 1 1]
+      [ 1 0 2 2 2]
+      [ 1 2 2 2 2],
+    r=(3,7,9), s=(1,3,5,5,5),
+    T_Z=26 <= A=27 < T_E=28.
+
+The complete selected-slice prime marginals are
+M_3=(4/3,2,8/3,8/3,8/3) and M_5=(8/5,12/5,14/5), all strictly
+above1. Independent enumeration of all2909 feasible3-by-5 tables
+agrees with both minima; the universal result is proved by the
+witnesses above, not by this enumeration.
+
+To realize the family with original labels, take P=p^H and Q=q^G
+for distinct odd primes p,q and arbitrary H,G>=1. Reuse the
+[two-coordinate exponent-antichain construction, Report345 section5](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/345-fixed-prime-fourier-obstruction-and-digit-relation-masks.md).
+Choose just TWO further distinct odd primes r,s, neither equal to p,q,
+and enumerate the F_ij+1 multiplicity copies by t=1,...,N, where
+
+    N=sum_(i,j)(F_ij+1)=3P Q-P-Q-3.                 (IT13)
+
+Assign copy t the literal modulus P Q r^t s^(N+1-t), its prescribed
+p,q-cell, and zero phase on both auxiliary coordinates. These are
+distinct odd nonunits on EXACTLY FOUR support primes. On the SAME
+cofactor with auxiliary coordinates zero modulo r^N and s^N, the
+exact table is F+1. The unique class at(1,1) supplies the true private
+zero; its complete p- and q-lines are covered.
+
+Every original has a private witness. Give its auxiliary coordinates
+truncated valuations t and N+1-t, where valuation N means the zero
+coordinate modulo the Nth prime power. Copy u is active only if
+u<=t and N+1-u<=N+1-t, forcing u=t. Its assigned p,q-cell then gives
+a private point, including the endpoint exponents. Equivalently, let
+G_t=r^t s^(N+1-t) and let b_t mod P Q be its cell residue. With all
+inverses taken modulo P Q, the literal integer
+
+    w_t=G_t*(1+r*s*k_t),
+    k_t=((b_t*G_t^(-1)-1)*(r*s)^(-1)) mod P Q
+
+has the prescribed cell and exact auxiliary valuations, proving the
+same isolation. This is an application of the existing construction,
+not a new tagging principle. For P=3,Q=5 there are34 originals, with
+support {3,5,7,11} when r=7,s=11.
+
+The complete-row condition here applies only to the two selected
+prime directions on this actual slice. It is NOT the global PS1
+condition for all private points and all support primes. In particular,
+changing the r-coordinate from0 to1, while retaining the private
+p,q-cell and s-coordinate0, creates a hole. The cofactor r=s=1
+also has zero complete p- and q-marginals. The complete r-marginal
+is zero when the s-coordinate is1, and the complete s-marginal is
+zero when the r-coordinate is1. Therefore the construction is neither an all-marginals-passing
+noncover nor a global private-shell-saturated distinct-odd example.
+It proves that selected-slice marginal feasibility, ordinary optimized
+transport, and complete private lines together do not subsume the
+fixed-zero transport test. Unrestricted #7 still requires a global
+same-original-label forcing argument. These are ordinary proofs,
+not new Lean verification or a claim of literature priority.
+
+## Existing survivor laws restrict simultaneous complete marginal feasibility
+
+The uniform-profile argument establishes MF1 through five support primes.
+Under the stronger attributed common-law source premises specified below,
+MF7 extends the exclusion through eight, and MF8 restricts the two largest
+primes at support size nine. The source dependencies are kept explicit.
+
+The existing product and complete-survivor laws imply more than a
+noncoverage assertion for the following restricted task. For any
+finite NONEMPTY family of congruence classes with pairwise distinct odd
+numerical moduli greater than 1, arbitrary residues, actual period L>1
+and at most FIVE support primes, at least one actual support prime r satisfies
+
+    min_y M_r(y)<1.                                  (MF1)
+
+Thus a nonempty odd-distinct noncover whose EVERY complete support-prime
+marginal is at least 1 must use at least six primes. This is a reuse of
+existing survivor estimates to restrict that stronger marginal-feasibility
+search, not an enlarged noncoverage range for Erdős #7. Empty support
+is excluded: when L=1 there is no support prime to select.
+
+### Keep the target coordinate Haar while conditioning the others
+
+Write L=product_p p^(H_p) and fix a target r. For each p other than r,
+let U_p be the actual set avoiding every original pure-p-power class.
+With normalized Haar on that coordinate, put
+
+    delta_p=sum_(e=1..H_p)p^(-e),
+    b_p=delta_p/(1-delta_p),
+    s_p=Haar(U_p)>=1-delta_p>0,
+    u_r=sum_(e=1..H_r)r^(-e).
+
+Use the product of the uniform laws on these actual U_p, but keep the
+ENTIRE r-coordinate Haar. This is the same pure-power survivor
+construction used in [FC1, FC4 and PH1](../../docs/reports/erdos7-odd-covering/problem-details/02-current-bounds-and-comparisons.md),
+with precisely one coordinate left unconditioned. On its cofactor
+product law nu, Fubini gives
+
+    E_nu M_r=E_(Haar_r times nu)c
+      <=(1+u_r) product_(p!=r)(1+b_p)-1-sum_(p!=r)b_p. (MF2)
+
+Indeed every anchor cylinder of depth e has conditional mass at most
+p^(-e)/s_p<=p^(-e)/(1-delta_p). Sum the product bound over the complete
+numerical exponent inventory; then omit the unit and every pure-anchor
+slot. Such a pure slot is either absent or its actual event is disjoint
+from U_p. All other missing labels only enlarge this upper bound. This
+retains the original phases and one common product law. Conditioning
+the r-coordinate as well would no longer give the complete M_r here.
+
+The upper bound in MF2 increases in every b_p: its slope is
+(1+u_r) product_(q!=p,r)(1+b_q)-1>0. Since
+b_p<1/(p-2) and u_r<1/(r-1), choose r largest and compare the ordered
+support with the first odd primes. The resulting height-uniform bounds
+for support sizes 1,2,3,4 are respectively
+
+    1/2, 1/2, 7/9, 74/75.
+
+All are below 1. This argument includes arbitrary finite heights and
+arbitrary residues. The finite-height formula, for the full-support
+periods 11025=3^2*5^2*7^2 and 17325=3^2*5^2*7*11, gives respectively
+
+    min M_7 <=2976/4655,
+    min M_11<=4589/6270.
+
+These are analytic all-phase exclusions for the complete-marginal
+search at those periods, not solver UNSAT claims. The averaging sets
+are the actual pure-power survivor products, which can depend on the
+family; they are not the rectangle obtained by deleting first roots only.
+
+### Apply the existing four-prime complete-survivor profile
+
+More generally, take any probability mu on the cofactor carrier that
+avoids every r-free original. Define its nonunit cylinder-cap sum
+
+    R_mu=sum_(1<m | L/r^(H_r)) max_a mu(y=a mod m).
+
+The r-free contributions to M_r vanish on mu. At each positive r-height
+there is at most one original per cofactor m, and the unit cofactor
+has mass 1. Therefore on this SAME law
+
+    min_y M_r(y)<=E_mu M_r<=u_r(1+R_mu).              (MF3)
+
+[The four-prime profile, P3--P5](../../docs/reports/erdos7-odd-covering/problem-details/10-a-four-prime-head-and-a-restricted-noncoverage-theorem.md)
+already constructs the uniform law on the complete survivors of any
+family supported on {3,5,7,11}, and proves R_mu<=1514/145, uniformly
+in all phases and heights. The profile transfers coordinatewise to
+any four ordered odd primes p_1<p_2<p_3<p_4: these are no smaller than
+3,5,7,11. Here the transfer concerns the numerical BOUNDS, not a map
+that transports an individual old configuration to a new one.
+
+For completeness, label prime subsets by their coordinate indices.
+Start from the empty-subset profile. If its predecessor coefficients
+are bounded by the old ones, each new envelope term in P3 is no larger:
+the primes in its denominator have only increased. Hence its entire
+nonunit sum R is no larger. In P4, both the pure-cylinder factor
+(p-1)/(p-2) and the deletion ratio R/(p-2) are no larger, so each old
+admissible extension remains admissible with no larger coefficients.
+Taking the minimum over these orders is legitimate because all orders
+describe the SAME new uniform complete-survivor law. Induction over
+subsets proves the claimed transfer and R_mu<=1514/145.
+
+For exactly five support primes, choose the largest r>=13 and apply
+that law to the four-prime r-free family. The prescribed cofactor
+carrier may include unused coordinates or digits; uniform lifting
+is part of the same cylinder-profile construction. MF3 now gives
+
+    min_y M_r(y)< (1+1514/145)/(r-1)
+                <=553/580<1.                        (MF4)
+
+Together with MF2 this proves MF1. This use of P3--P5 introduces no new
+profile computation, residue enumeration, Lean theorem or noncoverage
+range. An old assertion that a hole merely exists would not imply MF1;
+the existing complete-survivor LAW and its cylinder caps are the input.
+
+### Uniform profiles restrict six support primes to seventeen prime sets
+
+Suppose the original family has exactly six support primes and every
+complete support-prime marginal is at least 1. Then its support must be
+one of the following SEVENTEEN sets:
+
+    {3,5,7,11,13,r},  r prime, 17<=r<=71;             (MF5a)
+    {3,5,7,11,17,19}, {3,5,7,11,17,23};              (MF5b)
+    {3,5,7,13,17,19}.                               (MF5c)
+
+There are fourteen choices of r in MF5a. This is a necessary condition,
+not an assertion that any listed set admits such a family. Every
+finite exponent and every original residue remain unrestricted.
+The stronger common-law application MF7 below excludes all seventeen
+sets under its stated source premises.
+
+Only five profile calculations are needed for the exclusion. In each
+row below, remove the target r and apply the existing P3--P4 recurrence
+to the five cofactor primes. It supplies the uniform probability on
+the complete survivors of the actual r-free original family, with
+nonunit cylinder-cap sum bounded by the displayed R. Its empty subset
+is the base case; each of its 31 nonempty indexed subsets has an
+admissible last-prime extension.
+
+| Ordered six-prime support | Target r | Cofactor profile bound R | (1+R)/(r-1) |
+|---|---:|---:|---:|
+| 3,5,11,13,17,19 | 3 | 58495/63454 | 121949/126908 |
+| 3,5,7,11,19,23 | 23 | 11159716533087/534598681841 | 5847157607464/5880585500251 |
+| 3,5,7,11,17,29 | 29 | 1652775682537/66859985411 | 429908916987/468019897877 |
+| 3,5,7,13,17,23 | 23 | 507203988220491/29060939613244 | 536264927833735/639340671491368 |
+| 3,5,7,11,13,73 | 73 | 814972792/11609325 | 826582117/835871400 |
+
+All five entries in the last column are strictly below 1. By MF3 each
+row forces a deficient complete marginal. The subset induction used
+above for MF4 applies without a restriction to four coordinates:
+if an ordered six-prime support is coordinatewise at least a displayed
+row, use the same indexed target. Its five-prime profile coefficients
+and envelope sum are no larger, and its target denominator is no
+smaller. Thus every such larger support is excluded too. This transports
+the bounds to the new family's OWN complete-survivor law; no old
+configuration, selected phase assignment, or optimized measure is
+substituted for the actual new one.
+
+Here is an exhaustive argument for the remaining supports, with no
+bound on the initially proposed primes. Avoiding the first row forces
+the three smallest primes to be 3,5,7: otherwise the third is at least
+11 and the support dominates that row. Write the other three as a<b<c.
+Avoiding the second row forces b<=17. If b=13, then a=11, and avoiding
+the last row gives c<=71, precisely MF5a. If b=17, then a is 11 or 13.
+For a=11, avoiding the third row gives c=19 or 23; for a=13, avoiding
+the fourth gives c=19. These are MF5b--MF5c. No further ordered prime
+cases remain.
+
+The [existing exact profile verifier](../../docs/reports/erdos7-odd-covering/elementary-checks/verify_uniform_head_profile.py)
+now checks these five parameters in addition to its original four-prime
+ones. It evaluates the full infinite envelope sums by finite cutoff
+cells and exact geometric tails. The all-residue, all-finite-height
+conclusion comes from the profile induction and MF3, not from enumerating
+residues or sampling heights. This is an ordinary proof and a restriction
+of the stronger marginal-feasibility search; it is not a Lean result or
+a settlement of unrestricted Erdős #7.
+
+### Disjoint prime components cannot repair a deficient marginal
+
+Join two support primes when an original numerical modulus contains
+both, and let S_j be the connected components of this graph. Every
+nonunit original belongs to exactly one component. In the actual CRT
+coordinates, write its component multiplicity as c_j(x_j). Then
+
+    c(x)=sum_j c_j(x_j),
+    min c=sum_j min c_j.
+
+For p in component j, complete uniform averaging in that p-coordinate
+and minimization over the independent remaining coordinates give
+
+    min M_p=min M_p^(j)+sum_(k!=j) min c_k.           (MF6)
+
+These identities concern the same original family. A noncover has
+min c=0, so every min c_k=0. Its complete marginals are therefore all
+at least 1 exactly when the complete marginals of every component
+are all at least 1. A nonempty odd-distinct NONCOVER passing the tests
+can consequently be reduced to one connected component that also
+passes. Every component of any such family must have at least six
+support primes by MF1; any component with exactly six must have a
+support in MF5. In particular, adding disjoint pure-prime tails to a
+known noncover cannot repair its deficient old marginals. This reduction
+does not assert that a connected family passes the tests, and supplies
+no unproved existence of a covering or noncovering family on MF5.
+
+### Query-independent survivor laws extend the marginal exclusion through eight primes
+
+MF3 only requires one probability supported on the actual r-free
+survivors; it does not require that probability to be uniform. The
+common-law query bounds already proved in
+[Report461](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md)
+and
+[Report462, LS1](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/462-the-final-stage-ledger-gives-a-seven-core-common-law.md)
+therefore give the following stronger conclusion, under their attributed
+source construction and comparison premises:
+
+    1<=number of actual support primes<=8
+       ==> some actual support prime r has min_y M_r(y)<1. (MF7)
+
+The original moduli remain pairwise distinct odd integers greater than1;
+all original phases and finite heights are arbitrary. The source is
+Michael Schroeder's Nine Prime Divisors in Odd Distinct Covering Systems,
+edition1.0.1. The source identity and local verification boundary are in
+its [library entry](schroeder2026nine.md). MF7 applies the existing
+common-law interfaces; it is not a new finite geometry calculation,
+Lean result, or improvement of the known bare noncoverage range.
+
+For six, seven or eight actual support primes choose the largest one r,
+and let K=L/r^(H_r). Use the indicated law on the ACTUAL complete
+survivors of the r-free original subfamily. It controls all cylinders
+modulo every divisor of this fixed K, including query depths not used
+by the r-free subfamily itself. The law is chosen before the later
+layouts, and the same law serves every target height.
+
+| Actual support size | r-free core size | Bound on R_mu from the common law | Smallest possible r | Bound on min M_r |
+|---|---:|---|---:|---:|
+|6|5|R_mu<10|17|<11/16|
+|7|6|R_mu<14|19|<5/6|
+|8|7|R_mu<=70874/3375|23|<74249/74250|
+
+Indeed MF3 gives
+
+    min M_r<=u_r*(1+R_mu),
+    u_r=sum_(h=1..H_r)r^(-h)<1/(r-1).
+
+The last entry is (1+70874/3375)/22=74249/74250<1.
+The first two use the conservative bounds10 and14; Report461 gives
+strictly smaller exact constants. MF1 handles support sizes one
+through five. No coordinate average is taken under a conditioned
+r-law: M_r remains the COMPLETE uniform r-coordinate average, and
+only its cofactor is averaged under mu. Thus this deduction does
+not replace a marginal by a different observable.
+
+An empty r-free family or unused cofactor coordinates cause no extra
+assumption. The source interfaces permit a family on AT MOST the
+stated number of primes and any fixed resolving period; their finite
+padding, transport and projection supply exactly the required carrier.
+No compatible choice of laws over an infinite chain of periods is
+needed, since the actual original family and its period are finite.
+
+For eight support primes the quantitative gap relies on Report462's
+uniform query functional LS5 and retained surplus LS6. It would NOT
+follow just from the source's bare assertion that some survivor exists,
+nor from the actual loss of an empty auxiliary23 family. The source's
+finite geometry and rational certificate have been locally reproduced;
+its full arbitrary-height comparison remains an attributed premise,
+and no fresh full Lean replay is asserted here.
+
+Consequently every nonempty odd-distinct family passing ALL complete
+support-prime marginals must use at least NINE primes, under these
+same source premises. The seventeen supports in MF5 remain valid
+necessary restrictions furnished by the earlier uniform-profile
+calculation, but MF7 excludes all of them using the stronger common
+laws. They are not remaining cases of the full marginal-feasibility
+problem. In particular MF6 now implies that every component of an
+all-marginals-passing NONCOVER must contain at least nine primes.
+No such actual noncover is constructed, and no result for arbitrary
+support size is claimed.
+
+### The same query extension restricts the two largest primes at support size nine
+
+The one-prime query extension in
+[Report463, PE6](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/463-two-actual-prime-extensions-preserve-a-common-core-law.md)
+also applies to MF3. Use the stronger seven-core input
+
+    A=70871/3375,
+
+from the relative-ledger deduction in
+[Report466](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/466-randomized-completion-retains-full-original-survivor-support.md).
+This step retains that deduction's attributed source comparison and
+compatible-screening premises. Full survivor support and the all-depth
+compactness consequence of that report are not needed here.
+
+For exactly nine support primes let q<r be the two largest, so q>=23.
+Choose the fixed seven-core law on the actual subfamily avoiding both
+q and r. Extend it through the actual q-bearing, r-free originals by
+PE6, keeping the complete cofactor period required by the r-bearing
+queries. Since q>A+2, the resulting one survivor law has
+
+    R8(q)<=B_A(q):=((q-1)A+1)/(q-2-A).
+
+Consequently the sufficient bound 1+B_A(q)<r-1 gives a deficient
+complete r-marginal by MF3. Multiplying this bound comparison by the
+positive denominator shows that it is exactly
+
+    N_A(q,r)=(q-A-2)(r-A-2)-(A^2+A+1)>0.          (MF8)
+
+Interchanging q and r proves a deficient complete q-marginal as well.
+The two cofactor laws and two witnessing points can differ; this is
+not a simultaneous choice of both minima under one law. Each argument
+uses one law for all its own original-label queries. The algebraic
+criterion is the existing symmetric PE9 criterion, now read as a
+complete-marginal obstruction rather than only as bare noncoverage.
+
+Thus a nine-support family passing all complete marginals must have
+N_A(q,r)<=0. Its two largest primes obey the following exact necessary
+bounds; the displayed upper endpoints need not themselves be prime.
+
+| Eighth prime q | Upper bound on ninth prime r |
+|---:|---:|
+|23|1562545/4|
+|29|2028271/20254|
+|31|2183513/27004|
+|37|2649239/47254|
+|41|2959723/60754|
+
+These are obtained by solving MF8 for
+r<=A+2+(A^2+A+1)/(q-A-2), which decreases with q>A+2.
+At q=43 the upper endpoint is3114965/67504<47, while the next support
+prime must be at least47. Every larger q is excluded as well. Hence
+the five q values in the table exhaust the possible eighth primes,
+without bounding any original exponent. The seven smaller primes
+remain subject to being distinct odd primes below q and all the
+other original constraints. None of these necessary cases is claimed
+feasible, and the table does not assert a new unrestricted or bare
+noncoverage range.
+
+### Unrestricted fractional phases only recover the reciprocal test
+
+For a fixed nonempty inventory D of nonunit numerical labels, allow one probability vector z_(d,a)
+over ALL phases a mod d of each original label. Use this same vector
+in every prime marginal. If sum_(d in D)1/d>=1, choosing every vector
+uniform makes each expected original indicator equal to 1/d at every
+point; all expected complete marginals are then the constant
+sum_d 1/d>=1. Conversely, averaging any feasible marginal over its
+whole cofactor carrier forces that reciprocal sum to be at least 1.
+
+Thus, without fixed phases or additional restrictions, feasibility of
+this fractional relaxation is equivalent to the ordinary reciprocal
+condition. Writing its full dual does not restore one actual phase
+per original label. Restrictions such as fixed pure phases, a prescribed
+hole excluded by every original, or integral common-phase choices must
+be kept if the relaxation is to supply further arithmetic information.
