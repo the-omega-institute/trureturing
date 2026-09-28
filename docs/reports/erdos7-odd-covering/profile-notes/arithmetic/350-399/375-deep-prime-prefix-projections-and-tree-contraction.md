@@ -662,3 +662,495 @@ hypothetical odd extremal family, or to repair its E_J with a smaller
 allowed AP inventory. Different blocked leaves can still require
 different cofactor witnesses. Neither the tree nor the private-hull
 repair rules make those witnesses one common cofactor.
+
+## 9. Liability multiplicity and the missing distribution of blocked fibres
+
+The actual joint region in section8 gives a multiplicity alternative.
+It also identifies the extra premise needed to average over smaller-prime
+heights. The following deductions retain the same original labels and
+whole-cover hypotheses. The finite controls below are noncovers and test
+only the explicitly listed local premises. This section contains ordinary
+proofs and exact finite checks, not new Lean verification.
+
+### 9.1. A blocked tree forces private leaves or multiple coverage
+
+Keep a blocked u and its complete t-ary tree T from section8, where
+t=q-r+1. For every leaf xi choose v_xi in the actual fibre of E_J
+minimizing the number mu_xi of original owners of (u,xi,v_xi).
+Whole coverage and the definition of E_J give mu_xi>=1 and put every
+owner in J. Let
+
+    n=t^G,
+    C_T=sum_(d in J, u=a_d mod r^(v_r(d)))
+            #{xi in leaves(T): xi=a_d mod q^(v_q(d))}.
+
+Each summand is either zero or t^(G-v_q(d)). Counting actual
+point-owner incidences, and then forgetting only the cofactor test,
+gives
+
+    sum_(xi in leaves(T))mu_xi <= C_T
+      <= H*tau(M)*(t^G-1)/(t-1).                    (LM1)
+
+The last inequality uses at most H*tau(M) original labels at each
+q-height e. It does not assume their cofactor events are independent.
+If P is the number of leaves admitting a point IN E_J private to one original,
+the minimizing choices have mu_xi=1 at precisely those P leaves, and
+mu_xi>=2 elsewhere. Consequently
+
+    P >= max(0, 2*t^G-C_T)
+      >= max(0, 2*t^G-H*tau(M)*(t^G-1)/(t-1)).        (LM2)
+
+In particular, if no leaf of T admits a private point in E_J, then
+
+    2*t^G <= H*tau(M)*(t^G-1)/(t-1),
+    2*(q-r) <= H*tau(M)-1.                          (LM3)
+
+More generally, if every such liability point has at least m>=1 original
+owners, replace 2 by m. If P>0, at least ceil(P/t^(G-1)) distinct low-r
+labels privately own the chosen points: any one original in J has
+q-height at least one and can meet at most t^(G-1) leaves.
+
+These are alternatives, not a universal doubling of LA5. In the private
+arm, each point permits the existing same-source shell inequalities in
+[Lettl--Sun accounting](../../../../../../Library/Arith/lettlsun2008cosets.md#the-covering-premise-and-pointwise-demand).
+The points need not have the same private owner or cofactor. They do not
+identify the complete private region required for a repair in Report385.
+
+### 9.2. A single distribution on blocked smaller-prime fibres
+
+Let U be the set of u modulo r^H for which no complete r-ary depth-G
+tree avoids E_u. Extremality gives U nonempty. Suppose ONE probability
+sigma supported on U obeys
+
+    sigma(u=c mod r^a)<=beta_a, 0<=a<H, for every c.  (LM4)
+
+Choose the JL3 law nu_u separately for each u and mix these actual laws
+with sigma. For an original d=r^a q^e s in J, its event requires the
+specified r-prefix, and its conditional probability at any such u is
+at most t^(-e). Thus the mixed law nu satisfies
+
+    nu(A_d)<=beta_a*t^(-e),
+    1<=sum_(d in J)nu(A_d)
+      <=tau(M)*(sum_(a=0..H-1)beta_a)*(1-t^(-G))/(t-1).
+
+All retained events still have mass zero. In particular,
+
+    q-r < tau(M)*sum_(a=0..H-1)beta_a.               (LM5)
+
+This conditional inequality replaces H only after LM4 has been proved
+for one actual sigma. A different law for each height or each label
+does not suffice.
+
+For example, beta_a=r^(-a) forces sigma uniform modulo r^(H-1): at
+that depth its r^(H-1) cell masses sum to one and each is bounded by
+1/r^(H-1). Such a sigma exists on U exactly when U meets every one of
+those cells. If H>=2 and the original r-class is normalized to0, no
+u=0 mod r belongs to U, so this proposed uniform law is impossible.
+Normalization is available for the prime classes by one common CRT
+translation, and does not change any covering or tree property.
+
+A sufficient different condition is that U contain all leaves of a
+complete (r-1)-ary depth-H prefix subtree. Its uniform leaf law has
+beta_a=(r-1)^(-a), yielding
+
+    q-r < tau(M)*sum_(a=0..H-1)(r-1)^(-a)
+         < tau(M)*(r-1)/(r-2).
+
+No such subtree in U has been established for every hypothetical cover.
+
+### 9.3. The actual source of possible distribution
+
+Let L be the projection onto r^H of the region not covered by the
+q-free originals, and let
+
+    V={a_d mod r^H: d in D, v_r(d)=H, v_q(d)>=1}.
+
+Then, directly from the original events,
+
+    L minus V subset U subset L,
+    |V|<=G*tau(M).                                  (LM6)
+
+Indeed, outside L the q-free originals cover every cofactor, so E_u
+is empty. For u in L minus V choose an actual q-free-live cofactor v.
+No full-r q-bearing original has that u, so every q-leaf at (u,v)
+belongs to E_J. Hence E_u is the full q-tree and u belongs to U.
+There is at most one full-r numerical label for each (e,s), proving
+the count on V.
+
+If B=L minus V is nonempty, its uniform distribution gives an explicit
+instance of LM4 with
+
+    beta_a=min(1, r^(H-a)/|B|).
+
+Writing delta=|B|/r^H therefore gives the conditional height-independent
+consequence
+
+    q-r < tau(M)*(1+1/(delta*(r-1))).                (LM7)
+
+Here beta_0=1 and the positive-depth geometric series is bounded by
+1/(delta*(r-1)). The unknown is an adequate positive lower bound on
+this actual delta, or a sharper prefix distribution on U. The bound
+on |V| alone provides neither. Report374 controls projections of a
+prime-free residual onto LARGER primes; it cannot be reversed to
+supply the distribution at r<q used here.
+
+Whole coverage gives a further check on L itself. For each u in L
+choose one actual q-free-live v_u and then vary xi over ALL q^G leaves,
+keeping that v_u fixed. These |L|*q^G points must all have q-bearing
+owners. A label r^a q^e s covers at most r^(H-a)*q^(G-e) of them.
+There is at most one label for each (a,e,s), so
+
+    |L| <= tau(M)*(r^(H+1)-1)/(r-1)
+                  *(1-q^(-G))/(q-1).               (LM8)
+
+Restricting to B=L minus V removes every full-r owner and gives the
+same bound with the first geometric factor replaced by
+r*(r^H-1)/(r-1). These are direct common-source counting consequences
+of the complete q-coordinate marginal test, not a new general marginal
+theorem. Unlike a single selected liability law, they use coverage of
+every q-leaf above every chosen u. They give upper bounds on the live
+projection; they cannot serve as the missing lower bound for delta.
+
+### 9.4. Actual odd controls exclude a local geometric replacement
+
+Consider first the six original classes
+
+    0 mod3, 4 mod9, 10 mod27, 0 mod5, 1 mod15, 37 mod45.
+
+Their period is135. They are odd, numerically distinct, divisor-closed
+and irredundant, with normalized prime classes and disjoint comparable
+originals. Every complete private congruence hull is exactly its original
+modulus. The finite DR3--DR6 conditions of Report385, the EP4 projection
+conditions of Report374 and LA5 all hold. The family has49 holes.
+
+For r=3,q=5,H=3,G=1,M=1, the points55,1,82 all have u=1 mod27
+and have q-roots0,1,2. They are private to5,15,45 respectively.
+Their uniform law is supported on actually covered points of E_J,
+has zero mass on every retained original and gives each of the three
+r-heights mass1/3. The proposed replacement would require
+
+    q-r=2 < sum_(a=0..2)3^(-a)=13/9,
+
+which fails. For these selected leaves C_T=3, so LM1--LM2 attain
+equality and all three private leaves are retained by the accounting.
+
+The second family strengthens the source control:
+
+    (residue,modulus)=
+    (0,3),(4,9),(10,27),(28,81),(82,243),
+    (0,7),(1,21),(37,63),(136,189),(487,567),
+    (0,5),(7,15),(26,35),(76,105).
+
+It has period8505 and2333 holes and satisfies the same listed local
+conditions, for every relevant support-prime pair. Take
+r=3,q=7,H=5,G=1,M=5. At the SAME u=1 mod243 and v=1 mod5,
+the full seven-root q-line consists of
+
+    6076,1,2431,4861,7291,1216,3646.
+
+Every one is covered by the original family. The first five are
+private to7,21,63,189,567. Their uniform law gives five distinct
+r-heights mass1/5 while every retained event has mass zero. Nevertheless
+
+    q-r=4 > tau(5)*sum_(a=0..4)3^(-a)=242/81.
+
+Thus even one completely covered same-source q-line, together with all
+the listed local conditions, does not justify that geometric inventory
+bound. These examples do not have the whole-cover premise and are not
+counterexamples to LM5 or Erdős#7. In a noncover E_J can also contain
+original holes; the verified laws use only its actually covered points.
+In fact their live projections have |L|=14 and122, respectively, while
+LM8 would require |L|<=8 and104. This whole-cover test rejects both
+controls, even though the second covers the displayed complete q-line.
+They also fail some same-source private shell demands. The examples
+therefore refute the stated local shortcut, not one that additionally
+assumes all original shell inequalities or LM8.
+
+The [control program](../../../frontier/cover-geometry/p-flat-constructor/joint_liability_global_bridge.py)
+and [exact data](../../../frontier/cover-geometry/p-flat-constructor/joint_liability_global_bridge.json)
+check complete-period ownership, all private hulls, divisor closure,
+comparable disjointness, the named local inequalities and the literal
+source laws. Independent enumeration from the displayed classes agrees
+on both private-count vectors, hulls, source points, masses and holes.
+Normal and optimized runs produce identical result bytes:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/p-flat-constructor/joint_liability_global_bridge.py --output /tmp/e7_joint_liability_global_bridge.json
+```
+
+The remaining whole-cover obligation is to force enough distribution
+on U, exploit both arms of LM3 through complete private-region repairs,
+or supply another strict descent. A local geometric substitution does
+not discharge it.
+
+### 9.5. The coarse projection comparison cannot exclude an extremal inventory
+
+LM8's counting proof does not require the order r<q. It is therefore
+legitimate to apply it with a larger coordinate p>q, and compare it to
+DP1 on the SAME residual R_q. Write
+
+    Q=p^H q^G M, H,G>=1, gcd(M,pq)=1,
+    L=projection_(p^H)(R_q), t=p-q+1.
+
+The resulting scalar test is
+
+    t^H <= |L| <= tau(M)*(sum_(a=0..H)p^(H-a))
+                           *(sum_(e=1..G)q^(-e)).    (LM9)
+
+For the initial-odd-prime support of the extremal model, with at least
+three support primes, the RIGHT endpoint is always strictly larger
+than t^H. Consequently this comparison cannot exclude any such prime
+and height inventory, even when all prime pairs and arbitrary heights
+are allowed. This is a limitation of the coarse tau(M) replacement,
+not a construction of an actual cover or of jointly realizable residuals.
+
+Here is a uniform proof. After dividing by p^H, the lower endpoint
+and the upper endpoint satisfy, respectively,
+
+    (t/p)^H <= t/p,
+    tau(M)*(sum_(a=0..H)p^(-a))*(sum_(e=1..G)q^(-e))
+       >= tau(M)*(p+1)/(p*q).
+
+It is thus enough to show
+
+    q*(p-q+1) < tau(M)*(p+1).                       (LM10)
+
+Let p_j be the j-th odd prime, so p_1=3,p_2=5,p_3=7. For j>=3,
+the j-2 other primes among p_1,...,p_j divide M, whence
+tau(M)>=2^(j-2). Bertrand's postulate gives p_(j+1)<2*p_j, and
+induction from 2=(7+1)/4 yields
+
+    2^(j-2)>=(p_j+1)/4,
+
+with strict inequality for j>=4. Therefore for p>=11,
+
+    q*(p-q+1) <= (p+1)^2/4 < tau(M)*(p+1),
+
+where the first inequality follows by completing the square. For p=7,
+q is3 or5 and the two sides of LM10 are at most15 and at least16.
+For p=5,q=3, the assumed third support prime divides M, so they are
+9 and at least12. This proves LM10 in every case and hence the strict
+compatibility of the two scalar endpoints in LM9.
+
+The initial-segment premise is supplied by Report350's original-label
+prime compression. The at-most-two-prime case already fails the elementary
+reciprocal test: even the completed nonunit inventory on3 and5 has
+sum 1/d=(3/2)*(5/4)-1=7/8<1. Thus the comparison excluded here cannot
+advance the remaining unrestricted extremal case.
+
+This does not discard the literal-inventory or phase-sensitive versions
+of LM8. For example, for one fixed actual live section v_u,
+
+    |L| <= sum_(d:q divides d) q^(-v_q(d))
+              *#{u in L: u=a_d mod p^(v_p(d)),
+                            v_u=a_d mod s_d},
+    s_d=d/(p^(v_p(d))*q^(v_q(d))).                  (LM11)
+
+This is the complete q-marginal inequality summed over that same
+section. Omitting only the v_u test or keeping the actual numerical
+inventory gives intermediate upper bounds. LM10 concerns the final
+coarse bound after replacing every possible (a,e,s) by inventory
+capacity. It proves no domination for LM11, supplies no missing common
+source distribution, and settles no unrestricted covering assertion.
+
+### 9.6. Complement size and scalar support-rank bounds cannot close the coarse comparison
+
+Continue with the SAME p>q setup and extremal assumptions of section9.5.
+Write N=p^H M=Q/q^G for the complete q-free carrier, let n_q be the
+actual number of q-free originals, and abbreviate the normalized coarse
+upper endpoint by
+
+    B=tau(M)*(sum_(a=0..H)p^(-a))*(sum_(e=1..G)q^(-e)).
+
+Then LM8 gives |L|/p^H<=B. The residual R_q is nonempty: otherwise
+the q-free originals alone would form a smaller whole cover.
+Divisor closure and at least three support primes ensure that the
+q-free originals include at least two distinct prime moduli. In
+particular n_q>=2. These facts retain the actual original labels;
+n_q is not replaced by a completed inventory count.
+
+**The cyclic complement bound is already published.** Sambale and
+Tărnăuceanu, [*On the size of coset unions*](https://doi.org/10.1007/s10801-021-01079-x),
+J. Algebraic Combin.55 (2022),979--987, state on page986 that a nonempty
+complement of n cosets in a finite cyclic group has relative size at
+least 2^(-n), using their Lemma4 and the cyclic prime-power extension
+of Theorem6. The same paper's general finite-group bound in Proposition2
+is 1/(2*n!). Sambale's [September2026 preprint](https://arxiv.org/abs/2609.09052v1),
+Theorem1, gives at most 2^n translates of the complement for arbitrary
+groups, hence the same cardinal bound for finite groups. The latter is
+a broader group theorem, not a newly available cyclic bound here.
+All these complement statements require nonemptiness; applying them
+to the entire original family without that premise would assume the
+noncoverage conclusion being sought.
+
+For R_q the published cyclic result supplies
+
+    |R_q|>=N/2^(n_q),
+    |L|>=ceil(p^H/2^(n_q)).                         (LM12)
+
+The second formula includes both integer steps: |L|>=ceil(|R_q|/M)
+and ceil(ceil(N/d)/M)=ceil(p^H/d) for positive integer d. The supplied
+unrounded numerical density lower bound is at most 1/4 because n_q>=2.
+This is NOT an upper bound on the actual density of R_q.
+
+**Even cancellation-sensitive Fourier support has an obstruction.**
+Let f be ANY nonzero complex function on Z/N supported inside R_q,
+and let rho be the cardinality of its actual Fourier support. Standard
+support uncertainty gives
+
+    |R_q|>=|supp f|>=N/rho,
+    |L|>=ceil(p^H/rho).                             (LM13)
+
+For example, [Borello--Willems--Zini, Theorem2.4 and Remark2.5](https://arxiv.org/abs/2202.12621v1)
+give the support-times-convolution-rank inequality; over the complex
+cyclic group that rank is rho. The nonzero hypothesis is essential.
+This is reuse of the standard uncertainty bound, not a new such theorem.
+
+The following elementary frequency-line argument applies to every
+choice of f, including weights chosen after all original phases are
+known. If f vanishes on one full congruence class a_l mod l for each
+of k DISTINCT primes l dividing N, then
+
+    |supp(fhat)|>=2^k.                              (LM14)
+
+To see this at arbitrary prime-power heights, use the inverse Fourier
+expansion f(x)=sum_v fhat(v)*exp(2*pi*i*v*x/N). Restrict to x=a_l+l*t.
+Uniqueness of the Fourier expansion on Z/(N/l) gives, for each b mod N/l,
+
+    sum_(j=0..l-1) fhat(b+j*N/l)*exp(2*pi*i*j*a_l/l)=0.
+
+All exponential weights are nonzero. Thus every occupied frequency
+line b+<N/l> contains at least two support points. The subgroups
+<N/l> have pairwise coprime orders l; their sum is a direct product
+of k cyclic groups, even when l^2 divides N. Partition the frequency
+carrier into cosets of this sum. In any occupied coset, the support
+is a subset of that product with no singleton coordinate line.
+
+Such a subset has at least 2^k points. Induct on k. An occupied line
+in the last coordinate gives at least two nonempty slices with that
+coordinate fixed. Within each slice the other k-1 line conditions
+still hold, so each has at least 2^(k-1) points. This proves LM14.
+It is the elementary support bound for a product of single parity
+constraints. It is sharp for these vanishing conditions alone:
+
+    f_0(x)=product_l (1-exp(2*pi*i*(x-a_l)/l))
+
+has exactly 2^k Fourier frequencies. The direct product of the
+frequency subgroups makes all its subset frequencies distinct, and
+all their coefficients are nonzero. This sharpness example asserts
+no support inside the actual R_q when further originals are present.
+
+If s is the original number of support primes, its q-free subfamily
+contains the actual prime class for each of the other s-1 primes.
+Every function in LM13 vanishes on all these classes. Therefore
+
+    rho>=2^(s-1)>=4.                                (LM15)
+
+In particular, optimizing phases, cancellations, or the supported
+weighting f cannot make the scalar guarantee 1/rho exceed 1/4 in
+this setup. This lower bound on rho does not equate Fourier support
+with a list of possible frequencies. For the common choice
+
+    f(x)=product_(d in D_q)(1-exp(2*pi*i*(x-a_d)/d)),
+
+where D_q is the actual q-free numerical inventory, the support of
+f is exactly R_q and its Fourier support is CONTAINED in the nominal
+subset-frequency set
+
+    S_q={sum_(d in E) N/d mod N: E subset D_q}.
+
+Collisions can cancel, so rho<=|S_q| need not be equality. LM15
+controls the actual rho after cancellation as well. A weaker use
+of 1/|S_q| or 2^(-n_q) consequently cannot improve the conclusion.
+
+**The obstruction survives exact projection rounding.** The elementary
+inventory comparison in section9.5 in fact gives
+
+    B>1/4+1/p.                                     (LM16)
+
+For p>=7, its same Bertrand induction gives tau(M)>=(p+1)/4, and
+distinct odd primes have q<=p-2. Hence
+
+    B>=(p+1)^2/(4*p*q)
+      >=(p+1)^2/(4*p*(p-2))>1/4+1/p,
+
+where the last numerator difference is
+`(p+1)^2-(p-2)*(p+4)=9`. For p=5, q=3 and a third support prime
+give tau(M)>=2 and B>=4/5, which also proves LM16.
+
+Every denominator in LM12--LM13 is at least 4. Since p^H is an
+integer and H>=1, the strongest numerical projection lower bound
+that these inequalities can supply satisfies
+
+    ceil(p^H/4)/p^H <=1/4+3/(4*p^H)
+                      <=1/4+3/(4*p)<B.             (LM17)
+
+Thus none contradicts the coarse LM8 upper endpoint, even after
+rounding the lower endpoint up and the upper endpoint down to
+integers. Taking their maximum with DP1 still cannot close LM9:
+section9.5 already puts DP1's integer lower endpoint strictly below
+the same upper endpoint.
+
+**The same obstruction covers non-circulant exact-support matrices.**
+Let R be a nonempty subset of Z/N avoiding a prescribed complete
+class a_l mod l for each of k distinct primes l dividing N. Over
+ANY field, suppose an N-by-N matrix A has exact Cayley support R:
+
+    A[x,y]!=0 if and only if y-x belongs to R.
+
+Then an elementary triangular minor gives
+
+    rank(A)>=2^k.                                  (LM18)
+
+Choose z in R. For each selected prime l, CRT supplies delta_l with
+delta_l=z-a_l mod l and delta_l=0 mod every other selected prime.
+For each subset U of the selected primes put x_U=sum_(l in U)delta_l.
+Use rows x_U and columns x_V+z. Both index maps are injective:
+distinct subsets differ at some l, and delta_l is nonzero mod l.
+If U is not contained in V, choose l in U\V. The displacement
+x_V+z-x_U is a_l mod l, so the selected matrix entry is zero.
+On the diagonal U=V the displacement is z, so every diagonal entry
+is nonzero. Ordering subsets by increasing cardinality, with the
+same tie order for rows and columns, gives an upper triangular
+2^k-by-2^k minor with nonzero determinant. This proves LM18 without
+a circulant assumption or a restriction on prime-power heights.
+
+The bound is sharp over C for the pure-prime complement: take
+A[x,y]=f_0(y-x) with the product f_0 above. Its exact support is that
+complement, and its circulant rank equals its 2^k Fourier frequencies.
+This again asserts no such sharp weighting for the actual R_q with
+additional original classes. Exact support cannot be replaced by
+arbitrary allowed support: a matrix merely zero outside the allowed
+positions can have rank zero or one. One valid weakening retains
+zeros outside R and requires A[x,x+z]!=0 for EVERY x at one fixed
+z in R; the same triangular minor still works.
+
+For an exact-support matrix put r=rank(A). Its r basis rows each
+have |R| nonzero entries. Their supports cover every column, because
+each column of A has a nonzero entry and every row is a combination
+of the basis rows. The ordinary row-basis cardinal bound is therefore
+
+    N<=r*|R|.                                      (LM19)
+
+Applied to R=R_q, divisor closure gives r>=2^(s-1)>=4. Thus the
+complete rounded projection guarantee from LM19 is
+
+    |L|>=ceil(ceil(N/r)/M)=ceil(p^H/r)
+          <=ceil(p^H/4).                           (LM20)
+
+Here the last inequality compares the supplied LOWER ENDPOINTS,
+not the actual value of |L|. By LM17 these endpoints remain below
+the coarse LM8 upper endpoint. Optimizing over arbitrary exact-support
+matrix weights, including non-circulant choices, cannot repair this
+particular row-basis comparison.
+
+This excludes a specific scalar proof route, not Fourier analysis,
+rank methods or the cited papers as a whole. It does not exclude
+stronger uncertainty or rank inequalities, smaller translate covers
+proved by other means, the literal label and phase bounds in LM11,
+or distribution across prefixes.
+The comparison is for p>q in section9.5; it makes no assertion about
+all possible smaller-prime absorption arguments. No feasible cover
+or jointly attainable pair of endpoints is constructed. These are
+ordinary proofs and source checks, not new Lean verification or a
+resolution of unrestricted Erdős #7.

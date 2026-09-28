@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:aaf184c593a3164f70b9e094d5065d30c7724e40fb8d75bfc22032ede3deb160
   normalized_sha256: sha256:aaf184c593a3164f70b9e094d5065d30c7724e40fb8d75bfc22032ede3deb160
 cas_ref: sha256:aaf184c593a3164f70b9e094d5065d30c7724e40fb8d75bfc22032ede3deb160
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S0/Automata/BoundedStateSampleCompactness.bounded_state_sample_compactness
+    target_statement_id: sha256:5ed5f25c91d8331c27d96e92ada17cdee712b557b6f1405f0dc6e9464ce60c35
 receipts:
   unresolved_subitems: []
