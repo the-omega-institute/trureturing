@@ -1011,3 +1011,26 @@ the inverse of the unit with the same residue as $z$. Its product with
 $z$ is $1$ modulo $3E$ and its norm is $1$.
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Nonsquare quotients on dyadic Fibonacci layers from k = 1
+
+**Theorem 22.1 (dyadic quotient obstruction).** For every natural number
+$k\geq1$, the exact integer quotient
+
+$$
+Q_k=\frac{F_{2^{k+1}}}{F_{2^k}}
+$$
+
+satisfies $Q_1\equiv3\pmod5$ and $Q_k\equiv2\pmod5$ for $k\geq2$.
+Consequently no $Q_k$ is a square. This supplies the dyadic nonsquare
+case of Lemma 10.2.
+
+Proof. Fibonacci--Lucas doubling identifies $Q_k=L_{2^k}$.
+The initial values are $L_2=3$ and $L_4=7$. For $k\geq2$, the index
+$2^k$ is even, so Lucas doubling gives
+$L_{2^{k+1}}=L_{2^k}^2-2$. The residue $2$ is fixed by
+$u\mapsto u^2-2$ modulo five. Induction therefore gives the stated
+residue at every later layer. The square residues modulo five are
+$0$, $1$, and $4$, excluding both $2$ and $3$.
+
+## 追加锚（本行以下为增补区）
