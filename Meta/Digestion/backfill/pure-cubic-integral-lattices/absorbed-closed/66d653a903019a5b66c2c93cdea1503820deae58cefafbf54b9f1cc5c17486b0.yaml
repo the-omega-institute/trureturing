@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:66d653a903019a5b66c2c93cdea1503820deae58cefafbf54b9f1cc5c17486b0
+  normalized_sha256: sha256:66d653a903019a5b66c2c93cdea1503820deae58cefafbf54b9f1cc5c17486b0
+cas_ref: sha256:66d653a903019a5b66c2c93cdea1503820deae58cefafbf54b9f1cc5c17486b0
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/PureCubicIntegralLattices.integral_cubic_lattices
+    target_statement_id: sha256:7d47db39e8f28c425e58245214c80de3541c8df95efd09dd0b9af816ef16908d
+receipts:
+  unresolved_subitems: []

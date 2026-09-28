@@ -45,25 +45,42 @@ internal sealed class PureCubicIntegralLatticesDocument : IScribeDocumentDefinit
 
     private static Formula LatticeFormula()
     {
-        Formula alpha = F.Id("alpha");
-        Formula beta = F.Id("beta");
-        Formula gamma = F.Id("gamma");
+        Formula alpha = Alpha;
+        Formula beta = Beta;
+        Formula gamma = GammaLower;
         Formula m = F.Id("m");
         Formula n = F.Id("n");
         Formula c = F.Id("c");
         Formula v = F.Id("v");
         Formula integer = Seq(Mathbb, Grp(F.Id("Z")));
         Formula rational = Seq(Mathbb, Grp(F.Id("Q")));
-        Formula mn = Seq(m, n);
+        Formula mn = Seq(m, Sp, Cdot, Sp, n);
         Formula basisOne = Call("Basis", rational, D(1), alpha, beta);
         Formula basisTwo = Call("Basis", rational, D(1), alpha, gamma);
         Formula discrOne = Call("discr", rational, D(1), alpha, beta);
         Formula discrTwo = Call("discr", rational, D(1), alpha, gamma);
 
         return Disp(new Formula.Aligned([
+            Seq(Call("Field", F.Id("K")), Sp, Land, Sp,
+                Call("Algebra", rational, F.Id("K")), Sp, Land, Sp,
+                m, Comma, n, Comma, c, Comma, F.Id("a"), Comma, F.Id("k"), Comma,
+                v, Sp, InMacro, Sp, integer, Sp, Land, Sp,
+                Call("PowerBasis", rational, F.Id("K"), D(1), alpha, Pow(alpha, D(2))),
+                Sp, Land),
+            Seq(Call("dim", rational, F.Id("K")), Sp, Eq, Sp, D(3), Sp, Land, Sp,
+                m, Sp, Neq, Sp, D(0), Sp, Land, Sp,
+                n, Sp, Neq, Sp, D(0), Sp, Land, Sp,
+                Pow(v, D(2)), Sp, Eq, Sp, D(1), Sp, Land),
+            Seq(Pow(alpha, D(3)), Sp, Eq, Sp, m, Sp, Cdot, Sp, Pow(n, D(2)),
+                Sp, Land, Sp,
+                Pow(c, D(3)), Sp, Cdot, Sp, m, Sp, Cdot, Sp, Pow(n, D(2)),
+                Sp, Eq, Sp, D(1), Plus, D(9), F.Id("a"), Sp, Land, Sp,
+                Pow(c, D(2)), Sp, Cdot, Sp, n, Sp, Eq, Sp, v, Plus, D(3), F.Id("k"),
+                Sp, Rightarrow),
             Seq(beta, Sp, Eq, Sp, Frac, Grp(Pow(alpha, D(2))), Grp(n), Comma, Sp,
                 gamma, Sp, Eq, Sp, Frac,
-                Grp(D(1), Plus, c, alpha, Plus, v, beta), Grp(D(3)), Comma),
+                Grp(D(1), Plus, c, Sp, Cdot, Sp, alpha, Plus, v, Sp, Cdot, Sp, beta),
+                Grp(D(3)), Comma),
             Seq(Call("IsIntegral", integer, alpha), Sp, Land, Sp,
                 Call("IsIntegral", integer, beta), Sp, Land, Sp,
                 Call("IsIntegral", integer, gamma), Comma),
