@@ -1,0 +1,192 @@
+{
+  "actual_haar_lower": "3549034855753/14889516779972016",
+  "coarse_square358_haar_lower": "1518527/6388568550",
+  "coefficient_W": 20,
+  "common_query_square_upper": "2607189975/7283281",
+  "dependency_hashes": {
+    "fibre_credit_depth_two_uniform_shallow.json": "afc7b9a8167cf22e67885e427c865c5daa844eb3664b6ff7b684be56e3168591",
+    "fibre_credit_depth_two_uniform_shallow.py": "1f01fb1c704a48fddb7f0be9563635cbb4ea436ce1495d2e156fdfc3c0788de6"
+  },
+  "expected_W_lower": "338887655/29133124",
+  "finite_inventories": [
+    {
+      "block_sizes": [
+        383,
+        384,
+        384,
+        384
+      ],
+      "q_height": 1,
+      "r_height": 1
+    },
+    {
+      "block_sizes": [
+        383,
+        384,
+        768,
+        768
+      ],
+      "q_height": 1,
+      "r_height": 2
+    },
+    {
+      "block_sizes": [
+        383,
+        384,
+        1152,
+        1152
+      ],
+      "q_height": 1,
+      "r_height": 3
+    },
+    {
+      "block_sizes": [
+        383,
+        384,
+        1536,
+        1536
+      ],
+      "q_height": 1,
+      "r_height": 4
+    },
+    {
+      "block_sizes": [
+        383,
+        768,
+        384,
+        768
+      ],
+      "q_height": 2,
+      "r_height": 1
+    },
+    {
+      "block_sizes": [
+        383,
+        768,
+        768,
+        1536
+      ],
+      "q_height": 2,
+      "r_height": 2
+    },
+    {
+      "block_sizes": [
+        383,
+        768,
+        1152,
+        2304
+      ],
+      "q_height": 2,
+      "r_height": 3
+    },
+    {
+      "block_sizes": [
+        383,
+        768,
+        1536,
+        3072
+      ],
+      "q_height": 2,
+      "r_height": 4
+    },
+    {
+      "block_sizes": [
+        383,
+        1152,
+        384,
+        1152
+      ],
+      "q_height": 3,
+      "r_height": 1
+    },
+    {
+      "block_sizes": [
+        383,
+        1152,
+        768,
+        2304
+      ],
+      "q_height": 3,
+      "r_height": 2
+    },
+    {
+      "block_sizes": [
+        383,
+        1152,
+        1152,
+        3456
+      ],
+      "q_height": 3,
+      "r_height": 3
+    },
+    {
+      "block_sizes": [
+        383,
+        1152,
+        1536,
+        4608
+      ],
+      "q_height": 3,
+      "r_height": 4
+    },
+    {
+      "block_sizes": [
+        383,
+        1536,
+        384,
+        1536
+      ],
+      "q_height": 4,
+      "r_height": 1
+    },
+    {
+      "block_sizes": [
+        383,
+        1536,
+        768,
+        3072
+      ],
+      "q_height": 4,
+      "r_height": 2
+    },
+    {
+      "block_sizes": [
+        383,
+        1536,
+        1152,
+        4608
+      ],
+      "q_height": 4,
+      "r_height": 3
+    },
+    {
+      "block_sizes": [
+        383,
+        1536,
+        1536,
+        6144
+      ],
+      "q_height": 4,
+      "r_height": 4
+    }
+  ],
+  "finite_padding_cases": 75,
+  "identity_coefficients": {
+    "0,0,0": 16800,
+    "0,0,1": -20,
+    "0,0,2": 1,
+    "0,1,0": -560,
+    "0,2,0": 10,
+    "1,0,0": -600,
+    "1,1,0": 20,
+    "2,0,0": 10
+  },
+  "old_haar_density_lower": "104726/6084351",
+  "old_period": 334639305,
+  "outside_rectangle_cost_minimum": 7851,
+  "pointwise_threshold": 7750,
+  "scope": "All distinct odd nonunit moduli d*q^e*r^f, d|334639305; two distinct fresh primes q>=29,r>=31; arbitrary simultaneous phases and arbitrary finite e,f. Core v3<=2, every other core height<=1. Ordinary proof and exact checks, not Lean or unrestricted Erdos7.",
+  "simple_coarse_haar_lower": "1/4250",
+  "simple_haar_lower": "1/4200",
+  "source_replayed": true
+}
