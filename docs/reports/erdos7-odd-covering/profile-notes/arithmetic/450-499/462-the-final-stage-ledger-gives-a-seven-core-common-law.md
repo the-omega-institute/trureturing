@@ -1895,9 +1895,12 @@ completed family. It neither expands the discrete chart nor changes t/e.
 Every certified endpoint slack is inherited along the entire edge for its
 physical tuple. Finiteness of Xi^6 and the certified route partition gives a
 strictly positive uniform minimum, without computing or displaying its value.
-The7424-millionth minimum belongs to the remaining22 subcertificate; it has
-not been shown here to be the minimum of all280 source rows. No global constant
-is inferred from it. The inherited strict inequalities already prove `<29`.
+The7424-millionth minimum belongs to the remaining22 subcertificate. By
+itself it does not give a lower bound for the whole280-source domain. The later
+positive-weight neighborhood proof explicitly aggregates all certificate
+parts and verifies that the same number is a safe uniform lower bound; it is
+not asserted to be the exact minimum of the actual slack. The inherited
+strict inequalities already prove `<29`.
 
 ### Finite obstructions to unjustified extensions
 
@@ -2021,3 +2024,179 @@ branch masses, and the strict integral difference1/K. The program writes only
 stdout and reads no external files. Its ordinary and optimized outputs agree.
 No geometry is evaluated. The general identities and matrix obstruction are
 proved above; neither a new source vertex nor a new Lean result is claimed.
+
+## An explicit continuous neighborhood from positive weight domination
+
+The fixed chart now has a certified region beyond the13/22 edge: from any
+point of that edge toward any permitted continuous budget of the same chart,
+raw-parameter interpolation by any fraction at most `1/50000` preserves the
+strict query bound29 for all `280^6` physical tuples. This conclusion reuses
+the existing complete-tail estimates; it does not evaluate a new geometry or
+close a full additional source vertex.
+
+### Aggregating a common strict margin
+
+The first-label partition is the disjoint union of ordinary255, the old
+source `(1,4,7,14)`, Q/Q′, and remaining22. Within the old source, its four
+disjoint prefix domains have1600,3200,6400 and67200 pairs, totaling280².
+Their retained lower bounds for `14D-H16` are:
+
+| Certified domain | Uniform lower bound for the slack |
+| --- | ---: |
+| Ordinary255 | greater than0.16291984 |
+| Old source, eta11=eta13=14 | 0.091827 |
+| Old source, eta11 in1,4 and eta13=14 | 0.187251 |
+| Old source, eta11 in7,8,11,13 and eta13=14 | 0.115893 |
+| Old source, eta13 different from14 | 0.839287 |
+| Q/Q′ | 0.074590 |
+| Remaining22 | 0.007424 |
+
+The ordinary255 entry is recomputed from each retained current7 bound, its
+declared continuation route and its full query bound; it is not inferred from
+the largest rounded query ratio. For the other entries, the previously checked
+millionth-rounded route certificates already give the displayed lower bounds.
+Their geometry inputs and proofs retain their earlier verification scope.
+
+Consequently
+
+    delta0=7424/1000000=116/15625,
+    R0=135/4,
+    G_xi(w_edge)<=14R0-delta0=14765393/31250
+
+hold uniformly over the whole physical domain and the entire certified edge.
+Here delta0 is a safe common lower bound obtained by aggregating all the
+certificate domains. It is not the exact minimum of the actual slack, nor of
+all possible sharper numerical routes. The edge extension uses the already
+proved transport and common-functional convexity.
+
+### Order and scaling of the common positive functional
+
+For one fixed actual construction, physical tuple and all declared interfaces,
+the finest common positive functional has nonnegative layout coefficients:
+
+    sum_x w(x)*c_(layout,x),        c_(layout,x)>=0.
+
+Maximizing over a fixed layout family, adding positive stage contributions and
+integrating the complete positive multiplier laws preserve monotonicity and
+positive homogeneity. Hence the same `G_xi=14*S_xi+H_xi` used in the edge
+proof satisfies
+
+    w<=v  =>  G_xi(w)<=G_xi(v),
+    G_xi(c*w)=c*G_xi(w)             for c>=0.
+
+The ordered weight vector contains all four zero/positive-depth source regions.
+Their complete tail measures are held fixed. No bounded-payoff approximation
+or tail cutoff is required. These properties concern this positive defining
+functional, not a minimum of route formulas or the subtraction of two upper
+bounds. A route using a negative credit remains usable only through its
+existing proof that it bounds the same positive functional.
+
+### A reference point on the closed edge for every legal budget
+
+Let theta=(z,t,e) be any allowed continuous budget in the fixed chart:
+
+    z_h>=0, sum_h z_h=1/2,
+    t_j>=0, sum_(j=1..4)t_j=1/20,       0<=e<=t1.
+
+Write s=z13+z22 and set
+
+    rho3=(8-6s)/5,
+    zbar_h=2/3-(2/3-z_h)/rho3          for h=13,22,
+    zbar_h=0                          otherwise.
+
+Since `0<=s<=1/2`, one has `1<=rho3<=8/5`. The two nonzero reference
+coordinates satisfy
+
+    zbar_h-z_h=(2/3-z_h)*(1-1/rho3)>=0,
+    zbar13+zbar22=4/3-(4/3-s)/rho3=1/2.
+
+Thus zbar lies on the already certified edge. On those two rows the ratio of
+the target zero-depth ternary factor to its reference factor equals rho3;
+on every other retained row that ratio is at most1.
+
+The reference quinary budget is `t0=(1/20,0,0,0), e0=0`. Its zero-depth
+column1 factors are11/20 in ternary root1 and7/20 in ternary root2. The
+corresponding target/reference ratios are
+
+    A=(12-20t1)/11,
+    B=(8-20t1+20e)/7.
+
+Both are at least1. In the other columns the target factors only decrease.
+The ternary increase can occur only on the two edge rows in root1. Therefore
+all four source regions satisfy the simultaneous pointwise bound
+
+    w(theta)<=rho(theta)*w(zbar,t0,0),
+    rho(theta)=max(rho3*A,B).
+
+This is also the exact maximum of these finite region-weight ratios: the
+first term is attained at an edge row in root1/column1, and the second in
+the positive-extra3 region at root2/column1. All reference weights are
+strictly positive on the common carrier. This statement is about comparison
+weights; it does not assert that each relaxed budget has an actual realizing
+cover or that different actual kernels have been identified.
+
+For `ga=sum_(h mod3=2)z_h` and `gr=sum_(h mod9=8)z_h`, the source reserve is
+
+    R(theta)=R0+(6/5)*ga+(9-ga)*t2+gr+(3-gr)*t3+(9-ga)*e >= R0.
+
+Indeed `B_eff=9-ga`, `D2=t2` and `D3=t3` in the earlier reserve formula.
+Every additional term is nonnegative because `0<=ga,gr<=1/2`.
+
+Monotonicity, scaling and the edge certificate now give the explicit
+sufficient condition
+
+    14R(theta)-rho(theta)*(14R0-delta0)>0.
+
+Whenever it holds, `14D-H16>0` for every physical tuple. Since `H16>=0`,
+it also gives `D>0`, so the actual complete-query readout remains below29.
+This condition defines a relative open region containing the entire closed
+edge, because the displayed expression is continuous and equals delta0 on
+that edge.
+
+### A uniform rational radius in raw parameter coordinates
+
+Take any edge point thetaE and any permitted target thetaV in this chart.
+For `0<=tau<=1`, interpolate their raw parameters:
+
+    theta_tau=(1-tau)*thetaE+tau*thetaV.
+
+This stays in the legal budget domain, including `e<=t1`. No joint affinity
+of the weights is assumed. Instead, the explicit ratios imply
+
+    rho3(theta_tau)<=1+3*tau/5,
+    A(theta_tau)<=1+tau/11,
+    B(theta_tau)<=1+tau/7.
+
+For the last inequality use `eV<=t1V`. Also
+
+    1+tau/7 <= (1+3*tau/5)*(1+tau/11)
+
+for every nonnegative tau. Thus, uniformly in both endpoints,
+
+    rho(theta_tau)<=(1+3*tau/5)*(1+tau/11).
+
+At `tau0=1/50000`, the right side is `137501900003/137500000000` and
+
+    14R0-rho_bound(tau0)*(14R0-delta0)
+      =3845709003821/4296875000000000
+      >0.000895001368.
+
+The weight-multiplier bound increases with tau, so this positive slack lower bound holds for
+all `0<=tau<=tau0`. This proves the claimed uniform neighborhood, including
+simultaneous changes in the pure3, pure5 and overlap budgets. The fraction is
+a radius in the stated interpolation, not an absolute Euclidean or TV radius.
+
+The factor is allowed to exceed1 and is paid for by the existing strict
+margin. Accordingly, the earlier row7 fixed-query obstruction does not
+contradict this result. At the full row7 vertex the factor is8/5, and this
+argument does not pay for that increase. Other discrete charts, the19
+remaining joint representatives and unrestricted Erdős #7 remain unresolved.
+
+The [portable exact checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-tube.py)
+and [results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/tube.json)
+pin the seven prior coverage files, check the complete first-label partition,
+aggregate the lower margins, and check840 rational parameter cases with147840
+cell/region comparisons. The continuous result follows from the formulas
+above, not from the finite samples. The checker writes only stdout and reads
+explicit adjacent project inputs. Normal and optimized modes agree; no new
+geometry or Lean verification is claimed.
