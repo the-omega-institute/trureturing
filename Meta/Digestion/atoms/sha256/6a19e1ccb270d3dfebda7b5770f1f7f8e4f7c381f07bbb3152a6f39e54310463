@@ -1,0 +1,12 @@
+## corollary 12.3: 原 RT 参考态的精确层分解
+
+对 $D=de$，
+
+$$
+\mathcal V_{D;d,e}|\Psi^\alpha_{D,L}\rangle
+=|\Psi^\alpha_{d,L}\rangle\otimes|\Psi^\alpha_{e,L}\rangle,
+\qquad
+\mathcal R_{D,d}(|\Psi^\alpha_{D,L}\rangle\langle\Psi^\alpha_{D,L}|)
+=|\Psi^\alpha_{d,L}\rangle\langle\Psi^\alpha_{d,L}|.
+$$
+

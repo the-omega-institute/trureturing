@@ -1,0 +1,33 @@
+## proposition 30.1: 相对面积系数的有限谱公式
+
+考虑四维有限实标量场，恒定严格正定质量平方矩阵
+
+$$
+\mathsf M=\begin{pmatrix}A&B\\B^T&C\end{pmatrix},\qquad
+\mathsf M_0=A\oplus C,
+\qquad D_g=-\nabla_g^2I+\xi RI+\mathsf M.
+$$
+
+比较模型具有同样的场、曲率耦合、正规化与有限重整化处方，仅将跨块质量耦合关闭。设 Euclidean 作用量线性曲率项为 $\Gamma_{E,R}=-\kappa\int\sqrt g R$。在低曲率、低导数展开的这一项中，
+
+$$
+\Delta\kappa=\frac{\hbar}{32\pi^2}(1/6-\xi)\,\mathcal I,
+\quad
+\mathcal I=\operatorname{tr}(\mathsf M\log\mathsf M-\mathsf M_0\log\mathsf M_0)
+=\operatorname{tr}(\mathsf M)\,D\left(\frac{\mathsf M}{\operatorname{tr}\mathsf M}\middle\|\frac{\mathsf M_0}{\operatorname{tr}\mathsf M}\right).
+$$
+
+对一个有适当平滑锥正规化的静态分岔视界截面 $\Sigma$，只取同一局部曲率项的复制熵，则
+
+$$
+\boxed{\Delta S^{(R)}_\Sigma
+=\frac{4\pi}{\hbar}\Delta\kappa\,\operatorname{Area}(\Sigma)
+=\frac{1/6-\xi}{8\pi}\operatorname{Area}(\Sigma)\,\mathcal I.}
+$$
+
+**证明。** 标量热核线性项为 $(4\pi s)^{-2}e^{-s\mathsf M}[1+s(1/6-\xi)R]$。两谱的维数与迹相同，故差的 $s^{-2}$ 积分在紫外有限，正质量保证红外收敛，逐谱积分得 $\mathcal I$。块对角 $\log\mathsf M_0$ 使 $\operatorname{tr}(\mathsf M\log\mathsf M_0)=\operatorname{tr}(\mathsf M_0\log\mathsf M_0)$，得到相对熵式。
+
+复制角为 $2\pi n$ 的锥在一阶有 $\int R_n=n\int R_1+4\pi(1-n)\operatorname{Area}(\Sigma)+O((n-1)^2)$。对 $S=(n\partial_n-1)\Gamma_E/\hbar|_{n=1}$ 代入局部项，得到最后两式。证毕。$\mathcal I$ 的对数可统一写为 $\log(\mathsf M/\mu^2)$，迹相同使 $\mu$ 抵消。
+
+此为局部复制／Wald 型贡献，尤其当 $\xi\ne0$ 时含非最小耦合接触项，不能无条件等同于正的普通物质 von Neumann 纠缠熵。[Cone95, NonMin97] 的比较边界适用。归一化质量矩阵亦不是实际物质场密度态。完整真空能、高曲率项、非局域项和引力子圈未被该有限相对系数决定。
+
