@@ -4620,3 +4620,42 @@ Section 4（第 14–17 页）的 Proposition 10、Fact 11 及结尾证明已核
 有限支持的 $H_\alpha-H_\infty$ 界分别用于两个输出，未推断熵差单调。
 有限文献检索不认证全局原创；未给无界输出、期望熵、Shannon 端点或更宽噪声结论。
 纯理论正文未进入 Lean、消化或冻结链。
+
+## 第 111 章：格点惊异比较、Gaussian 标记积分与条件方差接口
+
+[谱边界卷第 111 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+给出同整数坐标上的二项／离散 Gaussian 中心惊异比较，
+通过共同带噪通道的有符号核收缩，将原完整方差熵目标归约为格点大组问题。
+大组和原外部组都保留各自惊异与能量的共同实现；实际固定总数选择由原中心方差比较支付。
+归约不依赖输出密度下界或把能量误差除以噪声宽度。
+
+第 109 章已核对的 Agostini–Amendola，
+*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)，
+仍提供离散 Gaussian、theta 正规化和矩的经典背景。
+其既有 Proposition 4.1 与 Remark 4.2 不自动给出本章原二项中心惊异的有符号质量误差、
+增长数组的全输出条件方差比较或原 path 数据范围。
+本章的 $d^{-1/8}$ 比较明确给出 Stirling 中央余项、加权尾与精确中心的支付。
+共同正核的 $L^1$ 收缩和条件均值的截断变分公式属于成熟测度与条件期望方法。
+
+Denis S. Grebenkov，*Optimal and sub-optimal quadratic forms for non-centered Gaussian processes*，
+[arXiv:1307.0185v1](https://arxiv.org/abs/1307.0185v1)。
+原 TeX Section II 给 Gaussian 二次型特征函数、迹展开及非中心累积量。
+其模型是离散时间的连续值 Gaussian 向量，不能把 “discrete-time” 当作整数格点概率。
+本章以原有限 Gaussian 积分直接核对零、一、二阶惊异标记，
+保留复均值和方差后得到聚合扭转能量乘 Gaussian 衰减；
+再将所有实际 Poisson 模求和，逐坐标正规化接近一，故没有隐藏指数维数因子。
+Gaussian 平方完成和矩求导本身不主张新意。
+版本标识为 2013 年；当前 PDF 标题日期为 2018 年，原 TeX 使用日期宏，两者区分。
+
+完整补偿后，任意实扭转的非零半整数混叠绝对积分为
+$Ce^{-ce^{2\Delta}}+O(Q^{-400})$，不乘增长的 $Q$ 次幂。
+只减先验方差的弱补偿则在原渐近权重上留下 $A\asymp Q^{1/4}$ 的参考扭转项。
+所选参考扭转未被证明由原经验中心实现，故这个反例只限定估计方法。
+频率相关复中心与逐输出条件均值仍是不同对象，完整非线性条件方差和尾部接口保持开放。
+
+另检索 DOI [10.1214/aop/1176994310](https://doi.org/10.1214/aop/1176994310)
+的全文入口只得到 HTML 阻断，未将其计作已读原文或定理依据。
+有限文献检索不认证全局原创。
+本章是原模型中的综合推导，未进入 Lean、消化或冻结链；
+全余量下的实际方差熵极限仍未解决。
