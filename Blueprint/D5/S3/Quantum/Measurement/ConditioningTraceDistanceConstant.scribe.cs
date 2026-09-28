@@ -136,7 +136,7 @@ internal sealed class ConditioningTraceDistanceConstantDocument : IScribeDocumen
         Formula rho = F.Id("rho"), sigma = F.Id("sigma"), x = F.Id("x");
         Formula states = States(d);
         Formula pos = Call("proofOfPositivity", d);
-        Formula hermitian = Call("hR_isHermitian", r, h);
+        Formula hermitian = Call("isHermitian", h);
         Formula k = Call("conditionNumber", d, pos, r, hermitian);
         Formula image = Distance(Tau(d, pos, r, h, rho), Tau(d, pos, r, h, sigma));
         Formula source = Distance(rho, sigma);
