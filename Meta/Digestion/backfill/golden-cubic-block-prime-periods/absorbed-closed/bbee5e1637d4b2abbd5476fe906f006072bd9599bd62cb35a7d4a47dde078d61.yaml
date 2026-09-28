@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bbee5e1637d4b2abbd5476fe906f006072bd9599bd62cb35a7d4a47dde078d61
+  normalized_sha256: sha256:bbee5e1637d4b2abbd5476fe906f006072bd9599bd62cb35a7d4a47dde078d61
+cas_ref: sha256:bbee5e1637d4b2abbd5476fe906f006072bd9599bd62cb35a7d4a47dde078d61
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciFiveAdicDepth.fibonacci_five_adic_depth
+    target_statement_id: sha256:8991ee39c841b80438fe71589499ba55e5ee0c001c9c97d4cc8af0a5846bea27
+receipts:
+  unresolved_subitems: []

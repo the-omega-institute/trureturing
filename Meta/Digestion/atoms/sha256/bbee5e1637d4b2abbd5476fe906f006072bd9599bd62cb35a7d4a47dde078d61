@@ -1,0 +1,32 @@
+**Theorem 23.1 (exact five-adic depth).** For every positive integer
+$n$, the original Fibonacci number satisfies
+
+$$v_5(F_n)=v_5(n).$$
+
+Proof. Write $\phi^n=a+b\phi$ in the integral basis
+$1,\phi$, so $b=F_n$ and
+$a^2+ab-b^2=N(\phi^n)=(-1)^n$. Direct multiplication in
+$\mathbb Z[\phi]$ gives
+
+$$
+F_{5n}=5F_n Q(a,b),\qquad
+Q(a,b)=a^4+2a^3b+4a^2b^2+3ab^3+b^4.
+$$
+
+Modulo five, $Q(a,b)=(a+3b)^4$. If $a+3b$ vanished modulo five,
+substituting $a=-3b$ into the norm would give
+$a^2+ab-b^2=5b^2=0$ modulo five, contradicting
+$N(\phi^n)=(-1)^n$. Thus $5\nmid Q(a,b)$, and the displayed
+factorization gives $v_5(F_{5n})=v_5(F_n)+1$ for $n>0$.
+
+The least positive Fibonacci zero modulo five is at index five:
+$F_5=5$, whereas $F_1,F_2,F_3,F_4$ are nonzero modulo five.
+The Fibonacci entry-point theorem therefore gives
+$5\mid F_n$ exactly when $5\mid n$. For $5\nmid n$, both
+valuations in the conclusion are zero. If $5\mid n$, write
+$n=5m$ with $0<m<n$ and apply the preceding one-step equality
+and strong induction to $m$.
+
+This proves the five-adic input used in Section 10. It does not
+establish the square-class rigidity invoked there.
+
