@@ -90,7 +90,7 @@ or imported here. The useful methodological comparison is to turn local
 prime data into an actual global bound, beyond merely counting abstract
 characters. No specific inequality from Erdos126 is a GSE premise.
 
-Nat Sothanaphanov, *Resolution of Erdos Problem #728: a writeup of
+Nat Sothanaphan, *Resolution of Erdos Problem #728: a writeup of
 Aristotle's Lean proof*, arXiv:2601.07421v2:
 https://arxiv.org/html/2601.07421v2 . Sections 3-4 reduce factorial
 quotients to prime-by-prime valuations and use carry bounds and spike
