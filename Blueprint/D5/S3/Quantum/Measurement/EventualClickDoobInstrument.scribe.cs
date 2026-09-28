@@ -22,8 +22,10 @@ internal sealed class EventualClickDoobInstrumentDocument : IScribeDocumentDefin
                 Paragraph(Text(
                     "Let Q be the no-click Kraus family and L the click Kraus family of a complete finite-dimensional "
                         + "instrument. If the survival effects converge to F, then the residual effect R = I - F "
-                        + "satisfies the one-step balance law. Its support P contains every click range, and the "
-                        + "no-click dynamics preserves operators supported on P.")),
+                        + "satisfies the one-step balance law. Every click Kraus operator vanishes on the orthogonal "
+                        + "complement of the support P of R, and P Q (I - P) = 0 for every no-click Kraus operator. "
+                        + "Consequently the no-click pullback maps operators supported on P to operators supported "
+                        + "on P, and every click pullback is supported on P.")),
                 Paragraph(Text(
                     "The square root G of R and its support pseudo-inverse Gplus obey Gplus G = G Gplus = P and "
                         + "P G = G. Conjugating the no-click channel and pulling back the click maps by Gplus gives "
