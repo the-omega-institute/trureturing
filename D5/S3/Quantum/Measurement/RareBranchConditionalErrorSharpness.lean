@@ -6,7 +6,7 @@
    utility: none
    digest: A rare branch can attain maximal conditional error from an arbitrarily small initial error. -/
 
-import D5.S3.Quantum.Measurement.BranchConditionedTraceDistance
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

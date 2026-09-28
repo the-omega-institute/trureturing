@@ -122,7 +122,7 @@ internal sealed class RareBranchConditionalErrorSharpnessDocument : IScribeDocum
         Formula matrixDistance = Seq(
             Call("traceNorm", Difference(normalizedRho, normalizedSigma)),
             Sp, Slash, Sp, D(2));
-        Formula weightedDistance = Product(Call("max", epsilon, epsilon), matrixDistance);
+        Formula weightedDistance = Product(Call("max", epsilon, epsilon), Seq(Open, matrixDistance, Close));
         Formula instrumentIdentity = Eq(
             Seq(Product(Adj(pm), pm), Sp, Plus, Sp, Product(Adj(k), k)), D(1));
         Formula witnessConjunction = And(
