@@ -69886,3 +69886,241 @@ $$
 交叠变化按查询逐项相消、以查询分量平方范数计费的先例见 Aleksandrs Belovs、Duyal Yolcu，[*One-Way Ticket to Las Vegas and the Quantum Adversary*, arXiv:2301.02003v1](https://arxiv.org/pdf/2301.02003v1)，Definition 4.1（PDF 第 12 页）及 Theorem 7.4、式 (7.4)（第 25 页）。共同膨胀的通道连续性工具见 Dennis Kretschmann、Dirk Schlingemann、Reinhard F. Werner，[*The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation*, quant-ph/0605009v1](https://arxiv.org/pdf/quant-ph/0605009v1)，第 6 页式 (15)–(18)。保真度与迹距离的一般关系见 Christopher A. Fuchs、Jeroen van de Graaf，[*Cryptographic Distinguishability Measures for Quantum Mechanical States*, quant-ph/9712042v2](https://arxiv.org/pdf/quant-ph/9712042v2)，Theorem 1、式 (46)（第 17 页）。这些是所用方法的先例；本节的完整停止输出界由上面的精确膨胀、秩二计算与迹类超时极限直接推出。
 
 ## 追加锚（本行以下为增补区）
+
+## 442. 由有限控制器的名义证书取得完整停止输出预算
+
+第 441 节的完整停止输出界需要名义与实际两端的平均调用次数。本节固定第 440 节的装置，用一个有限活动空间上的名义算子不等式取得这两个预算，再直接代入定理 441.2。成本估计复用 [WAVE 卷第 68.1—68.3、70.1—70.2 条](https://github.com/the-omega-institute/trureturing/blob/fdde41e8bf565b35ce20bd7462d83e7b3a2c1b11/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md)的完整仪器漂移证书；装置、相位与停止输出均按[同一固定版本的本卷第 413、415、440、441 节](https://github.com/the-omega-institute/trureturing/blob/fdde41e8bf565b35ce20bd7462d83e7b3a2c1b11/docs/develop/theory/QUANTUM-REALITY.md)。
+
+**定义 442.1（固定装置与有限轮规则）。** 取 $S=\mathbb C^5$、$I=[\arctan(1/\sqrt2),\arctan\sqrt2]$，固定 $u\in I$ 及定理 413.1 在 $r=\tan u$ 给出的一个归一化平衡见证 $b$。完整采用定义 440.1 的确切 ket 代表 $q_i(t)$、制备 $J_t$、$b_a=D^ab$、四维原始记录空间 $R_2=(\mathbb C^2)^{\otimes2}$ 上的仪器及固定反馈 $U_a(u)$。特别地，实际 $Q_0$ 包括反对称方向，不能将装置改成只定义在三维制备像上的仪器。每次调用取迹量子 $R_2$，保留全部实际标签 $a=0,1,2$，得到
+
+$$
+\begin{aligned}
+\mathcal Q_t(X)&:=\mathcal Q_{u,t}(X)
+ =\sum_{a=0}^2|a\rangle\langle a|_C\otimes A_a(t)XA_a(t)^\dagger,
+ &C&=\mathbb C^3,\\
+A_a(t)&=U_a(u)\operatorname{diag}_{i=1}^5\langle b_a|q_i(t)\rangle,
+ &\sum_a A_a(t)^\dagger A_a(t)&=I_S,\qquad A_a(u)=I_S/\sqrt3.
+\end{aligned}
+$$
+
+这些恒等式及对任意未操作参考的有效性来自定理 415.1 和定义 440.1。各次调用使用新鲜隐藏环境；已取迹的量子记录与隐藏 Kraus 指标不再可访问。两参数下使用同一个控制器，其规则可依赖固定的 $u,b$，不依赖实际参数 $t$。
+
+固定一个有限维完整活动空间 $A$，包含查询系统 $S$、全部可变初始记忆以及后续会重读的所有有限控制摘要。输入允许 $A$ 上任意密度算子及其与任意有限维未操作参考 $F$ 的纠缠。每轮的共同前处理、后处理均完全正保迹，借助一个固定有限维辅助空间 $K$ 恰好调用一次 $\mathcal Q_t$，形成同一有限结果完整仪器
+
+$$
+\begin{aligned}
+\Gamma_t&=\mathcal R\circ(\mathcal Q_t\otimes\operatorname{id}_K)\circ\mathcal P,\\
+\Gamma_t(X)&=\bigoplus_{z\in Z}\mathcal N_{t,z}(X)
+                  \ \oplus\ \bigoplus_{y\in Y}\mathcal E_{t,y}(X),\\
+\mathcal N_{t,z}&:\mathcal L(A)\longrightarrow\mathcal L(A),
+&\mathcal E_{t,y}&:\mathcal L(A)\longrightarrow\mathcal L(M_y).
+\end{aligned}
+$$
+
+这里 $Z,Y$ 为固定有限标签集，$M_y$ 有限维；每个标签包含该轮实际 $a$、控制器实际测量结果及继续或停止标志，包括零概率标签。全部分支完全正，其完整直和保迹，终端集合 $Y$ 包含每一种失败和成功。共同的 $\mathcal P,\mathcal R$ 包含该轮的有限控制与记录操作，每轮在所有分支上有限完成。继续分支将全部仍可操作的量子记忆和有限摘要送回 $A$；终端分支保留全部最终可访问记忆，此后不再操作。
+
+每轮将实际结果按顺序追加到经典档案。旧档案始终保留，但下一轮只读取 $A$ 中的摘要与记忆，不重读旧档案；同一 $\Gamma_t$ 因而在每轮重复使用。所有会改变下一轮规则的可变数据都必须包括在 $A$ 内。只为成本计算记
+
+$$
+\mathcal N_t=\sum_{z\in Z}\mathcal N_{t,z}.
+$$
+
+从活动入口开始计数，每完成一轮计一次装置调用；$T\in\{1,2,\ldots,\infty\}$。完整停止映射 $\mathcal S_t$ 仍按定义 441.1 取全部终端历史的无条件直和。具体地，若 $h=(z_1,\ldots,z_n)$ 是继续历史，则终端块 $(h,y)$ 的映射为
+
+$$
+\mathcal S_{t,(h,y)}
+ =\mathcal E_{t,y}\circ\mathcal N_{t,z_n}\circ\cdots\circ\mathcal N_{t,z_1},
+\qquad n\ge0,
+$$
+
+空继续历史对应 $\mathcal E_{t,y}$，其调用数为一。块标签保留整个有序档案，块内保留 $M_y$；对所有 $h,y$ 求和不删除失败叶，也不作停止或成功的条件归一化。记
+
+$$
+\sigma_t(\rho)=(\operatorname{id}_F\otimes\mathcal S_t)(\rho_{FA}),\qquad
+m_t(\rho)=\mathbb E_{t,\rho}T.
+$$
+
+**命题 442.2（名义有限证书给出第 441 节的两端预算）。** 在定义 442.1 下，设 $W$ 是 $A$ 上的正半定算子，$\mathcal N_u^*$ 表示迹配对伴随，并满足单位漂移条件
+
+$$
+W-\mathcal N_u^*(W)\ge I_A.
+$$
+
+固定 $\theta\in I$，置
+
+$$
+w=\|W\|,\qquad L=2\sqrt2\,|\sin(\theta-u)|,\qquad
+c=1-\frac{wL}{2}>0,\qquad x=\sin^2(\theta-u),
+$$
+
+其中 $\|W\|$ 是算子范数。对每个 $\rho=\rho_{FA}$，令 $\rho_A=\operatorname{Tr}_F\rho$、$v=\operatorname{Tr}(W\rho_A)$，则
+
+$$
+\boxed{\quad m_u(\rho)\le v,\qquad m_\theta(\rho)\le\frac vc.\quad}
+$$
+
+因而两端均几乎必然停止，整个输入域上的统一预算可取 $M_u=w$、$M_\theta=w/c$。沿用定理 441.2 的函数，明确记作
+
+$$
+B_{441}(q)=
+\begin{cases}
+2\sqrt{2q-q^2},&0\le q\le1,\\
+2,&q>1,
+\end{cases}
+$$
+
+则完整停止输出满足未折半的界
+
+$$
+\boxed{\quad
+\|\sigma_\theta(\rho)-\sigma_u(\rho)\|_1
+ \le B_{441}\!\left(\frac{xv}{\sqrt c}\right),\qquad
+\|\mathcal S_\theta-\mathcal S_u\|_\diamond
+ \le B_{441}\!\left(\frac{xw}{\sqrt c}\right).
+\quad}
+$$
+
+这里的 diamond 范数与定义 441.1 相同，覆盖任意有限参考和任意输入矩阵；两停止映射均为到完整历史直和空间的正规完全正保迹映射。
+
+证明。先核对成本边际与真实历史。对固定 $t$ 和输入 $\rho_{FA}$，记 $\rho_{t,h}$ 为完成 $n$ 轮后仍活动、具有继续历史 $h\in Z^n$ 的未归一化 $FA$ 态，$\rho_{t,\emptyset}=\rho$。旧档案不参与下一轮，所以
+
+$$
+\rho_{t,hz}=(\operatorname{id}_F\otimes\mathcal N_{t,z})(\rho_{t,h}).
+$$
+
+在 $n=0$ 时，取迹空档案得到 $\rho$。若取迹 $n$ 轮档案所得为 $\sum_{h\in Z^n}\rho_{t,h}$，则下一轮的有限分支和给出
+
+$$
+\sum_{h\in Z^n,z\in Z}\rho_{t,hz}
+=(\operatorname{id}_F\otimes\mathcal N_t)
+  \left(\sum_{h\in Z^n}\rho_{t,h}\right).
+$$
+
+因此有限前缀归纳得到
+
+$$
+\operatorname{Tr}_{\mathrm{archive}}
+ \left(\bigoplus_{h\in Z^n}\rho_{t,h}\right)
+=(\operatorname{id}_F\otimes\mathcal N_t^n)(\rho),\qquad
+\Pr_{t,\rho}(T>n)
+=\operatorname{Tr}\bigl[(\operatorname{id}_F\otimes\mathcal N_t^n)(\rho)\bigr].
+$$
+
+这同时保留了与 $F$ 的关联。求总迹后也等于 $\operatorname{Tr}\mathcal N_t^n(\rho_A)$，故实际生存概率和均值只依赖 $\rho_A$。此处取迹仅用于识别成本法则；待比较的 $\mathcal S_t$ 仍保留每一个历史块，不能用这个边际替换。
+
+定理 440.2 证明中选择的是固定目标 $\mathcal Q_u(X)=(I_C/3)\otimes X$，其共同幅度计算直接给出
+
+$$
+\|\mathcal Q_\theta-\mathcal Q_u\|_\diamond\le L.
+$$
+
+这比只知道对所有 $\tau\otimes\operatorname{id}$ 取下确界的记录误差更具体。共同 CPTP 前后处理及辅助恒等映射的 diamond 收缩性于是给出完整轮仪器的校准
+
+$$
+\delta_\Gamma:=\frac12\|\Gamma_\theta-\Gamma_u\|_\diamond\le\frac L2.
+$$
+
+半因子使用的是完整仪器：在其每个继续块放置效果 $W/w$，所有终端块放零，所得 $E_W$ 满足 $0\le E_W\le I$。两完整输出态之差为迹零 Hermitian 算子，故对每个输入态 $\eta$，
+
+$$
+\left|\operatorname{Tr}\bigl[E_W(\Gamma_\theta-\Gamma_u)(\eta)\bigr]\right|
+\le\frac12\|(\Gamma_\theta-\Gamma_u)(\eta)\|_1
+\le\delta_\Gamma.
+$$
+
+其中 $w\ge1$，因为单位漂移与 $\mathcal N_u^*(W)\ge0$ 蕴含 $W\ge I_A$。上述效果正是 WAVE 第 70.2 条证明使用的继续后继效果；半因子不是把一个迹不增继续映射的范数界任意除以二。
+
+现在直接应用 WAVE 定理 70.2：在每个活动历史只有定义 442.1 这一轮规则，继续标签为 $z$，后继为 $hz$，取常值证书族 $B_h=W$、统一上界 $b_{\mathrm{WAVE}}=w$、名义余量 $\varepsilon=1$。各历史的名义后继和恰为 $\sum_z\mathcal N_{u,z}^*(W)=\mathcal N_u^*(W)$，完整仪器的半 diamond 校准可统一取 $\delta=L/2$。这逐项履行定义 70.1，而其成本一次恰为本节的一次 $\mathcal Q_t$ 调用。定理给出实际均值 $m_\theta(\rho_A)\le\operatorname{Tr}(W\rho_A)/c$；在名义仪器与自身的比较中取 $\delta=0$，同一定理给 $m_u(\rho_A)\le\operatorname{Tr}(W\rho_A)$。上面的历史归纳使这些就是完整过程的均值。张量任意 $I_F$ 后证书、算子范数上界与校准界也不变，因而没有遗漏纠缠参考或变量初始记忆。
+
+至此两端有限均值已由证书推出，不再是额外的实际终止假设。由 $v\le w$ 得全输入统一预算。把
+
+$$
+\sqrt{m_u(\rho)m_\theta(\rho)}\le\frac v{\sqrt c},\qquad
+\sqrt{M_uM_\theta}=\frac w{\sqrt c}
+$$
+
+代入定理 441.2，并用 $B_{441}$ 的单调性，即得两项完整停止输出界及停止通道的正规保迹性。证毕。
+
+**例 442.3（保持未知系统的模式 01 证书）。** 取 $A=\mathbb C^2_{\mathrm{mode}}\otimes S$。每轮先在指定基 $\{|0\rangle,|1\rangle\}$ 中测量模式，并将实际模式结果 $m$ 归档；随后对同一个 $S$ 调用 $\mathcal Q_t$，归档全部实际 $a$，按下表更新模式或停止：
+
+| 本轮测得的模式 | $a=0$ | $a=1$ | $a=2$ |
+|---|---|---|---|
+| $m=0$ | 继续，模式置 $1$ | 继续，模式置 $0$ | 继续，模式置 $0$ |
+| $m=1$ | 继续，模式置 $1$ | 停止，保留模式 $1$ | 继续，模式置 $0$ |
+
+从模式 $0$ 出发，这识别连续设备标签中的模式 $01$；表中规则也定义了所有模式初态。停止输出保留全部模式测量、设备标签、继续和停止标志以及最终模式和 $S$。$S$ 是跨轮持续保留的任意未知输入，不重置为已知探针，并允许初态在模式、$S$ 与参考之间纠缠。
+
+校准处每个实际设备分支都是 $X\mapsto X/3$。对任意块矩阵 $X=\sum_{m,n=0}^1|m\rangle\langle n|\otimes X_{mn}$，显式模式测量先消去 $m\ne n$ 的块；由表中全部继续分支得到
+
+$$
+\mathcal N_u(X)
+=|0\rangle\langle0|\otimes\frac{2X_{00}+X_{11}}3
+ +|1\rangle\langle1|\otimes\frac{X_{00}+X_{11}}3.
+$$
+
+于是取
+
+$$
+W=\operatorname{diag}(9,6)\otimes I_S
+$$
+
+便有完整算子恒等式
+
+$$
+\begin{aligned}
+\mathcal N_u^*(W)
+ &=\operatorname{diag}\!\left(\frac{2\cdot9+6}3,
+                              \frac{9+6}3\right)\otimes I_S
+ =\operatorname{diag}(8,5)\otimes I_S,\\
+W-\mathcal N_u^*(W)&=I_A,\qquad \|W\|=9.
+\end{aligned}
+$$
+
+该计算对任意 $X$ 成立；初始模式非对角块确由协议中的实际测量消去，因此并未把算子证书限于经典模式混合。张量任意参考后同样成立。若
+
+$$
+c=1-9\sqrt2\,|\sin(\theta-u)|>0,
+$$
+
+命题 442.2 给出统一预算 $M_u=9$、$M_\theta=9/c$ 及
+
+$$
+\|\mathcal S_\theta-\mathcal S_u\|_\diamond
+\le B_{441}\!\left(\frac{9\sin^2(\theta-u)}{\sqrt c}\right).
+$$
+
+失配处各设备标签的条件概率可以随未知 $S$ 及已发生历史而改变；此结论使用完整仪器证书，没有假设这些标签独立同分布。
+
+**边界例 442.4（一个已制备输入的有限均值不足）。** 另取模式 $g,\mathrm{bad}$ 与同一个 $S$，每轮实际测量并记录模式。模式 $g$ 中先调用 $\mathcal Q_t$ 并归档 $a$，随后作二结果投影测量
+
+$$
+P_-=|\psi_-\rangle\langle\psi_-|,\qquad I_S-P_-,\qquad
+|\psi_\pm\rangle=\frac{|1\rangle\pm|3\rangle}{\sqrt2}.
+$$
+
+记录测量结果，停止时保留模式和测量后的 $S$；得到 $P_-$ 就进入 $\mathrm{bad}$，否则停止。在 $\mathrm{bad}$ 中每轮继续调用同一装置、归档实际结果并留在 $\mathrm{bad}$，永不停止。取初态 $|g\rangle\otimes|\psi_+\rangle$。
+
+定义 440.1 的实际系统边际 $\Phi_{u,\theta}=\operatorname{Tr}_C\mathcal Q_\theta$ 保持 $|1\rangle,|3\rangle$ 的布居，并将两者的相干元乘以 $1-x$，这是定理 440.2 证明中的极点—纬线交叠计算。因此在这两个基向量上，
+
+$$
+\Phi_{u,\theta}(|\psi_+\rangle\langle\psi_+|)
+=\frac12\begin{pmatrix}1&1-x\\1-x&1\end{pmatrix},\qquad
+\Pr_\theta(\text{进入 }\mathrm{bad})
+=\operatorname{Tr}\!\left[P_-\Phi_{u,\theta}(|\psi_+\rangle\langle\psi_+|)\right]
+=\frac x2.
+$$
+
+这里对全部实际 $a$ 求和只是计算一个不按 $a$ 区分的事件概率；输出档案仍保留各 $a$，没有选取某个设备标签作条件化。在 $t=u$ 时该已制备输入必在一次调用后停止，均值为一；任意 $x>0$ 时却以概率 $x/2$ 永久进入坏模式，实际均值为无穷。
+
+这不满足命题 442.2 的全输入名义证书。事实上，名义坏模式输入 $\eta=|\mathrm{bad}\rangle\langle\mathrm{bad}|\otimes|1\rangle\langle1|$ 已满足 $\mathcal N_u(\eta)=\eta$；若有单位漂移证书，则
+
+$$
+1\le\operatorname{Tr}\bigl[(W-\mathcal N_u^*(W))\eta\bigr]
+=\operatorname{Tr}\bigl[W(\eta-\mathcal N_u(\eta))\bigr]=0,
+$$
+
+矛盾。对一个指定制备的名义均值估计，因而不能替代覆盖全部活动输入方向的算子条件。
+
+本节的有限证书只要求核对给定有限轮仪器的完备性、共同单次调用实现和一个有限维算子不等式；常值历史证书由这些条件统一产生。该范围不包括第 441 节允许的任意可数分支、无统一历史记忆维数的控制器，也不把未指定的无限历史证书族说成有限可核对。所给正余量是充分条件，不提供必要性、最优半径或证书搜索的效率保证。原始装置仍使用两份记录的联合访问，不由此推出 LOCC 实现；未知输入、全部实际停止历史与未操作参考均在显示的比较范围内。
+
+## 追加锚（本行以下为增补区）
