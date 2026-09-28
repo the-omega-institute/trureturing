@@ -969,3 +969,22 @@ that relation with the rational image of a global degree-three isogeny
 requires the separate map construction and image theorem of Section 13.
 
 ## 追加锚（本行以下为增补区）
+
+## 20. Exact period at an odd Fibonacci modulus
+
+**Theorem 20.1 (Fibonacci modulus period).** For every odd integer
+$n\geq5$, the order of the Fibonacci matrix $Q$ modulo $F_n$ is
+
+$$
+\pi(F_n)=4n.
+$$
+
+Proof. The Fibonacci-coordinate formula makes $\phi^n$ the scalar
+$F_{n-1}$ modulo $F_n$. Cassini's identity gives
+$F_{n-1}^2=-1\pmod{F_n}$ for odd $n$. Since $F_n\geq5$, this scalar has
+order four, so the order of $\phi$ divides $4n$. Conversely, every
+return $\phi^t=1$ modulo $F_n$ implies $F_n\mid F_t$. The Fibonacci gcd
+identity and strict growth from index two imply $n\mid t$. The
+order-of-a-power identity then forces the order of $\phi$ to be $4n$.
+The faithful golden multiplication matrix identifies that order with
+the order of $Q$.
