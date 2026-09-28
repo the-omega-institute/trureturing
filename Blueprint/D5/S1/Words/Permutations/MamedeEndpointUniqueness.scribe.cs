@@ -7,9 +7,59 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Permutations;
 internal sealed class MamedeEndpointUniquenessDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A common extremal endpoint determines a reduced consecutive word.",
-        H("Extremal Endpoint Uniqueness"),
-        Blocks(Describe.Lean(
+        "Extremal endpoints force oscillation and determine reduced consecutive words.",
+        H("Extremal Endpoint Structure"),
+        Blocks(
+        Describe.Lean(
+            DescribeId.Create("mamede-extremal-maximum-peel"),
+            DeclarationHandle.Create(
+                "D5/S1/Words/Permutations/MamedeEndpointUniqueness.maximum_peel"),
+            H("Forced descent from a maximal first letter"),
+            StatementSource.FromAuthor(Disp(Q(
+                Call("ReducedConsecutive", V("n"), Call("Cons", V("M"), V("a"))), Land,
+                Call("AllLettersAtMost", V("M"), Call("Cons", V("M"), V("a"))),
+                Implies, Exists, V("i"), Comma, Exists, V("q"), Comma,
+                Call("InitialDescendingRun", V("M"), V("i"), V("a"), V("q"))))),
+            AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create("D5/L/Words/mamede2026commutation")),
+            Blocks(Paragraph(Text(
+                "For a reduced consecutive word M::a with every generator at most M, "
+                + "there are i and q with 1<=i<=M, M::a=descending(M,i)++q, "
+                + "and every letter of q strictly above i. Its product sends position i "
+                + "to position M+1. The descent is an initial run, with no assumed "
+                + "oscillation. The theorem is the existing forced-run proof exposed for "
+                + "reuse by the endpoint-uniqueness proof; it does not constrain all later "
+                + "spike lengths or establish Lemma 3.2's oscillation direction."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
+            DescribeId.Create("mamede-extremal-endpoint-oscillation"),
+            DeclarationHandle.Create(
+                "D5/S1/Words/Permutations/MamedeEndpointUniqueness.extremal_endpoint_oscillation"),
+            H("Oscillation from an extremal endpoint"),
+            StatementSource.FromAuthor(Disp(Q(
+                Call("ReducedConsecutive", V("n"), V("w")), Land,
+                Call("Endpoint", V("k"), V("w")), Land,
+                Call("GeneratorExtremum", V("k"), V("w")),
+                Implies, Call("Oscillation", V("w"))))),
+            AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create("D5/L/Words/mamede2026commutation")),
+            Blocks(Paragraph(Text(
+                "Let w be a reduced consecutive adjacent-swap word on n+1 positions. "
+                + "Suppose its first or last letter is k, and all its letters are at "
+                + "most k or all are at least k. Then oscillation(w) holds: the absolute "
+                + "differences between its first letter, strict internal peaks and valleys, "
+                + "and last letter form a weakly increasing or weakly decreasing list. "
+                + "The endpoint condition excludes the empty word and makes k an attained "
+                + "extremum. A maximal first letter forces a descending run; its final "
+                + "letter starts a shorter suffix at its minimum. Reflection and induction "
+                + "give weakly decreasing lengths, and reversal supplies the last-letter "
+                + "cases. This proves the endpoint-to-oscillation direction of Lemma 3.2 "
+                + "in the repository's exact model. The paper invokes its Theorem 2.2, "
+                + "but this proof uses the existing reduced-word crossing results. It does "
+                + "not prove the reverse characterization or derive an extremal endpoint "
+                + "from two opposite position maps."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
             DescribeId.Create("mamede-extremal-endpoint-uniqueness"),
             DeclarationHandle.Create(
                 "D5/S1/Words/Permutations/MamedeEndpointUniqueness.extremal_endpoint_unique"),

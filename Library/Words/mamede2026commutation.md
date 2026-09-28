@@ -109,6 +109,32 @@ establish `i<=j`, and does not settle Conjecture 5.1.
 
 ## Extremal endpoint uniqueness
 
+`MamedeEndpointUniqueness.maximum_peel` exposes the initial descent used by
+the uniqueness proof. If a reduced consecutive word begins at its attained
+maximum generator `M`, it has the form `descending(M,i) ++ q` for some
+`1<=i<=M`; every generator of `q` exceeds `i`, and the product sends
+position `i` to position `M+1`. This is a one-run constraint, not the
+peak/valley monotonicity or `oscillation` conclusion of Lemma 3.2 by itself.
+
+`MamedeEndpointUniqueness.extremal_endpoint_oscillation` proves that conclusion
+for the repository's exact predicate. For every reduced consecutive word
+`w`, if its first or last letter is `k` and all letters are at most `k` or
+all are at least `k`, then `oscillation w`. The endpoint makes the extremum
+attained and excludes the empty case. For a maximal first letter, a forced
+descent ends at a minimum of the remaining suffix. Induction on that suffix,
+after reflection, proves that all spike segment lengths are weakly decreasing.
+Reflection gives a minimal first letter; reversal gives both last-letter cases.
+
+The paper's Theorem 2.2 concerns words in `[n]*` with consecutive indices and
+their associated permutations: membership in `R_bullet(sigma)` is equivalent
+to excluding factors with repeated or symmetric segments. The Lean inputs
+are valid indices, minimal representing length, and consecutive letters.
+The new proof uses the existing crossing lemmas rather than assuming the
+paper's unformalized repeated/symmetric-segment characterization. It proves
+only the endpoint-to-oscillation direction of Lemma 3.2. The reverse direction
+and the bridge from two opposite extremal position maps to an extremal word
+endpoint remain unproved.
+
 `MamedeEndpointUniqueness.extremal_endpoint_unique` compares two reduced
 consecutive words with equal permutation products. If their first letters
 are the same common minimum or maximum, the words are equal; the same holds

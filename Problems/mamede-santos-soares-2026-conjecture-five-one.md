@@ -47,6 +47,16 @@ of Lemmas 3.2 and 3.4. Together with the endpoint assumptions in the
 conditional fiber theorem below, it helps identify all words in a `j<i`
 fiber. It does not change KPI.
 
+`MamedeEndpointUniqueness.maximum_peel` makes the existing initial-descent
+proof reusable: a reduced consecutive word beginning at its attained maximum
+is a full descent to `i` followed only by generators greater than `i`.
+The new `extremal_endpoint_oscillation` proves the endpoint-to-oscillation
+direction for the exact Lean predicate: the first or last letter is an attained
+minimum or maximum, with reducedness and consecutive indices unchanged.
+It identifies the peeled runs with `spikes` and proves weakly decreasing
+segment lengths for a first extremum. Reversal gives the last-letter cases.
+This is a source-only result; it does not close the source adapter or change KPI.
+
 `MamedeFactorSeparation.source_shape_unique_of_j_lt_i` supplies the
 factor-separation step of Proposition 3.7: under `1<=m<j<i<M<=n`, equal-product
 reduced consecutive words with the two actual first-orientation source shapes
@@ -68,6 +78,18 @@ The reflected orientation, oscillating and involutive branches, and a global
 count argument for every permutation remain unproved. The induction also needs
 to derive the exact endpoint and exterior hypotheses from an arbitrary
 nonoscillating source, up to permutation inversion, and handle the terminating cases.
+In particular, the current Lean source does not prove that a nonoscillating
+source excludes the opposite extremal position map; the paper's Lemma 3.6
+obtains the needed strict internal endpoint and the map to `j+1` with `j<M`.
+The endpoint theorem alone cannot discharge that map exclusion: its attained
+extremal endpoint premise has not been derived from the two opposite maps.
+The remaining direct route must align the forced full ascending and descending
+runs. When both outer factors are nonempty, their common boundary generator
+would bracket a full symmetric excursion. A proof must show that this factor
+can be shortened (or repeats a pair crossing), contradicting the actual
+minimal-length `reducedWord` premise. Neither that alignment and cancellation
+bridge nor the exact opposite-map consumer has been compiled. Freeze, gate,
+and PR admission are therefore withheld for this checkpoint.
 The class-to-word correspondence and the paper's upper bound still require
 formal justification in this adjacent-word model before the full conjecture
 can be claimed. Research target: [#10285](https://github.com/the-omega-institute/trureturing/issues/10285).
