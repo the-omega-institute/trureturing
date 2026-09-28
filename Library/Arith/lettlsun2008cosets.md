@@ -2133,7 +2133,285 @@ in every hypothetical distinct odd cover, or a stronger compatible
 condition if these tests can all pass. The inequalities and constructions
 here are ordinary proofs, not new Lean verification or a priority claim.
 
+### Private residual zeros do not rescue nonnegative transport potentials
+
+Keep the SAME actual two-prime slice and F=c-1 from IT1. For an
+integer k define the elementary discrete conjugate
+
+    h(k)=max_(n>=0 integer)(k*n-g(n))
+        =0 if k<=1, and k*(k-1)/2 if k>=2.
+
+This follows from the successive differences g(n+1)-g(n)=n+1.
+For arbitrary integer row and column potentials alpha_i,beta_j put
+k_ij=alpha_i+beta_j. If E is a set of cells with ACTUAL F_ij=0, set
+
+    D_E=alpha*r+beta*s-sum_((i,j) notin E) h(k_ij).
+
+Any nonnegative integer table with the same margins and zeros on E
+has cost at least D_E, by summing g(n)>=k*n-h(k). Thus a whole cover
+with these actual zeros necessarily satisfies A_z>=D_E. No assertion
+of strong duality or a new transportation theorem is needed here.
+Write T_E(r,s) for the corresponding minimum cost, taking +infinity
+when its feasible set is empty.
+
+However, if EVERY cell has k_ij>=0, then
+
+    A_z>=D_E                                       (IT6)
+
+holds for EVERY actual multiplicity table, including tables with holes.
+To prove this, write the exact difference as
+
+    A_z-D_E=sum_((i,j) notin E)
+                [g(F_ij)-k_ij*F_ij+h(k_ij)].        (IT7)
+
+Covered cells have F_ij>=0 and nonnegative bracket by the defining
+maximum for h. At a hole F_ij=-1, the bracket is k_ij+h(k_ij), again
+nonnegative when k_ij>=0. Cells in E contribute zero because both
+F and g(F) vanish and their conjugate penalties have been omitted.
+This proves IT6 without using whole coverage, oddness or distinctness.
+
+In particular, fix one literal original cylinder
+C_t=I_t times J_t times K_t and its actual private region Pi_t.
+On each cofactor z in K_t take
+
+    alpha_i=a*1_(i in I_t), beta_j=b*1_(j in J_t), a,b>=0 integers,
+    E_z={(i,j): (i,j,z) belongs to Pi_t}.
+
+All these k are nonnegative. Summing IT6 over the SAME K_t therefore
+gives, for any actual family, covering or not,
+
+    sum_(z in K_t) A_z
+      >=a*sum_(z in K_t) r_z(I_t)+b*sum_(z in K_t) s_z(J_t)
+        -|K_t|*[|I_t||J_t|h(a+b)
+                +|I_t|(Q-|J_t|)h(a)
+                +(P-|I_t|)|J_t|h(b)]
+        +|Pi_t|h(a+b).                              (IT8)
+
+With a=b=1 this becomes
+
+    Delta_t=sum_(z in K_t)[A_z-r_z(I_t)-s_z(J_t)]
+                 +|K_t||I_t||J_t| >= |Pi_t|.         (IT9)
+
+Every irredundant family, even a noncover, has |Pi_t|>=1 for each
+original t. Consequently the target Delta_t<=0 is already impossible
+for an irredundant family without assuming whole coverage. The private
+point bonus does not supply a new covering obstruction. Expanding all
+terms into exact original-label CRT intersection counts leaves this
+conclusion unchanged; such an expansion changes no inequality.
+
+There is an exact sign criterion for a potentially useful certificate.
+Allow arbitrary signed integer alpha_i,beta_j, keep
+k_ij=alpha_i+beta_j, and put
+
+    H_-={(i,j): F_ij=-1 and k_ij<0}.
+
+For these cells h(k_ij)=0. Partitioning IT7 gives
+
+    A_z-D_E=P_E-sum_((i,j) in H_-) (-k_ij),          (IT10)
+
+where P_E is the sum of the nonnegative brackets over covered cells
+outside E and over holes with k_ij>=0. Hence D_E>A_z holds exactly
+when the weighted negative-potential holes exceed P_E. In particular
+negative k at an ACTUAL hole is necessary, not merely a negative
+alpha or beta somewhere. Such negativity alone is not sufficient:
+the covered-cell slack can still pay for it. IT10 is an identity on
+the original table, not a way to obtain unknown hole locations for free.
+
+Forced zeros can nevertheless strengthen the OPTIMIZED transportation
+test even when every marginal and the ordinary optimized test pass.
+Consider the actual integer residual table
+
+    F = [0 2 -1]       r=(1,10,10), s=(12,8,1),
+        [6 3  1]       A=sum g(F_ij)=59,
+        [6 3  1]       E={(0,0)}.
+
+All multiplicities F+1 are nonnegative, every residual margin is
+strictly positive, and E is an actual residual zero. The two tables
+
+    X = [1 0 0]       X_E = [0 1 0]
+        [5 4 1]             [6 4 0]
+        [6 4 0]             [6 3 1]
+
+have the same margins and costs58 and60, respectively; X_E is zero
+on E. For the unrestricted problem, alpha=(0,4,4), beta=(2,0,-3)
+give alpha*r+beta*s=101 and sum h(k)=43, hence D_empty=58.
+For the fixed-zero problem, alpha=(0,2,2), beta=(5,2,-1) give
+alpha*r+beta*s=115 and sum_(notin E) h(k)=55, hence D_E=60.
+Feasible tables and weak duality prove both minima exactly:
+
+    T_Z(r,s)=58 <= A=59 < T_E(r,s)=60.              (IT11)
+
+The fixed-zero certificate uses only r,s,A,E. It does not need the
+hole location as an input. At the displayed actual hole its k is -1;
+every covered cell outside E has zero bracket in IT7. Thus IT10
+has P_E=0 and a negative-hole contribution of1, exactly matching
+A-D_E=-1. The point of IT11 is the strict separation from the
+ordinary optimized transport test, not merely T_E>T_Z.
+
+This separation has a literal distinct-odd AP realization on one
+common slice. Append two columns of F=0 to get a 3-by-5 table.
+The new column margins are zero, forcing those columns to be zero
+in EVERY feasible nonnegative table. Both minima and A are unchanged.
+The dual beta vectors extend by (-4,-4) and (-2,-2), respectively,
+without adding any conjugate penalty. All complete3- and5-marginals
+on this slice are at least1; the new columns attain equality.
+
+There are36 multiplicity copies in F+1. Give each one a different odd
+prime tag ell_t outside{3,5}, and use the literal numerical modulus
+15*ell_t with that cell's3- and5-phases and tag phase0. The moduli
+are pairwise distinct odd nonunits. At the SAME cofactor where all
+tags are0, the original multiplicity table is exactly the padded
+table. The cell(0,0) has a unique original and is its actual private
+point, supplying E. Every original also has a private witness with
+its own tag0 and all other tags1, so the family is irredundant.
+
+This is only a selected-slice separation. When all tags are1, no
+original is active and the complete3- and5-marginals are zero. Each
+tag prime also has a zero complete marginal: hold the3- and5-cell
+different from its original's cell and all other tags at1. Hence
+this is NOT a noncover passing all complete prime marginals, and it
+does not enlarge the unrestricted noncoverage range. The exact
+minimum proofs above use the explicit primal and dual witnesses;
+independent enumeration of the43 feasible3-by-3 tables agrees.
+
+For an inclusion-minimal whole cover, each original t must have SOME
+actual private position (i,j,z) in its cylinder. A valid further test
+may therefore reject all candidate positions by comparing A_z with
+the corresponding fixed-zero transport minimum, keeping each slice's
+own margins and actual overlap. Excluding every position for just
+one t rules out that family's being an inclusion-minimal whole cover.
+For a general family the conclusion is only that it does not cover
+OR t is redundant. Under whole coverage the exclusion therefore
+forces redundancy; with t independently known essential it forces
+noncoverage. Universal #7 forcing still requires original-label
+arithmetic that violates a genuinely coverage-dependent condition.
+These are ordinary finite proofs, not new Lean verification.
+
+### Private-zero separation survives complete private rows and columns
+
+The IT11 example has a hole in the same row as its private point, so
+it does not pass the strong private-shell condition even on that
+selected two-prime slice. The following family separates the fixed-zero
+transport test after imposing that further local condition as well.
+
+For ANY integers P,Q>=3 define one actual residual table by
+
+    F_00=-1;
+    F_0j=F_i0=1 for i,j>0;
+    F_11=0;
+    F_ij=2 for every other i,j>0.
+
+It has exactly one hole, at(0,0), and exactly one private cell, at(1,1).
+They are in different rows AND columns, so both complete coordinate
+lines through the private point are covered. Thus the slice satisfies
+the no-private-to-hole-edge condition PS2 in both selected directions.
+Every residual margin is strictly positive:
+
+    r=(Q-2,2Q-3,2Q-1,...,2Q-1),
+    s=(P-2,2P-3,2P-1,...,2P-1).
+
+The actual overlap cost and both transport minima are
+
+    A=P+Q-2+3*((P-1)*(Q-1)-1),
+    T_Z(r,s)=A-1,
+    T_E(r,s)=A+1, E={(1,1)}.                       (IT12)
+
+Here T_E fixes the ONE actual residual zero. The claimed minima
+have exact primal and dual witnesses at every P,Q.
+
+For the ordinary minimum, change F_00 from-1 to0, F_01 and F_10
+from1 to0, and F_11 from0 to1. This rectangle move preserves all
+margins, makes the whole table nonnegative, and lowers its cost by1.
+Use additive potentials
+
+    alpha=(0,1,2,...,2), beta=(-1,0,1,...,1).
+
+Each positive entry x of this repaired table satisfies
+x<=alpha_i+beta_j<=x+1; each zero has alpha_i+beta_j<=1.
+These are equality conditions in g(x)>=k*x-h(k), so the feasible
+table and weak dual bound agree at A-1. No strong-duality assertion
+or numerical minimization is needed.
+
+For the fixed-zero minimum, instead repair the corner using rows0,2
+and columns0,2: F_00 rises to0, F_02 and F_20 fall to0, and F_22
+rises from2 to3. The private cell(1,1) remains zero. All margins
+are preserved and the cost rises by1. Take
+
+    alpha=(0,2,2,...,2), beta=(-1,1,1,...,1).
+
+The potential sum is-1 at the hole,1 on the two arms, and3 on the
+interior. Outside E every covered entry of the ORIGINAL F has zero
+Fenchel slack, while the hole contributes-1. Removing the conjugate
+penalty h(3)=3 at E therefore gives D_E=A+1 by IT7. Equivalently,
+the repaired nonnegative table attains equality at every allowed
+cell. These matching witnesses prove the fixed-zero minimum in IT12.
+
+For P=3,Q=5 this gives
+
+    F=[-1 1 1 1 1]
+      [ 1 0 2 2 2]
+      [ 1 2 2 2 2],
+    r=(3,7,9), s=(1,3,5,5,5),
+    T_Z=26 <= A=27 < T_E=28.
+
+The complete selected-slice prime marginals are
+M_3=(4/3,2,8/3,8/3,8/3) and M_5=(8/5,12/5,14/5), all strictly
+above1. Independent enumeration of all2909 feasible3-by-5 tables
+agrees with both minima; the universal result is proved by the
+witnesses above, not by this enumeration.
+
+To realize the family with original labels, take P=p^H and Q=q^G
+for distinct odd primes p,q and arbitrary H,G>=1. Reuse the
+[two-coordinate exponent-antichain construction, Report345 section5](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/345-fixed-prime-fourier-obstruction-and-digit-relation-masks.md).
+Choose just TWO further distinct odd primes r,s, neither equal to p,q,
+and enumerate the F_ij+1 multiplicity copies by t=1,...,N, where
+
+    N=sum_(i,j)(F_ij+1)=3P Q-P-Q-3.                 (IT13)
+
+Assign copy t the literal modulus P Q r^t s^(N+1-t), its prescribed
+p,q-cell, and zero phase on both auxiliary coordinates. These are
+distinct odd nonunits on EXACTLY FOUR support primes. On the SAME
+cofactor with auxiliary coordinates zero modulo r^N and s^N, the
+exact table is F+1. The unique class at(1,1) supplies the true private
+zero; its complete p- and q-lines are covered.
+
+Every original has a private witness. Give its auxiliary coordinates
+truncated valuations t and N+1-t, where valuation N means the zero
+coordinate modulo the Nth prime power. Copy u is active only if
+u<=t and N+1-u<=N+1-t, forcing u=t. Its assigned p,q-cell then gives
+a private point, including the endpoint exponents. Equivalently, let
+G_t=r^t s^(N+1-t) and let b_t mod P Q be its cell residue. With all
+inverses taken modulo P Q, the literal integer
+
+    w_t=G_t*(1+r*s*k_t),
+    k_t=((b_t*G_t^(-1)-1)*(r*s)^(-1)) mod P Q
+
+has the prescribed cell and exact auxiliary valuations, proving the
+same isolation. This is an application of the existing construction,
+not a new tagging principle. For P=3,Q=5 there are34 originals, with
+support {3,5,7,11} when r=7,s=11.
+
+The complete-row condition here applies only to the two selected
+prime directions on this actual slice. It is NOT the global PS1
+condition for all private points and all support primes. In particular,
+changing the r-coordinate from0 to1, while retaining the private
+p,q-cell and s-coordinate0, creates a hole. The cofactor r=s=1
+also has zero complete p- and q-marginals. The complete r-marginal
+is zero when the s-coordinate is1, and the complete s-marginal is
+zero when the r-coordinate is1. Therefore the construction is neither an all-marginals-passing
+noncover nor a global private-shell-saturated distinct-odd example.
+It proves that selected-slice marginal feasibility, ordinary optimized
+transport, and complete private lines together do not subsume the
+fixed-zero transport test. Unrestricted #7 still requires a global
+same-original-label forcing argument. These are ordinary proofs,
+not new Lean verification or a claim of literature priority.
+
 ## Existing survivor laws restrict simultaneous complete marginal feasibility
+
+The uniform-profile argument establishes MF1 through five support primes.
+Under the stronger attributed common-law source premises specified below,
+MF7 extends the exclusion through eight, and MF8 restricts the two largest
+primes at support size nine. The source dependencies are kept explicit.
 
 The existing product and complete-survivor laws imply more than a
 noncoverage assertion for the following restricted task. For any
@@ -2242,7 +2520,7 @@ profile computation, residue enumeration, Lean theorem or noncoverage
 range. An old assertion that a hole merely exists would not imply MF1;
 the existing complete-survivor LAW and its cylinder caps are the input.
 
-### Exactly six support primes reduce to seventeen prime sets
+### Uniform profiles restrict six support primes to seventeen prime sets
 
 Suppose the original family has exactly six support primes and every
 complete support-prime marginal is at least 1. Then its support must be
@@ -2255,6 +2533,8 @@ one of the following SEVENTEEN sets:
 There are fourteen choices of r in MF5a. This is a necessary condition,
 not an assertion that any listed set admits such a family. Every
 finite exponent and every original residue remain unrestricted.
+The stronger common-law application MF7 below excludes all seventeen
+sets under its stated source premises.
 
 Only five profile calculations are needed for the exclusion. In each
 row below, remove the target r and apply the existing P3--P4 recurrence
@@ -2328,6 +2608,138 @@ support in MF5. In particular, adding disjoint pure-prime tails to a
 known noncover cannot repair its deficient old marginals. This reduction
 does not assert that a connected family passes the tests, and supplies
 no unproved existence of a covering or noncovering family on MF5.
+
+### Query-independent survivor laws extend the marginal exclusion through eight primes
+
+MF3 only requires one probability supported on the actual r-free
+survivors; it does not require that probability to be uniform. The
+common-law query bounds already proved in
+[Report461](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md)
+and
+[Report462, LS1](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/462-the-final-stage-ledger-gives-a-seven-core-common-law.md)
+therefore give the following stronger conclusion, under their attributed
+source construction and comparison premises:
+
+    1<=number of actual support primes<=8
+       ==> some actual support prime r has min_y M_r(y)<1. (MF7)
+
+The original moduli remain pairwise distinct odd integers greater than1;
+all original phases and finite heights are arbitrary. The source is
+Michael Schroeder's Nine Prime Divisors in Odd Distinct Covering Systems,
+edition1.0.1. The source identity and local verification boundary are in
+its [library entry](schroeder2026nine.md). MF7 applies the existing
+common-law interfaces; it is not a new finite geometry calculation,
+Lean result, or improvement of the known bare noncoverage range.
+
+For six, seven or eight actual support primes choose the largest one r,
+and let K=L/r^(H_r). Use the indicated law on the ACTUAL complete
+survivors of the r-free original subfamily. It controls all cylinders
+modulo every divisor of this fixed K, including query depths not used
+by the r-free subfamily itself. The law is chosen before the later
+layouts, and the same law serves every target height.
+
+| Actual support size | r-free core size | Bound on R_mu from the common law | Smallest possible r | Bound on min M_r |
+|---|---:|---|---:|---:|
+|6|5|R_mu<10|17|<11/16|
+|7|6|R_mu<14|19|<5/6|
+|8|7|R_mu<=70874/3375|23|<74249/74250|
+
+Indeed MF3 gives
+
+    min M_r<=u_r*(1+R_mu),
+    u_r=sum_(h=1..H_r)r^(-h)<1/(r-1).
+
+The last entry is (1+70874/3375)/22=74249/74250<1.
+The first two use the conservative bounds10 and14; Report461 gives
+strictly smaller exact constants. MF1 handles support sizes one
+through five. No coordinate average is taken under a conditioned
+r-law: M_r remains the COMPLETE uniform r-coordinate average, and
+only its cofactor is averaged under mu. Thus this deduction does
+not replace a marginal by a different observable.
+
+An empty r-free family or unused cofactor coordinates cause no extra
+assumption. The source interfaces permit a family on AT MOST the
+stated number of primes and any fixed resolving period; their finite
+padding, transport and projection supply exactly the required carrier.
+No compatible choice of laws over an infinite chain of periods is
+needed, since the actual original family and its period are finite.
+
+For eight support primes the quantitative gap relies on Report462's
+uniform query functional LS5 and retained surplus LS6. It would NOT
+follow just from the source's bare assertion that some survivor exists,
+nor from the actual loss of an empty auxiliary23 family. The source's
+finite geometry and rational certificate have been locally reproduced;
+its full arbitrary-height comparison remains an attributed premise,
+and no fresh full Lean replay is asserted here.
+
+Consequently every nonempty odd-distinct family passing ALL complete
+support-prime marginals must use at least NINE primes, under these
+same source premises. The seventeen supports in MF5 remain valid
+necessary restrictions furnished by the earlier uniform-profile
+calculation, but MF7 excludes all of them using the stronger common
+laws. They are not remaining cases of the full marginal-feasibility
+problem. In particular MF6 now implies that every component of an
+all-marginals-passing NONCOVER must contain at least nine primes.
+No such actual noncover is constructed, and no result for arbitrary
+support size is claimed.
+
+### The same query extension restricts the two largest primes at support size nine
+
+The one-prime query extension in
+[Report463, PE6](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/463-two-actual-prime-extensions-preserve-a-common-core-law.md)
+also applies to MF3. Use the stronger seven-core input
+
+    A=70871/3375,
+
+from the relative-ledger deduction in
+[Report466](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/466-randomized-completion-retains-full-original-survivor-support.md).
+This step retains that deduction's attributed source comparison and
+compatible-screening premises. Full survivor support and the all-depth
+compactness consequence of that report are not needed here.
+
+For exactly nine support primes let q<r be the two largest, so q>=23.
+Choose the fixed seven-core law on the actual subfamily avoiding both
+q and r. Extend it through the actual q-bearing, r-free originals by
+PE6, keeping the complete cofactor period required by the r-bearing
+queries. Since q>A+2, the resulting one survivor law has
+
+    R8(q)<=B_A(q):=((q-1)A+1)/(q-2-A).
+
+Consequently the sufficient bound 1+B_A(q)<r-1 gives a deficient
+complete r-marginal by MF3. Multiplying this bound comparison by the
+positive denominator shows that it is exactly
+
+    N_A(q,r)=(q-A-2)(r-A-2)-(A^2+A+1)>0.          (MF8)
+
+Interchanging q and r proves a deficient complete q-marginal as well.
+The two cofactor laws and two witnessing points can differ; this is
+not a simultaneous choice of both minima under one law. Each argument
+uses one law for all its own original-label queries. The algebraic
+criterion is the existing symmetric PE9 criterion, now read as a
+complete-marginal obstruction rather than only as bare noncoverage.
+
+Thus a nine-support family passing all complete marginals must have
+N_A(q,r)<=0. Its two largest primes obey the following exact necessary
+bounds; the displayed upper endpoints need not themselves be prime.
+
+| Eighth prime q | Upper bound on ninth prime r |
+|---:|---:|
+|23|1562545/4|
+|29|2028271/20254|
+|31|2183513/27004|
+|37|2649239/47254|
+|41|2959723/60754|
+
+These are obtained by solving MF8 for
+r<=A+2+(A^2+A+1)/(q-A-2), which decreases with q>A+2.
+At q=43 the upper endpoint is3114965/67504<47, while the next support
+prime must be at least47. Every larger q is excluded as well. Hence
+the five q values in the table exhaust the possible eighth primes,
+without bounding any original exponent. The seven smaller primes
+remain subject to being distinct odd primes below q and all the
+other original constraints. None of these necessary cases is claimed
+feasible, and the table does not assert a new unrestricted or bare
+noncoverage range.
 
 ### Unrestricted fractional phases only recover the reciprocal test
 
