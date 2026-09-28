@@ -19,7 +19,7 @@ internal sealed class CriticalIncidenceStarDocument : IScribeDocumentDefinition
                 + "the fibre of that map; StarOccurrence(s,e) is its subtype of local "
                 + "occurrences. Its cardinality counts local occurrences, including "
                 + "repeated tetrahedra and repeated neighbouring global labels. The local "
-                + "frame puts each target slot first and its opposite third.")),
+                + "frame puts each target slot first and its opposite fourth.")),
             Paragraph(Text("Critical labels are low labels of degree six. Every occurrence "
                 + "of the target has at least three high neighbours. A chosen subset of at "
                 + "least four occurrences has four high neighbours and a critical opposite "
@@ -52,7 +52,6 @@ internal sealed class CriticalIncidenceStarDocument : IScribeDocumentDefinition
         var t = F.Id("T"); var eType = F.Id("E"); var s = F.Id("s");
         var edge = F.Id("e"); var x = F.Id("x"); var good = F.Id("good");
         var critical = F.Id("critical"); var a = F.Id("a"); var f = F.Id("f");
-        var star = Call("star", s, edge);
         var occurrence = Call("StarOccurrence", s, edge);
         var criticalClass = All([("f", eType)], Imp(Call("critical", f),
             And(Eq(Call("low", s, f), F.Id("true")),
@@ -68,7 +67,6 @@ internal sealed class CriticalIncidenceStarDocument : IScribeDocumentDefinition
             Imp(Call("critical", f), Le(Rat(4, 3), Call("x", f)))));
         var premises = And(Call("Fintype", t), Call("DecidableEq", eType),
             Call("critical", edge),
-            Eq(Call("card", star), F.D(6)),
             Le(F.D(4), Call("card", good)), criticalClass,
             threeHigh, favourable, box);
         var pi = F.Id("pi");
