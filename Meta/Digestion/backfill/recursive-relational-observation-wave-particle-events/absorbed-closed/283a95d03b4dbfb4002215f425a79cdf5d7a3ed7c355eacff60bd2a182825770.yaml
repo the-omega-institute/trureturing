@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:283a95d03b4dbfb4002215f425a79cdf5d7a3ed7c355eacff60bd2a182825770
   normalized_sha256: sha256:283a95d03b4dbfb4002215f425a79cdf5d7a3ed7c355eacff60bd2a182825770
 cas_ref: sha256:283a95d03b4dbfb4002215f425a79cdf5d7a3ed7c355eacff60bd2a182825770
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/NonProjectiveDarkEffect.non_projective_dark_effect
+    target_statement_id: sha256:de6d86a1c1f5ec8b5afa3f7e1075fe466818ac34af050923f700707b73473097
 receipts:
   unresolved_subitems: []
