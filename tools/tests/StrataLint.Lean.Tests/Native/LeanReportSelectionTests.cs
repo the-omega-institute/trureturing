@@ -7,14 +7,14 @@ namespace StrataLint.Lean.Tests;
 public sealed class LeanReportSelectionTests
 {
     [Theory]
-    [InlineData("probe", "none", false)]
+    [InlineData("probe", "none", true)]
     [InlineData("reuse", "none", false)]
-    [InlineData("probe", "source", true)]
-    [InlineData("probe", "toolchain", true)]
-    [InlineData("probe", "environment", true)]
-    [InlineData("reuse", "material", true)]
-    [InlineData("probe", "old-receipt", true)]
-    public void ReportReuseChecksDeclaredInputsWithoutInstalledToolchain(string operation, string change, bool needsLake)
+    [InlineData("probe", "source", false)]
+    [InlineData("probe", "toolchain", false)]
+    [InlineData("probe", "environment", false)]
+    [InlineData("reuse", "material", false)]
+    [InlineData("probe", "old-receipt", false)]
+    public void ReportCandidateChecksDeclaredInputsWithoutAuthorizingReuse(string operation, string change, bool candidate)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
@@ -48,8 +48,11 @@ public sealed class LeanReportSelectionTests
         var text = Encoding.UTF8.GetString(result.StandardOutput);
         Assert.True(result.ExitCode == 0, text + Encoding.UTF8.GetString(result.StandardError));
         using var outcome = JsonDocument.Parse(text);
-        Assert.Equal(needsLake, outcome.RootElement.GetProperty("needs_lake").GetBoolean());
-        Assert.Equal(operation == "reuse" && !needsLake, outcome.RootElement.GetProperty("published").GetBoolean());
+        Assert.True(outcome.RootElement.GetProperty("needs_lake").GetBoolean());
+        Assert.Equal(candidate, outcome.RootElement.TryGetProperty("candidate", out var selected) && selected.GetBoolean());
+        Assert.False(outcome.RootElement.GetProperty("published").GetBoolean());
+        if (candidate)
+            Assert.Equal("current-semantic-witness-required", outcome.RootElement.GetProperty("reason").GetString());
     }
 
     [Theory]
@@ -89,7 +92,7 @@ public sealed class LeanReportSelectionTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void ReportEntryReusesValidatedReportWithoutInstalledToolchain(bool existingOutput)
+    public void ReportEntryRequiresExecutableToolchainEvenWithValidatedReport(bool existingOutput)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
@@ -117,8 +120,10 @@ public sealed class LeanReportSelectionTests
                 fixture.doCleanups()
             """, root, existingOutput.ToString()], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         var text = Encoding.UTF8.GetString(result.StandardOutput);
-        Assert.True(result.ExitCode == 0, text + Encoding.UTF8.GetString(result.StandardError));
-        Assert.Contains("LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0", text, StringComparison.Ordinal);
+        Assert.True(result.ExitCode == 2, text + Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("an absolute executable lake path is required", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("LEAN_INSPECTOR_WORK", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("RAW_LEAN_REPORT", text, StringComparison.Ordinal);
         Assert.DoesNotContain("UNEXPECTED_BUILD", text, StringComparison.Ordinal);
     }
 
@@ -135,8 +140,13 @@ public sealed class LeanReportSelectionTests
             fixture = ReuseTests()
             fixture.setUp()
             try:
-                first, calls = fixture.entry_with_program_build([], build_exit=37)
+                first, calls = fixture.entry_with_program_build([])
                 if first.returncode: raise RuntimeError(first.stdout + first.stderr)
+                (fixture.root / 'build-calls').unlink()
+                # This shell-boundary fixture injects a failing native entry.
+                # Real witness generation and semantic fallback run in NativeEntryConsumerTests.
+                fixture.write('tools/scripts/worktree/lean-cache-run.sh',
+                    '#!/bin/bash\nset -euo pipefail\nprintf "%s\\n" "$*" >> build-calls\nexit 37\n')
                 probe = reuse.probe(fixture.root, fixture.report)
                 archive = publication.member(fixture.report, '.materials.zip')
                 with zipfile.ZipFile(archive, 'w') as output: output.writestr('unreferenced', b'bad material')
@@ -175,13 +185,14 @@ public sealed class LeanReportSelectionTests
         var text = Encoding.UTF8.GetString(result.StandardOutput);
         Assert.True(result.ExitCode == 0, text + Encoding.UTF8.GetString(result.StandardError));
         using var outcome = JsonDocument.Parse(text);
-        Assert.False(outcome.RootElement.GetProperty("probe").GetProperty("needs_lake").GetBoolean());
+        Assert.True(outcome.RootElement.GetProperty("probe").GetProperty("needs_lake").GetBoolean());
+        Assert.True(outcome.RootElement.GetProperty("probe").GetProperty("candidate").GetBoolean());
         Assert.True(outcome.RootElement.GetProperty("exit").GetInt32() == 37, text);
         var calls = outcome.RootElement.GetProperty("calls").EnumerateArray().Select(item => item.GetString()).ToArray();
         Assert.Equal(3, calls.Length);
         Assert.Equal("toolchain", calls[0]);
         Assert.Equal("ensure", calls[1]);
-        Assert.EndsWith(" build :report", calls[2]);
+        Assert.EndsWith(" build :reportEntry", calls[2]);
     }
 
     public static IEnumerable<object[]> InspectorPhaseCases()

@@ -310,6 +310,10 @@ defaultFacets = ["static"]
     def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120,
                         observe_output=None):
         if args and args[0] == getattr(self, 'lake', None):
+            # The cache entry changes cwd to its repository. Preserve the
+            # caller's package selection for isolated Interface consumers.
+            if cwd is not None and Path(cwd).resolve() != self.root.resolve():
+                args = [args[0], '-d', str(Path(cwd).resolve()), *args[1:]]
             args = ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-run.sh'), *args]
         if os.environ.get('STRATALINT_NATIVE_COMMAND_OBSERVATION') != '1':
             return self._guarded_command(args, cwd=cwd, env=env, text=text, capture_output=capture_output,

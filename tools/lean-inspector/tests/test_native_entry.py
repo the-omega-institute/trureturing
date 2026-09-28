@@ -66,8 +66,8 @@ class NativeEntryConsumerTests:
         if not first.is_absolute(): first = Path(cwd) / first
         shadow = first.resolve() / 'D5/A.olean'
         original = self.root / '.lake/build/lib/lean/D5/A.olean'
-        self.assertTrue(shadow.is_relative_to(self.root))
-        self.assertNotEqual(shadow, original)
+        self.assertTrue(shadow.is_relative_to(self.root.resolve()))
+        self.assertNotEqual(shadow, original.resolve())
         shadow.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(original, shadow)
         failed = self.whole_entry(success=False)

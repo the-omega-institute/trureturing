@@ -526,12 +526,12 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         # Even an already published run cannot bypass registered program builds.
         self.write('Audit.lean', 'this is not valid Lean\n')
         failed = self.release_run('publish', success=False)
-        self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
+        self.assertIn('LEAN_INSPECTOR_FAILED phase=report', failed.stderr)
         self.assertIn('Audit.lean:1:0: unexpected identifier; expected command', failed.stdout + failed.stderr)
         self.assertFalse(publication.member(output, '.reuse.json').exists())
         self.assertNotIn('LEAN_CACHE_PUBLISH ', failed.stdout)
         self.assertEqual(releases, {p.name for p in (self.root / 'releases').iterdir()})
-        # Clearing the receipt sends the same invalid program through :report.
+        # Missing receipts still run the same required native program checks.
         cold_failed = self.release_run('publish', success=False)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=report', cold_failed.stderr)
         self.assertIn('Audit.lean:1:0: unexpected identifier; expected command',

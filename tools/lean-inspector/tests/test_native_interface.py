@@ -120,6 +120,9 @@ run_cmd do
         manifest.write_text(json.dumps(resolved))
         env = {key: value for key, value in os.environ.items()
                if not key.startswith(('LEAN_', 'LAKE_', 'ELAN_'))}
+        # Use the actual already-built cache owner; the standalone package has
+        # no .NET project and must not acquire the parent Lean search path.
+        env.update(STRATALINT_LEAN_PRODUCER_DLL=str(self.cli), LAKE_BIN=self.lake)
         return package, env
 
     def test_interface_standalone_core_only(self):
@@ -135,7 +138,7 @@ run_cmd do
             'import LeanInformationAuditInterface.Syntax\n'
             'def output := 1\ndef analysis_output := 2\ndef ascii_output := 3\n'
             'register_information_template Nat\n')
-        result = self.guarded_command([self.lake, 'env', 'lean', 'MissingHandler.lean'],
+        result = self.guarded_command([self.lake, 'env', 'lean', str(package / 'MissingHandler.lean')],
                                       cwd=package, env=env)
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('elaboration function', result.stdout + result.stderr)

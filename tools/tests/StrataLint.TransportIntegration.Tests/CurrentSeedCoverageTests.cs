@@ -302,10 +302,18 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
                         sys.exit(0)
                     expected = root / 'build/ci/current-check-seed' / relative
                     assert selected == str(expected), 'must select accepted independent producer: ' + str(selected)
-                    assert not reuse.probe(root, pathlib.Path(selected))['needs_lake']
+                    probe = reuse.probe(root, pathlib.Path(selected))
+                    assert probe == dict(needs_lake=True, reason='current-semantic-witness-required', candidate=True), probe
                     output = root / 'build/reused-report' / publication.RAW
-                    assert not reuse.reuse(root, pathlib.Path(selected), output)['needs_lake']
+                    # This transport fixture supplies a synthetic producer at
+                    # the unit boundary. A downloaded candidate alone cannot
+                    # authorize reuse; real Lake witness generation is covered
+                    # by the complete native-entry regression suite.
+                    assert reuse.reuse(root, pathlib.Path(selected), output)['needs_lake']
+                    assert not output.exists(), 'candidate probe must not publish without current witness'
+                    assert not reuse.reuse(root, pathlib.Path(selected), output, fixture.witness)['needs_lake']
                     assert output.read_bytes() == expected.read_bytes()
+                    shutil.rmtree(output.parent)
                 else:
                     raise AssertionError(operation)
             finally:

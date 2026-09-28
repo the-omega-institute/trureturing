@@ -468,8 +468,9 @@ raise SystemExit(23 if value['calls'] == 1 or os.environ['FIXTURE_TRANSIENT'] ==
                             raise OSError('injected publication replacement failure')
                         return replace(source, target)
                     with patch.object(publication.os, 'replace', side_effect=fail_one_replace):
-                        with self.assertRaisesRegex(OSError, 'replacement failure'):
+                        with self.assertRaisesRegex(publication.PublicationFailure, 'replacement failure') as failure:
                             publication.publish(report, destination, coordinates, self.root, mode='cached', _scope=scope)
+                    self.assertIsInstance(failure.exception.__cause__, OSError)
                     self.assertTrue(failed)
                     self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
                                              for suffix in publication.SUFFIXES})
