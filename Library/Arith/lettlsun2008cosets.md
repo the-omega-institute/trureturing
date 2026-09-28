@@ -2829,6 +2829,109 @@ or attachment obligations of
 [Chapter73](../../docs/reports/erdos7-odd-covering/problem-details/73-missing-anchor-eight-core-source-audit.md),
 whose candidate source rows serve a different block-gluing interface.
 
+### Nine-support marginal feasibility also requires seven
+
+The necessary condition in MF9 strengthens to: a family on exactly NINE
+support primes passing every complete support-prime marginal must contain
+ALL of3,5,7. The new sufficient common-law bound is
+
+    p_i>=(3,5,11,13,17,19,23,29)_i, i=1,...,8
+      ==> some actual complete-survivor law mu has R(mu)<51/2. (MF10)
+
+All original residues and finite heights remain arbitrary. The law is
+chosen before every query phase and controls every numerical query depth.
+This uses the existing P3--P4 uniform-survivor profile and the same
+product-source query comparison as MF9. The profile alone has envelope
+sum45.3823269762... at the least tuple, which does not give MF10. Its
+survivor mass, combined with a different query estimate, does.
+
+For a prime subset S let lambda_S be the product of normalized Haar on
+the ACTUAL complete pure-coordinate survivors. Write U_S for the complete
+actual survivor and alpha_S=lambda_S(U_S). Conditioning lambda_S on U_S
+gives precisely the uniform survivor law used by P3--P4: the product law
+has constant density on its pure-survivor product, which contains U_S.
+
+Let c_S be the P3--P4 profile, R(c_S) its full envelope sum, and
+C_p=(p-1)/(p-2). If A=S\{p} and b_(A,p)=R(c_A)/(p-2)<1, first condition
+lambda_A on U_A, then append lambda_p. All old-only and pure-p originals
+are already absent. The remaining mixed originals have total mass at
+most b_(A,p), by the same complete numerical-label sum used in P4. Thus
+
+    alpha_S>=alpha_A*(1-b_(A,p)).
+
+Define a_empty=1 and
+
+    a_S=max_p a_(S\{p})*(1-R(c_(S\{p}))/(p-2)),   (MF11)
+
+where the maximum is over admissible predecessor extensions. Then
+alpha_S>=a_S by induction. Every order describes the same original
+source and survivor, so no separately optimal laws are combined.
+For this specific recurrence there is also the identity
+
+    a_S=product_(p in S) C_p / c_S(S).             (MF12)
+
+Indeed the full-support instance of P4 is
+c_S(S)=min_p c_A(A)*C_p/(1-b_(A,p)); substitute the induction hypothesis.
+MF12 is a consequence of that construction, not a way to recover a
+pure-source mass lower bound from an arbitrary Haar density cap.
+
+At the least tuple in MF10, exact rational evaluation of all256 subsets
+gives
+
+    a_S=0.016392818285728736...>2/125.
+
+Use the independent auxiliary runs from MF9 on this tuple and put
+M=product_p(1+J_p). For the integer threshold16, its COMPLETE hinge is
+
+    h=E(M-16)_+
+     =product_p(1+1/(p-2))-16
+       +sum_(m=1..15)(16-m)*Pr(M=m)
+     =0.16778042796244585...<21/125.               (MF13)
+
+The atoms below16 are a finite multiplicative convolution of
+Pr(J_p=0)=1-C_p/p and
+Pr(J_p=j)=C_p*(p-1)/p^(j+1) for j>=1. The mean in MF13 includes the
+entire infinite tail; omitting atoms at16 or above does not truncate it.
+The existing exact profile verifier checks the reserve recurrence,
+MF12 at every subset, these two strict rational bounds, and the hinge
+convolution in both coordinate orders.
+
+For every finite complete query layout L including the unit cylinder,
+the product comparison gives E_lambda(L-16)_+<=h. For the ONE law
+mu=lambda_S restricted to U_S, divided by alpha_S, it follows that
+
+    E_mu(L-1)<=15+h/alpha_S
+              <=15+h/a_S<15+(21/125)/(2/125)=51/2.
+
+The fixed margin is independent of layout phases and depths. Maximizing
+the phases after fixing mu, and then exhausting finite exponent boxes,
+proves the all-depth bound in MF10 with its strict margin intact.
+
+Increasing the ordered primes does not increase any profile coefficient
+or envelope cost: use the indexed-subset induction from MF4--MF5.
+Every formerly admissible extension remains admissible. MF11 therefore
+has no smaller reserve, by another subset induction. The auxiliary run
+tails decrease as well, so MF13 has no larger hinge. These comparisons
+transport bounds to the new family's own law; they do not transport
+individual residues or combine sources from different families.
+
+An exactly-nine-prime support omitting7 has eight smaller primes
+dominating the tuple in MF10 and largest prime r>=31. Apply MF10 to its
+actual r-free family, including every required query depth. MF3 gives
+
+    min_y M_r(y)<(53/2)/(r-1)<=53/60<1.           (MF14)
+
+Together with MF9 this proves necessity of3,5,7. No feasible family on
+the remaining supports is supplied. The arbitrary eight-core query
+bound when all three primes are present remains unresolved here.
+[Chapter69](../../docs/reports/erdos7-odd-covering/problem-details/69-eight-prime-cores-omitting-seven.md)
+uses two exact omitted-seven cores in a different attachment interface;
+MF10 does not assert its gluing or transport obligations. This is an
+ordinary deduction and exact arithmetic verification, not a new Lean
+result, a literature-originality claim, or an enlarged bare noncoverage
+range for Erdős#7.
+
+
 ### Unrestricted fractional phases only recover the reciprocal test
 
 For a fixed nonempty inventory D of nonunit numerical labels, allow one probability vector z_(d,a)
