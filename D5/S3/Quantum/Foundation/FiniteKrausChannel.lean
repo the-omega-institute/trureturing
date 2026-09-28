@@ -261,7 +261,7 @@ end kraus
 section kron
 open Kronecker
 variable [Fintype B] [Fintype C] [Fintype D] [DecidableEq C]
-private noncomputable def kron [CommSemiring R] (M₁ : MatrixMap A B R) (M₂ : MatrixMap C D R) : MatrixMap (A × C) (B × D) R :=
+noncomputable def kron [CommSemiring R] (M₁ : MatrixMap A B R) (M₂ : MatrixMap C D R) : MatrixMap (A × C) (B × D) R :=
   let h₁ := (LinearMap.toMatrix (Module.Basis.tensorProduct  (Matrix.stdBasis R A A) (Matrix.stdBasis R C C))
       (Module.Basis.tensorProduct  (Matrix.stdBasis R B B) (Matrix.stdBasis R D D)))
     (TensorProduct.map M₁ M₂);
@@ -277,7 +277,7 @@ set_option maxHeartbeats 800000 in
 set_option synthInstance.maxHeartbeats 60000 in
 /-- The extensional definition of the Kronecker product `MatrixMap.kron`, in terms of the entries of
   its image. -/
-private theorem kron_def [CommSemiring R] (M₁ : MatrixMap A B R) (M₂ : MatrixMap C D R) (M : Matrix (A × C) (A × C) R) :
+theorem kron_def [CommSemiring R] (M₁ : MatrixMap A B R) (M₂ : MatrixMap C D R) (M : Matrix (A × C) (A × C) R) :
     (M₁ ⊗ₖₘ M₂) M (b₁, d₁) (b₂, d₂) = ∑ a₁, ∑ a₂, ∑ c₁, ∑ c₂,
       (M₁ (Matrix.single a₁ a₂ 1) b₁ b₂) * (M₂ (Matrix.single c₁ c₂ 1) d₁ d₂) * (M (a₁, c₁) (a₂, c₂)) := by
   rw [kron]
@@ -374,12 +374,12 @@ open scoped ComplexOrder MatrixOrder
 open Kronecker
 
 /-- A linear matrix map is *positive* if it maps `PosSemidef` matrices to `PosSemidef`.-/
-private def IsPositive (M : MatrixMap A B R) : Prop :=
+def IsPositive (M : MatrixMap A B R) : Prop :=
   ∀⦃x⦄, x.PosSemidef → (M x).PosSemidef
 
 /-- A linear matrix map is *completely positive* if, for any integer n, the tensor product
 with `I(n)` is positive. -/
-private def IsCompletelyPositive (M : MatrixMap A B R) : Prop :=
+def IsCompletelyPositive (M : MatrixMap A B R) : Prop :=
   ∀ (n : ℕ), (M ⊗ₖₘ (LinearMap.id : MatrixMap (Fin n) (Fin n) R)).IsPositive
 
 namespace IsCompletelyPositive
@@ -464,7 +464,7 @@ private theorem conj_isCompletelyPositive (M : Matrix B A R) : (conj M).IsComple
   tauto
 
 variable {κ : Type*} [Fintype κ]
-private theorem of_kraus_isCompletelyPositive (M : κ → Matrix B A R) :
+theorem of_kraus_isCompletelyPositive (M : κ → Matrix B A R) :
     (of_kraus M M).IsCompletelyPositive := by
   rw [of_kraus]
   exact IsCompletelyPositive.finset_sum (fun i ↦ conj_isCompletelyPositive (M i))
@@ -474,7 +474,7 @@ end PhyslibLeaf
 
 open scoped CStarAlgebra ComplexOrder MatrixOrder
 
-private def flattenCStar {a : Type*} [Fintype a] [DecidableEq a] (k : ℕ) :
+def flattenCStar {a : Type*} [Fintype a] [DecidableEq a] (k : ℕ) :
     CStarMatrix (Fin k) (Fin k) (CStarMatrix a a ℂ) ≃⋆ₐ[ℂ]
       CStarMatrix (a × Fin k) (a × Fin k) ℂ where
   toFun X := CStarMatrix.ofMatrix fun p q => X p.2 q.2 p.1 q.1
@@ -495,7 +495,7 @@ private def flattenCStar {a : Type*} [Fintype a] [DecidableEq a] (k : ℕ) :
       Fintype.sum_prod_type]
     exact Finset.sum_comm
 
-private theorem flatten_intertwines
+theorem flatten_intertwines
     {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
     (f : Matrix a a ℂ →ₗ[ℂ] Matrix b b ℂ) (k : ℕ)
     (X : CStarMatrix (Fin k) (Fin k) (CStarMatrix a a ℂ)) :
