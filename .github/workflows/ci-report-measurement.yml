@@ -1,0 +1,170 @@
+name: Report supervisor measurement
+
+on:
+  push:
+    branches:
+      - lane/governance/ci-report-measurement-10792
+
+permissions:
+  contents: read
+
+jobs:
+  measure:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /global.json
+            /tools/scripts/report/report-supervisor.sh
+            /tools/scripts/lib/resource-observation-lib.sh
+      - name: Observe environment and paired supervisor cost
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import platform
+          import resource
+          import signal
+          import statistics
+          import subprocess
+          import tempfile
+          import time
+
+          output = Path(os.environ["RUNNER_TEMP"]) / "ci-report-measurement"
+          output.mkdir(parents=True, exist_ok=True)
+          data = {
+              "purpose": "Diagnostic only; not a production-readiness acceptance check",
+              "cpu_scope": "RUSAGE_CHILDREN delta: reaped children and their reaped descendants",
+              "pairs": [],
+          }
+
+          def save():
+              temporary = output / "observations.json.tmp"
+              temporary.write_text(json.dumps(data, indent=2) + "\n")
+              temporary.replace(output / "observations.json")
+
+          def run(command, env=None):
+              before = resource.getrusage(resource.RUSAGE_CHILDREN)
+              started = time.perf_counter()
+              row = {"command": command, "timeout_seconds": 45}
+              try:
+                  process = subprocess.Popen(
+                      command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                      env=env, start_new_session=True,
+                  )
+                  try:
+                      stdout, stderr = process.communicate(timeout=45)
+                  except subprocess.TimeoutExpired:
+                      row["timed_out"] = True
+                      # Allow the existing supervisor EXIT trap to join its children.
+                      process.send_signal(signal.SIGTERM)
+                      try:
+                          stdout, stderr = process.communicate(timeout=5)
+                      except subprocess.TimeoutExpired:
+                          row["forced_kill"] = True
+                          os.killpg(process.pid, signal.SIGKILL)
+                          stdout, stderr = process.communicate()
+                  row.update(exit=process.returncode,
+                             stdout=stdout.decode("utf-8", errors="replace"),
+                             stderr=stderr.decode("utf-8", errors="replace"))
+              except OSError as error:
+                  row.update(exit=None, stdout="", stderr=str(error),
+                             launch_error=type(error).__name__)
+              elapsed = time.perf_counter() - started
+              after = resource.getrusage(resource.RUSAGE_CHILDREN)
+              row.update(
+                  elapsed_seconds=elapsed,
+                  rusage_before={"user": before.ru_utime, "system": before.ru_stime},
+                  rusage_after={"user": after.ru_utime, "system": after.ru_stime},
+                  reaped_cpu_seconds=(after.ru_utime - before.ru_utime
+                                      + after.ru_stime - before.ru_stime),
+              )
+              return row
+
+          try:
+              paths = ["global.json", "tools/scripts/report/report-supervisor.sh",
+                       "tools/scripts/lib/resource-observation-lib.sh"]
+              identity = {
+                  "checkout": run(["git", "rev-parse", "HEAD"]),
+                  "event_sha": os.environ.get("GITHUB_SHA"),
+                  "sha256": {path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                             for path in paths},
+              }
+              data["source_identity"] = identity
+              processes = run(["ps", "-e", "-o", "pid="])
+              data["environment"] = {
+                  "platform": platform.platform(),
+                  "uname": dict(platform.uname()._asdict()),
+                  "python": platform.python_version(),
+                  "nproc": run(["nproc"]),
+                  "process_snapshot": processes,
+                  "process_count": (len(processes["stdout"].splitlines())
+                                    if processes["exit"] == 0 else None),
+              }
+              save()
+              data["dotnet"] = []
+              for option in ("--info", "--list-sdks", "--list-runtimes"):
+                  data["dotnet"].append(run(["dotnet", option]))
+                  save()
+
+              for seconds in (2, 10):
+                  for pair_number in range(1, 4):
+                      pair = {"sleep_seconds": seconds, "pair": pair_number, "rows": []}
+                      # Each pair is bare then supervised, repeated sequentially.
+                      for mode in ("bare", "supervised"):
+                          root = tempfile.mkdtemp(prefix=f"{seconds}-{pair_number}-{mode}-",
+                                                  dir=output)
+                          env = os.environ.copy()
+                          env["STRATALINT_SUPERVISOR_ROOT"] = root
+                          env["STRATALINT_BUILD_TIMEOUT_SECONDS"] = "30"
+                          command = ["/bin/sleep", str(seconds)]
+                          if mode == "supervised":
+                              command = ["/bin/bash", "tools/scripts/report/report-supervisor.sh",
+                                         "--role", "measurement", "--"] + command
+                          row = run(command, env)
+                          row.update(mode=mode, source_identity=identity,
+                                     supervisor_root=root, build_timeout_seconds=30)
+                          pair["rows"].append(row)
+                      data["pairs"].append(pair)
+                      save()
+                      if any(row["exit"] != 0 or row.get("timed_out")
+                             for row in pair["rows"]):
+                          raise RuntimeError("Measurement invocation failed; raw pair retained")
+          except Exception as error:
+              data["error"] = f"{type(error).__name__}: {error}"
+              raise
+          finally:
+              save()
+              rows = [dict(sleep_seconds=pair["sleep_seconds"], pair=pair["pair"],
+                           **{key: row[key] for key in
+                              ("mode", "exit", "elapsed_seconds", "reaped_cpu_seconds")})
+                      for pair in data["pairs"] for row in pair["rows"]]
+              medians = []
+              for seconds in (2, 10):
+                  for mode in ("bare", "supervised"):
+                      selected = [row for row in rows if row["sleep_seconds"] == seconds
+                                  and row["mode"] == mode and row["exit"] == 0]
+                      if selected:
+                          medians.append({
+                              "sleep_seconds": seconds, "mode": mode, "count": len(selected),
+                              "elapsed_seconds": statistics.median(
+                                  row["elapsed_seconds"] for row in selected),
+                              "reaped_cpu_seconds": statistics.median(
+                                  row["reaped_cpu_seconds"] for row in selected),
+                          })
+              print(json.dumps({"medians": medians, "rows": rows}, separators=(",", ":")),
+                    flush=True)
+          PY
+      - name: Upload raw observations
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: ci-report-measurement-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/ci-report-measurement/
+          if-no-files-found: warn
