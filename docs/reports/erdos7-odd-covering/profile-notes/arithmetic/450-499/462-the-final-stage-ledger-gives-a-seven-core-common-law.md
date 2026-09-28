@@ -2342,3 +2342,228 @@ reuse the pinned common-margin result, evaluate the rational infinite-tail
 bounds, check finite phase legality, and include the13/8 negative screen.
 The all-height conclusions follow from the displayed geometric series and
 disjointness arguments. No new geometry or Lean verification is claimed.
+
+## A branch-summary proof opens a larger pure-3 source face
+
+In the same fixed chart, keep `t1=1/20`, the other t coordinates zero and e=0.
+Let A denote the certified endpoint `z13=1/2` and B the new vertex `z7=1/2`.
+For one fixed complete physical tuple xi define the same positive comparison
+
+    G_xi=14*sum_p L_(p,xi)+H16_xi.
+
+Here G is the unrounded positive comparison. Rounded numerical routes only
+provide upper bounds for it; their rounding is not part of G's definition.
+
+If every selected physical modulo9 projection belongs to `{2,5,8}`, then
+
+    G_B(xi)<=G_A(xi).
+
+Consequently the existing common margin `delta0=116/15625` also certifies B
+on this physical subdomain. Sibling transport and joint convexity extend this
+to every pure3 budget supported on `{7,13,16,22,25}`. The statement includes
+`168^6=22483074023424` physical tuples, namely729/15625 of the complete
+`280^6` domain. It does not certify the other tuples at the new vertices.
+
+### What the actual geometric formulas preserve
+
+For fixed auxiliary depths, multiplier and positive current/query component,
+the relevant maximum has the form
+
+    F_xi(w)=max_(r_g) sum_x w(x)*q_xi(x)
+              *[beta_xi(x)+sum_g c_g*1_(x=r_g mod g)]_+,
+    g in {3,9,27,5,15,45,135}, c_g>=0, q_xi>=0.
+
+The factor q contains same-cell products of the charged zero-depth fields;
+beta includes the baseline, threshold and selected-head offsets. Both depend
+only on the mod9 branch and quinary column, not on the mod27 leaf within that
+branch. The physical heads have types3,5,9,15.
+
+These are properties of the actual comparison formulas. In the source's
+seven-geometry formula the bracket is
+
+    [-1+6*s_xi(x)/7+sum_g c_g*1_head]_+,
+
+with nonnegative coefficients. Later selected-head extractions subtract
+`(p-1)/p` from their corresponding free categories and add the same terms at
+the fixed physical heads. The coefficients remain nonnegative. The pinned
+`missing23-eta14/geometry_replay.py` implements this in `co`, `cell_weights`
+and `geometry`. It retains the spatially varying charged fields; it does not
+replace their joint product by independent marginal choices.
+
+Extend the native44-cell source vector by zero to all135 cells, and allow
+each unknown head independently to use any residue of its named modulus.
+This leaves its geometric maximum unchanged: a head whose cylinder is empty
+on the native carrier can be independently moved to a nonempty cylinder,
+without decreasing any cell load. Nonnegative coefficients are essential.
+The same extension works for the positive linear tail majorants. This is an
+extension of the algebraic comparison's domain, not a change to the original
+covering's phases or its actual probability law.
+
+### Two unknown leaf heads require only branch mass and maximum leaf weight
+
+Fix a mod9 branch in ternary root1, and fix all head positions other than27
+and135. These are the only two heads that distinguish its mod27 leaves.
+Write a leaf's ternary weight as a_l. Its quinary factor, q and beta are
+independent of l.
+
+For any real b and nonnegative c,d,
+
+    [b+c+d]_+-[b]_+
+       >= ([b+c]_+-[b]_+)+([b+d]_+-[b]_+).
+
+Suppose the two heads are both placed in this branch. Let A0,B0 be their
+separate increments after summing over quinary columns, and C0 their increment
+when placed on the same leaf. The135 increment occurs only in its chosen
+column. The displayed inequality and nonnegative column weights give
+`C0>=A0+B0>=0`. Placing the heads on leaves l,k separately therefore gives
+increment at most
+
+    a_l*A0+a_k*B0 <= max_l a_l*(A0+B0) <= max_l a_l*C0.
+
+Both can be put on a maximum-weight leaf without decreasing the objective.
+If they occupy different branches, each can instead use a maximum-weight
+leaf in its own branch. Cases with one or neither head are included.
+
+For this fixed choice of the other heads, the background contribution uses
+only `W=sum_l a_l`, while the best leaf increments use only `M=max_l a_l`.
+Maximizing the remaining heads preserves this sufficiency. Thus the full
+maximum depends on each of these branches through `(W,M)`, retaining all
+quinary backgrounds and physical fields. This is a task-specific sufficient
+summary; it is not a transport of every fixed query or the underlying law.
+
+### The comparison uses a synthetic vector outside the native carrier
+
+List the root1 leaves as `(4,13,22 | 7,16,25)`, including removed leaf4 at
+weight zero. In the zero-extra3 regions the two source vectors are
+
+    a=(0,1/6,2/3 | 2/3,2/3,2/3),
+    b=(0,2/3,2/3 | 1/6,2/3,2/3).
+
+Let sigma exchange the whole mod9 branches4 and7, mapping
+`4<->7,13<->16,22<->25`; fix the other branches and the quinary coordinate.
+The vector
+
+    v=(4/7)*a+(3/7)*sigma(a)
+
+has branch masses `(4/3,3/2)` and maximum leaf weight2/3 in both branches.
+These are exactly the summaries of b. All other source weights agree.
+The preceding head-placement argument and convexity therefore imply
+
+    F_xi(b)=F_xi(v)
+       <=(4/7)*F_xi(a)+(3/7)*F_xi(sigma(a)).
+
+The synthetic vector has positive weight at removed leaf4. It is not an
+actual source in the fixed chart, and sigma is not an automorphism of the
+native44-cell carrier. The full135-cell extension is what makes this
+algebraic comparison meaningful. No certificate is asserted directly for
+the synthetic source.
+
+Instead, transport all unknown head phases by sigma and every selected
+modulo9 projection by4<->7. This fixes mod3,5,15 coordinates and preserves
+the independent full phase domains. Thus
+
+    F_xi(sigma(a))=F_(sigma xi)(a).
+
+Extend the ternary map to arbitrary greater height by leaving later relative
+digits unchanged. Each numerical modulus still has its own transported
+cylinder, and all original labels are preserved. The bound on the right is
+evaluated at the actual certified endpoint A.
+
+This argument must use an endpoint such as z13. At an interior point of
+the13/22 edge, the maximum weight in branch4 can be smaller than2/3; its
+summaries cannot be substituted for the endpoint's summaries above.
+
+### The full positive comparison and its complete tails
+
+Fix xi before splitting the positive defining comparison according to the
+extra3 depth:
+
+    G_xi=G0_xi+Gplus_xi.
+
+Unknown-head maxima occur within the respective region/depth components.
+The physical tuple remains common to all components. There is no exchange
+of the physical maximum with this sum.
+
+The branch argument applies at every zero3 region, every extra5 depth and
+every multiplier, for each current loss and the query comparison. Their
+coefficients are nonnegative. Summing them, and using monotone convergence
+for their complete positive series, gives
+
+    G0_B(xi)<=(4/7)*G0_A(xi)+(3/7)*G0_A(sigma xi).
+
+The retained positive linear tail majorants have the same property. For an
+affine multiplier-tail part, let pi be its probability mass, mu its first
+moment, A its spatial mass, h_g its maximum g-cylinder mass, and s the fixed
+selected-incidence field. With extraction c=(p-1)/p its regrouped expression is
+
+    (mu-t*pi)*A
+      +sum_g (mu*w_g-c*pi*1_(g selected))*h_g
+      +c*pi*sum_x a_x*s(x).
+
+The tail has m>=t, w_g>=1 and c<1, so these coefficients are nonnegative.
+Branch masses and maximum leaf weights determine all the displayed cylinder
+maxima. The anchor-depth remainder uses the positive linear load directly.
+This is a regrouping of the same comparison, not subtraction of independent
+upper estimates. No multiplier or anchor-depth tail is discarded.
+
+The positive-extra3 source weights do not depend on z, so
+`Gplus_B(xi)=Gplus_A(xi)`. The resulting full inequality is
+
+    G_B(xi)<=(4/7)*G_A(xi)+(3/7)*G_A(sigma xi)
+               +(3/7)*(Gplus_A(xi)-Gplus_A(sigma xi)).
+
+The last term is a real remaining correction for general physical tuples.
+For
+
+    Xi0={1,2} x {1,2,3,4} x {2,5,8} x {1,4,7,8,11,13,14},
+
+sigma fixes each label. Hence for every xi in Xi0^6 the correction is zero,
+and the old certificate gives
+
+    G_B(xi)<=G_A(xi)<=14*(135/4)-delta0.
+
+The reserve at B is135/4. Therefore `14D-H16>=delta0` and
+`D>=delta0/14>0`, giving the same-law complete-query bound below29. The final
+query heads remain unrestricted; Xi0 restricts only the selected physical
+projections in the source construction.
+
+Sibling permutations within branch7 give the same result for z16 and z25.
+With the old z13,z22 endpoints, the common-functional interpolation proves
+the result throughout the four-dimensional face
+
+    z_h>=0, sum_h z_h=1/2, support(z) subset {7,13,16,22,25},
+    t1=1/20, other t=0, e=0,
+
+on this same Xi0^6 domain. Every point has reserve135/4. As with earlier
+relaxed budgets, the conclusion concerns actual completed families whose
+parameters lie in the face; not every relaxed point is asserted realizable.
+
+### Remaining correction and verification scope
+
+For general xi let A0,B0 be `G0_A(xi),G0_A(sigma xi)` and C0,D0 be
+`Gplus_A(xi),Gplus_A(sigma xi)`. The two orientation estimates are
+`(4A0+3B0)/7+C0` and `(4B0+3A0)/7+D0`. The condition
+
+    (A0-B0)*(C0-D0)>=0
+
+would put both below `max(A0+C0,B0+D0)`. This condition is not established;
+the charged fields can decrease as selected incidences increase. Alternatively,
+an actual upper bound E on `Gplus_A(xi)-Gplus_A(sigma xi)` suffices whenever
+
+    3*E < 4*delta_xi+3*delta_(sigma xi).
+
+The E bound must control this same-source difference. A difference of two
+unrelated upper estimates does not do so. Neither criterion is asserted for
+all remaining tuples here.
+
+The [structural checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-branch.py)
+and [exact results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/branch.json)
+compare exhaustive two-head placement with the branch-summary formula in96
+cases, including signed backgrounds, unequal column factors and zero fields.
+Each case has175 placements, allowing either head to be outside these branches.
+The checker also tests all37800 selected-incidence comparisons on the full
+carrier, checks the non-preservation of the native carrier, and verifies
+finite face-interpolation examples. It uses the pinned existing common margin.
+The general result follows from the head-placement, transport and positive
+series arguments above, not from these finite examples. No new full source
+geometry or Lean verification is claimed.
