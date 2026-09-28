@@ -186,3 +186,90 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/fib
 The program does not enumerate the full original CRT period or claim that a bounded sample proves the arbitrary-H statements. Those follow from the disjoint side-cylinder construction, the exact two-fibre identity and the conditioning argument above. Default execution checks the retained result; `--output PATH` writes the recomputed result. No source geometry or Lean build is used.
 
 For arbitrary originals, report433 already supplies same-law forest and chordal overlap certificates with actual intersection masses; no new forest theorem is needed. The unresolved step is a sufficiently strong estimate of actual overlapping deletions, or a supported source change, that also controls the full query inventory for unrestricted original phases and heights. The two repairs here are verified for this explicit family, not for every seven-prime core.
+
+## Actual ternary-height-one families realize the single-class fibre charges
+
+The side-comb construction also applies at ternary height one, with arbitrary
+finite nonternary heights and any specified two-root partition. It realizes
+all the individual charges in
+[Report528's finite-height comparison](528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md#finite-height-profiles-do-not-extend-this-fibre-comparison-to-eleven-primes)
+simultaneously. This is an actual finite irredundant NONCOVER: the negative
+quantity is the carrier mass minus a sum of individual deletion masses, not
+the actual survivor mass. The construction reuses the side cylinders and
+private-cylinder separation proved above.
+
+Let Q be any finite set of primes at least5, with positive finite heights
+h_q, and partition Q=A disjoint union B. Include exactly every nonunit
+divisor of `3*product_q q^h_q`. Using the same `C(q,e,a)` as above, give the
+originals the following globally fixed CRT phases:
+
+| Numerical label | Ternary phase | Nonternary side cylinders |
+|---|---|---|
+|3|0|none|
+|`q^e`|none|`C(q,e,0)`|
+|`3q^e`|1 if `q in A`, otherwise2|`C(q,e,1)`|
+|`3^epsilon*d`, `D=supp(d)`, `k=|D|>=2`|none for epsilon0; one fixed `r_D in{1,2}` for epsilon1|`C(q,v_q(d),min(2k-2+epsilon,q-2))`, `q in D`|
+
+The roots `r_D` may depend on the support D but are chosen once. Numerical
+labels are distinct and the palette is divisor-closed. Every original has
+a private CRT cylinder. Put each absent q-coordinate on the tail
+`(-1) mod q^h_q`, and each present one in its prescribed side cylinder.
+Use root0 for pure3, the original root for a3-divisible label, and any
+retained root for a3-free label.
+
+A competitor using an absent coordinate misses the tail. Singleton
+competitors use sides0 or1, while support size at least two uses sides at
+least2. For a proper competing support E of size s>=2, its largest prime q
+has rank at least s among primes starting at5, so `q-2>=2s`: its side is at
+most `2s-1`, while the target's is at least `2s`. For equal supports, the
+largest prime separates epsilon0 and epsilon1 by the unclipped sides
+`2k-2` and `2k-1`. With equal support and epsilon, different exponent
+profiles are separated by side-cylinder disjointness. These cases exhaust
+competitors, independently of the support-dependent ternary-root choices.
+
+Thus the actual family is irredundant and comparable-disjoint. Either
+retained ternary root together with all nonternary tails survives, so it
+does not cover. Its full original period is finite.
+
+Put
+
+    a_q=sum_(e=1..h_q)q^-e, s_q=1-a_q,
+    c_q=1/s_q, b_q=a_q/s_q.
+
+Under the actual pure-conditioned nonternary product law, all side1
+blockers have exact total mass b_q on their assigned ternary root. Hence
+beta is the exact partition endpoint, without artificial enlargement.
+Every remaining mixed original uses sides at least2, disjoint on its own
+coordinates from both pure and side1 deletions. Its exact mass on root r
+inside the post-star carrier is
+
+    product_(q in D)c_q*q^(-v_q(d)) * g_r(D),
+    g_r(D)=product_(q notin D)(1-beta_qr).
+
+For one FIXED root weight `w in[0,1]`, choose `r_D` maximizing
+`w*g_1(D)` and `(1-w)*g_2(D)`. Summing the actual exponent inventory
+then makes the carrier mass minus the sum of the exact individual mixed
+deletion masses equal to `F_h(A,w)` in Report528. Their union remains
+smaller than that sum because different irredundant originals overlap.
+
+At the eleven-prime profile of Report528, take `A={5}` and `w=1/2`.
+The already retained exact comparison is negative. The present family
+realizes it as this exact-single-class subtraction, on the palette of
+`2*6^2*5^5*4^3-1=14399999` original labels specified by the formula.
+No enumeration of that palette or its CRT period is needed. For each
+fixed w the construction gives a corresponding actual family; it does
+not assert that one family realizes the maxima for every w.
+
+This excludes a uniform repair based only on sharper individual cylinder
+caps, their own-coordinate avoidance, or nonrealizability of the partition
+endpoint under finite heights, divisor closure and irredundancy. It does
+not exclude stronger joint-intersection estimates or global-extremality
+constraints. In fact this comb fails an existing repair test: its originals
+`14593 mod15015`, `14593 mod19635` and `1888 mod21945` all have phase
+`103 mod105`. [Report385's phase-capacity consumer](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#17-small-interfaces-bound-whole-cover-numerical-inventories)
+forbids three such originals in a globally extremal whole cover with
+ternary height one. The comb is not asserted to satisfy that premise.
+
+These are ordinary construction and measure calculations. The negative
+FC value is reused from Report528's existing exact result; no duplicate
+FC consumer or new Lean verification is added.

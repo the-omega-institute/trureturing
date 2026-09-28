@@ -2063,3 +2063,249 @@ HC8--HC9 state exactly how their additional factors arise from the SAME
 source. What remains is a whole-cover theorem forcing violation of these
 joint height/phase capacities, or another improving replacement. The bounds
 allow unbounded support and many feasible height profiles.
+
+## 17. Small interfaces bound whole-cover numerical inventories
+
+Retain ONE hypothetical whole distinct odd cover globally minimizing
+first the number of classes and then their modulus sum, and assume H3=1.
+All numerical labels and actual phases below belong to that family.
+The following inventory bounds consume the existing fresh-repair and
+same-phase occupancy principles of sections13--15; they are ordinary
+deductions, not new Lean results or an unrestricted noncoverage theorem.
+
+### Two distinct nonternary primes
+
+Let p,q>=5 be distinct support primes and h=3pq. Three original multiples
+of h cannot have the same phase c modulo h. To see the section15 repair
+explicitly, delete those three originals and cover all of c modulo h
+with the fresh labels9,9p,9q. Assign them the three different modulo9
+roots above c modulo3; for their respective cofactors1,p,q retain c's
+actual phase. Every point in the target meets one new class. H3=1 makes
+all three numerical labels fresh relative to the entire original family.
+
+Their modulus sum is `9(1+p+q)<9pq=3h`, below the sum of the three
+removed moduli. Cardinality stays unchanged and the sum decreases, a
+contradiction. Thus every actual h-phase contains at most two original
+labels. This is the R=N=3 instance of the existing repair; the cofactor
+palette has `tau(pq)=4>=3`.
+
+If any multiple of h occurs, divisor closure includes h and all its
+nonunit divisors. Its own phase contains only h by comparable
+disjointness. If h is absent, its entire multiple inventory is empty.
+
+Normalize the pure3,p,q phases to zero by one CRT translation and put
+`a=p-1`, `b=q-1`. The two retained ternary roots initially have ab
+possible(p,q) root pairs each. Original3p removes one p-root on its
+actual ternary root; original3q similarly removes one q-root. Original
+pq removes one actual(p,q) pair on both roots.
+
+If3p and3q occupy the same ternary root, their union removes a+b-1
+cells there, and pq removes at least one more cell in the other root.
+If they occupy different roots, they already remove a+b cells. Hence
+the number M of phases avoiding all proper original divisors of h obeys
+
+    M<=2ab-a-b=2(p-1)(q-1)-p-q+2.
+
+This proper-divisor bound is attained by putting3p and3q on the same
+root and choosing pq's pair inside their blocked union on that root;
+it removes exactly one additional cell on the other root. This is
+attainment of the finite phase bound, not existence of a whole cover.
+
+Every original multiple of h must use one of these M phases. The phase
+of h itself has one occupant and every other phase at most two. Therefore
+
+    # {d original:3pq|d} <=4pq-6p-6q+7.                 (PI1)
+
+Either retained ternary root has at most ab-1 allowed phases: an
+unaffected root still loses pq's one cell; a root containing a3p or3q
+deletion loses at least as many. Its uniform label capacity is therefore
+
+    # {d original:3pq|d, a_d mod3=r} <=2(p-1)(q-1)-2.  (PI2)
+
+The root containing original h loses one additional label slot. The
+total and root capacities are simultaneous constraints on the same
+actual inventory; their separate maxima need not be attained together.
+
+At(p,q)=(5,7), there are at most38 allowed105 phases, at most75 original
+105-multiples in total, and at most46 on either retained ternary root.
+The weaker use of only the pure prime exclusions would give95 in total.
+
+### A shared four-label repair couples two different phases
+
+The independent phase capacities above omit a further consequence of
+the same PH2 joint replacement rule. Continue to assume H3=1 in ONE
+globally cardinality-then-sum-minimal whole distinct odd cover. Put
+`h=3pq`, `a=p-1`, `b=q-1`, with distinct primes p,q>=5.
+
+Fix one actual ternary root r, one actual p-root u, and two distinct
+actual q-roots v,w. Let C_v,C_w be the corresponding two classes
+modulo h. Their union has a common repair using the four fresh
+numerical labels
+
+    9, 9p, 9q, 9pq.
+
+Choose a lift rho of r modulo9. Assign the classes by CRT as follows:
+
+    label9:   x=rho mod9;
+    label9p:  x=rho+3 mod9, x=u modp;
+    label9q:  x=rho+6 mod9, x=v modq;
+    label9pq: x=rho+6 mod9, x=u modp, x=w modq.
+
+Every point of C_v union C_w meets one of these four classes: its next
+ternary digit selects one of the three displayed roots; the third
+root is split according to the two original q-phases. This covers
+the entire two congruence classes, including all higher lifts and all
+other coordinates. It does not assume the two phases have a common
+q-root or independently choose their original source.
+
+The four labels are pairwise distinct and absent from the whole
+original palette because their ternary height is2. If four original
+h-multiples occupied these two phases, delete those originals and
+insert this repair. Their old classes lie in the repaired union, so
+all previously covered integers remain covered. Four distinct odd
+quotients by h have sum at least1+3+5+7=16, whereas
+
+    9(1+p+q+pq)=9(p+1)(q+1)<16h.
+
+For example, `(p+1)(q+1)<=36pq/25` already gives the strict inequality.
+The number of classes stays unchanged and the sum of moduli falls,
+contradicting PH2. A larger removed inventory would reduce the number
+of classes. Consequently
+
+    occupants(C_v)+occupants(C_w)<=3.                (JP1)
+
+Interchanging p,q gives the corresponding statement for two cells
+in the same q-column. These are constraints on several ACTUAL phases
+of the same family. They are a new explicit finite consumer of the
+existing PH2 exchange principle, not a new general exchange theorem.
+Sections9 and11--15 provide other joint repairs; their displayed
+single common-phase capacities do not themselves give JP1.
+
+### The double-occupied cells must form a matching
+
+The previous single-phase repair gives at most two original labels
+per h-phase. By JP1, any two cells occupied twice cannot share a
+p-root or a q-root within one ternary root. Thus the double-occupied
+cells form a matching in that root's bipartite p-root/q-root table.
+
+Let M be the number of h-phases left after excluding all proper
+original divisors, and K the number of double-occupied cells across
+both retained ternary roots. The original h-multiple inventory obeys
+
+    # {d original:h|d} <= M+K.
+
+Assume p<q; then a<b. Each root's matching has size at most a.
+Original3p removes an entire p-row on its actual ternary root, so
+that root's matching has size at most a-1. These are simultaneous
+facts about the same pair of physical tables. Hence
+
+    K<=2a-1=2min(a,b)-1.
+
+Combining this with the earlier proper-divisor bound
+`M<=2ab-a-b` yields the stronger uniform inventory capacity
+
+    # {d original:3pq|d}
+       <=2(p-1)(q-1)-|p-q|-1.                      (JP2)
+
+Either retained ternary root has at most ab-1 allowed cells and a
+matching of size at most min(a,b). Therefore its uniform capacity is
+
+    # {d original:3pq|d, a_d mod3=r}
+       <=(p-1)(q-1)+min(p-1,q-1)-1.                (JP3)
+
+For h=105 these give45 original multiples in total and at most27 on
+either retained ternary root, strengthening75 and46 above. All bounds
+remain necessary conditions; no claim is made that their separate
+maxima can occur simultaneously in a whole cover.
+
+If h is absent, divisor closure makes the counted inventory empty.
+If h is present, its own phase has only the original h by comparable
+disjointness. The count M+K already respects this: that phase can
+contribute a single occupant but cannot contribute to K. The matching
+upper bound above need not be attained through that phase, so this
+observation does not justify subtracting one more from JP2 or JP3.
+
+The deductions use arbitrary original cofactor heights and support
+size. They constrain an actual numerical deletion inventory and can
+be imposed jointly with the earlier root capacities; they do not
+force any forbidden packet to exist, prove noncoverage, or constitute
+new Lean verification. No additional numerical cap-grid is used.
+
+### Divisor closure also restricts each actual label
+
+Let m be an actual original divisible by3pq, with
+`a=v_p(m)>=1`, `b=v_q(m)>=1`. Since H3=1, its nonunit divisors
+include exactly
+
+    a*b*product_(r|m, r notin {3,p,q})(v_r(m)+1)
+
+distinct multiples of3pq. Every one is an original by divisor
+closure, so JP2 implies the labelwise restriction
+
+    a*b*product_(r|m, r notin {3,p,q})(v_r(m)+1)
+        <=2(p-1)(q-1)-|p-q|-1.                      (JP4)
+
+In particular, an actual label containing3,5,7 has this product at
+most45. If it has k distinct nonternary prime factors, the product
+is at least `2^(k-2)`, so k<=7 and `omega(m)<=8`. This concerns
+only originals containing those three primes. It neither bounds
+the union of support primes across the whole family nor imposes
+the same8-prime bound on originals missing5 or7. This is a direct
+consumer of JP2 and divisor closure, not a separate general result.
+
+### A nonternary square
+
+For h=3q^2 with q>=5, the same existing repair has R=3 and
+`tau(q^2)=3`. Use the fresh labels9,9q,9q^2. Their sum is below
+`27q^2=9h`, while three distinct odd multiples of h have sum at least9h.
+The resulting strict sum descent again gives at most two labels per
+actual h-phase.
+
+Whenever this inventory is nonempty, proper originals3,q,q^2,3q are
+present. After3 andq are removed, the two retained ternary roots have
+`2q(q-1)` q^2 cells. Pure q^2 removes one cell on each root. Original
+3q removes q cells on one root, with overlap at most one with that
+root's already removed pure q^2 cell. Thus `M<=2q^2-3q-1`, and
+
+    # {d original:3q^2|d} <=4q^2-6q-3.                (PI3)
+
+Each root has at most `q(q-1)-1` allowed cells, giving its uniform
+label bound `2q(q-1)-2`. At q5 the total/root bounds are67/38;
+at q7 they are151/82.
+
+When counting only originals with at least two distinct nonternary
+primes, original3q^2 itself is outside that counted set but consumes
+one of PI3's slots. Consequently that restricted inventory has at most
+`4q^2-6q-4` labels, namely66 at q5 and150 at q7. Further known star
+labels may consume more slots, but a global q-height does not by
+itself imply the presence of every3q^e label.
+
+### Fixed controls and consumer boundary
+
+The [fixed phase control](../../../frontier/cover-geometry/composite-parent-contraction/h3_phase_capacity.py)
+and [exact result](../../../frontier/cover-geometry/composite-parent-contraction/h3_phase_capacity.json)
+check all2304 actual15/21/35 phase assignments outside their pure
+divisors, the maximum38 cells and maximum23 cells on one root, and
+all105 target phases of the9/45/63 repair on joint period315. They
+also check all525 same-row or same-column two-phase unions for the
+9/45/63/315 repair on that joint period, and exact bipartite matching
+capacities on the same2304 proper-phase tables. The combined
+phase-plus-matching bounds are45 in total and27 on either root.
+The finite matching witness reserves an unmatched phase for the
+original105 singleton; it is only an occupancy relaxation, not a
+whole-cover construction. The controls also check the three literal
+overfull-comb labels displayed in
+[Report529](../500-549/529-an-irredundant-comb-separates-fibre-credits-from-supported-query-laws.md#actual-ternary-height-one-families-realize-the-single-class-fibre-charges).
+The latter form a noncover witness, not a globally minimal cover.
+
+The program uses only Python's standard library, reads no external
+input and runs no geometry producer. Default output is stdout;
+`--output PATH` explicitly writes the result. Normal and optimized
+Python agree. The general p,q proofs above, rather than the finite
+control, justify PI1--PI3 and JP1--JP4 at arbitrary primes and original heights.
+
+[Report528](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md#fixed-label-capacities-preserve-the-partition-reduction)
+describes how these capacities can constrain its actual numerical
+deletion inventory without changing the common source. Neither the
+capacity formulas nor their finite control close that comparison or
+bound the number of support primes.
