@@ -19,5 +19,6 @@ For every finite local protocol with a nonempty finite holder set and a finite s
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Recovery/PurifiedLocalPath.purified_local_path_bridge`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteDensityPurification](../Foundation/FiniteDensityPurification.md)
 - Dependency: [D5/S3/Quantum/Recovery/ProductPrefixRigidity](ProductPrefixRigidity.md)
 - Dependency: [D5/S3/Quantum/Recovery/RetainedLocalProtocol](RetainedLocalProtocol.md)

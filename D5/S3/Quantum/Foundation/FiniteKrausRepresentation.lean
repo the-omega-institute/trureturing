@@ -221,7 +221,8 @@ The retained pinned upstream tree has no NOTICE file. Full upstream license foll
    limitations under the License.
 -/
 
-/- Selected additional Choi/Kraus declarations from QuantumInfo/Channels/Unbundled.lean
+/- Selected additional Choi/Kraus declarations from QuantumInfo/Channels/MatrixMap.lean
+and QuantumInfo/Channels/Unbundled.lean
 at revision 6a09b2d1761a0d4430083045a247eb121d8da260. Existing MatrixMap, kron,
 CP predicates and amplification transport are reused from their original owner.
 Retire the selected declarations when equivalent declarations exist in this

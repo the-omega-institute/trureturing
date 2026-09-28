@@ -19,4 +19,5 @@ For every finite local instrument tree and every input matrix with arbitrary fin
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Recovery/RetainedLocalProtocol.recursive_coarse_retained`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)
 - Dependency: [D5/S3/Quantum/Recovery/FiniteLocalProtocol](FiniteLocalProtocol.md)
