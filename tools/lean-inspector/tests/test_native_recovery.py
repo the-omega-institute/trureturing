@@ -54,6 +54,58 @@ class NativeBatchPartitionTests:
 
 
 class NativeRecoveryConsumerTests:
+    def test_warm_report_requires_current_export_owner(self):
+        dependency = self.root / '.lake/packages/mathlib'
+        config = dependency / 'lakefile.toml'
+        config.write_text(config.read_text() + '\n[[lean_lib]]\nname = "ExternalData"\n')
+        (dependency / 'ExternalData.lean').write_text('def externalValue : Nat := 1\n')
+        self.write('D5/A.lean', 'import ExternalData\ndef value : Nat := externalValue\n')
+        self.build()
+        before = self.stamps(), self.report()
+        # The bytes are valid and identical, but runtime resolution now finds
+        # a different owner. Warm row acceptance must still join that check.
+        shadow = self.root / '.lake/build/lean-inspector/producer/lib/lean/ExternalData.olean'
+        shutil.copyfile(dependency / '.lake/build/lib/lean/ExternalData.olean', shadow)
+        result = self.build(success=False)
+        self.assertIn('shadowed export ExternalData', result.stdout + result.stderr)
+        self.assertEqual((self.stamps(), self.report()), before)
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        shadow.unlink()
+        self.build()
+        self.assertEqual((self.stamps(), self.report()), before)
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+    def test_report_preparation_keeps_independent_compilers_live(self):
+        self.build()
+        # The first compiler can finish only after an independent later
+        # compiler runs. The FIFO is a dependency witness, not a timing bound.
+        gate = self.root / 'compiler-gate'
+        os.mkfifo(gate)
+        self.write('D5/A.lean', '''import D5.B
+#eval do
+  let _ ← IO.Process.output {cmd := "python3", args := #["-c",
+    "from pathlib import Path; Path('compiler-entered').write_text('yes'); open('compiler-gate').read()"]}
+  pure ()
+def value : Nat := D5.hidden
+''')
+        self.write('D5/Alone.lean', '''#eval do
+  let _ ← IO.Process.output {cmd := "python3", args := #["-c",
+    "from pathlib import Path; open('compiler-gate', 'w').write('release'); Path('independent-compiled').write_text('yes')"]}
+  pure ()
+def alone : String := "independent"
+''')
+        self.build()
+        self.assertEqual((self.root / 'compiler-entered').read_text(), 'yes')
+        self.assertEqual((self.root / 'independent-compiled').read_text(), 'yes')
+        before = self.stamps(), self.report()
+        self.build()
+        self.assertEqual((self.stamps(), self.report()), before)
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        # An unchanged report still requires the selected independent program.
+        self.write('Audit.lean', 'def invalid : False := True.intro\n')
+        result = self.build(success=False, targets=['Audit'])
+        self.assertIn('Type mismatch', result.stdout + result.stderr)
+
     def test_release_stage_and_verify_preserve_absent_lake(self):
         self.build()
         self.publish()
