@@ -23118,3 +23118,420 @@ pair/path 分别用原一、二行比较，辅助 Gaussian 独立性不替代实
 本章不声称新的一般局部极限定理、单模最优化、全局原创、输出平均熵、无界输出或 Shannon 延拓。
 
 ## 追加锚（第 114 章后续增补区）
+
+## 115. 经验鞍点的曲率把统一响应延伸到所有远离一的阶数
+
+**定理 115.1（固定 Shannon 间隔上的完整经验响应）。** 保持第 114 章的原完整计数后验、固定参数、全部取整、实际经验中心、同一带噪标量，以及
+
+$$
+\delta=Q^{-1/2},\qquad L=\ln(1/\sigma)\to\infty,
+\qquad \limsup L/Q^3<c_q/2.
+\tag{115.1}
+$$
+
+对每个固定 $\epsilon>0$，在概率趋一的共同实际好事件上，第 114 章完整累积量
+
+$$
+K_{\alpha,\sigma}(t)=
+-\frac12\sum_j\ln(1-2tv_j/\alpha)
++\sum_j\frac{te_j^2}{1-2tv_j/\alpha}
++\frac{\delta\sigma^2t^2}{2\alpha}
+\tag{115.2}
+$$
+
+对每个有限 $\alpha\ge1+\epsilon$ 都有唯一正根 $K'(t_\alpha)=V$。
+这里仍是完整原窗口上的
+$v_j=C_jp_j(1-p_j)/B^2$、$e_j=(\mu_j-C_jp_j)/B$、$V=\sum_jv_j$、$v_*=\max_jv_j$，
+$B^2=q/Q^{5/2}$，零方差项按确定项解释。定义精确有限量
+
+$$
+W_\alpha=K''(t_\alpha),\qquad b_\alpha=\sqrt\delta\,t_\alpha/\alpha.
+\tag{115.3}
+$$
+
+对每个固定 $R<\infty$，
+
+$$
+\sup_{\substack{\alpha\in[1+\epsilon,\infty]\\ |y|\le R}}
+\left|H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x^0)
+-\frac\alpha{\alpha-1}\left[
+b_\alpha y+\left(\frac\delta{2\alpha W_\alpha}-\frac1{2\nu}\right)y^2
+\right]\right|\longrightarrow0.
+\tag{115.4}
+$$
+
+无穷阶取因子为一、$b_\infty=\sqrt\delta/(2v_*)$ 和 $\delta/(\alpha W_\alpha)=0$。
+收敛在原实际数据概率下对全部大小 $q$ 的确定支持一致，pair/path 分别成立。
+所有阶数、系数和输出均使用同一个实际数据纤维。
+$\epsilon$ 固定，常数和好事件阈值可以依赖它；本章不包含移动的 $\epsilon_Q\downarrow0$ 或 Shannon 端点。
+噪声可以任意慢地趋零，放大的线性系数和曲率都不换成连续谱极限。
+
+**共同正根及低阶几何。** 第 114 章的实际估计仍给
+$V\to\gamma>0$、$v_*/\delta\to\rho_0>0$、$\|e\|=O_{\mathbb P}(\delta^5)$，
+以及完整数组的剖面和谱亏损 (114.8)、(114.9)。
+由 (114.7)，在同一事件 $\|e\|^2<V\epsilon/(1+\epsilon)$ 上，
+
+$$
+K'(0)\le V/(1+\epsilon)+\|e\|^2<V,
+\qquad K''(t)>0.
+\tag{115.5}
+$$
+
+最大中心平方项在右极点发散，故对全部有限 $\alpha\ge1+\epsilon$ 同时有唯一正根。
+以下先限制紧随机常数，再放开限制。令
+
+$$
+\mathcal I_Q=[1+\epsilon,\delta^{-1/3}],\quad
+A=(\alpha\delta)^{-1},\quad
+s_\alpha=2v_*t_\alpha/\alpha,\quad d_\alpha=1-s_\alpha,
+$$
+
+$$
+q_j^\circ=1-v_j/v_*,\qquad
+D_j=1-2t_\alpha v_j/\alpha=d_\alpha+(1-d_\alpha)q_j^\circ.
+\tag{115.6}
+$$
+
+需要在有界阶数也证明
+
+$$
+c/\alpha^2\le d_\alpha\le C/\alpha^2
+\quad(\alpha\in\mathcal I_Q).
+\tag{115.7}
+$$
+
+第 114 章的确定和式估计
+$S(d)=\sum_jv_j/[d+(1-d)q_j^\circ]\le C(\delta/d+d^{-1/2})$
+在 $0<d\le1/2$ 成立。
+对充分小的固定 $d_0$，只要 $d\le d_0$ 且 $\sqrt d/\delta\to\infty$ 一致成立，
+中央块 $|j|\le c\sqrt d/\delta$ 就给 $S(d)\ge c/\sqrt d$；这个下界不要求 $d\to0$。
+
+先取充分小的固定 $k>0$，在 $d=k/\alpha^2$ 有
+$d\le d_0$、$\sqrt d/\delta\ge\sqrt k\delta^{-2/3}$，所以
+$S(d)/\alpha\ge c/\sqrt k>V$。其余根方程项非负，单调性给下界。
+再取充分大的固定 $K$。对 $\alpha\ge\sqrt{2K}$，在 $d=K/\alpha^2\le1/2$，
+
+$$
+S(d)/\alpha\le C/\sqrt K+C\alpha\delta/K,\qquad
+\sum_j e_j^2/D_j^2\le C\delta^{10}\alpha^4/K^2=o(1),
+\qquad \delta\sigma^2t/\alpha\le C\sigma^2=o(1).
+\tag{115.8}
+$$
+
+因 $\alpha\delta\le\delta^{2/3}$，取 $K$ 大使测试点的 $K'<V$，得到上界。
+剩余 $\alpha<\sqrt{2K}$ 用 $d_\alpha<1\le2K/\alpha^2$。
+这补上有界阶数，不直接借用第 114 章的发散下截点。
+
+在根处，倾斜 Gaussian 坐标的精确方差和均值为
+$w_j=v_j/(\alpha D_j)$、$m_j=-e_j/D_j$。
+原中央块中有 $N\asymp A$ 个高计数坐标满足
+
+$$
+c/A\le w_j\le C/A,
+\qquad \max_jw_j\le C/A,
+\qquad \sum_jw_j\le V,
+\qquad \sum_jm_j^2\le C\delta^{10}\alpha^4=o(1).
+\tag{115.9}
+$$
+
+确切地，取 $|j|\le cA$，则 $|j\delta|\le c/\alpha$ 位于固定小弧，
+$v_j\asymp\delta$，$D_j\asymp\alpha^{-2}$；最后两式也由完整根方程及 (115.7) 得到。
+$A\ge\delta^{-2/3}$ 一致发散。
+
+**完整根处的高组方差。** 取 $l<c_q/2$ 使 $L\le lQ^3$，再取 $\zeta>0$ 使
+$2\zeta<c_q-l$，置 $H=\{j:C_j\ge e^{\zeta Q^3}\}$。
+全部比较坐标都在 $H$。令 $K_H$ 仅限制坐标和，保留完整噪声项及输出中的完整 $V$。
+原低组范围给
+
+$$
+\ell_v=\sum_{j\notin H}v_j\le\operatorname{poly}(Q)e^{-(c_q-\zeta)Q^3},\qquad
+\ell_e=\sum_{j\notin H}e_j^2\le\operatorname{poly}(Q)e^{-(c_q-2\zeta)Q^3}.
+\tag{115.10}
+$$
+
+低组 $D_j\ge1/2$。在同一个完整根处，记
+
+$$
+K_H'(t_\alpha)=V-\varepsilon_{\rm low},\quad
+0\le\varepsilon_{\rm low}\le C(\ell_v/\alpha+\ell_e),\quad
+W_H=K_H''(t_\alpha)\asymp A^{-1}=\alpha\delta.
+\tag{115.11}
+$$
+
+方差下界由比较块给出，上界用 (115.9) 和噪声方差 $\delta\sigma^2/\alpha$。
+完整方差差明确满足
+
+$$
+0\le W_\alpha-W_H
+\le C(\ell_v^2/\alpha^2+\ell_v\ell_e/\alpha),
+$$
+
+$$
+\sup_{\alpha\in\mathcal I_Q}\frac\delta\alpha
+\left|W_H^{-1}-W_\alpha^{-1}\right|\to0,
+\qquad
+\sup_{\alpha\in\mathcal I_Q}\varepsilon_{\rm low}/\sqrt{\alpha\delta}\to0.
+\tag{115.12}
+$$
+
+第一式从低坐标在 (114.7) 中的两项逐项求和；第二式除以
+$W_HW_\alpha\ge c\alpha^2\delta^2$ 即得。
+
+**直接应用 Gaussian 泛函的经典密度定理。** 令 $F$ 是高组完整倾斜能量，
+包括倾斜后的独立噪声，减去精确均值后除以 $\sqrt{W_H}$。
+它作为标准正态坐标的函数恰为
+
+$$
+F=\sum_H a_j(Z_j^2-1)+\sum_H\beta_jZ_j+\beta_GG,
+\quad a_j=w_j/\sqrt{W_H},\quad
+\beta_j=2m_j\sqrt{w_j}/\sqrt{W_H},\quad
+\beta_G=\sqrt{\delta\sigma^2/\alpha}/\sqrt{W_H}.
+\tag{115.13}
+$$
+
+精确归一化给 $2\sum a_j^2+\sum\beta_j^2+\beta_G^2=1$。
+Hu–Lu–Nualart 的 arXiv:1302.6962v2，Theorem 6.5，条件 (6.10)，要求
+$F_n\in\mathbb D^{2,s}$、收敛于非退化正态，以及
+
+$$
+\sup_n\bigl(\|F_n\|_{2,s}+\|F_n\|_{2p}
++\|\|DF_n\|^{-2}\|_r\bigr)<\infty,
+\qquad p,r,s>1,\quad 1/p+1/r+1/s=1.
+\tag{115.14}
+$$
+
+其结论为连续密度的一致收敛。本章直接取 $p=2,r=4,s=4$。
+方差一的至多二次 Gaussian 多项式的四阶矩由系数平方和控制。
+梯度分量是 $2a_jZ_j+\beta_j$ 和 $\beta_G$，Hessian 是对角常数 $2a_j$，
+其 Hilbert–Schmidt 范数平方 $4\sum a_j^2\le2$。
+所以 $\|F\|_{2,4}$ 和 $\|F\|_4$ 一致有界，不依赖维数。
+
+逆梯度矩也由同一比较块验证：其中 $a_j^2\ge c/A$，故
+
+$$
+\|DF\|^2\ge\frac cA\sum_{j\in\mathcal B}(Z_j+\beta_j/(2a_j))^2,
+\qquad |\mathcal B|=N\asymp A.
+\tag{115.15}
+$$
+
+对任意位移 $c_j$ 和 $u\ge0$，
+
+$$
+\mathbb E e^{-u\sum_{j=1}^N(Z_j+c_j)^2}
+=(1+2u)^{-N/2}\exp\left[-\frac{u\sum c_j^2}{1+2u}\right]
+\le(1+2u)^{-N/2}.
+$$
+
+乘 $u^3/6$ 积分，得到移位平方范数的四阶逆矩不超过
+$[(N-2)(N-4)(N-6)(N-8)]^{-1}$。于是
+
+$$
+\mathbb E\|DF\|^{-8}\le
+\frac{CA^4}{(N-2)(N-4)(N-6)(N-8)}\le C.
+\tag{115.16}
+$$
+
+噪声梯度只增大左侧逆幂前的平方范数。非中心项没有被删去。
+精确特征函数 (114.20) 在固定频率紧区间展开给
+
+$$
+\ln\mathbb Ee^{i\xi F}
+=-\xi^2/2+
+O\left(|\xi|^3\frac{\sum w_j^3+\sum w_j^2m_j^2}{W_H^{3/2}}\right)
+=-\xi^2/2+O(|\xi|^3A^{-1/2}).
+\tag{115.17}
+$$
+
+因此沿任意允许数组和阶数序列都有正态分布收敛。
+若密度一致性在整个参数族失败，就选出固定正误差的数组序列，
+嵌入同一个可数等距 Gaussian 空间；(115.14)–(115.17) 对它仍一致成立，
+经典定理产生矛盾。所以标准化密度 $q_{Q,\alpha}$ 满足
+
+$$
+\sup_{\alpha\in\mathcal I_Q}\sup_{z\in\mathbb R}
+|q_{Q,\alpha}(z)-\varphi(z)|\to0.
+\tag{115.18}
+$$
+
+这是对一般 Gaussian 泛函定理的直接应用。完整变量含一、二阶混沌，
+不把第 114 章引用的单一混沌条件误套于它。
+
+**有界标准化输出留下的曲率。** 物理能量 $h_y=V+\sqrt\delta y$ 的标准化位置为
+
+$$
+z_y=(\sqrt\delta y+\varepsilon_{\rm low})/\sqrt{W_H},
+\qquad z_0=\varepsilon_{\rm low}/\sqrt{W_H}.
+\tag{115.19}
+$$
+
+它们在当前范围只保证位于共同紧区间；有界 $\alpha$ 时不能断言 $z_y\to0$。
+该紧区间上 $\varphi$ 有正下界，故 (115.18) 给
+
+$$
+\ln\frac{q_{Q,\alpha}(z_y)}{q_{Q,\alpha}(z_0)}
+=-\frac{\delta y^2}{2W_H}
+-\frac{\sqrt\delta y\varepsilon_{\rm low}}{W_H}+o(1).
+\tag{115.20}
+$$
+
+交叉项由 (115.10)、(115.11) 一致趋零。
+对原高组 Gaussian 标量加 $\sigma G/\sqrt\alpha$ 的密度 $g_{\alpha,\sigma}$，
+精确撤倾斜公式 (114.24) 仍用同一 $K_H,t_\alpha,W_H$，所以
+
+$$
+-\frac1\alpha\ln\frac{g_{\alpha,\sigma}(y)}{g_{\alpha,\sigma}(0)}
+=b_\alpha y+\frac\delta{2\alpha W_\alpha}y^2+o(1).
+\tag{115.21}
+$$
+
+完整方差替换由 (115.12) 支付。正曲率来自对负的正态对数密度曲率乘 $-1/\alpha$，
+没有对第 114 章的 $C^0$ 渐近式求导。
+
+**相邻噪声与原计数回接。** 舍入比较需要 $u=\sigma^2$ 与
+$|u'/u-1|\le h_Q$，其中 $h_Q$ 对 $Q^3$ 指数小。
+固定原完整根 $t=t_\alpha(u)$，有精确变化
+
+$$
+K_{H,u'}(t)-K_{H,u}(t)=\delta(u'-u)t^2/(2\alpha),
+$$
+
+$$
+K'_{H,u'}(t)-K'_{H,u}(t)=\delta(u'-u)t/\alpha,
+\qquad W_{H,u'}-W_{H,u}=\delta(u'-u)/\alpha.
+\tag{115.22}
+$$
+
+$t\le C\alpha/\delta$，所以均值变化为 $O(|u'-u|)$，相对方差变化为
+$O(|u'-u|/\alpha^2)$。标准化位置变化至多
+$C_R|u'-u|/\sqrt{\alpha\delta}+C_R|u'-u|/\alpha^2=o(1)$。
+同一比较块验证两宽度下的 (115.14)–(115.18)，密度在各自有界位置相对比较。
+包括指数项及前因子后，
+
+$$
+\sup_{\alpha\in\mathcal I_Q,\ |y|\le R}
+\alpha^{-1}|\ln g_{\alpha,\sqrt{u'}}(y)-\ln g_{\alpha,\sqrt u}(y)|
+\le C|u'-u|/\delta+o(1)=o(1).
+\tag{115.23}
+$$
+
+这不要求 $\sigma$ 更快趋零，也不把两中心密度都替成 $\varphi(0)$。
+先由撤倾斜公式、$K_H(t)\ge0$、$q(z_y)\ge c_R$ 和
+$\sqrt{\delta/W_H}\asymp\alpha^{-1/2}$ 得到两宽度共同的稀有密度下界
+
+$$
+g_{\alpha,\sigma'}(y)\ge e^{-C_R\alpha/\delta}.
+\tag{115.24}
+$$
+
+第 110、114 章有限幂二项比较原本在 $1\le\alpha\le Q^6$ 有效：
+先对含二项系数的完整计数质量取幂，再归一化。
+高组联合盒 $|z_j|\le Q^2$ 内，乘 $\alpha$ 的 Stirling 余项和格点 Gaussian 归一化给
+$1+O(\operatorname{poly}(Q)e^{-\zeta Q^3/4})$ 的质量比，
+删去的两边尾概率均为
+$\operatorname{poly}(Q)e^{-c\alpha Q^4+C\alpha}$。
+全部低元组和高组舍入给
+
+$$
+|T(n)-T_G|\le\Delta_Q\le
+\operatorname{poly}(Q)(B^{-1}+B^{-2}e^{2\zeta Q^3}),
+\qquad \sqrt\alpha\Delta_Q/\sigma\le\operatorname{poly}(Q)e^{-b_0Q^3}.
+\tag{115.25}
+$$
+
+完整 $\mu,V$ 保留。Gaussian 核移位不等式把该位移夹于相邻宽度之间。
+尾密度除以 (115.24) 趋零，因为 $\alpha\ge1+\epsilon$、$L=O(Q^3)$，
+$\alpha Q^4$ 压过 $Q^3$ 和 $\alpha/\delta$。
+结合 (115.23)，原乘积计数幂律 $Q_\alpha$ 满足
+
+$$
+\sup_{\alpha\in\mathcal I_Q,\ |y|\le R}
+\alpha^{-1}|\ln f_{Q_\alpha,\sigma/\sqrt\alpha}(y)-\ln g_{\alpha,\sigma}(y)|\to0.
+\tag{115.26}
+$$
+
+原完整选择仍使用 (114.32)、(114.33)。
+其能量矩界 $\sup_{1\le\alpha\le Q^6}\mathbb E_{Q_\alpha}E=O_{\mathbb P}(1)$
+也含当前有界阶数：盒内用 Gaussian 均值，盒外用
+$E\le CN_J^2/B^2=O_{\mathbb P}(B^2)$ 乘上述尾界。
+第 114 章的稀有壳层重加权矩论证对每个 $0<w\le1$ 成立，
+此处用同一物理壳层 $h=V+\sqrt\delta y$、$w=\sqrt\delta\sigma/\sqrt\alpha$。
+因此 Jensen 和 $D(n)^2/q\le C\delta(E+\|e\|^2)$ 给
+
+$$
+\sup_{\alpha\in\mathcal I_Q,\ |y|\le R}
+\alpha^{-1}\left|\ln\frac{f_{P_\alpha,\sigma/\sqrt\alpha}(y)}
+{f_{Q_\alpha,\sigma/\sqrt\alpha}(y)}\right|=O_{\mathbb P}(\delta).
+\tag{115.27}
+$$
+
+乘积独立性仅属于比较律。完整选择和实际 path 行依赖没有被删除。
+(115.21)、(115.26)、(115.27) 将曲率比回接到原 $P_\alpha$。
+
+**命题 115.2（完整鞍点的有限方差下界）。** 对任意有限阶数的正根和任意
+$0<\eta<1$，若
+
+$$
+B_\eta=V-\frac V{\alpha\eta}-\frac{\|e\|^2}{\eta^2}
+-\frac{\delta\sigma^2}{2v_*}>0,
+\tag{115.28}
+$$
+
+则
+
+$$
+W_\alpha\ge\frac{2(1-\eta)v_*}{\alpha\eta}B_\eta,
+\qquad
+\frac\delta{\alpha W_\alpha}\le
+\frac{\delta\eta}{2(1-\eta)v_*B_\eta}.
+\tag{115.29}
+$$
+
+证明在同一个根方程中分组。$D_j\ge\eta$ 的坐标均值贡献至多
+$V/(\alpha\eta)+\|e\|^2/\eta^2$，正噪声均值至多 $\delta\sigma^2/(2v_*)$。
+所以 $D_j<\eta$ 的两种坐标均值之和至少 $B_\eta$。
+因 $D_j=1-s_\alpha v_j/v_*$、$0<s_\alpha<1$，这些坐标满足
+$v_j\ge(1-\eta)v_*$，其方差贡献逐项有
+
+$$
+\frac{2v_j}{\alpha D_j}\frac{v_j}{\alpha D_j}
++\frac{4v_j}{\alpha D_j}\frac{e_j^2}{D_j^2}
+\ge\frac{2(1-\eta)v_*}{\alpha\eta}
+\left(\frac{v_j}{\alpha D_j}+\frac{e_j^2}{D_j^2}\right).
+$$
+
+求和并保留其余非负方差项即证。零方差确定坐标在 $D_j=1$ 一组，
+非中心项与噪声都已支付；不需要谱隙，也不组合分别可达的最大值。
+
+对任意确定 $A_Q\to\infty$，取 $h=\|e\|$、$\eta=\alpha^{-1/2}+\sqrt h$。
+在所有有限 $\alpha\ge A_Q$ 上，$\eta<1/2$ 最终一致成立，且
+$V/(\alpha\eta)\le V/\sqrt\alpha$、$h^2/\eta^2\le h$。
+所以 $B_\eta\ge V/2$，(115.29) 给
+
+$$
+\sup_{A_Q\le\alpha<\infty}\frac\delta{\alpha W_\alpha}
+\le C(A_Q^{-1/2}+\sqrt{\|e\|})
+=O_{\mathbb P}(A_Q^{-1/2}+\delta^{5/2})\to0.
+\tag{115.30}
+$$
+
+它包括超多项式阶数，并允许有限 $Q$ 的非中心根不趋于极点。
+
+**完成全部阶数。** 对 $\mathcal I_Q$，把原幂律密度比代入精确有限和恒等式
+(114.38)，再用第 105 章普通输出的紧集对数比
+$\ln f_x(y)-\ln f_x(0)=-y^2/(2\nu)+o_{\mathbb P}(1)$。
+因 $\alpha/(\alpha-1)\le(1+\epsilon)/\epsilon$，得到 (115.4)。
+对 $\alpha\ge\delta^{-1/3}$，第 114 章以发散下截点给同一精确斜率的响应，
+(115.30) 使新增曲率项一致趋零，于是也得到 (115.4)。
+无穷阶保持第 114 章的真实有限支持重叠：
+$\ln N\le m_Q\ln(M+1)\le CQ^5$，
+$0\le H_\alpha-H_\infty\le\ln N/(\alpha-1)$ 在 $\alpha\ge Q^6$ 给两输出总误差 $O(Q^{-1})$。
+无需在无界阶数用仍大于整数网格的有效噪声，也不对熵差使用单调性。
+
+所有估计在同一个实际好事件上一致成立，放开紧常数给原支持一致概率结论。
+有限根由 $K''>0$ 连续依赖参数，有限原子熵连续依赖阶数和输出，
+可数稠密集与单列的无穷阶端点给可测上确界。
+本章新增的是有界阶数保留的曲率比及全阶数有限方差比较；
+经典密度定理、Gaussian 变换和 Rényi 恒等式各按原条件使用。
+不声称移动 Shannon 间隔、无界输出、输出平均熵、半指数边界等号或全局原创。
+
+## 追加锚（第 115 章后续增补区）
