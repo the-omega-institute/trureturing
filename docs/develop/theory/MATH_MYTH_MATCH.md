@@ -36117,19 +36117,19 @@ $$
 
 对 $\delta'>0$，若 $D\le\delta'$，令 $t=0$；否则令 $t=1-\delta'/D\in(0,1)$。以 $P'$ 的点质量分解作为额外分支，便得到可行律 $(1-t)Q'+tP'$，其权重形如 $((1-t)w,tv)$，其中 $v$ 至多有 $m$ 项。
 
-对任意固定正阶，新增熵有如下上界：
+对任意固定正阶，新增熵有如下上界，其中 $h_{\rm Sh}(t)=-t\log t-(1-t)\log(1-t)$ 是二元 Shannon 熵，端点采用连续延拓：
 
 $$
 H_\alpha((1-t)w,tv)-H_\alpha(w)
 \le\begin{cases}
 \dfrac{\log((1-t)^\alpha+m^{1-\alpha}t^\alpha)}{1-\alpha},&0<\alpha<1,\\
-h_2(t)+t\log m,&\alpha=1,\\
+h_{\rm Sh}(t)+t\log m,&\alpha=1,\\
 \dfrac\alpha{\alpha-1}\log\dfrac1{1-t},&1<\alpha<\infty,\\
 \log\dfrac1{1-t},&\alpha=\infty.
 \end{cases}
 $$
 
-**证明。** 总变差的齐次性给修复后误差 $(1-t)D\le\delta'$。对 $0<\alpha<1$，幂和等于 $(1-t)^\alpha\sum w_j^\alpha+t^\alpha\sum v_x^\alpha$，而 $\sum v_x^\alpha\le m^{1-\alpha}$、$\sum w_j^\alpha\ge1$，相除取对数即得。Shannon 分组式给 $h_2(t)+(1-t)H(w)+tH(v)$，使用 $H(v)\le\log m$。对 $\alpha>1$，只保留旧分支幂和，并注意 $1/(1-\alpha)<0$；无穷阶则保留最大旧权重乘 $1-t$。证毕。
+**证明。** 总变差的齐次性给修复后误差 $(1-t)D\le\delta'$。对 $0<\alpha<1$，幂和等于 $(1-t)^\alpha\sum w_j^\alpha+t^\alpha\sum v_x^\alpha$，而 $\sum v_x^\alpha\le m^{1-\alpha}$、$\sum w_j^\alpha\ge1$，相除取对数即得。Shannon 分组式给 $h_{\rm Sh}(t)+(1-t)H(w)+tH(v)$，使用 $H(v)\le\log m$。对 $\alpha>1$，只保留旧分支幂和，并注意 $1/(1-\alpha)<0$；无穷阶则保留最大旧权重乘 $1-t$。证毕。
 
 每个固定正阶的右端都在 $t\to0$ 时趋零。零阶不具有这项性质：再小的正分支仍可能增加标签数。公式没有把多出的随机标签自动解释成多出的现实实体。
 
@@ -36229,7 +36229,7 @@ E(w,q_\varepsilon)=w\varepsilon,\qquad
 E(w,\delta_1)=E(w,\delta_2)=(w-1/2)_+,\qquad E(w,\delta_3)=w.
 $$
 
-所以 $e(w)=\min\{w\varepsilon,(w-1/2)_+\}$。每个满足 $e(w)\le\delta$ 的头部都可由点质量余量补齐，故最大值正为所列两支的较大者。对 $\delta<\varepsilon<1/3$，两支都小于一；无穷阶结论直接用第 1625 节。证毕。
+所以 $e(w)=\min\{w\varepsilon,(w-1/2)_+\}$。每个满足 $e(w)\le\delta$ 的头部都可由点质量余量补齐，故最大值正为所列两支的较大者。对 $\delta<\varepsilon<1/3$，两支都小于一；无穷阶结论直接用第 1624 节。证毕。
 
 当 $\delta\ge\varepsilon$ 时，一标签来源 $q_\varepsilon$ 可行，全部阶成本为零。第一支由两点来源向一个端点倾斜产生；第二支来自使用带泄漏的通道。相同最优权重数值可以连接不同生成方式，下一节再判全部有限阶。
 
@@ -36310,7 +36310,7 @@ $$
 
 当 $\alpha\downarrow0$，两者熵分别趋向 $\log2$ 与 $\log3$，故小正阶严格选择前者。无穷阶分别为 $-\log(1/2+\delta)$ 与 $-\log W$，后者严格较小，故由阶连续性，大有限阶严格选择后者。中间值定理给至少一次相等。若检验阶一，必须直接比较 Shannon 熵；两张概率向量在阶一的幂和都等于一，不能把这项恒等式当成转换证据。证毕。
 
-这里没有证明相等阶唯一，也没有给转换阶的闭式。由第 1629 节，有限阶最优值仍随 $\alpha\to\infty$ 收敛到无穷阶，故所列严格缺口没有一个对全部有限正阶共同为正的下界。
+这里没有证明相等阶唯一，也没有给转换阶的闭式。由第 1628 节，有限阶最优值仍随 $\alpha\to\infty$ 收敛到无穷阶，故所列严格缺口没有一个对全部有限正阶共同为正的下界。
 
 对“同一结构”的讨论，这个例子提供了三项同时可见的结果：最少标签数在 $\delta<\varepsilon$ 一直为二，最优最大权重在 $\delta_c$ 换支，有限阶的最佳来源又可能使用三个标签。相同的最少来源数并没有穷尽来源复杂度，换一个评价目标也没有改变正在生成的目标律。
 
