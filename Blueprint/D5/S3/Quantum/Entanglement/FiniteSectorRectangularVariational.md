@@ -12,7 +12,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/FiniteSectorRectangularVariational.k
 
 *Formalization.* `D5/S3/Quantum/Entanglement/FiniteSectorRectangularVariational.kyFanSum` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Jon Crall, Claude Fable 5, Claude Opus 4.8, GPT-5.6 Thinking, and GPT-5.6 High (2026). *Formal rectangular singular-value variational bounds*. URL: <https://github.com/AIQ-Kitware/aiq-dkps-formalization/tree/64e234954217f3ca907ac980c8cbde2900109a66/ForTauCeti/Analysis/InnerProductSpace>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/FiniteSectorRectangularVariational.r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/FiniteSectorRectangularVariational.re_sum_inner_map_le_ky_fan_sum` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Jon Crall, Claude Fable 5, Claude Opus 4.8, GPT-5.6 Thinking, and GPT-5.6 High (2026). *Formal rectangular singular-value variational bounds*. URL: <https://github.com/AIQ-Kitware/aiq-dkps-formalization/tree/64e234954217f3ca907ac980c8cbde2900109a66/ForTauCeti/Analysis/InnerProductSpace>.
 
 *Commentary.*
 

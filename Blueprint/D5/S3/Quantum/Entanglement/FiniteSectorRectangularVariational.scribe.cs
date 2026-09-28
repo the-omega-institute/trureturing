@@ -22,7 +22,8 @@ internal sealed class FiniteSectorRectangularVariationalDocument : IScribeDocume
                 DeclarationHandle.Create(Owner + "kyFanSum"),
                 H("Ky Fan singular-value sum"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/kitware2026rectangular")),
                 Blocks(Paragraph(Text(
                     "For a natural prefix length k, sum the first k singular values, with "
                     + "zero extension beyond the source dimension."))),
@@ -32,7 +33,8 @@ internal sealed class FiniteSectorRectangularVariationalDocument : IScribeDocume
                 DeclarationHandle.Create(Owner + "re_sum_inner_map_le_ky_fan_sum"),
                 H("Orthonormal variational upper bound"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/kitware2026rectangular")),
                 Blocks(Paragraph(Text(
                     "Every pair of orthonormal k-families has real paired trace at most the "
                     + "Ky Fan sum. The proof passes through positive square roots, polar "

@@ -15,7 +15,8 @@ internal sealed class FiniteSectorPhysicalConstructionDocument : IScribeDocument
                 DeclarationHandle.Create(Owner + "channel_kraus_stinespring"),
                 H("Finite Kraus and Stinespring construction"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Quantum/watrous2018theory")),
                 Blocks(
                     Paragraph(Text(
                         "For every channel between finite matrix spaces, complete positivity makes "

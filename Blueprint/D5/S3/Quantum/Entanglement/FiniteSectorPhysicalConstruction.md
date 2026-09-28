@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/FiniteSectorPhysicalConstruction.cha
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/FiniteSectorPhysicalConstruction.channel_kraus_stinespring` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information*. DOI: [10.1017/9781316848142](https://doi.org/10.1017/9781316848142).
 
 *Commentary.*
 

@@ -337,7 +337,6 @@ theorem sector_pair {Sector : Type u} {EX : Type u} {EY : Type u} [Fintype Secto
           ext_inner_right ℂ fun y => by
             rw [LinearMap.adjoint_inner_left]
             exact ι.inner_map_map x y
-
         have adjointZero (ι : E0 →ₗᵢ[ℂ] H0) {y : H0}
             (hy : y ∈ (LinearMap.range ι.toLinearMap)ᗮ) :
             LinearMap.adjoint ι.toLinearMap y = 0 :=
@@ -367,12 +366,10 @@ theorem sector_pair {Sector : Type u} {EX : Type u} {EY : Type u} [Fintype Secto
             (stdOrthonormalBasis ℂ ((LinearMap.range ι.toLinearMap)ᗮ : Submodule ℂ H0)
               (Fin.cast (finrank_orthogonal_range_linearIsometry ι).symm
                 ⟨(i : ℕ) - finrank ℂ E0, by have := i.isLt; omega⟩) : H0)
-
         have isometryPad_of_lt (ι : E0 →ₗᵢ[ℂ] H0)
             (v : OrthonormalBasis (Fin (finrank ℂ E0)) ℂ E0) {i : Fin (finrank ℂ H0)}
             (h : (i : ℕ) < finrank ℂ E0) : isometryPad ι v i = ι (v ⟨(i : ℕ), h⟩) :=
           dif_pos h
-
         have isometryPad_of_ge (ι : E0 →ₗᵢ[ℂ] H0)
             (v : OrthonormalBasis (Fin (finrank ℂ E0)) ℂ E0) {i : Fin (finrank ℂ H0)}
             (h : ¬ (i : ℕ) < finrank ℂ E0) :
@@ -523,9 +520,7 @@ theorem sector_pair {Sector : Type u} {EX : Type u} {EY : Type u} [Fintype Secto
               X.singularValues_of_lt rfl hi, heigen]
           · rw [(ι.toLinearMap ∘ₗ X).singularValues_of_finrank_le hi,
               X.singularValues_of_finrank_le hi]
-
         rw [singularLeft ix, singularPad iy (Matrix.toEuclideanLin B)]
-
       let ds := d s
       have hrepeated : ∀ i : Fin (J * ds), (Matrix.toEuclideanLin B).singularValues i =
           Real.sqrt (lam i.divNat / (ds : ℝ)) := by
@@ -788,7 +783,6 @@ theorem sector_pair {Sector : Type u} {EX : Type u} {EY : Type u} [Fintype Secto
     have hproject : kyFanSum k (Matrix.toEuclideanLin Z) ≤
         c * kyFanSum (ds * k) (Matrix.toEuclideanLin Q) :=
       hprojectGeneric fx fy hfx hfy Q c hc
-
     have hsourcePrefix : kyFanSum (ds * k) (Matrix.toEuclideanLin Q) =
         Real.sqrt (ds : ℝ) * ∑ j : Fin (min k J),
           Real.sqrt (lam (Fin.castLE (Nat.min_le_right k J) j)) := by
