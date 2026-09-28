@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:e13d91ff6dd95e4f6c4e9917b9979534b0080f5ef5ddc6432fa6231ba549652f
   normalized_sha256: sha256:e13d91ff6dd95e4f6c4e9917b9979534b0080f5ef5ddc6432fa6231ba549652f
 cas_ref: sha256:e13d91ff6dd95e4f6c4e9917b9979534b0080f5ef5ddc6432fa6231ba549652f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Separation/TernaryTreeBudgetObstruction.result
+    target_statement_id: sha256:75a71892389f44d5e23b105871bacd61df7e93a8324e44eafe6fe8aadf24fc95
 receipts:
   unresolved_subitems: []
