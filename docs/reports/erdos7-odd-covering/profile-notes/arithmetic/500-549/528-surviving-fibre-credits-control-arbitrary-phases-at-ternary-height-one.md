@@ -330,3 +330,101 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/fib
 Default execution checks the retained result; `--output PATH` writes the recomputed result. No optimizer, source geometry helper or Lean build is used. The obstruction is to proving the target from this enlarged two-tier budget and these predeletion query caps. Stronger actual-prefix incidence, overlap credits, or a different jointly supported source law remain possible routes; their sufficiency for unrestricted originals is unresolved.
 
 [Report529](529-an-irredundant-comb-separates-fibre-credits-from-supported-query-laws.md) supplies a separate obstruction with actual distinct original labels at unbounded ternary heights. Every original has a private integer, and positive exact-single-class fibre certification forces excessive query concentration for every ternary reweighting of the specified pure-q sources. The same family admits both an overlap mass repair and a different supported product law meeting the query target.
+
+## Finite height profiles do not extend this fibre comparison to eleven primes
+
+The simultaneous [height bounds of Report385, HC5--HC9](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#16-retained-pure-powers-turn-private-point-demand-into-height-bounds) for a globally extremal whole cover give a finite original exponent profile when the whole ternary height is one. The present comparison still does not cross zero at the first eleven odd primes. This is a limitation of the displayed lower bound, not a covering construction and not an upper bound on the actual survivor mass.
+
+First fix any finite odd-prime support `{3} union Q`, impose `v3(m)<=1`, and let `h_q>=1` bound **every original exponent** at each `q in Q`. All residues remain those of one actual family. Put
+
+    d_q=(q-2)q^h_q+1,    n_q=q^h_q-1,
+    c_q=(q-1)q^h_q/d_q,  b_q=n_q/d_q.
+
+If `S_q` avoids the actual pure q-power originals, then
+
+    H_q(S_q)>=1-sum_(e=1)^h_q q^-e=1/c_q,
+    lambda_q(a mod q^e)<=c_q q^-e,
+    sum_(e=1)^h_q c_q q^-e=b_q.
+
+Here `H_q` denotes normalized Haar measure. The finite-height replacement changes both the source density cap and the complete original-label inventory. It is not a substitution of a smaller inventory into an unchanged source estimate.
+
+The proof of (FC4) and (FC6) now applies with these `c_q,b_q`. For each nonternary support `D`, the inventory of remaining labels `d` and `3d` is bounded using the same full exponent profile. In particular, the one actual `3d` label still chooses at most one retained ternary root, so its charge is a maximum of the two fibre responses. The pooled two-root budget is still `beta_q1+beta_q2<=b_q`.
+
+Enlarge the forbidden sets on the two roots to saturate this budget, shrinking the comparison carrier, and then apply the same coordinatewise concavity argument. This derives a new lower comparison from the actual family. It does **not** assume that the old function `F` is monotone in `b_q`. For a partition `Q=A disjoint union B`, define
+
+    I_A(E)=product_(q not in E)(d_q-n_q*1_(q in A)),
+    J(E)=product_(q in E)n_q,    D0=product_q d_q.
+
+The exact partition value is
+
+    2D0 F_h(A)=I_A(empty)+I_B(empty)
+      -sum_(E subset Q, |E|>=2)
+         J(E)[I_A(E)+I_B(E)+max(I_A(E),I_B(E))].
+
+Every term is an integer. Setting `n_q=1,d_q=q-2` recovers the arbitrary-height comparison (FC15), including its eight-prime calibration. Complementing the partition exchanges `I_A,I_B`, so checking every partition containing 5 covers all cases.
+
+For the globally extremal branch, combine the retained-pure and disjoint-bucket height bounds
+
+    H5,H7<=5,    Hp<=4 for p>=11,
+    Hp<=2+floor((5s-9)/(p-2)), p>3,
+
+where `s` is the total support size. On the first eleven odd primes this gives the nonternary height profile
+
+    primes:  5,7,11,13,17,19,23,29,31,37,
+    heights: 5,5, 4, 4, 4, 4, 4, 3, 3, 3.
+
+On the first twelve, append prime41 with height3. These are shared upper bounds for the one actual family, rather than separately optimized branch realizations.
+
+The complete exact partition comparisons give:
+
+| Total support | Complementary partition pairs | Arbitrary-height minimum | Finite-height minimum |
+| --- | ---: | ---: | ---: |
+| 11, through37 | 512 | `-11713394479/435858711750` | `-3235686764662888756400388469505835122247281/121558280938063242531355231984302827769665424` |
+| 12, through41 | 1024 | `-134490454633/1888721084250` | `-193174336278412841396513204086750351078296803651/2722824454158657923874002959627060473488659053984` |
+
+In all four comparisons, the unique minimizing representative containing5 is `A={5}`. The finite-height minima are approximately `-0.026618398514` and `-0.070946305768`; the first improves the arbitrary-height value by only about `0.000255894`. The existing eight-prime calibration remains `2142533/15904350`.
+
+Even optimizing the two surviving ternary-root weights does not repair the eleven-prime comparison at this partition point. Put `lambda3(root1)=w` and `lambda3(root2)=1-w`, with Haar conditional tails inside each root and `0<=w<=1`. The actual-family argument gives
+
+    F_h(A,w)=w*g1(empty)+(1-w)*g2(empty)
+       -sum_(|D|>=2)b_D[
+          w*g1(D)+(1-w)*g2(D)
+          +max(w*g1(D),(1-w)*g2(D))].
+
+The first two deletion terms charge the one 3-free label on both roots. Its companion `3d` targets only one actual root, so the maximum includes the root weights. This remains a common-source estimate; the two root weights do not select different original residues.
+
+For `A={5}` and the eleven-prime finite-height profile, this function is concave and piecewise affine in `w`: it is affine minus a positive combination of maxima of affine functions. The breakpoint where the two terms for `D={5,7}` agree is
+
+    w*=418707776472463050778264010198585
+        /1104431572940608845135925740120209
+      =0.3791160871629475... .
+
+Exact rational evaluation over all1013 deletion supports gives
+
+    F'_-(w*)=
+      24981612669186739085078294065269191503567
+      /467756732806400163660818593494190775448448 >0,
+
+    F'_+(w*)=
+      -28370469388546560668735906293460733917015
+      /526226324407200184118420917680964622379504 <0.
+
+Concavity therefore certifies the strict global maximum over every real `w in[0,1]`, not merely a tested grid. Its value is
+
+    max_w F_h({5},w)=-0.007489481907568035...<-7/1000.
+
+Only `D={5,7}` is tied at `w*`. Thus no change of the two root probabilities makes **this relaxed comparison point** positive. This does not assert that an actual family realizes the point, or exclude other source constructions or stronger estimates.
+
+The [standard-library consumer](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_height_partition.py) evaluates the same integer formula for the arbitrary and bounded profiles. Its [exact JSON result](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_height_partition.json) includes every partition numerator, the common denominator, all minimizers, the source caps, the inventories and the eight-prime calibration. It also derives `w*` from the `{5,7}` breakpoint and records the exact rational maximum and both supporting derivatives. It writes JSON to stdout by default or to a specified `--output` path. A separately written integer implementation reproduces both bounded-profile minima; an independent rational reconstruction verifies the reweighting certificate.
+
+These calculations do not show that any actual family attains the comparison vertex. They show that the height restrictions alone, fed into this unchanged union-bound and fibre-credit comparison, do not establish a positive uniform comparison at the first eleven or twelve odd primes. The existing (FC14) exclusion through the first ten odd primes remains valid. A further exclusion needs stronger joint restrictions or a stronger estimate; unrestricted support is not closed by obtaining finite heights at each fixed support. These are ordinary deductions and exact integer checks, not new Lean verification.
+
+Run from the repository root with Python3.10+ (the consumer uses `int.bit_count`):
+
+```sh
+python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_height_partition.py
+```
+
+All checks remain active under `-O`; normal and optimized execution produce
+identical output. The consumer reads no external input and invokes no geometry
+producer or Lean checker.
