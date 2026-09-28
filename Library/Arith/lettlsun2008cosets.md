@@ -2133,6 +2133,160 @@ in every hypothetical distinct odd cover, or a stronger compatible
 condition if these tests can all pass. The inequalities and constructions
 here are ordinary proofs, not new Lean verification or a priority claim.
 
+### Private residual zeros do not rescue nonnegative transport potentials
+
+Keep the SAME actual two-prime slice and F=c-1 from IT1. For an
+integer k define the elementary discrete conjugate
+
+    h(k)=max_(n>=0 integer)(k*n-g(n))
+        =0 if k<=1, and k*(k-1)/2 if k>=2.
+
+This follows from the successive differences g(n+1)-g(n)=n+1.
+For arbitrary integer row and column potentials alpha_i,beta_j put
+k_ij=alpha_i+beta_j. If E is a set of cells with ACTUAL F_ij=0, set
+
+    D_E=alpha*r+beta*s-sum_((i,j) notin E) h(k_ij).
+
+Any nonnegative integer table with the same margins and zeros on E
+has cost at least D_E, by summing g(n)>=k*n-h(k). Thus a whole cover
+with these actual zeros necessarily satisfies A_z>=D_E. No assertion
+of strong duality or a new transportation theorem is needed here.
+Write T_E(r,s) for the corresponding minimum cost, taking +infinity
+when its feasible set is empty.
+
+However, if EVERY cell has k_ij>=0, then
+
+    A_z>=D_E                                       (IT6)
+
+holds for EVERY actual multiplicity table, including tables with holes.
+To prove this, write the exact difference as
+
+    A_z-D_E=sum_((i,j) notin E)
+                [g(F_ij)-k_ij*F_ij+h(k_ij)].        (IT7)
+
+Covered cells have F_ij>=0 and nonnegative bracket by the defining
+maximum for h. At a hole F_ij=-1, the bracket is k_ij+h(k_ij), again
+nonnegative when k_ij>=0. Cells in E contribute zero because both
+F and g(F) vanish and their conjugate penalties have been omitted.
+This proves IT6 without using whole coverage, oddness or distinctness.
+
+In particular, fix one literal original cylinder
+C_t=I_t times J_t times K_t and its actual private region Pi_t.
+On each cofactor z in K_t take
+
+    alpha_i=a*1_(i in I_t), beta_j=b*1_(j in J_t), a,b>=0 integers,
+    E_z={(i,j): (i,j,z) belongs to Pi_t}.
+
+All these k are nonnegative. Summing IT6 over the SAME K_t therefore
+gives, for any actual family, covering or not,
+
+    sum_(z in K_t) A_z
+      >=a*sum_(z in K_t) r_z(I_t)+b*sum_(z in K_t) s_z(J_t)
+        -|K_t|*[|I_t||J_t|h(a+b)
+                +|I_t|(Q-|J_t|)h(a)
+                +(P-|I_t|)|J_t|h(b)]
+        +|Pi_t|h(a+b).                              (IT8)
+
+With a=b=1 this becomes
+
+    Delta_t=sum_(z in K_t)[A_z-r_z(I_t)-s_z(J_t)]
+                 +|K_t||I_t||J_t| >= |Pi_t|.         (IT9)
+
+Every irredundant family, even a noncover, has |Pi_t|>=1 for each
+original t. Consequently the target Delta_t<=0 is already impossible
+for an irredundant family without assuming whole coverage. The private
+point bonus does not supply a new covering obstruction. Expanding all
+terms into exact original-label CRT intersection counts leaves this
+conclusion unchanged; such an expansion changes no inequality.
+
+There is an exact sign criterion for a potentially useful certificate.
+Allow arbitrary signed integer alpha_i,beta_j, keep
+k_ij=alpha_i+beta_j, and put
+
+    H_-={(i,j): F_ij=-1 and k_ij<0}.
+
+For these cells h(k_ij)=0. Partitioning IT7 gives
+
+    A_z-D_E=P_E-sum_((i,j) in H_-) (-k_ij),          (IT10)
+
+where P_E is the sum of the nonnegative brackets over covered cells
+outside E and over holes with k_ij>=0. Hence D_E>A_z holds exactly
+when the weighted negative-potential holes exceed P_E. In particular
+negative k at an ACTUAL hole is necessary, not merely a negative
+alpha or beta somewhere. Such negativity alone is not sufficient:
+the covered-cell slack can still pay for it. IT10 is an identity on
+the original table, not a way to obtain unknown hole locations for free.
+
+Forced zeros can nevertheless strengthen the OPTIMIZED transportation
+test even when every marginal and the ordinary optimized test pass.
+Consider the actual integer residual table
+
+    F = [0 2 -1]       r=(1,10,10), s=(12,8,1),
+        [6 3  1]       A=sum g(F_ij)=59,
+        [6 3  1]       E={(0,0)}.
+
+All multiplicities F+1 are nonnegative, every residual margin is
+strictly positive, and E is an actual residual zero. The two tables
+
+    X = [1 0 0]       X_E = [0 1 0]
+        [5 4 1]             [6 4 0]
+        [6 4 0]             [6 3 1]
+
+have the same margins and costs58 and60, respectively; X_E is zero
+on E. For the unrestricted problem, alpha=(0,4,4), beta=(2,0,-3)
+give alpha*r+beta*s=101 and sum h(k)=43, hence D_empty=58.
+For the fixed-zero problem, alpha=(0,2,2), beta=(5,2,-1) give
+alpha*r+beta*s=115 and sum_(notin E) h(k)=55, hence D_E=60.
+Feasible tables and weak duality prove both minima exactly:
+
+    T_Z(r,s)=58 <= A=59 < T_E(r,s)=60.              (IT11)
+
+The fixed-zero certificate uses only r,s,A,E. It does not need the
+hole location as an input. At the displayed actual hole its k is -1;
+every covered cell outside E has zero bracket in IT7. Thus IT10
+has P_E=0 and a negative-hole contribution of1, exactly matching
+A-D_E=-1. The point of IT11 is the strict separation from the
+ordinary optimized transport test, not merely T_E>T_Z.
+
+This separation has a literal distinct-odd AP realization on one
+common slice. Append two columns of F=0 to get a 3-by-5 table.
+The new column margins are zero, forcing those columns to be zero
+in EVERY feasible nonnegative table. Both minima and A are unchanged.
+The dual beta vectors extend by (-4,-4) and (-2,-2), respectively,
+without adding any conjugate penalty. All complete3- and5-marginals
+on this slice are at least1; the new columns attain equality.
+
+There are36 multiplicity copies in F+1. Give each one a different odd
+prime tag ell_t outside{3,5}, and use the literal numerical modulus
+15*ell_t with that cell's3- and5-phases and tag phase0. The moduli
+are pairwise distinct odd nonunits. At the SAME cofactor where all
+tags are0, the original multiplicity table is exactly the padded
+table. The cell(0,0) has a unique original and is its actual private
+point, supplying E. Every original also has a private witness with
+its own tag0 and all other tags1, so the family is irredundant.
+
+This is only a selected-slice separation. When all tags are1, no
+original is active and the complete3- and5-marginals are zero. Each
+tag prime also has a zero complete marginal: hold the3- and5-cell
+different from its original's cell and all other tags at1. Hence
+this is NOT a noncover passing all complete prime marginals, and it
+does not enlarge the unrestricted noncoverage range. The exact
+minimum proofs above use the explicit primal and dual witnesses;
+independent enumeration of the43 feasible3-by-3 tables agrees.
+
+For an inclusion-minimal whole cover, each original t must have SOME
+actual private position (i,j,z) in its cylinder. A valid further test
+may therefore reject all candidate positions by comparing A_z with
+the corresponding fixed-zero transport minimum, keeping each slice's
+own margins and actual overlap. Excluding every position for just
+one t rules out that family's being an inclusion-minimal whole cover.
+For a general family the conclusion is only that it does not cover
+OR t is redundant. Under whole coverage the exclusion therefore
+forces redundancy; with t independently known essential it forces
+noncoverage. Universal #7 forcing still requires original-label
+arithmetic that violates a genuinely coverage-dependent condition.
+These are ordinary finite proofs, not new Lean verification.
+
 ## Existing survivor laws restrict simultaneous complete marginal feasibility
 
 The existing product and complete-survivor laws imply more than a
