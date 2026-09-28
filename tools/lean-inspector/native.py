@@ -34,7 +34,7 @@ import publication as public
 selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
 # The template join has a fixed heartbeat budget per native invocation.
-NATIVE_BATCH_MODULES = 32
+NATIVE_BATCH_MODULES = 4
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
 
