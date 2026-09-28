@@ -1,0 +1,25 @@
+### theorem 34.1 两种缺陷的跨尺度映射
+
+在定理 33.3 的识别下，核的自然约化对应
+
+$$
+\boxed{\mathcal D_B[p^{r+1}]\overset{\times p}{\longrightarrow}\mathcal D_B[p^r],}
+$$
+
+而余核对应商约化
+
+$$
+\mathcal D_B/p^{r+1}\mathcal D_B
+\longrightarrow
+\mathcal D_B/p^r\mathcal D_B.
+$$
+
+因为对同一代表有
+
+$$
+\left[\frac{B\widetilde x}{p^r}\right]
+=p\left[\frac{B\widetilde x}{p^{r+1}}\right].
+$$
+
+所以相邻精度的核即使有相同大小，也不必按恒等方式对应。
+

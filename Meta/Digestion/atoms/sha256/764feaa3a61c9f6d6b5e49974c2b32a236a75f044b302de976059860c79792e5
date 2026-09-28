@@ -1,0 +1,45 @@
+### proposition 28.3 $T_9$ 直接丢高层时的混合谱
+
+对四腿态
+
+$$
+|T_n\rangle=\frac1n\sum_{x,y\in\mathbb Z/n\mathbb Z}|x,y,x+y,x+2y|,
+$$
+
+取 $n=9$ 并写 $x=a+3b$、$y=c+3f$。输出进位为
+
+$$
+\kappa_1=\left\lfloor\frac{a+c}{3}\right\rfloor,
+\qquad
+\kappa_2=\left\lfloor\frac{a+2c}{3}\right\rfloor.
+$$
+
+九个低层输入的进位对计数为
+
+$$
+\begin{array}{c|cccc}
+(\kappa_1,\kappa_2)&(0,0)&(0,1)&(1,1)&(1,2)\\ \hline
+\text{次数}&4&2&2&1
+\end{array}
+$$
+
+直接对高层取偏迹时，低层约化态的非零谱为
+
+$$
+\boxed{\left\{\frac49,\frac29,\frac29,\frac19\right\}},
+$$
+
+从而
+
+$$
+\boxed{S(\rho_{\mathrm{low}})=2\log3-\frac43\log2.}
+$$
+
+按低位联合信息从输出高位减去 $\kappa_1,\kappa_2$ 后，则有
+
+$$
+|T_9\rangle\longmapsto|T_3\rangle\otimes|T_3\rangle.
+$$
+
+所以混合谱正是未处理的进位记录，而不是抽象的“层级信息损失”。
+

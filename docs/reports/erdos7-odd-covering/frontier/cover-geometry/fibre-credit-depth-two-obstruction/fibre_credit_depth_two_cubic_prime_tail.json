@@ -1,0 +1,83 @@
+{
+  "actual_stage": {
+    "actual_loss": "1/10",
+    "actual_maximum_cube": "541/40",
+    "complete_queries_checked": 91125,
+    "loss_upper": "128/405",
+    "new_mass": "13/20",
+    "new_period": 45,
+    "old_mass": "3/4",
+    "old_period": 5,
+    "originals": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        3
+      ],
+      [
+        15,
+        7
+      ],
+      [
+        45,
+        14
+      ]
+    ],
+    "propagated_cube_upper": "69/5",
+    "union_load_cube": "11/81"
+  },
+  "cutoff_exclusive": 4000,
+  "dependency_hashes": {
+    "fibre_credit_depth_two_four_fresh_heights.json": "daedcfa370ad5979704109a926956d004343c33270a5e451d578d15071251041",
+    "fibre_credit_depth_two_four_fresh_heights.py": "f93c2c100dc8f4351a66be0ca18d5ce8992723500e6b393bf0a63b773931261c"
+  },
+  "ell": 7,
+  "exact_checks_passed": true,
+  "four_axis_cubic_potential": "5006518103820493161366055877/391240726784822476800000",
+  "four_axis_reserve": "21201970586591/5920223700787200",
+  "growth_exponent": 11,
+  "growth_polynomial_coefficient_slacks": [
+    "0",
+    "1/2",
+    "37",
+    "156",
+    "330",
+    "462",
+    "462",
+    "330",
+    "165",
+    "55",
+    "11",
+    "1"
+  ],
+  "haar_reset": {
+    "complete_all_height_cubic": "904586065356754077622844547849353/618450171621156480614400000000",
+    "cutoff_exclusive": 9000,
+    "ell": 8,
+    "head_Haar_reserve": "1110198785825664533/18010359497054150553600",
+    "integral_polynomial": "175956825317/68719476736",
+    "prime_product_constant": "129/127",
+    "remaining_absolute_mass_lower": "7213545532653942684471223688467075600024045274695606008940870822377776629247/1074028407668260643664850464132688259348547983289739540835047433165273982566400000",
+    "remaining_decimal": 6.716345192688812e-06,
+    "remaining_greater_than": "1/150000",
+    "tail_debit": "21130558812159466862899625863288163945916261311808183483606001/384710369867008034709565246317616439825023080612291547024588800000",
+    "tail_debit_decimal": 5.492588832337472e-05,
+    "tail_factor": "32587080496114130534985409084962929625/867787805335186980609432357266037375011651584"
+  },
+  "integral_polynomial": "6965952155/2259801992",
+  "kernel_prefix_caps_checked": 19968,
+  "kernel_rows_checked": 1536,
+  "prime_product_constant": "99/97",
+  "remaining_absolute_mass_lower": "2103480452447040948310325674032453271333794623003320967/4266030156271951705143907187016413971858918030904288870400",
+  "remaining_decimal": 0.0004930767892848782,
+  "remaining_greater_than": "1/2100",
+  "scope": "Ordinary absolute-submeasure cubic continuation; finite exact controls, not Lean. The analytic prime-product theorem is inherited from Chapter33 SH11. Final reserve is distorted mass, not a uniform final Haar density.",
+  "source_replayed": true,
+  "tail_debit": "793397299239116098389349067616916887765420348704589/256912385201562884983071796869401624321524723330580480",
+  "tail_debit_decimal": 0.0030882018343204795,
+  "tail_factor": "1154978415131008101545786503117500/4785859285879439976319158559215044471389",
+  "triple_exponent_count_checks": 16
+}

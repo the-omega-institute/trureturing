@@ -1,0 +1,18 @@
+### definition 13.1 组成体与两层边界读数
+
+把组成向量 $z=(a,b)^{\mathsf T}\in\mathbb Z^2$ 看作一个二通道体状态，体更新为
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+对权重 $(u,v)$，定义两层边界读数
+
+$$
+\partial_{u,v}(z)=H_{u,v}z,
+\qquad
+H_{u,v}=\begin{pmatrix}u&v\\v&u+v\end{pmatrix}.
+$$
+
+第一行是当前数量，第二行是一次替换后的数量。对本卷最小素数种子 $(u,v)=(2,3)$，记 $H=H_{2,3}$。
+

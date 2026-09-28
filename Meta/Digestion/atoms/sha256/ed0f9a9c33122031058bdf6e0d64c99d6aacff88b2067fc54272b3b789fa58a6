@@ -1,0 +1,24 @@
+### theorem 15.2 相容操作环就是黄金整数环
+
+$$
+\mathscr A_M=\{aI+bM:a,b\in\mathbb Z\},
+$$
+
+并且
+
+$$
+\mathscr A_M\cong\mathbb Z[\theta]/(\theta^2-\theta-1).
+$$
+
+在坐标 $(a,b)$ 下，乘法为
+
+$$
+(a,b)(c,d)=(ac+bd,\ ad+bc+bd),
+$$
+
+与仓内 `GoldenInt` 的乘法逐项一致。
+
+**证明。** 写 $A=\begin{pmatrix}r&s\\t&u\end{pmatrix}$。比较 $AM$ 与 $MA$ 得 $t=s$、$u=r+s$，所以 $A=rI+sM$；反向显然。由于 $M^2=M+I$，复合乘法正是 $\theta^2=\theta+1$ 的商环乘法。$□$
+
+这里 $I$ 是相容操作的单位，$M$ 是递归生成元。原子在数量接口中读成 $2,3$，与操作环中的单位和生成元属于不同解释层，二者不冲突。
+

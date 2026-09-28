@@ -1,0 +1,13 @@
+### proposition 17.4 两个标量系数读数是另一接口
+
+若只保留两个通道的 $\theta$ 系数，即读取 $\varepsilon(hx)$ 与 $\varepsilon(h^*x)$，则在上述 $(5,13)$ 例中
+
+$$
+\binom{\varepsilon(hx)}{\varepsilon(h^*x)}
+=\begin{pmatrix}5&13\\-5&8\end{pmatrix}\binom ab,
+\qquad
+\det\begin{pmatrix}5&13\\-5&8\end{pmatrix}=105.
+$$
+
+这两个标量在精确整数域仍区分不同输入，但其像指标为 $105$，不是整个 $\mathbb Z^2$；模 $m\ge2$ 的可逆性要求 $\gcd(105,m)=1$。$L$ 的定义域是 $R^2$，它使用完整环值，因而命题 17.2 本身不能充当这个两标量接口的解码证明，更不能推出两标量在每个模数下都可恢复。
+

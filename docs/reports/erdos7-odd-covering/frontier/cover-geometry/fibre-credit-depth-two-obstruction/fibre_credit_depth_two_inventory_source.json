@@ -1,0 +1,2607 @@
+{
+  "cases": [
+    {
+      "Haar_density_lower": "638398042571354575733/194854545919174901760000",
+      "Haar_density_lower_decimal": 0.003276279953130579,
+      "actual_head_cells": 75,
+      "actual_original_count": 191,
+      "all_rows_color_bound_exact": true,
+      "arbitrary132_multi_debit": "1859098033088797/12970364370163200",
+      "common_admissible_scale": "238381/1631232",
+      "complete_query_bound": "75025250279185118617/21561125186764800000",
+      "deep_debit": "15758572708896579559/32553071360409600000",
+      "fixed_head_phase_inventory": {
+        "11": {
+          "105": 23,
+          "15": 8,
+          "21": 8,
+          "3": 2,
+          "315": 256,
+          "35": 23,
+          "45": 32,
+          "5": 3,
+          "63": 8,
+          "7": 2,
+          "9": 5
+        },
+        "13": {
+          "105": 46,
+          "15": 1,
+          "21": 4,
+          "3": 1,
+          "315": 286,
+          "35": 32,
+          "45": 16,
+          "5": 2,
+          "63": 40,
+          "7": 4,
+          "9": 7
+        },
+        "17": {
+          "105": 61,
+          "15": 8,
+          "21": 2,
+          "3": 2,
+          "315": 313,
+          "35": 33,
+          "45": 17,
+          "5": 3,
+          "63": 61,
+          "7": 5,
+          "9": 8
+        },
+        "19": {
+          "105": 52,
+          "15": 2,
+          "21": 19,
+          "3": 2,
+          "315": 157,
+          "35": 27,
+          "45": 31,
+          "5": 2,
+          "63": 13,
+          "7": 5,
+          "9": 4
+        }
+      },
+      "fixed_weight_gate": "-2718857266981/8989483991040",
+      "fixed_weight_gate_decimal": -0.3024486466287653,
+      "fixed_weight_mass": "244169/663552",
+      "free_singleton_outside_root_slots": 44,
+      "gate": "638398042571354575733/774763098377748480000",
+      "gate_decimal": 0.8239912870244798,
+      "head": "opposite_root",
+      "head_probability": {
+        "103": "413/20004",
+        "104": "413/20004",
+        "107": "413/20004",
+        "113": "43/3334",
+        "122": "63/3334",
+        "124": "413/20004",
+        "128": "41/6668",
+        "13": "413/20004",
+        "134": "2/1667",
+        "139": "41/10002",
+        "142": "413/20004",
+        "149": "35/3334",
+        "157": "413/20004",
+        "16": "413/20004",
+        "164": "343/20004",
+        "166": "413/20004",
+        "167": "49/20004",
+        "17": "15/1667",
+        "173": "117/6668",
+        "188": "413/20004",
+        "193": "77/6668",
+        "194": "61/5001",
+        "197": "413/20004",
+        "202": "413/20004",
+        "209": "25/20004",
+        "212": "359/20004",
+        "214": "413/20004",
+        "218": "359/20004",
+        "223": "145/20004",
+        "229": "67/5001",
+        "233": "18/1667",
+        "239": "343/20004",
+        "241": "367/20004",
+        "242": "413/20004",
+        "254": "413/20004",
+        "256": "367/20004",
+        "257": "139/20004",
+        "263": "367/20004",
+        "268": "413/20004",
+        "269": "55/20004",
+        "278": "77/5001",
+        "286": "179/10002",
+        "29": "413/20004",
+        "292": "113/10002",
+        "299": "413/20004",
+        "302": "105/6668",
+        "304": "367/20004",
+        "31": "413/20004",
+        "313": "20/1667",
+        "32": "367/20004",
+        "34": "25/3334",
+        "4": "367/20004",
+        "44": "79/10002",
+        "52": "367/20004",
+        "53": "413/20004",
+        "59": "40/5001",
+        "61": "367/20004",
+        "62": "187/20004",
+        "67": "355/20004",
+        "76": "413/20004",
+        "79": "41/10002",
+        "83": "367/20004",
+        "88": "109/6668",
+        "94": "413/20004",
+        "97": "367/20004"
+      },
+      "integer_mass": 20004,
+      "maximum_active_labels": {
+        "11": 7,
+        "13": 7,
+        "17": 6,
+        "19": 4
+      },
+      "primal_atoms": 65,
+      "screens": [
+        {
+          "cap": "1",
+          "head_modulus": 1,
+          "height_lift": "1",
+          "outside_mask": 0
+        },
+        {
+          "cap": "1542403/12602520",
+          "head_modulus": 1,
+          "height_lift": "11/10",
+          "outside_mask": 1
+        },
+        {
+          "cap": "55386481/554510880",
+          "head_modulus": 1,
+          "height_lift": "13/12",
+          "outside_mask": 2
+        },
+        {
+          "cap": "47898223/3992478336",
+          "head_modulus": 1,
+          "height_lift": "143/120",
+          "outside_mask": 3
+        },
+        {
+          "cap": "338113411/4805760960",
+          "head_modulus": 1,
+          "height_lift": "17/16",
+          "outside_mask": 4
+        },
+        {
+          "cap": "2034465439/232894569600",
+          "head_modulus": 1,
+          "height_lift": "187/160",
+          "outside_mask": 5
+        },
+        {
+          "cap": "1720748233/247153420800",
+          "head_modulus": 1,
+          "height_lift": "221/192",
+          "outside_mask": 6
+        },
+        {
+          "cap": "2444721073/2883456576000",
+          "head_modulus": 1,
+          "height_lift": "2431/1920",
+          "outside_mask": 7
+        },
+        {
+          "cap": "26520091/428485680",
+          "head_modulus": 1,
+          "height_lift": "19/18",
+          "outside_mask": 8
+        },
+        {
+          "cap": "8166094421/1079783913600",
+          "head_modulus": 1,
+          "height_lift": "209/180",
+          "outside_mask": 9
+        },
+        {
+          "cap": "665372461/107733542400",
+          "head_modulus": 1,
+          "height_lift": "247/216",
+          "outside_mask": 10
+        },
+        {
+          "cap": "1056154905437/1425314765952000",
+          "head_modulus": 1,
+          "height_lift": "2717/2160",
+          "outside_mask": 11
+        },
+        {
+          "cap": "598201240817/137252533017600",
+          "head_modulus": 1,
+          "height_lift": "323/288",
+          "outside_mask": 12
+        },
+        {
+          "cap": "70044317132429/129703643701632000",
+          "head_modulus": 1,
+          "height_lift": "3553/2880",
+          "outside_mask": 13
+        },
+        {
+          "cap": "5324309202853/12352727971584000",
+          "head_modulus": 1,
+          "height_lift": "4199/3456",
+          "outside_mask": 14
+        },
+        {
+          "cap": "135949542247373/2594072874032640000",
+          "head_modulus": 1,
+          "height_lift": "46189/34560",
+          "outside_mask": 15
+        },
+        {
+          "cap": "1265/6668",
+          "head_modulus": 7,
+          "height_lift": "7/6",
+          "outside_mask": 0
+        },
+        {
+          "cap": "16469/720144",
+          "head_modulus": 7,
+          "height_lift": "77/60",
+          "outside_mask": 1
+        },
+        {
+          "cap": "581653/27725544",
+          "head_modulus": 7,
+          "height_lift": "91/72",
+          "outside_mask": 2
+        },
+        {
+          "cap": "24241799/9981195840",
+          "head_modulus": 7,
+          "height_lift": "1001/720",
+          "outside_mask": 3
+        },
+        {
+          "cap": "169391/11552310",
+          "head_modulus": 7,
+          "height_lift": "119/96",
+          "outside_mask": 4
+        },
+        {
+          "cap": "71058811/42050408400",
+          "head_modulus": 7,
+          "height_lift": "1309/960",
+          "outside_mask": 5
+        },
+        {
+          "cap": "38669117/27032405400",
+          "head_modulus": 7,
+          "height_lift": "1547/1152",
+          "outside_mask": 6
+        },
+        {
+          "cap": "204129/1220510720",
+          "head_modulus": 7,
+          "height_lift": "17017/11520",
+          "outside_mask": 7
+        },
+        {
+          "cap": "2161/175035",
+          "head_modulus": 7,
+          "height_lift": "133/108",
+          "outside_mask": 8
+        },
+        {
+          "cap": "29665343/21172233600",
+          "head_modulus": 7,
+          "height_lift": "1463/1080",
+          "outside_mask": 9
+        },
+        {
+          "cap": "2397925/1885336992",
+          "head_modulus": 7,
+          "height_lift": "1729/1296",
+          "outside_mask": 10
+        },
+        {
+          "cap": "75118139/509040987840",
+          "head_modulus": 7,
+          "height_lift": "19019/12960",
+          "outside_mask": 11
+        },
+        {
+          "cap": "479928101/504604900800",
+          "head_modulus": 7,
+          "height_lift": "2261/1728",
+          "outside_mask": 12
+        },
+        {
+          "cap": "11586983531/105967029168000",
+          "head_modulus": 7,
+          "height_lift": "24871/17280",
+          "outside_mask": 13
+        },
+        {
+          "cap": "8003563/86012199000",
+          "head_modulus": 7,
+          "height_lift": "29393/20736",
+          "outside_mask": 14
+        },
+        {
+          "cap": "3721272787/353223430560000",
+          "head_modulus": 7,
+          "height_lift": "323323/207360",
+          "outside_mask": 15
+        },
+        {
+          "cap": "1923/6668",
+          "head_modulus": 5,
+          "height_lift": "5/4",
+          "outside_mask": 0
+        },
+        {
+          "cap": "138373/3600720",
+          "head_modulus": 5,
+          "height_lift": "11/8",
+          "outside_mask": 1
+        },
+        {
+          "cap": "1028617/34656930",
+          "head_modulus": 5,
+          "height_lift": "65/48",
+          "outside_mask": 2
+        },
+        {
+          "cap": "12714157/3564712800",
+          "head_modulus": 5,
+          "height_lift": "143/96",
+          "outside_mask": 3
+        },
+        {
+          "cap": "3611087/171634320",
+          "head_modulus": 5,
+          "height_lift": "85/64",
+          "outside_mask": 4
+        },
+        {
+          "cap": "44003741/14417282880",
+          "head_modulus": 5,
+          "height_lift": "187/128",
+          "outside_mask": 5
+        },
+        {
+          "cap": "12520141/6178835520",
+          "head_modulus": 5,
+          "height_lift": "1105/768",
+          "outside_mask": 6
+        },
+        {
+          "cap": "54986027/199623916800",
+          "head_modulus": 5,
+          "height_lift": "2431/1536",
+          "outside_mask": 7
+        },
+        {
+          "cap": "3650779/190438080",
+          "head_modulus": 5,
+          "height_lift": "95/72",
+          "outside_mask": 8
+        },
+        {
+          "cap": "168319391/71985594240",
+          "head_modulus": 5,
+          "height_lift": "209/144",
+          "outside_mask": 9
+        },
+        {
+          "cap": "1765823/897779520",
+          "head_modulus": 5,
+          "height_lift": "1235/864",
+          "outside_mask": 10
+        },
+        {
+          "cap": "8431405163/35632869148800",
+          "head_modulus": 5,
+          "height_lift": "2717/1728",
+          "outside_mask": 11
+        },
+        {
+          "cap": "3290909897/2495500600320",
+          "head_modulus": 5,
+          "height_lift": "1615/1152",
+          "outside_mask": 12
+        },
+        {
+          "cap": "1206792179/6617532841920",
+          "head_modulus": 5,
+          "height_lift": "3553/2304",
+          "outside_mask": 13
+        },
+        {
+          "cap": "166099921021/1235272797158400",
+          "head_modulus": 5,
+          "height_lift": "20995/13824",
+          "outside_mask": 14
+        },
+        {
+          "cap": "1088109899/66175328419200",
+          "head_modulus": 5,
+          "height_lift": "46189/27648",
+          "outside_mask": 15
+        },
+        {
+          "cap": "223/3334",
+          "head_modulus": 35,
+          "height_lift": "35/24",
+          "outside_mask": 0
+        },
+        {
+          "cap": "607/70014",
+          "head_modulus": 35,
+          "height_lift": "77/48",
+          "outside_mask": 1
+        },
+        {
+          "cap": "36287/5281056",
+          "head_modulus": 35,
+          "height_lift": "455/288",
+          "outside_mask": 2
+        },
+        {
+          "cap": "291449/332706528",
+          "head_modulus": 35,
+          "height_lift": "1001/576",
+          "outside_mask": 3
+        },
+        {
+          "cap": "20788/3575715",
+          "head_modulus": 35,
+          "height_lift": "595/384",
+          "outside_mask": 4
+        },
+        {
+          "cap": "335869/450540090",
+          "head_modulus": 35,
+          "height_lift": "1309/768",
+          "outside_mask": 5
+        },
+        {
+          "cap": "18163/34326864",
+          "head_modulus": 35,
+          "height_lift": "7735/4608",
+          "outside_mask": 6
+        },
+        {
+          "cap": "241793/3604320720",
+          "head_modulus": 35,
+          "height_lift": "17017/9216",
+          "outside_mask": 7
+        },
+        {
+          "cap": "7171/1600320",
+          "head_modulus": 35,
+          "height_lift": "665/432",
+          "outside_mask": 8
+        },
+        {
+          "cap": "160421/302460480",
+          "head_modulus": 35,
+          "height_lift": "1463/864",
+          "outside_mask": 9
+        },
+        {
+          "cap": "9019/20164032",
+          "head_modulus": 35,
+          "height_lift": "8645/5184",
+          "outside_mask": 10
+        },
+        {
+          "cap": "40639/777755520",
+          "head_modulus": 35,
+          "height_lift": "19019/10368",
+          "outside_mask": 11
+        },
+        {
+          "cap": "253999/686537280",
+          "head_modulus": 35,
+          "height_lift": "11305/6912",
+          "outside_mask": 12
+        },
+        {
+          "cap": "409403/8650369728",
+          "head_modulus": 35,
+          "height_lift": "24871/13824",
+          "outside_mask": 13
+        },
+        {
+          "cap": "154387/4576915200",
+          "head_modulus": 35,
+          "height_lift": "146965/82944",
+          "outside_mask": 14
+        },
+        {
+          "cap": "3690497/865036972800",
+          "head_modulus": 35,
+          "height_lift": "323323/165888",
+          "outside_mask": 15
+        },
+        {
+          "cap": "5201/10002",
+          "head_modulus": 3,
+          "height_lift": "1",
+          "outside_mask": 0
+        },
+        {
+          "cap": "427309/6301260",
+          "head_modulus": 3,
+          "height_lift": "11/10",
+          "outside_mask": 1
+        },
+        {
+          "cap": "31930531/554510880",
+          "head_modulus": 3,
+          "height_lift": "13/12",
+          "outside_mask": 2
+        },
+        {
+          "cap": "8607761/1425885120",
+          "head_modulus": 3,
+          "height_lift": "143/120",
+          "outside_mask": 3
+        },
+        {
+          "cap": "2715467/75090015",
+          "head_modulus": 3,
+          "height_lift": "17/16",
+          "outside_mask": 4
+        },
+        {
+          "cap": "3113566319/605525880960",
+          "head_modulus": 3,
+          "height_lift": "187/160",
+          "outside_mask": 5
+        },
+        {
+          "cap": "6537814511/1730073945600",
+          "head_modulus": 3,
+          "height_lift": "221/192",
+          "outside_mask": 6
+        },
+        {
+          "cap": "39030053/86503697280",
+          "head_modulus": 3,
+          "height_lift": "2431/1920",
+          "outside_mask": 7
+        },
+        {
+          "cap": "6869951/214242840",
+          "head_modulus": 3,
+          "height_lift": "19/18",
+          "outside_mask": 8
+        },
+        {
+          "cap": "302724767/71985594240",
+          "head_modulus": 3,
+          "height_lift": "209/180",
+          "outside_mask": 9
+        },
+        {
+          "cap": "2668786787/754134796800",
+          "head_modulus": 3,
+          "height_lift": "247/216",
+          "outside_mask": 10
+        },
+        {
+          "cap": "10570589899/28506295319040",
+          "head_modulus": 3,
+          "height_lift": "2717/2160",
+          "outside_mask": 11
+        },
+        {
+          "cap": "90681515/40368392064",
+          "head_modulus": 3,
+          "height_lift": "323/288",
+          "outside_mask": 12
+        },
+        {
+          "cap": "15304710563/48038386556160",
+          "head_modulus": 3,
+          "height_lift": "3553/2880",
+          "outside_mask": 13
+        },
+        {
+          "cap": "12440696903/53475012864000",
+          "head_modulus": 3,
+          "height_lift": "4199/3456",
+          "outside_mask": 14
+        },
+        {
+          "cap": "727445382493/25940728740326400",
+          "head_modulus": 3,
+          "height_lift": "46189/34560",
+          "outside_mask": 15
+        },
+        {
+          "cap": "2341/20004",
+          "head_modulus": 21,
+          "height_lift": "7/6",
+          "outside_mask": 0
+        },
+        {
+          "cap": "274669/16803360",
+          "head_modulus": 21,
+          "height_lift": "77/60",
+          "outside_mask": 1
+        },
+        {
+          "cap": "33023/2520504",
+          "head_modulus": 21,
+          "height_lift": "91/72",
+          "outside_mask": 2
+        },
+        {
+          "cap": "3115019/2218043520",
+          "head_modulus": 21,
+          "height_lift": "1001/720",
+          "outside_mask": 3
+        },
+        {
+          "cap": "28669/3300660",
+          "head_modulus": 21,
+          "height_lift": "119/96",
+          "outside_mask": 4
+        },
+        {
+          "cap": "1801193/1529105760",
+          "head_modulus": 21,
+          "height_lift": "1309/960",
+          "outside_mask": 5
+        },
+        {
+          "cap": "14344469/15447088800",
+          "head_modulus": 21,
+          "height_lift": "1547/1152",
+          "outside_mask": 6
+        },
+        {
+          "cap": "1857053/18349269120",
+          "head_modulus": 21,
+          "height_lift": "17017/11520",
+          "outside_mask": 7
+        },
+        {
+          "cap": "13/1680",
+          "head_modulus": 21,
+          "height_lift": "133/108",
+          "outside_mask": 8
+        },
+        {
+          "cap": "95719/95219040",
+          "head_modulus": 21,
+          "height_lift": "1463/1080",
+          "outside_mask": 9
+        },
+        {
+          "cap": "123647/149363200",
+          "head_modulus": 21,
+          "height_lift": "1729/1296",
+          "outside_mask": 10
+        },
+        {
+          "cap": "652975/7541347968",
+          "head_modulus": 21,
+          "height_lift": "19019/12960",
+          "outside_mask": 11
+        },
+        {
+          "cap": "11803543/20596118400",
+          "head_modulus": 21,
+          "height_lift": "2261/1728",
+          "outside_mask": 12
+        },
+        {
+          "cap": "627707/8664932640",
+          "head_modulus": 21,
+          "height_lift": "24871/17280",
+          "outside_mask": 13
+        },
+        {
+          "cap": "75731273/1235767104000",
+          "head_modulus": 21,
+          "height_lift": "29393/20736",
+          "outside_mask": 14
+        },
+        {
+          "cap": "78121033/12357671040000",
+          "head_modulus": 21,
+          "height_lift": "323323/207360",
+          "outside_mask": 15
+        },
+        {
+          "cap": "1607/10002",
+          "head_modulus": 15,
+          "height_lift": "5/4",
+          "outside_mask": 0
+        },
+        {
+          "cap": "30791/1200240",
+          "head_modulus": 15,
+          "height_lift": "11/8",
+          "outside_mask": 1
+        },
+        {
+          "cap": "946097/50410080",
+          "head_modulus": 15,
+          "height_lift": "65/48",
+          "outside_mask": 2
+        },
+        {
+          "cap": "2417707/1109021760",
+          "head_modulus": 15,
+          "height_lift": "143/96",
+          "outside_mask": 3
+        },
+        {
+          "cap": "2276719/171634320",
+          "head_modulus": 15,
+          "height_lift": "85/64",
+          "outside_mask": 4
+        },
+        {
+          "cap": "10306559/4805760960",
+          "head_modulus": 15,
+          "height_lift": "187/128",
+          "outside_mask": 5
+        },
+        {
+          "cap": "3215209/2621324160",
+          "head_modulus": 15,
+          "height_lift": "1105/768",
+          "outside_mask": 6
+        },
+        {
+          "cap": "106081/582516480",
+          "head_modulus": 15,
+          "height_lift": "2431/1536",
+          "outside_mask": 7
+        },
+        {
+          "cap": "15119/1400280",
+          "head_modulus": 15,
+          "height_lift": "95/72",
+          "outside_mask": 8
+        },
+        {
+          "cap": "872033/571314240",
+          "head_modulus": 15,
+          "height_lift": "209/144",
+          "outside_mask": 9
+        },
+        {
+          "cap": "220937/192038400",
+          "head_modulus": 15,
+          "height_lift": "1235/864",
+          "outside_mask": 10
+        },
+        {
+          "cap": "2973013/20960511264",
+          "head_modulus": 15,
+          "height_lift": "2717/1728",
+          "outside_mask": 11
+        },
+        {
+          "cap": "908339/1146829320",
+          "head_modulus": 15,
+          "height_lift": "1615/1152",
+          "outside_mask": 12
+        },
+        {
+          "cap": "1044107/8169793632",
+          "head_modulus": 15,
+          "height_lift": "3553/2304",
+          "outside_mask": 13
+        },
+        {
+          "cap": "43024591/567680513400",
+          "head_modulus": 15,
+          "height_lift": "20995/13824",
+          "outside_mask": 14
+        },
+        {
+          "cap": "354551/32679174528",
+          "head_modulus": 15,
+          "height_lift": "46189/27648",
+          "outside_mask": 15
+        },
+        {
+          "cap": "781/20004",
+          "head_modulus": 105,
+          "height_lift": "35/24",
+          "outside_mask": 0
+        },
+        {
+          "cap": "223/40008",
+          "head_modulus": 105,
+          "height_lift": "77/48",
+          "outside_mask": 1
+        },
+        {
+          "cap": "2157/466760",
+          "head_modulus": 105,
+          "height_lift": "455/288",
+          "outside_mask": 2
+        },
+        {
+          "cap": "3097/5671134",
+          "head_modulus": 105,
+          "height_lift": "1001/576",
+          "outside_mask": 3
+        },
+        {
+          "cap": "3449/1100220",
+          "head_modulus": 105,
+          "height_lift": "595/384",
+          "outside_mask": 4
+        },
+        {
+          "cap": "3449/7701540",
+          "head_modulus": 105,
+          "height_lift": "1309/768",
+          "outside_mask": 5
+        },
+        {
+          "cap": "6371/18723744",
+          "head_modulus": 105,
+          "height_lift": "7735/4608",
+          "outside_mask": 6
+        },
+        {
+          "cap": "9773/240288048",
+          "head_modulus": 105,
+          "height_lift": "17017/9216",
+          "outside_mask": 7
+        },
+        {
+          "cap": "839/320064",
+          "head_modulus": 105,
+          "height_lift": "665/432",
+          "outside_mask": 8
+        },
+        {
+          "cap": "223/600120",
+          "head_modulus": 105,
+          "height_lift": "1463/864",
+          "outside_mask": 9
+        },
+        {
+          "cap": "7079/23044608",
+          "head_modulus": 105,
+          "height_lift": "8645/5184",
+          "outside_mask": 10
+        },
+        {
+          "cap": "3097/85067010",
+          "head_modulus": 105,
+          "height_lift": "19019/10368",
+          "outside_mask": 11
+        },
+        {
+          "cap": "1009/5041008",
+          "head_modulus": 105,
+          "height_lift": "11305/6912",
+          "outside_mask": 12
+        },
+        {
+          "cap": "1921/67213440",
+          "head_modulus": 105,
+          "height_lift": "24871/13824",
+          "outside_mask": 13
+        },
+        {
+          "cap": "47665/2097059328",
+          "head_modulus": 105,
+          "height_lift": "146965/82944",
+          "outside_mask": 14
+        },
+        {
+          "cap": "7192/2764677825",
+          "head_modulus": 105,
+          "height_lift": "323323/165888",
+          "outside_mask": 15
+        },
+        {
+          "cap": "867/3334",
+          "head_modulus": 9,
+          "height_lift": "1",
+          "outside_mask": 0
+        },
+        {
+          "cap": "1853/66680",
+          "head_modulus": 9,
+          "height_lift": "11/10",
+          "outside_mask": 1
+        },
+        {
+          "cap": "300113/10082016",
+          "head_modulus": 9,
+          "height_lift": "13/12",
+          "outside_mask": 2
+        },
+        {
+          "cap": "2874589/907381440",
+          "head_modulus": 9,
+          "height_lift": "143/120",
+          "outside_mask": 3
+        },
+        {
+          "cap": "788471/45769152",
+          "head_modulus": 9,
+          "height_lift": "17/16",
+          "outside_mask": 4
+        },
+        {
+          "cap": "22772953/12357671040",
+          "head_modulus": 9,
+          "height_lift": "187/160",
+          "outside_mask": 5
+        },
+        {
+          "cap": "1133878021/576691315200",
+          "head_modulus": 9,
+          "height_lift": "221/192",
+          "outside_mask": 6
+        },
+        {
+          "cap": "217417297/1038044367360",
+          "head_modulus": 9,
+          "height_lift": "2431/1920",
+          "outside_mask": 7
+        },
+        {
+          "cap": "4839803/285657120",
+          "head_modulus": 9,
+          "height_lift": "19/18",
+          "outside_mask": 8
+        },
+        {
+          "cap": "44841593/25709140800",
+          "head_modulus": 9,
+          "height_lift": "209/180",
+          "outside_mask": 9
+        },
+        {
+          "cap": "341385043/188533699200",
+          "head_modulus": 9,
+          "height_lift": "247/216",
+          "outside_mask": 10
+        },
+        {
+          "cap": "150744943/808001568000",
+          "head_modulus": 9,
+          "height_lift": "2717/2160",
+          "outside_mask": 11
+        },
+        {
+          "cap": "281947853/254642918400",
+          "head_modulus": 9,
+          "height_lift": "323/288",
+          "outside_mask": 12
+        },
+        {
+          "cap": "1190295037/10293939976320",
+          "head_modulus": 9,
+          "height_lift": "3553/2880",
+          "outside_mask": 13
+        },
+        {
+          "cap": "69509553943/588225141504000",
+          "head_modulus": 9,
+          "height_lift": "4199/3456",
+          "outside_mask": 14
+        },
+        {
+          "cap": "19557454669/1604250385920000",
+          "head_modulus": 9,
+          "height_lift": "46189/34560",
+          "outside_mask": 15
+        },
+        {
+          "cap": "1321/20004",
+          "head_modulus": 63,
+          "height_lift": "7/6",
+          "outside_mask": 0
+        },
+        {
+          "cap": "1439/180036",
+          "head_modulus": 63,
+          "height_lift": "77/60",
+          "outside_mask": 1
+        },
+        {
+          "cap": "2671/315063",
+          "head_modulus": 63,
+          "height_lift": "91/72",
+          "outside_mask": 2
+        },
+        {
+          "cap": "8423/9451890",
+          "head_modulus": 63,
+          "height_lift": "1001/720",
+          "outside_mask": 3
+        },
+        {
+          "cap": "36739/7801560",
+          "head_modulus": 63,
+          "height_lift": "119/96",
+          "outside_mask": 4
+        },
+        {
+          "cap": "4187/7801560",
+          "head_modulus": 63,
+          "height_lift": "1309/960",
+          "outside_mask": 5
+        },
+        {
+          "cap": "53959/100820160",
+          "head_modulus": 63,
+          "height_lift": "1547/1152",
+          "outside_mask": 6
+        },
+        {
+          "cap": "292237/5185036800",
+          "head_modulus": 63,
+          "height_lift": "17017/11520",
+          "outside_mask": 7
+        },
+        {
+          "cap": "6373/1400280",
+          "head_modulus": 63,
+          "height_lift": "133/108",
+          "outside_mask": 8
+        },
+        {
+          "cap": "1601/3400680",
+          "head_modulus": 63,
+          "height_lift": "1463/1080",
+          "outside_mask": 9
+        },
+        {
+          "cap": "88721/171394272",
+          "head_modulus": 63,
+          "height_lift": "1729/1296",
+          "outside_mask": 10
+        },
+        {
+          "cap": "559667/10283656320",
+          "head_modulus": 63,
+          "height_lift": "19019/12960",
+          "outside_mask": 11
+        },
+        {
+          "cap": "75961/234046800",
+          "head_modulus": 63,
+          "height_lift": "2261/1728",
+          "outside_mask": 12
+        },
+        {
+          "cap": "236143/7021404000",
+          "head_modulus": 63,
+          "height_lift": "24871/17280",
+          "outside_mask": 13
+        },
+        {
+          "cap": "120149/3510702000",
+          "head_modulus": 63,
+          "height_lift": "29393/20736",
+          "outside_mask": 14
+        },
+        {
+          "cap": "124279/35107020000",
+          "head_modulus": 63,
+          "height_lift": "323323/207360",
+          "outside_mask": 15
+        },
+        {
+          "cap": "1607/20004",
+          "head_modulus": 45,
+          "height_lift": "5/4",
+          "outside_mask": 0
+        },
+        {
+          "cap": "2579/210042",
+          "head_modulus": 45,
+          "height_lift": "11/8",
+          "outside_mask": 1
+        },
+        {
+          "cap": "3631/373408",
+          "head_modulus": 45,
+          "height_lift": "65/48",
+          "outside_mask": 2
+        },
+        {
+          "cap": "4052/3465693",
+          "head_modulus": 45,
+          "height_lift": "143/96",
+          "outside_mask": 3
+        },
+        {
+          "cap": "24069/3814096",
+          "head_modulus": 45,
+          "height_lift": "85/64",
+          "outside_mask": 4
+        },
+        {
+          "cap": "950843/961152192",
+          "head_modulus": 45,
+          "height_lift": "187/128",
+          "outside_mask": 5
+        },
+        {
+          "cap": "12443/19417216",
+          "head_modulus": 45,
+          "height_lift": "1105/768",
+          "outside_mask": 6
+        },
+        {
+          "cap": "968459/11533826304",
+          "head_modulus": 45,
+          "height_lift": "2431/1536",
+          "outside_mask": 7
+        },
+        {
+          "cap": "3781/700140",
+          "head_modulus": 45,
+          "height_lift": "95/72",
+          "outside_mask": 8
+        },
+        {
+          "cap": "9097/11027205",
+          "head_modulus": 45,
+          "height_lift": "209/144",
+          "outside_mask": 9
+        },
+        {
+          "cap": "599213/1008201600",
+          "head_modulus": 45,
+          "height_lift": "1235/864",
+          "outside_mask": 10
+        },
+        {
+          "cap": "57151/727795530",
+          "head_modulus": 45,
+          "height_lift": "2717/1728",
+          "outside_mask": 11
+        },
+        {
+          "cap": "138917/327665520",
+          "head_modulus": 45,
+          "height_lift": "1615/1152",
+          "outside_mask": 12
+        },
+        {
+          "cap": "241133/4084896816",
+          "head_modulus": 45,
+          "height_lift": "3553/2304",
+          "outside_mask": 13
+        },
+        {
+          "cap": "39989/982996560",
+          "head_modulus": 45,
+          "height_lift": "20995/13824",
+          "outside_mask": 14
+        },
+        {
+          "cap": "148727/27788556600",
+          "head_modulus": 45,
+          "height_lift": "46189/27648",
+          "outside_mask": 15
+        },
+        {
+          "cap": "413/20004",
+          "head_modulus": 315,
+          "height_lift": "35/24",
+          "outside_mask": 0
+        },
+        {
+          "cap": "359/120024",
+          "head_modulus": 315,
+          "height_lift": "77/48",
+          "outside_mask": 1
+        },
+        {
+          "cap": "367/140028",
+          "head_modulus": 315,
+          "height_lift": "455/288",
+          "outside_mask": 2
+        },
+        {
+          "cap": "59/200040",
+          "head_modulus": 315,
+          "height_lift": "1001/576",
+          "outside_mask": 3
+        },
+        {
+          "cap": "413/240048",
+          "head_modulus": 315,
+          "height_lift": "595/384",
+          "outside_mask": 4
+        },
+        {
+          "cap": "59/240048",
+          "head_modulus": 315,
+          "height_lift": "1309/768",
+          "outside_mask": 5
+        },
+        {
+          "cap": "413/2340468",
+          "head_modulus": 315,
+          "height_lift": "7735/4608",
+          "outside_mask": 6
+        },
+        {
+          "cap": "59/2640528",
+          "head_modulus": 315,
+          "height_lift": "17017/9216",
+          "outside_mask": 7
+        },
+        {
+          "cap": "59/40008",
+          "head_modulus": 315,
+          "height_lift": "665/432",
+          "outside_mask": 8
+        },
+        {
+          "cap": "359/1800360",
+          "head_modulus": 315,
+          "height_lift": "1463/864",
+          "outside_mask": 9
+        },
+        {
+          "cap": "59/360072",
+          "head_modulus": 315,
+          "height_lift": "8645/5184",
+          "outside_mask": 10
+        },
+        {
+          "cap": "367/18903780",
+          "head_modulus": 315,
+          "height_lift": "19019/10368",
+          "outside_mask": 11
+        },
+        {
+          "cap": "413/3600720",
+          "head_modulus": 315,
+          "height_lift": "11305/6912",
+          "outside_mask": 12
+        },
+        {
+          "cap": "59/3900780",
+          "head_modulus": 315,
+          "height_lift": "24871/13824",
+          "outside_mask": 13
+        },
+        {
+          "cap": "413/35107020",
+          "head_modulus": 315,
+          "height_lift": "146965/82944",
+          "outside_mask": 14
+        },
+        {
+          "cap": "59/42908580",
+          "head_modulus": 315,
+          "height_lift": "323323/165888",
+          "outside_mask": 15
+        }
+      ],
+      "source_Haar_density_cap": "133399/6668",
+      "source_mass": "1"
+    },
+    {
+      "Haar_density_lower": "326689328847837768548357/161103898535152780247040000",
+      "Haar_density_lower_decimal": 0.0020278176494689503,
+      "actual_head_cells": 85,
+      "actual_original_count": 191,
+      "all_rows_color_bound_exact": true,
+      "arbitrary132_multi_debit": "20736176499279907/142742634338304000",
+      "common_admissible_scale": "11669/107760",
+      "complete_query_bound": "5655578575728662685742753/1598352083445098741760000",
+      "deep_debit": "71027861481752874170243/145304734858645340160000",
+      "fixed_head_phase_inventory": {
+        "11": {
+          "105": 17,
+          "15": 2,
+          "21": 4,
+          "3": 2,
+          "315": 277,
+          "35": 17,
+          "45": 17,
+          "5": 2,
+          "63": 8,
+          "7": 4,
+          "9": 5
+        },
+        "13": {
+          "105": 17,
+          "15": 11,
+          "21": 2,
+          "3": 2,
+          "315": 58,
+          "35": 23,
+          "45": 2,
+          "5": 3,
+          "63": 53,
+          "7": 6,
+          "9": 2
+        },
+        "17": {
+          "105": 88,
+          "15": 13,
+          "21": 13,
+          "3": 2,
+          "315": 218,
+          "35": 18,
+          "45": 17,
+          "5": 3,
+          "63": 13,
+          "7": 6,
+          "9": 8
+        },
+        "19": {
+          "105": 101,
+          "15": 13,
+          "21": 5,
+          "3": 2,
+          "315": 263,
+          "35": 18,
+          "45": 43,
+          "5": 3,
+          "63": 61,
+          "7": 4,
+          "9": 4
+        }
+      },
+      "fixed_weight_gate": "-6388565015627/26968451973120",
+      "fixed_weight_gate_decimal": -0.23689031250272027,
+      "fixed_weight_mass": "185111/497664",
+      "free_singleton_outside_root_slots": 44,
+      "gate": "326689328847837768548357/474662133871574777856000",
+      "gate_decimal": 0.6882565630066191,
+      "head": "same_root",
+      "head_probability": {
+        "101": "49/20004",
+        "103": "533/20004",
+        "11": "211/10002",
+        "113": "131/5001",
+        "116": "10/5001",
+        "124": "73/5001",
+        "13": "33/1667",
+        "137": "100/5001",
+        "139": "165/6668",
+        "152": "40/5001",
+        "164": "533/20004",
+        "167": "131/6668",
+        "173": "151/20004",
+        "176": "81/3334",
+        "184": "533/20004",
+        "187": "533/20004",
+        "193": "139/6668",
+        "2": "23/3334",
+        "206": "533/20004",
+        "209": "15/3334",
+        "212": "100/5001",
+        "214": "241/20004",
+        "218": "31/10002",
+        "221": "91/6668",
+        "223": "63/3334",
+        "227": "74/5001",
+        "229": "73/3334",
+        "23": "155/6668",
+        "233": "41/5001",
+        "251": "131/6668",
+        "254": "61/5001",
+        "257": "100/5001",
+        "26": "116/5001",
+        "263": "4/1667",
+        "269": "169/20004",
+        "272": "33/3334",
+        "277": "100/5001",
+        "278": "155/10002",
+        "29": "75/3334",
+        "293": "461/20004",
+        "296": "28/1667",
+        "299": "83/3334",
+        "302": "29/20004",
+        "304": "533/20004",
+        "311": "16/1667",
+        "313": "241/20004",
+        "314": "165/6668",
+        "32": "53/10002",
+        "34": "155/20004",
+        "4": "533/20004",
+        "41": "31/20004",
+        "44": "153/6668",
+        "52": "533/20004",
+        "53": "449/20004",
+        "58": "533/20004",
+        "8": "63/6668",
+        "88": "107/6668",
+        "92": "233/10002",
+        "97": "533/20004"
+      },
+      "integer_mass": 20004,
+      "maximum_active_labels": {
+        "11": 6,
+        "13": 5,
+        "17": 5,
+        "19": 5
+      },
+      "primal_atoms": 59,
+      "screens": [
+        {
+          "cap": "1",
+          "head_modulus": 1,
+          "height_lift": "1",
+          "outside_mask": 0
+        },
+        {
+          "cap": "1535803/12602520",
+          "head_modulus": 1,
+          "height_lift": "11/10",
+          "outside_mask": 1
+        },
+        {
+          "cap": "7835623/79215840",
+          "head_modulus": 1,
+          "height_lift": "13/12",
+          "outside_mask": 2
+        },
+        {
+          "cap": "2418447523/199623916800",
+          "head_modulus": 1,
+          "height_lift": "143/120",
+          "outside_mask": 3
+        },
+        {
+          "cap": "1923007/27305460",
+          "head_modulus": 1,
+          "height_lift": "17/16",
+          "outside_mask": 4
+        },
+        {
+          "cap": "9419429713/1100956147200",
+          "head_modulus": 1,
+          "height_lift": "187/160",
+          "outside_mask": 5
+        },
+        {
+          "cap": "377961061/54064810800",
+          "head_modulus": 1,
+          "height_lift": "221/192",
+          "outside_mask": 6
+        },
+        {
+          "cap": "14880130777/17439145371648",
+          "head_modulus": 1,
+          "height_lift": "2431/1920",
+          "outside_mask": 7
+        },
+        {
+          "cap": "1374216241/22281255360",
+          "head_modulus": 1,
+          "height_lift": "19/18",
+          "outside_mask": 8
+        },
+        {
+          "cap": "860557393/114589313280",
+          "head_modulus": 1,
+          "height_lift": "209/180",
+          "outside_mask": 9
+        },
+        {
+          "cap": "179644227613/29411257075200",
+          "head_modulus": 1,
+          "height_lift": "247/216",
+          "outside_mask": 10
+        },
+        {
+          "cap": "7911931797013/10588052547072000",
+          "head_modulus": 1,
+          "height_lift": "2717/2160",
+          "outside_mask": 11
+        },
+        {
+          "cap": "15727360001/3604611978240",
+          "head_modulus": 1,
+          "height_lift": "323/288",
+          "outside_mask": 12
+        },
+        {
+          "cap": "883544971811/1668420401356800",
+          "head_modulus": 1,
+          "height_lift": "3553/2880",
+          "outside_mask": 13
+        },
+        {
+          "cap": "1856522936207/4282279030149120",
+          "head_modulus": 1,
+          "height_lift": "4199/3456",
+          "outside_mask": 14
+        },
+        {
+          "cap": "7406714673073/140147313713971200",
+          "head_modulus": 1,
+          "height_lift": "46189/34560",
+          "outside_mask": 15
+        },
+        {
+          "cap": "335/1667",
+          "head_modulus": 7,
+          "height_lift": "7/6",
+          "outside_mask": 0
+        },
+        {
+          "cap": "60289/2400480",
+          "head_modulus": 7,
+          "height_lift": "77/60",
+          "outside_mask": 1
+        },
+        {
+          "cap": "268507/13202640",
+          "head_modulus": 7,
+          "height_lift": "91/72",
+          "outside_mask": 2
+        },
+        {
+          "cap": "1153751/475295040",
+          "head_modulus": 7,
+          "height_lift": "1001/720",
+          "outside_mask": 3
+        },
+        {
+          "cap": "2681/173368",
+          "head_modulus": 7,
+          "height_lift": "119/96",
+          "outside_mask": 4
+        },
+        {
+          "cap": "3266203/1834926912",
+          "head_modulus": 7,
+          "height_lift": "1309/960",
+          "outside_mask": 5
+        },
+        {
+          "cap": "11286917/7208641440",
+          "head_modulus": 7,
+          "height_lift": "1547/1152",
+          "outside_mask": 6
+        },
+        {
+          "cap": "10975105/60552588096",
+          "head_modulus": 7,
+          "height_lift": "17017/11520",
+          "outside_mask": 7
+        },
+        {
+          "cap": "3611413/285657120",
+          "head_modulus": 7,
+          "height_lift": "133/108",
+          "outside_mask": 8
+        },
+        {
+          "cap": "32635861/19805560320",
+          "head_modulus": 7,
+          "height_lift": "1463/1080",
+          "outside_mask": 9
+        },
+        {
+          "cap": "16508267/13466692800",
+          "head_modulus": 7,
+          "height_lift": "1729/1296",
+          "outside_mask": 10
+        },
+        {
+          "cap": "3753898289/23529005660160",
+          "head_modulus": 7,
+          "height_lift": "19019/12960",
+          "outside_mask": 11
+        },
+        {
+          "cap": "320375/342788544",
+          "head_modulus": 7,
+          "height_lift": "2261/1728",
+          "outside_mask": 12
+        },
+        {
+          "cap": "21757007179/185380044595200",
+          "head_modulus": 7,
+          "height_lift": "24871/17280",
+          "outside_mask": 13
+        },
+        {
+          "cap": "23221087/245093808960",
+          "head_modulus": 7,
+          "height_lift": "29393/20736",
+          "outside_mask": 14
+        },
+        {
+          "cap": "837487809707/73410497659699200",
+          "head_modulus": 7,
+          "height_lift": "323323/207360",
+          "outside_mask": 15
+        },
+        {
+          "cap": "3079/10002",
+          "head_modulus": 5,
+          "height_lift": "5/4",
+          "outside_mask": 0
+        },
+        {
+          "cap": "1874143/50410080",
+          "head_modulus": 5,
+          "height_lift": "11/8",
+          "outside_mask": 1
+        },
+        {
+          "cap": "772349/26405280",
+          "head_modulus": 5,
+          "height_lift": "65/48",
+          "outside_mask": 2
+        },
+        {
+          "cap": "24515261/6654130560",
+          "head_modulus": 5,
+          "height_lift": "143/96",
+          "outside_mask": 3
+        },
+        {
+          "cap": "476249/21844368",
+          "head_modulus": 5,
+          "height_lift": "85/64",
+          "outside_mask": 4
+        },
+        {
+          "cap": "913252681/366985382400",
+          "head_modulus": 5,
+          "height_lift": "187/128",
+          "outside_mask": 5
+        },
+        {
+          "cap": "97606889/43251848640",
+          "head_modulus": 5,
+          "height_lift": "1105/768",
+          "outside_mask": 6
+        },
+        {
+          "cap": "53591035/207608873472",
+          "head_modulus": 5,
+          "height_lift": "2431/1536",
+          "outside_mask": 7
+        },
+        {
+          "cap": "921429/48543040",
+          "head_modulus": 5,
+          "height_lift": "95/72",
+          "outside_mask": 8
+        },
+        {
+          "cap": "33931141/15425484480",
+          "head_modulus": 5,
+          "height_lift": "209/144",
+          "outside_mask": 9
+        },
+        {
+          "cap": "1130821673/576691315200",
+          "head_modulus": 5,
+          "height_lift": "1235/864",
+          "outside_mask": 10
+        },
+        {
+          "cap": "139721225939/622826620416000",
+          "head_modulus": 5,
+          "height_lift": "2717/1728",
+          "outside_mask": 11
+        },
+        {
+          "cap": "116975561/79513499520",
+          "head_modulus": 5,
+          "height_lift": "1615/1152",
+          "outside_mask": 12
+        },
+        {
+          "cap": "1603284971/9541619942400",
+          "head_modulus": 5,
+          "height_lift": "3553/2304",
+          "outside_mask": 13
+        },
+        {
+          "cap": "9551981683/62974691619840",
+          "head_modulus": 5,
+          "height_lift": "20995/13824",
+          "outside_mask": 14
+        },
+        {
+          "cap": "393562058287/22670888983142400",
+          "head_modulus": 5,
+          "height_lift": "46189/27648",
+          "outside_mask": 15
+        },
+        {
+          "cap": "103/1667",
+          "head_modulus": 35,
+          "height_lift": "35/24",
+          "outside_mask": 0
+        },
+        {
+          "cap": "1159/150030",
+          "head_modulus": 35,
+          "height_lift": "77/48",
+          "outside_mask": 1
+        },
+        {
+          "cap": "9925/1440288",
+          "head_modulus": 35,
+          "height_lift": "455/288",
+          "outside_mask": 2
+        },
+        {
+          "cap": "26801/34656930",
+          "head_modulus": 35,
+          "height_lift": "1001/576",
+          "outside_mask": 3
+        },
+        {
+          "cap": "2677/520104",
+          "head_modulus": 35,
+          "height_lift": "595/384",
+          "outside_mask": 4
+        },
+        {
+          "cap": "16007/24964992",
+          "head_modulus": 35,
+          "height_lift": "1309/768",
+          "outside_mask": 5
+        },
+        {
+          "cap": "5003/9361872",
+          "head_modulus": 35,
+          "height_lift": "7735/4608",
+          "outside_mask": 6
+        },
+        {
+          "cap": "156889/2471534208",
+          "head_modulus": 35,
+          "height_lift": "17017/9216",
+          "outside_mask": 7
+        },
+        {
+          "cap": "16841/3640728",
+          "head_modulus": 35,
+          "height_lift": "665/432",
+          "outside_mask": 8
+        },
+        {
+          "cap": "16841/29125824",
+          "head_modulus": 35,
+          "height_lift": "1463/864",
+          "outside_mask": 9
+        },
+        {
+          "cap": "164587/360432072",
+          "head_modulus": 35,
+          "height_lift": "8645/5184",
+          "outside_mask": 10
+        },
+        {
+          "cap": "164587/2883456576",
+          "head_modulus": 35,
+          "height_lift": "19019/10368",
+          "outside_mask": 11
+        },
+        {
+          "cap": "218261/567953568",
+          "head_modulus": 35,
+          "height_lift": "11305/6912",
+          "outside_mask": 12
+        },
+        {
+          "cap": "218261/4543628544",
+          "head_modulus": 35,
+          "height_lift": "24871/13824",
+          "outside_mask": 13
+        },
+        {
+          "cap": "2132239/56227403232",
+          "head_modulus": 35,
+          "height_lift": "146965/82944",
+          "outside_mask": 14
+        },
+        {
+          "cap": "2132239/449819225856",
+          "head_modulus": 35,
+          "height_lift": "323323/165888",
+          "outside_mask": 15
+        },
+        {
+          "cap": "5983/10002",
+          "head_modulus": 3,
+          "height_lift": "1",
+          "outside_mask": 0
+        },
+        {
+          "cap": "144139/1867040",
+          "head_modulus": 3,
+          "height_lift": "11/10",
+          "outside_mask": 1
+        },
+        {
+          "cap": "1664173/26405280",
+          "head_modulus": 3,
+          "height_lift": "13/12",
+          "outside_mask": 2
+        },
+        {
+          "cap": "325120277/39924783360",
+          "head_modulus": 3,
+          "height_lift": "143/120",
+          "outside_mask": 3
+        },
+        {
+          "cap": "4624453/109221840",
+          "head_modulus": 3,
+          "height_lift": "17/16",
+          "outside_mask": 4
+        },
+        {
+          "cap": "1498729717/275239036800",
+          "head_modulus": 3,
+          "height_lift": "187/160",
+          "outside_mask": 5
+        },
+        {
+          "cap": "965391319/216259243200",
+          "head_modulus": 3,
+          "height_lift": "221/192",
+          "outside_mask": 6
+        },
+        {
+          "cap": "227768741/396344212992",
+          "head_modulus": 3,
+          "height_lift": "2431/1920",
+          "outside_mask": 7
+        },
+        {
+          "cap": "136238741/3713542560",
+          "head_modulus": 3,
+          "height_lift": "19/18",
+          "outside_mask": 8
+        },
+        {
+          "cap": "2530147409/534750128640",
+          "head_modulus": 3,
+          "height_lift": "209/180",
+          "outside_mask": 9
+        },
+        {
+          "cap": "22742493671/5882251415040",
+          "head_modulus": 3,
+          "height_lift": "247/216",
+          "outside_mask": 10
+        },
+        {
+          "cap": "211387737739/423522101882880",
+          "head_modulus": 3,
+          "height_lift": "2717/2160",
+          "outside_mask": 11
+        },
+        {
+          "cap": "50226377/19310421312",
+          "head_modulus": 3,
+          "height_lift": "323/288",
+          "outside_mask": 12
+        },
+        {
+          "cap": "162657850717/486622617062400",
+          "head_modulus": 3,
+          "height_lift": "3553/2880",
+          "outside_mask": 13
+        },
+        {
+          "cap": "13984611659/50979512263680",
+          "head_modulus": 3,
+          "height_lift": "4199/3456",
+          "outside_mask": 14
+        },
+        {
+          "cap": "13598037093023/385405112713420800",
+          "head_modulus": 3,
+          "height_lift": "46189/34560",
+          "outside_mask": 15
+        },
+        {
+          "cap": "1103/10002",
+          "head_modulus": 21,
+          "height_lift": "7/6",
+          "outside_mask": 0
+        },
+        {
+          "cap": "46733/3360672",
+          "head_modulus": 21,
+          "height_lift": "77/60",
+          "outside_mask": 1
+        },
+        {
+          "cap": "88639/7201440",
+          "head_modulus": 21,
+          "height_lift": "91/72",
+          "outside_mask": 2
+        },
+        {
+          "cap": "5612819/3629525760",
+          "head_modulus": 21,
+          "height_lift": "1001/720",
+          "outside_mask": 3
+        },
+        {
+          "cap": "7544/975195",
+          "head_modulus": 21,
+          "height_lift": "119/96",
+          "outside_mask": 4
+        },
+        {
+          "cap": "602729/611642304",
+          "head_modulus": 21,
+          "height_lift": "1309/960",
+          "outside_mask": 5
+        },
+        {
+          "cap": "3400099/3931986240",
+          "head_modulus": 21,
+          "height_lift": "1547/1152",
+          "outside_mask": 6
+        },
+        {
+          "cap": "30630179/283103009280",
+          "head_modulus": 21,
+          "height_lift": "17017/11520",
+          "outside_mask": 7
+        },
+        {
+          "cap": "36071/5441088",
+          "head_modulus": 21,
+          "height_lift": "133/108",
+          "outside_mask": 8
+        },
+        {
+          "cap": "1438771/1697619456",
+          "head_modulus": 21,
+          "height_lift": "1463/1080",
+          "outside_mask": 9
+        },
+        {
+          "cap": "1446529/1958791680",
+          "head_modulus": 21,
+          "height_lift": "1729/1296",
+          "outside_mask": 10
+        },
+        {
+          "cap": "91536659/987231006720",
+          "head_modulus": 21,
+          "height_lift": "19019/12960",
+          "outside_mask": 11
+        },
+        {
+          "cap": "263701/557031384",
+          "head_modulus": 21,
+          "height_lift": "2261/1728",
+          "outside_mask": 12
+        },
+        {
+          "cap": "1639507/27161911296",
+          "head_modulus": 21,
+          "height_lift": "24871/17280",
+          "outside_mask": 13
+        },
+        {
+          "cap": "7932517/152785751040",
+          "head_modulus": 21,
+          "height_lift": "29393/20736",
+          "outside_mask": 14
+        },
+        {
+          "cap": "4200901/647092592640",
+          "head_modulus": 21,
+          "height_lift": "323323/207360",
+          "outside_mask": 15
+        },
+        {
+          "cap": "805/5001",
+          "head_modulus": 15,
+          "height_lift": "5/4",
+          "outside_mask": 0
+        },
+        {
+          "cap": "17219/700140",
+          "head_modulus": 15,
+          "height_lift": "11/8",
+          "outside_mask": 1
+        },
+        {
+          "cap": "15121/900180",
+          "head_modulus": 15,
+          "height_lift": "65/48",
+          "outside_mask": 2
+        },
+        {
+          "cap": "2173487/831766320",
+          "head_modulus": 15,
+          "height_lift": "143/96",
+          "outside_mask": 3
+        },
+        {
+          "cap": "34173/3033940",
+          "head_modulus": 15,
+          "height_lift": "85/64",
+          "outside_mask": 4
+        },
+        {
+          "cap": "19215983/11468293200",
+          "head_modulus": 15,
+          "height_lift": "187/128",
+          "outside_mask": 5
+        },
+        {
+          "cap": "661177/561712320",
+          "head_modulus": 15,
+          "height_lift": "1105/768",
+          "outside_mask": 6
+        },
+        {
+          "cap": "201924383/1135361026800",
+          "head_modulus": 15,
+          "height_lift": "2431/1536",
+          "outside_mask": 7
+        },
+        {
+          "cap": "107371/10922184",
+          "head_modulus": 15,
+          "height_lift": "95/72",
+          "outside_mask": 8
+        },
+        {
+          "cap": "140923/95219040",
+          "head_modulus": 15,
+          "height_lift": "209/144",
+          "outside_mask": 9
+        },
+        {
+          "cap": "8369/8161632",
+          "head_modulus": 15,
+          "height_lift": "1235/864",
+          "outside_mask": 10
+        },
+        {
+          "cap": "4439591/28280054880",
+          "head_modulus": 15,
+          "height_lift": "2717/1728",
+          "outside_mask": 11
+        },
+        {
+          "cap": "593807/764552880",
+          "head_modulus": 15,
+          "height_lift": "1615/1152",
+          "outside_mask": 12
+        },
+        {
+          "cap": "39317249/389921968800",
+          "head_modulus": 15,
+          "height_lift": "3553/2304",
+          "outside_mask": 13
+        },
+        {
+          "cap": "62537023/817853137920",
+          "head_modulus": 15,
+          "height_lift": "20995/13824",
+          "outside_mask": 14
+        },
+        {
+          "cap": "412453313/38602274911200",
+          "head_modulus": 15,
+          "height_lift": "46189/27648",
+          "outside_mask": 15
+        },
+        {
+          "cap": "775/20004",
+          "head_modulus": 105,
+          "height_lift": "35/24",
+          "outside_mask": 0
+        },
+        {
+          "cap": "129/26672",
+          "head_modulus": 105,
+          "height_lift": "77/48",
+          "outside_mask": 1
+        },
+        {
+          "cap": "2359/600120",
+          "head_modulus": 105,
+          "height_lift": "455/288",
+          "outside_mask": 2
+        },
+        {
+          "cap": "619/1200240",
+          "head_modulus": 105,
+          "height_lift": "1001/576",
+          "outside_mask": 3
+        },
+        {
+          "cap": "45/13336",
+          "head_modulus": 105,
+          "height_lift": "595/384",
+          "outside_mask": 4
+        },
+        {
+          "cap": "41/106688",
+          "head_modulus": 105,
+          "height_lift": "1309/768",
+          "outside_mask": 5
+        },
+        {
+          "cap": "9/26672",
+          "head_modulus": 105,
+          "height_lift": "7735/4608",
+          "outside_mask": 6
+        },
+        {
+          "cap": "353/9801960",
+          "head_modulus": 105,
+          "height_lift": "17017/9216",
+          "outside_mask": 7
+        },
+        {
+          "cap": "123/43342",
+          "head_modulus": 105,
+          "height_lift": "665/432",
+          "outside_mask": 8
+        },
+        {
+          "cap": "123/346736",
+          "head_modulus": 105,
+          "height_lift": "1463/864",
+          "outside_mask": 9
+        },
+        {
+          "cap": "123/476762",
+          "head_modulus": 105,
+          "height_lift": "8645/5184",
+          "outside_mask": 10
+        },
+        {
+          "cap": "123/3814096",
+          "head_modulus": 105,
+          "height_lift": "19019/10368",
+          "outside_mask": 11
+        },
+        {
+          "cap": "41/173368",
+          "head_modulus": 105,
+          "height_lift": "11305/6912",
+          "outside_mask": 12
+        },
+        {
+          "cap": "41/1386944",
+          "head_modulus": 105,
+          "height_lift": "24871/13824",
+          "outside_mask": 13
+        },
+        {
+          "cap": "3/133360",
+          "head_modulus": 105,
+          "height_lift": "146965/82944",
+          "outside_mask": 14
+        },
+        {
+          "cap": "41/15256384",
+          "head_modulus": 105,
+          "height_lift": "323323/165888",
+          "outside_mask": 15
+        },
+        {
+          "cap": "1387/6668",
+          "head_modulus": 9,
+          "height_lift": "1",
+          "outside_mask": 0
+        },
+        {
+          "cap": "64049/2400480",
+          "head_modulus": 9,
+          "height_lift": "11/10",
+          "outside_mask": 1
+        },
+        {
+          "cap": "13253/600120",
+          "head_modulus": 9,
+          "height_lift": "13/12",
+          "outside_mask": 2
+        },
+        {
+          "cap": "663907/226845360",
+          "head_modulus": 9,
+          "height_lift": "143/120",
+          "outside_mask": 3
+        },
+        {
+          "cap": "340661/21844368",
+          "head_modulus": 9,
+          "height_lift": "17/16",
+          "outside_mask": 4
+        },
+        {
+          "cap": "6075809/3276655200",
+          "head_modulus": 9,
+          "height_lift": "187/160",
+          "outside_mask": 5
+        },
+        {
+          "cap": "17480993/10812962160",
+          "head_modulus": 9,
+          "height_lift": "221/192",
+          "outside_mask": 6
+        },
+        {
+          "cap": "122245649/619287832800",
+          "head_modulus": 9,
+          "height_lift": "2431/1920",
+          "outside_mask": 7
+        },
+        {
+          "cap": "738431/57131424",
+          "head_modulus": 9,
+          "height_lift": "19/18",
+          "outside_mask": 8
+        },
+        {
+          "cap": "532319/326465280",
+          "head_modulus": 9,
+          "height_lift": "209/180",
+          "outside_mask": 9
+        },
+        {
+          "cap": "50499947/37706739840",
+          "head_modulus": 9,
+          "height_lift": "247/216",
+          "outside_mask": 10
+        },
+        {
+          "cap": "426409703/2406375578880",
+          "head_modulus": 9,
+          "height_lift": "2717/2160",
+          "outside_mask": 11
+        },
+        {
+          "cap": "961699/990278016",
+          "head_modulus": 9,
+          "height_lift": "323/288",
+          "outside_mask": 12
+        },
+        {
+          "cap": "11886223/104852966400",
+          "head_modulus": 9,
+          "height_lift": "3553/2880",
+          "outside_mask": 13
+        },
+        {
+          "cap": "296414621/2941125707520",
+          "head_modulus": 9,
+          "height_lift": "4199/3456",
+          "outside_mask": 14
+        },
+        {
+          "cap": "2618741563/218980177678080",
+          "head_modulus": 9,
+          "height_lift": "46189/34560",
+          "outside_mask": 15
+        },
+        {
+          "cap": "533/10002",
+          "head_modulus": 63,
+          "height_lift": "7/6",
+          "outside_mask": 0
+        },
+        {
+          "cap": "1643/240048",
+          "head_modulus": 63,
+          "height_lift": "77/60",
+          "outside_mask": 1
+        },
+        {
+          "cap": "389/75015",
+          "head_modulus": 63,
+          "height_lift": "91/72",
+          "outside_mask": 2
+        },
+        {
+          "cap": "1505/2160432",
+          "head_modulus": 63,
+          "height_lift": "1001/720",
+          "outside_mask": 3
+        },
+        {
+          "cap": "1129/280056",
+          "head_modulus": 63,
+          "height_lift": "119/96",
+          "outside_mask": 4
+        },
+        {
+          "cap": "3607/7681536",
+          "head_modulus": 63,
+          "height_lift": "1309/960",
+          "outside_mask": 5
+        },
+        {
+          "cap": "11731/30806160",
+          "head_modulus": 63,
+          "height_lift": "1547/1152",
+          "outside_mask": 6
+        },
+        {
+          "cap": "9277/187237440",
+          "head_modulus": 63,
+          "height_lift": "17017/11520",
+          "outside_mask": 7
+        },
+        {
+          "cap": "4264/1275255",
+          "head_modulus": 63,
+          "height_lift": "133/108",
+          "outside_mask": 8
+        },
+        {
+          "cap": "23285/53050608",
+          "head_modulus": 63,
+          "height_lift": "1463/1080",
+          "outside_mask": 9
+        },
+        {
+          "cap": "60229/183636720",
+          "head_modulus": 63,
+          "height_lift": "1729/1296",
+          "outside_mask": 10
+        },
+        {
+          "cap": "19781/449369856",
+          "head_modulus": 63,
+          "height_lift": "19019/12960",
+          "outside_mask": 11
+        },
+        {
+          "cap": "3043/12602520",
+          "head_modulus": 63,
+          "height_lift": "2261/1728",
+          "outside_mask": 12
+        },
+        {
+          "cap": "52027/1697619456",
+          "head_modulus": 63,
+          "height_lift": "24871/17280",
+          "outside_mask": 13
+        },
+        {
+          "cap": "31753/1386277200",
+          "head_modulus": 63,
+          "height_lift": "29393/20736",
+          "outside_mask": 14
+        },
+        {
+          "cap": "25507/8488097280",
+          "head_modulus": 63,
+          "height_lift": "323323/207360",
+          "outside_mask": 15
+        },
+        {
+          "cap": "1999/20004",
+          "head_modulus": 45,
+          "height_lift": "5/4",
+          "outside_mask": 0
+        },
+        {
+          "cap": "18125/1440288",
+          "head_modulus": 45,
+          "height_lift": "11/8",
+          "outside_mask": 1
+        },
+        {
+          "cap": "16669/1800360",
+          "head_modulus": 45,
+          "height_lift": "65/48",
+          "outside_mask": 2
+        },
+        {
+          "cap": "26653/18903780",
+          "head_modulus": 45,
+          "height_lift": "143/96",
+          "outside_mask": 3
+        },
+        {
+          "cap": "1371/186704",
+          "head_modulus": 45,
+          "height_lift": "85/64",
+          "outside_mask": 4
+        },
+        {
+          "cap": "4857/5974528",
+          "head_modulus": 45,
+          "height_lift": "187/128",
+          "outside_mask": 5
+        },
+        {
+          "cap": "200281/277255440",
+          "head_modulus": 45,
+          "height_lift": "1105/768",
+          "outside_mask": 6
+        },
+        {
+          "cap": "1505933/15879175200",
+          "head_modulus": 45,
+          "height_lift": "2431/1536",
+          "outside_mask": 7
+        },
+        {
+          "cap": "25261/3900780",
+          "head_modulus": 45,
+          "height_lift": "95/72",
+          "outside_mask": 8
+        },
+        {
+          "cap": "317189/440728128",
+          "head_modulus": 45,
+          "height_lift": "209/144",
+          "outside_mask": 9
+        },
+        {
+          "cap": "1229201/1930886100",
+          "head_modulus": 45,
+          "height_lift": "1235/864",
+          "outside_mask": 10
+        },
+        {
+          "cap": "54181/642728520",
+          "head_modulus": 45,
+          "height_lift": "2717/1728",
+          "outside_mask": 11
+        },
+        {
+          "cap": "11083/21844368",
+          "head_modulus": 45,
+          "height_lift": "1615/1152",
+          "outside_mask": 12
+        },
+        {
+          "cap": "47251/873774720",
+          "head_modulus": 45,
+          "height_lift": "3553/2304",
+          "outside_mask": 13
+        },
+        {
+          "cap": "2691223/54064810800",
+          "head_modulus": 45,
+          "height_lift": "20995/13824",
+          "outside_mask": 14
+        },
+        {
+          "cap": "1530433/269945978400",
+          "head_modulus": 45,
+          "height_lift": "46189/27648",
+          "outside_mask": 15
+        },
+        {
+          "cap": "533/20004",
+          "head_modulus": 315,
+          "height_lift": "35/24",
+          "outside_mask": 0
+        },
+        {
+          "cap": "50/15003",
+          "head_modulus": 315,
+          "height_lift": "77/48",
+          "outside_mask": 1
+        },
+        {
+          "cap": "533/180036",
+          "head_modulus": 315,
+          "height_lift": "455/288",
+          "outside_mask": 2
+        },
+        {
+          "cap": "50/135027",
+          "head_modulus": 315,
+          "height_lift": "1001/576",
+          "outside_mask": 3
+        },
+        {
+          "cap": "165/86684",
+          "head_modulus": 315,
+          "height_lift": "595/384",
+          "outside_mask": 4
+        },
+        {
+          "cap": "131/560112",
+          "head_modulus": 315,
+          "height_lift": "1309/768",
+          "outside_mask": 5
+        },
+        {
+          "cap": "533/2520504",
+          "head_modulus": 315,
+          "height_lift": "7735/4608",
+          "outside_mask": 6
+        },
+        {
+          "cap": "449/17283456",
+          "head_modulus": 315,
+          "height_lift": "17017/9216",
+          "outside_mask": 7
+        },
+        {
+          "cap": "533/300060",
+          "head_modulus": 315,
+          "height_lift": "665/432",
+          "outside_mask": 8
+        },
+        {
+          "cap": "25/120024",
+          "head_modulus": 315,
+          "height_lift": "1463/864",
+          "outside_mask": 9
+        },
+        {
+          "cap": "533/2700540",
+          "head_modulus": 315,
+          "height_lift": "8645/5184",
+          "outside_mask": 10
+        },
+        {
+          "cap": "25/1080216",
+          "head_modulus": 315,
+          "height_lift": "19019/10368",
+          "outside_mask": 11
+        },
+        {
+          "cap": "139/1040208",
+          "head_modulus": 315,
+          "height_lift": "11305/6912",
+          "outside_mask": 12
+        },
+        {
+          "cap": "139/8321664",
+          "head_modulus": 315,
+          "height_lift": "24871/13824",
+          "outside_mask": 13
+        },
+        {
+          "cap": "449/30246048",
+          "head_modulus": 315,
+          "height_lift": "146965/82944",
+          "outside_mask": 14
+        },
+        {
+          "cap": "449/241968384",
+          "head_modulus": 315,
+          "height_lift": "323323/165888",
+          "outside_mask": 15
+        }
+      ],
+      "source_Haar_density_cap": "103694305/3840768",
+      "source_mass": "1"
+    }
+  ],
+  "passed": true,
+  "scope": "Fixed actual11 head,44 singleton HEAD PROJECTIONS and4 outside pure roots. All44 singleton outside roots, every132 multi-support shallow phase and every additional deep or23/29-bearing phase may vary; whole family finite with distinct odd nonunit moduli, support in nine primes and v3<=2. For each actual root assignment, use one normalized conditional-product source with the SAME fixed head probability. Reciprocal count bounds control all its queries and its Haar density. No uniform arbitrary44-head-projection result and no exact optimizer claim.",
+  "witness_sha256": "1c22a0198fb42dd8863ed44c2b94bad05d54364ce6185e65c02c16f99260bda1"
+}

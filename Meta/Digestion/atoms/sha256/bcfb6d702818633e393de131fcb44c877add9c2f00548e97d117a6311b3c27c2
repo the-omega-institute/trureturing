@@ -1,0 +1,20 @@
+### theorem 23.2 四腿相干态在奇数模数下为完美张量
+
+对 $n\ge2$，在独立加入 Hilbert 空间 $\mathbb C^n$、计算基和等权相干叠加后，定义
+
+$$
+|T_n\rangle
+=
+\frac1n\sum_{u,v\in R_n}
+|u,v,u+v,u+2v\rangle.
+$$
+
+则
+
+$$
+\boxed{
+|T_n\rangle\text{ 的任意两腿约化态最大混合}
+\iff n\text{ 为奇数}.
+}
+$$
+

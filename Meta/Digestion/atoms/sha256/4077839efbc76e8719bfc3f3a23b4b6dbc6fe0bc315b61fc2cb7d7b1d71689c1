@@ -1,0 +1,8 @@
+### theorem 33.3 核与余核来自同一个缺陷群
+
+令 $\mathcal D_B[p^r]=\{z\in\mathcal D_B:p^rz=0\}$。则
+
+$$
+\boxed{K_r\cong\mathcal D_B[p^r],\qquad C_r\cong\mathcal D_B/p^r\mathcal D_B.}
+$$
+

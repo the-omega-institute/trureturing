@@ -1,0 +1,23 @@
+## 38. Fibonacci 周期闭合自然产生素数方向
+
+令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+\qquad M^2=M+I,
+$$
+
+并定义 $t$ 步闭合边界映射
+
+$$
+B_t=M^t-I,
+\qquad
+\mathcal D_t=\mathbb Z^2/(M^t-I)\mathbb Z^2.
+$$
+
+若 $L_t=\operatorname{tr}(M^t)$ 为 Lucas 数，则
+
+$$
+\boxed{\det(M^t-I)=1+(-1)^t-L_t.}
+$$
+
