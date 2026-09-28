@@ -1,0 +1,12 @@
+# Four-cube degree-two repair budget
+
+Let `Cube = Bool^4` and let `Face = Fin 4 x Bool^3` index the actual
+triangular faces of the boundary of the four-dimensional cross-polytope.  A
+binary triangular cochain is `F : Face -> ZMod 2`; its tetrahedral defect is
+`d2 F b`, the sum of the four incident triangle values.  The support weight
+counts nonzero triangular faces.
+
+For a finite set `S : Finset Cube`, a pairing is a partition of `S` into
+unordered two-element subsets.  Its cost is the sum of the four-coordinate
+Hamming distances of the paired vertices; the empty pairing has cost zero.
+
