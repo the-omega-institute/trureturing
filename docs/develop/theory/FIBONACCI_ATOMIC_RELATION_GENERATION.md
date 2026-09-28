@@ -2879,7 +2879,7 @@ $$
 
 ## 46. 时间切片的四端口谱
 
-假设四个时刻的联合读数在 $V=(\mathbb Z/n\mathbb Z)^2$ 上单射，并在每个端口使用 $\mathbb C^n$，定义等权相干态
+假设四个互异时刻的联合读数在 $V=(\mathbb Z/n\mathbb Z)^2$ 上单射，并在每个端口使用 $\mathbb C^n$，定义等权相干态
 
 $$
 |\Psi_{\mathcal T,n}\rangle=\frac1n\sum_{x\in V}|r_{t_0}(x),r_{t_1}(x),r_{t_2}(x),r_{t_3}(x)\rangle.
@@ -3079,7 +3079,7 @@ $$
 
 ### theorem 54.1 Fibonacci 双区域障碍
 
-令 $g=\gcd(n,F_{t-s})$。则
+若附加记录的目标是恢复完整来源 $x$（即恒等任务），令 $g=\gcd(n,F_{t-s})$。则
 
 $$
 \boxed{\mathfrak J\cong\mathbb Z/g\mathbb Z,\qquad |R|_{\min}=g.}
