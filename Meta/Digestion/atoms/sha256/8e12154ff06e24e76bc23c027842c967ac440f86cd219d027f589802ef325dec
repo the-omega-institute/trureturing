@@ -1,0 +1,44 @@
+**Theorem 15.1 (first arrival at the Fibonacci period fixed point).**
+Let $I,J$ be finite sets of positive integer indices with nonempty union.
+Put $K=\max(I\cup J)$ and
+
+$$
+M=\prod_{j\in I}C_j\prod_{j\in J}B_j,\qquad
+\varepsilon=\begin{cases}4,&I\ne\varnothing,\\2,&I=\varnothing.\end{cases}
+$$
+
+Then the complete forward trajectory after its first two steps is
+
+$$
+\pi(M)=\varepsilon3^{K+1},\qquad
+\pi^{\circ(2+t)}(M)=8\cdot3^{\max(1,K-t)}\quad(t\geq0).
+$$
+
+In particular, $\pi^{\circ(K+1)}(M)=24$, while
+$\pi^{\circ n}(M)\ne24$ for every $0\leq n<K+1$.
+
+Proof. The exact block ranks and original depths give disjoint prime
+supports. At each prime factor of a selected block the prime-level matrix
+period is $4\cdot3^{j+1}$ for $C_j$ or $2\cdot3^{j+1}$ for $B_j$. Its
+exponent in $M$ equals its original depth, so the prime-power lift adds
+no factor. The Chinese remainder theorem and the largest selected index
+therefore give $\pi(M)=\varepsilon3^{K+1}$.
+
+The direct small-modulus returns are $\pi(2)=3$, $\pi(4)=6$, and
+$\pi(8)=12$. The identity $Q^8=I+3A$, with
+$A=\left(\begin{smallmatrix}11&7\\7&4\end{smallmatrix}\right)$ nonzero
+modulo three, has exact first depth one. The two-coordinate prime-power
+lift of Theorem 14.1, together with the order eight modulo three, gives
+$\pi(3^b)=8\cdot3^{b-1}$ for every $b\geq1$. CRT now yields
+
+$$
+\pi(\varepsilon3^{K+1})=8\cdot3^K,\qquad
+\pi(8\cdot3^u)=8\cdot3^{\max(1,u-1)}\quad(u\geq1).
+$$
+
+Induction on $t$ gives the displayed trajectory. The exponent reaches
+one for the first time when $t=K-1$, which is iteration $K+1$.
+Earlier terms from the second iterate have exponent at least two; the
+first iterate has the wrong power of two, and $M$ is odd. Thus none of
+the preceding terms is 24. The value 24 is fixed by the same recurrence.
+

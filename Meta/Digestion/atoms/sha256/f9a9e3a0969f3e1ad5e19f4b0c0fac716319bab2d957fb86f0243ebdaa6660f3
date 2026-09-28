@@ -1,0 +1,6 @@
+## 15. Exact period iteration of cubic block products
+
+Retain $B_j=L_{3^j}^2+3$ and $C_j=L_{3^j}^2+1$ for $j\geq1$, and let
+$\pi(m)$ be the order of $Q$ modulo a positive integer $m$. Write
+$\pi^{\circ0}(m)=m$ and $\pi^{\circ(n+1)}(m)=\pi(\pi^{\circ n}(m))$.
+
