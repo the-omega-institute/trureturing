@@ -1,0 +1,132 @@
+{
+  "bridges": [
+    {
+      "bad_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        1
+      ],
+      "minima": [
+        "1",
+        "1",
+        "4/5",
+        "28/45",
+        "224/495",
+        "2372/7425",
+        "8456/42075",
+        "16708/155925",
+        "888304/23856525",
+        "-7295956/296502525",
+        "-310739032/4273124625"
+      ],
+      "root": 0
+    },
+    {
+      "bad_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "minima": [
+        "1",
+        "1",
+        "5/6",
+        "2/3",
+        "121/240",
+        "423/1120",
+        "14263/53760",
+        "63523/358400",
+        "1047343/9318400",
+        "43281211/782745600",
+        "59873459/5322670080"
+      ],
+      "root": 1
+    }
+  ],
+  "certificate": {
+    "G": "8712921199/128193738750",
+    "H": "1550736200437900822266258293503106585119613595102947530250177781833199805979455302174417150916/3979077992122914037545231244599972274732294360773588307186756841616694998995784567353759765625",
+    "R": "6887706475904597060169424058464537712650481532395777734577557702552651746070625720852296411207/540890582146970773662415353065474934630179191741411810582457448412321733444530730929066015625",
+    "R_decimal": 12.73401072831597,
+    "score": "14497284272285229039969661893442238397915513357242350038012275306105248291740772722436029644339/282514537440726896665711418366598031505992899614924769810259735754785344928700704282116943359375",
+    "score_decimal": 0.051315179755402285,
+    "threshold": 8,
+    "w0": "19/50",
+    "w1": "31/50"
+  },
+  "continuation_A8": "886/1845",
+  "continuation_Q": "355/4797",
+  "continuation_s": "1733/23985",
+  "core_nonternary_primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37
+  ],
+  "full_Haar_density_cap": "1495269376/295615125",
+  "full_Haar_survivor_lower": "14497284272285229039969661893442238397915513357242350038012275306105248291740772722436029644339/19309674535779188927292165500652994443346883102254741632026087523011525719531837457711923200000000",
+  "height_boundary": "Every original, including outside-touching originals, hasv3<=1; all nonternary exponents are arbitrary finite.",
+  "outside_primes": [
+    41,
+    43,
+    47
+  ],
+  "partition_method": "Unordered block-size profiles with factorial multiplicities.",
+  "probability_method": "Signed partition coefficients times elementary symmetric polynomials; all1024 subsets per root.",
+  "query_method": "Inside-integral two-corner maximum; complete first moment plus exact low-product corrections.",
+  "reference_mass_by_root": [
+    [
+      "2/3",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    [
+      "1",
+      "4/5",
+      "8/9",
+      "10/11",
+      "14/15",
+      "16/17",
+      "20/21",
+      "26/27",
+      "28/29",
+      "34/35"
+    ]
+  ],
+  "root_Haar_density_cap": "93/50",
+  "scope": "One fixed ten-coordinate height-one star profile with actual-mask domination and finite dominated-measure thinning. No uniform fourteen-prime theorem and no new Lean claim.",
+  "source_boundary": "Actual core singleton survivor masses dominate the reference masses on their two named roots. All original phases and shared numerical-label inventories are retained.",
+  "stated_Haar_lower": "3/4000",
+  "strict_Haar_surplus": "15028370450837344500537767952492565405351030551293813992709663846604002091894629152087244339/19309674535779188927292165500652994443346883102254741632026087523011525719531837457711923200000000",
+  "target": "23943/1775",
+  "unnormalized_survivor_reserve": "14497284272285229039969661893442238397915513357242350038012275306105248291740772722436029644339/3817527425642723727620894856069213400378163209726180621914974513847057182036555713919197119140625"
+}
