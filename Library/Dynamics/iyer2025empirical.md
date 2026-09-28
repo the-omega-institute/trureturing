@@ -4334,3 +4334,52 @@ A. Mitalauskas、V. Statulevičius，
 结论是原实际确定支持数据概率下的先验信道积分判断，pair/path 分别成立；
 不提供全局原始数据期望、更小噪声的失败结论或其他后验泛函的自动推广。
 纯理论文本未进入消化或 Lean 冻结链。
+
+## 第 105 章：逐输出 Rényi 响应与有限噪声中心
+
+[谱边界卷第 105 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在第 103 章相同原计数后验、pair/path 数据律和半指数噪声区间内，
+给出零输出与固定输出之间的 $\delta^{-1/2}$ 线性项及常数阶二次项。
+中心采用包含全部原组、精确后验中心和实际噪声的有限鞍点。
+对 $|\alpha-1|\ge\eta_Q\gg\sqrt\delta$ 还得到固定正紧区间内的穿孔一致版本；
+阶数一的实际导数义务仍未由该比较解决。
+
+R. W. Butler、M. S. Paolella，
+[arXiv:0803.2132v1](https://arxiv.org/abs/0803.2132v1)，
+*Bernoulli* 14(1), 140–154 (2008)，
+继续提供第 103 章已核对的非中心平方和矩母函数、收敛域和鞍点密度前因子。
+其固定维数支持边缘比值定理未被当成当前增长数组或实际计数 escort 定理。
+本章先对有限 Legendre 函数 Taylor，未对该文近似式作超出假设的微分。
+
+Sojung Kim、Kyoung-Kuk Kim，
+*Saddlepoint methods for conditional expectations with applications to risk management*，
+[arXiv:1510.01858v1](https://arxiv.org/abs/1510.01858v1)（2015-10-07），
+第 2、3 节，Lemma 3.1、Lemma 3.2 和 Theorem 3.3，
+研究有连续联合密度的随机向量及其 iid 样本均值，要求鞍点附近的联合累积量函数
+和插入导数 $K_\gamma(\eta)$ 解析。插入导数的反演积分与密度的鞍点比值，
+是本章条件信息量导数问题的经典近邻。
+原离散计数 escort、相关 path 数据和增长数组尚未提供该定理的联合解析输入及一致导数界，
+故该文不直接解决 Shannon 延拓；有限支持本身也不能替代随规模一致的界。
+
+Alexander Katsevich，
+*Saddle Point Approximation and Central Limit Theorem for Densities in high dimensions*，
+[arXiv:2510.21545v1](https://arxiv.org/abs/2510.21545v1)（2025-10-24），
+的 Assumption 2.1、Theorem 3.1、Corollary 4.1、Assumption 4.2 与 Theorem 4.3
+提供高维密度近似的相关条件。本章不将其作为证明前提。
+具体地，对方差一的标准化标量按字面取 $n\asymp\delta^{-1}$，
+在 $\xi_n=2.5/\sqrt n$ 处，特征函数模至少 $1-\xi_n^2/2\to1$，
+而该版本 Assumption 4.2(3)、式 (4.5) 的右端
+$\max\{e^{-\sqrt n|\xi_n|},(1+|\xi_n|)^{-\kappa n}\}$ 趋于 $e^{-2.5}<1$。
+故此直接标准化代入不满足印出的条件；这里不擅自修正其尺度，也不对其他版本作结论。
+本章所需特征函数包络由原核心平方正态因子直接建立。
+
+Rényi、van Erven–Harremoës 与 Kadane 的归属沿用第 103 章：
+有限阶熵、escort 恒等式及幂二项分布是已知结构，未被单列为本章新定理。
+新推导把 $O_{\mathbb P}(\sqrt\delta)$ 的未缩放对数密度误差传回实际完整计数后验，
+明确支付核宽度扰动的 $|u'-u|/\delta$，并由精确有限阶数导数消除差商分母的伪障碍。
+合法慢降噪序列 $\sigma=\delta^{1/8}$ 表明删除噪声鞍点会留下发散线性残差。
+
+针对相对鞍点密度、条件矩与增长数组导数的有限原文检索不构成原创认证。
+未取得的 Tierney–Kadane 原文未用作依据；相关访问失败不被当作文献反证。
+本文只保留模型内推导及适用边界，不声称输出平均条件 Rényi 熵、Shannon 阶或无穷阶已由此解决。
+纯理论文本未进入消化或 Lean 冻结链。
