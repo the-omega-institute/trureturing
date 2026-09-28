@@ -172,11 +172,9 @@ $$
 S_\pi=\{a\in\mathcal A:\pi(a)>0\}.
 $$
 
-设有限结果 $Y_v(a)$ 具有已定义的均值
-
-$$
-m_v(a)=\mathbb E[Y_v(a)].
-$$
+若要讨论均值，先给结果一个校准的数值评分 $s_v:\mathcal Y_v\to\mathbb R$，并把
+$Y_v(a)$ 的均值理解为 $m_v(a)=\mathbb E[s_v(Y_v(a))]$。设这些有限结果的
+响应类允许的均值函数为 $m_v$。
 
 对已支持的 assignment，假设随机化观测核能识别 $m_v(a)$。给定固定权重 $w(a)\ge0$ 且 $\sum_aw(a)=1$，目标为
 
@@ -184,7 +182,7 @@ $$
 \mu_w=\sum_{a\in\mathcal A}w(a)m_v(a).
 $$
 
-**定理 5.2（全 assignment 加权平均的正性判据）。** 在不额外假设 exposure 因子化时，$\mu_w$ 能由这些被支持 assignment 的均值唯一确定，当且仅当
+**定理 5.2（全 assignment 加权平均的正性判据）。** 在不额外假设 exposure 因子化时，充分性不需要限制响应类；必要性假设：对每个未支持的 $a_*$，类中存在两个合法均值函数，它们在所有 $a\ne a_*$ 处相同，只在 $a_*$ 处取两个不同的校准数值。例如，包含任意 assignment 到两个不同数值结果的确定性响应的类满足此条件。在这个响应类上，$\mu_w$ 能由这些被支持 assignment 的均值唯一确定，当且仅当
 
 $$
 \boxed{
@@ -202,7 +200,7 @@ $$
 \mu'_w-\mu_w=w(a_*)c\ne0.
 $$
 
-所以目标不唯一。证毕。
+所以目标不唯一。若响应类不允许这种单坐标变动，上述必要性证明不适用；例如响应类只有一个已知常值函数时，没有设计支持也能识别目标。证毕。
 
 **推论 5.3（商上的正性与结构假设）。** 若已独立证明合法 exposure 因子化
 
@@ -210,7 +208,7 @@ $$
 m_v(a)=\bar m_v(e_v(a)),
 $$
 
-且目标权重只要求每个 exposure cell 的平均响应，那么识别所需的是每个具有正目标质量的 cell 至少有一个具有正设计概率的代表 assignment；同一 cell 内其余 assignment 的均值由结构商等式补回。
+则每个具有正目标质量的 cell 至少有一个具有正设计概率的代表 assignment，足以识别目标；同一 cell 内其余 assignment 的均值由结构商等式补回。若容许的 $\bar m_v$ 类还允许只改变任意一个未支持 cell 的共同均值、保持其余 cell 不变，则该条件也是必要的。
 
 ### 证明
 
@@ -309,9 +307,9 @@ $$
 
 ## 9. AHH：网络因果不是节点标签，而是 assignment 的商几何
 
-在有干扰的网络中，因果对象首先是完整 assignment 空间上的响应核。一个 exposure map 只有在每个纤维内响应恒定时才是合法坐标；一旦商合法，设计支持才有资格讨论该商上的平均与对比。
+在有干扰的网络中，因果对象首先是完整 assignment 空间上的响应核。一个 exposure map 只有在每个纤维内响应恒定时才是合法坐标；一旦商合法，设计支持才有资格讨论该商上的平均与对比。设计支持是对可用 assignment 的限制，不是第二个响应商。
 
-> **AHH：网络因果是两次取商。第一次把完整 assignment 按结构上不可区分的响应纤维压成 exposure；第二次把设计实际覆盖的纤维筛出来。把“未见 spillover”直接当成“没有 spillover”，就是把这两道门混成了一道。**
+> **AHH：网络因果先取一次结构商，再施加一次设计支持限制。把“未见 spillover”直接当成“没有 spillover”，就是把响应纤维的结构相等与实验是否覆盖该纤维混成了一道。**
 
 这一区分也适用于位置或局域事件：事件接口可以只读取一个区域标签，但是否能抹去远端关系，取决于完整响应核在相应纤维上是否真的相等；是否能估计该标签的事件率，则还取决于准备与探测协议对该纤维的支持。
 
@@ -328,7 +326,7 @@ $$
 q_v(a)=\theta^\mathsf T\varphi(a),
 $$
 
-并只考虑使所有 $q_v(a)$ 落在允许结果区间内的参数 $\theta$。把设计支持中的特征行堆成矩阵
+令 $\Theta_{\mathrm{adm}}\subseteq\mathbb R^d$ 为可接受参数族，其中所有参数都使 $q_v(a)$ 落在允许结果区间内。假设存在 $\theta_0$ 与 $\delta_0>0$，使欧氏开球 $B(\theta_0,\delta_0)\subseteq\Theta_{\mathrm{adm}}$。把设计支持中的特征行堆成矩阵
 
 $$
 \Phi_{S_\pi}
@@ -342,11 +340,11 @@ $$
 q_{S_\pi}=\Phi_{S_\pi}\theta.
 $$
 
-**定理 10.1（线性对比的设计秩判据）。** 给定参数线性对比 $c^\mathsf T\theta$，由支持 assignment 上的精确响应 $q_{S_\pi}$ 唯一确定，当且仅当
+**定理 10.1（线性对比的设计秩判据）。** 在上述含有 $\theta_0$ 欧氏开邻域的可接受参数族中，给定 $c\in\mathbb R^d$ 的参数线性对比 $c^\mathsf T\theta$，由支持 assignment 上的精确响应 $q_{S_\pi}$ 唯一确定，当且仅当存在 $r\in\mathbb R^k$ 使
 
 $$
 \boxed{
-c\in\operatorname{rowspan}(\Phi_{S_\pi}).
+c^\mathsf T=r^\mathsf T\Phi_{S_\pi}.
 }
 $$
 
@@ -360,7 +358,7 @@ $$
 
 ### 证明
 
-若 $c=r^\mathsf T\Phi_{S_\pi}$，则
+若 $c^\mathsf T=r^\mathsf T\Phi_{S_\pi}$，则
 
 $$
 c^\mathsf T\theta=r^\mathsf Tq_{S_\pi},
@@ -368,7 +366,7 @@ $$
 
 右端只由观测响应确定。
 
-反过来，若 $c$ 不在行空间，由有限维线性代数存在 $\delta\in\ker\Phi_{S_\pi}$ 使 $c^\mathsf T\delta\ne0$。取一个使所有 assignment 响应严格落在允许区间内部的参数 $\theta_0$；由于有限个 assignment 只有有限距离，取足够小的非零 $\epsilon$，使 $\theta_0+\epsilon\delta$ 仍然合法。两组参数在 $S_\pi$ 上满足
+反过来，若不存在这样的 $r$，由有限维线性代数存在 $\delta\in\ker\Phi_{S_\pi}$ 使 $c^\mathsf T\delta\ne0$。取假设中的内点 $\theta_0$，并令 $0<|\epsilon|\|\delta\|<\delta_0$，则 $\theta_0+\epsilon\delta\in\Theta_{\mathrm{adm}}$。两组参数在 $S_\pi$ 上满足
 
 $$
 \Phi_{S_\pi}(\theta_0+\epsilon\delta)
