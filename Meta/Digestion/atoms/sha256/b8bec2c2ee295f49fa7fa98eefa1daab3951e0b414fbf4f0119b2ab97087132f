@@ -1,0 +1,18 @@
+### 定理 51.1：活动容量的着色与延拓刻画
+
+若 \(D\neq\varnothing\)，则对每个切面 \(A\)，有
+
+$$
+\boxed{
+c_A^D(f)
+=
+\chi\bigl(G_A(D,f)\bigr)
+=
+\min_{H\in\operatorname{Ext}(D,f)}
+\kappa_A^D(H)
+=
+\min_{H\in\operatorname{Ext}(D,f)}
+\kappa_A(H).
+}
+$$
+
