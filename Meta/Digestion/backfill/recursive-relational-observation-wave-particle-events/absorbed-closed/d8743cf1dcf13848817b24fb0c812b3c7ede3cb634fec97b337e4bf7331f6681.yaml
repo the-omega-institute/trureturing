@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d8743cf1dcf13848817b24fb0c812b3c7ede3cb634fec97b337e4bf7331f6681
   normalized_sha256: sha256:d8743cf1dcf13848817b24fb0c812b3c7ede3cb634fec97b337e4bf7331f6681
 cas_ref: sha256:d8743cf1dcf13848817b24fb0c812b3c7ede3cb634fec97b337e4bf7331f6681
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/ExactConditionalPreparationCost.exact_conditional_preparation_cost
+    target_statement_id: sha256:9543f852721336b1f4f1972a120de91d6bafd9daa1d04c3f3890f92281c35d82
 receipts:
   unresolved_subitems: []
