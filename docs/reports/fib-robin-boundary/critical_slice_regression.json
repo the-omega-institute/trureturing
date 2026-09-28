@@ -1,0 +1,27 @@
+{
+  "scope": "Three concrete false-certificate regressions; not a complete checker audit.",
+  "certificate_sha256": "8885dc697a178d2b2944bcac093936ba61bd050eee37871667fd0ad4786160d9",
+  "corruptions_rejected": 3,
+  "checks": [
+    {
+      "mutation": "missing-layer",
+      "checker_exit": 1,
+      "rejected": true
+    },
+    {
+      "mutation": "false-cell",
+      "checker_exit": 1,
+      "rejected": true
+    },
+    {
+      "mutation": "false-patch-maximum",
+      "checker_exit": 1,
+      "rejected": true
+    }
+  ],
+  "source_sha256": {
+    "critical_slice_regression.py": "8936898bab5897070b16d545b40ca56716f71620e0446270422268da0ff1550a",
+    "critical_slice_check.py": "0d8144214fcd396854758070a8730ea99ffff8e9451724f0f5dfda13d642e646",
+    "price_band.py": "01fe08f39f0ffdabc98764807ba917351233de4d9aa2d6225b29a33936f59f02"
+  }
+}
