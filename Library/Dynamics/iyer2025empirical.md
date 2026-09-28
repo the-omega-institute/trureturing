@@ -4620,3 +4620,92 @@ Section 4（第 14–17 页）的 Proposition 10、Fact 11 及结尾证明已核
 有限支持的 $H_\alpha-H_\infty$ 界分别用于两个输出，未推断熵差单调。
 有限文献检索不认证全局原创；未给无界输出、期望熵、Shannon 端点或更宽噪声结论。
 纯理论正文未进入 Lean、消化或冻结链。
+
+## 第 111 章：格点惊异比较、Gaussian 标记积分与条件方差接口
+
+[谱边界卷第 111 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+给出同整数坐标上的二项／离散 Gaussian 中心惊异比较，
+通过共同带噪通道的有符号核收缩，将原完整方差熵目标归约为格点大组问题。
+大组和原外部组都保留各自惊异与能量的共同实现；实际固定总数选择由原中心方差比较支付。
+归约不依赖输出密度下界或把能量误差除以噪声宽度。
+
+第 109 章已核对的 Agostini–Amendola，
+*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)，
+仍提供离散 Gaussian、theta 正规化和矩的经典背景。
+其既有 Proposition 4.1 与 Remark 4.2 不自动给出本章原二项中心惊异的有符号质量误差、
+增长数组的全输出条件方差比较或原 path 数据范围。
+本章的 $d^{-1/8}$ 比较明确给出 Stirling 中央余项、加权尾与精确中心的支付。
+共同正核的 $L^1$ 收缩和条件均值的截断变分公式属于成熟测度与条件期望方法。
+
+Denis S. Grebenkov，*Optimal and sub-optimal quadratic forms for non-centered Gaussian processes*，
+[arXiv:1307.0185v1](https://arxiv.org/abs/1307.0185v1)。
+原 TeX Section II 给 Gaussian 二次型特征函数、迹展开及非中心累积量。
+其模型是离散时间的连续值 Gaussian 向量，不能把 “discrete-time” 当作整数格点概率。
+本章以原有限 Gaussian 积分直接核对零、一、二阶惊异标记，
+保留复均值和方差后得到聚合扭转能量乘 Gaussian 衰减；
+再将所有实际 Poisson 模求和，逐坐标正规化接近一，故没有隐藏指数维数因子。
+Gaussian 平方完成和矩求导本身不主张新意。
+版本标识为 2013 年；当前 PDF 标题日期为 2018 年，原 TeX 使用日期宏，两者区分。
+
+完整补偿后，任意实扭转的非零半整数混叠绝对积分为
+$Ce^{-ce^{2\Delta}}+O(Q^{-400})$，不乘增长的 $Q$ 次幂。
+只减先验方差的弱补偿则在原渐近权重上留下 $A\asymp Q^{1/4}$ 的参考扭转项。
+所选参考扭转未被证明由原经验中心实现，故这个反例只限定估计方法。
+频率相关复中心与逐输出条件均值仍是不同对象，完整非线性条件方差和尾部接口保持开放。
+
+另检索 DOI [10.1214/aop/1176994310](https://doi.org/10.1214/aop/1176994310)
+的全文入口只得到 HTML 阻断，未将其计作已读原文或定理依据。
+有限文献检索不认证全局原创。
+本章是原模型中的综合推导，未进入 Lean、消化或冻结链；
+全余量下的实际方差熵极限仍未解决。
+
+## 第 112 章：小球对数极限、凹性导数与移动经验谱
+
+[谱边界卷第 112 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把高阶 Rényi 输出响应延伸到 $\alpha\ge c\delta^{-1/4}$，得到原有限经验谱的修正
+$-C_{\mathrm{edge}}y/(\alpha^2\sqrt\delta)$，其中
+$C_{\mathrm{edge}}=\pi^2\rho_0/(\kappa\gamma^2)$。
+有限阶因子保持精确，原半指数噪声条件不变，噪声可以任意慢地趋零。
+
+Alexander Nazarov，*Log-Level Comparison Principle for Small Ball Probabilities*，
+[arXiv:0805.1773v1](https://arxiv.org/abs/0805.1773v1)，2008 年 5 月 13 日，九页原文。
+Proposition 1 比较固定正可和特征值序列，要求特征值比的无限乘积收敛。
+Section 2 Proposition 2 对固定无限序列定义
+$L(u)=-\tfrac12\sum\ln(1+2u\lambda_n)$，
+在 $(L'(u)+r)/\sqrt{L''(u)}\to0$ 下给小球概率的尖锐渐近式。
+原文将该式归属 Lifshits 1997 年 Theorem 2，并引 Sytaya 1974 年的 Gaussian Hilbert 空间方法；
+这两个更早原件在本轮未取得，归属来自已读 Nazarov 原文。
+
+本章数组有限、随机，随 $Q$ 和 $\alpha$ 同时改变；该命题不直接给它们的一致导数。
+因此正文明确证明有限 Laplace 和的内外尾、倾斜均值与方差，再由固定步长割线和对数凹性得到能量导数。
+这属于经典方法的原模型统一应用，不被称为新的通用小球原理。
+Theorem 1 另有计数函数积分增长条件，Remark 2 给正则变动的充分范围与移除条件后的失败边界。
+原 PDF 第 2 页的计数函数定义印为 $\mathcal N(\lambda)=\#\{n:\lambda_n<\lambda\}$，
+对正可和无限序列会给出无限计数；该不等号并非提取引入。
+本章不采用这一定义或对应计数函数定理。
+可读有限 Laplace 公式及正文独立的有限和承担推导。
+
+Alexander I. Nazarov、Ruslan S. Pusev，
+*Comparison Theorems for the Small Ball Probabilities of Gaussian Processes in Weighted L2-Norms*，
+[arXiv:1211.2344v1](https://arxiv.org/abs/1211.2344v1)，2012 年 11 月 10 日，十页原文。
+Section 2 Theorem 1／Corollary 1 与 Section 3 Theorem 2 处理固定自伴微分算子的 Gaussian Green 过程，
+要求系数正则性、规范边界条件、权重属于相应 $W_\infty^n$、远离零且规定的根次幂积分相等。
+其中 Section 3 Theorem 2 另要求边界条件的主部在两端分离。
+Proposition 2 的积分 Brownian bridge 还保留 Proposition 1 的正则性与归一化假设。
+在 $m=0$、权重一时指数因子为 $e^{-1/(8\varepsilon^2)}$，
+与逆平方谱的经典常数一致；它不提供本章有限经验谱、非中心均值、移动阶数和原噪声的统一性。
+没有把实际数组冒认为一个固定 Green 算子的谱。
+原 PDF 第 6 页 Proposition 1 证明的一处中间公式在非平凡端点因子两侧重复写了加权范数；
+该式不作为依据，所引用的比较定理与 Proposition 2 的单位权重指数分别核对。
+
+第 110 章已核对的 Cordero-Erausquin
+[arXiv:1801.04862v1](https://arxiv.org/abs/1801.04862v1)
+Theorem 1 标量情形及 Section 4 证明仍承担 Prékopa 边缘凹性。
+光滑正函数逼近凸球上图集指标后，支配收敛得到 CDF 对数凹；只用定性凹性，不引入维数常数。
+Baez 的有限 Gibbs／Rényi 恒等式继续承担精确代数部分，未被扩称为移动数组定理。
+
+Anderson–Darling 1952 原文入口返回 HTTP 200 的 1162 字节 HTML 阻断，未取得 PDF 或采用其定理。
+两份 Nazarov 原 PDF 的字体提取警告及上述未采用的计数函数定义保留为来源边界；
+所用条件和公式均已核对。有限检索不认证全局原创。
+本章未进入 Lean、消化或冻结链，也不声称更慢任意增长阶数、无界输出或 Shannon 端点已统一解决。

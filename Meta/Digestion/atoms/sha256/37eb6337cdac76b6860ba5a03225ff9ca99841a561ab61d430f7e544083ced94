@@ -1,0 +1,47 @@
+### 推论 32.1：固定投影族的全布尔选择器锐利指数
+
+固定整数 $r\geq1$，令 $q=2^r$。对任意整数块长 $k\geq1$、每个 $s\in\mathbb B^r$ 和 $1\leq i\leq k$，取互不相同的二元相等构件，分别产生
+
+$$
+U_{s,i}=\mathbf1[u_{s,i}^0=u_{s,i}^1],
+\qquad
+V_{s,i}=\mathbf1[v_{s,i}^0=v_{s,i}^1],
+$$
+
+并写 $U_s,V_s\in\mathbb B^k$。再取 $r$ 个彼此独立的指定投影构件
+
+$$
+\phi_j(t_j,d_j)=t_j,
+\qquad(t_j,d_j)\in\mathbb B^2.
+$$
+
+外层标量任务为
+
+$$
+F=\mathbf1[U_t=V_t],
+\qquad t=(t_1,\ldots,t_r).
+$$
+
+共有 $2qk$ 个良好相等构件、$4qk+2r$ 个原始比特。固定字典序：先按 $s$ 再按 $i$ 读取每个相等对的两个端点，并令每个良好相等对连续出现。取原顺序
+
+$$
+\pi=(t_1,\ldots,t_r,\text{全部 }U\text{ 对},\text{全部 }V\text{ 对},d_1,\ldots,d_r),
+$$
+
+以及规范化顺序
+
+$$
+\rho=\operatorname{cn}(\pi)
+=(\text{全部 }U\text{ 对},\text{全部 }V\text{ 对},t_1,d_1,\ldots,t_r,d_r).
+$$
+
+则计入全部端点和选择器层，精确宽度为
+
+$$
+W_F(\pi)=q\,2^k,
+\qquad
+W_F(\rho)=2^{qk}.
+$$
+
+因此在这个全布尔范围内，指数 $q=2^r$ 是最小一致指数；这里只对所列两种顺序给出锐利族，不声称所有端点顺序中的全局最优性。
+

@@ -1,0 +1,21 @@
+### 定理 37：特征着色与有限通用约化
+
+对定义 35 的任务，有
+
+$$
+ c_A(D,f)=\chi(G_A(D,f)),\qquad c_B(D,f)=\chi(G_B(D,f)).
+$$
+
+对任意正整数 $a,b,r,p,q$，有精确的类级量词等价
+
+$$
+\boxed{
+\left[\forall f\in\mathcal C_{(a,b,r)},\ \exists\text{ 一个 }(p,q)\text{-协议}
+\right]
+\Longleftrightarrow
+\left[U_{(a,b,r)}\text{ admits 一个 }(p,q)\text{-协议}\right].
+}
+$$
+
+这里的全称量词作用于整个任务类；右侧的一个通用响应表不是对每个成员分别声称同样的最小性。
+

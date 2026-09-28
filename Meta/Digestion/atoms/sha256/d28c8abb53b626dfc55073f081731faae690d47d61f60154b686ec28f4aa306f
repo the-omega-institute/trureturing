@@ -1,0 +1,9 @@
+# Complete-tripartite degree-one cochains and octahedral repair
+
+Let $A,B,C$ be nonempty sets. An edge cochain over $\mathbf F_2$ has three
+components $f_{AB}:A\times B\to\mathbf F_2$,
+$f_{AC}:A\times C\to\mathbf F_2$, and
+$f_{BC}:B\times C\to\mathbf F_2$. Its defect at $(a,b,c)$ is
+$d_1f(a,b,c)=f_{AB}(a,b)+f_{AC}(a,c)+f_{BC}(b,c)$. A vertex potential
+$g=(p,q,r)$ has $d_0g=(p+q,p+r,q+r)$.
+
