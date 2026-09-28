@@ -6,7 +6,6 @@ triage: theorem
 motivation_gids:
   - D5/S1/Words/Permutations/MamedeShapeExtraction
   - D5/S1/Words/Permutations/MamedeConditionalConverse
-  - D5/S1/Words/Permutations/MamedeOrderFreeFiber
 ---
 
 # Mamede--Santos--Soares Conjecture 5.1
@@ -66,6 +65,18 @@ so the bracketing copies cancel. Hence at least one outer factor is empty.
 This theorem does not assume either endpoint equation and does not extract
 the central factorization from them. KPI remains 0.
 
+`MamedeEndpointUniqueness.opposite_extremal_maps_oscillation` supplies that
+extraction and its oscillation consequence for an explicit attained generator
+interval. For `singletonWord n sigma a`, attained `m,M`, `1<=m<=M<=n`,
+and support in `[m,M]`, the simultaneous maps `sigma(M+1)=m` and
+`sigma(m)=M+1` imply `oscillation a`. The proof handles `m=M` directly.
+For `m<M` it forces a descent in the word and its reverse, aligns the resulting
+descent and ascent at `m` or `M`, and proves interior support for both outer
+factors. The symmetric-excursion obstruction and its reflected application
+then give an attained minimum or maximum at a word endpoint. Neither
+oscillation, source shape, nor an endpoint is an input. This closes the
+opposite-map consumer under its exact support hypotheses; KPI remains 0.
+
 `MamedeFactorSeparation.source_shape_unique_of_j_lt_i` supplies the
 factor-separation step of Proposition 3.7: under `1<=m<j<i<M<=n`, equal-product
 reduced consecutive words with the two actual first-orientation source shapes
@@ -87,20 +98,15 @@ The reflected orientation, oscillating and involutive branches, and a global
 count argument for every permutation remain unproved. The induction also needs
 to derive the exact endpoint and exterior hypotheses from an arbitrary
 nonoscillating source, up to permutation inversion, and handle the terminating cases.
-In particular, the current Lean source does not prove that a nonoscillating
-source excludes the opposite extremal position map; the paper's Lemma 3.6
-obtains the needed strict internal endpoint and the map to `j+1` with `j<M`.
-The endpoint theorem alone cannot discharge that map exclusion: its attained
-extremal endpoint premise has not been derived from the two opposite maps.
-The remaining direct obligation is to derive the two full runs from those
-maps, align their shared extreme occurrence into one of the two symmetric
-central factorizations, and prove that each outer factor has interior support.
-The compiled cancellation theorem handles the descent-then-ascent
-factorization once supplied; the ascent-then-descent form also needs its
-reflected application. Only then can an empty outer factor give an attained
-extremum at a word endpoint for `extremal_endpoint_oscillation`. That
-opposite-map consumer has not been compiled. Freeze, gate, and PR admission
-are withheld for this checkpoint.
+The opposite-map theorem excludes simultaneous extreme maps for a
+nonoscillating word with its attained generator interval. The remaining
+source-adapter obligation is to derive the strict internal endpoint `i>m`
+and the map to `j+1` with `j<M` from arbitrary nonoscillating sources, up to
+inversion, with all remaining endpoint and support conditions required by
+the conditional deletion and `j<i` fiber theorems. The paper's Lemma 3.6
+provides the intended source statement; the complete adapter is not yet a
+Lean theorem. The opposite-map consumer is compiled; the complete source
+adapter and the global count remain open.
 The class-to-word correspondence and the paper's upper bound still require
 formal justification in this adjacent-word model before the full conjecture
 can be claimed. Research target: [#10285](https://github.com/the-omega-institute/trureturing/issues/10285).

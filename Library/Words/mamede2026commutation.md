@@ -132,8 +132,8 @@ are valid indices, minimal representing length, and consecutive letters.
 The new proof uses the existing crossing lemmas rather than assuming the
 paper's unformalized repeated/symmetric-segment characterization. It proves
 only the endpoint-to-oscillation direction of Lemma 3.2. The reverse direction
-and the bridge from two opposite extremal position maps to an extremal word
-endpoint remain unproved.
+remains unproved. The separate opposite-map result below supplies the bridge
+to an extremal word endpoint for an explicitly attained generator interval.
 
 `MamedeEndpointUniqueness.symmetric_excursion_outer_empty` proves one
 independent part of that bridge. For `1<=m<M<=n`, write the symmetric central
@@ -144,8 +144,27 @@ letter of `p` and `q` lies strictly between `m` and `M`, then `p=[]` or
 `m` and `M+1`. Nonempty factors must both meet the central word at `M-1`;
 these swaps commute through the central product and cancel, contradicting
 minimal length. This is a repository-derived theorem and does not assume the
-paper's symmetric-factor exclusion. The opposite endpoint equations have
-not yet been shown to force this central factorization or its reflected form.
+paper's symmetric-factor exclusion.
+
+`MamedeEndpointUniqueness.opposite_extremal_maps_oscillation` proves the
+opposite-map implication in the repository's exact word model. Its inputs
+are `singletonWord n sigma a`, attained generators `m` and `M`,
+`1<=m<=M<=n`, support in `[m,M]`, and both maps `sigma(M+1)=m` and
+`sigma(m)=M+1` in one-based positions. Its conclusion is `oscillation a`;
+no source shape, exterior fixedness, or extremal word endpoint is assumed.
+The `m=M` case directly has an extremal first letter. For `m<M`, the
+attained witnesses from `extremal_orientation` equal the supplied `m,M`.
+Exterior fixedness and the guarded walk force a descent `M,...,m` in the
+word and, using the inverse product, a descent in the reverse word. The latter
+becomes an ascent `m,...,M` in the original word. Prefix comparison aligns
+the runs at `m` or `M`, without identifying their occurrences of `m` in
+advance. In each orientation both remaining outer factors have strictly
+interior support. The symmetric-excursion theorem, reflected for the
+ascent-first case, forces an outer factor to be empty. The resulting attained
+extremal endpoint gives oscillation by `extremal_endpoint_oscillation`.
+This standalone formulation is repository-derived and supports the
+nonoscillating map-exclusion step toward Lemma 3.6. It does not establish
+the full source adapter, the class-to-word translation, or Conjecture 5.1.
 
 `MamedeEndpointUniqueness.extremal_endpoint_unique` compares two reduced
 consecutive words with equal permutation products. If their first letters

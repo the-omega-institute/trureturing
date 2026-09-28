@@ -370,4 +370,85 @@ register_information_theorem symmetric_excursion_outer_empty in arena
 
 end SymmetricExcursion
 
+namespace OppositeExtremalMaps
+
+abbrev signature : Signature where
+  Params := Nat
+  State _ := List Nat
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ w => w) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => [1, 2, 1, 3, 2]) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law r := ∀ (n m M : Nat) (sigma : Equiv.Perm (Fin (n + 1))) (a : List Nat)
+      (_ha : singletonWord n sigma a) (_hmem : m ∈ a) (_hMem : M ∈ a)
+      (_hm : 1 ≤ m) (_hmM : m ≤ M) (_hMn : M ≤ n)
+      (_hb : ∀ k ∈ a, m ≤ k ∧ k ≤ M)
+      (_hmax : sigma (position n (M + 1)) = position n m)
+      (_hmin : sigma (position n m) = position n (M + 1)),
+    oscillation (r.readout () n a)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  have hr : reducedWord 1 [1] := by
+    refine ⟨by simp [validWord], ?_⟩
+    intro v _ he
+    cases v with
+    | nil => revert he; decide
+    | cons k v => simp
+  intro h
+  have hh := h 1 1 1 (wordProduct 1 [1]) [1]
+    ⟨hr, by simp [consecutive], rfl⟩ (by simp) (by simp)
+    (by decide) (by decide) (by decide) (by simp) (by decide) (by decide)
+  simp [rejected, realize, oscillation, spikes, internalSpikes,
+    segmentLengths, weakIncreasing] at hh
+
+theorem sensitivity : Sensitivity arena actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    intro j hji
+    cases i
+    cases j
+    exact (hji rfl).elim
+  · intro i
+    exact nomatch i
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  exact ⟨0, [], [1], by decide⟩
+
+def registration : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨opposite_extremal_maps_oscillation, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+
+register_information_theorem opposite_extremal_maps_oscillation in arena
+  readout via (realize signature (fun _ _ w => w) (fun e => nomatch e))
+  realizes registration
+  escape from source ({
+    owner := `D5.S1.Words.Permutations.MamedeEndpointUniqueness
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 4 }] })
+  escape continues (open)
+
+#print axioms registration
+
+end OppositeExtremalMaps
+
 end Reg.D5.S1.Words.Permutations.MamedeEndpointUniqueness

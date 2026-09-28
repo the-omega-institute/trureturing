@@ -4,9 +4,10 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Extremal endpoints force oscillation and determine reduced consecutive words. -/
+   digest: Extremal endpoints and opposite extremal maps force oscillation. -/
 
 import D5.S1.Words.Permutations.MamedeCrossing
+import D5.S1.Words.Permutations.MamedeExtremalOrientation
 import Mathlib.Data.Fin.Rev
 
 namespace D5.S1.Words.Permutations.MamedeEndpointUniqueness
@@ -997,6 +998,244 @@ theorem symmetric_excursion_outer_empty (n m M : Nat) (p q : List Nat)
       hpOpt (by simp [ht])) hr).elim
 
 #print axioms maximum_peel
+/-- Swapping both exterior positions of the attained generator interval forces
+    oscillation, without an assumed word endpoint or source factorization. -/
+theorem opposite_extremal_maps_oscillation (n m M : Nat)
+    (sigma : Equiv.Perm (Fin (n + 1))) (a : List Nat)
+    (ha : singletonWord n sigma a) (hmem : m ∈ a) (hMem : M ∈ a)
+    (hm : 1 ≤ m) (hmM : m ≤ M) (hMn : M ≤ n)
+    (hb : ∀ k ∈ a, m ≤ k ∧ k ≤ M)
+    (hmax : sigma (position n (M + 1)) = position n m)
+    (hmin : sigma (position n m) = position n (M + 1)) :
+    oscillation a := by
+  by_cases heq : m = M
+  · subst M
+    cases a with
+    | nil => simp at hmem
+    | cons k a =>
+      have hk : k = m := by have := hb k (by simp); omega
+      apply extremal_endpoint_oscillation n m (k :: a) ha.1 ha.2.1
+      · exact Or.inl (by simp [hk])
+      · exact Or.inr (fun t ht => (hb t ht).1)
+  have hlt : m < M := by omega
+  obtain ⟨lo, hi, _, _, _, hlo, hhi, hbounds, hfixed, _⟩ :=
+    D5.S1.Words.Permutations.MamedeExtremalOrientation.extremal_orientation
+      n a ha.1 ha.2.1 (by intro he; simp [he] at hmem)
+  have hlo_eq : lo = m := by
+    have := hb lo hlo
+    have := hbounds m hmem
+    omega
+  have hhi_eq : hi = M := by
+    have := hb hi hhi
+    have := hbounds M hMem
+    omega
+  subst lo
+  subst hi
+  have pos_val (t : Nat) (ht : 1 ≤ t ∧ t ≤ n + 1) :
+      (position n t).val = t - 1 := by
+    simp [position, Nat.mod_eq_of_lt (show t - 1 < n + 1 by omega)]
+  have hreverse_product : wordProduct n a.reverse = sigma⁻¹ := by
+    rw [rev_product, ha.2.2]
+  have hreverse_map : sigma⁻¹ (position n m) = position n (M + 1) := by
+    rw [← hmax]
+    simp
+  have force (w : List Nat) (pi : Equiv.Perm (Fin (n + 1)))
+      (hr : reducedWord n w) (hc : consecutive w)
+      (hp : wordProduct n w = pi)
+      (he : pi (position n m) = position n (M + 1))
+      (hf : ∀ x : Fin (n + 1), x.val + 1 < m → pi x = x) :
+      ∃ p q, w = p ++ descending M m ++ q ∧
+        (∀ k ∈ p, k < M) ∧ (∀ k ∈ q, m < k) := by
+    have guard : ∀ r : Fin (n + 1), r.val + 1 < m →
+        (pi r).val < (position n (M + 1)).val := by
+      intro r hrm
+      rw [hf r hrm, pos_val (M + 1) ⟨by omega, by omega⟩]
+      omega
+    have walk := guarded_walk_endpoint n m (M + 1) (position n (M + 1)) w
+      ⟨hm, by omega⟩ ⟨by omega, by omega⟩
+      (by rw [pos_val (M + 1) ⟨by omega, by omega⟩]; omega)
+      rfl hr (by simpa [hp] using he) (by simpa [hp] using guard)
+    exact forced_descent w m M hmM hc walk.1 walk.2
+  obtain ⟨pd, qd, hd, hpd, hqd⟩ := force a sigma ha.1 ha.2.1 ha.2.2 hmin
+    (fun x hx => by simpa [ha.2.2] using hfixed x (Or.inl hx))
+  obtain ⟨qr, pr, hr, hqr, hpr⟩ := force a.reverse sigma⁻¹
+    (rev_reduced n a ha.1) (rev_chain a ha.2.1) hreverse_product hreverse_map
+    (by
+      intro x hx
+      apply sigma.injective
+      simpa [ha.2.2] using (hfixed x (Or.inl hx)).symm)
+  have hasc : (descending M m).reverse = ascending m M := by
+    unfold descending ascending
+    apply List.ext_getElem
+    · simp
+    · intro r hr hr'
+      have hrange : r < M - m + 1 := by simpa using hr'
+      simp only [List.getElem_reverse, List.getElem_map, List.getElem_range,
+        List.length_map, List.length_range]
+      omega
+  let pa := pr.reverse
+  let qa := qr.reverse
+  have ha_run : a = pa ++ ascending m M ++ qa := by
+    simpa [pa, qa, List.reverse_append, hasc, List.append_assoc] using
+      congrArg List.reverse hr
+  have hpa : ∀ k ∈ pa, m < k := fun k hk => hpr k (List.mem_reverse.mp hk)
+  have hqa : ∀ k ∈ qa, k < M := fun k hk => hqr k (List.mem_reverse.mp hk)
+  have desc_first : descending M m = M :: descending (M - 1) m := by
+    unfold descending
+    rw [show M - m + 1 = (M - 1 - m + 1) + 1 by omega,
+      List.range_succ_eq_map]
+    simp only [List.map_cons, Nat.sub_zero, List.map_map]
+    congr 1
+    apply List.map_congr_left
+    intro k hk
+    have := List.mem_range.mp hk
+    simp only [Function.comp_apply, Nat.succ_eq_add_one]
+    omega
+  have desc_last : descending M m = descending M (m + 1) ++ [m] := by
+    unfold descending
+    rw [show M - m + 1 = (M - (m + 1) + 1) + 1 by omega,
+      List.range_succ, List.map_append]
+    simp only [List.map_singleton]
+    congr 1
+    simp only [List.cons.injEq, and_true]
+    omega
+  have asc_first : ascending m M =
+      m :: (List.range (M - m)).map (m + 1 + ·) := by
+    unfold ascending
+    rw [List.range_succ_eq_map]
+    simp only [List.map_cons, Nat.add_zero, List.map_map]
+    congr 1
+    apply List.map_congr_left
+    intro k _
+    simp only [Function.comp_apply, Nat.succ_eq_add_one]
+    omega
+  have asc_last : ascending m M = ascending m (M - 1) ++ [M] := by
+    unfold ascending
+    rw [show M - m + 1 = (M - 1 - m + 1) + 1 by omega,
+      List.range_succ, List.map_append]
+    simp only [List.map_singleton]
+    congr 1
+    simp only [List.cons.injEq, and_true]
+    omega
+  -- Prefix order determines which extreme is shared by the two forced runs.
+  have he : pd ++ (descending M m ++ qd) = pa ++ (ascending m M ++ qa) := by
+    simpa only [List.append_assoc] using hd.symm.trans ha_run
+  rcases List.append_eq_append_iff.mp he with
+    ⟨t, hprefix, _⟩ | ⟨t, hprefix, _⟩
+  · have hpdl : ∀ k ∈ pd, m < k := by
+      intro k hk
+      apply hpa k
+      rw [hprefix]
+      simp [hk]
+    have hnotm : m ∉ pd ++ descending M (m + 1) := by
+      intro hk
+      rcases List.mem_append.mp hk with hk | hk
+      · have := hpdl m hk; omega
+      · obtain ⟨r, hr, he⟩ := List.mem_map.mp hk
+        have := List.mem_range.mp hr
+        omega
+    have he_m : (pd ++ descending M (m + 1)) ++ m :: qd =
+        pa ++ m :: ((List.range (M - m)).map (m + 1 + ·) ++ qa) := by
+      simpa [desc_last, asc_first, List.append_assoc] using hd.symm.trans ha_run
+    have hsplit := (List.append_cons_inj_of_notMem hnotm
+      (by intro hk; have := hqd m hk; omega)).mp he_m
+    have hqal : ∀ k ∈ qa, m < k := by
+      intro k hk
+      apply hqd k
+      rw [hsplit.2.2]
+      simp [hk]
+    have hform : a = pd ++
+        (descending M m ++ (List.range (M - m)).map (m + 1 + ·)) ++ qa := by
+      rw [hd, hsplit.2.2]
+      simp only [List.append_assoc]
+    have hout := symmetric_excursion_outer_empty n m M pd qa hm hlt hMn
+      (fun k hk => ⟨hpdl k hk, hpd k hk⟩)
+      (fun k hk => ⟨hqal k hk, hqa k hk⟩)
+      (hform ▸ ha.1) (hform ▸ ha.2.1)
+    apply extremal_endpoint_oscillation n M a ha.1 ha.2.1
+    · rcases hout with hp | hq
+      · left
+        rw [hd, hp, desc_first]
+        simp
+      · right
+        rw [ha_run, hq, asc_last]
+        simp
+    · exact Or.inl (fun k hk => (hb k hk).2)
+  · have hpau : ∀ k ∈ pa, k < M := by
+      intro k hk
+      apply hpd k
+      rw [hprefix]
+      simp [hk]
+    have hnotM : M ∉ pa ++ ascending m (M - 1) := by
+      intro hk
+      rcases List.mem_append.mp hk with hk | hk
+      · have := hpau M hk; omega
+      · obtain ⟨r, hr, he⟩ := List.mem_map.mp hk
+        have := List.mem_range.mp hr
+        omega
+    have he_M : (pa ++ ascending m (M - 1)) ++ M :: qa =
+        pd ++ M :: (descending (M - 1) m ++ qd) := by
+      simpa [asc_last, desc_first, List.append_assoc] using ha_run.symm.trans hd
+    have hsplit := (List.append_cons_inj_of_notMem hnotM
+      (by intro hk; have := hqa M hk; omega)).mp he_M
+    have hqdu : ∀ k ∈ qd, k < M := by
+      intro k hk
+      apply hqa k
+      rw [hsplit.2.2]
+      simp [hk]
+    have hform : a = pa ++ (ascending m M ++ descending (M - 1) m) ++ qd := by
+      rw [ha_run, hsplit.2.2]
+      simp only [List.append_assoc]
+    have hreflect : (ascending m M ++ descending (M - 1) m).map (n + 1 - ·) =
+        descending (n + 1 - m) (n + 1 - M) ++
+          (List.range ((n + 1 - m) - (n + 1 - M))).map (n + 1 - M + 1 + ·) := by
+      rw [List.map_append]
+      congr 1
+      · unfold ascending descending
+        simp only [List.map_map]
+        apply List.ext_getElem
+        · simp; omega
+        · intro r hr hr'
+          have hrange : r < M - m + 1 := by simpa using hr
+          simp only [List.getElem_map, List.getElem_range, Function.comp_apply]
+          omega
+      · unfold descending
+        simp only [List.map_map]
+        apply List.ext_getElem
+        · simp; omega
+        · intro r hr hr'
+          have hrange : r < M - 1 - m + 1 := by simpa using hr
+          simp only [List.getElem_map, List.getElem_range, Function.comp_apply]
+          omega
+    have hword : a.map (n + 1 - ·) = pa.map (n + 1 - ·) ++
+        (descending (n + 1 - m) (n + 1 - M) ++
+          (List.range ((n + 1 - m) - (n + 1 - M))).map (n + 1 - M + 1 + ·)) ++
+        qd.map (n + 1 - ·) := by
+      rw [hform, List.map_append, List.map_append, hreflect]
+    have reflected_bounds (p : List Nat) (hp : ∀ k ∈ p, m < k ∧ k < M) :
+        ∀ k ∈ p.map (n + 1 - ·), n + 1 - M < k ∧ k < n + 1 - m := by
+      intro k hk
+      obtain ⟨l, hl, rfl⟩ := List.mem_map.mp hk
+      have := hp l hl
+      omega
+    have hout := symmetric_excursion_outer_empty n (n + 1 - M) (n + 1 - m)
+      (pa.map (n + 1 - ·)) (qd.map (n + 1 - ·)) (by omega) (by omega) (by omega)
+      (reflected_bounds pa (fun k hk => ⟨hpa k hk, hpau k hk⟩))
+      (reflected_bounds qd (fun k hk => ⟨hqd k hk, hqdu k hk⟩))
+      (hword ▸ reflect_reduced n a ha.1)
+      (hword ▸ reflect_consecutive n a ha.1.1 ha.2.1)
+    have hout' : pa = [] ∨ qd = [] := by simpa only [List.map_eq_nil_iff] using hout
+    apply extremal_endpoint_oscillation n m a ha.1 ha.2.1
+    · rcases hout' with hp | hq
+      · left
+        rw [ha_run, hp, asc_first]
+        simp
+      · right
+        rw [hd, hq, desc_last]
+        simp
+    · exact Or.inr (fun k hk => (hb k hk).1)
+
+#print axioms opposite_extremal_maps_oscillation
 #print axioms extremal_endpoint_oscillation
 #print axioms extremal_endpoint_unique
 #print axioms symmetric_excursion_outer_empty
