@@ -2200,3 +2200,145 @@ cell/region comparisons. The continuous result follows from the formulas
 above, not from the finite samples. The checker writes only stdout and reads
 explicit adjacent project inputs. Normal and optimized modes agree; no new
 geometry or Lean verification is claimed.
+
+## Finite pure-power prefixes absorb arbitrary higher tails
+
+The continuous neighborhood has a finite sufficient membership test. In the
+same fixed chart,17 additional low-height pure-power phase conditions ensure
+that every legally completed higher tail satisfies the query bound29. This
+does not place an arbitrary odd cover in this subclass; the other prefix
+patterns and discrete charts still require separate arguments.
+
+### Budget coordinates are actual deletion masses
+
+Use the same source definitions from Section5 of the cited paper. Completion
+has one class at each pure-power height, and the pure classes for each prime
+are disjoint. Write their phases as `a_(3^n)` and `a_(5^n)`. The selected
+low classes are0 modulo3,1 modulo9,4 modulo27 and0 modulo5. The selected25
+class and the selected75 quinary child are distinct children in column1.
+Let `c75` be that actual75 phase modulo25, with its ternary root fixed at2.
+
+The budget coordinates therefore have the exact sums
+
+    z_h=sum_(n>=4) (27/3^n)*1_(a_(3^n) mod27=h),
+    t_j=sum_(n>=3) (5/5^n)*1_(a_(5^n) mod5=j),
+    e=sum_(n>=3) (5/5^n)*1_(a_(5^n) mod25=c75).
+
+Each higher cylinder lies wholly in one of the displayed prefix classes.
+In particular e is an overlap from this same completed source, measured in
+the same column units as t1. It cannot be chosen independently afterward.
+
+Put
+
+    bad3=1-2*(z13+z22),
+    bad5=1-20*(t1-e)=20*(sum_(j!=1)t_j+e).
+
+Both lie in `[0,1]` and vanish on the certified edge. For `0<=tau<=1`, a
+legal budget theta lies in
+
+    (1-tau)*{certified edge}+tau*{legal continuous budget domain}
+
+if and only if `max(bad3,bad5)<=tau`.
+
+Necessity follows because both functions are affine and at most1 on the
+domain. For sufficiency when `0<tau<1`, set `s=z13+z22>0` and choose an
+edge point with ternary coordinates `(z13,z22)/(2s)`. Subtract `(1-tau)`
+times this edge point and divide the remainder by tau. The ternary residual
+is nonnegative precisely when `2s>=1-tau` and sums to1/2. The quinary
+residual has
+
+    tV1=(t1-(1-tau)/20)/tau,
+    tVj=t_j/tau (j!=1),        eV=e/tau.
+
+It sums to1/20, and `0<=eV<=tV1` follows precisely from `bad5<=tau`.
+At tau=0 the hypotheses say theta itself is on the edge; at tau=1 every
+legal theta is allowed. This includes the case s=0. The edge point in this
+decomposition is an interpolation witness, distinct from the earlier zbar
+chosen to optimize the weight ratio.
+
+### The same tail must pay for both quinary alternatives
+
+For integers `H3>=3,H5>=2`, impose the following prefix conditions:
+
+* For `4<=n<=H3`, the actual completed3^n phase modulo27 lies in `{13,22}`.
+* For `3<=n<=H5`, the actual completed5^n phase lies in column1 and its
+  phase modulo25 differs from c75.
+
+Every off-edge ternary deletion then has height above H3. Hence
+
+    bad3 <= 2*sum_(n>H3) 27/3^n = 3^(3-H3)=alpha.
+
+A quinary deletion contributing to bad5 either lies outside column1 or lies
+inside c75, which is in column1. These alternatives are disjoint for the
+same actual cylinder. All such cylinders have height above H5, so
+
+    bad5 <= 20*sum_(n>H5) 5/5^n = 5^(2-H5)=beta.
+
+There is one tail budget here, not two independent copies. Arbitrarily
+large later heights and arbitrary legal later phases are included by the
+infinite geometric sums.
+
+The previous exact weight bound now implies
+
+    rho <= max((1+3*alpha/5)*(1+beta/11), 1+beta/7).
+
+Indeed `rho3=1+3*bad3/5`, while `A<=1+bad5/11` and `B=1+bad5/7`.
+With `R>=R0` and `M0=14R0-delta0`, a sufficient uniform slack is
+
+    delta_prefix=14R0-M0*max((1+3*alpha/5)*(1+beta/11),1+beta/7).
+
+Two explicit choices give:
+
+| H3 | H5 | Additional phase conditions | Certified slack lower bound |
+| ---: | ---: | ---: | --- |
+| 13 | 9 | 17 | `5479330098137/2642980957031250 > 0.00207316` |
+| 14 | 8 | 17 | `1625223077149/528596191406250 > 0.00307460` |
+
+For13/9 one also has `bad3<=1/59049` and `bad5<=1/78125`, both less than
+the uniform raw radius1/50000. The direct ratio calculation gives the stronger
+displayed margin. The14/8 choice uses the general sufficient region even
+though its quinary tail exceeds that uniform radius. In each case all
+`280^6` physical tuples, the same fixed source construction and all complete
+query tails remain covered.
+
+As a negative control,13/8 gives only
+`-22218238121/176198730468750` from this lower screen. That does not prove
+an actual failure, a query counterexample, or the necessity of17 conditions;
+it only means this particular worst-case tail bound gives no certificate.
+
+### The prefix hypotheses have legal realizations
+
+For all n>=4, choose pure3 phases
+
+    a_(3^n)=13+27*3^(n-4) mod3^n.
+
+They retain row13. At two distinct heights the first added nonzero ternary
+digit occurs in different positions, so the residues disagree modulo the
+smaller modulus and the cylinders are disjoint. They also avoid all three
+selected lower pure3 classes.
+
+Choose a third25 child gamma in column1, different from both the selected25
+child and c75, and set for all n>=3
+
+    a_(5^n)=gamma+25*5^(n-3) mod5^n.
+
+The same first-nonzero-digit argument gives disjoint pure5 cylinders. They
+remain in column1 and avoid the selected25 class and the75 child. Such a
+gamma exists because column1 has five children and only two were excluded.
+A concrete choice has selected25 phase1, c75=6, gamma=11, and selected mixed
+phases2 modulo15,8 modulo45,56 modulo75. The latter has ternary root2 and
+quinary child6; each selected mixed class avoids its selected proper-divisor
+classes.
+
+This proves consistency of the source-prefix hypotheses with an infinite
+completion. It is not a construction of an odd distinct cover, and it does
+not allow phases from a prescribed hypothetical cover to be changed. A use
+against such a cover must establish these conditions for its actual
+completed source or handle the complementary prefix cases.
+
+The [exact prefix checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-prefix.py)
+and [results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/prefix.json)
+reuse the pinned common-margin result, evaluate the rational infinite-tail
+bounds, check finite phase legality, and include the13/8 negative screen.
+The all-height conclusions follow from the displayed geometric series and
+disjointness arguments. No new geometry or Lean verification is claimed.
