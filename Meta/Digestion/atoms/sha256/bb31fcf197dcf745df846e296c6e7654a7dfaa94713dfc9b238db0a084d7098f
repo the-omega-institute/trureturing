@@ -1,0 +1,4 @@
+### 6.2 同一证书的预测、自由能和恢复界
+
+令 $U_t=e^{-itH}$、$f_\beta(H)=-\beta^{-1}\log\operatorname{Tr}e^{-\beta H}$、$\gamma_H=e^{-\beta H}/Z_H$、$G_H(\rho)=\beta^{-1}D(\rho\Vert\gamma_H)$。
+

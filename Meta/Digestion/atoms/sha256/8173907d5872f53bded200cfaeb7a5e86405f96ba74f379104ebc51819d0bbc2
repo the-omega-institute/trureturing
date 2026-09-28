@@ -1,0 +1,13 @@
+### 6.1 有限 Weyl 证书与相互作用
+
+对 Hermitian $H$ 定义
+$$
+h_0=\operatorname{Tr}H/(de),\quad
+H_A=e^{-1}\operatorname{Tr}_BH-h_0I_A,\quad H_B=d^{-1}\operatorname{Tr}_AH,
+$$
+$$
+H_0=H_A\otimes I+I\otimes H_B,\quad V=H-H_0,
+\quad\mathbb E_A(X)=e^{-1}\operatorname{Tr}_B(X)\otimes I.
+$$
+因此 $\operatorname{Tr}_AV=\operatorname{Tr}_BV=0$。取 $d$ 维 Weyl 族 $W_{ab}=X^aZ^b$，定义 $R_{ab}=(\operatorname{id}-\mathbb E_A)[H,W_{ab}\otimes I]$，$\delta(H)=\max\|R_{ab}\|$，$\|M\|_{2,n}^2=\operatorname{Tr}M^\dagger M/(de)$。
+
