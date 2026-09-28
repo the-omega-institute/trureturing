@@ -1,0 +1,9 @@
+**定理 2143.2（观察纤维的幂闭包判据）。** 对任意群 $G$ 和任意子集 $S\subseteq G$，在定义 2143.1 的无约束域中有
+
+$$
+\operatorname{Rec}(S)
+\quad\Longleftrightarrow\quad
+\forall g\in\operatorname{Sat}_G(S)\ \forall k\geq1,\ g^k\in\operatorname{Sat}_G(S).
+\tag{2143.1}
+$$
+
