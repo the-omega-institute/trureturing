@@ -163,7 +163,7 @@ end D5.CommentOwner
         self.publish()
         self.assertEqual({p: p.read_bytes() for p in compiled}, compiled)
         self.assertEqual({name for name, stamp in self.stamps().items()
-                          if stamp != before[name]}, {'D5.B'})
+                          if stamp != before[name]}, {'D5.B', 'D5.A', 'Fixture'})
         warm = self.report()[1:]
         for artifact in (native.state(self.root) / 'modules').glob('*.zip*'):
             artifact.unlink()
@@ -282,6 +282,12 @@ class NativeCompilerOptionsTests:
         self.build()
         before = self.stamps()
         original = self.report()[0]
+        self.write('lakefile.toml', 'moreLeanArgs = ["--incr-load=unregistered.snapshot"]\n' + config)
+        rejected = self.build(success=False)
+        self.assertIn('incomplete module semantic coverage: external compiler inputs',
+                      rejected.stdout + rejected.stderr)
+        self.assertEqual(before, self.stamps())
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         # Lake must apply actual Lean options before accepting cached rows.
         self.write('lakefile.toml', 'leanOptions.autoImplicit = false\n' + config)
         rejected = self.build(success=False)
@@ -395,6 +401,10 @@ class NativeSemanticConsumerTests:
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['dependency_sources']['include'].append(
             dict(pattern='LeanInformationAudit/Support.lean', optional=False))
+        policy['inspector_sources']['include'].append(
+            dict(pattern='LeanInformationAudit/*.lean', optional=False))
+        # Reported content takes precedence even if also registered as program.
+        policy['inspector_sources']['include'].append(dict(pattern='D5/**/*.lean', optional=False))
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.build()
         before = self.stamps()
@@ -417,15 +427,25 @@ class NativeSemanticConsumerTests:
         self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 1\n-- comment only\n')
         changed(set())
         self.assertEqual(self.report()[1:], original)
-        # A changed compiled judge artifact refreshes exactly its importers.
+        # An unused imported producer implementation change must preserve reports.
+        program = self.root / '.lake/build/lib/lean/LeanInformationAudit/Support.olean'
+        compiled = program.read_bytes()
         self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 2\n')
-        changed({'D5.A', 'Fixture'})
+        self.run_lake('build', '+D5.A')
+        self.assertNotEqual(compiled, program.read_bytes())
+        self.write('activity.jsonl', '')
+        probe = self.run_lake('--no-build', 'build', '+D5.A:report')
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(before, self.stamps())
+        self.record_result('imported-program-hit', dict(exit_code=probe.returncode,
+            compiled_producer_changed=True, extracted=0, artifacts_unchanged=True))
+        changed(set())
         self.assertEqual(self.report()[1:], original)
         for name in ['D5.B', 'D5.Alone']:
             self.assertEqual(self.origins()[name], origins[name])
         changed(set())
         self.write('LeanInformationAudit/Registry.lean', driver.replace(':= judgeSupport', ':= judgeSupport + 0'))
-        changed({'D5.A', 'Fixture'})
+        changed(set())
         self.assertEqual(self.report()[1:], original)
 
         policy['report_cache_release_semantic_version'] += 1
@@ -433,9 +453,17 @@ class NativeSemanticConsumerTests:
         changed(set(before))
         self.assertEqual(self.report()[1:], original)
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text() + '-- content bytes\n')
-        changed({'D5.B'})
+        changed({'D5.B', 'D5.A', 'Fixture'})
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
         changed({'D5.B', 'D5.A', 'Fixture'})
+
+        # An added producer helper with the same execution configuration is
+        # still covered by compatibility; it must not count as a new data input.
+        self.write('LeanInformationAudit/Added.lean', 'def unusedHelper : Nat := 42\n')
+        self.write('LeanInformationAudit/Registry.lean', 'import LeanInformationAudit.Added\n' + driver)
+        changed(set())
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '',
+                         'compatible helper growth rebuilt report data')
 
         # Compatible judge edits cannot license damaged, incomplete or foreign rows.
         state = native.state(self.root)
@@ -631,6 +659,29 @@ class NativeSemanticConsumerTests:
         self.assertEqual(result['aggregated'], {'before': 1, 'unchanged': 0, 'warm': 1, 'clean': 1})
         self.assertTrue(result['unaffected_origin_preserved'])
 
+    def test_external_package_semantic_source_binding(self):
+        # A real library module in the fixture's pinned Git dependency.
+        # Dirty dependency source still changes semantics even at the same pin.
+        config = self.root / '.lake/packages/mathlib/lakefile.toml'
+        config.write_text(config.read_text() + '\n[[lean_lib]]\nname = "ExternalData"\n')
+        dependency = config.parent / 'ExternalData.lean'
+        dependency.write_text('namespace ExternalData\ndef value : Nat := 1\n')
+        self.write('D5/A.lean', 'import ExternalData\nnoncomputable def value : Nat := ExternalData.value\n')
+        self.build()
+        before = self.stamps()
+        self.build()
+        self.assertEqual(before, self.stamps())
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        dependency.write_text(dependency.read_text().replace('def value : Nat := 1',
+            'noncomputable def value : Nat := Classical.choice (show Nonempty Nat from ⟨1⟩)'))
+        self.build()
+        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]},
+                         {'D5.A', 'Fixture'})
+        row = next(row for row in self.report()[0] if row['module'] == 'D5.A')
+        self.assertEqual(row['declarations'][0]['axioms'], ['Classical.choice'])
+        self.record_result('external-source', dict(changed=['D5.A', 'Fixture'],
+            axioms=row['declarations'][0]['axioms'], dependency_sha256=publication.digest(dependency)))
+
     def test_exported_transitive_dependency_binding(self):
         self.build()
         self.publish()
@@ -668,7 +719,7 @@ class NativeSemanticConsumerTests:
         self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() + '\n[[lean_lib]]\nname = "Support"\n')
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         rejected = self.build(success=False)  # Native dependencies never invent registration.
-        self.assertIn('unregistered native dependency sources: Support.lean', rejected.stdout + rejected.stderr)
+        self.assertIn('incomplete module semantic coverage: Support at Support.lean', rejected.stdout + rejected.stderr)
         policy['dependency_sources']['include'].append(dict(pattern='Support.lean', optional=False))
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.build()

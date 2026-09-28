@@ -735,13 +735,16 @@ class EntryPointTests(unittest.TestCase):
     def test_prebuilt_utility_producer_is_required_and_its_failure_stops_preparation(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            (root / 'lean-toolchain').write_text('fixture\n')
             (root / 'Trureturing.lean').write_text('def x : Nat := 1\n')
             loader = 'tools/scripts/report/lean-report-selection.py'
             (root / loader).parent.mkdir(parents=True)
             (root / loader).write_text(Path(native.selection.__file__).read_text())
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
             (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
-                report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
+                report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths('lean-toolchain'),
+                report_execution=dict(toolchain='lean-toolchain',
+                    **{name: list(values) for name, values in native.selection.REPORT_EXECUTION.items()}),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json', loader), 'scribe-content': paths()})))
             binary = root / 'candidate producer.dll'
             binary.write_bytes(b'fixture candidate producer')

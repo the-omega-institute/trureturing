@@ -155,6 +155,7 @@ private structure CompileState where
   dependencies : Array DependencyIdentity := #[]
   rules : Array String := #[]
   constructorTypes : NameSet := {}
+  /-- One fixed theorem owner and import graph per assessment; cache both answers. -/
   independentOwners : Std.HashMap Name Bool := {}
   /-- Only original AST parameters and direct constructor fields carry descent
   authority. An arbitrary local with the same type does not. -/
@@ -285,28 +286,29 @@ private def independentSource (name : Name) : CompileM Bool := do
   if sourceOwner == env.header.mainModule || sourceOwner == targetOwner ||
       judgePackageModule sourceOwner then
     return false
-  if (← get).independentOwners[sourceOwner]? == some true then return true
-  let some sourceIdx := env.getModuleIdx? sourceOwner | return false
-  let some targetIdx := env.getModuleIdx? targetOwner | return true
-  -- The importer appends a module only after visiting its imports.
-  if sourceIdx.toNat < targetIdx.toNat then
-    modify fun s => { s with independentOwners := s.independentOwners.insert sourceOwner true }
-    return true
+  if let some independent := (← get).independentOwners[sourceOwner]? then return independent
+  let some _ := env.getModuleIdx? sourceOwner | return false
+  let some _ := env.getModuleIdx? targetOwner | return true
+  -- Follow source imports, independently of global module indices and request order.
   let mut pending := #[sourceOwner]
-  let mut seen : NameSet := {}
+  let mut seen : NameSet := ({} : NameSet).insert sourceOwner
   while !pending.isEmpty do
     charge
     let owner := pending.back!
     pending := pending.pop
-    if owner == targetOwner then return false
-    if seen.contains owner then continue
-    seen := seen.insert owner
+    if owner == targetOwner then
+      modify fun s => { s with independentOwners := s.independentOwners.insert sourceOwner false }
+      return false
     let some idx := env.getModuleIdx? owner | return false
-    if idx.toNat < targetIdx.toNat then continue
     let some data := env.header.moduleData[idx.toNat]? | return false
-    pending := pending ++ data.imports.map (·.module)
-  modify fun s => { s with independentOwners := s.independentOwners.insert sourceOwner true }
-  return true
+    for imported in data.imports do
+      unless seen.contains imported.module ||
+          (← get).independentOwners[imported.module]? == some true do
+        seen := seen.insert imported.module
+        pending := pending.push imported.module
+  -- Only a completed independent walk proves every visited subgraph independent.
+  let owners := seen.toArray.foldl (fun memo n => memo.insert n true) (← get).independentOwners
+  modifyGet fun s => (true, { s with independentOwners := owners })
 
 private def dependency (info : ConstantInfo) : CompileM Unit := do
   let state ← get

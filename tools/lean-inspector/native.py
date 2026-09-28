@@ -28,6 +28,7 @@ ROW_ERRORS = (OSError, UnicodeError, ValueError, KeyError, TypeError,
 
 import materials
 import publication as public
+import reuse
 
 selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
@@ -133,6 +134,37 @@ def write_if_changed(path, data):
     os.replace(temporary, path)
 
 
+def semantic_inputs(inputs):
+    """Register roles and pins; Lake alone selects and resolves each import closure.
+
+    Membership is not a module fingerprint. A report source wins over the
+    producer category, including registration/test data beside producer code.
+    Lake binds effective compiler options and resolution instead of hashing
+    entire package configs (whose roots/globs grow with unrelated modules).
+    """
+    execution = reuse.capture_execution(inputs)
+    if not execution['eligible']:
+        raise ValueError('incomplete module semantic coverage: ' + execution['reason'])
+    pins, configs = {}, {}
+    for path in inputs.expand('config_inputs'):
+        source = inputs.safe_file(path)
+        if source.name == 'lake-manifest.json':
+            manifest = public.read_json(source.read_bytes())
+            for package in manifest['packages']:
+                if package['type'] == 'git':
+                    pin = {key: package.get(key) for key in ('url', 'rev', 'subDir')}
+                    name = package['name']
+                    if name in pins and pins[name] != pin:
+                        raise ValueError('conflicting semantic dependency pin: ' + name)
+                    pins[name] = pin
+        elif source.name not in ('lakefile.toml', 'lakefile.lean'):
+            configs[path] = public.digest(source)
+    return dict(content=inputs.dependency_sources(), programs=inputs.expand('inspector_sources'),
+        reported=inputs.expand('report_modules'), pins=pins,
+        common=dict(schema='module-report-semantic-v1', compatibility=inputs.compatibility(),
+                    configs=configs, execution=execution['execution']))
+
+
 @phase('native-inputs')
 def prepare(root):
     root = Path(root).resolve()
@@ -172,9 +204,11 @@ def prepare(root):
             write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
                 'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
         write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
-    # Membership and full config identity affect aggregation only. Each module
-    # traces compatibility, source, utility inputs and Lake's compiler dependencies.
+    # Membership affects aggregation only; Lake projects semantic inputs through
+    # each module's actual transitive import closure, including private imports.
     with phase('native-input-coordinates'):
+        # Role inventory is lookup data, not aggregate membership or a cache key.
+        write_if_changed(state(root) / 'semantic-inputs.json', materials.canonical_json(semantic_inputs(inputs)))
         write_if_changed(state(root) / 'inputs.json', materials.canonical_json({
             'modules': sorted(modules),
             'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root)}))
