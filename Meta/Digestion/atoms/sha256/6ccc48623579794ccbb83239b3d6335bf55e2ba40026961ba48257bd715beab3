@@ -1,0 +1,71 @@
+### 定理 536.4（私有极小元的穷尽及任意通道之下的剩余单纯形）
+
+令
+
+$$
+\Delta_{m-1}=\{p\in[0,1]^m:\sum_ip_i=1\}.
+$$
+
+对 $p\in\Delta_{m-1}$，定义辅助空间 $\{1,\ldots,m\}$ 上的规范通道
+
+$$
+W^{p}_{a_i}=\delta_i,\qquad W^{p}_b=\sum_ip_i\delta_i,
+\qquad E_p=E_{W^p}.
+\tag{536.12}
+$$
+
+每个 $E_p$ 充分。对任意充分 $E_W$ 及任意 $p\in\Delta_{m-1}$，有
+
+$$
+\begin{aligned}
+E_p\preceq E_W
+&\quad\Longleftrightarrow\quad p_i\ge\lambda_i\quad(1\le i\le m),\\
+E_W\preceq E_p
+&\quad\Longleftrightarrow\quad \nu=\sum_ip_i\mu_i.
+\end{aligned}
+\tag{536.13}
+$$
+
+全部 $E_p$ 都是 $\mathcal F_{\mathrm{priv}}$ 的极小元，不同参数的 $E_p$ 两两不可比，并穷尽该族的全部极小等价类。因此任意 $E_W$ 支配的私有极小类恰由
+
+$$
+\{p\in\Delta_{m-1}:p\ge\lambda\}
+=\lambda+\left(1-\sum_i\lambda_i\right)\Delta_{m-1}
+\tag{536.14}
+$$
+
+参数化；此集总非空，是一个平移、缩放后的剩余单纯形，一般不是原单纯形的一个面。任意 $E_W$ 本身极小，当且仅当 $\nu=\sum_ip_i\mu_i$ 对某个 $p\in\Delta_{m-1}$ 成立；这时 $p$ 唯一。$m\ge2$ 时，私有充分族没有最小元。
+
+证明：叶 Dirac 律两两奇异，先得 $E_p$ 充分。若 $E_p\preceq E_W$，在读数 $u_i$ 上使用式（536.4）的核 $K_i$。叶行要求
+
+$$
+K_i(\{i\}\mid z)=1\quad\mu_i\text{ 几乎处处}.
+$$
+
+同一等式因绝对连续性也在 $\nu^{\mathrm{ac}(\mu_i)}$ 几乎处处成立。中心行则给出
+
+$$
+p_i=\int K_i(\{i\}\mid z)\nu(dz)\ge\lambda_i.
+$$
+
+为证充分性，取引理 536.2 的共同分划，记 $s=\sum_i\lambda_i$。若 $s<1$，在 $D_i$ 上输出 $i$，在 $D_0$ 上按概率向量
+
+$$
+\left(\frac{p_i-\lambda_i}{1-s}\right)_{i=1}^m
+$$
+
+抽样。非负性和总和为一来自 $p\ge\lambda$。这个分离核不需要读取 $q$，把每个叶律送到 $\delta_i$，把中心律送到 $p$。若 $s=1$，则 $p=\lambda$；$D_0$ 对所有行都为零，那里任取一个标签即可，无须相除。第一式成立。
+
+若反向 $E_W\preceq E_p$，在 $u_i$ 上的核必须把源标签 $i$ 送到 $\mu_i$；对中心行因而有测度不等式 $\nu\ge p_i\mu_i$。取同一个不交叶分划，对任意可测 $B$ 得
+
+$$
+\nu(B)\ge\sum_i\nu(B\cap D_i)
+\ge\sum_ip_i\mu_i(B\cap D_i)=\sum_ip_i\mu_i(B).
+$$
+
+右端质量为一，所以非负差测度的总质量为零，必有 $\nu=\sum_ip_i\mu_i$。反之，若这个等式成立，从标签 $i$ 抽样 $\mu_i$ 即把 $E_p$ 送到 $E_W$；按 $D_i$ 分离又把 $E_W$ 送回 $E_p$。这两个核同样不需要读取 $q$。混合权重由 $p_i=\nu(D_i)$ 唯一确定，包括 $p_i=0$ 的情形。
+
+现在任取充分 $E_W\preceq E_p$，第二式强迫这个混合等式，所以也有 $E_p\preceq E_W$；这证明每个 $E_p$ 在整个标准 Borel 允许族中极小。以 $E_W=E_r$ 代入第二式，Dirac 叶律使中心混合权重必须为 $p=r$，故不同参数不可比。
+
+对任意充分 $E_W$，式（536.8）保证总能选到 $p\ge\lambda$ 且 $\sum_ip_i=1$；第一式给出一个 $E_p\preceq E_W$。若 $E_W$ 极小，它必须与这个 $E_p$ 等价，再由第二式得到混合条件。因此没有遗漏其他极小等价类，式（536.14）也随之成立。特别地，当 $s=1$ 时只剩 $p=\lambda$ 这一类；但仅有唯一一个受支配的极小类，不强迫 $E_W$ 自身极小，仍须满足混合等式。最后，至少两个不同的单纯形顶点给出不同极小类；若最小元存在，它低于这两个极小元，便须同时与二者等价，矛盾。证毕。
+
