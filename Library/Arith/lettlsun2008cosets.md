@@ -3047,8 +3047,9 @@ The only nine-prime odd support below or equal to31 that omits19 is
 
     (3,5,7,11,13,17,23,29,31).
 
-Its feasibility remains unresolved; the bound supplies no actual
-family passing all marginals and no exclusion of this last support.
+The basic comparison alone leaves this last support unresolved and
+supplies no actual family passing all marginals. The charged refinement
+below excludes it; the four coarse bounds above remain valid.
 
 The existing [query-hinge consumer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/query_stoploss_completion.py)
 with `--eight-core-marginals` reproduces the four rows using exact
@@ -3057,6 +3058,69 @@ This is an ordinary deduction and numerical verification, not new
 Lean verification, a literature-priority claim, or an enlarged bare
 noncoverage range for Erdős#7.
 
+
+### Charged continuation also forces the seventh odd support prime
+
+The missing19 eight-prime proxy admits the stronger bound
+
+    R_K(nuhat)<29,
+    nu(1)>=1032241751/56250000000>0.                  (MF20)
+
+Here K is any fixed finite carrier supported on these eight core primes
+and resolving the actual eight-core originals and parent31 cofactor-query
+heights. The same unnormalized source nu
+is supported on their complete actual survivors and is chosen before
+the queried residue phases on K. This uses the attributed completed
+source, capped-kernel, arbitrary-label and finite-transport hypotheses
+of MF15--MF19, with the matched positive charged continuation detailed
+in [Report462](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/462-the-final-stage-ledger-gives-a-seven-core-common-law.md#an-eight-core-law-closes-the-missing-19-parent31-comparison).
+The original phases and heights remain arbitrary. No compatibility
+between laws for different K is claimed.
+
+Keep the fixed source thresholds (2,4,4,8,12,16), product of caps77/2,
+and query18. The first7 padded deletion, current loss and reduced
+zero-depth component belong to ONE actual source kernel. At later
+stages the ordinary multiplier law minus11/14 times the law omitting7
+is a nonnegative submeasure; its ordinary contribution and the
+matched kappa-weighted zero component are added as positive terms.
+Both source losses and the final query use this same continuation.
+
+For one common affine reserve R, source-loss functional L and query
+hinge H in135-cell units, the certificate proves
+
+    D=R-L>0, 12D-H>0,
+    R_K(nuhat)<=17+H/D<29.                           (MF21)
+
+The complete domain comprises32 basic vertices,56 mixed five-vertex
+charts and all280 physical7-projections at each of two remaining
+vertices. Its866 terminal bounds are28 basic,278 mixed,554 coarse7,
+four exact current7 and two charged-continuation bounds. The minimum
+D is3096725253/1250000000. The worst vertex query upper is approximately
+28.90982372331657; every displayed strict comparison is checked with
+exact rationals. Interpolation applies to the SAME positive actual
+functional, with fixed thresholds and query. Pointwise minima of
+upper screens and upward-rounded costs are only vertex estimates;
+their convexity is not assumed. All geometric tails remain included.
+
+Apply MF3 with distinguished parent31 to the last missing19 support:
+
+    min M_31< (1+29)/30=1.
+
+Combining this exclusion with MF15 and the earlier exclusion for
+largest prime at least37 proves that an exactly-nine-prime family
+passing every complete support-prime marginal must contain
+
+    3,5,7,11,13,17,19.                              (MF22)
+
+This leaves the other nine-prime supports and the unrestricted problem
+unsettled; it makes no assertion about families with ten or more
+support primes. The [portable exact consumer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/missing19_joint_prefix.py)
+uses the pinned basic72 geometry batches plus102 required additional
+batches, with source identity and MIT license retained. Its
+[exact output](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/missing19_joint_prefix.json)
+records the positive mass, slack and complete domain counts. These
+are ordinary mathematical deductions and finite arithmetic, not new
+Lean verification or a literature-priority claim.
 
 ### Unrestricted fractional phases only recover the reciprocal test
 
