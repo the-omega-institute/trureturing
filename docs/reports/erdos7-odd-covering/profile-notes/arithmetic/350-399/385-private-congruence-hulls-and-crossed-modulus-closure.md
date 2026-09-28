@@ -1187,3 +1187,160 @@ intersections or combine independently executed replacements. No
 original exponent is bounded. A whole-cover theorem forcing a
 violation remains missing. This is ordinary mathematics, not new
 Lean verification or a literature-priority claim.
+
+## 13. Several fresh heights give exact repair capacities below the single-layer threshold
+
+Keep one original period Q, an odd prime p, H=v_p(Q), and a nonunit
+h=p^a*n dividing Q, with gcd(p,n)=1 and 0<=a<=H. Put
+
+    r=p^(H-a+1), t=tau(n).
+
+The permitted repair labels in this section are exactly
+
+    p^(H+1+j)*e,  j>=0, e|n.                         (ML1)
+
+They are distinct across different heights or cofactors and are all
+unused by the original family. The existence and minimum statements
+below concern this specified palette. Other repair labels or repairs
+of a smaller private region are not excluded by their necessity claim.
+
+### Finite repair existence and its minimum number of classes
+
+A finite family using distinct labels from ML1 can cover the ENTIRE
+class c mod h if and only if
+
+    t>r*(p-1)/p.                                    (ML2)
+
+Restrict a proposed repair to c mod h. An incompatible phase is empty;
+every nonempty restriction at height H+1+j is one p-prefix cylinder
+of relative mass 1/(r*p^j). At most t labels occur at each height.
+For any finite largest layer L, its covered mass is at most
+
+    (t/r)*sum_(j=0..L)p^(-j)<t*p/(r*(p-1)).
+
+Coverage of the target mass one therefore requires ML2, including
+its strict inequality.
+
+For sufficiency, start with the r target cylinders at height H+1.
+At layer j, cover min(t,s_j) of the s_j uncovered cylinders, assigning
+distinct divisors e|n and imposing the cofactor phase c mod e. The
+cofactor condition is automatic on c mod h. Expand each unselected
+cylinder into its p children. Before termination,
+
+    s_0=r, s_(j+1)=p*(s_j-t).
+
+If t>=r, the construction stops at once, using N=r classes. If t<r,
+write
+
+    delta=p*t-(p-1)*r>0,
+    J=min{j>=0:p^j*delta>=t},
+    s=(p*t-p^J*delta)/(p-1), N=t*J+s.                (ML3)
+
+Solving the recurrence shows that it terminates with layer counts
+t,...,t,s, with J full layers and 1<=s<t. To verify strict s<t,
+equality would give
+
+    t=p^(H-a+1+J)/(1+p+...+p^J).
+
+Here J>=1; the denominator exceeds one and is coprime to p, so this
+cannot be an integer. The constructed cylinders form a complete
+disjoint prefix cut and cover every integer in c mod h, including
+all lifts beyond Q.
+
+The value N is the minimum number of repair classes from ML1.
+Indeed, discard empty or redundant restrictions from any finite
+repair. The remaining cylinders form a complete prefix-free cut
+in a p-ary forest with r roots. If u_j nodes are exposed at layer j
+and m_j<=t are chosen as leaves, then
+
+    u_(j+1)=p*(u_j-m_j).
+
+At every layer before the greedy construction terminates, its exposed
+node count is at most u_j, and its internal-node count is at most
+u_j-m_j. Later internal-node counts are nonnegative. Every complete
+forest cut has
+
+    number of leaves=r+(p-1)*sum_j(number of internal nodes at j).
+
+Thus no repair uses fewer than N leaves. Equality forces the same
+internal-node counts and consequently the same layer counts as ML3.
+This proof allows arbitrary original repair phases: a minimum repair
+cannot contain an empty or redundant target restriction.
+
+### Exact modulus sum at the minimum number
+
+Let sigma_u(n) be the sum of the u smallest positive divisors of n,
+and sigma(n)=sigma_t(n). Among all N-class repairs from ML1, the
+minimum numerical modulus sum is
+
+    S=p^(H+1)*sigma_r(n),                            if t>=r;
+    S=p^(H+1)*(sigma(n)*(p^J-1)/(p-1)
+                  +p^J*sigma_s(n)),                 if t<r. (ML4)
+
+Minimum cardinality fixes the layer counts. Every full layer uses
+all divisors, and the last layer uses its smallest required divisors.
+These assignments are compatible with the same prefix construction,
+so the bound is attained. Labels at different heights remain distinct
+because every e is coprime to p.
+
+### A shared old-phase obstruction in a hypothetical minimum cover
+
+Now impose the same hypothetical distinct-odd whole-cover minimum
+as AQ1--AQ4. Select a nonempty set P of original parents such that
+h|d and a_d=c mod h for every d in P, and choose new phases b_d.
+Define the union of removed child labels exactly as in AQ1:
+
+    J_d={M in D minus P:d|M,M>d,a_M=b_d mod d},
+    J_removed=union_(d in P)J_d.
+
+Move the selected parents, delete this union, and add the minimum
+ML1 repair. Every old selected parent lies in c mod h and is repaired;
+every deleted child lies in a moved parent; all other originals are
+retained. Thus the complete old union, including joint liabilities,
+remains covered on a common period dividing p^(H+1+J)*Q (with J=0
+in the single-layer case). The new labels are fresh, odd and nonunit.
+The two extremal objectives require
+
+    |J_removed|<=N;
+    |J_removed|=N ==> sum_(M in J_removed)M<=S.       (ML5)
+
+Each deleted M is a proper odd multiple of h. Distinctness gives
+the lower bound h*N*(N+2) for the sum of N such labels. In particular,
+
+    S<h*N*(N+2) ==> |J_removed|<=N-1.                (ML6)
+
+This retains a checkable sufficient tie condition; no universal claim
+that ML6's left side always holds is needed. If B=N-1 under ML6,
+or B=N otherwise, two incomparable original parents in this same
+old h-phase cannot both have a descendant phase group of size B.
+Here B>=2. The union bound would identify their selected groups;
+fixing one group while varying the other parent's new phase would
+identify their COMPLETE descendant sets. SR4's original divisor-lattice
+argument then contradicts incomparability. This concerns actual old
+phases and original classes, not projected-shadow intersections.
+
+### A range not covered by the single-layer qualification
+
+The following exact instances have t<r and hence fail AQ1's t>=r
+qualification. They use a=0 and c=0; the displayed construction gives
+the repair residues by CRT.
+
+| p | H | n=h | r | t | Layer counts | N | S | h*N*(N+2) |
+| ---: | ---: | --- | ---: | ---: | --- | ---: | ---: | ---: |
+|3|1|5^6=15625|9|7|7,6|13|281241|3046875|
+|3|1|5*7*11=385|9|8|8,3|11|5535|55055|
+|3|2|5^4*7^3=214375|27|20|20,20,3|43|33742359|414815625|
+
+The corresponding conditional union caps are 12,10,42. In their
+complete comparison periods 421875,10395,52093125, respectively,
+the target classes have 27,27,243 residues; each is covered exactly
+once by the constructed repair. These are repairs of one class,
+not distinct-odd whole covers.
+
+At a=H, r=p and the integer condition ML2 reduces to t>=p, recovering
+the earlier single-layer qualification. The added cases lie below
+the global p-height. This extends the possible common repairs while
+retaining arbitrary original support, phases and heights. A theorem
+forcing a hypothetical whole cover to violate these conditions remains
+missing. These are ordinary mathematical deductions and exact finite
+controls, not new Lean verification or a literature-priority claim.
