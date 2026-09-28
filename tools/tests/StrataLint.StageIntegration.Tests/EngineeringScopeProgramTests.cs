@@ -81,6 +81,8 @@ public sealed class EngineeringScopeProgramTests
               [ "${CANDIDATE_SHA+x}" != x ] && [ "$NUGET_PACKAGES" = "$PROBE_PACKAGES" ] || exit 75
             if [ "$1" = test ] && [ "$2" = --help ]; then
               printf 'prepare\n' >> "$PROBE_STATE/order"
+              printf 'initialization stdout: error and warning usage\n'
+              printf 'warning: initialization stderr diagnostic\n' >&2
               if [ "$PROBE_PREPARATION_EXIT" != 0 ]; then
                 printf 'intentional initialization failure\n' >&2
                 exit "$PROBE_PREPARATION_EXIT"
@@ -112,9 +114,11 @@ public sealed class EngineeringScopeProgramTests
         Assert.True(result.Exit == (preparationExit != 0 ? preparationExit : failingTest ? 1 : 0), result.StandardOutput + result.StandardError);
         var order = File.ReadAllLines(Path.Combine(state, "order"));
         Assert.Equal("prepare", order[0]);
+        Assert.Contains("warning: initialization stderr diagnostic", result.StandardError, StringComparison.Ordinal);
         if (preparationExit != 0)
         {
             Assert.Single(order);
+            Assert.Contains("initialization stdout: error and warning usage", result.StandardOutput, StringComparison.Ordinal);
             Assert.Contains("intentional initialization failure", result.StandardError, StringComparison.Ordinal);
             Assert.Contains("raw_exit=73", result.StandardOutput, StringComparison.Ordinal);
             Assert.DoesNotContain("ENGINEERING_TEST_PROJECT ", result.StandardOutput, StringComparison.Ordinal);
@@ -122,6 +126,8 @@ public sealed class EngineeringScopeProgramTests
             Assert.Empty(Directory.GetFiles(Path.Combine(root, CommonExecutionEvidence.RootPath), "*.trx", SearchOption.AllDirectories));
             return;
         }
+        Assert.DoesNotContain("initialization stdout: error and warning usage", result.StandardOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain("--blame-crash", result.StandardOutput, StringComparison.Ordinal);
         Assert.Equal(4, order.Length);
         Assert.Equal("prepared", order[1]);
         Assert.All(order.Skip(2), line => Assert.StartsWith("child:", line, StringComparison.Ordinal));

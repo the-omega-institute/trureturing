@@ -68,7 +68,7 @@ internal static class Program
             var repository = RepositoryOption(arguments);
             var prepared = CommonExecutionEvidence.PrepareRegisteredTests(repository, round: buildRound);
             return RunPreparedTests(repository, (project, results) => RunTests(repository, prepared.Assemblies[project], results),
-                output, prepared, prepare: () => RunDotnet(repository, ["test", "--help"]));
+                output, prepared, prepare: () => RunDotnet(repository, ["test", "--help"], output));
         }
         catch (Exception exception)
         {
@@ -185,9 +185,10 @@ internal static class Program
     private static int RunTests(string root, string project, string results)
         => RunDotnet(root, BuildTestArguments(project, results));
 
-    private static int RunDotnet(string root, IReadOnlyList<string> arguments)
+    private static int RunDotnet(string root, IReadOnlyList<string> arguments, TextWriter? initializationOutput = null)
     {
-        var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false };
+        var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false,
+            RedirectStandardOutput = initializationOutput is not null };
         start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
         start.Environment["CI"] = "true";
         // Synthetic test repositories supply their own candidate identity.
@@ -196,7 +197,11 @@ internal static class Program
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var argument in arguments) start.ArgumentList.Add(argument);
         using var process = Process.Start(start) ?? throw new InvalidOperationException("could not start dotnet test");
+        // Successful help is ordinary prose, not diagnostics. Keep stderr live and
+        // drain only initialization stdout, retaining it when initialization fails.
+        var initializationText = initializationOutput is null ? null : process.StandardOutput.ReadToEnd();
         process.WaitForExit();
+        if (process.ExitCode != 0) initializationOutput?.Write(initializationText);
         return process.ExitCode;
     }
 
