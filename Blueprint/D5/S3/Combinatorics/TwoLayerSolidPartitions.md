@@ -58,6 +58,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TwoLayerSolidPartitions.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/meeussen-2025-a381265-two-layer-solid` (proved) by `D5/S3/Combinatorics/TwoLayerSolidPartitions.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"meeussen-2025-a381265-two-layer-solid","declaration_gid":"D5/S3/Combinatorics/TwoLayerSolidPartitions.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Wouter Meeussen (2025). *OEIS A381265, solid partitions with two layers and second layer a plane partition of 3: formula conjecture*. URL: <https://oeis.org/A381265>.

@@ -28,7 +28,10 @@ internal sealed class TwoLayerSolidPartitionsDocument : IScribeDocumentDefinitio
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the conjecture", Disp(F.Id("claim")),
                 "The plane partitions of 3 are six: the three lines {0, e_k, 2 e_k} and the three corners {0, e_i, e_j}. A plane partition of n contains the line in direction k exactly when some cell has k-th coordinate at least 2, so by the bijections that permute the coordinates the three lines are each contained in A000219(n) - A000990(n) plane partitions of n. It contains the corner {0, e_i, e_j} exactly when it contains e_i and e_j. The plane partitions of n without e_i lie in the coordinate plane x_i = 0 and are the lower sets of n cells of the square of the natural numbers, which are the Young diagrams of the partitions of n (row lengths); those without e_i and e_j lie on the remaining axis, one for each n. So each corner is contained in A000219(n) - 2 A000041(n) + 1 of them, and summing over the six second layers gives the formula.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("meeussen-2025-a381265-two-layer-solid"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
