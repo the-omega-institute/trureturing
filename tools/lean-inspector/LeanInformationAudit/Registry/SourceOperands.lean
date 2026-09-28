@@ -64,7 +64,8 @@ private partial def visit (e : Expr) (depth : Nat := 0) : M Unit := do
         else throwError "incomplete_closure:source.operand_identity:{e}; type={type}"
       if candidate.hasMVar || candidate.hasLevelMVar then
         throwError "incomplete_closure:source.identity_metavariable"
-      if ← withTransparency .all <| isDefEq candidate identity.statement then
+      if ← withOptions (smartUnfolding.set · false) <|
+          withTransparency .all <| isDefEq candidate identity.statement then
         throwError "forbidden_dependency:source.operand_identity"
       pure { identity with unclassified := none }
     else pure identity
