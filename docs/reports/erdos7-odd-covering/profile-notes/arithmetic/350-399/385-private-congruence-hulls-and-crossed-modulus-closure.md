@@ -1304,20 +1304,134 @@ The two extremal objectives require
     |J_removed|<=N;
     |J_removed|=N ==> sum_(M in J_removed)M<=S.       (ML5)
 
-Each deleted M is a proper odd multiple of h. Distinctness gives
-the lower bound h*N*(N+2) for the sum of N such labels. In particular,
+For every parameter choice satisfying ML2, the repair sum and the
+removed union satisfy the uniform bounds
 
-    S<h*N*(N+2) ==> |J_removed|<=N-1.                (ML6)
+    S<h*N^2,   |J_removed|<=N-1.                     (ML6)
 
-This retains a checkable sufficient tie condition; no universal claim
-that ML6's left side always holds is needed. If B=N-1 under ML6,
-or B=N otherwise, two incomparable original parents in this same
-old h-phase cannot both have a descendant phase group of size B.
-Here B>=2. The union bound would identify their selected groups;
-fixing one group while varying the other parent's new phase would
-identify their COMPLETE descendant sets. SR4's original divisor-lattice
-argument then contradicts incomparability. This concerns actual old
-phases and original classes, not projected-shadow intersections.
+The first inequality is proved below. For the second, ML5 already
+excludes |J_removed|>N. If |J_removed|=N, each deleted M is a proper
+odd multiple of h, so distinctness gives
+
+    sum_(M in J_removed)M>=h*N*(N+2)>h*N^2>S,
+
+contradicting ML5. Thus no additional modulus-sum condition is needed.
+
+Put B=N-1. Two incomparable original parents in this same old h-phase
+cannot both have a descendant phase group of size B. Here B>=2.
+The union bound would identify their selected groups; fixing one group
+while varying the other parent's new phase would identify their
+COMPLETE descendant sets. SR4's original divisor-lattice argument
+then contradicts incomparability. This concerns actual old phases
+and original classes, not projected-shadow intersections.
+
+### The repair sum is uniformly smaller than h times the squared count
+
+In the single-layer case, N=r>=3 and ML4 gives
+
+    S/h=r*sigma_r(n)/n<r^2=N^2.
+
+The inequality is strict because r distinct divisors cannot all equal n.
+
+For the multilevel case, write k=H-a+1, so r=p^k and t<r. Then k>=2.
+The positive integer delta from ML3 satisfies
+
+    delta=p*(t-(p-1)*p^(k-1))>=p.
+
+Therefore p^(k-1)*delta>=r>t, and the stopping depth obeys
+
+    1<=J<=k-1.
+
+The complementary-divisor bijection and oddness of n give
+
+    sigma(n)/n=sum_(e|n)1/e
+       <=Hodd(t):=sum_(i=0..t-1)1/(2*i+1).
+
+Indeed, the i-th positive divisor of an odd integer is at least 2*i-1.
+Strict convexity of 1/(2*x+1) on each interval
+[i-1/2,i+1/2], for i=1,...,t-1, gives
+
+    1/(2*i+1)<integral_(i-1/2)^(i+1/2) dx/(2*x+1).
+
+Summing these intervals proves
+
+    Hodd(t)<1+(ln t)/2<1+k*(ln p)/2.
+
+Using sigma_s(n)<=sigma(n) in ML4, and
+N=t*J+s>t*J>r*(p-1)*J/p, now yields
+
+    S/h<r*p^J*p*Hodd(t)/(p-1),
+    S/(h*N^2)
+       < [p^3/(p-1)^3]*(1+k*(ln p)/2)
+            /[p^(k-J)*J^2].
+
+All quantities divided by here are positive. For fixed p,k the
+consecutive ratio of a_J=p^(k-J)*J^2 is
+
+    a_(J+1)/a_J=((J+1)/J)^2/p,
+
+which decreases with J. Hence a_J increases and then decreases,
+with either part possibly empty, and its minimum on 1<=J<=k-1 is
+at an endpoint:
+
+    p^(k-J)*J^2>=min(p^(k-1),p*(k-1)^2).
+
+Three parameter ranges make the displayed ratio strictly below one.
+
+For p>=5 and k>=3, p^3/(p-1)^3<=125/64<2 and ln p<=p-1, so its
+numerator is strictly below
+
+    2+k*(p-1)<=k*p.
+
+Both endpoint denominators are at least k*p: (k-1)^2>=k, and
+p^(k-2)>=k. The latter inequality starts at k=3 with p>=5>=3;
+multiplication by p preserves its inductive lower bound.
+
+For p=3 and k>=3, use ln3<10/9. For example, the first five terms
+of exp(10/9) already sum to 59453/19683>3. The ratio's numerator is
+therefore strictly below
+
+    (27+15*k)/8.
+
+Both endpoint denominators are at least this quantity. The first,
+3^(k-1), equals it at k=3, and its induction follows from
+
+    3*(27+15*k)-(27+15*(k+1))=39+30*k>0.
+
+The second, 3*(k-1)^2, is larger at k=3; after multiplying the
+difference by eight, its increment is 48*k-39>0. Thus the strict
+ratio bound also holds when one endpoint estimate is equality.
+
+For k=2 and p>=7, J=1 and the denominator is p. Here
+p^3/(p-1)^3<=343/216<8/5 and ln p<=(p-1)/2. The logarithm bound
+follows from ln5<2 and the positive derivative of
+(x-1)/2-ln x for x>=5; exp2>1+2+2^2/2=5 proves the initial value.
+The numerator is strictly below
+
+    (8/5)*(1+(p-1)/2)=4*(p+1)/5<p.
+
+Only (p,k)=(3,2) and (5,2) remain. ML2 and t<r leave respectively
+t=7,8 and t=21,22,23,24. All have J=1 and s=p*(r-t)<t.
+Every proper divisor of odd n is at most n/3, and the s smallest
+divisors omit n. Thus
+
+    sigma(n)/n<=1+(t-1)/3,   sigma_s(n)/n<=s/3,
+    S/h<=(r/3)*(t+2+p*s).
+
+The six exact comparisons are:
+
+| p | k | t | s | N | Upper bound for S/h | N^2 |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+|3|2|7|6|13|81|169|
+|3|2|8|3|11|57|121|
+|5|2|21|20|41|1025|1681|
+|5|2|22|15|37|825|1369|
+|5|2|23|10|33|625|1089|
+|5|2|24|5|29|425|841|
+
+Each upper bound is strictly below N^2. These cases complete the
+proof of S<h*N^2 for every ML2-qualified h, at arbitrary original
+p-height and cofactor support.
 
 ### A range not covered by the single-layer qualification
 
