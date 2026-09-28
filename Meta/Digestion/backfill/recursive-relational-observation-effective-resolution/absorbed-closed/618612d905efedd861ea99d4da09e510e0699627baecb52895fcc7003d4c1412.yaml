@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:618612d905efedd861ea99d4da09e510e0699627baecb52895fcc7003d4c1412
-  normalized_sha256: sha256:618612d905efedd861ea99d4da09e510e0699627baecb52895fcc7003d4c1412
-cas_ref: sha256:618612d905efedd861ea99d4da09e510e0699627baecb52895fcc7003d4c1412
-coverage_gids:
-  - gid: D5/S3/Arith/Congruence/DeletionReadoutInversionConstant.deletion_readout_inversion_constant
-    target_statement_id: sha256:6f7c257c667e0f74b9f21ae9d6e25c99af67a754d567b2e933827630be9a3e0e
-receipts:
-  unresolved_subitems: []
