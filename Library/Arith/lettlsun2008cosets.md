@@ -2932,6 +2932,123 @@ result, a literature-originality claim, or an enlarged bare noncoverage
 range for Erdős#7.
 
 
+### Common-query source laws force the first six odd support primes
+
+The nine-support necessary condition strengthens further: a family
+passing every complete support-prime marginal must contain
+
+    3,5,7,11,13,17.                                  (MF15)
+
+This deduction uses the same attributed ordinary source-construction,
+arbitrary-label convex-comparison and finite transport premises as
+[Report461](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md).
+Those premises are not re-proved by the exact arithmetic consumer.
+The original residues and all finite heights remain arbitrary.
+
+Fix ONE finite period K on the eight core primes resolving the original
+family and every cofactor query to be used. For a probability nu on its
+actual complete survivors, write
+
+    R_K(nu)=sum_(1<d|K) max_b nu(b mod d).
+
+For each proxy below, every coordinatewise larger ordered eight-prime
+core has one law chosen before the query phases, with the stated strict
+bound. No compatibility between laws chosen for different K is claimed.
+
+| Omitted prime | Eight-prime proxy | Fixed query threshold k | Source mass lower | Query bound |
+| --- | --- | ---: | --- | ---: |
+|11|3,5,7,13,17,19,23,29|8|10237584019/168750000000|R_K<14|
+|13|3,5,7,11,17,19,23,29|8|13939935091/337500000000|R_K<18|
+|17|3,5,7,11,13,19,23,29|16|12314552263/675000000000|R_K<27|
+|19|3,5,7,11,13,17,23,29|24|290064917/30000000000|R_K<36|
+
+The exact rational query upper bounds are approximately
+13.2626300884,17.0993737229,26.2093835488,35.6790383600, respectively.
+All rows retain the source deletion schedule (2,4,4,8,8,12) at the six
+nonanchor primes q, with caps C_q=(q-1)/(q-1-t_q). The missing11 mass
+agrees with Chapter68's source calculation. Its separate block
+attachment and graph-gluing assumptions are not used here.
+
+Retain the normalized predeletion kernels as sigma, then restrict to
+the same source survivor event to obtain mu<=sigma. For a complete
+query layout L including the unit cylinder,
+
+    mu(L-1)<=(k-1)*mu(1)+sigma((L-k)_+).              (MF16)
+
+Report461's ordered-increment comparison includes ALL six nonanchor
+coordinates in the auxiliary product M=product_q(1+J_q), where
+Pr(J_q>=e)=C_q/q^e. These independent runs are comparison variables,
+not independent actual source coordinates. Let pi(m)=Pr(M=m), A0 be
+the relaxed anchor carrier mass in135-cell units, W its full linear
+bound, and F(x) its safe anchor hinge bound. Then
+
+    135*sigma((L-k)_+)<=N(k),
+    N(k)=sum_(m<k) m*pi(m)*F(k/m)
+         +(E M-sum_(m<k)m*pi(m))*W
+         -k*(1-sum_(m<k)pi(m))*A0.                  (MF17)
+
+The mean E M=product_q(1+C_q/(q-1)) is complete. For m>=k the anchor
+load is at least one, so the remaining hinge is exactly linear and
+the tail mass and first moment suffice. No infinite tail is dropped.
+If D is the same anchor reserve minus its six source losses, then
+mu(1)>=D/135>0 and normalization yields
+
+    R_K(muhat)<=k-1+N(k)/D.                          (MF18)
+
+The cached anchor bounds have threshold nodes x=t/m for
+t in{2,4,8,12},1<=m<t. For the additional query ratios at k=16 or24,
+use a nonnegative secant between adjacent cached nodes; include x=1
+with bound W-A0. Beyond the largest node12, use F(12). The actual
+hinge is convex and nonincreasing in x, so these are upper bounds.
+Every fixed-node bound is convex in the continuous anchor parameter;
+the secant coefficients depend only on x, hence preserve that
+convexity. W is convex, A0 affine, and the coefficient of W in MF17
+is nonnegative. Thus N(k) remains convex in the anchor parameter.
+
+For each row, use ONE k at all32 anchor vertices and check, with its
+coarse bound C,
+
+    (C-k+1)*(reserve-source_losses)-N(k)>0.          (MF19)
+
+The reserve is affine, the unrounded source losses are convex, and
+C-k+1>=0, so the left side is concave and the vertex inequalities
+extend over every anchor simplex. Upward-rounded losses only make
+the vertex checks conservative; rounding itself is not asserted to
+be convex. These are joint inequalities at one source parameter,
+not separately attained numerator and denominator optima.
+
+Report460's finite random prefix injections transport the bound to
+larger actual primes: each pulled-back query is empty or retains its
+numerical exponent vector. Construct and push forward unnormalized
+source laws, average, then normalize once. The inequality
+mu(L-1)<=C*mu(1) is linear before normalization. It therefore holds
+for one transported law and all layouts on the chosen K.
+
+If an exactly-nine-prime family omits11,13 or17, its largest prime
+r>=31 and the other eight primes dominate the corresponding proxy.
+Choose K to resolve the actual r-free originals AND all original
+r-cofactor queries. MF3 gives a marginal strictly below
+15/30,19/30 or28/30, respectively. Each is below one; combining these
+exclusions with MF9--MF14 proves MF15. Finite K already suffices for
+this implication; no inverse-limit law is needed.
+
+For omission of19, the same calculation excludes largest prime
+r>=41. At r=31 or37 the displayed exact query bound still exceeds
+the required r-2. Together with MF15 this leaves only the additions
+(23,29,31),(23,29,37),(23,31,37),(29,31,37) to the first six primes
+when19 is absent. These are unresolved supports under this bound,
+not supplied feasible families. The fixed source schedule does not
+certify positive mass at the minimum proxies omitting23 or29; that
+failure does not show the actual survivor empty.
+
+The existing [query-hinge consumer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/query_stoploss_completion.py)
+with `--eight-core-marginals` reproduces the four rows using exact
+rationals, the pinned source geometry and explicit geometric tails.
+This is an ordinary deduction and numerical verification, not new
+Lean verification, a literature-priority claim, or an enlarged bare
+noncoverage range for Erdős#7.
+
+
 ### Unrestricted fractional phases only recover the reciprocal test
 
 For a fixed nonempty inventory D of nonunit numerical labels, allow one probability vector z_(d,a)
