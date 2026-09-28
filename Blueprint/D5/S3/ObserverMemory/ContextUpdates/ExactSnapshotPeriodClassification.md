@@ -4,23 +4,7 @@
 
 Exact snapshots have common binary sender periods and even global switches.
 
-**Theorem 1.1 (Every local input occurs on every reachable branch).**
-
-Lean statement: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassification.local_input_realizability`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassification.local_input_realizability` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Let G be an additive commutative group, I a finite sender set with at least two members, and chi an additive homomorphism from G to ZMod 2. A source is ((a,x),h), where a is the receiver coordinate, x maps I to G, and h belongs to ker chi. Its target is Y = a + sum_i x_i and its clock is t = Y+h. A protocol has a deterministic query q(a,t) and replies e_i(x_i,t,c), with arbitrary, possibly different, reply alphabets.
-
-For every reachable branch (a,t,c), every sender i and every x in G, there exists one actual source with receiver a, clock t, query c and sender coordinate x_i=x. Choose a different sender j, assign it t-a-x, set all remaining sender coordinates to zero, and take h=0. Thus the local input and the branch occur together in the original source space.
-
-This conclusion needs neither exact decoding nor surjectivity of chi, and permits infinite G. Separating the receiver from I identifies this source with G^r times ker chi, where r=card(I)+1; hence r is at least three.
-
-**Theorem 1.2 (Sender periods and the global even-switch group).**
+**Theorem 1.1 (Sender periods and the global even-switch group).**
 
 Lean statement: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassification.period_classification`
 
@@ -30,7 +14,11 @@ Lean statement: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassifi
 
 *Commentary.*
 
-Now assume a decoder D recovers Y from the entire snapshot O=(a,t,(e_i(x_i,t,q(a,t)))_i). Every sender input is realizable on every reachable branch, together with the following classification. Define P_i to contain precisely those p for which e_i(x+p,t,c)=e_i(x,t,c) for every x and every reachable branch (a,t,c). Define K to contain the source translations v satisfying O(s+v)=O(s) for every actual source s. No closed update of O is assumed.
+Let G be an additive commutative group, I a finite sender set with at least two members, and chi an additive homomorphism from G to ZMod 2. A source is ((a,x),h), where a is the receiver coordinate, x maps I to G, and h belongs to ker chi. Its target is Y = a + sum_i x_i and its clock is t = Y+h. A protocol has a deterministic query q(a,t) and replies e_i(x_i,t,c), with arbitrary, possibly different, reply alphabets. Separating the receiver from I identifies the source space with G^r times ker chi, where r=card(I)+1 is at least three.
+
+For every reachable branch (a,t,c), every sender i and every x in G, there exists one actual source with receiver a, clock t, query c and sender coordinate x_i=x. Choose a different sender j, assign it t-a-x, set all remaining sender coordinates to zero, and take h=0. This calculation needs neither exact decoding nor surjectivity of chi and permits infinite G.
+
+Assume a decoder D recovers Y from the entire snapshot O=(a,t,(e_i(x_i,t,q(a,t)))_i). Every sender input is realizable on every reachable branch, together with the following classification. Define P_i to contain precisely those p for which e_i(x+p,t,c)=e_i(x,t,c) for every x and every reachable branch (a,t,c). Define K to contain the source translations v satisfying O(s+v)=O(s) for every actual source s. No closed update of O is assumed.
 
 Each P_i is either the zero subgroup or {0,tau_i}, where tau_i is nonzero, chi(tau_i)=1, and tau_i+tau_i=0. Every two nonzero elements drawn from any two P_i are equal. Consequently all nontrivial sender period groups share one generator. No generator is chosen when all P_i are trivial.
 
@@ -42,5 +30,4 @@ The quantifiers range over all actually used branches. A collision on one branch
 
 ## References
 
-- Truth anchor: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassification.local_input_realizability`
 - Truth anchor: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassification.period_classification`

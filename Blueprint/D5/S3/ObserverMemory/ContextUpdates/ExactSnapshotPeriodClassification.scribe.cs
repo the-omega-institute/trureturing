@@ -9,33 +9,6 @@ internal sealed class ExactSnapshotPeriodClassificationDocument : IScribeDocumen
         H("Exact Snapshot Period Classification"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("local-input-realizability"),
-                DeclarationHandle.Create(
-                    "D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassification."
-                    + "local_input_realizability"),
-                H("Every local input occurs on every reachable branch"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "Let G be an additive commutative group, I a finite sender set with at least "
-                        + "two members, and chi an additive homomorphism from G to ZMod 2. A source "
-                        + "is ((a,x),h), where a is the receiver coordinate, x maps I to G, and h "
-                        + "belongs to ker chi. Its target is Y = a + sum_i x_i and its clock is t = Y+h. "
-                        + "A protocol has a deterministic query q(a,t) and replies e_i(x_i,t,c), "
-                        + "with arbitrary, possibly different, reply alphabets.")),
-                    Paragraph(Text(
-                        "For every reachable branch (a,t,c), every sender i and every x in G, "
-                        + "there exists one actual source with receiver a, clock t, query c and "
-                        + "sender coordinate x_i=x. Choose a different sender j, assign it t-a-x, "
-                        + "set all remaining sender coordinates to zero, and take h=0. Thus the "
-                        + "local input and the branch occur together in the original source space.")),
-                    Paragraph(Text(
-                        "This conclusion needs neither exact decoding nor surjectivity of chi, "
-                        + "and permits infinite G. Separating the receiver from I identifies this "
-                        + "source with G^r times ker chi, where r=card(I)+1; hence r is at least three."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("period-classification"),
                 DeclarationHandle.Create(
                     "D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassification."
@@ -45,7 +18,22 @@ internal sealed class ExactSnapshotPeriodClassificationDocument : IScribeDocumen
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Now assume a decoder D recovers Y from the entire "
+                        "Let G be an additive commutative group, I a finite sender set with at least "
+                        + "two members, and chi an additive homomorphism from G to ZMod 2. A source "
+                        + "is ((a,x),h), where a is the receiver coordinate, x maps I to G, and h "
+                        + "belongs to ker chi. Its target is Y = a + sum_i x_i and its clock is t = Y+h. "
+                        + "A protocol has a deterministic query q(a,t) and replies e_i(x_i,t,c), "
+                        + "with arbitrary, possibly different, reply alphabets. Separating the receiver "
+                        + "from I identifies the source space with G^r times ker chi, where "
+                        + "r=card(I)+1 is at least three.")),
+                    Paragraph(Text(
+                        "For every reachable branch (a,t,c), every sender i and every x in G, "
+                        + "there exists one actual source with receiver a, clock t, query c and "
+                        + "sender coordinate x_i=x. Choose a different sender j, assign it t-a-x, "
+                        + "set all remaining sender coordinates to zero, and take h=0. This calculation "
+                        + "needs neither exact decoding nor surjectivity of chi and permits infinite G.")),
+                    Paragraph(Text(
+                        "Assume a decoder D recovers Y from the entire "
                         + "snapshot O=(a,t,(e_i(x_i,t,q(a,t)))_i). "
                         + "Every sender input is realizable on every reachable branch, together "
                         + "with the following classification. "

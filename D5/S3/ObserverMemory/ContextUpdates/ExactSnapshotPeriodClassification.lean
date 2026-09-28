@@ -45,26 +45,6 @@ def observe (P : Protocol G I C M) {χ : G →+ ZMod 2}
 def Reachable (P : Protocol G I C M) (χ : G →+ ZMod 2) (a t : G) (c : C) : Prop :=
   ∃ s : Source (I := I) χ, s.1.1 = a ∧ clock s = t ∧ P.query a t = c
 
-/-- Every local input occurs on each reachable branch: a second sender absorbs
-exactly the amount needed to keep the clock fixed, with zero kernel offset. -/
-theorem local_input_realizability [Nontrivial I] (P : Protocol G I C M)
-    (χ : G →+ ZMod 2) (a t : G) (c : C) (hb : Reachable P χ a t c)
-    (i : I) (x : G) :
-    ∃ s : Source (I := I) χ,
-      s.1.1 = a ∧ clock s = t ∧ P.query s.1.1 (clock s) = c ∧ s.1.2 i = x := by
-  classical
-  obtain ⟨j, hj⟩ := exists_ne i
-  let v : I → G := Pi.single i x + Pi.single j (t - a - x)
-  have hv : ∑ k, v k = x + (t - a - x) := by
-    simp [v, Finset.sum_add_distrib]
-  have ht : clock (χ := χ) ((a, v), 0) = t := by
-    simp only [clock, target, hv, ZeroMemClass.coe_zero, add_zero]
-    abel
-  refine ⟨((a, v), 0), rfl, ht, ?_, ?_⟩
-  · rw [ht]
-    exact hb.choose_spec.2.2
-  · simp [v, Ne.symm hj]
-
 /-- Periods must preserve every local input in every actually used branch. -/
 def senderPeriods (P : Protocol G I C M) (χ : G →+ ZMod 2) (i : I) : AddSubgroup G where
   carrier := {p | ∀ a t c, Reachable P χ a t c →
@@ -123,8 +103,25 @@ theorem period_classification [Nontrivial I]
     ( (activeSenders P χ).Nonempty →
       Nonempty (globalPeriods P χ ≃+ evenSwitches (activeSenders P χ)) ∧
       Nat.card (globalPeriods P χ) = 2 ^ ((activeSenders P χ).card - 1)) := by
-  refine ⟨local_input_realizability P χ, ?_⟩
   classical
+  have local_input_realizability :
+      ∀ a t c, Reachable P χ a t c → ∀ i x,
+        ∃ s : Source (I := I) χ,
+          s.1.1 = a ∧ clock s = t ∧
+          P.query s.1.1 (clock s) = c ∧ s.1.2 i = x := by
+    intro a t c hb i x
+    obtain ⟨j, hj⟩ := exists_ne i
+    let v : I → G := Pi.single i x + Pi.single j (t - a - x)
+    have hv : ∑ k, v k = x + (t - a - x) := by
+      simp [v, Finset.sum_add_distrib]
+    have ht : clock (χ := χ) ((a, v), 0) = t := by
+      simp only [clock, target, hv, ZeroMemClass.coe_zero, add_zero]
+      abel
+    refine ⟨((a, v), 0), rfl, ht, ?_, ?_⟩
+    · rw [ht]
+      exact hb.choose_spec.2.2
+    · simp [v, Ne.symm hj]
+  refine ⟨local_input_realizability, ?_⟩
   have hb : Reachable P χ 0 0 (P.query 0 0) := by
     exact ⟨0, rfl, by simp [clock, target], rfl⟩
   have rigid (u : I → G) (hu : ∀ i, u i ∈ senderPeriods P χ i)
@@ -209,7 +206,7 @@ theorem period_classification [Nontrivial I]
       have hk : v.2 = 0 := Subtype.ext (by simpa [clock, hy] using ht)
       refine ⟨ha, hk, ?_, by simpa [target, ha] using hy⟩
       intro i a t c hb' x
-      obtain ⟨s, hsa, hst, hsq, hsx⟩ := local_input_realizability P χ a t c hb' i x
+      obtain ⟨s, hsa, hst, hsq, hsx⟩ := local_input_realizability a t c hb' i x
       have hadd : clock (s + v) = clock s := by
         simp only [clock, target, Prod.fst_add, Prod.snd_add, Pi.add_apply,
           Finset.sum_add_distrib, AddSubgroup.coe_add, ha, hk, ZeroMemClass.coe_zero]
@@ -337,7 +334,6 @@ theorem period_classification [Nontrivial I]
     rw [hcard', ← pow_succ, Nat.sub_add_cancel hn]
 
 
-#print axioms local_input_realizability
 #print axioms period_classification
 
 end D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification
