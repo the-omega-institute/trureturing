@@ -85,25 +85,6 @@ def input {r : ℕ} {A B : Type} {D : Fin r → Type}
   | .inr (.inl true) => b
   | .inr (.inr i) => d i
 
-instance {r : ℕ} {A B : Type} {D : Fin r → Type}
-    [Finite A] [Finite B] [∀ i, Finite (D i)] (c : Coord r) : Finite (Alphabet A B D c) := by
-  rcases c with i | (b | i)
-  · exact inferInstanceAs (Finite Bool)
-  · cases b
-    · exact inferInstanceAs (Finite A)
-    · exact inferInstanceAs (Finite B)
-  · exact inferInstanceAs (Finite (D i))
-
-instance {r : ℕ} {A B : Type} {D : Fin r → Type}
-    [Nonempty A] [Nonempty B] [∀ i, Nonempty (D i)] (c : Coord r) :
-    Nonempty (Alphabet A B D c) := by
-  rcases c with i | (b | i)
-  · exact inferInstanceAs (Nonempty Bool)
-  · cases b
-    · exact inferInstanceAs (Nonempty A)
-    · exact inferInstanceAs (Nonempty B)
-  · exact inferInstanceAs (Nonempty (D i))
-
 noncomputable def coreBefore {I A B Z O : Type} (ψ : A → B → Z)
     (G : (I → Bool) → Z → O) (s : I → Prop) :
     ({i // s i} → Bool) → (({i // ¬s i} → Bool) × A × B) → O :=
@@ -151,6 +132,23 @@ theorem result {r : ℕ} (_hr : 1 ≤ r) (h : ℕ) (hh : h ≤ r)
           C * (width (Alphabet A B D) (task ψ (fun _ _ => o)) (piPosition h) : ℝ)^(2^h : ℕ) →
         1 ≤ C) := by
   classical
+  letI alphabetFinite {r : ℕ} {A B : Type} {D : Fin r → Type}
+      [Finite A] [Finite B] [∀ i, Finite (D i)] (c : Coord r) : Finite (Alphabet A B D c) := by
+    rcases c with i | (b | i)
+    · exact inferInstanceAs (Finite Bool)
+    · cases b
+      · exact inferInstanceAs (Finite A)
+      · exact inferInstanceAs (Finite B)
+    · exact inferInstanceAs (Finite (D i))
+  letI alphabetNonempty {r : ℕ} {A B : Type} {D : Fin r → Type}
+      [Nonempty A] [Nonempty B] [∀ i, Nonempty (D i)] (c : Coord r) :
+      Nonempty (Alphabet A B D c) := by
+    rcases c with i | (b | i)
+    · exact inferInstanceAs (Nonempty Bool)
+    · cases b
+      · exact inferInstanceAs (Nonempty A)
+      · exact inferInstanceAs (Nonempty B)
+    · exact inferInstanceAs (Nonempty (D i))
   have transport {U V Y Z O : Type} [Finite U] [Finite V] [Finite Y] [Finite Z] [Finite O]
       (f : U → Y → O) (g : V → Z → O) (a : U → V) (b : Y → Z)
       (ha : Function.Surjective a) (hb : Function.Surjective b)

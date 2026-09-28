@@ -1,0 +1,37 @@
+### 命题 25.1：有限确定性系统的精确细化稳定性
+
+设 $Q$ 为非空有限状态集，$U$ 为有限操作集，每个 $u\in U$ 对应总转移函数 $T_u:Q\to Q$，输出函数为 $o:Q\to Y$。对有限操作词 $w=u_1\cdots u_\ell$，记 $T_w=T_{u_\ell}\circ\cdots\circ T_{u_1}$，空词的转移为恒等函数。定义第 $k$ 层精确等价关系：
+
+$$
+p\equiv_k q
+\quad\Longleftrightarrow\quad
+\forall w\in U^{\leq k},\quad o(T_w(p))=o(T_w(q)).
+$$
+
+则这些关系逐层细化；若某个 $k\geq0$ 满足 $\equiv_k=\equiv_{k+1}$，则：
+
+$$
+\boxed{
+p\equiv_k q
+\quad\Longleftrightarrow\quad
+\forall w\in U^*,\quad o(T_w(p))=o(T_w(q)).
+}
+$$
+
+并且由于 $Q$ 有限，总存在这样的稳定层。
+
+**证明。** 长度至多 $k$ 的词包含于长度至多 $k+1$ 的词，故 $\equiv_{k+1}\subseteq\equiv_k$。按照词的首个操作拆分，还得到精确递推：
+
+$$
+p\equiv_{k+1}q
+\quad\Longleftrightarrow\quad
+o(p)=o(q)\ \land\
+\forall u\in U,\quad T_u(p)\equiv_k T_u(q).
+$$
+
+若相邻两层相同，则 $p\equiv_k q$ 蕴含 $o(p)=o(q)$，并且对每个 $u\in U$，有 $T_u(p)\equiv_k T_u(q)$。对词长归纳可知 $T_w(p)\equiv_k T_w(q)$ 对每个有限词 $w$ 都成立，所以其输出也相同。反过来，全部有限词上的输出相同当然蕴含长度至多 $k$ 的词上输出相同，由此得到等价式。
+
+每次严格细化都使 $Q$ 的等价类数至少增加一个，而等价类数至多为 $|Q|$。因此严格细化只能发生有限次，必有相邻两层相等。∎
+
+这里的相等是全部指定状态、输出和操作上的精确关系相等，证明用到了对每个操作的量词。有限样本上暂未出现冲突并不提供这个前提。
+
