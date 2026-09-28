@@ -662,3 +662,223 @@ hypothetical odd extremal family, or to repair its E_J with a smaller
 allowed AP inventory. Different blocked leaves can still require
 different cofactor witnesses. Neither the tree nor the private-hull
 repair rules make those witnesses one common cofactor.
+
+## 9. Liability multiplicity and the missing distribution of blocked fibres
+
+The actual joint region in section8 gives a multiplicity alternative.
+It also identifies the extra premise needed to average over smaller-prime
+heights. The following deductions retain the same original labels and
+whole-cover hypotheses. The finite controls below are noncovers and test
+only the explicitly listed local premises. This section contains ordinary
+proofs and exact finite checks, not new Lean verification.
+
+### 9.1. A blocked tree forces private leaves or multiple coverage
+
+Keep a blocked u and its complete t-ary tree T from section8, where
+t=q-r+1. For every leaf xi choose v_xi in the actual fibre of E_J
+minimizing the number mu_xi of original owners of (u,xi,v_xi).
+Whole coverage and the definition of E_J give mu_xi>=1 and put every
+owner in J. Let
+
+    n=t^G,
+    C_T=sum_(d in J, u=a_d mod r^(v_r(d)))
+            #{xi in leaves(T): xi=a_d mod q^(v_q(d))}.
+
+Each summand is either zero or t^(G-v_q(d)). Counting actual
+point-owner incidences, and then forgetting only the cofactor test,
+gives
+
+    sum_(xi in leaves(T))mu_xi <= C_T
+      <= H*tau(M)*(t^G-1)/(t-1).                    (LM1)
+
+The last inequality uses at most H*tau(M) original labels at each
+q-height e. It does not assume their cofactor events are independent.
+If P is the number of leaves admitting a point IN E_J private to one original,
+the minimizing choices have mu_xi=1 at precisely those P leaves, and
+mu_xi>=2 elsewhere. Consequently
+
+    P >= max(0, 2*t^G-C_T)
+      >= max(0, 2*t^G-H*tau(M)*(t^G-1)/(t-1)).        (LM2)
+
+In particular, if no leaf of T admits a private point in E_J, then
+
+    2*t^G <= H*tau(M)*(t^G-1)/(t-1),
+    2*(q-r) <= H*tau(M)-1.                          (LM3)
+
+More generally, if every such liability point has at least m>=1 original
+owners, replace 2 by m. If P>0, at least ceil(P/t^(G-1)) distinct low-r
+labels privately own the chosen points: any one original in J has
+q-height at least one and can meet at most t^(G-1) leaves.
+
+These are alternatives, not a universal doubling of LA5. In the private
+arm, each point permits the existing same-source shell inequalities in
+[Lettl--Sun accounting](../../../../../../Library/Arith/lettlsun2008cosets.md#the-covering-premise-and-pointwise-demand).
+The points need not have the same private owner or cofactor. They do not
+identify the complete private region required for a repair in Report385.
+
+### 9.2. A single distribution on blocked smaller-prime fibres
+
+Let U be the set of u modulo r^H for which no complete r-ary depth-G
+tree avoids E_u. Extremality gives U nonempty. Suppose ONE probability
+sigma supported on U obeys
+
+    sigma(u=c mod r^a)<=beta_a, 0<=a<H, for every c.  (LM4)
+
+Choose the JL3 law nu_u separately for each u and mix these actual laws
+with sigma. For an original d=r^a q^e s in J, its event requires the
+specified r-prefix, and its conditional probability at any such u is
+at most t^(-e). Thus the mixed law nu satisfies
+
+    nu(A_d)<=beta_a*t^(-e),
+    1<=sum_(d in J)nu(A_d)
+      <=tau(M)*(sum_(a=0..H-1)beta_a)*(1-t^(-G))/(t-1).
+
+All retained events still have mass zero. In particular,
+
+    q-r < tau(M)*sum_(a=0..H-1)beta_a.               (LM5)
+
+This conditional inequality replaces H only after LM4 has been proved
+for one actual sigma. A different law for each height or each label
+does not suffice.
+
+For example, beta_a=r^(-a) forces sigma uniform modulo r^(H-1): at
+that depth its r^(H-1) cell masses sum to one and each is bounded by
+1/r^(H-1). Such a sigma exists on U exactly when U meets every one of
+those cells. If H>=2 and the original r-class is normalized to0, no
+u=0 mod r belongs to U, so this proposed uniform law is impossible.
+Normalization is available for the prime classes by one common CRT
+translation, and does not change any covering or tree property.
+
+A sufficient different condition is that U contain all leaves of a
+complete (r-1)-ary depth-H prefix subtree. Its uniform leaf law has
+beta_a=(r-1)^(-a), yielding
+
+    q-r < tau(M)*sum_(a=0..H-1)(r-1)^(-a)
+         < tau(M)*(r-1)/(r-2).
+
+No such subtree in U has been established for every hypothetical cover.
+
+### 9.3. The actual source of possible distribution
+
+Let L be the projection onto r^H of the region not covered by the
+q-free originals, and let
+
+    V={a_d mod r^H: d in D, v_r(d)=H, v_q(d)>=1}.
+
+Then, directly from the original events,
+
+    L minus V subset U subset L,
+    |V|<=G*tau(M).                                  (LM6)
+
+Indeed, outside L the q-free originals cover every cofactor, so E_u
+is empty. For u in L minus V choose an actual q-free-live cofactor v.
+No full-r q-bearing original has that u, so every q-leaf at (u,v)
+belongs to E_J. Hence E_u is the full q-tree and u belongs to U.
+There is at most one full-r numerical label for each (e,s), proving
+the count on V.
+
+If B=L minus V is nonempty, its uniform distribution gives an explicit
+instance of LM4 with
+
+    beta_a=min(1, r^(H-a)/|B|).
+
+Writing delta=|B|/r^H therefore gives the conditional height-independent
+consequence
+
+    q-r < tau(M)*(1+1/(delta*(r-1))).                (LM7)
+
+Here beta_0=1 and the positive-depth geometric series is bounded by
+1/(delta*(r-1)). The unknown is an adequate positive lower bound on
+this actual delta, or a sharper prefix distribution on U. The bound
+on |V| alone provides neither. Report374 controls projections of a
+prime-free residual onto LARGER primes; it cannot be reversed to
+supply the distribution at r<q used here.
+
+Whole coverage gives a further check on L itself. For each u in L
+choose one actual q-free-live v_u and then vary xi over ALL q^G leaves,
+keeping that v_u fixed. These |L|*q^G points must all have q-bearing
+owners. A label r^a q^e s covers at most r^(H-a)*q^(G-e) of them.
+There is at most one label for each (a,e,s), so
+
+    |L| <= tau(M)*(r^(H+1)-1)/(r-1)
+                  *(1-q^(-G))/(q-1).               (LM8)
+
+Restricting to B=L minus V removes every full-r owner and gives the
+same bound with the first geometric factor replaced by
+r*(r^H-1)/(r-1). These are direct common-source counting consequences
+of the complete q-coordinate marginal test, not a new general marginal
+theorem. Unlike a single selected liability law, they use coverage of
+every q-leaf above every chosen u. They give upper bounds on the live
+projection; they cannot serve as the missing lower bound for delta.
+
+### 9.4. Actual odd controls exclude a local geometric replacement
+
+Consider first the six original classes
+
+    0 mod3, 4 mod9, 10 mod27, 0 mod5, 1 mod15, 37 mod45.
+
+Their period is135. They are odd, numerically distinct, divisor-closed
+and irredundant, with normalized prime classes and disjoint comparable
+originals. Every complete private congruence hull is exactly its original
+modulus. The finite DR3--DR6 conditions of Report385, the EP4 projection
+conditions of Report374 and LA5 all hold. The family has49 holes.
+
+For r=3,q=5,H=3,G=1,M=1, the points55,1,82 all have u=1 mod27
+and have q-roots0,1,2. They are private to5,15,45 respectively.
+Their uniform law is supported on actually covered points of E_J,
+has zero mass on every retained original and gives each of the three
+r-heights mass1/3. The proposed replacement would require
+
+    q-r=2 < sum_(a=0..2)3^(-a)=13/9,
+
+which fails. For these selected leaves C_T=3, so LM1--LM2 attain
+equality and all three private leaves are retained by the accounting.
+
+The second family strengthens the source control:
+
+    (residue,modulus)=
+    (0,3),(4,9),(10,27),(28,81),(82,243),
+    (0,7),(1,21),(37,63),(136,189),(487,567),
+    (0,5),(7,15),(26,35),(76,105).
+
+It has period8505 and2333 holes and satisfies the same listed local
+conditions, for every relevant support-prime pair. Take
+r=3,q=7,H=5,G=1,M=5. At the SAME u=1 mod243 and v=1 mod5,
+the full seven-root q-line consists of
+
+    6076,1,2431,4861,7291,1216,3646.
+
+Every one is covered by the original family. The first five are
+private to7,21,63,189,567. Their uniform law gives five distinct
+r-heights mass1/5 while every retained event has mass zero. Nevertheless
+
+    q-r=4 > tau(5)*sum_(a=0..4)3^(-a)=242/81.
+
+Thus even one completely covered same-source q-line, together with all
+the listed local conditions, does not justify that geometric inventory
+bound. These examples do not have the whole-cover premise and are not
+counterexamples to LM5 or Erdős#7. In a noncover E_J can also contain
+original holes; the verified laws use only its actually covered points.
+In fact their live projections have |L|=14 and122, respectively, while
+LM8 would require |L|<=8 and104. This whole-cover test rejects both
+controls, even though the second covers the displayed complete q-line.
+They also fail some same-source private shell demands. The examples
+therefore refute the stated local shortcut, not one that additionally
+assumes all original shell inequalities or LM8.
+
+The [control program](../../../frontier/cover-geometry/p-flat-constructor/joint_liability_global_bridge.py)
+and [exact data](../../../frontier/cover-geometry/p-flat-constructor/joint_liability_global_bridge.json)
+check complete-period ownership, all private hulls, divisor closure,
+comparable disjointness, the named local inequalities and the literal
+source laws. Independent enumeration from the displayed classes agrees
+on both private-count vectors, hulls, source points, masses and holes.
+Normal and optimized runs produce identical result bytes:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/p-flat-constructor/joint_liability_global_bridge.py --output /tmp/e7_joint_liability_global_bridge.json
+```
+
+The remaining whole-cover obligation is to force enough distribution
+on U, exploit both arms of LM3 through complete private-region repairs,
+or supply another strict descent. A local geometric substitution does
+not discharge it.
