@@ -9,7 +9,10 @@
 import Mathlib.Algebra.Ring.Invertible
 import Mathlib.Analysis.InnerProductSpace.Positive
 import Mathlib.Tactic.Abel
-import D5.S3.Quantum.Dynamics.CompressedPowerDefect
+import Mathlib.Analysis.InnerProductSpace.Adjoint
+import Mathlib.Tactic.GCongr
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -19,7 +22,6 @@ noncomputable section
 namespace D5.S3.Quantum.Dynamics.CompressedResolventRemainder
 
 open ContinuousLinearMap
-open D5.S3.Quantum.Dynamics.CompressedPowerDefect
 open RCLike
 open scoped InnerProductSpace
 
