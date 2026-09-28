@@ -613,7 +613,8 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
     let driver ← IO.ofExcept <| env.evalConstCheck (Array Name → MetaM (Array Json)) {}
       typeName producerName
-    let heartbeatBudget := max 200000 (inputs.size * 1000)
+    -- The join assesses the full imported registry, which can outweigh the requested modules.
+    let heartbeatBudget := max 1000000 (inputs.size * 10000)
     let bindings ← runReportMeta env "information-template-join"
       (driver (inputs.map (·.moduleName.toName))) heartbeatBudget
     return bindings
