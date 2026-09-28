@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Extremal endpoints and opposite extremal maps force oscillation. -/
+   digest: Oscillation characterizes extremal endpoints; opposite maps force oscillation. -/
 
 import D5.S1.Words.Permutations.MamedeCrossing
 import D5.S1.Words.Permutations.MamedeExtremalOrientation
@@ -207,12 +207,9 @@ private theorem rev_chain (v : List Nat) (hc : consecutive v) : consecutive v.re
   rw [chain, List.isChain_reverse]
   exact (chain v).mp hc |>.imp (fun _ _ h => h.symm)
 
-/-- Reversal represents the inverse singleton permutation and preserves the
-    exact broad-monotone spike-length predicate, for arbitrary words. -/
-theorem word_reversal_invariants (n : Nat) (σ : Equiv.Perm (Fin (n + 1)))
-    (w : List Nat) :
-    (singletonWord n σ⁻¹ w.reverse ↔ singletonWord n σ w) ∧
-      (oscillation w.reverse ↔ oscillation w) := by
+-- Shared with the endpoint converse: reversal reverses the actual length list.
+private theorem reverse_spike_lengths (w : List Nat) :
+    segmentLengths (spikes w.reverse) = (segmentLengths (spikes w)).reverse := by
   have internalSpikes_snoc (p : List Nat) (x y z : Nat) :
       internalSpikes (p ++ [x, y, z]) = internalSpikes (p ++ [x, y]) ++
         (if (x < y ∧ z < y) ∨ (y < x ∧ y < z) then [y] else []) := by
@@ -303,6 +300,14 @@ theorem word_reversal_invariants (n : Nat) (σ : Equiv.Perm (Fin (n + 1)))
         simp only [List.reverse_cons, List.append_assoc, List.singleton_append] at ih ⊢
         rw [segmentLengths_snoc r.reverse b a, ih]
         simp [segmentLengths, add_comm]
+  rw [reverse_spikes, reverse_segmentLengths]
+
+/-- Reversal represents the inverse singleton permutation and preserves the
+    exact broad-monotone spike-length predicate, for arbitrary words. -/
+theorem word_reversal_invariants (n : Nat) (σ : Equiv.Perm (Fin (n + 1)))
+    (w : List Nat) :
+    (singletonWord n σ⁻¹ w.reverse ↔ singletonWord n σ w) ∧
+      (oscillation w.reverse ↔ oscillation w) := by
   have singleton_rev (v : List Nat) (τ : Equiv.Perm (Fin (n + 1)))
       (hv : singletonWord n τ v) : singletonWord n τ⁻¹ v.reverse :=
     ⟨rev_reduced n v hv.1, rev_chain v hv.2.1, by rw [rev_product, hv.2.2]⟩
@@ -310,7 +315,7 @@ theorem word_reversal_invariants (n : Nat) (σ : Equiv.Perm (Fin (n + 1)))
   · intro hv
     simpa using singleton_rev w.reverse σ⁻¹ hv
   · unfold oscillation
-    rw [reverse_spikes, reverse_segmentLengths]
+    rw [reverse_spike_lengths]
     simp only [List.reverse_reverse, or_comm]
 
 /-- An attained generator extremum at either end forces the exact broad-monotone
@@ -652,6 +657,165 @@ theorem extremal_endpoint_oscillation (n k : Nat) (w : List Nat)
   · have hrev := first w.reverse (rev_reduced n w hr) (rev_chain w hc)
       (by simpa only [List.head?_reverse] using hl) (by simpa using hext)
     exact (word_reversal_invariants n (wordProduct n w) w).2.mp hrev
+
+/-- Weakly monotone spike lengths put an attained support extremum at an
+    endpoint. This direction needs consecutiveness, but no reducedness. -/
+theorem oscillation_extremal_endpoint (m M : Nat) (a : List Nat)
+    (hc : consecutive a) (hm : m ∈ a) (hM : M ∈ a)
+    (hb : ∀ k ∈ a, m ≤ k ∧ k ≤ M) (ho : oscillation a) :
+    a.head? = some m ∨ a.head? = some M ∨
+      a.getLast? = some m ∨ a.getLast? = some M := by
+  have first_spike (a b : Nat) (r : List Nat)
+      (hc : (a :: b :: r).IsChain (· ≠ ·)) :
+      ∃ t s, spikes (a :: b :: r) = a :: t :: s ∧
+        t ∈ b :: r ∧ ((a < b → a < t) ∧ (b < a → t < a)) := by
+    induction r generalizing a b with
+    | nil =>
+      exact ⟨b, [], by simp [spikes, internalSpikes], by simp, by tauto⟩
+    | cons c r ih =>
+      have hab := (List.isChain_cons_cons.mp hc).1
+      have hbc := (List.isChain_cons_cons.mp (List.isChain_cons_cons.mp hc).2).1
+      by_cases ht : (a < b ∧ c < b) ∨ (b < a ∧ b < c)
+      · exact ⟨b, internalSpikes (b :: c :: r) ++ [(b :: c :: r).getLast!],
+          by simp [spikes, internalSpikes, ht, List.getLast!], by simp, by tauto⟩
+      · obtain ⟨t, s, hs, hmem, hdir⟩ := ih b c (List.isChain_cons_cons.mp hc).2
+        have he : spikes (a :: b :: c :: r) =
+            a :: (spikes (b :: c :: r)).tail := by
+          simp [spikes, internalSpikes, ht, List.getLast!]
+        refine ⟨t, s, by rw [he, hs]; rfl, by simp [hmem], ?_⟩
+        constructor
+        · intro h
+          have hbc' : b < c := by omega
+          exact lt_trans h (hdir.1 hbc')
+        · intro h
+          have hcb : c < b := by omega
+          exact lt_trans (hdir.2 hcb) h
+  have erase (a b c : Nat) (r : List Nat)
+      (hm : (a < b ∧ b < c) ∨ (c < b ∧ b < a)) :
+      spikes (a :: b :: c :: r) = spikes (a :: c :: r) := by
+    have hnot : ¬ ((a < b ∧ c < b) ∨ (b < a ∧ b < c)) := by omega
+    cases r with
+    | nil => simp [spikes, internalSpikes, hnot, List.getLast!]
+    | cons d r =>
+      have he : ((b < c ∧ d < c) ∨ (c < b ∧ c < d)) ↔
+          ((a < c ∧ d < c) ∨ (c < a ∧ c < d)) := by omega
+      simp [spikes, internalSpikes, hnot, he, List.getLast!]
+  -- Erase straight-run interiors; at a turn, the next span contains the first letter.
+  have main : ∀ l, ∀ (x : Nat) (r : List Nat), (x :: r).length = l →
+      (x :: r).IsChain (· ≠ ·) →
+      weakIncreasing (segmentLengths (spikes (x :: r))) →
+      ∃ z, (x :: r).getLast? = some z ∧
+        ((∀ k ∈ x :: r, k ≤ z) ∨ (∀ k ∈ x :: r, z ≤ k)) := by
+    intro l
+    induction l using Nat.strong_induction_on with
+    | h l ih =>
+      intro x r hlen hc hi
+      cases r with
+      | nil => exact ⟨x, rfl, Or.inl (by simp)⟩
+      | cons y r =>
+        cases r with
+        | nil =>
+          refine ⟨y, rfl, ?_⟩
+          rcases le_total x y with h | h
+          · exact Or.inl (by simpa using h)
+          · exact Or.inr (by simpa using h)
+        | cons z r =>
+          have hxy := (List.isChain_cons_cons.mp hc).1
+          have hyz := (List.isChain_cons_cons.mp (List.isChain_cons_cons.mp hc).2).1
+          by_cases ht : (x < y ∧ z < y) ∨ (y < x ∧ y < z)
+          · obtain ⟨t, s, hs, hmem, hdir⟩ := first_spike y z r
+              (List.isChain_cons_cons.mp hc).2
+            have he : spikes (x :: y :: z :: r) = x :: spikes (y :: z :: r) := by
+              simp [spikes, internalSpikes, ht, List.getLast!]
+            have hinc : (x - y) + (y - x) ≤ (y - t) + (t - y) ∧
+                weakIncreasing (segmentLengths (spikes (y :: z :: r))) := by
+              simpa only [he, hs, segmentLengths, weakIncreasing] using hi
+            have hbetween : (y ≤ x ∧ x ≤ t) ∨ (t ≤ x ∧ x ≤ y) := by
+              rcases ht with ⟨hxy, hzy⟩ | ⟨hyx, hyz⟩
+              · have hty := hdir.2 hzy
+                omega
+              · have hyt := hdir.1 hyz
+                omega
+            obtain ⟨e, he, hb⟩ := ih (y :: z :: r).length
+              (by simp only [List.length_cons] at hlen ⊢; omega) y (z :: r) rfl
+              (List.isChain_cons_cons.mp hc).2 hinc.2
+            refine ⟨e, by simpa using he, ?_⟩
+            rcases hb with hb | hb
+            · left
+              intro k hk
+              rcases List.mem_cons.mp hk with rfl | hk
+              · have hy := hb y (by simp)
+                have ht := hb t (by simp [hmem])
+                rcases hbetween with h | h <;> omega
+              · exact hb k hk
+            · right
+              intro k hk
+              rcases List.mem_cons.mp hk with rfl | hk
+              · have hy := hb y (by simp)
+                have ht := hb t (by simp [hmem])
+                rcases hbetween with h | h <;> omega
+              · exact hb k hk
+          · have hm : (x < y ∧ y < z) ∨ (z < y ∧ y < x) := by omega
+            have he := erase x y z r hm
+            have hc' : (x :: z :: r).IsChain (· ≠ ·) :=
+              List.isChain_cons_cons.mpr ⟨by omega,
+                (List.isChain_cons_cons.mp (List.isChain_cons_cons.mp hc).2).2⟩
+            obtain ⟨e, hend, hb⟩ := ih (x :: z :: r).length
+              (by simp only [List.length_cons] at hlen ⊢; omega) x (z :: r) rfl hc'
+              (by simpa only [he] using hi)
+            refine ⟨e, by simpa using hend, ?_⟩
+            rcases hb with hb | hb
+            · left
+              intro k hk
+              simp only [List.mem_cons] at hk
+              rcases hk with hx | hy | hk
+              · subst k
+                exact hb x (by simp)
+              · subst k
+                have hx := hb x (by simp)
+                have hz := hb z (by simp)
+                rcases hm with h | h <;> omega
+              · exact hb k (by simp [hk])
+            · right
+              intro k hk
+              simp only [List.mem_cons] at hk
+              rcases hk with hx | hy | hk
+              · subst k
+                exact hb x (by simp)
+              · subst k
+                have hx := hb x (by simp)
+                have hz := hb z (by simp)
+                rcases hm with h | h <;> omega
+              · exact hb k (by simp [hk])
+  have last_endpoint (w : List Nat) (hc : consecutive w) (hm : m ∈ w) (hM : M ∈ w)
+      (hb : ∀ k ∈ w, m ≤ k ∧ k ≤ M)
+      (hi : weakIncreasing (segmentLengths (spikes w))) :
+      w.getLast? = some m ∨ w.getLast? = some M := by
+    cases w with
+    | nil => simp at hm
+    | cons x r =>
+      have hc' : (x :: r).IsChain (· ≠ ·) :=
+        ((chain _).mp hc).imp (fun _ _ h => by rcases h with h | h <;> omega)
+      obtain ⟨z, hend, hbound⟩ := main (x :: r).length x r rfl hc' hi
+      have hz : z ∈ x :: r := List.mem_of_mem_getLast? (by rw [hend]; simp)
+      have hzb := hb z hz
+      rcases hbound with hbound | hbound
+      · have hMz := hbound M hM
+        right
+        have hzM : z = M := by omega
+        simpa only [hzM] using hend
+      · have hzm := hbound m hm
+        left
+        have hzm' : z = m := by omega
+        simpa only [hzm'] using hend
+  rcases ho with hi | hi
+  · exact Or.inr (Or.inr (last_endpoint a hc hm hM hb hi))
+  · have hirev : weakIncreasing (segmentLengths (spikes a.reverse)) := by
+      rw [reverse_spike_lengths]
+      exact hi
+    have hend := last_endpoint a.reverse (rev_chain a hc)
+      (by simpa using hm) (by simpa using hM) (by simpa using hb) hirev
+    simpa only [List.getLast?_reverse] using hend.elim Or.inl (Or.inr ∘ Or.inl)
 
 theorem extremal_endpoint_unique (n k : Nat) (a b : List Nat)
     (ha : reducedWord n a) (hb : reducedWord n b)
@@ -1252,6 +1416,7 @@ theorem opposite_extremal_maps_oscillation (n m M : Nat)
 #print axioms opposite_extremal_maps_oscillation
 #print axioms word_reversal_invariants
 #print axioms extremal_endpoint_oscillation
+#print axioms oscillation_extremal_endpoint
 #print axioms extremal_endpoint_unique
 #print axioms symmetric_excursion_outer_empty
 

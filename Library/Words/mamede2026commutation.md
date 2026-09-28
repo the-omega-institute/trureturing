@@ -178,11 +178,19 @@ The paper's Theorem 2.2 concerns words in `[n]*` with consecutive indices and
 their associated permutations: membership in `R_bullet(sigma)` is equivalent
 to excluding factors with repeated or symmetric segments. The Lean inputs
 are valid indices, minimal representing length, and consecutive letters.
-The new proof uses the existing crossing lemmas rather than assuming the
-paper's unformalized repeated/symmetric-segment characterization. It proves
-only the endpoint-to-oscillation direction of Lemma 3.2. The reverse direction
-remains unproved. The separate opposite-map result below supplies the bridge
-to an extremal word endpoint for an explicitly attained generator interval.
+The proof uses the existing crossing lemmas rather than assuming the paper's
+unformalized repeated/symmetric-segment characterization. The converse
+`MamedeEndpointUniqueness.oscillation_extremal_endpoint` proves that a
+consecutive word with attained minimum `m` and maximum `M`, support in
+`[m,M]`, and `oscillation` has first or last letter equal to `m` or `M`.
+It needs no reducedness hypothesis. Thus both directions of Lemma 3.2's
+endpoint characterization hold for reduced consecutive words with attained
+extrema and support in `[m,M]` in the repository's word predicate. The separate
+opposite-map result below
+supplies the bridge to an extremal word endpoint for an explicitly attained
+generator interval. The paper-to-`singletonWord` interpretation remains
+ASSUMED-UNVERIFIED; neither direction counts commutation classes or resolves
+Conjecture 5.1. The verified-resolution KPI remains 0.
 
 `MamedeEndpointUniqueness.symmetric_excursion_outer_empty` proves one
 independent part of that bridge. For `1<=m<M<=n`, write the symmetric central

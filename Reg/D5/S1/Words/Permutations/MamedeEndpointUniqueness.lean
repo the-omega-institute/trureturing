@@ -260,6 +260,80 @@ register_information_theorem extremal_endpoint_oscillation in arena
 
 end EndpointOscillation
 
+namespace OscillationEndpointConverse
+
+abbrev signature : Signature where
+  Params := Nat
+  State _ := List Nat
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ w => w) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => [1]) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law r := ∀ (m M : Nat) (a : List Nat)
+      (_hc : consecutive a) (_hm : m ∈ a) (_hM : M ∈ a)
+      (_hb : ∀ k ∈ a, m ≤ k ∧ k ≤ M)
+      (_ho : oscillation (r.readout () m a)),
+    a.head? = some m ∨ a.head? = some M ∨
+      a.getLast? = some m ∨ a.getLast? = some M
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 1 3 [2, 1, 2, 3, 2]
+    (by simp [consecutive]) (by decide) (by decide) (by decide)
+    (by simp [rejected, realize, oscillation, spikes,
+      segmentLengths, weakIncreasing])
+  simp at hh
+
+theorem sensitivity : Sensitivity arena actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    intro j hji
+    cases i
+    cases j
+    exact (hji rfl).elim
+  · intro i
+    exact nomatch i
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  exact ⟨1, [], [1], by decide⟩
+
+def registration : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨oscillation_extremal_endpoint, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+
+register_information_theorem oscillation_extremal_endpoint in arena
+  readout via (realize signature (fun _ _ w => w) (fun e => nomatch e))
+  realizes registration
+  escape from source ({
+    owner := `D5.S1.Words.Permutations.MamedeEndpointUniqueness
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "domain", "arg"]
+      stateBinder := 2 }] })
+  escape continues (open)
+
+#print axioms registration
+
+end OscillationEndpointConverse
+
 namespace SymmetricExcursion
 
 private theorem sample_reduced : reducedWord 3 [2, 3, 2, 1, 2, 3] := by

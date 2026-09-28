@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Permutations;
 internal sealed class MamedeEndpointUniquenessDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Extremal endpoints and opposite extremal maps force oscillation; common extremal endpoints determine reduced consecutive words.",
+        "Oscillation and attained extremal endpoints coincide for reduced consecutive words; opposite extremal maps force oscillation and common extremal endpoints determine words.",
         H("Extremal Endpoint Structure"),
         Blocks(
         Describe.Lean(
@@ -83,9 +83,38 @@ internal sealed class MamedeEndpointUniquenessDocument : IScribeDocumentDefiniti
                 + "give weakly decreasing lengths, and reversal supplies the last-letter "
                 + "cases. This proves the endpoint-to-oscillation direction of Lemma 3.2 "
                 + "in the repository's exact model. The paper invokes its Theorem 2.2, "
-                + "but this proof uses the existing reduced-word crossing results. It does "
-                + "not prove the reverse characterization. The separate opposite-map "
+                + "but this proof uses the existing reduced-word crossing results. It is "
+                + "paired with the reverse endpoint characterization below. The separate opposite-map "
                 + "theorem below derives the required extremal endpoint."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
+            DescribeId.Create("mamede-oscillation-extremal-endpoint"),
+            DeclarationHandle.Create(
+                "D5/S1/Words/Permutations/MamedeEndpointUniqueness.oscillation_extremal_endpoint"),
+            H("An oscillating word has an extremal endpoint"),
+            StatementSource.FromAuthor(Disp(Q(
+                Call("Consecutive", V("a")), Land,
+                Call("Member", V("m"), V("a")), Land,
+                Call("Member", V("M"), V("a")), Land,
+                Call("AllLettersBetween", V("m"), V("M"), V("a")), Land,
+                Call("Oscillation", V("a")), Implies,
+                Call("HeadEquals", V("a"), V("m")), Lor,
+                Call("HeadEquals", V("a"), V("M")), Lor,
+                Call("LastEquals", V("a"), V("m")), Lor,
+                Call("LastEquals", V("a"), V("M"))))),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "For natural numbers m and M and a list a of natural generator indices, "
+                + "suppose a is consecutive, both m and M occur in a, every letter k "
+                + "satisfies m<=k<=M, and oscillation(a) holds. Then the first or last "
+                + "letter is m or M. The theorem needs no reducedness or permutation "
+                + "premise. It erases straight-run interior letters while preserving "
+                + "spikes, then uses monotone spike lengths to make the last letter an "
+                + "attained support extremum; reversal handles the opposite direction. "
+                + "This closes the reverse endpoint direction of Lemma 3.2 in the "
+                + "repository's word predicate under the stated attained-extrema and "
+                + "support hypotheses. The paper's commutation-class interpretation, "
+                + "global Conjecture 5.1 count, and the model translation are not proved."))),
             DescribeRole.Theorem),
         Describe.Lean(
             DescribeId.Create("mamede-symmetric-excursion-outer-empty"),
