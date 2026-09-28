@@ -1,0 +1,469 @@
+{
+  "dependency_hashes": {
+    "fibre_credit_depth_two_core_height_joint_bridge.json": "385db85e5f01bb21534c4e31ed9f089d0871360193236dab1f1fbc42bb08a491",
+    "fibre_credit_depth_two_old23_full_height.json": "ca998ef3ce5e1043cbd1a78a4f9cd4306b12cfb781b219729aa916f0ba016ede"
+  },
+  "required_original_structure": "Core-shallow originals use at most one outside prime; each such axis may have all eleven nonunit core cofactors at every allowed exponent. Core-higher originals may use arbitrary outside subsets/heights within the stated carrier.",
+  "results": [
+    {
+      "clipping_levels": [
+        "7/10",
+        "7/12",
+        "11/16",
+        "13/18",
+        "17/22"
+      ],
+      "denominators": [
+        7,
+        7,
+        11,
+        13,
+        17
+      ],
+      "full_outside_primes": [],
+      "maximum_total_cost": "69655678/70690165",
+      "query_multiplier": "27648/17017",
+      "raw_outside_Haar_factor": "437/49",
+      "rows": [
+        {
+          "H4": "16/39",
+          "H6": "10/77",
+          "Haar_survivor_lower": "1530823/1082145285",
+          "Nmin": 77,
+          "core_debit": "476821/920304",
+          "raw_Haar_cap": "19665/539",
+          "raw_higher_core_debit": "91549632/108755647",
+          "raw_remaining_mass": "218689/4237233",
+          "shape": "root1_same_other_column",
+          "source_loss_terms": [
+            "16/273",
+            "10/539",
+            "10/847",
+            "10/1001",
+            "10/1309"
+          ],
+          "source_mass_lower": "3511903/3930927",
+          "total_cost": "4018544/4237233"
+        },
+        {
+          "H4": "32/79",
+          "H6": "5/39",
+          "Haar_survivor_lower": "95615782/51614128995",
+          "Nmin": 78,
+          "core_debit": "78233/153504",
+          "raw_Haar_cap": "6555/182",
+          "raw_higher_core_debit": "7510368/9070061",
+          "raw_remaining_mass": "47807891/716534819",
+          "shape": "root1_other_same_column",
+          "source_loss_terms": [
+            "32/553",
+            "5/273",
+            "5/429",
+            "5/507",
+            "5/663"
+          ],
+          "source_mass_lower": "15637243/17476459",
+          "total_cost": "668726928/716534819"
+        },
+        {
+          "H4": "32/79",
+          "H6": "5/39",
+          "Haar_survivor_lower": "95615782/51614128995",
+          "Nmin": 78,
+          "core_debit": "78233/153504",
+          "raw_Haar_cap": "6555/182",
+          "raw_higher_core_debit": "7510368/9070061",
+          "raw_remaining_mass": "47807891/716534819",
+          "shape": "root1_other_other_column",
+          "source_loss_terms": [
+            "32/553",
+            "5/273",
+            "5/429",
+            "5/507",
+            "5/663"
+          ],
+          "source_mass_lower": "15637243/17476459",
+          "total_cost": "668726928/716534819"
+        },
+        {
+          "H4": "2/5",
+          "H6": "2/15",
+          "Haar_survivor_lower": "2233837/3935995635",
+          "Nmin": 75,
+          "core_debit": "477419/889200",
+          "raw_Haar_cap": "1311/35",
+          "raw_higher_core_debit": "91664448/105079975",
+          "raw_remaining_mass": "2233837/105079975",
+          "shape": "root2_same_other_column",
+          "source_loss_terms": [
+            "2/35",
+            "2/105",
+            "2/165",
+            "2/195",
+            "2/255"
+          ],
+          "source_mass_lower": "76031/85085",
+          "total_cost": "102846138/105079975"
+        },
+        {
+          "H4": "2/5",
+          "H6": "5/37",
+          "Haar_survivor_lower": "229886/596362975",
+          "Nmin": 74,
+          "core_debit": "474271/877344",
+          "raw_Haar_cap": "19665/518",
+          "raw_higher_core_debit": "19512864/22216909",
+          "raw_remaining_mass": "1034487/70690165",
+          "shape": "root2_other_same_column",
+          "source_loss_terms": [
+            "2/35",
+            "5/259",
+            "5/407",
+            "5/481",
+            "5/629"
+          ],
+          "source_mass_lower": "2811051/3148145",
+          "total_cost": "69655678/70690165"
+        },
+        {
+          "H4": "2/5",
+          "H6": "5/37",
+          "Haar_survivor_lower": "229886/596362975",
+          "Nmin": 74,
+          "core_debit": "474271/877344",
+          "raw_Haar_cap": "19665/518",
+          "raw_higher_core_debit": "19512864/22216909",
+          "raw_remaining_mass": "1034487/70690165",
+          "shape": "root2_other_other_column",
+          "source_loss_terms": [
+            "2/35",
+            "5/259",
+            "5/407",
+            "5/481",
+            "5/629"
+          ],
+          "source_mass_lower": "2811051/3148145",
+          "total_cost": "69655678/70690165"
+        }
+      ],
+      "strict_simple_Haar_lower": "1/2600",
+      "thresholds": [
+        4,
+        6,
+        6,
+        6,
+        6
+      ],
+      "uniform_Haar_survivor_lower": "229886/596362975"
+    },
+    {
+      "clipping_levels": [
+        "7/10",
+        "7/12",
+        "11/16",
+        "12/17",
+        "16/21"
+      ],
+      "denominators": [
+        7,
+        7,
+        11,
+        12,
+        16
+      ],
+      "full_outside_primes": [
+        19,
+        23
+      ],
+      "maximum_total_cost": "12926803/12991440",
+      "query_multiplier": "884/539",
+      "raw_outside_Haar_factor": "7293/784",
+      "rows": [
+        {
+          "H4": "16/39",
+          "H6": "10/77",
+          "Haar_survivor_lower": "54619850/49079869839",
+          "Nmin": 77,
+          "core_debit": "476821/920304",
+          "raw_Haar_cap": "29835/784",
+          "raw_higher_core_debit": "105377441/124010964",
+          "raw_remaining_mass": "136549625/3224285064",
+          "shape": "root1_same_other_column",
+          "source_loss_terms": [
+            "16/273",
+            "10/539",
+            "10/847",
+            "5/462",
+            "5/616"
+          ],
+          "source_mass_lower": "550079/616616",
+          "total_cost": "3087735439/3224285064"
+        },
+        {
+          "H4": "32/79",
+          "H6": "5/39",
+          "Haar_survivor_lower": "75307598/49110194133",
+          "Nmin": 78,
+          "core_debit": "78233/153504",
+          "raw_Haar_cap": "8415/224",
+          "raw_higher_core_debit": "1329961/1591128",
+          "raw_remaining_mass": "188268995/3268176912",
+          "shape": "root1_other_same_column",
+          "source_loss_terms": [
+            "32/553",
+            "5/273",
+            "5/429",
+            "5/468",
+            "5/624"
+          ],
+          "source_mass_lower": "10174247/11387376",
+          "total_cost": "3079907917/3268176912"
+        },
+        {
+          "H4": "32/79",
+          "H6": "5/39",
+          "Haar_survivor_lower": "75307598/49110194133",
+          "Nmin": 78,
+          "core_debit": "78233/153504",
+          "raw_Haar_cap": "8415/224",
+          "raw_higher_core_debit": "1329961/1591128",
+          "raw_remaining_mass": "188268995/3268176912",
+          "shape": "root1_other_other_column",
+          "source_loss_terms": [
+            "32/553",
+            "5/273",
+            "5/429",
+            "5/468",
+            "5/624"
+          ],
+          "source_mass_lower": "10174247/11387376",
+          "total_cost": "3079907917/3268176912"
+        },
+        {
+          "H4": "2/5",
+          "H6": "2/15",
+          "Haar_survivor_lower": "47822/160044885",
+          "Nmin": 75,
+          "core_debit": "477419/889200",
+          "raw_Haar_cap": "21879/560",
+          "raw_higher_core_debit": "8116123/9216900",
+          "raw_remaining_mass": "23911/2048200",
+          "shape": "root2_same_other_column",
+          "source_loss_terms": [
+            "2/35",
+            "2/105",
+            "2/165",
+            "1/90",
+            "1/120"
+          ],
+          "source_mass_lower": "24733/27720",
+          "total_cost": "2024289/2048200"
+        },
+        {
+          "H4": "2/5",
+          "H6": "5/37",
+          "Haar_survivor_lower": "129274/1028859975",
+          "Nmin": 74,
+          "core_debit": "474271/877344",
+          "raw_Haar_cap": "328185/8288",
+          "raw_higher_core_debit": "164543/185592",
+          "raw_remaining_mass": "64637/12991440",
+          "shape": "root2_other_same_column",
+          "source_loss_terms": [
+            "2/35",
+            "5/259",
+            "5/407",
+            "5/444",
+            "5/592"
+          ],
+          "source_mass_lower": "609613/683760",
+          "total_cost": "12926803/12991440"
+        },
+        {
+          "H4": "2/5",
+          "H6": "5/37",
+          "Haar_survivor_lower": "129274/1028859975",
+          "Nmin": 74,
+          "core_debit": "474271/877344",
+          "raw_Haar_cap": "328185/8288",
+          "raw_higher_core_debit": "164543/185592",
+          "raw_remaining_mass": "64637/12991440",
+          "shape": "root2_other_other_column",
+          "source_loss_terms": [
+            "2/35",
+            "5/259",
+            "5/407",
+            "5/444",
+            "5/592"
+          ],
+          "source_mass_lower": "609613/683760",
+          "total_cost": "12926803/12991440"
+        }
+      ],
+      "strict_simple_Haar_lower": "1/8000",
+      "thresholds": [
+        4,
+        6,
+        6,
+        6,
+        6
+      ],
+      "uniform_Haar_survivor_lower": "129274/1028859975"
+    },
+    {
+      "clipping_levels": [
+        "7/10",
+        "7/12",
+        "2/3",
+        "13/18",
+        "16/21"
+      ],
+      "denominators": [
+        7,
+        7,
+        10,
+        13,
+        16
+      ],
+      "full_outside_primes": [
+        17,
+        23
+      ],
+      "maximum_total_cost": "199093841/199595760",
+      "query_multiplier": "748/455",
+      "raw_outside_Haar_factor": "2299/245",
+      "rows": [
+        {
+          "H4": "16/39",
+          "H6": "10/77",
+          "Haar_survivor_lower": "761171/730655640",
+          "Nmin": 77,
+          "core_debit": "476821/920304",
+          "raw_Haar_cap": "1881/49",
+          "raw_higher_core_debit": "8105957/9516780",
+          "raw_remaining_mass": "761171/19033560",
+          "shape": "root1_same_other_column",
+          "source_loss_terms": [
+            "16/273",
+            "10/539",
+            "1/77",
+            "10/1001",
+            "5/616"
+          ],
+          "source_mass_lower": "13633/15288",
+          "total_cost": "18272389/19033560"
+        },
+        {
+          "H4": "32/79",
+          "H6": "5/39",
+          "Haar_survivor_lower": "152522207/104548312440",
+          "Nmin": 78,
+          "core_debit": "78233/153504",
+          "raw_Haar_cap": "6897/182",
+          "raw_higher_core_debit": "14629571/17461080",
+          "raw_remaining_mass": "152522207/2758850640",
+          "shape": "root1_other_same_column",
+          "source_loss_terms": [
+            "32/553",
+            "5/273",
+            "1/78",
+            "5/507",
+            "5/624"
+          ],
+          "source_mass_lower": "4006495/4485936",
+          "total_cost": "2606328433/2758850640"
+        },
+        {
+          "H4": "32/79",
+          "H6": "5/39",
+          "Haar_survivor_lower": "152522207/104548312440",
+          "Nmin": 78,
+          "core_debit": "78233/153504",
+          "raw_Haar_cap": "6897/182",
+          "raw_higher_core_debit": "14629571/17461080",
+          "raw_remaining_mass": "152522207/2758850640",
+          "shape": "root1_other_other_column",
+          "source_loss_terms": [
+            "32/553",
+            "5/273",
+            "1/78",
+            "5/507",
+            "5/624"
+          ],
+          "source_mass_lower": "4006495/4485936",
+          "total_cost": "2606328433/2758850640"
+        },
+        {
+          "H4": "2/5",
+          "H6": "2/15",
+          "Haar_survivor_lower": "169789/724786920",
+          "Nmin": 75,
+          "core_debit": "477419/889200",
+          "raw_Haar_cap": "6897/175",
+          "raw_higher_core_debit": "89277353/101146500",
+          "raw_remaining_mass": "1867679/202293000",
+          "shape": "root2_same_other_column",
+          "source_loss_terms": [
+            "2/35",
+            "2/105",
+            "1/75",
+            "2/195",
+            "1/120"
+          ],
+          "source_mass_lower": "48697/54600",
+          "total_cost": "200425321/202293000"
+        },
+        {
+          "H4": "2/5",
+          "H6": "5/37",
+          "Haar_survivor_lower": "45629/724786920",
+          "Nmin": 74,
+          "core_debit": "474271/877344",
+          "raw_Haar_cap": "20691/518",
+          "raw_higher_core_debit": "12669811/14256840",
+          "raw_remaining_mass": "501919/199595760",
+          "shape": "root2_other_same_column",
+          "source_loss_terms": [
+            "2/35",
+            "5/259",
+            "1/74",
+            "5/481",
+            "5/592"
+          ],
+          "source_mass_lower": "240053/269360",
+          "total_cost": "199093841/199595760"
+        },
+        {
+          "H4": "2/5",
+          "H6": "5/37",
+          "Haar_survivor_lower": "45629/724786920",
+          "Nmin": 74,
+          "core_debit": "474271/877344",
+          "raw_Haar_cap": "20691/518",
+          "raw_higher_core_debit": "12669811/14256840",
+          "raw_remaining_mass": "501919/199595760",
+          "shape": "root2_other_other_column",
+          "source_loss_terms": [
+            "2/35",
+            "5/259",
+            "1/74",
+            "5/481",
+            "5/592"
+          ],
+          "source_mass_lower": "240053/269360",
+          "total_cost": "199093841/199595760"
+        }
+      ],
+      "strict_simple_Haar_lower": "1/16000",
+      "thresholds": [
+        4,
+        6,
+        6,
+        6,
+        6
+      ],
+      "uniform_Haar_survivor_lower": "45629/724786920"
+    }
+  ],
+  "scope": "Fixed-threshold exact consumer for three actual clipped-source scopes.\nLiteral Report741 hinges and Report744 partial caps refer to one canonical\nold315 law. No numerical LP, optimizer or threshold-optimality premise.\n"
+}
