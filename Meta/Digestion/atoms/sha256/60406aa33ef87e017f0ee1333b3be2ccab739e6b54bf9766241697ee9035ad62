@@ -1,0 +1,45 @@
+**定理 642.1（全域原始行稳定性）。** 对 $M\le t\le1$ 及任意概率行 $R$，记 $\varepsilon=\Phi_t(R)-c(t-M)\ge0$，则
+
+$$
+\boxed{
+\operatorname{TV}(R,R^{,t})\le\frac{n}{tm}\varepsilon.
+}
+$$
+
+证明：先把有限排序的离散度估计用在第 640 节的 $z$ 上。令 $\bar z=Z/n$、$H_z=\frac12\sum_i|z_i-\bar z|$。若 $H_z=0$ 则无需估计。否则记严格高于平均的坐标数为 $j$，其中 $1\le j\le n-1$。若 $j\ge d$，最大 $d$ 项的正偏差至少占全部正偏差的 $d/j$，所以 $\kappa\ge(d/j)H_z\ge[d/(n-1)]H_z$。若 $j<d$，最大 $d$ 项包含所有正偏差，还扣去 $n-j$ 个非正偏差中绝对值最小的 $d-j$ 项，故
+
+$$
+\kappa\ge H_z-\frac{d-j}{n-j}H_z
+=\frac p{n-j}H_z\ge\frac p{n-1}H_z.
+$$
+
+零偏差允许出现在后一组，不影响平均估计。因此两种情形共同给出 $H_z\le[(n-1)/m]\kappa$。这一步使用的是有限排序与零和偏差的普通估计，不另把它当成项目新创的一般理论。
+
+现在直接比较原始行与中心。由 $a_i-z_i=(a_i-L)_+-(-a_i)_+$，有 $\sum_i|a_i-z_i|=N+P$，且
+
+$$
+|Z-E|=|-a_\circ+N-P|\le|a_\circ|+N+P.
+$$
+
+依次经过 $z_i$ 与其平均，三角不等式给出
+
+$$
+\begin{aligned}
+t\operatorname{TV}(R,R^{,t})
+&=\frac12\left(|a_\circ|+\sum_i|a_i-E/n|\right)\\
+&\le |a_\circ|+N+P+\frac{n-1}{m}\kappa.
+\end{aligned}
+$$
+
+又 $B_\circ\ge(m/n)|a_\circ|$，且 $c,\alpha\ge m/n$。用第 640 节的分解控制右侧，得到
+
+$$
+|a_\circ|+N+P+\frac{n-1}{m}\kappa
+\le\frac nm(B_\circ+cN+\alpha P+\kappa)
+=\frac nm\varepsilon.
+$$
+
+除以 $t>0$ 即得。证毕。
+
+这是一个关于所有原始行的误差界，并未先假设它们位于中心附近。右端超过一时，仍可与概率分布的 $\operatorname{TV}\le1$ 合用取较小者。其用途是把一个数值目标的近最优性，转成整份概率行的明确接近程度；这种作用依赖本族的极值刚性，不能从任意目标函数都存在一个最小值推得。
+

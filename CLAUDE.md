@@ -2,6 +2,39 @@
 
 **默认 thinking 与回答技能**：所有 agent 开始处理用户请求时，默认读取并使用 [`skills/formal-thinking-and-answer/SKILL.md`](skills/formal-thinking-and-answer/SKILL.md)，无需用户显式点名。按该技能进行思考、核验证据与组织回答；具体形式化和编译范围遵守技能的适用条件，面向用户默认用普通语言回答，并保留影响结论的条件与未决边界。
 
+## 常用命令速查
+
+在仓库根目录运行；`<…>` 换成实际值。完整参数以 `make help`、`make -C tools help` 和脚本用法为准；有 make 目标就用目标（第 8.1 条），长任务用宿主后台作业（第 8.6 条）。
+
+| 用途 | 命令 |
+|---|---|
+| 创建会话 worktree（已有则复用） | `make worktree KIND=<kind> NAME=<任务码> DEST=../trureturing-<session-id>` |
+| 编译指定 Lean 模块及依赖 | `make lean LEAN_TARGETS="<点分模块名>"`（省略 `LEAN_TARGETS` 为全项目） |
+| 生成 Lean 报告 / 发射 Scribe | `make lean-report` / `make emit` |
+| 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
+| 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
+| 查看开放 atom 的就绪情况 | `make digestion-readiness` |
+| 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
+| 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
+| 预览 atom 子句拆分 | `make decompose ATOM_ID=<id> DRY_RUN=1` |
+| 按请求结算 atom（先连读上下文） | `make settle REQUEST=<请求文件>`（适用范围见第 3.2 条） |
+| 快速 .NET 结构检查 | `make preflight MODE=fast`（不验证 Lean 或完整准入） |
+| 基线到当前工作树的完整增量检查 | `make preflight MODE=push BASE=<40位commit-SHA>` |
+| .NET 构建 / 全量测试 | `make -C tools dotnet` / `make -C tools test` |
+| 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
+| 建 PR 并等 required CI | `make pr-open HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；自动合并须显式加 `AUTO_MERGE=1`） |
+| 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
+| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 会删除，含未提交改动） |
+
+常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
+
+| 用途 | 命令 |
+|---|---|
+| 查指定修订的工具文件 / 目录容量余量 | `bash tools/scripts/agent/headroom.sh HEAD` |
+| 提取定理前的节级假设 | `bash tools/scripts/agent/section-context.sh <源文件.md> <定理号>` |
+| Nyx 提问 / 续取已提交任务 | `bash tools/scripts/agent/nyx.sh ask <brief文件> <输出文件>` / `bash tools/scripts/agent/nyx.sh fetch <task-id> <输出文件>` |
+| 查看 Nyx 任务状态 | `bash tools/scripts/agent/nyx.sh status` |
+
 ## 1. 权威、本体与不可逆真值 DAG
 
 ### 1.1 权威原文与守护强度

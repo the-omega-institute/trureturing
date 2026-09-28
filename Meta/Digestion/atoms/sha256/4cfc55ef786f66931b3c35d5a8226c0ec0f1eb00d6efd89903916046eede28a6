@@ -1,0 +1,34 @@
+**命题 843.1（同分布化的定量增益）。** 记上一节改造前后的互信息为 $I_{\rm old},I_{\rm new}$。则
+
+$$
+I_{\rm old}-I_{\rm new}\ge\frac12\mathbb E(a_H-b_H)^2.
+$$
+
+证明：在 $(-1,1)$ 上，$g''(t)=-1/(1-t^2)$，所以 $g(t)+t^2/2$ 为凹函数；由连续性延伸到闭区间。对两个均值使用中点凹性，得到
+
+$$
+2g(c)-g(a)-g(b)\ge\frac{(a-b)^2}{4}.
+$$
+
+又因 $g'(t)=-\operatorname{artanh}t$，对 $r=|c|$ 有
+
+$$
+g(\alpha c)-g(c)
+=\int_{\alpha r}^{r}\operatorname{artanh}t\,dt
+\ge\frac{1-\alpha^2}{2}r^2.
+$$
+
+当 $r=1$ 时积分按端点极限理解；$\operatorname{artanh}t\ge t$ 的积分仍有限。于是
+
+$$
+\begin{aligned}
+I_{\rm old}-I_{\rm new}
+&=\mathbb E[2g(c_H)-g(a_H)-g(b_H)]
+ +2\mathbb E[g(\alpha c_H)-g(c_H)]\\
+&\ge\frac14\mathbb E(a_H-b_H)^2+(1-\alpha^2)v\\
+&=\frac12\mathbb E(a_H-b_H)^2.
+\end{aligned}
+$$
+
+证毕。这个下界针对同一准确二元观察模型与同一组来源权重。它没有把一般语言、哲学或宗教之间的差异赋予一个“必须消除的代价”；哪些差别属于应保留的目标，仍须先行说明。
+

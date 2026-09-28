@@ -1,0 +1,66 @@
+**命题 532.1（全支撑预算的三项下界）。** 对定义 530.1—530.2，若 $m(T)\le\eta$，则
+
+$$
+j(T)\ge
+\max\left\{
+\lambda,\;
+2\lambda-\eta,\;
+2rD-2(1-r)p\varepsilon-\left(\frac2c-1\right)\eta
+\right\}.
+$$
+
+证明：第一项由命题 531.2 的通常联合模拟下界得到，因为保留实际记录的生成器也是通常模拟器。
+
+对任意状态，由 TV 的三角不等式与正齐次性，
+
+$$
+r\operatorname{TV}(R,Q_S)
+\le \operatorname{TV}((1-r)T_S+rR,Q_S)
++(1-r)\operatorname{TV}(T_S,Q_S).
+$$
+
+于是该状态的联合误差至少为 $2r\operatorname{TV}(R,Q_S)-\eta$。对状态取最大，再使用命题 531.1 的最小包围半径，得到 $j\ge2r\rho-\eta=2\lambda-\eta$。这是经典三角关系在本问题中的具体使用，不把它另立为新的通用度量定理。
+
+为取得第三项，对状态与标签的同时置换平均生成器。目标族在此作用下不变，项目 [TotalVariation/Convexity](../../../D5/S3/TotalVariation/Convexity.lean) 的 total_variation_joint_convex 所表达的凸平均关系，保证 $m,j$ 均不增。平均后的 $R$ 在全部标签上均匀，$T_S$ 在 $S$ 与 $S^c$ 上分别均匀；仍只处理实际旧记录，没有替换它。
+
+记
+
+$$
+e=n\varepsilon,\qquad
+z=r(1-R(\circ)),\qquad a=(1-r)T_S(S^c)\ge0.
+$$
+
+边缘在 $S^c$ 上相对目标的有符号差为 $a+cz-ce$。TV 控制每个事件的有符号差，所以
+
+$$
+a+cz-ce\le\eta,\qquad
+z\le e+\frac{\eta-a}{c}.
+$$
+
+另取事件 $B_S=\{\circ\}\cup S^c$。擦除分支在这个事件上的有符号差为
+
+$$
+F=r(1-b)-(1-c)z-rce,
+$$
+
+揭示分支在该事件上的有符号差记为 $G$。两分支相加就是边缘在该事件上的差，故 $F+G\le\eta$。各分支的 TV 分别不小于 $F$ 与 $-G$，于是
+
+$$
+j\ge F-G\ge2F-\eta.
+$$
+
+这一步不要求 $F$ 或 $G$ 预先具有某种符号；正是有符号事件界使它对全部可行预算适用。代入 $z$ 的上界，得到
+
+$$
+\begin{aligned}
+j
+&\ge2rD-2(1-r)(1-c)e
+-\left(\frac2c-1\right)\eta
++\frac{2(1-c)}c\,a\\
+&\ge2rD-2(1-r)p\varepsilon
+-\left(\frac2c-1\right)\eta.
+\end{aligned}
+$$
+
+其中 $(1-c)e=p\varepsilon$。平均后的生成器满足该界，原生成器的联合误差不会更低，第三项成立。证毕。
+

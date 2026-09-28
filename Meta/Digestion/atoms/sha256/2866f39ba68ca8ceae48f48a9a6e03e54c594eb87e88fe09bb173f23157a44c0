@@ -1,0 +1,121 @@
+**定理 50.2（共同轮廓的有限分辨率谱律）。** 对固定 $`A\gt0`$ 和紧区间
+$`I=[s_0,s_1]`$，在定义 50.1 的两个实际实验与两种方向信息情形下，
+以下联合收敛对固定支持一致成立：
+
+```math
+\left(F_M|_{[0,A]},\mathcal R_M|_I,Y_M,L_M|_{[-H,H]},
+ C_M|_{[-H,H]},Z_M\right)
+\Longrightarrow
+\left(F|_{[0,A]},\mathcal R|_I,Y,L|_{[-H,H]},C|_{[-H,H]},Z\right)
+\qquad(H\gt0).
+```
+
+式 (50.4)。
+
+Fourier 因子取复值连续函数的一致拓扑，其余路径取既有 $`J_1`$ 拓扑。
+谱曲线极限连续，且可取满足
+
+```math
+\mathcal R'(s)=2|F(e^s)|^2
+```
+
+式 (50.5)。
+
+的版本。后验条件核结论在均匀固定基数先验空间中依数据概率成立。
+极限 Fourier 坐标的协方差和不带共轭的二阶关系分别为
+
+```math
+\mathbb E[F(u)\overline{F(v)}]=\gamma r(u-v),\qquad
+\mathbb E[F(u)F(v)]=\gamma r(u+v),\qquad F(0)=Y.
+```
+
+式 (50.6)。
+
+特别地，任取固定 $`0<b_0<b_1<\infty`$，同一有限谱带能量满足
+
+```math
+\sum_{N_M(\log b_0)<|k|\le N_M(\log b_1)}
+ (1+k^2)^{-1/2}|\widehat\mu_M(k)|^2
+\Longrightarrow
+\mathcal B_{b_0,b_1}:=2\int_{b_0}^{b_1} |F(v)|^2\,\frac{dv}{v}.
+```
+
+式 (50.7)。
+
+这是非高斯且非退化的随机变量；即使给定同一端点 $`Y`$，仍有正条件方差。
+极限变量满足
+
+```math
+\begin{split}
+\mathbb E[\mathcal B_{b_0,b_1}\mid Y]
+ &=2\int_{b_0}^{b_1}
+       \{\gamma+(Y^2-\gamma)r(v)^2\}\,\frac{dv}{v},\\
+\mathrm{Cov}(\mathcal B_{b_0,b_1},Y^2)
+ &=4\gamma^2\int_{b_0}^{b_1} r(v)^2\,\frac{dv}{v}>0.
+\end{split}
+```
+
+式 (50.8)。
+
+这些是极限 Gaussian 对象的矩恒等式，不主张实际谱能量矩的收敛。
+
+证明。[经验 Fourier 过程与二次谱泛函的先例及适用边界](../../../Library/Dynamics/iyer2025empirical.md)
+归于经典理论；下面核对实际后验的带权时钟与常数级截断误差。
+先建立保留整个标记分布的 Fourier 紧性。把复 Hilbert 空间
+$`H^1[0,A]`$ 视为实 Hilbert 空间。在同一个辅助独立标签律下，令
+$`F_M^{\mathsf Q}(v)=B_M^{-1}\sum_{i\in J}(\zeta_i-p_i)e^{-i\omega vx_i}`$。
+第 42、43 章的总时钟和二阶带权时钟给出
+
+```math
+V_M=\frac{d_J}{B_M^2}\longrightarrow\gamma,\qquad
+K_M^{(2)}=\frac1{B_M^2}\sum_{i\in J}x_i^2p_i(1-p_i)
+ \longrightarrow\frac\gamma\kappa,
+\qquad
+\mathbb E_{\mathsf Q}\|F_M^{\mathsf Q}\|_{H^1[0,A]}^2
+ =A(V_M+\omega^2K_M^{(2)}).
+```
+
+式 (50.9)。
+
+将 (43.9) 用于 Hilbert 系数
+$`f_i(v)=B_M^{-1}e^{-i\omega vx_i}`$，其方差和正是 (50.9) 右端，故
+
+```math
+\left\|B_M^{-1}\sum_{i\in J}(\pi_i-p_i)e^{-i\omega(\cdot)x_i}
+ \right\|_{H^1[0,A]}
+ \le C\{A(V_M+\omega^2K_M^{(2)})\}^{1/2}e_J
+ \longrightarrow0\quad\text{依概率}.
+```
+
+式 (50.10)。
+
+这里 $`e_J`$ 为 (43.9) 的趋零括号。
+条件 Markov 界、一次完整后验向量比较及独立的中心界，遂使实际
+$`\|F_M\|_{H^1[0,A]}`$ 在概率意义下有界。没有转移无界范数的期望。
+有界 $`H^1`$ 集在一维 $`C[0,A]`$ 中相对紧，因而得到实际 Fourier 过程紧性。
+
+同一论证用于 $`|x_i|>R`$ 的尾部；(43.8) 及总方差尾使其 $`H^1`$ 范数
+先取样本上极限、再令 $`R\to\infty`$ 后依概率消失。
+固定 $`R`$ 时，对带符号计数测度分部积分，将截断的 Fourier 和写成
+$`L_M|_{[-R,R]}`$ 的连续线性积分和两个端点项。
+既有轮廓极限连续，故 $`J_1`$ 收敛足以给出该截断和在固定频率区间上一致收敛，
+并保留同一端点、桥及 $`Z_M`$ 的联合律。
+Gaussian 极限一侧有相同的带权尾界，因此可移除 $`R`$。
+这识别 $`F`$ 为同一个 $`\mathcal W_\rho`$ 的 Fourier 积分，证明 Fourier 部分的联合收敛。
+其二阶关系由实等距性和 Gaussian 密度的 Fourier 变换得到 (50.6)。
+此外 $`\mathbb E\|F\|_{H^1[0,A]}^2=A\gamma(1+\omega^2/\kappa)<\infty`$，
+故可取局部 $`H^1`$ 的连续版本。
+
+接着需要在常数级而非 $`\mathfrak L_M`$ 级控制频率和。
+对任意 $`f\in H^1[0,A]`$，令 $`g(v)=|f(v)|^2-|f(0)|^2`$。
+则 $`g(0)=0`$ 且
+
+```math
+\|g'\|_2\le2\|f\|_\infty\|f'\|_2,\qquad
+|g(v)|\le\sqrt v\,\|g'\|_2,\qquad
+\left|\int_0^\varepsilon\frac{g(v)}v\,dv\right|
+ \le2\sqrt\varepsilon\,\|g'\|_2.
+```
+
+式 (50.11)。
+

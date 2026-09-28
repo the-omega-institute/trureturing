@@ -34,6 +34,24 @@ internal sealed class FiniteDetectionSurvivalLimitDocument : IScribeDocumentDefi
                     "The dark projection is the matrix of the orthogonal projection onto the dark space."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("finite-detection-dark-block-contraction"),
+                DeclarationHandle.Create(Prefix + "dark_block_contraction"),
+                H("Dark-complement survival contracts geometrically by dimension blocks"),
+                StatementSource.FromAuthor(DarkBlockContractionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let Q be the no-click operator and L_x the finite family of click operators. "
+                            + "Their adjoint products sum with Q^* Q to the identity. The survival "
+                            + "defect above the dark projection is positive, factors through the dark "
+                            + "complement, and is controlled by squared norms of restricted powers.")),
+                    Paragraph(Text(
+                        "Compactness of the unit sphere in the finite-dimensional dark complement "
+                            + "turns strict decay after d steps into a uniform positive gap g. Iterating "
+                            + "that block contraction bounds the defect at n+kd by (1-g)^k, and the "
+                            + "quotient-remainder decomposition gives the corresponding bound at every N."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("finite-detection-survival-limit"),
                 DeclarationHandle.Create(Prefix + "finite_detection_survival_limit"),
                 H("Survival converges exactly to the dark projection"),
@@ -76,6 +94,35 @@ internal sealed class FiniteDetectionSurvivalLimitDocument : IScribeDocumentDefi
     private static Formula Arrow(Formula source, Formula target) => Seq(source, Sp, To, Sp, target);
 
     private static Formula Multiply(Formula left, Formula right) => Seq(left, Sp, Cdot, Sp, right);
+
+    private static Formula Add(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Add, right);
+
+    private static Formula Subtract(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
+
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+
+    private static Formula Less(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+
+    private static Formula LessEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+
+    private static Formula Paren(Formula value) => Seq(Open, value, Close);
+
+    private static Formula Both(params Formula[] terms) => terms.Aggregate(
+        (left, right) => new Formula.Logic(left, FormulaLogicOperator.And, right));
+
+    private static Formula All(Formula.BoundVariable variable, Formula body) =>
+        new Formula.BindMany(FormulaQuantifier.ForAll, [variable], body);
+
+    private static Formula Exists(Formula.BoundVariable[] variables, Formula body) =>
+        new Formula.BindMany(FormulaQuantifier.Exists, [.. variables], body);
+
+    private static Formula.BoundVariable Bound(string name, Formula type) =>
+        new(FormulaIdentifier.Create(name), type);
 
     private static Formula Power(Formula value, Formula exponent) => Seq(value, Caret, Grp(exponent));
 
@@ -122,6 +169,66 @@ internal sealed class FiniteDetectionSurvivalLimitDocument : IScribeDocumentDefi
             CommonBinders(d, outcomeType, q, click),
             Call("darkProjection", q, click), Sp, Eq, Sp,
             Call("matrix", projection), Dot));
+    }
+
+    private static Formula DarkBlockContractionFormula()
+    {
+        Formula d = F.Id("d"), outcomeType = F.Id("X"), q = F.Id("Q"), click = F.Id("L");
+        Formula n = F.Id("n"), k = F.Id("k"), index = F.Id("N"), x = F.Id("x");
+        Formula g = F.Id("g"), c = F.Id("c");
+        Formula one = D(1), zero = D(0);
+        Formula nat = NaturalType(), real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula clickAt = Subscript(click, x);
+        Formula identity = Subscript(F.Id("I"), d);
+        Formula projection = Call("darkProjection", q, click);
+        Formula complement = Subtract(identity, projection);
+        Formula gap = Subtract(one, g);
+
+        Formula Survival(Formula time) =>
+            Multiply(Power(Paren(Adjoint(q)), time), Power(q, time));
+        Formula Defect(Formula time) => Subtract(Survival(time), projection);
+        Formula Coefficient(Formula time) => Call("c", time);
+        Formula ScalarBound(Formula scalar) => Call("smul", scalar, Paren(complement));
+        Formula ForIndex(Formula body) => Paren(All(Bound("N", nat), body));
+        Formula ForTwo(Formula body) => Paren(new Formula.BindMany(
+            FormulaQuantifier.ForAll, [Bound("n", nat), Bound("k", nat)], body));
+
+        Formula completeness = Equal(Add(
+            Multiply(Adjoint(q), q),
+            Seq(Sum, Underscore, Grp(x, Sp, InMacro, Sp, outcomeType), Sp,
+                Multiply(Adjoint(clickAt), clickAt))), identity);
+        Formula nonzeroDimension = Seq(d, Sp, Neq, Sp, zero);
+        Formula blockIndex = Add(n, Multiply(k, d));
+        Formula quotientPower = Power(Paren(gap), Call("div", index, d));
+        Formula iteratedPower = Power(Paren(gap), k);
+        Formula conclusion = Exists(
+            [Bound("g", real), Bound("c", Arrow(nat, real))],
+            Both(
+                Less(zero, g),
+                LessEqual(g, one),
+                ForIndex(LessEqual(zero, Coefficient(index))),
+                ForIndex(LessEqual(Coefficient(index), one)),
+                ForIndex(LessEqual(Coefficient(Add(index, d)),
+                    Multiply(Paren(gap), Coefficient(index)))),
+                ForIndex(LessEqual(projection, Survival(index))),
+                ForIndex(Equal(Defect(index),
+                    Multiply(Multiply(Paren(complement), Survival(index)), Paren(complement)))),
+                LessEqual(zero, Paren(complement)),
+                ForIndex(LessEqual(Defect(index), ScalarBound(Coefficient(index)))),
+                ForIndex(LessEqual(new Formula.Norm(Defect(index)), Coefficient(index))),
+                Equal(gap, Coefficient(d)),
+                LessEqual(Defect(d), ScalarBound(Paren(gap))),
+                ForTwo(LessEqual(Coefficient(blockIndex), iteratedPower)),
+                ForIndex(LessEqual(Coefficient(index), quotientPower)),
+                ForTwo(LessEqual(Defect(blockIndex), ScalarBound(iteratedPower))),
+                ForIndex(LessEqual(Defect(index), ScalarBound(quotientPower)))));
+
+        return Disp(Seq(
+            CommonBinders(d, outcomeType, q, click),
+            OpenBracket, Call("Fintype", outcomeType), CloseBracket, Comma,
+            RowBreak, Grp(),
+            Paren(Both(completeness, nonzeroDimension)), Sp, Rightarrow, RowBreak, Grp(),
+            conclusion, Dot));
     }
 
     private static Formula TheoremFormula()

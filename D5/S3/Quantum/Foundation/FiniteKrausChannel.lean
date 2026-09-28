@@ -240,7 +240,7 @@ namespace D5.S3.Quantum.Foundation.FiniteKrausChannel
 
 namespace PhyslibLeaf
 
-private abbrev MatrixMap (A B R : Type*) [Semiring R] :=
+abbrev MatrixMap (A B R : Type*) [Semiring R] :=
   Matrix A A R →ₗ[R] Matrix B B R
 
 namespace MatrixMap
@@ -249,7 +249,7 @@ variable {A B C D R : Type*} [Fintype A] [DecidableEq A]
 
 section kraus
 variable [Star R] [CommSemiring R] {κ : Type*} [Fintype κ]
-private def of_kraus (M N : κ → Matrix B A R) : MatrixMap A B R :=
+def of_kraus (M N : κ → Matrix B A R) : MatrixMap A B R :=
   ∑ k : κ, {
     toFun X := M k * X * (N k).conjTranspose
     map_add' x y := by rw [Matrix.mul_add, Matrix.add_mul]

@@ -1,0 +1,44 @@
+**定理 847.1（来源熵约束下的准确共同信息）。** 置
+
+$$
+G_\rho=h_2(q_0),\qquad q_0=\frac\rho{1+\rho}.
+$$
+
+对每个 $B\in[G_\rho,\log2]$，令 $\pi_B\in[q_0,1/2]$ 为 $h_2(\pi_B)=B$ 的唯一解。则
+
+$$
+\boxed{F_\rho(B)=H_\rho-2K_\rho(\pi_B).}
+$$
+
+该值由一个恰有两个正权重的表示达到，权重与条件均值为
+
+$$
+\begin{aligned}
+\lambda_+&=\pi_B,&
+ z_+&=\sqrt{\frac{\rho(1-\pi_B)}{\pi_B}},\\
+\lambda_-&=1-\pi_B,&
+ z_-&=-\sqrt{\frac{\rho\pi_B}{1-\pi_B}},
+\end{aligned}
+$$
+
+两个条件律分别为 $q_{z_+}^{\otimes2}$ 与 $q_{z_-}^{\otimes2}$。
+
+证明下界：任取有限可行表示。第 842 节在不增加两项成本的情况下给出条件同分布表示。令 $m$ 为最大权重、$q=1-m$。来源熵的分组恒等式是
+
+$$
+H(\lambda)=h_2(q)+qH\!\left((\lambda_h/q)_{h\ne0}\right)\ge h_2(q).
+$$
+
+由 $H(\lambda)\le B$、$q\le1/2$ 及 $h_2$ 在该区间严格递增，得到 $q\le\pi_B$。于是
+
+$$
+I_{\rm old}\ge I_{\rm new}
+=H_\rho-2\mathbb E g(z_H)
+\ge H_\rho-2K_\rho(q)
+\ge H_\rho-2K_\rho(\pi_B).
+$$
+
+证明达到：所示两个偏置属于 $[-1,1]$，因为 $\pi_B\ge q_0$。直接相乘求和得 $\mathbb Ez_H=0$、$\mathbb Ez_H^2=\rho$，因此生成准确目标律；来源熵为 $h_2(\pi_B)=B$，条件熵恰为 $2K_\rho(\pi_B)$。证毕。
+
+这个结论没有依赖潜在状态数的先验二态限制，也没有通过数值搜索排除较多状态。第 844—846 节提供了排除它们改进答案的共同下界，明确构造则实现该界。
+

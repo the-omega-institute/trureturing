@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:64e2b50f63422cbc5549f9f13b03a7dccd5e5ab0e4285439d45329aa931c7081
+  normalized_sha256: sha256:64e2b50f63422cbc5549f9f13b03a7dccd5e5ab0e4285439d45329aa931c7081
+cas_ref: sha256:64e2b50f63422cbc5549f9f13b03a7dccd5e5ab0e4285439d45329aa931c7081
+coverage_gids:
+  - gid: D5/S1/Words/Permutations/MamedeDeletionEquiv.source_deletion_equiv
+    target_statement_id: sha256:c980ac3e8e305add0c84b24b62cb0dde3fdcd1f4c5f18f526bd62f5457f60f27
+receipts:
+  unresolved_subitems: []

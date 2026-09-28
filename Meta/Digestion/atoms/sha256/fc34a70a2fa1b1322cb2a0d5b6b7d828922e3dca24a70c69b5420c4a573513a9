@@ -1,0 +1,18 @@
+**定义 776.1（本批的研究对象与文献归属）。** 第 752—775 节区分了共同生成表示、最少来源状态、参数识别与模型验证。本批继续研究同一有限生成关系：不同观察在给定潜在变量后相互独立。这里的“来源”仍指概率表示中的生成变量；关于共同终极实在的方向不因一个表示存在、最优或唯一就取得证明。
+
+先补足第 757—760 节方形扰动族的准确文献归属。Bocci、Carlini、Rapallo 的 *Perturbation of Matrices and Nonnegative Rank with a View toward Statistical Models*，SIAM J. Matrix Anal. Appl. 32(4), 1500–1512 (2011)，[DOI:10.1137/110825455](https://doi.org/10.1137/110825455)，[arXiv:1010.3566v3](https://arxiv.org/abs/1010.3566v3)第 5 节，已经研究如下列归一化矩阵：
+
+$$
+B_\varepsilon=\frac1{2+4\varepsilon}
+\begin{pmatrix}
+1+\varepsilon&\varepsilon&1+\varepsilon&\varepsilon\\
+1+\varepsilon&\varepsilon&\varepsilon&1+\varepsilon\\
+\varepsilon&1+\varepsilon&1+\varepsilon&\varepsilon\\
+\varepsilon&1+\varepsilon&\varepsilon&1+\varepsilon
+\end{pmatrix}.
+$$
+
+对第 757 节的 $P_\varepsilon$ 先按 $(1,3,2,4)$ 重排列，再按 $(1,4,2,3)$ 重排行，所得矩阵乘四恰为 $B_\varepsilon$。该正比例不改变非负秩。文献明确给出 $0\le\varepsilon<\sqrt2/2$ 时非负秩四、临界点为三；第 758—760 节的嵌套方形论证还明确写出超过临界点的保持关系。这是同一个已发表例子的详细推导与应用，不是 MMM 发明的矩阵族或阈值。
+
+本批进一步回答第 770 节尚未求出的方形最小来源熵，并区分三个层次的最优解：来源状态最少、来源自身熵最小、来源与全部观察的互信息最小。几何、熵与解释之间的联系由各自条件建立。
+

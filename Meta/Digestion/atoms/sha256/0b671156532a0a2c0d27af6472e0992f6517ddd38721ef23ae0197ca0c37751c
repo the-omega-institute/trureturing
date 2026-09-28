@@ -1,0 +1,33 @@
+**命题 566.1（全部单次先验中的参数最优值）。** 定义
+
+$$
+\varepsilon_*=\frac{Dw}{2U}=\frac{s_*w}{2}.
+$$
+
+则
+
+$$
+\boxed{
+\inf_{\pi\in[0,1]}E_{\mathrm{par}}(\pi,\varepsilon)
+=\min\left\{\frac w2,\frac{\varepsilon}{s_*}\right\}.
+}
+$$
+
+$\pi_*$ 对所有 $\varepsilon$ 都达到此值。$\varepsilon=0$ 时全部单射先验达到零误差；$0<\varepsilon<\varepsilon_*$ 时 $\pi_*$ 是唯一最优先验；$\varepsilon\ge\varepsilon_*$ 时每个先验的最优最坏误差都是 $w/2$。
+
+证明：对 $0<s\le s_*$，命题 565.1 给出 $\min(w/2,\varepsilon/s)$，在正噪声且尚未饱和时随 $s$ 严格下降。对 $s\ge s_*$，同一公式中未与 $w/2$ 取小的表达为
+
+$$
+\frac U4+\frac{\varepsilon-D/4}{s}.
+$$
+
+有 $\varepsilon_*<D/4$，因为 $2w<U$。故当 $0<\varepsilon<\varepsilon_*$ 时，后一表达随 $s$ 严格增加；它在 $s_*$ 处等于 $\varepsilon/s_*<w/2$。与两侧比较，即得唯一最优值。
+
+再看大噪声。全部单次风险查询在该纤维上的总振幅都不超过 $s_*w$：$s\le s_*$ 时振幅为 $sw$；$s>s_*$ 且 $t>a$ 时振幅为
+
+$$
+s(t-a)=\frac{D-sA}{2}<s_*w;
+$$
+
+$t\le a$ 或 $\pi\le1/2$ 时振幅为零。若 $2\varepsilon\ge s_*w$，取读数上确界与下确界的中值，整个参数区间都与它相容。因此每个先验均有半直径下界 $w/2$，常数中点解码达到。零噪声的分类直接来自命题 563.1。证毕。
+

@@ -1,0 +1,4 @@
+**定义 840.1（数学来源与当前综合）。** 对称距离使用 Seigal—Montúfar，*Mixtures and products in two graphical models*，[arXiv:1709.05276v1](https://arxiv.org/abs/1709.05276v1)，定理 1.1、1.2 及推论 1.3 的全单纯形三态成员判据，来源读取范围接续第 798、820 节。第 822—828 节把该判据与四类加权质量预算组合，求出对称全模型的准确距离、唯一最近观察律、两态达到构造与固定边缘代价；作为当前理论综合给出，不宣称外部原创。
+
+二元来源熵与其两个达到表示继续使用第 814—815 节及 Kumar—Li—El Gamal，*Exact Common Information*，[arXiv:1402.0062v1](https://arxiv.org/abs/1402.0062v1)，命题 8 的经典背景。共同信息公式的直接新读部分为 Xu—Liu—Chen，*Wyner's Common Information: Generalizations and A New Lossy Source Coding Interpretation*，[arXiv:1301.2237v1](https://arxiv.org/abs/1301.2237v1)，第 V-A 节、式 (47)—(50) 及命题 1 的证明。当前双对称参数对应与所有等号条件在第 830—832 节给出；原论文的其余有损编码结果不在本批承接范围。Wyner 与 Witsenhausen 的原始成果在此按该文归属说明，未声称直接读完其原论文。
+

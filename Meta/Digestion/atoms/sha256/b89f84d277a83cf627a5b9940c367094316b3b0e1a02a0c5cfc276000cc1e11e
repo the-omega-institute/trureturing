@@ -1,0 +1,18 @@
+**定义 703.1（本批问题与原始域）。** 第 679—702 节刻画了部分状态族何时仍以均匀残余为最优中心。本批继续处理第 702.3 节的非平衡缺口，并把结果接到“多种表达能否关联于同一所指”的哲学问题。新增第 703—725 节；既有章节的字节与其当时适用的条件全部保留。
+
+取标签集 $I=\{1,\ldots,n\}$，其中 $n\ge2$，$1\le p<n$，以及非空状态族 $\mathcal F\subseteq\binom Ip$。公共坐标记为 $\circ$。底量为严格正向量 $l=(b,e_1,\ldots,e_n)$，令
+
+$$
+M=b+\sum_i e_i<1,\qquad D=1-M,\qquad L=D/p,\qquad Q_S=l+L\mathbf1_S.
+$$
+
+每个 $Q_S$ 都是 $\{\circ\}\cup I$ 上的概率行。除明确讨论低质量区间外，取 $M\le t\le1$、$E=t-M\in[0,D]$；优化域始终是全部原始概率行 $R$。用残余 $a=tR-l$ 表示同一行，原始可行条件恰为 $a_x\ge-l_x$ 与 $\sum_xa_x=E$。定义
+
+$$
+\phi_S(a)=(a_\circ)_++\sum_{i\notin S}(a_i)_++\sum_{i\in S}(a_i-L)_+,
+\qquad \Phi_t^{\mathcal F}(R)=\max_{S\in\mathcal F}\phi_S(a),
+\qquad \mu_{\mathcal F}(E)=\min_R\Phi_t^{\mathcal F}(R).
+$$
+
+此处 $x_+=\max(x,0)$。连续目标在紧概率单纯形上达到最小值。$\mu$ 的记号省略了固定的 $L$；只有在 $L$ 与状态族不变时，才讨论它对 $E$ 的变化。底量的各坐标仍决定原始行的位置与可行下界，不能在最优值化简后将这些数据从原问题中删除。
+

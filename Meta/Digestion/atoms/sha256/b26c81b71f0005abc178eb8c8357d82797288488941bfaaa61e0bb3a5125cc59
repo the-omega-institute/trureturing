@@ -1,0 +1,30 @@
+**定理 663.1（切片上的精确常数与零情形）。** 对 $0<t\le M$，考虑
+
+$$
+\mathcal D_t^\circ=\{R\in\Delta(X):tR_\circ=b\},\qquad
+\mathcal K_t^\circ=\mathcal D_t^\circ\cap\mathcal K_t.
+$$
+
+$t<b$ 时该切片为空，不在其上申报有辨识意义的锐利常数；$t=b$ 时它只有公共坐标概率为一的单点，该点已最优，最小非负常数为零。对于 $b<t\le M$，置
+
+$$
+h=t-b>0,\qquad k_t^\circ=\max\{k:E_k<h\}.
+$$
+
+在 $\mathcal D_t^\circ$ 上，到 $\mathcal K_t^\circ$ 的精确距离仍为 $H/t$，且其最佳障碍系数为
+
+$$
+\boxed{
+C_t^\circ=
+\begin{cases}
+0,&h\le\min_i e_i,\\[1mm]
+\displaystyle\frac1t\max\left(1,\frac{k_t^\circ}d\right),&h>\min_i e_i.
+\end{cases}}
+$$
+
+证明：公共坐标保持固定后，标签的总质量在 $tR$ 单位中恰为 $h$；标签总容量为 $\sum_i e_i=M-b\ge h$。第 645 节的截断与回填因而可完全在标签之间进行，距离仍是去掉的超额质量除以 $t$，公共坐标无需参与。
+
+若 $h\le\min_i e_i$，任意标签行的每个质量都不超过总量 $h$，所以整片都最优。否则存在非最优行。正标签支撑 $J$ 必须满足 $\sum_{i\in J}e_i<h$，故其基数至多 $k_t^\circ$；排序估计与第 662 节相同。锐利见证也只需将该节的总可分配质量 $t$ 改为标签质量 $h$，在最小底量支撑上分配等量正超额，并在其余标签中回填。公共质量始终为 $b$。当 $k_t^\circ\le d$ 时，可将全部标签质量放到某个 $e_i<h$ 的标签，取得正距离与精确比例 $1/t$。证毕。
+
+在 $t=M$，有 $h=\sum_i e_i$。由于每个标签底量都正，恰有 $k_M^\circ=n-1$，得到 $C_M^\circ=(n-1)/(Md)$，与第 661 节相接。$t=b$ 的单点情形必须单独处理；不能对 $E_k<0$ 的空索引集合擅自取最大值，再把得到的形式代入公式。
+

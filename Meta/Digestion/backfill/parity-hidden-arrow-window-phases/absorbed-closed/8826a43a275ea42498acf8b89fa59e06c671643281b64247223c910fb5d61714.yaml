@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8826a43a275ea42498acf8b89fa59e06c671643281b64247223c910fb5d61714
+  normalized_sha256: sha256:8826a43a275ea42498acf8b89fa59e06c671643281b64247223c910fb5d61714
+cas_ref: sha256:8826a43a275ea42498acf8b89fa59e06c671643281b64247223c910fb5d61714
+coverage_gids:
+  - gid: D5/S3/Fourier/Asymptotics/L2ContinuousPrimitive.result
+    target_statement_id: sha256:2979f07414ed84673f89e94bb5ad1f4d504aa7c5e34218910a673e39c398184c
+  - gid: D5/S3/Fourier/Asymptotics/L2MeasurableVersion.result
+    target_statement_id: sha256:b83eba3be052cfd2d44f28d55d61f657262e902dfed4924b55a7c9b52412aa01
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+**命题 738.1（两段值公式）。** 对第 737 节的状态族，整个 $0\le E\le pL$ 上有
+
+$$
+\mu(E)=
+\begin{cases}
+E/2,&0\le E\le2L,\\
+\dfrac{kE-(k-p+1)L}{N},&2L<E\le pL.
+\end{cases}
+$$
+
