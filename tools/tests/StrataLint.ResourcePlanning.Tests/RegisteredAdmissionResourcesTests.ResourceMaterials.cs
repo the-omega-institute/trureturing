@@ -15,10 +15,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             spec.loader.exec_module(selection)
             inputs = selection.Selection(source)
             inputs.validate('lean-report')
-            # Match the producer's effective working-tree inputs, including new
-            # authored files before staging; ignored build outputs stay excluded.
-            paths = subprocess.check_output(['git', '-C', str(source), 'ls-files',
-                '--cached', '--others', '--exclude-standard', '-z']).decode().split('\0')
+            paths = subprocess.check_output(['git', '-C', str(source), 'ls-files', '-z']).decode().split('\0')
             projects = {row['path']: row for row in json.loads(
                 (source / 'Meta/engineering-projects.json').read_text())['projects']}
             def expand(patterns, excludes=()):
