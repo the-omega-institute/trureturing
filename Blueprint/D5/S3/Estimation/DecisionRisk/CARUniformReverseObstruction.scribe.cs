@@ -267,13 +267,19 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
             Eqn(Call("output", V("J"), Call("row", V("uprime"), V("i"))), Call("E", V("T"), V("i"))))));
 
     private static Formula PublicConclusion() => AndInline(
-        Eqn(V("Deltaprime"), D(0)), Eqn(V("Rprime"), D(0)),
+        All(CommaList(V("i"), V("j")), V("A"), AndInline(
+            Eqn(Call("Deltaprime", V("i"), V("j")),
+                Sub(Call("r", V("vprime"), V("i"), V("j")), Call("r", V("wprime"), V("i"), V("j")))),
+            Eqn(Call("Deltaprime", V("i"), V("j")), D(0)))),
+        Eqn(V("Rprime"), Mul(Div(D(1), D(2)), Call("max", V("i"),
+            SumOver(Call("neq", V("j"), V("i")), Call("max", Call("Deltaprime", V("i"), V("j")), D(0)))))),
+        Eqn(V("Rprime"), D(0)),
         Eqn(Call("d", V("EP"), V("EQ")), Mul(V("t"), V("epsilon"))),
         Eqn(Call("d", V("EP"), V("EQ")), Div(D(2), Mul(D(3), V("n"), Sub(V("n"), D(1))))),
         Eqn(Call("d", V("EQ"), V("EP")), Mul(V("t"), V("rho"))),
         Eqn(Call("d", V("EQ"), V("EP")), Div(Sub(Mul(D(2), V("n")), D(3)), Mul(D(3), V("n"), Sub(V("n"), D(1))))),
         Eqn(Div(Mul(V("t"), V("rho")), Mul(V("t"), V("epsilon"))), Sub(V("n"), Div(D(3), D(2)))),
-        LtF(Call("min", D(1), Mul(Div(V("n"), D(2)), V("t"), V("epsilon"))), Mul(V("t"), V("rho"))));
+        LtF(Call("min", D(1), Add(V("Rprime"), Mul(Div(V("n"), D(2)), V("t"), V("epsilon")))), Mul(V("t"), V("rho"))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>

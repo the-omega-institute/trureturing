@@ -63,6 +63,9 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
     let Δ := fun i j => pair (v n) i j - pair (w n) i j
     let R := (1 / 2 : ℝ) * Finset.univ.sup' Finset.univ_nonempty
       (fun i => ∑ j ∈ Finset.univ.erase i, max (Δ i j) 0)
+    let R' := (1 / 2 : ℝ) * Finset.univ.sup' Finset.univ_nonempty
+      (fun i => ∑ j ∈ Finset.univ.erase i,
+        max (pair (mix n (v n)) i j - pair (mix n (w n)) i j) 0)
     (∀ B, 0 ≤ w n B ∧ 0 ≤ v n B) ∧
     IsRowStochastic W ∧ IsRowStochastic V ∧
     (∀ i j, i ≠ j → pair (w n) i j = n / (3 * ((n : ℝ) - 1)) ∧
@@ -119,12 +122,13 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
           (∀ i, channelOutput H.1 (publicExperiment n p Q i) = row (mix n (v n)) i) ∧
           (∀ i, channelOutput J.1 (row (mix n (v n)) i) = publicExperiment n p Q i)) ∧
         (∀ i j, pair (mix n (v n)) i j - pair (mix n (w n)) i j = 0) ∧
+        R' = 0 ∧
         finiteDeficiency (publicExperiment n p Q) (publicExperiment n p P) =
           ENNReal.ofReal ((2 / n) * ε) ∧
         finiteDeficiency (publicExperiment n p P) (publicExperiment n p Q) =
           ENNReal.ofReal ((2 / n) * ρ) ∧
         ((2 / n) * ρ) / ((2 / n) * ε) = (n : ℝ) - 3 / 2 ∧
-        min 1 ((n : ℝ) / 2 * ((2 / n) * ε)) < (2 / n) * ρ := by
+        min 1 (R' + (n : ℝ) / 2 * ((2 / n) * ε)) < (2 / n) * ρ := by
   classical
   letI : NeZero n := ⟨by omega⟩
   dsimp only
@@ -814,7 +818,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
   refine ⟨fun B => ⟨hw0 B, hv0 B⟩, hW, hV, hp, hΔ, hR, F, G, rfl, rfl,
     ferror, gerror, blockr, blockl, ?_, rW, rV, ?_, lW, lV, defF, defG, ratio, coeff, ?_,
     p, P, Q, hp0, hp1, hpw, hpv, ⟨Hw, Jw, hHw, hJw⟩, ⟨Hv, Jv, hHv, hJv⟩,
-    pubpair, pubF, pubG, pubratio, pubstrict⟩
+    pubpair, ?_, pubF, pubG, pubratio, ?_⟩
   · refine ⟨dr, ?_⟩
     intro u hu e
     rcases Finset.mem_insert.mp hu with h | h
@@ -828,5 +832,8 @@ theorem result (n : ℕ) (hn : 4 ≤ n) :
     · have h : u = v n := Finset.mem_singleton.mp h
       subst u; exact (hdl (v n) hv0).2.1 e
   · simpa only [hR, zero_add] using strict
+  · simp only [pubpair, max_self, Finset.sum_const_zero, Finset.sup'_const, mul_zero]
+  · simpa only [pubpair, max_self, Finset.sum_const_zero, Finset.sup'_const, mul_zero,
+      zero_add] using pubstrict
 
 end D5.S3.Estimation.DecisionRisk.CARUniformReverseObstruction
