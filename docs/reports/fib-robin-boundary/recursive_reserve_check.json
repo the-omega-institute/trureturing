@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "saved_nodes_checked": 3202,
+  "saved_leaves_checked": 1608,
+  "roots_checked": 14,
+  "decimal_rounding_checks": 6,
+  "arithmetic": "integer comparisons only",
+  "source_sha256": "a3e528e87a56f398e662d8ba069392fdfc510bd334ceb48189a938992a0e8b87",
+  "certificate_sha256": "9015782fc5dc657eca638c4d63a504a9623d58a1edce52a3202a9bedd9182db1",
+  "scope": "Saved-certificate structure and rounding; transcendental enclosures come from the producer and its audited interval engine."
+}
