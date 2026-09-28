@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:96d6de5c66a2b3164efdcc0b3da004325968c0eeb6c180aaf67e721faa71fc1e
   normalized_sha256: sha256:96d6de5c66a2b3164efdcc0b3da004325968c0eeb6c180aaf67e721faa71fc1e
 cas_ref: sha256:96d6de5c66a2b3164efdcc0b3da004325968c0eeb6c180aaf67e721faa71fc1e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/RareBranchConditionalErrorSharpness.rare_branch_conditional_error_sharpness
+    target_statement_id: sha256:e57e91a0a7bc6a13f435c408f9de9649a63cff6bdf11a32cfe3c5f876c812f58
 receipts:
   unresolved_subitems: []
