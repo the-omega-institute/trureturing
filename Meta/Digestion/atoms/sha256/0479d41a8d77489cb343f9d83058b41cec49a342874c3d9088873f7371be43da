@@ -1,0 +1,22 @@
+### theorem 15.4 每个线性观察都由黄金整数作用产生
+
+存在唯一
+
+$$
+ h=(v-u)+u\theta\in R
+$$
+
+使
+
+$$
+q_{u,v}(x)=\varepsilon(hx)\qquad(x\in R).
+$$
+
+**证明。** 若 $h=c+d\theta$，则
+
+$$
+\varepsilon(h(a+b\theta))=da+(c+d)b.
+$$
+
+比较系数得 $d=u$、$c=v-u$，且唯一。$□$
+

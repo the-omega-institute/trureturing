@@ -1,0 +1,8 @@
+### theorem 46.1 二分的平坦谱
+
+约化态的非零谱平坦，Schmidt 秩与熵为
+
+$$
+\boxed{R_{A|B}=\frac{n^2}{k_Ak_B},\qquad S(A)=2\log n-\log k_A-\log k_B.}
+$$
+

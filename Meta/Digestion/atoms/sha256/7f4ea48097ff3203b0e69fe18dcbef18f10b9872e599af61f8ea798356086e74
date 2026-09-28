@@ -1,0 +1,32 @@
+### theorem 30.2 一般整数矩阵的恢复滞后
+
+设方阵 $B$ 的行列式非零，Smith 标准形为
+
+$$
+UBV=\operatorname{diag}(s_1,\ldots,s_q),
+$$
+
+其中 $U,V$ 整数可逆，令 $\nu_i=v_p(s_i)$。则
+
+$$
+\boxed{
+|\ker(B\bmod p^r)|=p^{\sum_i\min(r,\nu_i)}.
+}
+$$
+
+从 $Bx\bmod p^{r+t}$ 统一恢复 $x\bmod p^r$ 所需的最小额外精度为
+
+$$
+\boxed{t_{\min}=\max_i\nu_i.}
+$$
+
+**证明。** 整数可逆换基不改变模 $p^r$ 的恢复性，故只需研究标量乘法 $z_i\mapsto s_i z_i$。其核大小为 $p^{\min(r,\nu_i)}$；已知输出多 $\max_i\nu_i$ 位足以逐项消去因子，不足该数时对应方向仍有不可见差异。证毕。 $\square$
+
+因此
+
+$$
+\sum_i\min(r,\nu_i)
+$$
+
+计量当前未区分的信息量，而 $\max_i\nu_i$ 计量最坏方向的恢复滞后。二者不能混同。
+

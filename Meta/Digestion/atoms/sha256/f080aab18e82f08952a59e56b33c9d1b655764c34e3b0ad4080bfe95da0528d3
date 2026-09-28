@@ -1,0 +1,26 @@
+## 49. 更高阶递推与观察优化
+
+对 $k$-bonacci 递推矩阵 $C_k$ 和基本读数 $\varepsilon_k$，采样矩阵为
+
+$$
+H_{\mathcal T}=\begin{pmatrix}\varepsilon_kC_k^{t_0}\\\vdots\\\varepsilon_kC_k^{t_{m-1}}\end{pmatrix}.
+$$
+
+若其满列秩 Smith 因子为 $s_1,\ldots,s_k$，则
+
+$$
+\boxed{|\ker(H_{\mathcal T}\bmod n)|=\prod_i\gcd(n,s_i)}.
+$$
+
+因此完整恢复等价于所有 $k\times k$ 子式的最大公因数与 $n$ 互素。二阶 Fibonacci 的额外简化来自强整除律把这些子式压缩为一个 $F_g$。
+
+给定允许时刻集合 $\mathcal A$ 与成本 $c(\mathcal T)$，最小完整恢复问题是
+
+$$
+\min_{\mathcal T\subseteq\mathcal A}c(\mathcal T)
+\quad\text{subject to}\quad
+\gcd(n,F_{g(\mathcal T)})=1.
+$$
+
+若要求任意两两时刻都可恢复，则对所有时刻对施加 $\gcd(n,F_{|t_i-t_j|})=1$；若要求量子四端口完美性，还需联合单射和对应二分的 $k_A,k_B$ 条件。这个优化保持关系和时钟标签，不把素性答案编码进端口。
+

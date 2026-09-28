@@ -1,0 +1,10 @@
+### theorem 2.2 结构解释的唯一延拓
+
+对任意集合 $X$、元素 $a_X,b_X\in X$ 和二元运算 $\mu:X\times X\to X$，存在唯一映射 $\operatorname{Eval}:\mathcal T\to X$ 满足
+
+$$
+\operatorname{Eval}(\alpha)=a_X,\qquad
+\operatorname{Eval}(\beta)=b_X,\qquad
+\operatorname{Eval}(\langle s,t\rangle)=\mu(\operatorname{Eval}(s),\operatorname{Eval}(t)).
+$$
+
