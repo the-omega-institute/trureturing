@@ -75936,3 +75936,432 @@ Fawzi–Saunderson–Parrilo 同文的定理2及第3节还给出正 $2^m$ 边形
 定理353.2保留的是一个固定推进、读出后重置的经典记录接口。它不把原系统的噪声、环境、量子输出或参考纠缠恢复出来；其纯初态化也没有扩展到多个非交换推进操作。严格周期的结论不附带近似周期下的稳定性界。上述结果不承担一般近代数问题、量子公理重建、全球原创性或 Lean 核验声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 354. 多控制记录的共同酉实现与纯初态的容量代价
+
+第353节把单一周期推进化为同容量的酉推进与纯初态。多个控制必须同时作用于同一份记忆，不能分别纯化后再拼接。本节先证明有限群记录接口仍允许不增加总持续维数的共同酉实现，但保留混合初态；再用一个具有层析完备记录的三维例子检验纯初态要求。
+
+### 354.1 有限群记录合同与共同实现
+
+**定义 354.1（有限群控制记录）。** 固定有限群 $G$、有限控制字母表 $\mathsf A$ 及生成 $G$ 的标签 $g_a$，允许用群中全部元素作为字母。固定非空有限结果集 $Y$ 与概率族 $p_y(g)\ge0$、$\sum_yp_y(g)=1$。对按时间排列的字串 $w=(a_1,\ldots,a_k)$，约定
+
+$$
+g_w=g_{a_k}\cdots g_{a_1},
+\qquad g_\varnothing=e.
+\tag{354.1}
+$$
+
+从初态或上次读取后执行 $w$，下一次结果为 $y$ 的概率是 $p_y(g_w)$；目标在每个结果后重置。这个规则指定全部有限自适应命令树的经典记录律。实现使用固定初态、每个字母的一条固定 CPTP 映射以及一份固定读取仪器，所有持续保存的经典和量子寄存器计入总 Hilbert 维数。装置只收到当前字母或读取命令，没有免费群标签、时钟、历史或持久环境。竞争者可以改变内部读后更新，只须匹配上述完整记录。门参数和精度成本不由此维数计量，合同不含额外量子输出或未操作参考接口。
+
+**定理 354.2（有限群记录的共同酉正规形）。** 若定义354.1的记录接口有 $d$ 维精确 CPTP 实现，则有 $D\le d$ 维实现，使用一份固定的、允许混合的初态 $\sigma$、每个字母的一份固定酉矩阵 $U_a$、一份固定 POVM $(E_y)$，并在读取后实际重置到 $\sigma$。所有字串与全部有限自适应经典记录都保持。各个 $U_a$ 作用于同一个 $D$ 维空间，但此结论不要求这些矩阵在全部输入上构成 $G$ 的普通表示。
+
+证明。取原实现初态 $\rho$、推进 $\Phi_a$ 和首次读取效应 $F_y$，则对全部字串有
+
+$$
+\operatorname{tr}(F_y\Phi_w(\rho))=p_y(g_w),
+\qquad
+\Phi_w=\Phi_{a_k}\circ\cdots\circ\Phi_{a_1}.
+\tag{354.2}
+$$
+
+原仪器在读取后的行为不进入这条必要条件。
+
+在有限维通道空间与有限群的乘积中取
+
+$$
+\mathscr S=\overline{\{(\Phi_w,g_w):w\in\mathsf A^*\}},
+\qquad
+(T,g)(R,h)=(T\circ R,gh).
+\tag{354.3}
+$$
+
+有限维 CPTP 映射集合紧，复合连续，所以 $\mathscr S$ 是紧半群。第二坐标只标记证明中的通道极限，没有加入物理寄存器。群有限且离散，因此式（354.2）连续延拓为
+
+$$
+\operatorname{tr}(F_yT(\rho))=p_y(g)
+\quad\text{对每个 }(T,g)\in\mathscr S.
+\tag{354.4}
+$$
+
+以下的秩是 $M_d(\mathbb C)$ 上复线性超算子的秩。选 $(T,h)\in\mathscr S$ 使其秩 $r$ 最小。保迹使 $r\ge1$，且 $\operatorname{rank}T^2=r$。于是
+
+$$
+M_d=\operatorname{ran}T\oplus\ker T,
+\qquad T=A_0\oplus0,
+\tag{354.5}
+$$
+
+其中 $A_0$ 在 $\operatorname{ran}T$ 上可逆。令 $m$ 为 $h$ 的阶。由紧性，取相邻间隔至少二的严格递增整数 $n_j$，使 $T^{mn_j}\to L$。所有这些幂的群标签都是 $e$，故 $(L,e)\in\mathscr S$。极限在 $\ker T$ 上为零、像包含于 $\operatorname{ran}T$，最小秩又给 $\operatorname{rank}L=r$，所以 $L=B_0\oplus0$ 且 $B_0$ 可逆。由
+
+$$
+A_0^{m(n_{j+1}-n_j)}
+=A_0^{mn_{j+1}}(A_0^{mn_j})^{-1}\longrightarrow I,
+$$
+
+得到一份共同的 CPTP 幂等映射
+
+$$
+(P,e)\in\mathscr S,\qquad
+P=I_{\operatorname{ran}T}\oplus0,\qquad
+P^2=P,\qquad \operatorname{rank}P=r.
+\tag{354.6}
+$$
+
+这里的投影作用于算子空间，不是原 Hilbert 空间上的正交投影。
+
+记 $V=\operatorname{ran}P$。角半群
+
+$$
+\mathscr C=\{(PTP,g):(T,g)\in\mathscr S\}
+\tag{354.7}
+$$
+
+以 $(P,e)$ 为单位。每个成员的秩既不超过 $r$，又由最小性不小于 $r$，因此在 $V$ 上可逆，并在 $\ker P$ 上为零。限制到 $V$ 将它识别为 $\operatorname{GL}(V)\times G$ 的紧子半群。任意拓扑群的紧子半群都是群：对其中任意 $z$，取 $z^{n_j}\to\ell$ 且相邻间隔至少二，则在环境群中
+
+$$
+z^{n_{j+1}-n_j}\to1,\qquad
+z^{n_{j+1}-n_j-1}\to z^{-1};
+$$
+
+后者都是半群中的非负整数幂，闭性使逆元也在其中。
+
+因而每个压缩推进 $B_a=P\Phi_aP$ 有一份 CPTP 映射 $Q_a=PQ_aP$，满足
+
+$$
+Q_aB_a=B_aQ_a=P.
+\tag{354.8}
+$$
+
+它们在同一个 $V$ 上互逆，不是对各个控制分别选择空间。并且插入的每个 $P$ 标签均为 $e$，式（354.4）给
+
+$$
+\operatorname{tr}\!\left(
+F_yB_{a_k}\cdots B_{a_1}(P(\rho))
+\right)=p_y(g_w).
+\tag{354.9}
+$$
+
+不需要 $P$ 与原 $\Phi_a$ 对易。
+
+对 CPTP 幂等映射 $P$，外围空间恰为 $V$。使用 Wolf–Pérez-García，*The Inverse Eigenvalue Problem for Quantum Channels*，[arXiv:1005.4545v1，定理8(1)、式(22)](https://arxiv.org/html/1005.4545v1#Thmtheorem8)，得到一个共同的正交分解
+
+$$
+\mathbb C^d
+=H_0\oplus\bigoplus_{j=1}^s
+(\mathbb C^{n_j}\otimes\mathbb C^{m_j}),
+\qquad
+V=0\oplus\bigoplus_{j=1}^s(M_{n_j}\otimes\tau_j),
+\tag{354.10}
+$$
+
+其中 $\tau_j>0$ 是迹一矩阵。该文对保迹 Schwarz 映射采用对偶 Schwarz 条件，CPTP 映射满足它。本节只对共同的 $P$ 应用一次该结构定理。
+
+令 $K=\bigoplus_j\mathbb C^{n_j}$、$\mathcal A=\bigoplus_jM_{n_j}\subseteq M_D$，则
+
+$$
+D=\dim K=\sum_jn_j\le\sum_jn_jm_j\le d.
+\tag{354.11}
+$$
+
+所有经典块仍逐块计入维数，只去除固定张量因子 $\tau_j$。定义 CPTP 映射
+
+$$
+\begin{aligned}
+\beta:M_D&\longrightarrow M_d,
+&
+\beta(X)&=0\oplus\bigoplus_jX_{jj}\otimes\tau_j,\\
+\kappa:M_d&\longrightarrow M_D,
+&
+\kappa(Z)&=\bigoplus_j\operatorname{Tr}_{\mathbb C^{m_j}}(\Pi_jZ\Pi_j)
++\operatorname{tr}(\Pi_0Z)\omega,
+\end{aligned}
+\tag{354.12}
+$$
+
+其中 $\Pi_0,\Pi_j$ 为显示块的正交投影，$\omega\in\mathcal A$ 为任意固定密度矩阵。块消相干、偏迹、固定态制备均完全正；按总迹直接核对两映射保迹。它们满足
+
+$$
+\kappa\beta|_{\mathcal A}=\operatorname{id}_{\mathcal A},
+\qquad
+\beta\kappa|_V=\operatorname{id}_V.
+\tag{354.13}
+$$
+
+在同一个 $\mathcal A$ 上，$L_a=\kappa B_a\beta$ 与 $R_a=\kappa Q_a\beta$ 是互逆 CPTP 映射。其迹对偶 $\alpha_a=L_a^\dagger$、$\gamma_a=R_a^\dagger$ 互逆且完全正保单位。Schwarz 不等式及其在逆映射下的对应给
+
+$$
+\alpha_a(x^\dagger x)\ge\alpha_a(x)^\dagger\alpha_a(x),
+\qquad
+\gamma_a(\alpha_a(x)^\dagger\alpha_a(x))\ge x^\dagger x.
+\tag{354.14}
+$$
+
+对第一式施 $\gamma_a$ 给反向不等式，所以两者取等。由 $\gamma_a$ 单射，$\alpha_a$ 在 Schwarz 不等式中取等；极化得到乘法保持。因此 $\alpha_a$ 是有限维 $C^*$-代数自同构。它只能置换同阶简单块，并在块内作酉共轭；该作用保持普通块迹，其迹对偶也为自同构。所以存在 $K$ 上的一份酉矩阵 $U_a$，使
+
+$$
+L_a(X)=U_aXU_a^\dagger
+\quad(X\in\mathcal A).
+\tag{354.15}
+$$
+
+同一块分解适用于全部字母。选择这些实现酉矩阵无需把项目相位或块中心乘子提升为普通群表示。
+
+最后置
+
+$$
+\sigma=\kappa(P(\rho)),\qquad E_y=\beta^\dagger(F_y).
+\tag{354.16}
+$$
+
+$\sigma$ 是 $\mathcal A$ 内的密度矩阵；$\beta^\dagger$ 完全正保单位，故 $E_y\ge0$ 且 $\sum_yE_y=I_D$。对每个字母有 $\beta(U_aXU_a^\dagger)=B_a\beta(X)$，按字串归纳并用式（354.9），得到
+
+$$
+\operatorname{tr}(E_yU_w\sigma U_w^\dagger)=p_y(g_w).
+\tag{354.17}
+$$
+
+定义 $\mathcal J_y(X)=\operatorname{tr}(E_yX)\sigma$。这些分支完全正且总和保迹，每个非零概率分支都实际重置到 $\sigma$。任意有限自适应树的一条结果路径，其条件概率相乘为 $\prod_i p_{y_i}(g_{w_i})$，与目标一致。极限映射与分解只选择固定装置参数，不是运行时需存储时钟或群标签的过程。证毕。
+
+这是一条精确存在性结论，没有给出有效综合成本或近似稳定性。它保留声明的经典记录，不恢复原通道、环境或额外参考接口。第274节的固定因子压缩以及相位边界卷第15—16节的单通道外围投影已有对应工具；这里增加的是由整个通道半群选出一个共同可逆空间，并对全部字串保持响应的连接。
+
+### 354.2 完整响应秩迫使最小实现保留群作用
+
+**定理 354.3（满算子秩下的可逆性）。** 在定义354.1的接口中，令 $P=(p_y(g))_{y,g}$。若 $\operatorname{rank}_{\mathbb R}P=d^2$，则任意 $d$ 维精确 CPTP 实现的全部推进映射都为酉共轭。它们的共轭作用只依赖字串的群乘积，并构成 $G$ 在整个 $M_d$ 上的真实作用。这个结论不要求实现的初态纯。
+
+证明。为每个 $g$ 选一条代表字串，恒等元选空字，记其首次读取前状态为 $\tau_g$，固定首次读取效应为 $E_y$。分解
+
+$$
+P_{y,g}=\operatorname{tr}(E_y\tau_g)
+\tag{354.18}
+$$
+
+通过 $d^2$ 维实空间 $\operatorname{Herm}_d$，秩取满迫使 $\{\tau_g\}$ 与 $\{E_y\}$ 各自张成全部空间。若字串 $u,v$ 代表同一群元素，对任意代表字串 $w_t$，先执行 $w_t$ 再执行 $u$ 或 $v$，全部读取概率相等；效应张成性给 $\Phi_u(\tau_t)=\Phi_v(\tau_t)$。状态张成性继而给 $\Phi_u=\Phi_v$ 于全部 Hermitian 矩阵，复线性使等式延伸到 $M_d$。特别是群恒等字串对应空字的恒等通道，代表逆元的字串给每个推进的 CPTP 逆。
+
+这些通道的迹对偶是互逆的完全正保单位映射，式（354.14）的双 Schwarz 论证表明它们是 $M_d$ 的自同构。全矩阵代数自同构由酉共轭实现，其迹对偶也如此。原通道因此已是酉共轭。任意读后更新均不能改变首次读取前的上述约束。证毕。
+
+### 354.3 混合三维记忆与同维纯初态的不相容
+
+**定理 354.4（有限控制下纯初态需要额外容量）。** 存在定义354.1的一份有限群记录接口，其一般 CPTP 最小持续维数恰为 $3$，纯初态且允许一般 CPTP 推进的最小持续维数恰为 $4$；若再要求推进全部为酉操作，最小维数介于 $4$ 与 $9$ 之间。特别地，多控制合同不允许把定理354.2的初态无条件改纯并同时保持维数。
+
+证明。令 $\varphi=(1+\sqrt5)/2$，固定正二十面体顶点
+
+$$
+(0,\pm1,\pm\varphi),\qquad
+(\pm1,\pm\varphi,0),\qquad
+(\pm\varphi,0,\pm1).
+\tag{354.19}
+$$
+
+取其旋转群 $G\cong A_5$，标准实正交表示记为 $R_g\in SO(3)$；全部群元素作为控制字母。置
+
+$$
+D=\begin{pmatrix}-1&0&0\\0&0&0\\0&0&1\end{pmatrix},
+\qquad
+A=\begin{pmatrix}0&-1&1\\1&0&-1\\-1&1&0\end{pmatrix},
+\qquad
+\rho=\frac I3+\frac{D+\mathrm iA}{20}.
+\tag{354.20}
+$$
+
+$H=D+\mathrm iA$ 为 Hermitian 矩阵，直接计算 $\det(tI-H)=t(t^2-4)$，故
+
+$$
+\operatorname{spec}(\rho)=
+\left\{\frac7{30},\frac13,\frac{13}{30}\right\}.
+\tag{354.21}
+$$
+
+所以 $\rho$ 是严格正的迹一三维态。
+
+以下保留所需的表示论计算。按 $A_5$ 的共轭类排列，令 $\bar\varphi=(1-\sqrt5)/2$，有
+
+$$
+\begin{array}{c|rrrrr}
+ &1A&2A&3A&5A&5B\\ \hline
+\text{类大小}&1&15&20&12&12\\
+1&1&1&1&1&1\\
+3&3&-1&0&\varphi&\bar\varphi\\
+3'&3&-1&0&\bar\varphi&\varphi\\
+4&4&0&1&-1&-1\\
+5&5&1&-1&0&0
+\end{array}
+\tag{354.22}
+$$
+
+这些行是实际表示的特征标。旋转角的迹公式 $1+2\cos\theta$ 给标准 $R$ 的三维行；由 $S_5$ 中奇置换的共轭交换两个五阶类，得到另一实三维表示 $R'$。五点置换表示去掉常数方向给四维行。实对称无迹矩阵上的共轭作用给五维行，其特征标由
+
+$$
+\chi_5(g)=\frac{\chi_R(g)^2+\chi_R(g^2)}2-1
+\tag{354.23}
+$$
+
+计算，平方交换两个五阶类。按类大小加权并除以 $60$，式（354.22）各行内积为单位矩阵，因此均复不可约且互不等价。维数平方和 $1+9+9+16+25=60$ 证明其穷尽全部复不可约表示。故普通三维表示只能为 $1\oplus1\oplus1$、$R$ 或 $R'$。这是标准 $A_5$ 特征标计算；可对照 Etingof 等，[《Introduction to Representation Theory》第3.1、3.5、3.8节，第41—42页](https://math.mit.edu/~etingof/replect.pdf)。
+
+标准共轭的实表示分解为
+
+$$
+\operatorname{Herm}_3
+=\mathbb RI
+\oplus \mathrm i\,\mathfrak{so}(3,\mathbb R)
+\oplus \operatorname{Sym}_0(3,\mathbb R)
+\cong1\oplus3\oplus5.
+\tag{354.24}
+$$
+
+中间分量通过反对称矩阵的轴向量与 $R$ 等价；最后分量由式（354.23）给出。它们两两不等价、各出现一次，复化仍不可约，所以实交织自映射也只能在各分量上乘实标量。
+
+$\rho$ 在这三个分量中都有非零投影。因此 $\rho_g=R_g\rho R_g^T$ 的实轨道张成整个 $\operatorname{Herm}_3$。具体地，各不可约分量的特征标投影是群作用的实线性组合，保持轨道张成空间；每个非零投影再由不可约性生成整个分量。群平均给
+
+$$
+\frac1{60}\sum_g\rho_g=\frac I3.
+\tag{354.25}
+$$
+
+定义固定的六十结果 POVM、控制与读取分支：
+
+$$
+F_h=\frac{\rho_h}{20},\qquad
+\Phi_a(X)=R_aXR_a^T,\qquad
+\mathcal J_h(X)=\operatorname{tr}(F_hX)\rho.
+\tag{354.26}
+$$
+
+各 $F_h\ge0$，式（354.25）给 $\sum_hF_h=I$。每个分支完全正，总和保迹，非零概率结果后实际重置到 $\rho$。其响应为
+
+$$
+p_h(g)=\frac1{20}\operatorname{tr}(\rho_h\rho_g).
+\tag{354.27}
+$$
+
+任意有限自适应记录按重置逐次相乘，故这是一份完整实现。持续存储只有这个三维系统；六十个控制标签来自当前命令，装置不保存累计群元素或准备标签。
+
+响应矩阵 $P=(p_h(g))_{h,g}$ 是轨道的 Gram 矩阵乘 $1/20$。由轨道张成性，
+
+$$
+\operatorname{rank}_{\mathbb R}P=9.
+\tag{354.28}
+$$
+
+任意 $d$ 维 CPTP 竞争实现都通过 $\operatorname{Herm}_d$ 因子化其首次读取概率，因此 $9\le d^2$。这给一般容量下界 $d\ge3$，由式（354.26）达到。
+
+现在假设一个纯初态竞争实现的维数不超过三。其维数必为三，定理354.3迫使它的全部推进为酉共轭，并在 $M_3$ 上给出群作用 $\beta_g$。记初态为 $\sigma_e$，代表字串后的状态为 $\sigma_g$，读取效应为 $E_h$。响应矩阵秩九迫使两族各张成 $\operatorname{Herm}_3$，故存在唯一实线性同构
+
+$$
+S:\operatorname{Herm}_3\longrightarrow\operatorname{Herm}_3,
+\qquad
+S(\rho_g)=\sigma_g,
+\qquad
+S\operatorname{Ad}(R_g)=\beta_gS.
+\tag{354.29}
+$$
+
+其良定义由记录直接保证：若 $\sum_gc_g\rho_g=0$，则 $\sum_gc_g\sigma_g$ 与全部 $E_h$ 的迹配对为零，层析张成性迫使它为零。满秩再给 $S$ 可逆。由于轨道各态迹一，$S$ 保迹；源作用固定空间只有 $\mathbb RI$，交织使目标固定空间也一维，而 $\beta_g$ 固定单位，所以 $S(I)=I$。
+
+还需排除项目表示留下的额外三维模型。选酉代表 $V_g$，$V_e=I$，使 $\beta_g=\operatorname{Ad}(V_g)$，于是
+
+$$
+V_gV_k=c(g,k)V_{gk},
+\qquad c(g,k)\in U(1).
+\tag{354.30}
+$$
+
+取行列式 $d_g=\det V_g$，则 $d_gd_k/d_{gk}=c(g,k)^3$。选三阶循环子群 $H\subset A_5$，其指数为二十。$H$ 的项目作用有一条共同不变复直线：取生成元酉代表的一个本征向量 $v$，其余代表均为该生成元幂的标量倍。对左陪集 $x\in G/H$ 选代表 $r_x$ 并令 $v_x=V_{r_x}v$。存在唯一相位 $m(g,x)$ 使
+
+$$
+V_gv_x=m(g,x)v_{gx}.
+$$
+
+在以陪集为正交基的二十维辅助证明空间上定义 $W_ge_x=m(g,x)e_{gx}$。这些是酉单项矩阵，式（354.30）直接给 $W_gW_k=c(g,k)W_{gk}$。因此若 $e_g=\det W_g$，则 $e_ge_k/e_{gk}=c(g,k)^{20}$。利用 $7\cdot3-20=1$，置
+
+$$
+q_g=\frac{d_g^7}{e_g},
+\qquad
+\frac{q_gq_k}{q_{gk}}=c(g,k),
+\qquad
+\widetilde V_g=q_g^{-1}V_g.
+\tag{354.31}
+$$
+
+于是 $\widetilde V$ 是普通酉表示，共轭作用仍为 $\beta$。二十维空间只用于证明消去标量乘子，不是实现中的额外存储。这也不使用未声明的 Schur 乘子分类；项目表示与乘子的一般定义可对照 Etingof–Gelaki–Nikshych–Ostrik，[《Tensor Categories》例7.4.9，印刷页136](https://math.mit.edu/~etingof/egnobookfinal.pdf#page=153)。
+
+由式（354.22），$\widetilde V$ 只能为全平凡、$R$ 或 $R'$。平凡表示不能生成九维轨道。$R'$ 的 Hermitian 共轭表示为 $1\oplus3'\oplus5$，与式（354.24）不等价，不能由可逆 $S$ 交织；在五阶类上，其共轭特征标 $\bar\varphi^2$ 与 $\varphi^2$ 已不同。因此目标表示酉等价于 $R$，可选竞争者基底使二者一致。
+
+式（354.29）的 $S$ 现在与标准共轭对易。实 Schur 引理、各分量只出现一次以及 $S(I)=I$，给
+
+$$
+\sigma_e=S(\rho)
+=\frac I3+\frac{aD+\mathrm i\,bA}{20},
+\qquad
+a,b\in\mathbb R\setminus\{0\}.
+\tag{354.32}
+$$
+
+这些矩阵都不可能是纯态。若 $\sigma=zz^\dagger$，写 $z=u+\mathrm iv$，$u,v\in\mathbb R^3$，则其实部与虚部分别为
+
+$$
+B=uu^T+vv^T,\qquad C=vu^T-uv^T=[u\times v]_\times.
+\tag{354.33}
+$$
+
+因此虚部的轴向量 $n=u\times v$ 必满足 $Bn=0$。但对式（354.32），
+
+$$
+n=\frac b{20}(1,1,1)^T,\qquad
+B=\operatorname{diag}\!\left(\frac13-\frac a{20},\frac13,\frac13+\frac a{20}\right),
+\qquad
+(Bn)_2=\frac b{60}\ne0.
+\tag{354.34}
+$$
+
+这与纯态条件矛盾。由定理354.3，这个排除覆盖一般 CPTP 推进的纯初态三维竞争者，而不只覆盖预先选定的控制矩阵。
+
+四维可以达到纯初态且一般 CPTP 推进的下界。令 $K=\mathbb C|f\rangle\oplus\mathbb C^3$，其中 $|f\rangle$ 是与三维核心正交的单位初始化状态，取它为固定纯初态。对任意算子 $X=\begin{pmatrix}x&r\\s&Z\end{pmatrix}$，定义
+
+$$
+\begin{aligned}
+\widehat\Phi_a(X)
+&=0\oplus R_a(Z+x\rho)R_a^T,\\
+\widehat E_h
+&=p_h(e)|f\rangle\langle f|\oplus F_h,\\
+\widehat{\mathcal J}_h(X)
+&=\operatorname{tr}(\widehat E_hX)|f\rangle\langle f|.
+\end{aligned}
+\tag{354.34a}
+$$
+
+推进先丢弃两个正交块之间的相干，再将初始化块的迹制备为 $\rho$、把原核心保持，最后对核心作 $R_a$ 共轭。各步完全正；输出迹为 $\operatorname{tr}Z+x=\operatorname{tr}X$，所以推进是 CPTP。效应非负且总和为 $I_4$，读取后实际重置到同一个纯初始化态。
+
+空字串直接从初始化块读取，给出 $p_h(e)$；任何非空字串都把初态送到 $0\oplus\rho_{g_w}$，因为第一步制备对应的轨道态，后续步骤在核心内按群乘积推进。故全部字串响应及每次重置后的自适应记录都保持。第四个状态计入总容量，没有附赠的外部标志或时钟。结合已证下界，纯初态的一般 CPTP 最小维数恰为四。这里的推进在整个 $M_4$ 上不可逆：它把初始化态与核心中的 $\rho$ 送到同一个状态，因此不构成纯初态的酉推进实现。
+
+最后，取 $\rho$ 的一份纯化 $|\Psi\rangle\in\mathbb C^3\otimes\mathbb C^3$，用 $R_a\otimes I_3$ 推进、$F_h\otimes I_3$ 读取，并取分支
+
+$$
+\widehat{\mathcal J}_h(X)
+=\operatorname{tr}((F_h\otimes I_3)X)\,|\Psi\rangle\langle\Psi|.
+\tag{354.35}
+$$
+
+每次读取都重置整个联合系统，故全部自适应记录保持。两份三维寄存器均计入持续容量，得到九维上界。证毕。
+
+若分别记一般实现、纯初态且一般推进、纯初态且酉推进的最小维数，所得结论准确为
+
+$$
+d_{\mathrm{all}}=3,
+\qquad
+d_{\mathrm{pure,CPTP}}=4,
+\qquad
+4\le d_{\mathrm{pure,unitary}}\le9.
+\tag{354.36}
+$$
+
+没有确定纯初态且酉推进的准确最小值，也没有宣称九维最优。混合态的标准纯化仍然存在；本例证明的是：在要求同一组多控制记录全部保持、并计入全部持久寄存器时，纯化不能总在原最小容量内完成。
+
+### 354.4 来源与适用范围
+
+共同酉正规形使用成熟的紧矩阵半群、幂等通道外围结构、完全正序同构及有限维代数工具。Wolf–Pérez-García 的原定理承担式（354.10）的块分解；式（354.3）—（354.9）承担由同一记录合同取得共同可逆空间的连接。该结果不要求原控制共有忠实固定态，也不从一份平均通道的固定态推出每个原控制分别固定它。
+
+$A_5$ 的三维表示、特征标与 Schur 引理属于标准有限群表示论，见上述 Etingof 教材。项目的[观察者 adelic 完成常数卷定理26.1](OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md)已经使用 $3,3'$ 及相关外幂分解；本节不将这些成分视作新表示论。新增接口论证由合法态与 POVM、完整响应秩、对全部竞争实现的群作用约束及纯态相容性矛盾共同构成。定理354.4的二十维陪集空间只是项目乘子证明，不与九维物理纯化容量混用。
+
+本节保持有限群、精确字串响应和读取后重置的经典接口。它没有把“可逆”和“纯”重新定义成同一个条件，也没有推出量子公理、一般时空结构或多边形过程的对数维上界。近似群关系、有限观测窗口、无限群以及纯初态且酉推进容量的准确数值仍在显示结论之外。上述推导为理论正文与解析论证，不作全球原创性或 Lean 核验声明。
+
+## 追加锚（本行以下为增补区）
