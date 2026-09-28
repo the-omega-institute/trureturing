@@ -115,11 +115,97 @@ package_facet reportSemanticInputs (pkg : Package) : SemanticInputs := do
       ← IO.ofExcept (json.getObjVal? "pins"),
       (← IO.ofExcept (json.getObjVal? "common")).compress⟩
 
+-- A canonical, hash-consed Patricia set. Lake's invocation owns the arena:
+-- equal subtrees and repeated unions are shared, including diamond imports.
+-- Leaves are semantic inputs, never producer module names or graph edges.
+private structure SemanticNode where
+  keyHash : UInt64 := 0
+  bit : Nat := 64
+  left : Nat := 0
+  right : Nat := 0
+  values : Array String := #[]
+  digest : UInt64 := 0
+  deriving Inhabited
+
+private structure SemanticArena where
+  -- Mutex publication marks values shared. Persistent containers copy only
+  -- their changed paths; flat arrays/maps would copy the arena on each job.
+  nodes : Lean.PersistentArray SemanticNode := Lean.PersistentArray.empty.push {}
+  leaves : Lean.PersistentHashMap (Array String) Nat := {}
+  branches : Lean.PersistentHashMap (Nat × Nat) Nat := {}
+  unions : Lean.PersistentHashMap (Nat × Nat) Nat := {}
+  modules : Nat := 0
+  edges : Nat := 0
+  allEdges : Nat := 0
+  unionVisits : Nat := 0
+  deriving Inhabited
+
+package_facet reportSemanticArena (_pkg : Package) : Std.Mutex SemanticArena := do
+  Job.async do Std.Mutex.new {}
+
+private def semanticLeaf (values : Array String) : StateM SemanticArena Nat := do
+  if let some id := (← get).leaves.find? values then return id
+  let id := (← get).nodes.size
+  modify fun arena => {arena with
+    nodes := arena.nodes.push {keyHash := hash values[0]!, values, digest := hash values}
+    leaves := arena.leaves.insert values id}
+  return id
+
+@[inline] private def semanticBit (keyHash : UInt64) (bit : Nat) : Bool :=
+  (keyHash >>> UInt64.ofNat bit) &&& 1 != 0
+
+private def semanticBranch (bit left right : Nat) : StateM SemanticArena Nat := do
+  if let some id := (← get).branches.find? (left, right) then return id
+  let arena ← get
+  let l := arena.nodes[left]!
+  let r := arena.nodes[right]!
+  let keyHash := l.keyHash &&& ((1 <<< UInt64.ofNat bit) - 1)
+  let id := arena.nodes.size
+  set {arena with
+    nodes := arena.nodes.push {keyHash := keyHash, bit := bit, left := left, right := right, digest := hash (bit, keyHash, l.digest, r.digest)}
+    branches := arena.branches.insert (left, right) id}
+  return id
+
+private partial def semanticUnion (a b : Nat) : StateM SemanticArena Nat := do
+  if a == 0 then return b
+  if b == 0 || a == b then return a
+  let key := if a < b then (a, b) else (b, a)
+  if let some id := (← get).unions.find? key then return id
+  modify fun arena => {arena with unionVisits := arena.unionVisits + 1}
+  let arena ← get
+  let x := arena.nodes[a]!
+  let y := arena.nodes[b]!
+  let top := min x.bit y.bit
+  let difference := x.keyHash ^^^ y.keyHash
+  -- Isolate the lowest differing bit with fixed-width arithmetic; the native
+  -- log2 primitive avoids an interpreted bit scan at every shared union.
+  let bit := if difference == 0 then top
+    else min top ((difference &&& (0 - difference)).log2.toNat)
+  let result ← if bit < top then
+      if semanticBit x.keyHash bit then semanticBranch bit b a else semanticBranch bit a b
+    else if x.bit < y.bit then
+      if semanticBit y.keyHash x.bit then
+        semanticBranch x.bit x.left (← semanticUnion x.right b)
+      else semanticBranch x.bit (← semanticUnion x.left b) x.right
+    else if y.bit < x.bit then
+      if semanticBit x.keyHash y.bit then
+        semanticBranch y.bit y.left (← semanticUnion a y.right)
+      else semanticBranch y.bit (← semanticUnion a y.left) y.right
+    else if top < 64 then
+      semanticBranch top (← semanticUnion x.left y.left) (← semanticUnion x.right y.right)
+    else
+      -- Hash collisions retain every original atom, in canonical order.
+      semanticLeaf ((x.values ++ y.values).qsort (· < ·) |>.foldl
+        (fun acc value => if acc.back? == some value then acc else acc.push value) #[])
+  modify fun arena => {arena with unions := arena.unions.insert key result}
+  return result
+
 private structure SemanticSource where
   program : Bool
   path : String
   compilerConfig : String
   validation : Job Unit
+  importCount : Nat
 
 -- Interned per resolved module: hash a shared source once, then compose Lake's
 -- actual import closures. No second import parser or persistent cache is used.
@@ -174,7 +260,36 @@ module_facet reportSemanticSource (mod : Module) : SemanticSource := do
       if external then addPureTrace (pin.toOption.get!).compress "dependency pin"
       addPureTrace mod.pkg.id? "semantic package identity"
       addPureTrace compilerConfig "semantic compiler configuration"
-    return ⟨isProgram, path, compilerConfig, validation⟩
+    return ⟨isProgram, path, compilerConfig, validation, info.imports.size⟩
+
+private structure SemanticSummary where
+  id : Nat
+  digest : UInt64
+  validation : Job Unit
+
+/-- Compose actual resolved direct imports once per module. The canonical set
+forgets producer membership/topology while retaining all data and configurations.
+Validation follows the same shared jobs and remains required on report hits. -/
+module_facet reportSemanticSummary (mod : Module) : SemanticSummary := do
+  let pkg := (← getWorkspace).root
+  let arena ← (← fetch <| pkg.facet `reportSemanticArena).await
+  let source ← fetch <| mod.facet `reportSemanticSource
+  let imports ← (← mod.imports.fetch).await
+  let children ← imports.mapM fun child => fetch <| child.facet `reportSemanticSummary
+  (source.zipWith Prod.mk (Job.collectArray children)).mapM fun (input, summaries) => do
+    let atom := if input.program then "config:" ++ input.compilerConfig
+      else "source:" ++ mod.name.toString ++ ":" ++ source.getTrace.hash.toString
+    let (id, digest) ← arena.atomically do
+      modify fun state => {state with
+        modules := state.modules + 1
+        edges := state.edges + imports.size
+        allEdges := state.allEdges + input.importCount}
+      let mut id ← semanticLeaf #[atom]
+      for summary in summaries do id ← semanticUnion id summary.id
+      return (id, (← get).nodes[id]!.digest)
+    let validation ← (Job.collectArray (summaries.map (·.validation))).add input.validation
+      |>.mapM fun _ => pure ()
+    return ⟨id, digest, validation⟩
 
 /-- Trace semantic compatibility after validating registered inputs.
 Module identity projects registered semantic inputs through Lake imports.
@@ -282,40 +397,32 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
       | error s!"utility claim module is not in the Lake workspace: {name}"
     exports := exports.push (← claim.exportInfo.fetch)
     sourceModules := sourceModules.push claim
-  let mut dependencies : OrdModuleSet := .empty
-  for source in sourceModules do
-    dependencies := dependencies.insert source
-    dependencies := dependencies.appendArray (← (← source.transImports.fetch).await)
-  let mut sources : Array (SemanticSource × BuildTrace) := #[]
-  let mut sourcePaths : Array String := #[]
-  let mut programConfigs : Std.HashSet String := {}
-  let semantic ← (← fetch <| pkg.facet `reportSemanticInputs).await
-  let reported ← (← fetch <| pkg.facet `reportSourceModules).await
-  -- Compute the lexical key once per member, not in every sort comparison.
-  let ordered := (dependencies.toArray.map fun dependency => (dependency.name.toString, dependency))
-    |>.qsort (fun a b => a.1 < b.1)
-  for (_, dependency) in ordered do
-    let job ← fetch <| dependency.facet `reportSemanticSource
-    let input ← job.await
-    sources := sources.push (input, job.getTrace)
-    if input.program then
-      programConfigs := programConfigs.insert input.compilerConfig
-    if dependency.name != mod.name && reported.contains dependency.name then continue
-    let path := input.path
-    unless path.startsWith ".lake/" || path.startsWith "../" do
-      sourcePaths := sourcePaths.push path
-  let prepareProduction : JobM Unit :=
+  let summaries ← sourceModules.mapM fun source => fetch <| source.facet `reportSemanticSummary
+  -- Only extraction consumes the source whitelist. Hits do no closure flatten,
+  -- lexical sort, source-list serialization or per-member validation traversal.
+  let prepareProduction : JobM Unit := do
+    let reported ← (← JobM.runFetchM <| fetch <| pkg.facet `reportSourceModules).await
+    let mut dependencies : OrdModuleSet := .empty
+    for source in sourceModules do
+      dependencies := dependencies.insert source
+      dependencies := dependencies.appendArray (← (← JobM.runFetchM source.transImports.fetch).await)
+    let mut sourcePaths : Array String := #[]
+    for dependency in dependencies do
+      if dependency.name != mod.name && reported.contains dependency.name then continue
+      let path := (relPathFrom (← repositoryDir pkg) (← IO.FS.realPath dependency.leanFile)).toString
+      unless path.startsWith ".lake/" || path.startsWith "../" do
+        sourcePaths := sourcePaths.push path
     writeBinFileIfChanged (utility.addExtension "sources.json")
       (String.toUTF8 (Lean.toJson sourcePaths).compress)
-  -- Fold the same ordered semantic traces in one job. Per-edge add/mix jobs
-  -- duplicate the shared closure's task graph for every report module.
-  let base := deps
-  deps ← base.mapM fun _ => do
-    -- mapM adds an ambient trace; the fold must start at the original base
-    -- to preserve existing native artifact identities exactly.
-    setTrace base.getTrace
-    for (source, trace) in sources do
-      unless source.program do addTrace trace
+  let semantic ← (← fetch <| pkg.facet `reportSemanticInputs).await
+  let arena ← (← fetch <| pkg.facet `reportSemanticArena).await
+  -- Finish the semantic set during preparation, independently of compilation.
+  -- Only the small root list is joined here; shared subtrees stay interned.
+  let roots ← (Job.collectArray summaries).await
+  let digest ← arena.atomically do
+    let mut id := 0
+    for summary in roots do id ← semanticUnion id summary.id
+    return (← get).nodes[id]!.digest
   -- Await without mixing: recompilation must succeed, but its implementation
   -- identity is not a report-semantic dependency.
   let inspector ← reportInspector.fetch
@@ -323,20 +430,13 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let env := workspace.augmentedEnvVars
   let file := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
   (deps.add (Job.mixArray exports) |>.add inspector |>.add driverBuild).mapM fun _ => do
-    -- All exports were scheduled above. Join every owner validation before
-    -- probing even a warm artifact; failures remain required failures.
     let mut valid := true
-    for (source, _) in sources do
-      try source.validation.await catch _ => valid := false
+    for summary in roots do
+      try summary.validation.await catch _ => valid := false
     unless valid do error "Inspector semantic export validation failed"
-    -- Exports/programs must succeed, but their compiler artifact identities
-    -- do not enter report semantics. Private dependencies are already included
-    -- by transImports (not the visibility-limited allTransTrace).
+    addPureTrace ("module-report-semantic-set-v1", digest) "semantic input set"
     addPureTrace semantic.common "report semantics"
     addPureTrace (← getLeanInstall).githash "Lean toolchain revision"
-    -- Producer membership/bytes are version-governed; distinct execution
-    -- configurations remain inputs without counting identical helper modules.
-    addPureTrace (programConfigs.toArray.qsort (· < ·)) "producer compiler configurations"
     let executable ← inspector.await
     let args := #[(← repositoryDir pkg).toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
       utility.toString, executable.toString, file.toString]
@@ -447,6 +547,16 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
   try observePhase "lake-prepare-register" "finish" catch _ => pure ()
   let batch ← (Job.collectArray prepared).mapM fun artifacts => do
     observePhase "lake-prepare" "finish"
+    try
+      if let some path ← IO.getEnv "STRATALINT_INSPECTOR_SEMANTIC_WORK" then
+        let arena ← (← JobM.runFetchM <| fetch <| pkg.facet `reportSemanticArena).await
+        let counts ← arena.atomically do
+          let state ← get
+          return Lean.Json.mkObj [("modules", Lean.toJson state.modules),
+            ("direct_edges", Lean.toJson state.allEdges), ("resolved_edges", Lean.toJson state.edges), ("union_visits", Lean.toJson state.unionVisits),
+            ("set_nodes", Lean.toJson state.nodes.size), ("memoized_unions", Lean.toJson state.unionVisits)]
+        IO.FS.writeFile path counts.compress
+    catch _ => logWarning "Inspector semantic work observation unavailable"
     let requests ← artifacts.filterMapM fun request => do
       if request.artifact?.isSome then return none
       request.prepareProduction

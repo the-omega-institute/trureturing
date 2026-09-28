@@ -344,6 +344,142 @@ class NativeCompilerOptionsTests:
 
 
 class NativeSemanticConsumerTests:
+    def test_driver_only_data_requires_current_production_verdict(self):
+        # A report's source/claim exports can remain identical while the fixed
+        # judge consumes changed data. Exercise the production Inspector entry,
+        # including its real driver call, rather than statement-only fixtures.
+        self.copy('tools/lean-inspector/Inspector.lean')
+        self.compiler_seed = None
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_cache_release_semantic_version'] = 15
+        policy['dependency_sources']['include'].append(
+            dict(pattern='DriverData.lean', optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() +
+                   '\n[[lean_lib]]\nname = "DriverData"\n')
+        self.write('DriverData.lean', 'def driverAccepts : Bool := true\n')
+        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+namespace LeanInformationAudit
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+''')
+        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+import DriverData
+namespace LeanInformationAudit
+open Lean
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
+  unless driverAccepts do throwError "driver-data-rejected"
+  pure <| names.map fun _ => Json.mkObj [
+    ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (15 : Nat)),
+    ("inventory", toJson (#[] : Array Json)), ("registered", toJson (#[] : Array Json)),
+    ("records", toJson (#[] : Array Json))]
+''')
+        self.build()
+        before, report, origins = self.stamps(), self.report(), self.origins()
+        self.assertTrue(all('information_templates' in row for row in report[0]))
+        source_exports = {p: p.read_bytes() for p in
+            (self.root / '.lake/build/lib/lean/D5').rglob('*.olean*')
+            if not p.name.endswith('.hash')}
+        self.build()
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(self.stamps(), before)
+        # This source is intentionally absent from the report/claim closures.
+        # Recompilation succeeds; executing the data-dependent driver rejects.
+        self.write('DriverData.lean', 'def driverAccepts : Bool := false\n')
+        rejected = self.build(success=False)
+        self.assertIn('driver-data-rejected', rejected.stdout + rejected.stderr)
+        self.assertEqual({p: p.read_bytes() for p in source_exports}, source_exports)
+        self.assertEqual(self.stamps(), before)
+        self.assertEqual(self.report(), report)
+        self.assertEqual(self.origins(), origins)
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+    def test_semantic_sets_are_canonical_and_collision_safe(self):
+        lakefile = self.root / 'tools/lean-inspector/lakefile.lean'
+        source = lakefile.read_text()
+        probe = r"""
+script semanticSetProbe do
+  let check : StateM SemanticArena Bool := do
+    let mut ascending := 0
+    let mut descending := 0
+    let mut left := 0
+    let mut right := 0
+    let mut incomplete := 0
+    for i in [:512] do
+      let a ← semanticLeaf #[s!"input:{i}"]
+      let b ← semanticLeaf #[s!"input:{511 - i}"]
+      ascending ← semanticUnion ascending a
+      descending ← semanticUnion descending b
+      if i < 384 then left ← semanticUnion left a
+      if i >= 128 then right ← semanticUnion right a
+      if i < 511 then incomplete ← semanticUnion incomplete a
+    let combined ← semanticUnion left right
+    let reverse ← semanticUnion right left
+    let repeated ← semanticUnion combined ascending
+    let state ← get
+    return ascending == descending && combined == ascending && reverse == ascending &&
+      repeated == ascending && state.nodes[incomplete]!.digest != state.nodes[ascending]!.digest
+  unless Id.run (check.run' {}) do error "semantic set lost membership or depends on construction order"
+  return 0
+"""
+        lakefile.write_text(source + probe)
+        self.run_lake('-d', 'tools/lean-inspector', 'script', 'run', 'semanticSetProbe')
+        # Force all key hashes to collide. Full atom values must still decide
+        # set membership; an accidental hash-as-identity shortcut fails here.
+        collision_source = source.replace('keyHash := hash values[0]!', 'keyHash := 0')
+        self.assertNotEqual(collision_source, source)
+        lakefile.write_text(collision_source + probe)
+        self.run_lake('-d', 'tools/lean-inspector', 'script', 'run', 'semanticSetProbe')
+
+    def test_program_import_diamonds_preserve_semantic_sets(self):
+        # The same data arrives through different producer paths, with different
+        # helper membership and redundant edges. Set identity must not encode
+        # that topology, but must retain data privately reached through it.
+        self.write('LeanInformationAudit/Left.lean',
+                   'import D5.B\ndef left : Nat := 1\n')
+        self.write('LeanInformationAudit/Right.lean',
+                   'import D5.B\ndef right : Nat := 2\n')
+        self.write('LeanInformationAudit/Registry.lean',
+                   'import LeanInformationAudit.Left\nimport LeanInformationAudit.Right\n'
+                   'def fixtureDriver : Nat := left + right\n')
+        work = self.root / 'semantic-work.json'
+        self.env['STRATALINT_INSPECTOR_SEMANTIC_WORK'] = str(work)
+        self.build()
+        before, report = self.stamps(), self.report()[1:]
+        state = native.state(self.root)
+        sources = {p.name: (p.stat().st_mtime_ns, p.read_bytes())
+                   for p in (state / 'inputs').glob('*.sources.json')}
+        self.write('LeanInformationAudit/Bridge.lean',
+                   'import LeanInformationAudit.Right\nimport D5.B\ndef bridge : Nat := right\n')
+        self.write('LeanInformationAudit/Left.lean',
+                   'import LeanInformationAudit.Bridge\nimport D5.B\ndef left : Nat := 1\n')
+        self.write('LeanInformationAudit/Registry.lean',
+                   'import LeanInformationAudit.Right\nimport LeanInformationAudit.Left\n'
+                   'import LeanInformationAudit.Bridge\ndef fixtureDriver : Nat := left + right\n')
+        self.build()
+        self.assertEqual(self.stamps(), before)
+        self.assertEqual(self.report()[1:], report)
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(sources, {p.name: (p.stat().st_mtime_ns, p.read_bytes())
+                         for p in (state / 'inputs').glob('*.sources.json')})
+        counts = json.loads(work.read_text())
+        self.assertEqual(counts['modules'], 10)  # Six data and four producer modules.
+        self.record_result('shared-semantic-set', counts)
+        # A real new input behind a producer remains semantic for every row.
+        self.write('Data.lean', 'private axiom seed : Nat\nnoncomputable def data : Nat := seed\n')
+        self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() +
+                   '\n[[lean_lib]]\nname = "Data"\n')
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['dependency_sources']['include'].append(dict(pattern='Data.lean', optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.write('LeanInformationAudit/Bridge.lean',
+                   'import LeanInformationAudit.Right\nimport Data\ndef bridge : Nat := right\n')
+        self.build()
+        self.assertEqual(set(before), {name for name, stamp in self.stamps().items() if stamp != before[name]})
+        self.write('Data.lean', 'private def seed : Nat := 3\ndef data : Nat := seed\n')
+        before = self.stamps()
+        self.build()
+        self.assertEqual(set(before), {name for name, stamp in self.stamps().items() if stamp != before[name]})
+
     def test_native_invalidation(self):
         self.build(targets=['Audit'])
         rows, original_report, original_materials = self.report()
