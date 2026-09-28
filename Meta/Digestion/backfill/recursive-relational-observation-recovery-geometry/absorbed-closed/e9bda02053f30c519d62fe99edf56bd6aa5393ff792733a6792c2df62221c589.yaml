@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:e9bda02053f30c519d62fe99edf56bd6aa5393ff792733a6792c2df62221c589
   normalized_sha256: sha256:e9bda02053f30c519d62fe99edf56bd6aa5393ff792733a6792c2df62221c589
 cas_ref: sha256:e9bda02053f30c519d62fe99edf56bd6aa5393ff792733a6792c2df62221c589
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/TotalVariation/CycleSingleCutMinimax.cycle_single_cut_minimax
+    target_statement_id: sha256:05be4df8ddab9e639b084bee9f5314a97c17871cc5b57bc465376df429a12f0b
 receipts:
   unresolved_subitems: []
