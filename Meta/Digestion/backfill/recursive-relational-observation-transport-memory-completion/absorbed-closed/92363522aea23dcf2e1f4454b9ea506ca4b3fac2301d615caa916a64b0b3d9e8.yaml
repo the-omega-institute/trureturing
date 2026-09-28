@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92363522aea23dcf2e1f4454b9ea506ca4b3fac2301d615caa916a64b0b3d9e8
+  normalized_sha256: sha256:92363522aea23dcf2e1f4454b9ea506ca4b3fac2301d615caa916a64b0b3d9e8
+cas_ref: sha256:92363522aea23dcf2e1f4454b9ea506ca4b3fac2301d615caa916a64b0b3d9e8
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/TerminalClockCompression.earliest_midpoint_terminal_time
+    target_statement_id: sha256:03513ba8dec227e6fa8fe227f1a5850b93a05266daf18506d51a44e62f8bc5fb
+  - gid: D5/S3/Observer/Budget/TerminalClockCompression.terminal_pair_fiber_bijection_and_clock_injectivity
+    target_statement_id: sha256:a21bf9e329c63a41c83bfa66d494891e6999bcf220e692bcda151f486d8c2c72
+receipts:
+  unresolved_subitems: []
