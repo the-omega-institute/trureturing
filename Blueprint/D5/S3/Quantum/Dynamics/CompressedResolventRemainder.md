@@ -23,3 +23,4 @@ Compression removes the first-order cross-block term. The remaining expression i
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Dynamics/CompressedResolventRemainder.compressed_resolvent_remainder`
+- Dependency: [D5/S3/Observer/BlockStructure/FourBlockDecomposition](../../Observer/BlockStructure/FourBlockDecomposition.md)
