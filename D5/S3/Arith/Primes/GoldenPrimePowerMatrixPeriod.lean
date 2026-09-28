@@ -9,8 +9,8 @@
 import Mathlib
 import D5.S3.Arith.GoldenApparition
 import D5.S3.Arith.GoldenMatrixPeriodBridge
-import D5.S3.Arith.GoldenPrimePeriodBounds
 import D5.S3.Arith.GoldenPrimePowerOrder
+import D5.S3.Arith.GoldenPrimePeriodBounds
 import D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation
 
 namespace D5.S3.Arith.Primes.GoldenPrimePowerMatrixPeriod
@@ -19,11 +19,13 @@ open scoped Matrix
 open D5.S0.Carrier D5.S1.Scale
 open D5.S3.Arith.GoldenApparition
 open D5.S3.Arith.GoldenMatrixPeriodBridge
-open D5.S3.Arith.GoldenPrimePeriodBounds
 open D5.S3.Arith.GoldenPrimePowerOrder
+open D5.S3.Arith.GoldenPrimePeriodBounds
 open D5.S3.Arith.Primes.FiniteFibonacciRankClosure
 open D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation
 
+set_option maxHeartbeats 1000000 in
+-- The single proof elaborates the universal matrix lift and all prime-power depths.
 /-- The two coordinates of the first return have equal positive depth, and
 the matrix period grows by exactly the remaining prime power. -/
 theorem golden_matrix_prime_power_period
@@ -34,14 +36,30 @@ theorem golden_matrix_prime_power_period
     0 < h ∧
       padicValNat p (Nat.fib τ) = h ∧
       padicValNat p (Nat.fib τ) = padicValNat p (Nat.fib (τ - 1) - 1) ∧
+      Even τ ∧
+      (Nat.fib (τ - 1) - 1) * (Nat.fib (τ - 1) + 1) =
+        Nat.fib τ * (Nat.fib τ - Nat.fib (τ - 1)) ∧
+      (¬ p ∣ Nat.fib (τ - 1) + 1 ∧
+        ¬ p ∣ Nat.fib τ - Nat.fib (τ - 1)) ∧
+      (∃ u v : ℕ,
+        Nat.fib (τ - 1) = 1 + p ^ h * u ∧
+        Nat.fib τ = p ^ h * v ∧ ¬ p ∣ v ∧
+        ∃ A : Matrix (Fin 2) (Fin 2) ℕ,
+          A = !![u + v, v; v, u] ∧
+          (∀ q : ℕ,
+            (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod q)) ^ τ =
+              1 + ((p ^ h : ℕ) : ZMod q) •
+                A.map (Nat.castRingHom (ZMod q))) ∧
+          A.map (Nat.castRingHom (ZMod p)) ≠ 0) ∧
+      (∀ m : ℕ, 0 < m →
+        ((!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^
+            (τ * m) = 1 ↔ a ≤ h + padicValNat p m)) ∧
+      (∀ n : ℕ,
+        (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^ n = 1 →
+          τ ∣ n) ∧
       orderOf
         (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) =
         τ * p ^ (a - h) := by
-  have hbridge (m : ℕ) :
-      orderOf
-          (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod m)) =
-        orderOf (GoldenMod.phi : GoldenMod m) :=
-    (golden_matrix_faithful m).2.2.symm
   have hpair (m n : ℕ) :
       (GoldenMod.phi : GoldenMod m) ^ (n + 1) =
         ⟨(Nat.fib n : ZMod m), (Nat.fib (n + 1) : ZMod m)⟩ := by
@@ -67,30 +85,24 @@ theorem golden_matrix_prime_power_period
       ((Nat.prime_dvd_prime_iff_eq Nat.prime_five hp).mp
         ((ZMod.natCast_eq_zero_iff p 5).mp hz)).symm
     omega
-  have hprimeBound : t ∣ p - 1 ∨ t ∣ 2 * (p + 1) := by
+  have hprimeCase :
+      (t ∣ p - 1 ∧ ¬ p ∣ t) ∨ (t ∣ 2 * (p + 1) ∧ ¬ p ∣ t) := by
     rcases legendreSym.eq_one_or_neg_one (p := 5) (a := (p : ℤ)) hpModFive with
       heps | heps
     · left
-      change orderOf (GoldenMod.phi : GoldenMod p) ∣ p - 1
-      rw [← hbridge p]
-      exact ((golden_prime_period_bounds hp hp5).1 heps).1
+      simpa only [t, (golden_matrix_faithful p).2.2] using
+        (golden_prime_period_bounds hp hp5).1 heps
     · right
-      change orderOf (GoldenMod.phi : GoldenMod p) ∣ 2 * (p + 1)
-      rw [← hbridge p]
-      exact ((golden_prime_period_bounds hp hp5).2 heps).1
+      simpa only [t, (golden_matrix_faithful p).2.2] using
+        (golden_prime_period_bounds hp hp5).2 heps
+  have hprimeBound : t ∣ p - 1 ∨ t ∣ 2 * (p + 1) :=
+    hprimeCase.elim (fun h => Or.inl h.1) (fun h => Or.inr h.1)
   have htpos : 0 < t := by
     rcases hprimeBound with h | h
     · exact Nat.pos_of_dvd_of_pos h (by omega)
     · exact Nat.pos_of_dvd_of_pos h (by omega)
-  have hpNotDvdT : ¬ p ∣ t := by
-    rcases legendreSym.eq_one_or_neg_one (p := 5) (a := (p : ℤ)) hpModFive with
-      heps | heps
-    · change ¬ p ∣ orderOf (GoldenMod.phi : GoldenMod p)
-      rw [← hbridge p]
-      exact ((golden_prime_period_bounds hp hp5).1 heps).2
-    · change ¬ p ∣ orderOf (GoldenMod.phi : GoldenMod p)
-      rw [← hbridge p]
-      exact ((golden_prime_period_bounds hp hp5).2 heps).2
+  have hpNotDvdT : ¬ p ∣ t :=
+    hprimeCase.elim (fun h => h.2) (fun h => h.2)
   have htTwo : 2 ≤ t := by
     have htNeOne : t ≠ 1 := by
       intro htOne
@@ -260,6 +272,38 @@ theorem golden_matrix_prime_power_period
       simpa only [f, GoldenMod.b_add, GoldenMod.b_one, GoldenMod.b_mul,
         GoldenMod.a_natCast, GoldenMod.b_natCast, Nat.cast_mul,
         zero_mul, zero_add, add_zero] using hf
+  let A : Matrix (Fin 2) (Fin 2) ℕ := !![u + v, v; v, u]
+  have hmatrixLift (q : ℕ) :
+      (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod q)) ^ t =
+        1 + ((p ^ h : ℕ) : ZMod q) • A.map (Nat.castRingHom (ZMod q)) := by
+    have hbase := congrArg (goldenMatrixHom q) (hpair q (t - 1))
+    rw [htPred, map_pow, (golden_matrix_faithful q).2.1] at hbase
+    have hcoords :
+        (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod q)) ^ t =
+          goldenMatrixHom q (⟨(c : ZMod q), (f : ZMod q)⟩ : GoldenMod q) := by
+      simpa only [c, f] using hbase
+    have hcq : (c : ZMod q) = 1 + (p ^ h : ZMod q) * (u : ZMod q) := by
+      simpa only [Nat.cast_add, Nat.cast_one, Nat.cast_mul, Nat.cast_pow] using
+        congrArg (fun n : ℕ => (n : ZMod q)) hCu
+    have hfq : (f : ZMod q) = (p ^ h : ZMod q) * (v : ZMod q) := by
+      simpa only [Nat.cast_mul, Nat.cast_pow] using
+        congrArg (fun n : ℕ => (n : ZMod q)) hFv
+    rw [hcoords]
+    change
+      !![(c : ZMod q) + (f : ZMod q), (f : ZMod q);
+          (f : ZMod q), (c : ZMod q)] =
+        1 + ((p ^ h : ℕ) : ZMod q) • A.map (Nat.castRingHom (ZMod q))
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [A, Matrix.add_apply, Matrix.smul_apply,
+        Matrix.map_apply, hcq, hfq] <;> ring
+  have hAnonzero : A.map (Nat.castRingHom (ZMod p)) ≠ 0 := by
+    intro hzero
+    have h01 := congrArg
+      (fun M : Matrix (Fin 2) (Fin 2) (ZMod p) => M 0 1) hzero
+    have hvzero : (v : ZMod p) = 0 := by
+      simpa [A, Matrix.map_apply] using h01
+    exact hpNotDvdV ((ZMod.natCast_eq_zero_iff v p).mp hvzero)
   have hpm : h + 2 ≤ p * h := by nlinarith
   let pair (q : ℕ) : GoldenMod q := ⟨u, v⟩
   have hvNotDvd : ¬ (p : ℤ) ∣ (v : ℤ) := by
@@ -337,6 +381,23 @@ theorem golden_matrix_prime_power_period
       have hmult := Nat.div_mul_cancel htdivN
       rw [hquot] at hmult
       simpa only [n, Nat.mul_comm] using hmult.symm
+  have hreturns (m : ℕ) (hm : 0 < m) :
+      ((!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^
+          (t * m) = 1 ↔ a ≤ h + padicValNat p m) := by
+    rw [← orderOf_dvd_iff_pow_eq_one,
+      ← (golden_matrix_faithful (p ^ a)).2.2, hgoal]
+    have hcancel : (t * p ^ (a - h) ∣ t * m) ↔ p ^ (a - h) ∣ m := by
+      exact Nat.mul_dvd_mul_iff_left htpos
+    rw [hcancel, padicValNat_dvd_iff_le (p := p) hm.ne']
+    omega
+  have hreturnDiv (n : ℕ)
+      (hn : (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^ n = 1) :
+      t ∣ n := by
+    have hdvd := orderOf_dvd_of_pow_eq_one hn
+    rw [← (golden_matrix_faithful (p ^ a)).2.2] at hdvd
+    change orderOf x ∣ n at hdvd
+    rw [hgoal] at hdvd
+    exact dvd_trans ⟨p ^ (a - h), rfl⟩ hdvd
   change 0 < h ∧
       padicValNat p
           (Nat.fib (orderOf
@@ -344,16 +405,66 @@ theorem golden_matrix_prime_power_period
       padicValNat p
           (Nat.fib (orderOf
             (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)))) =
-        padicValNat p
+      padicValNat p
           (Nat.fib (orderOf
             (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) - 1) - 1) ∧
+      Even (orderOf
+        (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p))) ∧
+      (Nat.fib (orderOf
+        (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) - 1) - 1) *
+        (Nat.fib (orderOf
+          (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) - 1) + 1) =
+        Nat.fib (orderOf
+          (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p))) *
+          (Nat.fib (orderOf
+            (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p))) -
+            Nat.fib (orderOf
+              (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) - 1)) ∧
+      (¬ p ∣ Nat.fib (orderOf
+          (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) - 1) + 1 ∧
+        ¬ p ∣ Nat.fib (orderOf
+          (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p))) -
+            Nat.fib (orderOf
+              (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) - 1)) ∧
+      (∃ u v : ℕ,
+        Nat.fib (orderOf
+          (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) - 1) =
+            1 + p ^ h * u ∧
+        Nat.fib (orderOf
+          (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p))) =
+            p ^ h * v ∧ ¬ p ∣ v ∧
+        ∃ A : Matrix (Fin 2) (Fin 2) ℕ,
+          A = !![u + v, v; v, u] ∧
+          (∀ q : ℕ,
+            (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod q)) ^
+                (orderOf
+                  (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p))) =
+              1 + ((p ^ h : ℕ) : ZMod q) •
+                A.map (Nat.castRingHom (ZMod q))) ∧
+          A.map (Nat.castRingHom (ZMod p)) ≠ 0) ∧
+      (∀ m : ℕ, 0 < m →
+        ((!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^
+            (orderOf
+              (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) * m) =
+          1 ↔ a ≤ h + padicValNat p m)) ∧
+      (∀ n : ℕ,
+        (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^ n = 1 →
+          orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) ∣ n) ∧
       orderOf
         (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) =
         orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) *
           p ^ (a - h)
-  rw [hbridge (p ^ a), hbridge p]
+  rw [← (golden_matrix_faithful (p ^ a)).2.2,
+    ← (golden_matrix_faithful p).2.2]
   exact ⟨hhpos, by simpa only [f] using hval,
-    by simpa only [f, c] using hval.trans hvalC.symm, hgoal⟩
+    by simpa only [f, c] using hval.trans hvalC.symm,
+    htEven, by simpa only [c, f] using hIdentity,
+    ⟨by simpa only [c] using hcPlusNot,
+      by simpa only [f, c] using hfSubNot⟩,
+    ⟨u, v, by simpa only [c] using hCu,
+      by simpa only [f] using hFv, hpNotDvdV,
+      A, rfl, hmatrixLift, hAnonzero⟩,
+    hreturns, hreturnDiv, hgoal⟩
 
 #print axioms golden_matrix_prime_power_period
 

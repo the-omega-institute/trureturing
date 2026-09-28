@@ -48,6 +48,27 @@ def arena : Arena where
     0 < h ∧
       padicValNat p (Nat.fib τ) = h ∧
       padicValNat p (Nat.fib τ) = padicValNat p (Nat.fib (τ - 1) - 1) ∧
+      Even τ ∧
+      (Nat.fib (τ - 1) - 1) * (Nat.fib (τ - 1) + 1) =
+        Nat.fib τ * (Nat.fib τ - Nat.fib (τ - 1)) ∧
+      (¬ p ∣ Nat.fib (τ - 1) + 1 ∧
+        ¬ p ∣ Nat.fib τ - Nat.fib (τ - 1)) ∧
+      (∃ u v : ℕ,
+        Nat.fib (τ - 1) = 1 + p ^ h * u ∧
+        Nat.fib τ = p ^ h * v ∧ ¬ p ∣ v ∧
+        ∃ A : Matrix (Fin 2) (Fin 2) ℕ,
+          A = !![u + v, v; v, u] ∧
+          (∀ q : ℕ,
+            (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod q)) ^ τ =
+              1 + ((p ^ h : ℕ) : ZMod q) •
+                A.map (Nat.castRingHom (ZMod q))) ∧
+          A.map (Nat.castRingHom (ZMod p)) ≠ 0) ∧
+      (∀ m : ℕ, 0 < m →
+        ((!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^
+            (τ * m) = 1 ↔ a ≤ h + padicValNat p m)) ∧
+      (∀ n : ℕ,
+        (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^ n = 1 →
+          τ ∣ n) ∧
       orderOf
         (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) =
         r.readout () p a
@@ -58,8 +79,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
     (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod 7))
   let h7 := padicValNat 7 (Nat.fib (fibonacciRank 7))
   have hgood := (golden_matrix_prime_power_period 7 1
-    (by decide) (by decide) (by decide)).2.2.2
-  have hbad := (h 7 1 (by decide) (by decide) (by decide)).2.2.2
+    (by decide) (by decide) (by decide)).2.2.2.2.2.2.2.2.2
+  have hbad := (h 7 1 (by decide) (by decide) (by decide)).2.2.2.2.2.2.2.2.2
   change orderOf
       (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (7 ^ 1))) =
     τ7 * 7 ^ (1 - h7) at hgood
@@ -76,6 +97,27 @@ def registration : Registration arena
       0 < h ∧
         padicValNat p (Nat.fib τ) = h ∧
         padicValNat p (Nat.fib τ) = padicValNat p (Nat.fib (τ - 1) - 1) ∧
+        Even τ ∧
+        (Nat.fib (τ - 1) - 1) * (Nat.fib (τ - 1) + 1) =
+          Nat.fib τ * (Nat.fib τ - Nat.fib (τ - 1)) ∧
+        (¬ p ∣ Nat.fib (τ - 1) + 1 ∧
+          ¬ p ∣ Nat.fib τ - Nat.fib (τ - 1)) ∧
+        (∃ u v : ℕ,
+          Nat.fib (τ - 1) = 1 + p ^ h * u ∧
+          Nat.fib τ = p ^ h * v ∧ ¬ p ∣ v ∧
+          ∃ A : Matrix (Fin 2) (Fin 2) ℕ,
+            A = !![u + v, v; v, u] ∧
+            (∀ q : ℕ,
+              (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod q)) ^ τ =
+                1 + ((p ^ h : ℕ) : ZMod q) •
+                  A.map (Nat.castRingHom (ZMod q))) ∧
+            A.map (Nat.castRingHom (ZMod p)) ≠ 0) ∧
+        (∀ m : ℕ, 0 < m →
+          ((!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^
+              (τ * m) = 1 ↔ a ≤ h + padicValNat p m)) ∧
+        (∀ n : ℕ,
+          (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^ n = 1 →
+            τ ∣ n) ∧
         orderOf
           (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) =
           τ * p ^ (a - h)) where
@@ -126,7 +168,7 @@ register_information_theorem
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "arg"]
+        "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg"]
       stateBinder := 1 }] })
   escape continues (open)
 
