@@ -396,9 +396,11 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
         raise ValueError('native aggregate membership mismatch')
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.aggregate.', dir=output.parent) as directory, \
-            tempfile.TemporaryFile(dir=output.parent) as material_spool:
+            tempfile.TemporaryFile(dir=output.parent) as material_spool, \
+            zipfile.ZipFile(material_spool, 'w', compression=zipfile.ZIP_DEFLATED,
+                            compresslevel=6, allowZip64=True) as compressed_spool:
         directory = Path(directory)
-        material_offsets = {}
+        material_sizes = {}
         rows = []
         origins = {}
         for name, artifact in zip(config['modules'], artifacts):
@@ -423,41 +425,35 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
                 with zipfile.ZipFile(public.member(report, '.materials.zip')) as archive:
                     for entry in archive.infolist():
                         with archive.open(entry) as reader:
-                            if entry.filename in material_offsets:
-                                offset, size = material_offsets[entry.filename]
-                                material_spool.seek(offset)
-                                seen = 0
-                                for block in iter(lambda: reader.read(materials.BUFFER_BYTES), b''):
-                                    seen += len(block)
-                                    if seen > size or block != material_spool.read(len(block)):
+                            if entry.filename in material_sizes:
+                                size = material_sizes[entry.filename]
+                                with compressed_spool.open(entry.filename) as previous:
+                                    seen = 0
+                                    for block in iter(lambda: reader.read(materials.BUFFER_BYTES), b''):
+                                        seen += len(block)
+                                        if seen > size or block != previous.read(len(block)):
+                                            raise ValueError('statement material address collision')
+                                    if seen != size:
                                         raise ValueError('statement material address collision')
-                                if seen != size:
-                                    raise ValueError('statement material address collision')
                             else:
-                                material_spool.seek(0, os.SEEK_END)
-                                offset = material_spool.tell()
-                                shutil.copyfileobj(reader, material_spool, materials.BUFFER_BYTES)
-                                material_offsets[entry.filename] = (offset, material_spool.tell() - offset)
+                                info = zipfile.ZipInfo(entry.filename, materials.ARCHIVE_TIMESTAMP)
+                                info.compress_type = zipfile.ZIP_DEFLATED
+                                with compressed_spool.open(info, 'w') as writer:
+                                    shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
+                                material_sizes[entry.filename] = compressed_spool.getinfo(entry.filename).file_size
         if row_statuses is not None and any(row_statuses):
             return
         report = directory / public.RAW
         report.write_bytes(materials.canonical_json({'modules': rows, 'schema': materials.REPORT_SCHEMA}))
         with zipfile.ZipFile(public.member(report, '.materials.zip'), 'w', compression=zipfile.ZIP_DEFLATED,
                              compresslevel=6, allowZip64=True) as archive:
-            for name, (offset, size) in sorted(material_offsets.items()):
+            for name in sorted(material_sizes):
                 info = zipfile.ZipInfo(name, materials.ARCHIVE_TIMESTAMP)
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.create_system = 3
                 info.external_attr = (stat.S_IFREG | 0o644) << 16
-                material_spool.seek(offset)
-                with archive.open(info, 'w') as writer:
-                    remaining = size
-                    while remaining:
-                        block = material_spool.read(min(materials.BUFFER_BYTES, remaining))
-                        if not block:
-                            raise ValueError('truncated private material spool')
-                        writer.write(block)
-                        remaining -= len(block)
+                with compressed_spool.open(name) as reader, archive.open(info, 'w') as writer:
+                    shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
         public.write_sidecars(report, config['coordinates'], origins)
         # The native aggregate facet validates the completed bundle before
         # exposing it. Do not repeat that complete pass inside its builder.
