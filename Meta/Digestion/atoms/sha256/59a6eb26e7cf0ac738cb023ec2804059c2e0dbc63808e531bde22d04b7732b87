@@ -1,0 +1,16 @@
+## 1. Scope and notation
+
+This volume is mathematical reference input. Formal truth is determined by the
+Lean declarations and their axiom closures, not by this prose. Let $F_0=0$,
+$F_1=1$, and $F_{n+2}=F_{n+1}+F_n$. For a prime $p>5$, write
+
+$$
+Q=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+\tau_p=\operatorname{ord}_{\operatorname{Mat}_2(\mathbb Z/p\mathbb Z)}(Q),
+\qquad \varepsilon_p=\left(\frac{5}{p}\right).
+$$
+
+The matrix $Q$ is invertible modulo $p$: its determinant is $-1$.
+Consequently $\tau_p$ is positive. Since $p>5$, the Legendre symbol
+$\varepsilon_p$ is either $1$ or $-1$.
+

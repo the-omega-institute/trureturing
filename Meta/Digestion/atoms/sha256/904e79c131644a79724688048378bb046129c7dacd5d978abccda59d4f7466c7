@@ -1,0 +1,35 @@
+**Theorem 2.1 (golden Frobenius bounds).** For every prime $p>5$, both
+implications below hold:
+
+$$
+\begin{aligned}
+\varepsilon_p=1
+  &\quad\Longrightarrow\quad \tau_p\mid p-1
+     \quad\text{and}\quad p\nmid\tau_p,\\
+\varepsilon_p=-1
+  &\quad\Longrightarrow\quad \tau_p\mid 2(p+1)
+     \quad\text{and}\quad p\nmid\tau_p.
+\end{aligned}
+$$
+
+Proof. The Fibonacci entry congruences give
+$F_{p-\varepsilon_p}\equiv0\pmod p$ and
+$F_p\equiv\varepsilon_p\pmod p$. In the golden quadratic algebra over
+$\mathbb Z/p\mathbb Z$, let $\phi^2=\phi+1$. Its power coordinates satisfy
+$\phi^n=F_{n-1}+F_n\phi$ for $n\geq1$. Multiplication by $\phi$ on the
+basis $(\phi,1)$ is the matrix $Q$, and the multiplication-matrix map is
+injective. Thus $\phi$ and $Q$ have the same multiplicative order.
+
+If $\varepsilon_p=1$, then $F_{p-1}\equiv0$ and $F_p\equiv1$, so
+$\phi^p=\phi$. The identity $\phi(\phi-1)=1$ makes $\phi$ a unit; hence
+$\phi^{p-1}=1$ and $\tau_p\mid p-1$.
+
+If $\varepsilon_p=-1$, then $F_{p+1}\equiv0$ and $F_p\equiv-1$, so
+$\phi^{p+1}=-1$. Squaring gives $\phi^{2(p+1)}=1$, and therefore
+$\tau_p\mid2(p+1)$.
+
+Finally, $p$ divides neither $p-1$ nor $2(p+1)$: in the latter case,
+primality would force $p\mid2$ or $p\mid p+1$, both impossible for
+$p>5$. The corresponding divisibility bound in each branch therefore
+implies $p\nmid\tau_p$.
+

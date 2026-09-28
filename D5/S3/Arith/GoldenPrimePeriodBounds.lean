@@ -15,17 +15,17 @@ open scoped Matrix
 open D5.S0.Carrier D5.S1.Scale
 open D5.S3.Arith.GoldenApparition D5.S3.Arith.GoldenMatrixPeriodBridge
 
-local instance : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
-
 /-- The split and inert Frobenius bounds for the period of the actual
 Fibonacci matrix modulo a prime. -/
 theorem golden_prime_period_bounds {p : ℕ} (hp : p.Prime) (hpFive : 5 < p) :
+    letI : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩;
     (legendreSym 5 p = 1 →
       orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) ∣ p - 1 ∧
       ¬ p ∣ orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p))) ∧
     (legendreSym 5 p = -1 →
       orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) ∣ 2 * (p + 1) ∧
       ¬ p ∣ orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p))) := by
+  letI : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
   have hpNotDvdFive : ¬ p ∣ 5 := by
     intro h
     have hle := Nat.le_of_dvd (by decide : 0 < 5) h
