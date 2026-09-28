@@ -18,7 +18,9 @@ Let Q be a finite set of states with a surjection onto the n vertices of a finit
 
 In the rational free vector space on Q, let D be the span of differences of basis vectors in the same fiber. This is exactly the kernel of coefficient aggregation onto the vertices: coefficients sum to zero separately in each fiber. Its dimension is the cardinality of Q minus n. Extend each predecessor function linearly on its terminal fiber and by zero on the other fibers. The resulting edge maps preserve D. Their restrictions to D are the operators considered here.
 
-Every incompatible numbered edge word has zero linear product. For each natural d, all compatible paths of length d forget the terminal state if and only if every ordered length-d product has zero image on D. This criterion concerns every product individually. It does not replace the family by the power of a sum or average.
+Every incompatible numbered edge word has zero linear product. For each natural d, all compatible paths of length d forget the terminal state if and only if every ordered length-d product has zero image on D. This criterion concerns every product individually.
+
+A single averaged operator cannot replace this family of products. Take one vertex, two states, and two loop edges whose predecessor functions are respectively the identity and the swap of the states. On D the identity acts as plus one and the swap as minus one, so their equally weighted average is already zero. At every finite depth, the path using only the identity edge still distinguishes the two states. Thus the average can be nilpotent even though no finite path-forgetting depth exists.
 
 Start with W at zero equal to D, and obtain the next W by summing all edge-map images of the preceding W. At each depth j, W is the sum of the images of all ordered products of length j. These subspaces decrease. Equality of two adjacent terms forces equality at every subsequent depth.
 

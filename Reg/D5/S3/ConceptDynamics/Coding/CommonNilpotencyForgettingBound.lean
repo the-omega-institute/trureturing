@@ -57,7 +57,13 @@ def arena : Arena where
     (∀ d, Forgets L d ↔ W d = ⊥) ∧
     (∀ d, IsLeast {j | Forgets L j} d ↔ IsLeast {j | W j = ⊥} d) ∧
     ((∃ d, Forgets L d) → ∃ d ≤ Fintype.card Q - n, IsLeast {j | Forgets L j} d) ∧
-    ((∃ d, Forgets L d) ↔ W (Fintype.card Q - n) = ⊥)
+    ((∃ d, Forgets L d) ↔ W (Fintype.card Q - n) = ⊥) ∧
+    (∃ L₀ : IncomingLift (fun (_ _ : Fin 1) => 2) Bool,
+      (∀ u, (L₀.lift ⟨0, 0, 0⟩ u).val = u.val) ∧
+      (∀ u, (L₀.lift ⟨0, 0, 1⟩ u).val = !u.val) ∧
+      ((1 / 2 : ℚ) • (edgeLinear L₀ ⟨0, 0, 0⟩ + edgeLinear L₀ ⟨0, 0, 1⟩)).domRestrict
+        (differenceSpace L₀.project) = 0 ∧
+      ∀ d, ¬ Forgets L₀ d)
 
 theorem actual_law : arena.Law actual := by
   intro n A Q inst L

@@ -56,46 +56,6 @@ def Forgets {n : ℕ} {A : CountMat n n} {Q : Type}
   ∀ (i j : Fin n) (p : FinitePath A d i j)
     (u v : {q : Q // L.project q = j}), L.liftPath p u = L.liftPath p v
 
-private theorem difference_space_description {Q V : Type*} [Fintype Q] [Fintype V]
-    (p : Q → V) (hp : Function.Surjective p) :
-    differenceSpace p = LinearMap.ker (Finsupp.lmapDomain ℚ ℚ p) ∧
-    Module.finrank ℚ (differenceSpace p) = Fintype.card Q - Fintype.card V := by
-  classical
-  let P := Finsupp.lmapDomain ℚ ℚ p
-  let r : V → Q := Function.surjInv hp
-  have hr : ∀ v, p (r v) = v := Function.rightInverse_surjInv hp
-  have heq : differenceSpace p = LinearMap.ker P := by
-    apply le_antisymm
-    · apply Submodule.span_le.mpr
-      rintro x ⟨u, v, huv, rfl⟩
-      change P (_ - _) = 0
-      rw [map_sub]
-      simp [P, Finsupp.lmapDomain_apply, huv]
-    · intro x hx
-      have hzero : P x = 0 := hx
-      let R := Finsupp.lmapDomain ℚ ℚ r
-      have hdecomp : x - R (P x) =
-          ∑ u : Q, x u • (Finsupp.single u 1 - Finsupp.single (r (p u)) 1) := by
-        have hxexp : x = ∑ u : Q, x u • Finsupp.single u 1 := by
-          ext u
-          simp
-        conv_lhs => rw [hxexp]
-        simp only [map_sum, map_smul, P, R, Finsupp.lmapDomain_apply,
-          Finsupp.mapDomain_single, Finset.sum_sub_distrib, smul_sub]
-      rw [hzero, map_zero, sub_zero] at hdecomp
-      rw [hdecomp]
-      apply Submodule.sum_mem
-      intro u _
-      apply Submodule.smul_mem
-      exact Submodule.subset_span ⟨u, r (p u), (hr _).symm, rfl⟩
-  refine ⟨heq, ?_⟩
-  have hsurj : Function.Surjective P := Finsupp.mapDomain_surjective hp
-  have hdim := LinearMap.finrank_range_add_finrank_ker P
-  rw [LinearMap.range_eq_top.mpr hsurj, _root_.finrank_top,
-    Module.finrank_finsupp_self, Module.finrank_finsupp_self] at hdim
-  rw [heq]
-  omega
-
 private theorem image_chain_analysis {K M E : Type*} [Field K] [AddCommGroup M]
     [Module K M] (T : E → M →ₗ[K] M) (D : Submodule K M) [FiniteDimensional K D]
     (hinv : ∀ a, D.map (T a) ≤ D) :
@@ -304,7 +264,9 @@ private theorem forgetting_linearization {n : ℕ} {A : CountMat n n} {Q : Type}
 
 /-- Exact forgetting, common annihilation, and the descending image algorithm.
 The space is represented inside the free vector space on the actual states;
-its kernel description imposes zero coefficient sum separately in every fiber. -/
+its kernel description imposes zero coefficient sum separately in every fiber.
+The identity/swap lift on two states has zero average on the difference space,
+yet retains state information along identity paths of every length. -/
 theorem common_nilpotency_forgetting_bound {n : ℕ} {A : CountMat n n} {Q : Type}
     [Fintype Q] (L : IncomingLift A Q) :
     let D := differenceSpace L.project
@@ -334,13 +296,57 @@ theorem common_nilpotency_forgetting_bound {n : ℕ} {A : CountMat n n} {Q : Typ
     (∀ d, Forgets L d ↔ W d = ⊥) ∧
     (∀ d, IsLeast {j | Forgets L j} d ↔ IsLeast {j | W j = ⊥} d) ∧
     ((∃ d, Forgets L d) → ∃ d ≤ Fintype.card Q - n, IsLeast {j | Forgets L j} d) ∧
-    ((∃ d, Forgets L d) ↔ W (Fintype.card Q - n) = ⊥) := by
+    ((∃ d, Forgets L d) ↔ W (Fintype.card Q - n) = ⊥) ∧
+    (∃ L₀ : IncomingLift (fun (_ _ : Fin 1) => 2) Bool,
+      (∀ u, (L₀.lift ⟨0, 0, 0⟩ u).val = u.val) ∧
+      (∀ u, (L₀.lift ⟨0, 0, 1⟩ u).val = !u.val) ∧
+      ((1 / 2 : ℚ) • (edgeLinear L₀ ⟨0, 0, 0⟩ + edgeLinear L₀ ⟨0, 0, 1⟩)).domRestrict
+        (differenceSpace L₀.project) = 0 ∧
+      ∀ d, ¬ Forgets L₀ d) := by
   classical
   dsimp only
   let D := differenceSpace L.project
   let T := edgeLinear L
   let W := imageChain T D
-  obtain ⟨hker, hdim⟩ := difference_space_description L.project L.onto
+  have hdescription :
+      differenceSpace L.project = LinearMap.ker (Finsupp.lmapDomain ℚ ℚ L.project) ∧
+      Module.finrank ℚ (differenceSpace L.project) = Fintype.card Q - Fintype.card (Fin n) := by
+    classical
+    let P := Finsupp.lmapDomain ℚ ℚ L.project
+    let r : Fin n → Q := Function.surjInv L.onto
+    have hr : ∀ v, L.project (r v) = v := Function.rightInverse_surjInv L.onto
+    have heq : differenceSpace L.project = LinearMap.ker P := by
+      apply le_antisymm
+      · apply Submodule.span_le.mpr
+        rintro x ⟨u, v, huv, rfl⟩
+        change P (_ - _) = 0
+        rw [map_sub]
+        simp [P, Finsupp.lmapDomain_apply, huv]
+      · intro x hx
+        have hzero : P x = 0 := hx
+        let R := Finsupp.lmapDomain ℚ ℚ r
+        have hdecomp : x - R (P x) =
+            ∑ u : Q, x u • (Finsupp.single u 1 - Finsupp.single (r (L.project u)) 1) := by
+          have hxexp : x = ∑ u : Q, x u • Finsupp.single u 1 := by
+            ext u
+            simp
+          conv_lhs => rw [hxexp]
+          simp only [map_sum, map_smul, P, R, Finsupp.lmapDomain_apply,
+            Finsupp.mapDomain_single, Finset.sum_sub_distrib, smul_sub]
+        rw [hzero, map_zero, sub_zero] at hdecomp
+        rw [hdecomp]
+        apply Submodule.sum_mem
+        intro u _
+        apply Submodule.smul_mem
+        exact Submodule.subset_span ⟨u, r (L.project u), (hr _).symm, rfl⟩
+    refine ⟨heq, ?_⟩
+    have hsurj : Function.Surjective P := Finsupp.mapDomain_surjective L.onto
+    have hdim := LinearMap.finrank_range_add_finrank_ker P
+    rw [LinearMap.range_eq_top.mpr hsurj, _root_.finrank_top,
+      Module.finrank_finsupp_self, Module.finrank_finsupp_self] at hdim
+    rw [heq]
+    omega
+  obtain ⟨hker, hdim⟩ := hdescription
   simp only [Fintype.card_fin] at hdim
   obtain ⟨hinv, hlin, hincompat, hpath⟩ := forgetting_linearization L
   obtain ⟨himages, hmono, hstable, hbound⟩ := image_chain_analysis T D hinv
@@ -364,7 +370,7 @@ theorem common_nilpotency_forgetting_bound {n : ℕ} {A : CountMat n n} {Q : Typ
       (wordOperator T w).domRestrict D = 0 := by
     rw [← LinearMap.range_domRestrict, LinearMap.range_eq_bot]
   refine ⟨hker, hdim, hinv, hincompat, hlin, hzero, hpath, rfl, fun _ => rfl,
-    himages, hmono, hstable, hiff, ?_, hleast, ?_⟩
+    himages, hmono, hstable, hiff, ?_, hleast, ?_, ?_⟩
   · intro d
     have heq : {j | Forgets L j} = {j | W j = ⊥} := Set.ext hiff
     rw [heq]
@@ -378,6 +384,47 @@ theorem common_nilpotency_forgetting_bound {n : ℕ} {A : CountMat n n} {Q : Typ
         _ = ⊥ := (hiff d).mp hmin.1
     · intro h
       exact ⟨Fintype.card Q - n, (hiff _).mpr h⟩
+  · let L₀ : IncomingLift (fun (_ _ : Fin 1) => 2) Bool := {
+      project := fun _ => 0
+      onto := by intro v; exact ⟨false, Subsingleton.elim _ _⟩
+      lift := fun a u => ⟨if a.number = 0 then u.val else !u.val,
+        Subsingleton.elim _ _⟩ }
+    refine ⟨L₀, ?_, ?_, ?_, ?_⟩
+    · intro u
+      rfl
+    · intro u
+      rfl
+    · have hsum : differenceSpace L₀.project ≤
+          LinearMap.ker (edgeLinear L₀ ⟨0, 0, 0⟩ + edgeLinear L₀ ⟨0, 0, 1⟩) := by
+        apply Submodule.span_le.mpr
+        rintro x ⟨u, v, _, rfl⟩
+        change (edgeLinear L₀ ⟨0, 0, 0⟩ + edgeLinear L₀ ⟨0, 0, 1⟩)
+          (Finsupp.single u 1 - Finsupp.single v 1) = 0
+        cases u <;> cases v <;> simp [edgeLinear, L₀, add_comm]
+      apply LinearMap.ext
+      intro x
+      have hx : (edgeLinear L₀ ⟨0, 0, 0⟩ + edgeLinear L₀ ⟨0, 0, 1⟩) x.val = 0 :=
+        hsum x.property
+      change (1 / 2 : ℚ) • ((edgeLinear L₀ ⟨0, 0, 0⟩ +
+        edgeLinear L₀ ⟨0, 0, 1⟩) x.val) = 0
+      rw [hx, smul_zero]
+    · have hidentity : ∀ d, ∃ p : FinitePath (fun (_ _ : Fin 1) => 2) d 0 0,
+          ∀ u, L₀.liftPath p u = u := by
+        intro d
+        induction d with
+        | zero => exact ⟨.nil 0, fun _ => rfl⟩
+        | succ d ih =>
+          obtain ⟨p, hp⟩ := ih
+          refine ⟨.cons 0 p, ?_⟩
+          intro u
+          change L₀.lift ⟨0, 0, 0⟩ (L₀.liftPath p u) = u
+          rw [hp u]
+          rfl
+      intro d hd
+      obtain ⟨p, hp⟩ := hidentity d
+      have heq := hd 0 0 p ⟨false, rfl⟩ ⟨true, rfl⟩
+      rw [hp, hp] at heq
+      exact Bool.false_ne_true (congrArg Subtype.val heq)
 
 #print axioms common_nilpotency_forgetting_bound
 
