@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d859d9f55c28432c66d666c96e2bd80b3a404cfd9943a726d2adf59de9324886
+  normalized_sha256: sha256:d859d9f55c28432c66d666c96e2bd80b3a404cfd9943a726d2adf59de9324886
+cas_ref: sha256:d859d9f55c28432c66d666c96e2bd80b3a404cfd9943a726d2adf59de9324886
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/PureCubicSuborder.pure_cubic_suborder
+    target_statement_id: sha256:19399dc46a10fd7ad5de7b287b4193012542b9fa80744e19d3fc43a5c1f808da
+receipts:
+  unresolved_subitems: []
