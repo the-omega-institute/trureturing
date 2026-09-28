@@ -518,3 +518,169 @@ This gives a legal way to bring whole-cover phase restrictions into
 the joint numerical inventory. No positive uniform bound for the
 resulting optimized functional, all-weight obstruction, unrestricted
 support conclusion or new Lean result is claimed here.
+
+## Whole-family height one permits a smaller common query interface
+
+The all-depth query in(FC13) permits later originals with arbitrary ternary
+height. If instead **every** original in the whole family has v3(m)<=1,
+then every old cofactor of every later original has ternary exponent0 or1.
+The same actual law can therefore be tested on the smaller interface
+
+    R_<=1(mu)=sum_(d>1,P8-smooth,v3(d)<=1) max_a mu(a mod d).
+
+Keep the actual product source lambda8, actual avoid-set U8 and one law
+mu8=lambda8|U8/alpha8 from(FC13)--(FC16). Before any query is chosen,
+alpha8>=alpha_*=2142533/15904350. For a finite complete restricted query,
+use all labels d=3^e product_q q^i_q with e in{0,1} and bounded nonternary
+depths, including d=1. Call its load L. Ordered increments in(FC10) apply
+only at the depths present in this query. Thus the ternary auxiliary run
+is B~Bernoulli(1/2), while the other runs retain their full tails:
+
+    M=(1+B)product_(q in Q8)(1+J_q),
+    Pr(J_q>=e)=((q-1)/(q-2))q^-e, e>=1.
+
+The auxiliary runs are independent; actual query indicators and the
+coordinates of the restricted law mu8 need not be. For every t>=1,
+
+    E_mu8(L-1)<=t-1+E_lambda8(L-t)_+/alpha8
+              <=t-1+E(M-t)_+/alpha_*=U(t).             (FC17)
+
+Here L>=1, the hinge is nonnegative, and the comparison is on the original
+product source before restriction. Maximizing the phases of each finite
+query and exhausting only the nonternary depths proves R_<=1(mu8)<=U(t).
+Every query uses this same mu8; no new law is selected for an exponent
+slice. This does not improve the unrestricted all-depth R in(FC13).
+
+For outside primes T={29,31,37}, fix an outside exponent tuple and factor
+each original numerical label uniquely as d times its outside part.
+Distinctness allows at most one original per old d within this tuple.
+The old unit label must be included. Under mu8 times outside Haar measure,
+the full later union consequently has mass at most
+
+    C_T[1+R_<=1(mu8)],
+    C_T=product_(r in T)r/(r-1)-1=3023/30240.          (FC18)
+
+The whole-family height-one condition is needed here, since it puts all
+these d in the restricted query interface. It is stronger than the
+old-only premise of(FC14). The bound includes every outside exponent and
+keeps one actual residue for each original label.
+
+Exact arithmetic gives EM=2048/595 and
+
+    U(6)=25585241677563810650651525265027348808464564
+         /2768452210966647080721479752700688323091875
+        =9.241713321332838...,
+    1-C_T[1+U(6)]=-0.023832651137207977... .
+
+The required query bound for a positive expression in(FC18) is strictly
+below27217/3023. The displayed negative lower expression supplies no
+positive survivor certificate; it is not a negative actual probability.
+
+## Coupling finite source heights and query heights on the same law
+
+For old nonternary height bounds h_q>=1 use the finite-profile source
+already defined above, with
+
+    D_q=(q-2)q^h_q+1,
+    c_q=(q-1)q^h_q/D_q,    b_q=(q^h_q-1)/D_q.
+
+Let alpha_h>0 be the lower comparison furnished by its complete partition
+functional. Restrict this actual product source lambda_h to its actual
+survivors U, obtaining mu_h=lambda_h|U/lambda_h(U). Define R_h by summing
+the nonunit old query labels with ternary exponent0/1 and other exponents
+0..h_q. Ordered increments now use
+
+    M_h=(1+B)product_q(1+J_q),  B~Bernoulli(1/2),
+    Pr(J_q>=e)=c_q q^-e for1<=e<=h_q, and0 thereafter.
+
+In particular, the exact coordinate atoms and complete mean are
+
+    Pr(1+J_q=1)=1-c_q/q,
+    Pr(1+J_q=m)=c_q(q-1)/q^m, 2<=m<=h_q,
+    Pr(1+J_q=h_q+1)=c_q/q^h_q,
+    E(1+J_q)=1+b_q=c_q.
+
+The final atom includes the entire remaining tail. The source bound and
+query numerator now use the same c_q,b_q and the same actual lambda_h:
+
+    R_h(mu_h)<=U_h(t)=t-1+E(M_h-t)_+/alpha_h,
+    mu_h<=((3/2)product_q c_q)/alpha_h * H_P8.         (FC19)
+
+The denominator is recomputed from this source; one cannot combine a
+new query numerator with an unrelated independently optimized source.
+For whole-family outside height bounds k_r, the same deletion argument
+replaces C_T by product_(r in T)(sum_(j=0)^k_r r^-j)-1. It requires all
+later old cofactors to satisfy the stated old height profile as well.
+
+In the globally extremal whole-cover branch on the first eleven odd
+primes, **both HC7 and HC9 of Report385** give the simultaneous bounds
+
+    old q:       5,7,11,13,17,19,23,
+    h_q:         5,5, 4, 4, 4, 4, 4,
+    outside r:  29,31,37, with k_r=3.
+
+The existing finite-profile partition formula has64 complementary cases
+on this eight-prime core. Its unique minimizing representative containing5
+is A={5}, giving
+
+    alpha_h=7869166022025963372126998610755
+            /58313734905966118372203626202336,
+    EM_h=29587293691123932440386084375
+          /8597041855516160750730300192,
+    E(M_h-6)_+=33298700700065977060036535627593
+               /58313734905966118372203626202336,
+    C_T=99431594269/994678024931.
+
+Consequently
+
+    U_h(6)=72644530810195793920671528681368
+            /7869166022025963372126998610755
+           =9.23154125950097...,
+    1-C_T[1+U_h(6)]
+      =-5752216770187904734900111181430100674522
+        /252493113440094170651284888859573040475255
+      =-0.022781677851790836... .                       (FC20)
+
+This improves the restricted query bound but does not exclude this
+eleven-prime branch. A positive bound would imply an uncovered residue
+on the actual finite LCM period; a nonpositive comparison gives no
+covering example and does not show the true survivor mass is zero.
+
+For both profiles,6 is the unique optimum over **all real thresholds**,
+not only a scanned finite list. The function U_h is convex. Since M_h
+is integer-valued, its left and right slopes at6 are respectively
+1-Pr(M_h>=6)/alpha_h and1-Pr(M_h>6)/alpha_h. The exact finite-profile tails
+are
+
+    Pr(M_h>=6)=269620927993579193251848591286
+                /1822304215811441199131363318823,
+    Pr(M_h>6)=202740140808017619581010471770
+               /1822304215811441199131363318823.
+
+They strictly straddle alpha_h, so the slopes have opposite strict signs.
+The arbitrary-nonternary-height profile has the same strict crossing
+with alpha_*. Convexity proves uniqueness in both cases. Changing only
+the real threshold in these fixed comparisons cannot repair their gaps.
+This does not exclude better estimates using the same law, stronger
+source mass bounds or additional original-label relations.
+
+The [truncated-query consumer](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_truncated_query.py)
+and [exact result](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_truncated_query.json)
+retain both profiles, their complete means, product atoms through6,
+hinges, exact slopes and margins. The consumer checks the hashes of the
+existing source certificate and finite-profile program, reuses that
+partition formula and evaluates all64 cases of the new core profile.
+Atoms through6 and the complete mean determine the displayed hinges
+without omitting any tail. Independent arithmetic using integer
+coordinate numerators and multiplicative factorizations through6 agrees
+with the finite query, tails and outside ledger; it reuses alpha_h and
+does not independently certify the partition reduction. Normal,
+optimized and different-working-directory runs agree byte for byte.
+
+```sh
+python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_truncated_query.py
+```
+
+Checks remain active under `-O`; the default dependency paths are relative
+to the program. These are ordinary proofs with exact finite arithmetic,
+not new Lean results, a geometry enumeration or an unrestricted#7 result.
