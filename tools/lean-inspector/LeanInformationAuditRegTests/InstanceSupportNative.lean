@@ -11,6 +11,24 @@ namespace D5.InstanceSupportFixture
 theorem source (X : Type) [Fintype X] (n : Nat) : n ≤ Fintype.card X + n :=
   Nat.le_add_left n (Fintype.card X)
 
+-- Construct kernel-checked declarations with raw domains that surface syntax
+-- normally elaborates away. Both wrappers reduce to the original class domain.
+open Lean Meta in
+run_meta do
+  let info ← getConstInfo ``source
+  let .forallE x xt (.forallE d dt body bi) xb := info.type
+    | throwError "unexpected raw-domain fixture telescope"
+  let one := Level.succ .zero
+  let pair := mkAppN (mkConst ``Prod.mk [one, one])
+    #[mkSort one, mkSort one, dt, mkConst ``Nat]
+  for (name, domain) in #[
+      (`D5.InstanceSupportFixture.metadataSource, Expr.mdata {} dt),
+      (`D5.InstanceSupportFixture.projectionSource, Expr.proj ``Prod 0 pair)] do
+    addDecl <| .thmDecl {
+      name, levelParams := [],
+      type := .forallE x xt (.forallE d domain body bi) xb,
+      value := mkConst ``source }
+
 abbrev signature : Signature where
   Params := Σ X : Type, Fintype X
   State _ := Nat
@@ -52,6 +70,22 @@ def registration : Registration arena (∀ (X : Type) [Fintype X] (n : Nat),
     refine ⟨⟨Unit, inferInstance⟩, (0 : Nat), (1 : Nat), ?_⟩
     change Fintype.card Unit + 0 ≠ Fintype.card Unit + 1
     omega
+
+def metadataRegistration : Registration arena
+    (∀ (X : Type) [Fintype X] (n : Nat), n ≤ Fintype.card X + n) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := registration.variation
+  sensitivity := registration.sensitivity
+  dependence := registration.dependence
+
+def projectionRegistration : Registration arena
+    (∀ (X : Type) [Fintype X] (n : Nat), n ≤ Fintype.card X + n) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := registration.variation
+  sensitivity := registration.sensitivity
+  dependence := registration.dependence
 
 theorem dependentSource (X : Type) [Fintype X] (x : Fin (Fintype.card X + 1)) (n : Nat) :
     n ≤ x.val + Fintype.card X + n := Nat.le_add_left _ _
@@ -182,6 +216,38 @@ def noncanonicalRegistration : Registration noncanonicalArena
     refine ⟨⟨7⟩, 0, 1, ?_⟩
     change (7 : Nat) + 0 ≠ 7 + 1
     omega
+
+-- The unused Sort domain still belongs to the complete original statement.
+-- Construct Sort 253 without changing the surface elaborator's offset guard.
+open Lean Elab Term in
+elab "supportDeepSort" : term =>
+  return mkSort ((List.range 253).foldl (fun level _ => Level.succ level) .zero)
+
+theorem deepLevelSource (_a _b _c : Unit) (X : supportDeepSort) [d : Inhabited Nat] (n : Nat) :
+    n ≤ @default Nat d + n := Nat.le_add_left _ _
+
+abbrev deepLevelArena : Arena where
+  signature := noncanonicalSignature
+  Law r := ∀ (_a _b _c : Unit) (X : supportDeepSort) [d : Inhabited Nat] (n : Nat),
+    n ≤ r.readout () d n
+
+theorem deepLevelRejectedLaw : ¬ deepLevelArena.Law noncanonicalRejected := by
+  intro h
+  exact Nat.not_succ_le_zero 0 (@h () () () PUnit ⟨7⟩ 1)
+
+def deepLevelRegistration : Registration deepLevelArena
+    (∀ (_a _b _c : Unit) (X : supportDeepSort) [d : Inhabited Nat] (n : Nat),
+      n ≤ @default Nat d + n) where
+  actual := noncanonicalActual
+  bridge := Iff.rfl
+  variation := ⟨deepLevelSource, noncanonicalRejected, deepLevelRejectedLaw⟩
+  sensitivity := ⟨by
+    intro i
+    refine ⟨noncanonicalRejected, ?_, rfl, deepLevelRejectedLaw⟩
+    intro j h
+    exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)),
+    by intro i; exact nomatch i⟩
+  dependence := noncanonicalRegistration.dependence
 
 abbrev multipleSignature : Signature where
   Params := Σ X : Type, Fintype X
@@ -594,6 +660,30 @@ open Lean Meta LeanInformationAudit
 open D5.InstanceSupportFixture
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 namespace Reg.D5.InstanceSupportFixture
+
+register_information_theorem metadataSource in arena
+  readout via (realize signature (fun _ p n => @Fintype.card p.1 p.2 + n) (fun e => nomatch e))
+  realizes metadataRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[0],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}] })
+  escape continues (open)
+
+register_information_theorem projectionSource in arena
+  readout via (realize signature (fun _ p n => @Fintype.card p.1 p.2 + n) (fun e => nomatch e))
+  realizes projectionRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[0],
+    readouts := #[{path := #["body", "body", "body", "arg"], stateBinder := 2}] })
+  escape continues (open)
+
+register_information_theorem deepLevelSource in deepLevelArena
+  readout via (realize noncanonicalSignature (fun _ p n => p.default + n) (fun e => nomatch e))
+  realizes deepLevelRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "arg"], stateBinder := 5}] })
+  escape continues (open)
 
 register_information_theorem source in arena
   readout via (realize signature (fun _ p n => @Fintype.card p.1 p.2 + n) (fun e => nomatch e))

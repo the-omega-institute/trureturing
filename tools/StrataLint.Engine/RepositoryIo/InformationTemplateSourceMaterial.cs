@@ -135,10 +135,12 @@ internal static class InformationTemplateSourceMaterial
             {
                 case "eb": Number(); break;
                 case "ef": case "em": Name(); break;
-                case "es": Level(depth + 1); break;
+                // wireExpr starts a fresh universe depth at each sort/constant;
+                // Level still charges the same shared work counter.
+                case "es": Level(0); break;
                 case "ec":
                     Name(); Need(",[");
-                    if (!Take("]")) { do { Level(depth + 1); } while (Take(",")); Need("]"); }
+                    if (!Take("]")) { do { Level(0); } while (Take(",")); Need("]"); }
                     break;
                 case "ea": Expr(); Need(","); Expr(); break;
                 case "ep": case "el":

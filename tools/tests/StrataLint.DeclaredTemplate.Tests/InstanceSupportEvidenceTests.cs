@@ -8,6 +8,55 @@ namespace StrataLint.DeclaredTemplate.Tests;
 [Collection("Lean cache environment")]
 public sealed class InstanceSupportEvidenceTests
 {
+    [Theory]
+    [InlineData(false, 256, true)]
+    [InlineData(true, 256, true)]
+    [InlineData(false, 257, false)]
+    [InlineData(true, 257, false)]
+    public void support_material_universe_depth_is_independent_of_expression_depth(bool constant, int depth, bool accepted)
+    {
+        var level = string.Concat(Enumerable.Repeat("ls(", depth)) + "l0" + new string(')', depth);
+        var expression = constant ? "ec(ns(n0,5:PUnit),[" + level + "])" : "es(" + level + ")";
+        var material = "ep(bd,ec(ns(n0,4:Unit),[]),ep(bd," + expression + ",ec(ns(n0,4:True),[])))";
+        CheckMaterial(material, accepted);
+    }
+
+    [Theory]
+    [InlineData(256, true)]
+    [InlineData(257, false)]
+    public void support_material_expression_depth_keeps_its_own_limit(int depth, bool accepted)
+    {
+        // CheckMaterial adds one outer instance binder at expression depth zero.
+        var material = string.Concat(Enumerable.Repeat("ed(", depth - 1))
+            + "es(l0)" + new string(')', depth - 1);
+        CheckMaterial(material, accepted);
+    }
+
+    [Theory]
+    [InlineData(10, true)]
+    [InlineData(11, false)]
+    public void support_material_expression_and_level_nodes_share_work_budget(int doublings, bool accepted)
+    {
+        var level = string.Concat(Enumerable.Repeat("ls(", 255)) + "l0" + new string(')', 255);
+        var expression = "ec(ns(n0,5:PUnit),[" + level + "])";
+        // Depth remains below 256, but 2048 copies exceed 524288 total nodes.
+        // Resetting work on entry to Level would incorrectly accept this tree.
+        for (var i = 0; i < doublings; i++) expression = "ea(" + expression + "," + expression + ")";
+        CheckMaterial(expression, accepted);
+    }
+
+    private static void CheckMaterial(string body, bool accepted)
+    {
+        const string domain = "ea(ec(ns(n0,9:Inhabited),[ls(l0)]),ec(ns(n0,3:Nat),[]))";
+        var declaration = new LeanDeclaration("fixture", "theorem",
+            "statement-v1(uparams=[],type=ep(bc," + domain + "," + body + "))", []);
+        var binding = JsonSerializer.SerializeToElement(new { support_entries = new[] {
+            new { path = new[] { "body" }, material = domain } } });
+        if (accepted) InformationTemplateSourceMaterial.Check(binding, declaration);
+        else Assert.Equal("DTR-Evidence: invalid canonical source material",
+            Assert.Throws<FormatException>(() => InformationTemplateSourceMaterial.Check(binding, declaration)).Message);
+    }
+
     [Fact]
     public void support_material_navigation_preserves_utf8_names_and_debruijn_context()
     {
@@ -89,8 +138,45 @@ public sealed class InstanceSupportEvidenceTests
         foreach (var control in encodingControls.RootElement.EnumerateArray())
             InformationTemplateBindingIdentity.Check(control, report.Files.Values.SelectMany(f => f.Declarations));
         var path = RepoPath.CreateKnown("Reg/D5/InstanceSupportFixture.lean");
+        var grammarFailures = new List<string>();
+        foreach (var (name, prefix) in new[] { ("metadataSource", "ed("), ("projectionSource", "ej("),
+            ("deepLevelSource", "ea(") })
+        {
+            var theorem = "D5.InstanceSupportFixture." + name;
+            var row = report.Files[path].InformationTemplates!.Value.GetProperty("records").EnumerateArray()
+                .Single(r => r.GetProperty("key").GetProperty("theorem").GetString() == theorem);
+            if (row.GetProperty("state").GetString() != "declared_validated")
+            {
+                grammarFailures.Add(name + ": producer " + row.GetProperty("diagnostic").GetString());
+                continue;
+            }
+            var sourceBinding = row.GetProperty("certificate").GetProperty("source_binding");
+            var originalDomain = Assert.Single(sourceBinding.GetProperty("support_entries").EnumerateArray())
+                .GetProperty("material").GetString()!;
+            Assert.StartsWith(prefix, originalDomain, StringComparison.Ordinal);
+            var sourceDeclaration = report.Files.Values.SelectMany(f => f.Declarations).Single(d => d.Name == theorem);
+            Assert.Contains(originalDomain, sourceDeclaration.LoadTypeRepresentation(), StringComparison.Ordinal);
+            if (name == "deepLevelSource")
+            {
+                Assert.Equal(6, sourceBinding.GetProperty("telescope_size").GetInt32());
+                Assert.Empty(sourceBinding.GetProperty("coordinates").EnumerateArray());
+                Assert.Equal(4, Assert.Single(sourceBinding.GetProperty("support").EnumerateArray()).GetInt32());
+                Assert.Equal(5, Assert.Single(sourceBinding.GetProperty("readouts").EnumerateArray())
+                    .GetProperty("state_binder").GetInt32());
+                Assert.Contains("type=" + string.Concat(Enumerable.Repeat("ep(bd,ec(ns(n0,4:Unit),[]),", 3))
+                    + "ep(bd,es(" + string.Concat(Enumerable.Repeat("ls(", 253)) + "l0",
+                    sourceDeclaration.LoadTypeRepresentation(), StringComparison.Ordinal);
+            }
+            var failure = Record.Exception(() => {
+                var selected = InformationTemplateEvidence.Collect(snapshot, report, [path],
+                    ImmutableHashSet.Create(theorem));
+                Assert.Equal(InformationTemplateBindingState.DeclaredValidated, Assert.Single(selected.Occurrences).Value.State);
+            });
+            if (failure is not null) grammarFailures.Add(name + ": " + failure.Message);
+        }
+        Assert.True(grammarFailures.Count == 0, string.Join("\n", grammarFailures));
         var evidence = InformationTemplateEvidence.Collect(snapshot, report, [path]);
-        Assert.Equal(26, evidence.Occurrences.Count);
+        Assert.Equal(29, evidence.Occurrences.Count);
         var rejectedNames = new[] { "eqSource", "swapLambdaSource", "swapSigmaSource" };
         var rejected = evidence.Occurrences.Where(pair => rejectedNames.Contains(pair.Key.Theorem.Split('.').Last())
             || (pair.Key.Theorem.Contains(".wrapper_", StringComparison.Ordinal)
@@ -143,6 +229,29 @@ public sealed class InstanceSupportEvidenceTests
         Assert.Equal(new[] { 0, 1 }, binding.GetProperty("parameter_slots").EnumerateArray().Select(x => x.GetInt32()));
         var support = Assert.Single(binding.GetProperty("support_entries").EnumerateArray());
         Assert.Equal("ea(ec(ns(n0,7:Fintype),[l0]),eb(0))", support.GetProperty("material").GetString());
+        foreach (var forged in new[] { "ed()", "ej(ns(n0,4:Prod),0)", "ef(ns(n0,1:x))", "em(ns(n0,1:x))",
+            "es(lv(ns(n0,1:u)))", "ed(ef(ns(n0,1:x)))", support.GetProperty("material").GetString()! })
+        {
+            // Even self-consistent material/support/binding hashes cannot
+            // replace the imported original metadata-wrapped binder domain.
+            var wire = JsonNode.Parse(report.Files[path].InformationTemplates!.Value.GetRawText())!;
+            var row = wire["records"]!.AsArray().Single(r =>
+                r!["key"]!["theorem"]!.GetValue<string>() == "D5.InstanceSupportFixture.metadataSource")!;
+            var certificate = row["certificate"]!;
+            var changed = certificate["source_binding"]!;
+            var hash = InformationTemplateJson.Sha256(System.Text.Encoding.UTF8.GetBytes(forged));
+            changed["support_entries"]![0]!["material"] = forged;
+            changed["support_entries"]![0]!["identity"] = hash;
+            changed["support_identity"] = InformationTemplateJson.Sha256(
+                System.Text.Encoding.UTF8.GetBytes("DTR-source-support-v1:1:body/body:" + hash));
+            certificate["evidence_ref"] = InformationTemplateBindingIdentity.Compute(
+                JsonSerializer.SerializeToElement(row), declarations);
+            var files = report.Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value);
+            files[path.Value] = report.Files[path] with { InformationTemplates = JsonSerializer.SerializeToElement(wire) };
+            var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(snapshot,
+                LeanAxiomReport.Create(files), [path]));
+            Assert.Equal("DTR-Evidence: source support material differs from addressed binder", error.Message);
+        }
         foreach (var file in report.Files.Values)
             foreach (var declaration in file.Declarations)
                 Assert.All(declaration.Axioms, axiom => Assert.Contains(axiom,

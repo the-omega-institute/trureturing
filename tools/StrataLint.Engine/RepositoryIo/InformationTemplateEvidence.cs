@@ -226,14 +226,9 @@ internal static class InformationTemplateEvidence
                 var index = Bounded(supportEntries[i].GetProperty("index"), 255);
                 var path = Path(supportEntries[i].GetProperty("path"));
                 var material = InformationTemplateJson.String(supportEntries[i], "material");
-                if (System.Text.Encoding.UTF8.GetByteCount(material) is 0 or > 65536
-                    || !material.StartsWith("ec(", StringComparison.Ordinal)
-                        && !material.StartsWith("ep(", StringComparison.Ordinal)
-                        && !material.StartsWith("el(", StringComparison.Ordinal)
-                        && !material.StartsWith("ee(", StringComparison.Ordinal)
-                        && !material.StartsWith("ea(", StringComparison.Ordinal)
-                        && !material.StartsWith("eb(", StringComparison.Ordinal)
-                        && !material.StartsWith("es(", StringComparison.Ordinal))
+                // Collect parses the imported source and joins this material to
+                // the original instance binder, including raw metadata/projections.
+                if (System.Text.Encoding.UTF8.GetByteCount(material) is 0 or > 65536)
                     throw new FormatException("DTR-Evidence: source support material");
                 var identity = HashField(supportEntries[i], "identity");
                 if (identity != InformationTemplateJson.Sha256(System.Text.Encoding.UTF8.GetBytes(material)))
