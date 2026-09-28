@@ -428,3 +428,93 @@ python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-
 All checks remain active under `-O`; normal and optimized execution produce
 identical output. The consumer reads no external input and invokes no geometry
 producer or Lean checker.
+
+## Fixed label capacities preserve the partition reduction
+
+[Report529's ternary-height-one construction](529-an-irredundant-comb-separates-fibre-credits-from-supported-query-laws.md#actual-ternary-height-one-families-realize-the-single-class-fibre-charges)
+realizes the partition budgets and all exact individual deletion charges
+of the finite-height functional, for each fixed root weight. In particular
+the negative eleven-prime subtraction is realized by an actual finite
+irredundant noncover. That construction does not satisfy the additional
+global-extremality premise, and it does not make the actual survivor
+mass negative. The missing information can be the intersections of
+different original deletions or additional whole-cover constraints.
+
+The latter have a concrete inventory interface.
+[Report385, PI1--PI3 and JP1--JP4](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#17-small-interfaces-bound-whole-cover-numerical-inventories)
+bounds the numbers of original multiples of3pq and3q^2 in one globally
+extremal whole cover with H3=1. Those formulas retain the actual prime
+labels and the entire original family; they impose no bound on its
+support size. No corresponding restriction is asserted for arbitrary
+irredundant noncovers.
+
+Its shared four-label repair also couples two different actual phases:
+within a retained ternary root, two3pq phases sharing a p-root or
+q-root have at most three original occupants together. Since each
+phase has at most two, double-occupied cells form a matching. In the
+same whole-cover model this gives the beta-independent bounds
+
+    # {d original:3pq|d}<=2(p-1)(q-1)-|p-q|-1,
+    # {d original:3pq|d, a_d mod3=r}
+        <=(p-1)(q-1)+min(p-1,q-1)-1.
+
+For105 these are45 originals in total and at most27 on either actual
+ternary root, strengthening the earlier independent-phase75/46
+bounds. They are simultaneous necessary restrictions, not separately
+attainable maxima. They retain all original numerical identities and
+do not require identifying artificial partition membership with an
+original phase. Finer row/column constraints themselves require those
+physical phase labels to be kept explicitly.
+
+JP4 also excludes a candidate numerical label if its own forced
+3pq-divisor inventory exceeds JP2. This exclusion depends on the
+original label and its heights, not on beta, so it may be applied
+before the fixed-inventory optimization. For instance, an actual
+original containing3,5,7 can have at most seven distinct nonternary
+prime factors; this is not a bound on the family's complete support.
+
+Fix the finite exponent inventory, beta parameters and root weight w.
+An original label3d assigned to root r has nonnegative deletion charge
+
+    a_(d,r)(beta)=w_r*g_r(D)*product_(q in D)c_q*q^(-v_q(d)),
+    D=supp(d), w_1=w, w_2=1-w.
+
+If a set of numerical labels has at most K originals, its total charge
+is bounded by the sum of the K largest allowed labelled charges,
+maximizing over each label's allowed single-root choice. This is an
+upper comparison: it does not claim the maximizing labels and phases
+can coexist. Disjoint bins can be paid separately. For overlapping
+capacity sets, keep the joint restrictions in one optimization or use
+a proved relaxation; the same saving cannot be subtracted twice.
+
+There is still an exact partition reduction for every fixed feasible
+selection set independent of beta. Hold all prime blocks except q
+fixed. For each numerical-label/root choice, `a_(d,r)` is affine in
+`(beta_q1,beta_q2)`: it is constant when q belongs to D, and otherwise
+has one factor `1-beta_qr`. Therefore the maximum total charge over
+any fixed finite set of admissible selections is a maximum of affine
+functions, hence convex in this block. This includes top-count bins,
+joint pair capacities and uniform root-specific capacities.
+
+The initial carrier mass and the unrestricted3-free charges are
+affine in the same block. Their difference from the maximal allowed
+3-divisible charge is consequently concave. Artificially enlarging
+the blocked sets still shrinks the same comparison carrier, and
+these numerical inventory constraints remain true for the actual
+labels independently of that enlargement. Successive blockwise
+extreme-point choices therefore reduce a global minimum to the same
+two-root partition vertices. The minimizing partition can change;
+the old minimizer alone is not a uniform certificate for the new
+functional.
+
+The beta-independent feasible-set condition is essential. A partition
+obtained by enlargement and concavity does not reveal the actual
+root of original3p or3q. It cannot be used to select a stronger
+same-root or opposite-root phase capacity without preserving those
+physical root labels and proving the additional relation. The
+uniform inventory bounds in Report385 avoid that inference.
+
+This gives a legal way to bring whole-cover phase restrictions into
+the joint numerical inventory. No positive uniform bound for the
+resulting optimized functional, all-weight obstruction, unrestricted
+support conclusion or new Lean result is claimed here.
