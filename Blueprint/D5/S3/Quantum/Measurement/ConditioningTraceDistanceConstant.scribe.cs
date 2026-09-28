@@ -10,24 +10,6 @@ internal sealed class ConditioningTraceDistanceConstantDocument : IScribeDocumen
         "Positive conditioning filters have sharp trace-distance constant equal to the spectral condition number.",
         H("Conditioning Trace-Distance Constant"),
         Blocks(
-            Describe.Lean(DescribeId.Create("maximum-eigenvalue-definition"),
-                DeclarationHandle.Create("D5/S3/Quantum/Measurement/ConditioningTraceDistanceConstant.rMax"),
-                H("The maximum eigenvalue"),
-                StatementSource.FromAuthor(RMaxFormula()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The maximum eigenvalue is the first entry of the ordered eigenvalue list."))),
-                DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("minimum-eigenvalue-definition"),
-                DeclarationHandle.Create("D5/S3/Quantum/Measurement/ConditioningTraceDistanceConstant.rMin"),
-                H("The minimum eigenvalue"),
-                StatementSource.FromAuthor(RMinFormula()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The minimum eigenvalue is the last entry of the ordered eigenvalue list."))),
-                DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("condition-number-definition"),
-                DeclarationHandle.Create("D5/S3/Quantum/Measurement/ConditioningTraceDistanceConstant.conditionNumber"),
-                H("The spectral condition number"),
-                StatementSource.FromAuthor(ConditionNumberFormula()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The spectral condition number is the ratio of the maximum to the minimum eigenvalue."))),
-                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("conditioned-state-definition"),
                 DeclarationHandle.Create("D5/S3/Quantum/Measurement/ConditioningTraceDistanceConstant.conditionedState"),
                 H("The normalized conditioned state"),
@@ -84,9 +66,6 @@ internal sealed class ConditioningTraceDistanceConstantDocument : IScribeDocumen
     private static Formula Mul(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
 
-    private static Formula Subtract(Formula left, Formula right) =>
-        new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
-
     private static Formula Div(Formula left, Formula right) =>
         new Formula.Fraction(left, right);
 
@@ -106,42 +85,11 @@ internal sealed class ConditioningTraceDistanceConstantDocument : IScribeDocumen
     private static Formula Tau(Formula hd, Formula r, Formula h, Formula rho) =>
         Call("conditionedState", hd, r, h, rho);
 
-    private static Formula EigenvaluesZero() =>
-        Seq(Operatorname, Grp(F.Id("eigenvalues")), Underscore, Grp(D(0)));
-
-    private static Formula EigenvalueAt(Formula hermitian, Formula index) =>
-        Apply(Apply(EigenvaluesZero(), hermitian), index);
-
     private static Formula ForallTyped(Formula variable, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(variable, type), Comma, Sp, Scope(body));
 
     private static Formula ExistsTyped(Formula variable, Formula type, Formula body) =>
         Seq(Exists, Sp, Typed(variable, type), Comma, Sp, Scope(body));
-
-    private static Formula RMaxFormula()
-    {
-        Formula hd = Subscript(F.Id("h"), F.Id("d"));
-        Formula r = F.Id("R"), h = Subscript(F.Id("h"), F.Id("R"));
-        return Disp(Seq(Call("rMax", hd, r, h), Sp, Colon, Eq, Sp,
-            EigenvalueAt(h, D(0)), Dot));
-    }
-
-    private static Formula RMinFormula()
-    {
-        Formula d = F.Id("d"), hd = Subscript(F.Id("h"), F.Id("d"));
-        Formula r = F.Id("R"), h = Subscript(F.Id("h"), F.Id("R"));
-        Formula last = Subtract(Call("card", Call("Fin", d)), D(1));
-        return Disp(Seq(Call("rMin", hd, r, h), Sp, Colon, Eq, Sp,
-            EigenvalueAt(h, last), Dot));
-    }
-
-    private static Formula ConditionNumberFormula()
-    {
-        Formula hd = Subscript(F.Id("h"), F.Id("d"));
-        Formula r = F.Id("R"), h = Subscript(F.Id("h"), F.Id("R"));
-        return Disp(Seq(Call("conditionNumber", hd, r, h), Sp, Colon, Eq, Sp,
-            Div(Call("rMax", hd, r, h), Call("rMin", hd, r, h)), Dot));
-    }
 
     private static Formula ConditionedStateFormula()
     {
@@ -162,16 +110,16 @@ internal sealed class ConditioningTraceDistanceConstantDocument : IScribeDocumen
         Formula h0 = Subscript(F.Id("h"), D(0));
         Formula rho = Rho, sigma = SigmaLower, x = F.Id("x");
         Formula states = States(d);
-        Formula hermitian = Call("isHermitian", h);
-        Formula k = Call("conditionNumber", h0, r, hermitian);
+        Formula k = Div(Call("greatestEigenvalue", r, h),
+            Call("leastEigenvalue", r, h));
         Formula image = Distance(Tau(h0, r, h, rho), Tau(h0, r, h, sigma));
         Formula source = Distance(rho, sigma);
         Formula twoSided = And(
             Le(Scope(Mul(Call("inv", k), source)), image),
             Le(image, Scope(Mul(k, source))));
         Formula equalExtreme = ForallTyped(rho, states,
-            Imply(Equal(Call("rMin", h0, r, hermitian),
-                Call("rMax", h0, r, hermitian)),
+            Imply(Equal(Call("leastEigenvalue", r, h),
+                Call("greatestEigenvalue", r, h)),
                 Equal(Tau(h0, r, h, rho), rho)));
         Formula ratioBody = And(
             NotEqual(rho, sigma),
