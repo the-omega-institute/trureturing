@@ -1,0 +1,167 @@
+{
+  "actual_mask_box": {
+    "active_leaves": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "certificate": {
+      "positive": true,
+      "query_hinge_upper": "597881507028991805679887245753851297598129/1062975514082960744723766684375000000000000",
+      "query_upper": "1079240113358959686853095885496342726813754/96271721265993576234641727948498285843125",
+      "score": "8199125928384385168395508313924674353749/265743878520740186180941671093750000000000",
+      "score_decimal": 0.030853489359847955,
+      "source_lower": "6859178516797877/75735000000000000",
+      "threshold": 6,
+      "weights": [
+        "8/25",
+        "3/10",
+        "19/100",
+        "0",
+        "19/100"
+      ]
+    },
+    "epsilon": "1/100",
+    "leaf_probability_bridge": [
+      {
+        "four_coordinate_minimum": "1103915579/5344863579",
+        "leaf": 0,
+        "six_coordinate_top": "-260381502998611/2195621854480989"
+      },
+      {
+        "four_coordinate_minimum": "34605337/586769337",
+        "leaf": 1,
+        "six_coordinate_top": "-477053486332271/1671011692987329"
+      },
+      {
+        "four_coordinate_minimum": "117507311/700879311",
+        "leaf": 2,
+        "six_coordinate_top": "-59341729761739/350335224482661"
+      },
+      {
+        "four_coordinate_minimum": "-7/15",
+        "leaf": 3,
+        "six_coordinate_top": "-4459/4675"
+      },
+      {
+        "four_coordinate_minimum": "117507311/700879311",
+        "leaf": 4,
+        "six_coordinate_top": "-59341729761739/350335224482661"
+      }
+    ],
+    "minimum_query_zero_atom": "39/100",
+    "minimum_target_mass": "59/100",
+    "scope": "Every actual star mask bounded by beta_DT+1/100 on the four active leaves; no full-profile claim.",
+    "target_masses": [
+      [
+        "99/100",
+        "99/100",
+        "197/300",
+        "1/3",
+        "197/300"
+      ],
+      [
+        "79/100",
+        "59/100",
+        "99/100",
+        "1",
+        "99/100"
+      ],
+      [
+        "691/900",
+        "791/900",
+        "99/100",
+        "1",
+        "99/100"
+      ],
+      [
+        "989/1100",
+        "889/1100",
+        "99/100",
+        "1",
+        "99/100"
+      ],
+      [
+        "277/300",
+        "257/300",
+        "99/100",
+        "1",
+        "99/100"
+      ],
+      [
+        "1483/1700",
+        "1583/1700",
+        "99/100",
+        "1",
+        "99/100"
+      ]
+    ],
+    "thinning_rule": "xi[q,l]=(m_star[q,l]/eta_actual[q,l](1))*eta_actual[q,l]"
+  },
+  "coefficient_choice_counts": {
+    "1": 10,
+    "2": 55,
+    "3": 220
+  },
+  "leaf_probability_bridge": [
+    {
+      "four_coordinate_minimum": "9/40",
+      "leaf": 0,
+      "six_coordinate_top": "-267/2800"
+    },
+    {
+      "four_coordinate_minimum": "1/12",
+      "leaf": 1,
+      "six_coordinate_top": "-1919/7488"
+    },
+    {
+      "four_coordinate_minimum": "31/165",
+      "leaf": 2,
+      "six_coordinate_top": "-4021/28050"
+    },
+    {
+      "four_coordinate_minimum": "-7/15",
+      "leaf": 3,
+      "six_coordinate_top": "-4459/4675"
+    },
+    {
+      "four_coordinate_minimum": "31/165",
+      "leaf": 4,
+      "six_coordinate_top": "-4021/28050"
+    }
+  ],
+  "positive": {
+    "positive": true,
+    "query_hinge_upper": "3228200366246968137908865934995503816/5501562645075623704410944945818359375",
+    "query_upper": "24713501153110400200110167810184968389/2360139937624505529694940814040590625",
+    "score": "2548523432511439183713026082610425361/22006250580302494817643779783273437500",
+    "score_decimal": 0.1158090708461072,
+    "source_lower": "4061237/37867500",
+    "threshold": 6,
+    "weights": [
+      "8/25",
+      "3/10",
+      "19/100",
+      "0",
+      "19/100"
+    ]
+  },
+  "scope": "The declared DT comparison vertex and a transported actual-mask box; no claim for all height-two profiles or all weights.",
+  "wstar": {
+    "positive": false,
+    "query_hinge_upper": "5515618178952151389114386555159293219/8362375220514948030704636317643906250",
+    "query_upper": "9702823475213693070244395381166980719/837441059252308336226001765201537500",
+    "score": "-29524709156417186490987236185955719/8362375220514948030704636317643906250",
+    "score_decimal": -0.0035306606529668587,
+    "source_lower": "37922/378675",
+    "threshold": 6,
+    "weights": [
+      "1/4",
+      "1/4",
+      "1/4",
+      "0",
+      "1/4"
+    ]
+  }
+}
