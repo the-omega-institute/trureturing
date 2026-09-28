@@ -116,9 +116,9 @@ internal sealed class RareBranchConditionalErrorSharpnessDocument : IScribeDocum
             Eq(Seq(D(1), Sp, Slash, Sp, probability, Sp, Cdot, Sp,
                 Product(pm, state, Adj(pm))), projector);
         Formula normalizedRho = Product(
-            Seq(D(1), Sp, Slash, Sp, epsilon), Product(pm, rho, Adj(pm)));
+            Seq(D(1), Sp, Slash, Sp, epsilon), Product(pm, Call("matrix", rho), Adj(pm)));
         Formula normalizedSigma = Product(
-            Seq(D(1), Sp, Slash, Sp, epsilon), Product(pm, sigma, Adj(pm)));
+            Seq(D(1), Sp, Slash, Sp, epsilon), Product(pm, Call("matrix", sigma), Adj(pm)));
         Formula matrixDistance = Seq(
             Call("traceNorm", Difference(normalizedRho, normalizedSigma)),
             Sp, Slash, Sp, D(2));
