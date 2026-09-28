@@ -876,3 +876,122 @@ Python and the pinned source model's active assertions; that source model
 deliberately rejects `-O`. Geometry regeneration requires a C++17 compiler
 and an explicit fresh-rebuild request. The declared local scope remains
 unchanged by either verification mode.
+
+## The same fixed node permits all later phases
+
+This extends the preceding fixed eta14 certificate. It fixes exactly the
+same node `(2,4,1,8,1,2,1,0,13)`, `xi7=(1,4,7,14)`, source thresholds
+`(2,4,4,8,8,16)` and query16. The projections at 11 and13 still range over
+40 eta14 labels each. At 17,19,29 each projection now ranges independently
+over all280 source labels, with last coordinate in `(1,4,7,8,11,13,14)`.
+It does not extend the first two eta values, the node, xi7, or the entire
+missing23 support.
+
+The new domain has `1600*280^3=35123200000` tuples. All1600 prefix-label
+pairs satisfy the common query16 criterion uniformly over their later
+choices. The worst rational query upper rounded upward is `28.9603851962`,
+at `(xi11,xi13)=(A,C)` or `(B,C)`, where
+`A=(2,4,2,14)`, `B=(2,4,5,14)`, `C=(2,4,8,14)`.
+Ceiling each of six losses and H16 to one millionth leaves
+`D>=2.318861` and `14D-H16>=0.091827>0`.
+
+### Source-preserving extension and routing
+
+For each of five spatial-field pairs `AB,CC,CA,AA,FA`, [the new bounds](../../../frontier/cover-geometry/finite-prefix-sources/missing23-late280/bounds.json) record
+the three partially released current bounds at every allowed eta.
+`F=(2,3,2,14)` is a physical projection whose four-way intersection is
+empty. The three selected heads 3,5,9 are released into their complete
+contributing domains, while the actual selected15 head is retained.
+Thus each recorded eta value bounds all40 first-three-coordinate choices;
+no 280-cubed geometry enumeration is involved.
+
+Each of these direct later comparisons retains all eight same-cell
+zero/positive components at7,11,13. The inherited convex-release proof
+uses a coefficient scalar across the whole cell vector and bounds the
+same padded source. Earlier physical labels are not reselected. A flat
+zero11 field is identical for all empty four-way intersections, so the FA
+continuation applies to every such xi11 while each row still pays its
+own current11 and current13 bound. This replaces only a continuation
+upper comparison; it does not identify distinct actual source laws.
+
+The exact prior permutation exchanges A and B, preserves C and eta,
+and maps the entire allowed later projection domain to itself. It
+transports `CA` to `CB`, `AA` to `BB`, and `FA` to the corresponding
+empty11/B comparison. The consumer retains the individual prefix-label
+costs under these transports.
+
+For the general transfer reference AB, the current17 bound instead uses
+full13. Its seven released eta bounds are refined at eta8 and eta11 by
+all40 four-head values, and at eta14 by the older all40 table. The final
+uniform current17 upper is `3.7130521644`, at eta13's released screen.
+The current19 and29 reference bounds retain both zero fields; their
+uniform uppers are `4.2109420471` and `2.0248867687`. Therefore the earlier
+positive-transfer proof applies without a zero13 addition at17. It uses
+both applicable additions at19/29.
+
+The two new actual-C current13 refinements are
+
+| physical xi13 | current13 upper |
+|---|---:|
+| `(2,4,2,14)` | `5.852992434` |
+| `(2,3,2,14)` | `5.6272629423` |
+
+The same permutation gives the third-coordinate5 cases. All other
+current11/current13 inputs, H16, the transfer increments, infinite-tail
+formulas, and completion/padding hypotheses come from the fixed prior
+package. Both packages concern one source schedule and query16.
+
+The disjoint selected routes are transfer1521, FA-direct74, AA-direct2,
+CA-direct2, and CC1. AA and CC happen to have equal late numerical tables;
+they were calculated separately, and no new general identity is inferred.
+The worst later29 released bound occurs at eta8, so eta14 alone cannot be
+asserted to be worst over the allowed eta values.
+
+### Exact domain and numerical verification
+
+The extended numerical input contains105 released values (five field pairs,
+three current stages, seven eta choices), seven full13 current17 reference
+values, two complete40-label current17 refinements, and two actual-C
+current13 values. Each has a corresponding targeted producer command; all116
+commands have reproduced the recorded values from complete-input geometry
+caches, without a new geometry call in that reconstruction check.
+
+Every `released` command begins with the eight positive components from
+zero/positive choices at7,11,13, keeping their spatial zero products on the
+same anchor cell. For later current19 or29 the intervening full17 or
+full17/full19 multiplier laws are appended. The physical xi11/xi13 pair
+remains the pair named by the row. In contrast, both full13 current17
+commands use four zero7/zero11 components multiplied by the full13 law;
+they do not retain a zero13 field. The current13-C command uses four
+zero7/zero11 components before13 and the selected physical current13 label.
+Thus these producer maps preserve precisely the different hypotheses needed
+by the direct and transfer routes.
+
+The old source completion, fixed padding, reserve and final H16 remain
+unchanged. Every new estimate is an upper bound on that same construction.
+For each ordered prefix pair, the arithmetic consumer takes the smallest
+available valid six-loss sum, then verifies `D=135/4-sum L>0` and
+`14D-H16>0`. The chosen routes partition all1600 prefix pairs and each
+selected later bound is uniform over all280 allowed projections at its
+prime. Consequently every one of their independent triples is covered;
+no claim is made that separate stage maxima are simultaneously attained.
+
+The smallest exact reserve lower bound is
+
+$$
+D=\frac{2876939530945115455363}{1240667948520000000000}.
+$$
+
+The exact minimum slack is approximately0.09186131983613406 and the
+worst rational query upper is approximately28.9603851961421. The displayed
+upward bound28.9603851962 and millionth certificate0.091827 are conservative.
+The [consumer](../../../frontier/cover-geometry/finite-prefix-sources/missing23-late280/verify.py) checks only exact arithmetic and routing from pinned
+numerical inputs; a cache replay is not an independent rerun of its integer
+maxima. These results add no Lean declaration or kernel verification.
+
+The extension covers neither the other eta11/eta13 slices nor other nodes
+or xi7. Those change earlier spatial zero fields and must be treated as new
+comparison domains. In particular no monotonicity in eta and no universal
+worst-eta claim follows from this result.
+
+Reproduction commands and verification layers are in the [extension package](../../../frontier/cover-geometry/finite-prefix-sources/missing23-late280/README.md).
