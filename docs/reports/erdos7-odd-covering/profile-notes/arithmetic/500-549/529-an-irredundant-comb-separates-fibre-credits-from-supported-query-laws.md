@@ -249,8 +249,11 @@ inside the post-star carrier is
 For one FIXED root weight `w in[0,1]`, choose `r_D` maximizing
 `w*g_1(D)` and `(1-w)*g_2(D)`. Summing the actual exponent inventory
 then makes the carrier mass minus the sum of the exact individual mixed
-deletion masses equal to `F_h(A,w)` in Report528. Their union remains
-smaller than that sum because different irredundant originals overlap.
+deletion masses equal to `F_h(A,w)` in Report528. Their union has mass at
+most that sum; strict inequality is not asserted for every finite Q.
+In the negative eleven-prime instance below, the sum exceeds the carrier
+mass and hence strictly exceeds the deletion union. The subtraction there
+is therefore not the actual survivor mass.
 
 At the eleven-prime profile of Report528, take `A={5}` and `w=1/2`.
 The already retained exact comparison is negative. The present family
