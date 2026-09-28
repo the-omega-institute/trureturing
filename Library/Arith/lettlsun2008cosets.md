@@ -2132,3 +2132,129 @@ an arithmetic argument forcing a marginal failure or an IT2 violation
 in every hypothetical distinct odd cover, or a stronger compatible
 condition if these tests can all pass. The inequalities and constructions
 here are ordinary proofs, not new Lean verification or a priority claim.
+
+## Existing survivor laws restrict simultaneous complete marginal feasibility
+
+The existing product and complete-survivor laws imply more than a
+noncoverage assertion for the following restricted task. For any
+finite NONEMPTY family of congruence classes with pairwise distinct odd
+numerical moduli greater than 1, arbitrary residues, actual period L>1
+and at most FIVE support primes, at least one actual support prime r satisfies
+
+    min_y M_r(y)<1.                                  (MF1)
+
+Thus a nonempty odd-distinct noncover whose EVERY complete support-prime
+marginal is at least 1 must use at least six primes. This is a reuse of
+existing survivor estimates to restrict that stronger marginal-feasibility
+search, not an enlarged noncoverage range for Erdős #7. Empty support
+is excluded: when L=1 there is no support prime to select.
+
+### Keep the target coordinate Haar while conditioning the others
+
+Write L=product_p p^(H_p) and fix a target r. For each p other than r,
+let U_p be the actual set avoiding every original pure-p-power class.
+With normalized Haar on that coordinate, put
+
+    delta_p=sum_(e=1..H_p)p^(-e),
+    b_p=delta_p/(1-delta_p),
+    s_p=Haar(U_p)>=1-delta_p>0,
+    u_r=sum_(e=1..H_r)r^(-e).
+
+Use the product of the uniform laws on these actual U_p, but keep the
+ENTIRE r-coordinate Haar. This is the same pure-power survivor
+construction used in [FC1, FC4 and PH1](../../docs/reports/erdos7-odd-covering/problem-details/02-current-bounds-and-comparisons.md),
+with precisely one coordinate left unconditioned. On its cofactor
+product law nu, Fubini gives
+
+    E_nu M_r=E_(Haar_r times nu)c
+      <=(1+u_r) product_(p!=r)(1+b_p)-1-sum_(p!=r)b_p. (MF2)
+
+Indeed every anchor cylinder of depth e has conditional mass at most
+p^(-e)/s_p<=p^(-e)/(1-delta_p). Sum the product bound over the complete
+numerical exponent inventory; then omit the unit and every pure-anchor
+slot. Such a pure slot is either absent or its actual event is disjoint
+from U_p. All other missing labels only enlarge this upper bound. This
+retains the original phases and one common product law. Conditioning
+the r-coordinate as well would no longer give the complete M_r here.
+
+The upper bound in MF2 increases in every b_p: its slope is
+(1+u_r) product_(q!=p,r)(1+b_q)-1>0. Since
+b_p<1/(p-2) and u_r<1/(r-1), choose r largest and compare the ordered
+support with the first odd primes. The resulting height-uniform bounds
+for support sizes 1,2,3,4 are respectively
+
+    1/2, 1/2, 7/9, 74/75.
+
+All are below 1. This argument includes arbitrary finite heights and
+arbitrary residues. The finite-height formula, for the full-support
+periods 11025=3^2*5^2*7^2 and 17325=3^2*5^2*7*11, gives respectively
+
+    min M_7 <=2976/4655,
+    min M_11<=4589/6270.
+
+These are analytic all-phase exclusions for the complete-marginal
+search at those periods, not solver UNSAT claims. The averaging sets
+are the actual pure-power survivor products, which can depend on the
+family; they are not the rectangle obtained by deleting first roots only.
+
+### Apply the existing four-prime complete-survivor profile
+
+More generally, take any probability mu on the cofactor carrier that
+avoids every r-free original. Define its nonunit cylinder-cap sum
+
+    R_mu=sum_(1<m | L/r^(H_r)) max_a mu(y=a mod m).
+
+The r-free contributions to M_r vanish on mu. At each positive r-height
+there is at most one original per cofactor m, and the unit cofactor
+has mass 1. Therefore on this SAME law
+
+    min_y M_r(y)<=E_mu M_r<=u_r(1+R_mu).              (MF3)
+
+[The four-prime profile, P3--P5](../../docs/reports/erdos7-odd-covering/problem-details/10-a-four-prime-head-and-a-restricted-noncoverage-theorem.md)
+already constructs the uniform law on the complete survivors of any
+family supported on {3,5,7,11}, and proves R_mu<=1514/145, uniformly
+in all phases and heights. The profile transfers coordinatewise to
+any four ordered odd primes p_1<p_2<p_3<p_4: these are no smaller than
+3,5,7,11. Here the transfer concerns the numerical BOUNDS, not a map
+that transports an individual old configuration to a new one.
+
+For completeness, label prime subsets by their coordinate indices.
+Start from the empty-subset profile. If its predecessor coefficients
+are bounded by the old ones, each new envelope term in P3 is no larger:
+the primes in its denominator have only increased. Hence its entire
+nonunit sum R is no larger. In P4, both the pure-cylinder factor
+(p-1)/(p-2) and the deletion ratio R/(p-2) are no larger, so each old
+admissible extension remains admissible with no larger coefficients.
+Taking the minimum over these orders is legitimate because all orders
+describe the SAME new uniform complete-survivor law. Induction over
+subsets proves the claimed transfer and R_mu<=1514/145.
+
+For exactly five support primes, choose the largest r>=13 and apply
+that law to the four-prime r-free family. The prescribed cofactor
+carrier may include unused coordinates or digits; uniform lifting
+is part of the same cylinder-profile construction. MF3 now gives
+
+    min_y M_r(y)< (1+1514/145)/(r-1)
+                <=553/580<1.                        (MF4)
+
+Together with MF2 this proves MF1. This use of P3--P5 introduces no new
+profile computation, residue enumeration, Lean theorem or noncoverage
+range. An old assertion that a hole merely exists would not imply MF1;
+the existing complete-survivor LAW and its cylinder caps are the input.
+
+### Unrestricted fractional phases only recover the reciprocal test
+
+For a fixed nonempty inventory D of nonunit numerical labels, allow one probability vector z_(d,a)
+over ALL phases a mod d of each original label. Use this same vector
+in every prime marginal. If sum_(d in D)1/d>=1, choosing every vector
+uniform makes each expected original indicator equal to 1/d at every
+point; all expected complete marginals are then the constant
+sum_d 1/d>=1. Conversely, averaging any feasible marginal over its
+whole cofactor carrier forces that reciprocal sum to be at least 1.
+
+Thus, without fixed phases or additional restrictions, feasibility of
+this fractional relaxation is equivalent to the ordinary reciprocal
+condition. Writing its full dual does not restore one actual phase
+per original label. Restrictions such as fixed pure phases, a prescribed
+hole excluded by every original, or integral common-phase choices must
+be kept if the relaxation is to supply further arithmetic information.
