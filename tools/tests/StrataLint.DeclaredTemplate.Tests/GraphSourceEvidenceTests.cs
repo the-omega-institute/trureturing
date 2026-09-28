@@ -7,6 +7,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.DeclaredTemplate.Tests;
 
+[Collection("Lean cache environment")]
 public sealed class GraphSourceEvidenceTests(Xunit.Abstractions.ITestOutputHelper output)
 {
     [Fact]

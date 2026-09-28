@@ -3487,6 +3487,8 @@
         ".editorconfig",
         "D5/**/*.lean",
         "Directory.Build.*",
+        "Golden/Frozen/state/D5/S3/Combinatorics/Graph/OctahedralCochainSharpness.lean.json",
+        "Golden/Frozen/state/D5/S3/Combinatorics/Graph/TripartiteH1Repair.lean.json",
         "Meta/Digestion/atomizers.toml",
         "Reg/**/*.lean",
         "Reg/lake-manifest.json",
