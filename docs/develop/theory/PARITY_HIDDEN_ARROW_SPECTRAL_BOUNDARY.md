@@ -18248,3 +18248,415 @@ van der Corput、Abel 求和、Fourier 反演及凸截断都是成熟工具；
 原始文献和适用条件见 [Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
 
 ## 追加锚（第 102 章后续增补区）
+
+## 103. 固定阶后验 Rényi 熵与稀有能量鞍点
+
+**定义 103.1（逐输出的计数 Rényi 熵）。** 保持第 68–71 章的原幅度、固定
+$\beta\in(1/2,1)$、合法规模、全部取整、完整计数向量及其均匀大小 $q$ 支持先验。
+记 $\mathsf P_x$ 为原精确计数后验，$\mathsf P_x^y$ 为同一标量
+$Y=t_x(R)+\sigma_MG$ 在输出 $y$ 后的精确后验。
+本章固定 $\alpha>0$、$\alpha\ne1$，采用自然对数，定义
+
+$$
+H_\alpha(P)=\frac{\ln\sum_nP(n)^\alpha}{1-\alpha}.
+\tag{103.1}
+$$
+
+这是每个输出对应的一份有限分布的熵，不是输出平均，也不是 Arimoto 或 Sibson 条件熵。
+幂作用于计数概率，包括其中的组合因子；对象不是标签微观态。
+
+为避免与熵阶混淆，将原计数线斜率记为
+$\vartheta=\ln(1+r)/[-\ln(1-r)]$。令
+
+$$
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\kappa=a^{-1}+\vartheta^2/b,\quad
+\rho(s)=\frac{e^{-\kappa s^2/2}}{4\pi\sqrt{ab}},\quad
+\gamma=\int_{\mathbb R}\rho(s)\,ds,
+$$
+
+$$
+K(t)=-\frac12\int_{\mathbb R}\ln(1-2t\rho(s))\,ds,
+\quad -\infty<t<t_c:=\frac1{2\rho(0)}.
+\tag{103.2}
+$$
+
+记 $t_\alpha$ 为 $K'(t_\alpha)=\alpha\gamma$ 的唯一解，并置
+$J_\alpha=\alpha\gamma t_\alpha-K(t_\alpha)$。
+下文证明全部固定正阶均有这个内部鞍点。
+
+**定理 103.2（固定阶的后验熵响应）。** 若
+
+$$
+L_M=\ln(1/\sigma_M)\to\infty,\qquad
+\limsup_M L_M/Q^3<c_q/2,
+\tag{103.3}
+$$
+
+则对每个固定有限 $R$，
+
+$$
+\sup_{|y|\le R}\left|
+\delta[H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x)+L_M]
+-\frac{J_\alpha}{\alpha-1}\right|\longrightarrow0,
+\qquad\delta=Q^{-1/2}.
+\tag{103.4}
+$$
+
+收敛在原实际数据概率下、对所有规定大小的确定支持一致，pair/path 两种原实验分别成立。
+确定支持数据仍评价同一个均匀先验定义的后验函数。
+$J_\alpha>0$，故修正项在 $0<\alpha<1$ 时为负，在 $\alpha>1$ 时为正。
+本结论不对趋近零、一或无穷的阶数一致，不给期望后验熵或增长输出区间上的结论。
+
+**精确模型与最大权重。** 在原共同良好数据事件上，完整非空组位于确定截断计数线，
+组数 $m\le CQ^2$。保留
+
+$$
+B^2=q/Q^{5/2},\quad
+d_j=C_jp_j(1-p_j),\quad v_j=d_j/B^2,\quad V=\sum_jv_j,
+\quad e_j=(\mu_j-C_jp_j)/B,
+$$
+
+$$
+A_j(n)=(n_j-\mu_j)/B,\quad E(n)=\sum_jA_j(n)^2,
+\quad t_x(n)=\delta^{-1/2}(E(n)-V).
+\tag{103.5}
+$$
+
+原精确中心 $\mu_j$ 和完整校准 $V$ 都未替换。
+第 69、70 章的实际占据数与校准界给
+$N_J=\sum C_j=O_{\mathbb P}(B^2)$、$V\to\gamma$、
+$\eta_x=\max|p_j-1/2|=O_{\mathbb P}(q^{-1/2})$、
+$\|e\|_2=O_{\mathbb P}(Q^{-5/2}+q^{-1/2})$。
+空组可补零。以 $\bar C_j$ 记两总体 Poisson 比较均值，原一、二行 PGF 给
+
+$$
+\mathbb EC_j=\bar C_j(1+O(\lambda^3/M)),\quad
+\operatorname{Var}C_j\le C(\bar C_j+\lambda^3\bar C_j^2/M),
+\quad\sum_j\bar C_j\le CB^2,\quad
+\sum_j\bar C_j^2\le CB^4\delta.
+\tag{103.6}
+$$
+
+因此对固定 $\zeta>0$，Chebyshev 联合界给
+
+$$
+\Pr\{\max_j|C_j-\mathbb EC_j|>\zeta B^2\delta\}
+\le C_\zeta\left[(B^2\delta^2)^{-1}
++\lambda^3/(M\delta)\right]\to0.
+\tag{103.7}
+$$
+
+在固定空间紧区间上，原 Stirling 剖面给
+$\bar C_j/(4B^2\delta)\to\rho(j\delta)$ 一致成立；其外先用 Gaussian 包络，
+再用远端指数小的总均值。结合 (103.7) 及校准，得到
+
+$$
+\max_jv_j/\delta\to\rho(0).
+\tag{103.8}
+$$
+
+原点组给下界。正倾斜需要这项最大值控制，单有累积时钟极限不够。
+同理，对包含权重范围的固定区间上的 $C^1$ 函数 $F$，若 $F(0)=0$，则
+
+$$
+\delta\sum_jF(v_j/\delta)\to\int F(\rho(s))\,ds.
+\tag{103.9}
+$$
+
+紧区间上用 Riemann 和，外部用 $|F(u)|\le C_Fu$ 及实际尾质量的 Markov 界。
+对紧的一致 Lipschitz 参数族用有限网，得到参数一致版本。
+这些仍是实际数据概率结论，没有假定路径行独立。
+
+**精确 escort 恒等式。** 对计数律 $P$ 置 $P_\alpha=P^\alpha/\sum P^\alpha$，
+以 $f_{P,s}$ 记对原同一 $t_x$ 加标准差 $s$ 的 Gaussian 输出密度。
+Gaussian 核的幂满足
+
+$$
+\varphi_\sigma(z)^\alpha
+=(2\pi)^{(1-\alpha)/2}\sigma^{1-\alpha}\alpha^{-1/2}
+\varphi_{\sigma/\sqrt\alpha}(z).
+$$
+
+有限求和及 Bayes 公式于是给精确等式
+
+$$
+H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x)
+=-L_M+\tfrac12\ln(2\pi)-\frac{\ln\alpha}{2(1-\alpha)}
++\frac{\ln f_{\mathsf P_\alpha,\sigma/\sqrt\alpha}(y)
+-\alpha\ln f_{\mathsf P,\sigma}(y)}{1-\alpha}.
+\tag{103.10}
+$$
+
+在计数 escort 下，紧输出对应稀有能量；普通中心极限定理不能计算这里的密度。
+
+**固定总数修正的稀有输出比较。** 校准乘积计数律
+$\mathsf Q_x=\bigotimes_j\operatorname{Bin}(C_j,p_j)$ 与实际计数律满足
+$\mathsf P_x(n)=\mathcal L_x(k)\mathsf Q_x(n)$，其中
+$k=\sum_jn_j$、$D=k-\sum C_jp_j$。
+在完整盒支持事件上，第 70 章全局界为
+
+$$
+-C(D^2/q+q^{-1/2})\le\ln\mathcal L_x(k)
+\le C(d_J/q+q^{-1/2}),\quad d_J=B^2V.
+\tag{103.11}
+$$
+
+其完整计数 escort 仍是独立乘积，每个组合因子都取 $\alpha$ 次幂。
+已证界给
+$\operatorname{Var}_\alpha n_j\le C_\alpha C_j$、
+$|\mathbb E_\alpha n_j-C_jp_j|\le C_\alpha C_j\eta_x$，以及
+$\ln\mathbb E_\alpha\mathcal L_x^\alpha=O_{\mathbb P,\alpha}(Q^{-5/2})$。
+精确能量满足
+
+$$
+D^2/q\le2mB^2q^{-1}(E+\|e\|^2)
+\le C\delta(E+\|e\|^2),\qquad
+\mathbb E_\alpha E=O_{\mathbb P,\alpha}(1).
+\tag{103.12}
+$$
+
+后式来自 $N_J/B^2$、$\eta_x^2N_J^2/B^2$ 及 $\|e\|^2$ 的界。
+
+需要控制同一稀有输出权重下的能量，而非除以输出密度。
+若非负变量 $E$ 满足 $\mathbb EE\le A$、$A\ge1$，按
+$\exp[-(E-h)^2/(2w^2)]$ 重加权，其中 $|h|\le H$、$0<w\le1$，
+则新均值只依赖 $A,H$ 有界。确实，$\Pr(E\le2A)\ge1/2$，故分母至少
+$\frac12e^{-(2A+H)^2/(2w^2)}$。选固定 $R_0$ 使 $u\ge R_0$ 时
+$(u-h)^2-(2A+H)^2\ge u^2/4$，尾部均值比至多
+$2\sup_{u\ge R_0}u e^{-u^2/(8w^2)}$，统一有界；内部至多 $R_0$。
+
+取 $h=V+\sqrt\delta y$、$w=\sqrt\delta\sigma/\sqrt\alpha$，
+用 $\mathbb E_{\alpha,y}$ 表示这个 Gaussian 加权的原计数 escort，则
+
+$$
+\frac{f_{\mathsf P_\alpha,\sigma/\sqrt\alpha}(y)}
+{f_{\mathsf Q_\alpha,\sigma/\sqrt\alpha}(y)}
+=\frac{\mathbb E_{\alpha,y}\mathcal L_x^\alpha}
+{\mathbb E_\alpha\mathcal L_x^\alpha}.
+$$
+
+由 Jensen、(103.11)–(103.12) 及刚证明的条件均值界，
+
+$$
+\sup_{|y|\le R}\left|
+\ln\frac{f_{\mathsf P_\alpha,\sigma/\sqrt\alpha}(y)}
+{f_{\mathsf Q_\alpha,\sigma/\sqrt\alpha}(y)}\right|
+=O_{\mathbb P,\alpha,R}(\delta).
+\tag{103.13}
+$$
+
+此步对任意趋零正噪声成立，也包含 $\alpha=1$。
+极端元组的 $\mathcal L_x$ 可很小；没有声称全盒上的正下界。
+
+**计数幂律与取整 Gaussian 的相对比较。** 对紧参数二项分布，记
+$d=np(1-p)$，$z=(k-np)/\sqrt d$。带余项 Stirling 给
+
+$$
+\ln b_{n,p}(k)=-\tfrac12\ln(2\pi d)-z^2/2
++O((1+|z|^3)/\sqrt n).
+\tag{103.14}
+$$
+
+在 $|z|\le n^{1/12}$ 归一化 $\alpha$ 次幂；全局 Gaussian 原子包络控制补集。
+Riemann 和得到
+
+$$
+\sum_kb_{n,p}(k)^\alpha
+=(2\pi d)^{(1-\alpha)/2}\alpha^{-1/2}(1+O_\alpha(n^{-1/4})).
+\tag{103.15}
+$$
+
+若 $Z^{\rm round}$ 是 $N(np,d/\alpha)$ 的最近整数取整，
+则在 $|z|\le R_n=o(n^{1/6})$、右侧误差趋零的范围内，归一化幂质量 $h$ 满足
+
+$$
+\frac{h_{n,p;\alpha}(k)}{\Pr(Z^{\rm round}=k)}
+=1+O_\alpha\left[n^{-1/4}+(1+R_n^3)/\sqrt n\right].
+\tag{103.16}
+$$
+
+单位格内积分与中心密度的相对误差为 $O_\alpha((1+|z|)/\sqrt n)$。
+同一包络给所用范围内的尾界 $C_\alpha e^{-c_\alpha R^2}$。
+
+固定 $l<c_q/2$ 使最终 $L_M\le lQ^3$，选 $\epsilon>0$ 满足
+$2\epsilon<c_q-l$。只为证明分组：令 $H=\{j:C_j\ge e^{\epsilon Q^3}\}$。
+其余所有计数配置均满足
+
+$$
+0\le E_{H^c}\le CQ^2e^{2\epsilon Q^3}/B^2.
+\tag{103.17}
+$$
+
+这是由 $0\le\mu_j,n_j\le C_j$ 得到的整个范围界。
+在 $H$ 上引入独立标准正态并保持精确中心，令
+
+$$
+T_G=\delta^{-1/2}\left[
+\sum_{j\in H}(\sqrt{v_j/\alpha}Z_j-e_j)^2-V\right].
+\tag{103.18}
+$$
+
+整数盒 $|n_j-C_jp_j|/\sqrt{d_j}\le Q^2$ 上，(103.16) 的至多 $CQ^2$ 项
+相乘得到 $1+o(1)$ 的一致质量比；两律盒外概率至多
+$CQ^2e^{-c_\alpha Q^4}$。
+在盒的连续 Gaussian 原像上，电荷范数至多 $CQ^2$，
+取整造成的电荷向量误差至多 $\sqrt m/(2B)$。
+结合 (103.17) 及平方差分解，对所有低计数组配置一致有
+
+$$
+|t_x(n)-T_G|\le\Delta_Q
+\le\operatorname{poly}(Q)[B^{-1}+B^{-2}e^{2\epsilon Q^3}],
+\qquad\Delta_Q/\sigma\to0.
+\tag{103.19}
+$$
+
+多项式阶固定，来自 $m\le CQ^2$、$\delta^{-1/2}$ 和盒半径。
+原两次下取整已包含在 $\ln q=c_qQ^3+O(1)$ 内。
+
+为避免额外损失一个逆噪声，直接夹住 Gaussian 核。
+若 $|d|\le\Delta$、$h=\Delta/s\in(0,1)$，则对全部实 $z$，
+
+$$
+\varphi_s(z+d)\ge(1+h)^{-1/2}e^{-(h+h^2)/2}
+\varphi_{s/\sqrt{1+h}}(z),
+$$
+
+$$
+\varphi_s(z+d)\le(1-h)^{-1/2}e^{h/2}
+\varphi_{s/\sqrt{1-h}}(z).
+\tag{103.20}
+$$
+
+它们由 $(z+d)^2$ 的两侧二次不等式直接得到，$\Delta=0$ 时取等式。
+取 $s=\sigma/\sqrt\alpha$，在整个中央盒上积分，再积分全部低计数组。
+所得原乘积 escort 密度夹在 $(1+o(1))$ 倍的两种 (103.18) Gaussian 输出密度之间，
+噪声宽度分别为 $s/\sqrt{1\pm h}$，加性误差至多
+
+$$
+C_\alpha\sigma^{-1}Q^2e^{-c_\alpha Q^4}.
+\tag{103.21}
+$$
+
+下一步的相对密度下界会支付此误差，不能用多项式加性误差代替。
+
+**倾斜数组的局部密度。** 每个固定空间紧区间最终都包含在 $H$ 中，
+而删除低计数组对 $\sum v_j$ 的影响指数小。
+故 (103.8)–(103.9) 仍成立。容许 $\sigma'/\sigma\to1$，包括 (103.20) 的两种宽度扰动。
+定义
+
+$$
+W=\sum_{j\in H}(\sqrt{v_j}Z_j-\sqrt\alpha e_j)^2
++\sqrt{\alpha\delta}\,\sigma'G,\qquad
+z_y=\alpha(V+\sqrt\delta y).
+$$
+
+其精确缩放累积量函数为
+
+$$
+F_x(t)=\delta\ln\mathbb E e^{tW/\delta}
+=-\frac\delta2\sum_H\ln(1-2tv_j/\delta)
++\alpha t\sum_H\frac{e_j^2}{1-2tv_j/\delta}
++\frac{\alpha t^2(\sigma')^2}{2}.
+\tag{103.22}
+$$
+
+由最大权重界，在 $t<t_c$ 的任意紧子区间上有共同正分母余量；
+(103.9) 给 $F_x^{(k)}\to K^{(k)}$ 对 $k=0,1,2,3,4$ 局部一致。
+非中心项及其固定阶导数至多 $C\|e\|^2=o_{\mathbb P}(1)$。
+
+直接微分积分得
+
+$$
+K'(t)=\int\frac{\rho(s)}{1-2t\rho(s)}\,ds,\qquad
+K''(t)=2\int\frac{\rho(s)^2}{(1-2t\rho(s))^2}\,ds>0.
+$$
+
+$K'(0)=\gamma$，$t\to-\infty$ 时导数趋零；$t\uparrow t_c$ 时，
+原点附近分母与 $1-2t\rho(0)+s^2$ 可比，故导数趋无穷。
+因此每个固定正阶的 $t_\alpha$ 唯一且内部。
+严格凸性给 $J_\alpha>0$，除非 $\alpha=1$。
+在 $t_\alpha$ 两侧选紧的导数夹点，得到唯一精确鞍点
+
+$$
+F_x'(t_x(y))=z_y,\qquad t_x(y)\to t_\alpha
+\quad\text{对 }|y|\le R\text{ 一致}.
+\tag{103.23}
+$$
+
+按 $e^{tW/\delta-F_x(t)/\delta}$ 倾斜，取 $t=t_x(y)$。
+平方前的 Gaussian 坐标均值与方差变为
+
+$$
+-\frac{\sqrt\alpha e_j}{1-2tv_j/\delta},\qquad
+\widetilde v_j=\frac{v_j}{1-2tv_j/\delta}.
+$$
+
+附加 Gaussian 方差仍为 $\alpha\delta(\sigma')^2$，均值变为
+$\alpha t(\sigma')^2$。倾斜后的 $W$ 均值恰为 $z_y$，方差为 $\delta F_x''(t)$。
+固定空间核心提供至少 $c/\delta$ 个 $v_j\in[c\delta,C\delta]$ 的坐标。
+因此倾斜后标准化变量的特征函数满足
+
+$$
+|\psi_{x,t}(u)|\le(1+c\delta u^2)^{-c'/\delta}.
+\tag{103.24}
+$$
+
+非中心因子只减小模。$|u|\le\delta^{-1/2}$ 时由 $e^{-c_1u^2}$ 主控；
+更高频令 $v=\sqrt\delta|u|\ge1$，用
+$\ln(1+cv^2)\ge\ln(1+c)+[2c/(1+c)]\ln v$，尾积分指数小。
+在固定频段，对 (103.22) 作复参数展开给
+
+$$
+\ln\psi_{x,t}(u)=-\tfrac12F_x''(t)u^2
++O(\sqrt\delta|u|^3).
+$$
+
+共同分母余量控制复导数余项；Fourier 反演与一致可积主控遂给倾斜标准化密度在零处为
+$[2\pi F_x''(t)]^{-1/2}+o(1)$，对固定输出紧区间及两种噪声扰动一致。
+解除倾斜，并用 $dz_y/dy=\alpha\sqrt\delta$，得到相对估计
+
+$$
+f_{G,\alpha,\sigma'/\sqrt\alpha}(y)
+=\frac{\alpha[1+o(1)]}{\sqrt{2\pi F_x''(t_x(y))}}
+\exp\left[-\frac{t_x(y)z_y-F_x(t_x(y))}{\delta}\right].
+\tag{103.25}
+$$
+
+其前因子有正的上下界，指数率一致趋于 $J_\alpha$，所以
+
+$$
+\sup_{|y|\le R}|\delta\ln f_{G,\alpha,\sigma'/\sqrt\alpha}(y)+J_\alpha|\to0,
+\qquad f_{G,\alpha,\sigma'/\sqrt\alpha}(y)\ge e^{-C_{\alpha,R}/\delta}.
+\tag{103.26}
+$$
+
+上述结论可先限制紧随机量，再释放限制，得到实际数据概率收敛；
+未断言所有原历史上的几乎处处收敛。
+
+**实际回接。** (103.21) 相对 (103.26) 下界的对数至多
+$-c_\alpha Q^4+L_M+C_{\alpha,R}\sqrt Q+O(\ln Q)\to-\infty$。
+因此核夹逼给原完整乘积 escort 的同一缩放对数密度极限。
+再用 (103.13) 回到实际固定总数后验，得到
+
+$$
+\sup_{|y|\le R}|\delta\ln f_{\mathsf P_\alpha,\sigma/\sqrt\alpha}(y)+J_\alpha|\to0,
+\qquad
+\sup_{|y|\le R}|\delta\ln f_{\mathsf P,\sigma}(y)|\to0.
+\tag{103.27}
+$$
+
+第二式用同一密度证明的 $\alpha=1$ 情形，此时 $t_1=J_1=0$，不是由 Shannon 熵推得。
+代回 (103.10)，分子留下 $-J_\alpha$；除以 $1-\alpha$ 得 (103.4) 的符号与系数。
+固定常数乘 $\delta$ 后消失。
+全部原输入界分别覆盖 pair/path 且对支持一致；保持奇偶的置换也保持
+组计数、中心、标量及输出上确界。未知方向只增加原共同判向事件的失败概率。证毕。
+
+该证明没有从稀有密度上除掉多项式 TV 误差，没有将精确中心误差提前除以噪声，
+也没有改动完整观察向量。独立性只用于校准乘积律和显式构造的 Gaussian 比较。
+第 102 章的平均信息方差区间不能据此自动推广到本章。
+变化阶数、增长输出紧区间、噪声端点与期望熵仍不在结论中。
+指数倾斜、Stirling 与 Fourier 局部极限为成熟方法；新增连接是原选中计数模型下的
+稀有输出条件矩控制与相对密度回接，归属见 [Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（第 103 章后续增补区）
