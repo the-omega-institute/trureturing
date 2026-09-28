@@ -2567,3 +2567,126 @@ finite face-interpolation examples. It uses the pinned existing common margin.
 The general result follows from the head-placement, transport and positive
 series arguments above, not from these finite examples. No new full source
 geometry or Lean verification is claimed.
+
+## Fifteen prefix conditions suffice on the branch-fixed physical domain
+
+Continue to restrict the six physical modulo9 projections to `{2,5,8}`,
+so xi belongs to Xi0^6. The preceding five-leaf face has a larger provable
+neighborhood than the original two-leaf edge. It gives a source certificate
+using15 additional low-height phase conditions, with every legal higher
+tail retained. This does not replace the17-condition certificate on the
+larger280^6 physical domain: the two conclusions have different hypotheses.
+
+### A reference on the whole five-leaf face
+
+Put `S={7,13,16,22,25}` and `s=sum_(h in S)z_h`. For any legal budgets,
+define
+
+    bad3=1-2s,       bad5=1-20*(t1-e),
+    rho3=(20-6s)/17=1+(3/17)*bad3,
+    zbar_h=2/3-(2/3-z_h)/rho3  for h in S,
+    zbar_h=0                  otherwise.
+
+Since `0<=s<=1/2`, rho3 is at least1 and zbar is nonnegative. Moreover
+
+    sum_(h in S)zbar_h=10/3-(10/3-s)/rho3=1/2.
+
+Thus zbar is a legal reference on the certified face. Its zero-extra3 factors
+satisfy `2/3-z_h=rho3*(2/3-zbar_h)` on S. Outside S the original factor is
+at most the reference factor2/3. This ternary ratio is sharp among references
+supported on S: summing the five required domination inequalities forces
+`10/3-s<=rho*(17/6)`.
+
+At zero-extra5 depth, comparison with `t0=(1/20,0,0,0),e=0` gives ratio
+
+    A=(12-20t1)/11    on root1,column1,
+    B=(8-20t1+20e)/7  on root2,column1,
+
+and at most1 on the other columns. Every row in S is on root1. The four
+zero/positive-depth regions therefore satisfy, simultaneously,
+
+    w(z,t,e)<=rho*w(zbar,t0,0),       rho=max(rho3*A,B).
+
+The root2 factor B is not multiplied by rho3: outside S the original
+ternary factor was already at most the reference. Single-zero-depth regions
+are also covered because A and rho3 are at least1 and rho is at least B.
+
+Using the previously proved `R>=R0=135/4` and monotonicity/homogeneity of the
+common unrounded positive G, with `M0=14765393/31250=14R0-delta0`, yields
+
+    G(z,t,e)<=rho*M0,
+    14R-G >=14R-rho*M0 >=delta0-M0*(rho-1).
+
+Thus `14R-rho*M0>0` is a sufficient certificate on this physical subdomain.
+Each comparison uses one face reference for all regions and current/query
+terms. It neither changes the actual law term by term nor asserts that every
+relaxed reference must itself be an actual completed source.
+
+### Uniform raw neighborhood and a separate finite-prefix test
+
+A legal budget lies in `(1-tau)*{five-leaf face}+tau*{legal budgets}` exactly
+when `max(bad3,bad5)<=tau`. For `0<tau<1`, normalize the mass on S to1/2
+for the face component, subtract `(1-tau)` times that component, and divide
+the remainder by tau. Nonnegativity follows from `2s>=1-tau`. For the
+quinary coordinates, subtract `(1-tau)/20` from t1 and retain e; legality
+is exactly `t1-e>=(1-tau)/20`. The cases tau0 and1 follow directly.
+
+Since `A<=1+bad5/11` and `B=1+bad5/7`, raw interpolation has
+
+    rho<=max((1+3tau/17)*(1+tau/11),1+tau/7)
+        =(1+3tau/17)*(1+tau/11).
+
+Every interpolation from any face point toward any legal budget with
+`0<=tau<=1/18000` therefore retains the positive slack
+
+    255839334607/631125000000000 >0.00040537.
+
+For a finite-prefix certificate, impose:
+
+* The actual completed pure3 phases at heights4 through H3 lie in S modulo27.
+* The actual completed pure5 phases at heights3 through H5 lie in column1
+  and outside the actual selected75 child c75 modulo25.
+
+Because completion makes the pure3 classes disjoint from the selected3,9,27
+classes, its retained leaves in ternary root1 are precisely S. Within these
+source assumptions, the first condition is equivalently that each specified
+pure3 phase equals1 modulo3; it does not prescribe one particular27 leaf.
+
+The exact deletion-mass definitions and geometric tail sums give
+
+    bad3<=alpha=3^(3-H3),
+    bad5<=beta=5^(2-H5).
+
+For the second inequality the outside-column1 mass and the mass inside c75
+are disjoint contributions from one completed source. The joint bound is
+`(1/20-t1)+e<=beta/20`. Counting two independent copies of the same tail is
+unnecessary. Hence
+
+    rho<=max((1+3alpha/17)*(1+beta/11),1+beta/7).
+
+Take H3=12 and H5=8: there are9+6=15 additional phase conditions, and
+
+    alpha=1/19683, beta=1/15625,
+    rho<=6390235096/6390140625,
+    14R-G>=87611182897/199691894531250 >0.00043873.
+
+Here beta exceeds1/18000; this certificate uses the separate alpha,beta
+bound, not the uniform raw radius. All legal phases at arbitrary later
+heights are included by the infinite sums. The earlier explicit row13 and
+quinary-child11 completion satisfies these conditions, establishing their
+consistency. They are not a normalization theorem for arbitrary odd covers.
+
+The same lower screen is negative for11/8,12/7 and11/9. Those values neither
+show source infeasibility nor prove that15 conditions are necessary. The
+13/8 choice gives the stronger lower slack `10609607/3417968750` on this
+restricted physical domain.
+
+The [face-neighborhood checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-face-tube.py)
+and [results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/face-tube.json)
+pin the preceding face certificate and check840 rational source cases,
+including face interior points, against all44 cells and four regions.
+Their147840 checks include attainment of the stated maximum weight ratio.
+They also evaluate the exact all-height tail constants and negative screens.
+Continuous sufficiency and the infinite tails follow from the displayed
+algebra and geometric sums, not finite sampling. No full source geometry
+or new Lean verification is claimed.
