@@ -447,6 +447,10 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             self.assertEqual((clone / 'activity.jsonl').read_text(), '')
             self.assertEqual(expected, self.report()[1:])
             self.assertEqual(origins, self.origins())
+            # Switching back from the shim to the pinned binary is warm too.
+            self.build()
+            self.assertEqual(before, self.stamps())
+            self.assertEqual((clone / 'activity.jsonl').read_text(), '')
             self.write('D5/Alone.lean', 'def alone : Nat := 9\n')
             self.build()
             self.assertEqual({n for n, value in self.stamps().items() if value != before[n]}, {'D5.Alone'})
@@ -522,8 +526,18 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         # Even an already published run cannot bypass registered program builds.
         self.write('Audit.lean', 'this is not valid Lean\n')
         failed = self.release_run('publish', success=False)
-        self.assertIn('LEAN_INSPECTOR_FAILED phase=report', failed.stderr)
+        self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
+        self.assertIn('Audit.lean:1:0: unexpected identifier; expected command', failed.stdout + failed.stderr)
+        self.assertFalse(publication.member(output, '.reuse.json').exists())
         self.assertNotIn('LEAN_CACHE_PUBLISH ', failed.stdout)
+        self.assertEqual(releases, {p.name for p in (self.root / 'releases').iterdir()})
+        # Clearing the receipt sends the same invalid program through :report.
+        cold_failed = self.release_run('publish', success=False)
+        self.assertIn('LEAN_INSPECTOR_FAILED phase=report', cold_failed.stderr)
+        self.assertIn('Audit.lean:1:0: unexpected identifier; expected command',
+                      cold_failed.stdout + cold_failed.stderr)
+        self.assertFalse(publication.member(output, '.reuse.json').exists())
+        self.assertNotIn('LEAN_CACHE_PUBLISH ', cold_failed.stdout)
         self.assertEqual(releases, {p.name for p in (self.root / 'releases').iterdir()})
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         validator = self.root / 'tools/lean-inspector/publication.py'
@@ -535,5 +549,6 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         self.assertEqual(releases, {p.name for p in (self.root / 'releases').iterdir()})
         self.record_result('publication', dict(restored_bundle_parity=True,
             unchanged_extracted_modules=0, unchanged_aggregates=0,
-            required_default_failure_exit=failed.returncode, required_validation_failure_exit=rejected.returncode,
+            required_default_failure_exit=failed.returncode, cold_program_failure_exit=cold_failed.returncode,
+            required_validation_failure_exit=rejected.returncode,
             partition=address['partition']))

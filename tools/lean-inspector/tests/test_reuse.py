@@ -126,6 +126,19 @@ class ReuseTests(unittest.TestCase):
         self.assertFalse(api.reuse(self.root, self.output, self.output)['needs_lake'])
         self.assertFalse((self.root / '.lake').exists())
 
+    def test_pinned_elan_selector_and_direct_entry_share_execution_identity(self):
+        api = self.receipt()
+        captured = api.capture(self.root)
+        pin = (self.root / 'lean-toolchain').read_text().strip()
+        with patch.dict(os.environ, ELAN_TOOLCHAIN=pin):
+            self.assertEqual(api.capture(self.root), captured)
+            self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
+            api.seal(self.root, self.report, api.capture(self.root))
+        self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
+        with patch.dict(os.environ, ELAN_TOOLCHAIN='another-toolchain'):
+            self.assertNotEqual(api.capture(self.root), captured)
+            self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
+
     def test_probe_cli_reports_misses_but_rejects_invalid_registration(self):
         self.receipt()
         command = [sys.executable, '-B', str(HERE / 'reuse.py'), 'probe', '--repository', str(self.root),

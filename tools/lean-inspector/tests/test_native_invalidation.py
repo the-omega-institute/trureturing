@@ -164,6 +164,8 @@ end D5.CommentOwner
         self.assertEqual({p: p.read_bytes() for p in compiled}, compiled)
         self.assertEqual({name for name, stamp in self.stamps().items()
                           if stamp != before[name]}, {'D5.B', 'D5.A', 'Fixture'})
+        activity = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertEqual(sum(row['count'] for row in activity if row['kind'] == 'extract'), 3)
         warm = self.report()[1:]
         for artifact in (native.state(self.root) / 'modules').glob('*.zip*'):
             artifact.unlink()
