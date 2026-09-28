@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:daff8631949fe210ef4824a716fd7657688ae924c894cc521442aac398d84bd8
   normalized_sha256: sha256:daff8631949fe210ef4824a716fd7657688ae924c894cc521442aac398d84bd8
 cas_ref: sha256:daff8631949fe210ef4824a716fd7657688ae924c894cc521442aac398d84bd8
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/GoldenCubicBlockPrimePeriods.cubic_block_b_prime_period
+    target_statement_id: sha256:408663e5e0fe841e2867ec069aa28a16a41531fd8fa0c2cffd785c916482e0cf
 receipts:
   unresolved_subitems: []
