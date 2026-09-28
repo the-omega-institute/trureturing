@@ -11,6 +11,21 @@ internal sealed class GradedPredictionShiftDocument : IScribeDocumentDefinition
         H("Graded Prediction Shift"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("stable-finite-complete-quotient-equivalence"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Refinement/GradedPredictionShift."
+                    + "stableCompletionEquiv"),
+                H("A stable finite quotient is the complete quotient"),
+                StatementSource.FromAuthor(StableCompletionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let R_m identify states with equal readout words through time m, and "
+                    + "let Z_m be its quotient. Let Z_infinity identify states with equal "
+                    + "complete future itineraries. Equality of R_m and R_(m+1) identifies "
+                    + "the two quotients by the map that preserves source representatives. "
+                    + "No finiteness assumption on the state or output type is required."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("graded-prediction-shift-closes-after-stabilization"),
                 DeclarationHandle.Create(
                     "D5/S3/ObserverMemory/Refinement/GradedPredictionShift."
@@ -40,6 +55,18 @@ internal sealed class GradedPredictionShiftDocument : IScribeDocumentDefinition
                         + "searches found no result combining both maps, both word identities, "
                         + "the stage bijection, and the closed dynamics."))),
                 DescribeRole.Theorem))));
+
+    private static Formula StableCompletionFormula()
+    {
+        Formula m = F.Id("m");
+        Formula next = Seq(m, Sp, Plus, Sp, D(1));
+        return Disp(Seq(
+            Forall, Sp, m, Comma, Sp,
+            Subscript(F.Id("R"), m), Sp, Eq, Sp,
+            Subscript(F.Id("R"), next), Sp, Rightarrow, Sp,
+            Subscript(F.Id("Z"), m), Sp, Equiv, Sp,
+            Subscript(F.Id("Z"), Infty), Dot));
+    }
 
     private static Formula Subscript(Formula value, Formula index) =>
         Seq(value, Underscore, Grp(index));

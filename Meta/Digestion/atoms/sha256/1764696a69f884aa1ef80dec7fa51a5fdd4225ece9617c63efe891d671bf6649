@@ -1,0 +1,2 @@
+最后，取前 $n+1$ 个符号给满射 $\pi_n:T\to W_n$。若 $R_n=R_{n+1}$，定理27.2的稳定性使 $sR_nt$ 蕴含 $D^jsR_nD^jt$ 对每个 $j$ 成立，从每次的首坐标得 $\iota(s)=\iota(t)$。故 $\pi_n$ 单射，$K=N_n$。反向，$K=N_n$ 使此有限满射成为双射，故 $R_n=\ker\iota$；而 $\ker\iota\subseteq R_{n+1}\subseteq R_n$，两核相等。证毕。
+

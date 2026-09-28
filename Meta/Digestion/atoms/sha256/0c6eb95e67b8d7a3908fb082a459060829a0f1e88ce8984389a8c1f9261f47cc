@@ -1,0 +1,17 @@
+**定理 27.3（交换条件恢复完整未来的约束）。** 令完整行程及其有限实际像为
+
+$$
+\iota(s)=(q(D^js))_{j\ge0},\qquad T=\iota(S),\qquad K=|T|,
+\qquad \sigma(t)_j=t_{j+1}.
+\tag{27.16}
+$$
+
+尾移 $\sigma:T\to T$ 总定义。对任意 $n\ge0$，交换实现的最小总状态数恰为 $K$。交换可逆实现存在当且仅当 $\sigma$ 单射，等价地双射；存在时最小总状态数也为 $K$。两种达到构造均可取满射准备。此外
+
+$$
+K=N_n\quad\Longleftrightarrow\quad R_n=R_{n+1}.
+\tag{27.17}
+$$
+
+这里完整行程与尾移的对应归属 [FutureItineraryShift](../../../D5/S3/ObserverMemory/Trajectories/FutureItineraryShift.lean) 的 `future_itinerary_shift`；稳定有限商与完整商的对应归属 [GradedPredictionShift](../../../D5/S3/ObserverMemory/Refinement/GradedPredictionShift.lean) 的 `stableCompletionEquiv`。来源族的残余并见 [PROCESS_GEOMETRY 定理6.2(c)](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)。[ReachableBehaviorMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.lean) 的 `finite_state_minimality` 要求一个指定初态及从它出发的可达性；本定理不把它当作全部准备状态的下界，而作如下直接计数。
+
