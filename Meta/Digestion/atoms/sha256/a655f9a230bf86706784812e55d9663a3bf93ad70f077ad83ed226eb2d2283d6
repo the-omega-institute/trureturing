@@ -1,0 +1,20 @@
+### theorem 58.1 叶子计数加关联数的可逆性
+
+在非负整数坐标上，
+
+$$
+a_2=u-\kappa,\qquad a_3=v,\qquad a_5=w-\kappa,\qquad a_7=\kappa,
+$$
+
+且其合法性条件为
+
+$$
+u,v,w,\kappa\ge0,\qquad \kappa\le\min(u,w).
+$$
+
+因此
+
+$$
+n=2^{u-\kappa}3^v5^{w-\kappa}7^\kappa.
+$$
+

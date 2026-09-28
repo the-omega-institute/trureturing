@@ -1,0 +1,24 @@
+### theorem 73.1 有限观察可递归闭合的充要条件
+
+设 $M$ 是有限状态集，且令 $W=\operatorname{im}p$；$p:M\to W$ 是观察，$\tau_u:M\to M$ 是允许更新，$\rho:M\to O$ 是当前读出。存在
+
+$$
+\widehat\tau_u:W\to W,\qquad \widehat\rho:W\to O
+$$
+
+使
+
+$$
+p\circ\tau_u=\widehat\tau_u\circ p,\qquad
+\rho=\widehat\rho\circ p
+$$
+
+当且仅当对所有 $m,m'$，若 $p(m)=p(m')$，则
+
+$$
+\rho(m)=\rho(m'),\qquad
+p(\tau_u(m))=p(\tau_u(m'))\quad\text{对所有 }u.
+$$
+
+**证明。** 必要性由交换式直接得到。充分性是在每个观察纤维上定义 $\widehat\rho$ 与 $\widehat\tau_u$；纤维上的常值性保证定义良好。沿操作词归纳，还可得到任意有限未来行为在 $p$ 上因子化。证毕。 $\square$
+

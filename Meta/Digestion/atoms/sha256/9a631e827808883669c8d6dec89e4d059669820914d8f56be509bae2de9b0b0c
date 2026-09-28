@@ -1,0 +1,10 @@
+### definition 15.3 观察元素
+
+令 $R=\mathbb Z[\theta]/(\theta^2-\theta-1)$，并以
+
+$$
+\varepsilon(a+b\theta)=b
+$$
+
+为基本系数观察。对任意整数权重 $u,v$，令 $q_{u,v}(a+b\theta)=ua+vb$。
+

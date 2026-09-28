@@ -1,0 +1,16 @@
+**证明。**
+
+若 $x=a+b\theta$，则 $x-x^*=b(2\theta-1)$，给出第一式。对 $x=a+b\theta$、$y=c+d\theta$ 展开乘法，左边的 $\theta$ 系数为 $ad+bc+bd$，而右边同样为
+
+$$
+b(c+d\theta)+((a+b)-b\theta)d.
+$$
+
+最后一式由
+
+$$
+(2M-I)(I-J)x=\delta(x-x^*)=\delta^2\partial x=5\partial x
+$$
+
+得到。证毕。 $\square$
+

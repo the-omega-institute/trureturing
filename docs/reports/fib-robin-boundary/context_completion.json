@@ -1,0 +1,559 @@
+{
+  "completion_examples": [
+    {
+      "C": 1,
+      "action": 5040,
+      "final": 5040,
+      "gcd": 1
+    },
+    {
+      "C": 2,
+      "action": 2520,
+      "final": 5040,
+      "gcd": 2
+    },
+    {
+      "C": 7,
+      "action": 720,
+      "final": 5040,
+      "gcd": 7
+    },
+    {
+      "C": 10,
+      "action": 504,
+      "final": 5040,
+      "gcd": 10
+    },
+    {
+      "C": 12,
+      "action": 420,
+      "final": 5040,
+      "gcd": 12
+    },
+    {
+      "C": 65520,
+      "action": 1,
+      "final": 65520,
+      "gcd": 5040
+    }
+  ],
+  "counterexamples": {
+    "coarse_addition": {
+      "add": 2,
+      "gcd": 1,
+      "initial": [
+        11,
+        13
+      ],
+      "new_actions": [
+        5040,
+        336
+      ]
+    },
+    "context_reversal": {
+      "initial": [
+        5040,
+        2520
+      ],
+      "multiply_by": 2,
+      "strict_order_reverses": true
+    },
+    "relation_loss": {
+      "actions": [
+        720,
+        504
+      ],
+      "canonical_blocks": [
+        7,
+        10
+      ],
+      "leaf_counts": [
+        1,
+        0,
+        1
+      ]
+    },
+    "same_action_different_value": {
+      "action": 5040,
+      "initial": [
+        11,
+        121
+      ]
+    }
+  },
+  "counts": {
+    "boundary_associativity_checks": 216000,
+    "boundary_binary_checks": 3600,
+    "coarse_actual_multiplication_checks": 40320,
+    "context_objective_comparisons": 34384,
+    "direct_divisor_weight_checks": 512,
+    "fine_additive_transition_checks": 40320,
+    "fine_multiplicative_transition_checks": 40320,
+    "finite_unsafe_pruning_witnesses": 3708,
+    "gcd_future_endpoint_checks": 32768,
+    "general_template_distinguishing_pairs": 87360,
+    "large_template_distinguishing_suffixes": 5040,
+    "large_template_nonzero_difference_checks": 5039,
+    "relation_coordinate_complement_checks": 60,
+    "strict_boundary_threshold_checks": 8,
+    "uniform_tail_base_checks": 1,
+    "unit_fiber_cardinality_checks": 60,
+    "unit_fiber_coordinate_checks": 5040,
+    "universally_safe_price_pairs": 388
+  },
+  "domains": {
+    "bounded_candidate_A": [
+      1,
+      128
+    ],
+    "context_count": 263,
+    "future_C": [
+      1,
+      2,
+      3,
+      6,
+      30,
+      210,
+      5040,
+      31104
+    ],
+    "gcd_future_pair_A_B": [
+      1,
+      64
+    ],
+    "general_H": [
+      2,
+      64
+    ]
+  },
+  "fibers": [
+    {
+      "action": 5040,
+      "gcd": 1,
+      "size": 1152
+    },
+    {
+      "action": 2520,
+      "gcd": 2,
+      "size": 576
+    },
+    {
+      "action": 1680,
+      "gcd": 3,
+      "size": 384
+    },
+    {
+      "action": 1260,
+      "gcd": 4,
+      "size": 288
+    },
+    {
+      "action": 1008,
+      "gcd": 5,
+      "size": 288
+    },
+    {
+      "action": 840,
+      "gcd": 6,
+      "size": 192
+    },
+    {
+      "action": 720,
+      "gcd": 7,
+      "size": 192
+    },
+    {
+      "action": 630,
+      "gcd": 8,
+      "size": 144
+    },
+    {
+      "action": 560,
+      "gcd": 9,
+      "size": 192
+    },
+    {
+      "action": 504,
+      "gcd": 10,
+      "size": 144
+    },
+    {
+      "action": 420,
+      "gcd": 12,
+      "size": 96
+    },
+    {
+      "action": 360,
+      "gcd": 14,
+      "size": 96
+    },
+    {
+      "action": 336,
+      "gcd": 15,
+      "size": 96
+    },
+    {
+      "action": 315,
+      "gcd": 16,
+      "size": 144
+    },
+    {
+      "action": 280,
+      "gcd": 18,
+      "size": 96
+    },
+    {
+      "action": 252,
+      "gcd": 20,
+      "size": 72
+    },
+    {
+      "action": 240,
+      "gcd": 21,
+      "size": 64
+    },
+    {
+      "action": 210,
+      "gcd": 24,
+      "size": 48
+    },
+    {
+      "action": 180,
+      "gcd": 28,
+      "size": 48
+    },
+    {
+      "action": 168,
+      "gcd": 30,
+      "size": 48
+    },
+    {
+      "action": 144,
+      "gcd": 35,
+      "size": 48
+    },
+    {
+      "action": 140,
+      "gcd": 36,
+      "size": 48
+    },
+    {
+      "action": 126,
+      "gcd": 40,
+      "size": 36
+    },
+    {
+      "action": 120,
+      "gcd": 42,
+      "size": 32
+    },
+    {
+      "action": 112,
+      "gcd": 45,
+      "size": 48
+    },
+    {
+      "action": 105,
+      "gcd": 48,
+      "size": 48
+    },
+    {
+      "action": 90,
+      "gcd": 56,
+      "size": 24
+    },
+    {
+      "action": 84,
+      "gcd": 60,
+      "size": 24
+    },
+    {
+      "action": 80,
+      "gcd": 63,
+      "size": 32
+    },
+    {
+      "action": 72,
+      "gcd": 70,
+      "size": 24
+    },
+    {
+      "action": 70,
+      "gcd": 72,
+      "size": 24
+    },
+    {
+      "action": 63,
+      "gcd": 80,
+      "size": 36
+    },
+    {
+      "action": 60,
+      "gcd": 84,
+      "size": 16
+    },
+    {
+      "action": 56,
+      "gcd": 90,
+      "size": 24
+    },
+    {
+      "action": 48,
+      "gcd": 105,
+      "size": 16
+    },
+    {
+      "action": 45,
+      "gcd": 112,
+      "size": 24
+    },
+    {
+      "action": 42,
+      "gcd": 120,
+      "size": 12
+    },
+    {
+      "action": 40,
+      "gcd": 126,
+      "size": 16
+    },
+    {
+      "action": 36,
+      "gcd": 140,
+      "size": 12
+    },
+    {
+      "action": 35,
+      "gcd": 144,
+      "size": 24
+    },
+    {
+      "action": 30,
+      "gcd": 168,
+      "size": 8
+    },
+    {
+      "action": 28,
+      "gcd": 180,
+      "size": 12
+    },
+    {
+      "action": 24,
+      "gcd": 210,
+      "size": 8
+    },
+    {
+      "action": 21,
+      "gcd": 240,
+      "size": 12
+    },
+    {
+      "action": 20,
+      "gcd": 252,
+      "size": 8
+    },
+    {
+      "action": 18,
+      "gcd": 280,
+      "size": 6
+    },
+    {
+      "action": 16,
+      "gcd": 315,
+      "size": 8
+    },
+    {
+      "action": 15,
+      "gcd": 336,
+      "size": 8
+    },
+    {
+      "action": 14,
+      "gcd": 360,
+      "size": 6
+    },
+    {
+      "action": 12,
+      "gcd": 420,
+      "size": 4
+    },
+    {
+      "action": 10,
+      "gcd": 504,
+      "size": 4
+    },
+    {
+      "action": 9,
+      "gcd": 560,
+      "size": 6
+    },
+    {
+      "action": 8,
+      "gcd": 630,
+      "size": 4
+    },
+    {
+      "action": 7,
+      "gcd": 720,
+      "size": 6
+    },
+    {
+      "action": 6,
+      "gcd": 840,
+      "size": 2
+    },
+    {
+      "action": 5,
+      "gcd": 1008,
+      "size": 4
+    },
+    {
+      "action": 4,
+      "gcd": 1260,
+      "size": 2
+    },
+    {
+      "action": 3,
+      "gcd": 1680,
+      "size": 2
+    },
+    {
+      "action": 2,
+      "gcd": 2520,
+      "size": 1
+    },
+    {
+      "action": 1,
+      "gcd": 5040,
+      "size": 1
+    }
+  ],
+  "scope": "Exact finite diagnostics; universal results are paper proofs, no Lean build or RH claim.",
+  "state_count": {
+    "additive": 5040,
+    "multiplicative": 60
+  },
+  "strict_thresholds": [
+    {
+      "adopted": true,
+      "gain": "31/30",
+      "layer": 4,
+      "p": 2
+    },
+    {
+      "adopted": false,
+      "gain": "63/62",
+      "layer": 5,
+      "p": 2
+    },
+    {
+      "adopted": true,
+      "gain": "13/12",
+      "layer": 2,
+      "p": 3
+    },
+    {
+      "adopted": false,
+      "gain": "40/39",
+      "layer": 3,
+      "p": 3
+    },
+    {
+      "adopted": true,
+      "gain": "6/5",
+      "layer": 1,
+      "p": 5
+    },
+    {
+      "adopted": false,
+      "gain": "31/30",
+      "layer": 2,
+      "p": 5
+    },
+    {
+      "adopted": true,
+      "gain": "8/7",
+      "layer": 1,
+      "p": 7
+    },
+    {
+      "adopted": false,
+      "gain": "57/56",
+      "layer": 2,
+      "p": 7
+    }
+  ],
+  "template": 5040,
+  "unsafe_witness_exponent_histogram": {
+    "0": 2016,
+    "1": 770,
+    "10": 1,
+    "11": 2,
+    "2": 431,
+    "3": 249,
+    "4": 138,
+    "5": 62,
+    "6": 23,
+    "7": 11,
+    "8": 3,
+    "9": 2
+  },
+  "unsafe_witness_samples": [
+    {
+      "A": 2,
+      "B": 1,
+      "C": 16,
+      "exponent": 4,
+      "ratio": "63/62"
+    },
+    {
+      "A": 2,
+      "B": 5,
+      "C": 4,
+      "exponent": 2,
+      "ratio": "25/28"
+    },
+    {
+      "A": 2,
+      "B": 7,
+      "C": 4,
+      "exponent": 2,
+      "ratio": "15/16"
+    },
+    {
+      "A": 2,
+      "B": 11,
+      "C": 16,
+      "exponent": 4,
+      "ratio": "231/248"
+    },
+    {
+      "A": 2,
+      "B": 25,
+      "C": 4,
+      "exponent": 2,
+      "ratio": "375/434"
+    },
+    {
+      "A": 2,
+      "B": 49,
+      "C": 16,
+      "exponent": 4,
+      "ratio": "1029/1178"
+    },
+    {
+      "A": 2,
+      "B": 55,
+      "C": 4,
+      "exponent": 2,
+      "ratio": "275/336"
+    },
+    {
+      "A": 3,
+      "B": 1,
+      "C": 9,
+      "exponent": 2,
+      "ratio": "40/39"
+    }
+  ]
+}

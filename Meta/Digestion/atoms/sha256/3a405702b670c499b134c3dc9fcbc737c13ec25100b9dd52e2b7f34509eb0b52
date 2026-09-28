@@ -1,0 +1,95 @@
+## 79. 辅助的全局 Fib 重数表与 F–Robin 等价式
+
+前面的四块系统只覆盖 $2^a3^b5^c7^d$。下面的逐素数重数表只是把任意正整数接入全局量词的辅助索引；它不是前文“素 Fib 原子—加法成块—乘法组合”的递归块语法。递归块版本的 Robin 读出见第 82 节。
+
+要得到与 Robin 判据同量词的全局辅助版本，让每个素数标签各自携带一行 Fibonacci 重数码。
+
+定义
+
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j.
+$$
+
+令 $\mathscr F$ 为所有有限支撑表
+
+$$
+B=(b_{p,j})_{p\in\mathbb P,\ j\ge0},
+$$
+
+其中 $b_{p,j}\in\{0,1\}$，并满足
+
+$$
+ b_{p,j}b_{p,j+1}=0
+$$
+
+对每个 $p,j$。第 $p$ 行表示重数
+
+$$
+ a_p(B)=\sum_j b_{p,j}G_j,
+$$
+
+表的数值与对数规模定义为
+
+$$
+N(B)=\prod_p p^{a_p(B)},
+\qquad
+\mathcal E(B)=\sum_{p,j}b_{p,j}G_j\log p.
+$$
+
+唯一素因数分解与每一行的 Zeckendorf 唯一性给出
+
+$$
+\boxed{N:\mathscr F\overset{\sim}{\longrightarrow}\mathbb N_{>0},\qquad
+\mathcal E(B)=\log N(B).}
+$$
+
+这里 $p$ 是乘法原子标签，$G_j$ 是编码该原子重数的 Fibonacci 位权；两层原子不能混同。
+
+对 $B,C\in\mathscr F$ 定义乘法子配置关系
+
+$$
+\boxed{
+C\preceq_\times B
+\iff
+ a_p(C)\le a_p(B)\quad\text{对每个素数 }p.
+}
+$$
+
+这等价于 $N(C)\mid N(B)$，而不等价于每一行码字的支撑逐位包含。例如 $2\le4$，但重数码 `010` 不是 `101` 删除若干个1得到的码字。
+
+定义完整配置的约数配分函数
+
+$$
+\boxed{
+\mathcal Z(B)=\sum_{C\preceq_\times B}e^{-\mathcal E(C)}.
+}
+$$
+
+由于 $e^{-\mathcal E(C)}=1/N(C)$，有
+
+$$
+\mathcal Z(B)=\sum_{d\mid N(B)}\frac1d=\frac{\sigma(N(B))}{N(B)}.
+$$
+
+因此经典 Robin 定理等价于如下全局 Fibonacci 命题：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall B\in\mathscr F,\quad
+\mathcal E(B)>\log5040
+\Longrightarrow
+\mathcal Z(B)<e^\gamma\log\mathcal E(B).
+}
+\tag{F--Robin}
+$$
+
+右侧是 $e^\gamma\log\log N(B)$；不能误写成 $e^\gamma\mathcal E(B)$。若定义
+
+$$
+\Delta_{\mathrm{Fib}}(B)=\gamma+\log\log\mathcal E(B)-\log\mathcal Z(B),
+$$
+
+则 F--Robin 要求所有超过阈值的配置满足 $\Delta_{\mathrm{Fib}}(B)>0$。
+

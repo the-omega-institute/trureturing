@@ -1,0 +1,21 @@
+### theorem 71.1 关系坐标对块增量闭合
+
+$$
+\boxed{
+I\circ U_R=\widehat U_R\circ I,qquad
+I_{\le r}\circ U_R=\widehat U_R^{(r)}\circ I_{\le r}.
+}
+$$
+
+并且对所有合法块 $R,S$，
+
+$$
+\widehat U_R^{(r)}\circ\widehat U_S^{(r)}
+=
+\widehat U_S^{(r)}\circ\widehat U_R^{(r)}.
+$$
+
+**证明。** 对每个观察坐标 $T$，加入一份 $R$ 恰使 $y_T$ 增加 $1$ 当且仅当 $T\subseteq R$，所以两条交换式逐坐标成立。增量是加法，故不同块的更新交换。证毕。 $\square$
+
+这给出一个明确的有限交换更新接口：截断观察虽然不能恢复所有高阶块重数，却可以独立执行所有“加入一个合法块”的未来操作。它能否回答某个终端任务，取决于该任务是否在 $\ker I_{\le r}$ 的每个方向上保持不变。
+

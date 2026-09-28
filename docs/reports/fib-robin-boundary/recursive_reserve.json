@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "range": [
+    144,
+    121393
+  ],
+  "prime_count": 11425,
+  "prime_power_event_count": 11539,
+  "root_count": 14,
+  "bound_evaluations": 3202,
+  "leaf_count": 1608,
+  "maximum_depth_root_zero": 12,
+  "minimum_leaf_interval": [
+    44627,
+    44771
+  ],
+  "minimum_leaf_Gamma_wire": [
+    "32163571298526891009054821822779",
+    "32163741439540210464967099592607"
+  ],
+  "minimum_leaf_Gamma_decimal": [
+    "9.452024090922056648662549639E-8",
+    "9.452074090872056698662500226E-8"
+  ],
+  "gamma_interval": [
+    "0.5772156649014495272731787651",
+    "0.5772156649019495267731792651"
+  ],
+  "direct_prefix_audit_nodes": 14,
+  "diagnostic_x": 100000,
+  "diagnostic_intervals": {
+    "B_old": [
+      "0.0001563106368398430577032307435",
+      "0.0001563106368398430577032307435"
+    ],
+    "B2": [
+      "0.0001917077846203446426790616033",
+      "0.0001917077846203446426790616033"
+    ],
+    "R2": [
+      "0.0001917077846203446426790616033",
+      "0.0001917077846203446426790616033"
+    ],
+    "R3": [
+      "0.0002136066629966230676164578705",
+      "0.0002136066629966230676164578705"
+    ],
+    "R4": [
+      "0.0002192525856014055727857889397",
+      "0.0002192525856014055727857889397"
+    ],
+    "R": [
+      "0.0002294849318088087412288509040",
+      "0.0002294849318088087412288509040"
+    ]
+  },
+  "certificate_path": "certificate.json.gz",
+  "certificate_sha256": "9015782fc5dc657eca638c4d63a504a9623d58a1edce52a3202a9bedd9182db1",
+  "script": "recursive_reserve.py",
+  "script_sha256": "9b9f02533f97641a63201ed2e3f67ea72071a131362a6f793cd760313ac3a4a7",
+  "engine": "price_band.py",
+  "engine_sha256": "01fe08f39f0ffdabc98764807ba917351233de4d9aa2d6225b29a33936f59f02",
+  "limitations": [
+    "Integer-interval arithmetic certificate, not Lean verification.",
+    "Analytic reserve and continuity bridges require the separate mathematical argument.",
+    "Only the finite range and x=100000 diagnostic are checked."
+  ]
+}
