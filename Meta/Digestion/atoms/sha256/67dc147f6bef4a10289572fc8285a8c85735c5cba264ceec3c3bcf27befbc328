@@ -1,0 +1,9 @@
+**Theorem 3 (exact octahedral repair coefficient).** For natural numbers
+$p,q$, including $q=0$,
+
+$$
+\bigl(\forall f\;\exists g,\quad
+q\operatorname{wt}(f+d_0g)\leq pT(f)\bigr)
+\quad\Longleftrightarrow\quad 3q\leq2p.
+$$
+
