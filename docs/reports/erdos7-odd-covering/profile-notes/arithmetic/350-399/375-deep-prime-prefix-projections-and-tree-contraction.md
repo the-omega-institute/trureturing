@@ -882,3 +882,73 @@ The remaining whole-cover obligation is to force enough distribution
 on U, exploit both arms of LM3 through complete private-region repairs,
 or supply another strict descent. A local geometric substitution does
 not discharge it.
+
+### 9.5. The coarse projection comparison cannot exclude an extremal inventory
+
+LM8's counting proof does not require the order r<q. It is therefore
+legitimate to apply it with a larger coordinate p>q, and compare it to
+DP1 on the SAME residual R_q. Write
+
+    Q=p^H q^G M, H,G>=1, gcd(M,pq)=1,
+    L=projection_(p^H)(R_q), t=p-q+1.
+
+The resulting scalar test is
+
+    t^H <= |L| <= tau(M)*(sum_(a=0..H)p^(H-a))
+                           *(sum_(e=1..G)q^(-e)).    (LM9)
+
+For the initial-odd-prime support of the extremal model, with at least
+three support primes, the RIGHT endpoint is always strictly larger
+than t^H. Consequently this comparison cannot exclude any such prime
+and height inventory, even when all prime pairs and arbitrary heights
+are allowed. This is a limitation of the coarse tau(M) replacement,
+not a construction of an actual cover or of jointly realizable residuals.
+
+Here is a uniform proof. After dividing by p^H, the lower endpoint
+and the upper endpoint satisfy, respectively,
+
+    (t/p)^H <= t/p,
+    tau(M)*(sum_(a=0..H)p^(-a))*(sum_(e=1..G)q^(-e))
+       >= tau(M)*(p+1)/(p*q).
+
+It is thus enough to show
+
+    q*(p-q+1) < tau(M)*(p+1).                       (LM10)
+
+Let p_j be the j-th odd prime, so p_1=3,p_2=5,p_3=7. For j>=3,
+the j-2 other primes among p_1,...,p_j divide M, whence
+tau(M)>=2^(j-2). Bertrand's postulate gives p_(j+1)<2*p_j, and
+induction from 2=(7+1)/4 yields
+
+    2^(j-2)>=(p_j+1)/4,
+
+with strict inequality for j>=4. Therefore for p>=11,
+
+    q*(p-q+1) <= (p+1)^2/4 < tau(M)*(p+1),
+
+where the first inequality follows by completing the square. For p=7,
+q is3 or5 and the two sides of LM10 are at most15 and at least16.
+For p=5,q=3, the assumed third support prime divides M, so they are
+9 and at least12. This proves LM10 in every case and hence the strict
+compatibility of the two scalar endpoints in LM9.
+
+The initial-segment premise is supplied by Report350's original-label
+prime compression. The at-most-two-prime case already fails the elementary
+reciprocal test: even the completed nonunit inventory on3 and5 has
+sum 1/d=(3/2)*(5/4)-1=7/8<1. Thus the comparison excluded here cannot
+advance the remaining unrestricted extremal case.
+
+This does not discard the literal-inventory or phase-sensitive versions
+of LM8. For example, for one fixed actual live section v_u,
+
+    |L| <= sum_(d:q divides d) q^(-v_q(d))
+              *#{u in L: u=a_d mod p^(v_p(d)),
+                            v_u=a_d mod s_d},
+    s_d=d/(p^(v_p(d))*q^(v_q(d))).                  (LM11)
+
+This is the complete q-marginal inequality summed over that same
+section. Omitting only the v_u test or keeping the actual numerical
+inventory gives intermediate upper bounds. LM10 concerns the final
+coarse bound after replacing every possible (a,e,s) by inventory
+capacity. It proves no domination for LM11, supplies no missing common
+source distribution, and settles no unrestricted covering assertion.
