@@ -13,6 +13,7 @@ strata_touched:
   - D5/S1/Words/Permutations/MamedeDeletionEquiv
   - D5/S1/Words/Permutations/MamedeExtremalOrientation
   - D5/S1/Words/Permutations/MamedeEndpointUniqueness
+  - D5/S1/Words/Permutations/MamedeNonoscSourceEndpoints
   - D5/S1/Words/Permutations/MamedeFactorSeparation
   - D5/S1/Words/Permutations/MamedeOrderFreeFiber
 license: citation-only
@@ -101,11 +102,24 @@ descending run, or the opposite endpoint map with a full ascending run.
 The proof uses reversed words to represent inverse permutations. This is a
 formalization of a published intermediate result, not a new resolution.
 
-The nonoscillating source-admissibility implication still requires strict
-internal endpoint extraction, the other endpoint equations, nonoscillation
-under reversal, and a proof that arbitrary sources enter the conditional
-`j<i` fiber theorem below. The extremal theorem does not assume or
-establish `i<=j`, and does not settle Conjecture 5.1.
+`MamedeNonoscSourceEndpoints.first_orientation_strict_endpoints` closes the
+first-orientation endpoint extraction for an actual nonoscillating source.
+Given attained `m,M`, support in `[m,M]`, and `sigma(M+1)=m`, it proves `m<M`
+and constructs `i=sigma^{-1}(M+1)` and `j+1=sigma(m)` with
+`m<i<M` and `m<j<M`. It proves `sigma(i)=M+1`, `sigma(m)=j+1`, and
+fixedness outside `[m,M+1]`. No source shape or remaining map is assumed.
+The proof excludes `i=m` and `j=M` using the opposite-map oscillation theorem;
+`i=M` and `j=m` force an extremal last or first word letter, respectively.
+The one-generator interval also forces oscillation. This is a repository-derived
+first-orientation source result, not a count theorem.
+
+The indices are not asserted to satisfy `i<=j`. If `i<=j`, the extracted
+data give the endpoint and exterior premises of `source_shape_for_every_singleton`
+and the conditional deletion construction. If `j<i`, they give the premises
+of `singleton_fiber_unique_of_j_lt_i`. These consumer applications use the
+same permutation and actual source word; no additional source shape is an
+input. The reflected orientation, oscillation and involution cases, and the
+global count remain open.
 
 ## Extremal endpoint uniqueness
 
@@ -222,8 +236,9 @@ establish the universal extraction.
 This is the conditional first-orientation fiber argument of published
 Proposition 3.7. The older frozen `endpointExteriorFixedSource` and
 its extraction theorems still require `i<=j`; the new argument uses
-independent interior bounds. Deriving the strict internal endpoints and
-the endpoint equations from an arbitrary nonoscillating source remains
-unproved, as do the other branches of Conjecture 5.1. The identification
+independent interior bounds. The first-orientation endpoint theorem above
+derives those bounds and equations from an actual nonoscillating source;
+the reflected orientation and other branches of Conjecture 5.1 remain open.
+The identification
 of the paper's commutation classes with `singletonWord` remains a
 source-translation judgment. KPI is 0.

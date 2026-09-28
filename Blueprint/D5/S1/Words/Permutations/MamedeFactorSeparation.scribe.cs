@@ -15,7 +15,7 @@ internal sealed class MamedeFactorSeparationDocument : IScribeDocumentDefinition
                 "D5/S1/Words/Permutations/MamedeFactorSeparation.source_shape_unique_of_j_lt_i"),
             H("Conditional uniqueness for j<i"),
             StatementSource.FromAuthor(Disp(Q(
-                V("1"), Le, V("m"), Lt, V("j"), Lt, V("i"), Lt, V("M"), Le, V("n"), Land,
+                D(1), Le, V("m"), Lt, V("j"), Lt, V("i"), Lt, V("M"), Le, V("n"), Land,
                 Call("ReducedConsecutive", V("n"), V("a")), Land,
                 Call("ReducedConsecutive", V("n"), V("b")), Land,
                 Call("WordProduct", V("n"), V("a")), Eq,
@@ -45,9 +45,10 @@ internal sealed class MamedeFactorSeparationDocument : IScribeDocumentDefinition
                 + "by minimality against the empty representative. This formalizes "
                 + "the factor-separation argument in Proposition 3.7, conditional on "
                 + "both source shapes. It assumes no oscillation or endpoint equations. "
-                + "It does not derive those shapes for an arbitrary singleton-word "
-                + "fiber: the existing extraction theorems assume i<=j. No global "
-                + "Conjecture 5.1 resolution or KPI change follows."))),
+                + "This theorem takes both shapes as inputs. The order-free fiber "
+                + "theorem derives them under j<i endpoint data, and the nonoscillating "
+                + "source-endpoint theorem derives those data in the first orientation. "
+                + "No global Conjecture 5.1 resolution or KPI change follows."))),
             DescribeRole.Theorem))));
 
     private static Formula Q(params Formula[] items)

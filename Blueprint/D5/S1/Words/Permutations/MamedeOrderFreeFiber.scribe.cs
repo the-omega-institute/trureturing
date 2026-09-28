@@ -15,11 +15,11 @@ internal sealed class MamedeOrderFreeFiberDocument : IScribeDocumentDefinition
                 "D5/S1/Words/Permutations/MamedeOrderFreeFiber.singleton_fiber_unique_of_j_lt_i"),
             H("Whole-fiber uniqueness for j<i"),
             StatementSource.FromAuthor(Disp(Q(
-                V("1"), Le, V("m"), Lt, V("j"), Lt, V("i"), Lt, V("M"), Le, V("n"),
-                Land, Call("Endpoints", V("σ"), V("m"), V("M"), V("i"), V("j")),
-                Land, Call("ExteriorFixed", V("σ"), V("m"), V("M")),
-                Land, Call("SingletonWord", V("n"), V("σ"), V("a")),
-                Land, Call("SingletonWord", V("n"), V("σ"), V("b")),
+                D(1), Le, V("m"), Lt, V("j"), Lt, V("i"), Lt, V("M"), Le, V("n"),
+                Land, Call("Endpoints", V("sigma"), V("m"), V("M"), V("i"), V("j")),
+                Land, Call("ExteriorFixed", V("sigma"), V("m"), V("M")),
+                Land, Call("SingletonWord", V("n"), V("sigma"), V("a")),
+                Land, Call("SingletonWord", V("n"), V("sigma"), V("b")),
                 Implies, V("a"), Eq, V("b")))),
             AssessedProvenance.FromLiterature(
                 LibraryNoteRef.Create("D5/L/Words/mamede2026commutation")),
@@ -34,8 +34,10 @@ internal sealed class MamedeOrderFreeFiberDocument : IScribeDocumentDefinition
                 + "(m,j) and every suffix letter in (i,M). The existing factor-separation "
                 + "theorem then identifies two such lists. The proof includes adjacent "
                 + "endpoints i=j+1 and empty outer factors. The theorem is conditional "
-                + "on all three endpoint equations and exterior fixedness; it does not "
-                + "derive them from an arbitrary nonoscillating source. It formalizes "
+                + "on all three endpoint equations and exterior fixedness; the separate "
+                + "nonoscillating source-endpoint theorem derives these from an actual "
+                + "first-orientation source word with attained generator extrema. "
+                + "It formalizes "
                 + "this first-orientation part of Proposition 3.7 and does not settle "
                 + "global Conjecture 5.1. The repository's singletonWord interpretation "
                 + "of the paper's commutation classes remains a source-translation "

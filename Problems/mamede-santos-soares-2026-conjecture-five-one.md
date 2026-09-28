@@ -33,10 +33,12 @@ step, not a verified resolution of Conjecture 5.1. KPI: 0.
 
 `MamedeExtremalOrientation.extremal_orientation` derives attained generator
 extrema, exterior fixedness, an endpoint orientation, and a full extremal run
-from any nonempty reduced consecutive word. It supplies the extremal part of
-the source adapter. Strict internal endpoints and the remaining source
-adapter obligations are still unproved; the conditional `j<i` fiber step
-is proved below. This intermediate result does not change KPI.
+from any nonempty reduced consecutive word. In the first orientation,
+`MamedeNonoscSourceEndpoints.first_orientation_strict_endpoints` now derives
+strictly interior endpoint indices and both remaining position equations from
+an actual nonoscillating source. No source shape is assumed. The indices may
+occur in either order; the conditional `j<i` fiber step is proved below.
+These source results do not change KPI.
 
 `MamedeEndpointUniqueness.extremal_endpoint_unique` proves that two reduced
 consecutive words with the same product and the same first (or the same
@@ -94,19 +96,14 @@ theorems retain their `i<=j` telescope. KPI remains 0.
 
 ## Gap
 
-The reflected orientation, oscillating and involutive branches, and a global
-count argument for every permutation remain unproved. The induction also needs
-to derive the exact endpoint and exterior hypotheses from an arbitrary
-nonoscillating source, up to permutation inversion, and handle the terminating cases.
-The opposite-map theorem excludes simultaneous extreme maps for a
-nonoscillating word with its attained generator interval. The remaining
-source-adapter obligation is to derive the strict internal endpoint `i>m`
-and the map to `j+1` with `j<M` from arbitrary nonoscillating sources, up to
-inversion, with all remaining endpoint and support conditions required by
-the conditional deletion and `j<i` fiber theorems. The paper's Lemma 3.6
-provides the intended source statement; the complete adapter is not yet a
-Lean theorem. The opposite-map consumer is compiled; the complete source
-adapter and the global count remain open.
+The first-orientation endpoint adapter is compiled. With attained `m,M`,
+support in `[m,M]`, nonoscillation, and `sigma(M+1)=m`, its indices satisfy
+`m<i<M` and `m<j<M`, both required position maps, and exterior fixedness.
+For `i<=j`, these are the endpoint premises of the existing shape and deletion
+results; for `j<i`, they are the premises of the existing whole-fiber
+uniqueness theorem. The theorem does not order `i,j` or prove the reflected
+orientation, oscillating and involutive branches, terminating cases, or a
+global count argument for every permutation.
 The class-to-word correspondence and the paper's upper bound still require
 formal justification in this adjacent-word model before the full conjecture
 can be claimed. Research target: [#10285](https://github.com/the-omega-institute/trureturing/issues/10285).
@@ -114,9 +111,8 @@ can be claimed. Research target: [#10285](https://github.com/the-omega-institute
 ## Route
 
 Establish the reflected deletion branch and the oscillating and involutive
-cases. Then derive the endpoint and exterior conditions from arbitrary
-nonoscillating sources, justify the class-to-word correspondence and upper
-bound in the formal model, and close the global induction.
+cases, handle the terminating cases, justify the class-to-word correspondence
+and upper bound in the formal model, and close the global induction.
 
 ## Falsifier
 
