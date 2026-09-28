@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:f3bb9ebb0f20c984b263f608056b0773331d20fa72293657ec49d0a0047b4e6b
   normalized_sha256: sha256:f3bb9ebb0f20c984b263f608056b0773331d20fa72293657ec49d0a0047b4e6b
 cas_ref: sha256:f3bb9ebb0f20c984b263f608056b0773331d20fa72293657ec49d0a0047b4e6b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Separation/BooleanRankThreeProtocol.result
+    target_statement_id: sha256:34fb9b3d50ad1590094abafaee679af40e320b0b3158b0a5deda1693b211d625
 receipts:
   unresolved_subitems: []
