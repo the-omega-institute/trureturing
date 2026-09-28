@@ -4,6 +4,6 @@ fingerprints:
 cas_ref: sha256:231ef37f9994f3c7eb5457efe0439596f019534a5ad4d400996656603ab329df
 coverage_gids:
   - gid: D5/S3/Combinatorics/Partitions/PartitionLInftyGeodesic.partition_lInf_geodesic
-    target_statement_id: sha256:910a5b2b0f26267ff4a00af1f9f65b2a20cdd7fd27a2fcb4ebc046813c2e86ca
+    target_statement_id: sha256:afa308ce81fe99f8a7c1e71549f7f92295beb29e4e1bfacdd1866d357933d59b
 receipts:
   unresolved_subitems: []

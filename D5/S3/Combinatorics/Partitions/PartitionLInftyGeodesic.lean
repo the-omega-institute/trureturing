@@ -34,7 +34,10 @@ def Path {n D : ℕ} (p q : Partition n) :=
       min (coord p i) (coord q i) ≤ coord (γ k) i ∧
       coord (γ k) i ≤ max (coord p i) (coord q i))}
 
-private def fill (l h : List ℕ) (r : ℕ) : List ℕ :=
+/-! The source construction fills the lower endpoint greedily from left to
+right, spending as much of the remaining mass as the current capacity allows.
+The definitions below expose that construction at the coordinate level. -/
+def fill (l h : List ℕ) (r : ℕ) : List ℕ :=
   match l, h with
   | a :: as, b :: bs =>
       let t := min r (b - a)
@@ -62,10 +65,44 @@ private def baseFn {n D : ℕ} (p q : Partition n) (i : Fin n) : ℕ :=
 private def base {n D : ℕ} (p q : Partition n) : List ℕ :=
   List.ofFn (baseFn (D := D) p q)
 
+def algorithmStepValues {n D : ℕ} (f g : Fin n → ℕ) : List ℕ :=
+  let l := List.ofFn (fun i =>
+    max 0 (max (f i - 1)
+      (max (g i - (D - 1)) (min (f i) (g i)))))
+  let h := List.ofFn (fun i =>
+    min (f i + 1)
+      (min (g i + (D - 1)) (max (f i) (g i))))
+  fill l h (n - l.sum)
+
+def algorithmStepFn {n D : ℕ} (f g : Fin n → ℕ) : Fin n → ℕ :=
+  let v := algorithmStepValues (D := D) f g
+  fun i => v.getD i.1 0
+
+/-- One source-algorithm step: form the displayed `l` and `h` bounds and
+greedily fill from the smallest index until the fixed mass is reached. -/
+def algorithmStep {n D : ℕ} (p q : Partition n) : List ℕ :=
+  algorithmStepValues (D := D) (fun i => coord p i) (fun i => coord q i)
+
+/-- The source algorithm iterated for exactly `D` steps.  The first coordinate
+function is the initial endpoint; each subsequent one is the greedy step with
+the remaining distance as its parameter. -/
+def algorithmPathValuesAt {n : ℕ} : (D : ℕ) →
+    (Fin n → ℕ) → (Fin n → ℕ) → Fin (D + 1) → List ℕ
+  | 0, f, _, _ => List.ofFn f
+  | D + 1, f, g, k => Fin.cases (List.ofFn f)
+      (fun j => algorithmPathValuesAt D
+        (algorithmStepFn (D := D + 1) f g) g j) k
+
+def AlgorithmPath {n D : ℕ} (p q : Partition n) :=
+  {G : Path (D := D) p q //
+    ∀ k : Fin (D + 1), (G.1 k).1 =
+      algorithmPathValuesAt D (fun i => coord p i) (fun i => coord q i) k}
+
 /-- Every pair of fixed-mass partitions has an endpoint-confined path whose
 length is its maximum coordinate difference. -/
 theorem partition_lInf_geodesic {n : ℕ} (p q : Partition n) :
     Nonempty (Path (D := dInf p q) p q) ∧
+      Nonempty (AlgorithmPath (D := dInf p q) p q) ∧
       (∀ K : ℕ, ∀ γ : Fin (K + 1) → Partition n,
         γ 0 = p → γ ⟨K, by omega⟩ = q →
         (∀ k : Fin K, dInf (γ ⟨k.1, by omega⟩)
@@ -273,7 +310,8 @@ theorem partition_lInf_geodesic {n : ℕ} (p q : Partition n) :
       ∃ r : Partition n,
         dInf p r ≤ 1 ∧ dInf r q = D - 1 ∧
         (∀ i : Fin n, min (coord p i) (coord q i) ≤ coord r i ∧
-          coord r i ≤ max (coord p i) (coord q i)) := by
+          coord r i ≤ max (coord p i) (coord q i)) ∧
+        r.1 = algorithmStep (D := D) p q := by
     classical
     have pant : ∀ ⦃i j : Fin n⦄, i < j → coord p i ≥ coord p j := by
       intro i j hij
@@ -354,13 +392,6 @@ theorem partition_lInf_geodesic {n : ℕ} (p q : Partition n) :
       have hmax : max (coord p i) (coord q i) ≥ max (coord p j) (coord q j) :=
         max_le_max (pant hij) (qant hij)
       exact min_le_min hp1 (min_le_min hq1 hmax)
-    have hbase_antitone : (base (D := D) p q).Pairwise (· ≥ ·) := by
-      change (List.ofFn (baseFn (D := D) p q)).Pairwise (· ≥ ·)
-      apply (List.pairwise_ofFn).2
-      intro i j hij
-      change baseFn (D := D) p q i ≥ baseFn (D := D) p q j
-      apply Nat.div_le_div_right
-      exact Nat.add_le_add (Nat.mul_le_mul_left (D - 1) (pant hij)) (qant hij)
     have hbase_lower : ∀ i : Fin n, lowerFn (D := D) p q i ≤ baseFn (D := D) p q i := by
       intro i
       change lowerFn (D := D) p q i ≤ baseFn (D := D) p q i
@@ -410,69 +441,6 @@ theorem partition_lInf_geodesic {n : ℕ} (p q : Partition n) :
                   rw [Nat.mul_comm]
                   exact (hmul_one (coord q i)).symm
                 _ ≤ (D - 1) * coord p i + coord q i := Nat.add_le_add_right hm _
-    have hbase_upper : ∀ i : Fin n, baseFn (D := D) p q i ≤ upperFn (D := D) p q i := by
-      intro i
-      change baseFn (D := D) p q i ≤ upperFn (D := D) p q i
-      apply Nat.div_le_of_le_mul
-      have hdiff₁ : coord q i ≤ coord p i + D := by
-        have := hcoord i
-        omega
-      have hdiff₂ : coord p i ≤ coord q i + D := by
-        have := hcoord i
-        omega
-      have h₁ : ((D - 1) * coord p i + coord q i) ≤ D * (coord p i + 1) := by
-        calc
-          (D - 1) * coord p i + coord q i ≤
-              (D - 1) * coord p i + (coord p i + D) :=
-            Nat.add_le_add_left hdiff₁ _
-          _ = D * (coord p i + 1) := by
-            rw [Nat.mul_add]
-            simp only [Nat.mul_one]
-            calc
-              (D - 1) * coord p i + (coord p i + D) =
-                  ((D - 1) * coord p i + coord p i) + D := by omega
-              _ = D * coord p i + D := by rw [hmul_one]
-      have h₂ : ((D - 1) * coord p i + coord q i) ≤ D * (coord q i + (D - 1)) := by
-        have hm := Nat.mul_le_mul_left (D - 1) hdiff₂
-        calc
-          (D - 1) * coord p i + coord q i ≤ (D - 1) * (coord q i + D) + coord q i :=
-            Nat.add_le_add_right hm _
-          _ = D * (coord q i + (D - 1)) := by
-            rw [Nat.mul_add]
-            calc
-              (D - 1) * coord q i + (D - 1) * D + coord q i =
-                  ((D - 1) * coord q i + coord q i) + (D - 1) * D := by omega
-              _ = D * coord q i + (D - 1) * D := by rw [hmul_one]
-              _ = D * coord q i + D * (D - 1) := by rw [Nat.mul_comm (D - 1) D]
-              _ = D * (coord q i + (D - 1)) := by rw [Nat.mul_add]
-      have h₃ : ((D - 1) * coord p i + coord q i) ≤ D * max (coord p i) (coord q i) := by
-        by_cases hpq : coord p i ≤ coord q i
-        · rw [max_eq_right hpq]
-          have hm := Nat.mul_le_mul_left (D - 1) hpq
-          calc
-            (D - 1) * coord p i + coord q i ≤ (D - 1) * coord q i + coord q i :=
-              Nat.add_le_add_right hm _
-            _ = D * coord q i := by
-              exact hmul_one (coord q i)
-        · have hqp : coord q i ≤ coord p i := by omega
-          rw [max_eq_left hqp]
-          have hm : coord q i ≤ coord p i := hqp
-          calc
-            (D - 1) * coord p i + coord q i ≤ (D - 1) * coord p i + coord p i :=
-              Nat.add_le_add_left hm _
-            _ = D * coord p i := by
-              exact hmul_one (coord p i)
-      have h₂' : ((D - 1) * coord p i + coord q i) ≤
-          min (D * (coord q i + (D - 1)))
-            (D * max (coord p i) (coord q i)) := by
-        apply (le_min_iff).2
-        exact ⟨h₂, h₃⟩
-      change (D - 1) * coord p i + coord q i ≤
-        D * min (coord p i + 1) (min (coord q i + (D - 1))
-          (max (coord p i) (coord q i)))
-      rw [mul_min, mul_min]
-      apply (le_min_iff).2
-      exact ⟨h₁, h₂'⟩
     have hupper_num : ∀ i : Fin n,
         (D - 1) * coord p i + coord q i ≤ D * upperFn (D := D) p q i := by
       intro i
@@ -522,6 +490,9 @@ theorem partition_lInf_geodesic {n : ℕ} (p q : Partition n) :
               (D - 1) * coord p i + coord q i ≤
                   (D - 1) * coord p i + coord p i := Nat.add_le_add_left hqp _
               _ = D * coord p i := hmul_one _
+    have hbase_upper : ∀ i : Fin n, baseFn (D := D) p q i ≤ upperFn (D := D) p q i := by
+      intro i
+      exact Nat.div_le_of_le_mul (hupper_num i)
     have hupper_sum_mul : D * n ≤ D * (upper (D := D) p q).sum := by
       have hs : (∑ i : Fin n, ((D - 1) * coord p i + coord q i)) ≤
           (∑ i : Fin n, D * upperFn (D := D) p q i) :=
@@ -575,22 +546,6 @@ theorem partition_lInf_geodesic {n : ℕ} (p q : Partition n) :
         rw [hju]
       rw [hbget, huget]
       simpa [List.get_ofFn] using hbase_upper (⟨i.1, hi_n⟩ : Fin n)
-    have hrem : n - (base (D := D) p q).sum ≤
-        (upper (D := D) p q).sum - (base (D := D) p q).sum :=
-      Nat.sub_le_sub_right hp_upper_sum _
-    let vals : List ℕ := fill (base (D := D) p q) (upper (D := D) p q)
-      (n - (base (D := D) p q).sum)
-    have hvals_len : vals.length = n := by
-      dsimp [vals]
-      rw [fill_length (hlen_base.trans hlen_upper.symm), hlen_base]
-    have hvals_pair : vals.Pairwise (· ≥ ·) := by
-      dsimp [vals]
-      apply fill_pairwise (hlen_base.trans hlen_upper.symm)
-        hbase_antitone hupper_antitone hbase_upper_list hrem
-    have hvals_sum : vals.sum = n := by
-      dsimp [vals]
-      rw [fill_sum (hlen_base.trans hlen_upper.symm) hbase_upper_list hrem]
-      exact Nat.add_sub_of_le hbase_sum_le
     have fill_ge : ∀ {l h : List ℕ} {s : ℕ}, (hlen : l.length = h.length) →
         ∀ i : Fin l.length, l.get i ≤
           (fill l h s).get
@@ -675,129 +630,6 @@ theorem partition_lInf_geodesic {n : ℕ} (p q : Partition n) :
                     rfl
                   rw [hs]
                   simpa [fill] using htail ⟨i, hi'⟩
-    have hr_bounds : ∀ i : Fin n,
-        baseFn (D := D) p q i ≤ coord (listPartition vals hvals_len hvals_pair hvals_sum) i ∧
-          coord (listPartition vals hvals_len hvals_pair hvals_sum) i ≤
-            upperFn (D := D) p q i := by
-      intro i
-      let ib : Fin (base (D := D) p q).length :=
-        ⟨i.1, by simpa only [hlen_base] using i.2⟩
-      let iv : Fin vals.length := ⟨i.1, by simpa only [hvals_len] using i.2⟩
-      have hcast : Fin.cast
-          (fill_length (l := base (D := D) p q) (h := upper (D := D) p q)
-            (r := n - (base (D := D) p q).sum)
-            (hlen_base.trans hlen_upper.symm)).symm ib = iv := by
-        apply Fin.ext
-        rfl
-      have hge := fill_ge (l := base (D := D) p q) (h := upper (D := D) p q)
-        (s := n - (base (D := D) p q).sum)
-        (hlen_base.trans hlen_upper.symm) ib
-      have hle := fill_le_point (l := base (D := D) p q) (h := upper (D := D) p q)
-        (s := n - (base (D := D) p q).sum)
-        (hlen_base.trans hlen_upper.symm) hbase_upper_list ib
-      rw [hcast] at hge hle
-      have hbcast : Fin.cast (by simp [base] :
-          (base (D := D) p q).length =
-            (List.ofFn (baseFn (D := D) p q)).length) ib =
-          (⟨i.1, by simp [base]⟩ :
-            Fin (List.ofFn (baseFn (D := D) p q)).length) := by
-        apply Fin.ext
-        rfl
-      have hbget : (base (D := D) p q).get ib = baseFn (D := D) p q i := by
-        change (List.ofFn (baseFn (D := D) p q)).get
-          (Fin.cast (by simp [base] :
-            (base (D := D) p q).length =
-              (List.ofFn (baseFn (D := D) p q)).length) ib) = _
-        rw [hbcast, List.get_ofFn]
-        apply congrArg (baseFn (D := D) p q)
-        apply Fin.ext
-        rfl
-      have huget : (upper (D := D) p q).get
-          (Fin.cast (hlen_base.trans hlen_upper.symm) ib) =
-          upperFn (D := D) p q i := by
-        have hju : Fin.cast (by simp [upper] :
-            (upper (D := D) p q).length =
-              (List.ofFn (upperFn (D := D) p q)).length)
-            (Fin.cast (hlen_base.trans hlen_upper.symm) ib) =
-              (⟨i.1, by simp [upper]⟩ :
-                Fin (List.ofFn (upperFn (D := D) p q)).length) := by
-          apply Fin.ext
-          rfl
-        change (List.ofFn (upperFn (D := D) p q)).get
-          (Fin.cast (by simp [upper] :
-            (upper (D := D) p q).length =
-              (List.ofFn (upperFn (D := D) p q)).length)
-            (Fin.cast (hlen_base.trans hlen_upper.symm) ib)) = _
-        rw [hju, List.get_ofFn]
-        apply congrArg (upperFn (D := D) p q)
-        apply Fin.ext
-        rfl
-      rw [hbget] at hge
-      rw [huget] at hle
-      have hri : coord (listPartition vals hvals_len hvals_pair hvals_sum) i =
-          vals.get iv := by
-        rfl
-      rw [hri]
-      change baseFn (D := D) p q i ≤ vals.get iv ∧
-        vals.get iv ≤ upperFn (D := D) p q i
-      exact ⟨hge, hle⟩
-    let r : Partition n := listPartition vals hvals_len hvals_pair hvals_sum
-    have hr_bounds' : ∀ i : Fin n,
-        baseFn (D := D) p q i ≤ coord r i ∧
-          coord r i ≤ upperFn (D := D) p q i := by
-      intro i
-      simpa [r] using hr_bounds i
-    have hlow_p : ∀ i : Fin n, coord p i - 1 ≤ coord r i := by
-      intro i
-      have hli : coord p i - 1 ≤ lowerFn (D := D) p q i := by
-        calc
-          coord p i - 1 ≤ max (coord p i - 1)
-              (max (coord q i - (D - 1)) (min (coord p i) (coord q i))) :=
-            le_max_left _ _
-          _ ≤ lowerFn (D := D) p q i := le_max_right _ _
-      exact hli.trans ((hbase_lower i).trans (hr_bounds' i).1)
-    have hlow_q : ∀ i : Fin n, coord q i - (D - 1) ≤ coord r i := by
-      intro i
-      have hli : coord q i - (D - 1) ≤ lowerFn (D := D) p q i := by
-        calc
-          coord q i - (D - 1) ≤
-              max (coord q i - (D - 1)) (min (coord p i) (coord q i)) :=
-            le_max_left _ _
-          _ ≤ max (coord p i - 1)
-              (max (coord q i - (D - 1)) (min (coord p i) (coord q i))) :=
-            le_max_right _ _
-          _ ≤ lowerFn (D := D) p q i := le_max_right _ _
-      exact hli.trans ((hbase_lower i).trans (hr_bounds' i).1)
-    have hupp_p : ∀ i : Fin n, coord r i ≤ coord p i + 1 := by
-      intro i
-      have hui : upperFn (D := D) p q i ≤ coord p i + 1 := by
-        unfold upperFn
-        exact min_le_left _ _
-      exact (hr_bounds' i).2.trans hui
-    have hupp_q : ∀ i : Fin n, coord r i ≤ coord q i + (D - 1) := by
-      intro i
-      have hui : upperFn (D := D) p q i ≤ coord q i + (D - 1) := by
-        unfold upperFn
-        exact (min_le_right _ _).trans (min_le_left _ _)
-      exact (hr_bounds' i).2.trans hui
-    have hstep : dInf p r ≤ 1 := by
-      unfold dInf
-      apply Finset.sup_le
-      intro i hi
-      have h₁ := hlow_p i
-      have h₂ := hupp_p i
-      apply max_le
-      · omega
-      · omega
-    have hdist_upper : dInf r q ≤ D - 1 := by
-      unfold dInf
-      apply Finset.sup_le
-      intro i hi
-      have h₁ := hlow_q i
-      have h₂ := hupp_q i
-      apply max_le
-      · omega
-      · omega
     have hn : 0 < n := by
       by_contra hn'
       have hn0 : n = 0 := Nat.eq_zero_of_not_pos hn'
@@ -819,66 +651,195 @@ theorem partition_lInf_geodesic {n : ℕ} (p q : Partition n) :
         max (coord p i - coord q i) (coord q i - coord p i) = dInf p q := by
           simpa [dInf] using hsup.symm
         _ = D := hd
-    have hdist_lower : D - 1 ≤ dInf r q := by
+    have hlower_antitone : (List.ofFn (lowerFn (D := D) p q)).Pairwise (· ≥ ·) := by
+      apply (List.pairwise_ofFn).2
+      intro i j hij
+      unfold lowerFn
+      apply max_le_max
+      · exact le_rfl
+      · apply max_le_max
+        · exact Nat.sub_le_sub_right (pant hij) _
+        · apply max_le_max
+          · exact Nat.sub_le_sub_right (qant hij) _
+          · exact min_le_min (pant hij) (qant hij)
+    have hlen_lower : (List.ofFn (lowerFn (D := D) p q)).length = n := by simp
+    have hlower_base_list : ∀ i : Fin (List.ofFn (lowerFn (D := D) p q)).length,
+        (List.ofFn (lowerFn (D := D) p q)).get i ≤
+          (base (D := D) p q).get (Fin.cast (hlen_lower.trans hlen_base.symm) i) := by
+      intro i
+      have hi : i.1 < n := by simpa [hlen_lower] using i.2
+      let ii : Fin n := ⟨i.1, hi⟩
+      have hcast : i = (⟨i.1, by simpa [hlen_lower] using i.2⟩ : Fin (List.ofFn (lowerFn (D := D) p q)).length) := by
+        apply Fin.ext
+        rfl
+      rw [hcast]
+      have hbasecast : Fin.cast (hlen_lower.trans hlen_base.symm)
+          (⟨i.1, by simpa [hlen_lower] using i.2⟩ :
+            Fin (List.ofFn (lowerFn (D := D) p q)).length) =
+          (⟨i.1, by simpa [base] using hi⟩ : Fin (List.ofFn (baseFn (D := D) p q)).length) := by
+        apply Fin.ext
+        rfl
+      rw [hbasecast]
+      simpa [base] using hbase_lower ii
+    have hlower_sum : (List.ofFn (lowerFn (D := D) p q)).sum ≤ n := by
+      have hle := list_sum_le (l := List.ofFn (lowerFn (D := D) p q))
+        (h := base (D := D) p q) (hlen := hlen_lower.trans hlen_base.symm)
+        (hle := hlower_base_list)
+      exact hle.trans hbase_sum_le
+    have hlower_upper_list : ∀ i : Fin (List.ofFn (lowerFn (D := D) p q)).length,
+        (List.ofFn (lowerFn (D := D) p q)).get i ≤
+          (upper (D := D) p q).get
+            (Fin.cast (hlen_lower.trans hlen_upper.symm) i) := by
+      intro i
+      exact (hlower_base_list i).trans
+        (hbase_upper_list (Fin.cast (hlen_lower.trans hlen_base.symm) i))
+    have hlower_rem : n - (List.ofFn (lowerFn (D := D) p q)).sum ≤
+        (upper (D := D) p q).sum - (List.ofFn (lowerFn (D := D) p q)).sum := by
+      exact Nat.sub_le_sub_right hp_upper_sum _
+    let algVals : List ℕ := fill (List.ofFn (lowerFn (D := D) p q))
+      (upper (D := D) p q) (n - (List.ofFn (lowerFn (D := D) p q)).sum)
+    have halg_len : algVals.length = n := by
+      dsimp [algVals]
+      rw [fill_length (hlen_lower.trans hlen_upper.symm), hlen_lower]
+    have halg_pair : algVals.Pairwise (· ≥ ·) := by
+      dsimp [algVals]
+      exact fill_pairwise (hlen_lower.trans hlen_upper.symm) hlower_antitone
+        hupper_antitone hlower_upper_list hlower_rem
+    have halg_sum : algVals.sum = n := by
+      dsimp [algVals]
+      rw [fill_sum (hlen_lower.trans hlen_upper.symm) hlower_upper_list hlower_rem]
+      exact Nat.add_sub_of_le hlower_sum
+    let alg : Partition n := listPartition algVals halg_len halg_pair halg_sum
+    have halg_bounds : ∀ i : Fin n,
+        lowerFn (D := D) p q i ≤ coord alg i ∧
+          coord alg i ≤ upperFn (D := D) p q i := by
+      intro i
+      let il : Fin (List.ofFn (lowerFn (D := D) p q)).length :=
+        ⟨i.1, by rw [hlen_lower]; exact i.2⟩
+      let ia : Fin algVals.length := ⟨i.1, by rw [halg_len]; exact i.2⟩
+      have hcast : Fin.cast
+          (fill_length (l := List.ofFn (lowerFn (D := D) p q))
+            (h := upper (D := D) p q)
+            (r := n - (List.ofFn (lowerFn (D := D) p q)).sum)
+            (hlen_lower.trans hlen_upper.symm)).symm il = ia := by
+        apply Fin.ext
+        rfl
+      have hge := fill_ge (l := List.ofFn (lowerFn (D := D) p q))
+        (h := upper (D := D) p q)
+        (s := n - (List.ofFn (lowerFn (D := D) p q)).sum)
+        (hlen_lower.trans hlen_upper.symm) il
+      have hle := fill_le_point (l := List.ofFn (lowerFn (D := D) p q))
+        (h := upper (D := D) p q)
+        (s := n - (List.ofFn (lowerFn (D := D) p q)).sum)
+        (hlen_lower.trans hlen_upper.symm) hlower_upper_list il
+      rw [hcast] at hge hle
+      have hlow_get : (List.ofFn (lowerFn (D := D) p q)).get il = lowerFn (D := D) p q i := by
+        change (List.ofFn (lowerFn (D := D) p q)).get il = _
+        simp [il, List.get_ofFn]
+      have hupp_get : (upper (D := D) p q).get
+          (Fin.cast (hlen_lower.trans hlen_upper.symm) il) = upperFn (D := D) p q i := by
+        have hcast_u : Fin.cast (hlen_lower.trans hlen_upper.symm) il =
+            (⟨i.1, by rw [hlen_upper]; exact i.2⟩ : Fin (upper (D := D) p q).length) := by
+          apply Fin.ext
+          rfl
+        rw [hcast_u]
+        change (List.ofFn (upperFn (D := D) p q)).get _ = _
+        simp [upper, List.get_ofFn]
+      change lowerFn (D := D) p q i ≤ algVals.get ia ∧
+        algVals.get ia ≤ upperFn (D := D) p q i
+      constructor
+      · simpa [algVals, hlow_get] using hge
+      · have hle' : algVals.get ia ≤
+            (upper (D := D) p q).get (Fin.cast (hlen_lower.trans hlen_upper.symm) il) := by
+          simpa [algVals] using hle
+        rw [hupp_get] at hle'
+        exact hle'
+    have alg_low_p : ∀ i : Fin n, coord p i - 1 ≤ coord alg i := by
+      intro i
+      have hA : coord p i - 1 ≤ lowerFn (D := D) p q i := by
+        unfold lowerFn
+        calc
+          coord p i - 1 ≤ max (coord p i - 1)
+              (max (coord q i - (D - 1)) (min (coord p i) (coord q i))) := le_max_left _ _
+          _ ≤ max 0 (max (coord p i - 1)
+              (max (coord q i - (D - 1)) (min (coord p i) (coord q i)))) := le_max_right _ _
+      exact hA.trans (halg_bounds i).1
+    have alg_low_q : ∀ i : Fin n, coord q i - (D - 1) ≤ coord alg i := by
+      intro i
+      have hB : coord q i - (D - 1) ≤ lowerFn (D := D) p q i := by
+        unfold lowerFn
+        calc
+          coord q i - (D - 1) ≤ max (coord q i - (D - 1))
+              (min (coord p i) (coord q i)) := le_max_left _ _
+          _ ≤ max (coord p i - 1)
+              (max (coord q i - (D - 1)) (min (coord p i) (coord q i))) := le_max_right _ _
+          _ ≤ max 0 (max (coord p i - 1)
+              (max (coord q i - (D - 1)) (min (coord p i) (coord q i)))) := le_max_right _ _
+      exact hB.trans (halg_bounds i).1
+    have alg_upp_p : ∀ i : Fin n, coord alg i ≤ coord p i + 1 := by
+      intro i
+      exact (halg_bounds i).2.trans (min_le_left _ _)
+    have alg_upp_q : ∀ i : Fin n, coord alg i ≤ coord q i + (D - 1) := by
+      intro i
+      exact (halg_bounds i).2.trans ((min_le_right _ _).trans (min_le_left _ _))
+    have alg_step : dInf p alg ≤ 1 := by
+      unfold dInf
+      apply Finset.sup_le
+      intro i hi
+      have h₁ := alg_low_p i
+      have h₂ := alg_upp_p i
+      apply max_le <;> omega
+    have alg_dist_upper : dInf alg q ≤ D - 1 := by
+      unfold dInf
+      apply Finset.sup_le
+      intro i hi
+      have h₁ := alg_low_q i
+      have h₂ := alg_upp_q i
+      apply max_le <;> omega
+    have alg_dist_lower : D - 1 ≤ dInf alg q := by
       by_cases hab : coord p i - coord q i ≤ coord q i - coord p i
       · have hqdiff : coord q i - coord p i = D := by
           rw [max_eq_right hab] at hmax
           exact hmax
-        have hrlo := hlow_q i
-        have hrup := hupp_p i
         have hqeq : coord q i = coord p i + D := by omega
-        have hdiff : coord q i - coord r i = D - 1 := by omega
+        have h₁ := alg_low_q i
+        have h₂ := alg_upp_p i
+        have hdiff : coord q i - coord alg i = D - 1 := by omega
         have hi_sup := Finset.le_sup (s := (Finset.univ : Finset (Fin n)))
-          (f := fun j : Fin n =>
-            max (coord r j - coord q j) (coord q j - coord r j))
+          (f := fun j : Fin n => max (coord alg j - coord q j) (coord q j - coord alg j))
           (Finset.mem_univ i)
-        have hi_sup' : max (coord r i - coord q i) (coord q i - coord r i) ≤
-            dInf r q := by
+        have hi_sup' : max (coord alg i - coord q i) (coord q i - coord alg i) ≤ dInf alg q := by
           simpa [dInf] using hi_sup
-        calc
-          D - 1 = coord q i - coord r i := hdiff.symm
-          _ ≤ max (coord r i - coord q i) (coord q i - coord r i) := le_max_right _ _
-          _ ≤ dInf r q := hi_sup'
+        exact hdiff ▸ (le_max_right _ _).trans hi_sup'
       · have hpq : coord q i - coord p i ≤ coord p i - coord q i := by omega
         have hpdiff : coord p i - coord q i = D := by
           rw [max_eq_left hpq] at hmax
           exact hmax
-        have hrlo := hlow_p i
-        have hrup := hupp_q i
         have hpeq : coord p i = coord q i + D := by omega
-        have hdiff : coord r i - coord q i = D - 1 := by omega
+        have h₁ := alg_low_p i
+        have h₂ := alg_upp_q i
+        have hdiff : coord alg i - coord q i = D - 1 := by omega
         have hi_sup := Finset.le_sup (s := (Finset.univ : Finset (Fin n)))
-          (f := fun j : Fin n =>
-            max (coord r j - coord q j) (coord q j - coord r j))
+          (f := fun j : Fin n => max (coord alg j - coord q j) (coord q j - coord alg j))
           (Finset.mem_univ i)
-        have hi_sup' : max (coord r i - coord q i) (coord q i - coord r i) ≤
-            dInf r q := by
+        have hi_sup' : max (coord alg i - coord q i) (coord q i - coord alg i) ≤ dInf alg q := by
           simpa [dInf] using hi_sup
-        calc
-          D - 1 = coord r i - coord q i := hdiff.symm
-          _ ≤ max (coord r i - coord q i) (coord q i - coord r i) := le_max_left _ _
-          _ ≤ dInf r q := hi_sup'
-    have heq : dInf r q = D - 1 := le_antisymm hdist_upper hdist_lower
-    refine ⟨r, hstep, heq, ?_⟩
-    intro i
-    have hmin : min (coord p i) (coord q i) ≤ lowerFn (D := D) p q i := by
-      calc
-        min (coord p i) (coord q i) ≤
-            max (coord q i - (D - 1)) (min (coord p i) (coord q i)) :=
-          le_max_right _ _
-        _ ≤ max (coord p i - 1)
-            (max (coord q i - (D - 1)) (min (coord p i) (coord q i))) :=
-          le_max_right _ _
-        _ ≤ lowerFn (D := D) p q i := le_max_right _ _
-    have hmaxu : upperFn (D := D) p q i ≤ max (coord p i) (coord q i) := by
-      unfold upperFn
-      exact (min_le_right _ _).trans (min_le_right _ _)
-    exact ⟨hmin.trans ((hbase_lower i).trans (hr_bounds' i).1),
-      (hr_bounds' i).2.trans hmaxu⟩
-  constructor
-  · suffices aux : ∀ D : ℕ, ∀ p q : Partition n,
-        dInf p q = D → Nonempty (Path (D := D) p q) by
-      exact aux _ p q rfl
+        exact hdiff ▸ (le_max_left _ _).trans hi_sup'
+    have alg_dist : dInf alg q = D - 1 := le_antisymm alg_dist_upper alg_dist_lower
+    have alg_conf : ∀ i : Fin n,
+        min (coord p i) (coord q i) ≤ coord alg i ∧
+          coord alg i ≤ max (coord p i) (coord q i) := by
+      intro i
+      have hmin : min (coord p i) (coord q i) ≤ lowerFn (D := D) p q i := by
+        exact (le_max_right _ _).trans ((le_max_right _ _).trans (le_max_right _ _))
+      have hmaxu : upperFn (D := D) p q i ≤ max (coord p i) (coord q i) := by
+        exact (min_le_right _ _).trans (min_le_right _ _)
+      exact ⟨hmin.trans (halg_bounds i).1, (halg_bounds i).2.trans hmaxu⟩
+    have alg_coord : alg.1 = algorithmStep (D := D) p q := by
+      rfl
+    refine ⟨alg, alg_step, alg_dist, alg_conf, alg_coord⟩
+  have algorithm_aux : ∀ D : ℕ, ∀ p q : Partition n,
+      dInf p q = D → Nonempty (AlgorithmPath (D := D) p q) := by
     intro D
     induction D with
     | zero =>
@@ -888,76 +849,122 @@ theorem partition_lInf_geodesic {n : ℕ} (p q : Partition n) :
           apply List.ext_get (p.2.1.trans q.2.1.symm)
           intro i hip hiq
           let j : Fin n := ⟨i, by simpa [p.2.1] using hip⟩
-          have hh : max (coord p j - coord q j) (coord q j - coord p j) ≤ 0 := by
-            have hj : max (coord p j - coord q j) (coord q j - coord p j) ≤
-                dInf p q := by
-              change max (coord p j - coord q j) (coord q j - coord p j) ≤
-                Finset.sup Finset.univ (fun k : Fin n =>
-                  max (coord p k - coord q k) (coord q k - coord p k))
-              exact Finset.le_sup (s := (Finset.univ : Finset (Fin n)))
-                (f := fun k : Fin n =>
-                  max (coord p k - coord q k) (coord q k - coord p k))
-                (Finset.mem_univ j)
+          have hj : max (coord p j - coord q j) (coord q j - coord p j) ≤ dInf p q := by
+            exact Finset.le_sup (s := (Finset.univ : Finset (Fin n)))
+              (f := fun k : Fin n => max (coord p k - coord q k) (coord q k - coord p k))
+              (Finset.mem_univ j)
+          have he0 : coord p j - coord q j = 0 ∧ coord q j - coord p j = 0 := by
             simpa [hd] using hj
           have he : coord p j = coord q j := by omega
           exact he
         subst q
-        refine ⟨⟨fun _ => p, rfl, rfl, ?_, ?_⟩⟩
+        refine ⟨⟨⟨fun _ => p, ?_⟩, ?_⟩⟩
+        · exact ⟨rfl, rfl, by intro k; exact Fin.elim0 k, by intro k i; simp⟩
         · intro k
-          exact Fin.elim0 k
-        · intro k i
-          simp
+          simp only [algorithmPathValuesAt]
+          apply List.ext_get
+          · simp [p.2.1]
+          · intro i hi₁ hi₂
+            have hi_n : i < n := by simpa [p.2.1] using hi₁
+            simp [coord, hi_n]
     | succ D ih =>
         intro p q hd
-        obtain ⟨r, hpr, hrq, hr⟩ := partition_one_step p q (Nat.succ_pos D) hd
+        obtain ⟨r, hpr, hrq, hrest⟩ := partition_one_step p q (Nat.succ_pos D) hd
+        obtain ⟨hr, hr_alg⟩ := hrest
         have hrq' : dInf r q = D := by simpa using hrq
-        obtain ⟨⟨γ, hγ0, hγlast, hγstep, hγbounds⟩⟩ := ih r q hrq'
-        refine ⟨⟨Fin.cases p γ, ?_, ?_, ?_, ?_⟩⟩
-        · rfl
-        · change γ ⟨D, by omega⟩ = q
-          exact hγlast
+        obtain ⟨⟨⟨γ, hγpath⟩, hγalg⟩⟩ := ih r q hrq'
+        rcases hγpath with ⟨hγ0, hγlast, hγstep, hγbounds⟩
+        have hstep_fn : (fun i => coord r i) = algorithmStepFn
+            (D := Nat.succ D) (fun i => coord p i) (fun i => coord q i) := by
+          funext i
+          have hi : i.1 < r.1.length := by simpa [r.2.1] using i.2
+          calc
+            coord r i = r.1.getD i.1 0 := by
+              simpa [coord] using
+                (List.getD_eq_get r.1 0 ⟨i.1, hi⟩).symm
+            _ = (algorithmStep (D := Nat.succ D) p q).getD i.1 0 := by
+              exact congrArg (fun v : List ℕ => v.getD i.1 0) hr_alg
+            _ = algorithmStepFn (D := Nat.succ D)
+                (fun i => coord p i) (fun i => coord q i) i := by
+              simp [algorithmStepFn, algorithmStep]
+        refine ⟨⟨⟨Fin.cases p γ, ?_⟩, ?_⟩⟩
+        · refine ⟨rfl, ?_, ?_, ?_⟩
+          · change γ ⟨D, by omega⟩ = q
+            exact hγlast
+          · intro k
+            refine Fin.cases ?_ (fun j => ?_) k
+            · change dInf p (γ 0) ≤ 1
+              rw [hγ0]
+              exact hpr
+            · change dInf (γ ⟨j.1, by omega⟩) (γ ⟨j.1 + 1, by omega⟩) ≤ 1
+              exact hγstep j
+          · intro k
+            refine Fin.cases ?_ (fun j => ?_) k
+            · intro i
+              exact ⟨min_le_left _ _, le_max_left _ _⟩
+            · intro i
+              have h₁ := hr i
+              have h₂ := hγbounds j i
+              constructor
+              · by_cases hpq : coord p i ≤ coord q i
+                · rw [min_eq_left hpq] at h₁ ⊢
+                  exact (le_min h₁.1 hpq).trans h₂.1
+                · have hqp : coord q i ≤ coord p i := by omega
+                  rw [min_eq_right hqp] at h₁ ⊢
+                  exact (le_min h₁.1 le_rfl).trans h₂.1
+              · by_cases hpq : coord p i ≤ coord q i
+                · rw [max_eq_right hpq] at h₁ ⊢
+                  exact h₂.2.trans (max_le h₁.2 le_rfl)
+                · have hqp : coord q i ≤ coord p i := by omega
+                  rw [max_eq_left hqp] at h₁ ⊢
+                  exact h₂.2.trans (max_le h₁.2 hqp)
         · intro k
           refine Fin.cases ?_ (fun j => ?_) k
-          · change dInf p (γ 0) ≤ 1
-            rw [hγ0]
-            exact hpr
-          · change dInf (γ ⟨j.1, by omega⟩) (γ ⟨j.1 + 1, by omega⟩) ≤ 1
-            exact hγstep j
-        · intro k
-          refine Fin.cases ?_ (fun j => ?_) k
-          · intro i
-            exact ⟨min_le_left _ _, le_max_left _ _⟩
-          · intro i
-            change min (coord p i) (coord q i) ≤ coord (γ j) i ∧
-              coord (γ j) i ≤ max (coord p i) (coord q i)
-            have h₁ := hr i
-            have h₂ := hγbounds j i
+          · simp only [Fin.cases_zero, algorithmPathValuesAt]
+            apply List.ext_get
+            · simp [p.2.1]
+            · intro i hi₁ hi₂
+              have hi_n : i < n := by simpa [p.2.1] using hi₁
+              simp [coord, hi_n]
+          · change (γ j).1 = algorithmPathValuesAt (Nat.succ D)
+              (fun i => coord p i) (fun i => coord q i) ⟨j.1 + 1, by omega⟩
+            have hk : (⟨j.1 + 1, by omega⟩ : Fin (Nat.succ (D + 1))) = Fin.succ j := by
+              apply Fin.ext
+              rfl
+            rw [hk]
+            simp only [algorithmPathValuesAt]
+            rw [← hstep_fn]
+            exact hγalg j
+  obtain ⟨algPath⟩ := algorithm_aux _ p q rfl
+  constructor
+  · exact ⟨algPath.1⟩
+  · constructor
+    · exact ⟨algPath⟩
+    · intro K γ hstart hend hstep
+      have coord_bound : ∀ k : Fin (K + 1), ∀ i : Fin n,
+          coord (γ 0) i ≤ coord (γ k) i + k.1 ∧
+          coord (γ k) i ≤ coord (γ 0) i + k.1 := by
+        intro k
+        obtain ⟨k, hk⟩ := k
+        induction k with
+        | zero => intro i; simp
+        | succ k ih =>
+            intro i
+            have prev := ih (by omega) i
+            have next : max (coord (γ ⟨k, by omega⟩) i -
+                  coord (γ ⟨k + 1, hk⟩) i)
+                (coord (γ ⟨k + 1, hk⟩) i - coord (γ ⟨k, by omega⟩) i) ≤ 1 :=
+              (Finset.le_sup (s := Finset.univ)
+                (f := fun j => max (coord (γ ⟨k, by omega⟩) j - coord (γ ⟨k + 1, hk⟩) j)
+                  (coord (γ ⟨k + 1, hk⟩) j - coord (γ ⟨k, by omega⟩) j))
+                (Finset.mem_univ i)).trans (hstep ⟨k, by omega⟩)
+            dsimp only at prev ⊢
             omega
-  · intro K γ hstart hend hstep
-    have coord_bound : ∀ k : Fin (K + 1), ∀ i : Fin n,
-        coord (γ 0) i ≤ coord (γ k) i + k.1 ∧
-        coord (γ k) i ≤ coord (γ 0) i + k.1 := by
-      intro k
-      obtain ⟨k, hk⟩ := k
-      induction k with
-      | zero => intro i; simp
-      | succ k ih =>
-          intro i
-          have prev := ih (by omega) i
-          have next : max (coord (γ ⟨k, by omega⟩) i -
-                coord (γ ⟨k + 1, hk⟩) i)
-              (coord (γ ⟨k + 1, hk⟩) i - coord (γ ⟨k, by omega⟩) i) ≤ 1 :=
-            (Finset.le_sup (s := Finset.univ)
-              (f := fun j => max (coord (γ ⟨k, by omega⟩) j - coord (γ ⟨k + 1, hk⟩) j)
-                (coord (γ ⟨k + 1, hk⟩) j - coord (γ ⟨k, by omega⟩) j))
-              (Finset.mem_univ i)).trans (hstep ⟨k, by omega⟩)
-          dsimp only at prev ⊢
-          omega
-    apply Finset.sup_le
-    intro i _
-    have h := coord_bound ⟨K, by omega⟩ i
-    rw [hstart, hend] at h
-    dsimp only at h
-    omega
+      apply Finset.sup_le
+      intro i _
+      have h := coord_bound ⟨K, by omega⟩ i
+      rw [hstart, hend] at h
+      dsimp only at h
+      omega
 
 end D5.S3.Combinatorics.Partitions.PartitionLInftyGeodesic

@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/PartitionLInftyGeodesic.partitio
 
 *Commentary.*
 
-For every n and every pair of partitions λ and μ of n, let d∞(λ, μ) be the maximum coordinate difference. There is a path of exactly d∞(λ, μ) adjacent steps through partitions of n. Every coordinate of every vertex lies between the corresponding coordinates of λ and μ. Conversely, any path through partitions of n whose adjacent steps have d∞ at most one has at least d∞(λ, μ) steps.
+For every n and every pair of partitions λ and μ of n, let d∞(λ, μ) be the maximum coordinate difference. There is a path of exactly d∞(λ, μ) adjacent steps through partitions of n. Every coordinate of every vertex lies between the corresponding coordinates of λ and μ. The displayed greedy algorithm starts at the source and, at each of the d∞ steps, fills the source-defined lower bounds from the smallest index up to the source-defined upper bounds; its output is such a path and has the same confinement properties. Conversely, any path through partitions of n whose adjacent steps have d∞ at most one has at least d∞(λ, μ) steps.
 
 ## References
 
