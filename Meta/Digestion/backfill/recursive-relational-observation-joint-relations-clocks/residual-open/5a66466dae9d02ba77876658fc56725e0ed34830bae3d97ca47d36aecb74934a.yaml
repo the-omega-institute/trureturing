@@ -2,8 +2,6 @@ fingerprints:
   raw_sha256: sha256:5a66466dae9d02ba77876658fc56725e0ed34830bae3d97ca47d36aecb74934a
   normalized_sha256: sha256:5a66466dae9d02ba77876658fc56725e0ed34830bae3d97ca47d36aecb74934a
 cas_ref: sha256:5a66466dae9d02ba77876658fc56725e0ed34830bae3d97ca47d36aecb74934a
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Refinement/GradedPredictionShift.graded_prediction_shift
-    target_statement_id: sha256:2572ef9897ccd21314e001e49a52707fd1246f712b591fac8a5e862d1fb8b782
+coverage_gids: []
 receipts:
   unresolved_subitems: []
