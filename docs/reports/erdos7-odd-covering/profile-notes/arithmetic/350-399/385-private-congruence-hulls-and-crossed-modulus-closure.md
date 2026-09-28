@@ -1665,3 +1665,149 @@ force a violation of some available joint replacement constraint.
 MX1--MX5 strengthen those constraints without supplying that forcing
 theorem. These are ordinary proofs and finite arithmetic, not new
 Lean verification or a literature-priority claim.
+
+## 15. Retained pure powers reduce the fresh repair forest
+
+Fix the same hypothetical minimum distinct-odd whole cover, original
+period Q, odd prime p, H=v_p(Q), and h=p^a n|Q with n>1, gcd(p,n)=1.
+Select nonempty original parents P whose actual classes lie in c mod h.
+Every pure p-power original stays when parents divisible by h and their
+proper descendants are moved/deleted: n>1 prevents such a pure label
+from being selected or absorbed.
+
+Let I be the heights i with a<i<=H for which p^i is original and
+its actual residue equals c modulo p^a. The pure classes are pairwise
+disjoint by comparable-original disjointness. Original pure classes of
+height at most a are disjoint from c mod h: otherwise they would contain
+one selected original parent, contrary to the same premise. A pure
+class indexed by i in I covers exactly p^(H+1-i) of the r=p^(H-a+1)
+first-fresh roots of c mod h. Thus the residual forest has
+
+    R=r-sum_(i in I)p^(H+1-i).                       (RP1)
+
+roots. They all share the same cofactor condition c mod n. In particular
+R is a positive multiple of p and
+
+    R >= ((p-2)r+p)/(p-1) > r*(p-2)/(p-1).
+
+The inequality allows every possible subset of the actual pure chain;
+no compatible phases are invented. Existing other originals may cover
+more of the target, but are not used by this stated construction.
+
+Using exactly the fresh palette p^(H+1+j)e, j>=0,e|n, together with the
+retained pure classes, the whole c mod h can be covered iff
+
+    t=tau(n) > R*(p-1)/p.                           (RP2)
+
+This is the old forest argument with R roots. Necessity is the finite
+geometric capacity sum; sufficiency repeatedly selects min(t,s_j)
+exposed roots and expands the rest into p children. If t>=R, N=R.
+Otherwise set
+
+    delta=p*t-(p-1)*R,
+    J=min{j>=0:p^j*delta>=t},
+    s=(p*t-p^J*delta)/(p-1), N=t*J+s.                (RP3)
+
+Now 1<=s<=t, including equality. That is the only change needed in the
+minimum-count proof. The greedy construction minimizes all preceding
+internal-node counts, and a minimum cardinality cut must have the same
+layer counts. Its exact minimum fresh modulus sum at count N is
+
+    S=p^(H+1)*sigma_R(n),                         t>=R;
+    S=p^(H+1)*(sigma(n)*(p^J-1)/(p-1)+p^J*sigma_s(n)), t<R.
+
+The uniform tie comparison still holds:
+
+    S<h*N^2.                                        (RP4)
+
+For t>=R, if R=r use the previous sigma_R(n)<R*n argument. If R<r,
+then k=H-a+1>=2 and R>=6. Complementary distinct divisors give
+sigma_R(n)/n<=Hodd(R). The inequality Hodd(R)<R/2 for every R>=5
+follows from its R=5 value and the increment 1/(2R+1)<1/2. Since r<2R,
+
+    S/h=r*sigma_R(n)/n<2R*(R/2)=R^2.
+
+For t<R, k>=2, delta is a positive multiple of p, and 1<=J<=k-1.
+With the old strict Hodd(t)<1+k*ln(p)/2 estimate,
+
+    S/(h*N^2)
+    < [p^3/((p-1)*(p-2)^2)]*(1+k*ln(p)/2)
+        /[p^(k-J)*J^2].
+
+Here t>R*(p-1)/p>r*(p-2)/p is the new lower bound used for N>tJ.
+The denominator is at least min(p^(k-1),p*(k-1)^2), as before.
+
+For p>=7, A=p^3/((p-1)*(p-2)^2)<7/3. Its logarithmic derivative has
+numerator 6-5p<0, so it suffices to check p=7. Also ln p<=(p-1)/3:
+ln7<2 follows from exp2>7, and the difference is increasing for p>=7.
+For k=2, the numerator is <7(p+2)/9<=p. For k>=3 it is
+<(7/3)(1+k*(p-1)/6)<=k*p, while both denominator endpoints are >=k*p.
+
+For p=5,k>=3, ln5<5/3 (the first five exponential terms already
+sum to 10009/1944>5) gives numerator <125*(6+5k)/216. Both endpoints
+exceed this at k=3; multiplication by5 preserves the exponential
+comparison, and the quadratic increment5*(2k-1) exceeds625/216.
+
+For p=3,k>=6, ln3<10/9 gives numerator <(27+15k)/2. Both endpoints
+exceed this at k=6, and their increments dominate the linear increment
+15/2 thereafter.
+
+The only cases left are (p,k)=(3,2),(3,3),(3,4),(3,5),(5,2). Exhaust
+ALL R in p*Z with r*(p-2)/(p-1)<R<=r and ALL integers
+R*(p-1)/p<t<R. This is a finite superset of actual retained-pure
+geometries. Set C=1+5k/9 for p=3 and C=1+5k/6 for p=5. Then
+sigma(n)/n<C. If s<t, every selected final-layer divisor is proper,
+so sigma_s(n)/n<=s/3; use min(C,s/3). If s=t use C instead. Therefore
+
+    S/h < U=r*((p^J-1)/(p-1)*C+p^J*last),
+    last=min(C,s/3) if s<t; last=C if s=t.
+
+Independent exact rational computation gives:
+
+| p,k | Cases | Maximum U/N^2 | Maximizer R,t |
+| --- | ---: | --- | --- |
+|3,2|3|23/32|6,5|
+|3,3|30|531/625|15,11|
+|3,4|273|553/648|48,33|
+|3,5|2460|55539/67712|132,89|
+|5,2|7|25/49|20,18|
+
+All2773 inequalities are strict;19 cases have s=t and use that
+branch. The [exact checker](../../../frontier/cover-geometry/composite-parent-contraction/retained_pure_repair.py)
+uses the [five exception ranges and literal classes](../../../frontier/cover-geometry/composite-parent-contraction/retained_pure_repair_originals.json)
+to produce the [finite comparisons and complete-period control](../../../frontier/cover-geometry/composite-parent-contraction/retained_pure_repair.json).
+From that program's directory, reproduce with Python3.9+ and its
+standard library:
+
+```sh
+python3 -I -S -B retained_pure_repair.py --input retained_pure_repair_originals.json --output retained_pure_repair.json
+```
+
+Consequently the mixed deletion/movement bound still gives
+|E|+|J_removed|<=N-1 with this cheaper repair. Its repair count N can
+now depend on the ACTUAL old h-phase c. Same-phase occupancy can be
+bounded by deleting that group directly; using an unrelated old
+parent h-phase a_h is not justified when these counts differ.
+
+A small actual control uses the five original classes
+
+    0 mod3, 0 mod5, 2 mod25, 3 mod125, 1 mod625.
+
+This is a divisor-closed irredundant noncover on period1875, with938
+holes; its six comparable pairs are disjoint. Only its retained
+0 mod3 class is used to help repair the target1 mod625. Here
+p=3,H=1,a=0,r=9,R=6,t=5. The old ML2 test fails (5<=6), while the
+retained-pure test passes (5>4), with layer counts5,3,N=8,S=7866.
+Fresh classes are
+
+    1 mod9, 11 mod45, 76 mod225, 626 mod1125, 3751 mod5625,
+    8 mod27, 71 mod135, 26 mod675.
+
+On the full comparison period16875, target1 mod625 has27 points.
+The retained0 mod3 covers9 and the fresh classes disjointly cover the
+remaining18; S7866<h*N^2=40000. This verifies the interface extension,
+not a cardinality improvement of this five-class NONCOVER. It extends
+the available joint-replacement tests to some interfaces failing ML2;
+a whole-cover forcing theorem is still missing. These are ordinary
+proofs and exact finite computations, not new Lean verification, a
+literature-priority claim, or a solution of unrestricted Erdős#7.
