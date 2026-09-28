@@ -17,6 +17,9 @@ internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabl
 {
     internal static AdmissionCheckTiming Disabled { get; } = new(TimeProvider.System, enabled: false);
 
+    // Only phases that take long enough to matter for diagnosis are written.
+    internal static TimeSpan ReportingThreshold { get; } = TimeSpan.FromSeconds(1);
+
     internal T Measure<T>(
         string stage,
         Func<T> action,
@@ -117,7 +120,13 @@ internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabl
         }
     }
 
-    private static void WriteEvent(string stage, string status, double elapsedSeconds) =>
+    private static void WriteEvent(string stage, string status, double elapsedSeconds)
+    {
+        if (elapsedSeconds < ReportingThreshold.TotalSeconds)
+        {
+            return;
+        }
+
         Console.Error.WriteLine(JsonSerializer.Serialize(new
         {
             @event = "gate_stage_timing",
@@ -128,6 +137,7 @@ internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabl
             status,
             elapsed_seconds = elapsedSeconds,
         }));
+    }
 }
 
 internal sealed class AdmissionCheckTimingAccumulator(

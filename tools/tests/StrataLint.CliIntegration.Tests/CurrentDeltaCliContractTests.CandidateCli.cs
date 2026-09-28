@@ -14,6 +14,16 @@ namespace StrataLint.CliIntegration.Tests;
 
 public sealed partial class CurrentDeltaCliContractTests
 {
+    // Each timestamp read advances one second, so every measured stage reaches the reporting threshold.
+    private sealed class SecondPerReadTimeProvider : TimeProvider
+    {
+        private long timestamp;
+
+        public override long TimestampFrequency => 1;
+
+        public override long GetTimestamp() => Interlocked.Increment(ref timestamp);
+    }
+
     // Stage timing is information-level telemetry on stderr; other tests may write there too.
     private static (ExplicitCommandResult Result, string[] Stages) CaptureStageTiming(Func<ExplicitCommandResult> run)
     {

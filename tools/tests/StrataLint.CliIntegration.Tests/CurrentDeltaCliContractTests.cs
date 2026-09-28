@@ -108,7 +108,8 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         Git(temporary.Path, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "parentless");
         var report = Path.Combine(temporary.Path, ".lake/build/stratalint/raw-lean-report.json");
         if (!metadata) WriteReport();
-        var environment = new ProductionCliEnvironment(temporary.Path, new GitRepositoryGateway(temporary.Path), new FakeLeanReportSource(null));
+        var environment = new ProductionCliEnvironment(temporary.Path, new GitRepositoryGateway(temporary.Path), new FakeLeanReportSource(null),
+            scribeEmissionVerifier: null, new SecondPerReadTimeProvider());
         var arguments = Arguments();
         if (scenario == "metadata-seed-miss")
         {
@@ -593,7 +594,8 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         }
         foreach (var suffix in new[] { ".sha256", ".input.attestation", ".provenance.json" })
             File.WriteAllText(report + suffix, "synthetic producer sidecar\n");
-        var environment = new ProductionCliEnvironment(root, new GitRepositoryGateway(root), new FakeLeanReportSource(null));
+        var environment = new ProductionCliEnvironment(root, new GitRepositoryGateway(root), new FakeLeanReportSource(null),
+            scribeEmissionVerifier: null, new SecondPerReadTimeProvider());
         var currentConsole = new BufferedConsole();
         var currentExit = CliApplication.Run(["check-current", "--candidate-lean-report", report], environment, currentConsole);
         if (scenario is "mixed-missing-filemap" or "mixed-malformed-filemap" or "mixed-ambiguous-filemap"
