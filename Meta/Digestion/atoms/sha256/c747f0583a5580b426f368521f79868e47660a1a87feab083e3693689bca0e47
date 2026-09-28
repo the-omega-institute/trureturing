@@ -1,0 +1,58 @@
+## theorem 16.2: 两参数严格相容
+
+空间通道 CPTP、满射且非恒定，并在全部逻辑输入上满足
+
+$$
+\mathcal S_{\Pi,d}\mathcal E_{d,L}
+=\mathcal E_{d,r}\operatorname{ret}_{\Pi}.
+$$
+
+若 $\Sigma$ 是对 $r$ 个宏块的进一步连续分割，则在全部边界输入上
+
+$$
+\mathcal S_{\Sigma,d}\mathcal S_{\Pi,d}
+=\mathcal S_{\Sigma\circ\Pi,d}.
+$$
+
+与第 12 节每个环长上的精度通道还满足
+
+$$
+\boxed{\mathcal S_{\Pi,d}\mathcal R^{(L)}_{D,d}
+=\mathcal R^{(r)}_{D,d}\mathcal S_{\Pi,D}.}
+$$
+
+各等式也适用于与任意外部参考纠缠的输入。原参考态严格送到同一模型的短环参考态：
+
+$$
+\mathcal S_{\Pi,d}(|\Psi^{\alpha_L}_{d,L}\rangle\langle\Psi^{\alpha_L}_{d,L}|)
+=|\Psi^{\alpha_r}_{d,r}\rangle\langle\Psi^{\alpha_r}_{d,r}|.
+$$
+
+**证明。** 在 $K_{d,L}|x\rangle\langle y|K_{d,L}^*$ 中，每个被删历史标签的两份都位于同一宏块内部，偏迹恰好给出对应的 $\delta_{x_i,y_i}$；每个保留标签的两份仍作为相邻宏块端点保留。因此
+
+$$
+\operatorname{Ret}_{\Pi}(K_{d,L}\rho K_{d,L}^*)
+=K_{d,r}\operatorname{ret}_{\Pi}(\rho)K_{d,r}^*.
+$$
+
+共轭给出全输入交换图。嵌套偏迹保留同一组最终端点，中间 $G^*G$ 抵消，得到空间复合律。精度与空间的方形图归结为
+
+$$
+\operatorname{Ret}_{\Pi}\,Q_{D,d}^{\otimes2L}
+=Q_{D,d}^{\otimes2r}\,\operatorname{Ret}_{\Pi},
+$$
+
+因为在被删寄存器上数字通道保迹，在保留寄存器上两操作分属独立因子。满射由偏迹可添加固定辅助态和幺正共轭得出。参考历史是各寄存器 $|+_d\rangle$ 的乘积，丢弃内部历史仍留下相同形式的纯输入。所有证明是在矩阵单位或算子上建立，故包含任意参考系统。证毕。
+
+**局部实现。** 两端的双线性缝合相位 $u_0v_{L-1}$ 在偏迹前后相同且只涉及被保留寄存器，故相消。令 $\delta=\alpha_r-\alpha_L$，实际空间通道可写成
+
+$$
+\mathcal S_{\Pi,d}
+=\operatorname{Ad}_{M_d^{\otimes r}}
+\circ\operatorname{Ad}_{D_{d,\delta}^{(u_0)}}
+\circ\operatorname{Ret}_{\Pi}
+\circ\operatorname{Ad}_{(M_d^{\otimes L})^*}.
+$$
+
+所有解码、丢弃和重新编码都位于各自宏块内；额外二次相位只位于第一个宏块。宏块大小为 $b$ 时门支持可达该宏块的 $2b$ 条细腿，不能称为与分块尺寸无关的细格点操作。空间通道不保持任意细腿区域的原熵；它保持的是所指定编码交换图，并把参考态送到满足各自图割等式的粗态。
+

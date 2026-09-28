@@ -1,0 +1,28 @@
+**定义 12.1（显式历史编码）。** 固定 $L\ge3$ 和整数 $\alpha$。解码后每个边界块有寄存器 $(u_i,v_i)$。令
+
+$$
+M_d|u,v\rangle=|u+v,u+2v\rangle,\qquad
+M_d^{-1}|a,b\rangle=|2a-b,b-a\rangle,
+$$
+
+$$
+P_d|u_0,v_0,\ldots,u_{L-1},v_{L-1}\rangle
+=\omega_d^{u_0v_{L-1}+\alpha u_0^2}|u_0,v_0,\ldots,u_{L-1},v_{L-1}\rangle,
+\qquad G_d=M_d^{\otimes L}P_d.
+$$
+
+$M_d$ 的行列式为一，故是全边界空间上的置换幺正；$P_d$ 只作用于缝合两块。取 $L+1$ 个逻辑历史寄存器并定义等距
+
+$$
+K_d|x_0,\ldots,x_L\rangle=\bigotimes_{i=0}^{L-1}|x_i,x_{i+1}\rangle,
+\quad J_d=G_dK_d,\quad\mathcal E_d(\rho)=J_d\rho J_d^*.
+$$
+
+$K_d$ 是固定计算基的相干重复编码；不把任意未知量子态复制为两个独立副本。对 $|+_d\rangle=d^{-1/2}\sum_x|x\rangle$，
+
+$$
+J_d|+_d\rangle^{\otimes(L+1)}=|\Psi^\alpha_{d,L}\rangle,
+$$
+
+恰为定义 4.2 的原网络态。编码定义在整个 $d^{L+1}$ 维历史空间，未把单个参考态当成整个输入空间。
+

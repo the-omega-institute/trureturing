@@ -1,0 +1,18 @@
+## theorem 4.1: 普通奇环
+
+普通缝合 $x_L=x_0$ 的归一化态为
+
+$$
+|\Psi^{\mathrm{id}}_{d,L}\rangle=d^{-L/2}\sum_{x\in R_d^L}
+|(I+P)x\rangle_A|(I+2P)x\rangle_B,
+\quad(Px)_i=x_{i+1}.
+$$
+
+若 $L$ 为奇数，则
+
+$$
+S(\rho_A)=L\log d-\log\gcd(d,2^L+1).
+$$
+
+非零谱平坦，秩为 $d^L/\gcd(d,2^L+1)$，而 $m(A)=L$。
+
