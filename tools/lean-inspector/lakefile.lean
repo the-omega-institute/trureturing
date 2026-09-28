@@ -286,19 +286,20 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   for source in sourceModules do
     dependencies := dependencies.insert source
     dependencies := dependencies.appendArray (← (← source.transImports.fetch).await)
+  let mut sources : Array (SemanticSource × BuildTrace) := #[]
   let mut sourcePaths : Array String := #[]
   let mut programConfigs : Std.HashSet String := {}
   let semantic ← (← fetch <| pkg.facet `reportSemanticInputs).await
   let reported ← (← fetch <| pkg.facet `reportSourceModules).await
-  for dependency in dependencies.toArray.qsort (fun a b => a.name.toString < b.name.toString) do
+  -- Compute the lexical key once per member, not in every sort comparison.
+  let ordered := (dependencies.toArray.map fun dependency => (dependency.name.toString, dependency))
+    |>.qsort (fun a b => a.1 < b.1)
+  for (_, dependency) in ordered do
     let job ← fetch <| dependency.facet `reportSemanticSource
     let input ← job.await
-    deps := deps.add input.validation
+    sources := sources.push (input, job.getTrace)
     if input.program then
-      deps := deps.add job
       programConfigs := programConfigs.insert input.compilerConfig
-    else
-      deps := deps.mix job
     if dependency.name != mod.name && reported.contains dependency.name then continue
     let path := input.path
     unless path.startsWith ".lake/" || path.startsWith "../" do
@@ -306,6 +307,15 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let prepareProduction : JobM Unit :=
     writeBinFileIfChanged (utility.addExtension "sources.json")
       (String.toUTF8 (Lean.toJson sourcePaths).compress)
+  -- Fold the same ordered semantic traces in one job. Per-edge add/mix jobs
+  -- duplicate the shared closure's task graph for every report module.
+  let base := deps
+  deps ← base.mapM fun _ => do
+    -- mapM adds an ambient trace; the fold must start at the original base
+    -- to preserve existing native artifact identities exactly.
+    setTrace base.getTrace
+    for (source, trace) in sources do
+      unless source.program do addTrace trace
   -- Await without mixing: recompilation must succeed, but its implementation
   -- identity is not a report-semantic dependency.
   let inspector ← reportInspector.fetch
@@ -313,6 +323,12 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let env := workspace.augmentedEnvVars
   let file := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
   (deps.add (Job.mixArray exports) |>.add inspector |>.add driverBuild).mapM fun _ => do
+    -- All exports were scheduled above. Join every owner validation before
+    -- probing even a warm artifact; failures remain required failures.
+    let mut valid := true
+    for (source, _) in sources do
+      try source.validation.await catch _ => valid := false
+    unless valid do error "Inspector semantic export validation failed"
     -- Exports/programs must succeed, but their compiler artifact identities
     -- do not enter report semantics. Private dependencies are already included
     -- by transImports (not the visibility-limited allTransTrace).
