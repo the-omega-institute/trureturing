@@ -1120,3 +1120,42 @@ which is odd. The odd-support hypothesis therefore puts $p$ in $H$,
 a contradiction.
 
 ## 追加锚（本行以下为增补区）
+
+## 25. A ternary budget from odd Fibonacci support
+
+Retain the Fibonacci entry ranks $\rho(p)$ and, for a finite set $H$ of
+primes, $R_H=\operatorname{lcm}_{p\in H}\rho(p)$.
+
+**Theorem 25.1 (ternary rank budget).** Suppose $2\in H$ and $n\geq1$.
+If every prime factor of $n$ belongs to $H$, and every prime factor
+$p$ of $F_n$ for which $v_p(F_n)$ is odd belongs to $H$, then
+
+$$
+v_3(n)\leq v_3(R_H).
+$$
+
+Proof. The first Fibonacci zero modulo two is at index three, so
+$3=\rho(2)\mid R_H$. If $e=v_3(n)>v_3(R_H)$, then $e\geq2$; put
+$j=e-1\geq1$. The frozen cubic Fibonacci identity gives the exact
+positive quotient
+
+$$
+C_j=\frac{F_{3^{j+1}}}{F_{3^j}}=L_{3^j}^2+1.
+$$
+
+The frozen Lucas congruence $L_{3^j}^2\equiv1\pmod5$ implies
+$C_j\equiv2\pmod5$, so $C_j$ is not a square. Choose a prime
+$p\mid C_j$ with odd $v_p(C_j)$. The cubic-block rank and original-depth
+theorem gives $\rho(p)=3^{j+1}=3^e$ and
+$v_p(C_j)=v_p(F_{\rho(p)})$. If $p\in H$, its rank divides $R_H$,
+contradicting $e>v_3(R_H)$. Thus $p\notin H$.
+
+Since $3^e\mid n$, the entry-point theorem gives $p\mid F_n$.
+The index-support hypothesis gives $p\nmid n$, and the prime-to-index
+valuation theorem yields
+$v_p(F_n)=v_p(F_{\rho(p)})=v_p(C_j)$, which is odd. The odd-support
+hypothesis puts $p$ in $H$, a contradiction. This settles the
+three-exponent branch under the stated support conditions; it does not
+assert the unrestricted GSE1 divisor bound or the five-exponent branch.
+
+## 追加锚（本行以下为增补区）
