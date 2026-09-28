@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:901e3798a2875f8d8ee5a3d0d97a08e328bf950cc48ad9427f8f68ff090febe0
   normalized_sha256: sha256:901e3798a2875f8d8ee5a3d0d97a08e328bf950cc48ad9427f8f68ff090febe0
 cas_ref: sha256:901e3798a2875f8d8ee5a3d0d97a08e328bf950cc48ad9427f8f68ff090febe0
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Mordell/GoldenCubicBlockIsogenyNonimage.actual_block_cubic_isogeny_nonimage
+    target_statement_id: sha256:475eb27e804bc19250ba4884a40bacece1ab216bbac7fa16c879fe8c07898536
 receipts:
   unresolved_subitems: []

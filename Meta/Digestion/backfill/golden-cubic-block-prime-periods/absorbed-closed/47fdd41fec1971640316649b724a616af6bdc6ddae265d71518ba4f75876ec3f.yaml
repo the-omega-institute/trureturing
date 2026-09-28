@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:47fdd41fec1971640316649b724a616af6bdc6ddae265d71518ba4f75876ec3f
   normalized_sha256: sha256:47fdd41fec1971640316649b724a616af6bdc6ddae265d71518ba4f75876ec3f
 cas_ref: sha256:47fdd41fec1971640316649b724a616af6bdc6ddae265d71518ba4f75876ec3f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/MordellTwoAdicNonTorsion.infinite_add_order_of_unit_x_positive_two_adic_y
+    target_statement_id: sha256:075c5902e2bd33726347a86fee9590ba055eb5de1dbe430cf99a1645420d8c78
 receipts:
   unresolved_subitems: []
