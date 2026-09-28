@@ -3998,3 +3998,440 @@ $$
 这里研究的仅是两片叶的实际消息。定义 39 的三叶内部节点只能读取子消息，不能把一个原始联合切面编码器直接当作已可取得的内部消息；本章不给出该三叶模型的恢复定理，也不消除定理 40 的切面与实际峰值之差。所引平衡、森林同态、单色消去及同态表示均按各自条件使用，以上组合结论不包含文献优先权或物理化学周期性的断言。
 
 ## 追加锚（本行以下为增补区）
+
+## 二十三、增补八·边界输运系统与切面曲率
+
+前面的边界容量公式给出了每个切面各自的最小状态数，但还留下一个局部问题：从一个切面固定若干坐标以后，原先可区分的响应哪些会被合并，哪些会继续保持可区分？这个问题同时解释三种现象：某些顺序的容量会下降；另一些顺序的容量单调增加；相同终点切面可以有不同的中间峰值。
+
+### 定义 42：响应函数与固定赋值输运
+
+对任意 \(A\subseteq I\)，记剩余响应函数的像为
+
+$$
+\mathcal R_A(F)
+=
+\{R_A^F(a):a\in X_A\}
+\subseteq O^{X_{I\setminus A}}.
+$$
+
+由边界等价的定义，存在规范双射
+
+$$
+\bar\eta_A^F:\mathsf S_A(F)\longrightarrow\mathcal R_A(F),
+\qquad
+[a]_A\longmapsto R_A^F(a).
+$$
+
+取 \(A\subseteq C\subseteq I\)，令 \(E=C\setminus A\)、\(R=I\setminus C\)。对每个固定赋值 \(e\in X_E\)，定义响应限制
+
+$$
+\operatorname{res}_e:O^{X_{I\setminus A}}\to O^{X_R},
+\qquad
+(\operatorname{res}_e h)(u)=h(e\sqcup u).
+$$
+
+并定义边界输运
+
+$$
+\tau_{A,C;e}^F:\mathsf S_A(F)\to\mathsf S_C(F),
+\qquad
+\tau_{A,C;e}^F([a]_A)=[a\sqcup e]_C.
+$$
+
+这里的 \(e\) 是实际固定的坐标赋值，不是它在 \(\mathsf S_E(F)\) 中的类型。因此输运是一族映射，而不是在任意包含关系 \(A\subseteq C\) 上自动存在的单一映射。
+
+### 定理 42.1：输运的良定义、像并与限制表示
+
+在上述设定下，以下结论成立。
+
+**良定义与满射像并：**
+
+$$
+\tau_{A,C;e}^F
+\text{ 良定义},
+\qquad
+\mathsf S_C(F)
+=
+\bigcup_{e\in X_E}
+\operatorname{im}(\tau_{A,C;e}^F).
+$$
+
+因此，令
+
+$$
+r_{A,C}^F(e)
+=
+\left|\operatorname{im}(\tau_{A,C;e}^F)\right|,
+$$
+
+则有精确容量公式
+
+$$
+\boxed{
+\kappa_C(F)
+=
+\left|
+\bigcup_{e\in X_E}
+\operatorname{im}(\tau_{A,C;e}^F)
+\right|.
+}
+$$
+
+特别地，
+
+$$
+\max_{e\in X_E}r_{A,C}^F(e)
+\leq
+\kappa_C(F)
+\leq
+\sum_{e\in X_E}r_{A,C}^F(e)
+\leq
+|X_E|\,\kappa_A(F).
+$$
+
+**响应限制表示：** 对所有 \(a\in X_A\)、\(e\in X_E\)，
+
+$$
+\boxed{
+R_C^F(a\sqcup e)
+=
+\operatorname{res}_e\bigl(R_A^F(a)\bigr).
+}
+$$
+
+所以 \(\tau_{A,C;e}^F\) 正是响应函数限制在 \(e\) 上的商化表示。
+
+**结合与单位：** 若 \(A\subseteq C\subseteq D\)，取 \(e\in X_{C\setminus A}\)、\(h\in X_{D\setminus C}\)，则
+
+$$
+\boxed{
+\tau_{C,D;h}^F\circ\tau_{A,C;e}^F
+=
+\tau_{A,D;e\sqcup h}^F.
+}
+$$
+
+当 \(C=A\) 时，空赋值给出恒等映射。
+
+#### 证明
+
+若 \(a\sim_A^F a'\)，任取 \(u\in X_R\)，则 \(e\sqcup u\) 是 \(A\) 外部的一个补全，因而
+
+$$
+F(a\sqcup e\sqcup u)=F(a'\sqcup e\sqcup u).
+$$
+
+所以 \(a\sqcup e\sim_C^F a'\sqcup e\)，输运良定义。
+
+任取 \(c\in X_C\)，将其限制为 \(a=c|_A\) 与 \(e=c|_E\)，便有 \([c]_C=\tau_{A,C;e}^F([a]_A)\)，故像并等于整个 \(\mathsf S_C(F)\)。三个容量不等式分别来自有限集合的并集、并集基数的和界，以及每个像的大小不超过定义域大小。
+
+响应限制等式由定义直接得到。最后，
+
+$$
+\tau_{C,D;h}^F(\tau_{A,C;e}^F([a]_A))
+=[a\sqcup e\sqcup h]_D
+=\tau_{A,D;e\sqcup h}^F([a]_A),
+$$
+
+单位律同样由空坐标合并得到。证毕。
+
+定理 42.1 给出一个比单纯的拼接代数更细的对象：
+
+$$
+\boxed{
+\text{拼接代数记录类型怎样合并；输运系统记录固定部分赋值后类型怎样变化。}
+}
+$$
+
+拼接映射满足
+
+$$
+\mu_{A,E}^F([a]_A,[e]_E)
+=
+\tau_{A,A\cup E;e}^F([a]_A),
+$$
+
+其中右侧不依赖 \(e\) 在 \(\mathsf S_E(F)\) 中的代表元；这正是定理 18 的良定义性在输运系统中的表现。
+
+### 定义 43：锚定分离与输运缺陷
+
+对 \(A\subseteq C\) 和 \(e\in X_{C\setminus A}\)，称 \(e\) 满足从 \(A\) 到 \(C\) 的**锚定分离条件**，若
+
+$$
+\forall a,a'\in X_A,
+\quad
+a\not\sim_A^F a'
+\Longrightarrow
+\exists u\in X_{I\setminus C},
+\quad
+F(a\sqcup e\sqcup u)\neq F(a'\sqcup e\sqcup u).
+$$
+
+定义该锚的输运缺陷关系为
+
+$$
+\operatorname{Def}_{A,C;e}^F
+=
+\left\{
+([a]_A,[a']_A):
+\begin{array}{l}
+[a]_A\neq[a']_A,\\
+[a\sqcup e]_C=[a'\sqcup e]_C
+\end{array}
+\right\}.
+$$
+
+它记录固定 \(e\) 后被合并的原边界类型对。这个缺陷是关系，而不是一个未经指定量纲的标量；若需要资源估计，应直接使用其商类数或输运像的基数。
+
+### 定理 43.1：输运注入判据与容量不单调性的精确位置
+
+对任意 \(e\in X_{C\setminus A}\)，以下等价：
+
+1. \(e\) 满足锚定分离条件；
+2. \(\tau_{A,C;e}^F\) 是单射；
+3. \(\operatorname{Def}_{A,C;e}^F=\varnothing\)；
+4. 限制映射
+   $$
+   \operatorname{res}_e:\mathcal R_A(F)\to O^{X_{I\setminus C}}
+   $$
+   在 \(\mathcal R_A(F)\) 上是单射。
+
+因此，若至少存在一个满足锚定分离条件的 \(e\)，则
+
+$$
+\boxed{
+\kappa_A(F)\leq\kappa_C(F).
+}
+$$
+
+若一条切面链
+
+$$
+A_0\subseteq A_1\subseteq\cdots\subseteq A_n
+$$
+
+在每一步都能选取一个满足锚定分离条件的锚赋值，则
+
+$$
+\kappa_{A_0}(F)\leq\kappa_{A_1}(F)\leq\cdots\leq\kappa_{A_n}(F),
+$$
+
+该顺序的峰值恰为终点容量 \(\kappa_{A_n}(F)\)。
+
+反之，若
+
+$$
+\kappa_C(F)<\kappa_A(F),
+$$
+
+则每一个 \(e\in X_{C\setminus A}\) 都违反锚定分离条件，且所有输运像的并集严格小于 \(\mathsf S_A(F)\) 的基数。
+
+#### 证明
+
+条件 1 与条件 2 等价，因为对任意 \(a,a'\)，
+
+$$
+\tau_{A,C;e}^F([a]_A)=\tau_{A,C;e}^F([a']_A)
+\Longleftrightarrow
+\forall u\in X_{I\setminus C},
+F(a\sqcup e\sqcup u)=F(a'\sqcup e\sqcup u).
+$$
+
+这正是锚定分离条件的否定形式。条件 2 与条件 3 只是输运缺陷的定义。条件 2 与条件 4 通过 \(\bar\eta_A^F\)、\(\bar\eta_C^F\) 的规范双射互相转化。
+
+若某个输运单射，则其像具有 \(\kappa_A(F)\) 个元素；定理 42.1 的像并公式给出 \(\kappa_C(F)\geq\kappa_A(F)\)。沿切面链逐步应用即可得到单调性与峰值结论。
+
+若 \(\kappa_C(F)<\kappa_A(F)\)，则不可能存在单射输运，否则前一段不等式给出相反方向；同时像并严格小于定义域基数。证毕。
+
+这个判据把“容量是否单调”从经验观察变成了局部可检验条件。它也说明，定理 26 中的满射切片条件实际承担的作用，是构造锚定分离所需的共同补全；它不是一个与输运无关的排列技巧。
+
+### 定理 44：边界输运的菱形相容性与顺序曲率
+
+设 \(A\subseteq I\)，\(i,j\notin A\) 且 \(i\neq j\)。对任意 \(a\in X_i\)、\(b\in X_j\)，有
+
+$$
+\boxed{
+\tau_{A\cup\{i\},A\cup\{i,j\};b}^F
+\circ
+\tau_{A,A\cup\{i\};a}^F
+=
+\tau_{A\cup\{j\},A\cup\{i,j\};a}^F
+\circ
+\tau_{A,A\cup\{j\};b}^F.
+}
+$$
+
+两边都等于
+
+$$
+[s]_A\longmapsto[s\sqcup a\sqcup b]_{A\cup\{i,j\}}.
+$$
+
+但是中间容量 \(\kappa_{A\cup\{i\}}(F)\) 与 \(\kappa_{A\cup\{j\}}(F)\) 可以不同，因而不同读取顺序可以有不同峰值，即使终点边界空间完全相同。
+
+#### 证明
+
+对任意 \([s]_A\)，左侧给出
+
+$$
+\tau_{A\cup\{i\},A\cup\{i,j\};b}^F
+\bigl([s\sqcup a]_{A\cup\{i\}}\bigr)
+=[s\sqcup a\sqcup b]_{A\cup\{i,j\}}.
+$$
+
+右侧同样给出该类。两条复合映射相等。
+
+终点的输运复合相同只说明固定的 \((a,b)\) 产生相同终点类；容量是对所有中间赋值的输运像作并集后的基数。两条路径的中间像并可以不同，故中间容量和峰值不由菱形相容性决定。证毕。
+
+由此可以把一个读取顺序的局部数据写成输运剖面
+
+$$
+\mathsf P_F(\pi)
+=
+\left(
+\left\{
+\operatorname{im}\tau_{A_{k-1},A_k;a}^F:
+a\in X_{i_k}
+\right\}
+\right)_{k=1}^{n},
+$$
+
+其中 \(A_k\) 是顺序 \(\pi\) 的前缀。顺序宽度不是终点商的另一个名字，而是这些输运像并集在中间层的最大基数：
+
+$$
+W_F(\pi)
+=
+\max_k
+\left|
+\bigcup_{a\in X_{i_k}}
+\operatorname{im}\tau_{A_{k-1},A_k;a}^F
+\right|.
+$$
+
+这是定理 42.1 对固定顺序的逐层展开。所谓**顺序曲率**，就是同一终点切面在不同菱形路径中出现的中间输运像并大小差异；它不是新的状态类型，而是已有类型沿不同路径被暂时合并和重新展开的方式。
+
+### 定理 45：任务细化在输运系统上的自然性
+
+设有两个任务
+
+$$
+G:X_I\to O',
+\qquad
+F=r\circ G.
+$$
+
+对每个 \(A\)，令
+
+$$
+p_A:\mathsf S_A(G)\twoheadrightarrow\mathsf S_A(F),
+\qquad
+p_A([a]_A^G)=[a]_A^F.
+$$
+
+则对所有 \(A\subseteq C\) 与 \(e\in X_{C\setminus A}\)，有
+
+$$
+\boxed{
+p_C\circ\tau_{A,C;e}^{G}
+=
+\tau_{A,C;e}^{F}\circ p_A.
+}
+$$
+
+所以任务细化不仅给出各切面的满射，还给出输运系统之间的自然变换。
+
+进一步，以下两件事等价：
+
+1. \(p_C\) 不是单射；
+2. 存在 \(c,c'\in X_C\)，使得对所有 \(u\in X_{I\setminus C}\) 有
+   $$
+   F(c\sqcup u)=F(c'\sqcup u),
+   $$
+   但存在 \(u_0\in X_{I\setminus C}\) 使
+   $$
+   G(c\sqcup u_0)\neq G(c'\sqcup u_0).
+   $$
+
+这给出一个严格的局部细化见证。它不能自动称为 catalog 中某个 theorem 的独有信息；独有性仍须在固定 peer catalog 中用 leave-one-out kernel 比较另行证明。
+
+#### 证明
+
+满射性与定理 19 相同。对代表元直接计算：
+
+$$
+p_C\bigl(\tau_{A,C;e}^{G}([a]_A^G)\bigr)
+=p_C([a\sqcup e]_C^G)
+=[a\sqcup e]_C^F
+=\tau_{A,C;e}^{F}([a]_A^F)
+=\tau_{A,C;e}^{F}\bigl(p_A([a]_A^G)\bigr).
+$$
+
+若 \(p_C\) 不单射，取两个具有相同 \(F\) 边界类型而具有不同 \(G\) 边界类型的代表元，按两个边界类型的定义分别得到所需的全量词和见证 \(u_0\)。反向由同一见证立即得到两个不同的 \(G\) 类被映到同一个 \(F\) 类。证毕。
+
+### 例 45.1：容量下降并非异常，而是输运像的交叠
+
+取 \(I=\{x,y\}\)、\(X_x=\{a,b,c\}\)、\(X_y=\{0,1\}\)、\(O=\{0,1\}\)，任务由下表定义：
+
+| \(F\) | \(y=0\) | \(y=1\) |
+|---|---:|---:|
+| \(x=a\) | \(0\) | \(0\) |
+| \(x=b\) | \(0\) | \(1\) |
+| \(x=c\) | \(1\) | \(0\) |
+
+对 \(A=\{x\}\)，三行响应两两不同，故
+
+$$
+\kappa_{\{x\}}(F)=3.
+$$
+
+对 \(C=I\)，完整赋值的任务结果只有 \(0,1\) 两类，故
+
+$$
+\kappa_I(F)=2.
+$$
+
+固定 \(y=0\) 时，输运把三类映为 \((0,0,1)\)；固定 \(y=1\) 时，输运把三类映为 \((0,1,0)\)。两个输运均非单射，但它们的像并仍只有两个完整响应类型。这是
+
+$$
+\kappa_{\{x\}}>\kappa_I
+$$
+
+的最小型见证。
+
+它说明“加入已知坐标会增加信息”不是一般定律。真正成立的是：加入坐标会把响应函数限制到更小的剩余域；限制可能保留区别，也可能把区别合并。只有锚定分离条件保证限制在当前响应像上单射时，容量才不会下降。
+
+### 与动态完成和承诺域的接合
+
+沿固定读取顺序，\(R_{A_k}^F(a)\) 就是此前前缀的全部后缀响应。把下一坐标的每个符号 \(v\in X_{i_{k+1}}\) 固定，便得到一个输运
+
+$$
+\tau_{A_k,A_{k+1};v}^F.
+$$
+
+它是有限未来 kernel 的一层限制；所有 \(v\) 的像并重新组成下一层的响应商。因而，边界输运剖面是项目已有有限视界递推的切面版本。若加入更新操作而不只是坐标赋值，则必须把 \(v\) 替换为允许动作，并改用全部未来词的最大前向不变核；单层切面商不能自动承担无限未来闭合。
+
+对承诺域 \(D\subseteq X_I\)，同样的构造只能在合法补全上进行。此时应将 \(X_{I\setminus A}\) 替换为合法后缀纤维，并把输运像限制为实际可达消息。定理 40 的无界因果峰值说明：原始联合切面的输运商即使很小，也不能替代各叶消息经过固定树内部映射后的**可达输运系统**。因此，承诺域版本需要额外记录
+
+$$
+\operatorname{Reach}_\Pi(v),
+$$
+
+即协议 \(\Pi\) 在节点 \(v\) 上实际产生的消息像；这项数据不由原始 \(\kappa_A(F)\) 单独决定。
+
+本增补的核心结论可以压缩为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{边界类型}&=\text{剩余响应的商类},\\
+\text{输运}&=\text{固定赋值后的响应限制},\\
+\text{容量变化}&=\text{输运像的并集变化},\\
+\text{顺序效应}&=\text{菱形路径的中间像并差异},\\
+\text{因果峰值}&=\text{可达输运系统的额外约束}.
+\end{aligned}
+}
+$$
+
+这把切面容量、读取顺序、动态未来核和承诺域中的因果实现放进同一个可比较对象中，同时保留它们的模型边界。本文增补仍是纸面理论；它没有取得新的 Lean 声明或冻结状态。
+
+## 追加锚（本行以下为增补区）

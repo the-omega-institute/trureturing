@@ -1,0 +1,62 @@
+### 定理 43.1：输运注入判据与容量不单调性的精确位置
+
+对任意 \(e\in X_{C\setminus A}\)，以下等价：
+
+1. \(e\) 满足锚定分离条件；
+2. \(\tau_{A,C;e}^F\) 是单射；
+3. \(\operatorname{Def}_{A,C;e}^F=\varnothing\)；
+4. 限制映射
+   $$
+   \operatorname{res}_e:\mathcal R_A(F)\to O^{X_{I\setminus C}}
+   $$
+   在 \(\mathcal R_A(F)\) 上是单射。
+
+因此，若至少存在一个满足锚定分离条件的 \(e\)，则
+
+$$
+\boxed{
+\kappa_A(F)\leq\kappa_C(F).
+}
+$$
+
+若一条切面链
+
+$$
+A_0\subseteq A_1\subseteq\cdots\subseteq A_n
+$$
+
+在每一步都能选取一个满足锚定分离条件的锚赋值，则
+
+$$
+\kappa_{A_0}(F)\leq\kappa_{A_1}(F)\leq\cdots\leq\kappa_{A_n}(F),
+$$
+
+该顺序的峰值恰为终点容量 \(\kappa_{A_n}(F)\)。
+
+反之，若
+
+$$
+\kappa_C(F)<\kappa_A(F),
+$$
+
+则每一个 \(e\in X_{C\setminus A}\) 都违反锚定分离条件，且所有输运像的并集严格小于 \(\mathsf S_A(F)\) 的基数。
+
+#### 证明
+
+条件 1 与条件 2 等价，因为对任意 \(a,a'\)，
+
+$$
+\tau_{A,C;e}^F([a]_A)=\tau_{A,C;e}^F([a']_A)
+\Longleftrightarrow
+\forall u\in X_{I\setminus C},
+F(a\sqcup e\sqcup u)=F(a'\sqcup e\sqcup u).
+$$
+
+这正是锚定分离条件的否定形式。条件 2 与条件 3 只是输运缺陷的定义。条件 2 与条件 4 通过 \(\bar\eta_A^F\)、\(\bar\eta_C^F\) 的规范双射互相转化。
+
+若某个输运单射，则其像具有 \(\kappa_A(F)\) 个元素；定理 42.1 的像并公式给出 \(\kappa_C(F)\geq\kappa_A(F)\)。沿切面链逐步应用即可得到单调性与峰值结论。
+
+若 \(\kappa_C(F)<\kappa_A(F)\)，则不可能存在单射输运，否则前一段不等式给出相反方向；同时像并严格小于定义域基数。证毕。
+
+这个判据把“容量是否单调”从经验观察变成了局部可检验条件。它也说明，定理 26 中的满射切片条件实际承担的作用，是构造锚定分离所需的共同补全；它不是一个与输运无关的排列技巧。
+
