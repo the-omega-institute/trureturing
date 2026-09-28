@@ -1,0 +1,408 @@
+{
+  "coherent_counterexamples": [
+    {
+      "actual_originals": [
+        {
+          "a": 0,
+          "m": 3
+        },
+        {
+          "a": 1,
+          "m": 9
+        },
+        {
+          "a": 0,
+          "m": 5
+        },
+        {
+          "a": 0,
+          "m": 7
+        },
+        {
+          "a": 11,
+          "m": 15
+        },
+        {
+          "a": 2,
+          "m": 45
+        },
+        {
+          "a": 1,
+          "m": 21
+        },
+        {
+          "a": 58,
+          "m": 63
+        },
+        {
+          "a": 3,
+          "m": 35
+        },
+        {
+          "a": 74,
+          "m": 105
+        },
+        {
+          "a": 187,
+          "m": 315
+        }
+      ],
+      "coherent_anchors_checked": 315,
+      "coherent_max": "1584/25",
+      "exact_Gamma": "64",
+      "gap": "16/25",
+      "head": "opposite",
+      "legal_head_size": 75,
+      "maximizing_query_layout": [
+        {
+          "a": 0,
+          "m": 1
+        },
+        {
+          "a": 2,
+          "m": 7
+        },
+        {
+          "a": 3,
+          "m": 5
+        },
+        {
+          "a": 23,
+          "m": 35
+        },
+        {
+          "a": 2,
+          "m": 3
+        },
+        {
+          "a": 2,
+          "m": 21
+        },
+        {
+          "a": 8,
+          "m": 15
+        },
+        {
+          "a": 23,
+          "m": 105
+        },
+        {
+          "a": 7,
+          "m": 9
+        },
+        {
+          "a": 16,
+          "m": 63
+        },
+        {
+          "a": 43,
+          "m": 45
+        },
+        {
+          "a": 268,
+          "m": 315
+        }
+      ],
+      "reduced_ternary_pair_values": {
+        "0,0": "16",
+        "0,1": "16",
+        "0,2": "652/25",
+        "0,3": "16",
+        "0,4": "16",
+        "0,5": "652/25",
+        "0,6": "16",
+        "0,7": "844/25",
+        "0,8": "652/25",
+        "1,0": "844/25",
+        "1,1": "844/25",
+        "1,2": "1096/25",
+        "1,3": "844/25",
+        "1,4": "844/25",
+        "1,5": "1096/25",
+        "1,6": "844/25",
+        "1,7": "1584/25",
+        "1,8": "1096/25",
+        "2,0": "1156/25",
+        "2,1": "1156/25",
+        "2,2": "1576/25",
+        "2,3": "1156/25",
+        "2,4": "1156/25",
+        "2,5": "1576/25",
+        "2,6": "1156/25",
+        "2,7": "64",
+        "2,8": "1576/25"
+      },
+      "source": [
+        {
+          "mass": "21/100",
+          "row": 23
+        },
+        {
+          "mass": "21/100",
+          "row": 128
+        },
+        {
+          "mass": "21/100",
+          "row": 233
+        },
+        {
+          "mass": "37/100",
+          "row": 268
+        }
+      ]
+    },
+    {
+      "actual_originals": [
+        {
+          "a": 0,
+          "m": 3
+        },
+        {
+          "a": 1,
+          "m": 9
+        },
+        {
+          "a": 0,
+          "m": 5
+        },
+        {
+          "a": 0,
+          "m": 7
+        },
+        {
+          "a": 1,
+          "m": 15
+        },
+        {
+          "a": 22,
+          "m": 45
+        },
+        {
+          "a": 1,
+          "m": 21
+        },
+        {
+          "a": 16,
+          "m": 63
+        },
+        {
+          "a": 3,
+          "m": 35
+        },
+        {
+          "a": 74,
+          "m": 105
+        },
+        {
+          "a": 47,
+          "m": 315
+        }
+      ],
+      "coherent_anchors_checked": 315,
+      "coherent_max": "1584/25",
+      "exact_Gamma": "64",
+      "gap": "16/25",
+      "head": "same",
+      "legal_head_size": 85,
+      "maximizing_query_layout": [
+        {
+          "a": 0,
+          "m": 1
+        },
+        {
+          "a": 3,
+          "m": 7
+        },
+        {
+          "a": 2,
+          "m": 5
+        },
+        {
+          "a": 17,
+          "m": 35
+        },
+        {
+          "a": 2,
+          "m": 3
+        },
+        {
+          "a": 17,
+          "m": 21
+        },
+        {
+          "a": 2,
+          "m": 15
+        },
+        {
+          "a": 17,
+          "m": 105
+        },
+        {
+          "a": 7,
+          "m": 9
+        },
+        {
+          "a": 52,
+          "m": 63
+        },
+        {
+          "a": 7,
+          "m": 45
+        },
+        {
+          "a": 52,
+          "m": 315
+        }
+      ],
+      "reduced_ternary_pair_values": {
+        "0,0": "16",
+        "0,1": "16",
+        "0,2": "652/25",
+        "0,3": "16",
+        "0,4": "16",
+        "0,5": "652/25",
+        "0,6": "16",
+        "0,7": "844/25",
+        "0,8": "652/25",
+        "1,0": "844/25",
+        "1,1": "844/25",
+        "1,2": "1096/25",
+        "1,3": "844/25",
+        "1,4": "844/25",
+        "1,5": "1096/25",
+        "1,6": "844/25",
+        "1,7": "1584/25",
+        "1,8": "1096/25",
+        "2,0": "1156/25",
+        "2,1": "1156/25",
+        "2,2": "1576/25",
+        "2,3": "1156/25",
+        "2,4": "1156/25",
+        "2,5": "1576/25",
+        "2,6": "1156/25",
+        "2,7": "64",
+        "2,8": "1576/25"
+      },
+      "source": [
+        {
+          "mass": "21/100",
+          "row": 17
+        },
+        {
+          "mass": "37/100",
+          "row": 52
+        },
+        {
+          "mass": "21/100",
+          "row": 122
+        },
+        {
+          "mass": "21/100",
+          "row": 227
+        }
+      ]
+    }
+  ],
+  "complete_geometric_tail_identity_checks": 16,
+  "prefix_reduction_checks": [
+    {
+      "full_live_source_weight": 4400,
+      "head": "opposite",
+      "layouts": [
+        {
+          "arbitrary_lift_value": "114649/38500",
+          "seed": 0,
+          "zero_lift_and_pair_value": "115249/38500"
+        },
+        {
+          "arbitrary_lift_value": "658951/154000",
+          "seed": 1,
+          "zero_lift_and_pair_value": "60101/14000"
+        },
+        {
+          "arbitrary_lift_value": "76059/11000",
+          "seed": 2,
+          "zero_lift_and_pair_value": "106649/15400"
+        },
+        {
+          "arbitrary_lift_value": "467589/154000",
+          "seed": 3,
+          "zero_lift_and_pair_value": "475529/154000"
+        },
+        {
+          "arbitrary_lift_value": "1519/250",
+          "seed": 4,
+          "zero_lift_and_pair_value": "468157/77000"
+        },
+        {
+          "arbitrary_lift_value": "273503/38500",
+          "seed": 5,
+          "zero_lift_and_pair_value": "273733/38500"
+        },
+        {
+          "arbitrary_lift_value": "67547/38500",
+          "seed": 6,
+          "zero_lift_and_pair_value": "9709/5500"
+        },
+        {
+          "arbitrary_lift_value": "41111/5500",
+          "seed": 7,
+          "zero_lift_and_pair_value": "4607/616"
+        }
+      ],
+      "nonproduct_source": "weight 1+(29*x)%101 on actual legal residues",
+      "numerical_divisor_slots": 27,
+      "period": 11025
+    },
+    {
+      "full_live_source_weight": 4879,
+      "head": "same",
+      "layouts": [
+        {
+          "arbitrary_lift_value": "11856/4165",
+          "seed": 0,
+          "zero_lift_and_pair_value": "488746/170765"
+        },
+        {
+          "arbitrary_lift_value": "659423/170765",
+          "seed": 1,
+          "zero_lift_and_pair_value": "661583/170765"
+        },
+        {
+          "arbitrary_lift_value": "1294596/170765",
+          "seed": 2,
+          "zero_lift_and_pair_value": "37036/4879"
+        },
+        {
+          "arbitrary_lift_value": "504209/170765",
+          "seed": 3,
+          "zero_lift_and_pair_value": "73617/24395"
+        },
+        {
+          "arbitrary_lift_value": "22166/4165",
+          "seed": 4,
+          "zero_lift_and_pair_value": "913202/170765"
+        },
+        {
+          "arbitrary_lift_value": "305834/34153",
+          "seed": 5,
+          "zero_lift_and_pair_value": "1530484/170765"
+        },
+        {
+          "arbitrary_lift_value": "287486/170765",
+          "seed": 6,
+          "zero_lift_and_pair_value": "57830/34153"
+        },
+        {
+          "arbitrary_lift_value": "20599/3485",
+          "seed": 7,
+          "zero_lift_and_pair_value": "1010503/170765"
+        }
+      ],
+      "nonproduct_source": "weight 1+(29*x)%101 on actual legal residues",
+      "numerical_divisor_slots": 27,
+      "period": 11025
+    }
+  ],
+  "scope": "Exact ordinary finite checks; no new Lean verification."
+}
