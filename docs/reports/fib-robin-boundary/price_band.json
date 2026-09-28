@@ -1,0 +1,53 @@
+{
+  "status": "all integer-interval comparisons passed; not Lean verified",
+  "prime_count": 9592,
+  "active_layers_at_low": 8665,
+  "active_prime_directions_at_low": 8529,
+  "switches": 8657,
+  "cells": 8658,
+  "gamma_interval": [
+    "0.5772151649014495272731787651",
+    "0.5772161649014495272731787651"
+  ],
+  "initial_gap": [
+    "0.0003044299671956354044760911299",
+    "0.0003054299671956354044760911299"
+  ],
+  "minimum_noninitial_gap": [
+    "0.0002461836616312356422357908016",
+    "0.0002471836616312356422357908016"
+  ],
+  "minimum_cell": 8657,
+  "energy_at_low": [
+    "87995.49273415800231797705341",
+    "87995.49273415800231797705341"
+  ],
+  "rho_at_low_bracket": [
+    87847,
+    87848
+  ],
+  "finite_starting_integers": 2959,
+  "small_minimum_n": 7560,
+  "small_minimum_gap": [
+    "0.02337803029564597843921064397",
+    "0.02337903029564597843921064397"
+  ],
+  "target_margin": "123/500000",
+  "integer_transfer_upper": "10^30000",
+  "integer_transfer_energy_budget": [
+    "769730.1418884650513419577167",
+    "769730.1418884650513419577167"
+  ],
+  "certificate_sha256": "414a27db7d99045d016c3b155e1ad9c2e5910a7f2ec0d1eff1b5d7aafd7e28f8",
+  "script_path": "price_band.py",
+  "script_sha256": "01fe08f39f0ffdabc98764807ba917351233de4d9aa2d6225b29a33936f59f02",
+  "scale": "340282366920938463463374607431768211456",
+  "minimum_noninitial_gap_wire": [
+    "83771959077140286915981906565535675",
+    "84112241444061225379445281175738211"
+  ],
+  "limitations": [
+    "Analytic correctness of log series, gamma bounds, optimum characterization and transfer is part of the paper argument, not machine proved here.",
+    "This executable does not establish any bound below price 1e-6 or RH."
+  ]
+}
