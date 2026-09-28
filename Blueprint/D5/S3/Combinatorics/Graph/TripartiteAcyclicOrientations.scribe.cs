@@ -28,7 +28,10 @@ internal sealed class TripartiteAcyclicOrientationsDocument : IScribeDocumentDef
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of clause (4)", Disp(F.Id("claim")),
                 "If two commuting involutions r and s of a finite set act without fixed points, and so does r s, the orbits have four elements and 4 divides the size of the set. For non-adjacent vertices u and v with the same neighbours and an edge avoiding both, take r the reversal of all arcs and s the swap of u and v on the acyclic orientations: r has no fixed point because the graph has an edge, and r s has none because it reverses the edge avoiding u and v, so the acyclic orientations not fixed by s number a multiple of 4. The orientations fixed by s are those that give v the arcs of u, and deleting v is a bijection from them onto the acyclic orientations of the graph without v: a directed cycle through v becomes a closed walk through u. Hence psi(G) and psi(G - v) agree modulo 4. In K_{m,n,p} two vertices of the same part are such twins, and one vertex from each of the other two parts gives an edge avoiding them; removing vertices this way ends at the triangle K_{1,1,1}, whose 8 orientations are 6 transitive ones and 2 cyclic ones. So psi(K_{m,n,p}) is congruent to 6, that is to 2, modulo 4, for all m, n, p at least 1.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("muhlherr-poullot-2026-tripartite-acyclic-orientations"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
