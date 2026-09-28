@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:2706006a9a2d07ca948b98f0dcde14e5b2cf3f37318d6ea2cb4a774e6df73f08
   normalized_sha256: sha256:2706006a9a2d07ca948b98f0dcde14e5b2cf3f37318d6ea2cb4a774e6df73f08
 cas_ref: sha256:2706006a9a2d07ca948b98f0dcde14e5b2cf3f37318d6ea2cb4a774e6df73f08
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/PureCubicSquareDivisor.square_divisor_obstructs_maximality
+    target_statement_id: sha256:ffbc63db08fd2c78b2a7a9d3edc5a6481c90e215ebd6e8561398cb991c3f06b9
 receipts:
   unresolved_subitems: []
