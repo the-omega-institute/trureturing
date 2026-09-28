@@ -1,5 +1,7 @@
 # Surviving-fibre credits give common query laws at ternary height one
 
+A [large-prime continuation](#eleven-small-support-primes-allow-an-unrestricted-large-prime-tail) permits arbitrarily many additional primes greater than100000: if at most eleven support primes are at most100000, only originals entirely on those small primes need v3(m)<=1. Every tail-touching original may have arbitrary finite exponents, including deeper powers of3. The complete family remains finite and noncovering.
+
 Every finite family of pairwise distinct odd numerical moduli greater than1, with at most eleven actual support primes and v3(m)<=1 for every original, leaves integer survivor density greater than1/700. The [eleven-prime construction](#actual-pure-outside-conditioning-closes-the-eleven-prime-branch) below permits arbitrary original residues and arbitrary finite nonternary heights. It is an ordinary proof with exact rational checks, not new Lean verification.
 
 Let P={3,5,7,11,13,17,19}. For every finite family of pairwise distinct odd numerical moduli greater than1 supported on P, with arbitrary original residues and v3(m)<=1, there is one probability mu on its actual survivor set such that
@@ -825,3 +827,87 @@ No original geometry or prior partition computation is repeated.
 These are ordinary proofs with exact arithmetic, not new Lean
 verification. The result does not impose or justify height one for
 arbitrary hypothetical covers, and does not settle unrestricted support.
+
+## Eleven small support primes allow an unrestricted large-prime tail
+
+Let R be all actual support primes at most100000. If |R|<=11 and every
+original supported entirely on R has v3(m)<=1, the full finite family
+cannot cover the integers. Original moduli touching a prime greater
+than100000 may have arbitrary finite exponents at every coordinate,
+including arbitrary powers of3. There is no bound on the number of
+large support primes, or on how many of them occur in a single modulus.
+Distinct odd nonunit numerical moduli and their actual residues are kept.
+
+This is a direct use of the joint-moment tail interface in
+[Chapter33, SH6 and SH11--SH13](../../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md#4-uniform-continuation-over-every-large-prime).
+Its head premise is a supported submeasure with positive mass and a
+joint Haar-density bound. It does not require an all-depth query norm.
+
+Apply(FC22) and the no3 case to the head-only originals, obtaining their
+actual survivor set U with H_R(U)>1/700. Resolve head heights large enough
+for the entire original family, including the head parts of later
+moduli. Uniform lifting to those heights preserves H_R(U). Use
+
+    eta=H_R restricted to U,
+    eta(1)>1/700, eta<=H_R.                            (FC23)
+
+This is an actual Haar restriction, so the tail argument has m=1/700
+and D=1. No claim that eta retains the previous source's query bound is
+needed. For any at-most-eleven odd head primes, the joint second moment
+of Chapter33 SH6 is at most
+
+    M2(R)=product_(p in R) p(p+1)/(p-1)^2
+           <=61036374269/1970749440.                   (FC24)
+
+Each factor decreases with p; the first eleven odd primes majorize all
+such heads. Finite heights only lower this complete geometric moment.
+Domination eta<=H_R supplies the same bound despite correlations in eta.
+
+Take B=100000, ell=10 and c_ell=201/199. The inherited analytic
+prime-product premise SH11 applies since B>=286, ell>=4 and
+3^ell=59049<=B. Its complete tail allowance is
+
+    tau7=(c_ell^7/B)(B/(B-3))^2
+          sum_(j=0)^7 7!/((7-j)!ell^j),
+    sum_(j=0)^7 7!/((7-j)!ell^j)=305593/125000,
+    M2 tau7=313147209759498591392330831
+             /385594576415774972001458278400.
+
+Thus the final supported mass is strictly greater than
+
+    1/700-M2 tau7
+      =1663915295841259580268266967
+        /2699162034910424804010207948800
+      >1/2000>0.                                      (FC25)
+
+The tail theorem charges each original at its last large-prime
+coordinate. At every depth it retains all earlier exponents and the
+original numerical label; pure tail classes include the unit earlier
+cofactor. Its normalized kernels preserve the entire preceding measure,
+so all bad-set charges can be subtracted once from one final law. The
+complete prime-product majorant permits any finite number of tail
+primes. Positive supported mass gives an actual CRT survivor and hence
+an uncovered integer.
+
+The height-one premise is needed only to construct U. Subsequent
+queries at deeper ternary exponents use eta's joint Haar domination
+and the full second moment(FC24), rather than the restricted query
+interface(FC17). It is therefore unnecessary to impose height one on
+tail-touching originals. The number in(FC25) is mass under the final
+distorted measure, not a natural-density lower bound of that size for
+the complete family.
+
+The [large-tail consumer](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_large_tail.py)
+and [exact result](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_large_tail.json)
+consume the pinned head certificate and compute only the finite moment
+product and the SH12 rational allowance. Independent evaluation using
+the original SH6 factors and a recurrence for the positive polynomial
+agrees exactly. Normal, optimized and different-working-directory runs
+also agree. The program does not rerun the source, partition or query
+calculations and does not prove the analytic prime-product estimate.
+The latter retains Chapter33's Rosser--Schoenfeld/source attribution and
+verification boundary. This application adds no Lean certification.
+
+Unrestricted#7 still permits twelve or more small support primes and
+head-only originals of greater ternary height. Neither is excluded by
+these results.
