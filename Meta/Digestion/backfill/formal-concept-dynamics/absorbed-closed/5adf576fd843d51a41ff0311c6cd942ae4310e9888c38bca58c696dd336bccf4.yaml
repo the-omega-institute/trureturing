@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:5adf576fd843d51a41ff0311c6cd942ae4310e9888c38bca58c696dd336bccf4
   normalized_sha256: sha256:5adf576fd843d51a41ff0311c6cd942ae4310e9888c38bca58c696dd336bccf4
 cas_ref: sha256:5adf576fd843d51a41ff0311c6cd942ae4310e9888c38bca58c696dd336bccf4
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/CARApproximateRecovery.result
+    target_statement_id: sha256:20bd19913dd4f7169d88db3b8c586e74481b50516837c1cac70525dd85d8af2c
 receipts:
   unresolved_subitems: []
