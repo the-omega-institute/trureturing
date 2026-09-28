@@ -135,6 +135,14 @@ structure ReadoutScope where
   rawContext : Array SourceBinder := #[]
   rawObservation : Expr := default
 
+private structure PreparedReadout where
+  context : Array SourceBinder
+  observation : Expr
+  state : Expr
+  output : Expr
+  rawContext : Array SourceBinder
+  rawObservation : Expr
+
 structure DefinitionEntry where
   path : Array String
   owner : Name
@@ -152,13 +160,145 @@ structure Scope where
   levels : List Name
   selection : SourceSelection
   telescope : Array SourceBinder
+  /-- Original lexical indices selected as parameters.  `coordinates` remains
+      the user-selected semantic data projection; `support` contains only
+      omitted class-valued instance binders needed by that projection. -/
+  parameterSlots : Array Nat
   coordinates : Array SourceBinder
+  /-- Raw source binders used to authenticate omitted instance support. -/
+  supportRaw : Array SourceBinder
+  support : Array SourceBinder
+  parameters : Array SourceBinder
   readouts : Array ReadoutScope
 
 private partial def dictionary (type : Expr) : MetaM Bool := do
   let type ← withTransparency .all <| whnf type
   forallTelescope type fun _ result => do
     pure (Lean.isClass (← getEnv) (result.getAppFn.constName?.getD .anonymous))
+
+private partial def referencedPaths (context : Array SourceBinder) (e : Expr)
+    (localDepth : Nat := 0) (depth : Nat := 0) : M (Array (Array String)) := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.source_support_depth"
+  let child := fun x => referencedPaths context x localDepth (depth + 1)
+  let bound := fun x => referencedPaths context x (localDepth + 1) (depth + 1)
+  let join := fun (left right : Array (Array String)) =>
+    left.foldl (init := right) fun acc path => if acc.contains path then acc else acc.push path
+  match e with
+  | .bvar i =>
+    if i < localDepth then return #[]
+    let i := i - localDepth
+    unless i < context.size do throwError "unclassified_form:source.open_coordinate"
+    return #[context[context.size - 1 - i]!.path]
+  | .app f a => return join (← child f) (← child a)
+  | .lam _ t b _ | .forallE _ t b _ => return join (← child t) (← bound b)
+  | .letE _ t v b _ =>
+    return join (join (← child t) (← child v)) (← bound b)
+  | .mdata _ b | .proj _ _ b => return ← child b
+  | .mvar _ | .fvar _ => throwError "unclassified_form:source.open_expression"
+  | _ => return #[]
+
+private def supportCandidate (context : Array SourceBinder) (index : Nat) : M Bool := do
+  let b := context[index]!
+  if b.info != .instImplicit || b.value.isSome then return false
+  inContext (context.extract 0 index) (fun locals => do
+    let domain := b.domain.instantiateRev locals
+    if domain == mkSort .zero || (← isProp domain) then return false
+    return ← dictionary domain)
+
+private def addSupportClosure (coordinateContext : Array SourceBinder)
+    (coordinateSlots : Array Nat) (roots : Array (Array (Array String))) : M (Array Nat) := do
+  let coordinatePaths := coordinateSlots.map (fun i => coordinateContext[i]!.path)
+  let mut pending := roots.flatten
+  let mut paths : Array (Array String) := #[]
+  while !pending.isEmpty do
+    debit
+    let path := pending[0]!
+    pending := pending.extract 1 pending.size
+    if coordinatePaths.contains path || paths.contains path then continue
+    let some index := coordinateContext.findIdx? (fun b => b.path == path)
+      | throwError "unclassified_form:source.captured_support"
+    let binder := coordinateContext[index]!
+    if let some value := binder.value then
+      -- A lexical let is source syntax, not a parameter.  Expand its raw
+      -- value in the strictly earlier context before deciding whether any
+      -- actual instance support is needed.
+      let dependencies ← referencedPaths (coordinateContext.extract 0 index) value
+      pending := pending ++ dependencies
+      continue
+    unless ← supportCandidate coordinateContext index do
+      throwError "unclassified_form:source.coordinate_dependency"
+    paths := paths.push path
+    let earlier := coordinateContext.extract 0 index
+    let dependencies ← referencedPaths earlier (← expandLets earlier earlier.size binder.domain)
+    pending := pending ++ dependencies
+  return paths.map fun path => coordinateContext.findIdx? (fun b => b.path == path) |>.get!
+
+private def prepareReadout (selected : SourceReadoutSelection)
+    (context : Array SourceBinder) (observation : Expr) : M PreparedReadout := do
+  if selected.functionOperand || selected.stateOperand.isSome then
+    unless selected.stateBinder == 0 &&
+        !(selected.functionOperand && selected.stateOperand.isSome) &&
+        !(selected.functionOperand && selected.booleanPredicate) do
+      throwError "unclassified_form:source.operand_mode"
+    let (state, body) ← inContext context fun locals => do
+      let term := observation.instantiateRev locals
+      if selected.functionOperand then
+        let .forallE _ domain output .default := (← inferType term)
+          | throwError "unclassified_form:source.function_operand"
+        unless !output.hasLooseBVars && domain != mkSort .zero &&
+            !(← isProp domain) && !(← dictionary domain) && !(← isType term) do
+          throwError "unclassified_form:source.function_operand"
+        let typeArgument ← withLocalDeclD `state domain fun state => isType state
+        if typeArgument then throwError "unclassified_form:source.function_operand"
+        return (domain.abstract locals, mkApp (observation.liftLooseBVars 0 1) (.bvar 0))
+      let path := selected.stateOperand.get!
+      unless !path.isEmpty && path.size ≤ 256 do
+        throwError "unclassified_form:source.state_operand_path"
+      let pair ← atPath observation path
+      let inside := pair.1
+      let operand := pair.2
+      unless inside.isEmpty do throwError "unclassified_form:source.state_operand_scope"
+      let operand := operand.instantiateRev locals
+      unless !(← isProof operand) && !(← isType operand) do
+        throwError "unclassified_form:source.state_operand_data"
+      let state ← inferType operand
+      if (← dictionary state) then throwError "unclassified_form:source.state_operand_data"
+      let body ← replaceAt (observation.liftLooseBVars 0 1) path.toList (.bvar 0)
+      return (state.abstract locals, body)
+    let extended := context.push {name := `state, info := .default, domain := state}
+    let body ← if selected.booleanPredicate then
+        inContext extended fun locals => do
+          let term := body.instantiateRev locals
+          unless ← isProp term do throwError "unclassified_form:source.boolean_predicate"
+          return (← mkDecide term).abstract locals
+      else pure body
+    let output ← inContext extended fun locals => do
+      let term := body.instantiateRev locals
+      unless !(← isProof term) && !(← isType term) do
+        throwError "unclassified_form:source.observation_data"
+      let output ← inferType term
+      if (← dictionary output) then throwError "unclassified_form:source.observation_data"
+      return output.abstract locals
+    return PreparedReadout.mk extended body state output context observation
+  if selected.booleanPredicate then throwError "unclassified_form:source.operand_mode"
+  unless selected.stateBinder < context.size do
+    throwError "unclassified_form:source.state_binder"
+  let stateBinder := context[selected.stateBinder]!
+  if stateBinder.value.isSome then throwError "unclassified_form:source.let_state"
+  inContext (context.extract 0 selected.stateBinder) fun locals => do
+    let domain := stateBinder.domain.instantiateRev locals
+    if stateBinder.info == .instImplicit || domain == mkSort .zero ||
+        (← isProp domain) || (← dictionary domain) then
+      throwError "unclassified_form:source.dictionary_or_proof_state"
+  let output ← inContext context fun locals => do
+    let term := observation.instantiateRev locals
+    unless !(← isProof term) && !(← isType term) do
+      throwError "unclassified_form:source.observation_data"
+    let output ← inferType term
+    if (← dictionary output) then throwError "unclassified_form:source.observation_data"
+    return output.abstract locals
+  return PreparedReadout.mk context observation stateBinder.domain output context observation
 
 def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
   unless info.isTheorem do throwError "unclassified_form:source.theorem"
@@ -242,71 +382,69 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
           (← isProp domain) || (← dictionary domain) then
         throwError "unclassified_form:source.dictionary_or_proof_coordinate"
     if b.value.isSome then throwError "unclassified_form:source.let_coordinate"
-    let domain ← transport (coordinateContext.extract 0 i) (slots.filter (· < i)) b.domain
-    coordinates := coordinates.push { b with domain }
+    coordinates := coordinates.push b
     previous := some i
-  let readouts ← (selection.readouts.zip occurrences).mapM fun (selected, context, observation) => do
+  -- Prepare every selected readout before collecting support.  This keeps
+  -- state abstraction occurrence-specific and makes state/output type
+  -- dependencies part of the same closure as coordinate domains.
+  let prepared ← (selection.readouts.zip occurrences).mapM fun (selected, (context, observation)) =>
+    prepareReadout selected context observation
+  let mut roots : Array (Array (Array String)) := #[]
+  for i in slots do
+    let earlier := coordinateContext.extract 0 i
+    roots := roots.push (← referencedPaths earlier (← expandLets earlier earlier.size coordinateContext[i]!.domain))
+  for ((selected, _), prepared) in (selection.readouts.zip occurrences).zip prepared do
+    let varyingPath := if selected.functionOperand || selected.stateOperand.isSome then
+        prepared.context[prepared.context.size - 1]!.path
+      else prepared.context[selected.stateBinder]!.path
+    let bodyRefs ← referencedPaths prepared.context
+      (← expandLets prepared.context prepared.context.size prepared.observation)
+    roots := roots.push (bodyRefs.filter (· != varyingPath))
+    let stateContext := if selected.functionOperand || selected.stateOperand.isSome then prepared.rawContext
+      else prepared.rawContext.extract 0 selected.stateBinder
+    let stateRefs ← referencedPaths stateContext
+      (← expandLets stateContext stateContext.size prepared.state)
+    roots := roots.push (stateRefs.filter (· != varyingPath))
+    let outputRefs ← referencedPaths prepared.context
+      (← expandLets prepared.context prepared.context.size prepared.output)
+    roots := roots.push (outputRefs.filter (· != varyingPath))
+  let supportSlots := (← addSupportClosure coordinateContext slots roots).qsort (· < ·)
+  if slots.size + supportSlots.size > 64 then
+    throwError "incomplete_closure:E8.source_binders"
+  for index in supportSlots do
+    let path := coordinateContext[index]!.path
+    for (context, _) in occurrences do
+      unless context[index]?.any (fun binder => binder.path == path) do
+        throwError "unclassified_form:source.captured_support"
+  let parameterSlots := (slots ++ supportSlots).qsort (· < ·)
+  let mut parameters := #[]
+  for i in parameterSlots do
+    let b := coordinateContext[i]!
+    let domain ← transport (coordinateContext.extract 0 i) (parameterSlots.filter (· < i)) b.domain
+    parameters := parameters.push { b with domain }
+  let support := parameters.filter fun b => supportSlots.any fun i =>
+    coordinateContext[i]!.path == b.path
+  let supportRaw := supportSlots.map (fun i => coordinateContext[i]!)
+  let readouts ← prepared.mapIdxM fun i prepared => do
+    let selected := selection.readouts[i]!
+    let context := prepared.rawContext
+    let observation := prepared.rawObservation
     if selected.functionOperand || selected.stateOperand.isSome then
-      unless selected.stateBinder == 0 && !(selected.functionOperand && selected.stateOperand.isSome) &&
-          !(selected.functionOperand && selected.booleanPredicate) do
-        throwError "unclassified_form:source.operand_mode"
-      let (state, body) ← inContext context fun locals => do
-        let term := observation.instantiateRev locals
-        if selected.functionOperand then
-          let .forallE _ domain output .default := (← inferType term)
-            | throwError "unclassified_form:source.function_operand"
-          unless !output.hasLooseBVars && !(← isProp domain) && !(← isType term) do
-            throwError "unclassified_form:source.function_operand"
-          let typeArgument ← withLocalDeclD `state domain fun state => isType state
-          if typeArgument then throwError "unclassified_form:source.function_operand"
-          return (domain.abstract locals, mkApp (observation.liftLooseBVars 0 1) (.bvar 0))
-        else
-          let path := selected.stateOperand.get!
-          unless !path.isEmpty && path.size ≤ 256 do
-            throwError "unclassified_form:source.state_operand_path"
-          let (inside, operand) ← atPath observation path
-          unless inside.isEmpty do throwError "unclassified_form:source.state_operand_scope"
-          let operand := operand.instantiateRev locals
-          unless !(← isProof operand) && !(← isType operand) do
-            throwError "unclassified_form:source.state_operand_data"
-          let state ← inferType operand
-          let body ← replaceAt (observation.liftLooseBVars 0 1) path.toList (.bvar 0)
-          return (state.abstract locals, body)
-      let extended := context.push {name := `state, info := .default, domain := state}
-      let body ← if selected.booleanPredicate then
-          inContext extended fun locals => do
-            let term := body.instantiateRev locals
-            unless ← isProp term do throwError "unclassified_form:source.boolean_predicate"
-            return (← mkDecide term).abstract locals
-        else pure body
-      let output ← inContext extended fun locals => do
-        let term := body.instantiateRev locals
-        unless !(← isProof term) && !(← isType term) do
-          throwError "unclassified_form:source.observation_data"
-        return (← inferType term).abstract locals
-      let state ← transport context slots state
-      let output ← transport extended slots output
-      let projected ← transport extended (slots.push context.size) body
+      let state ← transport context parameterSlots prepared.state
+      let output ← transport prepared.context parameterSlots prepared.output
+      let projected ← transport prepared.context (parameterSlots.push context.size) prepared.observation
       return {
-        context := extended
-        observation := body
+        context := prepared.context
+        observation := prepared.observation
         state, output, projected
         rawContext := context
         rawObservation := observation : ReadoutScope }
-    if selected.booleanPredicate then throwError "unclassified_form:source.operand_mode"
-    unless selected.stateBinder < context.size && slots.all (· < selected.stateBinder) do
+    unless selected.stateBinder < context.size && parameterSlots.all (· < selected.stateBinder) do
       throwError "unclassified_form:source.state_binder"
-    let stateBinder := context[selected.stateBinder]!
-    if stateBinder.value.isSome then throwError "unclassified_form:source.let_state"
-    let output ← inContext context fun locals => do
-      let term := observation.instantiateRev locals
-      unless !(← isProof term) && !(← isType term) do
-        throwError "unclassified_form:source.observation_data"
-      return (← inferType term).abstract locals
-    let output ← transport context slots output
-    let state ← transport (context.extract 0 selected.stateBinder) slots stateBinder.domain
-    let projected ← transport context (slots.push selected.stateBinder) observation
-    return { context, observation, state, output, projected, rawContext := context, rawObservation := observation : ReadoutScope }
+    let output ← transport context parameterSlots prepared.output
+    let state ← transport (context.extract 0 selected.stateBinder) parameterSlots prepared.state
+    let projected ← transport context (parameterSlots.push selected.stateBinder) observation
+    return ReadoutScope.mk context observation state output projected context observation
   let mut reconstructedSource := source
   for (selected, context, observation) in selection.readouts.zip occurrences do
     if selected.booleanPredicate then
@@ -322,7 +460,11 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
     levels := info.levelParams
     selection := selection
     telescope := telescope
+    parameterSlots := parameterSlots
     coordinates := coordinates
+    supportRaw := supportRaw
+    support := support
+    parameters := parameters
     readouts := readouts }
 
 private partial def packedType (domains : Array SourceBinder) (i : Nat)
@@ -351,14 +493,14 @@ private def family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 /-- Every selected role is checked at the actual source occurrence and its type.
 Coordinate projection is inverted before this kernel equality is used. -/
 def validateFields (scope : Scope) (signature actual : Expr) : M Unit := do
-  let params ← packedType scope.coordinates 0 #[]
+  let params ← packedType scope.parameters 0 #[]
   unless ← isDefEq params (← mkAppM (family ++ `Signature.Params) #[signature]) do
     throwError "unclassified_form:source.params"
   let roles ← RegistrationGates.indices
     (← mkAppM (family ++ `Signature.Role) #[signature])
     (← mkAppM (family ++ `Signature.finiteRole) #[signature])
   unless roles.size == scope.readouts.size do throwError "unclassified_form:source.roles"
-  inContext scope.coordinates fun locals => do
+  inContext scope.parameters fun locals => do
     let parameter ← packedValue params locals 0
     for (role, readout) in roles.zip scope.readouts do
       debit
@@ -373,6 +515,12 @@ def validateFields (scope : Scope) (signature actual : Expr) : M Unit := do
       let observation := Expr.lam `state readout.state readout.projected .default
       let observation := observation.instantiateRev locals
       let actualReadout ← mkAppM (family ++ `Realization.readout) #[actual, role, parameter]
+      let rawReadout ← withTransparency .all <| whnf actualReadout
+      for (binder, index) in scope.parameters.zipIdx do
+        if scope.support.any (fun support => support.path == binder.path) &&
+            (observation.find? (· == locals[index]!)).isSome then
+          unless (rawReadout.find? (· == locals[index]!)).isSome do
+            throwError "unclassified_form:source.actual_support_link"
       unless ← isDefEq observation actualReadout do
         throwError "unclassified_form:source.actual_observation"
 

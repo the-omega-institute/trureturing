@@ -150,6 +150,77 @@ public sealed class InformationTemplateEvidenceTests
         Assert.Equal("D5.S0.Carrier.Probe", row.SourceOwner);
     }
 
+    [Fact]
+    public void release16_requires_complete_support_block_and_rejects_downgrade()
+    {
+        var wire = SourceWire();
+        RepositorySnapshot SnapshotAt(int version)
+        {
+            var files = InformationTemplateFixture.PolicyFiles();
+            var manifest = JsonNode.Parse(files["lean-report-inputs.json"])!;
+            manifest["report_cache_release_semantic_version"] = version;
+            files["lean-report-inputs.json"] = manifest.ToJsonString();
+            files[PathA] = TextA;
+            return DeclaredTemplateFixture.Tree(files);
+        }
+        InformationTemplateModuleEvidence Read(int version) => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, SnapshotAt(version));
+        wire["compatibility_version"] = 15;
+        Assert.True(Assert.Single(Read(15).Records).HasFourSlots);
+        Assert.Throws<FormatException>(() => Read(16));
+        wire["compatibility_version"] = 16;
+        Assert.Throws<FormatException>(() => Read(16));
+        var binding = wire["records"]![0]!["certificate"]!["source_binding"]!.AsObject();
+        binding["support"] = new JsonArray();
+        binding["support_paths"] = new JsonArray();
+        binding["support_entries"] = new JsonArray();
+        binding["support_identity"] = Hash("DTR-source-support-v1:");
+        binding["parameter_slots"] = binding["coordinates"]!.DeepClone();
+        Assert.True(Assert.Single(Read(16).Records).HasFourSlots);
+        foreach (var field in new[] { "support", "support_paths", "support_entries", "support_identity", "parameter_slots" })
+        {
+            var retained = binding[field]!.DeepClone();
+            binding.Remove(field);
+            Assert.Throws<FormatException>(() => Read(16));
+            binding[field] = retained;
+        }
+        wire["compatibility_version"] = 15;
+        Assert.Throws<FormatException>(() => Read(15));
+    }
+
+    [Fact]
+    public void source_support_is_bound_to_its_indexed_scope_path()
+    {
+        var wire = SourceWire();
+        wire["compatibility_version"] = 16;
+        var files = InformationTemplateFixture.PolicyFiles();
+        var manifest = JsonNode.Parse(files["lean-report-inputs.json"])!;
+        manifest["report_cache_release_semantic_version"] = 16;
+        files["lean-report-inputs.json"] = manifest.ToJsonString();
+        files[PathA] = TextA;
+        var snapshot = DeclaredTemplateFixture.Tree(files);
+        var binding = wire["records"]![0]!["certificate"]!["source_binding"]!;
+        binding["coordinates"] = new JsonArray(0, 11);
+        binding["coordinate_paths"] = JsonSerializer.SerializeToNode(
+            new[] { new[] { "body" }, Enumerable.Repeat("body", 12).ToArray() });
+        binding["support"] = new JsonArray(1);
+        binding["support_paths"] = JsonSerializer.SerializeToNode(
+            new[] { new[] { "body", "body" } });
+        // A support entry without producer-authenticated raw domain material is
+        // forged, even when its index/path/hash fields are self-consistent.
+        binding["support_entries"] = JsonSerializer.SerializeToNode(new[] { new {
+            index = 1, path = new[] { "body", "body" }, material = "eb(0)", identity = Hash("forged") } });
+        binding["support_identity"] = Hash("DTR-source-support-v1:1:body/body:" + Hash("eb(0)"));
+        binding["parameter_slots"] = new JsonArray(0, 1, 11);
+        var read = () => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, snapshot);
+        Assert.Throws<FormatException>(read);
+        binding["support_entries"]![0]!["identity"] = Hash("eb(0)");
+        Assert.True(Assert.Single(read().Records).HasFourSlots);
+        binding["support_paths"]![0] = new JsonArray("body", "body", "body");
+        Assert.Throws<FormatException>(read);
+    }
+
     [Theory]
     [InlineData(false, false, true)]
     [InlineData(true, false, false)]

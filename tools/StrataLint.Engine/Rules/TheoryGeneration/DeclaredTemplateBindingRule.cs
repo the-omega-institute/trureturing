@@ -30,6 +30,7 @@ internal sealed record InformationTemplateOccurrence(
     string? SourceDefinitionName = null,
     ImmutableDictionary<string, string>? SourceProjectionOwners = null)
 {
+    internal System.Text.Json.JsonElement? SourceBinding { get; init; }
     internal System.Text.Json.JsonElement? DefinitionSourceBinding { get; init; }
     internal ImmutableHashSet<string> RealizationDependencyOwners { get; init; } = [];
 

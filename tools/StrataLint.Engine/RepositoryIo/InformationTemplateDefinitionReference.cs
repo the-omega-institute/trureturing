@@ -41,7 +41,7 @@ internal static class InformationTemplateDefinitionReference
             throw new FormatException("DTR-Evidence: source definition reference identity differs from current declaration");
     }
 
-    private static (string[] Parameters, int TypeStart) Parameters(string material)
+    internal static (string[] Parameters, int TypeStart) Parameters(string material)
     {
         const string prefix = "statement-v1(uparams=[";
         if (!material.StartsWith(prefix, StringComparison.Ordinal))

@@ -110,7 +110,8 @@ internal static class InformationTemplateEvidence
                 if (bridgeKind == "source-equivalence")
                 {
                     (sourceOwner, sourceDefinitionName) = CheckSourceBinding(
-                        certificate.GetProperty("source_binding"), key, statement);
+                        certificate.GetProperty("source_binding"), key, statement,
+                        value.GetProperty("compatibility_version").GetRawText());
                     projectionOwners = CheckDefinitionDependency(certificate, key, realization, sourceDefinitionName);
                     if (escapeFrom is null || escapeFrom.Name != key.Theorem
                         || escapeFrom.TypeIdentity != statement
@@ -137,6 +138,9 @@ internal static class InformationTemplateEvidence
             records.Add(new(key, registration, statement, state, reference, diagnostic, binding, unit, realization,
                 escapeFrom, escapeContinues, bridgeKind, sourceOwner, sourceDefinitionName, projectionOwners) {
                 RealizationDependencyOwners = realizationDependencyOwners,
+                SourceBinding = state == InformationTemplateBindingState.DeclaredValidated
+                    && bridgeKind == "source-equivalence" && certificate.TryGetProperty("source_binding", out var source)
+                    ? source.Clone() : null,
                 DefinitionSourceBinding = sourceDefinitionName is null ? null
                     : certificate.GetProperty("source_binding").Clone() });
         }
@@ -144,13 +148,14 @@ internal static class InformationTemplateEvidence
     }
 
     private static (string Owner, string? DefinitionName) CheckSourceBinding(
-        JsonElement value, InformationOccurrenceKey key, string statement)
+        JsonElement value, InformationOccurrenceKey key, string statement, string release)
     {
         string[] fields = ["source_owner", "source_name", "source_type_identity",
             "telescope_size", "level_count", "coordinates", "coordinate_paths", "readouts", "registration_identity"];
         InformationTemplateJson.Fields(value, [.. fields,
             .. value.TryGetProperty("definition_entry", out _) ? new[] { "definition_entry" } : [],
-            .. value.TryGetProperty("finite_projection", out _) ? new[] { "finite_projection" } : []]);
+            .. value.TryGetProperty("finite_projection", out _) ? new[] { "finite_projection" } : [],
+            .. (release.Length > 2 || release.Length == 2 && string.CompareOrdinal(release, "16") >= 0) ? new[] { "support", "support_paths", "support_entries", "support_identity", "parameter_slots" } : []]);
         if (value.TryGetProperty("finite_projection", out var projection))
         {
             InformationTemplateJson.Fields(projection, "family_arena", "bridge");
@@ -197,10 +202,65 @@ internal static class InformationTemplateEvidence
                 throw new FormatException("DTR-Evidence: source coordinate order");
             previous = index;
         }
+        var support = System.Array.Empty<int>();
+        var supportPaths = System.Array.Empty<string[]>();
+        var supportIdentity = (string?)null;
+        if (value.TryGetProperty("support", out var supportValue))
+        {
+            support = supportValue.ValueKind == JsonValueKind.Array
+                ? supportValue.EnumerateArray().Select(n => Bounded(n, 255)).ToArray()
+                : throw new FormatException("DTR-Evidence: source support count");
+            supportPaths = Array(value, "support_paths").Select(Path).ToArray();
+            if (supportPaths.Length != support.Length)
+                throw new FormatException("DTR-Evidence: source support count");
+            var supportEntries = Array(value, "support_entries").ToArray();
+            if (supportEntries.Length != support.Length)
+                throw new FormatException("DTR-Evidence: source support count");
+            var supportTokens = new List<string>(support.Length);
+            for (var i = 0; i < support.Length; i++)
+            {
+                InformationTemplateJson.Fields(supportEntries[i], "index", "path", "material", "identity");
+                var index = Bounded(supportEntries[i].GetProperty("index"), 255);
+                var path = Path(supportEntries[i].GetProperty("path"));
+                var material = InformationTemplateJson.String(supportEntries[i], "material");
+                if (System.Text.Encoding.UTF8.GetByteCount(material) is 0 or > 65536
+                    || !material.StartsWith("ec(", StringComparison.Ordinal)
+                        && !material.StartsWith("ep(", StringComparison.Ordinal)
+                        && !material.StartsWith("el(", StringComparison.Ordinal)
+                        && !material.StartsWith("ee(", StringComparison.Ordinal)
+                        && !material.StartsWith("ea(", StringComparison.Ordinal)
+                        && !material.StartsWith("eb(", StringComparison.Ordinal)
+                        && !material.StartsWith("es(", StringComparison.Ordinal))
+                    throw new FormatException("DTR-Evidence: source support material");
+                var identity = HashField(supportEntries[i], "identity");
+                if (identity != InformationTemplateJson.Sha256(System.Text.Encoding.UTF8.GetBytes(material)))
+                    throw new FormatException("DTR-Evidence: source support material identity differs");
+                if (index != support[i] || !path.SequenceEqual(supportPaths[i]))
+                    throw new FormatException("DTR-Evidence: source support entry differs");
+                supportTokens.Add(index.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                    + ":" + string.Join("/", path) + ":" + identity);
+            }
+            supportIdentity = HashField(value, "support_identity");
+            var expectedSupportIdentity = InformationTemplateJson.Sha256(
+                System.Text.Encoding.UTF8.GetBytes("DTR-source-support-v1:" + string.Join(",", supportTokens)));
+            if (supportIdentity != expectedSupportIdentity)
+                throw new FormatException("DTR-Evidence: source support identity differs");
+            var parameterSlots = Array(value, "parameter_slots").Select(n => Bounded(n, 255)).ToArray();
+            if (parameterSlots.Length > 64
+                || parameterSlots.Distinct().Count() != parameterSlots.Length
+                || parameterSlots.Zip(parameterSlots.Skip(1)).Any(pair => pair.First >= pair.Second))
+                throw new FormatException("DTR-Evidence: source parameter order");
+            if (!parameterSlots.SequenceEqual(coordinates.Concat(support).OrderBy(index => index)))
+                throw new FormatException("DTR-Evidence: source parameter/support coordinates differ");
+            if (support.Intersect(coordinates).Any() || support.Distinct().Count() != support.Length
+                || support.Zip(support.Skip(1)).Any(pair => pair.First >= pair.Second))
+                throw new FormatException("DTR-Evidence: source support order");
+        }
         var readouts = Array(value, "readouts").ToArray();
         if (readouts.Length is < 1 or > 64)
             throw new FormatException("DTR-Evidence: source role count");
         var paths = new HashSet<string>(StringComparer.Ordinal);
+
         foreach (var readout in readouts)
         {
             var function = readout.TryGetProperty("function_operand", out var functionValue);
@@ -227,6 +287,8 @@ internal static class InformationTemplateEvidence
             var scopePaths = Array(readout, "scope_paths").Select(Path).ToArray();
             if (scopePaths.Length != scope)
                 throw new FormatException("DTR-Evidence: source lexical scope size");
+            if (coordinates.Any(index => index >= scope) || support.Any(index => index >= scope))
+                throw new FormatException("DTR-Evidence: source captured binder bound");
             for (var i = 0; i < scopePaths.Length; i++)
             {
                 var anchor = scopePaths[i];
@@ -237,6 +299,11 @@ internal static class InformationTemplateEvidence
             for (var i = 0; i < coordinates.Length; i++)
                 if (!coordinatePaths[i].SequenceEqual(scopePaths[coordinates[i]]))
                     throw new FormatException("DTR-Evidence: source captured coordinate");
+            for (var i = 0; i < support.Length; i++)
+                if ((!function && !operand && support[i] >= binder)
+                    || !scopePaths[support[i]].SequenceEqual(supportPaths[i]))
+                    throw new FormatException("DTR-Evidence: source captured support");
+
         }
         string? definitionName = null;
         if (value.TryGetProperty("definition_entry", out var definition))
@@ -415,6 +482,8 @@ internal static class InformationTemplateEvidence
                 if (sourceOwners.Length != 1 || ModuleForSource(sourceOwners[0].Value) != sourceOwner
                     || report.Files[sourceOwners[0]].Declarations.Count(d => d.Name == key.Theorem) != 1)
                     throw new FormatException("DTR-Evidence: source theorem owner is missing or ambiguous");
+                var sourceTheorem = report.Files[sourceOwners[0]].Declarations.Single(d => d.Name == key.Theorem);
+                LeanDeclaration? sourceDefinition = null;
                 if (selected.SourceDefinitionName is { } definitionName)
                 {
                     var definitions = report.Files[sourceOwners[0]].Declarations
@@ -423,9 +492,14 @@ internal static class InformationTemplateEvidence
                         throw new FormatException("DTR-Evidence: source definition owner is missing or ambiguous");
                     InformationTemplateDefinitionReference.Check(selected.DefinitionSourceBinding!.Value,
                         selected.StatementIdentity,
-                        report.Files[sourceOwners[0]].Declarations.Single(d => d.Name == key.Theorem),
+                        sourceTheorem,
                         definitions[0]);
+                    sourceDefinition = definitions[0];
                 }
+                // Replay only after the unique imported owner and exact closed
+                // Prop reference have admitted this definition body.
+                InformationTemplateSourceMaterial.Check(selected.SourceBinding!.Value,
+                    sourceTheorem, sourceDefinition);
             }
             if (selected.SourceProjectionOwners is { } projectionOwners)
                 foreach (var (name, owner) in projectionOwners)

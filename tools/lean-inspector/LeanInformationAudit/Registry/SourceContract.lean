@@ -4,6 +4,7 @@ namespace LeanInformationAudit.SourceFinite
 open Lean Meta SourceScope
 
 private def family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
 private def finite := `D5.S3.ConceptDynamics.InformationEscape
 
 /-- A Unit-indexed family may audit an existing finite catalog only through the
@@ -77,6 +78,58 @@ namespace LeanInformationAudit.SourceContract
 open Lean Meta TemplateAudit SourceScope
 
 private def family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+-- Statement-v1 encoding matches InspectorProducer; importing its executable
+-- module here is outside the native-coherence library dependency graph.
+private def atom (value : String) : String := s!"{value.utf8ByteSize}:{value}"
+
+private partial def encodeName : Name → String
+  | .anonymous => "n0"
+  | .str parent value => s!"ns({encodeName parent},{atom value})"
+  | .num parent value => s!"nn({encodeName parent},{value})"
+
+private partial def encodeLevel : Level → String
+  | .zero => "l0"
+  | .succ level => s!"ls({encodeLevel level})"
+  | .max left right => s!"lm({encodeLevel left},{encodeLevel right})"
+  | .imax left right => s!"li({encodeLevel left},{encodeLevel right})"
+  | .param name => s!"lp({encodeName name})"
+  | .mvar id => s!"lv({encodeName id.name})"
+
+private def encodeBinderInfo : BinderInfo → String
+  | .default => "bd"
+  | .implicit => "bi"
+  | .strictImplicit => "bs"
+  | .instImplicit => "bc"
+
+private def encodeLiteral : Literal → String
+  | .natVal value => s!"ln({value})"
+  | .strVal value => s!"lt({atom value})"
+
+private partial def encodeExpr (e : Expr) (depth : Nat := 0) : M String := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.source_support_depth"
+  let child := fun e => encodeExpr e (depth + 1)
+  let material ← match e with
+  | .bvar index => pure s!"eb({index})"
+  | .fvar id => pure s!"ef({encodeName id.name})"
+  | .mvar id => pure s!"em({encodeName id.name})"
+  | .sort level => pure s!"es({encodeLevel level})"
+  | .const name levels =>
+      pure s!"ec({encodeName name},[{String.intercalate "," (levels.map encodeLevel)}])"
+  | .app function argument => pure s!"ea({← child function},{← child argument})"
+  | .lam _ type body binderInfo =>
+      pure s!"el({encodeBinderInfo binderInfo},{← child type},{← child body})"
+  | .forallE _ type body binderInfo =>
+      pure s!"ep({encodeBinderInfo binderInfo},{← child type},{← child body})"
+  | .letE _ type value body nondependent =>
+      pure s!"ee({if nondependent then "1" else "0"},{← child type},{← child value},{← child body})"
+  | .lit literal => pure s!"ei({encodeLiteral literal})"
+  | .mdata _ body => pure s!"ed({← child body})"
+  | .proj name index body => pure s!"ej({encodeName name},{index},{← child body})"
+  if material.utf8ByteSize > 65536 then
+    throwError "incomplete_closure:E8.source_support_fingerprint"
+  return material
 
 private def atLevels (event : TemplateOccurrenceEvent) (name : Name) : M Expr := do
   debit
@@ -235,7 +288,36 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let projection := input.finiteBridge.toList.map fun bridge =>
       ("finite_projection", Json.mkObj [
         ("family_arena", toJson arenaName.toString), ("bridge", toJson bridge.toString)])
-    let sourceBinding := Json.mkObj ([
+    let supportEntries ← scope.supportRaw.mapM fun binder => do
+      let .ok (_, checkedWork) := compactRawIdentity scope.levels binder.domain (← get)
+        | throwError "incomplete_closure:E8.source_support_fingerprint"
+      debit checkedWork
+      let material ← encodeExpr binder.domain
+      let identity := Sha256.hex material.toUTF8
+      let work := material.utf8ByteSize + binder.path.size + 1
+      if work > 65536 then throwError "incomplete_closure:E8.source_support_fingerprint"
+      -- The raw domain material is retained so the C# consumer can join the
+      -- indexed source binder to the addressed theorem statement without
+      -- implementing a second Lean type checker.
+      debit work
+      pure (binder.path, material, identity)
+    let supportEntries := supportEntries.map fun (path, material, identity) =>
+      let index := scope.parameterSlots[scope.parameters.findIdx? (fun b : SourceBinder => b.path == path) |>.get!]!
+      (index, path, material, identity)
+    let supportEntries := supportEntries.qsort (fun left right => left.1 < right.1)
+    let supportMaterial := "DTR-source-support-v1:" ++ String.intercalate ","
+      (supportEntries.map fun (index, path, _material, identity) =>
+        s!"{index}:{String.intercalate "/" path.toList}:{identity}").toList
+    let supportIdentity := Sha256.hex supportMaterial.toUTF8
+    let supportEvidence := #[
+      ("support", toJson (supportEntries.map (·.1))),
+      ("support_paths", toJson (scope.support.map (·.path))),
+      ("support_entries", Json.arr (supportEntries.map fun (index, path, material, identity) =>
+        Json.mkObj [("index", toJson index), ("path", toJson path),
+          ("material", toJson material), ("identity", toJson identity)])),
+      ("support_identity", toJson supportIdentity),
+      ("parameter_slots", toJson scope.parameterSlots)]
+    let sourceBinding := Json.mkObj (([
       ("source_owner", toJson selection.owner.toString),
       ("source_name", toJson event.key.theoremName.toString),
       ("source_type_identity", toJson sourceTypeIdentity),
@@ -243,8 +325,8 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       ("level_count", toJson scope.levels.length),
       ("coordinates", toJson selection.coordinates),
       ("coordinate_paths", toJson (scope.coordinates.map (·.path))),
-      ("readouts", Json.arr readouts), ("registration_identity", toJson registrationIdentity)] ++
-      definitionEntry ++ projection)
+      ("readouts", Json.arr readouts), ("registration_identity", toJson registrationIdentity)] ++ supportEvidence.toList ++
+      definitionEntry ++ projection))
     let escape : EscapeRecordEvidence := {
       bridgeKind := "source-equivalence"
       fromObject := some {

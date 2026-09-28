@@ -7,6 +7,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.DeclaredTemplate.Tests;
 
+[Collection("Lean cache environment")]
 public sealed class FourierBridgeSourceEvidenceTests(Xunit.Abstractions.ITestOutputHelper output)
 {
     // Required production evidence has a hard deadline: expiration is a failure,
