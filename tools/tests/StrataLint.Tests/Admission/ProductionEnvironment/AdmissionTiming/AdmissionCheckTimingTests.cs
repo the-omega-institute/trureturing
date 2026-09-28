@@ -163,6 +163,59 @@ public sealed partial class ProductionEnvironmentTests
         }
     }
 
+    [Fact]
+    public void TimingWritesOnlyStagesAtLeastTheReportingThreshold()
+    {
+        var clock = new SteppedTimeProvider();
+        var timing = new AdmissionCheckTiming(clock);
+        using var timingOutput = new StringWriter(CultureInfo.InvariantCulture);
+        var originalError = Console.Error;
+        try
+        {
+            Console.SetError(timingOutput);
+            clock.Step = TimeSpan.FromMilliseconds(400);
+            _ = timing.Measure("fast-phase", static () => 0);
+            clock.Step = AdmissionCheckTiming.ReportingThreshold;
+            _ = timing.Measure("slow-phase", static () => 0);
+            clock.Step = TimeSpan.FromMilliseconds(400);
+            Assert.Throws<InvalidOperationException>(() =>
+                timing.Measure<int>("fast-failure", static () => throw new InvalidOperationException()));
+            var accumulator = timing.CreateAccumulator("fast-accumulated");
+            _ = accumulator.Measure(static () => 0);
+            accumulator.CompletePassed();
+        }
+        finally
+        {
+            Console.SetError(originalError);
+        }
+
+        var stages = timingOutput.ToString()
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(static line =>
+            {
+                using var document = JsonDocument.Parse(line);
+                return document.RootElement.GetProperty("stage").GetString()!;
+            })
+            .ToArray();
+        Assert.Equal(["slow-phase"], stages);
+    }
+
+    private sealed class SteppedTimeProvider : TimeProvider
+    {
+        private long timestamp;
+
+        internal TimeSpan Step { get; set; }
+
+        public override long TimestampFrequency => TimeSpan.TicksPerSecond;
+
+        public override long GetTimestamp()
+        {
+            var current = timestamp;
+            timestamp += Step.Ticks;
+            return current;
+        }
+    }
+
     private static string[] NonRuleStages(IEnumerable<JsonDocument> events) =>
         events
             .Select(static document => document.RootElement.GetProperty("stage").GetString()!)
