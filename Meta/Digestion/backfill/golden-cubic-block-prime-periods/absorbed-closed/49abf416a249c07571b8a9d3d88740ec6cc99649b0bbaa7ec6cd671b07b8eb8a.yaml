@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:49abf416a249c07571b8a9d3d88740ec6cc99649b0bbaa7ec6cd671b07b8eb8a
+  normalized_sha256: sha256:49abf416a249c07571b8a9d3d88740ec6cc99649b0bbaa7ec6cd671b07b8eb8a
+cas_ref: sha256:49abf416a249c07571b8a9d3d88740ec6cc99649b0bbaa7ec6cd671b07b8eb8a
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciDyadicRankBudget.fibonacci_dyadic_rank_budget
+    target_statement_id: sha256:3607a9ba08b1fa322fe3edca755f51c05dd554a7a906605da6bdf4f15c8161aa
+receipts:
+  unresolved_subitems: []

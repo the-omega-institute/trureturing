@@ -1,0 +1,38 @@
+**Theorem 24.1 (dyadic rank budget).** Suppose $3\in H$ and $n\geq1$.
+If every prime factor of $n$ belongs to $H$, and every prime factor
+$p$ of $F_n$ for which $v_p(F_n)$ is odd belongs to $H$, then
+
+$$
+v_2(n)\leq v_2(R_H).
+$$
+
+Proof. Since $\rho(3)=4$ and $3\in H$, one has $4\mid R_H$.
+Suppose $e=v_2(n)>v_2(R_H)$, so $e\geq3$ and $2^e\mid n$.
+The exact quotient
+
+$$
+C_e=\frac{F_{2^e}}{F_{2^{e-1}}}
+$$
+
+is not a square by Theorem 22.1. Choose a prime $p\mid C_e$ for which
+$v_p(C_e)$ is odd. Both Fibonacci values in this quotient are odd,
+so $p\ne2$. The entry rank $\rho(p)$ divides $2^e$. If it divided
+$2^{e-1}$, then $p$ would divide both Fibonacci values. The
+prime-to-index valuation identity, applied to their indices, would
+give equal $p$-valuations, contradicting $v_p(C_e)>0$. Hence
+$\rho(p)=2^e$ and $p\nmid F_{2^{e-1}}$, so
+$v_p(F_{2^e})=v_p(C_e)$ is odd.
+
+If $p\in H$, its rank would divide $R_H$, contrary to
+$e>v_2(R_H)$. Thus $p\notin H$. Since $p\mid F_{2^e}$ and
+$2^e\mid n$, Fibonacci divisibility gives $p\mid F_n$.
+The prime-support hypothesis for $n$ implies $p\nmid n$.
+The prime-to-index valuation identity now gives
+
+$$
+v_p(F_n)=v_p(F_{\rho(p)})=v_p(F_{2^e}),
+$$
+
+which is odd. The odd-support hypothesis therefore puts $p$ in $H$,
+a contradiction.
+
