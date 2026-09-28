@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:2fb7b4bd1f20b3c4c8a069e9e94fae446a4c2d70b6f128526b090fe3710b12ea
   normalized_sha256: sha256:2fb7b4bd1f20b3c4c8a069e9e94fae446a4c2d70b6f128526b090fe3710b12ea
 cas_ref: sha256:2fb7b4bd1f20b3c4c8a069e9e94fae446a4c2d70b6f128526b090fe3710b12ea
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/FiniteCutoffProtocolRecursion.finite_cutoff_branch_recursion
+    target_statement_id: sha256:57438e8e3dad7c3e5150238a97b633735cd48e3a0531b402bbe77f2df8c6dc01
 receipts:
   unresolved_subitems: []
