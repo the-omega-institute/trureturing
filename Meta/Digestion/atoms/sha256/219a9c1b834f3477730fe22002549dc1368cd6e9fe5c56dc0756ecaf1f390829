@@ -1,0 +1,29 @@
+### 定义 31：行像覆盖数与固定构件的比较范围
+
+固定非空有限集合 $X,Y$ 及构件 $\phi:X\times Y\to Z$，其中 $Z=\operatorname{im}\phi$。其行像为 $S_x=\phi(\{x\}\times Y)$，并定义
+
+$$
+\begin{aligned}
+\tau_{\mathrm r}(\phi)
+&=\min\left\{\sum_{x\in X}\lambda_x:
+\lambda_x\geq0,\quad
+\sum_{x:z\in S_x}\lambda_x\geq1\quad(z\in Z)\right\},\\
+&=\max\left\{\sum_{z\in Z}w_z:
+ w_z\geq0,\quad
+ \sum_{z\in S_x}w_z\leq1\quad(x\in X)\right\}.
+\end{aligned}
+$$
+
+这里是有限超图 $(Z,(S_x)_{x\in X})$ 的经典分数边覆盖及其线性规划对偶；相同行像允许保留不同的行标记。每个 $S_x$ 非空且其并为 $Z$。原问题可行，并可将每个大于 $1$ 的权重截为 $1$ 而保持可行；对偶可行，且每个 $w_z\leq1$。有限有理线性规划的强对偶与有理最优解性质保证上述两个最值相等且均有有理最优解。相应的列像覆盖数定义为
+
+$$
+\tau_{\mathrm c}(\phi)=\tau_{\mathrm r}(\phi^{\mathsf T}),
+\qquad \phi^{\mathsf T}(y,x)=\phi(x,y).
+$$
+
+覆盖界、熵形式及有理对偶的加权直积构造，采用 A. Atserias、M. Grohe、D. Marx，*Size Bounds and Query Plans for Relational Joins*，SIAM Journal on Computing 42(4), 1737–1767 (2013)，[DOI: 10.1137/110859440](https://doi.org/10.1137/110859440)；本文所用编号对应可读稿 [arXiv:1711.03860v1](https://arxiv.org/pdf/1711.03860v1)，§3.1、引理 2–4，第 6–8 页。该文引理 2 将乘积上界归于 Grohe–Marx，引理 3 是 Shearer 引理，引理 4 给出对偶加权的直积极值构造。
+
+比较范围沿用定义 26：每个有限构件族含一个固定的指定构件 $\phi$，其余构件各自存在一条满射行和一条满射列，不要求每条切片都满射。所有端点是互不相同的坐标，输入遍历非空有限端点域的完整独立直积，所有构件输出集均取有效像。外层 $G:\prod_i Z_i\to O$ 是任意全函数，$O$ 非空有限，复合任务为 $F=G((\phi_i)_i)$。记指定构件的 $X$ 端点坐标为 $\xi$，$Y$ 端点坐标为 $\eta$；用 $x\in X,y\in Y$ 表示其值。其余构件的方向任意。
+
+$\operatorname{cn}$ 按定义 26 的第二端点出现次序连续读取各对，并保留每对原方向。$\kappa_A(F)$ 计数共同标记的完整原始剩余域上的不同响应函数；$W_F$ 是所有读取层的最大值，包含初始层、常值响应和最终输出层。下述一致幂次比较中的常数可以依赖固定的 $\phi$ 和所比较的指数，但不得依赖变化的伴随构件、字母表、外层任务或读取顺序。
+
