@@ -199018,3 +199018,19 @@ $A$ 只在 $(1,1)$ 次有非零空间，而 $B$ 在 $(r,r)$ 次的迹为 $c>0$�
 2. **Fock 态场。** 能否把给定的有理 Heisenberg 模式和生成场二阶局域性扩张到 $F_{\mathbb C}$ 上每个态的 $Y_F$，验证真空、平移、局域性及相容的共形向量？仅生成场的系数对易不算通过。依据：[Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；[Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。
 3. **反常与融合。** 能否在指定的同一共形表示中证明应力张量 OPE、Virasoro 中心项和所需流代数；若主张融合，能否另外给出满足假设 2143.4 的 $U$、模范畴和带插入态迹函数的典范 $S_U^{\mathrm{can}}$？普通分次迹不足以回答两问。依据：[Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；[Huang 2008a, Theorems 5.2, 5.5](https://arxiv.org/abs/math/0406291v3) [文献注](../../../Library/VertexAlgebra/huang2008verlinde.md)。
 4. **完整边界与 bulk。** 能否构造读取左右手征数据的 $\Pi$ 并验证式 (2143.3)；若进一步声称弦论或 AdS/CFT 对偶，能否指定适用极限、bulk 态及算子字典并验证 $EA=\iota(A)E$？仅 VOA、分母或融合公式不回答这一问。依据：[Maldacena 1998](https://arxiv.org/abs/hep-th/9711200v3) [文献注](../../../Library/Quantum/maldacena1998ads.md)；区域相对熵的附加范围见 [JLMS 2016](https://arxiv.org/abs/1512.06431) [文献注](../../../Library/Quantum/jlms2016relativeentropy.md)。
+
+**问题 2143.8（分次行列式与迹的同源核验）。** 给定同一批正双分次有限维 $G$-表示 $W_{m,n}$（$m,n\geq1$），令 $D_g(p,q)=\prod_{m,n\geq1}\det(1-p^mq^n g\mid W_{m,n})$，其中每个因子都由 $g$ 在该空间上的实际作用定义。能否依次验证：对每个因子，形式恒等式
+
+$$
+[x^k]\bigl(-\log\det(1-xg\mid W_{m,n})\bigr)
+=\frac{\operatorname{tr}(g^k\mid W_{m,n})}{k}\quad(k\geq1)
+$$
+
+连同零次系数成立；这些因子的正双分次乘积逐系数局部有限，且对 $a,b\geq1$ 有
+
+$$
+[p^aq^b](-\log D_g)
+=\sum_{k\mid\gcd(a,b)}\frac{\operatorname{tr}(g^k\mid W_{a/k,b/k})}{k};
+$$
+
+最后，若使用 Monster 名称，能否证明这里的 $W_{m,n}$ 与 $D_g$ 正是同一个 $V^\natural$ 所给的根空间与 twined 分母，并满足假设 2143.3 的维数及 $J$-分母等式？前两步是有限维行列式和局部有限形式乘积的代数接口，不能由任意指定的迹级数代替；最后一步还要求实际 Monster 构造。行列式、外幂与 Adams 迹展开的文献先例见 [Borcherds 1992, §8, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)；$V^\natural$ 的来源见 [FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)。
