@@ -78,6 +78,12 @@ def capture_execution(inputs):
     if execution is None:
         return dict(eligible=False, reason='execution-not-registered')
     environment = {name: os.environ.get(name, '') for name in execution['environment']}
+    # Elan injects the selected pin; invoking that toolchain's binary directly
+    # leaves it unset. The required pin already binds both equivalent entries.
+    # Preserve every distinct override without resolving or executing a tool.
+    pin = inputs.safe_file(execution['toolchain']).read_text(encoding='utf-8').strip()
+    if environment['ELAN_TOOLCHAIN'] == pin:
+        environment['ELAN_TOOLCHAIN'] = ''
     if any(environment[name] for name in ('LEAN_PATH', 'LEAN_SRC_PATH', 'LEAN_SYSROOT', 'LEAN_OPTS')):
         return dict(eligible=False, reason='external-semantic-environment')
     return dict(eligible=True, execution=dict(toolchain=execution['toolchain'], tools=execution['tools'],

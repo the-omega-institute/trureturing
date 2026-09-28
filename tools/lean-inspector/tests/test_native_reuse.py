@@ -37,20 +37,26 @@ class NativeReportConsumerTests:
         # Required.lean deliberately imports no production Reg module.
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = EXECUTION
-        for row in policy['dependency_sources']['include']:
-            if row['pattern'] == registry:
-                row['pattern'] = registry_owner
-        policy['dependency_sources']['include'].append(dict(pattern=impl, optional=False))
+        for role in ('inspector_sources', 'dependency_sources'):
+            for row in policy[role]['include']:
+                if row['pattern'] == 'LeanInformationAudit/**/*.lean':
+                    row['pattern'] = 'tools/lean-inspector/' + row['pattern']
         self.write('lean-report-inputs.json', json.dumps(policy))
+        publication.selection.Selection(self.root).validate('lean-report')
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = json.dumps(execution['lean_targets'])
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
 
-        def entry(phase):
+        def entry(phase, *, success=True):
             result = self.guarded_command(['make', 'lean-report'], env=self.env)
+            data = dict(exit_code=result.returncode, stdout=result.stdout,
+                        stderr=result.stderr, targets=execution['lean_targets'])
+            # Startup input errors precede log publication. Preserve and assert
+            # the primary result before inspecting the required phase outputs.
+            self.record_result(phase, data)
+            self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
             logs = Path(str(output) + '.logs')
             paths = [path for path in logs.iterdir() if path.is_file()]
-            self.record_result(phase, dict(exit_code=result.returncode,
-                stdout=result.stdout, stderr=result.stderr, targets=execution['lean_targets']), paths)
+            self.record_result(phase, data, paths)
             return result
 
         initial = entry('production-initial')
@@ -85,7 +91,7 @@ class NativeReportConsumerTests:
         # No report-module edit or report miss is used to expose the failure.
         self.write(impl, 'def gateValue : Bool := true\n')
         self.assertFalse(reuse.probe(self.root, output)['needs_lake'])
-        failed = entry('production-consumer-failure')
+        failed = entry('production-consumer-failure', success=False)
         self.assertNotEqual(failed.returncode, 0, '[FAIL] production_consumer_failure_must_block_reuse')
         errors = (logs / 'programs.stdout.log').read_text() + (logs / 'programs.stderr.log').read_text()
         self.assertIn('Reg/ProductionOnly.lean', errors)
