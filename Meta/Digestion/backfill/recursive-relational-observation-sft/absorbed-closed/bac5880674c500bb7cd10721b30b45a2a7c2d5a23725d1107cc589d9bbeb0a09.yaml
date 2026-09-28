@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:bac5880674c500bb7cd10721b30b45a2a7c2d5a23725d1107cc589d9bbeb0a09
   normalized_sha256: sha256:bac5880674c500bb7cd10721b30b45a2a7c2d5a23725d1107cc589d9bbeb0a09
 cas_ref: sha256:bac5880674c500bb7cd10721b30b45a2a7c2d5a23725d1107cc589d9bbeb0a09
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Partitions/PartitionLInftyGeodesic.partition_lInf_geodesic
+    target_statement_id: sha256:910a5b2b0f26267ff4a00af1f9f65b2a20cdd7fd27a2fcb4ebc046813c2e86ca
 receipts:
   unresolved_subitems: []
