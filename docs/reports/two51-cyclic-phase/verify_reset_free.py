@@ -326,7 +326,11 @@ def validate_table(table, original, localized, variant):
             'halt_enabled_transition_slots': sum(len(row.successors) for row in table.values()
                                                  if row.action == 'H'),
             'artificial_halt_self_loops': 0, 'epsilon_transitions': 0,
-            'full_table_C5': cov}
+            # These are mathematical counterexample slots, not anomaly-ledger
+            # records. Keep their explicit list after asserting it is empty.
+            'full_table_C5': {'enabled_slots_checked': cov['enabled_slots_checked'],
+                              'terminal_outputs_checked': cov['terminal_outputs_checked'],
+                              'noncommuting_slots': cov['failures']}}
 
 
 def dial_word(run):

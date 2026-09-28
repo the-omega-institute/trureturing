@@ -1451,7 +1451,7 @@
       "epsilon_transitions": 0,
       "full_table_C5": {
         "enabled_slots_checked": 1165,
-        "failures": [],
+        "noncommuting_slots": [],
         "terminal_outputs_checked": 75
       },
       "halt_enabled_transition_slots": 0,
@@ -15313,7 +15313,7 @@
       "epsilon_transitions": 0,
       "full_table_C5": {
         "enabled_slots_checked": 1160,
-        "failures": [],
+        "noncommuting_slots": [],
         "terminal_outputs_checked": 75
       },
       "halt_enabled_transition_slots": 0,
