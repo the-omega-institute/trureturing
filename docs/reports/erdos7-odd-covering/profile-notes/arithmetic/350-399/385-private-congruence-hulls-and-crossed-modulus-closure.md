@@ -1811,3 +1811,255 @@ the available joint-replacement tests to some interfaces failing ML2;
 a whole-cover forcing theorem is still missing. These are ordinary
 proofs and exact finite computations, not new Lean verification, a
 literature-priority claim, or a solution of unrestricted Erdős#7.
+
+### Retained pure powers turn private-point demand into height bounds
+
+Assume that a finite distinct odd nonunit whole cover exists, and choose
+ONE cover globally minimizing first the number of classes and then their
+modulus sum, as in [Report350, EB1](../../321-384/350-extremal-paired-branch-and-source-support.md#1-extremality-supplies-the-divisor-structure). Let its original numerical labels be D,
+its full period be Q, and H_p=v_p(Q). Irredundancy, divisor closure,
+comparable-class disjointness and initial odd-prime support refer to this
+same chosen family. The bounds below are for this globally extremal cover;
+they are not height bounds on every arbitrary irredundant odd cover.
+
+The supplier lower bound is existing mathematics: use the original-shell
+identity and [QC1--QC2](../../../../../../Library/Arith/lettlsun2008cosets.md#arbitrary-quotient-cuts-collapse-to-the-same-depth-suffixes). The top-only
+private fan is also already [Report371, section2](371-private-top-fans-and-ancestor-cuts.md). Neither is a new theorem
+here. The purpose is to connect that retained all-depth information to
+section15's actual repair capacity RP1--RP4. These are ordinary deductions,
+not new Lean declarations or claims of literature priority.
+
+### The existing demand in the exact phase needed by repair
+
+Fix p in the original support and a private point x of the original pure
+class p^H, where H=H_p. For 1<=a<H, put c=x mod p^a. QC1--QC2 give
+
+    S_a(x,p) >= (H-a)(p-1).
+
+Every contributing original label M has p-height h_M>a, agrees with x
+modulo p^a, agrees with x at its entire p-free cofactor, and has weight
+p^(1-h_M+b_M)<=1. The pure owner p^H is not among these suppliers.
+Consequently the actual phase packet
+
+    P_a(c)={M in D:p^a|M,a_M=c mod p^a}
+
+has at least
+
+    1+(H-a)(p-1)                                    (HC1)
+
+original labels. This count directly reuses QC2; it is not a separately
+introduced private-prefix theorem. The original p^a class has a different
+phase, by comparable disjointness. Every supplier's complete p-free
+congruence contains the SAME x, not a source selected separately per label.
+
+### Repair with another prime gives a finite height optimization
+
+Let q!=p be any odd prime, including a prime absent from Q, and put
+K=H_q. For the target h=p^a, all original pure q-powers are retained:
+none can be a parent or deleted descendant whose modulus is divisible
+by p^a. Since h has q-height zero, every pure q-power is compatible
+with its old target phase at the q-coordinate. Their actual disjoint
+classes remove exactly
+
+    sum_(i=1..K) q^(K+1-i)
+
+first-fresh q-roots, independently of c. Thus RP1 gives
+
+    R=R_q(K)=q^(K+1)-sum_(i=1..K)q^(K+1-i)
+            =q*((q-2)q^K+1)/(q-1),
+    t=tau(p^a)=a+1.                                 (HC2)
+
+No favorable phase is substituted: because the target has q-height zero,
+these retained-pure savings are phase-independent in this particular
+consumer. Relative-height-positive consumers must still use their actual
+compatible pure powers, as required by RP1.
+
+Define A_q(K)=(q-2)q^K+1. Within this specified fresh-q palette, the RP2 criterion is t>A_q(K), equivalently
+
+    a>=A_q(K).                                      (HC3)
+
+Let N_q(R,t) be the exact RP3 forest count: it is R when t>=R; otherwise
+
+    delta=q*t-(q-1)*R,
+    J=min{j>=0:q^j*delta>=t},
+    s=(q*t-q^J*delta)/(q-1),
+    N=t*J+s.                                        (HC4)
+
+The final layer may have s=t. RP4's strict modulus-sum estimate gives
+the actual phase occupancy cap |P_a(c)|<=N-1. Combining it with HC1 gives,
+whenever H>a,
+
+    (H-a)(p-1)<=N-2.
+
+If H<=a, the following bound holds automatically. Hence in all cases
+
+    H_p <= B_(p;q,K)
+        := min_(A_q(K)<=a<=R_q(K)-1)
+                  [a+floor((N_q(R_q(K),a+1)-2)/(p-1))].     (HC5)
+
+This minimum is genuinely finite. At a>=R-1, t>=R and N=R, so its
+objective increases with a; none of the a>R-1 can improve the value
+at R-1. The first feasible index A_q(K) is at most R-1. All selected
+repair moduli have q-height above K and are fresh relative to the ENTIRE
+original family.
+
+One must optimize a rather than always choose its first feasible value.
+For example q=5,K=1,p=3 attains the displayed minimum28 at a=19,N=20.
+For q=3,K=3,p=5, the optimum46 occurs at a=30,N=68; the first feasible
+a=28 would give50. (At that first index N=90, so the bound is28+22=50.)
+
+### An absent odd prime bounds every height at fixed support
+
+For an absent odd prime ell, K=0, R=ell and A=ell-1. The optimization
+has just one index a=ell-1 and N=ell. Thus
+
+    H_p <= ell-1+floor((ell-2)/(p-1))                 (HC6)
+
+for every present p. Taking ell to be the smallest absent odd prime
+uses the existing initial-support conclusion of report350. For each
+fixed finite support, all exponents of a globally extremal putative
+cover now have explicit finite bounds. Support itself is still unbounded;
+this does not reduce the unrestricted problem to one finite search.
+
+This is an added consequence of the repair constraints, not a new
+private-point lower bound. The classical aggregate s-number bound
+n>=1+sum_p H_p(p-1) already bounds heights when n is fixed. HC6 does
+not require a numerical bound on that unknown minimum n.
+
+### Exact finite parameter values
+
+Entries are the optimized upper bounds B_(p;q,K). A dash means q=p,
+which is not this consumer's domain. These are exact integer parameter
+calculations of HC5, conditional on the stated global extremality and
+actual heights. They do not assert existence of a cover with those
+parameters.
+
+| q | K | R | Candidate a range | p=3 | p=5 | p=7 | p=11 | p=13 | p=17 | p=19 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|3|1|6|4..5|—|5|5|4|4|4|4|
+|3|2|15|10..14|—|15|13|12|11|11|11|
+|3|3|42|28..41|—|46|41|36|35|33|32|
+|5|1|20|16..19|28|—|21|19|18|17|17|
+|5|2|95|76..94|140|—|104|94|91|88|86|
+|7|1|42|36..41|61|51|—|43|41|40|39|
+|7|2|287|246..286|428|357|—|300|292|281|278|
+
+For H_3=1, choosing a=4 uses R=6,t=5 and layer counts(5,3), so N=8.
+Consequently
+
+    H_5<=5, H_7<=5,
+    H_p<=4 for every present p>=11.                  (HC7)
+
+The same suffix-demand consumer without retained pure3 has R=9 and
+first feasible a=6. Its optimized bounds for p=5,7,11 are8,7,7,
+respectively. Thus the retained-pure contribution yields a strict
+parameter improvement; it is not merely a renaming of ML2's forest.
+
+For a concrete aggregate-count comparison, the initial-support profile
+(H3,H5,H7,H11)=(1,6,1,1) permits43<=n<=55 under just the classical
+s-number lower bound and n<=tau(Q)-1. HC7 excludes that profile for
+the chosen globally extremal cover. This is a parameter comparison,
+not an actual covering family or an independence result against all
+classical or repository constraints.
+
+### Keeping the common cofactor source gives a stronger H3=1 bound
+
+Assume H3=1 and let s be the number of original support primes. Fix
+p>3 and H_p>2. Use HC1 at a=2, retaining its specific QC1 suppliers and the pure owner.
+This actual subset contains at least
+
+    1+(H_p-2)(p-1)
+
+labels. At most H_p-2 of these are pure p-powers, so at least
+
+    1+(H_p-2)(p-2)                                  (HC8)
+
+are mixed suppliers. All have p-height>2 and their full p-free
+cofactor congruences contain the SAME private point x.
+
+Partition these actual labels into disjoint buckets. First put every
+supplier whose cofactor contains3 into the3-bucket. Assign each remaining
+mixed supplier to one chosen prime q!=3,p dividing its cofactor, using
+one fixed rule. No label appears in two buckets.
+
+All3-bucket labels are proper descendants of h=3*p^2 in one actual
+phase determined by x mod3 and x mod p^2. Repair at3 uses the full
+original3-height: R=3,t=tau(p^2)=3,N=3. Its exact phase capacity is2.
+
+Every q-bucket has the same original interface h=p^2*q and actual
+phase given by x. Repair at3 retains the pure3 class: R=6,
+t=tau(p^2*q)=6,N=6. Each such bucket has capacity5. There are at most
+s-2 such q-buckets. Therefore
+
+    1+(H_p-2)(p-2) <= 2+5*(s-2)=5s-8,
+    H_p <= 2+floor((5s-9)/(p-2)).                    (HC9)
+
+For H_p<=2 the second inequality is automatic because s>=2. The
+bounds use the same actual source in every bucket. They sum disjoint
+sets of labels; they do not sum separately optimized physical repairs
+or execute all repairs simultaneously.
+
+Examples within initial odd-prime support:
+
+* s=4: H5<=5, H7<=4 and H11<=3.
+* s=9: H23<=3 and H29<=3.
+* s=11: H29<=3, H31<=3 and H37<=3.
+* For any present p>5s-7, HC9 forces H_p<=2.
+
+HC9 and HC7 can be imposed together. The existing
+[Report528, FC13--FC14](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md#eight-old-primes-and-arbitrary2931-originals)
+already excludes H3=1 with initial support size at most10, even allowing
+unrestricted ternary heights on the later29/31 originals. Thus the s=4
+and s=9 rows above illustrate the parameter bounds; they are not new
+exclusions of unresolved branches. The unrestricted H3=1 branch still
+allows s>=11, and no upper bound on support size has been obtained.
+
+### A local common-source star still does not ensure a cheap common divisor
+
+The actual family
+
+    0 mod3, 0 mod5, 6 mod25, 7 mod125, 8 mod625,
+    1 mod15, 52 mod75, 253 mod375, 4 mod1875
+
+is divisor-closed, comparable-disjoint and irredundant. On the complete
+period1875 it has807 holes, including2. Private witnesses in the listed
+order are3,5,56,7,8,1,52,253,4. No whole-cover or global-minimum premise
+is claimed.
+
+Fix the cofactor source1 mod3 and the5-adic tail zero. The four nonzero
+first5 digits correspond to actual CRT points1,1252,628,4. They are
+covered by the original labels15,75,375,1875 respectively. All have
+cofactor3 at the same actual phase. Nevertheless h=3 has no repair
+in the stated fresh-prime forest palette: with repair prime3 its
+retained-root count is3 and t=1; with any other odd repair prime q,
+t=2<=q-1<=R(q-1)/q. This finite noncover refutes only the inference
+from those local star and divisor conditions to a feasible common
+cofactor repair. It does not refute any theorem using whole coverage.
+
+### Verification and unresolved interface
+
+The [portable exact consumer](../../../frontier/cover-geometry/composite-parent-contraction/repair_height_bounds.py)
+compares the exposed-root recurrence with the closed RP3 count, retains
+the minimizing a and N, compares the unreduced forests, and checks the
+complete period of the finite noncover. Its [exact output](../../../frontier/cover-geometry/composite-parent-contraction/repair_height_bounds.json)
+includes q in{3,5,7}, K in{0,1,2}, plus q3K3, with11 target primes
+before excluding q=p. The K0 rows apply only when q is actually absent;
+initial-support compatibility is recorded explicitly. From the repository root:
+
+```sh
+python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/composite-parent-contraction/repair_height_bounds.py
+```
+
+The program uses the standard library, reads no external input, and writes
+JSON to stdout unless an explicit `--output PATH` is provided. Its checks
+remain active under `-O`; normal and optimized outputs agree. The general
+height consequences rest on the ordinary proofs above, not extrapolation
+from this parameter grid. They are not new Lean verification.
+
+A two-coordinate or arbitrary-interface concentration does not follow
+merely by combining separately changed prime digits: each supplier is
+forced to contain its changed prime power, not the other target factors.
+HC8--HC9 state exactly how their additional factors arise from the SAME
+source. What remains is a whole-cover theorem forcing violation of these
+joint height/phase capacities, or another improving replacement. The bounds
+allow unbounded support and many feasible height profiles.
