@@ -1,0 +1,9 @@
+来源下降的闭性机制归属既有 [GradedPredictionShift](../../../D5/S3/ObserverMemory/Refinement/GradedPredictionShift.lean) 的 `graded_prediction_shift`、`closedUpdate`。在当前记号下，式(27.13)良定恰要求 $sR_nt\Rightarrow DsR_nDt$。直接按坐标有
+
+$$
+R_{n+1}=R_0\cap(D\times D)^{-1}R_n\subseteq R_n.
+\tag{27.15}
+$$
+
+若上述稳定性成立，由 $R_n\subseteq R_0$ 得反向包含，故连续两核相等；反之，相等和式(27.15)给稳定性。稳定时任取同词代表都给相同后继，故式(27.12)就是该下降。没有稳定性时，式(27.12)仍是合法的有限窗口综合，式(27.13)却不是良定函数。证毕。
+

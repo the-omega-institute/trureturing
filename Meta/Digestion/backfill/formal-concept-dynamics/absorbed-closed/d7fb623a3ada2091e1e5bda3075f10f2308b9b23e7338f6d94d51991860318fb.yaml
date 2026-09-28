@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d7fb623a3ada2091e1e5bda3075f10f2308b9b23e7338f6d94d51991860318fb
+  normalized_sha256: sha256:d7fb623a3ada2091e1e5bda3075f10f2308b9b23e7338f6d94d51991860318fb
+cas_ref: sha256:d7fb623a3ada2091e1e5bda3075f10f2308b9b23e7338f6d94d51991860318fb
+coverage_gids:
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/TaggedCARPairAntichain.equal_weights_of_common_simulator
+    target_statement_id: sha256:6d7a57e3e4621510404a3c75eb427d0e14e4583d877efc28ece07ad3cea639b6
+receipts:
+  unresolved_subitems: []

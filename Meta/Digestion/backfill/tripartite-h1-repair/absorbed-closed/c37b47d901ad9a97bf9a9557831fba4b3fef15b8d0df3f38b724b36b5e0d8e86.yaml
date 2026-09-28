@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c37b47d901ad9a97bf9a9557831fba4b3fef15b8d0df3f38b724b36b5e0d8e86
+  normalized_sha256: sha256:c37b47d901ad9a97bf9a9557831fba4b3fef15b8d0df3f38b724b36b5e0d8e86
+cas_ref: sha256:c37b47d901ad9a97bf9a9557831fba4b3fef15b8d0df3f38b724b36b5e0d8e86
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/TripartiteH1Repair.sharp_three_edge_witness
+    target_statement_id: sha256:25b7d4e2ec2c6d2581972c776cae083331170540ac5c57f3006e17f72fa6cab6
+receipts:
+  unresolved_subitems: []

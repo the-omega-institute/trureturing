@@ -1,0 +1,85 @@
+{
+  "actual_example": {
+    "actual_star_union_masses": [
+      "1/20",
+      "0",
+      "1/4",
+      "1/4",
+      "1/4"
+    ],
+    "interpretation": "A finite actual arithmetic realization witnesses strict enlargement of the sufficient-condition region; it is not a covering-system counterexample or a universal profile certificate.",
+    "lost_target_decimal": 0.007453357100415924,
+    "lost_target_mass": "1568/210375",
+    "originals": [
+      {
+        "modulus": 3,
+        "residue": 0
+      },
+      {
+        "modulus": 9,
+        "residue": 1
+      },
+      {
+        "modulus": 5,
+        "residue": 0
+      },
+      {
+        "modulus": 15,
+        "residue": 11
+      },
+      {
+        "modulus": 45,
+        "residue": 41
+      },
+      {
+        "modulus": 225,
+        "residue": 76
+      }
+    ],
+    "passes_new_gate": true,
+    "pure5_carrier_count": 20,
+    "pure5_period": 25,
+    "query_decimal": 10.87982644048746,
+    "query_upper": "23893398933029251967809147092414968389/2196119493608275883234736670486590625",
+    "retained_ternary_leaf_order": [
+      4,
+      7,
+      2,
+      5,
+      8
+    ],
+    "score": "1474022156405118438534954040144425361/22006250580302494817643779783273437500",
+    "strictly_outside_old_box": true,
+    "survivor_mass_lower": "3778997/37867500",
+    "weights": [
+      "8/25",
+      "3/10",
+      "19/100",
+      "0",
+      "19/100"
+    ]
+  },
+  "deficit_budgets": {
+    "box": {
+      "G": "6859178516797877/75735000000000000",
+      "H": "597881507028991805679887245753851297598129/1062975514082960744723766684375000000000000",
+      "exact_deficit_limit": "8199125928384385168395508313924674353749/1740893571533828566613924008593750000000000",
+      "gate_margin_at_weak_bound": "285973330503346229241308274862174353749/265743878520740186180941671093750000000000",
+      "limit_decimal": 0.004709722674867757,
+      "score": "8199125928384385168395508313924674353749/265743878520740186180941671093750000000000",
+      "sufficient_weak_deficit_bound": "1/220"
+    },
+    "fixed": {
+      "G": "4061237/37867500",
+      "H": "3228200366246968137908865934995503816/5501562645075623704410944945818359375",
+      "exact_deficit_limit": "2548523432511439183713026082610425361/144163396658716343601299047151648437500",
+      "gate_margin_at_weak_bound": "772144965261388059387080750671397597/44012501160604989635287559566546875000",
+      "limit_decimal": 0.0176780201603092,
+      "score": "2548523432511439183713026082610425361/22006250580302494817643779783273437500",
+      "sufficient_weak_deficit_bound": "3/200"
+    }
+  },
+  "gate_factor": "321/49",
+  "scope": "Ordinary same-source finite measure construction and exact arithmetic. Not new Lean and not an unrestricted covering result.",
+  "threshold": 6
+}

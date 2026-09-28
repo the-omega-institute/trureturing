@@ -1,0 +1,45 @@
+## theorem 24.3: 任意细腿区域的最大代数与熵
+
+对物理腿集合 $A$，记 $\mathscr F_A$ 为仅在 $A$ 有支撑的相空间标签，定义
+
+$$
+\mathscr S_A=\mathscr S\cap\mathscr F_A,\qquad
+E_A=\{(a,b)\in R_d^2:\exists s\in\mathscr S,\ s+a\ell_X+b\ell_Z\in\mathscr F_A\}.
+$$
+
+令
+
+$$
+Z_A=E_A\cap E_A^\perp,\quad c_A=|Z_A|,\quad
+r_A=\sqrt{|E_A|/c_A},\quad t_A=\frac d{c_A r_A},
+$$
+
+$$
+R_A=\frac{d^{|A|}}{|\mathscr S_A|},\qquad
+m_A=\frac{R_A}{c_A r_A}.
+$$
+
+这些数均为正整数，且 $E_{\bar A}=E_A^\perp$。区域的最大可恢复逻辑代数是实际逻辑 Weyl 算符的线性包
+
+$$
+\mathcal M_A=\operatorname{span}\{W_{\rm log}(a,b):(a,b)\in E_A\}
+\simeq\bigoplus_{z=1}^{c_A}M_{r_A}(\mathbb C)\otimes I_{t_A}.
+$$
+
+对任意逻辑密度矩阵，写其在该代数上的标准分块限制为 $\oplus_zp_z\rho_z$，实际边缘态有区域内的支撑等距正规形
+
+$$
+\boxed{\mathcal N_A(\rho)\simeq
+\bigoplus_{z=1}^{c_A}p_z\rho_z\otimes I_{m_A}/m_A,}
+\qquad\mathcal N_A=\operatorname{Tr}_{\bar A}\circ\mathcal E^{\{j\}}_{d,L}.
+$$
+
+因此对所有细腿区域和全部输入，
+
+$$
+S(\mathcal N_A\rho)=\log m_A+S_{\mathcal M_A}(\rho),\qquad
+\mathcal L_A=(\log m_A)I_d.
+$$
+
+互补恢复、区域包含下的逻辑代数包含、以及边界与相应代数相对熵的等式同时成立。正常支持上的完整谱由该正规形给出，不仅是熵数值。
+

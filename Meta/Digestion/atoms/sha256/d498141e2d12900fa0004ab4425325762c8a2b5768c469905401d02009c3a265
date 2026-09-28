@@ -1,0 +1,6 @@
+### 定义 533.4（固定操作后果的识别）
+
+称数据 $(M,\mu,\pi)$ 识别固定操作 $K$ 的端点后果，当且仅当 $Q_K$ 在全部 $\mathcal F(M,\mu,\pi)$ 上恒定。此处要求完整端点通道相同，因而同时决定每个输入标签的输出律；仅仅决定按 $\mu$ 平均的输出律是较弱目标。
+
+这是本卷第 108 节的观察纤维准则在该实现空间上的用法；一般的目标识别与纤维包含关系亦见[查询族识别准则](../../../D5/S3/ConceptDynamics/Sufficiency/QueryFamilyIdentification.lean)及[干预目标因子化准则](../../../D5/S3/ConceptDynamics/RefinementFactorization/InterventionTargetFactorization.lean)。这里的目标为固定 $K$ 的 $Q_K$，观察为 $(SP,P\mu)$，$\mu$ 和全部标签是固定参数。后果可识别不等于内部角色通道 $P,S$ 已被识别，也不赋予取得焦点读数、制造 $K$ 或执行 $K$ 的能力。
+

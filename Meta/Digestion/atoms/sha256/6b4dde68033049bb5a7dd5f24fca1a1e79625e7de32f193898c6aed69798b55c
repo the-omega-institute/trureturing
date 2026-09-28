@@ -1,0 +1,28 @@
+## theorem 18.1: 共享中心的相干分组子码
+
+将 $Z$ 分成非空不交集合 $Z_t$，大小 $r_t$。取正权概率 $\lambda_{t,z}>0$、$\sum_{z\in Z_t}\lambda_{t,z}=1$，定义受约束历史嵌入
+
+$$
+F|t,a,b\rangle=\sum_{z\in Z_t}\sqrt{\lambda_{t,z}}\,\mathcal U|z,a,b\rangle,
+\qquad a\in K_A,\quad b\in K_B.
+$$
+
+这是进入原历史空间的等距，码维数为 $|T||K_A||K_B|$，其中 $T$ 是分组指标集合。在两侧分别整理真实标签后，物理编码变为
+
+$$
+JF|t,a,b\rangle\simeq
+|t,b\rangle_X|t,a\rangle_Y\otimes|\chi_t\rangle,
+\qquad
+|\chi_t\rangle=\sum_{z\in Z_t}\sqrt{\lambda_{t,z}}|z\rangle_X|z\rangle_Y.
+$$
+
+因而其最大互补可恢复代数由 $t$ 扇区内的 $b$、$a$ 完全矩阵代数给出，而所有逻辑密度矩阵 $\rho$ 都满足
+
+$$
+S(\rho_X)=S_{\mathcal M_X}(\rho)+\operatorname{Tr}(\rho\mathcal L_X),
+\qquad
+\mathcal L_X=\bigoplus_t H(\lambda_t)I_{K_A\otimes K_B}.
+$$
+
+均匀选择时面积特征值为 $\log r_t$；选择不同大小的组可使面积算符非标量。没有增加物理辅助空间，$\chi_t$ 来自对原共享中心施加固定相干约束。
+

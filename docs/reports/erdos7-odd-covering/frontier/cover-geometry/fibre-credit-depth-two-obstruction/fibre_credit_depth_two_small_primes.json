@@ -1,0 +1,141 @@
+{
+  "certificates": [
+    {
+      "four_coordinate_minimum": "7207/111807",
+      "minimum_coordinate_sets": [
+        [
+          5,
+          7,
+          11,
+          13
+        ]
+      ],
+      "minimum_query_zero_atom": "13/30",
+      "name": "all six star budgets <=9b/10",
+      "query_hinge_upper": "4375787900090374019177568804552115948273/9189423319247195638136962986421875000000",
+      "query_upper": "23610220131369713201525162716591685982319/2096571286219718228798491260587067627500",
+      "query_upper_decimal": 11.26134860596168,
+      "score": "22493243811976243858815631428033003803/1021047035471910626459662554046875000000",
+      "score_decimal": 0.022029586327117878,
+      "six_coordinate_max_cap_residual": "-718000793/2538130707",
+      "small_product_atoms": {
+        "1": "197084465250689/1345432275000000",
+        "2": "13981550220139127567/90626916552046875000",
+        "3": "3337102055299483920831791/146508832701787258828125000",
+        "4": "14538272558750668564912909412743/236848376578199809430429296875000",
+        "5": "266412418719675404268977582517888239/382892638301966484922373457767578125000"
+      },
+      "source_lower": "1963520017/25818750000",
+      "source_lower_decimal": 0.0760501580053256,
+      "star_budget_multipliers": [
+        "9/10",
+        "9/10",
+        "9/10",
+        "9/10",
+        "9/10",
+        "9/10"
+      ],
+      "strict_query_ceiling": "113/10",
+      "strict_score_floor": "1/50",
+      "target_masses": [
+        "7/10",
+        "41/50",
+        "9/10",
+        "101/110",
+        "47/50",
+        "161/170"
+      ]
+    },
+    {
+      "four_coordinate_minimum": "23/273",
+      "minimum_coordinate_sets": [
+        [
+          5,
+          7,
+          11,
+          13
+        ]
+      ],
+      "minimum_query_zero_atom": "23/45",
+      "name": "small 5/7 budgets <=2b/3; 11/13/17/19 budgets <=2b",
+      "query_hinge_upper": "318796013142906561738218675031086501/860130022681537511729619735529087500",
+      "query_upper": "571938847638946836338637536464512751/50628566899208054920083772286685250",
+      "query_upper_decimal": 11.296761545266913,
+      "score": "12872761849864573554575016887810749/860130022681537511729619735529087500",
+      "score_decimal": 0.01496606502553243,
+      "six_coordinate_max_cap_residual": "-100171/372645",
+      "small_product_atoms": {
+        "1": "410486957/3498123915",
+        "2": "668408160403252/5655119592847725",
+        "3": "152124764422268011828/9142151160591524950875",
+        "4": "696328685284029175991947844/14779338698479668108458788125",
+        "5": "11577823843236788802515011522612/23892500630042708659156103764696875"
+      },
+      "source_lower": "401209/6816150",
+      "source_lower_decimal": 0.05886152740183241,
+      "star_budget_multipliers": [
+        "2/3",
+        "2/3",
+        "2",
+        "2",
+        "2",
+        "2"
+      ],
+      "strict_query_ceiling": "113/10",
+      "strict_score_floor": "7/500",
+      "target_masses": [
+        "7/9",
+        "13/15",
+        "7/9",
+        "9/11",
+        "13/15",
+        "15/17"
+      ]
+    }
+  ],
+  "evidence": "Ordinary proof and exact rational verification; no new Lean verification.",
+  "first_level_forcing": [
+    {
+      "forced_first_union_mass_strictly_above": "4/45",
+      "full_higher_tail_cap": "2/15",
+      "original_first_labels": [
+        15,
+        45
+      ],
+      "prime": 5
+    },
+    {
+      "forced_first_union_mass_strictly_above": "8/105",
+      "full_higher_tail_cap": "2/35",
+      "original_first_labels": [
+        21,
+        63
+      ],
+      "prime": 7
+    }
+  ],
+  "method": "Uniform thinning of one actual carrier; shared original root/leaf inventories; full signed-support lower and full-tail same-carrier query upper.",
+  "primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "scope": "Conditional whole-family v3<=2 with six core q coordinates and pure-conditioned outside23/29. Actual leafwise masks satisfy the displayed bounds; no global profile-cover assertion.",
+  "source_coefficients": [
+    "7/4",
+    "29/12",
+    "37/4"
+  ],
+  "target_plus_one": "615/49",
+  "threshold": 6,
+  "weights": [
+    "1/4",
+    "1/4",
+    "1/6",
+    "1/6",
+    "1/6"
+  ]
+}

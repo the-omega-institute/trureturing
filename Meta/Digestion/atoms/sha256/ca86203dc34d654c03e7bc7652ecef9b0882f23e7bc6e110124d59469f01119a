@@ -1,0 +1,33 @@
+**证明。** 设 $q=\sqrt{1-4\epsilon^2}$、$r_-=(\gamma-\sqrt{\gamma^2-4\Omega^2})/2$、$r_+=(\gamma+\sqrt{\gamma^2-4\Omega^2})/2$。解二阶方程得
+
+$$
+\alpha_t=\frac{r_+e^{-r_-t}-r_-e^{-r_+t}}{r_+-r_-},\qquad
+\beta_t=\frac{\Omega(e^{-r_-t}-e^{-r_+t})}{r_+-r_-}.
+$$
+
+$k=r_-r_+/\gamma$，且 $r_->k$。写 $\alpha_t=e^{-r_-t}+\frac{r_-}{r_+-r_-}(e^{-r_-t}-e^{-r_+t})$，再用 $te^{-kt}\le1/(\exp(1)k)$，得到
+
+$$
+|\alpha_t-e^{-kt}|
+\le\frac{r_-}{r_+-r_-}+\frac{r_--k}{\exp(1)k}
+=\epsilon^2\left[\frac2{q(1+q)}+\frac4{\exp(1)(1+q)^2}\right].
+$$
+
+$q\ge5/6$、$\exp(1)\ge5/2$ 将括号控制在 $72/55+288/605=216/121<2$。差通道恰为
+
+$$
+X\longmapsto\operatorname{Tr}\!\left([ (\alpha_t-e^{-kt})\sigma_z+\beta_t\sigma_y]X\right)
+\frac{\tau_0-\tau_1}{2}.
+$$
+
+两 Pauli 反对易，其系数矩阵的算子范数为所列平方根，引理 31.2 给出精确钻石范数。命题 32.2 给出最终上界。先作用 $\Delta$ 时 $\sigma_y$ 项消失。区域面积读数可用 $A_X=(\log3)P_0+(\log6)P_1$ 实现，减去谱区间中点后范数为 $\Delta a/2$；两输出迹相同，迹对偶界给出面积误差。证毕。这里没有用有限时间网格代替 $\sup_{t\ge0}$ 的证明。
+
+在慢时间 $\tau=kt$ 上，有效方程是 $dp/d\tau=1/2-p$，从而
+
+$$
+\frac{d\bar a}{d\tau}=a_{\rm mid}-\bar a,
+\qquad a_{\rm mid}=\log3+\tfrac12\log2.
+$$
+
+这条自治面积方程来自同一中心量子模型的受控极限。若只令 $\gamma\to\infty$ 却固定原始时间，得到的是冻结，不能误报为非平凡的耗散几何。开放量子系统的绝热消元与 CP/TP 保持已有 [ASR16] 等研究；其任意阶的一般 Lindblad 断言在该文为猜想，本节仅证明上面这个指定模型的精确有限时间结果。#8330 已有同类驱动二能级传播与完全相对熵收缩；这里的新增目标是当前区域因子化的最优钻石误差、固定面积预测风险与统一时间 Markov 比较，不再次认领二阶阻尼方程本身。
+

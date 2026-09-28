@@ -1,0 +1,22 @@
+## corollary 13.2: 局部能量认证全部区域
+
+设实际归一化态为 $\sigma$，且
+
+$$
+0\le\operatorname{Tr}(H_d\sigma)\le\varepsilon\le1/4.
+$$
+
+令 $\psi=|\Psi^\alpha_{d,L}\rangle\langle\Psi^\alpha_{d,L}|$。则
+
+$$
+\operatorname{Tr}(\psi\sigma)\ge1-\varepsilon,\qquad
+\tfrac12\|\sigma-\psi\|_1\le\sqrt\varepsilon.
+$$
+
+若 $\alpha$ 满足全区域 RT 判据，对任意非空的边界腿集合 $A$，$D_A=d^{|A|}$，有
+
+$$
+\boxed{|S(\sigma_A)-m(A)\log d|
+\le\sqrt\varepsilon\log(D_A-1)+h_2(\sqrt\varepsilon).}
+$$
+
