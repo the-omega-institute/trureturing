@@ -24,7 +24,8 @@ namespace D5.S3.Factorization.QuadraticIdeals.EisensteinOddIdealFactorization
 
 noncomputable section
 
-private lemma factor_norm [IsDomain EisensteinOrder] [IsPrincipalIdealRing EisensteinOrder]
+/-- The prime-indexed oriented ideal has absolute norm `p`. -/
+lemma factor_norm [IsDomain EisensteinOrder] [IsPrincipalIdealRing EisensteinOrder]
     (b p : ℕ) (hb : Odd b) (hp : p ∣ blockNorm b) :
     Ideal.absNorm (orientedIdeal b ⊔ Ideal.span {(p : EisensteinOrder)}) = p := by
   obtain ⟨_, e, he⟩ := eisenstein_odd_scalar_quotient b hb

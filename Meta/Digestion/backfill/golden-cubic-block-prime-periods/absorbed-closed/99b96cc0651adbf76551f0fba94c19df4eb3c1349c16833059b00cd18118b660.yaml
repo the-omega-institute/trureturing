@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:99b96cc0651adbf76551f0fba94c19df4eb3c1349c16833059b00cd18118b660
   normalized_sha256: sha256:99b96cc0651adbf76551f0fba94c19df4eb3c1349c16833059b00cd18118b660
 cas_ref: sha256:99b96cc0651adbf76551f0fba94c19df4eb3c1349c16833059b00cd18118b660
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/QuadraticIdeals/GoldenCubicPrimaryProduct.golden_cubic_primary_product
+    target_statement_id: sha256:003c5ba6b74eeabfc9f5d84d1341c5ac17e7e4bfb3f80c85fde6533ee1a91559
 receipts:
   unresolved_subitems: []
