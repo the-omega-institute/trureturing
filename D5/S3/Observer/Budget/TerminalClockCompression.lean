@@ -15,8 +15,6 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Observer.Budget.TerminalClockCompression
 
 open DyadicForwardWaitingOptimality
-open private forced_midpoint transport_execute from
-  D5.S3.Observer.Budget.DyadicForwardWaitingOptimality
 
 /-- Elapsed time at the final query of the actual raw-bit controller. -/
 def terminalTime (P : Nat) (b : Fin 2) {j : Nat} (p : Protocol j) (r : Nat) : Nat :=
