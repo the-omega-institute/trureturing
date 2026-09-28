@@ -1,0 +1,13 @@
+### 86.3 连续转动与解析延拓的区别
+
+对实参数 $\theta$，令
+
+$$
+R_\theta(s,a,b)=
+\bigl(s,\cos\theta\,a-\sin\theta\,J^{-1}b,
+\sin\theta\,Ja+\cos\theta\,b\bigr).
+\tag{86.5}
+$$
+
+它满足 $R_{\theta+\eta}=R_\theta R_\eta$、$R_0=I$、$R_{\pi/2}=T$。这些是三角加法公式的直接应用，给出解析依赖参数的一族环境自同构。
+
