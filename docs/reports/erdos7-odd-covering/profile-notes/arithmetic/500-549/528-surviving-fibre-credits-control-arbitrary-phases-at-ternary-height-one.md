@@ -1,5 +1,7 @@
 # Surviving-fibre credits give common query laws at ternary height one
 
+Every finite family of pairwise distinct odd numerical moduli greater than1, with at most eleven actual support primes and v3(m)<=1 for every original, leaves integer survivor density greater than1/700. The [eleven-prime construction](#actual-pure-outside-conditioning-closes-the-eleven-prime-branch) below permits arbitrary original residues and arbitrary finite nonternary heights. It is an ordinary proof with exact rational checks, not new Lean verification.
+
 Let P={3,5,7,11,13,17,19}. For every finite family of pairwise distinct odd numerical moduli greater than1 supported on P, with arbitrary original residues and v3(m)<=1, there is one probability mu on its actual survivor set such that
 
     R_P(mu)=sum_(d>1,P-smooth) max_a mu(a mod d)<39/4,
@@ -684,3 +686,142 @@ python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-
 Checks remain active under `-O`; the default dependency paths are relative
 to the program. These are ordinary proofs with exact finite arithmetic,
 not new Lean results, a geometry enumeration or an unrestricted#7 result.
+
+## Actual pure-outside conditioning closes the eleven-prime branch
+
+For any finite family of pairwise distinct odd numerical moduli greater
+than1, supported on at most eleven actual primes, assume every original
+satisfies v3(m)<=1. Then its periodic integer survivor set has natural
+density greater than1/700. All actual residues and all finite nonternary
+heights are arbitrary. Global extremality, divisor closure and the
+optional HC7/HC9 height bounds are unnecessary for this statement.
+
+First work on the first eleven odd primes. Keep exactly the old law mu8
+in(FC17), with its arbitrary-nonternary-height query bound
+
+    R=25585241677563810650651525265027348808464564
+       /2768452210966647080721479752700688323091875,
+    mu8<=D_old H_P8,
+    D_old=(2048/595)/(2142533/15904350).
+
+Use the existing actual pure-outside continuation of
+[Report463, PE3--PE4](../450-499/463-two-actual-prime-extensions-preserve-a-common-core-law.md#a-fixed-product-law-and-the-original-modulus-labels)
+and [Report464, FQ2--FQ4](../450-499/464-smaller-common-law-cores-give-ten-prime-noncoverage.md#finite-prime-extension-with-actual-pure-survival).
+Their counting argument requires old query control only for cofactors
+appearing in later originals. Here every such cofactor belongs to the
+restricted interface in(FC17), by the whole-family ternary-height premise.
+This is a reuse of that continuation, with a stronger task-specific seed.
+
+For each r in T={29,31,37}, let S_r avoid all actual original pure r-power
+classes and set rho_r=H_r(.|S_r). Numerical distinctness gives
+
+    H_r(S_r)>=(r-2)/(r-1),
+    rho_r<=c_r H_r, c_r=(r-1)/(r-2),
+    b_r=sum_(e>=1)c_r r^-e=1/(r-2).
+
+The single probability nu=mu8 tensor rho29 tensor rho31 tensor rho37
+already avoids all old-only originals and all pure outside originals.
+Each mask uses the actual family's residues; absent pure classes are
+not inserted. The masks depend on disjoint coordinates, so their product
+is legitimate. Independence of the remaining forbidden events is not
+assumed, and mu8 is neither replaced nor reconditioned at this step.
+
+At each nonzero outside exponent tuple, distinct full numerical labels
+leave at most one original per old cofactor d. Summing d>1 costs at most
+R under the same mu8. An original with d=1 and singleton outside support
+is already excluded by its own pure mask. Unit old cofactors with two or
+three outside primes must still be paid. Thus, with Q=product_r(1+b_r)-1,
+
+    nu(remaining forbidden union)<=R Q+Q-sum_r b_r,
+    nu(full survivor)>=delta=1-R Q-Q+sum_r b_r.        (FC21)
+
+These quantities all use the same law and complete geometric tails.
+The charge also equals R sum b_r+(R+1)(sum_pairs b_r b_s+product b_r),
+so conservative caps remain valid if some pure slots are missing.
+
+Here Q=3/29 and Q-sum b_r=92/27405. Exact substitution gives
+
+    delta=88016430921103672032820067404610465617466941
+           /2167698081186884664204918646364638956980938125
+          =0.04060363926368927...,
+    nu<=D_full H, D_full=1751777280/62133457.
+
+Consequently the actual full survivor U satisfies
+
+    H(U)>=delta/D_full
+      =88016430921103672032820067404610465617466941
+        /61115611972512329206704300212201763057254400000
+      >1/700.                                         (FC22)
+
+The exact numerator surplus over1/700 at this denominator is
+708413817514630308956781387179375535674941. All originals resolve on
+one finite CRT period, so Haar measure equals natural integer density.
+The negative outside-Haar expressions(FC18),(FC20) remain correct for
+that choice of law; they do not obstruct this pure-conditioned law.
+
+### Transport to arbitrary actual primes while preserving3
+
+If3 occurs in the support, pad it to eleven coordinates with unused odd
+primes and order them as q1=3<q2<...<q11. Write p_i for the first eleven
+odd primes. Then q_i>=p_i. Apply the existing finite digitwise shifted
+prefix injections from
+[Report460](../450-499/460-joint-five-prime-moments-give-a-parent-seventeen-completion-margin.md#transport-to-any-five-actual-odd-primes),
+using the identity at3 and resolving every actual original height.
+For each injection F, an original cylinder pulls back to either an empty
+set or one source cylinder with the same exponent vector. After empty
+preimages are discarded, numerical labels remain distinct and v3<=1.
+
+The preceding construction on this pullback family gives a live
+submeasure xi_F with mass at least delta and xi_F<=D_full H_source.
+Average the unnormalized pushforwards. Their common support avoids all
+actual originals, their average mass is at least delta, and
+
+    E_F F_*xi_F<=D_full E_F F_*H_source=D_full H_actual.
+
+At every nonternary coordinate, each fixed source word has uniform target
+image under its finite random shifts. Integrating source Haar on the
+unchanged3 coordinate preserves ternary Haar. Domination is applied
+before averaging even though xi_F depends on F. Projection
+away from unused padding coordinates preserves the actual avoidance
+and the same Haar bound. Hence(FC22) holds for every support containing3
+of size at most eleven. No infinite choice of incompatible laws is used.
+
+If3 is absent, apply the same existing pure-outside continuation with
+empty old core, R=0 and initial density cap1. All original pure powers
+are removed by the coordinate masks. The remaining support-size-at-least2
+inventory gives
+
+    H(U)>=[2+sum b_p-product(1+b_p)]/product(1+b_p).
+
+This expression decreases in each b_p=1/(p-2), as in Report464 FQ5.
+The first eleven nonternary primes5,7,11,13,17,19,23,29,31,37,41 therefore
+give the smallest comparison for any at-most-eleven nonternary support:
+
+    product(1+b_p)=1048576/403767,
+    2+sum b_p-product(1+b_p)=29127751/66621555,
+    H(U)>=29127751/173015040>1/700.
+
+This handles absent3 without adding a twelfth coordinate or transferring
+another prime's height restriction to3.
+
+The optional whole-family finite profiles in(FC19) sharpen the literal
+first-eleven-prime value. Finite old heights and arbitrary outside heights
+give H(U)>=0.001480220499343449...; imposing outside heights at most3
+gives
+
+    H(U)>=3647238554156052072191496549233497994846917
+          /2462011359564062528038650437146933392655778125
+         =0.0014814060625625435... .
+
+The [pure-extension consumer](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_pure_extension.py)
+and [exact data](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_pure_extension.json)
+consume the pinned common source/query certificate and evaluate the
+continuation in both product and support-expansion forms. They also
+recover the existing two-prime threshold566/49 and verify the empty-core
+case. Independent rational evaluation agrees with the displayed bounds;
+normal, optimized and different-working-directory outputs agree exactly.
+No original geometry or prior partition computation is repeated.
+
+These are ordinary proofs with exact arithmetic, not new Lean
+verification. The result does not impose or justify height one for
+arbitrary hypothetical covers, and does not settle unrestricted support.
