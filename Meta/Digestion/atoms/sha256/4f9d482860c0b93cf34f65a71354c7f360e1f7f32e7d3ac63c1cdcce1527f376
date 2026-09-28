@@ -1,0 +1,17 @@
+## 70. 截断同块观察的秩与隐藏高阶关系
+
+沿用第 62 节的有限向下封闭块族 $\mathcal K$。对 $r\ge1$ 定义
+
+$$
+\mathcal K_{\le r}=\{T\in\mathcal K^+:|T|\le r\},qquad
+\mathcal K_{>r}=\mathcal K^+\setminus\mathcal K_{\le r}.
+$$
+
+令 $I$ 为完整同块观察矩阵
+
+$$
+(Im)_T=\sum_{S\supseteq T}m_S,qquad T\in\mathcal K^+,
+$$
+
+令 $I_{\le r}$ 只保留 $T\in\mathcal K_{\le r}$ 的行。把块按大小从大到小排列后，$I$ 是对角为1的整数三角矩阵；它的逆正是第 62 节的容斥反演。
+

@@ -1,0 +1,89 @@
+{
+  "eligible_R_count_1_through_46188": 10558,
+  "eligible_R_count_3329_through_46188": 9798,
+  "exact_max_sigma_R_over_R": "33516/26741",
+  "maximizers": [
+    26741
+  ],
+  "exact_max_R_le_4181": "3024/2431",
+  "maximizers_R_le_4181": [
+    2431
+  ],
+  "exponent_pattern_bounds": {
+    "(2, 1, 1)": "33516/26741",
+    "(1, 2, 1)": "39528/31603",
+    "(1, 1, 2)": "51576/41327"
+  },
+  "original_Z_bound": "979693/201600",
+  "strong_Z_bound": "49476/10285",
+  "original_margin": "125407/1008000",
+  "strong_margin": "44611/257125",
+  "family_833_le_R_lt_46189_margin": "136783/10285000",
+  "analytic_rational_checks": "all passed using series bounds",
+  "gamma_lower_bound": "H_1000 - log(1001) > 5767/10000",
+  "common_residues": {
+    "modulus_triples": 343,
+    "raw_tuple_checks": 42875,
+    "multiplication_cases": 5831,
+    "N14_m8_m12_image": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        0,
+        8
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        2,
+        10
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        4,
+        8
+      ],
+      [
+        6,
+        2
+      ],
+      [
+        6,
+        6
+      ],
+      [
+        6,
+        10
+      ]
+    ],
+    "N14_m8_m12_multiplicity": 2,
+    "N14_m8_m12_MI": "log(2)",
+    "N2_m6_m10_independent_image_size": 15
+  },
+  "status": "passed; independent Python finite audit, no Lean claim",
+  "script_path": "adaptive_boundary.py",
+  "script_sha256": "de542eedb484f6e558b68d47a7fb7acff5e4d7c81be40191d8f92afff31eea48",
+  "limitations": [
+    "Exact finite enumeration and rational series checks; not a Lean theorem.",
+    "Entropy equalities require a uniform common source; support checks do not certify arbitrary source laws."
+  ]
+}

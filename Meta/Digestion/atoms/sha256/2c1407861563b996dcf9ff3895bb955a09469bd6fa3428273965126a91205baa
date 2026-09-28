@@ -1,0 +1,70 @@
+## 74. Robin 作为关系子结构的加权读出
+
+经典 Robin 判据写成
+
+$$
+\mathrm{RH}
+\iff
+\forall n>5040,\qquad
+\frac{\sigma(n)}n<e^\gamma\log\log n,
+$$
+
+其中 $\sigma(n)=\sum_{d\mid n}d$，严格范围是 $n>5040$。利用约数互补，定义
+
+$$
+Z(n):=\frac{\sigma(n)}n=\sum_{d\mid n}\frac1d.
+$$
+
+因此它读取的是全部合法约数子结构的正权重总和，而不是约数个数。
+
+在此前的 Fibonacci 操作载体 $V_n=(\mathbb Z/n\mathbb Z)^2$ 中，若 $\mathscr L_n$ 表示同时由递归更新与方向提取保持的加法子群，已有分类给出
+
+$$
+\mathscr L_n=\{dV_n:d\mid n\}.
+$$
+
+因为 $[V_n:dV_n]=d^2$，同一个读数可写成
+
+$$
+Z(n)=\sum_{W\in\mathscr L_n}[V_n:W]^{-1/2}.
+$$
+
+这里的指数 $1/2$ 来自二维载体的指数，不能单独解释为 ζ 函数的临界线。它只把 Robin 的约数权重准确翻译成关系子结构的加权读出。
+
+沿用四个合法块
+
+$$
+[2],\quad[3],\quad[5],\quad[2+5],
+$$
+
+及其乘法轴 $2,3,5,7$。若
+
+$$
+(u,v,w;\kappa)=(a_2+a_7,a_3,a_5+a_7;a_7),
+$$
+
+则
+
+$$
+ n=2^{u-\kappa}3^v5^{w-\kappa}7^\kappa,
+$$
+
+而令 $A_p(a)=1+p^{-1}+\cdots+p^{-a}$，便有
+
+$$
+\boxed{
+Z_{\mathrm{blk}}(u,v,w;\kappa)
+=A_2(u-\kappa)A_3(v)A_5(w-\kappa)A_7(\kappa).
+}
+$$
+
+相应的数量尺度为
+
+$$
+\boxed{
+\log n=u\log2+v\log3+w\log5-\kappa\log\frac{10}{7}.
+}
+$$
+
+所以在这四块生成域内，关联数同时改变 Robin 不等式的左右两侧：它改变约数权重，也改变整体的对数规模。
+

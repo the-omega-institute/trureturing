@@ -1,0 +1,12 @@
+### definition 3.1 斐波那契替换
+
+定义 $\rho:\mathcal T\to\mathcal T$：
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle .
+$$
+
+令 $T_j=\rho^j(\alpha)$，于是 $T_0=\alpha$、$T_1=\beta$、$T_2=\langle\beta,\alpha\rangle$。
+

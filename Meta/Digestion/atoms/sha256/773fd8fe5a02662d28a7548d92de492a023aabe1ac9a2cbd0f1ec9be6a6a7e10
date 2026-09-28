@@ -1,0 +1,53 @@
+### theorem 27.2 跨尺度提升障碍
+
+定义
+
+$$
+\boxed{
+\delta_{d,e}(a)=
+\left[\frac{A\widetilde a}{d}\right]
+\in
+\frac{(\mathbb Z/e\mathbb Z)^r}{\operatorname{im}(A\bmod e)}.
+}
+$$
+
+则
+
+$$
+\boxed{
+a\text{ 能提升为 }\mathcal S_{de}\text{ 中的状态}
+\iff
+\delta_{d,e}(a)=0.
+}
+$$
+
+该定义与代表选择无关：若 $\widetilde a'=\widetilde a+dt$，则商中的残差只增加 $At$。
+
+**证明。** 细层候选写成 $x=\widetilde a+db$。条件 $Ax=0\pmod{de}$ 等价于
+
+$$
+Ab=-\frac{A\widetilde a}{d}\pmod e,
+$$
+
+这恰好表示残差属于 $\operatorname{im}(A\bmod e)$。证毕。 $\square$
+
+令 $Y_{d,e}=\ker\delta_{d,e}\subseteq\mathcal S_d$。对每个 $a\in Y_{d,e}$，高层解是某个陪集 $b_0(a)+\mathcal S_e$，故
+
+$$
+\boxed{
+|\mathcal S_{de}|=|Y_{d,e}|\,|\mathcal S_e|.
+}
+$$
+
+相应地，以下序列在核与像处正合：
+
+$$
+0\longrightarrow\mathcal S_e
+\overset{\times d}{\longrightarrow}\mathcal S_{de}
+\longrightarrow\mathcal S_d
+\overset{\delta_{d,e}}{\longrightarrow}
+\operatorname{coker}(A\bmod e).
+$$
+
+因此每层分别存在合法状态，并不意味着任意粗层状态都能沿同一相容路径细化。
+

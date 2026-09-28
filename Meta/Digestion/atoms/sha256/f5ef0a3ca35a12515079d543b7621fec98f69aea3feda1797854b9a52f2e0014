@@ -1,0 +1,25 @@
+### theorem 27.2 跨尺度提升障碍
+
+定义
+
+$$
+\boxed{
+\delta_{d,e}(a)=
+\left[\frac{A\widetilde a}{d}\right]
+\in
+\frac{(\mathbb Z/e\mathbb Z)^r}{\operatorname{im}(A\bmod e)}.
+}
+$$
+
+则
+
+$$
+\boxed{
+a\text{ 能提升为 }\mathcal S_{de}\text{ 中的状态}
+\iff
+\delta_{d,e}(a)=0.
+}
+$$
+
+该定义与代表选择无关：若 $\widetilde a'=\widetilde a+dt$，则商中的残差只增加 $At$。
+

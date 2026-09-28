@@ -1,0 +1,14 @@
+### theorem 48.1 超度量与精度参数
+
+$d_p$ 是平移不变超度量。若 $z(p)$ 如上并令 $e_p=v_p(F_{z(p)})$，则对奇素数 $p$
+
+$$
+ v_p(F_d)=\begin{cases}0,&z(p)\nmid d,\\e_p+v_p(d/z(p)),&z(p)\mid d,\end{cases}
+$$
+
+并有
+
+$$
+ z(p^r)=z(p)p^{\max(0,r-e_p)}.
+$$
+

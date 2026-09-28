@@ -1,0 +1,8 @@
+### theorem 45.1 采样边界实现粗时钟行为商
+
+在有限模状态空间上，$O_{\mathcal T}(x)=O_{\mathcal T}(y)$，当且仅当
+
+$$
+ r_{t_0+jg}(x)=r_{t_0+jg}(y)\quad\text{对所有 }j\ge0.
+$$
+
