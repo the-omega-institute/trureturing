@@ -122,6 +122,7 @@
       0
     ],
     "first_read_acquires_high_digit": true,
+    "full_formal_table_reference_states": 251,
     "full_noninitial_covariance_checks": 450,
     "initial_reference_refinement_states": 91,
     "max_reads": 4,
@@ -150,6 +151,7 @@
       "source_configurations": 60,
       "used_halt_reference_pairs": 60
     },
+    "redirected_physically_unused_read_slots": 65,
     "scope": "91 is exact for the refinement retaining both original q and initial high digit; not a minimum over all controllers."
   },
   "scope": "No full two-archive operational equivalence, universal controller optimum, or complete Lean claim."

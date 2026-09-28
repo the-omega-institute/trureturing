@@ -164,6 +164,21 @@ def controller_reference():
     def lifted(q,r,digit):
         target = step(q,digit)
         return (target,r) if (target,r) in pairs else (('H',5*r),r)
+    redirected = sum((step(q,digit),r) not in pairs
+                     for q,r in pairs if q[0] in ('F','G') for digit in range(5))
+    assert redirected == 65
+    formal = {(('WG2',r),r) for r in range(5)}
+    frontier = list(formal)
+    while frontier:
+        q,r = frontier.pop()
+        if q[0] == 'H':
+            continue
+        for digit in ([0] if q[0].startswith('W') else range(5)):
+            target = (step(q,digit),r)
+            if target not in formal:
+                formal.add(target)
+                frontier.append(target)
+    assert len(formal) == 250
     for q,r in pairs:
         assert (rotate(q),(r+1)%5) in pairs
         for digit in range(5):
@@ -201,7 +216,15 @@ def controller_reference():
         shifted=traces[(x+5)%25][0]
         assert shifted == [rotate(q) for q in trace]
         assert ((halt+5)%25, (a+1)%5) == ((j+5*((a+1)%5))%25,(a+1)%5)
-    assert len(code)==60
+    assert len(code)==60 and len(reachable)==190
+    assert max(r for r,w in costs) <= 4 and max(w for r,w in costs) <= 6
+    def decode(x,a):
+        j=(x-5*a)%25
+        return (a,j if j<12 else 0)
+    for x,a in product(range(25),range(5)):
+        aa,j=decode(x,a)
+        assert 0<=j<12 and aa==a
+        assert decode((x+5)%25,(a+1)%5) == ((a+1)%5,j)
     return {"physical_inputs": 25, "original_states": 51, "first_read_acquires_high_digit": True,
             "prepared_source_protocol": {"source_configurations":60,
                 "external_reference_labels":5, "used_halt_reference_pairs":len(code),
@@ -210,6 +233,8 @@ def controller_reference():
                 "max_unit_waits_after_preparation":max(w for r,w in costs),
                 "scope":"Requires a source-dependent dial loader and an external record of a; their acquisition/preparation costs are not included."},
             "initial_reference_refinement_states": 91,
+            "redirected_physically_unused_read_slots": redirected,
+            "full_formal_table_reference_states": 1+len(formal),
             "noninitial_refinement_by_kind": dict(by_kind),
             "max_reads": max(t[1] for t in traces), "max_unit_waits": max(t[2] for t in traces),
             "ambiguous_state": ['WG2',0], "possible_initial_references": [0,1,3],
