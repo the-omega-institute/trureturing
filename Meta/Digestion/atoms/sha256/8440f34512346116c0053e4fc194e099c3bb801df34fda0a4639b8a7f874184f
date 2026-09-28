@@ -1,0 +1,16 @@
+## proposition 10.4: 六 qutrit 的精确样本
+
+取 $d=L=3$，两条内部边恒等，另一条为 $F_3\operatorname{diag}(1,1,-1)$。归一化态为
+
+$$
+|\Psi\rangle=\frac19\sum_{x_0,\ldots,x_3\in R_3}
+\omega_3^{x_0x_3}g(x_0)\bigotimes_{i=0}^2|x_i+x_{i+1},x_i+2x_{i+1}\rangle,
+\quad g=(1,1,-1).
+$$
+
+每顶点选第一输出的区域具有完整谱
+
+$$
+\{(1/81)^{\times9},(4/81)^{\times18}\}.
+$$
+

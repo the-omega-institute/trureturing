@@ -4479,3 +4479,99 @@ Theorem 2.3、Theorem 2.4 要求连续实符号 $f,g$ 且 $g\ge0$，
 结论保留原实际 pair/path、紧输出和确定支持一致的概率范围，
 不提供下一输出尺度、任意更快阶数、Shannon 阶或输出平均熵的结论。
 纯理论文本未进入消化或 Lean 冻结链。
+
+## 第 108 章：绝对众数成本与近端包络
+
+[谱边界卷第 108 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把最大后验原子的领先阶成本推进到绝对 $o(1)$ 精度。
+原完整经验最大方差 $v_*$ 保留在放大输出斜率中；
+有限噪声项在逐输出成本中可发散，却在两个输出相减时严格抵消。
+证明覆盖全部最小化元组，不预设唯一最大权重或唯一最优配置。
+
+Jean-Jacques Moreau，*Proximité et dualité dans un espace hilbertien*，
+Bulletin de la Société Mathématique de France **93** (1965)，273–299，
+[Numdam 原文](https://www.numdam.org/item/BSMF_1965__93__273_0/)。
+第 1 节的 $\Gamma_0(H)$ 是实 Hilbert 空间上适当、下半连续的凸扩展实函数。
+Proposition 3.a 给平方距离罚项加该函数的唯一极小点；
+Examples 3.c–3.e 分别处理仿射函数、非空闭凸集的示性函数和两者之和。
+Example 3.e 的答案是先按仿射系数平移再投影。
+取 $H=\mathbb R$、$C=[0,\infty)$、仿射系数 $\delta\sigma^2/(2v_*)$，
+直接得到本章 $e^\circ(h)=(h-\delta\sigma^2/(2v_*))_+$。
+这一步是经典定理的直接应用；它不证明原离散计数成本与仿射成本相差 $o(1)$，
+也不赋予离散实际极小元唯一性。
+原文完整 PDF 的提取含一项数值 token 替换警告；上述法文假设及公式可读，
+未把提取进程成功等同于所有字形无误。
+
+Philippe Mounaix、Satya N. Majumdar、Abhimanyu Banerjee，
+*Bose-Einstein Condensation of a Gaussian Random Field in the Thermodynamic Limit*，
+[arXiv:1111.3229v2](https://arxiv.org/abs/1111.3229v2)。
+Section II 的 (i)–(iii) 假设包括环面上中心齐次 Gaussian 场、归一化正定协方差、
+严格的零频最大协方差模、存在的极限谱、径向对称和谱边缘幂律。
+式 (21)–(24) 把临界强度写为谱亏损倒数的积分；
+边缘指数 $\zeta$ 小于维数 $d$ 时该积分有限，$\zeta\ge d$ 时无限。
+Section III.A 相应排除后者的有限强度凝聚转变。
+这些是热力学极限下条件场质量的结论，不是固定总数离散计数的最大原子公式。
+
+形式上的谱轮廓 $\rho(s)/\rho_0=e^{-\kappa s^2/2}$ 对应一维二次边缘，
+亏损倒数在零附近不可积。这与本卷 $K'(1/(2\rho_0)-)=\infty$ 的边界相容，
+但不构成原计数模型的凝聚或非凝聚定理。
+尤其不能从“单个最大方差坐标给可行上界”推导“典型后验质量凝聚于该坐标”。
+本章未采用严格最大值或谱间隙假设。
+所取版本横幅为 2012 年 1 月 30 日的 v2，PDF 内部日期为 2021 年 9 月 6 日；
+两种日期原样区分，不由内部日期推断另一个版本。
+
+本章的实际模型内容是完整有限经验系数比较、全元组离散曲率下界、
+同一数据纤维的整数上界构造，以及原噪声精度下的绝对成本拼接。
+普通密度归一化由第 105 章的实际相对鞍点比较推出，没有以弱收敛替代密度定理。
+经典包络法、二项对数凹性及 Stirling 展开分别归属其成熟来源；
+有限文献核查不认证全局原创。结论仍是纯理论文本，未进入 Lean 或消化链。
+
+## 第 109 章：半整数带、theta 标记与未闭合的方差抵消
+
+[谱边界卷第 109 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在 $\ln(1/\sigma)\to\infty$ 且任意 $\Delta=\ln(q/Q^{11/4})-\ln(1/\sigma)\to\infty$ 下证明实际标量输出的
+加权 $L^1$ 平滑，并将前两阶信息标记的剩余项定位于非零半整数共振带。
+原完整信息方差定理仍缺带内中心抵消和输出尾部控制，未由标量结果自动推出。
+
+Daniele Agostini、Carlos Améndola，*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)。
+Section 2 定义采用 $e(x)=\exp(2\pi x)$，复对称矩阵的实部正定；
+参数还必须避开 theta 零除子才能形成归一化分布。
+Proposition 4.1、Remark 4.2（PDF 第 11–12 页及对应原 TeX）
+把特征函数写成移位 theta 比，把矩写成 theta 导数、累积量写成对数导数；
+协方差分子是 $\theta\theta''-(\theta')^2$，并由热方程联系线性与二次倾斜。
+这些基本公式在原文亦归属此前离散 Gaussian 文献。
+
+本章一维 Gaussian 相位对应矩阵参数
+$B_{\rm theta}=1/(2\pi d)-2i\tau$、线性参数
+$u_{\rm theta}=m/(2\pi d)+ib/(2\pi)$，实部条件成立。
+但复杂经验相位处的 theta 分母未获一致非零保证；
+因此本章保留不除以单坐标因子的有限乘积标记公式。
+该文没有给原二项信息标记、固定总数选中律或增长数组下的统一二阶导数估计，
+也不支付条件方差比较的全输出尾部。
+
+J. P. Buhler、A. C. Gamst、R. L. Graham、A. W. Hales，
+*Explicit error bounds for lattice Edgeworth expansions*，
+[arXiv:1710.08845v1](https://arxiv.org/abs/1710.08845v1)。
+Theorem 1 与 Section 1（PDF 第 1–4 页）处理有界、非退化整数随机变量的 iid 和，
+固定格距与平移，给均值两侧概率差的一阶偏度及同余修正；
+归一化表述把格距设为一，允许实平移。
+版本横幅为 2017 年 10 月 24 日，内部标题日期为 2018 年 9 月 12 日，二者区分。
+这说明格点修正须保留自己的算术条件，
+并非直接适用于本章非同分布二次计数、经验实中心、Gaussian 平滑及两个信息标记。
+骰子例子也不构成原实际计数模型的反例。
+
+第 106 章已核对的 Cellarosi–Marklof [arXiv:1501.07661v2](https://arxiv.org/abs/1501.07661v2)
+的 theta 变换及 Lemmas 3.18–3.19 提供经典 cusp/移位包络关系；
+Baker [arXiv:2103.05555v1](https://arxiv.org/abs/2103.05555v1)
+Section 2、Lemma 3 的完整 Gauss 和界保持其互素条件。
+它们的分布性或最大估计不替代原共同环境的量化相位分离。
+本章另直接证明小分母收缩与单模宽度：分母一、二只有一个模为一的 Fourier 模，
+更大固定分母有严格收缩；使用全部可用中心因子将每个共振带物理积分宽度降至常数。
+
+条件方差的共同调制抵消和信息倾斜二阶导数是经典条件矩与指数族恒等式，
+不被另称为新通用定理。这里的模型内内容是实际标记 Fourier 定位、
+无逆噪声的选中标量回接，以及保留精确中心、完整外部相关性和同一测量残差的接口。
+原中心有理独立只排除精确共振，不给所需的近共振速率。
+有限原文检索未找到直接承担全部剩余估计的结果，不认证其不存在或全局原创。
+纯理论文本未进入 Lean、消化或冻结链。

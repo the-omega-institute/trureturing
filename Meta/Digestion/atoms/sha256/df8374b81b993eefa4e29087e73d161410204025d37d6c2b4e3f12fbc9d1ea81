@@ -1,0 +1,64 @@
+## theorem 24.3: 任意细腿区域的最大代数与熵
+
+对物理腿集合 $A$，记 $\mathscr F_A$ 为仅在 $A$ 有支撑的相空间标签，定义
+
+$$
+\mathscr S_A=\mathscr S\cap\mathscr F_A,\qquad
+E_A=\{(a,b)\in R_d^2:\exists s\in\mathscr S,\ s+a\ell_X+b\ell_Z\in\mathscr F_A\}.
+$$
+
+令
+
+$$
+Z_A=E_A\cap E_A^\perp,\quad c_A=|Z_A|,\quad
+r_A=\sqrt{|E_A|/c_A},\quad t_A=\frac d{c_A r_A},
+$$
+
+$$
+R_A=\frac{d^{|A|}}{|\mathscr S_A|},\qquad
+m_A=\frac{R_A}{c_A r_A}.
+$$
+
+这些数均为正整数，且 $E_{\bar A}=E_A^\perp$。区域的最大可恢复逻辑代数是实际逻辑 Weyl 算符的线性包
+
+$$
+\mathcal M_A=\operatorname{span}\{W_{\rm log}(a,b):(a,b)\in E_A\}
+\simeq\bigoplus_{z=1}^{c_A}M_{r_A}(\mathbb C)\otimes I_{t_A}.
+$$
+
+对任意逻辑密度矩阵，写其在该代数上的标准分块限制为 $\oplus_zp_z\rho_z$，实际边缘态有区域内的支撑等距正规形
+
+$$
+\boxed{\mathcal N_A(\rho)\simeq
+\bigoplus_{z=1}^{c_A}p_z\rho_z\otimes I_{m_A}/m_A,}
+\qquad\mathcal N_A=\operatorname{Tr}_{\bar A}\circ\mathcal E^{\{j\}}_{d,L}.
+$$
+
+因此对所有细腿区域和全部输入，
+
+$$
+S(\mathcal N_A\rho)=\log m_A+S_{\mathcal M_A}(\rho),\qquad
+\mathcal L_A=(\log m_A)I_d.
+$$
+
+互补恢复、区域包含下的逻辑代数包含、以及边界与相应代数相对熵的等式同时成立。正常支持上的完整谱由该正规形给出，不仅是熵数值。
+
+**证明。** 稳定子平均给出
+
+$$
+\mathcal N_A(I_d/d)=P_A/R_A,\qquad
+P_A=|\mathscr S_A|^{-1}\sum_{s\in\mathscr S_A}W_A(s).
+$$
+
+由于非恒等 Weyl 的迹为零，$P_A$ 的秩为 $R_A$。任意局部 Weyl 的码压缩，若标签不在 $\mathscr N$ 则为零；在 $\mathscr N$ 中则为一个逻辑 Weyl。因此实际局部压缩算符恰由 $E_A$ 张成，乘法闭合。有限辛配对给出
+
+$$
+(\mathscr N\cap\mathscr F_A)^\perp=\mathscr S+\mathscr F_{\bar A}.
+$$
+
+在 $\mathscr N/\mathscr S$ 中取像便得到 $E_{\bar A}=E_A^\perp$。结合 [BKK07] 压缩错误交换子判据，这些就是最大可恢复代数，而非只是一组选出的可恢复算符。
+
+限制 Weyl 乘法的中心是 $Z_A$；商群 $E_A/Z_A$ 的交换配对非退化。有限扭曲群代数因而有 $c_A$ 个简单块，每块维数 $r_A$，其中 $c_A r_A^2=|E_A|$。也可逐个中心特征用正交幂等元直接得到这一分解。逻辑空间和物理支撑 $P_A$ 上，每个非恒等逻辑标签的归一化迹均为零；因此中心特征等权，各简单块的表示重数分别为 $t_A$、$m_A$。两者的整数性由实际表示的维数给出，不依赖核的自由性。局部 Weyl 期望逐项等于同一个逻辑 Weyl 期望，其余压缩项为零，故完整边缘态必须是所列分块态，各重数因子最大混合。熵与相对熵由此直接计算。证毕。
+
+**可执行的精确算法。** 将引理 24.2 的 $n-1$ 个稳定子生成元堆为行矩阵 $S$，末尾加 $\ell_X,\ell_Z$ 得 $H$。解 $H_{\bar A}^T y=0\pmod d$ 并投影到最后两个系数，就得到 $E_A$；解 $S_{\bar A}^Ty=0\pmod d$ 则给出 $|\mathscr S_A|$。这里下标保留补集的位移和相位列。整数 Smith 正规形的非零对角元 $s_i$ 每个贡献 $\gcd(s_i,d)$ 个核选择，零列贡献 $d$，因此复合模数与非自由子群也可精确处理。
+

@@ -1,0 +1,30 @@
+## theorem 16.2: 两参数严格相容
+
+空间通道 CPTP、满射且非恒定，并在全部逻辑输入上满足
+
+$$
+\mathcal S_{\Pi,d}\mathcal E_{d,L}
+=\mathcal E_{d,r}\operatorname{ret}_{\Pi}.
+$$
+
+若 $\Sigma$ 是对 $r$ 个宏块的进一步连续分割，则在全部边界输入上
+
+$$
+\mathcal S_{\Sigma,d}\mathcal S_{\Pi,d}
+=\mathcal S_{\Sigma\circ\Pi,d}.
+$$
+
+与第 12 节每个环长上的精度通道还满足
+
+$$
+\boxed{\mathcal S_{\Pi,d}\mathcal R^{(L)}_{D,d}
+=\mathcal R^{(r)}_{D,d}\mathcal S_{\Pi,D}.}
+$$
+
+各等式也适用于与任意外部参考纠缠的输入。原参考态严格送到同一模型的短环参考态：
+
+$$
+\mathcal S_{\Pi,d}(|\Psi^{\alpha_L}_{d,L}\rangle\langle\Psi^{\alpha_L}_{d,L}|)
+=|\Psi^{\alpha_r}_{d,r}\rangle\langle\Psi^{\alpha_r}_{d,r}|.
+$$
+

@@ -1,0 +1,17 @@
+## proposition 17.1: 当前单环的显式双曲实现
+
+固定 $L\ge3$，将原单环的每个四价顶点拆成两个三价顶点，以权重 $\beta=L+1$ 的辅助边连接。每个新顶点接一条原环边和一条原边界边；所有原边权为一。令
+
+$$
+\epsilon=\frac1{10(L+1)^2},\qquad
+w(\ell)=\operatorname{arsinh}\!\frac1{\sinh(\ell/2)}.
+$$
+
+每个三价顶点用一条边界长度为 $\epsilon\beta$、另外两条为 $\epsilon$ 的双曲裤子面替代；按图缝合内部边界，扭转参数任意。未缝合边界可附加半领圈作为实际外边界。所得曲面 $\Sigma$ 有 $2L$ 个标记边界分量、亏格一。对每个标记边界集合 $A$，
+
+$$
+\min_{\gamma\sim A}\operatorname{Length}(\gamma)=\epsilon m(A),
+$$
+
+其中 $\gamma$ 为与 $A$ 同调的分离多曲线，$m(A)$ 是原单环的图最小割。所有区域由同一个曲面同时实现。
+
