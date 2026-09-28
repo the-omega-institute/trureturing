@@ -650,6 +650,88 @@ def wrapper_lexical_actualRegistration : Registration lexicalArena (∀ [d1 : In
   sensitivity := ⟨by intro i; refine ⟨swapRejected, ?_, rfl, swapRejectedLaw⟩; intro j h; exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i)), by intro i; exact nomatch i⟩
   dependence := by intro i; cases i; exact ⟨⟨⟨0⟩,⟨0⟩⟩, 0, 1, by decide⟩
 
+-- A legal dependent dictionary family: k occurs in the class index.
+-- eqReadFin ignores its dictionary computationally; raw capture must still bind it.
+def eqReadFin (_d : DecidableEq (Fin 2)) (n : Nat) : Nat := n
+abbrev familySig : Signature where
+  Params := (k : Nat) → DecidableEq (Fin k)
+  State _ := Nat
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def familyFaithful : Realization familySig :=
+  realize familySig (fun _ d n => eqReadFin (d 2) n) (fun e => nomatch e)
+def familyCanonical (k : Nat) : DecidableEq (Fin k) := inferInstance
+def familyReplacement : Realization familySig :=
+  realize familySig (fun _ _ n => eqReadFin (familyCanonical 2) n) (fun e => nomatch e)
+def familyDrop : Realization familySig :=
+  realize familySig (fun _ _ n => n) (fun e => nomatch e)
+def familyRejected : Realization familySig :=
+  realize familySig (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev familyArena : Arena where
+  signature := familySig
+  Law r := ∀ [d : (k : Nat) → DecidableEq (Fin k)] (n : Nat), n ≤ r.readout () d n
+theorem familyRejectedLaw : ¬ familyArena.Law familyRejected := by
+  intro h
+  exact Nat.not_succ_le_zero 0 (@h (fun _ => inferInstance) 1)
+
+theorem familyFaithfulSource [d : (k : Nat) → DecidableEq (Fin k)] (n : Nat) :
+    n ≤ eqReadFin (d 2) n := Nat.le_refl n
+def familyFaithfulRegistration : Registration familyArena
+    (∀ [d : (k : Nat) → DecidableEq (Fin k)] (n : Nat), n ≤ eqReadFin (d 2) n) where
+  actual := familyFaithful
+  bridge := Iff.rfl
+  variation := ⟨familyFaithfulSource, familyRejected, familyRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨familyRejected, ?_, rfl, familyRejectedLaw⟩
+      intro j h
+      exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := by
+    intro i; cases i
+    exact ⟨(fun _ => inferInstance), 0, 1, by decide⟩
+
+theorem familyReplacementSource [d : (k : Nat) → DecidableEq (Fin k)] (n : Nat) :
+    n ≤ eqReadFin (d 2) n := Nat.le_refl n
+def familyReplacementRegistration : Registration familyArena
+    (∀ [d : (k : Nat) → DecidableEq (Fin k)] (n : Nat), n ≤ eqReadFin (d 2) n) where
+  actual := familyReplacement
+  bridge := Iff.rfl
+  variation := ⟨familyReplacementSource, familyRejected, familyRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨familyRejected, ?_, rfl, familyRejectedLaw⟩
+      intro j h
+      exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := by
+    intro i; cases i
+    exact ⟨(fun _ => inferInstance), 0, 1, by decide⟩
+
+theorem familyDropSource [d : (k : Nat) → DecidableEq (Fin k)] (n : Nat) :
+    n ≤ eqReadFin (d 2) n := Nat.le_refl n
+def familyDropRegistration : Registration familyArena
+    (∀ [d : (k : Nat) → DecidableEq (Fin k)] (n : Nat), n ≤ eqReadFin (d 2) n) where
+  actual := familyDrop
+  bridge := Iff.rfl
+  variation := ⟨familyDropSource, familyRejected, familyRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨familyRejected, ?_, rfl, familyRejectedLaw⟩
+      intro j h
+      exact False.elim (h (show j = i from @Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := by
+    intro i; cases i
+    exact ⟨(fun _ => inferInstance), 0, 1, by decide⟩
+
 end D5.InstanceSupportFixture
 "####
 
@@ -660,6 +742,42 @@ open Lean Meta LeanInformationAudit
 open D5.InstanceSupportFixture
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 namespace Reg.D5.InstanceSupportFixture
+
+register_information_theorem familyFaithfulSource in familyArena
+  readout via (realize familySig (fun _ d n => eqReadFin (d 2) n) (fun e => nomatch e))
+  realizes familyFaithfulRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "arg"], stateBinder := 1}] })
+  escape continues (open)
+
+register_information_theorem familyReplacementSource in familyArena
+  readout via (realize familySig (fun _ d n => eqReadFin (familyCanonical 2) n) (fun e => nomatch e))
+  realizes familyReplacementRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "arg"], stateBinder := 1}] })
+  escape continues (open)
+
+register_information_theorem familyDropSource in familyArena
+  readout via (realize familySig (fun _ d n => n) (fun e => nomatch e))
+  realizes familyDropRegistration
+  escape from source ({
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "arg"], stateBinder := 1}] })
+  escape continues (open)
+
+run_meta do
+  let info ← getConstInfo ``familyFaithfulSource
+  let (scope, work) ← (SourceScope.resolve info {
+    owner := `D5.InstanceSupportFixture, coordinates := #[],
+    readouts := #[{path := #["body", "body", "arg"], stateBinder := 1}] }).run 524288
+  let .forallE _ domain _ .instImplicit := info.type
+    | throwError "family source instance binder missing"
+  unless scope.source.equal info.type && scope.supportRaw.size == 1 &&
+      scope.supportRaw[0]!.domain.equal domain && scope.parameterSlots == #[0] &&
+      scope.coordinates.isEmpty do throwError "family raw source identity changed"
+  logInfo m!"[PASS] legal_family_raw_source support=0 work={work}"
 
 register_information_theorem metadataSource in arena
   readout via (realize signature (fun _ p n => @Fintype.card p.1 p.2 + n) (fun e => nomatch e))
@@ -919,7 +1037,8 @@ register_information_theorem swapSigmaSource in swapArena
   escape continues (open)
 
 run_meta do
-  for (name, valid) in #[(``eqSource, false), (``eqFaithfulSource, true),
+  for (name, valid) in #[(``familyFaithfulSource, true), (``familyReplacementSource, false),
+      (``familyDropSource, false), (``eqSource, false), (``eqFaithfulSource, true),
       (``swapSource, true), (``swapLambdaSource, false), (``swapSigmaSource, false)] do
     let env ← getEnv
     let some event := (TemplateBinding.inventory env).find? (·.key.theoremName == name)

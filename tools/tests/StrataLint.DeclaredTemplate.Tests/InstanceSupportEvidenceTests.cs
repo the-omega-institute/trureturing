@@ -176,17 +176,33 @@ public sealed class InstanceSupportEvidenceTests
         }
         Assert.True(grammarFailures.Count == 0, string.Join("\n", grammarFailures));
         var evidence = InformationTemplateEvidence.Collect(snapshot, report, [path]);
-        Assert.Equal(29, evidence.Occurrences.Count);
-        var rejectedNames = new[] { "eqSource", "swapLambdaSource", "swapSigmaSource" };
+        Assert.Equal(32, evidence.Occurrences.Count);
+        var rejectedNames = new[] { "familyReplacementSource", "familyDropSource", "eqSource", "swapLambdaSource", "swapSigmaSource" };
         var rejected = evidence.Occurrences.Where(pair => rejectedNames.Contains(pair.Key.Theorem.Split('.').Last())
             || (pair.Key.Theorem.Contains(".wrapper_", StringComparison.Ordinal)
                 && !pair.Key.Theorem.EndsWith("_faithful", StringComparison.Ordinal))).ToArray();
-        Assert.Equal(13, rejected.Length);
+        Assert.Equal(15, rejected.Length);
         Assert.All(rejected, pair => Assert.Equal(InformationTemplateBindingState.DeclaredUnresolved, pair.Value.State));
         Assert.All(evidence.Occurrences.Except(rejected).Select(pair => pair.Value), entry => {
             Assert.Equal(InformationTemplateBindingState.DeclaredValidated, entry.State);
             Assert.True(entry.HasFourSlots);
         });
+        var family = evidence.Occurrences.Single(pair =>
+            pair.Key.Theorem == "D5.InstanceSupportFixture.familyFaithfulSource").Value.SourceBinding!.Value;
+        Assert.Equal(2, family.GetProperty("telescope_size").GetInt32());
+        Assert.Empty(family.GetProperty("coordinates").EnumerateArray());
+        Assert.Equal(new[] { 0 }, family.GetProperty("support").EnumerateArray().Select(x => x.GetInt32()));
+        Assert.Equal(new[] { 0 }, family.GetProperty("parameter_slots").EnumerateArray().Select(x => x.GetInt32()));
+        var familySupport = Assert.Single(family.GetProperty("support_entries").EnumerateArray());
+        Assert.Equal(new[] { "body" }, familySupport.GetProperty("path").EnumerateArray().Select(x => x.GetString()));
+        var familyMaterial = familySupport.GetProperty("material").GetString()!;
+        Assert.StartsWith("ep(", familyMaterial, StringComparison.Ordinal);
+        Assert.Contains("DecidableEq", familyMaterial, StringComparison.Ordinal);
+        Assert.Contains(familyMaterial, report.Files.Values.SelectMany(f => f.Declarations)
+            .Single(d => d.Name == "D5.InstanceSupportFixture.familyFaithfulSource").LoadTypeRepresentation(),
+            StringComparison.Ordinal);
+        Assert.Equal(1, Assert.Single(family.GetProperty("readouts").EnumerateArray())
+            .GetProperty("state_binder").GetInt32());
         var occurrence = evidence.Occurrences.Single(pair => pair.Key.Theorem == "D5.InstanceSupportFixture.source").Value;
         Assert.Equal(InformationTemplateBindingState.DeclaredValidated, occurrence.State);
         Assert.True(occurrence.HasFourSlots);

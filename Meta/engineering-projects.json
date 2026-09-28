@@ -3512,6 +3512,8 @@
         "tools/lean-inspector/native_image.c",
         "tools/lean-inspector/publication.py",
         "tools/lean-inspector/reuse.py",
+        "tools/lean-inspector/tests/test_instance_support.py",
+        "tools/lean-inspector/tests/test_native_support.py",
         "tools/scripts/lean-report-pair.sh",
         "tools/scripts/lib/resource-observation-lib.sh",
         "tools/scripts/report/lean-report-input.sh",

@@ -172,8 +172,7 @@ structure Scope where
   readouts : Array ReadoutScope
 
 private partial def dictionary (type : Expr) : MetaM Bool := do
-  let type ← withTransparency .all <| whnf type
-  forallTelescope type fun _ result => do
+  withTransparency .all <| forallTelescopeReducing type (whnfType := true) fun _ result => do
     pure (Lean.isClass (← getEnv) (result.getAppFn.constName?.getD .anonymous))
 
 private partial def referencedPaths (context : Array SourceBinder) (e : Expr)

@@ -10,6 +10,8 @@ public sealed partial class CurrentExecutionContractTests
     [Theory]
     [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/LeanInformationAudit/Enrollment.lean", true)]
     [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/native.py", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/tests/test_instance_support.py", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/tests/test_native_support.py", true)]
     [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/native_image.c", true)]
     [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/Inspector.lean", true)]
     [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/materials.py", true)]
@@ -93,6 +95,10 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Track();
         Assert.Equal(new[] { ExecutionFixture.First, ExecutionFixture.Second }, Execute(fixture));
         var original = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        Seed(fixture);
+        Assert.Empty(Execute(fixture));
+        Assert.Equal(original.Projects.Select(row => row with { Status = "reused" }),
+            CommonExecutionEvidence.ValidateTests(fixture.Root).Projects);
         Seed(fixture);
 
         fixture.Write(path, "changed fixture input\n");
