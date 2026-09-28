@@ -72,15 +72,39 @@ def Certificate : Prop :=
   finiteBayesRisk prior rejectLoss (row v) = ENNReal.ofReal (1/2 : ℝ) ∧
   finiteBayesRisk prior listLoss (row w) = ENNReal.ofReal (2/9 : ℝ) ∧
   finiteBayesRisk prior listLoss (row v) = ENNReal.ofReal (1/9 : ℝ) ∧
+  (∃ (f : B → Fin 5) (d : FiniteMarkovKernel B (Fin 5)),
+    (∀ b a, d.1 b a = if f b = a then 1 else 0) ∧
+    (∀ b, (rejectMin b : ℝ) = ∑ i : A, prior i * (if i ∈ b.1 then 1 else 0) * rejectLoss i (f b)) ∧
+    (∀ b a, (rejectMin b : ℝ) ≤ ∑ i : A, prior i * (if i ∈ b.1 then 1 else 0) * rejectLoss i a) ∧
+    finiteBayesCost prior rejectLoss (row w) d.1 = 2/9 ∧
+    finiteBayesCost prior rejectLoss (row v) d.1 = 1/2 ∧
+    (∀ k : FiniteMarkovKernel B (Fin 5),
+      finiteBayesCost prior rejectLoss (row w) d.1 ≤ finiteBayesCost prior rejectLoss (row w) k.1 ∧
+      finiteBayesCost prior rejectLoss (row v) d.1 ≤ finiteBayesCost prior rejectLoss (row v) k.1)) ∧
+  (∃ (f : B → Fin 6) (d : FiniteMarkovKernel B (Fin 6)),
+    (∀ b a, d.1 b a = if f b = a then 1 else 0) ∧
+    (∀ b, (listMin b : ℝ) = ∑ i : A, prior i * (if i ∈ b.1 then 1 else 0) * listLoss i (f b)) ∧
+    (∀ b a, (listMin b : ℝ) ≤ ∑ i : A, prior i * (if i ∈ b.1 then 1 else 0) * listLoss i a) ∧
+    finiteBayesCost prior listLoss (row w) d.1 = 2/9 ∧
+    finiteBayesCost prior listLoss (row v) d.1 = 1/9 ∧
+    (∀ k : FiniteMarkovKernel B (Fin 6),
+      finiteBayesCost prior listLoss (row w) d.1 ≤ finiteBayesCost prior listLoss (row w) k.1 ∧
+      finiteBayesCost prior listLoss (row v) d.1 ≤ finiteBayesCost prior listLoss (row v) k.1)) ∧
   finiteDeficiency (row v) (row w) = ENNReal.ofReal (1/9 : ℝ) ∧
   finiteDeficiency (row w) (row v) = ENNReal.ofReal (5/18 : ℝ) ∧
   ENNReal.ofReal (min 1 (star w v + 2 * (finiteDeficiency (row v) (row w)).toReal)) <
     finiteDeficiency (row w) (row v) ∧
+  (finiteDeficiency (row w) (row v)).toReal -
+    min 1 (star w v + 2 * (finiteDeficiency (row v) (row w)).toReal) = 1/18 ∧
   (∀ c : ℝ, finiteDeficiency (row w) (row v) ≤
     ENNReal.ofReal (c * (finiteDeficiency (row v) (row w)).toReal) → 5/2 ≤ c) ∧
+  (∀ i j, i ≠ j → pair (mix w) i j = 2/9 ∧ pair (mix v) i j = 2/9) ∧
   star (mix w) (mix v) = 0 ∧
   finiteDeficiency (row (mix v)) (row (mix w)) = ENNReal.ofReal (1/18 : ℝ) ∧
   finiteDeficiency (row (mix w)) (row (mix v)) = ENNReal.ofReal (5/36 : ℝ) ∧
+  (finiteDeficiency (row (mix w)) (row (mix v))).toReal -
+    min 1 (star (mix w) (mix v) +
+      2 * (finiteDeficiency (row (mix v)) (row (mix w))).toReal) = 1/36 ∧
   (∃ (p : Seed → ℝ) (P Q : Seed → Finpartition (Finset.univ : Finset A)),
     (∀ s, 0 ≤ p s) ∧ (∑ s, p s = 1) ∧
     (∀ b, (∑ s, if b.1 ∈ (P s).parts then p s else 0) = mix w b) ∧
@@ -95,7 +119,10 @@ def Certificate : Prop :=
     finiteDeficiency (publicExperiment p P) (publicExperiment p Q) = ENNReal.ofReal (5/36 : ℝ) ∧
     ENNReal.ofReal (min 1 (star (mix w) (mix v) +
       2 * (finiteDeficiency (publicExperiment p Q) (publicExperiment p P)).toReal)) <
-      finiteDeficiency (publicExperiment p P) (publicExperiment p Q))
+      finiteDeficiency (publicExperiment p P) (publicExperiment p Q) ∧
+    (finiteDeficiency (publicExperiment p P) (publicExperiment p Q)).toReal -
+      min 1 (star (mix w) (mix v) +
+        2 * (finiteDeficiency (publicExperiment p Q) (publicExperiment p P)).toReal) = 1/36)
 
 /-- The coefficient-two bound at this actual certified four-state pair. -/
 def claim : Prop := Certificate → finiteDeficiency (row w) (row v) ≤
@@ -162,15 +189,24 @@ theorem result : ¬ claim := by
       have h := hp i j (Finset.ne_of_mem_erase hj).symm
       rw [h.1, h.2]; norm_num
     simp only [he, Finset.sup'_const, mul_zero]
-  have risk {n : ℕ} [NeZero n] (u : B → ℚ) (l : A → Fin n → ℚ) (m : B → ℚ)
-      (hu : ∀ b, 0 ≤ u b)
+  have risk {n : ℕ} [NeZero n] (l : A → Fin n → ℚ) (m : B → ℚ)
       (hm : ∀ b a, m b ≤ ∑ i : A, (1/4 : ℚ) * (if i ∈ b.1 then 1 else 0) * l i a)
       (ha : ∀ b, ∃ a : Fin n, m b = ∑ i : A, (1/4 : ℚ) * (if i ∈ b.1 then 1 else 0) * l i a) :
-      finiteBayesRisk prior (fun i a => (l i a : ℝ)) (row (fun b => (u b : ℝ))) =
-        ENNReal.ofReal ((∑ b, u b * m b : ℚ) : ℝ) := by
+      ∃ (f : B → Fin n) (d : FiniteMarkovKernel B (Fin n)),
+        (∀ b a, d.1 b a = if f b = a then 1 else 0) ∧
+        (∀ b, (m b : ℝ) = ∑ i : A, prior i * (if i ∈ b.1 then 1 else 0) * (l i (f b) : ℝ)) ∧
+        (∀ b a, (m b : ℝ) ≤ ∑ i : A, prior i * (if i ∈ b.1 then 1 else 0) * (l i a : ℝ)) ∧
+        ∀ u : B → ℚ, (∀ b, 0 ≤ u b) →
+          finiteBayesRisk prior (fun i a => (l i a : ℝ)) (row (fun b => (u b : ℝ))) =
+            ENNReal.ofReal ((∑ b, u b * m b : ℚ) : ℝ) ∧
+          finiteBayesCost prior (fun i a => (l i a : ℝ)) (row (fun b => (u b : ℝ))) d.1 =
+            ((∑ b, u b * m b : ℚ) : ℝ) ∧
+          ∀ k : FiniteMarkovKernel B (Fin n),
+            finiteBayesCost prior (fun i a => (l i a : ℝ)) (row (fun b => (u b : ℝ))) d.1 ≤
+              finiteBayesCost prior (fun i a => (l i a : ℝ)) (row (fun b => (u b : ℝ))) k.1 := by
     classical
     choose f hf using ha
-    have expand (d : B → Fin n → ℝ) :
+    have expand (u : B → ℚ) (d : B → Fin n → ℝ) :
         finiteBayesCost prior (fun i a => (l i a : ℝ)) (row (fun b => (u b : ℝ))) d =
           ∑ b, (u b : ℝ) * ∑ a, d b a *
             ∑ i : A, (1/4 : ℝ) * (if i ∈ b.1 then 1 else 0) * (l i a : ℝ) := by
@@ -199,6 +235,10 @@ theorem result : ¬ claim := by
     let d : FiniteMarkovKernel B (Fin n) :=
       ⟨fun b a => if f b = a then 1 else 0,
         ⟨by intro b a; dsimp only; split_ifs <;> norm_num, by intro b; simp⟩⟩
+    refine ⟨f, d, fun _ _ => rfl, ?_, ?_, ?_⟩
+    · intro b; simp only [prior]; rw [← coeff]; exact congrArg (fun x : ℚ => (x : ℝ)) (hf b)
+    · intro b a; simp only [prior]; rw [← coeff]; exact_mod_cast hm b a
+    intro u hu
     have hd : finiteBayesCost prior (fun i a => (l i a : ℝ)) (row (fun b => (u b : ℝ))) d.1 =
         ((∑ b, u b * m b : ℚ) : ℝ) := by
       rw [expand]
@@ -207,10 +247,9 @@ theorem result : ¬ claim := by
       apply Finset.sum_congr rfl; intro b _
       congr 1
       rw [← coeff]; exact congrArg (fun x : ℚ => (x : ℝ)) (hf b).symm
-    apply le_antisymm
-    · exact (iInf_le _ d).trans_eq (congrArg ENNReal.ofReal hd)
-    · apply le_iInf; intro k
-      apply ENNReal.ofReal_le_ofReal
+    have lower (k : FiniteMarkovKernel B (Fin n)) :
+        ((∑ b, u b * m b : ℚ) : ℝ) ≤
+          finiteBayesCost prior (fun i a => (l i a : ℝ)) (row (fun b => (u b : ℝ))) k.1 := by
       rw [expand]; push_cast
       apply Finset.sum_le_sum; intro b _
       apply mul_le_mul_of_nonneg_left _ (by exact_mod_cast hu b)
@@ -219,36 +258,30 @@ theorem result : ¬ claim := by
         _ = ∑ a, k.1 b a * (m b : ℝ) := Finset.sum_mul _ _ _
         _ ≤ _ := Finset.sum_le_sum fun a _ => mul_le_mul_of_nonneg_left
           (by rw [← coeff]; exact_mod_cast hm b a) (k.2.1 b a)
+    refine ⟨le_antisymm ?_ ?_, hd, fun k => hd.le.trans (lower k)⟩
+    · exact (iInf_le _ d).trans_eq (congrArg ENNReal.ofReal hd)
+    · exact le_iInf fun k => ENNReal.ofReal_le_ofReal (lower k)
   have qr : (∀ b a, rejectMin b ≤ ∑ i : A, (1/4 : ℚ) * (if i ∈ b.1 then 1 else 0) * rejectLossQ i a) ∧
       (∀ b, ∃ a : Fin 5, rejectMin b = ∑ i : A, (1/4 : ℚ) * (if i ∈ b.1 then 1 else 0) * rejectLossQ i a) := by decide +kernel
   have ql : (∀ b a, listMin b ≤ ∑ i : A, (1/4 : ℚ) * (if i ∈ b.1 then 1 else 0) * listLossQ i a) ∧
       (∀ b, ∃ a : Fin 6, listMin b = ∑ i : A, (1/4 : ℚ) * (if i ∈ b.1 then 1 else 0) * listLossQ i a) := by decide +kernel
   have qsum : (∑ b, wq b * rejectMin b) = 2/9 ∧ (∑ b, vq b * rejectMin b) = 1/2 ∧
       (∑ b, wq b * listMin b) = 2/9 ∧ (∑ b, vq b * listMin b) = 1/9 := by decide +kernel
-  have rwR : finiteBayesRisk prior rejectLoss (row w) = ENNReal.ofReal (2/9 : ℝ) := by
-    change finiteBayesRisk prior (fun i a => (rejectLossQ i a : ℝ)) (row (fun b => (wq b : ℝ))) = ENNReal.ofReal (2/9 : ℝ)
-    have hh := risk wq rejectLossQ rejectMin qw.1 qr.1 qr.2
-    rw [qsum.1] at hh
-    norm_num only [Rat.cast_div, Rat.cast_ofNat, Rat.cast_one] at hh
-    exact hh
-  have rvR : finiteBayesRisk prior rejectLoss (row v) = ENNReal.ofReal (1/2 : ℝ) := by
-    change finiteBayesRisk prior (fun i a => (rejectLossQ i a : ℝ)) (row (fun b => (vq b : ℝ))) = ENNReal.ofReal (1/2 : ℝ)
-    have hh := risk vq rejectLossQ rejectMin qv.1 qr.1 qr.2
-    rw [qsum.2.1] at hh
-    norm_num only [Rat.cast_div, Rat.cast_ofNat, Rat.cast_one] at hh
-    exact hh
-  have rwL : finiteBayesRisk prior listLoss (row w) = ENNReal.ofReal (2/9 : ℝ) := by
-    change finiteBayesRisk prior (fun i a => (listLossQ i a : ℝ)) (row (fun b => (wq b : ℝ))) = ENNReal.ofReal (2/9 : ℝ)
-    have hh := risk wq listLossQ listMin qw.1 ql.1 ql.2
-    rw [qsum.2.2.1] at hh
-    norm_num only [Rat.cast_div, Rat.cast_ofNat, Rat.cast_one] at hh
-    exact hh
-  have rvL : finiteBayesRisk prior listLoss (row v) = ENNReal.ofReal (1/9 : ℝ) := by
-    change finiteBayesRisk prior (fun i a => (listLossQ i a : ℝ)) (row (fun b => (vq b : ℝ))) = ENNReal.ofReal (1/9 : ℝ)
-    have hh := risk vq listLossQ listMin qv.1 ql.1 ql.2
-    rw [qsum.2.2.2] at hh
-    norm_num only [Rat.cast_div, Rat.cast_ofNat, Rat.cast_one] at hh
-    exact hh
+  obtain ⟨rf, rd, rdet, ratt, rmin, rrisk⟩ := risk rejectLossQ rejectMin qr.1 qr.2
+  obtain ⟨listChoice, ld, ldet, latt, lmin, lrisk⟩ := risk listLossQ listMin ql.1 ql.2
+  have wr := rrisk wq qw.1
+  have vr := rrisk vq qv.1
+  have wl := lrisk wq qw.1
+  have vl := lrisk vq qv.1
+  rw [qsum.1] at wr
+  rw [qsum.2.1] at vr
+  rw [qsum.2.2.1] at wl
+  rw [qsum.2.2.2] at vl
+  norm_num only [Rat.cast_div, Rat.cast_ofNat, Rat.cast_one] at wr vr wl vl
+  have rwR : finiteBayesRisk prior rejectLoss (row w) = ENNReal.ofReal (2/9 : ℝ) := wr.1
+  have rvR : finiteBayesRisk prior rejectLoss (row v) = ENNReal.ofReal (1/2 : ℝ) := vr.1
+  have rwL : finiteBayesRisk prior listLoss (row w) = ENNReal.ofReal (2/9 : ℝ) := wl.1
+  have rvL : finiteBayesRisk prior listLoss (row v) = ENNReal.ofReal (1/9 : ℝ) := vl.1
   have hW : IsRowStochastic (row w) := ⟨by intro i b; unfold row; split_ifs; exact hw b; exact le_rfl, hwr⟩
   have hV : IsRowStochastic (row v) := ⟨by intro i b; unfold row; split_ifs; exact hv b; exact le_rfl, hvr⟩
   have hprior : (∀ i, 0 ≤ prior i) ∧ ∑ i, prior i = 1 := by norm_num [prior, Fin.sum_univ_succ]
@@ -305,22 +338,27 @@ theorem result : ¬ claim := by
     rw [dr, ← ENNReal.ofReal_mul (by norm_num : (0 : ℝ) ≤ 1/2)] at hh
     norm_num only [show (1/2 : ℝ) * (5/18) = 5/36 by norm_num] at hh
     exact hh
+  have hpm : ∀ i j, i ≠ j → pair (mix w) i j = 2/9 ∧ pair (mix v) i j = 2/9 := by
+    intro i j hij
+    have pe (u : B → ℝ) : pair (mix u) i j = (1/2 : ℝ) * pair u i j := by
+      unfold pair mix
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl; intro b _
+      by_cases hb : i ∈ b.1 ∧ j ∈ b.1
+      · have hn : b.1.card ≠ 1 := by
+          intro hc
+          obtain ⟨a, ha⟩ := Finset.card_eq_one.mp hc
+          rw [ha] at hb
+          exact hij ((Finset.mem_singleton.mp hb.1).trans (Finset.mem_singleton.mp hb.2).symm)
+        simp only [if_pos hb, if_neg hn]; ring
+      · simp only [if_neg hb, mul_zero]
+    rw [pe, pe, (hp i j hij).1, (hp i j hij).2]; norm_num
   have hsm : star (mix w) (mix v) = 0 := by
-    have he : ∀ i j, i ≠ j → pair (mix v) i j = pair (mix w) i j := by
-      intro i j hij
-      have hpw := (hp i j hij).1
-      have hpv := (hp i j hij).2
-      have pe (u : B → ℝ) : pair (mix u) i j =
-          (1/2 : ℝ) * (∑ b : B, if i ∈ b.1 ∧ j ∈ b.1 then (if b.1.card = 1 then 1 else 0) else 0) +
-          (1/2 : ℝ) * pair u i j := by
-        unfold pair mix
-        rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
-        apply Finset.sum_congr rfl; intro b _; split_ifs <;> ring
-      rw [pe, pe, hpw, hpv]
     unfold star
     have hz : ∀ i : A, (∑ j ∈ Finset.univ.erase i, max (pair (mix v) i j - pair (mix w) i j) 0) = 0 := by
       intro i; apply Finset.sum_eq_zero; intro j hj
-      rw [he i j (Finset.ne_of_mem_erase hj).symm]; norm_num
+      have h := hpm i j (Finset.ne_of_mem_erase hj).symm
+      rw [h.1, h.2]; norm_num
     simp only [hz, Finset.sup'_const, mul_zero]
   norm_num only [show (1 : ℝ) - 1/2 = 1/2 by norm_num] at scaling
   obtain ⟨p, P, Q, hp0, hp1, hPw, hQv, eP, eQ⟩ :=
@@ -385,10 +423,16 @@ theorem result : ¬ claim := by
       exact transport _ _ _ _ RQ FP hRQ hFP
   have certificate : Certificate := by
     refine ⟨fun b => ⟨hw b, hv b⟩, hwr, hvr, hH, hJ, htH, htJ, hp, hs,
-      rwR, rvR, rwL, rvL, df, dr, violation, necessary, hsm, dsf, dsr, ?_⟩
-    refine ⟨p, P, Q, hp0, hp1, hPw, hQv, ⟨FP, RP, hFP, hRP⟩,
-      ⟨FQ, RQ, hFQ, hRQ⟩, pubf, pubr, ?_⟩
-    rw [hsm, pubf, pubr]; norm_num
+      rwR, rvR, rwL, rvL,
+      ⟨rf, rd, rdet, ratt, rmin, wr.2.1, vr.2.1, fun k => ⟨wr.2.2 k, vr.2.2 k⟩⟩,
+      ⟨listChoice, ld, ldet, latt, lmin, wl.2.1, vl.2.1, fun k => ⟨wl.2.2 k, vl.2.2 k⟩⟩,
+      df, dr, violation, ?_, necessary, hpm, hsm, dsf, dsr, ?_, ?_⟩
+    · rw [hs, df, dr]; norm_num
+    · rw [hsm, dsf, dsr]; norm_num
+    · refine ⟨p, P, Q, hp0, hp1, hPw, hQv, ⟨FP, RP, hFP, hRP⟩,
+        ⟨FQ, RQ, hFQ, hRQ⟩, pubf, pubr, ?_, ?_⟩
+      · rw [hsm, pubf, pubr]; norm_num
+      · rw [hsm, pubf, pubr]; norm_num
   exact fun h => (not_le_of_gt violation) (h certificate)
 end
 end D5.S3.Estimation.DecisionRisk.CARFourStateReverseObstruction

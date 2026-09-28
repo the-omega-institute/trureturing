@@ -66,7 +66,10 @@ internal sealed class CARFourStateReverseObstructionDocument : IScribeDocumentDe
                         + "every state. For each block, every randomized row is a convex combination "
                         + "of its action costs and is at least their minimum. Choosing a minimizing "
                         + "action at each block forms one deterministic decision kernel attaining "
-                        + "all minima simultaneously. Thus the displayed values are unrestricted "
+                        + "all block minima simultaneously. The certificate exposes one such common "
+                        + "deterministic kernel for each task, together with its block minima, its costs "
+                        + "under both w and v, and optimality against every randomized decision kernel "
+                        + "under both profiles. Thus the displayed values are unrestricted "
                         + "Bayes optima, including at zero-weight blocks.")),
                     new DocumentBlock.DisplayFormula(BayesFormula()),
                     Paragraph(Text("The identification-or-rejection task has actions 0,1,2,3 and reject. "
@@ -172,9 +175,28 @@ internal sealed class CARFourStateReverseObstructionDocument : IScribeDocumentDe
             All(i,I("A"),All(j,I("A"),Implies(Seq(i,Sp,Neq,Sp,j),And(Eqn(Call("pair",w,i,j),Q(4,9)),Eqn(Call("pair",v,i,j),Q(4,9)))))),
             Eqn(R(w,v),D(0)),Eqn(RiskOf(I("rejectLoss"),w),OR(Q(2,9))),Eqn(RiskOf(I("rejectLoss"),v),OR(Q(1,2))),
             Eqn(RiskOf(I("listLoss"),w),OR(Q(2,9))),Eqn(RiskOf(I("listLoss"),v),OR(Q(1,9))),
+            Attainment(I("rejectLoss"),I("rejectMin"),5,Q(2,9),Q(1,2)),
+            Attainment(I("listLoss"),I("listMin"),6,Q(2,9),Q(1,9)),
             Eqn(DR(w,v),OR(Q(1,9))),Eqn(DR(v,w),OR(Q(5,18))),LtF(Bound(w,v),DR(v,w)),
+            Eqn(Sub(TR(DR(v,w)),Call("min",D(1),Add(R(w,v),Mul(D(2),TR(DR(w,v)))))),Q(1,18)),
             All(c,Real(),Implies(LeF(DR(v,w),OR(Mul(c,TR(DR(w,v))))),LeF(Q(5,2),c))),
-            Eqn(R(Mix(w),Mix(v)),D(0)),Eqn(DR(Mix(w),Mix(v)),OR(Q(1,18))),Eqn(DR(Mix(v),Mix(w)),OR(Q(5,36))),PublicClause())));
+            All(i,I("A"),All(j,I("A"),Implies(Seq(i,Sp,Neq,Sp,j),And(
+                Eqn(Call("pair",Mix(w),i,j),Q(2,9)),Eqn(Call("pair",Mix(v),i,j),Q(2,9)))))),
+            Eqn(R(Mix(w),Mix(v)),D(0)),Eqn(DR(Mix(w),Mix(v)),OR(Q(1,18))),Eqn(DR(Mix(v),Mix(w)),OR(Q(5,36))),
+            Eqn(Sub(TR(DR(Mix(v),Mix(w))),Call("min",D(1),Add(R(Mix(w),Mix(v)),Mul(D(2),TR(DR(Mix(w),Mix(v))))))),Q(1,36)),PublicClause())));
+    }
+    private static Formula Attainment(Formula loss,Formula minimum,int n,Formula cw,Formula cv)
+    {
+        Formula b=I("B"),a=I("a"),i=I("i"),f=I("f"),d=I("delta"),k=I("k");
+        Formula blocks=Call("Block",I("A")),actions=Call("Fin",Num(n)),kernel=Call("FiniteMarkovKernel",blocks,actions);
+        Formula BlockCost(Formula action)=>SumOver(Typed(i,I("A")),Mul(Call("pi",i),Ite(Member(i,b),D(1),D(0)),Apply(loss,i,action)));
+        Formula Cost(Formula u,Formula decision)=>Call("finiteBayesCost",I("pi"),loss,Row(u),Call("val",decision));
+        return Some(f,Arrow(blocks,actions),Some(d,kernel,And(
+            All(b,blocks,All(a,actions,Eqn(Apply(Call("val",d),b,a),Ite(Eqn(Apply(f,b),a),D(1),D(0))))),
+            All(b,blocks,Eqn(Apply(minimum,b),BlockCost(Apply(f,b)))),
+            All(b,blocks,All(a,actions,LeF(Apply(minimum,b),BlockCost(a)))),
+            Eqn(Cost(I("w"),d),cw),Eqn(Cost(I("v"),d),cv),
+            All(k,kernel,And(LeF(Cost(I("w"),d),Cost(I("w"),k)),LeF(Cost(I("v"),d),Cost(I("v"),k)))))));
     }
     private static Formula Kernels() => Display(Lines(
         Eqn(Call("H",I("B"),I("C")),Ite(Eqn(Call("card",I("B")),D(1)),Ite(And(Eqn(Call("card",I("C")),D(2)),Call("subset",I("B"),I("C"))),Q(1,3),D(0)),Ite(Eqn(Call("card",I("B")),D(4)),Ite(Eqn(Call("card",I("C")),D(3)),Q(1,4),D(0)),Ite(Eqn(I("B"),I("C")),D(1),D(0))))),
@@ -211,7 +233,8 @@ internal sealed class CARFourStateReverseObstructionDocument : IScribeDocumentDe
         return Some(p,Arrow(I("Seed"),Real()),Some(P,Arrow(I("Seed"),Call("Finpartition",I("A"))),Some(Qp,Arrow(I("Seed"),Call("Finpartition",I("A"))),And(
             All(s,I("Seed"),LeF(D(0),Apply(p,s))),Eqn(SumOver(Typed(s,I("Seed")),Apply(p,s)),D(1)),Profile(P,I("w")),Profile(Qp,I("v")),Channels(P,I("w")),Channels(Qp,I("v")),
             Eqn(FD(Pub(Qp),Pub(P)),OR(Q(1,18))),Eqn(FD(Pub(P),Pub(Qp)),OR(Q(5,36))),
-            LtF(OR(Call("min",D(1),Add(R(Mix(I("w")),Mix(I("v"))),Mul(D(2),TR(FD(Pub(Qp),Pub(P))))))),FD(Pub(P),Pub(Qp)))))));
+            LtF(OR(Call("min",D(1),Add(R(Mix(I("w")),Mix(I("v"))),Mul(D(2),TR(FD(Pub(Qp),Pub(P))))))),FD(Pub(P),Pub(Qp))),
+            Eqn(Sub(TR(FD(Pub(P),Pub(Qp))),Call("min",D(1),Add(R(Mix(I("w")),Mix(I("v"))),Mul(D(2),TR(FD(Pub(Qp),Pub(P))))))),Q(1,36))))));
     }
     private static Formula PublicFormula()=>Display(Lines(
         Eqn(I("Seed"),Product(Call("Option",Call("Block",I("A"))),Call("Option",Call("Block",I("A"))))),
