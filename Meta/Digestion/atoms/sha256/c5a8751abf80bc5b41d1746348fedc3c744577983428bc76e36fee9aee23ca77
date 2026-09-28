@@ -1,0 +1,7 @@
+# Four-cube degree-two sharp repair law
+
+Let `Cube = Bool^4`, `Face = Fin 4 x Bool^3`, and let a binary triangular
+cochain be `F : Face -> ZMod 2`.  Write `weight` for triangular support,
+`d1` for the edge coboundary, and `defects F` for the number of tetrahedra
+where `d2 F` is nonzero.
+
