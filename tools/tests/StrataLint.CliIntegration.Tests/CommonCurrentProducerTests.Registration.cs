@@ -13,6 +13,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
 {
     private const string Invocation = "tools/StrataLint.Cli/Admission/ProductionCliEnvironment.CurrentChecks.cs";
     private const string Verification = "tools/StrataLint.Cli/Runtime/ScribeEmissionVerifier.cs";
+    private const string Timing = "tools/StrataLint.Cli/Admission/AdmissionCheckTiming.cs";
     private const string Producer = "Meta/ReportProducers/scribe-content.json";
     private const string Consumer = "Meta/ReportConsumers/scribe-content.json";
 
@@ -136,7 +137,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             var consumer = JsonNode.Parse(File.ReadAllText(Path.Combine(source, Consumer)))!;
             Write(Consumer, consumer.ToJsonString());
             foreach (var input in consumer["materials"]!.AsArray()
-                .Select(item => item!.GetValue<string>()).Append(Invocation).Append(Verification).Distinct())
+                .Select(item => item!.GetValue<string>()).Append(Invocation).Append(Verification).Append(Timing).Distinct())
                 Write(input, File.ReadAllText(Path.Combine(source, input)));
             // The sparse fixture authors native producer scope explicitly; current
             // reuse continues to consume the actual registered consumer above.
@@ -159,7 +160,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             foreach (var path in projects) Write(path, "<Project />");
             Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(projects.Select(path =>
                 new EngineeringProjectFixture(path, Path.GetFileNameWithoutExtension(path), "test-support", false,
-                    path.Contains("StrataLint.Cli", StringComparison.Ordinal) ? [Invocation, Verification]
+                    path.Contains("StrataLint.Cli", StringComparison.Ordinal) ? [Invocation, Verification, Timing]
                         : path.Contains("Scribe.Documents", StringComparison.Ordinal)
                             ? ["Blueprint/D5/S0/Synthetic/Invocation.scribe.cs", "Blueprint/D5/S0/Synthetic/Other.scribe.cs"] : [])).ToArray()));
             var checks = JsonNode.Parse(CommonCheckRegistrationFixture.Manifest("fixtures/Independent.csproj"))!;
@@ -203,7 +204,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             var project = new XElement("Project", new XAttribute("Sdk", "Microsoft.NET.Sdk"),
                 new XElement("PropertyGroup", new XElement("TargetFramework", "net10.0"), new XElement("OutputType", "Exe"),
                     new XElement("AssemblyName", "StrataLint"), new XElement("ImplicitUsings", "enable"), new XElement("Nullable", "enable")),
-                new XElement("ItemGroup", new[] { Invocation, Verification }.Select(path =>
+                new XElement("ItemGroup", new[] { Invocation, Verification, Timing }.Select(path =>
                     new XElement("Compile", new XAttribute("Include", Path.Combine(Root, path))))),
                 new XElement("ItemGroup", new[] { "StrataLint.ExecutionEvidence", "StrataLint.ResourcePlanning", "StrataLint.InspectionScope", "StrataLint.Engine", "StrataLint.Scribe", "Trureturing.Truth" }.Select(name =>
                     new XElement("Reference", new XAttribute("Include", name),

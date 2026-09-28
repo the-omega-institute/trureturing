@@ -120,10 +120,6 @@ internal sealed partial class ProductionCliEnvironment
                 findings => findings.Any(finding => (finding.Effect ?? admissionEffect) is AdmissionEffect.Block));
     }
 
-    private static bool Blocked(RuleExecutionOutcome outcome) =>
-        outcome is not RuleExecutionOutcome.Completed completed
-        || completed.Capability.Diagnostics.Any(diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block);
-
     private static string RenderPlaneObservations(ImmutableArray<Diagnostic> observations) =>
         observations.IsDefaultOrEmpty ? "" : JsonSerializer.Serialize(new { diagnostics = observations }) + "\n";
 
