@@ -1,0 +1,18 @@
+### proposition 18.2 旧数量观察的双嵌入表达
+
+由于 $x_+-x_-=b\sqrt5$，有
+
+$$
+\varepsilon(x)=\frac{x_+-x_-}{\sqrt5},\qquad
+q_{2,3}(x)=\varepsilon(\theta^3x).
+$$
+
+因此对每个 $j\ge0$，
+
+$$
+q_{2,3}(\theta^j x)
+=\frac{\varphi^{j+3}x_+-\psi^{j+3}x_-}{\sqrt5}.
+$$
+
+这个表达把既有的整数数量响应分解为两个算术谱方向，并没有把原来一个标量观察改成两个独立可取得的实数测量。
+

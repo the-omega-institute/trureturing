@@ -1,0 +1,22 @@
+### proposition 35.2 有限相干态的边界谱
+
+明确选择有限 Hilbert 空间和等权相干叠加，令
+
+$$
+|\Psi_B\rangle=\frac1{\sqrt{|G|}}\sum_{x\in G}|x\rangle|Bx\rangle.
+$$
+
+边界约化态为
+
+$$
+\rho_\partial=\frac{|\ker B|}{|G|}\sum_{y\in\operatorname{im}B}|y\rangle\langle y|,
+$$
+
+所以
+
+$$
+\boxed{S(\rho_\partial)=\log|G|-\log|\ker B|.}
+$$
+
+每个实际边界标签有同样多的内部原像，故偏迹后的非零本征值相等。对方阵而言 $|\ker B|=|\operatorname{coker}B|$，于是同一个整数缺陷同时给出内部混同、边界约束和相对于满边界空间的熵亏损。
+

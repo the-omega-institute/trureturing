@@ -1,0 +1,18 @@
+### theorem 25.2 进位满足接续相容律
+
+$$
+\boxed{
+\kappa_d(a,c)+\kappa_d([a+c]_d,z)
+=
+\kappa_d(c,z)+\kappa_d(a,[c+z]_d).
+}
+$$
+
+**证明。** 两边都等于
+
+$$
+\frac{a+c+z-[a+c+z]_d}{d}.
+$$
+
+所以不同的二元拼接顺序携带相同的总进位。证毕。 $\square$
+

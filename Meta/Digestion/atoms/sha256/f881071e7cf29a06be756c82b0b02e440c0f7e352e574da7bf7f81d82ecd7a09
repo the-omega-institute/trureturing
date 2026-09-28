@@ -1,0 +1,10 @@
+### definition 4.1 数量商
+
+令 $\mathcal G=\mathbb Z\alpha\oplus\mathbb Z\beta$ 为有向组成的自由交换群，指定唯一数量关系
+
+$$
+\beta+\beta\sim_q\alpha+\alpha+\alpha.
+$$
+
+令 $r=3\alpha-2\beta$，并定义 $\mathcal Q=\mathcal G/\mathbb Zr$。这只是选定的观察商，不是原始符号所蕴含的等式。
+

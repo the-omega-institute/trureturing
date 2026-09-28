@@ -1,0 +1,17 @@
+### theorem 11.1 Fibonacci 原子关系模型
+
+上述定义组合出如下链条：
+
+$$
+\text{原始原子树}\xrightarrow{\rho}\text{原始原子树}
+\quad\leadsto\quad
+\mathbb Z^2\xrightarrow{M}\mathbb Z^2,
+\ M^2=M+I,
+$$
+
+$$
+\mathbb Z^2/\langle3\alpha-2\beta\rangle\cong\mathbb Z,
+$$
+
+当前和下一次数量读数恢复组成；正权重无整除损失恰好给出相邻 Fibonacci 权重；两个权重都为素数时只有 $(2,3)$、$(3,5)$，最小选择为 $(2,3)$；已证明为素数的轨道读数可以封装成更高层原子而保持展开后的响应；同一原始语法可以编码有限关系结构，并在另加组合规则后承载函数和递归程序。
+
