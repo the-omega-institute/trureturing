@@ -1921,3 +1921,103 @@ is inferred from it. The inherited strict inequalities already prove `<29`.
 The [finite structural checker](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify.py) and its [exact results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/result.json) verify the ten prefix generators, all70 source-budget vertices under these maps, the280 physical labels, reserve identities, and exact examples of the joint interpolation and continuous edge. The general interpolation and arbitrary-height transport follow from the formulas above. Finite samples do not prove the whole continuous domain.
 
 The program reads only the adjacent pinned source model and writes stdout. Run `python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify.py`. Its ordinary and optimized outputs agree. No geometric maximum is newly computed, no new Lean statement is added, and no all-missing23 or unrestricted Erdős #7 conclusion is asserted.
+
+## A complete query obstructs universal transport to the next row orbit
+
+Keep the same chart, `t1=1/20`, the other t coordinates zero, and `e=0`.
+The closed edge has `z13=u/2,z22=(1-u)/2`, with `0<=u<=1`; the next row
+orbit has representative `z7=1/2`. Both have reserve135/4 and equal total
+comparison mass. Equal total mass does not imply domination of the permitted
+queries. In particular, the following obstruction rules out a universal
+fixed-query transport, while leaving comparison of the full maximum G16 open.
+
+In ternary root1 the retained branches modulo9 are branch4, with leaves13,22
+and removed leaf4, and branch7, with leaves7,16,25. Their zero-extra-depth
+weights are `2/3-z_h` on retained leaves:
+
+| Source | Branch4 mass | Branch7 mass |
+| --- | ---: | ---: |
+| Any point on the closed13/22 edge | 5/6 | 2 |
+| Row7 vertex | 4/3 | 3/2 |
+
+These numbers omit the common quinary factor. After summing the positive
+ternary depths, the full retained weight in a leaf is `1-z_h`. The branch
+masses then become `(3/2,3)` on the closed edge and `(2,5/2)` at row7.
+The zero-depth masses alone must not be used to evaluate a finite cylinder
+query on the whole comparison submeasure.
+
+Define nu to be Haar measure restricted by the completed pure3 and pure5
+families and by the selected15,45,75 anchors. This selected-anchor comparison
+submeasure precedes the7,11,13,17,19,29 deletion kernels; it is not the final
+live law, and other mixed constraints are not imposed here.
+
+Take `K=27*5^8=10546875` and one query phase for each of its36 divisors
+`3^e*5^f`, with `0<=e<=3`, `0<=f<=8`, including the unit divisor. The
+quinary phase is2 modulo5^f. The ternary phase is4 modulo9 when e=2, and0
+modulo3^e otherwise, with no restriction when e=0. CRT combines these into
+one phase per numerical divisor. They are legal complete-query phases and do
+not replace the original covering phases.
+
+On the common carrier C, the e=1 and e=3 terms vanish. Put
+
+    M(x5)=sum_(f=0..8) 1_(x5=2 mod5^f),       1<=M<=9.
+
+The exact load and hinge are
+
+    Q(x)=M(x5)*(1+1_(x3=4 mod9)),
+    (Q(x)-16)_+=2*1_(x3=4 mod9)*1_(x5=2 mod5^8).
+
+Indeed M=9 precisely on the displayed deepest5-cylinder, and otherwise the
+load is at most16. The pure5 tail and selected75 hole lie in column1; column2
+is retained. The selected15,45,75 holes all lie in ternary root2, so none
+meets the root1 support of this hinge. The full retained branch4 masses give
+
+    integral (Q-16)_+ dnu_edge = 3/K,
+    integral (Q-16)_+ dnu_7    = 4/K.
+
+Thus one legal complete query at the target threshold has strictly larger
+readout at row7 than at every point on the certified edge. This does not
+compare the maxima over all queries: the closed edge has more mass in
+branch7, where a different query can have a larger readout. Nor does it
+evaluate the final G16, which also contains all current losses and later
+charged fields. It excludes the universal fixed-query domination that would
+otherwise have been used to transfer the source certificate without an
+additional argument.
+
+### The excluded positive transports
+
+Every tree automorphism preserving the named anchor leaf4 also preserves its
+parent branch4. A convex mixture of these automorphisms cannot increase its
+zero-depth mass from5/6 to4/3. Even if the removed leaf were initially allowed
+to move, the unique zero leaf and positivity force each automorphism in an
+exact mixture to put it back at4, with the same obstruction.
+
+A broader, explicitly restricted matrix class fails too. On the six leaves
+`(4,13,22,7,16,25)` at one fixed quinary coordinate, suppose P is nonnegative,
+has column sums1 and row sums at most1, and its pullback of the branch4
+indicator is constant on each source9 branch. The row-sum bound expresses
+that a27-leaf query pulls back to a subconvex combination of27-leaf queries;
+the last condition retains the9-cylinder type without splitting its leaves.
+
+Since P is square, all its row sums equal1. Let a be any closed-edge weight
+vector and b the row7 vector, both using the zero-depth weights above. If
+`b=P*a`, the unique zero of a and `b_4=0` force `P_(4,4)=1`. Consequently
+`P^T*1_branch4` is1 at source leaf4 and hence, by the branch-constancy
+condition, on all three leaves of its branch. Its total is3 by the row sums,
+so nonnegativity makes it zero on the other branch. Therefore
+
+    sum_branch4 b = sum_branch4 a = 5/6,
+
+contradicting the target mass4/3. A pointwise bound `b<=P*a` also fails: the
+total masses agree, so mass preservation would force equality. These are
+conditions on this proposed transport class, not necessary conditions on all
+possible proofs about G16. In particular, an estimate using the actual joint
+loss/query coefficients may still work without such a source transport.
+
+The [exact complete-query check](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/verify-row7.py)
+and [rational results](../../../frontier/cover-geometry/finite-prefix-sources/missing23-source-vertices/row7.json)
+check the36 CRT labels, all18 combinations of M and branch membership, the
+branch masses, and the strict integral difference1/K. The program writes only
+stdout and reads no external files. Its ordinary and optimized outputs agree.
+No geometry is evaluated. The general identities and matrix obstruction are
+proved above; neither a new source vertex nor a new Lean result is claimed.
