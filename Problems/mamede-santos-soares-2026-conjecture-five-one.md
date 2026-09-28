@@ -57,6 +57,15 @@ It identifies the peeled runs with `spikes` and proves weakly decreasing
 segment lengths for a first extremum. Reversal gives the last-letter cases.
 This is a source-only result; it does not close the source adapter or change KPI.
 
+`MamedeEndpointUniqueness.symmetric_excursion_outer_empty` proves the
+reducedness obstruction for an actual central word that descends from `M` to
+`m` and ascends back to `M`. When both outer factors use only interior
+generators, consecutiveness forces `M-1` on their adjacent ends; the central
+product swaps the two exterior positions and commutes with that generator,
+so the bracketing copies cancel. Hence at least one outer factor is empty.
+This theorem does not assume either endpoint equation and does not extract
+the central factorization from them. KPI remains 0.
+
 `MamedeFactorSeparation.source_shape_unique_of_j_lt_i` supplies the
 factor-separation step of Proposition 3.7: under `1<=m<j<i<M<=n`, equal-product
 reduced consecutive words with the two actual first-orientation source shapes
@@ -83,13 +92,15 @@ source excludes the opposite extremal position map; the paper's Lemma 3.6
 obtains the needed strict internal endpoint and the map to `j+1` with `j<M`.
 The endpoint theorem alone cannot discharge that map exclusion: its attained
 extremal endpoint premise has not been derived from the two opposite maps.
-The remaining direct route must align the forced full ascending and descending
-runs. When both outer factors are nonempty, their common boundary generator
-would bracket a full symmetric excursion. A proof must show that this factor
-can be shortened (or repeats a pair crossing), contradicting the actual
-minimal-length `reducedWord` premise. Neither that alignment and cancellation
-bridge nor the exact opposite-map consumer has been compiled. Freeze, gate,
-and PR admission are therefore withheld for this checkpoint.
+The remaining direct obligation is to derive the two full runs from those
+maps, align their shared extreme occurrence into one of the two symmetric
+central factorizations, and prove that each outer factor has interior support.
+The compiled cancellation theorem handles the descent-then-ascent
+factorization once supplied; the ascent-then-descent form also needs its
+reflected application. Only then can an empty outer factor give an attained
+extremum at a word endpoint for `extremal_endpoint_oscillation`. That
+opposite-map consumer has not been compiled. Freeze, gate, and PR admission
+are withheld for this checkpoint.
 The class-to-word correspondence and the paper's upper bound still require
 formal justification in this adjacent-word model before the full conjecture
 can be claimed. Research target: [#10285](https://github.com/the-omega-institute/trureturing/issues/10285).

@@ -135,6 +135,18 @@ only the endpoint-to-oscillation direction of Lemma 3.2. The reverse direction
 and the bridge from two opposite extremal position maps to an extremal word
 endpoint remain unproved.
 
+`MamedeEndpointUniqueness.symmetric_excursion_outer_empty` proves one
+independent part of that bridge. For `1<=m<M<=n`, write the symmetric central
+word as the descent `M,...,m` followed by the ascent `m+1,...,M`. If a reduced
+consecutive word is `p` followed by this central word and then `q`, and every
+letter of `p` and `q` lies strictly between `m` and `M`, then `p=[]` or
+`q=[]`. The proof calculates that the central product swaps only positions
+`m` and `M+1`. Nonempty factors must both meet the central word at `M-1`;
+these swaps commute through the central product and cancel, contradicting
+minimal length. This is a repository-derived theorem and does not assume the
+paper's symmetric-factor exclusion. The opposite endpoint equations have
+not yet been shown to force this central factorization or its reflected form.
+
 `MamedeEndpointUniqueness.extremal_endpoint_unique` compares two reduced
 consecutive words with equal permutation products. If their first letters
 are the same common minimum or maximum, the words are equal; the same holds

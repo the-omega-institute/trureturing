@@ -777,8 +777,228 @@ theorem extremal_endpoint_unique (n k : Nat) (a b : List Nat)
       (by simpa only [List.head?_reverse] using hlast_b) hrevext
     exact List.reverse_injective hrev
 
+/-- The full excursion down to the smallest generator and back swaps just its
+    two exterior positions. -/
+private theorem symmetric_excursion_product (n m M : Nat)
+    (hm : 1 ≤ m) (hmM : m ≤ M) (hMn : M ≤ n) :
+    wordProduct n (descending M m ++
+      (List.range (M - m)).map (m + 1 + ·)) =
+      Equiv.swap (position n m) (position n (M + 1)) := by
+  have pos_val (t : Nat) (ht : 1 ≤ t ∧ t ≤ n + 1) :
+      (position n t).val = t - 1 := by
+    simp [position, Nat.mod_eq_of_lt (show t - 1 < n + 1 by omega)]
+  have desc_step (lo hi : Nat) (h : lo < hi) :
+      descending hi lo = hi :: descending (hi - 1) lo := by
+    have hn : hi - lo + 1 = ((hi - 1) - lo + 1) + 1 := by omega
+    unfold descending
+    rw [hn, List.range_succ_eq_map]
+    simp only [List.map_cons, Nat.sub_zero, List.map_map]
+    congr 1
+    apply List.map_congr_left
+    intro k hk
+    have hk' := List.mem_range.mp hk
+    simp only [Function.comp_apply, Nat.succ_eq_add_one]
+    omega
+  have tail_last (lo hi : Nat) (h : lo < hi) :
+      (List.range (hi - lo)).map (lo + 1 + ·) =
+        (List.range (hi - 1 - lo)).map (lo + 1 + ·) ++ [hi] := by
+    rw [show hi - lo = (hi - 1 - lo) + 1 by omega,
+      List.range_succ, List.map_append]
+    simp only [List.map_singleton]
+    congr 1
+    simp only [List.cons.injEq, and_true]
+    omega
+  induction M using Nat.strong_induction_on with
+  | h M ih =>
+    by_cases heq : M = m
+    · subst M
+      have hdesc : descending m m = [m] := by simp [descending]
+      rw [hdesc, Nat.sub_self]
+      simp only [List.range_zero, List.map_nil, List.append_nil]
+      simp [wordProduct, adjacent, position]
+    · have hlt : m < M := by omega
+      have hprev' : m ≤ M - 1 := by omega
+      have hprev := ih (M - 1) (by omega) hprev' (by omega)
+      have hadj : adjacent n M =
+          Equiv.swap (position n M) (position n (M + 1)) := by
+        simp [adjacent, position]
+      have hfix : (Equiv.swap (position n M) (position n (M + 1)))
+          (position n m) = position n m := by
+        apply Equiv.swap_apply_of_ne_of_ne
+        · intro h; have := congrArg Fin.val h
+          rw [pos_val m ⟨hm, by omega⟩,
+            pos_val M ⟨by omega, by omega⟩] at this
+          omega
+        · intro h; have := congrArg Fin.val h
+          rw [pos_val m ⟨hm, by omega⟩,
+            pos_val (M + 1) ⟨by omega, by omega⟩] at this
+          omega
+      calc
+        wordProduct n (descending M m ++
+            (List.range (M - m)).map (m + 1 + ·)) =
+            adjacent n M *
+              wordProduct n (descending (M - 1) m ++
+                (List.range (M - 1 - m)).map (m + 1 + ·)) * adjacent n M := by
+                  rw [desc_step m M hlt, tail_last m M hlt]
+                  simp [wordProduct, List.map_append, List.prod_append, mul_assoc]
+        _ = Equiv.swap (position n m) (position n (M + 1)) := by
+          rw [hprev, show M - 1 + 1 = M by omega, hadj]
+          conv_lhs => arg 1; rw [Equiv.mul_swap_eq_swap_mul]
+          rw [hfix, Equiv.swap_apply_left]
+          simp
+
+/-- A symmetric excursion cannot be bracketed by the same interior generator
+    in a reduced word: the two boundary swaps cancel through its product. -/
+private theorem symmetric_excursion_not_reduced (n m M : Nat) (p q : List Nat)
+    (hm : 1 ≤ m) (hgap : m + 1 < M) (hMn : M ≤ n)
+    (hp : p.getLast? = some (M - 1))
+    (hq : q.head? = some (M - 1)) :
+    ¬ reducedWord n
+      (p ++ (descending M m ++ (List.range (M - m)).map (m + 1 + ·)) ++ q) := by
+  let E := descending M m ++ (List.range (M - m)).map (m + 1 + ·)
+  let k := M - 1
+  have hpEq : p.dropLast ++ [k] = p :=
+    List.dropLast_append_getLast? k (by simp [k, hp])
+  obtain ⟨s, hqEq⟩ : ∃ s, q = k :: s := by
+    cases q with
+    | nil => simp at hq
+    | cons t s =>
+      have ht : t = k := by simpa [k] using hq
+      exact ⟨s, by simp [ht]⟩
+  have pos_val (t : Nat) (ht : 1 ≤ t ∧ t ≤ n + 1) :
+      (position n t).val = t - 1 := by
+    simp [position, Nat.mod_eq_of_lt (show t - 1 < n + 1 by omega)]
+  have fix_inner (t : Nat) (ht : m < t ∧ t < M + 1) :
+      (Equiv.swap (position n m) (position n (M + 1))) (position n t) =
+        position n t := by
+    apply Equiv.swap_apply_of_ne_of_ne
+    · intro h; have := congrArg Fin.val h
+      rw [pos_val t ⟨by omega, by omega⟩,
+        pos_val m ⟨hm, by omega⟩] at this
+      omega
+    · intro h; have := congrArg Fin.val h
+      rw [pos_val t ⟨by omega, by omega⟩,
+        pos_val (M + 1) ⟨by omega, by omega⟩] at this
+      omega
+  have hcomm : wordProduct n E * adjacent n k =
+      adjacent n k * wordProduct n E := by
+    have hadj : adjacent n k = Equiv.swap (position n k) (position n (k + 1)) := by
+      simp [adjacent, position]
+    rw [symmetric_excursion_product n m M hm (by omega) hMn, hadj,
+      Equiv.mul_swap_eq_swap_mul]
+    rw [fix_inner k (by dsimp [k]; omega),
+      fix_inner (k + 1) (by dsimp [k]; omega)]
+  intro hr
+  let r := p.dropLast
+  have hv : validWord n (r ++ E ++ s) := by
+    intro t ht
+    have hmem : t ∈ p ++ E ++ q := by
+      rw [← hpEq, hqEq]
+      simp only [List.mem_append, List.mem_cons] at ht ⊢
+      tauto
+    exact hr.1 t (by simpa [E] using hmem)
+  have heq : wordProduct n (r ++ E ++ s) = wordProduct n (p ++ E ++ q) := by
+    rw [← hpEq, hqEq]
+    simp only [wordProduct, List.map_append, List.prod_append,
+      List.map_cons, List.prod_cons]
+    change wordProduct n r * wordProduct n E * wordProduct n s =
+      wordProduct n r * adjacent n k * wordProduct n E *
+        adjacent n k * wordProduct n s
+    symm
+    calc
+      wordProduct n r * adjacent n k * wordProduct n E *
+          adjacent n k * wordProduct n s =
+          wordProduct n r * (adjacent n k * wordProduct n E) *
+            adjacent n k * wordProduct n s := by group
+      _ = wordProduct n r * (wordProduct n E * adjacent n k) *
+            adjacent n k * wordProduct n s := by rw [← hcomm]
+      _ = wordProduct n r * wordProduct n E * wordProduct n s := by
+            simp [adjacent, mul_assoc]
+  have hmin : (p ++ E ++ q).length ≤ (r ++ E ++ s).length :=
+    hr.2 (r ++ E ++ s) hv (by simpa [E] using heq)
+  rw [← hpEq, hqEq] at hmin
+  simp only [List.length_append, List.length_cons] at hmin
+  dsimp [r] at hmin
+  omega
+
+/-- A reduced consecutive word containing the full symmetric excursion cannot
+    have interior letters on both sides of that excursion. -/
+theorem symmetric_excursion_outer_empty (n m M : Nat) (p q : List Nat)
+    (hm : 1 ≤ m) (hmM : m < M) (hMn : M ≤ n)
+    (hp : ∀ k ∈ p, m < k ∧ k < M)
+    (hq : ∀ k ∈ q, m < k ∧ k < M)
+    (hr : reducedWord n
+      (p ++ (descending M m ++ (List.range (M - m)).map (m + 1 + ·)) ++ q))
+    (hc : consecutive
+      (p ++ (descending M m ++ (List.range (M - m)).map (m + 1 + ·)) ++ q)) :
+    p = [] ∨ q = [] := by
+  by_cases hpn : p = []
+  · exact Or.inl hpn
+  by_cases hqn : q = []
+  · exact Or.inr hqn
+  let E := descending M m ++ (List.range (M - m)).map (m + 1 + ·)
+  have hgap : m + 1 < M := by
+    have hx := hp (p.getLast hpn) (List.getLast_mem hpn)
+    omega
+  have desc_step : descending M m = M :: descending (M - 1) m := by
+    have hn : M - m + 1 = ((M - 1) - m + 1) + 1 := by omega
+    unfold descending
+    rw [hn, List.range_succ_eq_map]
+    simp only [List.map_cons, Nat.sub_zero, List.map_map]
+    congr 1
+    apply List.map_congr_left
+    intro k hk
+    have hk' := List.mem_range.mp hk
+    simp only [Function.comp_apply, Nat.succ_eq_add_one]
+    omega
+  have hEhead : ∃ u, E = M :: u := by
+    refine ⟨descending (M - 1) m ++ (List.range (M - m)).map (m + 1 + ·), ?_⟩
+    simp [E, desc_step]
+  have hEend : ∃ u, E = u ++ [M] := by
+    let tail := (List.range ((M - 1) - m)).map (m + 1 + ·)
+    have ht : (List.range (M - m)).map (m + 1 + ·) = tail ++ [M] := by
+      dsimp [tail]
+      rw [show M - m = (M - 1 - m) + 1 by omega,
+        List.range_succ, List.map_append]
+      simp only [List.map_singleton]
+      congr 1
+      simp only [List.cons.injEq, and_true]
+      omega
+    refine ⟨descending M m ++ tail, ?_⟩
+    simp [E, ht, List.append_assoc]
+  have hc' : (p ++ E ++ q).IsChain (fun x y => x + 1 = y ∨ y + 1 = x) :=
+    (chain _).mp hc
+  obtain ⟨u, hu⟩ := hEhead
+  have hrelp : (p.getLast hpn) + 1 = M ∨ M + 1 = p.getLast hpn := by
+    have h : (p ++ (E ++ q)).IsChain (fun x y => x + 1 = y ∨ y + 1 = x) := by
+      simpa only [List.append_assoc] using hc'
+    have hboundary := h.rel_getLast_head_of_append hpn (by rw [hu]; simp)
+    simpa [hu] using hboundary
+  have hlast : p.getLast hpn = M - 1 := by
+    have hb := hp (p.getLast hpn) (List.getLast_mem hpn)
+    omega
+  have hpOpt : p.getLast? = some (M - 1) := by
+    conv_lhs => rw [← List.dropLast_append_getLast hpn]
+    simp [hlast]
+  cases q with
+  | nil => contradiction
+  | cons t s =>
+    obtain ⟨v, hv⟩ := hEend
+    have hrelq : M + 1 = t ∨ t + 1 = M := by
+      have h : ((p ++ E) ++ (t :: s)).IsChain
+          (fun x y => x + 1 = y ∨ y + 1 = x) := by
+        simpa only [List.append_assoc] using hc'
+      have hboundary := h.rel_getLast_head_of_append (by rw [hv]; simp) (by simp)
+      simpa [hv, List.append_assoc] using hboundary
+    have ht : t = M - 1 := by
+      have hb := hq t (by simp)
+      omega
+    exact ((symmetric_excursion_not_reduced n m M p (t :: s) hm hgap hMn
+      hpOpt (by simp [ht])) hr).elim
+
 #print axioms maximum_peel
 #print axioms extremal_endpoint_oscillation
 #print axioms extremal_endpoint_unique
+#print axioms symmetric_excursion_outer_empty
 
 end D5.S1.Words.Permutations.MamedeEndpointUniqueness

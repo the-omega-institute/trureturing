@@ -60,6 +60,29 @@ internal sealed class MamedeEndpointUniquenessDocument : IScribeDocumentDefiniti
                 + "from two opposite position maps."))),
             DescribeRole.Theorem),
         Describe.Lean(
+            DescribeId.Create("mamede-symmetric-excursion-outer-empty"),
+            DeclarationHandle.Create(
+                "D5/S1/Words/Permutations/MamedeEndpointUniqueness.symmetric_excursion_outer_empty"),
+            H("No two exterior factors around a symmetric excursion"),
+            StatementSource.FromAuthor(Disp(Q(
+                Call("ReducedConsecutiveSymmetricExcursion", V("n"), V("m"), V("M"),
+                    V("p"), V("q")), Land,
+                Call("InteriorSupport", V("m"), V("M"), V("p"), V("q")),
+                Implies, V("p"), Eq, Call("EmptyWord"), Lor,
+                V("q"), Eq, Call("EmptyWord")))),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "Let 1<=m<M<=n and let the middle word descend from M to m, then "
+                + "ascend from m+1 to M. If p and q contain only generators strictly "
+                + "between m and M, and the combined word is reduced and consecutive, "
+                + "then p or q is empty. The middle product swaps positions m and M+1 "
+                + "and fixes the interior. When both factors are nonempty, consecutiveness "
+                + "forces generator M-1 at both boundaries; the two copies commute through "
+                + "the middle product and cancel, contradicting reducedness. This is an "
+                + "unbounded source theorem. It does not derive the displayed factorization "
+                + "from opposite endpoint maps or prove their oscillation consequence."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
             DescribeId.Create("mamede-extremal-endpoint-uniqueness"),
             DeclarationHandle.Create(
                 "D5/S1/Words/Permutations/MamedeEndpointUniqueness.extremal_endpoint_unique"),

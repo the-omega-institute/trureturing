@@ -260,4 +260,114 @@ register_information_theorem extremal_endpoint_oscillation in arena
 
 end EndpointOscillation
 
+namespace SymmetricExcursion
+
+private theorem sample_reduced : reducedWord 3 [2, 3, 2, 1, 2, 3] := by
+  refine ⟨by simp [validWord], ?_⟩
+  intro v hv hp
+  by_contra hn
+  have hl : v.length ≤ 5 := by simp only [List.length_cons, List.length_nil] at hn; omega
+  rcases v with _ | ⟨a, _ | ⟨b, _ | ⟨c, _ | ⟨d, _ | ⟨e, _ | ⟨f, tail⟩⟩⟩⟩⟩⟩
+  · revert hp; decide
+  · obtain ⟨ha0, ha1⟩ := hv a (by simp)
+    interval_cases a <;> revert hp <;> decide
+  · obtain ⟨ha0, ha1⟩ := hv a (by simp)
+    obtain ⟨hb0, hb1⟩ := hv b (by simp)
+    interval_cases a <;> interval_cases b <;> revert hp <;> decide
+  · obtain ⟨ha0, ha1⟩ := hv a (by simp)
+    obtain ⟨hb0, hb1⟩ := hv b (by simp)
+    obtain ⟨hc0, hc1⟩ := hv c (by simp)
+    interval_cases a <;> interval_cases b <;> interval_cases c <;> revert hp <;> decide
+  · obtain ⟨ha0, ha1⟩ := hv a (by simp)
+    obtain ⟨hb0, hb1⟩ := hv b (by simp)
+    obtain ⟨hc0, hc1⟩ := hv c (by simp)
+    obtain ⟨hd0, hd1⟩ := hv d (by simp)
+    interval_cases a <;> interval_cases b <;> interval_cases c <;>
+      interval_cases d <;> revert hp <;> decide
+  · obtain ⟨ha0, ha1⟩ := hv a (by simp)
+    obtain ⟨hb0, hb1⟩ := hv b (by simp)
+    obtain ⟨hc0, hc1⟩ := hv c (by simp)
+    obtain ⟨hd0, hd1⟩ := hv d (by simp)
+    obtain ⟨he0, he1⟩ := hv e (by simp)
+    interval_cases a <;> interval_cases b <;> interval_cases c <;>
+      interval_cases d <;> interval_cases e <;> revert hp <;> decide
+  · simp only [List.length_cons] at hl
+    omega
+
+abbrev signature : Signature where
+  Params := Σ _ : Nat, Σ _ : Nat, Σ _ : Nat, List Nat
+  State _ := List Nat
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ q => q) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => [2]) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law r := ∀ (n m M : Nat) (p q : List Nat)
+      (_hm : 1 ≤ m) (_hmM : m < M) (_hMn : M ≤ n)
+      (_hp : ∀ k ∈ p, m < k ∧ k < M)
+      (_hq : ∀ k ∈ q, m < k ∧ k < M)
+      (_hr : reducedWord n
+        (p ++ (descending M m ++ (List.range (M - m)).map (m + 1 + ·)) ++ q))
+      (_hc : consecutive
+        (p ++ (descending M m ++ (List.range (M - m)).map (m + 1 + ·)) ++ q)),
+    p = [] ∨ r.readout () ⟨n, m, M, p⟩ q = []
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 3 1 3 [2] [] (by decide) (by decide) (by decide)
+    (by simp) (by simp) (by change reducedWord 3 [2, 3, 2, 1, 2, 3]; exact sample_reduced)
+    (by change consecutive [2, 3, 2, 1, 2, 3]; simp [consecutive])
+  simp [rejected, realize] at hh
+
+theorem sensitivity : Sensitivity arena actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    intro j hji
+    cases i
+    cases j
+    exact (hji rfl).elim
+  · intro i
+    exact nomatch i
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  exact ⟨⟨0, 0, 0, []⟩, [], [1], by decide⟩
+
+def registration : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨symmetric_excursion_outer_empty, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+
+register_information_theorem symmetric_excursion_outer_empty in arena
+  readout via (realize signature
+    (fun _ _ q => q) (fun e => nomatch e))
+  realizes registration
+  escape from source ({
+    owner := `D5.S1.Words.Permutations.MamedeEndpointUniqueness
+    coordinates := #[0, 1, 2, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body",
+        "arg", "fn", "arg"]
+      stateBinder := 4 }] })
+  escape continues (open)
+
+#print axioms registration
+
+end SymmetricExcursion
+
 end Reg.D5.S1.Words.Permutations.MamedeEndpointUniqueness
