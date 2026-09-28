@@ -69,6 +69,8 @@ internal sealed class TwoLayerSolidPartitionsDocument : IScribeDocumentDefinitio
     private static Formula Count(Formula variable, Formula condition) =>
         new Formula.Absolute(Seq(OpenBrace, variable, Sp, Mid, Sp, condition, CloseBrace));
     private static Formula Solid(Formula size, Formula cells) => Call("IsSolidPartition", size, cells);
+    private static Formula AsInt(Formula value) =>
+        Seq(Open, value, Colon, Sp, new Formula.Integers(), Close);
 
     private static Formula PlaneFormula()
     {
@@ -88,16 +90,16 @@ internal sealed class TwoLayerSolidPartitionsDocument : IScribeDocumentDefinitio
         Formula n = F.Id("n"), first = F.Id("P1"), second = F.Id("P2");
         Formula pair = Seq(Open, first, Comma, Sp, second, Close);
         return Disp(Equal(Call("a", n), Count(pair,
-            And(And(Solid(n, first), Solid(D(3), second)), SubsetOf(second, first)))));
+            And(Solid(n, first), And(Solid(D(3), second), SubsetOf(second, first))))));
     }
 
     private static Formula ClaimFormula()
     {
         Formula n = F.Id("n");
-        Formula partitions = new Formula.Absolute(Call("Partition", n));
-        Formula inner = Add(Subtract(Subtract(Times(D(2), Call("planeCount", n)), Call("twoRowCount", n)),
-            Times(D(2), partitions)), D(1));
+        Formula partitions = AsInt(new Formula.Absolute(Call("Partition", n)));
+        Formula inner = Add(Subtract(Subtract(Times(D(2), AsInt(Call("planeCount", n))),
+            AsInt(Call("twoRowCount", n))), Times(D(2), partitions)), D(1));
         return Disp(Iff(F.Id("claim"), All("n", Naturals(),
-            Equal(Call("a", n), Times(D(3), Parenthesized(inner))))));
+            Equal(AsInt(Call("a", n)), Times(D(3), Parenthesized(inner))))));
     }
 }
