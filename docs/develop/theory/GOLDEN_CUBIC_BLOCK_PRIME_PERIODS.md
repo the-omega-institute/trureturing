@@ -988,3 +988,26 @@ identity and strict growth from index two imply $n\mid t$. The
 order-of-a-power identity then forces the order of $\phi$ to be $4n$.
 The faithful golden multiplication matrix identifies that order with
 the order of $Q$.
+## 追加锚（本行以下为增补区）
+
+## 21. Primary associates in the Eisenstein order
+
+Let $E=\mathbb Z[\omega]$, where $\omega^2+\omega+1=0$, and write
+$N(a+b\omega)=a^2-ab+b^2$. An element is *primary* when it is congruent
+to $1$ modulo $3E$.
+
+**Theorem 21.1 (primary associate normalization).** If $z\in E$ has
+$N(z)\equiv1\pmod3$, then there is a unit $u\in E$ with $N(u)=1$ and
+
+$$
+uz\equiv1\pmod{3E}.
+$$
+
+Proof. Modulo $3$, the norm form is $(a+b)^2$. Its value is $1$ exactly
+on the six residue pairs $(1,0)$, $(2,0)$, $(0,1)$, $(0,2)$, $(1,1)$,
+and $(2,2)$. These are precisely the residues of the six units
+$\pm1$, $\pm\omega$, and $\pm(1+\omega)$; each has norm $1$. Choose
+the inverse of the unit with the same residue as $z$. Its product with
+$z$ is $1$ modulo $3E$ and its norm is $1$.
+
+## 追加锚（本行以下为增补区）
