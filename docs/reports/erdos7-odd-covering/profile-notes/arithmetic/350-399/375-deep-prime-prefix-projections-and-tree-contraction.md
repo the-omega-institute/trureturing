@@ -952,3 +952,205 @@ inventory gives intermediate upper bounds. LM10 concerns the final
 coarse bound after replacing every possible (a,e,s) by inventory
 capacity. It proves no domination for LM11, supplies no missing common
 source distribution, and settles no unrestricted covering assertion.
+
+### 9.6. Complement size and scalar support-rank bounds cannot close the coarse comparison
+
+Continue with the SAME p>q setup and extremal assumptions of section9.5.
+Write N=p^H M=Q/q^G for the complete q-free carrier, let n_q be the
+actual number of q-free originals, and abbreviate the normalized coarse
+upper endpoint by
+
+    B=tau(M)*(sum_(a=0..H)p^(-a))*(sum_(e=1..G)q^(-e)).
+
+Then LM8 gives |L|/p^H<=B. The residual R_q is nonempty: otherwise
+the q-free originals alone would form a smaller whole cover.
+Divisor closure and at least three support primes ensure that the
+q-free originals include at least two distinct prime moduli. In
+particular n_q>=2. These facts retain the actual original labels;
+n_q is not replaced by a completed inventory count.
+
+**The cyclic complement bound is already published.** Sambale and
+Tărnăuceanu, [*On the size of coset unions*](https://doi.org/10.1007/s10801-021-01079-x),
+J. Algebraic Combin.55 (2022),979--987, state on page986 that a nonempty
+complement of n cosets in a finite cyclic group has relative size at
+least 2^(-n), using their Lemma4 and the cyclic prime-power extension
+of Theorem6. The same paper's general finite-group bound in Proposition2
+is 1/(2*n!). Sambale's [September2026 preprint](https://arxiv.org/abs/2609.09052v1),
+Theorem1, gives at most 2^n translates of the complement for arbitrary
+groups, hence the same cardinal bound for finite groups. The latter is
+a broader group theorem, not a newly available cyclic bound here.
+All these complement statements require nonemptiness; applying them
+to the entire original family without that premise would assume the
+noncoverage conclusion being sought.
+
+For R_q the published cyclic result supplies
+
+    |R_q|>=N/2^(n_q),
+    |L|>=ceil(p^H/2^(n_q)).                         (LM12)
+
+The second formula includes both integer steps: |L|>=ceil(|R_q|/M)
+and ceil(ceil(N/d)/M)=ceil(p^H/d) for positive integer d. The supplied
+unrounded numerical density lower bound is at most 1/4 because n_q>=2.
+This is NOT an upper bound on the actual density of R_q.
+
+**Even cancellation-sensitive Fourier support has an obstruction.**
+Let f be ANY nonzero complex function on Z/N supported inside R_q,
+and let rho be the cardinality of its actual Fourier support. Standard
+support uncertainty gives
+
+    |R_q|>=|supp f|>=N/rho,
+    |L|>=ceil(p^H/rho).                             (LM13)
+
+For example, [Borello--Willems--Zini, Theorem2.4 and Remark2.5](https://arxiv.org/abs/2202.12621v1)
+give the support-times-convolution-rank inequality; over the complex
+cyclic group that rank is rho. The nonzero hypothesis is essential.
+This is reuse of the standard uncertainty bound, not a new such theorem.
+
+The following elementary frequency-line argument applies to every
+choice of f, including weights chosen after all original phases are
+known. If f vanishes on one full congruence class a_l mod l for each
+of k DISTINCT primes l dividing N, then
+
+    |supp(fhat)|>=2^k.                              (LM14)
+
+To see this at arbitrary prime-power heights, use the inverse Fourier
+expansion f(x)=sum_v fhat(v)*exp(2*pi*i*v*x/N). Restrict to x=a_l+l*t.
+Uniqueness of the Fourier expansion on Z/(N/l) gives, for each b mod N/l,
+
+    sum_(j=0..l-1) fhat(b+j*N/l)*exp(2*pi*i*j*a_l/l)=0.
+
+All exponential weights are nonzero. Thus every occupied frequency
+line b+<N/l> contains at least two support points. The subgroups
+<N/l> have pairwise coprime orders l; their sum is a direct product
+of k cyclic groups, even when l^2 divides N. Partition the frequency
+carrier into cosets of this sum. In any occupied coset, the support
+is a subset of that product with no singleton coordinate line.
+
+Such a subset has at least 2^k points. Induct on k. An occupied line
+in the last coordinate gives at least two nonempty slices with that
+coordinate fixed. Within each slice the other k-1 line conditions
+still hold, so each has at least 2^(k-1) points. This proves LM14.
+It is the elementary support bound for a product of single parity
+constraints. It is sharp for these vanishing conditions alone:
+
+    f_0(x)=product_l (1-exp(2*pi*i*(x-a_l)/l))
+
+has exactly 2^k Fourier frequencies. The direct product of the
+frequency subgroups makes all its subset frequencies distinct, and
+all their coefficients are nonzero. This sharpness example asserts
+no support inside the actual R_q when further originals are present.
+
+If s is the original number of support primes, its q-free subfamily
+contains the actual prime class for each of the other s-1 primes.
+Every function in LM13 vanishes on all these classes. Therefore
+
+    rho>=2^(s-1)>=4.                                (LM15)
+
+In particular, optimizing phases, cancellations, or the supported
+weighting f cannot make the scalar guarantee 1/rho exceed 1/4 in
+this setup. This lower bound on rho does not equate Fourier support
+with a list of possible frequencies. For the common choice
+
+    f(x)=product_(d in D_q)(1-exp(2*pi*i*(x-a_d)/d)),
+
+where D_q is the actual q-free numerical inventory, the support of
+f is exactly R_q and its Fourier support is CONTAINED in the nominal
+subset-frequency set
+
+    S_q={sum_(d in E) N/d mod N: E subset D_q}.
+
+Collisions can cancel, so rho<=|S_q| need not be equality. LM15
+controls the actual rho after cancellation as well. A weaker use
+of 1/|S_q| or 2^(-n_q) consequently cannot improve the conclusion.
+
+**The obstruction survives exact projection rounding.** The elementary
+inventory comparison in section9.5 in fact gives
+
+    B>1/4+1/p.                                     (LM16)
+
+For p>=7, its same Bertrand induction gives tau(M)>=(p+1)/4, and
+distinct odd primes have q<=p-2. Hence
+
+    B>=(p+1)^2/(4*p*q)
+      >=(p+1)^2/(4*p*(p-2))>1/4+1/p,
+
+where the last numerator difference is
+`(p+1)^2-(p-2)*(p+4)=9`. For p=5, q=3 and a third support prime
+give tau(M)>=2 and B>=4/5, which also proves LM16.
+
+Every denominator in LM12--LM13 is at least 4. Since p^H is an
+integer and H>=1, the strongest numerical projection lower bound
+that these inequalities can supply satisfies
+
+    ceil(p^H/4)/p^H <=1/4+3/(4*p^H)
+                      <=1/4+3/(4*p)<B.             (LM17)
+
+Thus none contradicts the coarse LM8 upper endpoint, even after
+rounding the lower endpoint up and the upper endpoint down to
+integers. Taking their maximum with DP1 still cannot close LM9:
+section9.5 already puts DP1's integer lower endpoint strictly below
+the same upper endpoint.
+
+**The same obstruction covers non-circulant exact-support matrices.**
+Let R be a nonempty subset of Z/N avoiding a prescribed complete
+class a_l mod l for each of k distinct primes l dividing N. Over
+ANY field, suppose an N-by-N matrix A has exact Cayley support R:
+
+    A[x,y]!=0 if and only if y-x belongs to R.
+
+Then an elementary triangular minor gives
+
+    rank(A)>=2^k.                                  (LM18)
+
+Choose z in R. For each selected prime l, CRT supplies delta_l with
+delta_l=z-a_l mod l and delta_l=0 mod every other selected prime.
+For each subset U of the selected primes put x_U=sum_(l in U)delta_l.
+Use rows x_U and columns x_V+z. Both index maps are injective:
+distinct subsets differ at some l, and delta_l is nonzero mod l.
+If U is not contained in V, choose l in U\V. The displacement
+x_V+z-x_U is a_l mod l, so the selected matrix entry is zero.
+On the diagonal U=V the displacement is z, so every diagonal entry
+is nonzero. Ordering subsets by increasing cardinality, with the
+same tie order for rows and columns, gives an upper triangular
+2^k-by-2^k minor with nonzero determinant. This proves LM18 without
+a circulant assumption or a restriction on prime-power heights.
+
+The bound is sharp over C for the pure-prime complement: take
+A[x,y]=f_0(y-x) with the product f_0 above. Its exact support is that
+complement, and its circulant rank equals its 2^k Fourier frequencies.
+This again asserts no such sharp weighting for the actual R_q with
+additional original classes. Exact support cannot be replaced by
+arbitrary allowed support: a matrix merely zero outside the allowed
+positions can have rank zero or one. One valid weakening retains
+zeros outside R and requires A[x,x+z]!=0 for EVERY x at one fixed
+z in R; the same triangular minor still works.
+
+For an exact-support matrix put r=rank(A). Its r basis rows each
+have |R| nonzero entries. Their supports cover every column, because
+each column of A has a nonzero entry and every row is a combination
+of the basis rows. The ordinary row-basis cardinal bound is therefore
+
+    N<=r*|R|.                                      (LM19)
+
+Applied to R=R_q, divisor closure gives r>=2^(s-1)>=4. Thus the
+complete rounded projection guarantee from LM19 is
+
+    |L|>=ceil(ceil(N/r)/M)=ceil(p^H/r)
+          <=ceil(p^H/4).                           (LM20)
+
+Here the last inequality compares the supplied LOWER ENDPOINTS,
+not the actual value of |L|. By LM17 these endpoints remain below
+the coarse LM8 upper endpoint. Optimizing over arbitrary exact-support
+matrix weights, including non-circulant choices, cannot repair this
+particular row-basis comparison.
+
+This excludes a specific scalar proof route, not Fourier analysis,
+rank methods or the cited papers as a whole. It does not exclude
+stronger uncertainty or rank inequalities, smaller translate covers
+proved by other means, the literal label and phase bounds in LM11,
+or distribution across prefixes.
+The comparison is for p>q in section9.5; it makes no assertion about
+all possible smaller-prime absorption arguments. No feasible cover
+or jointly attainable pair of endpoints is constructed. These are
+ordinary proofs and source checks, not new Lean verification or a
+resolution of unrestricted Erdős #7.
