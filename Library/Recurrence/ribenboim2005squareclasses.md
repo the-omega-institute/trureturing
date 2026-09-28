@@ -90,7 +90,7 @@ or imported here. The useful methodological comparison is to turn local
 prime data into an actual global bound, beyond merely counting abstract
 characters. No specific inequality from Erdos126 is a GSE premise.
 
-Nat Sothanaphan, *Resolution of Erdos Problem #728: a writeup of
+Nat Sothanaphanov, *Resolution of Erdos Problem #728: a writeup of
 Aristotle's Lean proof*, arXiv:2601.07421v2:
 https://arxiv.org/html/2601.07421v2 . Sections 3-4 reduce factorial
 quotients to prime-by-prime valuations and use carry bounds and spike
@@ -411,3 +411,333 @@ resolution, or elimination of a single B_j=P^2Q^3 pattern is obtained.
 The assumptions of GPF5 remain visible. GPF1-GPF4 give unconditional
 statements about actual original odd-depth supports, and GPF5 gives a
 new simultaneous necessary budget for any proposed powerful value.
+
+
+## GDR. Higher dyadic rank channels and source-prime collision repair
+
+### GDR.0 Fixed original depths and the additional obstruction
+
+Retain the original Fibonacci and Lucas sequences and the definitions
+rho(p), h_p and U(n) from GPF. In particular
+
+$$U(n)=\{p>5:p\mid F_n,\ p\nmid n,\ h_p\text{ odd}\}.$$
+
+Let a=v_2(n), let m=product_(q>5)q^v_q(n), and assume m>1. Set
+b_q=v_q(m), k=omega(m), Omega(m)=sum_q b_q, and ell=min Supp(m).
+All q in the notation below are primes greater than five. No initial
+depth is set equal to one. GPF used ranks q^s and, for even n, 2q^s.
+The new construction retains all available ranks 2^t q^s, 1<=t<=a.
+
+A genuine new obstruction appears in those higher rows: the source
+prime q itself can divide the old Lucas value. For example
+
+$$L_{28}/L_4=101521=7\cdot14503,\qquad\rho(7)=8.$$
+
+Seven here has old rank eight, not the putative new rank 56. Thus the
+unmodified quotient cannot be called a packet of pure rank 56. This
+refutes that cancellation argument, not every possible stronger count.
+Pairing two successive source-prime steps will remove this obstruction.
+
+The exact valuation formulas and the full Fibonacci/Lucas square-class
+classifications used in GPF remain classical inputs. In particular the
+only nonsingleton Lucas index classes are {1,3} and {0,6}; none of the
+Lucas index pairs used below is exceptional. The source statement is
+Ribenboim (2005), (3.5), with the same attribution as in this note.
+
+### GDR.1 The local order calculation identifies every colliding row
+
+For t>=1 and s>=1 put
+
+$$Q_{t,q,s}=\frac{L_{2^{t-1}q^s}}{L_{2^{t-1}q^{s-1}}},\qquad
+ \delta_t(q)=\mathbf1_{\rho(q)=2^t}.$$
+
+**Lemma GDR1 (collision classification).** The quotient is a positive
+integer greater than one. Its factors have exactly this description:
+
+$$\boxed{v_q(Q_{t,q,s})=\delta_t(q),}\tag{GDR1}$$
+
+and every other prime p dividing it is greater than five, has
+rho(p)=2^t q^s, and occurs with exponent h_p. No other old prime factor
+survives. Conversely every p>5 of rank 2^t q^s divides the quotient.
+There is at most one t with delta_t(q)=1.
+
+**Proof.** Odd-multiplier Lucas divisibility gives integrality. If an
+odd p divides L_d, then p does not divide F_d, since their common odd
+factor would divide four. From F_(2d)=F_d L_d, the rank of p divides
+2d but not d; hence v_2(rho(p))=v_2(2d). This also proves the converse:
+if rho(p)|2d but rho(p) does not divide d, then p|L_d.
+
+For d=2^(t-1)q^(s-1), an old odd p divides L_(dq) and not F_(dq),
+because multiplication by odd q does not change the two-part of d.
+The original Fibonacci valuation law therefore gives
+
+$$v_p(L_{dq})-v_p(L_d)=v_p(q).$$
+
+So old factors cancel except possibly q, which contributes exactly one.
+Since rho(q) is prime to q and divides q-(5/q), membership of q in
+L_(2^(t-1)q^s) is equivalent to rho(q)=2^t. When that equality fails q
+is absent at all s, and when it holds q is already present at s=0.
+This proves GDR1. A new rank divides 2^t q^s, has two-part 2^t, and
+cannot have smaller q-exponent, since then it would occur in the old
+term. Thus its rank is exactly 2^t q^s. The corresponding index is
+prime to p: the only possible index primes are two and q, both excluded.
+Its exponent is consequently h_p. Two is absent from all Lucas terms
+here since their indices are prime to three. The old factor three can
+occur only when t=2 and cancels; five divides no Lucas number. This
+accounts for all small primes. A prime has only one rank, proving the
+last assertion.
+
+**Lemma GDR2 (order and residue type).** For any new factor of rank
+r=2^t q^s, the Fibonacci pair period is r for t=1 and 2r for t>=2.
+At t=1 the prime splits in Q(sqrt(5)) and p=1 modulo r. At t>=2,
+
+$$\boxed{\begin{cases}
+p\equiv1\pmod{2r},&(5/p)=1,\\
+p\equiv r-1\pmod{2r},&(5/p)=-1.
+\end{cases}}\tag{GDR2}$$
+
+**Proof.** Write d=r/2. The golden element phi^d has trace zero and
+norm (-1)^d modulo p. Its quadratic identity gives
+phi^r=-(-1)^d. Any return exponent is divisible by the rank r.
+For t=1, d is odd, so phi^r=1 and the period is r; the identity
+L_d^2-5F_d^2=-4 gives splitness and r|p-1. For t>=2, d is even,
+phi^r=-1 and the period is 2r. In the split case it divides p-1.
+In the inert case phi^(p+1)=-1 and r|p+1, so (p+1)/r is odd.
+This gives both residue classes. The faithful matrix bridge transfers
+the golden element's order to the pair period. These are classical
+rank/order consequences, not new general prime-period theorems.
+
+In particular, a new factor is at least 2q^s+1 for t=1, and at least
+2^t q^s-1 for t>=2. Each is strictly greater than its source q.
+
+### GDR.2 Repair by an even valuation shift and construct disjoint packets
+
+For each q^b_q||m include the original Fibonacci packets
+
+$$A_{q,s}=F_{q^s}/F_{q^{s-1}},\qquad1\le s\le b_q.$$
+
+For each 1<=t<=a with delta_t(q)=0, include every Q_(t,q,s),
+1<=s<=b_q. For the possible colliding row delta_t(q)=1, include instead
+
+$$P_{t,q,j}=\frac{L_{2^{t-1}q^{2j}}}
+ {q^2 L_{2^{t-1}q^{2j-2}}},\qquad1\le j\le\lfloor b_q/2\rfloor.$$
+
+Their possible-rank sets are respectively {q^s}, {2^t q^s}, and
+{2^t q^(2j-1),2^t q^(2j)}. All these sets are disjoint. Let the
+collection be D(n). Write
+
+$$c_a(q)=\mathbf1_{\rho(q)=2^t\text{ for some }1\le t\le a},\qquad
+ C_a(m)=\sum_{q\mid m}c_a(q)\left\lceil\frac{b_q}{2}\right\rceil.$$
+
+**Theorem GDR3 (complete packet construction).** Every member of D(n)
+is a nonsquare positive integer greater than one dividing F_n. Its
+prime factors exceed five and its prime exponents are their original
+h_p. A prime divides it exactly when its rank belongs to its displayed
+rank set. Distinct members are coprime, and
+
+$$\boxed{|D(n)|=E_a(m)=(a+1)\Omega(m)-C_a(m).}\tag{GDR3}$$
+
+**Proof.** The A statements are the previous GPF lemma. In a noncolliding
+Lucas row GDR1 gives the exact new factors. If the quotient were square,
+its two distinct Lucas indices would lie in the same square class;
+they are not {1,3} or {0,6}, a contradiction.
+
+In a colliding row, multiplying the quotients at s=2j-1 and s=2j
+contributes exactly q^2. Division by q^2 removes the only old factor.
+Thus P is an integer with precisely the two displayed new rank sets,
+with exponents h_p. If P were square then
+
+$$\frac{L_{2^{t-1}q^{2j}}}{L_{2^{t-1}q^{2j-2}}}=q^2P$$
+
+would be square. Its two Lucas indices differ by the factor q^2 and
+are not an exceptional pair. This proves nonsquareness and positivity.
+The integer P divides its numerator, which divides F_(2^t q^(2j)),
+which divides F_n. The converse rank statements follow from GDR1.
+Disjoint rank sets give coprime full supports. A noncolliding source
+contributes (a+1)b_q packets; a colliding one replaces b_q packets in
+one row by floor(b_q/2), losing ceil(b_q/2). Summing proves GDR3.
+
+The repair is cancellation in the group of positive rational numbers
+modulo squares: two forced q factors vanish together. The argument does
+NOT prove that Q_(t,q,s)/q is individually nonsquare in a colliding row.
+A final unpaired layer is deliberately omitted.
+
+### GDR.3 Project away the index and count the remaining independent directions
+
+Let R(n) be the union of the packet rank sets, and define
+
+$$I(n)=\{p:p\mid m,\ \rho(p)\in R(n)\},\qquad t(n)=|I(n)|.$$
+
+To keep multiple internal primes in the same packet from being counted
+twice, also set
+
+$$b(n)=\#\{D\in D(n):\text{some }p\mid m\text{ has }\rho(p)\in R(D)\}.$$
+
+Both capacities need only the factorization of n and ranks at its
+index primes. No factorization of F_n is needed. They satisfy b(n)<=t(n).
+These symbols refer to finite capacities, not GIR's normalization index.
+
+**Theorem GDR4 (simultaneous original-depth bound).** In the positive
+rational square-class group G, let V be spanned by {[D]:D in D(n)}
+and let pi delete coordinates at primes dividing n. Then
+
+$$\boxed{\dim V=E_a(m),\qquad
+ E_a(m)-b(n)\le\dim\pi(V)\le|U(n)|,}\tag{GDR4}$$
+
+and in particular
+
+$$\boxed{|U(n)|\ge(a+1)\Omega(m)-C_a(m)-\omega(m)+1.}\tag{GDR5}$$
+
+**Proof.** Every packet is nonsquare and the full prime supports are
+disjoint, so their square classes are independent. Projection preserves
+disjointness of the remaining supports. A packet untouched by every
+index prime has a nonzero projected class. There are at least E-b
+such packets, and their projected classes are still independent. Every
+nonzero retained coordinate is at p>5, p not dividing n, with odd
+original h_p and p|F_n, hence lies in U(n). This proves GDR4.
+
+There are k index primes greater than five. The least one ell cannot
+belong to I(n): all packet factors strictly exceed their source, which
+is itself at least ell. Thus t(n)<=k-1. Combining b<=t with GDR4 proves
+GDR5. This capacity subtraction concerns one common actual F_n; it does
+not assume statistical independence or choose different indices for
+different witnesses.
+
+Equivalently, form the multiquadratic extension generated by the square
+roots of the packets. Its degree is 2^E. After adjoining square roots
+of the index primes, its relative degree is 2^dim(pi(V)), hence at least
+2^(E-b). This is the standard square-class/Kummer interpretation of the
+proved independent directions; it is not itself a WSS existence theorem.
+
+### GDR.4 A sharp three-channel theorem and the first repaired higher row
+
+No prime q>5 has rank two or four. Hence C_a(m)=0 for a<=2.
+Specializing GDR5 to a=2 gives
+
+$$\boxed{v_2(n)=2,\ m>1\quad\Longrightarrow\quad
+ |U(n)|\ge3\Omega(m)-\omega(m)+1.}\tag{GDR6}$$
+
+If merely 4|n, apply this bound to the packets already dividing
+F_(4m), keeping projection relative to the ORIGINAL n. Their factors
+exceed five, so the extra factors two, three and five in n cannot absorb
+them. The same bound GDR6 thus holds for every n divisible by four.
+It is attained at n=28: F_28=3*13*29*281, and its external odd-original-
+depth set is exactly {13,29,281}. This is an equality example for the
+count, not a WSS example or an asymptotic-optimality assertion.
+
+For a=3 the only new colliding source is seven: a prime of rank eight
+must divide F_8=3*7, and only seven has rank eight. Therefore
+
+$$\boxed{v_2(n)=3\quad\Longrightarrow\quad
+ |U(n)|\ge4\Omega(m)-\left\lceil v_7(m)/2\right\rceil
+                   -\omega(m)+1.}\tag{GDR7}$$
+
+For instance n=392=8*7^2 has seven repaired packets, with no internal
+packet factor possible because seven is its only large index prime.
+Thus |U(392)|>=7, whereas the preceding two-channel GPF bound gives four.
+This deduction uses exact rank and nonsquare inputs, not a complete
+factorization of F_392.
+
+At n=364=4*7*13 the six packets are
+
+$$13,29,281,\quad233,521,90481.$$
+
+Thirteen is absorbed by the index, while the other five displayed primes
+are external, with original depth one. The packet projection has rank
+five. The actual F_364 was not completely factored in this verification;
+these five primes are not claimed to be its full external support.
+
+### GDR.5 Distinct-prime mass and the direct powerful-Fibonacci consequence
+
+Attach a lower bound w(D) to each packet as follows:
+
+$$w(A_{q,s})=2q^s-1,\qquad w(Q_{1,q,s})=2q^s+1,$$
+
+$$w(Q_{t,q,s})=2^t q^s-1\ (t\ge2),\qquad
+ w(P_{t,q,j})=2^t q^{2j-1}-1.$$
+
+A colliding row always has t>=3, so the last formula uses the correct
+higher-row bound. By GDR2 and the odd-rank bound for A, every prime
+factor of a packet is at least its indicated w(D). Consequently
+
+$$\boxed{\prod_{p\in U(n)}p\ \ge\
+ \frac{\ell}{\operatorname{rad}(m)}\prod_{D\in D(n)}w(D).}\tag{GDR8}$$
+
+**Proof.** Choose one odd-exponent prime from each packet. These primes
+are distinct. Their product is at least the product of w(D). The product
+of those dividing n is at most rad(m)/ell, by the smallest-source
+argument. Dividing gives the stated bound on the selected external
+product, which is at most the product over all of U(n).
+
+In particular, the three-channel subcollection at every 4|n gives
+
+$$\boxed{\prod_{p\in U(n)}p\ \ge\
+ \frac{\ell}{\operatorname{rad}(m)}
+ \prod_{q^e\parallel m}\prod_{s=1}^{e}
+       (4q^{2s}-1)(4q^s-1).}\tag{GDR9}$$
+
+Let B_o(n) count all p>5 dividing F_n with odd original h_p>=3,
+including those dividing n. If F_n is powerful, then U(n) is a subset
+of that set: v_p(F_n)=h_p for p not dividing n, and an odd exponent
+at least two is at least three. Thus all count and mass bounds apply
+with these genuinely original exceptional witnesses. In particular
+
+$$\boxed{4\mid n,\ m>1,\ F_n\text{ powerful}
+ \quad\Longrightarrow\quad
+ B_o(n)\ge3\Omega(m)-\omega(m)+1\ge2\Omega(m)+1.}\tag{GDR10}$$
+
+Therefore B_o(n)<=r forces Omega(m)<=floor((r-1)/2). A powerful
+F_(4m) with m squarefree and k primes all greater than five requires
+at least 2k+1 different odd-depth WSS primes. If m=q^e, it requires at
+least 3e. The old five-smooth classification also yields: any positive
+powerful Fibonacci index divisible by four, other than twelve, requires
+at least three such primes. None of these implications supplies a
+powerful counterexample or asserts that even one WSS prime exists.
+
+For the earlier fixed-support set P(S), its candidates still lie among
+divisors of 5R_(H(S)). They must now additionally satisfy E_a(m)-b(n)<=|S|,
+and at 4|n must satisfy 3Omega(m)-omega(m)+1<=|S|. These are factorization-
+of-index filters before computing or factoring the large Fibonacci value.
+
+### GDR.6 Repository, source, formalization and verification boundaries
+
+The inspected latest branch already contains GPF and the local matrix-
+period, prime-to-index-depth and cubic-order work. The separate repository
+atom 0641c337c4e10a26e833dfb22c40d0e8cbf85fa13ce1513271780c97955ea5cd
+records gcd(L_(2^i H),L_(2^j H))|2. That older dyadic disjointness statement
+is compatible with this proof; it does not remove the source-prime factor
+when an odd multiplier q is introduced within ONE such row. GDR proves
+that collision classification, its paired repair, and the original-depth
+budget for the enlarged collection. Earlier GPF bounds remain valid.
+
+Primary source roles: Ribenboim, FFF (2005), (3.4)-(3.5), supplies the
+Fibonacci and Lucas square-class classifications. The parsed statements
+were re-read in this pass; the requested image of page 8 failed. The
+classifications remain explicit prerequisites, not new theorem claims.
+Medina-Rowland's Theorem 1.4 supplies the classical original valuation
+formula already used in GPF. Ballot-Elia, *Rank and period of primes in
+the Fibonacci sequence. A trichotomy*, Fibonacci Quarterly 45 (2007),
+56-63, DOI 10.1080/00150517.2007.12428243, is related classical context;
+only its publisher abstract was read here, and no unread numbered theorem
+is imported. GDR2 is proved directly above from trace, norm and the
+existing golden Frobenius identities. No first general order theorem or
+established global priority for the particular new bounds is claimed.
+
+For concurrent formalization, the useful order is: the precise Lucas
+zero-rank two-part; the source-prime valuation increment; paired removal
+of q^2; the explicit disjoint rank sets; the finite witness injection
+and smallest-source exclusion; then GDR6 and GDR10. The forest/injection
+proof can precede construction of the full rational square-class quotient.
+Keep the Lucas nonsquare premise explicit until its classical proof is
+available. Pairing does not require cubic reciprocity or the maximal
+order of the auxiliary pure-cubic field.
+
+The companion verifier checks the new packets with original ranks and
+valuations, source-prime leakage, disjointness, independent finite root-
+of-unity order checks and the count/mass formulas. Complete factorizations
+of F_n are restricted to n<=60. Larger chosen cases factor only the
+small packets; paired high-rank cases use exact quotient, gcd and integer
+square-root checks without complete factorization. No finite computation
+substitutes for the general proof. This continuation changes no Lean or
+Scribe theorem, registration, freeze or CI status. It decides no new WSS
+prime family and does not exclude the entire P^2Q^3 golden-block branch.
