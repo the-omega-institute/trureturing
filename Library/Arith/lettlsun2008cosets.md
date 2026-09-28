@@ -1487,6 +1487,24 @@ subtraction. Its conclusion concerns complete, exactly valued marginal
 functions of one fixed original family. It does not turn scalar
 Lettl–Sun inequalities into a proof of unrestricted odd noncoverage.
 
+The layer-uniqueness statement is established prior work: Zhi-Wei Sun,
+*On the range of a covering function*, Theorem 1.2,
+[J. Number Theory 111 (2005), 190–196](https://doi.org/10.1016/j.jnt.2004.11.004),
+[final preprint, arXiv math/0409279v2, p. 3](https://arxiv.org/pdf/math/0409279v2).
+It states that two systems, each with distinct numerical moduli, are
+identical if their multiplicity functions agree modulo an integer that
+does not divide their joint least common multiple. For the layers below,
+take that integer to be p: their moduli divide B and p does not divide B.
+Positive moduli in the source include 1. Empty or singleton layers can
+be handled by adding to BOTH systems the same two classes
+0 mod(pB+1) and 0 mod(2pB+1), applying Sun's theorem, then removing them.
+These two new numerical labels exceed B, are distinct and prime to p,
+so each enlarged system still satisfies the source hypotheses. The
+height-by-height reconstruction is consequently a short application
+of this existing theorem. The finite-field calculation retained below
+also specifies the coefficients used by the recognition procedure;
+it is not a new uniqueness theorem or a new Lean formalization.
+
 ### Complete marginal and original-label reconstruction
 
 Let A and A' be finite families of literal congruence classes, each
@@ -1811,6 +1829,53 @@ cylinders coincide, so CB3 and S_p>=0 imply the positive-part integrand
 bound on every common cofactor. Integrating gives CB4a. The weights
 use the same complete-family M_p and original Haar source throughout;
 they do not arise from separately optimized laws.
+
+### Scalar overlap tests are relaxations of the shared-phase constraint
+
+The full CB4 constraint already contains a useful pair-overlap scalar
+test. This test does not supply an additional obstruction when that
+shared-phase constraint is satisfiable. For t>=0, put k=floor(t) and
+
+    Phi(t)=k(k-1)/2+k(t-k).
+
+This is convex, is zero on [0,1], and agrees with binom(n,2) at every
+nonnegative integer n. Fix the original cofactor classes and heights,
+and let G be either the CB4 graph or its exact-row subgraph, whose
+edges have a common cofactor y with M_p(y)=1. Suppose ONE assignment
+of the original prime phases makes the prime cylinders disjoint at
+every edge of G. Its actual multiplicity c has the prescribed M_p,
+whether or not this assignment covers. On that same uniform CRT source,
+
+    average_y Phi(M_p(y)) <= Omega_2
+      := average_(u,y) binom(c(u,y),2)
+       = sum_(i<j) Pr(original_i intersect original_j)
+      <= sum_(i<j, ij notin G, C_i intersect C_j nonempty)
+                                      1/lcm(d_i,d_j).       (CB6)
+
+The first inequality is convexity on each full prime row; it does not
+assume c>=1. The last inequality holds because graph edges and
+cofactor-incompatible pairs have zero intersection, while every
+remaining pair contributes either zero or exactly 1/lcm(d_i,d_j).
+Thus violation of CB6 certifies that G has no satisfying prime-prefix
+assignment. It cannot exclude a table whose CB4 constraints already
+have such an assignment. Using the full low-slack CB4 graph can reduce
+the upper bound relative to the exact-row graph, but is still a scalar
+relaxation of the same constraint. Rows with M_p<1 independently fail
+the existing elementary marginal test.
+
+A related active-label count also adds no new phase condition. If a
+finite row contains n weights p^(-e_i), one selected weight is p^(-h),
+and 1<=M_p<1+p^(-h), then n>=1+h(p-1). Indeed, removing that weight
+leaves a sum S with 1-p^(-h)<=S<1. Carrying p equal-depth terms into
+one term at the preceding depth never increases the term count. The
+finite base-p expansion of S has its first h digits equal to p-1,
+since floor(p^h S)=p^h-1. At least h(p-1) original remaining terms
+are therefore required; h=0 is immediate. This consequence uses only
+the already required M_p>=1 and reciprocal prime-power weights,
+not a further private-point or whole-cover phase hypothesis.
+
+These are ordinary consequences and limitations of existing conditions,
+not new Lean declarations or an unrestricted noncoverage argument.
 
 ### A complete arithmetic obstruction with every clique budget valid
 
