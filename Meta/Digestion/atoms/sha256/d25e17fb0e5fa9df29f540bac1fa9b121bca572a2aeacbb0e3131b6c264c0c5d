@@ -1,0 +1,8 @@
+## 35. 相位校验与边界熵亏损
+
+令 $q=p^r$，$G=(\mathbb Z/q\mathbb Z)^d$，并定义
+
+$$
+Z_B=\ker(B^{\mathsf T}\bmod q).
+$$
+

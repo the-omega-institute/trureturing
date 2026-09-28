@@ -1,0 +1,10 @@
+### definition 2.1 原子与原始语法
+
+取两个不同原子 $\mathsf A=\{\alpha,\beta\}$，令 $\mathcal T$ 为自由二叉树：
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle .
+$$
+
+构造 $\langle s,t\rangle$ 是有序且不预设交换律或结合律。因此 $\langle\alpha,\beta\rangle\ne\langle\beta,\alpha\rangle$，且不同括号结构保持不同。
+

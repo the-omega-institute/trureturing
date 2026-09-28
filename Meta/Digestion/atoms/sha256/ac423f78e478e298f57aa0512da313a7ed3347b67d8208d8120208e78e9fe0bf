@@ -1,0 +1,42 @@
+### proposition 17.2 Fib 素权重 $(5,13)$ 的整环值解码器
+
+对 $u=5,v=13$，有
+
+$$
+h=8+5\theta,\qquad h^*=13-5\theta,\qquad
+N(h)=79,\qquad \operatorname{Tr}(h)=21.
+$$
+
+由 $4\cdot79-15\cdot21=1$，得到环内的 Bezout 恒等式
+
+$$
+\begin{aligned}
+1&=4hh^*-15(h+h^*)\\
+ &=(37-20\theta)h-15h^*.
+\end{aligned}
+$$
+
+因此定义有明确类型的解码器
+
+$$
+L:R^2\longrightarrow R,\qquad
+L(y,z)=(37-20\theta)y-15z,
+$$
+
+便有
+
+$$
+L(E_h(x))=\bigl((37-20\theta)h-15h^*\bigr)x=x
+\qquad(x\in R).
+$$
+
+对每个整数 $m\ge1$，把系数、输入和输出同时约化到 $\bar R_m=R/mR$，同一恒等式给出
+
+$$
+\bar E_h:\bar R_m\longrightarrow\bar R_m^2,\qquad
+\bar L:\bar R_m^2\longrightarrow\bar R_m,\qquad
+\bar L\circ\bar E_h=\operatorname{id}_{\bar R_m}.
+$$
+
+所以该双通道在每个模数下都可恢复组成余数。$37-20\theta$ 与 $-15$ 是所选权重的 Bezout 见证，不是物理常数，也不指定任何物理测量装置。
+

@@ -1,0 +1,37 @@
+### definition 19.1 递归、共轭与方向提取
+
+令
+
+$$
+R=\mathbb Z[\theta]/(\theta^2-\theta-1),
+\qquad x=a+b\theta.
+$$
+
+在坐标空间 $R\cong\mathbb Z^2$ 上定义
+
+$$
+M(a,b)=(b,a+b),
+$$
+
+$$
+J(a,b)=(a+b,-b),
+$$
+
+以及选定的归一化方向提取
+
+$$
+\partial(a,b)=(b,0).
+$$
+
+前两个操作分别是乘以 $\theta$ 和黄金共轭；$\partial$ 不是由指数5唯一强迫的操作，而是选择了“读取 $\theta$ 系数并把结果放回标量方向”的基本接口。
+
+它们的矩阵为
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+\qquad
+J=\begin{pmatrix}1&1\\0&-1\end{pmatrix},
+\qquad
+\partial=\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+$$
+

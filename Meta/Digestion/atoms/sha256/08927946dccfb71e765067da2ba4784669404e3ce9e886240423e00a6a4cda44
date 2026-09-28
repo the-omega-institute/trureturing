@@ -1,0 +1,8 @@
+### definition 4.3 内部自然数与乘法
+
+令 $\mathcal N$ 为包含 $0$ 且对 $S(x)=x+e$ 封闭的最小子集，并递归定义
+
+$$
+x\otimes0=0,\qquad x\otimes S(y)=(x\otimes y)+x.
+$$
+

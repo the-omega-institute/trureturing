@@ -1,0 +1,18 @@
+### definition 20.1 模 $n$ 的操作系统
+
+固定 $n\ge2$，令
+
+$$
+V_n=(\mathbb Z/n\mathbb Z)^2
+$$
+
+并把 $M,\partial$ 按同一坐标公式降到 $V_n$。称加法子群 $W\subseteq V_n$ 为封闭子结构，当
+
+$$
+M(W)\subseteq W,
+\qquad
+\partial(W)\subseteq W.
+$$
+
+这是操作闭包的定义；它不把 $W$ 预先假设成某个因子生成的子群。
+

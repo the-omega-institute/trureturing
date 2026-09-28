@@ -1,0 +1,28 @@
+## 59. 黄金代数中的关联记录
+
+在已有黄金整数环
+
+$$
+R=\mathbb Z[\theta]/(\theta^2-\theta-1)
+$$
+
+中，沿用范数
+
+$$
+\mathcal N(a+b\theta)=a^2+ab-b^2.
+$$
+
+四个块可由
+
+$$
+1,\qquad \theta,\qquad \theta^2=1+\theta,\qquad 2+\theta
+$$
+
+记录；它们的数量读数 $q(a+b\theta)=2a+3b$ 分别为 $2,3,5,7$，而范数分别为 $1,-1,1,5$。
+
+直接有
+
+$$
+2+\theta=\theta(2\theta-1),\qquad (2\theta-1)^2=5,\qquad (2+\theta)^2=5\theta^2.
+$$
+
