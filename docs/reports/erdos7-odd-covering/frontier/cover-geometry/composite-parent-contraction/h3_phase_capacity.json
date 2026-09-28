@@ -1,0 +1,146 @@
+{
+  "scope": "Pure prime phases translated to0 once. All2304 actual choices of original15/21/35 phases outside their pure divisors. No whole-cover enumeration or Lean verification.",
+  "cases": 2304,
+  "phase_profile_counts": {
+    "14,23": 360,
+    "15,23": 216,
+    "17,19": 360,
+    "17,20": 72,
+    "18,19": 120,
+    "18,20": 24,
+    "19,17": 360,
+    "19,18": 120,
+    "20,17": 72,
+    "20,18": 24,
+    "23,14": 360,
+    "23,15": 216
+  },
+  "maximum_allowed105_phases": 38,
+  "maximum_allowed_phases_per_root": 23,
+  "independent_phase_multiple105_upper": 75,
+  "independent_phase_multiple105_per_root_upper": 46,
+  "strengthened_multiple105_count": 45,
+  "strengthened_uniform_multiple105_count_per_root": 27,
+  "maximum_double_cells_total": 7,
+  "maximum_double_cells_per_root": 4,
+  "joint_phase_matching_extremum": {
+    "phases": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "allowed": [
+      15,
+      23
+    ],
+    "matching_sizes": [
+      3,
+      4
+    ],
+    "matching_edges": [
+      [
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ]
+      ]
+    ],
+    "occupancy_upper": [
+      18,
+      27
+    ],
+    "original105_singleton_phase": [
+      1,
+      2,
+      2
+    ]
+  },
+  "extrema": [
+    {
+      "counts": [
+        15,
+        23
+      ],
+      "phases": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "repair": {
+    "labels": [
+      9,
+      45,
+      63
+    ],
+    "sum": 117,
+    "joint_period": 315,
+    "target_phases_checked": 105
+  },
+  "shared_two_phase_repair": {
+    "labels": [
+      9,
+      45,
+      63,
+      315
+    ],
+    "sum": 432,
+    "joint_period": 315,
+    "cases_by_shared_prime": {
+      "5": 315,
+      "7": 210
+    },
+    "two_phase_pairs_checked": 525
+  },
+  "literal_noncover_comb_overfull_packet": [
+    {
+      "modulus": 15015,
+      "residue": 14593,
+      "phase105": 103
+    },
+    {
+      "modulus": 19635,
+      "residue": 14593,
+      "phase105": 103
+    },
+    {
+      "modulus": 21945,
+      "residue": 1888,
+      "phase105": 103
+    }
+  ],
+  "premises": "One globally number-then-modulus-sum-minimal whole distinct odd cover, H3=1, divisor closure, comparable disjointness. Presence of any105 multiple forces all seven nonunit divisors including105. Each surviving phase has at most2 multiples; the original105 phase has exactly1. The shared four-label repair forces at most3 occupants in any two cells on one row or column of one ternary root, so double-occupied cells form a matching. The old75/46 independent-phase bounds are retained;45/27 are the stronger joint constraints. Finite occupancy extrema are not whole-cover constructions."
+}
