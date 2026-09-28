@@ -74691,3 +74691,327 @@ $$
 最后，$P=(E|_W)^{-1}E$ 是到 $W$ 的复线性投影，范数至多为 $2$。投影界由上述构造得到，没有作为前提使用。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 350. 相容酉操作族的同时修正与代数近包含
+
+**定义 350.1（矩阵读数空间与单向近包含）。** 设 $d\ge1$，$V\subseteq\operatorname{Herm}_d$ 是包含 $I$ 的实线性空间，$W=V+iV$。以下范数均为 $M_d(\mathbb C)$ 的算子范数；$U_1$ 表示线性空间 $U$ 的闭单位球。沿用第80.4节的乘法缺陷，并定义其复单位球版本：
+
+$$
+\eta=\sup_{a,b\in V_1}\operatorname{dist}(ab,W),
+\qquad
+\mu=\sup_{x,y\in W_1}\operatorname{dist}(xy,W).
+$$
+
+对含单位的环境 $C^*$-子代数 $A\subseteq M_d(\mathbb C)$，记
+
+$$
+\nu(A,W)=\sup_{a\in A_1}\operatorname{dist}(a,W),
+\qquad
+D(A,W)=\max\left\{
+\sup_{a\in A_1}\operatorname{dist}(a,W_1),
+\sup_{w\in W_1}\operatorname{dist}(w,A_1)
+\right\}.
+$$
+
+$\nu$ 的目标为整个线性空间，$D$ 比较两个完整复单位球；二者均未取矩阵放大后的上确界。
+
+**定理 350.2（紧群表示与代数近包含的统一修正）。** 在定义350.1下，设 $\eta\le1/500$。若 $G$ 是紧 Hausdorff 群，$\rho:G\to U(d)$ 是连续酉表示，且
+
+$$
+\sup_{g\in G}\operatorname{dist}(\rho(g),W)
+\le\delta\le\frac1{2000},
+$$
+
+则存在酉矩阵 $S$，令 $\rho'(g)=S\rho(g)S^*$，有
+
+$$
+\begin{aligned}
+\sup_{g\in G}\|\rho'(g)-\rho(g)\|&\le52\delta,\\
+\sup_{g\in G}\operatorname{dist}(\rho'(g),W)&\le4240\eta,\\
+\|S-I\|&\le104\delta.
+\end{aligned}
+\tag{350.1}
+$$
+
+因此，若已给定的含单位环境代数 $A$ 满足 $\nu(A,W)\le\delta$，则可取 $A'=SAS^*$，使
+
+$$
+D(A,A')\le52\delta,
+\qquad
+\nu(A',W)\le4240\eta.
+\tag{350.2}
+$$
+
+式(350.2)不要求 $A,W$ 同维。若另外有 $\dim_{\mathbb C}A=\dim_{\mathbb C}W$ 及 $b=4240\eta<1$，则
+
+$$
+D(W,A')\le\frac{2b}{1-b},
+\tag{350.3}
+$$
+
+并存在复线性投影 $P:M_d\to W$，满足
+
+$$
+P|_W=\operatorname{id}_W,
+\qquad
+\|P\|\le\frac{1+b}{1-b}.
+\tag{350.4}
+$$
+
+全部常数与 $d$、群及代数的块数无关。结论以已给定的表示或代数为前提，不断言小 $\eta$ 单独保证存在同维的起始代数。 当 $4240\eta\ge\delta$ 时，直接取 $S=I$ 已满足式(350.1)；严格小于初始近包含上界的改进对应 $4240\eta<\delta$。
+
+证明。本定理的目标 $W$ 仅为含单位自伴线性空间。Kitaev 的 [*Almost-idempotent quantum channels and approximate C*-algebras*, arXiv:2405.02434v2](https://arxiv.org/abs/2405.02434v2) 中的近似代数误差修正以给定内部双线性乘法为前提；Christensen 的 [*Near inclusions of C*-algebras*, Acta Mathematica 144 (1980)](https://doi.org/10.1007/BF02392125) 中相关嵌入结论以目标为精确代数为前提。以下直接控制环境乘积到 $W$ 的距离，不先赋予 $W$ 这两类结构。
+
+将 $x,y\in W_1$ 各分成实部和虚部，所得四个自伴分量均在 $V_1$。展开乘积并使用 $W$ 的线性性，得到
+
+$$
+\eta\le\mu\le4\eta\le\frac1{125},
+\qquad
+\operatorname{dist}(xy,W)\le\mu\|x\|\|y\|
+\quad(x,y\in W).
+\tag{350.5}
+$$
+
+先说明所需的连续近邻选择。若 $F:G\to M_d$ 连续，且 $\operatorname{dist}(F(g),W)\le a$，则对每个 $\varepsilon>0$，存在连续的 $f:G\to W$，使 $\|f-F\|_\infty\le a+\varepsilon$。事实上，在有限开覆盖的中心 $g_j$ 选择最近点 $w_j\in W$，使对应开集内 $\|F(g)-F(g_j)\|<\varepsilon$。紧 Hausdorff 空间上的从属连续单位分解 $\phi_j$ 给出 $f(g)=\sum_j\phi_j(g)w_j$，其误差由凸性估计。若 $a=0$，闭性已给 $F(G)\subseteq W$，可直接取 $f=F$。
+
+下面证明一个与初始近酉误差无关的极分解估计：
+
+$$
+x\in W,\quad
+\|x^*x-I\|\le\frac14,\quad
+\mu\le\frac1{100}
+\quad\Longrightarrow\quad
+\operatorname{dist}\bigl(x(x^*x)^{-1/2},W\bigr)\le4\mu.
+\tag{350.6}
+$$
+
+置 $z=I-x^*x$。由式(350.5)及取近邻的自伴部分，可选 $y=y^*\in W$，满足
+
+$$
+\|z-y\|\le\frac54\mu,
+\qquad
+q=\|y\|\le\frac14+\frac54\mu\le\frac13,
+\qquad
+\|x\|\le\frac54.
+$$
+
+写 $F_0(t)=(1-t)^{-1/2}=\sum_{k\ge0}c_kt^k$，其中 $c_k\ge0$。从 $t_0=x$ 开始，在 $W$ 中递归选择
+
+$$
+\|t_{k+1}-t_ky\|\le\mu\|t_k\|q.
+$$
+
+归纳得到
+
+$$
+\begin{aligned}
+\|t_k\|&\le\|x\|((1+\mu)q)^k,\\
+\|t_k-xy^k\|&\le\|x\|q^k\bigl((1+\mu)^k-1\bigr).
+\end{aligned}
+$$
+
+因 $(1+\mu)q<1/2$，级数 $v=\sum_kc_kt_k$ 在 $W$ 中收敛。利用 $F_0'(t)\le2$ 在 $[0,1/2]$ 上成立，得到
+
+$$
+\|v-xF_0(y)\|
+\le\|x\|\bigl(F_0((1+\mu)q)-F_0(q)\bigr)
+\le2\|x\|\mu q.
+$$
+
+无需假设 $y,z$ 交换：恒等式
+
+$$
+z^k-y^k=\sum_{j=0}^{k-1}z^{k-1-j}(z-y)y^j
+$$
+
+同样给 $\|F_0(z)-F_0(y)\|\le2\|z-y\|$。于是
+
+$$
+\begin{aligned}
+\|xF_0(z)-v\|
+&\le2\|x\|\bigl(\|z-y\|+\mu q\bigr)\\
+&\le\frac{95}{24}\mu\le4\mu.
+\end{aligned}
+$$
+
+这证明式(350.6)，包括 $\mu=0$。该证明中的近邻只用于点态距离估计；极分解本身在可逆矩阵上连续。
+
+现在对任意连续映射 $u:G\to U(d)$，定义
+
+$$
+e(u)=\sup_{g,h}\|u_gu_h-u_{gh}\|,
+\qquad
+A_g=\int_G u_x^*u_{xg}\,dx,
+$$
+
+其中 $dx$ 是归一化 Haar 测度。以下群平均的二次修正取自 McKenney–Vignati 的紧群平均方法，其原始形式使用可逆元的逆；此处酉元的逆即伴随。相关先例见 [*Ulam stability for some classes of C*-algebras*, arXiv:1601.05445v2](https://arxiv.org/abs/1601.05445v2) 中构造 $\widetilde\rho(u)=\int\rho(x)^{-1}\rho(xu)\,dx$ 的命题。为同时控制距 $W$ 的距离，这里保留所需估计的推导。
+
+令 $e=e(u)$，$r_g=A_g-u_g$，$E_{x,h}=u_xu_h-u_{xh}$。有 $\|A_g\|\le1$、$\|r_g\|\le e$。由展开及 Haar 测度的右平移不变性，
+
+$$
+A_gA_h-A_{gh}
+=r_gr_h+
+\int_G
+\bigl(u_{xg^{-1}}^*-u_gu_x^*\bigr)E_{x,h}\,dx.
+\tag{350.7}
+$$
+
+积分中第一个因子可写为
+
+$$
+u_{xg^{-1}}^*
+\bigl(u_x-u_{xg^{-1}}u_g\bigr)u_x^*,
+$$
+
+故两个因子的范数均不超过 $e$，从而乘法误差至多 $2e^2$。固定 $g$，置 $X_x=u_x^*u_{xg}$。矩阵方差恒等式给出
+
+$$
+\begin{aligned}
+0\le I-A_g^*A_g
+&=\int_G(X_x-A_g)^*(X_x-A_g)\,dx\\
+&=\int_G(X_x-u_g)^*(X_x-u_g)\,dx-r_g^*r_g\\
+&\le e^2I.
+\end{aligned}
+\tag{350.8}
+$$
+
+当 $e<1$ 时，$A_g$ 可逆，其极分解酉因子 $Q_g$ 满足
+
+$$
+\|Q_g-A_g\|\le1-\sqrt{1-e^2}\le e^2.
+$$
+
+比较三个位置上的替换误差可得
+
+$$
+e(Q)\le5e^2,
+\qquad
+\|Q-u\|_\infty\le e+e^2.
+\tag{350.9}
+$$
+
+$A,Q$ 均连续。若 $e\le1/100$，重复式(350.9)使每轮缺陷至多减半、移动至多为当前缺陷的两倍，故一致收敛到连续的精确酉表示 $\pi$，并有
+
+$$
+\|\pi-u\|_\infty\le4e(u).
+\tag{350.10}
+$$
+
+极限的乘法性及酉性使其单位元像自动等于 $I$。
+
+为了在迭代中保留对 $W$ 的距离，进一步设 $e(u)\le1/100$ 且 $\sup_g\operatorname{dist}(u_g,W)\le4\mu$。逐点取距 $u_g$ 不超过 $a=4\mu$ 的 $w_g\in W$。由式(350.5)，
+
+$$
+\begin{aligned}
+\operatorname{dist}(u_x^*u_{xg},W)
+&\le a(2+a)+\mu(1+a)^2\\
+&=(9+24\mu+16\mu^2)\mu\le10\mu.
+\end{aligned}
+$$
+
+在商空间 $M_d/W$ 中积分，得到 $\operatorname{dist}(A_g,W)\le10\mu$；该积分没有使用 $w_g$ 的可测性。若 $\mu>0$，用连续近邻选择取连续的 $x_g\in W$，满足 $\|x_g-A_g\|\le11\mu$。于是
+
+$$
+\|x_g-u_g\|\le e+11\mu\le0.098,
+\qquad
+\|x_g^*x_g-I\|\le2(0.098)+(0.098)^2<\frac14.
+$$
+
+令 $u_g^+=\operatorname{polar}(x_g)$。式(350.6)恢复同一个距离上界
+
+$$
+\sup_g\operatorname{dist}(u_g^+,W)\le4\mu.
+\tag{350.11}
+$$
+
+由式(350.8)，$A_g$ 的奇异值属于 $[\sqrt{1-e^2},1]$。扰动 $11\mu$ 后，$x_g$ 的奇异值落在相应扩张区间内，故
+
+$$
+\|u_g^+-x_g\|\le e^2+11\mu,
+\qquad
+\|u_g^+-A_g\|\le e^2+22\mu.
+$$
+
+结合式(350.7)及 $A_g,u_g^+$ 均为收缩，得到
+
+$$
+e(u^+)\le5e(u)^2+66\mu,
+\qquad
+\|u^+-u\|_\infty\le e(u)+e(u)^2+22\mu.
+\tag{350.12}
+$$
+
+若 $\mu=0$，则 $W$ 已对乘法闭合，$A_g\in W$，直接取 $x_g=A_g$，上述结论仍成立。
+
+若 $\delta=0$，原表示已在 $W$ 中，可取 $S=I$。以下令 $\delta>0$，连续选择 $f:G\to W$，满足 $\|f-\rho\|_\infty\le2\delta$，并取 $u^{(0)}=\operatorname{polar}(f)$。奇异值扰动及式(350.6)给
+
+$$
+\|u^{(0)}-\rho\|_\infty\le4\delta,
+\qquad
+e_0=e(u^{(0)})\le12\delta\le0.006,
+\qquad
+\sup_g\operatorname{dist}(u_g^{(0)},W)\le4\mu.
+$$
+
+这里应用式(350.6)合法，因为 $\|f_g^*f_g-I\|\le4\delta+4\delta^2<1/4$。
+
+当 $\mu>0$ 时，只在 $e_n>264\mu$ 时执行式(350.12)的修正。此时
+
+$$
+e_{n+1}<0.3e_n\le\frac12e_n,
+\qquad
+\|u^{(n+1)}-u^{(n)}\|_\infty<2e_n.
+$$
+
+所以在有限步 $N$ 后，$e_N\le264\mu$，且始终 $e_N\le1/100$。最后使用式(350.10)的环境修正，取得精确表示 $\rho'$。由式(350.11)，
+
+$$
+\sup_g\operatorname{dist}(\rho'_g,W)
+\le4\mu+4e_N\le1060\mu\le4240\eta.
+$$
+
+移动误差包括这最后一步。利用 $2e_n\le4(e_n-e_{n+1})$，有
+
+$$
+\begin{aligned}
+\|\rho'-\rho\|_\infty
+&\le4\delta+\sum_{n<N}2e_n+4e_N\\
+&\le4\delta+4e_0\le52\delta.
+\end{aligned}
+$$
+
+若 $\mu=0$，直接在 $W$ 中进行一致收敛的修正，仍有相同移动估计。
+
+置
+
+$$
+T=\int_G\rho'_g\rho_g^*\,dg.
+$$
+
+Haar 测度的左平移不变性给 $\rho'_hT=T\rho_h$，而 $\|T-I\|\le52\delta<1$ 保证 $T$ 可逆。$T^*T$ 与原表示的全部像交换，故 $T$ 的酉极分解因子 $S$ 仍交织两个表示。于是 $\rho'_h=S\rho_hS^*$，且奇异值扰动给 $\|S-I\|\le2\|T-I\|\le104\delta$。这证明式(350.1)；同一个共轭也保留全部不可约表示的重数。
+
+对给定代数 $A$，取 $G=U(A)$ 及包含表示。每个 $a\in A_1$ 都是 $A$ 内两个酉元的平均：在每个矩阵块中，将其极分解部分等距延拓成酉元 $u$，令 $c=|a|$、$v=c+i\sqrt{I-c^2}$，则 $a=(uv+uv^*)/2$。各块直和仍在 $A$ 内。因此式(350.1)对全部酉元的统一估计给出
+
+$$
+\sup_{a\in A_1}\|SaS^*-a\|\le52\delta,
+\qquad
+\nu(SAS^*,W)\le4240\eta.
+$$
+
+共轭把 $A_1$ 双射到 $(SAS^*)_1$，故式(350.2)成立。
+
+最后证明同维时的双向控制。一般地，若 $\nu(B,W)\le b<1$，其中 $B$ 是与 $W$ 同维的含单位环境代数，取范数一的条件期望 $E:M_d\to B$。它可由标准块分解上的压缩与归一化偏迹构造。对 $a\in B$，先选 $w_0\in W$，满足 $\|w_0-a\|\le b\|a\|$；然后对残差 $a-Ew_0$ 重复选择。第 $n$ 步残差的范数至多为 $b^n\|a\|$。所得级数在 $W$ 中收敛到一个 $\widetilde a$，且
+
+$$
+E\widetilde a=a,
+\qquad
+\|\widetilde a\|\le\frac{1+b}{1-b}\|a\|,
+\qquad
+\|\widetilde a-a\|\le\frac{2b}{1-b}\|a\|.
+$$
+
+因此 $E|_W$ 满射；相同的有限维数使它成为双射。上面构造的原像遂唯一，等于线性映射 $L=(E|_W)^{-1}$ 的值。于是 $P=LE$ 是到 $W$ 的投影，具有式(350.4)的界。
+
+对 $w\in W_1$，$Ew\in B_1$，且唯一性给 $\|w-Ew\|\le2b/(1-b)$。反向对 $a\in B_1$，取距它不超过 $b$ 的 $w\in W$，再将 $w$ 除以 $1+b$，可得 $\operatorname{dist}(a,W_1)\le2b$。故 $D(W,B)\le2b/(1-b)$。代入 $B=A'$ 即得式(350.3)。证毕。
+
+## 追加锚（本行以下为增补区）
