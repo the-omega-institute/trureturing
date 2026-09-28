@@ -1288,3 +1288,190 @@ The [self-contained producer](../../docs/reports/erdos7-odd-covering/frontier/co
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/quotient-private-shells/quotient_private_shells.py --output /tmp/e7_quotient_private_shells.json
 ```
+
+## Prime normalization and all-private scalar cuts do not force line coverage
+
+There is an explicit finite irredundant odd NONCOVER containing every
+original prime class `0 mod p` for its support, satisfying the numerical
+Lettl–Sun directional inequality at EVERY actual private point, for EVERY
+prime and EVERY divisor cut. Numerical moduli repeat. Thus this is not a
+distinct-odd example and not an application of the published theorem's
+whole-cover premise. It separates simultaneous scalar inequalities from
+actual private-line coverage even when the pure-prime reset applies.
+The earlier PS1 noncover already satisfies all these scalar conditions.
+The new distinction here is the presence of every normalized prime
+class together with a failure of PS1 itself.
+
+### One original family from the nineteen Boolean patterns
+
+Reuse the nineteen patterns in the preceding private-shell construction.
+Their complete32-word truth table has these properties:
+
+* `00000` is the only uncovered Boolean word;
+* each of the nineteen patterns has a private Boolean word;
+* every private Boolean word has weight at least two;
+* each of the five weight-one words has multiplicity exactly two.
+
+Fix any five pairwise distinct odd primes `p_1,...,p_5`, and let
+`Q=product_i p_i`. Add the five literal prime classes
+
+    P_i = 0 mod p_i.
+
+For every Boolean pattern w, expand its fixed coordinates as follows:
+
+    fixed 0: actual residue1 mod p_i;
+    fixed 1: independently choose r_i in {2,...,p_i-1};
+    star: no condition, including no restriction against residue0.
+
+Each choice produces one literal original AP by CRT, with modulus
+`m_w=product_(i:w_i!=*) p_i`. Retain all these original labels. They are
+odd, squarefree and greater than one. No two APs are identical, although
+many have the SAME numerical modulus.
+
+At a point with every coordinate nonzero, set
+`beta_i(x)=0` for residue1 and `beta_i(x)=1` for residues2 through p_i-1.
+Its actual mixed-class multiplicity is exactly the number of Boolean
+patterns containing beta(x): exactly one phase choice of each matching
+pattern contains x. Points with any zero coordinate are covered by at
+least one P_i. Hence the unique actual hole is
+
+    h=1 mod Q.                                           (AP1)
+
+Every expanded mixed class has a genuine private point. Take its
+pattern's private Boolean word, retain the class's fixed actual phases,
+and choose actual1 or2 at every free coordinate according to that word.
+All coordinates are nonzero, so no P_i is present, and the Boolean
+multiplicity identity gives exactly one mixed owner. Each P_i is private
+at the point x_i with coordinate i equal0 and every other coordinate
+equal1. A mixed pattern fixing i cannot contain x_i; a pattern free at i
+would otherwise contain the forbidden Boolean word00000. Thus the whole
+original family is irredundant. In particular, comparable numerical
+moduli carry disjoint classes, as follows for any irredundant AP family.
+
+### All actual private points and all directions
+
+Write c for the multiplicity of this one fixed family. Since h is the
+only hole, any prime-coordinate line not containing h is fully covered.
+The complete p_i-line through h has the exact multiplicity profile
+
+    p_i-coordinate: 0, 1, 2, ..., p_i-1;
+    multiplicity:  1, 0, 2, ..., 2.                     (AP2)
+
+The first value is the private prime point x_i. The second is h. Every
+remaining value corresponds to the weight-one Boolean word at coordinate
+i, whose multiplicity is exactly two. There are no other prime classes
+on this line. Thus x_i is its ONLY private point.
+
+For any actual private point x with owner t and any p dividing Q, the
+squarefree directional sum has an exact elementary form. If p divides
+m_t, then no p-free label meets the p-line through x, and each active
+p-bearing label meets it at one point. Since x has exactly one owner,
+
+    LS_p(x)=sum_(y on the complete p-line through x)c(y)-1.  (AP3)
+
+A fully covered line gives `LS_p(x)>=p-1`. A line containing h has only
+the private source x_i described in AP2, for which
+
+    LS_(p_i)(x_i)=2(p_i-2)>=p_i-1,                      (AP4)
+
+because p_i>=3. Therefore every positive-demand directional inequality
+holds at EVERY actual private point, not just one listed witness per
+class.
+
+If p does not divide the owner's modulus, the required right side is
+zero and the directional sum is nonnegative. More explicitly, for
+p|Q the unique p-free owner contributes p to its complete line, so the
+sum is `sum_line c-p>=0`. If p does not divide Q, the directional index
+set is empty and both sides are zero. This handles every prime.
+
+Since Q is squarefree, for any divisor cut L each p-depth ell is0 or1.
+The labelwise quotient identity QC1 identifies its directional left side
+with the same original depth suffix. If p divides m_t and p does not
+divide L, this is precisely AP3 with demand p-1. If p divides L,
+ell=1=H and the directional suffix is exactly zero, as is the target
+demand. If p does not divide L and does not divide the owner modulus,
+ell=0 retains its nonnegative zero-demand original row. Thus ALL
+divisor-cut inequalities hold simultaneously at
+ALL original private points, with one unchanged family and its actual
+phases. No fibre-dependent optimization is used.
+
+Nevertheless PS1 fails at each of the five x_i: changing its p_i-coordinate
+from0 to1 reaches the actual hole h. There are exactly five private-to-hole
+prime-line incidences. This is consistent with
+[Report450(PR3)](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md): PS1 would
+imply whole coverage in a family containing an original prime, but the
+scalar inequalities do not supply PS1.
+
+### Complete finite arithmetic control
+
+At primes `(3,5,7,11,13)`, Q=15015. Literal AP expansion and progression
+enumeration give4198 original classes on14 numerical moduli,11307 actual
+private residues,3707 overlap residues, and the single hole1. Every one
+of the4198 classes has a private residue. The multiplicities by numerical
+modulus are
+
+    3:1, 5:1, 7:1, 11:1, 13:1,
+    105:9, 165:3, 273:5, 715:9, 1001:20,
+    1365:11, 2145:1, 5005:55, 15015:4080.
+
+The [standard-library consumer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/all_private_scalar_prime_lift.py),
+with its [exact result](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/all_private_scalar_prime_lift.json),
+reconstructs the literal classes and their
+complete multiplicity function. It checks the Boolean identity at all
+5760 all-nonzero coordinate points and all56535 private-point/support-prime
+rows:30696 positive-demand rows and25839 zero-demand rows. All pass.
+The five failures of the stronger PS1 incidence requirement are:
+
+|p|actual private point|owner modulus|directional service|demand|
+|---:|---:|---:|---:|---:|
+|3|10011|3|2|2|
+|5|9010|5|6|4|
+|7|4291|7|10|6|
+|11|13651|11|18|10|
+|13|8086|13|22|12|
+
+Every displayed point has all other prime coordinates1, and all five
+lines reach the SAME hole1. Squarefreeness and QC1 justify the complete
+cut family; the program does not substitute sampled cuts for that argument.
+The standalone consumer requires an explicit output path and optionally
+accepts any five distinct odd primes:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/all_private_scalar_prime_lift.py --output /tmp/e7_all_private_scalar_prime_lift.json
+```
+
+Normal and optimized runs have identical default output bytes. An
+independent reconstruction by successive CRT joins directly evaluates
+the original directional predicates and agrees on all56535 rows; it
+does not use AP3 to compute them. These finite controls do not replace
+the arbitrary-prime construction proof.
+These are ordinary exact finite calculations and a general CRT proof,
+not Lean verification or a literature-priority claim.
+
+### The numerical-distinctness obligation remains
+
+This construction is not a distinct-modulus lift of the nineteen-pattern
+family. It retains all phase copies needed for the multiplicity identity
+and for the two suppliers on every nonzero weight-one branch. Its
+numerical inventory is NOT divisor-closed: in the displayed control,
+15 is absent although it divides the present modulus105. Thus this
+family must not be combined with the distinct, divisor-closed463-family
+obstruction as though one actual family satisfied both sets of hypotheses.
+
+Merely keeping one original AP per numerical modulus, while retaining
+the normalized prime classes, cannot repair this example. In the displayed
+inventory, only eight numerical moduli contain13. At the retained private
+point of the prime13 class, at most seven other original labels can
+contribute to its directional sum, below the required12. Deleting other
+classes leaves that original private point private. Thus the straightforward
+thinning fails even the uncut inequality. More generally, the numbers
+of numerical support types containing each coordinate are7,8,7,7,8,
+including its prime class. The largest of five distinct odd primes is
+at least13 and belongs to at most eight types, giving the same
+obstruction regardless of the order assigned to the prime coordinates.
+
+The simultaneous inequalities have therefore not supplied a sufficient
+condition for line coverage in this repeated-modulus class. Whether
+numerical distinctness together with the actual arithmetic constraints
+of a hypothetical minimal odd cover closes this gap remains unresolved.
+The example does not settle that stronger question.

@@ -1932,9 +1932,186 @@ arbitrarily high added pure-prime prefixes are allowed. Exact whole
 coverage cannot be replaced by an arbitrarily high fixed density and
 this entire relocation-resistance condition in the proposed supplier.
 
-The theorem leaves different child primes in one batch, incompatible
-new centers, centers not induced by actual children, and other changes
-outside its scope. In particular it does not prove global minimality
-of the463 family or exclude exchanges that also alter other originals.
+Section13.8 also excludes different child primes in one batch under
+the common-center condition. Incompatible new centers, centers not
+induced by actual children, and other changes remain outside these
+results. In particular they do not prove global minimality of the463
+family or exclude exchanges that also alter other originals.
 The argument and finite certificate are ordinary mathematics, not new
 Lean verification or a resolution of unrestricted Erdős#7.
+
+### 13.8. Mixed child primes also forbid every common-center relocation batch
+
+For the same463 original classes, the prime used to induce a new parent
+phase may vary between selected parents. Every nonempty batch in this
+larger class still loses an originally covered integer. The conclusion
+requires one common CRT center but no bound on batch size. Unlike13.7,
+the proof needs points with several old owners; it does not claim that
+every loss is witnessed by an original private point.
+
+For each actual original child d and each prime p dividing d, write
+
+    d=p^e m,  e=v_p(d)>=1,  p not dividing m,  m>1.
+
+The original parent m exists by divisor closure. The resulting option
+is (m,c), with c=a_d modulo m. Options with the same(m,c) are identical
+proposed parent classes, so they may be grouped, retaining all original
+child labels, primes and heights as provenance. Comparable-original
+disjointness gives c!=a_m. Reconstructing the full input gives1603
+options at449 eligible original parents, with1665 child-prime-height
+records. The grouped option count is smaller than13.7's sum across
+separate primes because an identical(m,c) can arise at different primes.
+
+A selected set A is nonempty, uses at most one option per parent, and
+satisfies
+
+    c_i=c_j modulo gcd(m_i,m_j) for every i,j in A.    (CM1)
+
+The finite generalized CRT makes CM1 equivalent to existence of one
+integer realizing all selected centers. To see sufficiency, choose,
+at each prime, a selected modulus of maximum exponent. Pairwise
+compatibility makes its phase agree with every lower exponent at that
+prime; ordinary CRT then joins the prime-power coordinates.
+
+Change precisely the selected original parents to their proposed
+phases, retaining every other original. A child used to induce one
+option may itself be another selected parent, so the mixed-prime
+operation must not be described as leaving every child untouched.
+The stated operation is nevertheless the largest resulting union if
+one also wishes to delete any original classes afterwards. Such
+deletions cannot restore an integer already lost by the replacement.
+
+#### Shared old owners give necessary implications
+
+Let P(A) be the selected parent labels. For any originally covered
+integer w define, using the full numerical originals and options,
+
+    O(w)={m: w=a_m modulo m},
+    R(w)={i: w=c_i modulo m_i}.
+
+If some old owner is not selected, its unchanged original still covers
+w. If all old owners are selected, only a proposed new class can
+rescue w. Consequently preservation at this point is EXACTLY
+
+    O(w) subset P(A)  implies  A intersect R(w) is nonempty.  (CM2)
+
+This is a same-integer implication: it does not combine independently
+chosen private witnesses or laws into a fictitious common source.
+For singleton O(w), CM2 is the private-witness condition used earlier.
+
+The private conditions alone are insufficient even for the checked
+input. The five proposed parent phases
+
+    (5,2), (7,2), (17,11), (143,119), (171,92)
+
+are induced by actual children, share the center445479489002, and
+preserve all858 supplied private integers. But481093572625 has old
+owner set{5,171} and belongs to no class after this replacement. Thus
+passing all those private tests is not a coverage-preserving exchange.
+This statement concerns the858 supplied private integers, not an
+enumeration of every actual private integer in the full period.
+
+In addition to the existing private input, the following ten points
+suffice for the exclusion. Each listed owner set is checked against
+all463 numerical originals; each rescue set is reconstructed against
+all1603 numerical option classes.
+
+| Integer w | Exact original owners O(w) | Number of proposed rescuers |
+| ---: | --- | ---: |
+| 412070210125 | 5,7,17 | 8 |
+| 81127832500 | 5,9,11,13 | 3 |
+| 168172364921 | 11 | 16 |
+| 132084398875 | 5,11,13 | 6 |
+| 250668554125 | 5,11 | 8 |
+| 254458847500 | 5,11,13,17 | 6 |
+| 30923151625 | 5,9 | 9 |
+| 468401215375 | 5,9 | 7 |
+| 299488721625 | 3,5,17 | 4 |
+| 282188731500 | 3,5,13,19 | 3 |
+
+The singleton row is retained alongside the genuinely joint rows.
+These are necessary point constraints, not an assertion that the ten
+points characterize the entire covered union.
+
+#### A finite exhaustive implication proof
+
+The [standalone verifier](../../../frontier/cover-geometry/merged-phase-excess/centered_mixed_relocation_obstruction.py)
+reads the unchanged originals, the395 extra private integers from13.7,
+and the [ten-point input](../../../frontier/cover-geometry/merged-phase-excess/centered_mixed_relocation_blockers.json).
+It rebuilds the options and all incidences, then checks that no nonempty
+selection can satisfy CM1 and every supplied CM2. The
+[exact result](../../../frontier/cover-geometry/merged-phase-excess/centered_mixed_relocation_obstruction.json)
+is produced by finite case analysis without a SAT or SMT solver.
+
+Here is the invariant making the computation a proof. A search state
+(U,S,F) retains every hypothetical completion A with
+
+    S subset A subset U,  F subset P(A),
+
+where U is the live option set, S the required options and F the
+required parent labels. Selected options remove their incompatible
+neighbors. A required parent must have a live option. Conditional on
+selecting i, all remaining options must lie in U intersect C(i);
+here C(i) consists of i and its CRT-compatible options at different
+parent labels, across all inducing primes. In this restricted universe,
+every private obligation of its parent, every already required parent,
+and every now fully required joint-owner row must still be satisfiable
+there. A failure excludes i. These tests only remove impossible
+completions of the displayed invariant.
+
+When all owners of a point are required, at least one live rescuer is
+required. A unique rescuer forces that option; rescuers all at the same
+parent force that parent. If there is no live rescuer and exactly one
+old owner is not yet required, that last owner must remain unchanged.
+Removing its options is therefore sound. Empty required choices are
+contradictions. Every nonterminal propagation round shrinks U or grows
+S or F.
+
+At stability, the remaining cases are exhaustive: choose each possible
+center of a required parent; split an undecided parent into moved and
+unmoved; or choose each possible rescuer of an unmet requirement.
+If no option is yet selected and no such requirement exists, branch
+on each live option using nonemptiness of A. Rescuer branches may
+overlap, which is harmless when every branch is contradictory.
+An actual satisfying necessary-condition selection causes rejection
+of the exclusion claim; it is never treated as a proof of preservation.
+
+All49126 nodes close, with35618 contradiction leaves and no surviving
+necessary-condition model. The largest branch depth is14; the node
+and depth figures measure this deterministic implication proof, not a
+bound on the permitted number of relocated parents. Since preserving
+the old union would satisfy these necessary conditions, no operation
+CM1 preserves that union. The
+verifier also checks the five-parent control directly, including its
+lost integer. Inputs are explicit paths and arithmetic checks use
+exceptions, so Python optimization does not disable them.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/centered_mixed_relocation_obstruction.py --originals docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/irredundant_divisor_closed_phase_obstruction_originals.json --blockers docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/centered_batch_relocation_blockers.json --joint-blockers docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/centered_mixed_relocation_blockers.json --output /tmp/e7_centered_mixed_relocation_obstruction.json
+```
+
+#### The same obstruction persists along all prescribed pure-prime tails
+
+In13.5 an added original is a pure power of a new prime. Removing its
+full prime power leaves parent1, which is ineligible. No added parent
+divides an old child. Thus the complete mixed-prime option set is
+unchanged, not merely the option sets at individual old primes.
+
+For every checked old point w, CRT chooses an extension equal to w
+modulo the old full period and equal to c_(l,H_l+1) modulo l^H_l at
+each new prime l. That explicit residue avoids all added classes by
+13.5. The entire old owner set O(w), including joint owner sets, is
+therefore unchanged. So is R(w), since every option has an old parent
+modulus. The same finite contradiction applies to every extension.
+
+Consequently the arbitrarily small positive hole densities of IC9
+can coexist with resistance to ALL mixed-prime common-center batches
+defined here, divisor closure, genuine irredundancy, normalized prime
+classes, and both pointwise low-excess obstructions IC6. This rules
+out another proposed sufficient replacement for exact whole coverage.
+It does not exclude incompatible centers, arbitrary new phases, edits
+outside the stated parent options, or a consequence specific to an
+actual whole cover. The input remains an explicitly certified noncover;
+the unrestricted Erdős#7 question and the whole-cover bridge remain
+unresolved. These are ordinary arithmetic and finite-case proofs,
+not new Lean verification.
