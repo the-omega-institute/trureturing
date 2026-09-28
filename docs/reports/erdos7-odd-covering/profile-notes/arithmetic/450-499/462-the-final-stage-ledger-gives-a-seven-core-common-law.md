@@ -1139,3 +1139,150 @@ and one empty field offer a finite continuation index, while first-stage
 current costs still require the actual numerical labels.
 
 Reproduction commands and verification layers are in the [two-slice package](../../../frontier/cover-geometry/finite-prefix-sources/missing23-eta11-1-4/README.md).
+
+## The remaining four eta11 slices at the same prefix
+
+Fix the same A1 node `(2,4,1,8,1,2,1,0,13)`, xi7=(1,4,7,14), source
+schedule `(2,4,4,8,8,16)` and query16. This increment treats eta11 in
+`{7,8,11,13}`, keeps eta13=14, and permits each later prime17,19,29 all280
+physical projections. Each eta11 slice has40 actual xi11 and40 actual
+xi13 labels. The four disjoint slices thus contain6400 prefix pairs and
+`6400*280^3=140492800000` full tuples.
+
+The previous common-source comparison, fixed padding and exact infinite
+remainders remain the mathematical hypotheses. The additional finite
+upper bounds below are computed by the attributed integer geometry engine;
+this is ordinary comparison mathematics and rational verification, not
+new Lean verification.
+
+### Exact current11 labels replace a coarse phase maximum
+
+At each selected physical xi11, retain all four prescribed current heads
+rather than immediately releasing the first three. The incoming
+comparison is the same charged7 measure: its spatial zero7 component
+plus its positive7 component. The threshold at11 remains4; the four
+subtractions are each10/11 and the added current offset is
+`(10/11)*s11(x)`. The exact small-multiplier geometry and linear remainders
+are evaluated as in the existing producer.
+
+The original source's phase-only upper bound is therefore replaced by a
+smaller upper bound on the same padded current loss. This does not alter
+the selected labels, earlier probability construction, or later source
+schedule. The resulting maxima over all40 physical labels are:
+
+| eta11 | maximum four-head current11 upper |
+|---|---:|
+|7|`4.7368193697`|
+|8|`5.0799304760`|
+|11|`4.8428666522`|
+|13|`4.8134860188`|
+
+There are128 explicitly enumerated representatives. The already proved
+prefix permutation2↔5 modulo9 preserves the carrier, every source region
+weight, fixed xi7, and the mod5 coordinate. It therefore preserves eta and
+transports each physical cylinder. The other32 labels are its recorded
+images, not new unconstrained optimizers. The checker verifies the160
+label maps and equal transported costs.
+
+Using the existing flat11 current13 table and later transfer bounds, a
+uniform sufficient current11 target for every eta14 xi13 is
+`4.9963896314`. All40 labels in eta7,11,13 and38 labels in eta8 meet
+this conservative target. For the two remaining labels
+
+$$
+ D=(2,3,2,8),\qquad E=(2,3,5,8),
+$$
+
+the precise existing budgets leave six prefix pairs: each of D,E paired
+with `(2,3,2,14)`, `(2,3,5,14)`, or `C=(2,4,8,14)`.
+
+### Three current13 refinements and one continuation field pair
+
+For xi11=D, its actual zero11 field is retained on the same anchor cells
+when evaluating current13. The three direct four-head bounds are
+
+| actual xi13 | current13 upper |
+|---|---:|
+|`(2,3,2,14)`|`5.5832079324`|
+|`(2,3,5,14)`|`5.6477324318`|
+|`(2,4,8,14)`|`5.7371194871`|
+
+The simultaneous prefix permutation gives the E cases, interchanging the
+first two selected13 labels and fixing C. These estimates include the
+padded current13 cost. The first two, together with the existing late
+bounds, resolve four of the six pairs.
+
+For `(D,C)`, retain all eight same-cell zero/positive components at7,11,13
+through the late comparisons. At each of17,19,29 release the selected
+heads3,5,9 and keep its actual15-head phase. Evaluate the seven allowed
+eta values separately. Every resulting value is uniform over all40
+other physical label coordinates by the existing scalar-coefficient
+convex-release proof. Thus the three stage maxima are valid uniformly
+over all280 choices each:
+
+$$
+ (L_{17},L_{19},L_{29})
+ \le(3.7708091560,4.2373978034,2.0296210340).
+$$
+
+The first two maxima occur at eta14 and the last at eta8. No universal
+worst-eta assumption is used. The direct current17 bound here retains
+zero13, unlike the older full13 reference used in the positive-transfer
+route. The E,C continuation follows by the same source-preserving
+permutation, which preserves every later eta and its full280 domain.
+These direct bounds resolve the final two prefix pairs.
+
+All other rows may still use the older flat11 current13 comparison and
+positive-transfer or flat11/A-or-B continuations. Pointwise zero11
+majorization and positive-kernel composition justify this reuse while
+each row pays its actual current11 upper. Taking the smaller valid
+numerical continuation bound does not change the actual source law.
+
+### Common-query certificate and its extent
+
+The disjoint selected routes are6078 transfer rows,320 flat11/A-or-B rows,
+and2 direct D,C or E,C rows. For each row the consumer checks exactly
+
+$$
+ D_{\mathrm{live}}=135/4-\sum_q L_q>0,
+ \qquad14D_{\mathrm{live}}-H_{16}>0.
+$$
+
+It uses the same H16 as the earlier increments. Consequently the final
+query upper `15+H16/D_live` is strictly below29. The conservative results
+for the four slices are:
+
+| eta11 | upward query upper | minimum millionth-rounded slack |
+|---|---:|---:|
+|7|`27.5870278810`|`3.633939`|
+|8|`28.9500381606`|`0.115893`|
+|11|`28.1283559009`|`2.149281`|
+|13|`27.9737716755`|`2.560601`|
+
+The worst row is D paired with `(2,3,5,14)` and its transported counterpart.
+The least exact reserve lower bound is
+
+$$
+ \frac{46458079200453}{20020000000000}.
+$$
+
+Even after rounding each of the six losses and H16 upward to one millionth,
+the reserve is at least2.320580 and the strict slack is at least0.115893.
+
+The new reconstruction surface consists of128 current11 representatives,
+three current13 values, and21 direct late phase values:152 targeted
+producer calls. Its data dependency is the existing byte-pinned source
+producer, so no old source or large geometry table is duplicated. The
+[consumer](../../../frontier/cover-geometry/finite-prefix-sources/missing23-eta11-rest/verify.py) pins [the new bounds](../../../frontier/cover-geometry/finite-prefix-sources/missing23-eta11-rest/bounds.json) and the preceding late280 consumer, validates
+the explicit label transports, and checks all6400 rational inequalities.
+Numerical upper-bound provenance, exact routing, and independent reruns of
+integer maxima remain distinct verification layers.
+
+Combining the three disjoint increments, **all280 physical xi11 choices**
+are now covered while xi13 is still restricted to its40 eta14 choices;
+the later three primes each allow280 choices. Their union contains
+`280*40*280^3=245862400000` tuples at the same fixed node and xi7. The other
+eta13 slices, other xi7, other comparison nodes, continuous interpolation,
+and unrestricted Erdos#7 remain outside this conclusion.
+
+Reproduction commands and verification layers are in the [four-slice package](../../../frontier/cover-geometry/finite-prefix-sources/missing23-eta11-rest/README.md).
