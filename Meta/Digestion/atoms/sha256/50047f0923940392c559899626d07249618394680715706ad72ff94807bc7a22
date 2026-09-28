@@ -1,0 +1,14 @@
+### definition 3.3 原子组成观察
+
+定义 $c:\mathcal T\to\mathbb N^2$：
+
+$$
+c(\alpha)=(1,0),\quad c(\beta)=(0,1),\quad c(\langle s,t\rangle)=c(s)+c(t).
+$$
+
+它保留两类原子数量而忘记次序和括号。记
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+

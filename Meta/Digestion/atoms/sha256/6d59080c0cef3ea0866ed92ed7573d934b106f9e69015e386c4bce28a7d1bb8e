@@ -1,0 +1,8 @@
+**证明。** 若 $h=c+d\theta$，则
+
+$$
+\varepsilon(h(a+b\theta))=da+(c+d)b.
+$$
+
+比较系数得 $d=u$、$c=v-u$，且唯一。$□$
+

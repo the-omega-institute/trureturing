@@ -1,0 +1,34 @@
+### theorem 19.3 共轭差分提取缺失方向
+
+令
+
+$$
+\delta=2\theta-1.
+$$
+
+则
+
+$$
+\delta^2=5,
+\qquad
+x-x^*=\delta\,\partial x.
+$$
+
+并且
+
+$$
+\boxed{
+\partial(xy)=\partial(x)y+x^*\partial(y).
+}
+$$
+
+此外，作为整数线性操作有
+
+$$
+\boxed{
+5\partial=(2M-I)(I-J).
+}
+$$
+
+所以当5可逆时，$\partial$ 可以从递归和共轭恢复；模5时，$\partial$ 是一个必须单独保留的方向接口。
+

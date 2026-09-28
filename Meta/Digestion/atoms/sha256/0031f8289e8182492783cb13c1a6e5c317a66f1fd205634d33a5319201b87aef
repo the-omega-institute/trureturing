@@ -1,0 +1,10 @@
+### definition 27.1 模数关系网络
+
+令 $A\in\operatorname{Mat}_{r\times s}(\mathbb Z)$，并定义
+
+$$
+\mathcal S_n=\{x\in(\mathbb Z/n\mathbb Z)^s:Ax=0\}.
+$$
+
+$A$ 可以同时包含局部递推、共享端口一致性和闭环约束。取 $a\in\mathcal S_d$ 的整数代表 $\widetilde a$，于是 $A\widetilde a=d\,\kappa_A(a)$。
+

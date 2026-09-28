@@ -1,0 +1,22 @@
+### theorem 15.8 数量核隐藏的是一个可逆方向
+
+令 $q=q_{2,3}$，则
+
+$$
+\ker q=\mathbb Z(3-2\theta),
+$$
+
+且
+
+$$
+(3-2\theta)(-1-2\theta)=1.
+$$
+
+因此
+
+$$
+R/\mathbb Z(3-2\theta)\cong\mathbb Z
+$$
+
+作为加法群，但环理想商 $R/(3-2\theta)$ 为零环。
+
