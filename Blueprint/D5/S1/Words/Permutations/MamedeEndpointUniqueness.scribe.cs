@@ -119,7 +119,7 @@ internal sealed class MamedeEndpointUniquenessDocument : IScribeDocumentDefiniti
         Describe.Lean(
             DescribeId.Create("mamede-symmetric-excursion-outer-empty"),
             DeclarationHandle.Create(
-                "D5/S1/Words/Permutations/MamedeEndpointUniqueness.symmetric_excursion_outer_empty"),
+                "D5/S1/Words/Permutations/MamedeOppositeExtremalMaps.symmetric_excursion_outer_empty"),
             H("No two exterior factors around a symmetric excursion"),
             StatementSource.FromAuthor(Disp(Q(
                 Call("ReducedConsecutiveSymmetricExcursion", V("n"), V("m"), V("M"),
@@ -142,7 +142,7 @@ internal sealed class MamedeEndpointUniquenessDocument : IScribeDocumentDefiniti
         Describe.Lean(
             DescribeId.Create("mamede-opposite-extremal-maps-oscillation"),
             DeclarationHandle.Create(
-                "D5/S1/Words/Permutations/MamedeEndpointUniqueness.opposite_extremal_maps_oscillation"),
+                "D5/S1/Words/Permutations/MamedeOppositeExtremalMaps.opposite_extremal_maps_oscillation"),
             H("Oscillation from both extremal position maps"),
             StatementSource.FromAuthor(Disp(Q(
                 Call("SingletonWord", V("n"), V("sigma"), V("a")), Land,

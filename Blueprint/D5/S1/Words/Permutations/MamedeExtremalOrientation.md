@@ -19,3 +19,4 @@ For every nonempty reduced consecutive adjacent-swap word w, there are attained 
 ## References
 
 - Truth anchor: `D5/S1/Words/Permutations/MamedeExtremalOrientation.extremal_orientation`
+- Dependency: [D5/S1/Words/Permutations/MamedeCrossing](MamedeCrossing.md)

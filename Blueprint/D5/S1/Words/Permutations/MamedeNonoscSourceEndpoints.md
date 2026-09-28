@@ -32,3 +32,5 @@ Let a be a singleton reduced consecutive word for sigma, with attained minimum m
 
 - Truth anchor: `D5/S1/Words/Permutations/MamedeNonoscSourceEndpoints.first_orientation_strict_endpoints`
 - Truth anchor: `D5/S1/Words/Permutations/MamedeNonoscSourceEndpoints.reflected_orientation_strict_endpoints`
+- Dependency: [D5/S1/Words/Permutations/MamedeEndpointUniqueness](MamedeEndpointUniqueness.md)
+- Dependency: [D5/S1/Words/Permutations/MamedeOppositeExtremalMaps](MamedeOppositeExtremalMaps.md)

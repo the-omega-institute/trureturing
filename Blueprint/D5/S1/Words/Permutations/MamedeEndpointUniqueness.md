@@ -56,7 +56,7 @@ For natural numbers m and M and a list a of natural generator indices, suppose a
 
 $$\operatorname {ReducedConsecutiveSymmetricExcursion}\left(n, m, M, p, q\right) \land \operatorname {InteriorSupport}\left(m, M, p, q\right) \implies p = \operatorname {EmptyWord}\left(\right) \lor q = \operatorname {EmptyWord}\left(\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Permutations/MamedeEndpointUniqueness.symmetric_excursion_outer_empty` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Permutations/MamedeOppositeExtremalMaps.symmetric_excursion_outer_empty` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,7 +68,7 @@ Let 1<=m<M<=n and let the middle word descend from M to m, then ascend from m+1 
 
 $$\operatorname {SingletonWord}\left(n, sigma, a\right) \land \operatorname {AttainedGeneratorExtrema}\left(m, M, a\right) \land \operatorname {GeneratorInterval}\left(n, m, M, a\right) \land \operatorname {OppositeExtremalMaps}\left(n, m, M, sigma\right) \implies \operatorname {Oscillation}\left(a\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Permutations/MamedeEndpointUniqueness.opposite_extremal_maps_oscillation` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Permutations/MamedeOppositeExtremalMaps.opposite_extremal_maps_oscillation` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -93,7 +93,9 @@ Let a and b be reduced consecutive adjacent-swap words on n+1 positions with the
 - Truth anchor: `D5/S1/Words/Permutations/MamedeEndpointUniqueness.extremal_endpoint_oscillation`
 - Truth anchor: `D5/S1/Words/Permutations/MamedeEndpointUniqueness.extremal_endpoint_unique`
 - Truth anchor: `D5/S1/Words/Permutations/MamedeEndpointUniqueness.maximum_peel`
-- Truth anchor: `D5/S1/Words/Permutations/MamedeEndpointUniqueness.opposite_extremal_maps_oscillation`
 - Truth anchor: `D5/S1/Words/Permutations/MamedeEndpointUniqueness.oscillation_extremal_endpoint`
-- Truth anchor: `D5/S1/Words/Permutations/MamedeEndpointUniqueness.symmetric_excursion_outer_empty`
 - Truth anchor: `D5/S1/Words/Permutations/MamedeEndpointUniqueness.word_reversal_invariants`
+- Truth anchor: `D5/S1/Words/Permutations/MamedeOppositeExtremalMaps.opposite_extremal_maps_oscillation`
+- Truth anchor: `D5/S1/Words/Permutations/MamedeOppositeExtremalMaps.symmetric_excursion_outer_empty`
+- Dependency: [D5/S1/Words/Permutations/MamedeCrossing](MamedeCrossing.md)
+- Dependency: [D5/S1/Words/Permutations/MamedeExtremalOrientation](MamedeExtremalOrientation.md)

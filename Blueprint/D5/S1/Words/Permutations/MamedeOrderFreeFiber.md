@@ -19,3 +19,5 @@ For arbitrary n,m,M,i,j with 1<=m<j<i<M<=n, let sigma be a permutation of the n+
 ## References
 
 - Truth anchor: `D5/S1/Words/Permutations/MamedeOrderFreeFiber.singleton_fiber_unique_of_j_lt_i`
+- Dependency: [D5/S1/Words/Permutations/MamedeFactorSeparation](MamedeFactorSeparation.md)
+- Dependency: [D5/S1/Words/Permutations/MamedeShapeExtraction](MamedeShapeExtraction.md)

@@ -1,4 +1,5 @@
 import D5.S1.Words.Permutations.MamedeEndpointUniqueness
+import D5.S1.Words.Permutations.MamedeOppositeExtremalMaps
 import Reg.Support.DependentFamily
 
 open D5.S1.Words.Permutations.MamedeAdjacentWords

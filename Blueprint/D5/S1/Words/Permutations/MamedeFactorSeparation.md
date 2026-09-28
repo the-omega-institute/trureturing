@@ -19,3 +19,5 @@ For arbitrary n,m,M,i,j with 1<=m<j<i<M<=n, let a and b be reduced consecutive a
 ## References
 
 - Truth anchor: `D5/S1/Words/Permutations/MamedeFactorSeparation.source_shape_unique_of_j_lt_i`
+- Dependency: [D5/S1/Words/Permutations/MamedeEndpointUniqueness](MamedeEndpointUniqueness.md)
+- Dependency: [D5/S1/Words/Permutations/MamedeSourceAction](MamedeSourceAction.md)

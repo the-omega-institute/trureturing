@@ -7,6 +7,7 @@
    digest: Nonoscillating words have strict interior endpoints in both extremal orientations. -/
 
 import D5.S1.Words.Permutations.MamedeEndpointUniqueness
+import D5.S1.Words.Permutations.MamedeOppositeExtremalMaps
 
 namespace D5.S1.Words.Permutations.MamedeNonoscSourceEndpoints
 
