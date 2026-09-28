@@ -1,0 +1,56 @@
+{
+  "certified_physical_tuples": 22483074023424,
+  "certified_pure3_face_support": [
+    7,
+    13,
+    16,
+    22,
+    25
+  ],
+  "face_sample_cell_checks": 352,
+  "fixed_physical_labels": 168,
+  "fraction_of_full_physical_domain": "729/15625",
+  "local_head_layouts_per_case": 175,
+  "local_parameter_cases": 96,
+  "local_result_sha256": "8535d902bfc965e441bc940fd0ff4d7fb2a36d2f4bd59d50e3177e3f8b71647e",
+  "minimum_scaled_exchange_gap": 0,
+  "new": [
+    0,
+    28,
+    28,
+    7,
+    28,
+    28
+  ],
+  "old": [
+    0,
+    7,
+    28,
+    28,
+    28,
+    28
+  ],
+  "physical_incidence_checks": 37800,
+  "physical_labels": 280,
+  "pinned_tube_sha256": "10cc4fb16f5c4db94fbdb227c9a6a524ca7bc34e52ba3881d6f9dcfda30a0b64",
+  "remaining_boundary": "Tuples containing physical9 projection4 or7 are not certified at new source vertices. The general result requires the head-placement and positive-component proof in the companion report, including all complete tails.",
+  "scope": "Fixed source chart and t1=1/20,e=0. Structural local enumeration, not full current/query geometry or new Lean verification.",
+  "source_leaf_order": [
+    4,
+    13,
+    22,
+    7,
+    16,
+    25
+  ],
+  "synthetic_mixture": [
+    12,
+    16,
+    28,
+    16,
+    19,
+    28
+  ],
+  "uniform_margin_lower": "116/15625",
+  "weight_unit": "1/42"
+}

@@ -1,0 +1,72 @@
+{
+  "boundary": "The 15-condition certificate restricts completed pure3 phases4..12 to the five retained root1 leaves and pure5 phases3..8 to column1 outside c75. All legal higher tails are included. Failed lower screens are not infeasibility or lower bounds on the number of necessary conditions.",
+  "branch_certificate_sha256": "963b1f1e95b6c8af3d444c382bec6b3ec61ec41bbc035868a7a1b3a06316a209",
+  "certified_physical_tuples": 22483074023424,
+  "common_G_upper": "14765393/31250",
+  "finite_region_cell_checks": 147840,
+  "finite_source_cases": 840,
+  "prefix_certificates_and_negative_controls": [
+    {
+      "H3": 12,
+      "H5": 8,
+      "additional_phase_conditions": 15,
+      "alpha": "1/19683",
+      "beta": "1/15625",
+      "slack_lower": "87611182897/199691894531250",
+      "strictly_positive": true,
+      "weight_ratio_upper": "6390235096/6390140625"
+    },
+    {
+      "H3": 13,
+      "H5": 8,
+      "additional_phase_conditions": 16,
+      "alpha": "1/59049",
+      "beta": "1/15625",
+      "slack_lower": "10609607/3417968750",
+      "strictly_positive": true,
+      "weight_ratio_upper": "109376/109375"
+    },
+    {
+      "H3": 11,
+      "H5": 8,
+      "additional_phase_conditions": 14,
+      "alpha": "1/6561",
+      "beta": "1/15625",
+      "slack_lower": "-9722827931/1210253906250",
+      "strictly_positive": false,
+      "weight_ratio_upper": "38729392/38728125"
+    },
+    {
+      "H3": 12,
+      "H5": 7,
+      "additional_phase_conditions": 14,
+      "alpha": "1/19683",
+      "beta": "1/3125",
+      "slack_lower": "-9690393/683593750",
+      "strictly_positive": false,
+      "weight_ratio_upper": "21876/21875"
+    },
+    {
+      "H3": 11,
+      "H5": 9,
+      "additional_phase_conditions": 15,
+      "alpha": "1/6561",
+      "beta": "1/78125",
+      "slack_lower": "-105916796293/18153808593750",
+      "strictly_positive": false,
+      "weight_ratio_upper": "580938176/580921875"
+    }
+  ],
+  "raw_tube_radius": "1/18000",
+  "scope": "Fixed discrete chart, physical domain Xi0^6 only. Exact rational samples and analytic tail constants, no full geometry or new Lean verification.",
+  "source_face_support": [
+    7,
+    13,
+    16,
+    22,
+    25
+  ],
+  "tube_slack_lower": "255839334607/631125000000000",
+  "tube_weight_ratio_upper": "20196300001/20196000000",
+  "uniform_face_margin_lower": "116/15625"
+}
