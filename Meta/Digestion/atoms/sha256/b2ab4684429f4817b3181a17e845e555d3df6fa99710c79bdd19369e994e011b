@@ -1,0 +1,26 @@
+### theorem 44.2 任意有限采样的 Smith 缺陷
+
+令 $g(\mathcal T)=\gcd(t_1-t_0,\ldots,t_{m-1}-t_0)$，并令 $H_{\mathcal T}$ 为 $O_{\mathcal T}$ 的整数矩阵。其非零 Smith 因子为
+
+$$
+\boxed{1,\ F_{g(\mathcal T)}.}
+$$
+
+所以
+
+$$
+\boxed{|\ker(O_{\mathcal T}\bmod n)|=\gcd(n,F_{g(\mathcal T)})},
+$$
+
+且 $O_{\mathcal T}\bmod n$ 单射，当且仅当 $\gcd(n,F_{g(\mathcal T)})=1$。
+
+**证明。** 以 $M^{t_0}x$ 为新坐标后，第一行是 $(0,1)$；对其他行减去其第二坐标倍的第一行，得到 $(F_{t_i-t_0},0)$。这些数的最大公因数是 $F_g$，使用强整除律 $\gcd(F_u,F_v)=F_{\gcd(u,v)}$。行列变换在模 $n$ 下可逆，故核大小为 $\gcd(n,F_g)$。证毕。 $\square$
+
+当边界有 $m$ 个坐标时，整数余核还包含自由相容约束：
+
+$$
+\operatorname{coker}H_{\mathcal T}\cong\mathbb Z^{m-2}\oplus\mathbb Z/F_g\mathbb Z.
+$$
+
+有限挠部分 $\mathbb Z/F_g\mathbb Z$ 才是时间采样产生的算术缺陷。增加同一步格内的读数不一定减少它；必须改变共同步长。
+
