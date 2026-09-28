@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:5c776ab79957e0cf305e9ce147c24f84ea6a45832d64e181eaecb69df7e512e0
   normalized_sha256: sha256:5c776ab79957e0cf305e9ce147c24f84ea6a45832d64e181eaecb69df7e512e0
 cas_ref: sha256:5c776ab79957e0cf305e9ce147c24f84ea6a45832d64e181eaecb69df7e512e0
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/GoldenCubicBlockRanks.cubic_block_c_prime_rank
+    target_statement_id: sha256:45b92d0ea2b6bd1f9b4dc175b82be8daf91cde765bee417a608bbd56c867ae57
 receipts:
   unresolved_subitems: []
