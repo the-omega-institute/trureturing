@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ded506e029b79373ddbad2bd1797181d966c014449e7de6037316d0a916e2f24
   normalized_sha256: sha256:ded506e029b79373ddbad2bd1797181d966c014449e7de6037316d0a916e2f24
 cas_ref: sha256:ded506e029b79373ddbad2bd1797181d966c014449e7de6037316d0a916e2f24
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/GoldenCubicBlockNativePowerPeriods.cubic_block_native_power_periods
+    target_statement_id: sha256:a72735bd4ae6e10ab0ace78533845aeb27ed74b1d8aa7ac99b2174cd486b2202
 receipts:
   unresolved_subitems: []

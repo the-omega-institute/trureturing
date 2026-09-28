@@ -15,7 +15,11 @@ internal sealed class GoldenCubicBlockNativePowerPeriodsDocument : IScribeDocume
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For positive indices, distinct C blocks have coprime supports, "
+                    "Let C_j = |L_(3^j)^2 + 1| and B_j = |L_(3^j)^2 + 3|, "
+                    + "where L is the golden Lucas sequence. Let pi(m) be the "
+                    + "multiplicative order modulo m of the Fibonacci matrix "
+                    + "with rows (1, 1) and (1, 0). For positive indices, "
+                    + "distinct C blocks have coprime supports, "
                     + "distinct B blocks have coprime supports, and every C block "
                     + "is coprime to every B block. At each positive index j and "
                     + "positive exponents a and b, the Fibonacci matrix periods "
