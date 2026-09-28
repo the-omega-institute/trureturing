@@ -2408,6 +2408,11 @@ not new Lean verification or a claim of literature priority.
 
 ## Existing survivor laws restrict simultaneous complete marginal feasibility
 
+The uniform-profile argument establishes MF1 through five support primes.
+Under the stronger attributed common-law source premises specified below,
+MF7 extends the exclusion through eight, and MF8 restricts the two largest
+primes at support size nine. The source dependencies are kept explicit.
+
 The existing product and complete-survivor laws imply more than a
 noncoverage assertion for the following restricted task. For any
 finite NONEMPTY family of congruence classes with pairwise distinct odd
@@ -2515,7 +2520,7 @@ profile computation, residue enumeration, Lean theorem or noncoverage
 range. An old assertion that a hole merely exists would not imply MF1;
 the existing complete-survivor LAW and its cylinder caps are the input.
 
-### Exactly six support primes reduce to seventeen prime sets
+### Uniform profiles restrict six support primes to seventeen prime sets
 
 Suppose the original family has exactly six support primes and every
 complete support-prime marginal is at least 1. Then its support must be
@@ -2528,6 +2533,8 @@ one of the following SEVENTEEN sets:
 There are fourteen choices of r in MF5a. This is a necessary condition,
 not an assertion that any listed set admits such a family. Every
 finite exponent and every original residue remain unrestricted.
+The stronger common-law application MF7 below excludes all seventeen
+sets under its stated source premises.
 
 Only five profile calculations are needed for the exclusion. In each
 row below, remove the target r and apply the existing P3--P4 recurrence
@@ -2601,6 +2608,138 @@ support in MF5. In particular, adding disjoint pure-prime tails to a
 known noncover cannot repair its deficient old marginals. This reduction
 does not assert that a connected family passes the tests, and supplies
 no unproved existence of a covering or noncovering family on MF5.
+
+### Query-independent survivor laws extend the marginal exclusion through eight primes
+
+MF3 only requires one probability supported on the actual r-free
+survivors; it does not require that probability to be uniform. The
+common-law query bounds already proved in
+[Report461](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md)
+and
+[Report462, LS1](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/462-the-final-stage-ledger-gives-a-seven-core-common-law.md)
+therefore give the following stronger conclusion, under their attributed
+source construction and comparison premises:
+
+    1<=number of actual support primes<=8
+       ==> some actual support prime r has min_y M_r(y)<1. (MF7)
+
+The original moduli remain pairwise distinct odd integers greater than1;
+all original phases and finite heights are arbitrary. The source is
+Michael Schroeder's Nine Prime Divisors in Odd Distinct Covering Systems,
+edition1.0.1. The source identity and local verification boundary are in
+its [library entry](schroeder2026nine.md). MF7 applies the existing
+common-law interfaces; it is not a new finite geometry calculation,
+Lean result, or improvement of the known bare noncoverage range.
+
+For six, seven or eight actual support primes choose the largest one r,
+and let K=L/r^(H_r). Use the indicated law on the ACTUAL complete
+survivors of the r-free original subfamily. It controls all cylinders
+modulo every divisor of this fixed K, including query depths not used
+by the r-free subfamily itself. The law is chosen before the later
+layouts, and the same law serves every target height.
+
+| Actual support size | r-free core size | Bound on R_mu from the common law | Smallest possible r | Bound on min M_r |
+|---|---:|---|---:|---:|
+|6|5|R_mu<10|17|<11/16|
+|7|6|R_mu<14|19|<5/6|
+|8|7|R_mu<=70874/3375|23|<74249/74250|
+
+Indeed MF3 gives
+
+    min M_r<=u_r*(1+R_mu),
+    u_r=sum_(h=1..H_r)r^(-h)<1/(r-1).
+
+The last entry is (1+70874/3375)/22=74249/74250<1.
+The first two use the conservative bounds10 and14; Report461 gives
+strictly smaller exact constants. MF1 handles support sizes one
+through five. No coordinate average is taken under a conditioned
+r-law: M_r remains the COMPLETE uniform r-coordinate average, and
+only its cofactor is averaged under mu. Thus this deduction does
+not replace a marginal by a different observable.
+
+An empty r-free family or unused cofactor coordinates cause no extra
+assumption. The source interfaces permit a family on AT MOST the
+stated number of primes and any fixed resolving period; their finite
+padding, transport and projection supply exactly the required carrier.
+No compatible choice of laws over an infinite chain of periods is
+needed, since the actual original family and its period are finite.
+
+For eight support primes the quantitative gap relies on Report462's
+uniform query functional LS5 and retained surplus LS6. It would NOT
+follow just from the source's bare assertion that some survivor exists,
+nor from the actual loss of an empty auxiliary23 family. The source's
+finite geometry and rational certificate have been locally reproduced;
+its full arbitrary-height comparison remains an attributed premise,
+and no fresh full Lean replay is asserted here.
+
+Consequently every nonempty odd-distinct family passing ALL complete
+support-prime marginals must use at least NINE primes, under these
+same source premises. The seventeen supports in MF5 remain valid
+necessary restrictions furnished by the earlier uniform-profile
+calculation, but MF7 excludes all of them using the stronger common
+laws. They are not remaining cases of the full marginal-feasibility
+problem. In particular MF6 now implies that every component of an
+all-marginals-passing NONCOVER must contain at least nine primes.
+No such actual noncover is constructed, and no result for arbitrary
+support size is claimed.
+
+### The same query extension restricts the two largest primes at support size nine
+
+The one-prime query extension in
+[Report463, PE6](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/463-two-actual-prime-extensions-preserve-a-common-core-law.md)
+also applies to MF3. Use the stronger seven-core input
+
+    A=70871/3375,
+
+from the relative-ledger deduction in
+[Report466](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/466-randomized-completion-retains-full-original-survivor-support.md).
+This step retains that deduction's attributed source comparison and
+compatible-screening premises. Full survivor support and the all-depth
+compactness consequence of that report are not needed here.
+
+For exactly nine support primes let q<r be the two largest, so q>=23.
+Choose the fixed seven-core law on the actual subfamily avoiding both
+q and r. Extend it through the actual q-bearing, r-free originals by
+PE6, keeping the complete cofactor period required by the r-bearing
+queries. Since q>A+2, the resulting one survivor law has
+
+    R8(q)<=B_A(q):=((q-1)A+1)/(q-2-A).
+
+Consequently the sufficient bound 1+B_A(q)<r-1 gives a deficient
+complete r-marginal by MF3. Multiplying this bound comparison by the
+positive denominator shows that it is exactly
+
+    N_A(q,r)=(q-A-2)(r-A-2)-(A^2+A+1)>0.          (MF8)
+
+Interchanging q and r proves a deficient complete q-marginal as well.
+The two cofactor laws and two witnessing points can differ; this is
+not a simultaneous choice of both minima under one law. Each argument
+uses one law for all its own original-label queries. The algebraic
+criterion is the existing symmetric PE9 criterion, now read as a
+complete-marginal obstruction rather than only as bare noncoverage.
+
+Thus a nine-support family passing all complete marginals must have
+N_A(q,r)<=0. Its two largest primes obey the following exact necessary
+bounds; the displayed upper endpoints need not themselves be prime.
+
+| Eighth prime q | Upper bound on ninth prime r |
+|---:|---:|
+|23|1562545/4|
+|29|2028271/20254|
+|31|2183513/27004|
+|37|2649239/47254|
+|41|2959723/60754|
+
+These are obtained by solving MF8 for
+r<=A+2+(A^2+A+1)/(q-A-2), which decreases with q>A+2.
+At q=43 the upper endpoint is3114965/67504<47, while the next support
+prime must be at least47. Every larger q is excluded as well. Hence
+the five q values in the table exhaust the possible eighth primes,
+without bounding any original exponent. The seven smaller primes
+remain subject to being distinct odd primes below q and all the
+other original constraints. None of these necessary cases is claimed
+feasible, and the table does not assert a new unrestricted or bare
+noncoverage range.
 
 ### Unrestricted fractional phases only recover the reciprocal test
 
