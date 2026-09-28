@@ -1,0 +1,12 @@
+**Theorem 1 (degree-one exactness).** The defect vanishes at every triangle
+if and only if $f=d_0g$ for a single vertex potential. One direction is the
+characteristic-two cancellation $d_1d_0=0$. For the converse choose anchors
+$a_0,b_0,c_0$ and put
+$p(a)=f_{AB}(a,b_0)$,
+$q(b)=f_{AB}(a_0,b)+f_{AB}(a_0,b_0)$, and
+$r(c)=f_{AC}(a_0,c)+f_{AB}(a_0,b_0)$. The triangle equations at the anchors
+give all three edge identities.
+
+Now let $A=B=C=\{0,1\}$. Write $R(f)$ for the least edge support weight in
+$f+\operatorname{im}d_0$ and $T(f)$ for the number of defective triangles.
+

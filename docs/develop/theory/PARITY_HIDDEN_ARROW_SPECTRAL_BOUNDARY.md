@@ -21738,3 +21738,365 @@ $\int_{|y|>K}f|D_{\mathrm{lat}}-D_{\mathrm{ref}}|>\eta$ 的最大概率趋零，
 本章的归约与无维数损失混叠界缩小了缺口，未宣布该接口闭合。
 
 ## 追加锚（第 111 章后续增补区）
+
+## 112. 逆平方谱端的小球导数与 Rényi 输出的临界修正
+
+**定理 112.1（原经验有限数组的谱端修正）。** 保持第 110 章的原完整计数后验、固定参数、取整、精确中心及同一带噪标量，信息量以 nats 计。仍假设
+
+$$
+L=\ln(1/\sigma)\to\infty,\qquad \limsup L/Q^3<c_q/2.
+\tag{112.1}
+$$
+
+保留 $v_j=C_jp_j(1-p_j)/B^2$、$v_*=\max_jv_j$、$b_x=\sqrt\delta/(2v_*)$。
+用 (110.5) 的原剖面参数定义两个不同的常数
+
+$$
+C_0=\frac{\pi^2\rho_0}{\kappa},\qquad C_{\mathrm{edge}}=\frac{C_0}{\gamma^2}.
+\tag{112.2}
+$$
+
+对每个固定 $c>0,K<\infty$，有
+
+$$
+\sup_{\substack{\alpha\in[c\delta^{-1/4},\infty]\\|y|\le K}}
+\left|H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x^0)
+-\frac\alpha{\alpha-1}
+\left[b_xy-\frac{y^2}{2\nu}-\frac{C_{\mathrm{edge}}y}{\alpha^2\sqrt\delta}\right]\right|
+\longrightarrow0.
+\tag{112.3}
+$$
+
+在无穷阶约定因子为一、$\alpha^{-2}=0$。收敛仍在原实际数据概率下，对全部大小 $q$ 的确定支持一致，
+pair/path 分别成立；双重上确界中的全部函数来自同一个数据纤维。
+原噪声可以任意慢地趋零，没有新增下界速率。
+
+特别地，若 $\alpha_Q\delta^{1/4}\to c\in(0,\infty)$，则一致于紧输出区间，
+
+$$
+H_{\alpha_Q}(\mathsf P_x^y)-H_{\alpha_Q}(\mathsf P_x^0)
+-\frac{\alpha_Q}{\alpha_Q-1}\left[b_xy-\frac{y^2}{2\nu}\right]
+\longrightarrow-\frac{C_{\mathrm{edge}}}{c^2}y.
+\tag{112.4}
+$$
+
+若确定 $a_Q\delta^{1/4}\to\infty$，则 (112.3) 在 $\alpha\ge a_Q$ 上删去谱端项后仍成立，
+但保留有限阶因子。第 110 章的 $\alpha_Q\sqrt\delta\to c$ 修正保持不变：在那个尺度谱端项趋零。
+在本章较低阶数尺度直接删去 $\alpha/(\alpha-1)$，则会留下 $\delta^{-1/4}$ 量级的项。
+
+**证明：更长的实际谱端窗口。** 在第 110 章同一个好事件上，$v_*=v_0$ 唯一，
+$d_j^\circ=1-v_j/v_0\ge c_1\min(j^2\delta^2,1)$。
+取原高计数组集合 $\mathcal H=\{j:C_j\ge e^{\epsilon Q^3}\}$，
+令
+
+$$
+A_\alpha=\frac1{\alpha\delta},\qquad
+w_j=\frac{v_j}{\alpha d_j^\circ},\qquad m_j^\circ=-\frac{e_j}{d_j^\circ}
+\quad(j\in\mathcal H\setminus\{0\}).
+\tag{112.5}
+$$
+
+这里 $A_\alpha$ 是本章的小球尺度，不是第 111 章的原方差校正系数。
+按原整数指标直接有
+
+$$
+w_j\le\frac{CA_\alpha}{j^2},\quad w_{\pm1}\asymp A_\alpha,
+\quad \sum_j(m_j^\circ)^2\le C\delta^{-4}\|e\|^2=O_{\mathbb P}(\delta^6).
+\tag{112.6}
+$$
+
+中央用剖面和谱亏损；中央外 $v_j\le Q^{-60}$、$|j|\le CQ^2$ 给相同的指标界。
+只为写和式可在不存在的指标补零，不新增实际计数组。
+
+先取区间
+
+$$
+\mathcal A_Q=[c\delta^{-1/4},\delta^{-1/3}].
+\tag{112.7}
+$$
+
+其中 $A_\alpha\to\infty$ 且 $A_\alpha\delta=1/\alpha\to0$ 一致成立。
+对每个固定 $B_0$，第 110 章的实际相对剖面误差
+$\eta_Q=O_{\mathbb P}(Q^{-3/2}(1+\ln Q)^{3/2})=o_{\mathbb P}(\delta^2)$ 给
+
+$$
+\sup_{\substack{\alpha\in\mathcal A_Q\\1\le|j|\le B_0A_\alpha}}
+\left|\frac{w_j}{\zeta A_\alpha/j^2}-1\right|\to0,
+\qquad \zeta=2\rho_0/\kappa.
+\tag{112.8}
+$$
+
+确实，此处 $|j|\delta\le B_0/\alpha\to0$，所有这些实际指标均属高计数核心。
+Taylor 展开给
+
+$$
+d_j^\circ=\frac\kappa2j^2\delta^2
+\left[1+O((j\delta)^2)+O\left(\frac{\eta_Q}{j^2\delta^2}\right)\right].
+\tag{112.9}
+$$
+
+两个相对误差分别由 $CB_0^2/\alpha_{\min}^2$ 与 $C\eta_Q/\delta^2$ 控制。
+同时 $v_j=\delta\rho_0(1+o_{\mathbb P}(1))$，得到 (112.8)。
+两侧整数分支和原所有取整都已包括，未假设一条固定无限谱。
+
+**有限数组的统一小球对数极限。** 先将辅助临界 Gaussian 的均值设为零，置
+$R_\alpha^0=\sum_jw_jZ_j^2$、$F_\alpha^0(h)=\Pr(R_\alpha^0\le h)$。
+其有限 Laplace 变换精确给
+
+$$
+T_{Q,\alpha}(z):=-A_\alpha^{-1}\ln\mathbb Ee^{-A_\alpha zR_\alpha^0}
+=\frac1{2A_\alpha}\sum_j\ln(1+2A_\alpha zw_j).
+\tag{112.10}
+$$
+
+一致于 $\alpha\in\mathcal A_Q$ 和每个正的紧 $z$ 区间，
+
+$$
+T_{Q,\alpha}(z)\longrightarrow d\sqrt z,
+\qquad d=2\pi\sqrt{\rho_0/\kappa}.
+\tag{112.11}
+$$
+
+为核对移动数组的统一性，先限 $\eta A_\alpha\le|j|\le B_0A_\alpha$。
+(112.8) 与网格 $1/A_\alpha$ 将和式化为
+
+$$
+\frac12\int_{\mathbb R}\ln(1+2\zeta z/t^2)dt
+=\pi\sqrt{2\zeta z}=d\sqrt z.
+\tag{112.12}
+$$
+
+外尾 $|j|>B_0A_\alpha$ 由 $\ln(1+x)\le x$ 和 (112.6) 控为 $C/B_0$。
+内段 $0<|j|<\eta A_\alpha$ 由阶乘或积分比较控为
+$C\eta(1+|\ln\eta|)+C\ln A_\alpha/A_\alpha$。
+先取原规模极限，再令 $\eta\downarrow0$、$B_0\uparrow\infty$。
+积分通过分部积分和 $\int_0^\infty\ln(1+b^2/t^2)dt=\pi b$ 得到；
+Gaussian 对数变换的 $1/2$ 与正负两个分支均已计入。
+
+对任意正紧能量区间 $I$，进一步有
+
+$$
+\sup_{\alpha\in\mathcal A_Q,\,h\in I}
+\left|A_\alpha^{-1}\ln F_\alpha^0(h)+C_0/h\right|\to0.
+\tag{112.13}
+$$
+
+上界用指数 Markov，取 $z=C_0/h^2$：
+$F_\alpha^0(h)\le\exp\{A_\alpha(zh-T_{Q,\alpha}(z))\}$。
+下界在同一个有限数组上以 $e^{-A_\alpha zR_\alpha^0}$ 倾斜。
+倾斜后的均值和方差是
+
+$$
+\mathbb E_zR_\alpha^0=\sum_j\frac{w_j}{1+2A_\alpha zw_j},\qquad
+\operatorname{Var}_zR_\alpha^0
+=2\sum_j\left(\frac{w_j}{1+2A_\alpha zw_j}\right)^2\le C/A_\alpha.
+\tag{112.14}
+$$
+
+方差界逐项用 $\min(CA_\alpha/j^2,(2A_\alpha z)^{-1})$，在 $|j|\asymp A_\alpha$ 处分和。
+均值一致趋于 $d/(2\sqrt z)$：可用同一 Riemann 和，
+也可用 $T_{Q,\alpha}$ 的凹性，将其导数夹在固定步长的前后割线间，
+先取 (112.11) 的一致极限，再令步长趋零。
+
+固定小 $t>0$，取 $h'=h-2t$、$z=C_0/(h')^2$。
+倾斜均值趋于 $h'$，方差趋零，故区间 $[h-3t,h-t]$ 的倾斜概率一致趋一。
+撤去同一个倾斜，得到
+
+$$
+F_\alpha^0(h)\ge e^{-A_\alpha T_{Q,\alpha}(z)+A_\alpha z(h-3t)}
+\Pr_z\{h-3t\le R_\alpha^0\le h-t\}.
+\tag{112.15}
+$$
+
+其归一化对数下界为 $-C_0/(h-2t)-zt+o_{\mathbb P}(1)$。
+最后 $t\downarrow0$，证明 (112.13)。这支付了有限随机数组的均值、方差和统一误差，
+不直接套用固定无限序列的小半径渐近式。
+
+**精确非中心均值与导数。** 还原
+$R_\alpha=\sum_j(\sqrt{w_j}Z_j+m_j^\circ)^2$、$F_\alpha(h)=\Pr(R_\alpha\le h)$。
+若 $b=\|m^\circ\|=O_{\mathbb P}(\delta^3)$，同一 Gaussian 向量上的三角不等式给
+
+$$
+F_\alpha^0((\sqrt h-b)_+^2)\le F_\alpha(h)
+\le F_\alpha^0((\sqrt h+b)^2).
+\tag{112.16}
+$$
+
+所以 $A_\alpha^{-1}\ln F_\alpha(h)\to f(h):=-C_0/h$ 在稍扩大正紧区间上一致成立。
+第 110 章核对的 Prékopa 边缘定理使 $F_\alpha$ 关于 $h$ 对数凹；
+非中心与不等方差均不破坏凸球上图集论证。
+正能量上这些有限数组的 CDF 光滑。
+对固定小步长 $t>0$，凹函数 $f_{Q,\alpha}=A_\alpha^{-1}\ln F_\alpha$ 满足
+
+$$
+\frac{f_{Q,\alpha}(h+t)-f_{Q,\alpha}(h)}t
+\le f_{Q,\alpha}'(h)
+\le\frac{f_{Q,\alpha}(h)-f_{Q,\alpha}(h-t)}t.
+\tag{112.17}
+$$
+
+若扩大区间上的一致误差为 $\epsilon_Q$，两侧离 $f'(h)$ 的误差至多
+$2\epsilon_Q/t$ 加 $f'$ 在尺度 $t$ 的连续模。
+先固定 $t$ 取规模极限，再令 $t\downarrow0$，得到
+
+$$
+\sup_{\alpha\in\mathcal A_Q,\,h\in I}
+\left|\frac{(\ln F_\alpha)'(h)}{A_\alpha}-\frac{C_0}{h^2}\right|\to0.
+\tag{112.18}
+$$
+
+这里补上了从对数渐近式到导数的实质条件；未直接微分未控制的渐近误差。
+
+**原噪声在较低阶数下的费用。** 现在核对整个区间
+$c\delta^{-1/4}\le\alpha\le Q^6$。
+第 110 章的精确临界分解仍为
+
+$$
+g_{\alpha,\sigma'}(y)=C_{x,\alpha}\sqrt\delta\,
+ e^{-\alpha[c_*h_y-\delta u'c_*^2/2]}(r_\alpha*\varphi_s)(z_y),
+\tag{112.19}
+$$
+
+其中 $c_*=1/(2v_*)$、$h_y=V+\sqrt\delta y$、$u'=(\sigma')^2$、
+$s^2=\delta u'/\alpha$、$z_y=h_y-\delta u'c_*$，而
+
+$$
+r_\alpha(h)=\mathbb E\left[(h-R_\alpha)^{-1/2}
+\cosh\!\left(\frac{\alpha e_0\sqrt{h-R_\alpha}}{v_0}\right)
+\mathbf1_{R_\alpha<h}\right].
+\tag{112.20}
+$$
+
+临界倾斜只用于非最大坐标，最大平方仍保留为未归一化核。
+所有紧输出的 $z_y$ 在固定正紧区间内，且
+
+$$
+z_0=V-\frac{\delta(\sigma')^2}{2v_*}\to\gamma.
+\tag{112.21}
+$$
+
+这里仅需 $\sigma'\to0$，没有要求环境收敛或噪声收敛的附加速率。
+
+第 110 章的小球下界仍适用：其构造所需坐标数
+$N=\lceil C(1+A_\alpha)\rceil=O(\delta^{-3/4})$，小于可用核心的 $\delta^{-1}$ 阶数量。
+前 $N$ 个标准坐标的限制概率至少 $e^{-CN}$，尾平方和的均值至多 $CA_\alpha/N$，
+小非中心均值由三角不等式支付。因此 $F_\alpha(h)\ge e^{-C(1+A_\alpha)}$，
+对数凹性给 $0\le(\ln F_\alpha)'\le D_\alpha:=C(1+A_\alpha)$。
+平方根核的局部积分界与 $j=\pm1$ 的二维密度界同样给
+
+$$
+F_\alpha'(h)\le C\alpha\delta,\qquad
+r_\alpha(h)\le C\alpha\delta\sqrt h\,e^{\alpha|e_0|\sqrt h/v_0}.
+\tag{112.22}
+$$
+
+在局部用 CDF 的对数 Lipschitz 界，区间外吸收非中心指数到 Gaussian 卷积的固定比例，得到
+
+$$
+\left|\ln\frac{(r_\alpha*\varphi_s)(z)}{F_\alpha(z)}\right|
+\le C\{1+\ln(2+D_\alpha)+D_\alpha s+D_\alpha^2s^2+\alpha|e_0|/v_0\}+o(1).
+\tag{112.23}
+$$
+
+外尾相对小球概率仍可忽略，因为 $(1/s^2)/A_\alpha=\alpha^2/u'\to\infty$，
+且 $1/s^2$ 一致压过各多项式对数。
+新的阶数范围内不能沿用 $D_\alpha s\to0$；正确的归一化费用是
+
+$$
+\frac{1+\ln(2+D_\alpha)}\alpha\le C\delta^{1/4}(1+|\ln\delta|),\qquad
+\frac{D_\alpha s}\alpha\le C\sigma'\delta^{1/8},
+$$
+
+$$
+\frac{D_\alpha^2s^2}\alpha
+\le C(\sigma')^2\left(\frac\delta{\alpha^2}+\frac1{\alpha^3}
++\frac1{\alpha^4\delta}\right)\le C(\sigma')^2,
+\qquad |e_0|/v_0=O_{\mathbb P}(\delta^4).
+\tag{112.24}
+$$
+
+全部趋零，故 (112.23) 除以 $\alpha$ 的误差一致趋零。
+
+**缩小输出差的积分。** 对 $\alpha\in\mathcal A_Q$，将 (112.18) 沿
+$[z_0,z_0+\sqrt\delta y]$ 有向积分。整个区间一致趋近 $\gamma$，故
+
+$$
+\frac{\ln F_\alpha(z_y)-\ln F_\alpha(z_0)}\alpha
+=\frac{A_\alpha\sqrt\delta}{\alpha}
+\left(\frac{C_0y}{\gamma^2}+o_{\mathbb P}(1)\right)
+=\frac{C_{\mathrm{edge}}y}{\alpha^2\sqrt\delta}+o_{\mathbb P}(1).
+\tag{112.25}
+$$
+
+误差可一致支付，因为 $1/(\alpha^2\sqrt\delta)\le1/c^2$。
+对 $\delta^{-1/3}\le\alpha\le Q^6$，用粗导数界已经有
+
+$$
+\alpha^{-1}|\ln F_\alpha(z_y)-\ln F_\alpha(z_0)|
+\le C_K(\sqrt\delta/\alpha+1/(\alpha^2\sqrt\delta))=O(\delta^{1/6});
+\tag{112.26}
+$$
+
+显式谱端项本身也为 $O(\delta^{1/6})$。
+因此 (112.19)、(112.23)–(112.26) 在整个多项式阶数区间给
+
+$$
+-\alpha^{-1}\ln\frac{g_{\alpha,\sigma'}(y)}{g_{\alpha,\sigma'}(0)}
+=b_xy-\frac{C_{\mathrm{edge}}y}{\alpha^2\sqrt\delta}+o_{\mathbb P}(1).
+\tag{112.27}
+$$
+
+有限噪声截距先在两个输出相减时精确消去。
+若 $|u'/u-1|\le h_Q$ 且 $h_Q$ 指数小，同一个 $C_{x,\alpha}$ 也使相邻宽度的绝对比较成立：
+
+$$
+\alpha^{-1}|\ln g_{\alpha,\sigma'}(y)-\ln g_{\alpha,\sigma}(y)|
+\le C|u'-u|/\delta+C(D_\alpha/\alpha)|u'-u|+o_{\mathbb P}(1)=o_{\mathbb P}(1).
+\tag{112.28}
+$$
+
+**实际计数、选择与无穷阶的回接。** (110.25)–(110.29) 的有限估计实际上对
+$1\le\alpha\le Q^6$ 成立：高计数组中央联合质量比误差为
+$\operatorname{poly}(Q)e^{-\epsilon Q^3/4}$，删去尾概率为
+$\operatorname{poly}(Q)e^{-c\alpha Q^4+C\alpha}$，
+原标量与舍入 Gaussian 的偏移满足
+
+$$
+\Delta_Q\le\operatorname{poly}(Q)(B^{-1}+B^{-2}e^{2\epsilon Q^3}),\qquad
+\frac{\Delta_Q}{\sigma/\sqrt\alpha}\le\operatorname{poly}(Q)e^{-b_0Q^3}.
+\tag{112.29}
+$$
+
+这些界未用第 110 章最终定理的更高阶数下界；高计数条件、原半指数噪声与 $\alpha\le Q^6$ 已足够。
+较低区间的稀有密度下界也可直接核验：除最大平方外，其余未倾斜平方均值至多
+$V/\alpha+\|e\|^2=o(1)$，至少以概率 $1/2$ 留在固定小能量内。
+将能量噪声限制在一个标准差内，剩余正紧能量处的最大平方密度给
+$g_{\alpha,\sigma'}(y)\ge e^{-C\alpha/\delta}$。
+所以删去尾密度相对此下界的费用至多
+$\operatorname{poly}(Q)\sigma^{-1}e^{-c\alpha Q^4+C\alpha+C\alpha/\delta}\to0$。
+用核宽夹逼和 (112.28)，将 (112.27) 移到原乘积计数幂律，误差除以 $\alpha$ 一致趋零。
+
+原选择回接仍是 (110.32) 的同一稀有输出期望比。
+全区间 $1\le\alpha\le Q^6$ 的能量期望有界；
+以 $e^{-(E-h)^2/(2w^2)}$ 重加权后亦有界，因其分母可由固定有界能量事件下界，
+远尾由 Gaussian 指数压过。
+再用原 $D(n)^2/q\le C\delta(E+\|e\|^2)$、精确选择对数界及 Jensen，
+得到幂后验的对数预测密度比除以 $\alpha$ 为 $O_{\mathbb P}(\delta)$。
+这保留实际固定总数选择与原 path 依赖。
+
+将实际幂预测密度的 (112.27) 代入精确恒等式 (110.11)，
+普通预测密度差仍为 $-y^2/(2\nu)+o_{\mathbb P}(1)$，便得 (112.3) 至 $Q^6$。
+更高阶数使用原有限计数支持的 $\ln N\le CQ^5$ 和
+$0\le H_\alpha-H_\infty\le\ln N/(\alpha-1)$，
+分别在两个输出应用，误差为 $O(Q^{-1})$；第 108 章端点响应完成真正的重叠。
+此时有限阶因子与谱端项的费用分别至多 $C(1+|b_x|)/Q^6$ 和
+$C_K/(Q^{12}\sqrt\delta)$，都趋零。
+因此不必在超多项式阶数要求有效噪声仍大于整数网格。
+
+全部估计在同一个原好事件上完成，原概率界对支持一致且对 pair/path 分别成立。
+放开紧的环境常数即给完整概率范围。(112.4) 和更快阶数结论由 (112.3) 直接推出，证毕。
+本章没有无界输出、期望熵、Shannon 延拓、典型单模凝聚、噪声阈值等号或全局原创结论。
+经典负指数倾斜、小球方法、Gaussian 二次型和凹函数割线各归成熟理论；
+新增连接是实际移动有限谱的一致导数，以及它在原完整后验输出响应中的常数阶作用。
+
+## 追加锚（第 112 章后续增补区）

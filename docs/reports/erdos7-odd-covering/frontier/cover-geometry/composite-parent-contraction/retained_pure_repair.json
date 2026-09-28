@@ -1,0 +1,154 @@
+{
+  "actual_control": {
+    "H": 1,
+    "J": 1,
+    "N": 8,
+    "R": 6,
+    "S": 7866,
+    "a": 0,
+    "c": 1,
+    "comparable_pairs": 6,
+    "comparison_period": 16875,
+    "eligible_retained_pure_classes": [
+      [
+        3,
+        0
+      ]
+    ],
+    "fresh_target_points": 18,
+    "h": 625,
+    "h_N_squared": 40000,
+    "old_qualification": false,
+    "original_holes": 938,
+    "original_period": 1875,
+    "p": 3,
+    "private_counts": {
+      "3": 469,
+      "5": 250,
+      "25": 50,
+      "125": 10,
+      "625": 2
+    },
+    "pure_target_points": 9,
+    "r": 9,
+    "repairs": [
+      [
+        9,
+        1
+      ],
+      [
+        27,
+        8
+      ],
+      [
+        45,
+        11
+      ],
+      [
+        135,
+        71
+      ],
+      [
+        225,
+        76
+      ],
+      [
+        675,
+        26
+      ],
+      [
+        1125,
+        626
+      ],
+      [
+        5625,
+        3751
+      ]
+    ],
+    "s": 3,
+    "t": 5,
+    "target_points": 27
+  },
+  "finite_bounds": {
+    "cases": 2773,
+    "equal_final_layer_cases": 19,
+    "ranges": [
+      {
+        "C": "19/9",
+        "cases": 3,
+        "k": 2,
+        "max_upper_ratio": "23/32",
+        "maximizer": {
+          "J": 1,
+          "N": 8,
+          "R": 6,
+          "U": "46",
+          "s": 3,
+          "t": 5
+        },
+        "p": 3
+      },
+      {
+        "C": "8/3",
+        "cases": 30,
+        "k": 3,
+        "max_upper_ratio": "531/625",
+        "maximizer": {
+          "J": 2,
+          "N": 25,
+          "R": 15,
+          "U": "531",
+          "s": 3,
+          "t": 11
+        },
+        "p": 3
+      },
+      {
+        "C": "29/9",
+        "cases": 273,
+        "k": 4,
+        "max_upper_ratio": "553/648",
+        "maximizer": {
+          "J": 3,
+          "N": 108,
+          "R": 48,
+          "U": "9954",
+          "s": 9,
+          "t": 33
+        },
+        "p": 3
+      },
+      {
+        "C": "34/9",
+        "cases": 2460,
+        "k": 5,
+        "max_upper_ratio": "55539/67712",
+        "maximizer": {
+          "J": 4,
+          "N": 368,
+          "R": 132,
+          "U": "111078",
+          "s": 12,
+          "t": 89
+        },
+        "p": 3
+      },
+      {
+        "C": "8/3",
+        "cases": 7,
+        "k": 2,
+        "max_upper_ratio": "25/49",
+        "maximizer": {
+          "J": 1,
+          "N": 28,
+          "R": 20,
+          "U": "400",
+          "s": 10,
+          "t": 18
+        },
+        "p": 5
+      }
+    ]
+  },
+  "scope": "ordinary exact arithmetic and finite noncover control; no Lean verification"
+}
