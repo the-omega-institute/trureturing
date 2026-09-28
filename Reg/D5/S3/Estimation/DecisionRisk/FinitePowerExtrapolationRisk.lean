@@ -29,10 +29,11 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law R := ∀ (T H : ℕ) (_hT : 1 ≤ T) (_hTH : T ≤ H) (η : ℝ) (_hη : 0 < η),
-    (ENNReal.ofReal (min (η * H / (2 * T)) (1 / 16)) ≤ R.readout () ⟨T, H⟩ η ∧
-      minimaxRisk T H η ≤ ENNReal.ofReal (min (1 / 2) (η * H / T))) ∧
-    (ENNReal.ofReal ((1 / 16) * min 1 (η * H / T)) ≤ minimaxRisk T H η ∧
-      minimaxRisk T H η ≤ ENNReal.ofReal (min 1 (η * H / T)))
+    let r := R.readout () ⟨T, H⟩ η
+    (ENNReal.ofReal (min (η * H / (2 * T)) (1 / 16)) ≤ r ∧
+      r ≤ ENNReal.ofReal (min (1 / 2) (η * H / T))) ∧
+    (ENNReal.ofReal ((1 / 16) * min 1 (η * H / T)) ≤ r ∧
+      r ≤ ENNReal.ofReal (min 1 (η * H / T)))
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
