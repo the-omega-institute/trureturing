@@ -1,0 +1,17 @@
+## corollary 15.3: 单环交错半边的经典与量子信息分解
+
+对第 12 节原编码，取 $V=R_d^{L+1}$、$A,B$ 为两侧真实边界线性输出。当区域每顶点恰选一腿时，两核均由初始值递推参数化，大小各为 $d$，故
+
+$$
+|Z|=d^{L-1},\qquad
+\mathcal M_A\simeq\bigoplus_{z=1}^{d^{L-1}}M_d(\mathbb C),\qquad
+\dim_{\mathbb C}\mathcal M_A=d^{L+1}.
+$$
+
+这表示 $d^{L-1}$ 个可区分经典扇区及每扇区一个 $d$ 维量子因子，不表示能恢复 $L$ 个独立量子寄存器。对均匀参考历史及第 4 节二次相位，中心分布均匀，扇区内的 Schmidt 秩为 $d/\gcd(d,c_k)$，所以
+
+$$
+S(\rho_A)=(L-1)\log d+
+\log\frac d{\gcd(d,c_k)}.
+$$
+

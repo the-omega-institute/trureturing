@@ -1,0 +1,8 @@
+## theorem 19.2: 到三方全息熵锥的精确一致误差
+
+令 $h=H(p)$，$s=(h,h,h,h,h,h,h)$ 按 $A,B,C,AB,AC,BC,ABC$ 排列。用 [HEC15] 的静态几何熵锥 $\mathcal C_3$ 约定，有
+
+$$
+\boxed{\inf_{g\in\mathcal C_3}\|g-s\|_\infty=h/7.}
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:40a033cfccaa0c4e044b96fec2b307d3a3a1550b7f7417d65b6ef1ad43dafef8
+  normalized_sha256: sha256:40a033cfccaa0c4e044b96fec2b307d3a3a1550b7f7417d65b6ef1ad43dafef8
+cas_ref: sha256:40a033cfccaa0c4e044b96fec2b307d3a3a1550b7f7417d65b6ef1ad43dafef8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Upstream-only bind-only closure under CLAUDE.md 3.2 and 4.7; no repository GID exists for this complete claim. Against pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, List.lookup_graph, List.lookup_append, List.reverse_append, List.lookup_eq_none_iff, List.nodup_dedup, List.nodup_reverse, List.Nodup.filter, List.toFinset_card_of_nodup, Finset.card_le_card and List.toFinset_card_le close the complete finite-history repair statement by instantiation, projection and normalization: append each original floating proposition exactly once with its current reading, introduce no new proposition, restore balance, and attain repair length equal to the floating-set cardinality; every balanced appended sequence must mention every original floating proposition and has at least that length, including repairs using unverified labels. The same deterministic strategy is empty on balanced inputs; identity preserves all ledger nodes, edges and witnesses, and constant True admission is invariant under every submitter permutation, giving all three good-subject conditions. Finset.le_sup, List.left_le_of_mem_range', List.length_range', List.pairwise_lt_range' and List.pairwise_append supply fresh increasing consecutive serials. The complete transient Lean check compiled through make lean with axiom closure only propext, Classical.choice and Quot.sound; its scratch source was removed. No new Lean declaration or frozen GID is delivered."
+    previous_atom_id: e570d08a0718b376cbfc30e32aa213ed229c48384bc9c93f5b5c44ae8b53237c
+    next_atom_id: dc5d2d98871e3ae57c5ba398c4b3236df07bec04b73c2058360398a8b5f50781
