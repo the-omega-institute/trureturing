@@ -88,7 +88,8 @@ private theorem firstSums_sum (a : ℕ) (s : List ℕ) :
         a + b + (firstSums (b :: c :: s)).sum + (c :: s).getLastD b =
           a + 2 * (b + (c :: s).sum))
 
-private theorem cellsOfRowLens_card (l : List ℕ) :
+/-- The diagram with row lengths `l` has `l.sum` cells. -/
+theorem cellsOfRowLens_card (l : List ℕ) :
     (YoungDiagram.cellsOfRowLens l).card = l.sum := by
   induction l with
   | nil => simp [YoungDiagram.cellsOfRowLens]
@@ -100,7 +101,8 @@ private theorem cellsOfRowLens_card (l : List ℕ) :
       obtain ⟨y, _, rfl⟩ := Finset.mem_map.mp hy
       simpa using (Finset.mem_product.mp hx).1
 
-private theorem rowLens_sum (d : YoungDiagram) : d.rowLens.sum = d.cells.card := by
+/-- A Young diagram has as many cells as the sum of its row lengths. -/
+theorem rowLens_sum (d : YoungDiagram) : d.rowLens.sum = d.cells.card := by
   have h := cellsOfRowLens_card d.rowLens
   change (YoungDiagram.ofRowLens d.rowLens d.rowLens_sorted).cells.card = _ at h
   rw [YoungDiagram.ofRowLens_to_rowLens_eq_self] at h
