@@ -9,78 +9,6 @@ internal sealed class ExactSnapshotCollisionClassificationDocument : IScribeDocu
         H("Exact Snapshot Collision Classification"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("branch-collision-rigidity"),
-                DeclarationHandle.Create(
-                    "D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.branch_collision_rigidity"),
-                H("Two collisions determine both signed differences"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "Let G be an additive commutative group, let chi:G to ZMod 2 be surjective, "
-                        + "and let I be a finite sender set with at least three elements, so a third sender exists for two "
-                        + "distinct senders. On a fixed parity fibre, exactness means that equal replies "
-                        + "force equal sums of sender inputs.")),
-                    Paragraph(Text(
-                        "Exactness separates each reply map on both chi fibres. Thus a nontrivial collision "
-                        + "has odd difference. If sender i collides at x and y and sender j collides at u "
-                        + "and v, a third sender completes the parity in two source comparisons. The first "
-                        + "comparison changes both coordinates and gives (y-x)+(v-u)=0; the second changes "
-                        + "the first coordinate against the opposite change and gives (y-x)-(v-u)=0.")),
-                    Paragraph(Text(
-                        "The two equations are obtained while the parity, branch and all replies remain fixed; "
-                        + "they therefore apply to arbitrary partial collisions on that branch."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("common-odd-collision"),
-                DeclarationHandle.Create(
-                    "D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.common_odd_collision_of_two_senders"),
-                H("All nontrivial collision differences agree"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "If two distinct senders each have a nontrivial collision on an exact branch, "
-                        + "their collision differences are equal and are fixed by a single element tau.")),
-                    Paragraph(Text(
-                        "The element tau has chi(tau)=1 and 2 tau=0. Every collision of every sender on "
-                        + "the branch has difference tau, while a sender with no collision imposes no "
-                        + "condition. The collision family may therefore be partial and the exceptional "
-                        + "sender may depend on the branch."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("branch-exact-from-decoder"),
-                DeclarationHandle.Create(
-                    "D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.branch_exact_of_decoder"),
-                H("A decoder induces exactness on every reachable parity branch"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "For an existing deterministic protocol and decoder that recovers the target on "
-                        + "every source, fix a reachable (a,t,c). Any sender tuple whose sum has parity "
-                        + "chi(t-a) can be completed with the unique kernel-valued clock offset. Two such "
-                        + "tuples with equal replies produce equal observations, so decoder correctness "
-                        + "forces equal sender sums."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("branch-exact-from-condition"),
-                DeclarationHandle.Create(
-                    "D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.branch_exact_of_condition"),
-                H("Collision conditions imply branch exactness"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "Suppose each reply map separates equal-characteristic inputs and either at most one "
-                        + "sender is noninjective or all nontrivial collisions have one common odd involution.")),
-                    Paragraph(Text(
-                        "On a fixed characteristic fibre, equal replies then force equal sender sums. With one "
-                        + "possible exceptional sender, parity determines its characteristic and separation "
-                        + "determines its value. With a common involution, each coordinate difference is zero "
-                        + "or the involution, and the parity equation makes the total difference zero."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("exact-recovery-iff-branches"),
                 DeclarationHandle.Create(
                     "D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.exact_recovery_iff_branch_conditions"),
@@ -92,12 +20,27 @@ internal sealed class ExactSnapshotCollisionClassificationDocument : IScribeDocu
                         "For a surjective characteristic and a finite set of at least three senders, "
                         + "a deterministic protocol has a decoder recovering the target on "
                         + "all sources exactly when every reachable branch has fibre separation and satisfies "
-                        + "the one-exception-or-common-involution alternative.")),
+                        + "the one-exception-or-common-involution alternative. Fibre separation means that every "
+                        + "reply map is injective on each of chi inverse zero and chi inverse one. The alternative "
+                        + "requires either at most one noninjective sender or an element tau with chi(tau)=1 and "
+                        + "tau+tau=0 such that every nontrivial reply collision y versus x has y-x=tau.")),
+                    Paragraph(Text(
+                        "For necessity, complete the parity with another sender to separate equal-characteristic "
+                        + "inputs. For collisions d and e at two distinct senders, a third sender completes "
+                        + "the parity. Comparing the two collisions in the same and opposite orientations forces "
+                        + "d+e=0 and d-e=0. Fixing one collision in each of two senders then makes all "
+                        + "nontrivial collision differences equal to the same odd involution.")),
+                    Paragraph(Text(
+                        "For sufficiency with one possible exceptional sender, all other coordinates are fixed, "
+                        + "parity fixes the last characteristic, and fibre separation fixes the last value. "
+                        + "For a common involution, induction over the sender set makes the total difference "
+                        + "either zero or tau; equal parity excludes tau.")),
                     Paragraph(Text(
                         "The reverse implication constructs a decoder by assigning to each observation the "
                         + "unique target value on its source fibre; observations outside the image receive an "
-                        + "arbitrary value. Empty branches therefore impose no condition, and collision pairs "
-                        + "may remain partial or vary between branches."))),
+                        + "arbitrary value. Empty branches therefore impose no condition. Only actual collision "
+                        + "pairs are constrained: not every pair differing by tau must be merged. Both the "
+                        + "exceptional sender and tau may depend on the branch."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-injective-iff-branch-single"),
@@ -110,11 +53,11 @@ internal sealed class ExactSnapshotCollisionClassificationDocument : IScribeDocu
                     Paragraph(Text(
                         "Assume the protocol has an exact decoder. The observation map is injective on the "
                         + "actual source space exactly when every reachable branch has at most one noninjective "
-                        + "sender.")),
+                        + "sender. The characteristic is surjective and there are at least three senders.")),
                     Paragraph(Text(
                         "If two senders collide, the common odd involution and a third sender produce two distinct "
-                        + "sources with the same observation. If at most one sender is noninjective, fibre separation "
-                        + "and the parity constraint recover every sender coordinate, after which the clock equation "
-                        + "recovers the kernel offset."))),
+                        + "sources with the same observation. If at most one sender is noninjective, all other "
+                        + "coordinates are fixed by their replies. Exact decoding fixes the total sum and hence "
+                        + "the remaining coordinate; the clock then fixes the kernel offset."))),
                 DescribeRole.Theorem))));
 }
