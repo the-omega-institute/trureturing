@@ -199019,6 +199019,8 @@ $A$ 只在 $(1,1)$ 次有非零空间，而 $B$ 在 $(r,r)$ 次的迹为 $c>0$�
 3. **反常与融合。** 能否在指定的同一共形表示中证明应力张量 OPE、Virasoro 中心项和所需流代数；若主张融合，能否另外给出满足假设 2143.4 的 $U$、模范畴和带插入态迹函数的典范 $S_U^{\mathrm{can}}$？普通分次迹不足以回答两问。依据：[Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；[Huang 2008a, Theorems 5.2, 5.5](https://arxiv.org/abs/math/0406291v3) [文献注](../../../Library/VertexAlgebra/huang2008verlinde.md)。
 4. **完整边界与 bulk。** 能否构造读取左右手征数据的 $\Pi$ 并验证式 (2143.3)；若进一步声称弦论或 AdS/CFT 对偶，能否指定适用极限、bulk 态及算子字典并验证 $EA=\iota(A)E$？仅 VOA、分母或融合公式不回答这一问。依据：[Maldacena 1998](https://arxiv.org/abs/hep-th/9711200v3) [文献注](../../../Library/Quantum/maldacena1998ads.md)；区域相对熵的附加范围见 [JLMS 2016](https://arxiv.org/abs/1512.06431) [文献注](../../../Library/Quantum/jlms2016relativeentropy.md)。
 
+第 3 问的 Sugawara 子目标由问题 2145.1 给出逐模数判据。一般形式的 Heisenberg 局部截断、正规序算子和 $c=1$ Virasoro 对易式已见 [Kytölä, VirasoroProject, `Sugawara.lean`, 固定提交 `5ff4245`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。用于本节具体 $\mathbb C[X_0,X_1,\ldots]$ 时，仍须核对模式的 Heisenberg 关系、逐态截断、正规序及结论所用算子的同一性。即使完成这一子目标，第 2 问的全态 $Y_F$、第 3 问的应力张量 OPE 和融合数据，以及第 1、4 问的 Monster 与完整边界接口仍各自待证；一般 Virasoro 表示也不能被称作整个 Fock 空间的 Virasoro 真空模。
+
 **问题 2143.8（分次行列式与迹的同源核验）。** 给定同一批正双分次有限维 $G$-表示 $W_{m,n}$（$m,n\geq1$），令 $D_g(p,q)=\prod_{m,n\geq1}\det(1-p^mq^n g\mid W_{m,n})$，其中每个因子都由 $g$ 在该空间上的实际作用定义。能否依次验证：对每个因子，形式恒等式
 
 $$
