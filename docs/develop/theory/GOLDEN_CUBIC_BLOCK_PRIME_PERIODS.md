@@ -1660,3 +1660,16 @@ integer coefficients of $P_m$ into $\mathbb C$. It follows by matching
 the initial values and the two recurrences; the factor $(-i)^{m-1}$
 converts the minus sign in the Chebyshev recurrence into the plus sign
 in $P_m$.
+## 40. Opposite-root symmetry at odd order
+
+For the same recurrence polynomial $P_m$, every odd index gives an even
+polynomial:
+
+$$
+P_{2r+1}(-X)=P_{2r+1}(X)\qquad(r\geq0).
+$$
+
+Consequently, if $z$ is a complex root of $P_{2r+1}$, then $-z$ is also
+a root. This is the algebraic form of the
+opposite pairing used before the trigonometric root formula; it does not
+assert the locations or simplicity of the roots.

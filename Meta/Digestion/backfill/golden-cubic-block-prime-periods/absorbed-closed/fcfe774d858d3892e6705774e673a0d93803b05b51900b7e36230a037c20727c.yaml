@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fcfe774d858d3892e6705774e673a0d93803b05b51900b7e36230a037c20727c
+  normalized_sha256: sha256:fcfe774d858d3892e6705774e673a0d93803b05b51900b7e36230a037c20727c
+cas_ref: sha256:fcfe774d858d3892e6705774e673a0d93803b05b51900b7e36230a037c20727c
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciRecurrencePolynomialOddParity.odd_recurrence_polynomial_even
+    target_statement_id: sha256:e398cccce25d746519f78b172bf43f26db9af8ad0943f2a20f955e6169ab2465
+receipts:
+  unresolved_subitems: []
