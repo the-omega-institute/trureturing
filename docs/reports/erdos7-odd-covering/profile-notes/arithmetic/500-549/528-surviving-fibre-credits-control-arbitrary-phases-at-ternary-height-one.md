@@ -1352,6 +1352,279 @@ including an attaining slot assignment after one shared35-cell
 exclusion. This is a finite check of the stated relaxation; the
 source-dependent inequality follows from the proof above.
 
+## Concentrating source losses exposes the limit of separate pair refinements
+
+FC42a retains an actual first-root mass matrix. It is possible to
+bound all such matrices using their total masses, but that relaxation
+has no strict gain for the FC36 inventory, even when each pair keeps
+one common old pq phase. The source-concentration argument and the
+actual finite example below distinguish this limitation from failure
+of a joint phase model.
+
+### A source-independent upper bound within the declared pair relaxation
+
+Fix one root, one exact-first-depth p/q bucket and its nonnegative
+coefficients a_i from FC42a. Enlarge its cell set to the complete
+p by q grid, dropping label-specific cell exclusions for this upper
+bound. Let F_a(R,C) be the maximum weighted charge over assignments
+with at most two labels per cell and doubled cells a matching. There
+are finitely many assignments; their admissibility does not depend
+on R,C. Assume the bucket fits this grid. From one product source,
+
+    0<=R_i,C_j<=1,
+    sum_i R_i=S_p=p*(1-beta_(p,t))/c_p,
+    sum_j C_j=S_q=q*(1-beta_(q,t))/c_q.
+
+Here c_p,c_q are the very same valid cylinder caps used in a_i.
+For 0<=S<=n write v_n(S) for the n-vector with floor(S) entries1,
+one entry S-floor(S) if nonzero, and all remaining entries0. Then
+
+    F_a(R,C)<=F_a(v_p(S_p),v_q(S_q)).             (FC43)
+
+For fixed C, each assignment gives a linear function of R. Their
+finite maximum is convex. The vertices of the capped simplex
+{R in[0,1]^p:sum R=S_p} have at most one fractional entry: two
+fractional entries admit opposite small perturbations preserving
+the sum, so cannot form a vertex. All vertices are permutations of
+v_p(S_p). The complete-grid assignment constraints are invariant
+under row permutations, so F_a has the same value at all these
+vertices. Express R as a convex combination of vertices to obtain
+F_a(R,C)<=F_a(v_p(S_p),C). Repeat in C to prove FC43.
+
+Joint convexity is neither assumed nor needed. This is one upper
+relaxation, not an assertion that two independent maximizing source
+laws can be glued. The row/column permutation argument requires the
+complete grid with all label-specific cell exclusions removed;
+retaining those exclusions requires retaining their actual incidence.
+
+The same deduction applies after FC34 enlarges star sets to prescribed
+masses B_(q,t) on the SAME nonatomic product source: replace beta by B
+in the mass identity. The enlarged-star carrier is a subset of the
+actual post-star carrier. After deleting all remaining actual
+originals, its remainder is contained in the full survivor U. Thus
+its mass minus an upper bound for these deletions gives a lower
+bound for lambda(U). The true originals retain their JP cell
+constraints. No normalized-Haar lower floor is transferred to
+a different law, and no all-ternary-height JP theorem is inferred.
+
+If k=floor(S_p), l=floor(S_q), the concentrated matrix has exactly
+kl full-value cells. One extra slot on each edge of a matching gives
+kl+min(k,l) full-value slots. Hence any n<=kl+min(k,l) can attain
+its entire independent charge in this pair relaxation. A strict gain
+from the total-mass bound requires n above this threshold or further
+retained relations. This condition concerns the relaxed model only.
+
+### The same scalar budgets admit an actual zero-deficit source
+
+For the complete FC36 height profile, replace the higher star combs
+by
+
+    pure q:       0 mod q,
+    pure q^e:     1+q^(e-1) mod q^e, e>=2,
+    star 3q:      2 mod q,
+    star 3q^e:    1+2*q^(e-1) mod q^e, e>=2.       (FC44a)
+
+Keep every star's original ternary root and pure3 at root0. At each
+q the pure and star cylinders remain pairwise disjoint: different
+depths disagree at the earlier nonzero digit; equal depths use
+distinct digits1 and2. Their exact pure normalizers c_q and blocked
+masses beta_(q,t) are therefore unchanged. Higher losses now share
+first root1. Relative to c_q/q, this gives
+
+    active root:   (0, 1-2q*sum_(e=2..h_q)q^-e, 0, 1,...,1),
+    inactive root: (0, 1-q*sum_(e=2..h_q)q^-e, 1,...,1).
+
+Every vector is a permutation of v_q(S_q); this ONE actual source
+simultaneously realizes all the concentrated coordinate vectors.
+In particular root1 has
+
+    R_5=(0,313/625,0,1,1),
+    R_7=(0,2001/2401,1,1,1,1,1).
+
+It has two full5 rows and five full7 columns, instead of FC42's
+one full5 row. The same eight numerical targets can now occupy
+
+    d:       455  665  805  1015  1085  1295  1435  5915
+    (5,7):  (3,2)(3,3)(3,4)(3,5)(3,6)(4,2)(4,3)(4,4).
+
+An explicit finite extension supplies all25 mixed cofactors in the
+numerical divisor closure of these targets, each with its d and3d
+original. Together with the85 pure/star originals it has135 distinct
+odd nonunit moduli. Every3d ternary root is the one prescribed by
+the FC36 input. Here is the complete phase prescription. For
+r in{13,19,23,29,31,37,41}, use e=1 and also e=2 when r=13. Set
+
+    V(r,1,j)=[j]_r,
+    V(r,e,j)=[1+j*r^(e-1)]_(r^e) for e>=2,
+    3<=j<=8.
+
+These side cylinders avoid every pure/star hole and are mutually
+disjoint as(e,j) varies, by their distinct first or terminal digits.
+The25 cofactors are35 together with5r^e,7r^e,35r^e. Their originals
+have the following CRT coordinates:
+
+| Original | 5/7 coordinates | r-coordinate | Ternary root |
+| --- | --- | --- | --- |
+| 35 | (1,1) | absent | absent |
+| 105 | (3,3) | absent | 2 |
+| 5r^e | 5-root3 | V(r,e,3) | absent |
+| 15r^e | 5-root3 | V(r,e,4) | 1 |
+| 7r^e | 7-root3 | V(r,e,5) | absent |
+| 21r^e | 7-root3 | V(r,e,6) | 2 |
+| 35r^e | (3,3) | V(r,e,7) | absent |
+| 105r^e | target table above | V(r,e,8) | 1 |
+
+For a mixed original's private point take its specified coordinates,
+set each absent q-coordinate to the literal1 through full height,
+and use root1 when it has no ternary condition. Distinct side
+cylinders exclude the other types and heights. For pure/star
+originals use their specified q-coordinate and absent coordinates1,
+except put7 at3; if the designated q is7, put absent5 at3 instead.
+Use the original star root, root1 for a pure q-power, and root0 for
+pure3. These vectors give one private CRT integer per original.
+The vector with ternary root1,7-coordinate3 and every other
+q-coordinate1 is uncovered. The retained certificate supplies and
+checks all these literal integers modulo the complete original
+period3*product_q q^h_q.
+It verifies full numerical divisor closure, irredundancy and every
+one of the110 p/q-root JP tables; all occupied cells are single.
+
+For each of the eight targets, every supported coordinate cylinder
+avoids its actual pure and active-star holes. As every target
+contains5, its outside-support factor on root1 is1. Consequently
+
+    actual root1 deletion mass of3d=u_d
+    for all eight targets simultaneously.                 (FC44b)
+
+Their eight(5,7) cells are distinct, so the targets are also pairwise
+disjoint: both the individual-cap deficit and their union deficit
+are exactly zero. This actual NONCOVER refutes transferring FC42's
+positive Delta from its specified source using only the common
+normalizers, beta array, star roots and local JP inequalities. It is
+not a globally minimal cover and does not realize all2138 selected
+mixed labels. A bound using additional whole-cover consequences
+remains possible.
+
+### Every shallow pair relaxation remains sharp for the fixed inventory
+
+The concentrated source gives a second exact diagnostic. For each
+of55 prime pairs and each of the two roots, extract all selected3d
+with v_p(d)=v_q(d)=1. Let n_(p,q,t) be their number and let k,l be
+the two numbers of full roots in FC44a. For all110 buckets,
+
+    n_(p,q,t)<=kl+min(k,l)-1.                       (FC45)
+
+The minimum slack is zero, at root1 and(p,q)=(5,11): n=19 and the
+right side is19. For example root1(5,7) has n=8 and capacity11;
+root2(5,7) has n=10 and capacity14.
+
+First root3 is full in every coordinate on BOTH ternary roots.
+Thus the old pq phase(3,3) can attain its own cap on both roots,
+while excluding the same cell from both descendant tables. Here
+k,l>=2. Removing one cell from a complete k by l full-value grid
+leaves a matching of size min(k,l), and hence
+kl-1+min(k,l) full slots. Formula FC45 therefore constructs a
+full-cap slot assignment for every bucket even after this single
+shared old pq exclusion. This strengthens the diagnostic beyond
+FC43's complete-grid upper relaxation without optimizing a separate
+old phase on each root.
+
+These are110 SEPARATE assignments. A numerical label can belong to
+several buckets, and the separate assignments do not establish one
+consistent phase for that label. Further old mixed-divisor exclusions
+are also omitted. Hence the exact conclusion is that none of these
+separately optimized first-depth pair models forces a positive
+source-uniform deficit on the fixed input. Joint cross-pair phase
+incidence, deeper prefix restrictions and the remaining3-free
+inventory are still available constraints; their sufficiency for
+unrestricted Erdős#7 remains open.
+
+### One old parent and its descendants have a joint fixed-source cost
+
+Return explicitly to FC36's ORIGINAL85-source, with higher pure and
+star holes in different first roots. The concentrated-source example
+does not use the following numerical matrix. Retain original35 and
+the eight root1 descendants of FC42 together. Put
+
+    a_0=c_5*c_7/35=1500625/32830064,
+    a_i=u_(d_i), with d_i in the decreasing order in FC42,
+    alpha=469/625, rho=2001/2401.
+
+Each a_i<=a_0 since all additional prime-power factors c_q/q^e
+are at most1. Comparable-original disjointness excludes the ONE
+old35 cell z from every descendant's(5,7) projection. The same z
+is used on both ternary roots. Conditional slot majorants are
+
+| Old35 phase | Its normalized root1 mass | Descendant top-eight slots |
+| --- | ---: | --- |
+| z_5=4, z_7 in{2,...,6} | 1 | 1,1,1,1,1,rho,alpha,alpha |
+| z_5=4, z_7=1 | rho | 1,1,1,1,1,1,alpha,alpha |
+| z_5 in{1,2,3} | at most alpha | 1,1,1,1,1,1,rho,alpha |
+
+Pure exclusions give z_5,z_7 nonzero. There are five full-mass cells
+in row4 before the35 exclusion. Deleting a full cell leaves four;
+at most one can be doubled, giving the first majorant. Deleting
+row4/column1 instead removes rho while leaving up to six full
+slots. Every other exclusion is bounded by the original FC42 list.
+These arguments include the possibility of doubling the rho cell.
+
+Define
+
+    U_F=a_1+...+a_5+rho*a_6+alpha*(a_7+a_8).
+
+Moving35 from a full cell to its rho cell increases the descendant
+bound by(1-rho)*a_6 but loses(1-rho)*a_0 in the parent's root1 mass.
+Moving it to another row increases the descendant bound by at most
+
+    (1-rho)*a_6+(rho-alpha)*a_7<=(1-alpha)*a_0,
+
+no more than the parent's own loss. Thus the joint root1 charge
+never exceeds a_0+U_F. Its root2 parent contribution remains at
+most g_2({5,7})*a_0. For every real root weight w in[0,1],
+
+    debit(35 and these eight root1 descendants)
+      <=w*(a_0+U_F)+(1-w)*g_2({5,7})*a_0
+      =independent group charge-w*Delta_8,
+
+    Delta_8=(1-rho)*a_6+(1-alpha)*(a_7+a_8)
+           =67641026826112877/118515192569436526728
+           =0.0005707371802689589... .                (FC46)
+
+This keeps one actual parent phase throughout. In the stated
+phase-slot relaxation, z=(4,4) attains the parent's cap on BOTH
+roots and leaves an attaining descendant slot list, so the bound
+is exact for every w. No common realization of the full mixed
+inventory is inferred. The first six descendants alone yield
+Delta_6=(1-rho)*a_6=21390625/101046833234; with at most five, this
+particular relaxed motif has no forced loss.
+
+FC46 REPLACES the FC42 credit for this overlapping group. If the
+old credit has already been used, only
+
+    Delta_8-Delta=4163696976057/13580290199316664
+                 =0.0003065985273471188...
+
+is additional. It cannot be added to FC42 as an independent saving,
+or transferred to FC44a's different source. The improvement still
+does not certify positivity of the full comparison. It identifies a
+joint relation to retain: the same free parent both carries debit
+and forbids a descendant cell.
+
+The [joint-parent control](../../../frontier/cover-geometry/fibre-credit-partition/shared_parent_cell_credit.py)
+and its [exact result](../../../frontier/cover-geometry/fibre-credit-partition/shared_parent_cell_credit.json)
+check24 live old35 phases,4938 partial matchings and48 rational
+weighted equalities. The all-real-weight statement follows from
+the displayed affine inequalities, not from those sampled weights.
+
+The [actual-source control](../../../frontier/cover-geometry/fibre-credit-partition/concentrated_source_zero_gap.py)
+and its [certificate](../../../frontier/cover-geometry/fibre-credit-partition/concentrated_source_zero_gap.json)
+check the135-original noncover and its zero deficits. The
+[pair-capacity control](../../../frontier/cover-geometry/fibre-credit-partition/concentrated_slot_capacity.py)
+and its [exact result](../../../frontier/cover-geometry/fibre-credit-partition/concentrated_slot_capacity.json)
+check all110 buckets and construct their separate full-value slot
+assignments. These are ordinary proofs and finite checks, not new
+Lean verification or a resolution of the unrestricted problem.
+
 ## Whole-family height one permits a smaller common query interface
 
 The all-depth query in(FC13) permits later originals with arbitrary ternary
