@@ -14,7 +14,8 @@ import Mathlib.Tactic
 
 /- This remains a same-target partial implementation of theorem 104.1.
 The actual joint state and reduced entropy identities are proved here;
-explicit eigenspaces, singular values, and the full application remain open. -/
+the left eigenspaces are characterized, while their dimensions, the right
+eigenspaces, singular values, and the full application remain open. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -598,6 +599,57 @@ theorem actual_block_matrices (alpha : G →+ A) (beta : G →+ B)
   · intro v hv
     rw [hredB, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec, hv, Matrix.mulVec_zero, smul_zero]
 
+/-- The actual left reduction has exactly its block-column and kernel eigenspaces. -/
+theorem actual_left_eigenspaces (alpha : G →+ A) (beta : G →+ B)
+    (hpair : Function.Injective (fun x : G => (alpha x, beta x))) :
+    (∀ x : A → ℂ, (actualReducedA alpha beta).mulVec x =
+        (blockWeight alpha beta : ℂ) • x ↔
+      ∃ y : BlockQuotient alpha beta → ℂ, (leftVectors alpha beta).mulVec y = x) ∧
+    (∀ x : A → ℂ, (actualReducedA alpha beta).mulVec x = 0 ↔
+      ((leftVectors alpha beta)ᴴ).mulVec x = 0) := by
+  classical
+  obtain ⟨hU, _, _, hredA, _, _, _, _, _⟩ :=
+    actual_block_matrices alpha beta hpair
+  let Q := BlockQuotient alpha beta
+  let U := leftVectors alpha beta
+  have hw : (blockWeight alpha beta : ℂ) ≠ 0 := by
+    have hKA : (0 : ℝ) < Fintype.card alpha.ker := by exact_mod_cast Fintype.card_pos
+    have hKB : (0 : ℝ) < Fintype.card beta.ker := by exact_mod_cast Fintype.card_pos
+    have hN : (0 : ℝ) < Fintype.card G := by exact_mod_cast Fintype.card_pos
+    have hwR : blockWeight alpha beta ≠ 0 :=
+      (div_pos (mul_pos hKA hKB) hN).ne'
+    exact_mod_cast hwR
+  have characterize (X : Matrix A Q ℂ) (hX : Xᴴ * X = 1)
+      (D : Matrix A A ℂ) (hD : D = (blockWeight alpha beta : ℂ) • (X * Xᴴ))
+      (x : A → ℂ) :
+      (D *ᵥ x = (blockWeight alpha beta : ℂ) • x ↔
+        ∃ y : Q → ℂ, X *ᵥ y = x) ∧
+      (D *ᵥ x = 0 ↔ Xᴴ *ᵥ x = 0) := by
+    constructor
+    · constructor
+      · intro hx
+        rw [hD, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec x X Xᴴ] at hx
+        exact ⟨Xᴴ *ᵥ x, hw.isUnit.smul_left_cancel.mp hx⟩
+      · rintro ⟨y, rfl⟩
+        rw [hD, Matrix.smul_mulVec,
+          ← Matrix.mulVec_mulVec (X *ᵥ y) X Xᴴ,
+          Matrix.mulVec_mulVec y Xᴴ X, hX, Matrix.one_mulVec]
+    · constructor
+      · intro hx
+        rw [hD, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec x X Xᴴ] at hx
+        have hxy : X *ᵥ (Xᴴ *ᵥ x) = 0 := (smul_eq_zero.mp hx).resolve_left hw
+        have hy := congrArg (fun z => Xᴴ *ᵥ z) hxy
+        simpa only [Matrix.mulVec_mulVec (Xᴴ *ᵥ x) Xᴴ X, hX,
+          Matrix.one_mulVec, Matrix.mulVec_zero] using hy
+      · intro hx
+        rw [hD, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec x X Xᴴ, hx,
+          Matrix.mulVec_zero, smul_zero]
+  refine ⟨?_, ?_⟩
+  · intro x
+    exact (characterize U hU _ hredA x).1
+  · intro x
+    exact (characterize U hU _ hredA x).2
+
 /-- Flat spectra are extracted from the actual reductions, including ambient zero directions. -/
 theorem actual_flat_reductions (alpha : G →+ A) (beta : G →+ B)
     (hpair : Function.Injective (fun x : G => (alpha x, beta x))) :
@@ -622,7 +674,8 @@ theorem actual_flat_reductions (alpha : G →+ A) (beta : G →+ B)
       (Finset.univ.filter (fun i => hB.isHermitian.eigenvalues i = 0)).card =
         Fintype.card B - Fintype.card (BlockQuotient alpha beta)) := by
   classical
-  obtain ⟨hU, hV, hC, hA, hB, _, _, _, _⟩ := actual_block_matrices alpha beta hpair
+  obtain ⟨hU, hV, hC, hA, hB, _, _, _, _⟩ :=
+    actual_block_matrices alpha beta hpair
   let U := leftVectors alpha beta
   let V := rightVectors alpha beta
   let w := blockWeight alpha beta
@@ -972,6 +1025,7 @@ end D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutSpectrum
 #print axioms D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutSpectrum.kernel_quotient_normalization
 #print axioms D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutSpectrum.readout_block_partitions
 #print axioms D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutSpectrum.actual_block_matrices
+#print axioms D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutSpectrum.actual_left_eigenspaces
 #print axioms D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutSpectrum.actual_flat_reductions
 #print axioms D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutSpectrum.actual_joint_state
 #print axioms D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutSpectrum.actual_reduced_entropy
