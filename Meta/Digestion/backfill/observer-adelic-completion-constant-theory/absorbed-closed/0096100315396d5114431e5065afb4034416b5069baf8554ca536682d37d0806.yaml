@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0096100315396d5114431e5065afb4034416b5069baf8554ca536682d37d0806
+  normalized_sha256: sha256:0096100315396d5114431e5065afb4034416b5069baf8554ca536682d37d0806
+cas_ref: sha256:0096100315396d5114431e5065afb4034416b5069baf8554ca536682d37d0806
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockSugawaraSupport.normalPair_support_interval
+    target_statement_id: sha256:4965c0130d0dbcb3bc99ea25c46d318f4523b7b32c7450986791b3fb99994f7c
+receipts:
+  unresolved_subitems: []
