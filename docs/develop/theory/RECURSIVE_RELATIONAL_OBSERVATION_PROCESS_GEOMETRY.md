@@ -8072,3 +8072,204 @@ $E_1$ 类；在固定其中一个双层读数 $\eta$ 的纤维内，容量各为
 不对连续、量子或无限来源作自动推广。
 
 ## 51.99 追加锚
+
+## 52. 从 Fibonacci 生成签名到四表达共同商
+
+前面的章节已经分别给出二叶自由语法、未来行为核和空间—时间—边界—记忆的局部恢复条件。本节把它们写成一条解释链。新的重点是：生成签名只提供候选载体，过程语义仍由类型、合法性、来源、记录、权限和完整未来实验决定。
+
+### 定义 52.1（生成签名与过程解释像）
+
+取静态签名
+
+$$
+\Sigma_{\mathrm F}=\{\alpha:0,\ \beta:0,\ \langle-,-\rangle:2\},
+$$
+
+其有限初始代数记为 $\mathcal T_{\mathrm F}$。把 Fibonacci 替换 $\rho$ 看作 $\mathcal T_{\mathrm F}$ 上的一个额外一元操作；它不是第三个叶子，而是生成语法上的动态闭包。
+
+令 $\mathcal A$ 是带接口类型的部分过程代数。对相容类型，部分二元组合写成
+
+$$
+\mu_{\tau}:A_\tau\times A_\tau\rightharpoonup A_{\tau'},
+$$
+
+不相容输入记为 $\bot$，并把来源、权限、输出、失败、记录和时钟字段视作 $A$ 的结构，而不是解释之后可以免费添加的注释。给定两个实际过程 $p_\alpha,p_\beta$，唯一结构映射满足
+
+$$
+\operatorname{Eval}(\alpha)=p_\alpha,
+\qquad
+\operatorname{Eval}(\beta)=p_\beta,
+\qquad
+\operatorname{Eval}(\langle s,t\rangle)=\mu(\operatorname{Eval}(s),\operatorname{Eval}(t)).
+$$
+
+定义生成解释像
+
+$$
+A_{\mathrm F}:=\operatorname{im}(\operatorname{Eval})\subseteq\mathcal A.
+$$
+
+设 $A_{\mathrm{decl}}$ 是声明任务的实际过程载体，且生成像有一个类型保持嵌入 $\iota:A_{\mathrm F}\to A_{\mathrm{decl}}^{\mathcal C}$。记 $A_{\mathrm{decl}}^{\mathcal C}$ 为只保留该任务可调用部分的载体；下文定义的 $\sim_{\mathcal C}$ 同时用于这两个实际像，分别取行为商
+
+$$
+Q_{\mathrm F}=A_{\mathrm F}/\!\sim_{\mathcal C},
+\qquad
+Q_{\mathrm{decl}}=A_{\mathrm{decl}}^{\mathcal C}/\!\sim_{\mathcal C}.
+$$
+
+生成底座覆盖声明任务的充要条件，是自然映射
+
+$$
+Q_{\mathrm F}\longrightarrow Q_{\mathrm{decl}},
+\qquad [x]\longmapsto[\iota(x)]
+$$
+
+满射：每个声明行为类都有一个 Fibonacci 解释像代表。要求原始载体逐点相等会过强；一个未被语法直接生成的过程，只要与某个生成项在声明任务上行为等价，仍可被该底座覆盖。反之，非满射才是生成覆盖缺口。所有后续四表达定理都应明确是在 $Q_{\mathrm F}$ 上，或在上述满射成立时把它识别为 $Q_{\mathrm{decl}}$；字母名称本身不提供这种识别。
+
+若解释先落到一个抽象目标代数 $I$，再由实现映射 $\chi:I\to S_0$ 落到实际共同来源的过程像，则应保留三层链
+
+$$
+\mathcal T_{\mathrm F}
+\xrightarrow{\operatorname{Eval}} I
+\xrightarrow{\chi} S_0
+\xrightarrow{q_{\mathcal C}} S_0/\!\equiv_{\mathcal C}.
+$$
+
+这里 $\equiv_{\mathcal C}$ 在实际像上比较完整声明响应。抽象代数的等式、实现映射造成的识别和任务行为商造成的识别是三种不同的核；它们可以严格不同。若把 $\operatorname{Eval}$ 直接取值于实际过程代数，则本节的 $A_{\mathrm F}$ 已经是 $S_0$，后两层仍须保留。
+
+令 $e=\operatorname{Eval}:\mathcal T_{\mathrm F}\to I$、$\sigma=\chi\circ e$，并在项上拉回实际行为关系：
+
+$$
+u\approx_{\mathcal C}v
+\iff
+\sigma(u)\equiv_{\mathcal C}\sigma(v).
+$$
+
+于是有核链
+
+$$
+\ker(e)\subseteq\ker(\sigma)\subseteq\approx_{\mathcal C},
+$$
+
+以及由满射 $\sigma:\mathcal T_{\mathrm F}\twoheadrightarrow S_0$ 诱导的规范双射
+
+$$
+\mathcal T_{\mathrm F}/\!\approx_{\mathcal C}
+\;\cong\;
+S_0/\!\equiv_{\mathcal C},
+\qquad
+[u]\longmapsto[\sigma(u)].
+$$
+
+第一处等号恰当时表示实现没有进一步折叠抽象代数；第二处等号表示声明实验族已经分离实际像中的不同过程。若要让 $\approx_{\mathcal C}$ 继承二元构造器，还须另证它是构造同余，并把合法域、失败、记录和后继一并纳入代表无关性条件。
+
+### 定义 52.2（声明任务的完整行为商）
+
+固定一个类型正确的实验族 $\mathcal C$，它包含允许的有限续接、非法尝试的失败标签、输出、记录、权限变化、时钟字段和后继类型。对 $x,y\in A_{\mathrm F}$ 定义
+
+$$
+x\sim_{\mathcal C}y
+\iff
+\forall w\in\mathcal C^{*},\quad
+\operatorname{Resp}(x,w)=\operatorname{Resp}(y,w).
+$$
+
+这里的响应比较完整合同中声明要保留的字段；若某字段未声明为可观察量，它不自动进入该商。记
+
+$$
+Q_{\mathcal C}=A_{\mathrm F}/\!\sim_{\mathcal C}.
+$$
+
+这个商首先只是一个行为集合及其下降操作。若要把二元构造器也直接下降为商上的构造器，还必须另证代表无关性：
+
+$$
+s\sim_{\mathcal C}s',\quad t\sim_{\mathcal C}t'
+\Longrightarrow
+\langle s,t\rangle\sim_{\mathcal C}\langle s',t'\rangle,
+$$
+
+并同时检查部分构造的合法域、失败、记录和后继在纤维上常值。没有这一步，不能把行为商冒称为继承原始配对的初始代数；它仍然可以是一个正确的过程行为商。
+
+### 定理 52.3（解释像上的最小可拼接边界）
+
+在 $\mathcal C$ 对前后合法接续封闭的条件下，$Q_{\mathcal C}$ 上的每个声明操作、读出和失败标签都有唯一的下降。若 $m:A_{\mathrm F}\to B$ 能恢复 $\mathcal C$ 的全部有限响应，则
+
+$$
+\ker m\subseteq\sim_{\mathcal C},
+$$
+
+并存在唯一满射 $d:m[A_{\mathrm F}]\twoheadrightarrow Q_{\mathcal C}$ 使
+
+$$
+d\circ m=q_{\mathcal C},
+$$
+
+其中 $q_{\mathcal C}$ 是商映射。因此 $Q_{\mathcal C}$ 是该任务的最小行为边界；它不是“两个叶子值”的默认商。
+
+证明。若 $x\sim_{\mathcal C}y$，对任意外部测试把前后合法接续吸收到一个新的测试词中，封闭性保证两者的响应仍相同，故操作、读出和失败标签对等价类代表元无关。若 $m(x)=m(y)$ 而 $x\not\sim_{\mathcal C}y$，则存在一个声明续接 $w$ 分离两者，任何只从同一记忆值 $m(x)=m(y)$ 解码的响应都会对同一输入给出两个结果，矛盾。于是 $d(m(x))=[x]$ 良定义且满射；由 $d\circ m=q_{\mathcal C}$ 的定义唯一。$\square$
+
+### 定理 52.4（四种表达的共同商判据）
+
+设 $\eta_X,\eta_T,\eta_B,\eta_M$ 分别是空间切面、时间动作、边界摘要和记忆表示，并都定义在同一个实际过程像 $S_0$ 上；若生成覆盖商层满射，则可把 $S_0/\!\equiv_{\mathcal C}$ 识别为声明过程商。它们在声明任务上互相恢复，当且仅当满足：
+
+1. 四个核在 $S_0$ 上相同，且等于 $\equiv_{\mathcal C}$；
+2. 每个声明操作 $a$ 都有下降更新
+   $$
+   \eta_i\circ T_a=\overline T_{i,a}\circ\eta_i
+   \qquad(i\in\{X,T,B,M\});
+   $$
+3. 任意两种表示的配对映射在实际联合像上有逆，而不是把分别可达的坐标任意拼成笛卡尔积。
+
+证明。第一项给出每个表示到共同商 $Q_{\mathcal C}$ 的双射；第二项保证这些双射与操作运输相容；第三项把四个商上的坐标运输提升为实际联合像上的双射。反向地，若四种表示互相恢复，则互相可恢复的表示必须有相同的不可区分纤维，且其后继、合法性和记录必须在该纤维上常值，否则恢复器对同一表示值会要求两种响应。$\square$
+
+这里还要把三类缺口分开。若某个表示的核严格大于 $\equiv_{\mathcal C}$，它丢掉了声明任务仍能区分的行为；若其核严格小于 $\equiv_{\mathcal C}$，它保留了额外的、对当前任务无效的区别，但仍可通过商映射得到一个非最小表示。若 $A_{\mathrm{decl}}$ 中存在不与 $A_{\mathrm F}$ 中任何项行为等价的过程，则这是生成覆盖缺口；若动作在行为类上不能下降，则这是动态闭合缺口。四个表示的联合核只有
+
+$$
+\bigcap_i\ker(\eta_i)=\equiv_{\mathcal C}
+$$
+
+时，只能说明四元组联合充分，不能替代逐个表示的两两恢复。
+
+### 命题 52.5（两叶组成是加性任务的普适二维接口）
+
+若读出 $\lambda:\mathcal T_{\mathrm F}\to(M,+,0)$ 满足
+
+$$
+\lambda(\langle s,t\rangle)=\lambda(s)+\lambda(t),
+$$
+
+则存在唯一 $\bar\lambda:\mathbb N^2\to M$ 使
+
+$$
+\lambda=\bar\lambda\circ c,
+\qquad
+\bar\lambda(a,b)=a\lambda(\alpha)+b\lambda(\beta),
+$$
+
+其中 $c$ 是两类叶组成向量。若再加入 Fibonacci 替换，则
+
+$$
+c(\rho(t))=Mc(t),
+\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+所以在“固定替换、组成加性、完整数量未来”合同下，二维组成边界是普适且可更新的接口。若实验读取左右次序、括号、来源或完整事件，则 $c$ 的核不再等于 $\sim_{\mathcal C}$，必须回到行为商 $Q_{\mathcal C}$。
+
+因此，本项目所说的精简关系结构不是单独的 $\{\alpha,\beta\}$，而是
+
+$$
+\boxed{
+\text{生成签名}
+\;+
+\text{部分接续}
+\;+
+\text{声明行为商}
+\;+
+\text{下降更新}.
+}
+$$
+
+空间、时间、边界和记忆只有在这四项共同满足时，才是同一关系的不同表达。
+
+## 52.99 追加锚
