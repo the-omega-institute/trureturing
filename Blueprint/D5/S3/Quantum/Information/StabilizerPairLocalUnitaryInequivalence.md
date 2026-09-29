@@ -1,0 +1,171 @@
+# Local-unitary inequivalence of two weight-isometric pairs of stabilizer codes
+
+## Abstract
+
+Neither the two [[5,2]] codespaces of S_A and S_B nor the two [[6,3]] codespaces of S+ and S- of Theorem 5.3 of arXiv:2607.26214 are related by a product unitary composed with a qubit permutation, which answers the first part of Question 5.4 of A. A. Mahmoud in the negative.
+
+**Definition 1.1 (Pauli labels).**
+
+$$\operatorname{Pauli} = \left\{\operatorname{I}, \operatorname{X}, \operatorname{Y}, \operatorname{Z}\right\}$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+The four single-qubit Pauli labels.
+
+**Definition 1.2 (Pauli matrices).**
+
+$$\left(\operatorname{pauliMatrix}\left(\operatorname{I}\right) = 1 \land \operatorname{pauliMatrix}\left(\operatorname{X}\right) = \operatorname{qubitX}\right) \land \left(\operatorname{pauliMatrix}\left(\operatorname{Y}\right) = i \cdot (\operatorname{qubitX} \cdot \operatorname{qubitZ}) \land \operatorname{pauliMatrix}\left(\operatorname{Z}\right) = \operatorname{qubitZ}\right)$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+The label I gives the identity, X and Z give the frozen Pauli matrices qubitX and qubitZ, and Y gives i X Z, where i is the imaginary unit, so that Y has rows (0, -i) and (i, 0).
+
+**Definition 1.3 (Product operators).**
+
+$$\forall x \in \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right),\; \forall y \in \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right),\; \operatorname{tensorOp}\left(M\right)\left(x, y\right) = \prod_{i \in \operatorname{Fin}\left(n\right)} \left(M_{i}\right)\left(x_{i}, y_{i}\right)$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.tensorOp` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+The tensor product of n two-by-two matrices, acting on functions of n bits: its entry at the pair of bit strings x and y is the product over the qubits i of the entries of M_i at x_i and y_i.
+
+**Definition 1.4 (Pauli words).**
+
+$$\operatorname{wordOp}\left(g\right) = \operatorname{tensorOp}\left((i \mapsto \operatorname{pauliMatrix}\left(g_{i}\right))\right)$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.wordOp` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+The operator of a word g of Pauli labels is the product operator of the Pauli matrices of its letters.
+
+**Definition 1.5 (Qubit permutations).**
+
+$$\forall x \in \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right),\; \forall y \in \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right),\; \operatorname{qubitPermutation}\left(sigma\right)\left(x, y\right) = \operatorname{if} y = x \circ sigma \operatorname{then} 1 \operatorname{else} 0$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.qubitPermutation` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+The permutation sigma of the qubits acts by (P psi)(x) = psi(x o sigma): the entry at x and y is 1 when y = x o sigma and 0 otherwise.
+
+**Definition 1.6 (Codespaces).**
+
+$$\operatorname{codespace}\left(S\right) = \{psi \mid \forall j \in \operatorname{Fin}\left(3\right),\; \operatorname{wordOp}\left(S_{j}\right) psi = psi\}$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.codespace` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+The codespace of the stabilizer group generated by three words S_0, S_1, S_2 is their joint +1 eigenspace.
+
+**Definition 1.7 (The code S_A).**
+
+$$\operatorname{SA} = \langle ZZZZI, XXIIX, IIXXX \rangle$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.SA` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+The [[5,2]] code S_A of Theorem 5.3 (ii); the i-th letter of a word acts on qubit i.
+
+**Definition 1.8 (The code S_B).**
+
+$$\operatorname{SB} = \langle ZZIZX, XIZXI, IXXYI \rangle$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.SB` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+The [[5,2]] code S_B of Theorem 5.3 (ii).
+
+**Definition 1.9 (The code S+).**
+
+$$\operatorname{Splus} = \langle XXIIXX, IIXXXX, ZZZZIX \rangle$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Splus` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+The [[6,3]] code S+ of Theorem 5.3 (iii).
+
+**Definition 1.10 (The code S-).**
+
+$$\operatorname{Sminus} = \langle XXZXII, ZZXYII, IZZZXX \rangle$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Sminus` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+The [[6,3]] code S- of Theorem 5.3 (iii).
+
+**Definition 1.11 (The positive answer to Question 5.4).**
+
+$$claim \Leftrightarrow ((\exists U \in \operatorname{Fin}\left(5\right) \to \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \exists sigma \in \operatorname{Perm}\left(\operatorname{Fin}\left(5\right)\right),\; \operatorname{map}\left(\operatorname{toLin'}\left(\operatorname{tensorOp}\left(U\right) \cdot \operatorname{qubitPermutation}\left(sigma\right)\right), \operatorname{codespace}\left(\operatorname{SA}\right)\right) = \operatorname{codespace}\left(\operatorname{SB}\right)) \lor (\exists U \in \operatorname{Fin}\left(6\right) \to \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \exists sigma \in \operatorname{Perm}\left(\operatorname{Fin}\left(6\right)\right),\; \operatorname{map}\left(\operatorname{toLin'}\left(\operatorname{tensorOp}\left(U\right) \cdot \operatorname{qubitPermutation}\left(sigma\right)\right), \operatorname{codespace}\left(\operatorname{Splus}\right)\right) = \operatorname{codespace}\left(\operatorname{Sminus}\right)))$$
+
+*Formalization.* `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.claim` (`✓ std3`).
+
+*Citation.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+Some product of five unitary two-by-two matrices, composed with a permutation of the five qubits, maps the codespace of S_A onto that of S_B; or some product of six unitary matrices, composed with a permutation of the six qubits, maps the codespace of S+ onto that of S-. Question 5.4 asks whether this holds.
+
+**Theorem 1.12 (Both pairs are inequivalent).**
+
+$$\neg claim$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/mahmoud-2026-stabilizer-pair-local-unitary-inequivalence` (refuted) by `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mahmoud-2026-stabilizer-pair-local-unitary-inequivalence","declaration_gid":"D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.result","resolution_kind":"refuted"} -->
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Ali Assem Mahmoud (2026). *Minimal Counterexamples of the MacWilliams Extension Theorem for Stabilizer Codes*. DOI: [10.48550/arXiv.2607.26214](https://doi.org/10.48550/arXiv.2607.26214). URL: <https://arxiv.org/abs/2607.26214v1>.
+
+*Commentary.*
+
+For a set T of qubits and a subspace C, let V_T(C) be the span of all M psi with psi in C and M a product operator that is the identity on the qubits of T; V_T(C) is the whole space exactly when the reduced state of C on T has full rank. If W is a product of invertible matrices composed with a qubit permutation sigma, conjugating by W turns a product operator that is the identity on T into one that is the identity on sigma(T), so W maps V_T(C) into V_sigma(T)(W C); applied to W and to its inverse, this shows that T is full for C exactly when sigma(T) is full for W C. If a word fixing C is supported in T and has an X or a Y, it commutes with every product operator that is the identity on T, so it fixes V_T(C), which then misses the basis vector 0...0: T is not full. This makes {0,2,3} and {1,2,3} not full for S_B (the words XIZXI and IXXYI), and {0,1,2,3}, {0,1,4,5}, {2,3,4,5} not full for S+ (XXXXII, XXIIXX, IIXXXX). If a word n commutes with the generators, it maps C into C, and V_T(C) is invariant under the part of n on T; when these parts include X_j and Z_j for every j in T, V_T(C) is invariant under every product operator, and being nonzero it contains every basis vector. Tables of such words, checked by the kernel, make every triple other than {0,1,4} and {2,3,4} full for S_A and every set of four qubits other than {0,1,2,3} full for S-; the codespaces of S_A and S+ contain the indicator of the bit strings with x_0 = x_1, x_2 = x_3 and x_4 = x_0 + x_2, and S- is nonzero because it is the image of S+. For the first pair the preimages of {0,2,3} and {1,2,3} under sigma must then be {0,1,4} and {2,3,4}, but the first two share two qubits and the last two share one. For the second pair the images of {0,1,2,3}, {0,1,4,5} and {2,3,4,5} are three different sets of four qubits that are not full for S-, which has only one.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.SA`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.SB`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Sminus`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Splus`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.claim`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.codespace`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.qubitPermutation`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.result`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.tensorOp`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.wordOp`
+- Dependency: [D5/S3/Quantum/FiniteDimensional](../FiniteDimensional.md)

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5e125a22e241439150ed65c512aeaf093f39e24bc866058d956cea499aef1478
+  normalized_sha256: sha256:5e125a22e241439150ed65c512aeaf093f39e24bc866058d956cea499aef1478
+cas_ref: sha256:5e125a22e241439150ed65c512aeaf093f39e24bc866058d956cea499aef1478
+coverage_gids:
+  - gid: D5/S1/Scale/Fibonacci.golden_phi_pow_eq_fib_pair
+    target_statement_id: sha256:d216732e11d7a2e479d9c2c4667ce688b4f5a7eb54e80c6bce46e6858e22e2be
+  - gid: D5/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence.complete_kernel_eq_iInf_finite_horizon
+    target_statement_id: sha256:6c9124b82095f76931ad1ec2d960fea617da46b98d6f26717759478867e4cdab
+  - gid: D5/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence.finite_horizon_kernel_antitone
+    target_statement_id: sha256:bc068fb13a8e77e5790c7fb2a701b68ebc991d34553b9cee9dcd74e211ce7a4d
+receipts:
+  unresolved_subitems: []
