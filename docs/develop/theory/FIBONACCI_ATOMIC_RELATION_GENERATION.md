@@ -8027,3 +8027,86 @@ $$
 本节是对 §§2–11、61–73 与 94 的结构性归纳；它没有把受限行为等价提升为任意二元同余，也没有把数量观察或素性封装宣称为底层语法的定理。
 
 ## 111.99 追加锚
+
+## 112. 静态二叶与动态一种子不可混同
+
+第 111 节把“二叶生成基础”与“完整行为边界”分开。本节再区分两个容易混淆的最小性问题：保留静态构造签名时需要几个零元生成元，以及把替换当作可执行操作后需要几个动态种子。
+
+### 命题 112.1（轨道、操作闭包与静态载体的三种范围）
+
+令
+
+$$
+\operatorname{Orb}_{\rho}(\alpha)=\{\rho^j(\alpha):j\ge0\},
+$$
+
+并令 $\operatorname{Cl}_{\langle-,-\rangle,\rho}(\{\alpha\})$ 是从 $\alpha$ 出发、对有序配对和 $\rho$ 都闭合的最小集合。则
+
+$$
+\operatorname{Orb}_{\rho}(\alpha)
+\subsetneq
+\mathcal T_{\mathrm F},
+\qquad
+\operatorname{Cl}_{\langle-,-\rangle,\rho}(\{\alpha\})
+=\mathcal T_{\mathrm F}.
+\tag{112.1}
+$$
+
+**证明。** 轨道严格包含于自由树集，因为每个 $T_j=\rho^j(\alpha)$ 都满足 Fibonacci 轨道的固定递归，而例如 $\langle\alpha,\alpha\rangle$ 不在该轨道。另一方面，$\beta=\rho(\alpha)$，所以闭包包含两个叶 $\alpha,\beta$；再对项的构造递归，若 $s,t$ 已在闭包中，则 $\langle s,t\rangle$ 也在闭包中，故包含全部 $\mathcal T_{\mathrm F}$。反包含由闭包定义成立。$\square$
+
+因此，“一个种子”可以有两种完全不同的含义：只允许反复施加 $\rho$ 时，它只生成一条 Fibonacci 轨道；允许任意有序配对和局部使用 $\rho$ 时，一个种子已经足以生成全部有限二叶树。后一结论是操作闭包的生成性，不是把静态签名中的两个零元合并成一个。
+
+### 命题 112.2（保构造的静态一叶签名不能覆盖二叶初始代数）
+
+令
+
+$$
+F_1(X)=\{\star\}\sqcup(X\times X),
+\qquad
+F_2(X)=\{\alpha,\beta\}\sqcup(X\times X),
+$$
+
+分别取其有限初始代数 $\mathcal T_1,\mathcal T_{\mathrm F}$。不存在保持有序二元构造器的满射
+
+$$
+h:\mathcal T_1\twoheadrightarrow\mathcal T_{\mathrm F}
+$$
+
+满足
+
+$$
+h(\langle u,v\rangle)=\langle h(u),h(v)\rangle.
+\tag{112.2}
+$$
+
+**证明。** 结构保持性使 $h$ 完全由 $t_0=h(\star)$ 决定。如果 $t_0=\alpha$，则 $h$ 的像只含由 $\alpha$ 反复配对形成的树，不能命中叶 $\beta$；$t_0=\beta$ 时对称。如果 $t_0$ 是复合项，则 $t_0$ 本身及其所有后续像都保留至少一个复合根，不能命中任一零元叶。故 $h$ 不可能满射。$\square$
+
+这个命题的最小性严格限于“静态签名、保留二元构造、没有额外编码器或解码器”的范畴。允许 $\rho$、编码器、商映射或隐藏控制器以后，最小性对象已经改变，必须重新按行为核和动态下降条件判定。
+
+### 推论 112.3（当前项目中的基础性读法）
+
+当前理论应同时保留以下三项：
+
+$$
+\boxed{
+\text{静态零元叶数}=2,
+\qquad
+\text{动态种子数}=1\ \text{（在允许 }\rho\text{ 时）},
+\qquad
+\text{Fibonacci 加性未来的线性维数}=2.
+}
+\tag{112.3}
+$$
+
+它们分别回答静态语法、可执行生成协议和固定加性任务的最小边界三个问题，不能合并为“关系本体只有两个不可约关系”。完整过程仍须沿
+
+$$
+\mathcal T_{\mathrm F}
+\longrightarrow I
+\longrightarrow S_0
+\longrightarrow S_0/\!\equiv_{\mathcal C}
+$$
+
+检查来源、合法域、失败、记录、权限、时钟和选择器；只有在这些字段对组成纤维保持常值时，二维组成才是该任务的动态充分边界。本节是理论推导，未新增 Lean 核验。
+
+## 112.99 追加锚
