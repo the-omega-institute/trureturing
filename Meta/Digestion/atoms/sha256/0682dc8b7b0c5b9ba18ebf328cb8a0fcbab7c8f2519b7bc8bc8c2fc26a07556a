@@ -1,0 +1,15 @@
+## theorem 1.2: Coverage by the three source sectors
+
+For every integer $k\ge1$ and every residue $z\in\mathbb Z/N\mathbb Z$,
+some nonnegative $m,n$ with $m+n\le k$ represent $z$ in one of the three
+source sectors.
+
+Choose the representative $0\le w<N$ and write $w=nc+r$ with
+$n=\lfloor w/c\rfloor$ and $0\le r<c$. Since $0<d<c$ and $N=qc+d$,
+$n\le q$. If $r\le k-n$, choose $m=r$; then $w=m-nb=m+nc$.
+Otherwise put $j=q-n$. For $r\le d$, set $m=d-r$. The inequality
+$r>k-n$ gives $m\le n+1$, while $w=N-jc-m$ is the sector
+$-ma+jb$ modulo $N$. For $r>d$, set $m=r-d$. Since $r<c=d+2$,
+$m\le1\le n+1$, and $w=N-jc+m$ is the sector $ma+jb$ modulo $N$.
+In either case $m+j\le(n+1)+(q-n)=k$.
+
