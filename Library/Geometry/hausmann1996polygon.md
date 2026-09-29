@@ -67,3 +67,14 @@ The repository independently formalizes the classical existence criterion
 using an attainable-resultant induction and continuity on a complex circle.
 This note attributes the criterion, not that exact proof implementation or
 every auxiliary resultant claim, and makes no mathematical novelty claim.
+
+## Verified locator
+
+DOI: 10.48550/arXiv.dg-ga/9602012
+
+URL: https://arxiv.org/abs/dg-ga/9602012v1
+
+The cited source is *Polygon spaces and Grassmannians* by Jean-Claude
+Hausmann and Allen Knutson. The locator scope is Corollary (4.2), manuscript
+page 10, together with the perimeter and polygon conventions in Sections
+2.1, 2.3–2.4, and 4 described above.
