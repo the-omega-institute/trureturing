@@ -16,9 +16,15 @@ escape_witness: form (2): the conclusion `result` itself, produced on its live p
   acyclic orientations of the triangle and the induction `main` over three-coloured complete
   multipartite graphs
 admission_basis: open-problem-resolution (issue #11156)
-Direct frozen dependencies: none (pinned Mathlib only)
+Direct frozen dependencies:
+  D5/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder.AcyclicEdge
+  (statement_id sha256:34c9e95d80e84597437e9ddedbeb9f7636e7b84aaccb18a61c418ba12f23708f) and
+  D5/S3/ConceptDynamics/DagSemantics/StrictDependencyCoordinate.acyclic_of_strictCoordinate
+  (statement_id sha256:eed099a51e1028e9a4920137fa64a0edd55178d104db578f9afd0ed7903c011d)
 -/
 
+import D5.S3.ConceptDynamics.DagSemantics.StrictDependencyCoordinate
+import D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.Prod
@@ -32,6 +38,8 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Graph.TripartiteAcyclicOrientations
 
 open Finset
+open D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder (AcyclicEdge)
+open D5.S3.ConceptDynamics.DagSemantics.StrictDependencyCoordinate (acyclic_of_strictCoordinate)
 
 /-!
 L. Mühlherr and G. Poullot, "Hamiltonicity of graphs of acyclic orientations and acyclic
@@ -47,13 +55,9 @@ m, n, p ≥ 1.
 def IsOrientation {V : Type*} (G : SimpleGraph V) (d : V → V → Bool) : Prop :=
   ∀ a b, d a b = true ↔ (G.Adj a b ∧ d b a = false)
 
-/-- `d` has no directed cycle: its transitive closure has no loop. -/
-def IsAcyclic {V : Type*} (d : V → V → Bool) : Prop :=
-  ∀ a, ¬ Relation.TransGen (fun x y => d x y = true) a a
-
 /-- ψ(G), the number of acyclic orientations of `G`. -/
 noncomputable def acyclicOrientationCount {V : Type*} [Fintype V] (G : SimpleGraph V) : ℕ :=
-  Nat.card {d : V → V → Bool // IsOrientation G d ∧ IsAcyclic d}
+  Nat.card {d : V → V → Bool // IsOrientation G d ∧ AcyclicEdge (fun x y => d x y = true)}
 
 /-- Clause (4) of Conjecture 1: for m, n, p ≥ 1 not all odd, the complete tripartite graph
 K_{m,n,p} (Mathlib's complete multipartite graph with parts of sizes m, n, p) has ψ ≡ 2 mod 4. -/
@@ -139,16 +143,6 @@ theorem result : claim := by
       have hcard : Y.card = (Y \ O).card + O.card := (card_sdiff_add_card_eq_card hOY).symm
       rw [hcard, hOcard]
       exact Nat.dvd_add hrec (dvd_refl 4)
-  -- ranking lemma
-  have rank : ∀ {V : Type} (d : V → V → Bool) (f : V → ℕ),
-      (∀ a b, d a b = true → f a < f b) → IsAcyclic d := by
-    intro V d f hf a h
-    have key : ∀ x y, Relation.TransGen (fun x y => d x y = true) x y → f x < f y := by
-      intro x y hxy
-      induction hxy with
-      | single hab => exact hf _ _ hab
-      | tail _ hbc ih => exact ih.trans (hf _ _ hbc)
-    exact lt_irrefl _ (key a a h)
   -- K3
   have k3 : acyclicOrientationCount (⊤ : SimpleGraph (Fin 3)) = 6 := by
     let bit : Bool × Bool × Bool → Fin 3 → Fin 3 → Bool := fun t a b =>
@@ -178,12 +172,18 @@ theorem result : claim := by
         simp [D, bit, dd, anti 0 1 (by decide), anti 0 2 (by decide), anti 1 2 (by decide)]
     let good : Bool × Bool × Bool → Prop := fun t =>
       t ≠ (true, false, true) ∧ t ≠ (false, true, false)
-    have acyc : ∀ t, good t → IsAcyclic (D t) := by
+    have acyc : ∀ t, good t → AcyclicEdge (fun x y => D t x y = true) := by
       intro t ht
-      refine rank (D t) (fun a => (Finset.univ.filter (fun b => D t b a = true)).card) ?_
-      revert t
-      decide
-    have goodOf : ∀ d, IsOrientation (⊤ : SimpleGraph (Fin 3)) d → IsAcyclic d →
+      have h : ∀ a b, D t a b = true →
+          (Finset.univ.filter (fun c => D t c a = true)).card <
+            (Finset.univ.filter (fun c => D t c b = true)).card := by
+        revert t
+        decide
+      exact acyclic_of_strictCoordinate (edge := fun x y => D t x y = true)
+        (coordinate := fun a => (Finset.univ.filter (fun c => D t c a = true)).card)
+        (fun a b hab => h a b hab)
+    have goodOf : ∀ d, IsOrientation (⊤ : SimpleGraph (Fin 3)) d →
+        AcyclicEdge (fun x y => d x y = true) →
         good (d 0 1, d 0 2, d 1 2) := by
       intro d hd ha
       have e := hDeq d hd
@@ -201,7 +201,8 @@ theorem result : claim := by
         have h10 : d 1 0 = true := (o 1 0).mpr ⟨by decide, h01⟩
         exact ha 0 (Relation.TransGen.tail (Relation.TransGen.tail
           (Relation.TransGen.single h02) h21) h10)
-    have e : {d : Fin 3 → Fin 3 → Bool // IsOrientation (⊤ : SimpleGraph (Fin 3)) d ∧ IsAcyclic d}
+    have e : {d : Fin 3 → Fin 3 → Bool // IsOrientation (⊤ : SimpleGraph (Fin 3)) d ∧
+        AcyclicEdge (fun x y => d x y = true)}
         ≃ {t : Bool × Bool × Bool // good t} :=
       { toFun := fun d => ⟨(d.1 0 1, d.1 0 2, d.1 1 2), goodOf d.1 d.2.1 d.2.2⟩
         invFun := fun t => ⟨D t.1, hDor t.1, acyc t.1 t.2⟩
@@ -214,7 +215,8 @@ theorem result : claim := by
   -- counting through a finset
   have cardEq : ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V),
       acyclicOrientationCount G =
-        (Finset.univ.filter (fun d : V → V → Bool => IsOrientation G d ∧ IsAcyclic d)).card := by
+        (Finset.univ.filter (fun d : V → V → Bool =>
+          IsOrientation G d ∧ AcyclicEdge (fun x y => d x y = true))).card := by
     intro V _ _ G
     classical
     rw [acyclicOrientationCount, Nat.card_eq_fintype_card, Fintype.card_subtype]
@@ -254,7 +256,8 @@ theorem result : claim := by
       refine ⟨fun h => ?_, autAdj1 a b⟩
       have := autAdj1 _ _ h
       simpa [sw, Equiv.swap_apply_self] using this
-    let P : (V → V → Bool) → Prop := fun d => IsOrientation G d ∧ IsAcyclic d
+    let P : (V → V → Bool) → Prop := fun d =>
+      IsOrientation G d ∧ AcyclicEdge (fun x y => d x y = true)
     let X := Finset.univ.filter P
     let S : (V → V → Bool) → V → V → Bool := fun d a b => d (sw a) (sw b)
     let R : (V → V → Bool) → V → V → Bool := fun d a b => d b a
@@ -313,7 +316,8 @@ theorem result : claim := by
     -- fixed points of S versus orientations of G - v
     let W := {w : V // w ∈ ({w | w ≠ v} : Set V)}
     let G' := G.induce {w | w ≠ v}
-    let P' : (W → W → Bool) → Prop := fun d => IsOrientation G' d ∧ IsAcyclic d
+    let P' : (W → W → Bool) → Prop := fun d =>
+      IsOrientation G' d ∧ AcyclicEdge (fun x y => d x y = true)
     let φ : V → W := fun a => if h : a = v then ⟨u, huv⟩ else ⟨a, h⟩
     have φval : ∀ a, (φ a).1 = if a = v then u else a := by
       intro a; by_cases h : a = v <;> simp [φ, h]

@@ -17,11 +17,8 @@ internal sealed class TripartiteAcyclicOrientationsDocument : IScribeDocumentDef
             Node("orientation", "Orientations", OrientationFormula(),
                 "A Boolean relation d on the vertices orients the simple graph G when every edge {a, b} carries exactly one of the arcs a to b and b to a, and no other pair carries an arc.",
                 "IsOrientation", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("acyclic", "Acyclic relations", AcyclicFormula(),
-                "The relation has no directed cycle: no vertex is related to itself by the transitive closure of the arcs.",
-                "IsAcyclic", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("count", "The number of acyclic orientations", CountFormula(),
-                "psi(G) is the number of acyclic orientations of G, counted as Boolean relations on the vertex set.",
+                "psi(G) is the number of acyclic orientations of G, counted as Boolean relations on the vertex set. Acyclicity is the repository's AcyclicEdge of the dependency-reachability order, applied to the arcs d(x, y) = true: no vertex is related to itself by the transitive closure of the arcs.",
                 "acyclicOrientationCount", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Clause (4) of Conjecture 1", ClaimFormula(),
                 "For all m, n, p at least 1 that are not all odd, the complete tripartite graph K_{m,n,p}, Mathlib's complete multipartite graph over the family i ↦ Fin([m, n, p](i)) indexed by Fin 3, that is with parts Fin m, Fin n and Fin p, in which two vertices are adjacent exactly when they lie in different parts, has psi congruent to 2 modulo 4.",
@@ -72,21 +69,14 @@ internal sealed class TripartiteAcyclicOrientationsDocument : IScribeDocumentDef
         return Disp(Iff(Call("IsOrientation", g, d), All("a", v, All("b", v, body))));
     }
 
-    private static Formula AcyclicFormula()
-    {
-        Formula d = F.Id("d"), a = F.Id("a"), v = F.Id("V"), x = F.Id("x"), y = F.Id("y");
-        Formula arc = Seq(Open, Open, x, Comma, Sp, y, Close, Sp, Mapsto, Sp,
-            IsTrue(Call("d", x, y)), Close);
-        return Disp(Iff(Call("IsAcyclic", d),
-            All("a", v, Not(Call("TransGen", arc, a, a)))));
-    }
-
     private static Formula CountFormula()
     {
-        Formula g = F.Id("G"), d = F.Id("d");
+        Formula g = F.Id("G"), d = F.Id("d"), x = F.Id("x"), y = F.Id("y");
+        Formula arc = Seq(Open, Open, x, Comma, Sp, y, Close, Sp, Mapsto, Sp,
+            IsTrue(Call("d", x, y)), Close);
         Formula set = Seq(OpenBrace, d, Colon, Sp, F.Id("V"), Sp, To, Sp, F.Id("V"), Sp, To, Sp,
             Named("Bool"), Sp, Mid, Sp,
-            And(Call("IsOrientation", g, d), Call("IsAcyclic", d)), CloseBrace);
+            And(Call("IsOrientation", g, d), Call("AcyclicEdge", arc)), CloseBrace);
         return Disp(Equal(Call("acyclicOrientationCount", g), new Formula.Absolute(set)));
     }
 

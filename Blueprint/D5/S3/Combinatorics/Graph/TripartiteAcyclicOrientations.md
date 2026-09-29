@@ -16,21 +16,9 @@ $$\operatorname{IsOrientation}\left(G, d\right) \Leftrightarrow (\forall a \in V
 
 A Boolean relation d on the vertices orients the simple graph G when every edge {a, b} carries exactly one of the arcs a to b and b to a, and no other pair carries an arc.
 
-**Definition 1.2 (Acyclic relations).**
+**Definition 1.2 (The number of acyclic orientations).**
 
-$$\operatorname{IsAcyclic}\left(d\right) \Leftrightarrow (\forall a \in V,\; \neg(\operatorname{TransGen}\left(((x, y) \mapsto \operatorname{d}\left(x, y\right) = \operatorname{true}), a, a\right)))$$
-
-*Formalization.* `D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations.IsAcyclic` (`✓ std3`).
-
-*Citation.* Leonie Mühlherr; Germain Poullot (2026). *Hamiltonicity of graphs of acyclic orientations and acyclic polynomials*. URL: <https://arxiv.org/abs/2609.02249v2>.
-
-*Commentary.*
-
-The relation has no directed cycle: no vertex is related to itself by the transitive closure of the arcs.
-
-**Definition 1.3 (The number of acyclic orientations).**
-
-$$\operatorname{acyclicOrientationCount}\left(G\right) = \left|\{d: V \to V \to \operatorname{Bool} \mid \operatorname{IsOrientation}\left(G, d\right) \land \operatorname{IsAcyclic}\left(d\right)\}\right|$$
+$$\operatorname{acyclicOrientationCount}\left(G\right) = \left|\{d: V \to V \to \operatorname{Bool} \mid \operatorname{IsOrientation}\left(G, d\right) \land \operatorname{AcyclicEdge}\left(((x, y) \mapsto \operatorname{d}\left(x, y\right) = \operatorname{true})\right)\}\right|$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations.acyclicOrientationCount` (`✓ std3`).
 
@@ -38,9 +26,9 @@ $$\operatorname{acyclicOrientationCount}\left(G\right) = \left|\{d: V \to V \to 
 
 *Commentary.*
 
-psi(G) is the number of acyclic orientations of G, counted as Boolean relations on the vertex set.
+psi(G) is the number of acyclic orientations of G, counted as Boolean relations on the vertex set. Acyclicity is the repository's AcyclicEdge of the dependency-reachability order, applied to the arcs d(x, y) = true: no vertex is related to itself by the transitive closure of the arcs.
 
-**Definition 1.4 (Clause (4) of Conjecture 1).**
+**Definition 1.3 (Clause (4) of Conjecture 1).**
 
 $$claim \Leftrightarrow (\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall p \in \mathbb{N},\; 1 \le m \Rightarrow (1 \le n \Rightarrow (1 \le p \Rightarrow (\neg(\operatorname{Odd}\left(m\right) \land \left(\operatorname{Odd}\left(n\right) \land \operatorname{Odd}\left(p\right)\right)) \Rightarrow (\operatorname{acyclicOrientationCount}\left(\operatorname{completeMultipartiteGraph}\left(((i : \operatorname{Fin}\left(3\right)) \mapsto \operatorname{Fin}\left([m, n, p](i)\right))\right)\right) \operatorname{mod} 4 = 2)))))$$
 
@@ -52,7 +40,7 @@ $$claim \Leftrightarrow (\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\;
 
 For all m, n, p at least 1 that are not all odd, the complete tripartite graph K_{m,n,p}, Mathlib's complete multipartite graph over the family i ↦ Fin([m, n, p](i)) indexed by Fin 3, that is with parts Fin m, Fin n and Fin p, in which two vertices are adjacent exactly when they lie in different parts, has psi congruent to 2 modulo 4.
 
-**Theorem 1.5 (Proof of clause (4)).**
+**Theorem 1.4 (Proof of clause (4)).**
 
 $$claim$$
 
@@ -72,8 +60,9 @@ If two commuting involutions r and s of a finite set act without fixed points, a
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations.IsAcyclic`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations.IsOrientation`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations.acyclicOrientationCount`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations.claim`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations.result`
+- Dependency: [D5/S3/ConceptDynamics/DagSemantics/StrictDependencyCoordinate](../../ConceptDynamics/DagSemantics/StrictDependencyCoordinate.md)
+- Dependency: [D5/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder](../../ConceptDynamics/DependencyTopology/DependencyReachabilityOrder.md)
