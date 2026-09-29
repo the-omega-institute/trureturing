@@ -63,12 +63,15 @@ alone does not settle the unbounded claim.
 
 ## Evidence
 
-The Lean source is `D5/S3/Combinatorics/SemiMeanderSecondDiagonal.lean`,
-whose public `result` states the exact all-`n` count. Its mathematical source
-mapping and four-declaration shape were independently approved before this
-publication-artifact work. Source attribution, the Scribe interpretation,
-deposit, independent publication review and merge are separate from the
-kernel statement.
+The Lean model is in
+`D5/S3/Combinatorics/SemiMeanderSecondDiagonal/Model.lean`; its five ordered
+`Stage1.lean` through `Stage5.lean` modules establish the cut classification,
+connectivity and count. The short
+`D5/S3/Combinatorics/SemiMeanderSecondDiagonal.lean` module states the exact
+all-`n` `result`. The mathematical source mapping and theorem statement were
+independently approved before this publication-artifact work. Source
+attribution, the Scribe interpretation, deposit, independent publication
+review and merge are separate from the kernel statement.
 
 ## Triage
 

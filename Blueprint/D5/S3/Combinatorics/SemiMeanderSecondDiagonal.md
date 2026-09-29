@@ -8,7 +8,7 @@ Connected semi-meanders with n crossings and winding n minus four have the secon
 
 $$U_{n} = \{M \in \operatorname{Fin}\left(2 \cdot n\right) \to \operatorname{Fin}\left(2 \cdot n\right) \mid \left(\forall x \in \operatorname{Fin}\left(2 \cdot n\right),\; M\left(M\left(x\right)\right) = x \land M\left(x\right) \ne x\right) \land \left(\forall a \in \operatorname{Fin}\left(2 \cdot n\right),\; \forall b \in \operatorname{Fin}\left(2 \cdot n\right),\; \neg \left(a < b \land \left(b < M\left(a\right) \land M\left(a\right) < M\left(b\right)\right)\right)\right)\}$$
 
-*Formalization.* `D5/S3/Combinatorics/SemiMeanderSecondDiagonal.UpperMatching` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SemiMeanderSecondDiagonal/Model.UpperMatching` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -66,5 +66,6 @@ For every n at least four, count exactly the noncrossing upper matchings whose m
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SemiMeanderSecondDiagonal.UpperMatching`
 - Truth anchor: `D5/S3/Combinatorics/SemiMeanderSecondDiagonal.result`
+- Truth anchor: `D5/S3/Combinatorics/SemiMeanderSecondDiagonal/Model.UpperMatching`
+- Dependency: [D5/S3/Combinatorics/SemiMeanderSecondDiagonal/Stage5](SemiMeanderSecondDiagonal/Stage5.md)

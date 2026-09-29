@@ -15,7 +15,7 @@ internal sealed class SemiMeanderSecondDiagonalDocument : IScribeDocumentDefinit
         H("The Second Semi-Meander Diagonal"),
         Blocks(
             Describe.Lean(DescribeId.Create("upper-matching"),
-                DeclarationHandle.Create(Prefix + "UpperMatching"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/SemiMeanderSecondDiagonal/Model.UpperMatching"),
                 H("Noncrossing upper arches"), StatementSource.FromAuthor(UpperMatchingFormula()),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Endpoints are numbered from zero to 2n minus one. "
