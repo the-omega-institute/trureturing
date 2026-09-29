@@ -314,6 +314,28 @@ private def runBatch (pkg : Package) (requests : Array (String × Array String))
     removeFileIfExists requestFile
     removeFileIfExists resultFile
 
+-- Bound the continuation depth when collecting thousands of module jobs.
+private def collectModuleJobs {α : Type} (jobs : Array (Job α)) : Job (Array α) := Id.run do
+  let mut level : Array (Job (Array α)) := #[]
+  let mut start := 0
+  while start < jobs.size do
+    level := level.push (Job.collectArray (jobs.extract start (min (start + 64) jobs.size)))
+    start := start + 64
+  if level.isEmpty then
+    return Job.collectArray #[]
+  while level.size > 1 do
+    let mut next : Array (Job (Array α)) := #[]
+    let mut i := 0
+    while i < level.size do
+      if i + 1 < level.size then
+        next := next.push ((level[i]!).zipWith (sync := true) (· ++ ·) (level[i + 1]!))
+        i := i + 2
+      else
+        next := next.push level[i]!
+        i := i + 1
+    level := next
+  return level[0]?.getD (Job.collectArray #[])
+
 package_facet report (owner : Package) : FilePath := withCurrPackage owner do
   let pkg := (← getWorkspace).root
   observePhase "lake-inputs" "start"
@@ -338,7 +360,7 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
       members := members.insert mod.name
       prepared := prepared.push (← preparedModuleReport mod)
   try observePhase "lake-prepare-register" "finish" catch _ => pure ()
-  let batch ← (Job.collectArray prepared).mapM fun artifacts => do
+  let batch ← (collectModuleJobs prepared).mapM fun artifacts => do
     observePhase "lake-prepare" "finish"
     let requests ← artifacts.filterMapM fun request => do
       if request.artifact?.isSome then return none
@@ -354,7 +376,7 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
       | error s!"registered report module is not in the Lake workspace: {name}"
     rows := rows.push (← nativeModuleReport mod)
   let membership ← inputBinFile inputs
-  ((Job.collectArray rows).zipWith (fun artifacts _ => artifacts) membership).mapM fun artifacts =>
+  ((collectModuleJobs rows).zipWith (fun artifacts _ => artifacts) membership).mapM fun artifacts =>
     reportState.validation.atomically do
     let root ← repositoryDir pkg
     let paths := artifacts.map (·.path.toString)
