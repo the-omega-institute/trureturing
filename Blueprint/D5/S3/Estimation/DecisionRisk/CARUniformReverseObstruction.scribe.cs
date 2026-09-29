@@ -123,30 +123,154 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
                 new DocumentBlock.DisplayFormula(Display(PublicConclusion())))))));
 
     private static Formula TheoremFormula() => All(V("n"), Call("Nat"),
-        Implies(LeF(D(4), V("n")), And(
-            Profiles(),
+        Implies(LeF(D(4), V("n")), LetIn(TheoremDefinitions(), And(
             All(V("B"), V("Bset"), AndInline(LeF(D(0), Call("w", V("B"))), LeF(D(0), Call("v", V("B"))))),
-            All(V("i"), V("A"), AndInline(Eqn(SumOver(V("B"), Call("W", V("i"), V("B"))), D(1)),
-                Eqn(SumOver(V("B"), Call("V", V("i"), V("B"))), D(1)))),
-            All(CommaList(V("i"), V("j")), V("A"), PairFormula()),
-            Some(CommaList(V("F"), V("G")), Call("Kernel", V("Bset"), V("Bset")),
-                And(All(CommaList(V("B"), V("C")), V("Bset"), KernelFormula()), ErrorFormula(),
-                    BlockMinima(), Attainment(), RiskFormula(), ExactFormula(), ObstructionFormula(), PublicWitness())))));
+            All(V("i"), V("A"), AndInline(Eqn(SumOver(Typed(V("B"), V("Bset")), Call("W", V("i"), V("B"))), D(1)),
+                Eqn(SumOver(Typed(V("B"), V("Bset")), Call("V", V("i"), V("B"))), D(1)))),
+            All(CommaList(V("i"), V("j")), V("A"), AndInline(
+                Implies(Call("neq", V("i"), V("j")), AndInline(
+                    Eqn(Call("r", V("w"), V("i"), V("j")), V("b")),
+                    Eqn(Call("r", V("v"), V("i"), V("j")), V("b")))),
+                Eqn(Call("Delta", V("i"), V("j")), D(0)))),
+            Eqn(V("R"), D(0)),
+            Some(CommaList(V("F"), V("G")), Call("FiniteMarkovKernel", V("Bset"), V("Bset")), And(
+                All(CommaList(V("B"), V("C")), V("Bset"), KernelFormula()),
+                All(V("i"), V("A"), AndInline(
+                    Eqn(Call("totalVariation", Call("V", V("i")), Call("channelOutput", Projection(V("F")), Call("W", V("i")))), V("epsilon")),
+                    Eqn(Call("totalVariation", Call("W", V("i")), Call("channelOutput", Projection(V("G")), Call("V", V("i")))), V("rho")))),
+                LossClaims(), BlockClaims(),
+                AttainmentFor("Drej", "Costrej"), AttainmentFor("Dlist", "Costlist"),
+                TheoremRisks(), TheoremDeficiencies(), ObstructionFormula(),
+                LtF(D(0), V("t")), LeF(V("t"), D(1)), PublicWitness()))))));
+
+    private static Formula[] TheoremDefinitions() => [
+        Eqn(V("A"), Call("Fin", V("n"))),
+        Eqn(V("Bset"), Call("Block", V("A"))),
+        Eqn(V("b"), Div(V("n"), Mul(D(3), Sub(V("n"), D(1))))),
+        Eqn(V("a"), Div(D(2), Mul(D(3), Sub(V("n"), D(1))))),
+        Eqn(V("c"), Div(D(1), Mul(D(3), Sub(V("n"), D(1))))),
+        Eqn(V("x"), Div(D(1), Mul(D(2), Sub(V("n"), D(1))))),
+        Eqn(V("w"), Lambda(Typed(V("B"), V("Bset")),
+            Add(Mul(Sub(D(1), V("b")), Indicator(Eqn(Card(V("B")), D(1)))),
+                Mul(V("b"), Indicator(Eqn(Card(V("B")), V("n"))))))),
+        Eqn(V("v"), Lambda(Typed(V("B"), V("Bset")),
+            Add(Mul(V("a"), Indicator(Eqn(Card(V("B")), D(2)))),
+                Mul(V("c"), Indicator(Eqn(Card(V("B")), Sub(V("n"), D(1)))))))),
+        Eqn(V("row"), Lambda(CommaList(Typed(V("u"), Arrow(V("Bset"), Real())),
+            Typed(V("i"), V("A")), Typed(V("B"), V("Bset"))),
+            Mul(Indicator(Member(V("i"), V("B"))), Call("u", V("B"))))),
+        Eqn(V("W"), Call("row", V("w"))), Eqn(V("V"), Call("row", V("v"))),
+        Eqn(V("r"), Lambda(CommaList(Typed(V("u"), Arrow(V("Bset"), Real())),
+            Typed(V("i"), V("A")), Typed(V("j"), V("A"))),
+            SumOver(Typed(V("B"), V("Bset")), Mul(
+                Indicator(AndInline(Member(V("i"), V("B")), Member(V("j"), V("B")))), Call("u", V("B")))))),
+        Eqn(V("Delta"), Lambda(CommaList(Typed(V("i"), V("A")), Typed(V("j"), V("A"))),
+            Sub(Call("r", V("v"), V("i"), V("j")), Call("r", V("w"), V("i"), V("j"))))),
+        Eqn(V("R"), Budget("Delta")),
+        Eqn(V("epsilon"), Div(D(1), Mul(D(3), Sub(V("n"), D(1))))),
+        Eqn(V("rho"), Div(Sub(Mul(D(2), V("n")), D(3)), Mul(D(6), Sub(V("n"), D(1))))),
+        Eqn(V("pi"), Lambda(Typed(V("i"), V("A")), Div(D(1), V("n")))),
+        Eqn(V("Drej"), Call("Option", V("A"))),
+        Eqn(V("Dlist"), Call("ListAction", V("n"))),
+        Eqn(V("lrej"), Call("rejectLoss", V("n"))),
+        Eqn(V("llist"), Call("listLoss", V("n"))),
+        Eqn(V("mrej"), Lambda(Typed(V("B"), V("Bset")),
+            Call("min", Call("natSub", Card(V("B")), D(1)), Div(Card(V("B")), D(2))))),
+        Eqn(V("mlist"), Lambda(Typed(V("B"), V("Bset")), Call("natSub", Card(V("B")), D(2)))),
+        Eqn(V("Costrej"), Lambda(CommaList(Typed(V("X"), Arrow(V("A"), Arrow(V("Bset"), Real()))),
+            Typed(V("D"), Call("FiniteMarkovKernel", V("Bset"), V("Drej")))),
+            Call("finiteBayesCost", V("pi"), V("lrej"), V("X"), Projection(V("D"))))),
+        Eqn(V("Costlist"), Lambda(CommaList(Typed(V("X"), Arrow(V("A"), Arrow(V("Bset"), Real()))),
+            Typed(V("D"), Call("FiniteMarkovKernel", V("Bset"), V("Dlist")))),
+            Call("finiteBayesCost", V("pi"), V("llist"), V("X"), Projection(V("D"))))),
+        Eqn(V("Riskrej"), Lambda(Typed(V("X"), Arrow(V("A"), Arrow(V("Bset"), Real()))),
+            Call("inf", Typed(V("D"), Call("FiniteMarkovKernel", V("Bset"), V("Drej"))),
+                Call("ofReal", Call("Costrej", V("X"), V("D")))))),
+        Eqn(V("Risklist"), Lambda(Typed(V("X"), Arrow(V("A"), Arrow(V("Bset"), Real()))),
+            Call("inf", Typed(V("D"), Call("FiniteMarkovKernel", V("Bset"), V("Dlist"))),
+                Call("ofReal", Call("Costlist", V("X"), V("D")))))),
+        Eqn(V("t"), Div(D(2), V("n"))),
+        Eqn(V("I"), Lambda(Typed(V("B"), V("Bset")), Indicator(Eqn(Card(V("B")), D(1))))),
+        Eqn(V("wprime"), Lambda(Typed(V("B"), V("Bset")),
+            Add(Mul(Sub(D(1), V("t")), Call("I", V("B"))), Mul(V("t"), Call("w", V("B")))))),
+        Eqn(V("vprime"), Lambda(Typed(V("B"), V("Bset")),
+            Add(Mul(Sub(D(1), V("t")), Call("I", V("B"))), Mul(V("t"), Call("v", V("B")))))),
+        Eqn(V("Seed"), Product(Call("Option", V("Bset")), Call("Option", V("Bset")))),
+        Eqn(V("Deltaprime"), Lambda(CommaList(Typed(V("i"), V("A")), Typed(V("j"), V("A"))),
+            Sub(Call("r", V("vprime"), V("i"), V("j")), Call("r", V("wprime"), V("i"), V("j"))))),
+        Eqn(V("Rprime"), Budget("Deltaprime"))
+    ];
+
+    private static Formula Budget(string delta) => Mul(Div(D(1), D(2)),
+        Call("max", Typed(V("i"), V("A")), SumOver(
+            Seq(Typed(V("j"), V("A")), Comma, Sp, Call("neq", V("j"), V("i"))),
+            Call("max", Call(delta, V("i"), V("j")), D(0)))));
+
+    private static Formula LossClaims() => And(
+        All(V("i"), V("A"), Eqn(Call("lrej", V("i"), Call("none")), Div(D(1), D(2)))),
+        All(CommaList(V("i"), V("j")), V("A"), Eqn(
+            Call("lrej", V("i"), Call("some", V("j"))), Indicator(Call("neq", V("i"), V("j"))))),
+        All(V("i"), V("A"), All(V("D"), V("Dlist"), Eqn(
+            Call("llist", V("i"), V("D")), Indicator(Call("not", Member(V("i"), V("D"))))))));
+
+    private static Formula BlockClaims() => All(V("B"), V("Bset"), And(
+        All(V("d"), V("Drej"), LeF(Div(Call("mrej", V("B")), V("n")),
+            Div(SumOver(Member(V("i"), V("B")), Call("lrej", V("i"), V("d"))), V("n")))),
+        Some(V("d"), V("Drej"), Eqn(
+            Div(SumOver(Member(V("i"), V("B")), Call("lrej", V("i"), V("d"))), V("n")),
+            Div(Call("mrej", V("B")), V("n")))),
+        All(V("d"), V("Dlist"), LeF(Div(Call("mlist", V("B")), V("n")),
+            Div(SumOver(Member(V("i"), V("B")), Call("llist", V("i"), V("d"))), V("n")))),
+        Some(V("d"), V("Dlist"), Eqn(
+            Div(SumOver(Member(V("i"), V("B")), Call("llist", V("i"), V("d"))), V("n")),
+            Div(Call("mlist", V("B")), V("n"))))));
+
+    private static Formula AttainmentFor(string actions, string cost) =>
+        Some(V("Dstar"), Call("FiniteMarkovKernel", V("Bset"), V(actions)),
+            All(V("u"), Arrow(V("Bset"), Real()),
+                Implies(Member(V("u"), Call("set", V("w"), V("v"))),
+                    All(V("D"), Call("FiniteMarkovKernel", V("Bset"), V(actions)),
+                        LeF(Call(cost, Call("row", V("u")), V("Dstar")),
+                            Call(cost, Call("row", V("u")), V("D")))))));
+
+    private static Formula TheoremRisks() => AndInline(
+        Eqn(Call("Riskrej", V("W")), Call("ofReal", Div(V("n"), Mul(D(6), Sub(V("n"), D(1)))))),
+        Eqn(Call("Riskrej", V("V")), Call("ofReal", Div(D(1), D(2)))),
+        Eqn(Call("Risklist", V("W")), Call("ofReal", Div(Sub(V("n"), D(2)), Mul(D(3), Sub(V("n"), D(1)))))),
+        Eqn(Call("Risklist", V("V")), Call("ofReal", Div(Sub(V("n"), D(3)), Mul(D(3), Sub(V("n"), D(1)))))));
+
+    private static Formula TheoremDeficiencies() => AndInline(
+        Eqn(Call("finiteDeficiency", V("V"), V("W")), Call("ofReal", V("epsilon"))),
+        Eqn(Call("finiteDeficiency", V("W"), V("V")), Call("ofReal", V("rho"))),
+        Eqn(Div(V("rho"), V("epsilon")), Sub(V("n"), Div(D(3), D(2)))));
 
     private static Formula PublicWitness() => Some(V("p"), Arrow(V("Seed"), Real()),
-        Some(CommaList(V("P"), V("Q")), Arrow(V("Seed"), Call("Partition", V("A"))), And(
-            All(V("s"), V("Seed"), LeF(D(0), Call("p", V("s")))), Eqn(SumOver(V("s"), Call("p", V("s"))), D(1)),
-            All(V("B"), V("Bset"), AndInline(
-                Eqn(SumOver(V("s"), Mul(Call("p", V("s")), Indicator(Member(V("B"), Call("parts", Call("P", V("s"))))))), Call("wprime", V("B"))),
-                Eqn(SumOver(V("s"), Mul(Call("p", V("s")), Indicator(Member(V("B"), Call("parts", Call("Q", V("s"))))))), Call("vprime", V("B"))))),
-            ExactPublicKernels(V("P"), V("wprime")), ExactPublicKernels(V("Q"), V("vprime")), PublicConclusion())));
+        Some(CommaList(V("P"), V("Q")), Arrow(V("Seed"), Call("Finpartition", Call("univ", V("A")))),
+            LetIn([
+                Eqn(V("E"), Lambda(CommaList(
+                    Typed(V("T"), Arrow(V("Seed"), Call("Finpartition", Call("univ", V("A"))))),
+                    Typed(V("i"), V("A")), Typed(V("o"), Product(V("Seed"), V("Bset")))),
+                    Mul(Call("p", Call("fst", V("o"))), Indicator(Eqn(
+                        Call("part", Call("T", Call("fst", V("o"))), V("i")),
+                        Call("val", Call("snd", V("o")))))))),
+                Eqn(V("EP"), Call("E", V("P"))), Eqn(V("EQ"), Call("E", V("Q")))
+            ], And(
+                All(V("s"), V("Seed"), LeF(D(0), Call("p", V("s")))),
+                Eqn(SumOver(Typed(V("s"), V("Seed")), Call("p", V("s"))), D(1)),
+                All(V("B"), V("Bset"), AndInline(
+                    Eqn(SumOver(Typed(V("s"), V("Seed")), Mul(Call("p", V("s")),
+                        Indicator(Member(Call("val", V("B")), Call("parts", Call("P", V("s"))))))), Call("wprime", V("B"))),
+                    Eqn(SumOver(Typed(V("s"), V("Seed")), Mul(Call("p", V("s")),
+                        Indicator(Member(Call("val", V("B")), Call("parts", Call("Q", V("s"))))))), Call("vprime", V("B"))))),
+                ExactPublicKernels("EP", V("wprime")),
+                ExactPublicKernels("EQ", V("vprime")), PublicConclusion()))));
 
-    private static Formula ExactPublicKernels(Formula partition, Formula profile) =>
-        Some(V("H"), Call("Kernel", Product(V("Seed"), V("Bset")), V("Bset")),
-            Some(V("J"), Call("Kernel", V("Bset"), Product(V("Seed"), V("Bset"))),
+    private static Formula ExactPublicKernels(string experiment, Formula profile) =>
+        Some(V("H"), Call("FiniteMarkovKernel", Product(V("Seed"), V("Bset")), V("Bset")),
+            Some(V("J"), Call("FiniteMarkovKernel", V("Bset"), Product(V("Seed"), V("Bset"))),
                 All(V("i"), V("A"), AndInline(
-                    Eqn(Call("output", V("H"), Call("E", partition, V("i"))), Call("row", profile, V("i"))),
-                    Eqn(Call("output", V("J"), Call("row", profile, V("i"))), Call("E", partition, V("i")))))));
+                    Eqn(Call("channelOutput", Projection(V("H")), Call(experiment, V("i"))), Call("row", profile, V("i"))),
+                    Eqn(Call("channelOutput", Projection(V("J")), Call("row", profile, V("i"))), Call(experiment, V("i")))))));
 
     private static Formula Profiles() => Lines(
         Eqn(V("A"), Call("Fin", V("n"))), Eqn(V("Bset"), Call("NonemptySubsets", V("A"))),
@@ -172,12 +296,21 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
             SumOver(Call("neq", V("j"), V("i")), Call("max", Call("Delta", V("i"), V("j")), D(0)))))), Eqn(V("R"), D(0)));
 
     private static Formula DeficiencyDefinition() => Lines(
-        Eqn(Call("TV", V("p"), V("q")), Mul(Div(D(1), D(2)), SumOver(V("B"), Abs(Sub(Call("p", V("B")), Call("q", V("B"))))))),
-        Eqn(Call("d", V("X"), V("Y")), Call("inf", Typed(V("K"), Call("Kernel", V("Bset"), V("Bset"))),
-            Call("max", V("i"), Call("TV", Call("Y", V("i")), Call("output", V("K"), Call("X", V("i"))))))),
-        Eqn(Call("d", V("X"), V("Y")), Call("finiteDeficiency", V("Y"), V("X"))));
+        All(V("O"), Call("Type"), All(V("p"), Arrow(V("O"), Real()),
+            All(V("q"), Arrow(V("O"), Real()), Eqn(
+                Call("TV", V("p"), V("q")), Mul(Div(D(1), D(2)),
+                    SumOver(Typed(V("z"), V("O")), Abs(Sub(Call("p", V("z")), Call("q", V("z")))))))))),
+        All(V("O"), Call("Type"), All(V("T"), Call("Type"),
+            All(V("X"), Arrow(V("A"), Arrow(V("O"), Real())),
+                All(V("Y"), Arrow(V("A"), Arrow(V("T"), Real())), AndInline(
+                    Eqn(Call("d", V("X"), V("Y")),
+                        Call("inf", Typed(V("K"), Call("FiniteMarkovKernel", V("O"), V("T"))),
+                            Call("ofReal", Call("max", Typed(V("i"), V("A")),
+                                Call("TV", Call("Y", V("i")),
+                                    Call("channelOutput", Projection(V("K")), Call("X", V("i")))))))),
+                    Eqn(Call("d", V("X"), V("Y")), Call("finiteDeficiency", V("Y"), V("X")))))))));
 
-    private static Formula KernelFormula() => Lines(
+    private static Formula KernelFormula() => AndInline(
         Eqn(Call("F", V("B"), V("C")), Ite(Eqn(Card(V("B")), D(1)),
             Div(Indicator(AndInline(Eqn(Card(V("C")), D(2)), Call("subset", V("B"), V("C")))), Sub(V("n"), D(1))),
             Ite(Eqn(Card(V("B")), V("n")), Div(Indicator(Eqn(Card(V("C")), Sub(V("n"), D(1)))), V("n")), Indicator(Eqn(V("B"), V("C")))))),
@@ -277,10 +410,10 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
         Eqn(V("Rprime"), Mul(Div(D(1), D(2)), Call("max", V("i"),
             SumOver(Call("neq", V("j"), V("i")), Call("max", Call("Deltaprime", V("i"), V("j")), D(0)))))),
         Eqn(V("Rprime"), D(0)),
-        Eqn(Call("d", V("EP"), V("EQ")), Mul(V("t"), V("epsilon"))),
-        Eqn(Call("d", V("EP"), V("EQ")), Div(D(2), Mul(D(3), V("n"), Sub(V("n"), D(1))))),
-        Eqn(Call("d", V("EQ"), V("EP")), Mul(V("t"), V("rho"))),
-        Eqn(Call("d", V("EQ"), V("EP")), Div(Sub(Mul(D(2), V("n")), D(3)), Mul(D(3), V("n"), Sub(V("n"), D(1))))),
+        Eqn(Call("finiteDeficiency", V("EQ"), V("EP")), Call("ofReal", Mul(V("t"), V("epsilon")))),
+        Eqn(Call("finiteDeficiency", V("EQ"), V("EP")), Call("ofReal", Div(D(2), Mul(D(3), V("n"), Sub(V("n"), D(1)))))),
+        Eqn(Call("finiteDeficiency", V("EP"), V("EQ")), Call("ofReal", Mul(V("t"), V("rho")))),
+        Eqn(Call("finiteDeficiency", V("EP"), V("EQ")), Call("ofReal", Div(Sub(Mul(D(2), V("n")), D(3)), Mul(D(3), V("n"), Sub(V("n"), D(1)))))),
         Eqn(Div(Mul(V("t"), V("rho")), Mul(V("t"), V("epsilon"))), Sub(V("n"), Div(D(3), D(2)))),
         LtF(Call("min", D(1), Add(V("Rprime"), Mul(Div(V("n"), D(2)), V("t"), V("epsilon")))), Mul(V("t"), V("rho"))));
 
@@ -290,11 +423,13 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
     private static Formula Card(Formula value) => Call("card", value);
     private static Formula Indicator(Formula value) => Call("indicator", value);
     private static Formula Typed(Formula value, Formula type) => Seq(value, Colon, Sp, type);
-    private static Formula All(Formula value, Formula type, Formula body) => Seq(Forall, Sp, Typed(value, type), Comma, Sp, body);
-    private static Formula Some(Formula value, Formula type, Formula body) => Seq(Exists, Sp, Typed(value, type), Comma, Sp, body);
+    private static Formula All(Formula value, Formula type, Formula body) => Seq(Forall, Sp, Typed(value, type), Comma, Sp, Paren(body));
+    private static Formula Some(Formula value, Formula type, Formula body) => Seq(Exists, Sp, Typed(value, type), Comma, Sp, Paren(body));
     private static Formula Arrow(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
     private static Formula Product(Formula a, Formula b) => Seq(a, Sp, Times, Sp, b);
     private static Formula Pair(Formula a, Formula b) => Paren(CommaList(a, b));
+    private static Formula Lambda(Formula args, Formula body) => Paren(Seq(args, Sp, Mapsto, Sp, body));
+    private static Formula Projection(Formula value) => Seq(value, Dot, D(1));
     private static Formula Real() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Ite(Formula condition, Formula yes, Formula no) => Call("ite", condition, yes, no);
     private static Formula Member(Formula a, Formula b) => Seq(a, Sp, InMacro, Sp, b);
@@ -324,4 +459,7 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
     private static Formula Lines(params Formula[] clauses) => Infix(Seq(RowBreak, Grp()), clauses);
     private static Formula And(params Formula[] clauses) => Paren(Infix(Seq(Land, RowBreak, Grp()), clauses.Select(Paren).ToArray()));
     private static Formula Implies(params Formula[] clauses) => Infix(Seq(Rightarrow, RowBreak, Grp()), clauses.Select(Paren).ToArray());
+    private static Formula LetIn(Formula[] definitions, Formula body) => Seq(
+        F.Text, Grp(F.Id("let")), Sp, Lines(definitions), RowBreak, Grp(),
+        F.Text, Grp(F.Id("in")), Sp, body);
 }
