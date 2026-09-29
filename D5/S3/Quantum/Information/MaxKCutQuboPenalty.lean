@@ -20,13 +20,6 @@ Direct frozen dependencies: D5/S3/Quantum/Entanglement/PhaseHistoryBound (module
 -/
 
 import D5.S3.Quantum.Entanglement.PhaseHistoryBound
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
