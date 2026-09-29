@@ -40,7 +40,8 @@ for every prime `p`, every `c` and every even `t`.
 ## Gap
 
 Issue #11296 preregisters the reading, the route and the literature check. The
-paper has one arXiv version. INSPIRE lists 38 citing records; the 36 arXiv full
+paper has one arXiv version, and the published JHEP text states the same
+conjecture with the same formula as eq. (5.5). INSPIRE lists 38 citing records; the 36 arXiv full
 texts were searched and none proves eq. (barP). Dymarsky–Shapere
 (arXiv:2009.01244) give the `p = 2` average without a written proof.
 arXiv:2310.06012 proves the average over all codes, a different ensemble. The

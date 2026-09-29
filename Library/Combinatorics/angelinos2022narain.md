@@ -1,6 +1,6 @@
 ---
 bibkey: angelinos2022narain
-authors: Nikolay Angelinos; Debarghya Chakraborty; Anatoly Dymarsky
+authors: Nikolaos Angelinos; Debarghya Chakraborty; Anatoly Dymarsky
 year: 2022
 title: "Optimal Narain CFTs from codes"
 doi: 10.48550/arXiv.2206.14825
@@ -40,3 +40,6 @@ followed by eq. (barP):
 - URL: https://arxiv.org/abs/2206.14825v1 (source of v1 retrieved 2026-09-30).
 - Location: the section on codes over `F_p × F_p` for prime `p`, for the
   B-form of the generating matrix, the enumerator polynomial and eq. (barP).
+- Published version: https://doi.org/10.1007/JHEP11(2022)118 (open-access
+  PDF retrieved 2026-09-30); it states the same conjecture with the same
+  formula as eq. (5.5), including the printed upper limit `p=1`.

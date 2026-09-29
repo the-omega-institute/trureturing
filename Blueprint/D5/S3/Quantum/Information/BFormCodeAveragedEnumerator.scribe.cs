@@ -21,7 +21,7 @@ internal sealed class BFormCodeAveragedEnumeratorDocument : IScribeDocumentDefin
                 "The codewords of the code of B are the pairs (r, B^T r) with r in (Z/p)^c. Its full enumerator is the sum over the codewords of the product over i of x_(r_i, (B^T r)_i); the paper evaluates it at x_ab = t_a t_b.",
                 "enumerator", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The conjectured average", ClaimFormula(),
-                "Eq. (barP) of the paper: the average of the enumerator over all B-form matrices, for every prime p, every c and every t with t(-a) = t(a). In the cosine, k, a and b are read as their representatives 0, ..., p - 1; there are p^(c(c-1)/2) B-form matrices.",
+                "Eq. (barP) of the paper: the average of the enumerator over all B-form matrices, for every prime p, every c and every t with t(-a) = t(a). In the cosine, k, a and b are read as their representatives 0, ..., p - 1. In the exponent c(c - 1) is a natural number, natDiv is division of natural numbers rounded down and c - 1 is subtraction of natural numbers (0 at c = 0); c(c - 1) is even, so natDiv(c(c - 1), 2) = c(c - 1)/2 is the number of entries above the diagonal, and there are p^(c(c-1)/2) B-form matrices.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the averaged formula", Disp(F.Id("claim")),
                 "Exchange the sums over B and r. The term r = 0 gives t_0^(2c) for every B. For r nonzero, antisymmetry with zero diagonal gives r . B^T r = 0, and the linear map B -> B^T r is onto the hyperplane orthogonal to r: if r_j is nonzero, a matrix supported on row and column j reaches any s orthogonal to r. So each such s has the same number of preimages, and the sum over B equals p^(c(c-1)/2) / p^(c-1) times the sum over s orthogonal to r. The constraint r . s = 0 is written as p^(-1) times the sum over k of the standard additive character psi(k r . s); the sum over r and s then factors into the c-th power of the sum over a and b of psi(kab) t_a t_b, and the row r = 0 contributes p t_0^c (sum of t_a)^c. Since t is even, replacing (a, b) by (-a, b) turns psi(kab) into its complex conjugate, so the character sum equals the cosine sum. Counting the B-form matrices as p^(c(c-1)/2) gives the formula.",
@@ -102,7 +102,7 @@ internal sealed class BFormCodeAveragedEnumeratorDocument : IScribeDocumentDefin
         Formula k = F.Id("k"), a = F.Id("a"), b = F.Id("b");
         Formula average = Div(
             SumOver(Seq(Member(B, Matrices()), Comma, Sp, Call("IsBForm", B)), Call("enumerator", t, B)),
-            Pow(p, Div(Mul(c, Parenthesized(Sub(c, D(1)))), D(2))));
+            Pow(p, Call("natDiv", Mul(c, Parenthesized(Sub(c, D(1)))), D(2))));
         Formula angle = Div(Mul(Mul(Mul(Seq(D(2), Pi), Val(k)), Val(a)), Val(b)), p);
         Formula cosineSum = SumOver(Member(a, ZModP()), SumOver(Member(b, ZModP()),
             Mul(Mul(Call("cos", angle), T(a)), T(b))));

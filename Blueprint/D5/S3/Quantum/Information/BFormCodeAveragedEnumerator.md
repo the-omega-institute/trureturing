@@ -10,7 +10,7 @@ $$\operatorname{IsBForm}\left(B\right) \Leftrightarrow ((B^{T} = -B) \land (\for
 
 *Formalization.* `D5/S3/Quantum/Information/BFormCodeAveragedEnumerator.IsBForm` (`✓ std3`).
 
-*Citation.* Nikolay Angelinos; Debarghya Chakraborty; Anatoly Dymarsky (2022). *Optimal Narain CFTs from codes*. DOI: [10.48550/arXiv.2206.14825](https://doi.org/10.48550/arXiv.2206.14825). URL: <https://arxiv.org/abs/2206.14825v1>.
+*Citation.* Nikolaos Angelinos; Debarghya Chakraborty; Anatoly Dymarsky (2022). *Optimal Narain CFTs from codes*. DOI: [10.48550/arXiv.2206.14825](https://doi.org/10.48550/arXiv.2206.14825). URL: <https://arxiv.org/abs/2206.14825v1>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\operatorname{enumerator}\left(t, B\right) = \sum_{r \in (\mathbb{Z}/p)^{c}} \
 
 *Formalization.* `D5/S3/Quantum/Information/BFormCodeAveragedEnumerator.enumerator` (`✓ std3`).
 
-*Citation.* Nikolay Angelinos; Debarghya Chakraborty; Anatoly Dymarsky (2022). *Optimal Narain CFTs from codes*. DOI: [10.48550/arXiv.2206.14825](https://doi.org/10.48550/arXiv.2206.14825). URL: <https://arxiv.org/abs/2206.14825v1>.
+*Citation.* Nikolaos Angelinos; Debarghya Chakraborty; Anatoly Dymarsky (2022). *Optimal Narain CFTs from codes*. DOI: [10.48550/arXiv.2206.14825](https://doi.org/10.48550/arXiv.2206.14825). URL: <https://arxiv.org/abs/2206.14825v1>.
 
 *Commentary.*
 
@@ -30,15 +30,15 @@ The codewords of the code of B are the pairs (r, B^T r) with r in (Z/p)^c. Its f
 
 **Definition 1.3 (The conjectured average).**
 
-$$claim \Leftrightarrow (\forall p \in \mathbb{N},\; (\operatorname{Prime}\left(p\right)) \Rightarrow \left(\forall c \in \mathbb{N},\; \forall t \in \mathbb{Z}/p \to \mathbb{C},\; (\forall a \in \mathbb{Z}/p,\; t\left(-a\right) = t\left(a\right)) \Rightarrow \frac{\sum_{B \in \operatorname{Mat}\left(c, \mathbb{Z}/p\right), \operatorname{IsBForm}\left(B\right)} \operatorname{enumerator}\left(t, B\right)}{p^{\frac{c \cdot (c - 1)}{2}}} = t\left(0\right)^{2 \cdot c} + \frac{\sum_{k \in \mathbb{Z}/p} (\sum_{a \in \mathbb{Z}/p} \sum_{b \in \mathbb{Z}/p} \operatorname{cos}\left(\frac{2\pi \cdot \operatorname{val}\left(k\right) \cdot \operatorname{val}\left(a\right) \cdot \operatorname{val}\left(b\right)}{p}\right) \cdot t\left(a\right) \cdot t\left(b\right))^{c} - p \cdot t\left(0\right)^{c} \cdot (\sum_{a \in \mathbb{Z}/p} t\left(a\right))^{c}}{p^{c}}\right))$$
+$$claim \Leftrightarrow (\forall p \in \mathbb{N},\; (\operatorname{Prime}\left(p\right)) \Rightarrow \left(\forall c \in \mathbb{N},\; \forall t \in \mathbb{Z}/p \to \mathbb{C},\; (\forall a \in \mathbb{Z}/p,\; t\left(-a\right) = t\left(a\right)) \Rightarrow \frac{\sum_{B \in \operatorname{Mat}\left(c, \mathbb{Z}/p\right), \operatorname{IsBForm}\left(B\right)} \operatorname{enumerator}\left(t, B\right)}{p^{\operatorname{natDiv}\left(c \cdot (c - 1), 2\right)}} = t\left(0\right)^{2 \cdot c} + \frac{\sum_{k \in \mathbb{Z}/p} (\sum_{a \in \mathbb{Z}/p} \sum_{b \in \mathbb{Z}/p} \operatorname{cos}\left(\frac{2\pi \cdot \operatorname{val}\left(k\right) \cdot \operatorname{val}\left(a\right) \cdot \operatorname{val}\left(b\right)}{p}\right) \cdot t\left(a\right) \cdot t\left(b\right))^{c} - p \cdot t\left(0\right)^{c} \cdot (\sum_{a \in \mathbb{Z}/p} t\left(a\right))^{c}}{p^{c}}\right))$$
 
 *Formalization.* `D5/S3/Quantum/Information/BFormCodeAveragedEnumerator.claim` (`✓ std3`).
 
-*Citation.* Nikolay Angelinos; Debarghya Chakraborty; Anatoly Dymarsky (2022). *Optimal Narain CFTs from codes*. DOI: [10.48550/arXiv.2206.14825](https://doi.org/10.48550/arXiv.2206.14825). URL: <https://arxiv.org/abs/2206.14825v1>.
+*Citation.* Nikolaos Angelinos; Debarghya Chakraborty; Anatoly Dymarsky (2022). *Optimal Narain CFTs from codes*. DOI: [10.48550/arXiv.2206.14825](https://doi.org/10.48550/arXiv.2206.14825). URL: <https://arxiv.org/abs/2206.14825v1>.
 
 *Commentary.*
 
-Eq. (barP) of the paper: the average of the enumerator over all B-form matrices, for every prime p, every c and every t with t(-a) = t(a). In the cosine, k, a and b are read as their representatives 0, ..., p - 1; there are p^(c(c-1)/2) B-form matrices.
+Eq. (barP) of the paper: the average of the enumerator over all B-form matrices, for every prime p, every c and every t with t(-a) = t(a). In the cosine, k, a and b are read as their representatives 0, ..., p - 1. In the exponent c(c - 1) is a natural number, natDiv is division of natural numbers rounded down and c - 1 is subtraction of natural numbers (0 at c = 0); c(c - 1) is even, so natDiv(c(c - 1), 2) = c(c - 1)/2 is the number of entries above the diagonal, and there are p^(c(c-1)/2) B-form matrices.
 
 **Theorem 1.4 (Proof of the averaged formula).**
 
@@ -52,7 +52,7 @@ $$claim$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Nikolay Angelinos; Debarghya Chakraborty; Anatoly Dymarsky (2022). *Optimal Narain CFTs from codes*. DOI: [10.48550/arXiv.2206.14825](https://doi.org/10.48550/arXiv.2206.14825). URL: <https://arxiv.org/abs/2206.14825v1>.
+*Acknowledgement.* Nikolaos Angelinos; Debarghya Chakraborty; Anatoly Dymarsky (2022). *Optimal Narain CFTs from codes*. DOI: [10.48550/arXiv.2206.14825](https://doi.org/10.48550/arXiv.2206.14825). URL: <https://arxiv.org/abs/2206.14825v1>.
 
 *Commentary.*
 
