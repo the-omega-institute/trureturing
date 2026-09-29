@@ -52,6 +52,87 @@ class NativeBatchPartitionTests:
                     native.produce_batch(requests + [replacement])
                 chunk.assert_not_called()
 
+    def test_heartbeat_split_preserves_successful_membership(self):
+        requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
+                    for index in range(6, -1, -1)]
+        attempted, completed = [], []
+
+        def inspect(chunk):
+            attempted.append(len(chunk))
+            if len(chunk) > 2:
+                raise native.TemplateJoinHeartbeatError(1, '/inspector')
+            completed.extend(chunk)
+
+        with patch.object(native, 'produce_batch_chunk', side_effect=inspect):
+            native.produce_batch(requests)
+        self.assertEqual(attempted, [7, 3, 1, 2, 4, 2, 2])
+        self.assertEqual(completed, sorted(requests, key=lambda row: row[1]))
+
+    def test_singleton_heartbeat_and_unrelated_failures_propagate(self):
+        request = ['/root', 'Module.0', '', '', '/inspector', '']
+        for error, requests in [
+            (native.TemplateJoinHeartbeatError(1, '/inspector'), [request]),
+            (subprocess.CalledProcessError(1, '/inspector'),
+             [request, ['/root', 'Module.1', '', '', '/inspector', '']]),
+            (ValueError('incomplete native inspection batch'),
+             [request, ['/root', 'Module.1', '', '', '/inspector', '']]),
+        ]:
+            with self.subTest(error=type(error).__name__), \
+                    patch.object(native, 'produce_batch_chunk', side_effect=error) as chunk:
+                with self.assertRaises(type(error)) as raised:
+                    native.produce_batch(requests)
+                self.assertIs(raised.exception, error)
+                chunk.assert_called_once()
+
+    def test_inspector_failure_classification_and_output(self):
+        diagnostic = ('uncaught exception: information-template-join: (deterministic) timeout at '
+                      '`«template proof erasure»`, maximum number of heartbeats (200000) has been reached')
+        for output, code, stream, expected in [
+            (diagnostic, 1, 'stdout', native.TemplateJoinHeartbeatError),
+            (diagnostic, 1, 'stderr', native.TemplateJoinHeartbeatError),
+            (diagnostic, 0, 'stdout', None),
+            (diagnostic.replace('template proof erasure', 'whnf'), 1, 'stdout', subprocess.CalledProcessError),
+            (diagnostic.replace('(200000)', '(400000)'), 1, 'stdout', subprocess.CalledProcessError),
+            ('unrelated failure: ' + diagnostic, 1, 'stdout', subprocess.CalledProcessError),
+        ]:
+            with self.subTest(output=output, code=code, stream=stream), \
+                    patch('sys.stdout', new_callable=io.StringIO) as captured:
+                command = [sys.executable, '-c',
+                           'import sys; print(sys.argv[1], file=getattr(sys, sys.argv[3])); '
+                           'sys.exit(int(sys.argv[2]))', output, str(code), stream]
+                if expected is None:
+                    native.run_batch_inspector(command, ROOT)
+                else:
+                    with self.assertRaises(expected) as raised:
+                        native.run_batch_inspector(command, ROOT)
+                    self.assertIs(type(raised.exception), expected)
+                    self.assertEqual(raised.exception.returncode, code)
+                self.assertEqual(captured.getvalue(), output + '\n')
+
+    def test_failure_after_split_stops_remaining_work(self):
+        requests = [['/root', f'Module.{index}', '', '', '/inspector', '']
+                    for index in range(4)]
+        for error in [native.TemplateJoinHeartbeatError(1, '/inspector'),
+                      subprocess.CalledProcessError(2, '/inspector')]:
+            attempted, completed = [], []
+
+            def inspect(chunk):
+                attempted.append([row[1] for row in chunk])
+                if len(chunk) > 1:
+                    raise native.TemplateJoinHeartbeatError(1, '/inspector')
+                if chunk[0][1] == 'Module.1':
+                    raise error
+                completed.extend(chunk)
+
+            with self.subTest(error=type(error).__name__), \
+                    patch.object(native, 'produce_batch_chunk', side_effect=inspect):
+                with self.assertRaises(type(error)) as raised:
+                    native.produce_batch(requests)
+                self.assertIs(raised.exception, error)
+            self.assertEqual(attempted, [['Module.0', 'Module.1', 'Module.2', 'Module.3'],
+                                        ['Module.0', 'Module.1'], ['Module.0'], ['Module.1']])
+            self.assertEqual(completed, requests[:1])
+
 
 class NativeRecoveryConsumerTests:
     def test_release_stage_and_verify_preserve_absent_lake(self):
