@@ -21,7 +21,7 @@ elab "observe_import_body" : command => do
     name, levelParams := original.levelParams, type := original.type, isUnsafe := false }))
   branch.commitCheckEnv checked
   setEnv branch.mainEnv
-  let .ok () ← enroll name | throwError "setup: ordinary template enrollment failed"
+  let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) name | throwError "setup: ordinary template enrollment failed"
   let env ← getEnv
   let .ok plan := selectedPlan env name | throwError "setup: checked plan absent"
   let .ok bytes := planEncoding plan | throwError "setup: checked plan encoding failed"

@@ -19,7 +19,7 @@ elab "observe_constructor_hidden_proof" : command => do
   liftCoreM <| addDecl (.inductDecl [] 0
     [{ name := ast, type := mkSort (.succ .zero),
        ctors := [{ name := ast.str "mk", type := ctorType }] }] false)
-  let result ← enroll ``constructorProbe #[ast]
+  let result ← enroll (← getEnv).header.mainModule (← getOptions) ``constructorProbe #[ast]
   let retained := (selectedPlan (← getEnv) ``constructorProbe).isOk
   set initial
   let ok := result.isOk && retained

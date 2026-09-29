@@ -19,7 +19,7 @@ run_meta do
     (event.key.registrationModule == producer && record.bindingOwner == some producer &&
       (env.getModuleIdxFor? theoremName).map (env.header.moduleNames[·]!) == some source &&
       (record.result matches .declaredValidated _))
-  let joined ← assessJoined
+  let joined ← (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let selected := joined.filter (·.occurrence.key == event.key)
   observe "inline_join_precedes_assessment"
     (selected.size == 1 && selected[0]?.any fun row =>

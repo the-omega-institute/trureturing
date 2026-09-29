@@ -17,13 +17,13 @@ theorem extraCausalTheorem :
         D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.Int N :=
   observation_strictly_weaker_than_intervention
 
-/-- Supply missing/extra rows under a test-owned contributor for rejection tests. -/
-def registerCausalFixture (second : Bool := true) (extra : Bool := false) :
+/-- Supply missing/extra rows in the selected synthetic root for member-set rejection.
+The positive ownership check uses separately compiled contributors. -/
+def registerCausalFixture (rootId : Name) (second : Bool := true) (extra : Bool := false) :
     CommandElabM Unit := do
   let catalogId := mkIdent `fixtureCausal
   let originalModule := (← getEnv).header.mainModule
-  modifyEnv (·.setMainModule
-    causalContributor)
+  modifyEnv (·.setMainModule rootId)
   try
     elabCommand (← `(command|
       register_information_theorem observation_strictly_weaker_than_intervention

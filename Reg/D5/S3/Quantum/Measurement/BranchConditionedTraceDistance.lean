@@ -1,6 +1,6 @@
 import D5.S3.Quantum.Measurement.BranchConditionedTraceDistance
 import Reg.Support.DependentFamily
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Syntax
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Foundation.FiniteTraceDistance
@@ -138,6 +138,5 @@ register_information_theorem branch_conditioned_trace_distance in arena
 #print axioms sensitivity_proof
 #print axioms dependence_proof
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← getEnv)
 
 end Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance

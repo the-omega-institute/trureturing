@@ -102,7 +102,7 @@ def cachedJoinedRecords (env : Environment) : Except String (Array BindingRecord
 
 def sourcePath := TemplateAudit.sourcePath
 
-def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.CommandElabM Unit := do
+def publishRegistration (rootId : Name) (entry : InformationRegistryEntry) : Elab.Command.CommandElabM Unit := do
   let info ← getConstInfo entry.theoremName
   let sourceRecord := (pendingDeclaration.getState (← getEnv)).bind (·.sourceRecord)
   let identity := if entry.sourceBound || sourceRecord.isSome then TemplateAudit.compactRawIdentity info.levelParams info.type
@@ -141,29 +141,12 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
         throwError "unclassified_form:dtr.inline_occurrence"
       pure <| some {
         key := event.key, arena := event.arena, descriptor := declaration.descriptor,
-        resolutionDiagnostic := declaration.diagnostic, escapeInput := declaration.escapeInput, owner := (← getEnv).header.mainModule : TemplateBindingClaim }
+        resolutionDiagnostic := declaration.diagnostic, escapeInput := declaration.escapeInput, owner := rootId : TemplateBindingClaim }
   let record ← Elab.Command.liftTermElabM <| assess event claim
   modifyEnv fun current => addRecord (addOccurrence current event) record
   if let some claim := claim then modifyEnv (addClaim · claim)
   if record.result matches .undeclared then logWarning (missingDeclarationDiagnostic event.key)
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
-
-/-- A realization provider may be imported by its registration source. The
-complete report environment can contain other, unrelated owners as well. -/
-private def ownerReachable (env : Environment) (root owner : Name) : Bool := Id.run do
-  let mut seen : NameSet := {}
-  let mut pending := [root]
-  while let name :: rest := pending do
-    pending := rest
-    if seen.contains name then continue
-    if name == owner then return true
-    seen := seen.insert name
-    let imports := if name == env.header.mainModule then env.header.imports else
-      match env.getModuleIdx? name with
-      | some index => env.header.moduleData[index.toNat]!.imports
-      | none => #[]
-    pending := imports.toList.map (·.module) ++ pending
-  return false
 
 /-- A replayed event cannot acquire current source or statement identities by
 being exported from a new root. Check the original owner and retained bytes. -/
@@ -191,7 +174,7 @@ def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
   let realizationOwner := (RegistrationReifier.declaringModuleOf env event.realizationName).getD
     env.header.mainModule
   unless env.contains event.realizationName &&
-      ownerReachable env event.key.registrationModule realizationOwner do
+      moduleReachable env event.key.registrationModule realizationOwner do
     throwError "incomplete_closure:dtr.event_unit_owner"
 
 /-- Snapshot for the complete imported join. Original producer records retain
@@ -202,9 +185,14 @@ structure JoinedRecords where
 
 /-- Shared final assessment after the full imported claim set has been joined.
 Callers must establish complete governed registration inputs before claiming coverage. -/
-def assessJoined : MetaM (Array BindingRecord) := do
-  let env ← getEnv
-  let joined ← match joinClaims (ownedEvents env) (ownedClaims env) with
+def assessJoined (input : RegistrationAssessmentInput) : MetaM (Array BindingRecord) :=
+    withOptions (fun _ => input.options) do
+  unless sameRegistrationEnvironment input.environment (← getEnv) do
+    throwError "incomplete_closure:dtr.assessment_environment"
+  let env := input.environment
+  let selected (owner : Name) := moduleReachable env input.rootId owner
+  let joined ← match joinClaims ((ownedEvents env).filter (selected ∘ Prod.fst))
+      ((ownedClaims env).filter (selected ∘ Prod.fst)) with
     | .ok joined => pure joined
     | .error reason => throwError reason
   for (event, _) in joined do validateEvent event
@@ -214,12 +202,15 @@ def assessJoined : MetaM (Array BindingRecord) := do
   joined.mapM fun (event, claim) => withCurrHeartbeats (assess event claim)
 
 /-- Export always starts by joining the entire loaded declaration universe. -/
-def exportSnapshot : MetaM JoinedRecords := do
+def exportSnapshot (input : RegistrationAssessmentInput) : MetaM JoinedRecords := do
   -- Empty inventories still execute this judge. Validate its compiled source
   -- before collecting records.
+  unless sameRegistrationEnvironment input.environment (← getEnv) do
+    throwError "incomplete_closure:dtr.assessment_environment"
   TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.Registry]
-  let selected ← assessJoined
-  let originals ← (inventory (← getEnv)).mapM fun event => do
+  let selected ← assessJoined { input with environment := ← getEnv }
+  let originals ← ((inventory input.environment).filter fun event =>
+      moduleReachable input.environment input.rootId event.key.registrationModule).mapM fun event => do
     let some original := (records (← getEnv)).find? (·.occurrence.key == event.key)
       | throwError "incomplete_closure:dtr.original_inventory"
     return original
@@ -325,7 +316,7 @@ def reportJson (modules : Array (Name × Array TemplateOccurrenceKey)) : MetaM (
     (if modules.any (fun row => row.1 == env.header.mainModule) then
       env.header.imports.map (·.module) else #[])
   TemplateAudit.NativeCoherence.validate roots
-  let snapshot ← exportSnapshot
+  let snapshot ← exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule)
   let rows ← modules.mapM fun (moduleName, registered) => moduleJson snapshot moduleName registered
   -- Compare the original snapshots after all records have been read. A replacement during this transaction cannot renew them.
   TemplateAudit.NativeCoherence.validate roots
@@ -337,9 +328,9 @@ namespace LeanInformationAudit
 open Lean Meta
 
 
-def registerValidatedEntry (entry : InformationRegistryEntry) :
+def registerValidatedEntry (rootId : Name) (entry : InformationRegistryEntry) :
     Lean.Elab.Command.CommandElabM Unit := do
-  TemplateBinding.publishRegistration (← registerSemanticEntry entry)
+  TemplateBinding.publishRegistration rootId (← registerSemanticEntry rootId entry)
 
 end LeanInformationAudit
 

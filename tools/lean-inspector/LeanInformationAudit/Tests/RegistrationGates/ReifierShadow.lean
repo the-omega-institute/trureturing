@@ -78,8 +78,8 @@ Companion names match the derived convention to compare the same occurrences. -/
 private def manual (form : Syntax) (wrapped : Bool) : CommandElabM Unit := do
   let theoremName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo form[1]
   let arenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo form[5]
-  let unit := localCompanionName (← getEnv) theoremName theoremUnitSuffix
-  let bridge := localCompanionName (← getEnv) theoremName primitiveRealizationSuffix
+  let unit := localCompanionName (← getEnv) (← getEnv).header.mainModule theoremName theoremUnitSuffix
+  let bridge := localCompanionName (← getEnv) (← getEnv).header.mainModule theoremName primitiveRealizationSuffix
   let nd := unit.str "__nondegenerate"
   let sens := unit.str "__sensitivity"
   let vari := unit.str "__variation"

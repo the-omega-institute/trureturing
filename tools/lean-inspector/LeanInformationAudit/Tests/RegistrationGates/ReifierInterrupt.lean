@@ -18,14 +18,14 @@ elab "interrupt_after_derive" : command => registrationTransaction do
     synthesizeSyntheticMVarsNoPostponing
     let descriptor ← instantiateMVars descriptor
     let env ← getEnv
-    let entry ← prepareRegistrationEntry env {
+    let entry ← prepareRegistrationEntry env.header.mainModule env {
       theoremName := ``clean
-      unitName := localCompanionName env ``clean theoremUnitSuffix
+      unitName := localCompanionName env env.header.mainModule ``clean theoremUnitSuffix
       arenaName := ``arena
-      realizationName := localCompanionName env ``clean primitiveRealizationSuffix
+      realizationName := localCompanionName env env.header.mainModule ``clean primitiveRealizationSuffix
       statementIdentity := theoremStatementIdentity env ``clean }
     discard <| derive entry (← freezeArena ``arena) descriptor
-  unless (← getEnv).contains (localCompanionName (← getEnv) ``clean theoremUnitSuffix) do
+  unless (← getEnv).contains (localCompanionName (← getEnv) (← getEnv).header.mainModule ``clean theoremUnitSuffix) do
     throwError "interrupt control did not derive"
   throw (.internal interruptExceptionId)
 

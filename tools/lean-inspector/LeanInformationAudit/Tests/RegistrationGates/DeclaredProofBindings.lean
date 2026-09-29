@@ -42,7 +42,7 @@ elab "observe_proof_plan_identities" : command => do
     liftCoreM <| addDecl (.defnDecl { definition with name := probe, all := [probe] })
     let .defnInfo actual ← getConstInfo probe | throwError "[FAIL] proof_variant_setup"
     exactInput := exactInput && actual.value.equal definition.value
-    let result ← enroll probe
+    let result ← enroll (← getEnv).header.mainModule (← getOptions) probe
     match selectedPlan (← getEnv) probe with
     | .ok plan => plans := plans.push plan
     | .error error => logError m!"[FAIL] proof_variant_enrolled {name}: {error}; {repr result}"
@@ -92,7 +92,7 @@ elab "observe_constructor_proof_identity" : command => do
     let .ok (identity, _) := rawStatementIdentity [] info.type
       | throwError "[FAIL] constructor_proof_raw_setup"
     rawTypes := rawTypes.push identity
-    let result ← enroll ``cutRealization #[ast]
+    let result ← enroll (← getEnv).header.mainModule (← getOptions) ``cutRealization #[ast]
     match selectedPlan (← getEnv) ``cutRealization with
     | .ok plan => plans := plans.push plan
     | .error error => logError m!"[FAIL] constructor_proof_enrolled {error}; {repr result}"

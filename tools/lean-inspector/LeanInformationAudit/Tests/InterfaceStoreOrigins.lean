@@ -68,7 +68,7 @@ private def rejectCachedRecord (change : TSyntax `term) (diagnostic : String) :
     | .ok _ => throwError "[FAIL] cached_record_mutation_accepted"
     -- Authoritative assessment joins occurrences and claims, independently of
     -- these transported result payloads.
-    let assessed ← liftTermElabM assessJoined
+    let assessed ← liftTermElabM do (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
     unless assessed.size == 1 && (assessed[0]!.result matches .declaredValidated _) do
       throwError "[FAIL] transported_result_changed_assessment"
   finally setEnv env

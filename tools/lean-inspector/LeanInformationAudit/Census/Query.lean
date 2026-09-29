@@ -46,7 +46,7 @@ def prepareBindingSnapshot (evidenceModules : Array Name) :
     for moduleName in evidenceModules do
       unless moduleName == env.header.mainModule || (env.getModuleIdx? moduleName).isSome do
         throwError "incomplete_closure:dtr.census_registration:{moduleName}"
-    return .ok (← TemplateBinding.exportSnapshot)
+    return .ok (← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule)))
   catch error => return .error (← error.toMessageData.toString)
 
 def incompleteBindingEvidence (diagnostic : String) : Json := Json.mkObj [

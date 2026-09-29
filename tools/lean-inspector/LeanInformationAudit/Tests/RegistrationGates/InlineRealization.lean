@@ -91,8 +91,8 @@ elab "reject_inline " label:str " in " command:command : command => do
   let errors := (← get).messages.toList.filter (·.severity == .error)
   modify fun state => { state with messages := previousMessages }
   let theoremName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo command.raw[1]
-  let unitName := localCompanionName before theoremName theoremUnitSuffix
-  let realizationName := localCompanionName before theoremName primitiveRealizationSuffix
+  let unitName := localCompanionName before before.header.mainModule theoremName theoremUnitSuffix
+  let realizationName := localCompanionName before before.header.mainModule theoremName primitiveRealizationSuffix
   let after ← getEnv
   unless !errors.isEmpty && before.contains unitName == after.contains unitName &&
       before.contains realizationName == after.contains realizationName &&
@@ -154,7 +154,7 @@ run_meta do
     let inputs ← TemplateBinding.moduleInputs env root
     unless inputs.any (·.path == helperPath) do
       throwError "inline proof helper absent from module inputs"
-    let snapshot ← TemplateBinding.exportSnapshot
+    let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
     let registered := snapshot.originals.filter (·.occurrence.key.registrationModule == root)
       |>.map (·.occurrence.key)
     let wires ← TemplateBinding.reportJson #[(root, registered)]

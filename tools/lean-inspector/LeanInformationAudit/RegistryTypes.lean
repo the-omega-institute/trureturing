@@ -8,6 +8,11 @@ open Lean
 
 namespace TemplateAudit
 
+register_option informationTemplate.work : Nat := {
+  defValue := 524288
+  descr := "Lower-only DTR expression, substitution and byte-work quota" }
+
+
 inductive Origin where
   | templateBody | suppliedArgument | actualExtraction | proofLeaf
   deriving BEq, Inhabited, Repr
@@ -608,4 +613,76 @@ The inspector resolves one exact declaration/owner of this type. Content does
 not register producers, callbacks, policies or acceptance bits. -/
 abbrev InformationTemplateReportDriver := Array Name → MetaM (Array Json)
 
+/-- Original registration root, immutable environment input and caller-selected
+options. Both command and report consumers pass the same explicit inputs. -/
+structure RegistrationAssessmentInput where
+  rootId : Name
+  environment : Environment
+  options : Options
+
+def RegistrationAssessmentInput.capture {m : Type → Type} [Monad m] [MonadEnv m]
+    [MonadOptions m] (rootId : Name) : m RegistrationAssessmentInput := do
+  return { rootId, environment := ← getEnv, options := ← getOptions }
+
+private def sameInputObject (a b : α) : Bool := unsafe ptrEq a b
+
+/-- Inputs are captured in the service's Core/Meta context. Command lifts reset
+diagnostics, so command adapters capture only after entering that context. -/
+def sameRegistrationEnvironment (a b : Environment) : Bool := sameInputObject a b
+
 end LeanInformationAudit
+
+
+namespace LeanInformationAudit.TemplateAudit
+open Lean
+
+/-- A byte-radix tree. Each node has at most 256 sorted outgoing byte edges;
+lookup visits only the selected key's path, never the collection of templates. -/
+inductive TemplateTrie where
+  | node (value : Option TemplatePlanData) (edges : Array (UInt8 × TemplateTrie))
+  deriving Inhabited
+
+namespace TemplateTrie
+partial def insertAt (tree : TemplateTrie) (key : ByteArray) (offset : Nat)
+    (value : TemplatePlanData) : TemplateTrie := Id.run do
+  let .node old edges := tree
+  if offset == key.size then return .node (some value) edges
+  let byte := key[offset]!
+  let mut found := false
+  let mut next := edges.map fun (b, child) =>
+    if b == byte then
+      (b, insertAt child key (offset + 1) value)
+    else (b, child)
+  for (b, _) in edges do if b == byte then found := true
+  if !found then
+    next := next.push (byte, insertAt (.node none #[]) key (offset + 1) value)
+  return .node old (next.qsort fun a b => a.1 < b.1)
+
+/-- The callback observes actual node/edge visits. It cannot change the lookup. -/
+partial def lookupAt [Monad m] (tree : TemplateTrie) (key : ByteArray)
+    (offset : Nat) (observe : m Unit) : m (Option TemplatePlanData) := do
+  observe
+  let .node value edges := tree
+  if offset == key.size then return value
+  let byte := key[offset]!
+  for (b, child) in edges do
+    observe
+    if b == byte then return ← lookupAt child key (offset + 1) observe
+    if b > byte then return none
+  return none
+
+end TemplateTrie
+
+/-- The only persistent enrollment entry: byte buffers and a fixed digest.
+No decoded expression, plan, universe list or dependency graph is deserialized
+by Lean on behalf of this extension. Lean's general olean loading is separate. -/
+structure TemplatePlanFrame where
+  key : ByteArray
+  payload : ByteArray
+  identity : String
+  deriving Inhabited
+
+def TemplatePlanFrame.retainedBytes (frame : TemplatePlanFrame) : Nat :=
+  frame.key.size + frame.payload.size + frame.identity.utf8ByteSize + 16
+
+end LeanInformationAudit.TemplateAudit

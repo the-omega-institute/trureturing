@@ -37,6 +37,9 @@ information_theorem importedTheorem
   primitives fixtureRealization
   : lawArena.Law fixtureRealization := by trivial
 
+expect_information_occurrence importedTheorem in objectArena
+  from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
+
 #print axioms
   importedTheorem.«LeanInformationAudit.Tests.Occurrence.ImportClosureProducer/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__primitive_realization
 #print axioms

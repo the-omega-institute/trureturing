@@ -28,6 +28,6 @@ run_cmd do
   for suffix in #[theoremUnitSuffix, primitiveRealizationSuffix,
       "__lowers_escape", "__escape_enriched"] do
     let generated := env.header.mainModule ++ owner.str suffix
-    unless localCompanionName env owner suffix == generated &&
+    unless localCompanionName env env.header.mainModule owner suffix == generated &&
         env.contains generated && !(env.contains (owner.str suffix)) do
       throwError "root contract must publish qualified companions without old-name aliases"

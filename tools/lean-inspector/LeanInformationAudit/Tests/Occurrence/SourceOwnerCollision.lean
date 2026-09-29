@@ -20,7 +20,7 @@ run_cmd do
   let unitId := mkIdent (`_root_ ++ unitName)
   elabCommand (← `(command| def $unitId : TheoremUnit lawArena.toArena :=
     TheoremUnit.mk fixtureRealization.toPrimitiveBundle True other))
-  registerValidatedEntry {
+  registerValidatedEntry (← getEnv).header.mainModule {
     theoremName := `LeanInformationAudit.Tests.SourceOwnerCollision.other
     unitName
     arenaName := `LeanInformationAudit.Tests.ImportClosureProducer.lawArena
@@ -42,8 +42,8 @@ run_cmd do
   let env ← getEnv
   unless (InformationRegistry.entries env).size == 2 do
     throwError "source-owner collision must have two valid entries"
-  validateRegistrySnapshot env
-  validateSourceEntries env (InformationRegistry.entries env)
+  validateRegistrySnapshot env.header.mainModule env
+  validateSourceEntries env.header.mainModule env (InformationRegistry.entries env)
 
 /-- error: IE-C025 QualifiedNameCollision root=LeanInformationAudit.Tests.Occurrence.SourceOwnerCollision catalog=importedBool generated_name=LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem.«LeanInformationAudit.Tests.Occurrence.SourceOwnerCollision/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_unit occurrences=["LeanInformationAudit.Tests.ImportClosureProducer.objectArena/LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem","LeanInformationAudit.Tests.ImportClosureProducer.objectArena/LeanInformationAudit.Tests.SourceOwnerCollision.other"] -/
 #guard_msgs (error) in

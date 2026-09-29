@@ -15,7 +15,7 @@ set_option maxHeartbeats 2000000 in
 -- declaration ownership cannot be established by setMainModule simulation.
 run_cmd do
   let env ← getEnv
-  validateRegistrySnapshot env
+  validateRegistrySnapshot env.header.mainModule env
   let actual := SealRecords.occurrencesForRoot env designatedRoot
   unless actual.size == 3 && SealRecords.systemCatalogIrredundant env designatedRoot do
     throwError "fixture designated root lost an occurrence or irredundancy proof"

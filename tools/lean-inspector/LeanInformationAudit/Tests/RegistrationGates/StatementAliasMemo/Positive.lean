@@ -2,7 +2,7 @@ import LeanInformationAudit.Tests.RegistrationGates.StatementAliasMemo.SharedAre
 
 open Lean LeanInformationAudit
 run_meta do
-  let rows ← TemplateBinding.assessJoined
+  let rows ← (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let selected := rows.filter (fun r => r.occurrence.key.registrationModule ==
     `LeanInformationAudit.Tests.RegistrationGates.StatementAliasMemo.SharedArenaOIProbe)
   unless selected.size == 7 do throwError "[FAIL] SevenRegistrations: wrong occurrence count"

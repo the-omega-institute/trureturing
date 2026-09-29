@@ -78,7 +78,7 @@ run_meta do
       (binding.getObjValAs? (Array Nat) "coordinates").toOption == some #[] &&
       (binding.getObjValAs? String "source_type_identity").toOption == some (Sha256.hex rawBytes) do
     throwError "quantum complete source identity/telescope differs"
-  let snapshot ← TemplateBinding.exportSnapshot
+  let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let records := snapshot.originals.filter (·.occurrence.key.registrationModule == owner)
   unless records.size == 1 && records.all (·.occurrence.key.theoremName == name) do
     throwError "quantum registration inventory differs from the exact original"

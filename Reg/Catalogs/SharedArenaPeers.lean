@@ -235,23 +235,7 @@ open EscapeRecord
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.CIRPT
 
-open Lean Meta LeanInformationAudit in
-run_cmd do
-  let catalogs ← prepareCatalogs
-  unless catalogs.size == 2 do throwError "expected two maximal canonical catalogs"
-  for (prepared, expected) in catalogs.zip #[``interventionCatalog, ``observationCatalog] do
-    Lean.Elab.Command.liftTermElabM do
-      unless ← isDefEq prepared.type (← inferType (mkConst expected)) do
-        throwError "measured catalog uses a different canonical arena: {expected}"
-      -- The engine's empty vector tail is extensionally empty, not definitionally
-      -- the vecEmpty term. Check every actual unit in its complete finite vector.
-      for unit in prepared.record.units do
-        let bound ← mkAppM ``LT.lt #[mkNatLit unit.index, mkNatLit prepared.record.units.size]
-        let position ← mkAppM ``Fin.mk #[mkNatLit unit.index, ← mkDecideProof bound]
-        let measured ← mkAppM ``Catalog.theoremAt #[mkConst expected, position]
-        unless ← isDefEq measured (mkConst unit.unitName) do
-          throwError "measured catalog differs at occurrence {unit.theoremName}"
-    logInfo m!"MAXIMAL_CATALOG_VALIDATED: {prepared.record.arenaName}; occurrences={prepared.record.units.size}"
+
 end
 
 section

@@ -36,7 +36,7 @@ example : cat.uniqueCaptureCount (1 : Fin 2) = 0 := by decide
 expect_information_occurrence first in arena from "LeanInformationAudit.Tests.Occurrence.P2CloneSplit"
 expect_information_occurrence second in cloneArena from "LeanInformationAudit.Tests.Occurrence.P2CloneSplit"
 run_cmd do
-  let catalogs ← LeanInformationAudit.prepareCatalogs
+  let catalogs ← (LeanInformationAudit.prepareCatalogs (← getEnv).header.mainModule)
   let [prepared] := catalogs.toList
     | throwError "P2CloneSplit: aliases split the maximal catalog"
   unless prepared.record.units.size == 2 &&

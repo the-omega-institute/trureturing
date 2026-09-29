@@ -19,8 +19,8 @@ elab "reject_via " label:str " expects " reason:str " in " command:command : com
   unless (InformationRegistry.entries (← getEnv)).size == (InformationRegistry.entries before).size do
     throwError "{label.getString}: rejected command inserted an entry"
   let owner ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo command.raw[1]
-  let unit := localCompanionName before owner theoremUnitSuffix
-  for name in #[unit, localCompanionName before owner primitiveRealizationSuffix,
+  let unit := localCompanionName before before.header.mainModule owner theoremUnitSuffix
+  for name in #[unit, localCompanionName before before.header.mainModule owner primitiveRealizationSuffix,
       unit.str "__variation", unit.str "__sensitivity", unit.str "__nondegenerate",
       RegistrationGates.diagnosticName unit before.header.mainModule] do
     unless before.contains name == (← getEnv).contains name do
@@ -149,7 +149,7 @@ run_meta do
       cert with occurrence := occurrenceBinding rebound } }
   let corrupt := { entry with statementIdentity := "stale", derivedCertificate := some {
     cert with statementIdentity := "stale" } }
-  match ← validatePersistedEntry (← getEnv) corrupt with
+  match ← validatePersistedEntry (← getEnv).header.mainModule (← getEnv) corrupt with
   | .error reason => unless reason.startsWith "P1.CertificateBindingMismatch" do throwError reason
   | .ok () => throwError "stale statement identity certified"
   let changed := { entry with realizationName := ``otherRealization }
@@ -263,7 +263,7 @@ run_meta do
 def expectPersistedRejection (label : String) (edit : InformationRegistryEntry → InformationRegistryEntry) : MetaM Unit := do
   let env ← getEnv
   let some entry := InformationRegistry.find? env ``clean | throwError "missing clean"
-  match ← validatePersistedEntry env (edit entry) with
+  match ← validatePersistedEntry env.header.mainModule env (edit entry) with
   | .error reason =>
     unless reason.startsWith "P1.CertificateBindingMismatch" do throwError "{label}: {reason}"
     logInfo m!"P1_REVIEW {label} {reason}"
@@ -274,7 +274,7 @@ run_meta expectPersistedRejection "certificate_omission" fun e => { e with deriv
 run_meta do
   let env ← getEnv
   let some entry := InformationRegistry.find? env ``clean | throwError "missing clean"
-  match ← withOptions (fun o => o.set `informationReifier.fuel (0 : Nat)) (validatePersistedEntry env entry) with
+  match ← withOptions (fun o => o.set `informationReifier.fuel (0 : Nat)) (validatePersistedEntry env.header.mainModule env entry) with
   | .error reason => unless reason.startsWith "P1.IncompleteCheck" do throwError reason
   | .ok () => throwError "original zero fuel accepted"
   withOptions (fun o => o.set `informationReifier.fuel (0 : Nat)) <|
@@ -357,7 +357,7 @@ run_meta do
     let some cert := original.derivedCertificate | throwError "missing certificate"
     let descriptor := mkAppN cert.descriptor.getAppFn
       (cert.descriptor.getAppArgs.set! 5 cert.descriptor.getAppArgs[6]!)
-    let e ← prepareRegistrationEntry (← getEnv) { original with
+    let e ← prepareRegistrationEntry (← getEnv).header.mainModule (← getEnv) { original with
       theoremName := ``reflexive
       unitName := original.unitName.str "producerBug"
       realizationName := original.realizationName.str "producerBug"
@@ -443,7 +443,7 @@ elab "accept_via " label:str " in " command:command : command => do
     elabCommand command
     let some entry := InformationRegistry.find? (← getEnv) ``wrongArena
       | throwError "{label.getString}: missing positive registration"
-    match ← liftTermElabM <| validatePersistedEntry (← getEnv) entry with
+    match ← liftTermElabM <| validatePersistedEntry (← getEnv).header.mainModule (← getEnv) entry with
     | .error reason => throwError reason
     | .ok () => logInfo m!"P1_A5 {label.getString} insertion_and_consumer accepted"
   finally setEnv saved
@@ -474,8 +474,8 @@ elab "check_internal_rollback" : command => do
   let some source := InformationRegistry.find? initial.env ``clean | throwError "missing source"
   let some cert := source.derivedCertificate | throwError "missing source certificate"
   let owner := ``wrongArena
-  let unit := localCompanionName initial.env owner theoremUnitSuffix
-  let names := #[unit, localCompanionName initial.env owner primitiveRealizationSuffix,
+  let unit := localCompanionName initial.env initial.env.header.mainModule owner theoremUnitSuffix
+  let names := #[unit, localCompanionName initial.env initial.env.header.mainModule owner primitiveRealizationSuffix,
     unit.str "__nondegenerate", unit.str "__sensitivity", unit.str "__variation",
     RegistrationGates.diagnosticName unit initial.env.header.mainModule]
   let mut observations : Array String := #[]
@@ -485,11 +485,11 @@ elab "check_internal_rollback" : command => do
     set initial
     let caught ← captureCommandException <| registrationTransaction do
       let entry ← liftTermElabM do
-        let e ← prepareRegistrationEntry (← getEnv) { source with
+        let e ← prepareRegistrationEntry (← getEnv).header.mainModule (← getEnv) { source with
           theoremName := owner, unitName := unit, realizationName := names[1]!,
           statementIdentity := theoremStatementIdentity (← getEnv) owner, derivedCertificate := none }
         derive e (← freezeArena ``eqArena) cert.descriptor
-      registerValidatedEntry entry
+      registerValidatedEntry (← getEnv).header.mainModule entry
       unless names.all (← getEnv).contains &&
           (InformationRegistry.entries (← getEnv)).size == (InformationRegistry.entries initial.env).size + 1 do
         throwError "internal rollback control did not stage all declarations and row"
@@ -521,7 +521,7 @@ run_meta do
   let some entry := InformationRegistry.find? env ``exportedClean
     | throwError "provider_export: missing registration"
   validateDerivedCertificate entry
-  match ← validatePersistedEntry env entry with
+  match ← validatePersistedEntry env.header.mainModule env entry with
   | .error reason => throwError reason
   | .ok () => logInfo "P1_A7 provider_export insertion_and_consumer accepted"
 

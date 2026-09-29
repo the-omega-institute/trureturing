@@ -16,6 +16,17 @@ class NativeInterfaceTests:
             target = package / 'LeanInformationAudit' / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, target)
+        # This core-only audit fixture needs the real capability type, but does
+        # not execute catalog construction. Copy its exact declaration; private
+        # construction and all field types stay identical to the producer.
+        catalog = (ROOT / 'tools/lean-inspector/LeanInformationAudit/CatalogBuilder.lean').read_text()
+        start = catalog.index('structure ValidatedSourceSnapshot where\n')
+        stop = catalog.index('\ndef ValidatedSourceSnapshot.sourceEntries', start)
+        (package / 'LeanInformationAudit/CatalogBuilder.lean').write_text(
+            'import LeanInformationAuditInterface.Records\n'
+            'import LeanInformationAudit.Registry.Repository\n'
+            'namespace LeanInformationAudit\nopen Lean\n' +
+            catalog[start:stop] + '\nend LeanInformationAudit\n')
         # Illegal capabilities exist only in disposable fixtures. Names deliberately
         # disagree with owners, including a foreign package impersonating the judge.
         owners = [('LeanInformationAuditInterface', 'OutsideJudgeNamespace'),
@@ -46,8 +57,8 @@ end {namespace}
                                        ('loader', 'Lean.findOLean'), ('mutate', 'Lean.setEnv'),
                                        ('clean', None)]:
                 stem = f'probe{index}_{action}'
-                declarations.append(f'''def {stem}Publication : CommandElabM Unit := {namespace}.{action}
-def {stem}Seal : CommandElab := terminalSealCommand {stem}Publication
+                declarations.append(f'''def {stem}Publication (_ : ValidatedSourceSnapshot) : CommandElabM Unit := {namespace}.{action}
+def {stem}Seal : ValidatedSourceSnapshot → CommandElab := terminalSealCommand {stem}Publication
 def {stem}StageBody (_ : Name) : CommandElabM Unit := {namespace}.{action}
 def {stem}Stage : CommandElab := terminalInformationAnalysisStageCommand {stem}StageBody
 def {stem}ExportBody (_ : Name) (_ : List ArtifactKind) : CommandElabM AnalysisExportPlan := do

@@ -269,8 +269,8 @@ def diagnosticName (unitName registrationModule : Name) : Name :=
 
 /-- Registration diagnostics are source-bound metadata, excluded by Inspector
 from statement identity. Their value is a literal, not executable report logic. -/
-def publishDiagnostic (unitName : Name) (diagnostic : Option String) : MetaM Unit := do
-  let name := diagnosticName unitName (← getEnv).header.mainModule
+def publishDiagnostic (rootId unitName : Name) (diagnostic : Option String) : MetaM Unit := do
+  let name := diagnosticName unitName rootId
   if (← getEnv).contains name then throwError "registration diagnostic already exists: {name}"
   addDecl <| .defnDecl {
     name, levelParams := [], type := mkConst ``String

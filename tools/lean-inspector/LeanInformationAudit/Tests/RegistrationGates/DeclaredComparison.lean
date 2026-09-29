@@ -111,7 +111,7 @@ private def observe (event : TemplateOccurrenceEvent) (actual : Name)
 
 elab "check_body_argument_grammar" : command => do
   let saved ← get
-  let result ← TemplateAudit.enroll ``decisionBody
+  let result ← TemplateAudit.enroll (← getEnv).header.mainModule (← getOptions) ``decisionBody
   let ok := result matches .error "unclassified_form:E3.closed_decision"
   set saved
   (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] body_argument_closed_decision_same_rule"

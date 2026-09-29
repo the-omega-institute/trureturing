@@ -54,7 +54,7 @@ run_meta do
       unitName := original.unitName.str "dirtyDiagnostic"
       realizationName := original.realizationName.str "dirtyDiagnostic"
       derivedCertificate := none } certificate.arena certificate.descriptor
-  RegistrationGates.publishDiagnostic entry.unitName (some "IE-C048 fixture retained rejection")
+  RegistrationGates.publishDiagnostic entry.registrationModuleName entry.unitName (some "IE-C048 fixture retained rejection")
   let rejected ← try
     closedTruthExcluded entry
     pure false

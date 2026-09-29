@@ -224,6 +224,27 @@ def InformationRegistry.hasOccurrence (env : Environment)
 def InformationRegistry.hasUnit (env : Environment) (n : Name) : Bool :=
   (entries env).any fun entry => entry.unitName == n
 
+/-- Reachability is relative to the requested registration root, which can be
+an imported module in a report environment containing unrelated roots. -/
+def moduleReachable (env : Environment) (root owner : Name) : Bool := Id.run do
+  let mut seen : NameSet := {}
+  let mut pending := [root]
+  while let name :: rest := pending do
+    pending := rest
+    if seen.contains name then continue
+    if name == owner then return true
+    seen := seen.insert name
+    let imports := if name == env.header.mainModule then env.header.imports else
+      match env.getModuleIdx? name with
+      | some index => env.header.moduleData[index.toNat]!.imports
+      | none => #[]
+    pending := imports.toList.map (·.module) ++ pending
+  return false
+
+def InformationRegistry.forRoot (env : Environment) (root : Name) :
+    Array InformationRegistryEntry :=
+  entries env |>.filter (fun entry => moduleReachable env root entry.registrationModuleName)
+
 /-- A deterministic identity for the theorem type stored in the elaborated environment. -/
 def theoremStatementIdentity (env : Environment) (theoremName : Name) : String :=
   match env.find? theoremName with
@@ -258,12 +279,12 @@ end ExpectedOccurrenceManifest
 
 /-- The root contract selects published companion ownership. Without an explicit
 prefix, imported objects receive private names local to this compilation. -/
-def localCompanionName (env : Environment) (owner : Name) (suffix : String) : Name :=
+def localCompanionName (env : Environment) (rootId owner : Name) (suffix : String) : Name :=
   let name := owner.str suffix
-  if !env.isImportedConst owner then name
-  else match (RootCatalogs.find? env env.header.mainModule).bind (·.companionPrefix) with
+  if (RegistrationReifier.declaringModuleOf env owner).getD env.header.mainModule == rootId then name
+  else match (RootCatalogs.find? env rootId).bind (·.companionPrefix) with
     | some companionPrefix => companionPrefix ++ name
-    | none => mkPrivateName env name
+    | none => mkPrivateNameCore rootId (privateToUserName name)
 
 def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrence) :
     Array ExpectedOccurrence :=
@@ -301,7 +322,7 @@ theorem_name={entry.theoremName} registration_modules={jsonStringArray modules} 
 count={entries.size}"
 
 /-- Resolve the prospective owner before any admission precheck. -/
-def prepareRegistrationEntry (env : Environment)
+def prepareRegistrationEntry (rootId : Name) (env : Environment)
     (entry : InformationRegistryEntry) : MetaM InformationRegistryEntry := do
   let spelling := if entry.objectArenaName.isAnonymous then entry.arenaName
     else entry.objectArenaName
@@ -309,7 +330,7 @@ def prepareRegistrationEntry (env : Environment)
   return { entry with
     resolvedArenaName
     registrationModuleName := if entry.registrationModuleName.isAnonymous then
-      env.header.mainModule else entry.registrationModuleName }
+      rootId else entry.registrationModuleName }
 
 
 private def statementMismatchError (name : Name) : String :=
@@ -491,12 +512,12 @@ def sameEntry (left right : InformationRegistryEntry) : Bool :=
     sameCertificate left.derivedCertificate right.derivedCertificate
 
 /-- Validate a prospective entry before insertion; neither registry key may exist yet. -/
-def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
+def validateNewEntry (rootId : Name) (env : Environment) (entry : InformationRegistryEntry) :
     MetaM (Except String Unit) := do
   match ← validateEntryCore env entry with
   | .error message => return .error message
   | .ok () => pure ()
-  let entries := InformationRegistry.entries env
+  let entries := InformationRegistry.forRoot env rootId
   let occurrenceMatches := entries.filter fun candidate =>
     candidate.canonicalObjectArenaName == entry.canonicalObjectArenaName &&
       candidate.theoremName == entry.theoremName
@@ -505,19 +526,19 @@ def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
   let unitMatches := entries.filter fun candidate =>
     candidate.unitName == entry.unitName
   if !unitMatches.isEmpty then
-    return .error <| qualifiedNameCollisionError env.header.mainModule
+    return .error <| qualifiedNameCollisionError entry.registrationModuleName
       entry.effectiveCatalogId entry.unitName (unitMatches.push entry)
   let realizationMatches := entries.filter fun candidate =>
     candidate.realizationName == entry.realizationName
   if !realizationMatches.isEmpty then
-    return .error <| qualifiedNameCollisionError env.header.mainModule
+    return .error <| qualifiedNameCollisionError entry.registrationModuleName
       entry.effectiveCatalogId entry.realizationName (realizationMatches.push entry)
   return .ok ()
 
 /-- Validate an entry already stored in the persistent registry exactly once. -/
-def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry) :
+def validatePersistedEntry (rootId : Name) (env : Environment) (entry : InformationRegistryEntry) :
     MetaM (Except String Unit) := do
-  let entries := InformationRegistry.entries env
+  let entries := InformationRegistry.forRoot env rootId
   let occurrenceMatches := entries.filter fun candidate =>
     candidate.canonicalObjectArenaName == entry.canonicalObjectArenaName &&
       candidate.theoremName == entry.theoremName
@@ -537,33 +558,33 @@ def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry
   match unitMatches.toList with
   | [candidate] =>
     unless sameEntry candidate entry do
-      return .error <| qualifiedNameCollisionError env.header.mainModule
+      return .error <| qualifiedNameCollisionError entry.registrationModuleName
         entry.effectiveCatalogId entry.unitName #[candidate, entry]
-  | _ => return .error (qualifiedNameCollisionError env.header.mainModule
+  | _ => return .error (qualifiedNameCollisionError entry.registrationModuleName
       entry.effectiveCatalogId entry.unitName unitMatches)
   let realizationMatches := entries.filter fun candidate =>
     candidate.realizationName == entry.realizationName
   match realizationMatches.toList with
   | [candidate] =>
     unless sameEntry candidate entry do
-      return .error <| qualifiedNameCollisionError env.header.mainModule
+      return .error <| qualifiedNameCollisionError entry.registrationModuleName
         entry.effectiveCatalogId entry.realizationName #[candidate, entry]
-  | _ => return .error (qualifiedNameCollisionError env.header.mainModule
+  | _ => return .error (qualifiedNameCollisionError entry.registrationModuleName
       entry.effectiveCatalogId entry.realizationName realizationMatches)
   return .ok ()
 
 
 
-def registerSemanticEntry (entry : InformationRegistryEntry) :
+def registerSemanticEntry (rootId : Name) (entry : InformationRegistryEntry) :
     Lean.Elab.Command.CommandElabM InformationRegistryEntry := do
   let env ← getEnv
   let entry ← if entry.resolvedArenaName.isAnonymous then
-      Lean.Elab.Command.liftTermElabM <| prepareRegistrationEntry env entry
+      Lean.Elab.Command.liftTermElabM <| prepareRegistrationEntry rootId env entry
     else pure entry
   let entry := { entry with statementIdentity := if entry.statementIdentity.isEmpty then
     theoremStatementIdentity env entry.theoremName else entry.statementIdentity }
   let result <- Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) entry
+    validateNewEntry rootId (← getEnv) entry
   match result with
   | .ok () =>
     Lean.Elab.Command.liftTermElabM do
@@ -576,7 +597,7 @@ def registerSemanticEntry (entry : InformationRegistryEntry) :
         if let some diagnostic := diagnostic then throwError diagnostic
       if entry.derivedCertificate.isSome && diagnostic.isSome then
         RegistrationReifier.checkDiagnostic diagnostic.get!
-      RegistrationGates.publishDiagnostic entry.unitName diagnostic
+      RegistrationGates.publishDiagnostic entry.registrationModuleName entry.unitName diagnostic
     modifyEnv fun env => informationRegistryExt.addEntry env entry
     return entry
   | .error message => throwError message

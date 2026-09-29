@@ -85,7 +85,7 @@ run_meta do
 #guard_msgs in
 run_cmd do
   let saved ← get
-  let result ← enroll ``recursorTemplate #[``State]
+  let result ← enroll (← getEnv).header.mainModule (← getOptions) ``recursorTemplate #[``State]
   set saved
   liftTermElabM <| check "enrolled_structural_descent_rejected"
     (match result with | .ok () => none | .error reason => some reason)

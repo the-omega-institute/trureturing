@@ -44,10 +44,6 @@ def eraseProofs (e : Expr) (fuel : Nat := 524288) : MetaM (Expr × Nat) := do
   let (result, remaining) ← (erase e 0).run limit
   return (result, limit - remaining)
 
-register_option informationTemplate.work : Nat := {
-  defValue := 524288
-  descr := "Lower-only DTR expression, substitution and byte-work quota" }
-
 private structure WireState where
   bytes : ByteArray := {}
   remaining : Nat := 524288
@@ -510,11 +506,6 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
 def planEncoding (plan : TemplatePlanData) (fuel : Nat := 524288) : Except String ByteArray :=
   (planEncodingWithWork plan fuel).map Prod.fst
 
-def sourcePath (name : Name) : String :=
-  (if (`LeanInformationAuditInterface).isPrefixOf name then "tools/lean-inspector-interface/"
-    else if (`LeanInformationAudit).isPrefixOf name then "tools/lean-inspector/" else "") ++
-    name.toString.replace "." "/" ++ ".lean"
-
 private abbrev HashWorker := IO.Process.Child {
   stdin := .piped, stdout := .piped, stderr := .null }
 
@@ -781,7 +772,6 @@ private partial def exports (env : Environment) (name : Name)
     allTransitive := allTransitive
     transitive := transitive }
   return (some value, memo.insert name value)
-
 
 private def unchanged (inputs : Array SourceInput) : IO Bool := do
   if inputs.isEmpty then return true

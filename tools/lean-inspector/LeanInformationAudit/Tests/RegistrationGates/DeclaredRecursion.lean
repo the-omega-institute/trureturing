@@ -64,7 +64,7 @@ elab "observe_constructor_recursion" : command => do
       some "unclassified_form:E1.instance_slot")]
   for (label, name, asts, expected) in cases do
     let saved ← get
-    let result ← enroll name asts
+    let result ← enroll (← getEnv).header.mainModule (← getOptions) name asts
     let actual := match result with | .ok () => none | .error text => some text
     let selected := selectedPlan (← getEnv) name
     let retained := selected.isOk

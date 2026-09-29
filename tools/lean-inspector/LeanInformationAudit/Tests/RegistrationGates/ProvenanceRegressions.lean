@@ -96,7 +96,7 @@ def structuralTemplate (f : Unit → Nat → Nat) :
 register_information_template structuralTemplate
 
 private def expectBinding (name : Name) (label : String) (reason : Option String) : Meta.MetaM Unit := do
-  let rows ← TemplateBinding.assessJoined
+  let rows ← (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let some row := rows.find? (·.occurrence.key.theoremName == name)
     | throwError "setup: missing binding record {name}"
   let ok := match row.result, reason with

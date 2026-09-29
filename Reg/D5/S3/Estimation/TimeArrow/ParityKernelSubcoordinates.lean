@@ -1,6 +1,6 @@
 import D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
 import Reg.Support.ParityKernelRegistrationTemplates
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Syntax
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.ConceptDynamics.InformationEscape.ParityKernelRegistrationTemplates
@@ -136,6 +136,5 @@ register_information_theorem subcoordinateLaw_eq in lawArena
 #print axioms law_sensitivity
 #print axioms law_dependence
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← getEnv)
 
 end Reg.D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates

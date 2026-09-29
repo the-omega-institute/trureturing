@@ -12,7 +12,8 @@ run_cmd do
   elabCommand (← `(command| theorem $(mkIdent (`_root_ ++ collision)) : True := True.intro))
   let before ← getEnv
   let mut rejected := false
-  try prepareSealPublication
+  try liftCoreM do
+    assessAndSealRegistration (← RegistrationAssessmentInput.capture root)
   catch error => rejected := (← error.toMessageData.toString).startsWith "IE-C025"
   let mut exportRejected := false
   try discard <| prepareInformationAnalysisExport root [.seal, .analysis, .ascii]

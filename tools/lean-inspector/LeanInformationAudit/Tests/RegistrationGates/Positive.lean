@@ -77,7 +77,7 @@ run_cmd Elab.Command.liftCoreM do
 
 run_meta do
   let root := `LeanInformationAudit.Tests.RegistrationGates.Positive
-  let snapshot ← TemplateBinding.exportSnapshot
+  let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let registered := snapshot.originals.filter (·.occurrence.key.registrationModule == root)
     |>.map (·.occurrence.key)
   let wires ← TemplateBinding.reportJson #[(root, registered)]
