@@ -15,7 +15,7 @@ internal sealed class TriangleSymmetricLocalRefutationDocument : IScribeDocument
         H("A fully symmetric triangle-local distribution with p(A = B = C) above 1/4"),
         Blocks(
             Node("local", "Locality in the triangle network", LocalFormula(),
-                "Eq. (trilocal) of the paper: the three sources are uniform on [0, 1], Alice's output depends on the sources beta and gamma, Bob's on gamma and alpha, and Charlie's on alpha and beta. The responses p_A, p_B and p_C are measurable conditional distributions over the four outcomes; the conditions displayed for p_A are imposed on p_B and p_C as well.",
+                "Eq. (trilocal) of the paper: the three sources are uniform on [0, 1], Alice's output depends on the sources beta and gamma, Bob's on gamma and alpha, and Charlie's on alpha and beta. The responses p_A, p_B and p_C are measurable conditional distributions over the four outcomes: each is measurable in its two source values, nonnegative, and sums to 1 over the outcome.",
                 "IsTriangleLocal", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("symmetric", "Fully symmetric distributions", SymmetricFormula(),
                 "Invariance under every permutation of the three parties and under every joint relabelling of the four outcomes.",
@@ -78,10 +78,12 @@ internal sealed class TriangleSymmetricLocalRefutationDocument : IScribeDocument
     {
         Formula a = F.Id("a"), b = F.Id("b"), c = F.Id("c"), x = F.Id("x"), y = F.Id("y");
         Formula responseType = Seq(FinOf(4), Sp, To, Sp, Reals(), Sp, To, Sp, Reals(), Sp, To, Sp, Reals());
-        Formula nonnegative = All("a", FinOf(4), All("x", Reals(), All("y", Reals(),
-            Rel(D(0), FormulaRelationOperator.LessThanOrEqual, Response("A", a, x, y)))));
-        Formula normalised = All("x", Reals(), All("y", Reals(),
-            Equal(SumOver(a, Response("A", a, x, y)), D(1))));
+        Formula measurable(string party) => All("a", FinOf(4), Call(F.Id("Measurable"),
+            Call(F.Id("uncurry"), new Formula.Apply(new Formula.Subscript(F.Id("p"), F.Id(party)), [a]))));
+        Formula nonnegative(string party) => All("a", FinOf(4), All("x", Reals(), All("y", Reals(),
+            Rel(D(0), FormulaRelationOperator.LessThanOrEqual, Response(party, a, x, y)))));
+        Formula normalised(string party) => All("x", Reals(), All("y", Reals(),
+            Equal(SumOver(a, Response(party, a, x, y)), D(1))));
         Formula cube = Seq(OpenBracket, D(0), Comma, D(1), CloseBracket, Caret, Grp(D(3)));
         Formula integrand = Times(Times(Response("A", a, Beta, GammaLower),
             Response("B", b, GammaLower, Alpha)), Response("C", c, Alpha, Beta));
@@ -89,12 +91,23 @@ internal sealed class TriangleSymmetricLocalRefutationDocument : IScribeDocument
             F.Id("d"), Alpha, Sp, F.Id("d"), Beta, Sp, F.Id("d"), GammaLower);
         Formula trilocal = All("a", FinOf(4), All("b", FinOf(4), All("c", FinOf(4),
             Equal(P(a, b, c), integral))));
+        Formula conditions = AndAll(
+            measurable("A"), measurable("B"), measurable("C"),
+            nonnegative("A"), nonnegative("B"), nonnegative("C"),
+            normalised("A"), normalised("B"), normalised("C"), trilocal);
         Formula responses = Seq(new Formula.Subscript(F.Id("p"), F.Id("A")), Comma, Sp,
             new Formula.Subscript(F.Id("p"), F.Id("B")), Comma, Sp,
             new Formula.Subscript(F.Id("p"), F.Id("C")));
-        Formula body = Seq(Exists, Sp, responses, Sp, Colon, Sp, responseType, Comma, Sp,
-            And(nonnegative, And(normalised, trilocal)));
+        Formula body = Seq(Exists, Sp, responses, Sp, Colon, Sp, responseType, Comma, Sp, conditions);
         return Disp(Iff(Call(F.Id("IsTriangleLocal"), F.Id("p")), body));
+    }
+
+    private static Formula AndAll(params Formula[] clauses)
+    {
+        Formula result = Parenthesized(clauses[^1]);
+        for (var index = clauses.Length - 2; index >= 0; index--)
+            result = new Formula.Logic(Parenthesized(clauses[index]), FormulaLogicOperator.And, result);
+        return result;
     }
 
     private static Formula SymmetricFormula()
