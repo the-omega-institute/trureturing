@@ -85,6 +85,7 @@ internal static partial class RepositoryRules
             }
         }
 
+        findings.AddRange(RegImplementationBoundary.Evaluate(context));
         return findings.ToImmutable();
     }
 
