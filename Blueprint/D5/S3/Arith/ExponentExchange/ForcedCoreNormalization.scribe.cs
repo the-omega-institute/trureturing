@@ -85,7 +85,7 @@ internal sealed class ForcedCoreNormalizationDocument : IScribeDocumentDefinitio
             Dvd(I("M"), I("n"))),
         Seq(Land, Sp, Open, Forall, Sp, I("p"), Comma, I("q"), Colon, N, Comma,
             App("Prime", I("p")), Land, Sp, App("Prime", I("q")), Land, Sp,
-            I("p"), Lt, I("q"), Rightarrow, Val(I("n"), I("q")), Le, Sp,
+            I("p"), Lt, I("q"), Rightarrow, Sp, Val(I("n"), I("q")), Le, Sp,
             Val(I("n"), I("p")), Close),
         Seq(Land, Sp, App("Ordered", App("c", I("B")), I("t")), Land, Sp,
             Suffix, Eq, I("n"), Land, Sp, Z(I("n")), Eq, Weight),
