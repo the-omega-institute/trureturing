@@ -1,0 +1,37 @@
+**引理 61.1（实际快慢耦合流的能量、状态与可见速度界）。** 设 $p,r$ 为正整数，$A\in\mathbb R^{p\times p}$、$B\in\mathbb R^{p\times r}$、$C\in\mathbb R^{r\times r}$，且对称块矩阵
+
+$$
+L=\begin{pmatrix}A&B\\B^{\mathsf T}&C\end{pmatrix}
+$$
+
+正定。令 $\epsilon>0$、$u_0=(x_0,z_0)\in\mathbb R^p\oplus\mathbb R^r$，并定义
+
+$$
+W_\epsilon=\operatorname{diag}(I_p,\epsilon^{-1}I_r),\qquad
+u(t)=(x(t),z(t))=\exp(-tW_\epsilon L)u_0,\qquad
+U(u)=\tfrac12\langle u,Lu\rangle.
+$$
+
+取 $\ell=\lambda_{\min}(L)>0$、$R_0=\sqrt{2U(u_0)/\ell}$ 及 $M_0=\|[A\ B]\|_{2\to2}R_0$。则 $u(0)=u_0$；对每个 $t\ge0$，两个坐标满足
+
+$$
+\dot x(t)=-Ax(t)-Bz(t),\qquad
+\dot z(t)=-\epsilon^{-1}(B^{\mathsf T}x(t)+Cz(t)),
+$$
+
+并且
+
+$$
+\frac{d}{dt}U(u(t))
+=-\|Ax(t)+Bz(t)\|^2
+-\epsilon^{-1}\|B^{\mathsf T}x(t)+Cz(t)\|^2.
+$$
+
+因此 $t\mapsto U(u(t))$ 在整个实轴上单调不增。对每个 $t\ge0$，
+
+$$
+U(u(t))\le U(u_0),\qquad
+\|u(t)\|\le R_0,\qquad
+\|\dot x(t)\|=\|Ax(t)+Bz(t)\|\le M_0.
+$$
+

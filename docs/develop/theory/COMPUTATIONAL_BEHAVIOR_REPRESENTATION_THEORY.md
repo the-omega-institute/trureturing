@@ -2796,3 +2796,54 @@ $\|H_\varepsilon(\varphi)-H_\varepsilon(\psi)\|/
 **证明边界。** 本章六条引理、定理、推论或命题均以其正文假设给出纸面证明，不具有新增 Lean 证明身份。精确谱匹配不等于数值近匹配，有限时间预算不等于真实耗热，允许任意 CPTP 恢复不等于免费物理实施。尚未闭合的是一般非对易多标签的共同动态最优值、一般模型的有限窗口完整 Pareto 前沿，以及实际能量守恒实现的工作和参考系成本。
 
 ## 追加锚（本行以下为增补区）
+
+## 61. 正定耦合块流的能量与可见速度
+
+**引理 61.1（实际快慢耦合流的能量、状态与可见速度界）。** 设 $p,r$ 为正整数，$A\in\mathbb R^{p\times p}$、$B\in\mathbb R^{p\times r}$、$C\in\mathbb R^{r\times r}$，且对称块矩阵
+
+$$
+L=\begin{pmatrix}A&B\\B^{\mathsf T}&C\end{pmatrix}
+$$
+
+正定。令 $\epsilon>0$、$u_0=(x_0,z_0)\in\mathbb R^p\oplus\mathbb R^r$，并定义
+
+$$
+W_\epsilon=\operatorname{diag}(I_p,\epsilon^{-1}I_r),\qquad
+u(t)=(x(t),z(t))=\exp(-tW_\epsilon L)u_0,\qquad
+U(u)=\tfrac12\langle u,Lu\rangle.
+$$
+
+取 $\ell=\lambda_{\min}(L)>0$、$R_0=\sqrt{2U(u_0)/\ell}$ 及 $M_0=\|[A\ B]\|_{2\to2}R_0$。则 $u(0)=u_0$；对每个 $t\ge0$，两个坐标满足
+
+$$
+\dot x(t)=-Ax(t)-Bz(t),\qquad
+\dot z(t)=-\epsilon^{-1}(B^{\mathsf T}x(t)+Cz(t)),
+$$
+
+并且
+
+$$
+\frac{d}{dt}U(u(t))
+=-\|Ax(t)+Bz(t)\|^2
+-\epsilon^{-1}\|B^{\mathsf T}x(t)+Cz(t)\|^2.
+$$
+
+因此 $t\mapsto U(u(t))$ 在整个实轴上单调不增。对每个 $t\ge0$，
+
+$$
+U(u(t))\le U(u_0),\qquad
+\|u(t)\|\le R_0,\qquad
+\|\dot x(t)\|=\|Ax(t)+Bz(t)\|\le M_0.
+$$
+
+**证明。** 有限维矩阵指数给出 $u(0)=u_0$ 和 $\dot u=-W_\epsilon Lu$；按两块展开即为所列坐标方程。由于 $L=L^{\mathsf T}$，链式法则给
+
+$$
+\frac{d}{dt}U(u(t))
+=\langle Lu(t),\dot u(t)\rangle
+=-\langle Lu(t),W_\epsilon Lu(t)\rangle,
+$$
+
+而 $W_\epsilon$ 的两块分别为 $I_p$ 和 $\epsilon^{-1}I_r$，故得到逐块耗散恒等式。$\epsilon>0$ 使右侧非正；在任意实数区间积分即得全实轴的能量反单调性。正定谱分解给 $\langle u,Lu\rangle\ge\ell\|u\|^2$。对 $t\ge0$，结合 $U(u(t))\le U(u_0)$，得到 $\|u(t)\|^2\le 2U(u_0)/\ell$。最后由可见方程及矩阵算子范数，$\|\dot x(t)\|=\|[A\ B]u(t)\|\le\|[A\ B]\|_{2\to2}\|u(t)\|\le M_0$。证毕。
+
+## 追加锚（本行以下为增补区）

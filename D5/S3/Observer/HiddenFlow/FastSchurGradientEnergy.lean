@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/HiddenFlow/FastSchurGradientEnergy
    mirror-E: none(waiver:finite-dimensional-gradient-flow)
    anchors: []
+   utility: none
    digest: The actual epsilon-scaled block gradient flow dissipates its quadratic energy. -/
 
 import Mathlib.Analysis.CStarAlgebra.Matrix

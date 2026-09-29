@@ -1,0 +1,10 @@
+**证明。** 有限维矩阵指数给出 $u(0)=u_0$ 和 $\dot u=-W_\epsilon Lu$；按两块展开即为所列坐标方程。由于 $L=L^{\mathsf T}$，链式法则给
+
+$$
+\frac{d}{dt}U(u(t))
+=\langle Lu(t),\dot u(t)\rangle
+=-\langle Lu(t),W_\epsilon Lu(t)\rangle,
+$$
+
+而 $W_\epsilon$ 的两块分别为 $I_p$ 和 $\epsilon^{-1}I_r$，故得到逐块耗散恒等式。$\epsilon>0$ 使右侧非正；在任意实数区间积分即得全实轴的能量反单调性。正定谱分解给 $\langle u,Lu\rangle\ge\ell\|u\|^2$。对 $t\ge0$，结合 $U(u(t))\le U(u_0)$，得到 $\|u(t)\|^2\le 2U(u_0)/\ell$。最后由可见方程及矩阵算子范数，$\|\dot x(t)\|=\|[A\ B]u(t)\|\le\|[A\ B]\|_{2\to2}\|u(t)\|\le M_0$。证毕。
+
