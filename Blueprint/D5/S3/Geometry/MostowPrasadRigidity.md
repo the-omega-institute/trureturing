@@ -174,6 +174,22 @@ Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_
 
 A dense orbit and basepoint control imply a trivial centralizer.
 
+**Theorem 1.15 (Dense attracting poles force a trivial centralizer).**
+
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let G be any group, X any Hausdorff topological space in which every pair of points has a third point distinct from both, and rho a group homomorphism from G to the homeomorphisms of X. Suppose the set of a for which there are g in G and b in X with a distinct from b, such that the n-fold iterate of rho(g) at every x distinct from b converges to a, is dense in X. Then every homeomorphism commuting with every rho(g) is the identity.
+
+For each attracting pole a, choose x away from b and the inverse image of b under a centralizing homeomorphism z. Commutation transports the entire iterated orbit through z. Continuity makes its limit z(a), while the attracting-pole condition makes the same orbit converge to a. Hausdorff uniqueness fixes a; density and continuity fix all of X.
+
+This gives a conditional route to the centralizer premise of groupConjugacy_conjugator_unique. It does not construct an ideal boundary, establish north-south dynamics or lattice pole density, prove faithfulness, construct a conjugator, or prove MostowPrasadRigidityEndpoint.
+
 ## References
 
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.DenseOrbit`
@@ -188,5 +204,6 @@ A dense orbit and basepoint control imply a trivial centralizer.
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.hasIsometryRepresentative_of_isometry`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_dense_range`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_eqOn_dense`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_orbit`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.uniqueIsometryRepresentative_of_eqOn_dense`
