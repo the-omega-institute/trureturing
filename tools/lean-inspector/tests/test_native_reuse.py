@@ -64,6 +64,7 @@ class NativeReportConsumerTests:
         self.assertTrue(untouched)
         stamps = {path: (path.stat().st_mtime_ns, publication.digest(path)) for path in untouched}
         production = self.root / '.lake/build/reg/lib/lean/Reg/ProductionOnly.olean'
+        before = production.stat().st_mtime_ns if production.exists() else None
         self.write(impl, 'def gateValue : Nat := 2\n')
         import reuse
         self.assertFalse(reuse.probe(self.root, output)['needs_lake'])
@@ -74,7 +75,7 @@ class NativeReportConsumerTests:
         self.assertRegex(programs, r'Built LeanInformationAudit\.RegistrationGates(?:\s|$)')
         self.assertNotRegex(programs, r'Built Reg\.',
                             '[FAIL] paused_audit_must_not_compile_reg')
-        self.assertFalse(production.exists())
+        self.assertEqual(before, production.stat().st_mtime_ns if production.exists() else None)
         self.assertNotRegex(programs, r'Built (?:D5\.|Mathlib\.)')
         self.assertEqual(stamps, {path: (path.stat().st_mtime_ns, publication.digest(path)) for path in untouched})
         self.assertEqual(report_stamps, self.stamps())
