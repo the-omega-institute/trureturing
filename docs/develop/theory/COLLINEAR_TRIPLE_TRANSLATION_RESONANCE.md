@@ -147,3 +147,22 @@ sets differ by a translation in $\mathbb Z/p\mathbb Z$. Indeed, translating by
 $(h,k)$ preserves the slope and sends $X$ to $h+X$; conversely, when the
 slopes agree and $X'=h+X$, the choice $k=b'-b+ah$ sends $(a,b,X)$ to
 $(a,b',X')$, so intercepts impose no further obstruction.
+
+**Theorem 9 (affine graph translation stabilizer).** Let $R$ be a commutative
+ring, $X\subset R$ a nonempty finite set, and $a,b\in R$. Write
+$\Gamma_{a,b}(X)=\{(x,ax+b):x\in X\}$. Then
+
+\[
+  \operatorname{Stab}_{R^2}(\Gamma_{a,b}(X))
+    =\{(h,ah):h\in\operatorname{Stab}_R(X)\}.
+\]
+
+The map $h\mapsto(h,ah)$ is an additive homomorphism, so this identifies the
+graph stabilizer with the abscissa stabilizer even when $R$ has zero divisors.
+
+**Proof.** Translation by $(h,k)$ sends $\Gamma_{a,b}(X)$ to
+$\Gamma_{a,b+k-ah}(h+X)$. Equality of the two graphs implies equality of
+their first-coordinate projections, hence $h+X=X$. Choose $x\in X$.
+Comparing the unique graph points above $x$ then gives
+$ax+b+k-ah=ax+b$, so $k=ah$. Conversely, these two equations make the
+translated graph equal to the original graph. $\square$

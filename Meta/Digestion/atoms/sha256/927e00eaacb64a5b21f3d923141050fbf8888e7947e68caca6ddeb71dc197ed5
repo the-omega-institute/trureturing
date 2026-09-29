@@ -1,0 +1,12 @@
+**Theorem 9 (affine graph translation stabilizer).** Let $R$ be a commutative
+ring, $X\subset R$ a nonempty finite set, and $a,b\in R$. Write
+$\Gamma_{a,b}(X)=\{(x,ax+b):x\in X\}$. Then
+
+\[
+  \operatorname{Stab}_{R^2}(\Gamma_{a,b}(X))
+    =\{(h,ah):h\in\operatorname{Stab}_R(X)\}.
+\]
+
+The map $h\mapsto(h,ah)$ is an additive homomorphism, so this identifies the
+graph stabilizer with the abscissa stabilizer even when $R$ has zero divisors.
+

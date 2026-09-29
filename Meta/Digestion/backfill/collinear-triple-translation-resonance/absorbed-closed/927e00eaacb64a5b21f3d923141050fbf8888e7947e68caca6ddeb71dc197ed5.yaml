@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:927e00eaacb64a5b21f3d923141050fbf8888e7947e68caca6ddeb71dc197ed5
+  normalized_sha256: sha256:927e00eaacb64a5b21f3d923141050fbf8888e7947e68caca6ddeb71dc197ed5
+cas_ref: sha256:927e00eaacb64a5b21f3d923141050fbf8888e7947e68caca6ddeb71dc197ed5
+coverage_gids:
+  - gid: D5/S3/Factorization/Collinear/AffineGraphTranslationStabilizer.affineGraph_stabilizer_eq_map
+    target_statement_id: sha256:ccc751e7e52fbb5049b1e0991d6d354471890c8c888ba080236d8b01fdf66d1c
+receipts:
+  unresolved_subitems: []
