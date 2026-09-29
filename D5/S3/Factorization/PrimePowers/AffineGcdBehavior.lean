@@ -8,6 +8,7 @@
 
 import D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
 import D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution
+import D5.S3.Arith.Congruence.PrimePowerAffineBehavior
 import Mathlib.Data.PNat.Basic
 import Mathlib.Data.Int.GCD
 import Mathlib.Data.ZMod.Basic
@@ -204,25 +205,84 @@ def localEncoding (p h e : Nat) (hp : p.Prime) (hh : 1 ≤ h) (heh : e ≤ h)
       ZMod.unitOfCoprime (x.val / p ^ r) (hp.coprime_pow_of_not_dvd hq))
   else
     exact .inr ((x.val / p ^ e : Nat) : ZMod (p ^ (h - e)))
-
-/-- Exact signed quotient coordinates and their sufficient affine response law.
-The response statement includes every positive multiplier and signed translation. -/
-theorem local_encoding_signed_response (p h e : Nat) (hp : p.Prime)
+/- The local code is exactly the quotient of signed sources by all affine
+   responses, and every typed code has a signed (hence positive) source. -/
+theorem local_encoding_complete (p h e : Nat) (hp : p.Prime)
     (hh : 1 ≤ h) (heh : e ≤ h) :
-    (∀ (x : ZMod (p ^ h)) (X : Int), (X : ZMod (p ^ h)) = x →
-      match localEncoding p h e hp hh heh x with
-      | .inl (r, u) => depth p h 0 x = r.val ∧ (p : Int) ^ r.val ∣ X ∧
-          ((X / (p : Int) ^ r.val : Int) : ZMod (p ^ (h - e))) = u
-      | .inr z => e ≤ depth p h 0 x ∧ (p : Int) ^ e ∣ X ∧
-          ((X / (p : Int) ^ e : Int) : ZMod (p ^ (h - e))) = z) ∧
     (∀ X Y : Int,
       localEncoding p h e hp hh heh (X : ZMod (p ^ h)) =
-        localEncoding p h e hp hh heh (Y : ZMod (p ^ h)) →
+        localEncoding p h e hp hh heh (Y : ZMod (p ^ h)) ↔
       ∀ (a : ℕ+) (b : Int),
         depth p h 0 ((((a : Nat) : Int) * X + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) =
-        depth p h 0 ((((a : Nat) : Int) * Y + (p : Int) ^ e * b : Int) : ZMod (p ^ h))) := by
+        depth p h 0 ((((a : Nat) : Int) * Y + (p : Int) ^ e * b : Int) : ZMod (p ^ h))) ∧
+    (∀ c : LocalCode p h e, ∃ X : Int,
+      localEncoding p h e hp hh heh (X : ZMod (p ^ h)) = c) := by
   letI : Fact p.Prime := ⟨hp⟩
   letI : NeZero (p ^ h) := ⟨pow_ne_zero _ hp.ne_zero⟩
+  have threshold (Z : Int) (j : Nat) (hj : j ≤ h) :
+      j ≤ depth p h 0 (Z : ZMod (p ^ h)) ↔ (p : Int) ^ j ∣ Z := by
+    have hs := ((D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result
+      p h hh).1 0 (Z : ZMod (p ^ h))).2 j hj
+    simpa only [ZMod.cast_intCast (pow_dvd_pow p hj), ZMod.cast_zero,
+      ZMod.intCast_zmod_eq_zero_iff_dvd, Nat.cast_pow] using hs
+  let supplier := D5.S3.Arith.Congruence.PrimePowerAffineBehavior.local_classification
+    p h e hp heh
+  rcases supplier with
+    ⟨depthFact, congruentFact, _positiveLift, affineLift, _wordForm,
+      _wordRealize, responseFact, _unitCollapse⟩
+  have signedDepth (X : Int) :
+      D5.S3.Arith.Congruence.PrimePowerAffineBehavior.depth p h X =
+        depth p h 0 (X : ZMod (p ^ h)) := by
+    let d := D5.S3.Arith.Congruence.PrimePowerAffineBehavior.depth p h X
+    let r := depth p h 0 (X : ZMod (p ^ h))
+    have hdle : d ≤ h := (depthFact X).1
+    have hrle : r ≤ h := ((D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result
+      p h hh).1 0 (X : ZMod (p ^ h))).1
+    have hdx : (p : Int) ^ d ∣ X := by
+      have hg := (depthFact X).2.1
+      have hgdiv := Int.gcd_dvd_left X ((p : Int) ^ h)
+      rw [hg] at hgdiv
+      simpa only [Nat.cast_pow] using hgdiv
+    have hdr : d ≤ r := (threshold X d hdle).2 hdx
+    have hrx : (p : Int) ^ r ∣ X := (threshold X r hrle).1 le_rfl
+    have hrgcd : p ^ r ∣ Int.gcd X ((p : Int) ^ h) := by
+      exact_mod_cast (Int.dvd_coe_gcd hrx (pow_dvd_pow (p : Int) hrle))
+    rw [(depthFact X).2.1] at hrgcd
+    have hrd : r ≤ d := (Nat.pow_dvd_pow_iff_le_right hp.one_lt).mp hrgcd
+    exact Nat.le_antisymm hdr hrd
+  let embed : LocalCode p h e →
+      (Nat × ZMod (p ^ (h - e))) ⊕ ZMod (p ^ (h - e)) :=
+    fun c => match c with
+      | .inl (r, u) => .inl (r.val, u.val)
+      | .inr z => .inr z
+  have embed_inj : Function.Injective embed := by
+    intro c d hcd
+    cases c with
+    | inl cu =>
+        cases d with
+        | inl du =>
+            rcases cu with ⟨r, u⟩
+            rcases du with ⟨s, v⟩
+            have hpairs : (r.val, (u : ZMod (p ^ (h - e)))) =
+                (s.val, (v : ZMod (p ^ (h - e)))) := by
+              exact Sum.inl.inj (by simpa only [embed] using hcd)
+            have hrs : r = s := Fin.ext (congrArg Prod.fst hpairs)
+            have huv : u = v := Units.ext (congrArg Prod.snd hpairs)
+            simp only [hrs, huv]
+        | inr z =>
+            have : Sum.inl (cu.1.val, (cu.2 : ZMod (p ^ (h - e)))) =
+                Sum.inr z := by simpa only [embed] using hcd
+            cases this
+    | inr z =>
+        cases d with
+        | inl du =>
+            have : Sum.inr z =
+                Sum.inl (du.1.val, (du.2 : ZMod (p ^ (h - e)))) := by
+              simpa only [embed] using hcd
+            cases this
+        | inr v =>
+            have hz : z = v := Sum.inr.inj (by simpa only [embed] using hcd)
+            simp only [hz]
   have specification : ∀ (x : ZMod (p ^ h)) (X : Int),
       (X : ZMod (p ^ h)) = x →
       match localEncoding p h e hp hh heh x with
@@ -275,284 +335,59 @@ theorem local_encoding_signed_response (p h e : Nat) (hp : p.Prime)
     · dsimp only
       refine ⟨by omega, ?_⟩
       exact quotient e le_rfl ((threshold e heh).1 (by omega))
-  refine ⟨specification, ?_⟩
-  intro X Y hcode a b
-  have threshold (Z : Int) (j : Nat) (hj : j ≤ h) :
-      j ≤ depth p h 0 (Z : ZMod (p ^ h)) ↔ (p : Int) ^ j ∣ Z := by
-    have hs := ((D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result
-      p h hh).1 0 (Z : ZMod (p ^ h))).2 j hj
-    simpa only [ZMod.cast_intCast (pow_dvd_pow p hj), ZMod.cast_zero,
-      ZMod.intCast_zmod_eq_zero_iff_dvd, Nat.cast_pow] using hs
-  have same (hd : (p : Int) ^ h ∣ ((a : Nat) : Int) * (Y - X)) :
-      depth p h 0 ((((a : Nat) : Int) * X + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) =
-      depth p h 0 ((((a : Nat) : Int) * Y + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) := by
-    have hd' : ((p ^ h : Nat) : Int) ∣
-        (((a : Nat) : Int) * Y + (p : Int) ^ e * b) -
-          (((a : Nat) : Int) * X + (p : Int) ^ e * b) := by
-      rw [Nat.cast_pow]
-      convert hd using 1 <;> ring
-    exact congrArg (depth p h 0)
-      ((ZMod.intCast_eq_intCast_iff_dvd_sub _ _ _).2 hd')
-  have hx := specification (X : ZMod (p ^ h)) X rfl
-  have hy := specification (Y : ZMod (p ^ h)) Y rfl
-  rw [← hcode] at hy
-  cases hc : localEncoding p h e hp hh heh (X : ZMod (p ^ h)) with
-  | inr z =>
-      rw [hc] at hx hy
-      have hq := (ZMod.intCast_eq_intCast_iff_dvd_sub
-        (X / (p : Int) ^ e) (Y / (p : Int) ^ e) (p ^ (h - e))).1
-          (hx.2.2.trans hy.2.2.symm)
-      have hd := mul_dvd_mul_left ((p : Int) ^ e) hq
-      have hpow : (p : Int) ^ e * ((p ^ (h - e) : Nat) : Int) = (p : Int) ^ h := by
-        rw [Nat.cast_pow, ← pow_add, Nat.add_sub_of_le heh]
-      rw [hpow, mul_sub, Int.mul_ediv_cancel' hx.2.1,
-        Int.mul_ediv_cancel' hy.2.1] at hd
-      exact same (hd.mul_left _)
-  | inl ru =>
-      rcases ru with ⟨r, u⟩
-      rw [hc] at hx hy
-      have hq := (ZMod.intCast_eq_intCast_iff_dvd_sub
-        (X / (p : Int) ^ r.val) (Y / (p : Int) ^ r.val) (p ^ (h - e))).1
-          (hx.2.2.trans hy.2.2.symm)
-      have hdiff : (p : Int) ^ (r.val + (h - e)) ∣ Y - X := by
-        have hd := mul_dvd_mul_left ((p : Int) ^ r.val) hq
-        rw [Nat.cast_pow, ← pow_add, mul_sub, Int.mul_ediv_cancel' hy.2.1,
-          Int.mul_ediv_cancel' hx.2.1] at hd
-        exact hd
-      let s := padicValInt p ((a : Nat) : Int)
-      by_cases hcross : e ≤ r.val + s
-      · have hd := mul_dvd_mul (padicValInt_dvd (p := p) ((a : Nat) : Int)) hdiff
-        rw [← pow_add] at hd
-        exact same ((pow_dvd_pow (p : Int) (by omega : h ≤ s + (r.val + (h - e)))).trans hd)
-      · have hrs : r.val + s + 1 ≤ e := by omega
-        have low_response (Z : Int) (hzdepth : depth p h 0 (Z : ZMod (p ^ h)) = r.val) :
-            depth p h 0 ((((a : Nat) : Int) * Z + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) =
-              r.val + s := by
-          clear specification hcode hc hx hy hq hdiff
-          have hrh : r.val < h := r.isLt.trans_le heh
-          have hd : (p : Int) ^ r.val ∣ Z := (threshold Z r.val (by omega)).1 (by omega)
-          have hn : ¬ (p : Int) ^ (r.val + 1) ∣ Z := by
-            intro hn
-            have := (threshold Z (r.val + 1) (by omega)).2 hn
-            omega
-          have hz : Z ≠ 0 := by
-            intro hz
-            apply hn
-            rw [hz]
-            exact dvd_zero _
-          have hv : padicValInt p Z = r.val := by
-            have hl := ((padicValInt_dvd_iff (p := p) r.val Z).1 hd).resolve_left hz
-            have hu : ¬ r.val + 1 ≤ padicValInt p Z := by
-              intro hu
-              exact hn ((padicValInt_dvd_iff (p := p) (r.val + 1) Z).2 (Or.inr hu))
-            omega
-          have ha : ((a : Nat) : Int) ≠ 0 := by exact_mod_cast a.ne_zero
-          have hval : padicValInt p (((a : Nat) : Int) * Z) = r.val + s := by
-            rw [padicValInt.mul ha hz, hv]
-            exact Nat.add_comm _ _
-          have hprod : ((a : Nat) : Int) * Z ≠ 0 := mul_ne_zero ha hz
-          have hbase : (p : Int) ^ (r.val + s) ∣ ((a : Nat) : Int) * Z := by
-            rw [padicValInt_dvd_iff]
-            exact Or.inr (by omega)
-          have hnext : ¬ (p : Int) ^ (r.val + s + 1) ∣ ((a : Nat) : Int) * Z := by
-            intro hd
-            have := ((padicValInt_dvd_iff (p := p) (r.val + s + 1) _).1 hd).resolve_left hprod
-            omega
-          have ht : (p : Int) ^ (r.val + s + 1) ∣ (p : Int) ^ e * b :=
-            (pow_dvd_pow (p : Int) hrs).mul_right b
-          have hout : r.val + s ≤
-              depth p h 0 ((((a : Nat) : Int) * Z + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) :=
-            (threshold (((a : Nat) : Int) * Z + (p : Int) ^ e * b)
-              (r.val + s) ((Nat.le_succ _).trans (hrs.trans heh))).2
-              (dvd_add hbase ((pow_dvd_pow (p : Int) ((Nat.le_succ _).trans hrs)).mul_right b))
-          have hnout : ¬ r.val + s + 1 ≤
-              depth p h 0 ((((a : Nat) : Int) * Z + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) := by
-            intro hnout
-            have hhout := (threshold (((a : Nat) : Int) * Z + (p : Int) ^ e * b)
-              (r.val + s + 1) (hrs.trans heh)).1 hnout
-            apply hnext
-            simpa only [add_sub_cancel_right] using dvd_sub hhout ht
+  have normalized (X : Int) :
+      D5.S3.Arith.Congruence.PrimePowerAffineBehavior.eta p h e X =
+        embed (localEncoding p h e hp hh heh (X : ZMod (p ^ h))) := by
+    have hs := specification (X : ZMod (p ^ h)) X rfl
+    cases hc : localEncoding p h e hp hh heh (X : ZMod (p ^ h)) with
+    | inl ru =>
+        rcases ru with ⟨r, u⟩
+        rw [hc] at hs
+        have hlow :
+            D5.S3.Arith.Congruence.PrimePowerAffineBehavior.depth p h X < e := by
+          rw [signedDepth X, hs.1]
+          exact r.isLt
+        simp only [D5.S3.Arith.Congruence.PrimePowerAffineBehavior.eta,
+          if_pos hlow, embed, hc, Sum.inl.injEq]
+        rw [signedDepth X, hs.1]
+        exact Prod.ext rfl hs.2.2
+    | inr z =>
+        rw [hc] at hs
+        have hdeep :
+            ¬ D5.S3.Arith.Congruence.PrimePowerAffineBehavior.depth p h X < e := by
+          rw [signedDepth X]
           omega
-        exact (low_response X hx.1).trans (low_response Y hy.1).symm
-
-#print axioms localEncoding
-#print axioms local_encoding_signed_response
-
-/- The local code is exactly the quotient of signed sources by all affine
-   responses, and every typed code has a signed (hence positive) source. -/
-theorem local_encoding_complete (p h e : Nat) (hp : p.Prime)
-    (hh : 1 ≤ h) (heh : e ≤ h) :
-    (∀ X Y : Int,
-      localEncoding p h e hp hh heh (X : ZMod (p ^ h)) =
-        localEncoding p h e hp hh heh (Y : ZMod (p ^ h)) ↔
-      ∀ (a : ℕ+) (b : Int),
-        depth p h 0 ((((a : Nat) : Int) * X + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) =
-        depth p h 0 ((((a : Nat) : Int) * Y + (p : Int) ^ e * b : Int) : ZMod (p ^ h))) ∧
-    (∀ c : LocalCode p h e, ∃ X : Int,
-      localEncoding p h e hp hh heh (X : ZMod (p ^ h)) = c) := by
-  letI : Fact p.Prime := ⟨hp⟩
-  letI : NeZero (p ^ h) := ⟨pow_ne_zero _ hp.ne_zero⟩
-  have threshold (Z : Int) (j : Nat) (hj : j ≤ h) :
-      j ≤ depth p h 0 (Z : ZMod (p ^ h)) ↔ (p : Int) ^ j ∣ Z := by
-    have hs := ((D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result
-      p h hh).1 0 (Z : ZMod (p ^ h))).2 j hj
-    simpa only [ZMod.cast_intCast (pow_dvd_pow p hj), ZMod.cast_zero,
-      ZMod.intCast_zmod_eq_zero_iff_dvd, Nat.cast_pow] using hs
-  have top (Z : Int) : depth p h 0 (Z : ZMod (p ^ h)) = h ↔
-      (Z : ZMod (p ^ h)) = 0 := by
-    exact (D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result
-      p h hh).2.1 0 (Z : ZMod (p ^ h))
-  have separate (j : Nat) (hje : j ≤ e) (X Y : Int)
-      (hX : (p : Int) ^ j ∣ X) (hY : (p : Int) ^ j ∣ Y)
-      (hquot : ((X / (p : Int) ^ j : Int) : ZMod (p ^ (h - e))) ≠
-        ((Y / (p : Int) ^ j : Int) : ZMod (p ^ (h - e)))) :
-      ∃ a : ℕ+, ∃ b : Int,
-        depth p h 0 ((((a : Nat) : Int) * X + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) = h ∧
-        depth p h 0 ((((a : Nat) : Int) * Y + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) < h := by
-    let aa : Nat := p ^ (e - j)
-    have haa : 0 < aa := pow_pos hp.pos _
-    have hpow : (p : Int) ^ (e - j) * (p : Int) ^ j = (p : Int) ^ e := by
-      rw [← pow_add, Nat.sub_add_cancel hje]
-    have hXeq : X = (X / (p : Int) ^ j) * (p : Int) ^ j :=
-      (Int.ediv_mul_cancel hX).symm
-    have hYeq : Y = (Y / (p : Int) ^ j) * (p : Int) ^ j :=
-      (Int.ediv_mul_cancel hY).symm
-    refine ⟨⟨aa, haa⟩, -(X / (p : Int) ^ j), ?_⟩
-    have hzero :
-        ((aa : Int) * X + (p : Int) ^ e * -(X / (p : Int) ^ j)) = 0 := by
-      have hpow' : (aa : Int) * (p : Int) ^ j = (p : Int) ^ e := by
-        simpa [aa] using hpow
-      calc
-        (aa : Int) * X + (p : Int) ^ e * -(X / (p : Int) ^ j) =
-            (aa : Int) * ((X / (p : Int) ^ j) * (p : Int) ^ j) +
-              (p : Int) ^ e * -(X / (p : Int) ^ j) := by
-                nth_rewrite 1 [hXeq]
-                rfl
-        _ =
-            ((aa : Int) * (p : Int) ^ j - (p : Int) ^ e) *
-              (X / (p : Int) ^ j) := by ring
-        _ = 0 := by rw [hpow']; ring
-    have hnonzero :
-        ((((aa : Int) * Y + (p : Int) ^ e * -(X / (p : Int) ^ j) : Int) : ZMod (p ^ h)) ≠ 0) := by
-      intro hz
-      have hdH : (p : Int) ^ h ∣
-          (aa : Int) * Y + (p : Int) ^ e * -(X / (p : Int) ^ j) :=
-        (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp hz
-      have hpowh : (p : Int) ^ h = (p : Int) ^ e * (p : Int) ^ (h - e) := by
-        rw [← pow_add, Nat.add_sub_of_le heh]
-      have hfactor :
-          (aa : Int) * Y + (p : Int) ^ e * -(X / (p : Int) ^ j) =
-            (p : Int) ^ e * (Y / (p : Int) ^ j - X / (p : Int) ^ j) := by
-        have hpow' : (aa : Int) * (p : Int) ^ j = (p : Int) ^ e := by
-          simpa [aa] using hpow
-        calc
-          (aa : Int) * Y + (p : Int) ^ e * -(X / (p : Int) ^ j) =
-              (aa : Int) * ((Y / (p : Int) ^ j) * (p : Int) ^ j) +
-                (p : Int) ^ e * -(X / (p : Int) ^ j) := by
-                  nth_rewrite 1 [hYeq]
-                  rfl
-          _ = ((aa : Int) * (p : Int) ^ j) * (Y / (p : Int) ^ j) -
-                (p : Int) ^ e * (X / (p : Int) ^ j) := by ring
-          _ =
-              (p : Int) ^ e * (Y / (p : Int) ^ j) -
-                (p : Int) ^ e * (X / (p : Int) ^ j) := by rw [hpow']
-          _ = (p : Int) ^ e * (Y / (p : Int) ^ j - X / (p : Int) ^ j) := by ring
-      rw [hpowh, hfactor] at hdH
-      have hcancel : (p : Int) ^ (h - e) ∣
-          Y / (p : Int) ^ j - X / (p : Int) ^ j := by
-        have hp0 : (p : Int) ≠ 0 := by exact_mod_cast hp.ne_zero
-        exact (mul_dvd_mul_iff_left (pow_ne_zero e hp0)).mp hdH
-      exact hquot ((ZMod.intCast_eq_intCast_iff_dvd_sub _ _ (p ^ (h - e))).2 hcancel)
-    constructor
-    · change depth p h 0
-        ((((aa : Nat) : Int) * X + (p : Int) ^ e * -(X / (p : Int) ^ j) : Int) : ZMod (p ^ h)) = h
-      apply (top _).2
-      simpa only [Int.cast_add, Int.cast_mul, Int.cast_pow, Int.cast_neg,
-        Int.cast_natCast, Int.cast_zero] using congrArg (fun z : Int => (z : ZMod (p ^ h))) hzero
-    · have hbound := (D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result
-        p h hh).1 0
-        (((aa : Int) * Y + (p : Int) ^ e * -(X / (p : Int) ^ j) : Int) : ZMod (p ^ h))
-      have hne : depth p h 0
-          (((aa : Int) * Y + (p : Int) ^ e * -(X / (p : Int) ^ j) : Int) : ZMod (p ^ h)) ≠ h := by
-        intro heq
-        exact hnonzero ((top _).1 heq)
-      exact Nat.lt_of_le_of_ne hbound.1 hne
+        simpa only [D5.S3.Arith.Congruence.PrimePowerAffineBehavior.eta,
+          if_neg hdeep, embed, hc, Sum.inr.injEq] using hs.2.2
   have response_iff (X Y : Int) :
       localEncoding p h e hp hh heh (X : ZMod (p ^ h)) =
         localEncoding p h e hp hh heh (Y : ZMod (p ^ h)) ↔
       ∀ (a : ℕ+) (b : Int),
         depth p h 0 ((((a : Nat) : Int) * X + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) =
         depth p h 0 ((((a : Nat) : Int) * Y + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) := by
+    have heta : (localEncoding p h e hp hh heh (X : ZMod (p ^ h)) =
+        localEncoding p h e hp hh heh (Y : ZMod (p ^ h))) ↔
+        D5.S3.Arith.Congruence.PrimePowerAffineBehavior.eta p h e X =
+          D5.S3.Arith.Congruence.PrimePowerAffineBehavior.eta p h e Y := by
+      rw [normalized X, normalized Y]
+      exact ⟨fun hc => congrArg embed hc, fun hc => embed_inj hc⟩
+    rw [heta]
     constructor
-    · exact (local_encoding_signed_response p h e hp hh heh).2 X Y
-    · intro hresp
-      by_contra hcode
-      have hXspec := (local_encoding_signed_response p h e hp hh heh).1
-        (X : ZMod (p ^ h)) X rfl
-      have hYspec := (local_encoding_signed_response p h e hp hh heh).1
-        (Y : ZMod (p ^ h)) Y rfl
-      cases hXc : localEncoding p h e hp hh heh (X : ZMod (p ^ h)) with
-      | inl ruX =>
-          cases hYc : localEncoding p h e hp hh heh (Y : ZMod (p ^ h)) with
-          | inl ruY =>
-              rcases ruX with ⟨rX, uX⟩
-              rcases ruY with ⟨rY, uY⟩
-              rw [hXc] at hXspec
-              rw [hYc] at hYspec
-              by_cases hdepth : rX.val = rY.val
-              · have hrEq : rX = rY := Fin.ext hdepth
-                subst rY
-                by_cases hu : uX = uY
-                · exact hcode (by rw [hXc, hYc, hu])
-                · obtain ⟨a, b, hsepX, hsepY⟩ := separate rX.val
-                    (le_of_lt rX.isLt) X Y hXspec.2.1
-                    (by simpa using hYspec.2.1) (by
-                      intro heq
-                      apply hu
-                      apply Units.ext
-                      exact hXspec.2.2.symm.trans (heq.trans (by simpa using hYspec.2.2)))
-                  have hsame := hresp a b
-                  exact (Nat.ne_of_lt hsepY) (hsame ▸ hsepX)
-              · have hsame := hresp (⟨1, by omega⟩ : ℕ+) 0
-                have hdx := hXspec.1
-                have hdy := hYspec.1
-                have hsame' : depth p h 0 (X : ZMod (p ^ h)) =
-                    depth p h 0 (Y : ZMod (p ^ h)) := by simpa using hsame
-                omega
-          | inr zY =>
-              rw [hXc] at hXspec
-              rw [hYc] at hYspec
-              have hsame := hresp (⟨1, by omega⟩ : ℕ+) 0
-              have hleX : depth p h 0 (X : ZMod (p ^ h)) < e :=
-                hXspec.1.trans_lt ruX.1.isLt
-              have hleY : e ≤ depth p h 0 (Y : ZMod (p ^ h)) := hYspec.1
-              have hsame' : depth p h 0 (X : ZMod (p ^ h)) =
-                  depth p h 0 (Y : ZMod (p ^ h)) := by simpa using hsame
-              omega
-      | inr zX =>
-          cases hYc : localEncoding p h e hp hh heh (Y : ZMod (p ^ h)) with
-          | inl ruY =>
-              rw [hXc] at hXspec
-              rw [hYc] at hYspec
-              have hsame := hresp (⟨1, by omega⟩ : ℕ+) 0
-              have hleX : e ≤ depth p h 0 (X : ZMod (p ^ h)) := hXspec.1
-              have hleY : depth p h 0 (Y : ZMod (p ^ h)) < e :=
-                hYspec.1.trans_lt ruY.1.isLt
-              have hsame' : depth p h 0 (X : ZMod (p ^ h)) =
-                  depth p h 0 (Y : ZMod (p ^ h)) := by simpa using hsame
-              omega
-          | inr zY =>
-              rw [hXc] at hXspec
-              rw [hYc] at hYspec
-              by_cases hz : zX = zY
-              · exact hcode (by rw [hXc, hYc, hz])
-              · obtain ⟨a, b, hsepX, hsepY⟩ := separate e le_rfl X Y
-                    hXspec.2.1 hYspec.2.1 (by
-                      intro heq
-                      apply hz
-                      exact hXspec.2.2.symm.trans (heq.trans hYspec.2.2))
-                have hsame := hresp a b
-                exact (Nat.ne_of_lt hsepY) (hsame ▸ hsepX)
+    · intro he a b
+      obtain ⟨A, B, hA, hB, hc⟩ := affineLift ((a : Nat) : Int) b
+      have hr := (responseFact X Y).1.mp he A B hA hB
+      have hleft := (congruentFact _ _ (hc X)).1
+      have hright := (congruentFact _ _ (hc Y)).1
+      have hs := hleft.trans (hr.trans hright.symm)
+      simpa only [signedDepth] using hs
+    · intro hr
+      apply (responseFact X Y).1.mpr
+      intro a b ha hb
+      have hap : 0 < a.toNat := by omega
+      have hs := hr ⟨a.toNat, hap⟩ b
+      simpa only [← signedDepth, PNat.mk_coe,
+        Int.toNat_of_nonneg (le_of_lt ha)] using hs
+
   refine ⟨response_iff, ?_⟩
   intro c
   cases c with

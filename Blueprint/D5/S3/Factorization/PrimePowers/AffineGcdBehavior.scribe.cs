@@ -53,33 +53,6 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
                             + "source x."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("local-encoding-signed-response"),
-                DeclarationHandle.Create(Prefix + "local_encoding_signed_response"),
-                H("Exact signed quotient coordinates preserve affine responses"),
-                StatementSource.FromAuthor(LocalResponseFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "Let p be prime, 1 <= h, 0 <= e <= h, and M = p^(h-e). "
-                            + "LocalCode(p,h,e) is the tagged sum of Fin(e) times Units(ZMod(M)) "
-                            + "and ZMod(M). For an actual residue x, localEncoding computes its "
-                            + "zero-aware depth r. If r < e, it returns S(r,u), where u is the "
-                            + "unit obtained from the exact canonical quotient x.val/p^r. "
-                            + "Otherwise it returns D(x.val/p^e modulo M). Nondivisibility "
-                            + "at depth r+1 proves the low canonical quotient coprime to p. "
-                            + "This includes e=0, e=h, M=1, and the zero residue.")),
-                    Paragraph(Text(
-                        "For every signed integer representative X of x, a low tag has depth r, "
-                            + "p^r divides X, and X/p^r modulo M is u. A deep tag has depth at "
-                            + "least e, p^e divides X, and X/p^e modulo M is its recorded z. "
-                            + "Changing the representative by a multiple of p^h changes the "
-                            + "quotient by a multiple of M. Equal codes give equal depths after "
-                            + "every positive multiplier a and every signed translation p^e b. "
-                            + "For low tags, below e the depth is r+v_p(a); after crossing e "
-                            + "the multiplied residues agree modulo p^h. Deep tags already "
-                            + "retain the full source residue."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("local-encoding-complete"),
                 DeclarationHandle.Create(Prefix + "local_encoding_complete"),
                 H("The local code is exactly the affine response quotient"),
@@ -90,9 +63,8 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
                         "For every signed pair of sources, equality of the computed tagged "
                             + "local codes is equivalent to equality of every response depth "
                             + "under every positive multiplier and every signed p^e translation. "
-                            + "The reverse implication separates unequal depths, distinct low "
-                            + "unit coordinates, distinct deep coordinates, and mixed tags by "
-                            + "one explicitly constructed response.")),
+                            + "The reverse implication uses the frozen affine classifier after "
+                            + "matching signed depth and quotient coordinates to the typed code.")),
                     Paragraph(Text(
                         "Every LocalCode is represented by an integer source. The construction "
                             + "uses an exact p^e multiple for deep tags, and a p^r times a unit "
@@ -101,8 +73,11 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
+        => Call(F.Id(name), arguments);
+
+    private static Formula Call(Formula function, params Formula[] arguments)
     {
-        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        var items = new List<Formula> { Operatorname, Grp(function), Open };
         for (var i = 0; i < arguments.Length; i++)
         {
             if (i > 0)
@@ -129,7 +104,8 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
         Formula slope = F.Id("a");
         Formula shift = F.Id("t");
         Formula x = F.Id("x");
-        Formula output = Seq(Call("runWord", Call("update", library), word, x), Sp,
+        Formula output = Seq(Seq(Par(Call("runWord", Call("update", library), word, x)), Dot,
+            F.Id("val")), Sp,
             Eq, Sp, slope, Sp, x, Sp, Plus, Sp, shift);
         Formula conclusion = Seq(Exists, Sp, slope, Comma, Sp, shift, Sp,
             InMacro, Sp, Nat(), Comma, Sp,
@@ -146,11 +122,16 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
         Formula library = F.Id("A");
         Formula slope = F.Id("a");
         Formula shift = F.Id("t");
-        Formula indices = F.Id("u");
+        Formula indices = F.Id("ws");
         Formula x = F.Id("x");
-        Formula word = Call("cons", Call("inl", slope), Call("mapInr", indices));
+        Formula word = Call(Seq(F.Id("List"), Dot, F.Id("cons")),
+            Call(Seq(F.Id("Sum"), Dot, F.Id("inl")), slope),
+            Call(Seq(F.Id("List"), Dot, F.Id("map")),
+                Seq(F.Id("Sum"), Dot, F.Id("inr")), indices));
         Formula action = Seq(
-            Call("residue", h, Call("runWord", Call("update", library), word, x)),
+            Call("residue", h,
+                Seq(Par(Call("runWord", Call("update", library), word, x)),
+                    Dot, F.Id("val"))),
             Sp, Eq, Sp,
             Call("residue", h, Seq(slope, Sp, x, Sp, Plus, Sp, shift)));
         Formula realizes = Seq(Exists, Sp, indices, Sp, InMacro, Sp,
@@ -161,49 +142,6 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
                 Par(Seq(D(2), Sp, Le, Sp, h, Sp, Land, Sp,
                     Call("libraryGcd", h, library), Sp, Mid, Sp, shift)),
                 Sp, Rightarrow, Sp, realizes))))));
-    }
-
-    private static Formula LocalResponseFormula()
-    {
-        Formula p = F.Id("p"), h = F.Id("h"), e = F.Id("e"), r = F.Id("r");
-        Formula u = F.Id("u"), z = F.Id("z"), x = F.Id("x");
-        Formula bigX = F.Id("X"), bigY = F.Id("Y"), a = F.Id("a"), b = F.Id("b");
-        Formula m = Seq(p, Caret, Grp(Seq(h, Minus, e)));
-        Formula ph = Seq(p, Caret, Grp(h)), pe = Seq(p, Caret, Grp(e));
-        Formula pr = Seq(p, Caret, Grp(r));
-        Formula modM = Call("ZMod", m), modH = Call("ZMod", ph);
-        Formula codeX = Call("localEncoding", p, h, e, x);
-        Formula repX = Call("residue", ph, bigX);
-        Formula quotientR = Call("residue", m, Call("div", bigX, pr));
-        Formula quotientE = Call("residue", m, Call("div", bigX, pe));
-        Formula depthX = Call("depth", p, h, D(0), x);
-        Formula low = All(r, Call("Fin", e), All(u, Call("Units", modM), Seq(
-            Par(Seq(codeX, Sp, Eq, Sp, Call("S", r, u))), Sp, Rightarrow, Sp,
-            Par(Seq(depthX, Sp, Eq, Sp, r, Sp, Land, Sp,
-                pr, Sp, Mid, Sp, bigX, Sp, Land, Sp,
-                quotientR, Sp, Eq, Sp, Call("value", u))))));
-        Formula deep = All(z, modM, Seq(
-            Par(Seq(codeX, Sp, Eq, Sp, Call("D", z))), Sp, Rightarrow, Sp,
-            Par(Seq(e, Sp, Le, Sp, depthX, Sp, Land, Sp,
-                pe, Sp, Mid, Sp, bigX, Sp, Land, Sp,
-                quotientE, Sp, Eq, Sp, z))));
-        Formula representatives = All(x, modH, All(bigX, Int(), Seq(
-            Par(Seq(repX, Sp, Eq, Sp, x)), Sp, Rightarrow, Sp,
-            Par(Seq(Par(low), Sp, Land, Sp, Par(deep))))));
-        Formula encodingX = Call("localEncoding", p, h, e, repX);
-        Formula encodingY = Call("localEncoding", p, h, e, Call("residue", ph, bigY));
-        Formula responseX = Call("depth", p, h, D(0),
-            Call("residue", ph, Seq(a, bigX, Plus, pe, b)));
-        Formula responseY = Call("depth", p, h, D(0),
-            Call("residue", ph, Seq(a, bigY, Plus, pe, b)));
-        Formula responses = All(bigX, Int(), All(bigY, Int(), Seq(
-            Par(Seq(encodingX, Sp, Eq, Sp, encodingY)), Sp, Rightarrow, Sp,
-            All(a, Positive(), All(b, Int(), Seq(responseX, Sp, Eq, Sp, responseY))))));
-        Formula hypotheses = Seq(Call("Prime", p), Sp, Land, Sp,
-            D(1), Sp, Le, Sp, h, Sp, Land, Sp, e, Sp, Le, Sp, h);
-        return Disp(All(p, Nat(), All(h, Nat(), All(e, Nat(), Seq(
-            Par(hypotheses), Sp, Rightarrow, Sp,
-            Par(Seq(Par(representatives), Sp, Land, Sp, Par(responses))))))));
     }
 
     private static Formula CompleteFormula()
