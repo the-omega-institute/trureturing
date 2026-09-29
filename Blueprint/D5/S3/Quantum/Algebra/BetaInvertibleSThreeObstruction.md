@@ -2,7 +2,7 @@
 
 ## Abstract
 
-When 3 divides N, no copy of the symmetric group S_3 inside the anyon permutation symmetries of the Z_N x Z_N SymTFT has all of its non-identity elements beta-invertible, as conjectured by D.-C. Lu, Z. Sun and Z. Zhang (arXiv:2406.12151, JHEP 11 (2025) 081); so the Z_N x Z_N theory admits no S_3-ality extension of this kind for such N.
+When 3 divides N, no copy of the symmetric group S_3 inside the anyon permutation symmetries of the Z_N x Z_N SymTFT has all of its non-identity elements beta-invertible, as conjectured by D.-C. Lu, Z. Sun and Z. Zhang (arXiv:2406.12151, JHEP 11 (2025) 081). The paper infers from this, through the Etingof-Nikshych-Ostrik classification of G-extensions, that there are no S_3-ality defects for such N; that inference is not formalized here.
 
 **Definition 1.1 (The quadratic form of the SymTFT).**
 
@@ -44,7 +44,7 @@ $$claim$$
 
 *Commentary.*
 
-Reduce rho modulo 3. The reduced matrices still preserve Q, since every vector over Z/3 lifts to Z/N, and still have invertible beta blocks at g other than the identity, since the determinant reduces to a unit. Over Z/3 let S_g = delta_g beta_g^{-1}, where delta_g is the lower-right block. The matrix rho(g) sends (0, x) to (beta_g x, delta_g x), and Q vanishes at (0, x), so y . S_g y = 0 for every y; hence S_g has zero diagonal and opposite off-diagonal entries and is determined by its entry S_g(0, 1). If g and h are different non-identity permutations with S_g = S_h, then rho(h) sends (0, z) to rho(g)(0, x) for z = beta_h^{-1} beta_g x, so rho(h^{-1} g) sends (0, x) to (0, z) for every x and its beta block vanishes, although h^{-1} g is not the identity. So g -> S_g(0, 1) maps the five non-identity permutations injectively into Z/3, which has three elements, a contradiction. The same argument bounds every beta-invertible group by p + 1 for any prime p dividing N.
+Reduce rho modulo 3. The reduced matrices still preserve Q, since every vector over Z/3 lifts to Z/N, and still have invertible beta blocks at g other than the identity, since the determinant reduces to a unit. Over Z/3 let S_g = delta_g beta_g^{-1}, where delta_g is the lower-right block. The matrix rho(g) sends (0, x) to (beta_g x, delta_g x), and Q vanishes at (0, x), so y . S_g y = 0 for every y; hence S_g has zero diagonal and opposite off-diagonal entries and is determined by its entry S_g(0, 1). If g and h are different non-identity permutations with S_g = S_h, then rho(h) sends (0, z) to rho(g)(0, x) for z = beta_h^{-1} beta_g x, so rho(h^{-1} g) sends (0, x) to (0, z) for every x and its beta block vanishes, although h^{-1} g is not the identity. So g -> S_g(0, 1) maps the five non-identity permutations injectively into Z/3, which has three elements, a contradiction. The same argument, which is not formalized here, bounds the order of every beta-invertible group by p + 1 for any prime p dividing N.
 
 ## References
 

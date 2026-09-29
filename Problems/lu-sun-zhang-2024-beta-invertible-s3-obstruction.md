@@ -39,9 +39,11 @@ Etingof–Nikshych–Ostrik classification of G-extensions and is not formalized
 
 `D5/S3/Quantum/Algebra/BetaInvertibleSThreeObstruction.result` proves the
 conjecture for every `N` divisible by 3. Together with the paper's even case it
-shows that a β-invertible `S₃`, and hence an `S₃`-ality extension of this
-kind, can exist only when every prime factor of `N` is at least 5, in line with
-the paper's tables, where `N = 5` is the smallest admissible value.
+shows that a β-invertible `S₃` can exist only when every prime factor of `N`
+is at least 5, in line with the paper's tables, where `N = 5` is the smallest
+admissible value. The paper's further inference that there are then no
+`S₃`-ality defects rests on the Etingof–Nikshych–Ostrik classification and is
+not formalized.
 
 ## Gap
 
