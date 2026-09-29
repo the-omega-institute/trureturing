@@ -17,6 +17,13 @@ private witnesses in the point's own covered fibres. It needs neither
 whole coverage nor irredundancy of every original. No Lean verification,
 uniform positive query debit, or resolution of Erdős #7 is claimed.
 
+For several prime pairs, Section 7 gives a different joint restriction:
+when each prime has one common cut height, the graph of simultaneously
+present rectangles must be bipartite. Every finite bipartite pattern can
+occur with original load two. The resulting cut inequalities restrict
+joint rectangle masses without supplying a uniform all-pair excess
+coefficient.
+
 ## 1. Original labels and the rectangles being counted
 
 Let
@@ -419,3 +426,205 @@ only. The general argument remains RC5--RC11.
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/moments-survival/two_cut_rectangle_excess.py --output /tmp/e7_two_cut_rectangle_excess.json
 ```
+
+## 7. Which prime-pair rectangles can coexist
+
+The following uses the same original classes and actual private fibres,
+but allows different prime pairs for different targets. Every target
+still satisfies RC1 for its own pair. For a point $x$, let $I(x)$ be the
+set of original labels containing $x$.
+
+If $x\in R_t$, choose an actual private point
+$y_t\in\Pi_t\cap F_t(x)$. For every $i\in I(x)$, one has $i\ne t$
+because $x\notin C_t$, and privacy implies $y_t\notin C_i$.
+The two points agree outside $p_t,q_t$ and first differ at these primes
+at the target's cut heights $\alpha_t,\beta_t$. A label containing
+$x$ and missing $y_t$ must distinguish at least one of these two
+coordinates. RC1 permits at most one. Therefore every actual active
+label satisfies the exact constraint
+
+$$
+\boxed{
+\mathbf1_{\{v_{p_t}(d_i)\ge\alpha_t\}}
++\mathbf1_{\{v_{q_t}(d_i)\ge\beta_t\}}=1
+\quad(x\in R_t,\ i\in I(x)).}
+\tag{RC16}
+$$
+
+This is a restriction on all the active original labels simultaneously.
+No witness or original phase is moved to an unrelated fibre.
+
+### 7.1 Common heights give a bipartite graph and one weighted cut budget
+
+Suppose every prime $p$ has one common cut height $h_p$ across the
+selected targets. Let $G$ be the graph whose vertices are these primes
+and whose edge $t$ joins $p_t,q_t$. There is at most one target per
+edge: two originals reaching the same pair of cut heights would violate
+each other's RC1. Let $G_x$ consist of those edges with $x\in R_t$.
+
+If $G_x$ is nonempty, the covered-fibre premise ensures $I(x)$ is
+nonempty. Choose any $i\in I(x)$ and put
+$S_i=\{p:v_p(d_i)\ge h_p\}$. RC16 says every edge of $G_x$ crosses
+the cut $(S_i,S_i^c)$. Thus $G_x$ is bipartite; more precisely its
+edge incidence vector is dominated by the cut vector of this same
+actual original label.
+
+Write $U_R=\bigcup_tR_t$. For nonnegative edge weights $w_t$, define
+the finite weighted maximum cut of the fixed candidate graph by
+
+$$
+\operatorname{MC}_G(w)
+ =\max_{S\subseteq V(G)}
+   \sum_{t:\,|\{p_t,q_t\}\cap S|=1}w_t.
+$$
+
+The single label just chosen proves the pointwise inequality
+
+$$
+\sum_t w_t\mathbf1_{R_t}(x)
+ \le\operatorname{MC}_G(w)\mathbf1_{U_R}(x).
+\tag{RC17}
+$$
+
+Consequently, under any one nonnegative measure $\xi$ and any one
+nonnegative payoff $h$ on the original finite carrier,
+
+$$
+\sum_t w_t\int h\mathbf1_{R_t}\,d\xi
+ \le\operatorname{MC}_G(w)\int h\mathbf1_{U_R}\,d\xi
+ \le\operatorname{MC}_G(w)\int h(L-1)_+\,d\xi.
+\tag{RC18}
+$$
+
+The last inequality uses the one-target overlap result: every rectangle
+point lies in at least two original classes. When the maximum cut is
+positive, RC18 also lower-bounds the actual weighted union mass by the
+weighted sum of rectangle masses divided by that maximum cut. It does
+not identify a particular original deletion bucket.
+
+For an odd cycle $Z$ of $G$, take its edge weights to be one and all
+other weights zero. Its maximum cut is $|Z|-1$, so
+
+$$
+\sum_{t\in Z}\mathbf1_{R_t}\le |Z|-1,
+\qquad
+\sum_{t\in Z}\int h\mathbf1_{R_t}\,d\xi
+ \le(|Z|-1)\int h\mathbf1_{U_R}\,d\xi.
+\tag{RC19}
+$$
+
+One may choose $i(x)$ by a single fixed original-label order on $U_R$.
+If $0<\int h\mathbf1_{U_R}\,d\xi<\infty$, normalize this same
+restricted measure. The normalized rectangle-mass vector then lies in the
+downward closure of the convex hull of cuts of $G$. This retains a
+common-source mixture; it does not combine independently optimized edge
+marginals. The maximum-cut coefficient depends on the graph and weights,
+so RC18 is consistent with the unbounded all-pair obstruction of
+[Report 842](842-cross-pair-haar-rectangle-charges-have-no-uniform-excess-bound.md).
+
+### 7.2 Every finite bipartite pattern occurs with load two
+
+Conversely let $G=(P,Q,E)$ be any finite nonempty simple bipartite
+graph. Assign distinct odd primes to its vertices and a further odd
+prime $\ell$ to a tag. For every edge $(p,q)$ include one target
+of modulus $pq$ with roots $(1,1)$.
+
+For every complete non-1 pattern on $P$, include one supplier fixing
+that pattern and tag $0\bmod\ell^j$, of modulus
+$\ell^j\prod_{p\in P}p$. Include the analogous suppliers for every
+complete non-1 pattern on $Q$. Assign all suppliers different positive
+heights $j$, and let $K$ be their maximum. CRT fixes all phases once.
+
+The numerical moduli are odd, distinct and greater than one. Each
+supplier omits the opposite side, and every other target omits at least
+one endpoint of any chosen edge. Thus every target satisfies RC1 at
+height one. At the full origin, including tag zero, precisely the
+all-zero $P$ supplier and the all-zero $Q$ supplier occur: $L(0)=2$.
+
+For each edge, its canonical fibre with all other core coordinates zero
+and full tag zero is covered. The $p\ne1$ rows have matching
+$P$ suppliers, the $q\ne1$ columns have matching $Q$ suppliers,
+and the remaining $(1,1)$ cell has its target. This cell is private:
+each other target requires another core coordinate equal to one, and
+both supplier groups miss it. Hence every selected rectangle contains
+this same origin.
+
+Isolated vertices may be omitted or retained in the side products; a
+nonempty edge set ensures both sides are nonempty. This proves the
+exact local graph classification for a declared target inventory: a
+finite simple edge pattern is simultaneously realizable under the
+common-height premises if and only if it is bipartite, with the empty
+pattern vacuous. It does not enumerate every possible target cut in
+the constructed family. Arbitrarily many
+bipartite edges are compatible with load two. The full all-core-zero,
+tag-one point is a global hole, so this realization proves no
+whole-cover statement.
+
+### 7.3 A sharp triangle with literal original classes
+
+Take core primes $(p,q,r)=(3,5,7)$ and tag prime $11$. Include targets
+
+$$
+T_{pq}=[1]_{15},\qquad T_{pr}=[1]_{21},\qquad T_{qr}=[0]_{35}.
+\tag{RC20}
+$$
+
+Add ten suppliers, each with the indicated core residue and tag
+$0\bmod11^k$:
+
+| Core condition | Tag heights $k$, in the displayed residue order |
+| --- | --- |
+| $p=0,2$ | $1,2$ |
+| $q=2,3,4$ | $3,4,5$ |
+| $r=2,3,4,5,6$ | $6,7,8,9,10$ |
+
+Their moduli are respectively $p11^k,q11^k,r11^k$. All thirteen
+original moduli are distinct and odd, and all targets have globally
+admissible pairs at common height one. The full period is
+$3\cdot5\cdot7\cdot11^{10}$.
+
+With full tag zero, the targets have private points $(1,1,0)$,
+$(1,0,1)$ and $(1,0,0)$ respectively. Their corresponding pair fibres
+are covered. For $T_{pq}$, fix $r=0$: the $p$ suppliers cover
+$p\ne1$; at $p=1$, $T_{pq}$ covers $q=1$, $T_{qr}$ covers $q=0$,
+and the $q$ suppliers cover $q\ge2$. The $T_{pr}$ argument is
+symmetric. For $T_{qr}$, fix $p=1$: its target covers $(q,r)=(0,0)$,
+$T_{pq}$ covers $q=1$, $T_{pr}$ covers $r=1$, and a supplier covers
+every case with $q\ge2$ or $r\ge2$. Each displayed private point
+misses every other original.
+
+At the full origin the first two rectangles occur and the third does
+not. Exactly the $p=0$ supplier and $T_{qr}$ contain it. Thus
+
+$$
+\sum_{t\in\{pq,pr,qr\}}\mathbf1_{R_t}(0)=2,
+\qquad L(0)-1=1.
+\tag{RC21}
+$$
+
+The triangle bound is attained, including RC18 for unit triangle
+weights and a point mass at the origin. Its coefficient cannot be
+replaced by one under these premises. The point
+$(p,q,r,\text{tag})=(0,1,0,1)$ is a global hole. This is a symbolic
+CRT control, not an additional run of the checker in Section 6.
+
+### 7.4 Unequal heights and the remaining allocation obligation
+
+For arbitrary target heights, RC16 still holds on threshold vertices
+$(p,h)$, one edge for each target's two thresholds. An actual active
+label assigns the values $\mathbf1_{v_p(d_i)\ge h}$; these values
+are monotone in $h$ along each prime. This threshold graph is bipartite
+wherever its rectangles coexist. Identifying different thresholds with
+one prime vertex is not justified. RC17--RC19 on the original prime
+graph require the stated common-height premise.
+
+RC16 also shows why an unrestricted supplier-matching restatement adds
+no capacity. For each present target, the union of its two supplier
+sides is all of $I(x)$. If either side is allowed, every target is
+adjacent to every active label. After reserving one owner label, this
+complete target-to-slot graph has rank
+$\min(\#\{t:x\in R_t\},L(x)-1)$.
+An allocation that adds arithmetic information must retain an actual
+direction, consumer bucket, or additional relation forced by whole
+coverage. The graph exclusions and their sharpness do not supply the
+uniform positive source/query debit still required for Erdős #7.
