@@ -1,0 +1,8 @@
+### 3.1 一个窗口强迫有限稳定导数深度
+
+令非零实或复 Hilbert 空间上的 $B,C$ 有界，$b=\max(1,\|B\|),c=\|C\|$，定义
+$$
+(\mathcal T_Tx)(t)=Ce^{tB}x,\quad
+ a(T)=\inf_{\|x\|=1}\|\mathcal T_Tx\|_{L^2(0,T)}^2,
+\quad\mu_N=\inf_{\|x\|=1}\sum_{k=0}^N\|CB^kx\|^2.
+$$

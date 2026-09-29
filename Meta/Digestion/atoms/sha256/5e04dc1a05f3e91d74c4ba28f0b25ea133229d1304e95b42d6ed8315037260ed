@@ -1,0 +1,80 @@
+### 9.3 参考文献
+
+[SS16] J. M. Sanz-Serna. *Symplectic Runge–Kutta Schemes for Adjoint Equations, Automatic Differentiation, Optimal Control, and More*. SIAM Review 58(1), 3–33 (2016). DOI: https://doi.org/10.1137/151002769.
+
+[CRBD18] R. T. Q. Chen et al. *Neural Ordinary Differential Equations*. NeurIPS 2018. https://arxiv.org/abs/1806.07366.
+
+[J20] I. Joseph. *Koopman–von Neumann approach to quantum simulation of nonlinear classical dynamics*. Physical Review Research 2, 043102 (2020). https://doi.org/10.1103/PhysRevResearch.2.043102.
+
+[AS97] A. Ashtekar, T. A. Schilling. *Geometrical Formulation of Quantum Mechanics*. https://arxiv.org/abs/gr-qc/9706069.
+
+[McA19] S. McArdle et al. *Variational ansatz-based quantum simulation of imaginary time evolution*. npj Quantum Information 5, 75 (2019). https://doi.org/10.1038/s41534-019-0187-2.
+
+[G97] M. Grmela, H. C. Öttinger. *Dynamics and thermodynamics of complex fluids. I. Development of a general formalism*. Physical Review E 56, 6620 (1997). https://doi.org/10.1103/PhysRevE.56.6620.
+
+[VSM02] A. van der Schaft, B. Maschke. *Hamiltonian formulation of distributed-parameter systems with boundary energy flow*. Journal of Geometry and Physics 42 (2002), 166–194. https://doi.org/10.1016/S0393-0440(01)00083-3.
+
+[L16] H. Lei, N. A. Baker, X. Li. *Data-driven parameterization of the generalized Langevin equation*. https://arxiv.org/abs/1606.02596.
+
+[L76] G. Lindblad. *On the generators of quantum dynamical semigroups*. Communications in Mathematical Physics 48, 119–130 (1976). https://doi.org/10.1007/BF01608499.
+
+[CM17] E. A. Carlen, J. Maas. *Gradient flow and entropy inequalities for quantum Markov semigroups with detailed balance*. https://arxiv.org/abs/1609.01254.
+
+[C10] A. A. Clerk et al. *Introduction to Quantum Noise, Measurement, and Amplification*. https://arxiv.org/abs/0810.4729.
+
+[W12] C. Weedbrook et al. *Gaussian Quantum Information*. Reviews of Modern Physics 84, 621–669 (2012). https://arxiv.org/abs/1110.3234. 使用 Williamson、正则酉及张量热分解。
+
+[ZGPG18] G. Zhang, S. Grivopoulos, I. R. Petersen, J. E. Gough. *The Kalman Decomposition for Linear Quantum Systems*. IEEE TAC 63, 331–346 (2018). https://arxiv.org/abs/1606.05719v4.
+
+[ZLDP23] G. Zhang, J. Li, Z. Dong, I. R. Petersen. *The Quantum Kalman Decomposition: A Gramian Matrix Approach*. https://arxiv.org/abs/2312.16082v1.
+
+[BGH23] P. Buchfink, S. Glas, B. Haasdonk. *Symplectic Model Reduction of Hamiltonian Systems on Nonlinear Manifolds and Approximation with Weakly Symplectic Autoencoder*. https://doi.org/10.1137/21M1466657.
+
+[AHP19] A. Aldroubi, L. X. Huang, A. Petrosyan. *Frames induced by the action of continuous powers of an operator*. JMAA 478(2), 1059–1084 (2019). https://arxiv.org/abs/1801.10103; https://doi.org/10.1016/j.jmaa.2019.05.066. 使用其幂分支及 Conjecture 5.6。
+
+[ACKM26] A. Aldroubi, C. Cabrelli, I. Krishtal, U. Molter. *Dynamical Sampling: A Survey*. https://arxiv.org/abs/2511.10769v3; https://doi.org/10.1007/s44007-026-00215-y. Conjecture 2 为本研究线原问题来源；本文不将合编当作独立确认问题状态。
+
+[DMM21] R. Díaz Martín, I. Medri, U. Molter. *Continuous and discrete dynamical sampling*. https://arxiv.org/abs/2006.08046; https://doi.org/10.1016/j.jmaa.2021.125060. 既有连续/离散关系不认领为新增结果。
+
+[SJP15] E. Schmerling, L. Janson, M. Pavone. *Optimal Sampling-Based Motion Planning under Differential Constraints: the Drift Case with Linear Affine Dynamics*. CDC 2015，2574–2581. https://pmc.ncbi.nlm.nih.gov/articles/PMC4795843/; https://doi.org/10.1109/CDC.2015.7402604. 全谱小时间 Gramian 幂次已有该文的可控对偶结果。
+
+[SD14] Y. Subasi, M. Demirekler. *Quantitative measure of observability for linear stochastic systems*. Automatica 50(6), 1669–1674 (2014). https://doi.org/10.1016/j.automatica.2014.04.008. 互信息可观测性是既有概念。
+
+[GSV05] D. Guo, S. Shamai, S. Verdú. *Mutual Information and Minimum Mean-square Error in Gaussian Channels*. IEEE Transactions on Information Theory 51(4), 1261–1282 (2005). https://arxiv.org/abs/cs/0412108; https://doi.org/10.1109/TIT.2005.844072. 本文第 8 节直接计算指定 Gaussian 实验，未将一般 I-MMSE 换成任意潜变量或量子测量的断言。
+
+[M65] H. Mori. *Transport, Collective Motion, and Brownian Motion*. https://doi.org/10.1143/PTP.33.423.
+
+[M65C] H. Mori. *A Continued-Fraction Representation of the Time-Correlation Functions*. https://doi.org/10.1143/PTP.34.399.
+
+[LL26] Q. Lang, J. Lu. *Learning Memory Kernels in Generalized Langevin Equations*. SIAM Journal on Mathematics of Data Science 8(1), 141–166 (2026). https://doi.org/10.1137/24M1651101.
+
+[LL25] Q. Lang, J. Lu. *Error Analysis of Generalized Langevin Equations with Approximated Memory Kernels*. https://arxiv.org/abs/2512.10256. 其白噪声与衰减假设不自动适用于有限封闭热初态。
+
+[H14] A. Horikoshi. *External Source Method for Kubo-Transformed Quantum Correlation Functions*. https://arxiv.org/abs/1401.0983.
+
+[MR17] A. Müller-Hermes, D. Reeb. *Monotonicity of the Quantum Relative Entropy Under Positive Maps*. https://arxiv.org/abs/1512.06117. 用于测量数据处理和 Pinsker 的既有前置。
+
+[GL11] A. García-Sáez, J. I. Latorre. *An exact tensor network for the 3SAT problem*. https://arxiv.org/abs/1105.3201. 计数背景；本文另外给出固定温度的对角 Hamilton 归约。
+
+[ZP25] H. Zhao, Y. Zhang, J. Preskill. *Learning to erase quantum states: thermodynamic implications of quantum learning theory*. https://arxiv.org/abs/2504.07341. 其密码学前件不被替换成已证的 P/NP 分离。
+
+[S25] S. O. Scalet et al. *Classical Estimation of the Free Energy and Quantum Gibbs Sampling from the Markov Entropy Decomposition*. https://arxiv.org/abs/2504.17405. 有效相互作用衰减、边缘估计和恢复算法的前件不由一个全局二分的零泄漏自动推出。
+
+[PV25] S. Pérez-Vieites et al. *Online Bayesian Experimental Design for Partially Observed Dynamical Systems*. https://arxiv.org/abs/2511.04403. 贝叶斯设计背景，本卷未运行该文算法。
+
+[Tong] D. Tong. Dynamics、Quantum Field Theory 与 General Relativity 原始讲义：https://www.damtp.cam.ac.uk/user/tong/dynamics/dynhtml/S4.html ; https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S6.html ; https://www.damtp.cam.ac.uk/user/tong/gr/grhtml/S2.html . 最小耦合、场作用量与曲率是既有物理构件。
+
+[GEMPIC] M. Kraus et al. *GEMPIC: Geometric ElectroMagnetic Particle-In-Cell Methods*. https://arxiv.org/abs/1609.03053.
+
+[AB59] Y. Aharonov, D. Bohm. *Significance of Electromagnetic Potentials in the Quantum Theory*. Physical Review 115, 485 (1959). https://doi.org/10.1103/PhysRev.115.485.
+
+[LFO90] X. L. Li, G. W. Ford, R. F. O'Connell. *Magnetic-field effects on the motion of a charged particle in a harmonic potential*. Physical Review A 42, 4519 (1990). https://doi.org/10.1103/PhysRevA.42.4519.
+
+[Bir17] J. Birrell. *Entropy Anomaly in Langevin-Kramers Dynamics with a Temperature Gradient, Matrix Drag, and Magnetic Field*. https://arxiv.org/abs/1709.06981.
+
+[NIST] NIST Guide to the SI, Chapter 4, derived SI units. https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-4-two-classes-si-units-and-si-prefixes.
+
+[Tesla1888] N. Tesla. US381968A, *Electro-magnetic motor*. https://patents.google.com/patent/US381968A/en.
+
+原检索还引用 [GP26] E. A. Gallardo-Gutiérrez, J. R. Partington, https://arxiv.org/abs/2605.29671；[KP26] I. A. Krishtal, G. E. Pfander, https://arxiv.org/abs/2606.20848；[KM26] I. A. Krishtal, B. Miller, https://arxiv.org/abs/2607.18491。相关已发表反例作为外部来源，不计为本研究的额外猜想结算。
+

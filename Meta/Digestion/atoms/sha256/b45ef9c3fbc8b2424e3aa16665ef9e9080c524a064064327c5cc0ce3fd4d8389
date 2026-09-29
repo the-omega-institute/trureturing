@@ -1,0 +1,15 @@
+**定理 1.4（被动隐藏记忆）。** 设
+$$
+\dot x=(J_x-R_x)e-Ch+Bu,\quad
+\dot h=C^Te+(J_h-R_h)h,\qquad e=\nabla V_x(x),
+$$
+其中矩阵固定、$J$ 反对称、$R$ 半正定。总储能 $V_x+|h|^2/2$ 的导数为 $-e^TR_xe-h^TR_hh+e^TBu$。消去 $h$ 后，记忆核为
+$$
+K(t)=Ce^{tA_h}C^T,\quad A_h=J_h-R_h,
+$$
+且保留项包括 $-Ce^{tA_h}h_0$ 与 $-\int_0^tK(t-s)e(s)ds$。其 Laplace 响应在 $\operatorname{Re}s>0$ 正实：若 $w=(sI-A_h)^{-1}C^Tv$，则
+$$
+\operatorname{Re}(v^\dagger\widehat K(s)v)
+=(\operatorname{Re}s)\|w\|^2+w^\dagger R_hw\ge0.
+$$
+

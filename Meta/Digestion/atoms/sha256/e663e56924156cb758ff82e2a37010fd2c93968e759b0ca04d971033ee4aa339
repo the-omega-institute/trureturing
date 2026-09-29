@@ -1,0 +1,18 @@
+### 11.7 从有限历史实现记忆图的一个误差预算
+
+假设当前 $x_0,p_0$ 精确，过去 $p_{-h},p_{-2h}$ 各有绝对误差至多 $\varepsilon$，且轨迹段上 $|p'''|\le K_3$。定义
+\[
+ \widehat p'=(3p_0-4\widehat p_{-h}+\widehat p_{-2h})/(2h),
+ \quad\widehat p''=(p_0-2\widehat p_{-h}+\widehat p_{-2h})/h^2,
+\]
+\[
+ \widehat r=\widehat p'+x_0^3,\quad
+ \widehat s=\widehat p''+(3x_0^2+\chi_0)p_0.
+\]
+Taylor 余项及二阶差分的双积分表达给出保守界
+\[
+ |\widehat r-r|\le K_3h^2+5\varepsilon/(2h),\quad
+ |\widehat s-s|\le K_3h+3\varepsilon/h^2.
+\]
+乘以上节 $\|A\|_F/|\Delta|$ 的逆增益，得到隐藏状态恢复误差。这个指定模板可用 $h\asymp\varepsilon^{1/3}$ 平衡第二条预算；不宣称这一阶对任意高阶模板或采样设计最优。该段只处理有限历史恢复，不把导数观测当作无噪声现成输入。
+
