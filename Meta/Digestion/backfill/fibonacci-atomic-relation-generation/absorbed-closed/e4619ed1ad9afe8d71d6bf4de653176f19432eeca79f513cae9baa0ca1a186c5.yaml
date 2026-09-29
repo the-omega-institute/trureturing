@@ -4,7 +4,7 @@ fingerprints:
 cas_ref: sha256:e4619ed1ad9afe8d71d6bf4de653176f19432eeca79f513cae9baa0ca1a186c5
 coverage_gids:
   - gid: D5/S3/Arith/FibonacciAtomic/RecordCapacity.autonomous_record_capacity
-    target_statement_id: sha256:57963e5bcc6de46fa051cd82d0758411f2243e0b417671661b042ccff4b54fea
+    target_statement_id: sha256:a3c02dab3348ee133dc8c5d196bbbfec9f760a4be8f73d32be9ba0c3cbd504d8
 receipts:
   unresolved_subitems: []
   chain_atoms:

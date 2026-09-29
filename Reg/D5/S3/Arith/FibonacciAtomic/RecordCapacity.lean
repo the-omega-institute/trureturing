@@ -28,7 +28,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law T := ∀ {d p : ℕ} (_hp : p.Prime)
+  Law T := (∀ {d p : ℕ} (_hp : p.Prime)
     (B : Matrix (Fin d) (Fin d) ℤ)
     (U V : (Matrix (Fin d) (Fin d) ℤ)ˣ) (s : Fin d → ℕ)
     (_hSmith : U.val * B * V.val = diagonal (fun i => (s i : ℤ)))
@@ -43,7 +43,7 @@ abbrev arena : Arena where
       Nat.card (Defect p s → ZMod (p ^ (r + 1))) =
         p ^ ((r + 1) * Fintype.card (Defect p s))) ∧
     (∀ r x, reduce p (r + 1) (canonicalRecord V p (r + 2) s x) =
-      canonicalRecord V p (r + 1) s (reduce p (r + 1) x)) ∧
+      canonicalRecord V p (r + 1) s (reduce p (r + 1) x))) ∧
     (∀ (q : ℕ) (hq : q.Prime), ScalarRecordExamples.{u} q hq) ∧
     ThreeNodeRecordExamples.{u}
 
@@ -52,7 +52,7 @@ theorem actual_law : arena.{u}.Law actual := by
 
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have hbad := h (d := 0) (p := 2) (by decide) 0 1 1 (fun i => Fin.elim0 i)
+  have hbad := h.1 (d := 0) (p := 2) (by decide) 0 1 1 (fun i => Fin.elim0 i)
     (by ext i; exact Fin.elim0 i) (R := fun _ => ULift.{u} (ZMod 1))
     (fun _ _ => 0) (fun _ _ => 0)
     (fun _ _ _ _ => Subsingleton.elim _ _) (fun _ _ => rfl)
@@ -79,7 +79,7 @@ register_information_theorem autonomous_record_capacity in arena
     owner := `D5.S3.Arith.FibonacciAtomic.RecordCapacity
     coordinates := #[0, 1, 6]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
+      path := #["fn", "arg", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "body", "arg", "fn", "arg"]
       stateOperand := some #["arg", "fn", "arg"] }] })

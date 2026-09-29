@@ -84,7 +84,7 @@ def threeNodeB : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, 0; 0, 1, 2; 2, 0, 1]
 
 /-- Exact single-level and cross-level claims for a scalar prime boundary.
-The final clause quantifies arbitrary finite record towers; the earlier clauses
+The final clause quantifies arbitrary ℕ-indexed towers of finite record sets; the earlier clauses
 exhibit the specific highest-digit record and its failed autonomous update. -/
 def ScalarRecordExamples (p : ℕ) (hp : p.Prime) : Prop :=
   (∀ n, Nat.card (scalarAction p n).ker = p) ∧
@@ -129,14 +129,15 @@ def ThreeNodeRecordExamples : Prop :=
 /-- Record-only transitions force the sharp full-precision defect bound.
 The scalar and three-node examples include their unrestricted minima,
 explicit attaining records, and failures of autonomous minimal recording. -/
-theorem autonomous_record_capacity {d p : ℕ} (hp : p.Prime)
+theorem autonomous_record_capacity :
+    (∀ {d p : ℕ} (hp : p.Prime)
     (B : Matrix (Fin d) (Fin d) ℤ)
     (U V : (Matrix (Fin d) (Fin d) ℤ)ˣ) (s : Fin d → ℕ)
     (hSmith : U.val * B * V.val = diagonal (fun i => (s i : ℤ)))
     {R : ℕ → Type u} [∀ r, Fintype (R r)]
     (η : ∀ r, State d p (r + 1) → R r) (ρ : ∀ r, R (r + 1) → R r)
     (hjoint : ∀ r, Function.Injective (fun x => (action B p (r + 1) x, η r x)))
-    (haut : ∀ r x, ρ r (η (r + 1) x) = η r (reduce p (r + 1) x)) :
+    (haut : ∀ r x, ρ r (η (r + 1) x) = η r (reduce p (r + 1) x)),
     (∀ r, Function.Injective (fun x => η r (defectInput V p (r + 1) s x)) ∧
       p ^ ((r + 1) * Fintype.card (Defect p s)) ≤ Fintype.card (R r)) ∧
     (∀ r, Function.Injective (fun x =>
@@ -144,7 +145,7 @@ theorem autonomous_record_capacity {d p : ℕ} (hp : p.Prime)
       Nat.card (Defect p s → ZMod (p ^ (r + 1))) =
         p ^ ((r + 1) * Fintype.card (Defect p s))) ∧
     (∀ r x, reduce p (r + 1) (canonicalRecord V p (r + 2) s x) =
-      canonicalRecord V p (r + 1) s (reduce p (r + 1) x)) ∧
+      canonicalRecord V p (r + 1) s (reduce p (r + 1) x))) ∧
     (∀ (q : ℕ) (hq : q.Prime), ScalarRecordExamples.{u} q hq) ∧
     ThreeNodeRecordExamples.{u} := by
   classical
@@ -522,8 +523,7 @@ theorem autonomous_record_capacity {d p : ℕ} (hp : p.Prime)
       have hb := htower Q η ρ hj ha 2
       rw [hminimal 2] at hb
       norm_num at hb
-  have base := tower hp B U V s hSmith η ρ hjoint haut
-  exact ⟨base.1, base.2.1, base.2.2, scalarResult, threeResult⟩
+  exact ⟨tower, scalarResult, threeResult⟩
 
 #print axioms autonomous_record_capacity
 
