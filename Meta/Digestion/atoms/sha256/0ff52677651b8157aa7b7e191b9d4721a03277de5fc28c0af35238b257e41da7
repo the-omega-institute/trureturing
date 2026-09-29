@@ -1,0 +1,27 @@
+**定义 106.1（两接缝规范词与系数深度）。** 固定整数 $H\ge2$，令 $R=\mathbb Z/H\mathbb Z$，并取
+
+$$
+F_0=0,\quad F_1=1,\quad F_{k+2}=F_{k+1}+F_k,
+\qquad \phi=\frac{1+\sqrt5}{2},\quad \alpha=\phi^{-1}.
+$$
+
+位词均按低位到高位排列。对整数 $L\ge1$，令 $\mathcal W_L$ 为所有长度 $3\ell$、$1\le\ell\le L$ 的位词 $w=(b_0,\ldots,b_{3\ell-1})$，要求无相邻 1、$b_0=0$，且最后三位不全为零。因而这些词非空并至少含一个 1。条件 $b_0=0$ 恰使一个内部合法的非空词在两种输入接缝之后都合法。令 $\mathcal W^{00}_L$ 为其中另满足 $b_1=0$ 的词；第二个零是更强的限制。
+
+对任意有限位词，包括空词，把缺失的位视为零，定义模 $H$ 系数
+
+$$
+A_w=b_0+\sum_{k\ge2}b_kF_{k-1},\qquad
+B_w=b_1+\sum_{k\ge2}b_kF_k,\qquad C_H(w)=(A_w,B_w)\in R^2.
+$$
+
+从任意行 $(u,v)\in R^2$ 出发，令 $a_0=u,a_1=v,a_{k+2}=a_{k+1}+a_k$，定义词值 $\operatorname{value}(u,v,w)=\sum_k b_ka_k$。系数饱和深度为
+
+$$
+\begin{aligned}
+D(H)&=\min\{L\ge1:C_H(\mathcal W_L)=R^2\},\\
+D_{00}(H)&=\min\{L\ge1:C_H(\mathcal W^{00}_L)=R^2\},
+\end{aligned}
+$$
+
+其中空的最小值集合暂记为 $+\infty$。这里要求覆盖整个系数对空间 $R^2$。
+
