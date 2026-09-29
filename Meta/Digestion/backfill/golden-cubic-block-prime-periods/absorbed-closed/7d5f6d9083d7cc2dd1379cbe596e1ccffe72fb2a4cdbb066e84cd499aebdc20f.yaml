@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7d5f6d9083d7cc2dd1379cbe596e1ccffe72fb2a4cdbb066e84cd499aebdc20f
   normalized_sha256: sha256:7d5f6d9083d7cc2dd1379cbe596e1ccffe72fb2a4cdbb066e84cd499aebdc20f
 cas_ref: sha256:7d5f6d9083d7cc2dd1379cbe596e1ccffe72fb2a4cdbb066e84cd499aebdc20f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/QuadraticIdeals/CubicIdealCharacter.cubic_ideal_character_and_factored_multiplicativity
+    target_statement_id: sha256:4cf386ce874b79d747a173a76107a92ed9f2eed26037b0c9997111536586c004
 receipts:
   unresolved_subitems: []

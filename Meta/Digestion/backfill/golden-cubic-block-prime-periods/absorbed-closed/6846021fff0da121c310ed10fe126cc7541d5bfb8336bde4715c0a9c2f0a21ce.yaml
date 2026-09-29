@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:6846021fff0da121c310ed10fe126cc7541d5bfb8336bde4715c0a9c2f0a21ce
   normalized_sha256: sha256:6846021fff0da121c310ed10fe126cc7541d5bfb8336bde4715c0a9c2f0a21ce
 cas_ref: sha256:6846021fff0da121c310ed10fe126cc7541d5bfb8336bde4715c0a9c2f0a21ce
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciPrimePowerMod31Nonsquare.fibonacci_prime_power_mod31_nonsquare
+    target_statement_id: sha256:31f6d0349dd3516cd65e3e6aa631c3f908a1413807566dc31d69cf32af102eb0
 receipts:
   unresolved_subitems: []
