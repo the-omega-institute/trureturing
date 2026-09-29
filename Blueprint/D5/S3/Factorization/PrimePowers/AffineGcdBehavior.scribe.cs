@@ -77,7 +77,27 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
                             + "every positive multiplier a and every signed translation p^e b. "
                             + "For low tags, below e the depth is r+v_p(a); after crossing e "
                             + "the multiplied residues agree modulo p^h. Deep tags already "
-                            + "retain the full source residue. No converse is asserted here."))),
+                            + "retain the full source residue."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("local-encoding-complete"),
+                DeclarationHandle.Create(Prefix + "local_encoding_complete"),
+                H("The local code is exactly the affine response quotient"),
+                StatementSource.FromAuthor(CompleteFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every signed pair of sources, equality of the computed tagged "
+                            + "local codes is equivalent to equality of every response depth "
+                            + "under every positive multiplier and every signed p^e translation. "
+                            + "The reverse implication separates unequal depths, distinct low "
+                            + "unit coordinates, distinct deep coordinates, and mixed tags by "
+                            + "one explicitly constructed response.")),
+                    Paragraph(Text(
+                        "Every LocalCode is represented by an integer source. The construction "
+                            + "uses an exact p^e multiple for deep tags, and a p^r times a unit "
+                            + "representative for low tags; when M is one the unique unit class "
+                            + "is handled directly. Zero and saturation are included."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
@@ -185,4 +205,32 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
             Par(hypotheses), Sp, Rightarrow, Sp,
             Par(Seq(representatives, Sp, Land, Sp, responses)))))));
     }
+
+    private static Formula CompleteFormula()
+    {
+        Formula p = F.Id("p"), h = F.Id("h"), e = F.Id("e");
+        Formula bigX = F.Id("X"), bigY = F.Id("Y"), a = F.Id("a"), b = F.Id("b");
+        Formula m = Seq(p, Caret, Grp(Seq(h, Minus, e)));
+        Formula ph = Seq(p, Caret, Grp(h)), pe = Seq(p, Caret, Grp(e));
+        Formula modH = Call("ZMod", ph), localCode = Call("LocalCode", p, h, e);
+        Formula source(Formula x) => Call("residue", ph, x);
+        Formula code(Formula x) => Call("localEncoding", p, h, e, source(x));
+        Formula response(Formula x) => Call("depth", p, h, D(0),
+            source(Seq(a, Sp, Times, Sp, x, Sp, Plus, Sp, pe, Sp, Times, Sp, b)));
+        Formula positive = Positive();
+        Formula responseEquality = All(bigX, Int(), All(bigY, Int(), IffFormula(
+            Seq(code(bigX), Sp, Eq, Sp, code(bigY)),
+            All(a, positive, All(b, Int(), Seq(response(bigX), Sp, Eq, Sp, response(bigY)))))));
+        Formula realization = All(F.Id("c"), localCode, Seq(
+            Exists, Sp, bigX, Sp, InMacro, Sp, Int(), Comma, Sp,
+            Seq(code(bigX), Sp, Eq, Sp, F.Id("c"))));
+        Formula hypotheses = Seq(Call("Prime", p), Sp, Land, Sp,
+            D(1), Sp, Le, Sp, h, Sp, Land, Sp, e, Sp, Le, Sp, h);
+        return Disp(All(p, Nat(), All(h, Nat(), All(e, Nat(), Seq(
+            Par(hypotheses), Sp, Rightarrow, Sp,
+            Par(Seq(responseEquality, Sp, Land, Sp, realization)))))));
+    }
+
+    private static Formula IffFormula(Formula left, Formula right) =>
+        new Formula.Logic(Par(left), FormulaLogicOperator.Iff, Par(right));
 }
