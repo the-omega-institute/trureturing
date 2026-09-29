@@ -5,5 +5,7 @@ cas_ref: sha256:192157d4c9203cc22775c78b79962a433ff4e7f063e4aaa70d0b474e000b7701
 coverage_gids:
   - gid: D5/S3/Arith/Congruence/PrimePowerAffineBehavior.local_classification
     target_statement_id: sha256:e3a8a66631d552a4404de5a1a06fb0292379bd24d39ae1c1bfafe091d5f9e995
+  - gid: D5/S3/Factorization/PrimePowers/AffineGcdBehavior.local_encoding_complete
+    target_statement_id: sha256:70bbf4443a2222d3fc89f5d8140b923d75e860d983ace942a46ed381c6105237
 receipts:
   unresolved_subitems: []
