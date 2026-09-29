@@ -66,8 +66,8 @@ lattice, sector, and degree conditions; its `result` proves `¬ claim` from the
 `k=1` one-neighbor contradiction. The five named public theorems have scoped
 Lean builds and accepted axiom-closure checks recorded in
 [#11275](https://github.com/the-omega-institute/trureturing/issues/11275).
-Freeze, successful Scribe emission, and required CI remain pending; the scoped
-checks do not establish those integration states.
+The module is frozen, Scribe emission succeeds, and local push preflight is
+green; required remote CI is evaluated on the delivery PR.
 
 ## Triage
 
