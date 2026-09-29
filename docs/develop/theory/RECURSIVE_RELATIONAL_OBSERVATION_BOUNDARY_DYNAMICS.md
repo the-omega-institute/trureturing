@@ -17172,3 +17172,190 @@ $$
 因此，Fibonacci 的二维组成边界只在加性数量任务中满足（85.1）；一旦加入括号、来源、权限、失败或时钟字段，必须把相应字段并入 $\eta_\Sigma$，或改用完整行为商。这里的“两个通道”是一个可验证的任务合同，不是所有过程的固定边界容量。
 
 ## 85.99 追加锚
+
+## 86. 观察标签投影后的精确纤维聚合判据
+
+第85节的式(85.1)逐个保留内部标签 $z$，而式(85.2)的最终输出已经对 $z$ 求和。这两种任务有不同的必要条件。本节保留第85节的充分方向，并限定其“条件失败则不存在边界核”的反向断言：只有对合同实际保留的标签比较聚合行，才能得到充要条件。对于全部点输入都可用的有限有单位半环模型，边界核的系数也由这些点输入唯一确定，不需要消去律。
+
+### 定义 86.1（同源联合核与保留标签）
+
+固定有限非空集合 $S,S',Z,Y$，以及有单位半环 $(K,+,\cdot,0,1)$。加法交换，乘法不要求交换；以下乘积始终保持“输入权重在左、核权重在右”的顺序。给定摘要映射，并将它们的陪域限制到实际像：
+
+$$
+q:S\longrightarrow B=q[S],\qquad
+q':S'\longrightarrow B'=q'[S'].
+$$
+
+给定同一实际来源的一步联合核 $W:S\times Z\times S'\to K$，以及合同声明的保留标签投影 $\pi:Z\to Y$。不要求 $\pi$ 满射，未实现标签的求和为零。$W$ 同时指定标签与后继的权重，不能由分别取得的标签边缘和后继边缘任意拼接；一般半环下也不假定概率归一化。
+
+对任意输入 $H:S\to K$，定义
+
+$$
+\begin{aligned}
+A_\pi(s,y,b')
+&=\sum_{\substack{z\in Z\\\pi(z)=y}}
+  \sum_{\substack{s'\in S'\\q'(s')=b'}}W(s,z,s'),\\
+(P_qH)(b)&=\sum_{\substack{s\in S\\q(s)=b}}H(s),\\
+G_\pi(H)(y,b')&=\sum_{s\in S}H(s)A_\pi(s,y,b').
+\end{aligned}
+\tag{86.1}
+$$
+
+$G_\pi$ 的输出保留 $y$ 与 $b'$ 的联合权重。$\pi=\operatorname{id}_Z$ 是逐标签保留的合同；$Y=\{\ast\}$、$\pi(z)=\ast$ 是完全收缩标签的合同。其余投影给出部分保留的任务，不在推导中暗自改变。
+
+### 定理 86.2（精确聚合的充要条件与唯一核）
+
+在定义86.1的条件下，存在唯一函数 $L_\pi:B\times Y\times B'\to K$，使
+
+$$
+G_\pi(H)(y,b')
+=\sum_{b\in B}(P_qH)(b)L_\pi(b,y,b')
+\quad\text{对所有 }H:S\to K,\ y\in Y,\ b'\in B',
+\tag{86.2}
+$$
+
+当且仅当
+
+$$
+q(s)=q(t)\quad\Longrightarrow\quad
+A_\pi(s,y,b')=A_\pi(t,y,b')
+\quad\text{对所有 }s,t\in S,\ y\in Y,\ b'\in B'.
+\tag{86.3}
+$$
+
+此时唯一核由实际来源确定：
+
+$$
+L_\pi(q(s),y,b')=A_\pi(s,y,b').
+\tag{86.4}
+$$
+
+证明。若(86.3)成立，对每个 $b\in B$ 选取 $q(s_b)=b$，令 $L_\pi(b,y,b')=A_\pi(s_b,y,b')$。纤维常值保证与代表选择无关。对有限和按 $q$ 纤维分组并用分配律，得到
+
+$$
+\begin{aligned}
+\sum_{s\in S}H(s)A_\pi(s,y,b')
+&=\sum_{b\in B}\sum_{q(s)=b}H(s)L_\pi(b,y,b')\\
+&=\sum_{b\in B}\left(\sum_{q(s)=b}H(s)\right)L_\pi(b,y,b').
+\end{aligned}
+$$
+
+反过来，设某个 $L_\pi$ 对全部输入满足(86.2)。对任意 $s\in S$，取点输入 $\delta_s(s)=1$，其余位置为 $0$。则 $P_q\delta_s$ 在 $q(s)$ 处为 $1$，其余为 $0$；代入(86.2)即得(86.4)。若 $q(s)=q(t)$，右侧核值相同，故(86.3)成立。又因每个 $b\in B$ 都有实际代表，(86.4)决定 $L_\pi$ 的全部系数，因此唯一。证明没有相减、约分或消去；即使不另设 $0\ne1$，同一论证也成立。证毕。
+
+取 $\pi=\operatorname{id}_Z$，(86.3)就是式(85.1)的逐标签条件，因而它对这个合同既充分又必要。取常值 $\pi$，精确的必要条件只比较 $\sum_z\sum_{q'(s')=b'}W(s,z,s')$；式(85.1)仍充分，却不再必要。任意指定投影的充要条件都是对应的(86.3)，不能把未经投影的式(85.1)作为全部合同的必要条件。
+
+同样，在本节的有限、有单位、全输入条件下，第85.2节关于“非消去半环可能有不同系数给出同一线性作用”的附注不适用：点输入已经逐项分离系数。若把 $B$ 扩成含未实现值的陪域，或把允许输入限制到不足以提供这些点探针的族，则本证明的唯一性或必要性步骤不再自动成立；那是另一份合同。
+
+### 命题 86.3（共同画像、记忆与实际像恢复）
+
+定义当前切面与一步响应的联合画像
+
+$$
+\sigma_\pi:S\longrightarrow B\times K^{Y\times B'},\qquad
+\sigma_\pi(s)=\bigl(q(s),A_\pi(s,-,-)\bigr),
+\qquad Q_\pi=\sigma_\pi[S].
+\tag{86.5}
+$$
+
+对任意映射 $f$，记 $\ker(f)=\{(s,t):f(s)=f(t)\}$。给定同一来源上的记忆 $m:S\to M$，存在唯一解码器 $d:m[S]\to Q_\pi$ 满足
+
+$$
+d(m(s))=\sigma_\pi(s)\quad(s\in S)
+\quad\Longleftrightarrow\quad
+\ker(m)\subseteq\ker(\sigma_\pi),
+\tag{86.6}
+$$
+
+其中左侧的量词是“存在唯一这样的 $d$”。该解码器存在时自动满射；它是双射，当且仅当
+
+$$
+\ker(m)=\ker(\sigma_\pi).
+\tag{86.7}
+$$
+
+证明。解码器存在时，$m(s)=m(t)$ 必推出 $\sigma_\pi(s)=\sigma_\pi(t)$。核包含成立时，以 $d(m(s)):=\sigma_\pi(s)$ 定义；包含关系保证代表无关，定义域的每一点均为实际记忆，故唯一；目标的每一点也有实际来源，故满射。若两核相等，则相同画像必有相同记忆，故 $d$ 单射；若 $d$ 单射，则 $\sigma_\pi(s)=\sigma_\pi(t)$ 迫使 $m(s)=m(t)$，给出反向包含。证毕。
+
+因此，$\sigma_\pi$ 是同时保留当前 $q$ 与全部指定一步响应行的最粗摘要，最小性按核包含比较、唯一性限于实际像重命名。定理86.2恰对应 $\ker(q)=\ker(\sigma_\pi)$：原边界已足够时，画像没有增加状态类；不足时，画像指出必须区分的来源对。若目标根本不要求恢复当前 $q$，单独的响应行可能允许更粗摘要，不能沿用这里的最小性称号。
+
+同一来源上的空间、时间、边界或记忆读数 $e_i:S\to E_i$，只有在各自满足 $\ker(e_i)=\ker(\sigma_\pi)$ 时，才都通过 $Q_\pi$ 在实际像上互为坐标。仅有 $\ker(e_i)\subseteq\ker(\sigma_\pi)$ 只保证单向恢复共同画像，读数可能还携带额外信息。这里恢复的是指定画像，既不恢复未记录的原始状态，也不从一步权重推出已发生路径或实际累计时钟。
+
+### 命题 86.4（标签的再投影与画像关系的复合）
+
+固定同一 $S,S',q,q',W$，取有限非空标签集 $Y_1,Y_2$ 及映射 $\pi_1:Z\to Y_1$、$r:Y_1\to Y_2$，令 $\pi_2=r\circ\pi_1$。定义画像上的标签合并映射
+
+$$
+\begin{aligned}
+C_r:B\times K^{Y_1\times B'}&\longrightarrow B\times K^{Y_2\times B'},\\
+C_r(b,a)&=(b,r_\ast a),\\
+(r_\ast a)(y_2,b')&=\sum_{\substack{y_1\in Y_1\\r(y_1)=y_2}}a(y_1,b').
+\end{aligned}
+\tag{86.8}
+$$
+
+有限纤维分组给出
+
+$$
+A_{\pi_2}(s,y_2,b')
+=\sum_{r(y_1)=y_2}A_{\pi_1}(s,y_1,b'),\qquad
+\sigma_{\pi_2}=C_r\circ\sigma_{\pi_1},\qquad
+\ker(\sigma_{\pi_1})\subseteq\ker(\sigma_{\pi_2}).
+\tag{86.9}
+$$
+
+$C_r$ 限制为满射 $Q_{\pi_1}\to Q_{\pi_2}$。存在实际像上的解码器 $D:Q_{\pi_2}\to Q_{\pi_1}$，使 $D(\sigma_{\pi_2}(s))=\sigma_{\pi_1}(s)$ 对所有 $s$ 成立，当且仅当 $C_r|_{Q_{\pi_1}}$ 单射；也等价于(86.9)中的两个核相等。这一解码器存在时唯一且为该限制映射的逆。
+
+证明。$\pi_2^{-1}(y_2)$ 是各 $\pi_1^{-1}(y_1)$ 在 $r(y_1)=y_2$ 上的不交并，得到(86.9)。若 $C_r$ 把两个实际画像合成同一点，任何 $D$ 都无法同时恢复两者；若限制映射单射，它已满射，故有唯一逆。再取 $r_2:Y_2\to Y_3$，重复分组得到 $C_{r_2\circ r}=C_{r_2}\circ C_r$，而恒等标签映射给恒等画像映射。证毕。
+
+这给出了“观察关系之间的关系”的具体结构：继续投影只会合并画像类，复合由有限和承担；是否可逆看实际实现的画像集合，而非要求 $r$ 全局单射，也非要求整个函数空间上的 $C_r$ 单射。细标签合同满足(86.3)时，粗标签合同也满足它，且粗核由细核按 $r$ 求和得到；反向一般不成立。
+
+### 反例 86.5（有序二叶的隐藏标记与声明记录）
+
+取 $K=\mathbb Q_{\ge0}$，以及同一有限实际来源
+
+$$
+\begin{gathered}
+S=\{u,v\},\qquad u=\langle\alpha,\beta\rangle,\quad
+v=\langle\beta,\alpha\rangle,\qquad q(u)=q(v)=(1,1),\\
+S'=\{r\},\qquad q'(r)=(1,0),\qquad Z=\{0,1\},\\
+W(u,0,r)=1,\quad W(u,1,r)=0,\quad
+W(v,0,r)=0,\quad W(v,1,r)=1.
+\end{gathered}
+\tag{86.10}
+$$
+
+这里 $r$ 是本例的后继状态符号，与命题86.4的标签合并函数无关。这个核由同一个确定性规则给出：$u$ 产生标签 $0$，$v$ 产生标签 $1$，两者都到达 $r$；每一来源行总质量都是 $1$。这是有序二叶项上的声明过程，不声称它就是 Fibonacci 替换本身。
+
+令 $\pi_{\mathrm c}:Z\to\{\ast\}$ 为常值映射，则
+
+$$
+\begin{aligned}
+A_{\pi_{\mathrm c}}(u,\ast,(1,0))
+&=A_{\pi_{\mathrm c}}(v,\ast,(1,0))=1,\\
+G_{\pi_{\mathrm c}}(H)(\ast,(1,0))&=H(u)+H(v).
+\end{aligned}
+\tag{86.11}
+$$
+
+所以只有一个来源边界值的精确核 $L_{\pi_{\mathrm c}}((1,1),\ast,(1,0))=1$ 对所有输入都成立。然而逐标签行分别是
+
+$$
+\bigl(A_{\operatorname{id}}(u,0,(1,0)),A_{\operatorname{id}}(u,1,(1,0))\bigr)=(1,0),\qquad
+\bigl(A_{\operatorname{id}}(v,0,(1,0)),A_{\operatorname{id}}(v,1,(1,0))\bigr)=(0,1).
+\tag{86.12}
+$$
+
+这直接使式(85.1)失败，却没有破坏完全收缩标签后的(86.11)。相反，逐标签合同下 $G_{\operatorname{id}}(H)$ 的两坐标就是 $(H(u),H(v))$；点输入 $\delta_u,\delta_v$ 具有相同 $P_qH$，却给不同联合响应，故不存在仅由原边界聚合得到的逐标签核。于是 $|Q_{\pi_{\mathrm c}}|=1$、$|Q_{\operatorname{id}}|=2$，从两个实际画像到一个画像的 $C_r$ 不单射。
+
+若 $z$ 只是合同明确隐藏的内部标记，(86.11)已经完成本例的声明任务。若 $z$ 被声明为记录、时钟增量，或某个保留字段需要由它确定，则必须保留足以确定该字段的投影并重查(86.3)；本例对两个不同标签至少需要两个来源画像类。保留标签的权重律仍不等于观察者已取得本次标签；本例的确定性使来源画像决定标签，随机模型中的一般画像只决定分支权重。物理时长、取得过程和累计存储仍需各自的合同。
+
+### 86.6 来源、后续切面与适用边界
+
+本节是仓内结果的具体综合及第85节必要条件的修正，不主张新的通用商定理或经文献检索确认的原创结果。[Process Geometry 第29节、命题31.20及第52节](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)分别提供联合标签核、不可读标签先求和与细标签额外条件、生成解释像和共同商的背景；[Fibonacci 第109—113节](FIBONACCI_ATOMIC_RELATION_GENERATION.md)限定生成叶子、组成摘要、允许操作和行为类的区别；[Joint Clocks 第31—32节](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md)限定时钟载体、实际纯轨道与四表达互恢复。式(86.10)保留有序配对差别，不能据两个生成叶子推出所有任务只有两个行为类。
+
+既有形式化锚仅作范围明确的引用：[EffectiveImageKernelCriterion.refinement_iff_kernel_inclusion_on_effective_images](../../../D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean)对应命题86.3的实际像因子化；[DynamicsDescent.dynamics_descends_iff](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean)处理满射摘要下的确定性自映射下降；[DynamicClosureMinimality.dynamic_closure_is_least](../../../D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean)要求候选细化对声明干预闭合；[ControlledBehaviorUniversality.controlled_behavior_universal_property](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean)要求有限实现、满射及更新和读出交换。这些引用不表示本节的半环加权实例、反例或全部解释已被 Lean 核验。
+
+全部结论限于有限和、同源联合核、固定 $q,q'$ 与明确的 $\pi$。必要性使用任意细点输入；仅在一份固定初始分布或受限准备族上恰好正确，不能推出(86.3)。无限载体需要另给求和存在与分组合法性的条件。这里的 $\sigma_\pi$ 只为当前一步和指定目标切面最小；把目标摘要换成下一步所需的更细画像后，原条件可能失效。未来接续必须对每个声明动作及每个切面重新检查联合核、合法性、失败、记录、时钟及选择器的保持；需要完整未来行为时，还须相应的动态闭包条件。
+
+恢复定理只谈实际像上的函数存在与唯一，不保证解码可计算、已取得、可在预算内实施，也不赋予任意拼接来源或旁支的权限。共同画像足以支持这一项声明任务，并不把一般空间、物理时间、边界与记忆无条件等同。本节只追加理论正文，未进行 Lean 编译或内核验证，也未进行消化结算。
+
+## 86.99 追加锚
