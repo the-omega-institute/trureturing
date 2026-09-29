@@ -38,7 +38,7 @@ to rule out Hamiltonian cycles in the flip graph of acyclic orientations.
 
 Issue #11156 preregisters the proof route and the literature check. The paper
 has two versions and reports no change to Conjecture 1. Savage, Squire and West
-(1993) proved the bipartite case ψ(K_{m,n}) ≡ 2 (mod 4) and state nothing for
+(1993) proved the bipartite case ψ(K_{m,n}) ≡ 2 (mod 4) for m, n ≥ 2 and state nothing for
 tripartite graphs. Carballosa et al. (arXiv:2303.09021) give counting formulas
 for complete multipartite graphs without any statement modulo 4.
 `not-found-in-searched-scope`.
@@ -69,14 +69,18 @@ none.
 
 The canonical source is
 `D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations.lean`. Its public
-declarations are `IsOrientation`, `IsAcyclic`, `acyclicOrientationCount`,
+declarations are `IsOrientation`, `acyclicOrientationCount`,
 `claim`, and `result`. The frozen module state has statement identity
-`sha256:d805770b745dcab8d954b1ca08fe975cd968ead0569d8ab7b20158e905161a84`.
+`sha256:af776b188065e23abe737b95da0837324443594c639560790494e0cba8e537af`.
 The result declaration has statement identity
 `sha256:0e8d62573fd046d5d880b9e6ce19654ad753ee806301b7f477de12ac86099d8f`.
 The Freeze event is
-`sha256:4f4652031ffdef0c4ec6a9a02f0dbecc85cd79fd598aafd94d20285859bc5f8a`.
-It has no project-level frozen prerequisite. The proof uses only the standard
+`sha256:f862a64a40c4f2efbf50e46673238154c01217f9051f315cc8bab121fee362cc`.
+Its frozen prerequisites are the acyclicity predicate
+`D5/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder.AcyclicEdge`
+and the criterion
+`D5/S3/ConceptDynamics/DagSemantics/StrictDependencyCoordinate.acyclic_of_strictCoordinate`,
+both reused directly. The proof uses only the standard
 axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
 
