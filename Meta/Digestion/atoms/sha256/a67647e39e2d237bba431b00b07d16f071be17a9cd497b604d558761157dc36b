@@ -1,0 +1,44 @@
+### 22.10 定理：固定相位连续性的完整判据
+
+固定 $0<r<1$、$0<\alpha<1$ 和任意实相位 $x$。则
+\[
+\boxed{\beta\longmapsto G_r(\beta,x)\text{ 在 }\alpha\text{ 连续}
+\iff \forall k\geq1,\quad x+k\alpha\notin\mathbb Z.}
+\tag{22.17}
+\]
+若 $x+k\alpha=z\in\mathbb Z$，其中 $k\geq1$，则对每个 $0\leq\beta<\alpha$ 都有
+\[
+\boxed{G_r(\alpha,x)-G_r(\beta,x)\geq(1-r)^2r^{k-1}>0.}
+\tag{22.18}
+\]
+这里连续性使用完整的实数邻域；由于 $\alpha$ 是内部点，可把邻域限制在 $(0,1)$。$r=0$ 被明确排除，因为它只保留第一位，后续累计整数命中未必影响数值。
+
+**无整数命中时的证明。** 对给定 $N$，每个 $x+k\alpha$，$1\leq k\leq N$，到相邻整数的距离均为正。令
+\[
+d_N=\frac12\min\left(\{\alpha,1-\alpha\}\cup
+\left\{\frac{\min(\{x+k\alpha\},1-\{x+k\alpha\})}{k}:1\leq k\leq N\right\}\right)>0.
+\]
+$N=0$ 时内侧集合为空。若 $|\beta-\alpha|<d_N$，则 $\beta\in(0,1)$，前 $N$ 个累计取整完全相同，故 $P_{r,N}(\beta,x)=P_{r,N}(\alpha,x)$。两个尾部都位于 $[0,r^N]$，因此
+\[
+|G_r(\beta,x)-G_r(\alpha,x)|\leq r^N.
+\]
+给定正误差，取足够大的 $N$ 使 $r^N$ 小于它，便得到连续性。
+
+**整数命中时的证明。** 令
+\[
+D_j=\lfloor x+j\alpha\rfloor-\lfloor x+j\beta\rfloor\geq0,\qquad D_0=0.
+\]
+对任意 $N$，实际读出满足有限恒等式
+\[
+P_{r,N}(\alpha,x)-P_{r,N}(\beta,x)
+=q_ND_N+\sum_{j=0}^{N-1}(q_j-q_{j+1})D_{j+1}.
+\tag{22.19}
+\]
+它由展开相邻取整差后逐项抵消得到，也可按 $N$ 归纳。若在时间 $k$ 命中整数，则每个较小参数都有 $D_k\geq1$。因为
+\[
+q_j-q_{j+1}=(1-r)^2r^j>0,
+\]
+对 $N\geq k$，式 (22.19) 的右端至少为 $(1-r)^2r^{k-1}$。让 $N$ 增大，并使用式 (22.14)，该下界保留到完成读出，得到式 (22.18)。任意邻域中都能选择 $\beta<\alpha$，所以连续性不成立。这一论证处理了实际相邻 bit 的正负变化，未假设数值跳变不会抵消。
+
+`geometric_readout_continuity_and_jump` 同时承载式 (22.17) 的显式 $\varepsilon$-$\delta$ 形式与式 (22.18)。证明中的正前缀半径和无限下界均由真实取整计算导出。
+

@@ -1,0 +1,62 @@
+**定义 39.1（一个固定非格点幅度与聚簇序列）。** 令
+
+```math
+A_1=1,\quad A_{j+1}=10^{5A_j},\quad
+Q_j=10^{A_j},\quad P_j=\sum_{h=1}^j10^{A_j-A_h},\quad
+\alpha=\sum_{h=1}^{\infty}10^{-A_h}.
+```
+
+式 (39.1)。
+
+固定一个满足 $`\log(1+r)/[-\log(1-r)]=\alpha`$ 的 $`r\in(0,1)`$，并记
+
+```math
+a=\frac{1+r}{2},\quad b=\frac{1-r}{2},\quad
+h=-\log(1-r),\quad \phi=a\log(1+r)+b\log(1-r),\quad
+D=b+a\alpha^2,\quad \kappa=\frac1a+\frac{\alpha^2}{b}.
+```
+
+式 (39.2)。
+
+固定 $`\beta\in(1/2,1)`$。以下省略序列下标 $`j`$，取
+
+```math
+\lambda=Q^3,\quad N=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,
+\quad M=2^N,\quad
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+\quad q=\lfloor M e^{-z_0}\rfloor,\quad
+\tau=\log(M/q),\quad \mathsf T=2M\lambda.
+```
+
+式 (39.3)。
+
+使用定义 27.1 的两个实际平稳实验、完整数据和优先级，以及均匀固定基数先验。
+补偿参数记为 $`\epsilon=rq/(M-q)`$，避免与 (39.2) 的 $`a`$ 混淆。
+正确对齐的一行得分、微观窗口和计数直线为
+
+```math
+W(k,l)=k\log\frac{1+r}{1-\epsilon}
+       +l\log\frac{1-r}{1+\epsilon},\qquad
+w=\sqrt{\lambda/q},\qquad J=\{i:\tau-w\lt W_i\le\tau+w\},
+\qquad
+\mathcal L=\{(k_0+tQ,l_0+tP):t\in\mathbb Z,\ k_0+tQ\ge0,\ l_0+tP\ge0\}.
+```
+
+式 (39.4)。
+
+$`\pi_i`$ 为精确后验包含概率，$`p_i`$ 为第 35 章的校准独立参数。
+定义新的噪声归一化和右连续过程
+
+```math
+B=\sqrt{\frac{q}{Q\sqrt\lambda}},\qquad
+\gamma=\frac1{2\sqrt{2\pi}\sqrt D},\qquad
+Y=\frac1B\sum_{i\in J}(\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+F(u)=\frac1B\sum_{\tau-w\lt W_i\le\tau+uw}
+                 (\mathbf1_{\{i\in S\}}-\pi_i),\quad -1\le u\le1.
+```
+
+式 (39.5)。
+
+未知方向时，仍先作同一次方向判决，再在工作正向数据上计算得分与正向模型权重。
+

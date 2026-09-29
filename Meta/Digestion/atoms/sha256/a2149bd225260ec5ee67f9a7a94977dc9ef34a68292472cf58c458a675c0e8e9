@@ -1,0 +1,25 @@
+**定理166.3（真实经验律的启动误差耦合）。** 对每个 $q,r$，存在
+$\mu_{q,r}$ 与 $\nu_\Delta$ 的耦合 $\pi_{q,r}$，满足
+
+$$
+\pi_{q,r}\{(x,y):|x-y|\le b\}=1.
+\tag{166.17}
+$$
+
+等价地，以
+
+$$
+W_\infty(\mu,\nu)
+=\inf_{\pi\in\Pi(\mu,\nu)}
+\operatorname*{ess\,sup}_{(x,y)\sim\pi}|x-y|
+$$
+
+记最大位移耦合距离，则
+
+$$
+\boxed{
+W_\infty(\mu_{q,r},\nu_\Delta)\le b.
+}
+\tag{166.18}
+$$
+

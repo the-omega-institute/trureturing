@@ -1,0 +1,9 @@
+**命题 10.5（路径平均可完全消差而具体编码仍二对一）。** 取单顶点双环基图 G_0=[2]，Q={0,1}，两条边对应 lambda_a=id、lambda_b=(0 1)。则
+
+$$
+C=\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+T_a|_D=1,\qquad T_b|_D=-1,\qquad (T_a+T_b)|_D=0.
+$$
+
+没有任何有限逐路径遗忘长度，pi 恰二对一，但 C 与 [2] 本身一步 SSE。
+

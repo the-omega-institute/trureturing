@@ -1,0 +1,22 @@
+### 57.5 与等距反例的对应
+
+对早期边缘
+
+$$
+M_\varepsilon=|0,0\rangle\langle0,0|
++(1-\varepsilon)|1,0\rangle\langle1,0|
++\varepsilon|1,1\rangle\langle1,1|,
+\qquad0<\varepsilon\le1/4,
+$$
+
+其秩为三。向量
+
+$$
+|0,0,0\rangle+\sqrt{1-\varepsilon}|1,0,1\rangle
++\sqrt\varepsilon|1,1,2\rangle
+$$
+
+就是式（57.5）的最小纯化。因此第 55 节的纯等距反例在固定 $M_\varepsilon$ 的全部有限末输出扩展中达到最大修复困难。末端基退相干保持同一 $M_\varepsilon$，且具有已证的最优修复误差 $\varepsilon$；这与式（57.8）的收缩方向一致。
+
+这里的“最大”只在固定 $M$、固定早期/晚输入端口和同一完整 tester 合同下比较扩展，不外推为只固定数值 $\delta$ 的所有边缘之间的最大值。
+

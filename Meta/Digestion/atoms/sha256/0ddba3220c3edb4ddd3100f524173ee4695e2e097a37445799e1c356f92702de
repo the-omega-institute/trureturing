@@ -1,0 +1,66 @@
+### 239.5 同一候选的无参考误差
+
+对任意密度输入 $\rho$，令 $p_j=\operatorname{Tr}(E_j\rho)$。目标与候选在第 $j$ 个记录块中都沿同一个 $P_j$ 输出，且不同记录块正交，所以
+$$
+\frac12\|\mathcal R(\rho)-\mathcal S^{\triangle}(\rho)\|_1
+=\frac12\sum_{j=1}^N|p_j-1/N|.
+\tag{239.26}
+$$
+归一化概率分布的总变差等于其在任意标签子集上的最大正概率差。交换有限个子集的最大值与密度矩阵的最大值，得到
+$$
+U(\mathcal S^{\triangle})
+=\max_{J\subseteq\{1,\ldots,N\}}
+\left[
+\lambda_{\max}\left(\sum_{j\in J}E_j\right)-\frac{|J|}{N}
+\right].
+\tag{239.27}
+$$
+空集给零。向 $J$ 中加入零效应标签不改变算子和，却减少方括号中的值，故只需考虑 $d+1$ 个活跃标签的子集。
+
+设活跃子集大小为 $k\ge1$。对应列向量 $v_j=P_Ve_j$ 的 Gram 矩阵为
+$$
+G_k=I_k-\frac1{d+1}\mathbf1_k\mathbf1_k^{\dagger}.
+\tag{239.28}
+$$
+它与输入效应和 $\sum_{j\in J}|v_j\rangle\langle v_j|$ 有相同非零谱，因为二者分别是同一列矩阵的 $M^{\dagger}M$ 与 $MM^{\dagger}$。
+
+当 $k=1$ 时，最大本征值为 $d/(d+1)$，所以对应值为
+$$
+\frac d{d+1}-\frac1N
+\le1-\frac2N.
+\tag{239.29}
+$$
+该不等式恰等价于 $N\ge d+1$。
+
+当 $2\le k\le d+1$ 时，$G_k$ 在 $\mathbf1_k^\perp$ 上的本征值为一，在 $\mathbf1_k$ 方向的本征值为 $1-k/(d+1)\in[0,1)$。因此其最大本征值恰为一，对应值为
+$$
+1-\frac kN\le1-\frac2N,
+\tag{239.30}
+$$
+且 $k=2$ 时达到等号。于是
+$$
+\boxed{U(\mathcal S^{\triangle})=1-2/N.}
+\tag{239.31}
+$$
+
+实际达到输入也可明确写出。任选两个不同的活跃标签 $a,b$，取
+$$
+g_{ab}=\frac{e_a-e_b}{\sqrt2}\in V.
+\tag{239.32}
+$$
+它是原输入空间中的单位向量，没有参考。因为 $P_Vg_{ab}=g_{ab}$，活跃标签的概率由相应坐标给出，非活跃标签的效应为零。因此对全部原标签有
+$$
+\langle g_{ab},E_jg_{ab}\rangle
+=\begin{cases}
+|\langle e_j,g_{ab}\rangle|^2,&1\le j\le d+1,\\
+0,&j>d+1
+\end{cases}
+=
+\begin{cases}
+1/2,&j=a\text{ 或 }j=b,\\
+0,&\text{其余标签}.
+\end{cases}
+\tag{239.33}
+$$
+故候选只在这两个标签上等概率输出，与原来全部 $N$ 标签均匀目标的总变差恰为 $1-2/N$。结合（239.14），这份实际候选同时证明了无参考最优值和（239.8）；再与（239.25）相减，得到（239.9），定理239.1得证。
+

@@ -1,0 +1,82 @@
+**定理 225.3（原参数区间内的精确最近通道）。**
+
+取 $0<\kappa<1/2$，令
+$$
+K_0=
+\begin{pmatrix}
+\sqrt{1-3\kappa/2}&0\\
+0&\sqrt{1-\kappa}\\
+0&0
+\end{pmatrix},
+$$
+$$
+\mathcal R(X)=
+|0\rangle\langle0|\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|\otimes\kappa\Gamma(X).
+\tag{225.CT.15}
+$$
+因为
+$$
+M^\dagger M+N^\dagger N=\operatorname{diag}(3/2,1),
+$$
+所以 $\mathcal R$ 为 CPTP，结果 Choi 秩恰为 $(1,2)$。
+
+令 $d_2$ 为它到全部同接口、保持两个经典标签、总 Choi 秩至多二的 CPTP 记录通道的完整半 diamond 距离下确界：
+$$
+d_2=
+\inf_{\substack{\mathcal S\ \mathrm{CPTP\ record}\\
+\operatorname{rank}J_{\mathcal S}\le2}}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+\tag{225.CT.16}
+$$
+此处“记录通道”指输出在指定经典标签上块对角，因此
+$$
+\operatorname{rank}J_{\mathcal S}
+=\operatorname{rank}J_{\mathcal S_0}
++\operatorname{rank}J_{\mathcal S_1}.
+\tag{225.CT.17}
+$$
+候选的结果0分支可以改变；只要求完整通道 CP、TP、同接口以及标签预算，没有把结果0分支从距离中删除。
+
+**精确结论。**
+$$
+\boxed{d_2=\kappa.}
+\tag{225.CT.18}
+$$
+证明下界。若竞争者的结果1分支秩至多一，则（225.CT.10）、（225.CT.14）应用于缩放分支 $\kappa\Gamma$，由（225.CT.4）得到距离至少为 $\kappa$。这一步覆盖任意 $3\times2$ Kraus $C_1$，不要求 $C_1\in\operatorname{span}\{M,N\}$，也不限制它和结果0分支之间如何共同满足 TP。
+
+若竞争者的结果1分支秩为二，则（225.CT.17）迫使它的结果0分支为零。在输入 $P_{f_1}$ 下，目标的结果0概率为
+$$
+\langle f_1,K_0^\dagger K_0f_1\rangle=1-\kappa>\kappa,
+$$
+竞争者为零，故完整半 diamond 距离至少为 $1-\kappa>\kappa$。两类穷尽总 Choi 秩至多二的候选，得到 $d_2\ge\kappa$。
+
+证明上界。删除结果1的 $\sqrt\kappa M$，保留 $K_0,\sqrt\kappa N$，取
+$$
+H=(I_2-\kappa M^\dagger M)^{-1/2}
+=\operatorname{diag}((1-\kappa)^{-1/2},1).
+$$
+定义
+$$
+\mathcal S(X)=
+|0\rangle\langle0|\otimes K_0HXHK_0^\dagger
++
+|1\rangle\langle1|\otimes\kappa NHXHN^\dagger.
+\tag{225.CT.19}
+$$
+每个结果分支恰有一个非零 Kraus，而
+$$
+H(K_0^\dagger K_0+\kappa N^\dagger N)H
+=H(I_2-\kappa M^\dagger M)H=I_2,
+$$
+所以这是合法结果秩 $(1,1)$ 的 CPTP 记录通道。
+
+使用第 219 节已证明的全缺失范数右 Gram 修复定理：若从 CPTP 通道删除完全正项 $L$，且 $\delta=\|L^*(I)\|_\infty<1$，则对保留项共同右乘 $(I-L^*(I))^{-1/2}$ 得到的 CPTP 修复通道满足完整半 diamond 误差不超过 $\delta$。这里
+$$
+L(X)=|1\rangle\langle1|\otimes\kappa MXM^\dagger,
+\qquad
+\delta=\kappa,
+$$
+故（225.CT.19）的完整半 diamond 误差至多为 $\kappa$。结合下界即得（225.CT.18），且下确界由显式候选取得。定理 224.5 的全部旋转规范修复结论进一步表明，每个旋转删除加共同右修复候选都同样达到这一全局最优值。证毕。
+

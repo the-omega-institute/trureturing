@@ -1,0 +1,33 @@
+### 253.3 任意联合输出测量的副本数下界
+
+等先验 Holevo–Helstrom 公式给
+$$
+P_{\mathrm{succ}}^{\mathrm{opt}}(n)
+=\frac12+\frac14
+\|\sigma_z^{\otimes n}-\sigma_0^{\otimes n}\|_1.
+\tag{253.14}
+$$
+任意最终输出二元判决的处理都定义了可访问联合系统上的二元 POVM，因此该公式覆盖集体测量与自适应策略。若成功率至少为 $2/3$，必有
+$$
+\|\sigma_z^{\otimes n}-\sigma_0^{\otimes n}\|_1\ge\frac23.
+\tag{253.15}
+$$
+自然对数版本的 Pinsker 不等式及相对熵张量加性给
+$$
+\begin{aligned}
+\|\sigma_z^{\otimes n}-\sigma_0^{\otimes n}\|_1^2
+&\le2D_{\mathrm{nat}}(\sigma_z^{\otimes n}\|\sigma_0^{\otimes n})\\
+&=2nD_{\mathrm{nat}}(\sigma_z\|\sigma_0)\\
+&\le\frac{8nqA}{1-A}z^4.
+\end{aligned}
+\tag{253.16}
+$$
+结合（253.15），得到
+$$
+\boxed{
+N_{\mathrm{out}}(z)\ge\frac{1-A}{18qA\,z^4}.
+}
+\tag{253.17}
+$$
+下界已把完整参考与所有量子输出作为可访问系统；共同 Bell 输出块不会补回产品块未保留的一阶相干区别。
+

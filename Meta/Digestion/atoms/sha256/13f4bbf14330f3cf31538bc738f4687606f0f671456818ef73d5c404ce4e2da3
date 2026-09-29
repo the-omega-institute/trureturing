@@ -1,0 +1,40 @@
+### 232.6 预算 $2\le R\le N$：选择 $R$ 个秩一标签
+
+置 $M=R$，只在前 $M$ 个原标签上放置分支
+$$
+\mathcal S_j(X)=\frac2M\operatorname{Tr}(P_j^{(M)}X)P_j
+\quad(1\le j\le M),
+\qquad\mathcal S_j=0\quad(j>M).
+\tag{232.UC.24}
+$$
+上式中的 $P_j^{(M)}$ 作用于输入，$P_j$ 作用于输出。由（232.UC.23），总迹效应为
+$$
+\sum_{j=1}^M\frac2MP_j^{(M)}=I_2,
+$$
+故该候选为 CPTP。每个非零分支恰为秩一，显式 Kraus 为
+$$
+C_j=\sqrt{\frac2M}|r_j\rangle\langle\psi_j^{(M)}|.
+\tag{232.UC.25}
+$$
+标签块正交，故 $K(\mathcal S)=M=R$。
+
+定义共同 CP 部分
+$$
+\mathcal C=\frac M{2N}\mathcal S.
+\tag{232.UC.26}
+$$
+在活跃标签上，它的输入效应为 $P_j^{(M)}/N$，而目标效应为 $I_2/N$。由（232.UC.11），目标与 $\mathcal C$ 的分支差完全正；在缺失标签上该差就是目标分支。因此 $\mathcal R-\mathcal C$ 完全正。
+
+因为 $M\le N$，$0<M/(2N)\le1/2$，所以 $\mathcal S-\mathcal C=(1-M/(2N))\mathcal S$ 也完全正。并且
+$$
+\mathcal C^*(I)=\frac M{2N}I_2.
+\tag{232.UC.27}
+$$
+引理 232.2给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\le1-\frac M{2N}=1-\frac R{2N}.
+\tag{232.UC.28}
+$$
+结合统一下界（232.UC.18），首个预算区间得到精确等号。
+

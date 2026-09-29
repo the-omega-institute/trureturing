@@ -1,0 +1,4 @@
+**定义 366.1（项目来源与普通数学推导）。** 本批直接使用五个项目模块：`LinearPostprocessingDefectContraction` 给出集合距离的线性后处理界；`DiscussionCommonSourceUpperBound` 给出来源受限消息的联合上界；`ConceptJoinUniversal` 给出乘积读数的精化关系；`LosslessEncodingCriterion` 给出实现像上的单射判据；`JointLosslessCommunicationCriterion` 提供逐坐标通信及相关补偿的对应范围。正文分别写明此次应用所选对象，未把一般编码与逐坐标编码混为一类。
+
+跨度与一致对角线、正矩阵收敛、影响向量、双随机条件、误差分解、群体规模极限、完整历史、可逆差异分解和决策风险比较，属于既有线性代数、概率与信息结构的应用和综合。正文给出自己的假设与推导，不申报原创数学，也不声称这些新增文字全部已在所引源码中逐字形式化。本批为纯理论正文，没有进行 Lean 编译、公理闭包核验或理论消化；源码阅读不是这些验证的替代。
+

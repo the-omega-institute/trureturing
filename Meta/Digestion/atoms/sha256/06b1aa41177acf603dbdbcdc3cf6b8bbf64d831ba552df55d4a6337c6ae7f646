@@ -1,0 +1,9 @@
+**定义 10.1（纤维差空间与逐边算子）。** 沿用定义 2.3 的入边提升，基图此节记为 G_0，顶点集 V。令 q=|Q|、n=|V|，并在有理数域上定义
+
+$$
+D_v=\left\{\sum_{u\in Q_v}c_u e_u:\sum_{u\in Q_v}c_u=0\right\},\qquad
+D=\bigoplus_{v\in V}D_v,\qquad \dim D=q-n.
+$$
+
+对每条实际边 a:s(a)→t(a)，线性延拓 e_u↦e_{lambda_a(u)} 给出 L_a:D_{t(a)}→D_{s(a)}。将它在其他纤维分量上延拓为零，得 T_a:D→D。非相容边串的算子乘积为零；相容路径 alpha=a_1…a_j 对应 T_alpha=T_{a_1}…T_{a_j}。长度零时使用 D 上的恒等映射。
+

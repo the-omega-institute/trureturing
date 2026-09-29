@@ -1,0 +1,23 @@
+**命题 60.2（同一证书的参数区域）。** 若 $1/5<\varepsilon<2/5$ 且以下三个不等式成立：
+
+$$
+\begin{aligned}
+\frac3{20}
+&\ge\frac{\alpha(a,\varepsilon)^2}{1/5-\varepsilon/2}
++\frac{\beta(a,\varepsilon)^2}{\varepsilon-3/20},\\
+\frac{\varepsilon-3/20}{2}(\varepsilon-1/5)
+&\ge\alpha(a,\varepsilon)^2,\\
+\frac{\varepsilon+3/20}{2}(\varepsilon-3/40)
+&\ge\beta(a,\varepsilon)^2,
+\end{aligned}
+\tag{60.14}
+$$
+
+则同样有
+
+$$
+\min_{S'\text{ 因果}}D(R_{a,\varepsilon},S')
+=D(R_{a,\varepsilon},S)=\varepsilon.
+\tag{60.15}
+$$
+

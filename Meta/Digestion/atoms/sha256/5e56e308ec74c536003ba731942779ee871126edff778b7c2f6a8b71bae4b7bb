@@ -1,0 +1,39 @@
+#### 5.1.8 素数分辨率：纵向精度与横向互补是两种关系
+
+取素数 $p$，深度 $k\ge0$，实际整数读数为
+
+$$
+q_{p,k}:\mathbb Z\to\mathbb Z/p^k\mathbb Z,
+\qquad q_{p,k}(n)=n\bmod p^k.
+\tag{TM.338}
+$$
+
+固定 $p$ 增大深度时，旧读数由新读数约化得到：$q_{p,k}=\pi_{k,k+1}q_{p,k+1}$。相应核是差值属于 $p^k\mathbb Z$；它随 $k$ 递减。已经拥有深层读数时，附加旧浅层读数不再切开新的纤维。$k=0$ 的模数为一，读数恒定。
+
+不同素数的读数则是互补关系。若 $p\ne q$ 且 $k,\ell\ge1$，共同核为
+
+$$
+p^k\mathbb Z\cap q^\ell\mathbb Z=p^kq^\ell\mathbb Z,
+\qquad
+\mathbb Z/(p^kq^\ell)\mathbb Z
+\cong\mathbb Z/p^k\mathbb Z\times\mathbb Z/q^\ell\mathbb Z.
+\tag{TM.339}
+$$
+
+两个方向都严格增加相对单个读数的区分能力，例如 $0$ 与 $p^k$ 被第一个读数合并，却可由第二个分开。这个互补不是概率独立断言；尚未指定整数的概率律。
+
+对任意正模数，$n\bmod L$ 能由 $n\bmod L'$ 因子化的充要条件是 $L\mid L'$：核包含要求 $L'\mathbb Z\subseteq L\mathbb Z$，反向则用自然约化。数字大小 $L'>L$ 不足以构成细化；例如模 $5$ 与模 $6$ 的观察互不细化。$\log L$ 是 $L$ 个可能标签的最大编码容量；只有指定共同概率律后才有实际 Shannon 熵，且 $H(N\bmod L)\le\log L$，等号要求该余数均匀。它不是每次取得一份读数就自动增加的信息量。
+
+更一般地，正模数 $a,b$ 的实际联合像不是任意指定的乘积，而是
+
+$$
+\operatorname{im}(n\mapsto(n\bmod a,n\bmod b))
+=\{(u,v):u\equiv v\pmod{\gcd(a,b)}\}
+\cong\mathbb Z/\operatorname{lcm}(a,b)\mathbb Z.
+\tag{TM.340}
+$$
+
+必要性由同一个整数在公共模数下的约化得到。充分性可写得直接：令 $d=\gcd(a,b)$、$a=da'$、$b=db'$，选整数代表 $u,v$。若 $v-u=dc$，求 $n=u+at$ 只需解 $a't\equiv c\pmod{b'}$；因为 $\gcd(a',b')=1$，Bézout 恒等式给出解。两个解之差同时被 $a,b$ 整除，恰等价于被最小公倍数整除。只有 $d=1$ 时相容约束才为空，联合像为整个乘积。
+
+这与项目既有 `PrimeBudgetReadoutDichotomy`、`SamePrimeScaleRedundancy` 和 `CompatibleResidueJointImage` 的区分一致：增加同一素数的深度是纵向细化，加入不同素数是横向联合观察，公共因子承担必须保留的重叠约束。
+

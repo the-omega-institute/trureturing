@@ -1,0 +1,33 @@
+## ST18．谱、实验与几何的共同约化命题
+
+### 定理 ST18.1：协议保持的有限维约化
+
+在正 Hilbert 空间中固定 Hermitian Hamiltonian、一个横截的不变子空间及其图坐标 $X$，并规定允许控制与仪器族。若所有允许操作保留该子空间，则由
+
+$$
+U=(I,X)^{\mathsf T}(I+X^\dagger X)^{-1/2}
+$$
+
+构造的有效理论具有以下同时成立的性质：完整态范数与效果读数由 ST10–ST12 的等距编码保持；所有有限自适应联合记录由 ST13 保持；在光滑参数变化及给定环境连接下，诱导连接和曲率由 ST15–ST17 确定。近似图子空间的演化误差可用 ST14 的残差控制，仪器漏出仍需单独控制。
+
+**证明。** 静态部分由 ST12.2 与 ST12.3；词级实验部分由 ST13.2；几何部分由定义等距编码后直接应用 ST15.2、ST17.2。ST14明确量化离开精确不变性时的误差。能量依赖的单根图与固定整个子空间的图不互相替代，故只在各自假设覆盖处使用 ST10与ST11。∎
+
+**接入弦论的条件性推论。** 若一个指定弦模型的规范相容有效构造，进一步提供以上正态空间、Hamiltonian、保留子空间、实际仪器及连接，则本命题可用于认证该模型中相应实验的约化。Sen 的量子 BV 积分和弦场论的树级同伦转移提供规范结构方面的外部输入，仍须逐项识别这些正 Hilbert 空间对象；不能用 BV 方程自动替代仪器零漏出，也不能把有限维误差界无条件用于无限弦塔。[ST-Sen][ST10-HomotopyII]
+
+由此形成三个有不同反例的条件：ST3控制规范恒等式，ST13控制干预后继续预测的能力，ST17控制对整条参数路径的相容运输。ST13.3和ST16.1分别证明，只有精确能谱或全部冻结响应时，后两项仍可能失败。
+
+**书目与归属。** 以下为本增订新增主要来源；日期状态核对至2026-09-17。本文有限矩阵证明自含，数值核验仅作错误探测，不替代普遍证明；未对全部既有文献或仓库逐定理穷尽查重。
+
+[ST10-Feshbach]: https://arxiv.org/abs/2105.02058 "Genevieve Dusson, Israel Sigal, Benjamin Stamm, The Feshbach-Schur map and perturbation theory (2021). Discrete self-adjoint spectra and explicit estimates."
+[ST10-SW]: https://arxiv.org/abs/1105.0675 "Sergey Bravyi, David DiVincenzo, Daniel Loss, Schrieffer-Wolff transformation for quantum many-body systems, Annals of Physics 326 (2011) 2793–2826, DOI 10.1016/j.aop.2011.06.004."
+[ST10-Subbundle]: https://arxiv.org/abs/2503.17163 "Marius A. Oancea, Thomas B. Mieling, Giandomenico Palumbo, Quantum geometric tensors from sub-bundle geometry, Quantum 10, 1965 (2026), DOI 10.22331/q-2026-01-14-1965. The general framework and extra ambient-curvature contribution belong to these authors."
+[ST10-Driving]: https://doi.org/10.1088/1751-8113/42/36/365303 "M. V. Berry, Transitionless quantum driving, Journal of Physics A: Mathematical and Theoretical 42 (2009) 365303."
+[ST10-Embedding]: https://arxiv.org/html/2607.21882v1 "Chang-geun Oh and Shuichi Murakami, Orbital Embedding and the Physical Definition of Quantum Geometry, arXiv:2607.21882v1, 24 July 2026. Preprint, used for the neighboring operational question, not as a premise for the two-state proof."
+[ST10-HomotopyII]: https://arxiv.org/abs/2106.08343 "Alex S. Arvanitakis, Olaf Hohm, Chris Hull, Victor Lekeu, Homotopy Transfer and Effective Field Theory II: Strings and Double Field Theory, Fortschritte der Physik 70 (2022) 2200004, DOI 10.1002/prop.202200004. Tree-level scope retained."
+
+---
+
+---
+
+<a id="string-observer-leakage-global-geometry"></a>
+

@@ -1,0 +1,78 @@
+### 278.7 任意经典自适应角度下的逐查询下界
+
+对每个实角度 $e$，§277的谱因子恒等式给
+$$
+-I_n\preceq H_w(e)\preceq I_n.
+\tag{278.31}
+$$
+因此，对任意固定 $\phi,\theta$，由（278.9）的块差得到
+$$
+\begin{aligned}
+d(\sigma_{1,\phi,\theta},\sigma_{0,\phi,\theta})
+&=\frac{\delta}{4n}
+\left(\|H_0(\theta-\phi)\|_1
++\|H_1(\theta-\phi)\|_1\right)\\
+&\le\frac\delta2.
+\end{aligned}
+\tag{278.32}
+$$
+自适应协议的输出并非固定单次输出的张量幂，故以下直接对实际查询与记忆作递推。
+
+固定 $\phi$。在查询之前，对一个给定的旧记忆输入，共同控制操作产生经典标签 $x$ 和条件量子记忆：
+$$
+\omega=\sum_xp_x|x\rangle\langle x|\otimes\tau_x,
+\qquad p_x\ge0,\quad\sum_xp_x=1,\quad
+\tau_x\succeq0,\quad\operatorname{Tr}\tau_x=1.
+\tag{278.33}
+$$
+标签 $x$ 选择角度 $\theta_x$；$\tau_x$ 可以包含全部已取得参考及任意辅助量子系统，内部不要求可分。
+
+按照访问合同，新来源在重置前独立，且只使用所选经典角度。因此在两个假设下，这次查询的作用分别为
+$$
+\mathcal O_b(\omega)
+=\sum_xp_x|x\rangle\langle x|\otimes\tau_x
+\otimes\sigma_{b,\phi,\theta_x}.
+\tag{278.34}
+$$
+固定纯重置因子可以一并附加，不改变下式。因为经典块的迹范数可加且 $\|\tau_x\|_1=1$，
+$$
+\begin{aligned}
+d(\mathcal O_1(\omega),\mathcal O_0(\omega))
+&=\sum_xp_x
+d(\sigma_{1,\phi,\theta_x},\sigma_{0,\phi,\theta_x})\\
+&\le\frac\delta2.
+\end{aligned}
+\tag{278.35}
+$$
+若角度选择含连续经典随机量，以积分替代求和，迹范数凸性给同一上界。
+
+令 $\rho_b^{(j)}$ 为前 $j$ 次查询后，协议保存的全部可用寄存器状态，并记
+$$
+D_j=d(\rho_1^{(j)},\rho_0^{(j)}).
+$$
+初始辅助资源与假设无关，故 $D_0=0$。将下一次操作拆成共同控制、一次新来源查询、共同后处理。对共同操作使用迹距离收缩，对同一个查询输入切换假设使用（278.35），三角不等式给
+$$
+D_j\le D_{j-1}+\frac\delta2,
+\qquad
+D_N\le\frac{N\delta}{2}.
+\tag{278.36}
+$$
+例如在查询前的两个经典—量子状态为 $\omega_1,\omega_0$ 时，中间一步正是
+$$
+\begin{aligned}
+d(\mathcal O_1(\omega_1),\mathcal O_0(\omega_0))
+&\le d(\mathcal O_1(\omega_1),\mathcal O_1(\omega_0))\\
+&\quad+d(\mathcal O_1(\omega_0),\mathcal O_0(\omega_0))\\
+&\le d(\omega_1,\omega_0)+\frac\delta2.
+\end{aligned}
+\tag{278.37}
+$$
+这里没有要求两假设产生相同的控制历史；不同历史已经包含在第一项中。
+
+最终任意共同POVM也不能增加可区分度。Holevo–Helstrom公式使等先验错误率不超过 $1/3$ 必须满足 $D_N\ge1/3$，所以
+$$
+\boxed{N\ge\frac{2}{3\delta}.}
+\tag{278.38}
+$$
+该证明对每个固定 $\phi$ 成立，自然适用于要求所有未知 $\phi$ 一致成功的协议。它允许利用旧量子参考生成新的经典角度，并允许最终联合测量全部参考；不只是对固定角度或只保留经典记录的下界。所用迹距判别公式可见 Watrous，*The Theory of Quantum Information*，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 3.4。
+

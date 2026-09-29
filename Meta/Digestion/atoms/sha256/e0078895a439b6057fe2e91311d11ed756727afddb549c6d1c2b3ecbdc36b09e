@@ -1,0 +1,4 @@
+**证明。** 每个输出 $y$ 上的动作 $f(y)$ 可独立选择，故反馈质量的最大值为 $\sum_yU_y$，最小值为 $\sum_yL_y$。常策略给出质量一，所以 $\sum L_y\le1\le\sum U_y$，得到式（52.15）。
+
+式（52.16）中，两个不同动作列只在对应的两个坐标相差 $\varepsilon$，故总变差为 $\varepsilon$。逐行有 $L_y=(1-\varepsilon)/m$、$U_y=(1-\varepsilon)/m+\varepsilon$，代入式（52.15）得式（52.17）。选择 $a=y$ 给出质量 $1+(m-1)\varepsilon$；在每行选择任一 $a\ne y$ 给出质量 $1-\varepsilon$。特别地，令 $\varepsilon=1/(m-1)$、$m\to\infty$，列间总变差趋于零，而反馈缺陷恒为一。$m\ge3$ 时这些表仍严格为正。$\square$
+

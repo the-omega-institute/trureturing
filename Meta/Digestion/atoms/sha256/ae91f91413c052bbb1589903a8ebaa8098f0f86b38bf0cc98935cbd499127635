@@ -1,0 +1,12 @@
+**命题 779.3（独立局部通道不能增大模型距离）。** 对各坐标施加非负、行和为一的有限随机通道 $W_i$，联合通道取 $W=\bigotimes_iW_i$，则
+
+$$
+W\mathcal M_r\subseteq\mathcal M_r',\qquad d_r(WP)\le d_r(P),
+$$
+
+其中右、左模型分别使用输入、输出观察集合。
+
+证明：$W$ 把 $\bigotimes_iq_{ih}$ 送到 $\bigotimes_i(W_iq_{ih})$，保持同一混合权重与至多 $r$ 项。取输入最近点 $Q$，输出模型距离至多为 $\operatorname{TV}(WP,WQ)$，再用总变差的数据处理不等式。项目 [TotalVariation/DataProcessing](../../../D5/S3/TotalVariation/DataProcessing.lean) 的 `total_variation_channel_le` 对非负行随机 $W$ 给出后一不等式；其输入实函数甚至不要求归一化，本批概率律满足更强条件。证毕。
+
+边缘化也保持乘积项数，因此具有同方向的距离界。任意联合通道则未必保持该模型：一个只有一个联合输入点的乘积分布，可以由输出总为 $00$ 或 $11$、各半的联合随机通道变成相关律。距离收缩的使用同时需要概率距离收缩与模型保持，缺少后一条件不能推出本节结论。
+

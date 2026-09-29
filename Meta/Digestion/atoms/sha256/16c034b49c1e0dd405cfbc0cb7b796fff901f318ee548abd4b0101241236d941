@@ -1,0 +1,140 @@
+**证明。** 先在实际数据上取得充分的方差时钟界。
+沿 (68.23) 的全部确定截断线，信号 Poisson 点质量 $f_j$ 满足
+
+```math
+\max_j f_j\le C/\lambda,\qquad
+\sum_j f_j\le C/(Q\sqrt\lambda).
+```
+
+式 (69.43)。
+
+第一式由两个均值为固定正倍数 $\lambda$ 的 Poisson 最大原子界相乘得到。
+第二式将负计数点质量上界为 $C/\sqrt\lambda$，正计数只落在模 $Q$ 的一个剩余类。
+若 $K\sim\operatorname{Pois}(a\lambda)$，有限循环群 Fourier 反演给
+
+```math
+\mathbb P(K\equiv k_0\pmod Q)
+ \le\frac1Q\sum_{l=0}^{Q-1}
+ e^{-a\lambda(1-\cos(2\pi l/Q))}\le C/Q,
+```
+
+式 (69.44)。
+
+因为 $1-\cos(2\pi l/Q)\ge c\min(l,Q-l)^2/Q^2$，而 $\lambda/Q^2=Q\to\infty$。
+去掉不可行线点只减小此界，所以零计数端点和完整尾部均包含在内。
+用 (68.27) 的 $m_j\le Cqf_j$ 与 (68.28) 的实际一、二行比较，有
+
+```math
+\sum_jm_j\le CB^2,\qquad
+\sum_jm_j^2\le C(q/\lambda)B^2=CB^4\delta,
+```
+
+```math
+\mathbb E_{\rm data}\sum_j C_j\le CB^2,\qquad
+\mathbb E_{\rm data}\sum_j C_j^2\le C(B^2+B^4\delta).
+```
+
+式 (69.45)。
+
+这里先对任意数据定义每个截断线占据数，再取实际期望；未条件于截断成功。
+全行截断失败只付其概率，且 $d_j\le C_j/4$，因此 Markov 给
+
+```math
+V_M=O_{\mathbb P}(1),\qquad
+\sum_jv_j^2=O_{\mathbb P}(\delta),\qquad d_J=B^2V_M=o_{\mathbb P}(q).
+```
+
+式 (69.46)。
+
+这些较粗界已足够，无须从 Gaussian 弱极限推断实际矩。
+原校准仍给 $d_{\rm all}\sim q/2$、$d_{J^c}/d_{\rm all}\to1$。
+
+现在在固定数据上使用同一完整辅助 Bernoulli 乘积律 $\mathsf Q_x$ 与精确后验
+$\mathsf P_x$。由 (68.33) 及其 Bernoulli 局部估计，令
+$D_J=S_J-\mathbb E_{\mathsf Q_x}S_J$，则在概率趋一的数据集上，统一于所有所选标签，
+
+```math
+L(S_J)=a_x e^{-D_J^2/(2d_{J^c})}+\xi_x(S_J),\qquad
+ a_x=\sqrt{d_{\rm all}/d_{J^c}},\quad
+\sup|\xi_x|\le Cq^{-1/2},\quad 0\le L\le K_0.
+```
+
+式 (69.47)。
+
+$K_0$ 为固定常数。分母是总均值恰为整数 $q$ 的中心原子，至少 $c/\sqrt{d_{\rm all}}$；
+补集任意原子至多 $C/\sqrt{d_{J^c}}$，故最后一个界对遥远总数同样成立。
+由此对任意非负函数 $F$ 有
+$\mathbb E_{\mathsf P_x}F\le K_0\mathbb E_{\mathsf Q_x}F$。
+这是本证明传递实际矩的依据；TV 接近本身不具有此性质。
+
+沿用 (69.9) 的 $U_j=(n_j-C_jp_j)/B$、$e_j=(\mu_j-C_jp_j)/B$，
+所以原电荷精确为 $A=U-e$，且 $e=\mathbb E_{\mathsf P_x}U$。
+在 (69.47) 中消去 $\mathbb E_{\mathsf Q_x}U=0$ 的常数项，
+由 $1-e^{-t}\le t$、Hilbert 空间 Cauchy–Schwarz 与
+$\mathbb E_{\mathsf Q_x}D_J^4\le3d_J^2+d_J$，得到
+
+```math
+\|e\|_2
+ \le C\sqrt{V_M}\left(\frac{\sqrt{3d_J^2+d_J}}q+q^{-1/2}\right)
+ =O_{\mathbb P}(Q^{-5/2}+q^{-1/2}).
+```
+
+式 (69.48)。
+
+这估计的是范数，不是范数平方；没有按组数放大中心误差。
+各组在辅助律下独立。令 $Y=\sum_jU_j^2-V_M$，Bernoulli 四阶累积量的直接展开给
+
+```math
+\mathbb E_{\mathsf Q_x}Y^2\le2\sum_jv_j^2+B^{-2}V_M,\qquad
+\mathbb E_{\mathsf Q_x}\langle U,e\rangle^2
+   =\sum_jv_je_j^2\le V_M\|e\|_2^2.
+```
+
+式 (69.49)。
+
+使用原定义 $T_M=\delta^{-1/2}(Y-2\langle U,e\rangle+\|e\|_2^2)$，
+再用 (69.47) 对整个平方作非负密度支配，得到
+
+```math
+\mathbb E_{\mathsf P_x}T_M^2
+ \le\frac{3K_0}{\delta}
+ \left(2\sum_jv_j^2+B^{-2}V_M+4V_M\|e\|_2^2+\|e\|_2^4\right).
+```
+
+式 (69.50)。
+
+第一项除以 $\delta$ 有界于数据概率，$B^{-2}/\delta=\lambda/q\to0$，
+而 (69.48) 使其余项除以 $\delta$ 后趋零，证明 (69.40)。
+坏数据上的有限矩不需要一致期望界，因此本结论不包含无条件二阶矩收敛。
+
+最后固定任一份数据，包括上述坏数据。此时 $T_M=f_x(R)$ 只有有限多个值。
+噪声通道条件于 $T_M$ 后与 $R$ 无关，链式法则给 (69.41) 的等号，
+无需调用 $R\mapsto T_M$ 的单射性。
+设 $m=\mathbb E_xT_M$、$v=v_M(x)$，$f$ 为 $Z_M$ 的有限 Gaussian 混合密度，
+$g$ 为均值 $m$、方差 $v+\upsilon_M^2$ 的 Gaussian 密度。
+以自然对数定义相对熵，经典混合恒等式为
+
+```math
+\sum_t\mathbb P_x(T_M=t)
+ D\bigl(N(t,\upsilon_M^2)\Vert g\bigr)
+ =I_x(T_M;Z_M)_{\rm nats}+D(f\Vert g)
+ =\tfrac12\log(1+v/\upsilon_M^2).
+```
+
+式 (69.51)。
+
+有限混合的对数密度有可积二次包络，故分解对数和交换有限求和合法。
+非负性给信息上界，且
+$1+v/\upsilon_M^2\le\max(1,\upsilon_M^{-2})(1+v)$。
+这是成熟 Gaussian 通道不等式在本数据纤维上的应用；新增桥梁是 (69.45)–(69.50)
+对原实际后验和精确中心的控制。
+
+由定理 68.5 与有限输入信息恒等式
+$H_x(R\mid Z_M)=H_x(R)-I_x(R;Z_M)$，立即得到 (69.42)。
+对固定多项式噪声也可直接将 $c$ 保留在
+$\tfrac12\log_2(1+v/c^2)$ 余项中。
+支持置换保持所有这些均匀先验定义的数据函数，并在大小 $q$ 支持上传递，
+故数据概率结论一致于确定支持。未知方向使用同一个判向成功事件。
+这里没有把剩余熵等同于任意指定符号的风险，也不声称期望信息极限、
+每个噪声输出的熵下界或稳定重构算法。证毕。
+

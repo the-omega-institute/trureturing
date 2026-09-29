@@ -1,0 +1,112 @@
+**证明。** 对两条不同射线 $[A],[B]$，乘积子空间
+$G([A])\otimes A$ 与 $G([B])\otimes B$ 代数直和，都包含于七维 $\mathcal R$，所以
+
+$$
+g([A])+g([B])\le7.
+$$
+
+结合各纤维至少三维，得到每个纤维至多四维，且至多一条射线可以有四维纤维。特别地，存在无穷多条三维纤维射线。
+
+如果其中两条不同射线具有同一个三维接收平面 $P$，则它们在 $\mathcal R$ 中生成整个六维 $P\otimes F$。取剩余一维的正交补即得（97.1）；对应的单位向量自动属于 $P^\perp\otimes F$。
+
+若 $\psi$ 的 Schmidt 秩为二，任何 $y\otimes z\in\mathcal R$ 向 $P^\perp\otimes F$ 投影后都会给一个单纯张量等于 $c\psi$，因此只能 $c=0$，所以 $y\in P$。若 $\psi=u\otimes z_*$，同样比较环境射线便得到所述唯一四维例外。因此第一种形式的纤维描述准确。
+
+现在假设没有两条不同三维纤维射线具有同一接收平面。选取两条三维纤维射线 $[A],[B]$，记
+
+$$
+G_A=G([A]),\qquad G_B=G([B]),\qquad
+I=G_A\cap G_B.
+$$
+
+两平面不同，所以 $\dim I\le2$。它们的乘积像
+
+$$
+\mathcal R_{AB}=(G_A\otimes A)\dotplus(G_B\otimes B)
+$$
+
+为六维。对任意不同于 $[A],[B]$ 的射线 $[C]$，其在 $A,B$ 坐标中的两个系数都非零，因此
+
+$$
+\mathcal R_{AB}\cap(G([C])\otimes C)
+=(I\cap G([C]))\otimes C.
+$$
+
+两空间之和包含于七维 $\mathcal R$，故
+
+$$
+\dim(I\cap G([C]))
+\ge6+g([C])-7=g([C])-1\ge2.
+$$
+
+结合 $\dim I\le2$，得到 $\dim I=2$、$I\subset G([C])$，且 $g([C])=3$。这对所有第三射线都成立；$I$ 也包含于 $G_A,G_B$。因此所有纤维均三维且共有 $I$，并有
+
+$$
+I\otimes F\subset\mathcal R.
+$$
+
+作正交分解
+
+$$
+\mathcal R=(I\otimes F)\oplus\mathcal S,
+\qquad \mathcal S\subset I^\perp\otimes F,
+\qquad \dim\mathcal S=3.
+$$
+
+每条环境射线在 $\mathcal S$ 中恰有一维接收纤维。选 $A,B$ 的非零代表作为 $F$ 的代数基，不要求它们正交。取非零 $a,b,c\in I^\perp$，使
+
+$$
+a\otimes A,\qquad b\otimes B,\qquad
+c\otimes(A+B)
+$$
+
+分别代表 $[A],[B],[A+B]$ 的残余纤维。$a,b$ 线性独立，否则 $G_A\cap G_B$ 将严格大于 $I$。这三个乘积向量也线性独立：若第三个属于前两个的张成，比较 $A,B$ 坐标会使非零 $c$ 同时平行于 $a,b$，矛盾。故它们构成 $\mathcal S$ 的基。
+
+取 $t\in\mathbb C\setminus\{0,1\}$，其射线 $[A+tB]$ 也有非零残余纤维，故存在 $y\ne0$ 和系数 $\alpha,\beta,\gamma$，使
+
+$$
+y\otimes(A+tB)
+=\alpha a\otimes A+\beta b\otimes B
++\gamma c\otimes(A+B).
+$$
+
+比较两个环境坐标，得到
+
+$$
+y=\alpha a+\gamma c,\qquad
+ty=\beta b+\gamma c,
+$$
+
+因而
+
+$$
+t\alpha a-\beta b+(t-1)\gamma c=0.
+$$
+
+如果 $a,b,c$ 线性独立，则 $t\ne0,1$ 使三个系数均为零，进而 $y=0$，矛盾。因此 $c\in E:=\operatorname{span}(a,b)$，$\dim E=2$。于是 $\mathcal S\subset E\otimes F$，是这个四维空间的三维超平面。取其单位法向量 $\psi$，便有
+
+$$
+\mathcal S=(E\otimes F)\cap\psi^\perp.
+$$
+
+$\psi$ 不能具有 Schmidt 秩一：若 $\psi=u\otimes z_*$，则在环境射线 $[z_*^\perp]$ 上整个二维 $E$ 都成为接收纤维，违反残余纤维恒为一维。因此 $\psi$ 的 Schmidt 秩为二，得到（97.2）。由于 $I\perp E$ 且 $\dim(I\oplus E)=4$，取正交补直接给（97.3）。证明完毕。
+
+### 97.2 三维纤维处处成立的显式酉
+
+设 $K=\mathbb C^7$，正交单位基为 $u_0,\ldots,u_6$，环境 $F=\mathbb C^2$ 的正交单位基为 $e_0,e_1$。置
+
+$$
+P=\operatorname{span}(u_0,u_1,u_2),\qquad
+E=\operatorname{span}(u_3,u_4),\qquad
+Q=\operatorname{span}(u_5,u_6),
+$$
+
+$$
+\psi=\frac{u_3\otimes e_0+u_4\otimes e_1}{\sqrt2},
+\qquad
+\mathcal R_0=(P\otimes F)\oplus\mathbb C\psi,
+\qquad
+\mathcal R_1=\mathcal R_0^\perp.
+$$
+
+两个输出子空间都为七维。
+

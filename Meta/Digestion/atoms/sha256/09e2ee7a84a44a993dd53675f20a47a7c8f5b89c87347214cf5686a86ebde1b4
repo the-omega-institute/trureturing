@@ -1,0 +1,38 @@
+**定理154.6（周期极限的完整参考误差证书）。** 在（154.8）—（154.9）下，
+
+$$
+\boxed{|e_n-h_{r(n)}|\le\zeta_n\qquad(n\ge3).}
+\tag{154.23}
+$$
+
+特别地，每个余数类上的误差收敛：
+
+$$
+e_{qk+r}\longrightarrow h_r.
+\tag{154.24}
+$$
+
+令同一物理装置的全时域最优解码误差为
+
+$$
+E_\infty=\sup_{n\ge1}e_n.
+$$
+
+对任意整数 $N\ge3$，置
+
+$$
+M_{N-1}=\max_{1\le n<N}e_n,\qquad
+h_{\max}=\max_{0\le r<q}h_r.
+$$
+
+则
+
+$$
+\boxed{
+\max\{M_{N-1},h_{\max}\}
+\le E_\infty
+\le\max\{M_{N-1},h_{\max}+\zeta_N\}.
+}
+\tag{154.25}
+$$
+

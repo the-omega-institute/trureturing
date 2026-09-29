@@ -1,0 +1,33 @@
+## ST6．黄金双更新进入弦世界面模群，钟尺进入物理读数
+
+### 定理 ST6.1：同一个黄金矩阵给出两个不同归一化的参数
+
+设
+
+$$
+F=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+A=F^2=\begin{pmatrix}2&1\\1&1\end{pmatrix},
+\quad \varphi=(1+\sqrt5)/2.
+$$
+
+有 $A\in SL_2(\mathbb Z)$。它的特征值是 $\varphi^2,\varphi^{-2}$；仓内零坐标上的洛伦兹快速度增量是
+
+$$
+\eta_\varphi=2\log\varphi.
+$$
+
+环面世界面的复模 $\tau\in\mathbb H$ 在该模群元素下变换为
+
+$$
+\tau\mapsto\frac{2\tau+1}{\tau+1}.
+$$
+
+其固定点满足 $\tau^2-\tau-1=0$，所以是实轴上的 $\varphi$ 与 $\varphi'=-1/\varphi$，均不在 $\mathbb H$ 内。
+
+用上半平面的标准双曲度量 $ds=|d\tau|/\operatorname{Im}\tau$，$A$ 的平移长度为
+
+$$
+\boxed{\ell(A)=4\log\varphi=2\eta_\varphi.}
+\tag{ST6.1}
+$$
+

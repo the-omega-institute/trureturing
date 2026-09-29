@@ -1,0 +1,20 @@
+**228.3.3 显式候选与完整参考上界。**
+
+$\mathcal T_0$ 的总 Choi 秩为一，适用于每个 $R\ge1$。$\mathcal T_1$ 的总 Choi 秩为 $d$，适用于每个 $R\ge d$。
+
+两个通道具有互斥经典标签，所以
+$$
+\|\mathcal T_1-\mathcal T_0\|_\diamond=2.
+\tag{228.HC.9}
+$$
+上界来自两个 CPTP 通道的 diamond 范数均为一及三角不等式；下界对任意密度输入即可达到，因为两份输出位于正交标签块。该论证保留完整参考系统，未将无参考上界冒作 diamond 上界。
+
+由（228.HC.6），精确得到
+$$
+\frac12\|\mathcal R_\kappa-\mathcal T_0\|_\diamond=\kappa,
+\qquad
+\frac12\|\mathcal R_\kappa-\mathcal T_1\|_\diamond=1-\kappa.
+\tag{228.HC.10}
+$$
+这给前两个预算区间的匹配上界。$R\ge d+1$ 时，目标本身已是预算内候选，距离为零。结合所有下界，证明（228.HC.8）。
+

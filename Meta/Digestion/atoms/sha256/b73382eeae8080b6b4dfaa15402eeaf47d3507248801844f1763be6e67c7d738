@@ -1,0 +1,20 @@
+**先排除一种支撑回返。** 若 $`\eta\in F`$ 为单位向量，取唯一单位 $`\xi\in\Gamma`$ 使 $`R\xi=\eta`$。由（27.4），
+
+$$
+V^{-1}(C_3\otimes\mathbb C\eta)
+=(H\otimes\mathbb C\xi\otimes|0\rangle)
+\oplus(G\otimes\mathbb C\xi\otimes|1\rangle).
+\tag{27.12}
+$$
+
+这里逆像在 $`V`$ 的像上理解；等距的单射性保证没有其它输入向量映到同一子空间。右边的零位、一位接收系数合起来只张成
+$`(H+G)\otimes\mathbb C\xi=Q\otimes\mathbb C\xi`$，维数为三。
+因此，当 $`n=4`$ 或 $`5`$ 时，不可能同时有
+
+$$
+C_n=C_3,\qquad \eta_n\in F:
+\tag{27.13}
+$$
+
+否则（27.7）、（27.11）及（27.12）会使前一终端的接收支撑 $`C_{n-1}`$ 只有三维，与（27.10）矛盾。
+

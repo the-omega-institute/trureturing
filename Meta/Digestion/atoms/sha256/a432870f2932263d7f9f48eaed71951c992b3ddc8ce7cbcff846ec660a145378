@@ -1,0 +1,67 @@
+**证明。** 取 $F$ 的正交单位基 $e_0=\beta,e_1$。缩放 $C,D$ 的射线代表，可写
+
+$$
+C=ce_0+e_1,\qquad D=de_0+e_1,\qquad c\ne d.
+\tag{66.5}
+$$
+
+不预设 $c,d$ 非零。$J$ 的正交单位基为 $e_0\otimes e_0,e_1\otimes e_0,e_0\otimes e_1$。在此基和值域的 $e_0,e_1$ 基中，写
+
+$$
+M=\begin{pmatrix}A_0&V&W\\X&Y&Z\end{pmatrix},
+\qquad A_0,V,W,X,Y,Z\in\operatorname{End}(Q).
+$$
+
+（66.3）的第三项给 $dX+Y=0$，前两项分别给
+
+$$
+cA_0+W=c(cX+Z),\qquad dA_0+W=d(dX+Z).
+$$
+
+由 $c\ne d$，解得
+
+$$
+M=\begin{pmatrix}
+Z+(c+d)X&V&-cdX\\
+X&-dX&Z
+\end{pmatrix}.
+\tag{66.6}
+$$
+
+在 $Q\otimes C\otimes\beta$ 上，值域 $e_1$ 分量为 $(c-d)X$。秩亏假设因此等价于 $\operatorname{rank}X<\dim Q$。余等距条件的右下块给
+
+$$
+ZZ^*=I_Q-(1+|d|^2)XX^*.
+\tag{66.7}
+$$
+
+可取单位向量 $t\in\ker X^*$，于是 $ZZ^*t=t$。令 $r=Z^*t$，便有
+
+$$
+\|r\|^2=\langle t,ZZ^*t\rangle=1,\qquad Zr=t,\qquad\|Zr\|=1.
+\tag{66.8}
+$$
+
+余等距 $M$ 是收缩，因为 $M^*M$ 是正交投影。若 $cd\ne0$，将单位输入 $r\otimes e_0\otimes e_1$ 送入（66.6），得到
+
+$$
+|cd|^2\|Xr\|^2+\|Zr\|^2\le1.
+$$
+
+由（66.8），$Xr=0$。所以对任意 $z\in F$，
+
+$$
+M(r\otimes e_0\otimes z)=Zr\otimes z,
+\tag{66.9}
+$$
+
+两边范数相同。取 $z=C$，得到所需非零向量。
+
+若 $cd=0$，两者恰有一个为零。（66.6）直接给
+
+$$
+M(r\otimes e_0\otimes e_1)=Zr\otimes e_1,
+$$
+
+仍保持范数。若 $c=0$，则 $C=e_1$；若 $d=0$，则 $D=e_1$。两种情形分别在引理列出的两个纤维中给出所需向量。证明完毕。
+

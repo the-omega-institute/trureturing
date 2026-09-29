@@ -1,0 +1,8 @@
+**形式化覆盖。**
+
+`D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.lean`：公开3个声明，证明真实矩阵和构造的syndrome编码/解码恒等式，以及逐syndrome酉运输后的恢复。相邻的 `OrthogonalSyndromeChannel` 另构造有限 CPTP 解码与编码通道；更广的物理实现仍由正文讨论。
+
+两相位可见度缺陷及相反相位例子属于本卷普通证明，不计入当前 Lean 覆盖。
+
+对应的 Scribe 与 Blueprint 阅读稿逐项列出声明和边界。数学最优性、参考系统上的通道范数、全局丛与 Chern 数只在正文中证明，不能据局部 Lean 覆盖把整章称为 kernel-verified。
+

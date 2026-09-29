@@ -1,0 +1,26 @@
+**引理 63.3（完整 tester 下的两角准确修复）。** 对每个满足式（63.6）的参数组，有
+
+$$
+e_D(R)=\Delta(M)=t+2ad=(a+d)^2-1.
+\tag{63.8}
+$$
+
+一个显式最优修复由任意
+
+$$
+p\in[ac,1-bd]
+\tag{63.9}
+$$
+
+给出：在正交分解 $\operatorname{span}\{x,y\}\oplus\operatorname{span}\{h,z\}$ 上令
+
+$$
+S_p=
+\begin{pmatrix}p&ac\\ac&p\end{pmatrix}_{x,y}
+\oplus
+\begin{pmatrix}1-p&bd\\bd&1-p\end{pmatrix}_{h,z},
+\tag{63.10}
+$$
+
+在其正交补上取零。
+

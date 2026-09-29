@@ -1,0 +1,53 @@
+**后验信息中的测量余量不改变此阶。** 同一个实际 $R,G,Y$ 满足
+
+$$
+J=S-L_M+\tfrac12\ln(2\pi)+G^2/2+\ln f_x(Y),
+$$
+
+从而
+
+$$
+\mathcal V_{{\rm post},x}(Y)
+ =\operatorname{Var}_x(S\mid Y)
+  +\tfrac14\operatorname{Var}_x(G^2\mid Y)
+  +\operatorname{Cov}_x(S,G^2\mid Y).
+\tag{87.32}
+$$
+
+输出内确定项已经消去；没有假定给定 $Y$ 后 $G$ 仍独立正态。
+给定原数据、尚未观测 $Y$ 时 $\mathbb EG^4=3$，所以
+$\int f_x\operatorname{Var}_x(G^2\mid y)dy\le3$。
+粗略的 $O_{\mathbb P}(Q)$ 协方差界不够，需要另估混合核。令
+
+$$
+\psi_\sigma(t)=(t/\sigma)^2\varphi_\sigma(t),\quad
+u_x(y)=\mathbb E_{P_x}[(S-h)\psi_{\sigma_M}(y-T)].
+\tag{87.33}
+$$
+
+$\psi_\sigma$ 非负、积分为一，且 $\|\psi_\sigma'\|_1\le C/\sigma$。
+因此前面的单次权重比较仍有效，将 $u_x$ 换为
+$u_G=\mathbb E[S_G\psi_{\sigma_M}(\,\cdot-T^{\rm G})]$ 的误差为
+$C(Qa_x+a_x+a_x^2)+CQ\sqrt{D_M/\sigma_M}+k_M=o_{\mathbb P}(1)$。
+一次倾斜给 $u_G=-\mathbb E[\mathcal A\psi_{\sigma_M}'(\,\cdot-T^{\rm G})]$。
+将常数部分与中心块部分的导数移到独立密度，再用 (87.15) 和正核卷积收缩，得
+$\|u_x\|_1=O_{\mathbb P}(1+a_0)=O_{\mathbb P}(\delta^{-1/2})$。
+
+令 $m_x=\mathbb E_x[S-h\mid Y]$、$r_x=\mathbb E_x[G^2\mid Y]$。
+(87.29) 给 $\mathbb E_{f_x}m_x^2=O_{\mathbb P}(\delta^{-1})$，
+条件 Jensen 给 $\mathbb E_{f_x}r_x^2\le3$。
+又 $u_x=f_x\mathbb E_x[(S-h)G^2\mid Y]$，所以
+
+$$
+\int f_x|\operatorname{Cov}_x(S,G^2\mid y)|dy
+ \le\|u_x\|_1+(\mathbb E_{f_x}m_x^2)^{1/2}
+                    (\mathbb E_{f_x}r_x^2)^{1/2}
+ =O_{\mathbb P}(\delta^{-1/2}).
+\tag{87.34}
+$$
+
+乘以 $\delta$ 后，(87.32) 的后两项均消失。
+由 (87.31) 得 (87.3)；(87.4) 来自原 Gaussian 空间剖面的两个积分。
+所有估计都在原数据好环境上给出，坏环境只支付其概率。
+实际一行／两行界和支持置换维持了两种原实验的一致量词，证毕。
+

@@ -1,0 +1,32 @@
+**定理 180.2（平均调度的包含关系）。** 总有
+
+$$
+\boxed{
+V_{\mathfrak P}\subseteq V_{\mathrm{word}}.
+}
+\tag{180.1}
+$$
+
+若 $\mathfrak P$ 包含每个顶点分布 $\delta_i$，则
+
+$$
+\boxed{
+V_{\mathfrak P}=V_{\mathrm{word}}.
+}
+\tag{180.2}
+$$
+
+### 证明
+
+把每个平均算子展开：
+
+$$
+T_{p_n}\cdots T_{p_1}H
+=
+\sum_{i_1,\ldots,i_n}
+(p_1)_{i_1}\cdots(p_n)_{i_n}
+A_{i_n}\cdots A_{i_1}H.
+$$
+
+右侧属于词闭包，得到（180.1）。若 $\delta_i\in\mathfrak P$，取 $p_j=\delta_{i_j}$ 就直接得到每个逐词生成元，反向包含成立，故得（180.2）。证毕。
+

@@ -1,0 +1,15 @@
+**引理148.1（全域酉与固定 CPTP 实现）。** 表（148.7）定义酉映射
+
+$$
+V:K\otimes\mathbb C^2\longrightarrow K\otimes E.
+$$
+
+因而
+
+$$
+\mathcal C(Y)=\operatorname{Tr}_E(VYV^*)
+\tag{148.8}
+$$
+
+是每轮可重复使用的同一个全域 CPTP 通道。
+

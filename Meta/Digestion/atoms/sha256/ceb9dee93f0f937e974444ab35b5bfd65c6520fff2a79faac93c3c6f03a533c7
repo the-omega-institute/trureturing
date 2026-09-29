@@ -1,0 +1,42 @@
+**引理76.1（四点保持与二次坐标块形）。** 上述条件使所有射线的二次纤维都被保持。取 $A^*A$ 的正交单位特征基 $e_0,e_1$，特征值为 $\mu,\nu>0$，则在 $J$ 的正交单位基
+$$
+\frac{Ae_0\otimes e_0}{\sqrt\mu},\qquad
+\frac{Ae_0\otimes e_1+Ae_1\otimes e_0}{\sqrt{\mu+\nu}},\qquad
+\frac{Ae_1\otimes e_1}{\sqrt\nu}
+$$
+中，存在 $L_0,L_1\in\operatorname{End}(Q)$，使
+$$
+M=\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt{\mu+\nu}&0\\
+0&L_0/\sqrt{\mu+\nu}&L_1/\sqrt\nu
+\end{pmatrix},
+\tag{76.1}
+$$
+并且对 $z=z_0e_0+z_1e_1$，
+$$
+M(\xi\otimes Az\otimes z)=(z_0L_0+z_1L_1)\xi\otimes z.
+\tag{76.2}
+$$
+
+**证明。** 对每个 $\xi\in Q$，把 $M(\xi\otimes Az\otimes z)$ 的两个输出环境坐标写为
+$$
+Y_0(z)\xi=(B_{00}z_0^2+B_{01}z_0z_1+B_{02}z_1^2)\xi,
+$$
+$$
+Y_1(z)\xi=(B_{10}z_0^2+B_{11}z_0z_1+B_{12}z_1^2)\xi,
+$$
+其中 $B_{ij}\in\operatorname{End}(Q)$。输出在环境射线 $z$ 上的充要条件为
+$$
+z_1Y_0(z)-z_0Y_1(z)=0.
+$$
+左侧的每个矩阵系数都是三次齐次多项式。它在四条不同复射影射线上为零，故恒为零。这给所有射线的保持条件，并逐系数给
+$$
+B_{10}=B_{02}=0,\qquad
+B_{00}=B_{11}=:L_0,\qquad B_{01}=B_{12}=:L_1.
+$$
+因此两个输出坐标分别为 $z_0(z_0L_0+z_1L_1)$ 和 $z_1(z_0L_0+z_1L_1)$，得到（76.2）。
+
+由于 $Ae_0\perp Ae_1$，所列三个二次张量的范数分别为 $\sqrt\mu,\sqrt{\mu+\nu},\sqrt\nu$，且彼此正交。将未归一化的二次系数改写到这组正交单位基，便得到（76.1）。证明完毕。
+
+这一加权 Toeplitz 型块式来自二次张量的标准坐标比较，论证对任意有限 $q$ 成立；它本身并不包含第72节的二维秩结论。
+

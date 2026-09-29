@@ -1,0 +1,111 @@
+**引理257.1（共同非对角块的根保真度界）。** 设
+$$
+X=\begin{pmatrix}P&C\\C^\dagger&Q\end{pmatrix}\succeq0,
+\qquad
+Y=\begin{pmatrix}R&C\\C^\dagger&S\end{pmatrix}\succeq0.
+\tag{257.9}
+$$
+不要求归一化，则
+$$
+\boxed{\mathsf F(X,Y)\ge2\|C\|_1.}
+\tag{257.10}
+$$
+
+**证明。** 先设 $P,R$ 严格正。Schur 补给
+$$
+Q\succeq C^\dagger P^{-1}C,
+\qquad
+S\succeq C^\dagger R^{-1}C.
+\tag{257.11}
+$$
+因此可取保留同一非对角块的较小正半定矩阵
+$$
+X_0=
+\begin{pmatrix}P&C\\C^\dagger&C^\dagger P^{-1}C\end{pmatrix}
+\preceq X,
+\qquad
+Y_0=
+\begin{pmatrix}R&C\\C^\dagger&C^\dagger R^{-1}C\end{pmatrix}
+\preceq Y.
+\tag{257.12}
+$$
+由（257.7），只需证明 $\mathsf F(X_0,Y_0)\ge2\|C\|_1$。
+
+令
+$$
+A=P^{1/2},\qquad B=C^\dagger P^{-1/2},
+\qquad
+D=R^{1/2},\qquad E_1=C^\dagger R^{-1/2}.
+\tag{257.13}
+$$
+则
+$$
+X_0=\begin{pmatrix}A\\B\end{pmatrix}
+\begin{pmatrix}A^\dagger&B^\dagger\end{pmatrix},
+\qquad
+Y_0=\begin{pmatrix}D\\E_1\end{pmatrix}
+\begin{pmatrix}D^\dagger&E_1^\dagger\end{pmatrix},
+\qquad
+AB^\dagger=DE_1^\dagger=C.
+\tag{257.14}
+$$
+$A,D$ 可逆。置 $T=A^{-1}D$，由共同非对角块关系得到
+$$
+D=AT,\qquad E_1=BT^{-\dagger},
+\tag{257.15}
+$$
+其中 $T^{-\dagger}=(T^{-1})^\dagger$。再令
+$$
+\alpha=A^\dagger A,\qquad \beta=B^\dagger B.
+\tag{257.16}
+$$
+Gram 恒等式（257.4）给
+$$
+\mathsf F(X_0,Y_0)
+=\|A^\dagger D+B^\dagger E_1\|_1
+=\|\alpha T+\beta T^{-\dagger}\|_1.
+\tag{257.17}
+$$
+
+对可逆 $T$ 作极分解 $T=UH$，其中 $U$ 酉、$H$ 严格正。于是 $T^{-\dagger}=UH^{-1}$。置 $\alpha'=U^\dagger\alpha U$、$\beta'=U^\dagger\beta U$。由酉不变性以及核范数不小于迹的绝对值，
+$$
+\begin{aligned}
+\|\alpha T+\beta T^{-\dagger}\|_1
+&=\|\alpha'H+\beta'H^{-1}\|_1\\
+&\ge\operatorname{Tr}(\alpha'H)+\operatorname{Tr}(\beta'H^{-1}).
+\end{aligned}
+\tag{257.18}
+$$
+右侧两项均为非负实数。Schatten Hölder 不等式进一步给
+$$
+\begin{aligned}
+\mathsf F(\alpha',\beta')
+&=\|\sqrt{\alpha'}\sqrt{\beta'}\|_1\\
+&=\|(\sqrt{\alpha'}H^{1/2})(H^{-1/2}\sqrt{\beta'})\|_1\\
+&\le
+\sqrt{\operatorname{Tr}(\alpha'H)\,
+\operatorname{Tr}(\beta'H^{-1})}.
+\end{aligned}
+\tag{257.19}
+$$
+再用标量算术—几何平均不等式，得到
+$$
+\operatorname{Tr}(\alpha'H)+\operatorname{Tr}(\beta'H^{-1})
+\ge2\mathsf F(\alpha',\beta')
+=2\mathsf F(\alpha,\beta).
+\tag{257.20}
+$$
+最后，对因子 $A^\dagger,B^\dagger$ 应用（257.4），
+$$
+\mathsf F(\alpha,\beta)=\|AB^\dagger\|_1=\|C\|_1.
+\tag{257.21}
+$$
+（257.17）—（257.21）证明严格正对角块情形。
+
+一般情形下，对任意 $\varepsilon>0$ 用 $X+\varepsilon I$、$Y+\varepsilon I$ 替代 $X,Y$。它们的两个上对角块严格正，非对角块仍为 $C$，故已证结论给
+$$
+\mathsf F(X+\varepsilon I,Y+\varepsilon I)\ge2\|C\|_1.
+\tag{257.22}
+$$
+有限维正平方根及迹范数连续。令 $\varepsilon\downarrow0$，得到（257.10）。$C$ 无需可逆，亦允许为零。$\square$
+

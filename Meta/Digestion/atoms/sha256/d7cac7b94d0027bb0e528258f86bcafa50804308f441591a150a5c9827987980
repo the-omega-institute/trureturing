@@ -1,0 +1,29 @@
+## ST29．恢复器需要保存路径上的逻辑作用
+
+### 定理 ST29.1：不同 syndrome 的已知运输可以精确补偿
+
+令$V_j$是逻辑酉矩阵，可以表示指定闭路的holonomy，或包含动力学相位的已知完整逻辑演化。取
+
+$$
+\widetilde S_j=S_jV_j.
+$$
+
+则$\widetilde S_j^\dagger\widetilde S_k=\delta_{jk}I$。采用$\widetilde S_j$构造的ST27解码精确恢复全部逻辑态。
+
+但如果噪声syndrome已去相干、概率为$p_j$，且使用未补偿运输的旧解码$S_j^\dagger$，则得到
+
+$$
+\boxed{\Phi(\rho)=\sum_jp_jV_j\rho V_j^\dagger.}
+\tag{ST29.1}
+$$
+
+**证明。** 先计算正交性，再代入ST27。对于对角$\sigma$，旧解码消去不同标签之间的块，仅保留上述各个逻辑作用。∎
+
+### 命题 ST29.2：无标签混合何时仍为一个酉演化？
+
+若$p_j>0$的分支均作用在相同有限逻辑空间，则$\Phi=\operatorname{Ad}_V$当且仅当每个受支持分支满足$V_j=e^{i\alpha_j}V$。
+
+**证明。** 若相差相位，共轭通道相同。反向利用Choi矩阵：$\Phi$的Choi矩阵是$\sum_jp_j|V_j\rangle\!\rangle\langle\!\langle V_j|$，酉通道的Choi矩阵秩一。正权重排除非共线向量，故$V_j=c_jV$；酉性给出$|c_j|=1$。∎
+
+这说明瞬时可纠正性和整条路径的恢复是不同问题。连接变化产生的syndrome相关逻辑作用必须保留或补偿。Lanka、Garcia-Nila、Brun在2026年3月的预印本中利用连续测量记录识别瞬时syndrome并途中调整holonomic路径，提供了直接相邻的物理实现方向。本文没有复现该文的连续测量动力学或容错阈值。[ST27-Steering]
+

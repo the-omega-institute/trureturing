@@ -1,0 +1,43 @@
+**theorem 24.3: 双侧商的普适最小性；Claim status: open.** 式（24.3）良定义，并且两个商都分别具有分离性：不同状态类可由某个协议区分，不同协议类可由某个状态区分。若另有满射 $f:X\to X'$、$g:P\to P'$ 和
+
+$$
+E(x,p)=E'(f(x),g(p)),
+$$
+
+且 $E'$ 的状态行与协议列都分离，那么存在唯一的等价
+
+$$
+X/{\sim_S}\simeq X',
+\qquad
+P/{\sim_P}\simeq P'
+$$
+
+保持代表元与评价。仓内 `RowColumnObserverCore.row_column_observer_core`、`DoubleExtensionalQuotientUniversality.double_extensional_quotient_universal_minimality` 给出相应的商下降和唯一双侧等价；`StateProtocolQuotientOrderCommutation.state_protocol_quotient_order_commutes` 说明先约化状态或先约化协议只改变规范表示，不改变联合评价。
+
+这里的满射条件排除“把从未由共同来源实现的值”误当作观察者状态，外延条件排除“目标内部仍有不可区分副本”。所以空间切面、时间读数和记忆摘要要互相恢复，至少需要同一实际像、状态运输、协议回拉和评价保持；一张数值坐标图或单边边界函数本身不够。
+
+若更新还要运输协议，必须另给 $T:X\to X$ 与 $G:P'\to P$，并证明
+
+$$
+E'(T x,p')=E(x,Gp').
+\tag{24.4}
+$$
+
+式（24.4）才使 $T$ 和 $G$ 在两个商上诱导同一动态评价。没有协议回拉，只能说状态被重标；不能说后续实验被保留。
+
+本节把有限稳定深度、动态记忆下界和双侧协议商接成一条链：
+
+$$
+\boxed{
+\text{首次有限稳定}
+\Rightarrow
+\text{完整未来边界}
+\Rightarrow
+\text{任意精确记忆的唯一因子}
+\Rightarrow
+\text{双侧评价的最小恢复载体}.
+}
+$$
+
+它仍是有限、确定性、任务相对的数学结论；不声称所有物理观察、无限状态或未知概率模型都具有同样的有限界。
+

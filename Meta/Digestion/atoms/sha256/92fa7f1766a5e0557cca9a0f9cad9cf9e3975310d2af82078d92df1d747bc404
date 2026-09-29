@@ -1,0 +1,33 @@
+### 10.1 先定义投影的实际像
+
+令 $X$ 是同一实际来源，精细读出和粗读出分别为
+
+$$
+\rho_s:X\to B_s,
+\qquad
+\rho_r:X\to B_r,
+\qquad s\succeq r.
+$$
+
+粗化箭头 $p_{s,r}:B_s\to B_r$ 只有在
+
+$$
+\rho_r=p_{s,r}\circ\rho_s
+\tag{10.1}
+$$
+
+时才表示同一来源上的分辨率下降。若 $p_{s,r}$ 只在 $\operatorname{im}\rho_s$ 上存在，应将其陪域限制为实际像；对像外任意延拓不产生观察者可用的唯一性。
+
+若精细更新 $F_s$、粗更新 $F_r$ 都来自同一实际操作，则动态自然性要求
+
+$$
+\rho_s\circ F=F_s\circ\rho_s,
+\qquad
+\rho_r\circ F=F_r\circ\rho_r,
+\qquad
+p_{s,r}\circ F_s=F_r\circ p_{s,r}.
+\tag{10.2}
+$$
+
+第二个等式只说各自下降，第三个才说跨分辨率运输相容。`StableObservationInverseLimit.stable_observation_inverse_limit_laws` 供应有限观察商塔和限制箭头的这类集合层支点；它不供应数值误差或实际取得成本。
+

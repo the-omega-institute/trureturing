@@ -1,0 +1,49 @@
+**定义 22.1（双向似然混合与逐步选择）。** 对定义 21.1 的状态空间，令
+$`M\ge2`$、$`\ell=\log M`$，置
+
+```math
+J_M=\max\{2,\lceil\ell^2\rceil\},\qquad
+u_j=\frac j{J_M}\quad(1\le j\lt J_M),\qquad
+\eta_M=\min\{1/16,\ell^{-2}\}.
+```
+
+式 (22.1)。
+
+对原始观测的出发行计数定义 $`N_{x,\pm}^{+}`$；反转每个有序对，或反转包含两端点的
+整条路径后，以同样方式定义 $`N_{x,\pm}^{-}`$。对于 $`x\in C_+`$、
+$`\sigma\in\{+,-\}`$，定义非负分数
+
+```math
+E_x^\sigma=\frac1{J_M-1}\sum_{j=1}^{J_M-1}
+ (1+u_j)^{N_{x,+}^\sigma}(1-u_j)^{N_{x,-}^\sigma}.
+```
+
+式 (22.2)。
+
+将每个方向的分数按降序记为 $`E_{[1]}^\sigma\ge\cdots\ge E_{[M]}^\sigma`$，并令
+
+```math
+R_\sigma=\max\left(\{0\}\cup
+ \left\{k\in\{1,\ldots,M\}:E_{[k]}^\sigma\ge\frac M{\eta_M k}\right\}\right).
+```
+
+式 (22.3)。
+
+当 $`R_\sigma=0`$ 时置 $`A_\sigma=\varnothing`$；否则取最大的
+$`R_\sigma`$ 个分数对应的状态为 $`A_\sigma`$。最后定义
+
+```math
+\widehat S=A_+\cup A_-,\qquad
+\widehat\varepsilon=
+\begin{cases}+,&R_+\ge R_-,\\[0pt]-,&R_+\lt R_-.
+\end{cases}
+```
+
+式 (22.4)。
+
+这些规则仅使用维数与实际观测，不使用 $`q,r,\beta`$ 或临界偏移。
+(22.3) 的阈值形式是
+[Wang–Ramdas 的基本 e-BH 规则](../../../Library/Dynamics/wang2022evalues.md)。
+背景行分数在实际律下的 e-value 期望条件将在证明中直接核对；
+归一化 Hamming 损失还需要比 FDR 更强的期望误选个数控制。
+

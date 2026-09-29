@@ -1,0 +1,13 @@
+#### 2.1.8 固定快照中的直接所有者与来源范围
+
+下列 Lean 声明的来源定位为不可变快照 237012b49d0d4729a86f7e9dd252d94df1de8dd0。它们作为已有数学接口使用；本节不新增对应 Lean 声明或形式核验。
+
+- D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.lean 的 finite_cofiltered_limit_nonempty：余滤图式的对象逐个有限且非空，即有相容 section。它直接调用 Mathlib 的 nonempty_sections_of_finite_cofiltered_system。其存在结论不要求这里逐层满射，但也没有提供算法可计算性；不能把非空声明改报为可计算选择。
+- D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean 的 stateThread_bijective_iff_complete_and_separates：原状态到线程的映射双射，当且仅当线程完备且分离状态。其 ThreadComplete 明确要求所有线程由原状态实现，直接承担C卷第2.1.4节不可省略的桥；stateEquivInverseLimit 在源码中是 noncomputable 定义，不构成本节算法的已有实现。
+- D5/S0/Computability/ClosureUndecidable.lean 的 closure_reading_unreachable：对代码行为外延不变且非平凡的闭合谓词，调用 Mathlib 的 ComputablePred.rice₂ 得不可计算判定；empty_ledger_reading_unreachable 是具体实例。其前件不能从“名字叫闭合”或“分辨率严格增长”取得。
+- D5/S0/Computability/FiniteCounterexampleCertificate.lean 的 finite_readout_counterexample_certificate：一个 Boolean 全称有限读数失败，当且仅当有有界搜索找到的反例证书。它承担有限拒绝证据接口，不给无限承诺的统一决定程序。
+- D5/S1/FixedPoints/KleeneStageLimit.lean 的 inductive_definition_is_supremum_of_stages：$\omega$-Scott 连续序自映射的最小不动点是有限迭代的上确界。它是 Kleene 最小不动点定理，不能作为“递归二叉树存在但无可计算分支”的所有者。
+- D5/S0/Computability/Searchability/SearchableWindowDecision.lean 的 searchable_window_forall_decidable：在已供应满足相应完备性的 Boolean 选择器时，得到全称测试的判定。它将选择器列为前提，不自动从有限层非空制造这种选择器。
+
+这里的仓内来源范围限于上述固定快照及列明的 D5 接口；这些接口不提供一般有效满射逆系统的可计算分支定理或 recursive binary Kleene tree 的存在定理。这不声称该快照其他位置、第三方库或文献不存在对应结果。本节的有效提升短证、CRT 纤维复用和具体 HALT 模型属于普通数学连接，不取得新增 Lean 或原创性名义。
+

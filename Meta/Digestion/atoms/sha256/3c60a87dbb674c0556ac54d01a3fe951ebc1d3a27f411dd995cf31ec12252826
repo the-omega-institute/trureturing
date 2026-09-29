@@ -1,0 +1,50 @@
+### 306.3 仅参考记录的尺度发现
+
+置
+$$
+\eta=\frac{\log(l/k^2)}{\kappa},\qquad
+\bar\eta=\min(\eta,1/2),\qquad
+H_\eta=1+\log(1/\bar\eta).
+$$
+第301—303节已有 \(H_\eta\asymp H\)。取
+$$
+\delta=\bar\eta/288,\qquad \Lambda=\log(A_1/\delta)\ge8,
+$$
+其中 \(A_1\) 为足够大的固定常数；于是 \(\Lambda\asymp H\)。
+
+只用新鲜参考联合记录构造式（306.10）的 \(V_i\)，令 \(t=\sqrt h\in(0,1/2]\)。在累计样本数
+$$
+n_s=2^s,\quad L_s=\Lambda+2\log(s+1),\quad
+r_s=d\sqrt{\frac{L_s}{2n_s}},\qquad s=0,1,\ldots
+$$
+计算前 \(n_s\) 个 \(V_i\) 的平均 \(\widehat t_s\)，取
+$$
+J=\inf\{s:\widehat t_s\ge2r_s\},\qquad
+t_0=\min(1,\widehat t_J/2),\qquad a=t_0^2.
+\tag{306.11}
+$$
+强大数律及 \(r_s\to0\) 保证 \(J<\infty\) 几乎必然；停止条件保证 \(0<t_0\le1\)，所以每一条已停止记录都给 \(0<a\le1\)。由于 \(V\) 可以取四，坏记录上的 \(\widehat t_J/2\) 可能超过一；上截断保证这类记录仍落在既有主表的参数域内。
+
+Hoeffding 与并合界给
+$$
+\Pr\{\exists s:|\widehat t_s-t|>r_s\}
+\le\sum_{s\ge0}2e^{-L_s}\le\delta/3.
+$$
+在这份全时好事件上，停止时 \(r_J\le\widehat t_J/2\)，故
+$$
+t\le\widehat t_J+r_J\le\frac32\widehat t_J,
+\qquad
+t\ge\widehat t_J-r_J\ge\frac12\widehat t_J.
+$$
+于是实际停止记录事件
+$$
+G=\{t/3\le t_0\le t\}
+\tag{306.12}
+$$
+满足 \(\Pr_h(G^c)\le\delta/3\)，且在 \(G\) 上
+$$
+h/9\le a\le h.
+\tag{306.13}
+$$
+后续条件化只使用 \(G\) 这个已取得停止记录的事件。全时置信事件只承担概率上界，不被当成将来新样本的条件。
+

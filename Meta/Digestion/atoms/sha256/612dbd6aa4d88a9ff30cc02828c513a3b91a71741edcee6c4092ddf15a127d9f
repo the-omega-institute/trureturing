@@ -1,0 +1,6 @@
+**定义 424.2（项目中已有的三个不同接口）。** [`EpsilonStoppingPairEvidenceCompletion`](../../../D5/S3/Observer/MeasureSeparation/EpsilonStoppingPairEvidenceCompletion.lean) 定义了后验阈值、抽象亲和量、条件亲和量及可预测证据过程。其 `open_loop_finite_state_completion` 明确接受 `OpenLoopEvidenceDichotomy` 作为前提；这个前提连接局部观察条件与全记录分离。该模块并未仅凭 `MeasureAffinity` 这个函数类型构造出真实 Hellinger 积分，也未仅凭一个 `Nat → PMF` 序列建立随机停止过程。它还给出反例：任意把亲和量设为零，即使各来源都是同一个 Dirac 律，也能把抽象“证据”做成发散。
+
+另一个模块 [`FinitePmfLikelihood`](../../../D5/S3/Observer/ProductMeasures/FinitePmfLikelihood.lean) 从有限坐标 PMF 的独立乘积出发：`integral_prefixRootLikelihood` 把平方根似然的期望连接到逐坐标亲和量的乘积，`productLaw_ac_of_summable` 则在逐坐标局部等价与 Hellinger 能量可和条件下给出乘积律的绝对连续性。源码使用 $\sqrt{p/q}$ 并对 $q$ 积分；下文使用 $L=q/p$ 并对 $P$ 积分，对应时须交换参数方向。
+
+[`Bhattacharyya`](../../../D5/S3/TotalVariation/Bhattacharyya.lean) 的有限亲和量为 $\sum_y\sqrt{p(y)q(y)}$，并有归一化输入下不超过一的界。下文从这些实际接口出发，以普通数学推导补出本批所需的历史依赖模型；独立乘积公式不会被直接搬到任意自适应历史上。上述源码定位不是本批新增的 Lean 编译或公理闭包核验。
+

@@ -1,0 +1,14 @@
+**定义 181.1（固定调度的折扣响应）。** 固定一个调度 $p$，写 $T=T_p$。在 $\mathcal X^*$ 上固定次乘法范数，取 $\lambda\ge0$ 满足
+
+$$
+\lambda\|T\|<1.
+$$
+
+对 $H\in\mathcal X^*$ 定义
+
+$$
+\mathsf R_{\lambda,T}(H)
+=
+\sum_{n=0}^{\infty}\lambda^nT^nH.
+$$
+

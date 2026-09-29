@@ -1,0 +1,9 @@
+**引理 57.2。** 任意 CPTP $\Lambda:E\to D$ 都将 $\mathcal S_E$ 映到 $\mathcal S_D$，且对所有厄米差和任意候选 $R_E,S_E$ 有
+
+$$
+D_D\bigl((\operatorname{id}_{AB}\otimes\Lambda)R_E,
+(\operatorname{id}_{AB}\otimes\Lambda)S_E\bigr)
+\le D_E(R_E,S_E).
+\tag{57.7}
+$$
+

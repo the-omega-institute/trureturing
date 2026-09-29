@@ -1,0 +1,22 @@
+**定义 5.1.1（概率、码族与幸存集）。** 固定一个有完整有限列表的字母表 $\Sigma$，其实际大小为 $d\ge2$。在 $X=\Sigma^{\mathbb N_0}$ 上取同一个 iid 概率律 $\mu_p$，其中
+$$
+p_a>0\quad(a\in\Sigma),\qquad \sum_{a\in\Sigma}p_a=1,
+\qquad m=m_p=\max_a p_a<1.
+$$
+严格不等式来自至少两个实际字母均有正权重。对有限词 $w$，写
+$$
+p(w)=\mu_p([w])=\prod_{i<|w|}p_{w_i},\qquad p(\varnothing)=1.
+$$
+给定非负整数序列 $b=(b_n)_{n\ge1}$，令 $\mathcal C_b$ 为所有前缀自由族 $\mathcal F\subseteq\Sigma^+$，满足 $|\mathcal F\cap\Sigma^n|\le b_n$。这里前缀自由指不同词互不为前缀，$\Sigma^+$ 排除空词；族可以有限或可数，可以跳过任意层。计数对象是最终不同的词，重复公告不重复计费。$b_n\equiv1$ 时简称一词预算，记可行族空间为 $\mathcal C_1$。
+
+定义删除质量、最终幸存集与深度截断为
+$$
+S_{\mathcal F}(p)=f_{\mathcal F}(p)=\sum_{w\in\mathcal F}p(w),\qquad
+E_{\mathcal F}=X\setminus\bigcup_{w\in\mathcal F}[w],
+$$
+$$
+\mathcal F_{\le N}=\{w\in\mathcal F:|w|\le N\},\qquad
+E_{\mathcal F,N}=X\setminus\bigcup_{w\in\mathcal F_{\le N}}[w].
+$$
+不同禁词的柱两两不交，故 $0\le S_{\mathcal F}(p)\le1$，$\mu_p(E_{\mathcal F})=1-S_{\mathcal F}(p)$。每个 $E_{\mathcal F,N}$ 是深度 $N$ 柱的有限并，$E_{\mathcal F,N}\downarrow E_{\mathcal F}$；这是一份集合论上的 clopen 外逼近，尚未声称能从任意公告程序计算其完整深度截断。
+

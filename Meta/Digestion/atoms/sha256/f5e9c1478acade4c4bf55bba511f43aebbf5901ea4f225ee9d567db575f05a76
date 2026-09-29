@@ -1,0 +1,74 @@
+### 156.6 真实轨道与真实档案目标的统一比较
+
+对每个 $n\ge3$，第11节给出一份仅作用于档案的规范坐标
+
+$$
+F_n:S_n\xrightarrow{\ \cong\ }Q\otimes R,
+\qquad
+W_n=(I_M\otimes F_n)T^{(n)},
+$$
+
+$$
+W_n|j\rangle=|j\rangle_Q\operatorname{vec}\sqrt{\rho_{j,n}},
+\qquad
+\|W_n-W_*\|=\delta_n.
+\tag{156.32}
+$$
+
+对等距通道，完整参考半 diamond 距离由相应等距的算子范数差控制，因此
+
+$$
+\frac12\|\operatorname{Ad}_{W_n}-\mathcal W_*\|_\diamond
+\le\delta_n.
+\tag{156.33}
+$$
+
+构造的真实启动通道 $\mathcal R_L$ 是 $\operatorname{Ad}_{W_L}$ 在 $Q$ 上退相干的结果。对 $\mathcal W_*$ 作相同退相干恰得 $\mathsf A$，故
+
+$$
+\frac12\|\mathcal R_L-\mathsf A\|_\diamond\le\delta_L.
+\tag{156.34}
+$$
+
+以后让真实状态和比较状态经过同一个来源及同一个固定接收器。由通道收缩性和（156.20），对于所有 $k\ge0$，
+
+$$
+\begin{aligned}
+\frac12\|\mathcal R_{L+2k}-\mathsf A\|_\diamond&\le\delta_L,\\
+\frac12\|\mathcal R_{L+2k+1}-\mathsf B\|_\diamond&\le\delta_L.
+\end{aligned}
+\tag{156.35}
+$$
+
+输出统一视为 $M\otimes K$。后续误差不随轮数累加。
+
+由第153节的输出支撑压缩，真实完整档案解码优化精确等价于输出规范 $Q\otimes R$、以 $\operatorname{Ad}_{W_n}$ 为目标的优化。对任一固定解码器，三角不等式使接收通道和目标通道两侧的扰动至多相加；再取最小值保留该界。运行态只占据一个扇区，任何该扇区上的解码器又都可通过正交补替换补成整个 $K$ 上的 CPTP 解码器。因此
+
+$$
+\begin{aligned}
+|e_{L+2k}-e_A^*|&\le\delta_L+\delta_{L+2k},\\
+|e_{L+2k+1}-e_B^*|&\le\delta_L+\delta_{L+2k+1}.
+\end{aligned}
+\tag{156.36}
+$$
+
+这里第二项 $\delta_n$ 比较的是第 $n$ 步真实来源档案目标与共同极限目标；不能只控制接收轨道而遗漏目标仍随 $n$ 变化这一项。
+
+代入（156.22），并使用 $\delta_n\to0$，即得（156.7）。由（156.5），两条界的间隔
+
+$$
+\frac{\lambda_*}{2}-2\delta_L>0.
+\tag{156.37}
+$$
+
+这完成定理156.1的证明。
+
+合成演化 $\mathcal F$ 确实具有外围本征值 $-1$：任选密度矩阵 $\eta$，由（156.20），
+
+$$
+\mathcal F\bigl(\mathsf A(\eta)-\mathsf B(\eta)\bigr)
+=-\bigl(\mathsf A(\eta)-\mathsf B(\eta)\bigr),
+$$
+
+而两项占据正交持久扇区，差不为零。真正阻止最优误差收敛的是（156.22）和（156.36）的可访问性间隔；仅有 $-1$ 本征值本身并不足以推出该结论。
+

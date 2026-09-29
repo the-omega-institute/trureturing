@@ -1,6 +1,7 @@
 """Behavioral contract for optional, complete report-entry reuse receipts."""
 import copy
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
@@ -165,6 +166,92 @@ class ReuseTests(unittest.TestCase):
                 self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
         with patch.object(api.platform, 'machine', return_value='another-architecture'):
             self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
+
+    def test_mismatch_explains_versions_and_input_changes_without_exposing_environment(self):
+        self.write('D5/Removed.lean', 'def removed := 1\n')
+        api = self.receipt()
+        self.write('D5/A.lean', 'def a := 2\n')
+        self.write('D5/Added.lean', 'def added := 1\n')
+        (self.root / 'D5/Removed.lean').unlink()
+        self.policy['report_cache_release_semantic_version'] += 1
+        self.write_policy()
+        with patch.dict(os.environ, ELAN_TOOLCHAIN='private-toolchain-value'):
+            result = api.probe(self.root, self.report)
+        self.assertTrue(result['needs_lake'])
+        self.assertEqual(result['mismatch'], dict(cached_semantic_version=1, current_semantic_version=2,
+            added_inputs=1, removed_inputs=1, changed_inputs=1, execution_changed=True))
+        output = io.StringIO()
+        with patch.dict(os.environ, GITHUB_ACTIONS='true'):
+            api.warn_mismatch(result, output)
+        warning = output.getvalue()
+        self.assertTrue(warning.startswith('::warning title=Lean report cache mismatch::'))
+        self.assertIn('cached_version=1 current_version=2', warning)
+        self.assertIn('Previous-version module reports are incompatible', warning)
+        self.assertIn('LEAN_CACHE and LEAN_INSPECTOR_WORK', warning)
+        self.assertNotIn('private-toolchain-value', json.dumps(result) + warning)
+
+    def test_mismatch_cli_preserves_json_probe_and_surfaces_reuse_warning(self):
+        self.receipt()
+        self.write('D5/A.lean', 'def a := 2\n')
+        args = ['--repository', str(self.root), '--report', str(self.report)]
+        with patch.dict(os.environ, GITHUB_ACTIONS='true'):
+            probe = subprocess.run([sys.executable, '-B', str(HERE / 'reuse.py'), 'probe',
+                *args, '--diagnostics'], text=True, capture_output=True, check=False)
+            reuse = subprocess.run([sys.executable, '-B', str(HERE / 'reuse.py'), 'reuse',
+                *args, '--output', str(self.output)], text=True, capture_output=True, check=False)
+        self.assertEqual(probe.returncode, 0, probe.stderr)
+        self.assertTrue(json.loads(probe.stdout)['needs_lake'])
+        self.assertIn('::warning title=Lean report cache mismatch::', probe.stderr)
+        self.assertIn('Lake will determine which module reports can be reused', probe.stderr)
+        self.assertNotIn('Previous-version module reports are incompatible', probe.stderr)
+        self.assertEqual(reuse.returncode, 3, reuse.stderr)
+        self.assertIn('::warning title=Lean report cache mismatch::', reuse.stdout)
+        self.assertFalse(self.output.exists())
+
+    def test_hits_and_unavailable_receipts_do_not_claim_input_mismatch(self):
+        api = self.receipt()
+        output = io.StringIO()
+        api.warn_mismatch(api.probe(self.root, self.report), output)
+        receipt = publication.member(self.report, '.reuse.json')
+        record = json.loads(receipt.read_text())
+        for invalid in [None, [], {'files': None}]:
+            record['inputs'] = invalid
+            receipt.write_text(json.dumps(record))
+            result = api.probe(self.root, self.report)
+            self.assertTrue(result['needs_lake'])
+            api.warn_mismatch(result, output)
+        receipt.unlink()
+        api.warn_mismatch(api.probe(self.root, self.report), output)
+        self.assertEqual(output.getvalue(), '')
+
+    def test_ci_resource_probe_forwards_mismatch_warning(self):
+        relative = '.lake/build/stratalint/raw-lean-report.json'
+        seed = self.root / 'build/ci/current-check-seed'
+        self.report = seed / relative
+        self.report.parent.mkdir(parents=True)
+        self.receipt()
+        checks = dict(version=2, stage='current', candidate='a' * 64, round='b' * 32)
+        (seed / 'checks.json').write_text(json.dumps(checks))
+        producer = dict(version=1, candidate=checks['candidate'], round=checks['round'],
+            report=relative, materials=[dict(path=relative + suffix)
+                for suffix in (*publication.SUFFIXES, '.reuse.json')])
+        (seed / 'producer-report.json').write_text(json.dumps(producer))
+        for name in ['reuse.py', 'publication.py', 'materials.py']:
+            target = self.root / 'tools/lean-inspector' / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(HERE / name, target)
+        self.policy['report_cache_release_semantic_version'] += 1
+        self.write_policy()
+        command = [sys.executable, '-B', '-c',
+            'import pathlib, sys; sys.path.insert(0, sys.argv[1]); import lean_actions; '
+            'print(lean_actions.report_seed(pathlib.Path(sys.argv[2])))',
+            str(ROOT / 'tools/scripts/worktree'), str(self.root)]
+        with patch.dict(os.environ, GITHUB_ACTIONS='true'):
+            result = subprocess.run(command, text=True, capture_output=True, check=False)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.strip(), 'None')
+        self.assertIn('::warning title=Lean report cache mismatch::', result.stderr)
+        self.assertIn('cached_version=1 current_version=2', result.stderr)
 
     def test_registered_file_mode_changes_invalidate_reuse_and_sealing(self):
         api = self.receipt()

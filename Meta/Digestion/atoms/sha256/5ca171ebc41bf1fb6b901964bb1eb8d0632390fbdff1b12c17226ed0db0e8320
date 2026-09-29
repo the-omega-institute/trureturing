@@ -1,0 +1,4 @@
+- D5/S0/Computability/Searchability/SearchableWindowDecision.lean 的 searchable_window_forall_decidable：在已供应满足相应完备性的 Boolean 选择器时，得到全称测试的判定。它将选择器列为前提，不自动从有限层非空制造这种选择器。
+
+这里的仓内来源范围限于上述固定快照及列明的 D5 接口；这些接口不提供一般有效满射逆系统的可计算分支定理或 recursive binary Kleene tree 的存在定理。这不声称该快照其他位置、第三方库或文献不存在对应结果。本节的有效提升短证、CRT 纤维复用和具体 HALT 模型属于普通数学连接，不取得新增 Lean 或原创性名义。
+

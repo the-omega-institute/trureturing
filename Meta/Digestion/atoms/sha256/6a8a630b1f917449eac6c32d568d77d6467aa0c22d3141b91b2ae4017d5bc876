@@ -1,0 +1,19 @@
+### 定理 12.4：有限 Kraus 左逆的双向构造
+
+设 $\sum_aE_a^\dagger E_a=I_d$。存在某个有限矩阵族 $A_b:H\to L$ 满足
+
+$$
+\sum_bA_b^\dagger A_b=I_n,\qquad
+\sum_bA_b\left(\sum_aE_aXE_a^\dagger\right)A_b^\dagger=X
+\quad\forall X
+\tag{12.4}
+$$
+
+当且仅当
+
+$$
+E_a^\dagger E_c=\frac{\operatorname{tr}(E_a^\dagger E_c)}d I_d
+\quad\forall a,c.
+\tag{12.5}
+$$
+

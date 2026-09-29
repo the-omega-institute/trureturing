@@ -1,0 +1,50 @@
+### 231.1 固定目标、预算及两种误差
+
+固定输入 $A=\mathbb C^2$、量子输出 $O=\mathbb C^m$，其中 $m\ge2$，以及经典记录 $B=\mathbb C^3$ 的指定正交标签 $|1\rangle,|2\rangle,|3\rangle$。任取三个固定单位向量
+$$
+r_1,r_2,r_3\in\mathbb C^m,\qquad P_j=|r_j\rangle\langle r_j|.
+\tag{231.TR.2}
+$$
+它们不必互相正交，可以全部相同。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^3|j\rangle\langle j|\otimes\mathcal R_j(X),
+\qquad\mathcal R_j(X)=\frac13\operatorname{Tr}(X)P_j.
+\tag{231.TR.3}
+$$
+候选为同一输入、输出及记录接口的任意 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^3|j\rangle\langle j|\otimes\mathcal S_j(X),
+\tag{231.TR.4}
+$$
+其中各 $\mathcal S_j$ 完全正、总和保迹。经典标签方向上的块对角性属于共同接口；不允许改成有相干标签的另一类输出模型。
+
+以非归一化 Choi 矩阵定义
+$$
+k_j=\operatorname{rank}J_{\mathcal S_j},
+\qquad K(\mathcal S)=\sum_{j=1}^3k_j
+=\operatorname{rank}J_{\mathcal S}.
+\tag{231.TR.5}
+$$
+末等式来自标签方向的正交直和。因此 $K$ 正是完整记录通道的最小 Kraus 数。零分支的秩为零。目标每个分支的 Choi 矩阵为 $(I_2\otimes P_j)/3$，故每个分支秩为二，总秩为六。
+
+定义完整误差及无参考误差
+$$
+\delta_\diamond(\mathcal R,\mathcal S)
+=\frac12\|\mathcal R-\mathcal S\|_\diamond,
+\qquad
+\delta_0(\mathcal R,\mathcal S)
+=\sup_{\rho\in\mathcal D(\mathbb C^2)}
+\frac12\|\mathcal R(\rho)-\mathcal S(\rho)\|_1.
+\tag{231.TR.6}
+$$
+第一项允许外部参考；第二项只允许输入密度矩阵，不保留外部参考。显然 $\delta_0\le\delta_\diamond$。
+
+对整数 $R\ge1$，令
+$$
+D_R=\inf_{K(\mathcal S)\le R}\delta_\diamond(\mathcal R,\mathcal S),
+\qquad
+U_R=\inf_{K(\mathcal S)\le R}\delta_0(\mathcal R,\mathcal S).
+\tag{231.TR.7}
+$$
+两个下确界都在（231.TR.4）的全部同接口 CPTP 候选上取。由于 $m\ge2$，任选等距 $V:\mathbb C^2\to\mathbb C^m$，将 $X\mapsto VXV^\dagger$ 放在一个标签、其余分支取零，即得到总秩一候选。所以每个 $R\ge1$ 的候选集均非空。$R=0$ 无 CPTP 候选，不属于本节的预算范围。
+

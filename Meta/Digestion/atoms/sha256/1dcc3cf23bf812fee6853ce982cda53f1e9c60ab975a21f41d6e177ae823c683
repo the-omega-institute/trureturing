@@ -1,0 +1,14 @@
+**证明。** 充分性：对$c^{(a)}$酉对角化，同时作Kraus基变换，得到$F_{aj}^\dagger F_{ak}=d_{aj}\delta_{jk}I$。$d_{aj}>0$时令$S_{aj}=F_{aj}/\sqrt{d_{aj}}$，零权重算子本身为零。ST27的解码对$\sum_jd_{aj}S_{aj}\rho S_{aj}^\dagger$给出$p_a\rho$，并可在补空间CPTP扩展。$p_a=0$时该分支恒为零。
+
+必要性：写恢复Kraus为$R_{at}$。复合通道$p_a\mathrm{id}$的Choi矩阵秩至多一，故每个$R_{at}E_{a\ell}=z_{at\ell}I$（零分支也成立）。利用恢复保迹，
+
+$$
+E_{a\ell}^\dagger E_{ak}
+=\sum_tE_{a\ell}^\dagger R_{at}^\dagger R_{at}E_{ak}
+=\left(\sum_t\overline{z_{at\ell}}z_{atk}\right)I.
+$$
+
+括号构成Gram矩阵，故半正定；分支迹给出$p_a$。∎
+
+这里的$p_a$不依赖未知逻辑态。如果某公开结果携带未知态的信息，同时要求每个结果后都恢复完整未知态，需要单独满足无信息无扰动条件，不能由“已知结果”自动获得。
+

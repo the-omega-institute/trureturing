@@ -1,0 +1,10 @@
+**定理 2.46。** For every fixed computable radix sequence and every fixed computably enumerable sparse presentation as in C卷第2.9.1节, and for every oracle $A$,
+
+$$
+\boxed{
+M\text{ is }A\text{-computable}
+\quad\Longleftrightarrow\quad
+R\text{ is }A\text{-decidable}.
+}
+$$
+

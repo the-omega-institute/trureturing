@@ -1,0 +1,13 @@
+**定义 42.1（弱点击与缓慢退出的共同仪器）。** 在正交基 $d,u,v$ 上，对 $0\le\varepsilon\le1$ 定义
+
+$$
+Q_{0,\varepsilon}=P_d+\sqrt{1-\varepsilon}\,P_u,
+\qquad
+Q_{1,\varepsilon}=\sqrt{\varepsilon(1-\varepsilon)}|d\rangle\langle u|,
+\qquad
+L_{u,\varepsilon}=\varepsilon P_u,
+\qquad L_v=P_v.
+$$
+
+前两个 Kraus 算子属于同一个未点击结果，后两个分别产生点击记录 $u,v$。这里点击 $u$ 的效果是 $\varepsilon^2P_u$，振幅与概率不能混用。
+

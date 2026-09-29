@@ -1,0 +1,97 @@
+### 307.4 三种零信号主阶与适应成本分界
+
+零参照为
+$$
+Q(x,z)=q_x/2,\qquad q_1=1/B,\quad q_0=1-1/B.
+$$
+由于 \(P_Z=U_Z\) 且 \(Q=q\otimes U_Z\)，有准确恒等式
+$$
+D(P^\beta_{c,h}\Vert Q)
+=D(p_{c,h}\Vert q)+I_{P^\beta_{c,h}}(X;Z).
+\tag{307.25}
+$$
+这只是在当前产品基准下的链式分解。
+
+令 \(\Delta=\varepsilon h^\beta\)、\(u_x=p_x/2\)。当前
+$$
+u_x\ge3/32,\qquad |\Delta/u_x|\le2/3.
+$$
+每行的互信息贡献为偶函数
+$$
+F(u,\Delta)
+=(u+\Delta)\log(1+\Delta/u)
+ +(u-\Delta)\log(1-\Delta/u)
+=\Delta^2/u+O(\Delta^4).
+$$
+余项可在上述紧范围一致控制；\(p_x=q_x+O(h)\) 给
+$$
+I_{P^\beta_{c,h}}(X;Z)
+=\alpha_Bh^{2\beta}
+ +O(h^{2\beta+1}+h^{4\beta}),\qquad
+\alpha_B=\frac{2\varepsilon^2B^2}{B-1}.
+$$
+旧边缘则有
+$$
+D(p_{c,h}\Vert q)=a_ch^2+O(h^3),\qquad
+a_c=\frac{c^2}{2C^2(B-1)}.
+$$
+所以完整、不会误吞不同幂次的展开是
+$$
+\boxed{D(P^\beta_{c,h}\Vert Q)
+=a_ch^2+\alpha_Bh^{2\beta}
+ +O(h^3+h^{2\beta+1}+h^{4\beta}).}
+\tag{307.26}
+$$
+这不是对一般 \(\beta\) 都有的“首项加 \(O(h^2)\)”公式。
+
+沿 \(c=1\)，令 \(a_1=1/[2C^2(B-1)]\)，有
+$$
+d_\beta(h):=D(P^\beta_{1,h}\Vert Q)
+\sim A_\beta^{\rm KL}h^\rho,\qquad
+\rho=2\min(\beta,1),
+$$
+$$
+A_\beta^{\rm KL}=
+\begin{cases}
+\alpha_B,&0<\beta<1,\\
+a_1+\alpha_B,&\beta=1,\\
+a_1,&\beta>1.
+\end{cases}
+\tag{307.27}
+$$
+这里 \(A_\beta^{\rm KL}\) 是首系数，勿与协议上界常数 \(A_\beta\) 混用。沿此路径两来源相同，故
+$$
+I_{\rm clock,\beta}(h)=\tfrac23d_\beta(h)
+\tag{307.28}
+$$
+直接满足第305节的条件信息／期望时长合同。
+
+单次 TV 至多
+$$
+\operatorname{TV}(P^\beta_{c,h},Q)
+\le h/(BC)+2\varepsilon h^\beta\longrightarrow0.
+\tag{307.29}
+$$
+任意有限请求前缀在共同控制和种子下趋于 \(Q\)。记 \(f_h(c)=\Pr_{c,h}(D=0)\)，风险边 \(r=1,k\) 给 \(f_h(1)-f_h(k^2)\ge2/3\)。将“至多 \(n\) 次调用且有限回答一”和“至多 \(n\) 次调用且有限回答零”分别放在 \(c=1,k^2\) 世界中，概率和至多 \(1/3\)。先令 \(h\to0\)，再令 \(n\to\infty\)，得
+$$
+Q(\text{有限回答})\le1/3.
+\tag{307.30}
+$$
+这仍保留有限控制步骤的回答要求，不把内部永久运行当成答案。
+
+定理305.1于是给
+$$
+\limsup_{h\downarrow0}
+\frac{I_{\rm clock,\beta}(h)\mathbb E_{0,1,h}T}
+{\log\log(1/h)}\ge2/3,
+$$
+即
+$$
+\boxed{\limsup_{h\downarrow0}
+\frac{h^\rho\mathbb E_{0,1,h}T}{\log\log(1/h)}
+\ge\frac1{A_\beta^{\rm KL}}.}
+\tag{307.31}
+$$
+具体：
+
+- \(\beta<1\)：必要尺度为 \(h^{-2\beta}\log\log(1/h)\)，系数 \(1/\alpha_B\)；\(\varepsilon=1/16\) 时 \(B=2,4\) 分别为 \(32,24\)。

@@ -1,0 +1,34 @@
+#### 232.4.1 归一化 Choi 态的平坦谱下界
+
+取二级参考 $E=\mathbb C^2$ 和归一化最大纠缠输入
+$$
+|\Omega\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2}.
+\tag{232.UC.15}
+$$
+目标联合输出为
+$$
+\tau=(\mathcal R\otimes\operatorname{id}_E)(P_\Omega)
+=\frac1{2N}\sum_{j=1}^N|j\rangle\langle j|\otimes P_j\otimes I_E
+=\frac1{2N}\Pi,
+\tag{232.UC.16}
+$$
+其中 $\Pi$ 为秩 $2N$ 的正交投影。故目标完整 Choi 秩恰为 $2N$。
+
+对任意候选，记
+$$
+\sigma=(\mathcal S\otimes\operatorname{id}_E)(P_\Omega),
+\qquad Q=\operatorname{supp}\sigma.
+$$
+因为 $\sigma$ 是归一化 Choi 态，$\operatorname{rank}Q=K(\mathcal S)\le R$。候选在效果 $I-Q$ 上概率为零，而目标概率满足
+$$
+\operatorname{Tr}[(I-Q)\tau]
+=1-\frac{\operatorname{Tr}(Q\Pi)}{2N}
+\ge1-\frac{R}{2N}.
+\tag{232.UC.17}
+$$
+这里仅用 $0\preceq\Pi\preceq I$；不假定候选支撑包含于目标支撑。因此对全部候选有
+$$
+\boxed{D_R\ge\max\left\{0,1-\frac{R}{2N}\right\}.}
+\tag{232.UC.18}
+$$
+

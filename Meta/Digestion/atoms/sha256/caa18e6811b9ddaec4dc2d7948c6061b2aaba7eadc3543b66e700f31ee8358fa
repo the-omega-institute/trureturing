@@ -1,0 +1,26 @@
+### 193.1 统一的二参数任务
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$。来源小权重取
+$0\le\ell\le1/2$，来源态、旗标通道及完整参考任务均为第192节的定义，输入噪声为 $w_0=\epsilon,w_1=R\epsilon$。记全部共同接收端 CPTP 恢复器的最优误差为
+
+$$
+\mathscr E(\ell,\epsilon)
+=h_{1-2\ell}(\epsilon,R).
+$$
+
+取充分小正 $\epsilon$，使输入态对全部来源权重合法。
+第189—190节的过渡函数记为 $\Phi_h$，并定义
+
+$$
+\Phi_\infty=\frac{\beta(R+1)}8,
+\qquad
+\Psi(z)=
+\begin{cases}
+\Phi_{z/(1-z)},&0\le z<1,\\
+\Phi_\infty,&z=1.
+\end{cases}
+\tag{193.1}
+$$
+
+第190节的连续性和远端极限保证 $\Psi$ 在整个闭区间 $[0,1]$ 连续。
+

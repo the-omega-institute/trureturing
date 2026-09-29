@@ -1,0 +1,68 @@
+### 164.1 连续矩阵描述与各自的实际相位群
+
+设参数 $t$ 属于紧度量空间 $P$。固定有限输入、活动记忆、接收器和规范输出空间，终端解码器始终取同一个紧 CPTP 集合 $\mathfrak D$。对每个 $t$，来源与接收装置符合原来的完整参考合同，单终端误差 $e_n(t)$ 连续依赖 $t$。
+
+假设给定连续函数
+
+$$
+g_t=(\lambda_1(t),\ldots,\lambda_s(t))\in\mathbb T^s,
+\qquad
+G_t=\overline{\{g_t^n:n\ge0\}},
+\tag{164.1}
+$$
+
+以及连续依赖参数的有限线性映射 $\Phi_j(t)$ 和稳定目标通道 $\mathcal V_t$，使
+
+$$
+\mathcal R_{t,z}=\sum_{j=1}^sz_j\Phi_j(t)
+\tag{164.2}
+$$
+
+对 $z\in G_t$ 为该装置的实际子序列极限通道。坐标和矩阵空间在参数间统一，不仅是给每个参数分别选一份没有对应的谱表。
+
+在整个共同环境环面上定义辅助比较函数
+
+$$
+\widetilde h(t,z)=
+\min_{\mathcal D\in\mathfrak D}
+\frac12\|
+(\operatorname{id}_M\otimes\mathcal D)\mathcal R_{t,z}-\mathcal V_t
+\|_\diamond.
+\tag{164.3}
+$$
+
+当 $z\notin G_t$ 时，（164.2）不必为物理通道；（164.3）此时仅使用有限线性映射上的 diamond 范数，作为连续比较函数。只有其在 $G_t$ 上的限制
+$h_t$ 才是该固定装置的实际相位误差。
+
+矩阵连续性、CPTP 后处理的范数收缩性及解码器集合的紧性给 $\widetilde h$ 的联合连续性。更直接地，对两份参数相位数据，三角不等式给
+
+$$
+|\widetilde h(t,z)-\widetilde h(u,w)|
+\le\frac12\|\mathcal R_{t,z}-\mathcal R_{u,w}\|_\diamond
++\frac12\|\mathcal V_t-\mathcal V_u\|_\diamond.
+\tag{164.4}
+$$
+
+这不需要连续选择最优解码器。
+
+另外要求统一尾界：存在与参数无关的非负数列 $r_n\to0$，使
+
+$$
+|e_n(t)-h_t(g_t^n)|\le r_n
+\quad\text{对全部 }t\in P,\ n\ge3.
+\tag{164.5}
+$$
+
+记 $\zeta_N=\sup_{n\ge N}r_n$、
+$M_{N-1}(t)=\max_{1\le n<N}e_n(t)$，以及
+$E_\infty(t)=\sup_{n\ge1}e_n(t)$。与第162节相同，对 $N\ge3$ 有
+
+$$
+0\le E_\infty(t)-
+\max\{M_{N-1}(t),\max_{z\in G_t}h_t(z)\}
+\le\zeta_N.
+\tag{164.6}
+$$
+
+本节的参数极限结论以（164.1）—（164.5）为明确前提；若稳定衰减率随参数趋近一，不能省去统一尾界后继续应用。
+

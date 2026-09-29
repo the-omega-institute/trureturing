@@ -70,6 +70,14 @@ class Presenter:
             return "error"
         return None
 
+    @staticmethod
+    def expected_rejection(value):
+        # Only the producer's completed, validated negative compilation check
+        # may reinterpret exit 1. Cancellation and unexpected exits stay errors.
+        child = value.get('child_exit')
+        return (value.get('expected_rejection') is True and value.get('outcome') == 'completed'
+                and isinstance(child, dict) and child.get('code') == 1)
+
     def structured(self, value, original, activity=True):
         # The CLI's diagnostic severity is authoritative; do not infer it from
         # words such as "error" inside an informational message or file name.
@@ -84,7 +92,7 @@ class Presenter:
             return
         severity = self.severity(value)
         child = value.get("child_exit")
-        if isinstance(child, dict) and child.get("code") not in (None, 0):
+        if isinstance(child, dict) and child.get("code") not in (None, 0) and not self.expected_rejection(value):
             severity = "warning" if child["code"] == 3 else "error"
         if severity in ("warning", "error"):
             # Stage results already retain scope, paths and successful steps in
@@ -142,7 +150,8 @@ class Presenter:
                 # Non-streaming operations emit their process result before
                 # their text. Keep an unsuccessful operation's explanation.
                 child = value.get("child_exit")
-                failed = self.severity(value) == "error" or isinstance(child, dict) and child.get("code") not in (None, 0)
+                failed = self.severity(value) == "error" or (isinstance(child, dict)
+                    and child.get("code") not in (None, 0) and not self.expected_rejection(value))
                 self.detail[stream] = False
                 if failed:
                     self.failed_operation.add(stream)

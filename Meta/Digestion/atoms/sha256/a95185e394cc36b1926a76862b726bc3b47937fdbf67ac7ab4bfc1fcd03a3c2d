@@ -1,0 +1,53 @@
+### 177.1 参数的统一有限界
+
+沿用第174、175节，记
+
+$$
+z=\left(-\frac12\right)^{L-1},\qquad
+t_0=z/3,\qquad t_1=-2z/3,
+$$
+
+$$
+d(t)=\frac19-\frac t6-\frac{t^2}{2},
+\qquad
+\mathfrak b(t)=\frac43-t+4\sqrt{d(t)},
+\qquad
+w(t)=\frac{9t^2}{\mathfrak b(t)}.
+\tag{177.1}
+$$
+
+置
+
+$$
+\epsilon=w_0=w(t_0),\qquad
+R=w_1/w_0=\frac{4\mathfrak b(t_0)}{\mathfrak b(t_1)},
+\qquad
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353}.
+\tag{177.2}
+$$
+
+对全部有限 $L\ge3$，有 $0<|t_j|\le1/6$。在这个区间上，
+
+$$
+\frac5{72}\le d(t)\le\frac18.
+$$
+
+所以
+
+$$
+\boxed{
+\frac{13}{6}<\mathfrak b(t)<3,\qquad
+\frac{z^2}{3}<\epsilon<\frac{6z^2}{13},\qquad
+\frac{26}{9}<R<\frac{72}{13}<6.
+}
+\tag{177.3}
+$$
+
+第一式使用
+$4/3-t\in[7/6,3/2]$、
+$\sqrt{d(t)}>1/4$ 与
+$4\sqrt{d(t)}\le\sqrt2<3/2$；
+其余两式由（177.1）—（177.2）直接得到。
+特别地，以下证明可以统一使用 $1\le R\le6$。
+

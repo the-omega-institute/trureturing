@@ -1,0 +1,12 @@
+**定理 67.3（相位阻尼转变的首阶定位）。** 固定满足 $c>\mu+\eta/\sqrt a$ 的 $(a,\varepsilon)$；例如第64节全部参数区域 $0<\varepsilon\le1/16$、$1/49\le a<1$。则存在唯一转变位置 $\lambda_*\in(0,1)$，使
+
+$$
+e(R_\lambda)=\varepsilon\quad\Longleftrightarrow\quad0\le\lambda\le\lambda_*,
+$$
+
+并且
+
+$$
+\frac\mu c\le\lambda_*\le\frac{\mu+\eta/\sqrt a}{c}<1.
+$$
+

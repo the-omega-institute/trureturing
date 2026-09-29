@@ -1,0 +1,19 @@
+**定义 213.1（先验机会约束）。** 给定先验 $\mu$ 和阈值 $\alpha$，机会约束为
+
+$$
+R_{\mathrm{avg}}(\pi,\mu)\le\alpha.
+$$
+
+给定来源集合而无先验的最坏约束为
+
+$$
+R_{\mathrm{worst}}(\pi)\le\alpha.
+$$
+
+给定历史预算向量 $\boldsymbol\alpha=(\alpha_h)$ 的局部约束为
+
+$$
+R_{\mathrm{cond}}(h,\pi)\le\alpha_h
+\quad\text{对所有可达 }h.
+$$
+

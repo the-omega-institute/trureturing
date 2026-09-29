@@ -1,0 +1,156 @@
+**定理32.3（全相位精确容量及其在线实现）。** 对 $n\ge1$ 和端点 $i,j$，记
+$C_n(i,j)\subseteq\mathbb Z^q$ 为所有 $n$ 步支持路径 $i\to j$ 的总荷集合，并置
+
+$$
+N_n=\sum_{i,j}|C_n(i,j)|,\qquad N_0=1.
+\tag{32.9}
+$$
+
+在定义31.1的任意参考、任意初始活动记忆与完整联合恢复合同下，
+
+$$
+\boxed{k_n^{(0)}(\mathbb T^q)=N_n.}
+\tag{32.10}
+$$
+
+同一列与未来终端无关的时变在线接收门，在每个时刻 $n$ 精确使用
+$N_n$ 维记忆即可实现，不需要另加失败旗标。
+
+证明。先写共同档案支撑，再证明任意共同编解码都受此支撑的维数下界。
+对路径 $\gamma=(i_0,\ldots,i_n)$，记
+
+$$
+p(\gamma)=\prod_{t=1}^nP_{i_{t-1}i_t},\qquad
+|\gamma\rangle=
+|i_0,i_1\rangle\otimes\cdots\otimes|i_{n-1},i_n\rangle.
+\tag{32.11}
+$$
+
+对每个可达三元组 $(i,j,c)$ 定义
+
+$$
+b_{ijc}=
+\sum_{\substack{\gamma:i\to j,\ |\gamma|=n\\g(\gamma)=c}}
+\sqrt{p(\gamma)}\,|\gamma\rangle,
+\qquad
+\chi_{ij}^{(n)}(\theta)
+=\sum_{c\in C_n(i,j)}e^{i\theta\cdot c}b_{ijc}.
+\tag{32.12}
+$$
+
+所有 $b_{ijc}$ 非零，不同三元组的路径集合不交，所以它们两两正交。
+$n\ge1$ 时，完整边标签同时记录初始及终止顶点；不同端点扇区也正交。
+对每个固定相位，全部初始输入在档案侧的支撑是
+
+$$
+S_n(\theta)=
+\operatorname{span}\{\chi_{ij}^{(n)}(\theta):C_n(i,j)\ne\varnothing\}.
+\tag{32.13}
+$$
+
+不同整数荷给出的环面字符线性无关。等价地，对固定 $i,j,c$，
+
+$$
+b_{ijc}=\frac1{(2\pi)^q}
+\int_{\mathbb T^q}e^{-i\theta\cdot c}\chi_{ij}^{(n)}(\theta)\,d\theta.
+\tag{32.14}
+$$
+
+有限维子空间对积分封闭，因此
+
+$$
+W_n:=\operatorname{span}_{\theta\in\mathbb T^q}S_n(\theta)
+=\operatorname{span}\{b_{ijc}\},\qquad \dim W_n=N_n.
+\tag{32.15}
+$$
+
+支撑计数尚不足以单独证明最小物理维数。设共同编码、解码通过
+$D$ 维寄存器，恢复通道为 $\mathcal R=\mathcal D_n\mathcal E_n$。
+以 $m$ 维参考 $J$ 和归一化 Bell 初态
+$m^{-1/2}\sum_i|i\rangle_J|i\rangle_M$ 测试合同，得到纯联合态
+
+$$
+|\Psi_{\theta,n}\rangle
+=\frac1{\sqrt m}\sum_{i,j}|i\rangle_J
+ \otimes\chi_{ij}^{(n)}(\theta)\otimes|j\rangle_M.
+\tag{32.16}
+$$
+
+它在档案侧的 Schmidt 支撑正是 $S_n(\theta)$。精确保持这个完整纯态，逐项比较参考—活动记忆的矩阵元，即得
+$\mathcal R(X)=X$ 对每个 $X\in\mathcal L(S_n(\theta))$ 成立。
+
+取恢复通道的一个固定 Stinespring 等距
+$U:H_n\to H_n\otimes E$。纯态不扰动使它在每个
+$S_n(\theta)$ 上形为
+
+$$
+Ux=x\otimes e_\theta\quad(x\in S_n(\theta)),\qquad
+\|e_\theta\|=1.
+\tag{32.17}
+$$
+
+这里同一支撑内的环境向量相同：先对一组正交基的纯态使用纯输出，再对任意两基向量的叠加或其非对角矩阵元使用
+$\mathcal R=\operatorname{id}$，就强制环境向量一致。
+
+固定 $\theta$，选任意非空端点扇区 $(i,j)$。向量
+$\chi_{ij}^{(n)}(\theta)$ 非零且连续，所以当 $\varphi$ 位于 $\theta$ 的某邻域时
+
+$$
+\langle\chi_{ij}^{(n)}(\theta),\chi_{ij}^{(n)}(\varphi)\rangle\ne0.
+\tag{32.18}
+$$
+
+由 $U$ 保持内积和（32.17），该内积等于其自身乘上
+$\langle e_\theta,e_\varphi\rangle$，故
+$\langle e_\theta,e_\varphi\rangle=1$，即 $e_\theta=e_\varphi$。
+环境向量在连通环面上局部常值，因而全局相同。这里仅使用邻近相位的交叠，不要求任意远隔相位的支撑非正交。
+
+线性性于是给 $Uw=w\otimes e$ 对全部 $w\in W_n$ 成立。因此
+$\mathcal R$ 在整个 $\mathcal L(W_n)$ 上恒等，编码
+$\mathcal E_n$ 在这个算子空间上单射。比较复线性维数得到
+
+$$
+N_n^2=\dim_{\mathbb C}\mathcal L(W_n)
+\le \dim_{\mathbb C}\mathcal L(\mathbb C^D)=D^2,
+\quad\text{故 }D\ge N_n.
+\tag{32.19}
+$$
+
+上界可将 $W_n$ 等距编码，并在正交补上作任意 CPTP 完成。下面的在线实现同时给出各终端的上界。
+
+令 $W_0=K_0=\mathbb C$。由（31.31）的端点递推，对每个相位都有
+$S_{n+1}(\theta)\subseteq S_n(\theta)\otimes B$，因此
+
+$$
+W_{n+1}\subseteq W_n\otimes B.
+\tag{32.20}
+$$
+
+取 $K_n=\mathbb C^{N_n}$、$F_n:W_n\to K_n$ 为满射等距，将
+$F_n$ 在 $W_n^\perp$ 上以零延拓。设 $\Pi_n$ 为 $W_n$ 的正交投影，
+$F_0=\Pi_0=I$，则
+$`F_n^*F_n=\Pi_n`$、$`F_nF_n^*=I_{K_n}`$。在整个输入载体上定义
+
+$$
+\begin{aligned}
+L_n&=F_n\Pi_n(F_{n-1}^*\otimes I_B),\\
+\mathcal C_n(X)
+&=L_nXL_n^*
++\operatorname{Tr}[(I-L_n^*L_n)X]\,\tau_n,
+\end{aligned}
+\tag{32.21}
+$$
+
+其中 $\tau_n$ 是 $K_n$ 内任一预定密度矩阵。前缀包含（32.20）保证
+$`L_n^*L_n`$ 为投影，所以（32.21）是全域 CPTP 映射；$L_n$ 在可达支撑上等距，在其正交补上为零。实际来源对全部相位和参考输入都落在可达支撑内，补分支概率恒为零。故解码
+
+$$
+\mathcal D_n(Y)=F_n^*YF_n
+\tag{32.22}
+$$
+
+保迹并精确恢复。所有门只依赖当前编号，无需知道未来终端。它们没有要求从整个
+$K_{n-1}\otimes B$ 到 $K_n$ 存在无环境等距；所需的是可达支撑上的部分等距及全域通道完成。证明完毕。
+
+上述必要性还适用于其他连通候选参数空间：只要档案支撑向量随参数连续、始终至少有一个非零向量，共同 Stinespring 环境同样由局部非零交叠强制为全局常量。因此，精确容量等于该连通族的共同档案支撑维数。下文的闭区间候选弧直接使用这一步，不预设能够制备不同参数值的叠加输入。
+

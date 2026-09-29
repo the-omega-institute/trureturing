@@ -1,0 +1,68 @@
+### 143.1 实际来源决定两个输入位块
+
+沿用第141节的非退化已知来源及记号：
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+x=|a|^2,\quad y=|b|^2,\quad x+y=1,\quad 0<x,y<1.
+\tag{143.1}
+$$
+
+令 $S_n$ 为实际 Bell 参考档案支撑，
+$F_n:S_{n+1}\hookrightarrow S_n\otimes B$ 为实际来源包含，
+$W_n:S_n\otimes\Gamma_n\to K$ 为可逆编码等距，
+$\tau_n>0$ 为 $\Gamma_n$ 上的固定密度矩阵，记 $r_n=\dim\Gamma_n$。接收前等距仍是
+
+$$
+J_n=(W_n\otimes I_B)\Pi_n(F_n\otimes I_{\Gamma_n}),
+\qquad \mathcal U_n=\operatorname{ran}J_n\subseteq K\otimes B.
+\tag{143.2}
+$$
+
+所有轮次的 $K$、物理位空间 $B$ 及其基相同。这里不把不同轮次的位块另行重标或旋转后再比较。
+
+对 $n\ge2$，用实际档案列定义
+
+$$
+h_n^i=a\chi_{i0}^{n}+\chi_{i1}^{n},\qquad
+g_n^i=\chi_{i0}^{n}\quad(i=0,1),
+$$
+
+$$
+\mathscr H_n=\operatorname{span}\{h_n^0,h_n^1\},
+\qquad
+\mathscr G_n=\operatorname{span}\{g_n^0,g_n^1\}.
+\tag{143.3}
+$$
+
+它们是 $S_n$ 中的两个二维子空间。来源列递推直接给出
+
+$$
+F_n(S_{n+1})
+=(\mathscr H_n\otimes|0\rangle)
+\mathbin{\oplus}(\mathscr G_n\otimes|1\rangle).
+\tag{143.4}
+$$
+
+因此令
+
+$$
+U_n^0=W_n(\mathscr H_n\otimes\Gamma_n),\qquad
+U_n^1=W_n(\mathscr G_n\otimes\Gamma_n),
+$$
+
+便有实际位块分解
+
+$$
+\boxed{
+\mathcal U_n=(U_n^0\otimes|0\rangle)
+\mathbin{\oplus}(U_n^1\otimes|1\rangle),
+\qquad
+\dim U_n^0=\dim U_n^1=2r_n,\quad
+\dim\mathcal U_n=4r_n.
+}
+\tag{143.5}
+$$
+
+两项在 $K\otimes B$ 中因位标签而正交，并未要求 $U_n^0,U_n^1$ 在 $K$ 中正交。实际 Bell 档案边缘在 $S_{n+1}$ 上正定，$\tau_n$ 在 $\Gamma_n$ 上正定，所以 $\mathcal U_n$ 恰为实际接收前边缘的支撑。
+

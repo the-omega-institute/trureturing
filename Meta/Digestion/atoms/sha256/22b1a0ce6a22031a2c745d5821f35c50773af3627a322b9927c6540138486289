@@ -1,0 +1,10 @@
+**推论 216.2（中心乘积不是置信证书）。** 若某个 $\beta_i$ 或 $\alpha_i$ 的区间具有正宽度，则一般有
+
+$$
+\widehat\beta_i\widehat\alpha_i
+<
+\overline\beta_i\,\overline\alpha_i.
+$$
+
+因此把经验中心直接代入（212.2）只能给点估计，不能给同时置信的上界。
+

@@ -1,0 +1,38 @@
+### 定理 ST5.3：只能恢复对偶轨道上的不变量
+
+设完整观测数据 $\mathscr D(R)$ 使用相应运输后的实验满足
+
+$$
+\mathscr D(R)=\mathscr D(\alpha'/R).
+$$
+
+则由数据唯一恢复的任何标量 $\Theta$ 必须满足
+
+$$
+\Theta(R)=\Theta(\alpha'/R).
+$$
+
+特别地，任意输出裸半径实数的估计器 $\widehat R$，至少满足
+
+$$
+\boxed{
+\max\left\{\left|\widehat R(\mathscr D)-R\right|,
+\left|\widehat R(\mathscr D)-\alpha'/R\right|\right\}
+\ge\frac12\left|R-\frac{\alpha'}R\right|.
+}
+\tag{ST5.2}
+$$
+
+**证明。** 相同输入数据必须有同一输出。用三角不等式
+$|R-\alpha'/R|\le|R-\widehat R|+|\widehat R-\alpha'/R|$。∎
+
+可恢复的候选量包括
+
+$$
+\left|\log\frac R{\sqrt{\alpha'}}\right|,
+\qquad
+\frac R{\sqrt{\alpha'}}+\frac{\sqrt{\alpha'}}R.
+$$
+
+因此本卷第30节的共同几何重建，在接入这种微观实现后，需要将“唯一”写成相对于规定规范和对偶关系的唯一。选择 $R\ge\sqrt{\alpha'}$ 可以选定代表元，但它是一项约定，不增加观测信息。
+

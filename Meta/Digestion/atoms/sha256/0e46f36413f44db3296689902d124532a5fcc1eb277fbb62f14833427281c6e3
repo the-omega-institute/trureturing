@@ -1,0 +1,1 @@
+- $\mathrm{Read}$ 若 $L<U$ 且 $E\bmod P=P-m$，发出 $R$，此项允许 $E=B$。收到 $a$ 时置 $U'=m-1,L'=L$，收到 $(a+1)\bmod p$ 时置 $L'=m,U'=U$；保留 $b,E$，新区间单点则进 $\mathrm{Done}$，否则进 $\mathrm{Advance}$。收到这两值以外的数字时，保留原数值字段而进 $\mathrm{Done}$，所以保留的仍是非单点区间。

@@ -12,10 +12,10 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/expanded_seven_survival_comparison.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/comparison-bounds/load_two_cost_remainders.py': '4bb1f09f0768f92b9dc447156ad0c816e1858c7a1e553c2b422ebe878d7d0ec2',
-    'certificates/source_norms/comparison-bounds/load_two_cost_remainders.json': 'f4224aa378cf67701c4d67bc6e7781277163ad429970727013673aa4e3b2a9e3',
-    'frontier/comparison-bounds/expanded_seven_pair_comparison.py': '5a51e611c2e9b981bfe0ba1450795d13e1cf734aa32b05f1c46c3d34f7bfd503',
-    'certificates/source_norms/comparison-bounds/expanded_seven_pair_comparison.json': '14eb81c7551671092f42a87532d77f58e392c2474daf05c69d09147a7a731986',
+    'frontier/comparison-bounds/load_two_cost_remainders.py': 'd946a67c8179e127e43bc6b9e58ce2820f4f9e7b7e3c37224f3a50dee7387a0a',
+    'certificates/source_norms/comparison-bounds/load_two_cost_remainders.json': '656c97a891b2fac1fb702c980eac0cdb852fac0293a0bb99047b04a974b903b7',
+    'frontier/comparison-bounds/expanded_seven_pair_comparison.py': '1f17d81d46584287a713c900d01d5371f961703883cbf4c4ff674a7fdbef8563',
+    'certificates/source_norms/comparison-bounds/expanded_seven_pair_comparison.json': '16f4a33374bdc2db67bf63700ab81dfdbe7ab7f08fdf3893f9ab282c373eb4b7',
     'profile-notes/193-256/201-two-more-seven-labels-and-selected-intersections-control-both-heavy-costs.md': 'bfe4561a41e7d35ce0a9e1410bcdd92e3f732b2cfb7c86bc798ab4cd7cc0ab10',
     'frontier/moments-survival/whole_block_mean_survival.py': '16928973f324bebbfa8abb8a0ca85a2cc7b2e7f64df17663f3e29b8447531bef',
     'certificates/source_norms/moments-survival/whole_block_mean_survival.json': 'cbccfcf1f81cf5d2185494f1a3a46674148a9d574ab3abebba0f6f0f3ba7eabd',

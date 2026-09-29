@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "1d0d386749d2692c30a948f73a5e07e3880525f507b71e9e6d8ffd875a1ff3a7",
+    "sha256": "c1584811bd149280b3091eeecd55e2f71b8efdb165a6d18eecf782667825a482",
     "kind": "value"
   },
   "fallbacks": {

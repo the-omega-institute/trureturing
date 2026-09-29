@@ -1,0 +1,35 @@
+**定理 69.2（同一校准证书族的最优半径与有限逼近）。** 若名义成本势 $\widehat T$ 存在，则
+
+$$
+\boxed{\mathfrak r_{\mathrm{cert}}=\frac1{\widehat M}.}
+$$
+
+该上确界由 $B=\widehat T$ 达到。无需先精确取得 $\widehat T$，对整数 $m\ge1$ 定义有限算子
+
+$$
+B_m=\sum_{j=0}^{m-1}\widehat{\mathcal A}^j(I),\qquad
+b_m=\|B_m\|_\infty,\qquad
+\varepsilon_m=1-\|\widehat{\mathcal A}^m(I)\|_\infty
+$$
+
+也满足
+
+$$
+\boxed{
+\frac{\varepsilon_m}{b_m}\longrightarrow\frac1{\widehat M}.
+}
+$$
+
+因而给定任意 $\delta<1/\widehat M$，某个有限 $m$ 的证书已经具有正校准余量 $\varepsilon_m-\delta b_m>0$。
+
+证明。任一正余量 $\varepsilon$ 与正算子 $B$，在定理 68.2 中取 $\delta=0$，得到 $\widehat T\le B/\varepsilon$，所以 $\varepsilon/b\le1/\widehat M$。取 $B=\widehat T$ 达到等号。
+
+对有限和直接计算
+
+$$
+B_m-\widehat{\mathcal A}(B_m)
+=I-\widehat{\mathcal A}^m(I).
+$$
+
+右侧最小本征值就是 $\varepsilon_m$。收敛的正级数给 $B_m\to\widehat T$ 及 $\widehat{\mathcal A}^m(I)\to0$，故 $b_m\to\widehat M$、$\varepsilon_m\to1$。最后由严格距离不等式与实数极限得到有限 $m$。这不声称比值随 $m$ 单调。$\square$
+

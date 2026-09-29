@@ -1,0 +1,78 @@
+**证明。** 在量子参考块应用固定坐标 $V^\dagger$。定义等距映射
+$$
+J_{\mathrm{ent}}:M\longrightarrow H\otimes(\mathbb C^2\otimes M),
+\quad z\longmapsto|\Phi^+\rangle\otimes z,
+\qquad
+J_s:E_s\longrightarrow H\otimes E_s,
+\quad e\longmapsto|r_s\rangle\otimes e.
+\tag{251.26}
+$$
+任意核内算子按这些像分块。若一个联合块的参考起终空间为 $E_t,E_s$，则其响应仍处于同一参考矩阵块；这是因为对参考投影有
+$$
+Q_s\mathcal R_w(T)Q_t
+=\mathcal R_w\bigl((I_H\otimes Q_s)T(I_H\otimes Q_t)\bigr),
+\tag{251.27}
+$$
+量子块使用 $Q$ 同理。因此不同参考块的响应不能相互抵消。
+
+先看量子—量子块。它唯一写成
+$$
+T_{\mathrm{ent},\mathrm{ent}}
+=J_{\mathrm{ent}}M_0J_{\mathrm{ent}}^\dagger
+=P_{\Phi^+}\otimes M_0,
+\qquad
+\mathcal R_a(T_{\mathrm{ent},\mathrm{ent}})
+=\frac12A_a^{\mathsf T}\otimes M_0.
+\tag{251.28}
+$$
+$A_a^2=\ell^2I_2$，所以 $A_a$ 可逆。该响应为零便迫使 $M_0=0$。
+
+再看从产品空间 $E_s$ 到量子空间的任意交叉块。它写成
+$$
+T_{\mathrm{ent},s}=J_{\mathrm{ent}}NJ_s^\dagger,
+\qquad N:E_s\longrightarrow M.
+\tag{251.29}
+$$
+对简单项，直接展开 Bell 向量得到
+$$
+\operatorname{Tr}_H
+\bigl[(A_w\otimes I)|\Phi^+,z\rangle\langle r_s,e|\bigr]
+=\frac1{\sqrt2}
+\bigl(A_w^{\mathsf T}|\overline{r_s}\rangle\otimes z\bigr)\langle e|.
+\tag{251.30}
+$$
+横线表示在（251.2）输入基中的逐坐标复共轭。令
+$$
+B_{w,s}:M\longrightarrow\mathbb C^2\otimes M,
+\qquad
+B_{w,s}z=A_w^{\mathsf T}|\overline{r_s}\rangle\otimes z.
+\tag{251.31}
+$$
+则
+$$
+\mathcal R_w(T_{\mathrm{ent},s})=\frac1{\sqrt2}B_{w,s}N,
+\qquad
+B_{w,s}^\dagger B_{w,s}=\ell^2I_M.
+\tag{251.32}
+$$
+最后一式使用实 Hermitian 矩阵 $A_w$ 的平方等式与 $|r_s\rangle$ 的单位范数。因此单取 $w=a$，响应为零已足以推出 $N=0$。$T$ 为 Hermitian，反向交叉块是其伴随，也为零。
+
+最后看任意产品—产品块，包括 $s=t$：
+$$
+T_{s,t}=J_sN_{s,t}J_t^\dagger
+=|r_s\rangle\langle r_t|\otimes N_{s,t},
+\qquad
+\mathcal R_w(T_{s,t})
+=\langle r_t|A_w|r_s\rangle N_{s,t}.
+\tag{251.33}
+$$
+两条标量系数不可能同时为零。否则，由 $\sqrt A\ne0$、$b_0\ne0$ 及（251.2），会同时有
+$$
+\langle r_t|X|r_s\rangle=0,
+\qquad\langle r_t|Z|r_s\rangle=0.
+\tag{251.34}
+$$
+但 $|r_s\rangle$ 是 $X$ 或 $Z$ 的本征向量，而 $X,Z$ 反对易；$X|r_s\rangle$ 与 $Z|r_s\rangle$ 因而是两个正交非零向量，张成 $\mathbb C^2$。非零的 $|r_t\rangle$ 不能同时与它们正交。故至少一个响应系数非零，相应零响应迫使 $N_{s,t}=0$。
+
+上述三类覆盖核内全部矩阵块，也覆盖 $A=B$ 时的四个产品方向及任意 $b_0$ 符号，所以 $T=0$。$\square$
+

@@ -1,0 +1,51 @@
+### 258.1 完整输出所给的额外数据
+
+沿用§256的有限维接口、可信输入轴及坐标
+$$
+A_a=\sqrt A\,Z+b_0X,\qquad
+A_b=\sqrt A\,Z-b_0X,\qquad
+A\ge B>0,\quad b_0^2=B,
+$$
+$$
+R_Z=\frac{R_a+R_b}{2\sqrt A},\qquad
+R_X=\frac{R_a-R_b}{2b_0},\qquad
+K=R_Z-iR_X.
+\tag{258.1}
+$$
+在输入的 $Y$ 本征基中，任意来源写成
+$$
+\Omega_Y=
+\begin{pmatrix}P&K/2\\K^\dagger/2&Q\end{pmatrix},
+\qquad
+\operatorname{Tr}_H\Omega_Y=P+Q.
+\tag{258.2}
+$$
+本节还给定一份参考密度矩阵
+$$
+\rho\succeq0,\qquad \operatorname{Tr}\rho=1,
+\tag{258.3}
+$$
+并要求所有竞争态具有同一个参考边缘 $\rho$。问题因而是寻找
+$$
+\boxed{
+\begin{pmatrix}P&K/2\\K^\dagger/2&Q\end{pmatrix}\succeq0,
+\qquad P+Q=\rho.
+}
+\tag{258.4}
+$$
+迹一已经由对角块之和给出。
+
+这一额外数据确实来自§253的实际仪器。在该节的仪器参数合同下，省略共同重置态后，每个可见标签的参考输出块为
+$$
+B_{w,s}=\frac{\rho+sR_w}{4}.
+\tag{258.5}
+$$
+所以
+$$
+\rho=\sum_{w,s}B_{w,s},
+\qquad
+R_w=2(B_{w,+}-B_{w,-}).
+\tag{258.6}
+$$
+固定全部 $B_{w,s}$ 与固定 $(\rho,R_a,R_b)$ 等价。§256讨论的是只保留后两份响应的投影数据合同；本节处理加入 $\rho$ 的合同。这里均指完整精确矩阵，而非一次实验取得的三个标量。
+

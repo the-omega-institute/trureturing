@@ -1,0 +1,51 @@
+**命题 62.3（二维完整仪器已能达到该指数）。** 固定 $K>1$，令
+
+$$
+c_p=\frac{K-1}{2^p}>0.
+$$
+
+对任意 $0<w<\min\{1,c_p\}$，取 $\gamma=(w/c_p)^{1/p}$。比较第 58.1 条的两个仪器
+
+$$
+\mathfrak I_{0,\gamma},\qquad\mathfrak I_{w,\gamma},
+$$
+
+共同初态仍为 $P_s$。两者从任意初态最终都点击，且从 $P_s$ 出发的等待律都属于 $\mathcal P_{p,K}$。两仪器的完整单轮半 diamond 距离及这两份等待律的总变差距离均为 $w$，均值差为
+
+$$
+\boxed{
+\mu_{w,\gamma}-\mu_{0,\gamma}
+=\frac{(K-1)^{1/p}}2w^r.
+}
+$$
+
+证明。两模型使用同一正 $\gamma<1$，所以最终点击结论由第 58.2 条成立。设 $\mathsf G$ 是成功概率为 $\gamma$、支撑从一开始的几何变量。从 $P_s$ 出发，第一轮未点击后总等待为 $1+\mathsf G$。几何级数及其一、二阶求导给
+
+$$
+\mathbb E(1+\mathsf G)^2
+=1+\frac1\gamma+\frac2{\gamma^2}
+\le\frac4{\gamma^2}.
+$$
+
+由于 $1<p\le2$，幂函数的凹性给
+
+$$
+\mathbb E(1+\mathsf G)^p
+\le\left[\mathbb E(1+\mathsf G)^2\right]^{p/2}
+\le\frac{2^p}{\gamma^p}.
+$$
+
+因此
+
+$$
+\mathbb E_{w,\gamma}\mathsf N^p
+=1-w+w\mathbb E(1+\mathsf G)^p
+\le1+\frac{2^pw}{\gamma^p}=K.
+$$
+
+另一个模型从 $P_s$ 第一轮必点击，其矩为一。相对于它，只有第一轮从 $s$ 出发的点击质量 $w$ 被移入慢尾，所以等待律的总变差为 $w$。
+
+对带参考的任意输入，两单轮输出之差在未点击块为 $w\rho_{ss}\otimes P_u$，在点击块为 $-w\rho_{ss}\otimes P_s$；两块正交，半迹范数为 $w\operatorname{Tr}\rho_{ss}\le w$，由输入 $P_s$ 达到。注意这里固定两模型相同的 $\gamma$，与第 58.2 条比较 $(0,0)$ 的距离公式有别。最后 $w/\gamma=c_p^{1/p}w^r$，即得均值差。$\square$
+
+令 $w\downarrow0$，任何以 $\varepsilon^s$、$s>r$ 为模量且常数只依赖 $p,K$ 的统一均值界都会被这个家族推翻。这里尖锐的是指数，未声称第 62.2 条的常数在二维仪器子类中最优；比较中的两个仪器都随 $w$ 变化。
+

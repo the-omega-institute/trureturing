@@ -1,0 +1,28 @@
+**定理 205.2（逐分支边缘只给策略值的保守包络）。** 对事件树联合集与其矩形包络，有
+
+$$
+\operatorname{Rect}(\mathfrak E)
+=\prod_{y\in Y}\mathfrak E_y,
+$$
+
+并且
+
+$$
+\boxed{
+\inf_{\operatorname{Rect}(\mathfrak E)}F
+\le
+\inf_{\mathfrak E}F
+\le
+\sup_{\mathfrak E}F
+\le
+\sup_{\operatorname{Rect}(\mathfrak E)}F.
+}
+\tag{205.2}
+$$
+
+只有当极值所需的逐分支选择能够由同一个来源同时实现时，矩形包络才保持对应的鲁棒端点。
+
+### 证明
+
+联合集显然包含于各投影的笛卡尔积。对任意实值函数 $F$，集合包含关系直接给出下确界和上确界的四项不等式。端点条件与第 201.2 定理相同。证毕。
+

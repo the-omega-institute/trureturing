@@ -1,0 +1,51 @@
+### 9.2 固定质量反演与实输出的匹配来源
+
+对目标 $t=(i,j)$，记
+
+$$
+C_t=\{(a,b)\in\{0,1,2\}^2:(a=i)\mathbin{\mathrm{xor}}(b=j)\}.
+$$
+
+其中恰有四个双删除标签。目标格没有被其中任何一行保留，其他每个格恰被两行保留：同一目标行或列上的其他格由另一臂的两个标签保留；不同行不同列的格在两臂各被一个标签保留。因此对每个 $s\in\Omega$，$\sum_{\gamma\in C_t}F_{\gamma s}=2(1-\mathbf1_{s=t})$，从而对每个实向量
+
+$$
+p_t=\sum_sp_s-\frac12\sum_{\gamma\in C_t}F_\gamma p.
+\tag{ER9.MS.6}
+$$
+
+特别地，
+
+$$
+\sum_sz_s=0\ \Longrightarrow\ \|z\|_\infty\le2\|Fz\|_\infty.
+\tag{ER9.MS.7}
+$$
+
+估计器 $D_t(y)=1-\frac12\sum_{\gamma\in C_t}y_\gamma$ 对所有 $\varepsilon\ge0$ 满足 $\|D(y)-p\|_\infty\le2\varepsilon$。这是已知真质量下的实输出，不要求 $\sum_tD_t(y)=1$。
+
+在目标 $(0,0)$ 取
+
+$$
+v=\frac14\begin{pmatrix}8&-3&-3\\-3&1&1\\-3&1&1\end{pmatrix}.
+$$
+
+其质量为 $2-4(3/4)+4(1/4)=0$，且 $\|v\|_\infty=2$、$\|v\|_1=6$。完整读数如下：空删除为零；删除目标坐标的单删除为 $-1/2$，其他单删除为 $1/4$；双删除与目标分别匹配两个、一个、零个坐标时，读数为 $1,-1,3/4$。这些值分别由四个角、两臂两角、目标两臂一角求和得到，故 $\|Fv\|_\infty=1$。于是零和逆常数二不可缩小。
+
+令 $u=(1/9,\ldots,1/9)$，逐格取绝对值，设
+
+$$
+b_\varepsilon=\varepsilon|v|+(1-6\varepsilon)u,
+\qquad p_\pm=b_\varepsilon\pm\varepsilon v,
+\qquad y=F b_\varepsilon.
+\tag{ER9.MS.8}
+$$
+
+当 $0\le\varepsilon\le1/6$，$b_\varepsilon,p_+,p_-$ 非负且总质量一：$\varepsilon(|v_j|\pm v_j)\ge0$，余项也非负；总和由 $\|v\|_1=6$ 与 $\sum v=0$ 给出。两个来源在全部十六行均满足 $\|Fp_\pm-y\|_\infty=\varepsilon\|Fv\|_\infty\le\varepsilon$，且距离为 $4\varepsilon$。任意共同输出 $q$ 满足
+
+$$
+\|q-p_+\|_\infty+\|q-p_-\|_\infty\ge4\varepsilon.
+$$
+
+至少一个误差不小于 $2\varepsilon$，这对三个输出域都成立。与 $D$ 的上界结合即得定理的实输出部分，包括端点 $1/6$；端点允许零质量格。
+
+本节是第 8.6 节固定质量张量反演在抽象三元乘积上的有限代数实例。具体地，九个双删除组成的方阵为 $(J_3-I_3)\otimes(J_3-I_3)$，逆为 $(J_3/2-I_3)\otimes(J_3/2-I_3)$；因为 $J_3^2=3J_3$，每个因子相乘为单位阵。目标逆行减去常数 $1/4$ 后，四个交叉系数是 $-1/2$，其余为零。第 8.6 节的张量参数在此为 $t=4,q=9,h=1,P=25$，于是 $(q-h)/t=2$、$(P-h)/t=6$ 和 $t/(P-h)=1/6$。这些代数对应没有消除该节算术版本的两两互素前提。
+

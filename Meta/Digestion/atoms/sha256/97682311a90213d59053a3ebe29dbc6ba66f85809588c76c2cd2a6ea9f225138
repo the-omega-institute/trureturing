@@ -1,0 +1,65 @@
+**定理187.1（纯来源上的精确标量优化）。** 令
+$\omega_j=\omega_+(w_j)$。有
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\max_{0\preceq E\preceq I}
+\frac{a_0(E)a_1(E)}{a_0(E)+a_1(E)},
+}
+\tag{187.2}
+$$
+
+其中
+
+$$
+a_0(E)=\operatorname{Tr}(E\omega_0),\qquad
+a_1(E)=\operatorname{Tr}((I-E)\omega_1).
+$$
+
+分母为零时比值取零。等价地，
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\min_{q\in[0,1]}
+\frac{q^2+(1-q)^2+
+\|q^2\omega_0-(1-q)^2\omega_1\|_1}{2}.
+}
+\tag{187.3}
+$$
+
+**证明。** 目标 $MR$ 为乘积纯态。对任意恢复器，在输出端丢弃 $R$ 并制备 $|0\rangle_R$，保持目标不变，由通道距离的后处理收缩性不会增加误差。因此可以将 $R$ 的输出固定为目标纯态。
+
+对原输入的 $Z$ 对称性作第173节的输出平均，可将输出标签取为经典而不增加最优误差。每个旗标上的两结果 instrument 此时只需保留其效果 $E_s,I-E_s$，再准备对应标签及目标 $R$。所有原输入使用同一个效果族，结果不预先等于原输入。
+
+又因 $\omega_-(w)=Z\omega_+(w)Z$，任意两个旗标效果等价于对 $s=+$ 使用平均效果
+
+$$
+E=\frac12(E_++ZE_-Z),\qquad 0\preceq E\preceq I.
+$$
+
+反过来，每个这样的 $E$ 由 $E_+=E$、$E_-=ZEZ$ 实现。因此可取得的正确概率恰为上式的 $a_0,a_1$。正确输出块分别为 $a_jP_\Xi$；第173节保留全部参考的二维谱式给误差
+$1-a_0a_1/(a_0+a_1)$，证明（187.2）。
+
+对非负 $a_0,a_1$，
+
+$$
+\frac{a_0a_1}{a_0+a_1}
+=\min_{q\in[0,1]}[q^2a_0+(1-q)^2a_1].
+$$
+
+括号内关于 $E$ 仿射、关于 $q$ 凸且连续；效果集合与 $[0,1]$ 均紧凸。应用紧凸极小极大定理，可将对 $E$ 的最大化与对 $q$ 的最小化交换。对固定 $q$，写
+$A_q=q^2\omega_0-(1-q)^2\omega_1$，则
+
+$$
+\begin{aligned}
+\max_E[q^2a_0+(1-q)^2a_1]
+&=(1-q)^2+\max_{0\preceq E\preceq I}\operatorname{Tr}(EA_q)\\
+&=(1-q)^2+\operatorname{Tr}(A_q)_+\\
+&=\frac{q^2+(1-q)^2+\|A_q\|_1}{2}.
+\end{aligned}
+$$
+
+其中最大值由正谱投影取得。得到（187.3）。这里采用的极小极大步骤是 Sion 的标准定理，见 [《On general minimax theorems》](https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf)；二元 Hermitian 检验的正谱公式只作为本模型推导的中间步骤。证毕。
+

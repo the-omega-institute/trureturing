@@ -1,0 +1,6 @@
+**证明。** 由（154.8），$\mathcal F^{qk+r}P\mathcal E_\omega
+=\mathcal F^rP\mathcal E_\omega$。剩余部分由
+$(I_{\mathscr V}-P)\mathcal E_\omega$ 产生，其值域位于 $\mathscr H$。按长度 $L$ 分块，式（154.9）使这部分趋零，有限多个块内余步的算子范数均有限。因此（154.12）成立。
+
+每个 $\mathcal R_{qk+r}$ 都来自同一个真实装置，因而 CPTP。有限维 Choi 矩阵的正性和固定偏迹条件在极限下闭合，所以 $\mathcal R_*^{(r)}$ 也是 CPTP。此结论来自实际通道极限，不是假设 $P$ 本身为一个可物理实施的通道。证毕。
+

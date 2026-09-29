@@ -1,0 +1,28 @@
+### 69.6 与上界配合及端点边界
+
+在式（69.5）的共同区间，调用第 66 节的显式修复。其参数满足 $\varepsilon<p\le2\varepsilon$ 以及
+
+$$
+p-\varepsilon=\frac{a\varepsilon p}{b^2-p}
+\le\frac{8a}{3b^2}\varepsilon^2,
+$$
+
+其中用了 $\varepsilon\le b^2/8$，所以 $b^2-p\ge3b^2/4$。该节准确上界中的因子满足
+
+$$
+2+\frac{2(\sqrt a+\sqrt\varepsilon b)}{c+\sqrt{1-p}}<6:
+$$
+
+确实，$\sqrt a+\sqrt\varepsilon b<2$，而 $\varepsilon\le1/8$、$p\le1/4$ 保证 $c+\sqrt{1-p}>1$。相乘得式（69.6）的上界，完成定理证明。$\square$
+
+更细的上界展开仍由第 66 节给出：
+
+$$
+e(R_{a,\varepsilon})-\varepsilon
+\le\frac{a(2+\sqrt a)}{1-a}\varepsilon^2
++\frac a{\sqrt{1-a}}\varepsilon^{5/2}+O_a(\varepsilon^3).
+\tag{69.29}
+$$
+
+匹配下界现在确定每个固定 $a\in(0,1)$ 的尖锐阶数，但未确定最优二阶系数，亦未证明 $(e(R_{a,\varepsilon})-\varepsilon)/\varepsilon^2$ 有极限。有限参数准确最优值、$a$ 随 $\varepsilon$ 变化时的尺度及端点过渡仍未由这些界解决。
+

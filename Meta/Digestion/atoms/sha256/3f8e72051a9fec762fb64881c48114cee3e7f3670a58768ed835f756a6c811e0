@@ -1,0 +1,19 @@
+### 298.2 两种来源、同一增益与逐次计费
+
+固定已知
+$$
+\sqrt{3/4}\le k<1,\quad k^2<l\le k,\quad
+h_0\in(0,1],\quad B\in\{2,4\},\quad
+1\le C\le C_*:=1024/225.
+$$
+一次判别批次内，未知 $r\in[l,1]$、$h\in[h_0,1]$ 固定不变，且在两假设中使用同一个 $(r,h)$。设
+$$
+c_j=k^j r,\qquad j\in\{0,1\}.
+$$
+
+每次允许选择以下两种真实来源之一：
+
+- 任务来源 $T$：返回
+  $$
+  Y_T\sim\operatorname{Bernoulli}\left(\frac{1-hc_j/C}{B}\right).
+  $$

@@ -1,0 +1,8 @@
+### 242.6 成熟背景与结论范围
+
+Schmidt 分解及纯态边缘谱的标准背景，可见 J. Watrous，*The Theory of Quantum Information*，正文第31页“Schmidt decompositions”；纯态纠缠熵的解释见第352页相关 Remark，[作者提供的全文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。本节所用的二元熵来自（242.6）两份明确本征值，并不要求额外的混合态纠缠公式。
+
+纯纠缠能够增强测量区分已有原始研究。C. Datta、T. Biswas、D. Saha、R. Augusiak，*Perfect discrimination of quantum measurements using entangled systems*，[arXiv:2012.07069v2](https://arxiv.org/abs/2012.07069v2)，Theorem 5 及式（64）（PDF第9页），在其两个三结果 POVM 的任务中给出关于纯态 concurrence 的区分优势；正式发表于 *New Journal of Physics* 23, 043021 (2021)，[DOI 10.1088/1367-2630/abecaf](https://doi.org/10.1088/1367-2630/abecaf)。其具体任务与本节固定四标签通道相对于均匀重置的比较不同，本节不直接移用该曲线，也不把“纯纠缠提供优势”单列为新内容。
+
+本节的完整方向优化与逆向资源曲线由（242.12）—（242.29）直接推导；不据此宣称文献原创性。其量词固定于纯联合探针、一次通道使用、原四标签和均匀目标权重。对混合联合探针，单侧边缘熵不是可直接替代的纠缠成本；对于其他同秩候选、重复查询或不同标签权重，也不能自动沿用（242.24）。
+

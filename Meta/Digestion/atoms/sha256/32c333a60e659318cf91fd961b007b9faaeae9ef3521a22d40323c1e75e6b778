@@ -1,0 +1,30 @@
+**推论 113.3（最优实际事件时间的系数也随之确定）。** 对每个充分小的 $0<h<R$ 选择任一最优仪器与其最优初态，令其实际首次点击轮数为 $\mathsf N_h$。则
+
+$$
+\boxed{
+h^2\mathsf N_h\Rightarrow\kappa^2 Z,
+\qquad Z\sim\operatorname{Exp}(1).
+}
+\tag{113.4}
+$$
+
+对每个固定实数 $s>0$，有
+
+$$
+h^{2s}\mathbb E\mathsf N_h^s
+\longrightarrow\kappa^{2s}\Gamma_{\rm E}(s+1).
+\tag{113.5}
+$$
+
+对每个固定 $0<\tau<1$，其下分位数满足
+
+$$
+q_\tau(h)\sim
+\kappa^2[-\log(1-\tau)]\,h^{-2}.
+\tag{113.6}
+$$
+
+证明。定理 99.1 与推论 99.2 已对任意实际最优选择给出 $\mathsf N_h/\mathscr K(R-h)\Rightarrow\operatorname{Exp}(1)$、全部固定正阶矩及固定分位数收敛。定理 113.1 给缩放因子 $h^2\mathscr K(R-h)\to\kappa^2$，代入这些已证关系便得到三式。$\square$
+
+式（113.4）仍是离散等待的弱极限，不升级成与连续分布的总变差收敛。$h$ 是完整通道距离间隙，$\mathsf N_h$ 是实际调用轮数；本批没有另作物理钟标定。
+

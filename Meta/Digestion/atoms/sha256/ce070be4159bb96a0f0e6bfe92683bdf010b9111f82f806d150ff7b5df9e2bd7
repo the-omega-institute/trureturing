@@ -1,0 +1,10 @@
+**命题 234.2（交换时，两次闭包给出最小共同完成）。** 若 $A,B$ 为闭包算子，且 $A\circ B=B\circ A$，则 $C=A\circ B$ 也是闭包算子，并有
+
+$$
+C(x)=x\quad\Longleftrightarrow\quad A(x)=x\ \land\ B(x)=x.
+$$
+
+其单调与扩张来自两算子相应性质；利用交换与幂等可得 $ABAB=AABB=AB$。若 $ABx=x$，则扩张性给出 $x\le Bx\le ABx=x$，所以 $Bx=x$，进而 $Ax=x$。反向直接代入。此处对应项目 [CommutingClosureCommonFixedPoint](../../../D5/S3/ObserverMemory/RefinementClosure/CommutingClosureCommonFixedPoint.lean) 的 `commutingComposition`、`commuting_closure_composition_fixed_iff` 与 `commuting_composition_order_independent`。
+
+进一步，$C(x)$ 是位于 $x$ 之上的最小共同不动点。它因幂等与上述等价而同时被 $A,B$ 固定；对任一 $y\ge x$ 且 $Ay=By=y$，单调性给出 $C(x)\le C(y)=y$。这个最小性是所列闭包性质的直接推论，不需要给每一类整顿分配一个分数。
+

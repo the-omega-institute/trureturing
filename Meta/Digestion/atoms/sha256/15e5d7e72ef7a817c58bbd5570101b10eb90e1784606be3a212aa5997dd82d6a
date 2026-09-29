@@ -1,0 +1,15 @@
+**引理109.1（总超额饱和迫使固定单线）。** 若同一个六维、乘积生成的 $E_0$ 满足 $\kappa(E_0)=1$，且
+
+$$
+\sum_{[z]}(f([z])-1)=4,
+$$
+
+则存在接收单线 $P\subset S_0$，使 $P\otimes F\subset E_0$。此外，
+
+$$
+E_0=(P\otimes F)\oplus M,
+\qquad M\subset(S_0\cap P^\perp)\otimes F,\quad\dim M=4,
+$$
+
+其中 $M$ 乘积生成、通常纤维为零；其各条乘积支持的接收纤维在接收空间中构成代数直和，总维数四。
+

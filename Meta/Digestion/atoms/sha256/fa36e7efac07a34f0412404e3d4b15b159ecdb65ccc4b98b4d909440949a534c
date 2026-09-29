@@ -1,0 +1,32 @@
+**定义 180.1（词闭包与调度闭包）。** 设允许接口为有限族
+
+$$
+\mathcal C=\{\Phi_1,\ldots,\Phi_m\},
+\qquad
+A_i=\Phi_i^*.
+$$
+
+终端效果族记为 $\mathcal F$。词闭包为
+
+$$
+V_{\mathrm{word}}
+=
+\operatorname{span}\{A_{i_n}\cdots A_{i_1}H:
+ n\ge0,\ H\in\mathcal F\}.
+$$
+
+对概率向量 $p=(p_1,\ldots,p_m)$，定义平均拉回
+
+$$
+T_p=\sum_{i=1}^mp_iA_i.
+$$
+
+给定调度族 $\mathfrak P\subseteq\Delta_m$，定义调度闭包
+
+$$
+V_{\mathfrak P}
+=
+\operatorname{span}\{T_{p_n}\cdots T_{p_1}H:
+ n\ge0,\ H\in\mathcal F,\ p_j\in\mathfrak P\}.
+$$
+

@@ -1,0 +1,24 @@
+### 268.9 固定实例误差界与未证明的锐性
+
+对每个固定 $n$ 的上述例族，§266所引Lourenço对称锥误差界给 $d_{\mathrm{PPS}}\le d_S=n$。使用同一完整 $2\otimes n$ 接口，对任意合法竞争态 $\Xi$ 记
+$$
+\varepsilon=
+\left\|\operatorname{Tr}_H\Xi-\frac1nI_n\right\|_1
++\left\|\mathscr K(\Xi)-\frac1nZ\right\|_1.
+\tag{268.58}
+$$
+范数均未除以二。由于来源唯一，对 $0\le\varepsilon\le1$ 存在固定常数 $C_n<\infty$，使
+$$
+\boxed{
+\|\Xi-\Omega_*\|_1\le C_n\varepsilon^{\,2^{-n}}.
+}
+\tag{268.59}
+$$
+这里使用的是§266已经核对的数据残差、固定仿射切片和PSD范数有界性；不需要另将候选限制为同边缘或同秩。
+
+标准奇异度 $d_S=n$ 证明了Ando特殊切片的约化深度随参考维数无界，尤其排除了统一上界二。它没有证明全部 $n$ 维Ando切片的最大奇异度一定等于 $n$，也没有仅凭步数证明（268.59）的指数最优。常数的显式值、跨维数一致性及该族的最优局部指数均需另行估计。
+
+所用标准面约化与误差界来源承接§266：Bruno F. Lourenço，Amenable cones: error bounds without constraint qualifications，[arXiv:1712.06221v2](https://arxiv.org/pdf/1712.06221v2)，标准奇异度定义见PDF第5—6页，合法证书链见第16页，$d_{\mathrm{PPS}}\le d_S$ 见第17页 Proposition 24，固定有界误差界见第27页 Proposition 38。当前构造的唯一性、证书分类与步数则由本节矩阵证明承担，不据此宣称外部文献原创性。
+
+本节还没有给寻找任意数据的最短证书链的算法效率，也没有把固定参考空间的奇异度直接移到增加未观测环境后的另一个切片。共同核、标准最少步骤和最优恢复指数仍是不同对象，各自需要相应证据。
+

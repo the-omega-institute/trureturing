@@ -1,0 +1,9 @@
+**推论 71.2（外置首轮的尾词 ABBBB 不可能）。** 在第69节的七维外置首轮合同
+
+$$
+F=\operatorname{span}\{\eta_2,\ldots,\eta_6\},\qquad
+\dim F=2,\qquad \eta_1\notin F
+$$
+
+中，尾词 $ABBBB$ 不可实现。
+

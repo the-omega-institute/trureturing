@@ -1,0 +1,21 @@
+**定理185.2（显式区间上的单输入精确最优性）。** 对
+$0<w\le1/10$，
+
+$$
+\boxed{
+\min_{\Gamma_+,\Gamma_-\ {\rm CPTP}}
+D\left(
+\frac12\sum_{s=\pm1}
+(\operatorname{id}_M\otimes\Gamma_s)(\eta_s(w)),
+P_\Xi
+\right)
+=d(w,t_\circ(w)).
+}
+\tag{185.27}
+$$
+
+最优值由 $U_s(t_\circ(w))$ 取得。
+
+**证明。** （185.26）对任意可行 Choi 矩阵给出移动检验收益的上界
+$\operatorname{Tr}\mathsf Y_s$，候选酉取等。当前 $P_\xi$ 是候选实际输出差的正本征投影，故该检验在候选上恰取得其迹距离。第183节的同一匹配论证遂给（185.27）。这里检验的目标收益是 $\tau^2$，没有把 $D$ 归一化或把它改成 $1$。证毕。
+

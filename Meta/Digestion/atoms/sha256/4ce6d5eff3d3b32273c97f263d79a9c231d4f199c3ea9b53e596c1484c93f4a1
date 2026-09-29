@@ -1,0 +1,12 @@
+**假设 E.** 对每个 \(N\)、每个内点 \(2\leq c\leq N-1\) 及每个非空可容许 \(\mathcal G\)，
+\[
+ \Phi(N,c,\mathcal G)\leq B(N),\qquad
+ s\geq-\left\lfloor\frac{N-1}{4}\right\rfloor.\tag{14}
+\]
+定理 11 已处理 \(g+h\leq N\)，定理 15 已处理 \(c=2,N-1\) 的单公差族，定理 25 已处理 \(N\leq16\)。其余情形中，一个明确的充分条件是对全部 \(X\subseteq\mathcal G\)、\(Y\subseteq P\) 证明 (7)，即
+\[
+ |Z_X\setminus B_Y|+|B_Y|-|Y|
+ \geq |X|+|H_X|-N-\varepsilon_c.
+\]
+它精确等价于联合图 \(D_{\mathcal J}\leq1+\varepsilon_c\)，而定理 13 说明该条件推出 (14)。若只允许某条含点公差线使用避点资源未占的本原坏对，则所需逐线 Hall 条件还必须逐子族检验；定理 21 表明保留每线原有的一个缺额并不足够。对邻端点混合公差及更深内点的其余族，(7) 或另一能直接控制 \(\delta\) 的不等式仍为待证。
+

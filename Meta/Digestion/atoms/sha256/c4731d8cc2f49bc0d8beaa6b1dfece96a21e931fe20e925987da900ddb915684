@@ -1,0 +1,42 @@
+**定理 62.1 的交点与条件达界部分。** 因为 $0<d\le\varepsilon\le1/16$，有
+
+$$
+p_0>d,\qquad
+\frac{p_*}{d}=\frac{2-d}{1+\varepsilon}
+\ge\frac{31}{17}>\frac32>\frac{p_0}{d},
+\qquad p_*<\varepsilon.
+$$
+
+因此式（62.3）成立。函数 $F_\varepsilon$ 在 $[p_0,\varepsilon]$ 上严格递增；其导数只在左端点为零。对 $p<p_*$，
+$\sqrt{\varepsilon(1-p)}-\sqrt p$ 为正且严格递减，所以 $G_\varepsilon$ 在 $[d,p_*]$ 上严格递减。并且
+
+$$
+F_\varepsilon(p_0)=\varepsilon<G_\varepsilon(p_0),
+\qquad
+G_\varepsilon(p_*)=\varepsilon<F_\varepsilon(p_*).
+\tag{62.18}
+$$
+
+介值定理与严格单调性给 $(p_0,p_*)$ 内的唯一交点 $\bar p_\varepsilon$。
+
+由第 62.2 节，对所有 $p\in[d,\varepsilon]$，均有
+
+$$
+N(R_\varepsilon-S_p)\ge
+\max\{G_\varepsilon(p),J_\varepsilon(p)\}.
+\tag{62.19}
+$$
+
+记交点值为 $m_\varepsilon$。若 $p<\bar p_\varepsilon$，则 $G_\varepsilon(p)>m_\varepsilon$；若 $p>\bar p_\varepsilon$，则 $p>p_0$，故 $J_\varepsilon(p)=F_\varepsilon(p)>m_\varepsilon$。在交点两者同等于 $m_\varepsilon$。因此式（62.19）右端在整个约化区间上的唯一最小点是 $\bar p_\varepsilon$，最小值是 $m_\varepsilon$。这与式（62.1）给出 $e_\varepsilon\ge m_\varepsilon$。
+
+如果 $L_\varepsilon(\bar p_\varepsilon)\ge0$，引理 62.4 和正向准确公式给
+
+$$
+N(R_\varepsilon-S_{\bar p_\varepsilon})
+=\max\{F_\varepsilon(\bar p_\varepsilon),
+G_\varepsilon(\bar p_\varepsilon)\}=m_\varepsilon.
+\tag{62.20}
+$$
+
+所以达到全局下界。任意原始最优修复的参数 $p=\sigma_{11}$ 均在 $[d,\varepsilon]$，且替换为相同参数的 $S_p$ 不增加误差；式（62.19）的严格性迫使 $p=\bar p_\varepsilon$，因此只要该交点满足正性条件，式（62.5）、（62.7）就成立。下面证明整个参数区间都有统一的严格正性余量。
+

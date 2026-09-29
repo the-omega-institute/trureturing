@@ -1,0 +1,290 @@
+**定理126.1（三维尾侧先行不可能）。** 在上述一重实际合同中，（126.1）不能成立。因此，完整零位尾纤维尺寸为四与三的一重候选，第二轮只能位于四维尾纤维。
+
+### 126.1 两个完整一位输入块及五种必要尾词
+
+在同一个固定一位等距下定义
+
+$$
+\begin{aligned}
+F_A&=V_1^{-1}(U_A^\perp\otimes A),\\
+F_B&=V_1^{-1}(U_B^\perp\otimes B).
+\end{aligned}
+$$
+
+因为 $V_1$ 满到完整 $R_1$，故
+
+$$
+K=F_A\oplus F_B,\qquad F_A\perp F_B,\qquad
+\dim F_A=4,\quad\dim F_B=3.
+\tag{126.4}
+$$
+
+真实 $V_1p=v\otimes A$ 给 $p\in F_A$。对第2至5轮，每个 $G_i$ 属于其已执行后继所对应的 $F_A$ 或 $F_B$。
+
+当前为 $A$ 的所有实际二维 $G_i$ 都在三维 $U_A$ 内，任意两个必有非零交。固定 $V_1$ 因而使当前 $A$ 的已见后继唯一。第三轮不能仍为 $A$，否则这条已见自循环会将整个五位尾词锁在 $A$，违反两尾合同。所以尾词从 $AB$ 开始，且任何已执行的 $A$ 都以后继 $B$ 结束。五位尾词只有
+
+$$
+ABABA,\quad ABABB,\quad ABBAB,\quad ABBBA,\quad ABBBB.
+\tag{126.5}
+$$
+
+这里只对第2至5轮使用后继。最后一词的第3至6轮环境共同，已由第71节排除。以下依次排除其余四词。
+
+后期实际合同还给：若当前环境为 $A$，则
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad Q_n\subset U_A^\perp,
+\qquad P_{U_A}H_n=G_n,\qquad H_n\cap U_A=0
+\quad(n\ge3),
+\tag{126.6}
+$$
+
+当前为 $B$ 时交换 $A,B$。最后一个零交来自 $P_{Q_n}|_{H_n}$ 单射，不能用于第二轮早期平面。
+
+### 126.2 ABABA：三维小侧与早期图差
+
+令
+
+$$
+E=G_2+G_4\subset U_A,\qquad O=G_3+G_5\subset U_B.
+$$
+
+第99.3节的局部实际证明给
+
+$$
+\dim O\ge3,\qquad
+V_1E\subset K\otimes B,\quad
+V_1O\subset K\otimes A.
+\tag{126.7}
+$$
+
+若首环境为 $B$，完整六轮为正交交替 $B,A,B,A,B,A$，第47节给八维下界，违反七维合同。
+
+若首环境为 $A$，真实零位首像给 $p\in U_A$；若首环境为第三条射线，第123.8式的完整纤维给 $p\in P\subset U_A$。因此剩余情形均有 $p\in U_A$。又 $p\in F_A$、$E\subset F_B$，所以 $p\perp E$。三维 $U_A$ 内的非零 $p$ 迫
+
+$$
+\dim E=2,\qquad G_2=G_4=E.
+$$
+
+相同零位环境上的相同接收平面使
+
+$$
+H_1=H_3,\qquad p\in H_3.
+\tag{126.8}
+$$
+
+如果 $\dim O=4$，则 $O=F_A$，从而 $p\in O\subset U_B$。第三轮当前为 $B$，（126.6）给 $H_3\cap U_B=0$，与（126.8）矛盾。
+
+只剩 $\dim O=3$。真实早期数据为
+
+$$
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),
+$$
+
+其中 $u,v,w$ 正交归一。由于 $v\in U_A^\perp$、$Q_4\subset U_A^\perp$，$H_2,H_4$ 都是共同域 $E$ 上的线性图，分别写为
+
+$$
+T_2:E\longrightarrow\mathbb Cv,\qquad
+T_2u=(b/a^2)v,\quad T_2w=0,
+$$
+
+以及同构
+
+$$
+T_4:E\longrightarrow Q_4.
+$$
+
+固定零位像给
+
+$$
+\dim(H_2+H_4)=\dim(G_3+G_5)=3.
+$$
+
+图和向 $E$ 的投影满射，其核为差图像，故
+
+$$
+3=\dim E+\operatorname{rank}(T_4-T_2)
+=2+\operatorname{rank}(T_4-T_2).
+\tag{126.9}
+$$
+
+若 $v\notin Q_4$，等式 $T_4z=T_2z$ 的共同值只能为零；$T_4$ 单射继而给 $z=0$，使差映射秩二，违反（126.9）。所以 $v\in Q_4$。实际
+
+$$
+V_1p=v\otimes A\in Q_4\otimes A=V_1G_3
+$$
+
+给 $p\in G_3$。与（126.8）合并，违反后期 $H_3\cap G_3=0$。这个图差步骤只用第99.4节中的局部实际关系，没有使用该节的正则铅笔假设。
+
+### 126.3 ABABB：两个同后继平面必须相同
+
+本词中 $G_2,G_4\subset U_A$ 的后继均为 $B$，$G_5\subset U_B$ 的后继也为 $B$。
+
+若 $G_2\ne G_4$，它们在三维 $U_A$ 内张成整个 $U_A$，又同处三维 $F_B$，所以 $U_A=F_B$。于是
+
+$$
+G_5\subset U_A\cap U_B=P,
+$$
+
+与 $G_5$ 二维、$P$ 一维矛盾。故
+
+$$
+G_2=G_4=:T.
+\tag{126.10}
+$$
+
+与此同时，$G_3,G_5\subset U_B$ 的后继分别为 $A,B$，所以 $G_3\perp G_5$。实际零位像
+
+$$
+V_0H_2=G_3\otimes B,\qquad
+V_0H_4=G_5\otimes B
+$$
+
+遂使 $H_2\perp H_4$。但非零 $w\in H_2\cap G_2$ 由（126.10）也属于 $G_4$，而 $H_4$ 满投影到 $G_4$。非零 $G_4$ 向量不可能同时正交于 $H_4$，矛盾。
+
+### 126.4 ABBAB：首态与完整一位纤维的正交冲突
+
+此时 $G_2,G_5\subset U_A$ 与 $G_3\subset U_B$ 的后继均为 $B$。与上一小节相同的三维饱和论证给
+
+$$
+G_2=G_5=:T.
+\tag{126.11}
+$$
+
+$G_3,G_4\subset U_B$ 的后继分别为 $B,A$，所以
+
+$$
+U_B=G_3\oplus G_4,\qquad G_3\perp G_4.
+\tag{126.12}
+$$
+
+两个二维平面 $T,G_3$ 同处三维 $F_B$，且交包含于一维 $U_A\cap U_B=P$，于是
+
+$$
+T\cap G_3=P,\qquad T+G_3=F_B,\qquad G_4\perp F_B.
+\tag{126.13}
+$$
+
+相同零位像 $T\otimes A$ 给 $H_1=H_4$。若首环境是 $B$，则 $p\in U_B$；若首环境为第三条射线，则 $p\in P\subset U_B$。这两种情况都违反 $0\ne p\in H_4$ 与后期 $H_4\cap U_B=0$。因此
+
+$$
+[\eta_1]=[A],\qquad p\in U_A,\qquad q\in U_A^\perp.
+\tag{126.14}
+$$
+
+$p\in F_A$ 又给 $p\perp T$，所以
+
+$$
+U_A=T\oplus\mathbb Cp,\qquad
+S_0=F_B+\mathbb Cp+G_4.
+\tag{126.15}
+$$
+
+零位环境正交使 $H_1\perp H_2,H_5$。真实 $q\in H_1$ 且 $q\perp T$，由早期
+
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad u,w\in T,\quad b\ne0,
+$$
+
+先得 $q\perp v$。再由 $H_5\subset T\oplus Q_5$ 及其对 $Q_5$ 的满投影，得到
+
+$$
+q\perp Q_5.
+\tag{126.16}
+$$
+
+这些关系作用于同一个真实首态 $k$：
+
+$$
+V_1k=q\otimes A,\qquad
+V_1p=v\otimes A,\qquad
+V_1G_4=Q_5\otimes A.
+$$
+
+等距性给 $k\perp p,G_4$。首式还使 $k\in F_A$，故 $k\perp F_B$。结合（126.15），
+
+$$
+k\perp S_0,\qquad Q=\mathbb Ck,\qquad k^\perp=S_0.
+\tag{126.17}
+$$
+
+最后一个等式使用本节一重合同的 $\dim S_0=6$。
+
+真实零位首像 $V_0k=p\otimes A$ 与 $p\perp T$ 给 $k\perp H_1=H_4$；它又与 $V_0H_3=G_4\otimes B$ 正交，所以 $k\perp H_3$。由（126.17），
+
+$$
+H_3,H_4\subset S_0.
+$$
+
+第3、4轮当前环境都为 $B$。因为 $U_B\subset S_0$，正交投影 $P_{U_B^\perp}$ 保持 $S_0$，后期满投影于是给
+
+$$
+Q_3=P_{U_B^\perp}H_3\subset S_0,\qquad
+Q_4=P_{U_B^\perp}H_4\subset S_0.
+\tag{126.18}
+$$
+
+另一方面，固定一位等距与（126.13）给
+
+$$
+V_1F_B
+=V_1(T+G_3)
+=(Q_3+Q_4)\otimes B
+=U_B^\perp\otimes B,
+$$
+
+所以 $Q_3+Q_4=U_B^\perp$。它包含非零 $k\in Q\subset U_B^\perp$，却由（126.18）完全落在 $S_0=k^\perp$ 中，矛盾。
+
+### 126.5 ABBBA：共同一位投影不能接出两个正交后继
+
+$G_3,G_4,G_5\subset U_B$，前两个的后继为 $B$，最后一个的后继为 $A$。故
+
+$$
+G_3,G_4\perp G_5.
+$$
+
+四维 $U_B$ 中 $G_5^\perp\cap U_B$ 恰二维，因此
+
+$$
+G_3=G_4=:T,\qquad T\perp G_5.
+\tag{126.19}
+$$
+
+同一个 $V_1$ 与相同输出环境 $B$ 给
+
+$$
+Q_4=Q_5=:Q'\subset U_B^\perp.
+$$
+
+实际后期平面满足
+
+$$
+H_4\subset T\oplus Q',\qquad
+H_5\subset G_5\oplus Q',
+\tag{126.20}
+$$
+
+且它们对共同 $Q'$ 的投影都满。第5、6轮零位输出环境分别为 $B,A$，所以 $H_4\perp H_5$。
+
+任取非零 $z\in Q'$，利用两份满投影选
+
+$$
+h_4=t+z\in H_4,\qquad h_5=g+z\in H_5,
+\qquad t\in T,\quad g\in G_5.
+$$
+
+由 $T\perp G_5$ 且 $Q'\perp U_B$，
+
+$$
+\langle h_4,h_5\rangle=\|z\|^2>0,
+$$
+
+与 $H_4\perp H_5$ 矛盾。本小节只使用四维 $U_B$、两个正交环境及后期满投影，未使用一重共同核的维数。
+
+五种必要尾词全部排除，定理126.1得证。本节将一重四加三分支的第二轮限制到四维尾侧；其余实际合同仍须另行检验。一般容量区间保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

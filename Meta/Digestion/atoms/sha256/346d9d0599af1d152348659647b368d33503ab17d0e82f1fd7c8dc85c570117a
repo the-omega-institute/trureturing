@@ -1,0 +1,49 @@
+### 281.3 对全部角度统一的小谱计数
+
+由（281.2），每个记录的理想分子矩阵都具有形式
+$$
+A_\zeta=I_n+\operatorname{Re}(\zeta Z_n)
+=B_\zeta^\dagger Q_nB_\zeta,
+\qquad
+B_\zeta=(1+\zeta)I_n+t\zeta J_n,
+\qquad |\zeta|=1.
+\tag{281.10}
+$$
+同一角度的四个相位为 $e^{ie},-e^{ie},ie^{ie},-ie^{ie}$。相反相位的两个分子之和为 $2I_n$，故全部本征值均在 $[0,2]$。
+
+用周期移位
+$$
+U_n=J_n+e_ne_1^\dagger,
+\qquad C_\zeta=(1+\zeta)I_n+t\zeta U_n
+\tag{281.11}
+$$
+比较 $B_\zeta$。$U_n$ 酉，包括 $n=1$；$C_\zeta$ 正规，且 $B_\zeta-C_\zeta$ 的秩不超过一。若 $N_B(r)$、$N_C(r)$ 分别计数不超过 $r\ge0$ 的奇异值，则
+$$
+N_B(r)\le1+N_C(r).
+\tag{281.12}
+$$
+具体地，$B$ 的低奇异值右子空间若维数为 $m$，其与 $\ker(B-C)$ 的交至少为 $m-1$ 维；交上 $\|Cv\|=\|Bv\|\le r\|v\|$。奇异值的极小极大表述给 $N_C(r)\ge m-1$。该论证同时处理零阈值与重根。
+
+$C_\zeta$ 的奇异值是半径 $t$ 的等距圆周网格到某个中心的距离。中心模长记为 $s$。若 $0<r<t/4$ 且半径 $r$ 的闭圆盘与圆周相交，则 $s\in[t-r,t+r]$，特别地 $s\ge3t/4$。把中心转到正实轴后，允许圆周角满足
+$$
+(t-s)^2+4ts\sin^2(\alpha/2)\le r^2.
+\tag{281.13}
+$$
+由于 $4ts\ge3t^2$ 及 $\arcsin u\le\pi u/2$，所占闭弧总角长至多 $2\pi r/(\sqrt3t)$。等距网格在此弧上的点数至多一加弧长占整圆的比例乘 $n$，包括弧跨越角度坐标切口的情况。$r=0$ 至多命中一个网格点；$r\ge t/4$ 时直接使用总数 $n$。合并得到全范围估计
+$$
+N_C(r)\le1+\frac4t nr,
+\qquad N_B(r)\le2+\frac4t nr.
+\tag{281.14}
+$$
+
+由 $A_\zeta\succeq q_-B_\zeta^\dagger B_\zeta$，分子本征值不超过 $u$ 的数量至多 $N_B(\sqrt{u/q_-})$。将同一角度的四个记录合并，记全部 $4n$ 个分子本征值为 $\lambda_j(e)$，计数为 $N_e(u)$，则
+$$
+\boxed{
+N_e(u):=\#\{j:\lambda_j(e)\le u\}
+\le8+K n\sqrt u,
+\qquad K:=\frac{64}{\sqrt{q_-}}.
+}
+\tag{281.15}
+$$
+这是对所有角度同时成立的上界，没有要求任意角度只有一个小模式。
+

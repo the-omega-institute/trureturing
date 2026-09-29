@@ -214,7 +214,7 @@ private integer are retained by the certificate. Exact disjoint F/C
 counts, the normalized three-piece fibre partition, and literal clean
 prefixes verify(AH1) without enumerating q^H residues.
 
-The [standard-library helper](../../frontier/cover-geometry/active_irredundant_star_all_heights.py) supports
+The [standard-library helper](../../frontier/cover-geometry/active-irredundant-star-all-heights/active_irredundant_star_all_heights.py) supports
 --base, --write, --check, an optional --output for isolated staging, and
 --later-height(default8). Its default [certificate](../../certificates/source_norms/cover-geometry/active_irredundant_star_all_heights.json) retains the construction. All
 certificate reads and writes use the unchanged canonical IO.
@@ -229,5 +229,5 @@ verify this explicit construction; the preceding arguments supply its
 arbitrary-height interpretation and the scope of the reused theorems.
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/active_irredundant_star_all_heights.py --check
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/active-irredundant-star-all-heights/active_irredundant_star_all_heights.py --check
 ```

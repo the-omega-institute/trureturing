@@ -1,0 +1,98 @@
+**定理 186.2（不依赖字母数的统一正差距）。** 对每个 $0<a<1$，
+$$
+R_*(a)\ge
+1+\frac{a^2}{[1+4a+2(1+a)\log2]^2}>1.
+\tag{186.3}
+$$
+因此即使允许字母数沿程序序列不断增加，也不能使全区间最坏相对成本趋于一。
+
+证明。 任取满足（186.1）的有限程序，记
+$$
+h=\frac{1+u}{2},\quad \ell=1-h,\quad d=1-a^2,\quad q=h-a^2=d-\ell>0.
+\tag{186.4}
+$$
+先将全部 CPTP 组件归约成固定标量支撑。删去在整个区间从未活跃的标签。每个剩余组件在某点具有正权重；因为 $\mathcal T_u$ 固定每个纯基态，第184.2节的纯态凸分解与 Kraus 论证迫使该组件是相关矩阵 $C_j$ 的 Schur 通道。将每个 $C_j$ 在端点交换 $0\leftrightarrow2$ 与复共轭下平均。此操作保持正半定、单位对角以及目标矩阵 $F(a,u)$，故保持精确模拟。概率曲线不变，信息成本也不变。
+
+平均后的矩阵具有形状 $F(x,2H-1)$，其中 $x,H$ 为实数，正半定条件等价于 $x^2\le H\le1$。当 $|x|<1$ 时令 $\lambda=(1-H)/(1-x^2)$，则
+$$
+F(x,2H-1)=\lambda F(x,2x^2-1)
++(1-\lambda)\left[\frac{1+x}{2}F(1,1)+\frac{1-x}{2}F(-1,1)\right].
+\tag{186.5}
+$$
+系数非负且与参数无关；$x=\pm1$ 时矩阵本来就是对应端点。按（186.5）拆分各标签，并保留不同原标签的副本。若拆分比例为 $\theta_k$，则新概率为 $\theta_kp_j$，其信息量之和仍是 $p_j'^2/p_j$。零比例项删去，零概率处的导数为零。所以这一步也精确保留第185.4节约定的信息成本。
+
+归约后只须研究固定有限支撑 $x_j\in[-1,1]$ 上的随机变量 $X$，其概率曲线满足
+$$
+\mathbb E X=a,\qquad \mathbb E X^2=h.
+\tag{186.6}
+$$
+这些约束同时保证相关矩阵混合为 $F(a,u)$。定义另一组归一概率及其均值、方差
+$$
+\nu_j(u)=\frac{(1-x_j^2)p_j(u)}{\ell},\qquad
+m=\mathbb E_\nu X,\qquad \sigma^2=\operatorname{Var}_\nu X.
+\tag{186.7}
+$$
+端点标签的 $\nu$ 权重为零。由（186.6）得到
+$\mathbb E X^3=a-\ell m$、$\mathbb E X^4=h-\ell(m^2+\sigma^2)$。将 $X^2$ 对常数与 $X$ 作线性回归后，剩余方差为
+$$
+\begin{aligned}
+V&=\operatorname{Var}(X^2)-\frac{\operatorname{Cov}(X^2,X)^2}{q}\\
+&=\ell(h-m^2-\sigma^2)-\frac{\ell^2(a-m)^2}{q}\\
+&=\frac{\ell q}{d}
+-\frac{\ell d}{q}\left(m-\frac{a\ell}{d}\right)^2
+-\ell\sigma^2.
+\end{aligned}
+\tag{186.8}
+$$
+这是有限矩恒等式，不对支撑大小作任何限制。
+
+在活跃标签上令 $s_j=p_j'/p_j$，在零权重标签上置 $s_j=0$。非负 $C^1$ 函数在内部零点导数为零，所以对归一性及（186.6）求导，得到
+$$
+\mathbb Es=0,\qquad \mathbb E(sX)=0,\qquad
+\mathbb E(sX^2)=\tfrac12.
+\tag{186.9}
+$$
+以 $Y=X^2-h-\operatorname{Cov}(X^2,X)(X-a)/q$ 表示回归残差，则 $\mathbb EY^2=V$、$\mathbb E(sY)=1/2$。Cauchy–Schwarz 不等式给出
+$$
+I_{\mathcal P}V\ge\tfrac14.
+\tag{186.10}
+$$
+若 $R=R(\mathcal P)=\infty$，所需下界已成立。否则 $I_{\mathcal P}\le RB=Rd/(4\ell q)$；结合（186.8）与（186.10），可得
+$$
+\left|m-\frac{a\ell}{d}\right|
+\le\frac qd\sqrt{1-\frac1R},
+\qquad
+\sigma^2\le\frac qd\left(1-\frac1R\right).
+\tag{186.11}
+$$
+特别地 $R\ge1$。这两式表明，接近逐点最优要求辅助分布同时靠近移动中心 $a\ell/d$ 并具有很小方差。
+
+然而固定支撑上均值的移动也受同一个得分限制。对（186.7）求导，并使用 $\mathbb E[s(1-X^2)]=-1/2$，得到
+$$
+m'=\frac1\ell\mathbb E[s(1-X^2)(X-m)].
+\tag{186.12}
+$$
+由于 $(1-X^2)^2\le1-X^2$，再用 Cauchy–Schwarz 和（186.11），有
+$$
+|m'|^2\le\frac{I_{\mathcal P}}{\ell^2}
+\mathbb E[(1-X^2)^2(X-m)^2]
+\le\frac{I_{\mathcal P}\sigma^2}{\ell}
+\le\frac{R-1}{4\ell^2}.
+\tag{186.13}
+$$
+因此对任意 $2a-1<u_0<u_1<1$，
+$$
+|m(u_1)-m(u_0)|
+\le\sqrt{R-1}\log\frac{1-u_0}{1-u_1}.
+\tag{186.14}
+$$
+
+取 $u_1=a$，让 $u_0\downarrow2a-1$。目标中心 $a\ell/d$ 在这两点间的差趋于 $a/[2(1+a)]$；两处的 $q/d$ 分别趋于 $a/(1+a)$ 与 $(1+2a)/[2(1+a)]$。三角不等式、（186.11）和（186.14）给出
+$$
+\frac{a}{2(1+a)}
+\le\sqrt{R-1}
+\left[\frac{1+4a}{2(1+a)\sqrt R}+\log2\right].
+\tag{186.15}
+$$
+这里只对已成立的不等式取极限，不要求概率或均值在区间左端具有极限。用 $1/\sqrt R\le1$ 放大右端，再移项平方，得到（186.3）对当前任意程序成立；取下确界即证。证毕。
+

@@ -1,0 +1,210 @@
+{
+  "scope": "Finite distinct P-smooth originals: arbitrary pure heights, all mixed labels of form3^a*q^b or3^a*5^b*7^c; arbitrary fixed phases and no exponent cutoff. Ordinary proof plus exact computation, not Lean or unrestricted Erdos7.",
+  "roles": [
+    "5",
+    "7",
+    "11",
+    "13",
+    "17",
+    "19",
+    "T"
+  ],
+  "optimizer_source_sha256": "1dde55d862c53a2ce028c6ed2855dc2748f2589d2216ea84c05ff08237cb6f3a",
+  "signed_integer_optimizer": {
+    "orbits": [
+      {
+        "orbit": 0,
+        "minimum_with_off": 3510150,
+        "minimum_saturated": 3510150,
+        "anchor_root_masks": [
+          60,
+          60,
+          60
+        ]
+      },
+      {
+        "orbit": 1,
+        "minimum_with_off": 3577860,
+        "minimum_saturated": 3577860,
+        "anchor_root_masks": [
+          60,
+          28,
+          60
+        ]
+      },
+      {
+        "orbit": 2,
+        "minimum_with_off": 3586365,
+        "minimum_saturated": 3586365,
+        "anchor_root_masks": [
+          67,
+          67,
+          67
+        ]
+      },
+      {
+        "orbit": 3,
+        "minimum_with_off": 3676920,
+        "minimum_saturated": 3676920,
+        "anchor_root_masks": [
+          60,
+          60,
+          60
+        ]
+      },
+      {
+        "orbit": 4,
+        "minimum_with_off": 3725466,
+        "minimum_saturated": 3725466,
+        "anchor_root_masks": [
+          62,
+          14,
+          14
+        ]
+      },
+      {
+        "orbit": 5,
+        "minimum_with_off": 3748782,
+        "minimum_saturated": 3748782,
+        "anchor_root_masks": [
+          62,
+          6,
+          62
+        ]
+      }
+    ],
+    "node_candidates": 143327232,
+    "root_convolution_candidates": 6122200320,
+    "checks_passed": 14
+  },
+  "pure_mask_count": 598,
+  "pruned_shapes": [
+    [
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        3,
+        3
+      ]
+    ],
+    [
+      [
+        2,
+        3,
+        3
+      ],
+      [
+        3,
+        3
+      ]
+    ]
+  ],
+  "denominator": 378675,
+  "literal_placement": {
+    "5": [
+      "B",
+      "B1",
+      "b0"
+    ],
+    "7": [
+      "B",
+      "B2",
+      "b1"
+    ],
+    "11": [
+      "A",
+      "A1",
+      "a1"
+    ],
+    "13": [
+      "A",
+      "A1",
+      "a1"
+    ],
+    "17": [
+      "A",
+      "A1",
+      "a4"
+    ],
+    "19": [
+      "A",
+      "A1",
+      "a1"
+    ],
+    "T": [
+      "B",
+      "B2",
+      "b4"
+    ]
+  },
+  "literal_leaf_order": [
+    "a0",
+    "a1",
+    "a2",
+    "a3",
+    "a4",
+    "b0",
+    "b1",
+    "b2",
+    "b3",
+    "b4",
+    "b5",
+    "b6",
+    "b7",
+    "b8"
+  ],
+  "literal_leaf_numerators": [
+    268800,
+    198450,
+    184275,
+    184275,
+    170100,
+    75735,
+    126225,
+    176715,
+    75735,
+    50490,
+    75735,
+    100980,
+    100980,
+    100980
+  ],
+  "shallow_loss_upper": "89521/136323",
+  "star_tail": "7244/227205",
+  "triangle_tail": "1/405",
+  "all_height_loss_upper": "8564/12393",
+  "loss_threshold_margin": "2989/3098250",
+  "full_Haar_survivor_lower": "210595/2985984",
+  "one_law_query_upper": "2304369/210595",
+  "query_target_margin": "1463356/10740345",
+  "outside23_29_relative_reserve": "365839/32431630",
+  "extended_Haar_lower": "365839/459841536",
+  "checks": {
+    "six_signed_orbits_with_off": true,
+    "off_never_improves_saturated_minimum": true,
+    "global_minimum": true,
+    "node_candidate_count": true,
+    "root_candidate_count": true,
+    "598_disjoint_pure_masks": true,
+    "exact_two_pruned_shapes": true,
+    "literal_leaf_numerators": true,
+    "literal_witness_attains_global_minimum": true,
+    "literal_witness_has_positive_leaves": true,
+    "literal_anchor_is_maximal_avoidance": true,
+    "head": true,
+    "star_tail": true,
+    "triangle_complete_tail": true,
+    "all_height_loss": true,
+    "G_threshold": true,
+    "Haar_survivor": true,
+    "common_law_query": true,
+    "query_target": true,
+    "outside23_29_reserve": true,
+    "outside23_29_Haar": true
+  },
+  "passed_count": 21,
+  "Lean": "not run"
+}

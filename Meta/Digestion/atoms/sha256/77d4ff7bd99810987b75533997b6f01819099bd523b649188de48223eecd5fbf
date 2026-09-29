@@ -1,0 +1,12 @@
+### 119.3 早期平面若在后期回返，环境必须正交
+
+下面的限制不要求（119.2），只使用非退化来源的实际早期平面及后期满投影。保留
+
+$$
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),
+\qquad a b\ne0,
+$$
+
+以及 $3\le n\le6$ 时 $\dim Q_n=2$、$P_{Q_n}|_{H_n}$ 为同构。
+

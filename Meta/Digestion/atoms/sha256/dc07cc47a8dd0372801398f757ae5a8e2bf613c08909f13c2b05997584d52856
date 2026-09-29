@@ -1,0 +1,28 @@
+**证明。** 取
+
+$$
+P=R_{a,\varepsilon}-S+\frac\varepsilon2Q_-.
+$$
+
+其偏迹是 $I_A\otimes\operatorname{diag}(3/20,\varepsilon-3/20)$。星形块的对角为 $3/20,1/5-\varepsilon/2,\varepsilon-3/20$，交叉项为 $\alpha,\beta$；第一项条件给其正性。其余非零对角为
+$P_{vv}=\varepsilon/2-1/20$、$P_{h_ih_i}=\varepsilon/2-3/40$，在给定区间均正。
+
+负向 $N$ 的对角依次取
+
+$$
+\left(
+\frac{\varepsilon-3/20}{2},
+\frac{\varepsilon-3/20}{2},
+\frac3{40},\frac3{40},
+\frac1{20},\varepsilon-\frac15,
+\frac3{40},\frac3{40}
+\right),
+$$
+
+仅令 $N_{xy}=N_{yx}=-\alpha$。其偏迹是
+$I_A\otimes\operatorname{diag}(\varepsilon-3/20,3/20)$；第二项条件给 $N\succeq0$。余量 $N-S+R$ 的 $xz$ 块对角为
+$(\varepsilon+3/20)/2,\varepsilon-3/40$，交叉项为 $\beta$；第三项条件给该块正性。其余非零余量对角为
+$(\varepsilon-3/20)/2,3/40$，所以 $N\succeq S-R$。两个方向的上界质量均为 $\varepsilon$，同上得式（60.15）。$\square$
+
+在 $(a,\varepsilon)=(1/2,1/4)$，式（60.14）均严格成立，故由连续性它们至少覆盖该点的一个非空开邻域。这是一个带显式充分条件的参数族结算，不是对所有量子比特末输出、所有秩二扩展或所有 $(a,\varepsilon)$ 的定理。
+

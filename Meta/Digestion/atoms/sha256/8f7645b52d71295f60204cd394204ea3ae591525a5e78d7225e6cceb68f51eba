@@ -1,0 +1,28 @@
+### 257.4 从根保真度到纤维直径上界
+
+对归一化态，标准纯化距离关系为
+$$
+d(\Omega,\Xi)\le\sqrt{1-\mathsf F(\Omega,\Xi)^2}.
+\tag{257.23}
+$$
+可直接用矩阵向量化证明所需形式：取 $\sqrt\Omega$ 与 $\sqrt\Xi V$ 的向量化，$V$ 为辅助空间酉算子。这两个单位向量分别纯化 $\Omega,\Xi$，其内积为 $\operatorname{Tr}(\sqrt\Omega\sqrt\Xi V)$。由极分解可选 $V$ 使内积绝对值等于 $\mathsf F(\Omega,\Xi)$。两纯态之差支撑于至多二维空间，两个可能非零的本征值为
+$$
+\pm\sqrt{1-\mathsf F(\Omega,\Xi)^2}.
+\tag{257.24}
+$$
+因此其半迹距离恰为（257.23）右侧。对辅助空间取偏迹不会增加 Hermitian 差矩阵的迹范数，遂得到（257.23）。
+
+现在任取 $\Omega,\Xi\in\mathfrak F(K)$。它们具有共同非对角块 $C=K/2$。引理257.1给
+$$
+\mathsf F(\Omega,\Xi)\ge k.
+\tag{257.25}
+$$
+结合（257.23），
+$$
+\boxed{
+d(\Omega,\Xi)\le\sqrt{1-k^2}.
+}
+\tag{257.26}
+$$
+该上界没有假定两态的对角块彼此交换、具有共同参考边缘或具有相同秩。
+

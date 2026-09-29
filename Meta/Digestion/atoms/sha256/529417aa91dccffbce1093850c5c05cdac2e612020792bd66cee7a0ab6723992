@@ -1,0 +1,13 @@
+**证明。** 将 $\psi=Uv$ 代入 $i\hbar\dot\psi=H\psi$ 并左乘 $U^\dagger$ 得到(ST15.5)。剩余法向部分为 $D_t$。对两个时变酉传播子采用与 ST14 相同的微分积分恒等式。∎
+
+即使 $HU=Uh$ 逐时刻成立，$N_t$ 仍可能非零。此时上述粗界是 $\int\|N_t\|dt$，减慢沿同一路径的运动并不会自动缩小这个路径长度界；更锐的绝热定理还需能隙、光滑性和振荡抵消分析。
+
+若允许加入实际控制 Hamiltonian
+
+$$
+\boxed{H_{\mathrm{cd}}=i\hbar[\dot\Pi,\Pi],}
+\tag{ST15.6}
+$$
+
+则对逐时刻不变子空间有 $(I-\Pi)H_{\mathrm{cd}}U=i\hbar N_t$，所以法向残差严格为零。且 $U^\dagger H_{\mathrm{cd}}U=0$，$\|H_{\mathrm{cd}}\|=\hbar\|N_t\|$。
+

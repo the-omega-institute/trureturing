@@ -1,0 +1,29 @@
+### 19.4 推论：固定网格的严格偏差及一个精确反例
+
+设固定有限网格 $G\subset[a,b]$ 包含 $a,m,b$。将 $\mu$ 的残余支撑和 $\nu$ 的支撑都限制在 $G$，记最大端点质量为 $W_G(\varepsilon)$。若 $\varepsilon\in(\varepsilon_1,\varepsilon_2)$ 且 $t=t(\varepsilon)\notin G$，令 $l<r$ 为夹住 $t$ 的相邻网格节点。因为 $m\in G$，有 $a\leq l<t<r\leq m$。式 (19.5) 的全部节点属于允许支撑，且 $G\cap(l,r)=\varnothing$，故
+\[
+\boxed{W_G(\varepsilon)=w_h(t;l,r),\qquad
+W(\varepsilon)-W_G(\varepsilon)
+=\frac{(1-W(\varepsilon))(t-l)(r-t)}{(1-l)(1-r)}>0.}
+\tag{19.11}
+\]
+若 $t\in G$，式 (19.4) 给出零偏差。因此有限网格在这个整个开噪声区间中只能于有限多个噪声值精确。有限原子取等不蕴含一个预先固定的有限节点集合足够。
+
+对 $a=1/4,b=3/4,G=\{1/4,1/2,3/4\}$ 和 $\varepsilon=1/25$，
+\[
+t=\frac{43}{116},\quad W=\frac{984}{1825},\quad W_G=\frac{13}{25},\quad
+W-W_G=\frac7{365}.
+\tag{19.12}
+\]
+连续模型的取等分布为
+\[
+\mu=\frac{984}{1825}\delta_1+\frac{841}{1825}\delta_{43/116},\qquad
+\nu=\delta_{3/4}.
+\]
+两矩误差恰为 $(-1/25,1/25)$。在整个中间区间 $1/40\leq\varepsilon\leq1/18$，网格偏差为
+\[
+W-W_G=\frac{(1-18\varepsilon)(40\varepsilon-1)}{3(48\varepsilon+1)}.
+\tag{19.13}
+\]
+该比较保持了固定网格问题本身的正确性，只改变允许的支撑模型类。
+

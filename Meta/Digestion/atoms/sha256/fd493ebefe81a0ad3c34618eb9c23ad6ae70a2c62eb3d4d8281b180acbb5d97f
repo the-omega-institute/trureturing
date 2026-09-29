@@ -1,0 +1,11 @@
+**定理 240.1（最坏纯探针的精确刻画）。** 对任意归一化纯联合输入及其输入边缘 $\rho$，
+$$
+\boxed{
+\varepsilon(\rho)=D_*
+\quad\Longleftrightarrow\quad
+[\rho,\Pi_j]=0\quad\text{对全部 }j.
+}
+\tag{240.9}
+$$
+因此全部最坏纯探针的输入边缘，恰是与整个投影族对易的密度矩阵。
+

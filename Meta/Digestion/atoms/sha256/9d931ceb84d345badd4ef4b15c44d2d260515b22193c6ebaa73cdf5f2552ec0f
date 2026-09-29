@@ -1,0 +1,57 @@
+### 281.4 谱计数给出的单次统一保真度界
+
+对每个 $\lambda\in[0,2]$，
+$$
+\frac1{\lambda+\delta}
+=\frac1{2+\delta}+\int_\lambda^2\frac{du}{(u+\delta)^2}.
+$$
+因此，包含零本征值在内，准确有
+$$
+\sum_{j=1}^{4n}\frac1{\lambda_j(e)+\delta}
+=\frac{4n}{2+\delta}
++\int_0^2\frac{N_e(u)}{(u+\delta)^2}\,du.
+\tag{281.16}
+$$
+使用（281.15）及标准积分
+$$
+\int_0^\infty\frac{\sqrt u}{(u+\delta)^2}\,du
+=\frac\pi{2\sqrt\delta},
+$$
+得到
+$$
+\sum_j\frac1{\lambda_j(e)+\delta}
+\le\frac8\delta+C_R\frac n{\sqrt\delta},
+\qquad C_R:=2+\frac{\pi K}{2}.
+\tag{281.17}
+$$
+这里将 $4n/(2+\delta)\le2n\le2n/\sqrt\delta$ 吸收进常数。
+
+在两个输出的共同本征基中，
+$$
+p_j=\frac{\lambda_j(e)}{4n},\qquad
+q_j=\frac{(1-\delta)\lambda_j(e)+\delta}{4n}.
+\tag{281.18}
+$$
+因为 $|1-\lambda_j|\le1$，且 $p_j+q_j\ge(\lambda_j+\delta)/(4n)$，每项平方根损失满足
+$$
+\tfrac12(\sqrt{p_j}-\sqrt{q_j})^2
+=\frac{(p_j-q_j)^2}{2(\sqrt{p_j}+\sqrt{q_j})^2}
+\le\frac{\delta^2}{8n(\lambda_j(e)+\delta)}.
+\tag{281.19}
+$$
+求和给 $1-F$，再乘 $1+F\le2$，由（281.17）得
+$$
+\boxed{
+1-F(\sigma_0(e),\sigma_1(e))^2
+\le2\frac\delta n+\frac{C_R}{4}\delta^{3/2}
+\le C R(n,\delta),
+\qquad C:=\max\{2,C_R/4\}.
+}
+\tag{281.20}
+$$
+所有常数独立于 $n,\delta,e$。同时，$q_j\ge(1-\delta)p_j$ 给
+$$
+F(\sigma_0(e),\sigma_1(e))\ge\sqrt{1-\delta}.
+\tag{281.21}
+$$
+

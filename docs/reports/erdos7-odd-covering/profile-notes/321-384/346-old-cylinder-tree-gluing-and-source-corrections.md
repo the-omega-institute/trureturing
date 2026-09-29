@@ -102,7 +102,7 @@ N_i=M\bigl(iM^{-1}\bmod11\bigr),\qquad0\le i\le10.
 \]
 最佳树代理与实际联合选择质量的比值为 \(3^{-H}\to0\)，故连在当前素数、当前高度和标签数全部固定时，也不存在独立于旧高度的统一乘法上界。该例只反驳这个具体联合预算，不是全覆盖反例；全覆盖会要求全部旧点没有失败分支，而这里明确保留失败。它不对整份原始倒数费用作新的排除结论。
 
-配套[精确检查程序](../../frontier/cover-geometry/old_cylinder_tree_gluing.py) 采用原余因子实际使用的估值阈值分割**全部**旧 Haar 空间。每个 \([a,b)\) 估值段质量为 \(q^{-a}-q^{-b}\)，末端质量为 \(q^{-H}\)。默认 \(H=2,3,12\) 分别仅有 \(27,48,48\) 个完整旧原子；各原子的标签激活常值。程序检查所有旧原子的规范化 cut 与失败、每个当前根的实际 CRT 原类成员关系、全部私有点，以及三棵树的精确修正。三层共检查 \(363\) 次私有点成员关系与 \(14883\) 次逐标签 CRT 成员关系，均使用整数与有理数。另逐状态核对上一节事件位树拼接的边缘保持和非法 \(4/105\) 质量。一般 \(H\) 的结论由上面的公式证明承担。
+配套[精确检查程序](../../frontier/cover-geometry/old-cylinder-tree-gluing/old_cylinder_tree_gluing.py) 采用原余因子实际使用的估值阈值分割**全部**旧 Haar 空间。每个 \([a,b)\) 估值段质量为 \(q^{-a}-q^{-b}\)，末端质量为 \(q^{-H}\)。默认 \(H=2,3,12\) 分别仅有 \(27,48,48\) 个完整旧原子；各原子的标签激活常值。程序检查所有旧原子的规范化 cut 与失败、每个当前根的实际 CRT 原类成员关系、全部私有点，以及三棵树的精确修正。三层共检查 \(363\) 次私有点成员关系与 \(14883\) 次逐标签 CRT 成员关系，均使用整数与有理数。另逐状态核对上一节事件位树拼接的边缘保持和非法 \(4/105\) 质量。一般 \(H\) 的结论由上面的公式证明承担。
 
 剩余输入已经具体化：若要用局部拼接控制假想全覆盖，必须保留共同旧数位边界或证明其充分性，支付 \(\Delta_T\) 所计的重复坐标，并控制同一真实来源的 \(b_{\rm all}\)。原模数唯一性与给定旧点的 cut 独立性本身不供应这些条件。
 
@@ -112,8 +112,8 @@ N_i=M\bigl(iM^{-1}\bmod11\bigr),\qquad0\le i\le10.
 树拼接、CRT 相容性及阈值森林计数是标准方法，不是新的一般拼接理论。[现有树形记录接口](../../../../../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)要求有限树、运行交集、局部非空和完整交叠投影相等；这里保留共同旧数位的条件与之对应，但事件位读数不满足同一充分性声明。第 27 节已有共同 CRT 与边缘松弛接口；本节补入原始圆柱的精确修正、真实规范化选择的无界低估族，以及事件位和原来源的边界。
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/old_cylinder_tree_gluing.py
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/old_cylinder_tree_gluing.py --heights 4 29
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/old-cylinder-tree-gluing/old_cylinder_tree_gluing.py
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/old-cylinder-tree-gluing/old_cylinder_tree_gluing.py --heights 4 29
 ```
 
 程序还检查来源限制例的四个原始私有点及完整周期内的原类成员关系。以上一般公式由正文的通常数学推导承担；有限精确程序不替代无界量词证明。本节没有新增 Lean 声明、运行 Lean 或产生冻结结果。不受限 Erdős #7 仍未解决。

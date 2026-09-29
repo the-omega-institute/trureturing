@@ -1,0 +1,14 @@
+**定义 95.1（只旋转未点击后继的固定仪器族）。** 取任意 $\Gamma_*\in\mathfrak F_R$，并使用定理 91.2 的基 $(\psi,\eta)$ 与参数 $e,v,d$。对实控制角 $\theta$，定义
+
+$$
+U_\theta=
+\begin{pmatrix}\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta\end{pmatrix},
+\qquad
+\mathcal N_\theta=\operatorname{Ad}_{U_\theta}\circ\mathcal N_{\Gamma_*},
+\qquad \mathcal C_\theta=\mathcal C_{\Gamma_*}.
+\tag{95.1}
+$$
+
+$\Gamma_\theta=(\mathcal N_\theta,\mathcal C_\theta)$ 是同接口完整仪器，因为旋转不改变未点击效果。每次执行固定一个 $\theta$ 并齐次重复该仪器；$\theta$ 是控制角，不是事件时间或钟读数。
+

@@ -1,0 +1,38 @@
+### 270.4 输入端的集体下界与逐次上界
+
+根保真度张量乘性和归一化态的迹距—保真度界给
+$$
+\begin{aligned}
+d(\Omega_*^{\otimes m},\Omega_h^{\otimes m})^2
+&\le1-\mathsf F(\Omega_*,\Omega_h)^{2m}\\
+&\le m\bigl(1-\mathsf F(\Omega_*,\Omega_h)^2\bigr)\\
+&\le mB_Fh^2.
+\end{aligned}
+\tag{270.30}
+$$
+等先验Helstrom公式要求成功率至少 $2/3$ 时半迹距离至少为 $1/3$。所以
+$$
+\boxed{
+N_{\mathrm{in}}(h)\ge\frac1{9B_Fh^2}.
+}
+\tag{270.31}
+$$
+该界覆盖所有输入与参考上的任意集体终端测量。
+
+逐份测量 $\{P,R\}$，只要有一次落在理想支撑外就判 $h$，否则判 $*$。理想假设下点击概率为零，竞争假设下每份点击概率为 $\ell_h$，故平均成功率为
+$$
+1-\frac12(1-\ell_h)^m
+\ge1-\frac12e^{-m\ell_h}.
+\tag{270.32}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{in}}(h)
+\le\left\lceil\frac{\ln(3/2)}{\ell_h}\right\rceil
+\le\left\lceil\frac{\ln(3/2)}{b_-h^2}\right\rceil.
+}
+\tag{270.33}
+$$
+该协议在理想假设下无错误，在另一假设下的错误率可达 $2/3$；它满足的是已经固定的等先验平均错误率目标。上下界共同给出 $N_{\mathrm{in}}=\Theta(h^{-2})$。
+

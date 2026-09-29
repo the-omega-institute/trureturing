@@ -218,7 +218,7 @@ does not supply a decreasing move when one is needed.
 
 ## 5. Verification and the remaining implication
 
-The [standalone exact checker](../../frontier/cover-geometry/prime_parent_eligibility_and_height.py)
+The [standalone exact checker](../../frontier/cover-geometry/prime-parent-eligibility-and-height/prime_parent_eligibility_and_height.py)
 retains literal AP residues, complete original periods and tails,
 forced edges and exact rational Haar masses. It checks PE1--PE5
 on the period-450 fixture and the entire source menu product's

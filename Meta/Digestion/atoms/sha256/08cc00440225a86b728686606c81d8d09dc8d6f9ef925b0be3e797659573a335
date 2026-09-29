@@ -1,0 +1,48 @@
+#### 8.6.2 在零和子空间上修正逆行
+
+记
+$$
+t=\prod_i(m_i-1),\qquad
+q=\prod_i(2m_i-3),\qquad
+h=\prod_i(m_i-2),\qquad
+\kappa=q/t.
+$$
+完整使用全部模数的读数 $y$ 满足
+$$
+y=Az,\qquad A=\bigotimes_i(J_{m_i}-I_{m_i}),\qquad
+B=A^{-1}=\bigotimes_i\left(\frac{J_{m_i}}{m_i-1}-I_{m_i}\right).
+$$
+每个状态点属于恰好 $t$ 个完整删除试验，因此
+$$
+\sum_a y_a=t\sum_cz_c=0.
+\tag{ER8.CM.3}
+$$
+
+先假定所有 $m_i\ge3$，固定目标 $c^*$。逆矩阵对应行记作 $b_a=B_{c^*,a}$，有
+$$
+b_a=\frac1t\prod_i
+\begin{cases}-(m_i-2),&a_i=c_i^*,\\1,&a_i\ne c_i^*.
+\end{cases}
+$$
+全部 $b_a$ 非零，且任何正项均至少为 $1/t$。由 ER8.CM.3，可从这一行的每个系数减去 $1/t$ 而不改变零和向量的恢复：
+$$
+z_{c^*}=\sum_a\left(b_a-\frac1t\right)y_a.
+\tag{ER8.CM.4}
+$$
+对正负项分别计算，
+$$
+\left|b_a-\frac1t\right|=|b_a|-\frac1t\operatorname{sgn}(b_a).
+$$
+行绝对和为 $\sum_a|b_a|=q/t$，符号和也分解为单坐标乘积：
+$$
+\sum_a\operatorname{sgn}(b_a)
+=\prod_i((m_i-1)-1)=h.
+$$
+所以修正逆行的绝对系数和恰为
+$$
+\sum_a\left|b_a-\frac1t\right|=\frac{q-h}{t}.
+$$
+目标 $c^*$ 任意，完整读数又包含在全部观察中，故得到 ER8.CM.2，常数为 $(q-h)/t$。
+
+若某个 $m_i=2$，则 $h=0$。此时直接使用原逆矩阵的行绝对和 $q/t$ 即得同一个上界；不能在这一分支照搬“所有正项至少为 $1/t$ 且无零项”的上述计算。空族 $q=h=t=1$，结论为零，单独已处理。
+

@@ -1,0 +1,9 @@
+**命题 17.3（周期读数判定惰性的有限界与不能混用的指数）。** 令 d_*=max_{rho≠1}dim(rho)。A inert 当且仅当
+
+$$
+F_{h,j}(A)=\operatorname{tr}(\epsilon(A)^j)
+\quad\text{对所有 }h\in H,\quad 1\le j\le n d_*.
+$$
+
+这里不能一般地把周期检查范围 n d_* 直接替换为定理 15.3 的系数检查范围 n b_H。
+

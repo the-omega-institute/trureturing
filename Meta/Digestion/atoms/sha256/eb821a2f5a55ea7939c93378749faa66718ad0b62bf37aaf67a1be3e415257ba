@@ -1,0 +1,95 @@
+### 177.3 好相位处的定量 Kraus 方差控制
+
+在 $\varphi_*=\pi/4$ 的接收端解掩码与旗标坐标中，基点是
+$I_Q/2\otimes P_\Xi$。另一类好相位通过第175节的接收端局部
+$J=-iY$ 协变变换化为同一计算。
+
+固定旗标 $\nu=0,1$，写 instrument 的 Kraus 为
+$K_{j,\nu,\alpha}:R\to R_{\mathrm{out}}$。它们满足
+
+$$
+\sum_{j,\alpha}
+K_{j,\nu,\alpha}^\dagger K_{j,\nu,\alpha}=I
+\quad\text{对每个 }\nu.
+\tag{177.8}
+$$
+
+对每个 Kraus，令
+
+$$
+a=\operatorname{Tr}(\rho K),\qquad
+E=K-aI,\qquad
+\|E\|_\rho^2=\operatorname{Tr}(\rho E^\dagger E).
+$$
+
+于是 $\operatorname{Tr}(\rho E)=0$。第175节的方差恒等式在非等号情形给
+
+$$
+\frac12\sum_{\nu,j,\alpha}|a_{j,\nu,\alpha}|^2=1-\ell_*,
+\qquad
+\frac12\sum_{\nu,j,\alpha}\|E_{j,\nu,\alpha}\|_\rho^2=\ell_*.
+\tag{177.9}
+$$
+
+还需要控制正交纯化 $\psi=(I\otimes Y)\Xi$ 的恢复振幅。记
+
+$$
+b=\langle\Xi|(I\otimes K)|\psi\rangle
+=\operatorname{Tr}(\rho KY).
+$$
+
+由于 $\operatorname{Tr}(\rho Y)=0$，将 $K$ 换成 $E$ 不改变 $b$。
+在加权内积
+$\langle C,E\rangle_\rho=\operatorname{Tr}(\rho C^\dagger E)$
+中，取 $C=\rho Y\rho^{-1}$，就有 $b=\langle C,E\rangle_\rho$。
+又
+
+$$
+\begin{aligned}
+\|C\|_\rho^2
+&=\operatorname{Tr}(\rho^{-1}Y\rho^2Y)\\
+&=\operatorname{Tr}\bigl(\rho^{-1}(I-\rho)^2\bigr)
+=\frac1{\det\rho}-3=6.
+\end{aligned}
+$$
+
+故加权 Cauchy–Schwarz 给
+
+$$
+\boxed{|b|^2\le6\|E\|_\rho^2.}
+\tag{177.10}
+$$
+
+令原输入权重为 $r_0=1,r_1=R$，并定义
+
+$$
+S=\frac12\sum_{\nu,j,\alpha}r_j|a_{j,\nu,\alpha}|^2,
+\qquad
+T=\frac12\sum_{\nu,j,\alpha}r_j|b_{j,\nu,\alpha}|^2.
+$$
+
+由（177.9）—（177.10），
+
+$$
+1-\ell_*\le S\le R,\qquad
+T\le6R\ell_*.
+\tag{177.11}
+$$
+
+第174节条件态的扰动方向是
+$-\beta P_\Xi+\beta P_\psi$ 加上系数为
+$\pm\gamma$ 的两个交叉项。因此
+
+$$
+\begin{aligned}
+G(\mathcal D,\varphi_*,R)
+&\le-\beta S+\beta T+2\gamma\sqrt{ST}\\
+&\le-\beta+\beta(1+6R)\ell_*
++2\gamma R\sqrt{6\ell_*}.
+\end{aligned}
+\tag{177.12}
+$$
+
+交叉项的界同时对旗标符号、结果标签和全部 Kraus 使用加权
+Cauchy–Schwarz；（177.8）始终是共同的保迹预算。
+

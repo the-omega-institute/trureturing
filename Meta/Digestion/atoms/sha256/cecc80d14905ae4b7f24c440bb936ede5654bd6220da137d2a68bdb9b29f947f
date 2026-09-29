@@ -1,0 +1,80 @@
+### 93.3 至少 q 减二 d 个匹配缺陷方向
+
+在 $E_0'$ 上，$Xv=0$ 且 $H_1^*v=0$，两对角方程依次给
+
+$$
+Yv=\nu v,\qquad H_0H_0^*v=(\mu/s)v.
+$$
+
+对称地，在 $E_1'$ 上有
+
+$$
+Xv=\mu v,\qquad H_1H_1^*v=(\nu/s)v.
+\tag{93.8}
+$$
+
+定义缺陷参数空间中的两个子空间
+
+$$
+Z_0=H_0^*E_0',\qquad Z_1=H_1^*E_1'
+\quad\subset\mathbb C^d.
+$$
+
+（93.8）说明相应 $H_i^*$ 单射，并给
+
+$$
+\dim Z_0=e_0-c_0,\qquad
+\dim Z_1=e_1-c_1,
+$$
+
+$$
+H_0Z_0\subset E_0',\qquad
+H_0^*H_0|_{Z_0}=(\mu/s)I,
+$$
+
+$$
+H_1Z_1\subset E_1',\qquad
+H_1^*H_1|_{Z_1}=(\nu/s)I.
+\tag{93.9}
+$$
+
+令 $Z=Z_0\cap Z_1$。由（93.7），
+
+$$
+\begin{aligned}
+\dim Z
+&\ge e_0+e_1-c_0-c_1-d\\
+&\ge e_0+e_1+r-2d.
+\end{aligned}
+$$
+
+Sylvester 秩不等式又给
+
+$$
+r=\operatorname{rank}(L_1L_0^*)
+\ge\operatorname{rank}L_1+\operatorname{rank}L_0-q
+=q-e_0-e_1.
+$$
+
+所以
+
+$$
+\boxed{\dim Z\ge q-2d.}
+\tag{93.10}
+$$
+
+每个 $f\in Z$ 同时满足
+
+$$
+H_0f\in\ker L_0^*\cap\ker H_1^*,\qquad
+H_1f\in\ker L_1^*\cap\ker H_0^*,
+$$
+
+$$
+H_0^*H_0f=(\mu/s)f,\qquad
+H_1^*H_1f=(\nu/s)f.
+\tag{93.11}
+$$
+
+这些是同时剥离所需的匹配条件。经过（93.5）的实际交空间筛选后，它们不要求 $H_0$ 或 $H_1$ 满列秩。
+

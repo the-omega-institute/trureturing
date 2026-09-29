@@ -1,0 +1,243 @@
+**证明。** 先固定共同好数据事件，保留完整窗口、校准根及精确后验中心。
+以 $\mathsf Q_x=\prod_j\operatorname{Bin}(C_j,p_j)$ 记原单个校准乘积计数律，
+$L_x=dP_x/d\mathsf Q_x$，$a_x=\|L_x-1\|_2$。
+第 68 章的实际比较及信息谱证明给
+
+```math
+0\le L_x\le C,\qquad a_x=O_{\mathbb P}(Q^{-5/2}),\qquad
+|h_x-\widetilde h_x|\le C(Qa_x+a_x^2),\qquad
+\mathbb E_{P_x}(\log L_x)^2\le Ca_x^2.
+```
+
+式 (73.5)。
+
+这里 $\widetilde h_x$ 是乘积计数熵，以 bits 计，常数吸收单位转换。
+密度仍为补集 Bernoulli 和在所需整数处的概率除以全体和在 $q$ 处的概率；
+未按组重新抽取实际标签。
+第 68 章还给 $p_j\in[1/4,3/4]$ 上统一的二项惊奇量方差界与乘积惊奇量的 $Q$ 尺度 CLT。
+由原一、二行 PGF 得到的全部窗口行数与第 69 章矩界同样适用，
+这些前提不要求实际路径行独立。
+
+写 $h_M^{noise}=\log^+(1/\sigma_M)$，$\lambda=Q^3$，取确定半径
+
+```math
+H_M=h_M^{noise}+\log Q+1,\qquad R_M^2=\sqrt{\lambda H_M}.
+```
+
+式 (73.6)。
+
+在第一条噪声条件下，$R_M\to\infty$、$R_M^2=o(\lambda)$，且
+$R_M^2/H_M\to\infty$。
+只为估计取足够大固定原行数截断 $k+l\le C_0\lambda$，其计数线索引为 $K_M$。
+在该线内分为
+
+```math
+\mathcal C_M=\{j:|j\delta|\le R_M\},\qquad
+\mathcal O_M=K_M\setminus\mathcal C_M,
+\qquad n_M^{core}=|\mathcal C_M|\le1+2R_M/\delta=o(Q^2).
+```
+
+式 (73.7)。
+
+截断事件的坏概率一致趋零，所有目标仍是原完整窗口。
+下述行数期望先在全部原始数据上对确定计数对取得，再在共同截断事件上识别为完整得分组。
+
+令 $m_j$ 为 (72.7) 的原 Poisson 混合平均占据数，
+$v_j=C_jp_j(1-p_j)/B^2$、$V_{\mathcal O}=\sum_{\mathcal O_M}v_j$。
+若两个计数均不少于对应 Poisson 均值的一半，固定截断上的率函数 Hessian 有正下界，
+保留有界原取整后，Stirling 前因子与严格凸性给
+
+```math
+\frac{m_j}{B^2}\le C\delta e^{-c(j\delta)^2}.
+```
+
+式 (73.8)。
+
+这在整个上述区域统一成立，不限于固定空间区间或固定对数半径。
+其余点至少有一个 Poisson 计数低于均值的一半，故
+$m_j/B^2\le Q^Ce^{-c\lambda}$，无需在零计数端点使用 Gaussian 前因子。
+原实际一行比较、$p_j(1-p_j)\le1/4$ 以及 Gaussian 格点尾和给
+
+```math
+\sup_S\mathbb E_S V_{\mathcal O}
+ \le Ce^{-cR_M^2}+Q^Ce^{-c\lambda}.
+```
+
+式 (73.9)。
+
+例如尾和用
+$\delta\sum_{|j\delta|>R}e^{-c(j\delta)^2}
+\le e^{-cR^2/2}\delta\sum_je^{-c(j\delta)^2/2}$ 即得。
+原行数依赖仍保留在实际期望中。
+
+在同一乘积计数向量上置
+
+```math
+U_j=(R_j-C_jp_j)/B,\qquad e_j=(\mu_j-C_jp_j)/B,
+\qquad \mathbb E_{\mathsf Q_x}U_j=0,\quad
+\mathbb E_{\mathsf Q_x}U_j^2=v_j.
+```
+
+式 (73.10)。
+
+精确后验中心给 $e=\mathbb E_{\mathsf Q_x}[(L_x-1)U]$，故
+$\|e_{\mathcal O}\|_2\le a_x\sqrt{V_{\mathcal O}}$。
+定义仅在证明中使用的核心标量
+
+```math
+T^{core}=\delta^{-1/2}
+ \left\{\sum_{j\in\mathcal C_M}(U_j-e_j)^2
+         -V_{\mathcal C}+\|e_{\mathcal O}\|_2^2\right\}.
+```
+
+式 (73.11)。
+
+每个中心与方差在给定原始数据后都是确定量；
+因此它只随机依赖核心的乘积后验计数。
+尾部确定项完整保留，不能因其趋零就在任意小噪声比较中删去。
+由原标量的精确展开直接相减，
+
+```math
+T-T^{core}=\delta^{-1/2}
+ \sum_{j\in\mathcal O_M}(U_j^2-v_j-2e_jU_j),\qquad
+\mathbb E_{\mathsf Q_x}|T-T^{core}|
+ \le C\delta^{-1/2}V_{\mathcal O}.
+```
+
+式 (73.12)。
+
+后一界用 $\mathbb E|U_j^2-v_j|\le2v_j$ 及
+$\mathbb E|e_{\mathcal O}\cdot U_{\mathcal O}|
+\le\|e_{\mathcal O}\|\sqrt{V_{\mathcal O}}$，
+共同好事件上 $L_x\le C$ 已保证 $a_x$ 有界。
+
+同方差 Gaussian 平移的 TV 距离至多
+$\min(1,|t-t'|/(\sqrt{2\pi}\sigma_M))$。
+把整个计数向量保留在联合律中，比较同一乘积向量的原通道与核心通道，得到
+
+```math
+\tau_M(x):=d_{TV}\bigl(\mathsf Q_x(dn)\varphi_{\sigma_M}(y-t_x(n))dy,
+ \mathsf Q_x(dn)\varphi_{\sigma_M}(y-t_x^{core}(n))dy\bigr)
+ \le\min\left(1,\frac{C\delta^{-1/2}V_{\mathcal O}}{\sigma_M}\right).
+```
+
+式 (73.13)。
+
+对好事件上的右侧取实际原始数据期望，(73.9) 给上界
+
+```math
+CQ^{1/4}e^{h_M^{noise}}
+ \{e^{-cR_M^2}+Q^Ce^{-c\lambda}\}\longrightarrow0.
+```
+
+式 (73.14)。
+
+因此已在真实 $1/\sigma_M$ 精度支付尾部代价。
+再对同一原通道使用一次完整后验向量比较，联合律满足
+
+```math
+\epsilon_M(x):=d_{TV}(P_x^{R,Y},\mathsf Q_x^{R,Y^{core}})
+ \le a_x/2+\tau_M(x)=o_{\mathbb P}(1).
+```
+
+式 (73.15)。
+
+坏数据事件只付其外层概率，未以 TV 传递无界矩。
+
+以自然对数写各乘积二项惊奇量 $S_j$ 及其均值 $H_j$，置
+
+```math
+Z^{out}=\frac{\sum_{j\in\mathcal O_M}(S_j-H_j)}{Q\log2},\qquad
+Z^{core}=\frac{\sum_{j\in\mathcal C_M}(S_j-H_j)}{Q\log2}.
+```
+
+式 (73.16)。
+
+在 $\mathsf Q_x^{R,Y^{core}}$ 下，$Z^{out}$ 与 $Y^{core}$ 精确独立。
+二项 varentropy 的统一界给
+$\mathbb E_{\mathsf Q_x}(Z^{core})^2\le Cn_M^{core}/Q^2=o(1)$。
+故乘积全惊奇量的 CLT 及阈值夹逼给
+
+```math
+\kappa_M(x):=\sup_z|\mathsf Q_x(Z^{out}\le z)-\Phi_v(z)|
+ \longrightarrow0
+```
+
+式 (73.17)。
+
+这删除的是独立和中方差可忽略的一部分，没有把增长半径代入固定半径的极限定理。
+原惊奇量的精确密度恒等式为
+
+```math
+Z_x=Z^{out}+Z^{core}
+ -\frac{\log L_x+(\log2)(h_x-\widetilde h_x)}{Q\log2}.
+```
+
+式 (73.18)。
+
+用 $L_x\le C$ 直接控制非负平方，再用 (73.5)，得
+
+```math
+\mathbb E_{P_x}|Z_x-Z^{out}|^2
+ \le C\{n_M^{core}/Q^2+a_x^2\}.
+```
+
+式 (73.19)。
+
+此矩界来自密度与精确中心，未由 (73.15) 推出。
+
+现在用一个有限核事实。若 $(X_0,Y)$ 的联合律与 $\nu\otimes\eta$ 的 TV 距离至多 $e$，
+则边缘收缩与三角不等式给该联合律距 $\nu\otimes P_Y$ 至多 $2e$。
+对有限输入逐原子积分绝对差，恰有
+
+```math
+\int d_{TV}(P_{X_0\mid y},\nu)P_Y(dy)\le2e.
+```
+
+式 (73.20)。
+
+无需对输出密度设逐点下界。将 (73.15) 推前到 $(Z^{out},Y)$，
+结合 (73.17) 得其条件 CDF 距离的输出平均至多 $2\epsilon_M+\kappa_M$。
+再以 (73.19) 作同一实现上的小位移夹逼。对任意固定 $b>0$，
+
+```math
+\overline D_M^A(x)\le2\epsilon_M(x)+\kappa_M(x)+\omega_v(b)
+ +\frac{C}{b^2}\{n_M^{core}/Q^2+a_x^2\},\qquad
+\omega_v(b)=\sup_z|\Phi_v(z+b)-\Phi_v(z)|.
+```
+
+式 (73.21)。
+
+先令规模趋无穷，再令 $b\downarrow0$，即得 (73.3) 第一条。
+所用 TV 始终比较有限输入与平滑输出的联合律、或两个离散核；
+没有声称离散惊奇量与连续正态在 TV 中趋近。
+
+对第二条，第 71 章的原通道信息密度记为 $i_x(R,Y)$，以自然对数计。
+实际矩界与严格正通道恒等式给
+
+```math
+I_x(R;Y)\le\tfrac12\log(1+m_{2,M}(x)/\sigma_M^2)=o_{\mathbb P}(Q),
+\qquad \mathbb E_x|i_x|\le I_x+2,
+```
+
+```math
+\frac{J_x(R,Y)-h_x}{Q}=Z_x-\frac{i_x(R,Y)}{Q\log2}.
+```
+
+式 (73.22)。
+
+其中 $m_{2,M}(x)=\mathbb E_{P_x}T^2=O_{\mathbb P}(1)$；
+绝对信息界来自 $\mathbb E_xe^{-i_x}=1$ 和负尾积分，不假定 $T$ 与惊奇量独立。
+逐输出使用同一小位移夹逼后积分，
+
+```math
+\overline D_M^B(x)\le\overline D_M^A(x)+\omega_v(b)
+ +\frac{I_x+2}{bQ\log2}.
+```
+
+式 (73.23)。
+
+先取规模极限再取 $b\downarrow0$ 即得第二条。
+第一条较宽范围只控制原惊奇量的条件律，不保证 $i_x/Q$ 可忽略，故不推出第二条。
+所有输入界一致于固定支持，逐数据纤维的确定推导保留该一致性。证毕。
+

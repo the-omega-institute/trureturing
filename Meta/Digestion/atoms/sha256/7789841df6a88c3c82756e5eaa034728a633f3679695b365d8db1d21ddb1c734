@@ -1,0 +1,16 @@
+**定义 493.1（去掉零质量的目标族）。** 固定 $k\ge2$、$0<r<\alpha<1$，取
+
+$$
+0<\varepsilon<\frac{r(1-\alpha)}k.
+$$
+
+在同一个 $I\cup\{\circ\}$ 上定义
+
+$$
+Q_i^\varepsilon(\circ)=\alpha,\qquad
+Q_i^\varepsilon(i)=\varepsilon,\qquad
+Q_i^\varepsilon(x)=\frac{1-\alpha-\varepsilon}{k-1}\quad(x\ne i).
+$$
+
+所有坐标严格为正，且被特别标记的坐标仍小于其他状态标签坐标。其共同质量为 $M_\varepsilon=\alpha+k\varepsilon>r$，所以精确边缘可行。
+

@@ -1,0 +1,12 @@
+### 102.2 已执行纤维的通常维数
+
+对任意 $E\subset X$，定义
+
+$$
+f_E([z])=\dim(E\cap S_z),\qquad
+\kappa(E)=\min_{[z]\in\mathbb{CP}^1}f_E([z]).
+\tag{102.9}
+$$
+
+与接收因子纤维的维数等同，因为 $y\mapsto y\otimes z$ 在固定非零 $z$ 上单射。
+

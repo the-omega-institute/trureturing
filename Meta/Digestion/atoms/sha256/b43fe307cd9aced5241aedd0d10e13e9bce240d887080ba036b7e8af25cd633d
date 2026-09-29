@@ -1,0 +1,48 @@
+### 54.1 实际来源、早期等距块与主结论
+
+固定非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$、$|a|^2+|b|^2=1$。七维接收器 $K$ 独立纯启动，同一个全域 CPTP 通道逐轮作用，前六个终端恢复完整参考—活动记忆—原档案联合态。记可逆编码固定附加态的秩为 $r_n$，本节取 $r_2=1$、$r_1=2$。
+
+固定该通道同一份 Stinespring 等距，记 $V_i x=V(x\otimes|i\rangle)$。第一步与第二步纯化比较给两个正数 $\lambda_1,\lambda_2$，四个正交单位接收向量 $p_1,q_1,p_2,q_2$，以及两组正交单位环境向量 $e_1,e_2$ 和 $f_1,f_2$，满足
+$$
+V_0k=\sum_{\alpha=1}^2\sqrt{\lambda_\alpha}\,p_\alpha\otimes e_\alpha,
+\qquad
+V_1k=\sum_{\alpha=1}^2\sqrt{\lambda_\alpha}\,q_\alpha\otimes e_\alpha,
+\tag{54.1}
+$$
+$$
+V_0p_\alpha=u\otimes f_\alpha,\qquad
+V_1p_\alpha=v\otimes f_\alpha,\qquad
+V_0q_\alpha=w\otimes f_\alpha.
+\tag{54.2}
+$$
+这里 $k$ 是单位初态，$u,v,w$ 正交归一，$\lambda_1+\lambda_2=1$。令
+$$
+P_0=\operatorname{span}(p_1,p_2),\quad
+X=\operatorname{span}(p_1,q_1,p_2,q_2),\quad
+F=\operatorname{span}(f_1,f_2),\quad
+U=\operatorname{span}(u,w).
+$$
+所以 $\dim P_0=2$、$\dim X=4$、$\dim F=2$，且
+$$
+V_0X=U\otimes F,\qquad V_1P_0=\mathbb Cv\otimes F.
+\tag{54.3}
+$$
+第二至第六终端均纯；第三至第六轮新环境是输入无关单位向量 $\eta_3,\eta_4,\eta_5,\eta_6$。写实际来源两列
+$$
+\Psi_n^i=|0\rangle_Mu_n^i+|1\rangle_Mv_n^i,\qquad
+H_n=\operatorname{span}(u_n^0,u_n^1),\quad
+G_n=\operatorname{span}(v_n^0,v_n^1),\quad C_n=H_n+G_n.
+$$
+各 $H_n,G_n$ 二维，$C_2$ 三维、$C_n$ 在 $n\ge3$ 时四维；第二终端有
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad G_2=U.
+\tag{54.4}
+$$
+对 $3\le n\le6$，有二维 $Q_n$ 使
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad G_n\perp Q_n.
+\tag{54.5}
+$$
+同轮来源递推使 $H_n$ 到 $G_n$ 和 $Q_n$ 的两个正交投影均为同构，且 $C_n=G_n\oplus Q_n$。
+

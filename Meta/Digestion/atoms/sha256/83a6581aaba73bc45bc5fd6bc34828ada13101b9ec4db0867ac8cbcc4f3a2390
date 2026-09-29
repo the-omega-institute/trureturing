@@ -1,0 +1,116 @@
+### 303.6 未知尺度发现及无条件逆矩
+
+参考输出 \(Y\) 对应变量
+$$
+Z=C(1-BY),\qquad \mathbb EZ=h.
+$$
+该变量取值区间长度为 \(d=BC\)，且 \(2\le d\le4C_\star\)。
+累计参考样本数依次为
+$$
+n_j=2^j,\quad j=0,1,2,\ldots,\qquad
+L_j=\log(A_1(j+1)^2/\delta),\qquad
+r_j=d\sqrt{\frac{L_j}{2n_j}}.
+\tag{303.20}
+$$
+令 \(\widehat h_j\) 是前 \(n_j\) 枚 \(Z\) 的平均。停在第一个
+$$
+J=\inf\{j:\widehat h_j\ge2r_j\},
+\qquad H_0=\min(1,\widehat h_J/2).
+\tag{303.21}
+$$
+第一阶段实际调用数是累计数 \(n_J\)，并非各级累计数之和。由强大数律及 \(r_j\to0\)，每个 \(h>0\) 下 \(J<\infty\) 几乎必然。停止条件确保 \(H_0>0\)。
+
+Hoeffding 与并合界给出
+$$
+\Pr\{\exists j:|\widehat h_j-h|>r_j\}
+\le\sum_{j\ge0}2e^{-L_j}
+\le\delta/3
+\tag{303.22}
+$$
+（增大 \(A_1\)）。在互补好事件上，由停止时
+\(\widehat h_J\ge2r_J\) 可得
+$$
+\boxed{h/3\le H_0\le h.}
+\tag{303.23}
+$$
+截到一不会破坏此式，因为 \(h\le1\)。此后只使用停止记录上的事件
+$$
+G_1=\{h/3\le H_0\le h\},\qquad
+\Pr_h(G_1^c)\le\delta/3.
+$$
+它是已经取得的第一阶段校准记录的函数；（303.22）的全时好事件只用于证明这个概率界，后续不以未取得的未来样本作条件。
+
+后续成本需要在失败记录上也成立的矩估计：
+$$
+\boxed{
+\mathbb E n_J\le A h^{-2}[\Lambda+\ell_+(h)],
+\quad
+\mathbb E H_0^{-2}\le A h^{-2},
+\quad
+\mathbb E H_0^{-1}\le A h^{-1}.}
+\tag{303.24}
+$$
+特别是反平方矩没有 \(\Lambda\) 或 \(\ell_+(h)\) 因子。
+
+以下证明（303.24）。由于 \(\Lambda\ge8\)，有
+\(L_{j+1}<2L_j\)，故 \(r_j\) 严格下降，\(n_j/L_j\) 严格增加。令 \(j_\star\) 是第一个 \(r_j\le h/4\) 的级别。它至少为一，由前一级的最小性，
+$$
+\frac{n_{j_\star}}{L_{j_\star}}
+\le\frac{16d^2}{h^2}.
+\tag{303.25}
+$$
+同级还满足 \(n_{j_\star}h^2/d^2\ge8L_{j_\star}\)。
+对 \(j>j_\star\)，若 \(J\ge j\)，则前一级尚未停止，所以
+$$
+\widehat h_{j-1}<2r_{j-1}\le h/2.
+$$
+从而
+$$
+\Pr(J\ge j)\le
+\exp[-n_{j-1}h^2/(2d^2)].
+\tag{303.26}
+$$
+这只用该级样本平均的边缘 Hoeffding 界，不假定各级均值独立。
+
+在停止级总有 \(H_0\ge\min(1,r_J)\)，于是
+$$
+H_0^{-2}\le1+r_J^{-2}
+=1+\frac{2n_J}{d^2L_J}.
+\tag{303.27}
+$$
+对 \(J\le j_\star\)，\(n_J/L_J\le n_{j_\star}/L_{j_\star}\)。
+对 \(j=j_\star+m\)、\(m\ge1\)，
+$$
+\frac{n_j}{L_j}
+\le2^m\frac{n_{j_\star}}{L_{j_\star}},
+\qquad
+\Pr(J=j)\le
+\exp[-2^{m-1}n_{j_\star}h^2/(2d^2)].
+$$
+将这些乘积求和，利用 \(n_{j_\star}h^2/d^2\ge8L_{j_\star}\ge64\)，
+得到
+$$
+\mathbb E(n_J/L_J)\le A\,n_{j_\star}/L_{j_\star}\le A/h^2.
+$$
+（303.27）证明反平方矩，Cauchy–Schwarz 给反一阶矩。
+同样的 dyadic 尾和直接给出 \(\mathbb E n_J\le A n_{j_\star}\)。
+
+最后，隐式定义 \(r_{j_\star}\le h/4\) 可反解为
+$$
+n_{j_\star}\le A h^{-2}[\Lambda+\ell_+(h)].
+\tag{303.28}
+$$
+一个不隐藏 \(\delta\) 依赖的验证如下：令
+\(t=\log(e/h)\ge1\)、\(S=\Lambda+\log(e+t)\)。
+取一个 dyadic \(n=2^j\) 介于
+\(A_2h^{-2}S\) 与 \(2A_2h^{-2}S\) 之间。则
+$$
+j+1\le A_3[1+t+\log S+\log A_2],
+$$
+所以 \(\log(j+1)\le A_4S+A_4\log\log(e+A_2)\)，
+且 \(L_j\le A_5S+A_5\log\log(e+A_2)\)。
+选定足够大的绝对 \(A_2\) 后，
+\(n\ge8d^2L_j/h^2\)，即 \(r_j\le h/4\)。
+最小性使 \(n_{j_\star}\le n\)，而
+\(S\asymp\Lambda+\ell_+(h)\)。这证明（303.28）及全部（303.24）。
+

@@ -1,0 +1,45 @@
+### 62.7 更高阶系数
+
+直接展开式（62.30）得到
+
+$$
+f(\delta,\kappa)
+=\frac98-\frac34\kappa\delta
++\left(\frac{\kappa^2}{2}-\frac3{64}\right)\delta^2
++O(\delta^3).
+\tag{62.33}
+$$
+
+在 $\kappa=3/4$，另一函数的偏导为
+
+$$
+\partial_\delta g(0,3/4)=-\frac{33}{128},
+\qquad
+\partial_\kappa g(0,3/4)=\frac3{10}.
+$$
+
+因此对 $f(\delta,\kappa(\delta))=g(\delta,\kappa(\delta))$ 求导，得到
+
+$$
+-\frac9{16}
+=-\frac{33}{128}+\frac3{10}\kappa'(0),
+\qquad\kappa'(0)=-\frac{65}{64}.
+\tag{62.34}
+$$
+
+所以
+
+$$
+\kappa(\delta)=\frac34-\frac{65}{64}\delta+O(\delta^2).
+$$
+
+代入 $p=\delta^2-\kappa(\delta)\delta^3$ 给式（62.9）的第一式。再代入式（62.33），$\delta^2$ 系数为
+
+$$
+-\frac34\left(-\frac{65}{64}\right)
++\frac12\left(\frac34\right)^2-\frac3{64}
+=\frac{255}{256},
+$$
+
+乘以 $\delta^2=\varepsilon$ 得式（62.9）的第二式。$\square$
+

@@ -1,0 +1,18 @@
+**定理 21.5（有限时限造成的统计距离损失）。** 设 $P_\rho,P_\sigma$ 为完整首次事件分布，结果集含永不点击标签；$P_\rho^{(N)},P_\sigma^{(N)}$ 为只保留 $\mathsf P_N$ 的分布。则
+
+$$
+0\le\operatorname{TV}(P_\rho,P_\sigma)
+-\operatorname{TV}(P_\rho^{(N)},P_\sigma^{(N)})
+\le\min\{\operatorname{Tr}(\rho S_N),\operatorname{Tr}(\sigma S_N)\}.
+$$
+
+若两来源均满足 $\operatorname{Tr}(\rho F)=\operatorname{Tr}(\sigma F)=0$，可进一步用定理 19.2 的 $q^{\lfloor N/M\rfloor}$ 控制右侧。
+
+证明。前 $N$ 轮坐标不变。令被合并尾部的两族质量为 $a_j,b_j$，总量为 $a,b$，则距离损失恰为
+
+$$
+\frac12\left(\sum_j|a_j-b_j|-|a-b|\right).
+$$
+
+三角不等式给非负；$\sum_j|a_j-b_j|\le a+b$ 给上界 $(a+b-|a-b|)/2=\min(a,b)$。当永久无点击权重为零，$s_N=\operatorname{Tr}(\rho R_N)$，可使用剩余尾界。若这些权重不为零，不能把有限时限记录中的 $S_N$ 直接替换成 $R_N$。$\square$
+

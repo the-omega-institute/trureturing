@@ -1,0 +1,14 @@
+**证明。** 若存在非零接收向量 $y$ 属于这个交，则
+$y\otimes\eta$、$y\otimes\zeta$ 都属于同一个线性空间
+$\operatorname{ran}V_0$。两条环境射线不同，在二维 $F$ 中线性独立，所以
+
+$$
+\mathbb Cy\otimes F\subset\operatorname{ran}V_0.
+$$
+
+因此对每个非零 $z\in F$ 都有 $g_0([z])\ge1$。第90节定理90.1给
+$g_0([z])=\operatorname{nullity}\mathcal P(z)$，于是
+$D(z)=0$ 对全部非零 $z$ 成立。这使齐次多项式 $D$ 恒零，与正则性矛盾。证明完毕。
+
+这里的交零是接收因子本身的交零，强于不同环境乘积子空间在 $K\otimes F$ 中自动交零。奇异铅笔不能使用本结论。
+

@@ -1,0 +1,55 @@
+### 166.1 固定来源的精确比较谱
+
+沿用第159、163、165节的同一来源、运行通道与完整参考任务，记
+
+$$
+\Delta=\det\rho_*>0,\qquad
+\ell=\frac34,\qquad
+u_\Delta=\frac{3+\sqrt{9+28\Delta}}8.
+\tag{166.1}
+$$
+
+密度矩阵的维数为二，所以 $\Delta\le1/4$。对实纯态
+$v_\alpha=(\cos\alpha,\sin\alpha)$，第165节的精确结论为
+
+$$
+\mathfrak e(v_\alpha)=
+\psi_\Delta\bigl(|\sin(2\alpha)|\bigr),
+\qquad
+\psi_\Delta(s)=
+\frac{3+\sqrt{9+4\Delta(1-s)(7-s)}}8,
+\quad 0\le s\le1.
+\tag{166.2}
+$$
+
+$\psi_\Delta$ 严格递减，并满足
+
+$$
+\psi_\Delta(1)=\ell,\qquad
+\psi_\Delta(0)=u_\Delta,\qquad
+\psi_\Delta'(s)=
+-\frac{\Delta(4-s)}
+{2\sqrt{9+4\Delta(1-s)(7-s)}}.
+\tag{166.3}
+$$
+
+令 $\alpha$ 在 $[0,\pi)$ 上均匀分布，定义比较误差随机变量及其分布
+
+$$
+S=|\sin(2\alpha)|,\qquad
+Z=\psi_\Delta(S),\qquad
+\nu_\Delta=\operatorname{Law}(Z).
+\tag{166.4}
+$$
+
+于是
+
+$$
+\Pr(S\le s)=\frac2\pi\arcsin s,\qquad
+f_S(s)=\frac2{\pi\sqrt{1-s^2}}
+\quad(0<s<1).
+\tag{166.5}
+$$
+
+第159节运行旋转的特征相位不是单位根，其任意正整数次幂也不是单位根。因此每个实际终端余数类上的比较相位都均匀分布，所得比较经验分布均为同一个 $\nu_\Delta$。这一点只确定比较轨道的分布。
+

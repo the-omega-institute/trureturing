@@ -1,0 +1,2 @@
+**命题 35.3（改变语境与容纳矛盾不同）。** 在经典语义中，$\mathcal M,c\models\varphi$ 与 $\mathcal M,c\models\neg\varphi$ 不能同时成立；但当 $c$ 与 $d$ 对语词的解释不同，$\mathcal M,c\models\varphi$ 与 $\mathcal M,d\models\neg\varphi$ 可以同时成立。
+

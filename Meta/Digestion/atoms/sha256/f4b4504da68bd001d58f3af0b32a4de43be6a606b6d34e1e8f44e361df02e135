@@ -1,0 +1,13 @@
+**引理 231.2（纯重置权重的精确距离）。** 对概率向量 $p=(p_1,p_2,p_3)$、$q=(q_1,q_2,q_3)$，令
+$$
+\mathcal T_p(X)=\sum_jp_j\operatorname{Tr}(X)|j\rangle\langle j|\otimes P_j.
+$$
+则
+$$
+\boxed{\delta_\diamond(\mathcal T_p,\mathcal T_q)
+=\delta_0(\mathcal T_p,\mathcal T_q)
+=\frac12\sum_{j=1}^3|p_j-q_j|.}
+\tag{231.TR.10}
+$$
+证明：任意迹一输入上的输出差是标签块 $ (p_j-q_j)P_j$ 的直和，给右侧值及无参考下界。对任意参考及任意输入矩阵，标签块迹范数相加，再对各块使用引理 231.1的 $M=I_2$，得到相同完整上界。$\square$
+

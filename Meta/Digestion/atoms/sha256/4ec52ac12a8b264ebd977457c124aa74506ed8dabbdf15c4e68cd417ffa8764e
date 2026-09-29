@@ -1,0 +1,58 @@
+### 282.1 实际来源与相位噪声合同
+
+沿用§280的规范图来源。对每个 $n\ge1$，令
+$$
+J_ne_1=0,\quad J_ne_j=e_{j-1}\ (2\le j\le n),\quad
+M_n=I_n+\frac14J_n,\quad
+Q_n+M_n^\dagger Q_nM_n=I_n,
+$$
+$$
+\frac7{23}I_n\preceq Q_n\preceq\frac{16}{23}I_n,
+\qquad Z_n=2Q_nM_n,
+\qquad \Omega_n=\frac1nT(Q_n,M_n).
+\tag{282.1}
+$$
+两种原始来源是
+$$
+\Omega_{0,n}=\Omega_n,\qquad
+\Omega_{1,n}=(1-\delta)\Omega_n+\delta\frac{I_{2n}}{2n},
+\qquad 0<\delta\le\frac14.
+\tag{282.2}
+$$
+每份来源在进入重置仪器之前，都独立经历一次相位作用
+$$
+U_\xi=\operatorname{diag}(e^{-i\xi},1),
+\qquad
+\mathcal P_r(X)=\mathbb E_\xi[(U_\xi\otimes I)X(U_\xi^\dagger\otimes I)].
+\tag{282.3}
+$$
+相位律固定、已知，并满足
+$$
+\mathbb E e^{-i\xi}=r\in[3/4,1].
+\tag{282.4}
+$$
+例如可取等概率的 $\xi=\pm\arccos r$。每份的相位独立于其他份、原始来源及观察者；实际相位值和产生它的环境均不可访问。两个假设使用相同的相位律。由此，真正供给的来源为独立同分布的
+$$
+\widetilde\Omega_{b,n}=\mathcal P_r(\Omega_{b,n}),\qquad b\in\{0,1\}.
+\tag{282.5}
+$$
+本节相位参考的平均方向已校准为零，$r$ 也已知。没有把一次未知但全程固定的相位当成逐份独立噪声；后者是式（282.3）的额外联合来源条件。
+
+设
+$$
+\epsilon=1-r,\qquad \Delta=r\delta,\qquad s=\epsilon+\Delta.
+\tag{282.6}
+$$
+于是
+$$
+0<\Delta\le s\le7/16<1/2,\qquad 0\le\epsilon\le s.
+\tag{282.7}
+$$
+对任意来源 $X$，相位通道保留参考边缘并把完整非对角响应乘以 $r$：
+$$
+\rho_{\mathcal P_r(X)}=\rho_X,\qquad
+K_{\mathcal P_r(X)}=rK_X.
+\tag{282.8}
+$$
+这是对联合输入—参考态的精确通道等式，包含了全部参考关联。
+

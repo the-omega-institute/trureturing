@@ -1,0 +1,63 @@
+### 208.4 中间分支的唯一代数根
+
+定义
+
+$$
+T(q)=2q-1,\qquad K(q)=q^2-R(1-q)^2,
+$$
+
+$$
+\mathcal D(q)=T(q)^2-4\beta\epsilon T(q)K(q)
++4D\epsilon^2K(q)^2.
+\tag{208.14}
+$$
+
+在 $(q_L,q_U)$ 上，$\mathcal D>0$，且
+$\|C(q)\|_1=\sqrt{\mathcal D(q)}$。
+所以（208.12）的唯一参考权重可直接指定为
+
+$$
+\boxed{
+\mathcal D'(q_*)+4T(q_*)\sqrt{\mathcal D(q_*)}=0,
+\qquad q_L<q_*<q_U.
+}
+\tag{208.15}
+$$
+
+这不是从若干根中任意选取；存在与唯一性已经由定理208.2证明。
+若需仅用多项式与符号条件描述，则等价为
+
+$$
+[\mathcal D'(q_*)]^2-16T(q_*)^2\mathcal D(q_*)=0,
+\qquad T(q_*)\mathcal D'(q_*)\le0,
+\qquad q_L<q_*<q_U.
+\tag{208.16}
+$$
+
+该多项式次数至多六。符号条件保留未平方方程的方向；
+当 $T=0$ 时，多项式本身强制 $\mathcal D'=0$，不会遗漏该点。
+不能在全噪声区间预设 $q_*<1/2$ 或 $\mathcal D'>0$。
+
+相应最优投影的明确式子是
+
+$$
+\boxed{
+F_*=\frac12\left[
+I+\frac{2\gamma\epsilon K(q_*)Y+
+[T(q_*)-2\beta\epsilon K(q_*)]Z}
+{\sqrt{\mathcal D(q_*)}}
+\right].
+}
+\tag{208.17}
+$$
+
+因为 $\mathcal D$ 正是两个 Pauli 系数的平方和，
+该式确为秩一投影，其方向是 $C(q_*)$ 的正谱方向。
+最优误差则为
+
+$$
+\mathscr E(0,\epsilon)
+=1-\frac{q_*^2+(1-q_*)^2+\sqrt{\mathcal D(q_*)}}2.
+\tag{208.18}
+$$
+

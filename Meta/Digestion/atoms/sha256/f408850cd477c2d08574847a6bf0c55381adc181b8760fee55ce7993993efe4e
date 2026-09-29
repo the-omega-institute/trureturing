@@ -1,0 +1,24 @@
+**负超额近区。** 在 $G$、$X\ge a_\star$、$X\le Y$ 时，式（300.21）给
+$$
+(-\beta)_+
+\le\frac1{D\kappa}
+\left[\log\frac{k^D(Y-\varepsilon)}{X-\varepsilon}\right]_+.
+$$
+由于 $X-\varepsilon\ge a_\star/2$、$\log z\le z-1$，
+$$
+(-\beta)_+
+\le\frac A\kappa
+[k^D Y+\varepsilon(1-k^D)-X]_+.
+$$
+再用（300.22）：
+$$
+\boxed{
+(-\beta)_+\mathbf1_{G\cap\{X\ge a_\star\}}
+\le\frac A\kappa(t_0Y-X)_+.
+}
+\tag{300.27}
+$$
+若 $X>Y$，左侧为零且右侧也为零，所以（300.27）覆盖该近区全部坐标。
+
+两式都针对真实联合计数上的线性超额，保留任务与参考的共同实现。
+

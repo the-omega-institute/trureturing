@@ -1,0 +1,12 @@
+**命题 710.1（任意状态族的完整零集）。** 令 $C=\bigcap_{S\in\mathcal F}S$、$r=|C|$，并令 $w=l+L\mathbf1_C$、$W=\sum_xw_x=M+rL$。对任意 $0<t\le1$，有
+
+$$
+\{R:\Phi_t^{\mathcal F}(R)=0\}=\{R\in\Delta(\{\circ\}\cup I):tR\le w\}.
+$$
+
+该集合非空当且仅当 $t\le W$。在 $t=W$ 时它恰为单点 $w/W$；在 $0<t<W$ 时它含有概率单纯形中的非空相对开集。特别地，$M\le t\le1$ 时，
+
+$$
+\mu_{\mathcal F}(E)=0\quad\Longleftrightarrow\quad E\le rL.
+$$
+

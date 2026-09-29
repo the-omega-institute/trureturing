@@ -1,0 +1,6 @@
+**定理 5.2.1（固定族的满质量不能只发生在部分正概率上）。** 固定次指数预算 $b$ 及 $\mathcal F\in\mathcal C_b$。在正概率单纯形
+$$
+\Delta_d^\circ=\{p\in\mathbb R^d:p_a>0,\ \sum_a p_a=1\}
+$$
+中，集合 $Z_{\mathcal F}=\{p:S_{\mathcal F}(p)=1\}$ 既相对闭又相对开。因此它或者为空，或者等于整个 $\Delta_d^\circ$。若另有 $B_d(b)<1$，则它为空。
+

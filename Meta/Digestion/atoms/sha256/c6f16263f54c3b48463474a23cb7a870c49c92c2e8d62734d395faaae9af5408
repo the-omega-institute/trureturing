@@ -1,0 +1,18 @@
+**定理 184.3（二符号限制的严格额外成本）。** 若第184.1节的程序只允许两个正权重符号，则最小成本为
+$$
+\mathfrak C_2(a,u)=\frac1{(1-u)(1+u-2a^2)}
+=\frac{\mathfrak C(a,u)}{1-a^2}>\mathfrak C(a,u).
+\tag{184.11}
+$$
+因而三个符号是达到（184.3）所需的最少有限字母数。
+
+证明。 设程序为 $p(v)\mathcal R_1+[1-p(v)]\mathcal R_2$。目标切向量非零，所以 $p'(u)\ne0$。由值与切向量的两条线性方程，$\mathcal R_1,\mathcal R_2$ 都必须落在通过 $\mathcal T_u$、方向为 $\partial_u\mathcal T_u$ 的同一仿射直线上，即它们为固定相邻系数 $a$ 的 $\mathcal T_{v_-},\mathcal T_{v_+}$。交换符号后可取 $v_-<u<v_+$。
+
+$F(a,v)$ 正半定的完整条件为 $2a^2-1\le v\le1$：反对称特征值为 $1-v$，对称块为 $\left(\begin{smallmatrix}1+v&\sqrt2a\\\sqrt2a&1\end{smallmatrix}\right)$。所以 $2a^2-1\le v_-<u<v_+\le1$。匹配方程迫使程序的局部信息量为
+$$
+\frac1{(u-v_-)(v_+-u)}
+\ge\frac1{(u-2a^2+1)(1-u)}.
+\tag{184.12}
+$$
+取两个端点通道达到等号，且其线性混合在 $u$ 邻域精确模拟。一个符号的固定通道无法产生非零切向量，结合定理184.2即得最少符号数。证毕。
+

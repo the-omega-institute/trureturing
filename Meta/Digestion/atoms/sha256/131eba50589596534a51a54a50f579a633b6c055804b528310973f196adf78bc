@@ -1,0 +1,32 @@
+**定理35.2（展开递推的显式有限时域误差隙）。** 对满足（35.2）的每个来源，任意维数不超过 $D$ 的固定接收器及任意终端解码器族，至少有一个 $1\le n\le N$，使完整联合最坏半迹恢复误差不小于 $\eta'_{D,k}>0$。事实上，只取来源初态 $|0\rangle_M$，不加参考，已经足够：
+
+$$
+\boxed{
+\max_{1\le n\le8D^2}\epsilon_n(|0\rangle)
+\ge\eta'_{D,k}.
+}
+\tag{35.4}
+$$
+
+其中 $\epsilon_n(|0\rangle)$ 比较接收后的 $M$ 与解码档案和真实纯目标的联合态。
+
+对固定 $k$，存在只依赖 $k$ 的 $C_k>0$，使全部 $D\ge1$ 满足
+
+$$
+-\log\eta'_{D,k}\le\exp(C_kD^4).
+\tag{35.5}
+$$
+
+因此第11节的全时域容量在 $\epsilon\downarrow0$ 时满足
+
+$$
+\boxed{
+d_\infty^{(\epsilon)}(a,b)
+=\Omega_k\!\left([\log\log(1/\epsilon)]^{1/4}\right).
+}
+\tag{35.6}
+$$
+
+此处的常数和充分小误差阈值可统一于（35.2）的整个来源类。它加强第20节
+$[\log\log(1/\epsilon)/\log\log\log(1/\epsilon)]^{1/4}$ 的已证下界，仍与既有 $O_{a,b}(\log(1/\epsilon))$ 上界相距很远。
+

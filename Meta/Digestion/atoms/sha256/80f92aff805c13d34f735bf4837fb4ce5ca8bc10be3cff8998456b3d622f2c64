@@ -1,0 +1,53 @@
+### 62.3 AAB 模式强制两个六维已用位像
+
+先取 $AAB$。固定 $V_1$ 将 $A_0$、$G_5$ 分别送到独立环境 $\alpha,\beta$，故 $A_0\cap G_5=0$；由（62.4），
+$$
+L_0=A_0+G_5.
+\tag{62.15}
+$$
+零位已用像包含
+$$
+(L_0\otimes\alpha)+((A_0+G_6)\otimes\beta).
+\tag{62.16}
+$$
+确实，第一项来自旧块 $A_0\alpha$ 及第五轮 $G_5\alpha$，第二项来自旧块 $A_0\beta$ 及第六轮 $G_6\beta$。两环境独立，故（62.16）的维数为 $4+\dim(A_0+G_6)\le7$。后一个维数只能为二或三。
+
+若它为三，（62.16）恰好饱和整个七维 $V_0K$，因此真正得到全域
+$$
+V_0K\subseteq L_0\otimes F.
+$$
+引理62.2使 $L_0=G\otimes\Gamma$。于是 $A_0\subseteq G\otimes\Gamma$，旧一位块给 $V_1A_0\subseteq B_0\otimes F$；而 $V_1A_0=Q_4\otimes\alpha$。所以 $Q_4=B_0$。再由（62.1）及固定 $V_1$ 单射性，$A_0=G_\alpha$。但（62.5）给 $H_3=H_\alpha$，非零 $w\otimes\xi_\alpha$ 遂属于 $H_3\cap G_3$，矛盾。
+
+故必为二维，得到
+$$
+G_6=A_0,\qquad H_5=H_\beta.
+\tag{62.17}
+$$
+其中后一式由 $V_0H_5=A_0\beta=V_0H_\beta$ 及单射性成立。
+
+还必须有
+$$
+Q_4\ne B_0,\qquad Q_6\ne B_0.
+\tag{62.18}
+$$
+第一项若不成立，上一段的 $A_0=G_\alpha$ 与 $H_3=H_\alpha$ 矛盾同样适用，不需要全域饱和。第二项若不成立，则 $V_1G_5=B_0\beta=V_1G_\beta$，给 $G_5=G_\beta$；与（62.17）的 $H_5=H_\beta$ 共同包含非零 $w\otimes\xi_\beta$，亦矛盾。
+
+由于 $L_1$ 三维，两组不同二维平面分别张成它：
+$$
+B_0+Q_4=L_1=B_0+Q_6.
+$$
+因此旧块与尾像在一位上包含整个六维
+$$
+L_1\otimes F
+=(L_1\otimes\alpha)+(L_1\otimes\beta)
+\subseteq V_1K.
+\tag{62.19}
+$$
+零位上则有六维
+$$
+\mathcal R_0=(L_0\otimes\alpha)+(A_0\otimes\beta)
+\subseteq V_0K.
+\tag{62.20}
+$$
+两个和都是不同环境方向的代数直和；未假设 $\alpha,\beta$ 正交。
+

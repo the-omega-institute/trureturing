@@ -1,0 +1,31 @@
+**定理 68.7（Shannon 熵与最小熵的次阶差）。** 沿用定理 68.5、68.6 的全部参数、
+完整计数向量及概率含义，令
+
+```math
+\ell(r,\beta)=\operatorname{Leb}\{u\in\mathcal I:I(u)<c_q\}.
+```
+
+式 (68.43)。
+
+该长度有限且严格为正。两种实际实验分别满足
+
+```math
+\frac{h_M(\mathscr X_M)-h_{\infty,M}(\mathscr X_M)}{Q^2}
+ \longrightarrow\frac{\ell(r,\beta)}{2\log2}.
+```
+
+式 (68.44)。
+
+收敛在先验数据概率下成立，亦一致于确定支持的抽样律。
+若 $\widetilde h_M,\widetilde h_{\infty,M}$ 是同一数据上校准乘积组计数律的两种熵，则还有绝对比较
+
+```math
+h_M-\widetilde h_M=O_{\mathbb P}(Q^{-3/2}),\qquad
+h_{\infty,M}-\widetilde h_{\infty,M}=O_{\mathbb P}(Q^{-5/2}).
+```
+
+式 (68.45)。
+
+在 $H_M$ 上，精确标量 $T_M$ 的离散 Shannon 熵与最小熵之差等于 (68.44) 的分子，
+故它也满足同一极限。这里不分别给出两种熵在 $Q^2$ 阶的展开。
+

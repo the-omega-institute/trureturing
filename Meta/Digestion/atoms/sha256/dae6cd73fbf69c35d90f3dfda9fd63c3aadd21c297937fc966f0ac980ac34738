@@ -1,0 +1,21 @@
+## 145. 相同的慢人口可以对应不同的递归时间噪声
+
+给出一个显式二状态族。取 $0<p<1$，$-\min\{p/(1-p),(1-p)/p\}<\lambda<1$，置
+
+$$
+T_{p,\lambda}
+=
+\begin{pmatrix}
+1-p(1-\lambda)&(1-p)(1-\lambda)\\
+p(1-\lambda)&1-(1-p)(1-\lambda)
+\end{pmatrix}.
+$$
+
+其列和为一，平稳分布为
+
+$$
+\pi=(1-p,p)^{\mathsf T},
+$$
+
+而另一个特征值为 $\lambda$。
+

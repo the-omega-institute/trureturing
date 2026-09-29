@@ -1,0 +1,43 @@
+### 182.3 正确块的一阶结构与二阶纯化重叠
+
+写
+
+$$
+\epsilon=w_0,\qquad R=w_1/w_0,
+\qquad
+r=\frac12+r_1\epsilon,\quad
+t=t_1\epsilon,\quad u=u_1\epsilon.
+\tag{182.7}
+$$
+
+以下展开让 $R,r_1,t_1,u_1$ 留在固定有界集合中。真实 $R$ 由第177节具有统一正上下界。对原输入 $j$ 的正确输出分支，置
+
+$$
+a_0=r_1,\quad a_1=-r_1,\qquad
+b_0=t_1,\quad b_1=-t_1,\qquad
+c_0=1,\quad c_1=R.
+\tag{182.8}
+$$
+
+这些 $a_j,b_j$ 是本节的展开系数。于是
+$p_j=1/2+a_j\epsilon$、$t_j=b_j\epsilon$、$w_j=c_j\epsilon$。
+
+正确输出块为
+
+$$
+\widetilde\sigma_{jj}
+=\frac12\sum_{\nu=0}^1
+(I_M\otimes\widetilde K_{j,\nu})
+\eta_{j,\nu}
+(I_M\otimes\widetilde K_{j,\nu}^\dagger),
+$$
+
+$$
+\eta_{j,\nu}
+=P_\Xi+\epsilon c_j\left[
+\beta(P_\psi-P_\Xi)
++s_\nu\gamma\bigl(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\bigr)
+\right].
+\tag{182.9}
+$$
+

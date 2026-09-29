@@ -1,0 +1,93 @@
+**定义 122.1（缩放标记测度）。** 沿用第 115 节的指定名义仪器、完整二维活动记忆、两种实际记录和齐次重复合同，取一条趋近同一个最近失效相位的非失效序列，设
+
+$$
+\Gamma_j\longrightarrow\Gamma_*\in\mathfrak F_R,
+\qquad
+\epsilon_j\longrightarrow0,
+\qquad
+\zeta_j\longrightarrow\zeta,
+$$
+
+并写
+
+$$
+P_*=P_{\text{暗}},
+\qquad
+Q_*=I-P_*.
+$$
+
+对每个输入算子 $X$，定义正时间标记的算子值测度
+
+$$
+\boxed{
+\mathbf M_j(X)
+=
+\sum_{n\ge1}\delta_{\epsilon_j n}\otimes
+\mathcal C_j\mathcal N_j^{\,n-1}(X).
+}
+\tag{122.1}
+$$
+
+对有界连续函数 $f:[0,\infty)\to\mathbb C$，定义其测试响应
+
+$$
+\boxed{
+\mathbf M_j[f](X)
+=
+\sum_{n\ge1}f(\epsilon_j n)\mathcal C_j\mathcal N_j^{\,n-1}(X).
+}
+\tag{122.2}
+$$
+
+对 Borel 集 $E\subseteq[0,\infty)$，式（122.1）按集合函数理解为
+
+$$
+\mathbf M_j(E)
+=
+\sum_{\epsilon_j n\in E}
+\mathcal C_j\mathcal N_j^{\,n-1}.
+$$
+
+每个 $\mathbf M_j(E)$ 是完全正、迹不增的映射，并且
+
+$$
+\sum_{n=1}^{m}
+(\mathcal C_j\mathcal N_j^{\,n-1})^*(I)
+=
+I-(\mathcal N_j^*)^m(I)
+\longrightarrow I.
+$$
+
+在有限维映射空间中，这个正项级数还按范数收敛：若记
+$K_{j,n}=\mathcal C_j\mathcal N_j^{\,n-1}$，则
+$\|K_{j,n}\|_\diamond\le\operatorname{Tr}K_{j,n}^*(I)$，而右侧的级数总和为输入空间维数。因此对不交 Borel 集的可数并，$\mathbf M_j$ 按映射范数可数可加；这使上面的集合函数确实是算子值测度，而不是只对有限集合定义的形式和。
+
+所以 $\mathbf M_j([0,\infty))=\Xi_{\Gamma_j}$ 是迹保持通道；对密度输入，取迹后的标量测度总质量为一。若 $f\ge0$，则 $\mathbf M_j[f]$ 是完全正映射；$0\le f\le1$ 时它还迹不增。一般复值 $f$ 只定义一个线性测试响应，不宣称其正性。这里的 $\epsilon_j$ 是内部谱泄漏标度，不是未经标定的物理秒。
+
+在第 115 节的谱投影记号下，置
+
+$$
+r_j=1-\epsilon_j,
+\qquad
+\mathcal P_j(X)=\sigma_j\operatorname{Tr}(G_jX),
+$$
+
+$$
+\mathcal B_j=\mathcal N_j(\operatorname{id}-\mathcal P_j).
+$$
+
+则
+
+$$
+\boxed{
+\mathcal N_j^{\,n-1}
+=
+r_j^{\,n-1}\mathcal P_j
++
+\mathcal B_j^{\,n-1}(\operatorname{id}-\mathcal P_j).
+}
+\tag{122.3}
+$$
+
+式（122.3）是线性映射的代数谱分解：它把实际点击映射的传播拆成慢本征项与稳定余项。有限 $j$ 时稳定余项一般不是正映射，也不是可单独读取的仪器分支；两项只有相加后才等于同一个实际事件映射。式（123.2）中的两个正分量是取极限后才出现的标记测度分解。
+

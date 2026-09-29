@@ -1,0 +1,9 @@
+**引理173.1（共同二结果 instrument）。** （173.1）可无损限制为
+
+$$
+\mathcal D(X)=\sum_{k=0}^1P_k^{Q_{\mathrm{out}}}\otimes\mathcal D_k(X),
+\qquad
+\mathcal D_k\ {\rm CP},\quad\mathcal D_0+\mathcal D_1\ {\rm TP}.
+\tag{173.2}
+$$
+

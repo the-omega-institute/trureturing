@@ -1,0 +1,40 @@
+### 30.1 实际有限词与限制系统
+
+令
+
+$$
+I_m:=\operatorname{im}(\operatorname{TP}_m)
+\subseteq \operatorname{Fin}(m+1)\to R.
+$$
+
+对 $m\le n$，限制映射
+
+$$
+\rho_{m,n}:I_n\to I_m
+$$
+
+把长度 $n+1$ 的读出词截到长度 $m+1$。一个兼容有限族是
+
+$$
+\mathbf u=(u_m)_{m\in\mathbb N}
+$$
+
+满足
+
+$$
+ u_m\in I_m,
+ \qquad
+ \rho_{m,n}(u_n)=u_m\quad(m\le n).
+\tag{30.1}
+$$
+
+因此它属于由实际有限窗口组成的逆极限
+
+$$
+\varprojlim_m I_m.
+$$
+
+条件 $u_m\in I_m$ 不能省略。仅仅给出每层名义值域中的一份相容函数，会产生一个形式上的极限序列，却未必来自任何实际状态。
+
+仓内 `ItineraryCompletion.CompatibleItineraryFamily` 正是把 (30.1) 写成带有 `realized` 与 `compatible` 两个字段的结构；`itineraryToLimit` 把一个实际完整 itinerary 送到其所有有限前缀。
+

@@ -1,0 +1,20 @@
+**定理148.2（七维六终端显式误差界）。** 对每个 $0<p<1$，上述同一固定接收通道和六个解码器满足
+
+$$
+\begin{aligned}
+\mathcal E_{7,6}(a,b;\mathfrak A)
+&\le
+\mu^2\left(\frac{a}{\lambda+\nu}+\frac{a^2}{2}\right)\\
+&\le\mu^2
+=\frac{p^7}{\kappa^2(c\kappa+a^2d^2)^2}.
+\end{aligned}
+\tag{148.21}
+$$
+
+因此（148.1）成立。特别地，对于 $0<p\le1/2$，
+
+$$
+\boxed{\varepsilon_{7,6}(\sqrt{1-p},\sqrt p)\le2p^7.}
+\tag{148.22}
+$$
+

@@ -1,0 +1,37 @@
+**定义 75.1（噪声对数与精确中心）。** 保持第 73 章的两种实际实验、原固定幅度、
+固定 $\beta\in(1/2,1)$、完整窗口和均匀大小 $q$ 支持先验。
+给定完整原始数据 $x$，以 $P_x$ 表示原完整组计数律，以 $h_x$ 表示其精确熵，单位为 bits。
+本章仍只观测定义 54.1 的精确标量加独立 Gaussian 噪声：
+
+$$
+T=t_x(R)=\frac{\sum_j((R_j-\mu_j)/B)^2-V}{\sqrt\delta},\qquad
+Y=T+\sigma_MG,
+\quad \mu_j=\mathbb E_{P_x}R_j,
+\quad V=B^{-2}\sum_jC_jp_j(1-p_j).
+\tag{75.1}
+$$
+
+这里 $B^2=q/Q^{5/2}$、$\delta=Q^{-1/2}$、$\lambda=Q^3$，
+$p_j$ 为原单个校准乘积律的参数；$V$ 不替换成实际平方和的后验期望。
+$G$ 独立于原数据与全部标签，且不单独揭示。
+取确定正噪声满足
+
+$$
+L_M:=\ln(1/\sigma_M)\longrightarrow\infty,
+\qquad L_M=o(Q^3),
+\qquad c_M(x)=h_x-\frac{L_M}{\ln2}.
+\tag{75.2}
+$$
+
+以 $\ln$ 表示自然对数。沿用 (73.1) 的严格正密度 $f_x$、输出后验 $p_x(n\mid y)$、
+输出后惊奇量 $J_x(n,y)$，并定义自然单位的信息密度
+
+$$
+i_x(n,y)=\ln\frac{\varphi_{\sigma_M}(y-t_x(n))}{f_x(y)},\qquad
+b_{M,\varepsilon}(x)=P_x^{R,Y}\{|i_x(R,Y)-L_M|>\varepsilon Q\}.
+\tag{75.3}
+$$
+
+$v>0$ 与 $\Phi_v(z)=\Phi(z/\sqrt v)$ 仍取第 73 章的完整窗口信息谱方差。
+噪声对数 $L_M$ 与决定 $v$ 的正率区间长度是不同量。
+

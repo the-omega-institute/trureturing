@@ -1,0 +1,40 @@
+**模型与纯输出必要性。**
+
+取来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+|a|^2+|b|^2=1,\quad ab\ne0,\qquad
+T|i\rangle=m_i\otimes|i\rangle_{\mathcal B}.
+\tag{38.1}
+$$
+
+这里只将来源记忆排在张量因子前面。接收器 $K=\mathbb C^2$ 从独立纯态 $e$ 启动，重复使用同一个全域 CPTP 通道
+$\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$。
+固定其一份 Stinespring 等距
+
+$$
+V:K\otimes\mathcal B\longrightarrow K\otimes E.
+\tag{38.2}
+$$
+
+环境每步可立即丢弃，不要求环境空白，不限制 Choi 秩。来源初态固定为 $|0\rangle_M$。接收后的联合态记为 $\sigma_n$。
+
+置 $p=|b|^2\in(0,1)$。真实来源边缘通道为
+
+$$
+\mathcal E(\rho)=\rho_{00}|m_0\rangle\langle m_0|
++\rho_{11}|0\rangle\langle0|.
+$$
+
+所以
+
+$$
+\rho_2=(1-p)|m_0\rangle\langle m_0|
++p|0\rangle\langle0|,\qquad
+\det\rho_2=p^2(1-p)>0.
+\tag{38.3}
+$$
+
+又有 $(\rho_2)_{11}=p(1-p)\in(0,1)$，故 $\rho_3$ 也是正定矩阵。
+

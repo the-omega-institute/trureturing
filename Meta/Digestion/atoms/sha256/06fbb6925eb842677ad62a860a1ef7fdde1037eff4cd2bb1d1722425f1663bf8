@@ -1,0 +1,27 @@
+**定理 26.4（条件尾项变为普通生存效果）。** 新过程从任意 $\mathcal H_P$ 上的初态出发最终点击概率为一，且
+
+$$
+\widetilde S_n
+=(\widetilde{\mathcal N}^{*})^n(I_P)
+=G^{-1}\mathcal A^n(R)G^{-1}\longrightarrow0.
+$$
+
+对定理 19.2 的 $M,q,T$，有
+
+$$
+\widetilde S_n\le q^{\lfloor n/M\rfloor}I_P,
+\qquad
+\widetilde T:=\sum_{n\ge0}\widetilde S_n=G^{-1}TG^{-1},
+\qquad
+\operatorname{Tr}\bigl(\tau_R(\rho)\widetilde T\bigr)
+=\frac{\operatorname{Tr}(\rho T)}{r_\rho}.
+$$
+
+证明。新未点击拉回为
+
+$$
+\widetilde{\mathcal N}^{*}(H)=G^{-1}\mathcal A(GHG)G^{-1}.
+$$
+
+从 $GI_PG=R$ 开始迭代；引理 26.2 保证中间算子都在 $P$ 支撑上，故相邻的 $G,G^{-1}$ 可消去，得到生存效果公式。定理 19.2 的剩余尾项趋零且被 $q^{\lfloor n/M\rfloor}R$ 控制，共轭后得到前两项。范数收敛允许逐项共轭求和。$T=PTP$，迹的循环性给出最后一式。$\square$
+

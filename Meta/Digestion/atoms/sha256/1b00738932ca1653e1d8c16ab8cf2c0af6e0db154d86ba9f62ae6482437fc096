@@ -1,0 +1,15 @@
+**定义 44.1（带适用域的描述）。** 在非空模型空间 $\Omega$ 上，一个局部描述为一对 $E=(D,P)$，其中 $P\subseteq D\subseteq\Omega$。$D$ 是该描述适用的状态范围，$P$ 是其中肯定回答成立的状态。定义状态标记
+
+$$
+\sigma_E(\omega)=
+\begin{cases}
++,&\omega\in P,\\
+-,&\omega\in D\setminus P,\\
+\mathsf I,&\omega\notin D.
+\end{cases}
+$$
+
+$\mathsf I$ 表示“按这项解释，描述不适用”。它不是神秘对象的名称，也不是第 36 节的未定判断 $?$。前者在指定状态上已经确定了适用性；后者表达一个读数尚不能区分相关候选。部分语义以及否定保留语义预设的讨论已有成熟文献，参见 [SEP《Presupposition》§2](https://plato.stanford.edu/entries/presupposition/#FregStraTrad)；本节借用显式记录定义域的工具，不据此声称所有语义预设、类型错误与宗教的不可言说都是一回事。
+
+在同一适用域内取否定，得到 $N(E)=(D,D\setminus P)$。它交换 $+$ 与 $-$，保留 $\mathsf I$，且 $N(N(E))=E$。这些是相对补集的通常性质。若改用全域补集 $\Omega\setminus P$，就会把 $\Omega\setminus D$ 也算作肯定命题的反例；这种全域化改变了原来的提问规则。比如将“能够燃烧”只用于模型中被选定的物质对象，抽象数便落在该规则的适用域外，而不是由该规则判成一种不能燃烧的物质。允许对抽象数使用这句话的另一种语言约定，须另给解释。
+

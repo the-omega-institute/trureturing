@@ -1,0 +1,70 @@
+### 254.1 两种真实仪器与随机选择接口
+
+沿用§253的固定参数及实际旧仪器 $\mathcal S_p$：
+$$
+\frac12\le A<1,\quad 0<B\le1-A,\quad b_0^2=B,
+\qquad
+A_a=\sqrt A\,Z+b_0X,
+\quad A_b=\sqrt A\,Z-b_0X.
+\tag{254.1}
+$$
+旧仪器在可见标签 $(w,s)$ 上的效应为
+$$
+E_{w,s}=\frac{I_2+sA_w}{4},
+\qquad w\in\{a,b\},\quad s\in\{+1,-1\}.
+\tag{254.2}
+$$
+新增仪器 $\mathcal T$ 的效应为
+$$
+F_{w,s}=\frac{I_2+sY}{4}.
+\tag{254.3}
+$$
+其中 $w$ 是均匀生成的辅助标签，与结果 $s$ 无关；两个 $w$ 值使用同一个 $Y$ 测量。$F_{w,s}\succeq0$ 且 $\sum_{w,s}F_{w,s}=I_2$，所以按效应测量并重置给出合法仪器。
+
+两种仪器都使用同一个可见寄存器 $(w,s)$、同一个纯重置输出 $P_{\mathrm{reset}}$，并保留完整参考 $E$。例如
+$$
+\mathcal T(X)
+=\sum_{w,s}|w,s\rangle\langle w,s|
+\otimes\operatorname{Tr}(F_{w,s}X)P_{\mathrm{reset}}.
+\tag{254.4}
+$$
+$Y$ 操作发生在原输入尚可访问时。它是本节新增的实际取得权限，不能从旧重置输出的后处理免费产生。
+
+取§253的同一三维参考与源族，记 $q=1-\theta\in(0,1)$：
+$$
+\begin{aligned}
+\Omega_0&=\theta P_\Phi+qP_{0_H}\otimes P_{2_E},\\
+\Omega_z&=\theta P_\Phi+qP_{\psi_z}\otimes P_{2_E},\\
+|\psi_z\rangle&=\sqrt{1-z^2}|0\rangle_H+iz|1\rangle_H,
+\qquad0<z<1.
+\end{aligned}
+\tag{254.5}
+$$
+两态的参考边缘相同，形成纠缠均为 $\theta$，半迹距离为 $qz$。$\Omega_0$ 对旧仪器响应饱和，$\Omega_z$ 不饱和。
+
+每份原探针到达时，以已知概率 $\gamma\in[0,1]$ 选择 $\mathcal T$，其余概率选择 $\mathcal S_p$。选择种子独立于未知源，并在各次使用间独立。定义两种仪器各自的完整输出
+$$
+\sigma_j=(\mathcal S_p\otimes\operatorname{id}_E)(\Omega_j),
+\qquad
+\upsilon_j=(\mathcal T\otimes\operatorname{id}_E)(\Omega_j),
+\qquad j=0,z.
+\tag{254.6}
+$$
+若保留选择记录 $h\in\{\mathrm{old},Y\}$，实际输出为
+$$
+\tau_j^\gamma
+=(1-\gamma)|\mathrm{old}\rangle\langle\mathrm{old}|\otimes\sigma_j
++\gamma|Y\rangle\langle Y|\otimes\upsilon_j.
+\tag{254.7}
+$$
+若擦除 $h$，且没有其他可取得的选择记录副本，则输出为
+$$
+\overline\tau_j^\gamma
+=\operatorname{Tr}_h\tau_j^\gamma
+=(1-\gamma)\sigma_j+\gamma\upsilon_j.
+\tag{254.8}
+$$
+擦除后仍保留 $(w,s)$、共同重置输出与全部参考。两种仪器相同的重置态及均匀 $w$ 约定，是此处完整接口的一部分。
+
+对每个已知 $z,\gamma$，未知假设 $j=0$ 或 $z$ 等先验选定，全部副本来自同一 $\Omega_j$。独立来源与独立选择给 $n$ 份输出 $(\tau_j^\gamma)^{\otimes n}$，或 $(\overline\tau_j^\gamma)^{\otimes n}$。允许对全部已开放输出作任意联合 POVM、自适应测量与后处理，目标为等先验平均正确率至少 $2/3$。仪器选择仍遵守已声明的固定 $\gamma$ 独立随机规则。
+

@@ -1,0 +1,26 @@
+**定义 193.1（固定增益下的预算问题）。** 令
+
+$$
+w_i
+=
+\left(\prod_{j=i+1}^{k}g_j\right)
+\left(\prod_{j=1}^{i-1}\widehat g_j\right)
+>0
+$$
+
+为第 $i$ 段的因果权重。假定把该段误差压到 $\delta_i>0$ 的成本模型为
+
+$$
+C_i(\delta_i)=a_i\delta_i^{-p},
+\qquad
+a_i>0,\ p>0.
+$$
+
+在总误差合同
+
+$$
+\sum_{i=1}^{k}w_i\delta_i\le\varepsilon
+$$
+
+下，研究总成本 $C(\delta)=\sum_i C_i(\delta_i)$ 的最小值。
+

@@ -1,0 +1,12 @@
+**引理208.1（唯一参考极小点及其端点判据）。**
+函数 $g$ 在 $[0,1]$ 上强凸，其唯一极小点位于 $[q_L,q_U]$。
+两个内侧单边导数为
+
+$$
+\boxed{
+g'_+(q_L)=2r\left(w-\frac1{1+r}\right),\qquad
+ g'_-(q_U)=2s\left(\frac1{1+s}-\beta\epsilon\right).
+}
+\tag{208.7}
+$$
+

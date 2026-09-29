@@ -1,0 +1,45 @@
+**定理 211.2（风险量词的蕴含方向）。** 对 $0\le\alpha\le1$：
+
+$$
+R_{\mathrm{worst}}(\pi)\le\alpha
+\Longrightarrow
+R_{\mathrm{avg}}(\pi,\mu)\le\alpha
+$$
+
+对任意先验 $\mu$ 成立。反之，平均风险合同一般不能推出最坏风险合同。若对某个历史分割 $\{h_i\}$ 存在数列 $\alpha_i$ 使
+
+$$
+R_{\mathrm{cond}}(h_i,\pi)\le\alpha_i
+\quad\text{对每个可达 }h_i,
+$$
+
+则对每个来源 $\omega$ 有
+
+$$
+\boxed{
+R_\omega^\pi
+\le
+\sum_i P_\omega^\pi(h_i)\alpha_i
+\le
+\max_i\alpha_i.
+}
+\tag{211.1}
+$$
+
+### 证明
+
+第一条由积分不超过被积函数的上确界得到。平均风险不能推出最坏风险，只需取一个小先验权重放在高风险来源上即可。
+
+对历史分割使用全概率公式：
+
+$$
+R_\omega^\pi
+=
+\sum_iP_\omega^\pi(h_i)
+P_\omega^\pi(\neg S_\pi\mid h_i).
+$$
+
+逐项使用条件风险界，得到第一项不等式；概率权重和为一，得到第二项不等式。证毕。
+
+局部条件合同保留了“风险发生在哪个记录历史”的信息；若只保存总平均风险，稀有历史上的高条件风险会被平均权重掩盖。
+

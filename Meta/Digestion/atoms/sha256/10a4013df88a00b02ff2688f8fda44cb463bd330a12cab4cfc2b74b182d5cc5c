@@ -1,0 +1,10 @@
+**定理 2.45（pointwise support computability）。** For every oracle $A$ and every support $S$,
+
+$$
+\boxed{
+F(S)\text{ is }A\text{-computable}
+\quad\Longleftrightarrow\quad
+S\text{ is }A\text{-decidable}.
+}
+$$
+

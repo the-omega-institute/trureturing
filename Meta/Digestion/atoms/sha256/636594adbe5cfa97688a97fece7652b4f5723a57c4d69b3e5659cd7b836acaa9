@@ -1,0 +1,20 @@
+### 证明
+
+若两个压缩算子相同，式（127.1）立即给出全部事件集的输出相同。
+
+反之，取 $E=\{0\}$ 得
+
+$$
+\omega_R^Q\otimes P_0
+=\widetilde\omega_R^Q\otimes P_0,
+$$
+
+从而 $\omega_R^Q=\widetilde\omega_R^Q$；取 $E=(0,\infty)$ 得
+
+$$
+\omega_R^P\otimes\zeta
+=\widetilde\omega_R^P\otimes\zeta,
+$$
+
+从而 $\omega_R^P=\widetilde\omega_R^P$。证毕。
+

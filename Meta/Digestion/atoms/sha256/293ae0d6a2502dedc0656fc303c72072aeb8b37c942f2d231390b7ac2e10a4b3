@@ -1,0 +1,1 @@
+- D5/S1/FixedPoints/KleeneStageLimit.lean 的 inductive_definition_is_supremum_of_stages：$\omega$-Scott 连续序自映射的最小不动点是有限迭代的上确界。它是 Kleene 最小不动点定理，不能作为“递归二叉树存在但无可计算分支”的所有者。

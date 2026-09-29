@@ -1,0 +1,38 @@
+### 186.1 旗标通道与共同恢复任务
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$0\le\kappa<1$，
+$\rho=\operatorname{diag}(r,\ell)$，
+$r=(1+\kappa)/2$、$\ell=(1-\kappa)/2$、
+$\Delta=r\ell=(1-\kappa^2)/4$。
+令 $\Xi=\sqrt r\,|00\rangle+\sqrt\ell\,|11\rangle$、
+$\psi=(I\otimes Y)\Xi$。对 $s\in\{-1,+1\}$ 定义
+
+$$
+\eta_s(w)=(1-\beta w)P_\Xi+\beta wP_\psi
++s\gamma w(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|).
+$$
+
+由于 $\Xi,\psi$ 正交，条件态在它们张成空间内的迹为一，行列式为
+$\beta w-(\beta^2+\gamma^2)w^2$。因此其合法范围包含
+$0\le w\le\beta/(\beta^2+\gamma^2)$。
+令 $w_0=\epsilon$、$w_1=R\epsilon$，
+$\omega_j=\frac12\sum_sP_s^Q\otimes\eta_s(w_j)$，
+$\mathcal N(X)=\sum_jX_{jj}\omega_j$，
+目标为 $\mathcal V(X)=X_{Q_{\mathrm{out}}}\otimes P_\Xi$。
+其中 $P_s^Q$ 是旗标的两个正交基投影。
+接收端只操作 $QR$，$M$ 不可访问。
+原输入、旗标、接收端量子记忆和输出标签均为 qubit；张量因子按系统标记排序。均匀旗标平均使两份 $\omega_j$ 的 $M$ 边缘都等于 $\rho$。
+记所有共同 CPTP 解码器的最优半 diamond 恢复误差为
+
+$$
+h_\kappa(\epsilon,R)
+=\min_{\mathcal D:QR\to Q_{\mathrm{out}}R_{\mathrm{out}}\ {\rm CPTP}}
+\frac12\left\|
+\mathcal V-(\operatorname{id}_M\otimes\mathcal D)\mathcal N
+\right\|_\diamond.
+\tag{186.1}
+$$
+
+令 $\delta=R-1$、$\Sigma=R+1$。同一 $\mathcal D$ 服务两个原输入，
+而 diamond 范数保留全部外部参考。
+

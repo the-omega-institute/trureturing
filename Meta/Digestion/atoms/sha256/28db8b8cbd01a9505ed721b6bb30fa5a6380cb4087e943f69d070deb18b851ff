@@ -1,0 +1,153 @@
+**定理121.1（单支持三维剩余空间禁阻）。** 若通常纤维维数为二，三维剩余空间 $N$ 不可能具有单环境形态
+
+$$
+N=D\otimes\zeta,\qquad \dim D=3.
+$$
+
+本结论只排除三维乘积生成剩余空间的支持分割 $3$，不排除分割 $2+1$ 或 $1+1+1$。
+
+### 121.1 单支持正规形与全部实际纤维
+
+反设上述形态成立。取单位环境 $\theta\perp\zeta$。第119节的正规形在此化为原接收内积下的正交分解
+
+$$
+K=P\oplus D\oplus Q,\qquad
+\dim P=2,\quad\dim D=3,\quad\dim Q=2,
+$$
+
+$$
+R_0=(P\otimes F)\oplus(D\otimes\theta),\qquad
+R_1=(Q\otimes F)\oplus(D\otimes\zeta).
+$$
+
+记 $S_0=P\oplus D$。第101、103节给同一个实际跨度
+
+$$
+S_0=\mathbb Cp+G_2+\cdots+G_5
+=\mathbb Cp+G_2+\cdots+G_6,\qquad\dim S_0=5.
+$$
+
+完整接收纤维准确为
+
+$$
+\mathcal G_0([z])=
+\begin{cases}
+S_0,&[z]=[\theta],\\
+P,&[z]\ne[\theta],
+\end{cases}
+\qquad
+\mathcal G_1([z])=
+\begin{cases}
+D\oplus Q,&[z]=[\zeta],\\
+Q,&[z]\ne[\zeta].
+\end{cases}
+$$
+
+称 $\theta$ 为异常零位方向，其余为普通方向。所有普通零位纤维是同一个二维 $P$；它们并非随着环境改变的不同平面。相应地，任意普通实际当前方向都满足 $G_i=P$。
+
+所有一位乘积接收因子均属于 $D\oplus Q=P^\perp$，特别地
+
+$$
+q,v\in P^\perp,\qquad Q_n\subset P^\perp\quad(3\le n\le6),
+$$
+
+若后期当前环境为 $\theta$，则 $Q_n=Q$，从而
+
+$$
+H_n\subset G_n\oplus Q,\qquad H_n\cap S_0=0
+\quad(3\le n\le6, [\eta_n]=[\theta]).
+$$
+
+后一个零交使用 $G_n\subset S_0$、$Q\perp S_0$，以及 $H_n$ 到 $Q_n$ 的同构投影。
+
+两个特殊环境都必须在实际尾部出现。若 $\theta$ 从不出现，则全部 $G_i=P$，使实际 $S_0=\mathbb Cp+P$ 至多三维，矛盾。若 $\zeta$ 从不出现，则真实
+
+$$
+V_1S_0=\mathbb C(v\otimes\eta_2)+\sum_{n=3}^6Q_n\otimes\eta_n
+\subset Q\otimes F,
+$$
+
+因为所有这些一位纤维都为 $Q$；五维输入便被等距送入四维空间，仍矛盾。第74节给尾部至多三条射线，因此只须处理正交两尾 $\theta,\zeta$，或再加一条不同射线的三尾。
+
+早期实际列保持为
+
+$$
+V_0k=p\otimes\eta_1,\quad V_1k=q\otimes\eta_1,\qquad
+V_0p=u\otimes\eta_2,\quad V_1p=v\otimes\eta_2,\quad
+V_0q=w\otimes\eta_2,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),
+$$
+
+其中 $p,q$ 以及 $u,v,w$ 分别正交归一。对后期 $3\le n\le6$，仍有 $H_n\subset G_n\oplus Q_n$、$G_n\perp Q_n$，两个同轮投影均为同构。全文只用第2至5轮的已执行 $V_1G_i$。
+
+### 121.2 两尾不能从二维普通侧开始
+
+先假设只有 $\theta,\zeta$ 两尾。如果 $[\eta_2]=[\zeta]$，则 $G_2=P$，任何以后再次采用 $\zeta$ 的实际平面也等于 $P$。普通方向的一位后继因同一 $V_1P$ 而唯一；若第三轮仍为 $\zeta$，此自循环将使所有尾环境都是 $\zeta$，矛盾。因此第三轮为 $\theta$。
+
+若以后不再出现 $\zeta$，第3至6轮全部为 $\theta$，违反第71节。否则取首次回返 $\zeta$ 的位置 $j\in\{4,5,6\}$。前一轮当前方向为 $\theta$，而
+
+$$
+G_j=G_2=P,\qquad
+V_0H_{j-1}=P\otimes\zeta=V_0H_1,
+$$
+
+故 $H_{j-1}=H_1$。但 $j-1\ge3$ 且其当前环境为 $\theta$，所以 $H_{j-1}\cap S_0=0$，与非零 $p\in H_1\cap S_0$ 矛盾。末轮回返只使用实际零位像。
+
+### 121.3 大侧开始的两尾十词只剩五词
+
+余下令 $A=\theta$、$B=\zeta$，从第二轮 $A$ 开始。第69节共同分叉限制的十三个两字母必要词，再用普通 $B$ 的实际平面全等于 $P$、已见后继不能分叉，留下
+
+$$
+AAAAB,\ AAABA,\ AAABB,\ AABAA,\ AABAB,
+\ AABBB,\ ABAAA,\ ABAAB,\ ABABA,\ ABBBB.
+$$
+
+其中五个局部禁阻与第112.3节相同，其证明不要求大侧只有四维。
+
+- $ABBBB$ 的四个后继相同，违反第71节。
+- $ABABA$ 中，实际交替词引理99.3给 $\dim(G_3+G_5)\ge3$，但 $G_3=G_5=P$，矛盾。
+- $AABAB$ 中，$G_4=G_6=P$ 给 $H_3=H_5$。第3、第5轮当前环境均为 $A$，其一位纤维均为 $Q$，所以向 $S_0$ 投影得到 $G_3=G_5$；相同空间对违反 $\delta_3\ne\delta_5$。
+- $ABAAB$ 中，$G_3=G_6=P$ 给 $H_2=H_5$。当前环境均为 $A$，且 $v,Q_5\subset Q$，所以 $P_{S_0}H_2=G_2$、$P_{S_0}H_5=G_5$，得到 $G_2=G_5$。非零 $w\in H_2\cap G_2$ 遂落入后期 $H_5\cap G_5=0$。
+- $AABBB$ 中，$G_4=G_5=G_6=P$ 给 $H_4=H_5$，相同空间对违反 $\delta_4\ne\delta_5$。
+
+只剩 $AAAAB,AAABA,AAABB,AABAA,ABAAA$。以下直接使用完整一位 $A$ 纤维为二维 $Q$，不使用四维大侧预算。
+
+对于 $AAAAB$，$G_2,G_3,G_4$ 的一位像都填满 $Q\otimes A$，所以它们相等。当前方向相同使 $H_2=H_3$，非零 $w$ 落入 $H_3\cap G_3=0$，矛盾。
+
+对于 $AAABA,AAABB$，同样有 $G_2=G_3=T$，而 $G_4$ 的一位后继是正交的 $B$，故 $T\perp G_4$。两份零位像 $V_0H_2=T\otimes A$、$V_0H_3=G_4\otimes A$ 使 $H_2\perp H_3$。非零 $w\in H_2\cap T$ 因而正交于 $H_3$，却不能正交于满投影到 $T=G_3$ 的 $H_3$。
+
+对于 $ABAAA$，完整一位 $A$ 纤维给 $G_4=G_5=T$；$G_2$ 的后继为 $B$，故 $G_2\perp T$。环境正交又使 $H_2\perp H_4$。实际 $H_4\subset T\oplus Q_4$ 且 $Q_4=Q$，而 $u\in G_2\subset S_0$，所以 $u\perp H_4$。由 $a^2u+bv\in H_2$ 与 $b\ne0$ 得 $v\perp H_4$；但真实 $v\in Q=Q_4$，后期满投影使这不可能。
+
+对于 $AABAA$，完整一位 $A$ 纤维给 $G_2=G_5=T$，且真实 $V_1p=v\otimes A$ 使 $p\in T$。$G_3$ 的后继为 $B$，所以 $T\perp G_3$；相应零位像使 $H_1\perp H_2$，特别 $p\perp H_2$。然而 $u,w$ 张成 $T$，$v\in Q\perp T$，且 $a\ne0$，故 $P_TH_2=T$；非零 $p\in T$ 不可能正交于 $H_2$。至此两尾全部排除。
+
+### 121.4 三尾的十三词与唯一异常标签
+
+反设尾部恰有三条射线，按首次出现命名为 $A,B,C$。其中包含 $\theta,\zeta$，第三条与二者都不同。普通方向上的实际平面全部等于 $P$，因此所有已有后继的普通当前位置都必须采用同一后继。
+
+第69、74节的十三个必要三尾词按这一条件得到下表；第二列指出哪一个字母必须等于异常零位方向 $\theta$。
+
+| 尾词 | 可能的异常字母 |
+|---|---|
+| $AAABC$ | $A$ |
+| $AABAC$ | $A$ |
+| $AABCC$ | $A$ |
+| $ABAAC$ | $A$ |
+| $ABABC$ | $B$ |
+| $ABACA$ | $A$ |
+| $ABBBC$ | $B$ |
+| $ABBCB$ | $B$ |
+| $ABCAB$ | 无 |
+| $ABCBA$ | $B$ |
+| $ABCBB$ | $B$ |
+| $ABCBC$ | $B$ |
+| $ABCCC$ | $A$ |
+
+该表只读取前四个尾位置的后继。$ABCAB$ 的三个当前字母具有三个不同后继，任意选一个异常字母后，两个普通字母仍有不同后继，因此直接排除。其余十二词分别处理。
+
+### 121.5 七个早期回返或重复空间的三尾禁阻
+

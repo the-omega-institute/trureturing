@@ -1,0 +1,103 @@
+### 165.4 正本征向量给下界，并由支撑达到给最优解
+
+置
+
+$$
+x=\begin{pmatrix}\sqrt r\\\sqrt\ell\end{pmatrix},
+\qquad
+B_s=P_x-\frac14K_s
+=\frac14
+\begin{pmatrix}
+3r&\sqrt\Delta(4-s)\\
+\sqrt\Delta(4-s)&3\ell
+\end{pmatrix}.
+\tag{165.16}
+$$
+
+该实对称矩阵的所有元素严格为正，其最大本征值
+$\tau=\lambda_{\max}(B_s)>0$ 有正实单位本征向量
+$y=(y_0,y_1)^{\mathsf T}$，其中 $y_0,y_1>0$。将 $y$ 视为偶宇称向量，由（165.14）可得对任意 $\bar\sigma\in\mathcal K_q$，
+
+$$
+\begin{aligned}
+\lambda_{\max}\left(P_\Xi-\frac{\bar\sigma}{4}\right)
+&\ge |\langle x,y\rangle|^2
+-\frac14\langle y|\bar\sigma|y\rangle\\
+&\ge y^{\mathsf T}\left(P_x-\frac14K_s\right)y
+=\tau.
+\end{aligned}
+\tag{165.17}
+$$
+
+现在证明这个下界可达。紧性保证存在一对可行扩张在 $y$ 方向达到（165.14）的最大值。记 $W=Z_M\otimes Z_{R_{\mathrm{out}}}$，用 $\operatorname{conj}(\sigma)$ 表示逐项复共轭。可行扩张对上的两个变换为
+
+$$
+(\sigma_+,\sigma_-)
+\longmapsto
+\bigl(\operatorname{conj}(\sigma_-),
+      \operatorname{conj}(\sigma_+)\bigr),
+$$
+
+$$
+(\sigma_+,\sigma_-)
+\longmapsto
+(W\sigma_-W,W\sigma_+W).
+\tag{165.18}
+$$
+
+它们保持各自规定的边缘，因为
+$\operatorname{conj}(\rho_-)=\rho_+$ 且 $Z\rho_-Z=\rho_+$。
+两变换交换，且各自平方为恒等。对生成的四元群取平均，仍保持在实偶向量 $y$ 上达到最大值，并可令
+
+$$
+\sigma_-=\operatorname{conj}(\sigma_+)=W\sigma_+W.
+\tag{165.19}
+$$
+
+于是 $\bar\sigma=(\sigma_++\sigma_-)/2$ 为实矩阵，且按奇偶宇称分块。令其偶块为 $A$。由（165.14）与支撑达到性，
+
+$$
+u^{\mathsf T}(K_s-A)u\ge0
+\quad\text{对所有 }u\in(0,\infty)^2,
+\qquad
+y^{\mathsf T}(K_s-A)y=0.
+\tag{165.20}
+$$
+
+$y$ 位于这个开正锥内部。因此二次函数在 $y$ 处取得局部最小值，梯度必须为零：
+
+$$
+(K_s-A)y=0.
+\tag{165.21}
+$$
+
+结合（165.16）可得
+
+$$
+\left(P_x-\frac14A\right)y=B_sy=\tau y.
+\tag{165.22}
+$$
+
+由于没有奇偶交叉块，$\tau>0$ 是整个
+$P_\Xi-\bar\sigma/4$ 的本征值。这个矩阵至多有一个正本征值，故其最大本征值恰为 $\tau$。与（165.17）合起来，
+
+$$
+\mathfrak e(v)=\lambda_{\max}(B_s).
+\tag{165.23}
+$$
+
+（165.18）中的 $W$ 只用于证明可行扩张集的代数对称性，没有要求接收端物理执行 $Z_M$。每个变换后的扩张仍具有规定边缘，所以由（165.6）的局部可达性存在相应的接收端通道；混合这些通道即可实现平均扩张。这也说明最优值在原操作权限内达到。
+
+最后直接求二维矩阵的最大本征值：
+
+$$
+\begin{aligned}
+\lambda_{\max}(B_s)
+&=\frac{3+\sqrt{9(r-\ell)^2+4\Delta(4-s)^2}}8\\
+&=\frac{3+\sqrt{9+4\Delta(1-s)(7-s)}}8.
+\end{aligned}
+\tag{165.24}
+$$
+
+这里用到 $(r-\ell)^2=1-4\Delta$。定理165.1得证。
+

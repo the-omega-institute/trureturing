@@ -1,0 +1,62 @@
+### 305.9 从完成时长发现尺度与四阶逆矩
+
+只用参考调用的时长，令
+$$
+t=\sqrt h,\qquad W=1-2Z=3-2\tau,\qquad \mathbb E W=t.
+$$
+在累计样本数 \(n_s=2^s\) 上，用第303节同一 dyadic Hoeffding 发现规则：
+$$
+L_s=\log(A(s+1)^2/\delta),\quad
+r_s=2\sqrt{L_s/(2n_s)},\quad
+J=\inf\{s:\widehat t_s\ge2r_s\},\quad
+t_0=\min(1,\widehat t_J/2).
+\tag{305.20}
+$$
+取 \(\delta=\bar\eta/288\)、\(\Lambda=\log(A/\delta)\asymp
+H=1+\log(\kappa/g)\)，与第303节相同。此处时长流是实际完成记录，不是免费校准。停在 \(J\) 的记录满足事件
+\(G_0=\{t/3\le t_0\le t\}\) 的概率至少 \(1-\delta/3\)。这是实际停止记录上的事件；全时 Hoeffding 界只用于估计其失败概率。
+
+对于 \(p=2,4\)，尺度发现满足
+$$
+\mathbb E t_0^{-p}\le A_p t^{-p}.
+\tag{305.21}
+$$
+具体核对 \(p=4\)：令 \(s_\star\) 为首个 \(r_s\le t/4\) 的级别，则
+\(n_{s_\star}/L_{s_\star}\le A/t^2\)，且
+\(n_{s_\star}t^2\ge aL_{s_\star}\)。
+停止条件保证
+$$
+t_0^{-4}\le1+r_J^{-4}
+\le1+A(n_J/L_J)^2.
+$$
+对于 \(s=s_\star+m\)、\(m\ge1\)，
+$$
+\Pr(J\ge s)\le e^{-a2^{m-1}n_{s_\star}t^2},
+\qquad
+(n_s/L_s)^2\le2^{2m}(n_{s_\star}/L_{s_\star})^2.
+$$
+超指数尾求和后给 \(\mathbb E t_0^{-4}\le At^{-4}\)。
+\(p=2\) 用一次方同理。没有在校准失败分支丢弃这些矩。
+
+令
+$$
+H_0=t_0^2.
+$$
+于是
+$$
+\Pr(h/9\le H_0\le h)\ge1-\delta/3,\quad
+\mathbb E H_0^{-2}\le Ah^{-2},\quad
+\mathbb E H_0^{-1}\le Ah^{-1}.
+\tag{305.22}
+$$
+发现调用成本为
+$$
+\mathbb E n_J
+\le Ah^{-1}\,[\Lambda+\ell_+(h)],
+\qquad
+\ell_+(h)=\log\log(e^e/h).
+\tag{305.23}
+$$
+因为 \(t=\sqrt h\ge h\)，可以用 \(\ell_+(h)\) 统一控制
+\(\ell_+(t)\)。这一步把原来的发现成本 \(h^{-2}\ell_+(h)\) 降为 \(h^{-1}\ell_+(h)\)。
+

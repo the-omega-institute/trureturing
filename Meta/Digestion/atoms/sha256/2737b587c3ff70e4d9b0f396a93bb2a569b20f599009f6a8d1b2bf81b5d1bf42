@@ -1,0 +1,24 @@
+### 149.3 实际累计接收器上的逻辑误差
+
+令 $\iota_n:S_n\hookrightarrow H_n$ 为实际档案嵌入。固定在线接收器从独立初态出发，对一整份 $n$ 位档案按原顺序实施相同接收通道，诱导全域累计通道
+
+$$
+\mathcal E_n:\mathcal L(H_n)\longrightarrow\mathcal L(K).
+$$
+
+较早接收与较晚来源发射作用于不同系统，可以交换次序。因此，实际来源上的接收态正是先形成完整档案，再在档案端作用 $\mathcal E_n$ 的结果；这里的累计通道由实际固定装置决定。
+
+对给定终端解码器 $\mathcal D_n$，定义
+
+$$
+\mathcal L_n
+=\mathcal D_n\mathcal E_n\operatorname{Ad}_{\iota_n},
+\qquad
+\mathcal I_n=\operatorname{Ad}_{\iota_n},
+\qquad
+\operatorname{Ad}_{\iota_n}(X)=\iota_nX\iota_n^*.
+\tag{149.13}
+$$
+
+两者均从 $S_n$ 输出到完整 $H_n$，所以允许近似解码输出含有 $S_n$ 外的分量。记同一装置在完整 Bell 输入上的半迹恢复误差为 $e_n$。
+

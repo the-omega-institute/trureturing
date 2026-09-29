@@ -1,0 +1,34 @@
+### 267.6 只读取实际符号的逐次协议达到八次方阶
+
+每份规定输出读取符号 $s$。可以忽略已经开放的 $w$ 和参考来构造上界；上一节下界仍是对完整输出得到的。
+
+记
+$$
+c=\operatorname{Tr}R_a=\operatorname{Tr}R_b
+=\frac{3}{4\sqrt2}.
+\tag{267.34}
+$$
+由（267.23），两个假设下
+$$
+\mathbb E_0s=c,\qquad
+\mathbb E_hs=(1-\delta)c,\qquad
+\operatorname{Var}_j(s)\le1.
+\tag{267.35}
+$$
+对 $n$ 份独立符号取样本均值，以 $c(1-\delta/2)$ 为阈值；大于阈值判零，否则判 $h$。两个均值到阈值的距离均为 $c\delta/2$。Chebyshev不等式给每一侧的错误率
+$$
+P_j(\text{判错})\le\frac4{nc^2\delta^2}.
+\tag{267.36}
+$$
+所以
+$$
+\boxed{
+N_{\mathrm{out}}(h)
+\le\left\lceil\frac{12}{c^2\delta^2}\right\rceil
+=\left\lceil\frac{128}{3\delta^2}\right\rceil
+=\left\lceil\frac1{96h^8}\right\rceil.
+}
+\tag{267.37}
+$$
+该协议使用真实可见的单份符号记录，不把理想算子响应矩阵当成一次实验直接给出的数据。
+

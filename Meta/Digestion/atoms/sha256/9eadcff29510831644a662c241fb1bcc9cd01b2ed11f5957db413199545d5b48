@@ -1,0 +1,61 @@
+### 131.4 ABBAB：两种小侧平面关系都不相容
+
+此词中 $G_2,G_5\subset U_A$ 的后继均为 $B$，$G_3,G_4\subset U_B$ 的后继分别为 $B,A$。因此
+
+$$
+U_B=G_3\oplus G_4,\qquad G_3\perp G_4.
+\tag{131.12}
+$$
+
+**第一种：$G_2=G_5=:T$。** 相同零位像 $T\otimes A$ 给 $H_1=H_4$。真实 $0\ne p\in H_1$ 于是属于 $H_4$；第4轮当前为 $B$，后期满投影给 $H_4\cap U_B=0$，所以
+
+$$
+p\notin U_B.
+\tag{131.13}
+$$
+
+若 $T=G_3$，相同环境 $B$ 上的正交零位像 $G_3\otimes B,G_4\otimes B$ 给 $H_2\perp H_3$。但非零 $w\in H_2\cap T=H_2\cap G_3$，与 $H_3$ 满投影到 $G_3$ 矛盾。
+
+若 $T\ne G_3$，两个二维平面都在三维 $F_B$ 中，故 $T+G_3=F_B$。由于 $G_4\subset F_A$，它正交于 $F_B$。这两个空间都在五维 $S_0$ 内，维数和为五，所以
+
+$$
+S_0=F_B\oplus G_4.
+$$
+
+真实 $p\in S_0\cap F_A$ 因而属于 $G_4\subset U_B$，违反（131.13）。第一种情况排除。
+
+**第二种：$G_2\ne G_5$。** 两个小侧平面填满三维 $U_A$ 与三维 $F_B$，所以 $F_B=U_A$。当前 $G_4$ 位于 $B$、后继为 $A$，第131.2节给
+
+$$
+G_4=J,\qquad p\in J,\qquad [\eta_1]=[B],
+\qquad q\in U_B^\perp.
+\tag{131.14}
+$$
+
+真实 $V_0k=p\otimes B\in G_4\otimes B=V_0H_3$，所以
+
+$$
+k\in H_3.
+\tag{131.15}
+$$
+
+另一方面，$V_0H_1=G_2\otimes A$、$V_0H_4=G_5\otimes A$，两个接收平面之和三维，所以 $\dim(H_1+H_4)=3$，两份二维输入必有非零交。取
+
+$$
+0\ne h=\alpha p+\beta q\in H_1\cap H_4.
+$$
+
+$p\in J=G_4$ 而后期 $H_4\cap G_4=0$，故 $\beta\ne0$。又 $H_4\subset G_4\oplus Q_4$、$G_4\subset U_B$、$Q_4\subset U_B^\perp$；对 $h$ 向 $U_B^\perp$ 投影得到
+
+$$
+\beta q\in Q_4,\qquad q\in Q_4.
+$$
+
+同一个一位首像遂满足
+
+$$
+V_1k=q\otimes B\in Q_4\otimes B=V_1G_3,
+$$
+
+所以 $k\in G_3$。结合（131.15），非零首态落入后期 $H_3\cap G_3=0$，矛盾。第二种情况也排除。
+

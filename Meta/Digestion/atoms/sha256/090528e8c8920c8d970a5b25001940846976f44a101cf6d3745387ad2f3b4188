@@ -1,0 +1,31 @@
+### 292.4 所有参考维数的先reset二次上界
+
+先reset访问使用同一实际块统计量 $V$，其均值与方差满足
+$$
+\mathbb E_cV=a_n^2c,\qquad
+\operatorname{Var}_cV\le8,
+\qquad a_n\ge15/16.
+\tag{292.11}
+$$
+将 $\overline V/a_n^2$ 截到 $[kl,1]$，再使用相同 $f_*$，得到实际风险界
+$$
+\mathcal R\le\frac14+
+B\sqrt{\frac8{Ka_n^4}}
+\le\frac14+\sqrt{\frac{32}{K\delta^2a_n^4}}.
+\tag{292.12}
+$$
+因为 $(15/16)^4>3/4$，取
+$$
+K=\left\lceil\frac{6144}{\delta^2}\right\rceil
+\tag{292.13}
+$$
+使附加项至多 $1/12$，对全部 $n\ge1$ 一致达到目标。包括取整和两份计费有
+$$
+\boxed{
+N_{\rm av}^{\rm reset}(n,\delta;3\delta)
+\le\frac{12289}{\delta^2}.
+}
+\tag{292.14}
+$$
+这里 $V$ 来自实际reset输出与保留参考；准确二值程序标签仍不属于允许观测。
+

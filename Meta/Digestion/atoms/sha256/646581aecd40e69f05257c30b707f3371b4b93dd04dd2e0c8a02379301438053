@@ -1,0 +1,25 @@
+**定义 112.1（在当前主本征态上放置参考检验）。** 在定义 111.1 的相位对齐坐标下，取第 101 节的实际输入 $\Omega_z$，固定
+
+$$
+z=z_0=\frac\phi2,\qquad \phi=\frac{1+\sqrt5}{2}.
+$$
+
+仍用该节同一投影仪器相对名义仪器的负谱投影 $E_N,E_C$、函数 $L(a,z)$ 及标量 $\chi,\nu,T,h_N,h_C$。写 $E_C=E_C^R\otimes P_0$，置
+
+$$
+\alpha_R=\sqrt{a(1-z)}|0_R\rangle+\sqrt z|1_R\rangle,
+\qquad \beta_R=-\sqrt{b(1-z)}|0_R\rangle,
+$$
+
+$$
+v_c=\alpha_R\otimes\psi,\quad
+v_b=\beta_R\otimes\psi,\quad
+v_f=\alpha_R\otimes\eta,\quad
+v_a=\beta_R\otimes\eta,
+\qquad
+H=E_C^R\otimes I-E_N.
+\tag{112.1}
+$$
+
+令 $H_{ij}=\langle v_i|H|v_j\rangle$。这些量在 $a=1/2$ 附近连续、有界且为实数，因为全部检验矩阵和向量在上述坐标中为实。
+

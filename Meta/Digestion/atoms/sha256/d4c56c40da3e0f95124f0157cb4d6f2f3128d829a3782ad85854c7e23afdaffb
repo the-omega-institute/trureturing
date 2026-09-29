@@ -1,0 +1,45 @@
+### 9.5 指定共同输入的整个纤维
+
+在 $y^*$ 的完整纤维中，反演公式给每格上下界
+
+$$
+\frac{1-16\varepsilon}{9}\le p_t\le\frac{1+20\varepsilon}{9}.
+\tag{ER9.MS.12}
+$$
+
+上端由第 9.4 节的对应来源达到。为求准确下端，在目标 $(0,0)$ 取
+
+$$
+w=\frac19\begin{pmatrix}-16&4&4\\4&0&0\\4&0&0\end{pmatrix}.
+$$
+
+$\sum w=0$。其单删除斜率按匹配、不匹配为 $8/9,-4/9$；双删除按匹配两个、一个、零个坐标为 $0,8/9,-8/9$。与 $y^*$ 相减后的误差斜率分别为 $-8/9,4/9$ 和 $-1/9,-1,7/9$，空删除为零。因此 $u+\varepsilon w$ 在 $[0,1/16]$ 是合法来源，目标格恰达到 $(1-16\varepsilon)/9$。
+
+对 $1/16\le\varepsilon\le1/7$ 固定来源 $p^{\rm edge}=u+w/16$。其目标格为零、四臂为 $5/36$、四角为 $1/9$，总和一。误差的单删除值为 $-1/18,1/36$；双删除三个匹配类的值为
+
+$$
+-\varepsilon/9,\qquad-\varepsilon/9-1/18,\qquad-\varepsilon/9+1/18.
+$$
+
+在两个端点的最大绝对误差分别为 $1/16,1/14$，均不超过相应噪声；每一正负误差不等式都是 $\varepsilon$ 的仿射不等式，故中间整段成立。对各目标作上述行列交换，得到所有下端的达到来源。因此在 $[0,1/7]$ 上，完整纤维而非仅九点子集的极值恰为
+
+$$
+u_t=\frac{1+20\varepsilon}{9},\qquad
+l_t=\max\left(0,\frac{1-16\varepsilon}{9}\right).
+$$
+
+由中心公式，
+
+$$
+r_{\mathbb R^9}(\mathcal K_\varepsilon(y^*))=
+\begin{cases}
+2\varepsilon,&0\le\varepsilon\le1/16,\\
+(1+20\varepsilon)/18,&1/16\le\varepsilon\le1/7,
+\end{cases}
+\qquad
+r_H(\mathcal K_\varepsilon(y^*))=r_{\Delta_9}(\mathcal K_\varepsilon(y^*))=20\varepsilon/9.
+\tag{ER9.DESIGNATED}
+$$
+
+最后两个半径由均匀中心达到：上偏差为 $20\varepsilon/9$，下偏差不超过它；质量一下界已证。在 $1/16$，实半径两式都是 $1/8$，受约束半径是 $5/36$；在 $1/7$，该输入实半径为 $3/14$，小于全局实风险 $2/7$。某一输出域的最坏共同输入不必是另一输出域的最坏输入。
+

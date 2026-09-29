@@ -1,0 +1,37 @@
+### 275.4 单位圆谱的规范多相位坐标
+
+现在假设 $\operatorname{spec}(M)\subseteq\{z:|z|=1\}$。Jordan标准形和每块可逆对角缩放给某个可逆 $S$，使
+$$
+S^{-1}MS
+=\bigoplus_{b\in\mathcal B}\lambda_b(I_{r_b}+tJ_{r_b}),
+\qquad |\lambda_b|=1,
+\qquad t=\frac14.
+\tag{275.25}
+$$
+确实，对标准块 $\lambda I+J_r$，对角缩放
+$\operatorname{diag}(1,\lambda t,\ldots,(\lambda t)^{r-1})$
+把超对角条目变成 $\lambda t$。所有 $\lambda_b$ 非零，所以缩放可逆。
+
+在（275.18）中取 $F^\dagger=S$，即可实现（275.25）。因此只需在过滤后的模型内证明结论；以下重新将其正定矩阵、graph矩阵和总迹记为 $Q,M,c$。参考坐标块正交，但 $Q$ 仍可有任意跨块条目。令
+$$
+n=\sum_b r_b,
+\qquad m=\max_b r_b,
+\qquad
+M=\Lambda(I+tJ),
+$$
+$$
+J=\bigoplus_bJ_{r_b},
+\qquad \Lambda=\bigoplus_b\lambda_bI_{r_b}.
+\tag{275.26}
+$$
+$\Lambda$ 酉且与 $J$ 交换。
+
+核基为
+$$
+q_{b,j}=(-Me_{b,j},e_{b,j})
+=(-\lambda_b(e_{b,j}+te_{b,j-1}),e_{b,j}),
+\qquad e_{b,0}=0.
+\tag{275.27}
+$$
+这些向量由下半部分线性独立，并张成 $\mathcal N=\ker T$。
+

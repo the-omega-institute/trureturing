@@ -1,0 +1,30 @@
+### 19.2 定理：移动原子的精确极值与支撑空隙代价
+
+设
+\[
+a\leq l<r\leq b,\qquad l\leq t\leq r,\qquad
+2t\leq a+b,\qquad l+r\leq a+b.
+\]
+定义
+\[
+\varepsilon(t)=\frac{(1-b)(b-t)}{2+t},\quad
+c(t)=\frac{(1-b)(2+b)}{2+t},\quad
+w_c(t)=1-\frac{c(t)}{1-t},
+\]
+\[
+w_h(t;l,r)=\frac{(b-l)(b-r)+\varepsilon(t)(1+l+r)}{(1-l)(1-r)}.
+\tag{19.2}
+\]
+则
+\[
+\boxed{W(\varepsilon(t))=w_c(t),\qquad
+W_{l,r}(\varepsilon(t))=w_h(t;l,r),}
+\]
+并且
+\[
+\boxed{w_c(t)-w_h(t;l,r)
+=\frac{(1-w_c(t))(t-l)(r-t)}{(1-l)(1-r)}.}
+\tag{19.3}
+\]
+当 $l<t<r$ 时差严格为正；在两个端点处差为零。
+

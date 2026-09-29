@@ -1,0 +1,16 @@
+**定义 164.1（承担与信息共同决定可实行性）。** 设 $X$ 是相关情境，$q:X\to Q$ 是行动时可用的读数，$A$ 是行动集合。对每一项同时有效的承担 $j\in J$，以 $L_j(x)\subseteq A$ 表示在情境 $x$ 中满足该承担的行动；身体能力、资源与已经成立的许可条件也可以作为其中的约束。需要的不是每个条件单独有解，而是一个只凭现有读数行事的规则，在所有相容情境下同时满足这些条件：
+
+$$
+\exists\pi:q(X)\to A,\quad
+\forall x\in X,\ \forall j\in J,\quad \pi(q(x))\in L_j(x).
+$$
+
+把 $L(x)=\bigcap_{j\in J}L_j(x)$ 代入项目的[确定性安全策略存在条件](../../../D5/S3/ConceptDynamics/Agency/DeterministicSafePolicyExistence.lean)，得到所需的共同交集条件：
+
+$$
+\forall z\in q(X),\qquad
+\bigcap_{x:q(x)=z}\ \bigcap_{j\in J}L_j(x)\ne\varnothing.
+$$
+
+一个已有规则为每条读数提供交集中的元素；反过来，在每个非空交集中选取一个元素，就得到集合意义上的规则。无限情境中的这一步选择不自动给出可计算、可测或资源可承受的实施方案。这里是在第 60 节观察纤维条件上加入同时有效的承担，因而要求信息约束与规范约束在同一实际情境中共同满足。
+

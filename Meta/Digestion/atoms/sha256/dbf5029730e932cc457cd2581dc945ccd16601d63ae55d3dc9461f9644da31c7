@@ -1,0 +1,43 @@
+### 253.4 逐次输出读出达到相同四次方阶
+
+逐份测量参考是否处于产品方向 $|2\rangle_E$，并读取可见符号 $s$。定义实际随机变量
+$$
+Y=
+\begin{cases}
+s,&\text{参考产品旗标成立},\\
+0,&\text{参考在 Bell 块中}.
+\end{cases}
+\tag{253.18}
+$$
+它满足
+$$
+\mathbb E_0Y=q\alpha,
+\qquad
+\mathbb E_zY=q\alpha(1-2z^2),
+\qquad
+\mathbb E_jY^2=q,
+\quad\operatorname{Var}_jY\le q.
+\tag{253.19}
+$$
+令 $\overline Y_n$ 为 $n$ 份独立读数的均值，以
+$$
+q\alpha(1-z^2)
+\tag{253.20}
+$$
+为阈值。超过阈值判为假设零，否则判为假设 $z$。两个假设的均值到阈值的距离均为 $q\alpha z^2$。Chebyshev 不等式给每一假设下的错误率
+$$
+P_j(\text{判错})
+\le\frac{q/n}{q^2A z^4}
+=\frac1{nqA z^4}.
+\tag{253.21}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{out}}(z)
+\le\left\lceil\frac3{qA z^4}\right\rceil.
+}
+\tag{253.22}
+$$
+这个上界使用逐次测量与经典阈值，而下界允许任意联合测量；两者给出了相同的 $z^{-4}$ 阶，常数不宣称最优。
+

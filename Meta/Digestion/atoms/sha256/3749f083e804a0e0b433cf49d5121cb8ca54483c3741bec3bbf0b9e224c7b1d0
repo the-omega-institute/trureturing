@@ -1,0 +1,25 @@
+### 6.8 同一原初态的合法取得与两种费用
+
+固定整数 $p\ge2$、$k\ge0$，令 $P=p^k$。只讨论模 $pP$ 的初态
+$$
+x=bP+r,\qquad 0\le b<p,\quad 0\le r<P.
+\tag{AS.1}
+$$
+以标准代表 $0\le x<pP$ 定义传感器 $d_k(x)=\lfloor x/P\rfloor$，群内加法按模 $pP$ 进行。每次读数不扰动状态；初始读数 $b$ 已取得并保留。目标为原初态 $x$，故余下需要识别 $r$。全部动作增量、事件数和结果均进入记录。若使用 $p$ 进整数解释，再要求 $p$ 为素数；下列有限循环模型本身不需要素性。
+
+基本执行只允许 $+1$，但可在所选时刻不读取，或在根据已有结果选择的时刻读取。等待 $n$ 个事件要计 $n$ 次实际单位演化；一次读取另计一查询。没有重置、复制、时间倒流或未知的外部状态旁路。初始读取不计在“额外查询”中，但所有总读取数应加一。
+
+[任意二元问题识别定理 `arbitrary_binary_questions_identify_target`](https://github.com/the-omega-institute/trureturing/blob/7f2bd771ec9e4bffc9558419ac45147775310773/D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.lean)在有限来源、有限当前读数和有限目标的条件下，允许逐纤维选择任意二元问题而给出对数深度。这里仅将其作为信息量比较；实际传感器可实现哪些问题，要由下面的阈值证明给出。[二元协议深度下界 `adaptive_binary_protocol_depth_lower_bound`](https://github.com/the-omega-institute/trureturing/blob/7f2bd771ec9e4bffc9558419ac45147775310773/D5/S3/ConceptDynamics/Coding/BinaryProtocolDepthLowerBound.lean)要求有限来源与有限当前读数，以及与当前读数和协议 transcript 相容的精确目标解码；该下界本身不要求目标类型有限。对于按已知 $b$ 选择的策略，固定 $b$ 后取 $X_b=\{0,\ldots,P-1\}$、当前读数为单点、目标为 $r\mapsto bP+r$，其唯一当前纤维有 $P$ 个不同目标。下面将真实原始读数规范化为二元响应，才应用该下界。
+
+同一整数模型还可以在任意 $P\ge1$ 上定义，不要求 $P$ 为 $p$ 的幂。固定整数 $p\ge2$，令
+
+$$
+R_{p,P}(b,r;n)=
+\left\lfloor\frac{(bP+r+n)\bmod(pP)}P\right\rfloor,
+\quad 0\le b<p,\quad 0\le r<P,\quad n\in\mathbb N.
+$$
+
+模运算取非负标准代表。这里 $P$ 是块长度及阈值相位周期，整个状态的周期为 $pP$。当 $P=p^k$ 时，$R_{p,P}(b,r;n)=d_k(x+n)$；任意整数 $P$ 只表示有限块传感器，不据此赋予它 $p$ 进位深。以下只依赖该整数读数公式的阈值、查询、等待和递推结论，对这个有限块模型同样成立。
+
+本节的费用是实际向前单位事件数与实际读取次数。仅保留固定信息后作计算、允许任意干预的模型、仅有 $+1$ 的模型，是不同的可用信息与操作条件。全程 $+1$ 时累计位移等于等待事件数；若另许带符号或任意大小的动作，只比较终点位移不会保持沿路每次读取的费用。以下优化识别原初态的剩余最坏等待，另约束每条路径的查询预算；若任务要求复述全部读取档案、逐次读取费用或既付总费用，这些量必须另行保留。实际等待单位是所声明的事件，不据此换算为物理秒或能量。
+

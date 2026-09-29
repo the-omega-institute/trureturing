@@ -1,0 +1,11 @@
+**引理219.4（候选的核方向与目标事件）。** 对同接口的总 Choi 秩至多二经典记录通道集合，
+$$
+\boxed{
+\min_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge
+\min\{\lambda_{\min}(B),\,\|E_0\|_\infty\}.
+}
+\tag{219.15}
+$$
+

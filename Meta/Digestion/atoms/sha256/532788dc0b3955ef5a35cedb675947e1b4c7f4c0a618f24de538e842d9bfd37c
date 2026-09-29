@@ -1,0 +1,83 @@
+### 209.2 两端系数的精确匹配
+
+令 $Q_{\mathrm{out}}(\ell)=Q_{\min}(1-2\ell)$ 为第186节的固定来源系数。
+对 $0<\ell\le1/2$，其精确拆分为
+
+$$
+\boxed{Q_{\mathrm{out}}(\ell)=-\frac{a^2}{\ell}+q_0+D(\ell).}
+\tag{209.4}
+$$
+
+确实，在（186.3）中使用
+
+$$
+\frac{1+3(1-2\ell)^2}{1-(1-2\ell)^2}
+=\frac1\ell-2+\frac\ell{1-\ell}
+$$
+
+并展开 $(1-2\ell)^2$，即得（209.4）。
+此外 $D(\ell)>0$ 对 $0<\ell\le1/2$ 成立，因为
+$4\Sigma^2(1-\ell)^2-\delta^2>0$；特别地
+$D(1/2)=\gamma^2R/4$。
+
+第197节已经证明
+
+$$
+\Phi_h=\Phi_\infty-\frac{a^2}{h}
+-\frac{Ba^2}{2h^2}+O(h^{-3}).
+\tag{209.5}
+$$
+
+第206节的完整二阶系数同时满足
+
+$$
+\boxed{Q(h)=q_0-\frac{Ba^2}{2h}+O(h^{-2}).}
+\tag{209.6}
+$$
+
+为核对这一匹配，置 $t=1/h$。
+在充分大的 $h$ 区域，圆盘约束活跃，第197节的驻点及圆周关系给
+
+$$
+\begin{gathered}
+n=at+\frac{Ba}{2}t^2+O(t^3),\qquad
+m=\frac12-a^2t^2-Ba^2t^3+O(t^4),\qquad
+z=\frac34+\frac{a^2}{2}t^2+O(t^3),\\
+L_s=-\frac B2+8a^2t+6Ba^2t^2+O(t^3),\qquad
+T_s=-\frac B2+4a^2t+3Ba^2t^2+O(t^3),\\
+L_d=\frac{\beta\delta}{2}-2\gamma\Sigma a\,t+O(t^2).
+\end{gathered}
+\tag{209.7}
+$$
+
+在第206节的 $Z$ 中，含 $h,h^2$ 的四项须共同展开。
+它们依次为
+
+$$
+\begin{aligned}
+hL_s/4&=-\frac B{8t}+2a^2+\frac32Ba^2t+O(t^2),\\
+-2hzT_s/3&=\frac B{4t}-2a^2-\frac43Ba^2t+O(t^2),\\
+4h^2z^2(1-4m^2)/9&=a^2+Ba^2t+O(t^2),\\
+-16hz^2\Phi_h/9&=-\frac B{8t}+a^2+\frac13Ba^2t+O(t^2).
+\end{aligned}
+$$
+
+再加上 $L_d^2/4=\beta^2\delta^2/16-2Ba^2t+O(t^2)$，得到
+
+$$
+Z=\frac{\beta^2\delta^2}{16}+2a^2-\frac{Ba^2}{2}t+O(t^2).
+$$
+
+而
+$a_{\mathrm{eff}}=\beta\delta/4-2\gamma\Sigma a\,t+O(t^2)$、
+$\theta=\gamma\Sigma/2+\beta\delta a\,t+O(t^2)$
+使 $-a_{\mathrm{eff}}^2/4$ 与 $-\theta^2m^2$ 的一次项相消，
+其常数项与 $Z$ 合并为 $q_0$，证明（209.6）。
+
+这些等式也说明修正 $D$ 的必要性。
+若限制复合式为
+$3/4+\epsilon\Phi_h+\epsilon^2[Q(h)+S(\ell)]$，
+其中 $S$ 连续且 $S(0)=0$，要求它在每个固定正来源处匹配第186节，
+由（209.4）—（209.6）必有 $S(\ell)=D(\ell)$。
+不加修正时，每个固定正来源的归一化二阶误差都留下 $D(\ell)>0$。
+

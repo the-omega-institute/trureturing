@@ -1,6 +1,7 @@
 import LeanInformationAuditRegTests.ProductionInputs
 import Reg.Catalogs.InformationRoot
 import Reg.Catalogs.TemplateShadow
+import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
 
 open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
 
@@ -111,9 +112,9 @@ run_cmd Elab.Command.liftCoreM do
   else
     logError m!"[FAIL] ProvenanceWorkFuelBoundary: exact={enough}, below={exhausted}, fuel={total}"
 
--- The shadow adapter contains an unsupported abstract dependent carrier. Keep
--- that rejection separate from the budget control on the same theorem's
--- concrete InformationRoot realization. No corpus-specific type admission.
+-- Both production occurrences now use the complete concrete context transport.
+-- The frozen former adapter remains an unsupported abstract-carrier input:
+-- query it directly as a negative fixture, without registering it again.
 run_cmd Elab.Command.liftCoreM do
   let shadowEntries ← LeanInformationAuditRegTests.productionEntries
     Reg.Support.TemplateShadowContract.contract.expected
@@ -121,9 +122,17 @@ run_cmd Elab.Command.liftCoreM do
     `D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points
   let some entry := shadowEntries.find? (·.theoremName == theoremName)
     | throwError "[FAIL] TemplateShadowReadoutBudget: missing registration"
+  let current ← provenanceErrorCurrent entry.registrationModuleName
+    entry.effectiveCatalogId theoremName entry.realizationName
+  let currentCounts ← getProvenanceCounters
+  unless current.isNone && currentCounts.chargedVisits > 0 &&
+      currentCounts.chargedVisits < provenanceExpressionFuel do
+    throwError "[FAIL] TemplateShadowCurrentReadoutBudget: {current}; {repr currentCounts}"
+  logInfo "[PASS] TemplateShadowCurrentReadoutBudget"
   let firstTrace := (← getTraces).size
   let actual ← withOptions (·.set `trace.InformationProvenance.check true) <|
-    provenanceErrorCurrent entry.registrationModuleName entry.effectiveCatalogId theoremName entry.realizationName
+    provenanceErrorCurrent entry.registrationModuleName entry.effectiveCatalogId theoremName
+      ``D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.context_bridge
   let mut firstCarrier : Option Nat := none
   let mut firstBudget : Option Nat := none
   for (trace, index) in (← getTraces).toArray[firstTrace:].toArray.zipIdx do

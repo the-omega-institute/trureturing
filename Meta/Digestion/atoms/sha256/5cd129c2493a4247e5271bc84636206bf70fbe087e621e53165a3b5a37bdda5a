@@ -1,0 +1,24 @@
+### 112.3 十个大纤维起始尾词缩为五个
+
+现在 $[\eta_2]=A$。第69节共同分叉限制给十三个两字母尾词：
+
+$$
+\begin{gathered}
+AAAAB,\ AAABA,\ AAABB,\ AABAA,\ AABAB,\ AABBB,\\
+ABAAA,\ ABAAB,\ ABABA,\ ABABB,\ ABBAB,\ ABBBA,\ ABBBB.
+\end{gathered}
+$$
+
+二维 $B$ 纤维识别所有对应的实际 $G_i=P_B$，因此 $B$ 的已见后继不能分叉。这排除 $ABABB,ABBAB,ABBBA$，剩下十词
+
+$$
+\begin{gathered}
+AAAAB,\ AAABA,\ AAABB,\ AABAA,\ AABAB,\\
+AABBB,\ ABAAA,\ ABAAB,\ ABABA,\ ABBBB.
+\end{gathered}
+\tag{112.8}
+$$
+
+下面排除其中五个，每次都保持同一实际来源：
+
+- $ABBBB$：第3至6轮环境全部相同，违反第71节。

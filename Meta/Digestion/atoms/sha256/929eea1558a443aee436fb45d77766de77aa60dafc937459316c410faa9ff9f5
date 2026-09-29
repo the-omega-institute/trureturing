@@ -1,0 +1,14 @@
+**定理 45.4（同一忠实测试对时间矩的判据）。** 在相同合同下，下列三项等价：
+
+$$
+\theta\longmapsto\operatorname{Tr}(\bar\rho T_\theta)\text{ 连续};
+\qquad
+\theta\longmapsto P_WT_\theta P_W\text{ 连续};
+\qquad
+\sup_\theta\|P_WZ_{m,\theta}P_W\|\longrightarrow0.
+$$
+
+这里 $T,Z_m$ 仍按第 43 节统计有限点击的轮数矩。
+
+证明。首项使 $\operatorname{Tr}(\bar\rho Z_{m,\theta})$ 成为连续、递减、逐点趋零的非负函数，因为每个有限矩 $M_{m,\theta}$ 连续。Dini 机制与引理 45.2 推出第三项；第三项使压缩 $T$ 为连续压缩 $M_m$ 的一致极限，推出第二项；第二项取固定迹即得首项。$\square$
+

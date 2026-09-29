@@ -1,0 +1,55 @@
+**平方根密度加权的条件均值比较。** 需要下述有限概率事实。
+若两个联合律满足 $P=LQ_0$、$0\le L\le C$、$\mathbb E_{Q_0}L=1$，
+$a=\|L-1\|_{2,Q_0}$，输出密度为 $f,g$，共同权重为 $W$，
+则
+
+$$
+\|\sqrt f\,\mathbb E_P[W\mid y]
+       -\sqrt g\,\mathbb E_{Q_0}[W\mid y]\|_2^2
+ \le C'a(\mathbb E_{Q_0}W^4)^{1/2}.
+\tag{87.24}
+$$
+
+证明这一事实时，条件于 $Q_0$ 的输出，置
+$l=\mathbb E[L\mid Y]$、$A=\mathbb E[LW\mid Y]$、
+$B=\mathbb E[W\mid Y]$。
+左边等于 $\mathbb E_{Q_{0,Y}}|A/\sqrt l-B|^2$。
+在 $l\ge1/2$ 上，写成
+$\mathbb E[(L-1)W\mid Y]/\sqrt l+B(1/\sqrt l-1)$，
+用 Cauchy–Schwarz、Jensen、
+$\mathbb E(L-1)^4\le Ca^2$ 和 $|1/\sqrt l-1|\le C|l-1|$ 得右侧界。
+在 $l<1/2$ 上，事件概率至多 $4a^2$，且
+$A^2/l\le\mathbb E[LW^2\mid Y]$、$B^2\le\mathbb E[W^2\mid Y]$，
+再用有界 $L$ 及四阶矩得到同一界；$l=0$ 处实际质量为零。
+
+若两联合律的 TV 距离为 $\epsilon$，分别与其平均律比较，
+密度比均至多为二、与一的 $L^2$ 距离至多为 $\sqrt\epsilon$，因而还有
+
+$$
+\|\sqrt f\,\mathbb E_P[W\mid y]
+       -\sqrt g\,\mathbb E_{Q_0}[W\mid y]\|_2^2
+ \le C\sqrt\epsilon(\mathbb E_PW^4+\mathbb E_{Q_0}W^4)^{1/2}.
+\tag{87.25}
+$$
+
+实际后验的多项式误差使用较强的 (87.24)；
+(87.25) 只用于指数精细的通道耦合。
+
+先以共同 $s$ 比较实际／乘积联合律，再用 (87.5) 改变权重到 $S-h$。
+接着在同一个计数与量化均匀变量空间比较 $T+\sigma_MG$ 和
+$T^{\rm G}+\sigma_MG$，其联合 TV 至多 $CD_M/\sigma_M$。
+这里已将测量正态积分进输出核；不声称在另行保留 $G$ 的图支撑上也有此 TV。
+最后由条件 $L^2$ 收缩将核心信息换为 $S_G$，外部中心信息精确消失。
+得到
+
+$$
+\left\|\sqrt\delta\,\frac{q_x}{\sqrt{f_x}}
+ -\sqrt\delta\,\frac{q_G}{\sqrt{g_x}}\right\|_2^2
+ \le C\delta\left[a_xQ^2+(Qa_x+a_x^2)^2
+                 +Q^2\sqrt{D_M/\sigma_M}+k_M^2\right]\to0.
+\tag{87.26}
+$$
+
+首项为 $O_{\mathbb P}(Q^{-1})$；其它项由 (87.8)、(87.10) 支付。
+并未要求实际似然对数的四阶矩，改变该权重只用其已证二阶矩。
+

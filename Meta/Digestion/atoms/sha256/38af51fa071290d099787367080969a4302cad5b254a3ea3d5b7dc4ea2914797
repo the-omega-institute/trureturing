@@ -1,0 +1,20 @@
+**命题 1.19（no universal rational converter）。** Let $U,V$ be distinct systems among binary and the $k$-bonacci systems. There is no rational two-tape relation that is total on the canonical $U$-representations of all natural numbers and relates each input only to equal-valued canonical $V$-representations. The conclusion still holds with regular leading-zero padding and with either fixed digit orientation on each tape, independently.
+
+**Proof.** Rational transductions send regular languages to regular languages. In the source system take
+$$
+X_U=
+\begin{cases}
+\{2^n:n\ge0\},&U\text{ is binary},\\
+\{G_n:n\ge0\},&U\text{ is }k\text{-bonacci}.
+\end{cases}
+\tag{TM.550}
+$$
+Its canonical most-significant-digit language is $10^*$. It is infinite and has unbounded successive gaps: this is immediate for powers of $2$, while for sufficiently large $n$ the recurrence gives
+$$
+G_{n+1}-G_n\ge G_{n-1}\longrightarrow\infty.
+\tag{TM.551}
+$$
+An infinite ultimately periodic set has bounded eventual gaps, so $X_U$ is not ultimately periodic.
+
+If the proposed relation existed, its image on the regular $U$-language of $X_U$ would be a regular $V$-language representing exactly $X_U$. For padded outputs, removing leading zeros gives its canonical language and preserves regularity. Reversing a language also preserves regularity; consequently, for any chosen input or output orientation, reverse the source test language or resulting output language as appropriate. This argument does not require reversing only one tape of the rational relation itself. Thus $X_U$ would be recognizable in both systems, contradicting the cited theorem. The construction of $X_U$ covers both directions, including binary as source. $\square$
+

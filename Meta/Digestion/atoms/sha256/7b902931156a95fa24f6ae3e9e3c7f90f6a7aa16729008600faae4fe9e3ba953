@@ -1,0 +1,122 @@
+**定理91.3（非正交 AAABA 与 AAABB 不可能）。** 在本节合同中，尾词 $AAABA$ 和 $AAABB$ 均不能发生。
+
+**证明。** 两词的前四个尾位置为 $A,A,A,B$。引理91.1及同一固定一位块给
+
+$$
+G_2=G_3=:U,\qquad G_4=:L,\qquad
+P:=R_-=U+L,\qquad U\cap L=0,\qquad \dim P=4,
+$$
+
+$$
+Q_3=Q_4=:Q,\qquad
+V_1U=Q\otimes A,\qquad V_1L=Q_5\otimes B.
+\tag{91.12}
+$$
+
+实际零位像给
+
+$$
+H_1=H_2,\qquad H_2\cap H_3=0,\qquad
+H_3\subset U\oplus Q,\qquad P_QH_3=Q.
+\tag{91.13}
+$$
+
+例如，交零来自 $V_0H_2=U\otimes A$、
+$V_0H_3=L\otimes A$ 及 $U\cap L=0$。由（91.8），$Q\perp P$；真实早期一位像 $v\otimes A$ 与每个实际尾零位块的环境内积也非零，所以
+
+$$
+v\perp P.
+\tag{91.14}
+$$
+
+先证明 $v\in Q$。反设 $v\notin Q$，令
+
+$$
+N=Q+\mathbb Cv,\qquad Z=U+\mathbb Cv.
+$$
+
+$N$ 三维且正交于四维 $P$，故
+
+$$
+K=P\oplus N,\qquad N=P^\perp.
+\tag{91.15}
+$$
+
+由 $p\in H_1=H_2\subset U+\mathbb Cv$，写 $p=e+c v$，其中 $e\in U$。若 $c=0$，则 $p\in U$；实际 $V_1p=v\otimes A$ 与（91.12）便迫使 $v\in Q$，矛盾。因此 $c\ne0$，使 $Z=U+\mathbb Cp$，并由同一个一位映射得到
+
+$$
+V_1Z=(Q+\mathbb Cv)\otimes A=N\otimes A.
+\tag{91.16}
+$$
+
+若 $\langle\eta_1,A\rangle\ne0$，真实首轮零位像
+$p\otimes\eta_1$ 与（91.16）跨位正交，迫使 $p\perp N$，即 $p\in P$。又 $p\in U+\mathbb Cv$、$v\perp P$，所以 $p\in U$，再次迫使 $v\in Q$，矛盾。故反设只能留下
+
+$$
+\eta_1\perp A.
+\tag{91.17}
+$$
+
+固定一位等距将 $k$ 送为 $q\otimes\eta_1$，与（91.16）正交，故 $k\perp Z$，特别 $k\perp U$、$k\perp v$。固定零位等距将 $H_3$ 送入 $L\otimes A$，也给 $k\perp H_3$。由（91.13）的满 $Q$ 投影，$k\perp U,H_3$ 进一步给 $k\perp Q$。因此 $k\perp N$，即
+
+$$
+k\in P.
+\tag{91.18}
+$$
+
+此时用到第89节给出的内部首轮关系 $\eta_1\in F$。由于 $A,B$ 非正交，（91.17）使 $\eta_1$ 既不属于 $A$ 射线，也不属于 $B$ 射线。因此存在非零系数 $\alpha,\beta$，使
+
+$$
+\eta_1=\alpha A+\beta B,\qquad \alpha\beta\ne0.
+$$
+
+由（91.12）、（91.18），真实首轮像满足
+
+$$
+q\otimes\eta_1=V_1k
+\in (Q\otimes A)\dotplus(Q_5\otimes B).
+$$
+
+比较两个独立环境坐标，得到 $q\in Q$，从而 $q\in P^\perp$。但 $q\in H_1=H_2$，而（91.4）的实际早期平面向 $U$ 的投影为
+
+$$
+P_UH_2=\operatorname{span}(a^2u,w)=U,
+$$
+
+并且该二维投影为同构。因为 $U\subset P$，这给 $H_2\cap P^\perp=0$，与非零单位 $q$ 矛盾。所以反设不成立，必有
+
+$$
+v\in Q.
+\tag{91.19}
+$$
+
+现在 $V_1p=v\otimes A\in V_1U$，固定单射性给 $p\in U$。同时 $p\in H_2$，而实际正交组和 $ab\ne0$ 给
+
+$$
+H_2\cap U=\mathbb Cw.
+$$
+
+故存在单位相位 $\zeta$，使 $p=\zeta w$，并有
+
+$$
+V_0w=\zeta^{-1}u\otimes A,\qquad
+V_1w=\zeta^{-1}v\otimes A.
+\tag{91.20}
+$$
+
+实际第二标签在第二终端为 $\Psi_2^1=m_0w$。下一次同一来源发射后，第三轮接收输出为
+
+$$
+\begin{aligned}
+a\,m_0\otimes V_0w+b\,m_1\otimes V_1w
+&=\zeta^{-1}(a\,m_0u+b\,m_1v)\otimes A\\
+&=\zeta^{-1}
+\left(|0\rangle(a^2u+bv)+|1\rangle ab\,u\right)\otimes A.
+\end{aligned}
+\tag{91.21}
+$$
+
+所以实际第三终端的零记忆平面 $H_3$ 包含非零 $a^2u+bv$。该向量也在 $H_2$ 中，与（91.13）的 $H_2\cap H_3=0$ 矛盾。两个尾词均被排除，证明完毕。
+
+这里的内部首轮闭合使用同一个真实 $q$：环境坐标把它放入 $P^\perp$，实际早期平面的单射投影又禁止这一点。没有把 $\eta_1\in F$ 替换为与尾射线相同，也没有要求 $\eta_1$ 与整个 $F$ 正交。
+

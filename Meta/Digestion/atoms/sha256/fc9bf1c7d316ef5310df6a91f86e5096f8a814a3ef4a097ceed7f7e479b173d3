@@ -1,0 +1,33 @@
+**命题 649.1（完整生成器的条件误差控制）。** 在第 648 节的内部擦除率条件下，若一个模拟器满足 $j\le\lambda+\varepsilon$，则
+
+$$
+\operatorname{TV}(R,R^*)\le\frac n{rm}\varepsilon,
+$$
+
+并对每个状态有
+
+$$
+\operatorname{TV}(T_S,Q_S)
+\le\frac{1+n/m}{1-r}\varepsilon.
+$$
+
+两条界都可再与一取最小值。第一条在允许的预算范围随所构造模拟器变化时具有锐利见证；第二条只是充分界，本批不主张其常数最优。
+
+证明：$j\ge r\Phi_1(R)$，因此 $\Phi_1(R)-cD\le\varepsilon/r$。将第 642 节用于 $t=1$ 得到第一式。又由 TV 的三角不等式及每个状态的 $\operatorname{TV}(R^*,Q_S)=cD$，有
+
+$$
+r\operatorname{TV}(R,Q_S)\ge\lambda-r\operatorname{TV}(R,R^*).
+$$
+
+把它代入 $j_S\le\lambda+\varepsilon$，得到
+
+$$
+(1-r)\operatorname{TV}(T_S,Q_S)
+\le\varepsilon+r\operatorname{TV}(R,R^*)
+\le(1+n/m)\varepsilon.
+$$
+
+除以 $1-r>0$ 即得。第一式的锐利性可用第 643 节在 $t=1$ 的公共坐标扰动，并取全部 $T_S=Q_S$；此时 $j=r\Phi_1(R)$，误差差值与行距离的比正好达到所列常数。这样的模拟器在任何 $\eta\ge j$ 的边缘预算下合法。证毕。
+
+分支的概率质量出现在分母中有明确意义：当擦除极少发生时，联合指标对擦除行的约束会变弱；当揭示极少发生时，对揭示行的逐行约束会变弱。不能在没有正分支概率下，把整体记录的接近直接当成每个未观察分支都被精确恢复。关于固定在 $\eta=\lambda$ 的额外预算面上第一式是否仍锐利，本批没有给出结论，不能把上述允许 $\eta\ge j$ 的见证移用过去。
+

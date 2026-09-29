@@ -1,0 +1,48 @@
+### 58.1 接口与显式修复
+
+使用 $A\otimes B\otimes D$ 次序，$\dim A=\dim B=2$、$\dim D=3$，其中 $B$ 是早输出、$A$ 是晚输入、$D$ 是晚输出。因果归一化修复满足
+
+$$
+S\succeq0,\qquad \operatorname{Tr}_D S=I_A\otimes\sigma,
+\qquad\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+$$
+
+完整 tester 的归一化算符为 $C\otimes I_D$，其中 $C\succeq0$、$\operatorname{Tr}_A C=I_B$；事件遍历全部 $0\preceq E\preceq C\otimes I_D$，全转置已吸收到配对约定。对任意厄米 $X$ 定义
+
+$$
+h(X)=\max_{C,E}\operatorname{Tr}(XE),\qquad
+N(X)=\max\{h(X),h(-X)\}.
+\tag{58.1}
+$$
+
+因果修复的完整事件误差是 $D(R,S)=N(R-S)$。
+
+记
+
+$$
+x=|0,0,0\rangle,\quad y=|1,0,1\rangle,
+\quad z=|1,1,2\rangle,\quad h_0=|0,1,0\rangle,
+\qquad c=\sqrt{1-\varepsilon},\quad s=\sqrt\varepsilon,
+$$
+
+并取 $0<\varepsilon\le1/4$。候选与修复定义为
+
+$$
+\begin{aligned}
+R_\varepsilon&=|x+cy+sz\rangle\langle x+cy+sz|,\\
+S_\varepsilon&=|cx+cy+sz\rangle\langle cx+cy+sz|
++\varepsilon|h_0\rangle\langle h_0|.
+\end{aligned}
+\tag{58.2}
+$$
+
+三个向量 $x,y,z$ 的 $D$ 坐标不同，故
+
+$$
+\operatorname{Tr}_D S_\varepsilon
+=I_A\otimes\operatorname{diag}(1-\varepsilon,\varepsilon).
+\tag{58.3}
+$$
+
+因此 $S_\varepsilon$ 是正且归一化的因果梳。候选 $R_\varepsilon$ 的归一化缺陷是 $\varepsilon$。
+

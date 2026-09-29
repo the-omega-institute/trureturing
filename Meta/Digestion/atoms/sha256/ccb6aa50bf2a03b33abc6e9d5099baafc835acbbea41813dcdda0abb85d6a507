@@ -1,0 +1,60 @@
+### 279.4 成功概率、失败概率与真实边缘
+
+相干相等分支的未归一化图迹为二。因此
+$$
+p_{\mathrm{eq}}=2^{1-k},
+\qquad
+\Pr(\mathrm{sym}\mid\mathrm{eq})=h_k,
+\qquad
+p_s=2^{1-k}h_k.
+\tag{279.19}
+$$
+完整三结果概率为
+$$
+p_s=2^{1-k}h_k,\qquad
+p_{\mathrm{symfail}}=2^{1-k}(1-h_k),
+\qquad
+p_{\mathrm{eqfail}}=1-2^{1-k}.
+\tag{279.20}
+$$
+三项和为一。$h_1=1$；对于 $k\ge2$，
+$$
+0<h_k<(\lambda_++\lambda_-)^k=1,
+$$
+严格不等式来自至少一个内部二项式系数大于一。代入当前参数，
+$$
+h_k=\frac{\lambda_+^{k+1}-\lambda_-^{k+1}}
+{\lambda_+-\lambda_-}
+=\frac{9^{k+1}-7^{k+1}}{2\,16^k},
+$$
+$$
+\boxed{p_s=\frac{9^{k+1}-7^{k+1}}{32^k}.}
+\tag{279.21}
+$$
+所以 $p_s\asymp(9/32)^k$；额外筛选不能省略为常数成功率。
+
+来源的参考边缘也必须随筛选更新。令
+$$
+Z_2=\operatorname{diag}(1,-1),\qquad
+D_s=V^\dagger Z_2^{\otimes k}V
+=\operatorname{diag}((-1)^j)_{j=0}^k.
+$$
+因为 $Z_2QZ_2=I_2-Q$，
+$$
+\rho_s=\frac{Q_s+D_sQ_sD_s}{2h_k}.
+\tag{279.22}
+$$
+在 $Q$ 的本征Dicke基中，$\rho_s$ 的本征值为
+$$
+\frac{\lambda_+^{k-j}\lambda_-^j
++\lambda_-^{k-j}\lambda_+^j}{2h_k},
+\qquad 0\le j\le k.
+\tag{279.23}
+$$
+它们严格正、和为一。$k\ge2$ 时边缘非均匀：端点 $j=0$ 与 $j=1$ 的分子之差为
+$$
+(\lambda_+-\lambda_-)
+(\lambda_+^{k-1}-\lambda_-^{k-1})>0.
+$$
+因此不能继续把成功来源的边缘写成 $I_{k+1}/(k+1)$。
+

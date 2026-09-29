@@ -1,0 +1,35 @@
+### 55.3 一个 $2\times2\times3$ 等距候选
+
+定义等距
+
+$$
+V|0\rangle=|0\rangle_B|0\rangle_D,
+\qquad
+V|1\rangle=\frac{\sqrt3}{2}|0\rangle_B|1\rangle_D
++\frac12|1\rangle_B|2\rangle_D.
+\tag{55.7}
+$$
+
+在 $A\otimes B\otimes D$ 中记
+
+$$
+x=|0,0,0\rangle,\quad
+y=|1,0,1\rangle,\quad
+z=|1,1,2\rangle,\quad
+v=x+\frac{\sqrt3}{2}y+\frac12z,
+\qquad R=|v\rangle\langle v|.
+\tag{55.8}
+$$
+
+$V$ 的两列正交且单位，因此 $R$ 满足式（55.1）。其早期边缘为
+
+$$
+M=\operatorname{Tr}_D R
+=|0,0\rangle\langle0,0|
++\frac34|1,0\rangle\langle1,0|
++\frac14|1,1\rangle\langle1,1|.
+\tag{55.9}
+$$
+
+这是对角的经典通道边缘；完整 Choi 算符仍保留晚输出相干。
+

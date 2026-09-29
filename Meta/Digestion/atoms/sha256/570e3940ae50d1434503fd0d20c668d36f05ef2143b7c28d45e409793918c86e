@@ -1,0 +1,25 @@
+**推论 18.3（有界终端容量的校准阈值）。** 固定 $`0<\epsilon<1`$，给定一列已知候选弧 $`I_n`$，弧长为 $`\ell_n`$。则
+
+$$
+\boxed{
+\sup_{n\ge4}k_n^{(\epsilon)}(I_n)<\infty
+\quad\Longleftrightarrow\quad
+\ell_n\sqrt n=O(1).
+}
+\tag{18.16}
+$$
+
+若 $`\ell_n=n^{-\gamma}`$，其中 $`\gamma\ge0`$，则
+
+$$
+k_n^{(\epsilon)}(I_n)
+=\Theta_\epsilon\!\left(1+n^{1/2-\gamma}\right).
+\tag{18.17}
+$$
+
+证明。直接使用（18.3）的统一常数；有限个起始终端不影响有界性。证明完毕。
+
+上述容量律不提供候选弧本身的取得程序。若候选弧来自额外观察，取得这些读数的资源仍是另一个任务。式（18.12）也不声明不同终端的支撑投影具有合法续接关系；将这些编码组成同一个固定接收器，还需要相应的动态闭合及共同误差证明。
+
+[^phase_calibration_lan]: Mădălin Guţă and Jukka Kiukas，*Equivalence classes and local asymptotic normality in system identification for quantum Markov chains*，[arXiv:1402.3535](https://arxiv.org/abs/1402.3535)。该文研究可识别参数的 $`n^{-1/2}`$ 局部尺度与 Gaussian 极限；本节不将该渐近统计结论当作有限终端、全参考恢复的容量定理。量子时钟压缩的相关先例见本卷 [^phase_clock]。本节的有限网格编码及相位弧双边容量式由（5.7）、定理17.2及实际档案支撑共同推出。
+

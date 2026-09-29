@@ -150,6 +150,41 @@ class PresentationTests(unittest.TestCase):
         self.assertIn("exit=0", self.output.getvalue())
         self.assertNotIn("huge-list", self.output.getvalue())
 
+    def test_verified_negative_compile_exit_is_information_but_other_exits_are_not(self):
+        for outcome, code, matched in [('completed', 1, True), ('completed', 1, False),
+                ('completed', 2, True), ('cancelled', 1, True), ('faulted', 1, True)]:
+            with self.subTest(outcome=outcome, code=code, matched=matched):
+                output = io.StringIO()
+                presenter = ci_output.Presenter('engineering', output)
+                event = dict(outcome=outcome, child_exit=dict(code=code), expected_rejection=matched)
+                presenter.line('STAGE_PROCESS ' + json.dumps(event) + '\n', 'stdout')
+                expected = outcome == 'completed' and code == 1 and matched
+                self.assertEqual(0 if expected else 1, presenter.counts['error'])
+                self.assertEqual(0, presenter.counts['warning'])
+                self.assertEqual(not expected, bool(presenter.in_detail('stdout')))
+                if expected:
+                    presenter.line('info: expected compilation rejection\n', 'stdout')
+                    presenter.line('Fixture.cs(1,1): warning CS1030: unrelated warning\n', 'stdout')
+                    presenter.line('Fixture.cs(2,1): error CS1002: unexpected syntax\n', 'stdout')
+                    self.assertEqual(1, presenter.counts['warning'])
+                    self.assertEqual(1, presenter.counts['error'])
+                    self.assertIn(': warning CS1030:', output.getvalue())
+                    self.assertIn(': error CS1002:', output.getvalue())
+
+    def test_failed_gate_timing_does_not_replace_actual_admission_diagnostics(self):
+        # Successful run 36299484428 counted 44 negative-test timing spans as errors.
+        event = dict(event='gate_stage_timing', level='information', scope='admission-check',
+                     stage='rule-sl-020', status='failed', elapsed_seconds=0.0000582)
+        self.presenter.line(json.dumps(event) + '\n', 'stderr')
+        self.assertEqual(dict(information=1, warning=0, error=0), self.presenter.counts)
+        self.assertEqual('', self.output.getvalue())
+        for severity in (1, 2):
+            diagnostic = dict(DisplaySeverity=severity, Message='actual admission finding')
+            self.presenter.line(json.dumps(diagnostic) + '\n', 'stdout')
+        self.presenter.line('STAGE_PROCESS {"child_exit":{"code":1}}\n', 'stdout')
+        self.assertEqual(dict(information=1, warning=1, error=2), self.presenter.counts)
+        self.assertIn('actual admission finding', self.output.getvalue())
+
     def test_progress_on_stderr_is_information_and_large_messages_are_bounded(self):
         self.presenter.line("⣷ [123/456] Building a module\n", "stderr")
         self.assertEqual("", self.output.getvalue())

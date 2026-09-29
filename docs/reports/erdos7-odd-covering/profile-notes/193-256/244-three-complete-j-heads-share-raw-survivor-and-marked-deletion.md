@@ -248,7 +248,7 @@ proof of the claimed bound.
 ## 6. Artifacts and remaining boundary
 
 - [Complete J joint-head verifier](../../frontier/j-geometry/j_face_joint_selected_heads.py)
-- [Optional numerical proposal tool](../../frontier/cover-geometry/propose_j_face_joint_selected_heads.py)
+- [Optional numerical proposal tool](../../frontier/cover-geometry/propose-j-face-joint-selected-heads/propose_j_face_joint_selected_heads.py)
 - [Rational dual bank and complete scan certificate](../../certificates/source_norms/j-geometry/j_face_joint_selected_heads.json)
 
 The new information is the simultaneous raw/survivor/deletion

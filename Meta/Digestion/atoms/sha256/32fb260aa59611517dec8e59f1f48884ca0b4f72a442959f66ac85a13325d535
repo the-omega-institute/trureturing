@@ -1,0 +1,24 @@
+**证明：下界。** 令 $T=E_1^\perp$，并以
+$\pi:X\to X/S_z$ 表示商映射。商空间为 $n$ 维。由
+
+$$
+(T+S_z)^\perp=E_1\cap S_z^\perp
+$$
+
+可知
+
+$$
+\dim\pi(T)=\dim(T+S_z)-\dim S_z=n-b_z.
+\tag{102.4}
+$$
+
+任意允许 $R_0$ 包含 $E_0$，所以交维数至少为 $a_z$。又 $R_0\subset T$，故
+
+$$
+\dim(R_0\cap S_z)
+=n-\dim\pi(R_0)
+\ge n-\dim\pi(T)=b_z.
+$$
+
+这给（102.3）的下界 $h_z$。
+

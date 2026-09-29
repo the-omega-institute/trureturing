@@ -1,0 +1,31 @@
+**定理 244.2（完整与无参考区分能力）。** 定义
+$$
+D_p=\frac12\|\mathcal S_p-\mathcal R\|_\diamond,
+\qquad
+U_p=\max_{\rho\text{ 为输入密度矩阵}}
+\frac12\|\mathcal S_p(\rho)-\mathcal R(\rho)\|_1.
+$$
+则
+$$
+\boxed{
+D_p=\frac{\sqrt{A+B}}2=\frac\ell2,
+\qquad
+U_p=\frac{\sqrt A}{2},
+\qquad
+\delta_p:=D_p-U_p
+=\frac{\sqrt{A+B}-\sqrt A}{2}.
+}
+\tag{244.22}
+$$
+
+**证明。** 对任意维数参考的纯联合探针，定理244.1给 $f_p\le\ell/2$，并由 $t=0$ 取得。任意联合混合态可分解为纯态，输出迹范数的凸性保持这个上界；纯态的 Schmidt 支撑又不超过输入维数二。因此，按两个通道之差的标准 diamond 区分刻画，完整值恰为 $\ell/2$。
+
+无参考输入的半迹距离是输入态的凸函数，其最大值可在纯输入上取得。纯输入对应 $t=1$ 的乘积纯探针，所以 $U_p=F_p(1;c)=\sqrt A/2$。$\square$
+
+在 $c<1$ 的本节主范围中，$B>0$ 当且仅当 $p\ne1/2$。因此
+$$
+\delta_p>0\quad\Longleftrightarrow\quad p\ne\frac12.
+\tag{244.23}
+$$
+完整距离在 $p=0,1$ 时为 $1/2$，在 $p=1/2$ 时为 $\sqrt A/2$。无参考最优值沿整个噪声族保持不变，因为沿共同轴 $u$ 的产品输入已经同时达到两条有效轴所需的投影值。这是当前通道族的精确性质。
+

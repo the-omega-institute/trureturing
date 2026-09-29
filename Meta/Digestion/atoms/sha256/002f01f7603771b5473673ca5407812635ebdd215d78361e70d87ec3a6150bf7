@@ -1,0 +1,48 @@
+**定义 26.1（格距与两种阈值相位）。** 沿用定义 23.1，另假设两个固定跳幅的
+比值为有理数。取最大格距，使
+
+```math
+h_+=h k_+,\qquad h_-=h k_-,\qquad
+h\gt0,\quad k_+,k_-\in\mathbb Z,\quad \gcd(k_+,k_-)=1.
+```
+
+式 (26.1)。
+
+第三累积量率及函数 $`A,k`$ 使用 (25.1) 的代数定义；此处不采用定义 25.1 的
+非格点假设。置
+
+```math
+L_h=\frac h{e^h-1},\qquad U_h=\frac h{1-e^{-h}},\qquad
+l_h=\log L_h,\qquad u_h=\log U_h=l_h+h.
+```
+
+式 (26.2)。
+
+定义两个连续的周期为格距的函数，其一个周期上的表达式为
+
+```math
+\begin{aligned}
+F_h(d)&=d-\frac h2+U_he^{-d},&&0\le d\le h,\\[0pt]
+G_h(y)&=y+\frac h2-e^y+L_h,&&l_h\le y\le u_h.
+\end{aligned}
+```
+
+式 (26.3)。
+
+端点满足 $`F_h(0)=F_h(h)=h/2+L_h`$ 和
+$`G_h(l_h)=G_h(u_h)=l_h+h/2`$，所以周期延拓确实连续。
+令
+
+```math
+\begin{aligned}
+t_*&=\tau_M-\tfrac12\log\lambda+k(z_M),\\[0pt]
+d_M&=h\left\lceil\frac{\tau_M}{h}\right\rceil-\tau_M,\\[0pt]
+y_M&=h\left\lceil\frac{t_*+l_h}{h}\right\rceil-t_*.
+\end{aligned}
+```
+
+式 (26.4)。
+
+于是 $`0\le d_M\lt h`$、$`l_h\le y_M\lt u_h`$；在周期端点采用任一等价代表值
+不改变下述结论。两个相位均由同一实际样本尺度和支持基数确定。
+

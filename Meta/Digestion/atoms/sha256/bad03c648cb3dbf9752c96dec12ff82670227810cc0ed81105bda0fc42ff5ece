@@ -1,0 +1,1 @@
+- D. Bacon、I. L. Chuang、A. W. Harrow，*Efficient Quantum Circuits for Schur and Clebsch-Gordan Transforms*，[quant-ph/0407082v1](https://arxiv.org/abs/quant-ph/0407082v1)，第2页式（3）、（5）给出Schur分解与张量作用的标准结构。本节使用该结构，不把近似Schur电路的复杂度转成当前精确投影的时间保证。

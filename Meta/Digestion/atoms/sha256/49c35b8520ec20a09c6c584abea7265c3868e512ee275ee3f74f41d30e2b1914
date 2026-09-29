@@ -1,0 +1,25 @@
+### 9.12 随机输出、可积性与不同的自洽输入合同
+
+若估计器在每个固定输入 $y$ 给一个随机输出 $Q$，损失改为 $\mathbb E\|Q-p\|_\infty$，下面仍使用在随机种子实现以前固定的来源。概率输出逐坐标自动可积。对 $H$ 中的随机输出，若某个合法来源的期望损失为无穷，下界已经成立；否则选取一个合法 $p$，由
+
+$$
+\mathbb E|Q_i|\le\mathbb E\|Q-p\|_\infty+|p_i|<\infty
+$$
+
+得到每格绝对可积。因此 $\sum_i\mathbb EQ_i=\mathbb E\sum_iQ_i=1$。在第 9.4 节的共同输入 $y^*$，选取满足 $\mathbb EQ_t\le1/9$ 的一个固定 $t$，有
+
+$$
+\mathbb E\|Q-p^{(t)}\|_\infty
+\ge\mathbb E|Q_t-p^{(t)}_t|
+\ge|\mathbb EQ_t-p^{(t)}_t|
+\ge20\varepsilon/9.
+$$
+
+$t$ 只依赖输出分布，不依赖实现后的随机种子。实输出则用第 9.2 节两源的逐点三角不等式，取非负扩展期望得
+
+$$
+\mathbb E\|Q-p_+\|_\infty+\mathbb E\|Q-p_-\|_\infty\ge4\varepsilon.
+$$
+
+至少一个固定来源的期望误差不小于 $2\varepsilon$，无穷期望情形也包括在内。确定性上界仍可选，故随机化不降低本章给出的三个精确值。
+

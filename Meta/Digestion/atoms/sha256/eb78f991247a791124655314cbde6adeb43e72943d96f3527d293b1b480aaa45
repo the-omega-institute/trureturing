@@ -1,0 +1,24 @@
+**证明。** 对任意 $x\in\mathcal M(Z)$，写
+$$
+x^\dagger Zx=e^{i\theta}.
+\tag{262.3}
+$$
+对任意可行 $F$，令
+$$
+q_x=\binom{x}{-e^{-i\theta}x}.
+\tag{262.4}
+$$
+直接计算得
+$$
+q_x^\dagger T_Z(F)q_x
+=x^\dagger Fx+x^\dagger(I_S-F)x
+-\operatorname{Re}(e^{-i\theta}x^\dagger Zx)=0.
+\tag{262.5}
+$$
+正半定矩阵将零二次型向量送到零，故 $T_Z(F)q_x=0$。取上半分量，得到
+$$
+\boxed{Fx=\frac12e^{-i\theta}Zx.}
+\tag{262.6}
+$$
+右侧由 $Z,x$ 确定。因此任意两个可行填充 $F_1,F_2$ 都满足 $(F_1-F_2)x=0$。若这些 $x$ 张成 $S$，就有 $F_1=F_2$；结合非空假设得到单点结论。$\square$
+

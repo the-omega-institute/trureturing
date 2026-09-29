@@ -1,0 +1,66 @@
+### 270.6 完整输出的相对熵与任意集体测量下界
+
+令 $\lambda_{w,i}$，$1\le i\le n$，为
+$\operatorname{Re}(e^{i\phi_w}Z)$ 的本征值。（270.38）给 $|\lambda_{w,i}|<1$。全部记录与参考上的 $4n$ 项概率为
+$$
+p_{w,\eta,i}=\frac{1+\eta\lambda_{w,i}}{4n},
+\qquad
+p_{w,\eta,i}^{(h)}
+=\frac{1+\eta(1-\delta_h)\lambda_{w,i}}{4n}.
+\tag{270.39}
+$$
+它们均严格正，两组各自求和为一。
+
+利用 $\ln x\le x-1$，
+$$
+\begin{aligned}
+D_{\mathrm{nat}}(\sigma_h\|\sigma_*)
+&\le
+\sum_{w,\eta,i}
+\frac{(p_{w,\eta,i}^{(h)}-p_{w,\eta,i})^2}{p_{w,\eta,i}}\\
+&=\Gamma_n\delta_h^2,
+\end{aligned}
+\tag{270.40}
+$$
+其中
+$$
+\boxed{
+\Gamma_n=\frac1{2n}
+\sum_{w\in\{a,b\}}\sum_{i=1}^n
+\frac{\lambda_{w,i}^2}{1-\lambda_{w,i}^2}.
+}
+\tag{270.41}
+$$
+这是求和两种符号后得到的精确 $\chi^2$ 系数。它有限且严格正：§268给 $e_1^\dagger Ze_1=1$，所以每个
+$\operatorname{Re}(e^{i\phi_w}Z)$ 在 $e_1$ 上的二次型均为 $1/\sqrt2$，至少有一个非零本征值。
+
+同一分布还给
+$$
+\|\sigma_h-\sigma_*\|_1
+=\frac{\delta_h}{2n}\sum_{w,i}|\lambda_{w,i}|
+=\Theta(\delta_h).
+\tag{270.42}
+$$
+副本下界使用更强的散度控制（270.40）。
+
+若 $m$ 份输出的等先验平均成功率达到 $2/3$，Helstrom公式、自然对数Pinsker不等式和相对熵张量加性给
+$$
+\begin{aligned}
+\frac49
+&\le\|\sigma_h^{\otimes m}-\sigma_*^{\otimes m}\|_1^2\\
+&\le2mD_{\mathrm{nat}}(\sigma_h\|\sigma_*)\\
+&\le2m\Gamma_n\delta_h^2.
+\end{aligned}
+\tag{270.43}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{out}}(h)
+\ge\frac{2}{9\Gamma_n\delta_h^2}
+=\frac{2}{9\Gamma_nk^2}h^{-4n}.
+}
+\tag{270.44}
+$$
+所有实际记录和完整参考都已进入这个下界。任意辅助处理或自适应终端判决仍定义开放联合输出上的二元POVM，因此也受同一界限制。
+

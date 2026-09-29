@@ -1,0 +1,10 @@
+**定理102.3（通常纤维的最小补全）。** 有
+
+$$
+\boxed{
+\min_{R_0\in\mathfrak R(E_0,E_1)}\gamma(R_0)
+=\max\{\kappa_0,\kappa_1\}.
+}
+\tag{102.11}
+$$
+

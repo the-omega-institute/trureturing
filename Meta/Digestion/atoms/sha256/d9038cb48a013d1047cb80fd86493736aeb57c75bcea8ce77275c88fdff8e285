@@ -1,0 +1,37 @@
+**额外 Kraus 的剩余方向。**
+
+令 $\kappa_0=\beta\delta/4>0$、$\kappa_d=\beta R/4>0$。
+在 $\epsilon=0,h=h_b$，消去后 $x=u=0$，
+$a_j=1/\sqrt2$、$b_1=-b_0$，
+额外向量为 $(0,0,1,v)$。
+第206节在 $\rho=0$ 的平方恒等式精确给
+
+$$
+\begin{aligned}
+H(0,h_b,y,t,v)-\Phi_{h_b}
+={}&\kappa_0|b_0-i\sqrt2n_b|^2\\
+&+\left(\kappa_d+\frac{h_b}{12}\right)
+\left(|d_0-\sqrt2m_b|^2+|d_1-\sqrt2m_b|^2\right)
++\kappa_dt|v|^2.
+\end{aligned}
+\tag{211.11}
+$$
+
+它对小带符号 $t$ 也成立，因为只使用仿射 TP 和代数展开。
+$\partial_vH$ 可被 $t$ 解析整除。
+在全基点，$(1/t)\partial_vH$ 对两个实 $v$ 分量的 Jacobian
+为 $2\kappa_dI_2=\beta RI_2/2\succ0$。
+主列关于 $v$ 只通过 $t|v|^2$ 变化，
+而主列二次型在基点的一阶导数为零，
+故 Jacobian 正是最后一项的 $2\kappa_dI_2$。
+于是
+
+$$
+\frac1t\partial_vH=0
+\tag{211.12}
+$$
+
+唯一给出解析 $v=V(\epsilon,h,y,t)$。
+在 $\epsilon=0$，一阶函数对 $v$ 仅通过 $|v|^2$ 依赖，
+所以 $V(0,h,y,t)=0$。
+

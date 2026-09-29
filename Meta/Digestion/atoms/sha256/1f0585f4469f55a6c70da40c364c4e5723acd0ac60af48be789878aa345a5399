@@ -1,0 +1,25 @@
+**推论207.2（包含纯来源的统一刚性）。**
+固定 $K_3<\infty$，在全部满足
+$0\le e_\epsilon-E_\epsilon\le K_3\epsilon^3$
+的对称化共同 instrument 上，一致有
+
+$$
+\boxed{
+\begin{gathered}
+U_0+V=O_{H,K_3}(\epsilon^2),\qquad
+\rho U_1=O_{H,K_3}(\epsilon^2),\qquad
+M_{\mathrm{def}}=O_{H,K_3}(\epsilon^2),\\
+\|\Gamma-\Gamma^*(h)\|_{\mathrm F}=O_{H,K_3}(\epsilon),\\
+(x+a_{\mathrm{eff}}/2)^2+W_\theta=O_{H,K_3}(\epsilon),
+\qquad 0\le h\le H.
+\end{gathered}}
+\tag{207.22}
+$$
+
+**证明。** 该类包含于某个固定二阶近优类。
+在（207.17）的吸收中保留一半 $U_0,V$ 代价以及其余非负项。
+定理207.1给 $\Delta=O(\epsilon^3)$，因此先得
+$U_0+V,\rho U_1=O(\epsilon^2)$ 和最后的平方界。
+然后应用（207.15）得到 Choi 距离及 $M_{\mathrm{def}}$ 的速率。
+这一证明不以 $h$ 作分母，故包括 $h=0$。证毕。
+

@@ -8,6 +8,7 @@ structure ResolvedDeclaration where
   theoremName : Name
   arena : Name
   descriptor : Option Expr
+  sourceRecord : Option Name := none
   diagnostic : Option String := none
   escapeInput : EscapeRecordInput := {}
 
@@ -103,7 +104,8 @@ def sourcePath := TemplateAudit.sourcePath
 
 def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.CommandElabM Unit := do
   let info ← getConstInfo entry.theoremName
-  let identity := if entry.sourceBound then TemplateAudit.compactRawIdentity info.levelParams info.type
+  let sourceRecord := (pendingDeclaration.getState (← getEnv)).bind (·.sourceRecord)
+  let identity := if entry.sourceBound || sourceRecord.isSome then TemplateAudit.compactRawIdentity info.levelParams info.type
     else TemplateAudit.rawStatementIdentity info.levelParams info.type
   let statementIdentity := match identity with
     | .ok (identity, _) => identity
@@ -128,7 +130,7 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
       objectArena := entry.canonicalObjectArenaName
       catalog := entry.effectiveCatalogId }
 
-    unitName := entry.unitName, realizationName := entry.realizationName,
+    unitName := entry.unitName, realizationName := sourceRecord.getD entry.realizationName,
     statement := info.type, levelParams := info.levelParams, statementIdentity,
     arena := mkConst arenaName,
     registrationSource := path, registrationSourceIdentity := sourceIdentity }
@@ -206,7 +208,10 @@ def assessJoined : MetaM (Array BindingRecord) := do
     | .ok joined => pure joined
     | .error reason => throwError reason
   for (event, _) in joined do validateEvent event
-  joined.mapM fun (event, claim) => assess event claim
+  -- The imported registration universe grows with the repository. A retained
+  -- assessment's currency check runs outside the template budget, so each
+  -- occurrence owns a fresh fixed budget rather than sharing one for the join.
+  joined.mapM fun (event, claim) => withCurrHeartbeats (assess event claim)
 
 /-- Export always starts by joining the entire loaded declaration universe. -/
 def exportSnapshot : MetaM JoinedRecords := do

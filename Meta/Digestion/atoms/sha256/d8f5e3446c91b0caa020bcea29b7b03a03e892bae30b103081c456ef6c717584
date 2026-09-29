@@ -1,0 +1,14 @@
+**定义 302.2（有权逐项改变，不等于有权任意组合）。** 对行动者 $g$，令 $\mathcal A_g\subseteq\mathcal P(R)$ 表示他在给定程序、时间及相关人同意条件下，可以作出的完整删减方案。数学上存在可行修复，是
+
+$$
+\exists D\subseteq R,\ \operatorname{Sat}(R\setminus D);
+$$
+
+存在被该权限关系认可的修复，则要求
+
+$$
+\exists D\in\mathcal A_g,\ \operatorname{Sat}(R\setminus D).
+$$
+
+两式相差的不是一个措辞，而是对同一个 $D$ 的额外条件。$\mathcal A_g$ 本身必须有规范或制度来源，不能把算法已经找到的方案事后全部填进去，再宣称权限问题已被解决。
+

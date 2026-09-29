@@ -1,0 +1,76 @@
+**定理 171.3（此混合比特族内的锐遗忘尺度）。** 对任意参数函数 $p_r\in(0,1/2]$，有
+$$
+\boxed{
+W_r^{\rm mix}\longrightarrow L
+\quad\Longleftrightarrow\quad
+\frac{p_r}{1-r}\longrightarrow0
+\qquad(r\uparrow1).
+}
+\tag{171.12}
+$$
+这是定义171.1的对称 Markov 比特族内的充要条件，不量化所有有限记忆预测器。
+
+证明。 充分性由（171.5）与 $H(r)\to L$ 直接得到。证明必要性，取
+$$
+N_r=\left\lfloor\frac{t_*}{\varepsilon}\right\rfloor,
+\qquad \theta_r=N_r\alpha\longrightarrow\pi/3.
+\tag{171.13}
+$$
+最终 $N_r\ge2$ 且 $\theta_r<\pi/2$。以下略去下标 $r$。每条符号路径均满足 $\cos(\alpha\sum S_j)\ge\cos\theta$。若恰有一次翻转发生在第 $j$ 次与第 $j+1$ 次通道之间，则该余弦为 $\cos((N-2j)\alpha)$，该事件概率为 $p(1-p)^{N-2}$。这些事件互斥，所以
+$$
+z_{N,p}-\cos\theta\ge
+p(1-p)^{N-2}\sum_{j=1}^{N-1}
+\bigl[\cos((N-2j)\alpha)-\cos\theta\bigr].
+\tag{171.14}
+$$
+
+先考虑某条子序列满足 $p/\varepsilon\to\lambda\in(0,\infty)$。由 $\alpha/\varepsilon\to\sqrt3$、$\varepsilon N\to t_*$，括号和的 Riemann 极限及翻转概率极限分别为
+$$
+\varepsilon\sum_{j=1}^{N-1}
+\bigl[\cos((N-2j)\alpha)-\cos\theta\bigr]
+\longrightarrow
+\int_0^{t_*}
+\bigl[\cos(\sqrt3(t_*-2u))-\cos(\sqrt3t_*)\bigr]\,du
+=\frac{1-t_*}{2},
+\tag{171.15}
+$$
+$$
+(1-p)^{N-2}\longrightarrow e^{-\lambda t_*}.
+\tag{171.16}
+$$
+式（171.15）中，余弦积分为 $\sin(\sqrt3t_*)/\sqrt3=1/2$，常数项积分为 $t_*/2$。又 $t_*<1$，所以（171.14）的右侧趋于
+$$
+a_\lambda:=\lambda e^{-\lambda t_*}\frac{1-t_*}{2}>0.
+\tag{171.17}
+$$
+在同一视界取实际端点，使用（171.10）对应的距离公式，得到
+$$
+\liminf W_r^{\rm mix}\ge
+\frac{e^{-t_*}}2\sqrt{\frac34+a_\lambda^2}>L
+\tag{171.18}
+$$
+沿该子序列成立。
+
+再考虑 $p/\varepsilon\to\infty$ 的子序列。平稳符号链有 $\mathbb E S_j=0$ 及 $\mathbb E S_iS_j=(1-2p)^{|i-j|}$。由于 $0\le\rho=1-2p<1$，
+$$
+\mathbb E\left(\sum_{j=1}^N S_j\right)^2
+=N+2\sum_{h=1}^{N-1}(N-h)\rho^h
+\le N\frac{1+\rho}{1-\rho}
+=N\frac{1-p}{p}\le\frac Np.
+\tag{171.19}
+$$
+利用 $0\le1-\cos x\le x^2/2$，有
+$$
+0\le1-z_{N,p}\le\frac{\alpha^2N}{2p}
+\longrightarrow0,
+\tag{171.20}
+$$
+因为 $\alpha^2N=O(\varepsilon)$。所以 $z_{N,p}\to1$，实际端点距离趋于
+$$
+\frac{e^{-t_*}}2|e^{i\pi/3}-1|
+=\frac{e^{-t_*}}2>L.
+\tag{171.21}
+$$
+
+若 $p_r/\varepsilon$ 不趋于零，可选一条子序列使该比值始终至少为某个 $\delta>0$，再选扩展实数意义下收敛的子序列，其极限属于 $[\delta,\infty]$。有限正极限由（171.18）排除，无穷极限由（171.21）排除。因此 $W_r^{\rm mix}\to L$ 必须有 $p_r/\varepsilon\to0$。本证明只用互斥的单次翻转事件与二态链协方差，不需要把离散路径先替换成连续随机过程。证毕。
+

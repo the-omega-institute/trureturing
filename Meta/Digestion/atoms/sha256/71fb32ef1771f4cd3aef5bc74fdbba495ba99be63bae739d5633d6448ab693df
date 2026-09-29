@@ -1,0 +1,13 @@
+**推论156.4（$a=b=1/\sqrt2$ 的定量反例）。** 存在 $32$ 维固定接收器，满足
+
+$$
+\boxed{
+\limsup_{k\to\infty}e_{8+2k}\le\frac{33}{64},
+\qquad
+\liminf_{k\to\infty}e_{9+2k}\ge\frac{311}{576},
+\qquad
+\frac{311}{576}-\frac{33}{64}=\frac7{288}>0.
+}
+\tag{156.38}
+$$
+

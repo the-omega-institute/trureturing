@@ -1,0 +1,26 @@
+**证明。** 局部通道不改变每个分支的 $M$ 边缘，所以任何输出属于 $\mathcal C$。反过来，对任意指定扩张 $\sigma_j$，取其纯化到 $MR_{\mathrm{out}}E_j$。它和 $\zeta_j$ 纯化同一份 $\rho_j$，故可在 $K_j$ 的实际 Schmidt 支撑上用等距送到 $R_{\mathrm{out}}E_j$，再迹掉 $E_j$，得到 $\sigma_j$。接收端先测量正交子空间 $K_j$，再执行各分支通道；在实际支撑外任取固定输出完成全域 CPTP 映射。于是全部 $\mathcal C$ 可达。
+
+在 $A_{\mathrm{out}}$ 上平均有限 Weyl 共轭。因为 $\mathcal S$ 是常值入口，目标在原输入与 $A_{\mathrm{out}}$ 上协变，每个共轭后的解码器具有相同目标范数，平均不增加误差。因此可以将输出限制为
+$I_{A_{\mathrm{out}}}/d\otimes\sigma$，且 $\sigma\in\mathcal C$。
+
+对任意这样的 $\sigma$，目标和常值输出的归一化 Choi 态为
+
+$$
+P_{\Omega_d}^{JA_{\mathrm{out}}}\otimes P_\Psi,
+\qquad
+\frac{I_{JA_{\mathrm{out}}}}{d^2}\otimes\sigma.
+\tag{167.7}
+$$
+
+使用同一 $d$ 维 Bell 测量与 Weyl 纠正的标准传态过程，可以分别从这两份资源态模拟目标和常值通道。第一份资源传送输入；第二份资源的传态端口完全混合，输出仍为上述常值态。过程不作用于 $M$。带任意参考输入的迹距离收缩给通道距离不超过资源态距离，最大纠缠输入给反向不等式，所以完整半 diamond 距离恰为两 Choi 态的半迹距离。
+
+按 $P_{\Omega_d}$ 与其正交补分块，该距离等于
+
+$$
+\frac12\left(\|P_\Psi-\beta\sigma\|_1+1-\beta\right).
+\tag{167.8}
+$$
+
+$H_\sigma=P_\Psi-\beta\sigma$ 在 $\Psi^\perp$ 上半负定，至多有一个正本征值；又
+$\langle\Psi|H_\sigma|\Psi\rangle\ge1-\beta>0$，故恰有一个。由 $\operatorname{Tr}H_\sigma=1-\beta$，式（167.8）就是 $\lambda_{\max}(H_\sigma)$。证毕。
+

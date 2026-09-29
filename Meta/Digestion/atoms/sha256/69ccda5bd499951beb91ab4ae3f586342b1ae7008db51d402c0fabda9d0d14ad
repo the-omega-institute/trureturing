@@ -1,0 +1,128 @@
+**定理 163.2（全 CPTP 固定预测的精确弱记录极限）。** 式（163.4）对所有 $0\le r\le1$ 都是 CPTP 通道。令
+$$
+D_N(r)=
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal T_r^N),
+\qquad N\ge1,\qquad D_0(r)=0.
+\tag{163.5}
+$$
+则
+$$
+\boxed{
+\lim_{r\uparrow1}\mathcal J(r)
+=\lim_{r\uparrow1}\sup_{N\ge1}D_N(r)
+=\lim_{r\uparrow1}\sup_{N\ge1}\mathcal R_N(r)
+=L.
+}
+\tag{163.6}
+$$
+具体地，若 $r=1-\varepsilon$、$\varepsilon\downarrow0$，则在每个有限 $t$ 区间上一致地有
+$$
+D_{\lfloor t/\varepsilon\rfloor}(1-\varepsilon)
+\longrightarrow
+G(t):=\frac{e^{-t}}2
+\left|e^{i\min\{\sqrt3t,\pi\}}-e^{-k_*t}\right|.
+\tag{163.7}
+$$
+$G$ 的唯一全局最大点为 $t_*$，最大值为 $L$。对每个 $0<r<1$ 选取任一达到 $\sup_{N\ge1}D_N(r)$ 的整数 $N_T(r)$，都有
+$$
+(1-r)N_T(r)\longrightarrow t_*.
+\tag{163.8}
+$$
+式（163.6）只给出极限等式，不宣称 $\mathcal T_r$ 在每个固定 $r<1$ 都达到 $\mathcal J(r)$。
+
+证明。 先验证合法性。更一般地，对 $0<r\le1$、$0\le k\le3$，令 $z=r^k$。矩阵 $C(r,z)$ 的对角元为一，二阶主子式分别是 $1-r^2$ 与 $1-r^2z^2$，均非负。其三阶行列式可因式分解为
+$$
+\det C(r,z)=(1-rz)(1+rz-2r^2).
+\tag{163.9}
+$$
+因 $rz=r^{1+k}\le1$，第一个因子非负；又因 $1+k\le4$，
+$$
+1+rz-2r^2\ge1+r^4-2r^2=(1-r^2)^2\ge0.
+\tag{163.10}
+$$
+故所有主子式非负，$C(r,r^k)\succeq0$。取 $k=k_*$，再用第3节的 Gram 通道实现，得到完全正且保持迹。$r=0$ 的定义也显然合法；$r=1$ 时 $\mathcal T_1$ 是恒等通道。这里仅使用有限维正性与既有 Gram 实现，不另行假设插值后的系数自动物理合法。
+
+通道复合给出 $\mathcal T_r^N(A)=C(r^N,r^{k_*N})\odot A$。式（161.11）于是给出每个实际源的全参考精确距离
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal T_r^N)
+=\frac{r^N}{2}|e^{iN\phi}-r^{k_*N}|.
+$$
+实中心 $r^{k_*N}$ 为正，故和定理162.2一样，最坏相位使 $\cos(N\phi)$ 在允许区间上最小，从而
+$$
+D_N(r)=\frac{r^N}{2}
+\left|e^{i\min\{N\alpha(r),\pi\}}-r^{k_*N}\right|.
+\tag{163.11}
+$$
+该式在 $N=0$ 时也给零，在 $r=0$ 时按 $N\ge1$ 给零，在 $r=1$ 时给零。无需参考的平衡两标签输入仍能达到距离。
+
+定理161.6已给出 $\alpha(1-\varepsilon)/\varepsilon\to\sqrt3$ 与 $\log(1-\varepsilon)/\varepsilon\to-1$。当 $N=\lfloor t/\varepsilon\rfloor$ 时，在有限 $t$ 区间上一致地有
+$$
+r^N\to e^{-t},\qquad
+N\alpha(r)\to\sqrt3t,\qquad
+r^{k_*N}\to e^{-k_*t}.
+\tag{163.12}
+$$
+由复数模长的 Lipschitz 性，得到式（163.7），包括 $t=0$。同时
+$$
+0\le D_N(1-\varepsilon)
+\le(1-\varepsilon)^N
+\le e^{-\varepsilon N}
+\tag{163.13}
+$$
+给出与视界一致的尾界。
+
+现在精确定位 $G$ 的全局峰值。令 $b=\sqrt3$、$k=k_*$。在 $0<t<\pi/b$，
+$$
+G(t)^2=
+\frac14\left(e^{-2t}+e^{-2(1+k)t}
+-2e^{-(2+k)t}\cos(bt)\right),
+$$
+所以
+$$
+\frac{d}{dt}G(t)^2
+=\frac12e^{-(2+k)t}H(t),
+\qquad
+H(t)=(2+k)\cos(bt)+b\sin(bt)-e^{kt}-(1+k)e^{-kt}.
+\tag{163.14}
+$$
+有 $H(0)=0$、$H'(0)=b^2+k^2>0$。记
+$$
+A(t)=(2+k)\cos(bt)+b\sin(bt),\qquad
+t_0=\frac{\pi/2+\arctan(b/(2+k))}{b}\in(0,\pi/b).
+\tag{163.15}
+$$
+在 $[0,t_0)$ 上 $A>0$，在 $(t_0,\pi/b]$ 上 $A<0$。前一区间满足
+$$
+H''(t)=-b^2A(t)-k^2\bigl(e^{kt}+(1+k)e^{-kt}\bigr)<0.
+\tag{163.16}
+$$
+因而 $H$ 在 $[0,t_0]$ 严格凹；结合 $H'(0)>0$ 和 $H(t_0)<0$，它在 $(0,t_0)$ 恰有一个零点。唯一性也可由严格凹性推出 $H(t)/t$ 在 $t>0$ 时严格下降。在 $[t_0,\pi/b]$，$H=A-e^{kt}-(1+k)e^{-kt}<0$。因此 $G$ 在 $(0,\pi/b)$ 先严格增后严格减。在 $t\ge\pi/b$，$G(t)=e^{-t}(1+e^{-kt})/2$ 继续严格下降。
+
+由常数选择，$bt_*=\pi/3$、$kt_*=\log2$。代入式（163.14）得
+$$
+H(t_*)=\frac{2+k}{2}+\frac32-2-\frac{1+k}{2}=0.
+$$
+故 $t_*$ 正是上述唯一最大点，并且
+$$
+G(t_*)=
+\frac{e^{-t_*}}2
+\left|e^{i\pi/3}-\frac12\right|
+=\frac{\sqrt3}{4}e^{-t_*}=L.
+\tag{163.17}
+$$
+有限区间上一致收敛、网格间距 $\varepsilon\to0$ 以及式（163.13）的统一尾界，遂给出 $\sup_N D_N(r)\to L$。固定 $0<r<1$ 时 $D_1(r)>0$ 且 $D_N(r)\to0$，所以整数最大点存在；同一尾界排除缩放最大点逃至无穷，$G$ 的唯一最大点再给出式（163.8）。
+
+最后，任意固定 CPTP 通道 $\mathcal F$ 在每个视界的幂仍为一个 CPTP 通道，故定义161.2直接给出
+$$
+\sup_{N,\phi}d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F^N)
+\ge\sup_{N\ge1}\mathcal R_N(r).
+$$
+对 $\mathcal F$ 取下确界，再用合法候选 $\mathcal T_r$，得到逐参数夹逼
+$$
+\sup_{N\ge1}\mathcal R_N(r)
+\le\mathcal J(r)\le\sup_{N\ge1}D_N(r).
+\tag{163.18}
+$$
+两端由定理161.6与以上证明趋于同一个 $L$，即得式（163.6）。这里没有交换通道下确界与视界上确界，也没有把任意 CPTP 通道先验限制成 Schur 乘子。证毕。
+

@@ -1,0 +1,74 @@
+### 66.3 准确差算符与共同 tester 上界
+
+令
+
+$$
+w=\sqrt a\,x+\sqrt\varepsilon b\,z,
+\qquad
+\gamma=c-\sqrt s=\frac{d}{c+\sqrt s}>0.
+\tag{66.12}
+$$
+
+式（66.10）保持 $r_0$ 在 $x,z$ 上的两个系数，只改变 $y$ 系数。式（66.9）又使 $s_1$ 与 $r_1$ 的交叉项完全相同。因此直接展开得到
+
+$$
+\begin{aligned}
+R_{a,\varepsilon}-S
+={}&p(|x'\rangle\langle x'|-|h\rangle\langle h|)\\
+&+d(|y\rangle\langle y|-|z'\rangle\langle z'|)\\
+&+\gamma(|w\rangle\langle y|+|y\rangle\langle w|).
+\end{aligned}
+\tag{66.13}
+$$
+
+这里 $y$ 对角差为 $c^2-s=d$；$z'$ 对角差为
+$\varepsilon a-pa/s=\varepsilon-p=-d$。
+
+固定任意完整 tester
+
+$$
+C\succeq0,\quad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+$$
+
+$C$ 的每个标准基对角元都位于 $[0,1]$，所以式（66.13）第一、二行与 $E$ 配对的绝对值分别至多 $p,d$。
+
+对第三行，正性给
+
+$$
+|C_{00,11}|\le\sqrt{C_{00,00}C_{11,11}}.
+$$
+
+因为 $x,z$ 具有同一个 $D$ 坐标，
+
+$$
+\begin{aligned}
+\langle w|C\otimes I_D|w\rangle
+&\le\left(\sqrt a\sqrt{C_{00,00}}
++\sqrt\varepsilon b\sqrt{C_{11,11}}\right)^2\\
+&\le(\sqrt a+\sqrt\varepsilon b)^2.
+\end{aligned}
+\tag{66.14}
+$$
+
+同时 $\langle y|C\otimes I_D|y\rangle=C_{10,10}\le1$。正算子 $E$ 的 Cauchy–Schwarz 不等式及 $E\preceq C\otimes I_D$ 因而给
+
+$$
+|\langle y|E|w\rangle|
+\le\sqrt{\langle y|E|y\rangle\langle w|E|w\rangle}
+\le\sqrt a+\sqrt\varepsilon b.
+\tag{66.15}
+$$
+
+三个上界始终使用同一个任意 $C,E$。相加可得
+
+$$
+|\operatorname{Tr}((R-S)E)|
+\le p+d+2\gamma(\sqrt a+\sqrt\varepsilon b)
+=\varepsilon+d\left[
+2+\frac{2(\sqrt a+\sqrt\varepsilon b)}{c+\sqrt s}
+\right].
+$$
+
+取全部事件最大值，再与 $\Delta=\varepsilon$ 的下界合并，证明式（66.5）。
+

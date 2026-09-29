@@ -1,0 +1,4 @@
+**定义 438.3（期望差额的来源）。** 上述差额 $1-b$ 正好是 $Q$ 相对 $P$ 的奇异质量。有限时刻的归一化没有丢失；不能把它与极限交换，是因为这个似然鞅在 $P$ 下不一致可积。完整记录上的共同可识别部分和奇异部分，已经由命题 437.2 分开，不能把 $\mathbb E_PL_\infty<1$ 误读成 $Q$ 不再是概率律。
+
+这一对应是经典密度鞅分解的具体实例。Engelbert 与 Shiryaev，〈On absolute continuity and singularity of probability measures〉，*Banach Center Publications* 6（1980），121—132页，定理4在 $\mathcal F=\sigma(\bigcup_n\mathcal F_n)$、各有限层 $Q_n\ll P_n$ 的条件下，将 $Q$ 的绝对连续部分写为密度极限对 $P$ 的积分，其余部分相对 $P$ 奇异；公式及证明在印刷页122—123。本节不重新单列该定理，也不将那篇文章用于承诺一般可预测 Hellinger 判据。此处具体 Bernoulli 推导显示：正的有限前缀、部分长期识别和极限期望差额，可以在同一实际模型中同时发生。
+

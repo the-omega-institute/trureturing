@@ -1,0 +1,11 @@
+**命题 27.3（条件过程仍不能确定原来的点击权重）。** 若 $\mathcal D\ne\{0\}$，取任意暗态 $\omega_D$ 及 $\mathcal H_P$ 上的状态 $\sigma$。对 $0<t\le1$ 令 $\rho_t=(1-t)\omega_D+t\sigma$，则
+
+$$
+\tau_R(\rho_t)=\tau_R(\sigma),
+\qquad r_{\rho_t}=t\operatorname{Tr}(\sigma R).
+$$
+
+全部条件首次事件及终端态相同，而无条件最终点击概率可以不同。
+
+证明。$G\omega_DG=0$，故分子和分母同时乘 $t$。定理 26.3 随即给出条件过程相同；最后的概率公式随 $t$ 严格改变。$\square$
+

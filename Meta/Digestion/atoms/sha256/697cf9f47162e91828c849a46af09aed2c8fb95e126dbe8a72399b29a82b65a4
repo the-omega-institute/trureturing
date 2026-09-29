@@ -1,0 +1,20 @@
+## 96. 奇异铅笔的锐利跳秩预算与双侧纤维
+
+固定第89节的替代酉
+$$
+W:K\otimes\mathbb C^2\longrightarrow K\otimes F,
+\qquad \dim K=7,\quad \dim F=2.
+$$
+令
+$$
+V_i x=W(x\otimes|i\rangle),\qquad
+V_0x=A_0x\otimes e_0+A_1x\otimes e_1,
+$$
+其中 $e_0,e_1$ 为 $F$ 的正交单位基。记
+$$
+\mathcal P(z)=z_1A_0-z_0A_1.
+$$
+本节研究 $D(z)=\det\mathcal P(z)\equiv0$ 的奇异情形。
+
+证明采用标准可达空间分解，所需秩—零度公式、Schur 补、Cayley–Hamilton 和不同特征空间直和的步骤在下面展开。它不以未核对的 Kronecker 标准形或其最小指数公式为前提，也不主张该经典线性代数方法的原创性。
+

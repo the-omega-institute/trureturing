@@ -1,0 +1,13 @@
+**Proof, from $R$ to $S$.** For each $h\ge1$, inspect the finitely many words $s$ of length $h$. The condition
+
+$$
+[s]\in\mathcal B
+\quad\Longleftrightarrow\quad
+s\notin R\ \text{and}\ s^-\in R
+\tag{TM.661}
+$$
+
+decides whether a canonical cylinder exists at that depth. Therefore it decides membership of $h$ in $S$. $\square$
+
+The first procedure needs to discover at most $d$ raw cylinders for a depth-$d$ query. The theorem provides no bound on how long their announcements may be delayed.
+

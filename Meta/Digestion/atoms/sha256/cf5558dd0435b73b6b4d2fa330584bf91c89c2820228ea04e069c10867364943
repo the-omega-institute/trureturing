@@ -1,0 +1,33 @@
+**分支一：$`\eta_3\not\parallel\eta_4`$。** 若 $`x\in U\cap G_3`$，固定 $`V_1x`$ 同时属于 $`Q_3\otimes\eta_3`$ 和 $`Q_4\otimes\eta_4`$，只能为零，所以 $`U\cap G_3=0`$，$`\dim\pi(G_3)=2`$。由（29.41），两条不同射线在 $`F`$ 中线性无关；（29.42）的二维上限强制 $`\pi(G_4)=0`$，即 $`G_4=U`$。再在 $`V_1(G_4)=V_1(G_2)`$ 上比较第五、第三轮，得到 $`\eta_5\parallel\eta_3`$。因此
+
+$$
+\boxed{
+\eta_3\parallel\eta_5\not\parallel\eta_4,
+\qquad G_4=U,\qquad G_3\cap U=0.
+}
+\tag{29.43}
+$$
+
+并有更精确的零位全像
+
+$$
+\mathcal R_0=U\otimes F+G_3\otimes\eta_3.
+\tag{29.44}
+$$
+
+（29.44）中两项相交为零，维数和为六；不同于（29.39），此时 $`\eta_3\in F`$，没有环境外方向。又因为 $`\eta_5\parallel\eta_3`$，可从（29.44）取该环境方向的截面，得到
+
+$$
+G_5\subseteq U+G_3.
+\tag{29.45}
+$$
+
+如果定义 $`X_\eta:=V_0^{-1}(U\otimes\eta)`$（非零 $`\eta\in F`$），它是 $`X`$ 内的二维空间，则本分支还有
+
+$$
+H_3=X_{\eta_4},\qquad H_2\cap X=0,\qquad H_4\cap U=0.
+\tag{29.46}
+$$
+
+最后一式是 $`G_4=U`$ 与 $`\dim C_4=4`$ 的直接要求。
+

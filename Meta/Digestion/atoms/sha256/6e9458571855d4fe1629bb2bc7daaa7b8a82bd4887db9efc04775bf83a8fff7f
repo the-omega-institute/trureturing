@@ -1,0 +1,12 @@
+### 173.2 任意参考精确归约为一个二元权重
+
+对固定 instrument，令
+$\Delta=\mathcal V-(\operatorname{id}_M\otimes\mathcal D)\mathcal N$。
+它满足输入 $Z_A$ 与输出 $Z_{Q_{\mathrm{out}}}$ 的协变关系。对 $q\in[0,1]$，令
+
+$$
+|\phi_q\rangle_{AJ}
+=\sqrt q\,|00\rangle+\sqrt{1-q}\,|11\rangle.
+\tag{173.4}
+$$
+

@@ -96,7 +96,7 @@ are separate obligations.
 ## 3. Actual tail availability can be disconnected
 
 Use the actual period-144 fixture in
-[the private-vector checker](../../frontier/cover-geometry/prime_private_swap_vector.py):
+[the private-vector checker](../../frontier/cover-geometry/prime-private-swap-vector/prime_private_swap_vector.py):
 
     (0 mod 2), (0 mod 3), (1 mod 4), (5 mod 6),
     (7 mod 24), (7 mod 36), (19 mod 48),

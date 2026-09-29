@@ -1,0 +1,84 @@
+**引理156.3（两相位的解码间隔）。** 比较误差满足
+
+$$
+\boxed{
+e_A^*=\frac12,
+\qquad
+e_B^*\ge\frac12+\frac{\lambda_*}{2}.
+}
+\tag{156.22}
+$$
+
+**证明。** 对相位 A 取恒等解码器，输出是原始 qubit 完全退相干后再经 $W_*$ 编码。令 $\Delta$ 为计算基退相干，则
+
+$$
+\Delta=\frac12(\operatorname{id}+\operatorname{Ad}_Z),
+\qquad
+\frac12\|\Delta-\operatorname{id}\|_\diamond\le\frac12.
+$$
+
+故 $e_A^*\le1/2$。对 Bell 输入，任一解码器后的状态都在外部参考 $J$ 的计算基上分块对角。它与目标纯态
+
+$$
+|\Gamma\rangle
+=\frac{|0\rangle_J|0\rangle_Q+|1\rangle_J|1\rangle_Q}{\sqrt2}
+\otimes|\Xi\rangle_{MR}
+\tag{156.23}
+$$
+
+的重叠概率至多 $1/2$。用目标投影测量得到半迹距离至少 $1/2$，从而 $e_A^*=1/2$。
+
+对相位 B，固定任意解码器 $\mathcal D:R\to Q\otimes R$，令
+
+$$
+\sigma_j=(\operatorname{id}_M\otimes\mathcal D)
+|\psi_j\rangle\langle\psi_j|,
+\qquad
+f_j=\langle j|_Q\langle\Xi|_{MR}\,
+\sigma_j\,|j\rangle_Q|\Xi\rangle_{MR}.
+$$
+
+Bell 输入的实际解码态为 $\sigma=\tfrac12\sum_j|j\rangle\langle j|_J\otimes\sigma_j$，所以
+
+$$
+\langle\Gamma|\sigma|\Gamma\rangle
+=\frac14(f_0+f_1).
+\tag{156.24}
+$$
+
+设 $q_j$ 为解码输出标签等于 $j$ 的概率。目标投影是标签 $j$ 投影的子投影，故 $f_j\le q_j$。解码器再测量 $Q$ 构成 $R$ 上的二结果 POVM $E_0,E_1$，且
+
+$$
+q_j=\operatorname{Tr}(E_j\tau_j),
+\qquad
+\tau_0=\rho_*^{\mathsf T}=\rho_*,
+\qquad
+\tau_1=Y\rho_*Y=I-\rho_*.
+\tag{156.25}
+$$
+
+这里最后一个等式使用迹一、实对称的二阶矩阵。由于 $E_1=I-E_0$、$0\preceq E_0\preceq I$，直接的二态判别界给出
+
+$$
+\begin{aligned}
+q_0+q_1
+&=1+\operatorname{Tr}[E_0(\tau_0-\tau_1)]\\
+&\le1+\frac12\|\tau_0-\tau_1\|_1
+=2-2\lambda_*.
+\end{aligned}
+\tag{156.26}
+$$
+
+于是（156.24）至多为 $(1-\lambda_*)/2$。对纯目标，二结果测量 $\{|\Gamma\rangle\langle\Gamma|,I-|\Gamma\rangle\langle\Gamma|\}$ 给
+
+$$
+\frac12\|\sigma-|\Gamma\rangle\langle\Gamma|\|_1
+\ge1-\langle\Gamma|\sigma|\Gamma\rangle
+\ge\frac{1+\lambda_*}{2}.
+\tag{156.27}
+$$
+
+这一固定 Bell 输入下的下界对任意 $\mathcal D$ 成立，故也下界最优完整参考误差。证毕。
+
+式（156.22）已经把所有合法终端解码器纳入优化。两相位的差别由接收端可访问标签的判别能力给出，不能由再选一个接收器局部酉消去。
+

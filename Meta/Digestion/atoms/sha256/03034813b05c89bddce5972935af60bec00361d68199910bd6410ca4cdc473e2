@@ -1,0 +1,25 @@
+**定理 242.2（精确逆向资源曲线）。** 对 $0\le c<1$，令
+$$
+\varepsilon_0(c)=\frac12\left(1-\sqrt{\frac{1+c}{2}}\right)>0.
+\tag{242.23}
+$$
+则
+$$
+\boxed{
+E_{\min}(\varepsilon;c)=
+\begin{cases}
+H_2\!\left(
+\dfrac{1+\sqrt{\,8\varepsilon(1-\varepsilon)/(1-c)\,}}{2}
+\right),&0\le\varepsilon<\varepsilon_0(c),\\[8pt]
+0,&\varepsilon\ge\varepsilon_0(c).
+\end{cases}
+}
+\tag{242.24}
+$$
+平行或反平行轴 $c=1$ 时，则对所有 $\varepsilon\ge0$ 都有
+$$
+\boxed{E_{\min}(\varepsilon;1)=0.}
+\tag{242.25}
+$$
+以上下确界全部由实际纯探针取得。
+

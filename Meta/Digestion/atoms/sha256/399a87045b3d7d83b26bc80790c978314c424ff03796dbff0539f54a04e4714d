@@ -1,0 +1,58 @@
+### 48.3 精确轨道及首次越界时刻
+
+从纯态 $\sigma_0=|o\rangle\langle o|$ 启动。在组件 $i$ 内定义类态
+
+$$
+\omega_{i,j}=
+\begin{cases}
+|x_{i,j}\rangle\langle x_{i,j}|,&0\le j\le p_i-2,\\[2pt]
+\dfrac12\bigl(|y_{i,0}\rangle\langle y_{i,0}|
++|y_{i,1}\rangle\langle y_{i,1}|\bigr),&j=p_i-1.
+\end{cases}
+\tag{48.5}
+$$
+
+由转移规则，每个类态确定变成下一个类态，类号模 $p_i$ 计算。根一步后的每个组件质量为 $1/k$，以后不再改变。因此，对所有整数 $t\ge1$，
+
+$$
+\sigma_t=\frac1k\sum_{i=1}^k
+\omega_{i,(t-1)\bmod p_i}.
+\tag{48.6}
+$$
+
+不同组件正交，而且每个非零对角权重均严格为正。一个组件通常贡献秩一，恰在 $(t-1)\bmod p_i=p_i-1$，即 $p_i\mid t$ 时贡献秩二。故
+
+$$
+\boxed{\operatorname{rank}\sigma_t
+=k+\#\{i:p_i\mid t\}\qquad(t\ge1).}
+\tag{48.7}
+$$
+
+置
+
+$$
+r=2k-1,\qquad P=\prod_{i=1}^kp_i.
+\tag{48.8}
+$$
+
+有 $1\le r<d$。两两互素使 $P$ 为所有周期的最小公倍数，因而第一次同时满足全部整除条件的正时刻正是 $P$。结合根初态秩一，得到
+
+$$
+\operatorname{rank}\sigma_t\le r\quad(0\le t<P),
+\qquad
+\operatorname{rank}\sigma_P=2k=r+1.
+\tag{48.9}
+$$
+
+在 $t=P+1$ 时，所有组件又回到单节点类零，所以秩降回 $k$。一般非保单位通道的秩无需单调；这里的首次越界来自多个周期同时处于双节点类，而非单个支撑持续扩张。
+
+例如取 $k=2$、$p_1=3$、$p_2=5$，则 $d=11$、$r=3$，且
+
+$$
+\operatorname{rank}\sigma_t
+=2+\mathbf1_{3\mid t}+\mathbf1_{5\mid t}\quad(t\ge1).
+\tag{48.10}
+$$
+
+时刻 $0,\ldots,14$ 的秩全部不超过三，时刻十五首次达到四；时刻十六又降到二。
+

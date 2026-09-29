@@ -1,0 +1,26 @@
+**引理62.1（可逆逻辑态禁止低秩环境分支）。** 设当前轮开始前的联合输入已纯化，记不由接收通道作用的系统为 $B\otimes E_{\mathrm{old}}$，通道输入为 $D$，新 Stinespring 等距为
+$$
+W:D\to K\otimes E_{\mathrm{new}}.
+$$
+输出纯态 $|\Omega\rangle\in B\otimes E_{\mathrm{old}}\otimes K\otimes E_{\mathrm{new}}$ 在接收器上存在一个解码等距 $U_K$，使
+$$
+(I_B\otimes I_{E_{\mathrm{old}}}\otimes U_K\otimes I_{E_{\mathrm{new}}})
+|\Omega\rangle
+=
+|\psi\rangle_{BQ}\otimes
+|\tau\rangle_{\Gamma,E_{\mathrm{old}},E_{\mathrm{new}}}.
+\tag{62.6}
+$$
+必要时扩充解码目标中未被占据的辅助空间，使实际编码支撑上的解码延拓为全 $K$ 上的等距；这不改变（62.6）右侧的实际输出态。设 $|\psi\rangle$ 跨 $B|Q$ 的 Schmidt 秩为 $r$。
+
+给定新环境正交投影 $P$。若
+$$
+\operatorname{rank}((I_K\otimes P)W)<r,
+\tag{62.7}
+$$
+则实际输出的该环境分支为零：
+$$
+(I_{B,E_{\mathrm{old}},K}\otimes P)|\Omega\rangle=0.
+\tag{62.8}
+$$
+

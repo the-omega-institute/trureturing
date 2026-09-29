@@ -1,0 +1,74 @@
+**引理176.1（带统一谱间隙的扰动余项）。** 设 Hermitian 矩阵 $H$ 的最高本征值
+$\lambda$ 简单，单位本征向量为 $v$，且其与其余谱的间隙至少为
+$g>0$。设 $B$ Hermitian，$\|B\|\le M$。若
+$|\epsilon|M\le g/4$，则
+
+$$
+0\le
+\lambda_{\max}(H+\epsilon B)
+-\lambda-\epsilon\langle v|B|v\rangle
+\le\frac{2M^2}{g}\epsilon^2.
+\tag{176.11}
+$$
+
+**证明。** 下界直接取测试向量 $v$。对任意单位向量
+$y=av+w$，$w\perp v$，令 $t=\|w\|$。谱间隙给
+$\langle y|H|y\rangle\le\lambda-gt^2$。
+将扰动的 $v$ 方向对角项单独取出，其余部分的绝对值至多为
+$2|\epsilon|Mt+2|\epsilon|Mt^2$。所以
+
+$$
+\langle y|(H+\epsilon B)|y\rangle
+\le\lambda+\epsilon\langle v|B|v\rangle
+-\frac g2t^2+2|\epsilon|Mt
+\le\lambda+\epsilon\langle v|B|v\rangle
++\frac{2M^2}{g}\epsilon^2.
+$$
+
+对 $y$ 取最大值即得结论。证毕。
+
+本问题有精确仿射形式
+
+$$
+C_{\epsilon,R}(x)=C_0(x)+\epsilon V_R(x),
+$$
+
+$$
+V_R(x)=-\frac12\operatorname{diag}\left(
+(\operatorname{id}_M\otimes\mathcal D_0)(\dot\xi^\varphi),
+R(\operatorname{id}_M\otimes\mathcal D_1)(\dot\xi^\varphi)
+\right).
+\tag{176.12}
+$$
+
+当 $R$ 限制在包含 $4$ 的固定紧区间时，
+$V_R(x)$ 的范数有统一上界。由（176.9）和本征值连续性，
+存在 $\mathcal Z_b$ 的一个邻域，其闭包上 $C_0(x)$ 的最高本征值仍简单，谱间隙至少为 $1/2$。最高谱投影记为 $P(x)$，它在该邻域上连续。引理176.1给一致展开
+
+$$
+b_{\epsilon,R}(x)
+=b_0(x)+\epsilon g(x,R)+O(\epsilon^2),
+\qquad
+g(x,R)=\operatorname{Tr}(P(x)V_R(x)).
+\tag{176.13}
+$$
+
+这里的余项常数同时独立于该邻域中的 $x$ 和紧区间中的 $R$。
+
+在 $x\in\mathcal Z_b$ 上，$P(x)=P_u$。第175节逐旗标的标量 Kraus 计算与（176.7）给
+
+$$
+\begin{aligned}
+g(x,R)
+&=-\frac14\left.
+\frac{d}{d\epsilon}
+\bigl(f_0+f_1\bigr)\right|_{\epsilon=0}\\
+&=\frac{\beta}{4}(p_0+Rp_1)
+=\frac{\beta(1+R)}8.
+\end{aligned}
+\tag{176.14}
+$$
+
+特别地，这个导数在整个基点最优集合上取同一个值
+$5\beta/8$，而不是第175节线性收益优化出现的 $\beta/4$。
+

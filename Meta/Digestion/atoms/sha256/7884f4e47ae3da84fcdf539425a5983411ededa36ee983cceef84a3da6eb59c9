@@ -1,0 +1,15 @@
+- 本节给解析结论，未作 Lean 形式化或任何 kernel-verified 声明。
+
+未知尺度的迭代对数成本有经典序贯背景。Jamieson、Malloy、Nowak、Bubeck 的
+[*lil’ UCB: An Optimal Exploration Algorithm for Multi-Armed Bandits*](https://arxiv.org/pdf/1312.7308)，第3页 Theorem 1 重述 Farrell 的正态未知符号检验结论：对 iid \(N(\Delta,1)\)、全部 \(\Delta\ne0\) 的逐参数单独错误至多 \(\delta<1/2\)，有
+$$
+\limsup_{\Delta\to0}
+\frac{\mathbb E_\Delta T}
+{\Delta^{-2}\log\log(\Delta^{-2})}
+\ge2-4\delta.
+$$
+对应原文为 R. H. Farrell，
+[*Asymptotic Behavior of Expected Sample Size in Certain One Sided Tests*](https://doi.org/10.1214/aoms/1177703731)，Annals of Mathematical Statistics 35(1)，36—72（1964）。本节的增益只取正值，还有未知任务参数与同参数平均风险，不能直接套用该未知符号检验；第303.3—303.4节完成了本模型自己的非终止质量与窗口证明。
+
+本节新增连接是：把第301节带严格风险余量的实际概率表接到参考流的未知尺度发现与方差精校准，以无条件缺额矩保留稀有背景成本；把第302节同参数风险链接到零增益辅助律，得到沿正增益路径的子序列必要性。所用 Hoeffding、Bernstein、Chernoff、有限链式 KL、Pinsker 及二元数据处理均为成熟方法。这里没有声称新的标准序贯不等式、经文献核定的原创性、Lean 形式验证或实际仪器实验。
+

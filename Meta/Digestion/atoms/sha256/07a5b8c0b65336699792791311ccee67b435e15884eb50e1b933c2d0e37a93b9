@@ -1,0 +1,11 @@
+**定义 176.1（活动比特的相位反转校准）。** 沿用定义173.1的一般 CPTP 预测器合同、最小记忆维数 $D_{\rm fg}(r)$ 及定义174.1的 $c=r\cos\alpha$、$b=r\sin\alpha$、$n,m=n+1$。令 $K=\mathbb C^2$，一次初始化为 $I_2/2$。选 $0<\kappa<r$、$z=c+iv$，采用式（174.9）—（174.10）的记录向量及相干通道 $\mathcal Q_z$。在每次 $\mathcal Q_z$ 后，对记忆依次施加 $\mathcal D_\chi$、$U_\gamma=e^{-i\gamma X/2}$ 及重置 $\mathcal R_\delta$。
+
+这里允许 $-1\le\chi<0$：$\mathcal D_\chi$ 将记忆非对角元乘以 $\chi$，仍是 CPTP 通道，因为
+$$
+\mathcal D_\chi=\frac{1+\chi}{2}\,\mathrm{id}
++\frac{1-\chi}{2}\operatorname{Ad}_Z
+=|\chi|\operatorname{Ad}_Z+(1-|\chi|)\mathcal D_0.
+\tag{176.1}
+$$
+负号表示相干的相位反转，不是负概率。此处理器没有启动标志；全部记忆维数为二。
+

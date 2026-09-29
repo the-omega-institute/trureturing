@@ -1,0 +1,27 @@
+### 122.5 ABCBC 的早期向量不可能回返
+
+设尾词为 $ABCBC$。同一个五维实际尾像为
+
+$$
+E=V_1S_0=\mathbb C(v\otimes A)+\sum_{n=3}^6Q_n\otimes\eta_n,
+\qquad \dim E=5.
+$$
+
+记 $Y_X=\{y:y\otimes X\in E\}$ 为 $E$ 的完整接收纤维。后继方向 $B,C$ 的纤维都至少二维、至多三维；对应乘积块交零，维数之和至多五。
+
+若 $\dim Y_B=2$，则实际 $G_2,G_4$ 的一位像都填满 $Y_B\otimes B$，固定单射性给 $G_2=G_4$。它们的当前方向为不同的 $A,C$，违反第122.1节。因此
+
+$$
+\dim Y_B=3,\qquad \dim Y_C=2,
+$$
+
+$$
+G_3=G_5,\qquad H_2=H_4.
+\tag{122.9}
+$$
+
+三维 $Y_B$ 使 $B\in\mathcal Z$。若 $C\notin\mathcal Z$，则 $Q_4=Q$，正交于实际 $G_2$。若 $C\in\mathcal Z$，由（122.5），$B,C$ 都属于三元素集合 $\mathcal A\cap\mathcal A^\perp$。这个交集对无不动点的正交对合封闭，至多有两个元素，故 $B\perp C$。第三条 $A$ 不与 $C$ 正交；跨位正交
+$G_2\otimes A\perp Q_4\otimes C$ 仍给 $G_2\perp Q_4$。
+
+所以两种情况都使真实非零 $w\in H_2\cap G_2$ 正交于 $Q_4$。式（122.9）却把它放入 $H_4$，违反 $P_{Q_4}|_{H_4}$ 单射。$ABCBC$ 排除。
+

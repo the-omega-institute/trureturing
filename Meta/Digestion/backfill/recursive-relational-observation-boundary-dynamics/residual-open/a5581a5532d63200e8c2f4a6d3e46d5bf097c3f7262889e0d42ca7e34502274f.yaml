@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:a5581a5532d63200e8c2f4a6d3e46d5bf097c3f7262889e0d42ca7e34502274f
+  normalized_sha256: sha256:a5581a5532d63200e8c2f4a6d3e46d5bf097c3f7262889e0d42ca7e34502274f
+cas_ref: sha256:a5581a5532d63200e8c2f4a6d3e46d5bf097c3f7262889e0d42ca7e34502274f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.feedback_normalization_prefix_causality_sequential_kernels
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 20e8fee164716804b06e50d98619a75c990ad246a9ee625154832434bf8dfa08
+      - code: chain-migration-incomplete
+        detail: 7e8e15c0b30c9a7495727b95ce135196696a1e5f6aea5ecc27ba63140046f439
+  chain_atoms:
+    - 119cb3f127093b621954989fd7b7bd5b4bec3374d4d36c8c74745b027c7e4ee5
+    - 20e8fee164716804b06e50d98619a75c990ad246a9ee625154832434bf8dfa08
+    - 5320eef3eef957f10802c879adfb5fe3c51d0fb548ce3462d79ef49a29c22a71
+    - 7e8e15c0b30c9a7495727b95ce135196696a1e5f6aea5ecc27ba63140046f439

@@ -1,0 +1,80 @@
+**定理110.1（三个完整二维后继方向不可能）。** 在上述实际合同中，不可能有三条不同射线全部出现在 $\eta_3,\ldots,\eta_6$ 中，且 $E$ 在这三条射线上的完整接收纤维均为二维。因此第104.4节的三个二维后继方向分支不可能。
+
+证明保留第104节的同一个 $E$、$S$ 及位块，不在不同环境上更换补全。
+
+### 110.1 完整后继纤维识别实际输入
+
+按尾词的首次出现将三条射线命名为 $A,B,C$。第74节保证五条尾环境至多三种，而后四轮已经使用三种，因此第二轮也属于它们，且 $[\eta_2]=A$。
+
+对 $X\in\{A,B,C\}$，定义
+
+$$
+Q_X=\{y:y\otimes X\in E\},\qquad
+T_X=(V_1|_S)^{-1}(Q_X\otimes X).
+$$
+
+它们均为二维，满足
+
+$$
+V_1T_X=Q_X\otimes X,\qquad
+T_X\cap T_Y=0\quad(X\ne Y).
+\tag{110.2}
+$$
+
+这里交零来自同一个单射 $V_1$ 及不同环境方向。每个实际 $Q_n$ 已二维，因而填满相应完整 $E$ 纤维，得到
+
+$$
+Q_n=Q_{\eta_n},\qquad
+G_{n-1}=T_{\eta_n}\quad(3\le n\le6).
+\tag{110.3}
+$$
+
+真实 $V_1p=v\otimes A$ 与 $p\in S$ 还给
+
+$$
+v\in Q_A,\qquad p\in T_A.
+\tag{110.4}
+$$
+
+三个后继都实际出现，且 $p$ 已属于其中一个输入平面，所以
+
+$$
+S=T_A+T_B+T_C,\qquad \dim S=5.
+\tag{110.5}
+$$
+
+这个和不是三个平面的代数直和；任意两个平面的和四维，第三个与这个四维和的交恰一维。下面的七维像计数保留这一交。
+
+实际早期仍为
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),
+\tag{110.6}
+$$
+
+其中 $u,v,w$ 正交归一，$ab\ne0$，且 $0\ne w\in H_2\cap G_2$。对 $3\le n\le6$，
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\tag{110.7}
+$$
+
+两个同轮投影都是同构，特别 $H_n\cap G_n=0$。
+
+### 110.2 从十三个三尾词筛到五词
+
+第69节引理69.1与第74节给出的全部三尾候选为
+
+$$
+\begin{gathered}
+AAABC,\ AABAC,\ AABCC,\ ABAAC,\ ABABC,\ ABACA,\\
+ABBBC,\ ABBCB,\ ABCAB,\ ABCBA,\ ABCBB,\ ABCBC,\ ABCCC.
+\end{gathered}
+\tag{110.8}
+$$
+
+其中 $ABBBC,ABBCB,ABCBB,ABCBC,ABCCC$ 的后四轮只使用两条射线，不满足本节三个方向都实际出现的假设。余下八词中，再排除以下三个。
+

@@ -1,0 +1,3025 @@
+{
+  "scope": "Finite127-label squarefree query extension of the actual20-label family.\n\nChecks all phase zero/nonzero patterns and weighted zero/one/other CRT\npatterns. No enumeration of the full period; no all-height identification\nof finite residues and no Lean. Every query uses the same law H(.|U).\n",
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "period": 4849845,
+  "query_count": 127,
+  "phase_pattern_count": 2186,
+  "phase_free_pattern_count": 16256,
+  "phase_rows": [
+    {
+      "modulus": 3,
+      "support": [
+        3
+      ],
+      "all_one_survivor_fibre_count": 1616615,
+      "minimum_phase_survivor_fibre_count": 1591488,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 5,
+      "support": [
+        5
+      ],
+      "all_one_survivor_fibre_count": 968414,
+      "minimum_phase_survivor_fibre_count": 951062,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 7,
+      "support": [
+        7
+      ],
+      "all_one_survivor_fibre_count": 691394,
+      "minimum_phase_survivor_fibre_count": 676354,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 11,
+      "support": [
+        11
+      ],
+      "all_one_survivor_fibre_count": 439658,
+      "minimum_phase_survivor_fibre_count": 428138,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 13,
+      "support": [
+        13
+      ],
+      "all_one_survivor_fibre_count": 371918,
+      "minimum_phase_survivor_fibre_count": 361702,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 17,
+      "support": [
+        17
+      ],
+      "all_one_survivor_fibre_count": 284294,
+      "minimum_phase_survivor_fibre_count": 276014,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 19,
+      "support": [
+        19
+      ],
+      "all_one_survivor_fibre_count": 254330,
+      "minimum_phase_survivor_fibre_count": 246778,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 15,
+      "support": [
+        3,
+        5
+      ],
+      "all_one_survivor_fibre_count": 323323,
+      "minimum_phase_survivor_fibre_count": 304416,
+      "maximizing_zero_nonzero_pattern_count": 2
+    },
+    {
+      "modulus": 21,
+      "support": [
+        3,
+        7
+      ],
+      "all_one_survivor_fibre_count": 230945,
+      "minimum_phase_survivor_fibre_count": 214464,
+      "maximizing_zero_nonzero_pattern_count": 2
+    },
+    {
+      "modulus": 33,
+      "support": [
+        3,
+        11
+      ],
+      "all_one_survivor_fibre_count": 146965,
+      "minimum_phase_survivor_fibre_count": 134208,
+      "maximizing_zero_nonzero_pattern_count": 2
+    },
+    {
+      "modulus": 39,
+      "support": [
+        3,
+        13
+      ],
+      "all_one_survivor_fibre_count": 124355,
+      "minimum_phase_survivor_fibre_count": 112992,
+      "maximizing_zero_nonzero_pattern_count": 2
+    },
+    {
+      "modulus": 51,
+      "support": [
+        3,
+        17
+      ],
+      "all_one_survivor_fibre_count": 95095,
+      "minimum_phase_survivor_fibre_count": 85824,
+      "maximizing_zero_nonzero_pattern_count": 2
+    },
+    {
+      "modulus": 57,
+      "support": [
+        3,
+        19
+      ],
+      "all_one_survivor_fibre_count": 85085,
+      "minimum_phase_survivor_fibre_count": 76608,
+      "maximizing_zero_nonzero_pattern_count": 2
+    },
+    {
+      "modulus": 35,
+      "support": [
+        5,
+        7
+      ],
+      "all_one_survivor_fibre_count": 138510,
+      "minimum_phase_survivor_fibre_count": 126938,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 55,
+      "support": [
+        5,
+        11
+      ],
+      "all_one_survivor_fibre_count": 88126,
+      "minimum_phase_survivor_fibre_count": 79522,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 65,
+      "support": [
+        5,
+        13
+      ],
+      "all_one_survivor_fibre_count": 74562,
+      "minimum_phase_survivor_fibre_count": 67022,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 85,
+      "support": [
+        5,
+        17
+      ],
+      "all_one_survivor_fibre_count": 57010,
+      "minimum_phase_survivor_fibre_count": 50998,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 95,
+      "support": [
+        5,
+        19
+      ],
+      "all_one_survivor_fibre_count": 51006,
+      "minimum_phase_survivor_fibre_count": 45554,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 77,
+      "support": [
+        7,
+        11
+      ],
+      "all_one_survivor_fibre_count": 62934,
+      "minimum_phase_survivor_fibre_count": 55814,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 91,
+      "support": [
+        7,
+        13
+      ],
+      "all_one_survivor_fibre_count": 53246,
+      "minimum_phase_survivor_fibre_count": 47050,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 119,
+      "support": [
+        7,
+        17
+      ],
+      "all_one_survivor_fibre_count": 40710,
+      "minimum_phase_survivor_fibre_count": 35810,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 133,
+      "support": [
+        7,
+        19
+      ],
+      "all_one_survivor_fibre_count": 36422,
+      "minimum_phase_survivor_fibre_count": 31990,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 143,
+      "support": [
+        11,
+        13
+      ],
+      "all_one_survivor_fibre_count": 33870,
+      "minimum_phase_survivor_fibre_count": 29522,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 187,
+      "support": [
+        11,
+        17
+      ],
+      "all_one_survivor_fibre_count": 25894,
+      "minimum_phase_survivor_fibre_count": 22474,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 209,
+      "support": [
+        11,
+        19
+      ],
+      "all_one_survivor_fibre_count": 23166,
+      "minimum_phase_survivor_fibre_count": 20078,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 221,
+      "support": [
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 21906,
+      "minimum_phase_survivor_fibre_count": 18950,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 247,
+      "support": [
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 19598,
+      "minimum_phase_survivor_fibre_count": 16930,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 323,
+      "support": [
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 14982,
+      "minimum_phase_survivor_fibre_count": 12890,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 105,
+      "support": [
+        3,
+        5,
+        7
+      ],
+      "all_one_survivor_fibre_count": 46189,
+      "minimum_phase_survivor_fibre_count": 34560,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 165,
+      "support": [
+        3,
+        5,
+        11
+      ],
+      "all_one_survivor_fibre_count": 29393,
+      "minimum_phase_survivor_fibre_count": 20736,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 195,
+      "support": [
+        3,
+        5,
+        13
+      ],
+      "all_one_survivor_fibre_count": 24871,
+      "minimum_phase_survivor_fibre_count": 17280,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 255,
+      "support": [
+        3,
+        5,
+        17
+      ],
+      "all_one_survivor_fibre_count": 19019,
+      "minimum_phase_survivor_fibre_count": 12960,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 285,
+      "support": [
+        3,
+        5,
+        19
+      ],
+      "all_one_survivor_fibre_count": 17017,
+      "minimum_phase_survivor_fibre_count": 11520,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 231,
+      "support": [
+        3,
+        7,
+        11
+      ],
+      "all_one_survivor_fibre_count": 20995,
+      "minimum_phase_survivor_fibre_count": 13824,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 273,
+      "support": [
+        3,
+        7,
+        13
+      ],
+      "all_one_survivor_fibre_count": 17765,
+      "minimum_phase_survivor_fibre_count": 11520,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 357,
+      "support": [
+        3,
+        7,
+        17
+      ],
+      "all_one_survivor_fibre_count": 13585,
+      "minimum_phase_survivor_fibre_count": 8640,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 399,
+      "support": [
+        3,
+        7,
+        19
+      ],
+      "all_one_survivor_fibre_count": 12155,
+      "minimum_phase_survivor_fibre_count": 7680,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 429,
+      "support": [
+        3,
+        11,
+        13
+      ],
+      "all_one_survivor_fibre_count": 11305,
+      "minimum_phase_survivor_fibre_count": 6912,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 561,
+      "support": [
+        3,
+        11,
+        17
+      ],
+      "all_one_survivor_fibre_count": 8645,
+      "minimum_phase_survivor_fibre_count": 5184,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 627,
+      "support": [
+        3,
+        11,
+        19
+      ],
+      "all_one_survivor_fibre_count": 7735,
+      "minimum_phase_survivor_fibre_count": 4608,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 663,
+      "support": [
+        3,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 7315,
+      "minimum_phase_survivor_fibre_count": 4320,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 741,
+      "support": [
+        3,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 6545,
+      "minimum_phase_survivor_fibre_count": 3840,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 969,
+      "support": [
+        3,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 5005,
+      "minimum_phase_survivor_fibre_count": 2880,
+      "maximizing_zero_nonzero_pattern_count": 4
+    },
+    {
+      "modulus": 385,
+      "support": [
+        5,
+        7,
+        11
+      ],
+      "all_one_survivor_fibre_count": 12596,
+      "minimum_phase_survivor_fibre_count": 8398,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 455,
+      "support": [
+        5,
+        7,
+        13
+      ],
+      "all_one_survivor_fibre_count": 10658,
+      "minimum_phase_survivor_fibre_count": 7106,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 595,
+      "support": [
+        5,
+        7,
+        17
+      ],
+      "all_one_survivor_fibre_count": 8150,
+      "minimum_phase_survivor_fibre_count": 5434,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 665,
+      "support": [
+        5,
+        7,
+        19
+      ],
+      "all_one_survivor_fibre_count": 7292,
+      "minimum_phase_survivor_fibre_count": 4862,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 715,
+      "support": [
+        5,
+        11,
+        13
+      ],
+      "all_one_survivor_fibre_count": 6782,
+      "minimum_phase_survivor_fibre_count": 4522,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 935,
+      "support": [
+        5,
+        11,
+        17
+      ],
+      "all_one_survivor_fibre_count": 5186,
+      "minimum_phase_survivor_fibre_count": 3458,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 1045,
+      "support": [
+        5,
+        11,
+        19
+      ],
+      "all_one_survivor_fibre_count": 4640,
+      "minimum_phase_survivor_fibre_count": 3094,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 1105,
+      "support": [
+        5,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 4388,
+      "minimum_phase_survivor_fibre_count": 2926,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 1235,
+      "support": [
+        5,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 3926,
+      "minimum_phase_survivor_fibre_count": 2618,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 1615,
+      "support": [
+        5,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 3002,
+      "minimum_phase_survivor_fibre_count": 2002,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 1001,
+      "support": [
+        7,
+        11,
+        13
+      ],
+      "all_one_survivor_fibre_count": 4844,
+      "minimum_phase_survivor_fibre_count": 3230,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 1309,
+      "support": [
+        7,
+        11,
+        17
+      ],
+      "all_one_survivor_fibre_count": 3704,
+      "minimum_phase_survivor_fibre_count": 2470,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 1463,
+      "support": [
+        7,
+        11,
+        19
+      ],
+      "all_one_survivor_fibre_count": 3314,
+      "minimum_phase_survivor_fibre_count": 2210,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 1547,
+      "support": [
+        7,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 3134,
+      "minimum_phase_survivor_fibre_count": 2090,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 1729,
+      "support": [
+        7,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 2804,
+      "minimum_phase_survivor_fibre_count": 1870,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 2261,
+      "support": [
+        7,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 2144,
+      "minimum_phase_survivor_fibre_count": 1430,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 2431,
+      "support": [
+        11,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 1994,
+      "minimum_phase_survivor_fibre_count": 1330,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 2717,
+      "support": [
+        11,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 1784,
+      "minimum_phase_survivor_fibre_count": 1190,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 3553,
+      "support": [
+        11,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 1364,
+      "minimum_phase_survivor_fibre_count": 910,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 4199,
+      "support": [
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 1154,
+      "minimum_phase_survivor_fibre_count": 770,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 1155,
+      "support": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "all_one_survivor_fibre_count": 4199,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 1365,
+      "support": [
+        3,
+        5,
+        7,
+        13
+      ],
+      "all_one_survivor_fibre_count": 3553,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 1785,
+      "support": [
+        3,
+        5,
+        7,
+        17
+      ],
+      "all_one_survivor_fibre_count": 2717,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 1995,
+      "support": [
+        3,
+        5,
+        7,
+        19
+      ],
+      "all_one_survivor_fibre_count": 2431,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 2145,
+      "support": [
+        3,
+        5,
+        11,
+        13
+      ],
+      "all_one_survivor_fibre_count": 2261,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 2805,
+      "support": [
+        3,
+        5,
+        11,
+        17
+      ],
+      "all_one_survivor_fibre_count": 1729,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 3135,
+      "support": [
+        3,
+        5,
+        11,
+        19
+      ],
+      "all_one_survivor_fibre_count": 1547,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 3315,
+      "support": [
+        3,
+        5,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 1463,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 3705,
+      "support": [
+        3,
+        5,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 1309,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 4845,
+      "support": [
+        3,
+        5,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 1001,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 3003,
+      "support": [
+        3,
+        7,
+        11,
+        13
+      ],
+      "all_one_survivor_fibre_count": 1615,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 3927,
+      "support": [
+        3,
+        7,
+        11,
+        17
+      ],
+      "all_one_survivor_fibre_count": 1235,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 4389,
+      "support": [
+        3,
+        7,
+        11,
+        19
+      ],
+      "all_one_survivor_fibre_count": 1105,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 4641,
+      "support": [
+        3,
+        7,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 1045,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 5187,
+      "support": [
+        3,
+        7,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 935,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 6783,
+      "support": [
+        3,
+        7,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 715,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 7293,
+      "support": [
+        3,
+        11,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 665,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 8151,
+      "support": [
+        3,
+        11,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 595,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 10659,
+      "support": [
+        3,
+        11,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 455,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 12597,
+      "support": [
+        3,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 385,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 8
+    },
+    {
+      "modulus": 5005,
+      "support": [
+        5,
+        7,
+        11,
+        13
+      ],
+      "all_one_survivor_fibre_count": 969,
+      "minimum_phase_survivor_fibre_count": 646,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 6545,
+      "support": [
+        5,
+        7,
+        11,
+        17
+      ],
+      "all_one_survivor_fibre_count": 741,
+      "minimum_phase_survivor_fibre_count": 494,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 7315,
+      "support": [
+        5,
+        7,
+        11,
+        19
+      ],
+      "all_one_survivor_fibre_count": 663,
+      "minimum_phase_survivor_fibre_count": 442,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 7735,
+      "support": [
+        5,
+        7,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 627,
+      "minimum_phase_survivor_fibre_count": 418,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 8645,
+      "support": [
+        5,
+        7,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 561,
+      "minimum_phase_survivor_fibre_count": 374,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 11305,
+      "support": [
+        5,
+        7,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 429,
+      "minimum_phase_survivor_fibre_count": 286,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 12155,
+      "support": [
+        5,
+        11,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 399,
+      "minimum_phase_survivor_fibre_count": 266,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 13585,
+      "support": [
+        5,
+        11,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 357,
+      "minimum_phase_survivor_fibre_count": 238,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 17765,
+      "support": [
+        5,
+        11,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 273,
+      "minimum_phase_survivor_fibre_count": 182,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 20995,
+      "support": [
+        5,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 231,
+      "minimum_phase_survivor_fibre_count": 154,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 17017,
+      "support": [
+        7,
+        11,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 285,
+      "minimum_phase_survivor_fibre_count": 190,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 19019,
+      "support": [
+        7,
+        11,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 255,
+      "minimum_phase_survivor_fibre_count": 170,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 24871,
+      "support": [
+        7,
+        11,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 195,
+      "minimum_phase_survivor_fibre_count": 130,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 29393,
+      "support": [
+        7,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 165,
+      "minimum_phase_survivor_fibre_count": 110,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 46189,
+      "support": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 105,
+      "minimum_phase_survivor_fibre_count": 70,
+      "maximizing_zero_nonzero_pattern_count": 1
+    },
+    {
+      "modulus": 15015,
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        13
+      ],
+      "all_one_survivor_fibre_count": 323,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 19635,
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        17
+      ],
+      "all_one_survivor_fibre_count": 247,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 21945,
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        19
+      ],
+      "all_one_survivor_fibre_count": 221,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 23205,
+      "support": [
+        3,
+        5,
+        7,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 209,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 25935,
+      "support": [
+        3,
+        5,
+        7,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 187,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 33915,
+      "support": [
+        3,
+        5,
+        7,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 143,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 36465,
+      "support": [
+        3,
+        5,
+        11,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 133,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 40755,
+      "support": [
+        3,
+        5,
+        11,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 119,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 53295,
+      "support": [
+        3,
+        5,
+        11,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 91,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 62985,
+      "support": [
+        3,
+        5,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 77,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 51051,
+      "support": [
+        3,
+        7,
+        11,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 95,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 57057,
+      "support": [
+        3,
+        7,
+        11,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 85,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 74613,
+      "support": [
+        3,
+        7,
+        11,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 65,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 88179,
+      "support": [
+        3,
+        7,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 55,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 138567,
+      "support": [
+        3,
+        11,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 35,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 17
+    },
+    {
+      "modulus": 85085,
+      "support": [
+        5,
+        7,
+        11,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 57,
+      "minimum_phase_survivor_fibre_count": 38,
+      "maximizing_zero_nonzero_pattern_count": 6
+    },
+    {
+      "modulus": 95095,
+      "support": [
+        5,
+        7,
+        11,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 51,
+      "minimum_phase_survivor_fibre_count": 34,
+      "maximizing_zero_nonzero_pattern_count": 6
+    },
+    {
+      "modulus": 124355,
+      "support": [
+        5,
+        7,
+        11,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 39,
+      "minimum_phase_survivor_fibre_count": 26,
+      "maximizing_zero_nonzero_pattern_count": 6
+    },
+    {
+      "modulus": 146965,
+      "support": [
+        5,
+        7,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 33,
+      "minimum_phase_survivor_fibre_count": 22,
+      "maximizing_zero_nonzero_pattern_count": 6
+    },
+    {
+      "modulus": 230945,
+      "support": [
+        5,
+        11,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 21,
+      "minimum_phase_survivor_fibre_count": 14,
+      "maximizing_zero_nonzero_pattern_count": 6
+    },
+    {
+      "modulus": 323323,
+      "support": [
+        7,
+        11,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 15,
+      "minimum_phase_survivor_fibre_count": 10,
+      "maximizing_zero_nonzero_pattern_count": 6
+    },
+    {
+      "modulus": 255255,
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17
+      ],
+      "all_one_survivor_fibre_count": 19,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 38
+    },
+    {
+      "modulus": 285285,
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        19
+      ],
+      "all_one_survivor_fibre_count": 17,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 38
+    },
+    {
+      "modulus": 373065,
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 13,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 38
+    },
+    {
+      "modulus": 440895,
+      "support": [
+        3,
+        5,
+        7,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 11,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 38
+    },
+    {
+      "modulus": 692835,
+      "support": [
+        3,
+        5,
+        11,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 7,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 38
+    },
+    {
+      "modulus": 969969,
+      "support": [
+        3,
+        7,
+        11,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 5,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 38
+    },
+    {
+      "modulus": 1616615,
+      "support": [
+        5,
+        7,
+        11,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 3,
+      "minimum_phase_survivor_fibre_count": 2,
+      "maximizing_zero_nonzero_pattern_count": 22
+    },
+    {
+      "modulus": 4849845,
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19
+      ],
+      "all_one_survivor_fibre_count": 1,
+      "minimum_phase_survivor_fibre_count": 0,
+      "maximizing_zero_nonzero_pattern_count": 86
+    }
+  ],
+  "weighted_counts": {
+    "period": 4849845,
+    "deleted": 25127,
+    "survivors": 4824718,
+    "raw_hinge": 746946,
+    "deleted_hinge": 40,
+    "full_squarefree_load": 6762315,
+    "surviving_full_squarefree_load": 6754324
+  },
+  "load_histogram": {
+    "0": 1658880,
+    "1": 2020608,
+    "3": 928512,
+    "7": 213104,
+    "15": 26800,
+    "31": 1872,
+    "63": 68,
+    "127": 1
+  },
+  "positive_deleted_points": [
+    {
+      "zeros": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "ones": [
+        13,
+        17,
+        19
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        0
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        5,
+        7,
+        13
+      ],
+      "ones": [
+        11,
+        17,
+        19
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        1
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        5,
+        7,
+        17
+      ],
+      "ones": [
+        11,
+        13,
+        19
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        2
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        5,
+        7,
+        19
+      ],
+      "ones": [
+        11,
+        13,
+        17
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        3
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        5,
+        11,
+        13
+      ],
+      "ones": [
+        7,
+        17,
+        19
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        4
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        5,
+        11,
+        17
+      ],
+      "ones": [
+        7,
+        13,
+        19
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        5
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        5,
+        11,
+        19
+      ],
+      "ones": [
+        7,
+        13,
+        17
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        6
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        5,
+        13,
+        17
+      ],
+      "ones": [
+        7,
+        11,
+        19
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        7
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        5,
+        13,
+        19
+      ],
+      "ones": [
+        7,
+        11,
+        17
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        8
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        5,
+        17,
+        19
+      ],
+      "ones": [
+        7,
+        11,
+        13
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        9
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        7,
+        11,
+        13
+      ],
+      "ones": [
+        5,
+        17,
+        19
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        10
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        7,
+        11,
+        17
+      ],
+      "ones": [
+        5,
+        13,
+        19
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        11
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        7,
+        11,
+        19
+      ],
+      "ones": [
+        5,
+        13,
+        17
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        12
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        7,
+        13,
+        17
+      ],
+      "ones": [
+        5,
+        11,
+        19
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        13
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        7,
+        13,
+        19
+      ],
+      "ones": [
+        5,
+        11,
+        17
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        14
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        7,
+        17,
+        19
+      ],
+      "ones": [
+        5,
+        11,
+        13
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        15
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        11,
+        13,
+        17
+      ],
+      "ones": [
+        5,
+        7,
+        19
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        16
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        11,
+        13,
+        19
+      ],
+      "ones": [
+        5,
+        7,
+        17
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        17
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        11,
+        17,
+        19
+      ],
+      "ones": [
+        5,
+        7,
+        13
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        18
+      ]
+    },
+    {
+      "zeros": [
+        3,
+        13,
+        17,
+        19
+      ],
+      "ones": [
+        5,
+        7,
+        11
+      ],
+      "weight": 1,
+      "hinge": 2,
+      "hit_indices": [
+        19
+      ]
+    }
+  ],
+  "weighted_b_counts": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "weighted_Q_counts": [
+    [
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2
+    ]
+  ],
+  "raw_hinge": "14646/95095",
+  "exact_projection_and_deleted_hinge": "8/969969",
+  "finite_squarefree_query_sum": "3377162/2412359",
+  "scope_boundary": "Finite nonunit squarefree D0 only. A larger finite query family for the same law can retain these maximizing phases and this debit. P-adic all-height use requires explicitly lifting nu with independent Haar higher digits; no full R_P value or target bound is claimed by this check.",
+  "checks": {
+    "fibre_cardinality_3": true,
+    "all_one_phase_maximizes_3": true,
+    "fibre_cardinality_5": true,
+    "all_one_phase_maximizes_5": true,
+    "fibre_cardinality_7": true,
+    "all_one_phase_maximizes_7": true,
+    "fibre_cardinality_11": true,
+    "all_one_phase_maximizes_11": true,
+    "fibre_cardinality_13": true,
+    "all_one_phase_maximizes_13": true,
+    "fibre_cardinality_17": true,
+    "all_one_phase_maximizes_17": true,
+    "fibre_cardinality_19": true,
+    "all_one_phase_maximizes_19": true,
+    "fibre_cardinality_15": true,
+    "all_one_phase_maximizes_15": true,
+    "fibre_cardinality_21": true,
+    "all_one_phase_maximizes_21": true,
+    "fibre_cardinality_33": true,
+    "all_one_phase_maximizes_33": true,
+    "fibre_cardinality_39": true,
+    "all_one_phase_maximizes_39": true,
+    "fibre_cardinality_51": true,
+    "all_one_phase_maximizes_51": true,
+    "fibre_cardinality_57": true,
+    "all_one_phase_maximizes_57": true,
+    "fibre_cardinality_35": true,
+    "all_one_phase_maximizes_35": true,
+    "fibre_cardinality_55": true,
+    "all_one_phase_maximizes_55": true,
+    "fibre_cardinality_65": true,
+    "all_one_phase_maximizes_65": true,
+    "fibre_cardinality_85": true,
+    "all_one_phase_maximizes_85": true,
+    "fibre_cardinality_95": true,
+    "all_one_phase_maximizes_95": true,
+    "fibre_cardinality_77": true,
+    "all_one_phase_maximizes_77": true,
+    "fibre_cardinality_91": true,
+    "all_one_phase_maximizes_91": true,
+    "fibre_cardinality_119": true,
+    "all_one_phase_maximizes_119": true,
+    "fibre_cardinality_133": true,
+    "all_one_phase_maximizes_133": true,
+    "fibre_cardinality_143": true,
+    "all_one_phase_maximizes_143": true,
+    "fibre_cardinality_187": true,
+    "all_one_phase_maximizes_187": true,
+    "fibre_cardinality_209": true,
+    "all_one_phase_maximizes_209": true,
+    "fibre_cardinality_221": true,
+    "all_one_phase_maximizes_221": true,
+    "fibre_cardinality_247": true,
+    "all_one_phase_maximizes_247": true,
+    "fibre_cardinality_323": true,
+    "all_one_phase_maximizes_323": true,
+    "fibre_cardinality_105": true,
+    "all_one_phase_maximizes_105": true,
+    "fibre_cardinality_165": true,
+    "all_one_phase_maximizes_165": true,
+    "fibre_cardinality_195": true,
+    "all_one_phase_maximizes_195": true,
+    "fibre_cardinality_255": true,
+    "all_one_phase_maximizes_255": true,
+    "fibre_cardinality_285": true,
+    "all_one_phase_maximizes_285": true,
+    "fibre_cardinality_231": true,
+    "all_one_phase_maximizes_231": true,
+    "fibre_cardinality_273": true,
+    "all_one_phase_maximizes_273": true,
+    "fibre_cardinality_357": true,
+    "all_one_phase_maximizes_357": true,
+    "fibre_cardinality_399": true,
+    "all_one_phase_maximizes_399": true,
+    "fibre_cardinality_429": true,
+    "all_one_phase_maximizes_429": true,
+    "fibre_cardinality_561": true,
+    "all_one_phase_maximizes_561": true,
+    "fibre_cardinality_627": true,
+    "all_one_phase_maximizes_627": true,
+    "fibre_cardinality_663": true,
+    "all_one_phase_maximizes_663": true,
+    "fibre_cardinality_741": true,
+    "all_one_phase_maximizes_741": true,
+    "fibre_cardinality_969": true,
+    "all_one_phase_maximizes_969": true,
+    "fibre_cardinality_385": true,
+    "all_one_phase_maximizes_385": true,
+    "fibre_cardinality_455": true,
+    "all_one_phase_maximizes_455": true,
+    "fibre_cardinality_595": true,
+    "all_one_phase_maximizes_595": true,
+    "fibre_cardinality_665": true,
+    "all_one_phase_maximizes_665": true,
+    "fibre_cardinality_715": true,
+    "all_one_phase_maximizes_715": true,
+    "fibre_cardinality_935": true,
+    "all_one_phase_maximizes_935": true,
+    "fibre_cardinality_1045": true,
+    "all_one_phase_maximizes_1045": true,
+    "fibre_cardinality_1105": true,
+    "all_one_phase_maximizes_1105": true,
+    "fibre_cardinality_1235": true,
+    "all_one_phase_maximizes_1235": true,
+    "fibre_cardinality_1615": true,
+    "all_one_phase_maximizes_1615": true,
+    "fibre_cardinality_1001": true,
+    "all_one_phase_maximizes_1001": true,
+    "fibre_cardinality_1309": true,
+    "all_one_phase_maximizes_1309": true,
+    "fibre_cardinality_1463": true,
+    "all_one_phase_maximizes_1463": true,
+    "fibre_cardinality_1547": true,
+    "all_one_phase_maximizes_1547": true,
+    "fibre_cardinality_1729": true,
+    "all_one_phase_maximizes_1729": true,
+    "fibre_cardinality_2261": true,
+    "all_one_phase_maximizes_2261": true,
+    "fibre_cardinality_2431": true,
+    "all_one_phase_maximizes_2431": true,
+    "fibre_cardinality_2717": true,
+    "all_one_phase_maximizes_2717": true,
+    "fibre_cardinality_3553": true,
+    "all_one_phase_maximizes_3553": true,
+    "fibre_cardinality_4199": true,
+    "all_one_phase_maximizes_4199": true,
+    "fibre_cardinality_1155": true,
+    "all_one_phase_maximizes_1155": true,
+    "fibre_cardinality_1365": true,
+    "all_one_phase_maximizes_1365": true,
+    "fibre_cardinality_1785": true,
+    "all_one_phase_maximizes_1785": true,
+    "fibre_cardinality_1995": true,
+    "all_one_phase_maximizes_1995": true,
+    "fibre_cardinality_2145": true,
+    "all_one_phase_maximizes_2145": true,
+    "fibre_cardinality_2805": true,
+    "all_one_phase_maximizes_2805": true,
+    "fibre_cardinality_3135": true,
+    "all_one_phase_maximizes_3135": true,
+    "fibre_cardinality_3315": true,
+    "all_one_phase_maximizes_3315": true,
+    "fibre_cardinality_3705": true,
+    "all_one_phase_maximizes_3705": true,
+    "fibre_cardinality_4845": true,
+    "all_one_phase_maximizes_4845": true,
+    "fibre_cardinality_3003": true,
+    "all_one_phase_maximizes_3003": true,
+    "fibre_cardinality_3927": true,
+    "all_one_phase_maximizes_3927": true,
+    "fibre_cardinality_4389": true,
+    "all_one_phase_maximizes_4389": true,
+    "fibre_cardinality_4641": true,
+    "all_one_phase_maximizes_4641": true,
+    "fibre_cardinality_5187": true,
+    "all_one_phase_maximizes_5187": true,
+    "fibre_cardinality_6783": true,
+    "all_one_phase_maximizes_6783": true,
+    "fibre_cardinality_7293": true,
+    "all_one_phase_maximizes_7293": true,
+    "fibre_cardinality_8151": true,
+    "all_one_phase_maximizes_8151": true,
+    "fibre_cardinality_10659": true,
+    "all_one_phase_maximizes_10659": true,
+    "fibre_cardinality_12597": true,
+    "all_one_phase_maximizes_12597": true,
+    "fibre_cardinality_5005": true,
+    "all_one_phase_maximizes_5005": true,
+    "fibre_cardinality_6545": true,
+    "all_one_phase_maximizes_6545": true,
+    "fibre_cardinality_7315": true,
+    "all_one_phase_maximizes_7315": true,
+    "fibre_cardinality_7735": true,
+    "all_one_phase_maximizes_7735": true,
+    "fibre_cardinality_8645": true,
+    "all_one_phase_maximizes_8645": true,
+    "fibre_cardinality_11305": true,
+    "all_one_phase_maximizes_11305": true,
+    "fibre_cardinality_12155": true,
+    "all_one_phase_maximizes_12155": true,
+    "fibre_cardinality_13585": true,
+    "all_one_phase_maximizes_13585": true,
+    "fibre_cardinality_17765": true,
+    "all_one_phase_maximizes_17765": true,
+    "fibre_cardinality_20995": true,
+    "all_one_phase_maximizes_20995": true,
+    "fibre_cardinality_17017": true,
+    "all_one_phase_maximizes_17017": true,
+    "fibre_cardinality_19019": true,
+    "all_one_phase_maximizes_19019": true,
+    "fibre_cardinality_24871": true,
+    "all_one_phase_maximizes_24871": true,
+    "fibre_cardinality_29393": true,
+    "all_one_phase_maximizes_29393": true,
+    "fibre_cardinality_46189": true,
+    "all_one_phase_maximizes_46189": true,
+    "fibre_cardinality_15015": true,
+    "all_one_phase_maximizes_15015": true,
+    "fibre_cardinality_19635": true,
+    "all_one_phase_maximizes_19635": true,
+    "fibre_cardinality_21945": true,
+    "all_one_phase_maximizes_21945": true,
+    "fibre_cardinality_23205": true,
+    "all_one_phase_maximizes_23205": true,
+    "fibre_cardinality_25935": true,
+    "all_one_phase_maximizes_25935": true,
+    "fibre_cardinality_33915": true,
+    "all_one_phase_maximizes_33915": true,
+    "fibre_cardinality_36465": true,
+    "all_one_phase_maximizes_36465": true,
+    "fibre_cardinality_40755": true,
+    "all_one_phase_maximizes_40755": true,
+    "fibre_cardinality_53295": true,
+    "all_one_phase_maximizes_53295": true,
+    "fibre_cardinality_62985": true,
+    "all_one_phase_maximizes_62985": true,
+    "fibre_cardinality_51051": true,
+    "all_one_phase_maximizes_51051": true,
+    "fibre_cardinality_57057": true,
+    "all_one_phase_maximizes_57057": true,
+    "fibre_cardinality_74613": true,
+    "all_one_phase_maximizes_74613": true,
+    "fibre_cardinality_88179": true,
+    "all_one_phase_maximizes_88179": true,
+    "fibre_cardinality_138567": true,
+    "all_one_phase_maximizes_138567": true,
+    "fibre_cardinality_85085": true,
+    "all_one_phase_maximizes_85085": true,
+    "fibre_cardinality_95095": true,
+    "all_one_phase_maximizes_95095": true,
+    "fibre_cardinality_124355": true,
+    "all_one_phase_maximizes_124355": true,
+    "fibre_cardinality_146965": true,
+    "all_one_phase_maximizes_146965": true,
+    "fibre_cardinality_230945": true,
+    "all_one_phase_maximizes_230945": true,
+    "fibre_cardinality_323323": true,
+    "all_one_phase_maximizes_323323": true,
+    "fibre_cardinality_255255": true,
+    "all_one_phase_maximizes_255255": true,
+    "fibre_cardinality_285285": true,
+    "all_one_phase_maximizes_285285": true,
+    "fibre_cardinality_373065": true,
+    "all_one_phase_maximizes_373065": true,
+    "fibre_cardinality_440895": true,
+    "all_one_phase_maximizes_440895": true,
+    "fibre_cardinality_692835": true,
+    "all_one_phase_maximizes_692835": true,
+    "fibre_cardinality_969969": true,
+    "all_one_phase_maximizes_969969": true,
+    "fibre_cardinality_1616615": true,
+    "all_one_phase_maximizes_1616615": true,
+    "fibre_cardinality_4849845": true,
+    "all_one_phase_maximizes_4849845": true,
+    "query_inventory_127": true,
+    "phase_pattern_count": true,
+    "phase_free_pattern_count": true,
+    "total_period": true,
+    "unchanged_deleted_set": true,
+    "unchanged_survivor_set": true,
+    "exact_positive_deleted_pattern_count": true,
+    "positive_deleted_geometry": true,
+    "weighted_b_0": true,
+    "weighted_Q_0_0": true,
+    "weighted_Q_0_1": true,
+    "weighted_Q_0_2": true,
+    "weighted_Q_0_3": true,
+    "weighted_Q_0_4": true,
+    "weighted_Q_0_5": true,
+    "weighted_Q_0_6": true,
+    "weighted_Q_0_7": true,
+    "weighted_Q_0_8": true,
+    "weighted_Q_0_9": true,
+    "weighted_Q_0_10": true,
+    "weighted_Q_0_11": true,
+    "weighted_Q_0_12": true,
+    "weighted_Q_0_13": true,
+    "weighted_Q_0_14": true,
+    "weighted_Q_0_15": true,
+    "weighted_Q_0_16": true,
+    "weighted_Q_0_17": true,
+    "weighted_Q_0_18": true,
+    "weighted_Q_0_19": true,
+    "weighted_b_1": true,
+    "weighted_Q_1_0": true,
+    "weighted_Q_1_1": true,
+    "weighted_Q_1_2": true,
+    "weighted_Q_1_3": true,
+    "weighted_Q_1_4": true,
+    "weighted_Q_1_5": true,
+    "weighted_Q_1_6": true,
+    "weighted_Q_1_7": true,
+    "weighted_Q_1_8": true,
+    "weighted_Q_1_9": true,
+    "weighted_Q_1_10": true,
+    "weighted_Q_1_11": true,
+    "weighted_Q_1_12": true,
+    "weighted_Q_1_13": true,
+    "weighted_Q_1_14": true,
+    "weighted_Q_1_15": true,
+    "weighted_Q_1_16": true,
+    "weighted_Q_1_17": true,
+    "weighted_Q_1_18": true,
+    "weighted_Q_1_19": true,
+    "weighted_b_2": true,
+    "weighted_Q_2_0": true,
+    "weighted_Q_2_1": true,
+    "weighted_Q_2_2": true,
+    "weighted_Q_2_3": true,
+    "weighted_Q_2_4": true,
+    "weighted_Q_2_5": true,
+    "weighted_Q_2_6": true,
+    "weighted_Q_2_7": true,
+    "weighted_Q_2_8": true,
+    "weighted_Q_2_9": true,
+    "weighted_Q_2_10": true,
+    "weighted_Q_2_11": true,
+    "weighted_Q_2_12": true,
+    "weighted_Q_2_13": true,
+    "weighted_Q_2_14": true,
+    "weighted_Q_2_15": true,
+    "weighted_Q_2_16": true,
+    "weighted_Q_2_17": true,
+    "weighted_Q_2_18": true,
+    "weighted_Q_2_19": true,
+    "weighted_b_3": true,
+    "weighted_Q_3_0": true,
+    "weighted_Q_3_1": true,
+    "weighted_Q_3_2": true,
+    "weighted_Q_3_3": true,
+    "weighted_Q_3_4": true,
+    "weighted_Q_3_5": true,
+    "weighted_Q_3_6": true,
+    "weighted_Q_3_7": true,
+    "weighted_Q_3_8": true,
+    "weighted_Q_3_9": true,
+    "weighted_Q_3_10": true,
+    "weighted_Q_3_11": true,
+    "weighted_Q_3_12": true,
+    "weighted_Q_3_13": true,
+    "weighted_Q_3_14": true,
+    "weighted_Q_3_15": true,
+    "weighted_Q_3_16": true,
+    "weighted_Q_3_17": true,
+    "weighted_Q_3_18": true,
+    "weighted_Q_3_19": true,
+    "weighted_b_4": true,
+    "weighted_Q_4_0": true,
+    "weighted_Q_4_1": true,
+    "weighted_Q_4_2": true,
+    "weighted_Q_4_3": true,
+    "weighted_Q_4_4": true,
+    "weighted_Q_4_5": true,
+    "weighted_Q_4_6": true,
+    "weighted_Q_4_7": true,
+    "weighted_Q_4_8": true,
+    "weighted_Q_4_9": true,
+    "weighted_Q_4_10": true,
+    "weighted_Q_4_11": true,
+    "weighted_Q_4_12": true,
+    "weighted_Q_4_13": true,
+    "weighted_Q_4_14": true,
+    "weighted_Q_4_15": true,
+    "weighted_Q_4_16": true,
+    "weighted_Q_4_17": true,
+    "weighted_Q_4_18": true,
+    "weighted_Q_4_19": true,
+    "weighted_b_5": true,
+    "weighted_Q_5_0": true,
+    "weighted_Q_5_1": true,
+    "weighted_Q_5_2": true,
+    "weighted_Q_5_3": true,
+    "weighted_Q_5_4": true,
+    "weighted_Q_5_5": true,
+    "weighted_Q_5_6": true,
+    "weighted_Q_5_7": true,
+    "weighted_Q_5_8": true,
+    "weighted_Q_5_9": true,
+    "weighted_Q_5_10": true,
+    "weighted_Q_5_11": true,
+    "weighted_Q_5_12": true,
+    "weighted_Q_5_13": true,
+    "weighted_Q_5_14": true,
+    "weighted_Q_5_15": true,
+    "weighted_Q_5_16": true,
+    "weighted_Q_5_17": true,
+    "weighted_Q_5_18": true,
+    "weighted_Q_5_19": true,
+    "weighted_b_6": true,
+    "weighted_Q_6_0": true,
+    "weighted_Q_6_1": true,
+    "weighted_Q_6_2": true,
+    "weighted_Q_6_3": true,
+    "weighted_Q_6_4": true,
+    "weighted_Q_6_5": true,
+    "weighted_Q_6_6": true,
+    "weighted_Q_6_7": true,
+    "weighted_Q_6_8": true,
+    "weighted_Q_6_9": true,
+    "weighted_Q_6_10": true,
+    "weighted_Q_6_11": true,
+    "weighted_Q_6_12": true,
+    "weighted_Q_6_13": true,
+    "weighted_Q_6_14": true,
+    "weighted_Q_6_15": true,
+    "weighted_Q_6_16": true,
+    "weighted_Q_6_17": true,
+    "weighted_Q_6_18": true,
+    "weighted_Q_6_19": true,
+    "weighted_b_7": true,
+    "weighted_Q_7_0": true,
+    "weighted_Q_7_1": true,
+    "weighted_Q_7_2": true,
+    "weighted_Q_7_3": true,
+    "weighted_Q_7_4": true,
+    "weighted_Q_7_5": true,
+    "weighted_Q_7_6": true,
+    "weighted_Q_7_7": true,
+    "weighted_Q_7_8": true,
+    "weighted_Q_7_9": true,
+    "weighted_Q_7_10": true,
+    "weighted_Q_7_11": true,
+    "weighted_Q_7_12": true,
+    "weighted_Q_7_13": true,
+    "weighted_Q_7_14": true,
+    "weighted_Q_7_15": true,
+    "weighted_Q_7_16": true,
+    "weighted_Q_7_17": true,
+    "weighted_Q_7_18": true,
+    "weighted_Q_7_19": true,
+    "weighted_b_8": true,
+    "weighted_Q_8_0": true,
+    "weighted_Q_8_1": true,
+    "weighted_Q_8_2": true,
+    "weighted_Q_8_3": true,
+    "weighted_Q_8_4": true,
+    "weighted_Q_8_5": true,
+    "weighted_Q_8_6": true,
+    "weighted_Q_8_7": true,
+    "weighted_Q_8_8": true,
+    "weighted_Q_8_9": true,
+    "weighted_Q_8_10": true,
+    "weighted_Q_8_11": true,
+    "weighted_Q_8_12": true,
+    "weighted_Q_8_13": true,
+    "weighted_Q_8_14": true,
+    "weighted_Q_8_15": true,
+    "weighted_Q_8_16": true,
+    "weighted_Q_8_17": true,
+    "weighted_Q_8_18": true,
+    "weighted_Q_8_19": true,
+    "weighted_b_9": true,
+    "weighted_Q_9_0": true,
+    "weighted_Q_9_1": true,
+    "weighted_Q_9_2": true,
+    "weighted_Q_9_3": true,
+    "weighted_Q_9_4": true,
+    "weighted_Q_9_5": true,
+    "weighted_Q_9_6": true,
+    "weighted_Q_9_7": true,
+    "weighted_Q_9_8": true,
+    "weighted_Q_9_9": true,
+    "weighted_Q_9_10": true,
+    "weighted_Q_9_11": true,
+    "weighted_Q_9_12": true,
+    "weighted_Q_9_13": true,
+    "weighted_Q_9_14": true,
+    "weighted_Q_9_15": true,
+    "weighted_Q_9_16": true,
+    "weighted_Q_9_17": true,
+    "weighted_Q_9_18": true,
+    "weighted_Q_9_19": true,
+    "weighted_b_10": true,
+    "weighted_Q_10_0": true,
+    "weighted_Q_10_1": true,
+    "weighted_Q_10_2": true,
+    "weighted_Q_10_3": true,
+    "weighted_Q_10_4": true,
+    "weighted_Q_10_5": true,
+    "weighted_Q_10_6": true,
+    "weighted_Q_10_7": true,
+    "weighted_Q_10_8": true,
+    "weighted_Q_10_9": true,
+    "weighted_Q_10_10": true,
+    "weighted_Q_10_11": true,
+    "weighted_Q_10_12": true,
+    "weighted_Q_10_13": true,
+    "weighted_Q_10_14": true,
+    "weighted_Q_10_15": true,
+    "weighted_Q_10_16": true,
+    "weighted_Q_10_17": true,
+    "weighted_Q_10_18": true,
+    "weighted_Q_10_19": true,
+    "weighted_b_11": true,
+    "weighted_Q_11_0": true,
+    "weighted_Q_11_1": true,
+    "weighted_Q_11_2": true,
+    "weighted_Q_11_3": true,
+    "weighted_Q_11_4": true,
+    "weighted_Q_11_5": true,
+    "weighted_Q_11_6": true,
+    "weighted_Q_11_7": true,
+    "weighted_Q_11_8": true,
+    "weighted_Q_11_9": true,
+    "weighted_Q_11_10": true,
+    "weighted_Q_11_11": true,
+    "weighted_Q_11_12": true,
+    "weighted_Q_11_13": true,
+    "weighted_Q_11_14": true,
+    "weighted_Q_11_15": true,
+    "weighted_Q_11_16": true,
+    "weighted_Q_11_17": true,
+    "weighted_Q_11_18": true,
+    "weighted_Q_11_19": true,
+    "weighted_b_12": true,
+    "weighted_Q_12_0": true,
+    "weighted_Q_12_1": true,
+    "weighted_Q_12_2": true,
+    "weighted_Q_12_3": true,
+    "weighted_Q_12_4": true,
+    "weighted_Q_12_5": true,
+    "weighted_Q_12_6": true,
+    "weighted_Q_12_7": true,
+    "weighted_Q_12_8": true,
+    "weighted_Q_12_9": true,
+    "weighted_Q_12_10": true,
+    "weighted_Q_12_11": true,
+    "weighted_Q_12_12": true,
+    "weighted_Q_12_13": true,
+    "weighted_Q_12_14": true,
+    "weighted_Q_12_15": true,
+    "weighted_Q_12_16": true,
+    "weighted_Q_12_17": true,
+    "weighted_Q_12_18": true,
+    "weighted_Q_12_19": true,
+    "weighted_b_13": true,
+    "weighted_Q_13_0": true,
+    "weighted_Q_13_1": true,
+    "weighted_Q_13_2": true,
+    "weighted_Q_13_3": true,
+    "weighted_Q_13_4": true,
+    "weighted_Q_13_5": true,
+    "weighted_Q_13_6": true,
+    "weighted_Q_13_7": true,
+    "weighted_Q_13_8": true,
+    "weighted_Q_13_9": true,
+    "weighted_Q_13_10": true,
+    "weighted_Q_13_11": true,
+    "weighted_Q_13_12": true,
+    "weighted_Q_13_13": true,
+    "weighted_Q_13_14": true,
+    "weighted_Q_13_15": true,
+    "weighted_Q_13_16": true,
+    "weighted_Q_13_17": true,
+    "weighted_Q_13_18": true,
+    "weighted_Q_13_19": true,
+    "weighted_b_14": true,
+    "weighted_Q_14_0": true,
+    "weighted_Q_14_1": true,
+    "weighted_Q_14_2": true,
+    "weighted_Q_14_3": true,
+    "weighted_Q_14_4": true,
+    "weighted_Q_14_5": true,
+    "weighted_Q_14_6": true,
+    "weighted_Q_14_7": true,
+    "weighted_Q_14_8": true,
+    "weighted_Q_14_9": true,
+    "weighted_Q_14_10": true,
+    "weighted_Q_14_11": true,
+    "weighted_Q_14_12": true,
+    "weighted_Q_14_13": true,
+    "weighted_Q_14_14": true,
+    "weighted_Q_14_15": true,
+    "weighted_Q_14_16": true,
+    "weighted_Q_14_17": true,
+    "weighted_Q_14_18": true,
+    "weighted_Q_14_19": true,
+    "weighted_b_15": true,
+    "weighted_Q_15_0": true,
+    "weighted_Q_15_1": true,
+    "weighted_Q_15_2": true,
+    "weighted_Q_15_3": true,
+    "weighted_Q_15_4": true,
+    "weighted_Q_15_5": true,
+    "weighted_Q_15_6": true,
+    "weighted_Q_15_7": true,
+    "weighted_Q_15_8": true,
+    "weighted_Q_15_9": true,
+    "weighted_Q_15_10": true,
+    "weighted_Q_15_11": true,
+    "weighted_Q_15_12": true,
+    "weighted_Q_15_13": true,
+    "weighted_Q_15_14": true,
+    "weighted_Q_15_15": true,
+    "weighted_Q_15_16": true,
+    "weighted_Q_15_17": true,
+    "weighted_Q_15_18": true,
+    "weighted_Q_15_19": true,
+    "weighted_b_16": true,
+    "weighted_Q_16_0": true,
+    "weighted_Q_16_1": true,
+    "weighted_Q_16_2": true,
+    "weighted_Q_16_3": true,
+    "weighted_Q_16_4": true,
+    "weighted_Q_16_5": true,
+    "weighted_Q_16_6": true,
+    "weighted_Q_16_7": true,
+    "weighted_Q_16_8": true,
+    "weighted_Q_16_9": true,
+    "weighted_Q_16_10": true,
+    "weighted_Q_16_11": true,
+    "weighted_Q_16_12": true,
+    "weighted_Q_16_13": true,
+    "weighted_Q_16_14": true,
+    "weighted_Q_16_15": true,
+    "weighted_Q_16_16": true,
+    "weighted_Q_16_17": true,
+    "weighted_Q_16_18": true,
+    "weighted_Q_16_19": true,
+    "weighted_b_17": true,
+    "weighted_Q_17_0": true,
+    "weighted_Q_17_1": true,
+    "weighted_Q_17_2": true,
+    "weighted_Q_17_3": true,
+    "weighted_Q_17_4": true,
+    "weighted_Q_17_5": true,
+    "weighted_Q_17_6": true,
+    "weighted_Q_17_7": true,
+    "weighted_Q_17_8": true,
+    "weighted_Q_17_9": true,
+    "weighted_Q_17_10": true,
+    "weighted_Q_17_11": true,
+    "weighted_Q_17_12": true,
+    "weighted_Q_17_13": true,
+    "weighted_Q_17_14": true,
+    "weighted_Q_17_15": true,
+    "weighted_Q_17_16": true,
+    "weighted_Q_17_17": true,
+    "weighted_Q_17_18": true,
+    "weighted_Q_17_19": true,
+    "weighted_b_18": true,
+    "weighted_Q_18_0": true,
+    "weighted_Q_18_1": true,
+    "weighted_Q_18_2": true,
+    "weighted_Q_18_3": true,
+    "weighted_Q_18_4": true,
+    "weighted_Q_18_5": true,
+    "weighted_Q_18_6": true,
+    "weighted_Q_18_7": true,
+    "weighted_Q_18_8": true,
+    "weighted_Q_18_9": true,
+    "weighted_Q_18_10": true,
+    "weighted_Q_18_11": true,
+    "weighted_Q_18_12": true,
+    "weighted_Q_18_13": true,
+    "weighted_Q_18_14": true,
+    "weighted_Q_18_15": true,
+    "weighted_Q_18_16": true,
+    "weighted_Q_18_17": true,
+    "weighted_Q_18_18": true,
+    "weighted_Q_18_19": true,
+    "weighted_b_19": true,
+    "weighted_Q_19_0": true,
+    "weighted_Q_19_1": true,
+    "weighted_Q_19_2": true,
+    "weighted_Q_19_3": true,
+    "weighted_Q_19_4": true,
+    "weighted_Q_19_5": true,
+    "weighted_Q_19_6": true,
+    "weighted_Q_19_7": true,
+    "weighted_Q_19_8": true,
+    "weighted_Q_19_9": true,
+    "weighted_Q_19_10": true,
+    "weighted_Q_19_11": true,
+    "weighted_Q_19_12": true,
+    "weighted_Q_19_13": true,
+    "weighted_Q_19_14": true,
+    "weighted_Q_19_15": true,
+    "weighted_Q_19_16": true,
+    "weighted_Q_19_17": true,
+    "weighted_Q_19_18": true,
+    "weighted_Q_19_19": true,
+    "histogram_polynomial": true,
+    "raw_hinge_polynomial": true,
+    "unconditional_load_product": true,
+    "conditional_load_fibre_sum": true,
+    "projection_exact": true,
+    "projection_saturates_actual_debit": true,
+    "raw_hinge_exact": true,
+    "finite_query_exact": true,
+    "finite_hinge_certificate": true
+  },
+  "passed_count": 691
+}

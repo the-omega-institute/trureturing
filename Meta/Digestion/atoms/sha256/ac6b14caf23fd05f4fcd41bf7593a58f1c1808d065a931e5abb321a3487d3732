@@ -1,0 +1,43 @@
+### 235.1 固定接口与两种优化任务
+
+固定整数 $d\ge2$、$m\ge d$，输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$，以及三个指定经典标签。任取固定单位输出 $r_1,r_2,r_3\in O$，记 $P_j=|r_j\rangle\langle r_j|$。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^3|j\rangle\langle j|\otimes
+\frac13\operatorname{Tr}(X)P_j.
+\tag{235.AD.1}
+$$
+输出向量可以相同；标签正交承担各分支的区别。
+
+候选遍历同接口的全部 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^3|j\rangle\langle j|\otimes
+\sum_{a=1}^{k_j}C_{j,a}XC_{j,a}^\dagger,
+\qquad\sum_{j,a}C_{j,a}^\dagger C_{j,a}=I_d.
+\tag{235.AD.2}
+$$
+各分支采用最小 Kraus 表示，故
+$$
+K(\mathcal S)=\sum_{j=1}^3k_j
+=\operatorname{rank}J_{\mathcal S}.
+\tag{235.AD.3}
+$$
+允许零分支、任意量子输出方向及任意合法 Kraus 结构，保留经典记录块对角接口。
+
+对每个整数 $R\ge1$，定义
+$$
+D_R=\inf_{K(\mathcal S)\le R}\frac12\|\mathcal R-\mathcal S\|_\diamond,
+\tag{235.AD.4}
+$$
+$$
+U_R=\inf_{K(\mathcal S)\le R}\sup_{\rho\in\mathcal D(A)}
+\frac12\|\mathcal R(\rho)-\mathcal S(\rho)\|_1.
+\tag{235.AD.5}
+$$
+以下以 $\delta_\diamond(\mathcal R,\mathcal S)$、$\delta_0(\mathcal R,\mathcal S)$ 分别记（235.AD.4）、（235.AD.5）下确界内的单候选误差。第一项允许任意外部参考，第二项没有参考，故 $U_R\le D_R$。由 $m\ge d$，可将一个等距通道放入单个标签，得到总秩一的合法候选，所以全部上述候选集非空。预算零不允许 CPTP 候选，不纳入定义。
+
+置
+$$
+R_*=\left\lceil\frac{3d}{2}\right\rceil.
+\tag{235.AD.6}
+$$
+

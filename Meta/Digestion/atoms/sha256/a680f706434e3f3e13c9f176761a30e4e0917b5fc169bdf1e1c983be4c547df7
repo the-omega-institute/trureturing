@@ -1,0 +1,13 @@
+**定义 179.1（重置后的二步查询与统计任务）。** 固定定义178.1的一参数族及已知的充分近一参数 $r$，令 $\varepsilon=1-r$。一次查询把隐藏经典记忆重新均匀初始化，对信号连续施加两次同一处理器，只返回最终信号；不同查询使用独立的新记忆。允许任意参考系统，以及完整查询之间不依赖未知 $w$ 的自适应操作；不允许读取隐藏标签或干预一次查询的内部两步。由（178.2）、（178.9），查询通道 $\mathcal T_w:=\mathcal P_{r,2}^{w}$ 是相关矩阵为
+$$
+F(a,u(w))=
+\begin{pmatrix}1&a&u(w)\\a&1&a\\u(w)&a&1\end{pmatrix},
+\qquad
+a=\beta^2,\quad
+u(w)=u_0+2Jw,\quad u_0=r^2\cos(2\alpha)
+\tag{179.1}
+$$
+的实 Schur 通道，其中 $J=r^2\sin^2\alpha/x$、$0\le w\le\delta$。
+
+采用对称对数导数信息量：$\dot\sigma=(L\sigma+\sigma L)/2$ 时 $I(\sigma)=\operatorname{Tr}(\sigma L^2)$。用 $I_1(r,w)$ 表示一次查询在全部信号—参考输入上的最大信息量，用 $I_m(r,w)$ 表示 $m$ 次完整查询的全部允许自适应协议之信息量上确界。参数微分保持 $r$ 固定；端点信息量取连续单侧值。本文使用的参数无关通道下信息量单调性及经典程序模拟界，分别是量子估计与通道模拟的既有工具；经典模拟的具体形式可参见 Demkowicz-Dobrzański、Kołodyński、Guţă，*The elusive Heisenberg limit in quantum enhanced metrology*，arXiv:1201.3940v2，式（18）—（19）。一般可编程通道的自适应归约及其辨识下界见 Pirandola、Lupo，*Ultimate precision of adaptive noise estimation*，arXiv:1609.02160v3，补充材料式（85）；其要求程序界与可达界分开的限制在此保留。
+

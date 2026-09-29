@@ -1,0 +1,120 @@
+**第二步的近等距结构及首态混合程度。**
+
+首步后记
+
+$$
+\Gamma_1=|m_0\rangle_M\otimes|\alpha\rangle_{KE_1},
+\qquad
+|\alpha\rangle=V(e\otimes|0\rangle),\qquad
+\tau=\operatorname{Tr}_{E_1}|\alpha\rangle\langle\alpha|.
+\tag{40.13}
+$$
+
+第二次发射的记忆—新位纯态为
+
+$$
+|\Theta\rangle=a|m_0\rangle|0\rangle_{\mathcal B}
++b|0\rangle|1\rangle_{\mathcal B}.
+$$
+
+它的记忆边缘为 $\rho_2\succeq\mu I$。定义等距
+
+$$
+A:\mathcal B\longrightarrow K\otimes E_2\otimes E_1,
+\qquad
+A|b\rangle=(V\otimes I_{E_1})(\alpha\otimes|b\rangle).
+$$
+
+（40.12）的 $\phi_2$ 和 $\Theta$ 是同一正定 $\rho_2$ 在二维纯化空间上的纯化，
+所以存在酉 $U:\mathcal B\to K$，使
+$\phi_2=(I_M\otimes U)\Theta$。把（40.12）应用于第二步，并使用
+$\Theta$ 在新位上的最小 Schmidt 权重至少为 $\mu$，得到
+
+$$
+\boxed{
+\|A-U\otimes\zeta_2\|_{\rm op}
+\le\eta:=\frac{\zeta}{\sqrt\mu}
+=\frac{4\epsilon^{1/4}}{\mu}.
+}
+\tag{40.14}
+$$
+
+具体地，对差算子 $B$，
+$\|(I_M\otimes B)\Theta\|^2
+=\operatorname{Tr}(\rho_{\mathcal B}B^*B)\ge\mu\|B\|_{\rm op}^2$。
+
+记 $\lambda=\lambda_{\min}(\tau)$。
+下面利用首步与第二步确实使用同一个 $V$，证明
+
+$$
+\boxed{\lambda\le\eta.}
+\tag{40.15}
+$$
+
+若 $\lambda=0$ 无须证明。否则取 Schmidt 分解
+
+$$
+\alpha=\sum_{j=0}^1\sqrt{\lambda_j}\,q_j\otimes r_j,
+\qquad
+\lambda_0=1-\lambda,\quad\lambda_1=\lambda,
+$$
+
+并将 $\zeta_2$ 在 $E_1$ 的 $r_j$ 方向上的分量记为
+$\xi_j\in E_2$。由（40.14），对 $b=0$，误差向量
+
+$$
+z_j=\sqrt{\lambda_j}\,V(q_j\otimes|0\rangle)
+-U|0\rangle\otimes\xi_j
+$$
+
+满足 $\sum_j\|z_j\|^2\le\eta^2$；$\zeta_2$ 在其余 $E_1$ 方向的分量只会增加总误差。
+
+写 $e=\sum_j c_jq_j$，并令 $P=|U0\rangle\langle U0|$ 为输出 $K$ 上投影。
+由于 $P^\perp$ 消去各 $U0\otimes\xi_j$，Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+\|(P^\perp\otimes I)V(e\otimes|0\rangle)\|
+&=\left\|\sum_j\frac{c_j}{\sqrt{\lambda_j}}
+(P^\perp\otimes I)z_j\right\|\\
+&\le\left(\sum_j\frac{|c_j|^2}{\lambda_j}\right)^{1/2}
+\left(\sum_j\|z_j\|^2\right)^{1/2}
+\le\frac{\eta}{\sqrt\lambda}.
+\end{aligned}
+\tag{40.16}
+$$
+
+左侧平方恰为 $1-\langle U0|\tau|U0\rangle$，至少为 $\lambda$。
+所以 $\lambda^2\le\eta^2$，得到（40.15）。
+
+取 $k=q_0$ 为首态的最大特征向量，令 $\eta_1=r_0$。由（40.15），
+
+$$
+\|V(e\otimes|0\rangle)-k\otimes\eta_1\|
+\le\sqrt{2\eta}.
+\tag{40.17}
+$$
+
+若 $\tau$ 纯，按其唯一 Schmidt 项定义同样的 $k,\eta_1$。
+
+将（40.14）投影到 $r_0$ 后，置 $w=\xi_0/\sqrt{\lambda_0}$，得
+
+$$
+\|V(k\otimes\cdot)-U(\cdot)\otimes w\|_{\rm op}
+\le\eta/\sqrt{1-\eta}\le\sqrt2\,\eta
+$$
+
+（取 $\eta\le1/2$）。
+$|\|w\|-1|\le\sqrt2\,\eta$；取 $\eta\le1/4$ 可将 $w$ 归一化为单位
+$\eta_2$，并得到
+
+$$
+\boxed{
+\|V(k\otimes|b\rangle)-u_b\otimes\eta_2\|
+\le3\eta,\quad u_b=U|b\rangle,\quad b=0,1.
+}
+\tag{40.18}
+$$
+
+$u_0,u_1$ 是正交归一基。
+

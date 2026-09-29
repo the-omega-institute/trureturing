@@ -1,0 +1,13 @@
+### 定理 10.4：删除环境访问权可以破坏全部未知态恢复
+
+令逻辑为一个量子比特，先构造带公开错误标签的通道
+
+$$
+\mathcal M(\rho)=\tfrac12|0\rangle\langle0|\otimes\rho+
+\tfrac12|1\rangle\langle1|\otimes Z\rho Z.
+$$
+
+保留标签时，按标签补偿$I$或$Z$并丢弃标签可精确恢复。删除标签后，通道为$\mathcal N(\rho)=(\rho+Z\rho Z)/2$，不存在任何CPTP左逆。
+
+**证明。** 有标签的分支补偿直接给$\rho$。无标签通道把$|+\rangle\langle+|$与$|-\rangle\langle-|$都映成$I/2$，任何单值恢复映射都不能把相同输入变成两个不同输出。也可由其Kraus交叉项$Z/2$违反(10.5)得到结论。∎
+

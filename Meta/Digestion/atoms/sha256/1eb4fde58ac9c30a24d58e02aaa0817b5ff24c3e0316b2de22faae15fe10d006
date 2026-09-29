@@ -1,0 +1,25 @@
+**定理 56.1（统一线性比例间隙）。** 对式（56.3）的整个族，
+
+$$
+\left(1+\frac1{10000}\right)\varepsilon
+<\min_{S\text{ 因果}}D(R_\varepsilon,S)
+\le\frac{2\varepsilon}{1+\varepsilon}.
+\tag{56.4}
+$$
+
+所以额外修复成本满足
+
+$$
+\frac{\varepsilon}{10000}
+<\min_S D(R_\varepsilon,S)-\varepsilon
+\le\frac{\varepsilon(1-\varepsilon)}{1+\varepsilon}
+<\varepsilon.
+\tag{56.5}
+$$
+
+因此该额外成本在 $\varepsilon\downarrow0$ 时为 $\Theta(\varepsilon)$。式（56.4）的比例常数不主张尖锐。 特别地，在 $\varepsilon=1/4$ 时，
+
+$$
+\min_{S\text{ 因果}}D(R_{1/4},S)>\frac{10001}{40000}.
+$$
+

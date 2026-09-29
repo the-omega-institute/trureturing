@@ -1,0 +1,55 @@
+**命题 400.2（约化通道与有限相位分解的测量实现）。** 记逐项幂为
+
+$$
+(C^{\circ n})_{ij}=(C_{ij})^n,\qquad
+\Phi_C(X)=C\circ X.
+$$
+
+则 $J_n$ 是等距映射，且
+
+$$
+\operatorname{Tr}_{E_n}(J_nXJ_n^\dagger)
+ =C^{\circ n}\circ X=\Phi_C^n(X),
+$$
+
+其中 $\Phi_C^n$ 表示同一 $d$ 维矩阵空间上的 $n$ 次通道复合。若存在有限分解
+
+$$
+C^{\circ n}=\sum_{a=1}^m p_a z_a z_a^\dagger,
+\qquad p_a\ge0,\qquad \sum_{a=1}^m p_a=1,
+\qquad z_a\in\mathbb T^d,
+$$
+
+则存在定义 400.1 的有限 POVM 和反馈，使每个校正分支为 $p_a\operatorname{id}_S$，全部结果的总校正映射为 $\operatorname{id}_S$。这一结论适用于任意有限参考空间 $A$ 与任意联合输入 $\rho_{AS}$，分支输出为 $p_a\rho_{AS}$。
+
+证明。不同 $i$ 的系统因子正交，而每个 $r_i^{\otimes n}$ 归一化，故 $J_n^\dagger J_n=I_S$。在矩阵单位 $|i\rangle\langle j|$ 上，记录偏迹给出
+
+$$
+\langle r_j^{\otimes n}|r_i^{\otimes n}\rangle
+ =\langle r_j|r_i\rangle^n=(C_{ij})^n.
+$$
+
+连续 $n$ 次逐项乘以 $C$ 得到相同系数，故约化通道恰为 $\Phi_C^n$。这与定义 399.1 中作用在 $d^n$ 维输入上的 $\Phi_C^{\otimes n}$ 有不同的输入空间。
+
+为明确实现，沿用定理 390.2 的 ket 行坐标约定，在 $E_n$ 的一组正交基中写 $R_n$ 的第 $i$ 行为 $r_i^{\otimes n}$ 的坐标。$R_n$ 满列秩，$R_nR_n^\dagger=C^{\circ n}$。令
+
+$$
+\begin{aligned}
+R_n^+&=(R_n^\dagger R_n)^{-1}R_n^\dagger,\\
+D_a&=\left[R_n^+(p_a z_a z_a^\dagger)(R_n^+)^\dagger\right]^{\mathsf T},\\
+U_a&=\operatorname{diag}\bigl(\overline{(z_a)_1},\ldots,
+                              \overline{(z_a)_d}\bigr).
+\end{aligned}
+$$
+
+这里 $\mathsf T$ 是普通转置。因 $p_a z_a z_a^\dagger\preceq C^{\circ n}$，其值域包含于 $\operatorname{ran}R_n$；定理 390.2 的实现等式给出
+
+$$
+D_a\succeq0,\qquad \sum_aD_a=I_{E_n},\qquad
+R_nD_a^{\mathsf T}R_n^\dagger=p_a z_a z_a^\dagger.
+$$
+
+相应系统分支是 $(p_a z_a z_a^\dagger)\circ X$。逐项乘以 $U_a$ 及其伴随，得到 $\mathcal T_a(X)=p_aX$。对参考空间张量恒等映射后仍是同一等式，求和即得确定精确恢复。若记录空间还有正交补，可在该补空间取任意总和为恒等算子的正效果族，与 $D_a$ 作直和；所有实际记录态均位于 $E_n$，故分支不变。证毕。
+
+此实现是 Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Theorem 1（PDF 第 4 页）的纯环境测量实现及 Proposition 2（PDF 第 4–5 页）的校正条件在当前行坐标中的应用。这里完整访问的是联合记录张成空间，包括所需的相干测量；若已有记录泄漏到不可访问的环境，上述 POVM 权限就不再是给定权限，不能从本命题推出该记录也被擦除。
+

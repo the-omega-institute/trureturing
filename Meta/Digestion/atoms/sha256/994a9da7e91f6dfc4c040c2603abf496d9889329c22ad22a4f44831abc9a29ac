@@ -1,0 +1,19 @@
+**证明。** 矩阵单位律给出 $P^2=P$、$P^\dagger=P$ 以及 $PF_{ij}=F_{ij}P=F_{ij}$；有限和展开给出 $\pi(AB)=\pi(A)\pi(B)$ 和 $\pi(A)^\dagger=\pi(A^\dagger)$。对 $T_b$ 求 Gram 和，物理基的完备性给出 $\sum_iF_{iv}F_{vi}=P$。其作用的第 $(i,j)$ 元为
+
+$$
+\operatorname{tr}(F_{vi}XF_{jv})=\operatorname{tr}(F_{ji}X),
+$$
+
+得到(12.6)。完整CPTP性由支持外复位补全。另一方面，交换性与迹循环律给出
+
+$$
+\operatorname{tr}(F_{ij}Q)
+=\operatorname{tr}(F_{iv}F_{vj}Q)
+=\operatorname{tr}(F_{vj}F_{iv}Q)
+=\delta_{ij}\operatorname{tr}(F_{vv}Q).
+$$
+
+将 $Q\pi(A)$ 代入(12.6)，逐项用矩阵单位律即得到 $A_{ij}$；支持条件使复位项为零。∎
+
+式(12.7)是任意矩阵上的代数恒等式。要把 $Q\pi(\rho)$ 作为物理密度态，进一步取 $Q\ge0$、$\rho\ge0$、$\operatorname{tr}\rho=1$；交换性保证乘积正性，而(12.6)和归一条件给出迹一。这里没有选择综合征本征向量或支持丛的全局基。它是定理11.4观测代数视角的解码接口。[QREC-OA-PRA]
+

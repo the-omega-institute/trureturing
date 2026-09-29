@@ -1,0 +1,80 @@
+**引理 85.1（纯暗态失效必须满足的二阶余量）。** 设实际失效仪器的完整距离为 $\delta<1$，取其纯未点击固定态 $P_\psi$，并如第 78 节消去计算基相位。记
+
+$$
+a=|\langle0|\psi\rangle|^2,\quad b=1-a,\quad
+r=\sqrt{ab},\quad
+s=\sqrt{a^2+4b^2},\quad
+f(a)=\frac{a+s}{2}.
+$$
+
+此时 $0<a<1$、$\delta\ge a$、$\delta\ge f(a)$，并且
+
+$$
+\boxed{
+\frac{ab}{4s^2}
+\left[3a-2+s-2\sqrt{b(\delta-a)}\right]_+^2
+\le2\delta\bigl(\delta-f(a)\bigr).
+} \tag{85.1}
+$$
+
+证明。第 71.2 条的固定态构造及秩分类保证 $\delta<1$ 的失效必有纯固定态。若 $a=0$ 或 $a=1$，同条下界给 $f(a)=1$，故不可能。第 78.1 条给
+
+$$
+\mathcal N(|\psi\rangle\langle\eta|)
+=d|\psi\rangle\langle\eta|,
+\qquad
+|d|^2\le\frac{\delta-a}{b},
+$$
+
+其中 $\eta=-\sqrt b\,|0\rangle+\sqrt a\,|1\rangle$；右侧非负也给 $\delta\ge a$。
+
+现在置
+
+$$
+D=P_\psi-bP_0,\qquad
+S=\operatorname{sign}D=\frac{2D-aI}{s},
+\qquad
+Z=\operatorname{diag}_{\mathrm{record}}(S,-I),
+\qquad
+M=\frac12(\Gamma^*-\Gamma_0^*)(Z).
+$$
+
+仍有 $-\delta I\le M\le\delta I$，且
+
+$$
+\langle\psi|M|\psi\rangle=f(a),\qquad
+\langle\eta|M|\psi\rangle
+=\frac{r}{2s}\bigl(2bd-3a+2-s\bigr). \tag{85.2}
+$$
+
+为核对第二式，直接使用
+
+$$
+\langle\eta|S|\psi\rangle=\frac{2br}{s},\qquad
+\langle0|S|0\rangle=\frac{3a-2}{s},
+$$
+
+以及 $\mathcal N_0(|\psi\rangle\langle\eta|)=rP_0$、
+$\mathcal C_0(|\psi\rangle\langle\eta|)=-rP_0$ 即得。由 $\operatorname{Re}d\le|d|\le\sqrt{(\delta-a)/b}$，若方括号中的实数为正，则
+
+$$
+|\langle\eta|M|\psi\rangle|
+\ge\frac r{2s}
+\left(3a-2+s-2\sqrt{b(\delta-a)}\right).
+$$
+
+若该实数非正，使用零下界。因此左侧平方至少为式 (85.1) 左端。
+
+另一方面，正算子 $\delta I-M$ 的二维主子式非负，所以
+
+$$
+\begin{aligned}
+|\langle\eta|M|\psi\rangle|^2
+&\le(\delta-f(a))
+\bigl(\delta-\langle\eta|M|\eta\rangle\bigr)\\
+&\le2\delta(\delta-f(a)).
+\end{aligned}
+$$
+
+两式合并。$\square$
+

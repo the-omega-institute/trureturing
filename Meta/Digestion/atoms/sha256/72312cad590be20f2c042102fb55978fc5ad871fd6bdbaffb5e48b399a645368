@@ -1,0 +1,85 @@
+**Lemma 3.2 (uniform coordinate partitions).** Each $\pi_j$ and
+$\sigma_j$ in Definition 2.1 is a permutation of $\mathbb Z_n$.
+
+Proof. For an even coordinate $x$, take its half-index $x/2$ modulo
+$2k$; for an odd coordinate take $(x-1)/2$ modulo $2k$. First use
+shift $s=0$. Write $C_r,S_r$ for the bulk column and symbol images
+of class $r$. Their half-index images, together with their complements,
+are the following consecutive interval partitions. Each interval includes
+both endpoints, and $[u,u-1]$ is empty.
+
+| Coordinate parity | First cap block | First bulk block | Second cap block | Second bulk block |
+| --- | --- | --- | --- | --- |
+| Even columns | $[7,14]$ | $C_1:[15,k+5]$ | $[k+6,k+15]$ | $C_0:[k+16,2k+6]$ |
+| Odd columns | $[0,9]$ | $C_3:[10,k]$ | $[k+1,k+8]$ | $C_2:[k+9,2k-1]$ |
+| Even symbols | $[4,7]$ | $S_2:[8,k-2]$ | $[k-1,k+12]$ | $S_1:[k+13,2k+3]$ |
+| Odd symbols | $[0,13]$ | $S_0:[14,k+4]$ | $[k+5,k+8]$ | $S_3:[k+9,2k-1]$ |
+
+For example, the raw half-indices of $C_0$ are $6-t$, with image
+$[16-k,6]$; adding $2k$ gives the displayed $[k+16,2k+6]$.
+Those of $C_2$ are $-1-t$, with image $[9-k,-1]$; adding $2k$
+gives $[k+9,2k-1]$. The other column half-indices are $k+5-t$ and
+$k-t$. The symbol half-indices for classes $0,1,2,3$ are respectively
+$14+t,k+13+t,8+t,k+9+t$, giving the four displayed symbol blocks.
+
+Each line is a consecutive block of length $2k$. Its two bulk blocks
+each have length $k-9$; its cap block lengths are respectively
+$(8,10),(10,8),(4,14),(14,4)$. Reduction modulo $2k$ is bijective
+on each whole block, so all cross-class disjointness follows. Each bulk
+parametrization is injective, since its half-index has step $1$ or
+$-1$ and $k-9<2k$. At $k=9$, both bulk intervals in every line
+are empty and the two cap intervals still concatenate without overlap.
+
+Write $[u,v]_2=\{u,u+2,\ldots,v\}$, reduced modulo $4k$. The unused
+columns and symbols of this bulk are therefore the disjoint unions
+$$
+\begin{aligned}
+C={}&[14,28]_2\ \cup[2k+12,2k+30]_2
+       \ \cup[1,19]_2\ \cup[2k+3,2k+17]_2,\\
+S={}&[8,14]_2\ \cup[2k-2,2k+24]_2
+       \ \cup[1,27]_2\ \cup[2k+11,2k+17]_2.
+\end{aligned}
+$$
+Both sets have 36 elements. For shift $s=-4$, every bulk coordinate
+is translated by $-4$, and every half-index by $-2$. Thus subtracting
+$2$ from every endpoint in the partition table proves the corresponding
+partitions, with complements $C-4,S-4$. This translation argument
+concerns coordinate sets only; Lemma 3.1 already supplies the source
+identity for that shift.
+
+For completeness, the cap multiset identities can be read directly as
+identities of affine expressions, before reduction of their values.
+Represent (qk+b) by the pair $(q,b)$, reducing $q$ modulo $4$
+after adding a tail row. The cap column table, in each of its six
+columns, lists once each precisely the following pairs:
+$$
+\begin{split}
+\mathcal C_s={}&\{(0,14+s+2u):0\le u<8\}
+ \cup\{(2,12+s+2u):0\le u<10\}\\
+ &\cup\{(0,1+s+2u):0\le u<10\}
+ \cup\{(2,3+s+2u):0\le u<8\},
+\end{split}
+$$
+where $s=s_j$ for both parities. Substitution into the cap symbol
+rule lists once each precisely
+$$
+\begin{split}
+\mathcal S_s={}&\{(0,8+s+2u):0\le u<4\}
+ \cup\{(2,-2+s+2u):0\le u<14\}\\
+ &\cup\{(0,1+s+2u):0\le u<14\}
+ \cup\{(2,11+s+2u):0\le u<4\}.
+\end{split}
+$$
+These equalities involve only the fixed cap table and integer addition:
+add $a+\varepsilon_j(a)$ for a head row, or subtract (ell) for
+row $n-\ell$. For example, the $j=1$ even cap at row $n-17$
+has column $2k+26$ and symbol $2k+9$, and its row 10 has column
+$-3$ and symbol $11$. They give pairs $(2,9)$ and $(0,11)$
+in $\mathcal S_{-4}$.
+
+The pair sets represent exactly $C+s,S+s$. The interval partitions
+show that their residues are distinct for every $k\ge9$, even when
+some displayed expressions are negative or exceed $4k-1$. Thus each
+cap fills exactly the unused columns and symbols of its own bulk, with
+no repetitions. Both coordinate functions are permutations. $\square$
+

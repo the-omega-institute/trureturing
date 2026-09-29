@@ -1,0 +1,66 @@
+**命题 164.4（达到最优全视界极限的必要正局部代价）。** 令 $a=\sqrt3/2$、$t^\dagger=\arctan(a)/a$。在区间 $[0,t^\dagger]$ 上，式（164.14）的函数为 $g(t)=e^{-t}\sin(at)$。存在唯一 $t_c\in(0,t^\dagger)$ 使
+$$
+g(t_c)-t_cg'(t_c)=L.
+\tag{164.19}
+$$
+定义
+$$
+B_c=g'(t_c)>0,\qquad
+\xi_c=\sqrt{1+B_c^2}-1>0.
+\tag{164.20}
+$$
+则 $\Phi(\xi_c)=L$，且 $\Phi(\xi)>L$ 当且仅当 $0\le\xi<\xi_c$。若任意固定通道族 $\mathcal F_r$ 满足 $W_r(\mathcal F_r)\to L$，便必须有
+$$
+\boxed{
+\liminf_{r\uparrow1}
+\frac{\ell_r(\mathcal F_r)}{\mathcal R_1(r)}
+\ge1+\xi_c.
+}
+\tag{164.21}
+$$
+数值上，
+$$
+t_c\approx0.7066490123,\qquad
+B_c\approx0.0662831528,\qquad
+\xi_c\approx0.002194320652.
+\tag{164.22}
+$$
+这是所证下界 $\Phi$ 的临界参数，并非实际最小局部代价已经达到的断言。
+
+证明。 在 $[0,t^\dagger]$，
+$$
+g'(t)=e^{-t}(a\cos(at)-\sin(at)),\qquad
+g''(t)=e^{-t}\bigl((1-a^2)\sin(at)-2a\cos(at)\bigr)<0.
+\tag{164.23}
+$$
+最后一个严格号可由 $a^2=3/4$、$\tan(at)\le a$ 及 $\cos(at)>0$ 直接得到。因此 $g'$ 从 $g'(0)=a$ 严格下降至 $g'(t^\dagger)=0$。在 $t>t^\dagger$，包括越过相位截断之后，$g$ 仍严格下降。
+
+令 $B=\sqrt{\xi(2+\xi)}$。若 $B\ge a$，因全部 $t\ge0$ 都有 $g(t)\le at$，故 $\Phi(\xi)=0$。若 $0\le B<a$，存在唯一 $t_B\in(0,t^\dagger]$ 使 $g'(t_B)=B$。函数 $g(t)-Bt$ 在该点之前严格增加、之后严格下降，其最大值为正，所以
+$$
+\Phi(\xi)=g(t_B)-Bt_B.
+\tag{164.24}
+$$
+当 $B<a$ 增大时，这个最优值严格下降：若 $B_1<B_2<a$，在 $B_2$ 的正最大点代入 $B_1$ 的目标，即得严格不等式。
+
+函数 $Q(t)=g(t)-tg'(t)$ 在 $(0,t^\dagger)$ 满足 $Q'(t)=-tg''(t)>0$，且 $Q(0)=0$、$Q(t^\dagger)=K>L$。连续性与严格单调性证明式（164.19）唯一可解，并有 $0<B_c<a$。在 $B=B_c$ 时，式（164.24）的最大点正是 $t_c$，所以 $\Phi(\xi_c)=L$；再由上述严格下降与 $B\ge a$ 时的零值，得到所述阈值性质。
+
+为证明不要求局部误差比收敛的式（164.21），设 $W_r(\mathcal F_r)\to L$，令 $\varepsilon=1-r$、$N=\lfloor t_c/\varepsilon\rfloor$。定理164.2直接给出
+$$
+N\eta_r(\mathcal F_r)
+\ge\mathcal E_N(r)-W_r(\mathcal F_r).
+$$
+右端趋于 $g(t_c)-L=t_cB_c>0$，且 $\varepsilon N\to t_c$，故
+$$
+\liminf_{r\uparrow1}\frac{\eta_r(\mathcal F_r)}{\varepsilon}\ge B_c.
+\tag{164.25}
+$$
+再用精确式
+$$
+\frac{\eta_r(\mathcal F_r)}{\varepsilon}
+=\frac{2\mathcal R_1(r)}{\sqrt3\varepsilon}
+\sqrt{\xi_r(\mathcal F_r)\bigl(2+\xi_r(\mathcal F_r)\bigr)}
+$$
+及前因子趋于一，单调连续函数 $x\mapsto\sqrt{x(2+x)}$ 在非负半轴上的反函数为 $y\mapsto\sqrt{1+y^2}-1$，即得 $\liminf\xi_r(\mathcal F_r)\ge\xi_c$。证毕。
+
+因此约 $0.2194\%$ 是达到 $L$ 的必要相对超额下界，而命题163.3的显式构造给出约 $19.9217\%$ 的可行相对超额。两端之间的差距尚未由这些定理闭合；式（164.21）也不声称 $\Phi$ 对每个 $\xi>0$ 都是可达到的最优权衡。
+

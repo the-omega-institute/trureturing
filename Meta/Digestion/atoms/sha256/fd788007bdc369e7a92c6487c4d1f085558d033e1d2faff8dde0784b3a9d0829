@@ -1,0 +1,27 @@
+### 280.7 两个联合极限中的相反比较
+
+对齐方向可以写为
+$$
+N_n(0,\delta)\asymp\frac n{\delta(1+n\delta)}.
+\tag{280.38}
+$$
+所以 $n\delta\ll1$ 时其阶为 $n/\delta$，$n\delta\gg1$ 时其阶为 $\delta^{-2}$。临界方向的交叉参数则是 $n\sqrt\delta$。
+
+把（280.36）两个式子相除，得到维数一致的比较
+$$
+\boxed{
+\frac{N_n(\theta_c,\delta)}{N_n(0,\delta)}
+\asymp
+\frac1{n^2\delta}+\frac1{n\sqrt\delta}+\frac1n+\sqrt\delta.
+}
+\tag{280.39}
+$$
+由此有两种严格的联合极限：
+
+- 当 $n\sqrt\delta\to0$ 时，比值为 $\Theta((n^2\delta)^{-1})$ 并趋于无穷。因此，在这两个固定方向之间，对齐方向的预算渐近更小。
+- 当同时 $\delta\to0$ 且 $n\sqrt\delta\to\infty$ 时，临界方向的预算为 $\Theta(\delta^{-3/2})$，比值为 $\Theta((n\sqrt\delta)^{-1}+\sqrt\delta)$ 并趋于零。因此，在这两个方向之间，临界方向的预算渐近更小。
+
+第二种结论需要 $\delta\to0$。若固定正 $\delta$ 而只增加 $n$，两种预算都保持关于 $n$ 的常数阶，不能由（280.39）推出比值趋零。
+
+固定 $n$ 后再令 $\delta\downarrow0$，临界角是一个固定非零角，输出满秩，其预算恢复普通的 $\Theta(\delta^{-2})$。$\delta^{-3/2}$ 的谱带区间要求维数同时增长。这与§277固定维数的小角矩形一致；那个矩形及其比较常数没有被声明为覆盖当前维数联合极限。
+

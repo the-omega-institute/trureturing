@@ -1,0 +1,30 @@
+### 292.3 完整一维输入的线性副本上界
+
+对 $n=1$，逐块反对称测量得到 $\Pr_c(Y=1)=(1-c)/4$。取 $\widetilde c=1-4\overline Y$，再截到 $[kl,1]$ 得 $\widehat c$。真实 $c$ 位于这个区间，因此
+$$
+\mathbb E_c|\widehat c-c|
+\le\sqrt{\operatorname{Var}_c\widetilde c}
+\le2\sqrt{\frac{1-kl}{K}}.
+\tag{292.7}
+$$
+最后按概率 $f_*(\widehat c)$ 输出零。由真实估计误差、Lipschitz界和（291.3）的风险恒等式，实际风险至多为
+$$
+\frac14+2B\sqrt{\frac{1-kl}{K}}
+\le\frac14+4\sqrt{\frac5{K\delta}}.
+\tag{292.8}
+$$
+取
+$$
+K=\left\lceil\frac{11520}{\delta}\right\rceil
+\tag{292.9}
+$$
+即可使附加项不超过 $1/12$，达到目标风险 $1/3$。完整两位置计费及取整给
+$$
+\boxed{
+N_{\rm av}^{\rm full}(1,\delta;3\delta)
+\le\frac{23041}{\delta}.
+}
+\tag{292.10}
+$$
+决策知道 $\delta$ 与所承诺区间，不需要知道实际 $r$，也没有先取得准确参数 $c$。
+

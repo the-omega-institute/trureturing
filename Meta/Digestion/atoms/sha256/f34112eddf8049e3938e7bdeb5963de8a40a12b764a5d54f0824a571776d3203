@@ -1,0 +1,1 @@
+| Jacot, Gabriel, Hongler, *Neural Tangent Kernel*, NeurIPS 2018, arXiv:1806.07572（库内条目 [jacot2018neural](../../../Library/Dynamics/jacot2018neural.md)） | `literature-attested`：评注 3.4 所用线性化的定义及其无限宽、有限时间的成立条件；不用于有限宽网络的定理，也不支持任何失效时刻的断言 

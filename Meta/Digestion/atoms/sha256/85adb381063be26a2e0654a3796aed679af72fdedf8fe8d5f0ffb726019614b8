@@ -1,0 +1,38 @@
+### 184.6 上下界夹合与完成范围
+
+对任意共同 CPTP 解码器，上一节的可行证书给
+
+$$
+\begin{aligned}
+e
+&\ge1-\frac12\sum_s\operatorname{Tr}\mathsf Y_s\\
+&=\frac34+\frac{\beta\Sigma}{8}\epsilon
+-T\epsilon^2-2C\epsilon^3.
+\end{aligned}
+$$
+
+而第二、三部分的合法共同解码器给
+
+$$
+e(\widehat r,\widehat t,\widehat u_0,\widehat u_1)
+=\frac34+\frac{\beta\Sigma}{8}\epsilon
+-T\epsilon^2+O(\epsilon^3).
+$$
+
+取全体解码器的最优值，并使用真实 $R$ 的统一正上下界，就得到第一部分的
+$O(w_1^3)$ 二阶等式。
+
+第182节的构造二阶系数为
+
+$$
+\frac{3\beta^2-4\gamma^2}{64}(\Delta w)^2
+-\frac{5\gamma^2}{144}(\Sigma w)^2.
+$$
+
+与本节系数相减，差为
+$5\gamma^2(\Delta w)^2/16$，证明充分长启动时的严格改善。
+
+这个最优性结论依靠适用于全部 Choi instrument 的下界，而不是可行族内部的驻点。上界的完整参考误差则由正确块正交耦合的统一四阶谱影响控制，两项义务各自完成。
+
+本结论给出全 CPTP 最优值的二阶渐近展开，没有求出每个有限 $L$ 的精确最优误差，没有断言所给解码器在有限启动时达到全局最优，也没有给出 Schur 补三阶补正的显式数值阈值。
+

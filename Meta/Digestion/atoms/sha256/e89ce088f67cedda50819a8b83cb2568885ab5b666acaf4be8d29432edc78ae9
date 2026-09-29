@@ -1,0 +1,53 @@
+### 217.4 完整参考展开与真实受限最优器的全局定位
+
+此处不能从非凸秩约束的局部驻点直接断言全局最优。
+
+首先说明所用展开保留完整参考。第207节把来源变量先写为
+$t_{\mathrm{src}}=\sqrt\ell$，对四维匹配偶块作简单谱扰动；最高根与其余谱在零噪声最优面有统一正间隙，完整参考最大点在内部唯一且曲率严格负。$t_{\mathrm{src}}\mapsto-t_{\mathrm{src}}$ 是块酉共轭，因此最终参考最大值是偶解析函数，能解析改写为 $\ell$。
+
+这些谱间隙及参考最大点条件在 $A_j$ 接近 $1/2$ 时一致成立。其余 Choi 坐标位于紧集，$\gamma=\beta\sqrt{1-\nu}$ 在当前小箱解析。有限覆盖与固定紧参数箱遂给
+$$
+e(\epsilon h,\epsilon,\gamma(\nu),J)
+=\lambda(J)+\epsilon L_{h,\nu}(J)+O(\epsilon^2)
+\tag{217.14}
+$$
+在 $\mathcal K_{11}\cap\mathcal F$ 的固定邻域上一致成立，余项常数对 $(h,\nu)\in Q$ 和邻近合法 $J$ 一致。这里的 $e$ 是已经最大化全部外部参考的真实误差，不是冻结某个参考所得的下界。本文不对任意标量余项求导。
+
+对每份充分小正 $\epsilon$ 及 $(h,\nu)\in Q$，取任意 $\mathcal K_{11}$ 全局最优器 $J_{\epsilon,h,\nu}$。第213节 $t=0$ 给合法竞争者 $\Gamma_A(p)$，其误差为 $3/4+O(\epsilon)$，均匀成立。
+
+若这些受限最优器不能一致进入上述局部图，则存在
+$$
+\epsilon_n\downarrow0,\qquad (h_n,\nu_n)\longrightarrow(h_\infty,\nu_\infty)\in Q
+$$
+及不进入该图的受限最优器 $J_n$。紧性取子列使 $J_n\to J_\infty$。
+目标连续性、$E_A=3/4+O(\epsilon_n)$ 及（217.8）首先给
+$$
+J_\infty\in\mathcal K_{11}\cap\mathcal F.
+$$
+因此对大 $n$ 可使用一致展开（217.14）。又
+$\Gamma_A(0,h,\nu)=M(h,\nu)$，比较最优器与此合法候选，并使用
+$\lambda(J_n)\ge3/4$，可得
+$$
+L_{h_n,\nu_n}(J_n)
+\le
+L_{h_n,\nu_n}(M(h_n,\nu_n))+O(\epsilon_n).
+\tag{217.15}
+$$
+取极限：
+$$
+L_{h_\infty,\nu_\infty}(J_\infty)
+\le
+L_{h_\infty,\nu_\infty}(M(h_\infty,\nu_\infty)).
+$$
+上一节的全局唯一性迫使
+$J_\infty=M(h_\infty,\nu_\infty)$。该点与局部图边界有正距离，与所选序列矛盾。
+
+故所有真实受限全局最优器统一进入 $t=0$ 图。在该图里，$A_j>0$，两份 Choi 秩都恰为一；相位固定后每个最优器都是完整光滑共同 TP 流形的内点驻点。第213节的快变量隐函数定理和除以 $\epsilon$ 后的慢变量隐函数定理，唯一决定该图内的驻点为 $\Gamma_A(p)$。
+
+于是
+$$
+\boxed{E_{11}(p)=E_A(p)}
+\tag{217.16}
+$$
+在整个所取物理双退化箱内成立，且受限最优对称化 Choi 对唯一。证明没有使用 $\mathcal K_{11}$ 的凸性，也没有要求单个主 Kraus 可逆。
+

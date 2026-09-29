@@ -1,0 +1,10 @@
+**定义 69.1（恢复哪一种目标）。** 项目[《形式概念动力学》第 265 节](FORMAL_CONCEPT_DYNAMICS.md)和 [`identity_restoration_implies_value_compensation`](../../../D5/S3/ConceptDynamics/Restoration/RestorationImpliesCompensation.lean)固定身份读数 $I:X\to B_I$、价值或功能读数 $V:X\to B_V$，以及损害过程 $U:X\to X$、修复过程 $R:X\to X$。本节的 $R$ 专指修复函数。若 $V=v\circ I$，则
+
+$$
+\forall x,\ I(R(U(x)))=I(x)
+\quad\Longrightarrow\quad
+\forall x,\ V(R(U(x)))=V(x).
+$$
+
+理由是对恢复的身份等式应用同一个 $v$。该前提不能省略：若 $I$ 仅是始终不变的姓名或编号，$V$ 却随健康或功能改变，那么 $V$ 未必由 $I$ 决定。不能把“编号仍是同一个”直接当作全部价值已恢复。
+

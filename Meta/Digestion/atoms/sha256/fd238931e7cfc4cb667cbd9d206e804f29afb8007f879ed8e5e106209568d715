@@ -1,0 +1,20 @@
+**命题 2.36。** Every member of $\mathcal B$ is an actual member of $\mathcal P$. Consequently $\mathcal B$ contains at most one cylinder at each depth.
+
+**Proof.** Apply C卷第2.6.2节 to the native binary prefix tower, with $p=2$, the same open set $U$, and the presentation $\mathcal P$ as its distinct-depth generating family. The canonical basis there is exactly $\mathcal B$. Its compactness argument uses the strict finite bound
+
+$$
+\sum_{i=1}^k2^{-r_i}\le\sum_{r=1}^{\max_i r_i}2^{-r}<1,
+\tag{TM.657}
+$$
+
+and therefore includes the binary endpoint even though the infinite tail sum equals one. It gives actual membership of every canonical cylinder in this very presentation. $\square$
+
+Write $B_h$ for the unique canonical cylinder at any depth $h\in S$. Pairwise disjointness gives
+
+$$
+\boxed{1-M=\mu(U)=\sum_{h\in S}2^{-h}.}
+\tag{TM.658}
+$$
+
+This is an equality for the canonical basis. Summing the raw event inventory instead can overcount redundant descendants.
+

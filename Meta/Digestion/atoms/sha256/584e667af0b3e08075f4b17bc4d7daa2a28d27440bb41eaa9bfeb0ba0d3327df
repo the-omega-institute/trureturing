@@ -1,0 +1,51 @@
+### 274.9 两个二维来源的明确例子
+
+取 $n_1=n_2=2$、$t_1=t_2=1/4$。令
+$$
+J_2=\begin{pmatrix}0&1\\0&0\end{pmatrix},
+\qquad
+X_2=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\qquad
+M_2=I_2+\frac14J_2,
+$$
+$$
+Q_2=\begin{pmatrix}1/2&-1/16\\-1/16&1/2\end{pmatrix}
+=\frac12I_2-\frac1{16}X_2.
+\tag{274.59}
+$$
+$Q_2$ 的本征值为 $7/16,9/16$，严格正。直接相乘给
+$$
+M_2^\dagger Q_2M_2
+=\frac12I_2+\frac1{16}X_2=I_2-Q_2.
+\tag{274.60}
+$$
+所以两因子各有 $a_i=b_i=1$、$c_i=2$，成功概率为 $p=1/2$。
+
+成功图的权重与算子为
+$$
+Q_{\mathrm{out}}=Q_2\otimes Q_2,\qquad
+M_{\mathrm{out}}=M_2\otimes M_2,\qquad
+c_{\mathrm{out}}=2.
+\tag{274.61}
+$$
+其边缘精确为
+$$
+\begin{aligned}
+\rho_{\mathrm{out}}
+&=\frac12\left[
+Q_2\otimes Q_2+(I_2-Q_2)\otimes(I_2-Q_2)\right]\\
+&=\frac14I_4+\frac1{256}X_2\otimes X_2.
+\end{aligned}
+\tag{274.62}
+$$
+它具有跨参考因子的非零条目，并非均匀边缘。这是任意正定图权重推广所覆盖的具体情形。
+
+由于 $J_2^2=0$，
+$$
+(M_{\mathrm{out}}-I_4)^2=\frac18J_2\otimes J_2\ne0,
+\qquad
+(M_{\mathrm{out}}-I_4)^3=0.
+\tag{274.63}
+$$
+因此成功源联合秩为四、标准奇异度为三、锐指数为 $1/6$；每个原二维因子的锐指数为 $1/4$。这里的图矩阵、成功概率、边缘和链长均由上述矩阵恒等式确定。
+

@@ -1,0 +1,32 @@
+### 237.1 共同目标及全部完整曲线
+
+固定
+$$
+d\ge2,\qquad N\ge\max(d+1,2d-2),\qquad m\ge d.
+\tag{237.FL.1}
+$$
+输入为 $A=\mathbb C^d$、量子输出为 $O=\mathbb C^m$，记录接口有 $N$ 个指定正交标签。任选固定单位输出 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$，目标为
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j.
+\tag{237.FL.2}
+$$
+输出向量可以相同。候选为同接口的全部 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\mathcal S_j(X),
+\tag{237.FL.3}
+$$
+各分支完全正、总和保迹。候选保持经典标签块对角性，允许任意量子输出及 Kraus 结构。以完整 Choi 秩计预算：
+$$
+K(\mathcal S)=\sum_j\operatorname{rank}J_{\mathcal S_j}
+=\operatorname{rank}J_{\mathcal S}.
+\tag{237.FL.4}
+$$
+对每个整数 $R\ge1$，定义
+$$
+D_R=\inf_{K(\mathcal S)\le R}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+\tag{237.FL.5}
+$$
+该距离包含全部记录、量子输出及任意外部参考。由 $m\ge d$，一个标签上的等距通道给总秩一候选，故每个预算的候选集非空。
+

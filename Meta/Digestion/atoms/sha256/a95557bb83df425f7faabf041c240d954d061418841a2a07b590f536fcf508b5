@@ -1,0 +1,30 @@
+**证明。** 任何 $\mathcal S$ 的局部后处理仍是某份常值通道
+$\mathcal C_\Sigma(X)=\operatorname{Tr}(X)\Sigma$。对原输入 $P_j$ 分别测试，三角不等式给
+
+$$
+\max_jD(\Sigma,\omega_j)
+\ge\frac12D(\omega_0,\omega_1)=\frac{d_L}{2}.
+$$
+
+最后一个等号来自逻辑旋转和有 CPTP 左逆的编码保持迹距离。
+
+反向取中点 $\tau_{\mathrm{mid}}=(\tau_0+\tau_1)/2$。
+第174节的接收端解掩码把 $\omega_*$ 变成均匀旗标与 $P_\Xi$ 的乘积。
+接收端丢弃旧旗标，在 $Q$ 上制备 $V\tau_{\mathrm{mid}}V^*$，然后施加编码所需的随机 $Z_Q,Y_R$ 掩码，即得到
+
+$$
+\omega_{\mathrm{mid}}
+=\mathfrak E(V\tau_{\mathrm{mid}}V^*)
+=\frac{\omega_0+\omega_1}{2}.
+$$
+
+整个操作只访问 $QR$，保持原来的 $M$ 与 $R$ 纯化关系。
+由二元测量—制备通道的完整参考距离公式，
+
+$$
+d_\diamond(\mathcal C_{\omega_{\mathrm{mid}}},\mathcal N_L)
+=\max_jD(\omega_{\mathrm{mid}},\omega_j)=\frac{d_L}{2}.
+$$
+
+这达到下界。证毕。
+

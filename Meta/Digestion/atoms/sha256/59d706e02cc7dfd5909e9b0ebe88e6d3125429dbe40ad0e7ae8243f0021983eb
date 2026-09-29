@@ -1,0 +1,11 @@
+则
+
+$$
+D(\rho,\sigma_\varepsilon)=\varepsilon,
+\qquad
+\frac{D(\tau_R(\rho),\tau_R(\sigma_\varepsilon))}
+{D(\rho,\sigma_\varepsilon)}
+=\frac{\kappa_R}{1+(\kappa_R-1)\varepsilon}
+\longrightarrow\kappa_R.
+$$
+

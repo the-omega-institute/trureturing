@@ -1,0 +1,4 @@
+## 196. 全来源区间的统一二阶余项
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$。保持第192节的共同接收端 CPTP 任务、不可访问系统 $M$ 和全部外部参考，记最优半 diamond 恢复误差为 $\mathscr E(\ell,\epsilon)$。来源边缘态为 $\operatorname{diag}(1-\ell,\ell)$，$0\le\ell\le1/2$；过渡函数 $\Phi_h$ 由第189节的非负圆盘域优化定义。
+

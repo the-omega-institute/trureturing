@@ -1,0 +1,29 @@
+**定理 55.2（固定联合读数恰由模 $P$ 覆盖控制）。** 对任意有限整数列表 $a_1,\ldots,a_N$，包括重复项及 $N=0$，映射
+$$
+x\longmapsto\bigl(d(x+a_1),\ldots,d(x+a_N)\bigr)
+\tag{55.4}
+$$
+单射，当且仅当 $\{a_i\bmod P:1\le i\le N\}=\mathbb Z/P\mathbb Z$。因此固定偏移的最少读取数为 $P$；合法连续时刻 $0,1,\ldots,P-1$ 用 $P$ 次读取、$P-1$ 个来源步达到它。即使允许依答案在一条固定采样日程上提早停止，最坏读取数仍至少为 $P$。
+
+证明。加一使高位改变恰当被加数模 $P$ 等于 $P-1$，包括 $p-1$ 回绕为零的情形；$p\ge2$ 保证改变前后的数字不同。若缺少类 $t\in\{0,\ldots,P-1\}$，取相异初态
+$$
+x=P-1-t,\qquad x'=x+1.
+$$
+对每个已列偏移，$x+a_i\not\equiv P-1\pmod P$，所以 $d(x+a_i)=d(x'+a_i)$，（55.4）不单射。这也处理空列表；当 $P=1$ 时缺少唯一类恰指列表为空，所取两点为零和一。
+
+反向，覆盖意味着列表非空。固定首项答案 $b$，其纤维可写成循环中连续的 $P$ 点
+$$
+x=c+r\pmod M,\qquad c=bP-a_1,\quad 0\le r<P.
+\tag{55.5}
+$$
+对任意偏移 $a$，唯一写 $[c+a]_M=\beta P+t$，其中 $0\le\beta<p$、$0\le t<P$，则
+$$
+d(c+r+a)=\bigl(\beta+\mathbf1_{r+t\ge P}\bigr)\bmod p.
+\tag{55.6}
+$$
+若 $r<r'$，覆盖给一个 $a_i$ 满足 $c+a_i\equiv P-r'\pmod P$。此时 $t=P-r'$，局部唯一阈值在 $r'$，故 $r$ 的指标为零、$r'$ 的指标为一，读数不同。不同首读纤维已由首项区分，于是联合读数单射。$P=1$ 时每个首读纤维本已是单点，同一论证无需再取两点。
+
+覆盖 $P$ 个类至少需要 $P$ 项，连续时刻恰好各取一次；第24.8节已经给出其恢复规则。若固定日程容许按答案停止，令 $N$ 为全部初态上的最大实际读取数。假设 $N<P$，该日程前 $N$ 项的联合读数不单射，取上述相同全部答案的两初态。确定性逐项迫使它们有相同停止选择及输出；二者均至迟在第 $N$ 项停止，因而不能正确识别两者。这里比较完整最大前缀只用于不可区分性证明，并未让已经停止的执行免费读取余项。$\square$
+
+（55.4）是联合观察的代数判据，整数列表本身不承诺合法时序。实际执行所列偏移须选非负、严格递增的累计整数步数；有限商上可给各偏移加适当的 $M$ 倍数作顺序提升，但每个新增单位步都要执行、保存并计费，此说明不给提升后的步数最优性。固定版本 [PassiveAdaptiveTranscriptUpperBound](https://github.com/the-omega-institute/trureturing/blob/ffec542f612d6e8858eb4b08715aed884285a2b0/D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.lean) 的 `passive_adaptive_transcript_upper_bound` 说明被动协议记录通过完整 `jointReadout` 因子化；其每次查询向同一隐藏参数求值的表示语义，不供应这些偏移的实际顺序执行。
+

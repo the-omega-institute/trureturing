@@ -1,0 +1,25 @@
+**命题 790.1（规则图律的正扰动）。** 在第 786 节条件下，令 $J$ 为全一矩阵、$U_0=J/n^2$，并取
+
+$$
+P_\eta=(1-\eta)P+\eta U_0,\qquad 0<\eta<1.
+$$
+
+则 $P_\eta$ 严格正；存在 $\eta_0>0$，使 $0<\eta<\eta_0$ 时 $r_*(P_\eta)=n$；并且
+
+$$
+G(P_\eta)\longrightarrow\log n,\qquad
+C(P_\eta)\longrightarrow\log n,\qquad
+I_{P_\eta}(U;V)\longrightarrow\log(n/d)
+\quad(\eta\downarrow0).
+$$
+
+因此对足够小的正 $\eta$，观察间互信息仍严格小于 $G(P_\eta)$ 与 $C(P_\eta)$。
+
+证明：第 786 节说明 $P\notin\mathcal M_{n-1}$，紧性使 $\delta=d_{n-1}(P)>0$。本图有 $d<n$：若 $d=n$ 且 $d\ge2$ 就包含四环。逐点求差可得
+
+$$
+\operatorname{TV}(P_\eta,P)=\eta(1-d/n).
+$$
+
+只要此值小于 $\delta$，$P_\eta$ 便不能属于 $\mathcal M_{n-1}$，否则与 $\delta$ 的定义冲突。任意 $n\times n$ 概率矩阵按行可由至多 $n$ 状态生成，故恰为 $n$。$G,C$ 的极限来自第 785 节；观察间互信息由有限概率熵的连续性得到。极限差为 $\log d>0$，所以严格差在充分小邻域保持。证毕。
+

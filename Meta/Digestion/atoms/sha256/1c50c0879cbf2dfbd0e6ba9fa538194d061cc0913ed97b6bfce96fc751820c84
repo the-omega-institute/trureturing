@@ -1,0 +1,9 @@
+**命题 4.12（实际最后读取的截面界）。** 任意合法逐步法满足
+
+$$
+\Pr(S)\le
+\mathbb E\bigl[b_L(X_{-L})\bigr]
+=\mathbb E\!\left[\min\{1,r_L|S_L(X_{-L})|\}\right].
+\tag{TM.254}
+$$
+

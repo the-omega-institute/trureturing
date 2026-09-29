@@ -1,0 +1,90 @@
+**定理31.7（同一套无未来终端信息的接收门）。** 给定正的非增序列
+$(u_j)_{j\ge0}$，满足 $\sum_j u_j^2\le1$。置
+
+$$
+c_*=\frac{1-2^{-1/2}}{\sqrt{2C_{\mathrm{hist}}}},
+\qquad \rho_j=c_*\epsilon u_j2^{-j/2}.
+\tag{31.28}
+$$
+
+存在同一列满足（31.4）的全域接收门，在所有确定终端、全部实际相位和任意参考输入上误差至多 $\epsilon$。令
+$k=\lfloor\log_2n\rfloor$，则
+
+$$
+\boxed{
+\dim K_n\le m^2\operatorname{Pack}(\Gamma,\rho_k)+1
+\le m^2\operatorname{Pack}\!\left(
+\Gamma,\frac{c_*\epsilon u_k}{\sqrt n}\right)+1.
+}
+\tag{31.29}
+$$
+
+证明。取嵌套有限极大 $\rho_j$ 分离集
+$A_0\subseteq A_1\subseteq\cdots\subseteq\Gamma$。因
+$\rho_{j+1}\le2^{-1/2}\rho_j$，旧网可扩张成新网。每个新节点选距小于
+$\rho_{j-1}$ 的父节点，旧节点取恒等父映射。初层任取相位代表；递归沿
+$\mathcal H$ 调整每个新节点代表，使其与已固定父节点代表的原环面距离等于商距离。紧性保证最小值取得，旧节点保留原代表。
+
+在区块 $\{2^j,\ldots,2^{j+1}-1\}$，每个第 $k$ 层叶节点使用其第 $j$ 层祖先代表为虚拟相位，再截到当前终端 $n$。这些历史全部预先固定。对实际 $\theta$，只在误差证明中选距其商点小于 $\rho_k$ 的叶，再选单个
+$h\in\mathcal H$，使 $\theta+h$ 与叶代表的原环面距离小于 $\rho_k$。沿父链的三角不等式给每个第 $j$ 块的误差至多
+$\rho_j/(1-2^{-1/2})$，故
+
+$$
+\sum_{t\le n}d_{\mathbb T^q}(\theta+h,\varphi_t)^2
+\le\frac1{(1-2^{-1/2})^2}\sum_{j\le k}2^j\rho_j^2
+\le\frac{\epsilon^2}{2C_{\mathrm{hist}}}.
+\tag{31.30}
+$$
+
+每个终端只有一个固定的 $h$，没有逐块更换群移位或修改预定历史。由（31.15）、（31.20），实际 $\theta$ 的投影漏出也受
+$\epsilon^2I_M/2$ 控制。
+
+令 $W_n$ 为当前层全部叶历史支撑之和。其维数至多 $m^2|A_k|$。若历史延长一步，
+
+$$
+\chi_{ij}^{n+1,\boldsymbol\varphi'}
+=\sum_{\ell:(\ell,j)\in\mathcal E}\sqrt{P_{\ell j}}\,
+e^{i\varphi'_{n+1}\cdot g_{\ell j}}\,
+\chi_{i\ell}^{n,\boldsymbol\varphi}\otimes|\ell,j\rangle.
+\tag{31.31}
+$$
+
+区块内部沿同一叶延长；区块边界的新叶旧前缀恰为父节点历史。因此始终
+$W_{n+1}\subseteq W_n\otimes B$。
+
+记 $\Pi_n$ 为投影。取 $W_0=K_0=\mathbb C$、$F_0=\Pi_0=I$；对
+$n\ge1$，取
+$K_n=\mathbb C^{\dim W_n}\oplus\mathbb C|\bot_n\rangle$，以 $F_n$ 将
+$W_n$ 等距编码到成功块。将 $F_n$ 在 $W_n^\perp$ 上以零延拓，所以其伴随在失败旗标上为零。定义
+
+$$
+\begin{aligned}
+L_n&=F_n\Pi_n(F_{n-1}^*\otimes I_B),\\
+\mathcal C_n(X)&=L_nXL_n^*
++\operatorname{Tr}[(I-L_n^*L_n)X]|\bot_n\rangle\langle\bot_n|.
+\end{aligned}
+\tag{31.32}
+$$
+
+前缀包含使 $`L_n^*L_n`$ 为投影，故此式全域完全正且保迹，旧旗标保持吸收。接收门和之后的来源发射作用于不同系统，可以交换。又因
+$\Pi_n(\Pi_{n-1}\otimes I_B)=\Pi_n$，连续成功 Kraus 的乘积恰为
+$F_n\Pi_n$。不存在对不同终端失败的额外并集误差。
+
+取任意固定档案态 $\tau_n$，终端解码为
+
+$$
+\mathcal D_n(Y)=F_n^*YF_n+
+\langle\bot_n|Y|\bot_n\rangle\tau_n.
+\tag{31.33}
+$$
+
+对任意初始参考输入先纯化。令纯目标漏出质量为 $d_n\le\epsilon^2/2$。成功分支与目标重叠为 $(1-d_n)^2$，所有失败项为正，因此
+
+$$
+D(\widehat\Omega,\Omega)
+\le\sqrt{1-(1-d_n)^2}\le\sqrt{2d_n}\le\epsilon.
+\tag{31.34}
+$$
+
+丢弃额外纯化参考后仍成立。全域通道可用立即丢弃的新环境实现，并按需要附加独立纯空白，不保留未计入寄存器的输入相关系统。维数计数给（31.29）。证明完毕。
+

@@ -1,0 +1,52 @@
+### 248.1 固定取等态与已有共同见证
+
+固定§244—§247的双轴记录通道。所有量子重置输出为同一纯态，设置翻转概率已标定，原设置副本与翻转种子不在可取得接口中。采用
+$$
+0<B\le A,\qquad
+b_0=\beta\sqrt K\ne0,\qquad b_0^2=B,\qquad
+\ell=\sqrt{A+B},
+\tag{248.1}
+$$
+以及
+$$
+D=\frac\ell2,\qquad U=\frac{\sqrt A}{2},\qquad
+\delta=D-U>0.
+\tag{248.2}
+$$
+输入选共同轴 $u$ 的本征基，并选相位使正交轴 $v$ 对应 $X=\sigma_x$；令 $Z=\sigma_z$。两条效应差方向因此写成实矩阵
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X.
+\tag{248.3}
+$$
+这里 $A_a,A_b$ 是输入算子；标量 $A$ 与其区分。所用 Pauli 矩阵 $X,Z$ 均等于自身转置。
+
+取任意有限参考及任意联合态 $\Omega$，满足
+$$
+E_F(\Omega)=\theta,\qquad
+ g(\Omega)=U+\delta\theta,
+\qquad 0<\theta<1.
+\tag{248.4}
+$$
+$g$ 仍为该探针用于原固定通道比较时的联合输出半迹距离。由§247，每个有限最优形成纠缠分解都只有两类纯分量：权重总和为 $\theta$ 的最大纠缠分量，以及权重总和为 $1-\theta$ 的最优产品分量。参考分解为真正正交的
+$$
+E_{\mathrm{ent}}\perp E_{\mathrm{prod}},
+\qquad
+\Omega=\theta\Omega_{\mathrm{ent}}
+\oplus(1-\theta)\Omega_{\mathrm{prod}}.
+\tag{248.5}
+$$
+两块均归一化，零权重的未使用参考子空间可以忽略。
+
+同一对 Hermitian 收缩 $H_a,H_b$ 见证各响应块的迹范数取等。对每个最大纠缠分量，存在等距 $W_j:\mathbb C^2\to E_{\mathrm{ent}}$，使
+$$
+|\psi_j\rangle=\frac1{\sqrt2}
+\sum_{i=0}^1|i\rangle\otimes W_j|i\rangle,
+\qquad
+H_aW_j=W_j\frac{A_a}{\ell},\quad
+H_bW_j=W_j\frac{A_b}{\ell}.
+\tag{248.6}
+$$
+$E_{\mathrm{ent}}$ 由这些 $W_j$ 的像张成，并且对 $H_a,H_b$ 同时约化。这些是§247已证明的共同取等合同。
+

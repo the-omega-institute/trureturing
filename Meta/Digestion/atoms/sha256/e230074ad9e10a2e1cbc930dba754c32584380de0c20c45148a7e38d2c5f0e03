@@ -1,0 +1,1 @@
+- $\mathrm{Read}$ 在 $1\le i<P$ 时发出 $R$。若 $v=0$ 且答案 $y\ne b$，置 $v=P-i$；否则保留 $v$。$i=P-1$ 时进 $\mathrm{Done}$，否则进 $\mathrm{Step}$。

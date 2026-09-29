@@ -1,0 +1,96 @@
+### 192.3 纯来源恢复损失的非负分解
+
+按第189节对称化以后，
+$\Gamma_{j,-}=\operatorname{Ad}_Z\circ\Gamma_{j,+}\circ\operatorname{Ad}_Z$。
+只需在正旗标上写任意 Kraus 表示
+
+$$
+K_{j,\alpha}=
+\begin{pmatrix}a_{j,\alpha}&b_{j,\alpha}\\
+c_{j,\alpha}&d_{j,\alpha}\end{pmatrix}.
+$$
+
+共同保迹条件为
+$\sum_{j,\alpha}K_{j,\alpha}^\dagger K_{j,\alpha}=I$，
+而非每个结果分别保迹。以下暂略 $\epsilon$ 下标，定义
+
+$$
+U_j=\sum_\alpha|ra+\ell d|^2,\qquad
+V_j=\sum_\alpha|rb-\ell c|^2,
+$$
+
+$$
+W_j=\sum_\alpha
+\operatorname{Im}\bigl[(ra+\ell d)(r\overline b-\ell\overline c)\bigr].
+$$
+
+这些量分别来自精确振幅
+
+$$
+\langle\Xi|(I\otimes K)|\Xi\rangle=ra+\ell d,\qquad
+\langle\Xi|(I\otimes K)|\psi\rangle=i(rb-\ell c).
+$$
+
+因此正确目标收益严格为
+
+$$
+f_j=\langle\Xi|\sigma_{jj}|\Xi\rangle
+=U_j+\epsilon c_j^{\mathrm{in}}
+[\beta(V_j-U_j)+2\gamma W_j],
+\qquad c_0^{\mathrm{in}}=1,\quad c_1^{\mathrm{in}}=R.
+\tag{192.5}
+$$
+
+置
+
+$$
+D_0=1-U_0-U_1,\qquad
+L=\sum_jc_j^{\mathrm{in}}[\beta(V_j-U_j)+2\gamma W_j].
+$$
+
+共同 TP 给出本节的关键恒等式：
+
+$$
+\boxed{
+D_0
+=r\sum_{j,\alpha}|c|^2
++\ell\sum_{j,\alpha}|b|^2
++r\ell\sum_{j,\alpha}|a-d|^2
+\ge0.
+}
+\tag{192.6}
+$$
+
+证明只需逐 Kraus 展开，然后使用
+$\sum(|a|^2+|c|^2)=\sum(|b|^2+|d|^2)=1$ 及 $r+\ell=1$。
+它区分了三种损失：占据列的跳跃、稀有列的跳跃，以及两列之间的相干失配。
+
+取原输入与外部参考的 Bell 态，再用其理想输出的纯态投影检验。实际输出在该投影上的概率是 $(f_0+f_1)/4$，故完整误差满足
+
+$$
+\boxed{
+e_\epsilon
+\ge1-\frac{f_0+f_1}{4}
+=\frac34+\frac{D_0}{4}-\frac{\epsilon L}{4}.
+}
+\tag{192.7}
+$$
+
+这只是一个合法下界证书，没有把 Bell 检验当作任意解码器的完整误差。
+因为 $0\le U_j,V_j\le1$ 且 $|W_j|\le\sqrt{U_jV_j}\le1$，
+有与 $\ell$、instrument 均无关的界
+$|L|\le\Sigma(\beta+2|\gamma|)$。
+若 $e_\epsilon\le3/4+C\epsilon$，则（192.7）强制
+$D_0=O(\epsilon)$。由 $r\ge1/2$ 及（192.6），进一步得到统一估计
+
+$$
+\boxed{
+\sum|c|^2=O(\epsilon),\qquad
+\sum|b|^2=O(\epsilon/\ell),\qquad
+\sum|a-d|^2=O(\epsilon/\ell).
+}
+\tag{192.8}
+$$
+
+这些量都是 Choi 矩阵的线性泛函，不依赖 Kraus 表示。
+

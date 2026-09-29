@@ -1,0 +1,22 @@
+**命题 15.18（恒定行、双加性校准与轴相位）。** 若存在 $a_*\in A$ 使 $b\mapsto f(a_*,b)$ 为常数，则 $L_B=\{0\}$，$A$ 端删除原钟显示不减少最小状态数；恒定列给对称结论。特别地，若 $f=\beta$ 是双加性配对，令
+
+$$
+K_A=\{s:\ \beta(s,b)=0\ \forall b\in B\},\qquad
+K_B=\{t:\ \beta(a,t)=0\ \forall a\in A\},
+\tag{15.56}
+$$
+
+则 $D_\beta=K_A\times K_B$、$\chi_\beta=0$，两端均无删钟节省，并且
+
+$$
+\begin{aligned}
+T_\pm&:\left(\frac{n_S}{|K_B|},\frac{n_S}{|K_A|},n_S\right),\\
+T_\ell&:\left(\frac{n_S}{|K_A||K_B|},
+                 \frac{n_S}{|K_A||K_B|},
+                 \frac{n_S}{|K_A||K_B|}\right).
+\end{aligned}
+\tag{15.57}
+$$
+
+证明。对任意 $t\in P_B$，在恒定行取差即得 $\chi_B(t)=f(a_*,b+t)-f(a_*,b)=0$，所以 $L_B=\{0\}$。双加性校准有零行及零列；进一步，其平移差为 $\beta(a,t)+\beta(s,b)+\beta(s,t)$。若此差恒定，比较 $a$ 与零、$b$ 与零分别迫使 $t\in K_B,s\in K_A$，此时剩下的常数 $\beta(s,t)$ 也为零。反向这些根方向都给零差，故得到 $D_\beta$ 及 $\chi_\beta$，代入定理15.12给式(15.57)。这是补偿分类的双加性特化。证毕。
+

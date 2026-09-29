@@ -1,0 +1,77 @@
+**定理 392.2（零成功支撑及锐相位下界）。** 定义 392.1 的矩阵满足
+
+$$
+\operatorname{ran}C_0\cap\mathbb T^4=\varnothing,\qquad
+\eta(C_0)=0,
+$$
+
+$$
+W\succeq0,\qquad WC_0=0,\qquad
+\operatorname{Tr}W=4,\qquad
+\min_{z\in\mathbb T^4}z^\dagger Wz=\nu.
+$$
+
+对任意四维相关矩阵 $C$，由此得到统一上界
+
+$$
+\eta(C)\le\min\left\{1,\frac{\operatorname{Tr}(WC)}{\nu}\right\}.
+$$
+
+证明。由于 $R_0$ 满列秩，$\operatorname{ran}C_0=\operatorname{ran}R_0$，其中每个向量形如
+
+$$
+\left(a,b,\frac{a+b}{\sqrt2},\frac{a+ib}{\sqrt2}\right)^{\mathsf T}.
+$$
+
+若它属于 $\mathbb T^4$，前两个分量给出 $|a|=|b|=1$，第三个分量给出 $\operatorname{Re}(a\bar b)=0$，第四个给出 $\operatorname{Im}(a\bar b)=0$。这与 $|a\bar b|=1$ 矛盾，故相交为空；定理 391.1 随即给出 $\eta(C_0)=0$。这里排除的恢复仅限于定义 389.2 的测量与酉反馈接口。
+
+由 $W=B^\dagger B$ 有 $W\succeq0$。逐行相乘得 $BR_0=0$，所以 $WC_0=B^\dagger BR_0R_0^\dagger=0$。$B$ 的每行平方范数为 $2$，故 $\operatorname{Tr}W=\sum_{k,i}|B_{ki}|^2=4$。
+
+现在计算相位向量上的确切最小值。对 $z\in\mathbb T^4$，置
+
+$$
+A=\frac{z_1+z_2}{\sqrt2},\qquad
+D=\frac{z_1+iz_2}{\sqrt2},\qquad u=|A|,\quad v=|D|.
+$$
+
+因为 $|z_1\bar z_2|=1$，
+
+$$
+u^2-1=\operatorname{Re}(z_1\bar z_2),\qquad
+v^2-1=\operatorname{Im}(z_1\bar z_2),\qquad
+(u^2-1)^2+(v^2-1)^2=1,
+$$
+
+且 $0\le u,v\le\sqrt2$。由反三角不等式，
+
+$$
+\begin{aligned}
+z^\dagger Wz
+ &=|z_3-A|^2+|z_4-D|^2\\
+ &\ge(u-1)^2+(v-1)^2\\
+ &=\frac{(u^2-1)^2}{(u+1)^2}
+   +\frac{(v^2-1)^2}{(v+1)^2}\\
+ &\ge\frac{(u^2-1)^2+(v^2-1)^2}{(1+\sqrt2)^2}
+ =3-2\sqrt2=\nu.
+\end{aligned}
+$$
+
+这里第一行的 $z_3,z_4$ 仍是原相位向量的分量，没有将它们独立最优化后冒充共同实现。取同一个相位向量
+
+$$
+z_*=(1,1,1,(1+i)/\sqrt2)^{\mathsf T},
+$$
+
+则 $A=\sqrt2$、$D=(1+i)/\sqrt2$，上式的平方和等于 $(\sqrt2-1)^2=\nu$，所以该下界确实达到。
+
+最后，对任意可行成功矩阵 $Q=\sum_yp_yz_yz_y^\dagger\preceq C$，令 $t=\sum_yp_y$。有
+
+$$
+\nu t\le\sum_yp_yz_y^\dagger Wz_y
+=\operatorname{Tr}(WQ)\le\operatorname{Tr}(WC).
+$$
+
+最后一个不等式成立，因为
+$\operatorname{Tr}(W(C-Q))=\operatorname{Tr}(W^{1/2}(C-Q)W^{1/2})\ge0$。
+对所有协议取最大值并结合 $\eta(C)\le1$，得到结论。证毕。
+

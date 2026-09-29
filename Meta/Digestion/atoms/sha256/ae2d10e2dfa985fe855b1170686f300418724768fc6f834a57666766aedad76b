@@ -1,0 +1,14 @@
+**定义 485.1（一般有限目标与保留记录）。** 令 $I$ 为有限状态集，$|I|=k\ge2$，$X$ 为有限非空输出集，$Q_i\in\Delta(X)$ 为各状态下的目标概率。来源 $E_r$ 在状态 $i$ 下以概率 $1-r$ 输出标签 $i$、以概率 $r$ 输出额外标签 $\star$，其中 $0\le r\le1$。目标联合为
+
+$$
+J_i(y,x)=E_{r,i}(y)Q_i(x).
+$$
+
+这指定了给定状态后旧观察与新增观察的条件独立。可用生成器 $T_y\in\Delta(X)$ 只读取已经取得的 $y$，保留该实际记录，生成
+
+$$
+G_{T,i}(y,x)=E_{r,i}(y)T_y(x).
+$$
+
+仍取 $\operatorname{TV}(p,q)=\frac12\sum_x|p(x)-q(x)|$，定义新增边缘误差 $m(T)=\max_i\operatorname{TV}((G_{T,i})_X,Q_i)$，联合误差 $j(T)=\max_i\operatorname{TV}(G_{T,i},J_i)$。共同投影下的 $m\le j$ 使用项目 [TotalVariation/DataProcessing](../../../D5/S3/TotalVariation/DataProcessing.lean) 的 total_variation_channel_le。以下所有比较使用同一个实际状态、同一目标联合与同一种可用操作。
+

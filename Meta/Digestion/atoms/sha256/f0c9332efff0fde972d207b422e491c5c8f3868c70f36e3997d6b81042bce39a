@@ -1,0 +1,50 @@
+### 182.2 测量后反馈的共同 CPTP 构造
+
+取第180节的合法参数
+
+$$
+0<r<1,\qquad |t|<\min\{r,1-r\},
+$$
+
+$$
+p_0=r,\quad p_1=1-r,\qquad t_0=t,\quad t_1=-t.
+$$
+
+另取任意实数 $u$，对旗标 $\nu$ 定义局部酉
+
+$$
+U_\nu(u)=e^{i s_\nu uH}
+=\cos u\,I+i s_\nu\sin u\,H.
+$$
+
+测量后的 Kraus 算子取为
+
+$$
+\boxed{
+\widetilde K_{k,\nu}(r,t,u)
+=U_\nu(u)\bigl(p_kI+s_\nu t_kY\bigr)^{1/2}.
+}
+\tag{182.4}
+$$
+
+顺序是先作第180节的测量，再执行旗标相关的酉反馈。对两个输出结果 $k$ 使用同一个 $U_\nu(u)$。接收端将结果 $k$ 写入 $Q_{\mathrm{out}}$，保留 Kraus 输出为 $R_{\mathrm{out}}$，最后丢弃旧旗标。
+
+酉性保证
+
+$$
+\sum_k\widetilde K_{k,\nu}^\dagger\widetilde K_{k,\nu}
+=\sum_k(p_kI+s_\nu t_kY)=I.
+\tag{182.5}
+$$
+
+因此这个构造对每个合法 $r,t$ 和每个实 $u$ 都是接收端 CPTP 解码器。它只操作 $QR$，没有操作 $M$。参数依赖已知来源与启动长度，不依赖未知原输入 $j$。
+
+记其完整半 diamond 恢复误差为
+$\widetilde e_L(r,t,u)$。当 $u=0$ 时，它正是第180节的
+$e_L(r,t)$。对任意合法参数，
+
+$$
+h_L(i)\le\widetilde e_L(r,t,u).
+\tag{182.6}
+$$
+

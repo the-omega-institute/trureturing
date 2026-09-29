@@ -1,0 +1,74 @@
+### 301.2 全部适应性策略的统一必要界
+
+固定合法子模型 $h=h_0$。记任务币
+$$
+P_c=\mathrm{Bernoulli}\!\left(\frac{C-h_0c}{BC}\right).
+$$
+此时参考分布已知且与 $c$ 无关。任何最多 $N$ 次总调用的适应性策略，可由 $N$ 枚预取任务币与独立已知参考随机流模拟：需要任务时取下一枚任务币，需要参考时生成相应参考结果，未用任务币忽略。因而完整模拟输出是 $P_c^{\otimes N}$ 的共同后处理。这覆盖来源分配、记忆、随机化和允许停止；给下界策略免费参考并不改变实际上界的计费合同。
+
+准确的单币 chi-square 为
+$$
+\chi^2(P_c\Vert P_z)
+=
+\frac{h_0^2(c-z)^2}
+{(C-h_0z)[C(B-1)+h_0z]}.
+\tag{301.2}
+$$
+对 $z=kl,k^2,k$，有 $z\in[k^3,k]$，从而
+$$
+e^{-3\kappa_0}\kappa\le1-z\le3\kappa.
+$$
+因此
+$$
+C-h_0z=(C-h_0)+h_0(1-z)\asymp w_0
+\tag{301.3}
+$$
+的常数不依赖 $h_0$。第二因子统一位于 $[1,3C_\star+1]$。由 KL 不超过 chi-square：
+$$
+D_{\rm KL}(P_1\Vert P_{kl})\le A h_0^2\kappa^2/w_0,
+$$
+$$
+D_{\rm KL}(P_l\Vert P_{k^2})\le A h_0^2g^2/w_0,\qquad
+D_{\rm KL}(P_1\Vert P_k)\le A h_0^2\kappa^2/w_0.
+\tag{301.4}
+$$
+
+令 $f(c)$ 为共同后处理输出零的概率。成功意味着
+$f(r)-f(kr)\ge1/3$ 对全部合法 $r$ 成立。在 $r=1,k,l$ 三点相加，得到
+$$
+1-\mathrm{TV}(P_1^{\otimes N},P_{kl}^{\otimes N})
+\le\mathrm{TV}(P_l^{\otimes N},P_{k^2}^{\otimes N}).
+\tag{301.5}
+$$
+Bretagnolle–Huber 重叠界与 Pinsker 分别给
+$$
+1-\mathrm{TV}(P_1^{\otimes N},P_{kl}^{\otimes N})
+\ge\tfrac12\exp[-A N h_0^2\kappa^2/w_0],
+$$
+$$
+\mathrm{TV}(P_l^{\otimes N},P_{k^2}^{\otimes N})
+\le A h_0g\sqrt{N/w_0}.
+$$
+置
+$$
+t=\frac{N h_0^2\kappa^2}{w_0},
+$$
+得到
+$$
+g/\kappa\ge a\,t^{-1/2}e^{-At}.
+\tag{301.6}
+$$
+简单合法对 $r=1$ 又要求
+$$
+1/3\le\mathrm{TV}(P_1^{\otimes N},P_k^{\otimes N})
+\le A\sqrt t.
+$$
+故 $t$ 有统一正常数下界。取（301.6）的负对数，结合 $\log t\le t$ 及该正基线，得到
+$$
+t\ge a[1+\log(\kappa/g)].
+\tag{301.7}
+$$
+这证明定理301.1的下界。
+
+唯一的零支持端点是 $C=h_0=1$ 时 $P_1$ 的点击概率为零。它始终位于 KL 第一分布；基线分布 $P_{kl},P_k$ 的点击概率为正，所以（301.2）—（301.4）及重叠界仍有限有效。没有使用反向的无限 KL。$h_0\downarrow0$ 时分母趋向正背景，式（301.4）中的显式 $h_0^2$ 正是需要保留的信号因子。
+

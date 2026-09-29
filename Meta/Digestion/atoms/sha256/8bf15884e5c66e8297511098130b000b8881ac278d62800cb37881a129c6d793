@@ -1,0 +1,8 @@
+**引理 223.2（简单最优删除的端口择一性）。** 取一份使 $\delta_{\rm rot}$ 达到的酉旋转 $(M,N)$。若 $M$ 的最大奇异值简单，则
+$$
+\delta_{\rm rot}=\gamma_{\rm out}
+\quad\text{或}\quad
+\delta_{\rm rot}=\gamma_{\rm in}.
+\tag{223.TS.5}
+$$
+

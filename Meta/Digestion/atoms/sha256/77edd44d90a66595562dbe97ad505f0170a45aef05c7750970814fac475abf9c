@@ -1,0 +1,38 @@
+**定义35.1（来源、合同与展开参数）。**
+
+来源记忆 $M=\mathbb C^2$，每步发出 $\mathcal B=\mathbb C^2$。已知复振幅满足
+
+$$
+|a|^2+|b|^2=1,\qquad
+m_0=a|0\rangle+b|1\rangle,\quad m_1=|0\rangle,\qquad
+T_{a,b}|i\rangle=|i\rangle_{\mathcal B}\otimes m_i.
+\tag{35.1}
+$$
+
+接收器有一个独立于来源输入的纯初态，并在每一步使用同一个全域 CPTP 通道
+$\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$。
+每轮新环境可立即丢弃，全部持久控制计入 $K$；来源记忆和任意外部参考均不可访问。终端解码器只作用于 $K$，可以依赖终端编号。误差是参考、活动记忆与全部原档案联合态的半迹距离。
+
+固定整数 $D\ge1$、$k\ge2$，并限制振幅为
+
+$$
+|a|^2\ge1/k,\qquad |b|^2\ge1/k.
+\tag{35.2}
+$$
+
+定义完全显式的常数
+
+$$
+\begin{aligned}
+N&=8D^2,\\
+v'&=40D^4+4,\\
+s'&=96D^4+4D^2+3,\\
+H'&=\max\{k,400ND^4\}=\max\{k,3200D^6\},\\
+\widehat H'&=\max\{H',2v'+2s'\},\\
+\kappa'_{D,k}
+&=(16\widehat H'6^{v'})^{-v'12^{v'}},\\
+\eta'_{D,k}&=\frac{\kappa'_{D,k}}{16N}.
+\end{aligned}
+\tag{35.3}
+$$
+

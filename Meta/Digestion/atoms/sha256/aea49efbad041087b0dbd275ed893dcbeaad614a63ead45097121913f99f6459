@@ -1,0 +1,36 @@
+### 252.5 全态恢复界
+
+对任意 Hermitian 联合算子 $D_0$，$\mathcal R_w(D_0)$ 也是 Hermitian。使用 Hermitian 迹范数对偶可得
+$$
+\begin{aligned}
+\|\mathcal R_w(D_0)\|_1
+&=\sup_{\substack{K=K^\dagger\\\|K\|\le1}}
+\left|\operatorname{Tr}[(A_w\otimes K)D_0]\right|\\
+&\le\ell\|D_0\|_1.
+\end{aligned}
+\tag{252.27}
+$$
+现在取核内 Hermitian 算子
+$$
+T=\Xi_{\mathcal K}-\Omega.
+\tag{252.28}
+$$
+由（252.4）、（252.18）与（252.27），
+$$
+\begin{aligned}
+\|\mathcal R_a(T)\|_1+\|\mathcal R_b(T)\|_1
+&\le\varepsilon+2\ell\|\Xi_{\mathcal K}-\Xi\|_1\\
+&\le\varepsilon+4\ell\sqrt{h(\varepsilon)}.
+\end{aligned}
+\tag{252.29}
+$$
+引理252.2以及三角不等式便给
+$$
+\|\Xi-\Omega\|_1
+\le2\sqrt{h(\varepsilon)}
++\frac{25}{\sqrt B}
+\left(\varepsilon+4\ell\sqrt{h(\varepsilon)}\right).
+\tag{252.30}
+$$
+两份归一化态本身还满足 $\|\Xi-\Omega\|_1\le2$。将这两个上界取较小者，得到本节的定量结论。
+

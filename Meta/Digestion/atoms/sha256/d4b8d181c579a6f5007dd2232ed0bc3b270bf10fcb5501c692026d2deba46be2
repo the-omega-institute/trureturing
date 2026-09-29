@@ -1,0 +1,18 @@
+**定理207.1（闭比例区间上的完整统一三阶展开）。**
+存在只依赖固定模型和 $H$ 的 $C_H,\epsilon_H>0$，使
+
+$$
+\boxed{
+\sup_{0\le h\le H}
+\left|\mathscr E(h\epsilon,\epsilon)-\frac34
+-\epsilon\Phi_h-\epsilon^2Q(h)\right|
+\le C_H\epsilon^3
+\qquad(0<\epsilon<\epsilon_H).
+}
+\tag{207.4}
+$$
+
+充分小噪声同时满足 $H\epsilon\le1/2$ 及原输入合法性
+$R\epsilon\le\beta/(\beta^2+\gamma^2)$。
+该断言允许 $h$ 随 $\epsilon$ 趋零、等于零或穿过圆盘接触点。
+

@@ -1,0 +1,39 @@
+#### 4.6.8 部分赋值 DAG 的占用流与两方向压缩
+
+令 $\mathcal Q$ 为所有具名部分赋值组成的有限集。每个坐标要么未读，要么已有一个实际值，因此
+
+$$
+|\mathcal Q|=\prod_{i\in I}(1+m_i).
+\tag{TM.239}
+$$
+
+状态 $a\in\mathcal Q$ 的层数为 $|\operatorname{dom}(a)|$，未读坐标为 $U(a)$，选择与结果使它转到 $a\cup\{i=x\}$。每条边增加一个已读坐标，所以这是分层 DAG；每次执行至多访问每个状态一次。
+
+定义节点占用质量 $M(a)$、选取流 $F(a,i)$ 与结果子流 $F(a,i,x)$。根质量和每个非终端节点的出流约束是
+
+$$
+\begin{aligned}
+M(\varnothing)&=1,\\
+\sum_{i\in U(a)}F(a,i)&=M(a),\\
+\sum_{x\in X_i}F(a,i,x)&=F(a,i),\\
+0\le F(a,i,x)&\le r_iF(a,i).
+\end{aligned}
+\tag{TM.240}
+$$
+
+一个非根部分赋值可以经不同最后坐标到达，因此入流守恒是
+
+$$
+M(a)=\sum_{i\in\operatorname{dom}(a)}
+F(a\setminus\{i\},i,a_i)
+\qquad(a\ne\varnothing).
+\tag{TM.241}
+$$
+
+这里 $a\setminus\{i\}$ 删除坐标 $i$ 的赋值。全部变量非负。完整赋值 $v\in\Omega$ 的末端概率直接取
+
+$$
+\mu_v=M(v).
+\tag{TM.242}
+$$
+

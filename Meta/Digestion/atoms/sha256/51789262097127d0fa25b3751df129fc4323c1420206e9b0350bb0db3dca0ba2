@@ -1,0 +1,17 @@
+**定义 151.1（标量到达系数）。** 令
+
+$$
+u_{m,w}(dt)
+=
+\mathbf1^{\mathsf T}\boldsymbol\mu_m(dt)
+$$
+
+为第 $m$ 次事件的总历时标量测度，并定义
+
+$$
+G_w(z,t)=\mathbb E_w[z^{N(t)}],
+\qquad
+H_w(z,t)=\frac{1-G_w(z,t)}{1-z}
+\quad(0\le z<1).
+$$
+

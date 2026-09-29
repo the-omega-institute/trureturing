@@ -1,0 +1,30 @@
+**定义 237.1（固定任务的近纯实准备）。** 固定第236节的实际分界任务、共同四维处理器、共轭 $C$ 与内部窗口 $K$，沿用 $p_0,x_0,v_0,H_0,M,j,\gamma,L$。对实密度矩阵定义
+
+$$
+J(\rho)=\sqrt{2(1-\operatorname{Tr}\rho^2)}.
+\tag{237.1}
+$$
+
+令 $\mathcal B_s(\varepsilon)$ 为全区间解析实密度曲线的集合，要求同一处理器上的全输入精确性、完整尖锐集合 $\{u_1,u_3\}$、两节点最优普通双侧曲率，以及 $\sup_{J_a}J(\rho_u)\le\varepsilon$。不预先限制各点的秩。定义
+
+$$
+Q_s^{\rm mix}(\varepsilon)=
+\inf_{\rho\in\mathcal B_s(\varepsilon)}\sup_{u\in K}I_Q(\rho_u),
+\qquad
+E_s^{\rm mix}(\varepsilon)=
+\inf_{\rho\in\mathcal B_s(\varepsilon)}\int_KI_Q(\rho_u)\,du.
+\tag{237.2}
+$$
+
+这里 $I_Q$ 是点态 SLD 信息，包含秩变化处的原定义。再置
+
+$$
+\kappa_{\rm mix}=
+\max_{\beta\in\mathbb R^3\setminus\{0\}}
+\frac{-\beta^{\mathsf T}H_0\beta}
+{4\beta^{\mathsf T}M\beta}.
+\tag{237.3}
+$$
+
+它与第236节的 $\kappa$ 使用相同二次型和归一化，但不要求 $\beta\perp j$。
+

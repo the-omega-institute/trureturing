@@ -1,0 +1,27 @@
+**定义 40.1（按精确中心展开聚簇）。** 沿用定义 39.1 的固定幅度、固定 $`\beta\in(1/2,1)`$
+及其序列，保留同一实际数据、优先级与精确后验标签。置
+
+```math
+W_c=W(k_0,l_0),\qquad
+\Delta=Q\log\frac{1+r}{1-\epsilon}
+       +P\log\frac{1-r}{1+\epsilon},\qquad
+v=\frac{\sqrt\lambda}{Q}\Delta,\qquad
+F_0(x)=\Phi(\sqrt\kappa\,x),\qquad V(x)=\gamma F_0(x),
+```
+
+式 (40.1)。
+
+其中 $`\Phi`$ 是标准正态分布函数。以下仅取使 $`\Delta\gt0`$ 的充分大下标。
+对 $`x\in\mathbb R`$ 定义右连续的轮廓与桥
+
+```math
+J_x=\{i\in J:W_i\le W_c+xv\},\qquad
+L_M(x)=\frac1B\sum_{i\in J_x}(\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+\mathcal C_M(x)=L_M(x)-F_0(x)Y.
+```
+
+式 (40.2)。
+
+这里 $`J,B,Y,\gamma,\kappa`$ 均取第 39 章定义。
+未知方向版本共同使用一次方向判决及其工作正向得分、后验权重；$`W_c,v`$ 仍由上述确定参数计算。
+

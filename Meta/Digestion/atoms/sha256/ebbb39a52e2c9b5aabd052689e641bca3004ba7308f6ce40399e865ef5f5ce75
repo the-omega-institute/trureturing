@@ -1,0 +1,13 @@
+**定理272.1（全部非零参数来源均NPT）。** 当 $n\ge2$、$0<t\le1/4$ 时，$\Omega_t^\Gamma$ 有负本征值，因而 $\Omega_t$ 为纠缠态。
+
+**证明。** $M_t=I_n+tJ$ 是非平凡单Jordan块，唯一特征值为一，但不可对角化。$A_t$ 与它相似。若 $A_t$ 正规，则其酉对角化只有本征值一，故 $A_t=I_n$，进一步迫使 $M_t=I_n$，与 $tJ\ne0$ 矛盾。由（272.12），$T_t^\Gamma$ 不是PSD，故有负本征值。
+
+PPT是可分态的必要条件：若 $\Omega=\sum_jp_j\tau_j\otimes\eta_j$ 可分，则
+$$
+\Omega^\Gamma=\sum_jp_j\tau_j^{\mathsf T}\otimes\eta_j\succeq0,
+\tag{272.13}
+$$
+因为单系统转置保持PSD。因此负部分转置排除可分性。$\square$
+
+这里仅使用PPT必要性，没有使用PPT充分性，也没有从NPT进一步宣称蒸馏性质。正规性论证只需 $t>0$ 和相应正定 $Q$ 存在；本节的存在性与统一定量范围为 $0<t\le1/4$。
+

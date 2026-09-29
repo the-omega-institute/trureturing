@@ -1,0 +1,127 @@
+**引理55.4（排除三条互异射线的 ABAC）。** 不可能存在 $F$ 中三条互异环境射线的单位代表 $A,B,C$，使
+$$
+\eta_3=\eta_5=A,\qquad \eta_4=B,\qquad\eta_6=C.
+\tag{55.10}
+$$
+三条射线互异不表示两两正交；证明分别保留所有非零与零交叠。
+
+**证明。** 对 $U$ 取商 $\pi:K\to K/U$。由（55.2），
+$$
+Z=(\pi\otimes I_E)V_0K,\qquad\dim Z\le3.
+\tag{55.11}
+$$
+$V_1$ 在 $U,G_3,G_5$ 上分别使用 $A,B,C$，所以 $U\cap G_3=U\cap G_5=0$。因此
+$$
+M=\pi(G_3+G_5),\qquad m=\dim M\in\{2,3\},
+\quad M\otimes A\subset Z.
+\tag{55.12}
+$$
+
+**商像三维。**
+
+若 $m=3$，则 $Z=M\otimes A$。由 $B,C$ 均不平行 $A$，$\pi(G_4)\otimes B$、$\pi(G_6)\otimes C$ 只能为零，故
+$$
+G_4=G_6=U.
+\tag{55.13}
+$$
+令 $S=U+G_3+G_5$，它五维，且 $S\otimes A\subset V_0K$。因 $V_1U=Q_3\otimes A$，有 $S\perp Q_3$，于是
+$$
+K=S\oplus Q_3,\qquad v\in Q_3.
+\tag{55.14}
+$$
+$B,C$ 张成 $F$，所以它们不能同时正交于非零 $A\in F$。若 $\langle A,B\rangle\ne0$，跨位正交给 $Q_4\perp S$，因而 $Q_4=Q_3$；故
+$$
+V_1(U+G_3)=Q_3\otimes F.
+$$
+由 $V_1P_0=v\otimes F$ 及 $v\in Q_3$，单射性给 $P_0\subset U+G_3\subset S$。若改为 $\langle A,C\rangle\ne0$，则以 $Q_6=Q_3$ 和 $U+G_5$ 得到同样的 $P_0\subset S$。
+
+但（55.13）使 $V_0H_3=U\otimes B=V_0X_B$，故 $H_3=X_B$，非零 $p_B\in P_0\cap H_3$。另一方面，$H_3\subset G_3\oplus Q_3$ 到 $Q_3$ 的投影单射，而 $G_3\subset S\perp Q_3$，所以 $H_3\cap S=0$。与 $P_0\subset S$ 矛盾。
+
+**商像二维与共同的一位张量块。**
+
+以下 $m=2$。令
+$$
+S=U+G_3+G_5,\qquad\dim S=4.
+$$
+由于 $U\cap G_3=U\cap G_5=0$，有
+$$
+S=U+G_3=U+G_5.
+\tag{55.15}
+$$
+固定 $V_1$ 给
+$$
+V_1S=(Q_3\otimes A)+(Q_4\otimes B).
+$$
+将 $C$ 写成 $C=\alpha A+\beta B$，三射线互异使 $\alpha\beta\ne0$。由 $G_5\subset S$ 及 $V_1G_5=Q_6\otimes C$，逐个 $A,B$ 分量比较给 $Q_6\subset Q_3\cap Q_4$。三者均二维，因此
+$$
+Q_3=Q_4=Q_6=:Q,\qquad
+V_1S=Q\otimes F.
+\tag{55.16}
+$$
+跨位正交于是使
+$$
+U,G_3,G_4,G_5,G_6\subset Q^\perp.
+\tag{55.17}
+$$
+特别地 $S\perp Q$。
+
+此外，$V_1G_4=Q_5\otimes A$，其与 $V_1S=Q\otimes F$ 的交落在 $Q\otimes A=V_1U$。固定等距单射性给
+$$
+G_4\cap S=G_4\cap U.
+\tag{55.18}
+$$
+
+**二维商像中的 $G_4\ne U$ 分支。**
+
+由（55.11）、（55.12）及 $B\not\parallel A$，$\dim\pi G_4\le1$。当前不等于 $U$，故 $N=\pi G_4$ 恰一维。式（55.18）使 $N\cap M=0$：否则 $G_4$ 中一个不在 $U$ 的向量会属于 $S$。因此
+$$
+Z=(M\otimes A)\oplus(N\otimes B).
+$$
+对 $\pi(G_6)\otimes C\subset Z$ 比较两个非零环境分量，得 $\pi G_6\subset M\cap N=0$，所以
+$$
+G_6=U.
+\tag{55.19}
+$$
+式（55.18）还给 $\dim(S+G_4)=5$；结合（55.17）和 $\dim Q=2$，
+$$
+K=(S+G_4)\oplus Q.
+$$
+由（55.6）得 $v\in Q$。于是（55.3）、（55.16）给
+$$
+V_1p_C=v\otimes C\in Q\otimes C=V_1G_5,
+\quad\text{故 }p_C\in G_5.
+$$
+而（55.19）使 $H_5=X_C$，所以 $p_C\in H_5\cap G_5=0$，与 $p_C$ 单位矛盾。
+
+**二维商像中的 $G_4=U$ 分支。**
+
+现在 $H_3=X_B$。只需证明 $v\in Q$：一旦成立，（55.3）、（55.16）给 $p_B\in G_3$，而 $p_B\in H_3$，违反 $H_3\cap G_3=0$。
+
+若 $G_6\not\subset S$，由（55.11）、（55.12）及 $C\not\parallel A$，$\dim\pi G_6\le1$。故 $\dim(S+G_6)=5$。式（55.17）及（55.6）立即给 $K=(S+G_6)\oplus Q$、$v\in Q$。
+
+若 $G_6\subset S$ 而 $G_6\ne U$，则 $\dim\pi G_6=1$。已知零位像
+$$
+(U\otimes F)+(S\otimes A)+(G_6\otimes C)
+\tag{55.20}
+$$
+恰七维：商掉四维 $U\otimes F$ 后，前两个零位块留下二维 $M\otimes A$，最后一个留下不同环境线上的一维 $\pi(G_6)\otimes C$。因此（55.20）饱和 $V_0K$，并全部包含于 $S\otimes F$。式（55.4）两个严格正 Schmidt 权重迫使 $p_1,p_2\in S$，即 $P_0\subset S$。结合（55.2）、（55.16）得到 $v\in Q$。
+
+最后，若 $G_6=U$，则
+$$
+H_3=X_B,\qquad H_5=X_C,\qquad X=H_3+H_5.
+\tag{55.21}
+$$
+因为 $G_4=U$，固定 $V_1$ 又给 $Q_5=Q_3=Q$。于是 $H_3,H_4,H_5\subset S\oplus Q$，从而 $X\subset S\oplus Q$。$V_0X=U\otimes F$ 与 $V_0H_4=G_5\otimes A$ 交零，因为 $G_5\cap U=0$。所以
+$$
+X+H_4=S\oplus Q,\qquad \dim(X+H_4)=6.
+\tag{55.22}
+$$
+由（55.15），$G_3\subset U+G_5$，故
+$$
+V_0H_2=G_3\otimes A
+\subset (U\otimes F)+(G_5\otimes A)=V_0(X+H_4).
+$$
+单射性给 $H_2\subset X+H_4=S\oplus Q$。式（55.1）及 $u\in S$、$b\ne0$ 因而给 $v\in S\oplus Q$；而（55.6）使 $v\perp S$，所以仍有 $v\in Q$。
+
+最后一个分支的全部子情形都得到所需矛盾。$m=2$、$m=3$ 两个分支均已排除，定理得证。
+

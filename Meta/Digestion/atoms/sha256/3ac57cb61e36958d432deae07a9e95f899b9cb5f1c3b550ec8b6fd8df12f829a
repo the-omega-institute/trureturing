@@ -1,0 +1,19 @@
+### 定理 34：一个满射列伴随构件的系数一细化
+
+固定 $r\geq1$、$0\leq h\leq r$、布尔选择器 $t_1,\ldots,t_r$ 和非空有限无关字母表 $D_i$ 上的独立端点 $d_1,\ldots,d_r$，指定映射均为投影 $\phi_i(t_i,d_i)=t_i$。令 $A,B$ 为任意非空有限集，$\psi:A\times B\to Z=\operatorname{im}\psi$ 只要求存在 $b_0\in B$ 满足 $\psi(A,b_0)=Z$，不要求满射行。对任意非空有限 $O$ 和全函数 $G:\mathbb B^r\times Z\to O$，令 $F:\mathbb B^r\times A\times B\times\prod_iD_i\to O$ 为完整独立原始域上的任务 $F(t,a,b,d)=G(t,\psi(a,b))$。固定顺序
+
+$$
+\begin{aligned}
+\pi&=(t_1,\ldots,t_h,a,t_{h+1},\ldots,t_r,b,d_1,\ldots,d_r),\\
+\rho&=(a,b,t_1,d_1,\ldots,t_r,d_r)=\operatorname{cn}(\pi).
+\end{aligned}
+$$
+
+则
+
+$$
+W_F(\rho)\leq W_F(\pi)^{2^h}.
+$$
+
+固定这些投影及骨架，变化伴随有限映射与任务时，$2^h$ 是允许固定正乘数的最小一致实指数；标量布尔任务和具有双侧满射切片的加法构件已经给出锐利族。指数 $2^h$ 处的系数 $1$ 不能统一降低。
+

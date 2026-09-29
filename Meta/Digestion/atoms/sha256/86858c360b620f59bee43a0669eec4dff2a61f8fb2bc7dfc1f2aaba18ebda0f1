@@ -1,0 +1,31 @@
+**命题 307.3（无限制曲率的列权重方差表达）。** 对定理307.2的唯一可准入点，令
+
+$$
+u_i=x_i(1-x_i),\qquad
+f=\sum_iw_iu_i=m-\beta^2,\qquad
+\mathcal V_x=\sum_iw_i(u_i-f)^2.
+\tag{307.16}
+$$
+
+则第301节的旋转位移及无限制曲率满足
+
+$$
+\Omega_*b=\frac{(\operatorname{diag}(u)-fI)b}{2f},
+\qquad
+\Gamma_a=-\frac{\sqrt c\,\mathcal V_x}{4\sqrt A\,f^3}
+=-\kappa_a\frac{\mathcal V_x}{2f^2}.
+\tag{307.17}
+$$
+
+证明。式（307.5）与 $\lambda=A\beta$ 给出 $G_xb=A(I-X)b$，其中 $X=\operatorname{diag}(x)$。将它与式（307.7）代入 $M_*^{\mathsf T}-M_*=2\Omega_*$，得到
+
+$$
+2\Omega_*b
+=\frac{XG_xb-G_xXb}{Af}
+=\frac{(X(I-X)-fI)b}{f}.
+$$
+
+这证明第一个等式，并给出 $\|\Omega_*b\|_2^2=A\mathcal V_x/(4f^2)$。再用第301节的 $\Gamma_a=-\|\Omega_*b\|_2^2/D_a$ 和式（307.4），即得式（307.17）。证毕。
+
+这里得到的是正定支撑分支的有限代数刻画和唯一重建，并未给出两个标量等式的一般根式解。条件 $\mathcal T_x\ge0$ 仍须检查；本节没有证明所有满足列范数等式的单纯形点自动满足它，也没有由正定性推出 $G_x$ 逐条目为正或半群的最大角点在所有参数上固定。
+

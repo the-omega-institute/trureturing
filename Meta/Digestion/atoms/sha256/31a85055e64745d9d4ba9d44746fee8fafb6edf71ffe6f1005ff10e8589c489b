@@ -1,0 +1,9 @@
+**定理 34.2（两条长滞后兼容方程的逐索引证明）。** 第 27 节的 ψ_0、ψ_L、φ_R、φ_S 都是保端点与有序总群标记的实际双射，且满足
+
+$$
+\varphi_R^{(L)}=(\operatorname{id}_R\times\psi_L)
+ (\psi_0^{-1}\times\operatorname{id}_R),\qquad
+\varphi_S^{(L)}=(\operatorname{id}_S\times\psi_0)
+ (\psi_L^{-1}\times\operatorname{id}_S).
+$$
+

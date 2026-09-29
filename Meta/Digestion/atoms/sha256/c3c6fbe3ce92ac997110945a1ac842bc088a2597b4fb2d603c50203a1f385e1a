@@ -1,0 +1,20 @@
+**定理189.1（全 CPTP 过渡极限）。** 有
+
+$$
+\boxed{
+\lim_{\epsilon\downarrow0}
+\frac{H_h(\epsilon)-3/4}{\epsilon}
+=\Phi_h,
+\qquad
+H_h(\epsilon)=\frac34+\Phi_h\epsilon+o(\epsilon).
+}
+\tag{189.2}
+$$
+
+所给余项只有 $o(\epsilon)$；第188节固定可行族的
+$O(\epsilon^2)$ 余项不被升级为全体最优解的余项。
+
+第188节取 $n_{\mathrm{phys}}=\operatorname{sgn}(\gamma)n$
+的可行族已给匹配上界；$\gamma=0$ 时可取 $n_{\mathrm{phys}}=0$。
+以下证明任意 $\epsilon$ 相关共同 instrument 的下界。
+

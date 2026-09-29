@@ -1,0 +1,72 @@
+### 280.3 对齐方向：一个零概率与常规背景
+
+谱因子恒等式为
+$$
+I_n+\operatorname{Re}(\zeta Z_n)
+=(I_n+\zeta M_n)^\dagger Q_n(I_n+\zeta M_n),
+\qquad |\zeta|=1.
+\tag{280.14}
+$$
+它同时给 $-I_n\preceq H_w(\theta)\preceq I_n$，故所有理想输出概率均在 $[0,1/(2n)]$ 内。
+
+在 $\theta=0$ 时，
+$$
+I_n-H_0(0)=t^2J_n^\dagger Q_nJ_n,
+\qquad\ker(I_n-H_0(0))=\mathbb Ce_1.
+\tag{280.15}
+$$
+在 $e_1^\perp$ 上，$J_n$ 为等距嵌入，所以该块其余本征值至少为 $q_-t^2$。另外三个记录块的谱因子相位为 $1,i,-i$；由
+$$
+s_{\min}\bigl((1+\zeta)I_n+t\zeta J_n\bigr)
+\ge|1+\zeta|-t
+$$
+可知它们的分子本征值也至少为 $q_-t^2$。因此唯一零概率之外，所有概率都有统一下界
+$$
+p_j\ge\frac{b_A}{n},\qquad
+b_A:=\frac{q_-t^2}{4}=\frac7{1472}.
+\tag{280.16}
+$$
+$n=1$ 时第一块的非零谱为空，但其他三个记录块仍满足该下界。
+
+唯一零概率在混合后变为 $\delta/(4n)$，对 $1-F$ 的贡献恰为 $\delta/(8n)$。其余坐标满足 $|q_j-p_j|\le\delta/(4n)$，且
+$$
+\frac12(\sqrt p-\sqrt q)^2
+=\frac{(p-q)^2}{2(\sqrt p+\sqrt q)^2}
+\le\frac{(p-q)^2}{2p}.
+$$
+逐项使用（280.16），得到
+$$
+1-F\le\frac\delta{8n}+\frac{\delta^2}{8b_A}.
+\tag{280.17}
+$$
+
+还需要一个维数一致的 $\delta^2$ 下界。规范 $Q_n$ 为实对称矩阵；这可由§278的条目递推直接得出。取Lyapunov方程的迹，得到
+$$
+a_n:=\frac{\operatorname{Tr}Z_n}{n}
+=1-\frac{t^2}{n}\operatorname{Tr}(J_n^\dagger Q_nJ_n).
+$$
+由 $Q_n\preceq I_n$，
+$$
+15/16\le a_n\le1.
+\tag{280.18}
+$$
+完整单次输出的半迹距离为
+$$
+d(\sigma_n(0),\sigma_{n,\delta}(0))
+=\frac\delta{4n}\bigl(\|H_0(0)\|_1+\|H_1(0)\|_1\bigr)
+\ge\frac{\delta a_n}{4}\ge\frac{15\delta}{64}.
+\tag{280.19}
+$$
+所以 $1-F^2\ge d^2\ge225\delta^2/4096$。唯一零概率另给 $1-F^2\ge\delta/(8n)$。结合这两个下界与（280.17），记 $a_A=1-F(\sigma_n(0),\sigma_{n,\delta}(0))^2$，可明确取
+$$
+c_A:=\frac{225}{8192},\qquad C_A:=\frac{368}{7},
+$$
+$$
+\boxed{
+c_A(\delta/n+\delta^2)
+\le a_A\le C_A(\delta/n+\delta^2).
+}
+\tag{280.20}
+$$
+这里的 $\delta/n$ 来自一个零模式，$\delta^2$ 来自其余完整输出的常规区分信息。
+

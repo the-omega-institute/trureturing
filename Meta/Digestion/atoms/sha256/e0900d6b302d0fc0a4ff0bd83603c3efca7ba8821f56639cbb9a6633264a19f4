@@ -1,0 +1,24 @@
+**定理 90.1（同一实际实现可取代数坐标）。** 最短失效距离 $R$ 可由 Choi 矩阵元实部、虚部均为实代数数的仪器 $\Gamma_*$ 取得，并且可以同时选择具有代数矩阵元的未点击固定密度矩阵 $\sigma_*$。对每个实代数 $0\le u<R$，也可同时选择代数坐标的合法仪器 $\Gamma_u$ 与纯初态 $P_u$，使
+
+$$
+\delta(\Gamma_*)=R,\quad
+\mathcal N_{\Gamma_*}(\sigma_*)=\sigma_*,\qquad
+\mathbb E_{P_u}^{\Gamma_u}\mathsf N=\mathscr K(u).
+\tag{90.1}
+$$
+
+证明。实代数数域 $\mathbb A$ 是实闭域。实闭域量词消去给以下标准传递性质：一个只含 $\mathbb A$ 系数的有限实多项式量词公式，若在 $\mathbb R$ 中有解，则在 $\mathbb A$ 中有解。[^wave_real_closed_elimination]
+
+对最近失效仪器，把式（87.1）、（87.5）、（87.6）的共同变量 $\Gamma,\sigma$ 放在同一个公式中并固定半径 $R\in\mathbb A$。引理 79.1 保证实解存在，传递性质给代数实解。任何这样的解都有 $\delta\le R$ 且失效，最小性强制 $\delta=R$。
+
+对固定代数 $u<R$，定理 88.1 保证 $k=\mathscr K(u)\in\mathbb A$。将式（88.4）的变量 $\Gamma,T,k$ 与 $\mathsf B(\Gamma,u)$ 联合，再加入
+
+$$
+P=P^\dagger\succeq0,\qquad
+P^2=P,\qquad\operatorname{Tr}P=1,\qquad
+TP=kP.
+\tag{90.2}
+$$
+
+最大本征态保证该共同公式有实解，因此有代数解。式（88.2）与（90.2）使同一个装置和同一个纯态的实际均值等于 $k$，即式（90.1）。$\square$
+

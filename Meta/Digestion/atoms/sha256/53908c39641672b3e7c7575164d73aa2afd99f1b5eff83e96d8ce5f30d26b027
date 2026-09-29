@@ -1,0 +1,65 @@
+### 246.1 固定通道与参考维数的计量对象
+
+固定§244的实际设置记录噪声通道。输入为量子比特，原单位 Bloch 轴满足 $n\cdot m=c\in[0,1]$，设置标签以已标定概率 $p\in[0,1]$ 独立翻转，符号标签保留。所有量子输出为同一固定纯态 $P$。原设置副本和翻转种子仍不在取得接口中。
+
+记
+$$
+\begin{aligned}
+A&=\frac{1+c}{2},& K&=\frac{1-c}{2},&
+\beta&=1-2p,& B&=\beta^2K,\\
+D&=\frac12\sqrt{A+B},&
+U&=\frac12\sqrt A,&
+\delta&=D-U.
+\end{aligned}
+\tag{246.1}
+$$
+候选 $\mathcal S_p$ 的效应为
+$$
+E^{(p)}_{0,s}=\frac{I_2+s\,a_p\cdot\sigma}{4},
+\qquad
+E^{(p)}_{1,s}=\frac{I_2+s\,b_p\cdot\sigma}{4},
+\tag{246.2}
+$$
+其中 $a_p=(1-p)n+pm$、$b_p=pn+(1-p)m$；每个输出块再重置为 $P$。目标 $\mathcal R$ 的四个效应均为 $I_2/4$，输出也为 $P$。
+
+对联合探针 $\Omega$，实际半迹距离和形成纠缠分别记为
+$$
+g(\Omega)=\frac12
+\left\|[(\mathcal S_p-\mathcal R)\otimes\operatorname{id}_E](\Omega)\right\|_1,
+\tag{246.3}
+$$
+$$
+E_F(\Omega)=\inf_{\Omega=\sum_j w_j|\psi_j\rangle\langle\psi_j|}
+\sum_jw_jS(\operatorname{Tr}_E|\psi_j\rangle\langle\psi_j|).
+\tag{246.4}
+$$
+形成纠缠沿用标准凸屋定义，单位为比特。它不是混合态的单侧熵。
+
+纯探针输入边缘的 Bloch 长度为 $t$ 时，已有精确曲线
+$$
+e(t)=H_2\left(\frac{1+t}{2}\right),
+\qquad
+F(t)=\frac12\sqrt{A+B-Bt^2}.
+\tag{246.5}
+$$
+令 $t(e)$ 为 $e(t)$ 的反函数，记
+$$
+G(e)=F(t(e)),\qquad e\in[0,1].
+\tag{246.6}
+$$
+在本节主范围 $B>0$ 中，$G$ 严格递增且严格凸，满足 $G(0)=U$、$G(1)=D$ 及
+$$
+G(e)<U+\delta e,\qquad 0<e<1.
+\tag{246.7}
+$$
+方向优化由§244给出，严格弦界由§245给出。$B=0$ 时 $G$ 恒为 $D=U$，另按退化情形处理。
+
+本节计量的是总可访问参考支撑维数
+$$
+r_E(\Omega):=\operatorname{rank}(\operatorname{Tr}_H\Omega).
+\tag{246.8}
+$$
+全部可读取经典旗标也属于这个参考。无论参考环境的名义 Hilbert 空间有多大，$\Omega$ 都支撑于 $H\otimes\operatorname{supp}(\operatorname{Tr}_H\Omega)$：对参考边缘支撑的正交补投影取期望，正性使该正交补上没有联合态支撑。
+
+因此 $r_E(\Omega)\le2$ 的任意联合态，都能在参考端等距压缩到至多二维，并在需要时嵌入 $\mathbb C^2$。这种参考等距变换保持输出迹范数，也保持每个纯分量的输入边缘熵。正性又保证任意纯态分解均留在原支撑内，故凸屋下确界 $E_F$ 同样保持。下面对两比特态的结果因而覆盖所有 $r_E\le2$ 的探针。
+

@@ -1,0 +1,14 @@
+### theorem 4.2 单位从原子差中出现
+
+在 $\mathcal Q$ 中令 $e=\bar\beta-\bar\alpha$，则
+
+$$
+\bar\alpha=2e,\qquad \bar\beta=3e,\qquad \mathcal Q\cong\mathbb Z.
+$$
+
+更明确地，
+
+$$
+a\alpha+b\beta=(2a+3b)(\beta-\alpha)+(a+b)(3\alpha-2\beta).
+$$
+

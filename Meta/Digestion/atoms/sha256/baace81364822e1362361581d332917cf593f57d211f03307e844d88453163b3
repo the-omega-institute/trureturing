@@ -1,0 +1,42 @@
+**定理 80.2（校准球内共同指数尾与有限成本的精确阈值）。** 对上述二维名义仪器，
+
+$$
+\boxed{\mathscr K(u)<\infty\iff u<\mathfrak r_{\mathrm{fail}}.} \tag{80.1}
+$$
+
+更具体地，对每个固定 $u<\mathfrak r_{\mathrm{fail}}$，存在共同整数 $m\ge1$，使球内每个仪器、每个初态以及所有 $n\ge0$ 同时满足
+
+$$
+\boxed{
+\Pr_\rho^\Gamma(\mathsf N>n)
+\le2^{-\lfloor n/m\rfloor},
+\qquad
+\mathbb E_\rho^\Gamma\mathsf N\le2m.
+} \tag{80.2}
+$$
+
+证明。校准球 $\mathfrak B_u$ 是紧致仪器集中的闭子集。因 $u<\mathfrak r_{\mathrm{fail}}$，其中每个仪器对全部初态最终点击。令
+
+$$
+\mathcal A_\Gamma=\mathcal N_\Gamma^*,\qquad
+f_n(\Gamma)=\|\mathcal A_\Gamma^n(I)\|_\infty.
+$$
+
+每个 $f_n$ 连续，$1=f_0\ge f_1\ge\cdots\ge0$。对固定装置，全状态终止及有限维性给 $f_n\to0$，与第 71.2 条末段相同。
+
+开集 $U_n=\{\Gamma\in\mathfrak B_u:f_n(\Gamma)<1/2\}$ 递增并覆盖整个球。紧性给有限子覆盖，取最大指标 $m\ge1$，便有所有装置同时满足
+
+$$
+\mathcal A_\Gamma^m(I)\le\frac12I.
+$$
+
+这是第 40.2 条已使用的单调紧性机制在全状态生存效果上的应用。对每个固定装置，正性与齐次重复给
+
+$$
+\mathcal A_\Gamma^{km}(I)\le2^{-k}I.
+$$
+
+其余时刻由生存效果单调性控制，得到式 (80.2) 的尾界；尾和按每 $m$ 项分组，给 $\mathbb E\mathsf N\le m\sum_{k\ge0}2^{-k}=2m$。这一步没有交换未经控制的上确界与无穷和。
+
+反之，若 $u\ge\mathfrak r_{\mathrm{fail}}$，引理 79.1 的最小失效仪器就在球内。从其未点击固定态出发，$\mathsf N=\infty$ 几乎必然，故 $\mathscr K(u)=\infty$。$\square$
+

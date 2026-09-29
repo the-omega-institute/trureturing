@@ -1,0 +1,26 @@
+**命题 489.2（锐利族的两个中心与达到二倍状态数）。** 对定义 489.1，
+
+$$
+M=\alpha,\qquad\rho=\frac{1-\alpha}{k}.
+$$
+
+若 $0<r\le\alpha<1$，则精确边缘的共同中心只能是 $R=\delta_\circ$，因而
+
+$$
+\rho_r=1-\alpha,\qquad
+j_{\mathrm{exact}}=2r(1-\alpha),\qquad
+j_{\mathrm{free}}=\frac{r(1-\alpha)}k.
+$$
+
+命题 488.1 的上界 $2k$ 被达到。
+
+证明：每个状态标签都在某个目标中质量为零，公共符号在全部目标中质量为 $\alpha$，故 $l=\alpha\delta_\circ$、$M=\alpha$。精确边缘约束使 $R$ 在所有状态标签上为零，归一化遂迫使 $R=\delta_\circ$，到每个目标的 TV 都是 $1-\alpha$。
+
+为求无约束半径，对所有状态标签置换平均任意候选中心。项目 [TotalVariation/Convexity](../../../D5/S3/TotalVariation/Convexity.lean) 的 total_variation_joint_convex，经有限次平均使用，保证最大距离不增。因此可设 $R(\circ)=t$，$R(x)=(1-t)/k$。若 $t\le\alpha$，其到 $Q_i$ 的 TV 至少为被排除标签上的正差 $(1-t)/k\ge(1-\alpha)/k$；若 $t\ge\alpha$，至少为公共符号与该标签上的正差之和
+
+$$
+t-\alpha+\frac{1-t}{k}\ge\frac{1-\alpha}{k}.
+$$
+
+取 $t=\alpha$ 时，其余标签上的差均非正，TV 正好是 $(1-\alpha)/k$，达到下界。其余结论代入命题 485.3。证毕。
+

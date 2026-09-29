@@ -1,0 +1,97 @@
+### 207.7 纯来源系数与既有精确优化的核对
+
+以（207.2）的 $\nu$ 置
+
+$$
+\kappa=\beta(1/2-2\nu^2)+2\gamma\nu,
+\qquad b=\beta\delta(1/4+\nu^2).
+\tag{207.23}
+$$
+
+端点规范矩给
+$L_0=-\kappa,L_1=R\kappa,L_d=-\Sigma\kappa$，
+因此 $a_{\mathrm{eff}}=-\Sigma\kappa-b$、$Z=\Sigma^2\kappa^2/4$。
+$m=0$ 使反馈平方的二阶贡献为零，得到
+
+$$
+\Phi_0=-\frac{\delta\kappa}{4},\qquad
+Q(0)=-\frac{\Sigma\kappa b}{2}-\frac{b^2}{4}<0.
+\tag{207.24}
+$$
+
+明确分段为
+
+$$
+\boxed{
+\Phi_0=
+\begin{cases}
+-\dfrac{\delta(\beta^2+\gamma^2)}{8\beta},&0<\gamma\le\beta,\\[2mm]
+-\dfrac{\delta\gamma}{4},&\gamma\ge\beta,
+\end{cases}
+\qquad
+Q(0)=
+\begin{cases}
+-\dfrac{\delta(5R+3)(\beta^2+\gamma^2)^2}{64\beta^2},&0<\gamma\le\beta,\\[2mm]
+-\dfrac{\beta\delta[4\gamma\Sigma+\beta\delta]}{16},&\gamma\ge\beta.
+\end{cases}}
+\tag{207.25}
+$$
+
+两式在 $\gamma=\beta$ 一致，给
+$\Phi_0=-\beta\delta/4$、$Q(0)=-\beta^2\delta(5R+3)/16$。
+首阶系数就是定理187.2的既有结论。
+
+对 $0<\gamma<\beta$，定理187.3（第187.5节）的有限噪声闭式在充分小
+$w_0=\epsilon,w_1=R\epsilon$ 上成立。
+置 $\chi=(\beta^2+\gamma^2)/\beta$，该已有精确式展开为
+
+$$
+1-\frac{1-\chi\epsilon}
+{(\sqrt{1-\chi\epsilon}+\sqrt{1-R\chi\epsilon})^2}
+=\frac34-\frac{\delta\chi}{8}\epsilon
+-\frac{\delta(5R+3)\chi^2}{64}\epsilon^2+O(\epsilon^3).
+\tag{207.26}
+$$
+
+这与（207.25）一致。该有限噪声闭式的适用条件没有被扩张到
+$\gamma=\beta$ 或 $\gamma>\beta$；这两种情形的闭区间三阶结论由前述
+全 CPTP 上下界给出。
+
+还可直接在 $h=0$ 验证匹配构造的二阶变分系数。
+沿用定理187.1的完整参考标量式，对（207.19）暂取任意有界偏置 $\xi$。
+此时 $a_0^2=1/2+\epsilon\xi$、$a_1^2=1/2-\epsilon\xi$、$c=d=0$。
+正交投影直接给
+
+$$
+B_0=2\nu^2-4\nu^2\epsilon\xi+O(\epsilon^2),\qquad
+\operatorname{Im}N_0=-\nu+O(\epsilon^2),
+$$
+
+共同 TP 给 $B_1=1-B_0,N_1=-N_0$。
+置 $c_*:=\beta(1+4\nu^2)$，正确概率因而为
+
+$$
+\begin{aligned}
+F_0&=1/2+\epsilon(\xi-\kappa)-\epsilon^2c_*\xi+O(\epsilon^3),\\
+F_1&=1/2+\epsilon(-\xi+R\kappa)+\epsilon^2Rc_*\xi+O(\epsilon^3).
+\end{aligned}
+\tag{207.27}
+$$
+
+将它们代入已有的精确完整参考误差
+$1-F_0F_1/(F_0+F_1)$，二阶系数为
+
+$$
+\frac{(2\xi-\Sigma\kappa)^2}{4}-\frac{\delta c_*\xi}{4}
+=\xi^2-(\Sigma\kappa+b)\xi+\frac{\Sigma^2\kappa^2}{4},
+\tag{207.28}
+$$
+
+其中 $\delta c_*/4=b$。
+其最优偏置为 $\xi=(\Sigma\kappa+b)/2=-a_{\mathrm{eff}}/2$，
+最小值正是（207.24）。这直接验证端点构造；
+最优性与双参数统一余项仍由第207.2—207.5节承担。
+
+本节固定模型参数与有限 $H$，不声称 $H\to\infty$ 或模型参数退化时常数统一。
+它不要求有限噪声最优器有光滑选支，也不要求所有最优器采用给出的 Kraus 槽。
+

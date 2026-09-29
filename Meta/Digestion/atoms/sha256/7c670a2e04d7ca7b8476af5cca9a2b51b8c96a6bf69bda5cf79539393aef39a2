@@ -1,0 +1,17 @@
+### theorem 71.1 关系坐标对块增量闭合
+
+$$
+\boxed{
+I\circ U_R=\widehat U_R\circ I,qquad
+I_{\le r}\circ U_R=\widehat U_R^{(r)}\circ I_{\le r}.
+}
+$$
+
+并且对所有合法块 $R,S$，
+
+$$
+\widehat U_R^{(r)}\circ\widehat U_S^{(r)}
+=
+\widehat U_S^{(r)}\circ\widehat U_R^{(r)}.
+$$
+

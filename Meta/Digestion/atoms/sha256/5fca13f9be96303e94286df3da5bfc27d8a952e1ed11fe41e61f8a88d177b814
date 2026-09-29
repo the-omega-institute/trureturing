@@ -1,0 +1,1 @@
+- D5/S0/Computability/FiniteCounterexampleCertificate.lean 的 finite_readout_counterexample_certificate：一个 Boolean 全称有限读数失败，当且仅当有有界搜索找到的反例证书。它承担有限拒绝证据接口，不给无限承诺的统一决定程序。

@@ -1,0 +1,2 @@
+**命题 1.19（no universal rational converter）。** Let $U,V$ be distinct systems among binary and the $k$-bonacci systems. There is no rational two-tape relation that is total on the canonical $U$-representations of all natural numbers and relates each input only to equal-valued canonical $V$-representations. The conclusion still holds with regular leading-zero padding and with either fixed digit orientation on each tape, independently.
+

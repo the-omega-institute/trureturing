@@ -1,0 +1,19 @@
+**推论 76.3（同一校准球中的两类有效成本证书）。** 当 $0\le\delta<1/2$ 时，可同时使用第 68.3 条和定理 76.2，得到
+
+$$
+\boxed{
+\sup_{\Gamma:\,D_\diamond(\Gamma,\Gamma_0)\le\delta}
+\ \sup_\rho\mathbb E_\rho^\Gamma\mathsf N
+\le
+\min\left\{
+\frac2{1-2\delta},
+\frac{3-\delta}{(1-\delta)(4/5-\delta)}
+\right\}.
+}
+$$
+
+当 $1/2\le\delta<4/5$ 时，第二项仍独立有效。这里 $D_\diamond$ 表示完整仪器的半 diamond 距离。
+
+证明。名义最大成本为二，所以第 68.3 条给第一项；定理 76.2 给第二项，且两项对相同的每个实际仪器与初态同时成立，因而可取其最小值。$\square$
+
+

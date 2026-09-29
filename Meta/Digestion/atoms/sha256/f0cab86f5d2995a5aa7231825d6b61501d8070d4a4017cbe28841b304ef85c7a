@@ -1,0 +1,8 @@
+**Definition 1.1 (coordinates and transversals).** Let $k\ge9$ be an
+integer and put $n=4k$. Rows, columns and symbols belong to
+$\mathbb Z_n$, represented by $0,\ldots,n-1$. A transversal is a set
+of $n$ entries containing each row, column and symbol exactly once.
+An entry is pinned if it belongs to every transversal and at least one
+transversal exists. All coordinate expressions below are reduced modulo
+$n$; inequalities and interval endpoints are ordinary integers.
+

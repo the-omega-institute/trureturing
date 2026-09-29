@@ -1,0 +1,40 @@
+### 43.3 固定核心和输入—输出空间包含
+
+沿用第39节（39.4）的 $c,d,z,q,f,s,r$，固定接收器中七个正交单位方向 $u,v,w,p,e,g,h$、初态 $w$，以及
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+w0&pA&p0&uB\\
+w1&qA&p1&vB\\
+z0&sA&q0&wB\\
+u1&rA&f0&gB\\
+&&s1&hB
+\end{array}
+\tag{43.9}
+$$
+
+这里 $cs+br=df$，$z\in\operatorname{span}\{u,v\}$，且全部九个输入、九个输出各为正交单位族。
+
+对任意已规定部分表及 $\eta\in\{A,B\}$，记：
+- $D_\eta$ 是输出环境为 $\eta$ 的所有行的**接收器输入方向**张成空间，遗忘输入位；
+- $O_\eta$ 是这些行的接收器输出方向张成空间。
+
+本核心满足
+
+$$
+\begin{aligned}
+D_A&=\operatorname{span}\{w,z,u\}
+\subseteq \operatorname{span}\{u,v,w,g,h\}=O_B,\\
+D_B&=\operatorname{span}\{p,q,f,s\}
+\subseteq \operatorname{span}\{p,q,s,r\}=O_A.
+\end{aligned}
+\tag{43.10}
+$$
+
+这里 $D_A,D_B$ 未声明彼此正交；原输入位已经被遗忘。关键是交叉包含
+
+$$
+D_A\subseteq O_B,\qquad D_B\subseteq O_A.
+\tag{43.11}
+$$
+

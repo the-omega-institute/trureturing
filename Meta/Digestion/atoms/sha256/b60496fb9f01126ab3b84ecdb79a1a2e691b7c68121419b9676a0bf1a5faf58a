@@ -1,0 +1,40 @@
+**定理 391.1（伪逆界及正成功的充要条件）。** 在定义 389.2 的接口中，指定一个非零成功结果、相位向量 $z\in\mathbb T^d$ 和输入无关概率 $p>0$。该结果可实现精确恢复，当且仅当
+
+$$
+pzz^\dagger\preceq C.
+$$
+
+记 $C^+$ 为 Moore–Penrose 伪逆。上述条件进一步等价于
+
+$$
+z\in\operatorname{ran}C,\qquad
+0<p\le\frac1{z^\dagger C^+z}.
+$$
+
+于是总成功量具有支撑判据
+
+$$
+\eta(C)>0\quad\Longleftrightarrow\quad
+\operatorname{ran}C\cap\mathbb T^d\ne\varnothing.
+$$
+
+证明。定理 390.2 的成功分支论证给出必要形式 $pzz^\dagger$；若它被 $C$ 支配，将剩余矩阵作为失败分支即可实现，故第一个等价成立。
+
+若 $pzz^\dagger\preceq C$，对 $v\in\ker C$ 取二次型得 $p|z^\dagger v|^2\le0$。因此 $z$ 正交于 $\ker C$，即 $z\in\operatorname{ran}C$。在 $H_C=\operatorname{ran}C$ 上，$C$ 严格正定；令 $v=C^{-1/2}z$，这里的逆平方根仅在 $H_C$ 上定义。对不等式作可逆合同变换，得到
+
+$$
+pvv^\dagger\preceq I_{H_C}.
+$$
+
+对任意 $x\in H_C$，Cauchy–Schwarz 不等式给出 $p|v^\dagger x|^2\le p\|v\|^2\|x\|^2$；取 $x=v$ 又给出必要条件。因此该算子不等式恰在 $p\|v\|^2\le1$ 时成立。由于 $z\ne0$，
+
+$$
+\|v\|^2=z^\dagger C^+z>0,
+$$
+
+从而得到伪逆界。反向合同变换，并在 $\ker C$ 上补零，证明其充分性。
+
+若 $\eta(C)>0$，定理 390.2 的有限取得性给出某个 $p_y>0$，且 $p_yz_yz_y^\dagger\preceq Q\preceq C$，所以相应 $z_y$ 位于 $\operatorname{ran}C$。反之，支撑中的任意相位向量都由伪逆界给出一个正成功概率，故 $\eta(C)>0$。证毕。
+
+本定理中的倒数控制一个指定成功结果，不能把它直接当作 $\eta(C)$。例如 $C=I_d$ 时每个相位向量满足 $z^\dagger C^+z=d$，一个结果至多以 $1/d$ 成功；第 394 节的有限 Fourier 分解使所有成功结果的概率之和达到 $1$。
+

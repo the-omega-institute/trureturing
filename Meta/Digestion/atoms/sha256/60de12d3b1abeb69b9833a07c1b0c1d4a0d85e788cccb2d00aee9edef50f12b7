@@ -1,0 +1,28 @@
+**推论 82.3（随机熵响应与平均熵的不同尺度）。** 在同一实际条件实现上，
+
+$$
+\mathcal L_x\!\left(T,Y,G,H_M,
+ \sqrt\delta[\mathsf H_{{\rm post},x}(Y)-h_x^{\rm nat}+L_M]\right)
+\Longrightarrow
+\mathcal L\!\left(\sqrt\nu Z,\sqrt\nu Z,G_\infty,
+ c+\tfrac12(Z^2-G_\infty^2),\frac\gamma{\sqrt\nu}Z\right),
+\tag{82.20}
+$$
+
+其中 $Z,G_\infty$ 为独立标准正态；条件有界 Lipschitz 距离按定义 82.1 趋零。
+因此尺度化熵响应有非退化 $N(0,\gamma^2/\nu)$ 极限，而
+
+$$
+\int f_x(y)\mathsf H_{{\rm post},x}(y)dy
+ =h_x^{\rm nat}-L_M-c+o_{\mathbb P}(1).
+\tag{82.21}
+$$
+
+证明。(82.2) 给第五坐标在实际输出下的条件 $L^1$ 替换；
+将其与定理 79.2 的同一联合向量组合，连续映射即得 (82.20)。
+(82.21) 是第 77 章平均信息式与有限 Bayes 恒等式。
+平均修正为常数阶，不蕴含每个典型输出的熵在常数尺度集中。
+在 bits 单位，(82.2) 的括号改为
+$\mathsf H_{{\rm post},x}^{bits}-h_x^{bits}+L_M/\ln2$，系数改为 $\gamma/(\nu\ln2)$。
+本推论未从 $L^1$ 或弱极限推出熵响应的方差收敛。证毕。
+

@@ -1,0 +1,35 @@
+**定义 211.1（策略风险）。** 固定非预见策略 $\pi$、完整来源集合 $\mathfrak J$ 和一个安全事件 $S_\pi$。对来源 $\omega$ 写
+
+$$
+P_\omega^\pi(S_\pi)
+$$
+
+为该来源下安全事件的概率，写
+
+$$
+R_\omega^\pi=1-P_\omega^\pi(S_\pi)
+$$
+
+为总风险。若 $\mu$ 是来源先验，定义三种风险合同：
+
+$$
+R_{\mathrm{worst}}(\pi)
+=\sup_{\omega\in\mathfrak J}R_\omega^\pi,
+$$
+
+$$
+R_{\mathrm{avg}}(\pi,\mu)
+=\int_{\mathfrak J}R_\omega^\pi\,d\mu(\omega),
+$$
+
+以及在历史 $h$ 上的条件风险
+
+$$
+R_{\mathrm{cond}}(h,\pi)
+=
+\sup_{\omega\in\mathfrak J_h}
+P_\omega^\pi(\neg S_\pi\mid h),
+$$
+
+其中只对 $P_\omega^\pi(h)>0$ 的来源定义条件概率。
+

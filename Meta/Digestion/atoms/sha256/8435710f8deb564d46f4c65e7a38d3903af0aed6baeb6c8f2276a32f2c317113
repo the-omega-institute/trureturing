@@ -1,0 +1,42 @@
+**定理 68.5（完整组计数与精确标量的条件离散熵率）。** 对每份原始数据 $x$，
+以完整所选组计数向量 $R$ 在均匀大小 $q$ 支持先验下的有限后验分布定义
+
+```math
+h_M(x)=-\sum_r\mathbb P(R=r\mid\mathscr X_M=x)
+                    \log_2\mathbb P(R=r\mid\mathscr X_M=x),
+\qquad 0\log_20=0.
+```
+
+式 (68.19)。
+
+$h_M^T(x)$ 则是精确实值 $T_M$ 在同一数据纤维上的有限原子分布的离散熵。置
+
+```math
+c_q=\phi(1-\beta)/\beta,\quad
+\mathcal I=\{u:a+u\ge0,\ b+\alpha u\ge0\},\quad
+J_c(v)=v\log(v/c)-v+c\quad(v\ge0),
+```
+
+```math
+I(u)=J_a(a+u)+J_b(b+\alpha u),\qquad
+\mathscr H(r,\beta)=\frac1{2\log2}\int_{\mathcal I}(c_q-I(u))_+\,du.
+```
+
+式 (68.20)。
+
+这里 $0\log0=0$，率函数使用自然对数，$\mathscr H(r,\beta)$ 有限且严格为正。
+原平稳独立对与连续路径实验分别满足
+
+```math
+\frac{h_M(\mathscr X_M)}{Q^5}\longrightarrow\mathscr H(r,\beta),
+\qquad
+\frac{h_M^T(\mathscr X_M)}{Q^5}\longrightarrow\mathscr H(r,\beta)
+```
+
+式 (68.21)。
+
+收敛在先验数据概率意义下成立，亦即对每个固定 $e>0$，上述任一偏差超过 $e$ 的概率
+在所有大小 $q$ 的确定支持抽样律下之上确界趋零。这里仍评价由均匀先验定义的熵函数，
+不改用确定支持的点质量先验。在 $x\in H_M$ 上，$h_M^T(x)=h_M(x)$，
+给定 $x,T_M$ 后组计数的离散熵精确为零。结论不涉及 Gaussian 微分熵或期望熵的收敛。
+

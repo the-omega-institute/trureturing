@@ -1,0 +1,34 @@
+#### 4.6.6 有序历史的有限流多面体
+
+定义全部有序坐标—结果历史
+
+$$
+\mathcal H_k=
+\left\{((i_1,x_1),\ldots,(i_k,x_k)):
+i_1,\ldots,i_k\text{互异},\ x_j\in X_{i_j}\right\},
+\qquad \mathcal H=\bigcup_{k=0}^{n}\mathcal H_k.
+\tag{TM.231}
+$$
+
+根为 $\varnothing$。$U(h)$ 是未读坐标，$hix$ 表示向历史追加 $(i,x)$。当 $|h|=n$，$v(h)\in\Omega$ 是其完整具名赋值。这里“完整历史”指完整的有序坐标—结果历史；若实际观察者还有额外档案，本节先投影这些额外记录，并在下节说明保留范围。
+
+设节点质量为 $m(h)$，选取流为 $f(h,i)$，结果子流为 $f(h,i,x)$。定义 $\mathcal P_H$ 为下列有限线性约束的非负解集：
+
+$$
+\begin{aligned}
+m(\varnothing)&=1,\\
+\sum_{i\in U(h)}f(h,i)&=m(h) &&(|h|<n),\\
+\sum_{x\in X_i}f(h,i,x)&=f(h,i) &&(i\in U(h)),\\
+0\le f(h,i,x)&\le r_if(h,i) &&(x\in X_i),\\
+m(hix)&=f(h,i,x).
+\end{aligned}
+\tag{TM.232}
+$$
+
+终端 joint-law 投影定义为
+
+$$
+\mu_v=\sum_{\substack{h\in\mathcal H_n\\v(h)=v}}m(h).
+\tag{TM.233}
+$$
+

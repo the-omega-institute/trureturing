@@ -1,0 +1,12 @@
+**定理123.3（两尾完整位像的共同环境分块）。** 存在接收子空间 $U_A,U_B\subset K$，使
+
+$$
+\boxed{
+R_0=(U_A\otimes A)\oplus(U_B\otimes B),\qquad
+R_1=(U_A^\perp\otimes A)\oplus(U_B^\perp\otimes B).
+}
+\tag{123.7}
+$$
+
+这里 $U_A,U_B$ 恰为 $R_0$ 在两个尾方向上的完整接收纤维。它们不必彼此正交；显示的直和沿正交环境方向。
+

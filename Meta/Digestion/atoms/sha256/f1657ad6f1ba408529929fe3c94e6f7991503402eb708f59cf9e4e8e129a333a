@@ -1,0 +1,24 @@
+### 58.3 同一来源的早期支撑约束
+
+来源每次发射后，活动记忆的 $|1\rangle$ 分量只来自 $m_0$ 中的 $b|1\rangle$；$m_1=|0\rangle$ 不贡献该分量。因此，任何一步接收后的记忆 $|1\rangle$ 条件接收态，都由 $V_0$ 的像产生。式（58.10）使其接收支撑包含于 $L_0$。这对实际第二终端同样成立，因为每轮使用的是同一个全域通道。
+
+第二终端的标准可逆编码对两个来源基态给
+$$
+\Psi_2^0=a\,m_0\otimes u+b\,m_1\otimes v,\qquad
+\Psi_2^1=m_0\otimes w,
+$$
+再张量固定混合附加态 $\tau_\Gamma$。对 Bell 参考输入，投影活动记忆为 $|1\rangle$、迹掉参考后，未归一化接收态为
+$$
+\frac{|b|^2}{2}
+\bigl(|a|^2|u\rangle\langle u|+|w\rangle\langle w|\bigr)
+\otimes\tau_\Gamma.
+\tag{58.12}
+$$
+$ab\ne0$ 且 $\tau_\Gamma$ 正定，所以（58.12）的支撑恰为四维 $G\otimes\Gamma$。由上一段以及（58.11），
+$$
+G\otimes\Gamma\subseteq L_0,\qquad
+L_0=G\otimes\Gamma.
+\tag{58.13}
+$$
+这一步使用完整混合附加态，没有把其某个纯切片当作实际第二终端。
+

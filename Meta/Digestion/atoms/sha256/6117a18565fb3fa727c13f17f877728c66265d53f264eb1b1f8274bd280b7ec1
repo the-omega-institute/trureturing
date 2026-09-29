@@ -1,0 +1,13 @@
+**定理 100.7（条件记录容量）。** 已知粗状态 $q_H(C)=g$，希望再记录一个有限映射 $\rho:\mathbb Z/H\mathbb Z\to R$，使某个解码器满足
+
+$$
+\operatorname{Dec}(q_H(C),\rho(C))=\eta_{H,d}(C)
+\quad\text{对全部正整数 }C.
+$$
+
+此处 $R=\operatorname{im}\rho$，$|R|$ 是同一个有限记录映射的不同取值个数。允许解码依赖已经知道的 $g$，不要求记录单独执行状态更新。最少记录取值数为
+
+$$
+\min_{\rho,\operatorname{Dec}}|R|=\varphi_E(H/d).
+$$
+

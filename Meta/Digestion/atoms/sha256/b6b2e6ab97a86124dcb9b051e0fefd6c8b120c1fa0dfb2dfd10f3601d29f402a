@@ -1,0 +1,22 @@
+**定义 242.1（主动全息边界）。** 对当前任务定义
+
+$$
+\boxed{
+\eta_{\mathrm{active}}
+=
+\left(
+\mathfrak M/\!\sim_I,
+\Phi,
+\mathcal A_{\mathrm{do}},
+\{P_M^a\},
+\mathcal P_I,
+\{c_a\},
+\text{停止规则},
+\text{来源与干预合同}
+\right).
+}
+\tag{242.1}
+$$
+
+其中 $\mathfrak M/\!\sim_I$ 是当前观察边界的等价纤维，$\mathcal P_I$ 是目标不同而当前不可分的模型对，$\{P_M^a\}$ 说明每项干预如何切纤维，成本和停止规则说明主动取得关系的资源合同。
+

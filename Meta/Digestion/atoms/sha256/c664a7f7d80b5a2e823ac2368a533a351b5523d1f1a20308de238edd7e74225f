@@ -1,0 +1,71 @@
+### 37.1 四个对象及其规范映射
+
+固定一个处处有定义的更新 $F:X\to X$ 和读出 $q:X\to O$。完整未来行为写成
+
+$$
+ B(x):=(q(F^n x))_{n\ge0}\in O^{\mathbb N}.
+ \tag{37.1}
+$$
+
+由它得到行为商
+
+$$
+ Q_B:=X/\ker B,
+$$
+
+以及已实现的行为像
+
+$$
+ I_B:=B(X)\subseteq O^{\mathbb N}.
+$$
+
+二者有规范双射
+
+$$
+ Q_B\simeq I_B.
+ \tag{37.2}
+$$
+
+对每个 $n$，令有限窗口集合为
+
+$$
+ W_n:=\{(q(x),q(Fx),\ldots,q(F^n x)):x\in X\}
+ \subseteq O^{n+1}.
+$$
+
+删除最后一个坐标给出限制映射 $r_{n+1,n}:W_{n+1}\to W_n$。其逆极限为
+
+$$
+ L_W:=\varprojlim_n W_n.
+ \tag{37.3}
+$$
+
+把完整行为截断到各窗口，得到规范单射
+
+$$
+ I_B\hookrightarrow L_W.
+ \tag{37.4}
+$$
+
+单射来自所有有限前缀相等就逐坐标相等；满射则是额外的来源实现命题。若在 $Q_B$ 上另选一个与行为相容的度量并取完备化，记为 $\widehat Q_B$。于是至少要区分
+
+$$
+\boxed{
+ Q_B
+ \ \simeq\ I_B
+ \ \hookrightarrow\ L_W,
+ \qquad
+ Q_B\longrightarrow\widehat Q_B .
+}
+\tag{37.5}
+$$
+
+这里没有默认 $L_W=\widehat Q_B$，也没有默认任一形式点来自 $X$。四个对象分别回答：
+
+* $Q_B$：哪些原始状态具有相同的全部未来行为；
+* $I_B$：原始来源实际产生了哪些完整行为；
+* $L_W$：每个有限窗口都相容的形式行为有哪些；
+* $\widehat Q_B$：在所选度量下加入哪些 Cauchy 极限。
+
+ItineraryCompletion、BehaviorCompletionFunctoriality 与 CanonicalDiscountedFutureGeometry 分别提供这些层次的部分形式化支点；它们的假设不能在转述时删去。
+

@@ -1,0 +1,23 @@
+**定理 76.3（局部 packing 维数）。** 每个非空开 $J\subset(1/2,1)$ 满足
+$\dim_P(E\cap J)=1$。
+
+证明。第 74 章给 $E$ 内的稠密 $G_\delta$ 集。
+以 $\mathcal P^s_\delta(A)$ 表示半径至多 $\delta$、中心在 $A$ 的互不相交球的
+$(2r)^s$ 总和上确界，置 $\mathcal P^s_0=\lim_{\delta\downarrow0}\mathcal P^s_\delta$，
+并以可数覆盖正则化得到 packing 外测度
+
+$$
+\mathcal P^s(A)=\inf_{A\subset\bigcup_iA_i}\sum_i\mathcal P^s_0(A_i).
+\tag{76.6}
+$$
+
+若 $0<s<1$ 且 $A$ 在某个区间稠密，可在较短区间中放置至少 $c/r$ 个
+中心在 $A$ 的不交半径 $r$ 球；总量至少 $cr^{s-1}\to\infty$。
+故 $\mathcal P^s_0(A)<\infty$ 迫使 $A$ 无处稠密。
+若 $\dim_P(E\cap J)<1$，选介于它与 $1$ 之间的 $s$，
+$\mathcal P^s(E\cap J)=0$ 便给一列有限前测度集的覆盖，使 $E\cap J$ 成为贫集，
+与它包含相对稠密 $G_\delta$ 矛盾。直线给反向上界 $1$。证毕。
+
+稠密性本身不足以作此推论：可数稠密集的 packing 维数为零。
+这里用到了第 74 章的类别结论，而非仅用网格稠密。
+

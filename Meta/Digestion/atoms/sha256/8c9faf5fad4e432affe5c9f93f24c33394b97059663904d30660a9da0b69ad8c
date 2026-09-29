@@ -1,0 +1,67 @@
+**定理 75.2（显式仪器同时区分三种校准合同）。** 对定义 73.1 的两个仪器，有
+
+$$
+\boxed{
+\delta_{\mathrm{rec}}(\Gamma_+,\Gamma_0)=\frac1{\sqrt2}
+<
+\frac12\|\Gamma_+-\Gamma_0\|_\diamond=c_*.
+}
+$$
+
+另取
+
+$$
+Q_c=P_1,\qquad L_c=P_0
+$$
+
+定义完整仪器 $\Gamma_c$。则
+
+$$
+\boxed{
+\mathcal M_{\Gamma_c}=\mathcal M_{\Gamma_0},\qquad
+\frac12\|\Gamma_c-\Gamma_0\|_\diamond=1,\qquad
+\mathfrak r_{\mathrm{rec}}=0.
+}
+$$
+
+这些等式对同一合法二维仪器族成立，不以改变活动维数或把未读 Kraus 指标当作记录实现。
+
+证明。两个二结果测量的未点击效果差为
+
+$$
+F=P_+-P_1
+=\frac12
+\begin{pmatrix}
+1&1\\
+1&-1
+\end{pmatrix},
+\qquad
+F^2=\frac12I.
+$$
+
+对任意联合输入态 $\eta_{R\mathcal H}$，两结果通道的差在两个记录块上分别为 $X_R$ 与 $-X_R$，其中
+
+$$
+X_R=\operatorname{Tr}_{\mathcal H}[(I_R\otimes F)\eta].
+$$
+
+用 $F=F_+-F_-$ 的正负部分分解，得到
+
+$$
+\|X_R\|_1
+\le\operatorname{Tr}[(I_R\otimes|F|)\eta]
+\le\|F\|_\infty.
+$$
+
+完整记录差的半迹范数恰为 $\|X_R\|_1$。取 $F$ 的一个归一化本征态作为系统输入就达到 $\|F\|_\infty=1/\sqrt2$；这也证明参考系统不能提高本例的结果通道距离。定理 73.2 给完整距离，而
+
+$$
+c_*^2-\frac12=\frac{5(\sqrt5-1)}{32}>0
+$$
+
+给严格不等式。
+
+对 $\Gamma_c$，未点击、点击效果仍为 $P_1,P_0$，与 $\Gamma_0$ 完全相同，故两个结果通道作为线性映射相等，包括任意参考扩展。另一方面，输入 $P_1$ 后，$\Gamma_c$ 永久保持 $P_1$ 且不点击；$\Gamma_0$ 的单轮未点击后继为 $P_0$，下一轮必点击。第一轮的两个量子输出已经正交，所以完整单轮距离为一。由于 $\Gamma_c$ 是结果伪距离为零的实际失效仪器，$\mathfrak r_{\mathrm{rec}}=0$。$\square$
+
+相同效果遗漏后继的现象属于量子仪器与 POVM 的既有区别；它不被当作新的测量原理。这里的计算把它与同一个名义仪器的正失效半径、相干失效上界及对角不变阈值放在同一比较中。
+

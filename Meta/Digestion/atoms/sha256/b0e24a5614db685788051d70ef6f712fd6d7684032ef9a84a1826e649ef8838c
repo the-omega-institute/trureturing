@@ -1,0 +1,57 @@
+### 278.4 不依赖校准成功事件的方向误差界
+
+若 $\widehat v\ne0$，定义
+$$
+\widehat u=\widehat v/\|\widehat v\|_2;
+$$
+若 $\widehat v=0$，固定定义 $\widehat u=(1,0)$。选一个实现
+$\widehat u=(\cos\widehat\phi,\sin\widehat\phi)$ 的角度 $\widehat\phi$。
+
+对任意 $a>0$、单位向量 $u$ 及向量 $v$，上述归一化约定满足
+$$
+\|\widehat u-u\|_2\le\frac{2\|v-au\|_2}{a}.
+\tag{278.18}
+$$
+当 $v\ne0$ 时，
+$$
+\begin{aligned}
+\|\widehat u-u\|_2
+&\le\left\|\widehat u-\frac va\right\|_2
++\left\|\frac va-u\right\|_2\\
+&=\left|1-\frac{\|v\|_2}{a}\right|
++\frac{\|v-au\|_2}{a}
+\le\frac{2\|v-au\|_2}{a}.
+\end{aligned}
+$$
+当 $v=0$ 时，左侧至多二，右侧恰二，故同一界仍成立。
+
+令 $e=\widehat\phi-\phi$ 按圆周理解。单位向量恒等式及（278.17）—（278.18）给
+$$
+1-\cos e
+=\frac12\|\widehat u-u_\phi\|_2^2,
+$$
+$$
+\boxed{
+\mathbb E_{b,\phi}(1-\cos e)
+\le\frac8{a_{b,n}^2m}.
+}
+\tag{278.19}
+$$
+特别地，在理想假设下使用 $a_n\ge1/2$，得到
+$$
+\mathbb E_{0,\phi}(1-\cos e)\le\frac{32}{m}.
+\tag{278.20}
+$$
+在两个假设下统一使用 $a_{b,n}\ge1/4$，则得到 $128/m$ 的上界。
+
+若将 $e$ 取为 $[-\pi,\pi]$ 中的代表，$1-\cos e\ge2e^2/\pi^2$，故
+$$
+\mathbb E_{b,\phi}e^2
+\le\frac{4\pi^2}{a_{b,n}^2m}
+\le\frac{64\pi^2}{m}.
+\tag{278.21}
+$$
+这给出对每个 $\phi$ 一致的均方角误差；当 $m$ 为 $\delta^{-1}$ 阶时，均方根角误差为 $O(\sqrt\delta)$。
+
+后续判别直接使用（278.19）的平均背景界。整个计算不把校准分成“成功”和“失败”事件，也不把两假设的校准分布当作相同。
+

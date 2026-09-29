@@ -11,9 +11,38 @@ You do not need to write a new proof to make a useful contribution. Public-facin
 documentation defaults to English.
 
 [Project entrance](../README.md) ·
-[Use Claude Code or Codex](#use-claude-code-or-codex) ·
+[Choose a starting point](#choose-a-starting-point) ·
 [Repository rules](../AGENTS.md) · [Working map](../agents/CONTEXT.md) ·
 [Specification](develop/spec/golden-ledger-repo-spec.md)
+
+## Choose a starting point
+
+- **Connect a question to a research direction.** Use the
+  [research directions](VISION.md#research-directions) to identify an observation, missing relation
+  or reusable lemma that could advance an existing line. State what would
+  support or refute the proposed step, search the library first, and explain
+  what the result would enable next. New evidence should also update the
+  relevant explanation; preserve the distinction between a philosophical
+  commitment, a model, an experiment and a checked theorem.
+- **Read and explain.** Follow a [README example](../README.md#three-places-to-look)
+  from explanation to Lean statement. Clarify terminology, fix a link or improve
+  a translation while preserving the result's assumptions and scope.
+- **Reproduce.** Run the [WDigits example](../README.md#first-run). For an
+  experiment, follow its own instructions and report the input, environment and
+  output. A computed sample and a theorem answer different questions.
+- **Fix.** Bring a minimal reproduction of a build failure, misleading
+  explanation or tool defect. A small, focused fix is a useful first PR.
+- **Explore.** Start from a [problem dossier](../Problems/) or
+  [open frontier task](../D5/X_Frontier/), state the exact missing fact, and
+  search for existing results before writing a proof.
+
+To report a problem, [open an issue](https://github.com/the-omega-institute/trureturing/issues)
+with the source path or declaration, the commit from `git rev-parse HEAD`, your
+OS and relevant tool versions, the smallest input and command that reproduce
+it, the expected outcome and the actual output or exit code. For a mathematical
+mismatch, quote the statement and identify the missing hypothesis or give the
+counterexample. Include necessary diagnostics; omit credentials and session
+transcripts. A precise explanation question is welcome too.
 
 ## Use Claude Code or Codex
 
@@ -43,12 +72,38 @@ the portable way to use a skill is to ask the agent to read its canonical
 
 > Read skills/formal-thinking-and-answer/SKILL.md and use it to examine whether knowing every part determines the whole, making the assumptions and unresolved questions explicit.
 
-| Skill | When to use it / what to provide | Work and outcome |
-| --- | --- | --- |
-| [formal-thinking-and-answer](../skills/formal-thinking-and-answer/SKILL.md) | A mathematical, philosophical or conceptual question: “Does knowing every part determine the whole?” | Reasons from repository results, uses formal checking where applicable, and returns an ordinary answer with its assumptions and unresolved boundaries; can create and retain scoped formal artifacts under repository rules. |
-| [codex-formalize](../skills/codex-formalize/SKILL.md) | One existing open digestion atom: “Work on atom `<atom-id>`, reusing results first.” | Searches for reusable results first, then works on formalization or settlement of that source claim; a new theorem or closure is not guaranteed. |
-| [codex-theory-ingest](../skills/codex-theory-ingest/SKILL.md) | Externally authored material: “Ingest the document at `<path>` from `<source-URL>` under `<license>`.” | Brings reference input through the digestion workflow into open formalization atoms; ingestion is not proof. |
-| [theory-volume-template](../skills/theory-volume-template/SKILL.md) | Your own volume: “Draft a new volume on `<topic>`,” or “Append to `<volume-path>` while preserving existing atoms.” | Structures the volume for digestion while preserving existing atoms; use this for authoring and appending, and the ingest skill for externally authored material. |
+- **[formal-thinking-and-answer](../skills/formal-thinking-and-answer/SKILL.md)**
+
+  A mathematical, philosophical or conceptual question: “Does knowing every part
+  determine the whole?”
+
+  Reasons from repository results, uses formal checking where applicable, and
+  returns an ordinary answer with its assumptions and unresolved boundaries;
+  can create and retain scoped formal artifacts under repository rules.
+
+- **[codex-formalize](../skills/codex-formalize/SKILL.md)**
+
+  One existing open digestion atom: “Work on atom `<atom-id>`, reusing results
+  first.”
+
+  Searches for reusable results first, then works on formalization or settlement
+  of that source claim; a new theorem or closure is not guaranteed.
+
+- **[codex-theory-ingest](../skills/codex-theory-ingest/SKILL.md)**
+
+  Externally authored material: “Ingest the document at `<path>` from
+  `<source-URL>` under `<license>`.”
+
+  Brings reference input through the digestion workflow into open formalization
+  atoms; ingestion is not proof.
+
+- **[theory-volume-template](../skills/theory-volume-template/SKILL.md)**
+
+  Your own volume: “Draft a new volume on `<topic>`,” or “Append to
+  `<volume-path>` while preserving existing atoms.”
+
+  Structures the volume for digestion while preserving existing atoms; use this
+  for authoring and appending, and the ingest skill for externally authored material.
 
 A digestion atom is a source claim tracked by the repository's ingestion
 workflow. Replace the placeholders with your actual input; each linked skill
@@ -85,35 +140,6 @@ need a mathematical skill. A contribution request you can paste:
    the required remote checks. Local checks and an agent's confidence do not
    replace those results or independent review.
 
-## Choose a starting point
-
-- **Connect a question to a research direction.** Use the
-  [research directions](VISION.md#research-directions) to identify an observation, missing relation
-  or reusable lemma that could advance an existing line. State what would
-  support or refute the proposed step, search the library first, and explain
-  what the result would enable next. New evidence should also update the
-  relevant explanation; preserve the distinction between a philosophical
-  commitment, a model, an experiment and a checked theorem.
-- **Read and explain.** Follow a [README example](../README.md#three-places-to-look)
-  from explanation to Lean statement. Clarify terminology, fix a link or improve
-  a translation while preserving the result's assumptions and scope.
-- **Reproduce.** Run the [WDigits example](../README.md#first-run). For an
-  experiment, follow its own instructions and report the input, environment and
-  output. A computed sample and a theorem answer different questions.
-- **Fix.** Bring a minimal reproduction of a build failure, misleading
-  explanation or tool defect. A small, focused fix is a useful first PR.
-- **Explore.** Start from a [problem dossier](../Problems/) or
-  [open frontier task](../D5/X_Frontier/), state the exact missing fact, and
-  search for existing results before writing a proof.
-
-To report a problem, [open an issue](https://github.com/the-omega-institute/trureturing/issues)
-with the source path or declaration, the commit from `git rev-parse HEAD`, your
-OS and relevant tool versions, the smallest input and command that reproduce
-it, the expected outcome and the actual output or exit code. For a mathematical
-mismatch, quote the statement and identify the missing hypothesis or give the
-counterexample. Include necessary diagnostics; omit credentials and session
-transcripts. A precise explanation question is welcome too.
-
 ## Prerequisites
 
 Reading the source and book needs no local toolchain. For local work, use Git,
@@ -127,8 +153,8 @@ Make and Bash, with these tools on `PATH`:
   selected by [global.json](../global.json) using its declared roll-forward
   policy. The
   repository's Lean wrapper also uses .NET.
-- **Python** available as `python3` for the CI/preflight scripts, which require
-  the standard-library `tomllib` module.
+- **Python 3.11+** as `python3` for CI/preflight scripts, which import
+  standard-library `tomllib`.
 
 The shell examples below use macOS/Linux conventions. Install the SDK version
 specified in [global.json](../global.json), even when its roll-forward policy
@@ -282,12 +308,12 @@ Push the branch to your fork with `git push -u origin lane/governance/first-docs
 (substitute your actual branch). Open a PR against **`the-omega-institute/trureturing:dev`**;
 `main` is the release branch.
 
-Describe the concrete problem, resulting behavior or explanation, source
-evidence and verification. At the top, include the provenance required by
-[AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露): skills used (or none),
-who produced and reviewed the work, and the actual review method and scope.
-Disclose AI assistance when used. Keep the PR to useful results and necessary
-diagnostics; do not paste process transcripts.
+Describe the problem, resulting behavior or explanation, source evidence and
+verification. At the top, include [AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露)
+provenance: skills used (or none), producers and reviewers, and the actual
+review method and scope. For agent work, include the host session ID and
+resume command. Disclose AI assistance. Keep useful results and necessary
+diagnostics; omit process transcripts.
 
 Arrange independent review. The repository's documented merge checks are
 `push / engineering`, `push / current` and `delta`; inspect the actual check

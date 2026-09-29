@@ -1,0 +1,83 @@
+**引理182.2（正交方向的四阶谱影响）。** 对（182.7）的有界参数族，有
+
+$$
+\boxed{
+0\le\widetilde e_L(r,t,u)
+-\left(1-\frac{f_0f_1}{f_0+f_1}\right)
+\le C\epsilon^4
+}
+\tag{182.14}
+$$
+
+当 $\epsilon$ 足够小时成立，常数 $C$ 可对该有界参数族统一选取。
+
+**证明。** 输出标签为经典的，第173节的完整参考公式给
+
+$$
+\widetilde e_L(r,t,u)=\max_{q\in[0,1]}\lambda_{\max}(C_q),
+$$
+
+$$
+C_q=P_{u_q}-\operatorname{diag}
+\bigl(q\widetilde\sigma_{00},(1-q)\widetilde\sigma_{11}\bigr),
+\qquad
+u_q=\sqrt q\,|0\rangle\Xi+\sqrt{1-q}\,|1\rangle\Xi.
+\tag{182.15}
+$$
+
+按 $\mathcal T=\operatorname{span}\{|0\rangle\Xi,|1\rangle\Xi\}$
+及其正交补分块，写
+
+$$
+C_q=\begin{pmatrix}M_q&B_q\\B_q^\dagger&D_q\end{pmatrix},
+\qquad
+M_q=\begin{pmatrix}
+q(1-f_0)&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&(1-q)(1-f_1)
+\end{pmatrix}.
+\tag{182.16}
+$$
+
+这是矩阵估计中的正交分块，不为解码器增加操作 $MR$ 的权限。
+由于目标向量属于 $\mathcal T$、正确输出块半正定，始终有
+$D_q\preceq0$。由（182.13），$\|B_q\|=O(\epsilon^2)$ 对全部
+$q\in[0,1]$ 一致成立。
+
+令 $\lambda_q=\lambda_{\max}(M_q)$。由于 $f_j\to1/2$ 一致，
+对 $M_q$ 使用单位向量 $(\sqrt q,\sqrt{1-q})$ 的 Rayleigh 商，有
+
+$$
+\lambda_q\ge1-q^2f_0-(1-q)^2f_1
+\ge1-\max\{f_0,f_1\}\ge\frac14
+$$
+
+对足够小的 $\epsilon$ 及全部 $q$ 成立。
+一般地，若 $D\preceq0$、$\lambda=\lambda_{\max}(M)>0$，则
+
+$$
+0\le\lambda_{\max}\begin{pmatrix}M&B\\B^\dagger&D\end{pmatrix}-\lambda
+\le\frac{\|B\|^2}{\lambda}.
+\tag{182.17}
+$$
+
+下界取 $M$ 的最高本征向量。对任意单位向量 $(x,y)$，令
+$v=\|y\|$，其 Rayleigh 商至多为
+$\lambda-\lambda v^2+2\|B\|v\le\lambda+\|B\|^2/\lambda$，得到上界。
+应用到（182.16），得
+
+$$
+0\le\lambda_{\max}(C_q)-\lambda_q\le C\epsilon^4
+\quad\text{对全部 }q\in[0,1].
+$$
+
+因此可对两侧取 $q$ 最大值。第173、180节的二元调和公式给
+
+$$
+\max_q\lambda_q=1-\frac{f_0f_1}{f_0+f_1},
+$$
+
+从而得到（182.14）。证毕。
+
+这里没有把最坏参考权重固定为 $1/2$：两维块中的最大值仍在
+$q=f_1/(f_0+f_1)$ 取得，其偏移完整保留在调和式中；对实际最高根的误差估计则统一覆盖全部 $q$。
+

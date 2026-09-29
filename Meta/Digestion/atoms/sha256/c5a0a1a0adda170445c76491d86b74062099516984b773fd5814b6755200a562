@@ -1,0 +1,25 @@
+**定义 62.11（收费尾链上的同时吸收资料）。** 固定整数 $`p\ge2,k\ge0`$，置 $`P=p^k,M=pP`$。物理来源初始为 $`s=x\in\mathbb Z/M\mathbb Z`$；动作 $`W`$ 将来源加一，动作 $`R`$ 保持来源并返回 $`\lfloor[s]_M/P\rfloor`$。原控制器是有限、驻定、全定义的确定表，所有输入从同一个读取态 $`S`$ 开始，逐点执行有限动作词 $`R(W^+R)^*`$；最后读取后直接进入既有终止态，其固定解码给出原输入。没有来源相关准备、复位、复制、逆步、免费计时器、表外计数器或终止时刻侧信道。
+
+采用第56.9、61.1节的已收费尾链表示：读取态集为 $`\mathcal R`$，每个 $`q\in\mathcal R`$ 拥有与其他目标不交的状态 $`W(q,j)`$，$`1\le j\le L_q`$。其一次单位动作后，$`j\gt1`$ 时进入 $`W(q,j-1)`$，$`j=1`$ 时进入 $`q`$。简写 $`\langle q,d\rangle=W(q,d)`$；所有实际非终止读取后继均为这种入口，$`1\le d\le L_q`$。读取、每个单位等待位置及终止态都计入容量 $`C`$，原来未达但保留的名义状态也照常计费。以下变换针对这张给定表，不先缩短整周期等待。
+
+原槽是有序对 $`v=(r,a)`$，其后继记为 $`\sigma(v)`$。令 $`\mathcal V`$ 为全部原初始化执行实际使用的槽集，$`A_q=\{a:(q,a)\in\mathcal V\}`$ 为原完整数字支持。选择待删读取态集 $`D\subseteq\mathcal R\setminus\{S\}`$，并定义
+
+```math
+\begin{aligned}
+\mathcal I_D&=\{v\in\mathcal V:\sigma(v)=\langle u_v,\delta_v\rangle,\ u_v\in D\},\\[0pt]
+\mathcal O_v&=\{(x,i):\text{原输入 }x\text{ 的第 }i\text{ 次读取使用槽 }v\},\\[0pt]
+D_v&=\{a:\text{某个 }(x,i)\in\mathcal O_v\text{ 在其下一读取 }u_v\text{ 观察到 }a\}
+\quad(v\in\mathcal I_D).
+\end{aligned}
+\tag{62.21}
+```
+
+这里取全部原输入及其全部出现，包含自返、删态间的边、重复读取和单点延续；$`D_v`$ 非空。为每个整槽 $`v\in\mathcal I_D`$ 预定一个保留读取宿主 $`\phi(v)\in\mathcal R\setminus D`$，要求
+
+```math
+D_v\cap A_{\phi(v)}=\varnothing.
+\tag{62.22}
+```
+
+同一槽不能随出现位置或未来读数改变宿主。读取起点 $`S`$ 在全部输入上使用全部数字，故（62.22）本身排除它成为任何非空到达集的宿主。重要的是旧槽身份：两个槽即使同有后继 $`\langle u,d\rangle`$，也可以选择不同宿主，因而改写不能只定义成后继值的函数。
+

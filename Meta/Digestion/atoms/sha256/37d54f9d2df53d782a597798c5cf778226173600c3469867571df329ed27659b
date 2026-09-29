@@ -1,0 +1,39 @@
+### 36.4 动力下降与双向恢复的附加条件
+
+对每个合法动作 $a$，若
+
+$$
+ s\equiv_\star t
+ \Longrightarrow
+ \bigl(
+ \operatorname{Adm}_a(s)=\operatorname{Adm}_a(t)
+ \land
+ \operatorname{Out}_a(s)=\operatorname{Out}_a(t)
+ \land
+ T_a(s)\equiv_\star T_a(t)
+ \bigr),
+ \tag{36.9}
+$$
+
+则 $T_a$ 在共同商上下降为 $\overline T_a$，四个表示之间的 $g_{ij}$ 都满足动态半共轭
+
+$$
+ g_{ij}\circ \overline T_a^{\,i}
+ =
+ \overline T_a^{\,j}\circ g_{ij}.
+ \tag{36.10}
+$$
+
+这正是边界方程、时钟方程和观察者更新可以使用同一商的条件。若式 (36.9) 只对未来输出成立而不含合法性、失败或档案，得到的只是输出商，不能声称观察者的完整状态已恢复。
+
+若还要求反向恢复，则需在实际双向来源 $S^{\leftrightarrow}$ 上给出逆作用 $T_a^{-1}$，或证明每个所需的后继都有唯一带记录的前驱。有限载体上，足够迭代后的稳定周期核心满足这一要求；第34节的二点常值映射说明在核心之外不成立。于是双向版本的条件是
+
+$$
+ \boxed{
+ \text{(36.9) 对正向和反向均成立，且更新在 }S^{\leftrightarrow}\text{ 上可逆。}
+ }
+ \tag{36.11}
+$$
+
+没有式 (36.11)，最多得到正向时间、边界和记忆的互相恢复；把过去记忆写成未来边界的函数会把瞬态来源误当成已保存信息。
+

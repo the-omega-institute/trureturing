@@ -1,0 +1,79 @@
+### 301.7 两种单流倾斜的事件距离与计数差
+
+对 $0\le s<d$，任务流倾斜恒等式为
+$$
+\mathbb E\!\left[
+\frac{(I)_s}{(K)_s}|I-J|\mathbf1_F(I,J)\right]
+=p_x^s
+\mathbb E\!\left[
+|I_s-J|\mathbf1_F(I_s,J)\right],
+\tag{301.30}
+$$
+$$
+I_s=s+\mathrm{Bin}(K-s,p_x),
+$$
+其中 $I_s,J$ 独立。参考流有对称式，$J_s=s+\mathrm{Bin}(K-s,p_y)$，且与 $I$ 独立。$s=0$ 包含在恒等式中；若某个 $p=0,s>0$，该项的权重为零，恒等式仍有效。
+
+**事件并集的两种方向均保留实际 $h$ 距离。**
+未倾斜时
+$$
+h-h_0/2\ge h/2,
+$$
+$$
+hc-a_0(h_0)
+\ge c_0h-c_0h_0/4
+\ge3c_0h/4.
+\tag{301.31}
+$$
+倾斜一个计数，只使对应经验坐标的均值下降
+$$
+BC\,s(1-p)/K\le BCd/K
+\le4C_\star\alpha h_0\kappa
+\le c_0h_0/8\le c_0h/8.
+\tag{301.32}
+$$
+所以坏校准与低任务坐标这两个事件，在任务倾斜或参考倾斜下都与各自均值相隔至少固定倍 $h$；未倾斜坐标当然保持原距离。
+
+倾斜后的随机项数量只减少，故经验坐标方差仍至多
+$A w_h/K$，单项范围仍至多 $4C_\star/K$。Bernstein 分别作用于两个事件并作并集界，给
+$$
+\boxed{
+\Pr_{\rm tilt}(F)\le
+A\exp\!\left[-a\frac{Kh^2}{w_h+h}\right].
+}
+\tag{301.33}
+$$
+普通未倾斜概率也满足此式。它不是用 $h_0$ 替代真实 $h$ 后的弱界。
+
+**计数差的二阶矩同时控制两个倾斜方向。**
+原始平均计数差为
+$$
+K(p_x-p_y)=\frac{Kh(1-c)}{BC}.
+$$
+任务倾斜后
+$$
+\mathbb E(I_s-J)=K(p_x-p_y)+s(1-p_x),
+$$
+参考倾斜后
+$$
+\mathbb E(I-J_s)=K(p_x-p_y)-s(1-p_y).
+\tag{301.34}
+$$
+由于 $1-c\le3\kappa$、$s\le\alpha h_0\kappa K\le\alpha h\kappa K$，两种均值的绝对值都至多 $A Kh\kappa$。两流独立，且倾斜只减少随机项，所以两种计数差的方差都至多 $A Kw_h$。
+
+将任一倾斜差记为 $M_s$。于是
+$$
+(\mathbb E M_s^2)^{1/2}
+\le A(Kh\kappa+\sqrt{Kw_h}).
+$$
+Cauchy–Schwarz 与（301.33）给
+$$
+\boxed{
+\mathbb E_{\rm tilt}[|M_s|\mathbf1_F]
+\le A(Kh\kappa+\sqrt{Kw_h})
+\exp\!\left[-a\frac{Kh^2}{w_h+h}\right].
+}
+\tag{301.35}
+$$
+指数中的常数已经吸收平方根。没有要求 $M_s$ 与 $F$ 独立；Cauchy–Schwarz 正是为保留二者的共同分布而使用。
+

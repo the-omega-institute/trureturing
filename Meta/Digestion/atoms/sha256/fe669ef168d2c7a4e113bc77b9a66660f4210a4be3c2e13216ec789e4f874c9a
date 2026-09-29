@@ -1,0 +1,29 @@
+**证明。** 对 $z\in H$，Hausdorff 收敛给 $z_k\in G_{t_k}$ 且 $z_k\to z$。每个 $\mathcal R_{t_k,z_k}$ 是 CPTP 通道，矩阵连续性使它们趋向 $\mathcal R_{t_0,z}$。CPTP 集合闭，故极限仍为 CPTP。这个论证没有把 $z$ 加进固定装置的实际群 $G_{t_0}$。
+
+联合连续性及 Hausdorff 收敛给
+
+$$
+\max_{z\in G_{t_k}}h_{t_k}(z)
+\longrightarrow H_*:=\max_{z\in H}\widetilde h(t_0,z).
+\tag{164.12}
+$$
+
+为核对该最大值连续性，一方面将 $H$ 的一个最大点用 $G_{t_k}$ 中的点逼近，得到下极限；另一方面从各 $G_{t_k}$ 的最大点取收敛子列，其极限属于 $H$，得到上极限。
+
+每个固定有限前缀也满足
+$M_{N-1}(t_k)\to M_{N-1}(t_0)$。在（164.6）中先固定 $N$、令 $k\to\infty$，得
+
+$$
+\begin{aligned}
+\max\{M_{N-1}(t_0),H_*\}
+&\le\liminf_kE_\infty(t_k)\\
+&\le\limsup_kE_\infty(t_k)\\
+&\le\max\{M_{N-1}(t_0),H_*\}+\zeta_N.
+\end{aligned}
+$$
+
+最后令 $N\to\infty$，用
+$M_{N-1}(t_0)\uparrow E_\infty(t_0)$ 及 $\zeta_N\to0$，得到（164.11）。证毕。
+
+该式也说明，群扩大不必导致最坏误差跳变：新增相位的误差若不超过装置 $t_0$ 原有的全时域最坏值，右侧仍为 $E_\infty(t_0)$。有限暂态峰值能够高于所有新增渐近响应。
+

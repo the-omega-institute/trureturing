@@ -1,0 +1,22 @@
+### 54.3 共同纯尾的环境交叠限制
+
+考虑七维固定 CPTP 接收器服务前六个完整参考终端的非退化来源，且第二终端纯。沿标准早期可逆编码，记第二终端接收向量 $u,v,w$ 正交单位，
+$$
+U=G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),\qquad ab\ne0.
+\tag{54.14}
+$$
+第二轮排出第一终端附加因子的环境空间记为 $F$。它维数等于第一终端附加态秩 $r_1\ge1$，且固定 Stinespring 等距的两个位块满足
+$$
+U\otimes F\subseteq V_0K,\qquad
+\mathbb Cv\otimes F\subseteq V_1K.
+\tag{54.15}
+$$
+假设第三至第六轮的新环境为同一条纯射线；统一选取单位代表 $\eta$。实际系数空间满足
+$$
+V_0H_{n-1}=G_n\otimes\eta,\qquad
+V_1G_{n-1}=Q_n\otimes\eta\quad(3\le n\le6),
+\tag{54.16}
+$$
+其中各 $H_n,G_n,Q_n$ 二维，$C_2=H_2+G_2$ 三维，$C_n=H_n+G_n=G_n\oplus Q_n$ 在 $n\ge3$ 时四维。实际 $H_n$ 到 $G_n$、$Q_n$ 的两个正交投影均为同构。
+

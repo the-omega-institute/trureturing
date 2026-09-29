@@ -1,0 +1,55 @@
+### theorem 66.1 关联边界与 Mertens 判据
+
+对任意 $\alpha>0$，
+
+$$
+\boxed{\Delta_{7,10}(X)=O(X^\alpha)
+\iff M_{70}(X)=O(X^\alpha).}
+$$
+
+因而，使用经典 Mertens 判据时，
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall\varepsilon>0,\quad
+\Delta_{7,10}(X)=O_\varepsilon(X^{1/2+\varepsilon}).
+}
+$$
+
+**证明。** 直接有 $\Delta_{7,10}(X)=M_{70}(X/7)-M_{70}(X/10)$。反向取 $q=7/10$，则
+
+$$
+\Delta_{7,10}(7Y)=M_{70}(Y)-M_{70}(qY).
+$$
+
+有限回溯给出
+
+$$
+M_{70}(Y)=\sum_{j\ge0}\Delta_{7,10}(7q^jY),
+$$
+
+因为当 $q^jY<1$ 时计数函数为零。对 $\alpha>0$，该几何级数收敛，得到两个大 $O$ 估计的等价性。
+
+再令 $\mathcal S=\{2^i5^j7^k:i,j,k\ge0\}$。精确卷积恒等式为
+
+$$
+M(X)=\sum_{d\mid70}\mu(d)M_{70}(X/d),
+$$
+
+$$
+M_{70}(X)=\sum_{q\in\mathcal S}M(X/q),
+$$
+
+其中第二个和实际上因 $q\le X$ 而有限。对任意 $\alpha>0$，
+
+$$
+\sum_{q\in\mathcal S}q^{-\alpha}
+=\prod_{p\in\{2,5,7\}}(1-p^{-\alpha})^{-1}<\infty,
+$$
+
+故 $M_{70}(X)=O(X^\alpha)$ 与 $M(X)=O(X^\alpha)$ 等价。最后使用经典等价性 $\mathrm{RH}\iff\forall\varepsilon>0, M(X)=O_\varepsilon(X^{1/2+\varepsilon})$。证毕。 $\square$
+
+这里的等价性使用所有实数截断 $X\ge1$；只检查某个离散端点序列并不足以推出它。
+

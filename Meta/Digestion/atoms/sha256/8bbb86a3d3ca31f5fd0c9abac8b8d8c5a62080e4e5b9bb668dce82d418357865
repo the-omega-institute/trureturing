@@ -1,0 +1,6 @@
+**引理 2.21（effective localization of mass）。** Let $F\subseteq\mathbb Z_p$ be any effectively closed set, without a sparsity assumption. Given its computable complement enumeration and a rational Cauchy name for $\mu(F)$, the masses $\mu(F\cap[b]_d)$ are uniformly computable in $(d,b)$. Here a rational Cauchy name is a function $v:\mathbb N\to\mathbb Q$ satisfying
+$$
+|v(t)-\mu(F)|\le2^{-t}.
+\tag{TM.567}
+$$
+

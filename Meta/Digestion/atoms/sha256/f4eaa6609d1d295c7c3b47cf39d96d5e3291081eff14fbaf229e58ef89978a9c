@@ -1,0 +1,83 @@
+### 271.7 分块近核向量控制完整跨链相干
+
+对任意竞争态 $\Xi$，令
+$$
+R=\operatorname{Tr}_H\Xi-\rho_*,
+\qquad B=\mathscr K(\Xi)-K_*,
+\qquad T'=N\Xi.
+$$
+则有精确分解
+$$
+T'-T_*=\operatorname{diag}(D,-D)+X,
+\qquad
+X=\frac N2\begin{pmatrix}R&B\\B^\dagger&R\end{pmatrix},
+$$
+$$
+D=D^\dagger,
+\qquad \xi:=\|X\|\le\frac N2\varepsilon,
+\qquad \|T'\|,\|T_*\|\le N.
+\tag{271.38}
+$$
+仍允许 $D$ 具有全部跨链条目。
+
+固定一条长度 $r=r_b$ 的链，令 $\iota_b:E_b\to E$ 为等距嵌入。取
+$$
+0<\theta\le\theta_{0,b}
+:=\min\left\{1,\frac{t}{2r},\frac\pi r\right\},
+\qquad \ell=0,\ldots,r-1,
+$$
+$$
+\lambda_\ell=e^{i\ell\theta},
+\qquad z_\ell=\frac{\lambda_\ell-1}{t},
+\qquad
+x_{b,\ell}=\iota_b\bigl((1,z_\ell,\ldots,z_\ell^{r-1})^{\mathsf T}\bigr),
+$$
+$$
+v_{b,\ell}=(x_{b,\ell},-\lambda_\ell^{-1}x_{b,\ell}).
+\tag{271.39}
+$$
+全局矩阵仍满足
+$$
+Mx_{b,\ell}-\lambda_\ell x_{b,\ell}
+=-tz_\ell^r e_{b,r},
+\qquad
+Gv_{b,\ell}=\lambda_\ell^{-1}tz_\ell^r e_{b,r}.
+\tag{271.40}
+$$
+相位模长为一，使 $v_{b,\ell}$ 对 $\operatorname{diag}(D,-D)$ 的二次型精确为零。又 $|z_\ell|\le1/2$、$\|v_{b,\ell}\|^2\le2r$。重复§269的PSD向量估计，但保留全局迹界 $N$，得到
+$$
+\begin{aligned}
+\|Dx_{b,\ell}\|
+\le{}&\left(\sqrt{N\|Q\|}+\|G\|\|Q\|\right)t|z_\ell|^r\\
+&+\sqrt{2Nr\xi}+\sqrt{2r}\,\xi.
+\end{aligned}
+\tag{271.41}
+$$
+这里左边是在整个参考空间中的向量范数。
+
+对 $0\le\varepsilon\le1$，可取有限常数
+$$
+A_b=
+\left(\sqrt{N\|Q\|}+\|G\|\|Q\|\right)t
+\left(\frac{r-1}{t}\right)^r
++N\sqrt r+\frac{N\sqrt{2r}}2,
+\tag{271.42}
+$$
+使 $\max_\ell\|Dx_{b,\ell}\|\le A_b(\theta^r+\sqrt\varepsilon)$。$r=1$ 时第一项按零解释。
+
+令 $V_b$ 为该链上以 $(1,z_\ell,\ldots,z_\ell^{r-1})^{\mathsf T}$ 为列的 $r$ 阶Vandermonde矩阵。§269的系数估计给
+$$
+\|V_b^{-1}\|\le r(\pi t)^{r-1}\theta^{1-r}.
+\tag{271.43}
+$$
+$D\iota_bV_b$ 的列是完整向量 $Dx_{b,\ell}$，故右乘 $V_b^{-1}$ 后控制的是整个 $N\times r$ 列块：
+$$
+\boxed{
+\|D\iota_b\|
+\le r^{3/2}(\pi t)^{r-1}A_b
+\theta^{1-r}(\theta^r+\sqrt\varepsilon).
+}
+\tag{271.44}
+$$
+因此落入其他链的分量也已被估计；这里没有把全矩阵替换成对角压缩 $D_{bb}$。
+

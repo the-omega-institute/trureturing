@@ -1,0 +1,14 @@
+**命题 728.1（三种精确关系）。** 令 $C=\bigcap_{S\in\mathcal F}S$。则
+
+$$
+\tau=1\Longleftrightarrow C\ne\varnothing,
+\qquad
+\tau=n/p\Longleftrightarrow(p/n)\mathbf1\in\operatorname{conv}\{\mathbf1_S:S\in\mathcal F\}.
+$$
+
+并且对于状态概率权重 $\lambda$ 及负载 $q_i=\sum_{S\ni i}\lambda_S$，
+
+$$
+\min_{\lambda\in\Delta(\mathcal F)}\max_iq_i=1/\tau.
+$$
+

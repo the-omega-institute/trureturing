@@ -1,0 +1,37 @@
+**定义 32.1（修正区间的精确后验中心）。** 沿用定义 31.1，先对齐到正确方向。
+所有条件后验均取均匀固定基数支持先验，并条件于完整数据及独立同分优先级，
+记所生的 σ 代数为 $`\mathscr D_M`$。置
+
+```math
+I_M=A_M\triangle T_M,\qquad D_M=|N_M-m_M|=|I_M|,\qquad
+\varepsilon_M=\mathrm{sgn}(N_M-m_M),\qquad
+\widehat G_M=-\frac{N_M-\mathbb E_S N_M}{\sqrt q}.
+```
+
+式 (32.1)。
+
+若 $`D_M=0`$，取 $`\varepsilon_M=0`$。
+记 $`\pi_i=\mathbb P(i\in S\mid\mathscr D_M)`$ 为精确后验包含概率。
+实际遗漏数相对于间隙阈值的修正及其后验中心为
+
+```math
+\Delta_M=|S\setminus T_M|-(q-C_M)
+       =\varepsilon_M|I_M\cap S|,\qquad
+\overline\Delta_M=\varepsilon_M\sum_{i\in I_M}\pi_i,\qquad
+\mathcal R_M=\frac{\Delta_M-\overline\Delta_M}{q^{1/4}}.
+```
+
+式 (32.2)。
+
+这里 $`\Delta_M`$ 与遗漏损失一样依赖真实支持。
+未知方向时先使用第 27 章的方向判决，对所选方向计算同样的得分、排名区间及
+正向模型后验；容量仍为定义 31.1 的确定值。
+令
+
+```math
+v_+=\pi_+(1-\pi_+),\qquad v_-=\pi_-(1-\pi_-),\qquad
+v_s(g)=v_+(-g)_++v_-g_+.
+```
+
+式 (32.3)。
+

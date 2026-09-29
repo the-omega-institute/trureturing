@@ -1,0 +1,15 @@
+**推论 106.2（边界本身的有限事件律只有第一轮点击）。** 从初态 $\rho$ 在 $\Gamma_\vartheta^{\rm eq}$ 上运行，令 $\alpha=\operatorname{Tr}(\rho P_\vartheta)$。则
+
+$$
+\Pr(\mathsf N=1)=1-\alpha,\qquad
+\Pr(2\le\mathsf N<\infty)=0,\qquad
+\Pr(\mathsf N=\infty)=\alpha.
+\tag{106.5}
+$$
+
+在正概率的点击分支上，量子后继为 $P_0$；在正概率的未点击分支上，后继为 $P_\vartheta$，以后一直未点击。
+
+证明。式（106.2）直接给第一次两分支为 $(1-\alpha)P_0$ 与 $\alpha P_\vartheta$，且 $\mathcal N_\vartheta^{\rm eq}(P_\vartheta)=P_\vartheta$、$\mathcal C_\vartheta^{\rm eq}(P_\vartheta)=0$。$\square$
+
+该边界律与第 97 节的临界逼近不同：每个子临界装置仍最终点击，趋向永久保留的质量在逼近中形成长尾。直接将边界的无穷等待换成一个有限点击轮数，会丢掉这一极限次序。
+

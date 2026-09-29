@@ -1,0 +1,79 @@
+**定理 162.2（全 CPTP 单步最优类的精确迭代误差）。** 对每个 $1/\sqrt3<r<1$ 和每个整数 $N\ge1$，有
+$$
+\boxed{
+\mathcal E_N(r)=
+\frac{r^N}{2}
+\sqrt{1+c^{2N}-2c^N\cos\!\bigl(\min\{N\alpha,\pi\}\bigr)}.
+}
+\tag{162.4}
+$$
+同一个 $\mathcal F_*$ 对所有 $N$ 都达到式（162.2）的下确界。下界适用于全部 $\mathfrak F_1(r)$，不要求其中的通道为 Schur 乘子，也不要求它保持系统基的各个投影。达到下界的输入不需要参考系统。
+
+证明。 令 $P=|0\rangle\langle0|+|2\rangle\langle2|$，并在 $P\mathbb C^3$ 上使用 Pauli 矩阵 $X,Y,Z$。记
+$$
+u_\theta=(\cos\theta,\sin\theta,0),\qquad
+v_\theta=(-\sin\theta,\cos\theta,0),\qquad
+\rho_\theta=\frac12(P+u_\theta\cdot\sigma),
+\qquad q=r\sin\alpha>0.
+\tag{162.5}
+$$
+两端点源作用于 $\rho_\theta$ 后，所得态均支撑于 $P$，其 Bloch 向量构成无序对
+$$
+b_\theta+qv_\theta,\quad b_\theta-qv_\theta,
+\qquad b_\theta=rc\,u_\theta.
+\tag{162.6}
+$$
+这两个态的半迹范数距离为 $q$，且 $\mathcal R_1(r)=q/2$。
+
+先证它们在全三维态空间中半径 $q/2$ 的共同中心唯一。设密度矩阵 $\tau$ 到两态的距离均不大于 $q/2$。令 $t=\langle1|\tau|1\rangle\ge0$，将压缩块写成
+$$
+P\tau P=\frac12\bigl((1-t)P+w\cdot\sigma\bigr),
+\qquad w\in\mathbb R^3.
+\tag{162.7}
+$$
+对分块 $P\oplus(I-P)$ 做 pinching 不增加迹范数。一个 Hermitian 二维矩阵 $(-tP+a\cdot\sigma)/2$ 的迹范数是 $\max\{t,|a|\}$，因为它的两个特征值为 $(-t\pm|a|)/2$。因此上述两个距离分别至少为
+$$
+\frac12\left(\max\{t,|w-b_\theta\mp qv_\theta|\}+t\right).
+\tag{162.8}
+$$
+而
+$$
+\max_{\pm}|w-b_\theta\pm qv_\theta|
+\ge \sqrt{|w-b_\theta|^2+q^2}\ge q.
+\tag{162.9}
+$$
+距离上界迫使 $q+t\le q$，故 $t=0$；再由式（162.9）得 $w=b_\theta$。$\tau$ 正性和 $\langle1|\tau|1\rangle=0$ 还迫使所有与 $|1\rangle$ 相连的非对角元为零。故唯一共同中心为
+$$
+\tau_\theta=\frac12(P+rc\,u_\theta\cdot\sigma).
+\tag{162.10}
+$$
+本步骤使用二维 Bloch 球的 Euclidean 范数公式与 pinching 的迹范数收缩；它不声称任意高维迹范数球的共同中心都唯一。
+
+任取 $\mathcal F\in\mathfrak F_1(r)$。单步全输入距离上界特别适用于每个 $\rho_\theta$，所以前述唯一性给出 $\mathcal F(\rho_\theta)=\tau_\theta$。对 $\theta=0,\pi$ 的等式取和、取差，再用 $\theta=\pi/2,3\pi/2$，由线性性得
+$$
+\mathcal F(P/2)=P/2,\qquad
+\mathcal F(X)=rcX,\qquad
+\mathcal F(Y)=rcY.
+\tag{162.11}
+$$
+因此不论 $\mathcal F$ 在其余方向怎样作用，其在整个赤道圆盘上的迭代已被迫满足
+$$
+\mathcal F^N(\rho_\theta)
+=\frac12\bigl(P+(rc)^Nu_\theta\cdot\sigma\bigr).
+\tag{162.12}
+$$
+真实源在同一输入上的 Bloch 向量为 $r^N u_{\theta-N\phi}$；角度的正负来自式（161.1）的矩阵元约定，不影响以下模长。两输出的半迹范数距离恰为
+$$
+\frac{r^N}{2}|e^{iN\phi}-c^N|.
+\tag{162.13}
+$$
+由于 $c^N>0$，在 $|\phi|\le\alpha$ 上最大化此模长，等价于最小化 $\cos(N\phi)$。当 $N\alpha\le\pi$ 时最小值为 $\cos(N\alpha)$；当 $N\alpha\ge\pi$ 时可取实际源 $\phi=\pi/N$，最小值为 $-1$。这给每个 $\mathcal F\in\mathfrak F_1(r)$ 同一个式（162.4）下界。
+
+另一方面，$\mathcal F_*^N(A)=C(r^N,c^N)\odot A$，且作为 CPTP 通道的复合仍为 CPTP。它与 $\mathcal M_{r,\phi}^N$ 只在 $(0,2),(2,0)$ 两个乘子上不同。式（161.11）的全参考精确距离给出
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_*^N)
+=\frac{r^N}{2}|e^{iN\phi}-c^N|.
+\tag{162.14}
+$$
+故 $\mathcal F_*$ 达到上述下界，同时证明所有有限参考都不能扩大该达到值。证毕。
+

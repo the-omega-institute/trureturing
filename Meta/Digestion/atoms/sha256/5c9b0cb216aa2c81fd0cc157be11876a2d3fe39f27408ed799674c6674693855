@@ -1,0 +1,77 @@
+### 75.3 因果偏迹与核正性共同强迫对角质量
+
+令
+
+$$
+t=K_{x'x'},\qquad\beta=K_{z'z'},\qquad
+p=\dot\sigma_{11}=\alpha+\beta,
+\qquad s=-K_{yy}.
+$$
+
+$x',z'$ 均在 $w^\perp$，所以 $t,\beta\ge0$。式（75.5）在相应对角上还给
+
+$$
+t\le1+g,\qquad\beta\le1+g.
+\tag{75.9}
+$$
+
+因果偏迹的跨输入 $00,11$ 元为零，故
+
+$$
+K_{x'z'}=-K_{xz}.
+$$
+
+将 $P_0KP_0\succeq0$ 压缩到 $x',z'$，得到
+
+$$
+t\beta\ge|K_{x'z'}|^2=|K_{xz}|^2\ge(1-d_g)^2.
+\tag{75.10}
+$$
+
+结合式（75.9），这迫使
+
+$$
+t\ge\ell_g,\qquad\beta\ge\ell_g,
+\qquad p=\alpha+\beta\ge\ell_g.
+\tag{75.11}
+$$
+
+由于 $j\perp w$，还有 $K_{jj}\ge0$。式（75.3）在 $AB=10$ 上给 $K_{jj}+K_{yy}=-p$，所以
+
+$$
+s=p+K_{jj}\ge p\ge\ell_g.
+\tag{75.12}
+$$
+
+同一因果偏迹在 $AB=00$ 上给
+
+$$
+K_{xx}=-p-t.
+$$
+
+再使用 $x-y\perp w$ 的切向正性，
+
+$$
+0\le\langle x-y|K|x-y\rangle
+=-p-t-s-2\operatorname{Re}K_{xy}.
+$$
+
+由式（75.6），这给出同一实际方向 $Y$ 的约束
+
+$$
+\begin{gathered}
+Y_{xx}=p+t-1,\qquad Y_{yy}=s-1,\\
+\operatorname{Re}Y_{xy}\ge\frac{p+t+s}{2}-1.
+\end{gathered}
+\tag{75.13}
+$$
+
+从而
+
+$$
+\langle w|Y|w\rangle\ge2(p+t+s-2).
+\tag{75.14}
+$$
+
+至此没有删去任何未跟踪的相干项，也没有将分别可达的矩阵元界换成另一修复。
+

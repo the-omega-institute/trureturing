@@ -1,0 +1,47 @@
+**定理 226.2（带边界相位的输入—事件下界）。**
+
+给定任意输入为 $\mathbb C^2$ 的 CPTP 记录通道 $\mathcal R$，固定结果 $q$ 的目标分支 $\Lambda$。对闭单位圆盘中的 $z$，取单位输入
+$$
+v(z)=\sqrt{1-|z|^2}\,f_0+zf_1.
+\tag{226.WP.4}
+$$
+假设存在圆盘上的连续单位输出向量 $r(z)$、单位向量 $r_b$、连续圆周相位 $p:S^1\to S^1$ 以及统一常数 $\alpha\ge0$，使
+$$
+\langle r(z),\Lambda(P_{v(z)})r(z)\rangle\ge\alpha
+\quad (|z|\le1),
+$$
+$$
+r(z)=p(z)r_b
+\quad (|z|=1),
+\qquad
+\deg p\ne1.
+\tag{226.WP.5}
+$$
+则对任意同接口 CPTP 记录竞争者 $\mathcal S$，只要它的结果 $q$ 分支 Choi 秩至多一，就有
+$$
+\boxed{\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.}
+\tag{226.WP.6}
+$$
+
+证明。写候选该分支为 $X\mapsto CXC^\dagger$，其中 $C$ 是任意线性算子；零分支允许 $C=0$。定义连续复函数
+$$
+F(z)=\langle r(z),Cv(z)\rangle.
+$$
+在圆盘边界上，
+$$
+F(z)=z\overline{p(z)}h,
+\qquad h=\langle r_b,Cf_1\rangle.
+\tag{226.WP.7}
+$$
+若 $h=0$，边界即有零点。若 $h\ne0$，且 $F$ 在圆盘上无零，则 $F/|F|$ 连续，并在边界上的绕数为
+$$
+1-\deg p\ne0.
+$$
+但任何可以延拓到整个圆盘的圆周映射都零伦，绕数必为零，矛盾。因此总有一个 $z$ 使 $F(z)=0$。
+
+该输入上，完整输出效果 $|q\rangle\langle q|\otimes P_{r(z)}$ 在竞争者中的概率为零，在目标中的概率至少为 $\alpha$。两份完整输出都是密度矩阵，所以这一事件概率差给出完整半 diamond 距离的下界（226.WP.6）。证毕。
+
+所用标准事实可直接取自 Hatcher《Algebraic Topology》第1章 §1.1：第29页定理1.7计算 $\pi_1(S^1)=\mathbb Z$，第32页定理1.9证明中应用圆盘不能缩回到圆周的结论。[官方章节 PDF，第9页起](https://pi.math.cornell.edu/~hatcher/AT/ATch1.pdf#page=9)。这里的新应用是将目标事件的边界相位与任意线性 $Cv$ 的相位相比较，再转为通道距离下界。
+
+条件 $\deg p\ne1$ 不能删去。例如若目标本来就是等距单 Kraus 通道 $X\mapsto UXU^\dagger$，取 $r(z)=Uv(z)$，则边界相位 $p(z)=z$ 的绕数恰为一；此时候选 $C=U$ 给 $F(z)=1$，没有零点。
+

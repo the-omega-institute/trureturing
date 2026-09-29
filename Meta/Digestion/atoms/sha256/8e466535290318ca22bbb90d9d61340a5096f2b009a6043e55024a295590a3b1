@@ -1,0 +1,44 @@
+**引理157.4（代数的外围数据与稳定目标）。** 在某个具有代数坐标的 $\mathscr V$ 基中，$\mathcal A=\mathcal F|_{\mathscr V}$ 的矩阵具有代数坐标。其每个外围特征值 $\lambda_j$ 为复代数数，相应谱投影 $P_j$ 以及原矩阵坐标中的映射
+
+$$
+\Phi_j=P_j\mathcal E_\omega
+\tag{157.10}
+$$
+
+也具有代数坐标。第154节的稳定目标等距 $W_*$ 同样具有代数坐标。
+
+**证明。** 从四个初始矩阵单位出发，取
+$\mathcal F^j\mathcal E_\omega$ 的像，$0\le j<4D^2$。这些矩阵全有代数坐标，并由 Cayley–Hamilton 张成 $\mathscr V$。从中选取一个极大线性无关子族，就得到具有代数坐标的基。代数系数线性方程组的消元仍在 $\mathbb A_{\mathbb C}$ 内进行，所以 $\mathcal A$ 在该基中的矩阵也具有代数坐标。
+
+其特征值是代数系数特征多项式的根，因而属于 $\mathbb A_{\mathbb C}$。谱投影亦可由代数系数多项式取得：将最小多项式分解为不同特征值的互素幂因子，对相应因子用多项式中国剩余定理，选取在目标因子模下为一、在其余因子模下为零的多项式，再代入 $\mathcal A$。该构造允许稳定谱有 Jordan 块，也不要求谱投影正交。所有系数均为复代数数。回到原矩阵坐标并与 $\mathcal E_\omega$ 复合，得到（157.10）的代数性。
+
+最后，置 $p=|b|^2$。第154节的
+
+$$
+\rho_*=
+\frac{|m_0\rangle\langle m_0|+p|0\rangle\langle0|}{1+p},
+\qquad m_0=a|0\rangle+b|1\rangle
+$$
+
+具有代数坐标，且 $\det\rho_*=p^2/(1+p)^2$。第146节的二维平方根公式给
+
+$$
+\sqrt{\rho_*}
+=
+\frac{\rho_*+\frac p{1+p}I}
+{\sqrt{1+\frac{2p}{1+p}}}.
+\tag{157.11}
+$$
+
+这里的正平方根仍为实代数数。因而
+
+$$
+W_*|i\rangle
+=|i\rangle_Q|\operatorname{vec}\sqrt{\rho_*}\rangle_{MA}
+\tag{157.12}
+$$
+
+具有代数坐标。证毕。
+
+本引理使用通道 Choi 描述直接传递代数性，没有要求另选一份接收 Stinespring 实现或逐轮环境基。
+

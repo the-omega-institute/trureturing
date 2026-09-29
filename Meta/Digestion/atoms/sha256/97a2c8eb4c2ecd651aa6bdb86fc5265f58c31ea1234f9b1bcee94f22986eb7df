@@ -1,0 +1,12 @@
+**定理199.3（完整最优阈值的二阶位移）。**
+第198节的唯一阈值 $\ell_\epsilon$ 满足
+
+$$
+\boxed{
+\ell_\epsilon
+=h_c\epsilon-
+\frac{Q(h_c)}{\Phi'_{h_c}}\epsilon^2+o(\epsilon^2).
+}
+\tag{199.9}
+$$
+

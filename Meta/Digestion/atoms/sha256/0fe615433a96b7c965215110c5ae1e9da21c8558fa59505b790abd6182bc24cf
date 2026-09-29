@@ -1,0 +1,26 @@
+### 证明
+
+由潜在结果定义，
+
+$$
+P(Y\in B\mid\operatorname{do}(A=a),H=h)
+=
+P(Y(a)\in B\mid H=h).
+$$
+
+条件可交换性把右侧改写为
+
+$$
+P(Y(a)\in B\mid A=a,H=h).
+$$
+
+一致性再给出
+
+$$
+P(Y(a)\in B\mid A=a,H=h)
+=
+P(Y\in B\mid A=a,H=h).
+$$
+
+正支持保证条件分布有定义。证毕。
+

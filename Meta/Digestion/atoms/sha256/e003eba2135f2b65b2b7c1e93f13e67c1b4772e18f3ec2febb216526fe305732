@@ -1,0 +1,44 @@
+**命题 533.2（紧预算区间的达到）。** 若 $\beta\le\eta\le\eta_0$，令
+
+$$
+R(\circ)=1-\frac{n\varepsilon+\eta/c}{r},\qquad
+R(x)=\frac{n\varepsilon+\eta/c}{nr},
+$$
+
+并令
+
+$$
+T_S(\circ)=\frac{M-r+\eta/c}{1-r},\qquad
+T_S(x)=
+\begin{cases}
+(1-T_S(\circ))/p,&x\in S,\\
+0,&x\notin S.
+\end{cases}
+$$
+
+这些分布组成合法生成器，且
+
+$$
+m(T)=\eta,\qquad
+j(T)=2rD-2(1-r)p\varepsilon
+-\left(\frac2c-1\right)\eta.
+$$
+
+证明：$\eta\ge\beta$ 保证 $M-r+\eta/c\ge0$。$\eta\le\eta_0$ 又给出 $T_S(\circ)\le b$、$R(\circ)\ge b$。因此各分支非负；按定义其质量和都是一。
+
+新增边缘的公共质量为 $b$；子集外标签的总质量是 $c(n\varepsilon+\eta/c)=q\varepsilon+\eta$，比目标多 $\eta$；子集内的差按对称性同号，合计少 $\eta$，所以 $m=\eta$。
+
+擦除分支的公共差非负，子集外的差为正，子集内的差非正，其 TV 贡献为
+
+$$
+F=rD-(1-r)p\varepsilon-\frac{1-c}{c}\eta.
+$$
+
+揭示分支在公共符号上的差非正，在子集外完全没有输出，因而还短缺 $(1-r)q\varepsilon$；其子集内差为正，TV 贡献为
+
+$$
+G_{\rm TV}=rD-(1-r)p\varepsilon-\eta/c.
+$$
+
+两项相加得到所列联合误差。非负性也可由这些已确定的同号差直接看出。证毕。
+

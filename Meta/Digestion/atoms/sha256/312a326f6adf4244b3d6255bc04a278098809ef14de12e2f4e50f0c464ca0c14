@@ -1,0 +1,39 @@
+### 83.4 首轮外置使全域一位像矛盾
+
+继续证明定理83.1。若 $\langle\eta_1,A\rangle\ne0$，实际 $V_0k=p\otimes\eta_1$ 与（83.9）的跨位正交会迫 $p\perp N$，故（83.8）给 $p\in P$。但 $V_1p=v\otimes A\in V_1P$，沿（83.5）的环境 $A,B$ 坐标比较，立即得到 $v\in Q$，违反引理83.3。因此只能
+
+$$
+\eta_1\perp A.
+\tag{83.11}
+$$
+
+同一个一位等距现在给
+
+$$
+V_1k=q\otimes\eta_1\perp V_1U=Q\otimes A,
+\qquad k\perp U.
+$$
+
+同一个零位等距及（83.5）则给
+
+$$
+k\perp H_2,\qquad k\perp H_5.
+\tag{83.12}
+$$
+
+因 $u\in U$ 且 $a^2u+bv\in H_2$、$b\ne0$，这使 $k\perp v$。另一方面，$H_5\subset U\oplus S$ 且 $P_SH_5=S$；结合 $k\perp U,H_5$，得到 $k\perp S$。所以 $k\perp N$，由（83.8）得到
+
+$$
+k\in P.
+\tag{83.13}
+$$
+
+然而（83.5）已将全部 $V_1P$ 放入 $K\otimes F$。于是 $k\in P$ 将使真实首轮像 $V_1k=q\otimes\eta_1$ 属于 $K\otimes F$，与 $q\ne0$、$\eta_1\notin F$ 矛盾。定理83.1证明完毕。
+
+本节使用第四终端返回 $H_1$ 的实际关系，使 $v\notin S$；三维正交补随后把两种尾环境内积分支都接回同一个真实首轮矛盾。它没有将首环境外置预设为正交，也没有添加未执行的后继。该排除只移去必要尾词 $AABAA$，一般接收容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{83.14}
+$$
+

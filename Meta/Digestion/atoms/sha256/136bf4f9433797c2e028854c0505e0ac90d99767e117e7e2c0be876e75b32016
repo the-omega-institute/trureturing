@@ -1,0 +1,40 @@
+**定义 44.1（同一幅度上的可变算术相位）。** 固定定义 39.1 的
+$`r,\alpha,P_j,Q_j`$ 与 $`\beta\in(1/2,1)`$。取任意正整数序列
+$`\lambda_j`$，满足
+
+```math
+\frac{\lambda_j}{\log Q_j}\longrightarrow\infty,
+\qquad \frac{\lambda_j}{Q_j^4}\longrightarrow0,
+\qquad \theta_j=\frac{\lambda_j}{Q_j^2}.
+```
+
+式 (44.1)。
+
+将 (39.3) 的强度替换为该 $`\lambda_j`$，重新计算全部
+$`N,M,k_0,l_0,z_0,q,\tau,\mathsf T`$；沿用 (39.4) 的补偿参数、实际得分、
+窗口 $`J`$、直线 $`\mathcal L`$ 与精确后验。以下删去参数尚不合法的有限初始段并重新编号，省略下标 $`j`$，记
+
+```math
+c_0=\frac1{4\pi\sqrt{ab}},\qquad
+\mathcal C(\theta)=c_0\sum_{t\in\mathbb Z}
+                  \exp\left(-\frac{\kappa t^2}{2\theta}\right),\quad\theta\gt0,
+\qquad A_M=\sqrt{\frac q\lambda\mathcal C(\theta)}.
+```
+
+式 (44.2)。
+
+$`a,b,\kappa`$ 保持 (39.2) 的固定值。定义
+
+```math
+F_M(u)=\frac1{A_M}
+ \sum_{\tau-w\lt W_i\le\tau+uw}(\mathbf1_{\{i\in S\}}-\pi_i),
+\quad -1\le u\le1,\qquad Y_M=F_M(1),\qquad
+c_M=\frac{W(k_0,l_0)-\tau}{w}.
+```
+
+式 (44.3)。
+
+所有坐标仍使用同一完整数据与标签；未知方向时使用同一次判决及工作正向权重。
+记中心组为 $`J_0=\{i:(N_{i,+},N_{i,-})=(k_0,l_0)\}`$，
+$`d_E=\sum_{i\in E}p_i(1-p_i)`$ 使用正确对齐的校准参数。
+

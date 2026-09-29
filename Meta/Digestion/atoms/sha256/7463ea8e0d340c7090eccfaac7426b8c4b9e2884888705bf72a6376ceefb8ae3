@@ -1,0 +1,101 @@
+### 72.3 基准误差的全部最优事件
+
+合法 tester 仍为
+
+$$
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+$$
+
+考虑两个独立角参数的局部酉算符
+
+$$
+U_{\phi,\psi}
+=\operatorname{diag}(1,e^{i\phi})_A
+\otimes\operatorname{diag}(1,e^{i\psi})_B
+\otimes\operatorname{diag}(1,e^{-i\phi})_D.
+\tag{72.10}
+$$
+
+它固定 $x,y$，将 $h$ 乘以相位，所以保持 $Y_*$。同时，局部共轭把合法 tester 送到合法 tester。对两个角分别均匀平均，可把任意 $C$ 变成保持原对角的对角矩阵，而 $\operatorname{Tr}(Y_*E)$ 不变。故对 $Y_*$ 的正、负响应最大值都可在
+
+$$
+C=\operatorname{diag}(q,t,1-q,1-t),\qquad0\le q,t\le1
+\tag{72.11}
+$$
+
+中求取。
+
+令 $L=C^{1/2}\otimes I_D$。加权算符 $LY_*L$ 在 $x,y$ 上的主块为
+
+$$
+\begin{pmatrix}
+q&\frac12\sqrt{q(1-q)}\\
+\frac12\sqrt{q(1-q)}&0
+\end{pmatrix},
+\tag{72.12}
+$$
+
+其本征值为 $(q+\sqrt q)/2$ 与 $(q-\sqrt q)/2$；另有 $h$ 上的本征值 $-t$，其余全零。任意合法事件可写为 $E=LFL$，其中 $0\preceq F\preceq I$，在 $L$ 的核上如何延伸 $F$ 不影响结果。因此正响应最多为
+
+$$
+\frac{q+\sqrt q}{2}\le1,
+$$
+
+负响应绝对值最多为
+
+$$
+t+\frac{\sqrt q-q}{2}\le\frac98.
+\tag{72.13}
+$$
+
+后一等号只能在 $t=1,q=1/4$ 时成立，也确由负本征投影达到。于是 $N(Y_*)=9/8$，每个绝对值最优事件均满足
+
+$$
+\operatorname{Tr}(Y_*E)=-\frac98.
+\tag{72.14}
+$$
+
+这里还能控制未平均的全部最优 tester。将任一最优 $(C,E)$ 按（72.10）平均，原对角不变，平均后仍达到（72.14），所以原 $C$ 必满足
+
+$$
+C_{00,00}=\frac14,\quad C_{01,01}=1,
+\quad C_{10,10}=\frac34,\quad C_{11,11}=0.
+\tag{72.15}
+$$
+
+正性使 $C$ 的 $11$ 行列全零。由于 $0\preceq E\preceq C\otimes I_D$，$E$ 的 $z,z'$ 行列也全零。因此（72.9）中所有含 $z$ 或 $z'$ 的项对这个事件的配对为零，得到
+
+$$
+\operatorname{Tr}(Z_rE)
+=-\langle w|E|w\rangle+\langle h|E|h\rangle.
+\tag{72.16}
+$$
+
+右侧被（72.10）的平均保持。只需在平均后的对角 tester 中计算它。此时（72.12）的负本征单位向量为
+
+$$
+v_-=-\frac12x+\frac{\sqrt3}{2}y.
+$$
+
+达到最负响应要求 $F$ 在 $v_-$ 和 $h$ 上恒等、在正本征方向上为零。其核空间上的自由部分不影响 $w,h$ 的读数。所以
+
+$$
+\begin{aligned}
+\langle w|E|w\rangle
+&=|\langle v_-|Lw\rangle|^2
+=\left|-\frac14+\frac34\right|^2=\frac14,\\
+\langle h|E|h\rangle&=1.
+\end{aligned}
+\tag{72.17}
+$$
+
+这些值也适用于未平均的原事件。结合（72.16），对 $Y_*$ 的每个最优 tester 都有
+
+$$
+-\operatorname{Tr}(Z_rE)=-\frac34.
+\tag{72.18}
+$$
+
+这一步保留了全部最优事件，未以一个方便的对角事件代替完整范数。
+

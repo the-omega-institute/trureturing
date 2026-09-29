@@ -1,0 +1,96 @@
+**引理146.2（共同规范纯化的线性概率距离）。** 对所有 $0<p<1$，
+
+$$
+\delta_0\le\sqrt2\,p^{3/2},\qquad
+\delta_1\le\sqrt2\,p,\qquad
+\delta\le\sqrt2\,p.
+\tag{146.11}
+$$
+
+**证明。** 记 $F=R_0-R_1$。有
+
+$$
+\|F\|_{\rm HS}=\sqrt{2p},\qquad
+\rho_{0,2}-\rho_*=-\frac{p^2}{1+p}F.
+$$
+
+因为 $\rho_*$ 的最大特征值不超过一，
+$\lambda_{\min}(\rho_*)\ge\det\rho_*=p^2/(1+p)^2$。
+沿第11节的 Sylvester 方程估计，令
+$A=\sqrt{\rho_{0,2}}$、$B=\sqrt{\rho_*}$、$Z=A-B$，则
+$AZ+ZB=\rho_{0,2}-\rho_*$，故
+
+$$
+\delta_0\le
+\frac{\|\rho_{0,2}-\rho_*\|_{\rm HS}}
+{\sqrt{\lambda_{\min}(\rho_*)}}
+\le\sqrt2\,p^{3/2}.
+\tag{146.12}
+$$
+
+对第二份边缘，$\sqrt{\rho_{1,2}}=R_0$。迹一正定 $2\times2$ 矩阵的平方根公式给
+
+$$
+\sqrt{\rho_*}
+=\frac{\rho_*+\frac p{1+p}I}
+{\sqrt{1+\frac{2p}{1+p}}}.
+$$
+
+由 $\operatorname{Tr}(R_0R_1)=x=1-p$，得到精确表达
+
+$$
+\delta_1^2
+=2-2\operatorname{Tr}(R_0\sqrt{\rho_*})
+=2-2\frac{1+2p-p^2}{\sqrt{(1+p)(1+3p)}}.
+\tag{146.13}
+$$
+
+置 $L=\sqrt{(1+p)(1+3p)}$、$N=1+2p-p^2>0$。有
+
+$$
+L^2-N^2=p^2(1+4p-p^2),
+$$
+
+所以有理化后
+
+$$
+\delta_1^2
+=\frac{2p^2(1+4p-p^2)}{L(L+N)}
+\le\frac{2p^2(1+4p-p^2)}{L^2}
+\le2p^2.
+\tag{146.14}
+$$
+
+最后一步使用 $1+4p-p^2\le L^2=1+4p+3p^2$。由于 $p^{3/2}\le p$，得到（146.11）。证毕。
+
+此外，（146.14）的精确式给 $\delta_1/p\to1$，而（146.12）给 $\delta_0/p\to0$，所以本构造的两次距离证书满足 $2\delta=2p(1+o(1))$。这只是该构造所用证书的渐近式，不是最优误差的渐近式。
+
+这些计算保留任意复 $a,b$；只用到投影重叠 $|a|^2$，没有独立挑选两份最优 Uhlmann 纯化后再假定它们属于同一编码。（146.6）—（146.8）已经把两份规范纯化实现为一个共同酉。
+
+定义两个从初始记忆到 $MQR$ 的等距
+
+$$
+\begin{aligned}
+W_2|i\rangle&=|i\rangle_Q
+ |\operatorname{vec}\sqrt{\rho_{i,2}}\rangle_{MR},\\
+W_*|i\rangle&=|i\rangle_Q|\Xi\rangle_{MR}.
+\end{aligned}
+$$
+
+不同 $i$ 的差向量因 $Q$ 标签而正交，故
+$\|W_2-W_*\|_{\rm op}=\delta$。对任意参考输入 $\rho_{JM}$，真实第二终端经 $F_2$ 编码后的态 $\alpha_2$ 与比较态
+
+$$
+\beta_2=\rho_{JQ}\otimes|\Xi\rangle\langle\Xi|_{MR}
+$$
+
+满足
+
+$$
+D(\alpha_2,\beta_2)\le\delta\le\sqrt2\,p,
+\qquad D(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{146.15}
+$$
+
+这里 $\rho_{JQ}$ 是将原输入的记忆基同构为 $Q$ 的同一输入态。算子范数比较在张量任意参考后保持；混合输入先纯化再偏迹，因此（146.15）不是只对两个经典基态成立。
+

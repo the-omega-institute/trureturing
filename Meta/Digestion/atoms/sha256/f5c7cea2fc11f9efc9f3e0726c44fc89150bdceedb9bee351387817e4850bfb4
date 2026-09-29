@@ -1,0 +1,19 @@
+### 198.1 临界邻域的严格正差商
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，保持此前的共同接收端 CPTP 任务、不可访问系统 $M$ 和全部外部参考。令
+$\Phi_\infty=\beta(R+1)/8$，$h_c>0$ 为第190节的唯一一阶零点。
+
+选取正紧区间 $I=[a,b]$，满足
+
+$$
+0<a<h_c<b,\qquad
+\Phi_a<0<\Phi_b<\Phi_\infty.
+\tag{198.1}
+$$
+
+第190节的连续性及严格过零性质保证可以这样选择。记
+
+$$
+F_\epsilon(h)=\mathscr E(\epsilon h,\epsilon).
+$$
+

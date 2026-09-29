@@ -1,0 +1,55 @@
+### 218.7 任意单 Kraus 输出的核方向
+
+先证明更一般的下界：只要竞争者结果 $1$ 的 Choi 秩至多一，就有
+$$
+\frac12\|\mathcal R_q-\mathcal S\|_\diamond\ge q.
+\tag{218.27}
+$$
+对结果 $0$ 的秩不需要额外假设。
+
+因为 $\Psi_1$ 的 Choi 秩至多一，可以写
+$$
+\Psi_1(X)=K_1XK_1^\dagger,
+$$
+零映射时取 $K_1=0$。考虑线性泛函
+$$
+b=\langle r|K_1:\mathcal H_{\mathrm{in}}\longrightarrow\mathbb C.
+$$
+输入维数为二，所以 $\ker b$ 至少一维。取单位向量
+$|\psi\rangle\in\ker b$，作为合法无外部参考输入。
+
+固定输出事件为
+$$
+F=|1\rangle\langle1|^Q\otimes\sigma_r.
+\tag{218.28}
+$$
+它是一个合法投影效果，且不依赖输入方向。竞争者对此事件的概率为
+$$
+\operatorname{Tr}[F\mathcal S(P_\psi)]
+=
+|\langle r|K_1|\psi\rangle|^2=0.
+\tag{218.29}
+$$
+目标通道对此事件的概率为
+$$
+\operatorname{Tr}[F\mathcal R_q(P_\psi)]
+=
+\langle\psi|E_1(q)|\psi\rangle
+\ge q,
+\tag{218.30}
+$$
+因为
+$$
+E_1(q)=qI+(1-q)P^\perp\succeq qI.
+$$
+两份输出都是归一化状态，任意效果概率差不超过其半迹距离。因此
+$$
+\frac12\|\mathcal R_q(P_\psi)-\mathcal S(P_\psi)\|_1\ge q.
+$$
+diamond 距离允许这个输入，立即得到（218.27）。
+
+此输入可依赖被检验的竞争者，这是最小—最大距离问题中合法的下界方式。下界没有将某个固定参考探针的数值等同于 diamond 范数；它对每个竞争者各给一个合法测试，而下一节将完整处理上界的全部外部参考。
+
+若竞争者每个结果的 Choi 秩都至多一，（218.27）直接给
+$d_{11}(q)\ge q$。
+

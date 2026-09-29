@@ -1,0 +1,23 @@
+### 34.3 双向恢复的准确条件
+
+若 $F$ 在实际来源上是双射，则有限情形下每个状态都在周期核心中，(34.2) 与 (34.3) 可由双向 shift 互相运输。更一般地，令
+
+$$
+Y_\infty:=\operatorname{range}(F^{[|Y|]}).
+$$
+
+在有限载体上，`StableImagePeriodicCore.iterate_range_card_antitone_and_stable` 给出足够迭代后稳定像等于 $\operatorname{Per}(F)$；把实际来源限制到 $Y_\infty$ 后，更新在该核心上可逆，`FiniteBilateralTrajectory.finite_bilateral_trajectory` 给出双侧轨迹由周期点基准唯一确定。
+
+因此，若统一模型要求空间、时间、边界和记忆同时支持正向与反向恢复，至少要声明下列之一：
+
+$$
+\boxed{
+F\text{ 在实际来源像上双射}
+\quad\text{或}\quad
+\text{先把来源限制到稳定周期核心 }Y_\infty.
+}
+\tag{34.4}
+$$
+
+若只要求正向预测，非双射更新仍可使用第27节的最大前向不变 completion；若还要求过去档案可由同一边界重建，(34.4) 是额外的双向条件，而非未来 kernel 自动提供的结论。
+

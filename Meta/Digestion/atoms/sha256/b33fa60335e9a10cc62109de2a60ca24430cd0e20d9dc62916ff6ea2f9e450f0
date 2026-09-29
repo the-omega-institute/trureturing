@@ -1,0 +1,55 @@
+**定理 73.1。** 对每个 $r>0$，都有显式估计
+
+$$
+1<\gamma_r\le\frac98-\frac{23}{1024(1+2r)}.
+\tag{73.1}
+$$
+
+结合大参数的修复上界，可以进一步取一个与 $r$ 无关的明确常数：
+
+$$
+1<\gamma_r\le\frac98-\frac{23}{394240}
+\qquad(r>0).
+\tag{73.2}
+$$
+
+这些常数是可行修复给出的保守界，不是最优间隙。
+
+证明仍使用第 72 节的显式切向修复 $K_{r,\delta}$。取
+
+$$
+0<\delta\le\frac14,\qquad p=1-\delta,
+\qquad g=\sqrt{rp},
+\qquad \rho=\sqrt r-g=\sqrt r\,(1-\sqrt{1-\delta}).
+\tag{73.3}
+$$
+
+第 72 节已直接验证 $K_{r,\delta}\in\mathcal T$。记
+
+$$
+\begin{gathered}
+x=|000\rangle,\quad x'=|001\rangle,\quad h=|010\rangle,
+\quad y=|101\rangle,\quad z=|110\rangle,\quad z'=|111\rangle,\\
+w=x+y,\\
+J=|w\rangle\langle z|+|z\rangle\langle w|
+-|x'\rangle\langle z'|-|z'\rangle\langle x'|.
+\end{gathered}
+$$
+
+其差算符具有准确分解
+
+$$
+\begin{aligned}
+Y_{r,\delta}:=H_r-K_{r,\delta}
+={}&Y_* -\delta|w\rangle\langle w|
++\delta|h\rangle\langle h|+\delta|z'\rangle\langle z'|
++\rho J,\\
+Y_*={}&|x\rangle\langle x|
++\frac12(|x\rangle\langle y|+|y\rangle\langle x|)
+-|h\rangle\langle h|.
+\end{aligned}
+\tag{73.4}
+$$
+
+以下直接估计所有 tester 对式（73.4）的正负响应，不需要知道其最优事件。
+

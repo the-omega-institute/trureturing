@@ -1,0 +1,64 @@
+**定理 247.2（接口拼接结合律）。** 对任意有限接口和概率核，
+
+$$
+\boxed{
+(\lambda_M\star K_M)\star L_M
+=
+\lambda_M\star(K_M\star L_M).
+}
+\tag{247.1}
+$$
+
+若真实与名义两段满足
+
+$$
+D_{\mathrm{TV}}(\lambda_M,\bar\lambda_M)\le\varepsilon_1,
+\qquad
+\sup_{z\in Z}
+D_{\mathrm{TV}}(K_M(\cdot\mid z),\bar K_M(\cdot\mid z))
+\le\varepsilon_2,
+$$
+
+则
+
+$$
+\boxed{
+D_{\mathrm{TV}}(\lambda_M\star K_M,
+\bar\lambda_M\star\bar K_M)
+\le
+\varepsilon_1+\varepsilon_2.
+}
+\tag{247.2}
+$$
+
+更精细地，第二项可以替换为
+
+$$
+\sum_z\bar\lambda_M(z)
+D_{\mathrm{TV}}(K_M(\cdot\mid z),\bar K_M(\cdot\mid z)).
+$$
+
+### 证明
+
+展开左侧：
+
+$$
+\sum_y\left(\sum_z\lambda_M(z)K_M(y\mid z)\right)L_M(w\mid y)
+=
+\sum_{z,y}\lambda_M(z)K_M(y\mid z)L_M(w\mid y),
+$$
+
+右侧展开得到同一有限和，故结合律成立。
+
+误差项作望远镜分解：
+
+$$
+\lambda K-\bar\lambda\bar K
+=
+(\lambda-\bar\lambda)K
++
+\bar\lambda(K-\bar K).
+$$
+
+概率核对全变差距离是收缩的，第一项不超过 $\varepsilon_1$；第二项由凸性不超过接口条件误差的加权和，进而不超过 $\varepsilon_2$。证毕。
+

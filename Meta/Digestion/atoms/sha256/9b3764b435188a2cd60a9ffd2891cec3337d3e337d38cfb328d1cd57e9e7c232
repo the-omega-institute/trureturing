@@ -1,0 +1,23 @@
+**五个快坐标。**
+
+在 $\epsilon=0$，精确基点公式为
+
+$$
+f(0,h,x,y,t,u,v)
+=\frac34+\frac{C_{\rm main}+t|u|^2}{4}
++\frac{\xi^2}{1-C_{\rm main}-t|u|^2}.
+\tag{211.7}
+$$
+
+快 Hessian 在全基点为
+$\operatorname{diag}(2,1/2,1/2,1/2,1/2)\succ0$。
+隐函数定理唯一解出 $x=X(\epsilon,h,y,t,u,v)$，
+使 $\partial_xf=0$，且
+$X(0,h,y,t,u,v)=0$ 是整面恒等式。
+消去后记为 $f_1$，则
+
+$$
+f_1(0,h,y,t,u,v)=\frac34+\frac{t|u|^2}{4}.
+\tag{211.8}
+$$
+

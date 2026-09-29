@@ -1,0 +1,43 @@
+**定理 68.8（完整后验的信息量波动与概率覆盖）。** 沿用定理 68.7，令
+
+```math
+Y_M=-\log_2\mathbb P(R\mid\mathscr X_M),\qquad
+v(r,\beta)=\frac{\ell(r,\beta)}{2(\log2)^2}>0.
+```
+
+式 (68.53)。
+
+$Y_M$ 在给定数据后仍由同一后验计数向量 $R$ 随机产生。
+两种实际实验分别满足
+
+```math
+\sup_{z\in\mathbb R}\left|
+\mathbb P\!\left\{\frac{Y_M-h_M(x)}Q\le z\,\middle|\,\mathscr X_M=x\right\}
+ -\Phi\!\left(\frac z{\sqrt{v(r,\beta)}}\right)\right|
+ \longrightarrow0
+```
+
+式 (68.54)。
+
+同一概率意义下还有 $Q^{-2}\operatorname{Var}(Y_M\mid\mathscr X_M)\to v(r,\beta)$。
+收敛以原始数据概率理解；$\Phi$ 是标准正态分布函数。
+固定 $0<\varepsilon<1$，定义
+
+```math
+N_{\varepsilon,M}(x)=\min\{|A|:\mathbb P(R\in A\mid\mathscr X_M=x)\ge1-\varepsilon\}.
+```
+
+式 (68.55)。
+
+最小值在有限后验支持的子集上取到，且
+
+```math
+\log_2N_{\varepsilon,M}(x)
+ =h_M(x)+Q\sqrt{v(r,\beta)}\,\Phi^{-1}(1-\varepsilon)+o_{\mathbb P}(Q).
+```
+
+式 (68.56)。
+
+这些后验函数仍有对确定支持抽样律一致的含义；在 $H_M$ 上，精确标量 $T_M$ 的原子覆盖数相同。
+中心必须是实际纤维熵 $h_M(x)$，不是仅有一阶极限的 $Q^5\mathscr H(r,\beta)$。
+

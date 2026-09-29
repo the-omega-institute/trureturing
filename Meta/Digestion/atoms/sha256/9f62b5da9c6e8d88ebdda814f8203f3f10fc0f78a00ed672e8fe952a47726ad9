@@ -1,0 +1,63 @@
+### 275.3 可逆参考过滤的三个传递性质
+
+为处理单位圆谱，使用§274的可逆参考过滤。这里写出本节所需的精确变换和保持量。
+
+设 $F$ 为可逆参考矩阵，$H_F=I_H\otimes F$。未归一化同余变换给
+$$
+H_FT(Q,M)H_F^\dagger=T(Q_F,M_F),
+$$
+$$
+Q_F=FQF^\dagger,\qquad
+M_F=F^{-\dagger}MF^\dagger.
+\tag{275.18}
+$$
+在密度态上，变换为
+$$
+\Phi_F(\Xi)=\frac{H_F\Xi H_F^\dagger}{z_\Xi},
+\qquad
+z_\Xi=\operatorname{Tr}\bigl(F(\operatorname{Tr}_H\Xi)F^\dagger\bigr)>0.
+\tag{275.19}
+$$
+数据相应变为
+$$
+\rho_{\Phi_F(\Xi)}=\frac{F\rho_\Xi F^\dagger}{z_\Xi},
+\qquad
+K_{\Phi_F(\Xi)}=\frac{FK_\Xi F^\dagger}{z_\Xi}.
+\tag{275.20}
+$$
+逆变换为 $\Phi_{F^{-1}}$。在精确同边缘族上 $z_\Xi$ 恒定，所以精确同数据纤维双向对应。
+
+同余 $X\mapsto H_FXH_F^\dagger$ 是PSD锥的自同构，并将（275.5）的 $L$ 映到自身。合法面对偶证书按逆伴随变换，零配对和严格面包含均保持。因此标准奇异度不变；正的总迹归一化也不改变这一结论。
+
+固定过滤还保持局部幂指数。令
+$$
+\kappa_F=\|F\|^2\|F^{-1}\|^2\ge1.
+\tag{275.21}
+$$
+对任何两个密度态 $\Xi,\Omega$，分母满足
+$\|F^{-1}\|^{-2}\le z_\Xi,z_\Omega\le\|F\|^2$。乘法范数及分母差估计给
+$$
+\|\Phi_F(\Xi)-\Phi_F(\Omega)\|_1
+\le2\kappa_F\|\Xi-\Omega\|_1.
+\tag{275.22}
+$$
+在数据上同样有
+$$
+\varepsilon_{\Phi_F(\Omega)}(\Phi_F(\Xi))
+\le3\kappa_F\varepsilon_\Omega(\Xi).
+\tag{275.23}
+$$
+为核对后一系数，参考边缘差至多贡献
+$2\kappa_F\|\rho_\Xi-\rho_\Omega\|_1$；非对角数据差至多贡献
+$\kappa_F(\|K_\Xi-K_\Omega\|_1+\|\rho_\Xi-\rho_\Omega\|_1)$。
+这里使用任意实际来源的 $\|K_\Xi\|_1\le1$，对过滤后的实际来源也成立。该界可由
+$$
+U=\operatorname{diag}(I,-I),\qquad
+\left\|\frac{\Xi-U\Xi U^\dagger}{2}\right\|_1
+=2\|\Xi_{+-}\|_1=\|K_\Xi\|_1\le1
+\tag{275.24}
+$$
+直接得到。
+
+将（275.22）—（275.23）应用于 $F^{-1}$ 给反向界。因此态距离和完整数据距离都双向相差固定有限因子，真值邻域也双向对应；可用局部指数及其最优值保持。相同边缘的竞争族在过滤后仍相同边缘，所以这个子合同也保持。
+

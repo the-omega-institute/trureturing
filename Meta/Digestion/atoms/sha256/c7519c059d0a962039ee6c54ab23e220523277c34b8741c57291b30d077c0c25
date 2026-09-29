@@ -1,0 +1,12 @@
+**定义 1.1（单激发关系空间）。** 固定有限模式集 $X=\{1,\ldots,d\}$，$d\ge2$，令
+
+$$
+\mathcal H_1=\operatorname{span}_{\mathbb C}\{|x\rangle:x\in X\},
+\qquad
+|\psi\rangle=\sum_x\psi(x)|x\rangle,
+\qquad
+\sum_x|\psi(x)|^2=1.
+$$
+
+模式基正交归一。多个非零振幅仍表示同一单激发空间中的向量；激发数由所选扇区规定，不由非零坐标的个数规定。
+

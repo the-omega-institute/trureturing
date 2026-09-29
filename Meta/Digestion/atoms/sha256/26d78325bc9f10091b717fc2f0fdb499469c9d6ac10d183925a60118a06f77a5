@@ -1,0 +1,37 @@
+**定理213.1（联合解析临界图与精确秩）。**
+存在唯一联合解析临界图
+$\nu=\nu_b(\epsilon,h)$，满足
+
+$$
+\mu(\epsilon,h,\nu_b(\epsilon,h),0)=0.
+\tag{213.17}
+$$
+
+固定小参数箱内仍有 $\mu_t>0,\mu_\nu<0$。
+这给对全部正小 $\epsilon$ 的精确分类：
+
+$$
+\boxed{
+\nu>\nu_b(\epsilon,h):\ (1,2),\qquad
+\nu\le\nu_b(\epsilon,h):\ (1,1).
+}
+\tag{213.18}
+$$
+
+该图穿过 $\gamma=\beta,h=0$ 附近；
+不声称将它反解成 $h(\epsilon,\nu)$ 后在抛物顶点也解析。
+物理参数箱选择同时保证 $h\ge0$、$h\epsilon\le1/2$
+及 $R\epsilon<\beta/(\beta^2+\gamma^2)$。
+
+令 $\widehat t$ 为不约束符号时 $\mu=0$ 的解析根。
+由（213.16），存在解析正函数 $a$、$a(0,0,0)=1$，使
+
+$$
+\widehat t(\epsilon,h,\nu)
+=a(\epsilon,h,\nu)[\nu-\nu_b(\epsilon,h)],\qquad
+t^\sharp=a(\epsilon,h,\nu)[\nu-\nu_b(\epsilon,h)]_+.
+\tag{213.19}
+$$
+
+这是精确局部因子化，不只是阶数估计。
+

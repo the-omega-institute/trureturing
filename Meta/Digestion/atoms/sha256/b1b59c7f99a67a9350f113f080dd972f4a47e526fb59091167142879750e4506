@@ -1,0 +1,46 @@
+### 269.1 固定合同与目标
+
+沿用§268的标准基 $e_1,\ldots,e_n$，令
+$$
+Je_1=0,\qquad Je_j=e_{j-1}\quad(j\ge2),
+\qquad M=I_n+tJ,\qquad t>0.
+\tag{269.1}
+$$
+固定一个Hermitian正定矩阵 $Q$，满足
+$$
+Q+M^\dagger QM=I_n.
+\tag{269.2}
+$$
+§268已证明 $t=1/4$ 对每个 $n\ge1$ 都有这样的解，并有统一谱界
+$(7/23)I_n\preceq Q\preceq(16/23)I_n$。以下结论对任意满足（269.2）的固定 $(n,t,Q)$ 成立。
+
+记
+$$
+W=\begin{bmatrix}I_n&M\end{bmatrix},\qquad
+T_*=W^\dagger QW,\qquad Z=2QM,
+$$
+$$
+\Omega_*=\frac1nT_*,
+\qquad
+\rho_*=\frac1nI_n,\qquad K_*=\frac1nZ.
+\tag{269.3}
+$$
+输入空间 $H$ 为qubit，块矩阵使用固定输入 $Y$ 本征基，$\mathscr K(X)=2X_{+-}$。$T_*$ 秩为 $n$、迹为 $n$，所以 $\Omega_*$ 是合法来源；$n\ge2$ 时它是混合态。§268已证明其完整数据纤维唯一、标准奇异度为 $d_S=n$。
+
+对同一 $H\otimes\mathbb C^n$ 上任意密度态 $\Xi$，定义未除以二的完整数据误差
+$$
+\varepsilon(\Xi)=
+\|\operatorname{Tr}_H\Xi-\rho_*\|_1+
+\|\mathscr K(\Xi)-K_*\|_1.
+\tag{269.4}
+$$
+迹范数也用于非Hermitian数据矩阵的核范数；无下标的范数为算子范数。
+
+本节首先证明：存在依赖固定 $(n,t,Q)$ 的有限常数 $C_{\mathrm{up}}$，使
+$$
+\|\Xi-\Omega_*\|_1
+\le\min\{2,C_{\mathrm{up}}\varepsilon(\Xi)^{1/(2n)}\}.
+\tag{269.5}
+$$
+随后构造一个趋近 $\Omega_*$ 的合法族，排除每个更大的局部指数。
+

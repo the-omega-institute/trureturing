@@ -1,0 +1,86 @@
+### 270.1 固定来源、仪器与成功合同
+
+固定 $n\ge1$、$t=1/4$，取§268的实对称正定解
+$$
+Je_1=0,\qquad Je_j=e_{j-1}\quad(j\ge2),\qquad M=I_n+tJ,
+$$
+$$
+Q+M^\dagger QM=I_n,\qquad
+\frac7{23}I_n\preceq Q\preceq\frac{16}{23}I_n.
+\tag{270.1}
+$$
+在固定输入 $Y$ 本征基下，令
+$$
+Z=2QM,\qquad
+T_*=
+\begin{pmatrix}
+Q&QM\\M^\dagger Q&I_n-Q
+\end{pmatrix},
+\qquad
+\Omega_*=\frac1nT_*.
+\tag{270.2}
+$$
+输入 $H$ 为qubit，参考为 $E=\mathbb C^n$，完整数据映射为
+$$
+\rho_\Omega=\operatorname{Tr}_H\Omega,\qquad
+\mathscr K(\Omega)=2\Omega_{+-}.
+\tag{270.3}
+$$
+
+采用§269式（269.32）—（269.43）的同一常数与矩阵。为避免与仪器符号记录混淆，本节将（269.40）中的正数 $s$ 记作 $a>0$；因此 $C=aC_0$、$C_{nn}=a$，而 $k=ak_0>0$。定义
+$$
+S_h=\operatorname{diag}(h^{n-1},h^{n-2},\ldots,1),
+\qquad D_h=hS_hCS_h,\qquad \delta_h=kh^{2n},
+$$
+$$
+\Omega_h=\frac1n
+\begin{pmatrix}
+Q+D_h&(1-\delta_h)QM\\
+(1-\delta_h)M^\dagger Q&I_n-Q-D_h
+\end{pmatrix}.
+\tag{270.4}
+$$
+§269的精确Schur缩放证明给出 $h_0>0$，可取 $h_0\le1$，使所有 $0<h\le h_0$ 均满足 $\Omega_h\succ0$、$0<\delta_h<1$。同时
+$$
+\rho_h=\rho_*=\frac1nI_n,\qquad
+K_h=(1-\delta_h)K_*,
+\qquad K_*=\frac1nZ.
+\tag{270.5}
+$$
+理想来源 $\Omega_*$ 秩为 $n$，竞争来源秩为 $2n$；$n\ge2$ 时理想来源混合。§269式（269.59）—（269.60）还给
+$$
+\frac{2a}{n}h
+\le\|\Omega_h-\Omega_*\|_1
+\le\frac{2\|C\|_1+k\|Z\|_1}{n}h.
+\tag{270.6}
+$$
+
+固定§253的 $45^\circ$ 重置仪器：
+$$
+A_a=\frac{Z_H+X_H}{\sqrt2},\qquad
+A_b=\frac{Z_H-X_H}{\sqrt2},
+$$
+$$
+E_{w,\eta}=\frac{I_2+\eta A_w}{4},
+\qquad w\in\{a,b\},\quad\eta\in\{+1,-1\}.
+\tag{270.7}
+$$
+四个效应正半定且和为 $I_2$。量子输出统一重置为同一纯态 $P_{\mathrm{reset}}$；所有实际记录 $(w,\eta)$ 与完整参考 $E$ 均保留。
+
+未知假设 $j\in\{*,h\}$ 以等先验选定，此后提供 $m$ 份同一来源的独立副本。两种接口分别开放：
+
+- 重置前的全部联合来源 $\Omega_j^{\otimes m}$。
+- 固定仪器逐份独立作用后的完整输出 $\sigma_j^{\otimes m}$，其中 $\sigma_j=(\mathcal S_p\otimes\operatorname{id}_E)(\Omega_j)$。
+
+两接口都允许任意集体POVM、辅助处理和自适应终端测量。输出接口不开放原输入、额外设置种子或其隐藏副本，也不允许改换仪器查询其他方向。来源与通道没有共享的未建模记忆。
+
+令 $N_{\mathrm{in}}(h)$、$N_{\mathrm{out}}(h)$ 为等先验平均错误率不超过 $1/3$ 所需的最小固定整数副本数。方案知道 $h$、来源族和仪器；这里不是未知幅度的复合检验或随机停止的期望样本数。
+
+沿用
+$$
+d(\tau,\omega)=\frac12\|\tau-\omega\|_1,\qquad
+\mathsf F(\tau,\omega)=\|\sqrt\tau\sqrt\omega\|_1
+\tag{270.8}
+$$
+作为半迹距离和未平方的根保真度。下文的常数与充分小区间均可依赖固定实例。
+

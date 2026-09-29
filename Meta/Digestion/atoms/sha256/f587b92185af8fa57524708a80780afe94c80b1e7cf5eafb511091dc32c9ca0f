@@ -1,0 +1,64 @@
+**定义 36.1（同一后验上的阈值场）。** 取[波动卷定义 35.1](PARITY_HIDDEN_ARROW_FLUCTUATIONS.md)的非格点情形，固定
+$`I=[s_0,s_1]`$、$`s_0\lt s_1`$。所有阈值与容量使用同一数据、同一补偿得分、
+同一组连续优先级，以及同一组精确后验概率 $`\pi_i`$。对 $`s\in I`$ 定义
+
+```math
+A_M(s)=\{i:W_i\gt\tau+s\},\quad
+N_M(s)=|A_M(s)|,\quad C_M(s)=|S\cap A_M(s)|,\quad
+\overline C_M(s)=\sum_{i\in A_M(s)}\pi_i,\quad
+U_M(s)=-\frac{C_M(s)-\overline C_M(s)}{b_M^\circ},
+\qquad b_M^\circ=\sqrt{q/\sqrt\lambda}.
+```
+
+式 (36.1)。
+
+该阈值过程在得分等于阈值时同时移除整个得分组，取右连续版本。
+固定互异内点 $`s_0\lt c_j\lt s_1`$、$`1\le j\le d`$，以及 $`A\gt0`$，置
+
+```math
+\nu_{M,j}=\mathbb E_S N_M(c_j),\qquad
+X_{M,j}=-\frac{N_M(c_j)-\nu_{M,j}}{\sqrt q},\qquad
+m_{M,j}(a)=\lfloor\nu_{M,j}+a\sqrt q\rfloor\quad(|a|\le A).
+```
+
+式 (36.2)。
+
+每个均值按实际实验与正确对齐方向计算，包含背景贡献。
+令 $`T_{M,j}(a)`$ 为共同排序的前 $`m_{M,j}(a)`$ 个位置，
+$`I_{M,j}(a)=A_M(c_j)\triangle T_{M,j}(a)`$，
+$`e_{M,j}(a)=\mathrm{sgn}(N_M(c_j)-m_{M,j}(a))`$，定义
+
+```math
+R_{M,j}(a)=q^{-1/4}e_{M,j}(a)
+ \left(|I_{M,j}(a)\cap S|-\sum_{i\in I_{M,j}(a)}\pi_i\right),\qquad
+\mathcal P_{M,j}(a)=\frac{|S\setminus T_{M,j}(a)|-q+
+ \sum_{i\in T_{M,j}(a)}\pi_i}{b_M^\circ}.
+```
+
+式 (36.3)。
+
+未知方向时，阈值场与全部容量曲线共同使用定义 35.1 的一次方向判决和工作权重。
+置
+
+```math
+\Gamma(s)=d_*\log(1+e^{-s}),\qquad
+p_j=\frac1{1+e^{-c_j}},\quad v_j=p_j(1-p_j),\qquad
+H(s)=B^\circ(\Gamma(s)).
+```
+
+式 (36.4)。
+
+这里 $`B^\circ`$ 为标准 Brownian 运动。另取标准 Brownian 运动 $`B_{j,+},B_{j,-}`$，并定义
+
+```math
+K_j(t)=\begin{cases}
+\sqrt{v_j}\,B_{j,+}(-t),&t\le0,\\[0pt]
+-\sqrt{v_j}\,B_{j,-}(t),&t\ge0.
+\end{cases}
+```
+
+式 (36.5)。
+
+所有上述 Brownian 运动相互独立，并独立于
+$`G\sim N(0,\sigma^2)`$、$`\sigma^2=p_*(1-p_*)`$。
+

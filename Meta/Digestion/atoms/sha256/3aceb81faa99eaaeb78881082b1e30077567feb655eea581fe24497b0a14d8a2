@@ -1,0 +1,32 @@
+**定理28.2（固定候选集的一套多尺度因果接收器）。** 给定 $`0<\epsilon<1`$ 及正的非增序列 $`(u_j)_{j\ge0}`$，满足
+
+$$
+\sum_{j=0}^{\infty}u_j^2\le1.
+\tag{28.7}
+$$
+
+存在同一列寄存器和全域 CPTP 映射
+
+$$
+K_0=\mathbb C,\qquad
+\mathcal C_n:\mathcal L(K_{n-1}\otimes B)\to\mathcal L(K_n),
+\qquad
+\mathcal D_n:\mathcal L(K_n)\to\mathcal L(H_n),
+\tag{28.8}
+$$
+
+在每个确定终端、全部 $`\vartheta\in\Theta`$ 及任意初始参考输入上，完整联合恢复的半迹误差至多 $`\epsilon`$。对 $`n\ge1`$，令 $`k=\lfloor\log_2n\rfloor`$，则可取
+
+$$
+\boxed{
+\dim K_n
+\le4P(\Theta,c_{\rm hist}\epsilon u_k2^{-k/2})+1
+\le4P\left(\Theta,\frac{c_{\rm hist}\epsilon u_k}{\sqrt n}\right)+1.
+}
+\tag{28.9}
+$$
+
+这里一维失败旗标计入 $`K_n`$。计数、已知门描述、纯空白和路由仍按定义1.2及13.1另行计量；（28.9）不声称这些资源的界。
+
+证明分四步。
+

@@ -1,0 +1,7 @@
+## §4. 资源计数与联合匹配
+
+置 \(g=|\mathcal G|,h=|H|,p=|P|\)，\(Z=\binom V2\setminus L\)，\(z=|Z|\)，\(t=g+h-N\)，\(\delta=p-\nu\)。于是
+\[
+ s:=\binom N2+1-\Phi=z-t-\delta.\tag{5}
+\]
+

@@ -1,0 +1,27 @@
+**定义 115.1（最坏均值占比与终端距离）。** 对 $0<h<R$ 和任意 $\Gamma\in\mathfrak B_{R-h}$，定义
+
+$$
+\Xi_\Gamma=\sum_{n\ge1}\mathcal C_\Gamma\mathcal N_\Gamma^{n-1}
+=\mathcal C_\Gamma(\operatorname{id}-\mathcal N_\Gamma)^{-1},
+\qquad
+\mathcal T_0(X)=\operatorname{Tr}(X)P_0,
+$$
+
+$$
+\lambda_h(\Gamma)=\frac{M(\Gamma)}{\mathscr K(R-h)}\in(0,1],
+\qquad
+ d_\Gamma=\frac12\|\Xi_\Gamma-\mathcal T_0\|_\diamond\in[0,1].
+\tag{115.1}
+$$
+
+该球内所有装置全状态终止，有限维谱半径小于一，所以级数收敛并定义 CPTP 通道。这里 $\lambda_h$ 比较同一装置的最大平均等待与整个球的最坏平均等待；$d_\Gamma$ 比较同一装置的完整终端作用与固定准备 $P_0$ 的通道。
+
+对最近失效集合附近的装置，沿用 $\mathcal N(\sigma)=(1-\epsilon)\sigma$，定义实际慢点击后继
+
+$$
+\zeta_\Gamma=\frac{\mathcal C_\Gamma(\sigma_\Gamma)}{\epsilon_\Gamma}.
+\tag{115.2}
+$$
+
+完整性使分子正半定且迹恰为 $\epsilon_\Gamma$，故 $\zeta_\Gamma$ 是密度矩阵。它使用原始点击分支，不是第 112 节检验中辅助重置后的分支。
+

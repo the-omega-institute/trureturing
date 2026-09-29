@@ -1,0 +1,80 @@
+### 247.4 两条非平行响应强制参考支撑正交
+
+先看 $j\in J_1$ 的最大纠缠分量。固定一个输入正交基，存在等距映射 $W_j:\mathbb C^2\to E$，使
+$$
+|\psi_j\rangle=\frac1{\sqrt2}
+\sum_{i=0}^1|i\rangle\otimes W_j|i\rangle.
+\tag{247.19}
+$$
+令 $L_j=\operatorname{ran}W_j$。直接偏迹得
+$$
+R_w(|\psi_j\rangle\langle\psi_j|)
+=\frac12W_j(w\cdot\sigma)^{\mathsf T}W_j^\dagger,
+\qquad w=a,b.
+\tag{247.20}
+$$
+在 $L_j$ 上，其两个本征值为 $\pm\ell/2$，均非零。由（247.17）—（247.18），
+$$
+\boxed{
+H_wW_j=W_j\frac{(w\cdot\sigma)^{\mathsf T}}\ell,
+\qquad w=a,b.
+}
+\tag{247.21}
+$$
+所以 $L_j$ 对两者都不变。$H_a,H_b$ 为 Hermitian，故 $L_j$ 同时是约化子空间；其正交投影 $P_{L_j}$ 与两者交换。
+
+再看 $k\in J_0$ 的产品分量，写为
+$$
+|\psi_k\rangle=|\varphi_k\rangle\otimes|z_k\rangle,
+\tag{247.22}
+$$
+其中两向量均归一化，$r_k\in\mathbb R^3$ 为输入态 $|\varphi_k\rangle$ 对应的单位 Bloch 向量。其参考响应为
+$$
+R_w(|\psi_k\rangle\langle\psi_k|)
+=(r_k\cdot w)|z_k\rangle\langle z_k|.
+\tag{247.23}
+$$
+该分量取得 $U$，故
+$$
+|r_k\cdot a|+|r_k\cdot b|=2\sqrt A.
+\tag{247.24}
+$$
+置 $x=r_k\cdot a$、$y=r_k\cdot b$。由
+$$
+aa^{\mathsf T}+bb^{\mathsf T}
+=2A\,uu^{\mathsf T}+2B\,vv^{\mathsf T},\qquad A\ge B,
+$$
+得
+$$
+(|x|+|y|)^2\le2(x^2+y^2)\le4A.
+\tag{247.25}
+$$
+式（247.24）达到最右端，故两步均取等，强制
+$$
+|r_k\cdot a|=|r_k\cdot b|=\sqrt A>0.
+\tag{247.26}
+$$
+这个推论覆盖 $A=B$ 时的方向简并，没有要求产品态的最优方向唯一。由（247.17），
+$$
+H_a z_k=s_a z_k,
+\qquad H_b z_k=s_b z_k,
+\qquad s_a,s_b\in\{+1,-1\}.
+\tag{247.27}
+$$
+
+现在任取 $j\in J_1$、$k\in J_0$。若 $P_{L_j}z_k\ne0$，由约化性及（247.27），它将同时是 $H_a,H_b$ 在 $L_j$ 上的本征向量。通过 $W_j^\dagger$ 拉回，便得到 $(a\cdot\sigma)^{\mathsf T}$ 与 $(b\cdot\sigma)^{\mathsf T}$ 的非零共同本征向量。
+
+但 Pauli 交换子满足
+$$
+[(a\cdot\sigma)^{\mathsf T},(b\cdot\sigma)^{\mathsf T}]
+=-2i\,[(a\times b)\cdot\sigma]^{\mathsf T}.
+\tag{247.28}
+$$
+由于 $\|a\times b\|=2\sqrt{AB}>0$，且 $[(a\times b)\cdot\sigma]^2=\|a\times b\|^2I_2$，此交换子可逆。共同本征向量却必在交换子的核中，矛盾。因此
+$$
+\boxed{
+P_{L_j}z_k=0\quad\text{对所有 }j\in J_1,\ k\in J_0.
+}
+\tag{247.29}
+$$
+

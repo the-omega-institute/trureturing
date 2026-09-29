@@ -1,0 +1,15 @@
+**定理 249.2（无条件 Bell 重叠的精确有限式）。**
+$$
+\boxed{
+F_{n,k}=\mathbb E_\theta\left[\min\{1,2^{K-k}\}\right].
+}
+\tag{249.14}
+$$
+等价地，
+$$
+F_{n,k}=\Pr_\theta[K\ge k]
++2^{-k}\sum_{j=0}^{\min(n,k-1)}\binom nj(2\theta)^j(1-\theta)^{n-j}.
+\tag{249.15}
+$$
+空和按零解释，因此 $F_{n,0}=1$。
+

@@ -1,0 +1,11 @@
+**定义。** 令 $m=6|T|$，并设
+
+$$t=\frac{\pi}{m+2},\quad c=\cos t,\quad
+\delta=\min\left\{\frac18,\frac{1-c}{2+c}\right\}.$$
+
+为每条八度边取 $5/4\le x_e\le2$，为高边取 $1+\delta\le x_e\le8/5$，记所得闭盒为 $\Omega_x$。再定义与剖分规模无关的常数
+
+$$\eta=\min\left\{\pi,\ 2\pi-8\arccos\frac{293}{400},\
+8\arccos\frac{1577}{2236}-2\pi,\
+12\arccos\frac{37}{43}-2\pi\right\}.$$
+

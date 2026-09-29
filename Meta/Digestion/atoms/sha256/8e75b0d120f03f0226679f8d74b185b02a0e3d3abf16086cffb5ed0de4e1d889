@@ -1,0 +1,29 @@
+**证明。** 写 $K_i=U^\dagger\nabla_iU=-i\mathcal A_i$，则 $\nabla_iU=UK_i+N_i$。相容连接保持内积，微分 $K$ 并反对称化得
+
+$$
+\partial_iK_j-\partial_jK_i+[K_i,K_j]
+=U^\dagger[\nabla_i,\nabla_j]U
++N_i^\dagger N_j-N_j^\dagger N_i.
+$$
+
+使用 $[\nabla_i,\nabla_j]=-iF^{\mathrm{full}}_{ij}$，乘以 $i$ 即得。∎
+
+在内部框变换 $U\mapsto UV(\lambda)$，$V$ 酉时，
+
+$$
+\mathcal A_i\mapsto V^\dagger\mathcal A_iV+iV^\dagger\partial_iV,
+\qquad\mathcal F_{ij}\mapsto V^\dagger\mathcal F_{ij}V.
+$$
+
+所以适当闭路 holonomy 的共轭类是框不变量。若连环境基也改变，必须一同运输 $\Gamma$。这正是 ST16 被动变换必须保留惯性项的协变表达。
+
+若 $\Gamma=\Gamma_V\oplus\Gamma_W$ 保持原分块，ST15.1 中的 $\partial_iX$ 可替换成
+
+$$
+D_iX=\partial_iX-i\Gamma_{W,i}X+iX\Gamma_{V,i},
+$$
+
+得到 $N_i^\dagger N_j$ 的同样图坐标公式。证明只需在法向投影前写出 $\nabla_iL-L(-i\Gamma_{V,i})=(0,D_iX)^{\mathsf T}$。
+
+该式是向量子丛几何中的经典结构；Oancea–Mieling–Palumbo 已在2026年论文中系统研究了含环境曲率的量子几何张量，并讨论曲时空 Dirac 场的应用。[ST10-Subbundle] 本文增加的是与前述 Schur/Born 范数、实际仪器闭合和可计算二态见证的同一套记号与证明接口，不将(ST17.1)的普遍形式据为新发现。
+

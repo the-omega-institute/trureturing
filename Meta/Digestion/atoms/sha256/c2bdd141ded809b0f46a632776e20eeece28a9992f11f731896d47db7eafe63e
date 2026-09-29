@@ -1,0 +1,10 @@
+### theorem 26.2 操作复合的进位律
+
+对整数矩阵 $T,U$，有
+
+$$
+\boxed{
+c_{TU}(a)=T c_U(a)+c_T([Ua]_d)\pmod e.
+}
+$$
+

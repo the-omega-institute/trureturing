@@ -1,0 +1,11 @@
+**命题 55.2。** 此候选满足
+
+$$
+u=\max_C\operatorname{Tr}(R\widehat C)=\frac54,
+\qquad
+\ell=\min_C\operatorname{Tr}(R\widehat C)=\frac34,
+\qquad
+\Delta(R)=\frac14.
+\tag{55.10}
+$$
+

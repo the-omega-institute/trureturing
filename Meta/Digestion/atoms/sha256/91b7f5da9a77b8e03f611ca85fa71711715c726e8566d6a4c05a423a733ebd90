@@ -1,0 +1,10 @@
+**定义 212.1（相对于背景的阶段稳定）。** 项目 [InterpretationFixedPoint](../../../D5/S3/ConceptDynamics/Interpretation/InterpretationFixedPoint.lean) 把解释语境分成文本、读者准入、背景、评价目标和解释规则。对固定语境 $c$、概念序列 $u_n$、选定的概念对应关系 $\simeq$ 与解释函数 $I$，它的相对解释不动点条件是
+
+$$
+u_{n+1}\simeq u_n,
+\qquad
+I(c,u_{n+1})=I(c,u_n).
+$$
+
+这里检查的是相邻两个阶段在固定语境中的概念对应及解释结果相同。该定义没有自行提供递推法则，没有要求后面每个阶段都稳定，也没有把 $I(c,u_n)$ 的值认定为实际正确。
+

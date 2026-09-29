@@ -1,0 +1,31 @@
+### 271.8 完整数据上界由最长链控制
+
+令
+$$
+\eta_0=\min_b\theta_{0,b}^{2r_b}>0,
+\qquad
+\Gamma_b=2r_b^{3/2}(\pi t)^{r_b-1}A_b,
+\qquad
+\Gamma=\left(\sum_b\Gamma_b^2\right)^{1/2}.
+\tag{271.45}
+$$
+有限非空链族保证这些常数有限，且 $0<\eta_0\le1$。当 $0<\varepsilon\le\eta_0$ 时，对每条链分别选择 $\theta=\varepsilon^{1/(2r_b)}$，由（271.44）得到
+$$
+\|D\iota_b\|
+\le\Gamma_b\varepsilon^{1/(2r_b)}
+\le\Gamma_b\varepsilon^{1/(2m)}.
+\tag{271.46}
+$$
+对 $x=\sum_b\iota_bx_b$，Cauchy–Schwarz给
+$$
+\|Dx\|
+\le\sum_b\|D\iota_b\|\|x_b\|
+\le\left(\sum_b\|D\iota_b\|^2\right)^{1/2}\|x\|.
+$$
+所以
+$$
+\|D\|\le\Gamma\varepsilon^{1/(2m)}.
+\tag{271.47}
+$$
+若 $\varepsilon=0$，在（271.44）中分别令各链的 $\theta\downarrow0$，得到 $D\iota_b=0$，从而 $D=0$。
+

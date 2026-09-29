@@ -1,0 +1,2 @@
+**注 1.20。** A fixed periodic predicate $\{n:n\bmod L\in H\}$ is recognizable in each of these systems. The obstruction concerns a single converter for all integers, tested on a nonperiodic source-recognizable set. It neither prevents finite codebook conversion nor supplies a lower bound for a particular finite set of modular survivors.
+

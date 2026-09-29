@@ -1,0 +1,97 @@
+**定理87.1（外置首轮 ABBAB 不可能）。** 上述七维实际合同不能具有尾词 $ABBAB$。
+
+### 87.1 四加二维的尾像与第四终端返回
+
+实际早期有正交单位向量 $p,q$ 及 $u,v,w$，满足
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+$$
+
+$$
+V_0p=u\otimes A,\qquad V_1p=v\otimes A,\qquad
+V_0q=w\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{87.2}
+$$
+
+特别地，$w$ 是 $H_2\cap G_2$ 中的单位向量。对 $3\le n\le6$，实际 $H_n,G_n,Q_n$ 均二维，并满足
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,\qquad
+P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n.
+\tag{87.3}
+$$
+
+因此 $H_n\cap G_n=0$。这些关系是第26节及第75节的实际来源合同。
+
+令 $S_0=H_1+\cdots+H_5$。首环境外置给 $k\notin S_0$，因为 $V_0S_0\subset K\otimes F$，而 $V_0k=p\otimes\eta_1\notin K\otimes F$。所以 $\dim S_0\le6$。
+
+当前 $B$ 的第3、4轮具有不同的已执行后继 $B,A$，故固定 $V_1$ 给 $G_3\cap G_4=0$。令
+
+$$
+P=G_3+G_4+G_6.
+$$
+
+则 $(P\otimes B)\dotplus((G_2+G_5)\otimes A)\subset V_0S_0$，而两项维数分别至少四和二。因此
+
+$$
+\dim P=4,\qquad G_5=G_2=:L,\qquad
+\dim S_0=6,
+$$
+
+$$
+V_0S_0=(P\otimes B)\dotplus(L\otimes A).
+\tag{87.4}
+$$
+
+这是第69节饱和分叉接口在当前尾词中的直接应用。记
+
+$$
+T=G_3,\qquad U=G_4,\qquad Z=G_6,\qquad
+R=Q_3,\qquad S=Q_4,\qquad Q=Q_5.
+$$
+
+有 $P=T+U$、$T\cap U=0$。全部使用的位块关系为
+
+$$
+\begin{aligned}
+V_0H_1&=L\otimes A,&
+V_0H_2&=T\otimes B,&
+V_0H_3&=U\otimes B,\\
+V_0H_4&=L\otimes A,&
+V_0H_5&=Z\otimes B,\\
+V_1L&=R\otimes B,&
+V_1T&=S\otimes B,&
+V_1U&=Q\otimes A.
+\end{aligned}
+\tag{87.5}
+$$
+
+固定 $V_0$ 单射性使
+
+$$
+H_4=H_1,\qquad
+H_1\subset U\oplus S,\qquad
+H_3\subset T\oplus R,
+$$
+
+$$
+P_SH_1=S,\qquad P_RH_3=R.
+\tag{87.6}
+$$
+
+第6轮的 $Z$ 仅用于实际零位像，没有为它增添一位后继。
+
+### 87.2 两个初期零记忆平面必须相同
+

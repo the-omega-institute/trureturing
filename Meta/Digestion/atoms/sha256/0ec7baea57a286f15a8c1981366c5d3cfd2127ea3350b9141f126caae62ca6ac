@@ -1,0 +1,27 @@
+**定理 41.2（共同谱隙把绝对尾界升级为条件几何尾界）。** 在定理 41.1 的等价条件成立时，存在同一个整数 $M\ge1$，使对全部参数及 $m\ge0$，
+
+$$
+\boxed{
+0\le R_{m,\theta}\le2^{-\lfloor m/M\rfloor}R_\theta.
+}
+$$
+
+从而，对所有 $\operatorname{Tr}(\rho R_\theta)>0$ 的参数—来源对，
+
+$$
+\mathbb P_{\theta,\rho}(\mathsf N>m\mid\mathsf N<\infty)
+\le2^{-\lfloor m/M\rfloor},
+\qquad
+\mathbb E_{\theta,\rho}[\mathsf N\mid\mathsf N<\infty]\le2M.
+$$
+
+证明。定理 40.3 给共同趋零的绝对尾界，选 $M$ 使 $\|R_{M,\theta}\|\le g/2$ 对全部参数成立。由于 $0\le R_{M,\theta}\le R_\theta$，其支撑包含于 $P_\theta$，故
+
+$$
+R_{M,\theta}\le(g/2)P_\theta\le R_\theta/2.
+$$
+
+对每个参数重复应用正映射 $\mathcal A_\theta$，得到 $R_{kM,\theta}\le2^{-k}R_\theta$；块内再用 $\mathcal A_\theta^j(R_\theta)\le R_\theta$，推出全部 $m$。与初态取迹并除以正的最终点击概率给条件尾界，按长度 $M$ 分块求尾和得 $2M$。零效果参数没有需定义的正概率条件来源。$\square$
+
+本定理提供充分结构，不把“共同条件等待界”反称为“暗空间秩必稳定”。第 39.1 条的仪器全部点击只在第一轮，条件等待具有共同界一，暗空间维数仍在零参数变化。
+

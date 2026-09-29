@@ -1,0 +1,22 @@
+### 219.4 从正谱删除到合法容量近似
+
+采用未归一化 Choi 约定。若从 $J(\mathcal R)$ 删除一份正谱尾 $J(\mathcal L)\succeq0$，其迹为 $w$，则
+$$
+\delta=\|\mathcal L^*(I)\|_\infty\le\operatorname{Tr}\mathcal L^*(I)
+=\operatorname{Tr}J(\mathcal L)=w.
+$$
+因此只要 $w<1$，上述合法修复给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond\le\delta\le w.
+\tag{219.13}
+$$
+该误差不需要选取随外部参数连续的小谱向量。每一个真实通道分别按其谱分解构造即可。秩降低来自先删除谱分量；统一可逆右乘只恢复 TP，不重新增加任何结果的秩。
+
+在第217—218节的实际记录通道上，先取正谱侧。删除结果一中唯一的小谱项，令其本征值为 $\lambda_2^\sharp$。剩下的两个结果各有一个非零 Choi 方向，故修复通道是合法总秩二记录通道。联合小箱可保证 $\lambda_2^\sharp<1/4$，因而
+$$
+\boxed{d_2(p)\le\lambda_2^\sharp(p).}
+\tag{219.14}
+$$
+无新增谱方向时直接取 $\mathcal S=\mathcal R^\sharp$；无需选取任何零特征向量，误差为零。
+这里未声称每份原通道都达到上界，也未认定构造出的通道最接近或对原恢复任务最优。
+

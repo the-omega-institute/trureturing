@@ -1,0 +1,13 @@
+**命题 69.3（统一阈值和两个成本界均可达到）。** 任取 $\widehat M\ge1$，置 $\widehat\gamma=1/\widehat M$。取一维名义仪器每轮以概率 $\widehat\gamma$ 点击，并取实际仪器成功概率 $\gamma=\widehat\gamma-\delta$。对 $0\le\delta<1/\widehat M$，两仪器的完整半 diamond 距离正是 $\delta$，且
+
+$$
+M=\frac{\widehat M}{1-\delta\widehat M},\qquad
+|T-\widehat T|=\frac{\delta\widehat M^2}{1-\delta\widehat M}.
+$$
+
+在端点 $\delta=1/\widehat M$，实际仪器永不点击。因此在只知道 $\widehat M$ 与完整仪器距离的模型类中，严格条件 $\delta\widehat M<1$ 不能统一放宽为包含端点的条件。
+
+证明。一维完整输出是未点击、点击两点概率律，半 diamond 距离等于成功概率之差。正成功概率的等待均值为倒数；代入 $\gamma$ 给两条等式。成功概率为零时，每轮都未点击。$\square$
+
+上述命题的量词是跨仪器类的统一界，不断言每个固定名义仪器在自己的 $1/\widehat M$ 距离处都能产生不终止扰动。
+

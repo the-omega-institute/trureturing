@@ -1,0 +1,53 @@
+**定理 301.2（无限制端点曲率的精确符号）。** 在第300节的记号下，任意固定正半径都有
+
+$$
+\Gamma_a=-\frac{\|\Omega_*b\|_2^2}{D_a}\le0,
+\qquad
+\Theta_a=\frac{\lambda d_1d_2}{2D_a}>0.
+\tag{301.7}
+$$
+
+而且
+
+$$
+\Gamma_a=0
+\quad\Longleftrightarrow\quad a_1=a_2=a_3.
+\tag{301.8}
+$$
+
+因此，对每个固定的不等正半径模型，当 $\delta>0$ 充分小时，无限制实际最优误差严格低于其端点一阶切线：
+
+$$
+F_a^{(2)}\bigl(\eta(1-\delta)\bigr)<\kappa_a\delta.
+\tag{301.9}
+$$
+
+证明。由 $M_*b=b$ 与 $M_*^{\mathsf T}=M_*+2\Omega_*$，
+
+$$
+M_*^{\mathsf T}b=b+2\Omega_*b,
+\qquad
+b^{\mathsf T}(M_*^{\mathsf T})^2b
+=b^{\mathsf T}M_*^2b=A.
+$$
+
+反对称性给出 $b\cdot\Omega_*b=0$，故定义300.1中的量满足
+
+$$
+J_a=3A+4\|\Omega_*b\|_2^2.
+\tag{301.10}
+$$
+
+再将定理301.1的 $v\cdot\omega=0$ 代入该定义，得到
+
+$$
+\Gamma_a=\frac{3A-J_a}{4D_a}
+=-\frac{\|\Omega_*b\|_2^2}{D_a}.
+$$
+
+$\Theta_a$ 的表达与严格正性直接由第300节给出。
+
+若 $\Omega_*b=0$，则 $\omega\times b=0$，故 $\omega$ 平行于 $b$。但 $v\cdot\omega=0$ 且 $v\cdot b>0$，所以 $\omega=0$，即 $\Omega_*=0$。反方向显然成立。结合定理299.1，$\Omega_*=0$ 恰好等价于三个半径相等，证明式（301.8）。最后，对不等半径使用定理300.2的 $o(\delta^2)$ 余项与 $\Gamma_a<0$，得到式（301.9）。证毕。
+
+这些关系来自任务最优解的共同列支撑与耗散锥互补条件。它们不要求全部列约束具有严格正乘子，也不是一般量子比特生成元的分类。式（301.7）本身尚未确定一般半径下受限系数 $\Gamma_a+\Theta_a$ 的符号；端点的固定方向也不意味着有限预算最优通道具有完全相同的特征向量。
+

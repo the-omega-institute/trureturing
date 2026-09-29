@@ -1,0 +1,26 @@
+**定理 43.5（完整仪器校准到时间矩的有限—尾分解）。** 对两模型 $\mathfrak I,\mathfrak J$，令 $\delta=\delta(\mathfrak I,\mathfrak J)$。则对每个 $m\ge1$，
+
+$$
+\boxed{
+\|T_I-T_J\|_\infty
+\le m\min\{1,m\delta\}+\|Z_{m,I}\|_\infty+\|Z_{m,J}\|_\infty.
+}
+$$
+
+若模型类具有共同的 $\|Z_{m,\theta}\|\le c_m\to0$，便有连续性模量
+
+$$
+\|T_I-T_J\|_\infty
+\le\inf_{m\ge1}(m^2\delta+2c_m),
+$$
+
+右侧随 $\delta\downarrow0$ 趋零。
+
+证明。在第 35 节停止输出上使用同一个记录函数：点击于 $n\le m$ 时取值 $n$，尚未点击时取零。其对应观察算子 $W_m$ 满足 $0\le W_m\le mI$。对任意两归一化输出 $\omega,\sigma$，效果 $W_m/m$ 给
+
+$$
+|\operatorname{Tr}[W_m(\omega-\sigma)]|\le mD(\omega,\sigma).
+$$
+
+第 35.2 条因而给 $\|M_{m,I}-M_{m,J}\|\le m\min\{1,m\delta\}$。分别加入两侧正尾 $Z_m$，三角不等式得到方框式。共同尾情形先选 $m$ 使 $2c_m$ 足够小，再令 $\delta$ 足够小。$\square$
+

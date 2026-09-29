@@ -1,0 +1,66 @@
+### 61.3 全部 tester 的一致首阶极限
+
+写
+
+$$
+\delta=\sqrt\varepsilon,
+\qquad p=\delta^2-\kappa\delta^3.
+\tag{61.6}
+$$
+
+当 $\kappa$ 在任意固定有界区间变化时，充分小的 $\delta>0$ 使下列根式有定义。主块有一致展开
+
+$$
+\frac{rr^{\mathsf T}-P_p}{\delta^2}
+=H_\kappa+O(\delta),
+\qquad
+H_\kappa=\frac{uv_\kappa^{\mathsf T}+v_\kappa u^{\mathsf T}}2,
+\quad u=(1,1,0)^{\mathsf T},\quad v_\kappa=(1,0,\kappa)^{\mathsf T}.
+\tag{61.7}
+$$
+
+$D(q,t)u$ 的范数为一，$D(q,t)v_\kappa$ 的范数平方为 $q+\kappa^2t$，内积为 $q$。所以
+
+$$
+\frac{\lambda_\varepsilon(p;q,t)}{\varepsilon}
+=\frac{q+\sqrt{q+\kappa^2t}}2+O(\delta),
+\tag{61.8}
+$$
+
+余项在 $q,t\in[0,1]$ 和有界 $\kappa$ 上一致。这里可以直接使用最大特征值对算符范数的 Lipschitz 界，不要求特征值在原点简单。
+
+因此正向首阶最大值为
+
+$$
+F^+(\kappa)=\frac{1+\sqrt{1+\kappa^2}}2.
+\tag{61.9}
+$$
+
+负向首阶函数是
+
+$$
+G_\kappa(q,t)
+=1-\frac q2-t+\frac12\sqrt{q+\kappa^2t}.
+\tag{61.10}
+$$
+
+令 $w=q+\kappa^2t$，则
+
+$$
+G_\kappa(q,t)
+=1-\frac w2+\frac{\sqrt w}2
+-t\left(1-\frac{\kappa^2}{2}\right).
+$$
+
+当 $\kappa^2<2$ 时，其唯一全局最大点为 $(q,t)=(1/4,0)$，最大值为 $9/8$。特别地，$\kappa_0=3/4$ 满足
+
+$$
+F^+(\kappa_0)=\frac98,
+\qquad
+\partial_tG_{\kappa_0}(1/4,0)
+=-1+\frac{\kappa_0^2}{2}=-\frac{23}{32}<0.
+\tag{61.11}
+$$
+
+这一步检查了整个 tester 参数方形，不只比较两个预选 tester。
+

@@ -1,0 +1,21 @@
+**定理 58.4（最优修复的准确渐近比例）。** 对 $0<\varepsilon\le1/4$，
+
+$$
+\frac98\varepsilon-\frac{27}{16}\varepsilon^{3/2}
+\le e_\varepsilon
+\le\varepsilon\left(1+\frac{c^2}{(1+c)(1+3c)}\right)
+<\frac98\varepsilon.
+\tag{58.15}
+$$
+
+特别地，
+
+$$
+\lim_{\varepsilon\downarrow0}\frac{e_\varepsilon}{\varepsilon}
+=\frac98,
+\qquad
+\lim_{\varepsilon\downarrow0}\frac{e_\varepsilon-\varepsilon}{\varepsilon}
+=\frac18.
+\tag{58.16}
+$$
+

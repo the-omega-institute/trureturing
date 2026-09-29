@@ -1,0 +1,8 @@
+### 167.4 全部恢复权限化为活动记忆上的保真度差
+
+仍采用平方保真度
+
+$$
+F(a,b)=\left(\operatorname{Tr}\sqrt{\sqrt a\,b\sqrt a}\right)^2.
+$$
+

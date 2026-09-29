@@ -1,0 +1,81 @@
+**算法 6.7.3（已知满测后的概率截止）。** 若另有承诺 $M_b=1$，对各有限值交错严格测试 $M_N>1-\varepsilon$，必有一个测试成功；需要实际有限码时，枚举全部有限合法码和它们的质量下近似，直到某个超过 $1-\varepsilon$。这给可用见证，不是精确 argmax。如果输入是指定 c.e. 库存并另承诺其自身删除满测，有限公告并质量趋一，同样的严格搜索给公告阶段和该阶段最大深度。没有这个已知极限承诺，深度截止不等于公告截止。
+
+例 6.4.5 的可判满测码虽然全部合法满测实现的平均长度无穷，仍能搜索这样的 $1-\varepsilon$ 截止；有效高概率截止与有限均值不是同一要求。下面的标准库核对同时保留该例整数预算、固定尖峰有限值、隐藏与历史反例的准确数值。
+
+```python
+from fractions import Fraction as F
+from itertools import product
+from math import isqrt, comb
+
+
+def hidden_mass(word, emissions, updates, initial):
+    alpha = list(initial)
+    for a in word:
+        alpha = [sum(alpha[s]*emissions[s][a]*updates[s][a][t]
+                     for s in range(len(alpha))) for t in range(len(alpha))]
+    return sum(alpha)
+
+
+def deterministic_updates(destinations, d):
+    size = len(destinations)
+    return [[[F(int(t == destinations[s][a])) for t in range(size)]
+             for a in range(d)] for s in range(size)]
+
+
+def finite_greedy(d, budgets, mass):
+    live, chosen = [()], []
+    for cap in budgets:
+        expanded = [v+(a,) for v in live for a in range(d)]
+        expanded.sort(key=lambda w: (-mass(w),w))
+        chosen.extend(expanded[:cap])
+        live = expanded[cap:]
+    return sum((mass(w) for w in chosen),F(0)),chosen
+
+
+def run():
+    rows = {(): (F(3,5),F(2,5)), (0,): (F(99,100),F(1,100)),
+            (1,): (F(1,2),F(1,2))}
+    def history_mass(w):
+        val = F(1)
+        for j,a in enumerate(w): val *= rows[w[:j]][a]
+        return val
+    assert finite_greedy(2,[1,1],history_mass)[0] == F(4,5)
+    assert history_mass((1,))+history_mass((0,0)) == F(497,500)
+    emission = [[F(2,5),F(7,20),F(1,4)],
+                [F(49,50),F(1,100),F(1,100)],
+                [F(1,3)]*3,[F(1,3)]*3]
+    updates = deterministic_updates([[1,2,3],[1]*3,[2]*3,[3]*3],3)
+    mass = lambda w: hidden_mass(w,emission,updates,[F(1),F(0),F(0),F(0)])
+    assert finite_greedy(3,[1,1],mass)[0] == F(31,60)
+    assert mass((1,))+mass((0,0)) == F(371,500)
+    emission = [[F(1,2) if s==a else F(1,4) for a in range(3)] for s in range(3)]
+    updates = deterministic_updates([list(range(3))]*3,3)
+    markov = lambda w: hidden_mass(w,emission,updates,[F(1,3)]*3)
+    assert markov((0,)) == F(1,3) and markov((0,0)) == F(1,6)
+    assert sum(markov(w) for w in product(range(3),repeat=3)) == 1
+    assert F(9,5)**4-F(256,27) == F(17147,16875)
+    assert [isqrt(8**n//n**4) for n in range(2,13)] == [2,2,4,7,14,29,64,143,327,765,1820]
+    spike_values = []
+    for n in range(1,9):
+        weights = sorted((F(1,2)**w.count(0)*F(1,4)**(n-w.count(0))
+                          for w in product(range(3),repeat=n)),reverse=True)
+        spike_values.append(sum(weights[:3**(n-1)]))
+    assert spike_values == [F(1,2),F(1,2),F(9,16),F(19,32),F(79,128),F(341,512),F(687,1024),F(2853,4096)]
+    for n in range(1,10):
+        count = 0
+        for w in product(range(3),repeat=n):
+            position, first = 0,None
+            for j,a in enumerate(w,1):
+                position += 1 if a==0 else -1
+                if position == 1 and first is None: first = j
+            count += first == n
+        expected = 0 if n%2 == 0 else 2**((n-1)//2)*comb(n-1,(n-1)//2)//((n+1)//2)
+        assert count == expected
+    assert 1-F(3,4)**3 == F(37,64)
+    assert F(37,64)+F(1,10)<F(3,4)<1-F(1,10)
+    print("RATIONAL_WITNESSES_OK")
+
+if __name__ == "__main__":
+    run()
+```
+

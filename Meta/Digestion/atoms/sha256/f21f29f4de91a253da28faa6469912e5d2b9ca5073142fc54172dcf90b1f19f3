@@ -1,0 +1,8 @@
+**推论 5.4（最小证书滞后与最小链长的比较）。** 设 A≠B 且 A、B SSE，令 ell=ell(A,B)≥1，c 为完整 compatible concrete shift 的最小正滞后。则
+
+$$
+\left\lceil\frac{\operatorname{ell}+1}{2}\right\rceil\le c\le\operatorname{ell}.
+$$
+
+**证明。** 文献的 SSE 链到 concrete shift 的逐步复合保持滞后，故一条长度 ell 的链给出滞后 ell 的证书，得到 c≤ell；这个方向也见所引 Remark 3.8。[^rrosft-bdr] 对最小滞后 c 的证书应用定理 5.3，得 ell≤2c-1，移项并利用整数性即得另一侧。不满足 A≠B 时不套用此式，因为零步矩阵相等与证书滞后必须为正使用了不同约定。证毕。
+

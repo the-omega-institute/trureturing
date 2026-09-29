@@ -1,0 +1,22 @@
+**引理 31.3（相差至多一的块有指定 0/1 因子）。** 对 a,b≥0、|a-b|≤1，存在以下 P_ab∈M_{a,b}(N)、Q_ab∈M_{b,a}(N)，使
+
+$$
+P_{ab}Q_{ab}=J_a(0),\qquad Q_{ab}P_{ab}=J_b(0).
+$$
+
+若 a=b，取 P_ab=I_a、Q_ab=J_a(0)。若 a=b+1，取
+
+$$
+P_{ab}=\begin{bmatrix}I_b\\0\end{bmatrix},\qquad
+Q_{ab}=\begin{bmatrix}0&I_b\end{bmatrix}.
+$$
+
+若 b=a+1，取
+
+$$
+P_{ab}=\begin{bmatrix}0&I_a\end{bmatrix},\qquad
+Q_{ab}=\begin{bmatrix}I_a\\0\end{bmatrix}.
+$$
+
+零维情形按空矩形矩阵处理；J_1(0)=0，所以未配对的单点块也得到正确乘积。
+

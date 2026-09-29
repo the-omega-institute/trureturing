@@ -1,0 +1,9 @@
+### 21.2 定理：实际 bit 记录决定全部切点测试
+
+对任意 $x,y\in[0,1)$ 和 $n\geq0$，
+\[
+\boxed{O_n(x)=O_n(y)
+\iff \forall k<n,\ (c_k\leq x\iff c_k\leq y).}
+\tag{21.2}
+\]
+

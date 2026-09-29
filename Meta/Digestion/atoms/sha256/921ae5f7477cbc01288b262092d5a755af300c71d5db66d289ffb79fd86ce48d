@@ -1,0 +1,10 @@
+**定理289.1（维数一致的未知相位矩消去）。** 对当前规范来源、全部 $n\ge2$、$0\le w\le1/4$、$0<\delta\le1/4$，在完整原输入访问及逐假设一致风险下，
+$$
+\boxed{
+\frac{w+\delta}{180\delta^2}
+\le N_{\rm unk}^{\rm full}(n,\delta;w)
+\le\left(24\cdot10000^2+1\right)\frac{w+\delta}{\delta^2}.
+}
+\tag{289.30}
+$$
+

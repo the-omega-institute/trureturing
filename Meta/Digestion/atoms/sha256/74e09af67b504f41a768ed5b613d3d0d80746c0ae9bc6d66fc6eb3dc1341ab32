@@ -1,0 +1,47 @@
+### 274.1 任意正定图来源与完整数据合同
+
+令 $E$ 为有限维非零复Hilbert空间，$d=\dim E$。设 $Q=Q^\dagger\succ0$，$M$ 为 $E$ 上的unipotent算子，即 $M-I_E$ 幂零。定义
+$$
+G_M=\begin{bmatrix}I_E&M\end{bmatrix},
+\qquad
+T(Q,M)=G_M^\dagger QG_M
+=\begin{pmatrix}
+Q&QM\\M^\dagger Q&M^\dagger QM
+\end{pmatrix},
+$$
+$$
+c=\operatorname{Tr}T(Q,M)>0,\qquad
+\Omega(Q,M)=\frac1cT(Q,M).
+\tag{274.1}
+$$
+$G_M$ 满行秩，所以来源秩为 $d$。输入 $H$ 为qubit，使用固定输入 $Y$ 本征基。完整数据为
+$$
+\rho_*=\frac{Q+M^\dagger QM}{c},
+\qquad
+K_*=\mathscr K(\Omega)=\frac{2QM}{c},
+\qquad
+\mathscr K(X)=2X_{+-}.
+\tag{274.2}
+$$
+这里不要求 $\rho_*=I_E/d$。
+
+记
+$$
+m=\min\{j\ge1:(M-I_E)^j=0\}.
+\tag{274.3}
+$$
+它等于 $M$ 的最大Jordan块尺寸。对同一 $H\otimes E$ 上任意密度态 $\Xi$，完整数据误差为
+$$
+\varepsilon(\Xi)
+=\|\operatorname{Tr}_H\Xi-\rho_*\|_1
++\|\mathscr K(\Xi)-K_*\|_1.
+\tag{274.4}
+$$
+态差和完整数据误差使用未除以二的迹范数；无下标的矩阵范数为算子范数。竞争态允许任意秩、支撑及参考相干。
+
+本节将证明：完整数据纤维为单点，标准奇异度为 $m$，最优局部逆Hölder指数为 $1/(2m)$。最后一个结论在精确同边缘的竞争子类中也成立。标准奇异度始终针对原始完整数据仿射方向
+$$
+L=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{274.5}
+$$
+

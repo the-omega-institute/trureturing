@@ -1,0 +1,20 @@
+#### 5.1.4 Bellman 关系怎样沿观察塔运输
+
+先取有限非空的共同动作集 $A$，确定性转移 $T_a:X\to X$、阶段奖励 $r_a:X\to\mathbb R$ 和终端奖励 $g:X\to\mathbb R$。假设每层存在对应数据，使
+
+$$
+q_iT_a=T_{i,a}q_i,\qquad
+r_a=r_{i,a}q_i,\qquad g=g_iq_i.
+\tag{TM.322}
+$$
+
+定义有限时域值，其中 $n$ 计阶段奖励的次数，零时域仍有终端奖励：
+
+$$
+V_0=g,\qquad
+V_{n+1}(x)=\max_{a\in A}\{r_a(x)+V_n(T_ax)\}.
+\tag{TM.323}
+$$
+
+层上值 $V_{i,n}$ 使用同一递推。
+

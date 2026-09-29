@@ -1,0 +1,49 @@
+#### 3.6.5 星图档案：最优稳定常数恰为叶数
+
+固定整数 $n\ge1$，取中心为 $0$、叶为 $1,\ldots,n$ 的星图。每个顶点有二值状态，合法完整档案限定为全零及恰有一片叶取值一：
+$$
+A_n=\{\mathbf0,e_1,\ldots,e_n\}\subseteq\{0,1\}^{\{0,1,\ldots,n\}},\qquad
+(e_i)_0=0,\quad(e_i)_j=\mathbf1_{\{i=j\}},\qquad
+\pi_i(a)=(a_0,a_i).
+\tag{TM.74}
+$$
+
+中心在全部档案中恒为零，观察第 $i$ 条边的二元边缘。对任意 $p\in\Delta_{A_n}$，记 $p_i=p(e_i)$、$p_0=p(\mathbf0)=1-\sum_{i=1}^np_i$。按二元读数 $00,01,10,11$ 的次序，$M_ip=(1-p_i,p_i,0,0)$。于是整个边界恰好确定 $p_1,\ldots,p_n$，再由归一化确定 $p_0$；$M$ 在这个档案单纯形上是单射。其可行边缘必须满足 $p_i\ge0$ 与 $\sum_ip_i\le1$，不能把各边任意 Bernoulli 参数都当作共同可行数据。
+
+先给锐下界。取 $q_n=n^{-1}\sum_{i=1}^n\delta_{e_i}$，目标 $y^{(0)}=M\delta_{\mathbf0}$。这份目标明确由合法共同来源实现。目标的每条边都以概率一读到 $00$，故任意 $p\in F_{y^{(0)}}$ 必须满足所有 $p_i=0$，即目标纤维只有 $\delta_{\mathbf0}$。于是
+$$
+\min_{p\in F_{y^{(0)}}}\operatorname{TV}(p,q_n)=1,\qquad
+\operatorname{TV}(M_iq_n,y_i^{(0)})=\frac1n\quad(1\le i\le n),\qquad
+\delta(q_n,y^{(0)})=\frac1n.
+\tag{TM.75}
+$$
+
+因此，任何对全部可行 $y$ 与全部 $q$ 有效的常数都必须至少为 $n$。
+
+再给匹配的全局上界。取任意 $p,q\in\Delta_{A_n}$，令 $\Delta_i=p_i-q_i$。归一化给 $p_0-q_0=-\sum_{i=1}^n\Delta_i$，而每条边的总变差等于 $|\Delta_i|$，所以
+$$
+\begin{aligned}
+\operatorname{TV}(p,q)
+&=\tfrac12\left(\left|\sum_{i=1}^n\Delta_i\right|+\sum_{i=1}^n|\Delta_i|\right)\\
+&\le\sum_{i=1}^n|\Delta_i|
+\le n\max_{1\le i\le n}|\Delta_i|
+=n\max_{1\le i\le n}\operatorname{TV}(M_ip,M_iq).
+\end{aligned}
+\tag{TM.76}
+$$
+
+对任意可行目标 $y$，取其唯一来源 $p\in\Delta_{A_n}$，式(TM.76)即给式(TM.70)中常数 $n$ 的有效性。连同式(TM.75)的达到实例，得到
+$$
+\boxed{
+H_n^{\rm opt}
+:=\inf\{H\ge0:\operatorname{dist}_{\rm TV}(q,F_y)
+\le H\max_i\operatorname{TV}(M_iq,y_i)\ \text{对全部可行 }y\text{ 与全部 }q\text{ 成立}\}
+=n.
+}
+\tag{TM.77}
+$$
+
+这是这族明确档案与指定范数下的锐常数计算。每个固定 $n$ 的修复稳定界都有限，但当档案和边界同时扩张时，最优常数无界。星图没有环，边界映射在合法来源上还具有唯一逆，仍不能由这些事实推出独立于 $n$ 的最大边误差控制。
+
+这个增长结论也依赖误差怎样汇总。若将目标误差改成所有边总变差之和，式(TM.76)直接给常数一，式(TM.75)仍达到该界。改变范数改变了所衡量的预算；不能将总误差与最大单边误差的常数混作同一个尺度稳定性结论。
+

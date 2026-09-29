@@ -1,0 +1,10 @@
+**命题 220.1（同源消息的联合上界）。** 设状态集为 $X$，共同读数为 $q:X\to Q$，一族消息为 $m_i:X\to M_i$。假定对每个指标 $i$ 都有确定的函数 $f_i:Q\to M_i$，满足 $m_i=f_i\circ q$。则联合消息 $m(x)=(m_i(x))_i$ 也经由 $q$ 分解：
+
+$$
+m=F\circ q,\qquad F(z)=(f_i(z))_i.
+$$
+
+若某个目标 $t:X\to T$ 不能写成 $h\circ q$，那么它也不能写成 $g\circ m$。否则复合 $g\circ F$ 就给出被排除的分解。对一个确能恢复 $t$ 的消息族，至少有一条消息不能按上述方式从 $q$ 单独取得。
+
+这一关系对应项目 [CommonSourceEchoLimit](../../../D5/S3/ConceptDynamics/Discussion/CommonSourceEchoLimit.lean) 的 `common_source_repetition_cannot_resolve_blind_target`，以及 [IndexedCommonSourceUpperBound](../../../D5/S3/ConceptDynamics/Communication/IndexedCommonSourceUpperBound.lean) 的 `indexed_common_source_upper_bound`。其结论有明确前提：每条消息都经由同一个指定读数分解。说者人数、措辞变化或传播距离，本身都没有证明这一前提，也没有推翻它。
+

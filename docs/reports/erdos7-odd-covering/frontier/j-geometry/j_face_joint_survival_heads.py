@@ -10,7 +10,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/j-geometry/j_face_joint_survival_heads.json'
-PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/j-geometry/j_face_joint_selected_heads.py': '77c34ea38b4f11aabe721d401dddb1f70d992f991094bd29393f9f0aa4be921b', 'certificates/source_norms/j-geometry/j_face_joint_selected_heads.json': '67c0c79696a723ebdee9e8745c111c1da678f2916582498d61a5befecf45b0bf', 'frontier/j-geometry/j_face_complete_survival_linear_heads.py': 'f12ecd020ae71506c7f7bc53316cae85159845e97ee75328b5991888b01fa4ff', 'certificates/source_norms/j-geometry/j_face_complete_survival_linear_heads.json': 'fe797751e87e2226327294b12d6b80a1e0476ad1d08a429a1064e5fd50afd67b', 'profile-notes/193-256/244-three-complete-j-heads-share-raw-survivor-and-marked-deletion.md': '56f83856783c4e3c68ac919a6bed36a0d00e41f19d1d78f3d83b3cc950c66118'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/j-geometry/j_face_joint_selected_heads.py': '3fd533ce6b8e5d8736c2d6aa6636898212cee26f522720bb48cac971d348ed2f', 'certificates/source_norms/j-geometry/j_face_joint_selected_heads.json': 'c556c9dea7f0249db22c8134789f7207f5693b8ce03a5811fe7987f33d1998ab', 'frontier/j-geometry/j_face_complete_survival_linear_heads.py': 'f12ecd020ae71506c7f7bc53316cae85159845e97ee75328b5991888b01fa4ff', 'certificates/source_norms/j-geometry/j_face_complete_survival_linear_heads.json': 'fe797751e87e2226327294b12d6b80a1e0476ad1d08a429a1064e5fd50afd67b', 'profile-notes/193-256/244-three-complete-j-heads-share-raw-survivor-and-marked-deletion.md': 'e87f41fb473e7d964cf2dc110f3c9ff56685f33df8b240fc5f6b80936e7397c7'}
 MASS, MEAN = F(3, 20), F(16, 25)
 
 

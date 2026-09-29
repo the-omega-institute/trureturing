@@ -1,0 +1,28 @@
+**约定 8.1（实际系数域与空白行块）。** 写 $`a=\sqrt\alpha`$、$`b=\alpha`$，故 $`a,b>0`$。接收寄存器初态记为单位向量 $`e`$。对两个初始记忆基态，记前 $`j`$ 步接收后的纯联合向量为
+
+$$
+\Psi_j^i=|0\rangle_M u_j^i+|1\rangle_M v_j^i,
+\qquad
+(u_0^0,v_0^0)=(e,0),\quad
+(u_0^1,v_0^1)=(0,e).
+\tag{8.1}
+$$
+
+这里 $`u_j^i,v_j^i\in K`$。定义实际系数子空间
+
+$$
+H_t=\operatorname{span}\{u_j^i:0\le j\le t,\ i=0,1\},\qquad
+G_t=\operatorname{span}\{v_j^i:0\le j\le t,\ i=0,1\}.
+\tag{8.2}
+$$
+
+它们由同一实际装置和全部已声明输入生成，允许彼此相交。对 $`K\otimes\mathcal B`$ 上的同一个接收酉 $`U`$，定义其空白与非空白行块
+
+$$
+A=(I_K\otimes\langle0|)U(I_K\otimes|0\rangle),\qquad
+B=(I_K\otimes\langle0|)U(I_K\otimes|1\rangle),
+\tag{8.3}
+$$
+
+以及将左侧 $`\langle0|`$ 换成 $`\langle1|`$ 所得的 $`Z_0,Z_1`$。本节把新发出位的二维空间记为 $`\mathcal B`$，以区别接收算子 $`B:K\to K`$。
+

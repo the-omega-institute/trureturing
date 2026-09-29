@@ -1,0 +1,22 @@
+**定义 155.1（非齐次扇区核）。** 对第 $r$ 次事件后的续接 $\Lambda^{[r]}$，置
+
+$$
+T^{[r]}_{ba}
+=
+\operatorname{Tr}\bigl(E_b\Lambda^{[r]}(\rho_a)\bigr),
+\qquad
+K^{[r]}_{ba}(dt)
+=
+T^{[r]}_{ba}\nu_b(dt).
+$$
+
+固定首轮人口 $w$，令初始事件向量测度仍为 $\boldsymbol\nu_w$。对 $m\ge1$，定义
+
+$$
+\boldsymbol\mu^{(m)}_{[1:m-1]}(dt)
+=
+K^{[m-1]}*\cdots*K^{[1]}*\boldsymbol\nu_w(dt),
+$$
+
+其中 $m=1$ 时约定空乘积为恒等核。
+

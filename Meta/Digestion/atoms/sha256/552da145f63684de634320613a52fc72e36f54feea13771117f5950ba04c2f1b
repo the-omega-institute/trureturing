@@ -1,0 +1,19 @@
+**命题64.7（ABCCC 的三维结构）。** 任意上述实际候选都必须有
+$$
+\eta_1\parallel C,\qquad
+G_4=G_5=:T,\qquad H_3=H_4=:D,
+\tag{64.32}
+$$
+$$
+L:=T+G_6\text{ 三维},\qquad
+S:=D+H_5\text{ 三维},\qquad
+V_0K=(U A)\dotplus(G_3B)\dotplus(LC).
+\tag{64.33}
+$$
+而且
+$$
+p\in L,\quad k\in S,\quad
+G_3\ne T,\quad B\perp C.
+\tag{64.34}
+$$
+

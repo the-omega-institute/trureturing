@@ -1,0 +1,50 @@
+### 10.3 动态反射只需要像分离
+
+状态商上的 $\bar F$ 是否能反推出旧状态类，取决于 $\operatorname{im}\delta$ 是否足以分离状态行：
+
+$$
+\boxed{
+ \bar F\text{ 单射}
+ \iff
+ \Bigl[
+ \forall x,y,
+ \bigl(\forall p\in\operatorname{im}\delta,\ E(x,p)=E(y,p)\bigr)
+ \Longrightarrow x\sim_Xy
+ \Bigr].
+}
+\tag{10.9}
+$$
+
+对偶地，
+
+$$
+\boxed{
+ \bar\delta\text{ 单射}
+ \iff
+ \Bigl[
+ \forall p,q,
+ \bigl(\forall x\in\operatorname{im}F,\ E(x,p)=E(x,q)\bigr)
+ \Longrightarrow p\sim_Pq
+ \Bigr].
+}
+\tag{10.10}
+$$
+
+诱导映射的满射也应写成模等价形式：
+
+$$
+ \bar F\text{ 满射}
+ \iff
+ \forall x\in X,\ \exists y,\ Fy\sim_Xx,
+ \tag{10.11}
+$$
+
+$$
+ \bar\delta\text{ 满射}
+ \iff
+ \forall p\in P,\ \exists q,\ \delta q\sim_Pp.
+ \tag{10.12}
+$$
+
+所以原始 $F$ 或 $\delta$ 非满射，并不自动否定商上的双向恢复；反过来，商上双射也不说明原始元素可逆。真正需要检查的是像分离和模等价满射。
+

@@ -1,0 +1,32 @@
+#### 2.9.8 Uniform reverse recovery, resource boundaries, and scope
+
+For every permitted radix sequence, let $R_n$ be the extendible words at depth $n$ and let
+
+$$
+A_n=\bigcup_{s\in R_n}[s],
+\qquad a_n=|R_n|w_n.
+$$
+
+Then
+
+$$
+E\subseteq A_n,
+\qquad
+A_n\setminus E
+\subseteq\bigcup_{h>n:\,C_h\in\mathcal P}C_h.
+$$
+
+The second inclusion holds because a forbidden ancestor at depth at most $n$ would make the depth-$n$ cylinder nonextendible. Hence
+
+$$
+\boxed{
+0\le a_n-M\le\sum_{h>n}w_h\le w_n\le2^{-n}.
+}
+$$
+
+Thus an extension oracle uniformly computes a mass name: choose $n$ with $w_n\le2^{-m}$, query every depth-$n$ word, and return $a_n$. The displayed procedure uses $B_n$ Boolean extension queries. With unbounded computable radices, $B_n$ can overshoot $2^m$ by an arbitrarily large factor; no complexity bound for the radix program or polynomial-time bound is asserted. Taking $n=m$ is always sufficient for correctness, though not necessarily economical.
+
+The forward constructions separately consume radix computation, real-accuracy queries, raw-event waiting, and exact finite rational arithmetic. Pointwise computability does not identify any of these costs. The two-sided oracle statements also do not assign one Turing degree to all real names: a valid name may carry irrelevant extra information.
+
+The spherical and uniform-product hypotheses are essential to the stated reduction to one depth weight. In a general constrained symbolic tree, different nodes at the same depth can have different continuation sets, branching numbers, or cylinder masses. In particular, the legal-word trees for Zeckendorf or $k$-bonacci numeration are not automatically instances of this model: an extension would need to supply the appropriate measure, node-dependent weights, canonical-cylinder conditions, and ambiguity analysis. This section makes no such transfer.
+

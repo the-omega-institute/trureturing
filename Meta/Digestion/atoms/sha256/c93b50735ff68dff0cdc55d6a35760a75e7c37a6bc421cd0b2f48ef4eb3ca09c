@@ -1,0 +1,22 @@
+**定义 127.1（参考扇区压缩）。** 对有限参考系统 $R$ 和联合正算子 $\omega_{RA}\succeq0$，置
+
+$$
+\omega_R^Q
+=\operatorname{Tr}_A\bigl[(I_R\otimes Q_*)\omega_{RA}(I_R\otimes Q_*)\bigr],
+$$
+
+$$
+\omega_R^P
+=\operatorname{Tr}_A\bigl[(I_R\otimes P_*)\omega_{RA}(I_R\otimes P_*)\bigr].
+$$
+
+记
+
+$$
+q=\operatorname{Tr}\omega_R^Q,
+\qquad
+p=\operatorname{Tr}\omega_R^P.
+$$
+
+当 $\omega_{RA}$ 是密度矩阵时，$p+q=1$。
+

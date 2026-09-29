@@ -1,0 +1,13 @@
+**定义 1.9。** For least-significant-digit reading, let a legal prefix have length $t$, trailing run $a\in\{0,\ldots,k-1\}$, and accumulated residue $r\in\mathbb Z/L\mathbb Z$. Given a terminal residue set $H\subseteq\mathbb Z/L\mathbb Z$, its continuation language is
+$$
+R_{a,r,t}
+=\left\{u:
+\begin{array}{l}
+u\text{ is legal after the incoming run }a,\\
+r+\displaystyle\sum_{i=0}^{|u|-1}u_iG_{t+i}\in H\pmod L
+\end{array}
+\right\}.
+\tag{TM.537}
+$$
+Let $D_{a,t}$ be the set of increments $\sum_i u_iG_{t+i}\pmod L$ attained by these legal continuations, with no upper bound on $|u|$.
+

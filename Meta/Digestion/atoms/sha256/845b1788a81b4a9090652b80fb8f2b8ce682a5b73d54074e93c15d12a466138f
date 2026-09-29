@@ -1,0 +1,2 @@
+**命题 2.35（computable total mass with undecidable zero cylinder masses）。** For an odd prime $p$, there is an effectively closed $F\subseteq\mathbb Z_p$ with positive computable total mass and a computable family of cylinders whose intersection masses with $F$ are zero exactly on a nondecidable set.
+

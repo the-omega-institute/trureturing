@@ -1,0 +1,21 @@
+### 232.5 任意数量的平衡量子比特纯态
+
+对任意整数 $M\ge2$，令
+$$
+|\psi_a^{(M)}\rangle
+=\frac{|0\rangle+e^{2\pi i(a-1)/M}|1\rangle}{\sqrt2},
+\qquad P_a^{(M)}=|\psi_a^{(M)}\rangle\langle\psi_a^{(M)}|,
+\quad1\le a\le M.
+\tag{232.UC.22}
+$$
+由等比数列求和
+$$
+\sum_{a=1}^Me^{2\pi i(a-1)/M}=0
+$$
+得到精确的算子恒等式
+$$
+\boxed{\sum_{a=1}^MP_a^{(M)}=\frac M2I_2.}
+\tag{232.UC.23}
+$$
+因此 $\{(2/M)P_a^{(M)}\}_{a=1}^M$ 构成 POVM。$M=2$ 时为一组正交二结果投影；$M=3$ 时为 trine POVM；更大的 $M$ 对应 Bloch 赤道上的规则多边形。以下只使用（232.UC.23）的紧框架恒等式，不要求不同纯态正交。
+

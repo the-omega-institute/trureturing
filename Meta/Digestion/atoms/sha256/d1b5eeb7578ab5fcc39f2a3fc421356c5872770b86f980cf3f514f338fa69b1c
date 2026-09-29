@@ -1,0 +1,12 @@
+## 44. 一般整数边荷相干长度窗口的容量三分律
+
+沿用第42节有限 primitive 行随机矩阵 $P$、完整边标签、整数边荷 $g$ 和相干均匀长度窗口的来源与完整参考块编码合同。所有相位遍历整个 $\mathbb T^q$。写 $M_*=N+W-1$，其中 $1\le W\le N+1$。以下常数允许依赖固定的 $P,g$，误差常数另依赖固定 $0<\epsilon<1$，但不依赖 $N,W$。
+
+记
+$$
+\Lambda=G\ker_{\mathbb Z}[\mathsf D;\mathbf1^{\mathsf T}],\qquad
+L=\operatorname{span}_{\mathbb R}\Lambda,\qquad r=\dim L,
+\qquad \mu=\sum_{i,j}\pi_iP_{ij}g_{ij}.
+$$
+第42节已给 $\Lambda_0=G\ker_{\mathbb Z}\mathsf D=\Lambda+\mathbb Z\gamma$，且 $\mu-\gamma\in L$。整数格及其有限别名保留为实际模型数据。
+

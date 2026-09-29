@@ -1,3 +1,4 @@
+import Reg.Support.LegacyRelations.System
 import LeanInformationAudit.Syntax
 import LeanInformationAudit.SealCommand
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.FirstThreeRealizations
@@ -62,8 +63,13 @@ local instance systemArenaStateDecidableEq : DecidableEq arena.toArena.State :=
 
 register_information_theorem _root_.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application
   in arena
-  primitives systemRealization.toPrimitiveBundle
-  realization system_self_application_realization
+  readout via (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize
+    Reg.Support.LegacyRelations.System.signature Reg.Support.LegacyRelations.System.actual.readout Reg.Support.LegacyRelations.System.actual.anchor)
+  realizes Reg.Support.LegacyRelations.System.registration
+  finite via system_self_application_realization
+  variation Reg.Support.LegacyRelations.System.finite_variation sensitivity Reg.Support.LegacyRelations.System.finite_sensitivity
+  escape from source (Reg.Support.LegacyRelations.System.selection)
+  escape continues (open)
 end
 
 end Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit

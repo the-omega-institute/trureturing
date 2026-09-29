@@ -1,0 +1,75 @@
+**定理221.4（旋转驻点的完整距离证书）。** 对前述有限参数通道，取一份满足
+$$
+\partial_{\operatorname{Re}z}f(z_*)=
+\partial_{\operatorname{Im}z}f(z_*)=0
+\tag{221.16}
+$$
+的驻点。置
+$$
+S=L+z_*A,\quad D=1+\lambda|z_*|^2,\quad
+\sigma=\|S\|_\infty,\quad \delta=\lambda\sigma^2/D.
+$$
+假设 $\sigma$ 为简单最大奇异值，取单位奇异对
+$$
+Sv=\sigma r,\qquad S^\dagger r=\sigma v.
+$$
+此外假设
+$$
+\|N_{z_*}^\dagger r\|^2\ge\delta,\qquad
+q_0\ge\delta,\qquad
+0<\delta<1.
+\tag{221.17}
+$$
+
+由于 Wirtinger 导数满足
+$$
+\partial_z \|L+zA\|_\infty^2
+=\sigma\langle r,Av\rangle,
+$$
+驻点方程给
+$$
+\langle r,Av\rangle=\frac{\sigma\lambda\overline z_*}{D}.
+$$
+再用 $\langle r,(L+z_*A)v\rangle=\sigma$：
+$$
+\boxed{
+\langle r,Lv\rangle=\frac{\sigma}{D},\qquad
+\langle r,N_{z_*}v\rangle=0,\qquad
+M_{z_*}^\dagger r=\sqrt\delta\,v.
+}
+\tag{221.18}
+$$
+复共轭位置与（221.3）一致。
+
+由原通道的另一 Kraus 表示（221.13），目标结果1的压缩输入效应恰为
+$$
+B_r=\delta|v\rangle\langle v|
++N_{z_*}^\dagger|r\rangle\langle r|N_{z_*}.
+$$
+两方向正交，且第二个非零本征值为
+$\|N_{z_*}^\dagger r\|^2\ge\delta$。所以
+$$
+\lambda_{\min}(B_r)=\delta.
+$$
+结合（221.8）和（221.17），全部总秩二竞争者的距离都至少为 $\delta$；
+（221.15）的修复候选距离又至多为 $\delta$。因此
+$$
+\boxed{d_2=\delta=\lambda f(z_*).}
+\tag{221.19}
+$$
+
+该修复候选的完整 diamond 误差由同一个无参考输入 $P_v$ 达到。
+确实，$M_{z_*}^\dagger M_{z_*}v=\delta v$，故修复矩阵
+$H_*=(I-M_{z_*}^\dagger M_{z_*})^{-1/2}$ 保持 $v$ 的方向。
+由（221.18），修复候选在输入 $v$ 时对事件“标签1且输出为 $r$”的概率为零，而目标概率为 $\delta$。此下界与完整 diamond 上界相等。
+
+若进一步 $q_0>\delta$，则对任何纯输出方向 $r'$，由（221.8）和已证 $d_2=\delta$ 必有
+$\lambda_{\min}(B_{r'})\le\delta$。因此
+$$
+\boxed{
+d_2=\max_{\|r'\|=1}\lambda_{\min}(B_{r'}).
+}
+\tag{221.20}
+$$
+这里全局输出最优性由精确证书推得。证明没有预设局部输出图包含全局最优事件。定理221.4证毕。
+

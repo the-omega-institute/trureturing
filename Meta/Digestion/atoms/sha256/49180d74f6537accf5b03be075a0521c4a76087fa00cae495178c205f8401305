@@ -1,0 +1,12 @@
+**引理 2.43（complete ambiguity criterion）。** Suppose $S\ne S'$ and $j$ is their first differing depth. After exchanging the two supports if necessary, take $j\in S$ and $j\notin S'$. Then
+
+$$
+F(S)=F(S')
+$$
+
+holds if and only if all three conditions hold:
+
+- $b_n=2$ for every $n>j$;
+- no $n>j$ belongs to $S$;
+- every $n>j$ belongs to $S'$.
+

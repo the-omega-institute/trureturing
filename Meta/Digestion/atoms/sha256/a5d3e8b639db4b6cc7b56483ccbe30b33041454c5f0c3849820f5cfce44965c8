@@ -1,0 +1,26 @@
+**命题 24.2（完整输出的商下界）。** 确定性实现由有限（或任意）状态集 $Q$、全源准备映射 $I:S\to Q$、确定性更新 $U_d:Q\to Q$ 以及输出映射 $\rho:Q\to\Omega$ 组成，并满足
+
+$$
+\rho\bigl(U_{d_n}\cdots U_{d_1}(I(s))\bigr)=O(s+d_1+\cdots+d_n)
+\tag{24.3}
+$$
+
+对所有 $s$ 和所有有限词。这里 $Q$ 包含实现保留的全部历史；不能把另存历史当作免费存储。则
+
+$$
+|Q|\ge |S/K_*|.
+\tag{24.4}
+$$
+
+等号可由全源准备的商实现达到：以 $I(s)=[s]$ 初始化，以
+$U_d([s])=[s+d]$ 更新，并以 $\rho([s])=O(s)$ 输出。
+
+证明。若 $I(s)=I(s')$，确定性和式(24.3)在空词上先给出
+$O(s)=O(s')$，在任意后续词上给出
+
+$$
+O(s+d_1+\cdots+d_n)=O(s'+d_1+\cdots+d_n).
+$$
+
+令 $v=s'-s$；对固定的初始化来源对 $s,s'$，任给 $x\in S$，取单步继续 $d=x-s$，即得 $O(x+v)=O(x)$，所以 $v\in K_*$。因此不同的 $K_*$-陪集不能由同一状态初始化，得到(24.4)。反向，若 $s'-s\in K_*$，(24.2) 对每个有限平移词逐项保持(24.1)，故 $O$ 在陪集上定义良好。商上的 $U_d$ 和 $\rho$ 因而确定，并实现(24.3)。这给出下界的达到构造。这个论证正是 PROCESS_GEOMETRY Theorem 6.2(a)--(c) 所归属的通用残差最小性在本平移系统上的具体化；仓内冻结声明 finite_state_minimality（ObserverMemory/PredictionFactors/ReachableBehaviorMinimality）和 behavior_completion_is_least_stable_refinement（ObserverMemory/RefinementClosure/BehaviorCompletionMinimality）是相应的所有权锚。这里仅使用它们的确定性未来行为含义，不把它们的其他假设移作本节分类的证明。经典有限机背景见 Moore, *Gedanken-experiments on Sequential Machines* (1956), Theorem 4, pp.142--143；本系统的全部平移给出强连通的全源轨道。证毕。
+

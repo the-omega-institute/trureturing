@@ -1,0 +1,22 @@
+**命题 2.24（tail bound）。** For every $n\ge0$,
+$$
+E\subseteq B_n,
+\qquad
+B_n\setminus E\subseteq\bigcup_{h>n:\,C_h\text{ included}}C_h,
+\tag{TM.579}
+$$
+and hence
+$$
+0\le a_n-M\le\frac{p^{-n}}{p-1}.
+\tag{TM.580}
+$$
+
+**Proof.** The depth-$n$ cylinder containing any $x\in E$ intersects $E$, so $x\in B_n$. Conversely, let $x\in B_n\setminus E$, and let $D$ be its depth-$n$ cylinder. Then $E\cap D\ne\varnothing$, while $x$ belongs to some included forbidden cylinder $C_h$. If $h\le n$, the intersecting cylinders are nested with $D\subseteq C_h$, forcing $E\cap D=\varnothing$, a contradiction. Thus $h>n$. This proves the inclusion regardless of overlap or redundancy among the forbidden cylinders. Countable subadditivity now gives
+$$
+\mu(B_n\setminus E)
+\le\sum_{h>n}p^{-h}
+=\frac{p^{-n}}{p-1}.
+\tag{TM.581}
+$$
+Because $E\subseteq B_n$, this difference is exactly $a_n-M$. $\square$
+

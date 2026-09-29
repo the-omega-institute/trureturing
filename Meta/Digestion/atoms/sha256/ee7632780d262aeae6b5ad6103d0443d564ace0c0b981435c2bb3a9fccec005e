@@ -1,0 +1,22 @@
+**定义 19.2（压缩后快照的同时转换契约）。** 旧任务先运行并压缩到定义19.1的最小旧状态，任务改变请求在任意可达快照到达。转换只使用这些旧状态：第 $i\ge2$ 端同时发送一条确定性消息
+
+$$
+e_i(x_i,t)\in A_i,\qquad
+b_i=\lceil\log_2|A_i|\rceil,\qquad
+\Phi(x,h)=\bigl(x_1,t,e_2(x_2,t),\ldots,e_r(x_r,t)\bigr).
+\tag{19.4}
+$$
+
+非空有限字母表 $A_i$、编码映射与固定包宽 $b_i$ 事先选定，其容量不随 $t$ 变化。第一端仅见自身 $(x_1,t)$ 与全部消息，必须对每个 $(x,h)\in S$ 确定性地精确恢复 $Y$。发送者之间无通信，第一端无反馈。旧公共输入词、额外保留的控制资料、刚消费的输入、依赖来源的请求触发、时序、沉默、未来探测及额外知晓来源的发送者均不是转换的可用输入或信道。固定函数与群运算不携带执行相关资料。
+
+这个求值问题有直接的经典来源。固定共同已知的 $t$，作局部代换
+
+$$
+z_1=x_1-t\pmod4,\qquad z_i=x_i\ (i\ge2),\qquad
+\sum_i z_i\equiv0\pmod2,\qquad
+F(z)=\frac{[\sum_i z_i]_4}{2}=h,\qquad Y=t+2F(z)\pmod4.
+\tag{19.5}
+$$
+
+确有 $\sum_i z_i=Y-t=-2h=2h$ 于 $C_4$，而每个偶和 $z$ 都由 $x_1=z_1+t$、$x_i=z_i$、$h=F(z)$ 对应到一个实际来源。三方的偶和承诺及此布尔函数见 Buhrman、Cleve、van Dam，*Quantum Entanglement and Communication Complexity*，[quant-ph/9705033v1](https://arxiv.org/pdf/quant-ph/9705033v1)，PDF第3页§2式(1)–(4)。其通信接口为广播，且所有参与者都须学得答案；该文的四位结论不能充作本单接收端契约的四位下界。Buhrman、van Dam、Høyer、Tapp，*Multiparty Quantum Communication Complexity*，[quant-ph/9710054v2](https://arxiv.org/pdf/quant-ph/9710054v2)，PDF第2页§2称此问题为 Modulo-4 Sum，第4–5页§3式(4)–(5)的多方族在参数 $n=2$ 时正是式(19.5)。该文相应渐近下界要求 $n\ge\log_2 r$，不能覆盖固定 $n=2$ 的任意 $r$。以下刻画的是此既有承诺函数在式(19.4)的发送者乘积限制下的精确恢复条件，并将它接到式(19.2)的闭动态边界最小值。
+

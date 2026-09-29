@@ -1,0 +1,62 @@
+### 248.2 显式构造共同参考解码
+
+在 $E_{\mathrm{ent}}$ 上定义
+$$
+Z_E=\frac{\ell}{2\sqrt A}(H_a+H_b),
+\qquad
+X_E=\frac{\ell}{2b_0}(H_a-H_b).
+\tag{248.7}
+$$
+此处只取两个见证在该约化子空间上的限制。它们为 Hermitian，且（248.6）给
+$$
+Z_EW_j=W_jZ,
+\qquad
+X_EW_j=W_jX.
+\tag{248.8}
+$$
+每个像平面上均有 Pauli 关系；这些像平面张成整个 $E_{\mathrm{ent}}$，所以
+$$
+\boxed{
+Z_E^2=X_E^2=I_{E_{\mathrm{ent}}},
+\qquad Z_EX_E+X_EZ_E=0.
+}
+\tag{248.9}
+$$
+这一步无需假定不同最大纠缠分量的参考平面两两正交：共同算子已经在它们的重叠处保持相容。
+
+令
+$$
+M=\ker(Z_E-I).
+\tag{248.10}
+$$
+$X_E$ 是酉的 Hermitian 对合，反对易性使它把 $M$ 等距双射到 $\ker(Z_E+I)$。两个本征子空间正交且覆盖 $E_{\mathrm{ent}}$。因此以下映射是酉同构：
+$$
+\begin{aligned}
+V:\mathbb C^2\otimes M&\longrightarrow E_{\mathrm{ent}},\\
+V(|0\rangle\otimes z)&=z,\\
+V(|1\rangle\otimes z)&=X_Ez.
+\end{aligned}
+\tag{248.11}
+$$
+直接计算得
+$$
+V^\dagger Z_EV=Z\otimes I_M,
+\qquad
+V^\dagger X_EV=X\otimes I_M.
+\tag{248.12}
+$$
+
+对每个 $j$，置 $W'_j=V^\dagger W_j$。它同时满足
+$$
+(Z\otimes I_M)W'_j=W'_jZ,
+\qquad
+(X\otimes I_M)W'_j=W'_jX.
+\tag{248.13}
+$$
+第一式给 $W'_j|0\rangle=|0\rangle\otimes z_j$、$W'_j|1\rangle=|1\rangle\otimes z'_j$；第二式强制 $z'_j=z_j$。等距性保证 $\|z_j\|=1$，故
+$$
+W'_j|i\rangle=|i\rangle\otimes z_j,
+\qquad i=0,1.
+\tag{248.14}
+$$
+

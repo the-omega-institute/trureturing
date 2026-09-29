@@ -1,0 +1,17 @@
+**定理158.2（完整参考恢复误差的经验分布）。** 有弱收敛
+
+$$
+\boxed{
+\frac1N\sum_{n=1}^N\delta_{e_n}\ \Longrightarrow\ \nu=h_*\mu_G.
+}
+\tag{158.5}
+$$
+
+等价地，对每个连续 $\varphi:[0,1]\to\mathbb R$，
+
+$$
+\lim_{N\to\infty}\frac1N\sum_{n=1}^N\varphi(e_n)
+=\int_G\varphi(h(z))\,d\mu_G(z).
+\tag{158.6}
+$$
+

@@ -1,0 +1,28 @@
+### 173.1 同一个局部 instrument 必须同时服务两个来源
+
+所有空间均有限维。令原输入 $A$、目标标签 $Q_{\mathrm{out}}$ 均为 qubit；$M$ 为不可访问记忆，$K$ 为接收空间，$R$ 为固定的目标纯化空间。给定两份实际归一化状态
+
+$$
+\xi_0,\xi_1\in\mathcal S(M\otimes K),
+\qquad \operatorname{Tr}_K\xi_0=\operatorname{Tr}_K\xi_1=\rho,
+$$
+
+以及 $M\otimes R$ 上固定纯化 $|\Xi\rangle$，满足
+$\operatorname{Tr}_R P_\Xi=\rho$。定义
+
+$$
+\mathcal N(X)=X_{00}\xi_0+X_{11}\xi_1,
+\qquad
+\mathcal V(X)=X_{Q_{\mathrm{out}}}\otimes P_\Xi,
+$$
+
+$$
+e=\min_{\mathcal D:K\to Q_{\mathrm{out}}R\ {\rm CPTP}}
+\frac12\left\|
+\mathcal V-(\operatorname{id}_M\otimes\mathcal D)\mathcal N
+\right\|_\diamond.
+\tag{173.1}
+$$
+
+张量因子按系统标记排序。输入及其外部参考保留在 diamond 范数中，$\mathcal D$ 无权访问 $M$。有限维 CPTP Choi 集紧、目标连续，故最小值取得。
+

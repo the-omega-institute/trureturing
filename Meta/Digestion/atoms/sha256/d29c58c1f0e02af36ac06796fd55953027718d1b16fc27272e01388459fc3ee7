@@ -1,0 +1,14 @@
+**引理270.2（源根保真度的二阶损失）。** 对 $0<h\le h_1$，
+$$
+\boxed{
+b_-h^2
+\le1-\mathsf F(\Omega_*,\Omega_h)^2
+\le B_Fh^2.
+}
+\tag{270.29}
+$$
+**证明。** 下界由（270.21）、（270.28）。由 $0\le\mathsf F\le1$，
+$1-\mathsf F^2\le2(1-\mathsf F)$，再用（270.26）得上界。$\square$
+
+因此 $1-\mathsf F=\Theta(h^2)$。尽管所有 $h>0$ 的竞争态满秩，理想态只有秩 $n$；相对熵 $D_{\mathrm{nat}}(\Omega_h\|\Omega_*)=+\infty$。输入副本下界使用保真度，未套用这个方向的有限相对熵估计。
+

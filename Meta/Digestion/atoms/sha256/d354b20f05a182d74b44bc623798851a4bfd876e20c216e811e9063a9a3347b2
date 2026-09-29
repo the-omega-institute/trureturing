@@ -1,0 +1,13 @@
+**推论 235.3（方差需要联合来源）。** 在二阶矩存在时，
+
+$$
+\operatorname{Var}_\gamma(\Delta)
+=
+\sum_i g_i^2\operatorname{Var}_\gamma(\epsilon_i)
++
+2\sum_{i<j}g_ig_j
+\operatorname{Cov}_\gamma(\epsilon_i,\epsilon_j).
+$$
+
+因此，单动作半径或单动作方差只决定第一项；相关协方差属于联合 provenance。上面的 $\gamma_+$ 与 $\gamma_-$ 分别给出方差 $4\kappa^2$ 与 $0$。
+

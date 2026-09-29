@@ -1,0 +1,23 @@
+**定理190.2（唯一恢复分界）。** $\mathcal C$ 是连续、可微、凹且单调非减的函数，并有
+
+$$
+\mathcal C'(h)=M(y_h)\ge0
+\tag{190.8}
+$$
+
+（$h=0$ 取右导数）。其两端为
+
+$$
+\mathcal C(0)=-\frac{R-1}{4}
+\begin{cases}
+(\beta^2+\gamma^2)/(2\beta),&g\le\beta,\\
+g,&g\ge\beta,
+\end{cases}
+<0,
+\qquad
+\lim_{h\to\infty}\mathcal C(h)=\frac{\beta(R+1)}8>0.
+\tag{190.9}
+$$
+
+若 $g>0$，$\mathcal C$ 严格增加；若 $g=0$，它在 $0\le h<\beta R$ 严格增加，此后恒等于 $\beta(R+1)/8$。因此存在唯一有限正数 $h_c$ 使 $\mathcal C(h_c)=0$。
+

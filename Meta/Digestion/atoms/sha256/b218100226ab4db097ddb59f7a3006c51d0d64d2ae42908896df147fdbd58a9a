@@ -1,0 +1,45 @@
+**引理 2.21（effective localization of mass）。** Let $F\subseteq\mathbb Z_p$ be any effectively closed set, without a sparsity assumption. Given its computable complement enumeration and a rational Cauchy name for $\mu(F)$, the masses $\mu(F\cap[b]_d)$ are uniformly computable in $(d,b)$. Here a rational Cauchy name is a function $v:\mathbb N\to\mathbb Q$ satisfying
+$$
+|v(t)-\mu(F)|\le2^{-t}.
+\tag{TM.567}
+$$
+
+**Proof.** Apply C卷第2.3.3节 with alphabet $\{0,\ldots,p-1\}$, $C=F$, its given complement enumeration, and computable Haar measure. Total mass may be zero: this uses only the localization part, not positive-mass selection. In this instance the following exact rational implementation avoids separately computing all $p^d$ cylinder masses. Simulate the complement enumeration for $s$ computation steps. Let $F_s$ be the complement of the finite union of all cylinders announced during that simulation. These are uniformly computable clopen sets with
+$$
+F_{s+1}\subseteq F_s,
+\qquad
+\bigcap_sF_s=F,
+\qquad
+f_s:=\mu(F_s)\downarrow\mu(F).
+\tag{TM.568}
+$$
+Using a finite computation-time stage makes each $F_s$ computable even when no new event arrives. For $D=[b]_d$, put
+$$
+m=\mu(F\cap D),
+\qquad
+u_s=\mu(F_s\cap D),
+\qquad
+\ell_t=v(t)-2^{-t}.
+\tag{TM.569}
+$$
+Finite unions and intersections of $p$-adic cylinders have exactly computable rational masses. Since $F\subseteq F_s$ and $\ell_t\le\mu(F)$,
+$$
+L_{s,t}
+:=\max\{0,\ell_t-(f_s-u_s)\}
+\le m\le u_s.
+\tag{TM.570}
+$$
+Indeed, $f_s-u_s$ is the mass of $F_s\setminus D$ in the same probability space and bounds the mass of $F\setminus D$ from above. The interval width satisfies
+$$
+0\le u_s-L_{s,t}\le f_s-\ell_t.
+\tag{TM.571}
+$$
+Given a positive rational error tolerance $\varepsilon$, choose $t$ with $2^{1-t}<\varepsilon/2$. Then
+$$
+0\le\mu(F)-\ell_t\le2^{1-t}<\varepsilon/2.
+\tag{TM.572}
+$$
+Search through stages $s$ until the rational inequality $f_s-\ell_t<\varepsilon$ holds. Convergence of $f_s$ guarantees termination. The resulting interval encloses $m$ and has width less than $\varepsilon$. This gives its rational approximations uniformly. $\square$
+
+The generic lemma is owned by C卷第2.3.3节; C卷第2.4.8节 is its three-adic positive-selection application. Its validity does not require $\mu(F)>0$; positivity is needed only for that section's subsequent selection of a positive-mass child. The displayed form computes one cylinder mass using $f_s$ and $u_s$, so it does not require separately evaluating all $p^d$ cylinder masses.
+

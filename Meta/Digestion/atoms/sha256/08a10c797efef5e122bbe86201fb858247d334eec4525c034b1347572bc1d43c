@@ -1,0 +1,19 @@
+**第一终端秩二：三种尾环境射线排列。**
+
+令 $`\pi:K\to K/U`$ 为线性商映射。因为 $`(\pi\otimes I_E)V_0`$ 在四维 $`X`$ 上为零，其像
+
+$$
+\mathcal Z:=(\pi\otimes I_E)V_0(K)
+$$
+
+至多二维。对全部 $`n=3,4,5`$ 有
+
+$$
+\pi(G_n)\otimes\eta_n\subseteq\mathcal Z,
+\qquad
+\dim\pi(G_n)=2-\dim(G_n\cap U).
+\tag{29.42}
+$$
+
+不同环境射线产生的这类张量子空间相交为零；若其环境向量线性无关，维数可相加。
+

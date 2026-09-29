@@ -1,0 +1,20 @@
+### 定义 10.1：显式可恢复量子记录
+
+取有限非零逻辑空间$L=\mathbb C^d$和物理空间$H=\mathbb C^n$。给定有限非空指标集$I_{\mathrm{syn}}$上的矩阵$S_j:L\to H$，满足
+
+$$
+S_j^\dagger S_k=\delta_{jk}I_d.
+$$
+
+令$P=\sum_jS_jS_j^\dagger$，给定密度矩阵$\sigma$和固定逻辑密度态$\tau_0$，定义
+
+$$
+\mathcal E_\sigma(\rho)=\sum_{j,k}\sigma_{jk}S_j\rho S_k^\dagger,
+\qquad
+\mathcal D(X)=\sum_jS_j^\dagger XS_j+
+\operatorname{tr}[(I-P)X]\tau_0.
+\tag{10.1}
+$$
+
+采用有限von Neumann熵$S(\rho)=-\operatorname{tr}\rho\log\rho$，零本征值项按连续极限取零；相对熵为$D(\rho\|\tau)=\operatorname{tr}\rho(\log\rho-\log\tau)$，要求$\operatorname{supp}\rho\subseteq\operatorname{supp}\tau$，否则取$+\infty$。对数取自然底。这里的环境综合征态$\sigma$与未知逻辑输入无关。
+

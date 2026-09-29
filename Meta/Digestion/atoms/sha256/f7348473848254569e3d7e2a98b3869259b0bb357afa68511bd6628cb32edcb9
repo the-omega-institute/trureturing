@@ -1,0 +1,25 @@
+**定理 200.2（平均后继只给出鲁棒区间中的一个凸组合）。** 对任意效果 $0\le H\le I$，有
+
+$$
+\boxed{
+\min_{\tau\in\mathsf C_\Phi(\mathfrak R)}\operatorname{Tr}(\tau H)
+\le
+\operatorname{Tr}(\bar\rho_{\Phi,\mu}H)
+\le
+\max_{\tau\in\mathsf C_\Phi(\mathfrak R)}\operatorname{Tr}(\tau H).
+}
+\tag{200.2}
+$$
+
+左侧等号当且仅当 $\operatorname{Tr}(\tau_\rho H)$ 在 $\nu$-几乎处处取到该最小值；右侧等号具有相应的最大值条件。
+
+### 证明
+
+由定义，$\bar\rho_{\Phi,\mu}$ 是条件后继态的凸组合。对线性泛函 $\tau\mapsto\operatorname{Tr}(\tau H)$ 积分，所得值必位于其值域的闭区间内。若积分等于下端点，则非负函数
+
+$$
+\operatorname{Tr}(\tau_\rho H)-min_{\tau\in\mathsf C_\Phi(\mathfrak R)}\operatorname{Tr}(\tau H)
+$$
+
+的积分为零，故它在 $\nu$-几乎处处为零；反向同理。证毕。
+

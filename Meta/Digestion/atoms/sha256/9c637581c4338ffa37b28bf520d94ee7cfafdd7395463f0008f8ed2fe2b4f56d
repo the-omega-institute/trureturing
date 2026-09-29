@@ -1,0 +1,27 @@
+**完整联合误差。** 对给定的实际 $`\vartheta`$，由（28.14）选出的比较历史输出完全位于 $`W_n\otimes M`$。引理28.1遂给
+
+$$
+T_{\vartheta,n}^*[(I_{H_n}-P_n)\otimes I_M]T_{\vartheta,n}
+\preceq\frac{\epsilon^2}{2}I_M.
+\tag{28.22}
+$$
+
+固定任意档案态 $`\tau_n`$，定义全域终端解码
+
+$$
+\mathcal D_n(Y)=F_n^*YF_n
++\langle\bot_n|Y|\bot_n\rangle\tau_n.
+\tag{28.23}
+$$
+
+对任意初始参考输入再取纯化，令纯联合目标为 $`|\Psi\rangle`$，并令 $`d_n`$ 为其在（28.22）投影补空间的质量；则 $`d_n\le\epsilon^2/2`$。由（28.21），解码后的成功分支是 $`P_n|\Psi\rangle\langle\Psi|P_n`$，其与目标的重叠为 $`(1-d_n)^2`$；这里省略了参考与活动记忆上的恒等算子。全部失败项均为正，所以总重叠至少为该值。纯目标的迹距离界给
+
+$$
+D(\widehat\Omega,|\Psi\rangle\langle\Psi|)
+\le\sqrt{1-(1-d_n)^2}
+\le\sqrt{2d_n}\le\epsilon.
+\tag{28.24}
+$$
+
+丢弃额外纯化参考后此界仍成立。通道本身始终独立于实际相位和输入；为每个相位选叶节点只发生在证明中。最后，由 $`r_n\le4|A_k|`$ 及 $`2^k\le n`$，得到（28.9）。所有 $`W_n,F_n,\mathcal C_n,\mathcal D_n`$ 一次预定，因此同一门序列共同实现每个终端的结论。证明完毕。
+

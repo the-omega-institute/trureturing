@@ -1,0 +1,63 @@
+### 181.3 联合缩放后的构造上界
+
+取固定有界实参数 $\alpha$，令 $t=\alpha w$。
+由（181.6）—（181.7），先除以 $w$ 后得到
+
+$$
+\frac{H(w,\alpha w)}{w}
+=\beta P_\Xi+wH_1(\alpha)+O(w^2),
+$$
+
+$$
+H_1(\alpha)=
+\begin{pmatrix}
+r(\alpha^2-2\gamma\alpha)&\sqrt\Delta\,\alpha^2\\
+\sqrt\Delta\,\alpha^2&\ell(\alpha^2+2\gamma\alpha)
+\end{pmatrix}.
+\tag{181.11}
+$$
+
+余项对有界 $\alpha$ 一致。此时基点最高本征值为
+$\beta$，其与另一根的间隙固定为 $\beta>0$。
+因此第176节的简单最高根扰动估计可以作用于这个缩放后的矩阵，给出
+
+$$
+\boxed{
+d(w,\alpha w)
+=\beta w+
+(\alpha^2-2\kappa\gamma\alpha)w^2+O(w^3).
+}
+\tag{181.12}
+$$
+
+这里使用
+$\langle\Xi|H_1(\alpha)|\Xi\rangle
+=\alpha^2-2\kappa\gamma\alpha$。
+这一展开没有把原矩阵的趋零谱间隙误当作固定间隙。
+
+取共同参数
+
+$$
+t_L=\kappa\gamma w_1.
+\tag{181.13}
+$$
+
+输入 $1$ 给
+
+$$
+d(w_1,t_L)
+=\beta w_1-\kappa^2\gamma^2w_1^2+O(w_1^3).
+\tag{181.14}
+$$
+
+由于 $w_0/w_1\to1/4$，而 $w_1/w_0$ 有统一上界，
+（181.12）也给
+$d(w_0,t_L)=\beta w_0+O(w_1^2)$。
+因此对充分大的 $L$，输入 $1$ 仍是两者中误差较大的分支。由此得到合法共同模拟器的上界
+
+$$
+\delta_L^{\leftarrow}
+\le\beta w_1-\kappa^2\gamma^2w_1^2+O(w_1^3).
+\tag{181.15}
+$$
+

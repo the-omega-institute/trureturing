@@ -27,6 +27,40 @@ import native
 
 from test_native_support import *
 
+
+class NativeBatchPartitionTests:
+    def test_partition_preserves_membership_and_order(self):
+        requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
+                    for index in range(201, -1, -1)]
+        chunks = []
+        with patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
+            native.produce_batch(requests)
+        self.assertEqual([len(chunk) for chunk in chunks], [100, 100, 2])
+        self.assertEqual([row[1] for chunk in chunks for row in chunk],
+                         [f'Module.{index:03}' for index in range(202)])
+
+    def test_partition_binds_reg_sized_inventory(self):
+        requests = [['/root', f'Reg.Module.{index:03}', '', '', '/inspector', '']
+                    for index in range(97)]
+        chunks = []
+        with patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
+            native.produce_batch(requests)
+        self.assertEqual([len(chunk) for chunk in chunks], [97])
+
+    def test_partition_rejects_cross_chunk_duplicate_and_mixed_owner(self):
+        requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
+                    for index in range(101)]
+        for replacement, diagnostic in [
+            (['/root', 'Module.099', '', '', '/inspector', ''], 'duplicate native batch module'),
+            (['/other', 'Module.101', '', '', '/inspector', ''], 'mixed native batch owners'),
+        ]:
+            with self.subTest(diagnostic=diagnostic), \
+                    patch.object(native, 'produce_batch_chunk') as chunk:
+                with self.assertRaisesRegex(ValueError, diagnostic):
+                    native.produce_batch(requests + [replacement])
+                chunk.assert_not_called()
+
+
 class NativeRecoveryConsumerTests:
     def test_release_stage_and_verify_preserve_absent_lake(self):
         self.build()

@@ -1,0 +1,34 @@
+**定理101.2（二重纤维候选的五维支撑与三维剩余空间）。** 若固定替代酉的通常纯环境纤维维数为二，则存在五维 $S\subset K$，使
+
+$$
+S=\mathbb Cp+G_2+G_3+G_4+G_5+G_6=S_{R_0},
+\tag{101.6}
+$$
+
+$$
+(R_0)_{\mathrm{prod}}=R_0,
+\qquad R_0\subset S\otimes F.
+\tag{101.7}
+$$
+
+令 $Q=S^\perp$，则 $\dim Q=2$，且存在三维 $N\subset S\otimes F$，满足正交分解
+
+$$
+R_1=(Q\otimes F)\oplus N.
+\tag{101.8}
+$$
+
+$N$ 的通常纯环境纤维维数为零。若
+
+$$
+n([z])=\dim\{y\in S:y\otimes z\in N\},
+$$
+
+则
+
+$$
+g_1([z])=2+n([z]),\qquad
+\sum_{[z]}n([z])\le3.
+\tag{101.9}
+$$
+

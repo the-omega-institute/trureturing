@@ -1,0 +1,54 @@
+**定义 111.1（以真实准平稳态选择坐标）。** 对最近失效集合附近的任一不失效仪器 $\Gamma=(\mathcal N,\mathcal C)$，沿用定理 96.2 的实际准平稳态与主特征值：
+
+$$
+\mathcal N(\sigma)=(1-\epsilon)\sigma,
+\qquad \operatorname{Tr}\sigma=1,\qquad \epsilon>0.
+\tag{111.1}
+$$
+
+在充分小的共同邻域内，$\sigma$ 的最大本征值简单。令其谱分解为
+
+$$
+\sigma=(1-y)P+yP_\eta,
+\qquad P=|\psi\rangle\langle\psi|,
+\qquad P_\eta=I-P,
+\qquad 0\le y<\frac12.
+\tag{111.2}
+$$
+
+同时作输入输出的计算基对角酉共轭，可以令
+
+$$
+\psi=\sqrt a\,|0\rangle+\sqrt b\,|1\rangle,
+\qquad \eta=-\sqrt b\,|0\rangle+\sqrt a\,|1\rangle,
+\qquad b=1-a.
+$$
+
+该变换保持名义仪器和完整距离。趋近最近失效集合时，$a\to1/2$、$y\to0$，相位对齐后的未点击映射趋向 $X\mapsto P_+XP_+$。
+
+取任意有限 Kraus 表示，在这份当前本征基中写成
+
+$$
+A_j=\begin{pmatrix}c_j&b_j\\ f_j&a_j\end{pmatrix}.
+\tag{111.3}
+$$
+
+这里不要求 $f_j=0$。定义与该表示的选择无关的 Gram 量
+
+$$
+C=\sum_j|c_j|^2,\quad
+\beta=\sum_j|b_j|^2,\quad
+F=\sum_j|f_j|^2,\quad
+v=\sum_j|a_j|^2,
+$$
+
+$$
+g=\sum_j\overline{c_j}b_j,\qquad
+h=\sum_j\overline{c_j}f_j,\qquad
+\ell_\psi=1-C,
+\qquad E=I-\sum_jA_j^\dagger A_j=\mathcal C^*(I)\succeq0.
+\tag{111.4}
+$$
+
+以下 $o(1)$ 指不失效装置趋近整个最近失效紧集的共同极限，不仅指某条预选旋转路径。
+

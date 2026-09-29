@@ -1,0 +1,29 @@
+**推论145.3（相邻接口的最小间距）。** 对 $n\ge2$，在同一附加秩 $r$ 和 $\dim K\ge4r$ 下，
+
+$$
+\boxed{
+d^{\mathrm{geom}}_{n,n+1}(r,K)
+=\sin\!\left(\frac12|\vartheta_{n+1}-\vartheta_{n-1}|\right).
+}
+\tag{145.16}
+$$
+
+并且
+
+$$
+\lambda_{n+1}-\lambda_{n-1}
+=\frac{x^2(-y)^{n-1}}{t_{n-1}t_{n+1}}.
+\tag{145.17}
+$$
+
+对每个固定非退化来源，$n\to\infty$ 时，
+
+$$
+\boxed{
+d^{\mathrm{geom}}_{n,n+1}(r,K)
+\sim
+\frac{x^2(1+y)^2}{4\sqrt{xy}}\;y^{n-1}.
+}
+\tag{145.18}
+$$
+

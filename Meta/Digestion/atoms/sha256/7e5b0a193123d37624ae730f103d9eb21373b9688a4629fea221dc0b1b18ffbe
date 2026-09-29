@@ -1,0 +1,65 @@
+### 218.4 中心导数给出显式统一常数二
+
+在联合中心 $p=0$，第213节固定 $t$ 的冻结驻点满足
+$$
+k_0(0,t)=\frac1{\sqrt2}(1,0,i\sqrt{1-t},0)^{\mathsf T},\qquad
+k_1(0,t)=\frac1{\sqrt2}(1,0,-i\sqrt{1-t},0)^{\mathsf T},
+\qquad w(0,t)=e_b.
+\tag{218.14}
+$$
+在输出 $0$ 的 $(a,b)$ 二维块上，
+$$
+\partial_tJ_0(0,0)
+=
+D:=
+\begin{pmatrix}
+0&i/4\\
+-i/4&-1/2
+\end{pmatrix},
+\qquad
+\partial_tJ_1(0,0)=-D,
+\tag{218.15}
+$$
+其余块均零。$D$ 的两枚本征值为
+$$
+\frac{-1+\sqrt2}{4},\qquad
+\frac{-1-\sqrt2}{4}.
+$$
+因此
+$$
+\|\partial_t\mathsf J(0,0)\|_1
+=2\|D\|_1=\sqrt2<\frac32.
+\tag{218.16}
+$$
+
+另一方面，候选 $J_1$ 的小谱根具有精确解析因子
+$$
+\lambda_-(p,t)=t\,\eta(p,t),\qquad \eta>0,\qquad\eta(0,0)=\frac12.
+\tag{218.17}
+$$
+其来源是两维支撑上的大根 $\lambda_+>0$ 及行列式恒等式：
+$$
+\eta(p,t)=
+\frac{\|k_1\|^2\|P_{k_1^\perp}w\|^2}{\lambda_+(p,t)}.
+$$
+因为 $k_{1,a}>0,w_a=0,w_b=1$，投影分子严格正；$\eta$ 关于整个带符号 $t$ 邻域解析。在物理 $t>0$ 时，$\lambda_-$ 是第二大 Choi 本征值。
+
+连续性允许在固定联合小箱中同时保证
+$$
+\|\partial_t\mathsf J(p,t)\|_1\le\frac32,\qquad
+\eta(p,t)\ge\frac38.
+\tag{218.18}
+$$
+对 $\Delta>0$，实际 $\lambda_2^\sharp=t^\sharp\eta(p,t^\sharp)$。因此（218.13）给
+$$
+d_2(p)\le\frac34t^\sharp
+\le2\lambda_2^\sharp.
+\tag{218.19}
+$$
+这与（218.9）合起来证明（218.5）。
+
+当 $\Delta\le0$ 时，$t^\sharp=\lambda_2^\sharp=0$，实际最优通道本身属于
+$\mathfrak C_2$，故 $d_2=0$；定理在整个局部箱，包括临界图上成立。
+
+数值常数 $1/2$ 和 $2$ 不是最优常数的断言。证明给出它们共同适用的固定邻域，不要求靠近临界图时另行改变邻域或比较常数。
+

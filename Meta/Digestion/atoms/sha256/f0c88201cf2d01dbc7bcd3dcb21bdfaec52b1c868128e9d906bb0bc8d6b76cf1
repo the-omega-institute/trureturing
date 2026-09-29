@@ -1,0 +1,9 @@
+**定义 299.1（固定处境中的共同可满足性）。** 固定一个非空的实际可行行动集 $F$、要求集 $R$，并以 $P(r,a)$ 表示行动 $a$ 满足要求 $r$。这里的行动可以是一份包含多人分工、时间与资源的完整方案；每次共同满足必须使用同一个方案。对 $S\subseteq R$ 定义
+
+$$
+\operatorname{Sat}(S)\quad\Longleftrightarrow\quad
+\exists a\in F\ \forall r\in S,\ P(r,a).
+$$
+
+于是 $S\subseteq T$ 且 $\operatorname{Sat}(T)$ 时，同一行动也见证 $\operatorname{Sat}(S)$。这正给出项目 `Rights/ConflictRepairHittingSet` 所要求的向下封闭性。非空 $F$ 还保证空要求集可满足；本节固定 $F$ 与 $P$，没有在每次删去要求时悄悄改变技术、资金或行为含义。
+

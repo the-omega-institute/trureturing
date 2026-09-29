@@ -1,0 +1,52 @@
+{
+  "base_certificate": "integer_selector_tail_interface_certificate.json",
+  "base_certificate_sha256": "66f155d2d9f65b044017e0c033c1d3e8f9999cea100eabce1b8aa049810ecb5a",
+  "case_index": 0,
+  "phase_changes": [
+    {
+      "old_label": 35,
+      "old_phase": 3,
+      "new_phase": 0
+    },
+    {
+      "old_label": 13,
+      "old_phase": 18,
+      "new_phase": 22
+    }
+  ],
+  "mixed_modulus": 667,
+  "fixed_mixed_residue": 0,
+  "weight": [
+    17,
+    16,
+    13
+  ],
+  "expected_pure_counts": [
+    [
+      18,
+      21,
+      18
+    ],
+    [
+      21,
+      13,
+      24
+    ]
+  ],
+  "expected_pure_survivor_counts": [
+    40,
+    32,
+    25
+  ],
+  "expected_fixed_response_numerators": [
+    46,
+    33
+  ],
+  "expected_best_response_numerators": [
+    46,
+    33
+  ],
+  "boundary": "Two actual finite literal families with identical pure-axis deletion and combined survivor counts at the same old points; their shared mixed continuation differs. No universal improvement or completed-source mass claim.",
+  "base_result": "integer_selector_tail_interface.json",
+  "base_result_sha256": "4681c5b6da42138625dfa6c21e680522edf60ed400a3ae83c817d94bfcf9e4f4"
+}

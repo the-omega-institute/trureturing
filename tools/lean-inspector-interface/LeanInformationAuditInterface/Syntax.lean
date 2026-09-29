@@ -131,4 +131,12 @@ syntax (name := registerInformationSourceTheoremCmd)
   &" escape " &"from " &"source " "(" term ")"
   &" escape " &"continues " "(" informationEscapeContinuation ")" : command
 
+/-- Retain a finite catalog while binding its exact Unit-family source audit. -/
+syntax (name := registerInformationFiniteSourceTheoremCmd)
+  register_information_theoremKeyword ident &" in " ident
+  &"readout " &"via " "(" term ")" &" realizes " ident
+  &" finite " &"via " ident &" variation " ident &" sensitivity " ident
+  &" escape " &"from " &"source " "(" term ")"
+  &" escape " &"continues " "(" informationEscapeContinuation ")" : command
+
 end LeanInformationAudit

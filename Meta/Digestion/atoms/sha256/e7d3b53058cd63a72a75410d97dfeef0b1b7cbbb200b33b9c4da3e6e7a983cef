@@ -1,0 +1,25 @@
+**定义 15.11（完整持久状态与同源联合像）。** 每端 $i\in\{A,B\}$ 的状态集 $W_i$ 可有限或无限。初始化是固定状态 $\mathrm{Init}_i\in W_i$；更新只接收自身状态及当前公开标记，解码只接收自身状态。令 $z(w)=\sum_{u\text{ 在 }w\text{ 中}}u$，要求
+
+$$
+\begin{gathered}
+\sigma_i(\varnothing)=\mathrm{Init}_i,\qquad
+\sigma_i(wu)=\mathrm{Update}_i(\sigma_i(w),u),\qquad
+\mathrm{Decode}_i(\sigma_i(w))=o_i(z(w)),\\
+W_i^{\mathrm{reach}}=\{\sigma_i(w):w\in U^*\},\qquad
+Q=\{(\sigma_A(w),\sigma_B(w)):w\in U^*\}.
+\end{gathered}
+\tag{15.33}
+$$
+
+精确解码要求包含初始边界及每个有限前缀，两端之间没有运行时通信。没有另给的当前 $a$、$b$、$h$、$\ell$、步数或过去输入词；任何能再次参与更新或解码的档案、计数器、索引、缓存及控制状态均属于所计的 $W_i$。状态允许依赖历史，不要求存在 $S\to W_i$ 使它只依赖当前来源点。固定的 $f$、群运算、更新及解码函数是模型参数，不含随实际执行变化的外置状态。
+
+三种任务保持定义15.10的来源、制备和标记不变，只改变 $o_i$：
+
+| 15.11的任务 | $o_A(a,b,h)$ | $o_B(a,b,h)$ |
+| --- | --- | --- |
+| $T_+$：保留原钟及己方位置 | $(a,h,\ell)$ | $(b,h,\ell)$ |
+| $T_-$：删除原钟显示，保留己方位置 | $(a,\ell)$ | $(b,\ell)$ |
+| $T_\ell$：只保留校准钟 | $\ell$ | $\ell$ |
+
+每个输出空间可取指定函数的实际像。$Q$ 只包含同一公共历史产生的局部状态对，通常不等于 $W_A^{\mathrm{reach}}\times W_B^{\mathrm{reach}}$。对任务 $T$，记 $M_A^T,M_B^T,J^T$ 分别为所有满足上述条件的实现中 $|W_A^{\mathrm{reach}}|,|W_B^{\mathrm{reach}}|,|Q|$ 的最小值；三项分别取下确界，以下将给出使三项同时达到的有限实现。
+

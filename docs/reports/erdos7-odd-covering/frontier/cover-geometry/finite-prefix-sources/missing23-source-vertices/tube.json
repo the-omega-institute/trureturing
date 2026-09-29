@@ -1,0 +1,38 @@
+{
+  "common_G_upper": "14765393/31250",
+  "complete_parameter_tuples": 481890304000000,
+  "coverage_pins": {
+    "missing23-eta11-1-4": "22e4666f83e564cd545f1be1cf6aaf83072cfe910e35eecf569b7c66f0e11ef2",
+    "missing23-eta11-rest": "939c8e92c09f14d4d74da6c8f0f9d50f5e5137be0615844870acf0b5d1fdfa45",
+    "missing23-eta13-rest": "67e46905acc60676982757deed4138b833412d43a6c878788fdaf6124570f73c",
+    "missing23-late280": "b25d9f4b0cd07a848afd7279a785e1a3fffefa4c03ea45a0214cde6fa834294a",
+    "missing23-xi7-ordinary": "69e188e3b91d7dad85f117f071835d6805dd50617a238b2479308b2fd7878c1e",
+    "missing23-xi7-q": "e7b8b3a971e67976ac58a222cc05ec6be16cfeb9751c4367d13ebb110f8ec27b",
+    "missing23-xi7-remaining": "b3259a86677ffc4926e1ab85e8c979b32cd05b6aad30b1c6df60c114dab401c4"
+  },
+  "finite_parameter_cases": 840,
+  "finite_region_cell_checks": 147840,
+  "general_result": "For any point of the certified edge and any permitted parameter point of the same chart, every raw-coordinate interpolation with 0<=tau<=1/50000 is certified by positive-weight domination. General proof is in the report; the finite checks are examples.",
+  "margin_boundary": "Minimum of the retained certified lower bounds, not the exact minimum of actual slack or of all sharp numerical routes.",
+  "partition_sizes": [
+    255,
+    1,
+    2,
+    22
+  ],
+  "reported_margin_lowers": {
+    "missing23-eta11-1-4": "187251/1000000",
+    "missing23-eta11-rest": "115893/1000000",
+    "missing23-eta13-rest": "839287/1000000",
+    "missing23-late280": "91827/1000000",
+    "ordinary255": "11852676301974697225127723808370062275555258669396228941581538367810123390843109136689104381546041225343705123277032821/72751582665018574216640901012074268908301937373725262562358888656221304070137869427004319663330859483419806680000000000",
+    "q_and_qprime": "7459/100000",
+    "remaining22": "116/15625"
+  },
+  "reserve_lower": "135/4",
+  "scope": "One fixed chart. Reuses the pinned all280^6 common positive-functional certificates; no geometry and no new Lean verification.",
+  "tube_radius_in_raw_parameter_interpolation": "1/50000",
+  "uniform_certified_margin_lower": "116/15625",
+  "uniform_tube_slack_lower": "3845709003821/4296875000000000",
+  "uniform_weight_multiplier": "137501900003/137500000000"
+}

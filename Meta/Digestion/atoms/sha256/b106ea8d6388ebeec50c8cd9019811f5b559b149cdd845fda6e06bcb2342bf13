@@ -1,0 +1,44 @@
+### 10.1 半共轭的对象是剖面空间
+
+令
+
+$$
+ E:X\times P\to\Lambda,
+ \qquad
+ r_E(x):=E(x,-)\in\Lambda^P,
+ \qquad
+ c_E(p):=E(-,p)\in\Lambda^X.
+ \tag{10.1}
+$$
+
+定义回拉算子
+
+$$
+ \delta^*:\Lambda^P\to\Lambda^P,\quad
+ \delta^*(\varphi)=\varphi\circ\delta,
+ \qquad
+ F^*:\Lambda^X\to\Lambda^X,\quad
+ F^*(\psi)=\psi\circ F.
+ \tag{10.2}
+$$
+
+动态评价方程
+
+$$
+ E(Fx,p)=E(x,\delta p)
+ \tag{10.3}
+$$
+
+逐点等价于
+
+$$
+\boxed{
+ r_E\circ F=\delta^*\circ r_E,
+ \qquad
+ c_E\circ\delta=F^*\circ c_E .
+}
+\tag{10.4}
+$$
+
+因此，状态更新经状态行进入协议回拉的剖面空间，协议更新经协议列进入状态回拉的剖面空间。直接说“$F$ 与 $\delta$ 被 $E$ 半共轭”会掩盖这两个回拉对象的反变方向；只有在端点相同并且只看内部自映射时，方向差异才不显眼。
+

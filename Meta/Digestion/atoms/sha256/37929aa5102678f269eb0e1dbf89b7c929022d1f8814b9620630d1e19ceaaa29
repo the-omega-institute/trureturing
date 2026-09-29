@@ -1,0 +1,12 @@
+**定义 27.1（按最终点击权重归一的边界）。** 设 $\mathcal W\subseteq\operatorname{Herm}(\mathcal H)$ 为实线性空间，其中每个元素都支撑在 $P$ 上，且 $R\in\mathcal W$。令
+
+$$
+\Theta_R(H)=G^{-1}HG^{-1},\qquad
+\widetilde{\mathcal W}=\Theta_R(\mathcal W),
+\qquad
+b_{\mathcal W}(\rho)
+=\left(\frac{\operatorname{Tr}(\rho H)}{r_\rho}\right)_{H\in\mathcal W}.
+$$
+
+有限基即可给出这份边界的全部坐标。它描述已条件于最终点击的任务；若还要恢复原过程的无条件点击权重，须另保留 $r_\rho$。
+

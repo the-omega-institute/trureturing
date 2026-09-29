@@ -1,0 +1,29 @@
+## 定理 ST36.2：无需选择综合征基的全局解码 Kraus
+
+令$F_{ij}=\pi(e_{ij})$，定义$d\times n$矩阵
+
+$$
+T_b=\sum_{i=1}^d|i\rangle\langle b|F_{1i},\quad b=1,\ldots,n.
+\tag{ST36.3}
+$$
+
+则
+
+$$
+\sum_bT_b^\dagger T_b=P,
+\qquad
+\Bigl[\sum_bT_bXT_b^\dagger\Bigr]_{ij}
+=\operatorname{tr}(F_{ji}X).
+\tag{ST36.4}
+$$
+
+加入$|0\rangle\langle b|(I-P)$即得完整CPTP解码$\mathcal D_\pi$。它等于(ST34.3)的恢复器。
+
+**证明。** 矩阵单位关系$F_{ij}F_{kl}=\delta_{jk}F_{il}$给出
+
+$$
+\sum_bT_b^\dagger T_b=\sum_iF_{i1}F_{1i}=\sum_iF_{ii}=P.
+$$
+
+第$(i,j)$元为$\sum_b\langle b|F_{1i}XF_{j1}|b\rangle=\operatorname{tr}(F_{ji}X)$。另一方面，$\mathcal N^*(WXW)$的第$(i,j)$元也是$\operatorname{tr}(W\mathcal N(e_{ji})WX)$。两者及其补空间项相同。∎
+

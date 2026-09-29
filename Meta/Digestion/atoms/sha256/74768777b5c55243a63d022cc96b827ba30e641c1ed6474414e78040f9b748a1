@@ -1,0 +1,31 @@
+### 129.3 四个短排除与 AABAA 的首轮回接
+
+保留实际早期列
+
+$$
+H_1=\operatorname{span}(p,q),\quad
+G_2=\operatorname{span}(u,w),\quad
+H_2=\operatorname{span}(a^2u+bv,w),
+\tag{129.6}
+$$
+
+其中 $p,q$ 以及 $u,v,w$ 分别正交归一，$ab\ne0$。因为第二轮采用 $A$，$v\in U^\perp$。后期始终保留 $H_n\subset G_n\oplus Q_n$、两份正交投影均为同构，以及 $H_n\cap G_n=0$。
+
+**$AAAAB$。** （129.3）给 $G_2=G_3=G_4$。同一零位像使 $H_2=H_3$，于是非零 $w\in H_2\cap G_2$ 落入 $H_3\cap G_3=0$。
+
+**$AAABA$ 或 $AAABB$。** 两词均有 $G_2=G_3=X$、$G_4=Y\perp X$。第3、第4轮当前环境同为 $A$，所以 $H_2\perp H_3$。但 $0\ne w\in H_2\cap X$，而 $H_3$ 满投影到 $G_3=X$，矛盾。
+
+**$ABBBB$。** 第3至6轮环境相同，直接违反第71节。
+
+**$AABAA$。** 分叉识别给
+
+$$
+G_2=G_5=X,\qquad G_3=Y,\qquad U=X\oplus Y.
+$$
+
+第2、第5轮相同零位像使 $H_1=H_4$。真实非零 $q\in H_1$，且首轮一位像为 $q\otimes\eta_1$。第4轮零位像含 $G_4\otimes B$。若 $\langle\eta_1,B\rangle\ne0$，跨位正交给 $q\perp G_4$，与 $q\in H_4$ 和后期满投影的单射性矛盾。因此 $[\eta_1]=A$，从而 $p\in U$。
+
+真实 $V_1p=v\otimes A$ 和（129.3）继而使 $p\in X$。但第2、第3轮零位像分别为 $X\otimes A,Y\otimes A$，所以 $H_1\perp H_2$。由于 $v\perp X$、$a\ne0$，早期（129.6）满足 $P_XH_2=X$，非零 $p\in H_1\cap X$ 不可能正交于 $H_2$。本词排除。
+
+这一回接使用首轮的真实 $q$ 强制首环境位置，没有将首轮环境预先放入尾对。
+

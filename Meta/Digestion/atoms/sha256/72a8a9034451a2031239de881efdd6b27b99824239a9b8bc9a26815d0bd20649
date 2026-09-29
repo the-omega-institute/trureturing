@@ -1,0 +1,4 @@
+**定义 275.1（不损失旧方案的明确条件）。** 项目 [FreeInformationValue](../../../D5/S3/ConceptDynamics/DecisionValue/FreeInformationValue.lean) 的 `free_ignorable_information_value_nonnegative` 要求信息成本为零、观察不改变世界、原有行动对应的常值规则仍在候选池中，并且观察后的行动集合没有缩小；它还要求前后所比较的最优值确实被取得。在这些前提下，可以沿用原先的最佳行动，所以观察后的最优值不低。
+
+这里不是从“知识本身为善”推出价值不降，而是把一个原有可行方案确实嵌入了新问题。源码中的 `admissiblePolicies` 还要求候选规则在每个证据值上都选择一个观察后允许的行动；仅仅属于候选函数集合并不够。
+

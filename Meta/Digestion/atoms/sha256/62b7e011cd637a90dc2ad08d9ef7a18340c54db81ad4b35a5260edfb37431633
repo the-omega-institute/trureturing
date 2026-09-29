@@ -1,0 +1,14 @@
+**命题 5.5.3（真实外部体积与两个反向算法）。** 以最终真实延拓定义
+$$
+R_n=\{v\in\Sigma^n:R(v)=1\},\quad
+A_n=\bigcup_{v\in R_n}[v],\quad
+a_n=\mu_p(A_n)=\sum_{v\in R_n}p(v).
+$$
+则
+$$
+E\subseteq A_n,\qquad
+A_n\setminus E\subseteq\bigcup_{\substack{w\in\mathcal P\\|w|>n}}[w],
+\qquad 0\le a_n-M\le\frac{m^{n+1}}{1-m}.
+$$
+给参考概率名和 $R$，不需库存枚举即可计算 $M$。给参考概率名及条件柱概率接口 $\mathbf C$，也可计算 $M$，并且不查询 $R$。
+

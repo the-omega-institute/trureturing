@@ -1,0 +1,33 @@
+### 定理 27.1：相等构件的精确边界公式与配对顺序极小化
+
+在定义 27 的设定下，切面的容量只依赖于 $C,P$，且
+
+$$
+\kappa(C,P)
+=\left|\bigcup_{g\in\mathcal H_C}\{T_sg:s\in V_P\}\right|
+=\sum_{\mathcal O\in\mathscr O_{C,P}}
+\frac{2^{|P|}}{|\operatorname{Stab}_P(g_{\mathcal O})|}.
+$$
+
+其中 $\mathscr O_{C,P}$ 是与 $\mathcal H_C$ 相交的互不相同的 $V_P$ 平移轨道集合，每个 $g_{\mathcal O}$ 可取为该轨道中一个余因子。若 $G$ 为单调布尔函数，则进一步有
+
+$$
+\kappa(C,P)
+=\sum_{g\in\mathcal H_C}2^{|\operatorname{Ess}(g)\cap P|}.
+$$
+
+对任意有限值 $G$ 及 $n\geq1$，定义
+
+$$
+e_G(C,i)=|\mathcal H_C\cup T_i\mathcal H_C|,
+\qquad i\notin C.
+$$
+
+则在全部端点顺序上的精确最小宽度为
+
+$$
+\min_{\pi}W_F(\pi)
+=\min_{\sigma\in S_n}\ \max_{1\leq j\leq n}
+e_G\bigl(\{\sigma_1,\ldots,\sigma_{j-1}\},\sigma_j\bigr).
+$$
+

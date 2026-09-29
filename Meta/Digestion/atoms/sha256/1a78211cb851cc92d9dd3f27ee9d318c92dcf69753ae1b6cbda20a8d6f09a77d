@@ -1,0 +1,82 @@
+**引理104.2（两个二维后继方向不足以实现实际合同）。** 假设实际后继环境 $[\eta_3],\ldots,[\eta_6]$ 只使用两条不同射线 $B,C$，且 $E$ 在这两条射线上的完整接收纤维都恰为二维。则实际候选不可能。
+
+**证明。** 令这两个完整接收纤维为 $Q_B,Q_C$。每个实际二维 $Q_n$ 填满对应纤维，所以同一后继射线识别同一个输入平面。记
+
+$$
+V_1T_B=Q_B\otimes B,\qquad
+V_1T_C=Q_C\otimes C,\qquad
+\dim T_B=\dim T_C=2.
+\tag{104.6}
+$$
+
+不同环境射线使 $T_B\cap T_C=0$。两个后继都出现，故
+
+$$
+G_2+G_3+G_4+G_5=T_B+T_C,\qquad
+\dim(T_B+T_C)=4.
+$$
+
+而 $S=\mathbb Cp+G_2+\cdots+G_5$ 五维，因此 $p\notin T_B+T_C$。若 $[\eta_2]$ 等于 $B$ 或 $C$，真实 $V_1p=v\otimes\eta_2$ 会落入相应完整二维纤维，从而把 $p$ 放入 $T_B$ 或 $T_C$，矛盾。因此 $[\eta_2]=A$ 是第三条射线。
+
+交换 $B,C$ 的名称使 $[\eta_3]=B$。余下三个后继只取 $B,C$，且必须至少出现一次 $C$。七个相等关系词中，$ABBCC$、$ABCCB$ 违反第69节引理69.1的共同分叉限制：前者的当前 $B$ 分叉而其他当前 $A,C$ 具有不同后继；后者的当前 $C$ 分叉而其他当前 $A,B$ 具有不同后继。只剩
+
+$$
+ABBBC,\quad ABBCB,\quad ABCBB,\quad ABCBC,\quad ABCCC.
+\tag{104.7}
+$$
+
+前三个直接等式禁阻如下：
+
+| 尾词 | 由相同完整后继纤维得到的矛盾 |
+|---|---|
+| $ABBBC$ | $G_2=G_3=G_4$；相同零位像给 $H_2=H_3$，所以真实 $0\ne w\in H_2\cap G_2$ 也在 $H_3\cap G_3$，矛盾 |
+| $ABCBC$ | $G_2=G_4$、$G_3=G_5$；相同零位像给 $H_2=H_4$，所以 $0\ne w\in H_4\cap G_4$，矛盾 |
+| $ABCCC$ | $G_3=G_4=G_5$；相同零位像给 $H_3=H_4$，违反同一来源的严格差值 $\delta_4-\delta_3=x^3y^2/(t_3t_4)>0$ |
+
+表中后期 $H_n\cap G_n=0$、真实 $w$ 以及主角差值均为同一实际来源合同中的量。
+
+对于 $ABBCB$，置
+
+$$
+G_2=G_3=G_5=T,\qquad G_4=L,
+$$
+
+$$
+Q_3=Q_4=Q_6=Q_B,\qquad Q_5=Q_C.
+$$
+
+实际第三轮给 $T\perp Q_B$。令 $\rho=|\langle B,C\rangle|$。由
+$V_0H_2=T\otimes B$、$V_0H_4=T\otimes C$，同一个单位 $w\in H_2\cap T$ 满足
+
+$$
+\|P_{H_4}w\|=\rho.
+$$
+
+由 $V_1T=Q_B\otimes B$、$V_1L=Q_C\otimes C$，又有
+$\|P_Lw\|\le\rho$。实际 $H_4\subset L\oplus Q_B$，且 $w\perp Q_B$、$H_4\cap L=0$。若 $\rho>0$，便有
+
+$$
+\rho=\|P_{H_4}P_Lw\|<\|P_Lw\|\le\rho,
+$$
+
+矛盾。因此 $B\perp C$，固定 $V_1$ 继而给 $T\perp L$。同一环境 $B$ 上的 $V_0H_2=T\otimes B$、$V_0H_3=L\otimes B$ 使 $H_2\perp H_3$，这与 $0\ne w\in H_2\cap T$ 及实际满投影 $P_TH_3=T$ 冲突。
+
+对于 $ABCBB$，置
+
+$$
+G_2=G_4=G_5=T,\qquad G_3=L,\qquad P=L+T,
+$$
+
+$$
+\dim P=4,\qquad Q_3=Q_5=Q_6=Q_B,\qquad Q_4=Q_C.
+$$
+
+实际第3、5轮给 $Q_B\perp L,T$，故 $Q_B\perp P$。若 $B\perp C$，固定 $V_1$ 给 $L\perp T$，而
+$V_0H_2=L\otimes B$、$V_0H_4=T\otimes B$ 给 $H_2\perp H_4$，与真实 $w\in H_2\cap T$、$P_TH_4=T$ 冲突。
+
+若 $\langle B,C\rangle\ne0$，两个实际零位平面给 $P\otimes B\subset\operatorname{ran}V_0$。跨位正交及 $Q_C\otimes C\subset\operatorname{ran}V_1$ 于是给 $Q_C\perp P$。现在第3至6轮环境为 $(B,C,B,B)$，上述 $G,Q$ 关系、$Q_B,Q_C\perp P$ 及真实早期 $u,v,w$ 逐项满足第86节引理86.2，产生矛盾。该引理不限制第二轮环境，亦不要求 $G_6\subset P$。
+
+五个词均被排除。证明完毕。
+
+本引理只使用已执行空间 $E$ 的完整纤维。没有将这些二维纤维冒称为整个 $R_1$ 的完整纤维，也没有给 $G_6$ 添加后继。
+

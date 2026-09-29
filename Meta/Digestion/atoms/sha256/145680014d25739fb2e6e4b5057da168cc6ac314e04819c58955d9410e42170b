@@ -1,0 +1,15 @@
+**命题 2.8（强度误差的运输）。** 若四份强度读数各自实误差绝对值至多 $\varepsilon$，则用式（AP.13）计算的 $\widehat\Gamma$ 满足
+
+$$
+|\widehat\Gamma-\Gamma|\le\frac{\varepsilon}{\sqrt2}.
+\tag{AP.15}
+$$
+
+在式（AP.14）的分母精确已知时，对应环相位估计误差至多
+
+$$
+\frac{\varepsilon}
+{\sqrt2\,|\xi|^2r(P)r(Q)|\mu|}.
+\tag{AP.16}
+$$
+

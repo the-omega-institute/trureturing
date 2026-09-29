@@ -1,0 +1,3280 @@
+{
+  "counts_by_consumer": {
+    "complete_root_truncated_size_at_most9": 34,
+    "four_public_plus_private_singleton_consumer": 4,
+    "not_supplied_by_this_k0_k1_control": 15,
+    "three_tight_vectors_then_full11222_supplier": 7,
+    "whole_original_projection_at_most3": 2
+  },
+  "counts_by_public_token_cost": {
+    "0": 34,
+    "1": 13,
+    "2": 5,
+    "3": 8,
+    "4": 2
+  },
+  "rows": [
+    {
+      "c": 71,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 73,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 6,
+          "delta": 0,
+          "forward": 12,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 7,
+          "delta": 0,
+          "forward": 14,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            3
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 7,
+          "delta": 0,
+          "forward": 14,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 73,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            3,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 6,
+          "delta": 1,
+          "forward": 19,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 4,
+          "delta": 1,
+          "forward": 15,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 7,
+          "delta": 0,
+          "forward": 14,
+          "n": 4,
+          "p": 3,
+          "q": 2,
+          "z": [
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 3,
+          "q": 2,
+          "z": [
+            1,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            1,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 73,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "complete_root_truncated_size_at_most9",
+      "k": 0,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 6,
+          "delta": 1,
+          "forward": 19,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "whole_original_projection_at_most3",
+      "k": 1,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 4,
+          "delta": 0,
+          "forward": 8,
+          "n": 5,
+          "p": 2,
+          "q": 3,
+          "z": [
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "three_tight_vectors_then_full11222_supplier",
+      "k": 1,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "three_tight_vectors_then_full11222_supplier",
+      "k": 1,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "three_tight_vectors_then_full11222_supplier",
+      "k": 1,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 74,
+      "consumer": "four_public_plus_private_singleton_consumer",
+      "k": 1,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "four_public_plus_private_singleton_consumer",
+      "k": 1,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "four_public_plus_private_singleton_consumer",
+      "k": 1,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "four_public_plus_private_singleton_consumer",
+      "k": 1,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 6,
+          "delta": 0,
+          "forward": 12,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "three_tight_vectors_then_full11222_supplier",
+      "k": 1,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "whole_original_projection_at_most3",
+      "k": 1,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 4,
+          "delta": 0,
+          "forward": 8,
+          "n": 4,
+          "p": 2,
+          "q": 2,
+          "z": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "three_tight_vectors_then_full11222_supplier",
+      "k": 1,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "three_tight_vectors_then_full11222_supplier",
+      "k": 1,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "three_tight_vectors_then_full11222_supplier",
+      "k": 1,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 2,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 2,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 2,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 2,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 2,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 3,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 7,
+          "delta": 0,
+          "forward": 14,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            0,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "c": 72,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 3,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "c": 74,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 3,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 6,
+          "delta": 0,
+          "forward": 12,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 3,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 7,
+          "delta": 0,
+          "forward": 14,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 3,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 7,
+          "delta": 0,
+          "forward": 14,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 3,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 4,
+          "delta": 1,
+          "forward": 15,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 3,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 6,
+          "delta": 0,
+          "forward": 12,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            2
+          ]
+        },
+        {
+          "Z": 6,
+          "delta": 0,
+          "forward": 12,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "c": 76,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 3,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 7,
+          "delta": 0,
+          "forward": 14,
+          "n": 4,
+          "p": 3,
+          "q": 2,
+          "z": [
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 4,
+      "kind": "FFF",
+      "roots": [
+        {
+          "Z": 4,
+          "delta": 0,
+          "forward": 8,
+          "n": 5,
+          "p": 2,
+          "q": 3,
+          "z": [
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "c": 77,
+      "consumer": "not_supplied_by_this_k0_k1_control",
+      "k": 4,
+      "kind": "GFF",
+      "roots": [
+        {
+          "Z": 4,
+          "delta": 0,
+          "forward": 8,
+          "n": 4,
+          "p": 2,
+          "q": 2,
+          "z": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "Necessary sorted integer profiles; actual realization not asserted",
+  "status": "PASS"
+}

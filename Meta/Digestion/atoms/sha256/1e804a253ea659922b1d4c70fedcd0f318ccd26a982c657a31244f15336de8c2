@@ -1,0 +1,17 @@
+**定义 8.1（路径亲和矩阵与误差指数）。** 固定 $P\in\mathcal K_d^0$，
+令 $\mathsf W_{P,T}$ 为均匀启动的 $T$ 步路径律，$\mathsf W_{P,T}^{\leftarrow}$ 为倒序律。
+记等先验最小错误率为 $e_P(T)$，定义
+
+$$
+R_{xy}=\sqrt{P(x,y)P(y,x)},\qquad
+\mathcal H_P(T)=\sum_{\boldsymbol x}
+ \sqrt{\mathsf W_{P,T}(\boldsymbol x)\mathsf W_{P,T}^{\leftarrow}(\boldsymbol x)},
+\qquad
+\eta_p=\frac1M\sum_{x\in C_p}\sqrt{1-b(x)^2}\quad(p\in\{+,-\}).
+\tag{8.1}
+$$
+
+路径亲和度的矩阵表达式是经典马尔可夫 Bhattacharyya 递推，见
+[Daskalakis–Dikkala–Gravin，引理 5、式 (5)](../../../Library/Dynamics/daskalakis2018testing.md)，
+该处将此递推归于 Kazakos；引理本身不要求转移矩阵对称。
+

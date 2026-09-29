@@ -32,3 +32,5 @@ pinned mathlib, or linked formal-conjectures source. This is a bounded search
 finding, not a proof of absence from the literature. The existing frozen
 two-prime result supplies motivation only. The exact target and reusable
 counterexamples are in [the canonical dossier](../../Problems/erdos-7-odd-covering-systems.md).
+
+The later paper [Bispels--Cohen--Harrington--Lowrance--Pontes--Schaumann--Wong (2025/2026)](bispels2025oddcovering.md) likewise treats the unrestricted distinct odd problem as open and studies a repeated-modulus variant; its multiplicity constructions do not supply a distinct odd cover.

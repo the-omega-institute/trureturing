@@ -1,0 +1,58 @@
+### 213.1 纯来源有限正噪声的精确临界参数
+
+取 $h=0$，$0<x<1/(8R)$，并令 $\nu$ 在零的固定小邻域。
+这同时排除第208节的高噪声平台，并保证两个入口态严格正定。
+第208节的记号在此写成
+
+$$
+A=\frac1{1+(\gamma/\beta)^2}=\frac1{2-\nu},\qquad
+u=A-x,\quad w=A-Rx,\quad r=\sqrt{u/w}.
+$$
+
+缩放投影分支的精确条件为
+$w(1+r)=w+\sqrt{uw}\ge1$。
+因为 $u=w+\delta x$，等号化为
+
+$$
+w+\sqrt{w(w+\delta x)}=1
+\iff w(2+\delta x)=1.
+\tag{213.2}
+$$
+
+右侧解 $w=1/(2+\delta x)<1$，所以平方没有引入伪根；
+左侧严格随 $w>0$ 增加。
+因此临界参数为
+
+$$
+A_*(x)=Rx+\frac1{2+\delta x}.
+$$
+
+特别地，
+
+$$
+\boxed{
+\left(\frac{\gamma_*(\epsilon)}{\beta}\right)^2
+=\frac{1-\Sigma x-R\delta x^2}{1+2Rx+R\delta x^2},
+\qquad
+\nu_*(x)
+=\frac{(3R+1)x+2R\delta x^2}{1+2Rx+R\delta x^2}.
+}
+\tag{213.3}
+$$
+
+所取小噪声范围使分子严格正；临界点位于严格合法区间。
+这是有限正 $\epsilon$ 的精确等式，不是由固定 $\nu$ 的位移式外推。
+有
+
+$$
+\nu_*(x)=(3R+1)x-4R(R+1)x^2+O(x^3)>0.
+\tag{213.4}
+$$
+
+由 $A$ 随 $\nu$ 增加，$\nu>\nu_*(x)$ 时
+第208节最优效果为严格缩放的秩一投影 $\lambda P_v$，$0<\lambda<1$；
+$\nu=\nu_*(x)$ 时 $\lambda=1$；
+$\nu<\nu_*(x)$ 时为中间分支的秩一投影。
+等价地，额外方向在 $\gamma\ge\gamma_*(\epsilon)$ 时消失，
+且 $\gamma_*(\epsilon)<\beta$。
+

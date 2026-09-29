@@ -1,0 +1,52 @@
+**定理53.2（尾环境模式限制）。** 该七维、第二终端秩二分支的三个纯尾环境，只能有以下三种相对于 $F$ 的模式：
+$$
+(F,F,F),\qquad(O,F,O),\qquad(O,O,O).
+\tag{53.5}
+$$
+这里每个 $F$ 表示该向量属于二维空间 $F$，不同位置可以是不同射线；每个 $O$ 表示同一条不包含于 $F$ 的环境射线。声明的是必要模式，不宣称这三类均可实现。
+
+证明。先设 $\eta_4\in F$。若 $\eta_5\notin F$，则 $V_1G_3=Q_4\otimes\eta_4$ 与 $V_1G_4=Q_5\otimes\eta_5$ 的不同环境射线迫使 $A\cap G_4=0$。于是 $V_0K$ 中的
+$$
+(A\otimes F)+(G_4\otimes\eta_4)+(G_5\otimes\eta_5)
+$$
+是 $4+2+2=8$ 维直和，矛盾。因此 $\eta_5\in F$。
+
+若进一步有 $\eta_6\notin F$，则 $V_0K$ 中位于 $K\otimes F$ 的子空间
+$$
+R=(A\otimes F)+(G_4\otimes\eta_4)+(G_5\otimes\eta_5)
+$$
+必须至多五维，以容纳与它交零的二维 $G_6\otimes\eta_6$。令 $\pi_A:K\to K/A$。于是 $\dim (\pi_A\otimes I)R\le1$。若 $\eta_4,\eta_5$ 不共线，固定 $V_1$ 又使 $A\cap G_4=0$，给二维的 $\pi_A(G_4)\otimes\eta_4$，矛盾。因此 $\eta_4\parallel\eta_5$。此时商维数至多一意味着
+$$
+\dim(A+G_4+G_5)\le3.
+$$
+但 $\eta_5\in F$、$\eta_6\notin F$，固定 $V_1$ 迫使 $G_4\cap G_5=0$，两个二维空间不能同时位于上述三维空间中。矛盾。因此 $\eta_6\in F$，得到第一种模式。
+
+现在设 $\eta_4\notin F$。先记一个交空间约束：若另有 $\eta_j\notin F$，且 $\eta_j\not\parallel\eta_4$，定理53.1使
+$$
+\eta_j=c\eta_4+f,\qquad c\ne0,\quad 0\ne f\in F.
+$$
+逐个独立环境分量比较可知
+$$
+\bigl((A\otimes F)+(G_4\otimes\eta_4)\bigr)
+\cap(G_j\otimes\eta_j)
+=(A\cap G_4\cap G_j)\otimes\eta_j.
+\tag{53.6}
+$$
+前一个空间六维，后一个二维，联合包含于七维 $V_0K$，故（53.6）的交至少一维。特别地 $A\cap G_4\ne0$。
+
+若 $\eta_5\notin F$，则它必须与 $\eta_4$ 共线：否则（53.6）给 $A\cap G_4\ne0$，而 $V_1A\subset K\otimes\eta_4$、$V_1G_4\subset K\otimes\eta_5$ 强制这个交为零。共同外部射线又使
+$$
+\dim(G_4+G_5)\le3,
+$$
+因为其张量该射线与四维 $A\otimes F$ 交零。故 $G_4\cap G_5\ne0$，固定 $V_1$ 进一步强制 $\eta_6\parallel\eta_5$。得到第三种模式。
+
+最后取 $\eta_5\in F$。如果 $\eta_6\notin F$，它必须与 $\eta_4$ 共线：否则（53.6）再次给 $A\cap G_4\ne0$，但 $V_1$ 在 $A,G_4$ 上分别使用 $\eta_4\notin F$、$\eta_5\in F$，迫使交为零。若反而 $\eta_6\in F$，则
+$$
+R_F=(A\otimes F)+(G_5\otimes\eta_5)+(G_6\otimes\eta_6)
+$$
+与 $G_4\otimes\eta_4$ 交零，且两者都包含于七维 $V_0K$，所以 $\dim R_F\le5$。对 $A$ 取接收商，四维 $A\otimes F$ 是商映射在 $R_F$ 上的核，故
+$$
+\dim(\pi_A\otimes I)R_F\le1.
+$$
+特别有 $\dim\pi_A(G_5)\le1$，因此 $A\cap G_5\ne0$。但固定 $V_1$ 在 $A=G_3$ 上使用 $\eta_4\notin F$，在 $G_5$ 上使用 $\eta_6\in F$；不同射线迫使 $A\cap G_5=0$，矛盾。因此 $\eta_6$ 必须位于与 $\eta_4$ 相同的外部射线，得到第二种模式。证明完毕。
+

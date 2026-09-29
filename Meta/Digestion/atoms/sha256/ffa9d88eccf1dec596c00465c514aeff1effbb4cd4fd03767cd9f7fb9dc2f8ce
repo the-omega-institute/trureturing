@@ -1,0 +1,11 @@
+**命题 24.6（已知重置后的任务不要求任意态上的闭合）。** 固定 $0<\gamma<1$，取
+
+$$
+\mathcal N(X)=(1-\gamma)X,
+\qquad \mathcal C(X)=\gamma\operatorname{Tr}(X)P_0.
+$$
+
+首次事件空间为 $\mathbb RI$。点击后若只允许已知 Hadamard 酉 $H$、计算基测量及依赖已读历史的选择，则全部后续概率可由实际历史确定。尽管如此，$\mathcal W=\operatorname{span}_{\mathbb R}\{I,P_0\}$ 并不对 Hadamard 拉回闭合。
+
+证明。该仪器完全正且总迹保持，每次点击后的归一化状态均为 $P_0$，与输入无关。其后从已知 $P_0$ 出发，按记录的酉操作与测量结果递归计算状态，就能得到每步概率；零概率后继不作条件化。另一方面，$H^\dagger P_0H=P_+$ 具有非零非对角元，不属于 $\mathcal W$。初始输入对所有这些未来效果的作用都先经过重置，$\mathcal C^*(F)=\gamma\operatorname{Tr}(P_0F)I$，所以全部复合测试仍由初始事件边界决定。此处的充分性限于重置后的可达配置，不是任意后继态上的闭合。$\square$
+

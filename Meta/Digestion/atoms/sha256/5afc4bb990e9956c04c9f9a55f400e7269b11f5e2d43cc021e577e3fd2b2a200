@@ -1,0 +1,53 @@
+### 253.1 固定二元来源、通道与成功率
+
+采用§244的实际设置记录噪声通道。固定
+$$
+\frac12\le A<1,\qquad 0<B\le1-A,\qquad b_0^2=B,
+\qquad
+A_a=\sqrt A\,Z+b_0X,
+\quad A_b=\sqrt A\,Z-b_0X.
+\tag{253.1}
+$$
+量子输出统一重置到同一纯态 $P_{\mathrm{reset}}$；可见经典记录为 $(w,s)$，其中 $w\in\{a,b\}$、$s\in\{+1,-1\}$。对应实际效应为
+$$
+E_{w,s}=\frac{I_2+sA_w}{4}.
+\tag{253.2}
+$$
+它们来自§244已标定的设置翻转，原设置副本与翻转种子不另行开放。这里 $A+B\le1$ 保证效应正性，四个效应之和为 $I_2$。
+
+固定 $\theta\in(0,1)$，并在本节记
+$$
+q=1-\theta,
+\qquad\alpha=\sqrt A\in(0,1).
+\tag{253.3}
+$$
+参考空间为 $E=\mathbb C^2\oplus\mathbb C|2\rangle_E$，其中前一块与输入组成 Bell 态
+$$
+|\Phi\rangle
+=\frac{|0\rangle_H|0\rangle_E+|1\rangle_H|1\rangle_E}{\sqrt2}.
+\tag{253.4}
+$$
+对每个给定且已知的 $z\in(0,1)$，两份候选源为
+$$
+\begin{aligned}
+\Omega_0&=\theta P_\Phi+qP_{0_H}\otimes P_{2_E},\\
+\Omega_z&=\theta P_\Phi+qP_{\psi_z}\otimes P_{2_E},\\
+|\psi_z\rangle&=\sqrt{1-z^2}|0\rangle_H+iz|1\rangle_H.
+\end{aligned}
+\tag{253.5}
+$$
+由§252，两态参考边缘相同、形成纠缠均为 $\theta$；$\Omega_0$ 响应饱和，$\Omega_z$ 对 $0<z<1$ 不饱和。其单副本半迹距离为
+$$
+d_z:=\frac12\|\Omega_z-\Omega_0\|_1=qz.
+\tag{253.6}
+$$
+
+未知假设 $j\in\{0,z\}$ 以等先验选定，此后给出 $n$ 份同一来源的真正独立副本 $\Omega_j^{\otimes n}$。比较两种访问方式：
+
+- **重置前输入接口：**可访问每份原输入与参考，即 $\Omega_j^{\otimes n}$。
+- **规定输出接口：**固定通道 $\mathcal S_p$ 独立作用于各输入，只开放 $\sigma_j^{\otimes n}$，其中 $\sigma_j=(\mathcal S_p\otimes\operatorname{id}_E)(\Omega_j)$。通道各次使用没有共享的未建模记忆；每次设置翻转按同一已标定通道独立发生。
+
+两种接口都允许对全部可访问寄存器作任意联合 POVM、辅助处理和自适应测量。规定输出接口不允许回取已经重置的输入，也不允许改用另一通道查询其他 Pauli 方向。
+
+令 $N_{\mathrm{in}}(z)$ 与 $N_{\mathrm{out}}(z)$ 分别为两种接口达到等先验平均正确率至少 $2/3$ 所需的最小整数副本数。判别方案可以使用已知的 $A,B,\theta,z$。
+

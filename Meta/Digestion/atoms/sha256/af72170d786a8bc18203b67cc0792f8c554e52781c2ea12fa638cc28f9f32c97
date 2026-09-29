@@ -1,0 +1,98 @@
+### 211.4 标量活跃约束的横截性
+
+只用 $\epsilon=0$ 的一阶函数计算接触导数。
+此时 $x=u=v=0$，固定 $t$ 的唯一慢驻点具有
+
+$$
+b_0=i\sqrt2n,\quad b_1=-i\sqrt2n,\quad
+d_0=d_1=\sqrt2m,\qquad m^2+n^2=\frac{1-t}{4}.
+\tag{211.15}
+$$
+
+其余相位及反对称方向由正 Hessian 唯一固定。
+函数为第189节的
+
+$$
+F_h=\frac{7h}{12}-\frac{\beta\delta}{8}
+-\frac{4h}{3}m+\left(\frac h3+\beta R\right)m^2
++\frac{\delta}{2}(\beta n^2-\gamma n).
+\tag{211.16}
+$$
+
+允许带符号乘子 $\rho$，
+使用 $F_h+\rho(m^2+n^2-(1-t)/4)$，局部驻点满足
+
+$$
+m=\frac{2h}{h+3\beta R+3\rho},\qquad
+n=\frac{\gamma\delta}{2(\beta\delta+2\rho)},\qquad
+m^2+n^2=\frac{1-t}{4}.
+\tag{211.17}
+$$
+
+令
+
+$$
+A_b=\frac{h_b}{3}+\beta R,\qquad
+D_b=\frac{2m_b^2}{A_b}+\frac{4n_b^2}{\beta\delta}>0,\qquad
+m'_b=\frac{6\beta R}{(h_b+3\beta R)^2}>0.
+\tag{211.18}
+$$
+
+约束左侧对 $\rho$ 的导数为 $-D_b$，
+所以（211.17）确有唯一解析解。
+包络微分给
+
+$$
+\mu(0,h,t)=\frac{\rho(h,t)}4.
+\tag{211.19}
+$$
+
+在接触点精确有
+
+$$
+\boxed{
+q_{tt}(0,h_b,0)=\frac1{16D_b}>0,\qquad
+q_{th}(0,h_b,0)=\frac{m_bm'_b}{2D_b}>0.
+}
+\tag{211.20}
+$$
+
+不约束 $t$ 的驻点对应 $\rho=0$，位置为
+
+$$
+t_0(h)=1-4\left(\frac{2h}{h+3\beta R}\right)^2-4n_b^2,
+\qquad t'_0(h_b)=-8m_bm'_b<0.
+\tag{211.21}
+$$
+
+这些是实际标量约束的非退化和横截读数，
+没有使用最优值的二阶系数或两侧值相等。
+
+$\mu_h(0,h_b,0)>0$ 使
+$\mu(\epsilon,h,0)=0$ 唯一给解析曲线 $h=h_b(\epsilon)$。
+固定缩小邻域，使 $\mu_h>0$，则
+
+$$
+\mu(\epsilon,h,0)<0\iff h<h_b(\epsilon).
+\tag{211.22}
+$$
+
+由 $q_{tt}>0$，$\mu(\epsilon,h,t)=0$
+有唯一解析根 $\widehat t(\epsilon,h)$，
+在左侧严格为正、右侧为负。
+物理候选取
+
+$$
+t^\sharp=
+\begin{cases}
+\widehat t(\epsilon,h),&h<h_b(\epsilon),\\
+0,&h\ge h_b(\epsilon).
+\end{cases}
+\tag{211.23}
+$$
+
+于是 $t^\sharp\ge0,\mu^\sharp\ge0,t^\sharp\mu^\sharp=0$。
+可写
+$h_b'(0)=-q_{\epsilon t}(0,h_b,0)/q_{ht}(0,h_b,0)$；
+此式确定该解析曲线的位移首系数。
+

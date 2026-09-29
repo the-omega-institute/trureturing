@@ -1,0 +1,22 @@
+**命题 200.3（相同平均后继不能决定最坏未来）。** 设事件分支为恒等映射，取
+
+$$
+\mathfrak R_A=\left\{\frac I2\right\},
+\qquad
+\mathfrak R_B=\{|0\rangle\langle0|,|1\rangle\langle1|\},
+$$
+
+并在第二个集合上给两个来源相等先验。两者的平均后继都为 $I/2$。但是对效果 $H=|0\rangle\langle0|$，有
+
+$$
+\left\{\operatorname{Tr}(\tau H):\tau\in\mathsf C_\Phi(\mathfrak R_A)\right\}
+=\left\{\frac12\right\},
+$$
+
+而
+
+$$
+\left\{\operatorname{Tr}(\tau H):\tau\in\mathsf C_\Phi(\mathfrak R_B)\right\}
+=\{0,1\}.
+$$
+

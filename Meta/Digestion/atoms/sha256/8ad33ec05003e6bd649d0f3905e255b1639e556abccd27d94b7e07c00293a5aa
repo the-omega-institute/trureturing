@@ -1,0 +1,35 @@
+**定理 55.3（外层仿射近似的必要充分条件）。** 对任意确定性序列
+$`a_M\in[0,U)`$、$`a_M\to0`$，下列两条件等价：
+
+```math
+\sup_{a_M\le u\le U}|\mathcal Z_M(u)-\mathcal J_M-2uT_M|
+ \longrightarrow0\quad\text{依概率},
+\qquad
+\frac{a_M}{\sqrt\delta}\longrightarrow\infty.
+```
+
+式 (55.13)。
+
+概率结论可取任意固定支持序列的无条件律；当条件成立时，
+第 54 章的固定支持一致性和条件版本同时成立。
+将中心同时换成 $`\gamma`$ 不改变这个等价关系。
+
+证明。充分性由定理 54.2 给出。
+若比例不趋无穷，则存在子列使 $`a_M/\sqrt\delta\to c<\infty`$。
+定理 55.2 的连续极限及确定性移动时刻取值给出
+
+```math
+\mathcal Z_M(a_M)-\mathcal J_M-2a_MT_M
+ =\mathcal B_M(a_M/\sqrt\delta)
+ \Longrightarrow\mathcal E(c).
+```
+
+式 (55.14)。
+
+$`K_c^{\rm tail}`$ 在对角线附近有非零对数奇性，
+而 $`\rho`$ 处处为正，故
+$`\mathbb E\mathcal E(c)^2=2\|K_c^{\rm tail}\|_{L^2(\rho\otimes\rho)}^2>0`$。
+因此该非零极限不可能同时依概率趋零，否定 (55.13) 的第一个条件。
+这个反证适用于任意固定支持序列，因为整个统计量的固定支持律由置换等变性相同。
+(55.12) 的精确相消最后给出确定中心版本。
+

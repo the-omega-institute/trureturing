@@ -1,0 +1,36 @@
+**定义 195.1（集合值阶段合同）。** 对每个阶段 $i$，令
+
+$$
+\mathfrak R_i
+\subseteq
+\mathcal L(\mathcal U_{i-1},\mathcal U_i)
+$$
+
+为非空紧的合法响应集合。定义串联响应集合
+
+$$
+\mathfrak R_{[k]}
+=
+\mathfrak R_k\cdots\mathfrak R_1
+=
+\{R_k\circ\cdots\circ R_1:R_i\in\mathfrak R_i\}.
+$$
+
+若有名义响应 $\widehat R_i$ 和半径 $\delta_i$，满足
+
+$$
+\mathfrak R_i
+\subseteq
+\{R:\|R-\widehat R_i\|\le\delta_i\},
+$$
+
+则称 $(\widehat R_i,\delta_i)$ 是该阶段的球形不确定性合同。另记
+
+$$
+\gamma_i
+\ge
+\sup_{R\in\mathfrak R_i}\|R\|,
+\qquad
+\widehat\gamma_i\ge\|\widehat R_i\|.
+$$
+

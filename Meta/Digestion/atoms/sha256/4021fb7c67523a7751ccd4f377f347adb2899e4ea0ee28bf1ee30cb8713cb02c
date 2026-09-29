@@ -1,0 +1,10 @@
+**定义 313.1（严格递增变换保留共同菜单上的最优项）。** 对评价 $u:Z\to\mathbb R$ 与菜单 $F\subseteq Z$，记
+
+$$
+\operatorname{Max}_u(F)=\{z\in F:\forall y\in F,\ u(y)\le u(z)\}.
+$$
+
+项目 `DecisionValueScale/StrictMonotoneObjectiveArgmaxAlignment` 说明：若 $v=\phi\circ u$，其中 $\phi:\mathbb R\to\mathbb R$ 严格递增，则每个共同菜单都满足 $\operatorname{Max}_u(F)=\operatorname{Max}_v(F)$。它保留的是完整最优项集合，包括并列项；没有另行保证最大值存在，空菜单或没有最大值的菜单仍可得到空集。
+
+因此，$u\ne v$ 本身不足以说明偏好发生实质反转。例如 $v=2u+7$ 改变了分数，却保持所有两两比较与每个菜单上的最优项。与第 312 节连接时，严格反转排除的是这种顺序保留关系，而非仅仅排除函数逐点相等。
+

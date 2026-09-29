@@ -1,0 +1,9 @@
+**Proof of the reverse implication.** The finite partial sum through depth $n$ has error at most
+
+$$
+\sum_{h>n}2^{-h}=2^{-n},
+\tag{TM.663}
+$$
+
+so an $A$-decision procedure for $S$ computes the real uniformly.
+

@@ -1,0 +1,79 @@
+**定理 93.1（最近失效附近的统一单极点分解）。** 存在包含紧集 $\mathfrak F_R$ 的仪器邻域 $\mathcal U$，使每个 $\Gamma\in\mathcal U$ 都有一个代数简单的正实特征值 $r(\Gamma)$，它严格大于其余特征值的模。对应于伴随映射的谱投影记为 $\Pi_\Gamma$。对其中所有不失效的仪器，
+
+$$
+\boxed{
+T_\Gamma
+=\frac{\Pi_\Gamma(I)}{1-r(\Gamma)}+B_\Gamma,
+\qquad
+\sup_{\Gamma\in\mathcal U\setminus\mathfrak F}
+\|B_\Gamma\|_\infty<\infty.
+}
+\tag{93.1}
+$$
+
+并且，当不失效的 $\Gamma$ 到 $\mathfrak F_R$ 的距离趋零时，统一有
+
+$$
+\boxed{(1-r(\Gamma))M(\Gamma)\longrightarrow1.}
+\tag{93.2}
+$$
+
+若 $\Gamma\to\Gamma_*\in\mathfrak F_R$，则更强地
+
+$$
+(1-r(\Gamma))T_\Gamma\longrightarrow F_*.
+\tag{93.3}
+$$
+
+证明。先说明所用有限矩阵谱事实的参数范围。取
+$\sqrt R<a<b<1$，并取围住 $1$、与闭圆盘 $|z|\le a$ 分离的小圆盘。定理 91.2 使每个边界装置的特征多重集在小圆盘内恰有一个根，其他三个根在 $|z|\le\sqrt R$ 内。多项式根随系数连续，紧性因而给一个共同闭邻域，在其中小圆盘内仍恰有一个简单根，其他根的模至多 $a$，且所取根的模大于 $b$。
+
+这一根连续性可直接由有限根的紧性理解：单首多项式系数有界使全部根有界；若系数列收敛，将每次的全部根共同取子列，则极限乘积恰为极限多项式，保留代数重数。于是上述根数和分离若沿任一逼近边界的序列失效，就与边界多重集矛盾。伴随映射在 Hermitian 实基中的矩阵为实矩阵，小圆盘内的唯一根必须等于其共轭，因此为正实数。
+
+CP 次保单位映射的幂在 Hermitian 算子范数下有界；将一般复矩阵分解为两个 Hermitian 矩阵可得复空间上的幂同样有界，故全部谱模长至多一。所取正实根严格支配其余根，所以就是 $r(\Gamma)$。若仪器不失效，第 71 节的有限收缩块使 $r(\Gamma)<1$。
+
+下面给出投影和有界余项的有限代数表达，避免把谱分离本身当成非正规矩阵的范数界。设 $\chi_\Gamma$ 为四维伴随矩阵的特征多项式，写
+
+$$
+\chi_\Gamma(z)=(z-r(\Gamma))q_\Gamma(z),
+\qquad
+\Pi_\Gamma=\frac{q_\Gamma(\mathcal A_\Gamma)}
+{q_\Gamma(r(\Gamma))}.
+\tag{93.4}
+$$
+
+简单性给分母非零。Cayley–Hamilton 与广义特征空间分解说明：该多项式算子在所取特征直线上为恒等，在其他全部广义特征空间上为零；即使其他谱有 Jordan 块也成立。因此 $\Pi_\Gamma$ 为连续的秩一谱投影，与 $\mathcal A_\Gamma$ 对易。
+
+令
+
+$$
+\mathcal D_\Gamma=
+(\operatorname{id}-\mathcal A_\Gamma+\Pi_\Gamma)^{-1}
+(\operatorname{id}-\Pi_\Gamma).
+\tag{93.5}
+$$
+
+第一因子中的算子在所取特征直线上为乘 $2-r(\Gamma)$，在其余广义特征空间上为 $\operatorname{id}-\mathcal A_\Gamma$，所以在整个共同闭邻域上可逆。它及其逆连续；闭邻域是紧致仪器集的闭子集，故 $\mathcal D_\Gamma$ 具有共同有限范数界。这一步控制了稳定部分全部 Jordan 与非正规贡献。
+
+对不失效仪器，在两份不变子空间上分别计算可得
+
+$$
+(\operatorname{id}-\mathcal A_\Gamma)^{-1}
+=\frac{\Pi_\Gamma}{1-r(\Gamma)}+\mathcal D_\Gamma.
+$$
+
+作用于 $I$，取 $B_\Gamma=\mathcal D_\Gamma(I)$，即得式（93.1）。
+
+在任一 $\Gamma_*\in\mathfrak F_R$ 上，$\mathcal N_{\Gamma_*}(P_*)=P_*$，而伴随的特征直线由 $F_*$ 张成，且 $\operatorname{Tr}(P_*F_*)=1$。因此
+
+$$
+\Pi_{\Gamma_*}(X)=\operatorname{Tr}(P_*X)F_*,
+\qquad\Pi_{\Gamma_*}(I)=F_*,
+\qquad\|\Pi_{\Gamma_*}(I)\|_\infty=1.
+\tag{93.6}
+$$
+
+连续性与边界紧性给：到 $\mathfrak F_R$ 的距离趋零时，$r(\Gamma)\to1$ 且 $\|\Pi_\Gamma(I)\|_\infty\to1$，均为统一极限。式（93.1）的有界余项于是给式（93.2）；指定仪器极限时，投影的连续性还给式（93.3）。$\square$
+
+本证明与《相位边界》卷第 162.6 节同样保留了“统一谱分离加紧性控制预解算子”的条件；这里用式（93.4）—（93.5）直接写出固定四维的有限矩阵表达。没有把一般 CP 映射当成自伴算子，也没有将非正交谱投影换成正交投影。
+

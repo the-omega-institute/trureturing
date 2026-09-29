@@ -1,0 +1,26 @@
+### 101.1 三个相关空间
+
+设 $K$ 为有限维复向量空间，$F$ 为二维复向量空间，$R\subset K\otimes F$ 为任意子空间。定义
+
+$$
+G_R([z])=\{y\in K:y\otimes z\in R\},
+\qquad g_R([z])=\dim G_R([z])
+\quad(z\ne0).
+$$
+
+取一个核恰为 $R$ 的线性映射，并将其限制到 $y\mapsto y\otimes z$，便得到元素关于 $z$ 线性的矩阵。它的最大秩子式说明，$g_R([z])$ 除有限条射线外具有同一个最小值。将这个通常纤维维数记为 $k$。
+
+定义由 $R$ 中全部乘积向量生成的空间，以及这些乘积向量的接收因子跨度：
+
+$$
+R_{\mathrm{prod}}
+=\operatorname{span}\{y\otimes z:y\otimes z\in R,\ z\ne0\},
+$$
+
+$$
+S_R=\operatorname{span}\{y:\exists z\ne0,\ y\otimes z\in R\}.
+\tag{101.1}
+$$
+
+这里 $R_{\mathrm{prod}}\subset K\otimes F$，而 $S_R\subset K$。两者属于不同空间，不把它们的维数直接混用。
+

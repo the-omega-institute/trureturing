@@ -1,0 +1,107 @@
+**引理67.1（三维中间输入和不可能）。** 上述实际候选必须满足 $G_4=U$。
+
+**证明。** 反设 $\dim(U+G_4)=3$。由（67.1），
+$$
+T=U+G_4,\qquad
+S:=Q_3+Q_5,\qquad \dim T=\dim S=3,\qquad
+V_1T=S\otimes B.
+\tag{67.2}
+$$
+同环境跨位正交给 $P\perp S$，所以
+$$
+K=P\oplus S
+\tag{67.3}
+$$
+为四维加三维正交分解。
+
+#### 67.1.1 只剩两种环境正交形状
+
+若 $X\in\{A,C,D\}$ 不正交于 $B$，其对应零位接收平面分别为 $U,G_4,G_6$，均正交于 $S$。若其中两个平面不同，它们张成三维 $T$，于是 $T\perp S$；由（67.3）得到 $T\subset P$。但 $T$ 三维、$G_3\subset P$ 二维，交集非零，而固定 $V_1$ 在二者上分别使用不同射线 $B,C$，不可能。
+
+因此所有不正交于 $B$ 的对应接收平面必须相同。二维 $F$ 中至多一条射线正交于 $B$；若三条均不正交，则 $U=G_4=G_6$，违反 $\dim T=3$。所以恰有一条正交，且其余两个平面相同。正交射线不能是 $D$，否则 $U=G_4$。只余
+$$
+A\perp B,\quad G_4=G_6,
+\qquad\text{或}\qquad
+C\perp B,\quad U=G_6.
+\tag{67.4}
+$$
+
+#### 67.1.2 排除 $A\perp B,\ G_4=G_6$
+
+置 $R=G_4=G_6$。$C,D$ 都不正交于 $B$，故 $R\perp S$，由（67.3）有 $R\subset P$。固定一位块给
+$$
+V_1P=(Q_4\otimes C)\dotplus(Q_6\otimes D),
+\qquad
+V_1R=Q_5\otimes B.
+$$
+$B$ 在 $C,D$ 基中的两个坐标都非零，因此逐环境坐标比较给
+$$
+Q_4=Q_5=Q_6=:Q,\qquad V_1P=Q\otimes F.
+\tag{67.5}
+$$
+
+零位上，$R\otimes C$ 与 $R\otimes D$ 提供整个 $R\otimes F$，结合 $P\otimes B$、$U\otimes A$ 得
+$$
+V_0K=(P\otimes B)\oplus(T\otimes A).
+\tag{67.6}
+$$
+两个环境正交，右侧维数为七，因此确实是全域等式。固定 $V_1p=v\otimes A$ 与（67.2）给 $p\perp T$。首轮环境在 $F$ 中，比较 $V_0k=p\otimes\eta_1$ 与（67.6），其 $A$ 系数若非零就有 $p\in T$，矛盾。所以
+$$
+\eta_1\parallel B,\qquad p\in P,\qquad
+k\in H_2+H_4.
+\tag{67.7}
+$$
+其中最后一式来自 $V_0(H_2+H_4)=P\otimes B$。由（67.5）和 $V_1p=v\otimes A$，还有 $v\in Q$。
+
+由实际零位块 $U\otimes A=V_0H_1$ 与 $Q\otimes A\subset V_1P$ 跨位正交，给 $U\perp Q$。再由 $R\subset P\perp Q$，有 $T\perp Q$。于是
+$$
+H_2+H_4\subset T\oplus Q.
+\tag{67.8}
+$$
+
+按（67.8）把 $k=k_T+k_Q$ 正交分解。由 $V_1k=q\otimes B$ 和 $V_1k_T\in S\otimes B$，$V_1k_Q$ 仍是环境 $B$ 的乘积向量。由于 $k_Q\perp T$，等距性使它正交于整个 $S\otimes B$；跨位正交又使它正交于 $P\otimes B$。结合（67.3），该向量只能为零。因此
+$$
+k\in T,\qquad q\in S.
+\tag{67.9}
+$$
+
+$A\perp B$ 与固定零位块给 $H_1\perp H_4$。所以 $q\perp H_4$；又 $q\in S\perp R$，实际满投影使 $q\perp Q_4=Q$。由 $V_1k=q\otimes B$、$V_1R=Q\otimes B$，得到 $k\perp R$。结合 $k\in T\perp Q$ 和 $H_4\subset R\oplus Q$，有 $k\perp H_4$。固定零位等距再给
+$$
+p\perp G_5.
+\tag{67.10}
+$$
+但 $V_1p=v\otimes A$、$v\in Q$，而 $V_1G_5=Q\otimes D$。$A\perp B$ 且 $D$ 不属于 $B$ 射线，使 $\langle A,D\rangle\ne0$；选取像为 $v\otimes D$ 的 $G_5$ 向量即可得到与 $p$ 的非零内积，违反（67.10）。
+
+#### 67.1.3 排除 $C\perp B,\ U=G_6$
+
+$A,D$ 都不正交于 $B$，所以 $U\perp S$，由（67.3）有 $U\subset P$。$V_1G_3=Q_4\otimes C$ 与 $V_1T=S\otimes B$ 的正交环境使 $G_3\perp T$。因此
+$$
+P=U\oplus G_3.
+\tag{67.11}
+$$
+固定一位块在这两个正交输入平面上分别给 $Q_3\otimes B$、$Q_4\otimes C$。$G_5\subset P$ 的输出为 $Q_6\otimes D$，而 $D$ 在正交环境基 $B,C$ 上的两个系数都非零，故
+$$
+Q_3=Q_4=Q_6=:Q,\qquad V_1P=Q\otimes F.
+\tag{67.12}
+$$
+
+$A$ 不正交于 $B$，$V_1p=v\otimes A$ 与 $P\otimes B\subset V_0K$ 的跨位正交给 $v\in S$。另一方面，$B\perp C$ 给 $H_2\perp H_3$。$u\in U$ 已正交于 $G_3$ 和 $Q$，故 $u\perp H_3$；由 $a^2u+bv\in H_2$、$b\ne0$，得到 $v\perp H_3$。$v\in S\perp G_3$，而 $P_QH_3=Q$，所以
+$$
+v\in S\cap Q^\perp.
+\tag{67.13}
+$$
+
+零位上，$U\otimes A$ 和 $G_6\otimes D=U\otimes D$ 提供整个 $U\otimes F$，结合 $P\otimes B$、$G_4\otimes C$，得到全域饱和
+$$
+V_0K=(P\otimes B)\oplus(T\otimes C).
+\tag{67.14}
+$$
+首轮环境在 $F$ 中，逐环境坐标比较 $p\otimes\eta_1$ 可得 $p\in P+T$。然而（67.2）、（67.12）给
+$$
+V_1(P+T)=(S\otimes B)+(Q\otimes C).
+\tag{67.15}
+$$
+非零 $v$ 满足（67.13），而 $A$ 的 $C$ 坐标非零，因此 $v\otimes A$ 不属于（67.15）。这与 $V_1p=v\otimes A$ 矛盾。
+
+两种形状均被排除。所以 $\dim(U+G_4)=2$，即 $G_4=U$。证明完毕。
+

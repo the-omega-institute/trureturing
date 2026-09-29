@@ -1,0 +1,15 @@
+**定义 111.2（四种信息条件）。** 对固定事件 $P\subseteq X$，在状态 $x$ 处分别定义
+
+$$
+\begin{aligned}
+K_iP(x)&\Longleftrightarrow [x]_i\subseteq P,\\
+EP(x)&\Longleftrightarrow \forall i\in I,\ K_iP(x),\\
+DP(x)&\Longleftrightarrow \bigcap_{i\in I}[x]_i\subseteq P,\\
+CP(x)&\Longleftrightarrow [x]_C\subseteq P.
+\end{aligned}
+$$
+
+这里 $[x]_C$ 由从 $x$ 出发、每一步使用某位参与者的 $\sim_i$、经过任意有限步可以到达的状态组成，包含零步的 $x$。$K_i$ 是个人知识，$E$ 是每个人都知道，$D$ 是分布式知识或信息汇集后的可知，$C$ 是共同知识。$D$ 没有预设信息已经实际集中到某个人手里；$C$ 则要求关于他人知道什么的各层关系也能承受检查。
+
+共同知识可等价写为 $P$、$EP$、$E(EP)$ 等全部有限迭代都在 $x$ 成立：长度为 $n$ 的可及链对应 $n$ 层算子，逐层展开定义即可。它没有给有限心智要求现实中逐条算完无穷串句子；它是模型对所有有限链的统一条件。知识逻辑的这些标准区分可参见 [SEP《Common Knowledge》§2.1](https://plato.stanford.edu/entries/common-knowledge/)，该条目在本卷承担二手概念说明。
+

@@ -1,0 +1,20 @@
+**定义 186.1（固定程序的最坏相对成本）。** 固定 $0<a<1$，令 $J_a=(2a-1,1)$、$\mathcal T_u=\mathcal S_{F(a,u)}$。程序 $\mathcal P$ 由有限多个不随 $u$ 改变的 CPTP 组件 $\mathcal R_j$ 与非负 $C^1$ 概率 $p_j(u)$ 组成，并在整个 $J_a$ 满足
+$$
+\sum_jp_j(u)\mathcal R_j=\mathcal T_u.
+\tag{186.1}
+$$
+采用第185.4节的点态信息量约定，定义
+$$
+I_{\mathcal P}(u)=\sum_{j:p_j(u)>0}\frac{p_j'(u)^2}{p_j(u)},\qquad
+B(a,u)=\frac{1-a^2}{(1-u)(1+u-2a^2)},
+$$
+$$
+R(\mathcal P)=\sup_{u\in J_a}\frac{I_{\mathcal P}(u)}{B(a,u)},
+\qquad
+R_*(a)=\inf_{\mathcal P}R(\mathcal P).
+\tag{186.2}
+$$
+下确界允许任意有限字母数，且每个候选必须用同一套固定组件模拟全部参数。$B$ 是第184节允许按名义点重新设计组件时的最小生成成本。因而 $R_*$ 比较的是统一设计与逐点设计，而不是生成成本与实验可读信息量。
+
+这里沿用 Matsumoto，*On metric of quantum channel spaces*，arXiv:1006.0300v1，第3.3节的经典切向模拟框架。其量子态反向估计的整体交换条件见 arXiv:quant-ph/0511170v1，第6节；以下统一下界直接处理当前通道族每个组件的单位对角约束，不将该状态条件当作通道的极小极大结论。
+

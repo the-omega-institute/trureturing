@@ -1,0 +1,41 @@
+#### 2.6.1 固定前缀塔与深度零约定
+
+固定素数 $p\ge2$，令
+
+$$
+X=\mathbb Z_p\cong\{0,1,\ldots,p-1\}^{\mathbb N}.
+\tag{TM.602}
+$$
+
+数字按低位到高位读取。有限字 $s=(s_0,\ldots,s_{d-1})$ 的柱集为
+
+$$
+[s]=\{x\in X:x_i=s_i\ (0\le i<d)\}
+=\left(\sum_{i<d}s_ip^i\right)+p^d\mathbb Z_p.
+\tag{TM.603}
+$$
+
+其深度是 $|s|=d$，归一化 Haar 质量为 $p^{-d}$。深度零的唯一柱集是空字对应的根 $[\varnothing]=X$。两个柱集相交当且仅当一个包含另一个。
+
+对开集 $U\subseteq X$，定义规范最小前缀基
+
+$$
+\operatorname{Min}(U)=
+\begin{cases}
+\{X\},&U=X,\\
+\{[s]: |s|\ge1,\ [s]\subseteq U,\ [s^-]\not\subseteq U\},&U\ne X,
+\end{cases}
+\tag{TM.604}
+$$
+
+其中 $s^-$ 删掉最后一个数字。这里“最小”指已能认证属于 $U$ 的最短前缀；按集合包含关系，它们是 $U$ 内的极大柱集。特别地，$\operatorname{Min}(\varnothing)=\varnothing$。
+
+每个 $x\in U$ 都有一个包含于 $U$ 的柱邻域。在沿 $x$ 的前缀链上，取具有这一性质的最小深度，就得到 $\operatorname{Min}(U)$ 的一个成员。因此
+
+$$
+U=\bigcup_{C\in\operatorname{Min}(U)}C.
+\tag{TM.605}
+$$
+
+这些最小柱集两两不交：若两个相交而不相等，则一个严格包含另一个，后者的父柱也包含于 $U$，与最小性矛盾。
+

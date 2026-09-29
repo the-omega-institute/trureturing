@@ -1,0 +1,373 @@
+{
+  "scope": "new transposed two-copy prefix packing, fixed exact prefix checks; not a full-period or old-grid computation",
+  "heights": [
+    4,
+    4
+  ],
+  "query_depths": [
+    6,
+    6
+  ],
+  "pure5_classes": [
+    [
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      2,
+      0,
+      0
+    ],
+    [
+      2,
+      5,
+      0,
+      0
+    ],
+    [
+      2,
+      10,
+      0,
+      0
+    ],
+    [
+      3,
+      25,
+      0,
+      0
+    ],
+    [
+      3,
+      50,
+      0,
+      0
+    ],
+    [
+      4,
+      125,
+      0,
+      0
+    ],
+    [
+      4,
+      250,
+      0,
+      0
+    ]
+  ],
+  "pure7_classes": [
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      1,
+      2
+    ],
+    [
+      0,
+      0,
+      2,
+      7
+    ],
+    [
+      0,
+      0,
+      2,
+      14
+    ],
+    [
+      0,
+      0,
+      3,
+      49
+    ],
+    [
+      0,
+      0,
+      3,
+      98
+    ],
+    [
+      0,
+      0,
+      4,
+      343
+    ],
+    [
+      0,
+      0,
+      4,
+      686
+    ]
+  ],
+  "mixed_rectangles": [
+    [
+      1,
+      3,
+      1,
+      3
+    ],
+    [
+      1,
+      3,
+      1,
+      4
+    ],
+    [
+      1,
+      3,
+      2,
+      21
+    ],
+    [
+      1,
+      3,
+      2,
+      28
+    ],
+    [
+      1,
+      3,
+      3,
+      147
+    ],
+    [
+      1,
+      3,
+      3,
+      196
+    ],
+    [
+      1,
+      3,
+      4,
+      1029
+    ],
+    [
+      1,
+      3,
+      4,
+      1372
+    ],
+    [
+      2,
+      15,
+      1,
+      3
+    ],
+    [
+      2,
+      15,
+      1,
+      4
+    ],
+    [
+      2,
+      15,
+      2,
+      21
+    ],
+    [
+      2,
+      15,
+      2,
+      28
+    ],
+    [
+      2,
+      15,
+      3,
+      147
+    ],
+    [
+      2,
+      15,
+      3,
+      196
+    ],
+    [
+      2,
+      15,
+      4,
+      1029
+    ],
+    [
+      2,
+      15,
+      4,
+      1372
+    ],
+    [
+      3,
+      75,
+      1,
+      3
+    ],
+    [
+      3,
+      75,
+      1,
+      4
+    ],
+    [
+      3,
+      75,
+      2,
+      21
+    ],
+    [
+      3,
+      75,
+      2,
+      28
+    ],
+    [
+      3,
+      75,
+      3,
+      147
+    ],
+    [
+      3,
+      75,
+      3,
+      196
+    ],
+    [
+      3,
+      75,
+      4,
+      1029
+    ],
+    [
+      3,
+      75,
+      4,
+      1372
+    ],
+    [
+      4,
+      375,
+      1,
+      3
+    ],
+    [
+      4,
+      375,
+      1,
+      4
+    ],
+    [
+      4,
+      375,
+      2,
+      21
+    ],
+    [
+      4,
+      375,
+      2,
+      28
+    ],
+    [
+      4,
+      375,
+      3,
+      147
+    ],
+    [
+      4,
+      375,
+      3,
+      196
+    ],
+    [
+      4,
+      375,
+      4,
+      1029
+    ],
+    [
+      4,
+      375,
+      4,
+      1372
+    ]
+  ],
+  "label_count": 24,
+  "original_class_count": 48,
+  "mixed_pair_checks": 496,
+  "mixed_pure_checks": 512,
+  "mixed_query_checks": 1536,
+  "pure5_mass": "313/625",
+  "pure7_mass": "1601/2401",
+  "mixed_union_mass": "4992/60025",
+  "source_mass": "501113/1500625",
+  "actual_survivor_mass": "53759/214375",
+  "finite_query_hinges": {
+    "1": {
+      "pure_source_hinge": "536443242/1838265625",
+      "actual_survivor_hinge": "536443242/1838265625",
+      "saving": "0"
+    },
+    "2": {
+      "pure_source_hinge": "212297217/1838265625",
+      "actual_survivor_hinge": "212297217/1838265625",
+      "saving": "0"
+    },
+    "3": {
+      "pure_source_hinge": "109964392/1838265625",
+      "actual_survivor_hinge": "109964392/1838265625",
+      "saving": "0"
+    },
+    "4": {
+      "pure_source_hinge": "48125167/1838265625",
+      "actual_survivor_hinge": "48125167/1838265625",
+      "saving": "0"
+    },
+    "6": {
+      "pure_source_hinge": "12998957/1838265625",
+      "actual_survivor_hinge": "12998957/1838265625",
+      "saving": "0"
+    }
+  },
+  "complete_anchor_query_numerator": "10510427/36015000",
+  "complete_anchor_query_norm": "10510427/9031512",
+  "pure_source_query_norm": "10510427/12026712",
+  "limiting_complete_anchor_query_norm": "7/6",
+  "checks": {
+    "pure5_pairwise_disjoint": true,
+    "pure7_pairwise_disjoint": true,
+    "mixed_pairwise_disjoint": true,
+    "all_mixed_rectangles_in_complete_pure_survivor": true,
+    "all_positive_query_cylinders_disjoint_from_mixed_union": true,
+    "pure5_query_cylinders_avoid_pure5": true,
+    "pure7_query_cylinders_avoid_pure7": true,
+    "exactly_two_classes_per_numerical_original_label": true,
+    "two_pure25_in_root0": true,
+    "two_pure125_in_live_cell0mod25": true,
+    "roots3and4_have_no_pure5_deletion": true,
+    "raw_packing_closed_formula": true,
+    "survivor_mass_positive": true,
+    "count_law_mass_p5": true,
+    "count_law_mass_p7": true,
+    "enough_mass_in_load1_to_pay_all_mixed_deletion": true,
+    "actual_pushforward_mass": true,
+    "zero_anchor_hinge_saving_t1": true,
+    "zero_anchor_hinge_saving_t2": true,
+    "zero_anchor_hinge_saving_t3": true,
+    "zero_anchor_hinge_saving_t4": true,
+    "zero_anchor_hinge_saving_t6": true,
+    "normalization_strictly_increases_anchor_query_norm": true,
+    "limiting_anchor_query_norm": true
+  },
+  "passed_count": 24
+}

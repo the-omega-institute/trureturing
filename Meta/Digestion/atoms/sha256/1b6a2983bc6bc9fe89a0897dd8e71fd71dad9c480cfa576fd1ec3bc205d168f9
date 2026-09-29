@@ -1,0 +1,14 @@
+**定理 3.3（三次发射时的首个严格容量差）。** 等权情形在 \(n=2\) 对任何非空 \(\Theta\) 都有 \(k_2=3\)。在 \(n=3\)，已知单一相位只需四维，而任意两个不同候选相位已经需要五维。
+
+证明。记 \(a=\sqrt\alpha,b=\alpha\)。长度二的共同支撑恒为 \(\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}\)。长度三的四列为
+\[
+\begin{aligned}
+\chi_{00}^{3}(\vartheta)&=a^2|000\rangle+b e^{i\vartheta}|010\rangle,\\
+\chi_{01}^{3}(\vartheta)&=ab e^{i\vartheta}|001\rangle,\\
+\chi_{10}^{3}(\vartheta)&=a e^{i\vartheta}|100\rangle,\\
+\chi_{11}^{3}(\vartheta)&=b e^{2i\vartheta}|101\rangle.
+\end{aligned}
+\tag{3.7}
+\]
+单相位给四条独立列；任意两个不同相位使第一行的两份向量独立，另三条射线位于不交支撑，总维数五。物理下界与达到性由定理2.1承担。证明完毕。
+

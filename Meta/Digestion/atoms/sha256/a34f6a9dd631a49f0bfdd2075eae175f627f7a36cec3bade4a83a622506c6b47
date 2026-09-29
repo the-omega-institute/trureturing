@@ -1,0 +1,43 @@
+### 241.4 受限参考维数的明确区间
+
+若纯联合输入的 Schmidt 秩至多为 $h$，则 $\operatorname{rank}\rho\le h$。对非零本征值用 Cauchy–Schwarz，得到
+$$
+1=(\operatorname{Tr}\rho)^2
+\le h\operatorname{Tr}\rho^2,
+\qquad\operatorname{Tr}\rho^2\ge1/h.
+\tag{241.23}
+$$
+故（241.17）给
+$$
+\boxed{
+D_h(\mathcal S^{\triangle})
+\le D_*-\kappa\left(\frac1h-\frac1d\right),
+\qquad1\le h\le d.
+}
+\tag{241.24}
+$$
+其中 $D_h$ 仍指同一固定通道在 Schmidt 秩至多 $h$ 的纯输入上的最坏实际半迹距离。$h<d$ 时右侧比完整值低一个明确正数；$h=d$ 时缺口项为零，与最大纠缠取等相容。
+
+在固定 $h$ 维参考系统上，任意混合联合输入可分解为纯态，每个分量的 Schmidt 秩都至多为 $h$。迹范数凸性给同一上界。更一般地，若一份混合联合态具有一个分解
+$$
+\Omega=\sum_t p_t|\psi_t\rangle\langle\psi_t|,
+\qquad p_t\ge0,\quad\sum_tp_t=1,
+\quad\operatorname{SchmidtRank}(\psi_t)\le h,
+\tag{241.25}
+$$
+即其 Schmidt number 至多为 $h$，则即使总参考空间大于 $h$，逐项应用（241.24）和凸性仍给同一上界。这一扩展依赖实际存在的分解条件，不把混合态边缘秩当作 Schmidt number。
+
+结合§240已构造的 $h+1$ 坐标子空间最大纠缠输入，得到双侧区间
+$$
+\boxed{
+1-\frac{h+1}{Nh}
+\le D_h(\mathcal S^{\triangle})
+\le1-\frac{d+1}{Nd}
+-\frac{d+1}{Nd^2}\left(\frac1h-\frac1d\right).
+}
+\tag{241.26}
+$$
+$h=1$ 的精确值已经由§239给出，仍为 $1-2/N$；$h=d$ 时两端一致。对 $1<h<d$，本式是一段已证区间，没有把左端候选式宣称为精确值。
+
+本显式界确实不总紧。取 $d=2,N=3,h=1$，有 $D_*=1/2$、$\kappa=1/4$，因此（241.24）给缺口至少 $1/8$、$D_1\le3/8$；而已知精确值是 $D_1=1/3$，真实缺口为 $1/6$。
+

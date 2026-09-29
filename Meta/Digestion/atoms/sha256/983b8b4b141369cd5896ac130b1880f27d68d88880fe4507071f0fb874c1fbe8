@@ -1,0 +1,31 @@
+**定义 389.1（记录耦合与行坐标约定）。** 设系统空间为 $S=\mathbb C^d$，$d\ge1$，固定正交基 $\{|i\rangle\}_{i=1}^d$。记录向量 $r_1,\ldots,r_d$ 均归一化，其张成空间为 $E=\mathbb C^r$。在固定记录基中，将 ket 的坐标写成矩阵的行：
+
+$$
+R_{i\alpha}=(r_i)_\alpha,\qquad
+C=RR^\dagger,\qquad
+C_{ij}=\sum_\alpha(r_i)_\alpha\overline{(r_j)_\alpha}
+       =\langle r_j|r_i\rangle.
+$$
+
+因而 $R$ 满列秩，$C\succeq0$ 且 $C_{ii}=1$；称这样的 $C$ 为复相关矩阵。记 $A\circ X$ 为逐项乘积。记录等距映射为
+
+$$
+J|i\rangle=|i\rangle\otimes|r_i\rangle.
+$$
+
+本定义承接第 222 节的记录重叠通道，并保留第 88 节关于未撤销记录的限制。作为后续推导的基础，直接在矩阵单位上计算得
+
+$$
+J^\dagger J=I_S,\qquad
+\operatorname{Tr}_E(JXJ^\dagger)=C\circ X.
+$$
+
+第一式因为不同 $i$ 的系统因子正交且 $\|r_i\|=1$；第二式因为 $|i\rangle\langle j|$ 对应的记录项 $|r_i\rangle\langle r_j|$ 的迹为 $C_{ij}$。任取单位空白向量 $|b\rangle\in E$，两个正交族 $\{|i\rangle|b\rangle\}$ 与 $\{|i\rangle|r_i\rangle\}$ 都能补成 $S\otimes E$ 的正交基，按基映射便得到酉算子 $V$，满足
+
+$$
+V(|\psi\rangle\otimes|b\rangle)=J|\psi\rangle,\qquad
+V^\dagger J|\psi\rangle=|\psi\rangle\otimes|b\rangle.
+$$
+
+这只给出完整联合控制下的逆转。下述恢复接口不包含再次施加这个联合酉算子的权限。
+

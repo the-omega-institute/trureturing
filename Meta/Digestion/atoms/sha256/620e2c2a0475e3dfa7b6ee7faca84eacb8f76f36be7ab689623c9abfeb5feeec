@@ -1,0 +1,11 @@
+**定义 22.1（有限记录的恢复常数）。** 设 $d\ge2$，固定有限 POVM $\{H_j\}_{j=1}^J$，定义
+
+$$
+\mathsf M(\Delta)=(\operatorname{Tr}(\Delta H_j))_{j=1}^J,
+\qquad
+\alpha=\min_{\substack{\Delta=\Delta^\dagger,\ \operatorname{Tr}\Delta=0\\\|\Delta\|_2=1}}
+\|\mathsf M(\Delta)\|_{\ell^2}.
+$$
+
+$\|\cdot\|_2$ 为 Hilbert–Schmidt 范数。$\alpha$ 依赖所用记录坐标与噪声范数，单独比较不同粗粒化前后的 $\alpha$ 不构成信息增减的判据。
+

@@ -12,7 +12,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/retained_deletion_survival_comparison.json'
-PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/retained-transport/retained_deletion_heavy_comparison.py': '553c281d5de5a9bcd9098ea933f6cccf046b587132e6fa49ec4aa8b44b4ec86f', 'certificates/source_norms/retained-transport/retained_deletion_heavy_comparison.json': '3222b53f9c9dd173b80000e66cba64f13d22e1e42e85f98f400c8ab9eca42f66'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/retained-transport/retained_deletion_heavy_comparison.py': 'b5c823b78f082228be4a2ec71eecde1b29b220dcf680fb3f1e478270af4c77d7', 'certificates/source_norms/retained-transport/retained_deletion_heavy_comparison.json': '279ff33ee45167057143544e9141465fed831ccfd84ad389999dc330a373725b'}
 
 
 def require(condition, message):

@@ -1,0 +1,22 @@
+**推论 36.2（无限等待与零误差极限不能交换）。** 记暗基态输入的截止点击概率为 $h_m(\gamma)=1-(1-\gamma)^m$。则
+
+$$
+\lim_{\gamma\downarrow0}\lim_{m\to\infty}h_m(\gamma)=1,
+\qquad
+\lim_{m\to\infty}\lim_{\gamma\downarrow0}h_m(\gamma)=0.
+$$
+
+每个固定正 $\gamma$ 的平均首次点击轮数为 $1/\gamma$，且 $\|R_\gamma-R_0\|_\infty=1$。
+
+证明。对正 $\gamma$，$d$ 输入的首次点击概率为 $\gamma(1-\gamma)^{n-1}$，给出几何等待与期望；固定 $m$ 时 $h_m(\gamma)\to0$。最终效果差为 $P_d$。$\square$
+
+对任意 $0<\gamma_0\le1$，这一族没有共同趋零的等待尾界：每个有限 $m$ 都有
+
+$$
+\sup_{0<\gamma\le\gamma_0}
+\|\mathcal A_\gamma^m(R_\gamma)\|_\infty
+=\sup_{0<\gamma\le\gamma_0}(1-\gamma)^m=1.
+$$
+
+因此，“每台已知有限维装置分别具有收敛尾界”不能代替“对所有校准相容装置具有同一个尾界”。这里的差别已由同一二维模型实现，无需无穷维状态空间。
+

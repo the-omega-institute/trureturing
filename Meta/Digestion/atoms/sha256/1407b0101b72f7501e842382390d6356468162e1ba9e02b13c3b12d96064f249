@@ -1,0 +1,21 @@
+**定理 243.2（精确参考资源的乘法与加法律）。** 对（243.18）的固定张量通道对，在全部纯联合探针
+$$
+|\psi\rangle\in(H_1\otimes H_2)\otimes E
+$$
+中优化，不限制 $H_1$ 与 $H_2$ 之间的相关性，则
+$$
+\boxed{
+r_{\min}(\mathcal S_{12})
+=r_{\min}(\mathcal S_1)r_{\min}(\mathcal S_2),
+}
+\tag{243.23}
+$$
+$$
+\boxed{
+E_{\min}(\mathcal S_{12})
+=E_{\min}(\mathcal S_1)+E_{\min}(\mathcal S_2).
+}
+\tag{243.24}
+$$
+这里最小资源都指精确达到各自完整距离（243.22）或（243.3）。
+

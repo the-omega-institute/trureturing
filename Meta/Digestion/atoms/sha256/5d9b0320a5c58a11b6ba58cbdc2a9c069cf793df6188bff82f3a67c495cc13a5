@@ -1,0 +1,81 @@
+**定理 24.1（网半径、导数阶数与完整恢复误差）。** 给定非空 $`\Theta\subseteq\mathbb T`$、$`n\ge4`$、$`h>0`$ 及整数 $`k\ge1`$，存在一份维数至多
+
+$$
+4kP(\Theta,h)
+\tag{24.2}
+$$
+
+的全域 CPTP 编解码，对全部候选相位及全部参考完整输入，其联合半迹恢复误差至多
+
+$$
+\boxed{
+\min\left\{1,\;
+2\sqrt{\frac{(g_n^2h^2/2)^k}{k!}}\right\}
+\le
+\min\left\{1,\;
+2\sqrt{\frac{(nh^2/2)^k}{k!}}\right\}.
+}
+\tag{24.3}
+$$
+
+特别地，只要右侧的第二项不超过 $`\epsilon`$，就有
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta)
+\le\min\{2n-1,\;4kP(\Theta,h)\}.
+}
+\tag{24.4}
+$$
+
+常数统一于 $`\Theta,n,h,k`$。本定理允许集合不可测、非闭，也允许 $`h>\pi`$；此时分离数为一。
+
+证明。先建立两个初始来源基态都适用的共同移心矩估计。令
+
+$$
+Y_i=S_n-\mathbb E_iS_n,
+\qquad
+X=S_n-b_n,
+\qquad
+c_i=\mathbb E_iS_n-b_n=(i-\tfrac12)h_n.
+\tag{24.5}
+$$
+
+（5.7）的条件取值区间宽度及 Hoeffding 指数估计给，对全部实数 $`t`$，
+
+$$
+\mathbb E_i e^{tY_i}\le e^{V_nt^2/8}.
+\tag{24.6}
+$$
+
+同时使用 $`t`$ 与 $`-t`$，并用 $`|c_i|=h_n/2`$ 及 $`\cosh u\le e^{u^2/2}`$，得到
+
+$$
+\begin{aligned}
+\mathbb E_i(e^{tX}+e^{-tX})
+&\le2e^{V_nt^2/8}\cosh(tc_i)\\
+&\le2e^{g_n^2t^2/8}.
+\end{aligned}
+\tag{24.7}
+$$
+
+这里没有声称 $`X`$ 在每个初态下均值为零。对 $`t>0`$，事件 $`|X|\ge u`$ 上有 $`e^{tX}+e^{-tX}\ge e^{tu}`$。优化 $`t`$ 给
+
+$$
+\Pr_i\{|S_n-b_n|\ge u\}
+\le2e^{-2u^2/g_n^2}.
+\tag{24.8}
+$$
+
+由尾积分公式，对每个整数 $`k\ge1`$，
+
+$$
+\begin{aligned}
+\mathbb E_i|S_n-b_n|^{2k}
+&=2k\int_0^\infty u^{2k-1}
+\Pr_i\{|S_n-b_n|\ge u\}\,du\\
+&\le2k!\left(\frac{g_n^2}{2}\right)^k.
+\end{aligned}
+\tag{24.9}
+$$
+

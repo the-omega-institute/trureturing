@@ -1,0 +1,52 @@
+**定理82.3（通用双侧锐利秩界）。** 在本节合同下，每个非零复 $z$ 都满足
+$$
+\max(0,q-d)\le\operatorname{rank}L(z)
+\le\min\left\{q,\left\lfloor\frac{q+d}{2}\right\rfloor\right\}.
+\tag{82.17}
+$$
+对每个满足（82.13）的整数对 $(q,d)$ 及每个固定可逆 $A$，第82.4节的同一个构造在射线 $e_0$ 上达到右端，在射线 $e_1$ 上达到左端。
+
+**证明。** 上界已经由定理82.1证明。为证明下界，固定非零 $z$，置
+$$
+u=|z_0|^2,\qquad v=|z_1|^2,\qquad
+\alpha=\frac{s}{\Delta}(\mu^2u+\nu^2v)>0,
+\qquad \widehat H=[\,H_0\ H_1\,].
+$$
+由（82.4）及两个对角式的解，直接展开得到
+$$
+L(z)L(z)^*
+=\alpha I_Q+\widehat H(B_z\otimes I_d)\widehat H^*,
+\tag{82.18}
+$$
+其中二维厄米矩阵为
+$$
+B_z=\frac{s}{\Delta}
+\begin{pmatrix}
+-\mu s u+\mu\nu v&-\Delta z_1\overline{z_0}\\
+-\Delta z_0\overline{z_1}&\mu\nu u-\nu s v
+\end{pmatrix}.
+\tag{82.19}
+$$
+它的行列式恰为
+$$
+\det B_z
+=-\frac{s^3}{\Delta^2}
+(\mu^2u+\nu^2v)(\nu u+\mu v)<0.
+\tag{82.20}
+$$
+确实，展开乘积后 $u^2,v^2$ 的系数分别为 $-\mu^2\nu s$ 与 $-\mu\nu^2s$，而混合项使用
+$\mu\nu(s^2+\mu\nu)-\Delta^2=-s(\mu^3+\nu^3)$；再乘外部系数 $s^2/\Delta^2$ 即得（82.20）。
+
+因此 $B_z$ 有恰一个正特征值和一个负特征值。对它作正负谱分解并吸收正平方根，存在两个映射 $C_+,C_-:\mathbb C^d\to Q$，使
+$$
+L(z)L(z)^*=\alpha I_Q+C_+C_+^*-C_-C_-^*.
+\tag{82.21}
+$$
+负项的秩至多为 $d$。在 $\ker C_-^*$ 上，二次型至少为 $\alpha I$；这个子空间的维数至少为 $q-d$。当 $q>d$ 时，它与 $L(z)L(z)^*$ 的核相交为零，所以 $\operatorname{rank}L(z)\ge q-d$；当 $q\le d$ 时，所需下界为零，自动成立。这证明（82.17）。
+
+再核对同一个取等构造。若 $d\le q\le3d$，第82.4节使用 $n_3$ 个三维块、$n_2$ 个二维块及 $n_1$ 个标量块。在 $e_0$ 上已达到上界；在 $e_1$ 上，所有标量块的纤维系数为零，三维和二维块的纤维秩分别为二和一，故总秩为
+$$
+2n_3+n_2=q-d.
+$$
+若 $q\le d\le2q$，该节的全部块都是 $L_1=0$ 的标量块，所以在 $e_1$ 上总秩为零，恰为 $\max(0,q-d)$。两种情形均由同一个固定 $M$ 在两条指定实际射线上达到上下端，证明完毕。
+

@@ -1,0 +1,15 @@
+### 95.2 完整二维一位纤维可以读回当前位置
+
+实际 $G_i$、$2\le i\le6$ 均为二维，且
+
+$$
+G_i\otimes\eta_i\subset\operatorname{ran}V_0.
+$$
+
+对已执行后继 $2\le i\le5$，有二维 $Q_{i+1}$ 满足
+
+$$
+V_1G_i=Q_{i+1}\otimes\eta_{i+1}.
+\tag{95.4}
+$$
+

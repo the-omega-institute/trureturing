@@ -1,0 +1,33 @@
+### 209.7 可行线段上的全类下界
+
+任取（209.10）中的共同 CPTP Choi 对 $\Gamma$，
+不要求它靠近候选，也不限制其 Kraus 数量。
+沿可行线段
+$\Gamma^\sharp+t(\Gamma-\Gamma^\sharp)$，
+完整误差凸；在 $t=0$ 的右导数由邻近可行点上的解析延拓给出。
+因此
+
+$$
+\begin{aligned}
+e(\ell,\ell\tau,\Gamma)
+&\ge V(\ell,\tau)
++\sum_j\operatorname{Tr}[G_j^\sharp(J_j-J_j^\sharp)]\\
+&=V(\ell,\tau)+\sum_j\operatorname{Tr}(S_jJ_j)\\
+&\ge V(\ell,\tau).
+\end{aligned}
+\tag{209.28}
+$$
+
+中间一步使用共同 TP 消去乘子项，并使用 $S_jJ_j^\sharp=0$；
+最后一步由（209.27）及 $J_j\succeq0$ 得到。
+这里仅用可行线段右导数，不声明完整范数在任意环境方向 Fréchet 可微。
+
+解析候选本身严格共同 TP，给出反向上界。
+对原来尚未对称化的解码器，第189节的无损对称化仍适用。
+因此（209.28）覆盖原任务的全部共同 CPTP 操作，证明（209.9）。
+$V$ 是两层隐函数与局部谱解析函数的复合，所以命题209.2成立。
+
+单 Kraus 坐标仅用于产生可达驻点和乘子；
+全局匹配下界没有将多 Kraus 操作从竞争集合中删除。
+该论证也不需要最优物理实现唯一。
+

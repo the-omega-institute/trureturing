@@ -1,0 +1,163 @@
+**定理130.1（一重 AABBB 禁阻）。** 五位实际尾词不能为 $AABBB$。
+
+### 130.1 大侧的分叉使首轮只能采用小侧
+
+反设尾词为 $AABBB$。第129.1节的四维分叉关系给
+
+$$
+X=G_2,\qquad Y=G_3,\qquad
+U=X\oplus Y,\quad X\perp Y,
+$$
+
+$$
+V_1X=Q_3\otimes A,\qquad
+V_1Y=Q_4\otimes B.
+\tag{130.3}
+$$
+
+真实早期向量满足
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+\qquad V_1p=v\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\quad
+X=\operatorname{span}(u,w),\quad
+H_2=\operatorname{span}(a^2u+bv,w),
+\tag{130.4}
+$$
+
+其中 $p,q$ 及 $u,v,w$ 分别正交归一，$ab\ne0$，$v\in U^\perp$。零位像 $V_0H_1=X\otimes A$、$V_0H_2=Y\otimes A$ 给
+
+$$
+H_1\perp H_2.
+\tag{130.5}
+$$
+
+若 $p\in U$，则 $V_1p$ 与 $V_1Y$ 的环境正交，给 $p\perp Y$；（130.4）、（130.5）和 $v\perp U$ 又给 $p\perp u,w$，即 $p\perp X$。这使非零 $p\in U=X\oplus Y$ 正交于自身，矛盾。
+
+所以 $p\notin U$。完整零位首像（130.2）只有在首环境为 $B$ 时才容许这个位置；第三环境的零位纤维是 $U\cap M\subset U$。因此
+
+$$
+[\eta_1]=B,\qquad p\in M\setminus U,
+\qquad q\in M^\perp.
+\tag{130.6}
+$$
+
+### 130.2 同一个 p 迫使两个小侧平面相同
+
+实际 $G_4,G_5\subset M$ 的一位后继均为 $B$。它们的像与 $V_1p=v\otimes A$ 正交，故 $G_4,G_5\perp p$。三维 $M$ 中 $p^\perp\cap M$ 恰二维，所以
+
+$$
+G_4=G_5=T=M\cap p^\perp,
+\qquad M=\mathbb Cp\oplus T.
+\tag{130.7}
+$$
+
+相同零位像 $T\otimes B$ 给 $H_3=H_4$；不同环境又给 $H_2\perp H_3$。
+
+当前第三轮为 $A$，所以 $H_3\subset Y\oplus Q_3$、$Q_3\subset U^\perp$，并且 $H_3$ 满投影到 $Q_3$。由 $u,w\in X\perp Y$ 得 $u,w\perp H_3$。真实 $a^2u+bv\in H_2\perp H_3$、$b\ne0$ 继而使 $v\perp H_3$。再用 $v\perp Y$ 和满投影，得到
+
+$$
+v\perp Q_3.
+\tag{130.8}
+$$
+
+同一个 $V_1$ 将 $p,X$ 映到 $v\otimes A,Q_3\otimes A$，所以 $p\perp X$。已有 $p\perp Y$，于是
+
+$$
+p\perp U.
+\tag{130.9}
+$$
+
+定义完整一位输入块
+
+$$
+F_A=V_1^{-1}(U^\perp\otimes A),\qquad
+F_B=V_1^{-1}(M^\perp\otimes B).
+$$
+
+它们正交互补，维数分别为三与四。$p,X\subset F_A$，由（130.9）及维数相同，
+
+$$
+F_A=\mathbb Cp\oplus X,\qquad
+U^\perp=\mathbb Cv\oplus Q_3.
+\tag{130.10}
+$$
+
+另一方面，（130.3）、（130.7）直接给
+
+$$
+S_0=\mathbb Cp+X+Y+T.
+\tag{130.11}
+$$
+
+### 130.3 真实首态被迫成为唯一共同一位方向
+
+零位像 $V_0H_1=X\otimes A$ 与 $V_0H_4=T\otimes B$、$V_0H_5=G_6\otimes B$ 正交，所以
+
+$$
+H_1\perp H_4,H_5.
+\tag{130.12}
+$$
+
+第4、第5轮当前均为 $B$，实际
+
+$$
+H_4\subset T\oplus Q_4,\qquad
+H_5\subset T\oplus Q_5,
+$$
+
+并且两者分别满投影到 $Q_4,Q_5$。真实 $q\in H_1\cap M^\perp$，故 $q\perp T$；（130.12）于是给
+
+$$
+q\perp Q_4,Q_5.
+\tag{130.13}
+$$
+
+现在使用同一个真实首态 $k$ 的一位像：
+
+$$
+V_1k=q\otimes B,\qquad
+V_1Y=Q_4\otimes B,\qquad
+V_1T=Q_5\otimes B.
+$$
+
+式（130.13）给 $k\perp Y,T$。首式又使 $k\in F_B=F_A^\perp$，由（130.10）得 $k\perp p,X$。结合（130.11），
+
+$$
+k\perp S_0,\qquad Q=\mathbb Ck,\qquad S_0=k^\perp.
+\tag{130.14}
+$$
+
+最后两式使用真实首态非零及一重共同纤维的维数，不把独立新向量代替 $k$。
+
+### 130.4 同一个完整一位纤维不能既包含 k 又正交于 k
+
+真实首轮零位像为 $V_0k=p\otimes B$。它与 $V_0H_2=Y\otimes A$ 因环境正交而正交；它与 $V_0H_3=T\otimes B$ 因 $p\perp T$ 而正交。所以
+
+$$
+k\perp H_2,H_3.
+\tag{130.15}
+$$
+
+真实 $u\in X\subset S_0=k^\perp$，早期向量 $a^2u+bv\in H_2$ 及 $b\ne0$ 使 $v\perp k$，即 $v\in S_0$。
+
+当前 $H_3\subset Y\oplus Q_3$ 且 $Y\subset S_0$；（130.15）给 $H_3\subset S_0$，后期满投影于是使 $Q_3\subset S_0$。具体地，每个 $z\in Q_3$ 都有提升 $y+z\in H_3$，其中 $y\in Y\subset S_0$，相减即得 $z\in S_0$。
+
+因此（130.10）给
+
+$$
+U^\perp=\mathbb Cv\oplus Q_3\subset S_0.
+$$
+
+但（130.14）中的非零 $k$ 属于 $S_0^\perp\subset U^\perp$，遂同时属于 $S_0$ 与 $S_0^\perp$，矛盾。定理130.1得证。
+
+结合第129节，一重共同纤维的全部实际候选只剩大侧先行的交替尾词 $ABABA$。这仍不要求首轮属于尾对，也不证明剩余词可实现。二重共同纤维的剩余情形另行检验，一般容量区间仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

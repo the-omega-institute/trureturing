@@ -1,0 +1,18 @@
+**引理155.3（实际通道与外围相位通道的距离）。** 对全部 $n\ge0$，
+
+$$
+\boxed{
+\frac12\|\mathcal R_n-\mathcal R_{g^n}\|_\diamond
+\le\sqrt D\,B\,\kappa^{\lfloor n/L\rfloor}.
+}
+\tag{155.10}
+$$
+
+**证明。** 由（155.7），两通道之差恰为
+$\mathcal F^n(I_{\mathscr V}-\Pi)\mathcal E_\omega$。写 $n=Lk+t$，$0\le t<L$。其 Choi 矩阵的四个输出块均在 $\mathscr H$ 内，逐块施加 $\mathcal A^{Lk}$ 后的 Hilbert–Schmidt 范数至多乘以 $\kappa^k$，所以总 Choi Hilbert–Schmidt 范数至多 $B\kappa^k$。
+
+两项均为 CPTP，差映射保持厄米性。按第154节（154.17），二维输入、$2D$ 维输出给
+$\tfrac12\|\Delta\|_\diamond\le\sqrt D\|J(\Delta)\|_{\mathrm{HS}}$。代入即得。证毕。
+
+因此这仍是原始来源输入及任意参考下的通道界。使用时，须给出实际的投影、收缩块及常数；谱半径小于一只证明存在这样的有限块，不代替（155.8）的核验。
+

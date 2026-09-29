@@ -1,0 +1,22 @@
+### 211.7 全体最优器的唯一性与临界线
+
+若另一个 Choi 对也最优，（211.31）等号条件强制
+
+$$
+\operatorname{ran}J_0\subseteq\mathbb Ck_0,\qquad
+\operatorname{ran}J_1\subseteq\ker S_1.
+\tag{211.32}
+$$
+
+$\mu>0$ 时两份结果至多秩一；
+$\mu=0$ 时结果1至多秩二。
+在此固定核面内，靠近候选的每个 PSD 点都可用同一局部图表示，
+且 $t\ge0$。
+结果0只改变 $k_0$ 的正权重；
+在 $\operatorname{span}\{k_1,w\}$ 内，对结果1的正 $a$ 主元
+作 Schur 分解，余项是非负标量乘 $ww^\dagger$。
+$w_a=0,w_b=1$ 保证这恰落入当前图。
+
+在固定小图内，前述每次消元也是真实局部最小化：
+
+- 快 Hessian 严格正定；

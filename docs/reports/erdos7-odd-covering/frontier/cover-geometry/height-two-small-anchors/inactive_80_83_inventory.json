@@ -1,0 +1,885 @@
+{
+  "scope": "Finite necessary normalized cut shapes only. The exact80 consumers use unchanged complete fibres. The five exact83 open shapes are not claimed realizable or impossible.",
+  "two_inactive_exact80": [
+    {
+      "kind": "FF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            1,
+            1,
+            3,
+            3
+          ],
+          "Z": 9,
+          "p": 3,
+          "forward": 18
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Z": 10,
+          "p": 6,
+          "forward": 20
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "kind": "FF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            3
+          ],
+          "Z": 9,
+          "p": 4,
+          "forward": 18
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ],
+          "Z": 10,
+          "p": 5,
+          "forward": 20
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "kind": "FF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            3
+          ],
+          "Z": 9,
+          "p": 4,
+          "forward": 18
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Z": 10,
+          "p": 6,
+          "forward": 20
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "kind": "FF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            1,
+            2,
+            3,
+            3
+          ],
+          "Z": 10,
+          "p": 4,
+          "forward": 20
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Z": 9,
+          "p": 5,
+          "forward": 18
+        }
+      ],
+      "witness_root": 1
+    },
+    {
+      "kind": "FF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Z": 9,
+          "p": 5,
+          "forward": 18
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ],
+          "Z": 10,
+          "p": 5,
+          "forward": 20
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "kind": "FF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Z": 9,
+          "p": 5,
+          "forward": 18
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Z": 10,
+          "p": 6,
+          "forward": 20
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "kind": "GF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 4,
+          "q": 2,
+          "delta": 0,
+          "z": [
+            1,
+            2,
+            3,
+            3
+          ],
+          "Z": 9,
+          "p": 3,
+          "forward": 18
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Z": 10,
+          "p": 6,
+          "forward": 20
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "kind": "GF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 4,
+          "q": 2,
+          "delta": 0,
+          "z": [
+            1,
+            3,
+            3,
+            3
+          ],
+          "Z": 10,
+          "p": 4,
+          "forward": 20
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Z": 9,
+          "p": 5,
+          "forward": 18
+        }
+      ],
+      "witness_root": 1
+    },
+    {
+      "kind": "GF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 4,
+          "q": 2,
+          "delta": 0,
+          "z": [
+            2,
+            2,
+            2,
+            3
+          ],
+          "Z": 9,
+          "p": 4,
+          "forward": 18
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ],
+          "Z": 10,
+          "p": 5,
+          "forward": 20
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "kind": "GF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 4,
+          "q": 2,
+          "delta": 0,
+          "z": [
+            2,
+            2,
+            2,
+            3
+          ],
+          "Z": 9,
+          "p": 4,
+          "forward": 18
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Z": 10,
+          "p": 6,
+          "forward": 20
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "kind": "GF",
+      "cost": 80,
+      "k": 0,
+      "roots": [
+        {
+          "n": 4,
+          "q": 2,
+          "delta": 0,
+          "z": [
+            2,
+            2,
+            3,
+            3
+          ],
+          "Z": 10,
+          "p": 4,
+          "forward": 20
+        },
+        {
+          "n": 5,
+          "q": 3,
+          "delta": 0,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Z": 9,
+          "p": 5,
+          "forward": 18
+        }
+      ],
+      "witness_root": 1
+    }
+  ],
+  "three_inactive_exact83": [
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 0,
+        "z": [
+          1,
+          3,
+          3,
+          3
+        ],
+        "Z": 10,
+        "p": 4,
+        "forward": 20
+      },
+      "consumer": "open_profile"
+    },
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 0,
+        "z": [
+          2,
+          2,
+          3,
+          3
+        ],
+        "Z": 10,
+        "p": 4,
+        "forward": 20
+      },
+      "consumer": "open_profile"
+    },
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 2,
+        "z": [
+          1,
+          2
+        ],
+        "Z": 3,
+        "p": 3,
+        "forward": 20
+      },
+      "consumer": "clipped_cardinality9"
+    },
+    {
+      "cost": 83,
+      "k": 1,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 1,
+        "z": [
+          0,
+          0,
+          3
+        ],
+        "Z": 3,
+        "p": 0,
+        "forward": 13
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 1,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 1,
+        "z": [
+          0,
+          1,
+          2
+        ],
+        "Z": 3,
+        "p": 1,
+        "forward": 13
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 1,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 1,
+        "z": [
+          1,
+          1,
+          1
+        ],
+        "Z": 3,
+        "p": 2,
+        "forward": 13
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 2,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 0,
+        "z": [
+          0,
+          0,
+          0,
+          3
+        ],
+        "Z": 3,
+        "p": 0,
+        "forward": 6
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 2,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 0,
+        "z": [
+          0,
+          0,
+          1,
+          2
+        ],
+        "Z": 3,
+        "p": 0,
+        "forward": 6
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 2,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 0,
+        "z": [
+          0,
+          1,
+          1,
+          1
+        ],
+        "Z": 3,
+        "p": 1,
+        "forward": 6
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 0,
+        "z": [
+          1,
+          1,
+          2,
+          3,
+          3
+        ],
+        "Z": 10,
+        "p": 4,
+        "forward": 20
+      },
+      "consumer": "open_profile"
+    },
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 0,
+        "z": [
+          1,
+          2,
+          2,
+          2,
+          3
+        ],
+        "Z": 10,
+        "p": 5,
+        "forward": 20
+      },
+      "consumer": "open_profile"
+    },
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 0,
+        "z": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "Z": 10,
+        "p": 6,
+        "forward": 20
+      },
+      "consumer": "open_profile"
+    },
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 2,
+        "z": [
+          1,
+          1,
+          1
+        ],
+        "Z": 3,
+        "p": 3,
+        "forward": 20
+      },
+      "consumer": "clipped_cardinality9"
+    },
+    {
+      "cost": 83,
+      "k": 1,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 1,
+        "z": [
+          0,
+          0,
+          0,
+          3
+        ],
+        "Z": 3,
+        "p": 0,
+        "forward": 13
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 1,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 1,
+        "z": [
+          0,
+          0,
+          1,
+          2
+        ],
+        "Z": 3,
+        "p": 1,
+        "forward": 13
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 1,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 1,
+        "z": [
+          0,
+          1,
+          1,
+          1
+        ],
+        "Z": 3,
+        "p": 2,
+        "forward": 13
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 2,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 0,
+        "z": [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        "Z": 3,
+        "p": 0,
+        "forward": 6
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 2,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 0,
+        "z": [
+          0,
+          0,
+          0,
+          1,
+          2
+        ],
+        "Z": 3,
+        "p": 0,
+        "forward": 6
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    },
+    {
+      "cost": 83,
+      "k": 2,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 0,
+        "z": [
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        "Z": 3,
+        "p": 1,
+        "forward": 6
+      },
+      "consumer": "existing_small_anchor_or_public_singletons"
+    }
+  ],
+  "unresolved_exact83": [
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 0,
+        "z": [
+          1,
+          3,
+          3,
+          3
+        ],
+        "Z": 10,
+        "p": 4,
+        "forward": 20
+      },
+      "consumer": "open_profile"
+    },
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 4,
+        "q": 2,
+        "delta": 0,
+        "z": [
+          2,
+          2,
+          3,
+          3
+        ],
+        "Z": 10,
+        "p": 4,
+        "forward": 20
+      },
+      "consumer": "open_profile"
+    },
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 0,
+        "z": [
+          1,
+          1,
+          2,
+          3,
+          3
+        ],
+        "Z": 10,
+        "p": 4,
+        "forward": 20
+      },
+      "consumer": "open_profile"
+    },
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 0,
+        "z": [
+          1,
+          2,
+          2,
+          2,
+          3
+        ],
+        "Z": 10,
+        "p": 5,
+        "forward": 20
+      },
+      "consumer": "open_profile"
+    },
+    {
+      "cost": 83,
+      "k": 0,
+      "root": {
+        "n": 5,
+        "q": 3,
+        "delta": 0,
+        "z": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "Z": 10,
+        "p": 6,
+        "forward": 20
+      },
+      "consumer": "open_profile"
+    }
+  ],
+  "two_exact80_count": 11,
+  "three_exact83_count": 19,
+  "unresolved_exact83_count": 5,
+  "PASS": true
+}

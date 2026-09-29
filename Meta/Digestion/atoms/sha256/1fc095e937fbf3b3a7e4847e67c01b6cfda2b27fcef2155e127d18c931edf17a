@@ -1,0 +1,27 @@
+**引理 43.2（概率尾与时间矩尾的精确连接）。** 对任意单个模型及 $m\ge0$，有
+
+$$
+\boxed{
+Z_m=mR_m+\mathcal A^m(T),
+\qquad
+R_m\le\frac{T}{m+1}.
+}
+$$
+
+证明。对全部正算子和逐项使用 $n=\sum_{k=0}^{n-1}1$，有
+
+$$
+\sum_{n\ge1}nE_n
+=\sum_{k\ge0}\sum_{n>k}E_n
+=\sum_{k\ge0}R_k=T.
+$$
+
+第 19 节的有限性保证这些正算子和在范数中收敛。再将 $n>m$ 写成 $n=m+(n-m)$，得到
+
+$$
+Z_m=m\sum_{n>m}E_n+\sum_{k\ge m}R_k
+=mR_m+\mathcal A^m(T).
+$$
+
+最后，由 $T\ge\sum_{n>m}nE_n\ge(m+1)\sum_{n>m}E_n$ 得第二式。$\square$
+

@@ -1,0 +1,16 @@
+### 114.1 首轮在尾部两射线上时，正交补仍乘积生成
+
+若 $[\eta_1]=[A]$，令 $\widetilde U=U+\mathbb Cp$，便有
+
+$$
+R_0=(\widetilde U\otimes A)\oplus(W\otimes B),
+$$
+
+$$
+R_1=(\widetilde U^\perp\otimes A)
+\oplus(W^\perp\otimes B).
+\tag{114.4}
+$$
+
+若首轮采用 $B$，对称地把 $p$ 并入 $W$。两种情形下 $R_1$ 都由乘积向量生成，且无需把接收子空间 $U,W$ 同时酉对角化。式（114.4）只使用环境 $A,B$ 正交。
+

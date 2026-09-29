@@ -1,0 +1,6 @@
+**引理 236.2（最小支持关系的精确维数）。** 令 $H=\operatorname{span}\{w_j:j\in J\}$，则
+$$
+\boxed{\dim H=q-1.}
+\tag{236.MP.16}
+$$
+

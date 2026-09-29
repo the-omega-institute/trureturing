@@ -1,0 +1,13 @@
+**证明.** 反射至 \(c=1\)。令 \(T_m\) 包含所有可能的终端对，\(\tau(m)=|T_m|=\sum_{d=1}^{\lfloor m/3\rfloor}(\lfloor m/d\rfloor-2)\)；像的差与右端点决定 \((d,k)\)，故此计数准确且 \(W_F\subseteq T_m\)。混合公差中有 \(d\geq3\) 的成员 \(A\)。于是 \(b=|V\setminus A|\geq\lfloor2m/3\rfloor\)，而 \(\binom{V\setminus A}{2}\subseteq Z_F\)，故
+\[
+ |Z_F\setminus T_m|\geq\binom b2-\tau(m).\tag{9}
+\]
+定理 7 给出 \(|F|\leq\sum_{d=2}^{\lfloor(N-1)/3\rfloor}f(\lceil N/d\rceil)\)。\(N\geq300\) 时，\(\tau(m)\leq N(1+\log N)\)、\(|F|\leq N^2/6+N\log N+N/3\)、\(b\geq2N/3-2\)，因而 (9) 与 \(|F|\) 的差至少为 \(N^2/18-2N\log N-3N+3\geq N^2/180+3>0\)。其中 \(\log N\leq N/50\) 对 \(N\geq300\) 成立。
+
+对于 \(48\leq N\leq299\)，精确整数式
+\[
+ Q(N)=\binom{\lfloor2(N-1)/3\rfloor}{2}-\tau(N-1)
+ -\sum_{d=2}^{\lfloor(N-1)/3\rfloor}f(\lceil N/d\rceil)
+\]
+的最小值为 \(0\)，在 \(N=53\) 取得。对于 \(13\leq N\leq47\) 且有 \(d\geq4\)，以 \(b\geq m-\lceil m/4\rceil\) 代替，最小值为 \(4\)，在 \(N=14\) 取得。余下差集为 \(\{2,3\}\)。其 \(11\leq N\leq47\) 的粗界只在 \(N=11,13,14,15,17\) 为负，数值依次为 \(-4,-2,-3,-1,-6\)；逐一枚举所有公差三的避点 AP，\(\binom{V\setminus A}{2}\setminus T_m\) 的最小大小依次为 \(10,20,20,27,34\)，而 \(|F|\) 的相应上界为 \(7,13,13,17,25\)。命令 `python3 -B tools/scripts/agent/openproblem/erdos272-endgame-check.py` 逐值核验这些精确整数式。\(N\leq10\) 时混合无公差一族不存在，因为公差三的四元 AP 已放不进 \(V\)。故 \(|Z_F\setminus T_m|\geq|F|\)，而 \(|H_F|\leq N-1\)，得 (8)。\(\square\)
+

@@ -1,0 +1,7 @@
+**证明。** 取正右 Perron 向量 $r$，定义 $Q^*_{xy}=W_\tau(x,y)r_y/(\lambda_\tau r_x)$，各行和为一。对任意平稳 $(\pi,Q)$ 展开
+\[
+ \tau\sum_x\pi_x\operatorname{KL}(Q_x\Vert Q_x^*)
+ =\sum\pi_xQ_{xy}c_{xy}-\tau h(\pi,Q)+\tau\log\lambda_\tau.
+\]
+$\log r_y-\log r_x$ 项因平稳性抵消。有限不可约 $Q^*$ 有平稳分布，代入时 KL 为零，得到变分公式。以正倍数的 $r$ 从上下夹住 $\mathbf1$，再作用 $W_\tau^n$，即可得到增长率，无需图非周期。
+

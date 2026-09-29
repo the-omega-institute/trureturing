@@ -1,0 +1,18 @@
+**证明。** 局部纯态框为ST25的$u_N,u_S$。对$E$取$U_N=u_N\otimes I_2$、$U_S=u_S\otimes I_2$，连接为原线丛连接乘$I_2$，曲率迹为原来的两倍，故$C_1=-2$。ST23证明全局等距框不存在。
+
+另一方面，$p$是全局光滑矩阵。编码有全局光滑Kraus家族
+
+$$
+K_a(\boldsymbol n)v=(p(\boldsymbol n)|a\rangle)\otimes v,\qquad a=0,1.
+$$
+
+它们满足$\sum_aK_a^\dagger K_a=\operatorname{tr}(p^2)I=I$，且$\sum_aK_a\rho K_a^\dagger=p^2\otimes\rho=p\otimes\rho$。偏迹是CPTP且$\operatorname{tr}p=1$，所以复合为恒等。∎
+
+该例没有构造全局单Kraus纯态框。局部的Kraus族可以在参数空间混合，编码通道本身却是全局光滑的。每点制备$p(\boldsymbol n)$需要物理装置及该参数的访问权；定理没有宣称参数未知时可免费制备。
+
+### 命题 ST32.2：一个标量线丛扭转可对受限逻辑实验不可见
+
+对任意线丛$L$，$\operatorname{End}(L\otimes\mathbb C^d)$有规范的全局矩阵代数描述，因为局部框过渡$e^{i\alpha}I_d$的共轭作用为恒等。乘在全部逻辑分量上的同一相位，不改变密度态或普通CPTP过程。
+
+若实验进一步允许两条参数路径的相干叠加，并保留可比较的路径参考，相对标量holonomy可以重新成为可测量量。这时实验语言已经扩大，不能沿用前一个受限可观测等价。ST32并不否定Berry相位或ST23的向量框障碍；它精确区分了向量表示、密度通道和含路径参考的实验。
+

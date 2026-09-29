@@ -1,0 +1,24 @@
+### 定理 12.5：矩阵单位给出无需综合征基的实际解码
+
+给定 $F_{ij}\in M_n(\mathbb C)$ 满足
+
+$$
+F_{ij}F_{kl}=\delta_{jk}F_{il},\qquad F_{ij}^\dagger=F_{ji},
+\qquad P=\sum_iF_{ii},\qquad \pi(A)=\sum_{i,j}A_{ij}F_{ij}.
+$$
+
+固定逻辑指标 $v$，以矩阵元定义 $T_b(i,c)=F_{vi}(b,c)$。则 $P$ 为正交投影，$\pi$ 保乘法和伴随，且
+
+$$
+\sum_bT_b^\dagger T_b=P,\qquad
+\left[\sum_bT_bXT_b^\dagger\right]_{ij}=\operatorname{tr}(F_{ji}X).
+\tag{12.6}
+$$
+
+补上 $|v\rangle\langle b|(I-P)$ 得到完整CPTP解码 $\mathcal D_F$。若 $Q$ 满足 $PQ=Q$、$[Q,F_{ij}]=0$ 及 $\operatorname{tr}(F_{vv}Q)=1$，则
+
+$$
+\mathcal D_F(Q\pi(A))=A\quad\forall A\in M_d(\mathbb C).
+\tag{12.7}
+$$
+

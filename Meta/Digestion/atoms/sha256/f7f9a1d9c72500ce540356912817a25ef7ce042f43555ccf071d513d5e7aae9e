@@ -1,0 +1,12 @@
+#### 232.4.3 最后一个缺额仍损失一个完整标签事件
+
+若 $K(\mathcal S)\le2N-1$，至少有一个标签 $j$ 满足 $k_j\le1$。否则所有 $k_j\ge2$ 会使总秩至少为 $2N$。
+
+若 $k_j=0$，该标签的候选概率恒为零。若 $k_j=1$，按上节的振幅行核选择输入，使候选在事件 $|j\rangle\langle j|\otimes P_j$ 上概率为零。目标概率恒为 $1/N$。于是
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\frac1N
+\quad\text{只要 }K(\mathcal S)\le2N-1,
+\tag{232.UC.21}
+$$
+特别地 $D_{2N-1}\ge1/N$。这一下界无需参考，且允许候选在量子输出的任意方向上行动。
+

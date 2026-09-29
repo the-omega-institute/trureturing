@@ -1,0 +1,96 @@
+### 219.6 实际联合族的压缩效应与解析小根
+
+第213节的实际候选族，在固定输入优先 Choi 次序 $(a,c,b,d)$ 下为
+$$
+J_0(p,t)=k_0k_0^\dagger,\qquad
+J_1(p,t)=k_1k_1^\dagger+tww^\dagger,\qquad
+w=(0,u,1,v)^{\mathsf T}.
+\tag{219.16}
+$$
+其 Kraus 矩阵为
+$$
+K_1=\begin{pmatrix}a_1&b_1\\c_1&d_1\end{pmatrix},
+\qquad
+W=\begin{pmatrix}0&1\\u&v\end{pmatrix}.
+$$
+全部坐标关于 $(p,t)$ 在固定带符号 $t$ 邻域中实解析。物理最优器使用
+$$
+t=t^\sharp=a(p)[\Delta(p)]_+,\qquad a>0,\quad a(0)=1.
+\tag{219.17}
+$$
+
+固定量子输出投影 $P_0^{\mathrm{out}}=|0\rangle\langle0|$。目标结果1的压缩输入效应恰为
+$$
+B_1(p,t)
+=K_1^\dagger P_0^{\mathrm{out}}K_1
++tW^\dagger P_0^{\mathrm{out}}W
+=
+\begin{pmatrix}
+|a_1|^2&\overline a_1 b_1\\
+a_1\overline b_1&|b_1|^2+t
+\end{pmatrix}.
+\tag{219.18}
+$$
+因而有精确恒等式
+$$
+\det B_1=t|a_1|^2,\qquad
+\operatorname{Tr}B_1=|a_1|^2+|b_1|^2+t.
+\tag{219.19}
+$$
+中心有 $a_1=1/\sqrt2,b_1=-i/\sqrt2$，所以两根为 $1,0$。
+令 $b_+(p,t)$ 为接近一的大根。它在整个联合邻域解析并保持正值，于是另一根精确为
+$$
+b_-(p,t)=t\,\eta_0(p,t),\qquad
+\eta_0(p,t)=\frac{|a_1|^2}{b_+(p,t)}>0,\qquad
+\eta_0(0,0)=\frac12.
+\tag{219.20}
+$$
+对正小 $t$，$b_-$ 正是 $\lambda_{\min}(B_1)$。这是联合解析因子化，不是固定 $p$ 的点态余项展开。
+
+同时，记
+$$
+A=\|k_1\|^2,\qquad U=\|w\|^2,\qquad
+Q=A U-|\langle k_1,w\rangle|^2.
+$$
+$k_1,w$ 线性独立，故 $Q>0$。$J_1$ 的两枚可能非零根满足
+$$
+z^2-(A+tU)z+tQ=0.
+$$
+令 $\lambda_+(p,t)$ 为其接近一的解析大根，则
+$$
+\lambda_-(p,t)=t\,\eta(p,t),\qquad
+\eta(p,t)=\frac{Q(p,t)}{\lambda_+(p,t)}>0.
+\tag{219.21}
+$$
+在中心，$\|k_1\|^2=\|w\|^2=1$、
+$|\langle k_1,w\rangle|^2=1/2$，故
+$$
+\eta(0,0)=\frac12.
+\tag{219.22}
+$$
+
+实际结果0效应为 $E_0^\sharp=K_0^\dagger K_0$，其算子范数在中心等于一。缩小固定参数箱，可同时保证
+$$
+\|E_0^\sharp\|_\infty\ge\frac34,\qquad
+0\le b_-(p,t^\sharp)\le\frac14.
+$$
+引理219.4于是对全部竞争者给
+$$
+d_2(p)\ge b_-(p,t^\sharp).
+\tag{219.23}
+$$
+其中缺结果候选已经由标签测试统一控制，没有被预先排除。
+
+正谱侧 $t^\sharp=\widehat t(p)=a(p)\Delta(p)>0$，故（219.20）—（219.23）给
+$$
+\frac{d_2(p)}{\lambda(p)}
+\ge
+\frac{\eta_0(p,\widehat t(p))}{\eta(p,\widehat t(p))}
+=:r_{\mathrm{low}}(p).
+\tag{219.24}
+$$
+$\widehat t$ 在整个参数邻域解析，两分母均有正下界，所以
+$r_{\mathrm{low}}$ 是真正联合解析的函数，且 $r_{\mathrm{low}}(0)=1$。
+这里已把任意小 detuning 从比例下界中精确约去，没有除以未受控余项。
+
+

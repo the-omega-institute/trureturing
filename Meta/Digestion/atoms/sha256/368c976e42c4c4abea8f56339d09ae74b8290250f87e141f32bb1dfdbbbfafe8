@@ -1,0 +1,12 @@
+**命题 358.1（均方一致性的影响条件）。** 对每个 $n\ge1$，有 $n$ 份无偏报告 $Z_{n,i}=\theta+\varepsilon_{n,i}$。同一行中的误差两两不相关，且存在与 $n,i$ 无关的常数 $0<v_-\le v_+<\infty$，使 $v_-\le\operatorname{Var}(\varepsilon_{n,i})\le v_+$。对每个 $n$ 预定概率权重 $w_{n,i}$，令 $\widehat\theta_n=\sum_iw_{n,i}Z_{n,i}$。则
+
+$$
+\mathbb E(\widehat\theta_n-\theta)^2\longrightarrow0
+\quad\Longleftrightarrow\quad
+\max_iw_{n,i}\longrightarrow0.
+$$
+
+证明。记 $a_n=\max_iw_{n,i}$、$b_n=\sum_iw_{n,i}^2$。不相关性给出 $v_-b_n\le\mathbb E(\widehat\theta_n-\theta)^2\le v_+b_n$。另一方面，$a_n^2\le b_n\le a_n\sum_iw_{n,i}=a_n$。所以误差趋零当且仅当 $b_n\to0$，而这又当且仅当 $a_n\to0$。证毕。
+
+这里使用的是同一群体内部的不相关性，不要求不同 $n$ 的整组变量相互独立。方差的统一正下界用于必要方向：若某位具有固定正影响的人已经拥有方差趋零的报告，则其影响不消失也可能得到一致估计，不能省略该下界后继续宣称同一充要条件。结论是均方误差趋零；由 $\Pr(|\widehat\theta_n-\theta|\ge\epsilon)\le\mathbb E(\widehat\theta_n-\theta)^2/\epsilon^2$，对每个固定 $\epsilon>0$ 也得到概率收敛。
+

@@ -1,0 +1,66 @@
+**定理 169.3（弱记录邻域中的精确有限记忆 minimax 值）。** 存在 $r_2<1$，使对全部 $r\in(r_2,1)$，一个经典比特同时达到
+$$
+\boxed{
+J_{\rm mem}(r)=J_{{\rm mem},1}(r)
+=W_r^{\rm mem}(\Lambda_r,\sigma)=H(r).
+}
+\tag{169.9}
+$$
+因此它单步无超额风险，且全视界风险趋于
+$$
+\boxed{L=\frac{\sqrt3}{4}e^{-t_*},\qquad
+t_* =\frac\pi{3\sqrt3}.}
+\tag{169.10}
+$$
+式（169.9）是充分接近一时的有限参数精确等式，不指定一个未经求出的数值阈值 $r_2$。
+
+证明。 每个 $\mathcal P_{r,N}$ 都是合法 CPTP 通道，故由逐视界最优值的定义，对任意记忆维数、任意 $\Lambda_r,\sigma_r$ 均有
+$$
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\ge\mathcal R_N(r).
+\tag{169.11}
+$$
+取上确界和下确界便得 $J_{{\rm mem},1}(r)\ge J_{\rm mem}(r)\ge H(r)$。这个下界也允许记忆维数随 $r$ 改变，不需要紧性或先假设下确界可达。
+
+考察比特构造。令 $\varepsilon=1-r$。函数 $m$ 连续、有界且全局 Lipschitz，故与定理161.6相同的有限区间一致极限给出
+$$
+\frac{r^{\lfloor t/\varepsilon\rfloor}}2
+m(\lfloor t/\varepsilon\rfloor\alpha(r))
+\longrightarrow
+b(t):=\frac{e^{-t}}2m(\sqrt3t).
+\tag{169.12}
+$$
+同时，对全部离散视界都有统一尾界
+$$
+0\le\frac{r^N}{2}m(N\alpha(r))\le e^{-\varepsilon N}.
+\tag{169.13}
+$$
+在第一段 $0\le t\le\pi/(2\sqrt3)$，$b(t)=e^{-t}\sin(\sqrt3t)/2$，其唯一最大点是 $t_*$，值为 $L$。在第二段 $\pi/(2\sqrt3)\le t\le\pi/\sqrt3$，求导可知最大点为 $2t_*$，最大值为
+$$
+B_2=\frac34e^{-2t_*}<L.
+\tag{169.14}
+$$
+最后一段满足
+$$
+b(t)\le e^{-t}\le B_3:=e^{-\pi/\sqrt3}<L.
+\tag{169.15}
+$$
+两严格号分别等价于 $t_*>\log\sqrt3$ 和 $2t_*>\log(4/\sqrt3)$。例如 $\sqrt3<7/4$、$\pi>3$ 给出 $t_*>4/7$；由指数级数 $e^{11/10}>3$ 得 $\log\sqrt3<11/20<4/7$。又 $4/\sqrt3<3$，所以 $\log(4/\sqrt3)<\log3<11/10<8/7<2t_*$。因此两处都有严格余量。有限区间一致收敛及（169.13）已证明比特构造的全视界风险趋于 $L$。
+
+为得到有限 $r$ 的精确等式，还需将晚视界与早视界分开。记 $B=\max\{B_2,B_3\}<L$。有
+$$
+\limsup_{r\uparrow1}
+\sup_{N\alpha(r)\ge\pi/2}
+\frac{r^N}{2}m(N\alpha(r))\le B.
+\tag{169.16}
+$$
+严格说明移动分界的处理：先用（169.13）排除 $\varepsilon N$ 任意大的尾；若（169.16）失败，可选晚视界序列 $N_j$，使 $\varepsilon_jN_j$ 在有界区间内收敛到 $t$。由 $\alpha(r_j)/\varepsilon_j\to\sqrt3$，晚视界条件给出 $\sqrt3t\ge\pi/2$；一致收敛使风险趋于 $b(t)\le B$，矛盾。
+
+另一方面，取 $N_r=\lfloor t_*/\varepsilon\rfloor$，它最终属于早视界 $N_r\alpha(r)<\pi/2$，且风险趋于 $L$。选任意 $\eta\in(0,(L-B)/3)$；充分接近一时，晚视界全部风险至多 $B+\eta$，上述早视界风险至少 $L-\eta>B+\eta$。所以比特构造的全视界上确界只能在早视界取得。由（169.7）和定理161.3，每个早视界的风险精确等于 $\mathcal R_N(r)$，于是
+$$
+W_r^{\rm mem}(\Lambda_r,\sigma)
+=\sup_{N\alpha(r)<\pi/2}\mathcal R_N(r)\le H(r).
+$$
+结合（169.11）的反向不等式，得到（169.9）。比特构造已满足单步限制，故两个下确界同时由它达到。证毕。
+

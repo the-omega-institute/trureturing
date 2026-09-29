@@ -1,0 +1,60 @@
+### 231.5 Trine 候选达到完整上界
+
+令 $\sigma_x,\sigma_y,\sigma_z$ 为 Pauli 矩阵，取平面中的三个单位 Bloch 向量
+$$
+n_j=\left(\cos\frac{2\pi(j-1)}3,
+\sin\frac{2\pi(j-1)}3,0\right),\qquad j=1,2,3.
+\tag{231.TR.20}
+$$
+它们满足 $\sum_jn_j=0$、$n_i\cdot n_j=-1/2$ 对 $i\ne j$。选纯态
+$$
+|\psi_j\rangle=\frac{|0\rangle+e^{2\pi i(j-1)/3}|1\rangle}{\sqrt2},
+\qquad P_{\psi_j}=\frac{I+n_j\cdot\sigma}{2}.
+\tag{231.TR.21}
+$$
+标准 trine 效应为
+$$
+E_j=\frac23P_{\psi_j}=\frac{I+n_j\cdot\sigma}{3},
+\qquad\sum_jE_j=I_2.
+\tag{231.TR.22}
+$$
+定义每个标签只有一个 Kraus 的候选
+$$
+C_j=\sqrt{\frac23}\,|r_j\rangle\langle\psi_j|,
+\qquad\mathcal S_j^{\rm tr}(X)=C_jXC_j^\dagger
+=\operatorname{Tr}(E_jX)P_j.
+\tag{231.TR.23}
+$$
+因为 $C_j^\dagger C_j=E_j$，这是一份 CPTP 记录通道。各分支均非零且秩一，标签正交使完整 Choi 秩恰为三。
+
+目标与候选的第 $j$ 个分支之差为
+$$
+(\mathcal S_j^{\rm tr}-\mathcal R_j)(X)
+=\operatorname{Tr}(M_jX)P_j,
+\qquad M_j=\frac13n_j\cdot\sigma.
+\tag{231.TR.24}
+$$
+矩阵 $M_j$ 的本征值为 $\pm1/3$，引理 231.1给每个分支差的 diamond 范数恰为 $1/3$。完整输出的各标签块迹范数相加，因此对任意参考及任意输入矩阵都有
+$$
+\|(\mathcal S^{\rm tr}-\mathcal R)\otimes\operatorname{id}(X)\|_1
+\le\sum_{j=1}^3\frac13\|X\|_1=\|X\|_1.
+\tag{231.TR.25}
+$$
+故
+$$
+\delta_\diamond(\mathcal R,\mathcal S^{\rm tr})\le\frac12.
+$$
+结合（231.TR.19），得到
+$$
+\boxed{D_3=\delta_\diamond(\mathcal R,\mathcal S^{\rm tr})=\frac12.}
+\tag{231.TR.26}
+$$
+
+最大纠缠输入也直接达到这个上界。在输入基下取复共轭，则（231.TR.23）的联合输出为
+$$
+\sigma_{\rm tr}=\frac13\sum_{j=1}^3
+|j\rangle\langle j|\otimes P_j\otimes P_{\overline{\psi_j}}.
+\tag{231.TR.27}
+$$
+目标的各标签参考块为 $I_E/6$，候选为 $P_{\overline{\psi_j}}/3$。每个差块在目标支撑中的两个本征值为 $\pm1/6$；三块总迹范数为一，半迹距离为 $1/2$。
+

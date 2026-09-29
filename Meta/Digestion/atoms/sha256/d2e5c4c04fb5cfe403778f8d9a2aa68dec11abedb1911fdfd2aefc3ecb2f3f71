@@ -1,0 +1,21 @@
+### 22.11 定理：原子分布表示及跳变的精确总量
+
+固定 $0<r<1$ 和 $0\leq x<1$，令
+\[
+a_k=(1-r)^2r^{k-1},\qquad
+\nu_{r,x}=\sum_{k=1}^{\infty}a_k\sum_{j=1}^{k}\delta_{(j-x)/k}.
+\tag{22.20}
+\]
+则 $\nu_{r,x}$ 是集中于 $(0,1]$ 的概率测度，即 $\nu_{r,x}((0,1])=1$；当 $0<r<1$ 时其闭的拓扑支撑为 $[0,1]$。对 $0\leq\alpha\leq1$，
+\[
+\boxed{G_r(\alpha,x)=\nu_{r,x}((0,\alpha])
+=\sum_{k=1}^{\infty}a_k\lfloor x+k\alpha\rfloor.}
+\tag{22.21}
+\]
+因此，内部斜率处的左跳变恰为
+\[
+\boxed{G_r(\alpha,x)-G_r(\alpha-,x)
+=\sum_{\substack{k\geq1\\x+k\alpha\in\mathbb Z}}(1-r)^2r^{k-1}.}
+\tag{22.22}
+\]
+

@@ -1,0 +1,10 @@
+**定义 472.1（共同翻转与平均）。** 对 $y\in\{0,1,\star\}$，令 $\bar y$ 翻转两个位而保持 $\star$ 不变。给定 $T$，定义 $T^{\mathrm f}_y(x)=T_{\bar y}(1-x)$，再置 $\bar T=(T+T^{\mathrm f})/2$。同时交换状态、揭示位与输出位时，$E_r,S_e,J$ 都保持同一模型形式。
+
+项目 [TotalVariation/Convexity](../../../D5/S3/TotalVariation/Convexity.lean) 的 total_variation_joint_convex 对有限实值函数成立，混合参数属于 $[0,1]$ 即可。将它用在这里的两份概率律上，再对状态取最大值，给出
+
+$$
+m(\bar T)\le m(T),\qquad j(\bar T)\le j(T).
+$$
+
+因此，在最小化 $j$ 且约束 $m$ 不超过给定预算时，可以限制到翻转不变的生成器；这个限制不会丢掉更好的非对称方案。对称生成器在 $\star$ 上输出公平位，在两个揭示分支上使用同一个翻转概率 $a\in[0,1]$。
+

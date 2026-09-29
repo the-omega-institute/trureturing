@@ -1,0 +1,44 @@
+#### 2.9.7 Eventual binary tails obstruct presentation-uniform recovery
+
+Suppose instead that some finite depth $d\ge0$ satisfies
+
+$$
+b_n=2\qquad(n>d).
+$$
+
+Fix one cylinder $C=[c]$ of depth $d$, using $C=X$ if $d=0$. Its tail is the full binary digit space. Apply C卷第2.8.5节 under the tail embedding $y\mapsto cy$: normalized tail measure becomes $w_d$ times binary Haar measure, the queried cylinder $[0]$ becomes $[c0]$, and depths are shifted by $d$. The formulas below verify these changed measure and depth contracts. For each machine index $e$, construct a uniformly computable event presentation that always announces
+
+$$
+[c0^n1]\qquad(n\ge1)
+$$
+
+and additionally announces $[c0]$ if machine $e$ halts on its specified input. The announced depths are respectively $d+n+1$ and $d+1$, so every depth has at most one forbidden cylinder.
+
+The unconditional cylinders cover $[c0]\setminus\{c0^\infty\}$. Therefore
+
+$$
+E_e=
+\begin{cases}
+X\setminus[c0],&e\text{ halts},\\
+(X\setminus[c0])\cup\{c0^\infty\},&e\text{ does not halt},
+\end{cases}
+$$
+
+and in both cases
+
+$$
+\boxed{M_e=1-\frac{w_d}{2}.}
+$$
+
+However,
+
+$$
+[c0]\in R_{E_e}
+\quad\Longleftrightarrow\quad
+e\text{ does not halt}.
+$$
+
+If a single algorithm uniformly recovered $R$ from every permitted presentation and a valid mass name, applying it to this family and the same constant rational mass name would decide nonhalting. This is impossible. The counterexample uses one fixed radix sequence and satisfies the presentation restriction for every index $e$ without a halting promise.
+
+The construction uses one fixed finite choice of $d$ to prove nonexistence of a uniform operator for that fixed radix sequence. It does not claim that a program can find $d$ from an arbitrary index for an eventually-binary sequence. Each individual $R_{E_e}$ is decidable by its corresponding explicit formula, so this does not contradict the pointwise theorem.
+

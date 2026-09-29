@@ -1,0 +1,18 @@
+**定义 184.1（有限经典程序的一阶生成成本）。** 固定 $0<a<1$、$2a-1<u<1$，记 $\mathcal T_v=\mathcal S_{F(a,v)}$、$h=(1+u)/2$、$\ell=1-h$。在名义点 $u$ 的有限经典程序由有限多个与参数无关的 CPTP 映射 $\mathcal R_j$，以及在 $u$ 附近可微的概率 $p_j(v)$ 组成，要求全部 $p_j(u)>0$，并满足
+$$
+\sum_jp_j(u)\mathcal R_j=\mathcal T_u,
+\qquad
+\sum_jp_j'(u)\mathcal R_j=\partial_u\mathcal T_u.
+\tag{184.1}
+$$
+定义其局部成本及最优值为
+$$
+I_{\rm prog}(u)=\sum_j\frac{p_j'(u)^2}{p_j(u)},
+\qquad
+\mathfrak C(a,u)=\inf I_{\rm prog}(u),
+\tag{184.2}
+$$
+下确界取遍任意有限字母数的程序。若要求在一个邻域内精确满足 $\sum_jp_j(v)\mathcal R_j=\mathcal T_v$，则记相应最优值为 $\mathfrak C_{\rm exact}(a,u)$。这两种优化都在名义点逐点进行，程序组件在求导时保持固定。
+
+这个操作量属于既有的通道切向模拟框架：Matsumoto，*On metric of quantum channel spaces*，arXiv:1006.0300v1，第3.3节定义以经典程序 Fisher 信息量计量的 $G^{\max}$。量子态版本的反向估计及 RLD 输入下界见同作者 *Reverse estimation theory, Complementarity between SLD and RLD, and monotone distances*，arXiv:quant-ph/0511170v1，第4节的一阶匹配构造与输入信息量不等式。以下给出当前通道族的显式最优值与达到它的固定程序，直接证明所需下界，不把量子态模拟结论直接当作通道模拟等号。
+

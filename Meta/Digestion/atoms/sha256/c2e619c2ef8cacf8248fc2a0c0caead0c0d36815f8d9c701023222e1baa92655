@@ -1,0 +1,26 @@
+**定理252.3（无响应谱隙的全态稳定性）。** 在（252.1）—（252.4）的条件下，
+$$
+\boxed{
+\|\Xi-\Omega\|_1
+\le
+\min\left\{
+2,\ \frac{25\varepsilon}{\sqrt B}
++\left(2+\frac{100\ell}{\sqrt B}\right)
+\sqrt{\min\left\{1,\frac{\ell^2\varepsilon}{4B\sqrt A}\right\}}
+\right\}.
+}
+\tag{252.31}
+$$
+特别地，固定 $A,B$ 后，右侧在 $\varepsilon\to0$ 时为 $O(\sqrt\varepsilon)$。其常数不依赖 $\theta$、参考维数、正常形密度块的最小本征值或响应最小非零奇异值。$\varepsilon=0$ 时恢复§251的唯一性。
+
+证明使用理想源的 $L,\Pi$ 来控制全部竞争态。它不要求从带噪响应稳定提取谱符号或旗标，也没有以此构造一个稳健 Bell 解码程序。
+
+若取得的是估计矩阵 $\widetilde R_a,\widetilde R_b$，并且给定误差合同
+$$
+\sum_{w=a,b}\|\widetilde R_w-\mathcal R_w(\Omega)\|_1\le\eta,
+\qquad
+\sum_{w=a,b}\|\mathcal R_w(\Xi)-\widetilde R_w\|_1\le\zeta,
+\tag{252.32}
+$$
+其中 $\Xi$ 是一个合法候选态，则 $\varepsilon\le\eta+\zeta$。由右侧关于误差的单调性，可在（252.31）中直接用 $\eta+\zeta$ 代替 $\varepsilon$。该推论以存在相应合法候选及源误差合同为前提。
+

@@ -1,0 +1,37 @@
+**定理 27.2（条件边界的拉回闭合被精确运输）。** 对任意 $H\in\mathcal W$ 及 $r_\rho>0$，
+
+$$
+\operatorname{Tr}\bigl[\tau_R(\rho)\Theta_R(H)\bigr]
+=\frac{\operatorname{Tr}(\rho H)}{r_\rho},
+\qquad
+\widetilde{\mathcal N}^{*}\Theta_R(H)=\Theta_R\mathcal A(H).
+$$
+
+因此
+
+$$
+\mathcal A(\mathcal W)\subseteq\mathcal W
+\iff
+\widetilde{\mathcal N}^{*}(\widetilde{\mathcal W})
+\subseteq\widetilde{\mathcal W}.
+$$
+
+指定点击后测试族 $\mathcal Z_x$ 时，还有
+
+$$
+\mathcal C_x^*(\mathcal Z_x)\subseteq\mathcal W
+\iff
+\widetilde{\mathcal C}_x^*(\mathcal Z_x)
+\subseteq\widetilde{\mathcal W}.
+$$
+
+若这些包含关系成立，且每个 $\mathcal Z_x$ 包含终端恒等，则 $b_{\mathcal W}$ 对新过程的首次点击、未点击条件续接及所指定终端测试动态充分。这里的闭合指全部 $\mathcal H_P$ 状态上的同一线性表示；不据此断言受限可达来源必须具有全空间闭合。
+
+证明。第一式用 $H=PHP$ 与迹循环性。第二式由定理 26.4 的拉回公式和 $G\Theta_R(H)G=H$ 得到。$\Theta_R$ 是 $P$ 支撑 Hermitian 空间到 $\operatorname{Herm}(\mathcal H_P)$ 的线性双射，故推出第一个等价。新点击拉回满足
+
+$$
+\widetilde{\mathcal C}_x^*(Z)=\Theta_R\bigl(\mathcal C_x^*(Z)\bigr),
+$$
+
+得到第二个等价。$\Theta_R(R)=I_P$，所以新边界含恒等；对结果概率与每个后继坐标反复拉回，得到第 20 节的动态充分性。正概率后继才归一化，零概率路径不要求条件态。该证明同时说明：$\tau_R(\rho)$ 要配合变换后的仪器与测试使用，不能把原系统上任意中间测量的算子保持原样后仍声称相同条件实验。$\square$
+

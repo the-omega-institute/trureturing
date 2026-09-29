@@ -1,0 +1,6 @@
+## 25. 五终端的确定正交交替环境恰好需要七维
+
+本节仍取已知非退化来源
+$`m_0=a|0\rangle+b|1\rangle,\ m_1=|0\rangle`$，
+$`ab\ne0,\ |a|^2+|b|^2=1`$。固定接收通道取一份固定 Stinespring 等距映射
+$`V:K\otimes B\to K\otimes E`$，接收器独立纯初始化。

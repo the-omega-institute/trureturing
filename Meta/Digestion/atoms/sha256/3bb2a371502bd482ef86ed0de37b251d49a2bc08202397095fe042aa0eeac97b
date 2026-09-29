@@ -1,0 +1,10 @@
+**命题 15.4（相同复表示尺寸可以有不同最优界）。** 令 Q_8 为八元四元数群，D_8=⟨r,s:r^4=s^2=1,srs=r^{-1}⟩ 为八元二面体群，则
+
+$$
+\mathbb Q[Q_8]\cong\mathbb Q^4\times\mathbb H_{\mathbb Q},
+\qquad
+\mathbb Q[D_8]\cong\mathbb Q^4\times M_2(\mathbb Q),
+$$
+
+其中 H_Q 为有理 Hamilton 四元数除环。因此 b_{Q_8}=1、b_{D_8}=2。对 n 阶惰性非负整数群环矩阵，其最优统一均匀化界分别为 n 和 2n。两群复不可约表示维数却同为 1,1,1,1,2，故第 12.3 条对两者都给出 2n。
+

@@ -1,0 +1,306 @@
+**定理 84.2（带噪声方差的常数阶熵展开）。** 对定义 84.1 的每个噪声序列，
+
+$$
+\int f_x(y)|R_M^\sigma(y)-\mathcal H(y)|dy\longrightarrow0.
+\tag{84.2}
+$$
+
+更强的中间结论为
+
+$$
+\int f_x(y)\left|
+ \mathbb E_x[S_x(R)-h_x^{\rm nat}\mid Y=y]
+ -A_M^\sigma y-b_{\rm sur}(y^2-\nu)\right|dy\longrightarrow0.
+\tag{84.3}
+$$
+
+原 Gaussian 空间剖面 $\rho(t)=c_0e^{-\kappa t^2/2}$ 给
+
+$$
+\frac{\gamma g_3}{g_0^2}=\frac2{\sqrt3},\qquad
+b_{\rm sur}=\frac{1-2/\sqrt3}{\nu},\qquad
+\mathcal H(y)=\left(\frac12-\frac2{\sqrt3}\right)
+                  \frac{y^2-\nu}{\nu}-\frac12\ln\nu.
+\tag{84.4}
+$$
+
+特别地，常数阶中心化二次响应的系数为负。
+分母中的 $\sigma_M^2$ 保留了测量对首阶回归的衰减；
+仅有 $\sigma_M\to0$ 并不足以在常数精度删除它。
+
+证明。先加强实际方差剖面的精度。
+使用第 82 章同一个移动核心 $\mathcal C$、外部集 $\mathcal O$ 及 $v_j,e_j,a_x$，有
+
+$$
+V_{\mathcal C}=\sum_{\mathcal C}v_j=\gamma+O_{\mathbb P}(\delta),\qquad
+\nu_M=2\delta^{-1}\sum_{\mathcal C}v_j^2=\nu+O_{\mathbb P}(\delta),\qquad
+\delta^{-2}\sum_{\mathcal C}v_j^3\longrightarrow g_3.
+\tag{84.5}
+$$
+
+为取得前两式的速率，取固定足够大的 $K$，令 $H_Q=\sqrt{K\ln Q}$。
+由于原核心半径满足 $R_M^2/(L_M+\ln Q+1)\to\infty$，这个较小核心最终包含于 $\mathcal C$。
+在 $|j\delta|\le H_Q$ 上，原信号 tuple 的 Stirling 展开给
+
+$$
+f_j^{\rm sig}
+ =\frac{e^{-\kappa(j\delta)^2/2}}{2\pi\lambda\sqrt{ab}}
+ \left[1+O\left(\frac{1+H_Q^3}{\sqrt\lambda}\right)\right].
+\tag{84.6}
+$$
+
+两种 tuple 坐标仍是其均值的固定正比例，三阶率函数余项、取整误差及
+Liouville 斜率误差都被右侧控制。精确混合均值满足
+$m_j/(2qf_j^{\rm sig})=1+O(w+q/M)$，校准参数还满足
+$\sup_{i\in J}|p_i-1/2|=O_{\mathbb P}(w+q^{-1/2}+q/M)$。
+对实际一行、两行精度使用相对阈值 $Q^{-2}$ 的并合 Chebyshev，失败概率至多为
+
+$$
+CQ^4(1+H_Q/\delta)
+ [e^{-c_q\lambda+O(H_Q^2+\ln Q)}+e_{\rm row}]\longrightarrow0.
+\tag{84.7}
+$$
+
+路径行之间的依赖仍由原 $e_{\rm row}$ 项支付。在所得事件上
+
+$$
+\sup_{|j\delta|\le H_Q}
+ \left|\frac{v_j}{\delta\rho(j\delta)}-1\right|
+ \le O\left(Q^{-2}+\frac{1+H_Q^3}{\sqrt\lambda}\right)
+      +O_{\mathbb P}(w+q^{-1/2}+q/M)=o_{\mathbb P}(\delta).
+\tag{84.8}
+$$
+
+对 $\rho,\rho^2,\rho^3$，逐格积分导数给全直线 Riemann 和误差
+不超过 $\delta\|g'\|_1=O(\delta)$。
+选择足够大的 $K$，原第一、第二质量尾界使实际尾部
+$\sum_{|j\delta|>H_Q}v_j$ 及 $\delta^{-1}\sum_{|j\delta|>H_Q}v_j^2$
+均为 $o_{\mathbb P}(\delta^2)$：先对确定 tuple 占据数作期望界，再用 Markov；
+不在坏环境上平均无界量。三次尾和则用核心内 $\max v_j\le C\delta$，
+有 $\delta^{-2}\sum_{\mathcal C,|j\delta|>H_Q}v_j^3\le C\sum_{|j\delta|>H_Q}v_j$。
+这证明 (84.5)，无需三行独立性或第三占据矩。
+
+接着保留第 82 章比较中的未尺度化误差。定义带符号密度
+
+$$
+q_x(y)=\mathbb E_{P_x}[(S_x-h_x^{\rm nat})\varphi_{\sigma_M}(y-T)],\qquad
+q_G(y)=\mathbb E[S_G\varphi_{\sigma_M}(y-T^{\rm G})],\qquad
+S_G=\frac12\sum_{\mathcal C}(Z_j^2-1).
+\tag{84.9}
+$$
+
+这里 $T^{\rm G}$ 正是 (82.7)，精确中心和外部中心截距均保留。
+(82.4)—(82.10) 在乘 $\sqrt\delta$ 之前分别给
+
+$$
+\begin{aligned}
+\|q_x-q_x^{\rm prod}\|_1
+ &\le C(Qa_x+a_x+a_x^2)=O_{\mathbb P}(Q^{-3/2}),\\
+\|q_x^{\rm prod}-\mathbb E[s\varphi_{\sigma_M}(\,\cdot-T^{\rm G})]\|_1
+ &\le CQ\sqrt{D_M/\sigma_M}\longrightarrow0,\\
+\|q_x-q_G\|_1&\longrightarrow0.
+\end{aligned}
+\tag{84.10}
+$$
+
+第二行的额外 $Q$ 因子由 (82.8) 支付；
+第三行还使用乘积律下外部中心信息的精确抵消，以及核心量化信息误差的指数小界。
+这是整个实际后验的中心信息比较，不是由无权 TV 推出无界信息量的收敛。
+
+令 $g_x$ 为 $T^{\rm G}+\sigma_MG_0$ 的辅助密度。
+同一耦合还给 $\epsilon_x:=\|f_x-g_x\|_1\le a_x+CD_M/\sigma_M$。
+实际与参考输出的二阶矩有界于固定高概率环境类，故 Cauchy–Schwarz 给
+
+$$
+\|y(f_x-g_x)\|_1
+ \le [\mathbb E_xY^2+\mathbb E(T^{\rm G}+\sigma_MG_0)^2]^{1/2}\epsilon_x^{1/2},
+\qquad
+\delta^{-1/2}\|y(f_x-g_x)\|_1\longrightarrow0.
+\tag{84.11}
+$$
+
+最后一式用 $\delta^{-1}a_x=O_{\mathbb P}(Q^{-2})$ 及 (82.8)。
+因此从参考密度返回实际密度时，大小为 $\delta^{-1/2}$ 的线性系数也已付清。
+
+现在建立二阶密度导数的统一界。仍按第 82 章模四分块，令
+$T_A=T_0+T_2$、$T_B=T_1+T_3$。
+对全和及这两个半和的特征函数，(82.12) 及独立分块给
+$|\psi(t)|\le m_\delta(t)$、$|\psi'(t)|\le Cm_\delta(t)$。
+于是对各自密度 $h$ 和 $k=1,2$，Plancherel 给
+
+$$
+\begin{aligned}
+\|h^{(k)}\|_2^2+\|yh^{(k)}\|_2^2
+ &\le C_k\int\big[|t|^{2k}|\psi(t)|^2
+       +|kt^{k-1}\psi(t)+t^k\psi'(t)|^2\big]dt\le C_k,\\
+\|h^{(k)}\|_1&\le C_k,\qquad
+\int_{|y|>H}|h^{(k)}(y)|dy\le C_kH^{-1/2}.
+\end{aligned}
+\tag{84.12}
+$$
+
+Fourier 反演将弱导数识别为连续导数。
+全和的特征函数趋于 $e^{-\nu t^2/2}$；多项式加权的 $m_\delta$ 支配、
+(84.12) 的空间尾界及卷积收缩共同给
+
+$$
+\|g_x^{(k)}-\varphi_\nu^{(k)}\|_1\longrightarrow0,
+\qquad \|g_x^{(k)}\|_1\le C_k,\qquad k=1,2.
+\tag{84.13}
+$$
+
+一般导数极限仍由 Herry–Malicet–Poly 的既有理论覆盖；
+显式半块界用于下一步，没有 $\sigma_M^{-2}$ 代价。
+
+令 $w_j=v_j/\sqrt\delta$、$c_j=e_j/\sqrt{v_j}$，并置
+
+$$
+\begin{aligned}
+a_0&=\sum_{\mathcal C}w_j=V_{\mathcal C}/\sqrt\delta,\\
+\mu_G&=\mathbb ET^{\rm G}=\delta^{-1/2}\|e\|^2,\\
+v_G&=\operatorname{Var}(T^{\rm G})
+ =2\sum_{\mathcal C}w_j^2+4\sum_{\mathcal C}w_j^2c_j^2,\\
+\Lambda_G&=v_G+\sigma_M^2,\qquad A_G=a_0/\Lambda_G.
+\end{aligned}
+\tag{84.14}
+$$
+
+逐项非中心量 $c_j$ 不要求小；需要的是
+$\max w_j\le C\sqrt\delta$、$\sum w_j^2\le C$ 及
+$\sum w_j^2c_j^2=\delta^{-1}\sum v_je_j^2\le C\|e\|^2=O_{\mathbb P}(a_x^2)$。
+好环境上 $\Lambda_G$ 一致远离零。
+
+第一次 Gaussian 分部积分给
+
+$$
+\begin{aligned}
+q_G(y)&=-\mathbb E[\mathcal A\varphi_{\sigma_M}'(y-T^{\rm G})],\\
+\mathcal A&=\sum_{\mathcal C}w_jZ_j(Z_j-c_j),\qquad
+\mathcal A_c=\mathcal A-a_0
+ =\sum_{\mathcal C}[w_j(Z_j^2-1)-w_jc_jZ_j].
+\end{aligned}
+\tag{84.15}
+$$
+
+另一方面，对任意适当光滑测试函数 $h$，逐坐标分部积分给
+$\mathbb E[(T^{\rm G}-\mu_G)h(T^{\rm G})]=\mathbb E[\mathcal B h'(T^{\rm G})]$，其中
+
+$$
+\mathcal B=2\sum_{\mathcal C}w_j^2(Z_j-c_j)(Z_j-2c_j),\qquad
+\mathcal B_c=\mathcal B-v_G
+ =\sum_{\mathcal C}[2w_j^2(Z_j^2-1)-6w_j^2c_jZ_j].
+\tag{84.16}
+$$
+
+取 $h(t)=\varphi_{\sigma_M}(y-t)$，并用
+$(y-t)\varphi_{\sigma_M}(y-t)=-\sigma_M^2\varphi_{\sigma_M}'(y-t)$，得到精确含噪声恒等式
+
+$$
+(y-\mu_G)g_x(y)=-\Lambda_Gg_x'(y)
+ -\mathbb E[\mathcal B_c\varphi_{\sigma_M}'(y-T^{\rm G})].
+\tag{84.17}
+$$
+
+消去 (84.15) 中的 $g_x'$，有
+$q_G-A_G(y-\mu_G)g_x=-\mathbb E[(\mathcal A_c-A_G\mathcal B_c)\varphi_{\sigma_M}']$。
+写
+
+$$
+\mathcal A_c-A_G\mathcal B_c
+ =\sum_{\mathcal C}[h_j(Z_j^2-1)+k_jZ_j],\qquad
+h_j=w_j-2A_Gw_j^2,\quad k_j=-w_jc_j+6A_Gw_j^2c_j.
+\tag{84.18}
+$$
+
+第二次分部积分给
+
+$$
+\begin{aligned}
+q_G(y)-A_G(y-\mu_G)g_x(y)
+ &=\mathbb E[\mathcal C_M\varphi_{\sigma_M}''(y-T^{\rm G})],\\
+\mathcal C_M&=\sum_{\mathcal C}
+ [2h_jw_jZ_j(Z_j-c_j)+2k_jw_j(Z_j-c_j)].
+\end{aligned}
+\tag{84.19}
+$$
+
+固定 $\sigma_M>0$ 时这些核导数有界，Gaussian 多项式可积，故两次操作均合法。
+其均值和中心部分分别为
+
+$$
+\begin{aligned}
+C_M=\mathbb E\mathcal C_M
+ &=2\sum w_j^2-4A_G\sum w_j^3
+       +2\sum w_j^2c_j^2-12A_G\sum w_j^3c_j^2,\\
+\mathcal C_M-C_M
+ &=\sum [d_j(Z_j^2-1)+l_jZ_j],\\
+d_j&=2w_j^2-4A_Gw_j^3,\qquad
+l_j=-4w_j^2c_j+16A_Gw_j^3c_j.
+\end{aligned}
+\tag{84.20}
+$$
+
+此处 $d_j$ 只表示多项式系数。
+因为 $A_G=O(\delta^{-1/2})$，两个半核心上相应中心贡献 $J_A,J_B$ 均满足
+
+$$
+\mathbb EJ_l^2
+ \le C\sum(w_j^4+w_j^4c_j^2)
+ \le C\delta\left(\sum w_j^2+\sum w_j^2c_j^2\right)\le C\delta.
+\tag{84.21}
+$$
+
+条件于 $A$ 半块后，将二阶导数交给独立的 $B$ 半块密度 $h_B$。
+Fubini、(84.12) 与卷积收缩使相应 $L^1$ 范数至多为
+$\mathbb E|J_A|\|h_B''\|_1\le C\sqrt\delta$；另一项相同。因此
+
+$$
+\|q_G-A_G(y-\mu_G)g_x-C_Mg_x''\|_1\le C\sqrt\delta.
+\tag{84.22}
+$$
+
+这一步不使用 $S_G$ 随核心增长的方差，也不支付测量核的逆噪声导数范数。
+由 (84.5)，非中心修正为 $O_{\mathbb P}(a_x^2)$，且
+
+$$
+4A_G\sum w_j^3
+ =\frac{4V_{\mathcal C}}{\Lambda_G}\delta^{-2}\sum v_j^3,
+\qquad C_M\longrightarrow C_*.
+\tag{84.23}
+$$
+
+此外 (84.5) 给 $v_G=\nu+O_{\mathbb P}(\delta)+O_{\mathbb P}(a_x^2)$，从而
+
+$$
+|A_G-A_M^\sigma|
+ =O_{\mathbb P}(\sqrt\delta+\delta^{-1/2}a_x^2)\longrightarrow0,
+\qquad |A_G\mu_G|=O_{\mathbb P}(\delta^{-1}a_x^2)\longrightarrow0.
+\tag{84.24}
+$$
+
+现在用 (84.10)—(84.13)、(84.22)—(84.24) 回到实际密度，得到
+
+$$
+\|q_x-A_M^\sigma y f_x-C_*\varphi_\nu''\|_1\longrightarrow0.
+\tag{84.25}
+$$
+
+每项误差均已单独支付：带权后验比较、参考回归余项、确定系数替换、
+精确中心截距，以及 (84.11) 中被大系数放大的密度差。
+实际四阶输出矩由 (82.27) 给出，结合 $\|f_x-\varphi_\nu\|_1\to0$，分割 $|y|\le H$ 后得到
+$\|(1+y^2)(f_x-\varphi_\nu)\|_1\to0$。
+又 $\varphi_\nu''=(y^2-\nu)\varphi_\nu/\nu^2$，所以 (84.25) 等价于 (84.3)。
+只在已带 $f_x$ 权的积分内除以严格正密度，没有断言低密度输出上的逐点回归。
+
+最后由 (82.23) 的实际条件信息均值，
+
+$$
+\int f_x(y)\left|\mathbb E_x[H_M\mid y]
+                         -c-\frac{y^2-\nu}{2\nu}\right|dy\longrightarrow0.
+\tag{84.26}
+$$
+
+将其从 (84.3) 减去，再使用精确 Bayes 恒等式 (82.19)，即得 (84.2)。
+积分 $\rho,\rho^2,\rho^3$ 得到 (84.4)。全程保留同一实际向量、观测和方向一致事件。
+未知方向仅传递有界失败概率，不将无界熵乘以方向失败概率。证毕。
+

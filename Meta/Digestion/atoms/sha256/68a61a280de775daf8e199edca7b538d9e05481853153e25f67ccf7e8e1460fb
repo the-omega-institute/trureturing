@@ -1,0 +1,58 @@
+### 272.3 负性与精确二阶Schur形式
+
+采用negativity的通常归一化
+$$
+\mathcal N(\Omega)
+=\frac{\|\Omega^\Gamma\|_1-1}{2}
+=\operatorname{Tr}(\Omega^\Gamma)_-.
+\tag{272.14}
+$$
+其中 $X_-$ 为Hermitian矩阵的负部；所有态差和数据误差仍使用未除以二的迹范数。由 $\Omega_t=T_t/n$，
+$$
+\mathcal N(\Omega_t)=\frac1n\operatorname{Tr}(T_t^\Gamma)_-.
+\tag{272.15}
+$$
+
+令
+$$
+B_t=Q^{1/2}JQ^{-1/2},
+\qquad A_t=I_n+tB_t.
+\tag{272.16}
+$$
+在 $A_t^\dagger A_t-A_tA_t^\dagger$ 中，常数项及一阶项都精确相消。因此
+$$
+\boxed{
+S_t=t^2Q^{1/2}
+(B_t^\dagger B_t-B_tB_t^\dagger)Q^{1/2}.
+}
+\tag{272.17}
+$$
+这给出负方向的二阶结构，而不需要预先展开 $Q(t)$ 的更高阶系数。
+
+为把Schur补控制转换成整个部分转置的负谱，写
+$$
+T_t^\Gamma=G_t+\operatorname{diag}(0,S_t),
+$$
+$$
+G_t=
+\begin{bmatrix}Q^{1/2}\\QM_tQ^{-1/2}\end{bmatrix}
+\begin{bmatrix}Q^{1/2}\\QM_tQ^{-1/2}\end{bmatrix}^{\dagger}
+\succeq0.
+\tag{272.18}
+$$
+Gram矩阵的下对角块为 $QM_tQ^{-1}M_t^\dagger Q$，其余三块与 $T_t^\Gamma$ 完全相同。负部变分公式
+$$
+\operatorname{Tr}X_-=\max_{0\preceq P\preceq I}\{-\operatorname{Tr}(PX)\}
+\tag{272.19}
+$$
+于是给
+$$
+\boxed{
+\operatorname{Tr}(T_t^\Gamma)_-
+\le\operatorname{Tr}(S_t)_-
+\le\|S_t\|_1.
+}
+\tag{272.20}
+$$
+这里不把Schur补本征值当作原矩阵中相等的本征值，而是通过PSD加法与变分公式比较负谱总量。
+

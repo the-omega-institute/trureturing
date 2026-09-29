@@ -1,0 +1,63 @@
+**证明。** $V_0S_0\subset K\otimes F$，而 $V_0k=p\otimes\eta_1\notin K\otimes F$。固定等距的单射性给 $k\notin S_0$，所以 $\dim S_0\le6$。这一步没有把 $k$ 与 $S_0$ 判为正交。
+
+固定 $V_1$ 在 $G_2,G_3,G_4$ 上分别具有不同的后继环境射线 $\eta_3,\eta_4,\eta_5$，故这些二维空间两两交零。这里尚不对 $G_5$ 与前三个平面的交作判断。
+
+以 $\eta_2,\eta_3$ 为 $F$ 的代数基，$\eta_4$ 的两个坐标均非零。三个乘积块
+
+$$
+G_2\otimes\eta_2+G_3\otimes\eta_3+G_4\otimes\eta_4
+$$
+
+构成六维代数直和：若三项和为零，逐环境坐标比较便使第三项的接收向量落入 $G_2\cap G_3=0$，于是三项均零。因此这个和已等于 $V_0S_0$。
+
+$\eta_5$ 与上述三个环境射线均不同。仅为比较乘积子空间，重选每条射线的非零代表及 $F$ 的代数基，可使四条射线的坐标依次为
+
+$$
+(1,0),\quad(0,1),\quad(1,1),\quad(1,t),\qquad t\ne0,1.
+$$
+
+这种缩放不改变任何接收子空间或乘积子空间。对每个 $z\in G_5$，六维代数直和提供唯一的 $r_2\in G_2,r_3\in G_3,r_4\in G_4$，使
+
+$$
+z=r_2+r_4,\qquad tz=r_3+r_4.
+\tag{65.6a}
+$$
+
+减去这两式的适当倍数，得到
+
+$$
+(t-1)r_4=r_3-tr_2\in G_2+G_3.
+$$
+
+映射 $z\mapsto r_4$ 线性且单射：若 $r_4=0$，则 $z\in G_2$、$tz\in G_3$，$t\ne0$ 和 $G_2\cap G_3=0$ 给 $z=0$。域和值域 $G_4$ 均二维，所以该映射满射。又 $t-1\ne0$，故
+
+$$
+G_4\subset G_2+G_3=:R,\qquad\dim R=4.
+$$
+
+（65.6a）再给 $G_5\subset R$。前三个接收平面两两交零，所以 $G_2+G_4=G_3+G_4=R$。由 $V_0S_0\subset R\otimes F$ 及 $G_6\otimes\eta_6\subset V_0S_0$，得到 $G_6\subset R$。六维尾像与首轮外置一维像饱和七维 $V_0K$，故（65.6）成立。整个论证没有要求最后两条环境射线不同。
+
+现在 $G_2,G_3,G_4\subset R$，所以
+
+$$
+\dim\bigl(Q_3\otimes\eta_3+Q_4\otimes\eta_4+Q_5\otimes\eta_5\bigr)\le4.
+$$
+
+三个环境射线互异且张成二维，左侧维数恰为
+
+$$
+6-\dim(Q_3\cap Q_4\cap Q_5).
+$$
+
+确切地说，写 $\eta_5=\alpha\eta_3+\beta\eta_4$、$\alpha\beta\ne0$ 后，自然求和映射的核由 $(-\alpha z,-\beta z,z)$、$z\in Q_3\cap Q_4\cap Q_5$ 构成。因此三个二维 $Q_i$ 必相等，记为 $Q$。于是
+
+$$
+V_1R=V_1(G_2+G_3)=Q\otimes\eta_3+Q\otimes\eta_4=Q\otimes F.
+$$
+
+又 $G_5\subset R$、$V_1G_5=Q_6\otimes\eta_6$，得到 $Q_6=Q$。跨位正交将 $Q\otimes F$ 与每个 $G_i\otimes\eta_i$ 比较，给 $Q\perp G_i$，故 $Q\perp R$。
+
+最后，$V_1p=v\otimes\eta_2$。三条不同射线 $[\eta_2],[\eta_3],[\eta_4]$ 中，至少两条与 $\eta_2$ 非正交；对应的任意两个 $G_2,G_3,G_4$ 均张成 $R$。跨位正交于是给 $v\perp R$。这里没有声称 $G_5$ 与前三个接收平面全部交零。
+
+若 $P_F\eta_1\ne0$，$p\otimes\eta_1=V_0k$ 与 $Q\otimes F$ 跨位正交，直接给 $p\perp Q$。同样，在 $[\eta_2],[\eta_3],[\eta_4]$ 中至少两条与 $\eta_1$ 非正交；将相应零位像与 $q\otimes\eta_1=V_1k$ 比较，得到 $q\perp R$。证明完毕。
+

@@ -1,0 +1,56 @@
+### 156.1 固定来源、目标与结论
+
+取正实振幅 $a,b>0$、$a^2+b^2=1$，并令 $p=b^2\in(0,1)$。来源等距与活动记忆边缘通道为
+
+$$
+T|0\rangle=|m_0\rangle_M|0\rangle_B,
+\qquad
+T|1\rangle=|0\rangle_M|1\rangle_B,
+\qquad |m_0\rangle=a|0\rangle+b|1\rangle,
+$$
+
+$$
+\mathcal E(X)=X_{00}|m_0\rangle\langle m_0|
++X_{11}|0\rangle\langle0|.
+\tag{156.1}
+$$
+
+其满秩平稳态及规范纯化记为
+
+$$
+\rho_*=\frac{|m_0\rangle\langle m_0|+p|0\rangle\langle0|}{1+p},
+\qquad
+\lambda_*=\lambda_{\min}(\rho_*)>0,
+\qquad
+A=\sqrt{\rho_*},
+\qquad
+|\Xi\rangle_{MR}=\operatorname{vec}A.
+\tag{156.2}
+$$
+
+这里 $M,R\cong\mathbb C^2$，$\operatorname{vec}A=\sum_{m,r}A_{mr}|m\rangle_M|r\rangle_R$。矩阵 $\rho_*,A$ 在此固定基下均为实对称矩阵，且
+
+$$
+\det\rho_*=\frac{p^2}{(1+p)^2}.
+$$
+
+沿用第11、147节的规范启动量
+
+$$
+\delta_t=
+\max_{j=0,1}\left\|\sqrt{\rho_{j,t}}-\sqrt{\rho_*}\right\|_{\mathrm{HS}},
+\qquad t\ge3.
+\tag{156.3}
+$$
+
+对于固定 $p$，已有估计
+
+$$
+\delta_t\le C_pp^{t-1}\longrightarrow0,
+\qquad
+C_p=\frac{\sqrt{2p}}{(1+p)\sqrt{\lambda_*}}.
+\tag{156.4}
+$$
+
+为避免与来源等距 $T$ 混淆，本节把启动长度写为 $L$。
+

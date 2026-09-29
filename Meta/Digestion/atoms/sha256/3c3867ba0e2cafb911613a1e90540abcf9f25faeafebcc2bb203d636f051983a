@@ -1,0 +1,19 @@
+## 64. 七维纯分支的尾环境二维上界
+
+固定 Phase Boundary 第60节的实际合同与记号：同一全域 CPTP 的两个等距位块 $V_0,V_1$，接收器 $K$ 七维，六个完整参考终端，$r_1=r_2=1$。对 $i=2,\ldots,6$，接收因子 $G_i$ 二维，且
+$$
+G_i\otimes\eta_i\subseteq V_0K.
+\tag{64.1}
+$$
+这里 $G_2=\operatorname{span}(u,w)$。对 $i=2,\ldots,5$，固定一位块满足
+$$
+V_1G_i=Q_{i+1}\otimes\eta_{i+1}.
+\tag{64.2}
+$$
+为排除三维尾环境，先反设
+$$
+F_2=\operatorname{span}(\eta_2,\ldots,\eta_6),\qquad \dim F_2=3.
+\tag{64.3}
+$$
+本节先分类五轮尾环境，再逐一排除三种剩余词；不预设环境周期或相互正交。
+

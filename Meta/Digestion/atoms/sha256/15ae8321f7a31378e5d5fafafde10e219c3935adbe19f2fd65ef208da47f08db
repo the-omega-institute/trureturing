@@ -1,0 +1,18 @@
+**定义 169.1（续接响应映射）。** 令 $X$ 为有限维实边界空间，给定有限续接任务族
+
+$$
+\mathcal F=\{F_1,\ldots,F_J\},
+\qquad
+F_j:X\to\mathbb R
+$$
+
+的线性读数。定义响应映射
+
+$$
+\mathcal R_{\mathcal F}:X\to\mathbb R^J,
+\qquad
+\mathcal R_{\mathcal F}(x)
+=
+(F_1(x),\ldots,F_J(x)).
+$$
+

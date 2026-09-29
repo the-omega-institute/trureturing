@@ -1,0 +1,26 @@
+### 41.2 解析与代数标签要分开
+
+§39.2 中的“algebra completion”包含了两个强度不同的断言，应拆成
+
+$$
+\begin{aligned}
+\operatorname{AlgEq}(A,\mathcal A_*)
+&:\Longleftrightarrow A=\mathcal A_*,\\
+\operatorname{ObsContain}(A,\mathcal O_*)
+&:\Longleftrightarrow \mathcal O_*\subseteq A.
+\end{aligned}
+\tag{41.4}
+$$
+
+这里必须另行声明 $A$ 是哪一种 unital 或 $*$-代数、$\mathcal A_*$ 的目标代数是什么，以及 $\mathcal O_*$ 是单个 observable 还是一族 observable。`ObsContain` 由 `AlgEq` 蕴含的方向取决于 $\mathcal O_*\subseteq\mathcal A_*$，反向一般不成立。
+
+`FourTypedCompletionHierarchy` 的窗口生成反例只支持相应的具体包含或 properness 断言；它不提供一个不带载体和量词的统一 `Algebra` 谓词。因而 §39 的 typed 数据应写成
+
+$$
+\bigl(\text{语义核},\ \text{动态下降},\ \text{Uniform/StateFamily/MemberTarget},
+\ \text{AlgEq 或 ObsContain}\bigr),
+\tag{41.5}
+$$
+
+而不是把两个代数命题用“或”并成一个模式。
+

@@ -1,0 +1,49 @@
+### 59.4 逐元素比较保留全部事件误差
+
+对已平均的最优修复及其 $p\in[1-c,\varepsilon]$，令
+
+$$
+\widehat v_p=(\sqrt{1-p},\sqrt{1-p},\sqrt p)^{\mathsf T},
+\qquad P_p=\widehat v_p\widehat v_p^{\mathsf T}.
+$$
+
+式（59.11）与 $P\succeq0$ 逐项给
+
+$$
+P_{ii}\le(P_p)_{ii},
+\qquad P_{ij}\le\sqrt{P_{ii}P_{jj}}\le(P_p)_{ij}.
+\tag{59.18}
+$$
+
+所以 $r_0r_0^{\mathsf T}-P$ 的每个实矩阵元都不小于
+$r_0r_0^{\mathsf T}-P_p$。后者的三个非对角元分别为
+
+$$
+c-(1-p),\qquad
+\sqrt\varepsilon-\sqrt{p(1-p)},\qquad
+c\sqrt\varepsilon-\sqrt{p(1-p)}.
+\tag{59.19}
+$$
+
+第一项由 $p\ge1-c$ 非负；第二项由 $p\le\varepsilon$ 非负；第三项使用
+$p\le\varepsilon<1/2$ 及 $u(1-u)$ 在 $[0,1/2]$ 上递增，也非负。
+
+因此对每个非负对角矩阵 $D(q,t)$，
+$D(q,t)(r_0r_0^{\mathsf T}-P_p)D(q,t)$ 是实对称且非对角非负的矩阵。给两个比较矩阵加同一个充分大的标量单位阵，得到逐项有序的非负对称矩阵；Perron 最大特征值的单调性给
+
+$$
+\lambda(P;q,t)\ge\lambda(P_p;q,t).
+\tag{59.20}
+$$
+
+也可取右侧矩阵的非负单位最大特征向量，代入左侧的 Rayleigh 商直接证明式（59.20）。这里使用的是逐元素比较和非负特征向量，不将逐元素序等同于 Loewner 序。
+
+$x,y,z$ 的末输出坐标互异，所以式（59.5）的 $S_p$ 有偏迹
+$I_A\otimes\operatorname{diag}(1-p,p)$，是合法因果修复；其主块恰为 $P_p$。式（59.14）、（59.20）于是同时控制两个事件方向，给
+
+$$
+N(R_\varepsilon-S_p)\le N(R_\varepsilon-S).
+$$
+
+故全体因果修复的最优值在这一族中达到。反向比较由该族包含于全部因果修复集合得到，证明式（59.6）。
+

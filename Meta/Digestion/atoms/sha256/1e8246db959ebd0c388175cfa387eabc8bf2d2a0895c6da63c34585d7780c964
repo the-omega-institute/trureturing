@@ -1,0 +1,10 @@
+#### 4.8.3 有限支持、几乎处处关系与共同实现
+
+[ConditionalInformationSufficiency](../../../D5/S3/ConceptDynamics/Completion/ConditionalInformationSufficiency.lean) 的 `conditional_information_zero_iff_support_sufficiency` 针对有限状态、概念、目标及同一个先验和通道形成的联合律。零条件互信息对应条件独立及概念纤维内正先验状态上的核恒定；零先验状态不受这份结论约束。这种有限先验支持不是命题 4.3.3 的无限路径空间拓扑支撑，也未提供后者的有效闭负测试。
+
+[PositivePriorConditionalIndependence](../../../D5/S3/ConceptDynamics/Completion/PositivePriorConditionalIndependence.lean) 的 `positive_prior_sufficiency_iff_conditional_independence` 要求有限状态上的先验逐点严格正，才把同一联合律的条件独立提升到全部状态的核分解 $K=\overline K\circ\operatorname{concept}$。概念域可以另行给定，但因子的存在不自带可计算性、继续操作保持、环境组合或最小性。不能删去逐点正先验来处理本章的零质量分支。
+
+[PointwiseAlmostEverywhereSeparation](../../../D5/S3/Observer/ProbabilisticClosure/PointwiseAlmostEverywhereSeparation.lean) 的 `pointwise_sufficient_implies_almost_everywhere_sufficient` 以非空目标为前提，把纤维恒定扩成全读数域上的因子；其 `fpod_principle_118_1` 用常值读数和只在实数零点为真的目标，在非零 Lebesgue 测度下分离逐点与几乎处处充分。原例使用非概率测度，因子定义也没有加入可测或可计算保证，故不代替本章两种概率反例或公平随机机证明。该来源的恒等读数、常目标、零测度与空目标边界各保留在其原合同内。
+
+[FiniteMarginalGlobalReadoutContrast](../../../D5/S3/Observer/ProbabilisticClosure/FiniteMarginalGlobalReadoutContrast.lean) 的有限边缘相容、有限读数满射及 `readout_image_null` 结果，取自然数有限子集为源，读成二元有限支撑路径。任意有限坐标可实现，且共同公平乘积律的有限边缘相容，但完整读数像的概率为零；全路径恒等或满射读数则有全像。这一源像非闭，结论不否认全路径乘积概率或逆极限的存在。它说明有限共同读数不能自动认作指定源的全局实现，未供应第 4.5 节的观察度量、Dirac 反例或同一块对象的有效模量分离。
+

@@ -1,0 +1,4 @@
+**定义 406.1（采用项目既有的预测表示）。** 取有限非空隐藏状态集 $X$、输出集 $Y$，$d=|X|$。设转移矩阵 $T$ 行随机，发射概率 $E_y(x')\ge0$ 且 $\sum_yE_y(x')=1$；先转移到 $x'$，再输出 $y$。令 $M_y=T\operatorname{diag}(E_y)$，并对词 $w=y_1\cdots y_n$ 令 $M_w=M_{y_1}\cdots M_{y_n}$，空词矩阵为单位阵。当前隐藏状态律为行向量 $b$ 时，未来词概率是 $bM_w\mathbf1$。
+
+项目[语境几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)第 15 节已经对更一般的动作—输出联合仪器建立预测张成、实际预测域、正概率更新与目标恢复。本节沿用其单动作特例，将它接到第 403—405 节；所用方法见 Littman、Sutton、Singh 的 [*Predictive Representations of State*](https://proceedings.neurips.cc/paper_files/paper/2001/file/1e4d36177d71bbb3558e43af9577d70e-Paper.pdf)，定理 1、引理 1 与式（3）。不把这个已有构造重新作为 MMM 的原创理论。
+

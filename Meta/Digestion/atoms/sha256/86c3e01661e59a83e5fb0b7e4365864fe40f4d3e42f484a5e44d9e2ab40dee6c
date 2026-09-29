@@ -1,0 +1,42 @@
+### 300.9 联合真实期望尾的准确抵消
+
+定义
+$$
+R_d(z)=\sum_{m>d}\frac{(1-z/C)^m}{m}.
+$$
+阶乘矩给
+$$
+\mathbb E\lambda_I=\log x+R_d(x),\qquad
+\mathbb E\lambda_J=\log y+R_d(y).
+$$
+因此
+$$
+\mathbb E_{c,h}\beta
+=L(c)+\frac{R_d(hc)-R_d(h)}{D\kappa}.
+\tag{300.35}
+$$
+不是分别估两个绝对尾后再相加。准确求导得
+$$
+R_d'(z)=-\frac{(1-z/C)^d}{z},
+$$
+所以
+$$
+0\le R_d(hc)-R_d(h)
+=\int_{hc}^{h}\frac{(1-z/C)^d}{z}\,dz
+\le(-\log c)\,q_\star^d.
+\tag{300.36}
+$$
+因为 $c\ge kl>k^3$，$-\log c\le3\kappa$，得到
+$$
+0\le\mathbb E\beta-L(c)\le(3/D)q_\star^d.
+\tag{300.37}
+$$
+又 $d\ge\alpha\kappa K-1$，且 $\kappa K\ge t$，故
+$$
+\boxed{
+0\le\mathbb E\beta-L(c)\le A e^{-at}.
+}
+\tag{300.38}
+$$
+floor 只贡献固定 $q_\star^{-1}$。联合积分保留了一个 $\kappa$ 因子，故真实尾没有任何尺度发散的前因子。
+

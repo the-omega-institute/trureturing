@@ -1,0 +1,37 @@
+### 305.8 携带增益信息的正有界时长模型
+
+保持第301—304节原两源任务的同参数平均风险。已知
+$$
+B\in\{2,4\},\quad 1\le C\le C_\star=1024/225,\quad
+0<\kappa\le\kappa_0=-\log\sqrt{3/4},
+$$
+$$
+k=e^{-\kappa},\quad 0<g\le k-k^2,\quad l=k^2+g.
+$$
+批次内固定但未知的参数为 \(r\in[l,1]\)、\(h\in(0,1]\)，假设标号 \(j=0,1\)。不提供正增益下界。每次完成调用返回二元联合记录 \((X,Z)\)：
+
+- \(X\) 仍是原任务币或参考币，分别为
+  \(\operatorname{Bernoulli}((1-hk^jr/C)/B)\)、
+  \(\operatorname{Bernoulli}((1-h/C)/B)\)；
+- 同次独立产生
+  $$
+  Z\sim\operatorname{Bernoulli}((1-\sqrt h)/2),
+  \qquad \tau=1+Z\in\{1,2\}.
+  \tag{305.17}
+  $$
+  给定参数，新联合记录与过去独立。
+
+时长在全部世界使用相同的已知标定 \(\tau=1+Z\)，其概率律依赖真实增益。零增益参照是原币 \(\operatorname{Bernoulli}(1/B)\) 与独立 \(Z\sim\operatorname{Bernoulli}(1/2)\)。对所有 \(h>0\) 都有联合单向绝对连续；没有利用时长奇异编码。
+
+记
+$$
+w(z)=C-z+z\kappa,\qquad w_h=w(h),\qquad
+H=1+\log(\kappa/g),\qquad
+\mathcal O(h)=\frac{w_h}{h^2\kappa^2}H,
+$$
+$$
+\eta=\frac{\log(l/k^2)}{\kappa},\qquad
+\bar\eta=\min(\eta,1/2).
+$$
+第301节给 \(1+\log(1/\bar\eta)\asymp H\)，其常数在本节全部参数范围内一致。
+

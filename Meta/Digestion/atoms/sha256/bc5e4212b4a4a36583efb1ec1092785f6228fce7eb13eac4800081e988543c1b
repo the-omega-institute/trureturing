@@ -1,0 +1,20 @@
+#### 4.6.13 与既有行为商、联合核和资源接口的连接
+
+[第64篇“Adaptive core policy and continuous stoploss optima”](https://github.com/the-omega-institute/trureturing/blob/19a8543ea50538700a993a51989d9cbc7b5bf4fd/docs/reports/erdos7-odd-covering/problem-details/64-adaptive-core-policy-and-continuous-stoploss-optima.md)第12—60行、第176—181行已经给出本节接口的具体任务使用：在先读完 core、再处理 terminal 的策略域中，剩余 core 名集合与仍匹配的原始标签 ID 组成缓存摘要 $q(h)=(U,A)$。该节在其给定 profile 满足叶容量蕴含祖先容量的条件下，优化真实归一化叶行；同后继 mask 的实际叶按准确重数分组，选定行再展开回实际叶，各后继策略自由拼接，有限归纳得到达到最优值的实际策略。完整采样值与实际历史始终保留给后续 tail 查询，缓存共用不替代它们。因此它已经承担 core-first 的任务摘要与真实 Bellman 最优策略，不是只有静态覆盖价格；但其 $(U,A)$ 只对所声明的 head 目标充分，不能被引用为任意未来任务或完整联合档案的通用充分摘要。
+
+[第55篇“Adaptive read-once head orders with unrestricted tail comparison”](https://github.com/the-omega-institute/trureturing/blob/19a8543ea50538700a993a51989d9cbc7b5bf4fd/docs/reports/erdos7-odd-covering/problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md)第20—87行、第178—199行已经在原始标签、事件和确定条件容量固定的前提下，构造剩余坐标集合上的势 $Z(h)=B_{U(h)}(b(h))$，并证明每个合法所选行后的条件期望不增。其输入允许每个标签的坐标事件容量，较本节单个原子容量更一般；非负权重与递增凸终端函数共同进入比较。辅助 $U_p$ 对不同坐标独立，但同一坐标的辅助量在全部标签间共享，不能逐标签另抽，也不把辅助独立性赋给实际联合律。调度随机化须进入完整档案并在其后检查行容量，实际值与原始标签不能随分支重写。这是式(TM.250)所体现的逐步因果上界证书的一项既有具体使用。两篇正文均提供本库已交付的普通纸面数学；本节另补完整历史流与部分赋值 DAG 的精确投影及两方向实现，不将既有上界势、任务摘要或它们的计算实例计作新增 Lean 结果。
+
+[ML 卷定理2.2与3.2](https://github.com/the-omega-institute/trureturing/blob/e25dea7a9919fcae53bb797f7740b0f5c99668ac/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)已经要求任务摘要保持读数、动作定义域、更新及费用，并以全部未来严格响应确定最粗自治表示。[Context Geometry 第3节](https://github.com/the-omega-institute/trureturing/blob/e25dea7a9919fcae53bb797f7740b0f5c99668ac/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)已经组织了行为像、操作下降和保真运输。本节不重新把这些一般商原理计为新内容；A卷命题4.10是在有限随机行与占用流中加入凸聚合、末端输出量词和可拼接条件的具体使用。
+
+ML 卷定义34.1、定理34.3已经给出联合后继核、公开更新与矩形性条件下的有限视界 Bellman 拼接，并明确将相关正文作为纸面推导。本题的每个 $q\in K_i$ 通过
+
+$$
+\mathcal K_q(x,s')=
+q_x\mathbf1_{\{s'=T(s,i,x)\}}
+\tag{TM.257}
+$$
+
+给出观测与后继状态的同一份联合核。cap-only 假设使这些核可逐历史拼接。原卷的鲁棒控制具有其自己的 $\inf/\sup$ 角色；本节由采样者选择行来最大化成功概率，因而使用式(TM.247)，不能不经映射照抄其他问题的优化量词。
+
+已有 `DynamicClosureMinimality` 与 `ControlledBehaviorUniversality` 承担确定性动态闭包和行为表示接口；已有 `BellmanMaxEquation`、`BellmanContraction` 承担特定的折扣预测距离结论。这些声明不等于本节随机历史流、占用流聚合或给定完整档案下的条件容量已经得到新增形式化。其语义接口限定了上述复用范围。
+

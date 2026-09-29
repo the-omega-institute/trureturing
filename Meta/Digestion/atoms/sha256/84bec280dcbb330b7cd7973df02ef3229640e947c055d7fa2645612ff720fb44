@@ -1,0 +1,98 @@
+### 175.1 将真实入口写成共同基点加两份不同权重
+
+沿用第174节的记号。令
+
+$$
+A=\frac{42}{2353}X-\frac{288}{2353}Z,
+\qquad
+\tau_j=P_0+w_jA,
+\qquad
+\beta=\frac{288}{2353}.
+\tag{175.1}
+$$
+
+因此
+
+$$
+\xi_j^\varphi=\xi_*^\varphi+w_j\dot\xi^\varphi,
+\qquad
+\xi_*^\varphi=\mathfrak E(U_\varphi P_0U_\varphi^\dagger),
+\qquad
+\dot\xi^\varphi=\mathfrak E(U_\varphi A U_\varphi^\dagger).
+\tag{175.2}
+$$
+
+$\dot\xi^\varphi$ 是迹为零的 Hermitian 算子，不是另一个输入态。
+置
+
+$$
+\epsilon_L=w_0>0,\qquad R_L=\frac{w_1}{w_0}.
+\tag{175.3}
+$$
+
+第171、174节给
+
+$$
+\epsilon_L\longrightarrow0,\qquad
+R_L\longrightarrow4,\qquad
+\epsilon_L\sim\frac38\,4^{-(L-1)}.
+\tag{175.4}
+$$
+
+这里 $R_L$ 只是无量纲权重比，不表示第170节的运行通道
+$\mathcal R_{L+k}$。
+
+对任意一个固定合法解码器 $\mathcal D$，取输出
+$Q_{\mathrm{out}}$ 的两个对角块，记为
+$\mathcal D_0,\mathcal D_1:QR\to R_{\mathrm{out}}$。
+两者完全正，且 $\mathcal D_0+\mathcal D_1$ 保迹。对输入 $j$ 的正确纯化收益定义
+
+$$
+f_j(\mathcal D,\varphi,L)=
+\operatorname{Tr}\!\left[
+P_\Xi(\operatorname{id}_M\otimes\mathcal D_j)(\xi_j^\varphi)
+\right].
+\tag{175.5}
+$$
+
+以下函数都在同一个解码器上取值：
+
+$$
+\begin{aligned}
+F_0(\mathcal D,\varphi)
+&=\sum_{j=0}^1
+\operatorname{Tr}\!\left[
+P_\Xi(\operatorname{id}_M\otimes\mathcal D_j)(\xi_*^\varphi)
+\right],\\
+G(\mathcal D,\varphi,R)
+&=\operatorname{Tr}\!\left[
+P_\Xi(\operatorname{id}_M\otimes\mathcal D_0)(\dot\xi^\varphi)
+\right]\\
+&\quad+
+R\operatorname{Tr}\!\left[
+P_\Xi(\operatorname{id}_M\otimes\mathcal D_1)(\dot\xi^\varphi)
+\right].
+\end{aligned}
+\tag{175.6}
+$$
+
+线性性给精确分解
+
+$$
+f_0+f_1
+=F_0(\mathcal D,\varphi)
++\epsilon_LG(\mathcal D,\varphi,R_L).
+\tag{175.7}
+$$
+
+让 $\varphi$ 在 $\mathbb R/\pi\mathbb Z$ 上变化，解码器在固定输入、输出维数的 CPTP Choi 集合中变化。两者的乘积
+$\mathcal K$ 为紧集；$F_0$ 和 $G$ 连续。定义全相位 Bell 正确收益
+
+$$
+S_L=\max_{(\mathcal D,\varphi)\in\mathcal K}
+\bigl(f_0(\mathcal D,\varphi,L)+f_1(\mathcal D,\varphi,L)\bigr).
+\tag{175.8}
+$$
+
+这个最大值不是完整 diamond 恢复任务的最优误差。
+

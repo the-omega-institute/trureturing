@@ -1,0 +1,88 @@
+### 6.2 截面变换与整个实验的运输
+
+另取归一化函数 $\beta:Q\to K$，并令
+
+$$
+s'(a)=s(a)+\iota(\beta(a)),\qquad \beta(0)=0.
+$$
+
+直接代入 CE.3：
+
+$$
+c_{s'}(a,b)=c_s(a,b)+\delta\beta(a,b),
+\quad
+\delta\beta(a,b)=\beta(a)+\beta(b)-\beta(a+b).
+\tag{CE.10}
+$$
+
+同一个 $g$ 的新坐标却要减去该修正：
+
+$$
+T_\beta(k,a)=(k-\beta(a),a),
+\quad \Phi_{s'}\circ T_\beta=\Phi_s.
+\tag{CE.11}
+$$
+
+因而
+
+$$
+T_\beta(x\star_c y)
+=T_\beta(x)\star_{c+\delta\beta}T_\beta(y).
+\tag{CE.12}
+$$
+
+式（CE.12）两侧的核坐标同为 $k+\ell+c(a,b)-\beta(a+b)$，商坐标同为 $a+b$。同一个平移动作的旧参数 $(\ell,b)$ 因而也须运输为 $(\ell-\beta(b),b)$。
+
+对任意旧坐标动作 $A$ 和读数 $o$，新坐标表示必须取
+
+$$
+A'=T_\beta\circ A\circ T_\beta^{-1},\qquad
+ o'=o\circ T_\beta^{-1}.
+$$
+
+如果 $A$ 只在 $D$ 上定义，新定义域为 $T_\beta(D)$；状态相关费用 $e$ 的新表示为 $e\circ T_\beta^{-1}$，输出及失败标签也作同样运输。对相应状态 $z'=T_\beta z$，有 $A'z'=T_\beta Az$ 及 $o'(z')=o(z)$。对有限动作词逐步取消相邻的 $T_\beta^{-1}T_\beta$，每个前缀状态都相应，每次读数、费用和合法性都对应；空词由读数等式处理。按已见记录选择动作、停止或报告的策略也逐步对应，保留共同随机种子时则对每个种子如此。只运输终点而未运输中间接口，不具有这份保证。
+
+这两个符号必须成对保留：**进位加余边界，高位坐标减截面修正**。仅改进位表而保持旧坐标读数，会换掉实际运算。
+
+更一般地，在固定 $K,Q$ 及其标记时，任何保持核和商的扩张同构都具有
+
+$$
+F(k,a)=(k+t(a),a),\qquad t(0)=0
+$$
+
+的形式。理由是 $(k,a)=(k,0)\star_c(0,a)$，且 $F$ 在核上是恒等、在商上也是恒等。要求 $F:G_c\to G_d$ 保持加法，比较 $K$ 坐标就得到必要且充分条件
+
+$$
+d=c-\delta t.
+\tag{CE.13}
+$$
+
+必要性的计算是 $k+\ell+c(a,b)+t(a+b)=k+t(a)+\ell+t(b)+d(a,b)$。反向，式（CE.13）使此等式成立，$F$ 的逆为 $(k,a)\mapsto(k-t(a),a)$，故确为保持标记的同构。因此固定标记的等价关系恰由余边界给出，不要求两张表逐项相等。
+
+若还更换层标记，取同构 $\alpha:K\to K'$、$\gamma:Q\to Q'$，候选
+
+$$
+F(k,a)=(\alpha k+t(a),\gamma a)
+$$
+
+保持运算的精确条件变成
+
+$$
+\alpha(c(a,b))+t(a+b)
+=t(a)+t(b)+d(\gamma a,\gamma b).
+\tag{CE.14}
+$$
+
+这里 $t:Q\to K'$、$t(0)=0$。比较两种乘法的核坐标恰得式（CE.14），商坐标由 $\gamma$ 保加法而相等。反向，该式保证乘法相容，而
+
+$$
+F^{-1}(k',a')=
+\left(\alpha^{-1}\bigl(k'-t(\gamma^{-1}a')\bigr),\gamma^{-1}a'\right)
+$$
+
+给出双射性。因此式（CE.14）是改变层标记时的准确相容条件。
+
+分裂判据直接使用 [`extension_section_iff_coboundary`](https://github.com/the-omega-institute/trureturing/blob/7f2bd771ec9e4bffc9558419ac45147775310773/D5/S1/Deficit/Cocycles/ExtensionSectionCoboundary.lean)：以 $G,Q,q,s$ 代入，归一化前提为 $s(0)=0$，将核值修正函数写成 $\iota\circ\beta$，得到存在加法同态右逆当且仅当存在 $\beta:Q\to K$ 使 $c+\delta\beta=0$。方程在 $(0,0)$ 处给出 $\beta(0)=0$，无需增添该来源未列的前提。此时 $s+\iota\beta$ 的进位为零，由式（CE.6）、（CE.12）得到同指定标记相容的直积表示；反向，同态截面自身的进位为零。
+
+术语上，任意群扩张的 $H^2$ 分类还可能涉及非平凡作用；即使作用平凡、$K,Q$ 阿贝尔，任意中心扩张也未必阿贝尔。本章只使用**归一化对称余循环**对应的阿贝尔扩张，不把全部中心扩张无条件认成此处的阿贝尔对象。
+

@@ -1,0 +1,82 @@
+### 19.2 定理：移动原子的精确极值与支撑空隙代价
+
+设
+\[
+a\leq l<r\leq b,\qquad l\leq t\leq r,\qquad
+2t\leq a+b,\qquad l+r\leq a+b.
+\]
+定义
+\[
+\varepsilon(t)=\frac{(1-b)(b-t)}{2+t},\quad
+c(t)=\frac{(1-b)(2+b)}{2+t},\quad
+w_c(t)=1-\frac{c(t)}{1-t},
+\]
+\[
+w_h(t;l,r)=\frac{(b-l)(b-r)+\varepsilon(t)(1+l+r)}{(1-l)(1-r)}.
+\tag{19.2}
+\]
+则
+\[
+\boxed{W(\varepsilon(t))=w_c(t),\qquad
+W_{l,r}(\varepsilon(t))=w_h(t;l,r),}
+\]
+并且
+\[
+\boxed{w_c(t)-w_h(t;l,r)
+=\frac{(1-w_c(t))(t-l)(r-t)}{(1-l)(1-r)}.}
+\tag{19.3}
+\]
+当 $l<t<r$ 时差严格为正；在两个端点处差为零。
+
+**构造。** 无空隙时取
+\[
+\mu_c=w_c\delta_1+(1-w_c)\delta_t,\qquad\nu_c=\delta_b.
+\tag{19.4}
+\]
+有空隙时取
+\[
+\mu_h=w_h\delta_1+u_l\delta_l+u_r\delta_r,\qquad\nu_h=\delta_b,
+\]
+\[
+u_l=\frac{c(t)(r-t)}{(1-l)(r-l)},\qquad
+u_r=\frac{c(t)(t-l)}{(1-r)(r-l)}.
+\tag{19.5}
+\]
+这里式 (19.5) 的 $u_l,u_r$ 为残余概率质量。所有分母为正，$u_l,u_r\geq0$，而
+\[
+w_c=\frac{(b-t)(1+b+t)}{(1-t)(2+t)}\geq0,\qquad
+1-w_c=\frac{(1-b)(2+b)}{(1-t)(2+t)}>0.
+\]
+式 (19.2) 给 $w_h\geq0$。直接代入得到
+\[
+w_h+u_l+u_r=1,
+\]
+\[
+\int x\,d(\mu_c-\nu_c)=\int x\,d(\mu_h-\nu_h)=-\varepsilon(t),\qquad
+\int x^2\,d(\mu_c-\nu_c)=\int x^2\,d(\mu_h-\nu_h)=\varepsilon(t).
+\tag{19.6}
+\]
+因此两组都是实际可行概率对。
+
+**普遍上界。** 记任意可行对的误差为 $e_1,e_2$。对 $q(x)=x^2-sx+p$，$s\geq0$，若 $q$ 在 $\mu$ 的残余支撑上非负，并且在 $[a,b]$ 上不超过 $B$，则归一化与实际矩误差给出
+\[
+\mu(\{1\})q(1)\leq\int q\,d\mu
+=\int q\,d\nu+e_2-se_1\leq B+\varepsilon(1+s).
+\tag{19.7}
+\]
+取 $q_c(x)=(x-t)^2$。在 $[a,b]$ 上，
+\[
+q_c(b)-q_c(x)=(b-x)(b+x-2t)\geq0,
+\]
+所以 $B=(b-t)^2$。式 (19.7) 的上界由 (19.4) 取得，给出 $W=w_c$。
+
+取 $q_h(x)=(x-l)(x-r)$。它在 $(l,r)$ 之外非负，而
+\[
+q_h(b)-q_h(x)=(b-x)(b+x-l-r)\geq0\quad(a\leq x\leq b).
+\]
+式 (19.7) 的上界由 (19.5) 取得，给出 $W_{l,r}=w_h$。最后，(19.4) 与 (19.5) 具有相同前两矩及总质量，故对 $q_h$ 积分相同。于是
+\[
+w_hq_h(1)=w_cq_h(1)+(1-w_c)q_h(t),
+\]
+即为式 (19.3)。严格性来自 $1-w_c>0$ 及区间内部的两个正因子。
+

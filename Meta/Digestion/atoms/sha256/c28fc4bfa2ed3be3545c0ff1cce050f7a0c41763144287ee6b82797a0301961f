@@ -1,0 +1,19 @@
+## ST29．恢复器需要保存路径上的逻辑作用
+
+### 定理 ST29.1：不同 syndrome 的已知运输可以精确补偿
+
+令$V_j$是逻辑酉矩阵，可以表示指定闭路的holonomy，或包含动力学相位的已知完整逻辑演化。取
+
+$$
+\widetilde S_j=S_jV_j.
+$$
+
+则$\widetilde S_j^\dagger\widetilde S_k=\delta_{jk}I$。采用$\widetilde S_j$构造的ST27解码精确恢复全部逻辑态。
+
+但如果噪声syndrome已去相干、概率为$p_j$，且使用未补偿运输的旧解码$S_j^\dagger$，则得到
+
+$$
+\boxed{\Phi(\rho)=\sum_jp_jV_j\rho V_j^\dagger.}
+\tag{ST29.1}
+$$
+

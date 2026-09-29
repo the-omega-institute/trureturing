@@ -1,0 +1,47 @@
+### 194.4 统一误差带及带权操作缺陷
+
+第192节的恒等保持、均匀标签构造严格给
+
+$$
+\mathscr E(\ell,\epsilon)
+\le\frac34+\frac{\beta\Sigma}{8}\epsilon
++\frac{\beta^2\delta^2\epsilon^2}
+{16(1-\beta\Sigma\epsilon/2)}.
+$$
+
+在上述 $K$ 的选择下，分母中的
+$1-\beta\Sigma\epsilon/2\ge1/2$。因此令
+$B=\beta^2\delta^2/16$，并使用 $\ell\le1/2$，有
+
+$$
+\mathscr E(\ell,\epsilon)
+\le\frac34+\frac{\beta\Sigma}{8}\epsilon
++B\frac{\epsilon^2}{\ell}.
+\tag{194.10}
+$$
+
+对最优恢复器应用（194.9），舍去两个非负项，即得（194.1），可取
+$C=\max\{A,B\}$。选择 $\epsilon_0>0$ 足够小使所有入口态合法即可。
+
+更一般地，对满足（194.2）的恢复器，对称化后仍满足该上界；
+（194.9）与（194.10）给
+
+$$
+\boxed{
+D+t^2
+\le32(A+B+K_0)\frac{\epsilon^2}{\ell}.
+}
+\tag{194.11}
+$$
+
+（194.4）进一步给
+
+$$
+\sum|c|^2=O_{K_0}(\epsilon^2/\ell),\qquad
+\sum|b|^2+\sum|a-d|^2
+=O_{K_0}(\epsilon^2/\ell^2).
+\tag{194.12}
+$$
+
+这些估计的常数与 $\ell,\epsilon$ 无关，且各和都是相应 Choi 矩阵的线性泛函。
+

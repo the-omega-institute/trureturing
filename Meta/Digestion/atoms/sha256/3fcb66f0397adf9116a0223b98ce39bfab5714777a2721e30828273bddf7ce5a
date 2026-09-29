@@ -1,0 +1,10 @@
+**定义 210.1（只用当前读数就能回答）。** 对状态空间 $X$ 和读数 $q:X\to C$，把一个布尔问题写成 $p:X\to\{0,1\}$。若存在解码器 $d:q(X)\to\{0,1\}$，使
+
+$$
+p(x)=d(q(x))\qquad\text{对每个 }x\in X,
+$$
+
+则称 $p$ 可由 $q$ 回答。这里 $q(X)$ 是实际达到的读数集合；式中的 $q(x)$ 被看作该集合中的元素。记全部这类问题为 $\mathcal A(q)$。常值问题在其中；对已有问题作否定、合取和析取，仍在其中，因为可以在解码结果上作相同布尔运算。
+
+这对应项目 [QuestionAlgebraDuality](../../../D5/S3/ConceptDynamics/DefinitionEscape/QuestionAlgebraDuality.lean) 的有效坐标、`AnswerableQuestions` 及其布尔闭合结果。“全部”在这里量化所有数学函数 $X\to\{0,1\}$，不是某个人已经会说的句子，也没有要求解码器可计算、可实际取得或成本有限。
+

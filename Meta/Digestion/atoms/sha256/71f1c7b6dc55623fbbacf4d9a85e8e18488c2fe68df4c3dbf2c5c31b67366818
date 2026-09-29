@@ -1,0 +1,11 @@
+**引理140.1（有限最小值与零误差合同）。** 式（140.3）的下确界取得，且对全部 $\theta\in\Theta$，
+
+$$
+0\le\varepsilon_{D,N}(\theta)\le1,
+\qquad
+\varepsilon_{D,N}(\theta)=0
+\ \Longleftrightarrow\
+\text{存在容量不超过 $D$ 的完整前 $N$ 终端精确装置。}
+\tag{140.4}
+$$
+

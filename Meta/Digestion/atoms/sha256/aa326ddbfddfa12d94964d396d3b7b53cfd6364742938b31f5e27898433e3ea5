@@ -1,0 +1,2 @@
+**证明。** 第 2.3.3 节已拥有有限分割的质量局部化；第 2.7.2 节式（TM.570）—（TM.571）给它的单柱形式。此处以二元可测分割 $C,X\setminus C$ 接入同一论证：$f_s-u_s=\mu(K_s\setminus C)\ge\mu(K\setminus C)$，且 $\ell_t\le M$，故左端不超过 $M-\mu(K\setminus C)=m_C$。右端来自集合包含。若最大值取第二项，宽度等于 $f_s-\ell_t$；若取零，则 $\ell_t\le f_s-u_s$，仍有 $u_s\le f_s-\ell_t$。因此不要求阶段质量恰为有理，亦不要求 $M>0$。证毕。
+

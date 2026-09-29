@@ -1,0 +1,70 @@
+### 256.5 球面源的维数无关全态稳定性
+
+先记录一个对任意 Hermitian 块矩阵成立的收缩关系。在 $Y$ 坐标中定义
+$$
+\mathscr K(T)=2T_{+-},
+\qquad
+Z_0=\begin{pmatrix}I_E&0\\0&-I_E\end{pmatrix}.
+\tag{256.29}
+$$
+若 $T=\begin{pmatrix}P&C\\C^\dagger&Q\end{pmatrix}$，则
+$$
+T-Z_0TZ_0=\begin{pmatrix}0&2C\\2C^\dagger&0\end{pmatrix}.
+\tag{256.30}
+$$
+右侧的非零奇异值是 $2C$ 的非零奇异值各重复两次，故
+$$
+4\|C\|_1=\|T-Z_0TZ_0\|_1\le2\|T\|_1,
+\qquad
+\boxed{\|\mathscr K(T)\|_1\le\|T\|_1.}
+\tag{256.31}
+$$
+该论证适用于本节所需的 Hermitian 差矩阵。
+
+令 $\Omega_0$ 为任意球面数据 $K_0$ 的唯一源，即 $\|K_0\|_1=1$。令 $\Xi$ 为同一联合空间中的任意归一化正半定态，并记
+$$
+K_\Xi=\mathscr K(\Xi_Y),
+\qquad
+\delta=\|K_\Xi-K_0\|_1.
+\tag{256.32}
+$$
+选 $K_0=W|K_0|$ 的酉极分解延拓，以（256.12）定义 $L_W,J_W$，并令 $\Pi=J_WJ_W^\dagger$。理想源为
+$$
+\Omega_{0,Y}=J_W|K_0|J_W^\dagger.
+\tag{256.33}
+$$
+由归一化，
+$$
+\begin{aligned}
+0\le\operatorname{Tr}(L_W\Xi_Y)
+&=1-\operatorname{Re}\operatorname{Tr}(W^\dagger K_\Xi)\\
+&=\operatorname{Re}\operatorname{Tr}[W^\dagger(K_0-K_\Xi)]
+\le\delta.
+\end{aligned}
+\tag{256.34}
+$$
+而 $L_W=2(I-\Pi)$，所以核外权重满足
+$$
+t:=\operatorname{Tr}[(I-\Pi)\Xi_Y]\le\frac\delta2.
+\tag{256.35}
+$$
+保留次归一化压缩 $\Xi_{\mathcal K}=\Pi\Xi_Y\Pi$。§252直接证明的投影扰动界给
+$$
+a:=\|\Xi_Y-\Xi_{\mathcal K}\|_1
+\le2\sqrt t\le\sqrt{2\delta}.
+\tag{256.36}
+$$
+
+核内压缩写成 $\Xi_{\mathcal K}=J_WS J_W^\dagger$，其中 $S\succeq0$，无需把它归一化。它的响应为 $\mathscr K(\Xi_{\mathcal K})=WS$。于是
+$$
+\begin{aligned}
+\|\Xi_{\mathcal K}-\Omega_{0,Y}\|_1
+&=\|S-|K_0|\|_1\\
+&=\|\mathscr K(\Xi_{\mathcal K})-K_0\|_1\\
+&\le\delta+\|\mathscr K(\Xi_{\mathcal K}-\Xi_Y)\|_1\\
+&\le\delta+a.
+\end{aligned}
+\tag{256.37}
+$$
+第一式使用等距嵌入，第二式使用 $W$ 酉，最后一式使用（256.31）。三角不等式及两态归一化给出结论。
+

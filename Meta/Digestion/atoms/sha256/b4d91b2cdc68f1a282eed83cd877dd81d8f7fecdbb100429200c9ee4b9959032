@@ -1,0 +1,101 @@
+### 305.10 新鲜参考币的精校准与无条件矩
+
+继续只用新的参考调用，并在这一阶段利用原参考币 \(X\)，令
+$$
+p_H=(1-h/C)/B,\qquad
+\epsilon=H_0\kappa/(BC).
+$$
+取新的两批参考币：
+$$
+m_0=\lceil A\Lambda/\epsilon\rceil,\qquad
+\widehat p_0=S_0/m_0,\qquad
+m_1=\left\lceil
+A\Lambda(\widehat p_0+\epsilon)/\epsilon^2
+\right\rceil,
+$$
+第二批均值为 \(\widehat p_1\)，并令
+$$
+\widehat h=C(1-B\widehat p_1),\qquad
+a=\min\{1,\max\{H_0,\widehat h-H_0\kappa\}\}.
+\tag{305.24}
+$$
+与第303节相比，实际停止好事件由 \(H_0\ge h/3\) 改为 \(H_0\ge h/9\)。后续风险只使用 \(H_0\le h\)，成本只使用（305.22），所以所有后续义务仍满足。
+
+先明确实际校准记录上的好事件：
+$$
+G_1=\{h/9\le H_0\le h\},\qquad
+G_2=\{p_H\le2\widehat p_0+\epsilon\},\qquad
+G_3=\{|\widehat p_1-p_H|\le\epsilon\}.
+$$
+第一阶段给 \(\Pr_h(G_1^c)\le\delta/3\)。给定 \(H_0\)，若 \(p_H\le\epsilon\)，事件 \(G_2\) 自动成立；否则失败蕴含 \(\widehat p_0<p_H/2\)，乘法 Chernoff 给
+$$
+\Pr_h(G_2^c\mid H_0)
+\le e^{-m_0p_H/8}
+\le e^{-A\Lambda/8}\le\delta/3.
+$$
+在 \(G_2\) 上，\(p_H+\epsilon\le2(\widehat p_0+\epsilon)\)，所以
+$$
+m_1\ge\frac{A\Lambda(p_H+\epsilon)}{2\epsilon^2}.
+$$
+第二批是条件于第一批的新鲜独立 Bernoulli 样本。双边 Bernstein 给
+$$
+\Pr_h(G_3^c\mid H_0,\widehat p_0)
+\le2\exp\left[-\frac{m_1\epsilon^2}{2(p_H+\epsilon/3)}\right]
+\le\delta/3
+\qquad\text{在 }G_2\text{ 上}.
+$$
+从而 \(G=G_1\cap G_2\cap G_3\) 满足 \(\Pr_h(G^c)\le\delta\)。这些事件使用固定真实参数作为分析判据，但全部是已经取得的校准记录的函数，不要求协议知道它们是否发生。在 \(G\) 上
+$$
+|\widehat h-h|\le BC\epsilon=H_0\kappa,\qquad H_0\le h,
+$$
+故（305.24）给 \(a\le h\)，且 \(a\ge h-2H_0\kappa\)。截到一不破坏结论，因为 \(h\le1\)。
+
+期望费用不能只在 \(G\) 上计算。给定 \(H_0\)，利用 \(\mathbb E(\widehat p_0\mid H_0)=p_H\)，从样本数直接得到
+$$
+\mathbb E(m_0+m_1\mid H_0)
+\le A\Lambda\left(\frac{p_H}{\epsilon^2}+\frac1\epsilon\right).
+$$
+取整项由右侧吸收，因为 \(\epsilon\) 一致小于一且 \(\Lambda\) 有正下界。代入（305.22）与 \(p_H=(C-h)/(BC)\)，得到
+$$
+\begin{aligned}
+\mathbb E(m_0+m_1)
+&\le A\Lambda\left[
+(C-h)\kappa^{-2}\mathbb E H_0^{-2}
++\kappa^{-1}\mathbb E H_0^{-1}\right]\\
+&\le A\mathcal O(h).
+\end{aligned}
+\tag{305.25}
+$$
+这包括所有校准记录。
+
+还需对坏校准分支控制增益缺额。对 \(p_H>0\)，因为 \(m_0\epsilon\ge1\) 且 \(S_0\sim\operatorname{Bin}(m_0,p_H)\)，二项倒数恒等式给
+$$
+\begin{aligned}
+\mathbb E\left[\frac1{\widehat p_0+\epsilon}\middle|H_0\right]
+&\le m_0\mathbb E\frac1{S_0+1}\\
+&=\frac{m_0}{m_0+1}
+\frac{1-(1-p_H)^{m_0+1}}{p_H}
+\le\frac1{p_H}.
+\end{aligned}
+$$
+再按第二批条件方差及 Cauchy–Schwarz，
+$$
+\begin{aligned}
+\mathbb E(|\widehat p_1-p_H|\mid H_0)
+&\le\sqrt{p_H\mathbb E(1/m_1\mid H_0)}\\
+&\le\epsilon\sqrt{\frac{p_H}{A\Lambda}
+\mathbb E\left[\frac1{\widehat p_0+\epsilon}\middle|H_0\right]}
+\le\epsilon.
+\end{aligned}
+$$
+\(p_H=0\) 时两批样本恒为零，直接给零误差，不作除零。对所有校准记录，总有 \(a\ge H_0>0\) 且
+$$
+(h-a)_+\le|h-\widehat h|+H_0\kappa.
+$$
+因此得到包括全部失败分支的结论
+$$
+\boxed{\Pr_h(a\le h)\ge1-\delta,\qquad
+\mathbb E[(h-a)_+\mid H_0]\le2H_0\kappa.}
+\tag{305.26}
+$$
+

@@ -1,0 +1,4 @@
+**证明。** 用 $[\boldsymbol a\cdot\boldsymbol\sigma,\boldsymbol b\cdot\boldsymbol\sigma]=2i(\boldsymbol a\times\boldsymbol b)\cdot\boldsymbol\sigma$ 和 $\boldsymbol n\cdot d\boldsymbol n=0$，得到 $\nabla P=(1+2\kappa)dP$，故法向项具有该缩放。连接外微分贡献 $2\kappa\sin\theta\,\boldsymbol n\cdot\boldsymbol\sigma$，交换子贡献 $2\kappa^2\sin\theta\,\boldsymbol n\cdot\boldsymbol\sigma$。又 $U^\dagger\Gamma_\kappa U=0$，有效连接仍等于前式，因此Chern数不变。逐项积分即可。∎
+
+这说明同一个有效 Berry 曲率与同一能谱，不能单独识别几何来自环境运输还是保留空间的法向变化。改变 $\Gamma_\kappa$ 是改变物理上所指定的比较/运输规则；若它只是某个表示变换，其他动力学与探针项必须一起运输。本命题没有把这种参数连接直接认作引力时空。
+

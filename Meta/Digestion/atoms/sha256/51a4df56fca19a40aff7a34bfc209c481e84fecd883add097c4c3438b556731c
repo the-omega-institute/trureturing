@@ -1,0 +1,33 @@
+**定义 6.1（固定时域的同一被动接收器）。** 保留定义5.1的等权、全圆相位和全部初始联合来源，预先给定有限时域 $N\ge2$ 。接收器从固定纯态开始，每步只以一个已知 CPTP 映射作用于同一寄存器 $K$ 与最新发出位，之后把该位置成与其余系统独立的纯空白并丢弃；无持久辅助标签留在 $K$ 之外。源的活动记忆与参考均不可访问，也没有向源反馈。门可依赖 $N,\epsilon$ 和当前步数，不能依赖未知相位或输入。若在任一事先指定的 $n\le N$ 选择停止，均有解码器满足（5.1）。最小 $\dim K$ 记为 $k_{\le N}^{(\epsilon)}$ 。
+
+此合同只在所选终端解码，不要求解码后保留一份档案副本并原样继续，也不要求保持任意中途干预下的过程距离。计数、门控制、瞬时空白及丢弃环境的成本按定义1.2另计。允许的是固定相干基下的普通 CPTP 操作；未知 $\vartheta$ 不附加所有门必须相位协变的超选择限制。保持不可访问环境关联的局部压缩是既有任务；[^phase_tensor] 本节进一步要求同一逐步接收实现与共同误差预算。
+
+置
+
+$$
+s_{N,\epsilon}=\sqrt{\frac{N-1}{2}\log\frac4{\epsilon^2}},\qquad
+R_{N,\epsilon}=\frac{s_{N,\epsilon}+1}{1+p}.
+\tag{6.1}
+$$
+
+称合法词 $w\in\mathcal W_n$ 存活，若其每个前缀都满足
+
+$$
+\left|\sum_{t=1}^kw_t-k\mu\right|\le R_{N,\epsilon}
+\quad(1\le k\le n).
+\tag{6.2}
+$$
+
+令 $\mathcal W_n^{\rm s}$ 为存活词集；空词存活。对非空首末荷扇区定义
+
+$$
+g_{ijq}^{n,\rm s}
+=\sum_{\substack{w\in\mathcal W_n^{\rm s}\cap\mathcal W_n^{ij}\\
+\sum_tw_t=q}}A(w)|w\rangle,
+\qquad W_n^{\rm s}=\operatorname{span}\{g_{ijq}^{n,\rm s}\},
+\qquad W_0^{\rm s}=\mathbb C.
+\tag{6.3}
+$$
+
+空扇区不计入生成集， $d_n^{\rm s}=\dim W_n^{\rm s}$ 。这是保留全部过去未越界条件的子空间，不是各终端独立选择的荷窗口。
+

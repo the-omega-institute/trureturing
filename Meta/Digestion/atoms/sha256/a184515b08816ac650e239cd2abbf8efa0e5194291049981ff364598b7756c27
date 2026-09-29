@@ -1,0 +1,44 @@
+**定理 244.1（全部 Bloch 方向上的共同取等）。** 对每个 $t\in[0,1]$，
+$$
+\boxed{
+F_p(t;c):=\max_{\|r\|=t}f_p(\rho)
+=\frac12\sqrt{A+B(1-t^2)}.
+}
+\tag{244.16}
+$$
+最大值由沿 $u$ 的同一实际输入边缘及其纯化取得。
+
+**证明。** 平方根凹性给
+$$
+f_p(\rho)\le\frac12
+\sqrt{\ell^2(1-t^2)+
+\frac{(r\cdot a_p)^2+(r\cdot b_p)^2}{2}}.
+\tag{244.17}
+$$
+由（244.8），
+$$
+a_pa_p^{\mathsf T}+b_pb_p^{\mathsf T}
+=2A\,uu^{\mathsf T}+2B\,vv^{\mathsf T}.
+\tag{244.18}
+$$
+因为 $B\le K\le A$，最大本征值为 $2A$，从而
+$$
+(r\cdot a_p)^2+(r\cdot b_p)^2\le2At^2.
+\tag{244.19}
+$$
+将其代入（244.17），并用 $\ell^2=A+B$，得到（244.16）的上界。
+
+反向取 $r=tu$。此时
+$$
+(r\cdot a_p)^2=(r\cdot b_p)^2=t^2A,
+\tag{244.20}
+$$
+所以两项根号相同，同时达到凹性与 Rayleigh 上界。令 $|u,+\rangle,|u,-\rangle$ 为 $u\cdot\sigma$ 的正交本征基，参考取两个正交向量 $|0\rangle,|1\rangle$。纯探针
+$$
+|\psi_t\rangle=
+\sqrt{\frac{1+t}{2}}\,|u,+\rangle|0\rangle+
+\sqrt{\frac{1-t}{2}}\,|u,-\rangle|1\rangle
+\tag{244.21}
+$$
+实际具有该边缘并达到所给值。$t=1$ 时只需一维参考支撑，$t=0$ 时为最大纠缠纯探针。$\square$
+

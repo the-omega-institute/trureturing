@@ -1,0 +1,28 @@
+### 58.1 实际第二终端与第三轮排出块
+
+沿第53节，第二终端编码支撑为 $Q\otimes\Gamma\subset K$，$\dim Q=3$、$\dim\Gamma=2$；$u,v,w$ 为 $Q$ 中正交单位向量。附加态 $\tau_\Gamma$ 在 $\Gamma$ 上正定。置
+$$
+G=\operatorname{span}(u,w),\quad
+H=\operatorname{span}(z,w),\quad
+z=(a^2u+bv)/\sqrt{|a|^4+|b|^2}.
+$$
+第三轮将整个附加因子排到二维环境 $F\subset E$，给二维正交接收子空间
+$$
+A_0=G_3,\qquad B_0=Q_3,\qquad A_0\perp B_0,
+$$
+使
+$$
+V_0(H\otimes\Gamma)=A_0\otimes F,\qquad
+V_1(G\otimes\Gamma)=B_0\otimes F.
+\tag{58.1}
+$$
+两个旧位像均四维。这里第三轮新环境可以与旧环境纠缠，未被改称纯向量。
+
+对 $n=4,5,6$，实际纯终端空间满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad G_n\perp Q_n.
+\tag{58.2}
+$$
+各 $H_n,G_n,Q_n$ 二维；$H_n\subset G_n\oplus Q_n$ 到两个同轮因子的投影均为同构。
+

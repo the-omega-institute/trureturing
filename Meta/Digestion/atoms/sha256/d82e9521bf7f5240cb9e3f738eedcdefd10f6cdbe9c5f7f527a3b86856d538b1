@@ -1,0 +1,10 @@
+**定义 501.1（覆盖宇宙与状态对宇宙须分别对应）。** 项目 [MinimumCompleteSetCover](../../../D5/S3/Observer/Budget/MinimumCompleteSetCover.lean) 的 finite_budget_injective_iff_cover，把所选观察的联合单射性等价于它们分离全部不同状态对；minimum_complete_budget_iff_minimum_cover 再在指定自然数成本下描述最小完整预算。其被覆盖对象是不同状态对，而第 500 节被覆盖的是输出坐标。这两个对象并不因为都叫覆盖就自动相同。
+
+为给出明确的桥梁，另造辅助状态空间 $Z=X\times\{0,1\}$，为每个 $i$ 定义读数
+
+$$
+b_i(x,e)=\bigl(x,e\,\mathbf1_{A_i}(x)\bigr).
+$$
+
+第一坐标保留被检查的坐标名称；第二坐标检查该目标是否能够见证这个坐标的最小值。$Z,b_i$ 是用于编码容量检查的辅助结构，未被规定为原来的真实状态或实际测量仪器。
+

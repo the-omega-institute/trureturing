@@ -1,0 +1,68 @@
+### 299.4 真实计数、比较余量和统一阶数
+
+第296节的两个真实子实验都是
+$$
+Y\sim\operatorname{Bernoulli}(p(c)),\qquad
+p(c)=\frac{1-c/C}{B},
+\tag{299.13}
+$$
+其中完整 $n=1$ 使用反对称投影点击，$(B,C)=(4,1)$；reset使用实际记录的随机补位，$(B,C)=(2,4/a_n^2)$，$15/16\le a_n\le1$。因而统一有
+$$
+B\in\{2,4\},\qquad1\le C\le C_*:=1024/225.
+$$
+完整块数为 $K$，令 $J=\sum_{i=1}^K Y_i$。两种协议均按自己的权限取得这些记录。
+
+保持
+$$
+\eta=\frac{\log(l/k^2)}\kappa,\qquad
+\bar\eta=\min\{\eta,1/2\},\qquad
+D=3-\bar\eta/2\in[11/4,3),
+$$
+$$
+L(c)=1+\frac{\log c}{D\kappa}.
+$$
+在同一真实 $r$ 下有
+$$
+L(r)\le1,\quad L(kr)>0,\quad
+L(r)-L(kr)=1/D\ge1/3+\bar\eta/18.
+\tag{299.14}
+$$
+同时，$k^2\in[3/4,1)$，对数在所需紧区间内与其增量可比，故
+$$
+\eta\asymp g/\kappa,\qquad
+1+\log(1/\bar\eta)\asymp1+\log(\kappa/g)
+\tag{299.15}
+$$
+且比较常数统一。
+
+使用原阈值
+$$
+v_{--}=k^{11/4},\quad v_-=k^{21/8},\quad v=k^{5/2},
+\qquad u=k^{1/2},\quad u_+=k^{1/4},\quad u_{++}=k^{1/8}.
+$$
+所需的六个相邻间距
+$$
+k^2-v,\quad u_{++}-u_+,\quad u_+-u,\quad
+v-v_-,\quad u-k,\quad v_--v_{--}
+$$
+均至少为 $\gamma\kappa$，其中可取
+$\gamma=e^{-3\kappa_0}/8$。这由
+$e^{-a\kappa}-e^{-b\kappa}=\int_a^b\kappa e^{-t\kappa}\,dt$
+直接得到。对应的Bernoulli参数间距至少为
+$\delta_0\kappa$，$\delta_0=\gamma/(4C_*)$。
+
+为控制远尾，再取
+$$
+c_{\mathrm{cut}}=1/2<e^{-3\kappa_0},\qquad
+\delta_{\mathrm{far}}=
+\frac{e^{-(21/8)\kappa_0}-1/2}{4C_*}>0.
+$$
+固定
+$$
+0<\alpha\le\min\{\delta_0/4,
+\delta_{\mathrm{far}}/(4\kappa_0),1/(8\kappa_0)\},
+\qquad d=\lfloor\alpha\kappa K\rfloor.
+\tag{299.16}
+$$
+因此 $d\le K/8$。近阈值倾斜仍保留常数倍 $\kappa$ 的间距，远阈值倾斜则保留固定正间距。此处的截断阶数随双尺度和预算共同改变，不能套用一个未统一的固定 $k$ 常数。
+

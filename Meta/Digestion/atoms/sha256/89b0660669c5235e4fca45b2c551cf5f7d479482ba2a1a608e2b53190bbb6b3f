@@ -1,0 +1,67 @@
+### 177.5 全相位、全解码器的有限参数证书
+
+把（177.7）、（177.12）、（177.14）合并，得到
+
+$$
+G(\mathcal D,\varphi,R)
+\le-\beta+7\beta(1+6R)\ell+
+\left(2\gamma R\sqrt{42}+\frac{18R}{\sqrt{2353}}\right)\sqrt\ell.
+$$
+
+明确的有理常数估计给
+
+$$
+\begin{aligned}
+259\beta&<32,&
+12\gamma\sqrt{42}+\frac{108}{\sqrt{2353}}&<4,\\
+175\beta&<22,&
+8\gamma\sqrt{42}+\frac{72}{\sqrt{2353}}&<\frac52.
+\end{aligned}
+$$
+
+这些式子可用 $\sqrt{42}<13/2$、
+$\sqrt{2353}>48$ 和分数比较核对。因此
+
+$$
+\boxed{
+\begin{aligned}
+G(\mathcal D,\varphi,R)&\le-\beta+32\ell+4\sqrt\ell
+&&\text{若 }1\le R\le6,\\
+G(\mathcal D,\varphi,R)&\le-\beta+22\ell+\frac52\sqrt\ell
+&&\text{若 }1\le R\le4.
+\end{aligned}
+}
+\tag{177.15}
+$$
+
+分别取 $(a,c)=(32,4)$ 或 $(22,5/2)$。
+将相应的（177.15）代入（177.4），若 $a\epsilon<1$，则
+
+$$
+\begin{aligned}
+F(\mathcal D,\varphi,L)
+&\le1-\beta\epsilon
+-(1-a\epsilon)\ell+c\epsilon\sqrt\ell\\
+&\le1-\beta\epsilon+
+\frac{c^2\epsilon^2}{4(1-a\epsilon)}.
+\end{aligned}
+\tag{177.16}
+$$
+
+最后一步对非负变量 $\sqrt\ell$ 完全平方。右侧不含相位或解码器参数。
+第174节的 Bell 目标投影检验给误差至少为
+$1-F/4$。故
+
+$$
+\boxed{
+e_L(\varphi)
+\ge\frac34+\frac{\beta\epsilon}{4}
+-\frac{c^2\epsilon^2}{16(1-a\epsilon)}
+\quad
+\text{对全部相位，若 }a\epsilon<1.
+}
+\tag{177.17}
+$$
+
+这是有限参数不等式，没有使用渐近余项。
+

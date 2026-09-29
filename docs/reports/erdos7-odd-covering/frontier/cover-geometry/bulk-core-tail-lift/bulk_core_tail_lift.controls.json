@@ -1,0 +1,357 @@
+{
+  "parameters": {
+    "core_primes": [
+      5,
+      7,
+      11,
+      13
+    ],
+    "all_height_J1_upper": "1001/576",
+    "all_height_J2_upper": "7007/1440",
+    "original_survivor_density_lower": "79/192",
+    "old_Haar_density_cap": "192/79",
+    "strip_gap": "1/1050",
+    "strip_good_mass_lower": "1/6299",
+    "strip_good_Haar_density_upper": "1209408/79",
+    "strip_pointwise_margin": "1/4200",
+    "short_depth_good_mass_lower": "1/3999",
+    "short_depth_good_Haar_density_upper": "767808/79",
+    "short_depth_pointwise_margin": "1/2000",
+    "shared_Haar_density_cap": 16000,
+    "shared_integer_moment_cap": 80000,
+    "height_independent_prime_cutoff": "3^256 * 80000^3",
+    "short_depth_scope": "The whole original family has ternary height at most five",
+    "strip_scope": "At least one of h5<=3,h7<=2,h11<=1,h13<=1; any finite ternary height"
+  },
+  "actual_original_control": {
+    "scope": "Exact small-prime control, using measured survival rather than the asymptotic cutoff",
+    "core_period": 15625,
+    "outside_prime": 7,
+    "core_height": 6,
+    "ternary_height": 2,
+    "original_labels": [
+      {
+        "modulus": 7,
+        "residue": 0,
+        "e": 0,
+        "a": 1
+      },
+      {
+        "modulus": 63,
+        "residue": 36,
+        "e": 2,
+        "a": 1
+      },
+      {
+        "modulus": 35,
+        "residue": 15,
+        "e": 0,
+        "a": 5
+      },
+      {
+        "modulus": 315,
+        "residue": 135,
+        "e": 2,
+        "a": 5
+      },
+      {
+        "modulus": 175,
+        "residue": 100,
+        "e": 0,
+        "a": 25
+      },
+      {
+        "modulus": 1575,
+        "residue": 675,
+        "e": 2,
+        "a": 25
+      },
+      {
+        "modulus": 875,
+        "residue": 500,
+        "e": 0,
+        "a": 125
+      },
+      {
+        "modulus": 7875,
+        "residue": 5625,
+        "e": 2,
+        "a": 125
+      },
+      {
+        "modulus": 4375,
+        "residue": 1250,
+        "e": 0,
+        "a": 625
+      },
+      {
+        "modulus": 39375,
+        "residue": 16875,
+        "e": 2,
+        "a": 625
+      },
+      {
+        "modulus": 21875,
+        "residue": 12500,
+        "e": 0,
+        "a": 3125
+      },
+      {
+        "modulus": 196875,
+        "residue": 28125,
+        "e": 2,
+        "a": 3125
+      },
+      {
+        "modulus": 109375,
+        "residue": 93750,
+        "e": 0,
+        "a": 15625
+      },
+      {
+        "modulus": 984375,
+        "residue": 0,
+        "e": 2,
+        "a": 15625
+      }
+    ],
+    "old_core_classes": [],
+    "core_Haar_density_cap": 1,
+    "early_original_depths": [
+      0
+    ],
+    "late_original_depths": [
+      2
+    ],
+    "core_completion_load": 0,
+    "J1": "19531/15625",
+    "J2": "29293/15625",
+    "second_moment": "29293/765625",
+    "global_survival": "109188/109375",
+    "core_total_variation": "5797/3412125",
+    "core_cells": [
+      {
+        "valuation": 0,
+        "cardinality": 12500,
+        "representative": 1,
+        "core_mass": "4/5",
+        "alpha": "1/7",
+        "kernel": [
+          "0",
+          "1/6",
+          "1/6",
+          "1/6",
+          "1/6",
+          "1/6",
+          "1/6"
+        ],
+        "good_leaves": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "joint_conditioned": [
+          "0",
+          "21875/163782",
+          "21875/163782",
+          "21875/163782",
+          "21875/163782",
+          "21875/163782",
+          "21875/163782"
+        ],
+        "conditioned_core_mass": "21875/27297"
+      },
+      {
+        "valuation": 1,
+        "cardinality": 2500,
+        "representative": 5,
+        "core_mass": "4/25",
+        "alpha": "2/7",
+        "kernel": [
+          "0",
+          "0",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5"
+        ],
+        "good_leaves": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "joint_conditioned": [
+          "0",
+          "0",
+          "875/27297",
+          "875/27297",
+          "875/27297",
+          "875/27297",
+          "875/27297"
+        ],
+        "conditioned_core_mass": "4375/27297"
+      },
+      {
+        "valuation": 2,
+        "cardinality": 500,
+        "representative": 25,
+        "core_mass": "4/125",
+        "alpha": "3/7",
+        "kernel": [
+          "0",
+          "0",
+          "0",
+          "1/4",
+          "1/4",
+          "1/4",
+          "1/4"
+        ],
+        "good_leaves": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "joint_conditioned": [
+          "0",
+          "0",
+          "0",
+          "875/109188",
+          "875/109188",
+          "875/109188",
+          "875/109188"
+        ],
+        "conditioned_core_mass": "875/27297"
+      },
+      {
+        "valuation": 3,
+        "cardinality": 100,
+        "representative": 125,
+        "core_mass": "4/625",
+        "alpha": "4/7",
+        "kernel": [
+          "1/28",
+          "1/28",
+          "1/28",
+          "1/28",
+          "2/7",
+          "2/7",
+          "2/7"
+        ],
+        "good_leaves": [
+          4,
+          5,
+          6
+        ],
+        "joint_conditioned": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "50/27297",
+          "50/27297",
+          "50/27297"
+        ],
+        "conditioned_core_mass": "50/9099"
+      },
+      {
+        "valuation": 4,
+        "cardinality": 20,
+        "representative": 625,
+        "core_mass": "4/3125",
+        "alpha": "5/7",
+        "kernel": [
+          "3/35",
+          "3/35",
+          "3/35",
+          "3/35",
+          "3/35",
+          "2/7",
+          "2/7"
+        ],
+        "good_leaves": [
+          5,
+          6
+        ],
+        "joint_conditioned": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "10/27297",
+          "10/27297"
+        ],
+        "conditioned_core_mass": "20/27297"
+      },
+      {
+        "valuation": 5,
+        "cardinality": 4,
+        "representative": 3125,
+        "core_mass": "4/15625",
+        "alpha": "6/7",
+        "kernel": [
+          "5/42",
+          "5/42",
+          "5/42",
+          "5/42",
+          "5/42",
+          "5/42",
+          "2/7"
+        ],
+        "good_leaves": [
+          6
+        ],
+        "joint_conditioned": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "2/27297"
+        ],
+        "conditioned_core_mass": "2/27297"
+      },
+      {
+        "valuation": 6,
+        "cardinality": 1,
+        "representative": 0,
+        "core_mass": "1/15625",
+        "alpha": "1",
+        "kernel": [
+          "1/7",
+          "1/7",
+          "1/7",
+          "1/7",
+          "1/7",
+          "1/7",
+          "1/7"
+        ],
+        "good_leaves": [],
+        "joint_conditioned": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "conditioned_core_mass": "0"
+      }
+    ],
+    "killed_core_point": 0,
+    "point_mass_preservation_impossible": true,
+    "actual_late_completion": "57619/982692",
+    "finite_joint_cap_completion": "19531/163782",
+    "joint_query_count": 49,
+    "literal_original_CRT_checks": 441
+  }
+}

@@ -1,0 +1,26 @@
+**例 227.8（主谱下界与尾谱下界的互补）。**
+
+以下精确例说明为什么定理 227.3必须保留 $\beta$。取
+$$
+A=\begin{pmatrix}\sqrt6&0\\0&1\\0&0\end{pmatrix},
+\qquad
+B=\begin{pmatrix}0&0\\2&0\\0&\sqrt3\end{pmatrix}.
+$$
+其 Gram Bloch 形式为
+$$
+T(s)=\left(\frac72+\frac32s_z\right)I+s\cdot\sigma.
+\tag{227.GD.32}
+$$
+这里 $L=I,u=0$，Bloch 度数为正一，而 $n_0=-(3/2)e_z$ 在球外。因此
+$$
+\alpha=3,\qquad\beta=4,\qquad\delta=4.
+\tag{227.GD.33}
+$$
+所以“非零度数推出 $\alpha=\delta$”为假。度数保证主谱零事件机制可用；达到删除成本还要比较它与尾谱机制。
+
+若需合法记录通道，将两个 Kraus 同乘 $1/4$，并取
+$$
+K_0=E\sqrt{I_2-\operatorname{diag}(10,4)/16}.
+$$
+其中 $E:\mathbb C^2\to\mathbb C^3$ 是等距嵌入 $E(x,y)=(x,y,0)$。此时 $q_0=3/4$，$\delta=1/4$，故真实距离为 $d_2=1/4$，而缩放后的 $\alpha$ 只有 $3/16$。
+

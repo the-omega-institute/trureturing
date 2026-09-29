@@ -1,0 +1,21 @@
+**定义 475.1（有限对称目标与一般保留记录生成器）。** 令 $X$ 为有限非空集合，$\iota:X\to X$ 为对合，即 $\iota(\iota x)=x$。取概率向量 $Q_0,Q_1$，满足 $Q_1(x)=Q_0(\iota x)$。来源仍为 $E_r$，先假设 $0<r<1$。目标与生成联合分别为
+
+$$
+J^Q_\theta(y,x)=E_{r,\theta}(y)Q_\theta(x),\qquad
+G^Q_{T,\theta}(y,x)=E_{r,\theta}(y)T_y(x).
+$$
+
+记 $R=T_\star$。精确新增边缘要求对两个状态同时有
+
+$$
+(1-r)T_\theta+rR=Q_\theta.
+$$
+
+置 $l(x)=\min(Q_0(x),Q_1(x))$、$h(x)=\max(Q_0(x),Q_1(x))$，以及
+
+$$
+M=\sum_x l(x),\qquad D=\operatorname{TV}(Q_0,Q_1)=1-M.
+$$
+
+$l,h$ 在 $\iota$ 下不变。经典有限概率恒等式 $\operatorname{TV}=1-\sum\min$ 在此仅作后续构造的前置。
+

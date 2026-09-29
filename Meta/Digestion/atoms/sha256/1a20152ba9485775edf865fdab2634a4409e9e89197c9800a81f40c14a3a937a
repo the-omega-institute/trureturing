@@ -1,0 +1,13 @@
+#### 236.4.2 块距离精确达到
+
+输入维数为 $n=N-1$ 时，目标归一化 Choi 态在 $nN$ 维支撑上为恒定本征值 $1/(nN)$。任何 Choi 秩 $K$ 的候选，读取其支撑补的效果，都给半 diamond 下界 $1-K/(nN)$。对当前块 $K=N(N-2)$，这正是
+$$
+1-\frac{N(N-2)}{N(N-1)}=\frac1{N-1}.
+$$
+因此
+$$
+\boxed{\frac12\|\mathcal R_V-\mathcal S^{\rm simp}\|_\diamond
+=\frac1{N-1}.}
+\tag{236.MP.30}
+$$
+

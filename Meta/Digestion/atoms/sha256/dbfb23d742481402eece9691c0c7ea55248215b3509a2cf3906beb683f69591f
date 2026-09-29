@@ -1,0 +1,15 @@
+#### 8.8.2 单模数自洽观测的全尺度精确公式
+
+设 $m\ge2$，真实来源为 $p\in\Delta_m$，全部删除读数为 $F(p)_i=1-p_i$，空读数恒为一。观测必须由同一个概率来源产生，即 $\widehat y=F(a)$、$a\in\Delta_m$，并满足 $\|F(a)-F(p)\|_\infty=\|a-p\|_\infty\le\varepsilon$。允许任意确定性估计器；其输入中的 $a$ 可由 $1-\widehat y$ 精确恢复。风险是对一切合法 $(a,p)$ 的最大坐标误差上确界，再对估计器取下确界。
+
+在这个合同下，概率输出与实向量输出的全尺度风险分别为
+
+$$
+\boxed{R_{\Delta_m}^{\rm consistent}(\varepsilon)
+=\min\left(\varepsilon,1-\frac1m\right),
+\qquad
+R_{\mathbb R^m}^{\rm consistent}(\varepsilon)
+=\min(\varepsilon,1/2).}
+\tag{ER8.CS.1}
+$$
+

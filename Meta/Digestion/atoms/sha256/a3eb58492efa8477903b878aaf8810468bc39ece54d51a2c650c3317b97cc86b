@@ -1,0 +1,39 @@
+**定理 645.1（零障碍集合与精确修复距离）。** 对 $0<t\le M$，令
+
+$$
+\mathcal K_t=\{R\in\Delta(X):tR_x\le l_x\ \text{对所有 }x\},\qquad
+H(R)=\sum_x(tR_x-l_x)_+.
+$$
+
+则 $\min_R\Phi_t(R)=0$，其全部极小点恰为 $\mathcal K_t$。并且对任意原始概率行，
+
+$$
+\boxed{
+\operatorname{dist}_{\rm TV}(R,\mathcal K_t)=\frac{H(R)}t,
+\qquad
+\operatorname{dist}_{\rm TV}(R,\mathcal K_t)\le\frac n{td}\Phi_t(R).
+}
+$$
+
+距离是到该集合的最小 TV 距离，且最小值达到。
+
+证明：因 $p<n$，每个标签都被某个状态排除，故全部 $Q_S$ 的逐坐标下包络是 $l$。所有非负正部和都为零，当且仅当 $tR\le Q_S$ 对每个状态成立，也就是 $tR\le l$。向量 $l/M$ 属于该集合，因此极小值为零。
+
+设 $q_x=l_x/t$，把 $R$ 先截为 $V_x=\min(R_x,q_x)$。被拿走的总量为 $H(R)/t$，$V$ 的总量为 $1-H(R)/t$。尚可填入的容量为
+
+$$
+\sum_x(q_x-V_x)=\frac Mt-1+\frac{H(R)}t\ge\frac{H(R)}t.
+$$
+
+于是可将全部被拿走的质量填回尚未达到上限的坐标，得到 $K\in\mathcal K_t$。原来超出上限的坐标不再填入，质量转移量恰为 $H(R)/t$，所以 $\operatorname{TV}(R,K)$ 等于该值。反过来，任何 $K\in\mathcal K_t$ 都必须在事件 $A=\{x:R_x>q_x\}$ 上减少至少 $H(R)/t$ 的质量；TV 的事件界给出同一下界，故构造达到精确距离。
+
+沿用第 640 节的截断标签 $z$，有
+
+$$
+\Phi_t(R)=H(R)-\min_{|S|=p}\sum_{i\in S}z_i.
+$$
+
+最小 $p$ 项不超过 $\alpha Z$，而 $Z\le H(R)$，所以 $\Phi_t(R)\ge cH(R)$。与精确距离式相接即得第二式。证毕。
+
+这里需要恢复的是一个合法集合，而不是一份唯一行。若 $t<M$，$l/M$ 的全部坐标严格正，又严格低于 $l/t$；它在概率单纯形中有一个相对开邻域仍属于 $\mathcal K_t$。因此最优集合具有真正的连续自由度。若 $t=M$，总质量相等使 $tR\le l$ 强制 $R=l/M$，集合才缩成一个点。
+

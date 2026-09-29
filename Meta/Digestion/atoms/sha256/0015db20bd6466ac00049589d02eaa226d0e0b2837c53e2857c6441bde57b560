@@ -1,0 +1,2 @@
+**定义 383.4（项目源码的对应）。** 项目 [StrongLumpabilityDescent](../../../D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean) 的 `strong_lumpability_descent_tfae` 将概率质量函数经实际读数推前，刻画其在纤维上恒定与实际输出像上存在下降核的等价。其陈述不限于这里的有限矩阵。本文选择有限非空状态，用普通求和写明量词、唯一性和观察历史的推导；不将全部这些散文步骤冒充该源码中逐字相同的声明。
+

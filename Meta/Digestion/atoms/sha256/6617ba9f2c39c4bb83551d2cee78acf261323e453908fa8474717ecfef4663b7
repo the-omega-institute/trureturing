@@ -1,0 +1,22 @@
+## 213. 双退化端点的联合解析临界图与来源尺度
+
+固定 $\beta>0$、$R>1$，置 $\delta=R-1$、$\Sigma=R+1$。
+沿用第187—189、207、208节的同一完整参考恢复任务，
+接收端不可访问 $M$，优化仍覆盖全部共同 CPTP 操作。
+采用参数
+
+$$
+x=\beta\epsilon,\qquad H=h/\beta,\qquad
+\nu=1-(\gamma/\beta)^2,\qquad \gamma=\beta\sqrt{1-\nu}.
+\tag{213.1}
+$$
+
+物理来源为 $\ell=h\epsilon=xH$。
+$\nu>0$ 对应题设的 $0<\gamma<\beta$；
+推导中的小负 $\nu$ 也有合法正 $\gamma$，只用于统一局部解析图。
+第211节固定参数下的接触位置展开不覆盖 $\nu\to0,h\to0$ 的联合退化。
+本节先从纯来源精确问题求临界参数，再将实际共同 CPTP 正规形延伸到
+$\gamma=\beta,h=0$，证明联合解析临界图。该图进一步给出
+$\nu\asymp\epsilon$、$h\asymp\sqrt\epsilon$ 下的统一尺度，
+实际来源 $\ell=h\epsilon$ 则按 $\epsilon^{3/2}$ 缩放。
+

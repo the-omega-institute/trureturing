@@ -1,0 +1,32 @@
+**引理 45.2（有限来源覆盖产生忠实正测试）。** 可从 $\Gamma$ 中选出 $k\le r$ 个状态及正权重，满足
+
+$$
+\bar\rho=\sum_{i=1}^k w_i\rho_i,
+\qquad w_i>0,\quad\sum_iw_i=1,
+\qquad\operatorname{supp}\bar\rho=W.
+$$
+
+令 $\lambda>0$ 为 $\bar\rho|_W$ 的最小本征值。对每个正算子 $A\ge0$，有
+
+$$
+\boxed{
+\operatorname{Tr}(\bar\rho A)
+\le\|P_WAP_W\|_\infty
+\le\frac{\operatorname{Tr}(\bar\rho A)}\lambda.
+}
+$$
+
+证明。从任意允许态的非零支撑开始；若已取支撑的张成还不等于 $W$，就再取一个支撑不包含在当前张成中的允许态。每次维数至少增加一，至多 $r$ 次得到 $W$。任取全正权重；若 $v\in W$ 对 $\bar\rho$ 的二次型为零，则每个非负加项都为零，故 $v$ 与所有已取支撑正交，只能为零。所以 $\bar\rho|_W$ 正定。
+
+记 $A_W=P_WAP_W|_W\ge0$。由 $\operatorname{Tr}\bar\rho=1$ 得左界。又 $\bar\rho|_W\ge\lambda I_W$，故
+
+$$
+\operatorname{Tr}(\bar\rho A)
+\ge\lambda\operatorname{Tr}(A_W)
+\ge\lambda\|A_W\|_\infty,
+$$
+
+得到右界。$\square$
+
+$\bar\rho$ 在此也可以只表示 $k$ 个允许来源读数的固定加权和。若要实际随机准备这份混合态，还须允许相应经典随机化；线性推导本身不增加准备权限。
+

@@ -1,0 +1,67 @@
+### 281.7 未知相位的真实记录校准
+
+先固定 $\theta=0$，每份真实记录生成
+$$
+W=(2\eta{\bf1}_{w=0},\;2\eta{\bf1}_{w=1}).
+\tag{281.31}
+$$
+由（281.2）取迹，规范实矩阵满足
+$$
+a_n:=\frac{\operatorname{Tr}Z_n}{n}
+=1-\frac{t^2}{n}\operatorname{Tr}(J_n^\dagger Q_nJ_n),
+\qquad 15/16\le a_n\le1.
+\tag{281.32}
+$$
+于是，在两个各自的实际校准分布下，
+$$
+\mathbb E_{b,\phi}W=a_{b,n}(\cos\phi,\sin\phi),
+\qquad a_{b,n}:=(1-b\delta)a_n\ge15/32,
+\qquad \|W\|_2^2=4.
+\tag{281.33}
+$$
+用 $m$ 个独立副本的均值 $\widehat v$ 估计方向。非零时将其归一化，零时固定取 $(1,0)$；用固定可测角度代表 $\widehat\phi\in[-\pi,\pi)$ 表示该方向，令 $e=\widehat\phi-\phi$ 按圆周理解。
+
+独立性和单位向量归一化不等式给
+$$
+\mathbb E_{b,\phi}\|\widehat v-a_{b,n}u_\phi\|_2^2\le4/m,
+\qquad
+\|\widehat u-u_\phi\|_2\le2\|\widehat v-a_{b,n}u_\phi\|_2/a_{b,n}.
+$$
+因此
+$$
+\mathbb E_{b,\phi}(1-\cos e)\le\frac8{a_{b,n}^2m},
+\qquad
+\boxed{\mathbb E_{0,\phi}(1-\cos e)\le32/m.}
+\tag{281.34}
+$$
+这一计算不条件化于“校准成功”，也不将两个假设的历史概率混同。零均值和圆周坐标切口都已包含。
+
+先处理 $x\le X_0$ 的范围，稍后固定 $X_0=256$。使用
+$$
+m=\lceil576/\delta\rceil,\qquad L=\lceil8n/\delta\rceil.
+\tag{281.35}
+$$
+校准后请求 $\theta=\widehat\phi$，在记录 $(0,-1)$ 上测参考投影 $e_1e_1^\dagger$。由于 $M_ne_1=e_1$、$e_1^\dagger Z_ne_1=1$，条件于任意校准历史，单次点击概率为
+$$
+p_0(e)=\frac{1-\cos e}{4n},
+\qquad
+p_1(e)=(1-\delta)p_0(e)+\frac\delta{4n}\ge\frac\delta{4n}.
+\tag{281.36}
+$$
+第二阶段出现一次点击就判扰动假设。由 $L\le9n/\delta$、（281.34）和独立新来源，
+$$
+P_{0,\phi}(\widehat b=1)\le L\mathbb E_{0,\phi}p_0(e)
+\le\frac{72}{\delta m}\le\frac18,
+$$
+$$
+P_{1,\phi}(\widehat b=0)\le\exp[-L\delta/(4n)]\le e^{-2}<\frac14.
+\tag{281.37}
+$$
+故平均错误小于 $3/16$。全部副本数满足
+$$
+m+L\le585\frac n\delta
+=585\frac{1+x}{R}\le\frac{585(1+X_0)}R.
+\tag{281.38}
+$$
+该分支包括 $n=1$，以及后面低谱投影不能取得正秩的范围。
+

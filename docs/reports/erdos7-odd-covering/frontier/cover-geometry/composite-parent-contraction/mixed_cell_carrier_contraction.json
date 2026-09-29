@@ -1,0 +1,119 @@
+{
+  "fixtures": [
+    {
+      "active_nonzero_root_labels": {
+        "1": [
+          1485
+        ],
+        "2": [
+          2079
+        ],
+        "3": [],
+        "4": [
+          55
+        ],
+        "5": [],
+        "6": [],
+        "7": [],
+        "8": [],
+        "9": [],
+        "10": []
+      },
+      "all_nonzero_roots_covered_at_source": false,
+      "designated_prime": 11,
+      "divisor_membership_checks": 147,
+      "gained": 23,
+      "joint_liability_with_multiple_old_owners": 2,
+      "lost": 0,
+      "multiple_owner_witness": {
+        "integer": 1486,
+        "old_owners": [
+          189,
+          1485
+        ]
+      },
+      "name": "mixed-whole-cell-carriers",
+      "new_count": 24,
+      "new_covered": 8422,
+      "new_hole_witness": 16,
+      "new_holes": 1973,
+      "old_covered": 8399,
+      "old_covered_joint_liability": 23,
+      "old_hole_witness": 16,
+      "old_holes": 1996,
+      "old_parent_overlap_all_retained_covered": 11,
+      "original_count": 26,
+      "period": 10395,
+      "private_counts": {
+        "3": 1980,
+        "5": 657,
+        "7": 401,
+        "9": 366,
+        "11": 254,
+        "15": 216,
+        "21": 114,
+        "27": 46,
+        "33": 207,
+        "35": 117,
+        "45": 69,
+        "55": 76,
+        "63": 25,
+        "77": 45,
+        "99": 69,
+        "105": 40,
+        "135": 9,
+        "165": 54,
+        "189": 8,
+        "231": 36,
+        "297": 23,
+        "315": 10,
+        "495": 18,
+        "693": 12,
+        "1485": 3,
+        "2079": 1
+      },
+      "private_witnesses": {
+        "3": 3,
+        "5": 20,
+        "7": 7,
+        "9": 4,
+        "11": 11,
+        "15": 43,
+        "21": 52,
+        "27": 226,
+        "33": 17,
+        "35": 2,
+        "45": 19,
+        "55": 26,
+        "63": 46,
+        "77": 221,
+        "99": 197,
+        "105": 397,
+        "135": 757,
+        "165": 8,
+        "189": 541,
+        "231": 236,
+        "297": 557,
+        "315": 937,
+        "495": 404,
+        "693": 662,
+        "1485": 1,
+        "2079": 9451
+      },
+      "selected_child_roots": [
+        1,
+        2
+      ],
+      "single_contraction_losses": [
+        9,
+        8
+      ],
+      "single_loss_witnesses": [
+        757,
+        541
+      ],
+      "source": 1
+    }
+  ],
+  "input_sha256": "1230d9f5f457b5e1af99dc58af1d0ce34493d6f72c25ac77aefa7974bdeb2629"
+}

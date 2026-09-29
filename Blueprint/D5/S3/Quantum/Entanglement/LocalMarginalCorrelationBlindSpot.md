@@ -4,9 +4,15 @@
 
 Complete local marginals leave every cross-factor correlation direction unread.
 
+In the real Hermitian tensor model with factor dimensions $m, n$, write $L$ for the sum of the canonical traceless local sectors, $C$ for the sector traceless in both factors, and $H_{0}$ for the full traceless space. Sector dimensions and orthogonality are real.
+
+Independently, $\rho$ is the canonical two-qubit Bell density for 00 and 11, and $\sigma$ their equal diagonal mixture. Here $\geq 0$ means positive semidefinite; partial-trace subscripts name the factor traced out.
+
 **Theorem 1.1 (Complete local data omit the full correlation sector).**
 
-$$\begin{gathered}\forall m, n, m \geq 1 \land n \geq 1 \land {m} \times {n} > 1 \Rightarrow \\{}\operatorname{Sup}\left(\operatorname{localASector}\left(m, n\right), \operatorname{localBSector}\left(m, n\right), \operatorname{correlationSector}\left(m, n\right)\right) = \operatorname{bipartiteTraceZero}\left(m, n\right) \land\\{}\operatorname{finrankR}\left(\operatorname{Sup}\left(\operatorname{localASector}\left(m, n\right), \operatorname{localBSector}\left(m, n\right)\right)\right) = {m^{2} - 1} + {n^{2} - 1} \land\\{}\operatorname{finrankR}\left(\operatorname{correlationSector}\left(m, n\right)\right) = {m^{2} - 1} \times {n^{2} - 1} \land\\{}\frac{\operatorname{finrankR}\left(\operatorname{correlationSector}\left(m, n\right)\right)}{\operatorname{finrankR}\left(\operatorname{bipartiteTraceZero}\left(m, n\right)\right)} = \frac{{m^{2} - 1} \times {n^{2} - 1}}{{m^{2}} {n^{2}} - 1} \land\\{}\operatorname{Orthogonal}\left(\operatorname{Sup}\left(\operatorname{localASector}\left(m, n\right), \operatorname{localBSector}\left(m, n\right)\right), \operatorname{correlationSector}\left(m, n\right)\right) \land\\{}\operatorname{PosSemidef}\left(\operatorname{bellDensity}\right) \land \operatorname{Tr}\left(\operatorname{bellDensity}\right) = 1 \land \operatorname{rank}\left(\operatorname{bellDensity}\right) = 1 \land\\{}\operatorname{PosSemidef}\left(classicalCorrelatedDensity\right) \land \operatorname{Tr}\left(classicalCorrelatedDensity\right) = 1 \land classicalCorrelatedDensity^{2} \neq classicalCorrelatedDensity \land\\{}\operatorname{traceEnvironment}\left(\operatorname{bellDensity}\right) = \operatorname{traceEnvironment}\left(classicalCorrelatedDensity\right) \land\\{}\operatorname{traceFirstFactor}\left(\operatorname{bellDensity}\right) = \operatorname{traceFirstFactor}\left(classicalCorrelatedDensity\right) \land\\{}\operatorname{bellDensity} \neq classicalCorrelatedDensity.\end{gathered}$$
+$$
+\begin{gathered}\forall m, n \in \mathbb{N},\\\ {}m \geq 1 \land n \geq 1 \land mn > 1 \Rightarrow\\\ {}L + C = H_{0} \land\\\ {}\mathrm{dim}(L) = (m^{2} - 1) + (n^{2} - 1) \land\\\ {}\mathrm{dim}(C) = (m^{2} - 1)(n^{2} - 1) \land\\\ {}\frac{\mathrm{dim}(C)}{\mathrm{dim}(H_{0})} = \frac{(m^{2} - 1)(n^{2} - 1)}{m^{2}n^{2} - 1} \land\\\ {}L \perp C \land\\\ {}\rho \geq 0 \land \mathrm{Tr}(\rho) = 1 \land \mathrm{rank}(\rho) = 1 \land\\\ {}\sigma \geq 0 \land \mathrm{Tr}(\sigma) = 1 \land \sigma^{2} \neq \sigma \land\\\ {}\mathrm{Tr}_{B}(\rho) = \mathrm{Tr}_{B}(\sigma) \land\\\ {}\mathrm{Tr}_{A}(\rho) = \mathrm{Tr}_{A}(\sigma) \land\\\ {}\rho \neq \sigma.\end{gathered}
+$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.local_marginal_correlation_blind_spot` (`✓ std3`). ∎
 
@@ -14,13 +20,9 @@ $$\begin{gathered}\forall m, n, m \geq 1 \land n \geq 1 \land {m} \times {n} > 1
 
 *Commentary.*
 
-For two positive finite factor dimensions with nontrivial product, the locally visible directions are the join of the two canonical local Hermitian sectors. Their real dimension is the sum of the two local traceless dimensions.
+The correlation sector is orthogonal to all local directions. The ratio gives its share of the traceless space.
 
-The orthogonal unread sector is the canonical correlation sector. It has the product dimension, and its dimension divided by the full traceless dimension is the displayed correlation proportion.
-
-The final clauses give an explicit witness. The canonical Bell density is a positive trace-one rank-one state, while the diagonal equal mixture of the 00 and 11 basis states is a positive trace-one non-idempotent state.
-
-Both canonical partial traces agree for these two densities, but the global matrices differ. Thus even complete knowledge of both local marginals does not determine cross-factor correlations.
+The fixed witness has identical local marginals but different global matrices: complete local data need not determine cross-factor correlations.
 
 ## References
 

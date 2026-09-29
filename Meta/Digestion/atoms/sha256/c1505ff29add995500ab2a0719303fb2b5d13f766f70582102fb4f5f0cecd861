@@ -1,0 +1,42 @@
+**命题45.1a（每个维数的精确纯轨道阈值）。** 对每个 $d\ge2$，存在一个 $d$ 维 CPTP 通道及纯初态，使时刻 $0,\ldots,2d-2$ 的态全部纯，而时刻 $2d-1$ 的态混合。因此引理45.1的阈值 $2d-1$ 对每个维数均为最小可能值。
+
+证明：取正交单位基 $e_0,\ldots,e_{d-1}$，置
+
+$$
+v=\frac{e_0+e_1}{\sqrt2},\qquad
+K_0=\sum_{i=0}^{d-2}|e_{i+1}\rangle\langle e_i|,
+\qquad K_1=|v\rangle\langle e_{d-1}|.
+$$
+
+有
+
+$$
+K_0^*K_0=\sum_{i=0}^{d-2}|e_i\rangle\langle e_i|,
+\qquad K_1^*K_1=|e_{d-1}\rangle\langle e_{d-1}|,
+$$
+
+所以 $\mathcal R(X)=K_0XK_0^*+K_1XK_1^*$ 是 CPTP。以 $e_0$ 为初始纯态方向，前 $d$ 个时刻依次为
+
+$$
+\psi_t=e_t\quad(0\le t\le d-1).
+$$
+
+下一步由 $K_1$ 复位到 $v$。其后，只要两个分量均未跨过最后一维，$K_0$ 将它们共同右移而 $K_1$ 为零。因此
+
+$$
+\psi_{d+j}=\frac{e_j+e_{j+1}}{\sqrt2},
+\qquad 0\le j\le d-2.
+$$
+
+最后纯时刻恰为 $2d-2$；下一次分别由两份 Kraus 输出 $e_{d-1}/\sqrt2$ 与 $v/\sqrt2$，得到
+
+$$
+\sigma_{2d-1}
+=\frac12|e_{d-1}\rangle\langle e_{d-1}|
++\frac12|v\rangle\langle v|.
+$$
+
+这两个方向在每个 $d\ge2$ 都线性独立，所以该态秩为二。$d=2$ 时两方向虽然不正交，仍线性独立，证明同样成立。结合引理45.1，得到每个维数上的精确阈值。$d=1$ 的轨道恒纯，另行平凡处理。证明完毕。
+
+该例满足 $\mathcal R(I)=I-|e_0\rangle\langle e_0|+|v\rangle\langle v|\ne I$，所以不保单位；它与第45.4节更强的保单位特例并不冲突。
+

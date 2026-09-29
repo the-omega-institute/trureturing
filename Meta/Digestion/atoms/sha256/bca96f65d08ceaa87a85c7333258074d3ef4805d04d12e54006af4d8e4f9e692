@@ -1,0 +1,68 @@
+### 267.2 理想支撑压缩给出精确源保真度
+
+沿用§265的正交向量
+$$
+v_0=(1,-1/2,1,1/2)^{\mathsf T},
+\qquad
+v_1=(0,1,0,1)^{\mathsf T}.
+\tag{267.6}
+$$
+令 $P$ 为它们张成空间的投影，即 $\Omega_0$ 的支撑投影。在正交归一基
+$v_0/\sqrt{5/2},v_1/\sqrt2$ 下，
+$$
+\Omega_0\big|_{\operatorname{ran}P}
+=\Lambda=\operatorname{diag}(5/8,3/8).
+\tag{267.7}
+$$
+竞争态的未归一化压缩为
+$$
+A_h=P\Omega_hP\big|_{\operatorname{ran}P}
+=
+\begin{pmatrix}
+5/8-\frac45h^2-\frac{88}{5}h^4&-\frac{h}{2\sqrt5}\\
+-\frac{h}{2\sqrt5}&3/8-8h^4
+\end{pmatrix}.
+\tag{267.8}
+$$
+因此其理想支撑外质量精确为
+$$
+\boxed{
+t_h=\operatorname{Tr}((I-P)\Omega_h)
+=1-\operatorname{Tr}A_h
+=\frac45h^2+\frac{128}{5}h^4.
+}
+\tag{267.9}
+$$
+
+根保真度由未归一化的 $A_h$ 直接计算。令
+$$
+B_h=\sqrt\Lambda A_h\sqrt\Lambda
+=
+\begin{pmatrix}
+25/64-h^2/2-11h^4&-\sqrt3h/16\\
+-\sqrt3h/16&9/64-3h^4
+\end{pmatrix}.
+\tag{267.10}
+$$
+直接相乘得到
+$$
+\operatorname{Tr}B_h=\frac{17}{32}-\frac12h^2-14h^4,
+$$
+$$
+\det B_h
+=\frac{225}{4096}-\frac{21}{256}h^2
+-\frac{87}{32}h^4+\frac32h^6+33h^8.
+\tag{267.11}
+$$
+二阶正半定矩阵的两个本征值给
+$$
+\boxed{
+\mathsf F_{\mathrm{in}}(h)^2
+:=\mathsf F(\Omega_0,\Omega_h)^2
+=\operatorname{Tr}B_h+2\sqrt{\det B_h}.
+}
+\tag{267.12}
+$$
+这里 $\sqrt{\Omega_0}$ 在 $P^\perp$ 上为零，但 $A_h$ 的迹仍小于一；没有将压缩态重新归一化而删除支撑损失。事实上 $h>0$ 时
+$D_{\mathrm{nat}}(\Omega_h\|\Omega_0)=+\infty$，所以输入下界不能借用该方向的有限相对熵。
+

@@ -1,0 +1,38 @@
+**定义 68.1（共同接口、实际等待与正漂移余量）。** 固定有限维完整活动空间 $\mathcal H$。名义仪器与实际仪器分别为
+
+$$
+\widehat\Gamma(\rho)
+=|\varnothing\rangle\langle\varnothing|\otimes\widehat{\mathcal N}(\rho)
++\sum_x|x\rangle\langle x|\otimes\widehat\Phi_x(\rho),
+\qquad
+\Gamma(\rho)
+=|\varnothing\rangle\langle\varnothing|\otimes\mathcal N(\rho)
++\sum_x|x\rangle\langle x|\otimes\Phi_x(\rho).
+$$
+
+所有分支完全正，两完整映射保迹，输入、输出、记录标签与可再次作用的量子记忆一致。记
+
+$$
+\widehat{\mathcal A}=\widehat{\mathcal N}^{*},\qquad
+\mathcal A=\mathcal N^{*},\qquad
+\delta=\frac12\|\Gamma-\widehat\Gamma\|_\diamond.
+$$
+
+每调用一次完整仪器计一单位成本；第一次点击后停止，永不点击的轨迹成本为 $\infty$。实际等待轮数为 $\mathsf N\in\{1,2,\ldots,\infty\}$，部分成本势为
+
+$$
+T_m=\sum_{j=0}^{m-1}\mathcal A^j(I),\qquad T_0=0.
+$$
+
+给定一个非零正算子 $B$，置
+
+$$
+b=\|B\|_\infty,\qquad
+\varepsilon=\lambda_{\min}\bigl(B-\widehat{\mathcal A}(B)\bigr),\qquad
+c=\varepsilon-\delta b.
+$$
+
+本节的证书条件为 $c>0$。它涉及所有输入方向的算子序，不以指定来源上的平均不等式代替。
+
+附引：平均运行时间的算子表示是已有理论。Junyi Liu、Li Zhou、Gilles Barthe、Mingsheng Ying，[*Quantum Weakest Preconditions for Reasoning about Expected Runtimes of Quantum Programs (Extended Version)*，arXiv:1911.12557v3](https://arxiv.org/abs/1911.12557v3)，定义 3.1、定理 1—2 与推论 4.1 分别给成本语义、运行时间可观测量及有限维终止结论。其语法将初始化、酉操作和测量分别计费；本节只数原完整仪器的调用次数，不把两种成本数值直接等同。Christina Gehnen、Dominique Unruh、Joost-Pieter Katoen，[*Quantum Weakest Preconditions Revisited: Pre-expectations for Expected Runtime Analysis*，arXiv:2607.12532v1](https://arxiv.org/abs/2607.12532v1)，第 6 节说明计费规则可由 reward 插入位置指定；其命题 5.11、7.6 给 Park 归纳上界。下面证明中的正性与望远镜估计是这一成熟方法在当前成本约定下的有限维步骤；新增的组合对象是完整仪器校准误差与同一证书余量。
+

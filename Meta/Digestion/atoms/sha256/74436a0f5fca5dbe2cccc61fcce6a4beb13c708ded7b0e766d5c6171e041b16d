@@ -1,0 +1,10 @@
+**命题 357.2（固定权重的均方误差分解）。** 对 $\widehat\theta=w^{\mathsf T}Z$，有
+
+$$
+\mathbb E(\widehat\theta-\theta)^2=(w^{\mathsf T}b)^2+w^{\mathsf T}\Sigma w.
+$$
+
+证明。误差等于 $w^{\mathsf T}b+w^{\mathsf T}\varepsilon$。展开平方后，交叉项的期望为零，随机项平方的期望为 $\sum_{i,j}w_iw_j\Sigma_{ij}$，即得公式。证毕。
+
+这可以应用于第 354 节的确定影响向量：先由网络得到 $w$，再研究随机初值所产生的共同极限。但固定网络收敛与统计模型成立是两项不同前提。仅从 $P$ 的非负性，推不出初始报告无偏、独立或方差相同。
+

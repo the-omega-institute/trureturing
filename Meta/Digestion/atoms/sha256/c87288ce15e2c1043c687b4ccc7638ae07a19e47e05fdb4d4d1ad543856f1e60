@@ -1,0 +1,20 @@
+### 211.5 实际完整参考梯度的 PSD 证书
+
+候选已在全部主 Kraus TP 切向上驻定。
+$K_0$ 可逆，所以共同 TP 约束微分满秩：
+给定 Hermitian $H$，取
+$\delta K_0=K_0^{-\dagger}H/2$、$\delta K_1=0$。
+于是存在唯一 Hermitian 乘子 $\Lambda$，实解析依赖
+$(\epsilon,h,t)$，使
+
+$$
+S_j=G_j+\Lambda\otimes I,\qquad
+G_j=\partial_{J_j}\widetilde e(h\epsilon,\epsilon,\Gamma),
+\qquad S_jk_j=0.
+\tag{211.24}
+$$
+
+唯一性来自 $K_0$ 可逆；
+解析性来自满秩线性方程的解析右逆。
+输入优先乘子沿用第209节的约定。
+

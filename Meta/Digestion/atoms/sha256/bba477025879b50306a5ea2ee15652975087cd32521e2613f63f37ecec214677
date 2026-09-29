@@ -1,0 +1,29 @@
+### 254.5 擦除选择记录后的精确同输出源
+
+现在允许全部 $0<z<1$，固定任意 $0<\gamma<1$。擦除标签后的仪器效应为
+$$
+\overline E_{w,s}
+=(1-\gamma)E_{w,s}+\gamma F_{w,s}
+=\frac{I_2+s\overline A_w}{4},
+\qquad
+\overline A_w=(1-\gamma)A_w+\gamma Y.
+\tag{254.26}
+$$
+它们是原两套效应的凸组合，保持正性与归一化。校准已知的 $\gamma$ 不会补回被擦除的选择记录。
+
+定义
+$$
+\boxed{
+z_\gamma=
+\frac{\gamma}{\sqrt{\gamma^2+(1-\gamma)^2A}}
+\in(0,1).
+}
+\tag{254.27}
+$$
+该数满足
+$$
+\gamma\sqrt{1-z_\gamma^2}
+=(1-\gamma)\sqrt A\,z_\gamma.
+\tag{254.28}
+$$
+

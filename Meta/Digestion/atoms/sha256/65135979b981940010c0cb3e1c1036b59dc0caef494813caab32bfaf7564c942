@@ -1,0 +1,28 @@
+**定义 43.1（移动中心与一阶分布残差）。** 仍取第 39、40、42 章的固定参数及原序列
+$`\lambda=Q^3`$。全部坐标使用同一数据、支持标签及精确后验中心。
+用第 40 章的精确中心 $`W_c`$ 和正步长 $`\Delta`$ 定义
+
+```math
+v_M=\frac{\Delta\sqrt\lambda}{Q},\qquad
+h_M=\frac{v_M}{w},\qquad c_M=\frac{W_c-\tau}{w},\qquad
+x_i=\frac{W_i-W_c}{v_M},\qquad u_i=c_M+h_Mx_i.
+```
+
+式 (43.1)。
+
+这里 $`h_M\gt0`$，且 $`h_M,c_M\to0`$。在共同隔离事件上，计数组的
+$`x_i`$ 等于 $`t\delta_M`$。固定 $`s\gt3/2`$，采用 (42.2) 的实
+$`H^{-s}(\mathbb T_4)`$ 空间，置
+
+```math
+Z_M=\frac1{B_M}\sum_{i\in J}x_i(\mathbf1_{\{i\in S\}}-\pi_i),
+\qquad
+\nu_M=\frac{\mu_M-Y_M\delta_{c_M}}{h_M}.
+```
+
+式 (43.2)。
+
+$`\delta'_z`$ 表示分布导数，即对光滑周期测试函数
+$`\langle\delta'_z,f\rangle=-f'(z)`$。
+减去的点质量位于精确移动中心 $`c_M`$。
+

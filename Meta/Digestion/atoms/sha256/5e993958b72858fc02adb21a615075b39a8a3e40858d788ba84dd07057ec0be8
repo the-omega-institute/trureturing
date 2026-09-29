@@ -1,0 +1,49 @@
+**定理283.1（有限共同相位块的统一预算与径向信息）。** 在（283.1）—（283.6）的来源、访问及完整块合同内，$B=1$ 时两假设对所有协议不可区分。对全部 $B\ge2$、$0<\delta\le1/4$，
+$$
+\boxed{
+\frac1{54}\left(B+\frac1{B\delta^2}\right)
+\le N_{\rm opt}(B,\delta)
+\le B+360000\left(\delta^{-1}+\frac1{B\delta^2}\right).
+}
+\tag{283.48}
+$$
+因而比较常数独立于 $B,\delta$ 地有
+$$
+\boxed{
+N_{\rm opt}(B,\delta)
+\asymp B+\frac1{B\delta^2}
+\asymp B+\delta^{-1}+\frac1{B\delta^2}.
+}
+\tag{283.49}
+$$
+同一访问类的纯边界径向Fisher信息满足
+$$
+\boxed{
+\frac{4B^2}{30000}\le I_{\rm opt}(B;1)\le2B(B-1),
+\qquad B\ge2,
+}
+\tag{283.50}
+$$
+而 $I_{\rm opt}(1;1)=0$。
+
+**证明。** 当 $B=1$，对称程序（283.10）恒为 $(1/2,1/2)$，与 $a$ 无关；（283.12）表明每块实际通道也与半径无关，任意复合和后处理均无法区分。对 $B\ge2$，不可见极化替换给共同的经典程序模拟；（283.14）—（283.22）给任意旧量子记忆及跨块自适应的下界。真实校准与两设置二阶统计量由（283.27）—（283.46）给上界。两种预算表达等价，因为
+$$
+\delta^{-1}\le\tfrac12\left(B+\frac1{B\delta^2}\right).
+$$
+程序得分的准确二项方差（283.25）给Fisher信息上界，实际统计量的（283.47）给下界。$\square$
+
+固定 $B\ge2$ 后令 $\delta\downarrow0$，预算是 $\Theta_B(\delta^{-2})$。若 $B\delta$ 大，完整块合同强制至少计费一个 $B$ 长度块，预算变为 $\Theta(B)$。这个 $B$ 项是已声明的计费粒度；它不是没有钟合同就能宣称的不可避免物理历时，也不适用于免费跳过位置或只按实际使用前缀计费的其他规则。
+
+必须保留原输入权限边界。若允许对同相位的两份原qubit直接测量反对称投影，则
+$$
+\Pr_a(P_{\rm anti})
+=\frac{1-\operatorname{Tr}\rho_{a,\phi}^2}{2}
+=\frac{1-a^2}{4}.
+\tag{283.51}
+$$
+纯态时这个概率为零，$a=1-\delta$ 时为 $\delta/2-\delta^2/4$。因而在较强的共同输入访问类中，$B=2$ 也可用 $\Theta(\delta^{-1})$ 份来源完成判别，与当前固定块的 $\Theta_B(\delta^{-2})$ 不同。反对称投影不可从已经reset的经典记录恢复；（283.51）是权限改变的反例，不是本合同的方案。
+
+先估方向、再改变测量设置是成熟方法。Bagan、Ballester、Muñoz-Tapia、Romero-Isart，*Purity estimation with separable measurements*，[arXiv:quant-ph/0509087v2](https://arxiv.org/abs/quant-ph/0509087v2)，第3—4页给可分自适应纯度估计并明确处理近纯边界的非统一性；Zhang等，*Adaptive tomography of qubits: Purity versus statistical fluctuations*，[arXiv:1805.04808v1](https://arxiv.org/abs/1805.04808v1)，第3—4页及第9—10页说明对齐、稀少结果和实际混合噪声的区别。本节的完整块联合界由有限样本二项模拟与无偏统计量直接承担，没有把这些文献的Bayesian或渐近层析结论当作本合同的现成判别定理。
+
+这里新增的是同一来源、访问与计费合同中的联合结论。标准twirling、保真度数据处理、Bernoulli尾界和二阶U统计量都只作为中间工具。Haar相位、块间独立、已知边界、$n=1$、准确经典角度、reset前禁止新旧系统联合作用及确定完整块预算均为结论条件。改变相位先验或相关结构、增加量子参考、允许原输入共同操作、使用未知块边界或仅限制期望停止次数，需要另行分析。
+

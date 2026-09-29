@@ -1,0 +1,9 @@
+**文献接口（Epperlein Remark 5.3(b) 的有限惰性停止界）。** 令 K 为 Q^{n×H} 中每个基顶点的群坐标之和为零的子空间，则 dim K=n(s-1)，E(A) 保持 K；所引结果给出
+
+$$
+A\text{ inert}\quad\Longleftrightarrow\quad
+A^{n(s-1)}\in u_H M_n(N).
+$$
+
+该停止界是后续不可约块细化的外部前提，不记作本卷定理。[^rrosft2-epperlein]
+

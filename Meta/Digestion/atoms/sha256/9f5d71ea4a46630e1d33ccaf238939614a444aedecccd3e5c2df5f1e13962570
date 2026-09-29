@@ -1,0 +1,39 @@
+**命题 550.1（精确端点与临界擦除率）。** 对 $0<r\le M$，
+
+$$
+\rho_r=\max\left\{\frac D2,\ D-\frac{(1-r)a}{r}\right\},
+\qquad
+\frac{j_{\mathrm{exact}}}{j_{\mathrm{free}}}
+=\max\left\{2,\ 4\left(1-\frac{(1-r)a}{rD}\right)\right\}.
+$$
+
+临界值为
+
+$$
+r_{\mathrm c}=\frac{2a}{D+2a}<M.
+$$
+
+在 $0<r\le r_{\mathrm c}$ 时比例等于二；在 $r_{\mathrm c}<r\le M$ 时严格大于二。
+
+证明：在命题 549.1 中置 $\eta=0$，再用第 485 节的 $j_{\mathrm{exact}}=2r\rho_r$ 与 $j_{\mathrm{free}}=r\rho=rD/2$，得到两式。自由中心的公共容量条件自动成立；标签容量条件分别是
+
+$$
+r(a+D/2)\le a,\qquad r(d+D/2)\le d.
+$$
+
+因 $a\le d$，前一条件更紧，恰等价于 $r\le r_{\mathrm c}$。又
+
+$$
+M-r_{\mathrm c}=\frac{D(M-2a)}{D+2a}>0,
+$$
+
+其中 $M-2a=b+d-a>0$。由此得到临界值及比例的两段行为。证毕。
+
+在 $r=M$ 时，完整公式特别给出
+
+$$
+\mathcal J_{b,a,d}(M,0)=2D(M-a).
+$$
+
+若 $b\ge a$，则共同下包络的最小坐标为 $u=a$，比例 $4(1-a/M)$ 再次达到第 523 节的 $2\tau(1-u/M)$。若 $b<a$，不能把 $u$ 写成 $a$；这个版本的全支撑界仍成立，但该等号理由已经不适用。
+

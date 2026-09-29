@@ -1,0 +1,32 @@
+### 命题 ST4.2：恢复误差控制全部约定的未来记录
+
+固定有限维密度态 $\rho,\sigma$，其中 $\sigma$ 忠实；固定量子通道 $\mathcal N$，在有效支撑上定义
+
+$$
+\varepsilon_\rho
+=D(\rho\|\sigma)-D(\mathcal N\rho\|\mathcal N\sigma).
+$$
+
+引用普适恢复定理：存在仅依赖 $\sigma,\mathcal N$ 的恢复通道 $\mathcal R$，在 $\operatorname{supp}\mathcal N\sigma$ 上采用该定理的恢复映射，并在正交补上作保迹扩展，使
+
+$$
+\varepsilon_\rho\ge-2\log F(\rho,\mathcal R\mathcal N\rho),
+\quad F(\rho,\omega)=\|\sqrt\rho\sqrt\omega\|_1.
+$$
+
+这里 $F$ 为未平方保真度，自然对数用于相对熵。[ST-Recovery]
+
+令 $\Lambda$ 为任意一个双方共用的后续 CPTP 实验过程，它可以包括有限次自适应测量及完整经典记录。对最终效果 $0\le E\le I$，有
+
+$$
+\boxed{
+\left|\operatorname{tr}E\Lambda(\rho)
+-\operatorname{tr}E\Lambda(\mathcal R\mathcal N\rho)\right|
+\le\sqrt{1-e^{-\varepsilon_\rho}}
+\le\sqrt{\varepsilon_\rho}.
+}
+\tag{ST4.1}
+$$
+
+整个经典记录分布的总变差距离满足同一界。
+

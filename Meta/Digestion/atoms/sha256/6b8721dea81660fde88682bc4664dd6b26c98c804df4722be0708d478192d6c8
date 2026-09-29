@@ -1,0 +1,35 @@
+**定理 241.3（近最坏探针的资源证书）。** 固定同一单纯形候选。若一份归一化纯联合输入满足
+$$
+f(\rho)\ge D_*-\varepsilon,
+\qquad\varepsilon\ge0,
+\tag{241.27}
+$$
+则其输入边缘纯度、Schmidt 秩 $r$ 及纠缠熵满足
+$$
+\boxed{
+\operatorname{Tr}\rho^2
+\le\frac1d+\frac{Nd^2}{d+1}\varepsilon,
+}
+\tag{241.28}
+$$
+$$
+\boxed{
+r\ge
+\left\lceil
+\frac1{\displaystyle 1/d+\frac{Nd^2}{d+1}\varepsilon}
+\right\rceil,
+}
+\tag{241.29}
+$$
+以及
+$$
+\boxed{
+S(\rho)\ge
+\max\left\{0,
+\log_2d-
+\log_2\left(1+\frac{Nd^3}{d+1}\varepsilon\right)
+\right\}.
+}
+\tag{241.30}
+$$
+

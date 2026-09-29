@@ -1,0 +1,10 @@
+**$AAABC$。** $G_2,G_3$ 的一位像都为 $Q\otimes A$，所以 $G_2=G_3$，相同零位像给 $H_1=H_2$。普通 $B$ 位于第5轮，给 $G_5=P$，其后继为 $C$，所以 $V_1P=Q\otimes C$。
+
+由于普通 $C\ne A^\perp=Y$，$\langle A,C\rangle\ne0$；同一个 $V_1$ 把 $G_2,P$ 分别映到 $Q\otimes A,Q\otimes C$，所以 $P_P|_{G_2}$ 单射，两个平面均二维，得到 $P_PG_2=P$。又 $v\perp P$、$a\ne0$，真实早期式（128.7）给
+
+$$
+P_PH_2=P_PG_2=P.
+$$
+
+但 $q\perp P$ 使 $P_PH_1\subset\mathbb C(P_Pp)$，维数至多一。这与 $H_1=H_2$ 矛盾。
+

@@ -1,0 +1,11 @@
+**引理 2.38。** For every oracle $A$ and every set $S\subseteq\mathbb N_{>0}$,
+
+$$
+\sum_{h\in S}2^{-h}\text{ is }A\text{-computable}
+\quad\Longleftrightarrow\quad
+S\text{ is }A\text{-decidable}.
+\tag{TM.662}
+$$
+
+This is an oracle-relative, pointwise statement. There is no uniform operator that, from a name of the sum alone, selects the original set $S$ for all inputs.
+

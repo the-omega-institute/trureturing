@@ -1,0 +1,92 @@
+**定理102.1（精确的逐方向最小交维数）。** 对每个非零 $z$，
+
+$$
+\boxed{
+\min_{R_0\in\mathfrak R(E_0,E_1)}
+\dim(R_0\cap S_z)
+=\max\{a_z,b_z\}.
+}
+\tag{102.3}
+$$
+
+这个最小值可以达到；达到它的补全允许依赖所选方向 $[z]$。
+
+**证明：下界。** 令 $T=E_1^\perp$，并以
+$\pi:X\to X/S_z$ 表示商映射。商空间为 $n$ 维。由
+
+$$
+(T+S_z)^\perp=E_1\cap S_z^\perp
+$$
+
+可知
+
+$$
+\dim\pi(T)=\dim(T+S_z)-\dim S_z=n-b_z.
+\tag{102.4}
+$$
+
+任意允许 $R_0$ 包含 $E_0$，所以交维数至少为 $a_z$。又 $R_0\subset T$，故
+
+$$
+\dim(R_0\cap S_z)
+=n-\dim\pi(R_0)
+\ge n-\dim\pi(T)=b_z.
+$$
+
+这给（102.3）的下界 $h_z$。
+
+**证明：补空间选择的可行性。** 写 $e_i=\dim E_i$。由（102.4），
+
+$$
+\dim(T\cap S_z)
+=\dim T-\dim\pi(T)
+=(2n-e_1)-(n-b_z)=n-e_1+b_z.
+\tag{102.5}
+$$
+
+这个维数至少为 $b_z$，因为 $e_1\le n$；它也至少为 $a_z$，因为
+$E_0\cap S_z\subset T\cap S_z$。因此可在 $T\cap S_z$ 内选取一个 $h_z$ 维子空间 $L$，使
+
+$$
+E_0\cap S_z\subset L.
+\tag{102.6}
+$$
+
+另一方面，
+
+$$
+\dim\pi(E_0)=e_0-a_z.
+$$
+
+需要在 $\pi(T)$ 中选一个 $n-h_z$ 维空间包含它。若 $h_z=a_z$，则
+$e_0-a_z\le n-a_z=n-h_z$；若 $h_z=b_z$，则
+$\pi(E_0)\subset\pi(T)$ 及（102.4）给
+$e_0-a_z\le n-b_z=n-h_z$。同时 $h_z\ge b_z$，所以
+$n-h_z\le n-b_z=\dim\pi(T)$。两侧可选性都成立，故存在
+
+$$
+Y\subset\pi(T),\qquad
+\dim Y=n-h_z,\qquad \pi(E_0)\subset Y.
+\tag{102.7}
+$$
+
+**证明：实际构造最小交补全。** 选取 $E_0$ 中的向量
+$x_1,\ldots,x_{e_0-a_z}$，使其 $\pi$ 像构成 $\pi(E_0)$ 的基；它们与
+$E_0\cap S_z$ 一同张成 $E_0$。将这些像扩充为 $Y$ 的一组基，并为新增基向量在 $T$ 中选取提升。令 $R_0$ 为 $L$、这些原有 $x_i$ 及新增提升的张成。
+
+所有提升的投影构成 $Y$ 的基，因此它们模 $S_z$ 线性独立。于是
+
+$$
+\dim R_0=\dim L+\dim Y=h_z+(n-h_z)=n,
+$$
+
+$$
+R_0\cap S_z=L.
+\tag{102.8}
+$$
+
+此外 $E_0\subset R_0\subset T=E_1^\perp$，所以
+$R_0\in\mathfrak R(E_0,E_1)$，而（102.8）给交维数恰为 $h_z$。证明完毕。
+
+取 $a_z=b_z=0$，即恢复第100节的横截补全判据；本定理还处理无法取得零交但可以控制最小正的交维数的情形。
+

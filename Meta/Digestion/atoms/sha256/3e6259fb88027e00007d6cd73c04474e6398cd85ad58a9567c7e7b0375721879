@@ -1,0 +1,23 @@
+### 38.1 三种 completion 不是同一个性质
+
+给定读出 $r:X\to R$、未来目标 $b:X\to B$ 和代表关系 $\mathsf{Rep}\subseteq X\times U$，分别定义：
+
+$$
+\begin{aligned}
+ \operatorname{IdComp}(r)
+ &:\Longleftrightarrow \operatorname{Injective}(r),\\
+ \operatorname{NormComp}(\mathsf{Rep})
+ &:\Longleftrightarrow
+   \forall x,\ \exists!u,\ \mathsf{Rep}(x,u),\\
+ \operatorname{BehComp}(r,b)
+ &:\Longleftrightarrow
+   \forall x,y,\ r(x)=r(y)\Longrightarrow b(x)=b(y).
+\end{aligned}
+\tag{38.1}
+$$
+
+第一项说当前读出保留身份，第二项说每个对象有唯一规范代表，第三项说当前读出足以恢复指定未来目标。它们的量词不同，互相没有一般蕴含。
+
+最小的有限反例已经存在于二点载体：
+
+* 恒等读出满足 $\operatorname{IdComp}$，但“任意代表都合法”的关系不满足 $\operatorname{NormComp}$；

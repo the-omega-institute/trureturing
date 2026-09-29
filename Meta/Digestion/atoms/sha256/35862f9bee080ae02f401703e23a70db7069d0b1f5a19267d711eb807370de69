@@ -1,0 +1,8 @@
+**引理167.1（边缘扩张恰是全部局部可达输出）。** 接收端从 $\Omega$ 所能产生的 $MR_{\mathrm{out}}$ 状态恰好为 $\mathcal C$。而且
+
+$$
+\boxed{e=\min_{\sigma\in\mathcal C}
+\lambda_{\max}(P_\Psi-\beta\sigma).}
+\tag{167.6}
+$$
+

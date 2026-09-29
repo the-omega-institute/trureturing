@@ -1,0 +1,6 @@
+import LeanInformationAudit.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
+
+open D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
+
+register_information_template mechanicalReadoutRealization

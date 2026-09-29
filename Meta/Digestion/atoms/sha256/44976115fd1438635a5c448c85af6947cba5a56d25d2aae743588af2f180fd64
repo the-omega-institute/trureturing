@@ -1,0 +1,15 @@
+**定理168.1（退相干与独立标签）。** 存在一份固定的接收端酉
+$V_{\mathrm{loc}}$，使对所有逻辑算子 $\sigma$，
+
+$$
+\boxed{
+V_{\mathrm{loc}}\,
+\mathcal N_{\mathrm{loc}}(\sigma)\,
+V_{\mathrm{loc}}^*
+=\mathcal D_\kappa(\sigma)\otimes\frac{I_R}{2}.
+}
+\tag{168.6}
+$$
+
+因此 $\mathcal N_{\mathrm{loc}}$ 与 $\mathcal D_\kappa$ 可以互相通过 CPTP 后处理模拟；等式也在张量任意逻辑参考后成立。
+

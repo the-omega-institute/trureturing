@@ -1,0 +1,11 @@
+### 56.3 非正交 AABA 的排除
+
+采用第55节的七维、$r_1=2,r_2=1$、前六个完整参考终端的实际合同。来源 $ab\ne0$，记 $U=G_2$、$H_2=\operatorname{span}(a^2u+bv,w)$，$u,v,w$ 正交单位。第二轮排出空间 $F$ 二维，且
+$$
+U\otimes F\subset V_0K,\qquad
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n.
+\tag{56.11}
+$$
+$H_n\subset G_n\oplus Q_n$ 到两个同轮二维因子的投影均为同构，$V_0K\perp V_1K$。全部尾环境属于 $F$，所以 $Q_n\perp U$。
+

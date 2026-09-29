@@ -1,0 +1,14 @@
+**定理 70.3（阶数随规模趋零的完整过渡）。** 对任意确定序列 $0<\nu_M\le1$，若
+$Q^{-3}\log(1/\nu_M)\to s\in[0,\infty)$，则在定理 70.2 的同一概率意义下
+
+```math
+\frac{H_{\nu_M,M}}{Q^5}
+ \longrightarrow\frac1{2\log2}
+ \int_{\mathcal I}\{A(u)+\min(A(u),s)\}\,du.
+```
+
+式 (70.18)。
+
+$s=0$ 时极限为 $\mathscr H$；$s\ge c_q=\max A$ 时为 $2\mathscr H$。
+若 $Q^{-3}\log(1/\nu_M)\to\infty$，仍得到 $2\mathscr H$。
+

@@ -191,7 +191,7 @@ and retained families, and both K+core-error values are below403.
 
 ## Exact certificate and boundary
 
-The [helper](../../frontier/cover-geometry/missing9_six_cell_fallback.py) and
+The [helper](../../frontier/cover-geometry/missing9-six-cell-fallback/missing9_six_cell_fallback.py) and
 [certificate](../../certificates/source_norms/cover-geometry/missing9_six_cell_fallback.json)
 retain exact rational source margins, complete record digests, all equality
 witnesses, complete AP probability tails, hinges and both core errors. The
@@ -202,7 +202,7 @@ The pinned236 probability, moment and core routines are reused directly;
 its full dependency closure and first seven fallback records are preserved.
 
 ```sh
-python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/missing9_six_cell_fallback.py --check
+python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/missing9-six-cell-fallback/missing9_six_cell_fallback.py --check
 ```
 
 This is an ordinary continuous-domain proof with exact arithmetic evidence.

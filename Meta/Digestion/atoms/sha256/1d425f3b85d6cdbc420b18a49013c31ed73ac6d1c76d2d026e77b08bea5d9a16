@@ -1,0 +1,89 @@
+**定理 191.3（局部纯程序达到仍不能使用二维空间）。** 设一个固定处理器在包含 $t\in J_a$ 的开区间上精确生成 $\mathcal T_u$，且程序曲线在该区间为 $C^1$ 纯态。若程序联合空间维数不超过二，则
+$$
+I_Q(\rho_t)>I_r(t).
+\tag{191.11}
+$$
+
+证明。 一维程序只能生成恒定通道，所以只需考虑二维。取处理器的 Stinespring 等距表示 $V$。对信号基态 $|i\rangle$，目标通道保持纯输出 $|i\rangle\langle i|$，故对每个程序向量 $\psi_u$，
+$$
+V(|i\rangle\otimes\psi_u)=|i\rangle\otimes w_i(u).
+\tag{191.12}
+$$
+程序向量在任一非空精确开区间内张成整个二维空间：否则所有程序投影相同，诱导通道不随 $u$ 变化。由线性性，（191.12）因此推广为
+$$
+V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i,
+\qquad W_i^\dagger W_i=I
+\tag{191.13}
+$$
+在整个信号与二维程序输入空间上的恒等式。这里的受控等距形状由纯基态输出推出，没有预先限制处理器类型。
+
+固定均衡 $02$ 输入并测量 $|+\rangle,|-\rangle$。由（191.13），其在任意程序输入上的信号输出均位于 $02$ 子空间；因此得到完整的二维程序 POVM
+$$
+M_\pm=\frac12(I\pm\operatorname{Re}A),\qquad
+A=W_2^\dagger W_0,
+\qquad p_+=h=\frac{1+u}{2},\quad p_-=\ell=1-h.
+\tag{191.14}
+$$
+$A$ 是压缩算子，且 $\operatorname{Re}A=(A+A^\dagger)/2$。测量的信息量为 $I_r$，所以一般测量信息不等式已给出 $I_Q\ge I_r$。
+
+反设在 $t$ 取等号。令 $L$ 为该点的 SLD，$\psi=\psi_t$。支持敏感的测量等号条件要求
+$$
+\sqrt{M_j}L\psi=s_j\sqrt{M_j}\psi,
+\qquad s_j=\frac{p_j'}{p_j}\ne0,
+\qquad j\in\{+,-\}.
+\tag{191.15}
+$$
+这一条件可由每项 Hilbert 空间 Cauchy–Schwarz 等号直接取得，亦见 Braunstein–Caves，Phys. Rev. Lett. **72**, 3439（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）的支持敏感等号条件。若某个 $M_j$ 可逆，（191.15）就给出 $L\psi=s_j\psi$；但 $\langle\psi,L\psi\rangle=\operatorname{Tr}\rho'=0$，与 $s_j\ne0$ 矛盾。故两个非零效应都是秩一。二维中两个秩一正效应之和为单位算子，必为互补正交投影。
+
+选择其本征基，令 $M_\pm=(I\pm Z)/2$，从而 $\operatorname{Re}A=Z$。由 $\|A\|\le1$，在 $Z$ 的两个本征向量上，实部为 $\pm1$ 的期望值已经饱和 Cauchy–Schwarz；因此 $A=Z$。又因 $W_0,W_2$ 为等距映射，$W_2^\dagger W_0=Z$ 蕴含 $W_2=W_0Z$。
+
+在 $t$ 附近选择连续可微的归一纯态向量，并用固定基向量相位令
+$$
+\psi_u=\begin{pmatrix}\sqrt h\\ e^{i\varphi(u)}\sqrt\ell\end{pmatrix},
+\qquad\varphi(t)=0.
+\tag{191.16}
+$$
+这里对 $C^1$ 曲线只需取 $C^1$ 的局部相位。纯态信息量为
+$$
+I_Q(\rho_u)=I_r(u)+4h\ell(\varphi')^2.
+\tag{191.17}
+$$
+所以等号迫使 $\varphi'(t)=0$，并有
+$$
+\psi_t=\begin{pmatrix}\sqrt{h_0}\\\sqrt{\ell_0}\end{pmatrix},
+\qquad
+v:=\psi_t'=\begin{pmatrix}1/(4\sqrt{h_0})\\-1/(4\sqrt{\ell_0})\end{pmatrix}.
+\tag{191.18}
+$$
+令 $K=W_0^\dagger W_1$。通道的两个固定实系数给出
+$$
+\langle\psi_u,K\psi_u\rangle=a,
+\qquad
+\langle Z\psi_u,K\psi_u\rangle=a.
+\tag{191.19}
+$$
+第一式使用 $C_{01}$ 的复共轭仍等于实数 $a$，第二式使用 $W_2=W_0Z$。两式相加相减先给出整个邻域的向量恒等式；再在 $t$ 求导，得到
+$$
+K\psi_u=\begin{pmatrix}a/\sqrt h\\0\end{pmatrix},
+\qquad
+Kv=\begin{pmatrix}-a/(4h_0\sqrt{h_0})\\0\end{pmatrix}.
+\tag{191.20}
+$$
+两个实向量 $\psi_t,v$ 线性无关，故它们的像唯一确定整个复矩阵：
+$$
+K=\begin{pmatrix}A_0&B_0\\0&0\end{pmatrix},
+\qquad A_0=\frac{at}{h_0},\quad B_0=2a\sqrt{\frac{\ell_0}{h_0}}>0.
+\tag{191.21}
+$$
+于是（191.19）第一式在附近每个参数的实部都必须满足
+$$
+a=A_0h+B_0\sqrt{h\ell}\cos\varphi(u)
+\le A_0h+B_0\sqrt{h\ell}
+$$
+$$
+=a-\frac a{h_0}
+\left(\sqrt{h\ell_0}-\sqrt{\ell h_0}\right)^2.
+\tag{191.22}
+$$
+对 $u\ne t$，最后的平方严格为正，矛盾。因此不能在 $t$ 达到等号，结合测量信息下界即得（191.11）。证毕。
+

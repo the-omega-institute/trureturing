@@ -1,0 +1,19 @@
+**命题 59.1（统计可区分损失与动态残差的复合）。** 取有限维系统上的 CPTP 粗化通道 $\mathcal C_1:A\to B$、$\mathcal C_2:B\to C$ 及三个已指定的 CPTP 演化族 $\mathcal P_t^A,\mathcal P_t^B,\mathcal P_t^C$。给定 $a,b>0$，定义
+\[
+ e_T(\mathcal C_1;a)=\tfrac12\sup_{0\le t\le T}
+ \|\mathcal C_1\mathcal P_t^A-\mathcal P_{at}^B\mathcal C_1\|_\diamond,
+\]
+并类似定义其他通道的残差。则
+\[
+ \boxed{e_T(\mathcal C_2\mathcal C_1;ab)
+ \le e_T(\mathcal C_1;a)+e_{aT}(\mathcal C_2;b).}
+\]
+对支持相容且全部相对熵有限的 $\rho,\sigma$，定义 $\ell_{\mathcal C}(\rho,\sigma)=D(\rho\Vert\sigma)-D(\mathcal C\rho\Vert\mathcal C\sigma)$。则
+\[
+ \boxed{\ell_{\mathcal C_2\mathcal C_1}(\rho,\sigma)
+ =\ell_{\mathcal C_1}(\rho,\sigma)
+ +\ell_{\mathcal C_2}(\mathcal C_1\rho,\mathcal C_1\sigma).}
+\]
+
+**证明。** 动态交换子中加减 $\mathcal C_2\mathcal P_{at}^B\mathcal C_1$，利用前后复合 CPTP 映射不增钻石范数，再对时间取上确界即得第一式。第二式插入并消去中间相对熵，数据处理保证每个缺陷非负。经典有限概率系统是交换子代数上的相同论证。这是标准通道与数据处理的复合性质，而非新的 RG 普适性定理。统计账本没有指定有效时间演化，动态账本也未保证指定态族恢复；两式的右侧不能互相替代。若将这些通道解释为尺度粗粒化，还须另外给出空间尺度、重新缩放、耦合参数及局域性条件。证毕。[^tcs11-beny]
+

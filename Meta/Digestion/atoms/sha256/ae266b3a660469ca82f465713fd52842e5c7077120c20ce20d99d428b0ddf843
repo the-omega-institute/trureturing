@@ -1,0 +1,24 @@
+### 证明
+
+列随机性给出左 Perron 向量 $\mathbf1$，平稳分布给出右 Perron 向量 $\pi$，并取 $\mathbf1^{\mathsf T}\pi=1$。因为
+
+$$
+D'(0)=\begin{pmatrix}0&0\\0&-1\end{pmatrix},
+\qquad
+A'(0)=T D'(0),
+$$
+
+简单特征值微分公式给出
+
+$$
+\lambda'(0)
+=\mathbf1^{\mathsf T}A'(0)\pi
+=-\mathbf1^{\mathsf T}T
+\begin{pmatrix}0&0\\0&1\end{pmatrix}\pi
+=-\pi_1.
+$$
+
+由于 $\lambda(0)=1$，有 $\psi'(0)=\lambda'(0)$。证毕。
+
+---
+

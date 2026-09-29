@@ -1,0 +1,21 @@
+**推论211.2（接触曲线的一次负位移）。** 有
+
+$$
+\boxed{
+h_b(\epsilon)
+=h_b-\frac{\beta^2R\,P_R(s)}{s(4-s)^2}\epsilon
++O(\epsilon^2),
+\qquad P_R(s)>0.
+}
+\tag{211.37}
+$$
+
+相应实际来源边界为
+
+$$
+\ell_b(\epsilon)
+=h_b\epsilon-\frac{\beta^2R\,P_R(s)}{s(4-s)^2}\epsilon^2
++O(\epsilon^3).
+\tag{211.38}
+$$
+

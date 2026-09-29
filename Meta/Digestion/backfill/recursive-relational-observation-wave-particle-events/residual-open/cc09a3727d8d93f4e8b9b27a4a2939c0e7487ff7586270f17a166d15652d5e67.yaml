@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:cc09a3727d8d93f4e8b9b27a4a2939c0e7487ff7586270f17a166d15652d5e67
+  normalized_sha256: sha256:cc09a3727d8d93f4e8b9b27a4a2939c0e7487ff7586270f17a166d15652d5e67
+cas_ref: sha256:cc09a3727d8d93f4e8b9b27a4a2939c0e7487ff7586270f17a166d15652d5e67
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Quantum/Measurement/GeneralInstrumentResidualTailContraction.residual_tail_contraction
+    gaps:
+      - code: chain-migration-incomplete
+        detail: b4fdde88d0d454b0886080c59059e939585858dd97f982bc62a9aeb744814377
+  chain_atoms:
+    - 3e719ece53b2d3c565ee9d0908bf60c03b2de46572e501aabc3c3f22d25159d4
+    - b4fdde88d0d454b0886080c59059e939585858dd97f982bc62a9aeb744814377

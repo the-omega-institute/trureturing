@@ -1,0 +1,54 @@
+## ST12．由不变图子空间构造真正的有效量子理论
+
+### 假设 ST12.1
+
+给定 $X:V\to W$，满足矩阵 Riccati 方程
+
+$$
+B^\dagger+CX=X(A+BX).
+\tag{ST12.1}
+$$
+
+定义
+
+$$
+L=\begin{pmatrix}I\\X\end{pmatrix},\quad
+G=I+X^\dagger X,\quad K=A+BX,\quad
+U=LG^{-1/2},\quad\Pi=UU^\dagger.
+$$
+
+这等价于 $\operatorname{Ran}L$ 为 $H$ 的不变图子空间。一个预选谱子空间能用这样的 $X$ 表示，当且仅当其到 $V$ 的投影为同构；这是一项横截性条件。本文不假设任意截断都满足它，也不把任意不变子空间自动称为低能子空间。其与严格 Schrieffer–Wolff/子空间旋转构造的关系见[ST10-SW]。
+
+### 定理 ST12.2：等距重建与自伴有效 Hamiltonian
+
+有
+
+$$
+HL=LK,\quad GK=K^\dagger G,\quad U^\dagger U=I,
+$$
+
+$$
+\boxed{
+h:=U^\dagger HU=G^{1/2}KG^{-1/2}=h^\dagger,
+\qquad HU=Uh.
+}
+\tag{ST12.2}
+$$
+
+从而对全部实数 $t$，
+
+$$
+\boxed{e^{-itH/\hbar}U=Ue^{-ith/\hbar}.}
+\tag{ST12.3}
+$$
+
+**证明。** Riccati 方程给出块等式 $HL=LK$。$L^\dagger HL$ 为 Hermitian，故 $GK=K^\dagger G$。正定平方根给出 $U^\dagger U=I$。共轭 $K$ 得到 $h$ 并验证交织式；将交织式逐次相乘，再代入矩阵指数的绝对收敛幂级数，得到(ST12.3)。∎
+
+### 推论 ST12.3：实际效果与全部叠加态一同转移
+
+映射 $\rho\mapsto U\rho U^\dagger$ 为 CPTP 编码，$O\mapsto U^\dagger OU$ 为幺完全正的效果拉回。对任意密度态 $\rho$、效果 $O$ 和实数 $t$，完整编码态与有效态给出相同的该时刻读数。
+
+**证明。** 两个映射均有单 Kraus 表示，$U^\dagger U=I$ 给出保迹/保单位性。迹的循环性与(ST12.3)给出统计相等。∎
+
+这保证初始编码后、一次最终读数的相等；中途仪器会不会把态推出编码子空间，仍需下一节的独立条件。
+

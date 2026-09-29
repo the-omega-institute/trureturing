@@ -1,0 +1,32 @@
+**命题 534.1（完整预算公式）。** 对定义 530.1—530.2 的全部参数与 $\eta\ge0$，预算可行当且仅当 $\eta\ge\beta$；可行时
+
+$$
+\boxed{
+\mathcal J(\eta)=
+\max\left\{
+\lambda,\;
+2\lambda-\eta,\;
+2rD-2(1-r)p\varepsilon-\left(\frac2c-1\right)\eta
+\right\}.
+}
+$$
+
+证明：可行性由命题 531.2 的边缘最优值给出。任何从旧记录产生新增边缘的模拟器都可以同时保留旧记录而不改变边缘，所以该最优值也给出本问题的可行阈值。
+
+先设 $0<r<1$。记第三条仿射函数为 $H(\eta)$。它与第二条的差为
+
+$$
+H(\eta)-(2\lambda-\eta)
+=\frac{2(1-c)}c(\eta_0-\eta).
+$$
+
+在 $\beta\le\eta\le\eta_0$ 的非空区间，第三条不低于第二条，且 $\eta_0<\lambda$ 使第二条高于常数 $\lambda$。命题 533.2 达到第三条。在 $\max(\beta,\eta_0)\le\eta\le\lambda$ 上，第二条不低于其余两条，命题 533.3 达到它。若 $\eta\ge\lambda$，第二条不超过 $\lambda$；又因 $H$ 递减且
+
+$$
+H(\lambda)=\lambda-2(1-r)p\varepsilon\le\lambda,
+$$
+
+第三条也不超过 $\lambda$。取 $T_S=Q_S$、$R=R_*$，得到 $m=j=\lambda$。结合命题 532.1 的统一下界，完成内部参数的证明。
+
+$r=0$ 时实际记录总揭示状态，$\beta=\lambda=0$，可令两个误差均为零；公式的另外两项分别为 $-\eta$ 与 $-2p\varepsilon-(2/c-1)\eta$，均不大于零。$r=1$ 时旧记录恒为 $\star$，边缘与联合的距离相同，且 $\beta=\lambda=cD$。可行时最优值为 $\lambda$；在 $\eta\ge\lambda$ 上，另外两项均不超过它。证毕。
+

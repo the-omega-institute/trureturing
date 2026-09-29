@@ -1,0 +1,56 @@
+**定理 247.2（精确最小参考熵）。** 对 $0<\theta<1$，
+$$
+\boxed{
+\min_{\Omega\in\mathcal C_\theta}S(\Omega_E)
+=H_2(\theta)+\theta.
+}
+\tag{247.36}
+$$
+最小值在总参考支撑恰为三维的实际态上取得。在 $\mathcal C_\theta$ 内，达到这个熵最小值的参考边缘谱必为
+$$
+\boxed{
+\left(\frac\theta2,\frac\theta2,1-\theta\right)
+}
+\tag{247.37}
+$$
+并只可能另外添加零本征值。
+
+**证明。** 下界已经由（247.35）覆盖全部有限参考及全部精确最优态。反向，取§245的三维旗标构造
+$$
+\Xi_\theta=\theta|\Phi\rangle\langle\Phi|
+ +(1-\theta)|\eta\rangle\langle\eta|,
+\tag{247.38}
+$$
+其中
+$$
+|\Phi\rangle=
+\frac{|u,+\rangle|0\rangle+|u,-\rangle|1\rangle}{\sqrt2},
+\qquad
+|\eta\rangle=|u,+\rangle|2\rangle,
+\tag{247.39}
+$$
+参考基 $|0\rangle,|1\rangle,|2\rangle$ 正交。已有结果给
+$$
+E_F(\Xi_\theta)=\theta,
+\qquad
+ g(\Xi_\theta)=U+\delta\theta,
+\qquad
+\operatorname{spec}_{>0}((\Xi_\theta)_E)
+=\left(\frac\theta2,\frac\theta2,1-\theta\right).
+\tag{247.40}
+$$
+所以该态属于 $\mathcal C_\theta$，并且实际达到（247.36）。
+
+若任意 $\Omega\in\mathcal C_\theta$ 达到熵下界，因 $\theta,1-\theta>0$，（247.35）强制 $S(\rho_{\mathrm{ent}})=1$ 与 $S(\rho_{\mathrm{prod}})=0$。式（247.34）取等又要求每个正本征值都等于 $1/2$，故前一块恰有两个正本征值；后一块是纯态。结合正交性，即得到（247.37）。$\square$
+
+该证明同时显示每个 $\mathcal C_\theta$ 中的态都至少需要三维参考支撑：最大纠缠块至少占二维，非空产品块至少占一维，且二者正交。三维构造给达到性，与§246的精确维数结论相接。
+
+例如 $\theta=2/3$ 时，最小参考熵为
+$$
+H_2(2/3)+2/3=\log_2 3.
+\tag{247.41}
+$$
+此时每份参考熵最小态的参考边缘均在其三维支撑上均匀；一般响应取等态仍可使用更多参考熵。
+
+若把端点也纳入同一最优化，$\theta=0$ 时产品态给最小参考熵零；$\theta=1$ 时最优系综全部由最大纠缠分量组成，（247.33）—（247.34）的混合边缘上界仍给最小熵一，由单个最大纠缠纯态取得。因此最小值公式 $H_2(\theta)+\theta$ 连续覆盖 $\theta\in[0,1]$。
+

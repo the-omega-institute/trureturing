@@ -1,0 +1,62 @@
+**定理 25.2（实际纤维与轨道上的完全保留或完全分离）。** 对定义25.1的编码，令 $q=2^{r-2}$。每个 $B=(a,t)\in G^2$ 与每个 $(z_2,\ldots,z_r)\in H^{r-1}$ 都由恰好 $q$ 个实际来源实现为观察 $(a,t,z_2,\ldots,z_r)$。接收端的精确解码为
+
+$$
+Y=p_c(a)+\sum_{i=2}^r z_i+\chi(t)c,\qquad c=\theta(a,t).
+\tag{25.13}
+$$
+
+对每个 $c\in T$ 定义偶开关子群
+
+$$
+K_c=\left\{(0,\epsilon_2c,\ldots,\epsilon_rc,0)\in S:
+ \epsilon_i\in C_2,\ \sum_{i=2}^r\epsilon_i=0\text{ 于 }C_2\right\}.
+\tag{25.14}
+$$
+
+每条当前 $O$ 纤维是 $K_{\theta(B)}$ 的陪集，且对任意 $s\in S$，其未来行为类恰为
+
+$$
+[s]_{\sim_D}
+=s+\bigcap_{\ell\in\Lambda}K_{\theta(B(s)+\ell)}
+=\begin{cases}
+s+K_{\theta(B(s))},& B(s)\in\mathcal C_0,\\
+\{s\},& B(s)\in\mathcal C_1.
+\end{cases}
+\tag{25.15}
+$$
+
+因此在常值轨道上整条当前纤维保留；在非恒定轨道上每条当前纤维完全分离。这个编码族的未来等价关系对 $D$ 的依赖只通过 $\Lambda$。
+
+证明。由 $2c=0$ 与 $\chi(c)=1$，映射 $p_c$ 是到 $H$ 的同态投影：二元系数相加产生的偶数倍 $c$ 为零，且 $p_c|_H=\mathrm{id}_H$、$\ker p_c=\{0,c\}$。这直接给出命题22.3式(22.17)所用的投影构造；以下不使用第22节对任意编码的 $r\ge4$ 分类。
+
+固定 $a,t,z_2,\ldots,z_r$，所有候选坐标必须且可以写为
+
+$$
+x_1=a,\qquad x_i=z_i+\epsilon_i c\ (i\ge2),\qquad
+\sum_{i=2}^r\epsilon_i=\chi(t)-\chi(a)\text{ 于 }C_2,\qquad
+h=t-a-\sum_{i=2}^r x_i.
+\tag{25.16}
+$$
+
+这个唯一的奇偶约束保证 $h\in H$；任取前 $r-2$ 个二元值，最后一个唯一确定，故恰有 $q$ 个选择。每个选择都在同一实际 $S$ 中，且产生指定观察；不同选择产生不同来源。又 $\chi(Y)=\chi(t)$，而 $p_c(Y)=p_c(a)+\sum_{i\ge2}z_i$，得到(25.13)，故这些选择的 $Y$、$h=t-Y$ 均相同。两个选择之差于是恰为(25.14)的偶开关；反向加上任一偶开关保持 $a,t$ 和全部回复。这同时证明实际像为 $G^2\times H^{r-1}$、纤维为所述陪集，且 $|K_c|=q$。
+
+因为 $D$ 是子群，每个有限词的总增量仍在 $D$；每个 $d\in D$ 又本来就是合法单步输入。因此(25.12)等价于对全部 $d\in D$ 比较 $O(s+d)$ 与 $O(s'+d)$，其中 $d=0$ 也比较当前观察。不同当前观察已经由空词分离。若当前观察相同，记 $B=B(s)=B(s')$、$c=\theta(B)$、$v=s'-s\in K_c$。对同一个实际合法 $d$，两来源仍有共同上下文 $B+\lambda(d)$，其差仍为 $v$。刚证出的纤维公式给出
+
+$$
+O(s+d)=O(s'+d)
+\iff v\in K_{\theta(B+\lambda(d))}.
+\tag{25.17}
+$$
+
+遍历 $D$，其上下文像恰为 $\Lambda$，遂得(25.15)的交集式。若轨道上选择恒为 $c$，交集就是 $K_c$。若轨道非恒定，可取 $\ell\in\Lambda$ 使 $c'=\theta(B+\ell)\ne c$，并按 $\Lambda=\lambda(D)$ 取一个实际 $d=(u,k)\in D$ 满足 $\lambda(d)=\ell$。由于 $\{0,c\}\cap\{0,c'\}=\{0\}$，有 $K_c\cap K_{c'}=\{0\}$，交集因而平凡。
+
+分离也可在原标签上直接看见。若 $v=(0,\epsilon_2c,\ldots,\epsilon_rc,0)\ne0$，则在这同一个 $d$ 之后，第 $i$ 个回复之差为
+
+$$
+p_{c'}(x_i+\epsilon_i c+u_i)-p_{c'}(x_i+u_i)
+=p_{c'}(\epsilon_i c)=\epsilon_i(c-c').
+\tag{25.18}
+$$
+
+至少一个 $\epsilon_i=1$，故该带下标回复改变。公共输入的各 $u_i,k$ 可以相关；它们在两来源的回复差中抵消，并通过同一个 $\lambda(d)$ 确定查询，没有另选不合法的坐标平移。证毕。
+

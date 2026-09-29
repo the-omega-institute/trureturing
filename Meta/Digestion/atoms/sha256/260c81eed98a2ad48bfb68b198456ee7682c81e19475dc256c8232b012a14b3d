@@ -1,0 +1,17 @@
+### 22.3 定理：保序数值读出的完整权重分类
+
+对任意实权重 $w_0,\ldots,w_m$，定义非空有限读出
+\[
+V_w(\alpha,x)=\sum_{j=0}^m w_j s_j(\alpha,x).
+\]
+对每个固定无理 $\alpha\in(0,1)$，以下两项等价：
+\[
+\exists r>0,\quad \alpha+r<1,\quad
+\forall\delta\in[0,r],\ \forall x\in[0,1),\quad
+V_w(\alpha+\delta,x)\geq V_w(\alpha,x);
+\]
+\[
+\boxed{w_0\geq w_1\geq\cdots\geq w_m\geq0.}
+\tag{22.5}
+\]
+

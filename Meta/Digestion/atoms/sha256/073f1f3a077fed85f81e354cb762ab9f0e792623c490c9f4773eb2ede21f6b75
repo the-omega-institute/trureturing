@@ -1,0 +1,13 @@
+**命题 1.21（exact block tests with terminal tails）。** Every $w\in\mathcal L_k$ has a unique decomposition
+$$
+w=b_1\cdots b_m t,
+\qquad
+b_i\in\{0,10,\ldots,1^{k-1}0\},
+\qquad
+t\in\{\varepsilon,1,\ldots,1^{k-1}\}.
+\tag{TM.559}
+$$
+For a raw digit system, give block $b$ its composed raw transition, the sum of its raw edge costs, and roof $|b|$. Give each terminal tail its composed terminal transition, additional cost, and duration $|t|$. The resulting block test has exactly the same final state, observation, total cost, and raw duration as the raw word.
+
+**Proof.** Each zero terminates exactly one run of preceding ones, giving the complete blocks; the final run, if present, is the tail. Avoidance of $1^k$ bounds every run by $k-1$, and the zero positions make the decomposition unique. Transition composition and additivity, first across complete blocks and then across the tail, give all four equalities. $\square$
+

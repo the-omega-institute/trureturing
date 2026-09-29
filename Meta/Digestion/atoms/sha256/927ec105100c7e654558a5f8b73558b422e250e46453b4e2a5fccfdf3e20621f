@@ -1,0 +1,38 @@
+### 9.13 一般证书接口的实际参数与数学范围
+
+第 8.6 节 ER8.CM.1–ER8.CM.8 的固定质量代数、第 8.7 节 ER8.SO.1–ER8.SO.2 的输出域区分、第 8.8.1 节 ER8.CM.9 的自洽局部风险、第 8.8.2 节 ER8.CS.1–ER8.CS.2 的单模数自洽风险，以及第 8.9.5 节的紧单纯形中心，分别承担相应一般结论。本章对中心只取 $d=9$、非空紧集 $\mathcal K_\varepsilon(y)\subseteq\Delta_9$ 和直径 $\min(4\varepsilon,1)$。单模数 $m=9$ 的读数算子并不是 $K\otimes K$，其全尺度公式不能替代本章的三元双坐标问题。CM 的算术模数前提仍是两两互素；本章第 9.2 节直接从自由乘积定义证明所需张量恒等式。
+
+有限有理系数的上界与达到关系由既有 [LinearObjectiveDual](https://github.com/the-omega-institute/trureturing/blob/708968483b4104bcc227cc4d65a0d40fccfdf930/D5/S0/Certificates/LinearObjectiveDual.lean) 的 `UpperBoundCertificate`、`PrimalWitness`、`upper_bound_of_certificate` 和 `exact_upper_bound_of_certificate_and_witness` 给出。其前提是非负行权重、每列加权系数恰等于目标系数、加权右端不超过所称上界，以及达到该值的可行点。这里变量取 $\mathbb Q^{9k+16}$，把第 9.7 节质量等式分成两侧：
+
+$$
+\overline{\mathsf A}=\begin{pmatrix}\mathsf A\\\mathsf E\\-\mathsf E\end{pmatrix},\qquad
+\overline b=\begin{pmatrix}b\\0\\0\end{pmatrix},\qquad
+w=(\lambda,\mu^+,\mu^-),\quad
+\mu_a^+=\max(\mu_a,0),\quad\mu_a^-=\max(-\mu_a,0).
+$$
+
+约束数为 $k(43-k)$，所有变量仍自由，不悄然要求非负。第 9.9–9.10 节的各表给有理点 $z^*$ 与精确有限恒等式
+
+$$
+\overline{\mathsf A}z^*\le\overline b,\qquad w\ge0,\qquad
+\sum_rw_r\overline{\mathsf A}_{rj}=c_j,\qquad
+\sum_rw_r\overline b_r=c\mathbin\cdot z^*=\Lambda(S).
+$$
+
+因此恰满足该一般接口的全部有理前提。其 `LowerBoundCertificate` 用权重表示目标的负数；同一组 $w$ 对应目标 $-c$、下界 $-\Lambda(S)$，不是目标 $c$ 的下界 $+\Lambda(S)$。同一 $z^*$ 对负目标达到 $-\Lambda(S)$。仅对 $S=\Omega$，可另把来源和共同残差同时取反、交换正负噪声行及质量两侧，得到目标 $c$ 的下界 $-\Lambda(S)$ 和达到点 $-z^*$；真面上的面外非负阻止这个一般取反。
+
+既有 [RationalFarkas.infeasible_of_certificate](https://github.com/the-omega-institute/trureturing/blob/708968483b4104bcc227cc4d65a0d40fccfdf930/D5/S0/Certificates/RationalFarkas.lean) 的前提是非负权重、每列加权和为零、加权右端严格负。对有理 $\beta>\Lambda(S)$，在上述系统追加 $-c\mathbin\cdot z\le-\beta$ 并给权重一，得到
+
+$$
+\sum_r w_r\overline{\mathsf A}_{rj}-c_j=0,\qquad
+\sum_r w_r\overline b_r-\beta=\Lambda(S)-\beta<0.
+$$
+
+这正是其不可行证书参数。若 $\beta=\Lambda(S)$，右端为零而非严格负，且 $z^*$ 确实达到，不可推出矛盾。有理系数嵌入实数后，第 9.10 节同一有限求和证明对所有实点成立；若 $\beta$ 是无理实数，也直接得到 $0\le\Lambda(S)-\beta<0$ 的矛盾。这是实代数论证，不把有理变量域与实变量域混同。
+
+本章所用矩阵范数为诱导无穷算子范数，即最大行绝对和，向量范数为最大绝对坐标；它不是矩阵条目最大值范数。实解码器线性部分的行绝对和为二，仿射解码器为 $20/9$。相应一般矩阵来源为钉版 Mathlib 的 [Matrix 范数](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Matrix/Normed.lean) 中 `Matrix.linfty_opNorm_def`、`Matrix.linfty_opNorm_mulVec`，以及 [Kronecker 乘积](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/Kronecker.lean) 的 `Matrix.mul_kronecker_mul`。这里标量取实数，来源指标为九格，观察指标为十六标签；第 9.2、9.6 节的有限和已给出需要的误差不等式。
+
+相关一般结果的假设边界如下。
+
+| 来源 | 实际前提及本题中的范围 |
+|---|---|

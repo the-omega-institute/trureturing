@@ -1,0 +1,48 @@
+### 40.2 transition 数据的 coboundary 判据
+
+局部标架或局部记忆的值域不必是同一个线性坐标。设重叠上的 transition 取值于群 $G$：
+
+$$
+g_{ij}(x)\in G,
+\qquad x\in U_i\cap U_j.
+\tag{40.4}
+$$
+
+在固定方向约定下，局部 frame 系数 $c_i:U_i\to G$ 的相容式可写为
+
+$$
+c_i(x)=g_{ij}(x)c_j(x).
+\tag{40.5}
+$$
+
+如果存在这样的系数，就有
+
+$$
+g_{ij}(x)=c_i(x)c_j(x)^{-1}.
+\tag{40.6}
+$$
+
+反过来，(40.6) 代回 (40.5) 即得相容。因此，对单位群值 transition，
+
+$$
+\boxed{
+\text{存在全局非零 frame 系数}
+\Longleftrightarrow
+\text{transition 是一族局部单位的 coboundary}.
+}
+\tag{40.7}
+$$
+
+仓内 `global_frame_iff_transition_coboundary` 正是这个代数判据。它只给出声明的 overlap 关系上的群值系数等价，并没有自动加入自交叠、反向交叠或三重交叠的域闭合。若另加这些域条件，并要求同一个 $x$ 同时属于相应交叠，则 coboundary 在共同定义域上推出：
+
+$$
+g_{ij}g_{jk}=g_{ik},
+\qquad
+g_{ii}=e,
+\qquad
+g_{ji}=g_{ij}^{-1}.
+\tag{40.8}
+$$
+
+所以要声明一个可以继续拼接的局部 frame，至少要分别检查：交叠域是否真的存在、transition 的方向是否一致、三重交叠上的 cocycle、以及是否存在把它平凡化的 $c_i$。pairwise overlap equality 只处理 (40.2)，并不能替代带定义域条件的 (40.8) 或 (40.7)。
+

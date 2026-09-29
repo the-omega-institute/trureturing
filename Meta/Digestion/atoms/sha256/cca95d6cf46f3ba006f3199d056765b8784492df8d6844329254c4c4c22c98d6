@@ -1,0 +1,58 @@
+**证明。** 若最优删除具有简单主奇异值，结论由引理 223.2 得到。下面用显式稠密性处理全部重根情形，不预设简单最优者稠密。
+
+对归一化系数 $c$，令其 Bloch 向量为
+$$
+\xi=
+\bigl(
+2\operatorname{Re}(c_0\overline c_1),
+2\operatorname{Im}(c_0\overline c_1),
+|c_0|^2-|c_1|^2
+\bigr)\in S^2.
+$$
+令 $M_c=c_0A+c_1B$。用三 Pauli 矩阵表达 $M_cM_c^\dagger$ 的无迹部分，得到
+$$
+\text{无迹坐标}(M_cM_c^\dagger)=\alpha+T\xi,
+\tag{223.TS.12}
+$$
+其中 $\alpha\in\mathbb R^3$、$T\in M_3(\mathbb R)$ 的每个分量都是 $A,B$ 的实、虚矩阵元的实二次多项式。
+
+具体地，若无迹坐标约定为 $H\mapsto(\operatorname{Tr}(\sigma_jH)/2)_{j=1}^3$，常数项与三线性项分别来自
+$$
+H_0=\frac{AA^\dagger+BB^\dagger}{2},\quad
+H_1=\frac{AB^\dagger+BA^\dagger}{2},
+$$
+$$
+H_2=\frac{i(AB^\dagger-BA^\dagger)}2,\quad
+H_3=\frac{AA^\dagger-BB^\dagger}{2}.
+$$
+
+$M_c$ 的两个奇异值相等，当且仅当 $\alpha+T\xi=0$。若
+$$
+P(A,B):=
+\det T\,
+\left(\|\operatorname{adj}(T)\alpha\|^2-(\det T)^2\right)\ne0,
+\tag{223.TS.13}
+$$
+该方程的唯一解 $-T^{-1}\alpha$ 不在单位球面，所以没有任何归一化组合具有重奇异值；零矩阵组合也被排除。
+
+这个实多项式不恒为零。取
+$$
+A_{\rm ex}=\begin{pmatrix}2&0\\0&1\end{pmatrix},
+\qquad
+B_{\rm ex}=\begin{pmatrix}0&1\\3&0\end{pmatrix}.
+$$
+直接由（223.TS.12）的定义得到
+$$
+\alpha=(0,0,-5/4),\qquad
+T=\operatorname{diag}(7/2,-5/2,11/4).
+$$
+唯一解为 $(0,0,5/11)$，不在 $S^2$，故 $P(A_{\rm ex},B_{\rm ex})\ne0$。
+
+对任意给定 $(A,B)$，沿它到 $(A_{\rm ex},B_{\rm ex})$ 的实线段限制 $P$，得到一个在终点非零的一元多项式。它只有有限个零点；因此可以选取趋于起点的参数序列，使每份近似铅笔的任意归一化组合都具有简单主奇异值。
+
+另一方面，$\delta_{\rm rot}$、$\gamma_{\rm out}$、$\gamma_{\rm in}$ 都连续依赖 $A,B$：各单位球面上的矩阵函数一致连续，算子范数及 Hermitian 最小本征值连续，紧集上的极大极小值随一致收敛而收敛。
+
+对上述近似，每份归一化组合都具有简单主奇异值，特别是达到最小删除值的组合。因此可应用引理 223.2，再用三个极值的连续性取极限，得到所述恒等式。证毕。
+
+辅助矩阵对的稠密性只用于这个有限维代数结论，不赋予它们实际执行权限；下条距离定理单独保留共同 TP 及记录接口条件。
+

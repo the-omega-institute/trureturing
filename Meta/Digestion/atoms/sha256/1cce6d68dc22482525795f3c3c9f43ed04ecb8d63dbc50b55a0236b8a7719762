@@ -1,0 +1,23 @@
+**证明。** 块乘法给出(ST10.1)第一式。任一完整本征向量 $(v,w)$ 的第二块方程强制 $w=X_Ev$；若 $v=0$ 则 $w=0$。因此重建双向成立。又因 $R_E=R_E^\dagger$，有 $L_E^\dagger L_E=I+BR_E^2B^\dagger$。对 $(C-EI)R_E=I$ 求导，得 $\partial_E R_E=R_E^2$，代入 $S$ 得到最后一式。对 $v\ne0$，$v^\dagger Gv=\|v\|^2+\|X_Ev\|^2>0$。∎
+
+### 推论 ST10.3：Born 读数及可见谱权重
+
+对任意效果 $0\le O\le I_{\mathcal H}$ 和非零 $v\in V$，重建态的概率为
+
+$$
+\boxed{
+p_O(v)=\frac{v^\dagger L_E^\dagger O L_Ev}{v^\dagger G(E)v}.
+}
+\tag{ST10.3}
+$$
+
+令 $\delta=\operatorname{dist}(E,\operatorname{spec}C)>0$。则
+
+$$
+I\le G(E)\le\left(1+\frac{\|B\|^2}{\delta^2}\right)I,
+\qquad
+\frac1{1+\|B\|^2/\delta^2}\le
+Z(v):=\frac{\|v\|^2}{v^\dagger G(E)v}\le1.
+\tag{ST10.4}
+$$
+

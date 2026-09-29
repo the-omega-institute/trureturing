@@ -1,0 +1,33 @@
+### 304.3 终止事件的内部时间极限
+
+令 \(A\subseteq\{N\le b\}\) 是由有限终端记录确定的事件，例如
+\(A=\{a<N\le b\}\) 或指定某个决定值的停止窗口。记有限回答的内部时刻为 \(S\)，非有限回答时 \(S=\infty\)，并设
+$$
+A_T=A\cap\{S\le T\}.
+$$
+\(A_T\) 可由 \(\mathsf R_{b,T}\) 判定。因为它要求调用次数至多 \(b\) 的有限回答，提前在请求第 \(b+1\) 枚样本前截断不会丢失这种回答。二元数据处理及（304.5）给出
+$$
+\operatorname{kl}(P_h(A_T),Q(A_T))
+\le d(h)\mathbb E_h\min(N,b).
+$$
+随 \(T\to\infty\)，\(A_T\uparrow A\)。二元 KL 在闭方块上取扩展实值的下半连续性得到
+$$
+\boxed{
+\operatorname{kl}(P_h(A),Q(A))
+\le d(h)\mathbb E_h\min(N,b)
+\le d(h)\mathbb E_hN.}
+\tag{304.6}
+$$
+这证明引理304.2。该界只对有限回答事件取极限；实际协议不获得判断未来是否停机的能力，辅助参照也无须在无界运行中给出答案。
+
+对任意非负整数 \(a\)，同样取 \(A=\{N\le a\}\)、\(b=a\)，可得
+$$
+\operatorname{kl}(P_h(N\le a),Q(N\le a))
+\le a\,d(h),
+$$
+所以 Pinsker 给出
+$$
+P_h(N\le a)\le q+\sqrt{a\,d(h)/2}.
+\tag{304.7}
+$$
+

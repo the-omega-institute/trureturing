@@ -1,0 +1,68 @@
+### 306.8 相对零信号的联合 KL 与互信息
+
+只为分析引入 \(h=0\)：
+$$
+q_1=1/B,\quad q_0=1-1/B,\qquad Q(x,z)=q_x/2.
+\tag{306.30}
+$$
+这个零参照是产品律 \(q\otimes U_Z\)，而式（306.9）给实际 \(P_Z=U_Z\)。逐格拆分对数准确得到
+$$
+\boxed{D(P_{c,h}\Vert Q)
+=D(p_{c,h}\Vert q)+I_{P_{c,h}}(X;Z).}
+\tag{306.31}
+$$
+它依赖这里的产品参照与共同 \(Z\) 边缘；不是任意两个联合世界的“边缘 KL 加互信息差”规则。
+
+置 \(\Delta=\varepsilon\sqrt h\)、\(u_x=p_x/2\)。对每一行 \(x\)，两格的互信息贡献为
+$$
+F(u_x,\Delta)
+=(u_x+\Delta)\log(1+\Delta/u_x)
+ +(u_x-\Delta)\log(1-\Delta/u_x).
+$$
+这里 \(u_x\ge3/32\)、\(|\Delta/u_x|\le1/3\)，所以 Taylor 余项可统一控制：
+$$
+F(u,\Delta)=\frac{\Delta^2}{u}
+ +\frac{\Delta^4}{6u^3}+O(\Delta^6).
+\tag{306.32}
+$$
+两格求和对 \(\Delta\) 为偶函数，\(p_x\) 又是 \(h\) 的仿射式，因此展开中没有 \(h^{3/2}\) 项。由 \(p_x=q_x+O(h)\)：
+$$
+\begin{aligned}
+I_{P_{c,h}}(X;Z)
+&=2\varepsilon^2h(1/q_0+1/q_1)+O(h^2)\\
+&=\alpha_B h+O(h^2),\qquad
+\alpha_B=\frac{2\varepsilon^2B^2}{B-1}>0.
+\end{aligned}
+\tag{306.33}
+$$
+旧币边缘则满足
+$$
+D(p_{c,h}\Vert q)
+=\frac{c^2h^2}{2C^2(B-1)}+O(h^3).
+\tag{306.34}
+$$
+式（306.31）—（306.34）于是给
+$$
+\boxed{D(P_{c,h}\Vert Q)=\alpha_B h+O(h^2).}
+\tag{306.35}
+$$
+这些余项在允许的 \(c,C,B\) 范围内可统一控制。单独 \(X\) 只有二阶零信号 KL，单独 \(Z\) 的 KL 为零；联合观察出现的一阶项来自同次依赖。
+
+沿合法路径 \((j,r)=(0,1)\)，任务和参考都有 \(c=1\)，故任何已选来源具有相同单次联合 KL。其平均时长恒为 \(3/2\)，可直接取
+$$
+I_{\rm clock}(h)=\frac23D(P_{1,h}\Vert Q)
+=\frac{4\varepsilon^2B^2}{3(B-1)}h+O(h^2).
+\tag{306.36}
+$$
+这条路径本身足够应用第305节；没有必要声明 \(c=1\) 在全参数域内最大化 KL。
+
+固定 \(\varepsilon=1/16\) 后，
+$$
+\begin{array}{c|cc}
+B&\alpha_B&I_{\rm clock}(h)\\ \hline
+2&1/32&h/48+O(h^2)\\
+4&1/24&h/36+O(h^2).
+\end{array}
+\tag{306.37}
+$$
+

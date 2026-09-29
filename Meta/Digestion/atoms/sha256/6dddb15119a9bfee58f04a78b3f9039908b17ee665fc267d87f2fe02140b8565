@@ -1,0 +1,17 @@
+### 259.2 标准几何平均及其奇异延拓
+
+对严格正矩阵 $A,B$，正算子几何平均定义为
+$$
+A\#B
+=A^{1/2}\left(A^{-1/2}BA^{-1/2}\right)^{1/2}A^{1/2}.
+\tag{259.8}
+$$
+对一般 $A,B\succeq0$，采用从上方同时正则化的定义
+$$
+A\#B
+=\lim_{\varepsilon\downarrow0}
+(A+\varepsilon I)\#(B+\varepsilon I).
+\tag{259.9}
+$$
+这一均值属于标准Kubo–Ando理论。公式与正算子极限延拓可参见 D. T. Hoa、M. S. Moslehian、C. Conde、P. Zhang，*An extension of the Pólya–Szegö operator inequality*，[arXiv:1610.04162v1](https://arxiv.org/abs/1610.04162v1)，PDF第1—2页；该文第11页文献[9]列出 F. Kubo、T. Ando，*Means of positive linear operators*，Math. Ann. **246**（1980），205—224。以下直接证明本节所需的有限维块矩阵性质及极限存在性。
+

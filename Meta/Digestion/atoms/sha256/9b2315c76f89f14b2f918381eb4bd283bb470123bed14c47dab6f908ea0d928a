@@ -1,0 +1,44 @@
+### 59.1 接口与准确优化结论
+
+沿用第 58 节的端口次序 $A\otimes B\otimes D$，维数为 $2\times2\times3$，其中 $A$ 为晚输入、$B$ 为早输出、$D$ 为晚输出。记
+
+$$
+x=|0,0,0\rangle,\quad y=|1,0,1\rangle,
+\quad z=|1,1,2\rangle,\quad h_0=|0,1,0\rangle,
+$$
+
+并在本节固定
+
+$$
+0<\varepsilon\le\frac1{16},\qquad
+c=\sqrt{1-\varepsilon},\qquad s=\sqrt\varepsilon,
+\qquad r_0=(1,c,s)^{\mathsf T},
+\qquad R_\varepsilon=|x+cy+sz\rangle\langle x+cy+sz|.
+\tag{59.1}
+$$
+
+全部归一化因果修复满足
+
+$$
+S\succeq0,\qquad\operatorname{Tr}_D S=I_A\otimes\sigma,
+\qquad\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+\tag{59.2}
+$$
+
+在吸收全转置后的配对约定下，完整 tester 归一化算符和事件遍历
+
+$$
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+\tag{59.3}
+$$
+
+这些量词包含全部有限量子参考、记忆和最终测量。对厄米 $X$ 记
+
+$$
+h(X)=\max_{C,E}\operatorname{Tr}(XE),
+\qquad N(X)=\max\{h(X),h(-X)\},
+\qquad e_\varepsilon=\min_{S\text{ 满足式（59.2）}}N(R_\varepsilon-S).
+\tag{59.4}
+$$
+

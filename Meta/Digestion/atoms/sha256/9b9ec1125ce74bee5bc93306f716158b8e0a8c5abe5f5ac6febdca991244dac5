@@ -1,0 +1,23 @@
+**定理 53.1（截止响应的有理次数界）。** 固定状态 $\rho$，把 $q=1-\eta$ 作为参数，定义
+
+$$
+a(q)=\operatorname{Tr}\!\left[\rho(\operatorname{id}-q\mathcal A)^{-1}(B)\right]
+=\sum_{n\ge1}q^{n-1}\operatorname{Tr}(\rho E_n),\qquad0\le q<1.
+$$
+
+若 $\dim\mathcal H\le d$、$D=d^2$，则存在实多项式 $P,Q$，满足
+
+$$
+\boxed{
+a(q)=\frac{P(q)}{Q(q)},\qquad
+\deg P\le D-1,\quad\deg Q\le D,\quad
+Q(q)\ne0\ (0\le q<1),\quad Q(0)=1.
+}
+$$
+
+零多项式 $P$ 也允许。对每个端口单独的截止点击概率，同样成立。
+
+证明。在 Hermitian 算子的实向量空间上选基，$\mathcal A$ 由一个阶数 $D_0=(\dim\mathcal H)^2\le D$ 的实矩阵 $A$ 表示。取 $Q(q)=\det(I-qA)$。第 50.3 条保证 $0\le q<1$ 时可逆，且 $Q(0)=1$。由伴随矩阵公式，$\operatorname{adj}(I-qA)$ 的各项次数不超过 $D_0-1$；与固定输入 $B$、输出泛函 $X\mapsto\operatorname{Tr}(\rho X)$ 配对，得到次数不超过 $D-1$ 的分子。端口版本只需换成 $B_x=\mathcal C_x^*(I)$。$\square$
+
+这里的 $d^2$ 来自密度算子的线性动力学空间，不是把概率生成函数等同于纯态振幅生成函数。若另有已知且已证明的较小线性实现维数，可对该维数应用同一论证；仅凭某些样本显示低秩还不构成这份先验。
+

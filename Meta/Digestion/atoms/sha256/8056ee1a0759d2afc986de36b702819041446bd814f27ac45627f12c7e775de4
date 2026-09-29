@@ -1,0 +1,22 @@
+**定理 248.1（全部最大纠缠分量的共同 Bell 解码）。** 存在同一个参考本地酉同构 $V^\dagger$，使归一化最大纠缠块满足
+$$
+\boxed{
+(I_H\otimes V^\dagger)\Omega_{\mathrm{ent}}(I_H\otimes V)
+=P_{\Phi^+}\otimes\sigma_M,
+}
+\tag{248.15}
+$$
+其中
+$$
+|\Phi^+\rangle_{H,Q}=\frac{|00\rangle+|11\rangle}{\sqrt2},
+\qquad
+\sigma_M=\sum_{j\in J_1}\frac{\lambda_j}{\theta}
+|z_j\rangle\langle z_j|
+\tag{248.16}
+$$
+为 $M$ 上的密度矩阵，$Q=\mathbb C^2$ 是解码出的参考量子比特。
+
+**证明。** 将（248.14）代入（248.6），每份最大纠缠分量都被送到同一个 $|\Phi^+\rangle_{H,Q}\otimes z_j$。按原权重混合即得（248.15）。$\square$
+
+因此各分量之间的混合性只留在 $M$ 中。共同响应见证锁定了同一输入—参考对应，并提供对整块有效的一个解码器。
+

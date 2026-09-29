@@ -1,0 +1,8 @@
+### theorem 52.1 固定对方编码后的最小行消息数
+
+假设 $\beta$ 自身单侧充分，则
+
+$$
+\boxed{\min_\alpha|\operatorname{im}\alpha|=\chi(G_X^\beta).}
+$$
+

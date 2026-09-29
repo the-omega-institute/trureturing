@@ -1,0 +1,59 @@
+### 281.9 计入校准的低谱检测预算
+
+固定数值常数
+$$
+\gamma:=1/128,\qquad A:=16384,\qquad X_0:=256=2/\gamma.
+\tag{281.46}
+$$
+对 $x=n\sqrt\delta\ge X_0$，令
+$$
+r=\lfloor\gamma n\sqrt\delta\rfloor,
+\qquad m=\lceil A/\delta\rceil,
+\qquad L=\left\lceil\frac{8n}{\delta r}\right\rceil.
+\tag{281.47}
+$$
+因为 $\gamma x\ge2$，
+$$
+1\le r\le n,\qquad r\ge\gamma n\sqrt\delta/2,
+\qquad r/n\le\gamma\sqrt\delta,
+\qquad L\le9n/(\delta r).
+\tag{281.48}
+$$
+第一阶段用 $m$ 个副本作（281.31）的真实校准；第二阶段用 $L$ 个新副本执行（281.42）的固定投影检测。出现至少一次点击就判 $b=1$。
+
+理想假设下，并合界、全期望及（281.44）给
+$$
+\begin{aligned}
+P_{0,\phi}(\widehat b=1)
+&\le L\mathbb E_{0,\phi}p_0(e)\\
+&\le\frac{9C_2}\delta\left[(r/n)^2+1/m\right]\\
+&\le9C_2(\gamma^2+1/A)
+=\frac{630}{16384}<\frac1{16}.
+\end{aligned}
+\tag{281.49}
+$$
+扰动假设下，每个历史上的（281.45）及后续新副本独立性给
+$$
+P_{1,\phi}(\widehat b=0)
+\le\exp[-L\delta r/(4n)]\le e^{-2}<\frac14.
+\tag{281.50}
+$$
+因此对每个固定相位，等先验平均错误小于 $5/32<1/3$。
+
+所有校准副本均已包含，且
+$$
+\begin{aligned}
+m+L
+&\le A/\delta+1+\frac{18}{\gamma\delta^{3/2}}\\
+&\le18689\,\delta^{-3/2}
+\le\frac{18689(257/256)}{R(n,\delta)}.
+\end{aligned}
+\tag{281.51}
+$$
+最后一步使用 $x\ge256$。与（281.38）合并，由 $585\cdot257=150345$，得到一个明确的全参数上界
+$$
+\boxed{N_{\rm unknown}(n,\delta)\le\frac{150345}{R(n,\delta)}.}
+\tag{281.52}
+$$
+实际协议在两个分支都使用（281.35）或（281.47）的整数预算；（281.52）仅是便于统一比较的实数上界。常数未作优化。
+

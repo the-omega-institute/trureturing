@@ -1,0 +1,22 @@
+### 155.2 不依赖有限周期的显式衰减余项
+
+令 $\mathscr H=\ker\Pi$。由于其谱半径小于一，可以选择整数 $L\ge1$ 与 $0<\kappa<1$，使
+
+$$
+\|\mathcal A^L|_{\mathscr H}\|_{\mathrm{HS}\to\mathrm{HS}}
+\le\kappa.
+\tag{155.8}
+$$
+
+这里 $L$ 不再要求是某个共同相位周期的倍数。使用第153节未归一化的 Choi 约定，定义
+
+$$
+B=\max_{0\le t<L}
+\left\|J\!\left(
+\mathcal F^t(I_{\mathscr V}-\Pi)\mathcal E_\omega
+\right)\right\|_{\mathrm{HS}}.
+\tag{155.9}
+$$
+
+若 $\mathscr H=\{0\}$，取 $B=0$，收缩约束为空。
+

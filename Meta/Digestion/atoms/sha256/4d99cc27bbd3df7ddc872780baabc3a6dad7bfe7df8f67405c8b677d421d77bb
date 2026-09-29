@@ -1,0 +1,60 @@
+### 65.3 完整事件误差的上界
+
+记 $w=\sqrt a\,x+cy$。由
+
+$$
+b^2-\beta^2=\frac{a\varepsilon}{1-\varepsilon},
+\qquad
+\frac{\sqrt{1-a-\varepsilon}}c=\beta,
+$$
+
+直接展开得到准确分解
+
+$$
+\begin{aligned}
+R_{a,\varepsilon}-S_{a,\varepsilon}
+={}&\varepsilon(|x'\rangle\langle x'|-|h\rangle\langle h|)\\
+&+\xi\bigl(
+|w\rangle\langle z|+|z\rangle\langle w|
+-\sqrt a\,|x'\rangle\langle z'|
+-\sqrt a\,|z'\rangle\langle x'|
+\bigr)\\
+&+\zeta(|z\rangle\langle z|-|z'\rangle\langle z'|).
+\end{aligned}
+\tag{65.8}
+$$
+
+对任意完整 tester $C,E$，每个 $C$ 标准基对角元位于 $[0,1]$。因此第一行与 $E$ 的配对绝对值至多 $\varepsilon$，第三行至多 $\zeta$。
+
+第二行使用正算子 $E$ 的 Cauchy–Schwarz，以及 $E\preceq C\otimes I_D$。因为 $x,y$ 具有不同的 $D$ 坐标，
+
+$$
+\langle w|C\otimes I_D|w\rangle
+=a C_{00,00}+c^2C_{10,10}\le1,
+$$
+
+其中 $C_{00,00}+C_{10,10}=1$。其他三个标准基向量也满足
+
+$$
+\langle z|C\otimes I_D|z\rangle\le1,
+\qquad\langle x'|C\otimes I_D|x'\rangle\le1,
+\qquad\langle z'|C\otimes I_D|z'\rangle\le1.
+$$
+
+于是
+
+$$
+|\langle z|E|w\rangle|\le1,
+\qquad|\langle z'|E|x'\rangle|\le1.
+$$
+
+第二行与 $E$ 的配对绝对值至多 $2(1+\sqrt a)\xi$。三个界对同一个任意 $C,E$ 同时成立，相加给
+
+$$
+N(R_{a,\varepsilon}-S_{a,\varepsilon})
+\le\varepsilon+2(1+\sqrt a)\xi+\zeta.
+\tag{65.9}
+$$
+
+结合总响应下界 $e\ge\Delta=\varepsilon$，得到式（65.3）。
+

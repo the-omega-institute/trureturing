@@ -1,0 +1,29 @@
+**theorem 25.5: 联合未来边界的平移盲性条件；Claim status: open.** 设整数平移 $\sigma_k:X\to X$ 保持实际来源域，并满足
+\[
+\pi_{\rm sp}\sigma_k=\pi_{\rm sp},\qquad
+r\sigma_k=r,\qquad
+F\sigma_k=\sigma_kF.
+\tag{25.10}
+\]
+对迭代次数归纳得 $F^j\sigma_k=\sigma_kF^j$，故对每个有限 $N$，
+\[
+Q_N\sigma_k=Q_N.
+\tag{25.11}
+\]
+若绝对时间目标 $\Theta:X\to\mathbb Z$ 满足
+\[
+\Theta(\sigma_kx)=\Theta(x)+k
+\]
+且实际域中存在 $x,\sigma_kx$ 与 $k\ne0$，则 $\Theta$ 不能经 $Q_N$ 因子化：式（25.11）会迫使两目标值相同，与非零平移矛盾。
+
+`TemporalComposition.shift_attributes`、`shift_causal`、`q_shift` 和 `background_shift` 供应其指定档案字段的平移性质，不自动供应任意 $r,F$ 的式（25.10）。`guard_of_large_shift` 与 `exists_shift` 只移动右档案，以取得一份新的合法接续，不是所有数据不变的同时平移。相对时间差虽在同时平移下不变，也不因此自动可由接口恢复；仍须逐个检查它在观察纤维上恒定。
+
+最后，第25.4节的路径恢复只指所声明的拼接构造：`temporal_guard_iff` 刻画其时间合法性，`path_left_iff`、`path_right_iff` 和 `path_generated_iff` 刻画其来源路径；单独的 `edge_time`、`path_time` 不提供反向恢复。数学上定义的 $\operatorname{TP}_N$ 是指定未来响应表，只有实际执行并保留的记录才属于观察者当前档案。上述勘误保留式（25.1）、（25.2）、（25.4）与 HiddenArchive 的具体反例，并限定原式（25.3）及第25.3—25.4节的推论范围。
+
+还需区分第24节的未来读出商与双侧评价商：$C_\infty=X/{\equiv_\infty}$ 只由 $F,q$ 生成，不会自动包含协议 $P$ 可能读取的隐藏字段。若要把它作为第24.4节的双侧边界，必须另加任务条件
+\[
+x\equiv_\infty y\Longrightarrow\forall p,\ E(x,p)=E(y,p),
+\tag{25.12}
+\]
+其中合法性、记录和费用均已打包在 $E$ 中；若还要声称互相恢复，则需相反方向的分离条件，或直接证明评价行的 kernel 正好是 $\equiv_\infty$。相应地，$\bar F([x])=[F x]$ 与 $\bar q([x])=q(x)$ 的定义只在 $\equiv_\infty$ 对更新和读出稳定时良定义。缺少式（25.12）时，第24节的“完整未来边界”与双侧协议边界只能并列，不能自动串成同一商。
+

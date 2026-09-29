@@ -1,0 +1,8 @@
+**引理 4.6（质量守恒与紧性）。** 对每个可行流，
+
+$$
+\sum_{h\in\mathcal H_k}m(h)=1
+\qquad(0\le k\le n).
+\tag{TM.234}
+$$
+

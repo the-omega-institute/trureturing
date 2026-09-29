@@ -1,0 +1,31 @@
+**命题 39.1（零等待尾项仍允许暗空间突变）。** 取正交基 $d,u,v$。对 $0\le\varepsilon\le1$，用同一个未点击结果的两个 Kraus 算子及两个点击分支
+
+$$
+Q_0=P_d,
+\qquad Q_1=\sqrt{1-\varepsilon}|d\rangle\langle u|,
+\qquad L_u=\sqrt\varepsilon P_u,
+\qquad L_v=P_v.
+$$
+
+则全部点击只能发生在第一轮，且
+
+$$
+\boxed{
+R_\varepsilon=\varepsilon P_u+P_v,
+\qquad \mathcal A_\varepsilon^m(R_\varepsilon)=0\quad(m\ge1).
+}
+$$
+
+相对于零参数，完整单轮距离与最终输出距离均为 $\varepsilon$；最终输出此处使用恒等终端读出。然而
+
+$$
+\mathcal D_0=\operatorname{span}\{d,u\},
+\qquad \mathcal D_\varepsilon=\operatorname{span}\{d\}\quad(\varepsilon>0),
+\qquad
+\|P_{\mathcal D_\varepsilon}-P_{\mathcal D_0}\|_\infty=1\quad(\varepsilon>0).
+$$
+
+证明。效果之和为 $P_d+(1-\varepsilon)P_u+\varepsilon P_u+P_v=I$。每次未点击后的量子态都支撑于 $d$，此后不会点击。因此 $R_\varepsilon$ 就是首轮点击效果，所有迟到尾项为零。对任意参考输入，两仪器差为未点击块减少 $\varepsilon$ 倍的 $u$ 压缩态经 $|d\rangle\langle u|$ 运输的结果，以及点击 $u$ 块增加同迹的正算子，距离为 $\varepsilon$ 乘输入的 $u$ 权重。上确界由 $P_u$ 达到。最终输出中，这两块分别是未点击旗标和点击态，同样得到距离 $\varepsilon$。核空间由 $R_\varepsilon$ 的对角式直接读出。$\square$
+
+这个例子没有隐藏很长的等待：从 $u$ 输入，微弱点击失败后会永久进入 $d$。其区别是某个方向的最终点击概率从精确零变成任意小的正数。因此，共同等待尾界控制的是长期输出的近似误差，不能独自控制精确核的维数。
+

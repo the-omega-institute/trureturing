@@ -1,0 +1,11 @@
+**命题 4.6.7（任意阶的熵比较）。** 对定义 4.6.1 的任意 $q>1$，$H_q(p)\le H(p)$。
+
+**证明。** 在有限分布 $p$ 下，对随机变量 $Z(a)=(q-1)\log p_a$ 使用指数函数的 Jensen 不等式，再取对数，得
+$$
+\log c_q=\log\mathbb E_p e^{(q-1)\log p_a}
+\ge(q-1)\mathbb E_p\log p_a.
+$$
+除以负数 $1-q$ 反向即得结论。因此命题 4.6.6 的 $H_{3/2}>\log2$ 也认证了该例的 Shannon 严格条件。证毕。
+
+阶二比较的既有声明 `CollisionShannonComparison.collision_entropy_le_shannon_entropy` 只承担 $q=2$ 情形；一般 $q$ 比较、$q\downarrow1$ 的微分极限和有效搜索分别由上面证明。没有从它们推出必要或锐的 iid 阈值，也没有从尚未结束的搜索推出反例。
+

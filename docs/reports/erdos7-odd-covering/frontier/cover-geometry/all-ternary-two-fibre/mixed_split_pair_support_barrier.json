@@ -1,0 +1,4414 @@
+{
+  "verified": true,
+  "support_sha256": "21835ce8429c77ff3a0debe4e3cfd9d85e807f78abf2dce54ecf9892e65cc449",
+  "algorithm": "Independent Cartesian profiles and literal shell law; full exact integer NumPy pair scan by load classes; direct set check at each capacity minimum; rational feasible zero witnesses without optimization or producer imports.",
+  "profiles_Q20_through38": 20076,
+  "safe_profiles": 3332,
+  "support_vertices": 12705,
+  "unordered_distinct_support_pairs": 80702160,
+  "integer_pairs_scanned_including_equal_load_symmetry": 90447447,
+  "load_class_pairs": 190,
+  "finite_immediate_order_covers": 8098,
+  "overflow_immediate_order_covers": 58698,
+  "middle_mass": "23885076958949400679080200117823362199902156375897565997376874575155092710966810017651858654014024121621001106704/2039817633758195156477508306704389447118305610179079399616678627244816840141273664139318526594774349214935302734375",
+  "overflow39": "7480471258797976451061507166127915707537325748518266575710940032867958250682464078761741096334659516795688327406630048459722392120550084505575548049225042738657/1574569651059891543085080260299215440233957034150065063328022459257651647212262137667110106269635394187641827597951064416953443005054784807725809514522552490234375",
+  "total_mass": "25917765196443110195045169489447124810313579745357781051298048734781277453600895504394283278209264210202068337196789704876416978885551278020967834731353948988657/1574569651059891543085080260299215440233957034150065063328022459257651647212262137667110106269635394187641827597951064416953443005054784807725809514522552490234375",
+  "total_mass_float": 0.016460221482737878,
+  "m7": "7235955529/450000000000",
+  "excess": "613212992891964680973648880822815870334385335419781944629436133717317818410956402523575046327462341301519714666943314045379045263327072784080787584566630531962893/1612359322685328940119122186546396610799572002969666624847894998279835286745356428971120748820106643648145231460301889962960325637176099643111228942871093750000000000",
+  "excess_float": 0.00038032030718232186,
+  "witnesses": [
+    {
+      "q": 20,
+      "r": 20,
+      "minimum_N": 40,
+      "representative_indices": [
+        0,
+        0
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "20"
+        ],
+        "axis29": [
+          "20",
+          "20"
+        ],
+        "mixed_deletion": [
+          "16",
+          "16"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 21,
+      "minimum_N": 40,
+      "representative_indices": [
+        0,
+        8876
+      ],
+      "zero_witness": {
+        "axis23": [
+          "178/9",
+          "182/9"
+        ],
+        "axis29": [
+          "19",
+          "21"
+        ],
+        "mixed_deletion": [
+          "20",
+          "112/9"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 22,
+      "minimum_N": 40,
+      "representative_indices": [
+        0,
+        7370
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "20"
+        ],
+        "axis29": [
+          "18",
+          "22"
+        ],
+        "mixed_deletion": [
+          "20",
+          "12"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 23,
+      "minimum_N": 41,
+      "representative_indices": [
+        85,
+        1056
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "21"
+        ],
+        "axis29": [
+          "18",
+          "23"
+        ],
+        "mixed_deletion": [
+          "20",
+          "5"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 24,
+      "minimum_N": 40,
+      "representative_indices": [
+        0,
+        877
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "20"
+        ],
+        "axis29": [
+          "18",
+          "22"
+        ],
+        "mixed_deletion": [
+          "20",
+          "12"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 25,
+      "minimum_N": 40,
+      "representative_indices": [
+        0,
+        1065
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "20"
+        ],
+        "axis29": [
+          "18",
+          "22"
+        ],
+        "mixed_deletion": [
+          "20",
+          "12"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 26,
+      "minimum_N": 42,
+      "representative_indices": [
+        85,
+        1039
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "22"
+        ],
+        "axis29": [
+          "18",
+          "24"
+        ],
+        "mixed_deletion": [
+          "20",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 27,
+      "minimum_N": 41,
+      "representative_indices": [
+        85,
+        1017
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "21"
+        ],
+        "axis29": [
+          "18",
+          "23"
+        ],
+        "mixed_deletion": [
+          "20",
+          "5"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 28,
+      "minimum_N": 40,
+      "representative_indices": [
+        85,
+        1000
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "20"
+        ],
+        "axis29": [
+          "18",
+          "22"
+        ],
+        "mixed_deletion": [
+          "20",
+          "12"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 29,
+      "minimum_N": 45,
+      "representative_indices": [
+        85,
+        12068
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "22"
+        ],
+        "axis29": [
+          "18",
+          "27"
+        ],
+        "mixed_deletion": [
+          "20",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 30,
+      "minimum_N": 41,
+      "representative_indices": [
+        0,
+        11805
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "21"
+        ],
+        "axis29": [
+          "18",
+          "23"
+        ],
+        "mixed_deletion": [
+          "20",
+          "5"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 31,
+      "minimum_N": 47,
+      "representative_indices": [
+        85,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "22"
+        ],
+        "axis29": [
+          "19",
+          "28"
+        ],
+        "mixed_deletion": [
+          "18",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 32,
+      "minimum_N": 40,
+      "representative_indices": [
+        0,
+        11277
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "20"
+        ],
+        "axis29": [
+          "18",
+          "22"
+        ],
+        "mixed_deletion": [
+          "20",
+          "12"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 33,
+      "minimum_N": 41,
+      "representative_indices": [
+        85,
+        11444
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "21"
+        ],
+        "axis29": [
+          "18",
+          "23"
+        ],
+        "mixed_deletion": [
+          "20",
+          "5"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 34,
+      "minimum_N": 46,
+      "representative_indices": [
+        85,
+        11475
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "22"
+        ],
+        "axis29": [
+          "18",
+          "28"
+        ],
+        "mixed_deletion": [
+          "20",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 35,
+      "minimum_N": 47,
+      "representative_indices": [
+        85,
+        968
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "22"
+        ],
+        "axis29": [
+          "19",
+          "28"
+        ],
+        "mixed_deletion": [
+          "18",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 36,
+      "minimum_N": 40,
+      "representative_indices": [
+        85,
+        11361
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "20"
+        ],
+        "axis29": [
+          "18",
+          "22"
+        ],
+        "mixed_deletion": [
+          "20",
+          "12"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 37,
+      "minimum_N": 53,
+      "representative_indices": [
+        85,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "22"
+        ],
+        "axis29": [
+          "20",
+          "28"
+        ],
+        "mixed_deletion": [
+          "16",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 20,
+      "r": 38,
+      "minimum_N": 50,
+      "representative_indices": [
+        85,
+        11483
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "22"
+        ],
+        "axis29": [
+          "20",
+          "28"
+        ],
+        "mixed_deletion": [
+          "16",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 21,
+      "minimum_N": 40,
+      "representative_indices": [
+        149,
+        7190
+      ],
+      "zero_witness": {
+        "axis23": [
+          "59/3",
+          "61/3"
+        ],
+        "axis29": [
+          "19",
+          "21"
+        ],
+        "mixed_deletion": [
+          "21",
+          "35/3"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 22,
+      "minimum_N": 39,
+      "representative_indices": [
+        149,
+        3281
+      ],
+      "zero_witness": {
+        "axis23": [
+          "101/5",
+          "94/5"
+        ],
+        "axis29": [
+          "17",
+          "22"
+        ],
+        "mixed_deletion": [
+          "99/5",
+          "96/5"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 23,
+      "minimum_N": 39,
+      "representative_indices": [
+        3126,
+        6518
+      ],
+      "zero_witness": {
+        "axis23": [
+          "81/4",
+          "75/4"
+        ],
+        "axis29": [
+          "16",
+          "23"
+        ],
+        "mixed_deletion": [
+          "21",
+          "65/4"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 24,
+      "minimum_N": 38,
+      "representative_indices": [
+        7190,
+        15453
+      ],
+      "zero_witness": {
+        "axis23": [
+          "103/5",
+          "87/5"
+        ],
+        "axis29": [
+          "14",
+          "24"
+        ],
+        "mixed_deletion": [
+          "98/5",
+          "92/5"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 25,
+      "minimum_N": 40,
+      "representative_indices": [
+        311,
+        1344
+      ],
+      "zero_witness": {
+        "axis23": [
+          "265/13",
+          "255/13"
+        ],
+        "axis29": [
+          "15",
+          "25"
+        ],
+        "mixed_deletion": [
+          "21",
+          "93/13"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 26,
+      "minimum_N": 39,
+      "representative_indices": [
+        149,
+        1039
+      ],
+      "zero_witness": {
+        "axis23": [
+          "103/5",
+          "92/5"
+        ],
+        "axis29": [
+          "13",
+          "26"
+        ],
+        "mixed_deletion": [
+          "21",
+          "36/5"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 27,
+      "minimum_N": 34,
+      "representative_indices": [
+        3966,
+        14006
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "13"
+        ],
+        "axis29": [
+          "7",
+          "27"
+        ],
+        "mixed_deletion": [
+          "21",
+          "9"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 28,
+      "minimum_N": 34,
+      "representative_indices": [
+        6702,
+        16122
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "13"
+        ],
+        "axis29": [
+          "7",
+          "27"
+        ],
+        "mixed_deletion": [
+          "21",
+          "9"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 29,
+      "minimum_N": 34,
+      "representative_indices": [
+        8876,
+        18070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "13"
+        ],
+        "axis29": [
+          "7",
+          "27"
+        ],
+        "mixed_deletion": [
+          "21",
+          "9"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 30,
+      "minimum_N": 34,
+      "representative_indices": [
+        7190,
+        16473
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "13"
+        ],
+        "axis29": [
+          "7",
+          "27"
+        ],
+        "mixed_deletion": [
+          "21",
+          "9"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 31,
+      "minimum_N": 34,
+      "representative_indices": [
+        8876,
+        18584
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "13"
+        ],
+        "axis29": [
+          "7",
+          "27"
+        ],
+        "mixed_deletion": [
+          "21",
+          "9"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 32,
+      "minimum_N": 34,
+      "representative_indices": [
+        8005,
+        19244
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "13"
+        ],
+        "axis29": [
+          "7",
+          "27"
+        ],
+        "mixed_deletion": [
+          "21",
+          "9"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        3126,
+        13980
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "13"
+        ],
+        "axis29": [
+          "7",
+          "27"
+        ],
+        "mixed_deletion": [
+          "21",
+          "9"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        3126,
+        13981
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "14"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "21",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        3126,
+        13982
+      ],
+      "zero_witness": {
+        "axis23": [
+          "419/20",
+          "301/20"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "21",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        3126,
+        13983
+      ],
+      "zero_witness": {
+        "axis23": [
+          "397/19",
+          "306/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "21",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        3126,
+        13984
+      ],
+      "zero_witness": {
+        "axis23": [
+          "125/6",
+          "103/6"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "21",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 21,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        3126,
+        13985
+      ],
+      "zero_witness": {
+        "axis23": [
+          "353/17",
+          "310/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "21",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 22,
+      "minimum_N": 39,
+      "representative_indices": [
+        2410,
+        9331
+      ],
+      "zero_witness": {
+        "axis23": [
+          "101/5",
+          "94/5"
+        ],
+        "axis29": [
+          "17",
+          "22"
+        ],
+        "mixed_deletion": [
+          "99/5",
+          "96/5"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 23,
+      "minimum_N": 39,
+      "representative_indices": [
+        2410,
+        9332
+      ],
+      "zero_witness": {
+        "axis23": [
+          "121/6",
+          "113/6"
+        ],
+        "axis29": [
+          "16",
+          "23"
+        ],
+        "mixed_deletion": [
+          "22",
+          "95/6"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 24,
+      "minimum_N": 38,
+      "representative_indices": [
+        543,
+        1469
+      ],
+      "zero_witness": {
+        "axis23": [
+          "103/5",
+          "87/5"
+        ],
+        "axis29": [
+          "14",
+          "24"
+        ],
+        "mixed_deletion": [
+          "98/5",
+          "92/5"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 25,
+      "minimum_N": 37,
+      "representative_indices": [
+        790,
+        1891
+      ],
+      "zero_witness": {
+        "axis23": [
+          "270/13",
+          "211/13"
+        ],
+        "axis29": [
+          "12",
+          "25"
+        ],
+        "mixed_deletion": [
+          "256/13",
+          "225/13"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 26,
+      "minimum_N": 38,
+      "representative_indices": [
+        543,
+        1607
+      ],
+      "zero_witness": {
+        "axis23": [
+          "165/8",
+          "139/8"
+        ],
+        "axis29": [
+          "12",
+          "26"
+        ],
+        "mixed_deletion": [
+          "22",
+          "37/4"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 27,
+      "minimum_N": 28,
+      "representative_indices": [
+        790,
+        12066
+      ],
+      "zero_witness": {
+        "axis23": [
+          "280/13",
+          "84/13"
+        ],
+        "axis29": [
+          "1",
+          "27"
+        ],
+        "mixed_deletion": [
+          "162/13",
+          "202/13"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 28,
+      "minimum_N": 29,
+      "representative_indices": [
+        790,
+        12067
+      ],
+      "zero_witness": {
+        "axis23": [
+          "572/27",
+          "211/27"
+        ],
+        "axis29": [
+          "1",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 29,
+      "minimum_N": 30,
+      "representative_indices": [
+        790,
+        12068
+      ],
+      "zero_witness": {
+        "axis23": [
+          "275/13",
+          "115/13"
+        ],
+        "axis29": [
+          "2",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 30,
+      "minimum_N": 31,
+      "representative_indices": [
+        790,
+        12069
+      ],
+      "zero_witness": {
+        "axis23": [
+          "528/25",
+          "247/25"
+        ],
+        "axis29": [
+          "3",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 31,
+      "minimum_N": 32,
+      "representative_indices": [
+        790,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "253/12",
+          "131/12"
+        ],
+        "axis29": [
+          "4",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        790,
+        12071
+      ],
+      "zero_witness": {
+        "axis23": [
+          "484/23",
+          "275/23"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        790,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "13"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        790,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "440/21",
+          "295/21"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        790,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "209/10",
+          "151/10"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        790,
+        12075
+      ],
+      "zero_witness": {
+        "axis23": [
+          "396/19",
+          "307/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        790,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "187/9",
+          "155/9"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 22,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        790,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "352/17",
+          "311/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "22",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 23,
+      "minimum_N": 39,
+      "representative_indices": [
+        755,
+        3434
+      ],
+      "zero_witness": {
+        "axis23": [
+          "241/12",
+          "227/12"
+        ],
+        "axis29": [
+          "16",
+          "23"
+        ],
+        "mixed_deletion": [
+          "23",
+          "185/12"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 24,
+      "minimum_N": 38,
+      "representative_indices": [
+        755,
+        7516
+      ],
+      "zero_witness": {
+        "axis23": [
+          "103/5",
+          "87/5"
+        ],
+        "axis29": [
+          "14",
+          "24"
+        ],
+        "mixed_deletion": [
+          "98/5",
+          "92/5"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 25,
+      "minimum_N": 36,
+      "representative_indices": [
+        755,
+        3733
+      ],
+      "zero_witness": {
+        "axis23": [
+          "148/7",
+          "104/7"
+        ],
+        "axis29": [
+          "11",
+          "25"
+        ],
+        "mixed_deletion": [
+          "102/7",
+          "150/7"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 26,
+      "minimum_N": 36,
+      "representative_indices": [
+        755,
+        3762
+      ],
+      "zero_witness": {
+        "axis23": [
+          "83/4",
+          "61/4"
+        ],
+        "axis29": [
+          "10",
+          "26"
+        ],
+        "mixed_deletion": [
+          "45/2",
+          "27/2"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 27,
+      "minimum_N": 28,
+      "representative_indices": [
+        755,
+        12066
+      ],
+      "zero_witness": {
+        "axis23": [
+          "280/13",
+          "84/13"
+        ],
+        "axis29": [
+          "1",
+          "27"
+        ],
+        "mixed_deletion": [
+          "162/13",
+          "202/13"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 28,
+      "minimum_N": 29,
+      "representative_indices": [
+        755,
+        12067
+      ],
+      "zero_witness": {
+        "axis23": [
+          "571/27",
+          "212/27"
+        ],
+        "axis29": [
+          "1",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 29,
+      "minimum_N": 30,
+      "representative_indices": [
+        755,
+        12068
+      ],
+      "zero_witness": {
+        "axis23": [
+          "549/26",
+          "231/26"
+        ],
+        "axis29": [
+          "2",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 30,
+      "minimum_N": 31,
+      "representative_indices": [
+        755,
+        12069
+      ],
+      "zero_witness": {
+        "axis23": [
+          "527/25",
+          "248/25"
+        ],
+        "axis29": [
+          "3",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 31,
+      "minimum_N": 32,
+      "representative_indices": [
+        755,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "505/24",
+          "263/24"
+        ],
+        "axis29": [
+          "4",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        755,
+        12071
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "12"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        755,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "461/22",
+          "287/22"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        755,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "439/21",
+          "296/21"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        755,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "417/20",
+          "303/20"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        755,
+        12075
+      ],
+      "zero_witness": {
+        "axis23": [
+          "395/19",
+          "308/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        755,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "373/18",
+          "311/18"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 23,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        755,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "351/17",
+          "312/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "23",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 24,
+      "minimum_N": 38,
+      "representative_indices": [
+        68,
+        3317
+      ],
+      "zero_witness": {
+        "axis23": [
+          "103/5",
+          "87/5"
+        ],
+        "axis29": [
+          "14",
+          "24"
+        ],
+        "mixed_deletion": [
+          "98/5",
+          "92/5"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 25,
+      "minimum_N": 36,
+      "representative_indices": [
+        728,
+        1625
+      ],
+      "zero_witness": {
+        "axis23": [
+          "148/7",
+          "104/7"
+        ],
+        "axis29": [
+          "11",
+          "25"
+        ],
+        "mixed_deletion": [
+          "102/7",
+          "150/7"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 26,
+      "minimum_N": 36,
+      "representative_indices": [
+        478,
+        1417
+      ],
+      "zero_witness": {
+        "axis23": [
+          "83/4",
+          "61/4"
+        ],
+        "axis29": [
+          "10",
+          "26"
+        ],
+        "mixed_deletion": [
+          "45/2",
+          "27/2"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 27,
+      "minimum_N": 28,
+      "representative_indices": [
+        775,
+        12066
+      ],
+      "zero_witness": {
+        "axis23": [
+          "280/13",
+          "84/13"
+        ],
+        "axis29": [
+          "1",
+          "27"
+        ],
+        "mixed_deletion": [
+          "162/13",
+          "202/13"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 28,
+      "minimum_N": 29,
+      "representative_indices": [
+        81,
+        11534
+      ],
+      "zero_witness": {
+        "axis23": [
+          "190/9",
+          "71/9"
+        ],
+        "axis29": [
+          "1",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 29,
+      "minimum_N": 30,
+      "representative_indices": [
+        756,
+        12068
+      ],
+      "zero_witness": {
+        "axis23": [
+          "274/13",
+          "116/13"
+        ],
+        "axis29": [
+          "2",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 30,
+      "minimum_N": 31,
+      "representative_indices": [
+        308,
+        11697
+      ],
+      "zero_witness": {
+        "axis23": [
+          "526/25",
+          "249/25"
+        ],
+        "axis29": [
+          "3",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 31,
+      "minimum_N": 32,
+      "representative_indices": [
+        728,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "11"
+        ],
+        "axis29": [
+          "4",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        81,
+        11535
+      ],
+      "zero_witness": {
+        "axis23": [
+          "482/23",
+          "277/23"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        728,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "230/11",
+          "144/11"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        728,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "146/7",
+          "99/7"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        728,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "104/5",
+          "76/5"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        81,
+        11536
+      ],
+      "zero_witness": {
+        "axis23": [
+          "394/19",
+          "309/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        728,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "62/3",
+          "52/3"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 24,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        728,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "350/17",
+          "313/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "24",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 25,
+      "minimum_N": 36,
+      "representative_indices": [
+        729,
+        1625
+      ],
+      "zero_witness": {
+        "axis23": [
+          "148/7",
+          "104/7"
+        ],
+        "axis29": [
+          "11",
+          "25"
+        ],
+        "mixed_deletion": [
+          "102/7",
+          "150/7"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 26,
+      "minimum_N": 36,
+      "representative_indices": [
+        729,
+        1688
+      ],
+      "zero_witness": {
+        "axis23": [
+          "83/4",
+          "61/4"
+        ],
+        "axis29": [
+          "10",
+          "26"
+        ],
+        "mixed_deletion": [
+          "45/2",
+          "27/2"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 27,
+      "minimum_N": 28,
+      "representative_indices": [
+        776,
+        12066
+      ],
+      "zero_witness": {
+        "axis23": [
+          "280/13",
+          "84/13"
+        ],
+        "axis29": [
+          "1",
+          "27"
+        ],
+        "mixed_deletion": [
+          "162/13",
+          "202/13"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 28,
+      "minimum_N": 29,
+      "representative_indices": [
+        776,
+        12067
+      ],
+      "zero_witness": {
+        "axis23": [
+          "569/27",
+          "214/27"
+        ],
+        "axis29": [
+          "1",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 29,
+      "minimum_N": 30,
+      "representative_indices": [
+        757,
+        12068
+      ],
+      "zero_witness": {
+        "axis23": [
+          "547/26",
+          "233/26"
+        ],
+        "axis29": [
+          "2",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 30,
+      "minimum_N": 31,
+      "representative_indices": [
+        757,
+        12069
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "10"
+        ],
+        "axis29": [
+          "3",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 31,
+      "minimum_N": 32,
+      "representative_indices": [
+        729,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "503/24",
+          "265/24"
+        ],
+        "axis29": [
+          "4",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        729,
+        12071
+      ],
+      "zero_witness": {
+        "axis23": [
+          "481/23",
+          "278/23"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        729,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "459/22",
+          "289/22"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        729,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "437/21",
+          "298/21"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        729,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "83/4",
+          "61/4"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        729,
+        12075
+      ],
+      "zero_witness": {
+        "axis23": [
+          "393/19",
+          "310/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        729,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "371/18",
+          "313/18"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 25,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        729,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "349/17",
+          "314/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "25",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 26,
+      "minimum_N": 37,
+      "representative_indices": [
+        730,
+        1688
+      ],
+      "zero_witness": {
+        "axis23": [
+          "348/17",
+          "281/17"
+        ],
+        "axis29": [
+          "11",
+          "26"
+        ],
+        "mixed_deletion": [
+          "26",
+          "186/17"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 27,
+      "minimum_N": 28,
+      "representative_indices": [
+        794,
+        12066
+      ],
+      "zero_witness": {
+        "axis23": [
+          "280/13",
+          "84/13"
+        ],
+        "axis29": [
+          "1",
+          "27"
+        ],
+        "mixed_deletion": [
+          "162/13",
+          "202/13"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 28,
+      "minimum_N": 29,
+      "representative_indices": [
+        777,
+        12067
+      ],
+      "zero_witness": {
+        "axis23": [
+          "568/27",
+          "215/27"
+        ],
+        "axis29": [
+          "1",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 29,
+      "minimum_N": 30,
+      "representative_indices": [
+        777,
+        12068
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "9"
+        ],
+        "axis29": [
+          "2",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 30,
+      "minimum_N": 31,
+      "representative_indices": [
+        758,
+        12069
+      ],
+      "zero_witness": {
+        "axis23": [
+          "524/25",
+          "251/25"
+        ],
+        "axis29": [
+          "3",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 31,
+      "minimum_N": 32,
+      "representative_indices": [
+        758,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "251/12",
+          "133/12"
+        ],
+        "axis29": [
+          "4",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        730,
+        12071
+      ],
+      "zero_witness": {
+        "axis23": [
+          "480/23",
+          "279/23"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        730,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "229/11",
+          "145/11"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        730,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "436/21",
+          "299/21"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        730,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "207/10",
+          "153/10"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        730,
+        12075
+      ],
+      "zero_witness": {
+        "axis23": [
+          "392/19",
+          "311/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        730,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "185/9",
+          "157/9"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 26,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        730,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "348/17",
+          "315/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "26",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 27,
+      "minimum_N": 28,
+      "representative_indices": [
+        795,
+        12066
+      ],
+      "zero_witness": {
+        "axis23": [
+          "280/13",
+          "84/13"
+        ],
+        "axis29": [
+          "1",
+          "27"
+        ],
+        "mixed_deletion": [
+          "162/13",
+          "202/13"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 28,
+      "minimum_N": 29,
+      "representative_indices": [
+        795,
+        12067
+      ],
+      "zero_witness": {
+        "axis23": [
+          "21",
+          "8"
+        ],
+        "axis29": [
+          "1",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 29,
+      "minimum_N": 30,
+      "representative_indices": [
+        778,
+        12068
+      ],
+      "zero_witness": {
+        "axis23": [
+          "545/26",
+          "235/26"
+        ],
+        "axis29": [
+          "2",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 30,
+      "minimum_N": 31,
+      "representative_indices": [
+        778,
+        12069
+      ],
+      "zero_witness": {
+        "axis23": [
+          "523/25",
+          "252/25"
+        ],
+        "axis29": [
+          "3",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 31,
+      "minimum_N": 32,
+      "representative_indices": [
+        759,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "167/8",
+          "89/8"
+        ],
+        "axis29": [
+          "4",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        759,
+        12071
+      ],
+      "zero_witness": {
+        "axis23": [
+          "479/23",
+          "280/23"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        731,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "457/22",
+          "291/22"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        731,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "145/7",
+          "100/7"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        731,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "413/20",
+          "307/20"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        731,
+        12075
+      ],
+      "zero_witness": {
+        "axis23": [
+          "391/19",
+          "312/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        731,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "41/2",
+          "35/2"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 27,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        731,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "347/17",
+          "316/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "27",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 28,
+      "minimum_N": 29,
+      "representative_indices": [
+        82,
+        11534
+      ],
+      "zero_witness": {
+        "axis23": [
+          "566/27",
+          "217/27"
+        ],
+        "axis29": [
+          "1",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 29,
+      "minimum_N": 30,
+      "representative_indices": [
+        796,
+        12068
+      ],
+      "zero_witness": {
+        "axis23": [
+          "272/13",
+          "118/13"
+        ],
+        "axis29": [
+          "2",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 30,
+      "minimum_N": 31,
+      "representative_indices": [
+        779,
+        12069
+      ],
+      "zero_witness": {
+        "axis23": [
+          "522/25",
+          "253/25"
+        ],
+        "axis29": [
+          "3",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 31,
+      "minimum_N": 32,
+      "representative_indices": [
+        779,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "125/6",
+          "67/6"
+        ],
+        "axis29": [
+          "4",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        82,
+        11535
+      ],
+      "zero_witness": {
+        "axis23": [
+          "478/23",
+          "281/23"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        760,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "228/11",
+          "146/11"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        732,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "62/3",
+          "43/3"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        732,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "103/5",
+          "77/5"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        82,
+        11536
+      ],
+      "zero_witness": {
+        "axis23": [
+          "390/19",
+          "313/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        732,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "184/9",
+          "158/9"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 28,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        732,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "346/17",
+          "317/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "28",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 29,
+      "r": 29,
+      "minimum_N": 30,
+      "representative_indices": [
+        797,
+        12068
+      ],
+      "zero_witness": {
+        "axis23": [
+          "543/26",
+          "237/26"
+        ],
+        "axis29": [
+          "2",
+          "28"
+        ],
+        "mixed_deletion": [
+          "29",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 29,
+      "r": 30,
+      "minimum_N": 31,
+      "representative_indices": [
+        797,
+        12069
+      ],
+      "zero_witness": {
+        "axis23": [
+          "521/25",
+          "254/25"
+        ],
+        "axis29": [
+          "3",
+          "28"
+        ],
+        "mixed_deletion": [
+          "29",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 29,
+      "r": 31,
+      "minimum_N": 32,
+      "representative_indices": [
+        780,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "499/24",
+          "269/24"
+        ],
+        "axis29": [
+          "4",
+          "28"
+        ],
+        "mixed_deletion": [
+          "29",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 29,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        780,
+        12071
+      ],
+      "zero_witness": {
+        "axis23": [
+          "477/23",
+          "282/23"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "29",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 29,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        761,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "455/22",
+          "293/22"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "29",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 29,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        761,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "433/21",
+          "302/21"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "29",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 29,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        733,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "411/20",
+          "309/20"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "29",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 29,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        733,
+        12075
+      ],
+      "zero_witness": {
+        "axis23": [
+          "389/19",
+          "314/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "29",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 29,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        733,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "367/18",
+          "317/18"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "29",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 29,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        733,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "345/17",
+          "318/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "29",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 30,
+      "r": 30,
+      "minimum_N": 31,
+      "representative_indices": [
+        309,
+        11697
+      ],
+      "zero_witness": {
+        "axis23": [
+          "104/5",
+          "51/5"
+        ],
+        "axis29": [
+          "3",
+          "28"
+        ],
+        "mixed_deletion": [
+          "30",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 30,
+      "r": 31,
+      "minimum_N": 32,
+      "representative_indices": [
+        798,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "83/4",
+          "45/4"
+        ],
+        "axis29": [
+          "4",
+          "28"
+        ],
+        "mixed_deletion": [
+          "30",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 30,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        781,
+        12071
+      ],
+      "zero_witness": {
+        "axis23": [
+          "476/23",
+          "283/23"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "30",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 30,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        781,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "227/11",
+          "147/11"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "30",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 30,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        762,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "144/7",
+          "101/7"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "30",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 30,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        762,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "41/2",
+          "31/2"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "30",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 30,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        309,
+        11698
+      ],
+      "zero_witness": {
+        "axis23": [
+          "388/19",
+          "315/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "30",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 30,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        734,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "61/3",
+          "53/3"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "30",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 30,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        734,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "344/17",
+          "319/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "30",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 31,
+      "r": 31,
+      "minimum_N": 32,
+      "representative_indices": [
+        799,
+        12070
+      ],
+      "zero_witness": {
+        "axis23": [
+          "497/24",
+          "271/24"
+        ],
+        "axis29": [
+          "4",
+          "28"
+        ],
+        "mixed_deletion": [
+          "31",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 31,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        799,
+        12071
+      ],
+      "zero_witness": {
+        "axis23": [
+          "475/23",
+          "284/23"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "31",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 31,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        782,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "453/22",
+          "295/22"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "31",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 31,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        782,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "431/21",
+          "304/21"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "31",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 31,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        763,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "409/20",
+          "311/20"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "31",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 31,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        763,
+        12075
+      ],
+      "zero_witness": {
+        "axis23": [
+          "387/19",
+          "316/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "31",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 31,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        735,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "365/18",
+          "319/18"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "31",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 31,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        735,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "343/17",
+          "320/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "31",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 32,
+      "r": 32,
+      "minimum_N": 33,
+      "representative_indices": [
+        83,
+        11535
+      ],
+      "zero_witness": {
+        "axis23": [
+          "474/23",
+          "285/23"
+        ],
+        "axis29": [
+          "5",
+          "28"
+        ],
+        "mixed_deletion": [
+          "32",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 32,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        800,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "226/11",
+          "148/11"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "32",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 32,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        783,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "430/21",
+          "305/21"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "32",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 32,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        783,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "102/5",
+          "78/5"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "32",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 32,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        83,
+        11536
+      ],
+      "zero_witness": {
+        "axis23": [
+          "386/19",
+          "317/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "32",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 32,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        764,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "182/9",
+          "160/9"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "32",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 32,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        736,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "342/17",
+          "321/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "32",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 33,
+      "r": 33,
+      "minimum_N": 34,
+      "representative_indices": [
+        801,
+        12072
+      ],
+      "zero_witness": {
+        "axis23": [
+          "41/2",
+          "27/2"
+        ],
+        "axis29": [
+          "6",
+          "28"
+        ],
+        "mixed_deletion": [
+          "33",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 33,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        801,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "143/7",
+          "102/7"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "33",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 33,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        784,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "407/20",
+          "313/20"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "33",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 33,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        784,
+        12075
+      ],
+      "zero_witness": {
+        "axis23": [
+          "385/19",
+          "318/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "33",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 33,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        765,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "121/6",
+          "107/6"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "33",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 33,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        765,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "341/17",
+          "322/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "33",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 34,
+      "r": 34,
+      "minimum_N": 35,
+      "representative_indices": [
+        802,
+        12073
+      ],
+      "zero_witness": {
+        "axis23": [
+          "428/21",
+          "307/21"
+        ],
+        "axis29": [
+          "7",
+          "28"
+        ],
+        "mixed_deletion": [
+          "34",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 34,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        802,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "203/10",
+          "157/10"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "34",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 34,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        785,
+        12075
+      ],
+      "zero_witness": {
+        "axis23": [
+          "384/19",
+          "319/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "34",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 34,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        785,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "181/9",
+          "161/9"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "34",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 34,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        766,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "19"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "34",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 35,
+      "r": 35,
+      "minimum_N": 36,
+      "representative_indices": [
+        803,
+        12074
+      ],
+      "zero_witness": {
+        "axis23": [
+          "81/4",
+          "63/4"
+        ],
+        "axis29": [
+          "8",
+          "28"
+        ],
+        "mixed_deletion": [
+          "35",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 35,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        803,
+        12075
+      ],
+      "zero_witness": {
+        "axis23": [
+          "383/19",
+          "320/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "35",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 35,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        786,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "361/18",
+          "323/18"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "35",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 35,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        786,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "339/17",
+          "324/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "35",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 36,
+      "r": 36,
+      "minimum_N": 37,
+      "representative_indices": [
+        84,
+        11536
+      ],
+      "zero_witness": {
+        "axis23": [
+          "382/19",
+          "321/19"
+        ],
+        "axis29": [
+          "9",
+          "28"
+        ],
+        "mixed_deletion": [
+          "36",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 36,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        804,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "20",
+          "18"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "36",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 36,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        787,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "338/17",
+          "325/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "36",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 37,
+      "r": 37,
+      "minimum_N": 38,
+      "representative_indices": [
+        805,
+        12076
+      ],
+      "zero_witness": {
+        "axis23": [
+          "359/18",
+          "325/18"
+        ],
+        "axis29": [
+          "10",
+          "28"
+        ],
+        "mixed_deletion": [
+          "37",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 37,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        805,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "337/17",
+          "326/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "37",
+          "0"
+        ]
+      }
+    },
+    {
+      "q": 38,
+      "r": 38,
+      "minimum_N": 39,
+      "representative_indices": [
+        806,
+        12077
+      ],
+      "zero_witness": {
+        "axis23": [
+          "336/17",
+          "327/17"
+        ],
+        "axis29": [
+          "11",
+          "28"
+        ],
+        "mixed_deletion": [
+          "38",
+          "0"
+        ]
+      }
+    }
+  ],
+  "overflow_zero_witness": {
+    "axis23": [
+      "20",
+      "20"
+    ],
+    "axis29": [
+      "18",
+      "22"
+    ],
+    "mixed_deletion": [
+      "20",
+      "12"
+    ]
+  },
+  "source_inputs": {
+    "query_stoploss_completion.json": "44f871684942eb7dceb37c55880c9f9a49244d8bdd60134670ad80d10a3c587d",
+    "common_law_mass_tail.json": "3781704377f2ca6234ed55f3eff1a37d2f8665a3810b02c694aebdc2fc063cb4"
+  },
+  "integer_scan_dtype": "numpy.int64",
+  "integer_intermediate_bound": 457662330444,
+  "Lean_rerun": false,
+  "boundary": "An upward auxiliary comparison support of mass above m7 satisfying every pair-positive-K exclusion. No claim that this support is an actual source survivor set or original congruence cover. Ordinary full-history monotone comparison and literal-capacity relaxation remain the specified method; new Lean verification is absent."
+}

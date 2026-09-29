@@ -1,0 +1,20 @@
+**命题 2.33。** The point $0$ belongs to $E_A$, and
+$$
+E_A\cap D_n=
+\begin{cases}
+D_n,&n\in A,\\
+\varnothing,&n\notin A.
+\end{cases}
+\tag{TM.590}
+$$
+The extension relation $R_{E_A}$ is Turing equivalent to $A$, and
+$$
+\mu(E_A)=1-\sum_{n\notin A}p^{-(n+1)}.
+\tag{TM.591}
+$$
+Consequently $\mu(E_A)$ is computable if and only if $A$ is decidable, although $E_A$ always has the explicit computable point $0$.
+
+**Proof.** In low-to-high digit order, $D_n$ begins with $0^n1$. These prefixes are incompatible for different $n$, proving disjointness, and none contains zero. Thus removing the announced $D_n$ gives the displayed intersections and the exact mass formula. The map $n\mapsto(n+1,p^n)$ reduces membership in $A$ to extension. Conversely, with oracle $A$, decide whether a cylinder $[b]_d$ has an included ancestor by examining only $D_0,\ldots,D_{d-1}$; the sparse ancestor criterion then decides its extension. Hence $R_{E_A}\equiv_T A$. The mass conclusion follows from the oracle-equivalence theorem. $\square$
+
+If $A$ is co-c.e.-complete, every name of $\mu(E_A)$ computes the halting problem through the extension operator, and the halting oracle computes one such name. This statement leaves arbitrary extra information in other names unconstrained. The example is the fixed-inventory construction of profile 343, §13; its computable survivor and its hard extension queries are properties of the same set.
+

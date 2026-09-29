@@ -1,0 +1,10 @@
+**引理195.1（有界比例上的熵渐近）。** 对每个有限 $H>0$，
+
+$$
+\sup_{0\le h\le H}
+\left|
+\frac{s(h\epsilon)}{\epsilon L_\epsilon}-h
+\right|\longrightarrow0.
+\tag{195.3}
+$$
+

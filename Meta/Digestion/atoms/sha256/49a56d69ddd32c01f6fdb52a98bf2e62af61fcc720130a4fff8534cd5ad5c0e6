@@ -1,0 +1,21 @@
+### 74.5 最坏误差与实际参数尺度
+
+记
+
+$$
+F_\varepsilon=\sup_{0<a<1}\frac{e(R_{a,\varepsilon})}{\varepsilon}.
+$$
+
+（74.3）给 $\limsup F_\varepsilon\le\Gamma$。反向，取任意 $r_*\in\mathcal A$，令 $a_\varepsilon=1-r_*\varepsilon$。充分小正 $\varepsilon$ 时它属于 $(0,1)$，且第70节给对应比例趋于 $\gamma_{r_*}=\Gamma$。故 $\liminf F_\varepsilon\ge\Gamma$，证明（74.4）。
+
+最后，假设（74.5），记 $r_\varepsilon=(1-a_\varepsilon)/\varepsilon$。由（74.3）、（74.4），
+
+$$
+\gamma_{r_\varepsilon}\longrightarrow\Gamma>1.
+\tag{74.18}
+$$
+
+由于 $\gamma_r$ 在零与无穷两个端点均趋于一，存在 $0<d<R<\infty$，使这些渐近最坏参数最终全部满足 $r_\varepsilon\in[d,R]$。如果到 $\mathcal A$ 的距离不趋零，可取一个距离统一有正下界的子列，再在此紧区间取收敛子列 $r_{\varepsilon_j}\to r_\infty$。（74.18）和连续性给 $\gamma_{r_\infty}=\Gamma$，所以 $r_\infty\in\mathcal A$，与距离下界矛盾。得到（74.6），也得到 $d\varepsilon\le1-a_\varepsilon\le R\varepsilon$。证明完毕。
+
+一致尺度轮廓同时描述固定参数下的比值极限、临界移动参数的一阶比例间隙及两端退化行为；固定参数的二阶超额仍由第69节的更精细估计承担。它只针对本候选族与完整 tester 合同；没有把 $\Gamma$ 识别为所有有限量子过程的通用常数。
+

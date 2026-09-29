@@ -1,0 +1,24 @@
+### 159.3 两个常值入口相位的最优误差严格分离
+
+对任意单位向量 $v\in Q$，定义从原始活动输入到 $M\otimes K_{\mathrm{run}}$ 的常值通道
+
+$$
+\mathcal S_v(X)=\operatorname{Tr}(X)\,
+\mathfrak E(|v\rangle\langle v|).
+\tag{159.17}
+$$
+
+这份比较通道已完全忘掉原始输入；目标仍为（159.3）的完整来源输入及参考恢复，并未改成只恢复一份指定态。
+
+令
+
+$$
+\mathfrak e(v)=
+\min_{\mathcal D:\mathcal L(QR)\to
+\mathcal L(Q_{\mathrm{out}}R_{\mathrm{out}})\ {\rm CPTP}}
+\frac12\|
+(\operatorname{id}_M\otimes\mathcal D)\mathcal S_v-\mathcal W_*
+\|_\diamond.
+\tag{159.18}
+$$
+

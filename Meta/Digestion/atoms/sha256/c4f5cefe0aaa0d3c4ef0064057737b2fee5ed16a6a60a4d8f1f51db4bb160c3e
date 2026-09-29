@@ -1,0 +1,78 @@
+**定理 11.2（单峰似然的精确协方差及一致方差界）。** 在各个似然自身的概率律下，
+对任意 $d\ge2$、$0<r<1$、$s\ge0$，有
+
+$$
+\mathbb E_{\mathsf P^{\epsilon,E}_{b_z,s}}\log L^{\epsilon,E}_{b_z,s}=sI,
+\qquad
+\operatorname{Var}_{\mathsf P^{\epsilon,E}_{b_z,s}}
+       (\log L^{\epsilon,E}_{b_z,s})\le2sI.
+\tag{11.3}
+$$
+
+更精确地，在正向平稳路径下置
+$\ell_t=\log(nP_{b_z}(X_t,X_{t+1}))$，以及
+
+$$
+J=\frac{\xi(r)-k\xi(r/k)}n\le0,
+\qquad
+v=\frac{\psi(r)+k\psi(r/k)}n-I^2.
+\tag{11.4}
+$$
+
+则
+
+$$
+\operatorname{Cov}(\ell_t,\ell_{t+1})=IJ,\qquad
+\operatorname{Cov}(\ell_t,\ell_{t+j})=0\quad(j\ge2),
+\tag{11.5}
+$$
+
+故 $s\ge1$ 时，路径总对数似然的方差为 $sv+2(s-1)IJ$；
+独立状态对实验的方差为 $sv$。
+
+证明。条件于出发状态 $x$ 的对数似然均值为 $F(x)=\phi(b_z(x))$，
+二阶矩为 $\psi(b_z(x))$，故每条边的均值是 $I$，方差是 $v$。
+对 $u\in[0,1)$，有
+
+$$
+(2\phi-\psi)'(u)=-h(u)\log(1-u^2)\ge0.
+\tag{11.6}
+$$
+
+由零点取值及偶性得到 $\psi(u)\le2\phi(u)$，从而 $v\le2I$。
+又 $\xi(0)=0$ 且 $\xi''(u)=-u/(1-u^2)\le0$，
+凹性给出 $\xi(r)\le k\xi(r/k)$，所以 $J\le0$。
+
+由于平稳分布均匀，条件于到达状态 $y$ 的上一条边均值为
+
+$$
+R(y):=\mathbb E[\ell_{t-1}\mid X_t=y]=I+J\chi(y).
+\tag{11.7}
+$$
+
+确实，$(1+u)\log(1+u)=\phi(u)+\xi(u)$；在此处以
+$u=\chi(x)\chi(y)b_z(x)$ 代入并对 $x$ 均匀求和，
+利用单峰支撑在 $C_+$，即得 (11.7)。
+函数 $F$ 也只在 $C_+$ 上非零，故
+$\mathbb E(\chi F)=I$，以及
+
+$$
+P_{b_z}F=I(1+b_z).
+\tag{11.8}
+$$
+
+马尔可夫性与条件期望于是给出
+
+$$
+\mathbb E[\ell_t\ell_{t+1}]=\mathbb E(RF)=I^2+IJ,
+\qquad
+\mathbb E[\ell_t\ell_{t+2}]
+=\mathbb E(RP_{b_z}F)=I^2.
+$$
+
+第二式使用 $\mathbb E b_z=\mathbb E(\chi b_z)=\mathbb E\chi=0$。
+对 $j\ge3$，$P_{b_z}^{j-1}F=\Pi F=I$，同样得到乘积均值 $I^2$。
+求和协方差即得路径方差公式及其上界 $sv\le2sI$。
+独立状态对的方差直接相加。反向实验通过倒序或交换坐标变回正向实验，
+不改变相应对数似然的分布；$s=0$ 的结论直接成立。$\square$
+

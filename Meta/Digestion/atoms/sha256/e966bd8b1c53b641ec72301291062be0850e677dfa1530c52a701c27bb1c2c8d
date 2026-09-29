@@ -1,0 +1,15 @@
+### 34.2 恢复器的交换方块
+
+若第 $\ell$ 层有实际像恢复器 $R_\ell:\operatorname{im}q_\ell\to X_\ell$，粗化与恢复不能只比较每层数值，至少要检查
+
+$$
+r_{\ell}^{\ell'}\circ q_{\ell'}=q_\ell,
+\qquad
+R_\ell\circ r_{\ell}^{\ell'}\approx R_{\ell'}
+\tag{34.4}
+$$
+
+在声明的共同实际像上成立。若目标是另一载体 $Z$,则将第二式替换为 $T_\ell R_\ell r_{\ell}^{\ell'}=T_{\ell'}R_{\ell'}$. 只要 (34.4) 只在有限层分别成立，而没有统一误差或实际来源纤维闭性，不能把这些恢复器拼成无限层恢复器。
+
+`StableObservationInverseLimit.stable_observation_inverse_limit_laws` 供应限制箭头的相容性；`CompactLocalRealization.compact_local_realization` 还需要紧环境、闭纤维和同时有限可实现性，才能把有限交叠提升为实际点。可见有限层相容与完成来源存在是两个不同命题。
+

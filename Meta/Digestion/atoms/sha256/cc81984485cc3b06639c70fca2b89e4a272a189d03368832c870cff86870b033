@@ -1,0 +1,12 @@
+**定义 603.1（标准化量与最小部分和）。** 对内部参数 $0<r<1$，令
+
+$$
+u_0=\frac{(1-r)b}{rD},\quad
+u_i=\frac{(1-r)e_i}{rD},\quad
+C=u_0+\sum_i u_i,\quad
+\theta=1-C=\frac{r-M}{rD},\quad
+h=\frac{\eta}{rD},\quad q=\frac1{rp}.
+$$
+
+用 $\sigma_p(z)$ 表示向量 $z\in\mathbb R^n$ 最小的 $p$ 个坐标之和。并令 $t_i=(w_i-u_i)_+$。容量 $u_x$ 不是概率向量；在 $r<M$ 时，$\theta<0$ 合法。
+

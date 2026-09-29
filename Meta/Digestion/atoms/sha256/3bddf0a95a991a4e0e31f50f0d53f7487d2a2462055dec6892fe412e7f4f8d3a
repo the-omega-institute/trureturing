@@ -1,0 +1,40 @@
+### 221.1 谱数据与精确结论
+
+用输入优先约定
+$$
+\operatorname{vec}_{\mathrm{in}}(K)
+=(K_{00},K_{10},K_{01},K_{11})^{\mathsf T}.
+$$
+正谱侧目标通道写成
+$$
+\mathcal R(X)
+=
+|0\rangle\langle0|^Q\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|^Q\otimes
+\bigl(AXA^\dagger+\lambda LXL^\dagger\bigr),
+\tag{221.1}
+$$
+其中
+$$
+K_0^\dagger K_0+A^\dagger A+\lambda L^\dagger L=I,\qquad
+\|L\|_{\mathrm{HS}}=1,\qquad
+\operatorname{Tr}(A^\dagger L)=0.
+\tag{221.2}
+$$
+$A$ 已含主谱权重，$\alpha=\|A\|_{\mathrm{HS}}^2>\lambda>0$。
+记 $s_+\ge s_-$ 为 $L^\dagger L$ 的本征值，$s_++s_-=1$。
+原谱删除修复界为 $d_2\le k:=\lambda s_+$。
+
+对复参数 $z$，置
+$$
+D_z=1+\lambda|z|^2,\qquad
+M_z=\frac{\sqrt\lambda(L+zA)}{\sqrt{D_z}},\qquad
+N_z=\frac{A-\lambda\overline z L}{\sqrt{D_z}},
+$$
+$$
+f(z)=\frac{\|L+zA\|_\infty^2}{1+\lambda|z|^2}.
+\tag{221.3}
+$$
+$M_z,N_z$ 是结果1的另一份两 Kraus 表示，删除 $M_z$ 的效应范数为 $\lambda f(z)$。
+

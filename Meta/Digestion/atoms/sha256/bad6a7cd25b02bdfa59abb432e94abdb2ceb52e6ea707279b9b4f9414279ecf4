@@ -1,0 +1,61 @@
+### 218.8 完整参考下的合法最优候选
+
+任选单位向量 $|p^\perp\rangle$ 张成 $P^\perp$。端点 $\mathcal R_0$ 的两个结果分别只有一个 Kraus：
+$$
+K_{0}^{(0)}=|r\rangle\langle p|,\qquad
+K_{1}^{(0)}=|r\rangle\langle p^\perp|.
+\tag{218.31}
+$$
+所以 $\mathcal R_0$ 同时满足逐结果秩一和总秩二预算。
+
+端点 $\mathcal R_1$ 的结果 $0$ 为零，结果 $1$ 为
+$$
+X\longmapsto\operatorname{Tr}(X)\sigma_r.
+$$
+后者可取两个 Kraus
+$$
+K_{1,a}^{(1)}=|r\rangle\langle p|,\qquad
+K_{1,b}^{(1)}=|r\rangle\langle p^\perp|.
+\tag{218.32}
+$$
+因此 $\mathcal R_1$ 是合法的总秩二记录通道。
+
+对任意 $q,s\in[0,1]$，通道差为
+$$
+(\mathcal R_q-\mathcal R_s)(X)
+=(q-s)\operatorname{Tr}(PX)
+\bigl(|1\rangle\langle1|-|0\rangle\langle0|\bigr)^Q
+\otimes\sigma_r.
+\tag{218.33}
+$$
+取任意带外部参考 $\mathcal H_{\mathrm{ref}}$ 的输入算子 $X$，置
+$$
+Z_P=(\langle p|\otimes I_{\mathrm{ref}})
+X(|p\rangle\otimes I_{\mathrm{ref}}).
+$$
+双边乘法的迹范数界给 $\|Z_P\|_1\le\|X\|_1$，无需假设 $X$ 为 Hermitian。
+输出差为
+$$
+(q-s)
+\bigl(|1\rangle\langle1|-|0\rangle\langle0|\bigr)^Q
+\otimes\sigma_r\otimes Z_P,
+$$
+故其半迹范数恰为
+$$
+|q-s|\,\|Z_P\|_1\le|q-s|\,\|X\|_1.
+$$
+该界覆盖任意参考维数与全部 diamond 定义输入，而无参考输入 $P$ 达到等号。因此
+$$
+\boxed{
+\frac12\|\mathcal R_q-\mathcal R_s\|_\diamond=|q-s|.
+}
+\tag{218.34}
+$$
+这既证明上界已控制全部外部参考，也给出
+$$
+d_{11}(q)\le q,\qquad
+d_2(q)\le\min\{q,1-q\}.
+\tag{218.35}
+$$
+与（218.27）结合，首先完成 $d_{11}(q)=q$ 的证明。
+

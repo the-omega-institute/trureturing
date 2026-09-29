@@ -1,0 +1,16 @@
+**定理 15.3（有理矩阵阶给出的最优统一界）。** 对每个 n≥1 和 essential A∈M_n(N[H])，
+
+$$
+A\text{ inert}\quad\Longleftrightarrow\quad
+A^{n b_H}\in u_HM_n(\mathbb N).
+$$
+
+并且在全部群系数严格为正的 n 阶矩阵中，有限 tau 的最大值恰为 n b_H。更强地，存在一个正整数 K，使每个 t∈{1,…,n b_H} 都由某个严格正系数矩阵 A_t 实现，满足
+
+$$
+\tau(A_t)=t,\qquad
+\epsilon(A_t)=sKJ_n,
+$$
+
+其中 J_n 是全一矩阵，K 对这整个有限族相同。所有自由扩张矩阵 E(A_t) 均严格为正。
+

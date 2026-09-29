@@ -1,0 +1,229 @@
+**定理128.1（小零位方向必须进入实际三尾）。** 若五个尾环境恰有三条不同射线，则小零位方向 $Y$ 必须在第2至6轮实际出现。
+
+证明反设 $Y$ 不在尾部。以下全部空间及向量仍属于同一个实际过程。
+
+### 128.1 首轮必须采用小侧，四维尾输入已全部张成
+
+由于 $Y$ 不在尾部，每个 $G_i$、$2\le i\le6$ 都包含于 $U$；若当前环境不等于 $X$，则它填满同一个普通纤维 $P$。第103节给
+
+$$
+S=\mathbb Cp+G_2+G_3+G_4+G_5.
+$$
+
+$\dim S=5>\dim U=4$，所以
+
+$$
+p\notin U,\qquad G_2+G_3+G_4+G_5=U.
+\tag{128.3}
+$$
+
+首轮零位像的接收因子若不在 $U$，其环境只能为 $Y$；故
+
+$$
+[\eta_1]=Y,\qquad p\in W\setminus U.
+\tag{128.4}
+$$
+
+若 $X$ 也不在尾部，所有 $G_i=P$，实际 $S$ 至多三维，矛盾。因此三个尾方向恰为大侧 $X$ 和两个不同于 $X,Y$ 的普通方向。
+
+同一个五维实际一位尾像为
+
+$$
+E=V_1S=\mathbb C(v\otimes\eta_2)+\sum_{n=3}^6Q_n\otimes\eta_n.
+$$
+
+其生成环境均不为 $Y$，所以完整一位纤维公式使
+
+$$
+E\subset(Q\otimes F)\oplus(J\otimes X).
+$$
+
+两侧都五维，故
+
+$$
+\boxed{E=(Q\otimes F)\oplus(J\otimes X).}
+\tag{128.5}
+$$
+
+另记实际四维尾输入像
+
+$$
+E_U=V_1U=\sum_{n=3}^6Q_n\otimes\eta_n,
+\qquad\dim E_U=4.
+\tag{128.6}
+$$
+
+这个等式使用（128.3），不把 $E_U$ 与五维 $E$ 混同。
+
+所有一位乘积接收因子都正交于 $P$，因为 $P\otimes F\subset R_0$。因此真实 $q,v$ 及所有 $Q_n$ 均在 $P^\perp$ 中。早期仍有
+
+$$
+G_2=\operatorname{span}(u,w),\qquad
+H_1=\operatorname{span}(p,q),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),
+\tag{128.7}
+$$
+
+其中 $u,v,w$ 正交归一。若后期当前环境为大侧 $X$，则 $Q_n\subset U^\perp$，从而 $P_UH_n=G_n$；若额外已得 $Q_n=Q$，则 $H_n\subset U\oplus Q$。
+
+### 128.2 三尾的十三个必要词及大侧标签
+
+按尾部首次出现命名 $A,B,C$。两个普通方向的实际平面均为同一个 $P$，所以所有已有后继的普通当前位置必须具有同一个后继。第69、74节的十三个必要三尾词经这一条件筛选后如下；第二列表示哪一个字母必须是大侧 $X$。
+
+| 尾词 | 可能的大侧字母 |
+|---|---|
+| $AAABC$ | $A$ |
+| $AABAC$ | $A$ |
+| $AABCC$ | $A$ |
+| $ABAAC$ | $A$ |
+| $ABABC$ | $B$ |
+| $ABACA$ | $A$ |
+| $ABBBC$ | $B$ |
+| $ABBCB$ | $B$ |
+| $ABCAB$ | 无 |
+| $ABCBA$ | $B$ |
+| $ABCBB$ | $B$ |
+| $ABCBC$ | $B$ |
+| $ABCCC$ | $A$ |
+
+该表只读第2至5轮的已执行后继。$ABCAB$ 的三个当前字母具有三个不同后继，任取一个大侧标签后，两个普通字母的后继仍不同，所以直接排除。其余十二词逐项处理。
+
+### 128.3 大侧为第二个字母时，普通首字不能回返
+
+先取 $X=B$，所以 $A,C$ 均为普通方向。真实 $V_1p=v\otimes A$ 中的 $v$ 属于二维 $Q$。若第3至6轮再次出现 $A$，该轮的实际二维 $Q_n$ 填满 $Q$，使
+
+$$
+V_1p\in Q\otimes A=V_1G_{n-1}.
+$$
+
+固定单射性迫使 $p\in G_{n-1}\subset U$，违反（128.3）。这直接排除普通首字回返的 $ABABC$ 和 $ABCBA$。
+
+### 128.4 ABBBC、ABBCB、ABCBB 的四维一位像
+
+这三个词仍取 $X=B$。其后四轮只采用 $B,C$，其中普通 $C$ 的每个一位平面都等于 $Q$。将 $B$ 上实际一位平面的接收跨度记为 $T_B$。由（128.6），
+
+$$
+E_U=(T_B\otimes B)\dotplus(Q\otimes C),\qquad\dim E_U=4.
+$$
+
+两个不同环境的块代数交零，故 $\dim T_B=2$。因此所有采用 $B$ 的后继平面都相同，等于 $T_B\subset U^\perp$；对应的已执行输入平面也相同。
+
+**$ABBBC$。** 前三个后继都为 $B$，于是 $G_2=G_3=G_4$，且普通首字给 $G_2=P$。相同零位像给 $H_2=H_3$，非零 $w\in H_2\cap G_2$ 落入后期 $H_3\cap G_3=0$，矛盾。
+
+**$ABBCB$。** 此时
+
+$$
+G_2=G_3=G_5=P,\qquad Q_3=Q_4=Q_6=T_B,
+\qquad Q_5=Q.
+$$
+
+实际零位像为 $V_0H_2=P\otimes B$、$V_0H_4=P\otimes C$。置 $r=|\langle B,C\rangle|$；因为 $B=X$ 而普通 $C\ne Y=X^\perp$，有 $r>0$。同一个单位早期 $w\in H_2\cap G_2$ 满足
+
+$$
+\|P_{H_4}w\|=r,\qquad \|P_{G_4}w\|\le r.
+$$
+
+第一式来自两份零位像；第二式来自 $G_2,G_4$ 的实际一位环境 $B,C$。又 $Q_4=T_B\subset U^\perp$、$w\in U$，所以 $P_{H_4}w=P_{H_4}P_{G_4}w$。后期 $H_4\cap G_4=0$ 给非零方向上的严格投影收缩，遂有 $r<r$，矛盾。
+
+**$ABCBB$。** 四维分块准确给
+
+$$
+G_2=G_4=G_5=P,\qquad G_3=L_0,
+\qquad Q_3=Q_5=Q_6=T_B,\quad Q_4=Q.
+$$
+
+由（128.3），$L_0+P=U$ 四维；两个补平面 $T_B,Q$ 都正交于 $U$。第3至6轮的环境为 $(B,C,B,B)$，且 $\langle B,C\rangle\ne0$。这逐项满足第86节引理86.2的公共向量局部矩阵禁阻：该引理中的 $(L,T,Q,R)$ 分别取 $(L_0,P,T_B,Q)$，共同四维输入取当前 $U$，早期 $u,v,w$ 与来源列全部保持同一实际数据。该引理不限制第二轮环境，也不要求首轮环境外置，故直接得到矛盾。
+
+### 128.5 ABCBC 的后期空间对重复
+
+最后一个 $X=B$ 的词是 $ABCBC$。普通 $C$ 给 $G_4=G_6=P$，相同零位像使 $H_3=H_5$。第3、第5轮当前环境同为大侧 $B$，所以向同一 $U$ 投影得到 $G_3=G_5$。相同空间对 $(H_3,G_3)=(H_5,G_5)$ 违反实际来源的 $\delta_3\ne\delta_5$。
+
+### 128.6 大侧为首字时，两个普通后继填满固定一位块
+
+现在取 $X=A$，其余 $B,C$ 普通。对 $AAABC,AABAC,ABAAC,ABACA$ 四词，后四轮都实际使用了普通 $B,C$，所以 $E_U$ 包含 $Q\otimes B$ 和 $Q\otimes C$。它们共同张成四维 $Q\otimes F$，而 $E_U$ 本身四维，因此
+
+$$
+\boxed{V_1U=Q\otimes F.}
+\tag{128.8}
+$$
+
+这些词在大侧上的实际后继平面也就全等于 $Q$。任何后期 $H_n$ 都因此包含于 $U\oplus Q$，只要其当前方向为 $A$。
+
+**$AAABC$。** $G_2,G_3$ 的一位像都为 $Q\otimes A$，所以 $G_2=G_3$，相同零位像给 $H_1=H_2$。普通 $B$ 位于第5轮，给 $G_5=P$，其后继为 $C$，所以 $V_1P=Q\otimes C$。
+
+由于普通 $C\ne A^\perp=Y$，$\langle A,C\rangle\ne0$；同一个 $V_1$ 把 $G_2,P$ 分别映到 $Q\otimes A,Q\otimes C$，所以 $P_P|_{G_2}$ 单射，两个平面均二维，得到 $P_PG_2=P$。又 $v\perp P$、$a\ne0$，真实早期式（128.7）给
+
+$$
+P_PH_2=P_PG_2=P.
+$$
+
+但 $q\perp P$ 使 $P_PH_1\subset\mathbb C(P_Pp)$，维数至多一。这与 $H_1=H_2$ 矛盾。
+
+**$AABAC$。** 普通第4轮给 $G_4=P$，其后继为 $A$。结合（128.8），$G_2,G_4$ 的一位像都为 $Q\otimes A$，所以 $G_2=G_4=P$。普通第6轮也给 $G_6=P$。因此
+
+$$
+V_0H_1=P\otimes A,\qquad
+V_0H_3=P\otimes B,\qquad V_0H_5=P\otimes C.
+$$
+
+两个普通环境 $B,C$ 独立，所以 $H_1\subset H_3+H_5$。第3、第5轮当前环境均为大侧 $A$，由（128.8）有 $H_3,H_5\subset U\oplus Q$。真实 $p\in H_1\cap S$ 因而属于 $(U\oplus Q)\cap S=U$，违反（128.3）。
+
+**$ABAAC$。** 普通第3轮给 $G_3=P$，其后继为 $A$；（128.8）使 $G_4$ 的一位像也为 $Q\otimes A$，故 $G_4=P$。实际零位像为 $V_0H_2=P\otimes B$、$V_0H_3=P\otimes A$。
+
+置 $r=|\langle A,B\rangle|>0$，正值来自普通 $B\ne Y=A^\perp$。同一个单位 $w\in H_2\cap G_2$ 满足 $\|P_{H_3}w\|=r$；$G_2,G_3$ 的一位环境分别为 $B,A$，给 $\|P_{G_3}w\|\le r$。当前第3轮普通，所以 $Q_3=Q\perp U\ni w$。后期严格投影再次给 $r<r$，矛盾。
+
+### 128.7 ABACA 的同一个首轮向量与两次投影夹逼
+
+此词仍有 $X=A$，并满足（128.8）。两个普通当前平面为 $G_3=G_5=P$，都具有后继 $A$，所以
+
+$$
+V_1P=Q\otimes A,\qquad Q_4=Q_6=Q.
+$$
+
+同时 $V_1G_2=Q\otimes B$、$V_1G_4=Q\otimes C$，并且 $G_2+G_4=U$。
+
+先置 $r=|\langle B,C\rangle|$。零位像 $V_0H_2=P\otimes B$、$V_0H_4=P\otimes C$ 给同一单位 $w\in H_2\cap G_2$ 的精确读数 $\|P_{H_4}w\|=r$；一位等距给 $\|P_{G_4}w\|\le r$。由于 $Q_4=Q\perp U\ni w$，若 $r>0$，后期严格投影产生矛盾。故
+
+$$
+B\perp C,\qquad G_2\perp G_4,\qquad H_2\perp H_4.
+\tag{128.9}
+$$
+
+这里 $B,C$ 都普通，它们彼此正交仍须继续检验，不能仅以此排除。
+
+$u\in G_2$ 与 $H_4\subset G_4\oplus Q$ 使 $u\perp H_4$。真实 $a^2u+bv\in H_2$、$b\ne0$ 结合（128.9）给 $v\perp H_4$。一位 $A$ 纤维是 $U^\perp=Q\oplus J$，所以 $v\in Q\oplus J$。$J\perp U\oplus Q$，特别 $J\perp H_4$；因此 $P_Qv\perp H_4$。后期 $P_QH_4=Q$ 迫使
+
+$$
+P_Qv=0.
+$$
+
+真实 $V_1p=v\otimes A$ 遂正交于 $Q\otimes F=V_1U$，故 $p\perp U$。又 $p\in S\perp Q$，所以 $p\perp H_4$。
+
+最后比较真实零位像 $V_0p=u\otimes A$ 与 $V_0H_4=P\otimes C$。普通 $C\ne A^\perp=Y$ 使 $\langle A,C\rangle\ne0$，所以 $p\perp H_4$ 迫使 $u\perp P$。另一方面，同一个一位等距满足
+
+$$
+V_1G_2=Q\otimes B,\qquad V_1P=Q\otimes A,
+\qquad \langle A,B\rangle\ne0.
+$$
+
+因此 $P_P|_{G_2}$ 单射：若 $x\in G_2$ 正交于 $P$，写 $V_1x=y\otimes B$，它正交于整个 $Q\otimes A$，非零环境内积迫使 $y=0$，进而 $x=0$。非零单位 $u\in G_2$ 不可能正交于 $P$，矛盾。$ABACA$ 完整排除。
+
+### 128.8 最后两个普通尾部与完整结算
+
+余下 $X=A$ 的词只有 $AABCC,ABCCC$。两词都使 $G_4=G_5=G_6=P$，末两份零位像同处环境 $C$，所以 $H_4=H_5$。相同空间对 $(H_4,G_4)=(H_5,G_5)$ 违反实际 $\delta_4\ne\delta_5$。
+
+十三个必要尾词已全部排除：$ABCAB$ 无合法大侧标签，$X=B$ 的六词由第128.3—128.5节排除，$X=A$ 的六词由第128.6—128.8节排除。反设 $Y$ 不在尾部不成立，定理128.1得证。所用实际来源差值为
+
+$$
+\delta_5-\delta_3=\frac{x^4y^2}{t_3t_5}>0,\qquad
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0,
+\quad x=|a|^2,\quad y=|b|^2,\quad
+ t_0=1,\quad t_j=1-yt_{j-1}.
+$$
+
+本节排除的是小零位方向 $Y$ 只在首轮出现、尾部采用大侧 $X$ 与两个普通方向的全部三尾形态。仍须检验 $Y$ 在尾部实际出现的正交 $2+1$ 候选，以及其他未结算分支；本节没有给出七维实现，也没有排除全部七维接收器。一般容量区间保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

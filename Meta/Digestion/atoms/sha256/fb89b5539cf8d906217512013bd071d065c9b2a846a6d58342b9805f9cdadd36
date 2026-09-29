@@ -1,0 +1,49 @@
+### 268.2 对全部维数统一有效的正定参数
+
+在Hermitian矩阵的实向量空间上使用通常算子范数，线性映射使用对应诱导范数。记
+$$
+\mathcal E_t(X)=t(J^\dagger X+XJ)+t^2J^\dagger XJ.
+\tag{268.9}
+$$
+因为 $\|J\|\le1$，
+$$
+X+M^\dagger XM=2X+\mathcal E_t(X),
+\qquad
+\|\mathcal E_t\|\le2t+t^2.
+\tag{268.10}
+$$
+固定
+$$
+t=\frac14,\qquad
+\|\mathcal E_t/2\|\le\frac9{32}<1.
+\tag{268.11}
+$$
+所以以下Neumann级数在算子范数中收敛：
+$$
+Q=
+\frac12\left(\operatorname{Id}+\frac12\mathcal E_t\right)^{-1}(I_n)
+=\frac12\sum_{k=0}^\infty
+\left(-\frac12\mathcal E_t\right)^k(I_n).
+\tag{268.12}
+$$
+每一项Hermitian；该矩阵是（268.2）的唯一Hermitian解。其距离 $I_n/2$ 有统一界
+$$
+\left\|Q-\frac12I_n\right\|
+\le\frac12\frac{9/32}{1-9/32}
+=\frac9{46}.
+\tag{268.13}
+$$
+于是
+$$
+\boxed{
+\frac7{23}I_n\preceq Q\preceq\frac{16}{23}I_n
+\qquad\text{对所有 }n\ge1.
+}
+\tag{268.14}
+$$
+这给出所需正定性，参数和谱区间均不依赖 $n$。
+
+$J$ 为实矩阵，级数各项实对称，故 $Q$ 也实对称。$t=1/4$ 时，（268.2）还是一个有理系数的可逆有限维线性系统，所以 $Q$ 的所有条目均为有理数。这里提供的是明确存在性和正定界，不是求解复杂度或数值稳定性保证。
+
+下面关于唯一性、证书和最短性的证明只使用 $t>0$、（268.2）与 $Q\succ0$；因而既适用于统一族，也适用于后面另行认证的有理实例。
+

@@ -2259,3 +2259,2782 @@ Gaussian 平移 TV 界、核收缩、同边缘联合 TV 与平均条件 TV 的�
 所查原始来源不直接给出这一完整桥梁；有限检索不认证全局原创。
 本章不声称每个输出保证、零噪声结果、临界噪声锐利性、期望对数覆盖、变化误差水平或计算效率。
 第 72 章确定中心的替换仅使用已量化的 o_P(Q) 误差，纯理论文本未进入 Lean 冻结或消化链。
+
+## 原 floor 网格上的熵例外集与经典质量转移（第 74 章）
+
+`repo-derived`：第 74 章分类第 72 章确定均值中心下不发生 o_P(1) 熵集中的参数。
+原平稳对与连续路径实验给出相同的 Borel 例外集；它的 Lebesgue 测度为零，
+却包含稠密 Gδ 集，在每个非空开参数区间内的 Hausdorff 维数均为 2/3。
+所以参数测度意义的典型性与 Baire 类别意义的典型性在这里不同。
+它们都不改变先固定参数、再取实际数据概率极限的统计量词。
+
+关键实际连接是 beta 无关的因子 χ=2 exp(−z₀)f_j，以及
+m_j=2^floor(φQ³/(beta log2)) χ (1+o(1)) 的紧参数区间上一致相对比较。
+该比较保留 q 的原 floor、补偿与完整得分组。
+正根产生间距 Q^-2、宽度 Q^-3 的实际参数区间；整段区间的实际均值均有正的有限上下界。
+有限均值的子序列判据和实际行 PGF 的联合 Poisson 极限，使这些区间对应真正的后验熵障碍。
+跨过负根出现的阈值仍可使用同一正根网格，第二个独立 Poisson 项不会消去第一项的非退化性。
+两种例外集相同不意味着两种精确 floor 中心相差 o(1)。
+
+Beresnevich–Velani，*A Mass Transference Principle and the Duffin–Schaeffer conjecture for Hausdorff measures*，
+原版本 [arXiv:math/0412141v1](https://arxiv.org/abs/math/0412141v1)。
+原文 “A Mass Transference Principle” 节的主定理要求球的直径趋零、维数函数 f，
+以及 x^-k f(x) 单调；放大球的 limsup 在每个球中具有完整 k 维测度，
+则原球的 limsup 在每个球中具有完整 f-Hausdorff 测度。
+末部 “A general Mass Transference Principle” 将环境扩展到局部紧度量空间，
+要求 doubling 维数函数 g、H^g(B) 与 g(diam B) 的统一可比性、f/g 单调，
+并使用半径 g^-1(f(r)) 的放大球。
+
+该一般版本直接覆盖本章的度量下界步骤：取紧参数区间、g(r)=r、f(r)=r^s、0<s<2/3，
+以目标区间内部的 Q^-3 小球为原球，放大半径 Q^(-3s) 超过最大网格间隔 Q^-2。
+故放大球最终覆盖每个内点；相对端点球也满足统一的一维测度条件。
+这核实了局部紧区间的适用范围，不把局部网格误说成覆盖整个实轴。
+正文的全尺度质量证明另明确写出子区间宽度与中点间距之间的估计。
+
+Beresnevich–Dickinson–Velani，*Measure theoretic laws for lim sup sets*，
+原版本 [arXiv:math/0401118v3](https://arxiv.org/abs/math/0401118v3)。
+原文条件 (M2) 要求紧度量空间中小球的测度与半径 δ 次幂统一可比。
+局部 m-ubiquity 要求每个球在所有充分晚的权重块中，有固定正比例的测度被共振邻域覆盖；
+点共振的两项交叠条件自动以 γ=0 满足。
+原文主 Hausdorff 定理（TeX 标签 THM3）要求 r^-δ f(r) 随 r 递减且在零处趋无穷，
+r^-γ f(r) 递增，并定义 g(t)=f(ψ(t)) ψ(t)^(-γ) ρ(t)^(γ−δ)。
+其第 (ii) 项在 limsup g(u_n)>0 时给无限 f-Hausdorff 测度。
+第 (i) 项在该上极限为零时另有正则性与发散和条件，本章不使用该分支。
+
+对本章取 δ=1、γ=0、权重 Q_n、块端点 Q_(n−1),Q_n，
+ρ(t)=At^-2 的常数 A 足够大，ψ(t)=κt^-3 的 κ 足够小。
+实际网格上下间距给局部覆盖，有限权重内的共振点有限，紧区间端点满足 (M2)。
+对 0<s<2/3，g(Q_n) 与 Q_n^(2−3s) 同阶并趋无穷，故该定理也直接给所用下界。
+原超稀疏序列与这里的权重条件相容，不另假定连续分母或等分布。
+
+Borel–Cantelli、Baire、Hausdorff 覆盖、质量分布原理、质量转移和 ubiquity 都是经典内容。
+本章不把 Q^-2 网格以 Q^-3 加厚所得的 2/3 指数称为独立的新度量定理。
+新增综合在于完整实际实验到原 floor 区间的对应、共同例外集、两个根区间上的一致构造与统计后果。
+有限文献核对没有取得直接提供这一整套实际后验/floor 结论的原定理；这不认证全球原创性。
+检索未返回条目或接口超时不作为不存在定理的证据。
+
+原实际行比较、方差型局部 Bernoulli 证明、二项熵增量及 Poisson 矩判据的来源边界继续沿用第 72 章。
+不把 Barbour–Gnedin 的独立球盒模型当成原路径行的独立性定理，
+也不把固定试验数的熵参数凹性当成试验数增量估计。
+第 74 章另排除临界负端点的正有限均值障碍，但不判定指定 beta_* 的正根算术是否例外。
+结论不包含期望熵、参数上一致收敛速率、任意指定 Poisson 均值的可达性、有限精度恢复或效率保证。
+
+## 低噪声信息增益与 Gaussian 二次型密度（第 75 章）
+
+`repo-derived`：第 75 章把原实际标量的噪声范围扩展到
+L=ln(1/σ)→∞、L=o(Q³)，证明实际信息密度为 L+o_P(Q)。
+其输出后验信息谱的中心相应为精确原熵 h_x−L/ln2，
+并给典型输出的最优列表曲线与输出依赖最小覆盖数。
+在 L=aQ+o(Q) 时，对数列表基数的 Q 尺度收益精确为 a/ln2，且由可测后验排序达到。
+这些是概率结论，不是平均互信息或平均后验 Shannon 熵的展开。
+
+实质桥梁在于原模型的移动核心：半径平方
+R²=√[Q³(L+ln Q+1)] 为 o(Q³)，但足以在真实噪声精度压低尾部。
+原一、二行 PGF 比较与局部 Poisson 率下界使其中每个未归一化二项方差至少为 exp(c_q Q³/2)。
+粗单调耦合速率 E|X−Z|²≤Cd^−1/6 已足以控制标量位移除以 σ 后的误差。
+所有精确非中心项及尾部确定截距均保留，原完整二项计数向量始终附在联合通道上。
+只有标量位移支付 σ^−1，完整选定后验的多项式 TV 误差由核收缩进入，不乘该因子。
+
+Friedrich Götze、Alexey Naumov、Vladimir Spokoiny、Vladimir Ulyanov，
+*Large ball probabilities, Gaussian comparison and anti-concentration*，
+原版本 [arXiv:1708.08663v2](https://arxiv.org/abs/1708.08663v2)，2018-03-07，27 页 PDF。
+式 (2.1)（PDF 第 10 页）以协方差特征值 λ_j、尾平方和 Λ_k² 定义分段量 κ(Σ)。
+定理 2.6（第 13 页）对中心 Gaussian Hilbert 空间元 ξ 和任意确定平移 a，
+给 ||ξ−a||² 的密度上界 Cκ(Σ)；定理 2.7 给对应区间反集中界。
+第 15–16 页证明使用卷积收缩及式 (3.2) 的非中心平方特征函数模。
+
+该原定理直接覆盖第 75 章参考密度步骤。
+在固定中心小核心取 ξ_j=√w_j Z_j、a_j=√w_j c_j，
+其中 w_j 与 √δ 同阶，组数与 δ^−1 同阶。
+于是 Σ=diag(w_j) 的平方 Frobenius 范数有正下界，而最大特征值平方为 O(δ)；
+最终 3λ_1²≤Λ_1²，κ(Σ)=Λ_1^−1 有界。
+独立其余平方项及测量噪声的卷积保持密度上界。
+正文短特征函数证明仅明确所需一致性与非中心项，不将这个通用密度界申报为新定理。
+原文不提供实际行占据数、固定 q 后验或本模型指数小噪声下的通道比较。
+
+Andrew Carter、David Pollard，*Tusnády’s inequality revisited*，
+Annals of Statistics 32(6), 2731–2741 (2004)，DOI 10.1214/009053604000000733；
+核对的原电子重印本为 [arXiv:math/0508606v1](https://arxiv.org/abs/math/0508606v1)，
+2005-08-30，12 页 PDF。重印本注明分页与原印本不同。
+第 1–2 页定义 Bin(n,1/2) 与 N(n/2,n/4) 的单调耦合。
+定理 1（第 3–4 页）在 n≥28、n/2<k≤n−1 下给上尾近似；
+定理 2（第 4 页）控制相应正态分位切点，第 5 页讨论耦合后果。
+该文也明确 KMT、Hungarian 与 Tusnády 的经典谱系。
+
+本库校准 p 随数据变化，并非严格 1/2，故不把上述对称结论原样当作任意 p 的一致估计。
+第 67、75 章使用方差型局部 Bernoulli 界、单调层饼恒等式、四阶矩与插值，
+得到足够的非最优 d^−1/6 平方误差。耦合机制本身是经典内容；
+新增用途是原移动核心的实际指数大方差使该粗速率仍能支付指数小噪声。
+没有未平滑离散／连续 TV 近似，也没有整个过程的 KMT 耦合主张。
+
+Yury Polyanskiy、Yihong Wu，*Wasserstein continuity of entropy and outer bounds for interference channels*，
+原版本 [arXiv:1504.04419v2](https://arxiv.org/abs/1504.04419v2)，
+版本戳 2016-02-02、标题日期 2016-02-03，22 页 PDF。
+第 3 页的正则密度定义要求 ||∇log p(x)||≤c_1||x||+c_2；
+命题 1 在二阶矩与该正则性下以二阶 Wasserstein 距离控制熵及密度比量。
+第 4 页命题 2 对独立 Gaussian 平滑 B+Z、E||B||<∞ 给正则常数，
+其中 c_1=3 log e/σ²、c_2=4 log e E||B||/σ²。
+第 5 页推论 4 的熵／互信息比较保留 σ^−2 量级因子与所列矩条件。
+第 2 页反例也说明小散度本身不足以保证微分熵接近。
+
+这些条件是本章边界核查，未充当证明前提。
+普通 o(1) TV 不能自动提供其 Wasserstein 精度或控制随噪声退化的常数。
+第 75 章改用实际密度集合：{f_x>exp(bQ)} 的 Lebesgue 测度至多 exp(−bQ)，
+由有界参考密度与 TV 控制其实际概率；低密度事件由实际二阶矩与空间截断控制。
+因此 |ln f_x(Y)|=o_P(Q)，再用精确信息密度恒等式得到所需概率增益。
+这个论证不推出密度上确界或熵的一致可积性。
+
+第 71、73 章已核对的 Kontoyiannis–Verdú、Gavalakis–Kontoyiannis、
+Kuzuoka–Watanabe 保留其有限信息阈值、后验排序及各自条件／一般源假设。
+典型输出结论还使用第 73 章在整个 ln⁺(1/σ)=o(Q³) 范围的原惊奇量条件 CDF 定理，
+不能从边缘 CLT 与少量信息单独推得。
+本章的有限输入／实输出 Bayes 核、阈值界及可测选择直接按原实验证明。
+
+有界置换不变事件通过原支持对称移到实际确定支持的联合数据／输出律；
+先验预测混合密度仍不等于固定支持给定数据后的真实单个 Gaussian 密度。
+第 72 章确定中心的 o_P(Q) 精度可继承，Q⁵ 主项不能单独承担该中心。
+没有实际无界矩转移、每个输出保证、期望覆盖展开、零噪声或 Q³ 必要阈值结论。
+所核对经典原文直接承担其抽象步骤，未找到直接提供这套实际后验／移动核心连接的完整原定理；
+有限检索及接口失败均不构成全球原创性认证。
+
+## 临界规范测度、packing 类别与固定分母同步（第 76 章）
+
+`repo-derived`：第 76 章在原实际熵例外集上给完整规范零／无穷律，
+其级数为 Σ Q_n² f(Q_n^−3)，规范满足 f 递增、f(t)/t 非增且在零处趋无穷。
+因此每个非空开参数区间的 H^(2/3) 测度无穷，packing 维数为 1；
+正对数修正 t^(2/3)/(ln(1/t))^a、a>0 的测度却为零。
+类别／packing 推导使用稠密 Gδ 子集，单纯稠密不足以推出该结论。
+
+Beresnevich–Dickinson–Velani 的原文
+[arXiv:math/0401118v3](https://arxiv.org/abs/math/0401118v3)，
+*Measure theoretic laws for lim sup sets*，主 Hausdorff 定理（TeX 标签 THM3）
+直接承担规范测度的发散侧。除第 74 章已经使用的 G>0 分支外，
+第 (i) 项在 G=0 时还允许：ρ 对块上端点 u 正则，且 Σ g(u_n)=∞。
+该正则性定义为 ρ(u_(n+1))≤cρ(u_n) 最终成立于某个固定 c<1。
+它不要求 g(u_n) 单调，也不另要求规范沿 n 满足对数正则性。
+
+映射为紧 Euclidean 参数区间、Lebesgue 测度、M2 指数 d=1、点共振 γ=0，
+原正根 floor 区间中点的权重 Q_n，块 (Q_(n−1),Q_n]，
+ρ(t)=At^−2、ψ(t)=κt^−3。原网格最大间隙给逐块局部覆盖，
+原目标小球完整处于实际均值有正有限界的 floor 区间内。
+超稀疏原序列给 ρ(Q_(n+1))/ρ(Q_n)→0。
+因此两个分支覆盖全部发散级数情形；收敛侧由完整 E 的直径覆盖直接证明。
+这是经典度量定理在实际网格上的应用，不申报独立新规范定理。
+
+同步集合 E2 要求同一固定 beta、同一合法子序列上的正、负两组实际均值均趋于正有限值。
+第 76 章保留共同整数 L，使 L ln2+lnχ_j 与 L ln2+lnχ_k 同时有界，
+并将精确阶乘比化为固定分母 N=Q² 的曲线条件
+|k−NΨ(j/N)|≤C N^−1/2。
+两个 Stirling 展开中的 lnλ 前因子抵消，剩余原初始计数 floor 的光滑修正仍保留。
+根交换曲线的曲率不是未经核对的假设：解析展开证明其不恒零，
+内部零点因而孤立，参数例外至多可数。
+
+Jing-Jing Huang，*Rational points near planar curves and Diophantine approximation*，
+原版本 [arXiv:1403.7388v1](https://arxiv.org/abs/1403.7388v1)。
+正文原定义的曲率类要求固定紧区间上的 C² 函数与 0<c1≤|f″|≤c2。
+第一定理和第三定理（TeX 标签 t1、t6）另要求二阶导数 Lipschitz。
+第三定理计数的是所有 1≤q≤R 的和：
+N_f(R,η)=Σ_(q≤R) #{a:a/q∈I, ||qf(a/q)||<η}，
+并在 0<η≤1/2、整数 R>1 下给
+|I|ηR²+O(η^(1/2)log(1/η)R^(3/2)+R^(1+ε))。
+原始互素版本带 1/ζ(3) 系数；第四定理（TeX 标签 t2）对曲率类的一致闭包给较弱的 R^(4/3) 误差项。
+常数范围含区间、曲率界及所列 Lipschitz／ε 条件。
+
+本库曲线在局部满足这些光滑性要求，但所需分母固定为 Q_n²，不能换成所有 q≤R。
+在 η=N^−1/2 尺度，累计误差项含 N^(5/4)log N，
+大于单个分母预期的 N^(1/2) 主增量；取相邻 R 的差并不能得到正下界。
+原文也没有给本库的同阶前因子平移、共享 M-floor 整数交集或稀疏层嵌套。
+本章实际使用经典二阶导数指数和界与非负 Fejér 核，在固定分母上直接得 O(N^(2/3)) 上计数，
+再以原 floor 宽 Q^−3 得 dim_H E2≤4/9。
+抽象指数和估计不是新内容；新增连接是原双根均值到该固定分母、精度和 floor 条件的归约。
+
+同作者的 [arXiv:1403.8038v1](https://arxiv.org/abs/1403.8038v1)，
+*Hausdorff theory of dual approximation on planar curves*，是另一篇原文。
+其主定理处理整数向量的对偶不等式与递减逼近函数，曲线在零 H^s 集之外非退化；
+其 Huxley 计数引理按整个分母块求和。没有未经证明的对偶／同步迁移可把它用于本库固定分母下界。
+该版本所印 Hausdorff–Cantelli 引理将 |H_i| 称为高维体积却使用 Σ|H_i|^s，
+字面高维表述的指数与直径不匹配；正文使用直径覆盖，未采用这一印刷表述。
+这项局部警示不裁决该文主定理或其它版本。
+
+Claude Tricot Jr.，*Two definitions of fractional dimension*，
+Mathematical Proceedings of the Cambridge Philosophical Society (1982)，
+DOI [10.1017/S0305004100059119](https://doi.org/10.1017/S0305004100059119)，
+为 packing／维数框架的经典来源。此处取得了出版元数据，未取得通过 PDF 身份核验的原文；
+Taylor–Tricot 原文路线也返回访问拒绝，故不冒称其具体原定理已核对。
+第 76 章从 packing 外测度的可数覆盖定义直接证明所需类别推论，未依赖未读原定理或上 box 维数替代。
+
+E2 的上界使其 H^(2/3) 测度为零，而实际正根目标 limsup 的该测度无穷，
+因此在两根区域仍得到大量只留下单 Poisson 熵项的固定参数。
+这不证明同步双 Poisson 实例存在，不推出 dim_H E2=1/3，
+不把两个边缘稠密／余贫事件的交集当作同层同步命中。
+所有实际均值、精确中心和概率范围沿用第 72、74 章；参数测度不充当新实验先验。
+有限原文核对未关闭固定分母同步可达性；接口失败及不同分母范围都保留，
+未给全球原创性、期望熵或计算效率认证。
+
+## 低噪声平均信息的常数项与熵连续性（第 77 章）
+
+`repo-derived`：第 77 章保持原完整计数目标、精确后验中心及 Gaussian 标量通道。
+在 L=ln(1/σ)→∞、L=o(Q³) 的整个确定序列范围内，实际输出密度的上确界在原数据概率下有界，
+且其 L¹ 距离收敛到方差 2g₀ 的中心 Gaussian 密度。
+实际纤维二阶矩与这两个密度控制共同给微分熵的常数极限，进而
+I_x=L+½ln(2g₀)+o_P(1)，平均输出后验 Shannon 熵为精确 h_x−I_x/ln2。
+外层收敛一致于确定支持，两种实际平稳实验分别成立。
+这些平均量均在指定先验纤维内定义，不是点质量支持先验下的信息，也不是全原始数据期望。
+
+Hamid Ghourchian、Amin Gohari、Arash Amini，
+*Existence and Continuity of Differential Entropy for a Class of Distributions*，
+核对原版本 [arXiv:1703.09518v1](https://arxiv.org/abs/1703.09518v1)，
+2017-03-28，4 页 PDF；DOI 10.1109/LCOMM.2017.2689770。
+定义 3（PDF 第 2 页）规定 (α,v,m)–AC_n 类：绝对连续、α 阶绝对矩严格小于 v，
+且密度本质上确界严格小于 m。
+同页定理 1 给熵存在性，并在 d=||p−q||₁≤m 时给
+|h(p)−h(q)|≤c₁d+c₂d ln(1/d)，c₁,c₂ 由上述固定类参数控制。
+文中称此 L¹ 距离为 total variation，使用时不与半 L¹ 约定混用。
+第 3–4 页 IV.A–B 给存在性与连续性证明。
+
+该定理直接覆盖本章通用熵连续性步骤。
+取 n=1、α=2，先在实际数据的高概率事件固定密度界 B 和二阶矩界 K，
+稍放大参数以满足严格不等式，并将 Gaussian 极限纳入同一类。
+实际 L¹ 收敛给定理所需距离；最后令外层失败容差趋零。
+正文 (77.16)–(77.17) 给出所需一维尾部和紧区间证明，
+用于明确随机环境量词及实际矩的作用，不将这个连续性原理申报为新内容。
+弱收敛与密度有界不足以排除密度振荡；L¹ 收敛本身也不足以承担熵尾控制。
+
+Simon Becker、Nilanjana Datta、Michael G. Jabbour，
+*From Classical to Quantum: Uniform Continuity bounds on entropies in Infinite Dimensions*，
+核对原版本 [arXiv:2104.02019v3](https://arxiv.org/abs/2104.02019v3)，
+2024-11-19，18 页 PDF；期刊 DOI 10.1109/TIT.2023.3248228。
+PDF 第 6–7 页定理 3 针对非负整数上的均值约束 Shannon 熵，不能直接套给连续密度。
+与本章直接相关的是第 11 页命题 III.5：
+对 D 上密度 p,q、有界密度取值范围上的 α-Hölder 函数 F、正权 w，
+若 β<α、w^(−β/(1−α)) 可积、wp,wq 可积，则
+||F(p)−F(q)||₁≤|F|_{C^α}||p−q||_{L¹(w)}^β
+||p−q||₁^(α−β)(∫w^(−β/(1−α)))^(1−α)。
+
+在固定密度界 B 下，取 F(t)=−t ln t、α=3/4、β=1/2、w(y)=1+y²，
+则 ||p−q||_{L¹(w)}≤2+2K，且 ∫(1+y²)^−2dy 有限。
+故该命题也直接提供 C_B(2+2K)^½||p−q||₁^¼ 的熵连续模。
+其连续密度讨论以参考文献 [29] 引用 Ghourchian–Gohari–Amini。
+第 2 页修订注记 Remark 1 说明定理 2、4、6 的能量阈值须加限制，
+并指向后续全范围结果；本章不使用这些定理，也不把 v3 当作未经改变的旧版。
+这里采用命题 III.5 的具体加权假设，不借用任意量子熵或 Rényi 参数极限。
+
+Murali Godavarti、Alfred Hero，*Convergence of Differential Entropies*，
+IEEE Transactions on Information Theory 50(1), 171–176 (2004)，
+DOI 10.1109/TIT.2003.821979，是上述 2017 原文的参考文献 [8]。
+书目信息已核对；IEEE 原文路线返回 HTTP 418，另一路元数据没有开放 PDF。
+因此未核对其原定理假设，不以二手摘要承担本章的连续性前提。
+
+第 75 章核对的 Polyanskiy–Wu 原版本 arXiv:1504.04419v2，
+命题 1–2 与推论 4 保留二阶矩、正则密度和随 σ^−2 退化的常数。
+这些经典 Gaussian 平滑结果说明必须支付真实噪声尺度的代价。
+本章直接使用 Gaussian 核的导数范数：上确界为 e^−½/(√(2π)σ²)，L¹ 范数为 √(2/π)/σ。
+先对保留全部精确非中心项与尾部截距的乘积标量耦合证明 D_M/σ²→0，
+再由完整选定密度 L_x≤1+η_x 得 f_x≤(1+η_x)f_x^{prod}。
+实际后验的多项式 L²/TV 误差不除以 σ 或 σ²，故没有以无界放大偷换核收缩。
+
+Götze–Naumov–Spokoiny–Ulyanov 原版本 arXiv:1708.08663v2 定理 2.6
+直接承担含任意非中心项的参考 Gaussian 二次型密度界，具体参数对应见第 75 章归属。
+第 77 章另以实际平方质量和 δ^−1Σv_j²→g₀、最大权趋零及一致可积的特征函数，
+证明该参考密度的 L¹ Gaussian 极限；不由对角弱 CLT 单独推出局部密度结论。
+Carter–Pollard 的对称二项强耦合原文仍只作为经典谱系：
+实际校准 p_j 非严格 1/2，正文使用第 67、75 章已给的粗一致分位估计。
+固定总和条件化属于经典 rejective sampling；其完整向量密度式的本模型估计
+仍不能由固定阶 inclusion 展开替代。
+
+有限输入 Gaussian 通道的 I=h(Y)−h(σG)、有限 Bayes 熵链式公式、
+Fourier 反演、卷积收缩及 Scheffé 密度论证均为经典步骤。
+新内容的范围是上述条件在原实际行占据、精确固定 q 后验及整个 L=o(Q³) 范围的同时实现。
+输出后验熵的输出平均与典型输出 CDF／列表定理是不同结论；
+没有由前者推出每个输出的常数精度熵集中或期望对数覆盖。
+没有全数据无界期望转移、零噪声结果、Q³ 必要阈值、向量／适应性通道或计算效率结论。
+所查原文直接覆盖各通用工具；有界检索未找到完整实际模型连接的直接前例，
+这不是全球原创性、优先权、正式发表或 Lean 真值认证。
+
+## 通用正 Poisson 均值、精确相位与参数集维数（第 78 章）
+
+`repo-derived`：第 78 章构造同一个稠密 Gδ 参数集 U₀。
+其中每个固定 β 都能沿原合法规模子序列实现每个实 θ>0 的正根实际占据均值，
+并能在正整数目标处选择严格从上／下侧趋近。
+同一参数、层数和计数线索引同时给两种实际实验的确定均值极限；
+不同实验的原始数据并未因此被耦合。
+U₀ 及完整通用集 U 在每个参数开区间的 Hausdorff 维数均为 2/3，
+Lebesgue 测度为零、类别为余贫，局部 packing 维数为一。
+
+新增解析输入是 β 无关的精确阶乘相位 Φ_Q(j)=log₂χ_{Q,j}。
+对其 Gamma 延伸求导，在固定正根紧区间严格得到 −Φ_Q″ 与 Q⁻¹ 同阶；
+不对粗 Stirling 式的未知余项求导，也不丢弃原 k₀,l₀,P。
+经典指数和估计随后给任何固定圆弧在长索引区间内的正比例下计数。
+这些索引各选择原 M-floor 区间；内带余量及实际相对误差使两个实际均值
+在整个原区间上进入目标带，保留 q 的取整、补偿与完整得分组。
+
+Hermann Weyl，*Über die Gleichverteilung von Zahlen mod. Eins*，
+Mathematische Annalen 77 (1916), 313–352，DOI 10.1007/BF01475864。
+核对的原始 40 页扫描来自
+[Zenodo 原文](https://zenodo.org/api/records/2425535/files/article.pdf/content)。
+印刷第 313–315 页给均匀分布定义、Riemann 可积测试函数与三角多项式夹逼。
+Satz 1（第 315 页）要求一个序列的前 n 项对每个非零整数频率的指数和均为 o(n)，
+由此推出模一均匀分布。
+扫描文本有历史字体 OCR 错误；使用的是可辨读的量词与夹逼论证，
+正文的有限相位估计及公式独立写全。
+
+Weyl 原判据直接说明这里的经典解析机制，但本章的数组随 Q 与索引区间改变，
+未把它们当作同一无限序列的前缀。
+正文先选支撑于目标弧的连续非负函数，再取固定阶 Fejér 多项式 P，
+使 P−ε 成为真正的下小函数；对有限个非零频率使用二阶导数检验，
+得到 p_A N−C_A(N/√Q+√Q) 的计数下界。
+每个合法 Q 上的横向分布也不自动证明固定 β 沿超稀疏层数的点态分布。
+后者由原区间命中、Baire 交及确定嵌套构造承担。
+
+Jing-Jing Huang，*Rational points near planar curves and Diophantine approximation*，
+原版本 [arXiv:1403.7388v1](https://arxiv.org/abs/1403.7388v1)，
+核对 PDF 与 [原 TeX](https://arxiv.org/e-print/1403.7388v1)。
+Theorem 3 证明开头的 Lemma 1（源码标签 l1）针对任意有限实数序列 u₁,…,u_N，
+定义弧 (α,β) 的 discrepancy D=N_hit−(β−α)N，且 β−α<1。
+对任意正整数 K，其绝对误差满足
+|D|≤N/(K+1)+2Σ_{k≤K}[1/(K+1)+min(β−α,1/(πk))]|Σ_ne(ku_n)|。
+原文将证明归于 Montgomery 第 1 章，并讨论 Fejér 与精细 Fourier 权重的差别。
+
+该有限序列不等式直接覆盖本章所需的上下区间计数。
+固定弧后先取 K 大，再用有限频率指数和估计，即得所需下界。
+该文主定理按不超过 Q 的分母平均；本章没有拿它们替代每个指定合法分母上的下计数，
+也不据此声称双根同步可达。
+原文不提供本库的完整后验、实际依赖路径占据或 M/q-floor 对应。
+
+Karl-Goswin Grosse-Erdmann，*Universal families and hypercyclic operators*，
+Bulletin of the AMS 36 (1999), 345–381，DOI 10.1090/S0273-0979-99-00788-0。
+定向检索核对了书目，出版社 PDF 返回 HTTP 403；独立机构库链接重定向到申请表 HTML。
+未核对其原定理假设，也未发送获取文件的请求。
+因此不把未读的连续通用族定理直接套给本章分段常值且有跳跃的精确均值映射。
+正文通过每个目标带的原开放区间直接证明稠密 Gδ，包含从可数基到所有实目标的递增层选择。
+这个 Baire 机制是经典内容，不申报为新原理。
+
+维数下界使用经典质量分布法，但必须补上筛选后网格的实际条件。
+固定带只给长区间内下计数与最小间距，没有证明 Q⁻² 最大空隙。
+正文允许第 s 个带的密度常数 a_s 任意趋零，并在选择本层前纳入已知下一常数 a_{s+1}。
+由此同时控制柱集质量 M_s≤C_dℓ_s^d 与父质量
+M_{s−1}≤C_d(a_sℓ_{s−1})^d，覆盖所有中间尺度。
+这一步不能用只在柱集宽度上的估计替代。
+临界 d=2/3 时负主项消失，正文没有宣称临界 Hausdorff 测度已确定。
+
+第 76 章已核对的 Beresnevich–Dickinson–Velani 原版本 math/0401118v3，
+THM3 保留 Ahlfors 球测度、局部 ubiquity、交叠指数、规范单调性，
+以及相应的 G>0 或 G=0 加发散／u-regular 条件。
+它对一个满足条件的 limsup 集给测度结论，不能自动升级为不同窄均值带的可数交。
+Beresnevich–Velani 质量转移也不能省去扩大球的全测度前提。
+本章采用直接构造证明维数，不声称这些未核实的交集前提已具备。
+较大 E 的临界无穷测度不沿包含关系传到 U；收敛规范的零测度可以传递。
+
+两根区域中，已有 dim_H E₂≤4/9 允许从 U₀ 删除 E₂ 后仍保留局部维数 2/3。
+这只给维数结论，不给类别结论，因为小维数不蕴含贫性。
+在所得参数上，第 72 章的实际过渡组 Poisson 定理给所有非整数 θ 的
+b(P_θ)−b(floor θ) 及整数 m 的两种单侧 floor 熵极限。
+整个 U₀ 上的右根通用性仍可能伴随左侧项；E₂ 非空性、锐利维数及同步指定均值仍未解决。
+指定 β_* 是否通用亦未判定。
+
+原文检索保留 Weyl 出版社 HTML、缺少 pdftotext 后的成功 PDF 提取替代，
+Crossref HTTP 429 及通用族原文不可得的边界；未重复未变的失败接口。
+经典原文直接覆盖各抽象步骤；所核查范围未找到完整原 floor／实际均值通用构造的直接前例，
+不据此认证全球原创性。统计结论为固定参数后的实际弱极限及支持上一致的概率结论，
+不含参数先验、全数据熵期望、无界矩、解码或有限精度恢复主张。
+
+## 第 79 章归属：Gaussian 信息密度、乘积正态与条件核转移
+
+第 79 章研究同一真实计数／测量实现的信息密度 i_x(R,Y)，
+在 L=ln(1/σ)→∞、L=o(Q³) 下证明 i_x−L 的常数量级联合极限及全部固定信息矩。
+目标分布 c+(Z²−G²)/2 本身是经典 Gaussian 信息密度的低噪声极限；
+实际离散固定 q 后验、原路径行依赖和最终噪声尺度的连接须另行证明。
+
+Jonathan Huffmann、Martin Mittelbach，
+*On the Distribution of the Information Density of Gaussian Random Vectors: Explicit Formulas and Tight Approximations*，
+核对原版本 [arXiv:2105.03925v3](https://arxiv.org/abs/2105.03925v3)，
+2021-11-04。后续期刊书目信息为 Entropy 24(7), 924 (2022)，
+DOI 10.3390/e24070924；出版商 PDF 路线返回 HTTP 403，未据此声称与 arXiv v3 逐字相同。
+PDF 第 2–3 页的设置是联合 Gaussian 实向量、非奇异边缘协方差与正典型相关系数。
+式 (1)–(2) 把信息密度写成均值加独立半正态平方差的加权和；
+第 4 页定理 3 给全部整数中心矩，第 7 页给单个典型相关系数的化简，
+第 12 页引理 1 给中心信息特征函数 Π_j(1+ρ_j²t²)^−½。
+
+对严格正噪声的 Gaussian 输入 T₀∼N(0,ν)、Y₀=T₀+σG，
+ρ_σ=√[ν/(ν+σ²)]、I_σ=½ln(1+ν/σ²)，该原文直接给
+(i_σ−I_σ) 的分布等于 ρ_σUV，其中 U,V 为独立标准正态。
+因此本章极限标量形状及矩公式不是新结果。
+该分布等式不自动识别与原测量残差 G 的联合关系，
+也不把原实际后验变为 Gaussian 输入。
+原文将正典型相关表示归于 Pinsker 等早期来源；未独立取得那些原文，
+故此处仅转述作者的历史归属，不把未核对书页作为额外定理前提。
+
+Robert E. Gaunt，*A note on the distribution of the product of zero mean correlated normal random variables*，
+核对原版本 [arXiv:1807.03981v1](https://arxiv.org/abs/1807.03981v1)，2018-07-11。
+PDF 第 3 页定理 3.1 假设零均值二元正态、正方差及非退化相关系数，
+识别乘积为该文参数化的 variance-gamma 分布。
+相关系数为零、两方差为一时，密度为 K₀(|z|)/π；
+第 2–3 页的独立正态表示直接覆盖本章的乘积识别。
+正文只需正交旋转与条件 Gaussian 积分，即得特征函数 (1+t²)^−½、
+偶矩 [(2m−1)!!]² 和绝对矩 2^pΓ((p+1)/2)²/π。
+方差 1 与四阶中心矩 9 指随机输入信息密度，不能混同有功率约束 Gaussian 编码的操作色散。
+Craig 1936 原论文 DOI 10.1214/aoms/1177732541 的书目信息已定位，
+ProjectEuclid 路线返回 HTML 而非 PDF，未核对其原定理条件，不据此主张历史优先权。
+
+第 77 章已核对的 Becker–Datta–Jabbour 原版本
+[arXiv:2104.02019v3](https://arxiv.org/abs/2104.02019v3)
+PDF 第 11 页命题 III.5 还有直接相关的范围。
+其条件为密度值域上的 α-Hölder 函数 F、β<α 的正权
+w 满足 w^(−β/(1−α)) 可积，以及加权密度可积。
+每个固定整数 k 的 F_k(t)=t(ln t)^k 在 t=0 连续补零后，
+在有界密度值域上属于任意 α<1 的 Hölder 类。
+取 α=3/4、β=1/2、w(y)=1+y²，便从共同密度上界、二阶矩上界和 L¹ 收敛
+直接获得各自对数密度矩的连续性，包括相应的标量微分 varentropy。
+所以这类通用矩连续性也不作为新原则。
+其假设本身不保留测量残差，不能单靠边缘连续性推导 G² 与 ln f_x(Y) 的交叉矩。
+
+正文为实际矩转移给出独立可核对的尾界：若 ||f||∞≤B、E Y²≤K，
+则 P{−ln f(Y)>r}≤(2+K)e^(−2r/3)，由区间长度与二阶矩 Markov 界得到。
+它与精确 Gaussian 残差矩共同控制全部固定阶信息矩；
+异常原数据仅以概率排除，不把无界量乘其失败概率。
+对数密度替换使用实际输出加权的
+P_f{|ln(f/p)|>u}≤||f−p||₁/(1−e^(−u))，不要求全域密度比一致收敛。
+
+典型输出结论还用第 75、77 章保留完整计数向量的分位耦合。
+先比较实际 (R,Y) 与参考 (R,T^G+σG₀)，付出 a_x/2+D_M/(√(2π)σ)，
+再比较参考连续残差／输出的联合密度，最后以条件核三角不等式和位移界传回实际残差 CDF。
+这里分母 σ 仅作用于已证指数精度的标量位移，不作用于多项式后验 TV 误差。
+有限纤维给定输出后的实际残差仍为离散分布，与标准正态的 TV 距离恰为 1；
+所证对象是先验预测输出加权的条件 Kolmogorov 距离。
+这些条件核与平移不等式是经典步骤，原实际模型的共同实现与精度条件是本章承担的连接。
+
+未增加逐输出后验 Shannon 熵集中、全原数据无界矩、任意 T/Y 高阶混合矩、
+实际指数矩、零噪声或 Q³ 边界定理；原精确熵中心和方向范围不变。
+所核对原文直接覆盖通用分布与连续性工具；有界检索未给出完整实际连接的直接前例，
+不构成全球原创性、形式验证或正式发表认证。
+
+## 第 80 章归属：多层质量构造与可数交集的临界测度
+
+第 80 章固定第 78 章已有的均值带、内带、原 floor 中三分之一区间与通用集合，
+证明每个非空参数开区间内 H^(2/3)(U₀)=H^(2/3)(U)=∞。
+这不由维数等于 2/3、更大 E 集的临界无穷测度，或每个单带 limsup 的无穷测度推出。
+
+V. Beresnevich、S. Velani，
+*A Mass Transference Principle and the Duffin–Schaeffer conjecture for Hausdorff measures*，
+沿用并核对原版本 [arXiv:math/0412141v1](https://arxiv.org/abs/math/0412141v1)。
+原 TeX 的定理标签 thm3 假设球半径趋零、规范与环境体积之比单调，
+以及相应放大球 limsup 在每个球内具有满 Lebesgue 测度，
+推出原目标球 limsup 的 Hausdorff 规范测度结论。
+它是单个 limsup 的定理，不直接断言当前可数带交集的临界测度。
+
+其原证明明确固定任意大参数 η，构造携带 μ(A)≲f(A)/η 的紧子集，
+再令 η 增大得到无穷测度。原构造 P0–P5 使用局部子层、两两不交的三倍目标球、
+每子层固定的放大体积下界、层间递减的单球规范体积，以及足够多子层的累积。
+任意球估计按第一次触及两个子球的树层分类。
+第 80 章使用这一经典机制，不把多层构造或任意小 Frostman 常数作为新方法。
+
+本模型需核对的额外连接是：引理 78.3 在每个已固定有限开集上的下计数，
+保证删除早层五倍区间后仍可选更晚的原合法层；
+每层子区间总普通长度为 O(r/Q)，总临界内容却至少为 η_B r。
+每个父区间可取任意有限多层，使临界内容增加而普通长度仍小。
+固定均值带序列的 η_k 可以任意趋零，构造提前在父质量中支付下一带 η_(k+1)，
+从而任意区间估计中的 1/η_k 被消去。
+层内上计数 C(1+tQ²) 与跨层几何衰减给 C(t^(2/3)+mt)，
+不借用筛选中点网格尚未证明的最大空隙界。
+
+第 76 章核对的 Beresnevich–Dickinson–Velani，
+*Measure theoretic laws for lim sup sets*，
+[arXiv:math/0401118v3](https://arxiv.org/abs/math/0401118v3)，原 TeX 定理 THM3，
+也直接覆盖每个单带的临界结论。
+这里环境指数为 1、点共振交叠指数为 0，放大半径约 Q^−2、目标半径约 Q^−3，
+f(t)=t^(2/3) 给其 g(Q) 正常数。固定带的正比例下计数和分离使放大球局部占据正比例，
+正是局部 ubiquity；不要求每层覆盖整个区间。
+原定理的 G>0 分支给单带无穷测度，仍不替代本章交集证明。
+
+Arnaud Durand，*Sets with large intersection and ubiquity*，
+Math. Proc. Cambridge Philos. Soc. 144 (2008), 119–144，
+DOI 10.1017/S0305004107000746。
+核对[作者托管原稿](https://www.imo.universite-paris-saclay.fr/~arnaud.durand/files/sets_with_large_intersection_and_ubiquity.pdf)
+的定义及定理 1、2。取得版本是 26 页、带 “Under consideration for publication”
+页眉且 received 日期空白的作者稿；没有把它标作期刊版逐字副本。
+其 D_d 规范类要求 h(r)/r^d 近零正且非增，关系 g≺h 表示 g/h 单调趋于无穷。
+G^h(V) 的定义要求对每个这样的严格更大 g，在开放子集上有满外 net 测度。
+定理 1 给可数交稳定性、双 Lipschitz 原像稳定性，以及 g≺h 时 H^g 无穷；
+不能取 g=h。
+
+其定理 2 要求近似球族半径有界、每个有界区间内超过任意固定半径阈值的球只有有限多个，
+并且原球 limsup 局部满 Lebesgue 测度；以 h^(1/d) 的近零伪逆缩球后得到 G^h(V) 成员身份。
+第 78 章固定带放大球的正比例下界，在每个固定区间成立，
+用 limsup 的测度下界和 Lebesgue 密度定理可推出满测度。
+因此这些经典 large-intersection 条件可以核对，但交集性质仍只给严格规范的结论，
+不能省略第 80 章的临界构造。
+Falconer 1994 原论文 DOI 10.1112/jlms/49.2.267 的书目信息已定位，
+出版商原 PDF 返回 HTTP 403；不以未读原文中的端点表述承担证明。
+
+对数规范 a>0 的零测度来自更大 E 的原层覆盖，
+因为 Σ_n(ln Q_n)^−a 收敛；a=0 由新临界构造，a<0 由规范比较。
+E₂ 的维数上界 4/9 只用来删除临界零测度部分，未用来推断类别或非空性。
+实际 Poisson 熵子序列律保持原统计证明、精确中心与概率量词，未由参数测度构造引入新先验。
+这里的新增综合是经典多层方法在原精确均值带交集上的完整适用性与所有尺度估计，
+不主张新质量传递原理、任意规范发散律、全球原创性或形式验证。
+
+## 第 81 章归属：精确 Gamma 曲线的同步单元与固定分母边界
+
+第 81 章在原双根模型上证明负根交换处处严格凸、精确 Gamma 等系数曲线具有相同曲率，
+并在每个固定内部参数区间、每个充分大的原合法层构造共享一个整数规模 floor 的双根单元。
+实际双均值的正有限上下界允许依赖区间；结论没有被升级为固定参数的无限次同步。
+固定参数的双相位判据保留 3 ln Q、计数 floor 和共同规模 floor，
+给出有理根参数的排除及有理切线截距的必要条件。
+
+Gamma 的 polygamma 级数、Binet 余项与平滑 Stirling 展开是经典工具。
+递减曲率势函数的等值支求导、有理切线后的格点同余采样、紧嵌套和子序列抽取
+也不作为新的一般方法。新增综合是它们对原精确系数、两种实际实验的相对均值桥、
+同一个整数规模及完整窗口的共同适用；归属为 repo-derived。
+以下原文比较没有发现直接给出完整模型结论的定理，不构成全球原创性证明。
+
+Victor Beresnevich、Evgeniy Zorin，
+*Explicit bounds for rational points near planar curves and metric Diophantine approximation*，
+[arXiv:1002.2803v1](https://arxiv.org/abs/1002.2803v1)。
+原 TeX 的 t:01、t:02 采用曲率绝对值介于两个正数之间的 C² 曲线类及其一致闭包。
+计数 N_f(R,δ,J) 包含所有 0<q≤R 的既约有理点，垂直误差至多 δ/R。
+局部下界要求 |J|≤1/2、δ≤1、δR²|J|≥8C₁、Rδ≥C₂，
+并满足其显式的 R 与 |J|、δ 的附加关系；结论为至少 δR²|J|/(4C₁) 个点。
+覆盖定理使用 c₀R<q≤R 的整个分母块，半径 C₁/(δR²)，覆盖 J 的至少一半。
+本模型在紧根区间满足曲率条件，R=N=Q²、δ 与 N^−1/2 同阶也满足固定 J 的尺度条件。
+但这些定理不将分母固定为 N；没有 q|N 的保证，清分母或取整不能保留 N^−3/2 的精度。
+原引言一处 δ>Q^(2/3) 与相邻 δ<1/2 的范围不相容，未用该未参与证明的字面比较。
+
+Damaris Schindler、Rajula Srivastava、Niclas Technau，
+*Rational Points Near Manifolds, Homogeneous Dynamics, and Oscillatory Integrals*，
+[arXiv:2310.03867v1](https://arxiv.org/abs/2310.03867v1)。
+原 Lower Bounds 定理要求 l-nondegeneracy、至少 ceil((n+1)/η) 阶光滑性、
+0<η≤1/8，且 δ>R^(−3/(2n−1)+a_nη)，a_n=(2n+12)/(2n−1)。
+其主项为 c_t δ^m R^(d+1)，误差具有正的幂次节省。
+平面曲线 n=2、d=m=1，固定充分小 η 时，本模型满足光滑性、非退化及所需 δ 范围。
+然而原平滑计数带有支撑于 [1/2,1] 的固定权重 ω(q/R)，仍对分母求和。
+将权重缩至单个 q=N 会改变其导数控制；该定理未给这种变动权重的一致结论。
+
+Alexander Smith，*Lattice points in thickened parabolas and rational points near hypersurfaces*，
+[arXiv:2512.00202v1](https://arxiv.org/abs/2512.00202v1)。
+原 intro.tex 的 thm:hypersurface_qual、thm:planarcurves、thm:main
+讨论有界分母的有理点及有理二次曲面障碍，未固定分母为原 Q_n²。
+thm:parabola 则要求 SL_n(R) 的一参数幂零流满足 rank(u−Id)=2、(u−Id)²≠0，
+并且不保留任何非零有理二次型，才断言每个非空开放加厚区域含无穷格点。
+DaMa.tex 的一致版本使用这一可用生成元类的紧子集与固定正横向厚度；
+其几何表述引入 T₀ 后未在相应位置写 T>T₀，函数版本明确保留该限制。
+
+直接将平面仿射抛物线嵌入三维的流
+U_t(x,y,z)=(x+tz,y+2κtx+(κt²+ℓt)z,z) 保留非零整数二次型 z²，
+所以不满足上述假设；固定 z=N 也不是开放横截面。
+保格点线性共轭保留“存在有理不变二次型”这一障碍。
+这排除该直接套用方式，不证明原同步集为空，也不否定其它可能的迁移方式。
+
+Yanqiu Guo、Michael Ilyin，*Sparse distribution of lattice points in annular regions*，
+[arXiv:2309.10971v1](https://arxiv.org/abs/2309.10971v1)。
+原 thm2D 对 0<s<1/4、d>0 给任意大的 λ 及 κ≥Cλ^s，
+使 λ≤|x|²≤λ+κ 内任意两格点距离大于 d。
+紧接的注释明确允许零点、一个点或多个点，因此这不是空环带结论。
+其径向位置可选择、曲线为圆，不给原指定 Q_n² 上等系数曲线的无点结论。
+
+第 76 章已有 Huang 原版本 1403.7388v1 的固定分母上估计仍只提供上界。
+第 78 章固定宽度的一维相位下计数也不能用于此处宽度 O(Q^−1) 的双根目标。
+第 81 章的新逐层构造直接在精确 G_Q 上进行，未借用这些结论作为同步下界。
+一个固定区间内的全部晚期单元存在，与一个固定参数落入无穷多个单元有不同量词；
+当前 H_J 的区间依赖正是尚未跨过的边界。
+没有新增 E₂ 的维数下界、类别结论、指定双均值实现、有限精度恢复或形式验证声明。
+
+## 第 82 章归属：带权输出密度与后验熵响应
+
+第 82 章证明原实际后验在整个 L=ln(1/σ)→∞、L=o(Q³) 范围的输出积分熵回归：
+√δ(H_post−h_nat+L)−(γ/ν)Y 的输出积分绝对值趋零。
+平均信息的常数项与典型输出熵的 Q^(1/4) 波动属于不同尺度。
+新增综合是全计数中心信息的带权实际／乘积比较、最终噪声尺度的同一量化耦合，
+以及独立核心块对带权密度导数余项的控制；归属为 repo-derived。
+Bayes 熵恒等式、Gaussian 分部积分、Stirling 与一般光滑密度收敛都是既有工具。
+
+Ivan Nourdin、Giovanni Peccati，*Stein's method on Wiener chaos*，
+DOI 10.1007/s00440-008-0162-x，核对 [arXiv:0712.2940v5](https://arxiv.org/abs/0712.2940v5)
+及其原 TeX。Section 1.2 的 clef 式在等正态过程与中心 Y∈D^(1,2) 上使用
+E[Yf(Y)]=E[〈DY,−DL^−1Y〉f′(Y)]；Section 2 的 ipp 是导数／散度对偶。
+对二阶 chaos 的 F，−DL^−1F=DF/2。
+本章 F=√δ Σ(Z_j²−1)/2 与光滑函数 h(T^G) 的交叉分部积分，
+直接得到 K_M=Σv_jZ_j(Z_j−c_j)。该恒等式及一半系数不作为新发现。
+原文也指出 Stein 因子一般不必对 Y 可测；条件化步骤不能被无条件协方差替代。
+
+Ivan Nourdin、Frederi G. Viens，*Density formula and concentration inequalities with Malliavin calculus*，
+DOI 10.1214/EJP.v14-707，核对 [arXiv:0808.2088v2](https://arxiv.org/abs/0808.2088v2)
+的原 TeX Section 3、key-thm。
+对中心 Z∈D^(1,2)，它定义 g(z)=E[〈DZ,−DL^−1Z〉|Z=z]，
+并额外要求 g(Z)≥σ_min²>0 几乎处处，才给满实数支撑及显式密度公式。
+有限正权平方和有下界，不能自动满足这个全局正下界条件。
+本章没有由该定理取得实际后验的正 Stein 核或密度公式，使用的是直接有限分部积分。
+
+Yaozhong Hu、Fei Lu、David Nualart，
+*Convergence of densities of some functionals of Gaussian processes*，
+DOI 10.1016/j.jfa.2013.09.024，核对 [arXiv:1302.6962v2](https://arxiv.org/abs/1302.6962v2)。
+PDF 第 16 页 Theorem 4.1 要求固定齐次 chaos F=I_q(f)、q≥2、EF²=σ²，
+以及 M₆(F)=(E||DF||^−6)^(1/6)<∞，才给以四阶累积量控制的密度一致误差。
+第 18 页 Theorem 4.4 的高阶导数还要求更高逆导数矩；
+该版本显示式出现 3σ² 而非与四阶矩同量纲的 3σ⁴，此处不使用该显示式。
+第 36 页 Theorem 6.2 另要求 D^(2,s)、s≥8、逆 Stein 因子 r 阶矩、
+r>2 及 2/r+4/s=1。
+第 38 页 Theorem 6.5 在其统一 Sobolev、矩与逆导数或逆 Stein 因子条件下，
+将正态弱收敛加强为密度一致收敛。
+这些额外条件不能省略；本章参考还含一阶项和精确截距，不直接套固定齐次 chaos 结论。
+
+Ronan Herry、Dominique Malicet、Guillaume Poly，
+*Superconvergence phenomenon in Wiener chaoses*，DOI 10.1214/24-AOP1689，
+核对 [arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)
+及原 TeX 的 th:main-negative-moments-sum-chaos、cor:densitysumofchaos。
+PDF 第 9 页 Theorem 9 对固定有限 chaos 和 F_n，要求最高阶投影趋于标准正态、
+全变量 L² 有界，得到任意固定阶逆 carré-du-champ 矩最终统一有界。
+第 9–10 页 Corollary 10(a) 若再有低阶余项趋零于 L²，且 F_n 趋于标准正态，
+则密度在每个固定 W^(q,p)(R)、q≥0、1≤p≤∞ 中收敛。
+
+此结论直接覆盖本章 T^G/√ν 的一般密度及 L¹ 导数极限：
+最高二阶投影的正态极限由原平方质量剖面得到，一阶与常数余项由精确中心界控制。
+不同有限维数组可放在同一个可数等正态序列中。
+本章没有把这一 Gaussian 光滑性称为新定理；四块 Fourier 推导另外给出了
+两个独立半和的统一导数 L¹ 范数，用于把测量核导数转移给对方块。
+原文的 (n+1)^−1G²+G 例子说明最高阶退化时不能仅凭正态弱收敛作此推断。
+本章中心区 c/δ 个非退化二阶权重排除了该情形。
+
+信息权重 F_M 的方差可随移动核心增长，不能直接将上述有限 chaos 结论
+当作加权二元局部极限；K_M 的中心余项由两个独立块控制，才得到所需签名密度 L¹ 结论。
+原始离散计数、固定总数条件化、精确后验中心、实际路径行依赖和最终 σ
+则由各自的带权比较支付，不属于一般 Gaussian 结果的自动适用范围。
+
+第 79 章已核对的 Huffmann–Mittelbach Gaussian 信息密度与
+Ghourchian–Gohari–Amini 熵连续性原文继续承担其既有范围。
+新增条件信息矩结论还需原完整 T 的固定高阶实际矩界；
+第 77 章仅有输出二阶矩不能控制含 y² 的任意高阶目标核。
+该扩展通过 L_x≤C、Bernoulli 中心矩展开、条件 CDF 截断取得，未用 TV 搬运无界矩。
+
+Hyun-Suk Park，*Density Formula in Malliavin Calculus by Using Stein's Method and Diffusions*，
+DOI 10.3390/math13020323，及预稿 DOI 10.20944/preprints202412.0740.v1，
+书目已定位，三个原始获取入口返回 HTTP 403；未核对其定理条件，不作为证明前置。
+本章不主张一般加权局部极限的新原则、全球原创性、形式验证，
+也不宣称去除首项后的后验熵常数修正、熵响应方差收敛或每个输出的统一结论。
+
+## 第 83 章：剩余类同步与 Liouville 多项式根排除
+
+[理论卷第 83 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+保留原固定幅度、原合法十进制分母、精确 Gamma 等系数曲线、完整得分组和共同规模取整。
+利用全部剩余类，把实际双根同步构造的对数均值界改进为
+$C(1+\sqrt{d\omega}+d^2/Q)$，其中 $\omega$ 是精确切线截距的单侧整数差。
+它同时给出长度为 $\ell$ 的区间中、$Q\ge C\ell^{-3/2}$ 时的
+$C(1+\ell^{-1/2})$ 逐层界。固定参数的无限同步仍需要一个统一有限界，
+或正文所列尚未证明的单侧相位复现条件；逐层构造不自动闭合此缺口。
+
+另一个结果在原合法序列上排除所有非零内部根 $\Pi(\vartheta)$，$\Pi\in\mathbb Q[X]$。
+低次多项式的过度格点对齐不能补偿实际均值中的 $3\ln Q$ 前因子；
+次数至少三时，$\Pi''(\vartheta)/2$ 在固定有理格之外留下分离相位。
+正文给出两个明确允许的无理正根参数，并分别算出趋零均值及相邻格点的指数分离。
+这是经典 Taylor、整除和 Liouville 超越论证在原模型上的组合；
+没有宣称新的通用多项式小数部分理论，也未将结论延伸到任意有理函数。
+
+D. R. Heath-Brown，*Small solutions of quadratic congruences*，1985，87–93，
+[原刊 DOI:10.1017/S0017089500006091](https://doi.org/10.1017/S0017089500006091)。
+原文引言及 Theorems 1–3 处理整数齐次二次型的非零小同余解；
+Theorem 1 限素数模数和至少四个变量，Theorem 2 在四变量下附加行列式的模素数条件。
+其四变量证明通过二维各向同性子空间和行列式为 $p^2$ 的整数子格工作。
+原文本层中有损坏的上标和卷号数字，这些不清晰数值不作为此处核验常数。
+原计数问题具有实系数曲率、移动的非齐次截距、固定原分母和两个受约束指标；
+新增自由齐次化变量或把十进制模数当素数，均不保持原问题。
+因此该结果不提供正文所缺的单侧相位命中。
+
+Cheuk Fung (Joshua) Lau，*Simultaneously Small Fractional Parts of Polynomials*，
+[arXiv:2407.01611v1](https://arxiv.org/abs/2407.01611v1)。
+原 TeX 主定理 `thm:MainTheorem` 对实多项式 $f_1,\ldots,f_k$ 要求全部 $f_i(0)=0$，
+在给定宽度乘积与搜索长度关系下寻找一个共同正整数 $n<x$。
+显示范围使用 $d(d-1)$，此处仅按 $d\ge2$ 比较，不从其正整数措辞外推到 $d=1$。
+原模型的精确切线带非零截距与单侧目标，减去常数会改变命中事件；
+Gamma 曲线也不是固定多项式，且其三阶误差在所需尺度上不能直接删去。
+全区间的某个 $n<x$ 不同时保证原稀疏合法分母和局部父区间。
+上述原假设因而不能消除第 83 章的 $\omega$。
+
+Kiseok Yeon，*Small fractional parts of polynomials and mean values of exponential sums*，
+[arXiv:2210.03085v1](https://arxiv.org/abs/2210.03085v1)。
+Theorem 1.1 在 $k\ge6$、$s\ge k(k+1)/2$ 下，对无常数项的加性单项式形式
+从自由整数向量盒中取得 $X^{-1+\epsilon}$ 小数部分界。
+Theorem 1.2 的正幂次数满足 $k_1\ge6$、$2\le t<k_1$，并要求
+$s>k_1^2+k_1+2\lceil\sigma(1-k_1)\rceil$；
+$\sigma$ 由原文 (1.4) 中缺失幂次确定。
+这些多个自由加性变量不是原精确系数图和整数剩余类约束已经拥有的自由度，
+不能通过增加变量直接取得原共同规模单元。
+
+N. G. Moshchevitin，*On small fractional parts of polynomials*，
+[arXiv:0711.1753v1](https://arxiv.org/abs/0711.1753v1)。
+Theorem 1 假设 $t_{n+1}/t_n=1+\gamma/n+O(n^{-1-\epsilon_1})$，$\gamma,\epsilon_1>0$，
+讨论可选择乘子 $\alpha$ 的回避集合
+$\liminf n\log n\,\|\alpha t_n\|>0$。
+原定理写维数严格大于 $\gamma/(\gamma+1)$，末尾证明只总结不小于该值；
+此处不使用其严格维数断言。原源文件按声明的 cp866 解码后仍有部分乱码注释，
+所用英文条件和 ASCII 数学不受此影响，注释内容不承重。
+原合法 $N_n$ 的超稀疏增长不满足该比值假设，固定非线性截距也不是可自由选择的乘子。
+
+Yuval Peres、Wilhelm Schlag，*Two Erdős problems on lacunary sequences: Chromatic number and Diophantine approximation*，
+[arXiv:0706.0223v1](https://arxiv.org/abs/0706.0223v1)。
+主定理对整数序列 $n_{j+1}/n_j\ge1+\epsilon$，$0<\epsilon<1/4$，
+给出一个乘子 $\theta\in(0,1)$，使
+$\inf_j\|\theta n_j\|>c\epsilon/|\log\epsilon|$。
+原 TeX `thm:dio` 在 $n_{j+M}>2n_j$、$M\ge4$、$240c_0\le1$ 时，
+给半径 $c_0/(M\log_2M)$ 的全部目标邻域之补交非空。
+原 $N_n$ 满足其稀疏增长条件，故该文确实给可选的回避乘子。
+它不判定指定乘子，也不保证由同一率曲线关联的两根共同返回。
+第 83 章的明确多项式根排除由原小数展开和对数前因子直接证明，未由一般稀疏性推断。
+
+另取得的 *Small solutions of quadratic congruences and small fractional parts of quadratic forms*
+扫描原件 [DOI:10.4064/aa-37-1-241-248](https://doi.org/10.4064/aa-37-1-241-248)
+未取得可读的定理正文，不作为证明前提。
+这些条件核对仅说明已查原文不能直接补齐当前固定分母的同步缺口；
+不构成没有更强结果或全局原创性的断言。
+$E_2$ 的存在性、锐利维数及指定双均值的共同实现仍未解决。
+
+## 关联补充 84：噪声衰减校正与后验熵的常数阶二次响应
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+第 84 章在第 82 章的同一计数实现和同一带噪声输出上，确定后验熵的常数阶项。
+自然单位下，需扣除的首阶线性项是
+$\gamma y/[\sqrt\delta(\nu+\sigma_M^2)]$，完整噪声范围仍为
+$\ln(1/\sigma_M)\to\infty$、$\ln(1/\sigma_M)=o(Q^3)$。
+扣除后，输出积分 $L^1$ 剖面为
+$(1/2-2/\sqrt3)(y^2-\nu)/\nu-\tfrac12\ln\nu$。
+未校正分母 $\nu$ 给同一剖面的充要条件是 $\sigma_M^2=o(\sqrt\delta)$；
+合法序列 $\sigma_M=Q^{-1/16}$ 则使未校正余量在实际条件输出概率下逃离每个有界区间。
+
+Gaussian 回归的噪声衰减、分部积分、Hermite 二次多项式与
+Edgeworth 展开的思想都是成熟工具。新增推导的范围是：实际观测方差和的定量速率、
+完整后验的未尺度化中心信息比较、含精确中心的两次分部积分余项、
+最终噪声尺度上的返回估计，以及由此得到的模型特定剖面和实际反例。
+本条不把一般加权展开或二阶 Gaussian 微积分称作新理论。
+
+Ivan Nourdin 与 Giovanni Peccati 的
+*Stein's method and exact Berry–Esseen asymptotics for functionals of Gaussian fields*，
+[arXiv:0803.0458v3](https://arxiv.org/abs/0803.0458v3)，
+[DOI:10.1214/09-AOP461](https://doi.org/10.1214/09-AOP461)，
+提供精确 Gaussian 逼近误差与一项 Edgeworth 修正。
+核对的是 2009 年 12 月 9 日 v3 的 32 页作者／IMS 电子重印本；
+原件说明其页码及排版与期刊版不同。
+Theorem 3.1 位于 PDF 第 11—12 页：中心变量 $F_n\in\mathbb D^{1,2}$、
+绝对连续律、方差趋一，Stein 因子误差
+$\varphi(n)=\{\mathbb E(1-\langle DF_n,-DL^{-1}F_n\rangle)^2\}^{1/2}$
+有限、最终为正且趋零，并要求 $F_n$ 与标准化 Stein 因子误差联合趋于
+具有单位边缘方差的二元正态。结论包含 Kolmogorov 界及每个固定阈值的归一化 CDF 误差。
+PDF 第 13 页 Proposition 3.3 再要求精确单位方差、有限第三绝对矩及
+统一 $2+\varepsilon$ 阶矩，得到
+
+$$
+\Pr(F_n\le z)-\Phi(z)+\frac{\mathbb EF_n^3}{6}\Phi'''(z)
+ =o_z(\varphi(n)).
+$$
+
+这一固定阈值结论不能直接替代增长信息权下的全直线 $L^1$ 带符号密度展开。
+第 84 章的累积量常数符合这一经典机制，证明则另行支付实际离散后验、
+移动核心以及精细噪声的误差。该 v3 的原始源码端点返回 403；
+所需命题取自可读 PDF，未将源码访问失败记为已读 TeX。
+
+Ciprian A. Tudor 与 Nakahiro Yoshida 的
+*High order asymptotic expansion for Wiener functionals*，
+[arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1)，
+给出更强的一般多项式加权展开。
+核对的是 2019 年 9 月 19 日提交、题页日期 9 月 20 日的 57 页 v1 PDF
+及其原始 TeX；[2023 年期刊 DOI](https://doi.org/10.1016/j.spa.2023.07.001)
+仅作书目关联，不断言两版本相同。
+对象是固定维 Wiener 泛函向量与确定正定目标矩阵。
+PDF 第 10 页 [A1] 要求所有 $r>1$ 的统一 Sobolev 正则性、
+二阶 Gamma 因子到非奇异矩阵的多项式 Sobolev 速率；
+第 11 页 [A2] 要求中心高阶 Gamma 因子的指定 Sobolev $O(N^{-q})$
+及 $L^r$ 中的 $o(N^{-q})$；第 15 页 [A3] 给出阶数关系
+$q_0(k+1)>q$、$\xi(\ell-d)>q$、$\ell_1>p+1+d$
+及期望 Gamma 因子的加权速率。
+PDF 第 17 页 Proposition 1 给截断局部密度的加权一致逼近；
+第 19 页 Theorem 1 在这些假设下对所有满足
+$|g(x)|\le a(1+|x|)^b$ 的可测函数统一给 $o(N^{-q})$ 期望逼近，
+每个固定 $a,b>0$ 均可。它覆盖真正的多项式加权测试，不能缩称为只对光滑或紧支撑函数的结果。
+
+将本章 Gaussian 参考对标准化后，该理论提供候选通用路线；
+但 $S_G$ 的方差随核心增长，其标准化、再放大的成本必须进入全部 Gamma 因子速率。
+本章未仅凭“二者是二次型”就断言 [A1]—[A3] 成立，
+而是给出所需的有限恒等式及显式 $O(\sqrt\delta)$ 二阶导数余项。
+这不证明该 Gaussian 特例超出上述一般理论。
+
+第 82 章已核对的 Herry–Malicet–Poly
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)
+Corollary 10(a) 继续直接覆盖有限 chaos 参考的 $W^{2,1}$ 导数收敛；
+正文的 Fourier 分块计算同时记录独立半块所需的一致常数。
+已核对的 Nourdin–Peccati [arXiv:0712.2940v5](https://arxiv.org/abs/0712.2940v5)
+提供 Gaussian 导数／散度对偶。
+Nourdin–Viens 的全局正 Stein 核下界并未在此假设；
+Hu–Lu–Nualart 原文 Theorem 4.4 的既有印刷维度问题也未作为前提使用。
+含噪声的有限恒等式必须保留 $v_G+\sigma_M^2$，这些通用引用不能删除该项。
+
+文献检索范围为 Gaussian 精确误差、Wiener 多项式加权展开与条件二次型，
+未命中的关键词结果不构成不存在或全球原创证明。
+第 84 章结论是普通数学文本，未作 Lean、摄入、覆盖或冻结声明。
+它证明输出积分 $L^1$、同一实现的有界联合极限及纤维内第一平均；
+不宣称余量方差／高阶矩收敛、每个输出控制、无界数据平均、
+零噪声、$L_M$ 与 $Q^3$ 同阶的噪声、解码效率或实验等价性。
+
+## 关联补充 85：有理函数根的过渡带与对偶曲线的整数约束
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+第 85 章把指定原率根的排除从 $\mathbb Q[\vartheta]$ 扩展到
+$\mathbb Q(\vartheta)$，并确定该根对实际熵余项的贡献。
+它在前一截断 $t=P_{n-1}/Q_{n-1}$ 上保留
+$J_n^F=Q_n^2F(t)+Q_nF'(t)+F''(t)/2$。
+该有理量的分母至多为前一层分母的固定幂，远小于 $Q_n/\ln Q_n$；
+因此实际多项式过渡带要么为空，要么只有均值为固定正倍数 $Q_n^{-3}$ 的一个组。
+根项非零的实际概率为 $O(Q_n^{-3})$。
+两个倒数函数例子的预测量分母可精确约分，给出最终空带；它们各自的另一根仍未分类。
+
+Taylor 展开、有理函数的高度控制、整数分离和 Markov 不等式是经典工具。
+模型特定内容是原整数层上的完整过渡带判别、三次 Taylor 项进入实际均值的常数、
+两个倒数参数的合法性与局部熵后果。
+有理函数的分母不被假定为十的幂；普通 Liouville 逼近型分类也不替代原网格上的对数位移。
+
+Ana Paula Chaves、Diego Marques、Pavel Trojovský 的
+*On the Arithmetic Behavior of Liouville Numbers under Rational Maps*，
+[arXiv:1910.14190v1](https://arxiv.org/abs/1910.14190v1)，
+[期刊 DOI](https://doi.org/10.1007/s00574-020-00232-7)，讨论有理映射下的逼近类型。
+核对的是 v1 PDF 与原始 TeX 的主定理、高度定义、引理及证明开头。
+主定理要求有理逼近 $\alpha_n$ 的误差小于
+$H(\alpha_n)^{-\omega_n}$、$\omega_n\to\infty$，并要求
+$H(\alpha_{n+1})\le H(\alpha_n)^{O(\omega_n)}$；
+其结论用原文的不可约有理函数和系数域次数条件表述为 $U_m$ 分类。
+原十进制截断满足此类增长关系，但本文不使用该 $U_m$ 结论，
+也不把系数属于任意扩大的数域当成已满足原始性条件。
+
+该 v1 的 `hgamma` 显示式写 $H(F(\alpha_k))\ll H(\alpha_k)^{2m^2}$，
+未体现函数次数。$m=1$、$F(X)=X^3+2$ 时，紧正区间内的既约 $p/q$
+映到仍既约的 $(p^3+2q^3)/q^3$，高度为 $q^3$ 阶，不能由固定倍数 $q^2$ 控制。
+本章另证依赖次数的分母界，不使用该显示指数。
+原文关于非稠密 $G_\delta$ 与 Hausdorff 大小的关联措辞也未被用作前提；
+类别性质本身不能决定维数。上述范围说明不判定原文所有结论。
+
+V. V. Beresnevich、R. C. Vaughan、S. L. Velani 的
+*Inhomogeneous Diophantine approximation on planar curves*，
+[arXiv:0903.2817v1](https://arxiv.org/abs/0903.2817v1)，
+核对了 PDF 及原始 TeX 中的曲率条件、计数定义、覆盖定理 `thm6`、计数推论和完整下界构造。
+固定 $C^3$ 曲线在固定区间上曲率非零时，对每个子区间，存在依赖曲线及区间的常数，
+使 $R_0<d\le2R_0$、$k_1/R_0\le\delta\le k_2$ 下的近曲线有理点邻域
+覆盖至少一半子区间，并且对两个实平移统一成立。
+其分母块确实可映到固定原 $N$ 下的辅助切线分母；
+其平移量词也确实允许本章单侧相位对应的变化平移。
+
+实际缺口在其他条件：移动对偶曲线的二阶导数为 $N$ 阶，
+原证明的 $C_1=3c_2/(c_1c_0^8)$、$c_0<1/6$、$k_1^3>c_2C_1^2$
+使所需充分宽度随 $N^{1/3}$ 增长；并且原计数不要求 $\gcd(p,d)=1$。
+归一化曲率后还留下指数 $Q$ 的原格同余条件。
+这给出该特定证明的适用障碍，不是最佳可能计数界的不可能性定理。
+原文下界的最后 Taylor 估计将可达 $2R_0$ 的分母按 $R_0$ 处理，
+修正固定二倍因子不改变上述增长次数；上界证明中平方 Fejér 核的一个常数亦未按原值采用。
+两处都未作为本章精确数值前提，也不据此宣称其覆盖定理为假。
+
+Dzmitry Badziahin、Stephen Harrap、Mumtaz Hussain 的
+*An inhomogeneous Jarník type theorem for planar curves*，
+[arXiv:1503.04981v1](https://arxiv.org/abs/1503.04981v1)，
+核对了原始 PDF／TeX 的双重逼近定义、非退化条件、主定理及合并推论。
+对固定 $C^2$ 曲线与沿曲线 $C^2$ 的非齐次函数，曲率零集的相应
+Hausdorff 测度为零，且逼近函数递减趋零时，
+$\sum_q\psi(q)^s q^{2-s}<\infty$ 给 $0<s<1$ 的零测度结论；
+合并推论还包含既有的发散全测度半边及 $s=1$ 范围。
+其整数线性形式在所有系数高度中无限次逼近，
+不能直接产生一个指定原 $N$ 上满足驻点关系与原始基分数条件的有限计数。
+同称“对偶”不保证对象和量词相同。
+
+既有 Huang [arXiv:1403.7388v1](https://arxiv.org/abs/1403.7388v1)
+在本章的新对偶映射下再次按原件条件核对：
+即使暂设曲率常数统一，在宽度 $\delta\asymp A/D$ 处，
+所列误差的 $\sqrt A D\ln D+D^{1+\varepsilon}$ 已不能保证固定 $A$ 的正下界；
+真实移动曲线还具有增长的曲率常数。
+原始三元组条件不能替代 $\gcd(p,d)=1$。这里引用的不是另一个 1403.8038v1。
+
+检索涵盖平移曲线下界、对偶逼近及 Liouville 有理映射；
+关键词和近期元数据中未查到可用结果，不构成不存在或全球原创证书。
+$E_2$ 的空性、非空性、锐利维数和固定参数双均值实现均未由本章解决。
+第 85 章属于普通理论与出处说明，未摄入、覆盖、冻结或作 Lean 声明；
+未推出两个倒数参数的全熵余项趋零，也未推出无界熵的实际期望收敛。
+
+## 原文对照：固定凸体薄壳与第 86 章同步上界
+
+[理论卷第 86 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把原精确 Gamma 曲线的 $O(Q^{-1})$ 整数尺度条带包含于一个固定光滑正曲率凸体
+膨胀后的薄壳。由经典固定方向偏差 $O(t^{19/29})$，得到逐原层
+$O(Q^{38/29})$ 对整数候选，以及 $\dim_HE_2\le38/87$ 和所述对数规范零测度。
+这不证明同步集合非空或空，也不提供共同均值可达性。
+
+**直接使用的原始输入。** Jingwei Guo,
+*Lattice points in large convex planar domains of finite type*，
+[arXiv:1010.4923v2](https://arxiv.org/abs/1010.4923v2)，2011-06-01；
+[原 PDF](https://arxiv.org/pdf/1010.4923v2)、
+[原 TeX](https://arxiv.org/e-print/1010.4923v2)。
+该版本的 Remarks 6.5(1)（PDF 第 23 页）明确指出非消失曲率、型为 $2$ 时
+坏锥 $D_2$ 为空，其方法给 $O(t^{2/3-1/87})=O(t^{19/29})$。
+第 86 章使用这一逐方向特例，未把主定理的“几乎处处旋转”换成指定方向。
+
+适用对象是一个固定、含原点为内点、边界 $C^\infty$ 且曲率处处正的紧平面凸体。
+Lemma 3.4 先在切／法方向计算支持函数的高阶导数行列式
+$-m!^2\kappa^{-2}$，再构造整数方向；第 6 节以这些整数向量生成的子格及全部陪集
+分解原格，未把任意实仿射变换当作保整数映射。
+Corollary 4.3 给两支支持函数相位的 Fourier 展开。
+Proposition 5.2 的支持分离、导数及行列式条件，经固定曲率下界均取得固定常数；
+差分阶 $m=3$ 时其 $T\ge C M_*^{9/4}$ 条件在 $T=tD,M_*\asymp D$ 下
+给频率范围 $D\le c t^{4/5}$。
+第 6 节 (6.10)–(6.13) 的逐锥和式及低／高频余项，与 Lemma 6.2 证明中的
+卷积夹逼共同给第 86 章 (86.8)–(86.10)；平滑宽度 $t^{-10/29}$ 同时平衡
+面积误差与主相位项，其余幂严格更小。因此所用特例无额外对数损失。
+这些是原文的成熟格点方法，不作为本项目新创的一般偏差定理。
+
+**其它来源的适用边界。** Guo 的
+[On lattice points in large convex bodies, arXiv:1007.4284v1](https://arxiv.org/abs/1007.4284v1)
+主定理处理 $d\ge3$；未用于本章二维结论。
+Huxley 的 *Exponential Sums and Lattice Points III*，
+[DOI:10.1112/S0024611503014485](https://doi.org/10.1112/S0024611503014485)，
+Proc. London Math. Soc. 87 (2003), 591–609，其出版社摘要报告 $131/208$ 指数。
+当前未取得完整可核对的原始定理条件，故不据此宣称 $131/312$ 的同步维数界。
+原文访问返回摘要 HTML 或需令牌，与“原定理不成立”无关。
+
+Huxley–Ivić 的
+[Subconvexity for the Riemann zeta-function and the divisor problem,
+ arXiv:math/0611809v3](https://arxiv.org/abs/math/0611809v3)
+提供 Bombieri–Iwaniec 方法、局部有理格基与间距问题的背景；其已检查内容不提供
+采用上述更强指数所需的完整闭域定理。
+Michael Greenblatt 的
+[Convexity, Fourier transforms, and lattice point discrepancy,
+ arXiv:2402.16636v3](https://arxiv.org/abs/2402.16636v3)
+第 2 节在平面正曲率情形以 slab 衰减 $1/2$ 仅给 $2/3$，不足以产生本章严格改进。
+圆问题的专门指数也不自动适用于本章完成的非圆凸体。
+Bourgain–Watt arXiv:1709.04340v2 的指定版本未取得原 PDF／TeX，未作为定理输入。
+检索范围有限，不据未命中宣称更强结果不存在或本章具有全球原创性。
+
+**本章承担的连接。** 原率根映射满足 $\Psi''>0$ 和
+$\Psi(u)-u\Psi'(u)<0$；后者使精确保留该弧且包含原点的光滑凸体完成成为可能。
+Gamma 修正 $Q^{-1}R_Q$ 与目标条带同阶，须纳入壳宽。
+闭内域以严格的 Minkowski 泛函不等式排除，故边界格点不会被错误相减。
+全壳多计其它弧仅用于上界；它不能提供下界或相位命中。
+最后每对候选只覆盖有共同整数 $L$ 的原 $M=2^L$ 单元，单元宽度 $O(Q^{-3})$
+把逐层指数传到同一个固定参数的 limsup 上界。
+这些实际模型与几何之间的对应是本章新增推导；原有单根结论和所有开放的双根存在问题保持其范围。
+
+## 原文对照：条件信息方差损失与第 87 章的平方权重桥
+
+[理论卷第 87 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在同一个实际带噪能量观测下，得到输出积分意义的首个后验信息方差损失。
+自然单位的损失为 $-\sqrt{\pi/\kappa}\,Q^{1/2}$，低于原 $Q^2$ 阶方差；
+条件为 $\ln(1/\sigma_M)\to\infty$ 且 $o(Q^3)$。
+这是一条 repo-derived 的实际模型推导，非一般侧信息单调性。
+有限原数据纤维内的后验方差，区别于把输出也平均后的信息量联合方差。
+
+**条件微分与指数族的成熟输入。** Alex Dytso、Martina Cardone，
+*A General Derivative Identity for the Conditional Expectation with Focus on the Exponential Family*，
+[arXiv:2105.05106v2](https://arxiv.org/abs/2105.05106v2)，2021-08-30；
+[原 PDF](https://arxiv.org/pdf/2105.05106v2)，
+[DOI:10.1109/ITW48936.2021.9611503](https://doi.org/10.1109/ITW48936.2021.9611503)。
+原 Theorem 1（PDF 第 2—3 页）要求 $U\leftrightarrow X\leftrightarrow Y$、
+所列条件可积性与输出变量的绝对连续性，给条件均值导数与通道 score 的条件协方差恒等式。
+Theorem 2 的 A1—A5 在开输出域、解析充分统计量的连续指数族上给相应特例；
+Proposition 3 连接条件高阶累积量。
+本章每个有限纤维的输入字母表有限、Gaussian 通道密度处处正，满足所需有限正则条件。
+其 Gaussian 特例为
+$d\mathbb E[U\mid Y=y]/dy=\operatorname{Cov}(T,U\mid y)/\sigma^2$；
+该恒等式本身不控制指数小噪声下一致的平方信息量误差。
+本章两次潜在 Gaussian 方差倾斜也是经典指数族微分，明确计算了对应缩放映射，
+不把一般微分恒等式列为新发现。
+
+该版本原式 (19) 在一般充分统计量 $T(Y)$ 的记号下，将对数配分函数的一阶、
+二阶导数写为 $\mathbb EY$、$\operatorname{Var}Y$；
+一般情形正确对象为 $\mathbb E[T(Y)]$、$\operatorname{Cov}(T(Y))$。
+原显示式不作为本章前提；本章所用 Gaussian 方差倾斜直接从归一化密度求导。
+
+**varentropy 的适用对象。** Erdal Arıkan，
+*Varentropy Decreases Under the Polar Transform*，
+IEEE Transactions on Information Theory 62(6), 2016, 3390–3400，
+[DOI:10.1109/TIT.2016.2555841](https://doi.org/10.1109/TIT.2016.2555841)。
+原文首页的 Theorem 1、1′ 处理两个独立二元数据元素经 XOR 与保留第二位构成的极化变换：
+输出 varentropy 之和不大于输入之和，并有原文所列的零方差等号条件。
+该处 varentropy 为条件 surprise 的联合方差，不是固定输出后的纤维方差。
+它不直接覆盖计数输入的一次带噪能量观测，也不推出任意侧信息都降低纤维内方差。
+均匀两点先验配两个不同 Gaussian 均值即可使原先零方差变为几乎处处正的后验纤维方差；
+这说明本章负损失需要模型关系，不反驳 Arıkan 原定理。
+
+**密度分部积分与导数收敛。** Yaozhong Hu、Fei Lu、David Nualart，
+*Convergence of densities of some functionals of Gaussian processes*，
+[arXiv:1302.6962v2](https://arxiv.org/abs/1302.6962v2)，2013-08-29；
+[原 PDF](https://arxiv.org/pdf/1302.6962v2)。
+Theorem 3.1（PDF 第 10 页）要求
+$F\in\mathbb D^{2,s}$、$\mathbb E|F|^{2p}<\infty$、
+$\mathbb E\|DF\|^{-2r}<\infty$，其中 $p,r,s>1$、
+$1/p+1/r+1/s=1$。
+其 $DF/\|DF\|^2$ 的 Gaussian divergence 与密度表示直接覆盖本章的通用机制。
+本章具体计算有限维 divergence，并用增长的非中心卡方子块验证统一负矩；
+不把未核对非退化条件的固定 chaos 结果直接施于实际离散后验。
+
+Ronan Herry、Dominique Malicet、Guillaume Poly，
+*Superconvergence phenomenon in Wiener chaoses*，
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)，
+[原 PDF](https://arxiv.org/pdf/2303.02628v3)、
+[原 TeX](https://arxiv.org/e-print/2303.02628v3)。
+Corollary 10(a)，原标签 cor:densitysumofchaos:remainder，
+在有界阶 Wiener chaos 之和、最高阶以外的余项趋于零及标准正态分布极限下，
+给所述 Sobolev 范数中的密度收敛。
+本章参考二次型除以 $\sqrt\nu$ 后满足这些条件，所以一般导数超收敛已有直接先例。
+本章的分块 Fourier 证明保留了多项式加权所需的有限常数和整线导数尾界；
+原推论本身不提供实际选择律的平方权重比较或条件均值平方的转移。
+原 TeX 在定义 score 为 $\nabla\log f$ 后，
+标签 eq:score-ipp 的分部积分显示式印为正号；
+依该定义应为负号。本章 (87.19) 使用直接推导的负号，不依赖该印刷显示式。
+
+**新增推导与边界。** Stirling 界、量化耦合、Gaussian 卷积、
+指数族倾斜、卡方负矩、条件 Jensen 与全方差恒等式均保留经典归属。
+本章新增的是原总数条件化下的平方信息权重比较、
+平方根密度加权条件均值的 $L^2$ 比较、二阶带符号密度的整线控制，
+以及同一个测量噪声的混合核协方差估计。
+这些步骤消去两个输出二次项，得到实际完整后验的 $Q^{1/2}$ 阶损失；
+仅有第 82、84 章的一阶 $L^1$ 回归不足以平方条件均值。
+保留 $\gamma^2/(\nu+\sigma_M^2)$ 不表示余项为 $o(\sigma_M^2)$。
+结论不含逐输出有限规模单调性、原数据上的无界期望收敛、
+临界噪声相变、更高条件矩或解码算法。
+对条件 varentropy、指数族导数、二次型 score 与密度正则化的定向原文核对，
+未找到直接涵盖该完整实际后验陈述的原定理；这只是已检索范围内的结论，不证明全球原创性。
+
+## 原文对照：两根边缘通用与第 88 章的非同步族
+
+[理论卷第 88 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把原精确 Gamma 相位的区间下计数延伸到负内根，并将两种符号共同放入
+第 80 章的可数要求质量构造。所得固定参数集在每根分别实现所有正均值，
+局部 $2/3$ 维 Hausdorff 测度无穷；删去第 86 章维数至多 $38/87$ 的同步集后，
+此临界测度仍无穷。这是 repo-derived 的原模型连接，
+不解决同步集合的非空性或空性，也不把分别可达改成同时可达。
+
+**所用成熟方法。** Weyl 的指数和判据、二阶导数检验、固定 Fourier 下逼近、
+Baire 定理和质量分布原理保留第 78、80 章的归属。
+精确 Gamma 求导在负根仍成立，原因是两个计数坐标在内根紧弧上严格为正；
+不是通过正根符号重命名跳过可行域边界。
+V. Beresnevich、S. Velani，
+*A Mass Transference Principle and the Duffin–Schaeffer conjecture for Hausdorff measures*，
+[arXiv:math/0412141v1](https://arxiv.org/abs/math/0412141v1)，
+[原 TeX](https://arxiv.org/e-print/math/0412141v1)，
+原标签 thm3 及证明的 P0—P5 提供多子层、三倍区间分离、
+临界内容累积和任意小质量分布常数的经典机制。
+原定理要求放大球 limsup 的全 Lebesgue 测度及规范比值单调性；
+单一 limsup 的结论不自动具有本章所需的可数交集性质。
+本章复用第 80 章已经给出的任意尺度证明，并逐项验证带符号的输入，
+保留下一要求的密度常数；没有复制一份新的通用质量传递定理。
+Durand 的 large-intersection 结果所需严格规范或严格指数余量仍保持原范围，
+不据类归属单独宣告临界等号处测度无穷。
+
+**近期格点计数与共同原层的缺口。** Jonathan Hickman、Rajula Srivastava、
+James Wright，*Counting rational points near manifolds: a refined estimate, a conjecture and a variant*，
+[arXiv:2512.23204v1](https://arxiv.org/abs/2512.23204v1)，
+[原 TeX](https://arxiv.org/e-print/2512.23204v1)。
+其开头计数对整数分母 $1\le q\le Q$ 求和；
+曲率条件 CC 要求图映射 Hessian 的每个非零线性组合行列式非零。
+原标签 thm: refined count 在允许的维数／余维组合上改进上计数指数，
+包括所显示的 $e(n,R)\ge(n+2)R/(n+2R)$。
+这不是指定一个原分母的下命中定理，复数／Gaussian 有理变体也改变了算术对象。
+因此不用于本章同步存在性；原文所陈猜想不作为已证输入。
+复实 Hessian 说明段把实定义域为 $2m$ 的 Hessian 写成 $m$ 阶，
+该未用段落不承担这里任何前提；本章不裁定其复数变体。
+
+Damaris Schindler、Rajula Srivastava、Niclas Technau，
+*Rational Points Near Manifolds, Homogeneous Dynamics, and Oscillatory Integrals*，
+[arXiv:2310.03867v1](https://arxiv.org/abs/2310.03867v1)，
+[原 TeX](https://arxiv.org/e-print/2310.03867v1)。
+原标签 def counting func 的平滑计数含 $\omega(q/X)$，
+其中固定光滑 $\omega$ 支撑在 $[1/2,1]$，空间权重固定，
+逼近权重为支撑在 $(-1,1)$ 的偶函数。
+原下界定理 thm main lower bounds 要求
+$0<\eta\le1/8$、$l$ 非退化、至少 $\lceil(n+1)/\eta\rceil$ 阶导数及
+$X^{-3/(2n-1)+a_n\eta}<\delta<1/2$，
+$a_n=(2n+12)/(2n-1)$。
+其主项 $c_{\mathbf t}\delta^mX^{d+1}$ 和相对误差幂
+$X^{-\eta/[d(2l-1)(n+1)]}$ 是整个分母块的结论。
+平面曲率对应 $n=2,d=m=1,l=2$，足够小 $\eta$ 时包含
+$\delta\asymp X^{-1/2}$；但不能由此断言指定 $q=X$ 有命中。
+把 $\omega$ 改成宽 $X^{-1}$ 的可变峰会使导数随 $X$ 增长，
+原固定权重常数没有提供所需的一致性；移动 Gamma 曲线也有额外一致性义务。
+这说明该引用尚不能补上共同原层下界，不是原曲线无命中的证明。
+
+**结论范围。** 负根桥、带符号的精确原 floor 单元和共同要求日程，
+是相对于已有正根通用集的增量；临界质量机制继续由第 80 章承担。
+第 86 章薄壳偏差的误差阶大于正面积主项，仍只用作上界，
+不能据此推出同层命中或无命中。
+所有参数集结论保持同一个原固定参数和合法层序列；
+两种实验可共享确定均值的子序列，不表示数据被耦合成同一次观测。
+文献核对覆盖上述原定理的权重、曲率和分母量词；
+未找到能直接补上指定原层同步下界的已检索原文，不证明这种定理不存在或本章全球原创。
+
+## 原文对照：第 89 章的一般规范律与经典大交集接口
+
+[理论卷第 89 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+保持第 88 章两根边缘通用集的定义、原 floor 单元、固定均值带和合法层序列不变，
+将测度判据扩展到连续非减且 $f(t)/t$ 在零处单调趋于无穷的全部规范：
+局部 $f$-Hausdorff 测度由 $\sum_nQ_n^2f(Q_n^{-3})$ 的收敛／发散判为零／无穷。
+包括层代价趋零、相邻比值无界振荡的规范。
+删除第 86 章同步集 $E_2$ 后保持同一判据；其存在性与空性仍未解决。
+
+**局部 ubiquity 的原定理。** Victor Beresnevich、Detta Dickinson、Sanju Velani，
+*Measure theoretic laws for lim sup sets*，
+[arXiv:math/0401118v3](https://arxiv.org/abs/math/0401118v3)，
+[原 TeX](https://arxiv.org/e-print/math/0401118v3)。
+采用原文 Theorem 1 后标签 cor2 的推论，及紧邻的 dsm2、afm1 推导。
+原条件 M2 要求紧致度量空间上球测度与 $r^\delta$ 同阶；
+点状共振集的 intersection conditions 在 $\gamma=0$ 时成立。
+推论以局部 ubiquity、开集可测、发散级数
+$\sum_n(\psi(u_n)/\rho(u_n))^{\delta-\gamma}$
+及 $\psi$ 或 $\rho$ 的 $u$-regular 性推出全测度。
+这里取紧区间上的归一化 Lebesgue 测度、$\delta=1,\gamma=0$、
+$u_n=Q_n,\rho(t)=c_0t^{-2}$。原单元中点的分离与局部下计数验证 ubiquity，
+合法层增长验证 $\rho(Q_{n+1})/\rho(Q_n)\le1/4$ 最终成立。
+原推论允许由 $\rho$ 控制双重和；并不要求
+$\psi(Q_n)/\rho(Q_n)$ 单调或具有正的上极限。
+局部固定正比例覆盖与放大球 limsup 的全测度分别属于假设和结论，
+不能用前者冒充后者。
+
+**严格规范与可数交。** Arnaud Durand，
+*Sets with large intersection and ubiquity*，
+Mathematical Proceedings of the Cambridge Philosophical Society 144 (2008)，
+[DOI:10.1017/S0305004107000746](https://doi.org/10.1017/S0305004107000746)，
+[作者原稿](https://www.imo.universite-paris-saclay.fr/~arnaud.durand/files/sets_with_large_intersection_and_ubiquity.pdf)。
+采用所核对的 26 页作者稿 Proposition 1(e,f)、Theorems 1(a,c)、2，
+不声称作者稿与最终排印版逐字相同。
+Theorem 2 将全测度放大球族按规范的广义逆缩小后送入大交集类；
+逼近族须局部有限于每个正半径阈值之上。
+Proposition 1(e) 给包含该集合的 $G_\delta$ 集向上封闭性，
+Theorem 1(a) 给可数交封闭性。
+原严格顺序 $f\prec g$ 指 $f/g$ 在零处单调趋于无穷；
+Theorem 1(c) 对这样的 $f$ 给无穷 $f$-测度，不能直接取 $f=g$。
+第 89 章以 $g=f/\Theta(f/t)$ 保留级数发散并逐项核对规范单调性，
+因而同一个 $g$ 可供所有有符号均值带使用，再在所需的 $f$ 处结算测度。
+辅助规范削薄是成熟方法，原稿证明其有理逼近规范律时也采用这一机制。
+广义逆允许规范存在平坦段；本章不额外假定严格可逆。
+
+Arnaud Durand，*Describability via ubiquity and eutaxy in Diophantine approximation*，
+Annales mathématiques Blaise Pascal 22 (2015)，
+[DOI:10.5802/ambp.349](https://doi.org/10.5802/ambp.349)，
+[出版原文](https://ambp.centre-mersenne.org/item/10.5802/ambp.349.pdf)。
+Definition 6.4、Theorems 6.9–6.10 及印刷页 63 的端点说明保留上述严格规范边界。
+该文文本提取中的部分交集符号失真，承重公式取前述作者稿中清晰的原陈述，
+不根据失真文本扩大结论。
+
+**增量与适用边界。** 大交集类、一般质量传递和辅助规范方法均直接归属上述经典理论；
+不宣称新的一般 ubiquity 或可数交定理。
+本章的模型内增量是两根原单元的完整条件映射、全部振荡规范的级数分类，
+以及在同一固定通用集上删除同步集合的结论。
+删除步骤使用 $h=\min(f,\sqrt t)$：其级数仍发散，
+而 $\dim_HE_2\le38/87<1/2$ 给 $\mathcal H^h(E_2)=0$。
+没有据维数上界断言任意发散规范都满足 $\mathcal H^f(E_2)=0$。
+参数集测度不作为统计先验；每根各自的子序列仍不等于共同原层。
+文献直接覆盖的是通用测度工具，原模型的对象与条件由正文连接；
+上述有限文献核对不构成全球原创性认证。
+
+## 原文对照：第 90 章的条件信息谱与第三阶覆盖
+
+[理论卷第 90 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+研究同一个原完整计数后验在一个带噪能量输出之后的最小固定误差覆盖。
+在 $\ln(1/\sigma_M)\to\infty$ 且为 $o(Q^3)$ 的范围，
+以输出处精确条件熵为中心，给出 $Q$ 阶分位数、$-\ln Q$ 项及常数项。
+新增桥梁是输出积分的 $o(1/Q)$ 条件信息谱比较；
+原模型内的二维正态正则化使能量尾部比较不再支付逆噪声因子。
+第三阶源编码、Edgeworth 和 Cornish–Fisher 项本身是经典方法，
+不作为新的一般编码定律。
+
+**常数阶编码的直接先例与印刷边界。** Masahito Hayashi，
+*Semi-Finite Length Analysis for Information Theoretic Tasks*，
+[arXiv:1811.00262v2](https://arxiv.org/abs/1811.00262v2)，
+[原 TeX](https://arxiv.org/e-print/1811.00262v2)，
+所核对原稿为 2018 年 11 月 10 日的 29 页版本，源文件为 draft10.tex。
+PDF 第 3–4 页定义信息方差、三阶常数和格跨度修正
+$v(d)=\ln(d/(1-e^{-d}))$，$v(0)=0$；
+第 V 节、式 (51) 给 iid 固定长度源编码的常数精度展开，
+第 VIII 节说明强大偏差和 Edgeworth 方法。
+这些是通用计算机制的直接先例，iid 假设不自动涵盖本章随数据和噪声变化的条件后验。
+
+原式 (50) 将正确解码集合的质量约束写成 $P_X(\Omega)\le\varepsilon$，
+按字面取空集即使最小基数为零；相应覆盖约束应为至少 $1-\varepsilon$。
+其与随机化检验量的等同还需区分整数点选择。
+第 90 章使用有限计数恒等式与部分并列组界，不调用该显示式。
+原 Proposition 10（标签 L1）仅声明 $p$ 是概率分布，便写连续 Edgeworth 余项
+$O(n^{-1})$；此无格点限制的字面版本不适用于 Bernoulli 格点源，
+因为中心跳跃为 $n^{-1/2}$ 阶，与任意连续 CDF 的距离至少为跳跃的一半。
+正文只对实际使用的平滑 Gamma 家族验证展开与尾余项。
+原文 $\kappa(P\|Q)$ 定义中 $-\log(P/Q)$ 的中心化符号也与所称偏度不符，
+本章的第三累积量和分位数符号直接计算。
+上述三点均在原 TeX 核对，不归咎于 PDF 字体提取，也不否定其成熟方法。
+
+**有限块长的第三阶界。** Shuqing Chen、Michelle Effros、Victoria Kostina，
+*Lossless Source Coding in the Point-to-Point, Multiple Access, and Random Access Scenarios*，
+[arXiv:1902.03366v4](https://arxiv.org/abs/1902.03366v4)，
+[DOI:10.1109/TIT.2020.3005155](https://doi.org/10.1109/TIT.2020.3005155)。
+2020 年 10 月 10 日的 35 页原稿第 3 页 Theorem 1 重述
+Kontoyiannis–Verdú 的有限无记忆源界，在正信息方差及有限三阶绝对信息矩下，
+对数码本大小的前三项为 $nH+\sqrt{nV}\,z-\frac12\log n$，上下界相差 $O(1)$。
+第 4 页 Remark 1 说明固定 $\varepsilon\in(0,1)$ 及可数源字母表的扩展。
+该结论不提供本章变动条件后验的精确常数；$Q^2$ 个有效信息项对应 $-\ln Q$，
+并非新发现一般的 $-\frac12\log n$ 项。
+
+Ioannis Kontoyiannis、Sergio Verdú，
+*Lossless Data Compression at Finite Blocklengths*，
+[arXiv:1212.2668v1](https://arxiv.org/abs/1212.2668v1)。
+核对的 v1 PDF 第 9–10 页、Section II 的 Theorems 2–3 给一般离散源的
+排序／阈值界，第 7 页式 (34) 讨论 Strassen 的非格点精化式。
+第 23 页明确指出作者未能验证所引近似在 CDF 积分中的一个步骤，
+其 Theorems 16–17 给另行证明的有限无记忆界。
+第 90 章的积分核 $e^{u-t}\mathbf1_{u\le t}$ 有界且总变差为二，
+已证 CDF 误差为 $o(1/Q)$；这使计数积分的误差同样为 $o(1/Q)$，
+不是把指数加权计数直接按 TV 转移。
+
+**侧信息与条件精度。** Lampros Gavalakis、Ioannis Kontoyiannis，
+*Sharp Second-Order Pointwise Asymptotics for Lossless Compression with Side Information*，
+[arXiv:2005.10823v1](https://arxiv.org/abs/2005.10823v1)。
+PDF 第 4 页 Definition 2.1 和 Theorem 2.3 逐侧信息串排序条件概率，
+并在大于 $\log n$ 的归一化下比较码长和信息量；
+第 6 页 Assumption (M) 对平稳有限字母源及侧信息施加所列 Markov／混合条件，
+第 8 页 Theorem 2.10 是以平均条件熵为中心的联合概率 CLT。
+这些条件、中心和精度均不推出本章以 $H_x(y)$ 为中心的
+输出积分条件局部极限；排序原理仍直接归属经典编码理论。
+
+**密度导数工具。** Yaozhong Hu、Fei Lu、David Nualart，
+*Convergence of densities of some functionals of Gaussian processes*，
+[arXiv:1302.6962v2](https://arxiv.org/abs/1302.6962v2)。
+2013 年 8 月 29 日原稿 Theorem 3.1（PDF 第 10 页）在所列 Gaussian Sobolev
+正则性、正矩与逆导数矩条件下，以 $DF/\|DF\|^2$ 的散度表示并控制密度；
+Proposition 3.6（第 14 页）在更高正则性和逆矩下控制高阶密度导数。
+第 90 章用二维梯度 Gram 矩阵并显式核对逆矩，实现对应的有限维机制。
+原标量定理本身不替代二维非退化性验证，更不直接验证实际离散后验。
+
+Chaganty–Sethuraman，*Strong Large Deviation and Local Limit Theorems*，
+DOI 10.1214/aop/1176989136，是元数据检索所指的相关文献；
+所查原文下载端点返回 HTML 拒绝页，未取得可核对原定理，
+故该文没有承担正文任何前提。
+
+**结论范围。** 经典工具与本章实际模型桥梁分开归属：
+完整向量条件化、全域有界过渡组、最终噪声尺度耦合、
+二维核心正则化和精确中心化共同给出所需条件精度。
+结论仅对固定内部误差水平成立，保留原实际 pair/path 和固定支持量词；
+不主张每个输出、无界对数余项期望、零噪声、临界 $Q^3$ 对数噪声或高效编码。
+有限文献核对未提供直接替代这组实际条件桥梁的原定理，
+不构成不存在性或全球原创性认证。
+
+## 原文对照：第 91 章的固定切点复现限制
+
+[理论卷第 91 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+分析第 81、83 章已经构造的原共同规模单元。
+逐层局部存在定理直接复用；本章新增的是精确 Gamma 修正的严格负号、
+有限固定切点环形窗口的空 limsup，以及首个上方交点规则的单侧相位与等均值限制。
+这些限制保持原合法分母、count floor、共同规模相位和实际 pair/path 均值桥。
+它们没有解决整个双根同步集合 $E_2$ 的空性或非空性。
+
+**切线方法的经典背景与分母边界。** Victor Beresnevich、Evgeniy Zorin，
+*Explicit bounds for rational points near planar curves and metric Diophantine approximation*，
+[arXiv:1002.2803v1](https://arxiv.org/abs/1002.2803v1)，
+[原 TeX](https://arxiv.org/e-print/1002.2803v1)。
+原 Theorems 1–2（源标签 t:01、t:02）在统一正曲率类的闭包内给局部下计数和覆盖；
+其第二定理证明使用 Minkowski 线性形式及整数平移，属于有理切线构造的成熟背景。
+所数互素三元组允许 $0<q\le X$，覆盖版为 $c_0X<q\le X$，
+误差是 $\delta/X$，不是固定 $q=X$ 的结论。
+原假设包括 $\delta X^2|J|\ge8C_1$、$X\delta\ge C_2$、$|J|\le1/2$，
+以及所列 $X\gg|J|^{-3}$ 或另一二次尺度条件。
+在本模型取 $X=N$、$\delta\asymp N^{-1/2}$，固定父区间在晚期可以满足尺寸要求，
+但 Minkowski 输出只保证一个区间内的分母。
+它未保证该分母整除原 $N$；改为最近的 $N$ 分母网格会产生 $N^{-1}$ 阶误差，
+超过本题的 $N^{-3/2}$ 归一化条带宽度。因此不承担固定原层的下命中前提。
+
+**固定分母的算法文献。** Nicolas Brisebarre、Guillaume Hanrot，
+*Integer points close to a transcendental curve: an algorithmic approach*，
+[arXiv:2606.04858v1](https://arxiv.org/abs/2606.04858v1)，
+[原 TeX](https://arxiv.org/e-print/2606.04858v1)。
+原 Problem probgen 固定正整数 $u,v,w$，对在复邻域解析的超越函数寻找
+
+$$
+\left|f(X/u)-Y/v\right|<1/w.
+$$
+
+这允许在问题定义中固定 $u=v=N$，与按分母求和的计数不同。
+但 Algorithm algo:2variables 的保证是成功时返回包含所有解的候选列表；
+列表可以为空，算法还保留短向量不足及消元 resultant 为零的失败分支。
+主定理 thm:cplx2D 是固定函数、固定区间下随输入分母与多项式度数变化的复杂度结论，
+原证明明确保留两个辅助多项式互素的启发式假设。
+它不给正解数，也不给指定原层上的无限嵌套分支。
+本章没有运行该算法，不把随 $Q$ 变化的隐式 Gamma 曲线代入固定函数的复杂度结论，
+亦未证明它满足另一个有限阶整函数定理的全局假设。
+
+**本章使用与不使用的结论。** 均值定理、积分曲率、最近剩余类取整、
+Stirling／Binet 展开和有限集合的 limsup 推理均是经典工具。
+模型内新联系是：原取整使 $A_Q'<0$，从而产生必须抵消的负 Gamma 修正；
+同一规模中的 $-3\ln Q$ 预因子又强迫复现指标位于切点左侧，
+与右侧首交点的取整规则共同给出 $\omega=O_d(Q^{-2})$。
+有理截距排除仅适用于该规则或等正均值子目标；
+没有构造原曲线上的有理斜率／有理截距点，也没有排除不等均值的全部同步可能。
+文献核对给出上述具体适用边界，不作为不存在性或全球原创性认证。
+
+## 原文对照：第 92 章的指数分辨率与二项量化耦合
+
+[理论卷第 92 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+将精确条件熵中心下的第三阶覆盖扩展到
+$\limsup\ln(1/\sigma_M)/Q^3<c_q/2$，仍要求 $\ln(1/\sigma_M)\to\infty$。
+该系数是所证充分条件，不是噪声阈值锐性结论。
+经典二项耦合支付唯一的逆噪声误差；外部计数能量通过二维联合平移移除，
+其与外部信息量的依赖一直保留到最终条件中心化。
+
+**直接使用的有限 Wasserstein 定理。** Thomas Bonis，
+*Stein's method for normal approximation in Wasserstein distances with application to the multivariate Central Limit Theorem*，
+[arXiv:1905.13615v2](https://arxiv.org/abs/1905.13615v2)，
+[原 TeX](https://arxiv.org/e-print/1905.13615v2)。
+2020 年 5 月 11 日版本的 32 页 PDF 第 1 页设定 iid、中心化、单位协方差；
+第 5 页 Theorem 1、式 (9) 对 $m\ge2$ 给有限 $W_m$ 界：
+常数只依赖阶数 $m$，分子由四阶矩矩阵范数和 $(m+2)$ 阶矩显式控制，
+分母为 $\sqrt n$。原 body.tex 的 CTLmain、Wpmainthm 标签核对相同陈述。
+在一维代入标准化 Bernoulli，成功概率位于 $[1/4,3/4]$ 时所有这些矩一致有界，
+故直接取得 $C_m/\sqrt n$，不需密度、非格点或精确成功概率 $1/2$。
+一维单调量化同时最小化各固定阶凸运输代价，给正文同一个耦合的 $L^2,L^4$ 控制。
+这个精确阶及量化方法完全归属经典结果。
+
+**二项原文的交叉核对。** Alexander A. Serov、Andrew M. Zubkov，
+*A Full Proof of Universal Inequalities for the Distribution Function of the Binomial Law*，
+[arXiv:1207.3838v2](https://arxiv.org/abs/1207.3838v2)，
+[原 TeX](https://arxiv.org/e-print/1207.3838v2)。
+2012 年 8 月 31 日版本第 2 页的定理对全部 $n$、$p\in(0,1)$、
+$k=0,\ldots,n-1$ 给
+$C_{n,p}(k)\le F_{n,p}(k)\le C_{n,p}(k+1)$；
+内部 $C$ 为二项相对熵有符号平方根处的标准正态 CDF，
+端点单独定义为 $C(0)=(1-p)^n$、$C(n)=1-p^n$。
+第 2–5 页给完整 beta 积分及单调性证明，原 0542008.tex 中核对了定理和端点。
+紧 $p$ 区间内，有符号根的 Taylor 展开和量化夹逼给
+$|X-Z|\le C(1+Z^2)/\sqrt n$ 于 $|Z|\le c\sqrt n$，
+其外以 $|X|\le C\sqrt n$ 和正态尾控制各固定矩。
+这提供独立的二项专用核对，但正文已直接使用 Bonis 的有限定理。
+
+Serov–Zubkov 将原不等式归于 Alfers–Dinges 的 1984 年文献；
+该早期原文未独立取得，归属依据为这里核对的完整证明及其引用。
+所取 TeX 的介绍性 Moivre–Laplace 显示式多出一个 $\Phi(x)$ 因子，
+其后单独显示的 Stirling 公式省去 $(n/e)$ 的指数 $n$；
+紧接的二项系数计算使用 $n^n$。这两处未用显示式不承担本章前提，
+不把提取成功等同于每个印刷公式正确。
+
+**不作统一估计依据的后来版本。** Bonis，
+*Improved rates of convergence for the multivariate Central Limit Theorem in Wasserstein distance*，
+[arXiv:2305.14248v4](https://arxiv.org/abs/2305.14248v4)，
+2024 年 4 月 29 日版本第 3 页 Corollary 1 另用截断增量协方差条件，
+并含依赖底层分布的渐近余项；更强的非格点收益要求非零绝对连续分量。
+Bernoulli 没有该分量，且分布依赖余项不能直接当作随数据变化的 $p_j$ 的一致界。
+本章用前述更早的显式有限定理，未借此推导未给出的统一性。
+
+Carter–Pollard，*Tusnady's Inequality Revisited*，
+[arXiv:math/0508606v1](https://arxiv.org/abs/math/0508606v1)，
+DOI [10.1214/009053604000000733](https://doi.org/10.1214/009053604000000733)，
+第 1–5 页 Theorems 1–2 的原对象是 $\operatorname{Bin}(n,1/2)$，有其所列
+$n\ge28$ 及内部指标范围和尾部处理。实际 $p_j\to1/2$ 不能替代精确对称假设。
+这些成熟结果说明精确量化阶并非新发明；实际参数对应由 Bonis 定理完成。
+
+**组合范围。** 第 90 章已归属的 Kontoyiannis–Verdú、Chen–Effros–Kostina、
+Gavalakis–Kontoyiannis 和 Hu–Lu–Nualart 分别承担经典排序／编码与密度机制。
+它们不直接提供当前随数据、噪声变化的实际条件后验结论。
+本章先比较联合可观测量和中心一阶矩密度，再于最终参考使用条件 $C/Q$ 密度界；
+未在保留外部真实能量的中间通道虚报独立性。
+文献核对有版本和范围限制，不作为全球原创性证明。
+
+## 原文对照：第 93 章的代数根与傅里叶障碍
+
+[理论卷第 93 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+使用原 $Q_n=10^{e_n}$ 的素因子限制排除代数无理率根的多项式过渡带，
+并在根坐标中限制正有限均值复现集合所能承载的傅里叶衰减。
+两根同步的存在或不存在未被解决。
+
+**实际应用的子空间定理版本。** Boris Adamczewski、Yann Bugeaud，
+*On the complexity of algebraic numbers I. Expansions in integer bases*，
+Annals of Mathematics 165 (2007), 547–565，
+[DOI:10.4007/annals.2007.165.547](https://doi.org/10.4007/annals.2007.165.547)，
+[期刊原文](https://annals.math.princeton.edu/wp-content/uploads/annals-v165-n2-p04.pdf)。
+Section 4、印刷第 554–555 页给绝对值、向量范数和射影高度的完整归一化，
+Theorem E 给所用 $p$-进子空间定理，并归属于 Evertse。
+每个赋值处的形式须线性无关，系数允许是 $K$ 外的代数数，解仍在 $K^m$ 中。
+因此正文可取 $K=\mathbb Q$ 而在无穷处使用代数无理系数 $\xi$。
+本原整数对的高度是欧氏范数，有限赋值处范数为一；
+原分母约分后只有素因子 $2,5$，精确给出正文的受限分母下界。
+该一般逼近机制是经典定理的直接应用，不作新数论定理申报。
+原文自身的数字复杂度定理和正规性猜想没有承担本文前提。
+
+Jan-Hendrik Evertse，*An improvement of the quantitative Subspace theorem*，
+Compositio Mathematica 101(3) (1996), 225–311，
+[原文](https://www.numdam.org/item/CM_1996__101_3_225_0.pdf)。
+核对了前九个 PDF 页的标题、范围和允许 $K$ 外代数系数的说明。
+扫描公式未被现有文本提取完整恢复，故正文精确不等式采用上项已完整核对的
+Theorem E，不声称从缺失的扫描显示式中读出了它，也未审计长篇定量证明。
+
+D. Ridout 的历史原文 *Rational approximations to algebraic numbers*，
+Mathematika 4 (1957), 125–131，
+[DOI:10.1112/S0025579300001182](https://doi.org/10.1112/S0025579300001182)，
+及 *The p-adic generalization of the Thue-Siegel-Roth theorem*，
+Mathematika 5 (1958), 40–48，
+[DOI:10.1112/S0025579300001339](https://doi.org/10.1112/S0025579300001339)，
+提供成熟结果的历史归属。所查 Wiley 路径返回 403，Cambridge 的页面及所列 PDF
+返回访问页 HTML，未取得完整原定理；它们不是正文独立核验的承重来源。
+正文使用前述可访问且完整陈述的 Theorem E。
+
+**实际应用的傅里叶收敛结论。** Andrew Pollington、Sanju Velani、
+Agamemnon Zafeiropoulos、Evgeniy Zorin，
+*Inhomogeneous Diophantine Approximation on $M_0$-sets with restricted denominators*，
+[arXiv:1906.01151v1](https://arxiv.org/abs/1906.01151v1)，
+[原 TeX](https://arxiv.org/e-print/1906.01151v1)。
+原稿 Beyond lacunarity 节的 mainCONV 定理与 Lemma lem2 直接给正文使用的收敛侧：
+若整数倍分母处的傅里叶系数上确界可求和，而目标窗长度也可求和，
+则相应上极限集测度为零。此处不需稀疏性或目标函数单调性。
+原始有限 majorant 界及 Borel–Cantelli 证明均已核对。
+原另一个稀疏计数定理中的对数衰减指数 $A>2$ 不应套到本收敛侧：
+原 $\ln N_n$ 的增长使任何 $A>0$ 已足够求和。
+
+该文的发散／下计数结论针对固定标量、固定测度及其明确条件，
+不提供同一原层上随 $p,d$ 变化的精确对偶相位、单侧方向和剩余类共同命中的下界。
+本章只直接采用收敛结论，配合实际均值给出的必要根邻近窗。
+所得零傅里叶维数在根坐标中成立，不借非线性根映射冒领 $\beta$ 坐标的同一结论。
+
+**核对边界。** 最初的 Annals p06 定位返回 Granville–Soundararajan 的另一篇原文，
+标题核对后未采用；p04 才是本章使用的原文。
+有限的论文检索和版本核对不构成全球原创性认证。
+本章贡献是成熟工具在原实际模型中的定量对应，以及其对熵过渡项与可行研究路线的限制；
+不把测度工具换成新概率先验，不从数论下界推断可变分母的有效统一常数。
+
+## 原文对照：第 94 章的逐输出平滑与紧区间覆盖
+
+[理论卷第 94 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+将指数分辨率范围内的精确熵中心三阶覆盖加强为每个固定紧输出区间的一致式。
+其关键前提是逐输出未归一化测度、中心一阶矩密度及可观测量位移的定量控制，
+再以正密度下界条件化。输出积分误差本身不提供这种上确界控制。
+
+**高固定阶量化的来源。** 第 92 章核对的 Bonis
+[arXiv:1905.13615v2](https://arxiv.org/abs/1905.13615v2)，Theorem 1、式 (9)，
+直接给每个固定运输阶 $m\ge2$ 的有限界。
+标准化 Bernoulli 且 $p\in[1/4,3/4]$ 时所需矩一致有界，
+所以同一单调量化可在任意高但固定的阶数支付指数小的坏位移事件。
+阶数可依赖严格噪声间隙，不能让它随规模增长而忽略原常数的依赖。
+Serov–Zubkov 的紧参数量化核对及其未用印刷公式缺陷仍保持第 92 章所列范围。
+
+**正态密度与逆导数矩。** Yaozhong Hu、Fei Lu、David Nualart，
+*Convergence of densities of some functionals of Gaussian processes*，
+[arXiv:1302.6962v2](https://arxiv.org/abs/1302.6962v2)，2013 年 8 月 29 日版本。
+55 页 PDF 第 10 页 Theorem 3.1 要求 $F\in\mathbb D^{2,s}$、
+$\mathbb E|F|^{2p}<\infty$、$\mathbb E\|DF\|^{-2r}<\infty$，
+其中 $p,r,s>1$、$1/p+1/r+1/s=1$；其散度表示给密度及一致／Hölder 界。
+第 3.2、4、5 节的导数与向量比较另有各自非退化假设。
+第 94 章使用这一成熟演算机制，但为自己的二维信息量／能量对
+明确证明秩、行列式小值概率、逆矩及带权导数；没有将标量定理直接当成向量定理。
+固定块的全积分导数界经另一个独立块卷积后才变成切片上确界。
+
+**直接涵盖正态参考密度的超收敛。** Ronan Herry、Dominique Malicet、Guillaume Poly，
+*Superconvergence phenomenon in Wiener chaoses*，
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)，
+[原 TeX](https://arxiv.org/e-print/2303.02628v3)，2024 年 3 月 19 日版本。
+40 页 PDF 第 3 页 Theorems 1–2 对固定 Wiener chaos 内趋标准正态的序列
+给密度及其导数的强收敛。第 9–10 页 Theorem 9、Corollary 10(a)
+处理有限 chaos 和：最高阶投影趋标准正态且全序列 $L^2$ 有界保证负导数矩控制；
+若低阶余项在 $L^2$ 中趋零、全变量趋标准正态，则得到正态密度超收敛。
+原 super-fmt.tex 的 main-negative-moments-sum-chaos 与
+cor:densitysumofchaos:remainder 条目核对相同条件。
+
+第 94 章的正态核心参考归一化后是二阶 chaos 加趋零的一阶及常数余项，
+因此参考密度收敛被该经典结果直接涵盖，正文 Fourier 估计给本证明需要的具体分块界。
+该定理没有给原离散二项计数在指数小噪声下的逐输出替换误差，
+也没有给完整后验中心信息量的一阶矩密度控制；这些仍由正文桥接。
+原文还给 $G+(n+1)^{-1}G^2$ 的反例，说明有限 chaos 和趋正态
+若未核对最高阶投影条件，并不自动具有连续密度。
+
+**不能直接用于实际二项能量的二次型定理。** 同三位作者，
+*Regularity of laws via Dirichlet forms — Application to quadratic forms in independent and identically distributed random variables*，
+[arXiv:2303.09488v2](https://arxiv.org/abs/2303.09488v2)，
+[原 TeX](https://arxiv.org/e-print/2303.09488v2)，2024 年 6 月 20 日版本。
+34 页 PDF 第 2 页 Theorem A 与精确 Theorem 2.10 要求 iid 中心单位方差输入，
+输入位于 $\mathbb D^\infty$ 且 carré du champ 有某个有限负矩；
+系数算子对角为零，$\operatorname{tr}A^2=1$，
+$\mathcal R_{128q+18}(A)>d$ 且 influence 足够小，方得到 $W^{q,1}$ 正则性。
+原 reg-ptrf.tex 的 small-ball-gamma 假设、前置零对角设定及
+regularity-quadratic-form 定理核对这些要求。
+二项量化图像不满足该输入正则性，而当前能量是对角二次型；
+故该结果只提供相关方法视角，不能直接承接实际后验。
+
+**计数与边界。** 第 90、92 章已归属的源编码排序、Gamma 的
+Edgeworth／Cornish–Fisher 展开与负半对数项仍为经典内容。
+本章使用新证的 $o(1/Q)$ 紧区间条件 CDF 误差，
+通过总变差为二的计数核和截止并列质量界得到常数精度。
+精确条件熵没有被其主阶近似替换，也没有宣称阈值锐性、全输出一致性、
+熵响应或条件方差的自动扩展。
+
+文献核对限于所列原版与关系检索；部分 PDF 数学字形提取不完整，
+Herry–Malicet–Poly 的承重条件据原 TeX 核对。
+一个元数据检索响应为 HTTP 429，不计作已取得文献。
+该检索范围不证明全球原创性；正文的新增结论为原模型中上述关系的完整组合。
+
+## 原文对照：第 95 章的有效 Baire 输入与根数位障碍
+
+[理论卷第 95 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+构造原边缘通用集中的可计算参数，并证明有限均值复现根的有符号长数位块。
+一般可计算 Baire 选择是既有结果；需要在本模型中补齐的是它的有效输入：
+完整得分组等号判定、原取整、实际 pair/path 均值的严格有限证书，以及搜索终止性。
+
+**有效 Baire 的精确表示条件。** Vasco Brattka、Matthew Hendtlass、Alexander P. Kreuzer，
+*On the Uniform Computational Content of the Baire Category Theorem*，
+[arXiv:1510.01913v1](https://arxiv.org/abs/1510.01913v1)，
+[原 TeX](https://arxiv.org/e-print/1510.01913v1)。
+原文定义 $\mathrm{BCT}_0$ 于可计算 Polish 空间，输入为以负信息表示的
+无处稠密闭集序列；负信息是其开补集的有理球枚举。
+原 fact:BCT0-BCT1 明确陈述 $\mathrm{BCT}_0$ 可计算。
+Cauchy 表示及负信息表示按该原版核对；没有使用正信息或跳跃版本，
+也没有加入极限、泛性或真值 oracle。
+
+第 95 章对每个固定有理均值带、符号及下限层，枚举通过严格原窗条件和
+两种完整实际均值条件的 floor 单元内部有理区间。
+第 88 章的原层完整单元可用性使该开集稠密，因此它的补集具备所需负名字。
+可计算 floor 边界点的补集同样可枚举。
+一般的剩余性没有提供这个输入，不能独自保证一个可计算点。
+正文显式嵌套构造还输出原合法层及误差日程；没有把每个正实目标都说成
+无需目标名字即可沿可计算子序列实现，那会违背可数性。
+
+原文将 $\mathrm{BCT}_0$ 的可计算性追溯至 Brattka，
+*Computable versions of Baire's category theorem*，MFCS 2001，LNCS 2136，
+224–235，Theorem 6。该早期原文只核对到书目信息，未单独取得完整证明；
+承重陈述取自已读的 2015 年原版。
+同一 v1 后面的 comeager 定义／推论中存在 $X,\mathbb N^{\mathbb N},2^{\mathbb N}$
+的环境空间记号不一致；本章不用该段把 Cantor 空间结论搬到区间，
+所用定义和可计算性事实明确针对可计算 Polish 空间。
+
+**原模型的有限算法边界。** 第 68 章已经按 Baker–Wüstholz 原定理证明
+固定 $r$ 超越。由此原 $k_0,q$ 取整不在整数边界，完整得分等号化为
+有理多项式恒等判定。pair 均值是有限多项式，path 均值由原平稳
+$2M\times2M$ 标记转移矩阵幂精确给出；不以独立行或 Poisson 均值替代。
+这些证书可枚举，再由第 88 章实际相对均值与整单元下计数保证搜索终止。
+未知的渐近起始层不作为算法输入。
+这里没有新的一般可计算性定理，也没有对天文尺度有限数组实际运行该算法的主张。
+
+**正规数与前缀频率。** Verónica Becher、Pablo Ariel Heiber、Theodore A. Slaman，
+*A polynomial-time algorithm for computing absolutely normal numbers*，
+[作者原文](https://math.berkeley.edu/~slaman/papers/poly.pdf)，
+2013 年 3 月 4 日版本，13 页。
+Section 2.1 固定标准数位和 $b$-进区间；Definition 2.1 定义简单正规与正规；
+Section 2.3 的 Definition 2.3、Lemma 2.4 给数位频率偏差及其判据。
+本章只用这些经典定义，不应用该文构造绝对正规数的高效算法，
+也不据此推断原率函数的逆像保持正规性。
+
+原实际均值展开中的 $-3\ln Q$ 项使正根落在下方格点右侧、负根落在上方格点左侧，
+距离为 $3\ln Q/(Q|I'(x)|)+O(Q^{-1})$。
+由 $Q=10^{e_n}$ 得位置 $2e_n+1$ 开始、长度
+$e_n-\log_{10}e_n+O(1)$ 的零／九块。
+这些块占截止前缀的比例趋于 $1/3$，故相关数位频率上极限至少为 $1/3$，
+偏差至少为 $7/30$。任意长数位块本身不足以排除正规性；比例估计承担该结论。
+第 93 章的超越性和本章的可计算性与这一结论相容，但各自需要自己的证明。
+
+**适用范围。** 两符号日程可以不同；$E_2$ 非空或为空仍未判定，
+构造所得参数是否避开 $E_2$ 也未判定。
+根的非正规性不自动成为 $\beta$ 坐标的非正规性。
+本章不宣称实用复杂度、期望熵收敛、参数随机化或全球原创性。
+有限关系检索与上述原版条件核对，只支持所列经典归属和模型内对应。
+
+### 第 96 章：局部矩密度与显式常数阶熵响应
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 96 章
+在全部严格半指数噪声区间内，将紧输出区间的条件熵中心写成原精确先验熵、
+噪声对数、保留实际噪声方差的线性响应，以及显式二次常数项。
+其局部带符号矩密度估计与第 94 章的覆盖定理作用于同一实际后验和观测。
+Gaussian 分部积分、密度超收敛及 Edgeworth 方法已有来源；
+以下区分这些通用工具与实际固定总数模型的传递义务。
+
+Nourdin、Peccati，*Stein's method and exact Berry–Esseen asymptotics for functionals of Gaussian fields*，
+[arXiv:0803.0458v3](https://arxiv.org/abs/0803.0458v3)，版本 2009-12-09，
+Annals of Probability 37(6), 2231–2261。
+原 PDF 第 11–13 页定理 3.1、命题 3.3 分别给标准化固定阈值 CDF 误差
+和附加矩条件下的一项 Edgeworth 结论。
+前者保留 Malliavin 可微性、绝对连续性、有限、最终为正且趋零的 Stein discrepancy 的 $L^2$ 范数（原文 $\varphi(n)$，其平方为均方而非一般的中心方差），
+以及使用该 $\varphi(n)$ 标准化的二元向量的 Gaussian 联合极限。
+这些条件不直接提供增长的未缩放中心信息量所需的逐点带符号密度展开，
+也不自动把参考 Gaussian 结论传到噪声消失的实际离散后验。
+第 96 章的两次有限分部积分是经典 Gaussian 演算的应用；
+独立半核心的二阶密度导数上界另行支付局部余项。
+
+Tudor、Yoshida，*High order asymptotic expansion for Wiener functionals*，
+[arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1)，版本 2019-09-19。
+原文条件 [A1]–[A3]、命题 1 和定理 1 保留一致 Sobolev 矩界、
+Gamma 因子余项的速率、非退化目标协方差，以及展开阶数、
+可微阶数和局部化指标之间的明确不等式。
+命题 1 给带权一致局部密度逼近；定理 1 对受固定多项式支配的可测测试类给规定的余项阶。
+固定维测试类的多项式界不能替代本章未归一化且方差增长的核心信息量之统一估计。
+正文直接给出所需一阶带符号密度的有限恒等式与余项范数，
+没有宣称已核对整个实际阵列的任意阶 Wiener 展开条件。
+
+Herry、Malicet、Poly，*Superconvergence phenomenon in Wiener chaoses*，
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)，版本 2024-03-19，
+推论 10(a) 对有限 Wiener chaos 和，在低阶余项于 L2 趋零、
+主项归一化后趋标准 Gaussian 的条件下，给所列 W(q,p) 密度收敛，包括 p 为无穷。
+本章参考二次能量的最大系数趋零、方差趋正数，非中心线性项、
+有限截距和测量噪声在 L2 中趋零，因此其通用导数收敛位于该范围。
+原实际计数律不是这个 Gaussian 输入对象；实际局部质量与矩密度的误差仍须另证。
+正文的 Fourier 分块估计同时给出对每个正噪声一致的有限导数界。
+
+Mansanarez、Poly、Swan，*Edgeworth expansion on Wiener chaos*，
+[arXiv:2510.14002v2](https://arxiv.org/abs/2510.14002v2)，版本 2025-10-27，
+原 PDF 第 4 页定理 1.2 对方差归一化的单个固定 Wiener chaos 随机变量，
+以其累积量控制到规定 Edgeworth 带符号密度的总变差误差。
+这是相关的较新通用展开；定理没有直接给出增长信息权重的点态条件均值，
+也没有包含原 count posterior、固定基数或消失噪声的比较。
+因此本章不用未核对的加权／多变量推广替代 (96.19)–(96.24)。
+
+Bonis 的 arXiv:1905.13615v2 有限 Wasserstein 矩阶估计，
+以及 Serov–Zubkov 的 arXiv:1207.3838v2 任意二项参数 CDF 夹逼，
+沿第 92、94 章保留其原作用和条件。
+核心内标准化 Bernoulli 的各固定矩一致有界，允许按严格噪声间隙选择一个足够高的固定矩阶；
+没有令矩阶随系统大小增长，也未把 p=1/2 的专门定理用于近似 p=1/2。
+Gaussian 核恒等式、局部正密度归一化和 Bayes 熵恒等式均属经典工具。
+
+新增实际桥梁分别控制中心信息密度与残差平方密度，
+以独立块支付带符号二阶导数余项，并证明实际前两项方差轮廓有 O_P(delta) 精度。
+这足以在常数阶把有限随机系数换成 gamma/[sqrt(delta)(nu+sigma^2)]；
+只知道方差轮廓收敛不够。缓慢消失噪声说明 sigma^2 不能从该分母删除。
+结果限于固定输出紧区间和固定支持数据概率，保留原精确先验熵；
+不包含全实线一致性、外层期望熵、零噪声、端点锐性或高效计算。
+所核对原始来源未直接给出该完整模型陈述；有限检索范围不构成全球原创认证。
+
+### 第 97 章：可计算复现测度与全部晚层同步排除
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 97 章
+构造每个有理内部区间中的可计算参数，保留原完整模型的双符号边缘复现，
+并排除全部充分晚原层的一个必要同步算术包络。
+结论是原 V 减 E2 的有效非空性；它不判定 E2 自身非空或为空。
+算法给算术包络的可计算排除起点，实际正紧均值带的最终排除由原渐近必要条件推出，
+没有声称已计算每个实际均值带的数值起点。
+
+Galatolo、Hoyrup、Rojas，*A constructive Borel–Cantelli Lemma. Constructing orbits with required statistical properties*，
+[arXiv:0711.1478v2](https://arxiv.org/abs/0711.1478v2)，
+[原始 TeX](https://arxiv.org/e-print/0711.1478v2)，
+DOI [10.1016/j.tcs.2009.02.010](https://doi.org/10.1016/j.tcs.2009.02.010)。
+原文 “Constructive Borel-Cantelli sets” 一节定义有效可求和：
+有算法由正有理误差给出整个后续尾和的上界起点。
+其构造性 Borel–Cantelli 序列由一致有效开的好集组成，
+要求这些好集补集的测度有效可求和。
+标记 effective_BC_theorem 的定理在完备可计算度量空间、
+可计算 Borel 概率测度下，给相应集合中可计算点在测度支撑上的稠密性。
+“Shrinking sequence” 引理及该定理证明明确使用嵌套、有效缩径的开集。
+
+这条抽象构造原理已有来源，不属于本章新增的一般定理。
+本章先构造承载精确有符号复现证书的独立有限分支有理树和可计算测度，
+再给原同步包络全部晚层的显式可求和上覆盖。
+若调用上述开好集版本，必须用稍小的闭有理坏覆盖；
+开坏集的闭补集不能直接满足它的开集假设。
+正文直接证明剩余柱质量可计算并选择正质量子柱，保留一个可计算的算术起点。
+单凭正测度有效闭集或小 Hausdorff 维数都不足以保证可计算点。
+
+所检 v2 的 uniform-intersection 命题证明存在一个不用的显示不等式问题：
+定义 a_m=2^(-n) 后写坏集测度大于 a_m，而前面的 normal form 给的是相反方向。
+本文使用单序列定理的正确条件及正文独立的限制测度构造，
+不将这个显示式作为前提，也不据它断言后续版本有同一问题。
+
+Hoyrup、Rojas，*Computability of probability measures and Martin-Löf randomness over metric spaces*，
+[arXiv:0709.0907v1](https://arxiv.org/abs/0709.0907v1)，
+[原始 TeX](https://arxiv.org/e-print/0709.0907v1)。
+“Measures as valuations” 中标记 val_operator 的命题说明
+由可计算测度的 Cauchy 描述可以下半计算开集测度；
+valuation_equivalence 定理把可计算测度与开集、有限理想球并的一致下半可计算估值联系起来。
+它们没有断言任意闭集上的限制测度可计算。
+本章用有限有理区间的双侧柱质量逼近及有效孔尾界提供这个额外条件，
+不是由一般表示定理直接跳到可计算分支。
+
+Huang，*Rational points near planar curves and Diophantine approximation*，
+[arXiv:1403.7388v1](https://arxiv.org/abs/1403.7388v1)，
+原文引理 1 给任意有限序列及有限谐波截断的差异度控制。
+该工具及经典一阶／二阶导数指数和方法、Fejér 核是几何计数的成熟来源。
+其后对分母求和的应用不能原样变成本章原层 Q_n 上单个规定分母 N_n=Q_n^2 的命题。
+正文显式给一个较粗但有效的固定层覆盖：
+至多 C Q_n^(3/2) 个、长度 C Q_n^(-11/4) 的区间，
+不用更锐曲线格点估计的未知常数。
+
+原 signed phase 计数和有限实际完整组证书沿第 88、95 章复用。
+新增连接是具有显式全尺度 3/5 次幂上界的可计算复现测度，
+以及同步包络在该测度下的 Q_n^(-3/20) 全晚层预算。
+基树独立于排除选择；查询剩余质量不会改变此前已定义的复现测度。
+这保证每个正剩余质量父柱仍有可选的复现子柱，避免把分别存在的复现和排除
+误当作同一参数上可同时实现。
+
+所查来源直接覆盖抽象有效测度工具，没有直接给出本模型全部原取整、
+完整组、双实验及同步包络的对应。该范围不构成全球原创认证。
+
+### 第 98 章：局部二阶矩与首个信息方差响应
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 98 章
+在完整严格半指数噪声区间、每个固定输出紧区间上，确定精确后验信息方差
+相对原精确先验方差的主损失及首个输出相关修正。
+主损失保留实际噪声方差，下一阶系数为
+$(2\gamma/\nu)(2/\sqrt3-1)$。信息量用自然对数；
+改用 bit 时，方差及其修正均除以 $(\ln2)^2$。
+以下通用求导与展开方法属于已有理论。
+
+Dytso、Cardone，*A General Derivative Identity for the Conditional Expectation
+with Focus on the Exponential Family*，
+[arXiv:2105.05106v2](https://arxiv.org/abs/2105.05106v2)，版本 2021-08-30。
+原 PDF 第 2–3 页定理 1 保留 Markov 链、条件 score 乘积可积、
+通道密度导数可积及输出绝对连续条件；
+定理 2 在开输出域的连续指数族、解析充分统计及条件矩假设 A1–A5 下，
+给条件期望导数与条件协方差恒等式。
+本章每个有限实际纤维的 Gaussian 通道满足这些条件，
+直接有 $\partial_y\mathbb E[U\mid y]=\operatorname{Cov}(U,T\mid y)/\sigma^2$。
+该一般公式不提供指数消失噪声下的一致估计。
+正文使用相关的经典归一化指数族求导，对潜在 Gaussian 方差作精确倾斜，
+继而显式计算条件二阶矩与均值平方的消去；没有把一般求导恒等式当作新定理。
+
+Tudor、Yoshida，
+[arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1)，
+*High order asymptotic expansion for Wiener functionals*，
+条件 [A1]–[A3]、命题 1、定理 1 提供带权局部展开的成熟方法。
+其固定维归一化向量的一致 Sobolev 矩、Gamma 因子余项及指标条件
+不能直接用于未缩放且方差增长的完整信息量。
+本章从有限乘积特征函数给出所需前四阶密度导数的 O(delta) 余项，
+未宣称已核验原离散阵列的任意阶 Wiener 展开条件。
+
+Mansanarez、Poly、Swan，*Edgeworth expansion on Wiener chaos*，
+[arXiv:2510.14002v2](https://arxiv.org/abs/2510.14002v2)，版本 2025-10-27，
+原定理 1.2 对方差为一的固定 Wiener chaos 元素给带符号 Edgeworth 密度的 TV 界，
+误差由 Gamma 方差的规定幂控制，展开系数可用 Hermite 矩表示。
+这直接覆盖中心二次参考的通用带符号逼近，
+但 TV 界本身既不给导数范数余项，也不给局部无界二阶信息矩的传递。
+正文另证所需导数界及实际后验的带权局部比较。
+
+Herry、Malicet、Poly，
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)，
+*Superconvergence phenomenon in Wiener chaoses*，推论 10(a)
+覆盖有限 chaos 和在低阶项 L2 消失及 Gaussian 极限下的密度导数收敛。
+它提供参考正则性的通用来源，但不直接给本章曲率所需 O(delta) 速率，
+也不包含实际选中计数律。原文已注明的 score 分部积分符号疑点
+不作证明前提；正文从有限 Gaussian 积分逐项确定所用符号。
+
+Bonis 的 arXiv:1905.13615v2 定理 1、式 (9)，以及
+Serov–Zubkov 的 arXiv:1207.3838v2 任意参数 binomial CDF 夹逼，
+继续提供第 92、94 章同一量化耦合的固定阶控制。
+核心内标准化 Bernoulli 满足统一固定矩条件，
+严格噪声裕量允许使用足够高但固定的矩阶。
+不将 p=1/2 专用结论未经证明推广至一般 p，也不以实际路径行独立为前提。
+
+本章实际桥梁是：在减去原精确完整先验方差之后，传递局部中心二阶密度；
+以平方权重的联合切片导数先支付外部信息量与能量的相关；
+用独立块移除精确非中心项；最后控制归一化误差和同一个噪声残差的混合矩。
+Gaussian 倾斜、Hermite 代数、核恒等式及 Edgeworth 方法各有经典归属。
+结果仅含固定紧区间上的数据概率展开，不给常数阶方差极限、
+全实线一致性、全数据期望、一般条件化方差单调性或半指数端点结论。
+所核对来源未直接给出该完整模型桥梁；这不是全球原创认证。
+
+## 第 99 章：联合根组合的算术排除
+
+对应 [理论卷第 99 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。
+共同整数关系保留同一参数、同一原层、两个取整相位及对数位移，
+因而比“两个根分别超越”多保留同步关系：根和、根差必须在实代数数
+与原 Liouville 数的有理函数域之外。切向例外和随层变动的切线仍未解决。
+
+Adamczewski–Bugeaud, *On the complexity of algebraic numbers I.
+Expansions in integer bases*, Annals of Mathematics 165 (2007),
+Section 4, Theorem E，是第 93 章核对的 $p$-进子空间定理版本。
+允许独立代数系数线性形式；无穷处欧氏范数、有限处最大范数及高度归一化
+不变。本章应用于两根的一个固定组合，不取得移动切线高度的一致界。
+有理函数预测量直接复用第 85 章；公共分母可能含 $2,5$ 之外的素因子，
+所需性质是它小于原层误差的倒数，而非整除原分母。
+
+以下原始来源用于核对共同薄带路线，未作为同步存在定理：
+
+- Li–Li–Wu, *Multiplicative Diophantine approximation with restricted
+  denominators*, [arXiv:2409.18635v1](https://arxiv.org/abs/2409.18635v1)。
+  原 TeX 的 thm1Haus、thm1HMeas、ThmSabPsi、ThmLacunary 及下界证明
+  涉及自由平面坐标、同标量对角问题或固定整数底数。
+  原序列满足相关 lacunarity 条件；缺少的是原反根非线性曲线上的两坐标
+  同时命中两个带对数位移的目标。乘积小不保证两项同时小。
+- Wang–Li–Li, *Uniform Diophantine approximation with restricted
+  denominators*, [arXiv:2302.03923v2](https://arxiv.org/abs/2302.03923v2)。
+  原定义及 Theorems 1.1–1.3 使用 $b^{a_n}$，
+  假设 $\eta=\limsup a_{n+1}/a_n<\infty$；
+  代入原 $b=10,a_n=2e_n$ 则 $\eta=\infty$。
+  没有改变原递推以满足该条件。
+- Baier–Ghosh, *Restricted simultaneous Diophantine approximation*,
+  [arXiv:1503.07107v2](https://arxiv.org/abs/1503.07107v2)。
+  原主定理假设正的无理 $k$-Diophantine 向量，$k\ge d$，
+  对几乎每个 $\alpha>0$ 给出分母和一个分子均为素数的仿射直线逼近，
+  指数为 $1/[d(3k+2)]$ 加允许余量。
+  原 $N_n$ 非素数，反根曲线非该直线；几乎处处的分母求和结论
+  未被解释为原指定层上的下界。
+- Sanford, *A Note on Diophantine Approximation with Restricted
+  Denominators*, [arXiv:2606.02620v1](https://arxiv.org/abs/2606.02620v1)。
+  原 Diophantine density 定义要求每个充分大分母和每个本原分数有一致命中。
+  命题 99.7 的本原测试分数直接否定原集合的任意正密度。
+  该结论只使用定义。原主证明约分后未交代分母仍在任意指定集合中的步骤，
+  因此不作为前提；这里没有声称反驳全文定理。
+
+Li–Li–Wu 所引矩阵环面收缩目标的 manifold-theory 预印本，
+限定检索未定位原文，没有借用未核对定理。
+这些范围和不适用条件不构成全球不存在或原创性证明。
+
+成熟工具包括子空间定理、有理分离、Taylor 展开及模运算。
+仓内综合是共同整数关系、实际对数均值分离、同层反射尺度与由根和指定的
+可计算稠密排除族。反射律以实际边缘复现为条件，没有在构造参数处证明该前提。
+完整得分组未被独立 Poisson 行替代；$E_2$ 是否非空仍未解决。
+
+## 追加锚（第 99 章来源后续增补区）
+
+## 第 100 章：常数阶条件信息方差
+
+对应 [理论卷第 100 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。
+新增综合是：在完整实际计数后验及整个严格噪声区间上，扣除精确观测到的
+有限方差／线性系数后，得到紧输出区间一致的显式二次剖面。
+实际到 Gaussian 的中心二阶局部误差直接复用第 98 章；
+新步骤把参考余项算到常数阶，并将同一测量残差一起倾斜。
+没有从有界余项、弱收敛或 TV 近似直接推出常数极限。
+
+Dytso–Cardone, *A General Derivative Identity for the Conditional Expectation
+with Focus on the Exponential Family*,
+[arXiv:2105.05106v2](https://arxiv.org/abs/2105.05106v2)，
+PDF 第 5 页 Theorem 4、Proposition 3 将条件累积量联系到按充分统计量
+缩放的输出导数。其条件是所指定连续指数族及相应可积性、正则性；
+第 98 章已经核对 Theorems 1–2 的条件。
+Gaussian 有限纤维满足这些有限矩条件，但含逆噪声的公式本身不提供
+指数小噪声下一致估计。第 100 章直接证明归一化倾斜的精确密度变换，
+倾斜全部潜在 Gaussian 坐标及同一个 $G$，再用热方程求导。
+这些是成熟条件累积量工具，不把完整离散信息量冒认为通道的自然参数。
+
+Mansanarez–Poly–Swan, *Edgeworth expansion on Wiener chaos*,
+[arXiv:2510.14002v2](https://arxiv.org/abs/2510.14002v2)，
+原 TeX Theorem 1.2：固定阶混沌中 $\mathbb EF^2=1$ 的 $F$，
+与截至 $4m-1$ 阶的带符号 Hermite 密度之间，TV 误差至多
+$C_{p,m}\operatorname{Var}(\Gamma(F,F))^{(m+1)/2}$。
+对标准化的中心二次型取 $p=2,m=2$ 可直接给 $O(\delta^{3/2})$
+参考带符号分布近似。这不包含本章需要的密度导数上确界、
+乘发散系数后的对数曲率余项或实际选中离散律的中心局部矩。
+加上独立一阶 Gaussian 噪声后的输出不被未经核对地归入单一二阶混沌。
+本章用实际有限系数的乘积特征函数单独证明所需导数界。
+
+Tudor–Yoshida [arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1)
+的 Conditions A1–A3、Proposition 1、Theorem 1 要求相应 Malliavin Sobolev、
+Gamma 因子及指数／正则性条件；未对增长维度的完整未归一化信息量直接套用。
+Herry–Malicet–Poly [arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)
+的 Corollary 10(a) 提供所规定混沌和的通用密度导数收敛，
+不自动提供此处放大后仍为 $o(1)$ 的定量阶。
+Bonis 与 Serov–Zubkov 的有限 binomial 耦合输入仍按第 94–98 章的
+精确条件复用，不重复声称新的耦合定理。
+
+全部 Gaussian 积分、Hermite 多项式、热方程及指数倾斜代数均属成熟工具。
+本章保留实际有限系数、同一残差的混合矩、常数阶核心比较及原支持一致概率范围。
+限定文献核查不构成全球原创性证明。没有输出全轴积分、坏数据期望、
+零噪声、端点最优性、增长紧区间或新的覆盖效率结论。
+
+## 追加锚（第 100 章来源后续增补区）
+
+## 第 101 章的全输出信息方差平均与文献范围
+
+第 101 章在同一完整计数后验及精确 Gaussian 观测上，将第 100 章的
+固定紧区间剖面提升为 $\int|D_x-R_*|f_x\to0$，由此得到平均剩余常数
+$8/\sqrt3-25/6$。积分始终在给定数据的先验信道内；外层结论是实际
+pair/path 数据概率收敛，对固定支持一致，不包含无界原始数据期望。
+原严格区间 $\ln(1/\sigma_M)\to\infty$、
+$\limsup\ln(1/\sigma_M)/Q^3<c_q/2$ 全部保留。
+精确输出均值先保留，再由 $m_x=O_{\mathbb P}(Q^{-5/2})$ 支付；
+观测到的发散有限系数及分母中的有限噪声仍不可替换。
+
+全方差恒等式、条件正交投影、四阶矩截断和 Gaussian 指数倾斜均为经典工具。
+新增连接在于先中心化完整信息量，以选中密度的 $L^2$ 误差支付全局方差密度，
+在同一潜变量与输出上显式支付噪声残差的变化，联合消去相关外部能量之后
+才取消外部信息方差，最后用任意高的固定 Fourier 阶数及 Chernoff 尾界
+控制可积残余。紧区间收敛自身不许可积分，TV 自身不传递平方信息量。
+
+Herry–Malicet–Poly，*Superconvergence phenomenon in Wiener chaoses*，
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)，原文 §2.3
+Theorem 13 假设固定维各向同性向量的各坐标属于指定固定 Wiener chaos，
+并弱收敛到标准 Gaussian；对充分大指标给
+相对熵 $\le$ 一半相对 Fisher 信息 $\le C$ 乘四阶矩超额。
+中心参考 $T_0/\sqrt{\nu_0}$ 属于二阶 chaos、方差为一，
+$\max w_j\to0$ 给其正态极限，四阶矩超额为 $O(\delta)$，
+故此参考 Fisher 信息速率直接属于既有理论。
+它不识别乘 $A^2=O(\delta^{-1})$ 后的常数，也不自动把加入一阶测量噪声的
+变量判成同一固定 chaos，更不提供实际离散选中后验的全局结论。
+原文采用对数密度梯度的 score 定义，其分部积分显示式的符号问题仍按此前说明保留；
+本卷直接从 Gaussian 积分推导所需倾斜，不依赖该显示式的符号。
+
+Mansanarez–Poly–Swan，*Edgeworth expansion on Wiener chaos*，
+[arXiv:2510.14002v2](https://arxiv.org/abs/2510.14002v2)，
+原 Theorem 1.2 对固定 $\mathcal W_p$、$\mathbb EF^2=1$ 与任意固定正整数 $m$，
+给出至 $4m-1$ 次的带符号 Hermite 展开，TV 误差由
+$C_{p,m}\operatorname{Var}(\Gamma(F,F))^{(m+1)/2}$ 控制。
+任意高固定阶的中心参考展开不是新一般理论；带符号 TV 界仍不控制低密度区的
+对数导数。第 101 章通过相同系数数组的特征函数，另证四阶导数反演、
+中间区间的相对展开与外部输出尾界，并以固定矩积分多项式余项，
+避免额外施加 $\sigma_M^2(\ln Q)^C\to0$。
+
+Dytso–Cardone [arXiv:2105.05106v2](https://arxiv.org/abs/2105.05106v2)
+的 Theorems 1–2、Theorem 4／Proposition 3，及 Tudor–Yoshida
+[arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1) 的
+Conditions [A1]–[A3]、Proposition 1／Theorem 1，分别提供已有的条件导数／累积量
+关系和带明确 Malliavin 正则性及速率条件的局部加权展开。
+前者的固定有限混合正则性成立，但其逆噪声导数不单独提供本区间的全局界；
+后者的假设不能自动移植到增长且未归一化的离散信息量。
+Bonis 及 Serov–Zubkov 的一般参数二项耦合／CDF 界仍按第 96、98 章核对的
+版本和紧参数范围使用，不从对称二项外推。
+
+这些来源的经典机制与本卷实际模型组合分开承担。
+本章不声称文献全域原创性、零噪声结论、端点最优性、形式核验或新实验等价。
+
+## 第 102 章：离散二次平滑与占据指数内的平均信息方差
+
+[谱边界卷第 102 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+将第 101 章平均后验信息方差及全输出加权残余的条件扩大到
+$L_M\to\infty$、$\limsup L_M/Q^3<c_q$，其中 $L_M=\ln(1/\sigma_M)$。
+新步骤直接控制实际二项二次相位，并比较中心信息量前两阶的输出矩密度；
+外部计数、精确后验中心与同一 Gaussian 测量残差均保留。
+它不宣称严格端点成立、阈值必要或存在实际共振反例。
+
+D. R. Heath-Brown，*A New k-th Derivative Estimate for Exponential Sums via
+Vinogradov's Mean Value*，[arXiv:1601.04493v1](https://arxiv.org/abs/1601.04493v1)。
+原始 TeX 引言式 (1) 回顾经典 van der Corput 估计：整数 $k\ge2$，
+相位具有到 $k$ 阶的连续导数，且 $0<\lambda_k\le f^{(k)}\le A\lambda_k$。
+正文只取 $k=2$，得到长度 $N$ 的二次相位和界
+$C(N\sqrt{\lambda_2}+\lambda_2^{-1/2})$；
+二次相位平移不改二阶导数，负号由共轭处理。
+该论文新的 Theorem 1 从 $k\ge3$ 开始，不是本章所用的二阶定理。
+经典工具的归属维持 van der Corput；二项单峰质量的分块变差估计与
+Abel 求和负责将它转成对任意实中心一致的加权界。
+
+A. Mitalauskas、V. Statulevičius，*Local limit theorem and asymptotic expansion
+for the sums of independent lattice random variables*，
+Lithuanian Mathematical Journal 6(4), 1966，
+[DOI:10.15388/lmj.1966.19754](https://doi.org/10.15388/lmj.1966.19754)。
+原期刊 PDF 起始定义与定理处理独立整数值随机变量，并增加算术集中条件。
+本章的经验实中心二次型未被证明具有该文要求的共同整数格；
+该来源也没有直接提供当前噪声尺度上的前两阶信息矩密度。
+所以只作为局部极限定理的相关边界来源，不导入其未核对的算术条件。
+原 PDF 公式提取存在字形限制，没有据提取文本宣称精确条件已满足。
+
+Bonis 的 [arXiv:1905.13615v2](https://arxiv.org/abs/1905.13615v2)
+Theorem 1 对独立同分布、中心化、协方差为单位阵的和，在相应
+四阶及 $p+2$ 阶矩条件下给 $W_p$ 的 $n^{-1/2}$ 界。
+一维紧参数 Bernoulli 标准化满足这些假设；同一单调分位数耦合同时实现
+所有固定幂的最优运输代价。本章只在多项式低频段使用它，不把该误差除以噪声。
+Serov–Zubkov 的 [arXiv:1207.3838v2](https://arxiv.org/abs/1207.3838v2)
+任意成功参数的有限二项 CDF 夹逼及单独端点定义，继续提供二项专门核对；
+未用对称二项的结论代替实际数据依赖的近半参数。
+
+第 101 章的选中密度比较、相关外部能量支付、核心联合密度正则性、
+有限噪声抵消及参考尾界均按原假设复用。
+本章新增的高频预算使用固定但可随严格指数余量选择的多个未标记坐标；
+信息量的平方展开至多标记两个坐标，测量残差矩的 Gaussian 因子精确保留。
+输出密度很小时，用条件均值平方的凸截断支付误差，不作密度下界假设。
+
+所查文献未直接给出这条完整选中计数信道、实际经验中心及移动指数噪声下的
+平均信息方差定理；有限检索不构成全局原创认证。
+结论仍是给定原始数据后的先验信道积分，在实际确定支持数据律下作一致概率判断，
+分别覆盖 pair/path。它不提供无界原始数据平均、任意输出一致近似、
+零噪声定理或其他后验泛函的自动推广；纯理论文本未进入消化或 Lean 冻结链。
+
+## 第 103 章：固定阶逐输出 Rényi 熵与稀有能量倾斜
+
+[谱边界卷第 103 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+研究完整计数后验在原 noisy scalar 后的逐输出 Rényi 熵。
+对每个固定 $\alpha>0,\alpha\ne1$，在
+$L_M\to\infty$、$\limsup L_M/Q^3<c_q/2$ 下，
+$\delta[H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x)+L_M]$
+在固定输出紧区间上一致趋于 $J_\alpha/(\alpha-1)$。
+这是两种原实际实验各自的、对确定支持一致的数据概率结论。
+它不是平均条件熵或标签微观态熵，也不含变化阶数或噪声端点。
+
+Alfréd Rényi，*On Measures of Entropy and Information*，
+Fourth Berkeley Symposium, vol. 1, pp. 547–561 (1961)，
+[原始 PDF](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s4_v1_article-27.pdf)。
+原定义 (1.21) 对 $\alpha>0,\alpha\ne1$ 给有限分布的阶数熵，
+(1.22) 给趋近 Shannon 熵的极限；正文把底二对数换成自然对数。
+这一有限定义与 Gaussian 核的幂恒等式只给精确 escort 公式，
+不提供本章的稀有输出局部密度。
+
+Tim van Erven、Peter Harremoës，*Rényi Divergence and Kullback–Leibler Divergence*，
+[arXiv:1206.2459v1](https://arxiv.org/abs/1206.2459v1)，2012 年 6 月 12 日版本。
+原式 (26) 定义正有限归一化下的 $q^{1-\alpha}p^\alpha$ 倾斜律，
+Theorem 27 给变分恒等式与极小者；$\alpha>1$ 时极小者结论另要求其所述可积性。
+本章有限正概率计数盒上取均匀 $q$，满足这些 escort 识别条件。
+计数二项系数本身亦取幂，不是先倾斜独立 Bernoulli 标签再聚合。
+所取原文为明确的 v1；请求 v4 返回 404，没有据此宣称已读后续版本。
+
+Joseph B. Kadane，*Sums of Possibly Associated Bernoulli Variables:
+The Conway–Maxwell–Binomial Distribution*，
+[arXiv:1404.1856v1](https://arxiv.org/abs/1404.1856v1)。
+原 Section 2 式 (1) 与 Section 3 指数族形式识别单组计数 escort：
+其 $m=C_j,\nu=\alpha$，成功参数换为
+$\operatorname{logistic}(\alpha\operatorname{logit}p_j)$。
+该分布识别本身不提供随规模变化的整个乘积在指数小噪声下的相对误差；
+正文另由带余项 Stirling、原子包络及整个低计数能量范围证明所需估计。
+
+Ronald W. Butler、Marc S. Paolella，*Uniform saddlepoint approximations for ratios
+of quadratic forms*，Bernoulli 14(1), 140–154 (2008)，
+[arXiv:0803.2132v1](https://arxiv.org/abs/0803.2132v1)。
+原 Section 1 在支持端点渐近中固定维数，类 $C_R$ 要求相应最大特征值趋零。
+Lemma 5 的式 (8) 给精确非中心平方矩母函数、式 (9) 给收敛带；
+式 (10)、(13) 描述鞍点与密度近似。
+这些是本文 Gaussian 变换与方法的经典背景，但其固定维数比值定理
+不是本章增长三角数组、离散计数 escort 或固定总数修正的定理。
+正文对自身数组直接证明最大权重控制、共同正倾斜域及可积 Fourier 尾界。
+原 PDF 可读，TeX 来源请求返回 403，未将后者记为成功访问。
+
+Arratia–Goldstein–Langholz 的
+[arXiv:math/0506300v1](https://arxiv.org/abs/math/0506300v1)
+Condition 2.1、Theorem 2.1 要求独立 Bernoulli 总方差至少为变量数的固定比例，
+并取有界中心偏移。本模型补集有 $M$ 阶个变量、方差为 $q=o(M)$ 阶，
+不能直接代入该定理。正文复用第 70 章已核对的方差参数补集倾斜证明，
+再单独证明窄 Gaussian 权重下的能量条件均值界。
+
+Daniels 的 *Saddlepoint Approximations in Statistics*，
+[DOI:10.1214/aoms/1177728652](https://doi.org/10.1214/aoms/1177728652)，
+以及 Chaganty–Sethuraman 的 *Strong Large Deviation and Local Limit Theorems*，
+[DOI:10.1214/aop/1176989136](https://doi.org/10.1214/aop/1176989136)，
+本次仅取得元数据，原 PDF 路径返回挑战 HTML；没有导入未核对的定理。
+初次用于寻找 Daniels 的另一 DOI 对应不同题名，已由元数据排除，不作引用依据。
+
+本章与第 70 章的全局计数 Rényi 熵、第 71 章输出平均的信息谱结论区别明确。
+新增模型连接包括：在同一稀有输出加权下支付选中律修正，
+以实际一、二行矩控制最大权重，保留精确中心的非中心倾斜，
+以及在原噪声精度上把相对局部密度返回完整计数后验。
+成熟 escort、鞍点和 Fourier 工具不称为原创；有限来源检索不构成全局新颖性认证。
+正文仅为纯理论与归属说明，未进入消化或 Lean 冻结链。
+
+## 第 104 章：增长的占据数组与线性噪声余量
+
+[谱边界卷第 104 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+将第 102 章的平均信息方差和全输出加权残余推广到
+$\Delta_M=\ln(q/Q^{11/4})-\ln(1/\sigma_M)\ge C_{r,\beta}Q$。
+常数由原率函数的 Hessian 上界显式给出，只是充分值。
+这允许 $L_M/Q^3\to c_q$，不宣称端点、更小阶余量或阈值必要性。
+
+本章继续使用第 102 章已核对的
+D. R. Heath-Brown，[arXiv:1601.04493v1](https://arxiv.org/abs/1601.04493v1)
+引言式 (1) 所述经典 van der Corput 二阶导数估计。
+所用相位是二次多项式，二阶导数不依赖经验实中心；
+每个因子的常数固定，之后乘积中的 $C_v^{n_M}$ 明确保留。
+没有使用该文从 $k\ge3$ 开始的新 Theorem 1，
+也没有把增长因子数当成增长矩阶或假定相关常数一致。
+
+Bonis 的 [arXiv:1905.13615v2](https://arxiv.org/abs/1905.13615v2)
+Theorem 1 及 Serov–Zubkov 的
+[arXiv:1207.3838v2](https://arxiv.org/abs/1207.3838v2)
+仍只负责固定阶、紧二项参数的低频分位数比较。
+第 102 章逐项核对的独立同分布、中心化、协方差及矩假设保持不变。
+这一步的误差没有除以缩小的测量噪声。
+
+A. Mitalauskas、V. Statulevičius，
+[DOI:10.15388/lmj.1966.19754](https://doi.org/10.15388/lmj.1966.19754)，
+继续作为独立格点和局部极限定理的相关边界来源。
+原文要求整数值和算术集中条件，本章没有为真实经验中心的二次能量建立这些条件，
+因此不直接套用其定理；原 PDF 的公式提取限制也未消除。
+
+模型本身的新连接如下：原率函数在一个固定正位移区间严格低于 $c_q$，
+故原计数线上有数量为 $u_*Q^2+O(1)$ 的组，以共同高概率具有指数级占据数。
+该事件来自原一、二行相对 PGF 系数和并集界，path 行无需独立。
+这些远处组的低阶能量小，却在高频区共同产生二次相位消减。
+展开前两阶信息矩后，最多删除两个坐标；其余因子保留原计数及联合相关性。
+增长乘积的对数收益为 $Q^3$ 量级，固定因子常数只付出 $Q^2$ 量级，
+从而覆盖此前固定因子数无法支付的频率区间。
+
+高频论证与实际选中律、相关外部能量及同一 Gaussian 残差的返回步骤分工明确：
+前者新增，后者复用第 101、102 章不含逆噪声的界并核对原假设。
+全输出方差通过前三个矩密度和条件均值平方的凸截断控制，未假定输出密度下界。
+所有有限观测系数和噪声修正保持精确。
+
+针对增长维数二次格点和、三角阵特征函数乘积及算术平滑所作的有限检索，
+未提供可直接代入当前完整选中计数信道的定理；检索元数据未被当作定理来源。
+这里区分经典工具与模型内新增推导，不作全局原创认证。
+结论是原实际确定支持数据概率下的先验信道积分判断，pair/path 分别成立；
+不提供全局原始数据期望、更小噪声的失败结论或其他后验泛函的自动推广。
+纯理论文本未进入消化或 Lean 冻结链。
+
+## 第 105 章：逐输出 Rényi 响应与有限噪声中心
+
+[谱边界卷第 105 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在第 103 章相同原计数后验、pair/path 数据律和半指数噪声区间内，
+给出零输出与固定输出之间的 $\delta^{-1/2}$ 线性项及常数阶二次项。
+中心采用包含全部原组、精确后验中心和实际噪声的有限鞍点。
+对 $|\alpha-1|\ge\eta_Q\gg\sqrt\delta$ 还得到固定正紧区间内的穿孔一致版本；
+阶数一的实际导数义务仍未由该比较解决。
+
+R. W. Butler、M. S. Paolella，
+[arXiv:0803.2132v1](https://arxiv.org/abs/0803.2132v1)，
+*Bernoulli* 14(1), 140–154 (2008)，
+继续提供第 103 章已核对的非中心平方和矩母函数、收敛域和鞍点密度前因子。
+其固定维数支持边缘比值定理未被当成当前增长数组或实际计数 escort 定理。
+本章先对有限 Legendre 函数 Taylor，未对该文近似式作超出假设的微分。
+
+Sojung Kim、Kyoung-Kuk Kim，
+*Saddlepoint methods for conditional expectations with applications to risk management*，
+[arXiv:1510.01858v1](https://arxiv.org/abs/1510.01858v1)（2015-10-07），
+第 2、3 节，Lemma 3.1、Lemma 3.2 和 Theorem 3.3，
+研究有连续联合密度的随机向量及其 iid 样本均值，要求鞍点附近的联合累积量函数
+和插入导数 $K_\gamma(\eta)$ 解析。插入导数的反演积分与密度的鞍点比值，
+是本章条件信息量导数问题的经典近邻。
+原离散计数 escort、相关 path 数据和增长数组尚未提供该定理的联合解析输入及一致导数界，
+故该文不直接解决 Shannon 延拓；有限支持本身也不能替代随规模一致的界。
+
+Alexander Katsevich，
+*Saddle Point Approximation and Central Limit Theorem for Densities in high dimensions*，
+[arXiv:2510.21545v1](https://arxiv.org/abs/2510.21545v1)（2025-10-24），
+的 Assumption 2.1、Theorem 3.1、Corollary 4.1、Assumption 4.2 与 Theorem 4.3
+提供高维密度近似的相关条件。本章不将其作为证明前提。
+具体地，对方差一的标准化标量按字面取 $n\asymp\delta^{-1}$，
+在 $\xi_n=2.5/\sqrt n$ 处，特征函数模至少 $1-\xi_n^2/2\to1$，
+而该版本 Assumption 4.2(3)、式 (4.5) 的右端
+$\max\{e^{-\sqrt n|\xi_n|},(1+|\xi_n|)^{-\kappa n}\}$ 趋于 $e^{-2.5}<1$。
+故此直接标准化代入不满足印出的条件；这里不擅自修正其尺度，也不对其他版本作结论。
+本章所需特征函数包络由原核心平方正态因子直接建立。
+
+Rényi、van Erven–Harremoës 与 Kadane 的归属沿用第 103 章：
+有限阶熵、escort 恒等式及幂二项分布是已知结构，未被单列为本章新定理。
+新推导把 $O_{\mathbb P}(\sqrt\delta)$ 的未缩放对数密度误差传回实际完整计数后验，
+明确支付核宽度扰动的 $|u'-u|/\delta$，并由精确有限阶数导数消除差商分母的伪障碍。
+合法慢降噪序列 $\sigma=\delta^{1/8}$ 表明删除噪声鞍点会留下发散线性残差。
+
+针对相对鞍点密度、条件矩与增长数组导数的有限原文检索不构成原创认证。
+未取得的 Tierney–Kadane 原文未用作依据；相关访问失败不被当作文献反证。
+本文只保留模型内推导及适用边界，不声称输出平均条件 Rényi 熵、Shannon 阶或无穷阶已由此解决。
+纯理论文本未进入消化或 Lean 冻结链。
+
+## 第 106 章：二次共振的积分成本
+
+[谱边界卷第 106 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把完整原计数信道的加权信息方差区间扩大到
+$\Delta_M-\tfrac12\ln\ln Q\to\infty$，其中
+$\Delta_M=\ln(q/Q^{11/4})-\ln(1/\sigma_M)$。
+它保留实际中心任意取实数、完整固定总数后验、相关 path 行及同一测量残差。
+任意 $\Delta_M\to\infty$ 的命题仍未解决；新条件只是一条充分条件。
+
+Francesco Cellarosi、Jens Marklof，
+*Quadratic Weyl Sums, Automorphic Functions, and Invariance Principles*，
+[arXiv:1501.07661v2](https://arxiv.org/abs/1501.07661v2)（2015-02-26），
+引言式 (1.3)–(1.4) 的 Jacobi theta 函数及精确函数方程，
+要求复二次参数有正虚部，允许复线性参数，直接包含本文 Gaussian 的 Poisson 变换。
+第 2.6 节的 $\mathcal S_\eta$ 包含 Schwartz Gaussian。
+第 3.7 节 Lemma 3.18 对全部平移变量给尖点包络，
+Lemma 3.19 沿 Lebesgue 横坐标积分有理尖点区域。
+这提供积分共振峰宽度的经典结构。
+本章另写有限分母 Dirichlet 分解，明确二项质量误差、增长因子常数 $C^n$ 和原模型尺度。
+未把该文随机 theta 不变原理套到实际后验，也未从一般绝对连续测度推出有界密度。
+
+Roger Baker，*L^p maximal estimates for quadratic Weyl sums*，
+[arXiv:2103.05555v1](https://arxiv.org/abs/2103.05555v1)（2021-03-09），
+主定理积分线性变量、对二次变量取极大，使用单位权的有限 Weyl 和；
+本章则积分二次频率、带耦合的任意线性移位与二项权，故未直接使用该主定理。
+其 Lemma 2 的有理主项分解保留误差
+$q(1+|\beta_1|N+|\beta_2|N^2)$，本章未把该误差丢弃。
+Lemma 3(i) 在相应互素条件下给完整 Gauss 和界，并归属 Estermann；
+本章的模平方计算记录可覆盖偶分母的显式 $\sqrt{2k}$ 界。
+这些二次数论计算不是新增的一般定理。
+
+Bonis、Serov–Zubkov 仍只供应第 102 章原固定矩阶、紧参数的低频比较，
+没有把耦合误差除以最终噪声。
+Heath-Brown 的经典二阶导数界保留第 104 章原范围；本章的新积分证明不再按
+“整个频段长度乘逐点最坏界”支付所有峰。
+Mitalauskas–Statulevičius 的独立整数格点条件未为真实经验中心建立，仍不直接应用。
+
+模型内的新连接是：对所有经验实中心共同主控的周期包络，每周期只付
+$O(\mathcal D^{-1})$，其中 $\mathcal D=(q/Q^{11/4})\sqrt\delta$；
+对数个原中心组控制中频非零有理峰，固定 16 个未标记因子与 Gaussian 权逐周期控制全部远频。
+最多两个信息矩标记及同一 $G^2,G^4$ 项全程保留，所得任意多项式精度通过凸截断
+进入条件均值平方，并复用无逆噪声的实际选中律回接。
+小分母峰的标记抵消尚未证明，不能据现有上界失败宣告原命题失败。
+
+有限原文检索不认证全局原创。结论是先验信道积分在实际数据概率下的判断，
+未声称无界原始数据期望、逐输出一致、零噪声或其他泛函已同步推广。
+纯理论正文未进入消化或 Lean 冻结链。
+
+## 第 107 章：最大计数原子与无穷阶端点
+
+[谱边界卷第 107 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在原半指数噪声区间给出逐输出最小熵变化的系数 $\gamma/[2\rho(0)]$，
+并独立证明 $\alpha\to\infty$、$\alpha\le\ln Q$ 的一致有限阶桥接。
+最大原子由完整有限计数元组上的约束极小值直接处理；
+固定阶 Rényi 系数的无穷阶极限只作一致性核对，不承担极限交换。
+
+Robert König、Renato Renner、Christian Schaffner，
+*The operational meaning of min- and max-entropy*，
+[arXiv:0807.1338v1](https://arxiv.org/abs/0807.1338v1)，
+Definition 1、独立子系统特例及 Theorem 1，
+将经典—量子态的条件最小熵与最优 POVM 猜测概率的负对数相联系。
+侧信息也为经典时，该量先平均每份侧信息下的最佳猜测概率。
+本章对象是指定输出处的 $-\ln\max_n\mathsf P_x^y(n)$，不是该平均条件熵。
+无条件最大原子定义相容，本文另从原 Gaussian Bayes 公式推导逐输出恒等式，
+并将 bits 转为 nats。
+
+Tim van Erven、Peter Harremoës，
+[arXiv:1206.2459v1](https://arxiv.org/abs/1206.2459v1)，
+Theorem 6 给无穷阶 Rényi 散度的本质上确界表达，
+在可数空间为 $\ln\sup_xP(x)/Q(x)$，须保持其零值约定。
+取有限均匀参照律即得到最大原子熵。
+其固定分布对的阶数连续性不能代替本章增长模型的双极限论证。
+
+Bernard Bercu、Jean-François Bony、Vincent Bruneau，
+*Spectrum of the product of Toeplitz matrices with application in probability*，
+[arXiv:0712.1302v1](https://arxiv.org/abs/0712.1302v1)，
+Theorem 2.3、Theorem 2.4 要求连续实符号 $f,g$ 且 $g\ge0$，
+给有限 Toeplitz 乘积的极端特征值与无限算子谱边缘的对应；
+谱边缘一般不等于 $fg$ 的极值。
+第 3 节、Corollary 3.1 对平稳 Gaussian 过程二次型给速度 $n$ 的大偏差原理，
+其率函数可有斜率 $1/(2\lambda_{\max})$ 的仿射部分。
+这提供谱边缘成本形状的经典近邻，但对象是 Gaussian 事件概率，
+不能直接证明原受条件约束离散计数的最大原子或指数窄平滑密度。
+
+本章使用经典二项众数比的离散曲率，以向量误差避免损失整个组数的常数；
+全盒下界与最大经验方差组的可行整数构造分别承担两个方向。
+原固定总数修正上、下界按各自方向使用，没有假定远元组上的统一正下界。
+增长阶数的密度证明使用固定内部倾斜及单个平方坐标的显式密度，
+未假定边界鞍点对阶数一致内部化。
+高组 Stirling、尾项与核宽度误差中的 $\alpha\le\ln Q$ 因子逐项支付。
+
+有限原文检索不认证全局原创；经典工具与模型内组合分开归属。
+结论保留原实际 pair/path、紧输出和确定支持一致的概率范围，
+不提供下一输出尺度、任意更快阶数、Shannon 阶或输出平均熵的结论。
+纯理论文本未进入消化或 Lean 冻结链。
+
+## 第 108 章：绝对众数成本与近端包络
+
+[谱边界卷第 108 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把最大后验原子的领先阶成本推进到绝对 $o(1)$ 精度。
+原完整经验最大方差 $v_*$ 保留在放大输出斜率中；
+有限噪声项在逐输出成本中可发散，却在两个输出相减时严格抵消。
+证明覆盖全部最小化元组，不预设唯一最大权重或唯一最优配置。
+
+Jean-Jacques Moreau，*Proximité et dualité dans un espace hilbertien*，
+Bulletin de la Société Mathématique de France **93** (1965)，273–299，
+[Numdam 原文](https://www.numdam.org/item/BSMF_1965__93__273_0/)。
+第 1 节的 $\Gamma_0(H)$ 是实 Hilbert 空间上适当、下半连续的凸扩展实函数。
+Proposition 3.a 给平方距离罚项加该函数的唯一极小点；
+Examples 3.c–3.e 分别处理仿射函数、非空闭凸集的示性函数和两者之和。
+Example 3.e 的答案是先按仿射系数平移再投影。
+取 $H=\mathbb R$、$C=[0,\infty)$、仿射系数 $\delta\sigma^2/(2v_*)$，
+直接得到本章 $e^\circ(h)=(h-\delta\sigma^2/(2v_*))_+$。
+这一步是经典定理的直接应用；它不证明原离散计数成本与仿射成本相差 $o(1)$，
+也不赋予离散实际极小元唯一性。
+原文完整 PDF 的提取含一项数值 token 替换警告；上述法文假设及公式可读，
+未把提取进程成功等同于所有字形无误。
+
+Philippe Mounaix、Satya N. Majumdar、Abhimanyu Banerjee，
+*Bose-Einstein Condensation of a Gaussian Random Field in the Thermodynamic Limit*，
+[arXiv:1111.3229v2](https://arxiv.org/abs/1111.3229v2)。
+Section II 的 (i)–(iii) 假设包括环面上中心齐次 Gaussian 场、归一化正定协方差、
+严格的零频最大协方差模、存在的极限谱、径向对称和谱边缘幂律。
+式 (21)–(24) 把临界强度写为谱亏损倒数的积分；
+边缘指数 $\zeta$ 小于维数 $d$ 时该积分有限，$\zeta\ge d$ 时无限。
+Section III.A 相应排除后者的有限强度凝聚转变。
+这些是热力学极限下条件场质量的结论，不是固定总数离散计数的最大原子公式。
+
+形式上的谱轮廓 $\rho(s)/\rho_0=e^{-\kappa s^2/2}$ 对应一维二次边缘，
+亏损倒数在零附近不可积。这与本卷 $K'(1/(2\rho_0)-)=\infty$ 的边界相容，
+但不构成原计数模型的凝聚或非凝聚定理。
+尤其不能从“单个最大方差坐标给可行上界”推导“典型后验质量凝聚于该坐标”。
+本章未采用严格最大值或谱间隙假设。
+所取版本横幅为 2012 年 1 月 30 日的 v2，PDF 内部日期为 2021 年 9 月 6 日；
+两种日期原样区分，不由内部日期推断另一个版本。
+
+本章的实际模型内容是完整有限经验系数比较、全元组离散曲率下界、
+同一数据纤维的整数上界构造，以及原噪声精度下的绝对成本拼接。
+普通密度归一化由第 105 章的实际相对鞍点比较推出，没有以弱收敛替代密度定理。
+经典包络法、二项对数凹性及 Stirling 展开分别归属其成熟来源；
+有限文献核查不认证全局原创。结论仍是纯理论文本，未进入 Lean 或消化链。
+
+## 第 109 章：半整数带、theta 标记与未闭合的方差抵消
+
+[谱边界卷第 109 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在 $\ln(1/\sigma)\to\infty$ 且任意 $\Delta=\ln(q/Q^{11/4})-\ln(1/\sigma)\to\infty$ 下证明实际标量输出的
+加权 $L^1$ 平滑，并将前两阶信息标记的剩余项定位于非零半整数共振带。
+原完整信息方差定理仍缺带内中心抵消和输出尾部控制，未由标量结果自动推出。
+
+Daniele Agostini、Carlos Améndola，*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)。
+Section 2 定义采用 $e(x)=\exp(2\pi x)$，复对称矩阵的实部正定；
+参数还必须避开 theta 零除子才能形成归一化分布。
+Proposition 4.1、Remark 4.2（PDF 第 11–12 页及对应原 TeX）
+把特征函数写成移位 theta 比，把矩写成 theta 导数、累积量写成对数导数；
+协方差分子是 $\theta\theta''-(\theta')^2$，并由热方程联系线性与二次倾斜。
+这些基本公式在原文亦归属此前离散 Gaussian 文献。
+
+本章一维 Gaussian 相位对应矩阵参数
+$B_{\rm theta}=1/(2\pi d)-2i\tau$、线性参数
+$u_{\rm theta}=m/(2\pi d)+ib/(2\pi)$，实部条件成立。
+但复杂经验相位处的 theta 分母未获一致非零保证；
+因此本章保留不除以单坐标因子的有限乘积标记公式。
+该文没有给原二项信息标记、固定总数选中律或增长数组下的统一二阶导数估计，
+也不支付条件方差比较的全输出尾部。
+
+J. P. Buhler、A. C. Gamst、R. L. Graham、A. W. Hales，
+*Explicit error bounds for lattice Edgeworth expansions*，
+[arXiv:1710.08845v1](https://arxiv.org/abs/1710.08845v1)。
+Theorem 1 与 Section 1（PDF 第 1–4 页）处理有界、非退化整数随机变量的 iid 和，
+固定格距与平移，给均值两侧概率差的一阶偏度及同余修正；
+归一化表述把格距设为一，允许实平移。
+版本横幅为 2017 年 10 月 24 日，内部标题日期为 2018 年 9 月 12 日，二者区分。
+这说明格点修正须保留自己的算术条件，
+并非直接适用于本章非同分布二次计数、经验实中心、Gaussian 平滑及两个信息标记。
+骰子例子也不构成原实际计数模型的反例。
+
+第 106 章已核对的 Cellarosi–Marklof [arXiv:1501.07661v2](https://arxiv.org/abs/1501.07661v2)
+的 theta 变换及 Lemmas 3.18–3.19 提供经典 cusp/移位包络关系；
+Baker [arXiv:2103.05555v1](https://arxiv.org/abs/2103.05555v1)
+Section 2、Lemma 3 的完整 Gauss 和界保持其互素条件。
+它们的分布性或最大估计不替代原共同环境的量化相位分离。
+本章另直接证明小分母收缩与单模宽度：分母一、二只有一个模为一的 Fourier 模，
+更大固定分母有严格收缩；使用全部可用中心因子将每个共振带物理积分宽度降至常数。
+
+条件方差的共同调制抵消和信息倾斜二阶导数是经典条件矩与指数族恒等式，
+不被另称为新通用定理。这里的模型内内容是实际标记 Fourier 定位、
+无逆噪声的选中标量回接，以及保留精确中心、完整外部相关性和同一测量残差的接口。
+原中心有理独立只排除精确共振，不给所需的近共振速率。
+有限原文检索未找到直接承担全部剩余估计的结果，不认证其不存在或全局原创。
+纯理论文本未进入 Lean、消化或冻结链。
+
+## 第 110 章：有限 Gibbs 响应、Prékopa 边缘与高阶端点
+
+[谱边界卷第 110 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在原半指数噪声条件、固定原幅度与固定 $\beta$ 下，把紧输出的 Rényi 熵差
+一致延伸到 $\alpha\ge a_Q$ 的整个无界区间，其中 $a_Q\sqrt\delta\to\infty$。
+更强的有限阶因子公式覆盖每个固定 $c>0$ 的 $\alpha\ge c/\sqrt\delta$；
+当 $\alpha\sqrt\delta\to c$，相对最小熵响应留下 $y/(2c\rho_0)$。
+经验最大方差保留在放大中心中，收敛仍为实际数据概率、支持一致、pair/path 分别成立。
+
+John C. Baez，*Rényi Entropy and Free Energy*，
+[arXiv:1102.2098v4](https://arxiv.org/abs/1102.2098v4)。
+完整五页原文的 Section 1 equations (1)–(2)、Section 2 equations (3)–(9)
+把有限正概率写成 Gibbs 分布，并将 Rényi 熵表示为自由能差商。
+原文注明 Beck–Schlögl 等已有相关恒等式；本章精确幂后验恒等式属于这一经典代数。
+计数元组保留原二项质量及乘数，不能换成微观标签的等概率状态。
+该文不给增长维数和阶数下的统一响应、稀有能量输出回接或实际路径行估计。
+版本横幅为 2022 年 5 月 17 日，内部标题日期为 5 月 18 日，两者区分。
+原 PDF 第 3 页与原 TeX 中，equation (9) 前一个未使用中间式缺少所需对数符号；
+这里使用可读的 (9) 与正文直接有限求和，不依赖该中间式。
+
+Dario Cordero-Erausquin，*On matrix-valued log-concavity and related Prékopa and Brascamp–Lieb inequalities*，
+[arXiv:1801.04862v1](https://arxiv.org/abs/1801.04862v1)。
+Theorem 1（PDF 第 2 页）对 $C^2$、正定、逐纤维可积的矩阵值 N-log-concave 函数，
+给边缘仍为 N-log-concave；矩阵维数一就是经典 Prékopa 对数凹边缘定理。
+Section 4（第 14–17 页）的 Proposition 10、Fact 11 及结尾证明已核对。
+本章用明确的光滑正函数逼近 Gaussian 密度乘凸球上图集指标，
+以支配收敛核对非中心、非等方差有限数组下的小球 CDF 对数凹性。
+该定理只给每个有限维度的定性凹性；维度一致的小球下界、对数导数界与卷积尾界由本章另证。
+不把平方和密度本身说成对数凹。
+原文 reference [8] 归属 Prékopa 1971 年论文；另查的 1973 年原文未取得，未冒称已读。
+两份当前原 PDF 的字体提取警告保留为来源边界，可读原命题与直接推导承担所用结论。
+
+第 108 章已核对的 Mounaix–Majumdar–Banerjee
+[arXiv:1111.3229v2](https://arxiv.org/abs/1111.3229v2)
+讨论不同的 Gaussian 场凝聚问题，其齐次性、维数和谱端条件不直接承担本章原计数定理。
+本章从原经验剖面证明 $v_*=v_0$ 及 $1-v_j/v_0\gtrsim\min(j^2\delta^2,1)$，
+再对非最大模作合法临界倾斜，保留最大平方的未归一化核。
+有限 CDF 控制全部非最大模，未由端点优化推出典型单模凝聚。
+
+本章新增综合连接是原缩小谱隙、逆平方权重的小球支付、
+至 $Q^6$ 的原计数幂律相对比较，以及由 $\ln N\le CQ^5$ 与无穷阶重叠。
+有限支持的 $H_\alpha-H_\infty$ 界分别用于两个输出，未推断熵差单调。
+有限文献检索不认证全局原创；未给无界输出、期望熵、Shannon 端点或更宽噪声结论。
+纯理论正文未进入 Lean、消化或冻结链。
+
+## 第 111 章：格点惊异比较、Gaussian 标记积分与条件方差接口
+
+[谱边界卷第 111 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+给出同整数坐标上的二项／离散 Gaussian 中心惊异比较，
+通过共同带噪通道的有符号核收缩，将原完整方差熵目标归约为格点大组问题。
+大组和原外部组都保留各自惊异与能量的共同实现；实际固定总数选择由原中心方差比较支付。
+归约不依赖输出密度下界或把能量误差除以噪声宽度。
+
+第 109 章已核对的 Agostini–Amendola，
+*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)，
+仍提供离散 Gaussian、theta 正规化和矩的经典背景。
+其既有 Proposition 4.1 与 Remark 4.2 不自动给出本章原二项中心惊异的有符号质量误差、
+增长数组的全输出条件方差比较或原 path 数据范围。
+本章的 $d^{-1/8}$ 比较明确给出 Stirling 中央余项、加权尾与精确中心的支付。
+共同正核的 $L^1$ 收缩和条件均值的截断变分公式属于成熟测度与条件期望方法。
+
+Denis S. Grebenkov，*Optimal and sub-optimal quadratic forms for non-centered Gaussian processes*，
+[arXiv:1307.0185v1](https://arxiv.org/abs/1307.0185v1)。
+原 TeX Section II 给 Gaussian 二次型特征函数、迹展开及非中心累积量。
+其模型是离散时间的连续值 Gaussian 向量，不能把 “discrete-time” 当作整数格点概率。
+本章以原有限 Gaussian 积分直接核对零、一、二阶惊异标记，
+保留复均值和方差后得到聚合扭转能量乘 Gaussian 衰减；
+再将所有实际 Poisson 模求和，逐坐标正规化接近一，故没有隐藏指数维数因子。
+Gaussian 平方完成和矩求导本身不主张新意。
+版本标识为 2013 年；当前 PDF 标题日期为 2018 年，原 TeX 使用日期宏，两者区分。
+
+完整补偿后，任意实扭转的非零半整数混叠绝对积分为
+$Ce^{-ce^{2\Delta}}+O(Q^{-400})$，不乘增长的 $Q$ 次幂。
+只减先验方差的弱补偿则在原渐近权重上留下 $A\asymp Q^{1/4}$ 的参考扭转项。
+所选参考扭转未被证明由原经验中心实现，故这个反例只限定估计方法。
+频率相关复中心与逐输出条件均值仍是不同对象，完整非线性条件方差和尾部接口保持开放。
+
+另检索 DOI [10.1214/aop/1176994310](https://doi.org/10.1214/aop/1176994310)
+的全文入口只得到 HTML 阻断，未将其计作已读原文或定理依据。
+有限文献检索不认证全局原创。
+本章是原模型中的综合推导，未进入 Lean、消化或冻结链；
+全余量下的实际方差熵极限仍未解决。
+
+## 第 112 章：小球对数极限、凹性导数与移动经验谱
+
+[谱边界卷第 112 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把高阶 Rényi 输出响应延伸到 $\alpha\ge c\delta^{-1/4}$，得到原有限经验谱的修正
+$-C_{\mathrm{edge}}y/(\alpha^2\sqrt\delta)$，其中
+$C_{\mathrm{edge}}=\pi^2\rho_0/(\kappa\gamma^2)$。
+有限阶因子保持精确，原半指数噪声条件不变，噪声可以任意慢地趋零。
+
+Alexander Nazarov，*Log-Level Comparison Principle for Small Ball Probabilities*，
+[arXiv:0805.1773v1](https://arxiv.org/abs/0805.1773v1)，2008 年 5 月 13 日，九页原文。
+Proposition 1 比较固定正可和特征值序列，要求特征值比的无限乘积收敛。
+Section 2 Proposition 2 对固定无限序列定义
+$L(u)=-\tfrac12\sum\ln(1+2u\lambda_n)$，
+在 $(L'(u)+r)/\sqrt{L''(u)}\to0$ 下给小球概率的尖锐渐近式。
+原文将该式归属 Lifshits 1997 年 Theorem 2，并引 Sytaya 1974 年的 Gaussian Hilbert 空间方法；
+这两个更早原件在本轮未取得，归属来自已读 Nazarov 原文。
+
+本章数组有限、随机，随 $Q$ 和 $\alpha$ 同时改变；该命题不直接给它们的一致导数。
+因此正文明确证明有限 Laplace 和的内外尾、倾斜均值与方差，再由固定步长割线和对数凹性得到能量导数。
+这属于经典方法的原模型统一应用，不被称为新的通用小球原理。
+Theorem 1 另有计数函数积分增长条件，Remark 2 给正则变动的充分范围与移除条件后的失败边界。
+原 PDF 第 2 页的计数函数定义印为 $\mathcal N(\lambda)=\#\{n:\lambda_n<\lambda\}$，
+对正可和无限序列会给出无限计数；该不等号并非提取引入。
+本章不采用这一定义或对应计数函数定理。
+可读有限 Laplace 公式及正文独立的有限和承担推导。
+
+Alexander I. Nazarov、Ruslan S. Pusev，
+*Comparison Theorems for the Small Ball Probabilities of Gaussian Processes in Weighted L2-Norms*，
+[arXiv:1211.2344v1](https://arxiv.org/abs/1211.2344v1)，2012 年 11 月 10 日，十页原文。
+Section 2 Theorem 1／Corollary 1 与 Section 3 Theorem 2 处理固定自伴微分算子的 Gaussian Green 过程，
+要求系数正则性、规范边界条件、权重属于相应 $W_\infty^n$、远离零且规定的根次幂积分相等。
+其中 Section 3 Theorem 2 另要求边界条件的主部在两端分离。
+Proposition 2 的积分 Brownian bridge 还保留 Proposition 1 的正则性与归一化假设。
+在 $m=0$、权重一时指数因子为 $e^{-1/(8\varepsilon^2)}$，
+与逆平方谱的经典常数一致；它不提供本章有限经验谱、非中心均值、移动阶数和原噪声的统一性。
+没有把实际数组冒认为一个固定 Green 算子的谱。
+原 PDF 第 6 页 Proposition 1 证明的一处中间公式在非平凡端点因子两侧重复写了加权范数；
+该式不作为依据，所引用的比较定理与 Proposition 2 的单位权重指数分别核对。
+
+第 110 章已核对的 Cordero-Erausquin
+[arXiv:1801.04862v1](https://arxiv.org/abs/1801.04862v1)
+Theorem 1 标量情形及 Section 4 证明仍承担 Prékopa 边缘凹性。
+光滑正函数逼近凸球上图集指标后，支配收敛得到 CDF 对数凹；只用定性凹性，不引入维数常数。
+Baez 的有限 Gibbs／Rényi 恒等式继续承担精确代数部分，未被扩称为移动数组定理。
+
+Anderson–Darling 1952 原文入口返回 HTTP 200 的 1162 字节 HTML 阻断，未取得 PDF 或采用其定理。
+两份 Nazarov 原 PDF 的字体提取警告及上述未采用的计数函数定义保留为来源边界；
+所用条件和公式均已核对。有限检索不认证全局原创。
+本章未进入 Lean、消化或冻结链，也不声称更慢任意增长阶数、无界输出或 Shannon 端点已统一解决。
+
+## 第 113 章：同输出温度输运与任意发散的格点平滑间隙
+
+[谱边界卷第 113 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+证明原计数后验信息方差在所有 $L\to\infty$、
+$\Delta=\ln(q/Q^{11/4})-L\to\infty$ 下的全输出加权收敛。
+原有限噪声系数、实际经验中心、固定总数选择和 pair/path 范围均保留。
+第 111 章的格点归约和较弱补偿反例仍成立；新增结果补上归一化输出导数与尾部接口。
+
+Daniele Agostini、Carlos Améndola，*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)。
+原 Proposition 4.1 和 Remark 4.2 给 theta 导数的矩、累积量、协方差与热方程关系。
+其复参数域要求二次参数实部正定，并须避开 theta 零点除子才可取相应对数导数。
+本章只对正实格点归一化和求导，并用绝对收敛 Poisson 和直接控制前两次温度导数，
+没有假定复邻域无零点。
+这些成熟有限格点指数族恒等式不自行提供增长数组、原经验中心或条件方差商的统一误差。
+
+Denis S. Grebenkov，*Optimal and sub-optimal quadratic forms for non-centered Gaussian processes*，
+[arXiv:1307.0185v1](https://arxiv.org/abs/1307.0185v1)。
+原 Section II 的对象为有限实 Gaussian 向量、正定协方差和实对称二次型矩阵；
+行列式形式的非中心特征函数及累积量来自精确 Gaussian 积分。
+其中离散时间 Gaussian 过程仍是连续取值变量，不是整数格点分布。
+本章以这些经典积分为参考，并另证固定物理输出下的温度换元：
+坐标、噪声和扭转共同变换，快速输出相位保持不动。
+来源版本的 2013 年 6 月 30 日 arXiv 身份、PDF 所印 2018 年 11 月 12 日以及原 TeX 的自动日期各有其字面范围，
+不据排版日期改认版本。
+
+Cellarosi–Marklof [arXiv:1501.07661v2](https://arxiv.org/abs/1501.07661v2)
+与 Baker [arXiv:2103.05555v1](https://arxiv.org/abs/2103.05555v1)
+的原 theta、Poisson 与 Gauss 材料保持第 106、109 章所列适用边界。
+当前证明的实际输入是已经展开的两标记条带外界及第 111 章的格点质量比较；
+没有借用未验证的丢番图条件、随机相位不变测度或条件局部极限定理。
+Buhler–Gamst–Graham–Hales [arXiv:1710.08845v1](https://arxiv.org/abs/1710.08845v1)
+的原定理针对独立同分布、有界、固定格距的格点和，不直接覆盖本章数组。
+正文所需连续参考导数精度由实际权重累积量和中央坐标块的可积 Fourier 界逐项证明，
+不由通用超收敛结论猜测速率。
+
+正文的新增连接是归一化模的输出一、二阶导数分别带最大权重的一、二次幂，
+从而与增长迹相乘后仍有界；随后在完整条件商中保留平方项，并以同一律的适中区间和尾部支付全先验方差。
+核心联合密度导数是未加权估计，无界方差的转移另由第四矩裁剪承担。
+非大组能量与惊异保留联合关系，支付后才消去外部先验方差。
+这些条件不由文献中的单个有限 Gaussian 恒等式替代。
+
+按 theta 热关系、条件 Gaussian 累积量及 Stein／二次型温度关系作有限检索，
+未取得直接覆盖原标记格点条件方差结论的新定理；该未命中不证明文献中不存在结果。
+本章不声称全局原创、形式核验、固定间隙或更小间隙下的结论，也不把充分条件称作锐阈值。
+
+## 第 114 章：完整经验鞍点与增长阶数的相对局部密度
+
+[谱边界卷第 114 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在原严格半指数噪声条件下，用包含全部经验方差、非中心均值和能量噪声的有限累积量方程
+$K'(t_\alpha)=V$，统一每条确定 $a_Q\to\infty$ 之上的 Rényi 输出响应，包括无穷阶。
+精确有限系数保持在放大的线性项内；本章不声称有界阶数或 Shannon 附近的统一结果。
+
+R. W. Butler、M. S. Paolella，*Uniform saddlepoint approximations for ratios of quadratic forms*，
+Bernoulli 14(1)，140–154，2008，
+[arXiv:0803.2132v1](https://arxiv.org/abs/0803.2132v1)。
+原 Section 1 明确其支持端点渐近中维数固定。
+Lemma 5 要求其非退化比值类 $\mathcal C_{\mathcal R}$、非负分母矩阵及非零分子秩；
+式 (8)–(10) 给非中心 Gaussian 二次型变换、收敛带与鞍点导数。
+本章的逐坐标 Gaussian 积分是这些经典变换的基本形式，不需要该比值类。
+原固定维数相对误差定理未被直接套用于增长有限数组、移动阶数、非中心项和原整数计数后验。
+
+Ivan Nourdin、David Nualart，*Fisher Information and the Fourth Moment Theorem*，
+[arXiv:1312.5841v1](https://arxiv.org/abs/1312.5841v1)。
+原 Theorem 1.1 要求方差一的 $F$ 属于固定阶 $q\ge2$ 的单一 Wiener 混沌，且对某个 $\varepsilon>0$ 有
+$\mathbb E\|DF\|^{-4-\varepsilon}\le\eta$；Fisher 信息界的常数只依赖 $q,\varepsilon,\eta$。
+Corollary 1.2 在一致负 Malliavin 矩条件下才把第四矩收敛扩展为密度的一致收敛。
+没有该条件时，所列前四个等价断言不包括密度上确界收敛。
+只引用第四矩中心极限定理不能省去这个假设。
+
+本章中央辅助二次部分确实满足该文条件。
+若 $W_0=2\sum w_j^2$、$F_0=\sum w_j(Z_j^2-1)/\sqrt{W_0}$，则它属于二阶混沌，方差一，
+第四累积量为 $48\sum w_j^4/W_0^2\le C/A_\alpha$。
+原比较坐标块还给
+$\|DF_0\|^2\ge(c/A_\alpha)\chi_N^2$，其中 $N\ge c'A_\alpha$。
+取 $\varepsilon=2$，由
+$\mathbb E(\chi_N^2)^{-3}=1/[(N-2)(N-4)(N-6)]$
+得到所需一致六阶逆范数矩。
+因此中央辅助二次部分的密度收敛已有成熟直接依据。
+
+完整倾斜变量还含 $2m_j\sqrt{w_j}Z_j$ 与独立 Gaussian 噪声，不属于单一二阶混沌。
+正文对这个完整变量直接验证精确非中心特征函数、共同坐标块的可积频率尾和局部三阶余项，
+再在倾斜均值附近取得密度远离零的相对比。
+完整经验根与高计数组均值的差、相邻噪声宽度、原计数舍入和稀有输出下的固定总数选择，各自单独支付。
+这些桥梁不由上述单一混沌定理自动提供。
+
+所读原件的 arXiv v1 印记为 2013 年 12 月 20 日，而正文首页另印 2022 年 4 月 25 日；
+这两个字面日期保留其来源范围，未据此改认 arXiv 版本。
+PDF 提取产生字体警告，原 Theorem 1.1、Corollary 1.2 及式 (1.8)–(1.16) 的条件可读并已核对；
+不声称无警告提取或完美字形转录。
+
+第 105 章 Kim–Kim 来源要求独立同分布向量及其联合累积量的解析条件，
+第 112 章 Nazarov、Nazarov–Pusev 来源处理固定谱或固定过程的小球问题；
+这些边界不因新的经验鞍点写法而扩大。
+正文不从 $C^0$ 渐近式微分出未控制的密度比，也不把高阶数的有效噪声误当作仍大于整数网格。
+第 112 章的有限支持重叠与本章无界阶数的根到极点估计，共同承担无穷阶连接。
+
+指数倾斜、局部中心极限、特征函数反演和有限 Rényi 恒等式均属经典方法。
+本章新增的原模型连接是完整根处的高组相对密度、任意慢增长阶数的一致性、同一稀有输出的选择回接，
+以及保留非中心项的无界阶数比较。
+有限文献检索不认证全局原创，也不证明这些连接在其他文献中不存在。
+
+## 第 115 章：一般 Gaussian 泛函密度定理与经验鞍点曲率
+
+[谱边界卷第 115 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在原严格半指数噪声条件下，把响应统一到每个固定 $\epsilon>0$ 的全部
+$\alpha\in[1+\epsilon,\infty]$，保留完整有限经验根和 $K''(t_\alpha)$。
+有界阶数的标准化输出只留在紧区间，正态密度的相对比因而贡献曲率，不能全部用中心密度替换。
+
+Yaozhong Hu、Fei Lu、David Nualart，*Convergence of densities of some functionals of Gaussian processes*，
+[arXiv:1302.6962v2](https://arxiv.org/abs/1302.6962v2)。
+原 Section 6 的 Theorem 6.5、条件 (6.10) 适用于一般 Gaussian 泛函：
+要求 $F_n\in\mathbb D^{2,s}$，$\|F_n\|_{2,s}$、$\|F_n\|_{2p}$、
+$\|\|DF_n\|^{-2}\|_r$ 一致有界，$p,r,s>1$ 且 $1/p+1/r+1/s=1$，
+以及向非退化正态的分布收敛；结论为连续密度的一致收敛。
+证明以密度有界、等度连续和尾界建立紧性，再由分布极限确定所有子序列极限。
+
+本章直接应用这一定理，取 $p=2,r=4,s=4$。
+完整高组倾斜能量加原 Gaussian 噪声是方差一的至多二次 Gaussian 多项式，
+系数平方和给维数无关的四阶 Sobolev 界。
+原比较坐标块的平方系数至少为 $c/A$，有 $N\asymp A\to\infty$ 个坐标；
+移位平方 Gaussian 范数的 Laplace 变换不超过中心情形，因而明确验证
+$\mathbb E\|DF\|^{-8}\le CA^4/[(N-2)(N-4)(N-6)(N-8)]\le C$。
+精确非中心特征函数给分布收敛。沿任意允许数组序列应用原定理，得到移动参数族的一致密度结论。
+
+原 Theorem 6.2 使用另一随机量
+$\langle DF,-DL^{-1}F\rangle$ 的逆矩，配合 Hessian 算子范数和不同指数条件；
+本章不把它与梯度范数的逆矩混用，也不使用 Theorem 6.5 的替代条件 (6.11)。
+第 114 章 Nourdin–Nualart 来源的单一混沌条件保持原范围。
+本章完整非中心变量含一、二阶混沌，采用上述一般定理。
+
+原定理不自动提供原计数幂律、完整选择、经验中心和方差的相对回接。
+正文另外支付完整根与高组前两累积量之差、正密度紧区间上的相对对数比、相邻噪声宽度、
+含二项系数的原计数取幂、稀有输出下的同一选择权重，以及所有更高阶数的精确有限方差下界。
+该下界在同一根方程中分配均值贡献，保留非中心项，支持全无界阶数的曲率消失。
+
+所读原 PDF 为 55 页，arXiv v2 印记为 2013 年 8 月 29 日，正文另印 2018 年 7 月 13 日；
+保留两种字面日期，不据此改变版本归属。提取有可选 fontTools/CFF 警告；
+上述定理、条件及完整紧性证明可读并已核对，不声称无警告提取或视觉核验。
+第 105、114 章 Butler–Paolella 的固定维数适用边界保持不变。
+
+Gaussian 累积量、Malliavin 密度判据、指数倾斜和有限 Rényi 代数均是经典结果。
+本章为原实际模型补出有界阶数曲率与全阶数连接，不把经典一般密度定理称为新发现。
+有限来源搜索不认证全局原创；固定 $\epsilon$ 的结论不自动延伸到 Shannon 端点。
+
+## 第 116 章：固定带宽的 wrapped 核与实际相位修正
+
+[谱边界卷第 116 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在 $\ln(\sigma q/Q^{11/4})\to D\in\mathbb R$ 时保留全部半整数混叠，
+给出原后验方差熵的显式有界相位修正及全输出加权余项。
+原无修正极限等价于一个明确的经验周期积分趋零；这一实际中心断言仍未证明或反驳。
+
+Daniele Agostini、Carlos Améndola，*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)。
+原 Proposition 4.1 和 Remark 4.2 给 theta 比特征函数及其对数参数导数的累积量，
+要求实二次部分正定，并在复杂参数上避开 theta 除子。
+热方程把协方差与二次参数导数联系起来。
+本章只对正的实 Gaussian 归一化求导，另以正 wrapped 核混合证明输出质量下界；
+没有假设个别复杂 Poisson 模或复杂 theta 值非零。
+这些有限数组恒等式不提供增长维数下的实际经验中心模一反集中。
+
+Aaron J. Hendrickson、David P. Haefner，
+*Valley-peak modulation in phase space: a law-invariant VPM and its theta-function structure*，
+[arXiv:2603.01199v3](https://arxiv.org/abs/2603.01199v3)。
+原 Section 3 的模型为 $X=\mu+(K+\sigma Z)/g$，其中 $K$ 是任意整数值变量、$Z$ 是独立标准正态。
+模一个电子单位可精确消去整数 $K$，得到只依赖噪声的 wrapped Gaussian 相位。
+其 *Wrapped Gaussian series and Jacobi theta functions* 小节同时给正 Gaussian 周期和与 Fourier/Jacobi 表示。
+这些是正文 (116.33) 采用的经典核恒等式。
+
+该文的分布不变性不消去本章的实际 $\Theta(K)$：
+原二次能量含经验线性中心，不是该文的整数仿射信号。
+正文保留共同计数相位，使用同一个正核的移位混合取得下界，
+不把相位均匀或相位与惊讶独立当作前提。
+该文的相机噪声、Poisson 大曝光和估计精度结论不被移用为后验方差熵或经验中心算术定理。
+核的归一化在正文中明确：圆周平均为一，而原 wrapped 密度积分为一。
+
+原第 68 章的完整选择中心共享初等对称多项式分母。
+其有理独立性来自固定幅度的超越性和有理函数的不同消失阶，只排除精确等式，
+不提供对偶格点附近的定量距离。
+一、二行比较给占据和剖面，不能直接当作后验中心的联合模一反集中。
+正文保留这个区别，并给充分条件及必要充分周期判据各自的结论方向。
+
+第 111、113 章的 Grebenkov、Cellarosi–Marklof、Baker 及格点 Edgeworth 来源保持原范围。
+Grebenkov 处理连续 Gaussian 二次型；Agostini–Améndola 提供真正离散 Gaussian 的 theta 运算。
+已有格点 Edgeworth 论文不直接给本章增长维数、完整选择和同一输出下的条件方差结论。
+所需定量导数展开由原特征函数乘积及固定高阶 Taylor 余项建立，
+原中心带符号质量、非线性商式和外围能量误差分别支付。
+
+有限相关检索未获得适用于这些共同后验均值的模一反集中定理。
+一般 Dirichlet/Beta 后验反集中和其他模型的周期结论不被当作可用桥梁；
+这不证明所需结果不存在，也不认证全局原创。
+新增成果是原模型中的完整相位公式与边界归约，剩余实际概率问题按正文保留。
+
+## 第 117 章：可微鞍点误差与 Shannon 差商的原计数回接
+
+[谱边界卷第 117 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在原严格半指数噪声范围内，将完整有限经验响应统一到闭区间 $[1,\infty]$。
+响应以一阶处的精确系数作锚；Shannon 值由有限系数的阶数导数给出。
+为支付趋于零的差商分母，正文证明了 Gaussian 密度比、原计数幂律和完整固定 $q$
+选择修正的共同一阶可微余项，保留实际中心、低组、二项系数和任意慢衰减噪声。
+
+Jesse Goodman，*Asymptotic accuracy of the saddlepoint approximation for maximum likelihood estimation*，
+[arXiv:2005.11028v3](https://arxiv.org/abs/2005.11028v3)。
+所读原 PDF 为 80 页，arXiv v3 印记为 2022 年 1 月 24 日，正文日期为 1 月 25 日；
+两者按原文保留，不更改版本归属。
+核对范围为 Section 2.2 的 standard asymptotic regime（SAR），
+Theorem 1 及条件 (2.9)–(2.10)，Section 4.2 的 Proposition 10、Corollary 12、
+式 (4.6)–(4.11) 与 Theorem 1 的证明。
+
+原 SAR 要求 $X$ 是固定参数律的 $n$ 个 iid 副本之和，$K=nK_0$、$x=ny$。
+条件 (2.9) 要求归一化倾斜特征函数有多项式衰减包络；条件 (2.10) 控制连续混合变换导数，
+其阶数为 $k\in\{0,1\}$、$1\le k+\ell\le6$，以及 $k=2$、$0\le\ell\le2$。
+Theorem 1 在归一化观察与参数的紧集上给出对数鞍点似然梯度误差 $O(1/n)$。
+Proposition 10 与 Corollary 12 提供其中使用的连续可微余项。
+核心步骤把精确指数倾斜因子提出，对剩下的 Fourier 积分求导，并在可积包络下控制导数。
+
+上述定理不直接涵盖随 $Q$ 变化的非同分布经验数组、完整计数后验的固定 $q$ 依赖，
+或指数小测量噪声。本章采用这一经典方法关系，实际验证当前二次数组的特征函数与导数包络，
+不把固定 iid 定理的常数视为已经对本章数组族一致。
+正文另外证明同一稀有输出下总偏差、模态惊讶与似然惊讶的联合矩，
+以插入势能的配分函数比较回接原计数，再用精确选择协方差公式支付导数。
+保留总偏差平方后，选择导数误差为
+$O(\delta^5(1+m_Q+\delta^{-1}))=O(\delta)$，而非凭零阶误差直接求导。
+
+第 115 章 Hu–Lu–Nualart 的 Theorem 6.5 仍只在其 Gaussian Sobolev 与逆梯度矩条件下
+提供零阶密度收敛；它不提供本章对熵阶数的导数。
+其既有应用用于远离一的阶数连接，本章另行验证包含一阶的可微桥梁。
+Kim–Kim 的条件插入统计量方法和 Butler–Paolella 的二次型变换保留既述
+iid 连续模型或固定维数边界，不替代本章原计数比较。
+
+原 PDF 文本提取有可选 fontTools/CFF 编码警告；上述条件与推导可读且已核对，
+不声称无警告提取或视觉核验。
+有限幂律微分、指数倾斜、Gaussian/Wick 矩公式、Stirling 界、Fourier 反演及均值定理
+均属经典工具。本章提供的是这些工具在原完整模型上的联合导数估计，
+不把一般可微鞍点理论称为新发现；有限检索不认证全局原创。
+结论不自动延伸至一阶以下、无界物理输出、输出平均熵或半指数边界等号。
+
+## 第 118 章：拒绝抽样的一阶修正与实际相位中心的精度预算
+
+[谱边界卷第 118 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+证明完整三标记周期泛函在共同相位平移后的中心稳定性，
+其自然距离为 $\rho^2=\sum_jd_j(\widetilde\mu_j-\mu_j)^2$。
+随后用经典拒绝抽样修正和精确双锚恒等式，分别将实际中心归约到可控精度。
+固定噪声间隙下该实际周期泛函是否趋零仍然开放；中心的低维表示不是独立随机相位假设。
+
+Hélène Boistard、Hendrik P. Lopuhaä、Anne Ruiz-Gazen，
+*Approximation of rejective sampling inclusion probabilities and application to high order correlations*，
+[arXiv:1207.5654v1](https://arxiv.org/abs/1207.5654v1)，
+[原始 TeX 来源](https://arxiv.org/src/1207.5654v1)。
+本章直接应用原 Lemma 1 以及 Theorem 1 证明中 `eq:expansion1` 的 $k=1$ 情形。
+原定义是独立 Bernoulli 变量在总数等于整数均值后条件化；
+要求总方差 $d\to\infty$，结论及余项对行指标一致。
+当前原始后验精确具有该表示，校准满足全 $M$ 行均值和为 $q$、$cq\le d\le q$。
+
+对照原系数，$c_2-c_1=(1-p_i)(p_i-\overline{\overline p})$，
+故所用包含概率修正的符号为正：
+$\pi_i=p_i+p_i(1-p_i)(p_i-\overline{\overline p})/d+O(d^{-2})$。
+这里 $d$ 与加权均值均取全行校准，不是选中组窗的方差或先验信号占比。
+原 Section 4.1 的固定阶累积量、删除坐标及 Edgeworth 证明也已核对；
+Bernoulli 二阶以上累积量由总方差一致控制，特征函数的正弦平方包络支付外频尾部，
+因而适用于本章变化的数组，毋须每个生成概率有正的统一下界。
+
+原后续高阶相关应用中的 $N/d$ 有界条件不属于上述 Lemma 1 的一阶应用；
+本章允许 $M/d\to\infty$。原累积量引理的字面陈述包含一阶，
+而其证明单列一阶为均值和；本章只使用二阶及以上的方差阶结论。
+此前记录的任意正幂高阶相关命题边界仍不用于本章。
+该一阶包含概率公式是 Hájek 路线上的经典结果，不作为本项目的新一般抽样定理。
+
+修正后每个实际中心的误差为 $O(C_jq^{-2})$，原数组给
+$\sum_jd_jC_j^2\le Cq^3Q^{-7}$，故完整算术距离为
+$O(q^{-1/2}Q^{-7/2})$。仅有 $O(C_jq^{-1})$ 的中心界不能支付同一精度预算。
+新增推导是此经典修正与完整非线性周期商式的连接，包含同一残差噪声标记、
+非大组惊讶及原物理输出必须保留的共同相位平移。
+
+Simon Ruetz、Karin Schnass，*Bounds for matrices of inclusion probabilities in rejective sampling*，
+[arXiv:2212.09391v2](https://arxiv.org/abs/2212.09391v2)，
+[原始 TeX 来源](https://arxiv.org/src/2212.09391v2)。
+核对原定义、Comparison bound 引理及 Operator norm and semi-definite order bounds 定理。
+比较引理要求生成权重之和等于样本数；矩阵定理控制同一固定权重条件 Bernoulli 设计的包含概率。
+它们不提供由实际 pair/path 数据生成的共同权重在模一意义下的细尺度概率律。
+本章未用矩阵界填补这个反集中缺口。
+
+另一归约直接复用 Recovery 卷式 (26.16) 的二行删除关系，再作一次有限初等对称多项式展开，
+得到共同精确 $p_*,\tau_*$ 和有界非负系数的二次余项。
+原确定分数逼近与共同补偿步长使该余项在每个 $\beta>1/2$ 的完整算术距离下趋零。
+这条路线不依赖拒绝抽样渐近展开，也不把两个共同后验量视为可独立干预或独立抽样。
+有限指数族协方差恒等式只描述形式似然干预，实际数据中的合法变动及其概率仍需另证。
+
+两份指定版本的原始源码已读；有界关系检索还筛到条件 Poisson 极限定理、调查抽样集中和
+有理函数反集中相关摘要，但未检查其原定理，故不作为正文前提。
+原计数与好事件来自第 68 章及既有校准结果；实际依赖行的概率范围保持不变。
+搜索未命中直接可用的经验中心模一律不意味着该结果不存在，也不认证全局原创。
+
+## 第 119 章：条件中心化矩与后验信息方差的二阶响应
+
+新增正文研究同一原始计数后验、紧物理输出和正噪声 $L=\ln(1/\sigma)\to\infty$、$\limsup L/Q^3<c_q/2$ 下的信息方差响应。输出、中心、完整群组、先验和固定总数约束均与第 117 章相同。所得是普通数学中的绝对 $o_{\mathbb P}(1)$ 误差公式，不作 Lean 核验或全局原创声明。
+
+### Goodman：二阶导数需要额外的 Fourier 控制
+
+Jesse Goodman，*Asymptotic accuracy of the saddlepoint approximation for maximum likelihood estimation*，arXiv:[2005.11028v3](https://arxiv.org/abs/2005.11028v3)。版本与此前条目一致，arXiv 版本日期为 2022-01-24，正文题页日期为 2022-01-25；本条补充该文 Theorem 6(b) 与 Appendix H（印刷页 51–52）的适用范围。
+
+Theorem 6 的标准渐近制度为固定 iid 参数化 $K=nK_0$，并带局部识别性及非退化最大似然条件。其第二部分除结构条件 (2.30) 外，把 (2.10) 的导数控制加强为 $k\le2,\ 1\le k+\ell\le7$ 及 $k=3,\ \ell\le4$。Appendix H 明确重新控制被积函数和尾项的二阶导数，并把辅助余项的精度提升到均匀 $o(n^{-4})$，由此建立二阶连续可微性。它并非从已有一阶误差直接求导。
+
+这些条件和 MLE 结论不直接涵盖增长维、经验系数、随尺度收缩噪声及固定总数计数后验。本章复用其成熟的导数化 Fourier 方法，在原始有限阵列上另证共同频率包络、标准化方差的两阶消去及混合空间导数；不套用未经验证的 iid 一致常数。原有版本日期差异及提取限制保持此前条目的范围。
+
+### Kolassa–Li：同一条件分母下的鞍点反演
+
+John Kolassa 与 Jixin Li，*Multivariate saddlepoint approximations in tail probability and conditional inference*，Bernoulli **16**(4), 2010, 1191–1207，DOI [10.3150/09-BEJ237](https://doi.org/10.3150/09-BEJ237)，arXiv:[1011.5775v1](https://arxiv.org/abs/1011.5775v1)，版本日期 2010-11-26。
+
+该文以固定维 iid 向量的样本均值为起点，条件事件固定部分充分统计量。正文第 2 节说明解析变换与鞍点设置；条件反演比值 (4.1)、Lemma 4.1 的完整 Watson 引理证明及分母关系 (4.3) 将条件尾概率化为同一鞍点附近的分子分母近似，格点情形另用 (4.8)。其相对 $O(n^{-1})$ 近似在文中给定的固定维紧集与正则条件内使用。
+
+该结果既不提供增长维计数阵列的 Rényi 阶数二阶导数，也不保证稀有条件事件下的中心化信息矩。本章只借用“分子分母须在同一条件实现上共同控制”的经典结构，不把原始固定总数后验直接认作 iid 充分统计量模型。完整原始 PDF 为 18 页，正文条件及引理证明可读；提取产生字体编码警告，因此不宣称无损提取或可视化核验。
+
+### 本章补足的联合估计
+
+记 $A_y$ 为同一乘积计数 escort 中的模态信息与测量似然信息之和，$m_Q\le C\delta^{-4}$，$M_Q=1+m_Q+\delta^{-2}$，$\mathcal D$ 为总数电荷。正文建立
+
+$$
+\mathbb E|A_y-\mathbb EA_y|^4\le CM_Q^2,
+\qquad
+\mathbb E[(1+\mathcal D^2)(A_y-\mathbb EA_y)^2]\le CM_Q.
+$$
+
+第一式由同一条件 Fourier 反演中的复 Gaussian 累积量和中心化均值差给出，随后通过实际高低群组、格点舍入和稀有分母传回完整乘积计数律。第二式使用同一输出下的电荷矩，不能由分别可达的边缘最优值拼接。
+
+固定总数修正 $\ell$ 满足 $|\ell|\le C\delta^5(1+\mathcal D^2)$、$\ell\le C\delta^5$。其对数配分函数二阶导数精确等于两个条件方差之差；先中心化，再应用上述联合矩界，得到 $O(\delta^5M_Q)=O(\delta)$。这一步提供原始选择修正的二阶精度，未中心化的 $\delta^5m_Q^2$ 界则不能趋零。
+
+有限配分函数累积量恒等式、Gaussian 平方变换、Stirling 估计、Fourier 反演与协方差恒等式均属经典；本章贡献是这些方法在原始计数和固定总数模型中精度足够的组合验证。结论保留完整经验鞍点导数、非中心项与有限噪声，不覆盖零噪声、半指数等号、无界物理输出或更高阶累积量。固定间隙周期项消失仍未解决。

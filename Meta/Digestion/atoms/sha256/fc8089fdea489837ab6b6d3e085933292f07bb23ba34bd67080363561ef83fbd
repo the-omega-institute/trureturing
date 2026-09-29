@@ -1,0 +1,42 @@
+**证明。** 在 $0<t<1$ 上，令 $\operatorname{atanh}t=\frac12\ln((1+t)/(1-t))$。直接微分得
+$$
+e'(t)=-\frac{\operatorname{atanh}t}{\ln2}<0,
+\qquad
+F'(t)=-\frac{D\kappa t}{\sqrt{1-\kappa t^2}}.
+\tag{245.12}
+$$
+所以
+$$
+\frac{dG}{de}
+=D\kappa\ln2\,h(t),
+\qquad
+h(t)=\frac{t}{\sqrt{1-\kappa t^2}\operatorname{atanh}t}>0.
+\tag{245.13}
+$$
+其对数导数为
+$$
+\frac{h'(t)}{h(t)}
+=\frac{1}{t(1-\kappa t^2)}
+-\frac{1}{(1-t^2)\operatorname{atanh}t}.
+\tag{245.14}
+$$
+两处分母严格为正。因而 $h'(t)<0$ 等价于
+$$
+Q(t):=t(1-\kappa t^2)-(1-t^2)\operatorname{atanh}t>0.
+\tag{245.15}
+$$
+连续延拓给 $Q(0)=0$，并且
+$$
+\begin{aligned}
+Q'(t)&=2t\operatorname{atanh}t-3\kappa t^2\\
+&\ge(2-3\kappa)t^2>0,
+\qquad 0<t<1,
+\end{aligned}
+\tag{245.16}
+$$
+其中使用 $\operatorname{atanh}t\ge t$ 和 $\kappa\le1/2$。故 $Q(t)>0$、$h'(t)<0$。
+
+由于 $e'(t)<0$，式（245.13）的斜率 $dG/de$ 随 $e$ 严格增加，即 $G''(e)>0$ 对 $0<e<1$ 成立。连续延拓到端点后，$G$ 在整个 $[0,1]$ 上严格凸。它位于连接 $(0,U)$ 与 $(1,D)$ 的弦之下，内部严格低于该弦，得到（245.11）。$\square$
+
+本定理使用了当前族的 $\kappa\le1/2$ 与明确方向最优式，没有假定任意通道的纯态资源曲线都具有此凸性。
+

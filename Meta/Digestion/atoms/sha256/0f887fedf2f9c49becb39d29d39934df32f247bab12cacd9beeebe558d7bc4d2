@@ -1,0 +1,75 @@
+### 279.7 保留所有Schur扇区的图参数
+
+若保留相等成功支中的所有参考扇区，可以用较大的参考接口避免第二次筛选。相等成功的归一化来源是
+$$
+\Omega_{\mathrm{eq}}
+=\frac12T(Q^{\otimes k},M^{\otimes k}).
+\tag{279.31}
+$$
+它的参考边缘
+$$
+\frac{Q^{\otimes k}+(I_2-Q)^{\otimes k}}2
+$$
+严格正，秩为 $2^k$。
+
+使用标准Schur–Weyl分解。令
+$$
+j=0,\ldots,\lfloor k/2\rfloor,\qquad
+\ell_j=k-2j,\qquad
+m_j=\binom kj-\binom k{j-1},
+\qquad \binom k{-1}=0.
+\tag{279.32}
+$$
+可固定一个仅依赖 $k$ 的Schur酉变换 $U$，使
+$$
+E^{\otimes k}\cong
+\bigoplus_{j=0}^{\lfloor k/2\rfloor}
+\left(\operatorname{Sym}^{\ell_j}\mathbb C^2
+\otimes\mathbb C^{m_j}\right).
+\tag{279.33}
+$$
+在该正交分解中，张量作用为
+$$
+UA^{\otimes k}U^\dagger
+=\bigoplus_j
+(\det A)^j\operatorname{Sym}^{\ell_j}(A)\otimes I_{m_j}.
+\tag{279.34}
+$$
+这里 $\operatorname{Sym}^{\ell}(A)$ 是归一化对称基中的标准对称幂；$\ell=0$ 时它等于一。式（279.33）—（279.34）是既有表示论工具。
+
+由于 $\det M=1$，定义
+$$
+Q_j=(\det Q)^j\operatorname{Sym}^{\ell_j}(Q)\succ0,
+\qquad
+M_j=\operatorname{Sym}^{\ell_j}(M).
+\tag{279.35}
+$$
+在共同Schur坐标中，全部联合来源准确为
+$$
+(I_H\otimes U)\Omega_{\mathrm{eq}}(I_H\otimes U^\dagger)
+=\frac12\bigoplus_jT(Q_j,M_j)\otimes I_{m_j}.
+\tag{279.36}
+$$
+设 $h_0=1$，则第 $j$ 扇区的条件概率为
+$$
+w_j=m_j(\det Q)^j h_{\ell_j}(\lambda_+,\lambda_-),
+\qquad
+\sum_jw_j=1.
+\tag{279.37}
+$$
+其归一化输入/表示来源是
+$$
+\omega_j=
+\frac{T(Q_j,M_j)}
+{2(\det Q)^j h_{\ell_j}(\lambda_+,\lambda_-)}.
+\tag{279.38}
+$$
+因此式（279.36）也可写成
+$$
+\bigoplus_j w_j\,\omega_j\otimes\frac{I_{m_j}}{m_j}.
+\tag{279.39}
+$$
+最高扇区 $j=0$ 的权重正是 $h_k$，且 $\omega_0=\Omega_s$。
+
+扇区概率是已有Schur谱权重公式在本来源参数中的应用。每个 $M_j$ 的最大链长为 $\ell_j+1$，可由（279.24）—（279.26）把 $k$ 换成 $\ell_j$ 得到；因此定理274.3分别给这些条件来源深度 $\ell_j+1$、锐指数 $1/[2(\ell_j+1)]$。偶数 $k$ 的末扇区有 $\ell_j=0$，是一维参考的产品来源，深度一、锐指数 $1/2$。
+

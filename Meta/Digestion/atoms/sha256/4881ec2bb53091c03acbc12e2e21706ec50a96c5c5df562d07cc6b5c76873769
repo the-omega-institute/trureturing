@@ -1,0 +1,27 @@
+**引理154.5（最优解码的统一扰动界）。** 有
+
+$$
+|\mathfrak h(\mathcal R)-\mathfrak h(\mathcal S)|
+\le\frac12\|\mathcal R-\mathcal S\|_\diamond,
+\tag{154.20}
+$$
+
+以及
+
+$$
+|e_n-\mathfrak h(\mathcal R_n)|\le\delta_n
+\qquad(n\ge3).
+\tag{154.21}
+$$
+
+**证明。** 对每个固定解码器，diamond 距离的反三角不等式和 CPTP 后处理收缩性给（154.20）右侧的统一界。对两个目标 $\mathcal V_n,\mathcal V_*$ 采用同样的反三角不等式，并用（154.5），得到（154.21）的统一界。若两族实函数逐点之差绝对值不超过同一常数，它们的最小值之差也不超过该常数。分别对解码器取最小值即得两式。证毕。
+
+定义显式且非增的尾余项
+
+$$
+\zeta_n=C_p p^{n-1}
++\sqrt D\,B\,\kappa^{\lfloor n/L\rfloor},
+\qquad n\ge3.
+\tag{154.22}
+$$
+

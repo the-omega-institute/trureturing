@@ -1,0 +1,35 @@
+**证明。**
+解析根满足 $\widehat t_h=-q_{th}/q_{tt}<0$。
+沿其解析零集整除，得到严格正解析函数 $a$，使
+
+$$
+\widehat t(\epsilon,h)=a(\epsilon,h)[b(\epsilon)-h],\qquad
+a(\epsilon,b(\epsilon))=
+\frac{q_{th}(\epsilon,b(\epsilon),0)}{q_{tt}(\epsilon,b(\epsilon),0)}.
+\tag{212.9}
+$$
+
+也可对 $\widehat t_h$ 沿 $h$ 积分直接构造 $a$。
+由于 $q_t(\epsilon,h,\widehat t)=0$，两次基本积分精确给
+
+$$
+q(\epsilon,h,0)-q(\epsilon,h,\widehat t)
+=\widehat t^2\int_0^1 r\,
+q_{tt}(\epsilon,h,r\widehat t)\,dr.
+\tag{212.10}
+$$
+
+这个恒等式对正负小 $\widehat t$ 都成立。
+置
+
+$$
+C(\epsilon,h)=a(\epsilon,h)^2
+\int_0^1 r\,q_{tt}(\epsilon,h,r\widehat t)\,dr>0.
+\tag{212.11}
+$$
+
+积分保留局部实解析性。
+左侧物理区的最优值是 $E_I$，右侧是 $E_A=E_{11}$，
+所以（212.10）恰给（212.8）。
+缩小至紧邻域，正连续函数 $C$ 有正下界和有限上界，得到两侧估计。证毕。
+

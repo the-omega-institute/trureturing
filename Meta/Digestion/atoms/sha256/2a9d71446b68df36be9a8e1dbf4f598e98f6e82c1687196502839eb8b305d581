@@ -1,0 +1,22 @@
+### 281.6 已知相位的两方向达到方案
+
+§280的实际逐份测量和经典似然检验给两种固定角度上界，比较常数与 $n,\delta$ 无关：
+$$
+N_n(0,\delta)\lesssim\frac1{\delta/n+\delta^2},
+\qquad
+N_n(\theta_c,\delta)\lesssim\frac1{n\delta^2}+\delta^{-3/2},
+\qquad\theta_c=2\arcsin(t/2).
+\tag{281.28}
+$$
+知道相位时，实际请求角度分别为 $\phi$ 和 $\phi+\theta_c$。若 $x=n\sqrt\delta\le1$，选择对齐方向，预算至多固定常数乘
+$$
+\frac n\delta=\frac{1+x}{R}\le\frac2R.
+\tag{281.29}
+$$
+若 $x\ge1$，选择临界方向，预算至多固定常数乘
+$$
+\delta^{-3/2}(1+1/x)=\frac{(1+1/x)^2}{R}\le\frac4R.
+\tag{281.30}
+$$
+因而已知相位上界为 $O(1/R)$。全角度最优性来自（281.27），而非仅由两个方向的相互比较推出。
+

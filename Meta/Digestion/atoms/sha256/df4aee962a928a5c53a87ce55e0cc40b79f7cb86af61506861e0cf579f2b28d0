@@ -1,0 +1,14 @@
+**定义 174.1（相邻校准视界与启动记忆）。** 沿用定义173.1的一次初始化、时间齐次联合 CPTP 处理器、同一系统终端通道、标准新鲜输入遗忘条件及最小维数 $D_{\rm fg}(r)$。实际源仍为 $\mathcal M_{r,\phi}$，同一次运行的实际相位 $\phi$ 固定，环境逐步新鲜。记
+$$
+c=r\cos\alpha,\qquad b=r\sin\alpha,\qquad z_*=c+ib,
+\qquad \alpha=\alpha(r).
+\tag{174.1}
+$$
+在充分接近一的区间中，令 $n$ 为持续端点比特风险 $B_N(r)$ 的最小最大点，令 $m=n+1$。以下所用记忆为
+$$
+K=\mathbb C|e\rangle\oplus\mathbb C^2,
+\qquad \sigma=|e\rangle\langle e|,
+\tag{174.2}
+$$
+其中 $|e\rangle$ 是启动态，活动子空间的基为 $|+\rangle,|-\rangle$；启动态计入总维数。所有设计参数只依赖已知的 $r$，同一处理器服务全部运行视界 $N$。
+

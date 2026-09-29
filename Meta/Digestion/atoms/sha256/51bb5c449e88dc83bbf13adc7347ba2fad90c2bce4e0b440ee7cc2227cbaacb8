@@ -1,0 +1,74 @@
+**证明：纯终端与早期混合附加因子。**
+
+反设 $`\dim K=5`$。固定一次接收通道的 Stinespring 等距映射
+$`V:K\otimes B\to K\otimes E`$，写
+$`V_0x=V(x\otimes|0\rangle)`$、$`V_1x=V(x\otimes|1\rangle)`$。
+只需使用允许的 Bell 输入。终端档案相对 $`JM`$ 的 Schmidt 秩在第一步为二、第二步为三、第三步及以后为四。由第23节证明中的标准可逆编码分解，支撑秩 $`s`$ 与可逆附加因子的秩 $`r`$ 满足 $`sr\le5`$。
+因此第二至第五步的实际 $`JMK`$ 联合态均为纯态；第一步的附加因子秩
+$`r\in\{1,2\}`$，暂不假定为一。
+
+对 $`n=2,3,4,5`$ 写纯联合态为
+
+$$
+\Psi_n=\frac1{\sqrt2}\sum_{i=0}^1|i\rangle_J
+\bigl(|0\rangle_Mu_n^i+|1\rangle_Mv_n^i\bigr),
+\qquad
+H_n=\operatorname{span}\{u_n^0,u_n^1\},\quad
+G_n=\operatorname{span}\{v_n^0,v_n^1\}.
+\tag{26.2}
+$$
+
+这些空间满足
+
+$$
+\dim H_n=\dim G_n=2,
+\qquad
+\dim(H_2+G_2)=3,
+\qquad
+\dim(H_n+G_n)=4\quad(n=3,4,5).
+\tag{26.3}
+$$
+
+例如第二步可选择正交单位向量 $`u,v,w\in K`$，使两列为
+
+$$
+\Psi_2^0=a m_0u+b m_1v,
+\qquad \Psi_2^1=m_0w.
+\tag{26.4}
+$$
+
+从而 $`H_2=\operatorname{span}\{a^2u+bv,w\}`$，
+$`G_2=\operatorname{span}\{u,w\}`$。第三步的四维秩由第21节给出；往后 $`JM`$ 边缘仍正定，因为来源通道 $`\mathcal T`$ 满足 $`\mathcal T(I)>0`$。各活动记忆对角块在参考的两个计算基标签上都有正权，给出（26.3）中各二维空间。
+
+第二至第五步纯度还给出第三、四、五轮各自的新环境纯向量
+$`\eta_3,\eta_4,\eta_5`$。记这些轮次的实际输入支撑
+
+$$
+D_j=(H_{j-1}\otimes|0\rangle)\oplus
+(G_{j-1}\otimes|1\rangle),\qquad j=3,4,5.
+\tag{26.5}
+$$
+
+均有维数四，且 $`V(D_j)=(H_j+G_j)\otimes\eta_j`$。
+存在二维空间 $`Q_j`$，满足
+
+$$
+V_0(H_{j-1})=G_j\otimes\eta_j,
+\qquad
+V_1(G_{j-1})=Q_j\otimes\eta_j,
+\qquad
+G_j\perp Q_j.
+\tag{26.6}
+$$
+
+这里 $`G_j`$ 作为零位像空间，来自活动记忆 $`|1\rangle`$ 系数仅等于零位接收系数的非零倍数 $`b`$。还可写
+
+$$
+H_j\subset G_j\oplus Q_j,
+\qquad \operatorname{rank}(P_{G_j}|_{H_j})=2.
+\tag{26.7}
+$$
+
+后一秩来自 $`u_j^i=a A_ju_{j-1}^i+B_jv_{j-1}^i`$ 中
+$`A_j:H_{j-1}\to G_j`$ 等距、$`a\ne0`$，且 $`B_jv_{j-1}^i\in Q_j\perp G_j`$。
+

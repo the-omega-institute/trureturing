@@ -1,0 +1,59 @@
+**证明。** 可分态可写为有限个产品密度态的凸组合。每个输入因子转置后仍正半定，因此可分态的输入部分转置正半定。式（276.8）随即给 $A$ 正规。
+
+反之，设 $A$ 正规。有限维谱定理给一组正交归一本征向量 $u_1,\ldots,u_n$，满足
+$$
+Au_i=\lambda_i u_i,
+\qquad A^\dagger u_i=\bar\lambda_i u_i.
+\tag{276.13}
+$$
+令
+$$
+v_i=Q^{1/2}u_i\ne0,
+\qquad
+a_i=|+\rangle+\bar\lambda_i|-\rangle.
+\tag{276.14}
+$$
+由（276.7）可得
+$$
+M^\dagger v_i
+=Q^{1/2}A^\dagger u_i
+=\bar\lambda_i v_i.
+\tag{276.15}
+$$
+又有 $Q=\sum_i v_iv_i^\dagger$，所以原图矩阵精确分解为
+$$
+\begin{aligned}
+T(Q,M)
+&=\sum_i
+\begin{bmatrix}v_i\\M^\dagger v_i\end{bmatrix}
+\begin{bmatrix}v_i\\M^\dagger v_i\end{bmatrix}^{\!\dagger}\\
+&=\sum_i |a_i\rangle\langle a_i|\otimes v_iv_i^\dagger.
+\end{aligned}
+\tag{276.16}
+$$
+每一项都是正的产品算子。明确归一化：令
+$$
+|\widehat a_i\rangle
+=\frac{|+\rangle+\bar\lambda_i|-\rangle}
+{\sqrt{1+|\lambda_i|^2}},
+\qquad
+|\widehat v_i\rangle=v_i/\|v_i\|,
+$$
+$$
+p_i=\frac{(1+|\lambda_i|^2)\|v_i\|^2}{c}>0.
+\tag{276.17}
+$$
+对（276.16）取迹得 $\sum_i p_i=1$，因此
+$$
+\boxed{
+\Omega(Q,M)=\sum_i p_i
+|\widehat a_i\rangle\langle\widehat a_i|
+\otimes
+|\widehat v_i\rangle\langle\widehat v_i|.
+}
+\tag{276.18}
+$$
+这就给出所需可分分解。$\square$
+
+该充要判据的合同是秩为 $n$、上对角块正定的图来源（276.2）。证明中的PPT充分性由（276.16）直接承担；本节的结论范围不包含一般更高秩来源或奇异上对角块。
+

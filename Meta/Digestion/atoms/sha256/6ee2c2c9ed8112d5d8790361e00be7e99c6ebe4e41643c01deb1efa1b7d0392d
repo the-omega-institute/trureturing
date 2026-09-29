@@ -1,0 +1,65 @@
+**定理 108.2（有限停止输出与终端输出的精确距离）。** 对每个密度矩阵 $\rho$，置 $p=\operatorname{Tr}(\rho P)$。有
+
+$$
+\boxed{
+\Xi_t^\tau(\rho)
+=\left(1-\frac{k_t p}{\epsilon_t}\right)P_0
++\frac{k_t p}{\epsilon_t}\tau.
+}
+\tag{108.2}
+$$
+
+并且，对每个 $m\ge1$，包含任意参考输入的完整距离准确为
+
+$$
+\boxed{
+\begin{aligned}
+\frac12\|\Omega_m^{t,\tau}-\Omega_m^{t,\tau'}\|_\diamond
+&=\frac{k_t(1-r_t^m)}{\epsilon_t}D(\tau,\tau'),\\
+\frac12\|\Xi_t^\tau-\Xi_t^{\tau'}\|_\diamond
+&=\frac{k_t}{\epsilon_t}D(\tau,\tau').
+\end{aligned}
+}
+\tag{108.3}
+$$
+
+输入 $P$ 同时达到这两条等式。当 $t\downarrow0$ 时，
+
+$$
+\frac{k_t}{\epsilon_t}\longrightarrow\frac a{1+a}>0,
+\qquad
+\frac12\|\Gamma_t^\tau-\Gamma_t^{\tau'}\|_\diamond
+\longrightarrow0.
+\tag{108.4}
+$$
+
+证明。未点击后的 $P$ 占据满足
+
+$$
+\operatorname{Tr}[P\mathcal N_t^{n-1}(X)]
+=r_t^{n-1}\operatorname{Tr}(PX)
+\qquad(n\ge1).
+\tag{108.5}
+$$
+
+所以每个首次点击分支中，含 $\tau$ 的项准确为
+$k_t r_t^{n-1}\operatorname{Tr}(PX)\tau$。当 $X\succeq0$ 时，其余点击项均为 $P_0$ 的非负倍数。几何求和与总迹一给式（108.2）；$k_t\le\epsilon_t$ 保证它是概率凸组合。
+
+对任意带参考输入，两个装置的第 $n$ 个点击块之差准确为
+
+$$
+k_t r_t^{n-1}\omega_R^P\otimes(\tau-\tau').
+$$
+
+截至 $m$ 轮尚未点击的块完全相同。不同轮数记录正交，因此半迹范数相加为
+
+$$
+\frac{k_t(1-r_t^m)}{\epsilon_t}
+\operatorname{Tr}(\omega_R^P)D(\tau,\tau').
+$$
+
+参考态的迹至多一，输入 $P$ 取得一，得到第一条距离等式。终端通道之差由式（108.2）直接得到相同形式，只将有限几何和换成 $1/\epsilon_t$，给第二条等式。
+
+最后，$k_t=at^2$，而
+$\epsilon_t=at^2+(1-at^2)\sin^2t=(1+a)t^2+O(t^4)$，故式（108.4）成立。$\square$
+

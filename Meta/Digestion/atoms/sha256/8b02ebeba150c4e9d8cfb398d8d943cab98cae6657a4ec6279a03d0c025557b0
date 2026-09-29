@@ -1,0 +1,35 @@
+**分支二：$`\eta_3\parallel\eta_4`$ 而 $`\eta_5\not\parallel\eta_3`$。** 固定 $`V_1`$ 把 $`U+G_3`$ 送入 $`(Q_3+Q_4)\otimes\eta_3`$，把 $`G_4`$ 送入 $`Q_5\otimes\eta_5`$。两条环境射线不同，单射性给
+
+$$
+G_4\cap(U+G_3)=0.
+\tag{29.47}
+$$
+
+因此
+
+$$
+\dim\pi(G_3+G_4)=\dim\pi(G_3)+2.
+$$
+
+（29.42）同时包含 $`\pi(G_3+G_4)\otimes\eta_3`$ 与 $`\pi(G_5)\otimes\eta_5`$，所以二维上限强制 $`\pi(G_3)=\pi(G_5)=0`$。得到
+
+$$
+\boxed{
+\eta_3\parallel\eta_4\not\parallel\eta_5,
+\qquad G_3=G_5=U,\qquad G_4\cap U=0.
+}
+\tag{29.48}
+$$
+
+相应有
+
+$$
+\mathcal R_0=U\otimes F+G_4\otimes\eta_3,
+\qquad
+H_2=X_{\eta_3},\quad H_4=X_{\eta_5},\quad
+H_2+H_4=X,\quad H_3\cap X=0.
+\tag{29.49}
+$$
+
+因为 $`\eta_3,\eta_5`$ 为 $`F`$ 的一组基，两个 $`X_\eta`$ 的和确实是整个 $`X`$。
+

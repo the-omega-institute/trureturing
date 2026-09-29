@@ -1,0 +1,49 @@
+### 250.2　谱符号与交换子唯一恢复量子旗标
+
+令
+$$
+H_a=\operatorname{sign}R_a,
+\qquad H_b=\operatorname{sign}R_b,
+\tag{250.6}
+$$
+其中符号函数在正谱上取一、负谱上取负一。若回到原环境，核上统一取零。它们是唯一的谱函数，不是在未占用方向任意延拓的范数见证。
+
+由（250.5），在量子块上
+$$
+H_w\big|_{\mathrm{ent}}
+=V\left(\frac{A_w^{\mathsf T}}\ell\otimes I_M\right)V^\dagger,
+\tag{250.7}
+$$
+在产品符号块上则为 $s_wI$。定义
+$$
+C=[H_a,H_b],\qquad
+\gamma=\frac{4\sqrt{AB}}{A+B}\in(0,2].
+\tag{250.8}
+$$
+因 $A_a,A_b$ 为实矩阵，量子块中的交换子为
+$$
+C\big|_{\mathrm{ent}}
+=-\frac{4i\sqrt A\,b_0}{A+B}
+V(Y\otimes I_M)V^\dagger
+=-i\,\operatorname{sgn}(b_0)\gamma
+V(Y\otimes I_M)V^\dagger.
+\tag{250.9}
+$$
+产品块上两符号算子交换，故 $C=0$。于是
+$$
+\boxed{
+Q_{\mathrm{ent}}=-\frac{C^2}{\gamma^2}
+}
+\tag{250.10}
+$$
+恰为量子旗标的正交投影，而且
+$$
+\operatorname{ran}C=\operatorname{ran}Q_{\mathrm{ent}}=E_{\mathrm{ent}},
+\qquad
+\theta=\operatorname{Tr}(Q_{\mathrm{ent}}\rho_E).
+\tag{250.11}
+$$
+未占用方向上的两个谱符号都为零，所以把（250.10）补回原环境仍给零，不改变该投影。
+
+因此量子旗标不依赖选择哪份最优形成纠缠系综；它是实际边界响应的典范谱结构。
+

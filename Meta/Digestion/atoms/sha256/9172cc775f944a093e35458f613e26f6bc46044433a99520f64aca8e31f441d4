@@ -1,0 +1,69 @@
+### 299.7 先reset的超额积分与远尾控制
+
+reset经验坐标 $\widehat c=c_J$ 满足统一Hoeffding界
+$$
+\Pr(|\widehat c-c|\ge x)\le2e^{-bKx^2}.
+\tag{299.28}
+$$
+当真实均值与阈值的距离为常数倍 $\kappa$ 时，普通事件的指数是
+$K\kappa^2$。直接把旧的 $O(1/\kappa)$ 系数界乘上这类概率，会产生多余的对数成本；需要估计真正有害的超额。
+
+如果 $t-c\ge b_0\kappa$，积分尾概率给
+$$
+\begin{aligned}
+\mathbb E(\widehat c-t)_+
+&\le2\int_0^\infty e^{-bK(b_0\kappa+x)^2}\,dx\\
+&\le\frac A{K\kappa}e^{-aK\kappa^2}.
+\end{aligned}
+\tag{299.29}
+$$
+下侧超额同理。因此除以 $\kappa$ 后，只留下
+$A(K\kappa^2)^{-1}e^{-aK\kappa^2}$，在 $K\kappa^2\ge A_0$ 时一致可控。
+
+先估计真实 $c\ge v_-$ 时的负系数。近区
+$1/2\le\widehat c<k^D$ 上，由 $\beta\ge L$ 及对数在 $[1/2,1]$ 上的导数界，
+$$
+(-\beta_J)_+\le(-L(\widehat c))_+
+\le\frac A\kappa(k^D-\widehat c)_+.
+$$
+$k^D\le v_{--}$，所以真实 $c-k^D\ge v_--v_{--}\ge\gamma\kappa$。由（299.29），此项的期望至多 $Ae^{-aK\kappa^2}$。
+
+远区 $\widehat c<1/2$ 上不使用经验对数，改用（299.23）。真实
+$c\ge v_-$ 与 $1/2$ 的距离有固定正下界；（299.16）使任一阶乘倾斜后的距离仍有固定正下界。因此
+$$
+\mathbb E[(-\beta_J)_+;\widehat c<1/2]
+\le\frac A\kappa e^{-bK}.
+\tag{299.30}
+$$
+这里阶乘权重求和至多
+$(D\kappa)^{-1}\log(C/v_-)=O(1/\kappa)$，但乘的是固定远尾指数。
+若 $K\kappa^2\ge1$，则 $1/\kappa\le\sqrt K$，且
+$\sqrt K e^{-bK/2}$ 有统一上界；故（299.30）也至多
+$Ae^{-aK\kappa^2}$。合并近区和远区：
+$$
+\mathbb E_c(-\beta_J)_+\le Ae^{-aK\kappa^2}
+\qquad(c\ge v_-).
+\tag{299.31}
+$$
+
+再处理第一族 $r\le u_+$ 时的高区损失。第299.5节证明
+$\beta_i>1$ 只可能发生在 $\widehat c>u_{++}>1/2$。
+由（299.19）—（299.20）及 $\log x\le x-1$，
+$$
+(\beta_J-1)_+
+\le\frac{(\widehat c-1)_+}{D\kappa}
++\varepsilon_K\mathbf1_{\{\widehat c>u_{++}\}}.
+\tag{299.32}
+$$
+真实 $1-r\ge1-u_+\ge c\kappa$，第一项由超额积分控制；第二项保留了其事件指示，$\varepsilon_K$ 在 $K\kappa^2\ge A_0$ 下一致有界，且事件与真实均值相隔常数倍 $\kappa$。所以高区有害下降的期望也至多 $Ae^{-aK\kappa^2}$。
+
+真实级数尾同样需要保留分母 $d+1$。因 $c\ge k^3>1/2$，使用固定 $q_*=1-1/(2C_*)<1$ 得
+$$
+R_d(c)\le\frac{Aq_*^{d+1}}{\kappa(d+1)}
+\le\frac A{K\kappa^2}e^{-a\kappa K}
+\le A'e^{-a'K\kappa^2}
+\quad(K\kappa^2\ge A_0).
+\tag{299.33}
+$$
+最后用 $\kappa\le\kappa_0$ 调整固定指数常数。
+

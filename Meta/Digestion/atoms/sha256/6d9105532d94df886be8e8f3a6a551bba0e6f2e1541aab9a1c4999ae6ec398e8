@@ -1,0 +1,51 @@
+**定理119.1（双侧乘积生成的对偶正规形）。** 若 $N=N_{\mathrm{prod}}$，置 $r=7-2\gamma$。存在实际接收空间的正交分解
+
+$$
+K=P\oplus D\oplus Q,\qquad
+\dim P=\dim Q=\gamma,\quad \dim D=r,
+\tag{119.1}
+$$
+
+以及 $D$ 的基 $d_1,\ldots,d_r$、其内积对偶基 $e_1,\ldots,e_r$ 和非零环境向量 $z_1,\ldots,z_r$，使
+
+$$
+\langle d_i,e_j\rangle=\delta_{ij},
+$$
+
+$$
+\boxed{
+\begin{aligned}
+R_1&=(Q\otimes F)\oplus
+       \operatorname{span}\{d_i\otimes z_i:1\le i\le r\},\\
+R_0&=(P\otimes F)\oplus
+       \operatorname{span}\{e_i\otimes z_i^\perp:1\le i\le r\}.
+\end{aligned}}
+\tag{119.2}
+$$
+
+$z_i^\perp$ 表示在 $F$ 中任取一个非零正交向量。显示的两个大块之间为正交直和；各乘积基向量彼此不必正交，不同环境向量也不必正交。
+
+**证明。** $N$ 的通常纤维维数为零。第101节的乘积跨度恒等式给其全部接收因子跨度 $D$ 满足
+
+$$
+\dim D=\dim N=r.
+$$
+
+选取 $N$ 的 $r$ 个乘积向量组成的基 $d_i\otimes z_i$。它们的接收因子张成 $D$：对任一非零乘积向量，选择不消去其环境分量的线性泛函并作收缩，可见其接收因子属于这些 $d_i$ 的跨度。因此 $r$ 个 $d_i$ 是 $r$ 维 $D$ 的基。由于 $D\subset S_0=Q^\perp$，令
+
+$$
+P=S_0\cap D^\perp.
+$$
+
+则 $S_0=P\oplus D$，且 $\dim P=(7-\gamma)-(7-2\gamma)=\gamma$，得到（119.1）。
+
+在 $D$ 中取对偶基 $e_j$。每个 $e_j\otimes z_j^\perp$ 都正交于全部 $d_i\otimes z_i$：当 $i\ne j$ 时接收内积为零；当 $i=j$ 时环境内积为零。它们线性独立，因为对偶接收基独立。故这些 $r$ 个向量张成
+
+$$
+N^\perp\cap(D\otimes F),
+$$
+
+该空间的维数确为 $2r-r=r$。$P\otimes F$ 也正交于 $R_1$，而 $Q\otimes F\subset R_1$。对正交分解（119.1）逐块取补，即得（119.2）。证明完毕。
+
+这是一份保留原内积的坐标描述。对偶基通常不是正交基；不能把它的线性坐标变化当作免费可执行的酉操作。
+

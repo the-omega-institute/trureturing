@@ -1,0 +1,13 @@
+**命题 2.24（tail bound）。** For every $n\ge0$,
+$$
+E\subseteq B_n,
+\qquad
+B_n\setminus E\subseteq\bigcup_{h>n:\,C_h\text{ included}}C_h,
+\tag{TM.579}
+$$
+and hence
+$$
+0\le a_n-M\le\frac{p^{-n}}{p-1}.
+\tag{TM.580}
+$$
+

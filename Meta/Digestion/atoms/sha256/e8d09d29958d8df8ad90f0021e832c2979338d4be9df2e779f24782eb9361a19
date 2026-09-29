@@ -1,0 +1,42 @@
+## 90. 替代酉实现的正交纤维配对与行列式容量
+
+本节研究一个固定七维接收空间 $K$、二维输入位空间及二维环境空间 $F$ 上的固定酉实现
+
+$$
+W:K\otimes\mathbb C^2\longrightarrow K\otimes F.
+\tag{90.1}
+$$
+
+第89节的替代实现允许在其合同下选取这样的 $W$，保持全部六轮实际轨迹。本节所有全域结论均针对已选取的替代酉；不反推原始 Stinespring 算子的未执行部分已经具有相同全域像。
+
+记
+
+$$
+V_i x=W(x\otimes|i\rangle),\qquad i=0,1.
+$$
+
+则 $V_0,V_1$ 为等距，且
+
+$$
+\operatorname{ran}V_1=(\operatorname{ran}V_0)^\perp
+\quad\text{在 }K\otimes F\text{ 中成立}.
+\tag{90.2}
+$$
+
+取 $F$ 的正交单位基 $e_0,e_1$，写
+
+$$
+V_0x=A_0x\otimes e_0+A_1x\otimes e_1,
+\qquad A_0,A_1\in\operatorname{End}(K).
+$$
+
+对非零 $z=z_0e_0+z_1e_1$，定义矩阵铅笔及其行列式
+
+$$
+\mathcal P(z)=z_1A_0-z_0A_1,\qquad
+D(z_0,z_1)=\det\mathcal P(z).
+\tag{90.3}
+$$
+
+$D$ 是七次齐次多项式或恒零多项式。称前一种非恒零情形为正则铅笔，后一种为奇异铅笔。该分类不因输入、输出接收基或环境基的固定酉变换而改变。
+

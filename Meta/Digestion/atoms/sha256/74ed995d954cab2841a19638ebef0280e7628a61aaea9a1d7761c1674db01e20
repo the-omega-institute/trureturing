@@ -1,0 +1,28 @@
+**命题104.1（已执行剩余空间只有一维或二维）。** 在（104.1）下，
+
+$$
+Q\otimes F\subset E_1,\qquad
+E_1=(Q\otimes F)\oplus M,
+\tag{104.3}
+$$
+
+其中 $M\subset N$ 由其中的乘积向量生成，通常纤维为零，且
+
+$$
+\dim M=
+\begin{cases}
+1,&k\in S,\\
+2,&k\notin S.
+\end{cases}
+\tag{104.4}
+$$
+
+其全部可能形态如下，所有显示的接收向量均属于 $S$：
+
+- 一维时，$M=\mathbb C(r\otimes\zeta)$，$r,\zeta\ne0$；
+- 二维且只有一条乘积环境支持射线时，$M=D\otimes\zeta$，$\dim D=2$；
+- 二维且有两条乘积环境支持射线时，
+  $M=\operatorname{span}(r\otimes\zeta,s\otimes\xi)$，其中 $r,s$ 线性独立，$\zeta,\xi$ 线性独立。
+
+后二者分别在一条射线上有二维纤维，或在两条射线上各有一维纤维；没有其他非零乘积纤维。
+

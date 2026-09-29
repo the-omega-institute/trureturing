@@ -1,0 +1,28 @@
+**定理80.2（差一结构及全部纤维的准确秩）。** 在（80.1）—（80.2）下，可分别给输入和输出 $Q$ 选取酉坐标，使输出分成 $d,d,d-1$ 维的三个块，输入分成 $d,d-1,d-1,1$ 维的四个块，并有
+$$
+L_0=
+\begin{pmatrix}
+\sqrt\mu I_d&0&0&0\\
+0&0&0&0\\
+0&\beta I_{d-1}&0&0
+\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}
+0&0&0&0\\
+\sqrt\nu I_d&0&0&0\\
+0&0&\delta I_{d-1}&0
+\end{pmatrix},
+\tag{80.13}
+$$
+其中
+$$
+\beta=\mu\sqrt{s/\Delta},\qquad
+\delta=\nu\sqrt{s/\Delta}.
+$$
+零维块在 $d=1$ 时省略。反向，这些矩阵给满足全部合同的算子。每个非零复 $z$ 都满足
+$$
+\operatorname{rank}M|_{Q\otimes(Az\otimes z)}=2d-1.
+\tag{80.14}
+$$
+

@@ -1,0 +1,19 @@
+### 71.1 系数函数及结论
+
+第 70 节对每个固定 $r>0$ 定义了同一混合量子比特族沿
+
+$$
+a_\varepsilon=1-r\varepsilon
+$$
+
+移动时的准确极限系数
+
+$$
+\gamma_r=\lim_{\varepsilon\downarrow0}\frac{e(R_{a_\varepsilon,\varepsilon})}{\varepsilon}
+=\min_{K\in\mathcal T}N(H_r-K),
+\qquad1<\gamma_r\le\frac98.
+\tag{71.1}
+$$
+
+这里 $\mathcal T$ 是第 70 节的同一个闭因果切锥，与 $r$ 无关；$N$ 是完整 tester 事件范数。将式（71.1）的变分式延伸到 $r=0$，仍记所得值为 $\gamma_0$。
+

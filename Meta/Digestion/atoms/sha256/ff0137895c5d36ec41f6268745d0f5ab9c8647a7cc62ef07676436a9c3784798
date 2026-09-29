@@ -1,0 +1,7 @@
+**定义 13.1（协议暗空间）。** 令
+
+$$
+\mathcal D=\bigcap_{n\ge0,x}\ker(L_xQ^n),
+\qquad G_d=I-(Q^\dagger)^dQ^d.
+$$
+

@@ -1,0 +1,2 @@
+**定义 695.1（矩阵替代的精确参数）。** 项目 [FarkasAlternative](../../../D5/S3/Analytic/Convexity/FarkasAlternative.lean) 的 equality_farkas 对有限矩阵、非负未知量与有序域给出相容解和分离向量的二择。第 680 节取标量域为实数，行指标为标签 $I$，列指标为状态 $\mathcal F$，矩阵为 $A_{iS}=\mathbf1_{i\in S}$，右端为 $(p/n)\mathbf1$。因为 $p>0$，其非负解自动归一化；分离向量经减去坐标均值，才成为本文所需的零和改进方向。这项参数桥梁保留了原接口的条件。
+

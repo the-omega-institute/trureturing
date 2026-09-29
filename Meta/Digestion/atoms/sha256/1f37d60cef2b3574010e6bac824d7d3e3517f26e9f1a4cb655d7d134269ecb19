@@ -1,0 +1,54 @@
+### 279.2 对称支的完整三结果物理仪器
+
+相干相等算子为
+$$
+W_k=|+\rangle\langle+\cdots+|
++|-\rangle\langle-\cdots-|,
+\qquad
+P_{\mathrm{eq}}=W_k^\dagger W_k.
+\tag{279.8}
+$$
+它保留全正输入与全负输入之间的相干。参考置换 $U_\pi$ 给出正交投影
+$$
+P_{\mathrm{sym}}=\frac1{k!}\sum_{\pi\in S_k}U_\pi.
+\tag{279.9}
+$$
+令
+$$
+v_j=\binom kj^{-1/2}
+\sum_{\substack{x\in\{1,2\}^k\\
+\#\{a:x_a=2\}=j}}
+e_{x_1}\otimes\cdots\otimes e_{x_k},
+\qquad 0\le j\le k.
+\tag{279.10}
+$$
+这是归一化Dicke基，$v_0=e_1^{\otimes k}$、$v_k=e_2^{\otimes k}$。取等距映射
+$$
+V:\mathbb C^{k+1}\longrightarrow E^{\otimes k},
+\qquad VV^\dagger=P_{\mathrm{sym}}.
+$$
+固定 $V$ 将 $\mathbb C^{k+1}$ 的第 $j$ 个标准基向量映到 $v_j$（$0\le j\le k$）；下文压缩空间的坐标均按这组Dicke基。
+
+将不同结果的输出放入互相正交的标记空间，定义三个Kraus算子
+$$
+F_s=W_k\otimes V^\dagger,
+\qquad
+F_{\mathrm{symfail}}=W_k\otimes(I-P_{\mathrm{sym}}),
+\qquad
+F_{\mathrm{eqfail}}=(I-P_{\mathrm{eq}})\otimes I.
+\tag{279.11}
+$$
+它们分别输出成功参考、相等成功但对称失败的参考，以及相等失败的原系统。三个效果准确为
+$$
+F_s^\dagger F_s=P_{\mathrm{eq}}\otimes P_{\mathrm{sym}},
+$$
+$$
+F_{\mathrm{symfail}}^\dagger F_{\mathrm{symfail}}
+=P_{\mathrm{eq}}\otimes(I-P_{\mathrm{sym}}),
+\qquad
+F_{\mathrm{eqfail}}^\dagger F_{\mathrm{eqfail}}
+=(I-P_{\mathrm{eq}})\otimes I.
+\tag{279.12}
+$$
+效果之和为单位矩阵，故这是一台完整迹保持仪器。成功支是实际结果，另外两支也是明确的CP结果；不把条件成功态的维数用作整台仪器的输出维数。$k=1$ 时两种失败算子均为零。
+

@@ -1,0 +1,55 @@
+### 240.1 固定投影候选与纯化约定
+
+固定 $d,N\ge2$、输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$、$m\ge d$，以及 $N$ 个经典记录标签。每个标签给定单位输出 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$，并定义目标
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j.
+\tag{240.1}
+$$
+给定同一输入空间上的正交投影族，满足
+$$
+\sum_{j=1}^N\Pi_j=\frac RdI_d,
+\qquad 1\le R<Nd.
+\tag{240.2}
+$$
+各投影可为零或恒等，不要求其像彼此正交。对（240.2）取迹得 $\sum_j\operatorname{rank}\Pi_j=R$，故 $R$ 为整数。固定实际候选
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac dR\operatorname{Tr}(\Pi_jX)P_j.
+\tag{240.3}
+$$
+这份候选保迹、完全正、精确总 Choi 秩为 $R$。§233已证明
+$$
+D(\mathcal S):=\frac12\|\mathcal S-\mathcal R\|_{\diamond}
+=D_*:=1-\frac R{Nd}.
+\tag{240.4}
+$$
+以下始终研究这份固定候选，不对相同预算下其他最优候选所需的参考维数作结论。
+
+设 $|\psi\rangle\in A\otimes E$ 为归一化纯联合输入，输入边缘为
+$$
+\rho=\operatorname{Tr}_E|\psi\rangle\langle\psi|.
+\tag{240.5}
+$$
+其实际区分误差为
+$$
+\varepsilon(\psi)=\frac12
+\|[(\mathcal S-\mathcal R)\otimes\operatorname{id}_E]
+(|\psi\rangle\langle\psi|)\|_1.
+\tag{240.6}
+$$
+选择输入正交基，标准纯化取
+$$
+|\psi_\rho\rangle=
+\sum_{a=1}^d\sqrt\rho\,|a\rangle\otimes|a\rangle.
+\tag{240.7}
+$$
+它的输入边缘确为 $\rho$。输入效应 $M$ 对应的未归一化参考块为
+$$
+\operatorname{Tr}_A[(M\otimes I)|\psi_\rho\rangle
+\langle\psi_\rho|]
+=(\sqrt\rho M\sqrt\rho)^{\mathsf T}.
+\tag{240.8}
+$$
+转置相对于所选参考基。任一具有相同输入边缘的纯化，在其参考支撑上与此纯化相差一个等距映射，因而输出迹范数相同。所以（240.6）只依赖 $\rho$；下文也写作 $\varepsilon(\rho)$。整个论证不要求 $\rho$ 可逆。
+

@@ -1,0 +1,16 @@
+**定理 11.1（带正对边下界的实现判据）。** 若上述实际组合条件成立，且
+
+$$\boxed{L(a)>c_r,\qquad U(a,b)<c_r,\qquad
+J(b)<c_{r+1},\qquad H(b)<c_D,} \tag{PB}
+$$
+
+则原来的同一理想剖分具有非退化双曲几何实现和完全测地边界。其零曲率长度可以取在以下共同区域的内部：
+
+$$a\le\cosh l_e\le2\quad(d(e)=r),$$
+
+$$1+\delta\le\cosh l_e\le2\quad(r<d(e)<D),$$
+
+$$1+\delta\le\cosh l_e\le b\quad(d(e)\ge D),$$
+
+其中 $\delta>0$ 可以依赖该有限剖分的最大边度，不依赖任何预先存在的零曲率度量。
+

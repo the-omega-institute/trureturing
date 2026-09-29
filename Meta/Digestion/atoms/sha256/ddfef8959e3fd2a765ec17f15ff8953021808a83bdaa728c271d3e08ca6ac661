@@ -1,0 +1,63 @@
+### 209.8 双 Taylor 整除给角点三阶余项
+
+在命题209.2的解析邻域内，固定正 $\tau$，第207节唯一确定
+$F$ 关于 $\ell$ 的前三个系数：
+
+$$
+F(\ell,\tau)=\frac34+\ell A_{\mathrm{in}}(\tau)
++\ell^2B_{\mathrm{in}}(\tau)+O(\ell^3),
+\qquad
+A_{\mathrm{in}}(\tau)=\tau\Phi_{1/\tau},\quad
+B_{\mathrm{in}}(\tau)=\tau^2Q(1/\tau).
+\tag{209.29}
+$$
+
+对每个固定正 $\tau$，其 $h=1/\tau$ 是有限值，故这一步直接落在第207节范围内。
+现在 $A_{\mathrm{in}},B_{\mathrm{in}}$ 也是实际解析函数的 Taylor 系数，
+所以在 $\tau=0$ 具有共同解析延拓。
+由（209.5）—（209.6），其初项为
+
+$$
+A_{\mathrm{in}}(\tau)=\Phi_\infty\tau-a^2\tau^2+O(\tau^3),
+\qquad B_{\mathrm{in}}(\tau)=q_0\tau^2+O(\tau^3).
+\tag{209.30}
+$$
+
+另一方面，固定正 $\ell$，第186节确定 $F$ 关于 $\tau$ 的前三个系数：
+
+$$
+F(\ell,\tau)=\frac34+\ell\Phi_\infty\tau
++\ell^2Q_{\mathrm{out}}(\ell)\tau^2+O(\tau^3).
+\tag{209.31}
+$$
+
+由（209.4），其二次系数
+$\ell^2Q_{\mathrm{out}}(\ell)=-a^2\ell+q_0\ell^2+\ell^2D(\ell)$
+在 $\ell=0$ 解析。
+两组系数等式按解析性延拓到各自的零轴。
+
+在角点代入 $\epsilon=\ell\tau$，复合式成为解析函数
+
+$$
+C_{\mathrm{comp}}(\ell,\ell\tau)
+=\frac34+\ell A_{\mathrm{in}}(\tau)
++\ell^2B_{\mathrm{in}}(\tau)+\ell^2\tau^2D(\ell).
+\tag{209.32}
+$$
+
+（209.29）与 $D(0)=0$ 使 $F-C_{\mathrm{comp}}$ 被 $\ell^3$ 整除；
+（209.30）—（209.31）和精确拆分（209.4）又使它被 $\tau^3$ 整除。
+联合收敛幂级数因此只含两个次数都至少为三的项，给出
+
+$$
+\boxed{
+F(\ell,\tau)-C_{\mathrm{comp}}(\ell,\ell\tau)
+=\ell^3\tau^3T(\ell,\tau),
+}
+\tag{209.33}
+$$
+
+其中 $T$ 在原点附近实解析。
+在一个固定小闭矩形上 $T$ 有界，且 $\ell^3\tau^3=\epsilon^3$。
+这就是角点的统一三阶余项，不需要对最优器的未知余项交换极限。
+

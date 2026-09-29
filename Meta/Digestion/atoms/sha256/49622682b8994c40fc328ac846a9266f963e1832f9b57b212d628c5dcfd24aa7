@@ -1,0 +1,28 @@
+**定义 59.1（共振微观尺度）。** 保持定义 54.1 的原始模型与有限截距。
+取确定性序列，满足
+
+```math
+\eta_M\longrightarrow\infty,\qquad
+\eta_M^2\delta\longrightarrow0,\qquad
+\eta_M=2m_M,\quad m_M\in\mathbb N,
+\qquad R_M=\eta_M/\delta,\quad s_M=\log R_M.
+```
+
+式 (59.1)。
+
+这等价于精确共振 $`\omega\eta_M=\pi m_M`$，$`\omega=\pi/2`$。
+不限制 $`m_M`$ 的奇偶性。
+对固定紧区间 $`I\subset\mathbb R`$ 定义
+
+```math
+z_M(\theta)=s_M+\theta/\eta_M^3,\qquad
+\mathcal R_M(\theta)=\eta_M^{3/2}e^{z_M(\theta)/2}
+ \{\mathcal Z_M(z_M(\theta)\sqrt\delta)-\mathcal J_M
+                      -2z_M(\theta)\sqrt\delta\,T_M\}.
+```
+
+式 (59.2)。
+
+由 (59.1)，最终 $`\eta_M\le Q^{1/4}`$、$`R_M\le Q^{3/4}`$，
+所以 $`z_M(\theta)\sqrt\delta`$ 一致趋零且最终为正。
+

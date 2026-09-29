@@ -1,0 +1,17 @@
+### 256.7 标准核范数表示与当前结论的边界
+
+核范数的块半正定表示属于标准工具。Recht、Fazel 与 Parrilo 的 *Guaranteed Minimum-Rank Solutions of Linear Matrix Equations via Nuclear Norm Minimization*，[arXiv:0706.4138v1](https://arxiv.org/abs/0706.4138v1)，PDF第7页 Proposition 2.1 及第8页式（2.6），给出实矩阵的表示
+$$
+\|X\|_*=
+\min\left\{
+\frac12(\operatorname{Tr}W_1+\operatorname{Tr}W_2):
+\begin{pmatrix}W_1&X\\X^{\mathsf T}&W_2\end{pmatrix}\succeq0
+\right\},
+\tag{256.48}
+$$
+并以奇异值分解构造达到矩阵。本节在复数方阵上直接证明所需最小迹结论及其唯一性，再推导量子来源分类与稳定界；没有使用该文其他测量随机性或受限等距条件，也不把实矩阵表示冒充本文全部结论的现成证明。
+
+球面条件给精确唯一来源，球内则有（256.19）的实际多来源。这里保留了固定联合空间、可信输入轴和两份完整算子响应；这些条件不能退化为两个标量读数或任意无标记边界。带噪重建还使用（256.42）的球面真值与误差合同，不由有限样本自行断言精确球面等式。
+
+本节将标准核范数表示、正性约束与投影扰动连接为一组自包含结论，不据此宣称外部文献原创性。取得完整矩阵的样本预算以及数值实现成本仍须按所用观察协议另行给出。
+

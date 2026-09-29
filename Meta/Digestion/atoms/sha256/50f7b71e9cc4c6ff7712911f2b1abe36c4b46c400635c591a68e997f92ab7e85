@@ -1,0 +1,16 @@
+**定义 232.1（参考策略与覆盖系数）。** 令 $q_t(a\mid h)$ 是校准或数据收集策略，$\pi_t(a\mid h)$ 是目标策略。若
+
+$$
+\pi_t(a\mid h)>0\Longrightarrow q_t(a\mid h)>0,
+$$
+
+定义密度比与历史覆盖系数
+
+$$
+r_t(h,a)=\frac{\pi_t(a\mid h)}{q_t(a\mid h)},
+\qquad
+C_t(h)=\max_{a:q_t(a\mid h)>0}r_t(h,a).
+$$
+
+若存在目标策略使用而参考策略从不使用的动作，约定 $C_t(h)=+\infty$。
+

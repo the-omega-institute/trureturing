@@ -1,0 +1,55 @@
+**引理 226.3（所有纯输入的统一主谱下界）。**
+
+对任意单位输入 $v=xf_0+yf_1$，令
+$$
+q=|y|^2,\qquad u=\operatorname{Re}(\overline xy),
+$$
+并记两列输出 $a=Mv,b=Nv$ 的 Gram 矩阵为
+$$
+T_v=\begin{pmatrix}A&k\\\overline k&B\end{pmatrix},
+\qquad
+A=\|a\|^2,\quad B=\|b\|^2,\quad k=a^\dagger b.
+\tag{226.WP.8}
+$$
+直接展开（226.WP.2）得到
+$$
+A=1-\frac{39}{400}q,
+\qquad
+B=\frac45+\frac{321}{100}q+\frac{16}{5}u,
+$$
+$$
+k=\frac1{10}\overline xy+\frac{19}{50}\overline yx.
+\tag{226.WP.9}
+$$
+又因为 $|\overline xy|^2=q(1-q)$，
+$$
+|k|^2=\frac{49}{625}q(1-q)+\frac{19}{125}u^2.
+$$
+因此
+$$
+\begin{aligned}
+\det(I_2-T_v)
+&=(1-A)(1-B)-|k|^2\\
+&=-\frac{589}{10000}q
+-\frac{9383}{40000}q^2
+-\frac{39}{125}qu
+-\frac{19}{125}u^2\\
+&=\boxed{
+-\frac{589}{10000}q
+-\frac{19}{125}\left(u+\frac{39}{38}q\right)^2
+-\frac{56597}{760000}q^2.
+}
+\end{aligned}
+\tag{226.WP.10}
+$$
+当 $q>0$，该行列式严格为负。由于 $T_v$ 是 Hermitian，其两个本征值于是分别位于一的两侧：
+$$
+\lambda_-(v)<1<\lambda_+(v).
+$$
+当 $q=0$，直接有 $T_v=\operatorname{diag}(1,4/5)$。故全部单位输入均满足
+$$
+\boxed{\lambda_+(v)\ge1,\qquad \lambda_+(v)>\lambda_-(v).}
+\tag{226.WP.11}
+$$
+$\Gamma(P_v)=[a\ b][a\ b]^\dagger$ 与 $T_v$ 具有相同的非零本征值，其第三个本征值为零。因此 $\Gamma(P_v)$ 的主本征值始终简单，且至少为一。
+

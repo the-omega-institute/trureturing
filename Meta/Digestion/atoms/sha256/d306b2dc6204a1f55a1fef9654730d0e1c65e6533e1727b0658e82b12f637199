@@ -1,0 +1,7 @@
+**推论 4.6.3（平方倾斜的完整代入）。** 令 $c=\sum_a p_a^2$。上述结论在 $q=2$ 时为
+$$
+\widehat p_a=\frac{p_a^2}{c},\qquad
+\widehat p(w)=\frac{p(w)^2}{c^{|w|}},\qquad
+\sum_{w\in\mathcal F}p(w)\le\sqrt{\frac c{1-c}}.
+$$
+

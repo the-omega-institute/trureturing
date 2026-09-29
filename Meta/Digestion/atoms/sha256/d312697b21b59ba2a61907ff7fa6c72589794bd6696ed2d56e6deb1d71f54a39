@@ -1,0 +1,41 @@
+### 291.6 有限真实记录可以一致逼近准确读数风险
+
+有限预算不能达到 $R_{\rm exact}$，并不排除其为全部有限预算的极限。
+
+完整 $n=1$ 输入可逐块测量反对称投影，得到概率 $(1-c)/4$ 的Bernoulli记录 $Y$。未截断估计 $\widetilde c=1-4\overline Y$ 无偏且
+$$
+\mathbb E_c(\widetilde c-c)^2\le\frac4K.
+$$
+把它截到已知区间 $[kl,1]$ 得到 $\widehat c$，距离实际 $c$ 不会增大，因此
+$$
+\sup_{c\in[kl,1]}\mathbb E_c|\widehat c-c|\le\frac2{\sqrt K}.
+\tag{291.19}
+$$
+这里中间 $c$ 对应同一物理块态，所取区间包含两假设的全部实际像。
+
+先reset访问则使用（290.24）的实际变量 $V$，其中 $\mathbb E_cV=a_n^2c$、$\operatorname{Var}_cV\le8$、$a_n\ge15/16$。将 $\overline V/a_n^2$ 同样截到 $[kl,1]$，得到
+$$
+\sup_{c\in[kl,1]}\mathbb E_c|\widehat c-c|
+\le\frac{\sqrt8}{a_n^2\sqrt K}<\frac4{\sqrt K}.
+\tag{291.20}
+$$
+这些矩关系来自同一实际测量表达式，对本节所用全部 $0\le c\le1$ 成立；即使某些区间内点不属于当前两类像，也不需要新的访问权限。
+
+取得估计后，用独立随机数以概率 $f_*(\widehat c)$ 输出零。由（291.11），其实际决定概率与 $f_*(c)$ 的差分别至多 $2C/\sqrt K$、$4C/\sqrt K$。两个决定概率进入（291.3）时各有至多这一误差，风险前的 $1/2$ 刚好抵消两项之和，故
+$$
+R_K^{\rm full}\le R_{\rm exact}+\frac{2C}{\sqrt K},
+\qquad
+R_K^{\rm reset}(n)\le R_{\rm exact}+\frac{4C}{\sqrt K}.
+\tag{291.21}
+$$
+于是对每个固定允许的 $\delta,w$，
+$$
+\boxed{
+\inf_{K<\infty}R_K^{\rm full}
+=\inf_{K<\infty}R_K^{\rm reset}(n)
+=R_{\rm exact},
+}
+\tag{291.22}
+$$
+但（291.15）、（291.18）说明任何固定有限 $K$ 的风险仍严格较大。
+

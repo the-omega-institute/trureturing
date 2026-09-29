@@ -1,0 +1,33 @@
+**定义 53.1（同一极限噪声中的谱尾）。** 本章的对象是第 50、51 章的
+同一连续 Gaussian 极限族，不是对实际数据序列另取增长参数。
+保持实 Gaussian 测度 $`\mathcal W_\rho`$、$`\rho(x)=c_0e^{-\kappa x^2/2}`$、
+$`\gamma=\int\rho`$、$`\omega=\pi/2`$、$`F(v)=\mathcal W_\rho(e^{-i\omega v\cdot})`$
+及 $`Y=F(0)`$。记
+
+```math
+\begin{aligned}
+\mathcal R(s)&=(b_*+2s)Y^2+
+ 2\int_0^{e^s}(|F(v)|^2-Y^2)\,\frac{dv}{v},\\
+\mathcal J_\infty&=b_*\gamma+I_2(H),\qquad
+\mathcal E(s)=\mathcal R(s)-2s\gamma-\mathcal J_\infty,\\
+\mathcal U_s(t)&=e^{(s+t)/2}\mathcal E(s+t),\qquad
+\sigma_*^2=\frac{8\pi}{\omega}\int_{\mathbb R}\rho(x)^2\,dx
+ =16\int_{\mathbb R}\rho(x)^2\,dx.
+\end{aligned}
+```
+
+式 (53.1)。
+
+其中 $`b_*`$、$`H`$ 和二重 Wiener 积分的规范如定义 50.1、51.1。
+令 $`\mathscr G=\sigma\{\mathcal W_\rho(f):f\in L^2(\rho(x)dx)\}`$，
+取其概率完备化。另取独立于 $`\mathscr G`$ 的标准 Brownian 运动 $`B`$，置
+
+```math
+\mathcal U(t)=\sigma_*e^{t/2}B(e^{-t}),\qquad t\in\mathbb R.
+```
+
+式 (53.2)。
+
+这是连续平稳 Gaussian 过程，其协方差为
+$`\sigma_*^2e^{-|t-u|/2}`$，即相应的平稳 Ornstein–Uhlenbeck 律。
+

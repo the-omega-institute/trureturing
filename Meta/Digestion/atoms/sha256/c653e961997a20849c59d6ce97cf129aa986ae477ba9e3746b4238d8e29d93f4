@@ -1,0 +1,48 @@
+### 274.6 面约化运输与一般unipotent来源
+
+令 $\mathcal A=I_H\otimes A$。未归一化合同映射
+$$
+\Phi_A(X)=\mathcal A X\mathcal A^\dagger
+\tag{274.38}
+$$
+是PSD锥的可逆线性自同构，且
+$$
+\Phi_A(\operatorname{diag}(D,-D))
+=\operatorname{diag}(ADA^\dagger,-ADA^\dagger),
+\qquad \Phi_A(L)=L.
+\tag{274.39}
+$$
+对偶证书按
+$$
+Y'=\mathcal A^{-\dagger}Y\mathcal A^{-1}
+\tag{274.40}
+$$
+运输，并满足
+$$
+\langle Y',\Phi_A(X)\rangle=\langle Y,X\rangle.
+\tag{274.41}
+$$
+因此面对偶条件、$L^\perp$ 条件、固定偏移的零配对和严格约化都保持。可逆线性映射也保持相对内部；逆合同给反向运输，所以最短面约化链长度相同。
+
+对固定完整数据切片，边缘固定，$s_A(X)$ 是同一正常数。归一化仅将整个像切片除以该常数，而 $L$ 是线性空间，故方向仍为 $L$。所以
+$$
+d_S(F_A(\Omega))=d_S(\Omega).
+\tag{274.42}
+$$
+这一步使用锥自同构与对偶运输，没有假设非酉合同保持本征值或正交投影。
+
+图矩阵逐块变换为
+$$
+\Phi_A(T(Q,M))=T(Q',M'),
+\qquad
+Q'=AQA^\dagger,
+\qquad M'=A^{-\dagger}MA^\dagger.
+\tag{274.43}
+$$
+对任意unipotent $M$，选一个Jordan相似矩阵 $S$，使
+$$
+S^{-1}MS=I+\frac14J,
+\tag{274.44}
+$$
+其中 $J$ 是标准Jordan移位的直和。非零超对角可以在每个Jordan块内作对角相似缩放，故固定系数 $1/4$ 不改变块尺寸。取 $A=S^\dagger$，则（274.43）的 $M'$ 正是（274.44），而 $Q'=S^\dagger QS\succ0$。
+

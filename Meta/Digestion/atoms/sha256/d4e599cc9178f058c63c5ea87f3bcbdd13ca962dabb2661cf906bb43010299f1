@@ -1,0 +1,39 @@
+### 267.3 任意联合输入测量的下界与逐次可达上界
+
+§257给归一化态的界 $d(\tau,\omega)^2\le1-\mathsf F(\tau,\omega)^2$。平方根和奇异值的张量乘法又给根保真度乘性，所以
+$$
+\begin{aligned}
+d(\Omega_h^{\otimes n},\Omega_0^{\otimes n})^2
+&\le1-\mathsf F_{\mathrm{in}}(h)^{2n}\\
+&\le n\bigl(1-\mathsf F_{\mathrm{in}}(h)^2\bigr)\\
+&\le\frac{57}{32}nh^2.
+\end{aligned}
+\tag{267.19}
+$$
+按照§253的等先验Helstrom公式，正确率至少 $2/3$ 要求半迹距离至少 $1/3$。因此
+$$
+\boxed{
+N_{\mathrm{in}}(h)\ge\frac{32}{513h^2}.
+}
+\tag{267.20}
+$$
+该界允许全部原输入与参考上的任意集体测量。
+
+一个逐次协议达到同阶：每份测量 $\{P,I-P\}$，只要有一次落在理想支撑外就判 $h$，否则判零。假设零下点击概率为零，假设 $h$ 下每份点击概率为 $t_h$。独立性给
+$$
+P_{\mathrm{succ}}(n)
+=1-\frac12(1-t_h)^n
+\ge1-\frac12e^{-nt_h}.
+\tag{267.21}
+$$
+所以
+$$
+\boxed{
+N_{\mathrm{in}}(h)
+\le\left\lceil\frac{\ln(3/2)}{t_h}\right\rceil
+\le\left\lceil\frac{5\ln(3/2)}{4h^2}\right\rceil.
+}
+\tag{267.22}
+$$
+这里零假设下没有错误，另一假设的错误率至多 $2/3$；其等先验平均错误率满足规定的 $1/3$ 目标。
+

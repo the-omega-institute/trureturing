@@ -1,0 +1,27 @@
+**定义 1.1。** Fix an integer $k\ge 2$. Define
+$$
+G_i=2^i\quad(0\le i<k),
+\qquad
+G_{n+k}=G_{n+k-1}+\cdots+G_n\quad(n\ge0).
+\tag{TM.524}
+$$
+Let $\mathcal L_k\subseteq\{0,1\}^*$ consist of the words containing no factor $1^k$. In most-significant-digit order, put
+$$
+\operatorname{val}_k(d_{n-1}\cdots d_0)
+=\sum_{j=0}^{n-1}d_jG_j.
+\tag{TM.525}
+$$
+The canonical greedy representation $\operatorname{rep}_k(n)$ has no leading zero when $n>0$, and $\operatorname{rep}_k(0)=\varepsilon$. Arbitrary leading-zero padding gives
+$$
+\mathcal L_k=0^*\operatorname{rep}_k(\mathbb N).
+\tag{TM.526}
+$$
+For an integer $L\ge1$, define the unbounded divisibility language
+$$
+\mathcal A_{k,L}
+=\{w\in\mathcal L_k:\operatorname{val}_k(w)\equiv0\pmod L\}
+=0^*\operatorname{rep}_k(L\mathbb N).
+\tag{TM.527}
+$$
+The empty word and every all-zero word belong to this language. Illegal words are rejected. A trim deterministic automaton omits the state whose right language is empty; its transition function can therefore be partial.
+

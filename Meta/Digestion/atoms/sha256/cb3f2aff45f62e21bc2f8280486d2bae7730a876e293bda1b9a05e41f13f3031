@@ -1,0 +1,50 @@
+### 302.4 同参数三点链不依赖确定停止上限
+
+固定同一协议，令 \(f(c)\) 是其在实际参数 \(c\) 下最终输出零的概率。几乎必然二元终止使原风险仍准确写成
+$$
+\frac12[1-f(r)+f(kr)].
+$$
+风险至多 \(1/3\) 要求
+$$
+f(r)-f(kr)\ge1/3\qquad(l\le r\le1).
+$$
+用三个合法起点 \(r=1,k,l\) 相加：
+$$
+1\le f(1)-f(kl)+f(l)-f(k^2).
+$$
+因此对同一策略的增广停止律 \(\mathsf P_c\)，
+$$
+\boxed{
+1-\operatorname{TV}(\mathsf P_1,\mathsf P_{kl})
+\le\operatorname{TV}(\mathsf P_l,\mathsf P_{k^2}).
+}
+\tag{302.10}
+$$
+它仍然是同一个 nuisance 先验
+\((\delta_1+\delta_k+\delta_l)/3\) 的消项，不为两个假设分别选择参数。
+
+设单次信息量及统一期望预算使某个无量纲 \(t\) 满足
+$$
+D(\mathsf P_1\Vert\mathsf P_{kl})\le At,\qquad
+D(\mathsf P_l\Vert\mathsf P_{k^2})\le A(g/\kappa)^2t,
+$$
+$$
+D(\mathsf P_1\Vert\mathsf P_k)\le At.
+\tag{302.11}
+$$
+BH 检验重叠界和 Pinsker 给
+$$
+\tfrac12e^{-At}
+\le A'(g/\kappa)\sqrt t.
+\tag{302.12}
+$$
+简单对 \(r=1\) 还要求 TV 至少为 \(1/3\)，由第三式得到 \(t\ge a_0>0\)。
+对（302.12）取对数，利用 \(\log t\le t\) 并用正基线吸收固定常数，便有
+$$
+\boxed{t\ge a[1+\log(\kappa/g)].}
+\tag{302.13}
+$$
+这里所需期望方向主要是 \(\mathbb E_1N\) 和 \(\mathbb E_lN\)；
+它们确在统一预算域内。分母参数 \(k^2\) 对应合法 \((j,r)=(1,k)\)，
+\(kl\) 对应 \((1,l)\)，没有借用不合法参数的预算或终止保证。
+

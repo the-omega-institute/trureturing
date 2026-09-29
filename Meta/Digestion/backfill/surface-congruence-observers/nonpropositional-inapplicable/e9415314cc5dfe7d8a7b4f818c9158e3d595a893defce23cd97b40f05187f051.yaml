@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e9415314cc5dfe7d8a7b4f818c9158e3d595a893defce23cd97b40f05187f051
+  normalized_sha256: sha256:e9415314cc5dfe7d8a7b4f818c9158e3d595a893defce23cd97b40f05187f051
+cas_ref: sha256:e9415314cc5dfe7d8a7b4f818c9158e3d595a893defce23cd97b40f05187f051
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The complete atom is only the Markdown heading "53. 平方零辛形变的被动谱盲区". It contains no mathematical assertion or formula and has no chain_atoms children, so no upstream theorem or repository GID is needed. This receipt terminates only the heading leaf. The distinct section container cabb4aa1c48fb5cf696be15dc88bafff698279d4850759a5cd3e09ee2df5ec59 and its other children retain their own obligations; this receipt does not close the section or its geometric corollary.
+    previous_atom_id: 062184165a3f974cd18d666d032ba23a8da7c2d9045e2fa5944bd2eb3b393938
+    next_atom_id: 8d76650c6d9ac267baf6d324b3496900cf0ce9b058624b1595af2733e53a3bdb

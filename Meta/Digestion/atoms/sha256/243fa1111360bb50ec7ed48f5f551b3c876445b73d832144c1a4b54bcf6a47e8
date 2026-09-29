@@ -1,0 +1,45 @@
+### 31.1 从关系生成可保持读出，再生成联合核
+
+设 $X$ 为状态载体，$O$ 为一个固定的读出值域，$\mathscr R\subseteq X\times X$ 为一组当前被要求保留的关系。令
+
+$$
+\Pi(\mathscr R):=\{q:X\to O:\forall(x,y)\in\mathscr R,\ q(x)=q(y)\}
+$$
+
+为在 $\mathscr R$ 上不变的读出族，并定义联合可观测核
+
+$$
+\mathsf K(\mathscr R)
+:=\{(x,y):\forall q\in\Pi(\mathscr R),\ q(x)=q(y)\}.
+\tag{31.1}
+$$
+
+逐点展开得到三条关系律：
+
+$$
+\boxed{
+\mathscr R\subseteq\mathsf K(\mathscr R),
+}
+\tag{31.2}
+$$
+
+$$
+\mathscr R\subseteq\mathscr S
+\Longrightarrow
+\mathsf K(\mathscr S)\subseteq\mathsf K(\mathscr R),
+\tag{31.3}
+$$
+
+以及
+
+$$
+\boxed{
+\mathsf K(\mathsf K(\mathscr R))=\mathsf K(\mathscr R).
+}
+\tag{31.4}
+$$
+
+(31.2) 是因为每个 $q\in\Pi(\mathscr R)$ 都保持 $\mathscr R$；(31.3) 是因为约束增多后可用的读出变少；(31.4) 表示对同一读出值域再次取“所有保持读出”的联合核，不会创造新的区别。仓内 `ProtocolRelationClosureLaws.protocol_relation_closure_laws` 直接形式化了这三条关系侧结论。
+
+因此 $\mathsf K$ 是由读出—关系极性产生的固定点算子：它是扩张的、反单调的、幂等的。它不是普通意义上单调的闭包；把 (31.3) 错写成同向单调会颠倒信息增益的方向。
+

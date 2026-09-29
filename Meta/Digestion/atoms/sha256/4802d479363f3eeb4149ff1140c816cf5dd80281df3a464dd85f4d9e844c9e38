@@ -1,0 +1,9 @@
+**命题 15.2（相干记录检验与不可访问副本）。** 若实际可相干访问记录，检验归一化 $\chi=\sum_jc_j|j\rangle$ 得到分支算子 $K_\chi=\sum_j\overline{c_j}K_j$。若联合编码还含归一化环境记录 $e_j$，忽略环境后的分支改为
+
+$$
+\Phi_\chi(\rho)=\sum_{j,k}\overline{c_j}c_k
+\langle e_k|e_j\rangle K_j\rho K_k^\dagger.
+$$
+
+证明。对 $\sum_j|j\rangle\otimes K_j\psi\otimes e_j$ 作用 $\langle\chi|$，再对环境求迹。环境副本正交时交叉项消失。这个操作要求对实际记录及相应相位参考的访问，单纯忘记标签不满足该前提。$\square$
+

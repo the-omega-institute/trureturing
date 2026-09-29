@@ -1,0 +1,68 @@
+### 220.3 固定输出压缩的精确二次因子
+
+先固定量子输出事件 $P_0=|0\rangle\langle0|$。结果一的输入效应为
+$$
+B_0=K_1^\dagger P_0K_1+tW^\dagger P_0W
+=\begin{pmatrix}|a|^2&\overline a b\\a\overline b&|b|^2+t\end{pmatrix}.
+$$
+记其迹为 $T_0=|a|^2+|b|^2+t$。行列式为 $t|a|^2$，故接近一的大根 $b_+>0$ 解析，另一根精确为
+$$
+b_-=t\eta_0,\qquad \eta_0=|a|^2/b_+>0.
+\tag{220.10}
+$$
+同时，令
+$$
+T=\|k_1\|^2+t\|w\|^2,\qquad
+Q=\|k_1\|^2\|w\|^2-|\langle k_1,w\rangle|^2.
+$$
+第219节的完整 Choi 两根满足 $z^2-Tz+tQ=0$。接近一的大根记为 $\lambda_+$，另一根为
+$$
+\lambda_-=t\eta,\qquad \eta=Q/\lambda_+>0.
+\tag{220.11}
+$$
+中心有 $b_+=\lambda_+=1$、$\eta_0=\eta=1/2$。
+
+由（220.9），有精确恒等式
+$$
+T-T_0=h^2T_2,\qquad
+T_2=|\widehat c|^2+|\widehat d|^2
++t(|\widehat u|^2+|\widehat v|^2),
+\tag{220.12}
+$$
+$$
+Q=|a|^2+h^2Q_2,
+\quad
+\begin{aligned}
+Q_2={}&|a|^2(|\widehat u|^2+|\widehat v|^2)
++|b\widehat u-\widehat c|^2+|b\widehat v-\widehat d|^2\\
+&+h^2|\widehat c\widehat v-\widehat d\widehat u|^2.
+\end{aligned}
+\tag{220.13}
+$$
+第二式来自 $k_1,w$ 的六个二阶子式模方之和。
+
+两条小根方程在除去已解析确定的共同 $t$ 因子后为
+$$
+t\eta^2-T\eta+Q=0,\qquad
+t\eta_0^2-T_0\eta_0+|a|^2=0.
+$$
+这些等式在 $t=0$ 也由解析性成立。相减得到
+$$
+(\lambda_+-t\eta_0)(\eta-\eta_0)
+=h^2(Q_2-T_2\eta_0).
+$$
+分母 $\lambda_+-t\eta_0$ 在中心等于一。因此
+$$
+\boxed{
+\frac{\eta_0}{\eta}=1-h^2F,\qquad
+F=\frac{Q_2-T_2\eta_0}
+{\eta(\lambda_+-t\eta_0)}
+}
+\tag{220.14}
+$$
+是完整 $(p,t)$ 邻域中的解析恒等式，未除以物理小谱或 detuning。
+
+也可核对 $F\ge0$：$B_0$ 与完整 Choi 在输出零子空间上的压缩具有同样的谱，至多相差转置。$t>0$ 时，压缩的第二大本征值不超过完整矩阵的第二大本征值；$t<0$ 时，两者各有一个负根，压缩的最小根不小于完整矩阵的最小根。两种情形分别除以正、负 $t$，均得 $\eta_0\le\eta$。其余参数点由连续性承接。
+
+固定输出零已经能证明距离差至多为二次阶。要获得精确系数，还须允许检验的输出方向随来源移动。
+

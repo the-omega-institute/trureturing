@@ -1,0 +1,16 @@
+**定义 607.1（有限算式生成两个水位）。** 将 $u_i$ 升序排列，记 $U_k=\sum_{i=1}^k u_{(i)}$、$U_0=0$。对固定 $v\in\mathcal I_h$，定义
+
+$$
+\begin{aligned}
+a_0(v)&=\min_{1\le k\le n}
+\frac{U_k+h+(k-(n-p))v}{k},\\
+a(v)&=\min(L(v)/n,a_0(v)),\\
+y_i(v)&=\max(u_{(i)}+v,a(v)),\\
+b(v)&=\max_{0\le k<n}
+\frac{L(v)-\sum_{i=1}^k y_i(v)}{n-k},\\
+w_{(i)}^v&=\min(y_i(v),b(v)),\qquad w_0^v=1-L(v).
+\end{aligned}
+$$
+
+空和取零。这里的 $b(v)$ 是计算得到的上水位，与模型的固定公共底量 $b$ 由是否带自变量区分；它不是预设的 $1/p$。排序只规定计算顺序，输出时将每个坐标还给原标签。
+

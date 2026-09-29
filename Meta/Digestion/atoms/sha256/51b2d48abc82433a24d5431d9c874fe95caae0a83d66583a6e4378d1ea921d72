@@ -1,0 +1,155 @@
+**定理88.1（外置首轮 ABBBA 不可能）。** 上述实际七维合同不能具有尾词 $ABBBA$。
+
+### 88.1 饱和分叉与两个回返输入域
+
+实际早期正交单位组 $p,q$ 与 $u,v,w$ 满足
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+$$
+
+$$
+V_0p=u\otimes A,\qquad V_1p=v\otimes A,\qquad
+V_0q=w\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{88.2}
+$$
+
+特别有 $0\ne w\in H_2\cap G_2$。对 $3\le n\le6$，实际二维空间满足
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\qquad P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n.
+\tag{88.3}
+$$
+
+两个投影均为同构，因此 $H_n\cap G_n=0$。
+
+令 $S_0=H_1+\cdots+H_5$。由于 $V_0S_0\subset K\otimes F$ 而真实首轮像 $V_0k=p\otimes\eta_1$ 不属于该空间，$k\notin S_0$，故 $\dim S_0\le6$。
+
+当前 $B$ 在第3、5轮的已见后继分别为 $B,A$。固定单射 $V_1$ 使 $G_3\cap G_5=0$。令 $P=G_3+G_4+G_5$，则 $\dim P\ge4$。实际零位像包含代数直和
+
+$$
+(P\otimes B)\dotplus(G_2\otimes A)\subset V_0S_0.
+$$
+
+两个环境方向线性独立而 $G_2$ 二维，所以该六维预算迫使
+
+$$
+\dim P=4,\qquad
+V_0S_0=(P\otimes B)\dotplus(G_2\otimes A).
+\tag{88.4}
+$$
+
+实际末轮零位像 $G_6\otimes A$ 也属于（88.4），比较 $A$ 纤维得到 $G_6=G_2=:L$。另置 $T=G_3$、$U=G_5$，于是 $P=T+U$、$T\cap U=0$。一位像为
+
+$$
+V_1P=(Q_4\otimes B)\dotplus(Q_6\otimes A).
+$$
+
+$G_4\subset P$ 且 $V_1G_4=Q_5\otimes B$，读取该像的 $B$ 纤维得到 $Q_5=Q_4=:Q$；固定单射性再给 $G_4=T$。记 $R=Q_3$、$S=Q_6$。全部需要的实际位像为
+
+$$
+\begin{aligned}
+V_1L&=R\otimes B,&V_1T&=Q\otimes B,&V_1U&=S\otimes A,\\
+V_0H_1&=L\otimes A,&V_0H_2&=T\otimes B,&V_0H_3&=T\otimes B,\\
+V_0H_4&=U\otimes B,&V_0H_5&=L\otimes A.
+\end{aligned}
+\tag{88.5}
+$$
+
+因而同一个零位单射给
+
+$$
+H_2=H_3,\qquad H_1=H_5.
+\tag{88.6}
+$$
+
+实际第四、第五终端尤其满足
+
+$$
+H_4\subset T\oplus Q,\qquad H_5\subset U\oplus Q,
+\qquad P_QH_4=P_QH_5=Q.
+\tag{88.7}
+$$
+
+由于 $P\otimes B\subset V_0K$ 而 $Q\otimes B\subset V_1K$，跨位正交给
+
+$$
+Q\perp P.
+\tag{88.8}
+$$
+
+### 88.2 真实早期向量排除非正交尾环境
+
+先有
+
+$$
+v\notin S.
+\tag{88.9}
+$$
+
+否则 $V_1p=v\otimes A$ 属于 $S\otimes A=V_1U$，固定单射性给 $p\in U=G_5$。但 $p\in H_1=H_5$，与 $H_5\cap G_5=0$ 和 $p\ne0$ 矛盾。
+
+现设 $\langle A,B\rangle\ne0$。将一位像 $S\otimes A$、$\mathbb Cv\otimes A$ 分别与零位像 $P\otimes B$ 和 $L\otimes A$ 比较，跨位正交给
+
+$$
+S,v\perp P+L.
+\tag{88.10}
+$$
+
+由（88.9），$N=S+\mathbb Cv$ 是三维空间。它正交于至少四维的 $P+L$，而整个 $K$ 只有七维，因此 $\dim(P+L)=4$，即 $L\subset P$。
+
+于是 $V_1L=R\otimes B\subset V_1P$。由（88.5），$V_1P$ 的 $B$ 纤维恰为 $Q$，故 $R\subset Q$。两者均二维，所以 $R=Q$；同一个 $V_1$ 的单射性遂给 $L=T$。
+
+由（88.2）、（88.6），实际非零向量 $w$ 随即满足
+
+$$
+0\ne w\in H_2\cap L=H_3\cap G_3,
+$$
+
+违反（88.3）的交零。这排除了非正交分支。
+
+### 88.3 正交尾环境与两个共同满投影不相容
+
+只剩 $A\perp B$。同一个一位等距将 $T,U$ 分别送入 $Q\otimes B$、$S\otimes A$，故
+
+$$
+T\perp U.
+\tag{88.11}
+$$
+
+同一个零位等距将 $H_4,H_5$ 分别送入 $U\otimes B$、$L\otimes A$，因此
+
+$$
+H_4\perp H_5.
+\tag{88.12}
+$$
+
+但（88.7）与（88.8）已经使两者对同一个 $Q$ 满投影。任取 $0\ne q_0\in Q$，存在 $h_4\in H_4$、$h_5\in H_5$，使
+
+$$
+h_4=t+q_0,\qquad h_5=u_0+q_0,
+\qquad t\in T,\quad u_0\in U.
+$$
+
+由 $Q\perp(T+U)$ 和（88.11），
+
+$$
+\langle h_4,h_5\rangle=\|q_0\|^2>0,
+$$
+
+与（88.12）矛盾。两个尾环境内积分支均被排除，定理88.1证明完毕。
+
+本节用的是同一接收器中的实际共享空间：非正交分支把三维补空间接回早期交向量；正交分支把两个终端的共同满投影接回内积。末轮仅使用已执行的零位像，没有添加第七轮后继。该结论排除外置首轮尾词 $ABBBA$，一般容量区间仍为 $7\le d_{\mathrm{CPTP},6}(a,b)\le8$。
+

@@ -239,7 +239,7 @@ It is an attributed source theorem, already used by Chapter 33;
 no new full replay of its Lean formalization is claimed here.
 
 The program
-[`eight_prime_core_attachment_certificate.py`](../frontier/cover-geometry/eight_prime_core_attachment_certificate.py)
+[`eight_prime_core_attachment_certificate.py`](../frontier/cover-geometry/eight-prime-core-attachment-certificate/eight_prime_core_attachment_certificate.py)
 uses exact rational arithmetic and the recurrence
 \[
  Z_A=Z_{A\setminus\{i\}}
@@ -249,6 +249,6 @@ uses exact rational arithmetic and the recurrence
 which distinguishes whether the least vertex is unused or belongs to
 one unique selected support. It checks all 64 residuals, the eight
 parent comparisons, and the shared budget, and writes
-[`eight_prime_core_attachment_certificate.json`](../frontier/cover-geometry/eight_prime_core_attachment_certificate.json).
+[`eight_prime_core_attachment_certificate.json`](../frontier/cover-geometry/eight-prime-core-attachment-certificate/eight_prime_core_attachment_certificate.json).
 This requires one six-child dominating tuple; it does not enumerate
 all seven-child blocks or generate new source geometry.

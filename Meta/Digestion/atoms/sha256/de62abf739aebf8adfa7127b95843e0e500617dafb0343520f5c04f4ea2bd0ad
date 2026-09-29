@@ -1,0 +1,13 @@
+**定理200.1（内点区间的一致二阶系数）。** 存在对 $h\in I$ 一致的展开
+
+$$
+\boxed{
+\mathscr E(\epsilon h,\epsilon)
+=\frac34+\epsilon\Phi_h+\epsilon^2Q(h)+o_I(\epsilon^2).
+}
+\tag{200.4}
+$$
+
+这里对任意依赖 $\epsilon,h$ 的合法共同 CPTP 解码器取最优值；
+不预先固定 Kraus 秩，不假定最优器可微，不删除额外 Kraus。
+

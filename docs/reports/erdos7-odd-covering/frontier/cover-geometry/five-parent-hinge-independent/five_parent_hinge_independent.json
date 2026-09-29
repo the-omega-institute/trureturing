@@ -1,0 +1,80 @@
+{
+  "status": "PASS",
+  "conclusion_kind": "fixed-comparison-budget-obstruction",
+  "new_lean_verification": false,
+  "scope": "The three complete fixed-parent hinge minima over integer endpoints; the report separately proves real-h and arbitrary unit-cost selection reductions. No actual violation-loss lower bound is asserted.",
+  "parents": [
+    3,
+    5,
+    7,
+    11,
+    13
+  ],
+  "reference_first_caps": [
+    "2/3",
+    "4/15",
+    "1/6",
+    "1/10",
+    "1/12"
+  ],
+  "reference_deep_caps": [
+    "2",
+    "4/3",
+    "7/5",
+    "11/9",
+    "13/11"
+  ],
+  "complete_first_moment": "95/33",
+  "unqueried_factor": "4138163/4744224",
+  "rows": [
+    {
+      "owner": 37,
+      "h": 12,
+      "exact_minimum": "8594411566353980013022960572871919248911263928017745419699818149640674096812396817756377095349/1725542361658915492275161286813794895249109992534534052574662397437238373903208007812500000000000",
+      "minimum_decimal": 0.004980701579584182,
+      "number_of_integer_endpoints": 23
+    },
+    {
+      "owner": 41,
+      "h": 15,
+      "exact_minimum": "112878344214474403800265211151582074354946681335281599614324814809193862072527530329397648339208047/32386273200385770145639433401886412940206733172382535999260694871900167730195835296630859375000000000",
+      "minimum_decimal": 0.0034853761504466604,
+      "number_of_integer_endpoints": 27
+    },
+    {
+      "owner": 43,
+      "h": 12,
+      "exact_minimum": "58900098984129829851766193338355669552195955425746018415828835776602025650883281544337058828208422999840382255797472921/19773231217535222155697664976094443471814060347195167946380242375071190707432451131888255708850695266723632812500000000000",
+      "minimum_decimal": 0.002978779661054905,
+      "number_of_integer_endpoints": 29
+    }
+  ],
+  "sum": "113150905722827706690703528769827949059911123404549480044956388620712595345306254689388650991491104683249464724625989273/9886615608767611077848832488047221735907030173597583973190121187535595353716225565944127854425347633361816406250000000000",
+  "sum_decimal": 0.011444857391085746,
+  "guaranteed_head_reserve": "203129722400814193208791597/20692505911553620784640000000",
+  "excess": "515139620728094860263242618886077648339408567409604130195816290084812552699619297320757355356431621860872462405072672361/316371699480563554491162639617511095549024965555122687142083878001139051318919218110212091341611124267578125000000000000000",
+  "check_count": 183,
+  "checks": {
+    "producer_passed": 1,
+    "comparison_scope": 1,
+    "no_new_lean_claim": 1,
+    "fixed_parent_set": 1,
+    "fixed_guaranteed_reserve": 1,
+    "exact_primary_owners": 1,
+    "complete_first_moment": 1,
+    "two_unqueried_mass_factors": 1,
+    "complete_endpoint_interval": 3,
+    "exact_hinge_nonnegative": 79,
+    "independent_exact_endpoint": 79,
+    "independent_full_minimum": 3,
+    "same_critical_parent_union": 3,
+    "common_policy_matches_fixed_parent": 3,
+    "independent_exact_sum": 1,
+    "independent_exact_excess": 1,
+    "three_owners_exceed_guaranteed_reserve": 1,
+    "simple_rational_lower_bound": 1,
+    "reported_simple_bound": 1
+  },
+  "certificate_sha256": "17d2e1a10c9f182e3dd1917a2e1de1c1f71dc09dfea15b8927fab26de60c7510",
+  "verifier_sha256": "50fc36b010d7b13114bf49adf765ce2e442ef3fa19b45c321e6b334223db3464"
+}

@@ -1,0 +1,30 @@
+**证明。** 若 $P_0:E_x\to\operatorname{Ran}P_0$ 处处单射，则因秩相同而处处可逆。局部矩阵求逆说明其逆光滑，把固定目标基拉回就得到 $E$ 的全局框，正交化后得到全局等距 $U$。此时 $\operatorname{tr}\mathcal F=d\operatorname{tr}\mathcal A$，因为交换子迹为零。由 Stokes 定理积分为零，矛盾。存在被完全消去的单位向量时范数至少为1，而正交投影范数至多为1。∎
+
+在横截的图坐标区域，$U=(I,X)^{\mathsf T}(I+X^\dagger X)^{-1/2}$，所以
+
+$$
+\lambda_{\min}(U^\dagger P_0U)=\frac1{1+\|X\|^2}.
+\tag{ST23.2}
+$$
+
+因此全局障碍可表现为图坐标发散。它不要求完整 Hamiltonian 的物理能隙闭合。这里 $\|(I-P_0)P(x)\|^2$ 是不同子空间间的丢失量，应与 ST19 的一次实际仪器漏出参数分别命名。
+
+### 定理 ST23.3：有限图册与一致的局部模型
+
+每个 $x_\alpha\in\Sigma$ 处选择 $E_{x_\alpha}$ 的等距基 $W_\alpha$。在
+$W_\alpha^\dagger P(x)W_\alpha>0$ 的邻域内定义
+
+$$
+U_\alpha(x)=P(x)W_\alpha
+[W_\alpha^\dagger P(x)W_\alpha]^{-1/2}.
+\tag{ST23.3}
+$$
+
+这些是光滑局部等距框，紧致性给出有限子覆盖。在交叠区，
+
+$$
+g_{\alpha\beta}=U_\alpha^\dagger U_\beta,\quad
+U_\beta=U_\alpha g_{\alpha\beta},\quad
+g_{\alpha\beta}g_{\beta\gamma}=g_{\alpha\gamma}.
+$$
+

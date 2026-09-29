@@ -1,0 +1,24 @@
+**定理 249.3（重叠指数的变分式与分段式）。**
+$$
+\boxed{
+\lim_{n\to\infty}-\frac1n\ln F_{n,k_n}
+=I_\theta(R)
+:=\min_{0\le x\le1}
+\left[D_{\mathrm B}(x\|\theta)+(R-x)_+\ln2\right].
+}
+\tag{249.23}
+$$
+其精确分段为
+$$
+\boxed{
+I_\theta(R)=
+\begin{cases}
+0,&0\le R\le\theta,\\
+D_{\mathrm B}(R\|\theta),&\theta<R\le\theta',\\
+R\ln2-\ln(1+\theta),&R\ge\theta'.
+\end{cases}
+}
+\tag{249.24}
+$$
+两处接点连续，线性分支也适用于 $R>1$。
+

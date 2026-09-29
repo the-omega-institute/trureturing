@@ -1,0 +1,51 @@
+**三步的实际联合态。** 将活动记忆写在接收器前方。对初始记忆基态 $`|i\rangle_M`$，记接收后的纯联合向量为 $`\Psi_n^i\in M\otimes K`$。前三轮满足
+
+$$
+\begin{aligned}
+\Psi_1^0&=m_0\otimes t,
+&\Psi_1^1&=m_1\otimes y,\\
+\Psi_2^0&=a\,m_0\otimes u+b\,m_1\otimes v,
+&\Psi_2^1&=m_0\otimes w,\\
+\Psi_3^0&=c\,m_0\otimes z+ab\,m_1\otimes w,
+&\Psi_3^1&=a\,m_0\otimes t+b\,m_1\otimes y.
+\end{aligned}
+\tag{21.5}
+$$
+
+同时，各轮环境的纯向量分别为
+
+$$
+\eta_1=|0\rangle,
+\qquad \eta_2=|1\rangle,
+\qquad \eta_3=|0\rangle,
+\tag{21.6}
+$$
+
+且与其余全部系统成乘积。
+
+逐步验证如下。首轮只使用（21.3）中的 $`w\otimes|0\rangle`$ 与 $`w\otimes|1\rangle`$，两者都输出环境零，给（21.5）第一行。第二轮的两个发射后向量为
+
+$$
+a\,m_0\otimes t\otimes|0\rangle
++b\,m_1\otimes t\otimes|1\rangle,
+\qquad
+m_0\otimes y\otimes|0\rangle.
+\tag{21.7}
+$$
+
+其中全部接收输入都由（21.3）送到环境一，得到第二行。第三轮的两个发射后向量为
+
+$$
+\begin{aligned}
+&m_0\otimes(a^2u+bv)\otimes|0\rangle
++ab\,m_1\otimes u\otimes|1\rangle\\
+&\hspace{2em}=c\,m_0\otimes z\otimes|0\rangle
++ab\,m_1\otimes u\otimes|1\rangle,\\
+&a\,m_0\otimes w\otimes|0\rangle
++b\,m_1\otimes w\otimes|1\rangle.
+\end{aligned}
+\tag{21.8}
+$$
+
+全部接收输入都输出环境零，给第三行。以上每轮对两个初始基态使用相同的环境向量；线性性因而同时覆盖任意初始相干及任意参考纠缠。对混态可取纯化再偏迹。若仅为数学验证保留所有环境，则前三个终端的累计环境分别为 $`|0\rangle`$、$`|01\rangle`$、$`|010\rangle`$；实际运行立即丢弃各轮环境，并不将它们作为额外接收记忆。
+

@@ -1,0 +1,17 @@
+**结论 81.1（单态饱和、全接口相容与真实成本边界）。** 同一个二维名义仪器现在具有
+
+$$
+\boxed{
+\mathfrak r_{\mathrm{rec}}=0
+<\mathfrak r_{\mathrm{cert}}=\frac12
+<\frac45
+<\mathfrak r_{\mathrm{fail}}
+\le\sqrt{\frac{11+5\sqrt5}{32}}
+<\mathfrak r_{\mathrm{diag}}=1.
+}
+$$
+
+其中 $\mathfrak r_{\mathrm{cert}}$ 仍只指第 69 节指定的标量余量规则。真实最坏均值在每个严格小于 $\mathfrak r_{\mathrm{fail}}$ 的闭球上共同有限，在接近这一半径时至少按式 (80.4) 发散。
+
+本批的关键连接是：一个固定态上的最优读数还必须来自同一个对全部输入合法的仪器。该相容性排除了旧下界的等号；紧性再把排除单点升级成共同间隔，并把这个间隔传给整个装置族的等待预算。
+

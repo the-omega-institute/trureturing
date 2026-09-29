@@ -1,0 +1,16 @@
+### 229.3 回接量子分支与完整通道距离
+
+固定输入 $\mathbb C^d$，令 $\mathcal R$ 为同前节的有限维 CPTP 记录通道，指定结果 $b$ 的分支为 $\Gamma$。设存在连续单位输出向量
+$$
+r:S^{2d-1}\to S^{2m-1},
+$$
+整数 $n\ne1$ 及统一常数 $\alpha\ge0$，使
+$$
+r(av)=a^n r(v),\qquad a\in U(1),
+$$
+$$
+\langle r(v),\Gamma(P_v)r(v)\rangle\ge\alpha
+\quad\text{对每个单位输入 }v.
+\tag{229.NC.10}
+$$
+

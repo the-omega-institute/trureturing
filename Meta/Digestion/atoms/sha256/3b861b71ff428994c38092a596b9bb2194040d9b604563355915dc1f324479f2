@@ -1,0 +1,57 @@
+### 74.6 六维跨度的共同二维核与四步射影关系
+
+四条 $G_i\cap E$（$i=2,3,4,5$）的 $V_1$ 像是二维空间 $V_1E$ 内的四条乘积向量，其环境射线分别为 $B,C,D,A$，全部不同。在二维空间中，三个环境不同的乘积向量若相关，其接收因子必须同线：以前两个环境为基，第三个环境的两个非零坐标逐项比较即可。故
+$$
+V_1E=L_0\otimes F
+$$
+对某条接收直线 $L_0$ 成立。该直线属于全部四个 $Q_j$，而（74.16）—（74.17）给它们的共同交恰为 $L$。因此
+$$
+\mathcal U_E:=V_1|_E:E\longrightarrow L\otimes F
+\quad\text{为满等距}.
+\tag{74.18}
+$$
+
+四个 $G_2,G_3,G_4,G_5$ 的和等于 $R$：它们在（74.14）的四个一维商中分别非零，且其中任意两条不同的 $G_i\cap E$ 张成整个 $E$。结合（74.17）—（74.18），
+$$
+V_1R=(L\otimes F)\oplus
+\sum_{Y=A,B,C,D}(N_{Y^\perp}\otimes Y).
+\tag{74.19}
+$$
+和中的四个接收方向线性独立，并与 $L$ 正交。因此 $V_1R$ 在每个实际环境 $Y$ 上的完整乘积纤维恰为 $L\oplus N_{Y^\perp}$。
+
+现在在接收因子上取商 $\pi:R\to R/E$。（74.14）—（74.15）给 $R/E$ 的四个独立一维坐标，而每个 $P_X$ 仅进入自己的坐标。于是
+$$
+(\pi\otimes I)W
+=\bigoplus_{X=A,B,C,D}(\pi P_X)\otimes X
+$$
+四维。由于 $\dim W=7$，得
+$$
+\dim\bigl(W\cap(E\otimes F)\bigr)=3.
+\tag{74.20}
+$$
+四个实际零位块中的交线提供
+$$
+(G_i\cap E)\otimes\eta_i\subset W\cap(E\otimes F)
+\qquad(i=2,3,4,5).
+$$
+用（74.18）识别 $E$ 后，这四条线分别变为
+$$
+L\otimes(B\otimes A),\quad
+L\otimes(C\otimes B),\quad
+L\otimes(D\otimes C),\quad
+L\otimes(A\otimes D).
+$$
+前三张量独立；三个首、次环境各自互异，也排除秩一双线性核。因此（74.20）给同一个可逆 $\mathcal A:F\to F$，满足
+$$
+(\mathcal U_E\otimes I)\bigl(W\cap(E\otimes F)\bigr)
+=L\otimes\operatorname{span}\{\mathcal Az\otimes z:z\in F\},
+$$
+$$
+\mathcal AA\parallel B,\quad
+\mathcal AB\parallel C,\quad
+\mathcal AC\parallel D,\quad
+\mathcal AD\parallel A.
+\tag{74.21}
+$$
+这是四个已执行接收关系的射影约束，没有外推未执行轮次。
+

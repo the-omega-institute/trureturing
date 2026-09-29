@@ -1,0 +1,10 @@
+余项半正定，而且
+$$
+0\le FR_uF^*-(A+uI_E)^{-1},\qquad
+\|FR_uF^*-(A+uI_E)^{-1}\|
+\le\frac{\delta}{(a+u)^3}.
+$$
+更具体地，余项为
+$$
+(A+uI_E)^{-1}FSQ\,R_u\,QSF^*(A+uI_E)^{-1},
+$$

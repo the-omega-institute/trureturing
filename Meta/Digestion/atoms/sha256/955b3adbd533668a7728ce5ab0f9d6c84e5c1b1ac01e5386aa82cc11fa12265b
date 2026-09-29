@@ -1,0 +1,29 @@
+**证明。** 微分$\sum_{ij}F_{ij}F_{ji}=dP$得$Z+Z^\dagger=\dot P$。又微分$P^2=P$得$P\dot P+\dot PP=\dot P$，故$K+K^\dagger=0$。
+
+对固定$k,l$，矩阵单位和它的导数给出
+
+$$
+ZF_{kl}=\frac1d\sum_j\dot F_{kj}F_{jl},
+\quad
+F_{kl}Z=\frac1d\sum_j\dot F_{kj}F_{jl}-\dot F_{kl}P.
+$$
+
+因此$[Z,F_{kl}]=\dot F_{kl}P$。由$P\dot PP=0$及$PF_{kl}=F_{kl}P=F_{kl}$，有$[P\dot P,F_{kl}]=-F_{kl}\dot P$。微分$F_{kl}P=F_{kl}$后得到$[K,F_{kl}]=\dot F_{kl}$。求和得投影式。∎
+
+定义全局酉运输$G(t)$为下述显式收敛级数：
+
+$$
+G(t)=I+\sum_{m\ge1}\int_{0\le t_m\le\cdots\le t_1\le t}
+K(t_1)\cdots K(t_m)\,dt_m\cdots dt_1.
+\tag{ST39.3}
+$$
+
+若$\|K\|\le M$，第$m$项范数至多$(Mt)^m/m!$，所以一致收敛，可积分求导得$\dot G=KG$、$G(0)=I$。$\partial_t(G^\dagger G)=0$给出酉性；微分$G^\dagger F_{ij}G$得
+
+$$
+\boxed{F_{ij}(t)=G(t)F_{ij}(0)G(t)^\dagger.}
+\tag{ST39.4}
+$$
+
+唯一性由同一积分方程的迭代余项界或Gronwall不等式得到。这里已经实际构造运输，不另外假设存在一条正确的holonomy。
+

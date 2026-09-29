@@ -1,0 +1,50 @@
+### 275.1 正定上块的graph来源与完整数据
+
+固定 $n\ge1$、参考空间 $E=\mathbb C^n$ 和qubit输入 $H$。所有输入块使用同一固定 $Y$ 本征基。给定
+$$
+Q=Q^\dagger\succ0,\qquad M\in\mathbb C^{n\times n},
+\tag{275.1}
+$$
+不预先要求 $M$ 可逆。定义
+$$
+G=\begin{bmatrix}I_n&M\end{bmatrix},
+\qquad
+T=T(Q,M)=G^\dagger QG
+=\begin{pmatrix}Q&QM\\M^\dagger Q&M^\dagger QM\end{pmatrix},
+$$
+$$
+c=\operatorname{Tr}T>0,
+\qquad \Omega=\frac1cT.
+\tag{275.2}
+$$
+$G$ 满行秩，故 $\Omega$ 是秩 $n$ 的密度态。其完整数据为
+$$
+\rho=\frac{Q+M^\dagger QM}{c}\succ0,
+\qquad K=\frac{2QM}{c},
+\qquad \mathscr K(X)=2X_{+-}.
+\tag{275.3}
+$$
+本节不要求 $Q+M^\dagger QM$ 为单位矩阵。
+
+所有同数据竞争态 $\Xi$ 恰满足
+$$
+c\Xi=T+\operatorname{diag}(D,-D)\succeq0,
+\qquad D=D^\dagger.
+\tag{275.4}
+$$
+确实，同边缘使两对角差之和为零，同 $K$ 固定全部非对角块；反向这些条件也保证同数据和迹一。竞争者不限于graph形式、固定秩或某个参考块分解。
+
+记方向空间
+$$
+L=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{275.5}
+$$
+标准奇异度取固定切片 $T+L$ 的最少面对偶约化步数；除以正数 $c$ 不改变该步数。对任意合法竞争态定义完整误差
+$$
+\varepsilon_\Omega(\Xi)
+=\|\operatorname{Tr}_H\Xi-\rho\|_1
++\|\mathscr K(\Xi)-K\|_1.
+\tag{275.6}
+$$
+态差和数据差均使用未除以二的核范数；无下标的矩阵范数为算子范数。局部指数的含义与§269一致：在固定真值邻域内，对全部合法竞争态存在一个有限常数的误差幂次上界。
+

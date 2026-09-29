@@ -1,0 +1,20 @@
+### 54.3 时钟记录的自然性
+
+若跨接口态射在状态端为 $f$、协议端反变回拉为 $g$，评价保持写作
+
+$$
+E_2(fx,p)=E_1(x,gp).
+\tag{54.4}
+$$
+
+若时钟标签和联合记录也要保持，须追加
+
+$$
+\Delta_2(fx,p)=\Delta_1(x,gp),
+\qquad
+\operatorname{Record}_2(fx,p)=\operatorname{Record}_1(x,gp),
+\tag{54.5}
+$$
+
+其中 $f:X_1\to X_2$、$g:P_2\to P_1$、$x\in X_1$、$p\in P_2$，等式在各自声明的实际像和合法域上成立。`ObserverMorphismComposition.observer_morphism_composition` 只供应评价保持的双侧复合；(54.5) 是把它升级为观察者档案态射的额外合同。
+

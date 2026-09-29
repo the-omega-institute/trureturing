@@ -1,0 +1,32 @@
+**定义 16.1（增长支持与两个统计实验）。** 令
+ $`n=2^d`$ 、 $`M=n/2`$ 、 $`\ell=\log M`$ ，沿用奇偶类
+ $`C_+,C_-`$  和符号  $`\chi`$ 。给定整数  $`1\le q\lt M/2`$
+及  $`0\lt r\lt 1`$ ，对未知且在全部观测期间固定的集合
+ $`S\subset C_+`$ 、 $`|S|=q`$ ，定义
+
+```math
+ a=\frac{rq}{M-q},\qquad
+ b_S(x)=
+ \begin{cases}r,&x\in S,\\-a,&x\in C_+\setminus S,\\0,&x\in C_-,\end{cases}
+ \qquad P_S(x,y)=\frac{1+\chi(x)\chi(y)b_S(x)}n.
+ \tag{16.1}
+```
+
+记  $`K_{S,+}=P_S`$ 、 $`K_{S,-}=P_S^{\mathsf T}`$ 。两者均严格正、
+双随机，且平方等于均匀重置核  $`\Pi`$ 。参数为
+ $`\vartheta=(S,\varepsilon)`$ ，其中  $`\varepsilon\in\{+,-\}`$ 。
+实验  $`\mathcal E_{\rm pair}`$  观察  $`s`$  个独立的均匀平稳相邻对；
+实验  $`\mathcal E_{\rm path}`$  观察均匀起点后的  $`s`$  次连续转移。
+令  $`\lambda=s/n`$ ，并以
+
+```math
+ R_{\mathcal E}(d,s,q,r)
+ =\inf_\psi\sup_{S,\varepsilon}
+   \Pr_{S,\varepsilon}^{\mathcal E}\{\psi\ne\varepsilon\}
+ \tag{16.2}
+```
+
+表示允许随机化的最坏方向错误率。下确界中的规则可知道
+ $`d,s,q,r`$ ，不知道  $`S,\varepsilon`$ 。
+另记  $`\phi(u)=\tfrac12[(1+u)\log(1+u)+(1-u)\log(1-u)]`$ 。
+

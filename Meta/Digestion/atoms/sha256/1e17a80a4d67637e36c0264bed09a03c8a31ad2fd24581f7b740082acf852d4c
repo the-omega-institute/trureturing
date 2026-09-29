@@ -1,0 +1,54 @@
+**证明。** 先设 $A,B$ 严格正。Schur补给出
+$$
+HA^{-1}H\preceq B.
+\tag{259.13}
+$$
+置
+$$
+X=A^{-1/2}HA^{-1/2},
+\qquad C=A^{-1/2}BA^{-1/2}.
+\tag{259.14}
+$$
+于是 $X=X^\dagger$ 且 $X^2\preceq C$。正平方根的算子单调性给
+$$
+|X|=(X^2)^{1/2}\preceq C^{1/2}.
+\tag{259.15}
+$$
+结合 $-|X|\preceq X\preceq|X|$，再作 $A^{1/2}$ 同余，即得（259.12）。另一方面，由（259.8）直接计算
+$$
+GA^{-1}G=B.
+\tag{259.16}
+$$
+因此 $H=G$ 与 $H=-G$ 都满足Schur补等式，（259.10）成立。
+
+一般情形记 $A_\varepsilon=A+\varepsilon I$、$B_\varepsilon=B+\varepsilon I$、$G_\varepsilon=A_\varepsilon\#B_\varepsilon$。若 $0<\varepsilon<\delta$，将 $G_\varepsilon$ 的正块矩阵两个对角块各增加 $(\delta-\varepsilon)I$，得到它也是 $(A_\delta,B_\delta)$ 的可行填充。严格正情形的最大元性质给
+$$
+0\preceq G_\varepsilon\preceq G_\delta.
+\tag{259.17}
+$$
+在 $G_\delta$ 的正块矩阵上使用向量 $(x,-x)$，还得到
+$$
+2G_\delta\preceq A+B+2\delta I.
+\tag{259.18}
+$$
+故 $G_\varepsilon$ 随 $\varepsilon\downarrow0$ 单调下降且有下界。在有限维中它以算子范数收敛，定义出（259.9）的 $G\succeq0$。
+
+原来的任意可行 $H$ 对每个 $(A_\varepsilon,B_\varepsilon)$ 仍可行，因此 $-G_\varepsilon\preceq H\preceq G_\varepsilon$；取极限得（259.12）。由正半定锥的闭性，$\bigl(\begin{smallmatrix}A_\varepsilon&\pm G_\varepsilon\\\pm G_\varepsilon&B_\varepsilon\end{smallmatrix}\bigr)$ 的极限亦正半定，得到（259.10）。$\square$
+
+这里使用的是指定的单调正则化极限，没有假设几何平均在奇异矩阵对上沿任意逼近路径都联合连续。
+
+还需保留另一条界限：（259.12）只是一般可行 $H$ 的必要条件，不能把它当成（259.11）的充要条件。例如
+$$
+A=\begin{pmatrix}4/5&0\\0&1/5\end{pmatrix},\quad
+B=\begin{pmatrix}1/5&0\\0&4/5\end{pmatrix},\quad
+G=\frac25I_2,\quad
+H=\frac25\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{259.19}
+$$
+虽然 $-G\preceq H\preceq G$，却有
+$$
+B-HA^{-1}H=\operatorname{diag}(-3/5,3/5)\not\succeq0.
+\tag{259.20}
+$$
+精确纤维仍由块正性定义；计算其直径不需要把整条算子序区间都误当作可行纤维。
+

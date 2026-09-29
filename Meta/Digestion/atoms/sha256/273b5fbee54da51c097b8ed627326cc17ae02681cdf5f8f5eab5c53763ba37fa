@@ -1,0 +1,71 @@
+### 198.3 纯来源最优面上的非负源系数
+
+记
+
+$$
+\mathcal F=\{\Gamma\in\mathcal K:A_0=A_1=1/2,\ C_0=C_1=0\}.
+$$
+
+共同 TP 给
+$A_0+A_1=1-C_0-C_1$，所以一般基点误差有精确分解
+
+$$
+\lambda-\frac34
+=\frac{C_0+C_1}{4}
++\frac{(A_0-A_1)^2}{4(A_0+A_1)}
+\ge0.
+\tag{198.6}
+$$
+
+分母为零时基点误差为一。故 $\mathcal F$ 正好是基点最优面。
+
+在 $\mathcal F$ 上，$q=1/2,\lambda=3/4$。令
+$S_M=\operatorname{Re}(M_0+M_1)$、
+$K_M=|M_0|^2+|M_1|^2$，则
+
+$$
+\mathcal P
+=\frac7{12}-\frac23S_M+\frac16K_M,
+$$
+
+$$
+\mathcal N
+=\frac{\beta\Sigma}{8}
+-\frac\beta4(B_0+RB_1)
++\frac{\gamma\delta}{2}\operatorname{Im}N_0.
+\tag{198.7}
+$$
+
+后一式使用 $N_0+N_1=0$；它由共同 TP 与 $C_j=0$ 得到。
+
+正性给 $D_j\ge2|M_j|^2$，共同 TP 给
+$B_0+B_1+D_0+D_1=1$，所以
+
+$$
+K_M\le\frac12,\qquad S_M\le\sqrt{2K_M}.
+$$
+
+置 $m=\sqrt{K_M/2}\in[0,1/2]$，有
+
+$$
+\mathcal P
+\ge\frac7{12}-\frac43m+\frac13m^2
+=\frac{(1-2m)(7-2m)}{12}\ge0.
+\tag{198.8}
+$$
+
+若 $\mathcal P=0$，必须同时有
+$K_M=1/2$、$S_M=1$，故 $M_0=M_1=1/2$。
+于是 $D_j\ge1/2$ 和共同 TP 强制
+$D_0=D_1=1/2$、$B_0=B_1=0$。
+正性再给 $N_0=N_1=0$。因此
+
+$$
+\boxed{
+\Gamma\in\mathcal F,\quad\mathcal P(\Gamma)=0
+\quad\Longrightarrow\quad
+\mathcal N(\Gamma)=\Phi_\infty.
+}
+\tag{198.9}
+$$
+

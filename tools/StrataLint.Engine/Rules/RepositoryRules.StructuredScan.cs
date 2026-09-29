@@ -436,6 +436,20 @@ internal static class CanonicalLeanNameDecoder
         return decoded;
     }
 
+    // Structural Name components for consumers that must preserve str/num and
+    // UTF-8 atoms, rather than split the lossy display spelling on dots.
+    internal static (string Kind, string Value)[] ComponentsPrefix(
+        string input, int start, out int consumedCharacters)
+    {
+        ArgumentNullException.ThrowIfNull(input);
+        if ((uint)start > (uint)input.Length) throw new ArgumentOutOfRangeException(nameof(start));
+        var components = new List<(string Kind, string Value)>();
+        var parser = new Parser(input, start, components);
+        _ = parser.Name(requireRepositoryIdentifier: false);
+        consumedCharacters = parser.Position - start;
+        return components.ToArray();
+    }
+
     internal static bool IsRepositoryNameKey(string input)
     {
         try
@@ -450,17 +464,18 @@ internal static class CanonicalLeanNameDecoder
         }
     }
 
-    private sealed class Parser(string text, int start)
+    private sealed class Parser(string text, int start, List<(string Kind, string Value)>? components = null)
     {
         internal int Position { get; private set; } = start;
 
-        internal string Name(bool requireRepositoryIdentifier)
+        internal string Name(bool requireRepositoryIdentifier, int depth = 0)
         {
+            if (components is not null && depth > 256) throw Error("Name depth exceeds source bound.");
             if (TryTake("n0")) return string.Empty;
 
             var tag = Word(2);
             Take("(");
-            var parent = Name(requireRepositoryIdentifier);
+            var parent = Name(requireRepositoryIdentifier, depth + 1);
             Take(",");
             var part = tag switch
             {
@@ -469,6 +484,7 @@ internal static class CanonicalLeanNameDecoder
                 _ => throw Error("Unknown name tag."),
             };
             Take(")");
+            components?.Add((tag, part));
             return parent.Length == 0 ? part : parent + "." + part;
         }
 

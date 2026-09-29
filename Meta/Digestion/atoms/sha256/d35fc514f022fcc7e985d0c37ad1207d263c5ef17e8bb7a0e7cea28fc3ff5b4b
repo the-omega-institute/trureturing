@@ -1,0 +1,26 @@
+**定义 79.1（同一测量实现的信息波动）。** 保持第 75、77 章的原模型、
+完整计数向量 $R$、精确标量 $T=t_x(R)$ 与实际先验纤维律 $P_x$。
+对每个确定正噪声序列，令
+
+$$
+Y=T+\sigma_MG,\qquad L_M=\ln(1/\sigma_M)\to\infty,\qquad L_M=o(Q^3),
+\tag{79.1}
+$$
+
+其中 $G$ 独立于完整原实验，服从标准正态。沿用第 77 章的
+$\nu=2g_0>0$、方差参数密度 $\varphi_\nu$ 和实际输出密度 $f_x$，置
+
+$$
+\begin{aligned}
+i_x(n,y)&=\ln\frac{\varphi_{\sigma_M}(y-t_x(n))}{f_x(y)},\\
+H_M&=i_x(R,Y)-L_M,\qquad c=\tfrac12\ln\nu,\\
+\Lambda_x(y)&=\ln\frac{f_x(y)}{\varphi_\nu(y)}.
+\end{aligned}
+\tag{79.2}
+$$
+
+测量核 $\varphi_{\sigma_M}$ 仍按标准差标记。$H_M$ 是自然单位的信息波动，
+不是 Shannon 熵。$\mathbb E_x$ 积分同一个先验计数向量及其独立测量噪声。
+下文所有随机环境结论均对每个上述噪声序列、两种实际平稳实验成立，
+且一致于确定真实支持的原始数据概率；不对所有噪声序列同时取上确界。
+

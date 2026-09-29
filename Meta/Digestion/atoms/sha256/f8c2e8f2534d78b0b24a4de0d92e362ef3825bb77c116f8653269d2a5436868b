@@ -1,0 +1,24 @@
+**定义 272.1（有限模型的共轭缺口）。** 固定输入基底，设 $\mathcal R=\{\rho_1,\ldots,\rho_n\}$ 是 $M_d(\mathbb C)$ 中的非空有限密度矩阵族，定义
+
+$$
+\delta(\mathcal R)
+=\min_{\mathcal C\ \mathrm{CPTP}}
+\max_{1\le j\le n}
+\frac12\|\mathcal C(\rho_j)-\overline{\rho_j}\|_1,
+\qquad\mathcal C:M_d\to M_d.
+\tag{272.1}
+$$
+
+对任意有限维编码 $\mathcal E:M_d\to M_D$、解码 $\mathcal D:M_D\to M_d$ 及固定输出基底，定义
+
+$$
+e(\mathcal D,\mathcal E)
+=\max_j\frac12\|\mathcal D\mathcal E(\rho_j)-\rho_j\|_1,
+\qquad
+r(\mathcal E)
+=\max_j\frac12\|\mathcal E(\rho_j)-\overline{\mathcal E(\rho_j)}\|_1.
+\tag{272.2}
+$$
+
+全部映射均要求复线性、完全正且保迹；两处复共轭分别取所固定的输入和输出基底。$r=0$ 恰表示整个输出模型在该基底中取实。
+

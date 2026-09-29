@@ -1,0 +1,40 @@
+## 126. 一重纤维的三维尾侧不能先行
+
+沿用第89、112、119、120、123节的同一七维六终端实际合同。来源为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+接收器独立纯启动，各轮使用同一个固定全域通道，全部完整参考—活动记忆—原档案终端来自同一个实际过程。本节限定通常纤维维数为一，两个完整零位尾纤维的尺寸为三与四。
+
+第120、123节使五个尾环境恰使用两个正交方向。按第二轮命名单位代表 $A,B$，现在假设
+
+$$
+[\eta_2]=[A],\qquad A\perp B,\qquad
+\dim U_A=3,\quad \dim U_B=4.
+\tag{126.1}
+$$
+
+完整位像为
+
+$$
+\begin{aligned}
+R_0&=(U_A\otimes A)\oplus(U_B\otimes B),\\
+R_1&=(U_A^\perp\otimes A)\oplus(U_B^\perp\otimes B).
+\end{aligned}
+\tag{126.2}
+$$
+
+并且
+
+$$
+P=U_A\cap U_B,\quad\dim P=1,\qquad
+S_0=U_A+U_B,\quad\dim S_0=6,\qquad
+Q=S_0^\perp,\quad\dim Q=1.
+\tag{126.3}
+$$
+
+这里 $U_A,U_B$ 是完整接收纤维，不只是尾部实际 $G_i$ 的跨度；它们也不被预设为正交。
+

@@ -1,0 +1,11 @@
+**定义 247.1（纯预算边的几何常数）。** 沿用第243—246节的实际任务，置
+
+$$
+b=2\alpha,\qquad \sigma=\sqrt{1-b^2},\qquad
+d=\sqrt{D_*},\qquad r_0=\frac{bd}{\sigma},\qquad
+C_{\rm pure}=\left(\frac\pi2+\frac b\sigma\right)^2.
+\tag{247.1}
+$$
+
+以下所称纯预算边为 $\zeta_s=0$、$\eta_s=\delta_s=F_s+e_s$，其中 $0<e_s=o(s)$。候选准备因此处处为纯态，仍满足原全输入精确性与全部节点要求。
+

@@ -1,0 +1,16 @@
+**定义 46.1（量子比特的首次返回）。** 取 $\mathcal H=\operatorname{span}\{|0\rangle,|1\rangle\}$，参数 $0\le\gamma\le1$，令
+
+$$
+U_\gamma=
+\begin{pmatrix}
+\sqrt{1-\gamma}&-i\sqrt\gamma\\
+-i\sqrt\gamma&\sqrt{1-\gamma}
+\end{pmatrix},
+\qquad
+Q_\gamma=P_1U_\gamma,
+\qquad
+L_\gamma=P_0U_\gamma.
+$$
+
+每轮先执行 $U_\gamma$，再检测是否处于 $|0\rangle$；点击即停止，未点击则继续。共同初态为 $P_0$。这是一轮酉演化后接理想投影的仪器，参数也可写成 $\gamma=\sin^2\theta$、$0\le\theta\le\pi/2$。时间仍按轮数计。
+

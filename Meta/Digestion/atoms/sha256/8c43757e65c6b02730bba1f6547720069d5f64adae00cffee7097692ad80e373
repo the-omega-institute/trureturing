@@ -1,0 +1,48 @@
+### 266.2 哪些约束递归可以计为面约化步骤
+
+一条合法的 $d$ 步链为
+$$
+\mathcal C=\mathcal F_0
+\supsetneq\mathcal F_1
+\supsetneq\cdots
+\supsetneq\mathcal F_d,
+\tag{266.6}
+$$
+并须在每一步给出证书
+$$
+Y_j\in\mathcal F_{j-1}^*\cap L^\perp\cap\{a_0\}^\perp,
+\qquad
+\mathcal F_j=\mathcal F_{j-1}\cap\{Y_j\}^\perp.
+\tag{266.7}
+$$
+这里 $\mathcal F_{j-1}^*$ 是在原实内积空间中取的对偶锥。终端须满足
+$$
+\operatorname{ri}\mathcal F_d\cap(a_0+L)\ne\varnothing,
+\tag{266.8}
+$$
+即相对Slater条件；标准定理还允许较弱的PPS终端，本节使用（266.8）就已足够。于是
+$$
+d_{\mathrm{PPS}}\le d_S\le d.
+\tag{266.9}
+$$
+对 $0\le\epsilon\le1$，可由（266.3）使用保证指数 $2^{-d}$。
+
+在PSD锥中，若当前面由支撑投影 $P$ 表示，则
+$$
+Y\in\mathcal F_P^*
+\iff
+PYP\succeq0
+\quad\text{作为 }\operatorname{ran}P\text{ 上的算子}.
+\tag{266.10}
+$$
+因此后续证书只要求在当前面上正，不必在原全空间上正。与此同时，（266.7）始终要求证书消去整个固定仿射切片：它必须既垂直于方向空间，又垂直于偏移。
+
+这些正是Lourenço PDF第16页 Lemma 22与 Theorem 23的链条件。其PDF第23页 Theorem 35为一个对称锥步骤给出形如
+$$
+\kappa\epsilon+\kappa\sqrt{\epsilon\|x\|}
+\tag{266.11}
+$$
+的面残差函数；第26页 Lemma 36控制连续步骤的复合，从而得到（266.3）的幂指数。
+
+所以，最终核的维数、手算中出现几次Schur补、某个可行点有几条零二次型，都不能直接代替 $d$。必须核对（266.7）和终端条件。即使已经求得最短步数 $d_S$，标准定理给出的仍是有效上界；最优指数还需要独立下界。
+

@@ -1,0 +1,26 @@
+**定义 227.1（动作索引的响应合同）。** 令 $\mathcal A$ 为有限动作集。对每个 $a\in\mathcal A$，取真实线性响应 $T_a$ 和名义响应 $\bar T_a$，并定义
+
+$$
+\kappa_a=\|T_a-\bar T_a\|,
+\qquad
+g_a\ge\|T_a\|,
+\qquad
+\bar g_a\ge\|\bar T_a\|.
+$$
+
+策略 $\pi$ 在一条完整记录上产生动作词
+
+$$
+w=(a_1,\ldots,a_n).
+$$
+
+记
+
+$$
+T_w=T_{a_n}\cdots T_{a_1},
+\qquad
+\bar T_w=\bar T_{a_n}\cdots\bar T_{a_1}.
+$$
+
+动作支持 $\mathcal A_\Pi$ 是允许策略族在所有声明历史上可能调用的动作集合。
+

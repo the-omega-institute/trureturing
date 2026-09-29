@@ -1,0 +1,20 @@
+**定理 244.2（完整与无参考区分能力）。** 定义
+$$
+D_p=\frac12\|\mathcal S_p-\mathcal R\|_\diamond,
+\qquad
+U_p=\max_{\rho\text{ 为输入密度矩阵}}
+\frac12\|\mathcal S_p(\rho)-\mathcal R(\rho)\|_1.
+$$
+则
+$$
+\boxed{
+D_p=\frac{\sqrt{A+B}}2=\frac\ell2,
+\qquad
+U_p=\frac{\sqrt A}{2},
+\qquad
+\delta_p:=D_p-U_p
+=\frac{\sqrt{A+B}-\sqrt A}{2}.
+}
+\tag{244.22}
+$$
+

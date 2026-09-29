@@ -1,0 +1,79 @@
+### 148.4 第六轮的两个实际环境分支
+
+第五轮第一列在下一次发射时的零位系数为
+$a(\kappa h-bdg)$，一位系数为 $b\kappa h$。定义实数
+
+$$
+\begin{aligned}
+\mu&=\langle\xi_4,\kappa h-bdg\rangle
+=\frac{b(c\kappa-a^2d^2)}{\kappa},\\
+\nu&=\langle\zeta_4,\kappa h-bdg\rangle
+=d\left(a^2+\frac{cb^2}{\kappa}\right)>0.
+\end{aligned}
+\tag{148.10}
+$$
+
+因为 $\xi_4,\zeta_4$ 正交归一，
+
+$$
+\kappa h-bdg=\mu\xi_4+\nu\zeta_4,\qquad
+\mu^2+\nu^2=\lambda^2.
+\tag{148.11}
+$$
+
+令
+
+$$
+G=a^2dg+a^2bu+b^2w,\qquad
+H=abc\,h+ab^2v.
+\tag{148.12}
+$$
+
+第六轮的完整实际 Stinespring 列是
+
+$$
+|0\rangle\longmapsto
+a\mu\,m_0h\otimes A
++\bigl(a\nu\,m_0P+b\kappa\,m_1e\bigr)\otimes B,
+$$
+
+$$
+|1\rangle\longmapsto
+(m_0G+m_1H)\otimes B.
+\tag{148.13}
+$$
+
+第二式使用同一来源列的两个输入系数
+
+$$
+a^2df+a^2bP+b^2q,\qquad
+abc\,s+ab^2P,
+$$
+
+再分别读取表中的零、一位作用。两列使用同一环境基 $A,B$，没有按未知初始输入另选环境标签。
+
+因此，对从初始活动空间到当前 $M\otimes K$ 的两个算子
+
+$$
+\begin{array}{ll}
+L_A|0\rangle=a\mu\,m_0h,&L_A|1\rangle=0,\\
+L_B|0\rangle=a\nu\,m_0P+b\kappa\,m_1e,&
+L_B|1\rangle=m_0G+m_1H,
+\end{array}
+\tag{148.14}
+$$
+
+任意初始参考—活动态 $\rho_{RM}$ 的实际第六终端均为
+
+$$
+\sigma_6(\rho)=
+(I_R\otimes L_A)\rho(I_R\otimes L_A)^*
++(I_R\otimes L_B)\rho(I_R\otimes L_B)^*.
+\tag{148.15}
+$$
+
+这同时保留初始逻辑的非对角块：例如
+$|0\rangle\langle1|$ 的像为
+$L_B|0\rangle\langle1|L_B^*$，并非仅比较两份基态的概率。由实际全域酉实现，
+$L_A^*L_A+L_B^*L_B=I$，故 $\|L_B\|_{\mathrm{op}}\le1$。
+

@@ -1,0 +1,64 @@
+### 252.2 正见证的谱隙与竞争态泄漏
+
+用理想源的两份响应构造§251的参考谱符号 $H_a,H_b$、量子旗标 $Q$ 与产品旗标 $P_{\mathrm{prod}}$。令
+$$
+F=\frac QD+\frac{P_{\mathrm{prod}}}U,
+\qquad
+W=\frac14(A_a\otimes H_a+A_b\otimes H_b),
+\qquad
+L=I_{H\otimes E}-(I_H\otimes F)W.
+\tag{252.5}
+$$
+$H_a,H_b,F$ 在原源未占用的参考方向上按§251补零，因而 $W$ 在对应联合空间上为零，$L$ 为恒等算子。记
+$$
+\mathcal K=\ker L,
+\qquad \Pi=P_{\mathcal K}.
+\tag{252.6}
+$$
+$\Pi$ 是联合空间的核投影，须与参考量子旗标 $Q$ 区分。
+
+§251逐块计算了 $L$ 的谱。在量子块中，其非零本征值为 $2B/\ell^2,2A/\ell^2,2$；在产品块中非零本征值为二；在未占用参考方向上为一。因此
+$$
+\boxed{
+L\succeq\lambda(I-\Pi),
+\qquad
+\lambda=\frac{2B}{\ell^2}\in(0,1].
+}
+\tag{252.7}
+$$
+此谱隙只来自固定非平行轴参数，不涉及源态各密度矩阵块的最小本征值。
+
+源态满足 $\operatorname{Tr}(L\Omega)=0$。由§251的见证期望公式以及两态归一化，
+$$
+0\le\operatorname{Tr}(L\Xi)
+=-\frac14\sum_{w=a,b}\operatorname{Tr}(FH_w\Delta_w).
+\tag{252.8}
+$$
+$F$ 与 $H_w$ 交换，且
+$$
+\|FH_w\|\le\frac1U=\frac2{\sqrt A}.
+\tag{252.9}
+$$
+迹范数对偶于是给
+$$
+\operatorname{Tr}(L\Xi)
+\le\frac{\varepsilon}{4U}
+=\frac{\varepsilon}{2\sqrt A}.
+\tag{252.10}
+$$
+定义竞争态落在核外的权重
+$$
+t=\operatorname{Tr}[(I-\Pi)\Xi].
+\tag{252.11}
+$$
+结合（252.7）及 $0\le t\le1$，得到
+$$
+\boxed{
+ t\le h(\varepsilon),
+\qquad
+h(\varepsilon)=\min\left\{1,\frac{\ell^2\varepsilon}{4B\sqrt A}\right\}.
+}
+\tag{252.12}
+$$
+即使竞争态在原源未占用的参考空间中增加权重，该权重也包含在此泄漏界中。
+

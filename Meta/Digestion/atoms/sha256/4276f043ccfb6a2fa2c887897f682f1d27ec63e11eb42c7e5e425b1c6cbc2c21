@@ -1,0 +1,1 @@
+- `D5/S0/Tower/DBonacci/PerronRoot.lean` 已包含正根存在唯一性、特征方程、`two_sub_dbonacciPerronRoot_eq_inv_pow`、根的严格递增、二阶黄金根与 `dbonacciPerronRoot_tendsto_two`。这些成熟接口不因本节使用而成为新增形式化成果。

@@ -1,0 +1,2 @@
+**证明.** 最大联合匹配若留下 \(u\) 个避点 AP 和 \(v\) 个含点 AP，则 \(D_{\mathcal J}=u+v\)。设已匹配避点 AP 使用 \(R\) 个对资源；点资源至多 \(N-1-h\)，故 \(|R|\geq t+1-u\)。已匹配含点 AP 至多 \(z-|R|\) 个使用 \(Z\) 对，其余给出定理 9 图中的边，因此 \(\delta\leq v+z-|R|\)。代入 (5) 得 (6)。联合图中 \(X\sqcup Y\) 的邻域恰为 \((V\setminus H_X)\sqcup(Z_X\cup B_Y)\)。Hall 缺额公式给出 \(|N(X\sqcup Y)|\geq|X|+|Y|-1-\varepsilon_c\)；展开并移项即 (7)，反向移项亦成立。\(\square\)
+

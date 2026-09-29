@@ -1,0 +1,19 @@
+### 67.1 三维中间输入和的排除
+
+固定七维六终端纯分支合同，全部六轮环境位于同一二维空间 $F$，且
+$$
+(\eta_2,\eta_3,\eta_4,\eta_5,\eta_6)=(A,B,C,B,D),
+$$
+其中 $A,B,C,D$ 四条射线两两不同。采用单位代表。记
+$$
+U=G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),\qquad
+P=G_3+G_5.
+$$
+因为固定 $V_1$ 在 $G_3,G_5$ 上分别使用不同环境 $C,D$，有 $\dim P=4$。对零位像的环境因子施加正交投影 $P_{B^\perp}$，四维 $P\otimes B$ 位于其核中，故投影后的像至多三维。$A,C,D$ 均不同于 $B$，它们投影后的环境向量都属于同一条非零射线 $F\cap B^\perp$，所以投影像包含 $(U+G_4+G_6)\otimes(F\cap B^\perp)$。于是
+$$
+T:=U+G_4+G_6,\qquad\dim T\le3.
+\tag{67.1}
+$$
+它只使用四维零位块 $P\otimes B$，不要求全部位像属于 $K\otimes F$。
+

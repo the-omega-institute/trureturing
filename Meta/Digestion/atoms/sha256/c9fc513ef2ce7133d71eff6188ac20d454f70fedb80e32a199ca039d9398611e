@@ -1,0 +1,44 @@
+**定义 107.1（未点击动力学相同的后继参数族）。** 固定 $a>0$，取充分小的 $t>0$，令
+
+$$
+\psi=|+\rangle,\quad P=|\psi\rangle\langle\psi|,
+\quad \eta=\frac{-|0\rangle+|1\rangle}{\sqrt2},
+\quad \psi_t=\cos t\,\psi-\sin t\,\eta,
+\quad S_t=|\psi_t\rangle\langle\psi_t|,
+\quad k_t=at^2<1.
+$$
+
+对任意密度矩阵 $\tau$，定义
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal N_t(X)&=(1-k_t)\operatorname{Tr}(PX)S_t,\\
+\mathcal C_t^\tau(X)&=
+\operatorname{Tr}[(I-P)X]P_0+k_t\operatorname{Tr}(PX)\tau,
+\qquad \Gamma_t^\tau=(\mathcal N_t,\mathcal C_t^\tau).
+\end{aligned}
+}
+\tag{107.1}
+$$
+
+$\tau$ 是装置参数，每次执行前固定；不是观察者取得的额外结果。实际记录仍只有未点击与点击。点击 CP 映射的两项也未被声明为可读取的两个记录标签。
+
+令
+
+$$
+r_t=(1-k_t)\cos^2t,\qquad
+\epsilon_t=1-r_t
+=k_t+(1-k_t)\sin^2t>0,
+\tag{107.2}
+$$
+
+并记第 103 节不附加 $k_t$ 分支的向内旋转仪器为 $\widehat\Gamma_{-t}$。取共同校准半径
+
+$$
+u_t=\delta(\widehat\Gamma_{-t})+k_t.
+\tag{107.3}
+$$
+
+这里 $u_t$ 随 $t$ 变化，不是一个固定的子临界常数。
+

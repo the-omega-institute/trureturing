@@ -1,0 +1,63 @@
+**定理 241.2（单纯形的边缘偏差证书）。** 对每份纯联合输入的输入边缘 $\rho$，
+$$
+\boxed{
+D_*-f(\rho)\ge
+\kappa\|\rho-I_d/d\|_{\mathrm{HS}}^2
+=\kappa\left(\operatorname{Tr}\rho^2-\frac1d\right).
+}
+\tag{241.17}
+$$
+
+**证明。** 令 $H=\rho-I_d/d$，则 $H$ Hermitian 且迹零。恒等部分没有投影非对角块，秩一投影还给
+$$
+\begin{aligned}
+\sum_j\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2
+&=\sum_{j=1}^{d+1}
+\left[\operatorname{Tr}(\Pi_jH^2)
+-(\operatorname{Tr}(\Pi_jH))^2\right]\\
+&=\alpha\operatorname{Tr}H^2
+-\sum_{j=1}^{d+1}(\operatorname{Tr}(\Pi_jH))^2.
+\end{aligned}
+\tag{241.18}
+$$
+定义迹零 Hermitian 向量 $T_j=\Pi_j-I_d/d$，以 $\langle X,Y\rangle=\operatorname{Tr}(XY)$ 为实 Hilbert–Schmidt 内积。其 Gram 矩阵为
+$$
+\operatorname{Tr}(T_iT_j)=
+\begin{cases}
+(d-1)/d,&i=j,\\
+-(d-1)/d^2,&i\ne j.
+\end{cases}
+\tag{241.19}
+$$
+等价地，令 $n=d+1$，有
+$$
+\Gamma=
+\left(1-\frac1{d^2}\right)
+\left(I_n-\frac1n\mathbf1\mathbf1^{\mathsf T}\right).
+\tag{241.20}
+$$
+因此 $\Gamma$ 的最大本征值为 $\gamma=1-1/d^2$。对任意实系数 $c_j$、$\sum_jc_j^2=1$，
+$$
+\left|\sum_jc_j\operatorname{Tr}(T_jH)\right|
+\le\|H\|_{\mathrm{HS}}
+\left\|\sum_jc_jT_j\right\|_{\mathrm{HS}}
+\le\sqrt\gamma\|H\|_{\mathrm{HS}}.
+$$
+对系数取上确界，并使用 $\operatorname{Tr}H=0$，得到
+$$
+\sum_j(\operatorname{Tr}(\Pi_jH))^2
+=\sum_j(\operatorname{Tr}(T_jH))^2
+\le\left(1-\frac1{d^2}\right)\operatorname{Tr}H^2.
+\tag{241.21}
+$$
+代入（241.18），可得
+$$
+\sum_j\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2
+\ge\left(\frac{d+1}{d}-1+\frac1{d^2}\right)\operatorname{Tr}H^2
+=\frac{d+1}{d^2}\|H\|_{\mathrm{HS}}^2.
+\tag{241.22}
+$$
+在当前参数下，$a=d/(d+1)-1/N\ge1/N=b$，因为 $N\ge d+1$、$d\ge2$。因此定理241.1中的系数为 $b=1/N$。结合（241.22）得到（241.17）。$\square$
+
+该证明使用同一投影族的完整 Gram 关系。它没有仅凭各投影秩或各自谱推出正的统一系数。
+

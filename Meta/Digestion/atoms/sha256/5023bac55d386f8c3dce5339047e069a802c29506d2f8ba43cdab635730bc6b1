@@ -1,0 +1,58 @@
+### 157.1 固定代数数据与完整参考任务
+
+记
+
+$$
+\mathbb A=\overline{\mathbb Q}\cap\mathbb R,
+\qquad
+\mathbb A_{\mathbb C}=\mathbb A+i\mathbb A.
+\tag{157.1}
+$$
+
+$\mathbb A$ 是实代数数构成的实闭域，$\mathbb A_{\mathbb C}$ 是复代数数域。称一个复矩阵具有代数坐标，若其全部条目的实部、虚部均属于 $\mathbb A$。
+
+固定本卷的同一非退化来源
+
+$$
+T|0\rangle=(a|0\rangle+b|1\rangle)_M|0\rangle_B,\qquad
+T|1\rangle=|0\rangle_M|1\rangle_B,\qquad
+ab\ne0,\quad |a|^2+|b|^2=1,
+\tag{157.2}
+$$
+
+以及有限接收空间 $K=\mathbb C^D$、与来源及参考独立的纯初态 $\omega_K$，和逐轮重复的全域 CPTP 通道
+
+$$
+\mathcal C:\mathcal L(K\otimes B)\longrightarrow\mathcal L(K).
+$$
+
+本节的代数假设为
+
+$$
+a,b\in\mathbb A_{\mathbb C},\qquad
+\omega_K\text{ 与 }J(\mathcal C)\text{ 具有代数坐标}.
+\tag{157.3}
+$$
+
+Choi 约定沿用第153节。代数假设只约束装置描述；初始来源态、参考以及终端解码器仍在原合同允许的全部复量子态和全部 CPTP 映射中优化。
+
+沿用第150、153节固定装置的单终端最优完整参考半迹误差 $e_n$，以及
+
+$$
+E_\infty=\sup_{n\ge1}e_n.
+\tag{157.4}
+$$
+
+持续运行的来源、接收初态与物理接收通道均固定，只有本地终端解码器可以依赖终端编号。再沿用第155节的实际共同相位群 $G$、相位通道 $\mathcal R_z$、稳定目标 $\mathcal V_*$，记
+
+$$
+h(z)=
+\min_{\mathcal D:\mathcal L(K)\to\mathcal L(H_{\mathrm{can}})\ {\rm CPTP}}
+\frac12\|
+(\operatorname{id}_M\otimes\mathcal D)\mathcal R_z-\mathcal V_*
+\|_\diamond,
+\qquad
+h_G=\max_{z\in G}h(z).
+\tag{157.5}
+$$
+

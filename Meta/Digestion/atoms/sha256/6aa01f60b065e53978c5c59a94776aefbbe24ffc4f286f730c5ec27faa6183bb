@@ -1,0 +1,28 @@
+**精确共同支撑与最小物理维数。**
+
+对可达计数 $c\in\mathbb Z_{\ge0}^s$，将同一长度、端点和计数的所有路径振幅合为
+$$
+b_{n,ij,c}
+=\sum_{\substack{\gamma:i\to j,\ |\gamma|=n\\c(\gamma)=c}}
+\sqrt{\prod_{e\in\gamma}P_e}\,|n,\gamma\rangle.
+\tag{33.4}
+$$
+每个向量非零，且不同 $(n,i,j,c)$ 的向量正交。独立边相位使其字符为 $e^{i\theta\cdot c}$。因为 $\mathbf1^Tc=n$，不同长度也不可能产生相同完整计数。
+
+已知 $\theta$ 时，档案 Schmidt 支撑由各端点向量
+$$
+\chi_{ij}(\theta)=\frac1{\sqrt W}
+\sum_{n\in\mathcal I_{N,W}}\sum_{c\in\mathcal C_n(i,j)}
+e^{i\theta\cdot c}b_{n,ij,c}
+\tag{33.5}
+$$
+张成。这里每个 $\chi_{ij}$ 本身包含跨长度相干。完整边标签与 $N\ge1$ 使不同端点扇区正交；对 $m$ 维 Bell 参考输入，这些非零向量正是档案侧的 Schmidt 支撑。
+
+不同整数计数给出不同环面字符，故 $\theta$ 遍历整个 $\mathbb T^s$ 时，（33.5） 在每个端点扇区张满全部 $b_{n,ij,c}$。共同支撑 $\mathcal W$ 的维数因而为 $\sum_nN_n$。
+
+还必须证明共同物理编码不能低于这个维数。若同一恢复通道 $\mathcal D\circ\mathcal E$ 精确恢复全部完整纯目标，固定其 Stinespring 等距 $U_L$，则在每个已知相位 Schmidt 支撑上有 $U_Lx=x\otimes e_\theta$。任选非零端点向量，连续性使邻近相位的相应向量具有非零交叠；等距内积保持遂给 $e_\theta=e_\phi$。连通环面使这些环境向量全相同。线性性于是给 $U_Lw=w\otimes e$ 于整个 $\mathcal W$，所以恢复通道在 $\mathcal L(\mathcal W)$ 上恒等。
+
+编码在这个 $(\dim\mathcal W)^2$ 维算子空间上必须单射，故 $\dim K\ge\dim\mathcal W$。反向对 $\mathcal W$ 作一个整体等距编码，并在正交补完成全域 CPTP 映射，即实现精确上界，证明 （33.2）。
+
+定理32.4给出的完整边计数增长律 $N_n\asymp_P n^r$ 对每个充分大 $n$ 成立。由于窗口内 $N\le n\le2N$，其求和给 （33.3） 的精确侧，常数与 $W$ 无关。
+

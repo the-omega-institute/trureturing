@@ -1,0 +1,13 @@
+### 46.5 对全部有限误差的容量双界
+
+对 $0<\epsilon<1$，定义
+
+$$
+s_a(\epsilon)=
+\min\left\{1\le s\le M_*:
+\epsilon^3\ge d_s\epsilon+d_s^2(p_s-a_*)\right\}.
+\tag{46.21}
+$$
+
+全集 $s=M_*$ 总满足条件，所以这个整数必存在。
+

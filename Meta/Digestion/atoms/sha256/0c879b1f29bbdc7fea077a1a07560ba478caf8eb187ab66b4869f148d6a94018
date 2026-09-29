@@ -1,0 +1,11 @@
+### 259.4 最优重建半径恰为直径的一半
+
+用现有精确数据选一个合法归一化重建态 $\widehat\Omega$。允许它在纤维外，定义最坏半迹重建误差
+$$
+\mathcal R(\rho,K)=
+\inf_{\widehat\Omega\succeq0,\ \operatorname{Tr}\widehat\Omega=1}
+\sup_{\Omega\in\mathfrak S(\rho,K)}
+d(\widehat\Omega,\Omega).
+\tag{259.27}
+$$
+

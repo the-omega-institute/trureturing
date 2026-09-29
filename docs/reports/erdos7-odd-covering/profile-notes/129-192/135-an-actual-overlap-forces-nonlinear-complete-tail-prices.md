@@ -171,7 +171,7 @@ maximizer in129. Those may retain compensating terms. The example
 also does not assert that a general Haar-dominated defect is
 realizable, or that the whole relaxed residual simplex is realizable.
 
-[actual_overlap_tail_obstruction.py](../../frontier/cover-geometry/actual_overlap_tail_obstruction.py)
+[actual_overlap_tail_obstruction.py](../../frontier/cover-geometry/actual-overlap-tail-obstruction/actual_overlap_tail_obstruction.py)
 constructs four finite original-label witnesses, computes literal
 source and forbidden unions by independent CRT classes, and checks
 their exact released first and second moments. It also evaluates
@@ -182,7 +182,7 @@ pinned source construction. The arbitrary-depth conclusions use the
 ordinary proof above, not extrapolation from those fixtures.
 
 ```sh
-python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/actual_overlap_tail_obstruction.py --check
+python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/actual-overlap-tail-obstruction/actual_overlap_tail_obstruction.py --check
 ```
 
 No Lean, frozen-truth, global-bound or complete-CI result is claimed.

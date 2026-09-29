@@ -1,0 +1,18 @@
+## 定理 ST36.1：从可逆通道提取全体逻辑观测代数
+
+设(ST35.2)成立。对任意逻辑矩阵$A$定义
+
+$$
+\boxed{\pi(A)=W\mathcal N(A)W.}
+\tag{ST36.1}
+$$
+
+则
+
+$$
+\pi(I)=P,\quad \pi(A)^\dagger=\pi(A^\dagger),\quad
+\pi(A)\pi(B)=\pi(AB),\quad
+[Q,\pi(A)]=0,\quad \mathcal N(A)=Q\pi(A).
+\tag{ST36.2}
+$$
+

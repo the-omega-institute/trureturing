@@ -1,0 +1,35 @@
+**共同资料。** 反设有六维接收空间 $K$ 和固定 Stinespring 等距 $V$。记 $V_i x=V(x\otimes|i\rangle)$，则 $V_0K\perp V_1K$。纯终端归约给单位环境向量 $\eta_1,\ldots,\eta_5$、正交单位向量 $p,q$ 及正交单位向量 $u,v,w$，满足
+
+$$
+\begin{aligned}
+V_0k&=p\otimes\eta_1,&V_1k&=q\otimes\eta_1,\\
+V_0p&=u\otimes\eta_2,&V_1p&=v\otimes\eta_2,&V_0q&=w\otimes\eta_2.
+\end{aligned}
+\tag{36.2}
+$$
+
+早期系数空间为
+
+$$
+H_1=\operatorname{span}\{p,q\},\qquad
+G_2=\operatorname{span}\{u,w\},\qquad
+H_2=\operatorname{span}\{a^2u+bv,w\}.
+\tag{36.3}
+$$
+
+对 $n=3,4,5$，已有二维空间 $H_n,G_n,Q_n$，满足
+
+$$
+\begin{aligned}
+V_0H_{n-1}&=G_n\otimes\eta_n,&
+V_1G_{n-1}&=Q_n\otimes\eta_n,\\
+G_n&\perp Q_n,&
+H_n&\subset G_n\oplus Q_n,
+\end{aligned}
+\tag{36.4}
+$$
+
+且 $H_n$ 到 $G_n,Q_n$ 的两个正交投影均为同构。这里的满投影来自实际来源的非零系数，不是对任意二维子空间的额外假设。
+
+第30、34节使后三轮射线只可能为 $AAB$、$ABA$ 或 $ABB$，其中不同字母表示不同射线。各段可以一致吸收环境射线相位；这不改变 $a,b$，也不增加轮次控制。下文的 $S,Q,F$ 等辅助符号均在各段局部使用。
+

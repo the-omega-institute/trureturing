@@ -1,0 +1,24 @@
+**定义 18.1（一般未点击仪器）。** 用完全正映射
+
+$$
+\mathcal N(X)=\sum_{\alpha}Q_\alpha XQ_\alpha^\dagger,
+\qquad
+\mathcal C_x(X)=\sum_\beta L_{x\beta}XL_{x\beta}^\dagger
+$$
+
+分别表示未点击和可读结果 $x$，并要求
+
+$$
+\sum_\alpha Q_\alpha^\dagger Q_\alpha+
+\sum_{x,\beta}L_{x\beta}^\dagger L_{x\beta}=I.
+$$
+
+实际记录只读出“未点击”或 $x$，不自动包含 $\alpha,\beta$。同一映射的不同 Kraus 表示给出同一统计与后继。设 $\mathcal A=\mathcal N^*$，$B_x=\mathcal C_x^*(I)$，并定义
+
+$$
+E_{n,x}=\mathcal A^{n-1}(B_x),
+\qquad S_N=\mathcal A^N(I),\qquad S_0=I.
+$$
+
+有限维完全正映射的可达性与不变子空间方法参见 Ying、Feng、Yu、Ying, *Reachability Probabilities of Quantum Markov Chains*, [DOI:10.1007/978-3-642-40184-8_24](https://doi.org/10.1007/978-3-642-40184-8_24)。以下把这些算子工具用于本卷的首次事件与后继接口，保留一般仪器和单 Kraus 模型的区别。
+

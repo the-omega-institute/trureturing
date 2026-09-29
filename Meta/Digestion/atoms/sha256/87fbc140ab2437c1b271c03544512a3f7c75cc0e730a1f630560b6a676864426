@@ -1,0 +1,43 @@
+**定理 10.3（二步混合与二阶重合的边界）。** 正的双随机矩阵各自满足
+$P^2=Q^2=\Pi$，不足以推出路径异向似然的内积为一。
+另一方面，即使在本卷的单峰族内，(10.3) 的两种实验内积完全相同，
+它们的似然三阶矩仍可不同：当 $d\ge3$、$0<r<1$、$s=2$ 时，置
+
+$$
+\beta_3=\mathbb E b_z^3=\frac{r^3(1-k^{-2})}{n}>0,
+$$
+
+则
+
+$$
+\mathbb E_{\mathsf U^{\mathrm{pair}}_2}[(L^{+,\mathrm{pair}}_{b_z,2})^3]
+=(1+3\alpha)^2,
+\qquad
+\mathbb E_{\mathsf U^{\mathrm{path}}_2}[(L^{+,\mathrm{path}}_{b_z,2})^3]
+=(1+3\alpha)^2+3\alpha\beta_3.
+\tag{10.6}
+$$
+
+证明。第一项反例取 $X=\{-1,1\}^2$、
+$P(x,y)=(1+r x_1y_2)/4$、$Q=P^\top$，其中 $0<r<1$。
+均匀求和时 $\mathbb E(x_1x_2)=0$，故 $P^2=Q^2=\Pi$。
+但 $Q(y,x)=P(x,y)$，因此一步的异向内积为
+$\mathbb E_{x,y}(1+r x_1y_2)^2=1+r^2$。
+这里不具有 (10.2) 的共同奇偶因子结构。
+
+为证明 (10.6)，将单条边的似然因子立方展开为
+$f_3(x)+g_3(x)\chi(y)$，其中
+$f_3=1+3b_z^2$、$g_3=\chi(3b_z+b_z^3)$。
+因为 $b_z$ 只在 $C_+$ 上非零，
+
+$$
+\mathbb E f_3=1+3\alpha,\qquad
+\mathbb E g_3=\beta_3,\qquad
+\mathbb E(\chi f_3)=3\alpha.
+$$
+
+两条独立边给出 $(\mathbb E f_3)^2$。
+两条相邻边先对末状态积分，再对前两状态积分，给出
+$(\mathbb E f_3)^2+\mathbb E g_3\,\mathbb E(\chi f_3)$。
+因此二阶重合并不延伸为全部似然矩相同。$\square$
+

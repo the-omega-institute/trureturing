@@ -1,0 +1,46 @@
+**定理 228.1（连续事件给出分支容量下界）。** 对任意同接口 CPTP 记录竞争者 $\mathcal S$，若其结果 $q$ 的 Choi 秩 $k<d$，则
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.
+}
+\tag{228.HC.3}
+$$
+下界由一个无参考纯输入及同名结果块中的秩一输出事件见证。
+
+证明。先设 $k\ge1$，取该竞争分支的最小 Kraus 表示
+$$
+\mathcal S_q(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+定义连续映射
+$$
+F:S^{2d-1}\to\mathbb C^k\cong\mathbb R^{2k},
+\qquad
+F(v)=\bigl(\langle r(v),C_1v\rangle,\ldots,
+\langle r(v),C_kv\rangle\bigr).
+\tag{228.HC.4}
+$$
+由 $n$ 偶及（228.HC.1），$r(-v)=r(v)$，故
+$$
+F(-v)=-F(v).
+$$
+因为 $k<d$，可在输入的底层实空间 $\mathbb R^{2d}$ 中取一个实 $(2k+1)$ 维线性子空间。其单位球是 $S^{2k}$。限制 $F$ 到这个球面，得到连续奇映射
+$$
+F|_{S^{2k}}:S^{2k}\to\mathbb R^{2k}.
+$$
+标准 Borsuk–Ulam 定理给某个 $v$ 满足 $F(v)=F(-v)$。奇性随即给 $F(v)=0$。
+
+对这个输入，竞争者在完整输出效果
+$$
+E_v=|q\rangle\langle q|\otimes P_{r(v)}
+$$
+上的概率为
+$$
+\operatorname{Tr}(E_v\mathcal S(P_v))
+=\sum_{j=1}^k|\langle r(v),C_jv\rangle|^2=0,
+$$
+而目标概率至少为 $\alpha$。两份完整输出都是迹为一的状态，事件概率差不超过其输出差的迹范数的一半，再不超过完整半 diamond 距离，证明（228.HC.3）。若 $k=0$，竞争分支本来为零，任取单位输入即得同一下界，不需要引入负维球面或空坐标的拓扑约定。证毕。
+
+这里 Borsuk–Ulam 采用 Hatcher《Algebraic Topology》推论2B.7，第176页的形式：每个连续 $g:S^N\to\mathbb R^N$ 都有 $g(x)=g(-x)$。[官方第二章 PDF，第80页](https://pi.math.cornell.edu/~hatcher/AT/ATch2.pdf#page=80)。定理施用于实球面和实维数 $2k$；没有把复维数直接当作实维数。
+
+证明实际只使用 $r(-v)=r(v)$；（228.HC.1）的偶数相位是保证这一条件的一种明确结构。它不是结论成立的必要条件。
+

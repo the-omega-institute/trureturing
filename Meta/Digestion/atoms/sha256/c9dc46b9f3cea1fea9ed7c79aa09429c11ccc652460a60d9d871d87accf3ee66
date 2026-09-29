@@ -1,0 +1,58 @@
+**定理 249.2（无条件 Bell 重叠的精确有限式）。**
+$$
+\boxed{
+F_{n,k}=\mathbb E_\theta\left[\min\{1,2^{K-k}\}\right].
+}
+\tag{249.14}
+$$
+等价地，
+$$
+F_{n,k}=\Pr_\theta[K\ge k]
++2^{-k}\sum_{j=0}^{\min(n,k-1)}\binom nj(2\theta)^j(1-\theta)^{n-j}.
+\tag{249.15}
+$$
+空和按零解释，因此 $F_{n,0}=1$。
+
+**证明。** 对任意允许的无条件协议，初态模式混合的输出仍按 $\pi_z$ 线性相加。每个 $|z|=j$ 的模式输出受（249.7）约束，故由（249.8），
+$$
+\begin{aligned}
+\langle\Phi_{2^k}|\Lambda(\Omega^{\otimes n})|\Phi_{2^k}\rangle
+&\le\sum_z\pi_z\min\{1,2^{|z|-k}\}\\
+&=\mathbb E_\theta[\min\{1,2^{K-k}\}].
+\end{aligned}
+\tag{249.16}
+$$
+该上界再次覆盖不先测旗标的协议。
+
+反向，读取旗标并解码。$K=j\ge k$ 时保留 $k$ 个 Bell 对，重叠为一。$j<k$ 时保留全部 $j$ 对，并由双方本地制备 $k-j$ 份 $|00\rangle$ 产品对。与 $k$ Bell 目标的重叠平方恰为
+$$
+1\times\left(\frac12\right)^{k-j}=2^{j-k}.
+\tag{249.17}
+$$
+所有分支均输出指定维数的态，不作成功条件化。各模式分别达到（249.16）的上界，故期望公式精确成立。$\square$
+
+引入倾斜参数
+$$
+\theta'=\frac{2\theta}{1+\theta},\qquad \theta<\theta'<1.
+\tag{249.18}
+$$
+因为
+$$
+(2\theta)^j(1-\theta)^{n-j}
+=(1+\theta)^n(\theta')^j(1-\theta')^{n-j},
+$$
+有限公式还可以精确写为
+$$
+\boxed{
+F_{n,k}=\Pr_\theta[K\ge k]
++2^{-k}(1+\theta)^n\Pr_{\theta'}[K<k].
+}
+\tag{249.19}
+$$
+这里两项分别使用各自参数的二项分布。特别地，当 $k\ge n$，每个模式都有 $K\le k$，所以
+$$
+F_{n,k}=2^{-k}(1+\theta)^n.
+\tag{249.20}
+$$
+$k>n$ 时精确 Bell 成功概率为零，但无条件目标重叠仍由（249.20）给出。
+
