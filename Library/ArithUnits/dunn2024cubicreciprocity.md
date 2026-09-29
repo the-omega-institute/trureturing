@@ -33,6 +33,23 @@ Patterson and large-sieve results involving GRH are not premises of GCR.
 No statement about those averages on exact Fibonacci-rank supports is
 attributed to the authors.
 
+Rasmus Frigaard Lemvig, *Cubic and quartic reciprocity* (2021), revised
+manuscript, Section 3.2, Theorem 3.9(2), pp. 9-12,
+https://rasmusfl.github.io/Documents/project_revised.pdf, gives a proof of
+the ramified supplementary law. Lemvig uses primary denominators
+`a + b omega` with `a = 3m - 1` and `b = 3n`, and proves
+`chi_(a+b omega)(1-omega) = omega^(2m)` after establishing cubic
+reciprocity through Gauss and Jacobi sums. For a primary denominator
+`pi = a + b omega` in this dossier's `a = 1 (mod 3)` convention, apply
+that formula to `-pi`. Since negating a denominator does not change its
+prime-ideal factors, the converted exponent is `(a-1)/3` modulo three.
+For `eta_j = -2 + (x_j-1) omega`, this gives
+`chi_eta_j(1-omega) = omega^2`. The identities
+`lambda = omega (1-omega)` and `N(eta_j) = 1 (mod 9)` then give
+`chi_eta_j(lambda) = omega^2`. This source supplies a proof route for the
+classical input; cubic reciprocity and this conversion are not yet Lean
+theorems in the pinned repository.
+
 ## Consumer in the existing WSS dossier
 
 `Problems/wall-sun-sun-golden-unit-lift.md`, GCR, keeps the original
