@@ -1,3 +1,15 @@
+---
+bibkey: vanekeren2020atomicmonstercompletion
+authors: Jethro van Ekeren; Sven Möller; Nils R. Scheithauer
+year: 2020
+title: "Construction and Classification of Holomorphic Vertex Operator Algebras"
+doi: 10.1515/crelle-2017-0046
+claim: "Isotropic simple-current extensions under the published positivity and regularity hypotheses are an external input to the conditional fixed-point completion."
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Atomic relations, rank-three defects and fixed-point completions
 
 Research source record, 2026-09-29. Owner: `docs/develop/theory/MONSTER_LOCAL_COMPLETION_AND_CUBIC_RESPONSE.md`, reconciled appendix §§28–34. Ordinary mathematics, not a Lean proof or a novelty certificate.

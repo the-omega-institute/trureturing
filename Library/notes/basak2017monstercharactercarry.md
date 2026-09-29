@@ -1,3 +1,16 @@
+---
+bibkey: basak2017monstercharactercarry
+authors: Tathagata Basak
+year: 2017
+title: "The octonions as a twisted group algebra"
+doi: null
+url: https://arxiv.org/abs/1702.05705
+claim: "The published octonion twisted-group-algebra table is background for the finite sign-table comparison; actual VOA fusion remains conditional."
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Fibonacci atomic relations and rank-three Monster-candidate character carry
 
 Research date: 2026-09-29. Theory owner: `docs/develop/theory/MONSTER_LOCAL_COMPLETION_AND_CUBIC_RESPONSE.md`, FC continuation, sections 20–27. Ordinary proof draft; no Lean, independent review or priority certification.

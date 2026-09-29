@@ -1,3 +1,15 @@
+---
+bibkey: griess1981monsterlocalcompletion
+authors: Robert L. Griess Jr.
+year: 1981
+title: "A construction of F1 as automorphisms of a 196,883-dimensional algebra"
+doi: 10.1073/pnas.78.2.689
+claim: "Griess's algebra and its cubic form are published inputs to the Monster local-completion and cubic-response discussion."
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Monster local completion and cubic response: primary-source record
 
 Research date: 2026-09-28. Owner: [Monster local completion and cubic response](../../docs/develop/theory/MONSTER_LOCAL_COMPLETION_AND_CUBIC_RESPONSE.md), continuing PR #10310. This records external inputs and ordinary derivations, not a Lean proof or a formalization-status claim.

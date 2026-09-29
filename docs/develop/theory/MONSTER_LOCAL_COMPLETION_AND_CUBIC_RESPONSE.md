@@ -1141,7 +1141,7 @@ $$
 
 实际扩展须先具备定义 28.1 的 $U$ 和全部不同不可约模，应用实际 Verlinde、简单流扩展和诱导扭曲模定理。只验证有限字符不会替代这些前提。本文没有新增 Lean/Scribe，也没有核验所涉 VOA 定理的 Lean 公理闭包。
 
-新增 Library 记录为 [`fibonacci_atomic_monster_completion.md`](../../../Library/notes/fibonacci_atomic_monster_completion.md)。以下文献读取范围继承上一轮附件的来源记录，本次同步不冒称重新完成了文献审查：
+新增 Library 记录为 [`vanekeren2020atomicmonstercompletion.md`](../../../Library/notes/vanekeren2020atomicmonstercompletion.md)。以下文献读取范围继承上一轮附件的来源记录，本次同步不冒称重新完成了文献审查：
 
 [AM99] H. Albuquerque and S. Majid, *Quasialgebra structure of the octonions*, Journal of Algebra 220 (1999), 188–224; arXiv:math/9802116，DOI 10.1006/jabr.1998.7850。https://arxiv.org/pdf/math/9802116 。附件记录读取导言、§§3–4，并视觉核对 Proposition 4.4。已知八元数扭曲结构保留原作者归属。
 
@@ -1156,3 +1156,30 @@ $$
 程序 Git blob 为 `93ecb7cb7a82cfcb3a7dfcc4d5e34493289999df`，结果 Git blob 为 `1a2a3937430f68a018eaee5a6072bbeef1ed567d`。这些精确有限检查没有构造 VOA、实际交织算子、扩展或 Monster。同步只发布普通数学正文及检错材料，不声明 Lean、独立同行评审、硬件实验或 CI 通过。
 
 ## 追加锚（本行以下为后续增补区，AD 同步批次结束）
+
+## 35. 有限字符进位的两个独立子引理
+
+以下只涉及 $E=\mathbb F_2^3$ 的有限代数，不以实际 VOA 或融合范畴的存在性为前提。取标准基 $u_1,u_2,u_3$，令 $m=(m_{12},m_{13},m_{23})\in E$，并在式（FC.4）的 $f_0$ 上加交错双线性修正
+
+$$
+b_m(g,h)=m_{12}(g_1h_2+g_2h_1)+m_{13}(g_1h_3+g_3h_1)+m_{23}(g_2h_3+g_3h_2).
+$$
+
+记 $f_m=f_0+b_m$，以 $\ell_m(g)_i=f_m(g,u_i)$ 记录其三个字符坐标。此处的 $\ell_m(g)$ 是坐标向量；其对应线性形式由坐标配对给出。
+
+**引理 35.1（显式八表的共同楔积进位）。** 对任意 $m,g,h\in E$，有
+
+$$
+\ell_m(g)+\ell_m(h)-\ell_m(g+h)
+=\bigl(g_2h_3+g_3h_2,\;g_1h_3+g_3h_1,\;g_1h_2+g_2h_1\bigr).
+$$
+
+证明。$b_m$ 对第一个变量线性，其三项在进位中逐项抵消。$f_0$ 的双线性项同样抵消，剩下的三个二次项分别给右边的三个坐标。该式只处理这八张显式表；式（FC.1）的任意解是否都在其中，仍由定理 21.1 的另一部分承担。
+
+**引理 35.2（二来源平面上的进位盲性）。** 固定任意 $m,g,h\in E$，对任意 $a,b,c,d,e,f\in\mathbb F_2$，写 $x=ag+bh$、$y=cg+dh$、$z=eg+fh$。则
+
+$$
+\langle\ell_m(x)+\ell_m(y)-\ell_m(x+y),z\rangle=0.
+$$
+
+证明。引理 35.1 把左边化为 $\det(x,y,z)$。三个向量都位于 $\langle g,h\rangle$，故行列式为零。任意二元标签组成仍留在该平面；此结论不包含辅助八元数的乘法系数、三周期或实际 OPE。

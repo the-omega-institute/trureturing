@@ -47,6 +47,27 @@ class NativeBatchPartitionTests:
             native.produce_batch(requests)
         self.assertEqual([len(chunk) for chunk in chunks], [97])
 
+    def test_partition_can_reduce_batch_size_for_file_table_limits(self):
+        requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
+                    for index in range(45)]
+        chunks = []
+        with patch.dict(os.environ, STRATALINT_INSPECTOR_NATIVE_BATCH_MODULES='20'), \
+                patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
+            native.produce_batch(requests)
+        self.assertEqual([len(chunk) for chunk in chunks], [20, 20, 5])
+        self.assertEqual([row[1] for chunk in chunks for row in chunk],
+                         [f'Module.{index:03}' for index in range(45)])
+
+    def test_partition_rejects_invalid_batch_size(self):
+        requests = [['/root', 'Module.000', '', '', '/inspector', '']]
+        for limit in ['0', '101', 'invalid']:
+            with self.subTest(limit=limit), \
+                    patch.dict(os.environ, STRATALINT_INSPECTOR_NATIVE_BATCH_MODULES=limit), \
+                    patch.object(native, 'produce_batch_chunk') as chunk:
+                with self.assertRaises(ValueError):
+                    native.produce_batch(requests)
+                chunk.assert_not_called()
+
     def test_partition_rejects_cross_chunk_duplicate_and_mixed_owner(self):
         requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
                     for index in range(101)]

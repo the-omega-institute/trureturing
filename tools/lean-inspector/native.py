@@ -319,10 +319,14 @@ def produce_batch(requests):
         raise ValueError('mixed native batch owners')
     if any(left[1] == right[1] for left, right in zip(requests, requests[1:])):
         raise ValueError('duplicate native batch module')
+    chunk_size = int(os.environ.get(
+        'STRATALINT_INSPECTOR_NATIVE_BATCH_MODULES', NATIVE_BATCH_MODULES))
+    if not 1 <= chunk_size <= NATIVE_BATCH_MODULES:
+        raise ValueError('native batch module limit must be between 1 and 100')
     # Chunks bound per-process memory; Lake still validates every
     # completed module facet and the full aggregate after these bounded calls.
-    for start in range(0, len(requests), NATIVE_BATCH_MODULES):
-        produce_batch_chunk(requests[start:start + NATIVE_BATCH_MODULES])
+    for start in range(0, len(requests), chunk_size):
+        produce_batch_chunk(requests[start:start + chunk_size])
 
 
 @phase('native-batch')

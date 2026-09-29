@@ -1,3 +1,16 @@
+---
+bibkey: eno2010fusionqcaspectral
+authors: Pavel Etingof; Dmitri Nikshych; Victor Ostrik
+year: 2010
+title: "Fusion categories and homotopy theory"
+doi: null
+url: https://arxiv.org/abs/0909.3140
+claim: "Theorem 4.15 proves finiteness of braided tensor autoequivalence classes; the note also records separate QCA inputs and their limits."
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Categorical finiteness and spectral cut obstructions
 
 Recorded 2026-09-27. Research owner: `docs/develop/theory/FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md`, SC continuation, §§21–27. This note records provenance; it is not a Lean proof, a coverage certificate or an independent review.

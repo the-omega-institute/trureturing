@@ -1,3 +1,15 @@
+---
+bibkey: joneslim2024fusionqca
+authors: Corey Jones; Junhwi Lim
+year: 2024
+title: "An index for quantum cellular automata on fusion spin chains"
+doi: 10.1007/s00023-024-01429-y
+claim: "The fusion-chain net, strict QCA and FDQC definitions, half-chain input, and translation index are published prerequisites for the QCA obstruction draft."
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Jones–Lim fusion-chain QCA classification: source record
 
 Recorded 2026-09-26. This is a literature/provenance note, not a Lean proof or a completed formalization atom. Research owner: [fusion-chain QCA cut-obstruction volume](../../docs/develop/theory/FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md). No Scribe binding is supplied because no new Lean declaration is supplied.

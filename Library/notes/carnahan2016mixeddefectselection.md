@@ -1,3 +1,16 @@
+---
+bibkey: carnahan2016mixeddefectselection
+authors: Scott Carnahan; Masahiko Miyamoto
+year: 2016
+title: "Regularity of fixed-point vertex operator subalgebras"
+doi: null
+url: https://arxiv.org/abs/1603.05645
+claim: "Fixed-point regularity and mixed trace covariance up to scalar are published inputs; exact common trace normalization remains an explicit extra hypothesis."
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Monster selection from mixed involution defects
 
 Recorded 2026-09-28. Theory owner: `docs/develop/theory/MONSTER_LOCAL_COMPLETION_AND_CUBIC_RESPONSE.md`, new sections 12–19. This is a provenance and scope note, not a Lean theorem or an independent review.

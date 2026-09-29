@@ -1,3 +1,16 @@
+---
+bibkey: fibonacci2009quantumobservable2003
+authors: Simon Trebst; Matthias Troyer; Zhenghan Wang; Andreas W. W. Ludwig
+year: 2009
+title: "A short introduction to Fibonacci anyon models"
+doi: null
+url: https://arxiv.org/abs/0902.3275
+claim: "The Fibonacci fusion-tree basis, associator, and nearest-neighbor vacuum-channel interaction provide published inputs to the finite observable discussion."
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Fibonacci fusion trees and finite quantum observable completion
 
 Recorded 2026-09-27 for the continuation of PR #10310. Theory owner: [Fusion spin-chain QCA cut obstructions, sections 12–20](../../docs/develop/theory/FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md). This note records source attribution and the exact scope of reusable mathematics. No new Lean declaration or Scribe binding is claimed.
