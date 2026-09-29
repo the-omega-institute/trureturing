@@ -22,9 +22,10 @@ internal sealed class GlobalAffineGcdBehaviorDocument : IScribeDocumentDefinitio
                     "Fix H at least two and a finite list A of positive integer addends. "
                     + "Put d = libraryGcd(H,A), with d = H when A is empty. Each prime "
                     + "p dividing H has h = H.factorization(p) and e = d.factorization(p). "
-                    + "The function globalEncoding(H,A,x) is the dependent tuple of the actual "
-                    + "localEncoding(p,h,e,x modulo p^h) on these prime axes. Its codomain "
-                    + "GlobalCode(H,A) is the product of the typed LocalCode(p,h,e) spaces.")),
+                    + "The function globalEncoding(H,hH,A,x), for hH : 2 <= H, is the dependent "
+                    + "tuple of the actual localEncoding(p,h,e,x modulo p^h) on these prime "
+                    + "axes. Its codomain is the dependent product of the typed "
+                    + "LocalCode(p,h,e) spaces.")),
                 Paragraph(Text(
                     "Two positive sources have equal global codes exactly when every same "
                     + "legal finite word produces equal gcds with H, and exactly when every "
@@ -58,8 +59,11 @@ internal sealed class GlobalAffineGcdBehaviorDocument : IScribeDocumentDefinitio
             DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
+        => Call(F.Id(name), arguments);
+
+    private static Formula Call(Formula function, params Formula[] arguments)
     {
-        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        var items = new List<Formula> { Operatorname, Grp(function), Open };
         for (var i = 0; i < arguments.Length; i++)
         {
             if (i > 0)
@@ -71,40 +75,55 @@ internal sealed class GlobalAffineGcdBehaviorDocument : IScribeDocumentDefinitio
     }
 
     private static Formula Par(Formula x) => Seq(Open, x, Close);
+    private static Formula Qualified(string owner, string member) =>
+        Seq(F.Id(owner), Dot, F.Id(member));
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Positive() => Seq(Nat(), Underscore, Grp(Gt, D(0)));
+    private static Formula Val(Formula x) => Seq(x, Dot, F.Id("val"));
     private static Formula All(Formula x, Formula type, Formula body) =>
         Seq(Forall, Sp, x, Sp, InMacro, Sp, type, Comma, Sp, body);
+    private static Formula AllTyped(Formula x, Formula type, Formula body) =>
+        Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body);
     private static Formula Some(Formula x, Formula type, Formula body) =>
         Seq(Exists, Sp, x, Sp, InMacro, Sp, type, Comma, Sp, body);
+    private static Formula SomeTyped(Formula x, Formula type, Formula body) =>
+        Seq(Exists, Sp, x, Colon, Sp, type, Comma, Sp, body);
     private static Formula Equal(Formula x, Formula y) => Seq(x, Sp, Eq, Sp, y);
     private static Formula Iff(Formula x, Formula y) =>
         new Formula.Logic(Par(x), FormulaLogicOperator.Iff, Par(y));
 
     private static Formula Statement()
     {
-        Formula h = F.Id("H"), library = F.Id("A"), x = F.Id("x"), y = F.Id("y");
+        Formula h = F.Id("H"), hProof = Seq(F.Id("h"), Underscore, Grp(h)), library = F.Id("A");
+        Formula x = F.Id("x"), y = F.Id("y");
         Formula w = F.Id("w"), p = F.Id("p"), a = F.Id("a"), ws = F.Id("ws");
-        Formula c = F.Id("c"), words = Call("List", Call("Operation", library));
-        Formula code(Formula z) => Call("globalEncoding", h, library, z);
-        Formula output(Formula word, Formula z) => Call("runWord", library, word, z);
-        Formula gcd(Formula word, Formula z) => Call("gcd", output(word, z), h);
+        Formula words = Call("List", Call("Operation", library));
+        Formula code(Formula z) => Call("globalEncoding", h, hProof, library, z);
+        Formula output(Formula word, Formula z) =>
+            Call("runWord", Call("update", library), word, z);
+        Formula gcd(Formula word, Formula z) =>
+            Call(Qualified("Nat", "gcd"), Val(Par(output(word, z))), h);
         Formula behavior(bool quotient) => All(x, Positive(), All(y, Positive(), Iff(
             Equal(code(x), code(y)), All(w, words, Equal(
-                quotient ? Call("div", h, gcd(w, x)) : gcd(w, x),
-                quotient ? Call("div", h, gcd(w, y)) : gcd(w, y))))));
-        Formula special = Call("multiplyThenAdd", a, ws);
+                quotient ? Call(Qualified("Nat", "div"), h, gcd(w, x)) : gcd(w, x),
+                quotient ? Call(Qualified("Nat", "div"), h, gcd(w, y)) : gcd(w, y))))));
+        Formula special = Call(Qualified("List", "cons"), Call(Qualified("Sum", "inl"), a),
+            Call(Qualified("List", "map"), Qualified("Sum", "inr"), ws));
+        Formula separation = Seq(
+            Call(Qualified("Nat", "factorization"), gcd(special, x), Val(p)), Sp, Neq, Sp,
+            Call(Qualified("Nat", "factorization"), gcd(special, y), Val(p)));
+        Formula witnesses = SomeTyped(p, Call(Qualified("Nat", "primeFactors"), h),
+            Some(a, Positive(), Some(ws,
+                Call("List", Call("Fin", Seq(library, Dot, F.Id("length")))),
+                separation)));
         Formula separator = All(x, Positive(), All(y, Positive(), Seq(
             Par(Seq(code(x), Sp, Neq, Sp, code(y))), Sp, Rightarrow, Sp,
-            Some(p, Call("primeFactors", h), Some(a, Positive(),
-                Some(ws, Call("List", Call("Fin", Call("length", library))), Seq(
-                    Call("factorization", gcd(special, x), p), Sp, Neq, Sp,
-                    Call("factorization", gcd(special, y), p))))))));
-        Formula onto = All(c, Call("GlobalCode", h, library),
-            Some(x, Positive(), Equal(code(x), c)));
+            witnesses)));
+        Formula onto = Call(Qualified("Function", "Surjective"),
+            Call("globalEncoding", h, hProof, library));
         Formula result = Par(Seq(Par(behavior(false)), Sp, Land, Sp,
             Par(behavior(true)), Sp, Land, Sp, Par(separator), Sp, Land, Sp, Par(onto)));
-        return Disp(All(h, Nat(), All(library, Call("List", Positive()), Seq(
-            Par(Seq(D(2), Sp, Le, Sp, h)), Sp, Rightarrow, Sp, result))));
+        return Disp(AllTyped(h, Nat(), AllTyped(hProof, Seq(D(2), Sp, Le, Sp, h),
+            AllTyped(library, Call("List", Positive()), result))));
     }
 }
