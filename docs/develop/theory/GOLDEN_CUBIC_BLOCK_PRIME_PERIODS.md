@@ -1642,3 +1642,21 @@ golden ring. Its norm is $-1$ and its trace is $L_n$, so its quadratic
 equation reads $a^2=L_n a+1$. The golden coordinate of $a^m$ therefore
 obeys the defining recurrence of $U_m$, starts at zero, and has first
 value $F_n$. The same coordinate of $a^m=\varphi^{mn}$ is $F_{mn}$.
+## 39. A Chebyshev representation of the recurrence polynomial
+
+Let $P_0(X)=0$, $P_1(X)=1$, and
+$P_{m+2}(X)=XP_{m+1}(X)+P_m(X)$, so that $P_m$ is the recurrence
+polynomial used in Section 33. Over the complex numbers, for every
+$m\geq1$,
+
+$$
+P_m(X)=(-i)^{m-1}\,U_{m-1}\!\left(\frac{iX}{2}\right),
+$$
+
+where $U_k$ is the classical Chebyshev polynomial of the second kind
+normalized by $U_0=1$, $U_1=2X$, and
+$U_{k+2}=2XU_{k+1}-U_k$. The identity is an equality after mapping the
+integer coefficients of $P_m$ into $\mathbb C$. It follows by matching
+the initial values and the two recurrences; the factor $(-i)^{m-1}$
+converts the minus sign in the Chebyshev recurrence into the plus sign
+in $P_m$.
