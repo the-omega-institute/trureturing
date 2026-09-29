@@ -139,3 +139,11 @@ The argument includes $p=2$, when there is no such $X$, and $p=3$.
 Translation by $(h,k)$ sends the parameters $(a,b,X)$ to
 $(a,b+k-ah,h+X)$: the slope is invariant, the intercept shifts by
 $k-ah$, and the first-coordinate set shifts by $h$. $\square$
+
+**Theorem 8 (prime translation orbit fibers).** For every prime $p$, two
+admissible triples are in the same translation orbit if and only if their
+unique nonzero affine slopes are equal and their three-element first-coordinate
+sets differ by a translation in $\mathbb Z/p\mathbb Z$. Indeed, translating by
+$(h,k)$ preserves the slope and sends $X$ to $h+X$; conversely, when the
+slopes agree and $X'=h+X$, the choice $k=b'-b+ah$ sends $(a,b,X)$ to
+$(a,b',X')$, so intercepts impose no further obstruction.

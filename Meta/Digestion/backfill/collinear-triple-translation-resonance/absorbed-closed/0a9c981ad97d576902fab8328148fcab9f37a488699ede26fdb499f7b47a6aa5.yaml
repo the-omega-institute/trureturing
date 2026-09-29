@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0a9c981ad97d576902fab8328148fcab9f37a488699ede26fdb499f7b47a6aa5
+  normalized_sha256: sha256:0a9c981ad97d576902fab8328148fcab9f37a488699ede26fdb499f7b47a6aa5
+cas_ref: sha256:0a9c981ad97d576902fab8328148fcab9f37a488699ede26fdb499f7b47a6aa5
+coverage_gids:
+  - gid: D5/S3/Factorization/Collinear/PrimeCollinearTripleTranslationFibers.translation_orbit_iff
+    target_statement_id: sha256:8ad3c5135b1c24c7728142b1e5d59d74fe9fb5699afdf143ab799d5a89ca0345
+receipts:
+  unresolved_subitems: []
