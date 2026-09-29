@@ -489,3 +489,5 @@ cp docs/reports/fib-robin-boundary/refinement_records.py "$run_root/source files
 cmp "$run_root/output/coarse additions.json" docs/reports/fib-robin-boundary/coarse_additions.json
 cmp "$run_root/output/refinement records.json" docs/reports/fib-robin-boundary/refinement_records.json
 ```
+
+`temporal_projection.py` 为 FIB §§134–135 的完整剩余时间模型提供可重建的有限目录。默认 `H=5040`，保留实际数量 `6H` 的共同来源，枚举一个零秩周期内的全部纤维及损失闭包，并检查小模数退化情形。只依赖 Python 3.9+ 标准库；运行 `python3 -B docs/reports/fib-robin-boundary/temporal_projection.py --out docs/reports/fib-robin-boundary/temporal_projection.json`，或指定正整数 `--H` 搜索其他模数。输出是精确有限实验，不是一般闭包或 RH 的形式证明。
