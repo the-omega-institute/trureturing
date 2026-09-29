@@ -2,11 +2,13 @@
 
 ## Abstract
 
-Two defect directions have zero cubic carry response on their entire span.
+Every finite binary tree built from two defect directions has zero cubic carry response.
 
-**Theorem 1.1 (Two sources cannot detect the cubic carry).**
+Fix two coarse defect labels g and h. A coefficient tree has a pair (a,b) in F2 squared at each leaf. The source tree replaces that leaf by ag+bh and retains each binary fork; total adds all source labels. Let T denote the finite coefficient trees.
 
-$$\forall m, g, h\in E, a, b, c, d, e, f\in F_2,\ \operatorname{dot}\left(\operatorname{carry}\left(\operatorname{ell}\left(m\right), \operatorname{plane}\left(g, h, a, b\right), \operatorname{plane}\left(g, h, c, d\right)\right), \operatorname{plane}\left(g, h, e, f\right)\right)=0$$
+**Theorem 1.1 (No finite two-source tree detects the cubic carry).**
+
+$$\forall m, g, h\in E, L, M, R\in T,\ \operatorname{dot}\left(\operatorname{carry}\left(\operatorname{ell}\left(m\right), \operatorname{total}\left(\operatorname{sourceTree}\left(g, h, L\right)\right), \operatorname{total}\left(\operatorname{sourceTree}\left(g, h, M\right)\right)\right), \operatorname{total}\left(\operatorname{sourceTree}\left(g, h, R\right)\right)\right)=0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/DefectTwoSourceBlindness.two_source_carry_blind` (`✓ std3`). ∎
 
@@ -14,9 +16,9 @@ $$\forall m, g, h\in E, a, b, c, d, e, f\in F_2,\ \operatorname{dot}\left(\opera
 
 *Commentary.*
 
-Every plane expression is a linear combination of the same two defect labels g and h. The carry of two such expressions is their wedge product, and pairing it with any third expression from that plane is zero. Thus arbitrary binary composition of labels from two fixed sources remains unable to produce a negative cubic determinant sign. An independent third label is required to observe it.
+Induction on each tree shows that its total remains in the plane spanned by g and h. Direct evaluation of the eight finite sign choices shows that their carry is the same wedge product. Pairing the carry of two tree totals with a third total from that plane is therefore zero. This claim concerns additive label composition, not a physical fusion operation or a nonzero OPE coefficient.
 
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/DefectTwoSourceBlindness.two_source_carry_blind`
-- Dependency: [D5/S3/VertexAlgebra/FiniteDefectCharacterCarry](FiniteDefectCharacterCarry.md)
+- Dependency: [D5/S3/VertexAlgebra/CharacterCarryCompletion](CharacterCarryCompletion.md)

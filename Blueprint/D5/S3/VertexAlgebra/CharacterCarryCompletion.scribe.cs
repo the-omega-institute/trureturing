@@ -16,10 +16,11 @@ internal sealed class CharacterCarryCompletionDocument : IScribeDocumentDefiniti
         H("Character carry and recorded composition"),
         Blocks(
             Paragraph(Text("Let E and C be commutative groups and let ell assign a character "
-                + "record to each coarse label, with ell(0)=0. The carry of g and h is "
+                + "record to each coarse label. The carry of g and h is "
                 + "ell(g)+ell(h)-ell(g+h). A recorded pair (g,c) expands to "
                 + "(g,c+ell(g)); its composition has coarse component g+h and record "
-                + "c+d+carry(g,h).")),
+                + "c+d+carry(g,h). When ell(0)=0, the zero recorded pair is the identity. "
+                + "The binary-tree formula needs no normalization of ell.")),
             Describe.Lean(
                 DescribeId.Create("recorded-character-composition"),
                 DeclarationHandle.Create(Prefix + "recorded_composition"),

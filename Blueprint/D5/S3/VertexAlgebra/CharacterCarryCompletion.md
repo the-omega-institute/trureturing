@@ -4,7 +4,7 @@
 
 A section character determines an associative recorded law and the record of every finite fusion tree.
 
-Let E and C be commutative groups and let ell assign a character record to each coarse label, with ell(0)=0. The carry of g and h is ell(g)+ell(h)-ell(g+h). A recorded pair (g,c) expands to (g,c+ell(g)); its composition has coarse component g+h and record c+d+carry(g,h).
+Let E and C be commutative groups and let ell assign a character record to each coarse label. The carry of g and h is ell(g)+ell(h)-ell(g+h). A recorded pair (g,c) expands to (g,c+ell(g)); its composition has coarse component g+h and record c+d+carry(g,h). When ell(0)=0, the zero recorded pair is the identity. The binary-tree formula needs no normalization of ell.
 
 **Theorem 1.1 (The recorded law is uniquely determined by expansion).**
 
