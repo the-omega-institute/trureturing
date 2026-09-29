@@ -25578,7 +25578,7 @@ $$
 
 $$
 \begin{aligned}
-&\sum_i\beta(d_i)+a^\sharp-igl(2(L-1)+2m+\Delta\bigr)\\
+&\sum_i\beta(d_i)+a^\sharp-\bigl(2(L-1)+2m+\Delta\bigr)\\
 &\qquad=2\gamma-B+a^\sharp-\Delta+2(D-L)\\
 &\qquad\le2\gamma+n-2m-B=\lambda.
 \end{aligned}
