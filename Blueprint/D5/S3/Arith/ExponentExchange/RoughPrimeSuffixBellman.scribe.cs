@@ -21,28 +21,31 @@ internal sealed class RoughPrimeSuffixBellmanDocument : IScribeDocumentDefinitio
                 + "most b. R(y,n) means every prime divisor of n is greater than y. "
                 + "Z(n) is sigma1(n)/n in the real numbers. V is the semantic maximum "
                 + "of W over F, U is the maximum of Z over rough integers in [1,B], "
-                + "and c(y,B) is the natural logarithm of B to base q(y,0).")),
+                + "and c(y,B) is Nat.log(q(y,0),B), the natural-number floor "
+                + "logarithm. All number variables are natural numbers; t is a "
+                + "finite list of natural numbers, and W, Z, V and U are real-valued. "
+                + "Precisely, q(y,i) = Nat.nth(Nat.Prime,Nat.primeCounting(y)+i), "
+                + "G(q,a) = sum_{k=0}^a (q^{-1})^k, S(y,i,[]) = W(y,i,[]) = 1, "
+                + "S(y,i,a::t) = q(y,i)^a S(y,i+1,t), and "
+                + "W(y,i,a::t) = G(q(y,i),a) W(y,i+1,t). "
+                + "Ordered(h,[]) is true, Ordered(h,a::t) means "
+                + "0<a <= h and Ordered(a,t), and F means Ordered and S <= b. "
+                + "For b=0, V is zero; for B=0, U is zero.")),
             Result("feasible_finite", "Finite suffix states", FiniteFormula(),
                 "For arbitrary natural y, i, b and h, the feasible list set is finite. "
                 + "The represented positive integer exceeds the list length, and every "
                 + "entry is at most h. Thus only finitely many lists can fit the state."),
             Result("bellman_complete", "Complete branches and attained upper bounds",
                 BellmanFormula(),
-                "Here J(y,i,b,h) consists of one and every G(q(y,i),a) times "
-                + "V(y,i+1,div(b,q(y,i)^a),a), for 1 <= a <= h and q(y,i)^a <= b. "
+                "The displayed finite branch set consists of one and every G(q(y,i),a) times "
+                + "V(y,i+1,div(b,q(y,i)^a),a), for natural a with "
+                + "1 <= a <= h and q(y,i)^a <= b. "
                 + "The operation div is natural division. The four displayed clauses "
                 + "are denoted C(y,i,b,h) below. Splitting a nonempty exponent list "
                 + "gives exactly one legal branch; joining a legal head to a child "
                 + "suffix gives a feasible parent. Positive branches strictly reduce "
                 + "the integer budget, so every branch path terminates. No positive "
                 + "branch is omitted, and a zero head ends the entire suffix."),
-            Result("rough_maximizer_order", "Ordered valuations at a rough maximum",
-                MaximizerFormula(),
-                "The valuation v(n,p) is Nat.factorization n evaluated at p. "
-                + "The finite rough-integer family contains one and has a maximizing "
-                + "member. An inversion of allowed prime valuations, including a zero "
-                + "valuation at the smaller prime, gives a smaller rough integer with "
-                + "strictly greater Z by prime exponent exchange."),
             Result("suffix_prime_factors", "Actual suffix prime support", SupportFormula(),
                 "Every prime divisor of S occurs at a position of the actual exponent "
                 + "list. Distinct positions use strictly increasing primes. In "
@@ -61,7 +64,12 @@ internal sealed class RoughPrimeSuffixBellmanDocument : IScribeDocumentDefinitio
                 + "the empty suffix. No executable evaluator or certificate checker "
                 + "is defined by these semantic maxima."),
             Paragraph(Text(
-                "To reconstruct a maximizing integer, enumerate its prime valuations "
+                "The finite rough-integer family contains one and has a maximizing "
+                + "member. An inversion of allowed prime valuations, including a zero "
+                + "valuation at the smaller prime, gives a smaller rough integer with "
+                + "strictly greater Z by prime exponent exchange. Thus maximizing "
+                + "valuations are weakly decreasing. To reconstruct a maximizing integer, "
+                + "enumerate its prime valuations "
                 + "over a finite range bounded by primeCounting(n). The valuation "
                 + "order makes the positive entries an initial consecutive prefix: "
                 + "once a valuation is zero, all later entries are zero. Factorization "
@@ -78,7 +86,12 @@ internal sealed class RoughPrimeSuffixBellmanDocument : IScribeDocumentDefinitio
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(F.Id(name), [.. args]);
+    // A typed boundary keeps adjacent identifiers out of a preceding TeX control word.
+    private static Formula Seq(params Formula[] items) =>
+        F.Seq([.. items.SelectMany(item => new[] { item, F.Sp })]);
     private static Formula I(string name) => F.Id(name);
+    private static Formula Naturals => F.Seq(Mathbb, Grp(I("N")));
+    private static Formula Lists => Call("List", Naturals);
     private static Formula S => Call("S", I("y"), I("i"), I("t"));
     private static Formula W => Call("W", I("y"), I("i"), I("t"));
     private static Formula V => Call("V", I("y"), I("i"), I("b"), I("h"));
@@ -88,53 +101,54 @@ internal sealed class RoughPrimeSuffixBellmanDocument : IScribeDocumentDefinitio
     private static Formula U => Call("U", I("y"), I("B"));
     private static Formula Feasible => Call("F", I("y"), I("i"), I("b"), I("h"), I("t"));
     private static Formula Power(Formula x, Formula a) => new Formula.Power(x, a);
-    private static Formula All(params string[] names) => Seq(Forall, Sp,
-        Seq([.. names.Select((name, index) => Seq(index == 0 ? Sp : Comma, I(name)))]), Comma, Sp);
-    private static Formula Some(params string[] names) => Seq(Exists, Sp,
-        Seq([.. names.Select((name, index) => Seq(index == 0 ? Sp : Comma, I(name)))]), Comma, Sp);
+    private static Formula Quantify(Formula quantifier, Formula type, params string[] names) =>
+        Seq(quantifier, Sp,
+            Seq([.. names.Select((name, index) => Seq(index == 0 ? Sp : Comma, I(name)))]),
+            Colon, type, Comma, Sp);
+    private static Formula All(params string[] names) => Quantify(Forall, Naturals, names);
+    private static Formula Some(params string[] names) => Quantify(Exists, Naturals, names);
+    private static Formula AllLists(params string[] names) => Quantify(Forall, Lists, names);
+    private static Formula SomeLists(params string[] names) => Quantify(Exists, Lists, names);
+    private static Formula Branches => Seq(OpenBrace, D(1), CloseBrace, Cup, Sp, OpenBrace,
+        Call("G", Q, I("a")), Cdot,
+        Call("V", I("y"), Seq(I("i"), Plus, D(1)),
+            Call("div", I("b"), Power(Q, I("a"))), I("a")),
+        Mid, Sp, I("a"), Colon, Naturals, Comma, D(1), Le, I("a"), Le, I("h"),
+        Land, Power(Q, I("a")), Le, I("b"), CloseBrace);
 
     private static Formula FiniteFormula() => Disp(Seq(All("y", "i", "b", "h"),
-        Call("Finite", Seq(OpenBrace, I("t"), Mid, Feasible, CloseBrace))));
+        Call("Finite", Seq(OpenBrace, I("t"), Colon, Lists, Mid, Sp, Feasible, CloseBrace))));
 
     private static Formula BellmanFormula() => Disp(new Formula.Aligned([
-        Seq(All("y", "i", "b", "h"), D(1), Le, I("b"), Rightarrow),
-        Seq(V, Eq, Call("max", Call("J", I("y"), I("i"), I("b"), I("h")))),
-        Seq(Land, Open, All("t"), Feasible, Rightarrow, W, Le, V, Close),
-        Seq(Land, Open, Some("t"), Feasible, Land, W, Eq, V, Close),
+        Seq(All("y", "i", "b", "h"), D(1), Le, I("b"), Rightarrow, OpenBracket),
+        Seq(V, Eq, Call("max", Branches)),
+        Seq(Land, Open, AllLists("t"), Feasible, Rightarrow, W, Le, V, Close),
+        Seq(Land, Open, SomeLists("t"), Feasible, Land, W, Eq, V, Close),
         Seq(Land, Open, All("a"), D(1), Le, I("a"), Land, Power(Q, I("a")), Le, I("b"),
-            Rightarrow, Call("div", I("b"), Power(Q, I("a"))), Lt, I("b"), Close)
-    ]));
-
-    private static Formula MaximizerFormula() => Disp(new Formula.Aligned([
-        Seq(All("y", "B"), D(1), Le, I("B"), Rightarrow, Some("n")),
-        Seq(D(1), Le, I("n"), Le, I("B"), Land, Call("R", I("y"), I("n")),
-            Land, Call("Z", I("n")), Eq, U),
-        Seq(Land, Open, All("p", "q"), Call("Prime", I("p")), Land, Call("Prime", I("q")),
-            Land, I("y"), Lt, I("p"), Lt, I("q"), Rightarrow,
-            Call("v", I("n"), I("q")), Le, Call("v", I("n"), I("p")), Close)
+            Rightarrow, Call("div", I("b"), Power(Q, I("a"))), Lt, I("b"), Close, CloseBracket)
     ]));
 
     private static Formula SupportFormula() => Disp(new Formula.Aligned([
-        Seq(All("y", "i", "t"), D(0), Lt, S),
+        Seq(All("y", "i"), AllLists("t"), OpenBracket, D(0), Lt, S),
         Seq(Land, Open, All("p"), Call("Prime", I("p")), Land, Call("dvd", I("p"), S),
             Rightarrow, Some("j"), I("j"), Lt, Call("length", I("t")), Land,
             I("p"), Eq, Call("q", I("y"), Seq(I("i"), Plus, I("j"))), Close),
-        Seq(Land, Call("R", I("y"), S))
+        Seq(Land, Call("R", I("y"), S), CloseBracket)
     ]));
 
     private static Formula CompleteFormula() => Disp(new Formula.Aligned([
-        Seq(All("y", "B"), D(1), Le, I("y"), Land, D(1), Le, I("B"), Rightarrow),
+        Seq(All("y", "B"), D(1), Le, I("y"), Land, D(1), Le, I("B"), Rightarrow, OpenBracket),
         Seq(Open, All("i", "b", "h"), D(1), Le, I("b"), Rightarrow,
             Call("C", I("y"), I("i"), I("b"), I("h")), Close),
         Seq(Land, Open, All("p"), Open, Call("Prime", I("p")), Land, I("y"), Lt, I("p"),
             Close, Leftrightarrow, Some("i"), I("p"), Eq, Q, Close),
         Seq(Land, Open, All("a"), I("a"), Le, Cap, Leftrightarrow,
             Power(Call("q", I("y"), D(0)), I("a")), Le, I("B"), Close),
-        Seq(Land, Open, All("i", "t"), Call("Z", S), Eq, W, Close),
-        Seq(Land, Open, Some("n", "t"), D(1), Le, I("n"), Le, I("B"), Land,
+        Seq(Land, Open, All("i"), AllLists("t"), Call("Z", S), Eq, W, Close),
+        Seq(Land, Open, Some("n"), SomeLists("t"), D(1), Le, I("n"), Le, I("B"), Land,
             Call("R", I("y"), I("n")), Land, Call("F", I("y"), D(0), I("B"), Cap, I("t"))),
         Seq(Land, Call("S", I("y"), D(0), I("t")), Eq, I("n"), Land,
             Call("W", I("y"), D(0), I("t")), Eq, U, Close),
-        Seq(Land, U, Eq, Root)
+        Seq(Land, U, Eq, Root, CloseBracket)
     ]));
 }

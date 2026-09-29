@@ -235,65 +235,6 @@ theorem bellman_complete (y i b h : ℕ) (hb : 1 ≤ b) :
   have hdiv : b / prime y i ^ a ≤ b / 2 := Nat.div_le_div_left hq (by omega)
   omega
 
-/-- A global maximizer among actual rough integers has no valuation inversion,
-including inversions where the smaller allowed prime is absent. -/
-theorem rough_maximizer_order (y B : ℕ) (hB : 1 ≤ B) :
-    ∃ n : ℕ, 1 ≤ n ∧ n ≤ B ∧ Rough y n ∧
-      (ArithmeticFunction.sigma 1 n : ℝ) / n = U y B ∧
-      ∀ p q : ℕ, p.Prime → q.Prime → y < p → p < q →
-        n.factorization q ≤ n.factorization p := by
-  classical
-  let s := (Finset.Icc 1 B).filter (Rough y)
-  let f : ℕ → ℝ := fun n => (ArithmeticFunction.sigma 1 n : ℝ) / n
-  have hs : s.Nonempty := by
-    refine ⟨1, Finset.mem_filter.mpr ⟨Finset.mem_Icc.mpr ⟨le_rfl, hB⟩, ?_⟩⟩
-    intro p hp hpd
-    exact (hp.ne_one (Nat.dvd_one.mp hpd)).elim
-  obtain ⟨n, hn, hnmax⟩ := Finset.exists_max_image s f hs
-  obtain ⟨hnrange, hnrough⟩ := Finset.mem_filter.mp hn
-  obtain ⟨hn1, hnB⟩ := Finset.mem_Icc.mp hnrange
-  have hnU : f n = U y B := by
-    have hne : (s.image f).Nonempty := hs.image f
-    simp only [U, dif_pos hB]
-    change f n = (s.image f).max' hne
-    apply le_antisymm
-    · exact Finset.le_max' _ _ (Finset.mem_image.mpr ⟨n, hn, rfl⟩)
-    · apply Finset.max'_le
-      intro x hx
-      obtain ⟨m, hm, rfl⟩ := Finset.mem_image.mp hx
-      exact hnmax m hm
-  refine ⟨n, hn1, hnB, hnrough, hnU, ?_⟩
-  intro p q hp hq hyp hpq
-  by_contra horder
-  have hab : n.factorization p < n.factorization q := Nat.lt_of_not_ge horder
-  let a := n.factorization p
-  let b := n.factorization q
-  let t := n / (p ^ a * q ^ b)
-  let n' := t * p ^ b * q ^ a
-  have hswap := IntegerSwap.prime_exponent_swap hn1 hp hq hpq hab
-  change 1 ≤ t ∧ Nat.gcd t (p * q) = 1 ∧ n = t * p ^ a * q ^ b ∧
-    (0 < n' ∧ n' < n) ∧ f n < f n' at hswap
-  obtain ⟨_, _, hfactor, ⟨hn'1, hn'lt⟩, hgain⟩ := hswap
-  have htdvd : t ∣ n := by
-    rw [hfactor]
-    exact ⟨p ^ a * q ^ b, by simp [Nat.mul_assoc]⟩
-  have hn'rough : Rough y n' := by
-    intro r hr hrd
-    have hrd' : r ∣ t * p ^ b * q ^ a := hrd
-    rcases (hr.dvd_mul).mp hrd' with hleft | hqpow
-    · rcases (hr.dvd_mul).mp hleft with ht | hppow
-      · exact hnrough r hr (dvd_trans ht htdvd)
-      · have hrp : r = p := (Nat.prime_dvd_prime_iff_eq hr hp).mp
-          (hr.dvd_of_dvd_pow hppow)
-        exact hrp ▸ hyp
-    · have hrq : r = q := (Nat.prime_dvd_prime_iff_eq hr hq).mp
-        (hr.dvd_of_dvd_pow hqpow)
-      exact hrq ▸ (hyp.trans hpq)
-  have hn'mem : n' ∈ s :=
-    Finset.mem_filter.mpr ⟨Finset.mem_Icc.mpr ⟨hn'1, hn'lt.le.trans hnB⟩,
-      hn'rough⟩
-  exact (not_lt_of_ge (hnmax n' hn'mem)) hgain
-
 /-- Every prime divisor of an actual suffix product occurs at an index of its list. -/
 theorem suffix_prime_factors (y i : ℕ) (t : List ℕ) :
     0 < suffixNumber y i t ∧
@@ -388,7 +329,61 @@ theorem rough_prime_suffix_complete (y B : ℕ) (_hy : 1 ≤ y) (hB : 1 ≤ B) :
         simp only [suffixNumber, suffixWeight]
         rw [IntegerSwap.normalized_sigma_mul (hcop.pow_left a),
           IntegerSwap.normalized_sigma_prime_pow hp, ih]
-  obtain ⟨n, hn1, hnB, hnrough, hnU, hnorder⟩ := rough_maximizer_order y B hB
+  have hmaximizer : ∃ n : ℕ, 1 ≤ n ∧ n ≤ B ∧ Rough y n ∧
+      (ArithmeticFunction.sigma 1 n : ℝ) / n = U y B ∧
+      ∀ p q : ℕ, p.Prime → q.Prime → y < p → p < q →
+        n.factorization q ≤ n.factorization p := by
+    let s := (Finset.Icc 1 B).filter (Rough y)
+    let f : ℕ → ℝ := fun n => (ArithmeticFunction.sigma 1 n : ℝ) / n
+    have hs : s.Nonempty := by
+      refine ⟨1, Finset.mem_filter.mpr ⟨Finset.mem_Icc.mpr ⟨le_rfl, hB⟩, ?_⟩⟩
+      intro p hp hpd
+      exact (hp.ne_one (Nat.dvd_one.mp hpd)).elim
+    obtain ⟨n, hn, hnmax⟩ := Finset.exists_max_image s f hs
+    obtain ⟨hnrange, hnrough⟩ := Finset.mem_filter.mp hn
+    obtain ⟨hn1, hnB⟩ := Finset.mem_Icc.mp hnrange
+    have hnU : f n = U y B := by
+      have hne : (s.image f).Nonempty := hs.image f
+      simp only [U, dif_pos hB]
+      change f n = (s.image f).max' hne
+      apply le_antisymm
+      · exact Finset.le_max' _ _ (Finset.mem_image.mpr ⟨n, hn, rfl⟩)
+      · apply Finset.max'_le
+        intro x hx
+        obtain ⟨m, hm, rfl⟩ := Finset.mem_image.mp hx
+        exact hnmax m hm
+    refine ⟨n, hn1, hnB, hnrough, hnU, ?_⟩
+    intro p q hp hq hyp hpq
+    by_contra horder
+    have hab : n.factorization p < n.factorization q := Nat.lt_of_not_ge horder
+    let a := n.factorization p
+    let b := n.factorization q
+    let t := n / (p ^ a * q ^ b)
+    let n' := t * p ^ b * q ^ a
+    have hswap := IntegerSwap.prime_exponent_swap hn1 hp hq hpq hab
+    change 1 ≤ t ∧ Nat.gcd t (p * q) = 1 ∧ n = t * p ^ a * q ^ b ∧
+      (0 < n' ∧ n' < n) ∧ f n < f n' at hswap
+    obtain ⟨_, _, hfactor, ⟨hn'1, hn'lt⟩, hgain⟩ := hswap
+    have htdvd : t ∣ n := by
+      rw [hfactor]
+      exact ⟨p ^ a * q ^ b, by simp [Nat.mul_assoc]⟩
+    have hn'rough : Rough y n' := by
+      intro r hr hrd
+      have hrd' : r ∣ t * p ^ b * q ^ a := hrd
+      rcases (hr.dvd_mul).mp hrd' with hleft | hqpow
+      · rcases (hr.dvd_mul).mp hleft with ht | hppow
+        · exact hnrough r hr (dvd_trans ht htdvd)
+        · have hrp : r = p := (Nat.prime_dvd_prime_iff_eq hr hp).mp
+            (hr.dvd_of_dvd_pow hppow)
+          exact hrp ▸ hyp
+      · have hrq : r = q := (Nat.prime_dvd_prime_iff_eq hr hq).mp
+          (hr.dvd_of_dvd_pow hqpow)
+        exact hrq ▸ (hyp.trans hpq)
+    have hn'mem : n' ∈ s :=
+      Finset.mem_filter.mpr ⟨Finset.mem_Icc.mpr ⟨hn'1, hn'lt.le.trans hnB⟩,
+        hn'rough⟩
+    exact (not_lt_of_ge (hnmax n' hn'mem)) hgain
+  obtain ⟨n, hn1, hnB, hnrough, hnU, hnorder⟩ := hmaximizer
   have hn0 : n ≠ 0 := by omega
   let f : ℕ → ℕ := fun i => n.factorization (prime y i)
   have hf : Antitone f := by
@@ -485,7 +480,6 @@ theorem rough_prime_suffix_complete (y B : ℕ) (_hy : 1 ≤ y) (hB : 1 ≤ B) :
 #print axioms IntegerSwap.normalized_sigma_mul
 #print axioms bellman_complete
 #print axioms feasible_finite
-#print axioms rough_maximizer_order
 #print axioms suffix_prime_factors
 
 end
