@@ -14,7 +14,6 @@
     "fibre_credit_depth_two_uniform_shallow.json": "afc7b9a8167cf22e67885e427c865c5daa844eb3664b6ff7b684be56e3168591",
     "fibre_credit_depth_two_uniform_shallow.py": "1f01fb1c704a48fddb7f0be9563635cbb4ea436ce1495d2e156fdfc3c0788de6"
   },
-  "failures": [],
   "mean_W_lower": "5819929847465/662115792429",
   "outside_rectangle_unary_cube_lower": 21954,
   "pointwise_candidate": "A^3+B^3+D^3 + sum_(four pair/triple loads) C_i^2 + 3*W >=19000",

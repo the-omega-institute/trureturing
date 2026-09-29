@@ -1,0 +1,16 @@
+**命题 85.2（面积与余因子支持界）。** 令 $A(t)=\sum_{\theta_{p,k}>t}\log p$，则对 $\lambda>0$
+
+$$
+M(\lambda)=\int_\lambda^\infty A(t)\,dt.
+$$
+
+若 $n=CR$，$C$ 只含 $p\le y$ 的素因子，$R$ 不含这些素因子，且 $1\le R\le B$，则
+
+$$
+\log Z(n)\le\log Z(C)+
+\inf_{\lambda>0}\left\{\lambda\log B+
+\sum_{p>y,k\ge1}(\beta_{p,k}-\lambda\log p)_+\right\}.
+$$
+
+精确观测下一个素数 $q>y$ 的指数 $e$ 后，将 $C$ 改为 $Cq^e$、$B$ 改为 $B/q^e$，并从未解析层和移除整个 $q$ 方向，所得上界不增加。
+

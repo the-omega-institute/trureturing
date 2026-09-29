@@ -1,0 +1,10 @@
+**定理 90.2（完整分支、上界与取到）。** 状态 $V(i,b,h)$ 表示从 $q_i$ 起、剩余整数预算 $b\ge1$、首指数上限 $h\ge0$ 的规范后缀最大权重。它满足有限递推
+
+$$
+V(i,b,h)=\max\left(\{1\}\cup
+\left\{G_{q_i}(a)V\left(i+1,\left\lfloor b/q_i^a\right\rfloor,a\right):
+1\le a\le h,\ q_i^a\le b\right\}\right).
+$$
+
+令 $h_0=\max\{a\ge0:q_0^a\le B\}$，则 $U_y(B)=V(0,B,h_0)$。
+

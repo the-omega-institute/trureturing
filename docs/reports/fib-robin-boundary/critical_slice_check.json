@@ -1,0 +1,11 @@
+{
+  "status": "independent replay passed; not Lean verified",
+  "primes": 11425,
+  "events": 11568,
+  "cells": 11569,
+  "critical_configs": 133,
+  "integer_patch_blocks": 4,
+  "small_integers_independently_recomputed": 34960,
+  "certificate_sha256": "8885dc697a178d2b2944bcac093936ba61bd050eee37871667fd0ad4786160d9",
+  "checker_sha256": "0d8144214fcd396854758070a8730ea99ffff8e9451724f0f5dfda13d642e646"
+}
