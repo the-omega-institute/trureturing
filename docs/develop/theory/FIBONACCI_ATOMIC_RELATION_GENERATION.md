@@ -13697,3 +13697,139 @@ $$
 **核验边界。** [精确实验](../../reports/fib-robin-boundary/temporal_projection.py) 从小模数的真实纤维平均另算投影范数，检查 5040 全部秩壳、旧/未来体增量及 10080 有理种子。一般加权桥、时间反演组合与射线传播为未编译纸面推导；既有组件的局部编译不升级它们的证据身份，也不证明 RH。
 
 ## 追加锚（本行以下为增补区）
+
+## 138. 五窗递归中的守恒、异号扇区与勾股的适用对象
+
+**本批导航。** 本节区分既有黄金二次型、条件投影与窗口细化的三种守恒；§139 把 Robin 主线与替代判据接到实际缺失的估计。所有对 RH 的全称估计仍未建立，不改判旧卷或冻结结果。
+
+### 138.1. 计数坐标与组成坐标不能混用
+
+按输出接缝 0、1 排列的计数列向量 $(x,y)^\mathsf T$，每读一窗的转移为
+
+$$
+C=\begin{pmatrix}3&2\\2&1\end{pmatrix}
+=T^3,\qquad T=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+$$
+
+输入接缝 0 有三个输出 0、两个输出 1 的字母；输入接缝 1 仅有两个输出 0、一个输出 1 的字母。这正是 §116.6 已有计数，不再当作新分类。
+
+**命题 138.1（异号与两步守恒）。** 在计数坐标令 $Q(x,y)=x^2-xy-y^2$，则
+
+$$
+Q(Tv)=-Q(v),\qquad Q(Cv)=-Q(v),\qquad Q(C^2v)=Q(v).
+$$
+
+在实际组成坐标 $M(a,b)=(b,a+b)$ 中，对应的形式为 $Q'(a,b)=a^2+ab-b^2$，满足 $Q'(Mv)=-Q'(v)$。
+
+**证明。** 首式直接展开，$C=T^3$ 给后两式；组成式也直接展开，或交换两个坐标后取相反数。$\square$
+
+这复用 §22 的黄金二次型和 `GoldenAntiIsometry.golden_anti_isometry`。一次转移把正、负扇区互换，零锥保持；两次转移保存原值。因此同一递归可以同时有扇区交换和两步守恒。$Q$ 不是正定能量；符号交替本身也不是物理学意义的自发对称破缺。若要作后者解释，还缺物理状态、作用量/测度、对称群及所选状态等模型对应。
+
+本库实际可定位的“勾股分类”包括 [GICT 附录 E.46](GICT.md) 的三角群/度量区分，以及 `SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm` 的精确关系
+
+$$
+(\gamma_0-2\beta)^2+3\gamma_0^2=4m(m+1)
+\quad\Longleftrightarrow\quad
+\beta^2-\beta\gamma_0+\gamma_0^2=m(m+1).
+$$
+
+它是整坐标的 Eisenstein 范数门，不自动给出 FIB 五窗到全部原始勾股三元组的分类映射，也不能用名称把它认作 Berggren 树。
+
+### 138.2. 正定投影守恒与窗口概率守恒
+
+对同一概率空间上的两个嵌套观察 $\mathcal F\subseteq\mathcal G$，条件平均满足已有的投影勾股关系
+
+$$
+\|f-\mathbb E[f\mid\mathcal F]\|_2^2
+=\|f-\mathbb E[f\mid\mathcal G]\|_2^2
++\|\mathbb E[f\mid\mathcal G]-\mathbb E[f\mid\mathcal F]\|_2^2. \tag{138.1}
+$$
+
+它适用于 §136 的逐探针直和。精细读数把旧残差分解为新残差和已取得的变化量，两项非负；这不是 $Q$ 的符号交换。时间 $d$ 增加也不保证观察按包含关系变细，应先比较 $M_d$ 的整除关系，再使用嵌套投影公式。
+
+在 §116 的自然密度合同中，设 $\varphi=(1+\sqrt5)/2$。五窗的条件概率对输入接缝 0 为三份 $\varphi^{-3}$、两份 $\varphi^{-4}$；对输入接缝 1 为两份 $\varphi^{-2}$、一份 $\varphi^{-3}$。因此
+
+$$
+3\varphi^{-3}+2\varphi^{-4}=1,\qquad
+2\varphi^{-2}+\varphi^{-3}=1. \tag{138.2}
+$$
+
+这是合法延伸的概率质量守恒，并非五个字母等概率。任意固定有限层的柱集划分都保持总质量；将一片叶子细化为全部合法后继仍保持它的质量。程序若枚举规范整数，应同时保留单位位、接缝与 End，否则会重复零窗尾或纳入非法串。该自然密度与 §136 的模 $H$ 均匀来源分布是不同合同，没有默认的保测等同。
+
+有限分支平均控制不了每个整数的 Robin 余量：即使一个分支的条件平均为正，其中仍可有负值。式 (138.1) 的非负项只给分解，尚不给 $G_p(H)$ 与 $b_p(H)$ 的大小比较。“体”在本批具体指除数探针的直和，“边界”指观察投影保留或丢失的能量；要上升为 RH 判据，仍须下节的算术尺度和全称量词。
+
+## 139. Robin 主线与四条替代路线的准确缺口
+
+### 139.1. 判据地图与共同来源
+
+下表的等价判据来自所列经典来源或既有仓内接口。本批没有证明表中待估计量满足目标界；“已能表达判据”与“已达到判据”分别记述。
+
+| 路线 | 载体与精确目标 | 与本批关系及剩余估计 |
+| --- | --- | --- |
+| Robin（主线） | 每个整数 $n>5040$，$Z(n)<e^\gamma\log\log n$ | §§136–137 精确给素乘增量；缺少覆盖全部目标整数、允许新素轴进入的共同路径累计余量界。固定 5040 或七光滑族不够。 |
+| 七—十 Mertens 边界 | 对每个 $\varepsilon>0$，$B(X)=O_\varepsilon(X^{1/2+\varepsilon})$，$X\to\infty$ 经过全部实截断 | $B(X)=\sum_{X/10<r\le X/7,(r,70)=1}\mu(r)$。既有 `MertensBoundary.power_bounds_iff` 把任意正幂界与普通 $M(X)$ 连接；再用经典 Mertens–RH 判据。缺少带符号抵消，§136 的非负时间壳并不给该界。 |
+| Weil 的素数—Archimedean 能量 | 对每个仓内偶、光滑、紧支撑复测试函数 $f$ 和每个包含其支撑的半径 $L$，满足式 (139.1) | 实际 zeta 零点载体已由 `UnconditionalCanonicalZeroData.zetaZeroData` 提供；缺口是所有测试函数的能量估计，不是载体存在性。 |
+| Lagarias | $h_n=\sum_{j=1}^n1/j$，对每个 $n\ge1$，$\sigma(n)\le h_n+e^{h_n}\log h_n$，等号仅 $n=1$ | 同一个除数和体，改变预算且消去陈述中的未知常数；仍缺对全部整数的上界，换预算不自动提供它。 |
+| Báez-Duarte 的 Nyman–Beurling 加强式 | 在 $L^2((0,\infty),dx)$ 中，$\chi_{(0,1]}$ 属于 $\{\{1/(mx)\}:m\in\mathbb N_{>0}\}$ 的线性张成之闭包 | 给一个可优化的逼近任务；缺少趋零残差与全域尾部控制。FIB 的有限模数投影尚无连接这些分数部分函数并保误差的桥。 |
+
+Mertens 边界复用 §§66–67；只在 Fibonacci 端点检查不是全部实截断的界。已有 $[91,130)$ 内相对端点 $89,144$ 的采样障碍继续适用。改为更多有限端点仍须给端点之间和无穷尺度的统一控制，不能重命名采样为全称估计。
+
+### 139.2. 实际 Weil 能量与 Li 的索引范围
+
+为固定表中 Weil 量的归一化，令
+
+$$
+\begin{aligned}
+T_x(f)&=\int_{\mathbb R}|f(y)-f(y-x)|^2\,dy,\\
+W_L&=\sum_{2\le n\le e^{2L}}\frac{\Lambda(n)}{\sqrt n},\qquad
+J_L(f)=\sum_{2\le n\le e^{2L}}\frac{\Lambda(n)}{\sqrt n}T_{\log n}(f),\\
+J_\infty(f)&=\int_0^\infty\frac{e^{-x/2}}{1-e^{-2x}}T_x(f)\,dx,\qquad
+c_\infty=\Re\psi(1/4)-\log\pi,
+\end{aligned}
+$$
+
+其中 $\psi$ 为 digamma，和按整数截断，$\Lambda$ 自动去掉非素数幂。对于 $\operatorname{supp}f\subseteq[-L,L]$，准确目标是
+
+$$
+(2W_L-c_\infty)\|f\|_2^2
+\le2\left|\int_{\mathbb R}e^{x/2}f(x)\,dx\right|^2
++J_\infty(f)+J_L(f). \tag{139.1}
+$$
+
+`PrimeArchimedeanPoincareCriterion.rh_iff_primeArchimedeanPoincare` 取实际 `zetaZeroData`，得到此全称不等式与 RH 的既有接口。该旧模块注释所述 M1-b 存在性缺口已由后续载体构造填补；本批以当前声明的组合为准，不把旧注释继续当作现状，也不改写冻结模块。
+
+`PrimeOnlyNoGap.prime_only_no_gap` 另给：圆上非负、可求和跳跃权重的能量，在非零 Fourier 模上之下确界为零。故不能用这种模型的素数项独自提供统一正谱隙；其可求和假设不能被丢弃后用于否定式 (139.1) 的实际临界素数权重和 Archimedean 项。有限矩阵正半定也不直接推出式 (139.1) 对全部 $f,L$ 成立。
+
+Li 路线可复用 `CanonicalLiNonnegativeConverse.canonical_li_nonnegative_implies_rh`：实际完成 zeta 的规范系数
+
+$$
+\lambda_n=\frac1{(n-1)!}
+\Re\left.\frac{d^n}{ds^n}\bigl[s^{n-1}\log\xi(s)\bigr]\right|_{s=1},\qquad n\ge1,
+$$
+
+若对 **每个** 正指标非负，便给 RH。这里引用的是这一既有充分方向；本批没有计算或证明全部系数非负。有限正壳 $A_H(r)$ 与 $\lambda_n$ 不是同一列，也未建立保号变换。既有 Li 曲率/圆测度结果同样须保持实际系数、共同测度和全部阶数条件，不能把任意有限 Gram 矩阵的正性代入。
+
+### 139.3. 逼近路线的全域尾部与研究终点
+
+把 Báez-Duarte 条件写成可执行目标：
+
+$$
+D_N^2=\inf_{c_1,\ldots,c_N\in\mathbb R}
+\int_0^\infty\left|\chi_{(0,1]}(x)-\sum_{m=1}^Nc_m\left\{\frac1{mx}\right\}\right|^2dx
+\longrightarrow0.
+$$
+
+对任何固定实系数，$x>1$ 上每个分数部分都是 $1/(mx)$，故
+
+$$
+\int_1^\infty\left|\sum_{m=1}^Nc_m\left\{\frac1{mx}\right\}\right|^2dx
+=\left(\sum_{m=1}^N\frac{c_m}m\right)^2. \tag{139.2}
+$$
+
+这是全域目标的一项可精确检查的尾成本；仅最小化有限网格或 $(0,1)$ 的离散误差会漏掉它。有限维 Gram 正性保证目标非负，没有保证最优残差趋零。原论文还说明直接的 Möbius 截断不在该 Hilbert 范数中收敛，故“取 Möbius 系数即可”并不是可用的无条件实现。
+
+本批更明确的可推进对象是：由原始时间读数算秩壳，用能够消去共同背景的比值识别某些素乘增量，再与 **同一整数链** 的累计 Robin 预算比较。余下决定性桥是扩张素支撑上的统一估计，或 §92 已列的最终带符号尾界。投影守恒、五窗分类与有限精确证书都没有填平这条解析缺口。
+
+**来源与证据界限。** Lagarias, *An Elementary Problem Equivalent to the Riemann Hypothesis*, [arXiv:math/0008177v2](https://arxiv.org/abs/math/0008177v2)，Problem E、Theorem 1.1 及式 (1.2)；Báez-Duarte, *A Strengthening of the Nyman–Beurling Criterion for the Riemann Hypothesis*, [arXiv:math/0202141v2](https://arxiv.org/abs/math/0202141v2)，Theorem 1.1 与 §1，均按原文载体和量词引用。其它对应为本卷既有结果、仓内 Lean 组件及本批纸面综合；不主张文献穷尽或原创性。一般时间/投影/预算桥与外部判据的全文证明没有在本批形式化；有限结果和局部编译不构成 RH 证明。
+
+## 追加锚（本行以下为增补区）
