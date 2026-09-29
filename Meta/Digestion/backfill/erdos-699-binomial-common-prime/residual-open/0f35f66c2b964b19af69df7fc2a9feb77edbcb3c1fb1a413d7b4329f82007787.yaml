@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:0f35f66c2b964b19af69df7fc2a9feb77edbcb3c1fb1a413d7b4329f82007787
+  normalized_sha256: sha256:0f35f66c2b964b19af69df7fc2a9feb77edbcb3c1fb1a413d7b4329f82007787
+cas_ref: sha256:0f35f66c2b964b19af69df7fc2a9feb77edbcb3c1fb1a413d7b4329f82007787
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Arith/Erdos699AdjacentCores.adjacent_core_numerator_bound
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 0f35f66c2b964b19af69df7fc2a9feb77edbcb3c1fb1a413d7b4329f82007787
