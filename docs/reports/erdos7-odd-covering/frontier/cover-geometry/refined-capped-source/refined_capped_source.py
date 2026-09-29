@@ -2,7 +2,7 @@
 
 Geometric helper routines below are adapted from Michael Schroeder's
 checks/verify.py, Copyright (c) 2026 Michael Schroeder, MIT license.
-The full license is supplied in e7_refined_source_MIT.txt. Their finite maxima use the author's
+The full license is supplied in LICENSE-Schroeder.txt. Their finite maxima use the author's
 geometry.cpp, freshly compiled and run from the supplied archive. Explicit
 ValueError guards replace assertions and remain active under Python -O.
 
