@@ -1,0 +1,20 @@
+## 93. 递归储备的显式尾界与双层常数
+
+本节使用无约束压力
+
+$$
+\mathcal M(\lambda)=\sum_p\max_{a\ge0}
+\{\log G_p(a)-\lambda a\log p\},\qquad
+\lambda_x=\frac1{x\log x},\qquad
+\Delta(\lambda_x)=\gamma+\log\log x-\frac1{\log x}-\mathcal M(\lambda_x).
+$$
+
+若改用受限压力，须另证它与此压力相等的适用域。令 $Q_p(a)=\sum_{k=1}^a1/(kp^k)$、$v_p=\lfloor\log x/\log p\rfloor$，并置
+
+$$
+R_p(x)=Q_p(v_p)-\lambda_xv_p\log p
+-\max_{a\ge0}\{\log G_p(a)-\lambda_xa\log p\},\qquad R=\sum_pR_p.
+$$
+
+第 87 节的同一压力恒等式为 $\Delta(\lambda_x)=\Phi(x)+R(x)$。
+

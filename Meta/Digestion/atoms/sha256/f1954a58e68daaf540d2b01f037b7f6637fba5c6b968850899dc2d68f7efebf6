@@ -1,0 +1,19 @@
+**证明。** $p\ge x$ 时，实际第一层阈值小于 $1/(p\log p)\le\lambda_x$，故实际最优指数为零；参考在 $p=x$ 可能有一层，但其参考目标为零。因此 $R_p=0$ 对所有 $p\ge x$ 成立。求和给出
+
+$$
+R(x)=P(x)-\lambda_x\Psi(x)-M(\lambda_x).
+$$
+
+代入 $\Phi$ 且用 $\lambda_xx=1/\log x$ 即得恒等式；非负性来自定理 87.2。 $\square$
+
+这里的 $\Phi$ 正是 [ZECKENDORF_EULER_5040.md](ZECKENDORF_EULER_5040.md) 中“两个有限素数幂求和”之后的“定理 1.1：尾积分的有限算式”的 $I_\psi$（该处 $M_0=P$），$R$ 正是随后“定理 1.2：压力余量的精确二分解”的 $D_{\mathrm{disc}}$，条件是两处使用同一实际最优配置与同一个压力。有限恒等式不是本节发明；本节补充的是任意有限尺度下的逐素数非负性和下一条显式子储备。若使用受限整数域的压力，必须另证其与 $M$ 相等的适用域，不能直接代换。
+
+上述既有积分表达为
+
+$$
+I_\psi(x)=\int_x^\infty(\Psi(t)-t)
+\frac{\log t+1}{t^2\log^2t}\,dt.
+$$
+
+其推导依赖经典有效素数定理、Stieltjes 分部积分与 Mertens 极限；Mertens 背景可参见 Jared Duker Lichtman, *Mertens' prime product formula, dissected*, [arXiv:2002.03361v3, Theorem 1.1](https://arxiv.org/html/2002.03361v3)。本节有限分解本身不需数值计算无穷尾。此积分权重来自 $-d(1/(x\log x))/dx$；它与此前 $q(x)=\log(1+1/x)/\log x$ 所生成的尾权重不同，不能把两者的积分、常数或已证界混用。
+
