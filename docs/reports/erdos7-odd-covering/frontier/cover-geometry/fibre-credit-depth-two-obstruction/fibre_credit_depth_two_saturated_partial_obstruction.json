@@ -1,0 +1,2411 @@
+{
+  "dependency_hashes": {
+    "fibre_credit_depth_two_core_height_joint_bridge.json": "385db85e5f01bb21534c4e31ed9f089d0871360193236dab1f1fbc42bb08a491",
+    "fibre_credit_depth_two_old23_full_height.json": "ca998ef3ce5e1043cbd1a78a4f9cd4306b12cfb781b219729aa916f0ba016ede"
+  },
+  "joint_relaxation": {
+    "P_score_ge_quantile": "1161528073/12182721408",
+    "P_score_gt_quantile": "4204834741/48730885632",
+    "aggregate_quantile": "5/2",
+    "conditional_partial_means": [
+      "635299966712/181132533855",
+      "127201858013/21895141455",
+      "72092237429/13321112805",
+      "2276775435971/1992457872405",
+      "2654125964569/2789441021367",
+      "22588962566279/13947205106835",
+      "8305622/43522045"
+    ],
+    "conditional_partial_means_decimal": [
+      3.5073763569197878,
+      5.809592884998331,
+      5.4118780078148285,
+      1.1426969008999994,
+      0.9514902606789345,
+      1.6196049597929123,
+      0.19083712633448174
+    ],
+    "core_atoms": 13,
+    "joint_height_debit": "491126096519693/111577640854680",
+    "joint_height_debit_decimal": 4.401653348804365,
+    "raw_atoms": 78,
+    "raw_atoms_data": [
+      {
+        "mass": "1/58544640",
+        "multiplier": 32,
+        "score": "162",
+        "values": [
+          128,
+          192,
+          192,
+          64,
+          64,
+          96,
+          32
+        ]
+      },
+      {
+        "mass": "1/29272320",
+        "multiplier": 32,
+        "score": "284/3",
+        "values": [
+          64,
+          128,
+          128,
+          32,
+          32,
+          64,
+          0
+        ]
+      },
+      {
+        "mass": "73/58544640",
+        "multiplier": 16,
+        "score": "81",
+        "values": [
+          64,
+          96,
+          96,
+          32,
+          32,
+          48,
+          16
+        ]
+      },
+      {
+        "mass": "1/58544640",
+        "multiplier": 32,
+        "score": "80",
+        "values": [
+          64,
+          96,
+          96,
+          32,
+          32,
+          32,
+          0
+        ]
+      },
+      {
+        "mass": "1/58544640",
+        "multiplier": 32,
+        "score": "232/3",
+        "values": [
+          64,
+          96,
+          96,
+          32,
+          0,
+          32,
+          0
+        ]
+      },
+      {
+        "mass": "1/58544640",
+        "multiplier": 32,
+        "score": "76",
+        "values": [
+          64,
+          96,
+          96,
+          32,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1/31933440",
+        "multiplier": 32,
+        "score": "200/3",
+        "values": [
+          64,
+          96,
+          64,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1/57081024",
+        "multiplier": 32,
+        "score": "176/3",
+        "values": [
+          64,
+          64,
+          64,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "73/29272320",
+        "multiplier": 16,
+        "score": "142/3",
+        "values": [
+          32,
+          64,
+          64,
+          16,
+          16,
+          32,
+          0
+        ]
+      },
+      {
+        "mass": "401/4566481920",
+        "multiplier": 32,
+        "score": "128/3",
+        "values": [
+          32,
+          64,
+          64,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "149/4181760",
+        "multiplier": 8,
+        "score": "81/2",
+        "values": [
+          32,
+          48,
+          48,
+          16,
+          16,
+          24,
+          8
+        ]
+      },
+      {
+        "mass": "73/58544640",
+        "multiplier": 16,
+        "score": "40",
+        "values": [
+          32,
+          48,
+          48,
+          16,
+          16,
+          16,
+          0
+        ]
+      },
+      {
+        "mass": "73/58544640",
+        "multiplier": 16,
+        "score": "116/3",
+        "values": [
+          32,
+          48,
+          48,
+          16,
+          0,
+          16,
+          0
+        ]
+      },
+      {
+        "mass": "73/58544640",
+        "multiplier": 16,
+        "score": "38",
+        "values": [
+          32,
+          48,
+          48,
+          16,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1/19514880",
+        "multiplier": 32,
+        "score": "112/3",
+        "values": [
+          32,
+          64,
+          32,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "73/31933440",
+        "multiplier": 16,
+        "score": "100/3",
+        "values": [
+          32,
+          48,
+          32,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "83/3161410560",
+        "multiplier": 32,
+        "score": "32",
+        "values": [
+          32,
+          64,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "73/57081024",
+        "multiplier": 16,
+        "score": "88/3",
+        "values": [
+          32,
+          32,
+          32,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1163/22150402560",
+        "multiplier": 32,
+        "score": "24",
+        "values": [
+          32,
+          32,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "149/2090880",
+        "multiplier": 8,
+        "score": "71/3",
+        "values": [
+          16,
+          32,
+          32,
+          8,
+          8,
+          16,
+          0
+        ]
+      },
+      {
+        "mass": "29273/4566481920",
+        "multiplier": 16,
+        "score": "64/3",
+        "values": [
+          16,
+          32,
+          32,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1619/3252480",
+        "multiplier": 4,
+        "score": "81/4",
+        "values": [
+          16,
+          24,
+          24,
+          8,
+          8,
+          12,
+          4
+        ]
+      },
+      {
+        "mass": "149/4181760",
+        "multiplier": 8,
+        "score": "20",
+        "values": [
+          16,
+          24,
+          24,
+          8,
+          8,
+          8,
+          0
+        ]
+      },
+      {
+        "mass": "149/4181760",
+        "multiplier": 8,
+        "score": "58/3",
+        "values": [
+          16,
+          24,
+          24,
+          8,
+          0,
+          8,
+          0
+        ]
+      },
+      {
+        "mass": "149/4181760",
+        "multiplier": 8,
+        "score": "19",
+        "values": [
+          16,
+          24,
+          24,
+          8,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "73/19514880",
+        "multiplier": 16,
+        "score": "56/3",
+        "values": [
+          16,
+          32,
+          16,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "149/2280960",
+        "multiplier": 8,
+        "score": "50/3",
+        "values": [
+          16,
+          24,
+          16,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "6059/3161410560",
+        "multiplier": 16,
+        "score": "16",
+        "values": [
+          16,
+          32,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "149/4077216",
+        "multiplier": 8,
+        "score": "44/3",
+        "values": [
+          16,
+          16,
+          16,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "84899/22150402560",
+        "multiplier": 16,
+        "score": "12",
+        "values": [
+          16,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1619/1626240",
+        "multiplier": 4,
+        "score": "71/6",
+        "values": [
+          8,
+          16,
+          16,
+          4,
+          4,
+          8,
+          0
+        ]
+      },
+      {
+        "mass": "59749/326177280",
+        "multiplier": 8,
+        "score": "32/3",
+        "values": [
+          8,
+          16,
+          16,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "22097/6504960",
+        "multiplier": 2,
+        "score": "81/8",
+        "values": [
+          8,
+          12,
+          12,
+          4,
+          4,
+          6,
+          2
+        ]
+      },
+      {
+        "mass": "1619/3252480",
+        "multiplier": 4,
+        "score": "10",
+        "values": [
+          8,
+          12,
+          12,
+          4,
+          4,
+          4,
+          0
+        ]
+      },
+      {
+        "mass": "1619/3252480",
+        "multiplier": 4,
+        "score": "29/3",
+        "values": [
+          8,
+          12,
+          12,
+          4,
+          0,
+          4,
+          0
+        ]
+      },
+      {
+        "mass": "1619/3252480",
+        "multiplier": 4,
+        "score": "19/2",
+        "values": [
+          8,
+          12,
+          12,
+          4,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "149/1393920",
+        "multiplier": 8,
+        "score": "28/3",
+        "values": [
+          8,
+          16,
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1619/1774080",
+        "multiplier": 4,
+        "score": "25/3",
+        "values": [
+          8,
+          12,
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "5227/44300805120",
+        "multiplier": 32,
+        "score": "8",
+        "values": [
+          0,
+          32,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "12367/225815040",
+        "multiplier": 8,
+        "score": "8",
+        "values": [
+          8,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1619/3171168",
+        "multiplier": 4,
+        "score": "22/3",
+        "values": [
+          8,
+          8,
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1213009/11075201280",
+        "multiplier": 8,
+        "score": "6",
+        "values": [
+          8,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "22097/3252480",
+        "multiplier": 2,
+        "score": "71/12",
+        "values": [
+          4,
+          8,
+          8,
+          2,
+          2,
+          4,
+          0
+        ]
+      },
+      {
+        "mass": "649219/253693440",
+        "multiplier": 4,
+        "score": "16/3",
+        "values": [
+          4,
+          8,
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "51/5632",
+        "multiplier": 1,
+        "score": "81/16",
+        "values": [
+          4,
+          6,
+          6,
+          2,
+          2,
+          3,
+          1
+        ]
+      },
+      {
+        "mass": "22097/6504960",
+        "multiplier": 2,
+        "score": "5",
+        "values": [
+          4,
+          6,
+          6,
+          2,
+          2,
+          2,
+          0
+        ]
+      },
+      {
+        "mass": "22097/6504960",
+        "multiplier": 2,
+        "score": "29/6",
+        "values": [
+          4,
+          6,
+          6,
+          2,
+          0,
+          2,
+          0
+        ]
+      },
+      {
+        "mass": "22097/6504960",
+        "multiplier": 2,
+        "score": "19/4",
+        "values": [
+          4,
+          6,
+          6,
+          2,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1619/1084160",
+        "multiplier": 4,
+        "score": "14/3",
+        "values": [
+          4,
+          8,
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "22097/3548160",
+        "multiplier": 2,
+        "score": "25/6",
+        "values": [
+          4,
+          6,
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "381571/44300805120",
+        "multiplier": 16,
+        "score": "4",
+        "values": [
+          0,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "134377/175633920",
+        "multiplier": 4,
+        "score": "4",
+        "values": [
+          4,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "22097/6342336",
+        "multiplier": 2,
+        "score": "11/3",
+        "values": [
+          4,
+          4,
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1882897/1230577920",
+        "multiplier": 4,
+        "score": "3",
+        "values": [
+          4,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "51/2816",
+        "multiplier": 1,
+        "score": "71/24",
+        "values": [
+          2,
+          4,
+          4,
+          1,
+          1,
+          2,
+          0
+        ]
+      },
+      {
+        "mass": "8860897/507386880",
+        "multiplier": 2,
+        "score": "8/3",
+        "values": [
+          2,
+          4,
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "51/5632",
+        "multiplier": 1,
+        "score": "5/2",
+        "values": [
+          2,
+          3,
+          3,
+          1,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "mass": "51/5632",
+        "multiplier": 1,
+        "score": "29/12",
+        "values": [
+          2,
+          3,
+          3,
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "mass": "51/5632",
+        "multiplier": 1,
+        "score": "19/8",
+        "values": [
+          2,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "22097/2168320",
+        "multiplier": 2,
+        "score": "7/3",
+        "values": [
+          2,
+          4,
+          2,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "17/1024",
+        "multiplier": 1,
+        "score": "25/12",
+        "values": [
+          2,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "5451761/22150402560",
+        "multiplier": 8,
+        "score": "2",
+        "values": [
+          0,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1834051/351267840",
+        "multiplier": 2,
+        "score": "2",
+        "values": [
+          2,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "85/9152",
+        "multiplier": 1,
+        "score": "11/6",
+        "values": [
+          2,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "25698811/2461155840",
+        "multiplier": 2,
+        "score": "3/2",
+        "values": [
+          2,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "6817/146432",
+        "multiplier": 1,
+        "score": "4/3",
+        "values": [
+          1,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "153/5632",
+        "multiplier": 1,
+        "score": "7/6",
+        "values": [
+          1,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "8462513/2461155840",
+        "multiplier": 4,
+        "score": "1",
+        "values": [
+          0,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1411/101376",
+        "multiplier": 1,
+        "score": "1",
+        "values": [
+          1,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "138397/4972032",
+        "multiplier": 1,
+        "score": "3/4",
+        "values": [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "115501019/4922311680",
+        "multiplier": 2,
+        "score": "1/2",
+        "values": [
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "622013/9944064",
+        "multiplier": 1,
+        "score": "1/4",
+        "values": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "2023/4608",
+        "multiplier": 1,
+        "score": "0",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "375649/2280960",
+        "multiplier": 2,
+        "score": "0",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "27523/1140480",
+        "multiplier": 4,
+        "score": "0",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "17731/10264320",
+        "multiplier": 8,
+        "score": "0",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "1241/20528640",
+        "multiplier": 16,
+        "score": "0",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "mass": "17/20528640",
+        "multiplier": 32,
+        "score": "0",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "retained_atoms": 57,
+    "retained_atoms_data": [
+      {
+        "retained_mass": "1/58544640",
+        "score": "162",
+        "values": [
+          128,
+          192,
+          192,
+          64,
+          64,
+          96,
+          32
+        ]
+      },
+      {
+        "retained_mass": "1/29272320",
+        "score": "284/3",
+        "values": [
+          64,
+          128,
+          128,
+          32,
+          32,
+          64,
+          0
+        ]
+      },
+      {
+        "retained_mass": "73/58544640",
+        "score": "81",
+        "values": [
+          64,
+          96,
+          96,
+          32,
+          32,
+          48,
+          16
+        ]
+      },
+      {
+        "retained_mass": "1/58544640",
+        "score": "80",
+        "values": [
+          64,
+          96,
+          96,
+          32,
+          32,
+          32,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1/58544640",
+        "score": "232/3",
+        "values": [
+          64,
+          96,
+          96,
+          32,
+          0,
+          32,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1/58544640",
+        "score": "76",
+        "values": [
+          64,
+          96,
+          96,
+          32,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1/31933440",
+        "score": "200/3",
+        "values": [
+          64,
+          96,
+          64,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1/57081024",
+        "score": "176/3",
+        "values": [
+          64,
+          64,
+          64,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "73/29272320",
+        "score": "142/3",
+        "values": [
+          32,
+          64,
+          64,
+          16,
+          16,
+          32,
+          0
+        ]
+      },
+      {
+        "retained_mass": "401/4566481920",
+        "score": "128/3",
+        "values": [
+          32,
+          64,
+          64,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "149/4181760",
+        "score": "81/2",
+        "values": [
+          32,
+          48,
+          48,
+          16,
+          16,
+          24,
+          8
+        ]
+      },
+      {
+        "retained_mass": "73/58544640",
+        "score": "40",
+        "values": [
+          32,
+          48,
+          48,
+          16,
+          16,
+          16,
+          0
+        ]
+      },
+      {
+        "retained_mass": "73/58544640",
+        "score": "116/3",
+        "values": [
+          32,
+          48,
+          48,
+          16,
+          0,
+          16,
+          0
+        ]
+      },
+      {
+        "retained_mass": "73/58544640",
+        "score": "38",
+        "values": [
+          32,
+          48,
+          48,
+          16,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1/19514880",
+        "score": "112/3",
+        "values": [
+          32,
+          64,
+          32,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "73/31933440",
+        "score": "100/3",
+        "values": [
+          32,
+          48,
+          32,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "83/3161410560",
+        "score": "32",
+        "values": [
+          32,
+          64,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "73/57081024",
+        "score": "88/3",
+        "values": [
+          32,
+          32,
+          32,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1163/22150402560",
+        "score": "24",
+        "values": [
+          32,
+          32,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "149/2090880",
+        "score": "71/3",
+        "values": [
+          16,
+          32,
+          32,
+          8,
+          8,
+          16,
+          0
+        ]
+      },
+      {
+        "retained_mass": "29273/4566481920",
+        "score": "64/3",
+        "values": [
+          16,
+          32,
+          32,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1619/3252480",
+        "score": "81/4",
+        "values": [
+          16,
+          24,
+          24,
+          8,
+          8,
+          12,
+          4
+        ]
+      },
+      {
+        "retained_mass": "149/4181760",
+        "score": "20",
+        "values": [
+          16,
+          24,
+          24,
+          8,
+          8,
+          8,
+          0
+        ]
+      },
+      {
+        "retained_mass": "149/4181760",
+        "score": "58/3",
+        "values": [
+          16,
+          24,
+          24,
+          8,
+          0,
+          8,
+          0
+        ]
+      },
+      {
+        "retained_mass": "149/4181760",
+        "score": "19",
+        "values": [
+          16,
+          24,
+          24,
+          8,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "73/19514880",
+        "score": "56/3",
+        "values": [
+          16,
+          32,
+          16,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "149/2280960",
+        "score": "50/3",
+        "values": [
+          16,
+          24,
+          16,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "6059/3161410560",
+        "score": "16",
+        "values": [
+          16,
+          32,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "149/4077216",
+        "score": "44/3",
+        "values": [
+          16,
+          16,
+          16,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "84899/22150402560",
+        "score": "12",
+        "values": [
+          16,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1619/1626240",
+        "score": "71/6",
+        "values": [
+          8,
+          16,
+          16,
+          4,
+          4,
+          8,
+          0
+        ]
+      },
+      {
+        "retained_mass": "59749/326177280",
+        "score": "32/3",
+        "values": [
+          8,
+          16,
+          16,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "22097/6504960",
+        "score": "81/8",
+        "values": [
+          8,
+          12,
+          12,
+          4,
+          4,
+          6,
+          2
+        ]
+      },
+      {
+        "retained_mass": "1619/3252480",
+        "score": "10",
+        "values": [
+          8,
+          12,
+          12,
+          4,
+          4,
+          4,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1619/3252480",
+        "score": "29/3",
+        "values": [
+          8,
+          12,
+          12,
+          4,
+          0,
+          4,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1619/3252480",
+        "score": "19/2",
+        "values": [
+          8,
+          12,
+          12,
+          4,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "149/1393920",
+        "score": "28/3",
+        "values": [
+          8,
+          16,
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1619/1774080",
+        "score": "25/3",
+        "values": [
+          8,
+          12,
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "5227/44300805120",
+        "score": "8",
+        "values": [
+          0,
+          32,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "12367/225815040",
+        "score": "8",
+        "values": [
+          8,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1619/3171168",
+        "score": "22/3",
+        "values": [
+          8,
+          8,
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1213009/11075201280",
+        "score": "6",
+        "values": [
+          8,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "22097/3252480",
+        "score": "71/12",
+        "values": [
+          4,
+          8,
+          8,
+          2,
+          2,
+          4,
+          0
+        ]
+      },
+      {
+        "retained_mass": "649219/253693440",
+        "score": "16/3",
+        "values": [
+          4,
+          8,
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "51/5632",
+        "score": "81/16",
+        "values": [
+          4,
+          6,
+          6,
+          2,
+          2,
+          3,
+          1
+        ]
+      },
+      {
+        "retained_mass": "22097/6504960",
+        "score": "5",
+        "values": [
+          4,
+          6,
+          6,
+          2,
+          2,
+          2,
+          0
+        ]
+      },
+      {
+        "retained_mass": "22097/6504960",
+        "score": "29/6",
+        "values": [
+          4,
+          6,
+          6,
+          2,
+          0,
+          2,
+          0
+        ]
+      },
+      {
+        "retained_mass": "22097/6504960",
+        "score": "19/4",
+        "values": [
+          4,
+          6,
+          6,
+          2,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1619/1084160",
+        "score": "14/3",
+        "values": [
+          4,
+          8,
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "22097/3548160",
+        "score": "25/6",
+        "values": [
+          4,
+          6,
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "381571/44300805120",
+        "score": "4",
+        "values": [
+          0,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "134377/175633920",
+        "score": "4",
+        "values": [
+          4,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "22097/6342336",
+        "score": "11/3",
+        "values": [
+          4,
+          4,
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "1882897/1230577920",
+        "score": "3",
+        "values": [
+          4,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "51/2816",
+        "score": "71/24",
+        "values": [
+          2,
+          4,
+          4,
+          1,
+          1,
+          2,
+          0
+        ]
+      },
+      {
+        "retained_mass": "8860897/507386880",
+        "score": "8/3",
+        "values": [
+          2,
+          4,
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "retained_mass": "36875786755/4190856164352",
+        "score": "5/2",
+        "values": [
+          2,
+          3,
+          3,
+          1,
+          1,
+          1,
+          0
+        ]
+      }
+    ],
+    "retained_mass": "1243487/13077504",
+    "scope": "Finite common-source relaxation witness. NOT actual CRT residues or actual congruence-generated mixed event. All seven partial ICX marginals and their full-query ancestor-completion ICX inequalities are preserved."
+  },
+  "partial": {
+    "cases": [
+      {
+        "full_outside_axes": [],
+        "height_deletion_upper": "166210817489957/37192546951560",
+        "height_deletion_upper_decimal": 4.468928081382323,
+        "partial_bounds": [
+          {
+            "P_ge_quantile": "1505747/9115392",
+            "P_gt_quantile": "2135283713/42113111040",
+            "S": [
+              3
+            ],
+            "conditional_mean_decimal": 3.5075600049221207,
+            "conditional_mean_upper": "4706172084/1341722473",
+            "quantile": 2,
+            "weighted_debit": "2353086042/1341722473"
+          },
+          {
+            "P_ge_quantile": "480751/4561920",
+            "P_gt_quantile": "16138739/351267840",
+            "S": [
+              5
+            ],
+            "conditional_mean_decimal": 5.912485096792773,
+            "conditional_mean_upper": "330844426/55956915",
+            "quantile": 4,
+            "weighted_debit": "165422213/111913830"
+          },
+          {
+            "P_ge_quantile": "120319/1084160",
+            "P_gt_quantile": "181733/2168320",
+            "S": [
+              7
+            ],
+            "conditional_mean_decimal": 5.489934924201788,
+            "conditional_mean_upper": "375466449/68391785",
+            "quantile": 3,
+            "weighted_debit": "125155483/136783570"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "6/77",
+            "S": [
+              3,
+              5
+            ],
+            "conditional_mean_decimal": 1.3358598843413723,
+            "conditional_mean_upper": "8305622/6217435",
+            "quantile": 0,
+            "weighted_debit": "4152811/24869740"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "4/77",
+            "S": [
+              3,
+              7
+            ],
+            "conditional_mean_decimal": 0.9541856316724088,
+            "conditional_mean_upper": "8305622/8704409",
+            "quantile": 0,
+            "weighted_debit": "4152811/52226454"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "5/77",
+            "S": [
+              5,
+              7
+            ],
+            "conditional_mean_decimal": 1.7175341370103359,
+            "conditional_mean_upper": "74750598/43522045",
+            "quantile": 0,
+            "weighted_debit": "12458433/174088180"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "1/77",
+            "S": [
+              3,
+              5,
+              7
+            ],
+            "conditional_mean_decimal": 0.19083712633448174,
+            "conditional_mean_upper": "8305622/43522045",
+            "quantile": 0,
+            "weighted_debit": "4152811/1044529080"
+          }
+        ],
+        "retention_lower": "1243487/13077504",
+        "retention_test_passes": false
+      },
+      {
+        "full_outside_axes": [
+          23
+        ],
+        "height_deletion_upper": "444292814267289433/95741749013686776",
+        "height_deletion_upper_decimal": 4.640533715378184,
+        "partial_bounds": [
+          {
+            "P_ge_quantile": "1505747/9115392",
+            "P_gt_quantile": "345478854713/6780210877440",
+            "S": [
+              3
+            ],
+            "conditional_mean_decimal": 3.6403037929586097,
+            "conditional_mean_upper": "118839301767/32645435251",
+            "quantile": 2,
+            "weighted_debit": "118839301767/65290870502"
+          },
+          {
+            "P_ge_quantile": "28259761/268139520",
+            "P_gt_quantile": "12444675923941/269254175984640",
+            "S": [
+              5
+            ],
+            "conditional_mean_decimal": 6.086532557646858,
+            "conditional_mean_upper": "876736625570/144045335709",
+            "quantile": 4,
+            "weighted_debit": "438368312785/288090671418"
+          },
+          {
+            "P_ge_quantile": "4845411/43637440",
+            "P_gt_quantile": "672977869/8029288960",
+            "S": [
+              7
+            ],
+            "conditional_mean_decimal": 5.703553503470351,
+            "conditional_mean_upper": "611216536173/107164162798",
+            "quantile": 3,
+            "weighted_debit": "203738845391/214328325596"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "6/77",
+            "S": [
+              3,
+              5
+            ],
+            "conditional_mean_decimal": 1.4442044458437966,
+            "conditional_mean_upper": "3972254/2750479",
+            "quantile": 0,
+            "weighted_debit": "1986127/11001916"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "4/77",
+            "S": [
+              3,
+              7
+            ],
+            "conditional_mean_decimal": 1.0315746041741405,
+            "conditional_mean_upper": "19861270/19253353",
+            "quantile": 0,
+            "weighted_debit": "9930635/115520118"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "5/77",
+            "S": [
+              5,
+              7
+            ],
+            "conditional_mean_decimal": 1.856834287513453,
+            "conditional_mean_upper": "35750286/19253353",
+            "quantile": 0,
+            "weighted_debit": "5958381/77013412"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "1/77",
+            "S": [
+              3,
+              5,
+              7
+            ],
+            "conditional_mean_decimal": 0.2063149208348281,
+            "conditional_mean_upper": "3972254/19253353",
+            "quantile": 0,
+            "weighted_debit": "1986127/462080472"
+          }
+        ],
+        "retention_lower": "2750479/31207680",
+        "retention_test_passes": false
+      },
+      {
+        "full_outside_axes": [
+          19,
+          23
+        ],
+        "height_deletion_upper": "71135661951950274565/14396933587831042248",
+        "height_deletion_upper_decimal": 4.941028693226552,
+        "partial_bounds": [
+          {
+            "P_ge_quantile": "1505747/9115392",
+            "P_gt_quantile": "8647589378863/168462162570240",
+            "S": [
+              3
+            ],
+            "conditional_mean_decimal": 3.883068251866299,
+            "conditional_mean_upper": "10057721979/2590148132",
+            "quantile": 2,
+            "weighted_debit": "10057721979/5180296264"
+          },
+          {
+            "P_ge_quantile": "173455815047/1645572234240",
+            "P_gt_quantile": "292802010322588609/6279168936467395584",
+            "S": [
+              5
+            ],
+            "conditional_mean_decimal": 6.404785443608337,
+            "conditional_mean_upper": "39637329398629/6188705265402",
+            "quantile": 4,
+            "weighted_debit": "39637329398629/24754821061608"
+          },
+          {
+            "P_ge_quantile": "4130296138163/49275746347520",
+            "P_gt_quantile": "660252848792981/17618319125890560",
+            "S": [
+              7
+            ],
+            "conditional_mean_decimal": 6.016026225668588,
+            "conditional_mean_upper": "1486498644725921/247089788003828",
+            "quantile": 4,
+            "weighted_debit": "1486498644725921/1482538728022968"
+          },
+          {
+            "P_ge_quantile": "6/77",
+            "P_gt_quantile": "117/3584",
+            "S": [
+              3,
+              5
+            ],
+            "conditional_mean_decimal": 1.640011673719539,
+            "conditional_mean_upper": "11239/6853",
+            "quantile": 1,
+            "weighted_debit": "11239/54824"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "4/77",
+            "S": [
+              3,
+              7
+            ],
+            "conditional_mean_decimal": 1.1730812896304297,
+            "conditional_mean_upper": "3135990/2673293",
+            "quantile": 0,
+            "weighted_debit": "522665/5346586"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "5/77",
+            "S": [
+              5,
+              7
+            ],
+            "conditional_mean_decimal": 2.111546321334773,
+            "conditional_mean_upper": "5644782/2673293",
+            "quantile": 0,
+            "weighted_debit": "940797/10693172"
+          },
+          {
+            "P_ge_quantile": "1",
+            "P_gt_quantile": "1/77",
+            "S": [
+              3,
+              5,
+              7
+            ],
+            "conditional_mean_decimal": 0.23461625792608592,
+            "conditional_mean_upper": "627198/2673293",
+            "quantile": 0,
+            "weighted_debit": "104533/21386344"
+          }
+        ],
+        "retention_lower": "54557/701760",
+        "retention_test_passes": false
+      }
+    ],
+    "profiles": [
+      {
+        "D2_iterations": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "K": 4,
+        "S": [
+          3
+        ],
+        "histograms": 6,
+        "minimum_slacks": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "old45_layouts": 85,
+        "probabilities": [
+          "4657/6474",
+          "41278/249249",
+          "613/6006",
+          "0",
+          "1/77"
+        ],
+        "query45_slots": [
+          9,
+          45
+        ],
+        "stoploss_caps": [
+          "35/83",
+          "11/78",
+          "2/77",
+          "1/77"
+        ]
+      },
+      {
+        "D2_iterations": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "K": 6,
+        "S": [
+          5
+        ],
+        "histograms": 22,
+        "minimum_slacks": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "old45_layouts": 476,
+        "probabilities": [
+          "17/27",
+          "7/54",
+          "289/2079",
+          "29/462",
+          "2/77",
+          "0",
+          "1/77"
+        ],
+        "query45_slots": [
+          5,
+          15,
+          45
+        ],
+        "stoploss_caps": [
+          "7/9",
+          "11/27",
+          "1/6",
+          "5/77",
+          "2/77",
+          "1/77"
+        ]
+      },
+      {
+        "D2_iterations": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "K": 6,
+        "S": [
+          7
+        ],
+        "histograms": 170,
+        "minimum_slacks": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "old45_layouts": 4760,
+        "probabilities": [
+          "60/77",
+          "3/77",
+          "8/77",
+          "3/77",
+          "2/77",
+          "0",
+          "1/77"
+        ],
+        "query45_slots": [
+          1,
+          3,
+          5,
+          9,
+          15,
+          45
+        ],
+        "stoploss_caps": [
+          "6/11",
+          "25/77",
+          "1/7",
+          "5/77",
+          "2/77",
+          "1/77"
+        ]
+      },
+      {
+        "D2_iterations": [
+          2,
+          2
+        ],
+        "K": 2,
+        "S": [
+          3,
+          5
+        ],
+        "histograms": 1,
+        "minimum_slacks": [
+          "0",
+          "0"
+        ],
+        "old45_layouts": 17,
+        "probabilities": [
+          "71/77",
+          "5/77",
+          "1/77"
+        ],
+        "query45_slots": [
+          45
+        ],
+        "stoploss_caps": [
+          "1/11",
+          "1/77"
+        ]
+      },
+      {
+        "D2_iterations": [
+          0,
+          0
+        ],
+        "K": 2,
+        "S": [
+          3,
+          7
+        ],
+        "histograms": 6,
+        "minimum_slacks": [
+          "0",
+          "0"
+        ],
+        "old45_layouts": 85,
+        "probabilities": [
+          "73/77",
+          "3/77",
+          "1/77"
+        ],
+        "query45_slots": [
+          9,
+          45
+        ],
+        "stoploss_caps": [
+          "5/77",
+          "1/77"
+        ]
+      },
+      {
+        "D2_iterations": [
+          0,
+          0,
+          0
+        ],
+        "K": 3,
+        "S": [
+          5,
+          7
+        ],
+        "histograms": 22,
+        "minimum_slacks": [
+          "0",
+          "0",
+          "0"
+        ],
+        "old45_layouts": 476,
+        "probabilities": [
+          "72/77",
+          "2/77",
+          "2/77",
+          "1/77"
+        ],
+        "query45_slots": [
+          5,
+          15,
+          45
+        ],
+        "stoploss_caps": [
+          "9/77",
+          "4/77",
+          "1/77"
+        ]
+      },
+      {
+        "D2_iterations": [
+          0
+        ],
+        "K": 1,
+        "S": [
+          3,
+          5,
+          7
+        ],
+        "histograms": 1,
+        "minimum_slacks": [
+          "0"
+        ],
+        "old45_layouts": 17,
+        "probabilities": [
+          "76/77",
+          "1/77"
+        ],
+        "query45_slots": [
+          45
+        ],
+        "stoploss_caps": [
+          "1/77"
+        ]
+      }
+    ],
+    "scope": "First canonical old315 shape. Seven genuine partial-query comparison laws, zero included; all exact D2. Outside product transport then one common actual-event restriction. Upper bounds, not actual CRT extremizers; not Lean."
+  },
+  "scope": "Ordinary exact partial D2 comparisons and one finite joint relaxation; not actual CRT extrema, not Lean."
+}

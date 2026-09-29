@@ -1,0 +1,10 @@
+**定理 2145.2（多项式 Fock 态的正规序支撑界）。** 沿用问题 2145.1 的模式约定。对 $v\in F_{\mathbb C}$，令 $B(v)=\max\operatorname{vars}(v)$，空变量集时取 $B(v)=0$，并令 $N(v)=B(v)+2$。若 $:a_{n-r}a_r:$ 按较大模式在右的正规序作用于 $v$，则对每个 $n\in\mathbb Z$，
+
+$$
+\operatorname{supp}\bigl(r\mapsto :a_{n-r}a_r:v\bigr)
+\subseteq \bigl(n-N(v),N(v)\bigr)\cap\mathbb Z.
+\tag{2145.2}
+$$
+
+复 Heisenberg 真空表示的模式背景见 [Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；一般局部截断与 Sugawara 正规序形式化参见 [Kytölä, `Sugawara.lean`, 固定提交 `5ff4245`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。式 (2145.2) 给出本节具体多项式模型的显式逐态界。
+

@@ -1,0 +1,10 @@
+**定理 92.3（最终障碍等价于 RH）。** 在经典有效素数定理、积分显式公式、零点计数与对称性、Landau 非负 Laplace 变换定理下，
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\exists X_0>1\ \forall x\ge X_0,
+\quad\Phi(x)\ge-\frac1{2\sqrt x\log x}.
+$$
+
+更一般地，任意有限 $K\ge0$ 的这种最终下界都推出 RH；RH 反向给出每个 $K>C_\gamma$ 的最终下界，其中 $C_\gamma=2+\gamma-\log(4\pi)<1/2$。不声称反向对所有 $K\ge0$ 成立。
+

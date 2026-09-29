@@ -33,8 +33,10 @@ import publication as public
 
 selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
-# The template join has a fixed heartbeat budget per native invocation.
-NATIVE_BATCH_MODULES = 4
+# Each native invocation imports the batch's environment and joins its whole
+# registration universe; larger batches amortize that fixed cost. Each joined
+# occurrence has its own heartbeat budget, so batch size does not bound it.
+NATIVE_BATCH_MODULES = 100
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
 
@@ -317,7 +319,7 @@ def produce_batch(requests):
         raise ValueError('mixed native batch owners')
     if any(left[1] == right[1] for left, right in zip(requests, requests[1:])):
         raise ValueError('duplicate native batch module')
-    # A native join has a fixed heartbeat budget; Lake still validates every
+    # Chunks bound per-process memory; Lake still validates every
     # completed module facet and the full aggregate after these bounded calls.
     for start in range(0, len(requests), NATIVE_BATCH_MODULES):
         produce_batch_chunk(requests[start:start + NATIVE_BATCH_MODULES])
