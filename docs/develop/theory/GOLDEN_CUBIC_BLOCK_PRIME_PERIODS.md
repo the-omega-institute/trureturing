@@ -1260,3 +1260,31 @@ the formula. The conclusion is independent of the selected cubic
 roots and does not assert a discriminant or ramification law.
 
 ## 追加锚（本行以下为增补区）
+
+## 28. Odd-index Fibonacci twenty-five layers
+
+**Theorem 28.1 (normalized odd-index layer modulo seven).** For every
+positive odd integer $n$, there is a natural number $d_n$ such that
+
+$$
+F_{25n}=25F_nd_n,\qquad d_n\equiv5\pmod 7.
+$$
+
+In particular, $d_n$ is not a square.
+
+Proof. The addition identity for Fibonacci numbers, together with
+$F_7=13$ and $F_8=21$, gives $F_{r+8}\equiv-F_r\pmod7$ for every
+$r\geq0$. Since $25n=n+8(3n)$ and $n$ is odd,
+$F_{25n}\equiv-F_n\pmod7$. The first positive index at which seven
+divides a Fibonacci number is eight, and the strong divisibility
+identity gives $7\mid F_r$ if and only if $8\mid r$. Thus $F_n$ is
+nonzero modulo seven.
+
+Strong divisibility also gives $F_n\mid F_{25n}$. The five-adic
+identity $v_5(F_r)=v_5(r)$ for positive $r$ shows that the quotient
+$F_{25n}/F_n$ has five-adic valuation two, so it equals $25d_n$ for
+some natural number $d_n$. Cancelling $F_n$ modulo seven now yields
+$25d_n\equiv-1\pmod7$, hence $d_n\equiv5\pmod7$. The quadratic
+residues modulo seven are $0,1,2,4$, so $d_n$ is not a square.
+
+## 追加锚（本行以下为增补区）
