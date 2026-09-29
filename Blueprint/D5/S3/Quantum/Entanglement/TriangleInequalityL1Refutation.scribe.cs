@@ -29,7 +29,10 @@ internal sealed class TriangleInequalityL1RefutationDocument : IScribeDocumentDe
             Node("result", "A local distribution violating ineq_l1",
                 Disp(new Formula.Not(F.Id("claim"))),
                 "Let each source send one of the 24 orderings x = (x_1, x_2, x_3, x_4) of the four outcomes, uniformly, and let every party apply one rule f to its two sources in cyclic order: A = f(beta, gamma), B = f(gamma, alpha), C = f(alpha, beta). If x_1 or x_2 stands in one of the first two places of y, f(x, y) is whichever of them comes first in y; otherwise f(x, y) is x_1 if x_1 precedes x_2 in y, and x_3 if not. Cutting [0, 1] into 24 equal cells turns this into responses on [0, 1], and as for the fully symmetric model of the same paper the integral factorises over the cells, so p(a, b, c) is the number of source triples with outputs (a, b, c) divided by 24^3 = 13824. Sixteen kernel-checked counts over the 13824 triples give 1056 when a = b = c, 148 when exactly two outputs agree and 178 when all differ. So p is constant on each outcome type, every deviation from the type mean vanishes and Delta_1(p) = 0, while s_111(p) = 4 * 1056 / 13824 = 11/36 > 0.289.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("baumer-2024-triangle-inequality-l1"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(
