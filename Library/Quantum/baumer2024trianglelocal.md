@@ -5,9 +5,10 @@ year: 2024
 title: "Exploring the local landscape in the triangle network"
 doi: 10.48550/arXiv.2405.08939
 url: https://arxiv.org/abs/2405.08939v1
-claim: "Local models in the triangle network reach a fully symmetric four-outcome distribution with p(A=B=C) = 1/4; the paper conjectures that local fully symmetric distributions have maximal p(A=B=C) very close to 1/4, and asks as an open problem whether a local fully symmetric distribution with p(A=B=C) > 1/4 exists."
+claim: "Local models in the triangle network reach a fully symmetric four-outcome distribution with p(A=B=C) = 1/4; the paper conjectures that local fully symmetric distributions have maximal p(A=B=C) very close to 1/4, and asks as an open problem whether a local fully symmetric distribution with p(A=B=C) > 1/4 exists. From neural-network estimates it states that approximately s111(p) - 0.475 Delta_{l=1}(p) <= 0.289 (eq. ineq_l1) should hold for all local models."
 strata_touched:
   - D5/S3/Quantum/Entanglement/TriangleSymmetricLocalRefutation
+  - D5/S3/Quantum/Entanglement/TriangleInequalityL1Refutation
 license: citation-only
 triage: anchor
 ---
@@ -32,6 +33,15 @@ networks, and states in its conclusion:
 
 > Open problem. Does there exist a distribution p(A,B,C) that is local in the
 > triangle network and fully symmetric such that p(A=B=C) > 1/4?
+
+To build Bell-type inequalities it penalises asymmetry by
+`Δ_l = Σ_X Σ_{(a,b,c) ∈ I_X} |M_X − p(a,b,c)|^l`, with `I_X` the outcome triples
+of type 111, 112 and 123 (4, 36 and 24 of them) and `M_X` the mean of `p` over
+`I_X`, and states that approximately
+
+> s₁₁₁(p) − 0.475 Δ_{l=1}(p) ≤ 0.289,  s₁₁₁(p) − 5.211 Δ_{l=2}(p) ≤ 0.316,
+
+should both hold for all local models (eqs. `ineq_l1`, `ineq_l2`).
 
 ## Verified locator
 
