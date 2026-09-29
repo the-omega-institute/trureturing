@@ -78,21 +78,40 @@ internal sealed class DyadicPrefixDelayRangeDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A one-prefix delay table reaches each permitted time while the earliest "
-                        + "tree keeps every other source within W. A controller below W "
-                        + "contradicts the sharp waiting lower bound. For an eligible prefix, "
-                        + "the zero-delay even source and one-period-delayed odd source have "
-                        + "the same actual raw final read, although their source residues "
-                        + "differ and their terminal times differ by P."))),
+                    + "tree keeps every other source within W. A controller below W "
+                    + "contradicts the sharp waiting lower bound. For an eligible prefix, "
+                    + "the zero-delay even source and one-period-delayed odd source have "
+                    + "the same actual raw final read, although their source residues "
+                    + "differ and their terminal times differ by P."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("deadline-family-operational-capacity"),
+                DeclarationHandle.Create(Prefix + "deadline_family_operational_capacity"),
+                H("One decoder for every deadline-family controller"),
+                StatementSource.FromAuthor(CapacityStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Labels are counted only when attained at a terminal time of a successful "
+                    + "controller in the common-deadline family. For D below the sharp wait "
+                    + "the family is empty. Otherwise any time-only encoder admitting one "
+                    + "decoder for every controller and source uses at least 2^d plus the "
+                    + "number of prefixes whose earliest time plus one period meets D. "
+                    + "The explicit time tag records the prefix and delay parity, and one "
+                    + "decoder combines it with the original uncorrected raw final bit. "
+                    + "Its actual label image has exactly that cardinality. This proves "
+                    + "the deadline-family operational part of source section 9.2; the "
+                    + "closed-form slack staircase remains separate."))),
                 DescribeRole.Theorem))));
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Par(Formula body) => Seq(Left, Open, body, Right, Close);
     private static Formula All(string name, Formula domain, Formula body) =>
-        Seq(Forall, Sp, F.Id(name), Colon, Sp, domain, Comma, Sp, body);
+        Seq(Forall, Sp, F.Id(name), Colon, Sp, domain, Comma, Sp, Par(body));
     private static Formula Ex(string name, Formula domain, Formula body) =>
-        Seq(Exists, Sp, F.Id(name), Colon, Sp, domain, Comma, Sp, body);
-    private static Formula Imp(Formula a, Formula b) => Seq(Grp(a), Sp, Implies, Sp, Grp(b));
+        Seq(Exists, Sp, F.Id(name), Colon, Sp, domain, Comma, Sp, Par(body));
+    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
-    private static Formula Conj(Formula a, Formula b) => Seq(Grp(a), Sp, Land, Sp, Grp(b));
+    private static Formula Conj(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
     private static Formula Term() => Call("N", F.Id("p"), Seq(D(2), Sp, Times, Sp, F.Id("t"), Sp, Plus, Sp, F.Id("u")));
     private static Formula Expected() => Seq(Call("E", F.Id("t")), Sp, Plus, Sp,
         F.Id("P"), Sp, Times, Sp, Call("K", F.Id("t")));
@@ -143,7 +162,7 @@ internal sealed class DyadicPrefixDelayRangeDocument : IScribeDocumentDefinition
         var reachable = Ex("p", Call("Protocol", Seq(d, Sp, Plus, Sp, D(1))),
             Conj(family, Eqn(Call("N", p, source), time)));
         var range = All("t", N(), All("u", N(), All("k", N(), Imp(ValidPair(),
-            Seq(Grp(reachable), Sp, Iff, Sp, Grp(Seq(time, Sp, Le, Sp, deadline)))))));
+            Seq(Par(reachable), Sp, Iff, Sp, Par(Seq(time, Sp, Le, Sp, deadline)))))));
         var even = Seq(D(2), Sp, Times, Sp, t);
         var odd = Seq(even, Sp, Plus, Sp, D(1));
         var shifted = Eqn(Call("N", p1, odd), Seq(Call("N", p0, even), Sp, Plus, Sp, period));
@@ -158,5 +177,39 @@ internal sealed class DyadicPrefixDelayRangeDocument : IScribeDocumentDefinition
             Conj(Imp(Seq(wait, Sp, Le, Sp, deadline), range),
                 Imp(Seq(wait, Sp, Le, Sp, deadline), eligible)));
         return Disp(All("d", N(), All("b", Call("Fin", D(2)), All("D", N(), body))));
+    }
+
+    private static Formula CapacityStatement()
+    {
+        var d = F.Id("d"); var b = F.Id("b"); var deadline = F.Id("D");
+        var baseCount = Call("pow", D(2), d);
+        var count = Seq(baseCount, Sp, Plus, Sp,
+            Call("card", Call("eligiblePrefixes", d, deadline)));
+        var family = Call("deadlineFamily", d, b, deadline);
+        var labels = Call("familyClockLabels", d, b, deadline, F.Id("phi"));
+        var uniform = UniformDecoder(d, family, F.Id("phi"), F.Id("recover"));
+        var lower = All("Z", F.Id("Type"), All("phi", Seq(N(), Sp, To, Sp, F.Id("Z")),
+            All("recover", F.Id("ZToFin2ToNat"), Imp(uniform,
+                Seq(count, Sp, Le, Sp, Call("card", labels))))));
+        var upper = Conj(
+            UniformDecoder(d, family, Call("clockTag", d), Call("tagDecode", d, b)),
+            Eqn(Call("card", Call("familyClockLabels", d, b, deadline,
+                Call("clockTag", d))), count));
+        return Disp(All("d", N(), All("b", Call("Fin", D(2)), All("D", N(),
+            Conj(Imp(Seq(deadline, Sp, Lt, Sp, Call("sharpWait", Seq(d, Sp, Plus, Sp, D(1)))),
+                    Call("empty", family)),
+                Imp(Seq(Call("sharpWait", Seq(d, Sp, Plus, Sp, D(1))), Sp, Le, Sp,
+                    deadline), Conj(lower, upper)))))));
+    }
+
+    private static Formula UniformDecoder(Formula d, Formula family, Formula encoder, Formula decoder)
+    {
+        var p = F.Id("p"); var r = F.Id("r");
+        var depth = Seq(d, Sp, Plus, Sp, D(1));
+        var recovered = Call("apply", decoder, Call("apply", encoder, Call("N", p, r)),
+            Call("Y", p, r));
+        return All("p", Call("Protocol", depth), Imp(Call("member", p, family),
+            All("r", N(), Imp(Seq(r, Sp, Lt, Sp, Call("pow", D(2), depth)),
+                Eqn(recovered, r)))));
     }
 }

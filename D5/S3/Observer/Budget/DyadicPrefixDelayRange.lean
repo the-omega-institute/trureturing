@@ -403,10 +403,378 @@ theorem deadline_prefix_time_range_and_collision (d : Nat) (b : Fin 2) (D : Nat)
     rw [hbit₀, hbit₁, hcycle]
     omega
 
+/-- The delay parity is measured relative to the earliest time of the prefix. -/
+def earliestTime (d t : Nat) : Nat :=
+  2 ^ (d + 1) - 1 + 2 ^ (d + 1) * t.bitIndices.length - 2 * t
+
+def clockTag (d n : Nat) : Fin (2 ^ d) × Fin 2 :=
+  let P := 2 ^ (d + 1)
+  let t := ((P - 1 - n % P) / 2) % (2 ^ d)
+  (⟨t, Nat.mod_lt _ (Nat.two_pow_pos d)⟩,
+   ⟨((n - earliestTime d t) / P) % 2, Nat.mod_lt _ (by decide)⟩)
+
+/-- Count only labels of times reached by an actual deadline-family controller. -/
+noncomputable def realizedTimes (d : Nat) (b : Fin 2) (D : Nat) :
+    Finset Nat := by
+  classical
+  exact (Finset.range (D + 1)).filter (fun n =>
+    ∃ p : Protocol (d + 1), deadlineFamily d b D p ∧
+      ∃ r : Fin (2 ^ (d + 1)), terminalTime (2 ^ (d + 1)) b p r.val = n)
+
+noncomputable def familyClockLabels {Z : Type*} (d : Nat) (b : Fin 2)
+    (D : Nat) (phi : Nat → Z) : Finset Z := by
+  classical
+  exact (realizedTimes d b D).image phi
+
+def eligiblePrefixes (d D : Nat) : Finset (Fin (2 ^ d)) :=
+  Finset.univ.filter (fun t => earliestTime d t.val + 2 ^ (d + 1) ≤ D)
+
+private def requiredTags (d D : Nat) : Finset (Fin (2 ^ d) × Fin 2) :=
+  (Finset.univ.image (fun t : Fin (2 ^ d) => (t, 0))) ∪
+    ((eligiblePrefixes d D).image (fun t => (t, 1)))
+
+def tagDecode (d : Nat) (b : Fin 2)
+    (z : Fin (2 ^ d) × Fin 2) (y : Fin 2) : Nat :=
+  2 * z.1.val +
+    (y.val + b.val + earliestTime d z.1.val / 2 ^ (d + 1) + z.2.val) % 2
+
+/-- The operational minimum counts labels actually used by a universal
+time-only encoder. The same decoder receives the uncorrected raw final bit for
+every controller in the deadline family. -/
+theorem deadline_family_operational_capacity (d : Nat) (b : Fin 2) (D : Nat) :
+    (D < sharpWait (d + 1) →
+      ¬ ∃ p : Protocol (d + 1), deadlineFamily d b D p) ∧
+    (sharpWait (d + 1) ≤ D →
+      (∀ (Z : Type*) (phi : Nat → Z) (recover : Z → Fin 2 → Nat),
+        (∀ p : Protocol (d + 1), deadlineFamily d b D p →
+          ∀ r, r < 2 ^ (d + 1) →
+            recover (phi (terminalTime (2 ^ (d + 1)) b p r))
+              (terminalRecord (2 ^ (d + 1)) b p r).2 = r) →
+        2 ^ d + (eligiblePrefixes d D).card ≤
+          (familyClockLabels d b D phi).card) ∧
+      (∀ p : Protocol (d + 1), deadlineFamily d b D p →
+        ∀ r, r < 2 ^ (d + 1) →
+          tagDecode d b (clockTag d (terminalTime (2 ^ (d + 1)) b p r))
+            (terminalRecord (2 ^ (d + 1)) b p r).2 = r) ∧
+      (familyClockLabels d b D (clockTag d)).card =
+        2 ^ d + (eligiblePrefixes d D).card) := by
+  classical
+  refine ⟨(deadline_prefix_time_range_and_collision d b D).1.1, ?_⟩
+  intro hD
+  have clockTag_actual
+      (p : Protocol (d + 1))
+      (hc : CorrectOn (rawBit (2 ^ (d + 1)) b) p 0 0 (2 ^ (d + 1)))
+      (t k : Nat) (ht : t < 2 ^ d)
+      (hn : terminalTime (2 ^ (d + 1)) b p (2 * t) =
+        earliestTime d t + 2 ^ (d + 1) * k) :
+      clockTag d (terminalTime (2 ^ (d + 1)) b p (2 * t)) =
+        (⟨t, ht⟩, ⟨k % 2, Nat.mod_lt _ (by decide)⟩) := by
+    let P := 2 ^ (d + 1)
+    have hp : P = 2 * 2 ^ d := by dsimp [P]; rw [pow_succ]; omega
+    have hphase :=
+      (terminal_pair_fiber_bijection_and_clock_injectivity d b p hc).1 t ht |>.2.1
+    change terminalTime P b p (2 * t) % P = P - 1 - 2 * t at hphase
+    have hpre : (P - 1 - (terminalTime P b p (2 * t)) % P) / 2 = t := by
+      rw [hphase]
+      omega
+    have hprefix : ((P - 1 - (terminalTime P b p (2 * t)) % P) / 2) %
+        (2 ^ d) = t := by rw [hpre, Nat.mod_eq_of_lt ht]
+    have hdelay : ((terminalTime P b p (2 * t) - earliestTime d t) / P) % 2 =
+        k % 2 := by
+      rw [hn]
+      change ((earliestTime d t + P * k - earliestTime d t) / P) % 2 = k % 2
+      rw [Nat.add_sub_cancel_left]
+      exact congrArg (· % 2) (Nat.mul_div_cancel_left k (Nat.two_pow_pos (d + 1)))
+    apply Prod.ext
+    · apply Fin.ext
+      exact hprefix
+    · apply Fin.ext
+      simpa only [clockTag, P, hprefix] using hdelay
+  have requiredTags_card :
+      (requiredTags d D).card = 2 ^ d + (eligiblePrefixes d D).card := by
+    classical
+    unfold requiredTags
+    rw [Finset.card_union_of_disjoint]
+    · rw [Finset.card_image_of_injective, Finset.card_image_of_injective]
+      · simp
+      · intro x y h
+        exact Prod.mk.inj h |>.1
+      · intro x y h
+        exact Prod.mk.inj h |>.1
+    · apply Finset.disjoint_left.mpr
+      intro z hz hw
+      obtain ⟨t, _, rfl⟩ := Finset.mem_image.mp hz
+      obtain ⟨s, _, h⟩ := Finset.mem_image.mp hw
+      exact Fin.zero_ne_one (congrArg Prod.snd h.symm)
+  have realizedTags_eq_required :
+      (realizedTimes d b D).image (clockTag d) = requiredTags d D := by
+    classical
+    let P := 2 ^ (d + 1)
+    have hP : P = 2 * 2 ^ d := by dsimp [P]; rw [pow_succ]; omega
+    have range := (deadline_prefix_time_range_and_collision d b D).1.2 hD
+    have earlyBound (t : Nat) (ht : t < 2 ^ d) : earliestTime d t ≤ D := by
+      have h := (dyadic_forward_waiting_optimality (d + 1) b).2.2.2 (2 * t)
+        (by dsimp [P] at hP ⊢; omega)
+      have he := (earliest_midpoint_terminal_time d b t 0 ht (by decide)).1
+      change terminalTime P b (rawMidpoint P b (d + 1)) (2 * t) =
+        earliestTime d t at he
+      change terminalTime P b (rawMidpoint P b (d + 1)) (2 * t) ≤
+        sharpWait (d + 1) at h
+      rw [he] at h
+      exact h.trans hD
+    ext z
+    constructor
+    · intro hz
+      obtain ⟨n, hn, rfl⟩ := Finset.mem_image.mp hz
+      obtain ⟨hbound, p, ⟨hc, hd⟩, r, htime⟩ := by
+        simpa only [realizedTimes, Finset.mem_filter, Finset.mem_range] using hn
+      let t := r.val / 2
+      let u := r.val % 2
+      have ht : t < 2 ^ d := by dsimp [t]; have := r.isLt; omega
+      have hu : u < 2 := Nat.mod_lt _ (by decide)
+      have hr : 2 * t + u = r.val := by dsimp [t, u]; omega
+      obtain ⟨k, hk⟩ := arbitrary_protocol_prefix_time d b p hc t u ht hu
+      change terminalTime P b p (2 * t + u) = earliestTime d t + P * k at hk
+      have siblings := (terminal_pair_fiber_bijection_and_clock_injectivity d b p hc).1 t ht |>.1
+      have hn' : terminalTime P b p (2 * t) = earliestTime d t + P * k := by
+        rcases (show u = 0 ∨ u = 1 by omega) with h | h
+        · simpa only [h, Nat.add_zero] using hk
+        · have hk1 : terminalTime P b p (2 * t + 1) = earliestTime d t + P * k := by
+            simpa only [h] using hk
+          exact siblings.trans hk1
+      have htag := clockTag_actual p hc t k ht hn'
+      have hclock : clockTag d n =
+          (⟨t, ht⟩, ⟨k % 2, Nat.mod_lt _ (by decide)⟩) := by
+        rw [← htime, ← hr]
+        rcases (show u = 0 ∨ u = 1 by omega) with h | h
+        · simpa only [h, Nat.add_zero] using htag
+        · simpa only [h, ← siblings] using htag
+      rw [hclock]
+      rcases (show k % 2 = 0 ∨ k % 2 = 1 by omega) with hk0 | hk1
+      · apply Finset.mem_union_left
+        apply Finset.mem_image.mpr
+        exact ⟨⟨t, ht⟩, Finset.mem_univ _, by simp [hk0]⟩
+      · have hkpos : 1 ≤ k := by omega
+        have hmul : P ≤ P * k := by
+          simpa only [mul_one] using Nat.mul_le_mul_left P hkpos
+        have helig : earliestTime d t + P ≤ D := by
+          have := hd r.val r.isLt
+          rw [← hr, hk] at this
+          omega
+        apply Finset.mem_union_right
+        apply Finset.mem_image.mpr
+        exact ⟨⟨t, ht⟩, Finset.mem_filter.mpr ⟨Finset.mem_univ _, helig⟩,
+          by simp [hk1]⟩
+    · intro hz
+      rcases Finset.mem_union.mp hz with hz | hz
+      · obtain ⟨t, _, rfl⟩ := Finset.mem_image.mp hz
+        have he := earlyBound t.val t.isLt
+        obtain ⟨p, hp, htime⟩ :=
+          (range t.val 0 0 t.isLt (by decide)).2 (by simpa [earliestTime, P] using he)
+        have hn : earliestTime d t.val ∈ realizedTimes d b D := by
+          apply Finset.mem_filter.mpr
+          refine ⟨Finset.mem_range.mpr (by omega), p, hp,
+            ⟨2 * t.val, by have := t.isLt; omega⟩, ?_⟩
+          simpa [earliestTime, P] using htime
+        apply Finset.mem_image.mpr
+        refine ⟨earliestTime d t.val, hn, ?_⟩
+        have htag := clockTag_actual p hp.1 t.val 0 t.isLt (by
+          simpa [earliestTime, P] using htime)
+        rw [show terminalTime P b p (2 * t.val) = earliestTime d t.val by
+          simpa [earliestTime, P] using htime] at htag
+        simpa using htag
+      · obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp hz
+        have helig := (Finset.mem_filter.mp ht).2
+        obtain ⟨p, hp, htime⟩ :=
+          (range t.val 0 1 t.isLt (by decide)).2 (by simpa [earliestTime, P] using helig)
+        have hn : earliestTime d t.val + P ∈ realizedTimes d b D := by
+          apply Finset.mem_filter.mpr
+          refine ⟨Finset.mem_range.mpr (by omega), p, hp,
+            ⟨2 * t.val, by have := t.isLt; omega⟩, ?_⟩
+          simpa [earliestTime, P] using htime
+        apply Finset.mem_image.mpr
+        refine ⟨earliestTime d t.val + P, hn, ?_⟩
+        have htag := clockTag_actual p hp.1 t.val 1 t.isLt (by
+          simpa [earliestTime, P] using htime)
+        rw [show terminalTime P b p (2 * t.val) = earliestTime d t.val + P by
+          simpa [earliestTime, P] using htime] at htag
+        simpa [Nat.one_mod] using htag
+  have clockTag_common_decoder
+      (p : Protocol (d + 1))
+      (hc : CorrectOn (rawBit (2 ^ (d + 1)) b) p 0 0 (2 ^ (d + 1)))
+      (r : Nat) (hr : r < 2 ^ (d + 1)) :
+      tagDecode d b (clockTag d (terminalTime (2 ^ (d + 1)) b p r))
+        (terminalRecord (2 ^ (d + 1)) b p r).2 = r := by
+    let P := 2 ^ (d + 1)
+    let t := r / 2
+    let u := r % 2
+    have ht : t < 2 ^ d := by
+      dsimp [t, P] at *
+      omega
+    have hu : u < 2 := Nat.mod_lt _ (by decide)
+    have hsplit : 2 * t + u = r := by dsimp [t, u]; omega
+    obtain ⟨k, hk⟩ := arbitrary_protocol_prefix_time d b p hc t u ht hu
+    change terminalTime P b p (2 * t + u) = earliestTime d t + P * k at hk
+    have pair := (terminal_pair_fiber_bijection_and_clock_injectivity d b p hc).1 t ht
+    have htime : terminalTime P b p (2 * t) = earliestTime d t + P * k := by
+      rcases (show u = 0 ∨ u = 1 by omega) with h | h
+      · simpa only [h, Nat.add_zero] using hk
+      · have hk1 : terminalTime P b p (2 * t + 1) = earliestTime d t + P * k := by
+          simpa only [h] using hk
+        exact pair.1.trans hk1
+    have htag := clockTag_actual p hc t k ht htime
+    have hactual : clockTag d (terminalTime P b p r) =
+        (⟨t, ht⟩, ⟨k % 2, Nat.mod_lt _ (by decide)⟩) := by
+      rw [← hsplit]
+      rcases (show u = 0 ∨ u = 1 by omega) with h | h
+      · simpa only [h, Nat.add_zero] using htag
+      · rw [h, ← pair.1]
+        exact htag
+    have hcycle : cycleCount P b p t = earliestTime d t / P + k := by
+      change terminalTime P b p (2 * t) / P = _
+      rw [htime]
+      exact Nat.add_mul_div_left (earliestTime d t) k (Nat.two_pow_pos (d + 1))
+    have hbit := pair.2.2 u hu
+    change (terminalRecord P b p (2 * t + u)).2.val =
+      (b.val + cycleCount P b p t + u) % 2 at hbit
+    rw [hsplit] at hbit
+    rw [hactual]
+    change 2 * t +
+      ((terminalRecord P b p r).2.val + b.val + earliestTime d t / P + k % 2) % 2 = r
+    rw [hbit, hcycle]
+    have hb := b.isLt
+    omega
+  have htags := realizedTags_eq_required
+  have hcard := requiredTags_card
+  refine ⟨?_, ?_, ?_⟩
+  · intro Z phi recover hrec
+    have common_decoder_separates_tags
+        {n m : Nat} (hn : n ∈ realizedTimes d b D)
+        (hm : m ∈ realizedTimes d b D) (hphi : phi n = phi m) :
+        clockTag d n = clockTag d m := by
+      let P := 2 ^ (d + 1)
+      have hp : P = 2 * 2 ^ d := by dsimp [P]; rw [pow_succ]; omega
+      obtain ⟨_, p, hfamily, r, hrn⟩ := by
+        simpa only [realizedTimes, Finset.mem_filter, Finset.mem_range] using hn
+      obtain ⟨_, q, gfamily, s, hsm⟩ := by
+        simpa only [realizedTimes, Finset.mem_filter, Finset.mem_range] using hm
+      let t := r.val / 2
+      let v := s.val / 2
+      have ht : t < 2 ^ d := by dsimp [t]; have := r.isLt; omega
+      have hv : v < 2 ^ d := by dsimp [v]; have := s.isLt; omega
+      have pairp :=
+        (terminal_pair_fiber_bijection_and_clock_injectivity d b p hfamily.1).1 t ht
+      have pairq :=
+        (terminal_pair_fiber_bijection_and_clock_injectivity d b q gfamily.1).1 v hv
+      have timep : terminalTime P b p (2 * t) = n := by
+        have hu : r.val % 2 = 0 ∨ r.val % 2 = 1 := by omega
+        rcases hu with hu | hu
+        · have he : 2 * t = r.val := by dsimp [t]; omega
+          rw [he]
+          exact hrn
+        · have he : 2 * t + 1 = r.val := by dsimp [t]; omega
+          rw [pairp.1, he]
+          exact hrn
+      have timeq : terminalTime P b q (2 * v) = m := by
+        have hu : s.val % 2 = 0 ∨ s.val % 2 = 1 := by omega
+        rcases hu with hu | hu
+        · have he : 2 * v = s.val := by dsimp [v]; omega
+          rw [he]
+          exact hsm
+        · have he : 2 * v + 1 = s.val := by dsimp [v]; omega
+          rw [pairq.1, he]
+          exact hsm
+      let u := (b.val + cycleCount P b p t) % 2
+      let w := (b.val + cycleCount P b q v) % 2
+      have hu : u < 2 := Nat.mod_lt _ (by decide)
+      have hw : w < 2 := Nat.mod_lt _ (by decide)
+      have zeroP : (terminalRecord P b p (2 * t + u)).2 = 0 := by
+        apply Fin.ext
+        have hbit : (terminalRecord P b p (2 * t + u)).2.val =
+            (b.val + cycleCount P b p t + u) % 2 := pairp.2.2 u hu
+        rw [hbit]
+        dsimp [u]
+        omega
+      have zeroQ : (terminalRecord P b q (2 * v + w)).2 = 0 := by
+        apply Fin.ext
+        have hbit : (terminalRecord P b q (2 * v + w)).2.val =
+            (b.val + cycleCount P b q v + w) % 2 := pairq.2.2 w hw
+        rw [hbit]
+        dsimp [w]
+        omega
+      have sourceEq : 2 * t + u = 2 * v + w := by
+        have hfirst := hrec p hfamily (2 * t + u) (by have := r.isLt; dsimp [t]; omega)
+        have hsecond := hrec q gfamily (2 * v + w) (by have := s.isLt; dsimp [v]; omega)
+        have htp : terminalTime P b p (2 * t + u) = n := by
+          rcases (show u = 0 ∨ u = 1 by omega) with h | h
+          · rw [h]; simpa only [Nat.add_zero] using timep
+          · rw [h, ← pairp.1]; exact timep
+        have htq : terminalTime P b q (2 * v + w) = m := by
+          rcases (show w = 0 ∨ w = 1 by omega) with h | h
+          · rw [h]; simpa only [Nat.add_zero] using timeq
+          · rw [h, ← pairq.1]; exact timeq
+        rw [htp, zeroP] at hfirst
+        rw [htq, zeroQ] at hsecond
+        rw [hphi, hsecond] at hfirst
+        exact hfirst.symm
+      have tv : t = v := by omega
+      have uw : u = w := by omega
+      obtain ⟨k, hk⟩ := arbitrary_protocol_prefix_time d b p hfamily.1 t 0 ht (by decide)
+      obtain ⟨l, hl⟩ := arbitrary_protocol_prefix_time d b q gfamily.1 v 0 hv (by decide)
+      change terminalTime P b p (2 * t) = earliestTime d t + P * k at hk
+      change terminalTime P b q (2 * v) = earliestTime d v + P * l at hl
+      have tagp := clockTag_actual p hfamily.1 t k ht hk
+      have tagq := clockTag_actual q gfamily.1 v l hv hl
+      rw [timep] at tagp
+      rw [timeq] at tagq
+      have cyclesp : cycleCount P b p t = earliestTime d t / P + k := by
+        change terminalTime P b p (2 * t) / P = _
+        rw [hk]
+        exact Nat.add_mul_div_left (earliestTime d t) k (Nat.two_pow_pos (d + 1))
+      have cyclesq : cycleCount P b q v = earliestTime d v / P + l := by
+        change terminalTime P b q (2 * v) / P = _
+        rw [hl]
+        exact Nat.add_mul_div_left (earliestTime d v) l (Nat.two_pow_pos (d + 1))
+      have kl : k % 2 = l % 2 := by
+        dsimp [u, w] at uw
+        rw [cyclesp, cyclesq, ← tv] at uw
+        omega
+      rw [tagp, tagq]
+      exact Prod.ext (Fin.ext tv) (Fin.ext kl)
+    let labels := familyClockLabels d b D phi
+    have chooseTime (z : Z) (hz : z ∈ labels) :
+        ∃ n ∈ realizedTimes d b D, phi n = z := by
+      simpa only [labels, familyClockLabels] using Finset.mem_image.mp hz
+    let pick (z : Z) : Nat :=
+      if hz : z ∈ labels then Classical.choose (chooseTime z hz) else 0
+    have pick_mem (z : Z) (hz : z ∈ labels) : pick z ∈ realizedTimes d b D := by
+      simpa only [pick, dif_pos hz] using (Classical.choose_spec (chooseTime z hz)).1
+    have pick_phi (z : Z) (hz : z ∈ labels) : phi (pick z) = z := by
+      simpa only [pick, dif_pos hz] using (Classical.choose_spec (chooseTime z hz)).2
+    let toTag : Z → Fin (2 ^ d) × Fin 2 := fun z => clockTag d (pick z)
+    have surj : Set.SurjOn toTag labels ((realizedTimes d b D).image (clockTag d)) := by
+      intro tag htag
+      obtain ⟨n, hn, rfl⟩ := Finset.mem_image.mp htag
+      have hz : phi n ∈ labels := Finset.mem_image.mpr ⟨n, hn, rfl⟩
+      refine ⟨phi n, hz, ?_⟩
+      exact common_decoder_separates_tags
+        (pick_mem (phi n) hz) hn (pick_phi (phi n) hz)
+    have bound := Finset.card_le_card_of_surjOn toTag surj
+    rw [htags, hcard] at bound
+    exact bound
+  · intro p hp r hr
+    exact clockTag_common_decoder p hp.1 r hr
+  · have hlabels : familyClockLabels d b D (clockTag d) = requiredTags d D := by
+      ext z
+      simpa only [familyClockLabels, Finset.mem_image] using
+        (Finset.ext_iff.mp htags z)
+    exact (congrArg (fun s : Finset (Fin (2 ^ d) × Fin 2) => s.card) hlabels).trans hcard
+
 #print axioms midpoint_time_le_protocol
 #print axioms delayed_midpoint_execute
 #print axioms arbitrary_prefix_delay_table
 #print axioms arbitrary_protocol_prefix_time
 #print axioms deadline_prefix_time_range_and_collision
+#print axioms deadline_family_operational_capacity
 
 end D5.S3.Observer.Budget.DyadicPrefixDelayRange
