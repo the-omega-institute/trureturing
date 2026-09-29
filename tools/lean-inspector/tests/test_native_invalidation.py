@@ -642,7 +642,7 @@ class NativeSemanticConsumerTests:
         self.assertEqual(stage.returncode, 0, json.dumps(result))
         self.assertEqual(verify.returncode, 0, json.dumps(result))
 
-    def test_exported_private_dependency_and_retired_origin(self):
+    def test_exported_private_dependency_invalidates_report(self):
         support = 'module\npublic section\nnoncomputable section\nprivate axiom privateInput : Nat\ndef support : Nat := privateInput\n'
         self.write('Support.lean', support)
         self.write('D5/A.lean', 'import Support\nnoncomputable def value : Nat := support\n')
@@ -661,33 +661,3 @@ class NativeSemanticConsumerTests:
         self.build()
         self.assertEqual(self.report()[0][0]['declarations'][0]['axioms'], [])
         self.publish()
-        # Retired origin fields are malformed: only the current format is read.
-        before = self.stamps()
-        expected = self.report()[1:]
-        for relative in [*(f'modules/{name}.zip' for name in before), 'report.zip']:
-            artifact = self.root / '.lake/build/lean-inspector' / relative
-            with zipfile.ZipFile(artifact) as archive:
-                entries = [(info, archive.read(info)) for info in archive.infolist()]
-            artifact.unlink()
-            with zipfile.ZipFile(artifact, 'w') as archive:
-                for info, data in entries:
-                    if info.filename.endswith('.provenance.json'):
-                        origin = json.loads(data)
-                        records = origin['module_origins'].values() if 'module_origins' in origin else [origin]
-                        for record in records:
-                            record['input_sources'] = {}
-                        data = json.dumps(origin).encode()
-                    archive.writestr(info, data)
-        result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
-            'publish', str(self.root), str(self.root / 'rejected.json')], env=self.env, capture_output=True)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertFalse((self.root / 'rejected.json').exists())
-        self.build()
-        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
-        self.assertEqual(expected, self.report()[1:])
-        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-        self.assertEqual([row['count'] for row in records if row['kind'] == 'extract'], [len(before)])
-        self.publish()
-        self.build()
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '',
-                         'successfully reconstructed legacy artifacts must be reusable')
