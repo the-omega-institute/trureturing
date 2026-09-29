@@ -14837,3 +14837,133 @@ $$
 五窗细化可以在同一来源合同内揭示粗观察合并的隐藏类别；局部四相的范数保持既不给随尺度增长的新素轴估计，也不给实际 Möbius 函数的带符号抵消界，§§146–148 的全称缺口仍在。
 
 ## 追加锚（本行以下为增补区）
+
+## 150. 共轭收缩坐标上的五窗仿射递归固定点
+
+本节把五窗递归放到黄金共轭的收缩坐标中。
+令
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\psi=-\phi^{-1},\qquad
+\lambda=\psi^3,qquad |\lambda|<1.
+$$
+
+对五个窗口取组成向量
+
+$$
+d_{\mathrm{null}}=(0,0),\quad d_2=(1,0),\quad d_3=(0,1),\quad
+d_{25}=(2,1),\quad d_5=(1,1).
+$$
+
+写 $\sigma_-(a,b)=a+b\psi$，并置 $\delta_\sigma=\sigma_-(d_\sigma)$。
+按上述顺序，五个共轭坐标为
+
+$$
+0,\quad 1,\quad \psi,\quad 2+\psi,\quad 1+\psi=\psi^2.
+$$
+
+相应的仿射分支为
+
+$$
+f_\sigma(y)=\delta_\sigma+\lambda y.
+$$
+
+因 $\sigma_-(M^3x)=\psi^3\sigma_-(x)$，$f_\sigma$ 正是 §149 的三步递归在共轭坐标下的分支。
+本节路径地址按低窗到高窗读取；§149 对有限地址作从高窗到低窗的 Horner 求值，二者方向相反。
+状态 $0$ 表示 incoming seam 未被占用，状态 $1$ 表示低位侧 incoming seam 已占用。
+采用 incoming occupied seam rule 时，状态 $1$ 的当前窗首位必须为零；边从当前输入状态指向当前窗最高位决定的输出状态。
+在这个低到高约定下，有向两状态图的方程为
+
+$$
+\begin{aligned}
+K_0={}&f_{\mathrm{null}}(K_0)\cup f_2(K_0)\cup f_3(K_0)
+       \cup f_{25}(K_1)\cup f_5(K_1),\\
+K_1={}&f_{\mathrm{null}}(K_0)\cup f_3(K_0)\cup f_5(K_1).
+\end{aligned}
+$$
+
+因此，从 $0$ 出发的 $25$、$5$ 分支进入 $1$，而从 $1$ 出发的
+$\mathrm{null}$、$3$ 分支回到 $0$，$5$ 分支留在 $1$。
+若改用高窗到低窗的扫描，必须相应反向或重标图；不能在未声明约定时混用这两种方向。
+这些并集只表达允许的分支，不能声称各子集彼此不交；重叠是允许的。
+
+**命题 150.1（图有向 Hutchinson 算子的唯一紧集对）。**
+令 $\mathscr K(\mathbb R)$ 为非空紧子集空间，$H$ 为最大 Hausdorff 距离，
+并在 $\mathscr K(\mathbb R)^2$ 上置
+
+$$
+d_\infty((A_0,A_1),(B_0,B_1))=\max\{H(A_0,B_0),H(A_1,B_1)\}.
+$$
+
+右端两式定义算子 $\mathcal T(A_0,A_1)=(\mathcal T_0,\mathcal T_1)$。
+每个 $f_\sigma$ 都是比率 $|\lambda|$ 的仿射压缩，故
+
+$$
+H(f_\sigma(A),f_\sigma(B))=|\lambda|H(A,B).
+$$
+
+对相同标签的有限并，有
+
+$$
+H\!\left(\bigcup_j A_j,\bigcup_j B_j\right)
+\le\max_j H(A_j,B_j).
+$$
+
+逐行应用这个不等式，得到
+
+$$
+d_\infty(\mathcal T A,\mathcal T B)
+\le |\lambda|d_\infty(A,B).
+$$
+
+非空紧子集的 Hausdorff 空间在 $\mathbb R$ 完备时完备，最大度量的有限乘积仍完备。
+由于 $|\lambda|<1$，Banach 不动点定理给出唯一的非空紧集对 $(K_0,K_1)$。
+这是合法无限路径的完成，而非一个额外的整数对象。
+
+令 $\Omega_s$ 为从状态 $s$ 出发的所有合法无限标记路径，取有限字母积的乘积拓扑。
+若路径为 $(\sigma_0,\sigma_1,\ldots)$，则其编码为
+
+$$
+\kappa_s(\sigma_0,\sigma_1,\ldots)
+=\lim_{N\to\infty}f_{\sigma_0}\circ\cdots\circ f_{\sigma_{N-1}}(0)
+=\sum_{n\ge0}\lambda^n\delta_{\sigma_n}.
+$$
+
+收缩性使该级数一致收敛，故 $\kappa_s$ 连续；标准的逐层逼近给出
+$K_s=\kappa_s(\Omega_s)$。
+每个有限 Zeckendorf 地址都可在末尾接上无限个 $\mathrm{null}$，成为 eventually-null path。
+因为两个状态都存在通向状态 $0$ 的 $\mathrm{null}$ 边，eventually-null paths 在 $\Omega_s$ 中稠密。
+连续编码遂使这些路径的像在各 $K_s$（亦即 $K=K_0\cup K_1$）中稠密。
+这里不把所有无限路径等同于普通自然数；自然数地址只是其中的 eventually-null 子族。
+
+**命题 150.2（四相表示闭包）。** 在 $\mathbb C$ 中定义
+
+$$
+\widehat K_s=\bigcup_{k=0}^{3}i^kK_s,\qquad s\in\{0,1\}.
+$$
+
+因为 $K_s\subset\mathbb R$，有 $i\widehat K_s=\widehat K_s$，且普通复共轭也保持
+$\widehat K_s$：$\overline{i^kx}=i^{4-k}x$。
+这只是表示闭包，把实共轭坐标的四相放进复平面。
+组成坐标中的 $J$ 并不自动等于复数的普通共轭；若要声称 $J$ 对称，必须另外给出运输后的标签作用及其保持定理。
+
+另有一条离散的逆极限表述。
+令 $B_r$ 为有限边界或分辨率对象，$\pi_r:B_{r+1}\to B_r$ 为键合映射，
+并令 $g_r:B_r\to B_r$ 满足
+
+$$
+\pi_r\,g_{r+1}=g_r\,\pi_r.
+$$
+
+在 $\Omega=\varprojlim B_r$ 上定义
+$g_\infty((b_r)_r)=(g_r(b_r))_r$，则相容性保证它落在逆极限中。
+若每个 $g_r$ 都是双射，逐坐标取逆即得 $g_\infty$ 为双射。
+这个逆极限兼容性是有限对象作用的极限陈述，不能与上面的紧集 IFS 不动点混为同一构造。
+
+对 Robin 问题，本固定点只证明递归自相似与闭包。
+它没有给出 $Z(H)$ 的统一上界，没有给出带符号 Möbius 抵消，也没有给出 zeta 零点谱。
+有用的下一座桥需要一个算术 observable 或 probe，并且要证明共轭编码或四相作用保持、截断其误差，
+再配合随 growing-prime 尺度统一有效的估计；当前固定点本身不承担这些算术结论。
+
+## 追加锚（本行以下为增补区）
