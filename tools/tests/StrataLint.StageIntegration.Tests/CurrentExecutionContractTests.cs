@@ -7,6 +7,30 @@ namespace StrataLint.StageIntegration.Tests;
 
 public sealed partial class CurrentExecutionContractTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PreparationRunsOnceOnlyWhenSeedReuseLeavesExecution(bool changed)
+    {
+        using var fixture = new ExecutionFixture();
+        Execute(fixture);
+        Seed(fixture);
+        if (changed) TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, ExecutionFixture.First), "\n");
+        fixture.Build();
+        var preparations = 0;
+        var calls = new List<string>();
+        var exit = Program.RunCurrentTests(fixture.Root, (project, results) =>
+        {
+            Assert.Equal(1, preparations);
+            calls.Add(project);
+            fixture.WriteTrx(results, "Passed");
+            return 0;
+        }, TextWriter.Null, prepare: () => { ++preparations; return 0; });
+        Assert.Equal(0, exit);
+        Assert.Equal(changed ? 1 : 0, preparations);
+        Assert.Equal(changed ? new[] { ExecutionFixture.First } : [], calls);
+    }
+
     [Fact]
     public void CompilerOutputIdentityMustMatchProjectRegistration()
     {

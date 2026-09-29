@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "verification_kind": "standard-library integer-interval arithmetic; not Lean verified",
+  "range": [
+    144,
+    121393
+  ],
+  "prime_count": 11425,
+  "prime_power_event_count": 11539,
+  "cell_count": 11493,
+  "gamma_interval": [
+    "0.5772156640681995281065120861",
+    "0.5772156690676995781015125861"
+  ],
+  "gamma_wire": [
+    "196416312392968227538126515003324085491",
+    "196416314094209937971775467424954972447"
+  ],
+  "minimum_total_lower_expression_interval": [
+    "0.0001387077093931118879802602466",
+    "0.0001387127088931618829807601966"
+  ],
+  "minimum_total_lower_expression_wire": [
+    "47199787662469802103666673284339201",
+    "47201488904180235752619094917580048"
+  ],
+  "minimum_total_cell": [
+    120539,
+    120551
+  ],
+  "minimum_total_cell_index": 11409,
+  "minimum_total_phi_interval": [
+    "5.119595078627906539628078711E-7",
+    "5.169590079127856544627578761E-7"
+  ],
+  "minimum_total_reserve_interval": [
+    "0.0001381957498852490973262974387",
+    "0.0001381957498852490973262974387"
+  ],
+  "minimum_barrier_gap_interval": [
+    "0.0001234545027142578218122253261",
+    "0.0001234595022143078168127252761"
+  ],
+  "minimum_barrier_gap_wire": [
+    "42009390390655073577574050037332343",
+    "42011091632365507226526471668231778"
+  ],
+  "minimum_barrier_cell": [
+    118973,
+    119027
+  ],
+  "minimum_phi_interval": [
+    "-0.002752867056397131149772107291",
+    "-0.002752862056897081154771607341"
+  ],
+  "minimum_phi_cell": [
+    144,
+    149
+  ],
+  "strict_target": "13/100000",
+  "strict_claimed_minimum": "1387077/10000000000",
+  "margin_above_target_lower": "0.000008707709393111887980260246554",
+  "failure_count": 0,
+  "direct_prefix_sum_audit_cells": 13,
+  "certificate_sha256": "fd94b9c1fea15063b572734d272f38ea59d383eb067d10ca3749df6ff328f3f0",
+  "compressed_certificate_sha256": "8e4d1072dc7e59e8afff3fdcd517c131b715265cff85aa6e550a22f4f5b6fc63",
+  "script_sha256": "3e3919c1bd52ac9a7342067dffe3d3805da3bd107ec09cd8a1c009061bcc7bfb",
+  "script_path": "finite_reserve.py",
+  "imported_engine_path": "price_band.py",
+  "imported_engine_sha256": "01fe08f39f0ffdabc98764807ba917351233de4d9aa2d6225b29a33936f59f02",
+  "limitations": [
+    "Log-series, gamma inequalities, calculus cell minimum, and the analytic Delta >= Phi+B bridge require mathematical justification outside this arithmetic executable.",
+    "This arithmetic certificate is not a Lean theorem.",
+    "Coverage is exactly x in [144,121393]; no statement outside this range is checked."
+  ]
+}

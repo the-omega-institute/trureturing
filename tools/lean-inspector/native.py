@@ -33,6 +33,9 @@ import publication as public
 
 selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
+# Each native invocation imports the batch's environment and joins its whole
+# registration universe; larger batches amortize that fixed cost. Each joined
+# occurrence has its own heartbeat budget, so batch size does not bound it.
 NATIVE_BATCH_MODULES = 100
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
@@ -246,22 +249,6 @@ def module(root, name, source, utility_path, executable, output):
         print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
 
 
-class TemplateJoinHeartbeatError(subprocess.CalledProcessError):
-    """Only the native template join exhausted its unchanged heartbeat budget."""
-
-
-def run_batch_inspector(command, root):
-    result = subprocess.run(command, cwd=root, stdout=subprocess.PIPE,
-                            stderr=subprocess.STDOUT, text=True)
-    print(result.stdout, end='', flush=True)
-    if result.returncode:
-        diagnostic = ('uncaught exception: information-template-join: (deterministic) timeout at '
-                      '`«template proof erasure»`, maximum number of heartbeats (200000) has been reached')
-        error = (TemplateJoinHeartbeatError if diagnostic in result.stdout.splitlines()
-                 else subprocess.CalledProcessError)
-        raise error(result.returncode, command, output=result.stdout)
-
-
 def produce_batch_chunk(requests):
     root = Path(requests[0][0])
     template_inputs = selection.Selection(root)
@@ -292,7 +279,7 @@ def produce_batch_chunk(requests):
         argument_file.write_text(json.dumps(arguments))
         capture = retain_request(root, executable, arguments, utilities, origin)
         with phase('native-inspect', request_capture=capture):
-            run_batch_inspector([executable, '--request-file', str(argument_file)], root)
+            subprocess.run([executable, '--request-file', str(argument_file)], cwd=root, check=True)
         raw = public.read_json((directory / 'spool.json').read_bytes())
         if [row['module'] for row in raw['modules']] != sorted(bindings):
             raise ValueError('incomplete native inspection batch')
@@ -332,22 +319,10 @@ def produce_batch(requests):
         raise ValueError('mixed native batch owners')
     if any(left[1] == right[1] for left, right in zip(requests, requests[1:])):
         raise ValueError('duplicate native batch module')
-    def inspect(chunk):
-        try:
-            produce_batch_chunk(chunk)
-        except TemplateJoinHeartbeatError:
-            if len(chunk) == 1:
-                raise
-            middle = len(chunk) // 2
-            print(f'LEAN_INSPECTOR_SPLIT modules={len(chunk)} reason=template-join-heartbeats',
-                  file=sys.stderr, flush=True)
-            inspect(chunk[:middle])
-            inspect(chunk[middle:])
-
-    # Amortize loading, but isolate a join that exhausts the native budget.
-    # Every successful row and the full aggregate retain their usual checks.
+    # Chunks bound per-process memory; Lake still validates every
+    # completed module facet and the full aggregate after these bounded calls.
     for start in range(0, len(requests), NATIVE_BATCH_MODULES):
-        inspect(requests[start:start + NATIVE_BATCH_MODULES])
+        produce_batch_chunk(requests[start:start + NATIVE_BATCH_MODULES])
 
 
 @phase('native-batch')

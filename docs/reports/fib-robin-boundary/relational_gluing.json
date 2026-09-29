@@ -1,0 +1,55 @@
+{
+  "5040_labelled_occurrences": {
+    "histories": 256,
+    "normal_seams": 60,
+    "weight_ratio": "1296/403"
+  },
+  "status": "PASS",
+  "seam_pairs_checked": 4096,
+  "cocycle_triples_checked": 4096,
+  "local_monotonicity_checks": 2720,
+  "future_multiplier_comparisons": 24768,
+  "unrestricted_support_pairs_checked": 4096,
+  "partial_factor_floor_checks": 8192,
+  "dominance_reversals": [
+    {
+      "n": 6,
+      "m": 8,
+      "c": 3,
+      "before": "16/15",
+      "after": "13/15",
+      "future_floor_S3": "4/5"
+    },
+    {
+      "n": 30240,
+      "m": 40320,
+      "c": 3,
+      "before": "224/221",
+      "after": "847/850",
+      "future_floor_S3": "84/85"
+    }
+  ],
+  "5040_seam_factors": {
+    "with_2": "31/21",
+    "with_3": "13/10"
+  },
+  "three_block_5040_6_8": {
+    "partial_lower_factor": "144/65",
+    "refined_exact_factor": "3627/1022"
+  },
+  "all_pairs_overcount_example": {
+    "blocks": [
+      2,
+      2,
+      2
+    ],
+    "all_pairs_factor": "729/343",
+    "true_factor": "9/5"
+  },
+  "unattained_inf_example": "n=2,m=1,S={2}: every finite ratio is >1, with infimum 1",
+  "source_sha256": "1e190fa57b64f8ab433f92583f399f19db23fd11ed4e11b0b8461bbff27746f6",
+  "limits": [
+    "Finite exact diagnostics, not a proof of universal claims.",
+    "No Lean compilation or kernel verification."
+  ]
+}
