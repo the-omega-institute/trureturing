@@ -337,6 +337,152 @@ theorem suffix_prime_factors (y i : ℕ) (t : List ℕ) :
         rw [hpj]
         exact above (i + j)
 
+/-- The all-state finite recurrence represents the exact maximum over all rough
+integers, with consecutive-prime enumeration and an actual attaining suffix. -/
+theorem rough_prime_suffix_complete (y B : ℕ) (_hy : 1 ≤ y) (hB : 1 ≤ B) :
+    (∀ i b h : ℕ, 1 ≤ b →
+      V y i b h = (branchValues y i b h).max' (by
+        classical
+        exact ⟨1, Finset.mem_insert_self _ _⟩) ∧
+      (∀ t : List ℕ, Feasible y i b h t → suffixWeight y i t ≤ V y i b h) ∧
+      (∃ t : List ℕ, Feasible y i b h t ∧ suffixWeight y i t = V y i b h) ∧
+      (∀ a : ℕ, 1 ≤ a → prime y i ^ a ≤ b → b / prime y i ^ a < b)) ∧
+    (∀ p : ℕ, p.Prime ∧ y < p ↔ ∃ i : ℕ, p = prime y i) ∧
+    (∀ a : ℕ, a ≤ rootCap y B ↔ prime y 0 ^ a ≤ B) ∧
+    (∀ (i : ℕ) (t : List ℕ),
+      (ArithmeticFunction.sigma 1 (suffixNumber y i t) : ℝ) /
+        suffixNumber y i t = suffixWeight y i t) ∧
+    (∃ (n : ℕ) (t : List ℕ), 1 ≤ n ∧ n ≤ B ∧ Rough y n ∧
+      Feasible y 0 B (rootCap y B) t ∧ suffixNumber y 0 t = n ∧
+      suffixWeight y 0 t = U y B) ∧
+    U y B = V y 0 B (rootCap y B) := by
+  classical
+  have hmono : StrictMono (prime y) := by
+    intro i j hij
+    exact Nat.nth_strictMono Nat.infinite_setOfPred_prime (by omega)
+  have habove (i : ℕ) : y < prime y i := by
+    apply Nat.lt_of_succ_le
+    exact (Nat.count_le_iff_le_nth Nat.infinite_setOfPred_prime).mp
+      (show Nat.count Nat.Prime (y + 1) ≤ Nat.primeCounting y + i by
+        change Nat.count Nat.Prime (y + 1) ≤ Nat.count Nat.Prime (y + 1) + i
+        omega)
+  have henumerate (p : ℕ) (hp : p.Prime) (hyp : y < p) :
+      ∃ i : ℕ, p = prime y i := by
+    have hc : Nat.primeCounting y ≤ Nat.count Nat.Prime p :=
+      Nat.count_monotone Nat.Prime (by omega)
+    refine ⟨Nat.count Nat.Prime p - Nat.primeCounting y, ?_⟩
+    unfold prime
+    rw [Nat.add_sub_of_le hc, Nat.nth_count hp]
+  have hsigma (i : ℕ) (t : List ℕ) :
+      (ArithmeticFunction.sigma 1 (suffixNumber y i t) : ℝ) /
+        suffixNumber y i t = suffixWeight y i t := by
+    induction t generalizing i with
+    | nil => simp [suffixNumber, suffixWeight]
+    | cons a t ih =>
+        have hp : (prime y i).Prime := Nat.prime_nth_prime _
+        have hcop : (prime y i).Coprime (suffixNumber y (i + 1) t) := by
+          apply hp.coprime_iff_not_dvd.mpr
+          intro hd
+          obtain ⟨j, _, heq⟩ := (suffix_prime_factors y (i + 1) t).2.1 _ hp hd
+          exact (hmono (show i < i + 1 + j by omega)).ne heq
+        simp only [suffixNumber, suffixWeight]
+        rw [IntegerSwap.normalized_sigma_mul (hcop.pow_left a),
+          IntegerSwap.normalized_sigma_prime_pow hp, ih]
+  obtain ⟨n, hn1, hnB, hnrough, hnU, hnorder⟩ := rough_maximizer_order y B hB
+  have hn0 : n ≠ 0 := by omega
+  let f : ℕ → ℕ := fun i => n.factorization (prime y i)
+  have hf : Antitone f := by
+    intro i j hij
+    rcases eq_or_lt_of_le hij with rfl | hij
+    · exact le_rfl
+    · exact hnorder _ _ (Nat.prime_nth_prime _) (Nat.prime_nth_prime _)
+        (habove i) (hmono hij)
+  have hcover : n.factorization.support ⊆
+      (Finset.range (Nat.primeCounting n)).image (prime y) := by
+    intro p hp
+    have hpp : p.Prime := Nat.prime_of_mem_primeFactors hp
+    have hpd : p ∣ n := Nat.dvd_of_mem_primeFactors hp
+    obtain ⟨i, hi⟩ := henumerate p hpp (hnrough p hpp hpd)
+    apply Finset.mem_image.mpr
+    refine ⟨i, Finset.mem_range.mpr ?_, hi.symm⟩
+    have hcount : Nat.count Nat.Prime p < Nat.primeCounting n := by
+      have hpn : p ≤ n := Nat.le_of_dvd (by omega) hpd
+      have hc := Nat.count_monotone Nat.Prime (Nat.succ_le_succ hpn)
+      rw [Nat.count_succ, if_pos hpp] at hc
+      change Nat.count Nat.Prime p + 1 ≤ Nat.primeCounting n at hc
+      omega
+    have hindex : Nat.primeCounting y + i = Nat.count Nat.Prime p := by
+      rw [hi]
+      exact (Nat.count_nth_of_infinite Nat.infinite_setOfPred_prime _).symm
+    omega
+  have hprod : (∏ j ∈ Finset.range (Nat.primeCounting n), prime y j ^ f j) = n := by
+    calc
+      _ = n.factorization.prod (fun p a => p ^ a) := by
+        rw [Finsupp.prod_of_support_subset _ hcover (fun p a => p ^ a)
+          (by intros; simp)]
+        rw [Finset.prod_image (by intros a ha b hb hab; exact hmono.injective hab)]
+      _ = n := Nat.prod_factorization_pow_eq_self hn0
+  -- Zero valuations form a tail; stop at the first zero while reconstructing the product.
+  have hbuild (k i h : ℕ) (hhead : f i ≤ h) :
+      ∃ t : List ℕ, Ordered h t ∧ suffixNumber y i t =
+        ∏ j ∈ Finset.range k, prime y (i + j) ^ f (i + j) := by
+    induction k generalizing i h with
+    | zero => exact ⟨[], trivial, by simp [suffixNumber]⟩
+    | succ k ih =>
+        by_cases hz : f i = 0
+        · refine ⟨[], trivial, ?_⟩
+          simp only [suffixNumber]
+          symm
+          apply Finset.prod_eq_one
+          intro j hj
+          have hzero : f (i + j) = 0 := by have := hf (show i ≤ i + j by omega); omega
+          rw [hzero, pow_zero]
+        · obtain ⟨t, ht, htn⟩ := ih (i + 1) (f i) (hf (by omega))
+          refine ⟨f i :: t, ⟨by omega, hhead, ht⟩, ?_⟩
+          rw [suffixNumber, htn, Finset.prod_range_succ']
+          simp only [Nat.add_zero]
+          rw [Nat.mul_comm]
+          congr 1
+          apply Finset.prod_congr rfl
+          intro j hj
+          congr 2 <;> omega
+  have hcap : f 0 ≤ rootCap y B := by
+    apply Nat.le_log_of_pow_le (Nat.prime_nth_prime _).one_lt
+    exact (Nat.le_of_dvd (by omega)
+      (((Nat.prime_nth_prime _).pow_dvd_iff_le_factorization hn0).mpr le_rfl)).trans hnB
+  obtain ⟨t, htorder, htn⟩ := hbuild (Nat.primeCounting n) 0 (rootCap y B) hcap
+  have htn' : suffixNumber y 0 t = n := by
+    simp only [Nat.zero_add] at htn
+    exact htn.trans hprod
+  have htfeasible : Feasible y 0 B (rootCap y B) t := ⟨htorder, htn' ▸ hnB⟩
+  have htweight : suffixWeight y 0 t = U y B := by
+    rw [← hsigma, htn', hnU]
+  have hUV : U y B ≤ V y 0 B (rootCap y B) := by
+    rw [← htweight]
+    exact (bellman_complete y 0 B (rootCap y B) hB).2.1 t htfeasible
+  have hVU : V y 0 B (rootCap y B) ≤ U y B := by
+    obtain ⟨u, hu, huV⟩ := (bellman_complete y 0 B (rootCap y B) hB).2.2.1
+    obtain ⟨hupos, _, hurough⟩ := suffix_prime_factors y 0 u
+    rw [← huV, ← hsigma]
+    simp only [U, dif_pos hB]
+    apply Finset.le_max'
+    apply Finset.mem_image.mpr
+    exact ⟨suffixNumber y 0 u,
+      Finset.mem_filter.mpr ⟨Finset.mem_Icc.mpr ⟨hupos, hu.2⟩, hurough⟩, rfl⟩
+  refine ⟨fun i b h hb => bellman_complete y i b h hb, ?_, ?_, hsigma,
+    ⟨n, t, hn1, hnB, hnrough, htfeasible, htn', htweight⟩, le_antisymm hUV hVU⟩
+  · intro p
+    constructor
+    · rintro ⟨hp, hyp⟩
+      exact henumerate p hp hyp
+    · rintro ⟨i, rfl⟩
+      exact ⟨Nat.prime_nth_prime _, habove i⟩
+  · intro a
+    exact Nat.le_log_iff_pow_le (Nat.prime_nth_prime _).one_lt (by omega)
+
+#print axioms rough_prime_suffix_complete
+#print axioms IntegerSwap.normalized_sigma_prime_pow
+#print axioms IntegerSwap.normalized_sigma_mul
 #print axioms bellman_complete
 #print axioms feasible_finite
 #print axioms rough_maximizer_order
