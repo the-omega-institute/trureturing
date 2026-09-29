@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3458bf6f05389e46f9200aa97214152c6fb35fdc133faf9911de70409e11504d
+  normalized_sha256: sha256:3458bf6f05389e46f9200aa97214152c6fb35fdc133faf9911de70409e11504d
+cas_ref: sha256:3458bf6f05389e46f9200aa97214152c6fb35fdc133faf9911de70409e11504d
+coverage_gids:
+  - gid: D5/S3/Factorization/Collinear/PrimeCollinearTripleCensus.card_triples_prime
+    target_statement_id: sha256:4f69aafeb79119b5f7eb6b279cfc3e95b8a3e683f4f0727628560992aedf2a8d
+receipts:
+  unresolved_subitems: []
