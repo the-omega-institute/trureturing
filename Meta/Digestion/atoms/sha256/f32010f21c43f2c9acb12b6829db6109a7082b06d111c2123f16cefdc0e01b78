@@ -1,0 +1,38 @@
+**Theorem 30.1 (twenty-eight residue classes).** Let $q\geq7$ be a
+prime, and suppose
+
+$$
+q\pmod {120}\notin\{1,49,71,119\}.
+$$
+
+For every $k\geq0$, the positive integer
+
+$$
+Q_{q,k}=\frac{F_{q^{k+1}}}{F_{q^k}}
+$$
+
+is not a square. The quotient is an integer by Fibonacci divisibility.
+
+Proof. Among the $32$ residue classes coprime to $120$, the stated
+condition is equivalent to the union of the following three tests:
+$q\bmod12\in\{5,7\}$, $q\bmod8\in\{3,5\}$, or
+$q\bmod20\in\{3,7,13,17\}$. The Fibonacci pairs
+$(F_{12},F_{13})$, $(F_8,F_9)$, and $(F_{20},F_{21})$ reduce to
+$(0,1)$ modulo $8$, $3$, and $5$, respectively. Thus these are
+periods for the Fibonacci sequence in the indicated moduli.
+
+In the first test, the indices $q^k$ alternate between $1$ and $q$
+modulo $12$. The two Fibonacci residues modulo $8$ are $1$ and $5$,
+so $Q_{q,k}\equiv5\pmod8$; the denominator residue is a unit. In the
+second test, the indices alternate between $1$ and $q$ modulo $8$.
+Their Fibonacci residues modulo $3$ are $1$ and $2$, so
+$Q_{q,k}\equiv2\pmod3$. In the third test, powers of $q$ modulo $20$
+run through $1,q,9,9q$ (with possible repetitions). The Fibonacci
+residues modulo $5$ give $Q_{q,k}\equiv2$ or $3\pmod5$, according to
+the residue of $q$. The denominator is again a unit. None of $5$
+modulo $8$, $2$ modulo $3$, or $2,3$ modulo $5$ is a square residue.
+
+This proves only the specified residue classes. It does not prove
+Lemma 10.2 for $q\equiv1,49,71,119\pmod{120}$ or the general
+Fibonacci square-class rigidity used there.
+
