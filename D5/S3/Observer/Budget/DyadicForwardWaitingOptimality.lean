@@ -54,7 +54,7 @@ def questionTree {X : Type} (read : Nat → X → Fin 2) {d : Nat} :
       (fun bit => questionTree read (next bit) (now + wait))
 
 /-- Capacity saturation forces an actual sensor's cut to be the interval midpoint. -/
-private theorem forced_midpoint {P d a now wait : Nat}
+theorem forced_midpoint {P d a now wait : Nat}
     {read : Nat → Nat → Fin 2} (next : Fin 2 → Protocol d)
     (law : ∀ n r, r < P → read n r = threshold P n r)
     (hi : a + 2 ^ (d + 1) ≤ P)
@@ -301,7 +301,7 @@ def transport (P : Nat) (b : Fin 2) {d : Nat} : Protocol d → Nat → Protocol 
   | .query wait next, now => .query wait (fun bit =>
       transport P b (next (parityFlip P b (now + wait) bit)) (now + wait))
 
-private theorem transport_execute (P : Nat) (b : Fin 2) {d : Nat} (p : Protocol d) :
+theorem transport_execute (P : Nat) (b : Fin 2) {d : Nat} (p : Protocol d) :
     ∀ now r,
     execute (rawBit P b) (transport P b p now) now r = execute (sensor P b) p now r ∧
     execute (sensor P b) (transport P b p now) now r = execute (rawBit P b) p now r := by

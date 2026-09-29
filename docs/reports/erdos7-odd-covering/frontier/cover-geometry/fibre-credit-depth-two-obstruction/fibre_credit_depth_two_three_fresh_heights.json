@@ -1,0 +1,60 @@
+{
+  "Haar_lower_if_complete": "3207884069503261/641174722555488632784",
+  "accepted_leaves_by_depth": {
+    "0": 25071,
+    "1": 11701,
+    "2": 39579,
+    "3": 108426,
+    "4": 162864,
+    "5": 46592
+  },
+  "accepted_volume": "27405",
+  "complete": true,
+  "dependency_hashes": {
+    "fibre_credit_depth_two_uniform_shallow.json": "afc7b9a8167cf22e67885e427c865c5daa844eb3664b6ff7b684be56e3168591",
+    "fibre_credit_depth_two_uniform_shallow.py": "1f01fb1c704a48fddb7f0be9563635cbb4ea436ce1495d2e156fdfc3c0788de6"
+  },
+  "mean_W_lower": "5819929847465/662115792429",
+  "outside_rectangle_unary_cube_lower": 21954,
+  "pointwise_candidate": "A^3+B^3+D^3 + sum_(four pair/triple loads) C_i^2 + 3*W >=19000",
+  "processed_nodes": 446637,
+  "same_source_cubic_inheritance": {
+    "claim": "The same uniform pruned head law has both square and cubic bounds. Pure-product extension, followed by the one actual mixed-deletion restriction and normalization, preserves both on the same E23. Maxima here choose numerical ceilings, not sources.",
+    "common_relative_mass_lower": "1243487/13077504",
+    "pure_product_cubic_multiplier": "1077205/152064",
+    "raw_head_comparator_atoms": {
+      "1": "581/6966",
+      "12": "1/74",
+      "2": "3031/6966",
+      "3": "146/1053",
+      "4": "425/2106",
+      "5": "10/1443",
+      "6": "45/481",
+      "8": "1/37"
+    },
+    "raw_head_cubic_upper": "87660407/1116882",
+    "shape_relative_survivor_mass_lower": [
+      "1243487/13077504",
+      "7609619/64627200",
+      "7609619/64627200",
+      "39317/253440",
+      "123881/887040",
+      "123881/887040"
+    ]
+  },
+  "scope": "Ordinary proof and exact integer certificate, not Lean. The old core through23 remains shallow (v3<=2 and all other core exponents<=1). Three new primes q1>=29,q2>=31,q3>=37 have arbitrary finite heights and globally fixed phases.",
+  "source_cubic_upper": "94428228722435/16149165669",
+  "source_replayed": true,
+  "source_square_upper": "2607189975/7283281",
+  "target": 19000,
+  "total_expected_cost_upper": "4187580088869535/220705264143",
+  "unfinished_cells": 0,
+  "visits_by_depth": {
+    "0": 27405,
+    "1": 18672,
+    "2": 55768,
+    "3": 129512,
+    "4": 168688,
+    "5": 46592
+  }
+}

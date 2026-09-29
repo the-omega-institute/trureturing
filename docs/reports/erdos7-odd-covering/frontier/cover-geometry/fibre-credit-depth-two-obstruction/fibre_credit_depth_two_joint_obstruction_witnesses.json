@@ -1,0 +1,642 @@
+{
+  "beta": "1/19",
+  "minimum": "14451988566971/14400000000000",
+  "name": "opposite-root stars and three mixed originals",
+  "originals": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      45,
+      2
+    ],
+    [
+      21,
+      1
+    ],
+    [
+      63,
+      58
+    ],
+    [
+      35,
+      3
+    ],
+    [
+      105,
+      74
+    ],
+    [
+      315,
+      187
+    ]
+  ],
+  "weights": [
+    {
+      "arguments": [
+        7,
+        6
+      ],
+      "kind": "cylinder",
+      "weight": "83333333333/500000000000"
+    },
+    {
+      "arguments": [
+        5,
+        4
+      ],
+      "kind": "cylinder",
+      "weight": "1/4"
+    },
+    {
+      "arguments": [
+        35,
+        18
+      ],
+      "kind": "cylinder",
+      "weight": "22709777057/100000000000"
+    },
+    {
+      "arguments": [
+        35,
+        24
+      ],
+      "kind": "cylinder",
+      "weight": "115617781381/500000000000"
+    },
+    {
+      "arguments": [
+        21,
+        4
+      ],
+      "kind": "cylinder",
+      "weight": "83333333333/500000000000"
+    },
+    {
+      "arguments": [
+        15,
+        8
+      ],
+      "kind": "cylinder",
+      "weight": "1/4"
+    },
+    {
+      "arguments": [
+        105,
+        8
+      ],
+      "kind": "cylinder",
+      "weight": "141410916621/500000000000"
+    },
+    {
+      "arguments": [
+        105,
+        29
+      ],
+      "kind": "cylinder",
+      "weight": "14582040931/250000000000"
+    },
+    {
+      "arguments": [
+        105,
+        53
+      ],
+      "kind": "cylinder",
+      "weight": "70737223313/1000000000000"
+    },
+    {
+      "arguments": [
+        105,
+        59
+      ],
+      "kind": "cylinder",
+      "weight": "11611528263/250000000000"
+    },
+    {
+      "arguments": [
+        63,
+        16
+      ],
+      "kind": "cylinder",
+      "weight": "83333333333/500000000000"
+    },
+    {
+      "arguments": [
+        45,
+        17
+      ],
+      "kind": "cylinder",
+      "weight": "1/8"
+    },
+    {
+      "arguments": [
+        45,
+        32
+      ],
+      "kind": "cylinder",
+      "weight": "124999999999/1000000000000"
+    },
+    {
+      "arguments": [
+        315,
+        16
+      ],
+      "kind": "cylinder",
+      "weight": "123600983941/500000000000"
+    },
+    {
+      "arguments": [
+        315,
+        268
+      ],
+      "kind": "cylinder",
+      "weight": "4222627309/20000000000"
+    },
+    {
+      "arguments": [
+        4
+      ],
+      "kind": "coherent",
+      "weight": "13560597/25000000000"
+    },
+    {
+      "arguments": [
+        13
+      ],
+      "kind": "coherent",
+      "weight": "1156236881/1000000000000"
+    },
+    {
+      "arguments": [
+        17
+      ],
+      "kind": "coherent",
+      "weight": "1060045119/1000000000000"
+    },
+    {
+      "arguments": [
+        23
+      ],
+      "kind": "coherent",
+      "weight": "80569701/100000000000"
+    },
+    {
+      "arguments": [
+        29
+      ],
+      "kind": "coherent",
+      "weight": "435157497/500000000000"
+    },
+    {
+      "arguments": [
+        31
+      ],
+      "kind": "coherent",
+      "weight": "1645330469/1000000000000"
+    },
+    {
+      "arguments": [
+        32
+      ],
+      "kind": "coherent",
+      "weight": "1155782399/1000000000000"
+    },
+    {
+      "arguments": [
+        34
+      ],
+      "kind": "coherent",
+      "weight": "45788811/200000000000"
+    },
+    {
+      "arguments": [
+        44
+      ],
+      "kind": "coherent",
+      "weight": "345427357/500000000000"
+    },
+    {
+      "arguments": [
+        52
+      ],
+      "kind": "coherent",
+      "weight": "1393477389/1000000000000"
+    },
+    {
+      "arguments": [
+        61
+      ],
+      "kind": "coherent",
+      "weight": "1402870131/1000000000000"
+    },
+    {
+      "arguments": [
+        62
+      ],
+      "kind": "coherent",
+      "weight": "35896219/100000000000"
+    },
+    {
+      "arguments": [
+        67
+      ],
+      "kind": "coherent",
+      "weight": "724607273/1000000000000"
+    },
+    {
+      "arguments": [
+        68
+      ],
+      "kind": "coherent",
+      "weight": "636302223/1000000000000"
+    },
+    {
+      "arguments": [
+        76
+      ],
+      "kind": "coherent",
+      "weight": "443883813/500000000000"
+    },
+    {
+      "arguments": [
+        79
+      ],
+      "kind": "coherent",
+      "weight": "613942723/1000000000000"
+    },
+    {
+      "arguments": [
+        83
+      ],
+      "kind": "coherent",
+      "weight": "431290467/1000000000000"
+    },
+    {
+      "arguments": [
+        88
+      ],
+      "kind": "coherent",
+      "weight": "58391259/250000000000"
+    },
+    {
+      "arguments": [
+        89
+      ],
+      "kind": "coherent",
+      "weight": "631659671/1000000000000"
+    },
+    {
+      "arguments": [
+        94
+      ],
+      "kind": "coherent",
+      "weight": "115271939/1000000000000"
+    },
+    {
+      "arguments": [
+        97
+      ],
+      "kind": "coherent",
+      "weight": "151174833/200000000000"
+    },
+    {
+      "arguments": [
+        103
+      ],
+      "kind": "coherent",
+      "weight": "353930257/250000000000"
+    },
+    {
+      "arguments": [
+        104
+      ],
+      "kind": "coherent",
+      "weight": "355775749/1000000000000"
+    },
+    {
+      "arguments": [
+        107
+      ],
+      "kind": "coherent",
+      "weight": "417926671/500000000000"
+    },
+    {
+      "arguments": [
+        122
+      ],
+      "kind": "coherent",
+      "weight": "1060045119/1000000000000"
+    },
+    {
+      "arguments": [
+        124
+      ],
+      "kind": "coherent",
+      "weight": "700492577/1000000000000"
+    },
+    {
+      "arguments": [
+        128
+      ],
+      "kind": "coherent",
+      "weight": "59460977/62500000000"
+    },
+    {
+      "arguments": [
+        134
+      ],
+      "kind": "coherent",
+      "weight": "168435807/250000000000"
+    },
+    {
+      "arguments": [
+        139
+      ],
+      "kind": "coherent",
+      "weight": "332115287/1000000000000"
+    },
+    {
+      "arguments": [
+        142
+      ],
+      "kind": "coherent",
+      "weight": "1329338439/1000000000000"
+    },
+    {
+      "arguments": [
+        149
+      ],
+      "kind": "coherent",
+      "weight": "345427357/500000000000"
+    },
+    {
+      "arguments": [
+        151
+      ],
+      "kind": "coherent",
+      "weight": "246254369/250000000000"
+    },
+    {
+      "arguments": [
+        152
+      ],
+      "kind": "coherent",
+      "weight": "792893217/1000000000000"
+    },
+    {
+      "arguments": [
+        157
+      ],
+      "kind": "coherent",
+      "weight": "1374301571/1000000000000"
+    },
+    {
+      "arguments": [
+        164
+      ],
+      "kind": "coherent",
+      "weight": "216538359/1000000000000"
+    },
+    {
+      "arguments": [
+        166
+      ],
+      "kind": "coherent",
+      "weight": "1216153263/1000000000000"
+    },
+    {
+      "arguments": [
+        167
+      ],
+      "kind": "coherent",
+      "weight": "35896219/100000000000"
+    },
+    {
+      "arguments": [
+        173
+      ],
+      "kind": "coherent",
+      "weight": "775242001/1000000000000"
+    },
+    {
+      "arguments": [
+        188
+      ],
+      "kind": "coherent",
+      "weight": "360418301/1000000000000"
+    },
+    {
+      "arguments": [
+        193
+      ],
+      "kind": "coherent",
+      "weight": "322807751/1000000000000"
+    },
+    {
+      "arguments": [
+        194
+      ],
+      "kind": "coherent",
+      "weight": "631659671/1000000000000"
+    },
+    {
+      "arguments": [
+        197
+      ],
+      "kind": "coherent",
+      "weight": "1147249807/1000000000000"
+    },
+    {
+      "arguments": [
+        202
+      ],
+      "kind": "coherent",
+      "weight": "18114941/25000000000"
+    },
+    {
+      "arguments": [
+        209
+      ],
+      "kind": "coherent",
+      "weight": "107173639/250000000000"
+    },
+    {
+      "arguments": [
+        212
+      ],
+      "kind": "coherent",
+      "weight": "417926671/500000000000"
+    },
+    {
+      "arguments": [
+        214
+      ],
+      "kind": "coherent",
+      "weight": "439252647/1000000000000"
+    },
+    {
+      "arguments": [
+        218
+      ],
+      "kind": "coherent",
+      "weight": "1556201/8000000000"
+    },
+    {
+      "arguments": [
+        223
+      ],
+      "kind": "coherent",
+      "weight": "533497083/500000000000"
+    },
+    {
+      "arguments": [
+        229
+      ],
+      "kind": "coherent",
+      "weight": "295799717/500000000000"
+    },
+    {
+      "arguments": [
+        233
+      ],
+      "kind": "coherent",
+      "weight": "80569701/100000000000"
+    },
+    {
+      "arguments": [
+        239
+      ],
+      "kind": "coherent",
+      "weight": "168435807/250000000000"
+    },
+    {
+      "arguments": [
+        241
+      ],
+      "kind": "coherent",
+      "weight": "803941127/500000000000"
+    },
+    {
+      "arguments": [
+        242
+      ],
+      "kind": "coherent",
+      "weight": "1155782399/1000000000000"
+    },
+    {
+      "arguments": [
+        254
+      ],
+      "kind": "coherent",
+      "weight": "104822497/125000000000"
+    },
+    {
+      "arguments": [
+        256
+      ],
+      "kind": "coherent",
+      "weight": "1010364983/1000000000000"
+    },
+    {
+      "arguments": [
+        257
+      ],
+      "kind": "coherent",
+      "weight": "792893217/1000000000000"
+    },
+    {
+      "arguments": [
+        263
+      ],
+      "kind": "coherent",
+      "weight": "58171019/250000000000"
+    },
+    {
+      "arguments": [
+        268
+      ],
+      "kind": "coherent",
+      "weight": "402718769/1000000000000"
+    },
+    {
+      "arguments": [
+        277
+      ],
+      "kind": "coherent",
+      "weight": "755883799/1000000000000"
+    },
+    {
+      "arguments": [
+        278
+      ],
+      "kind": "coherent",
+      "weight": "636302223/1000000000000"
+    },
+    {
+      "arguments": [
+        286
+      ],
+      "kind": "coherent",
+      "weight": "431210059/500000000000"
+    },
+    {
+      "arguments": [
+        292
+      ],
+      "kind": "coherent",
+      "weight": "2394841/1562500000"
+    },
+    {
+      "arguments": [
+        293
+      ],
+      "kind": "coherent",
+      "weight": "360418301/1000000000000"
+    },
+    {
+      "arguments": [
+        299
+      ],
+      "kind": "coherent",
+      "weight": "77264609/100000000000"
+    },
+    {
+      "arguments": [
+        302
+      ],
+      "kind": "coherent",
+      "weight": "1147249807/1000000000000"
+    },
+    {
+      "arguments": [
+        313
+      ],
+      "kind": "coherent",
+      "weight": "48079459/31250000000"
+    },
+    {
+      "arguments": [
+        314
+      ],
+      "kind": "coherent",
+      "weight": "355775749/1000000000000"
+    }
+  ]
+}

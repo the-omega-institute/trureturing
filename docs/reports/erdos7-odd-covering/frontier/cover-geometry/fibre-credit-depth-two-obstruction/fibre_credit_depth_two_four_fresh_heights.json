@@ -1,0 +1,41 @@
+{
+  "Haar_lower": "1110198785825664533/18010359497054150553600",
+  "accepted_leaves_by_depth": {
+    "0": 981096,
+    "1": 1119276,
+    "2": 4069917,
+    "3": 7561776
+  },
+  "complete": true,
+  "dependency_hashes": {
+    "fibre_credit_depth_two_head_cubic.json": "04abeee82ca5c1c1b7c4f2363633211b5385c688659ab65bc9963d75be4bddec",
+    "fibre_credit_depth_two_head_cubic.py": "742cc3299b597da64d4a2b1330c8875c6c68c571adccf1d154cfadff783295f1",
+    "fibre_credit_depth_two_uniform_shallow.json": "afc7b9a8167cf22e67885e427c865c5daa844eb3664b6ff7b684be56e3168591",
+    "fibre_credit_depth_two_uniform_shallow.py": "1f01fb1c704a48fddb7f0be9563635cbb4ea436ce1495d2e156fdfc3c0788de6"
+  },
+  "expected_cost_upper": "683586565221409/39154918656",
+  "kappa": "1/8",
+  "mean_W_lower": "21201970586591/4894364832",
+  "old_Haar_lower": "23847415365782478611/1461878367426514082747520",
+  "old_cubic_bound": "94428228722435/16149165669",
+  "old_expected_cost_upper": "283756897702608515/15890779018296",
+  "old_mean_W_lower": "2277124626719485/1986347377287",
+  "old_simple_Haar_lower": "1/62000",
+  "outside_rectangle_lower": "640069/30",
+  "pointwise_lower": "A1^3+(4/5)A2^3+(1/2)A3^3+(1/3)A4^3+Phi_(1/8)(P,D_pair)>=18000",
+  "processed_nodes": 14576283,
+  "scope": "Ordinary proof and exact integer certificate, not Lean. Old d|334639305, four distinct fresh primes q1>=29,q2>=31,q3>=37,q4>=41, arbitrary finite fresh heights and simultaneous phases. Old core heights remain restricted.",
+  "simple_Haar_lower": "1/17000",
+  "source_cubic_upper": "906617738995/159166336",
+  "source_mean_upper": "19",
+  "source_square_upper": "2607189975/7283281",
+  "sources_replayed": true,
+  "target": 18000,
+  "visits_by_depth": {
+    "0": 1068795,
+    "1": 1403184,
+    "2": 4542528,
+    "3": 7561776
+  },
+  "volume": 1068795
+}
