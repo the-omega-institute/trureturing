@@ -1,0 +1,27 @@
+**Proof.** Translation by $G_n$ preserves all three defining conditions.
+For $S\in\mathcal T_n$, let $H_S$ be its translation stabilizer. The action
+of $H_S$ on the three points of $S$ is free: a translation fixing one point
+is zero. Consequently $|H_S|$ divides three, so each translation orbit of
+triples has size either $n^2$ or $n^2/3$.
+
+Suppose $|H_S|=3$. Its action on $S$ is then transitive, hence $S$ is a
+coset of $H_S$. Both coordinate projections of $H_S$ are injective, since
+the corresponding coordinates in $S$ are distinct. The subgroup of
+elements annihilated by three in $\mathbb Z/n\mathbb Z$ is
+$\{0,m,2m\}$; its two nonzero elements are $m$ and $-m$. Thus $H_S$ is
+one of exactly two subgroups,
+
+\[
+  H_+=\langle(m,m)\rangle,\qquad
+  H_-=\langle(m,-m)\rangle.
+\]
+
+Every coset of either subgroup is an admissible triple: its two
+coordinate projections are injective, and three points on a translate
+of one cyclic direction have zero difference determinant. Its
+translation stabilizer is precisely that subgroup. Translation acts
+transitively on the cosets of each $H_\pm$, while the two families
+cannot meet because a coset determines its stabilizer. Hence exactly
+two orbits of $\mathcal T_n$ have size $n^2/3$. All remaining orbits
+have size $n^2$, proving the formula. $\square$
+

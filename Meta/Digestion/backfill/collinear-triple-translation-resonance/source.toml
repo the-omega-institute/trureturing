@@ -1,0 +1,5 @@
+source_id = "collinear-triple-translation-resonance"
+path = "docs/develop/theory/COLLINEAR_TRIPLE_TRANSLATION_RESONANCE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

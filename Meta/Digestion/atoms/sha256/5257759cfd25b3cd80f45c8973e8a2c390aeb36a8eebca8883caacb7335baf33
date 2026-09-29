@@ -1,0 +1,8 @@
+# Resonant translation orbits of collinear triples
+
+For a positive integer $n$, put $G_n=(\mathbb Z/n\mathbb Z)^2$. Let $\mathcal T_n$
+be the set of unordered three-element subsets $S\subset G_n$ whose first
+coordinates are pairwise distinct, whose second coordinates are pairwise
+distinct, and whose difference determinant is zero. Write
+$A(n)=|\mathcal T_n|$. This is the count in OEIS A146557.
+

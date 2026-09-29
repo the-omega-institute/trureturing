@@ -1,0 +1,11 @@
+**Theorem 1 (the three-torsion residue).** If $n=3m>0$, there is a
+nonnegative integer $q$ such that
+
+\[
+  A(n)=n^2q+\frac{2n^2}{3}.
+\]
+
+Equivalently, $A(n)\equiv 2n^2/3\pmod{n^2}$. The divisor $n^2/3$ is
+therefore always present, but the stronger divisibility by $n^2$ fails for
+every positive multiple of three.
+
