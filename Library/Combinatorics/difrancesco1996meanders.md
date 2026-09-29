@@ -21,6 +21,12 @@ The 46-page arXiv PDF at `https://arxiv.org/pdf/hep-th/9607039` was inspected
 on 29 September 2026, especially Appendix D, PDF pages 41-44 (printed pages
 40-43), and the conclusion, PDF page 32 (printed page 31).
 
+## Verified locator
+
+- DOI: 10.1016/S0550-3213(96)00505-6 (Nuclear Physics B 482, 497-535).
+- URL: https://arxiv.org/abs/hep-th/9607039 (46-page arXiv PDF, Appendix D
+  and conclusion inspected 2026-09-29).
+
 Appendix D defines a generating function in (D.1) whose `q` exponent counts
 connected components and whose `t` exponent indexes the winding deficit:
 `t^j` corresponds to winding `n-2j`. For fixed `k`, (D.9) expresses the count
