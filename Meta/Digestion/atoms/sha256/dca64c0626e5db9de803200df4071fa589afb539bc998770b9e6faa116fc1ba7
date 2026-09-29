@@ -1,0 +1,51 @@
+**定理 130.2（仿射闭包与接枝理想）。** 设 $H>1$，记 $A_H=\mathbb Z/H\mathbb Z$、$d=\gcd(w_1,w_2,H)$ 及
+
+$$
+L_w=A_Hw+A_HMw.
+$$
+
+全部合法词在模 $H$ 上的变换恰为 $v\mapsto M^kv+t$，其中 $k\ge0$、$t\in L_w$，且
+
+$$
+q(L_w)=dA_H.
+$$
+
+因此
+
+$$
+v\sim_{H,w}v'
+\quad\Longleftrightarrow\quad
+\gcd(qM^kv+db,H)=\gcd(qM^kv'+db,H)
+\quad(k\ge0,\ b\in\mathbb Z).
+$$
+
+证明。逐字归纳给出实际整数等式 $W(v)=M^kv+t_W$：空词取 $k=0,t_W=0$，追加 $R$ 把 $t_W$ 变为 $Mt_W$，追加 $G_w$ 把它变为 $t_W+w$。$t_W$ 只依赖选定的词。由 $M^2=M+I$，所有 $M^jw$ 都在 $L_w$ 中；$M^{-1}=M-I$ 还表明该子模在逆矩阵下稳定，此处只是剩余环中的代数事实。
+
+取正整数 $L=(H^2)!$。矩阵 $M$ 置换 $H^2$ 个剩余对，每个循环的长度都整除 $L$，故 $M^L=I\pmod H$。对非负整数 $A,B$，实际词
+
+$$
+R^k,\ G_w^A,\ R^{L-1},\ G_w^B,\ R
+$$
+
+的整数终态是
+
+$$
+M^{k+L}v+A M^Lw+B Mw,
+$$
+
+模 $H$ 为 $M^kv+Aw+BMw$。令 $A,B$ 分别取所需系数在 $0,\ldots,H-1$ 中的代表，便实现每个 $t\in L_w$。实际中间向量始终非负；没有执行逆替换或负次接枝。
+
+置 $a_w=qw=2w_1+3w_2$、$b_w=qMw=3w_1+5w_2$。定理 5.4 的逆式给
+
+$$
+w_1=5a_w-3b_w,\qquad w_2=-3a_w+2b_w,
+$$
+
+所以 $\gcd(a_w,b_w,H)=d$，其生成的剩余理想正是 $dA_H$。更具体地，取整数 $\lambda,\mu,\nu$ 使
+
+$$
+\lambda a_w+\mu b_w+\nu H=d.
+$$
+
+需要平移 $db$ 时，用 $A=\lambda b\bmod H$、$B=\mu b\bmod H$ 的非负代表代入上述词，其终端数量就是 $qM^kv+db\pmod H$。当 $d=H$ 时所需可观察平移全为零，可直接省去接枝。这样既证明每个词属于所列测试族，也给每个测试一个作用于同一实际来源的合法词；对两个来源使用的是同一个词。所有前缀仍满足同样的仿射形式，故不留前缀缺口。$\square$
+
