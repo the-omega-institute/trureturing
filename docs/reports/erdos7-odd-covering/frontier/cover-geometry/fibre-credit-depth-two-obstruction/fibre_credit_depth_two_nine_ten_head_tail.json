@@ -1,0 +1,79 @@
+{
+  "scope": "Finite pairwise-distinct odd numerical moduli>1. At least one of 3,5,7,11 is absent from the entire original LCM. For each row, at most head_size prime divisors are <=tail_cutoff. All original phases, finite heights, support arities and the finite number of larger primes are unrestricted.",
+  "source_files": {
+    "fibre-credit-depth-two-obstruction/fibre_credit_depth_two_eight_head_tail.py": "3fbc339694e007783611b33f2a79a0b810df601e4a9f795991c50cbd3f45233a",
+    "fibre-credit-depth-two-obstruction/fibre_credit_depth_two_eight_head_tail.json": "7d36e5003e12630787184af423db7a29972fa446195aa70c9b4765fc0d6d86eb"
+  },
+  "source_dependencies": {
+    "missing11-core-certificate/missing11_core_certificate.py": "42ea72e661e643f88df57d29c280f43f74b433282d9468b9604fb7ce4f2f1484",
+    "finite-prefix-sources/six_prime_prefix_certificate.py": "3077f18fd91bf8f3a45483690b5f2d1386f1f692dccd9a453c43c99a8746daf4",
+    "finite-prefix-sources/six_prime_prefix_geometry.json": "0f65a963f617867e87021c695a5ded8ad18cb1217857c0bbc7d49652b0f5fdd1"
+  },
+  "source_mass_and_joint_moment": [
+    "10237584019/168750000000",
+    "26010182627/1040449536"
+  ],
+  "source_geometry_reexecuted": false,
+  "source_formula_vertices_recomputed": 32,
+  "head_delta": "1/2",
+  "head_kernel_cap": "2",
+  "head_charge_factor": "1",
+  "actual_bad_set_deleted_after_each_added_head": true,
+  "head_law_renormalized": false,
+  "tail_delta": "1/4",
+  "tail_kernel_cap": "4/3",
+  "tail_charge_factor": "4/3",
+  "rows": [
+    {
+      "head_size": 8,
+      "added_reference_prime": null,
+      "mass_lower": "10237584019/168750000000",
+      "joint_query_upper": "26010182627/1040449536",
+      "tail_cutoff": 1400,
+      "ell": 6,
+      "integral_polynomial": "115/54",
+      "prime_product_constant": "73/71",
+      "tau4": "2286058400500/1342865721551787",
+      "tail_charge_upper": "2123599874749732432625/37424571881219517431808",
+      "final_distorted_mass_lower": "7170057912347323462181930867/1827371673887671749600000000000",
+      "simple_final_strict_lower": "1/256"
+    },
+    {
+      "head_size": 9,
+      "added_reference_prime": 31,
+      "new_bad_mass_upper": "26010182627/936404582400",
+      "mass_lower": "60153961455906929/1828915200000000000",
+      "joint_query_upper": "7048759491917/234101145600",
+      "tail_cutoff": 3000,
+      "ell": 7,
+      "integral_polynomial": "4553/2401",
+      "prime_product_constant": "99/97",
+      "tau4": "1312078090059000/1911754092865717681",
+      "tail_charge_upper": "21144313880749210353345/767393386909042002894848",
+      "final_distorted_mass_lower": "18660801896253107429046442075711649/3496436119104322625689651200000000000",
+      "simple_final_strict_lower": "1/200"
+    },
+    {
+      "head_size": 10,
+      "added_reference_prime": 37,
+      "new_bad_mass_upper": "7048759491917/303395084697600",
+      "mass_lower": "817539304151922053/84652646400000000000",
+      "joint_query_upper": "2671479847436543/75848771174400",
+      "tail_cutoff": 10000,
+      "ell": 8,
+      "integral_polynomial": "891/512",
+      "prime_product_constant": "129/127",
+      "tau4": "173076800625/934114889960032",
+      "tail_charge_upper": "20757404486127046920325/2385571263945397411774464",
+      "final_distorted_mass_lower": "3007744035678694606230772099147/3145040240553014165913600000000000",
+      "simple_final_strict_lower": "1/1100"
+    }
+  ],
+  "eleventh_reference_prime": 41,
+  "eleventh_scalar_ledger_mass_lower": "-117144961015964651939/9481096396800000000000",
+  "eleventh_failure_scope": "Failure of this sufficient scalar bound only; not a covering example or an obstruction to another source or method.",
+  "analytic_prime_product_proved_by_code": false,
+  "same_source_restriction_proved_by_code": false,
+  "lean_verification": false,
+  "mass_interpretation": "All final lower bounds are distorted mass, not asserted uniform final Haar-density bounds."
+}
