@@ -4,9 +4,11 @@ authors: A. Chervov and others
 year: 2025
 title: 'CayleyPy Growth: Efficient growth computations and hundreds of new conjectures on Cayley graphs'
 doi: 10.48550/arXiv.2509.19162
-claim: Conjecture 2 asserts eventual quasipolynomial word distance for every polynomial-time constructible generator family; it is false as stated.
+url: https://arxiv.org/abs/2509.19162v2
+claim: Conjectures 1 and 2 assert eventual quasipolynomial Cayley diameter or marked-element distance for every polynomial-time constructible generator family; both are false as stated.
 strata_touched:
   - D5/S0/CayleyGrowth/QuasipolynomialWordMetricRefutation
+  - D5/S0/CayleyGrowth/CayleyPyConjectureOneRefutation
 license: citation-only
 triage: anchor
 ---
@@ -35,14 +37,23 @@ any degree rather than only of degree at most two. The polynomial-time hypothesi
 is discharged outside Lean; the two objects are given by closed formulas, so no
 complexity model is needed to see that they are constructible.
 
+Conjecture 1 is also false as stated. At nonsquare sizes take all transpositions;
+at square sizes take all products of at most three transpositions. The latter
+set has at most `1 + C(n,2) + C(n,2)^2 + C(n,2)^3` explicitly enumerable words,
+each output as a permutation on `n` points. Thus both generator lists can be
+output in polynomial time, exactly as the paper requires. The formal proof bounds
+the nonsquare Cayley diameter below by `n/2`, using the full-support rotation,
+and the square diameter above by `ceil(n/3)`, using a transposition factorization
+of length at most `n` grouped into triples. In a fixed residue class, sufficiently
+large squares and nearby nonsquares force a proposed constituent polynomial to
+lie on opposite sides of a line of slope `5/12`, contradicting its eventual sign.
+
 The authors anticipate a defect of this kind without exhibiting one. Their
 discussion reads: "Taking into account the amount of examples confirming the
 conjecture, it is natural to believe that it is true in one or another way. It
-might be that one needs to restrict the class of generators." The refutation turns
-that remark into a theorem: some restriction is necessary, not merely plausible.
-It says nothing about any restricted form of the conjecture, and nothing about
-Conjecture 1, whose refutation would need a diameter formula for two generator
-families rather than a single distance.
+might be that one needs to restrict the class of generators." The two refutations
+make that remark a theorem: some restriction is necessary, not merely plausible.
+They say nothing about any restricted form of either conjecture.
 
 ## Search log
 
@@ -56,7 +67,17 @@ families rather than a single distance.
 - 2026-09-13: Searched the repository for Cayley-graph and word-metric statements.
   `D5/S3/ContinuousObservables/AsymmetricPermutationDistances` measures observer
   distance along permutation orbits and does not bear on the word metric.
+- 2026-09-29: Checked the paper's explicit-output condition in Section 3.2.
+  `Mathlib/GroupTheory/Perm/Sign.lean` supplies a transposition factorization;
+  `Mathlib/GroupTheory/Perm/Support.lean` supplies its support bound, and
+  `Mathlib/Combinatorics/SimpleGraph/Diam.lean` supplies the diameter interface.
+- 2026-09-29: A public-source search checked both arXiv versions, title and
+  identifier searches, Conjecture 1 with quasipolynomial-diameter and
+  transposition terms, the later CayleyPy-4 paper, and accessible citing
+  discussions. No published resolution of Conjecture 1 was found in that
+  scope; this does not establish absolute priority.
 
 ## Verified locator
 
 - DOI: https://doi.org/10.48550/arXiv.2509.19162
+- arXiv v2: https://arxiv.org/abs/2509.19162v2, Section 3.2, Conjectures 1 and 2.
