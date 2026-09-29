@@ -122,7 +122,7 @@ def calculate():
            'A^3+B^3+D^3 + sum_(four pair/triple loads) C_i^2 + 3*W >=19000',
            'processed_nodes': nodes, 'visits_by_depth': dict(visits),
            'accepted_leaves_by_depth': dict(leaves), 'unfinished_cells': len(stack),
-           'failures': failures, 'complete': not failures and not stack,
+           'complete': not failures and not stack,
            'scope': 'Ordinary proof and exact integer certificate, not Lean. '
                     'The old core through23 remains shallow (v3<=2 and all other '
                     'core exponents<=1). Three new primes q1>=29,q2>=31,q3>=37 '
