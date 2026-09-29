@@ -109,10 +109,10 @@ internal sealed partial class ProductionCliEnvironment
             scribeEmissionVerifier, timeProvider.GetUtcNow(), arguments);
 
     public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
-        SettleAtomCommand.RunBatch(repositoryRoot, repository, arguments);
+        SettleAtomCommand.RunBatch(repositoryRoot, repository, arguments, leanReportSource);
 
     public CommandResult SettleAtom(IReadOnlyList<string> arguments) =>
-        SettleAtomCommand.Run(repositoryRoot, repository, arguments);
+        SettleAtomCommand.Run(repositoryRoot, repository, arguments, leanReportSource);
 
     public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) =>
         DecomposeAtomCommand.Run(repositoryRoot, repository, arguments);
