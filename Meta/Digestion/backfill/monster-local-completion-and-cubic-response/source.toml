@@ -1,0 +1,5 @@
+source_id = "monster-local-completion-and-cubic-response"
+path = "docs/develop/theory/MONSTER_LOCAL_COMPLETION_AND_CUBIC_RESPONSE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
