@@ -403,6 +403,11 @@ def replayRegistrationInputs (input : RegistrationAssessmentInput) : CoreM Unit 
     liftCommandElabM do
       for (_, contract) in contracts do
         liftTermElabM <| RootCatalogs.acquireProvenance contract
+      -- An independent expectation acquires its object arena's source evidence,
+      -- rejecting live forwarding sources, before any registration is assessed.
+      for (owner, expected) in ExpectedOccurrenceManifest.owned saved do
+        if selected owner then
+          discard <| liftTermElabM <| resolveCanonicalArenaName expected.objectArenaName
       for (owner, enrollment) in enrollments do assessRecordedEnrollment owner enrollment
       for (owner, registration) in registrations do
         GeneratedDeclarations.withOwner owner <| assessRecordedEntry owner registration

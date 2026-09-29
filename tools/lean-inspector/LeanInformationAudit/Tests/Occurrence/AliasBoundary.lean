@@ -46,7 +46,9 @@ run_cmd do
   let id := mkIdent (`_root_ ++ name)
   Lean.Elab.Command.elabCommand (← `(command| def $id : Nat := 0))
 
-/-- error: IE-C025 QualifiedNameCollision root=LeanInformationAudit.Tests.Occurrence.AliasBoundary catalog=collision generated_name=AliasBoundary.next.«LeanInformationAudit.Tests.Occurrence.AliasBoundary/AliasBoundary.zeta/collision».__information_unit occurrences=["LeanInformationAudit.Tests.ImportClosureProducer.objectArena/AliasBoundary.next"] -/
+-- The native recorder declares the occurrence's unit itself, so an occupied
+-- generated address is rejected by the kernel declaration before assessment.
+/-- error: `AliasBoundary.next.«LeanInformationAudit.Tests.Occurrence.AliasBoundary/AliasBoundary.zeta/collision».__information_unit` has already been declared -/
 #guard_msgs (error) in
 test_assess in information_theorem next
   in lawArena object_arena zeta catalog collision

@@ -1,7 +1,4 @@
 import LeanInformationAudit.Tests.Census.Query.OwnerSource
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 run_cmd Lean.Elab.Command.liftTermElabM do
   let some _ <- Lean.Meta.mkCongrSimpForConst?

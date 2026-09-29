@@ -81,7 +81,7 @@ theorem fakeSensitivity : FiniteSlotSensitivity fakeArena.toPrimitiveLawArena :=
 
 elab "observe_declared_witness" : command => do
   let start (theoremName arenaName bridgeName : String) :=
-    s!"register_information_theorem {theoremName} in {arenaName} " ++
+    s!"test_assess in register_information_theorem {theoremName} in {arenaName} " ++
     "readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false)) " ++
     s!"primitives reads.toPrimitiveBundle realization {bridgeName} "
   let tail := " escape from (Nat) escape continues (open)"
@@ -90,7 +90,7 @@ elab "observe_declared_witness" : command => do
   let cases : Array (String × String × Option String) := #[
     ("named", normal ++ evidence ++ tail, none),
     ("literal", start "literalResult" "arena" "bridge" ++ evidence ++ tail, none),
-    ("occurrence", "register_information_theorem result in arena " ++
+    ("occurrence", "test_assess in register_information_theorem result in arena " ++
       "object_arena objectArena catalog witnessCatalog " ++
       "readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false)) " ++
       "primitives reads.toPrimitiveBundle realization bridge " ++ evidence ++ tail, none),
@@ -102,7 +102,7 @@ elab "observe_declared_witness" : command => do
       some "IE-C006"),
     ("named_claim_required", start "result" "arena" "unnamedClaimBridge" ++ evidence ++ tail,
       some "dtr.witness_statement_identity"),
-    ("missing_bridge", "register_information_theorem result in arena " ++
+    ("missing_bridge", "test_assess in register_information_theorem result in arena " ++
       "readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false)) " ++
       "primitives reads.toPrimitiveBundle" ++ tail, some "parse"),
     ("wrong_origin", normal ++ evidence ++ " escape from (Bool) escape continues (open)",

@@ -90,7 +90,7 @@ elab "reject_inline " label:str " in " command:command : command => do
   let before ← getEnv
   let previousMessages := (← get).messages
   modify fun state => { state with messages := {} }
-  elabCommand command
+  elabCommand (← `(command| test_assess in $command))
   let errors := (← get).messages.toList.filter (·.severity == .error)
   modify fun state => { state with messages := previousMessages }
   let theoremName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo command.raw[1]
@@ -104,7 +104,7 @@ elab "reject_inline " label:str " in " command:command : command => do
 
 theorem wrongStatementTarget : True := trivial
 reject_inline "wrong_statement" in
-test_assess in register_information_theorem wrongStatementTarget in arena primitives good.toPrimitiveBundle
+register_information_theorem wrongStatementTarget in arena primitives good.toPrimitiveBundle
   realization inline good := namedBridge
 
 def otherArena : PrimitiveLawArena where
@@ -118,28 +118,28 @@ def otherArena : PrimitiveLawArena where
 
 theorem wrongArenaTarget : True := trivial
 reject_inline "wrong_arena" in
-test_assess in register_information_theorem wrongArenaTarget in otherArena primitives good.toPrimitiveBundle
+register_information_theorem wrongArenaTarget in otherArena primitives good.toPrimitiveBundle
   realization inline good := namedBridge
 
 theorem wrongBundleTarget : arena.Law good := rfl
 reject_inline "wrong_bundle" in
-test_assess in register_information_theorem wrongBundleTarget in arena primitives bad.toPrimitiveBundle
+register_information_theorem wrongBundleTarget in arena primitives bad.toPrimitiveBundle
   realization inline good := by exact ⟨Iff.rfl⟩
 
 theorem nonproofTarget : arena.Law good := rfl
 reject_inline "nonproof" in
-test_assess in register_information_theorem nonproofTarget in arena primitives good.toPrimitiveBundle
+register_information_theorem nonproofTarget in arena primitives good.toPrimitiveBundle
   realization inline good := true
 
 theorem unresolvedTarget : arena.Law good := rfl
 reject_inline "unresolved_proof" in
-test_assess in register_information_theorem unresolvedTarget in arena primitives good.toPrimitiveBundle
+register_information_theorem unresolvedTarget in arena primitives good.toPrimitiveBundle
   realization inline good := unresolvedInlineProof
 
 theorem forbiddenTarget : arena.Law good := rfl
 axiom forbiddenBridge : LegacyPrimitiveRealization arena (arena.Law good) good
 reject_inline "forbidden_axiom" in
-test_assess in register_information_theorem forbiddenTarget in arena primitives good.toPrimitiveBundle
+register_information_theorem forbiddenTarget in arena primitives good.toPrimitiveBundle
   realization inline good := forbiddenBridge
 
 private def replaceSource (path : System.FilePath) (bytes : ByteArray) : IO Unit := do

@@ -32,16 +32,17 @@ run_cmd do
   unless originals.any (fun (actual, input) =>
       actual == selected.enrollmentOwner && input.owner == actual && input.name == name) do
     throwError "[FAIL] enrollment_native_owner"
-  rejectedInput { owner := `WrongOwner, name, version := 1,
-    constructors := #[], sourceText, options } "incomplete_closure:E7.import_owner"
-  rejectedInput { owner, name, version := 1,
-    constructors := #[], sourceText := sourceText ++ " changed", options }
-    "incomplete_closure:dtr.input_source"
+  let wrongOwner : TemplateEnrollmentInput :=
+    { owner := `WrongOwner, name, version := 1, constructors := #[], sourceText, options }
+  rejectedInput wrongOwner "incomplete_closure:E7.import_owner"
+  let changedSource : TemplateEnrollmentInput :=
+    { owner, name, version := 1, constructors := #[], sourceText := sourceText ++ " changed", options }
+  rejectedInput changedSource "incomplete_closure:dtr.input_source"
   let .ok bytes := planEncoding selected | throwError "setup: plan encoding absent"
   unless bytes.size == selected.serializedBytes && Sha256.hex bytes == selected.planIdentity do
     throwError "[FAIL] current_plan_identity"
   let reset := resetTemplatePlans env
-  unless (selectedPlan reset name).isError &&
+  unless !(selectedPlan reset name).isOk &&
       (TemplateEnrollmentInputs.owned reset).size == originals.size do
     throwError "[FAIL] transient_plans_do_not_replace_raw_inputs"
   setEnv reset

@@ -1,7 +1,4 @@
 import Lean
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 namespace Round7PackedCarrier
 structure Packet where
   carrier : Type

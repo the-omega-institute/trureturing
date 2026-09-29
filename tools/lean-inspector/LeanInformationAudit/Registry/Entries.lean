@@ -19,19 +19,6 @@ private def primitiveRealizationName : Name :=
 private def legacyPrimitiveRealizationName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization
 
-def generatedCompanionSuffixes : Array String := #[
-  theoremUnitSuffix,
-  primitiveRealizationSuffix,
-  "__lowers_escape",
-  "__trivial_in_catalog",
-  "__escape_enriched",
-  "__information_catalog",
-  "__catalog_irredundant",
-  "__catalog_redundant",
-  "__system_catalog_irredundant",
-  "__system_catalog_not_irredundant",
-  "__information_registration_diagnostic"
-]
 
 def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : Name :=
   entry.arenaName
@@ -146,7 +133,7 @@ catalog={catalogId} address={address} consumer={consumer}"
 per-node identity guard. Both views belong to the same environment state, so
 imports, insertion and transaction rollback cannot leave the index stale.
 Only entries are persisted; the index is reconstructed on import. -/
-private structure InformationRegistryState where
+structure InformationRegistryState where
   entries : Array InformationRegistryEntry := #[]
   theoremNames : NameSet := {}
   deriving Inhabited
@@ -228,12 +215,6 @@ def expectedOccurrencesForRoot (env : Environment) (rootId : Name) :
         (fun type => "sha256:" ++ Sha256.hex (toString type).toUTF8) |>.getD ""
     { row with statementIdentity := identity }
 
-def isCompanionName : Name -> Bool
-  | .str _ suffix =>
-      -- Every reserved suffix starts with "__". Ordinary names avoid the
-      -- interpreted array scan; the registry remains the suffix authority.
-      suffix.startsWith "__" && generatedCompanionSuffixes.contains suffix
-  | _ => false
 
 /-- Complete, deterministic payload shared by prechecks, insertion and sealing.
 `entries` contains every contributing registration, including a prospective one

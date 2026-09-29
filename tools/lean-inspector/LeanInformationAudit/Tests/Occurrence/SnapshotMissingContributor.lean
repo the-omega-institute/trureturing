@@ -14,6 +14,8 @@ run_cmd do
   try
     modifyEnv (·.setMainModule designatedRoot)
     RootCatalogs.declare designatedContract
+    -- The report replay acquires each contract's provenance before assessing it.
+    liftTermElabM <| RootCatalogs.acquireProvenance designatedContract
     unless (InformationRegistry.entries (← getEnv)).isEmpty do
       throwError "missing-contributor control imported registrations"
     let expected := sourceRows.map (fun row =>

@@ -1,8 +1,5 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Seal.M3
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 open Lean Lean.Elab.Command
 run_cmd do
   -- Walk the import metadata already present in this environment. Loading a
@@ -49,7 +46,11 @@ run_cmd do
   -- SourceContract through Assessment, plus Interface.SourceSelection through Records.
   -- The infinite-domain support adds one D5/Impl module, so the split closure's
   -- 138 = 133 D5/Impl + 5 Interface becomes 143 = 137 D5/Impl + 6 Interface.
+  -- The retired `LeanInformationAudit.Syntax` left the closure; M3 now assesses
+  -- its recorded inputs through the explicit test helper
+  -- `LeanInformationAudit.Tests.Assessment`, which adds itself and
+  -- `D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates`: 144.
   let interface := inRepo.filter ((`LeanInformationAuditInterface).isPrefixOf ·)
-  if inRepo.size > 143 || interface.size != 6 then
+  if inRepo.size > 144 || interface.size != 6 then
     throwError "ImportCost: M3 closure changed: modules={inRepo.size} interface={interface.size}"
-  logInfo m!"DTR_M3_IMPORTS modules={inRepo.size} limit=143 interface={interface.size}"
+  logInfo m!"DTR_M3_IMPORTS modules={inRepo.size} limit=144 interface={interface.size}"

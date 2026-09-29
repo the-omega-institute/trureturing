@@ -67,7 +67,9 @@ test_assess in expect_information_occurrence sndTheorem
 #guard_msgs (error) in
 test_assess in #seal_information_theory
 
-/-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.AliasSplitCatalog.objectArena theorem_name=LeanInformationAudit.Tests.AliasSplitCatalog.fstTheorem registration_modules=["LeanInformationAudit.Tests.Occurrence.AliasSplitCatalog"] count=2 -/
+-- A native registration declares its theorem, so a second native occurrence of
+-- the same theorem is rejected when the recorder elaborates the declaration.
+/-- error: `LeanInformationAudit.Tests.AliasSplitCatalog.fstTheorem` has already been declared -/
 #guard_msgs (error) in
 test_assess in information_theorem fstTheorem
   in lawArena

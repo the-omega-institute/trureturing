@@ -24,11 +24,11 @@ elab "observe_declared_keywords" : command => do
       try elabCommand command catch _ => identifiers := false
   let saved ← get
   let commands := #[
-    "register_information_template cutRealization",
+    "test_assess in register_information_template cutRealization",
     "theorem keywordSource : RegistrationPositive.arena.Law RegistrationPositive.good := rfl",
     "theorem keywordBridge : LegacyPrimitiveRealization RegistrationPositive.arena " ++
       "(RegistrationPositive.arena.Law RegistrationPositive.good) RegistrationPositive.good := RegistrationPositive.bridge",
-    "register_information_theorem keywordSource in RegistrationPositive.arena " ++
+    "test_assess in register_information_theorem keywordSource in RegistrationPositive.arena " ++
       "readout via (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x)) " ++
       "primitives RegistrationPositive.good.toPrimitiveBundle realization keywordBridge " ++
       "variation RegistrationPositive.lawVariation sensitivity RegistrationPositive.slotSensitivity"]

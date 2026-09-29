@@ -20,9 +20,9 @@ def substitutionArena := pointwiseEqArena (Arena.ofFintype (Fin 3)) (List Tribon
 def recenterArena := pointwiseEqArena (Arena.ofFintype (Fin 3)) Point
 
 private def viaForms : CommandElabM (Array Syntax) := do
-  let substitution ← `(command| test_assess in register_information_theorem gapLabelSubstitution_three_compatible via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
+  let substitution ← `(command| register_information_theorem gapLabelSubstitution_three_compatible via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
     (fun label : Fin 3 => (gapLabelSubstitution 3 label.1).map tribonacciGapLetterOfLabel) (fun label => gapLetterSubstitution (tribonacciGapLetterOfLabel label.1))) in substitutionArena output_evidence (nontrivial_of_ne [] [.small] (by decide)))
-  let recenter ← `(command| test_assess in register_information_theorem recenter_direction via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
+  let recenter ← `(command| register_information_theorem recenter_direction via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
     (fun d : Fin 3 => recenter d (direction d)) (fun _ => (0, 0))) in recenterArena)
   return #[substitution, recenter]
 
@@ -146,7 +146,8 @@ elab "check_pointwise_shadow" : command => do
     unless ← liftTermElabM <| sameObservations m w do
       throwError "harmless bridge proof changed consumer observations"
   set initial
-  forms.forM elabCommand
+  forms.forM fun form => do
+    elabCommand (← `(command| test_assess in $(⟨form⟩):command))
   let derivedEntries ← liftCoreM ownEntries
   unless derivedEntries.size == 2 do throwError "derived count"
   let derivedObs ← liftTermElabM <| (derivedEntries.mapM registrationObservations : MetaM _)

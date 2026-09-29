@@ -1,7 +1,4 @@
 import LeanInformationAudit.Projection.AnalysisArtifact
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 open Lean LeanInformationAudit
 

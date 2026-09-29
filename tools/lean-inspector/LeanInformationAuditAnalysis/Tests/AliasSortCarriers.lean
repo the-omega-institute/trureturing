@@ -1,7 +1,4 @@
 import Lean
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 namespace AliasSortCarriers
 
 def CarrierKind : Type 1 := Type

@@ -2,6 +2,9 @@ import LeanInformationAudit.Tests.RegistrationGates.ProvenanceRegressions
 import LeanInformationAudit.Tests.Assessment
 
 test_imported_assessment
+run_cmd do
+  LeanInformationAudit.DispositionCensus.replayStructuralRegistrations
+    (← Lean.getEnv).header.mainModule
 
 open Lean LeanInformationAudit
 namespace RegistrationProvenance

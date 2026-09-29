@@ -3,6 +3,9 @@ import LeanInformationAudit.Tests.RegistrationGates.DeclaredP1
 import LeanInformationAudit.Tests.Assessment
 
 test_imported_assessment
+run_cmd do
+  LeanInformationAudit.DispositionCensus.replayStructuralRegistrations
+    (← Lean.getEnv).header.mainModule
 
 namespace LeanInformationAudit.Tests.DeclaredRoutes
 open Lean Meta Elab Command

@@ -1,9 +1,6 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.Projection.ProjectionSeal
 import LeanInformationAudit.Tests.Projection.FixtureState
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape D5.S3.ConceptDynamics.CIRPT

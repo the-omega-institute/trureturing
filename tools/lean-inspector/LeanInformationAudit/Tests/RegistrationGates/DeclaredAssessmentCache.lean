@@ -3,13 +3,39 @@ import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selected
 import LeanInformationAudit.Tests.SourceIsolation
 import LeanInformationAudit.Tests.Assessment
 
-test_imported_assessment
-
 namespace LeanInformationAudit.Tests.DeclaredAssessmentCache
 open Lean Meta Elab Command TemplateBinding TemplateAudit
 
 private def observe (name : String) (ok : Bool) : MetaM Unit :=
   (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {name}"
+
+-- Lake hashes source text modulo CRLF. The report's assessment starts from a
+-- fresh environment, so native coherence checks the unchanged trace rather than
+-- an earlier in-process snapshot; only an obsolete raw source hash would reject.
+run_meta withPrivateSources do
+  let fresh ← getEnv
+  let root := fresh.header.mainModule
+  assessRecordedRegistrations root
+  let rows ← assessJoined (← RegistrationAssessmentInput.capture root)
+  let #[record] := rows | throwError "setup: exactly one registration occurrence required"
+  let some descriptor := record.descriptor | throwError "setup: descriptor absent"
+  let .ok plan := selectedPlan (← getEnv) descriptor.getAppFn.constName!
+    | throwError "setup: selected plan absent"
+  setEnv fresh
+  let path := TemplateAudit.sourcePath plan.enrollmentOwner
+  let original ← IO.FS.readBinFile path
+  try
+    let edited := (String.fromUTF8! original).crlfToLf.replace "\n" "\r\n"
+    unless edited.toUTF8 != original do throwError "setup: line endings did not change bytes"
+    IO.FS.writeFile path edited
+    assessRecordedRegistrations root
+    let changed ← assessJoined (← RegistrationAssessmentInput.capture root)
+    observe "imported_line_endings_preserve_verdict"
+      (!changed.isEmpty && changed.all (fun row => row.result matches .declaredValidated _))
+  finally IO.FS.writeBinFile path original
+  setEnv fresh
+
+test_imported_assessment
 
 run_meta withPrivateSources do
   let initial ← getEnv
@@ -24,20 +50,6 @@ run_meta withPrivateSources do
   let before := (observedAssessments primed).size
   discard <| (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   observe "authoritative_assessment_reused" ((observedAssessments (← getEnv)).size == before)
-  -- Lake hashes source text modulo CRLF. Start a fresh assessment environment
-  -- so native coherence checks the unchanged trace rather than an earlier
-  -- in-process snapshot; only the obsolete enrolled raw hash would reject.
-  setEnv initial
-  let path := TemplateAudit.sourcePath plan.enrollmentOwner
-  let original ← IO.FS.readBinFile path
-  try
-    let edited := (String.fromUTF8! original).crlfToLf.replace "\n" "\r\n"
-    unless edited.toUTF8 != original do throwError "setup: line endings did not change bytes"
-    IO.FS.writeFile path edited
-    let changed ← (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
-    observe "imported_line_endings_preserve_verdict"
-      (changed.all (fun row => row.result matches .declaredValidated _))
-  finally IO.FS.writeBinFile path original
   setEnv primed
   -- An isolated change to the retained statement identity must not reuse the old
   -- record. Native ownership/statement validation is separately tested at the join.

@@ -1,7 +1,4 @@
 import LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 open Lean LeanInformationAudit.RegistrationGates
 namespace Round7ComputedStatement
 

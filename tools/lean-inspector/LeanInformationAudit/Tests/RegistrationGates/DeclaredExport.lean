@@ -4,6 +4,9 @@ import LeanInformationAudit.Tests.SourceIsolation
 import LeanInformationAudit.Tests.Assessment
 
 test_imported_assessment
+run_cmd do
+  LeanInformationAudit.DispositionCensus.replayStructuralRegistrations
+    (← Lean.getEnv).header.mainModule
 
 namespace LeanInformationAudit.Tests.DeclaredExport
 open Lean Meta Elab Command TemplateBinding

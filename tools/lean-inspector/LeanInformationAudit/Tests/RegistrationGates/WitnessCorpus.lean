@@ -7,9 +7,6 @@ import D5.S3.ConceptDynamics.InformationEscapeRealizations.CommutingCompletionEx
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.LocalLawGluingObstruction
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.EndStateOmitsPreemptingCause
 import D5.S3.ConceptDynamics.InformationEscape.SystemUnit
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 open D5.S3.ConceptDynamics.Aggregation.AgendaPower
 open D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification

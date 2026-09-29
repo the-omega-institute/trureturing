@@ -1,8 +1,5 @@
 import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
 import LeanInformationAudit.Registry
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 namespace LeanInformationAudit.Tests.ReifierProviderBinding
 open Lean Meta Elab Command

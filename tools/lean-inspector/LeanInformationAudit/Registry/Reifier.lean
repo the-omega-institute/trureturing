@@ -283,10 +283,11 @@ private def declaration (owner name : Name) (type value : Expr) (proof := true) 
   let value ← instantiateMVars value
   closed type; closed value
   if let some info := (← getEnv).find? name then
-    unless GeneratedDeclarations.ownerOf (← getEnv) name == owner &&
-        (← isDefEq info.type type) && info.value?.isSome &&
-        (← isDefEq info.value?.get! value) do
-      throwError "P1.BridgeBindingMismatch: existing declaration {name}"
+    let mismatch : MetaM Unit := throwError "P1.BridgeBindingMismatch: existing declaration {name}"
+    let some existing := info.value? (allowOpaque := true) | mismatch
+    unless GeneratedDeclarations.ownerOf (← getEnv) name == owner do mismatch
+    unless ← isDefEq info.type type do mismatch
+    unless ← isDefEq existing value do mismatch
     checkWithKernel value
   else
     if proof then addDecl (.thmDecl { name, levelParams := [], type, value })

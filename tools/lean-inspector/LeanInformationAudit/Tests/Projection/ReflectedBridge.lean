@@ -1,7 +1,4 @@
 import LeanInformationAudit.Projection.ProjectionCounts
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 open LeanInformationAudit D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.CIRPT
