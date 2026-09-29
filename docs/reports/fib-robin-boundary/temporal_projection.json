@@ -101,6 +101,38 @@
       "8": 6
     }
   },
+  "direct_fiber_averages": [
+    {
+      "H": 1,
+      "all_probes_checked": true,
+      "quotients": 1
+    },
+    {
+      "H": 2,
+      "all_probes_checked": true,
+      "quotients": 2
+    },
+    {
+      "H": 6,
+      "all_probes_checked": true,
+      "quotients": 4
+    },
+    {
+      "H": 12,
+      "all_probes_checked": true,
+      "quotients": 6
+    },
+    {
+      "H": 24,
+      "all_probes_checked": true,
+      "quotients": 8
+    },
+    {
+      "H": 60,
+      "all_probes_checked": true,
+      "quotients": 12
+    }
+  ],
   "edge_moduli": [
     {
       "H": 1,
@@ -268,5 +300,388 @@
       }
     }
   ],
-  "scope": "finite exact integer temporal fibers and closure"
+  "edge_projections": [
+    {
+      "V_time8_over_V_time4": "1",
+      "Z": "1",
+      "exp_minus_rank_shell": {},
+      "layers": [],
+      "prime_gains": {
+        "11": {
+          "future_body_loss": "10/121",
+          "gain": "1/11",
+          "old_body_loss": null
+        },
+        "2": {
+          "future_body_loss": "1/4",
+          "gain": "1/2",
+          "old_body_loss": null
+        },
+        "3": {
+          "future_body_loss": "2/9",
+          "gain": "1/3",
+          "old_body_loss": null
+        },
+        "5": {
+          "future_body_loss": "4/25",
+          "gain": "1/5",
+          "old_body_loss": null
+        },
+        "7": {
+          "future_body_loss": "6/49",
+          "gain": "1/7",
+          "old_body_loss": null
+        }
+      }
+    },
+    {
+      "V_time8_over_V_time4": "1",
+      "Z": "3/2",
+      "exp_minus_rank_shell": {
+        "3": "5/6"
+      },
+      "layers": [
+        {
+          "exp_minus_ell": "5/6",
+          "k": 1,
+          "p": 2,
+          "rank": 3
+        }
+      ],
+      "prime_gains": {
+        "11": {
+          "future_body_loss": "15/121",
+          "gain": "3/22",
+          "old_body_loss": null
+        },
+        "2": {
+          "future_body_loss": "1/8",
+          "gain": "1/4",
+          "old_body_loss": "1/4"
+        },
+        "3": {
+          "future_body_loss": "1/3",
+          "gain": "1/2",
+          "old_body_loss": null
+        },
+        "5": {
+          "future_body_loss": "6/25",
+          "gain": "3/10",
+          "old_body_loss": null
+        },
+        "7": {
+          "future_body_loss": "9/49",
+          "gain": "3/14",
+          "old_body_loss": null
+        }
+      }
+    },
+    {
+      "V_time8_over_V_time4": "1",
+      "Z": "4/3",
+      "exp_minus_rank_shell": {
+        "4": "5/6"
+      },
+      "layers": [
+        {
+          "exp_minus_ell": "5/6",
+          "k": 1,
+          "p": 3,
+          "rank": 4
+        }
+      ],
+      "prime_gains": {
+        "11": {
+          "future_body_loss": "40/363",
+          "gain": "4/33",
+          "old_body_loss": null
+        },
+        "2": {
+          "future_body_loss": "1/3",
+          "gain": "2/3",
+          "old_body_loss": null
+        },
+        "3": {
+          "future_body_loss": "2/27",
+          "gain": "1/9",
+          "old_body_loss": "2/9"
+        },
+        "5": {
+          "future_body_loss": "16/75",
+          "gain": "4/15",
+          "old_body_loss": null
+        },
+        "7": {
+          "future_body_loss": "8/49",
+          "gain": "4/21",
+          "old_body_loss": null
+        }
+      }
+    },
+    {
+      "V_time8_over_V_time4": "1",
+      "Z": "2",
+      "exp_minus_rank_shell": {
+        "3": "5/6",
+        "4": "5/6"
+      },
+      "layers": [
+        {
+          "exp_minus_ell": "5/6",
+          "k": 1,
+          "p": 2,
+          "rank": 3
+        },
+        {
+          "exp_minus_ell": "5/6",
+          "k": 1,
+          "p": 3,
+          "rank": 4
+        }
+      ],
+      "prime_gains": {
+        "11": {
+          "future_body_loss": "20/121",
+          "gain": "2/11",
+          "old_body_loss": null
+        },
+        "2": {
+          "future_body_loss": "1/6",
+          "gain": "1/3",
+          "old_body_loss": "1/3"
+        },
+        "3": {
+          "future_body_loss": "1/9",
+          "gain": "1/6",
+          "old_body_loss": "1/3"
+        },
+        "5": {
+          "future_body_loss": "8/25",
+          "gain": "2/5",
+          "old_body_loss": null
+        },
+        "7": {
+          "future_body_loss": "12/49",
+          "gain": "2/7",
+          "old_body_loss": null
+        }
+      }
+    },
+    {
+      "V_time8_over_V_time4": "1",
+      "Z": "15/8",
+      "exp_minus_rank_shell": {
+        "3": "29/30",
+        "6": "85/116"
+      },
+      "layers": [
+        {
+          "exp_minus_ell": "29/30",
+          "k": 1,
+          "p": 2,
+          "rank": 3
+        },
+        {
+          "exp_minus_ell": "53/58",
+          "k": 2,
+          "p": 2,
+          "rank": 6
+        },
+        {
+          "exp_minus_ell": "85/106",
+          "k": 3,
+          "p": 2,
+          "rank": 6
+        }
+      ],
+      "prime_gains": {
+        "11": {
+          "future_body_loss": "75/484",
+          "gain": "15/88",
+          "old_body_loss": null
+        },
+        "2": {
+          "future_body_loss": "1/32",
+          "gain": "1/16",
+          "old_body_loss": "1/16"
+        },
+        "3": {
+          "future_body_loss": "5/12",
+          "gain": "5/8",
+          "old_body_loss": null
+        },
+        "5": {
+          "future_body_loss": "3/10",
+          "gain": "3/8",
+          "old_body_loss": null
+        },
+        "7": {
+          "future_body_loss": "45/196",
+          "gain": "15/56",
+          "old_body_loss": null
+        }
+      }
+    },
+    {
+      "V_time8_over_V_time4": "1",
+      "Z": "7/3",
+      "exp_minus_rank_shell": {
+        "3": "13/14",
+        "4": "5/6",
+        "6": "21/26"
+      },
+      "layers": [
+        {
+          "exp_minus_ell": "13/14",
+          "k": 1,
+          "p": 2,
+          "rank": 3
+        },
+        {
+          "exp_minus_ell": "21/26",
+          "k": 2,
+          "p": 2,
+          "rank": 6
+        },
+        {
+          "exp_minus_ell": "5/6",
+          "k": 1,
+          "p": 3,
+          "rank": 4
+        }
+      ],
+      "prime_gains": {
+        "11": {
+          "future_body_loss": "70/363",
+          "gain": "7/33",
+          "old_body_loss": null
+        },
+        "2": {
+          "future_body_loss": "1/12",
+          "gain": "1/6",
+          "old_body_loss": "1/6"
+        },
+        "3": {
+          "future_body_loss": "7/54",
+          "gain": "7/36",
+          "old_body_loss": "7/18"
+        },
+        "5": {
+          "future_body_loss": "28/75",
+          "gain": "7/15",
+          "old_body_loss": null
+        },
+        "7": {
+          "future_body_loss": "2/7",
+          "gain": "1/3",
+          "old_body_loss": null
+        }
+      }
+    }
+  ],
+  "projection": {
+    "V_time8_over_V_time4": "25/28",
+    "Z": "403/105",
+    "exp_minus_rank_shell": {
+      "12": "31031/47286",
+      "3": "61/62",
+      "4": "37/39",
+      "5": "13/15",
+      "6": "213/244",
+      "8": "25/28"
+    },
+    "layers": [
+      {
+        "exp_minus_ell": "61/62",
+        "k": 1,
+        "p": 2,
+        "rank": 3
+      },
+      {
+        "exp_minus_ell": "117/122",
+        "k": 2,
+        "p": 2,
+        "rank": 6
+      },
+      {
+        "exp_minus_ell": "71/78",
+        "k": 3,
+        "p": 2,
+        "rank": 6
+      },
+      {
+        "exp_minus_ell": "341/426",
+        "k": 4,
+        "p": 2,
+        "rank": 12
+      },
+      {
+        "exp_minus_ell": "37/39",
+        "k": 1,
+        "p": 3,
+        "rank": 4
+      },
+      {
+        "exp_minus_ell": "91/111",
+        "k": 2,
+        "p": 3,
+        "rank": 12
+      },
+      {
+        "exp_minus_ell": "13/15",
+        "k": 1,
+        "p": 5,
+        "rank": 5
+      },
+      {
+        "exp_minus_ell": "25/28",
+        "k": 1,
+        "p": 7,
+        "rank": 8
+      }
+    ],
+    "prime_gains": {
+      "11": {
+        "future_body_loss": "806/2541",
+        "gain": "403/1155",
+        "old_body_loss": null
+      },
+      "2": {
+        "future_body_loss": "13/420",
+        "gain": "13/210",
+        "old_body_loss": "13/210"
+      },
+      "3": {
+        "future_body_loss": "62/945",
+        "gain": "31/315",
+        "old_body_loss": "62/315"
+      },
+      "5": {
+        "future_body_loss": "806/7875",
+        "gain": "403/3150",
+        "old_body_loss": "806/1575"
+      },
+      "7": {
+        "future_body_loss": "403/6860",
+        "gain": "403/5880",
+        "old_body_loss": "403/980"
+      }
+    }
+  },
+  "scope": "finite exact temporal, projection, rank-shell and Robin diagnostics",
+  "seed_10080": {
+    "budget_lower": "89/750",
+    "delta10080_lower": "2/125",
+    "exp_gamma_lower": "89/50",
+    "gain_10080_to_20160": "13/420",
+    "gamma_enclosure": [
+      "577215581/1000000000",
+      "288608041/500000000"
+    ],
+    "loglog10080_enclosure": [
+      "444238313/200000000",
+      "1110595783/500000000"
+    ],
+    "scope": "strict rational bounds using standard log/exp and gamma remainder inequalities"
+  }
 }

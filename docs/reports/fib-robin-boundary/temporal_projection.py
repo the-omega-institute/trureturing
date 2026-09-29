@@ -6,7 +6,8 @@ ensemble is indexed by t=0,...,H-1 at actual quantity 6H. No random sampling.
 """
 import argparse
 import json
-from math import gcd, isqrt
+from math import gcd, isqrt, factorial, prod
+from fractions import Fraction as Q
 from pathlib import Path
 
 
@@ -92,6 +93,137 @@ def temporal_catalogue(h):
     }
 
 
+
+def zeta_body(h):
+    return sum((Q(1, q) for q in divisors(h)), Q(0))
+
+
+def visible(h, m):
+    assert h % m == 0
+    return sum((Q(gcd(q, m), q * q) for q in divisors(h)), Q(0))
+
+
+def local_visible(p, a, b):
+    return sum((Q(p ** min(j, b), p ** (2 * j))
+                for j in range(a + 1)), Q(0))
+
+
+def mobius(n):
+    fs = factor(n)
+    return 0 if any(a > 1 for a in fs.values()) else (-1) ** len(fs)
+
+
+def projection_diagnostics(h):
+    fs = factor(h)
+    z = zeta_body(h)
+    r_h = rank(h)
+    shells = {}
+    layers = []
+    for p, a in fs.items():
+        for k in range(1, a + 1):
+            ratio = local_visible(p, a, a-k) / local_visible(p, a, a-k+1)
+            assert 0 < ratio < 1
+            r = rank(p ** k)
+            shells[r] = shells.get(r, Q(1)) * ratio
+            layers.append({'p': p, 'k': k, 'rank': r, 'exp_minus_ell': str(ratio)})
+    inversion = {}
+    for r in divisors(r_h):
+        value = Q(1)
+        for d in divisors(r):
+            value *= (visible(h, h // gcd(h, fib(d))) / z) ** mobius(r // d)
+        assert value == shells.get(r, Q(1))
+        if value != 1:
+            inversion[str(r)] = str(value)
+    for d in range(r_h + 1):
+        ratio = prod((v for r, v in shells.items() if d % r == 0), start=Q(1))
+        assert ratio == visible(h, h // gcd(h, fib(d))) / z
+    gains = {}
+    for p in sorted(set(fs) | {2, 3, 5, 7, 11}):
+        gain = zeta_body(p*h) - z
+        future_loss = zeta_body(p*h) - visible(p*h, h)
+        assert gain == Q(p, p-1) * future_loss
+        old_loss = None
+        if h % p == 0:
+            old_loss = z - visible(h, h//p)
+            assert gain == old_loss / (p-1)
+        gains[str(p)] = {'gain': str(gain), 'future_body_loss': str(future_loss),
+                         'old_body_loss': str(old_loss) if old_loss is not None else None}
+    ratio_8_4 = visible(h, h // gcd(h, 21)) / visible(h, h // gcd(h, 3))
+    if h % 7 == 0:
+        assert zeta_body(7*h)/z == 1 + (1-ratio_8_4)/6
+    return {'Z': str(z), 'layers': layers, 'exp_minus_rank_shell': inversion,
+            'V_time8_over_V_time4': str(ratio_8_4), 'prime_gains': gains}
+
+
+def direct_projection(h):
+    """Build fiber averages independently from the gcd norm formula."""
+    for m in divisors(h):
+        total, residual = Q(0), Q(0)
+        for q in divisors(h):
+            f = [Q(int(t % q == 0)) for t in range(h)]
+            averages = [sum(f[r::m], Q(0)) / (h//m) for r in range(m)]
+            norm = sum((averages[t % m] ** 2 for t in range(h)), Q(0)) / h
+            error = sum(((f[t]-averages[t % m]) ** 2 for t in range(h)), Q(0)) / h
+            assert norm == Q(gcd(q, m), q*q)
+            assert norm + error == Q(1, q)
+            total, residual = total + norm, residual + error
+        assert total == visible(h, m) and total + residual == zeta_body(h)
+    return {'H': h, 'quotients': len(divisors(h)), 'all_probes_checked': True}
+
+
+def log_interval(x, terms=32):
+    """Rational atanh expansion with geometric upper bound on its tail."""
+    assert x > 0
+    k = 0
+    while x >= 2:
+        x /= 2
+        k += 1
+    while x < 1:
+        x *= 2
+        k -= 1
+    def reduced(y):
+        t = (y-1)/(y+1)
+        s = 2 * sum((t**(2*j+1)/(2*j+1) for j in range(terms)), Q(0))
+        tail = 2*t**(2*terms+1)/((2*terms+1)*(1-t*t))
+        return s, s+tail
+    lo, hi = reduced(x)
+    l2, u2 = reduced(Q(2))
+    return lo + k*(l2 if k >= 0 else u2), hi + k*(u2 if k >= 0 else l2)
+
+
+def outward_decimal_rat(bounds, denominator=10**9):
+    lo, hi = bounds
+    return [str(Q((lo*denominator).__floor__(), denominator)),
+            str(Q((hi*denominator).__ceil__(), denominator))]
+
+
+def seed_certificate():
+    n = 1000
+    harmonic = sum((Q(1, j) for j in range(1, n+1)), Q(0))
+    ln, un = log_interval(Q(n))
+    # RobinRationalBasis.eulerMascheroni_remainder_bounds, N=1000.
+    gamma = (harmonic-un-Q(1, 2*n), harmonic-ln-Q(1, 2*(n+1)))
+    assert gamma[0] > Q(577, 1000)
+    exp_lower = sum((Q(577, 1000)**j / factorial(j) for j in range(6)), Q(0))
+    assert exp_lower > Q(89, 50)
+    l, u = log_interval(Q(10080))
+    ll = (log_interval(l)[0], log_interval(u)[1])
+    assert ll[0] > Q(11, 5)
+    assert log_interval(Q(2))[0] > Q(2, 3)
+    assert log_interval(Q(20160))[1] < 10
+    z = zeta_body(10080)
+    gain = zeta_body(20160)-z
+    assert z == Q(39, 10) and gain == Q(13, 420)
+    assert Q(89, 50)*Q(11, 5)-z == Q(2, 125)
+    # log(1+x) >= x/(1+x) at x=log(2)/log(10080).
+    budget_lower = Q(89, 50)*Q(2, 3)/10
+    assert budget_lower == Q(89, 750) and budget_lower > gain
+    return {'gamma_enclosure': outward_decimal_rat(gamma),
+            'loglog10080_enclosure': outward_decimal_rat(ll),
+            'exp_gamma_lower': '89/50', 'delta10080_lower': '2/125',
+            'gain_10080_to_20160': str(gain), 'budget_lower': str(budget_lower),
+            'scope': 'strict rational bounds using standard log/exp and gamma remainder inequalities'}
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--H', type=int, default=5040)
@@ -99,9 +231,13 @@ def main():
     args = parser.parse_args()
     if args.H < 1:
         parser.error('H must be positive')
-    result = {'scope': 'finite exact integer temporal fibers and closure',
+    result = {'scope': 'finite exact temporal, projection, rank-shell and Robin diagnostics',
               'catalogue': temporal_catalogue(args.H),
-              'edge_moduli': [temporal_catalogue(h) for h in (1, 2, 3, 6, 8, 12)]}
+              'edge_moduli': [temporal_catalogue(h) for h in (1, 2, 3, 6, 8, 12)],
+              'projection': projection_diagnostics(args.H),
+              'edge_projections': [projection_diagnostics(h) for h in (1, 2, 3, 6, 8, 12)],
+              'direct_fiber_averages': [direct_projection(h) for h in (1, 2, 6, 12, 24, 60)],
+              'seed_10080': seed_certificate()}
     data = json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + '\n'
     if args.out:
         args.out.write_text(data, encoding='utf-8')

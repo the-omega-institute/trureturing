@@ -491,3 +491,5 @@ cmp "$run_root/output/refinement records.json" docs/reports/fib-robin-boundary/r
 ```
 
 `temporal_projection.py` 为 FIB §§134–135 的完整剩余时间模型提供可重建的有限目录。默认 `H=5040`，保留实际数量 `6H` 的共同来源，枚举一个零秩周期内的全部纤维及损失闭包，并检查小模数退化情形。只依赖 Python 3.9+ 标准库；运行 `python3 -B docs/reports/fib-robin-boundary/temporal_projection.py --out docs/reports/fib-robin-boundary/temporal_projection.json`，或指定正整数 `--H` 搜索其他模数。输出是精确有限实验，不是一般闭包或 RH 的形式证明。
+
+FIB §§136–137 使用同一程序的 `projection` 与 `seed_10080` 数据。`Fraction` 有理数检验时间 Möbius 壳、旧体/未来体素乘增量；小模数部分直接构造每个探针的纤维平均，独立对照 gcd 公式。种子证书使用带显式尾界的对数展开、调和数的 Euler 常数夹界及指数 Taylor 下和，保留向外取整的有理端点。它可用于搜寻其他 `--H` 的混合秩与候选增量；全称分析结论仍由正文的条件与推导承担。
