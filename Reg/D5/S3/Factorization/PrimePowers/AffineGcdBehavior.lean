@@ -2,6 +2,7 @@ import D5.S3.Factorization.PrimePowers.AffineGcdBehavior
 import Reg.Support.DependentFamily
 
 open _root_.D5.S3.Factorization.PrimePowers.AffineGcdBehavior
+open _root_.D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution (depth)
 open _root_.D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality (runWord)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -149,5 +150,161 @@ register_information_theorem affine_action_realization in arena
   escape continues (open)
 
 end Action
+
+namespace Local
+
+abbrev signature : Signature where
+  Params := Σ _ : Nat, Nat
+  State q := ZMod (q.1 ^ q.2)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ q z => depth q.1 q.2 0 z) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  refine ⟨⟨2, 1⟩, (0 : ZMod 2), (1 : ZMod 2), ?_⟩
+  have hzero : depth 2 1 0 (0 : ZMod 2) = 1 :=
+    ((D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result
+      2 1 (by decide)).2.1 0 0).2 rfl
+  have hone : depth 2 1 0 (1 : ZMod 2) ≠ 1 := by
+    intro h
+    have hz := ((D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result
+      2 1 (by decide)).2.1 0 1).1 h
+    exact (by decide : (1 : ZMod 2) ≠ 0) hz
+  change depth 2 1 0 (0 : ZMod 2) ≠ depth 2 1 0 (1 : ZMod 2)
+  rw [hzero]
+  exact Ne.symm hone
+
+namespace Signed
+
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ (p h e : Nat) (hp : p.Prime) (hh : 1 ≤ h) (heh : e ≤ h),
+    (∀ (x : ZMod (p ^ h)) (X : Int), (X : ZMod (p ^ h)) = x →
+      match localEncoding p h e hp hh heh x with
+      | .inl (r, u) => depth p h 0 x = r.val ∧ (p : Int) ^ r.val ∣ X ∧
+          ((X / (p : Int) ^ r.val : Int) : ZMod (p ^ (h - e))) = u
+      | .inr z => e ≤ depth p h 0 x ∧ (p : Int) ^ e ∣ X ∧
+          ((X / (p : Int) ^ e : Int) : ZMod (p ^ (h - e))) = z) ∧
+    (∀ X Y : Int,
+      localEncoding p h e hp hh heh (X : ZMod (p ^ h)) =
+        localEncoding p h e hp hh heh (Y : ZMod (p ^ h)) →
+      ∀ (a : ℕ+) (b : Int),
+        R.readout () ⟨p, h⟩
+            ((((a : Nat) : Int) * X + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) =
+          depth p h 0 ((((a : Nat) : Int) * Y + (p : Int) ^ e * b : Int) : ZMod (p ^ h)))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have h := (law 2 1 0 (by decide) (by decide) (by decide)).2 0 0 rfl
+    (1 : ℕ+) 0
+  have htop : depth 2 1 0 (0 : ZMod 2) = 1 :=
+    ((D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result
+      2 1 (by decide)).2.1 0 0).2 rfl
+  have h' : (0 : Nat) = depth 2 1 0 (0 : ZMod 2) := by
+    simpa [rejected, realize] using h
+  omega
+
+def registration : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨by
+    intro p h e hp hh heh
+    exact local_encoding_signed_response p h e hp hh heh,
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro i
+      exact nomatch i
+  dependence := Local.dependence
+
+register_information_theorem local_encoding_signed_response in arena
+  readout via (realize signature (fun _ q z => depth q.1 q.2 0 z)
+    (fun e => nomatch e))
+  realizes registration
+  escape from source ({
+    owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "arg", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateOperand := some #["arg"] }] })
+  escape continues (open)
+
+end Signed
+
+namespace Complete
+
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ (p h e : Nat) (hp : p.Prime) (hh : 1 ≤ h) (heh : e ≤ h),
+    (∀ X Y : Int,
+      localEncoding p h e hp hh heh (X : ZMod (p ^ h)) =
+        localEncoding p h e hp hh heh (Y : ZMod (p ^ h)) ↔
+      ∀ (a : ℕ+) (b : Int),
+        R.readout () ⟨p, h⟩
+            ((((a : Nat) : Int) * X + (p : Int) ^ e * b : Int) : ZMod (p ^ h)) =
+          depth p h 0 ((((a : Nat) : Int) * Y + (p : Int) ^ e * b : Int) : ZMod (p ^ h))) ∧
+    (∀ c : LocalCode p h e, ∃ X : Int,
+      localEncoding p h e hp hh heh (X : ZMod (p ^ h)) = c)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have h := ((law 2 1 0 (by decide) (by decide) (by decide)).1 0 0).1 rfl
+    (1 : ℕ+) 0
+  have htop : depth 2 1 0 (0 : ZMod 2) = 1 :=
+    ((D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result
+      2 1 (by decide)).2.1 0 0).2 rfl
+  have h' : (0 : Nat) = depth 2 1 0 (0 : ZMod 2) := by
+    simpa [rejected, realize] using h
+  omega
+
+def registration : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨by
+    intro p h e hp hh heh
+    exact local_encoding_complete p h e hp hh heh,
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro i
+      exact nomatch i
+  dependence := Local.dependence
+
+register_information_theorem local_encoding_complete in arena
+  readout via (realize signature (fun _ q z => depth q.1 q.2 0 z)
+    (fun e => nomatch e))
+  realizes registration
+  escape from source ({
+    owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "fn", "arg", "body", "body", "arg", "body", "body", "fn", "arg"]
+      stateOperand := some #["arg"] }] })
+  escape continues (open)
+
+end Complete
+
+end Local
 
 end Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior
