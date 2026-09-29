@@ -46,7 +46,43 @@ theorem coefficientRejectedLaw : ¬ coefficientArena.Law coefficientRejected := 
     (by intro x y _; exact Subsingleton.elim x y) PUnit.unit PUnit.unit
   norm_num [coefficientRejected, realize, actualCoefficient] at hbad
 
+theorem coefficientDependence : ObservationalDependence coefficientSignature coefficientActual := by
+  intro i
+  cases i
+  refine ⟨(), 1, 4, ?_⟩
+  norm_num [coefficientActual, realize]
+
+def coefficientRegistration : Registration coefficientArena
+    (coefficientArena.Law coefficientActual) where
+  actual := coefficientActual
+  bridge := Iff.rfl
+  variation := ⟨coefficientActualLaw, coefficientRejected, coefficientRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨coefficientRejected, ?_, rfl, coefficientRejectedLaw⟩
+      intro j h
+      exact (h (show j = i from @Subsingleton.elim Unit _ j i)).elim
+    · intro i
+      exact nomatch i
+  dependence := coefficientDependence
+
+register_information_theorem actual_coefficient_block in coefficientArena
+  readout via (realize coefficientSignature
+    (fun _ _ x => (Real.sqrt x : ℂ)⁻¹) (fun e => nomatch e))
+  realizes coefficientRegistration
+  escape from source ({
+    owner := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "fn", "arg"]
+      stateOperand := some #["arg", "arg", "arg"] }] })
+  escape continues (open)
+
 #print axioms coefficientActualLaw
 #print axioms coefficientRejectedLaw
+#print axioms coefficientRegistration
 
 end Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks
