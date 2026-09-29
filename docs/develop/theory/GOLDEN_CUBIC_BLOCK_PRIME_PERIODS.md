@@ -1159,3 +1159,64 @@ three-exponent branch under the stated support conditions; it does not
 assert the unrestricted GSE1 divisor bound or the five-exponent branch.
 
 ## 追加锚（本行以下为增补区）
+
+## 26. Degree of the actual Lucas-block Kummer tower
+
+Let $K=\mathbb Q(\omega)$, where $\omega^2+\omega+1=0$. For $j\geq1$,
+retain the actual block $B_j=L_{3^j}^2+3$ and let
+$\beta_j=\sqrt[3]{B_j}$ be its positive real cube root. Put
+$K_0=K$ and $K_m=K(\beta_1,\ldots,\beta_m)$ for $m\geq1$.
+
+**Theorem 26.1 (Lucas-block Kummer tower degree).** For every
+$J\geq1$,
+
+$$
+[K_J:K]=3^J.
+$$
+
+Proof. First the classes $[B_j]$ are independent in
+$K^\times/(K^\times)^3$. Indeed, suppose for some finite set of indices
+and exponents $e_j\in\{0,1,2\}$ that
+$\prod_j B_j^{e_j}=u^3$ with $u\in K^\times$.
+Taking the norm to $\mathbb Q$ gives
+$\prod_j B_j^{2e_j}=N_{K/\mathbb Q}(u)^3$.
+For each $j$, the noncube property of $B_j$ and unique factorization
+of integers supply a prime $p_j\mid B_j$ whose exponent
+$v_{p_j}(B_j)$ is not divisible by three. The prime-support
+disjointness of Theorem 2.1 makes $p_j$ divide no other block in
+the product. Its valuation in the norm equation gives
+$3\mid2e_jv_{p_j}(B_j)$, hence $e_j=0$.
+
+We use the following descent in each cubic stage. Suppose
+$K_i=K_{i-1}(\beta_i)$ has degree three. It is a cyclic Galois
+extension: $K_{i-1}$ contains $\omega$, and the conjugates of
+$\beta_i$ are $\beta_i,\omega\beta_i,\omega^2\beta_i$.
+Choose its generator $\sigma$ with
+$\sigma(\beta_i)=\omega\beta_i$. If $a\in K_{i-1}^\times$ is a cube
+in $K_i$, write $z^3=a$ with $z\in K_i^\times$. Then
+$(\sigma z/z)^3=1$, so $\sigma z/z=\omega^k$ for some
+$k\in\{0,1,2\}$. The quotient $c=z/\beta_i^k$ is fixed by
+$\sigma$, hence belongs to $K_{i-1}$, and
+
+$$
+a=c^3B_i^k.
+$$
+
+Induct on $m$. At $m=1$, independence says that $B_1$ is not a cube
+in $K_0$. For the inductive step, if $B_m$ were a cube in $K_{m-1}$,
+apply the descent successively through
+$K_{m-1}/K_{m-2},\ldots,K_1/K_0$.
+At the bottom it would give
+$B_m\prod_{i=1}^{m-1}B_i^{e_i}\in(K^\times)^3$ for suitable
+$e_i\in\{0,1,2\}$, contrary to independence. Thus $B_m$ is not a
+cube in $K_{m-1}$. The cubic polynomial $X^3-B_m$ is irreducible
+over that field, so $[K_m:K_{m-1}]=3$; multiplication of degrees
+proves the formula.
+
+The general Kummer correspondence behind this degree calculation is
+given in J. S. Milne, *Fields and Galois Theory*, v5.10 (2022),
+Theorem 5.30 and Remark 5.32, pp. 75-76. The conclusion concerns the
+degree over $\mathbb Q(\omega)$; it makes no discriminant or
+ramification assertion.
+
+## 追加锚（本行以下为增补区）

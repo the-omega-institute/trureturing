@@ -1,0 +1,7 @@
+## 26. Degree of the actual Lucas-block Kummer tower
+
+Let $K=\mathbb Q(\omega)$, where $\omega^2+\omega+1=0$. For $j\geq1$,
+retain the actual block $B_j=L_{3^j}^2+3$ and let
+$\beta_j=\sqrt[3]{B_j}$ be its positive real cube root. Put
+$K_0=K$ and $K_m=K(\beta_1,\ldots,\beta_m)$ for $m\geq1$.
+
