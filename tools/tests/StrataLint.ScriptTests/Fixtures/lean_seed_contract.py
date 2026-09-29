@@ -64,6 +64,40 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, CacheDeadline
         self.assertIn("current Inspector report is malformed", malformed.stdout)
         self.assertEqual([], list(self.remote.iterdir()))
 
+    def host_platform(self, system, machine):
+        # Seed compatibility follows the host that runs the transport.
+        write(self.bin / "sitecustomize.py", "import os, platform\n"
+              "platform.system = lambda: os.environ['FAKE_PLATFORM_SYSTEM']\n"
+              "platform.machine = lambda: os.environ['FAKE_PLATFORM_MACHINE']\n")
+        return {"PYTHONPATH": str(self.bin), "FAKE_PLATFORM_SYSTEM": system, "FAKE_PLATFORM_MACHINE": machine}
+
+    def test_arm64_seeds_are_shared_between_linux_and_macos_only(self):
+        seed = "locally-produced-olean"
+        for publisher, fetcher, run in [(("Linux", "aarch64"), ("Darwin", "arm64"), "123"),
+                                        (("Darwin", "arm64"), ("Linux", "aarch64"), "124")]:
+            with self.subTest(publisher=publisher, fetcher=fetcher):
+                shutil.rmtree(self.remote)
+                self.remote.mkdir()
+                write(self.root / ".lake/build/lib/lean/D5/A.olean", seed)
+                published = self.transport("publish", run, **self.host_platform(*publisher))
+                self.assertEqual(0, published.returncode, published.stdout + published.stderr)
+                self.assertIn('"status":"published"', published.stdout)
+                tag = next(self.remote.iterdir()).name
+                # Publication keeps its own platform partition and retention.
+                own = "linux-arm64" if publisher[0] == "Linux" else "darwin-arm64"
+                self.assertEqual(f"lean-cache-v2-{REV}-{own}-{run}-1", tag)
+                shutil.rmtree(self.root / ".lake/build")
+                for other in [("Darwin", "x86_64"), ("Linux", "x86_64")]:
+                    missed = self.transport("fetch", **self.host_platform(*other))
+                    self.assertEqual(1, missed.returncode, missed.stdout + missed.stderr)
+                    self.assertIn('"status":"miss"', missed.stdout)
+                    self.assertFalse((self.root / ".lake/build").exists())
+                restored = self.transport("fetch", **self.host_platform(*fetcher))
+                self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
+                self.assertIn(f'"resolved":"{tag}"', restored.stdout)
+                self.assertIn(f'"partition":"{REV}/{own}"', restored.stdout)
+                self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
 
 if __name__ == "__main__":
     unittest.main()

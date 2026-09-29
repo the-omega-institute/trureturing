@@ -1,0 +1,87 @@
+## 27. 六维接收中秩二附加态对后续环境的约束
+
+本节只研究以下分支：已知非退化来源
+$`m_0=a|0\rangle+b|1\rangle`$、$`m_1=|0\rangle`$，
+$`ab\ne0`$、$`|a|^2+|b|^2=1`$；一个六维寄存器从独立纯态启动，使用同一个全域 CPTP 通道，精确服务前五个完整参考终端；第二终端可逆编码中的固定附加态秩为二。第一终端的附加态允许秩一、二或三。
+
+按第23节的标准可逆编码结构，第二终端的三维档案支撑与二维附加因子已占满六维寄存器，可取
+
+$$
+K=Q\otimes\Gamma,
+\qquad Q=\operatorname{span}\{u,v,w\},\quad
+\dim\Gamma=2,
+\tag{27.1}
+$$
+
+其中 $`u,v,w`$ 正交归一，第二终端的固定附加态在 $`\Gamma`$ 上正定。这里的张量分解只描述可逆编码，并不声称附加态纯，也不把它免费移出接收器。
+
+记
+
+$$
+c=\sqrt{|a|^4+|b|^2},\qquad
+z=\frac{a^2u+bv}{c},\qquad
+H=\operatorname{span}\{z,w\},\quad
+G=\operatorname{span}\{u,w\}.
+\tag{27.2}
+$$
+
+有 $`H+G=Q`$、$`H\cap G=\mathbb Cw`$。第三轮接收前的实际输入支撑为
+
+$$
+L_3=(H\otimes\Gamma\otimes|0\rangle)
+\oplus(G\otimes\Gamma\otimes|1\rangle),
+\qquad \dim L_3=8.
+\tag{27.3}
+$$
+
+后续三个终端的 Bell 档案秩均为四，而 $`6<2\cdot4`$，所以其可逆编码均为单个等距，接收后的 $`JMK`$ 联合态纯。固定每轮的 Stinespring 等距
+$`V:K\otimes B\to K\otimes E`$。精确可逆编码的相邻纯化结构给一份等距 $`R:\Gamma\to E`$ 及 $`K`$ 中四个正交单位向量 $`s,r,t,j`$，使
+
+$$
+\begin{aligned}
+V(z\otimes\xi\otimes|0\rangle)&=s\otimes R\xi,&
+V(u\otimes\xi\otimes|1\rangle)&=r\otimes R\xi,\\
+V(w\otimes\xi\otimes|0\rangle)&=t\otimes R\xi,&
+V(w\otimes\xi\otimes|1\rangle)&=j\otimes R\xi
+\end{aligned}
+\quad(\xi\in\Gamma).
+\tag{27.4}
+$$
+
+为说明这里未额外假定第三轮环境纯，取第二终端附加态与旧环境的一份 Schmidt 展开
+
+$$
+\chi_2=\sum_{j=1}^2\sqrt{\lambda_j}\,\xi_j\otimes e_j,
+\qquad \lambda_j>0,
+\tag{27.4a}
+$$
+
+其中两侧各自正交归一。第三终端的 $`JMK`$ 边缘纯，故与累计环境成乘积。旧环境边缘未被后续局部操作改变，所以第三终端的固定环境纯态必可写为
+$`\sum_j\sqrt{\lambda_j}\,e_j\otimes R\xi_j`$，其中 $`R\xi_1,R\xi_2`$ 正交归一。对旧环境的 $`e_j`$ 系数以及四个线性独立的 $`JM`$ 系数分别比较，即得（27.4）在整个 $`\Gamma`$ 上成立；接收向量的正交归一性也由第三终端的等距编码给出。
+
+因此第三轮把附加因子等距排入新环境，前三轮累计环境仍可是一份内部纠缠的固定纯态。这里没有把 $`\xi`$ 固定成单一向量，也没有把旧环境的某个分支当成可访问的控制。
+
+置
+
+$$
+C_3=\operatorname{span}\{s,r,t,j\},\qquad
+F=R\Gamma\subseteq E.
+\tag{27.5}
+$$
+
+于是 $`\dim C_3=4`$、$`\dim F=2`$ 且
+
+$$
+V(L_3)=C_3\otimes F.
+\tag{27.6}
+$$
+
+记第四、第五终端的四维接收器支撑为 $`C_4,C_5`$。因为第三至第五终端的联合态纯，第四、第五轮新环境分别为来源无关的单位纯向量 $`\eta_4,\eta_5`$。记相应四维接收输入支撑为 $`L_4,L_5`$，则
+
+$$
+V(L_4)=C_4\otimes\mathbb C\eta_4,
+\qquad
+V(L_5)=C_5\otimes\mathbb C\eta_5.
+\tag{27.7}
+$$
+

@@ -1,0 +1,228 @@
+using System.Collections.Immutable;
+using System.Text;
+using StrataLint.Engine;
+using TemporaryFileSystem = StrataLint.TestSupport.TemporaryFileSystem;
+
+namespace StrataLint.TestSupport;
+
+internal static class DirectoryLedgerTestSupport
+{
+    internal static TemporaryDirectory UseGitDirectoryPointer(TemporaryDirectory repository)
+    {
+        var gitDirectory = new TemporaryDirectory();
+        var dotGit = Path.Combine(repository.Path, ".git");
+        if (Directory.Exists(dotGit)) Directory.Delete(dotGit);
+        File.WriteAllText(dotGit, "gitdir: " + gitDirectory.Path + "\n");
+        return gitDirectory;
+    }
+
+    internal static Dictionary<string, string> Project(IReadOnlyDictionary<string, string> files)
+    {
+        var ledger = BackfillInventoryLoader.Load(Decode(files));
+        var result = new Dictionary<string, string>(files, StringComparer.Ordinal);
+        RemoveLedger(result);
+        foreach (var source in ledger.RequireDigestionSources())
+        {
+            var projectedSource = source.Atomizer == AtomizerRegistry.NoAtomizerId
+                ? source
+                : source with
+                {
+                    GenreRegistryProjection = GenreRegistryProjection.Available(
+                        GenreRegistryCheck.Collected([])),
+                };
+            result[$"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml"] =
+                Encoding.UTF8.GetString(BackfillInventoryWriter.WriteSourceMetadata(projectedSource).AsSpan());
+            foreach (var entry in source.Entries)
+            {
+                var state = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)
+                    + "-"
+                    + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth);
+                result[$"{BackfillInventoryLoader.RootPath}{source.SourceId}/{state}/{entry.AtomId}.yaml"] =
+                    Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(entry).AsSpan());
+            }
+        }
+
+        return result;
+    }
+
+    internal static RawRepositorySnapshot Project(RawRepositorySnapshot snapshot)
+    {
+        var ledger = BackfillInventoryLoader.Load(Decode(snapshot));
+        var entries = snapshot.Entries
+            .Where(static entry =>
+                !string.Equals(entry.Path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
+                && !BackfillInventoryLoader.IsCanonicalPath(entry.Path))
+            .ToList();
+        foreach (var source in ledger.RequireDigestionSources())
+        {
+            var projectedSource = source.Atomizer == AtomizerRegistry.NoAtomizerId
+                ? source
+                : source with
+                {
+                    GenreRegistryProjection = GenreRegistryProjection.Available(
+                        GenreRegistryCheck.Collected([])),
+                };
+            entries.Add(new RawRepositoryEntry(
+                $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml",
+                BackfillInventoryWriter.WriteSourceMetadata(projectedSource)));
+            foreach (var entry in source.Entries)
+            {
+                var state = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)
+                    + "-"
+                    + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth);
+                entries.Add(new RawRepositoryEntry(
+                    $"{BackfillInventoryLoader.RootPath}{source.SourceId}/{state}/{entry.AtomId}.yaml",
+                    BackfillInventoryWriter.WriteAtom(entry)));
+            }
+        }
+
+        return RawRepositorySnapshot.Create(entries);
+    }
+
+    private static RepositorySnapshot Decode(IReadOnlyDictionary<string, string> files)
+    {
+        var raw = RawRepositorySnapshot.Create(files.Select(static pair =>
+            RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(raw)).Snapshot;
+    }
+
+    private static RepositorySnapshot Decode(RawRepositorySnapshot snapshot) =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(snapshot)).Snapshot;
+
+    internal static void ReplaceWithProjection(
+        IDictionary<string, string> files,
+        BackfillInventoryDocument ledger)
+    {
+        var projected = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var source in ledger.RequireDigestionSources())
+        {
+            projected[$"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml"] =
+                Encoding.UTF8.GetString(BackfillInventoryWriter.WriteSourceMetadata(source).AsSpan());
+            foreach (var entry in source.Entries)
+            {
+                var state = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)
+                    + "-"
+                    + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth);
+                projected[$"{BackfillInventoryLoader.RootPath}{source.SourceId}/{state}/{entry.AtomId}.yaml"] =
+                    Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(entry).AsSpan());
+            }
+        }
+
+        RemoveLedger(files);
+        foreach (var (path, text) in projected)
+        {
+            files[path] = text;
+        }
+    }
+
+    internal static void Write(string repositoryRoot, IReadOnlyDictionary<string, string> files)
+    {
+        foreach (var (path, text) in files.Where(static pair =>
+                     BackfillInventoryLoader.IsCanonicalPath(pair.Key)))
+        {
+            var outputPath = Path.Combine(
+                repositoryRoot,
+                path.Replace('/', Path.DirectorySeparatorChar));
+            Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+            File.WriteAllText(outputPath, text, new UTF8Encoding(false));
+        }
+    }
+
+    internal static string Image(string repositoryRoot)
+    {
+        var root = Path.GetFullPath(repositoryRoot);
+        var paths = TemporaryFileSystem.Directory.EnumerateFiles(
+                Path.Combine(root, BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar)),
+                "*",
+                SearchOption.AllDirectories)
+            .Order(StringComparer.Ordinal);
+        return string.Concat(paths.Select(path =>
+            Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/')
+            + "\0"
+            + Convert.ToBase64String(TemporaryFileSystem.File.ReadAllBytes(path))
+            + "\n"));
+    }
+
+    internal static string RepositoryImage(TemporaryDirectory repository)
+    {
+        var root = Path.GetFullPath(repository.Path);
+        return string.Concat(RepositoryFiles(repository)
+            .Order(StringComparer.Ordinal)
+            .Select(path => Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/')
+                + "\0"
+                + Convert.ToBase64String(TemporaryFileSystem.File.ReadAllBytes(path))
+                + "\n"));
+    }
+
+    internal static RawRepositorySnapshot ReadRepository(TemporaryDirectory repository) =>
+        RawRepositorySnapshot.Create(RepositoryFiles(repository)
+            .Select(path => new RawRepositoryEntry(
+                Path.GetRelativePath(repository.Path, path).Replace(Path.DirectorySeparatorChar, '/'),
+                ImmutableArray.CreateRange(TemporaryFileSystem.File.ReadAllBytes(path)))));
+
+    // Forms input for a subsequent fake gateway call, never a disk preservation oracle.
+    internal static Dictionary<string, string> OverlayRepositoryFiles(
+        TemporaryDirectory repository,
+        IReadOnlyDictionary<string, string> files)
+    {
+        var repositoryRoot = repository.Path;
+        var result = new Dictionary<string, string>(files, StringComparer.Ordinal);
+        foreach (var path in RepositoryFiles(repository))
+        {
+            var relative = Path.GetRelativePath(repositoryRoot, path)
+                .Replace(Path.DirectorySeparatorChar, '/');
+            result[relative] = TemporaryFileSystem.File.ReadAllText(path);
+        }
+
+        return result;
+    }
+
+    // Git administrative files are outside the repository content snapshot.
+    private static IEnumerable<string> RepositoryFiles(TemporaryDirectory repository)
+    {
+        var dotGit = Path.Combine(repository.Path, ".git");
+        return Directory.EnumerateFiles(repository.Path, "*", SearchOption.AllDirectories)
+            .Where(path => path != dotGit
+                && !path.StartsWith(dotGit + Path.DirectorySeparatorChar, StringComparison.Ordinal));
+    }
+
+    internal static string Image(BackfillInventoryDocument ledger)
+    {
+        var files = new List<(string Path, byte[] Bytes)>();
+        foreach (var source in ledger.RequireDigestionSources())
+        {
+            files.Add((
+                $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml",
+                BackfillInventoryWriter.WriteSourceMetadata(source).ToArray()));
+            foreach (var entry in source.Entries)
+            {
+                var state = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)
+                    + "-"
+                    + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth);
+                files.Add((
+                    $"{BackfillInventoryLoader.RootPath}{source.SourceId}/{state}/{entry.AtomId}.yaml",
+                    BackfillInventoryWriter.WriteAtom(entry).ToArray()));
+            }
+        }
+
+        return string.Concat(files
+            .OrderBy(static file => file.Path, StringComparer.Ordinal)
+            .Select(static file => file.Path
+                + "\0"
+                + Convert.ToBase64String(file.Bytes)
+                + "\n"));
+    }
+
+    private static void RemoveLedger(IDictionary<string, string> files)
+    {
+        files.Remove(BackfillInventoryLoader.RelativePath);
+        foreach (var path in files.Keys
+                     .Where(BackfillInventoryLoader.IsCanonicalPath)
+                     .ToArray())
+        {
+            files.Remove(path);
+        }
+    }
+}

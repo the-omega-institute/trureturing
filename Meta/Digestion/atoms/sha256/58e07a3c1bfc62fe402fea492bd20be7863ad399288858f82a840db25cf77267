@@ -1,0 +1,2 @@
+**证明。** 向量场光滑、全局有界，并且对固定 $\varepsilon$ 是全局 Lipschitz，故正反时间的解均全局存在且流可逆。速度范数至多 $\varepsilon$，积分给均匀轨迹界。原点是固定点，线性化矩阵为 $\operatorname{diag}(1/\varepsilon,0)$；其变分流是 $\operatorname{diag}(e^{t/\varepsilon},1)$，拉回二形式恰乘行列式，得到公式。相应瞬时缺陷也可直接算为 $d(\iota_{\widetilde X_\varepsilon}\Omega)=\varepsilon^{-1}\cos(q/\varepsilon^2)dq\wedge dp$。本例说明某类损失函数缺少微分控制，不是对所有带正则化的学习算法作不可能性判断。证毕。
+

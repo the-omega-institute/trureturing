@@ -1,0 +1,44 @@
+**定理48.2（一般低秩轨道的有限延拓上界）。** 对任意 $d$ 维 CPTP 通道、任意初态及 $1\le r<d$，若
+
+$$
+\operatorname{rank}\sigma_n\le r
+\qquad(0\le n\le d^{r+1}-1),
+\tag{48.13}
+$$
+
+则全部以后时刻也满足该秩界。
+
+证明。置 $\ell=r+1\le d$，在 $\widetilde H=(\mathbb C^d)^{\otimes\ell}$ 上取反对称投影 $P_{\mathrm{alt}}$。对半正定态 $\sigma$，按其谱分解直接计算可得
+
+$$
+\operatorname{Tr}(P_{\mathrm{alt}}\sigma^{\otimes\ell})
+=\sum_{1\le i_1<\cdots<i_\ell\le d}
+\lambda_{i_1}(\sigma)\cdots\lambda_{i_\ell}(\sigma).
+\tag{48.14}
+$$
+
+各特征值非负，所以该式为零当且仅当 $\operatorname{rank}\sigma\le r$。又因 $P_{\mathrm{alt}}$ 是正交投影、$\sigma^{\otimes\ell}$ 半正定，迹为零当且仅当后者的支撑包含于 $\ker P_{\mathrm{alt}}$。
+
+令 $\widetilde\Phi=\Phi^{\otimes\ell}$，则 $\sigma_n^{\otimes\ell}=\widetilde\Phi^n(\sigma_0^{\otimes\ell})$。记 $\mathcal A$ 为其有限张量 Kraus 表，定义
+
+$$
+S_n=\operatorname{supp}(\sigma_n^{\otimes\ell}),\qquad
+W_n=\sum_{j=0}^nS_j.
+\tag{48.15}
+$$
+
+正项之和的支撑为各正项支撑之和，因此
+
+$$
+S_{n+1}=\sum_{A\in\mathcal A}AS_n,
+\qquad
+W_{n+1}=W_0+\sum_{A\in\mathcal A}AW_n.
+\tag{48.16}
+$$
+
+特别地，若 $W_{n+1}=W_n$，则每个 $A$ 都保持 $W_n$，所以之后的全部支撑均留在 $W_n$。
+
+置 $\widetilde d=d^\ell$。由（48.13）—（48.14），$W_0,\ldots,W_{\widetilde d-1}$ 全部包含于 $\ker P_{\mathrm{alt}}$。由于 $\ell\le d$，反对称子空间非零，故这个核是真子空间，维数至多 $\widetilde d-1$。另一方面，$W_0$ 至少一维。如果这 $\widetilde d-1$ 次相邻包含全部严格，则 $W_{\widetilde d-1}$ 至少 $\widetilde d$ 维，矛盾。因此某次相邻包含相等，此后的支撑永久留在同一个 $\ker P_{\mathrm{alt}}$ 内。再用（48.14），得到所有未来时刻的秩界。证明完毕。
+
+这个上界只用于区分“没有统一多项式界”与“没有有限界”。它未声称最优；特别在 $r=1$ 时，第45节已将这里的平方级界 $d^2-1$ 收紧到逐维精确的线性阈值 $2d-1$。
+

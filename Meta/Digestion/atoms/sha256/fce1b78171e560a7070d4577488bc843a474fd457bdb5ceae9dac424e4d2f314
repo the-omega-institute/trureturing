@@ -1,0 +1,66 @@
+### 73.3 中心块负响应的准确最大值
+
+定义不含末支撑相干项的中心算符
+
+$$
+Z_\delta=Y_*-\delta|w\rangle\langle w|+\delta|h\rangle\langle h|.
+\tag{73.7}
+$$
+
+它被第 72 节的两个角局部相位群保持。将任意给定 $(C,E)$ 按该群平均，不改变 $-\operatorname{Tr}(Z_\delta E)$，也不改变原对角参数 $q,s$；平均后的反馈矩阵为
+
+$$
+\overline C=\operatorname{diag}(q,1-s,1-q,s).
+$$
+
+因此对于中心项可以在这个对角反馈下求上界，同时保留原 tester 在式（73.6）中的同一个 $s$。
+
+加权 $Z_\delta$ 在 $x,y$ 上的主块为
+
+$$
+B_{q,\delta}=
+\begin{pmatrix}
+(1-\delta)q&(1/2-\delta)\sqrt{q(1-q)}\\
+(1/2-\delta)\sqrt{q(1-q)}&-\delta(1-q)
+\end{pmatrix}.
+\tag{73.8}
+$$
+
+其迹为 $q-\delta$，行列式为 $-q(1-q)/4$。唯一可能的负本征值绝对值为
+
+$$
+n_\delta(q)=
+\frac{\sqrt{\delta^2+(1-2\delta)q}-q+\delta}{2}.
+\tag{73.9}
+$$
+
+其余非零部分只有 $h$ 上的负本征值 $-p(1-s)$。故任意原 tester 满足
+
+$$
+-\operatorname{Tr}(Z_\delta E)
+\le p(1-s)+n_\delta(q).
+\tag{73.10}
+$$
+
+在 $0<\delta\le1/4$ 上，式（73.9）是 $q\in[0,1]$ 的凹函数，最大点为
+
+$$
+q_\delta=\frac{1-4\delta}{4(1-2\delta)}\in[0,1].
+$$
+
+可直接求导确认；在 $\delta=1/4$ 时最大点位于 $q=0$。代入得到
+
+$$
+F_\delta:=p+\max_{0\le q\le1}n_\delta(q)
+=\frac98-\frac34\delta+
+\frac{\delta^2}{2(1-2\delta)}.
+\tag{73.11}
+$$
+
+因此中心负响应具有保留末支撑质量罚项的界
+
+$$
+-\operatorname{Tr}(Z_\delta E)\le F_\delta-p s.
+\tag{73.12}
+$$
+

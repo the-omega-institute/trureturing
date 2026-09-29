@@ -1,0 +1,21 @@
+**定理278.1（未知共同相位的统一自适应预算）。** 对（278.1）—（278.10）的固定来源和访问合同，在充分小的 $h>0$ 下，
+$$
+\boxed{
+\frac{2}{3\delta}
+\le N_{\rm ad}(\delta)
+\le
+\left\lceil\frac{576}{\delta}\right\rceil
++\left\lceil\frac{8n}{\delta}\right\rceil.
+}
+\tag{278.39}
+$$
+因此
+$$
+\boxed{
+N_{\rm ad}(\delta)=\Theta(\delta^{-1})
+=\Theta(h^{-2n}),
+}
+\tag{278.40}
+$$
+且上界错误保证对共同未知相位 $\phi$ 一致。渐近常数可以依赖固定的 $n,Q,C,k$。
+

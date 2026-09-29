@@ -1,0 +1,43 @@
+### 46.3 对任意编码器有效的有限相位探针
+
+给任意概率向量 $w=(w_0,\ldots,w_{M_*-1})$，定义探针相位态
+
+$$
+|\psi^w_\theta\rangle
+=\sum_\ell\sqrt{w_\ell}e^{i\ell\theta}|\ell\rangle.
+\tag{46.13}
+$$
+
+对固定 Bell 初始输入，在（46.5）的完整目标中只把 $|\psi_\theta\rangle$ 替换为 $|\psi^w_\theta\rangle$，得到单位探针 $|\Xi^w_\theta\rangle$。真实目标与探针的投影重叠恰为
+
+$$
+|\langle\Xi^w_\theta,\Psi_\theta\rangle|^2
+=\left(\sum_\ell\sqrt{a_\ell w_\ell}\right)^2.
+\tag{46.14}
+$$
+
+若 Bell 输入的 Haar 平均半迹误差不超过 $\epsilon$，测量这个依相位定义的探针投影并积分，恢复输出的平均投影概率至少为（46.14）减去 $\epsilon$。探针只用于下界证明，不要求编码器知道实际相位或实施这个测量。
+
+设接收维数为 $D_K$、共同解码为 $\mathcal D$，记 $\tau=\mathcal D(I_K)$，故 $\operatorname{Tr}\tau=D_K$。每个编码联合态不超过 $I_{RM}\otimes I_K$，解码正性给恢复态不超过 $I_{RM}\otimes\tau$。将探针投影先对外部参考和活动记忆偏迹，再作相位 Haar 平均，在规范档案坐标中恰得
+
+$$
+\int\operatorname{Tr}_{RM}
+|\Xi^w_\theta\rangle\langle\Xi^w_\theta|\,d\theta
+=\frac{I_{IJ}}4\otimes
+\sum_\ell w_\ell|\ell\rangle\langle\ell|.
+\tag{46.15}
+$$
+
+其中最大特征值为 $\max_\ell w_\ell/4$。返回原档案支撑的等距不改变该谱，支撑外只有零特征值。因此
+
+$$
+\boxed{
+D_K\ge
+4\frac{\left(\sum_\ell\sqrt{a_\ell w_\ell}\right)^2-\epsilon}
+{\max_\ell w_\ell}.
+}
+\tag{46.16}
+$$
+
+该必要界对任意共同 CPTP 编解码成立，包括联合操作端点与相位寄存器的编码器。它也适用于较弱的 Haar 平均 Bell 合同，所以当然适用于全相位最坏误差。这里精确使用探针平均态的档案边缘谱，没有把源 Haar 平均谱的最佳低秩截断当成全相位最优压缩，也没有把某个 Schmidt 切面的尾质量当成压缩合同的充分必要条件。
+

@@ -1,0 +1,60 @@
+**定理 199.2（集合条件化的概率区间与误差放大）。** 对两个非空紧状态集 $\mathfrak R,\mathfrak S$，令
+
+$$
+\varepsilon=D_H(\mathfrak R,\mathfrak S).
+$$
+则
+
+$$
+\boxed{
+\left|p^-_\Phi(\mathfrak R)-p^-_\Phi(\mathfrak S)\right|
+\le\varepsilon,
+\qquad
+\left|p^+_\Phi(\mathfrak R)-p^+_\Phi(\mathfrak S)\right|
+\le\varepsilon.
+}
+\tag{199.2}
+$$
+
+若存在 $p_*>0$ 使
+
+$$
+\inf_{\rho\in\mathfrak R\cup\mathfrak S}p_\Phi(\rho)\ge p_*>
+0,
+$$
+则
+
+$$
+\boxed{
+D_H\!\left(\mathsf C_\Phi(\mathfrak R),
+\mathsf C_\Phi(\mathfrak S)\right)
+\le
+\frac{\varepsilon}{p_*}.
+}
+\tag{199.3}
+$$
+
+### 证明
+
+由于 $0\le B\le I$，迹距离的对偶表述给出
+
+$$
+|p_\Phi(\rho)-p_\Phi(\sigma)|
+=|\operatorname{Tr}[(\rho-\sigma)B]|
+\le D(\rho,\sigma).
+$$
+
+对紧集取最小值与最大值，得到（199.2）。
+
+任取 $\rho\in\mathfrak R$。由 Hausdorff 距离和紧性，存在 $\sigma\in\mathfrak S$ 使 $D(\rho,\sigma)\le\varepsilon$。定理 25.2 应用于同一个分支 $\Phi$，并利用 $p_\Phi(\rho),p_\Phi(\sigma)\ge p_*$，得到
+
+$$
+D\!\left(
+\frac{\Phi(\rho)}{p_\Phi(\rho)},
+\frac{\Phi(\sigma)}{p_\Phi(\sigma)}
+\right)
+\le\frac{\varepsilon}{p_*}.
+$$
+
+交换 $\mathfrak R,\mathfrak S$ 得到反向包含的同一界，故有（199.3）。证毕。
+

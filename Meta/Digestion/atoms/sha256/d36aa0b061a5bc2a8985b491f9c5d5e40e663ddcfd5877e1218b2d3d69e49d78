@@ -1,0 +1,10 @@
+**定理265.2（四次根障碍）。** 上述来源族满足
+$$
+\boxed{
+\varepsilon(\Omega_h)=16\sqrt{13}\,h^4,
+\qquad
+h\le\|\Omega_h-\Omega_0\|_1<2h.
+}
+\tag{265.11}
+$$
+

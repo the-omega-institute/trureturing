@@ -1,0 +1,16 @@
+**引理154.5（最优解码的统一扰动界）。** 有
+
+$$
+|\mathfrak h(\mathcal R)-\mathfrak h(\mathcal S)|
+\le\frac12\|\mathcal R-\mathcal S\|_\diamond,
+\tag{154.20}
+$$
+
+以及
+
+$$
+|e_n-\mathfrak h(\mathcal R_n)|\le\delta_n
+\qquad(n\ge3).
+\tag{154.21}
+$$
+

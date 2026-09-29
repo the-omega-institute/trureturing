@@ -1,0 +1,11 @@
+**定理 18.6（没有确定暗方向等价于所有态最终点击）。** 定义 18.1 下，下列条件等价：$\mathcal D=\{0\}$；$F=0$；$I-\mathcal A^d(I)$ 正定；每个初态最终点击概率为一。
+
+证明。有限核判据给出第一与第三项等价；第二与第四项由迹分离得到。$F=0$ 显然推出 $\mathcal D=0$。反之若 $F\ne0$，令 $\lambda=\|F\|>0$，$M$ 为其最大本征空间。对单位 $v\in M$，
+
+$$
+\lambda=\sum_\alpha\langle Q_\alpha v,FQ_\alpha v\rangle
+\le\lambda\sum_\alpha\|Q_\alpha v\|^2\le\lambda.
+$$
+
+等号迫使所有点击振幅为零，并使每个 $Q_\alpha v$ 属于 $M$。所以 $M$ 是非零不变暗子空间，包含于 $\mathcal D$。矛盾。该论证也表明非零 $F$ 必有本征值一，但其其他本征值不必为零；定理 18.3 给出后一情形。$\square$
+

@@ -76,11 +76,11 @@ internal sealed class ExecutionFixture : IDisposable
         TemporaryFileSystem.File.WriteAllText(path, manifest);
     }
 
-    internal void WriteTrx(string directory, string outcome)
+    internal void WriteTrx(string directory, string outcome, string? assembly = null)
     {
         TemporaryFileSystem.Directory.CreateDirectory(directory);
         var executed = outcome == "NotExecuted" ? 0 : 1;
-        var assembly = Path.GetFileName(directory) == "1" ? "Second" : "First";
+        assembly ??= Path.GetFileName(directory) == "1" ? "Second" : "First";
         TemporaryFileSystem.File.WriteAllText(Path.Combine(directory, "execution.trx"), $"""
             <TestRun><Results><UnitTestResult testId="one" testName="Fixture.Runs" outcome="{outcome}" /></Results>
             <TestDefinitions><UnitTest id="one" storage="{assembly}.dll"><TestMethod className="Fixture" name="Runs" /></UnitTest></TestDefinitions>

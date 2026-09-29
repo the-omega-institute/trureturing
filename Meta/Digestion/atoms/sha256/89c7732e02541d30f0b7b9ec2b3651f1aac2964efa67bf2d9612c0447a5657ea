@@ -1,0 +1,17 @@
+**定理89.3（七维候选的固定酉替代）。** 若存在本节合同中的七维接收器，则存在一个固定酉
+
+$$
+W:K\otimes B\longrightarrow K\otimes F,\qquad \dim F=2,
+\tag{89.7}
+$$
+
+使新全域 CPTP 通道
+
+$$
+\widetilde{\mathcal C}(X)
+=\operatorname{Tr}_F(WXW^*)
+\tag{89.8}
+$$
+
+在前六轮对任意初始输入与任意参考都产生与原接收器完全相同的联合状态。因此同一个独立纯初态和原六个终端解码器仍满足完整合同。
+

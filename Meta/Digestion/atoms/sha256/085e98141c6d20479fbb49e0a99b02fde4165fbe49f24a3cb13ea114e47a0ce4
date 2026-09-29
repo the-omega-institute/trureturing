@@ -1,0 +1,68 @@
+### 280.5 整段二次小谱的保真度损失
+
+在选定记录的共同本征基中，
+$$
+p_j=\frac{\lambda_j}{4n},\qquad
+q_j=\frac{(1-\delta)\lambda_j+\delta}{4n},\qquad
+q_j-p_j=\frac{\delta(1-\lambda_j)}{4n}.
+\tag{280.30}
+$$
+置 $u_0=19/23$。由（280.28），$u_0\le1-\lambda_j\le1$，且
+$$
+\frac{\lambda_j+\delta}{4n}\le p_j+q_j
+\le\frac{\lambda_j+\delta}{2n}.
+$$
+因此每项平方根损失满足
+$$
+\frac{u_0^2\delta^2}{32n(\lambda_j+\delta)}
+\le\frac12(\sqrt{p_j}-\sqrt{q_j})^2
+\le\frac{\delta^2}{8n(\lambda_j+\delta)}.
+\tag{280.31}
+$$
+使用（280.27）及 $c_0<1,C_0<1$，选定记录的损失与
+$$
+\frac{\delta^2}{n}\sum_{j=1}^n\frac1{\delta+(j/n)^2}
+=n\delta^2\sum_{j=1}^n\frac1{j^2+x^2},\qquad x=n\sqrt\delta
+\tag{280.32}
+$$
+一致可比。
+
+为核对全部联合参数范围，注意 $0<x\le n/\sqrt2$。若 $x\le1$，首项至少为 $1/2$，全和至多 $\sum_{j\ge1}j^{-2}<2$。若 $x\ge1$，前 $\lfloor x\rfloor$ 项存在且每项至少为 $1/(2x^2)$，而 $\lfloor x\rfloor\ge x/2$；另一方面单调积分比较给
+$$
+\sum_{j=1}^n\frac1{j^2+x^2}
+\le\int_0^\infty\frac{ds}{s^2+x^2}
+=\frac\pi{2x}.
+$$
+两种情形合并可统一写成
+$$
+\boxed{
+\frac1{4(1+x)}
+\le\sum_{j=1}^n\frac1{j^2+x^2}
+\le\frac4{1+x}.
+}
+\tag{280.33}
+$$
+该式包括 $n=1$；此时始终处于 $x<1$ 的第一种情形。
+
+记
+$$
+T_C(n,\delta)=\frac{n\delta^2}{1+n\sqrt\delta}.
+\tag{280.34}
+$$
+由（280.31）—（280.33），选定记录对 $1-F$ 的贡献在
+$u_0^2T_C/128$ 与 $T_C/(2c_0)$ 之间。其他 $3n$ 个记录概率由（280.29）给总贡献至多 $3\delta^2/(32b_C)$。因为
+$$
+\frac n{1+n\sqrt\delta}\ge\frac1{1+1/\sqrt2},
+$$
+该余项被固定常数乘 $T_C$ 吸收。最后乘以 $1+F\in[1,2]$，对
+$a_C=1-F(\sigma_n(\theta_c),\sigma_{n,\delta}(\theta_c))^2$ 得到明确常数
+$$
+c_C:=\frac{(19/23)^2}{128},\qquad
+C_C:=\frac1{c_0}+\frac{3(1+1/\sqrt2)}{16b_C},
+$$
+$$
+\boxed{c_C T_C(n,\delta)\le a_C\le C_C T_C(n,\delta).}
+\tag{280.35}
+$$
+与对齐方向不同，这里的主要量来自一整段二次谱的倒数和。当 $n\sqrt\delta$ 很大时，约有 $n\sqrt\delta$ 个模式满足 $\lambda_j$ 不超过扰动尺度；这些模式及其后的谱尾共同产生 $\delta^{3/2}$ 阶，而非单个零方向的 $\delta/n$ 阶。
+

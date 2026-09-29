@@ -31,7 +31,13 @@ internal static class LeanDeclarationSourceNames
             else if (token == "end" && scopes.TryPop(out var previous)) currentNamespace = previous;
             else if (token is "theorem" or "lemma" or "def" or "instance" or "abbrev" or "structure"
                 && i + 1 < tokens.Length && IsName(tokens[i + 1]))
-                names[Qualify(currentNamespace, tokens[++i])] = token;
+            {
+                var isPrivate = false;
+                for (var modifier = i - 1; modifier >= 0
+                    && tokens[modifier] is "private" or "protected" or "noncomputable" or "unsafe" or "partial"; modifier--)
+                    isPrivate |= tokens[modifier] == "private";
+                names[Qualify(currentNamespace, tokens[++i])] = isPrivate ? "private " + token : token;
+            }
         }
         return names.ToImmutable();
     }

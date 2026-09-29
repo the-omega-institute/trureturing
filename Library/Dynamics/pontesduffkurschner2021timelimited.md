@@ -51,3 +51,15 @@ A concrete tied-weight example separates stability from minimality: `A=[[0,1],[0
 | One original-system construction with stability and both error bounds | `OrderedStableBalancedTruncation.ordered_stable_reduction` |
 
 All module paths begin `D5/S3/Observer/Hankel/`. These sources formalize a classical mechanism and its repository integration; there is no claim of a new error constant, historical priority, a new periodic theorem, or an executed numerical balancing algorithm. Lean kernel acceptance and Scribe emission were not performed in this authoring environment.
+
+## Stable Stein equation used in quantum rank bounds
+
+Equation (4b) of `arXiv:1902.01652v1` gives the infinite observability Gramian for a stable discrete-time matrix. The accompanying equation (5b) prints `A^T Q_infinity A^T`; its final transpose is a typographical error. The series in (4b) instead yields `A^T Q_infinity A`, as does direct index shifting. The corresponding complex finite-dimensional identity is
+
+```math
+Q-V^\dagger QV=C,\qquad
+Q=\sum_{n=0}^{\infty}(V^\dagger)^nCV^n
+\quad(\rho(V)<1).
+```
+
+Quantum volume section 216 uses this classical iteration with the rank-one defect `C=c(I-V^*V)`, whose Gramian telescopes to `cI`. At the unit-circle exception it separates the reducing unit line before applying the stable equation. The source supplies the stable Gramian mechanism; the cross-Gram rank constraints, original-program dimension bounds, and exact channel constructions are repository deductions. No rank-constrained quantum-program theorem is attributed to this paper.

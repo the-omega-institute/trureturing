@@ -4,13 +4,25 @@ import LeanInformationAudit.Tests.Occurrence.JointImport.Second
 open Lean LeanInformationAudit
 open LeanInformationAudit.Tests.Occurrence.JointImport
 
+-- Source syntax must resolve both real public declarations after joint import.
+open LeanInformationAudit.Tests.Occurrence.JointImport.First in
+#check LeanInformationAudit.Tests.Occurrence.JointImport.shared.__information_unit
+open LeanInformationAudit.Tests.Occurrence.JointImport.Second in
+#check LeanInformationAudit.Tests.Occurrence.JointImport.shared.__information_unit
+
 /-! Separately compiled roots must retain their own catalogs for the same occurrence. -/
 run_cmd do
   let env ← getEnv
   let roots := #[`LeanInformationAudit.Tests.Occurrence.JointImport.First,
     `LeanInformationAudit.Tests.Occurrence.JointImport.Second]
-  unless (InformationRegistry.entries env).size == 2 do
-    throwError "joint import lost source registrations"
+  let entries := InformationRegistry.entries env
+  unless entries.size == 2 && entries.map (·.registrationModuleName) == roots &&
+      entries.all (·.theoremName == ``shared) do
+    throwError "joint import lost or reordered repeated theorem occurrences"
+  for name in #[``shared, `JointImportMissingTheorem] do
+    unless InformationRegistry.hasTheorem env name ==
+        entries.any (fun row => row.theoremName == name) do
+      throwError "joint import membership differs from repeated ordered entries"
   let mut generated : Array Name := #[]
   for root in roots do
     let records := SealRecords.forRoot env root
@@ -29,6 +41,12 @@ run_cmd do
         occurrence.certificateName.getPrefix.str "__escape_enriched"] do
       unless (env.getModuleIdxFor? name).map (env.header.moduleNames[·.toNat]!) == some root do
         throwError "generated declaration has the wrong module owner: {name}"
+      unless name == root ++ (``shared).str name.getString! ||
+          name == root ++ (``arena).str name.getString! do
+        throwError "generated declaration is not under its supplied public prefix: {name}"
+      if env.contains ((``shared).str name.getString!) ||
+          env.contains ((``arena).str name.getString!) then
+        throwError "joint import published an unqualified companion alias"
       if generated.contains name then
         throwError "joint import merged generated declarations: {name}"
       generated := generated.push name

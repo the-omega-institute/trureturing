@@ -1,0 +1,78 @@
+**定理 95.2（暗态后继旋转的二阶泄漏与等待）。** 对充分小的 $\theta\ne0$，$\Gamma_\theta$ 对所有初态终止，且
+
+$$
+\boxed{
+1-r(\Gamma_\theta)=a_*\theta^2+O(|\theta|^3),
+\qquad
+a_*=
+\frac{e}{1-v}\frac{1-|d|^2}{|1-d|^2}>0.
+}
+\tag{95.2}
+$$
+
+因此
+
+$$
+\boxed{M(\Gamma_\theta)\sim\frac1{a_*\theta^2}.}
+\tag{95.3}
+$$
+
+证明。点击效果仍是 $E=e(I-P)$。若旋转后的仪器失效，则其固定密度矩阵仍必须支撑在 $\ker E=\mathbb C\psi$，只能为 $P$。但
+
+$$
+\mathcal N_\theta(P)=U_\theta P U_\theta^\dagger\ne P
+$$
+
+对充分小的非零 $\theta$ 成立。因此它不失效。
+
+简单特征值及其谱投影随这个实解析矩阵族实解析变化：这也可由特征多项式在简单根处的隐函数定理及式（93.4）直接得到。取 trace 归一化的 Hermitian 特征矩阵
+
+$$
+\sigma_\theta=
+\begin{pmatrix}1-y(\theta)&z(\theta)\\
+\overline{z(\theta)}&y(\theta)\end{pmatrix},
+\qquad
+\mathcal N_\theta(\sigma_\theta)=r(\Gamma_\theta)\sigma_\theta,
+\qquad \sigma_0=P.
+\tag{95.4}
+$$
+
+它可由状态侧谱投影作用于 $P$ 后除以迹获得；该迹在零点为一，故在邻域内非零。下面的展开只需这些解析特征方程，不先假定特征矩阵的正性。
+
+沿用 $k=\sum_j\overline{b_j}a_j$。未旋转的状态映射为
+
+$$
+\mathcal N_{\Gamma_*}(\sigma_\theta)=
+\begin{pmatrix}
+1-y+\beta y&\overline d\,z+\overline k\,y\\
+d\overline z+ky&vy
+\end{pmatrix}.
+\tag{95.5}
+$$
+
+取迹先得准确关系
+
+$$
+r(\Gamma_\theta)=1-ey(\theta).
+\tag{95.6}
+$$
+
+令 $y(\theta)=y_1\theta+y_2\theta^2+O(|\theta|^3)$，
+$z(\theta)=z_1\theta+O(\theta^2)$。将式（95.5）左右乘旋转矩阵，并与式（95.4）的右侧比较。右下角的一阶项给 $y_1=vy_1$，故 $y_1=0$；右上角的一阶项给
+
+$$
+z_1=1+\overline d\,z_1,
+\qquad z_1=\frac1{1-\overline d}.
+$$
+
+右下角的二阶项于是给
+
+$$
+(1-v)y_2
+=1+2\operatorname{Re}(\overline d\,z_1)
+=\frac{1-|d|^2}{|1-d|^2}.
+\tag{95.7}
+$$
+
+其中 $\overline k\,y$ 只在该角的三阶及更高项出现。由式（95.6）得式（95.2）；$e>0,v<1,|d|<1$ 保证 $a_*>0$。最后对 $\Gamma_\theta\to\Gamma_*\in\mathfrak F_R$ 应用式（93.2），得到式（95.3）。$\square$
+

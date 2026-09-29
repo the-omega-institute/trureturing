@@ -1,0 +1,31 @@
+### 276.4 完整数据唯一时，可分性等价于加权酉性
+
+定理275.3表明：（276.2）的完整数据纤维唯一，当且仅当
+$$
+\operatorname{spec}(M)\subseteq\mathbb S^1.
+\tag{276.19}
+$$
+在这个子类中，设最大Jordan块长为 $m$，则标准奇异度为 $m$，完整数据的锐局部逆指数为 $1/(2m)$；这些结论的竞争类仍包含所有密度态。
+
+将前述标准结构用于（276.19）的唯一来源子类，得到
+$$
+\boxed{
+\Omega(Q,M)\text{ 可分}
+\quad\Longleftrightarrow\quad A\text{ 酉}
+\quad\Longleftrightarrow\quad M^\dagger QM=Q.
+}
+\tag{276.20}
+$$
+
+**证明。** $A$ 与 $M$ 相似，故所有本征值模长为一。若 $A$ 正规，谱定理将其酉对角化为单位模长的对角矩阵，因此 $A$ 酉；酉矩阵当然正规。最后，
+$$
+A^\dagger A=I_n
+\quad\Longleftrightarrow\quad
+Q^{-1/2}M^\dagger QMQ^{-1/2}=I_n
+\quad\Longleftrightarrow\quad M^\dagger QM=Q.
+\tag{276.21}
+$$
+结合（276.12）即得结论。$\square$
+
+非平凡Jordan链不可能属于正规矩阵，所以在唯一来源子类中，$m\ge2$ 必使来源NPT纠缠。下一例说明NPT纠缠也能出现在 $m=1$ 时：最长链描述的恢复深度，还不能单独判定权重与不同谱相位之间的纠缠关系。
+

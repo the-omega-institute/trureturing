@@ -1,0 +1,16 @@
+## 定理 387.1（精确混叠判据）
+
+对 $z'(t)=a'e^{i\omega't}$，
+
+$$
+S_\Delta(z)=S_\Delta(z')
+\Longleftrightarrow
+ a=a',\quad(\omega'-\omega)\Delta\in2\pi\mathbb Z .
+$$
+
+### 证明
+
+$n=0$ 给出 $a=a'$，$n=1$ 给出 $e^{i(\omega'-\omega)\Delta}=1$。反向蕴含由整数倍采样立即成立。∎
+
+若 $\omega\Delta=2\pi k$ 且 $k\ne0$，所有样本均为 $a$，但 $z$ 仍是非恒定函数。只观察模长时，纯相位频率不具可识别性；必须把参考、采样规则和事件对应一起声明。
+

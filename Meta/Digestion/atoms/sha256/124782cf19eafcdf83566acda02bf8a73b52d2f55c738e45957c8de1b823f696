@@ -1,0 +1,99 @@
+**定理 83.1（由真实失效间隔控制全校准球成本）。** 设 $R=\mathfrak r_{\mathrm{fail}}$。对每个 $0\le u<R$，令 $\Delta=R-u>0$。则
+
+$$
+\boxed{
+\frac{R}{R-u}
+\le\mathscr K(u)
+\le
+\frac{1+2(R-u)^2}{(1-u)(R-u)^2}.
+} \tag{83.1}
+$$
+
+特别地，接近真实失效半径时，已知的成本下界为倒数阶、上界至多为二次倒数阶；本条不认定其中任一指数就是精确发散阶。
+
+证明。左侧是第 80.4 条。对右侧，任取 $\Gamma\in\mathfrak B_u$、初态 $\rho$ 与有限 $n\ge1$。定义
+
+$$
+\rho_j=\mathcal N^j(\rho),\qquad
+s_j=\operatorname{Tr}\rho_j,\qquad
+\mu_n=\sum_{j=0}^{n-1}s_j
+=\mathbb E_\rho^\Gamma\min(\mathsf N,n),
+\qquad
+\sigma_n=\frac1{\mu_n}\sum_{j=0}^{n-1}\rho_j.
+$$
+
+无须假定最终点击或完整均值有限，就有 $1\le\mu_n\le n$，且 $\sigma_n$ 是密度矩阵。第 76.1 条的望远镜等式给
+
+$$
+\mathcal N(\sigma_n)-\sigma_n
+=\frac{\rho_n-\rho}{\mu_n},\qquad
+q_n:=\operatorname{Tr}\mathcal C(\sigma_n)
+=\frac{1-s_n}{\mu_n}\le\frac1{\mu_n}. \tag{83.2}
+$$
+
+置 $E=\mathcal C^*(I)$。名义仪器对 $P_0$ 必点击，所以完整校准保证
+
+$$
+\operatorname{Tr}E\ge\langle0|E|0\rangle\ge1-u. \tag{83.3}
+$$
+
+在二维空间写
+
+$$
+\sigma_n=(1-t)P+tP^\perp,\qquad
+0\le t\le\frac12,
+$$
+
+其中 $P$ 是最大本征值对应的秩一投影；当 $\sigma_n=I/2$ 时任选一个这样的投影。由 $\sigma_n\ge tI$、式 (83.2)—(83.3)，
+
+$$
+t(1-u)\le t\operatorname{Tr}E
+\le q_n\le\frac1{\mu_n}. \tag{83.4}
+$$
+
+记
+
+$$
+\varepsilon=1-\operatorname{Tr}[P\mathcal N(P)],\qquad
+\beta=\operatorname{Tr}[P\mathcal N(P^\perp)],
+\qquad
+e_P=\operatorname{Tr}(EP),\quad
+e_\perp=\operatorname{Tr}(EP^\perp).
+$$
+
+因为 $0\le P\le I$，未点击分支迹不增且与点击分支完整互补，故
+
+$$
+e_P\le\varepsilon,\qquad
+\beta\le1-e_\perp
+\le u+e_P\le u+\varepsilon. \tag{83.5}
+$$
+
+其中中间一步使用 $e_P+e_\perp=\operatorname{Tr}E\ge1-u$。另一方面，在式 (83.2) 的第一个等式上检验 $P$，得到
+
+$$
+-(1-t)\varepsilon+t\beta
+=\frac{\operatorname{Tr}(P\rho_n)-\operatorname{Tr}(P\rho)}{\mu_n}
+\ge-\frac1{\mu_n}.
+$$
+
+结合式 (83.5)，即
+
+$$
+(1-2t)\varepsilon\le tu+\frac1{\mu_n}. \tag{83.6}
+$$
+
+推论 82.2 对这个依赖于 $n,\Gamma,\rho$ 的纯态 $P$ 同样成立，给 $\varepsilon\ge\Delta^2$。由于 $1-2t\ge0$，式 (83.6) 于是推出
+
+$$
+\begin{aligned}
+\Delta^2
+&\le t(u+2\Delta^2)+\frac1{\mu_n}\\
+&\le\frac{u+2\Delta^2}{(1-u)\mu_n}
++\frac1{\mu_n}\\
+&=\frac{1+2\Delta^2}{(1-u)\mu_n}.
+\end{aligned}
+$$
+
+这里 $1-u>0$，因为第 79.2 条已给 $u<R\le c_*<1$。得到对全部有限 $\mu_n$ 同时成立的上界。最后用单调收敛得到完整均值上界，再对同一个校准球的装置及来源取上确界。整个证明没有预先调用一个可能发散的无限预解算子。$\square$
+

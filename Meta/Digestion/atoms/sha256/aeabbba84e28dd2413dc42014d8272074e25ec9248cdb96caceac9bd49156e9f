@@ -1,0 +1,10 @@
+**命题 142.1（可分叉的承继关系不能直接等同数值相等）。** 项目的[记忆承继不等于同一](../../../D5/S3/ConceptDynamics/Identity/MemoryInheritanceNotIdentity.lean)以关系 $M:P\times P\to\mathrm{Prop}$ 表示所选承继。若存在 $x,y,z\in P$ 满足
+
+$$
+M(x,y),\qquad M(x,z),\qquad y\ne z,
+$$
+
+则 $M$ 不可能处处等价于 $P$ 上的相等。否则 $M(x,y)$ 与 $M(x,z)$ 分别给出 $x=y$ 与 $x=z$，继而 $y=z$，与条件冲突。[严格同一的分叉不可能性](../../../D5/S3/ConceptDynamics/Identity/StrictIdentityBranchImpossibility.lean)表达的是同一个等号约束。
+
+这里 $y\ne z$ 必须是当前承载对象上的区别。若 $P$ 实际被替换成时间阶段，那么所得结论只是承继关系不等于“同一个阶段”，不能跳成“两个阶段不属于同一个人”。若目标是人格同一，就需要说明两个后继为何是不同的人，或对阶段到人的归属另行建模。
+

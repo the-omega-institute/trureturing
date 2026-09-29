@@ -1,0 +1,23 @@
+### 156.2 同一来源释放两份纯化的隐藏标签
+
+令
+
+$$
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},
+\qquad
+|\psi_0\rangle=|\Xi\rangle,
+\qquad
+|\psi_1\rangle=(I_M\otimes Y_R)|\Xi\rangle.
+\tag{156.8}
+$$
+
+两态具有相同活动记忆边缘 $\rho_*$。再发射一次，定义
+
+$$
+|\chi_j\rangle_{MRB}=(T\otimes I_R)|\psi_j\rangle_{MR},
+\qquad j=0,1,
+\tag{156.9}
+$$
+
+系统次序按下标作固定置换。两份 $\chi_j$ 的 $M$ 边缘仍为 $\rho_*$。
+

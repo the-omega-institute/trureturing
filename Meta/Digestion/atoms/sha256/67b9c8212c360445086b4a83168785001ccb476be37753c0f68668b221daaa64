@@ -1,0 +1,23 @@
+### 43.3 一阶精确而活性失败的有限反例
+
+取 $S=\{0,1\}$，每个状态只有一个动作，且
+
+$$
+F(0)=1,
+\qquad
+F(1)=1,
+\qquad
+R=\{0\}.
+\tag{43.9}
+$$
+
+取 $q=\operatorname{id}_S$。它当然满足当前读出和后继的精确下降，安全核是 $S$，但任何路径至多一次经过 $0$，所以
+
+$$
+\operatorname{Live}(R)=\varnothing.
+$$
+
+这个例子排除了“边界已经无损”便自动得到持续活性的推论。反向地，若把 $R=S$，同一个更新就满足 $\square\Diamond R$；活性取决于声明的 renewal 任务，而非单靠更新图的名称。
+
+若把 $q$ 改成常值摘要，(43.6) 甚至已经失败，因为两个状态的后继在摘要外的 renewal 关系不同。若把 renewal 标签并入 $q$，静态摘要可能恢复该标签，但仍需检查策略因子化和所有对手后继。仓内 `DeterministicSafePolicyExistence.deterministic_safe_policy_exists_iff` 给出每个纤维有共同合法安全动作与存在安全策略之间的有限判据；`BoundaryRelativeAgency.boundary_relative_agency` 与 `ActionLoopRequiresMemory.policy_change_implies_memory_change` 则分别说明隐藏决策和循环中的策略变化不能免费从粗边界恢复。
+

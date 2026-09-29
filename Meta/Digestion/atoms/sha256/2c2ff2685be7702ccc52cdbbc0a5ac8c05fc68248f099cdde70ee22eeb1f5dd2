@@ -1,0 +1,73 @@
+### 定理 27.1：相等构件的精确边界公式与配对顺序极小化
+
+在定义 27 的设定下，切面的容量只依赖于 $C,P$，且
+
+$$
+\kappa(C,P)
+=\left|\bigcup_{g\in\mathcal H_C}\{T_sg:s\in V_P\}\right|
+=\sum_{\mathcal O\in\mathscr O_{C,P}}
+\frac{2^{|P|}}{|\operatorname{Stab}_P(g_{\mathcal O})|}.
+$$
+
+其中 $\mathscr O_{C,P}$ 是与 $\mathcal H_C$ 相交的互不相同的 $V_P$ 平移轨道集合，每个 $g_{\mathcal O}$ 可取为该轨道中一个余因子。若 $G$ 为单调布尔函数，则进一步有
+
+$$
+\kappa(C,P)
+=\sum_{g\in\mathcal H_C}2^{|\operatorname{Ess}(g)\cap P|}.
+$$
+
+对任意有限值 $G$ 及 $n\geq1$，定义
+
+$$
+e_G(C,i)=|\mathcal H_C\cup T_i\mathcal H_C|,
+\qquad i\notin C.
+$$
+
+则在全部端点顺序上的精确最小宽度为
+
+$$
+\min_{\pi}W_F(\pi)
+=\min_{\sigma\in S_n}\ \max_{1\leq j\leq n}
+e_G\bigl(\{\sigma_1,\ldots,\sigma_{j-1}\},\sigma_j\bigr).
+$$
+
+**证明。** 固定切面的端点方向。对悬置构件 $i$，记已读比特为 $a_i$，未读比特为 $v_i$。对该切面的原始未读坐标定义映射 $q$ 到共同的剩余立方体：
+
+$$
+q_i=v_i\quad(i\in P),
+\qquad q_i=\mathbf1[x_i=y_i]\quad(i\in U).
+$$
+
+此映射满射，因为不同构件的未读坐标互不相交。已完成构件输出为 $\alpha$ 时，响应恰为
+
+$$
+\bigl(T_{\mathbf1_P\oplus a_P}g_\alpha\bigr)\circ q,
+$$
+
+其中 $a_P$ 在 $P$ 外延拓为零，$\mathbf1_P$ 亦是 $P$ 的指标向量。这里的偏移 $\mathbf1_P$ 来自
+
+$$
+\mathbf1[a_i=v_i]=1\oplus a_i\oplus v_i.
+$$
+
+各已完成输出 $\alpha$ 与各已读比特 $a_P$ 可独立任取。由于 $q$ 满射，两个平移余因子经 $q$ 拉回后相等，当且仅当它们原本相等，故得到轨道并集公式。每个有限群轨道的大小等于群大小除以稳定子大小，于是得到按不同出现轨道求和的公式；不能对落在同一轨道的多个余因子重复求和。余因子方法的背景见定理 26.1 所引 Bryant；分组 XOR 任务的不同通信行数与平移稳定子的精确计数，见 A. Montanaro 与 T. J. Osborne，*On the communication complexity of XOR functions*，[arXiv:0909.3392v2，命题 1，第 7 页](https://arxiv.org/pdf/0909.3392v2)。此处将该轨道计数步骤用于同一标记域上的余因子并集，并保留相等构件的上述偏移。
+
+若 $G$ 单调，则每个 $g\in\mathcal H_C$ 单调。假设 $T_sg$ 也单调，而 $s$ 翻转了一个本质坐标 $i$。单调性和本质性给出沿 $i$ 从 $0$ 到 $1$ 的严格上升边。在其余坐标平移后的对应位置，$T_sg$ 沿 $i$ 从 $0$ 到 $1$ 却严格下降，矛盾。因此，只要 $g$ 与 $T_sg$ 均单调，$s$ 就只能翻转非本质坐标，此时 $T_sg=g$。这同时证明不同单调余因子处于不同平移轨道，以及
+
+$$
+|\operatorname{Stab}_P(g)|=2^{|P\setminus\operatorname{Ess}(g)|}.
+$$
+
+代入轨道公式即得单调情形的求和式，常值余因子各贡献 $1$。
+
+最后，二元相等构件的每一行、每一列都满射。由定理 26.1，任意端点顺序都可规范化为不增宽的连续配对顺序。相等构件又关于端点交换对称，交换一对的两个端点只对输入赋值作双射重标记，因此连续配对顺序的宽度仅取决于构件排列 $\sigma$。
+
+在已完成 $C$ 而刚读入下一对 $i$ 的一个端点时，$P=\{i\}$，轨道并集公式给出的容量正是 $e_G(C,i)$。读入这一端点之前，容量为 $|\mathcal H_C|\leq e_G(C,i)$。读完该对之后，容量为 $|\mathcal H_{C\cup\{i\}}|$；对 $\mathcal H_C\cup T_i\mathcal H_C$ 中的函数统一限制 $z_i=0$，其像恰是
+
+$$
+\{g|_{z_i=0},g|_{z_i=1}:g\in\mathcal H_C\}
+=\mathcal H_{C\cup\{i\}},
+$$
+
+所以该偶数层也不超过相邻奇数层。这覆盖初始层和最后一层，连续配对顺序的最大值因此恰为其奇数层的最大值，得到所述极小化等式。这里缩至 $n!$ 种构件排列使用了二元相等构件的对称性；一般有限构件虽可按完成次序连续配对，端点方向仍可影响宽度。∎
+

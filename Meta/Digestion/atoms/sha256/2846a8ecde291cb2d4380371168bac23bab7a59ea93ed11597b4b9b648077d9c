@@ -1,0 +1,14 @@
+**定理 24.4（最佳一阶 Markov 近似的精确路径损失）。** 设 $X_0,\ldots,X_N$ 具有严格正联合密度，以下 KL 积分均有限；有限离散全支持情形同理。令
+\[
+ p^{\rm M}(x_{0:N})=p_0(x_0)\prod_{j=1}^Np(x_j\mid x_{j-1}).
+\]
+对任意 Markov 密度 $q=q_0\prod_{j=1}^Nq_j(x_j\mid x_{j-1})$，有
+\[
+ D_{\rm KL}(p\Vert q)
+ =\sum_{j=2}^NI(X_j:X_{0:j-2}\mid X_{j-1})
+ +D_{\rm KL}(p_0\Vert q_0)
+ +\sum_{j=1}^N\mathbb E_{X_{j-1}}
+ D_{\rm KL}(p(\cdot\mid X_{j-1})\Vert q_j(\cdot\mid X_{j-1})).
+\]
+因此前一求和是全部一阶 Markov 模型的最小正向 KL 损失，由 $p^{\rm M}$ 达到。定理 24.3 的三时刻实例中，这个最小损失发散，而同一真实路径的反转 KL 恒为零。
+

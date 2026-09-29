@@ -114,6 +114,15 @@ class Contract(unittest.TestCase):
         self.assertIn(MANIFEST, result.stderr)
         self.assertEqual(result.stdout, '')
 
+    def test_reg_module_name(self):
+        self.policy['report_modules']['include'].append(spec('Reg/**/*.lean', True))
+        before = self.selection().modules()
+        self.assertFalse(any(name.startswith('Reg.') for name in before))
+        self.write('Reg/D5/S3/Arith/X.lean', '-- registration module\n')
+        modules = self.selection().modules()
+        self.assertEqual(modules['Reg.D5.S3.Arith.X'], 'Reg/D5/S3/Arith/X.lean')
+        self.assertEqual({k: v for k, v in modules.items() if k != 'Reg.D5.S3.Arith.X'}, before)
+
     def test_glob_semantics(self):
         for pattern, yes, no in [
                 ('*.cs', ['A.cs'], ['Dir/A.cs', 'A.CS']),

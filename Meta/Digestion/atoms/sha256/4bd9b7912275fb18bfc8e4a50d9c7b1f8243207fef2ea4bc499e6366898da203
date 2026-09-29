@@ -1,0 +1,34 @@
+**推论 84.4（同一实现上的二次极限与纤维平均）。** 条件有界 Lipschitz 距离按定义 84.1 趋零地，
+
+$$
+\mathcal L_x\!\left(T,Y,G,H_M,R_M^\sigma(Y)\right)
+\Longrightarrow
+\mathcal L\!\left(\sqrt\nu Z,\sqrt\nu Z,N,
+ c+\frac{Z^2-N^2}{2},
+ \left(\frac12-\frac2{\sqrt3}\right)(Z^2-1)-c\right),
+\tag{84.33}
+$$
+
+其中 $Z,N$ 独立标准正态。并且
+$\mathbb E_xR_M^\sigma(Y)\to-c$；即使命题 84.3 的未校正余量逃逸，
+仍有 $\mathbb E_xR_M^0(Y)\to-c$。
+
+证明。(84.2) 提供同一联合向量最后坐标的条件 $L^1$ 替换，
+与第 79 章的信息联合极限组合即得 (84.33)。实际矩界给
+$\mathbb E_xY^2\to\nu$，所以 $\mathbb E_x\mathcal H(Y)\to-c$。
+未校正情形只差 $-k_M\mathbb E_xY$。精确中心展开与选中密度比较给
+
+$$
+\mathbb E_xY=\mathbb E_{P_x}T
+ =O_{\mathbb P}(a_x+\delta^{-1/2}a_x^2),\qquad k_M\le C\delta^{-1/2},
+\tag{84.34}
+$$
+
+故该差仍趋零。稳定的纤维平均与输出余量不紧可以同时成立。
+本章只证明余量的输出积分 $L^1$，未证明其方差或更高矩收敛。
+有界误差事件可先验平均，再以奇偶类内支持置换不变性传为
+确定支持的无条件联合结论；这不把确定支持条件输出律等同于先验预测律。
+所有熵换为 bits 时，将熵、$L_M$、线性系数及二次剖面同时除以 $\ln2$。
+未断言每个输出、无界数据平均、$L_M$ 与 $Q^3$ 同阶的噪声、零噪声、
+有限精度解码效率或实验等价性。证毕。
+

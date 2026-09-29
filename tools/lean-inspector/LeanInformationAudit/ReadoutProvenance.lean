@@ -313,8 +313,11 @@ def providerArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
   return .ok (inputs.toArray, min 524288 availableWork - remaining)
 
 /-- One raw node's occurrence-relative rejection checks. This grants no
-executable/type admission; the shared E2–E5 compiler owns that judgment. -/
-def argumentIdentityNode (env : Environment) (expression : Expr) : WalkM Unit := do
+executable/type admission; the shared E2–E5 compiler owns that judgment.
+The source contract can defer the legacy apartness grammar to its existing
+rigid Lean conversion check; deferred propositions remain unclassified here. -/
+def argumentIdentityNode (env : Environment) (expression : Expr)
+    (deferStatementApart : Bool := false) : WalkM Unit := do
   unless ← chargeTraversal do return
   if let .const name _ := expression.getAppFn then directConstant env name
   if let .proj name _ _ := expression then directProjection env name
@@ -329,9 +332,12 @@ def argumentIdentityNode (env : Environment) (expression : Expr) : WalkM Unit :=
     let candidate := if proposition then expression else type
     if candidate.equal (← get).statement then
       modify fun s => { s with forbidden := true }
-    else if (← checkedStatementType env candidate).isNone then
-      noteUnclassified ⟨"unresolved_statement_identity", (← get).currentFirst,
-        "argument", (← get).currentOrigin⟩
+    else
+      let unresolved ← if deferStatementApart then pure true
+        else (·.isNone) <$> checkedStatementType env candidate
+      if unresolved then
+        noteUnclassified ⟨"unresolved_statement_identity", (← get).currentFirst,
+          "argument", (← get).currentOrigin⟩
 
 /-- Initialize identity-only state once for the whole supplied telescope. -/
 def argumentIdentityState (theoremName : Name) (available : Nat) : Meta.MetaM WalkState := do

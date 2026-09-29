@@ -1,0 +1,22 @@
+### 77.2 原始修复误差也是同一类有限代数对象
+
+将第 64 节的混合量子比特族写为
+
+$$
+\begin{aligned}
+r_0(a,\varepsilon)
+&=\sqrt a\,x+\sqrt{\varepsilon(1-a)}\,z+\sqrt{1-\varepsilon}\,y,\\
+r_1(a,\varepsilon)
+&=\sqrt{1-a}\,x'-\sqrt{\varepsilon a}\,z',\\
+R_{a,\varepsilon}&=r_0r_0^*+r_1r_1^*.
+\end{aligned}
+\tag{77.2}
+$$
+
+记 $\mathcal C$ 为第 70 节的同一个因果修复集合，并令
+
+$$
+e(a,\varepsilon)=\min_{S\in\mathcal C}N(R_{a,\varepsilon}-S),
+\qquad0<a<1,\quad0<\varepsilon<1.
+$$
+

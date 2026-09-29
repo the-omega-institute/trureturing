@@ -1,0 +1,26 @@
+### 66.4 固定参数展开与范围
+
+固定 $a\in(0,1)$ 后，小根在 $\varepsilon=0$ 附近解析：式（66.3）对 $p$ 的偏导在 $(0,0)$ 为 $-b^2\ne0$。直接展开得到
+
+$$
+p=\varepsilon+\frac{a}{1-a}\varepsilon^2+O_a(\varepsilon^3),
+\qquad
+\gamma=\frac{a}{2(1-a)}\varepsilon^2+O_a(\varepsilon^3).
+\tag{66.16}
+$$
+
+故式（66.5）的上界具有展开
+
+$$
+e(R_{a,\varepsilon})
+\le\varepsilon+
+\frac{a(2+\sqrt a)}{1-a}\varepsilon^2
++\frac{a}{\sqrt{1-a}}\varepsilon^{5/2}
++O_a(\varepsilon^3).
+\tag{66.17}
+$$
+
+这是一个显式可行修复的上界展开，不能把其中的系数当作最优误差的系数。式（66.17）与 $e\ge\varepsilon$ 给式（66.6）。严格反例条件对每个固定 $a>0$ 在充分小的正 $\varepsilon$ 下成立，得到式（66.7）。$\square$
+
+该修复的参数区间和展开常数依赖 $a$；当 $a\uparrow1$ 时，允许的 $\varepsilon$ 区间缩小，显示系数发散。这不是整个 $a\in(0,1)$ 上的一致二阶估计。差值的匹配下界、尖锐阶数、最优系数和有限参数准确最优值仍需另证。
+

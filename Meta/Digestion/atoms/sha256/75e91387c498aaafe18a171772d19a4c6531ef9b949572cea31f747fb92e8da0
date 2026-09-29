@@ -1,0 +1,31 @@
+**定义 52.1（自由控制的有限响应表）。** 固定整数 $T\ge1$，非空有限动作集 $A_t$ 和输出集 $Y_t$。第 $t$ 轮先选择动作 $a_t\in A_t$，随后取得输出 $y_t\in Y_t$。记 $A_{r:s}=\prod_{j=r}^s A_j$、$Y_{r:s}=\prod_{j=r}^s Y_j$，空乘积取单点。给定完整非负实表
+
+$$
+P:Y_{1:T}\times A_{1:T}\longrightarrow[0,\infty),\qquad
+\sum_{y_{1:T}}P(y_{1:T}\mid a_{1:T})=1
+\quad\text{对每个 }a_{1:T}\in A_{1:T}.
+\tag{52.1}
+$$
+
+每个 $A_t$ 中的动作在该层所有历史上均允许。动作作为同一准备与接口中的可干预输入；实际来源、参考和校准在各动作列中保持所声明的共同关系。普通观测联合律的条件表不自动满足这一干预解释。
+
+确定性因果策略为 $f_t:Y_{1:t-1}\to A_t$。定义其动作词与反馈代入质量
+
+$$
+\begin{aligned}
+a^f(y)&=\bigl(f_1(\varnothing),f_2(y_1),\ldots,f_T(y_{1:T-1})\bigr),\\
+Z_f(P)&=\sum_{y\in Y_{1:T}}P(y\mid a^f(y)).
+\end{aligned}
+\tag{52.2}
+$$
+
+确定性策略过去所选动作已经由策略程序和输出前缀决定，因此该表示允许控制器记住自己的动作。归一化尚未证明时，$Z_f(P)$ 只是非负总质量。对 $0\le t\le T$ 定义固定动作词下的前缀边缘
+
+$$
+P_{\le t}(x\mid a)=\sum_{z\in Y_{t+1:T}}P(x,z\mid a),
+\qquad x\in Y_{1:t};
+\qquad
+P_{\le t}(E\mid a)=\sum_{x\in E}P_{\le t}(x\mid a).
+\tag{52.3}
+$$
+

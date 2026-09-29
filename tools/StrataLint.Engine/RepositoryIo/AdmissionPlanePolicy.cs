@@ -69,7 +69,7 @@ internal sealed record AdmissionPlaneDecision(
                 "FULL routing requires an admissible admission-plane classification.");
         }
 
-        return Classification is AdmissionPlaneClassification.JudgeOnly;
+        return Classification is AdmissionPlaneClassification.JudgeOnly or AdmissionPlaneClassification.Mixed;
     }
 }
 
@@ -205,11 +205,11 @@ internal static class AdmissionPlanePolicy
         if (judgePaths.Count > 0 && contentPaths.Count > 0)
         {
             return new AdmissionPlaneDecision(
-                false,
+                true,
                 AdmissionPlaneClassification.Mixed,
                 MixedCode,
                 FileMapPath,
-                "judge and content paths cannot be submitted together");
+                "judge and content paths are submitted together; all ordinary validation still applies");
         }
 
         return Admissible(

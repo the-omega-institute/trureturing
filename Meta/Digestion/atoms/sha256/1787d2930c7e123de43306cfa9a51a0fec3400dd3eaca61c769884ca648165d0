@@ -1,0 +1,71 @@
+**定理 196.1（不确定合同的组合稳定性）。** 设对每个阶段有两个非空紧响应集合 $\mathfrak A_i,\mathfrak B_i$，满足
+
+$$
+d_{\mathrm H}(\mathfrak A_i,\mathfrak B_i)\le\delta_i,
+$$
+
+并取共同增益界
+
+$$
+\gamma_i
+\ge
+\sup_{R\in\mathfrak A_i\cup\mathfrak B_i}\|R\|.
+$$
+
+则
+
+$$
+\boxed{
+d_{\mathrm H}
+\left(
+\mathfrak A_k\cdots\mathfrak A_1,
+\mathfrak B_k\cdots\mathfrak B_1
+\right)
+\le
+\sum_{i=1}^{k}
+\left(\prod_{j\ne i}\gamma_j\right)\delta_i.
+}
+\tag{196.1}
+$$
+
+### 证明
+
+任取
+
+$$
+A=A_k\cdots A_1
+\in
+\mathfrak A_k\cdots\mathfrak A_1.
+$$
+
+由 Hausdorff 距离，对每个 $i$ 可选取 $B_i\in\mathfrak B_i$ 使
+
+$$
+\|A_i-B_i\|\le\delta_i.
+$$
+
+乘积望远镜恒等式给出
+
+$$
+A_k\cdots A_1-B_k\cdots B_1
+=
+\sum_{i=1}^{k}
+A_k\cdots A_{i+1}
+(A_i-B_i)
+B_{i-1}\cdots B_1.
+$$
+
+每一项范数至多为
+
+$$
+\left(\prod_{j>i}\gamma_j\right)
+\delta_i
+\left(\prod_{j<i}\gamma_j\right).
+$$
+
+这给出从第一集合到第二集合的单向距离界。交换 $\mathfrak A_i$ 与 $\mathfrak B_i$，得到反向同样的界；取二者最大值即得（196.1）。证毕。
+
+当每个 $\mathfrak B_i$ 是名义单点 $\{\widehat R_i\}$ 时，式（196.1）退化为一个集合值的全局误差半径。与单一名义读数相比，集合合同还保留了“哪些实现仍然合法”的外层关系。
+
+---
+

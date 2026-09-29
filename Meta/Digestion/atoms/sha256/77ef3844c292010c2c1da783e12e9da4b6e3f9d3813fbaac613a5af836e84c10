@@ -1,0 +1,11 @@
+### 7.7 祖先标记、原适应性与指定策略的恢复
+
+精确像判据可以选择一个合法原像；要恢复此前实际选定的那一个原像，还须携带相应切口。对仅在保留深度停止的前缀自由码 $G$，给祖先映射 $a:G\to A^+$，要求 $a(g)\preceq g$、$|g|=m_S(|a(g)|)$，并令 $F=a(G)$ 满足
+$$
+\begin{gathered}
+F\text{ 前缀自由},\qquad |F\cap A^n|\le b_n,\\
+\{g\in G:a(g)=w\}=wA^{m_S(|w|)-|w|}\qquad(w\in F).
+\end{gathered}
+\tag{RST.23}
+$$
+

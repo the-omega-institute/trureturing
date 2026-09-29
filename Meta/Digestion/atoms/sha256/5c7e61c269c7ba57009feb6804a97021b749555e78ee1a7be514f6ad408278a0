@@ -1,0 +1,16 @@
+### 定理 12.7：全部逻辑矩阵单位的显式运输生成元
+
+令 $F_{ij}(t)$ 为实参数 $t$ 上的可微矩阵族，逐时满足定理12.5的矩阵单位和伴随关系。记 $D_{ij}=\dot F_{ij}$、$\dot P=\sum_iD_{ii}$，定义
+
+$$
+Z=\frac1d\sum_{i,j}D_{ij}F_{ji},\qquad K=Z-P\dot P.
+\tag{12.8}
+$$
+
+则
+
+$$
+K^\dagger=-K,\qquad [K,F_{ij}]=D_{ij},\qquad [K,P]=\dot P.
+\tag{12.9}
+$$
+

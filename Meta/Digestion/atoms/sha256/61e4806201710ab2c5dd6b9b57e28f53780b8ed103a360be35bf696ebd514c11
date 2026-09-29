@@ -1,0 +1,90 @@
+**命题 395.2（保留反馈的有限细分与必要保真度界）。** 对定义 395.1 的任意协议，可以将成功分支有限细分为向量 $v_j\in\mathbb C^d$，并对每个细分项保留原结果的同一个酉算子 $U_j$，使
+
+$$
+\begin{aligned}
+\mathcal T_{\mathrm s}(X)
+ &=\sum_j U_jD(v_j)XD(v_j)^\dagger U_j^\dagger,
+ &D(v)&=\operatorname{diag}(v_1,\ldots,v_d),\\
+M&=\sum_jv_jv_j^\dagger\preceq C,
+ &\operatorname{diag}M&=t\mathbf1,\qquad
+ \operatorname{Tr}M=\sum_j\|v_j\|_2^2=dt.
+\end{aligned}
+$$
+
+本节使用归一化最大纠缠向量和投影
+
+$$
+|\omega_d\rangle=\frac1{\sqrt d}\sum_{i=1}^d|i\rangle\otimes|i\rangle,
+\qquad \Pi_d=|\omega_d\rangle\langle\omega_d|.
+$$
+
+它与定理 390.2 中未归一化的 $|\Omega\rangle$ 满足 $|\omega_d\rangle=|\Omega\rangle/\sqrt d$，不可混用两种 Choi 迹约定。令
+
+$$
+\begin{aligned}
+J_{\mathrm s}&=(\operatorname{id}_S\otimes\mathcal T_{\mathrm s})(\Pi_d),
+ &\operatorname{Tr}J_{\mathrm s}&=t,\\
+f_{\mathrm{actual}}&=\langle\omega_d|J_{\mathrm s}|\omega_d\rangle
+ =\frac1{d^2}\sum_j|\operatorname{Tr}(U_jD(v_j))|^2,
+ &f_\star&=\frac1{d^2}\sum_j\|v_j\|_1^2,
+\end{aligned}
+$$
+
+其中向量的 $\|v\|_1=\sum_i|v_i|$。则
+
+$$
+0\le f_{\mathrm{actual}}\le f_\star\le t,
+\qquad
+\|\mathcal T_{\mathrm s}-t\operatorname{id}_S\|_\diamond
+ \ge2(t-f_{\mathrm{actual}}),
+$$
+
+从而任何满足误差合同的协议都必须满足
+
+$$
+f_\star\ge f_{\mathrm{actual}}\ge t(1-\delta/2).
+$$
+
+证明。由第 390 节的分支对应，$C_y\succeq0$ 且 $\sum_yC_y=C$。分别对每个成功 $C_y$ 作有限谱分解
+$C_y=\sum_kv_{yk}v_{yk}^\dagger$，将 $(y,k)$ 简记为 $j$，置 $U_j=U_y$。恒等式
+$(vv^\dagger)\circ X=D(v)XD(v)^\dagger$
+说明细分没有改变 $\mathcal T_{\mathrm s}$。若将这些标签实现为更细 POVM，第 390 节的正矩阵分解实现仍适用；使用原 $U_y$ 就还原同一个成功映射。因此证明既未假定原分支秩一，也未在细分时替换实际反馈。
+
+由 $\sum_jv_jv_j^\dagger=\sum_{y\in Y_{\mathrm s}}C_y$ 得 $M\preceq C$。又
+
+$$
+\mathcal T_{\mathrm s}^{*}(I_S)
+ =\sum_jD(v_j)^\dagger U_j^\dagger U_jD(v_j)
+ =\operatorname{diag}\left(\sum_j|(v_j)_i|^2\right)_{i=1}^d.
+$$
+
+与 $tI_S$ 比较便得到 $\operatorname{diag}M=t\mathbf1$，取迹即得总能量 $dt$。归一化 Choi 矩阵的迹因此是 $t$；恒等式
+$\langle\omega_d|(I\otimes K)|\omega_d\rangle=\operatorname{Tr}K/d$
+给出 $f_{\mathrm{actual}}$ 的公式。对每个酉矩阵，$|(U_j)_{ii}|\le1$，故
+
+$$
+|\operatorname{Tr}(U_jD(v_j))|
+ \le\sum_i|(v_j)_i|=\|v_j\|_1,
+\qquad \|v_j\|_1^2\le d\|v_j\|_2^2.
+$$
+
+求和并除以 $d^2$，得到 $f_{\mathrm{actual}}\le f_\star\le t$。这里使用的是已知的固定 Kraus 分解恢复保真度成分：Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Proposition 8（PDF 第 11–12 页，式 (15)–(21)）给出以 $d^{-2}\sum_j(\operatorname{Tr}|K_j|)^2$ 控制最优纠缠保真度的结果。本文所需的对角 Kraus、酉反馈情形已由上面的逐项估计直接证明；$f_\star$ 在这里是给定细分的上界，并不宣称原协议在 diamond 范数下最优。
+
+最后，以 $\Pi_d$ 作为 diamond 范数的一个合法输入，有
+
+$$
+\|\mathcal T_{\mathrm s}-t\operatorname{id}_S\|_\diamond
+ \ge\|J_{\mathrm s}-t\Pi_d\|_1.
+$$
+
+对 Hermitian 矩阵 $H=J_{\mathrm s}-t\Pi_d$，二结果检验 $\{\Pi_d,I-\Pi_d\}$ 给出的两个有符号读数为 $f_{\mathrm{actual}}-t$ 和 $t-f_{\mathrm{actual}}$。谱分解给出 $|\operatorname{Tr}(FH)|\le\operatorname{Tr}(F|H|)$（$0\preceq F\preceq I$），对这两个效果相加便得
+
+$$
+\|H\|_1\ge|f_{\mathrm{actual}}-t|+|t-f_{\mathrm{actual}}|
+ =2(t-f_{\mathrm{actual}}).
+$$
+
+结合误差合同并除以正数 $t$ 即得结论。证毕。
+
+该二结果计算给出必要下界。即使这个检验读数很小，也不能据此认定任意参考输入的误差都小；以下推导始终只沿上述必要性方向使用它。
+

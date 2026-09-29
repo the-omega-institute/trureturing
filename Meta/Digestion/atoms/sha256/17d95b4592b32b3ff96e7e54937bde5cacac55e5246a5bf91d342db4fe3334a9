@@ -1,0 +1,38 @@
+**定义 199.1（集合值分支合同）。** 令 $\mathfrak R$ 为有限维密度算子空间中的非空紧集，令 $\Phi$ 为完全正迹不增映射。写
+
+$$
+B=\Phi^*(I),
+\qquad
+p_\Phi(\rho)=\operatorname{Tr}(\rho B).
+$$
+
+定义分支概率区间
+
+$$
+p^-_\Phi(\mathfrak R)=\min_{\rho\in\mathfrak R}p_\Phi(\rho),
+\qquad
+p^+_\Phi(\mathfrak R)=\max_{\rho\in\mathfrak R}p_\Phi(\rho).
+$$
+
+当 $p^-_\Phi(\mathfrak R)>0$ 时，定义条件后继集合
+
+$$
+\boxed{
+\mathsf C_\Phi(\mathfrak R)
+=
+\left\{
+\frac{\Phi(\rho)}{p_\Phi(\rho)}:
+\rho\in\mathfrak R
+\right\}.
+}
+\tag{199.1}
+$$
+
+在状态空间上使用半迹距离
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+$$
+
+并用它诱导集合的 Hausdorff 距离 $D_H$。这里的正概率下界是声明合同的一部分；有限次没有观察到事件，不能单独推出这样的下界。
+

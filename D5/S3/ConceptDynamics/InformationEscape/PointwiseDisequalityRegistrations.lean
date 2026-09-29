@@ -6,11 +6,12 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/InformationEscape/PointwiseDisequalityRegistrations.recurrent_lawSensitive; instance=D5/S3/ConceptDynamics/InformationEscape/PointwiseDisequalityRegistrations.recurrentRealization
    digest: Recurrent and transient channel exclusions share a pointwise disequality template and one digit arena. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S0.Certificates.SkeletonChannelRetraction
-import LeanInformationAudit.SealCommand
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -20,7 +21,7 @@ namespace D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrati
 open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord D5.S3.ConceptDynamics.CIRPT
 
-register_information_template homogeneousPointwiseNeRealization
+
 open D5.S0.Certificates.SkeletonChannelRetraction
 
 def digitZero : Fin 4 := (⟨Nat.zero, (let h : Nat.lt 0 4 := (by change 0 < 4; omega); h)⟩ : Fin (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero))))))
@@ -55,23 +56,15 @@ private def recurrentChain : LayerChain digitArena.toArena where
 section
 private local instance : DecidableEq digitArena.State := instDecidableEqFin 4
 
-private def recurrentResidual : EscapeResidualWitness recurrentChain :=
+def recurrentResidual : EscapeResidualWitness recurrentChain :=
   ⟨(0 : Fin 4), (2 : Fin 4), by decide +kernel⟩
 end
 
-register_information_theorem recurrentRetract_ne_two in digitArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
-    (Fin 4) (Fin 4) (instDecidableEqFin 4)
-    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentReadout d) (fun _ => digitTwo))
-  primitives recurrentRealization.toPrimitiveBundle realization recurrent_bridge
-  variation recurrent_lawSensitive sensitivity digit_slotSensitive
-  escape from (Fin 4) escape continues (recurrentResidual)
-example : recurrentRetract_ne_two.__information_unit.Statement =
-    (∀ d : Fin 4, recurrentRetract d ≠ 2) := rfl
+
+
 #print axioms recurrent_bridge
 #print axioms recurrent_lawSensitive
-expect_information_occurrence recurrentRetract_ne_two in digitArena
-  from "D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations"
+
 
 def transientReadout (d : Fin 4) : Fin 4 :=
   Bool.rec d digitOne
@@ -97,38 +90,19 @@ private def transientChain : LayerChain digitArena.toArena where
 section
 private local instance : DecidableEq digitArena.State := instDecidableEqFin 4
 
-private def transientResidual : EscapeResidualWitness transientChain :=
+def transientResidual : EscapeResidualWitness transientChain :=
   ⟨(0 : Fin 4), (1 : Fin 4), by decide +kernel⟩
 end
 
-register_information_theorem transientRetract_ne_zero in digitArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
-    (Fin 4) (Fin 4) (instDecidableEqFin 4)
-    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientReadout d) (fun _ => digitZero))
-  primitives transientRealization.toPrimitiveBundle realization transient_bridge
-  variation transient_lawSensitive sensitivity digit_slotSensitive
-  escape from (Fin 4) escape continues (transientResidual)
-example : transientRetract_ne_zero.__information_unit.Statement =
-    (∀ d : Fin 4, transientRetract d ≠ 0) := rfl
+
+
 #print axioms transient_bridge
 #print axioms transient_lawSensitive
-expect_information_occurrence transientRetract_ne_zero in digitArena
-  from "D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations"
+
 
 #print axioms digit_slotSensitive
-#seal_information_theory
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  for entry in InformationRegistry.entries env do
-    if entry.registrationModuleName == env.header.mainModule then
-      let info ← getConstInfo (RegistrationGates.diagnosticName entry.unitName env.header.mainModule)
-      let some (.lit (.strVal diagnostic)) := info.value?
-        | throwError "registration diagnostic is not a literal"
-      if diagnostic.isEmpty then
-        logInfo m!"REGISTRATION_WITNESSES_CHECKED {entry.theoremName} support=[readout[0],readout[1]]"
-      else
-        logWarning diagnostic
+
+
 
 end D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations

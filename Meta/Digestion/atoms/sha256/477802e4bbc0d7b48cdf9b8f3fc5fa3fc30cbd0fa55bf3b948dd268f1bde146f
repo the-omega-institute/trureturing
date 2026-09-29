@@ -1,0 +1,52 @@
+### 159.5 真实输入、真实档案与比较旋转轨道
+
+对 $n\ge3$，规范档案等距 $F_n:S_n\to Q_{\mathrm{out}}\otimes R_{\mathrm{out}}$ 将真实累计来源表示为
+
+$$
+W_n|j\rangle
+=|j\rangle_{Q_{\mathrm{out}}}
+|\operatorname{vec}\sqrt{\rho_{j,n}}\rangle_{MR_{\mathrm{out}}},
+\qquad
+\frac12\|\operatorname{Ad}_{W_n}-\mathcal W_*\|_\diamond
+\le\delta_n.
+\tag{159.30}
+$$
+
+将（159.30）在 $n=L$ 时的两边同时后接
+$\operatorname{id}_M\otimes\mathcal N\mathcal P_0$。真实一边恰为实际启动输出通道 $\mathcal R_L$。在比较一边，重置 $Q$ 使原始输入被完全迹掉，因此恰为 $\mathcal S_{|0\rangle}$。由完整参考收缩性，
+
+$$
+\frac12\|\mathcal R_L-\mathcal S_{|0\rangle}\|_\diamond
+\le\delta_L.
+\tag{159.31}
+$$
+
+原始输入与参考的残余相关仍由这个通道范数控制，没有因为比较入口常值就把真实输入也当成已知态。
+
+以后让两边经过同一来源和同一运行通道。由（159.16），对全部 $k\ge0$，
+
+$$
+\boxed{
+\frac12\|
+\mathcal R_{L+k}-\mathcal S_{U^k|0\rangle}
+\|_\diamond\le\delta_L.
+}
+\tag{159.32}
+$$
+
+扰动不随运行轮数累加。真实运行态始终位于 $K_{\mathrm{run}}$；
+该扇区上任意 CPTP 解码器都可在其余扇区用固定态输出补成全 $K$ 解码器，反之任意全 $K$ 解码器都可限制到运行扇区。因此终端最优化并未限制原有解码权限。
+
+第153节的实际支撑压缩及 $F_n$ 换坐标给真实完整档案任务的同值优化。对每个解码器先比较接收通道，再比较目标通道，之后取最小值，得到
+
+$$
+\boxed{
+|e_{L+k}-\mathfrak e(U^k|0\rangle)|
+\le\delta_L+\delta_{L+k}
+\qquad(k\ge0).
+}
+\tag{159.33}
+$$
+
+第二项 $\delta_{L+k}$ 比较真实第 $L+k$ 终端档案与稳定目标，不能仅由接收轨道比较省去。
+

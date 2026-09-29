@@ -1,0 +1,34 @@
+**定义 217.1（尖锐集合上的秩轮廓）。** 固定 $`0<a<1`$、非空有限集合 $`S=\{t_1,\ldots,t_m\}\subset J_a`$ 及正整数 $`r_1,\ldots,r_m`$。令 $`D_\nu(a,S;\mathbf r)`$ 为第215节的一个固定全输入精确处理器及一条完整混态准备曲线满足
+
+```math
+S\subseteq\mathcal E_*(\rho),\qquad
+\operatorname{rank}\rho_{t_i}=r_i\quad(1\le i\le m)
+\tag{217.1}
+```
+
+所需的最小实际联合支持维数，其中 $`\nu=1,\infty,\omega`$ 分别要求 $`C^1`$、光滑、实解析。只指定这些态的秩，不指定其非零特征值。
+
+记 $`h_i=(1+t_i)/2`$。若 $`0<a<1/2`$ 且 $`t_c=2a+4a^2-1\in S`$，称该指标为临界指标 $`c`$，并令 $`\varepsilon=1`$；否则令 $`\varepsilon=0`$。设 $`I`$ 为删去可能的临界指标后的指标集，定义
+
+```math
+R_* =\max\bigl(\{r_i:i\in I\}\cup\{0\}\bigr),\qquad
+M_+=\sum_{i\in I}r_i,
+\qquad
+\Lambda_- =\{\lambda_-(h_i):i\in I\},
+\qquad
+M_- =\sum_{\lambda\in\Lambda_-}
+                 \max\{r_i:i\in I,\ \lambda_-(h_i)=\lambda\}.
+\tag{217.2}
+```
+
+空和取零。秩加权的谱维数定义为
+
+```math
+\mathcal N(a,S;\mathbf r)=
+\begin{cases}
+R_*+M_++M_-,&\varepsilon=0,\\[2pt]
+\max\{R_*,1\}+M_++M_-+\max\{r_c,2\},&\varepsilon=1.
+\end{cases}
+\tag{217.3}
+```
+

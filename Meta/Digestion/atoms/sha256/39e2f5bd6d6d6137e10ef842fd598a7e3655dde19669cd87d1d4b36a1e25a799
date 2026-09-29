@@ -1,0 +1,54 @@
+**定理 237.2（联合覆盖传输界）。** 对任意非负误差场 $e(h,a)$，若
+
+$$
+C_S=\operatorname*{ess\,sup}_{\mu}r_S,
+\qquad
+C_A=\operatorname*{ess\,sup}_{\mu q}r_A
+$$
+
+有限，则
+
+$$
+\boxed{
+\mathbb E_{\nu\pi}[e]
+\le
+C_SC_A\,\mathbb E_{\mu q}[e].
+}
+\tag{237.1}
+$$
+
+更精确地，令
+
+$$
+C_{S,A}
+=
+\operatorname*{ess\,sup}_{\mu q}r_{S,A},
+$$
+
+则
+
+$$
+\boxed{
+\mathbb E_{\nu\pi}[e]
+\le
+C_{S,A}\,\mathbb E_{\mu q}[e],
+\qquad
+C_{S,A}\le C_SC_A.
+}
+\tag{237.2}
+$$
+
+### 证明
+
+由 Radon–Nikodym 变换，
+
+$$
+\mathbb E_{\nu\pi}[e]
+=
+\int e(h,a)r_S(h)r_A(h,a)\,\mu(dh)q(da\mid h).
+$$
+
+逐点使用 $r_S\le C_S$ 与 $r_A\le C_A$ 得到（237.1）。直接使用联合比值的上确界得到（237.2），并且 $r_{S,A}=r_Sr_A$ 给出 $C_{S,A}\le C_SC_A$。证毕。
+
+分开记录两个上确界是安全的，但可能浪费联合相关性；若来源转移恰好把质量移向动作覆盖较好的区域，联合税可以严格小于乘积。反过来，只记录来源边缘和动作边缘而忘掉历史条件动作核，不能重建 $r_{S,A}$。
+

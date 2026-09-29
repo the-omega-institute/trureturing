@@ -1,0 +1,35 @@
+### 269.2 精确分离不可见方向与完整噪声
+
+令
+$$
+R=\operatorname{Tr}_H\Xi-\rho_*,
+\qquad N=\mathscr K(\Xi)-K_*,
+\qquad T'=n\Xi.
+\tag{269.6}
+$$
+把误差写成
+$$
+T'-T_*=\operatorname{diag}(D,-D)+X,
+\qquad D=D^\dagger,
+$$
+$$
+X=\frac n2
+\begin{pmatrix}R&N\\N^\dagger&R\end{pmatrix}.
+\tag{269.7}
+$$
+这是精确分解：$X$ 承担全部边缘与非对角读数误差，剩余项属于原数据映射的Hermitian核。
+
+对角与非对角块分别估计给
+$$
+\xi:=\|X\|
+\le\frac n2(\|R\|+\|N\|)
+\le\frac n2\varepsilon.
+\tag{269.8}
+$$
+又因 $T',T_*\succeq0$ 且两者迹均为 $n$，
+$$
+\|T'\|\le n,\qquad\|T_*\|\le n.
+\tag{269.9}
+$$
+没有在这些估计中要求 $\Xi$ 与理想源同支撑、同秩或同边缘。
+

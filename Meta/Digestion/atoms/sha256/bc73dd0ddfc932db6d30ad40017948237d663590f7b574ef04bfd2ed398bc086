@@ -1,0 +1,19 @@
+**定义 164.1（近似签名缺陷）。** 设 $\mathcal P$ 是一个划分。称同一块中的 $a,a'$ 具有缺陷 $(\epsilon,\delta,\eta)$，若对所有 $u\in U$：
+
+$$
+\frac12
+\sum_{B\in\mathcal P}
+\left|
+\sum_{b\in B}T^u_{ba}
+-
+\sum_{b\in B}T^u_{ba'}
+\right|
+\le\epsilon,
+$$
+
+$$
+\|\nu_a-\nu_{a'}\|_{\mathrm{TV}}\le\delta,
+\qquad
+D(\rho_a,\rho_{a'})\le\eta.
+$$
+

@@ -1,0 +1,37 @@
+**定理 62.2（均值对完整等待律的 Hölder 模量）。** 若 $P,Q\in\mathcal P_{p,K}$，且
+
+$$
+\varepsilon=\operatorname{TV}(P,Q)
+=\frac12\sum_{n\ge1}|P(n)-Q(n)|,
+$$
+
+则
+
+$$
+\boxed{|\mu_P-\mu_Q|\le(K-1)^{1/p}\varepsilon^r.}
+$$
+
+证明。取两律共同部分 $c_n=\min\{P(n),Q(n)\}$，并置 $u_n=P(n)-c_n$、$v_n=Q(n)-c_n$。两剩余质量都为 $\varepsilon$。因为 $p>1$，对 $n\ge1$ 有
+
+$$
+(n-1)^p\le n^p-1.
+$$
+
+例如，函数 $(1+t)^p-t^p$ 在 $t\ge0$ 上不减且在零点取一。因而
+
+$$
+\sum_n(n-1)^pu_n\le K-1,
+\qquad
+\sum_n(n-1)^pv_n\le K-1.
+$$
+
+Hölder 不等式给
+
+$$
+A:=\sum_n(n-1)u_n\le(K-1)^{1/p}\varepsilon^{1-1/p},
+\qquad
+B:=\sum_n(n-1)v_n\le(K-1)^{1/p}\varepsilon^{1-1/p}.
+$$
+
+共同部分抵消，且 $\sum_nu_n=\sum_nv_n$，所以 $\mu_P-\mu_Q=A-B$。由 $A,B\ge0$ 得 $|A-B|\le\max\{A,B\}$，推出结论。$\varepsilon=0$ 时两律相同；$K=1$ 时两律都集中于一，结论也成立。$\square$
+

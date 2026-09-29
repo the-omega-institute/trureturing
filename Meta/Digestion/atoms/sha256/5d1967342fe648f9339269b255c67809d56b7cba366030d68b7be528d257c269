@@ -1,0 +1,99 @@
+**第三终端与固定等距的交叉 Gram 矛盾。**
+
+由（38.5）、（38.8），第二终端的联合纯态是
+
+$$
+|\psi_2\rangle
+=a|m_0\rangle\otimes u_0+b|0\rangle\otimes u_1
+=|0\rangle\otimes(a^2u_0+bu_1)
++|1\rangle\otimes ab\,u_0.
+\tag{38.9}
+$$
+
+定义
+
+$$
+r=\sqrt{|a|^4+|b|^2}>0,\qquad
+q=(a^2u_0+bu_1)/r.
+\tag{38.10}
+$$
+
+$q$ 单位，且因 $b\ne0$，$q$ 与 $u_0$ 不共线。
+
+第三次发射后，实际的 $K\mathcal B$ Schmidt 支撑为
+
+$$
+S_3=\operatorname{span}\{q\otimes|0\rangle,\ u_0\otimes|1\rangle\}.
+\tag{38.11}
+$$
+
+理由是其两个记忆系数为线性无关的 $m_0,|0\rangle$，两个接收输入系数分别为非零的
+$r q\otimes|0\rangle$、$ab\,u_0\otimes|1\rangle$。
+
+若 $\sigma_3$ 也纯，则这整个二维支撑经 $V$ 后位于
+$K\otimes\mathbb C\eta_3$，并因两边维数都是二而占满该空间。所以存在正交归一基 $v_0,v_1$ 和单位 $\eta_3$，使
+
+$$
+V(q\otimes|0\rangle)=v_0\otimes\eta_3,\qquad
+V(u_0\otimes|1\rangle)=v_1\otimes\eta_3.
+\tag{38.12}
+$$
+
+令 $c_{23}=\langle\eta_2,\eta_3\rangle$。把（38.8）的两个第二步输入与（38.12）的两个第三步输入交叉取内积，得到
+
+$$
+\begin{pmatrix}
+\langle k,q\rangle&0\\
+0&\langle k,u_0\rangle
+\end{pmatrix}
+=
+c_{23}
+\begin{pmatrix}
+\langle u_0,v_0\rangle&\langle u_0,v_1\rangle\\
+\langle u_1,v_0\rangle&\langle u_1,v_1\rangle
+\end{pmatrix}.
+\tag{38.13}
+$$
+
+右边第二个矩阵是酉矩阵。若 $c_{23}=0$，则 $k$ 同时正交于张满 $K$ 的 $q,u_0$，矛盾。故 $c_{23}\ne0$，两项非对角元必须为零，于是
+
+$$
+v_0\parallel u_0,\qquad v_1\parallel u_1,\qquad
+|\langle k,q\rangle|=|\langle k,u_0\rangle|.
+\tag{38.14}
+$$
+
+特别地，$k$ 不可能平行于 $u_0$：否则（38.14）使 $q\parallel u_0$，与（38.10）矛盾。因此
+
+$$
+\langle k,u_1\rangle\ne0.
+\tag{38.15}
+$$
+
+现在把首次输入 $e\otimes|0\rangle$ 与第二步的
+$k\otimes|1\rangle$ 比较。输入正交，而输出内积为
+$\langle k,u_1\rangle\langle\eta_1,\eta_2\rangle$。
+由（38.15），$\langle\eta_1,\eta_2\rangle=0$。
+再与 $k\otimes|0\rangle$ 比较，得到
+
+$$
+\langle e,k\rangle
+=\langle k,u_0\rangle\langle\eta_1,\eta_2\rangle=0.
+\tag{38.16}
+$$
+
+同理，把首次输入与第三步的 $u_0\otimes|1\rangle$ 比较，利用
+$v_1\parallel u_1$ 及（38.15），得到
+$\langle\eta_1,\eta_3\rangle=0$。
+再与 $q\otimes|0\rangle$ 比较，得到
+
+$$
+\langle e,q\rangle
+=\langle k,v_0\rangle\langle\eta_1,\eta_3\rangle=0.
+\tag{38.17}
+$$
+
+二维空间中，非零 $e$ 的正交补是一条直线。（38.16）、（38.17）迫使
+$q\parallel k$，再由（38.14）得到 $k\parallel u_0$，最终又给
+$q\parallel u_0$，矛盾。
+

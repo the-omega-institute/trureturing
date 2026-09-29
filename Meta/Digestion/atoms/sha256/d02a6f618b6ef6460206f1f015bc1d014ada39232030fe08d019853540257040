@@ -1,0 +1,8 @@
+**说明 61.1（复用、来源与适用范围）。** 第 56 节使用期望的单调性与有限线性组合误差界，属于矩约束的弱包络方法。仓内 `RationalMomentQueryEnvelope` 的 `query_interval_of_envelope` 已有有限有理权重下的逐点包络到均值区间结构；这里允许可数等待标签、永不点击点及带噪读数，其纸面证明由第 56.2 条承担，没有宣称该有限有理声明已覆盖本节或已编译本节的精确应用。
+
+第 59 节的 Bernstein 归一化和方差方法对应上述恢复几何第 11.4 条及其所引钉版 Mathlib [Bernstein 源码](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Bernstein.lean)。集中界沿用第 22 节的来源：W. Hoeffding，*Probability Inequalities for Sums of Bounded Random Variables*，[DOI:10.1080/01621459.1963.10500830](https://doi.org/10.1080/01621459.1963.10500830)。本批给出新的任务对应和完整推导，不将这些标准工具声明为原创。
+
+第 58.4 条通过小总变差、大发散均值和统一覆盖推出上置信界退化。相关历史文献是 R. R. Bahadur、Leonard J. Savage，*The Nonexistence of Certain Statistical Procedures in Nonparametric Problems*（1956），[DOI:10.1214/aoms/1177728077](https://doi.org/10.1214/aoms/1177728077)。本批核对了该书目元数据，未取得可读原文，因此不把这里的二维仪器实现或单侧上置信界定理归给原文；所声明结论由第 58.4 条的自包含证明承担。
+
+以上均为纯理论文本，未新增 Lean 实现、消化覆盖或冻结结果。仪器维数、完整记忆、来源重置、截止校准和独立尾预算各有明确用途，不能以同一份有限记录同时替代所有这些前提。全文不声称文献原创性。
+

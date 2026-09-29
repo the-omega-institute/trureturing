@@ -1,0 +1,20 @@
+**命题 728.1（三种精确关系）。** 令 $C=\bigcap_{S\in\mathcal F}S$。则
+
+$$
+\tau=1\Longleftrightarrow C\ne\varnothing,
+\qquad
+\tau=n/p\Longleftrightarrow(p/n)\mathbf1\in\operatorname{conv}\{\mathbf1_S:S\in\mathcal F\}.
+$$
+
+并且对于状态概率权重 $\lambda$ 及负载 $q_i=\sum_{S\ni i}\lambda_S$，
+
+$$
+\min_{\lambda\in\Delta(\mathcal F)}\max_iq_i=1/\tau.
+$$
+
+**证明。** 若 $i\in C$，在该标签放覆盖权重一便得 $\tau=1$。反过来，最小覆盖总和若为一，每个状态都必须包含其全部正权坐标；至少有一个正权坐标，故共同核心非空。
+
+若最优匹配总和为 $n/p$，对标签负载求和的上界取等号，强制每个标签负载为一。将匹配权重除以 $n/p$ 就得到各坐标为 $p/n$ 的概率混合；反向按 $n/p$ 放大平衡权重即可得到匹配。最后，对任意状态概率权重，其最大负载 $m$ 为正，将权重除以 $m$ 得到总量 $1/m$ 的合法匹配，故 $m\ge1/\tau$。取总量 $\tau$ 的最优匹配并除以 $\tau$，所有负载不超过 $1/\tau$，得到反向及达到性。证毕。
+
+因此，共同核心为空时 $\tau>1$；非平衡又给出 $\tau<n/p$。这两种缺失不是同一件事：前者排除所有状态都包含某个标签，后者排除一种特定均匀负载分解。它们仍允许完整、相容的共同优化问题。
+

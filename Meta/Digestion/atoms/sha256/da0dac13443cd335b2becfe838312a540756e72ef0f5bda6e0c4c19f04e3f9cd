@@ -1,0 +1,346 @@
+**定理 424.1（固定深度的参数稳定性、严格间隙与有效恢复）。**
+
+在上述同一接口和固定深度下，以下五项同时成立。
+
+**（一）联合紧性与上半连续性。** 对每个 $m\le n$，集合
+
+$$
+\mathfrak G_m=\{(\theta,\rho,Z):\theta\in\Theta,\ \rho\in\mathcal D,\ Z\in\mathcal K_m(\theta,\rho)\}
+$$
+
+是紧集且每个 $(\theta,\rho)$ 的纤维非空；根集合
+
+$$
+\mathfrak A_n=\{(\theta,T):T\in\mathcal A_n(\theta)\}
+$$
+
+也是紧集。$p_n(\theta)$ 和 $\eta_n(\delta,\theta)$ 的最大值均由允许的有限协议取得，分支数可取各 $B_a$。函数 $p_n:\Theta\to[0,1]$ 上半连续。逐点地，定理 422.1 给出的固定源结论仍有
+
+$$
+\eta_n(0,\theta)=p_n(\theta),
+\qquad
+\lim_{\delta\downarrow0}\eta_n(\delta,\theta)=p_n(\theta).
+$$
+
+证明。深度零时，$\Theta\times\mathcal D\times\mathcal U(d)$ 是紧集，映射
+
+$$
+(\theta,\rho,U)\longmapsto
+ C(\operatorname{Ad}_U\circ\Phi_{(\theta,\otimes_a\rho_a)})
+$$
+
+连续；再并入恒为零的图，得到紧的 $\mathfrak G_0$。由于
+
+$$
+\operatorname{Tr}C(\operatorname{Ad}_U\circ\Phi_{(\theta,\otimes_a\rho_a)})
+=\sum_i\langle q_i(\theta)|\otimes_a\rho_a|q_i(\theta)\rangle\le d,
+$$
+
+因每个密度矩阵的算子范数至多一，所以上述迹界成立；完全正性给出 Choi 矩阵非负，故非零部分确实落在 $\mathcal H$ 中。凸权重和保留正性及迹界，所以每层递归仍落在同一个 $\mathcal H$ 中。
+
+假设 $\mathfrak G_m$ 紧。固定持有者 $a$，考虑紧集
+
+$$
+\Theta\times\mathcal D\times\Delta_{B_a}
+ \times(\mathcal D_a\times\mathcal H)^{B_a},
+$$
+
+并以有限个闭条件
+
+$$
+\sum_j\lambda_j\sigma_j=\rho_a,
+\qquad
+(\theta,\rho[a\leftarrow\sigma_j],Z_j)\in\mathfrak G_m
+$$
+
+截取其子集，再用连续映射 $(\lambda_j,Z_j)_j\mapsto\sum_j\lambda_jZ_j$。零权重和奇异密度均被闭条件保留，所以每个 $\mathfrak G_{m+1}^a$ 紧；有限持有者并集仍紧，且每个纤维非空：取 $\lambda_1=1$、$\sigma_j=\rho_a$、全部 $Z_j=0$ 即得零元，其余权重为零。归纳至 $n$，再限制 $\rho=\rho_\star$ 并乘以 $D_R$，再通过 Choi 线性同构的连续逆得到紧的 $\mathfrak A_n$。对于任意线性映射 $F$ 和有限参考矩阵 $X=\sum_{i,j}X_{ij}\otimes E_{ij}$，块压缩给出 $\|X_{ij}\|_1\le\|X\|_1$，因而
+
+$$
+\begin{aligned}
+\|(\operatorname{id}\otimes F)(X)\|_1
+&\le\sum_{i,j}\|X_{ij}\otimes F(E_{ij})\|_1\\
+&=\sum_{i,j}\|X_{ij}\|_1\|F(E_{ij})\|_1\\
+&\le\|X\|_1\sum_{i,j}\|F(E_{ij})\|_1.
+\end{aligned}
+$$
+
+这一定理 422.1 中使用的 Choi 坐标连续性估计说明 Choi 坐标收敛蕴含钻石范数收敛，其界对全部参考维数一致。因而在 $\mathfrak A_n\times[0,1]$ 上施加 $T=p\operatorname{id}$，或固定 $\delta$ 后施加 $T^*(I)=pI$ 及 $\|T-p\operatorname{id}\|_\diamond\le\delta p$，均得到含 $(0,0)$ 的非空紧可行集，两个最大值都取得。再由定理 422.1 的反向实现，每个最大化映射由同深度的允许有限树实现，持有者 $a$ 的每个节点至多有 $B_a$ 个实际结果。
+
+取任意 $\theta_j\to\theta$，并令 $p_j=p_n(\theta_j)$。先取子列使 $p_j\to\bar p=\limsup_jp_n(\theta_j)$，再由根图紧性，从相应最大化映射中取进一步子列 $(\theta_j,T_j)\to(\theta,T)$。闭图给出 $T=\bar p\operatorname{id}\in\mathcal A_n(\theta)$，故 $\bar p\le p_n(\theta)$。这正是上半连续性。最后两条逐点等式和极限直接应用定理 422.1 的固定源结论。证毕。
+
+**（二）紧参数族上的统一严格间隙。** 若 $v:\Theta\to\mathbb R$ 连续且
+
+$$
+ p_n(\theta)<v(\theta)\qquad(\theta\in\Theta),
+$$
+
+则存在 $\varepsilon>0$ 与 $\delta_0\in(0,2]$，使得
+
+$$
+\eta_n(\delta,\theta)\le v(\theta)-\varepsilon
+\qquad(\theta\in\Theta,\ 0\le\delta\le\delta_0).
+$$
+
+证明。由 $p_n$ 上半连续，$v-p_n$ 下半连续；紧性和处处严格正性给出
+
+$$
+\gamma=\min_{\theta\in\Theta}(v(\theta)-p_n(\theta))>0.
+$$
+
+置 $\varepsilon=\gamma/2$。若不存在统一的闭误差区间，则对每个 $j$ 可取 $0<\delta_j\le1/j$、$\theta_j\in\Theta$ 及近似可行最大化元 $(T_j,p_j)$，满足
+
+$$
+ p_j>v(\theta_j)-\gamma/2,
+\qquad
+\|T_j-p_j\operatorname{id}\|_\diamond\le\delta_jp_j.
+$$
+
+取子列使 $\theta_j\to\theta$、$p_j\to p$、$T_j\to T$。因 $0\le p_j\le1$，右端不超过 $\delta_j$，故第一项所引定理 422.1 的范数连续性估计给出 $T=p\operatorname{id}$；根图闭性给出 $p\le p_n(\theta)$。另一方面连续性给出
+
+$$
+ p\ge v(\theta)-\gamma/2,
+$$
+
+这与
+
+$$
+ p\le p_n(\theta)\le v(\theta)-\gamma
+$$
+
+矛盾。因此某个 $\delta_0>0$ 成立，并可将其截到 $2$ 以内。
+
+作为同一接口的五射线应用，取 $A\subset(1/\sqrt2,\sqrt2)$ 非空紧集、$d=5$、$k=2$、$d_1=d_2=2$、$D_R=4$、$B_1=B_2=629$，取第 420 节的连续源
+
+$$
+\omega=e^{2\pi i/3},\quad s_1=|0\rangle,\quad s_2=|1\rangle,\quad
+s_{3+j}(r)=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}
+\ (j=0,1,2),\quad q_i(r)=s_i(r)\otimes s_i(r),
+$$
+
+并令
+
+$$
+\kappa(r)=\frac{\sqrt{4+2(r^2+r^{-2})}}3,
+\qquad U(r)=\frac1{3\kappa(r)}.
+$$
+
+定理 422.1 的精确最大化元是一棵实际有限树，其原始两因子、全参考条件、局部操作权限和按实际标签共用的终端反馈均属于定理 420.1 的接口。对这棵树应用定理 420.1 的逐协议严格界，才得到 $p_n(r)<U(r)$。五个源向量及 $U$ 在 $A$ 上连续，所以应用前半部得到某个统一正间隙。若存在 $r_j\in A$、$\delta_j\to0$ 及近似协议使
+
+$$
+ p_j\ge U(r_j)-e_j,\qquad e_j\ge0,\quad e_j\to0,
+$$
+
+则对每个固定 $n$，充分大的 $j$ 满足 $\delta_j\le\delta_0$、$e_j<\varepsilon$。若此时深度仍至多 $n$，便同时有 $p_j\le\eta_n(\delta_j,r_j)\le U(r_j)-\varepsilon$ 和 $p_j\ge U(r_j)-e_j>U(r_j)-\varepsilon$，矛盾。因此深度最终超过每个固定整数。这里没有断言这样的近似列存在，也没有把结论延伸到开区间端点。证毕。
+
+**（三）零深度退相干反例。** 令 $d=d_1=2$、$k=1$、$n=0$，取
+
+$$
+q_1(t)=|0\rangle,
+\qquad
+q_2(t)=t|0\rangle+\sqrt{1-t^2}|1\rangle,
+\qquad 0\le t\le1,
+$$
+
+并写
+
+$$
+D_t\!\begin{pmatrix}a&b\\c&e\end{pmatrix}
+=\begin{pmatrix}a&tb\\tc&e\end{pmatrix}.
+$$
+
+则
+
+$$
+\mathcal A_0(t)=\{0\}\cup\{\operatorname{Ad}_U\circ D_t:U\in\mathcal U(2)\},
+$$
+
+且
+
+$$
+\min_U\|\operatorname{Ad}_U\circ D_t-\operatorname{id}\|_\diamond=1-t,
+$$
+
+$$
+ p_0(t)=\begin{cases}0,&t<1,\\1,&t=1,\end{cases}
+\qquad
+\eta_0(\delta,t)=\begin{cases}1,&\delta\ge1-t,\\0,&\delta<1-t.
+\end{cases}
+$$
+
+因此对每个 $0<\delta\le2$，
+
+$$
+\sup_{0\le t\le1}(\eta_0(\delta,t)-p_0(t))=1,
+$$
+
+而在 $\delta=0$ 时该上确界为零。
+
+证明。零深度只有确定性的末端拒绝或一个酉校正；没有可免费抽取的硬币，因此每个非零接受映射都保迹并有 $p=1$。令 $Z=|0\rangle\langle0|-|1\rangle\langle1|$、$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$。在矩阵单位上计算源重叠给出 $\Phi_{(t,I)}=D_t$，由零深度根等式得到所列 $\mathcal A_0(t)$。直接计算又得
+
+$$
+D_t=\frac{1+t}{2}\operatorname{id}
+ +\frac{1-t}{2}\operatorname{Ad}_Z,
+$$
+
+酉共轭在任意参考扩张后都保持迹范数，故 $\|\operatorname{Ad}_Z-\operatorname{id}\|_\diamond\le2$；输入 $|+\rangle\langle+|$ 给出两个正交纯态之差，迹范数为二，所以该范数恰为二。从而用 $U=I$ 得
+
+$$
+\|D_t-\operatorname{id}\|_\diamond\le1-t.
+$$
+
+对任意 $U$，令 $P_+=|+\rangle\langle+|$，$\sigma=UD_t(P_+)U^*$。$\sigma$ 的最大特征值为 $(1+t)/2$。利用 $2P_+-I$ 的算子范数为一，得到
+
+$$
+\|\sigma-P_+\|_1
+\ge2\bigl(1-\operatorname{Tr}(P_+\sigma)\bigr)
+\ge1-t.
+$$
+
+钻石范数支配无参考输入的迹范数，故任意 $U$ 都有相反方向的不等式；两者合起来给出最小值 $1-t$。当 $t<1$ 时该距离为正，故不能精确得到恒等映射；$t=1$ 时 $D_1=\operatorname{id}$，取 $U=I$ 即得 $p_0(1)=1$。前述零深度结构又说明近似约束只能接受 $p=1$ 或零映射，故恰好在 $\delta\ge1-t$ 时取到 $1$，否则只能取零。给定 $\delta>0$，选取 $t=1-\min(\delta/2,1/2)$ 即得上确界一；$\delta=0$ 时它退化为精确情形。这里 $p_0$ 在 $t=1$ 向上跳跃；第一项只给出上半连续性。第二项比较的是连续严格阈值，不是可能不连续的 $p_0$ 本身。在 $t=1$，只有 $v(1)\le1$ 才与严格阈值条件冲突；例如 $v\equiv2$ 满足该条件，所以不与第二项矛盾。证毕。
+
+**（四）精确代数输入下的半代数性与有效性。** 固定一个源、维数和深度，并假定每个源坐标的实部和虚部都是精确编码的实代数数。则可达 Choi 集、精确成功集合和
+
+$$
+F_n(\delta,p)=\left\{(T,p):T\in\mathcal A_n,\ T^*(I)=pI,
+ \|T-p\operatorname{id}\|_\diamond\le\delta p\right\}
+$$
+
+都有在实代数数域上的有效半代数描述；$p_n$ 是可有效计算的实代数数；$[0,2]$ 上 $\eta_n(\delta)$ 的图是有效半代数集，并且每个精确编码的代数 $\delta$ 所对应的 $\eta_n(\delta)$ 是可有效计算的实代数数。
+
+证明。把有限递归逐层展开为实多项式等式与不等式：张量积、酉性、单纯形条件、重心条件和有限持有者析取都只含有限次加法与乘法。对 Hermitian 矩阵 $H=A+iB$，其中 $A$ 实对称、$B$ 实斜对称，使用实化矩阵
+
+$$
+\begin{pmatrix}A&-B\\B&A\end{pmatrix}
+$$
+
+的所有主子式非负来精确表达 $H\succeq0$；这保留零特征值和奇异密度，不引入逆矩阵或平方根。实部、虚部、部分迹以及 Choi 等式同样是多项式条件。半代数集合在投影下保持半代数性；对实闭域上的量词消去和代数点的符号判定，使用 Basu--Pollack--Roy, *On the Combinatorial and Algebraic Complexity of Quantifier Elimination*, Journal of the ACM 43(6) (1996), pp.1002--1045, Theorems 1.3.1--1.3.2, pp.1004--1005。
+
+剩下的是钻石范数的精确桥接。对任意复线性
+
+$$
+F:\mathcal L(\mathbb C^d)\longrightarrow\mathcal L(\mathbb C^d),
+$$
+
+有
+
+$$
+\|F\|_\diamond
+=\sup_{m\ge1}\|F\otimes\operatorname{id}_m\|_{1\to1}
+=\|F\otimes\operatorname{id}_d\|_{1\to1}.
+$$
+
+这一定义适用于 $F=T-p\operatorname{id}$，即使 $F$ 不是完全正的。秩一输入 $uv^*$ 的左右 Schmidt 支持可以不同；分别对左右支持使用两个参考等距嵌入仍保持迹范数，所以参考维数 $d$ 的约化对该一般线性映射仍成立。
+
+令 $X$ 为输入、$Y$ 为输出，并置
+
+$$
+J_W(F)=\operatorname{Swap}\,C(F)\,\operatorname{Swap}^*
+=\sum_{i,j}F(E_{ij})\otimes E_{ij}
+$$
+
+作用在 $Y\otimes X$ 上。对每个 $e\ge0$，以下条件等价于 $\|F\|_\diamond\le e$：存在 $Y_0,Y_1\succeq0$（作用在 $Y\otimes X$ 上）和 $t_0,t_1\ge0$，满足
+
+$$
+\begin{pmatrix}
+Y_0&-J_W(F)\\
+-J_W(F)^*&Y_1
+\end{pmatrix}\succeq0,
+$$
+
+$$
+ t_bI_X-\operatorname{Tr}_Y(Y_b)\succeq0\quad(b=0,1),
+\qquad
+\frac{t_0+t_1}{2}\le e.
+$$
+
+这里没有把钻石范数除以 $d$，也没有采用半钻石范数约定。输入先行 Choi 约定给出
+
+$$
+\operatorname{Tr}_Y C(T)=(T^*(I_Y))^{\mathsf T},
+$$
+
+所以 $\operatorname{Tr}_Y C(T)=pI_X$ 正好就是标量成功条件（转置不改变标量矩阵）。
+
+上述等价性正是 John Watrous, *Simpler semidefinite programs for completely bounded norms*, arXiv:1207.5726v2, p.3, Theorem 6 (p.10) 及 §3.2 (pp.11--12) 的完全有界范数半定规划：其原问题为
+
+$$
+\max\ \operatorname{Re}\operatorname{Tr}(J_W(F)^*X_{\rm block})
+$$
+
+在
+
+$$
+\rho_0,\rho_1\succeq0,\quad
+\operatorname{Tr}\rho_b=1,\quad
+\begin{pmatrix}
+I_Y\otimes\rho_0&X_{\rm block}\\
+X_{\rm block}^*&I_Y\otimes\rho_1
+\end{pmatrix}\succeq0
+$$
+
+下取得同一未减半的钻石范数。原问题以 $\rho_b=I/d$、$X_{\rm block}=0$ 严格可行；对偶问题取足够大的正 $Y_b$ 及更大的 $t_b$ 也严格可行，故两端最优值均取得。弱对偶给出上式的充分性，取得的对偶最优值给出必要性，包括 $e=0$ 与等号情形；当 $F=0$ 时零对偶见证直接成立。式中的 $1/2$ 是两个对偶界的平均，不是对钻石范数作二分。
+
+在上式中代入 $F=T-p\operatorname{id}$ 与 $e=\delta p$，再把半正定条件改写成有限个主子式不等式，即得到 $F_n(\delta,p)$ 的有效半代数公式。对 $p_n$，用可行性公式及
+
+$$
+\forall s\,\bigl(\operatorname{Feasible}(s)\Rightarrow s\le p\bigr)
+$$
+
+刻画最大值，不预设可行 $p$ 的集合是区间。取得性使最大值集合为单点；量词消去与实根隔离遂给出该点的代数编码。对 $\eta_n$，同样以 $p$ 可行且所有可行成功率不超过 $p$ 的公式刻画图。实代数系数由整数多项式和有理隔离区间编码，故所有所述符号判定和代数数运算均有效。这里的有效性是有限维、固定深度的代数可计算性；没有推出优化的复杂度界、整棵递归的单一半定规划、任意实输入的有效性、参数族在未加假设下的半代数性或无界深度结论。证毕。
+
+**（五）固定代数实例的有效幂次误差界。** 对第四项的每个固定实例，存在正整数 $m$、正有理数 $C$ 和 $0<r\le2$，使
+
+$$
+0\le\eta_n(\delta)-p_n\le C\,\delta^{1/m}
+\qquad(0\le\delta\le r).
+$$
+
+并且存在一个终止的精确程序输出某个这样的三元组 $(m,C,r)$。
+
+证明。令
+
+$$
+ h(\delta)=\eta_n(\delta)-p_n.
+$$
+
+精确可行集包含误差为零的精确最大化元，故 $h\ge0$ 且 $h(0)=0$；定理 422.1 的固定源极限给出 $h(\delta)\to0$。第四项给出 $h$ 的图为半代数集。
+
+先处理不恒为零的情形。对 $(0,2)$ 上的半代数图取量词消去后的无量词公式，删去恒等于零的多项式。图上的每一点至少使一个余下多项式为零；否则所有符号在该点邻域内恒定，公式会包含一个二维开集，这不可能是单值函数的图。于是这些非零多项式的乘积 $P(x,y)$ 满足
+
+$$
+P(\delta,h(\delta))=0\qquad(0<\delta<2).
+$$
+
+除去 $P$ 中最大的公共 $x$ 次幂，得到 $Q$，使 $Q(0,y)$ 不恒等于零，且仍有 $Q(\delta,h(\delta))=0$。因 $h(\delta)\to0$，连续性给出 $Q(0,0)=0$。取 $m\ge1$ 为 $Q(0,y)$ 在 $y=0$ 处的最小非零次数，则
+
+$$
+Q(x,y)=xS(x,y)+y^mR(y),
+\qquad R(0)\ne0.
+$$
+
+在某个邻域内 $|R(y)|$ 有正下界而 $|S(x,y)|$ 有有限上界；代入 $y=h(x)\ge0$ 得
+
+$$
+ h(x)^m|R(h(x))|=x|S(x,h(x))|,
+$$
+
+从而 $h(x)^m\le Kx$。把常数增大并把区间端点缩为正有理数，得到所需的有理 $C,r$。
+
+若 $h$ 在某个 $(0,r_1)$ 上恒为零，则任取正整数 $m$、正有理数 $C$ 及足够小的正有理数 $r\le r_1$ 即可；这也包含在同一零点邻域论证中，不需另设分类。为使选择完全有效，按一个固定的穷举顺序枚举所有
+
+$$
+(m,C,r),\qquad m\ge1,\quad C\in\mathbb Q_{>0},\quad r\in\mathbb Q\cap(0,2].
+$$
+
+对每个三元组，用量词消去判定
+
+$$
+\forall\delta,y\;\bigl[
+0\le\delta\le r\ \wedge\ (\delta,y)\in\operatorname{Graph}(\eta_n)
+\bigr]
+\Rightarrow
+\bigl[0\le y-p_n\ \wedge\ (y-p_n)^m\le C^m\delta\bigr].
+$$
+
+每次判定都终止，而上面的多项式论证保证至少有一个真三元组，故穷举程序在有限步后返回第一个真三元组。这个结论只给出某个有效幂次上界，不给出尖锐指数、精确渐近式、对源参数或深度的统一模数。证毕。
+

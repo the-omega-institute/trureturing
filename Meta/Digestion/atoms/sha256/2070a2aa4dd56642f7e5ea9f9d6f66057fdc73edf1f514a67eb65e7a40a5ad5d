@@ -1,0 +1,21 @@
+**定义 284.1（正极因子与轴权重）。** 对定义276.1的正半径六态模型，令 $\mathcal P$ 为所有正定实对称矩阵 $P$ 的集合，要求 $P$ 是一个幺元量子比特 CPTP 通道的 Bloch 矩阵。记
+
+$$
+\mathcal W=\{w\in\mathbb R_{\ge0}^3:\textstyle\sum_iw_i=1\},
+\qquad
+D_w=\operatorname{diag}(w_1a_1^2,w_2a_2^2,w_3a_3^2),
+$$
+
+并定义
+
+$$
+J_a(P)=\max_{w\in\mathcal W}
+\left\{
+\sum_iw_ia_i^2\bigl(1+(P^2)_{ii}\bigr)
+-2\|PD_w\|_*
+\right\},
+\tag{284.1}
+$$
+
+其中 $\|\cdot\|_*$ 是奇异值之和。$r_*(P)$ 沿用式（281.8）；因 $P$ 正定，也可用式（281.10）的四角逆范数计算。
+

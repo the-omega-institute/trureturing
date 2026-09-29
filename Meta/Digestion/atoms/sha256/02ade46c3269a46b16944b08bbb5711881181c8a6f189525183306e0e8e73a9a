@@ -1,0 +1,19 @@
+### 255.1 给定矩阵与三个数据条件
+
+固定§248的已标定通道及同一有限维参考空间 $E$。记
+$$
+A\ge B>0,\quad b_0^2=B,\quad
+\ell=\sqrt{A+B},\quad D=\frac\ell2,\quad U=\frac{\sqrt A}{2},
+\qquad
+\kappa=\frac{A-B}{A+B}\in[0,1),
+\tag{255.1}
+$$
+输入算子仍为
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X.
+\tag{255.2}
+$$
+给定 $E$ 上任意两份 Hermitian 矩阵 $R_a,R_b$。它们目前只是候选响应，并未假定来自某个态。
+

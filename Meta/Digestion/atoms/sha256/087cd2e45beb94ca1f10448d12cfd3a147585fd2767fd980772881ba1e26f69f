@@ -1,0 +1,13 @@
+**推论 54.7（一般界留下的精确范围）。** 记 $\delta=\Delta(R)$，则
+
+$$
+\begin{cases}
+\displaystyle
+\delta\le\inf_{S\in\mathcal S}D(R,S)
+\le\dfrac{2\delta}{1+\delta},&0\le\delta\le1,\\[6pt]
+\displaystyle
+\inf_{S\in\mathcal S}D(R,S)=\delta,&\delta\ge1.
+\end{cases}
+\tag{54.30}
+$$
+

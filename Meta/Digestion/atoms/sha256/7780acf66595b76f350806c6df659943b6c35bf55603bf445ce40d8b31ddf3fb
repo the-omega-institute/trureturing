@@ -1,0 +1,80 @@
+### 200.5 任意最优共同 CPTP instrument 的二阶下界
+
+对每个最优器定义
+
+$$
+x=\frac{A_0-A_1}{2\epsilon}=O_I(1),\qquad
+A_0=\frac12+\epsilon x-\frac C2,\quad
+A_1=\frac12-\epsilon x-\frac C2.
+\tag{200.18}
+$$
+
+在 $\Gamma^*(h)$ 处，只沿 $A_0=1/2+u,A_1=1/2-u$ 改变
+（200.6），其来源项的一阶导数为零，噪声导数为
+
+$$
+\alpha=L_d-\frac{\beta\delta}{4}.
+\tag{200.19}
+$$
+
+因为（200.13）与（200.14）一致成立，光滑 Taylor 展开给
+
+$$
+L_h(\Gamma)=G_h(\Gamma)+\alpha\epsilon x+o_I(\epsilon).
+\tag{200.20}
+$$
+
+这里仅将 $O(\epsilon)$ 的占据列偏置作 Taylor 展开；
+其他 Choi 条目只需一致收敛，不要求 $O(\epsilon)$ 速率。
+而基点误差精确满足
+
+$$
+\lambda-\frac34
+=\frac C4+\frac{(A_0-A_1)^2}{4(A_0+A_1)}
+=\frac C4+\epsilon^2x^2+o_I(\epsilon^2).
+\tag{200.21}
+$$
+
+将（200.11）、（200.20）、（200.21）代入（200.7），得到
+
+$$
+\begin{aligned}
+\frac{e_\epsilon-3/4-\epsilon\Phi_h}{\epsilon^2}
+={}&Q_0+x^2+a_{\mathrm{eff}}x
++\frac{C}{4\epsilon^2}
++\frac{\gamma R}{2\epsilon}\operatorname{Im}P\\
+&+\frac{\beta\delta}{4\epsilon}U
++\frac{\beta R}{4\epsilon}V
++\frac{h}{6\epsilon}\sum_j|M_j-m|^2+o_I(1).
+\end{aligned}
+\tag{200.22}
+$$
+
+（200.11）中含 $C$ 的其他项在未归一化误差中为 $O(\epsilon^3)$。
+对任意复数 Kraus，严格有
+
+$$
+\begin{aligned}
+x^2+a_{\mathrm{eff}}x
+&=(x+a_{\mathrm{eff}}/2)^2-a_{\mathrm{eff}}^2/4,\\
+\frac{C}{4\epsilon^2}
++\frac{\gamma R}{2\epsilon}\operatorname{Im}P
+&=\frac14\sum_{j,\alpha}
+\left|\frac c\epsilon+i\gamma R\,d\right|^2
+-\frac{\gamma^2R^2}{4}(D_0+D_1).
+\end{aligned}
+\tag{200.23}
+$$
+
+由（200.14），$D_0+D_1=4m^2+o_I(1)$。
+删去（200.22）、（200.23）中的非负平方，便得对所有最优器一致的下界
+
+$$
+e_\epsilon\ge
+\frac34+\epsilon\Phi_h+\epsilon^2Q(h)+o_I(\epsilon^2).
+\tag{200.24}
+$$
+
+取最优器足以给全 CPTP 最优值下界；上面的平方恒等式本身适用于
+任意复杂 Kraus 表示，未使用实数 Kraus 限制或秩约束。
+

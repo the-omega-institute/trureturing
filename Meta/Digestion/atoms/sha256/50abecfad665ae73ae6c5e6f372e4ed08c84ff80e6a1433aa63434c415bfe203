@@ -1,0 +1,11 @@
+**定义 29.1（原卷耗散极限的固定模型）。** 沿用第 25.3 条所得线性扩散，固定 $D^{\mathsf T}=-D\in\mathbb R^{d\times d}$、$B\in\mathbb R^{d\times k}$，令
+\[
+ M=BB^{\mathsf T},\quad A=D-M/2,\quad F_t=e^{tA},
+ \qquad dX_t=AX_t\,dt+B\,dW_t.
+\]
+其转移核为 $\mathcal P_t=\mathcal K_{F_t}$，参考为 $\gamma_d$。所有参数已知且不随 $t$ 改变。定义
+\[
+ m=\min\left\{j\ge0:\operatorname{rank}[B,DB,\ldots,D^jB]=d\right\},
+\]
+若不存在则记 $m=\infty$。这里只讨论有明确线性 Gaussian 半群实现的模型；第 23 节的一次初始化有限热环境不自动满足本定义。
+

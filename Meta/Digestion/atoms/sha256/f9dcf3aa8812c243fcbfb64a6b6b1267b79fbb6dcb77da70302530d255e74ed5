@@ -1,0 +1,13 @@
+**推论 694.1（五环的完整质量分层）。** 设 $a_{\min}=\min_xl_x$。在五环上，
+
+$$
+C_t^{\mathcal C_5}=\begin{cases}
+0,&0<t\le a_{\min},\\
+1/t,&a_{\min}<t\le\theta,\\
+3/(2t),&\theta<t\le B,\\
+5/(3t),&B<t\le M.
+\end{cases}
+$$
+
+固定公共质量后，$h=t-b$ 在 $(0,B]$ 中，系数依次为：$h\le\min_i e_i$ 时零，$\min_i e_i<h\le\theta$ 时 $1/t$，$\theta<h\le B$ 时 $3/(2t)$。$t=b$ 仍单列为零，$t<b$ 切片为空。因此五环在固定公共端点的常数为 $3/(2M)$，而同样五标签的完整二元状态族为 $4/(3M)$。
+

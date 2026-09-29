@@ -146,6 +146,9 @@ domains:
   Quad:
     stratum: S1
     definition: Parameterized quadratic presentation rings and actual orders carrying the digit-gas root-unit criteria.
+  QuadraticForms:
+    stratum: S3
+    definition: Finite-dimensional quadratic forms, congruence, inertia, and symmetric-matrix signature.
   Quantum:
     stratum: S3
     definition: Finite-dimensional complex operator-algebra and probability structures.
@@ -185,6 +188,9 @@ domains:
   Solenoid:
     stratum: S1
     definition: The universal solenoid carrier, its visible projection, and hidden fiber structure.
+  SparseCoding:
+    stratum: S3
+    definition: Sparse feature representations, dictionary learning, superposition, identifiability, and sparse autoencoder methods.
   SpectralTopology:
     stratum: S3
     definition: Finite spectral localizers, point gaps, and chiral inertia counts for doubled Hermitian block operators.
@@ -197,6 +203,9 @@ domains:
   Tower:
     stratum: S0
     definition: Radix name towers and their normalized approximation arms.
+  VertexAlgebra:
+    stratum: S3
+    definition: Vertex-algebra structures, including Heisenberg Fock representations and formal fields.
   Weil:
     stratum: S3
     definition: Classical zeta conventions, Weil test functions, and Fourier-Laplace analysis.

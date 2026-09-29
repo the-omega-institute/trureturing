@@ -1,0 +1,4 @@
+- Y. Yang、D. Ebler、G. Chiribella，*Optimal Compression for Ensembles of Identically Prepared Mixed States*，所引[1506.03542v1](https://arxiv.org/abs/1506.03542v1)的标题；现行条目题为 *Efficient Quantum Compression for Ensembles of Identically Prepared Mixed States*。第2—3页式（2）—（4）、（7）、（9）采用Schur块中的 $I_m/m$，编码舍去重数、解码补回，其精确表示空间维数与式（279.40）相同。本节始终明确保留扇区权重，并由式（279.44）说明带输入关联的适用范围。
+
+本节具体建立的是同一相干拼接来源的两种实际接口：一条以已计入的成功率取得最短单链参考，另一条以较大的总表示空间保留全部模型来源；再将各自准确的正定图参数接到定理274.3，得到相同深度与锐指数。原始来源取得成本、条件筛选及模型解码的范围均不由这个共同指数替代。
+

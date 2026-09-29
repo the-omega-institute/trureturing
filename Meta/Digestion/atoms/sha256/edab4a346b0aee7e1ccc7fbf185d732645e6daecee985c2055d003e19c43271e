@@ -1,0 +1,19 @@
+### 162.3 经验分布的 Wasserstein 连续性
+
+记 $\mu_G$ 为 $G$ 上归一化 Haar 测度，令
+
+$$
+\nu_t=h(t,\cdot)_*\mu_G.
+\tag{162.9}
+$$
+
+对每个固定参数，第158节的均布论证及（162.3）给出实际经验律
+
+$$
+\frac1N\sum_{n=1}^N\delta_{e_n(t)}
+\Longrightarrow\nu_t.
+\tag{162.10}
+$$
+
+以实区间上的距离 $|x-y|$ 定义一阶 Wasserstein 距离 $W_1$。
+

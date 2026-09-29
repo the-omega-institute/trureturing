@@ -1,0 +1,53 @@
+**定理 26.3（最终点击条件的量子 Doob 表示）。** 对 $X\in\mathcal L(\mathcal H_P)$ 定义
+
+$$
+\widetilde{\mathcal N}(X)
+=G\mathcal N(G^{-1}XG^{-1})G,
+\qquad
+\widetilde{\mathcal C}_x(X)
+=\mathcal C_x(G^{-1}XG^{-1}).
+$$
+
+这些分支完全正，且满足仪器完备性
+
+$$
+\widetilde{\mathcal N}^{*}(I_P)
++\sum_x\widetilde{\mathcal C}_x^{*}(I)=I_P.
+$$
+
+对原空间全部算子，有
+
+$$
+\widetilde{\mathcal N}\mathcal S_R=\mathcal S_R\mathcal N,
+\qquad
+\widetilde{\mathcal C}_x\mathcal S_R=\mathcal C_x.
+$$
+
+因而对每个 $n\ge1$ 和 $r_\rho>0$，
+
+$$
+\boxed{
+\widetilde{\mathcal C}_x\widetilde{\mathcal N}^{\,n-1}
+\bigl(\tau_R(\rho)\bigr)
+=\frac{\mathcal C_x\mathcal N^{n-1}(\rho)}{r_\rho}.
+}
+$$
+
+所以新过程复现原过程在最终点击条件下的首次点击时间、端口及各非零分支的归一化终端量子态。
+
+证明。新 Kraus 算子分别是 $GQ_\alpha G^{-1}$ 和 $L_{x\beta}G^{-1}$，完全正性直接成立。拉回恒等后相加，得到
+
+$$
+G^{-1}\left(\mathcal A(R)+\sum_xB_x\right)G^{-1}
+=G^{-1}RG^{-1}=I_P.
+$$
+
+引理 26.2 给出 $GQ_\alpha P=GQ_\alpha$ 与 $L_{x\beta}P=L_{x\beta}$，故
+
+$$
+G\mathcal N(PXP)G=G\mathcal N(X)G,
+\qquad \mathcal C_x(PXP)=\mathcal C_x(X).
+$$
+
+再用 $G^{-1}G=GG^{-1}=P$，即得两个交织恒等式。逐次代入并除以 $r_\rho$ 得到方框公式。其右端迹是原分支概率除以最终点击概率；终端分支再归一化时该公共因子抵消。$\square$
+

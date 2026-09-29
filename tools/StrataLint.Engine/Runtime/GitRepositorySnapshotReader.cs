@@ -9,20 +9,24 @@ internal static class GitRepositorySnapshotReader
     private const int MaximumGitOutputBytes = 64 * 1024 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static RawRepositorySnapshot ReadCurrent(string repositoryRoot, Func<string, bool>? include = null)
-        => ReadCurrentCore(repositoryRoot, include, null);
+    // readContents only projects regular bodies, never entries or link bytes.
+    // FILEMAP policy bytes are retained for the same structural validation and
+    // effective inventory as the full reader.
+    internal static RawRepositorySnapshot ReadCurrent(string repositoryRoot, Func<string, bool>? include = null,
+        Func<string, bool>? readContents = null)
+        => ReadCurrentCore(repositoryRoot, include, null, readContents);
 
     // Visit every file while retaining only the bytes needed for the same link
     // validation as a full snapshot. Identity consumers need the complete path
     // inventory, but do not need all file bodies alive at once.
-    internal static void VisitCurrent(string repositoryRoot, Action<RawRepositoryEntry> visit)
+    internal static ImmutableArray<RepositoryPathInventoryEntry> VisitCurrent(string repositoryRoot, Action<RawRepositoryEntry> visit)
     {
         ArgumentNullException.ThrowIfNull(visit);
-        _ = ReadCurrentCore(repositoryRoot, null, visit);
+        return ReadCurrentCore(repositoryRoot, null, visit).PathInventory;
     }
 
     private static RawRepositorySnapshot ReadCurrentCore(string repositoryRoot, Func<string, bool>? include,
-        Action<RawRepositoryEntry>? visit)
+        Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
@@ -38,6 +42,7 @@ internal static class GitRepositorySnapshotReader
             .Order(StringComparer.Ordinal)
             .ToArray();
         var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
+        var inventory = ImmutableArray.CreateBuilder<RepositoryPathInventoryEntry>();
         var links = new HashSet<string>(StringComparer.Ordinal);
         var inspectedDirectories = new HashSet<string>(StringComparer.Ordinal);
         void Retain(RawRepositoryEntry entry, bool link = false)
@@ -48,8 +53,6 @@ internal static class GitRepositorySnapshotReader
         }
         foreach (var path in paths)
         {
-            if (include is not null && !include(path)) continue;
-
             if (!RepoPath.TryCreate(path, out _))
             {
                 throw new InvalidOperationException($"git emitted an invalid repository path: {path}");
@@ -64,28 +67,46 @@ internal static class GitRepositorySnapshotReader
             FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
             var fullPath = Path.Combine(root, path);
             var info = new FileInfo(fullPath);
-            if (info.LinkTarget is { } target)
+            // FileInfo caches lstat data. Do not re-read it through static File/Directory
+            // APIs or issue readlink for every regular repository entry.
+            var attributes = info.Attributes;
+            var present = attributes != (FileAttributes)(-1);
+            var indexMode = tracked.TryGetValue(path, out var indexedMode) ? indexedMode : null;
+            if (present && (attributes & FileAttributes.ReparsePoint) != 0
+                && info.LinkTarget is { } target)
             {
+                var linkBytes = ReadLinkBytes(root, fullPath, target);
+                inventory.Add(new(path, indexMode, "symlink", "120000", StrictUtf8.GetString(linkBytes)));
+                if (include is not null && !include(path)) continue;
                 links.Add(path);
-                Retain(new RawRepositoryEntry(path, ImmutableArray.CreateRange(ReadLinkBytes(root, fullPath, target))), link: true);
+                Retain(new RawRepositoryEntry(path, ImmutableArray.CreateRange(linkBytes)), link: true);
                 continue;
             }
 
+            if (present && (attributes & FileAttributes.Directory) != 0)
+                throw new InvalidOperationException($"non-regular repository entry {path} is a directory");
             if (!info.Exists)
             {
+                inventory.Add(new(path, indexMode, "absent", null, null));
                 continue;
             }
 
-            if ((info.Attributes & FileAttributes.ReparsePoint) != 0)
+            if ((attributes & (FileAttributes.ReparsePoint | FileAttributes.Device)) != 0)
             {
                 throw new InvalidOperationException(
                     $"non-regular repository entry {path} is not a plain file");
             }
 
+            var executable = !OperatingSystem.IsWindows() && (info.UnixFileMode
+                & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
+            inventory.Add(new(path, indexMode, "regular", executable ? "100755" : "100644", null));
+            if (include is not null && !include(path)) continue;
             Retain(new RawRepositoryEntry(
                 path,
                 // The fresh read buffer has no mutable alias; the snapshot owns it.
-                ImmutableCollectionsMarshal.AsImmutableArray(File.ReadAllBytes(fullPath))));
+                readContents is null || readContents(path) || FileMapDocuments.IsPolicyPath(path)
+                    ? ImmutableCollectionsMarshal.AsImmutableArray(File.ReadAllBytes(fullPath))
+                    : []));
         }
 
         FileMapSymlinkPolicy.ValidateSnapshot(entries, links, paths, path =>
@@ -94,7 +115,7 @@ internal static class GitRepositorySnapshotReader
             var info = new FileInfo(Path.Combine(root, path));
             return info.Exists || Directory.Exists(info.FullName) || info.LinkTarget is not null;
         });
-        return RawRepositorySnapshot.Create(entries);
+        return RawRepositorySnapshot.Create(entries, inventory.ToImmutable());
     }
 
     internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision)

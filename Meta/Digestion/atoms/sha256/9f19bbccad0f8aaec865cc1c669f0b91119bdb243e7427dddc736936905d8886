@@ -1,0 +1,725 @@
+**有限见证 6.6.4（分配 Bellman、显式树与压缩计数）。** 下列程序保存分配见证、极端行和逐节点重标号；逐词检查前缀自由、预算、直接柱质量与重标后 iid 质量，并与显式树贪心及压缩贪心分别比较。有限域为：$d=2,3$、深度四、每层预算 $\{0,1,2\}$；$d=4$、深度三、同一预算集合；各自三个有理 $\delta$ 见程序。另包括零预算、首层耗尽和四个深度七一词见证。总计 589 次执行、577 个不同输入（控制例与主域有重复）；这是有限核对域，不能据此替代定理 6.1.4。
+
+四个深度七值依次为 $(d,\delta)=(3,1/4),(3,1/10),(4,1/5),(2,1/3)$ 时的 $367/512,75226/78125,41312/78125,2186/2187$。代码中的精确数据还保留全部贪心词、Bellman 词、重标词、逐层质量及选中计数，因而不仅是一个最优值断言。
+
+```python
+from fractions import Fraction
+from functools import lru_cache
+from itertools import product
+import json
+
+@lru_cache(None)
+def compositions(n, d):
+    if d == 1:
+        return ((n,),)
+    return tuple((k,) + rest for k in range(n + 1) for rest in compositions(n-k, d-1))
+
+@lru_cache(None)
+def allocations(b, d):
+    # Canonical child order is permitted because the Bellman operator is symmetric.
+    out = set()
+    for columns in product(*(compositions(n, d) for n in b)):
+        rows = tuple(sorted(tuple(col[i] for col in columns) for i in range(d)))
+        out.add(rows)
+    return tuple(sorted(out))
+
+class Optimizer:
+    def __init__(self, d, delta):
+        self.d = d
+        self.delta = delta
+        self.u = delta.numerator
+        self.v = delta.denominator
+        self.r = 1 - (d-1)*delta
+        self.solve = lru_cache(None)(self._solve)
+
+    def _solve(self, b):
+        # Budget b[j] is the at-most count at relative depth j, including root j=0.
+        height = len(b)-1
+        if b[0]:
+            return self.v**height, True
+        if height == 0 or not any(b):
+            return 0, None
+        best_value, best_tree = -1, None
+        for parts in allocations(b[1:], self.d):
+            child_results = tuple(self.solve(part) for part in parts)
+            vals = tuple(x[0] for x in child_results)
+            value = self.u*sum(vals) + (self.v-self.d*self.u)*max(vals)
+            if value > best_value:
+                best_value = value
+                best_tree = tuple(x[1] for x in child_results)
+        return best_value, best_tree
+
+    def history_value(self, b):
+        numerator, tree = self.solve((0,)+tuple(b))
+        return Fraction(numerator, self.v**len(b)), tree
+
+    def direct_check(self, tree, b):
+        # Independently evaluate recursively with Fraction and return explicit F/rows.
+        def walk(t, h):
+            if t is True:
+                return Fraction(1), [h], {}
+            if t is None:
+                return Fraction(0), [], {}
+            children = [walk(child, h+str(a)) for a, child in enumerate(t)]
+            heavy = max(range(self.d), key=lambda a: children[a][0])
+            row = [self.delta]*self.d
+            row[heavy] = self.r
+            value = sum(row[a]*children[a][0] for a in range(self.d))
+            words = [word for child in children for word in child[1]]
+            rows = {h: row}
+            for child in children:
+                rows.update(child[2])
+            return value, words, rows
+        val, words, rows = walk(tree, '')
+        assert all(len([w for w in words if len(w)==n]) <= cap for n, cap in enumerate(b, 1))
+        assert all(not v.startswith(u) for u in words for v in words if u != v)
+        cylinder_sum = Fraction(0)
+        renamed_words = []
+        for w in words:
+            p = Fraction(1)
+            renamed = ''
+            for i, a in enumerate(w):
+                row = rows[w[:i]]
+                p *= row[int(a)]
+                # Consistent deterministic node permutation: first maximal-probability
+                # child is assigned 0, others in increasing original-label order.
+                heavy = max(range(self.d), key=lambda j: row[j])
+                labels = [heavy] + [j for j in range(self.d) if j != heavy]
+                renamed += str(labels.index(int(a)))
+            renamed_words.append(renamed)
+            cylinder_sum += p
+            iid_mass = self.r**renamed.count('0') * self.delta**(len(renamed)-renamed.count('0'))
+            assert iid_mass == p
+        assert cylinder_sum == val
+        assert all(not v.startswith(u) for u in renamed_words for v in renamed_words if u != v)
+        return val, words, renamed_words
+
+    def compressed_greedy(self, b):
+        # Counts indexed by number of low-probability letters in an active word.
+        active = [1]
+        masses = []
+        selected_counts = []
+        for n, cap in enumerate(b, 1):
+            candidates = [(active[k] if k < len(active) else 0)
+                          + (self.d-1)*(active[k-1] if k > 0 else 0)
+                          for k in range(n+1)]
+            chosen = []
+            remaining = cap
+            for available in candidates:
+                take = min(available, remaining)
+                chosen.append(take)
+                remaining -= take
+            active = [available-take for available,take in zip(candidates,chosen)]
+            mass = sum(chosen[k]*self.r**(n-k)*self.delta**k for k in range(n+1))
+            masses.append(mass)
+            selected_counts.append(chosen)
+        return sum(masses), masses, selected_counts
+
+    def greedy(self, b):
+        active = [('', Fraction(1))]
+        selected = []
+        masses = []
+        p = [self.r]+[self.delta]*(self.d-1)
+        for cap in b:
+            children = [(h+str(a), mass*p[a]) for h,mass in active for a in range(self.d)]
+            children.sort(key=lambda x: (-x[1], x[0]))
+            chosen = children[:cap]
+            active = children[cap:]
+            selected.extend(h for h,_ in chosen)
+            masses.append(sum(mass for _,mass in chosen))
+        return sum(masses), selected, masses
+
+EXPECTED = json.loads(r'''
+{
+  "arithmetic": "exact integers and fractions.Fraction; explicit-tree greedy also checked against count compression",
+  "total_instances": 589,
+  "suites": [
+    {
+      "d": 2,
+      "delta": "1/5",
+      "depth": 4,
+      "budget_alphabet": [
+        0,
+        1,
+        2
+      ],
+      "instances": 83,
+      "optimizer_states": 201,
+      "exact_agreement": true
+    },
+    {
+      "d": 2,
+      "delta": "1/3",
+      "depth": 4,
+      "budget_alphabet": [
+        0,
+        1,
+        2
+      ],
+      "instances": 83,
+      "optimizer_states": 201,
+      "exact_agreement": true
+    },
+    {
+      "d": 2,
+      "delta": "1/2",
+      "depth": 4,
+      "budget_alphabet": [
+        0,
+        1,
+        2
+      ],
+      "instances": 83,
+      "optimizer_states": 201,
+      "exact_agreement": true
+    },
+    {
+      "d": 3,
+      "delta": "1/10",
+      "depth": 4,
+      "budget_alphabet": [
+        0,
+        1,
+        2
+      ],
+      "instances": 83,
+      "optimizer_states": 203,
+      "exact_agreement": true
+    },
+    {
+      "d": 3,
+      "delta": "1/4",
+      "depth": 4,
+      "budget_alphabet": [
+        0,
+        1,
+        2
+      ],
+      "instances": 83,
+      "optimizer_states": 203,
+      "exact_agreement": true
+    },
+    {
+      "d": 3,
+      "delta": "1/3",
+      "depth": 4,
+      "budget_alphabet": [
+        0,
+        1,
+        2
+      ],
+      "instances": 83,
+      "optimizer_states": 203,
+      "exact_agreement": true
+    },
+    {
+      "d": 4,
+      "delta": "1/10",
+      "depth": 3,
+      "budget_alphabet": [
+        0,
+        1,
+        2
+      ],
+      "instances": 29,
+      "optimizer_states": 69,
+      "exact_agreement": true
+    },
+    {
+      "d": 4,
+      "delta": "1/5",
+      "depth": 3,
+      "budget_alphabet": [
+        0,
+        1,
+        2
+      ],
+      "instances": 29,
+      "optimizer_states": 69,
+      "exact_agreement": true
+    },
+    {
+      "d": 4,
+      "delta": "1/4",
+      "depth": 3,
+      "budget_alphabet": [
+        0,
+        1,
+        2
+      ],
+      "instances": 29,
+      "optimizer_states": 69,
+      "exact_agreement": true
+    }
+  ],
+  "one_per_depth_examples": [
+    {
+      "d": 3,
+      "delta": "1/4",
+      "depth": 7,
+      "budgets": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "joint_optimum": "367/512",
+      "greedy_words": [
+        "0",
+        "10",
+        "200",
+        "1100",
+        "12000",
+        "201000",
+        "2020000"
+      ],
+      "greedy_depth_masses": [
+        "1/2",
+        "1/8",
+        "1/16",
+        "1/64",
+        "1/128",
+        "1/256",
+        "1/512"
+      ],
+      "compressed_chosen_counts": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "bellman_witness_words": [
+        "0202222",
+        "021222",
+        "022",
+        "10222",
+        "1122",
+        "12",
+        "2"
+      ],
+      "renamed_witness_words": [
+        "1010000",
+        "102000",
+        "100",
+        "21000",
+        "2200",
+        "20",
+        "0"
+      ]
+    },
+    {
+      "d": 3,
+      "delta": "1/10",
+      "depth": 7,
+      "budgets": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "joint_optimum": "75226/78125",
+      "greedy_words": [
+        "0",
+        "10",
+        "200",
+        "1100",
+        "12000",
+        "201000",
+        "2020000"
+      ],
+      "greedy_depth_masses": [
+        "4/5",
+        "2/25",
+        "8/125",
+        "4/625",
+        "16/3125",
+        "64/15625",
+        "256/78125"
+      ],
+      "compressed_chosen_counts": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "bellman_witness_words": [
+        "0202222",
+        "021222",
+        "022",
+        "10222",
+        "1122",
+        "12",
+        "2"
+      ],
+      "renamed_witness_words": [
+        "1010000",
+        "102000",
+        "100",
+        "21000",
+        "2200",
+        "20",
+        "0"
+      ]
+    },
+    {
+      "d": 4,
+      "delta": "1/5",
+      "depth": 7,
+      "budgets": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "joint_optimum": "41312/78125",
+      "greedy_words": [
+        "0",
+        "10",
+        "200",
+        "3000",
+        "11000",
+        "120000",
+        "1300000"
+      ],
+      "greedy_depth_masses": [
+        "2/5",
+        "2/25",
+        "4/125",
+        "8/625",
+        "8/3125",
+        "16/15625",
+        "32/78125"
+      ],
+      "compressed_chosen_counts": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "bellman_witness_words": [
+        "0333",
+        "133",
+        "2033333",
+        "213333",
+        "22333",
+        "23",
+        "3"
+      ],
+      "renamed_witness_words": [
+        "1000",
+        "200",
+        "3100000",
+        "320000",
+        "33000",
+        "30",
+        "0"
+      ]
+    },
+    {
+      "d": 2,
+      "delta": "1/3",
+      "depth": 7,
+      "budgets": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "joint_optimum": "2186/2187",
+      "greedy_words": [
+        "0",
+        "10",
+        "110",
+        "1110",
+        "11110",
+        "111110",
+        "1111110"
+      ],
+      "greedy_depth_masses": [
+        "2/3",
+        "2/9",
+        "2/27",
+        "2/81",
+        "2/243",
+        "2/729",
+        "2/2187"
+      ],
+      "compressed_chosen_counts": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "bellman_witness_words": [
+        "0000001",
+        "000001",
+        "00001",
+        "0001",
+        "001",
+        "01",
+        "1"
+      ],
+      "renamed_witness_words": [
+        "1111110",
+        "111110",
+        "11110",
+        "1110",
+        "110",
+        "10",
+        "0"
+      ]
+    }
+  ],
+  "interpretation": "Finite arithmetic validation only; general and infinite conclusions require the separate mathematical proof."
+}
+''')
+
+def main():
+    suites = [(2, 4, 2, [Fraction(1,5), Fraction(1,3), Fraction(1,2)]),
+              (3, 4, 2, [Fraction(1,10), Fraction(1,4), Fraction(1,3)]),
+              (4, 3, 2, [Fraction(1,10), Fraction(1,5), Fraction(1,4)])]
+    results = []
+    checked = 0
+    for d,N,cap,deltas in suites:
+        for delta in deltas:
+            opt = Optimizer(d,delta)
+            count = 0
+            for b in product(range(cap+1), repeat=N):
+                history, tree = opt.history_value(b)
+                greedy, words, masses = opt.greedy(b)
+                direct, _, _ = opt.direct_check(tree,b)
+                compressed, compressed_masses, _ = opt.compressed_greedy(b)
+                assert history == direct
+                assert compressed == greedy and compressed_masses == masses
+                if history != greedy:
+                    raise AssertionError({'d':d,'delta':str(delta),'b':b,'history':str(history),'greedy':str(greedy)})
+                count += 1
+            # Full first-level extinction and otherwise zero are separate controls.
+            for b in [(d,)+(0,)*(N-1), (0,)*N]:
+                history, tree = opt.history_value(b)
+                greedy, _, _ = opt.greedy(b)
+                direct, _, _ = opt.direct_check(tree,b)
+                assert history == direct == greedy
+                count += 1
+            checked += count
+            results.append({'d':d,'delta':str(delta),'depth':N,'budget_alphabet':list(range(cap+1)),
+                            'instances':count,'optimizer_states':opt.solve.cache_info().currsize,
+                            'exact_agreement':True})
+    illustrative = []
+    for d,delta,N in [(3,Fraction(1,4),7),(3,Fraction(1,10),7),(4,Fraction(1,5),7),(2,Fraction(1,3),7)]:
+        opt = Optimizer(d,delta)
+        b = (1,)*N
+        history,tree = opt.history_value(b)
+        greedy,words,masses = opt.greedy(b)
+        direct,fw,renamed = opt.direct_check(tree,b)
+        compressed, compressed_masses, compressed_counts = opt.compressed_greedy(b)
+        assert history == greedy == direct == compressed
+        assert masses == compressed_masses
+        checked += 1
+        illustrative.append({'d':d,'delta':str(delta),'depth':N,'budgets':list(b),
+                            'joint_optimum':str(history),'greedy_words':words,
+                            'greedy_depth_masses':[str(x) for x in masses],
+                            'compressed_chosen_counts':compressed_counts,
+                            'bellman_witness_words':fw,'renamed_witness_words':renamed})
+    out = {'arithmetic':'exact integers and fractions.Fraction; explicit-tree greedy also checked against count compression','total_instances':checked,
+           'suites':results,'one_per_depth_examples':illustrative,
+           'interpretation':'Finite arithmetic validation only; general and infinite conclusions require the separate mathematical proof.'}
+    assert out == EXPECTED
+    print(json.dumps(out,indent=2))
+
+if __name__ == '__main__':
+    main()
+```
+

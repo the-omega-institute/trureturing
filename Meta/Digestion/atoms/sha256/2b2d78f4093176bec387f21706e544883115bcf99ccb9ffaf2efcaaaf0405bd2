@@ -1,0 +1,6 @@
+### 48.2 共同协议根与达到预算后的静默后继
+
+对实际支撑 $H\subseteq M_A\times M_B$，把每个实际对视为连接其两个坐标的边。若一个输出分别由两坐标算出且在每条边上一致，它沿支撑图路径必为常量。这是 RRO 主卷第76—77节共同商与支撑图机制的直接应用；`D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.lean` 中 `commonCoarsening` 及 `concept_kernel_order_duality` 的末项，以两观察核之并的等价闭包表达同一共同商结构。这里取来源为 $H$、读出为两个坐标、共同输出为协议树标识，不要求概率律。
+
+特别地，在 (48.2) 的非空完整乘积上，每个固定动作的初始根标识为常量：固定一个 $b_0$，有 $\sigma_{f,A}(\iota_A(a))=\sigma_{f,B}(\iota_B(b_0))$ 对全部 $a$ 成立；再固定任一 $a_0$ 得右侧同样常量。此处只应用既有共同商机制，不另主张一般共同信息定理。
+

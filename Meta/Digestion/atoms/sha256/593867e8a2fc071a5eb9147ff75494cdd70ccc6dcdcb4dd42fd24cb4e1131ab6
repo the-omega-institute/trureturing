@@ -1,0 +1,21 @@
+**定义 390.1（相位锥与恢复量）。** 定义相位向量集合、相位凸包及其锥为
+
+$$
+\mathbb T^d=\{z\in\mathbb C^d:|z_i|=1\ (1\le i\le d)\},\qquad
+\mathcal P_d=\operatorname{conv}\{zz^\dagger:z\in\mathbb T^d\},
+$$
+
+$$
+\mathcal K_d=\left\{\sum_{y=1}^{m}p_yz_yz_y^\dagger:
+ m<\infty,\ p_y\ge0,\ z_y\in\mathbb T^d\right\}.
+$$
+
+容许空和。对相关矩阵 $C$，在下式中始终要求 $m$ 为非负整数、$p_y\ge0$ 且 $z_y\in\mathbb T^d$，定义
+
+$$
+\eta(C)=\sup\left\{\sum_{y=1}^{m}p_y:
+ Q=\sum_{y=1}^{m}p_yz_yz_y^\dagger\preceq C\right\}.
+$$
+
+每个这样的 $Q$ 都有 $Q_{ii}=\sum_yp_y$；权重由 $Q$ 唯一决定，亦等于 $\operatorname{Tr}(Q)/d$。
+

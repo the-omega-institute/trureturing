@@ -1,0 +1,1 @@
+| [D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage.lean)，`joint_residue_image_eq_compatible_pairs` | 共同余数像由 gcd 相容性精确刻画，使用 `Nat.chineseRemainder'`；ER8.FH.10 按实际共同像求交，不能把两边缘自由组合。 

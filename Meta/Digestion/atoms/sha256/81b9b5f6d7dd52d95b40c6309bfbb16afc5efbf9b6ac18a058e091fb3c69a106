@@ -1,0 +1,6 @@
+### 28.4 实际像、条件归一化与复合秩
+
+每次条件化都要保留分支质量 $Z_y$. 当 $Z_y=0$ 时，不存在该分支的后验坐标；将零向量任意归一化会制造虚假的边界点。若每个 $K_a$ 在实际概率域上保持非负和总质量，复合保持性由 (28.1) 归纳得到；若只在形式实向量空间上定义矩阵，则还要另证它保持实际正锥。
+
+本节把边界核、时钟标签和预测秩放在同一联合来源上，但没有声称存在统一物理时空矩阵，也没有新增 Lean 声明。相关有限支点包括 `CumulativeTax.terminal_balance_eq_initial_add_tax`、`CanonicalPredictiveStateSufficiency.canonical_predictive_state_is_sufficient` 和已有的有限预测秩模块。Claim status: open。
+

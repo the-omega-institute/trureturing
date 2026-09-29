@@ -1,0 +1,28 @@
+### 70.6 上界与非一致端点
+
+对每个参数点，式（70.2）仍是第 64 节的末端 CPTP 压缩
+
+$$
+R_\varepsilon=(\operatorname{id}_{AB}\otimes\Lambda_{a_\varepsilon})
+(R_\varepsilon^{(3)}).
+$$
+
+末端处理保持因果修复并收缩完整事件误差，所以
+
+$$
+e_\varepsilon\le e(R_\varepsilon^{(3)}).
+$$
+
+第 62 节三维纯候选的准确最优值展开给
+
+$$
+\lim_{\varepsilon\downarrow0}\frac{e(R_\varepsilon^{(3)})}{\varepsilon}
+=\frac98.
+$$
+
+结合已证极限，得到 $\gamma_r\le9/8$，完成定理证明。$\square$
+
+对固定 $a\in(0,1)$，第 69 节给 $e(R_{a,\varepsilon})/\varepsilon\to1$。这里沿 $1-a_\varepsilon=r\varepsilon$ 移动，同一混合族的比值却收敛到严格大于一的 $\gamma_r$。因此固定参数的结论不能对整个参数开区间一致化。
+
+式（70.20）是系数的准确变分描述，已证明其达到最小值；本节未求出 $\gamma_r$ 的显式值、最优 $r$ 或不依赖 $r$ 的统一正比例间隙。
+

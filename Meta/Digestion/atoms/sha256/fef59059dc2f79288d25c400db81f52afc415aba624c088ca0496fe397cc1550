@@ -1,0 +1,24 @@
+**定理114.1（正交两尾的完整乘积缺陷分类）。** 在本节实际合同下，$R_1$ 不能由其乘积向量完全张成，当且仅当
+
+$$
+\boxed{
+[\eta_1]\notin\{[A],[B]\},\qquad
+p\in U+W,\qquad p\notin U,\quad p\notin W.
+}
+\tag{114.11}
+$$
+
+在这一分支，
+
+$$
+\boxed{
+(R_1)_{\mathrm{prod}}
+=((U^\perp\cap p^\perp)\otimes A)
+\oplus((W^\perp\cap p^\perp)\otimes B),
+\qquad \dim(R_1)_{\mathrm{prod}}=6.
+}
+\tag{114.12}
+$$
+
+其他所有情形均有 $(R_1)_{\mathrm{prod}}=R_1$、维数七。
+

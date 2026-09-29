@@ -1,0 +1,15 @@
+**命题 49.2（均匀轨迹接近与拓扑保持不能认证辛保真）。** 在 $\mathbb R^2$、$\Omega=dq\wedge dp$ 上，真实向量场为零。对每个 $0<\varepsilon\le1$，令
+\[
+ \widetilde X_\varepsilon(q,p)
+ =(\varepsilon\sin(q/\varepsilon^2),0).
+\]
+它有全时间光滑可逆流，满足对全部初态及 $t\ge0$，
+\[
+ \|\widetilde\Phi_t(x)-x\|\le\varepsilon t.
+\]
+但在固定点原点处，
+\[
+ \boxed{(\widetilde\Phi_t^*\Omega)_0=e^{t/\varepsilon}\Omega_0.}
+\]
+所以任意固定正时间下，轨迹误差趋零，而原点的辛形式误差趋于无穷；每个时间映射仍保持相空间拓扑。
+

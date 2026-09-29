@@ -1,0 +1,25 @@
+**证明。** 对 $D$ 退相干保留 $\operatorname{Tr}_D R$，而 $\widehat C=C\otimes I_D$ 只读取该偏迹，故式（55.26）成立。取
+
+$$
+S^{\mathrm{diag}}=|x\rangle\langle x|+|y\rangle\langle y|.
+$$
+
+其偏迹为 $I_A\otimes|0\rangle\langle0|$，所以因果且归一化。二者之差为
+
+$$
+R_\varepsilon^{\mathrm{diag}}-S^{\mathrm{diag}}
+=\varepsilon\bigl(|z\rangle\langle z|-|y\rangle\langle y|\bigr).
+$$
+
+对任意合法 $E\preceq C\otimes I_D$，式（55.3）给
+
+$$
+0\le\langle y|E|y\rangle\le\langle1,0|C|1,0\rangle\le1,
+\qquad
+0\le\langle z|E|z\rangle\le\langle1,1|C|1,1\rangle\le1.
+$$
+
+故事件响应差的绝对值不超过 $\varepsilon$。结合归一化缺陷的下界，得到左侧等号；右侧严格不等式由推论 55.4 给出。$\square$
+
+所以，全部反馈总质量的读数一致仍不足以决定最优因果修复成本。式（55.26）没有把事件算符也限制为对角；两边始终接受相同的全部量子 tester。差异来自完整候选保留的末输出相干。
+

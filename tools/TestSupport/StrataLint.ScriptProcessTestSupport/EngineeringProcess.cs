@@ -13,7 +13,15 @@ internal static class EngineeringProcess
     }
 
     internal static (int Exit, string Text) Process(string root, string executable, string[] arguments,
-        IReadOnlyDictionary<string, string>? environment = null, TimeSpan? hangGuard = null)
+        IReadOnlyDictionary<string, string>? environment = null, TimeSpan? hangGuard = null, int? maximumOutputBytes = null)
+    {
+        var result = Capture(root, executable, arguments, environment, hangGuard, maximumOutputBytes);
+        return (result.Exit, result.StandardOutput + result.StandardError);
+    }
+
+    internal static (int Exit, string StandardOutput, string StandardError) Capture(
+        string root, string executable, string[] arguments,
+        IReadOnlyDictionary<string, string>? environment = null, TimeSpan? hangGuard = null, int? maximumOutputBytes = null)
     {
         var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true };
         foreach (var argument in arguments) start.ArgumentList.Add(argument);
@@ -25,20 +33,25 @@ internal static class EngineeringProcess
         start.Environment.Remove("STRATALINT_CACHE_WRITES");
         foreach (var pair in environment ?? new Dictionary<string, string>()) start.Environment[pair.Key] = pair.Value;
         using var process = System.Diagnostics.Process.Start(start)!;
+        using var limitedOutput = maximumOutputBytes is { } stdoutLimit
+            ? new StreamReader(new LimitedOutputStream(process.StandardOutput.BaseStream, stdoutLimit)) : null;
+        using var limitedError = maximumOutputBytes is { } stderrLimit
+            ? new StreamReader(new LimitedOutputStream(process.StandardError.BaseStream, stderrLimit)) : null;
         using var deadline = new CancellationTokenSource(hangGuard ?? TestBudgets.ScriptProcessHangGuard);
         using var cleanup = new CancellationTokenSource();
         var stdoutText = new System.Text.StringBuilder();
         var stderrText = new System.Text.StringBuilder();
-        var stdout = Drain(process.StandardOutput, stdoutText);
-        var stderr = Drain(process.StandardError, stderrText);
+        var drainFailure = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var stdout = Drain(limitedOutput ?? process.StandardOutput, stdoutText);
+        var stderr = Drain(limitedError ?? process.StandardError, stderrText);
         var phase = "child-exit";
         var expired = false;
         try
         {
-            process.WaitForExitAsync(deadline.Token).GetAwaiter().GetResult();
+            CompleteOrFail(process.WaitForExitAsync(deadline.Token));
             phase = "output-drain";
-            Task.WhenAll(stdout, stderr).WaitAsync(deadline.Token).GetAwaiter().GetResult();
-            return (process.ExitCode, stdoutText.ToString() + stderrText);
+            CompleteOrFail(Task.WhenAll(stdout, stderr).WaitAsync(deadline.Token));
+            return (process.ExitCode, stdoutText.ToString(), stderrText.ToString());
         }
         catch (OperationCanceledException)
         {
@@ -49,7 +62,8 @@ internal static class EngineeringProcess
             if (!process.HasExited) process.Kill(entireProcessTree: true);
             cleanup.CancelAfter(TestBudgets.ScriptProcessHangGuard);
             try { Task.WhenAll(process.WaitForExitAsync(cleanup.Token), stdout, stderr).GetAwaiter().GetResult(); }
-            catch (OperationCanceledException) when (expired) { } // Preserve the original guard phase after draining retained bytes.
+            // Preserve the original output failure or guard phase after cleanup.
+            catch (Exception) when (expired || drainFailure.Task.IsFaulted) { }
             finally
             {
                 if (Environment.GetEnvironmentVariable("JUDGE_SEED_EVIDENCE") is { Length: > 0 } evidence)
@@ -68,12 +82,47 @@ internal static class EngineeringProcess
         throw new SkipException("infrastructure-hang-guard expired for shared build fixture: " + executable + " " + string.Join(' ', arguments)
             + "; phase=" + phase + "\nstdout:\n" + stdoutText + "\nstderr:\n" + stderrText);
 
+        void CompleteOrFail(Task work) =>
+            Task.WhenAny(work, drainFailure.Task).GetAwaiter().GetResult().GetAwaiter().GetResult();
+
         async Task Drain(StreamReader reader, System.Text.StringBuilder text)
         {
-            var buffer = new char[4096];
-            int count;
-            while ((count = await reader.ReadAsync(buffer.AsMemory(), cleanup.Token).ConfigureAwait(false)) != 0)
-                text.Append(buffer, 0, count);
+            try
+            {
+                var buffer = new char[4096];
+                int count;
+                while ((count = await reader.ReadAsync(buffer.AsMemory(), cleanup.Token).ConfigureAwait(false)) != 0)
+                    text.Append(buffer, 0, count);
+            }
+            catch (Exception error)
+            {
+                drainFailure.TrySetException(error);
+                throw;
+            }
+        }
+    }
+
+    private sealed class LimitedOutputStream(Stream source, int maximumBytes) : Stream
+    {
+        private long count;
+        public override bool CanRead => true;
+        public override bool CanSeek => false;
+        public override bool CanWrite => false;
+        public override long Length => throw new NotSupportedException();
+        public override long Position { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
+        public override void Flush() => throw new NotSupportedException();
+        public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+        public override void SetLength(long value) => throw new NotSupportedException();
+        public override void Write(byte[] buffer, int offset, int length) => throw new NotSupportedException();
+        public override int Read(byte[] buffer, int offset, int length) => Account(source.Read(buffer, offset, length));
+        public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default) =>
+            Account(await source.ReadAsync(buffer, cancellationToken).ConfigureAwait(false));
+        private int Account(int bytes)
+        {
+            count += bytes;
+            if (count > maximumBytes)
+                throw new InvalidOperationException($"process output exceeded {maximumBytes} bytes");
+            return bytes;
         }
     }
 }

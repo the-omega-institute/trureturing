@@ -1,0 +1,43 @@
+**定理270.3（单Jordan来源的实际访问代价）。** 对每个固定 $n\ge1$，采用（270.1）—（270.7）的来源和仪器，以及§270.1的等先验独立副本合同。存在 $h_1>0$ 与固定有限正常数 $b_-,B_F,\Gamma_n,c,k$，使所有 $0<h\le h_1$ 满足
+$$
+\boxed{
+\frac1{9B_Fh^2}
+\le N_{\mathrm{in}}(h)
+\le\left\lceil\frac{\ln(3/2)}{b_-h^2}\right\rceil,
+}
+\tag{270.54}
+$$
+$$
+\boxed{
+\frac{2}{9\Gamma_nk^2}h^{-4n}
+\le N_{\mathrm{out}}(h)
+\le\left\lceil\frac{12}{c^2k^2}h^{-4n}\right\rceil.
+}
+\tag{270.55}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{in}}(h)=\Theta(h^{-2}),\qquad
+N_{\mathrm{out}}(h)=\Theta(h^{-4n})
+\quad(h\downarrow0).
+}
+\tag{270.56}
+$$
+
+**证明。** 输入两界为（270.31）、（270.33）；输出两界为（270.44）、（270.49）。全部系数对固定实例有限且严格正，取整不改变渐近阶。$\square$
+
+以同一来源对的半迹距离 $d_h=\|\Omega_h-\Omega_*\|_1/2$ 表示，（270.6）给 $d_h=\Theta(h)$，故同样有
+$$
+N_{\mathrm{in}}=\Theta(d_h^{-2}),\qquad
+N_{\mathrm{out}}=\Theta(d_h^{-4n}).
+\tag{270.57}
+$$
+两端副本预算之比为 $\Theta(h^{-(4n-2)})$。
+
+来源的一阶变化包含非零跨支撑块；PSD性将它转化为二阶可检测支撑质量。固定重置仪器只留下 $h^{2n}$ 阶的响应变化，而其完整理想输出在共同支撑上严格正，式（270.40）把该变化转化为 $h^{4n}$ 阶的散度。理想完整数据的唯一性与有限取得预算由此相容。
+
+标准判别工具使用 Watrous，*The Theory of Quantum Information*，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)：Theorem 3.4给Holevo–Helstrom界，Theorem 3.33给归一化态的根保真度—迹距界，Theorem 5.38给Pinsker不等式。该书相对熵以二为底；换成自然对数后得到本文的 $\|\tau-\omega\|_1^2\le2D_{\mathrm{nat}}(\tau\|\omega)$。本节的支撑泄漏、完整输出系数与逐次协议均由同一实际实现计算，不据此宣称外部文献原创性。
+
+这些常数和充分小区间可依赖固定参考维数与来源实例，不声称跨维数一致。结论针对已知二元来源族，不是任意来源层析或未知幅度检验。副本数也不直接给出物理历时；制备速率、每份处理时间和并行规则仍须另行指定。
+

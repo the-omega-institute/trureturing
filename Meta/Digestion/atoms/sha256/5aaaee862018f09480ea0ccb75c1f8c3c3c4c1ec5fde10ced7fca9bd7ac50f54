@@ -1,0 +1,14 @@
+**定义 288.1（项目的共同资源安全条件）。** 项目 [JointResourceSafetyCriterion](../../../D5/S3/ConceptDynamics/TargetRisk/JointResourceSafetyCriterion.lean) 固定有限参与者、当前存量 $s$、希望保留的最低存量 $m$、恢复函数 $r$、各人的取用上限 $c_i$ 与共同可行关系 $\mathcal E$。一次取用 $x$ 后的存量为
+
+$$
+s'=s+r(s)-\sum_i x_i.
+$$
+
+其 `jointly_attainable_caps_characterize_resource_safety` 要求上限向量 $c$ 本身属于 $\mathcal E$，并且每个 $x\in\mathcal E$ 均满足 $0\le x_i\le c_i$。在这些条件下，所有共同可行取用都满足 $s'\ge m$，当且仅当
+
+$$
+\sum_i c_i\le s+r(s)-m.
+$$
+
+充分性来自实际总取用不超过上限之和；必要性将实际取用取为可行的 $c$。因此，“上限能够同时取到”是必要性推导的承重前提。恢复函数在源码中只是一个给定的实值函数；它没有自动成为经过生态测量的再生规律。
+

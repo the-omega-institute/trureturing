@@ -1,0 +1,23 @@
+**定义 173.1（因果闭包序列）。** 置
+
+$$
+V_0=\operatorname{span}\mathcal F_{\mathrm{term}},
+$$
+
+并递归定义
+
+$$
+V_{n+1}
+=
+V_n+
+\operatorname{span}
+\{\Phi^*(F):
+\Phi\in\mathcal C,\ F\in V_n\}.
+$$
+
+令
+
+$$
+V_\infty=\bigcup_{n\ge0}V_n.
+$$
+

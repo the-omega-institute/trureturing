@@ -1,0 +1,113 @@
+**引理54.4（排除共同外部尾环境）。** 回到54.1节的 $r_1=2,r_2=1$ 合同，不可能有
+$$
+\eta_3\parallel\eta_4\parallel\eta_5\parallel\eta_6,
+\qquad \eta_3\notin F.
+\tag{54.24}
+$$
+该结论没有要求外部射线事先正交于 $F$。
+
+**证明。** 选择共同单位代表 $\eta$，相应重标各终端纯向量的整体相位。令
+$$
+S_0=H_2+H_3+H_4+H_5,\qquad
+S_1=U+G_3+G_4+G_5.
+$$
+去掉共同环境，在这些域上写
+$$
+V_0x=f(x)\otimes\eta\quad(x\in S_0),\qquad
+V_1y=g(y)\otimes\eta\quad(y\in S_1),
+$$
+其中 $f,g$ 等距。置
+$$
+R=fS_0=G_3+G_4+G_5+G_6,\qquad W=gS_1.
+\tag{54.25}
+$$
+不同输入位正交给 $R\perp W$。
+
+因为 $\eta\notin F$，$U\otimes F$ 与 $R\otimes\eta$ 的交为零；两者都包含于七维 $V_0K$。因此
+$$
+\dim S_0=\dim R\le3.
+\tag{54.26}
+$$
+实际上
+$$
+\dim S_0=\dim R=3,\qquad G_3+G_4+G_5=R.
+\tag{54.27}
+$$
+为核对这一点，若 $\dim S_0=2$，则 $H_2=H_3=H_4$，并由 $f$ 单射得 $G_3=G_4$。若 $\dim(G_3+G_4+G_5)=2$，则 $G_3=G_4=G_5$，再由 $f$ 单射同样得 $H_2=H_3=H_4$。两种情形均使 $(H_3,G_3)=(H_4,G_4)$，但实际来源的主角乘积在这两个终端不同。具体地，置 $x=|a|^2$、$y=|b|^2$、$t_0=1$、$t_j=1-y t_{j-1}$。第53节式（53.14）的两个来源主角特征值相乘给
+$$
+\delta_n=\det\bigl(P_{H_n}P_{G_n}|_{H_n}\bigr)
+=x^2\frac{t_{n-2}}{t_n},\qquad
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0.
+\tag{54.28}
+$$
+故上述两种情形均不成立，证明（54.27）。
+
+于是 $S_1=U+R$，其维数至少三。由 $R\perp W$、$\dim W=\dim S_1$ 得
+$$
+\dim S_1\in\{3,4\}.
+\tag{54.29}
+$$
+对 $n=3,4,5$，因为 $Q_n\subset W\perp R$，来源递推给
+$$
+P_RH_n=G_n.
+$$
+式（54.27）因此给 $P_RS_0=R$。三维 $S_0$ 是一个线性映射 $T:R\to R^\perp$ 的图，并且
+$$
+T(G_3)=Q_3=gU,\qquad
+T(G_4)=Q_4=gG_3,\qquad
+T(G_5)=Q_5=gG_4.
+\tag{54.30}
+$$
+
+先排除 $\dim S_1=3$。这时 $U\subset R$，而 $0\ne w\in H_2\cap U\subset S_0\cap R$，故 $Tw=0$、$\operatorname{rank}T\le2$。式（54.30）的三个像都是二维，必相等。$g$ 单射给
+$$
+U=G_3=G_4.
+$$
+由 $fH_2=G_3$、$fH_3=G_4$ 再得 $H_2=H_3$，从而 $C_2=C_3$，违反三维、四维秩差。因此
+$$
+\dim S_1=\dim W=4,\qquad K=R\oplus W.
+\tag{54.31}
+$$
+
+若 $\eta$ 与 $F$ 有非零交叠，$V_0X=U\otimes F$ 与 $V_1S_1=W\otimes\eta$ 的正交性会给 $U\perp W$，进而 $U\subset R$，与 $\dim S_1=4$ 矛盾。因此
+$$
+\eta\perp F.
+\tag{54.32}
+$$
+由（54.3）和等距性，这迫使
+$$
+S_0\perp X,\qquad S_1\perp P_0,
+\quad\text{故}\quad P_0\perp S_0+S_1.
+\tag{54.33}
+$$
+
+接着证明 $\eta$ 也正交于第一轮环境支撑。对（54.1）的零位像取环境 $\eta$ 分量，置
+$$
+p_\eta=(I_K\otimes\langle\eta|)V_0k
+=\sum_{\alpha=1}^2\sqrt{\lambda_\alpha}\,
+\langle\eta,e_\alpha\rangle p_\alpha.
+$$
+$V_0k\perp V_1S_1=W\otimes\eta$ 给 $p_\eta\perp W$，式（54.31）给 $p_\eta\in R$。但 $p_\eta\in P_0$，且（54.33）使它正交于包含 $R$ 的 $S_1$。所以 $p_\eta=0$。$p_1,p_2$ 正交且两个 $\lambda_\alpha$ 严格正，故
+$$
+\eta\perp e_1,e_2.
+\tag{54.34}
+$$
+结合（54.1）和两个尾像，等距性再给
+$$
+k\perp S_0+S_1.
+\tag{54.35}
+$$
+
+最后，$k\notin P_0$。否则（54.3）使 $V_1k\in\mathbb Cv\otimes F$ 为非零纯张量；但（54.1）的 Schmidt 秩为二，矛盾。因此 $P_0+\mathbb Ck$ 三维，并由（54.33）、（54.35）正交于 $S_0+S_1$。七维性给
+$$
+\dim(S_0+S_1)\le4.
+\tag{54.36}
+$$
+两个四维终端支撑 $C_3,C_4$ 都包含于 $S_0+S_1$，故 $C_3=C_4=S_0+S_1$。固定等距 $V$ 将
+$$
+(H_2\otimes|0\rangle)\oplus(U\otimes|1\rangle)
+\quad\text{和}\quad
+(H_3\otimes|0\rangle)\oplus(G_3\otimes|1\rangle)
+$$
+分别映到相同的 $C_3\otimes\eta=C_4\otimes\eta$。单射性使两域相同，按输入位比较得 $H_2=H_3$、$U=G_3$。于是 $C_2=C_3$，再次违反秩差。证明完毕。
+

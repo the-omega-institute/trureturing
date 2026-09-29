@@ -1,0 +1,8 @@
+**命题 1.5（subsequential conversion with exact legal domain）。** Let $L$ be odd. Suppose an $S$-state deterministic partial subsequential transducer has domain exactly $\mathcal L_k$ and emits a binary word with the same numerical value as its input. Then
+$$
+SL\ge kL^k,
+\qquad S\ge kL^{k-1}.
+\tag{TM.533}
+$$
+The same conclusion holds if output correctness is required only modulo this particular $L$, while the domain remains exactly $\mathcal L_k$.
+

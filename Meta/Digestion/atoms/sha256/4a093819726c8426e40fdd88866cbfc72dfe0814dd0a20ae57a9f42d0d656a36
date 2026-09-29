@@ -1,0 +1,9 @@
+**定理 23.2（单时刻热保持与隐藏信息账）。** 定义 23.1 中，$\|F_t\|\le1$、$L_tL_t^{\mathsf T}=I-F_tF_t^{\mathsf T}$，且 $\mathsf T_t\gamma_r=\gamma_r$。若 $D_{\rm KL}(\nu\Vert\gamma_r)<\infty$，令 $\mu_t$ 为联合初态 $\nu\otimes\gamma_k$ 的完整演化，$\mu_t^V$ 为隐藏边缘，则
+\[
+ D_{\rm KL}(\nu\Vert\gamma_r)-D_{\rm KL}(\mathsf T_t\nu\Vert\gamma_r)
+ =I(U_t:V_t)+D_{\rm KL}(\mu_t^V\Vert\gamma_k)\ge0.
+\]
+此不等式分别比较每个 $t$ 与同一个初始时刻，没有蕴含两个任意正时刻之间的单调性。
+
+**证明。** $e^{t\Omega}$ 正交，取其第一块行与转置相乘，得到 $F_tF_t^{\mathsf T}+L_tL_t^{\mathsf T}=I$。独立热隐藏变量给出定义中的条件分布，且标准 Gaussian 参考被完整正交变换保持，故边缘热参考也保持。完整流可逆且保持参考测度，所以 $D_{\rm KL}(\mu_t\Vert\gamma_r\otimes\gamma_k)=D_{\rm KL}(\nu\Vert\gamma_r)$。将左侧按两个边缘展开为 $D_{\rm KL}(\mu_t^U\Vert\gamma_r)+D_{\rm KL}(\mu_t^V\Vert\gamma_k)+I(U_t:V_t)$，得到恒等式。有限总相对熵保证上述非负项有限。这里的信息丢失使用相对参考的可区分性，不把边缘微分熵本身强制单调。证毕。
+

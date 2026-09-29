@@ -1,0 +1,55 @@
+**定理101.1（乘积生成维数恒等式）。** 上述三个量满足
+
+$$
+\boxed{
+\dim R_{\mathrm{prod}}=\dim S_R+k.
+}
+\tag{101.2}
+$$
+
+因此
+
+$$
+\dim S_R\le\dim R-k,
+\tag{101.3}
+$$
+
+且等号成立当且仅当 $R$ 由其中的乘积向量生成。
+
+**证明。** 若 $R_{\mathrm{prod}}=0$，则 $S_R=0$，每条纤维也都为零，结论成立。否则从其乘积生成集中选出一组有限基
+
+$$
+y_1\otimes z_1,\ldots,y_d\otimes z_d,
+\qquad d=\dim R_{\mathrm{prod}}.
+\tag{101.4}
+$$
+
+这些 $y_j$ 张成整个 $S_R$。确切地说，任意 $y\otimes z\in R$ 均能用（101.4）线性表示，选 $\lambda\in F^*$ 满足 $\lambda(z)\ne0$，对该表示作用 $I_K\otimes\lambda$，便得到 $y\in\operatorname{span}(y_1,\ldots,y_d)$。反向包含由定义成立。
+
+现在选择一个非零线性泛函 $\ell\in F^*$，使它同时满足：
+
+1. $\ell(z_j)\ne0$ 对每个 $j$ 成立；
+2. 环境射线 $\ker\ell$ 上的纤维维数等于通常值 $k$。
+
+两项分别只排除有限条 $F^*$ 中的射线，而复射影直线无限，因此可以同时满足。定义
+
+$$
+L=(I_K\otimes\ell)|_{R_{\mathrm{prod}}}:
+R_{\mathrm{prod}}\longrightarrow K.
+$$
+
+第一项使（101.4）的像是 $\ell(z_j)y_j$，所以 $\operatorname{ran}L=S_R$。另一方面，二维 $F$ 中的 $\ker\ell$ 是一条射线，故
+
+$$
+\ker L
+=R_{\mathrm{prod}}\cap(K\otimes\ker\ell)
+=R\cap(K\otimes\ker\ell).
+\tag{101.5}
+$$
+
+最后一个等号成立，是因为右侧的每个向量都已经是某个 $y\otimes z$，其中 $z$ 属于同一条一维环境射线；它本身就是 $R_{\mathrm{prod}}$ 的生成向量。由第二项，（101.5）的维数为 $k$。对同一个 $L$ 使用秩—零度公式，即得（101.2）。
+
+由 $R_{\mathrm{prod}}\subset R$ 得（101.3）。两边取等恰好要求 $\dim R_{\mathrm{prod}}=\dim R$，即 $R_{\mathrm{prod}}=R$。证明完毕。
+
+本证明允许各条射线的接收因子不同，也允许有限条纤维维数跳升；它没有把通常纤维视为所有射线共同拥有的固定子空间。结论使用二维环境，使（101.5）的每个向量都自动为单个乘积向量。
+

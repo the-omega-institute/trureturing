@@ -1,0 +1,4 @@
+### 定理 10.5：同一静态不可区分核不足以决定相干路径实验
+
+$\operatorname{Ad}_I=\operatorname{Ad}_{-I}$，但它们作为具体酉实现接入受控路径后，产生的通道分别为$\operatorname{Ad}_{I\otimes I}$与$\operatorname{Ad}_{Z\otimes I}$，在控制输入$|+\rangle$上完全可区分。
+

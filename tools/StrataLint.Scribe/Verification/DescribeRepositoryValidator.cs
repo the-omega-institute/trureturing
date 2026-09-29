@@ -136,6 +136,7 @@ internal static class DescribeRepositoryValidator
         }
         ValidateResolutionClaims(
             resolutionClaims,
+            material,
             inspectedProblems.Candidates,
             leanReport,
             resolvedDeclarationCatalog,
@@ -152,6 +153,7 @@ internal static class DescribeRepositoryValidator
 
     private static void ValidateResolutionClaims(
         ImmutableArray<ResolutionClaimSource> sources,
+        ImmutableArray<ScribeDocument> documents,
         ImmutableArray<ProblemCandidate> problems,
         LeanAxiomReport? leanReport,
         DeclarationCatalog? declarationCatalog,
@@ -168,6 +170,14 @@ internal static class DescribeRepositoryValidator
             static problem => problem.Slug,
             StringComparer.Ordinal);
         var firstClaimBySlug = new Dictionary<string, string>(StringComparer.Ordinal);
+        var describesByGid = documents
+            .SelectMany(static document => EnumerateDescribes(document.Content))
+            .Where(static describe => describe.Statement is DescribeStatement.LeanDeclaration)
+            .GroupBy(static describe =>
+                ((DescribeStatement.LeanDeclaration)describe.Statement).Value.Value,
+                StringComparer.Ordinal)
+            .ToDictionary(static group => group.Key, static group => group.ToImmutableArray(),
+                StringComparer.Ordinal);
         frozenStatements = leanReport is null
             ? null
             : frozenStatements ?? FrozenStatementIndex.Create(
@@ -201,6 +211,7 @@ internal static class DescribeRepositoryValidator
                 leanReport,
                 declarationCatalog,
                 frozenStatements,
+                describesByGid,
                 findings);
         }
     }
@@ -210,6 +221,7 @@ internal static class DescribeRepositoryValidator
         LeanAxiomReport? leanReport,
         DeclarationCatalog? declarationCatalog,
         FrozenStatementIndex? frozenStatements,
+        Dictionary<string, ImmutableArray<DocumentBlock.Describe>> describesByGid,
         ImmutableArray<DescribeRedFinding>.Builder findings)
     {
         if (source.Describe.Statement is not DescribeStatement.LeanDeclaration lean)
@@ -231,53 +243,84 @@ internal static class DescribeRepositoryValidator
             return;
         }
 
-        if (!Gid.TryParse(lean.Value.Value, out var sourceGid))
+        var seenMembers = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var member in source.Claim.Members(lean.Value.Value))
         {
-            findings.Add(new DescribeRedFinding(
-                "invalid-problem-resolution-source",
-                source.Path,
-                $"resolution source is not a canonical formal GID: {lean.Value.Value}"));
-            return;
-        }
-
-        var frozenMessage = "frozen statement index is unavailable";
-        if (frozenStatements is null
-            || !frozenStatements.TryResolve(sourceGid, out _, out frozenMessage))
-        {
-            findings.Add(new DescribeRedFinding(
-                "invalid-problem-resolution-source",
-                source.Path,
-                $"resolution source is not one exact current frozen declaration: "
-                + $"{lean.Value.Value} ({frozenMessage})"));
-            return;
-        }
-
-        try
-        {
-            var catalog = declarationCatalog
-                ?? throw new InvalidOperationException(
-                    "Resolution claim validation requires the declaration catalog.");
-            var formalKind = catalog.Resolve(DeclarationHandle.Create(lean.Value.Value)).FormalKind;
-            var narrativeKind = catalog.ResolveKind(source.Describe);
-            if (formalKind != LeanDeclarationKind.Theorem
-                || narrativeKind is not DescribeKind.Theorem
-                    and not DescribeKind.Proposition
-                    and not DescribeKind.Lemma)
+            if (!seenMembers.Add(member))
             {
                 findings.Add(new DescribeRedFinding(
-                    "invalid-problem-resolution-source",
-                    source.Path,
-                    $"resolution source must be theorem-like in both Lean and Scribe: "
-                    + $"{lean.Value.Value} is {formalKind}/{narrativeKind}"));
+                    "invalid-problem-resolution-source", source.Path,
+                    $"resolution member is repeated: {member}"));
+                continue;
+            }
+            if (!Gid.TryParse(member, out var sourceGid)
+                || !GidRef.Create(member).IsFormalDeclaration)
+            {
+                findings.Add(new DescribeRedFinding(
+                    "invalid-problem-resolution-source", source.Path,
+                    $"resolution source is not a canonical formal GID: {member}"));
+                continue;
+            }
+
+            var frozenMessage = "frozen statement index is unavailable";
+            if (frozenStatements is null
+                || !frozenStatements.TryResolve(sourceGid, out _, out frozenMessage))
+            {
+                findings.Add(new DescribeRedFinding(
+                    "invalid-problem-resolution-source", source.Path,
+                    $"resolution source is not one exact current frozen declaration: "
+                    + $"{member} ({frozenMessage})"));
+                continue;
+            }
+
+            try
+            {
+                var catalog = declarationCatalog
+                    ?? throw new InvalidOperationException(
+                        "Resolution claim validation requires the declaration catalog.");
+                describesByGid.TryGetValue(member, out var matches);
+                var matchCount = matches.IsDefault ? 0 : matches.Length;
+                if (matchCount != 1)
+                {
+                    throw new InvalidOperationException(
+                        $"expected one matching Scribe Describe, found {matchCount}");
+                }
+                var formalKind = catalog.Resolve(DeclarationHandle.Create(member)).FormalKind;
+                var narrativeKind = catalog.ResolveKind(matches[0]);
+                if (formalKind != LeanDeclarationKind.Theorem
+                    || narrativeKind is not DescribeKind.Theorem
+                        and not DescribeKind.Proposition
+                        and not DescribeKind.Lemma)
+                {
+                    findings.Add(new DescribeRedFinding(
+                        "invalid-problem-resolution-source", source.Path,
+                        $"resolution source must be theorem-like in both Lean and Scribe: "
+                        + $"{member} is {formalKind}/{narrativeKind}"));
+                }
+            }
+            catch (InvalidOperationException exception)
+            {
+                findings.Add(new DescribeRedFinding(
+                    "invalid-problem-resolution-source", source.Path,
+                    $"resolution source is not a validated theorem-like declaration: "
+                    + $"{member} ({exception.Message})"));
             }
         }
-        catch (InvalidOperationException exception)
+    }
+
+    private static IEnumerable<DocumentBlock.Describe> EnumerateDescribes(BlockSequence blocks)
+    {
+        foreach (var block in blocks.Items)
         {
-            findings.Add(new DescribeRedFinding(
-                "invalid-problem-resolution-source",
-                source.Path,
-                $"resolution source is not a validated theorem-like declaration: "
-                + $"{lean.Value.Value} ({exception.Message})"));
+            if (block is DocumentBlock.Section section)
+            {
+                foreach (var nested in EnumerateDescribes(section.Content)) yield return nested;
+            }
+            else if (block is DocumentBlock.Describe describe)
+            {
+                yield return describe;
+                foreach (var nested in EnumerateDescribes(describe.Content)) yield return nested;
+            }
         }
     }
 

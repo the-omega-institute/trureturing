@@ -1,0 +1,71 @@
+### 286.5 有背景点击的实际投影检验
+
+上界仍使用§285的已知投影 $P_n$，它是在中间相位扇区内 $\operatorname{ran}C_n$ 的正交补，秩为 $n^2$。定义两个可由已知矩阵计算的量
+$$
+b=\operatorname{Tr}[P_n(D\otimes D)],
+\qquad c=\operatorname{Tr}(P_nR).
+\tag{286.16}
+$$
+由 $qI/n\preceq D\preceq sI/n$、$\tau_n=I/(2n)$ 和 $\operatorname{Tr}P_n=n^2$，
+$$
+q\le c\le s.
+\tag{286.17}
+$$
+又有 $D\preceq2s\tau_n$。分别作用在两张量因子并相加，得到
+$$
+D\otimes D\preceq s(D\otimes\tau_n+\tau_n\otimes D)=sR,
+\qquad b\le sc.
+\tag{286.18}
+$$
+这是控制背景相对于扰动信号的关系，不能仅用粗略的 $b\le1$ 代替。
+
+由§285的理想共同相位零事件、（286.4）及（286.5），两个假设下的点击概率准确为
+$$
+p_0=\varepsilon b,
+\qquad
+p_\delta=\varepsilon(1-\delta)^2b
++\delta(1-\delta)c+\frac{\delta^2}{4}.
+\tag{286.19}
+$$
+所以
+$$
+\begin{aligned}
+p_\delta-p_0
+&=\delta\left[c(1-\delta)-\varepsilon b(2-\delta)+\delta/4\right]\\
+&\ge\delta c\left[1-\delta-\varepsilon s(2-\delta)\right]\\
+&\ge\frac{287}{2116}\delta
+>\frac\delta8.
+\end{aligned}
+\tag{286.20}
+$$
+最后一步中方括号在 $\delta,\varepsilon\in[0,1/4]$ 上均随各参数不增，最小值为 $3/4-7s/16=41/92$，再用 $c\ge7/23$。
+
+同时 $b\le s^2<1$，且 $c\le s<1$，故
+$$
+p_0\le\varepsilon,\qquad
+p_\delta\le\varepsilon+\delta.
+\tag{286.21}
+$$
+例如后一式由 $\delta(1-\delta)c+\delta^2/4\le\delta$ 得到。因此两种Bernoulli点击变量的方差都至多 $\varepsilon+\delta$。
+
+在每个真实块测量 $\{P_n,I-P_n\}$，对点击频率采用已知两均值的中点阈值。独立使用
+$$
+K=\left\lceil768\frac{\varepsilon+\delta}{\delta^2}\right\rceil
+\tag{286.22}
+$$
+个完整块，每种错误由Chebyshev不等式至多
+$$
+\frac{4(\varepsilon+\delta)}{K(p_\delta-p_0)^2}
+\le\frac{256(\varepsilon+\delta)}{K\delta^2}\le\frac13.
+\tag{286.23}
+$$
+因为 $(\varepsilon+\delta)/\delta^2\ge1/\delta\ge4$，包括取整的全部计费满足
+$$
+\boxed{
+N_{\rm full,2}(n,\delta,r)
+\le1537\frac{\varepsilon+\delta}{\delta^2}.
+}
+\tag{286.24}
+$$
+背景非零时不能沿用“出现一次点击就判扰动”的零漂移方案；这里的实际协议比较的是两份已标定点击率。
+

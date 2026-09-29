@@ -1,0 +1,12 @@
+**引理 15.2（均匀部分与幂零部分的精确分离）。** 对定义 15.1 的 A，有 epsilon(Z_A)=0，并且对所有 j≥1，
+
+$$
+A^j=e_HM^j+Z_A^j.
+$$
+
+因此以下条件等价：A inert；Z_A 幂零；每个 A_lambda 幂零。沿用第 12.1 条 tau(A) 的正指数约定，有
+
+$$
+\tau(A)=\nu(Z_A)=\max_{\lambda\in\Lambda}\nu_\lambda(A).
+$$
+

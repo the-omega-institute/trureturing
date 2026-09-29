@@ -1,0 +1,29 @@
+**定理195.3（全来源区间上的等值带）。** 存在 $C>0$，使充分小正 $\epsilon$ 时
+$\mathcal Z_\epsilon\ne\varnothing$，且
+
+$$
+\boxed{
+\ell\in\mathcal Z_\epsilon
+\Longrightarrow
+|\ell-h_c\epsilon|\le C\epsilon^2.
+}
+\tag{195.6}
+$$
+
+这里不声明 $\mathcal Z_\epsilon$ 只有一个点。
+
+**证明。** 第191节已经给出 $h_c$ 附近至少一个等值点。还需排除该邻域以外的来源权重。
+
+固定 $H>h_c$，使 $\Phi_H>0$。第193节的全尺度一致式与
+$h\ge H\Rightarrow\Phi_h\ge\Phi_H$ 保证，对充分小 $\epsilon$，全部 $\ell/\epsilon\ge H$ 都有 $\mathscr E(\ell,\epsilon)>3/4$。
+
+在紧区间 $h\in[0,H]$ 上，$\Phi_h$ 只有零点 $h_c$，且
+$\Phi'_{h_c}>0$。因此函数
+$|\Phi_h|/|h-h_c|$ 在 $h_c$ 用该导数连续延拓以后，具有严格正的最小值 $a$。第191节的统一二阶余项于是给：若 $\mathscr E(h\epsilon,\epsilon)=3/4$，则
+
+$$
+a|h-h_c|\le|\Phi_h|\le C_H\epsilon.
+$$
+
+乘以 $\epsilon$，得到（195.6）。证毕。
+

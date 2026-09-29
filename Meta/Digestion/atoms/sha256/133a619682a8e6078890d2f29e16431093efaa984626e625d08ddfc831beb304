@@ -1,0 +1,65 @@
+**有限轨道、环境缺陷与已有零点排除。**
+
+先说明第20节已建立、在这里保留的误差转换。固定接收基变换可把独立纯接收初态取为 $e_0$，同时共轭固定通道及解码器，不改变合同。令
+
+$$
+\sigma_0=|0,e_0\rangle\langle0,e_0|,\qquad
+\sigma_n=\mathcal R^n(\sigma_0),\quad
+\rho_n=\operatorname{Tr}_K\sigma_n,\quad
+q_n=\operatorname{Tr}_M\sigma_n,
+\tag{35.7}
+$$
+
+其中 $\mathcal R$ 是一次来源发射与同一接收通道合成的 $M\otimes K$ 上通道。
+
+定义
+
+$$
+h(S)=
+\operatorname{Tr}[(\operatorname{Tr}_M S)^2]+
+\operatorname{Tr}[(\operatorname{Tr}_K S)^2]\operatorname{Tr}(S^2)
+-2\operatorname{Tr}[((\operatorname{Tr}_K S)\otimes I_K)S^2],
+\quad
+G=\sum_{n=1}^N h(\sigma_n).
+\tag{35.8}
+$$
+
+若 $|\chi_n\rangle_{MKE}$ 是 $\sigma_n$ 的任意纯化，记其边缘为
+$\omega_{ME,n}$、$\omega_{E,n}$，则第20节的有限矩阵恒等式给
+
+$$
+h(\sigma_n)=
+\|\omega_{ME,n}-\rho_n\otimes\omega_{E,n}\|_{\rm HS}^2\ge0.
+\tag{35.9}
+$$
+
+纯化两侧边缘具有相同非零谱，给出（35.8）的前两项；交叉项为
+$\operatorname{Tr}[((\operatorname{Tr}_K\sigma_n)\otimes I_K)\sigma_n^2]$。
+故只需 $2D$ 维联合态即可计算与全部累计环境的解耦缺陷。
+
+若一个终端解码的完整纯目标误差为 $\epsilon_n$，则纯目标投影的恢复概率至少为 $1-\epsilon_n$。对解码取 Stinespring 等距，将其全局输出在纯目标方向上的分量归一化，可得目标与某环境纯态的乘积近似，纯态半迹距离至多 $\sqrt{\epsilon_n}$。若目标投影概率为零，则 $\epsilon_n=1$，下述缺陷界直接由两个密度矩阵的迹范数距离至多二得到，无需归一化零向量。偏迹到 $ME$ 及 $E$，再用三角不等式，得到
+
+$$
+\frac12\|\omega_{ME,n}-\rho_n\otimes\omega_{E,n}\|_1
+\le2\sqrt{\epsilon_n}.
+$$
+
+结合 Hilbert–Schmidt 范数不超过迹范数，
+
+$$
+h(\sigma_n)\le16\epsilon_n,\qquad
+G\le16N\max_{1\le n\le N}\epsilon_n.
+\tag{35.10}
+$$
+
+另一前置是第12节证明给出的零点排除，而非有限近似误差的无限时间延拓。对非退化来源和同一固定通道，
+
+$$
+G>0\qquad(N=8D^2).
+\tag{35.11}
+$$
+
+理由是：若 $G=0$，（35.9）的非负性使前 $N$ 个终端的记忆与累计环境全都精确成乘积。取同一固定 Kraus 表的词环境，读取全部同长度交叉矩阵元，得到第12节的环境交叉等式。该等式族在 $8D^2$ 维可达空间中于 $N$ 步以内稳定，故精确零等式延拓到全部词长，并推出已被源纯度谱障碍排除的全时域乘积恒等式。这个论证只使用指定纯来源输入 $|0\rangle$，没有要求全部初态解码才成立。
+
+以下参数化只改变对同一个 $G>0$ 的数值分离方式。
+

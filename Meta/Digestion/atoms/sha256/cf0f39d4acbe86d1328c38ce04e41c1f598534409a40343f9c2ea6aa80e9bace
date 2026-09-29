@@ -1,0 +1,6 @@
+**约定 55.2（文献与形式化边界）。** 新引用以 `Library` 的规范书目条目登记，并在观察拓扑 Scribe 中说明文献的适用范围。定理 52.3 使用的离散频率障碍另由 `D5/S3/ConceptDynamics/ObservationTopology/TwoHarmonicRotationObstruction.coprime_two_frequency_cosine_obstruction` 给出 Lean 证明：对任意互素自然数 $m,n$，在 $\theta=\pi/6$ 时有
+\[
+\frac12\le\max\{|\cos(m\theta)|,|\cos(n\theta)|\}.
+\]
+该 Lean 结论比正频率前件略强，但只承担模六分类与互素矛盾这一步；命题 52.2 的核与 Gram 公式、定理 52.3 的完整稳定秩结论及达到性、定理 53.2 的六维极值与渐近、定理 54.1 的 Gaussian 风险仍由本文解析证明承担。形式声明的冻结和公理闭包以仓库机器账本为准。
+

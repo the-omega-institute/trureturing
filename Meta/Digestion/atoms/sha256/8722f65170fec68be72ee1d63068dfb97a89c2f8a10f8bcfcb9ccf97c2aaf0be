@@ -1,0 +1,24 @@
+**定理 54.1（固定总观测增益的精确两假设风险）。** 对定义 53.1 的同一模型，任取有限个已知延迟 $t_j\in\mathbb R$ 和权重 $w_j\in\mathbb R$，测量
+\[
+ Y_j=w_jH_\varepsilon(\varphi-t_j)+\xi_j,
+ \qquad \xi_j\ \text{独立 }\mathcal N(0,\sigma^2I_6),\quad\sigma>0.
+\]
+未知初相位在 $\varphi_0=0$ 和 $\varphi_1=2\pi/3$ 两者间等先验选择。令 $E=\sum_jw_j^2$。全部可测判别器的最小错误率精确为
+\[
+ \boxed{p^*(E,\varepsilon,\sigma)
+ =\Phi\!\left(-\frac1{2\sigma}
+                   \sqrt{\frac{6E\varepsilon}{Z_\varepsilon}}\right)
+ =\Phi\!\left(-\frac{\sqrt{3E}\,l_\varepsilon}{2\sigma}\right),}
+\]
+其中 $\Phi$ 是标准正态分布函数。给定 $E$ 时，增加延迟数、改变延迟位置或重新分配权重，均不改变这一个两假设任务的最优风险。若目标错误率为 $0<\alpha<1/2$，则必要且充分的预算为
+\[
+ \boxed{E\ge \frac{4\sigma^2}{3l_\varepsilon^2}
+                 [\Phi^{-1}(1-\alpha)]^2.}
+\]
+因此固定 $\sigma,\alpha$，在本构造 $R_{H_\varepsilon}\uparrow2$ 时，所需预算满足
+\[
+ E_{\min}\sim
+ \frac{3\sigma^2[\Phi^{-1}(1-\alpha)]^2}
+      {(2-R_{H_\varepsilon})^2}.
+\]
+

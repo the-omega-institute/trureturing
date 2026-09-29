@@ -1,0 +1,26 @@
+**证明。** 以 $A,B$ 为环境代数基，写 $C=\alpha A+\beta B$，其中 $\alpha\beta\ne0$。自然求和映射从六维外部直和 $L_A\oplus L_B\oplus L_C$ 到 $W$ 的核恰为
+
+$$
+\{(-\alpha z,-\beta z,z):z\in L_A\cap L_B\cap L_C\}.
+$$
+
+确实，三个乘积项之和为零，当且仅当其两个环境坐标分别为零。这给（75.4）。
+
+若 $z\otimes A\in W$，存在 $r_A\in L_A,r_B\in L_B,r_C\in L_C$，使
+
+$$
+z=r_A+\alpha r_C,\qquad 0=r_B+\beta r_C.
+$$
+
+所以 $r_C\in L_B\cap L_C$，得到 $W_A\subset L_A+(L_B\cap L_C)$。反向给定 $z=g+h$，其中 $g\in L_A,h\in L_B\cap L_C$，可取 $r_A=g,r_C=h/\alpha,r_B=-\beta h/\alpha$，得到 $z\otimes A\in W$。这证明第一条完整纤维公式。循环交换 $A,B,C$ 及相应接收平面，同样证明另两条；各相应环境系数均非零，因为三条射线互异。证明完毕。
+
+后面三个尾词的前3个实际当前环境均为 $A,B,C$，故取 $L_A=G_2,L_B=G_3,L_C=G_4$。如果实际一位后继给 $G_2\cap G_3=0$，引理75.1及（75.3）立即使
+
+$$
+V_0S_0=(G_2\otimes A)\dotplus(G_3\otimes B)
+\dotplus(G_4\otimes C),\qquad \dim S_0=6.
+\tag{75.6}
+$$
+
+式（75.5）读取的是这个完整尾像的纤维；实际末轮的二维接收平面只能先判为包含在相应纤维中，不能在完整纤维较大时直接判为相等。
+

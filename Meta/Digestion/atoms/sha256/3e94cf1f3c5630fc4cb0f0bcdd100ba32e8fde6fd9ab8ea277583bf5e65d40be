@@ -1,0 +1,88 @@
+### 75.2 同一总事件的近饱和约束
+
+记
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle,
+\quad j=|100\rangle,\quad w=x+y.
+$$
+
+固定任意 $K\in\mathcal T$，令 $Y=H_1-K$。切锥的准确刻画给
+
+$$
+\operatorname{Tr}_D K=I_A\otimes\dot\sigma,
+\qquad\dot\sigma=\dot\sigma^*,\quad\operatorname{Tr}\dot\sigma=0,
+\qquad P_0KP_0\succeq0,
+\tag{75.3}
+$$
+
+其中 $P_0$ 是 $w^\perp$ 上的正交投影。这里不要求 $K$ 本身为正。
+
+反设对某个
+
+$$
+0\le g\le\frac1{400}
+$$
+
+有
+
+$$
+N(Y)\le1+g.
+\tag{75.4}
+$$
+
+选择合法总事件
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad\Pi_+=C_+\otimes I_D,
+\qquad X=\Pi_+Y\Pi_+.
+$$
+
+第 70 节的一阶早边缘和式（75.3）给 $\operatorname{Tr}X=1$。$X$ 的正谱投影是合法事件，所以其正谱和至多 $1+g$，负谱绝对值之和至多 $g$。在 $\operatorname{ran}\Pi_+$ 上，
+
+$$
+X+gI\succeq0,
+\qquad\langle v|X|v\rangle\le1+g
+\quad\text{对每个单位向量 }v.
+\tag{75.5}
+$$
+
+第 70 节式（70.8）在 $r=1$ 时给
+
+$$
+\begin{gathered}
+(H_{xx},H_{x'x'},H_{yy},H_{zz},H_{z'z'})=(-1,1,-1,0,1),\\
+H_{xz}=1,\qquad H_{x'z'}=-1,\qquad H_{xy}=-1.
+\end{gathered}
+\tag{75.6}
+$$
+
+由于 $z\perp w$，令 $\alpha=K_{zz}$，切向正性给 $\alpha\ge0$。而 $X_{zz}=-\alpha$，故式（75.5）给
+
+$$
+0\le\alpha\le g.
+$$
+
+在 $x,z$ 上取 $X+gI$ 的二阶主子式，得到
+
+$$
+\begin{aligned}
+|1-K_{xz}|^2
+&\le(X_{xx}+g)(g-\alpha)\\
+&\le(1+2g)g.
+\end{aligned}
+\tag{75.7}
+$$
+
+定义
+
+$$
+d_g=\sqrt{(1+2g)g},\qquad
+\ell_g=\frac{(1-d_g)^2}{1+g}.
+\tag{75.8}
+$$
+
+本节参数范围保证 $d_g<1$；因此即使 $K_{xz}$ 为任意复数，式（75.7）也给 $|K_{xz}|\ge1-d_g$。
+

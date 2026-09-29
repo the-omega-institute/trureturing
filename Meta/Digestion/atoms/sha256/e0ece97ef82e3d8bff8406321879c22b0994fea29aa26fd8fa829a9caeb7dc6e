@@ -1,0 +1,30 @@
+**ABAA。**
+
+现在 $\eta_3=\eta_5=\eta_6=A$、$\eta_4=B$。令
+$$
+L=U+G_4+G_5,\quad l=\dim L,\qquad
+R=U+G_3+G_5+G_6,\quad r=\dim R,\qquad
+T=U+G_5,\quad t=\dim T.
+$$
+$V_1L$ 使用 $A$，$V_1G_3$ 使用 $B$，不同射线给 $G_3\cap L=0$。于是 $r\ge t+2$、$l\ge t$。同一环境 $A$ 上，零位像包含 $R\otimes A$，一位像 $V_1L$ 的接收因子维数为 $l$，故
+$$
+7\ge r+l\ge2t+2.
+$$
+$t\ge2$，所以 $t=2$，即
+$$
+G_5=U,\qquad L=U+G_4,\qquad l\in\{2,3\}.
+\tag{56.7}
+$$
+这里 $l\le3$ 因为 $r\ge4$。
+
+若 $l=3$，则 $r=4$。写 $V_1L=Q_A\otimes A$；同一环境的正交性使 $K=R\oplus Q_A$，$\dim Q_A=3$。式（56.4）给 $v\in Q_A$，所以（56.2）及单射性给 $p_A\in L$。同时（56.7）和（56.3）给 $H_4=X_A$，故 $p_A\in H_4$。
+
+但是 $B$ 环境中的零位像包含 $(U+G_4)\otimes B=L\otimes B$，一位像包含 $Q_4\otimes B$，所以 $Q_4\perp L$。$H_4\subset G_4\oplus Q_4$、$G_4\subset L$，且到 $Q_4$ 的投影单射，因而 $H_4\cap L=0$。这与非零 $p_A\in H_4\cap L$ 矛盾。因此 $l=2$，即
+$$
+G_4=G_5=U.
+\tag{56.8}
+$$
+这一步的结构归约只使用 $A,B$ 不同，尚未使用二者正交。
+
+由 $A\perp B$，固定 $V_1$ 给 $U\perp G_3$。而 $V_0H_2=G_3\otimes A$、$V_0H_4=U\otimes A$，故 $H_2\perp H_4$。式（56.8）使 $P_UH_4=U$，再次与 $0\ne w\in H_2\cap U$ 矛盾。
+

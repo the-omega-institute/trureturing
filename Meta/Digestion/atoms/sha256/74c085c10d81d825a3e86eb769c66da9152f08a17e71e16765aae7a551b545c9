@@ -1,0 +1,29 @@
+**证明。** 若 $k\ge1$，取最小 Kraus 表示
+$$
+\Lambda(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+由定理 230.1，存在单位输入 $v$ 使全部 $P([v])C_jv=0$。于是
+$$
+\operatorname{Tr}\bigl[P([v])\Lambda(P_v)\bigr]
+=\sum_{j=1}^k\|P([v])C_jv\|^2=0.
+\tag{230.HR.16}
+$$
+若 $k=0$，则 $\Lambda=0$，任意单位输入都满足（230.HR.16）；这一情形不需要陈类假设。
+
+在完整输出上使用效果
+$$
+F_v=|b_*\rangle\langle b_*|\otimes P([v]),
+\qquad 0\preceq F_v\preceq I.
+\tag{230.HR.17}
+$$
+目标事件概率至少为 $\alpha$，候选概率为零。因为 $\mathcal R(P_v)$ 与 $\mathcal S(P_v)$ 都是迹一正矩阵，差矩阵 $\Delta_v$ 自伴且迹零。其正负部的迹均为 $\tfrac12\|\Delta_v\|_1$，故
+$$
+\alpha\le|\operatorname{Tr}(F_v\Delta_v)|
+\le\tfrac12\|\Delta_v\|_1
+\le d_\diamond(\mathcal R,\mathcal S).
+\tag{230.HR.18}
+$$
+最后一步允许取无外部参考的输入作为完整 diamond 范数的一个见证。$\square$
+
+完整输出的保迹条件承担了（230.HR.18）中的 $1/2$ 因子。不能将目标与候选的非保迹分支单独替换成两份归一化态而沿用同一论证。事件投影可随所选见证输入变化；距离下界只需为每个竞争者找到一个输入及对应检验，并不要求有一项检验同时区分全部输入。
+

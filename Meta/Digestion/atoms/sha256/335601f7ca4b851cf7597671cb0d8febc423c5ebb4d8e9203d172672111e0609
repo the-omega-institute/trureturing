@@ -1,0 +1,33 @@
+**命题 437.2（共同质量、非对称分解与最优报告的共同实现）。** 对定义 437.1 的同一个模型，取来源先验 $\Pr(J=P)=\lambda\in(0,1)$，在给定 $J$ 后按相应律生成记录。其混合记录律记为 $\mu=\lambda P+(1-\lambda)Q$。则以下三个对象分别为
+
+$$
+\begin{aligned}
+P\wedge Q&=\min(a,b)C,\\
+Q^{\mathrm{ac}(P)}&=bC,\qquad Q^{\mathrm{s}(P)}=(1-b)B,\\
+\Pr(J=P\mid\omega)&=
+\begin{cases}
+1,&\omega\in E_A,\\
+\displaystyle\frac{\lambda a}{\lambda a+(1-\lambda)b},&\omega\in E_C,\\
+0,&\omega\in E_B.
+\end{cases}
+\end{aligned}
+$$
+
+其中 $Q^{\mathrm{ac}(P)}$ 与 $Q^{\mathrm{s}(P)}$ 分别表示 $Q$ 相对于 $P$ 的绝对连续部分与奇异部分，第二行是其 Lebesgue 分解；第三行的后验等式在 $\mu$ 几乎处成立。允许以记录为输入的任意可测随机二元报告，其最小先验平均错误为
+
+$$
+\mathcal R_\lambda=\min\{\lambda a,(1-\lambda)b\}.
+$$
+
+证明：以 $A+C+B$ 为支配测度，$P,Q$ 在三个承载集上的密度分别是 $(1-a,a,0)$ 与 $(0,b,1-b)$。共同下测度的密度是两者逐点的最小值；任意共同下测度在另外两个集上必须为零，在 $E_C$ 上必须同时不超过 $aC,bC$，所以第一行既可行又最大。$bC\ll P$，而 $B\perp P$，由 Lebesgue 分解的唯一性得到第二行；其密度在 $E_C$ 上为 $b/a$，在 $E_A$ 上为零。
+
+来源后验是测度 $\lambda P$ 相对于 $\mu$ 的密度，逐集相除得到第三行。若报告 $P$ 的概率是可测函数 $\delta:\Omega\to[0,1]$，错误为 $\lambda\int(1-\delta)\,dP+(1-\lambda)\int\delta\,dQ$。在 $E_A$ 上取 $\delta=1$、在 $E_B$ 上取零不产生错误；在 $E_C$ 上须最小化
+
+$$
+\int_{E_C}\big[\lambda a(1-\delta)+(1-\lambda)b\delta\big]\,dC.
+$$
+
+这是对 $\delta$ 的仿射函数，逐点选取成本较小的一端，最小值为所列两数的较小者；平手时任意随机化均可。证毕。
+
+这里将 Lebesgue 分解、Radon–Nikodym 后验及逐点 Bayes 决策这些既有工具，接到同一部分共同模型，补上第 436.2 项各接口之间的参数对应。并不把这些经典工具本身申报为新增理论。特别在 $a\ne b$ 时，$Q$ 的绝对连续质量 $b$ 与对称共同质量 $\min(a,b)$ 不是同一数值；即使取等先验，也只能由此模型的决策推导得到错误 $\min(a,b)/2$，不能靠“残余”一词替代证明。
+

@@ -1,0 +1,15 @@
+**定义 228.1（分支响应距离）。** 令 $K_{a,y}$ 与 $\bar K_{a,y}$ 是真实和名义的完全正迹不增分支。用迹范数定义动作—结果失配
+
+$$
+\frac12\|K_{a,y}-\bar K_{a,y}\|_{1\to1}
+\le\kappa_{a,y}.
+$$
+
+对输入态 $\rho$，写
+
+$$
+p=\operatorname{Tr}K_{a,y}(\rho),
+\qquad
+\bar p=\operatorname{Tr}\bar K_{a,y}(\rho).
+$$
+

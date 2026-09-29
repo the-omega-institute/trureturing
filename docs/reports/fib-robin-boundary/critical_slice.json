@@ -1,0 +1,46 @@
+{
+  "status": "all outward integer-interval comparisons passed; not Lean verified",
+  "range": [
+    "log(40000)",
+    121393
+  ],
+  "primes": 11425,
+  "initial_layers": 8,
+  "activation_events": 11568,
+  "stable_cells": 11569,
+  "critical_configs": 133,
+  "critical_at_or_above_144": 117,
+  "first_critical_integer": 720720,
+  "first_critical_energy": [
+    "13.48800599132532158028096206",
+    "13.48800599132532158028096206"
+  ],
+  "minimum_critical_energy": [
+    "119544.1883346433876462307764",
+    "119544.1883346433876462307764"
+  ],
+  "minimum_critical_gap": [
+    "0.0002052870022118778275605233327",
+    "0.0002052870027118773275610233322"
+  ],
+  "start_gap": [
+    "0.008314953821252398723132344539",
+    "0.008314953821752398223132844538"
+  ],
+  "end_gap": [
+    "0.0002044061996600856183985968307",
+    "0.0002044062001600851183990968302"
+  ],
+  "strict_uniform_bound": "51/250000",
+  "small_integers": 34960,
+  "small_patch_blocks": 4,
+  "small_patch_bound_evaluations": 7,
+  "certificate_sha256": "8885dc697a178d2b2944bcac093936ba61bd050eee37871667fd0ad4786160d9",
+  "script_sha256": "ad27849567256665639f6663ed4390dbfc756fd4605f0346048b8a1f14778a1f",
+  "engine_sha256": "01fe08f39f0ffdabc98764807ba917351233de4d9aa2d6225b29a33936f59f02",
+  "limitations": [
+    "Paper proof supplies log-series correctness, gamma enclosure, event completeness criterion, and no-minimum-at-switch theorem.",
+    "No threshold ties occurred in this finite range; paper proof covers simultaneous ties.",
+    "No assertion beyond end_x or of RH is certified."
+  ]
+}

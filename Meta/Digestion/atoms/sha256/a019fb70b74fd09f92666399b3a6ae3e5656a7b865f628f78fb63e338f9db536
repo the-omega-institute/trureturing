@@ -1,0 +1,146 @@
+**定理 101.2（独立于全部未知 Kraus 参数的参考检验下界）。** 设 $0<a<1$，并选择
+
+$$
+\frac12\le z<1,\qquad a+2(b-a)z\ge0.
+\tag{101.4}
+$$
+
+则每个具有该纯暗态参数的完整失效仪器都满足
+
+$$
+\boxed{
+\delta(\Gamma)\ge L(a,z):=
+\frac12\left[
+\sqrt{a^2+4abz(1-z)+4b^2z^2}
++\sqrt{a^2+4abz(1-z)}
+\right].
+}
+\tag{101.5}
+$$
+
+证明。按定义 101.1 先重置点击后继，记重置后仪器为 $\Gamma'$。取参考量子比特与归一化联合输入
+
+$$
+|\Omega_z\rangle
+=\sqrt{1-z}\,|0_R0\rangle+\sqrt z\,|1_R\psi\rangle.
+\tag{101.6}
+$$
+
+其系统边缘为 $(1-z)P_0+zP_\psi$。比较同一暗态的投影仪器
+
+$$
+\mathcal N_a^{\rm pr}(X)=P_\psi XP_\psi,\qquad
+\mathcal C_a^{\rm pr}(X)=\operatorname{Tr}(P_\eta X)P_0
+$$
+
+与名义仪器在这个联合输入上的输出。未点击块之差为
+
+$$
+D_N=|u\rangle\langle u|-|q_0\rangle\langle q_0|,
+\quad
+u=\sqrt{a(1-z)}\,|0_R\psi\rangle+\sqrt z\,|1_R\psi\rangle,
+\quad
+q_0=\sqrt{bz}\,|1_R0\rangle.
+\tag{101.7}
+$$
+
+点击块之差为
+
+$$
+D_C=w|0_R0\rangle\langle0_R0|-|\ell\rangle\langle\ell|,
+\quad w=b(1-z),\quad
+\ell=\sqrt{1-z}\,|0_R0\rangle+\sqrt{az}\,|1_R0\rangle.
+\tag{101.8}
+$$
+
+置
+
+$$
+\chi=\sqrt{a^2+4abz(1-z)},\qquad
+\nu=\sqrt{\chi^2+4b^2z^2},\qquad T=a+2bz.
+\tag{101.9}
+$$
+
+两个向量投影之差的非零谱可由迹与行列式直接求出，给
+
+$$
+\operatorname{Tr}D_N=a,\quad\|D_N\|_1=\nu,
+\qquad
+\operatorname{Tr}D_C=-a,\quad\|D_C\|_1=\chi.
+$$
+
+因 $0<a<1$、$0<z<1$，两块各有恰好一个负本征值。令 $E_N,E_C$ 分别为其负谱投影，在各自核上取零。由总迹为零，投影仪器的这份联合输出差在该负谱检验上的负权重为
+
+$$
+-\operatorname{Tr}(E_ND_N)-\operatorname{Tr}(E_CD_C)
+=\frac{\nu+\chi}{2}.
+\tag{101.10}
+$$
+
+现在保持同一联合输入及同一两个检验，换成任意可行的 $\Gamma'$。定义
+
+$$
+w_\psi=-\sqrt w\,|0_R\psi\rangle,
+\qquad w_\eta=-\sqrt w\,|0_R\eta\rangle.
+$$
+
+每个未点击 Kraus 算子的联合输出向量为 $c_j u+b_jw_\psi+a_jw_\eta$。式（91.2）中的 $\sum_j\overline{c_j}b_j=0$ 消去 $u,w_\psi$ 之间的交叉项。更关键的是
+
+$$
+w_\eta\perp u,\qquad w_\eta\perp q_0,
+\qquad E_Nw_\eta=0.
+\tag{101.11}
+$$
+
+于是所有含 $d,k$ 的交叉项，以及 $v|w_\eta\rangle\langle w_\eta|$，都在这个未点击检验下消失。只剩 $\beta$ 项。令
+
+$$
+h_N=\langle0_R\psi|E_N|0_R\psi\rangle,
+\qquad h_C=\langle0_R0|E_C|0_R0\rangle.
+$$
+
+实际点击输出比投影仪器少 $(\beta+v)w|0_R0\rangle\langle0_R0|$。完整输出差仍然迹为零，任一效果的负期望都不超过半迹范数。因此，同一实际装置满足
+
+$$
+\delta(\Gamma)\ge\delta(\Gamma')
+\ge\frac{\nu+\chi}{2}
++w\{\beta(h_C-h_N)+vh_C\}.
+\tag{101.12}
+$$
+
+最后核对未知非负参数的系数。点击块在其二维支撑上的负谱投影给
+
+$$
+h_C=\frac12\left(1+\frac{a(1-2z)}{\chi}\right).
+\tag{101.13}
+$$
+
+未点击块的特征值为 $\lambda_\pm=(a\pm\nu)/2$。其负谱投影满足
+
+$$
+\langle u|E_N|u\rangle
+=\frac{(T-\nu)(\nu-a)}{4\nu}.
+$$
+
+对负本征向量应用 $D_N$，再与 $|0_R\psi\rangle$ 配对；因该向量与 $q_0$ 正交，其分量等于 $\sqrt{a(1-z)}$ 乘对应的 $u$ 分量再除以 $\lambda_-$。取模平方得到
+
+$$
+h_N=\frac{a(1-z)(T-\nu)}{\nu(\nu-a)}.
+\tag{101.14}
+$$
+
+这里 $\nu>a>0$，分母严格为正。由 $z\ge1/2$ 和 $\chi\ge a$，式（101.13）给 $h_C\ge1-z$。另一方面，
+
+$$
+\begin{aligned}
+h_N\le1-z
+&\iff aT\le\nu^2,\\
+\nu^2-aT&=2bz\{a+2(b-a)z\}\ge0.
+\end{aligned}
+\tag{101.15}
+$$
+
+因此 $h_C-h_N\ge0$ 且 $h_C\ge0$。式（101.12）中的附加项非负，得到式（101.5）。$\square$
+
+这个下界对同一个实际仪器的全部可行 $\beta,v,d,k$ 同时成立。它没有将不同装置各自可达到的读数拼成一个假想装置，也没有假定投影仪器在每个固定 $a$ 下都最优。
+

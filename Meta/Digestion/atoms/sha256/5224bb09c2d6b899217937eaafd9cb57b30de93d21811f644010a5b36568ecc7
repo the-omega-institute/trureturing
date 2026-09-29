@@ -1,0 +1,78 @@
+**定理 260.2（共同矩阵上界的信息控制）。** 若（260.1）在 $[u-r,u+r]$ 上成立，其中 $r>0$，则
+
+$$
+I_Q(\rho_u)\le2\operatorname{Tr}C+r^{-2}.
+\tag{260.3}
+$$
+
+若同一个 $C$ 在整个实轴上控制一条 $C^2$ 密度曲线，则
+
+$$
+I_Q(\rho_u)\le2\operatorname{Tr}C.
+\tag{260.4}
+$$
+
+若密度曲线在 $[a,b]$ 的非负开邻域上为 $C^2$，且 $C$ 在 $[a,b]$ 上有效，则
+
+$$
+\sup_{[a,b]}I_Q
+\le2\operatorname{Tr}C+I_Q(\rho_a)+I_Q(\rho_b).
+\tag{260.5}
+$$
+
+证明。 在每个名义点固定其 SLD 的一个正交特征基 $e_j$，令 $p_j(t)=\langle e_j,\rho(t)e_j\rangle$，并置
+
+$$
+c_j=\langle e_j,Ce_j\rangle\ge0.
+\tag{260.6}
+$$
+
+由（260.1），在所需的整个区间上 $p_j''\le c_j$。第257节的标量局部正性界逐项给出
+
+$$
+\frac{p_j'(u)^2}{p_j(u)}
+\le2c_j+\frac{p_j(u)}{r^2}
+\quad\text{当 }p_j(u)>0.
+\tag{260.7}
+$$
+
+零概率项的导数为零。名义 SLD 测量精确给出点态信息，故求和并使用 $\sum_jc_j=\operatorname{Tr}C$、$\sum_jp_j=1$，得到（260.3）。全实轴上令 $r\to\infty$ 即得（260.4）。对于端点形式，改为对每个 $p_j$ 使用第259节的标量最大界，并将两个端点的固定测量信息分别控制为端点 SLD 信息，得到（260.5）。以上论证允许秩变化，且不对测量基随参数求导。证毕。
+
+在（260.5）中取最小共同上界，便得到 $2\nu_{[a,b]}(\rho)$。这是一条上界，不声称对每一个预先指定的矩阵 $C$ 都达到最优 Fisher 信息。选取 $C=L_{\rm op}I$ 立即恢复第259节的标量范数界；直接保留矩阵方向则可能给出更小的迹。
+
+为建立下述有限采样认证，先定义其有限矩阵优化问题，并调用既有的测量对偶。给定非空有限组 $n$ 阶 Hermitian 矩阵 $H_1,\ldots,H_m$，另置 $H_0=0$，定义
+
+$$
+\nu(H)=\min\left\{\operatorname{Tr}C:
+C=C^*,\ C\succeq H_j\ (0\le j\le m)\right\}.
+\tag{260.8}
+$$
+
+则
+
+$$
+\boxed{
+\nu(H)=
+\max\left\{
+\sum_{j=0}^m\operatorname{Tr}(E_jH_j):
+E_j\succeq0,\ \sum_{j=0}^mE_j=I
+\right\}.
+}
+\tag{260.9}
+$$
+
+两端最优值都取得。加入 $H_0=0$ 正好要求共同上界半正定；等价地，可以删去目标中的零项，把其余测量效应的约束写成 $\sum_{j=1}^mE_j\preceq I$。
+
+证明。 对任意两侧可行解，
+
+$$
+\sum_j\operatorname{Tr}(E_jH_j)
+\le\sum_j\operatorname{Tr}(E_jC)
+=\operatorname{Tr}C.
+\tag{260.10}
+$$
+
+反向最优值相等正是标准的 Hermitian 测量收益半定规划对偶：测量侧取 $E_j=I/(m+1)$ 可严格可行，上界侧取足够大的 $C=\beta I$ 也严格可行。Slater 强对偶给出相等与达到；测量集合紧，以及 $H_0=0$ 下共同上界的迹子水平集紧，也直接保证两边的达到。这是 Watrous《The Theory of Quantum Information》§3.1.2 的最优测量规划在 $\phi(j)=H_j$ 上的应用，不把半定规划对偶本身当作新增定理。
+
+在这个对应中，$E_j$ 是一个实际 POVM 的效应，$H_j$ 是 Hermitian 收益矩阵。$H_j$ 可以有负特征值，因此（260.9）一般不是未经转换的状态判别成功概率；其意义是标准的测量收益优化。它给共同上界的迹提供一个可核验的下界证据，与可行 $C$ 提供的上界证据配对。
+

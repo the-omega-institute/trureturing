@@ -1,0 +1,41 @@
+### 279.3 成功支仍是正定图来源
+
+每个 $A^{\otimes k}$ 都与参考置换交换，其伴随也如此，故对称子空间约化所有这些张量算子。定义
+$$
+Q_s=V^\dagger Q^{\otimes k}V\succ0,
+\qquad
+M_s=V^\dagger M^{\otimes k}V.
+\tag{279.13}
+$$
+相干相等先给图块 $T(Q^{\otimes k},M^{\otimes k})$；约化性质使图块乘法通过限制。因此
+$$
+F_s\Omega_2^{\otimes k}F_s^\dagger
+=\frac1{2^k}T(Q_s,M_s).
+\tag{279.14}
+$$
+令
+$$
+h_k=h_k(\lambda_+,\lambda_-)
+=\sum_{j=0}^k\lambda_+^{k-j}\lambda_-^j.
+\tag{279.15}
+$$
+在 $Q$ 的本征向量所生成的Dicke基中，$Q_s$ 的本征值是式（279.15）的各项，各出现一次，故 $\operatorname{Tr}Q_s=h_k$。而
+$$
+M_s^\dagger Q_sM_s
+=V^\dagger(I_2-Q)^{\otimes k}V.
+\tag{279.16}
+$$
+$I_2-Q$ 的本征值与 $Q$ 交换，$h_k$ 对两个变量对称，所以式（279.16）的迹也是 $h_k$。条件成功来源准确为
+$$
+\Omega_s=\frac{T(Q_s,M_s)}{2h_k}.
+\tag{279.17}
+$$
+它的参考维数和联合秩均为 $k+1$，完整数据为
+$$
+\rho_s=\frac{Q_s+M_s^\dagger Q_sM_s}{2h_k},
+\qquad
+K_s^{\mathrm{data}}=\frac{Q_sM_s}{h_k}.
+\tag{279.18}
+$$
+这里 $K_s^{\mathrm{data}}$ 是完整响应矩阵，区别于物理Kraus算子 $F_s$。
+

@@ -1,0 +1,15 @@
+**命题 2.2。** $K$ 不含可计算的三进整数。
+
+**证明。** 假设 $x\in K$ 可计算，令 $g(n)=q_n(x)$。这是总可计算函数，故存在程序编号 $e$ 使 $\varphi_e=g$。于是 $\varphi_e(e+1)$ 停机并输出 $q_{e+1}(x)$，因此 $e\in D$ 且 $x\in C_e$，与 $x\in K$ 矛盾。证毕。
+
+每个普通整数 $z\in\mathbb Z$ 都有可计算的标准剩余类函数 $n\mapsto z\bmod3^n$，负整数亦然。因此
+
+$$
+K\cap\mathbb Z=\varnothing,
+\qquad
+\bigcup_{e\in D}\bigl(a_e+3^{e+1}\mathbb Z\bigr)=\mathbb Z.
+\tag{TM.481}
+$$
+
+这里通过标准嵌入将 $\mathbb Z$ 视为 $\mathbb Z_3$ 的子集。式(TM.480)和式(TM.481)不矛盾：普通整数是一个稠密可数子集，而剩余的三进整数仍可有正测度。
+

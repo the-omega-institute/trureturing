@@ -1,0 +1,112 @@
+### 70.5 同一切向修复的饱和矛盾
+
+反设 $\gamma_r=1$，取式（70.20）的极小值点 $K$，置 $Y=H_r-K$。再令
+
+$$
+C_-=|01\rangle\langle01|+|10\rangle\langle10|,
+\qquad\Pi_-=C_-\otimes I_D.
+$$
+
+两个总事件的迹满足
+
+$$
+\operatorname{Tr}(\Pi_+Y\Pi_+)=1,
+\qquad\operatorname{Tr}(\Pi_-Y\Pi_-)=-1.
+$$
+
+因为 $N(Y)=1$，每个压缩的正负谱投影也是合法事件；正负谱和于是迫使
+
+$$
+\Pi_+Y\Pi_+\succeq0,
+\qquad\Pi_-(K-H_r)\Pi_-\succeq0.
+\tag{70.21}
+$$
+
+在 $\Pi_+$ 空间中，式（70.8）给
+
+$$
+(H_{xx},H_{x'x'},H_{zz},H_{z'z'})=(-r,r,0,1),
+\qquad H_{xz}=\sqrt r,\quad H_{x'z'}=-\sqrt r.
+$$
+
+由于 $z\perp w$，切向正性给 $K_{zz}\ge0$；式（70.21）又给 $Y_{zz}=-K_{zz}\ge0$。所以 $K_{zz}=Y_{zz}=0$。正矩阵的零对角行列全零，故
+
+$$
+K_{xz}=H_{xz}=\sqrt r.
+$$
+
+因果偏迹的跨输入 $00,11$ 元为零，遂有
+
+$$
+K_{x'z'}=-K_{xz}=-\sqrt r.
+\tag{70.22}
+$$
+
+令 $t=K_{x'x'}$、$p=\dot\sigma_{11}=K_{zz}+K_{z'z'}=K_{z'z'}$。$x',z'$ 均在 $w^\perp$，所以切向正性在这两个方向的主块给
+
+$$
+t,p\ge0,\qquad tp\ge r.
+$$
+
+式（70.21）同时给 $t\le r$、$p\le1$。固定 $r>0$ 使这些条件只能在
+
+$$
+t=r,\qquad p=1
+\tag{70.23}
+$$
+
+时成立。因 $\dot\sigma$ 迹零，其另一个对角元为 $-1$。因果条件从而给
+
+$$
+K_{xx}+K_{x'x'}=-1,\qquad K_{xx}=-1-r.
+\tag{70.24}
+$$
+
+另一方面，式（70.21）在 $y$ 上给 $K_{yy}\ge H_{yy}=-1$。向量 $|100\rangle$ 在 $w^\perp$，故 $K_{100,100}\ge0$；因果关系 $K_{100,100}+K_{yy}=-1$ 又给 $K_{yy}\le-1$。因此
+
+$$
+K_{yy}=-1.
+\tag{70.25}
+$$
+
+最后用 $x-y\perp w$ 的切向正性：
+
+$$
+0\le\langle x-y|K|x-y\rangle
+=-r-2-2\operatorname{Re}K_{xy}.
+$$
+
+结合 $H_{xy}=-(r+1)/2$，得到
+
+$$
+\operatorname{Re}Y_{xy}\ge\frac12,
+\qquad Y_{xx}=1,\qquad Y_{yy}=0.
+\tag{70.26}
+$$
+
+取任意 $q\in(0,1)$，例如 $q=1/2$，并选择
+
+$$
+C_q=\operatorname{diag}(q,1,1-q,0).
+$$
+
+加权 $Y$ 在 $x,y$ 上的主块为
+
+$$
+B_q=\begin{pmatrix}
+q&\sqrt{q(1-q)}\,Y_{xy}\\
+\sqrt{q(1-q)}\,\overline{Y_{xy}}&0
+\end{pmatrix}.
+\tag{70.27}
+$$
+
+由 $|Y_{xy}|\ge1/2$，有 $\det(qI-B_q)<0$，故最大特征值 $\lambda_q>q$。取对应秩一投影嵌入全空间，再按 $C_q^{1/2}\otimes I_D$ 加权，得到响应为 $\lambda_q$ 的合法事件。
+
+同一总事件的响应由式（70.9）、（70.13）等于 $-(1-q)$。所以互补事件响应为
+
+$$
+-(1-q)-\lambda_q<-1,
+$$
+
+与 $N(Y)=1$ 矛盾。由极小值达到可知 $\gamma_r>1$。
+

@@ -1,0 +1,270 @@
+{
+  "profiles": [
+    {
+      "active": [
+        0,
+        0,
+        0,
+        5
+      ],
+      "T": 9,
+      "k": 1,
+      "Z": 0,
+      "minimum_sorting_cost": 0,
+      "witness_p": [
+        0
+      ]
+    },
+    {
+      "active": [
+        0,
+        0,
+        5,
+        0
+      ],
+      "T": 9,
+      "k": 1,
+      "Z": 0,
+      "minimum_sorting_cost": 0,
+      "witness_p": [
+        0
+      ]
+    },
+    {
+      "active": [
+        0,
+        5,
+        0,
+        0
+      ],
+      "T": 9,
+      "k": 1,
+      "Z": 0,
+      "minimum_sorting_cost": 0,
+      "witness_p": [
+        0
+      ]
+    },
+    {
+      "active": [
+        3,
+        5,
+        5,
+        5
+      ],
+      "T": 1,
+      "k": 3,
+      "Z": 21,
+      "minimum_sorting_cost": 20,
+      "witness_p": [
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "active": [
+        3,
+        5,
+        5,
+        5
+      ],
+      "T": 1,
+      "k": 9,
+      "Z": 0,
+      "minimum_sorting_cost": 0,
+      "witness_p": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "active": [
+        4,
+        0,
+        0,
+        0
+      ],
+      "T": 9,
+      "k": 1,
+      "Z": 0,
+      "minimum_sorting_cost": 0,
+      "witness_p": [
+        0
+      ]
+    },
+    {
+      "active": [
+        4,
+        4,
+        5,
+        5
+      ],
+      "T": 1,
+      "k": 3,
+      "Z": 21,
+      "minimum_sorting_cost": 21,
+      "witness_p": [
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "active": [
+        4,
+        4,
+        5,
+        5
+      ],
+      "T": 1,
+      "k": 9,
+      "Z": 0,
+      "minimum_sorting_cost": 0,
+      "witness_p": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "active": [
+        4,
+        5,
+        4,
+        5
+      ],
+      "T": 1,
+      "k": 3,
+      "Z": 21,
+      "minimum_sorting_cost": 21,
+      "witness_p": [
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "active": [
+        4,
+        5,
+        4,
+        5
+      ],
+      "T": 1,
+      "k": 9,
+      "Z": 0,
+      "minimum_sorting_cost": 0,
+      "witness_p": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "active": [
+        4,
+        5,
+        5,
+        4
+      ],
+      "T": 1,
+      "k": 3,
+      "Z": 21,
+      "minimum_sorting_cost": 21,
+      "witness_p": [
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "active": [
+        4,
+        5,
+        5,
+        4
+      ],
+      "T": 1,
+      "k": 9,
+      "Z": 0,
+      "minimum_sorting_cost": 0,
+      "witness_p": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "active": [
+        4,
+        5,
+        5,
+        5
+      ],
+      "T": 0,
+      "k": 0,
+      "Z": 35,
+      "minimum_sorting_cost": 35,
+      "witness_p": [
+        4,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "active": [
+        4,
+        5,
+        5,
+        5
+      ],
+      "T": 0,
+      "k": 4,
+      "Z": 21,
+      "minimum_sorting_cost": 19,
+      "witness_p": [
+        2,
+        3,
+        3,
+        3
+      ]
+    }
+  ],
+  "shapes": {
+    "B": [
+      "033/11111/11111/11111",
+      "122/11111/11111/11112",
+      "123/11111/11111/11111",
+      "222/11111/11111/11111"
+    ],
+    "C": [
+      "1222/1111/11111/11111"
+    ],
+    "E": [
+      "2222/12222/12222/12222"
+    ],
+    "F": [
+      "0222/11111/11111/11111",
+      "1111/01222/11111/11111",
+      "1111/11111/11111/11113",
+      "1111/11111/11111/11122",
+      "1111/11111/11112/11112",
+      "1112/11111/11111/11112",
+      "1113/11111/11111/11111",
+      "1122/11111/11111/11111",
+      "1222/01111/11111/11111"
+    ]
+  },
+  "scope": "Necessary arithmetic profiles and sorted cost shapes only; does not certify actual child-to-leaf incidence, laws, or all cut70."
+}

@@ -1,0 +1,26 @@
+**定理300.1（共同校准与背景读数的统一最优调用数）。** 存在只依赖固定 $h_\star$ 的正常数 $a,A$，使达到风险至多 $1/3$ 的最小确定最大总调用数满足
+$$
+\boxed{
+a\,\frac w{\kappa^2}\left[1+\log\frac\kappa g\right]
+\le N_{\min}(B,C,h_0;\kappa,g)
+\le A\,\frac w{\kappa^2}\left[1+\log\frac\kappa g\right].
+}
+\tag{300.1}
+$$
+常数同时独立于 $B,C,h_0,\kappa,g$ 在上述范围内的变化；$\kappa_0,C_\star$ 已固定。
+下文估计中的 $a,A,b$ 等正常数可随公式改变，均只依赖固定 $h_\star$。
+
+特别地，$B=4,C=1$、$\nu=1-h_0$ 给
+$$
+\boxed{
+N_{\min}
+=\Theta_{h_\star}\!\left(
+\frac{\nu+\kappa}{\kappa^2}
+\left[1+\log\frac\kappa g\right]\right).
+}
+\tag{300.2}
+$$
+下界覆盖全部适应性来源选择；上界显式使用 $(N_T,N_H)=(K,K)$。没有证明每条流各自必须有 $K$ 个样本。
+
+本节沿用第298节声明的完整两源经典实验。若更大的物理装置还开放其他记录，构造仅提供可嵌入子实验的上界；下界需要完整统计等价才可转移。
+

@@ -1,0 +1,80 @@
+### 263.8 回接实际固定边缘的来源纤维
+
+设实际参考空间为有限维 $E$，固定
+$$
+\rho\succeq0,\qquad\operatorname{Tr}\rho=1,
+\qquad S=\operatorname{supp}\rho,
+\qquad n=\operatorname{rank}\rho.
+\tag{263.37}
+$$
+给定响应 $K$，考虑全部合法来源
+$$
+\mathfrak S(\rho,K)=
+\left\{
+\Omega=\begin{pmatrix}P&K/2\\K^\dagger/2&Q\end{pmatrix}\succeq0:
+P+Q=\rho
+\right\}.
+\tag{263.38}
+$$
+以下假设这组实际数据可实现。正性先保证
+$$
+K=P_SKP_S,
+\qquad
+\Omega=(I_H\otimes P_S)\Omega(I_H\otimes P_S)
+\quad\text{对全部 }\Omega\in\mathfrak S(\rho,K).
+\tag{263.39}
+$$
+确实，参考核中的向量使两个对角非负二次型之和为零，故相应的上、下联合向量均被整个正矩阵消去。这同时排除了核外质量与相干。
+
+令
+$$
+Z=\rho_S^{-1/2}(K|_S)\rho_S^{-1/2},
+\qquad D_\rho=\operatorname{diag}(\rho_S^{1/2},\rho_S^{1/2}).
+\tag{263.40}
+$$
+映射
+$$
+\boxed{F\longmapsto\Omega(F)=D_\rho T_Z(F)D_\rho}
+\tag{263.41}
+$$
+并在 $H\otimes S^\perp$ 上补零，给出 $\mathcal F(Z)$ 与 $\mathfrak S(\rho,K)$ 之间的仿射双射。其正性由可逆同余等价，参考边缘为 $\rho$，总迹为一，非对角块恰为 $K/2$。
+
+若 $F_*$ 为最大秩填充，并从其共同核定义 $W,U$，则实际来源的完整仿射包为
+$$
+\boxed{
+\operatorname{aff}_{\mathbb R}\mathfrak S(\rho,K)
+=\Omega(F_*)+
+\left\{
+\begin{pmatrix}
+\rho_S^{1/2}D\rho_S^{1/2}&0\\
+0&-\rho_S^{1/2}D\rho_S^{1/2}
+\end{pmatrix}
+:D\in\operatorname{Herm}(U)
+\right\},
+}
+\tag{263.42}
+$$
+同样对参考核外补零。可逆性保证方向映射单射，因此
+$$
+\boxed{
+\dim_{\mathbb R}\operatorname{aff}\mathfrak S(\rho,K)
+=(\operatorname{rank}\rho-\dim W)^2,
+\qquad
+\mathfrak S(\rho,K)\text{唯一}\iff W=S.
+}
+\tag{263.43}
+$$
+
+此外，同余保持 $H\otimes S$ 上的秩，核外补零不增加秩。所以唯一来源满足
+$$
+\boxed{\operatorname{rank}\Omega\le\operatorname{rank}\rho.}
+\tag{263.44}
+$$
+该上界对任意指定 $\rho$ 都能达到：取 $K=\rho$，则 $Z=I_S$，唯一来源为
+$$
+\Omega=\frac12\begin{pmatrix}\rho&\rho\\\rho&\rho\end{pmatrix}
+=P_+\otimes\rho,
+\tag{263.45}
+$$
+其中 $|+\rangle=(|y_+\rangle+|y_-\rangle)/\sqrt2$，且 $\operatorname{rank}\Omega=\operatorname{rank}\rho$。
+

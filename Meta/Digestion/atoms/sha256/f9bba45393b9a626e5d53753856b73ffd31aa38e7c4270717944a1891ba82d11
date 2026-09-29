@@ -1,0 +1,12 @@
+**命题 415.2（平均保证与逐模型保证的接口）。** 若每个正质量停止历史都报告 $d(h)$ 且 $b_h(d(h))\ge1-\varepsilon$，其中 $0\le\varepsilon\le1$，则
+
+$$
+\sum_\theta w_\theta P_\theta(d(H_\tau)\ne\theta)\le\varepsilon,
+\qquad
+P_\theta(d(H_\tau)\ne\theta)\le\min(1,\varepsilon/w_\theta).
+$$
+
+证明：按停止历史分解联合错误质量，得到 $\sum_hm(h)[1-b_h(d(h))]\le\varepsilon\sum_hm(h)=\varepsilon$。每个逐模型错误项都非负，故其加权值不超过总和，除以正先验即得第二式。项目 [PosteriorStoppingMapErrorBound](../../../D5/S3/Estimation/DecisionRisk/PosteriorStoppingMapErrorBound.lean) 在给定历史 PMF 与历史索引后验 PMF 后提供相应 MAP 风险界；本节另把这两组 PMF 接回同一个实际联合律。该源码本身没有从任意打分表推出真实条件概率，也没有自动给出阈值的可达性或停止的有限性。证毕。
+
+这个区别不能被“置信度很高”省略。例如两个模型观察律完全相同，先验分别为 $1-\eta,\eta$，$0<\eta<1/2$。始终报告第一个模型，后验置信度一直是 $1-\eta$，平均错误为 $\eta$，第二个模型下的错误却为一。这里高置信度全部来自先验；继续重复相同分布的观察不会改变它。
+

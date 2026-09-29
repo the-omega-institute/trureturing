@@ -1,0 +1,68 @@
+**证明。** 令 $S_0=H_1+\cdots+H_5$，外置首轮给 $\dim S_0\le6$。令 $P=G_2+G_3+G_4$。固定 $V_1$ 在 $G_2,G_4$ 上的后继环境分别为 $A,B$，所以它们交零，$\dim P\ge4$。零位尾像包含 $P\otimes A$ 与 $G_5\otimes B$，沿两个独立环境方向相加，故 $\dim P=4$，且
+$$
+V_0S_0=(P\otimes A)\dotplus(G_5\otimes B),\qquad\dim S_0=6.
+\tag{68.1}
+$$
+第三条射线上的 $G_6\otimes C$ 逐 $A,B$ 坐标比较，给
+$$
+G_5=G_6=:T\subset P.
+\tag{68.2}
+$$
+
+一位映射在 $P$ 上的像为
+$$
+V_1P=((Q_3+Q_4)\otimes A)\dotplus(Q_5\otimes B).
+$$
+左侧四维，$Q_5$ 二维，故 $Q_3=Q_4$。同一个 $V_1$ 在相同环境 $A$ 上的像相同，得到 $G_2=G_3$。又 $T\subset P$ 且 $V_1T=Q_6\otimes C$，$C$ 在 $A,B$ 基中的两个坐标都非零，故
+$$
+Q_3=Q_4=Q_5=Q_6=:Q,\qquad
+V_1P=Q\otimes F.
+\tag{68.3}
+$$
+跨位正交给 $P\perp Q$。记满等距 $U=V_1|_P$，则
+$$
+UG_2=UG_3=Q\otimes A,\qquad
+UG_4=Q\otimes B,\qquad UT=Q\otimes C.
+\tag{68.4}
+$$
+
+实际 $H_3,H_4,H_5$ 的零位像为 $G_4\otimes A,T\otimes B,T\otimes C$。后两项张成四维 $T\otimes F$，第一项与之交零，因为（68.4）使 $G_4\cap T=0$。故其和六维。三个实际域又均在 $P\oplus Q$ 中，因此
+$$
+S_0=H_3+H_4+H_5=P\oplus Q.
+\tag{68.5}
+$$
+
+实际 $V_1p=v\otimes A$ 与 $P\otimes A\subset V_0K$ 跨位正交，给 $v\perp P$。$a^2u+bv\in H_2\subset S_0$、$u\in P$、$b\ne0$，所以 $v\in Q$。于是
+$$
+V_1p=v\otimes A\in Q\otimes A=V_1G_2,
+$$
+固定单射性给 $p\in G_2$。
+
+由于 $G_2=G_3$，且第2、3轮环境均为 $A$，零位等距给
+$$
+V_0H_1=G_2\otimes A=G_3\otimes A=V_0H_2,
+\qquad H_1=H_2.
+\tag{68.6}
+$$
+实际早期空间为 $H_2=\operatorname{span}(a^2u+bv,w)$、$G_2=\operatorname{span}(u,w)$，且 $u,v,w$ 正交、$b\ne0$，所以 $H_2\cap G_2=\mathbb Cw$。由 $p\in H_1=H_2$ 及 $p\in G_2$，存在 $|\lambda|=1$，使
+$$
+p=\lambda w.
+\tag{68.7}
+$$
+
+最后使用真实来源列递推。第二终端的逻辑第1列为
+$$
+x_2^1=aw,\qquad y_2^1=bw.
+$$
+由 $V_0p=u\otimes A$、$V_1p=v\otimes A$ 和（68.7），第三轮在同一个实际环境 $A$ 中的零记忆系数为
+$$
+\begin{aligned}
+x_3^1\otimes A
+&=aV_0(aw)+V_1(bw)\\
+&=\lambda^{-1}(a^2u+bv)\otimes A.
+\end{aligned}
+$$
+所以非零 $x_3^1$ 同时属于 $H_2$ 与 $H_3$。另一方面，第3、4轮零位像为 $G_3\otimes A$ 和 $G_4\otimes A$；（68.4）使 $G_3\cap G_4=0$，于是固定单射性给 $H_2\cap H_3=0$，矛盾。证明完毕。
+
+该排除保留任意非正交环境，不假设首轮在六维尾域内。一般容量仍为 $7\le d_{\mathrm{CPTP},6}(a,b)\le8$。
+

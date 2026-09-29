@@ -1,0 +1,31 @@
+**定理 47.1（完整等待律一致可截断）。** 对第 46 节的共同初态，记 $s_m(\gamma)=\Pr_\gamma(\mathsf N>m)$。对 $m\ge1$，
+
+$$
+s_m(\gamma)=\gamma(1-\gamma)^{m-1}.
+$$
+
+其中 $s_m(0)=0$，整数零次幂取一。其精确统一尾界为
+
+$$
+\boxed{
+\sup_{0\le\gamma\le1}s_1(\gamma)=1,
+\qquad
+\sup_{0\le\gamma\le1}s_m(\gamma)
+=\frac{(m-1)^{m-1}}{m^m}\sim\frac1{em}\quad(m\ge2).
+}
+$$
+
+映射 $\gamma\mapsto p_\gamma$ 在整个 $[0,1]$ 上按总变差连续。
+
+证明。对 $n>m$ 的几何级数求和得到尾公式。若 $m\ge2$，函数 $\gamma(1-\gamma)^{m-1}$ 的内部导数与 $1-m\gamma$ 同号，两端为零，故最大值在 $\gamma=1/m$ 取得。渐近式来自 $(1-1/m)^{m-1}\to e^{-1}$。$m=1$ 时尾概率就是 $\gamma$。
+
+把 $n>m$ 的所有记录替换为共同删失符号 $\partial$，得到有限字母表上的分布 $p_\gamma^{(m)}$；将它与原分布都放在 $\mathbb N_{\ge1}\cup\{\partial\}$ 上。每个有限分布依赖参数连续，且
+
+$$
+\operatorname{TV}(p_\gamma,p_\gamma^{(m)})=s_m(\gamma)
+$$
+
+一致趋零。三角不等式便给完整等待律的总变差连续性。$\square$
+
+这里只给无穷记录律的数学表示和有限删失近似，不宣称有限装置能够存下无界的原始轮数标签。
+

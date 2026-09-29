@@ -1,0 +1,65 @@
+**定理 77.5（近最坏尺度的稳定性）。** 存在正有理数 $\alpha,\beta$、常数 $C_1,C_2>0$、$\delta_0>0$ 及 $\varepsilon_1>0$，使对任意
+
+$$
+0<\varepsilon<\varepsilon_1,\qquad
+0\le\delta\le\delta_0,\qquad0<a<1,
+$$
+
+只要
+
+$$
+\frac{e(a,\varepsilon)}{\varepsilon}
+\ge E_*(\varepsilon)-\delta,
+\tag{77.8}
+$$
+
+就有
+
+$$
+\operatorname{dist}\left(\frac{1-a}{\varepsilon},\mathcal M\right)
+\le C_1\bigl(\delta+C_2\varepsilon^\alpha\bigr)^\beta.
+\tag{77.9}
+$$
+
+证明。令 $q(r)=\Gamma-\gamma_r$。第 71 节的两端极限与 $\Gamma>1$ 使我们可以选有理数 $0<c<d$，令 $I=[c,d]$，使 $\mathcal M$ 位于 $I$ 的内部，且对 $r\notin I$ 有
+
+$$
+q(r)>\frac{\Gamma-1}{2}.
+\tag{77.10}
+$$
+
+在此固定紧区间上，定义
+
+$$
+\omega(t)=\max\{\operatorname{dist}(r,\mathcal M):
+ r\in I,\ q(r)\le t\},\qquad t\ge0.
+\tag{77.11}
+$$
+
+该集合总是非空，因为包含 $\mathcal M$；连续性和紧性保证最大值存在。$\mathcal M$ 与 $q$ 半代数，距离也半代数：可用非负平方根与紧集上最近点的最小性公式定义。因此 $\omega$ 为非负半代数函数。
+
+并且 $\omega(t)\to0$ 当 $t\downarrow0$。否则可选趋零的 $t_n$ 及对应最大点 $r_n\in I$，使距离有固定正下界。紧性给收敛子列 $r_n\to r$，连续性给 $q(r)=0$，即 $r\in\mathcal M$，与距离下界矛盾。
+
+引理 77.1 因而给某个正有理数 $\beta$ 及常数 $C_1$，使
+
+$$
+\omega(t)\le C_1t^\beta
+$$
+
+对充分小的 $t\ge0$ 成立；$t=0$ 时两侧均为零。
+
+对满足式（77.8）的 $a,\varepsilon$，令 $r=(1-a)/\varepsilon$。定理 77.3 及推论 77.4 给
+
+$$
+\begin{aligned}
+\gamma_r
+&\ge\frac{e(a,\varepsilon)}{\varepsilon}-C\varepsilon^\alpha\\
+&\ge E_*(\varepsilon)-\delta-C\varepsilon^\alpha\\
+&\ge\Gamma-\delta-2C\varepsilon^\alpha.
+\end{aligned}
+$$
+
+因此 $q(r)\le\delta+2C\varepsilon^\alpha$。选 $\delta_0,\varepsilon_1$ 足够小，使该上界小于式（77.10）的阈值，同时位于 $\omega$ 的幂次界适用区间。于是 $r\in I$，代入式（77.11）即得（77.9），取 $C_2=2C$。$\square$
+
+这些指数与常数尚未被显式计算，故本节没有给出可直接代入实验预算的数值误差证书。它给出的增强是：同一有限代数合同将已证的统一渐近轮廓与近优参数定位升级为某个幂次界；精确求值、最优幂次及数值常数仍需要进一步求解。
+

@@ -4,9 +4,11 @@
 
 The OEIS A175406 floor formula is refuted at a large explicit index.
 
-**Definition 1.1 (The greatest admissible exponent).**
+**Definition 1.1 (The sequence value).**
 
-$$\forall n \in \mathrm{Nat},\; \operatorname{a}\left(n\right) = \operatorname{sSup}\left(\{k \in \mathrm{Nat} | \left(1 + \frac{1}{(n : \mathrm{Real})}\right)^{k} \le 2\}\right)$$
+$$
+\begin{gathered}\forall n\in\mathbb{N},\\\ {}a(n)=\mathrm{sSup}\begin{Bmatrix}k\in\mathbb{N}\mid (1+1/n)^{k}\leq2\end{Bmatrix}\end{gathered}
+$$
 
 *Formalization.* `D5/S0/Certificates/GreathouseLogTwoFloorRefutation.a` (`✓ std3`).
 
@@ -14,11 +16,13 @@ $$\forall n \in \mathrm{Nat},\; \operatorname{a}\left(n\right) = \operatorname{s
 
 *Commentary.*
 
-For each natural n, a(n) is the supremum of the natural exponents whose real power of 1 + 1/n is at most 2. The cast (n : R) is the real-number cast used in the Lean definition. In the natural conditionally complete order, sSup of an unbounded set is 0, so this definition is total.
+For each natural n, including zero, a(n) takes the natural sSup of exponents k satisfying the displayed bound. Powers and division are real, with Lean's 1/0 = 0 convention. Natural sSup is 0 for unbounded sets, so a is total.
 
 **Definition 1.2 (Greathouse's floor conjecture).**
 
-$$(claim) \Leftrightarrow (\forall n \in \mathrm{Nat},\; (1 \le n) \Rightarrow (\operatorname{a}\left(n\right) = \lfloor\left((n : \mathrm{Real}) + \frac{1}{2}\right) \cdot Real.log\left(2\right)\rfloor_+))$$
+$$
+\begin{gathered}\mathrm{claim}\Leftrightarrow\\\ {}\forall n\in\mathbb{N},\ n\geq1\Rightarrow\\\ {}a(n)=\lfloor(n+1/2)\log 2\rfloor_+\end{gathered}
+$$
 
 *Formalization.* `D5/S0/Certificates/GreathouseLogTwoFloorRefutation.claim` (`✓ std3`).
 
@@ -26,11 +30,13 @@ $$(claim) \Leftrightarrow (\forall n \in \mathrm{Nat},\; (1 \le n) \Rightarrow (
 
 *Commentary.*
 
-For every natural n with 1 <= n, the conjecture identifies a(n) with the natural floor of (n + 1/2) times Real.log 2. The symbol shown as floor with a subscript plus is Nat.floor.
+For every positive natural n, the conjecture identifies a(n) with the displayed natural floor. The subscript plus denotes Nat.floor, and log is the natural logarithm.
 
 **Theorem 1.3 (The floor conjecture is false).**
 
-$$\neg claim$$
+$$
+\neg\mathrm{claim}
+$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/GreathouseLogTwoFloorRefutation.result` (`✓ std3`). ∎
 

@@ -1,0 +1,20 @@
+**定理 20.5（隐藏状态熵改变有效地形的曲率）。** 设有限指标集 $I$ 上有固定正权重 $r_i$，$\sum_i r_i=1$，光滑能量 $E_i:\mathbb R^d\to\mathbb R$。令
+\[
+ A_\tau(x)=-\tau\log\sum_i r_i e^{-E_i(x)/\tau},\qquad
+ p_i(x)=\frac{r_i e^{-E_i(x)/\tau}}{\sum_jr_j e^{-E_j(x)/\tau}}.
+\]
+则
+\[
+ \nabla A_\tau=\mathbb E_p\nabla E_i,\qquad
+ \nabla^2 A_\tau=\mathbb E_p\nabla^2E_i
+                   -\tau^{-1}\operatorname{Cov}_p(\nabla E_i).
+\]
+即使每个 $E_i$ 都严格凸，$A_\tau$ 仍可非凸。具体地，对 $a>0$、$E_\pm(x)=(x\mp a)^2/2$、$r_\pm=1/2$，
+\[
+ A_\tau(x)=\frac{x^2+a^2}{2}-\tau\log\cosh(ax/\tau).
+\]
+若 $\tau\ge a^2$，唯一极小点为 $0$；若 $0<\tau<a^2$，$0$ 是严格局部极大点，恰有两个全局极小点 $\pm x_\tau$，其中 $0<x_\tau<a$ 且
+\[
+ x_\tau=a\tanh(ax_\tau/\tau).
+\]
+

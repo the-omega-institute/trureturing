@@ -1,0 +1,9 @@
+**命题 249.2（范围相同仍可要求完全不同的输入规模）。** 取 $A=0$，$B_\varepsilon=\operatorname{diag}(1,\varepsilon)$，其中 $\varepsilon>0$。任何目标 $v=(v_1,v_2)$ 都能一步达到，唯一所需输入为 $(v_1,v_2/\varepsilon)$；其欧氏范数平方为
+
+$$
+\|u\|^2=v_1^2+\frac{v_2^2}{\varepsilon^2},\qquad
+W_\varepsilon=\operatorname{diag}(1,\varepsilon^2).
+$$
+
+所以每个正 $\varepsilon$ 对应的可达空间都等于 $\mathbb R^2$，但取得 $(0,1)$ 的输入范数为 $1/\varepsilon$，在 $\varepsilon$ 趋近零时无统一上界。在给定输入上限 $M$ 时，该目标能一步达到恰好要求 $1/\varepsilon\le M$。此处 $A=0$，增加执行步数也不能让多个过去输入累计到最终状态；最后状态只取决于最后一次输入。
+

@@ -1,0 +1,14 @@
+**定理 4.4（收缩动力学的有限状态近似上界）。** 设 $(X,d_X)$ 为度量空间，全部 $F_a$ 具有共同 Lipschitz 常数 $L\ge0$，观察 $o$ 的 Lipschitz 常数为 $M\ge0$。设点集 $z_1,\ldots,z_s\in X$ 及映射 $Q:X\to\{1,\ldots,s\}$ 满足
+\[
+ d_X(x,z_{Q(x)})\le\delta\quad\text{对全部 }x\in X.
+\]
+定义有限状态更新及输出
+\[
+ \widehat F_a(i)=Q(F_az_i),\qquad \widehat o(i)=o(z_i),
+\]
+初始状态取 $Q(x)$。对任意长度 $t$ 的动作词，输出误差至多为
+\[
+ M\delta\sum_{j=0}^{t}L^j.
+\]
+特别地，若 $L<1$，则全部时刻的误差一致不超过 $M\delta/(1-L)$。
+

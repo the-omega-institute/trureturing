@@ -288,7 +288,7 @@ public sealed partial class WorktreeCommandTests
             runner.Invocations,
             static call => (Path.GetFileName(call.FileName) == "lake"
                     && call.Arguments.SequenceEqual(["exe", "cache", "get"]))
-                || (call.FileName == "cp" && call.Arguments.FirstOrDefault() == "-R"));
+                || (call.FileName == "cp" && call.Arguments.FirstOrDefault() == "-pR"));
     }
 
     [Fact]
@@ -299,8 +299,8 @@ public sealed partial class WorktreeCommandTests
         File.WriteAllText(
             Path.Combine(repository.Path, ".gitignore"),
             "existing-output/\r\n.echo-review.md");
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture ignore policy");
+        TestGit.Run(repository.Path, "add", ".gitignore");
+        TestGit.Run(repository.Path, "commit", "-m", "fixture ignore policy");
         var target = Path.Combine(repository.Path, "provisioned-with-ignore");
         var console = new BufferedConsole();
 
@@ -332,8 +332,8 @@ public sealed partial class WorktreeCommandTests
         const string expected =
             "/.lake/\n.caller-review-prompt.md\n.echo-review.md\n.sshx-*\n";
         File.WriteAllText(Path.Combine(repository.Path, ".gitignore"), expected);
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture complete ignore policy");
+        TestGit.Run(repository.Path, "add", ".gitignore");
+        TestGit.Run(repository.Path, "commit", "-m", "fixture complete ignore policy");
         var target = Path.Combine(repository.Path, "provisioned-clean");
         var console = new BufferedConsole();
 
@@ -352,7 +352,7 @@ public sealed partial class WorktreeCommandTests
 
         Assert.Equal(0, exitCode);
         Assert.Equal(expected, File.ReadAllText(Path.Combine(target, ".gitignore")));
-        Assert.Equal(string.Empty, ReviewRegressionTests.RunGit(target, "status", "--porcelain"));
+        Assert.Equal(string.Empty, TestGit.Run(target, "status", "--porcelain"));
     }
 
     [Fact]
@@ -363,8 +363,8 @@ public sealed partial class WorktreeCommandTests
         var ignoreDirectory = Path.Combine(repository.Path, ".gitignore");
         Directory.CreateDirectory(ignoreDirectory);
         File.WriteAllText(Path.Combine(ignoreDirectory, "marker"), "fixture\n");
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore/marker");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture invalid ignore path");
+        TestGit.Run(repository.Path, "add", ".gitignore/marker");
+        TestGit.Run(repository.Path, "commit", "-m", "fixture invalid ignore path");
         var branch = $"{WorktreeCommand.CreationNamespace}/math/ignore-write-failure";
         var target = Path.Combine(repository.Path, "ignore-write-failure");
         var console = new BufferedConsole();
@@ -463,7 +463,7 @@ public sealed partial class WorktreeCommandTests
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         var branch = $"{WorktreeCommand.CreationNamespace}/math/already-present";
-        ReviewRegressionTests.RunGit(repository.Path, "branch", branch, "HEAD");
+        TestGit.Run(repository.Path, "branch", branch, "HEAD");
         var target = Path.Combine(repository.Path, "branch-conflict");
         var console = new BufferedConsole();
 
@@ -487,14 +487,15 @@ public sealed partial class WorktreeCommandTests
 
     private static void InitializeRepository(string root)
     {
-        ReviewRegressionTests.RunGit(root, "init", "--initial-branch=dev");
-        ReviewRegressionTests.RunGit(root, "config", "user.email", "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(root, "config", "user.name", "StrataLint Tests");
+        TestGit.Run(root, "init", "--initial-branch=dev");
+        TestGit.Run(root, "config", "user.email", "stratalint@example.invalid");
+        TestGit.Run(root, "config", "user.name", "StrataLint Tests");
         File.WriteAllText(Path.Combine(root, "README.md"), "# worktree fixture\n");
         File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
         File.WriteAllText(Path.Combine(root, "lake-manifest.json"), LeanCacheFixtureFile.Manifest());
-        ReviewRegressionTests.RunGit(root, "add", "README.md", "lean-toolchain", "lake-manifest.json");
-        ReviewRegressionTests.RunGit(root, "commit", "-m", "fixture baseline");
+        StrataLint.TestSupport.RegPackageFixture.Write(root);
+        TestGit.Run(root, "add", "README.md", "lean-toolchain", "lake-manifest.json", "Reg");
+        TestGit.Run(root, "commit", "-m", "fixture baseline");
     }
 
     private static void StampCache(string root)
@@ -544,41 +545,5 @@ public sealed partial class WorktreeCommandTests
                 4096);
             Assert.Equal(0, result.ExitCode);
         }
-    }
-}
-
-// 本类的其余测试已迁往 Commands/Worktrees/LeanCacheEnsureCommandTests.WorktreeIntegration.cs。
-// 这一个留在原处**不是疏漏**:SL-003 的 unknown 棘轮按 (PartitionKey, SourcePath, Id)
-// 认身份,而该方法被派生器判为 conservative unknown;换文件即造新身份,判词原文:
-//   SL-003 …WorktreeIntegration.cs: conservative unknown test method introduced after
-//   fork point: tools/tests/StrataLint.Tests::LeanCacheEnsureCommandTests.
-//   MissingLakeCanBeSeededFromAnotherRegisteredWorktree
-// 要搬它,须先消掉它的 unknown 分类(补 ScribePathProvenance 或改测试的取路径方式),
-// 那是另一层,不夹带在本层。
-public sealed partial class LeanCacheEnsureCommandTests
-{
-    [Fact]
-    public void MissingLakeCanBeSeededFromAnotherRegisteredWorktree()
-    {
-        using var repository = new TemporaryDirectory();
-        InitializeRepository(repository.Path);
-        var donor = AddWorktree(repository.Path, "registered-donor");
-        WriteCache(donor, "registered donor cache\n");
-        var target = AddWorktree(repository.Path, "registered-target");
-
-        var result = WorktreeCommand.Run(
-            repository.Path,
-            ["ensure-cache", "--path", target],
-            new RecordingWorktreeProcessRunner());
-
-        Assert.True(result.Success, result.Error);
-        using var receipt = ParseReceipt(result.Output);
-        Assert.Equal(
-            LeanCacheGuard.PhysicalPath(donor),
-            receipt.RootElement.GetProperty("donor").GetString());
-        Assert.Equal(
-            "registered donor cache\n",
-            LeanCacheFixtureFile.ReadText(Path.Combine(target, ".lake", "build", "cache.bin")));
-        Assert.True(LeanCacheStamp.Matches(Path.Combine(target, ".lake"), ReadPins(target), out _));
     }
 }

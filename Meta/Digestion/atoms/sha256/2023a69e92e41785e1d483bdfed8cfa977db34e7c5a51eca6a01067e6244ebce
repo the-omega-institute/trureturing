@@ -1,0 +1,27 @@
+### 284.2 非对角响应的维数一致范数余量
+
+以下暂略去下标 $n$，记 $t=1/4$。由（284.1），
+$$
+\begin{aligned}
+Z-I
+&=2QM-(Q+M^\dagger QM)\\
+&=Q(M-I)-(M^\dagger-I)QM\\
+&=tQJ-tJ^\dagger QM.
+\end{aligned}
+\tag{284.4}
+$$
+因为 $\|J\|\le1$、$\|M\|\le5/4$，
+$$
+\|Z-I\|\le\tfrac14\tfrac{16}{23}(1+5/4)=\frac9{23},
+\qquad
+\boxed{\|Z\|\le\frac{32}{23}.}
+\tag{284.5}
+$$
+所以
+$$
+\kappa:=\frac12\left(\frac{32}{23}\right)^2
+=\frac{512}{529}<1.
+\tag{284.6}
+$$
+该界同时涵盖 $n=1$ 和增长的 $n$。它控制算子范数，没有将数值半径与算子范数混用。
+

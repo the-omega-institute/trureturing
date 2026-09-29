@@ -1,0 +1,21 @@
+**定理 68.6（完整组计数的最大后验原子）。** 在定理 68.5 的同一均匀支持先验下，令
+
+```math
+p_{\max,M}(x)=\max_n\mathbb P(R=n\mid\mathscr X_M=x),\qquad
+h_{\infty,M}(x)=-\log_2p_{\max,M}(x).
+```
+
+式 (68.36)。
+
+$h_{\infty,M}$ 是每份原始数据上有限计数律的最小熵。
+两种实际实验分别满足
+
+```math
+\frac{h_{\infty,M}(\mathscr X_M)}{Q^5}\longrightarrow\mathscr H(r,\beta)
+```
+
+式 (68.37)。
+
+收敛在先验数据概率下成立，并一致于确定支持的抽样律；后者仍使用均匀先验定义的函数。
+在定理 68.2 的单射事件 $H_M$ 上，精确标量 $T_M$ 的最大原子与 $p_{\max,M}$ 相等。
+

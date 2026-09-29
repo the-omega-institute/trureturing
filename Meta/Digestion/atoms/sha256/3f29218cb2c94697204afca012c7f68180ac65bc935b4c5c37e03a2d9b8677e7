@@ -1,0 +1,2 @@
+**定理 4.2（打包下界与静态覆盖上界）。** 若有限集 $E\subseteq X$ 的不同元素满足 $d_H(x,y)>2\varepsilon$，则任何静态 $\varepsilon$ 预测编码都有 $|C|\ge |E|$。若响应集 $B_H[X]$ 在最大度量下有 $s$ 个半径 $\varepsilon$ 的覆盖球，球心属于 $Y^{\Sigma^{\le H}}$，则存在 $s$ 标签的静态 $\varepsilon$ 编码。
+

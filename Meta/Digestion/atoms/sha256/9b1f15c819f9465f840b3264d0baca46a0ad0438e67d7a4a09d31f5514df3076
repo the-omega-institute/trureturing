@@ -1,0 +1,18 @@
+**命题 54.6（任意有限轮数的统一修复界）。** 对任意有限轮数，令 $\mathcal S$ 为全部归一化确定性因果梳，$\mathcal C$ 为其全部确定性 tester 归一化算符。对 $R\succeq0$ 定义
+
+$$
+u=\max_{C\in\mathcal C}\operatorname{Tr}(RC),
+\qquad
+\ell=\min_{C\in\mathcal C}\operatorname{Tr}(RC),
+$$
+
+并假设 $\ell\le1\le u$。归一化的全局静态通道满足这个假设：选择提前准备全部输入、逐轮送入并丢弃输出的 tester，响应为一。沿用式（54.4）的事件响应定义，则存在 $S^+\in\mathcal S$ 满足
+
+$$
+\Delta(R)\le\inf_{S\in\mathcal S}D(R,S)
+\le D(R,S^+)
+\le\max\left\{u-1,\frac{u-\ell}{u}\right\}
+\le2\Delta(R).
+\tag{54.26}
+$$
+

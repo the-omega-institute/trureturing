@@ -1,0 +1,75 @@
+### 278.3 校准记录中的统一正振幅
+
+校准阶段固定 $\theta=0$。首先证明记录中用于定位相位的振幅不会随 $h$ 消失。
+
+规范矩阵 $Q$ 是实对称矩阵。为直接核对实性，把边界条目 $Q_{0,j},Q_{i,0}$ 记为零；由（278.1），每个条目满足
+$$
+2Q_{ij}
++t(Q_{i-1,j}+Q_{i,j-1})
++t^2Q_{i-1,j-1}
+={\bf1}_{i=j}.
+\tag{278.11}
+$$
+按 $i+j$ 递增归纳，每个条目由更早的实条目唯一确定，故全部为实数；结合 $Q=Q^\dagger$ 即得实对称性。
+
+置
+$$
+a_n=\frac{\operatorname{Tr}Z}{n}.
+\tag{278.12}
+$$
+对（278.1）取迹，并用
+$\operatorname{Tr}QJ=\operatorname{Tr}QJ^\dagger\in\mathbb R$，得到
+$$
+\begin{aligned}
+n
+&=2\operatorname{Tr}Q
++2t\operatorname{Tr}QJ
++t^2\operatorname{Tr}(J^\dagger QJ),\\
+a_n
+&=1-\frac{t^2}{n}\operatorname{Tr}(J^\dagger QJ).
+\end{aligned}
+\tag{278.13}
+$$
+由 $0\prec Q\preceq I_n$ 和 $\operatorname{Tr}(J^\dagger J)=n-1$，
+$$
+\boxed{
+1-\frac{n-1}{16n}\le a_n\le1,
+\qquad a_n\ge\frac{15}{16}.
+}
+\tag{278.14}
+$$
+
+每个真实校准记录产生一个二维实向量
+$$
+W=\bigl(2\eta{\bf1}_{w=0},\;2\eta{\bf1}_{w=1}\bigr).
+\tag{278.15}
+$$
+记
+$$
+u_\phi=(\cos\phi,\sin\phi),\qquad
+a_{b,n}=(1-b\delta)a_n.
+$$
+从（278.9）取迹计算记录概率，得到
+$$
+\mathbb E_{b,\phi}W=a_{b,n}u_\phi,
+\qquad
+a_{b,n}\ge\frac{15}{32}>\frac14.
+\tag{278.16}
+$$
+这也说明校准不需要预先判断是哪一个假设：两个均值只在正振幅上不同，方向相同。
+
+若使用 $m$ 个独立校准副本，令
+$$
+\widehat v=\frac1m\sum_{\ell=1}^mW_\ell.
+$$
+每个样本恰满足 $\|W_\ell\|_2^2=4$。独立性因此给
+$$
+\boxed{
+\mathbb E_{b,\phi}
+\|\widehat v-a_{b,n}u_\phi\|_2^2
+=\frac{4-a_{b,n}^2}{m}\le\frac4m.
+}
+\tag{278.17}
+$$
+这里已经计算了设置随机性和所有实际记录，不以只保留某个设置的样本数替代总副本数。
+

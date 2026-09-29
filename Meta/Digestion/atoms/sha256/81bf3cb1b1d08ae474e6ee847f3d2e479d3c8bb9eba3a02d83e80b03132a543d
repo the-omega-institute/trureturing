@@ -1,0 +1,52 @@
+### 284.7 真实两次记录达到相同阶
+
+上界只使用每块两次角度零的实际记录，可以丢弃量子参考。由§280的规范来源估计，
+$$
+a_n:=\operatorname{Tr}Z_n/n\in[15/16,1].
+\tag{284.27}
+$$
+每次构造
+$$
+W=(2\eta\mathbf1_{w=0},2\eta\mathbf1_{w=1}).
+\tag{284.28}
+$$
+条件于共同相位，$\mathbb E_aW=aa_n(\cos\phi,\sin\phi)$。因此块统计量
+$$
+V=W_1\cdot W_2
+\tag{284.29}
+$$
+满足
+$$
+\mathbb E_aV=a^2a_n^2,
+\qquad
+\mathbb E_aV^2=16\Pr(w_1=w_2)=8,
+\qquad\operatorname{Var}_aV\le8.
+\tag{284.30}
+$$
+两个设置标签是独立公平币，条件于相位的两份输出独立；所以这些等式在Haar平均后仍成立。
+
+两个假设的均值差至少为
+$$
+g_\delta=a_n^2(2\delta-\delta^2)
+\ge\frac{225}{256}\delta.
+\tag{284.31}
+$$
+独立使用
+$$
+K=\left\lceil\frac{128}{\delta^2}\right\rceil
+\tag{284.32}
+$$
+个块，对 $V$ 的均值作已知两均值的中点检验。每种错误概率由Chebyshev界至多
+$$
+\frac{32}{Kg_\delta^2}
+\le\frac{16384}{50625}<\frac13.
+\tag{284.33}
+$$
+全部块都只用允许的实际记录，没有免费相位校准。因此
+$$
+\boxed{N_2(n,\delta)\le2\left\lceil\frac{128}{\delta^2}\right\rceil
+\le\frac{257}{\delta^2}.}
+\tag{284.34}
+$$
+最后一步使用 $\delta\le1/4$ 吸收整数取整。
+

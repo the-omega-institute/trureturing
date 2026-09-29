@@ -1,0 +1,22 @@
+**Theorem 2.1 (sharp degree-two energy coefficient).** Suppose $n\ge4$.
+The coefficient $4n$ in Theorem 1.2 is the least real number $C$ for
+which every alternating triangle cochain satisfies
+$$
+ \sum_{r,i,j,k\in V}(dF)(r,i,j,k)^2
+ \le C\sum_{i,j,k\in V}\bigl(F(i,j,k)-(da)(i,j,k)\bigr)^2.
+$$
+In particular, for every $C<4n$ an alternating cochain violates this
+inequality.
+
+*Proof.* Theorem 1.2 shows that $4n$ is an admissible coefficient.
+To prove minimality, choose four distinct vertices $p_0,p_1,p_2,p_3$.
+For $t\in V$ write $e_t(x)=1$ if $x=t$ and $0$ otherwise. Let $F$ be
+the alternating determinant of the three coordinate functions
+$e_{p_1},e_{p_2},e_{p_3}$, evaluated at $(i,j,k)$. Expanding the
+determinant shows that $F(p_1,p_2,p_3)=1$, while $F$ vanishes on every
+triple containing $p_0$. Consequently
+$(dF)(p_0,p_1,p_2,p_3)=1$, so the defect energy is positive. Theorem
+1.2 and $n>0$ imply that its averaged-reconstruction residual energy
+is also positive. Substituting this $F$ into a universal bound with
+coefficient $C$ and cancelling the positive residual energy gives
+$4n\le C$. $\square$

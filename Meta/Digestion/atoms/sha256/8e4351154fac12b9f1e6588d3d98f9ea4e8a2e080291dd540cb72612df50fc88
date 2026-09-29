@@ -1,0 +1,11 @@
+**定理193.4（方向边界上的连续恢复响应）。** 规定
+
+$$
+\mathcal R(0,z)=\Psi(z)\quad(0\le z\le1),
+\qquad
+\mathcal R(\rho,1)=\Phi_\infty\quad(0\le\rho\le\rho_0),
+\tag{193.7}
+$$
+
+便得到定义在闭矩形 $[0,\rho_0]\times[0,1]$ 上的连续函数。其边界 $\rho=0$ 保存了趋向同一退化点的不同相对方向。
+

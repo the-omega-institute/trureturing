@@ -1,0 +1,10 @@
+**定理250.1（饱和态类中的完整重建）。** 原联合态恰为
+$$
+\boxed{
+\Omega=(I_H\otimes V)(P_{\Phi^+}\otimes\omega_M)(I_H\otimes V^\dagger)
++\sum_{s\in\Sigma}P_{r_s}\otimes Q_s\rho_EQ_s.
+}
+\tag{250.17}
+$$
+量子项与各产品项按对应参考支撑嵌入。因此，在固定通道的饱和态类上，映射 $\Omega\mapsto(\rho_E,R_a,R_b)$ 是单射。
+

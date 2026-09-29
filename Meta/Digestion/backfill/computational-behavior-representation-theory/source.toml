@@ -1,0 +1,5 @@
+source_id = "computational-behavior-representation-theory"
+path = "docs/develop/theory/COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

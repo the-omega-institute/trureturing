@@ -1,0 +1,48 @@
+#### 2.1.3 同余幸存塔的纤维数和显式提升
+
+给定可计算的整数相位 $a_i$ 与正模数 $m_i$，$i\ge1$。定义
+
+$$
+L_0=1,\qquad L_n=\operatorname{lcm}(m_1,\ldots,m_n),\qquad
+H_n=\{h\in\mathbb Z/L_n\mathbb Z:\;
+ h\not\equiv a_i\pmod{m_i}\ (1\le i\le n)\}.
+\tag{TM.467}
+$$
+
+$H_0$ 为唯一零剩余类。采用 $0\le h<L_n$ 的标准整数代表后，各 $H_n$ 是可完成的可计算有限列表，投影是模 $L_n$ 约化。
+
+设旧 $L=L_n$，新模数 $m=m_{n+1}$，相位 $a=a_{n+1}$，并令 $d=\gcd(L,m)$、$L'=\operatorname{lcm}(L,m)$、$q=L'/L=m/d$。旧幸存类 $h$ 的全部新层提升是 $h+jL$，$0\le j<q$。旧约束在全部提升上继续成立，新约束排除的提升满足
+
+$$
+h+jL\equiv a\pmod m
+\ \Longleftrightarrow\
+(L/d)j\equiv(a-h)/d\pmod q
+\quad\text{在 }h\equiv a\pmod d\text{ 时}.
+\tag{TM.468}
+$$
+
+若 $h\not\equiv a\pmod d$ 无解；否则 $\gcd(L/d,q)=1$，解在模 $q$ 下恰有一个。因此这是C卷第1.1节同一纤维计数的直接应用：
+
+$$
+|\{y\in H_{n+1}:y\bmod L_n=h\}|
+=q-\mathbf1_{\{h\equiv a_{n+1}\pmod{\gcd(L_n,m_{n+1})}\}}.
+\tag{TM.469}
+$$
+
+若每一步严格 LCM 增长，即 $q>1$，则每条旧幸存纤维至少有 $q-1\ge1$ 个新幸存者。故全部限制投影满射，从 $H_0\ne\varnothing$ 归纳得到所有 $H_n\ne\varnothing$。这里没有把不同旧状态各自可达的提升拼成不相容的实现。
+
+甚至无需枚举整层。取 $h_0=0$，逐次定义
+
+$$
+h_{n+1}=
+\begin{cases}
+h_n,&h_n\not\equiv a_{n+1}\pmod{m_{n+1}},\\
+h_n+L_n,&h_n\equiv a_{n+1}\pmod{m_{n+1}}.
+\end{cases}
+\tag{TM.470}
+$$
+
+第二种情形中，若 $h_n+L_n$ 也被排除，就有 $m_{n+1}\mid L_n$，与 $q>1$ 矛盾。又 $h_n+L_n<2L_n\le L_{n+1}$，故结果仍是标准代表；它保持旧剩余类并避开新类。归纳得到一条可计算相容幸存线程。这也恰是该纤维标准代表中的最小合法提升，因为 $j=0$ 失败时 $j=1$ 已成功。
+
+特别地，逐步只排除一个同余类且每步严格增长的这类系统，不发生任何有限层消亡，不能在保持这些假设的同时将停机编码为首次有限消亡。
+

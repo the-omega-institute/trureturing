@@ -1,0 +1,28 @@
+**定义 57.1（临界网格过程）。** 保持定义 54.1 的原始模型和有限截距，
+固定 $`\varrho\in(0,\infty)`$，取确定性序列
+
+```math
+s_M\longrightarrow\infty,\qquad
+r_M=e^{s_M}\delta\longrightarrow\varrho,
+\qquad
+\mathcal U_M^{\rm cr}(t)=e^{(s_M+t)/2}
+ \{\mathcal Z_M((s_M+t)\sqrt\delta)-\mathcal J_M
+                       -2(s_M+t)\sqrt\delta\,T_M\}.
+```
+
+式 (57.1)。
+
+参数 $`\varrho`$ 表示网格尺度，与固定信号幅度不同。
+在独立于旧 $`(N_2,W_\rho)`$ 的标准正态序列 $`(\xi_k)_{k\ge1}`$ 上定义
+
+```math
+G_\varrho(t)=4\sqrt{\varrho g_0}\,e^{t/2}
+       \sum_{k\ge1}\mathrm{Ci}(\omega\varrho e^t k)\xi_k,
+\qquad g_0=\int\rho^2,\quad\omega=\pi/2.
+```
+
+式 (57.2)。
+
+级数先按均方定义，再取下面证明的连续版本。
+所有 $`\varrho>0`$ 共用这一个序列。
+

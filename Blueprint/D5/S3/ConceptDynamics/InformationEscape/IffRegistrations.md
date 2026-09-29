@@ -204,3 +204,4 @@ Both Boolean readout slots have checked sensitivity witnesses.
 - Dependency: [D5/S0/Certificates/SelfInterestConventionDeviationGain](../../../S0/Certificates/SelfInterestConventionDeviationGain.md)
 - Dependency: [D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling](../Answering/AssertionSettlementCeiling.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/IffRegistrationTemplates](IffRegistrationTemplates.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

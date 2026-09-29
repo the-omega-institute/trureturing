@@ -1,0 +1,33 @@
+### 173.4 固定 instrument 的一维阈值判据
+
+对 $t>0$，秩一半正定更新判据给
+
+$$
+f_{\mathcal D}(q)\le t
+\iff
+G_{\mathcal D,t}(q)\le1,
+$$
+
+$$
+\begin{aligned}
+G_{\mathcal D,t}(q)
+={}&q\langle\Xi|(tI+q\sigma_{00})^{-1}|\Xi\rangle\\
+&+(1-q)\langle\Xi|(tI+(1-q)\sigma_{11})^{-1}|\Xi\rangle.
+\end{aligned}
+\tag{173.9}
+$$
+
+事实上，$tI+B_{\mathcal D}(q)$ 正定；用其负二分之一次幂夹乘
+$tI+B_{\mathcal D}(q)-P_{u_q}$，正性恰等价于
+$\langle u_q|(tI+B_{\mathcal D}(q))^{-1}|u_q\rangle\le1$，展开即得。
+
+函数 $G_{\mathcal D,t}$ 对 $q$ 凹。将任一 $\sigma$ 谱分解，其对应项是非负权重下的函数
+$x/(t+\lambda x)$ 之和，且
+
+$$
+\frac{d^2}{dx^2}\frac{x}{t+\lambda x}
+=-\frac{2t\lambda}{(t+\lambda x)^3}\le0.
+$$
+
+因此检查固定 instrument 的整个参考最坏值，可等价地检查（173.9）的一维凹函数最大值；内部极大点满足导数为零，端点另行比较。这没有移除外层共同 instrument 的可达性约束，也不宣称任意符号参数下都已有闭式解。
+

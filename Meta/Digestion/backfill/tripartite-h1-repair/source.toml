@@ -1,0 +1,5 @@
+source_id = "tripartite-h1-repair"
+path = "docs/develop/theory/TRIPARTITE_H1_REPAIR.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

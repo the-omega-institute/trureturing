@@ -1,0 +1,11 @@
+### 76.1 四条射线给出任意维数的加权块形
+
+设 $Q$ 是 $q$ 维复 Hilbert 空间，$q\ge1$，$F$ 二维，$A:F\to F$ 可逆，并令
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}.
+$$
+考虑 $M:Q\otimes J\to Q\otimes F$，且四条不同射线的非零代表 $z_1,\ldots,z_4$ 满足
+$$
+M(Q\otimes(Az_i\otimes z_i))\subset Q\otimes z_i.
+$$
+

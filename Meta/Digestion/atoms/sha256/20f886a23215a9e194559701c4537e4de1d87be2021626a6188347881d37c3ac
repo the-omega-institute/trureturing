@@ -1,0 +1,44 @@
+**引理199.2（临界最优器的共同斜率）。** 当
+$\epsilon\downarrow0$、$h\to h_c$ 时，全部
+$\Gamma\in\mathcal A_\epsilon(h)$ 都满足
+
+$$
+\boxed{\mathcal P(\Gamma)\longrightarrow\Phi'_{h_c}>0.}
+\tag{199.6}
+$$
+
+即对任意 $\epsilon_n\downarrow0$、$h_n\to h_c$ 和任意选择的相应最优器，
+上述斜率极限相同；不要求最优器本身具有唯一极限。
+
+**证明。** 取任意这样的序列，再取 Choi 聚点
+$\Gamma_n\to\Gamma_*$。由第198.4节，
+
+$$
+\Gamma_*\in\mathcal F,\qquad
+\mathcal N(\Gamma_*)+h_c\mathcal P(\Gamma_*)\le\Phi_{h_c}=0.
+\tag{199.7}
+$$
+
+另一方面，把这个固定可行操作 $\Gamma_*$ 用于任意固定 $u\in I$。
+其基点误差恰为 $3/4$。将
+$F_\epsilon(u)\le e_\epsilon(u,\Gamma_*)$
+两边减去 $3/4$，除以 $\epsilon$ 并取极限，
+第191节和引理198.2给
+
+$$
+\Phi_u\le\mathcal N(\Gamma_*)+u\mathcal P(\Gamma_*)
+\qquad(u\in I).
+\tag{199.8}
+$$
+
+在 $u=h_c$，（199.7）与（199.8）迫使等号成立。
+因此右侧仿射函数在 $h_c$ 从上方接触 $\Phi$。
+第190节保证 $\Phi$ 在该内点可微，故
+
+$$
+\mathcal P(\Gamma_*)=\Phi'_{h_c}.
+$$
+
+每个聚点都给同一斜率，$\mathcal P$ 在统一邻域连续；紧性反证即给（199.6）。
+正性来自第190节的严格过零导数。证毕。
+

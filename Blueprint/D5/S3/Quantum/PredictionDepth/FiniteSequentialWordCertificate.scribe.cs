@@ -35,7 +35,29 @@ internal sealed class FiniteSequentialWordCertificateDocument : IScribeDocumentD
                             + "Their rank can therefore grow strictly at most d squared minus "
                             + "one times, after which canonical centering gives the full bounded "
                             + "centered span."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("bounded-monotone-equal-step"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate."
+                        + "bounded_monotone_has_equal_step"),
+                H("A bounded monotone rank sequence has an equal step"),
+                StatementSource.FromAuthor(EqualStepFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If every step up to terminalRank - r(0) were strict, the sequence would exceed its "
+                        + "bound at the next index."))),
                 DescribeRole.Theorem))));
+
+    private static Formula EqualStepFormula()
+    {
+        Formula r = F.Id("r"), bound = F.Id("R"), m = F.Id("m"), n = F.Id("n");
+        return Disp(Seq(
+            r, Sp, F.Text, Grp(Sp, F.Id("monotone"), Sp), Land, Sp, Forall, Sp, n, Comma, Sp,
+            Apply(r, n), Sp, Leq, Sp, bound, Sp, Rightarrow, Sp,
+            Exists, Sp, m, Sp, Leq, Sp, bound, Minus, Apply(r, D(0)), Comma, Sp,
+            Apply(r, m), Sp, Eq, Sp, Apply(r, Seq(m, Plus, D(1)))));
+    }
 
     private static Formula Apply(Formula function, params Formula[] arguments)
     {

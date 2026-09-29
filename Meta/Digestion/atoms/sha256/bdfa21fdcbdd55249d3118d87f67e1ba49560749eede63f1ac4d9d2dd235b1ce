@@ -1,0 +1,12 @@
+**证明。** 完成平方得
+\[
+ U(x,z)=\tfrac12x^{\mathsf T}Sx
+       +\tfrac12(z+C^{-1}B^{\mathsf T}x)^{\mathsf T}C
+                       (z+C^{-1}B^{\mathsf T}x).
+\]
+第二项唯一极小于 $z=-C^{-1}B^{\mathsf T}x$。对 $C$ 正交对角化并逐坐标计算高斯积分，积分值为
+\[
+ e^{-x^{\mathsf T}Sx/(2\tau)}(2\pi\tau)^{r/2}(\det C)^{-1/2}.
+\]
+取对数完成证明。本条隐藏刚度 $C$ 与 $x$ 无关，因此熵修正是常数；对位置依赖的隐藏刚度，不能删掉该导数。证毕。[^tcs3-schur]
+

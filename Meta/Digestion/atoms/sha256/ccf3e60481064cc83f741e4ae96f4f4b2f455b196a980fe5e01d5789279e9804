@@ -1,0 +1,28 @@
+**约定 10.1（文献三值记录）**〔semantic〕。文献标签按其支持的确切断言使用：$\mathsf{literature\text{-}attested}$ 表示所列文本和定位支持该项断言；$\mathsf{repo\text{-}derived}$ 表示本卷结构定义、散文推导或已注明编号的仓内结果，不主张先创；$\mathsf{suspected\text{-}novel}$ 只用于给出认真检索范围后仍未找到前例的候选，本卷不使用此标签。未经核对的出处须另记 $\mathsf{ASSUMED\text{-}UNVERIFIED}$，不得算作 attested。下表只限定文本证据的范围，不赋予相应模型解释额外的逻辑蕴涵。这里与字典一样约定索引格式，不新增待证明的数学对象。
+
+| 来源 | 精确定位 | 支持的确切命题或解释范围 | 状态 |
+| --- | --- | --- | --- |
+| [SN 12.61](https://suttacentral.net/sn12.61/en/sujato)（SuttaCentral Bilara，Sujato 英译） | 5.2–5.3 | 经文含存在、发生、消失、止息的条件句形态；不证明定义 3.1 是其完整解释 | literature-attested |
+| [杂阿含·262](https://raw.githubusercontent.com/cbeta-git/xml-p5a/master/T/T02/T02n0099.xml)（CBETA T02n0099） | T02n0099；经号起于 0066b06，条件句在 0067a05–07 | “此有故彼有”等句与中道、缘起的语境相连 | literature-attested |
+| 杂阿含·296（CBETA T02n0099） | T02n0099 0084b12–23 | 文中区分因缘法、缘生法，含“此有故彼有”；不等于每个有限 DAG 节点都有前置 | literature-attested |
+| [中论·15.2](https://raw.githubusercontent.com/cbeta-git/xml-p5a/master/T/T30/T30n1564.xml)（CBETA T30n1564） | T30n1564 0019c27–28 | 偈文以“无作、不待异法成”表述性；用作定义 4.3 的受限命名参照 | literature-attested |
+| 中论·24.18 偈文（CBETA T30n1564） | T30n1564 0033b11–12 | 偈文写“我说即是无”，并接假名与中道 | literature-attested |
+| 中论·24.18 释文（CBETA T30n1564） | T30n1564 0033b15–19 | 释文写“我说即是空”“空亦复空”，并解释假名、中道；不证明命题 4.4 的核相对性与释文同义 | literature-attested |
+| 中论·24.8–9（CBETA T30n1564） | T30n1564 0032c16–19 | 偈文分别说世俗谛、第一义谛，及不分别二谛的后果 | literature-attested |
+| 中论·24.10 及释文（CBETA T30n1564） | T30n1564 0033a02–05 | “不依俗谛，不得第一义”及因言说表达第一义的说明 | literature-attested |
+| [Dhp 277–279](https://www.accesstoinsight.org/tipitaka/kn/dhp/dhp.20.than.html)（Access to Insight，Ṭhānissaro 英译） | Dhammapada 第 20 品，277–279 | 三偈依次以诸行无常、诸行苦、诸法无我为所观对象；不是含涅槃的同一组三印列举 | literature-attested |
+| [大智度论·卷 22](https://raw.githubusercontent.com/cbeta-git/xml-p5a/master/T/T25/T25n1509.xml)（CBETA T25n1509） | T25n1509 0222a28–0222b10 | 三种法印包括有为法念念生灭无常、一切法无我、寂灭涅槃 | literature-attested |
+| [SN 56.11](https://suttacentral.net/sn56.11/en/sujato)（SuttaCentral Bilara，Sujato 英译） | 4.1–4.9，5.1–8.3 | 苦、集、灭、道及各自应遍知、断、证、修的陈述；不把苦定义为浮账 | literature-attested |
+| [SN 12.15](https://suttacentral.net/sn12.15/en/sujato)（SuttaCentral Bilara，Sujato 英译） | 3.1–3.3 | 文中以“全有”“全无”为两端而说中道 | literature-attested |
+| [MN 63](https://suttacentral.net/mn63/en/sujato)（SuttaCentral Bilara，Sujato 英译） | 7.4–7.21，8.1–8.3 | 列十项未宣说问题，理由与梵行目的及止息相关；不提供双侧不可证的形式证明 | literature-attested |
+| 大智度论·卷 2（CBETA T25n1509） | T25n1509 0074c08–21 | 十四难分为四项常无常、四项边无边、四项死后、两项身神关系；答语含无实、非问、无利有失 | literature-attested |
+| [AN 6.63](https://suttacentral.net/an6.63/en/sujato)（SuttaCentral Bilara，Sujato 英译） | 33.3–33.5 | 业的解释涉及思及身、语、意行为；定义 7.1 没有这组心理变量 | literature-attested |
+| 杂阿含·335（CBETA T02n0099） | T02n0099 0092c12–24 | “有业报而无作者”连同异阴相续、除俗数法的上下文 | literature-attested |
+| [华严一乘教义分齐章·卷 4](https://raw.githubusercontent.com/cbeta-git/xml-p5a/master/T/T45/T45n1866.xml)（CBETA T45n1866） | T45n1866 0506a12–25 | 因陀罗网境界门说重重无尽及微尘中示现，非只谈后代传播 | literature-attested |
+| [华严金师子章注·因陀罗网境界门](https://raw.githubusercontent.com/cbeta-git/xml-p5a/master/T/T45/T45n1881.xml)（CBETA T45n1881） | T45n1881 0669c06–12 | 毛中师子、重重相入与帝网天珠的比喻 | literature-attested |
+| FPP 的账本结果 | 本卷所有〔引 FPP …〕条目；FPP 定义 1.5、2.4、3.1、3.2、4.5、5.1、9.1 及各处列明的假设、定理 | 提供账本、见证、状态、主张及其保持结论；3.4、3.7、5.2、5.7、5.8、7.6、8.6、9.1 是已有论证的承接 | repo-derived |
+| 最小支持的数学近邻 | SourceCutsetHittingDuality，source_cutset_hitting_duality | 有限来源域上单调可证谓词的割集—击中对偶；本卷不重复该结论 | repo-derived |
+| OSUV 的解释约束与语料索引 | 卷首解释约束；第 5 章第 12–14 项 | 本卷只沿用结构重构的解释限制，并给出已有佛教语料的索引指针，不重新摘录这些语料 | repo-derived |
+| 本卷模型论证 | 3.3、3.8、3.10、4.4、6.3、6.4、7.4、7.7 | 各条显示的存在反例、有限界、类型分离或策略证明；文献先创性不在结论内 | repo-derived |
+| 本卷定义的量化对偶 | 5.9 | 可动与三态寂静按定义互补，不作为新的通用数学成果 | repo-derived |
+

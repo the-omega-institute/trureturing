@@ -1,0 +1,14 @@
+### 22.7 定理：联合相位校准的局部精确代价
+
+固定无理 $\alpha\in(0,1)$ 和 $n\geq1$。令 $g>0$ 不大于 $\alpha,1-\alpha$、全部 $c_k,1-c_k$ 和不同切点的两两距离。对足够小的 $\delta,u$，满足
+\[
+\max_{0\leq k\leq n}|u+k\delta|\leq g/4,\qquad 0<\alpha+\delta<1,
+\]
+则
+\[
+\boxed{\lambda\{x:O_n(\alpha+\delta,x+u)\neq O_n(\alpha,x)\}
+=\sum_{k=0}^n|u+k\delta|.}
+\tag{22.12}
+\]
+机械词对相位的一周期平移不变，故这里 $x+u$ 不需要限制在 $[0,1)$。
+

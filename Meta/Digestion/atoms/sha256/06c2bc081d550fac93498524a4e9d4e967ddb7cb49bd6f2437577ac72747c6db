@@ -1,0 +1,70 @@
+### 268.1 单Jordan块产生的固定来源合同
+
+设参考空间为 $E=\mathbb C^n$，$n\ge1$，标准正交基为 $e_1,\ldots,e_n$，并约定 $e_0=0$。定义幂零移位
+$$
+Je_1=0,\qquad Je_j=e_{j-1}\quad(2\le j\le n),
+\qquad M=I+tJ.
+\tag{268.1}
+$$
+先令 $t>0$，假定存在Hermitian正定矩阵 $Q$ 满足
+$$
+Q+M^\dagger QM=I_n.
+\tag{268.2}
+$$
+下一节证明固定 $t=1/4$ 对所有 $n$ 都有这样的 $Q$。
+
+定义
+$$
+Z=2QM,\qquad F_*=Q,
+$$
+$$
+T_*=
+\begin{pmatrix}
+Q&QM\\
+M^\dagger Q&M^\dagger QM
+\end{pmatrix}
+=
+\begin{bmatrix}I\\M^\dagger\end{bmatrix}
+Q
+\begin{bmatrix}I&M\end{bmatrix}.
+\tag{268.3}
+$$
+由（268.2），这是原来的Ando填充
+$$
+T_*=T_Z(Q)
+=\begin{pmatrix}Q&Z/2\\Z^\dagger/2&I_n-Q\end{pmatrix},
+\tag{268.4}
+$$
+没有放宽非对角数据或两个对角块之和。$M$ 可逆，故 $Q$ 与 $I_n-Q=M^\dagger QM$ 都严格正。Gram形式给
+$$
+T_*\succeq0,\qquad \operatorname{rank}T_*=n,\qquad
+\operatorname{Tr}T_*=n.
+\tag{268.5}
+$$
+定义
+$$
+q_j=(-Me_j,e_j)=(-e_j-te_{j-1},e_j),
+\qquad j=1,\ldots,n.
+\tag{268.6}
+$$
+这些向量由其下半部分可知线性独立，且
+$$
+N:=\ker T_*=\ker\begin{bmatrix}I&M\end{bmatrix}
+=\operatorname{span}\{q_1,\ldots,q_n\}.
+\tag{268.7}
+$$
+$T_*$ 在 $N^\perp$ 上严格正。
+
+在固定输入 $Y$ 本征基下，归一化来源及其完整数据为
+$$
+\boxed{
+\Omega_*=\frac1nT_*,
+\qquad
+\rho_*=\operatorname{Tr}_H\Omega_*=\frac1nI_n,
+\qquad
+K_*=\mathscr K(\Omega_*)=\frac1nZ=\frac2nQM.
+}
+\tag{268.8}
+$$
+其中 $\dim H=2$、$\mathscr K(X)=2X_{+-}$。这是实际 $2\otimes n$ 接口上的密度态。$n\ge2$ 时其秩为 $n>1$，故是混合来源。
+

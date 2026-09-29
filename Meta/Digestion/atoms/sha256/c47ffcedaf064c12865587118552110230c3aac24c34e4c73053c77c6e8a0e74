@@ -1,0 +1,78 @@
+**定理 49.5（由控制秩与硬分量决定的实际容量）。** Claim status: open。在定义49.1下，对每个满足某个统一有限累计预算的正确控制器，逐当前读出有
+
+$$
+\begin{gathered}
+|\rho_A^{-1}(a)|\ge2^{\varepsilon_B}+h\quad(a\in A),\qquad
+|\rho_B^{-1}(b)|\ge2^{\varepsilon_A}+h\quad(b\in B),\\
+|Q\cap R^{-1}(z)|\ge1+h\quad(z\in V).
+\end{gathered}
+\tag{49.10}
+$$
+
+允许任意乃至无限本地状态集。三个总容量最小值为
+
+$$
+|M_A|_{\min}=(2^{\varepsilon_B}+h)|A|,\qquad
+|M_B|_{\min}=(2^{\varepsilon_A}+h)|B|,\qquad
+|Q|_{\min}=(1+h)|V|,
+\tag{49.11}
+$$
+
+且由同一个有限控制器同时达到。$h=0$ 的达到者永久零通信；$h=1$ 的达到者累计通信至多两位，此处不声称这个预算对给定 $C$ 最优。
+
+证明。引理49.3给每个本地纤维的 $2^{\varepsilon_B},2^{\varepsilon_A}$ 个静默状态，以及每个联合读出的一态。若 $h=1$，引理49.4的 $S_{\rm pre}$ 在每个当前 $z$ 上非空，在每个本地摘要上也非空；它与静默集合在左右两端分别不交，因而每个纤维都再加一态。若 $h=0$，直接使用静默界即可。固定读出的不同纤维互斥，求和得到 (49.11) 的下界。这些都是有限数目的实际状态见证，不要求总体有限，也不把“有一个硬分量”加强为“整个支撑图连通”。
+
+构造达到者时，先定义受限已知状态集
+
+$$
+\begin{aligned}
+\mathcal M_A^{\mathsf K}
+ &=\{(a,\mathsf K,q):q\in\ell_A(a)+\ell_B(B)\},\\
+\mathcal M_B^{\mathsf K}
+ &=\{(b,\mathsf K,q):q\in\ell_B(b)+\ell_A(A)\},\\
+\mathcal Q^{\mathsf K}
+ &=\{((a,\mathsf K,q),(b,\mathsf K,q)):
+       a\in A,b\in B,\ q=\ell_A(a)+\ell_B(b)\}.
+\end{aligned}
+\tag{49.12}
+$$
+
+当远端控制秩为零时，已知 $q$ 已由本端摘要限定，故不能把这一层计作任意的两倍笛卡尔积。若 $h=0$，只用这层，以
+
+$$
+\iota_A(a)=(a,\mathsf K,\kappa_A(a)),\qquad
+\iota_B(b)=(b,\mathsf K,\kappa_B(b))
+\tag{49.13}
+$$
+
+局部初始化。满投影和 (49.4) 保证这两个初始化的值属于受限集合。平移更新原摘要与 $q\mapsto q+c(e)$；重写用本端 $q$ 输出本端系数乘 $q$，再置 $q=0$，如定理49.2。任取一条初始边，纯平移已能使当前读出覆盖 $V$；已知控制不变量使得到的状态恰为 $\mathcal Q^{\mathsf K}$ 中对应的状态。因此这层的每个联合状态及每个本地状态都实际出现。
+
+若 $h=1$，另加未知层
+
+$$
+\begin{gathered}
+\mathcal M_A^?=\{(a,?):a\in A\},\qquad
+\mathcal M_B^?=\{(b,?):b\in B\},\\
+\mathcal Q^?=\{((a,?),(b,?)):a\in A,b\in B\},\qquad
+\iota_A(a)=(a,?),\quad\iota_B(b)=(b,?).
+\end{gathered}
+\tag{49.14}
+$$
+
+初始化的实际对仍仅取 $C$。平移保持未知标记，在已知层则按前述规则更新 $q$。首次 $N_i$ 在未知层执行第48.4节协议：若 $\alpha_i\ne0$ 且 $\ell_B\ne0$，右端传旧 $\ell_B(b)$；若 $\beta_i\ne0$ 且 $\ell_A\ne0$，左端传旧 $\ell_A(a)$；需要两位时固定先右后左。端点从自己的旧摘要和所收位计算必要的输出，系数为零的一端直接写零。已知层选择叶根并用旧 $q$ 计算。两种模式末尾均进入共同已知状态，所存当前控制为零，因为 $c(N_i z)=0$。模式由各端本地标记同步选择，不靠消息缺席判断；首次重写即便发送零位也进入已知层。
+
+这逐动作证明了受限集合闭合及本地可执行性；之后的所有动作均免费。任取一条实际初始边，平移得到未知层全部 $V$；对任意实际初态执行一次重写，再作平移，得到已知层全部 $V$。因此准确的可达集合是
+
+$$
+\begin{array}{c|c|c|c}
+h&M_A&M_B&Q\\ \hline
+0&\mathcal M_A^{\mathsf K}&\mathcal M_B^{\mathsf K}&\mathcal Q^{\mathsf K}\\
+1&\mathcal M_A^?\sqcup\mathcal M_A^{\mathsf K}
+ &\mathcal M_B^?\sqcup\mathcal M_B^{\mathsf K}
+ &\mathcal Q^?\sqcup\mathcal Q^{\mathsf K}
+\end{array}
+\tag{49.15}
+$$
+
+每个 $a$ 在已知层有恰 $2^{\varepsilon_B}$ 个允许 $q$，每个 $b$ 有恰 $2^{\varepsilon_A}$ 个，联合已知层每个 $z$ 恰一态；未知层每个本地摘要及每个 $z$ 又恰一态。得到 (49.11) 及逐纤维同时取等。每词至多首次重写付费，费用为 (48.8) 的 $C_i\le2$，所以构造确在所优化的控制器类内。证毕。
+

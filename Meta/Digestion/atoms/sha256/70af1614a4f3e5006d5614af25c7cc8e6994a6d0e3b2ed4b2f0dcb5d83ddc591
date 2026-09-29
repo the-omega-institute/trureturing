@@ -1,0 +1,23 @@
+**定理 61.3（相同边缘律不能决定端点耦合）。** 对非零 $`\theta`$，(61.4) 中的锚定极限 $`X_\theta`$ 满足
+
+```math
+\operatorname{cum}_4(X_\theta)=768\theta^4\gamma^4>0,\qquad
+\operatorname{Cov}(X_\theta,Y^2-\gamma)=
+ \begin{cases}4\theta\gamma^2,&m\hbox{ 为偶数},\\0,&m\hbox{ 为奇数}.\end{cases}
+```
+
+式 (61.21)。
+
+当 $`\theta>0`$ 时其支持为 $`[-2\theta\gamma,\infty)`$。
+两种奇偶性均无限出现时，包含旧端点的元组没有单一的共同弱极限。
+
+证明。写 $`Y_\sigma=\sqrt\gamma\,g`$，$`g\sim N(0,1)`$，
+其中心平方第四累积量为 $`48\gamma^4`$；乘 $`2\theta`$ 得第一式。
+偶数支使用同一平方，方差 $`2\gamma^2`$；奇数支独立，由定理 61.2 已证明的联合关系得到第二式。
+支持来自 $`g^2\in[0,\infty)`$。
+两条子列极限有不同的联合分布，因此整个元组不能收敛到同一个分布。
+这里比较的是极限律本身，不声称实际协方差或第四矩收敛。
+Nourdin–Peccati 的非中心收敛 Proposition 4.5 与 Remark 4.3 也指出：
+二阶混沌的中心 Gamma 边缘极限并不自动独立于旧 Gaussian 方向，仍需相应收缩消失。
+本例用 (61.18) 与实际有限谱估计识别了这项额外关系。
+

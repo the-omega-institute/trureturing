@@ -9,7 +9,7 @@
 import D5.S3.ConceptDynamics.Experiment.InfiniteIdentificationFiniteInexactness
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import Mathlib.Probability.Independence.InfinitePi
-import LeanInformationAudit.Syntax
+
 
 namespace D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunSpace
 
@@ -94,6 +94,6 @@ def bitArena : PrimitiveLawArena where
   Law r := Boundary (r.readout ())
 
 def bitRealization := cutRealization (fun b : Bool => b)
-register_information_template cutRealization
+
 
 end D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunSpace

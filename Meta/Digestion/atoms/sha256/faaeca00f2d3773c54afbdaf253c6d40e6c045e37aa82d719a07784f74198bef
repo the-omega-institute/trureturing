@@ -1,0 +1,21 @@
+**命题 36.1（共同核恢复判据）。** 若四个表示均取实际像，且
+
+$$
+ \ker(r_{\mathrm{sp}})=
+ \ker(r_{\mathrm{tm}})=
+ \ker(r_{\partial})=
+ \ker(r_{\mathrm{mem}})=\equiv_\star,
+ \tag{36.7}
+$$
+
+则对任意 $(i,j)$ 存在唯一双射
+
+$$
+ g_{ij}:R_i\to R_j,
+ \qquad
+ g_{ij}(r_i(s))=r_j(s),
+ \tag{36.8}
+$$
+
+并满足 $g_{ii}=\mathrm{id}$、$g_{jk}\circ g_{ij}=g_{ik}$。反之，若这些双射满足 (36.8)，则所有四个核相等。
+

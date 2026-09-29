@@ -1,0 +1,23 @@
+### 61.2 正向事件最大值的准确公式
+
+令 $P_p$ 为式（61.1）在 $x,y,z$ 上的秩一主块，$r=(1,c,\sqrt\varepsilon)^{\mathsf T}$。对反馈参数 $q,t\in[0,1]$，记
+
+$$
+D(q,t)=\operatorname{diag}(\sqrt q,\sqrt{1-q},\sqrt t),
+\quad
+\lambda_\varepsilon(p;q,t)
+=\max\{0,\lambda_{\max}(D(rr^{\mathsf T}-P_p)D)\}.
+$$
+
+精确的两单向函数为
+
+$$
+\begin{aligned}
+f_\varepsilon^+(p)&=\max_{q,t}\lambda_\varepsilon(p;q,t),\\
+f_\varepsilon^-(p)&=\max_{q,t}
+[\lambda_\varepsilon(p;q,t)+\varepsilon(1-q-t)],\\
+N(R_\varepsilon-S_p)&=\max\{f_\varepsilon^+(p),f_\varepsilon^-(p)\}.
+\end{aligned}
+\tag{61.4}
+$$
+

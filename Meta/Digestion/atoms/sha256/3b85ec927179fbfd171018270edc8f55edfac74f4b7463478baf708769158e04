@@ -1,0 +1,107 @@
+### 272.5 交换子方程与维数无关的核范数控制
+
+上界需要直接控制 $\|S_t\|_1$，以保留归一化带来的 $1/n$。令
+$$
+\mathcal L_t(X)=X+M_t^\dagger XM_t
+=2X+\mathcal E_t(X)
+\tag{272.33}
+$$
+作用于全部复矩阵，并使用核范数诱导的算子范数。Schatten乘法界给
+$\|\mathcal E_t\|_{1\to1}\le2t+t^2$，所以
+$$
+\|\mathcal L_t^{-1}\|_{1\to1}
+\le\frac1{2(1-a(t))}
+\le\frac{16}{23}.
+\tag{272.34}
+$$
+这里允许非Hermitian输入，因为下面的交换子一般不为Hermitian。
+
+置
+$$
+C_t=[Q,J]=QJ-JQ.
+\tag{272.35}
+$$
+利用 $JM_t=M_tJ$ 及（272.3），展开得到
+$$
+\mathcal L_t(C_t)
+=[J,M_t^\dagger]QM_t
+=t(E_{11}-E_{nn})QM_t.
+\tag{272.36}
+$$
+对 $n\ge2$，$\|E_{11}-E_{nn}\|_1=2$，并且
+$\|Q\|\le16/23$、$\|M_t\|\le1+t\le5/4$。因此
+$$
+\boxed{
+\|C_t\|_1
+\le\frac{16}{23}\cdot2t\cdot\frac{16}{23}\cdot\frac54
+=\frac{640}{529}t.
+}
+\tag{272.37}
+$$
+该界不含参考维数因子。
+
+令 $X_t=[Q^{1/2},J]$，则
+$$
+Q^{1/2}X_t+X_tQ^{1/2}=C_t.
+\tag{272.38}
+$$
+这个Sylvester方程具有精确积分解
+$$
+X_t=\int_0^\infty
+e^{-uQ^{1/2}}C_t e^{-uQ^{1/2}}\,du.
+\tag{272.39}
+$$
+指数衰减保证积分收敛；对被积函数求导并积分验证方程。正本征值之和保证解唯一。由此
+$$
+\|X_t\|_1
+\le\frac{\|C_t\|_1}{2\sqrt{\lambda_{\min}(Q)}}.
+\tag{272.40}
+$$
+对（272.16）的 $B_t$，
+$$
+B_t-J=X_tQ^{-1/2},
+$$
+$$
+\boxed{
+\|B_t-J\|_1
+\le\frac{\|C_t\|_1}{2\lambda_{\min}(Q)}
+\le\frac{320}{161}t\le2t.
+}
+\tag{272.41}
+$$
+同时
+$$
+\|B_t\|\le
+\sqrt{\frac{\lambda_{\max}(Q)}{\lambda_{\min}(Q)}}
+\le\frac4{\sqrt7}<2.
+\tag{272.42}
+$$
+
+分别展开 $B_t^\dagger B_t-J^\dagger J$ 与
+$B_tB_t^\dagger-JJ^\dagger$，两者的核范数各至多为
+$(\|B_t\|+1)\|B_t-J\|_1$。而
+$J^\dagger J-JJ^\dagger=-E_{11}+E_{nn}$，故
+$$
+\begin{aligned}
+\|B_t^\dagger B_t-B_tB_t^\dagger\|_1
+&\le2+2(\|B_t\|+1)\|B_t-J\|_1\\
+&\le2+12t\le5.
+\end{aligned}
+\tag{272.43}
+$$
+代入精确二阶形式（272.17），得到
+$$
+\|S_t\|_1
+\le t^2\|Q\|\,
+\|B_t^\dagger B_t-B_tB_t^\dagger\|_1
+\le\frac{80}{23}t^2\le4t^2.
+\tag{272.44}
+$$
+最后，（272.15）、（272.20）给
+$$
+\boxed{
+\mathcal N(\Omega_t)\le\frac{4t^2}{n}.
+}
+\tag{272.45}
+$$
+

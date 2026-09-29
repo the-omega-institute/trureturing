@@ -1,0 +1,8 @@
+**引理106.3（次轮平面重现的必要条件）。** 若 $H_2=H_n$、$3\le n\le6$，则必须
+$$
+[\eta_2]=[E^\perp],\qquad [\eta_n]=[E],\qquad w\notin P.
+\tag{106.8}
+$$
+
+**证明。** 实际单位 $w\in H_2\cap G_2\subset S$。若 $\eta_n\not\parallel E$，$Q_n=Q$ 使 $H_n\cap S=0$，立即矛盾。所以 $\eta_n\parallel E$，进而 $G_n\subset P$。将 $w\in H_n$ 分解为 $g+r$，得到 $r\in\mathbb Cu_*$。它不能为零，否则 $w\in H_n\cap G_n$；因此 $w\notin P$。由 $w\in G_2$ 与（106.4），必须 $\eta_2\parallel E^\perp$。证明完毕。
+

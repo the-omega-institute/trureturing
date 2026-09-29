@@ -1,0 +1,17 @@
+**命题 33.3（无纠缠也能破坏单比特平方系数）。** 对单比特退极化信道 $\Delta_s(\rho)=s\rho+(1-s)I_2/2$，$0<s<1$，有
+\[
+ \eta_{I_2/2}(\Delta_s)=s^2<\eta^{\rm c}(\Delta_s)\le s.
+\]
+严格不等号可由两个比特的可分输入实现。特别在 $s=1/2$ 时，可以取联合态
+\[
+ \rho_*=(I_4/6)+|\Omega\rangle\langle\Omega|/3,
+ \qquad |\Omega\rangle=(|00\rangle+|11\rangle)/\sqrt2,
+\]
+其两个边缘都为 $I_2/2$，并有
+\[
+ \frac{\mathcal D_{A|R}((\Delta_{1/2}\otimes\operatorname{id})\rho_*)}
+      {\mathcal D_{A|R}(\rho_*)}
+ =\frac{3\log(3/2)+5\log(5/6)}{4\log(4/3)}
+ \approx0.2648649060>\frac14.
+\]
+

@@ -1,0 +1,67 @@
+**次数与系数高度。** 对实变量上的复多项式 $`P=\sum_\alpha c_\alpha x^\alpha`$，使用系数范数
+
+$$
+\|P\|_{\mathrm{coef},1}=\sum_\alpha|c_\alpha|.
+\tag{20.15}
+$$
+
+该范数次可乘，复共轭不改变其值。一个复矩阵元写成 $`x+iy`$ 时范数为二；$`a,b`$ 同样如此。所有计算起于整数及 $`i`$，故中间系数属于 $`\mathbb Z[i]`$。最后取实部是逐系数操作，并满足
+ $`\|\operatorname{Re}P\|_{\mathrm{coef},1}\le\|P\|_{\mathrm{coef},1}`$；
+因此实化不会另增一个二因子。
+
+令 $`t_{ji}=(m_i)_j`$，即 $`t_{00}=a,t_{10}=b,t_{01}=1,t_{11}=0`$。按来源在前的固定因子次序，发射与接收合成的 Kraus 算子为
+
+$$
+(L_u)_{(j,\alpha),(i,\beta)}
+=t_{ji}\,W_{(\alpha,u),(\beta,i)},
+\quad
+1\le u\le2D^2,\quad 1\le\alpha,\beta\le D.
+\tag{20.16}
+$$
+
+每个矩阵元的次数至多二，系数范数至多四。递推
+ $`\sigma_{n+1}=\sum_uL_u\sigma_nL_u^\dagger`$
+的每个矩阵元，至多含 $`(2D^2)(2D)^2`$ 个被加项；左右两个 Kraus 元贡献范数因子至多十六。因此，由（20.4）起归纳，有
+
+$$
+\deg(\sigma_n)_{xy}\le4n,
+\qquad
+\| (\sigma_n)_{xy}\|_{\mathrm{coef},1}
+\le(128D^4)^n=B_D^n.
+\tag{20.17}
+$$
+
+记 $`z=B_D^n`$。接收边缘的每个矩阵元至多是两个 $`\sigma_n`$ 元之和，来源边缘的每个矩阵元至多是 $`D`$ 个之和。逐项求和遂给
+
+$$
+\begin{aligned}
+\|\operatorname{Tr}\sigma_{K,n}^2\|_{\mathrm{coef},1}
+&\le4D^2z^2,\\
+\|\operatorname{Tr}\rho_n^2\|_{\mathrm{coef},1}
+&\le4D^2z^2,\\
+\|\operatorname{Tr}\sigma_n^2\|_{\mathrm{coef},1}
+&\le4D^2z^2,\\
+\|\operatorname{Tr}[(\rho_n\otimes I_K)\sigma_n^2]\|_{\mathrm{coef},1}
+&\le8D^3z^3.
+\end{aligned}
+\tag{20.18}
+$$
+
+最后一项可具体按来源的两个行列指标及一个接收指标求和，共 $`4D`$ 项；其中 $`\rho_n`$ 元的范数至多 $`Dz`$，$`\sigma_n^2`$ 元的范数至多 $`2Dz^2`$，乘积即给上述界。结合（20.5），
+
+$$
+\begin{aligned}
+\|h_n\|_{\mathrm{coef},1}
+&\le4D^2B_D^{2n}
++16D^4B_D^{4n}
++16D^3B_D^{3n}\\
+&\le36D^4B_D^{4n},\\
+\deg G&\le16N=d,
+\qquad
+\|G\|_{\mathrm{coef},1}\le36ND^4B_D^{4N}.
+\end{aligned}
+\tag{20.19}
+$$
+
+式（20.5）对所有实参数均为实数：递推产生 Hermitian 矩阵，而其中的迹表达为实数。也可在定义目标多项式时直接取该表达的实部；它保持全部实参数上的值。由（20.15），得到的 $`G`$ 属于 $`\mathbb Z[x_1,\ldots,x_v]`$，且（20.19）保持原常数。因此约束与目标的整数系数高度统一不超过（20.2）的 $`H`$。
+

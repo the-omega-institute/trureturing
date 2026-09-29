@@ -1,0 +1,49 @@
+**Lemma 3.1 (source compatibility).** For every $k\ge9$, every
+$j\in\{0,1,2\}$, and every row $a$,
+$\sigma_j(a)=H_n[a,\pi_j(a)]$. All chosen columns satisfy the
+corresponding support in Lemma 1.4, and $T_j\cap D=D\setminus\{d_j\}$.
+
+Proof. The head, bulk and tail rows are disjoint and exhaust the row
+set: the bulk is $15,\ldots,n-22$, with $4(k-9)$ rows, and the tail
+starts at $n-21\ge15$. When $k=9$, the bulk is empty and the tail
+starts at 15.
+
+In bulk class $r=0$ the column is even and the source increment is
+$2$. In class $r=2$ the column is odd and the increment is $0$.
+The rows in classes $r=1,3$ are unmodified. Thus the four increments
+are $(2,0,0,0)$; adding row and column gives exactly the four symbol
+formulas in Definition 2.1. The shift $-4$ preserves these guards;
+no symmetry of the entire square is required. Every tail row is outside
+the modified head and bulk ranges, so its increment is zero.
+
+For the head rows $0,5,10$, the three profiles use respectively
+$$
+\begin{array}{c|ccc}
+j&\pi_j(0)&\pi_j(5)\ (k\text{ even};\ k\text{ odd})&\pi_j(10)\\ \hline
+0&13\ (k\text{ even}),\ 17\ (k\text{ odd})&2k+5;\ 2k+3&1\\
+1&5&2k+1;\ 2k-1&-3\\
+2&9&2k+5;\ 2k+3&13
+\end{array}
+$$
+Each is $1\pmod4$, and differs from the exceptional column $1,5,9$
+in its respective row. Here $-3$ has standard representative $n-3>9$.
+All three source increments are therefore $4$.
+
+In the distinguished rows $1,6,11$, profile $j$ retains the literal
+columns of the other two entries of $D$, giving increment $3$.
+The omitted rows use respectively $18$, $11$, and $2k+7$ for even
+$k$ or $2k+9$ for odd $k$. These avoid respectively
+$\{1,2,3,4\}$, $\{5,6,7,8\}$, and $\{9,10,11,12\}$, giving
+increment $0$. In rows $4,9$, the head table uses even columns,
+except for $\pi_2(4)=7$ when $k$ is odd. In row 14 it uses $7$
+or $3$ for $j=0$, $-1\equiv n-1$ for $j=1$, and $3$ for
+$j=2$. None is $1\pmod4$. All other head rows are unmodified.
+
+These head guards concern standard representatives: all the displayed
+nonnegative head columns are at most $\max(19,2k+16)<4k$ and are
+nonnegative for $k\ge9$. The two negative head columns $-3,-1$
+have representatives $n-3,n-1$. The prescribed cap increment
+$\varepsilon_j$ consequently equals the actual source increment in
+every row, proving the identity and the asserted distinguished entries.
+$\square$
+

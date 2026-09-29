@@ -1,0 +1,97 @@
+**定理 289.1（宽度控制的球面近似误差）。** 令 $\mathcal V\subset S^2$ 为有限、中心对称且张成 $\mathbb R^3$ 的集合，记 $\kappa=\eta_{\mathcal V}$，沿用定义287.1的二维预算函数。对任意 $R\ge0$，
+
+$$
+\frac12\max\{\kappa-R,0\}
+\le F^{(2)}_{\mathcal V}(R)
+\le F^{(2)}_{S^2}(R)
+=\frac12\max\{1-R,0\}.
+\tag{289.1}
+$$
+
+因而对全部非负预算一致有
+
+$$
+0\le F^{(2)}_{S^2}(R)-F^{(2)}_{\mathcal V}(R)
+\le\frac{1-\kappa}{2}.
+\tag{289.2}
+$$
+
+这个一致上界在预算 $R=\kappa$ 处达到。若 $\delta_{\mathcal V}=\max_{x\in S^2}\min_{v\in\mathcal V}\|x-v\|_2$ 是模型的实际欧氏覆盖半径，则更精确地有
+
+$$
+\sup_{R\ge0}\bigl(F^{(2)}_{S^2}(R)-F^{(2)}_{\mathcal V}(R)\bigr)
+=\frac{1-\kappa}{2}=\frac{\delta_{\mathcal V}^2}{4}.
+\tag{289.2a}
+$$
+
+若 $\mathcal V$ 还是球面的欧氏 $\delta$ 网，即对每个 $x\in S^2$ 都存在 $v\in\mathcal V$ 使 $\|x-v\|_2\le\delta$，则
+
+$$
+\kappa\ge1-\frac{\delta^2}{2},
+\qquad
+0\le F^{(2)}_{S^2}(R)-F^{(2)}_{\mathcal V}(R)
+\le\frac{\delta^2}{4}.
+\tag{289.3}
+$$
+
+证明。先证明一个适用于任意实矩阵 $M$ 的估计：
+
+$$
+\max_{v\in\mathcal V}\|Mv\|_2\ge\kappa\|M\|_{\rm op}.
+\tag{289.4}
+$$
+
+若 $M=0$ 则显然。否则取其最大右奇异方向 $x$，并选对应单位左奇异向量 $y$，使 $M^{\mathsf T}y=\|M\|_{\rm op}x$。由宽度定义，存在 $v\in\mathcal V$ 满足 $|x\cdot v|\ge\kappa$，所以
+
+$$
+\|Mv\|_2\ge|y\cdot Mv|
+=\|M\|_{\rm op}|x\cdot v|
+\ge\kappa\|M\|_{\rm op}.
+$$
+
+现在取任意实际仿射编码、解码，写为 $\mathcal E(v)=c+Av$、$\mathcal D(w)=d+Lw$，恢复的线性部分为 $T=LA$。由中心对称输入的平均平方误差界及式（289.4），
+
+$$
+e\ge\frac12\max_{v\in\mathcal V}\|(I-T)v\|_2
+\ge\frac{\kappa}{2}\|I-T\|_{\rm op}.
+\tag{289.5}
+$$
+
+原编码的残差满足
+
+$$
+r(\mathcal E)=|c_y|+
+\max_{v\in\mathcal V}|e_y^{\mathsf T}Av|
+\ge\kappa\|A^{\mathsf T}e_y\|_2.
+\tag{289.6}
+$$
+
+如第281、287节，存在单位方向 $n$ 与 $|k|\le1$，使 $L^{\mathsf T}n=k e_y$。因此任意预算可行方案都满足
+
+$$
+s_{\min}(T)\le\|T^{\mathsf T}n\|_2
+\le\|A^{\mathsf T}e_y\|_2\le R/\kappa.
+\tag{289.7}
+$$
+
+在 $T$ 的最小右奇异方向上使用反三角不等式，式（289.5）给出
+
+$$
+e\ge\frac{\kappa}{2}(1-s_{\min}(T))
+\ge\frac{\kappa-R}{2}.
+\tag{289.8}
+$$
+
+再与 $e\ge0$ 合并便得到下界。这个证明没有要求实际编码、解码或恢复幺元，也没有把有限模型的最优结构当作一般可行方案的性质。
+
+球面可行的方案对其子模型 $\mathcal V$ 仍可行，恢复误差不增加，所以第287节的球面达到构造给出上界。 为补齐该构造的端点，在 $R=0$ 取 $A=\operatorname{diag}(1/2,0,1/2)$ 并用恒等解码，残差为零、球面误差为 $1/2$；当 $R\ge1$ 时恒等编码、解码给出零误差。前述球面奇异值下界也覆盖这两个端点。对 $R\le\kappa$，上下界之差为 $(1-\kappa)/2$；对 $\kappa<R<1$，球面值本身小于这个数；对 $R\ge1$ 两个最优值都为零。这证明式（289.2）。 在 $R=\kappa$ 时，有限模型可以用达到宽度的酉编码及逆解码实现零误差，而球面值为 $(1-\kappa)/2$，故一致上界确实达到。又因模型中心对称，$\max_v x\cdot v=\max_v|x\cdot v|$；单位球面距离恒等式给出 $\delta_{\mathcal V}^2=2(1-\kappa)$，因此式（289.2a）成立。
+
+最后，对任意单位向量 $x$ 选满足网条件的 $v$。两者都在单位球面上，故
+
+$$
+x\cdot v=1-\frac12\|x-v\|_2^2
+\ge1-\frac{\delta^2}{2}.
+$$
+
+对模型向量取绝对内积最大值，再对 $x$ 取最小值得到宽度下界。将其代入式（289.2）即得式（289.3）。证毕。
+

@@ -1,0 +1,44 @@
+**定理 76.1（精确实块约化）。** 计算 $\gamma_{u^2}$ 时，可以将切向修复 $K$ 限制为相对于式（76.3）的实对称块对角矩阵。其块大小为 $3,3,1,1$；这个限制保持最优值，并存在达到最优值的此类 $K$。
+
+证明。由式（76.1），$Uw=w$ 且 $UH(u)U^*=H(u)$。若 $K\in\mathcal T$，则
+
+$$
+\operatorname{Tr}_D(UKU^*)
+=I_A\otimes U_B\dot\sigma U_B^*,
+\qquad P_0UKU^*P_0=U(P_0KP_0)U^*\succeq0.
+$$
+
+所以 $UKU^*\in\mathcal T$。另一方面，将合法 tester $C,E$ 同时变换为
+
+$$
+C'=(U_A\otimes U_B)C(U_A\otimes U_B)^*,\qquad E'=UEU^*,
+$$
+
+仍保持 $C'\succeq0$、$\operatorname{Tr}_A C'=I_B$ 和 $0\preceq E'\preceq C'\otimes I_D$。该变换可逆，因此 $N(UXU^*)=N(X)$。
+
+对 $K$ 作有限平均
+
+$$
+\mathcal A(K)=\frac14\sum_{a=0}^{3}U^aK(U^*)^a.
+\tag{76.4}
+$$
+
+凸性和 $H(u)$ 的不变性给
+
+$$
+\mathcal A(K)\in\mathcal T,
+\qquad N(H(u)-\mathcal A(K))\le N(H(u)-K).
+$$
+
+不同特征值之间的矩阵元在四项平均中消去，所以 $\mathcal A(K)$ 正好具有式（76.3）的块形。
+
+标准基中的复共轭同样保持切锥和 tester 可行集，且 $H(u)$ 为实矩阵。因此再用
+
+$$
+K_{\mathbb R}=\frac12\bigl(\mathcal A(K)+\overline{\mathcal A(K)}\bigr)
+$$
+
+替换，仍然可行且不增目标值。它是同一块形的实对称矩阵。取第 70 节保证存在的原问题最优修复，即得最优值保持及达到性。$\square$
+
+此处只约去由实际局部酉对称强制消失的块间相干；每个三维块内部的所有实相干仍被保留。
+

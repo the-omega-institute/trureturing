@@ -1,0 +1,44 @@
+**定义 26.1（显式编码与有限时域）。** 固定偶数 $m\ge2$、$r\ge3$，令 $C_m=\mathbb Z/m\mathbb Z$，并规定
+
+$$
+G=C_2\times C_m,\quad \chi(b,z)=b,\quad H=\{0\}\times C_m,\quad
+S=G^r\times H,\quad Y=\sum_{i=1}^r x_i,\quad t=Y+h,\quad a=x_1.
+\tag{26.10}
+$$
+
+记 $z:G\to C_m$ 为第二坐标，$f:C_m\to C_2$ 为公开的固定函数。接收端选择 $c=\tau_{f(z(a))}$，其中
+
+$$
+\tau_0=(1,0),\qquad \tau_1=(1,m/2),\qquad
+\Delta=\tau_1-\tau_0=(0,m/2)\ne0,\qquad
+p_c(x)=x-\chi(x)c.
+\tag{26.11}
+$$
+
+每个发送者 $i=2,\ldots,r$ 仅回复 $p_c(x_i)\in H$；所需输出始终是整个快照
+
+$$
+O(s)=(a,t,p_c(x_2),\ldots,p_c(x_r)).
+\tag{26.12}
+$$
+
+查询 $c$ 已由 $a$ 与公开 $f$ 确定。此处采用命题22.3的全商编码公式；该节的分类假设是 $r\ge4$，本节不将其分类结论移用到 $r=3$，而在下文直接构造全部实际来源。
+
+唯一单位动作是
+
+$$
+g=(0,1),\qquad d=(g,-g,0,\ldots,0;0),\qquad D(s)=s+d.
+\tag{26.13}
+$$
+
+合法词仅为 $d$ 的非负次数重复，正重复的每一步费用为一；即使某个平移可由多步达到，也不将其另列为单位动作。$Y,t,h$ 在动作下不变，$a$ 的相位每步增加一。对 $n\ge0$，定义
+
+$$
+F_n(s)=(O(s),O(Ds),\ldots,O(D^ns)),\qquad
+sR_ns'\ \Longleftrightarrow\ F_n(s)=F_n(s'),\qquad
+N_n=|S/R_n|.
+\tag{26.14}
+$$
+
+时域包含初始输出，故 $n$ 步对应 $n+1$ 个快照。此为既有 [FiniteHorizonKernelRecurrence](../../../D5/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence.lean) 中 `finiteHorizonKernel` 的单更新含义；最短分离词的通用概念归属 [ControlledDistinguishingDepth](../../../D5/S3/ObserverMemory/Algorithms/ControlledDistinguishingDepth.lean) 的 `shortestDistinguishingDepth`。以下计算这个编码的实际纤维与精确深度，不另设通用核或最短词定理。
+

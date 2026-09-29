@@ -1,0 +1,21 @@
+### 13.2 同步状态对判据
+
+构造顶点集 $X\times X$ 上的有向图。若 $x,\tilde x\in D_a$ 且
+
+$$
+\ell_a(x)=\ell_a(\tilde x)=y,
+$$
+
+便有一条具名同步边
+
+$$
+(x,\tilde x)
+ \xrightarrow{a/y}
+(F_a x,F_a\tilde x),
+\qquad
+\delta_a(x,\tilde x)=c_a(x)-c_a(\tilde x).
+\tag{13.4}
+$$
+
+初始顶点集为 $X_0\times X_0$。同步路径恰好代表具有相同完整可见档案的两条实际执行；沿路径的 $\delta$ 之和就是两条累计时钟之差。图中的同步只用于比较实际候选，不授予观察者同时取得两个隐藏配置的权限。
+

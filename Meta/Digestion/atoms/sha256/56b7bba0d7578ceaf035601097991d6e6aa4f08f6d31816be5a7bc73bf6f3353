@@ -1,0 +1,33 @@
+### 74.7 六维跨度同样迫首环境为 D
+
+由 $V_0k=p\eta_1\in W\subset R\otimes F$，有 $p\in R$。实际 $V_1p=vA$，而（74.19）的 $A$ 纤维恰为 $Q_6$，所以固定单射性给
+$$
+p\in G_5.
+\tag{74.22}
+$$
+
+若 $p\notin E$，则 $\pi p$ 只具有非零的 $D$ 坐标。将 $p\eta_1\in W$ 投到接收商，只有环境 $D$ 可以出现在该坐标，故 $[\eta_1]=D$。
+
+若 $p\in E$，则（74.18）及实际 $V_1p=vA$ 给 $\mathcal U_Ep\in L\otimes A$。首轮 $p\eta_1$ 位于（74.20）的三维核心，故（74.21）要求 $\mathcal A\eta_1\parallel A$。又 $\mathcal AD\parallel A$ 且 $\mathcal A$ 可逆，同样得到
+$$
+[\eta_1]=D.
+\tag{74.23}
+$$
+
+把实际 $V_1k=q\eta_1$ 与所有零位块比较。除 $D^\perp$ 组外，其他三组环境与 $D$ 非正交，所以
+$$
+q\perp R_{D^\perp}.
+$$
+由（74.17），其二维正交补恰为 $Q_5$。因此
+$$
+V_1k\in Q_5\otimes D=V_1G_4,\qquad k\in G_4.
+$$
+同时（74.22）—（74.23）给
+$$
+V_0k\in G_5\otimes D=V_0H_4,\qquad k\in H_4.
+$$
+再度违反非零初态与 $G_4\cap H_4=0$。
+
+六维、五维及更低的所有接收跨度均已排除，证明完毕。
+
+

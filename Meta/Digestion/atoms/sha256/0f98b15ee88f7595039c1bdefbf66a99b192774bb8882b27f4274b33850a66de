@@ -1,0 +1,58 @@
+### 280.1 全部维数与扰动强度上的实际来源
+
+固定 $t=1/4$。对每个整数 $n\ge1$，参考空间为 $E_n=\mathbb C^n$，输入为固定 $Y$ 本征基下的qubit。令
+$$
+J_ne_1=0,\qquad J_ne_j=e_{j-1}\quad(j\ge2),\qquad M_n=I_n+tJ_n.
+\tag{280.1}
+$$
+沿用§272的规范正定解
+$$
+Q_n+M_n^\dagger Q_nM_n=I_n,
+\qquad
+q_-I_n\preceq Q_n\preceq q_+I_n,
+\qquad q_-:=\frac7{23},\quad q_+:=\frac{16}{23}.
+\tag{280.2}
+$$
+这两个谱常数对所有 $n$ 相同。置
+$$
+Z_n=2Q_nM_n,\qquad
+\Omega_n=\frac1n
+\begin{pmatrix}
+Q_n&Q_nM_n\\
+M_n^\dagger Q_n&M_n^\dagger Q_nM_n
+\end{pmatrix}.
+\tag{280.3}
+$$
+图因子分解给 $\Omega_n\succeq0$、秩 $n$，而（280.2）给总迹一。对每个
+$$
+0<\delta\le\frac12
+$$
+定义实际竞争来源
+$$
+\boxed{
+\Omega_{n,\delta}
+=(1-\delta)\Omega_n+\delta\frac{I_{2n}}{2n}.
+}
+\tag{280.4}
+$$
+它对全部 $n,\delta$ 都是严格正定密度态，无须另加随维数变化的允许扰动区间。两个来源满足
+$$
+\rho_n=\rho_{n,\delta}=I_n/n,
+\qquad K_n=Z_n/n,\qquad K_{n,\delta}=(1-\delta)Z_n/n.
+\tag{280.5}
+$$
+其中 $K=2\Omega_{+-}$ 是固定输入基下的完整非对角响应。
+
+这个来源扰动本身具有维数一致的线性大小：
+$$
+\boxed{
+\delta\le\|\Omega_{n,\delta}-\Omega_n\|_1\le2\delta.
+}
+\tag{280.6}
+$$
+上界由两个密度态的迹范数均为一得到。下界取 $\Omega_n$ 的核投影 $P$，其秩为 $n$，于是
+$$
+\operatorname{Tr}\bigl[P(\Omega_{n,\delta}-\Omega_n)\bigr]=\delta/2.
+$$
+对迹零Hermitian差矩阵，任意效果的绝对配对不超过半迹范数，故得到下界。这一区分将在最后与§269的尖锐来源族比较时使用。
+

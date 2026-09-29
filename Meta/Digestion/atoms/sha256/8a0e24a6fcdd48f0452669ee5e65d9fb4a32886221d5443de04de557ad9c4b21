@@ -1,0 +1,30 @@
+**推论149.4（具体七维装置的六终端逻辑精度）。** 第148节装置诱导的逻辑通道满足
+
+$$
+\mathcal L_n=\mathcal I_n\qquad(1\le n\le5),
+$$
+
+而在第六终端，
+
+$$
+\boxed{
+\frac12\|\mathcal L_6-\mathcal I_6\|_\diamond
+\le\min\{1,\mu^2/\lambda_6\},
+\qquad
+\limsup_{p\downarrow0}
+\frac{\tfrac12\|\mathcal L_6-\mathcal I_6\|_\diamond}{p^5}
+\le\frac12.
+}
+\tag{149.17}
+$$
+
+在 $0<p\le1/2$ 上，有完全显式的粗界
+
+$$
+\boxed{
+\frac12\|\mathcal L_6-\mathcal I_6\|_\diamond
+\le\min\left\{1,\frac{32}{3}p^5\right\}.
+}
+\tag{149.18}
+$$
+

@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Project>
-  <!-- Fixed .NET SDK 10.0.103 hook. Parameter bindings are registered here, never discovered from an installed SDK. Compiler execution remains the SDK Csc task. -->
+  <!-- .NET SDK 10 hook. Parameter bindings are registered here, never discovered from an installed SDK. Compiler execution remains the SDK Csc task. -->
   <UsingTask TaskName="StrataLint.JudgeSeed.JudgeSeedInputs" AssemblyFile="$(JudgeSeedTaskAssembly)" />
   <UsingTask TaskName="StrataLint.JudgeSeed.JudgeSeedCopies" AssemblyFile="$(JudgeSeedTaskAssembly)" />
   <Target Name="_JudgeSeedRegistration" BeforeTargets="PrepareForBuild">
-    <Error Code="JUDGE_SEED_REGISTRATION" Condition="'$(NETCoreSdkVersion)' != '10.0.103' Or '$(JudgeSeedSdkVersion)' != '10.0.103' Or '$(TargetFramework)' != '$(JudgeSeedTargetFramework)' Or '$(TargetFrameworks)' != ''" Text="SDK/framework is inconsistent with the registered judge seed hook." />
+    <Error Code="JUDGE_SEED_REGISTRATION" Condition="'$(NETCoreSdkVersion)' != '$(JudgeSeedSdkVersion)' Or '$(JudgeSeedSdkVersion)' == '' Or '$(TargetFramework)' != '$(JudgeSeedTargetFramework)' Or '$(TargetFrameworks)' != ''" Text="SDK/framework is inconsistent with the registered judge seed hook." />
     <PropertyGroup>
       <_JudgeSeedCoreTargetsPath>$([MSBuild]::NormalizePath('$(CSharpCoreTargetsPath)'))</_JudgeSeedCoreTargetsPath>
     </PropertyGroup>

@@ -1,0 +1,26 @@
+**定理 39.2（Hermitian 方向上的 BKM 张量下界）。** 对任意有限维 $\sigma\succ0$ 和 Hermitian $X$，定义
+\[
+ Q_\sigma(X)=\operatorname{Tr}\big[X\,D\log(\sigma)[X]\big]
+ =\int_0^\infty\operatorname{Tr}\big[X(\sigma+uI)^{-1}X(\sigma+uI)^{-1}\big]du.
+\]
+对任意两组这样的数据，
+\[
+ \boxed{Q_{\sigma_1\otimes\sigma_2}(\Delta_1\otimes \Delta_2)
+        \ge Q_{\sigma_1}(\Delta_1)Q_{\sigma_2}(\Delta_2).}
+\]
+若 $\Delta_1,\Delta_2$ 均非零，等号当且仅当 $[\sigma_1,\Delta_1]=0$ 或 $[\sigma_2,\Delta_2]=0$。特别地，两边均非对易时该二次型比较严格。
+
+**证明。** 分别在 $\sigma_1,\sigma_2$ 的正交本征基中，记正本征值为 $a_i,b_k$，Hermitian 矩阵元为 $x_{ij},y_{kl}$。积分正函数得到
+\[
+ Q_{\sigma_1}(\Delta_1)=\sum_{i,j}|x_{ij}|^2 \ell(a_i,a_j),
+\]
+乘积系统中对应的求和项为 $|x_{ij}|^2|y_{kl}|^2\ell(a_i b_k,a_j b_l)$。因为 $|y_{kl}|^2=|y_{lk}|^2$，交换 $k,l$ 并平均，得到
+\[
+ Q_{\sigma_1\otimes\sigma_2}(\Delta_1\otimes \Delta_2)
+ =\sum_{i,j,k,l}|x_{ij}|^2|y_{kl}|^2
+ \frac{\ell(a_i b_k,a_j b_l)+\ell(a_i b_l,a_j b_k)}2.
+\]
+逐项应用引理 39.1，即得乘积下界。
+
+若一个方向与平均态对易，则所有非零矩阵元都在相同本征值之间，对应每项取等。反之，两个交换子都非零，就各自存在一个跨不同本征值的非零矩阵元；选取这两个索引对，引理 39.1 严格，其权重为正，其余项均非负，故总式严格。任意退化本征空间不影响这个判据。本证明依赖 Hermitian 条件所给的反向索引权重相等，未把它无条件推广到任意非自伴方向。证毕。
+

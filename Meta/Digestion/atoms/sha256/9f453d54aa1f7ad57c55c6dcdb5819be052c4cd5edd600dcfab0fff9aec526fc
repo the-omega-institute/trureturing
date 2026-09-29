@@ -1,0 +1,7 @@
+**定理 5.5.4（同一模型上的五接口等价）。** 给有限 $d\ge3$、正可计算 $p$ 和定理 5.5.1 的完整可枚举库存，采用定理 5.5.2 的同一阶段序列。相对于任意共同 oracle $A$，定义 4.2.1 的五个接口在这里均匀互算：
+$$
+\mathbf M\ \longleftrightarrow\ \mathbf C\ \longleftrightarrow
+\mathbf T\ \longleftrightarrow\ \mathbf S\ \longleftrightarrow\ \mathbf R.
+$$
+这些符号具体是同一 $M$ 的有理 Cauchy 名、同一 $\nu=\mu_p(\,\cdot\cap E)/M$ 的全部条件柱名、指定 $\nu_s=\mu_p(\,\cdot\cap E_s)/f_s$ 的总变差阶段选择器、公平位精确在线采样器，以及同一 $E$ 的真实延拓特征函数。
+

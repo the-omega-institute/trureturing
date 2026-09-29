@@ -1,0 +1,5 @@
+source_id = "math-myth-match"
+path = "docs/develop/theory/MATH_MYTH_MATCH.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

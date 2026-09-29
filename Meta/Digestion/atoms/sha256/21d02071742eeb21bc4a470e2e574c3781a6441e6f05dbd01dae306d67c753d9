@@ -1,0 +1,159 @@
+### 184.5 两个 Choi 约束的匹配二阶证书
+
+定义标量
+
+$$
+x=-\frac{\beta\delta}{8},\qquad
+z=\delta\Sigma\left(-\frac{\beta^2}{16}+\frac{5\gamma^2}{72}\right),
+\qquad
+q=\frac12+x\epsilon+z\epsilon^2,
+$$
+
+$$
+a=-\frac{\beta\Sigma}{8},\qquad
+y=\frac{7\gamma\Sigma}{72},
+$$
+
+$$
+T=-\frac{3\beta^2\delta^2}{64}
++\frac{3\gamma^2\delta^2}{8}
++\frac{5\gamma^2\Sigma^2}{144}.
+$$
+
+对充分小的 $\epsilon$，上述 $q$ 统一落在 $(0,1)$。
+先取
+
+$$
+\mathsf Y_s^0
+=\left(\frac14+a\epsilon+T\epsilon^2\right)\rho
+-s y\epsilon Y.
+\tag{184.9}
+$$
+
+它显然 Hermitian，且
+
+$$
+\operatorname{Tr}\mathsf Y_s^0
+=\frac14-\frac{\beta\Sigma}{8}\epsilon+T\epsilon^2.
+$$
+
+下面证明存在独立于真实 $R$ 的常数 $C>0$、$\epsilon_*>0$，使
+
+$$
+\boxed{
+\mathsf Y_s=\mathsf Y_s^0+C\epsilon^3I
+}
+\tag{184.10}
+$$
+
+在 $0<\epsilon<\epsilon_*$ 上满足两个共同 Choi 约束。
+
+令 $\tau_0=q^2$、$\tau_1=(1-q)^2$，并写未补正的 slack
+
+$$
+S_{j,s}^0=\mathsf Y_s^0\otimes I-\tau_jA_{j,s}.
+$$
+
+在 $\epsilon=0$，四个 slack 均为
+
+$$
+S_*=\frac14\left(\rho\otimes I-|g_0\rangle\langle g_0|\right).
+$$
+
+直接分块计算得
+
+$$
+\boxed{
+\operatorname{spec}S_*=
+\left\{0,\frac1{18},\frac{r_+}{4},\frac{\ell}{4}\right\},
+\qquad \ker S_*=\operatorname{span}\{v\}.
+}
+\tag{184.11}
+$$
+
+所以其正交补上存在固定正谱间隙。令
+$e=v/\sqrt2$、$Q=I-P_e$；将每个 slack 按
+$\operatorname{span}\{e\}\oplus e^\perp$ 分块。
+
+首先，一阶核标量为零，因为
+
+$$
+x-\frac\beta4
+=-x-\frac{\beta R}{4}
+=a.
+$$
+
+置 $d_j=\gamma c_j/4$。一阶非对角列用未归一化的 $v$ 表示为
+
+$$
+Q\left[\partial_\epsilon S_{j,s}^0\right]_{\epsilon=0}v
+=s\operatorname{vec}\!\left[Y(d_j\rho-yI)\right]
+=:h_{j,s}.
+$$
+
+该向量位于奇宇称的两个坐标上。在这两个坐标中，
+$S_*^{-1}$ 分别是 $4/r_+$、$4/\ell$，因而
+
+$$
+\begin{aligned}
+E_j
+&:=\langle h_{j,s},(S_*|_{e^\perp})^{-1}h_{j,s}\rangle\\
+&=4\left[\frac{(d_j\ell-y)^2}{r_+}
++\frac{(d_jr_+-y)^2}{\ell}\right]\\
+&=24d_j^2-56d_jy+36y^2.
+\end{aligned}
+$$
+
+最后一步使用
+$\ell^2/r_++r_+^2/\ell=6$、
+$\ell/r_++r_+/\ell=7$、
+$1/r_++1/\ell=9$。
+对所选 $y$，直接计算得
+
+$$
+\frac{E_0+E_1}{2}
+=\frac{3\gamma^2\delta^2}{8}
++\frac{5\gamma^2\Sigma^2}{144},
+\qquad
+E_1-E_0=\frac{5\gamma^2\delta\Sigma}{36}.
+$$
+
+因此所选 $z,T$ 恰满足
+
+$$
+T=x^2+z-\beta x+E_0
+=x^2-z+\beta Rx+E_1.
+\tag{184.12}
+$$
+
+这两个等式承担两个共同约束的二阶匹配。
+具体地，核标量的展开为
+
+$$
+\begin{aligned}
+\langle e,S_{0,s}^0e\rangle
+&=\frac{\epsilon^2}{2}(T-x^2-z+\beta x)+O(\epsilon^3)
+=\frac{\epsilon^2}{2}E_0+O(\epsilon^3),\\
+\langle e,S_{1,s}^0e\rangle
+&=\frac{\epsilon^2}{2}(T-x^2+z-\beta Rx)+O(\epsilon^3)
+=\frac{\epsilon^2}{2}E_1+O(\epsilon^3).
+\end{aligned}
+$$
+
+非对角列为 $\epsilon h_{j,s}/\sqrt2+O(\epsilon^2)$。
+正交块在充分小 $\epsilon$ 时一致正定，其逆为基点逆加 $O(\epsilon)$。故两个 slack 的标量 Schur 补均为
+
+$$
+\frac{\epsilon^2}{2}E_j
+-\frac{\epsilon^2}{2}E_j
++O(\epsilon^3)=O(\epsilon^3).
+$$
+
+所有矩阵都随 $\epsilon,R$ 光滑，而真实 $R$ 留在固定紧区间。因此存在统一的 $C_0$，使这两个 Schur 补均不小于
+$-C_0\epsilon^3$，并且正交块具有统一的正下界。
+
+现在加入 $C\epsilon^3I$。它在完整 slack 中加入
+$C\epsilon^3I_4$，不改变非对角列；核标量增加
+$C\epsilon^3$，正交块增加正矩阵，因此其逆只会减小。
+取 $C>C_0$，Schur 补非负、正交块正定，从而两个 slack 均半正定。这证明了共同 Choi 证书的可行性。
+

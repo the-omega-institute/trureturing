@@ -1,0 +1,106 @@
+**定理219.3（保秩 TP 修复）。** 令 $\mathcal R$ 为有限维 CPTP 通道，写为两个 CP 映射之和
+$$
+\mathcal R=\mathcal B+\mathcal L.
+$$
+记
+$$
+E=\mathcal L^*(I),\quad
+\delta=\|E\|_\infty,\quad G=I-E,\quad C=G^{1/2}.
+$$
+假设
+$$
+0\le\delta<1.
+\tag{219.9}
+$$
+那么
+$$
+\mathcal S=\mathcal B\circ\operatorname{Ad}_{G^{-1/2}}
+\tag{219.10}
+$$
+是 CPTP 通道，并满足
+$$
+\boxed{\frac12\|\mathcal R-\mathcal S\|_\diamond\le\delta.}
+\tag{219.11}
+$$
+
+证明：$G\succeq(1-\delta)I>0$，所以修复矩阵存在。若 $\mathcal B(X)=\sum_jB_jXB_j^\dagger$，则
+$$
+\sum_j(B_jG^{-1/2})^\dagger(B_jG^{-1/2})
+=G^{-1/2}\mathcal B^*(I)G^{-1/2}
+=I.
+$$
+这给 CP 和 TP。统一右乘可逆矩阵不改变保留 Kraus 算子的线性关系，因此 Choi 秩保持。若这些 Kraus 原来按经典结果分块，该操作也不混合结果；各结果的 Choi 秩分别保持。
+
+对任何 CP 映射 $\Phi$，有
+$$
+\|\Phi\|_\diamond=\|\Phi^*(I)\|_\infty.
+\tag{219.12}
+$$
+可在任意输入算子上证明上界：取 Kraus 的 Stinespring 堆叠算子 $V$，$V^\dagger V=\Phi^*(I)$；双边乘法给因子 $\|V\|_\infty^2$，部分迹的诱导迹范数为一（由对偶映射 $Y\mapsto I\otimes Y$ 保持算子范数）。因此上界对任何参考空间成立。以 $\Phi^*(I)$ 的最大本征向量作正输入，输出迹达到该上界。
+
+特别地，$\|\mathcal S\|_\diamond=1$。又 $\mathcal B=\mathcal S\circ\operatorname{Ad}_C$，所以
+$$
+\mathcal R-\mathcal S
+=\mathcal L+\mathcal S\circ(\operatorname{Ad}_C-\operatorname{id}).
+$$
+以下在同一输入上比较两项，保留它们的共同约束。
+
+取任意带外部参考的归一化纯态 $P_\psi$，置
+$$
+m=\sqrt{1-\delta},\qquad
+\phi=(C\otimes I)\psi,\qquad
+a=\langle\psi,(C\otimes I)\psi\rangle,\qquad
+b=\|\phi\|^2.
+$$
+被删 CP 项在该输入上的输出为正，迹为
+$e=1-b$。由（219.7），同一输入的滤波变形迹范数为
+$$
+f=\sqrt{(1+b)^2-4a^2}.
+$$
+所以输出差的迹范数至多 $e+f$。这里没有先分别最大化 $e$ 和 $f$。
+
+谱区间给 $m\le a\le1$、$m^2\le b\le1$ 和
+$b\le(1+m)a-m$。因此
+$$
+\begin{aligned}
+a^2-m^2(1+b-m^2)
+&\ge a^2-m^2(1+(1+m)a-m-m^2)\\
+&=(a-m)(a+m-m^2-m^3)\\
+&\ge0.
+\end{aligned}
+$$
+最后一因子至少为
+$2m-m^2-m^3=m(1-m)(m+2)\ge0$。
+又 $1+b-2m^2\ge1-m^2=\delta\ge0$，故可平方比较：
+$$
+(1+b-2m^2)^2-f^2
+=4[a^2-m^2(1+b-m^2)]\ge0.
+$$
+于是
+$$
+f\le1+b-2m^2=2\delta-e,
+\qquad e+f\le2\delta.
+$$
+对全部带参考纯态成立。$\mathcal R-\mathcal S$ 保持 Hermitian，第219.2节的输入归约遂给完整 diamond 范数至多 $2\delta$，证明（219.11）。
+
+$\delta=0$ 时被删除的 CP 映射为零，直接有 $\mathcal S=\mathcal R$。
+本证明只对输入归约及二维谱公式使用第219.2节，未使用其正滤波范数恒等式的阈值假设。
+正滤波独自的最坏变形仍可能超过 $\delta$；共同输入上的约束 $e+f\le2\delta$ 使通道修复不需要继承该阈值。
+
+该构造的系数一可以达到。取任意输入量子系统，并保留一个二元输出标签，令
+$$
+\mathcal B(X)=(1-\delta)|0\rangle\langle0|\otimes X,
+\qquad
+\mathcal L(X)=\delta|1\rangle\langle1|\otimes X.
+$$
+此时 $E=\delta I$，修复通道为
+$\mathcal S(X)=|0\rangle\langle0|\otimes X$。
+对任意带参考归一化态，输出差的两个标签块迹范数各为 $\delta$，总半迹距离为 $\delta$，因此
+$\tfrac12\|\mathcal R-\mathcal S\|_\diamond=\delta$。
+这结算的是所指定删除与修复构造的界，不是在全部低秩通道中证明其唯一最优。
+
+$\delta=1$ 则不能无条件要求同样的保秩修复。
+例如二维输入到一维输出的迹通道有两个 Kraus $\langle0|,\langle1|$；删去后者时 $E=|1\rangle\langle1|$，剩余 CP 映射只有一个 Kraus。
+相同接口上的单 Kraus TP 映射要求一个 $1\times2$ 矩阵满足 $K^\dagger K=I_2$，秩数矛盾。
+所以该端点确有保秩可实现性障碍；允许新增 Kraus 则是另一种预算。
+

@@ -1,0 +1,63 @@
+### 183.3 一个检验同时约束全部接收端 CPTP 映射
+
+令
+
+$$
+Z_s=(pI-sqY)D,\qquad
+\mathsf Y_s=Z_sU_s^\dagger.
+\tag{183.9}
+$$
+
+若写 $D=\operatorname{diag}(d_0,d_1)$，直接相乘得到
+
+$$
+\mathsf Y_s=
+\begin{pmatrix}
+pd_0C-qd_1S&is(pd_0S+qd_1C)\\
+is(pd_1S-qd_0C)&pd_1C+qd_0S
+\end{pmatrix}.
+$$
+
+（183.8）正是
+$p(d_0+d_1)S=q(d_0-d_1)C$，故该矩阵为 Hermitian。
+酉的未归一化 Choi 向量为
+$v_s=\operatorname{vec}(U_s^{\mathsf T})$。由（183.5）—（183.7），
+
+$$
+A_sv_s=\operatorname{vec}Z_s
+=(\mathsf Y_s\otimes I)v_s.
+\tag{183.10}
+$$
+
+因此 slack
+$\mathsf Y_s\otimes I-A_s$ 始终有非零核向量 $v_s$。
+在 $w=0$，$\xi=\Xi$、$D=\rho$、$p=1,q=0,U_s=I$，所以它退化为
+
+$$
+\rho\otimes I-|\operatorname{vec}\rho\rangle
+\langle\operatorname{vec}\rho|,
+$$
+
+其谱由第181节为 $\{0,2/9,r,\ell\}$。三个非零根严格为正；
+所有条目随 $w$ 连续，且（183.10）保留精确零根。
+因此缩小 $w_*$ 后，对两个旗标均有
+
+$$
+\boxed{\mathsf Y_s\otimes I-A_s\succeq0.}
+\tag{183.11}
+$$
+
+于是每个合法的 $J_{\Gamma_s}\succeq0$、
+$\operatorname{Tr}_{\mathrm{out}}J_{\Gamma_s}=I$ 均满足
+
+$$
+\operatorname{Tr}(J_{\Gamma_s}A_s)
+\le\operatorname{Tr}\mathsf Y_s
+=p\tau C+q\zeta S
+=F_\xi(\widehat t).
+\tag{183.12}
+$$
+
+候选酉 $U_s$ 取等。这里对偶可行性来自整个四维 Choi slack，
+没有将“在酉族中驻点”直接当作“在全部 CPTP 中最优”。
+

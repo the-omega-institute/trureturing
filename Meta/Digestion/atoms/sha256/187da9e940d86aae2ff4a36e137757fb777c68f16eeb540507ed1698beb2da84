@@ -1,0 +1,68 @@
+### 169.1 同一份分支联合态及其几何缺口
+
+采用第167节的合同：$k$ 个正权纯分支、正交接收支撑、接收端局部 CPTP 解码器、输入维数 $d\ge2$、完整外部参考。额外要求条件边缘的平均等于目标边缘：
+
+$$
+p_j>0,\qquad \sum_{j=1}^k p_j=1,\qquad
+\sum_{j=1}^k p_j\rho_j=\rho.
+\tag{169.1}
+$$
+
+引入记录实际可读分支的经典寄存器 $J$，定义
+
+$$
+\Gamma_{JM}=\sum_j p_j|j\rangle\langle j|\otimes\rho_j,
+\qquad
+\gamma_J=\sum_j p_j|j\rangle\langle j|,
+\qquad
+\Pi_{JM}=\gamma_J\otimes\rho.
+\tag{169.2}
+$$
+
+$\Gamma$ 是同一实际混合态的分支记录；$\Pi$ 是去掉 $J$ 与 $M$ 相关性的比较态。没有将另一种不可读分解的标签加入接收权限。
+
+全文采用平方保真度、自然对数和自然单位的熵：
+
+$$
+F(a,b)=\|\sqrt a\sqrt b\|_1^2,\qquad
+S(a)=-\operatorname{Tr}(a\log a),
+\qquad
+D(a\|b)=\operatorname{Tr}[a(\log a-\log b)].
+\tag{169.3}
+$$
+
+置
+
+$$
+F_j=F(\rho_j,\rho),\qquad
+f=\sum_jp_jF_j,\qquad u=1-f,
+$$
+
+$$
+\chi=I(J:M)_\Gamma
+=D(\Gamma\|\Pi)
+=\sum_jp_jD(\rho_j\|\rho)
+=S(\rho)-\sum_jp_jS(\rho_j).
+\tag{169.4}
+$$
+
+由于 $\rho\ge p_j\rho_j$，每个 $\rho_j$ 的支撑都包含在
+$\operatorname{supp}\rho$ 中，相对熵有限。记
+$r=\operatorname{rank}\rho$；此后的谱运算均可限制在这份共同支撑上。
+
+完整参考最优误差仍记为 $e$。令
+
+$$
+\beta=d^{-2},\qquad a=e-(1-\beta).
+\tag{169.5}
+$$
+
+第167节已证明
+
+$$
+\beta u\le a\le\frac{\beta}{1-\beta}u.
+\tag{169.6}
+$$
+
+因此 $u$ 与实际优化任务的额外损失只差一个至多 $4/3$ 的上下系数比。
+

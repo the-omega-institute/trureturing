@@ -1,0 +1,48 @@
+### 179.4 两个方向的同尺度首项
+
+第171节给
+
+$$
+z=\left(-\frac12\right)^{L-1},
+\qquad
+w_1=\frac32z^2+O(z^3).
+$$
+
+由（179.16），
+
+$$
+\boxed{
+\delta_L^{\leftarrow}
+=\beta w_1+O(w_1^2)
+\sim\frac{432}{2353}\,4^{-(L-1)}.
+}
+\tag{179.18}
+$$
+
+另一方向由第178节精确等于 $d_L/2$。结合第172节的展开，两方向在同一个启动尺度上满足
+
+$$
+\boxed{
+\begin{aligned}
+\delta_K(\mathcal S\to\mathcal N_L)
+&\sim\frac{27}{8\sqrt{2353}}\,4^{-(L-1)},\\
+\delta_K(\mathcal N_L\to\mathcal S)
+&\sim\frac{432}{2353}\,4^{-(L-1)}.
+\end{aligned}
+}
+\tag{179.19}
+$$
+
+特别地，
+
+$$
+\boxed{
+\frac{\delta_K(\mathcal N_L\to\mathcal S)}
+{\delta_K(\mathcal S\to\mathcal N_L)}
+\longrightarrow\frac{128}{\sqrt{2353}}>1.
+}
+\tag{179.20}
+$$
+
+这些量都保留共同接收端操作与全部原输入参考。两条通道的接口维数和不可访问记忆边缘相同；若改为允许处理整个 $MK$，反向重置的代价会变为零。正的反向系数因此依赖这里明确限定的局部操作权限，不能由维数或共同边缘单独判断。
+

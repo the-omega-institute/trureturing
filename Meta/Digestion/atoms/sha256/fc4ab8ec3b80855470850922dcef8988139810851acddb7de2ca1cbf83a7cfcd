@@ -1,0 +1,6 @@
+**定义 43.1（平衡的正交可读取分区）。** 给定与 $\rho_+,\rho_-$ 都对易的正交投影族 $P_a$，$\sum_aP_a=I$，并要求
+\[
+ \operatorname{Tr}P_a\rho_+=\operatorname{Tr}P_a\rho_-=p_a>0.
+\]
+归一化块态 $\rho_{s,a}=P_a\rho_sP_a/p_a$ 定义实验 $\mathsf W_a$，且 $\rho_s=\bigoplus_a p_a\rho_{s,a}$。分区结果是输出中可以无扰动读取的经典信息，其概率独立于输入标签。它不等同于任意不可见的凸混合分解。所有定义与结论在共同酉换基后保持，由投影一起变换实现。
+

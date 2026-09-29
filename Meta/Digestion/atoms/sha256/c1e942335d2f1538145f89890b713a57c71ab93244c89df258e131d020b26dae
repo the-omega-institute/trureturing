@@ -1,0 +1,42 @@
+**定理 212.2（到达权重乘条件风险）。** 对每个来源 $\omega$，
+
+$$
+\boxed{
+R_\omega^\pi
+=
+\sum_{i=1}^m\beta_i(\omega)q_i(\omega)
++
+q_\infty(\omega).
+}
+\tag{212.1}
+$$
+
+若边界只保存上界
+
+$$
+\beta_i(\omega)\le\overline\beta_i,
+\qquad
+q_i(\omega)\le\overline\alpha_i,
+\qquad
+q_\infty(\omega)\le\overline\alpha_\infty,
+$$
+
+则有鲁棒证书
+
+$$
+\boxed{
+R_{\mathrm{worst}}(\pi)
+\le
+\sum_{i=1}^m\overline\beta_i\,\overline\alpha_i
++
+\overline\alpha_\infty.
+}
+\tag{212.2}
+$$
+
+若每个首次失败节点都被完全列出，使 $q_\infty=0$，则（212.1）为精确分解；若只知道 $\overline\beta_i\le1$，（212.2）退化为条件风险上界的和。
+
+### 证明
+
+首次失败节点互不相交，且与剩余失败事件构成失败事件的分割。全概率公式给出（212.1）。逐项使用非负量的上界，得到（212.2）。证毕。
+

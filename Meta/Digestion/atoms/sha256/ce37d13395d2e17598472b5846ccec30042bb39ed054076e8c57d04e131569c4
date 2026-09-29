@@ -1,0 +1,15 @@
+**规模无界时，几何缺口趋零也不迫使信息量趋零。** 取 $n+1$ 个正交纯态，概率为
+$1-\varepsilon$ 与 $n$ 份 $\varepsilon/n$。则
+
+$$
+u=2\varepsilon-\varepsilon^2\left(1+\frac1n\right),
+\qquad
+\chi=h_2(\varepsilon)+\varepsilon\log n.
+\tag{169.29}
+$$
+
+令 $\varepsilon_t=1/t$，$n_t=\lceil e^t\rceil$，$t\to\infty$，便有
+$u_t\to0$ 而 $\chi_t\to1$。固定 $d$ 时，
+$a_t\le\beta u_t/(1-\beta)\to0$。所以不存在完全不依赖谱或规模、并在零点趋零的函数 $g$，能对所有这类实例保证
+$\chi\le g(u)$。这里每个有限实例都满足同一实际分支、同一平均边缘和相同接收操作合同；失去的是统一规模条件。
+

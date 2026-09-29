@@ -1,0 +1,10 @@
+**命题 429.3（独立乘积是这个结构的特殊情形）。** 若所有 $p_t,q_t$ 均不依赖历史，$A_n$ 为确定数，则
+
+$$
+\mathbb E_P\sqrt{L_n}=\exp(-A_n)=\prod_{t=1}^n\rho_t.
+$$
+
+证明：由命题 429.2，$\mathbb E_PM_n=1$；把确定因子 $\exp(-A_n)$ 提出期望即得。证毕。这与 `FinitePmfLikelihood.integral_prefixRootLikelihood` 的独立乘积接口相合。在一般历史策略下，$A_n$ 是随机变量，只有 $\sqrt{L_n}=M_n\exp(-A_n)$ 的逐路径恒等式，不能无条件把两个相关因子的期望拆开，更不能直接换成 $\exp(-\mathbb E_PA_n)$。
+
+对于任意一条路径，记 $d_t=1-\rho_t\in[0,1)$，则 $\sum_t d_t=\infty$ 与 $\sum_t-\log\rho_t=\infty$ 等价。一个方向由 $-\log(1-d)\ge d$ 得到；另一方向看逆否：若 $\sum_td_t<\infty$，则最终 $d_t\le1/2$，此后 $-\log(1-d_t)\le2d_t$，前面有限项又都有限。这说明本节的累计量与项目约定 $H_t^2=2(1-\rho_t)$ 在逐路径发散上有明确对应；尚须另验这样的路径集合在各实际规律下有多大概率。
+

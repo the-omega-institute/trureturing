@@ -1,0 +1,73 @@
+**引理49.1。** 若密度矩阵 $\omega_{AK}$ 满足 $\dim A=r$、$\dim K=D$ 及 $\operatorname{Tr}_K\omega=I_A/r$，则
+
+$$
+\boxed{\omega_{AK}\preceq\min\{1,D/r\}\,I_{AK}.}
+\tag{49.3}
+$$
+
+证明。取任一正特征值 $\lambda$ 及相应单位特征向量 $|\chi\rangle$。由
+$\lambda|\chi\rangle\langle\chi|\preceq\omega$，偏迹得
+$\lambda\chi_A\preceq I_A/r$。令 $Q$ 是 $\chi_A$ 的支撑投影；Schmidt 分解给 $\operatorname{rank}Q\le\min\{r,D\}$。两边乘 $Q$ 后取迹，得
+
+$$
+\lambda=\lambda\operatorname{Tr}(Q\chi_A)
+\le\frac{\operatorname{rank}Q}{r}
+\le\min\{1,D/r\}.
+$$
+
+每个特征值都满足此界，证明完毕。
+
+取共同解码器 $\mathcal D$，置 $\tau=\mathcal D(I_K)$，于是 $\tau\succeq0$、$\operatorname{Tr}\tau=D$。由（49.3）及解码正性，Bell 输入的每个恢复态满足
+
+$$
+\sigma_\theta\preceq
+\min\{1,D/4\}\,I_A\otimes\tau.
+\tag{49.4}
+$$
+
+对第46节任意概率向量探针 $|\Xi^w_\theta\rangle$，（46.15）的准确平均边缘谱给
+
+$$
+\int\langle\Xi^w_\theta|\sigma_\theta|\Xi^w_\theta\rangle\,d\theta
+\le\frac D4\min\{1,D/4\}\max_\ell w_\ell.
+\tag{49.5}
+$$
+
+因此，若 Bell 输入的平均半迹误差不超过 $\epsilon$，则
+
+$$
+\left(\sum_\ell\sqrt{a_\ell w_\ell}\right)^2-\epsilon
+\le\frac D4\min\{1,D/4\}\max_\ell w_\ell.
+\tag{49.6}
+$$
+
+继续使用（46.17）的有限优化，并把端点定义为
+
+$$
+\mathfrak L_a(0)=\left(\sum_\ell\sqrt{a_\ell}\right)^2,
+\qquad \mathfrak L_a(1)=0.
+\tag{49.7}
+$$
+
+对全部探针优化（49.6）得到
+
+$$
+\boxed{\mathfrak L_a(\epsilon)
+\le\frac D4\min\{1,D/4\}.}
+\tag{49.8}
+$$
+
+等价地，对 $0\le\epsilon<1$，
+
+$$
+\boxed{
+\left\lceil4\max\left\{\mathfrak L_a(\epsilon),
+\sqrt{\mathfrak L_a(\epsilon)}\right\}\right\rceil
+\le k_{\rm av,Bell}(\epsilon)
+\le k_{\rm mm}(\epsilon).
+}
+\tag{49.9}
+$$
+
+当 $\mathfrak L_a(\epsilon)<1$ 时，连续下界严格强于第46节的 $4\mathfrak L_a(\epsilon)$；取整后的整数下界不必每次都严格增大。对 $D\ge4$，式（49.8）回到第46节的必要界。
+

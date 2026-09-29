@@ -1,0 +1,43 @@
+**定理156.1（真实局部接收的非收敛反例）。** 对每个上述来源，任取整数 $L\ge3$ 满足
+
+$$
+\delta_L<\frac{\lambda_*}{4}.
+\tag{156.5}
+$$
+
+存在持久维数恰为 $D=4L$ 的接收空间 $K$、与来源独立的纯初态，以及每轮重复使用的全域通道
+
+$$
+\mathcal C:\mathcal L(K\otimes B)\longrightarrow\mathcal L(K),
+$$
+
+使其实际最优终端误差
+
+$$
+e_n=\min_{\mathcal D_n}\frac12
+\left\|
+(\operatorname{id}_{M}\otimes\mathcal D_n)\mathcal R_n
+-\operatorname{Ad}_{T^{(n)}}
+\right\|_\diamond
+\tag{156.6}
+$$
+
+满足
+
+$$
+\boxed{
+\begin{aligned}
+\limsup_{k\to\infty}e_{L+2k}
+&\le\frac12+\delta_L,\\
+\liminf_{k\to\infty}e_{L+2k+1}
+&\ge\frac12+\frac{\lambda_*}{2}-\delta_L
+>\frac12+\delta_L.
+\end{aligned}
+}
+\tag{156.7}
+$$
+
+其中 $\mathcal R_n$ 为该同一装置的实际保留通道，最小化遍历所有只访问 $K$、输出完整档案 $B^{\otimes n}$ 的 CPTP 解码器；diamond 输入仍为原始二维活动记忆。因而 $(e_n)$ 不收敛。
+
+下面给出通道和全部误差估计的构造性证明。
+

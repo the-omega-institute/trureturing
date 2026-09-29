@@ -1,0 +1,4 @@
+**命题 14.5（必然探测而无态区分）。** 取 $0<\gamma<1$、$Q=\sqrt{1-\gamma}I$、$L=\sqrt\gamma I$。每态的首次点击律均为 $\gamma(1-\gamma)^{n-1}$，最终点击概率为一，而 $\mathcal V_\infty=\mathbb RI$。
+
+证明。$E_n=\gamma(1-\gamma)^{n-1}I$。所有统计独立于输入，但点击后的量子态仍是输入态。继续测量后继扩大了原来的纯事件记录任务。$\square$
+

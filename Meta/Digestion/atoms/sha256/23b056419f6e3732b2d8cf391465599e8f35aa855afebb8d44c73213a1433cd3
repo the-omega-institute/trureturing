@@ -1,0 +1,34 @@
+**推论 403.2（十个结果的完整记录恢复）。** 在定义 400.1 的同一四维系统重复记录接口中，取 $n=3$，令 $y=(j,b)$ 遍历命题 403.1 的十个标签。在完整记录张成空间 $E_3$ 的正交基中，按命题 400.2 取满列秩行矩阵 $R_3$，并定义
+
+$$
+\begin{aligned}
+Q_y&=p_yz_yz_y^\dagger,\qquad
+R_3^+=(R_3^\dagger R_3)^{-1}R_3^\dagger,\\
+D_y&=\left[R_3^+Q_y(R_3^+)^\dagger\right]^{\mathsf T},
+\qquad
+U_y=\operatorname{diag}(\overline{(z_y)_1},\ldots,\overline{(z_y)_4}).
+\end{aligned}
+$$
+
+则 $\{D_y\}$ 是有限 POVM，每个结果经 $U_y$ 反馈后的映射均为 $p_y\operatorname{id}_S$。对任意有限参考空间 $A$ 及任意联合密度矩阵 $\rho_{AS}$，该分支的未归一化输出为 $p_y\rho_{AS}$，概率为输入无关的 $p_y$；接受全部结果给出 $\eta(C_0^{\circ3})=1$。
+
+证明。命题 403.1 给出 $\sum_yQ_y=C_0^{\circ3}=R_3R_3^\dagger$ 及 $0\preceq Q_y\preceq C_0^{\circ3}$。因此 $\operatorname{ran}Q_y\subseteq\operatorname{ran}R_3$。沿用定理 390.2 的普通转置约定与命题 400.2 的实现，有
+
+$$
+D_y\succeq0,\qquad
+\sum_yD_y=\left[R_3^+R_3R_3^\dagger(R_3^+)^\dagger\right]^{\mathsf T}=I_{E_3},
+\qquad
+R_3D_y^{\mathsf T}R_3^\dagger=Q_y.
+$$
+
+系统分支为 $Q_y\circ X$，而 $U_y\operatorname{diag}(z_y)=I_S$，故
+
+$$
+U_y(Q_y\circ X)U_y^\dagger=p_yX
+\quad\text{对每个 }X\in\mathbb C^{4\times4}.
+$$
+
+张量上参考系统的恒等映射即得 $p_y\rho_{AS}$；取迹得到概率，求和得到总恒等映射。若实际记录空间大于 $E_3$，可将 $E_3^\perp$ 上的恒等效果直和到某一个结果，其他结果在该补空间取零；实际记录态的分支不变。证毕。
+
+本推论使用任意有限联合记录 POVM 的既有权限，参考系统始终不被操作，不增加系统—记录相干逆转权限。其成熟框架仍由 Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Theorem 1（PDF 第 4 页，初始纯环境下的 CP 分解实现）与 Proposition 2（PDF 第 4–5 页，同维情形的酉反馈校正）承担；这里将命题 403.1 的具体分解代入已有实现，不重设一般校正判据。
+

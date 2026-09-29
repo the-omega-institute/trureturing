@@ -1,0 +1,56 @@
+**定理 223.4（任意记录秩 $(1,2)$ 通道的精确预算二距离）。** 采用定义 222.1 的实际 CPTP 记录通道
+
+$$
+\mathcal R(X)=P_0^Q\otimes K_0XK_0^\dagger
++P_1^Q\otimes(AXA^\dagger+BXB^\dagger),
+$$
+
+其中 $K_0\ne0$、$A,B$ 线性独立，且
+
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I.
+$$
+
+令 $d_2$ 是到同输入、同量子输出、同两经典标签、总 Choi 秩至多二的全部 CPTP 记录通道的完整半 diamond 距离，允许标签缺失；令 $q_0=\|K_0^\dagger K_0\|_\infty$。则
+
+$$
+\boxed{
+d_2=\min\!\left(
+\min_{|c_0|^2+|c_1|^2=1}\|c_0A+c_1B\|_\infty^2,
+\ \|K_0^\dagger K_0\|_\infty
+\right)
+=\min(\delta_{\rm rot},q_0).
+}
+$$
+
+若 $\delta_{\rm rot}\le q_0$，取达到最小删除值的两 Kraus 酉混合 $(M,N)$，令
+
+$$
+H=(I-M^\dagger M)^{-1/2}.
+$$
+
+则
+
+$$
+\mathcal S_{\rm rot}(X)
+=P_0^Q\otimes K_0HXHK_0^\dagger
++P_1^Q\otimes NHXHN^\dagger
+$$
+
+是一份最近通道，记录秩为 $(1,1)$。若 $q_0<\delta_{\rm rot}$，令
+
+$$
+G=A^\dagger A+B^\dagger B,
+\qquad H_0=G^{-1/2}.
+$$
+
+则
+
+$$
+\mathcal S_{\rm label}(X)
+=P_1^Q\otimes
+\left(AH_0XH_0A^\dagger+BH_0XH_0B^\dagger\right)
+$$
+
+是一份最近通道，记录秩为 $(0,2)$。这些构造各自的完整半 diamond 误差都可由一个无参考纯输入与一个合法输出事件达到。不要求最近通道唯一。
+

@@ -1,0 +1,33 @@
+### 154.2 同一物理接收器的有限可达转移空间
+
+固定 $K=\mathbb C^D$、与来源及参考独立的纯初态 $\omega_K$，以及每轮重复的全域 CPTP 接收通道
+
+$$
+\mathcal C:\mathcal L(K\otimes B)\longrightarrow\mathcal L(K).
+$$
+
+来源发射后再执行接收，给出 $M\otimes K$ 上的同一个固定 CPTP 通道 $\mathcal F$。以
+
+$$
+\mathcal E_\omega(Z)=Z\otimes\omega_K,\qquad
+\mathcal R_n=\mathcal F^n\mathcal E_\omega
+\tag{154.6}
+$$
+
+表示原始初始化嵌入与实际保留通道。$\mathcal R_n$ 的输入仍是二维原始活动记忆，输出为 $M\otimes K$；没有把初始化嵌入与来源纯态 $\Gamma_0$ 混用。
+
+令
+
+$$
+\mathscr V=
+\operatorname{span}_{\mathbb C}
+\{\mathcal F^j\mathcal E_\omega(Z):
+j\ge0,\ Z\in\mathcal L(M_{\mathrm{in}})\}
+\subseteq\mathcal L(M\otimes K).
+\tag{154.7}
+$$
+
+这是同一个实际初始化生成的转移不变空间，维数不超过 $4D^2$。它可由有限数据确定：在（154.7）中仅取四个矩阵单位 $Z$ 及 $0\le j<4D^2$ 已经足够，理由是 $\mathcal F$ 在整个 $\mathcal L(M\otimes K)$ 上满足其特征多项式。
+
+以下记 $\mathcal A=\mathcal F|_{\mathscr V}$，并在 $\mathscr V$ 的子空间上使用从矩阵空间继承的 Hilbert–Schmidt 内积。
+

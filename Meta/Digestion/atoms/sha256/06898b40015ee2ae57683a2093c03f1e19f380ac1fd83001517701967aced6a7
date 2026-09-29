@@ -1,0 +1,16 @@
+**定义 223.1（近似模型合同）。** 对每个待估参数 $j$，令 $\bar\theta_j$ 为名义模型下的参数，令真实关系参数为 $\theta_j$。声明模型失配半径
+
+$$
+|\theta_j-\bar\theta_j|\le\kappa_j,
+\qquad
+\kappa_j\ge0.
+$$
+
+从名义模型产生的有界样本给出经验均值 $\widehat\theta_j$。若用顺序或固定样本方法得到抽样半径 $r_j$，则抽样合同只约束
+
+$$
+|\widehat\theta_j-\bar\theta_j|\le r_j
+$$
+
+的置信事件。
+

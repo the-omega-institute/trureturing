@@ -1,0 +1,55 @@
+### 55.1 实际合同、共同接口与主结论
+
+固定非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$、$|a|^2+|b|^2=1$。七维接收器独立纯启动，同一全域 CPTP 接收通道服务前六个完整参考终端，第一终端可逆附加态秩二、第二终端纯。
+
+沿第54节记号，$V_0,V_1:K\to K\otimes E$ 是同一 Stinespring 等距的两个正交位像，早期空间为
+$$
+U=G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),\qquad
+u,v,w\text{ 正交单位}.
+\tag{55.1}
+$$
+存在二维 $P_0=\operatorname{span}(p_1,p_2)$、四维 $X=\operatorname{span}(p_1,q_1,p_2,q_2)$ 及二维环境 $F=\operatorname{span}(f_1,f_2)$，满足
+$$
+V_0X=U\otimes F,\qquad V_1P_0=\mathbb Cv\otimes F.
+\tag{55.2}
+$$
+对单位 $\xi=\xi_1f_1+\xi_2f_2\in F$，置
+$$
+p_\xi=\xi_1p_1+\xi_2p_2,\qquad
+q_\xi=\xi_1q_1+\xi_2q_2,\qquad
+X_\xi=\operatorname{span}(p_\xi,q_\xi).
+$$
+则 $p_\xi,q_\xi$ 正交单位，且
+$$
+V_0p_\xi=u\otimes\xi,\quad
+V_0q_\xi=w\otimes\xi,\quad
+V_1p_\xi=v\otimes\xi,\quad V_0X_\xi=U\otimes\xi.
+\tag{55.3}
+$$
+其中 $p_1,q_1,p_2,q_2$ 以及 $f_1,f_2$ 分别正交归一。两条不同射线 $\xi,\zeta\in F$ 满足 $X_\xi+X_\zeta=X$。
+
+第一轮的实际零位像还有 Schmidt 分解
+$$
+V_0k=\sqrt{\lambda_1}p_1\otimes e_1+
+\sqrt{\lambda_2}p_2\otimes e_2,\qquad
+\lambda_1,\lambda_2>0,
+\tag{55.4}
+$$
+其中 $e_1,e_2$ 正交单位。这份实际第一轮资料会在一个饱和分支中使用。
+
+对纯尾 $n=3,4,5,6$，各 $H_n,G_n,Q_n$ 二维，满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+\tag{55.5}
+$$
+并记 $C_n=H_n+G_n$；$C_2$ 三维，$C_n$ 在 $n=3,4,5,6$ 时四维。且 $G_n\perp Q_n$，$H_n\subset G_n\oplus Q_n$ 到两个同轮因子的投影均为同构。全部尾环境在 $F$ 内时，旧块和位像正交给
+$$
+v\perp U+G_3+G_4+G_5+G_6,
+\qquad Q_n\perp U.
+\tag{55.6}
+$$
+
+第54节已经给出 $\operatorname{span}(\eta_3,\eta_4,\eta_5,\eta_6)=F$，以下保留这个实际来源合同，不将 $F$ 内的不同射线预设为正交。
+

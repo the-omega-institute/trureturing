@@ -1,0 +1,48 @@
+### 282.3 所有角度的统一可区分性上界
+
+§281由循环移位的秩一比较得到四个分子矩阵的统一计数界，并对任意 $0<u\le1/2$ 得到
+$$
+\sum_{j=1}^{4n}\frac1{\lambda_j+u}
+\le\frac{C_1}{u}+\frac{C_2n}{\sqrt u}.
+\tag{282.13}
+$$
+这里 $C_1,C_2$ 为绝对常数，式子对所有角度成立。它是关于理想谱的关系，可以代入当前的 $u=s$，无须把 $s$ 当成原始来源的扰动参数。
+
+令 $a_\lambda=\epsilon+r\lambda$、$b_\lambda=s+(r-\Delta)\lambda$。由 $r\ge3/4$、$\Delta\le1/4$，
+$$
+s+\lambda\le a_\lambda+b_\lambda\le2(s+\lambda).
+\tag{282.14}
+$$
+根保真度的单项损失准确为
+$$
+\frac12(\sqrt{p_\lambda}-\sqrt{q_\lambda})^2
+=\frac{\Delta^2(1-\lambda)^2}
+{8n(\sqrt{a_\lambda}+\sqrt{b_\lambda})^2}.
+\tag{282.15}
+$$
+因 $|1-\lambda|\le1$，分母平方根部分至少为 $s+\lambda$。将（282.13）代入，并使用 $1+F\le2$，得到所有角度上的统一界
+$$
+1-F(\widetilde\sigma_0(\theta),\widetilde\sigma_1(\theta))^2
+\le C\left(\frac{\Delta^2}{ns}+\frac{\Delta^2}{\sqrt s}\right).
+\tag{282.16}
+$$
+记括号内为 $R_{\mathrm{noise}}$。由于（282.10），每个角度的根保真度都至少为 $\sqrt{1-\delta}>0$。
+
+对任意经典自适应协议，§281所用的成熟经典—量子保真度递推仍适用。具体地，两假设的查询前量子记忆密度可以不同，但在同一可见经典标签 $x$ 上选择同一个角度；按共同支配测度写成 $\tau_b(x)$ 后，一次查询的根保真度为
+$$
+\int F(\tau_0(x),\tau_1(x))
+F(\widetilde\sigma_0(\theta(x)),\widetilde\sigma_1(\theta(x)))\,d\mu(x).
+\tag{282.17}
+$$
+令 $g$ 为单次根保真度的全角度下确界，则该式至少为查询前根保真度乘 $g$。共同正规操作增加保真度，故最终 $F_N\ge g^N$，从而
+$$
+d_N^2\le1-g^{2N}\le N(1-g^2)\le CNR_{\mathrm{noise}}.
+\tag{282.18}
+$$
+Helstrom必要条件给
+$$
+N_{\mathrm{noise}}\ge\frac1{9CR_{\mathrm{noise}}}.
+\tag{282.19}
+$$
+这是全部允许角度和旧量子记忆的下界。保真度数据处理及该递推的标准文献归属同§281；本节改变的是实际噪声来源和（282.16）的尺度。
+

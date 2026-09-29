@@ -1,0 +1,65 @@
+**每个参考相位的导数支撑。** 在档案 $`H_n`$ 上定义自伴总荷算子
+
+$$
+\widehat Q_n|w\rangle
+=\left(\sum_{t=1}^nw_t\right)|w\rangle.
+\tag{24.10}
+$$
+
+它在整个计算基上定义；实际来源只占其中的合法词。对参考相位 $`\varphi`$，令 $`S_n(\varphi)`$ 为定理3.2中的四维档案支撑，定义
+
+$$
+S_{n,k}(\varphi)
+=\sum_{r=0}^{k-1}
+(\widehat Q_n-b_nI)^rS_n(\varphi).
+\tag{24.11}
+$$
+
+每个线性像的维数至多四，故 $`\dim S_{n,k}(\varphi)\le4k`$。这些子空间由已知来源、参考相位及终端编号确定。
+
+对实提升差 $`t=\vartheta-\varphi`$，共同相位的实际作用给
+
+$$
+T_{\vartheta,n}
+=(e^{it\widehat Q_n}\otimes I_M)T_{\varphi,n}.
+\tag{24.12}
+$$
+
+以同一个标量 $`e^{ib_nt}`$ 定义近似算子
+
+$$
+A_{\varphi,k}(t)
+=e^{ib_nt}\sum_{r=0}^{k-1}\frac{(it)^r}{r!}
+[(\widehat Q_n-b_nI)^r\otimes I_M]T_{\varphi,n}.
+\tag{24.13}
+$$
+
+它的档案分量全部落在 $`S_{n,k}(\varphi)`$ 内，不要求近似算子本身等距。对实数 $`x`$，积分形式的 Taylor 余项给
+
+$$
+\left|e^{ix}-\sum_{r=0}^{k-1}\frac{(ix)^r}{r!}\right|
+\le\frac{|x|^k}{k!}.
+\tag{24.14}
+$$
+
+这是沿实轴对 $`e^{ix}`$ 的估计，不额外产生 $`e^{|x|}`$ 因子。逐档案词展开并使用（24.9），对两个输入基向量都有
+
+$$
+\|(T_{\vartheta,n}-A_{\varphi,k}(t))|i\rangle\|^2
+\le\frac{|t|^{2k}}{(k!)^2}
+\mathbb E_i|S_n-b_n|^{2k}
+\le2\frac{(g_n^2t^2/2)^k}{k!}.
+\tag{24.15}
+$$
+
+两个误差列仍处于不同档案首位扇区，因而正交。于是同一个算子界成立：
+
+$$
+(T_{\vartheta,n}-A_{\varphi,k}(t))^*
+(T_{\vartheta,n}-A_{\varphi,k}(t))
+\preceq2\frac{(g_n^2t^2/2)^k}{k!}I_M.
+\tag{24.16}
+$$
+
+特别地，张量任意参考后仍保留该界；没有分别替换两个来源输入的相位。
+

@@ -1,0 +1,14 @@
+**引理 40.1（有限幅度 Holevo 信息的二次型夹逼）。** 设 $\sigma\succ0$ 为密度矩阵，$X=X^\dagger$、$\operatorname{Tr}X=0$，$r=\|\sigma^{-1/2}X\sigma^{-1/2}\|<1$。置
+\[
+ \psi(r)=\begin{cases}-\log(1-r^2)/r^2,&0<r<1,\\1,&r=0.\end{cases}
+\]
+则
+\[
+ \boxed{\frac12Q_\sigma(X)\le J(\sigma,X)
+                 \le\frac{\psi(r)}2Q_\sigma(X).}
+\]
+更精确地，令 $K_u=(\sigma+uI)^{-1/2}X(\sigma+uI)^{-1/2}$，有
+\[
+ J(\sigma,X)=-\frac12\int_0^\infty\operatorname{Tr}\log(I-K_u^2)\,du.
+\]
+

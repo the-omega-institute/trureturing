@@ -1,0 +1,34 @@
+**证明。** $\partial_iU=(\partial_iL)G^{-1/2}+L\partial_iG^{-1/2}$。投影到法向时第二项为零。对下块嵌入 $E_W:w\mapsto(0,w)$，块计算与 Woodbury 恒等式给出
+
+$$
+E_W^\dagger(I-\Pi)E_W
+=I-X(I+X^\dagger X)^{-1}X^\dagger
+=(I+XX^\dagger)^{-1}.
+$$
+
+这证明(ST15.1)。再令 $K_i=U^\dagger\partial_iU=-i\mathcal A_i$。展开 $\partial_iK_j-\partial_jK_i+[K_i,K_j]$，用 $\partial_iU=UK_i+N_i$ 消掉切向项，剩余 $\mathcal Q_{ij}-\mathcal Q_{ji}$，乘以 $i$ 即得(ST15.2)。∎
+
+对任意参数系数与内部向量族，$\sum_{ij}v_i^\dagger\mathcal Q_{ij}v_j=\|\sum_jN_jv_j\|^2\ge0$。因此 $g_{ij}^{\mathrm{par}}=\operatorname{Re}\operatorname{tr}\mathcal Q_{ij}$ 半正定。它是参数可辨识几何；其号型一般不是洛伦兹号型，不能将它直接等同于本卷第29节的时空度量。该子丛机制的广义几何背景见[ST10-Subbundle]。
+
+### 定理 ST15.3：不变谱子空间的间隙控制
+
+再假设 $H(\lambda)U(\lambda)=U(\lambda)h(\lambda)$。令保留与正交补中完整 Hamiltonian 的谱距离为 $\Delta>0$，它与 ST10 的隐藏块距离 $\delta$ 是不同对象。则
+
+$$
+\boxed{
+\|N_i\|_F\le
+\frac{\|(I-\Pi)(\partial_iH)U\|_F}{\Delta}.
+}
+\tag{ST15.3}
+$$
+
+因而
+
+$$
+\|\mathcal F_{ij}\|
+\le\frac{2}{\Delta^2}
+\|(I-\Pi)(\partial_iH)U\|_F
+\|(I-\Pi)(\partial_jH)U\|_F.
+\tag{ST15.4}
+$$
+

@@ -1,0 +1,10 @@
+**定理 4.3（延迟脉冲的静态与可更新记忆分离）。** 对 $m\in\mathbb N$，取
+\[
+ X=\mathbb N,\qquad F(n)=n+1,\qquad o_m(n)=\mathbf1_{\{n=m\}}\in\mathbb R.
+\]
+给定 $H\in\mathbb N$ 及 $0\le\varepsilon<1/2$，静态 $H$ 窗口 $\varepsilon$ 编码的最少标签数为
+\[
+ \min(H,m)+2.
+\]
+若要求一个固定有限状态更新器，从每个初态 $n$ 的编码出发，在任意后续时刻仍以误差至多 $\varepsilon$ 预测当前输出，则其最少状态数为 $m+2$。
+

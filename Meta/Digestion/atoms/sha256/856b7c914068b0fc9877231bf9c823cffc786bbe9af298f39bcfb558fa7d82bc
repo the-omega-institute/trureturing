@@ -1,0 +1,27 @@
+### 279.5 对称支保留深度 $k+1$
+
+下面使用标准对称幂计算确定图算子的链长。令
+$$
+L=\sum_{a=1}^kJ_2^{(a)}.
+$$
+各项交换且平方为零，所以
+$$
+M^{\otimes k}=\exp(tL),\qquad
+M_s=\exp(tL_s),\qquad L_s=V^\dagger LV.
+\tag{279.24}
+$$
+Dicke基中
+$$
+L_sv_j=\sqrt{j(k-j+1)}\,v_{j-1}\quad(1\le j\le k),
+\qquad L_sv_0=0.
+\tag{279.25}
+$$
+依次作用给 $L_s^kv_k=k!v_0$，而 $L_s^{k+1}=0$。展开指数后，$M_s-I=tL_s$ 加上更高次幂；在其 $k$ 次方中，所有总次数大于 $k$ 的项消失。因此
+$$
+(M_s-I)^k=k!t^k|v_0\rangle\langle v_k|\ne0,
+\qquad
+(M_s-I)^{k+1}=0.
+\tag{279.26}
+$$
+空间恰有维数 $k+1$，所以 $M_s$ 只有一个大小 $k+1$ 的unipotent Jordan块。
+

@@ -1,0 +1,9 @@
+**定理 402.2（共同证据下的条件误差）。** 记 $d=\operatorname{TV}(p,r)$，则
+
+$$
+\operatorname{TV}(p(\cdot\mid E),r(\cdot\mid E))
+\le \min\left\{1,\frac{d}{\max(a,b)}\right\}.
+$$
+
+因此若二者对该证据的概率都至少为 $\eta>0$，则条件误差至多 $d/\eta$。这一估计也可用于先验与共同似然生成的联合律；它没有把模型似然变化与先验变化混成同一种来源。
+

@@ -1,0 +1,12 @@
+**定理179.3（显式二阶余项）。** 有
+
+$$
+\boxed{
+0\le\beta w_1-\delta_L^{\leftarrow}
+\le
+\frac{6\gamma^2w_1^2}{1-7\beta w_1}
+\le\frac{32\gamma^2}{3}w_1^2.
+}
+\tag{179.16}
+$$
+

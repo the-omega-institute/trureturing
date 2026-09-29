@@ -1,0 +1,16 @@
+**定义 6.3.1（先发射、后更新）。** 状态集 $S$ 有限非空，发射满足 $p_s(a)>0$、$\sum_ap_s(a)=1$，更新 $K(s,a,t)\ge0$、$\sum_tK(s,a,t)=1$，允许结构零；初态 $\alpha$ 是任意状态分布。把行向量置左，定义
+$$
+M_a(s,t)=p_s(a)K(s,a,t),\quad M_w=M_{w_1}\cdots M_{w_n},\quad
+M_\varnothing=I,\quad \mu_\alpha[w]=\alpha M_w\mathbf1.
+$$
+非负矩阵及 $\sum_aM_a\mathbf1=\mathbf1$ 给柱的一致性和根质量一，确定唯一输出律。完整隐藏路径展开是
+$$
+\mu_\alpha[w]=\sum_{s_0,\ldots,s_n}
+\alpha(s_0)\prod_{i=1}^n p_{s_{i-1}}(w_i)K(s_{i-1},w_i,s_i).
+$$
+令 $\ell=\min_{s,a}p_s(a)>0$、$r_p=\max_{s,a}p_s(a)<1$。每个输出历史后的状态后验是分布，下一输出行是各发射行的凸组合，所以条件概率在 $[\ell,r_p]$，特别 $\ell^{|w|}\le\mu_\alpha[w]\le r_p^{|w|}$。它也在 $\mathcal Q_\ell$，该类的上界 $1-(d-1)\ell$ 可比 $r_p$ 大。
+
+在以下次指数预算且 $B<1$ 的固定模型结论中，定义
+$$
+\eta_b(p,K)=1-\max_{s\in S}\max_{F\in\mathcal C_b}\mu_{e_s}(U_F).
+$$

@@ -1,0 +1,29 @@
+## ST22．压缩后的非交换性由相同的法向块控制
+
+### 定理 ST22.1：投影乘法与交换子缺陷
+
+固定等距编码 $U$，$P=UU^\dagger$。对完整空间上的 Hermitian 算子 $A,B$，令
+
+$$
+a=U^\dagger AU,\quad b=U^\dagger BU,\quad
+L_A=(I-P)AU,\quad L_B=(I-P)BU.
+$$
+
+有
+
+$$
+U^\dagger ABU-ab=L_A^\dagger L_B,
+$$
+
+$$
+\boxed{[a,b]=U^\dagger[A,B]U-L_A^\dagger L_B+L_B^\dagger L_A,}
+\tag{ST22.1}
+$$
+
+以及
+
+$$
+\|[a,b]-U^\dagger[A,B]U\|\le2\|L_A\|\|L_B\|.
+\tag{ST22.2}
+$$
+

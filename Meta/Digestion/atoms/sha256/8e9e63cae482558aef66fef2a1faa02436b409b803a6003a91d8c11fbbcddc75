@@ -1,0 +1,2 @@
+**证明。** 式 (22.11) 蕴含 $2^{-p}\leq1/[8n(n+1)]$，故实际误差 $\delta_p<2^{-p}$ 位于已证局部区间。将它代入式 (22.10) 即得结论。该预算控制均匀相位下的错误比例，不保证每个相位的所有 bit 精确，也不是对某个特定二进制尾误差的必要位数声明。 Lean 专门化以 `IrrationalSlopeFaithfulness.irrational_slope_faithfulness` 的 `FinitePrecisionStable` 分量给出整数标签差的间隔，将标签取为切点和切点差，再应用 `MechanicalSlopeSensitivity.local_slope_disagreement_law` 所构造半径的定量下界，得到式 (22.10)。`Int.ceil_lt_add_one` 给出上方二进制误差的严格上界，`Int.ceil_le` 与 `Real.logb_le_iff_le_rpow` 给出整数预算等价；这三项完整专门化均已通过 Lean 核验，复用既有声明，不新增绑定包装。
+

@@ -1,0 +1,42 @@
+**定理 72.3（显式中心与 Poisson 剩余项）。** 令 $m_j$ 精确取 (72.7)，并定义
+
+```math
+\widetilde d_M=
+ \frac1{2\log2}\sum_{j\in K_M:m_j>Q^8}\log(\pi e m_j/2)
+ +\sum_{j\in K_M:Q^{-8}\le m_j\le Q^8}
+ b_{ent}(\lfloor m_j\rfloor).
+```
+
+式 (72.16)。
+
+则 $d_M^{\mathcal E}-\widetilde d_M=O(1)$，故
+$h_M-\widetilde d_M=O_{\mathbb P}(1)=o_{\mathbb P}(Q)$。
+该显式中心同时适用于两种实验，完整保留 $k_0,l_0,P,Q,M,q,\epsilon$ 的原值及阶乘。
+
+更精细地，任意子序列都能继续抽取，使至多两个过渡组的均值各趋于 $[0,\infty]$ 中一点。
+保留其中正有限极限 $\theta_1,\ldots,\theta_t$，并继续抽取使相应
+$\lfloor\bar c_j^{\mathcal E}\rfloor=k_v$ 固定，则
+
+```math
+h_M-d_M^{\mathcal E}\ \Longrightarrow\
+ \sum_{v=1}^t\{b_{ent}(P_{\theta_v})-b_{ent}(k_v)\},\qquad
+P_{\theta_v}\text{ 相互独立},\quad P_{\theta_v}\sim\operatorname{Pois}(\theta_v),
+\quad 0\le t\le2.
+```
+
+式 (72.17)。
+
+若 $\theta_v$ 非整数，则 $k_v=\lfloor\theta_v\rfloor$；若它是正整数，
+$k_v$ 可以是该整数或小一的整数，不能省去这一侧向取整信息。
+特别地，$h_M-d_M^{\mathcal E}=o_{\mathbb P}(1)$ 当且仅当过渡组均值没有趋于正有限值的子序列。
+原幅度不变时，存在一个固定合法 $\beta$ 及合法规模子序列，使
+
+```math
+h_M-d_M^{\mathcal E}\ \Longrightarrow\ b_{ent}(P_\theta),
+\qquad \theta\in[1/4,1/2],
+```
+
+式 (72.18)。
+
+该非退化结论分别对两种实际实验成立，排除了对所有合法参数统一声称 $o_{\mathbb P}(1)$。
+

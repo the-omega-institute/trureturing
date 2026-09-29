@@ -1,0 +1,13 @@
+**定义 40.1（连续的紧致仪器族）。** 固定非空紧度量空间 $\Theta$、有限维活动空间 $\mathcal H$、有限点击标签集及各后继空间。对每个 $\theta\in\Theta$，给定完整带记录通道 $\mathfrak I_\theta$，且 $\theta\mapsto\mathfrak I_\theta$ 在第 35.1 条的半 diamond 距离下连续。每个模型包含重复运行所需的全部活动记忆，并在全部轮次重复自身同一仪器。
+
+对各参数沿用
+
+$$
+\mathcal A_\theta=\mathcal N_\theta^*,\qquad
+R_\theta=I-F_\theta,\qquad
+H_{m,\theta}=I-\mathcal A_\theta^m(I),\qquad
+R_{m,\theta}=R_\theta-H_{m,\theta}=\mathcal A_\theta^m(R_\theta).
+$$
+
+固定第 38.1 条的同一族事件依赖 CPTP 读出，送到共同有限空间，并保留与点击输出正交的未解决／永不点击旗标。所得通道记为 $\Phi_{m,\theta}$、$\Phi_{\infty,\theta}$。仪器族的紧性与连续性属于已给定的模型合同，不从有限样本自动推出。
+

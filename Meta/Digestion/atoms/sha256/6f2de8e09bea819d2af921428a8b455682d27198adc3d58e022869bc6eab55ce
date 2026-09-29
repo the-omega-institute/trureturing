@@ -1,0 +1,51 @@
+### 281.5 不同历史与量子记忆下的逐查询下界
+
+固定真实相位 $\phi$，令
+$$
+g=\inf_\theta F(\sigma_0(\theta-\phi),\sigma_1(\theta-\phi)).
+\tag{281.22}
+$$
+对全部角度取下确界使 $g$ 与 $\phi$ 无关，并且 $g\ge\sqrt{1-\delta}>0$、$1-g^2\le CR$。
+
+查询前的共同控制产生经典标签和量子记忆。在有限或可数标签下，用两个各自实际的次归一化记忆块 $\tau_{b,z}$ 表示两假设状态；$\operatorname{Tr}\tau_{b,z}$ 已包含该假设自己的历史概率。同一标签 $z$ 请求相同角度 $\theta_z$。根保真度的直和可加性及张量乘法给
+$$
+\begin{aligned}
+&F\left(\bigoplus_z\tau_{0,z}\otimes\sigma_0(\theta_z-\phi),
+\bigoplus_z\tau_{1,z}\otimes\sigma_1(\theta_z-\phi)\right)\\
+&\quad=\sum_zF(\tau_{0,z},\tau_{1,z})
+F(\sigma_0(\theta_z-\phi),\sigma_1(\theta_z-\phi))\\
+&\quad\ge g\sum_zF(\tau_{0,z},\tau_{1,z}).
+\end{aligned}
+\tag{281.23}
+$$
+不要求 $\tau_{0,z}$ 与 $\tau_{1,z}$ 有相同迹或相同条件态。
+
+连续标签使用（281.2节）的正规合同。对正在比较的两种经典—量子状态取共同支配测度 $\mu$，其正迹类密度场记为 $\tau_b(z)$，满足 $\int\operatorname{Tr}\tau_b(z)d\mu(z)=1$。在代数 $L^\infty(X,\mu)\,\overline\otimes\,B(\mathcal H)$ 上，正规根保真度为
+$$
+F(\omega_0,\omega_1)
+=\int_X\left\|\sqrt{\tau_0(z)}\sqrt{\tau_1(z)}\right\|_1d\mu(z).
+\tag{281.24}
+$$
+平方根、乘积及绝对值逐点定义。张量乘法逐点成立，再积分就把（281.23）变为同一 $g$ 因子的下界。共同正规CPTP控制和后处理只能增加保真度。由初始状态相同，经过 $N$ 次查询后
+$$
+\boxed{F_{\rm final}\ge g^N.}
+\tag{281.25}
+$$
+对有确定最大次数的提前停止协议，补充的查询结果可以直接丢弃，同一结论仍成立。
+
+这使用的是成熟的经典—量子查询保真度机制。Wilde、Berta、Hirche、Kaur，*Amortized Channel Divergence for Asymptotic Quantum Channel Discrimination*，[arXiv:1808.01498v2](https://arxiv.org/abs/1808.01498v2)，Lemma 26式（182）给经典—量子通道在 $\alpha\ge1/2$ 的sandwiched Rényi amortization collapse，Lemma 14给逐查询meta-converse。该文式（13）采用平方保真度，转换为本节记号是 $\widetilde D_{1/2}=-2\log F$。上面的直接推导明确了本访问合同如何使用该工具。
+
+连续正规态框架及数据处理见 Berta、Furrer、Scholz，*The Smooth Entropy Formalism for von Neumann Algebras*，[arXiv:1107.5460v3](https://arxiv.org/abs/1107.5460v3)：第4页规定正规完全正保单位动力学，式（16）—（17）给一般正规态保真度及单调性，式（24）—（26）给纯化距离与态范数关系。该文的保真度也取平方；（281.24）是其标准正规态表达在经典—量子可测场上的形式，不把该文后续离散测量应用当成本节连续自适应结论的现成证明。
+
+使用 $d^2\le1-F^2$ 及 $1-u^N\le N(1-u)$，得到
+$$
+d_{\rm final}^2\le1-g^{2N}\le N(1-g^2)\le CNR.
+\tag{281.26}
+$$
+最终二元测量的等先验错误不超过 $1/3$，要求 $d_{\rm final}\ge1/3$。有限维表述是Holevo–Helstrom公式，一般正规态也可直接从每个二元效果的配对受半态范数控制得到。因此
+$$
+\boxed{N\ge\frac1{9C R(n,\delta)}.}
+\tag{281.27}
+$$
+根保真度—迹距界及有限维判别公式亦见 Watrous，*The Theory of Quantum Information*，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 3.33及Theorem 3.4。这里没有另将这些标准工具命名为新增定理。下界即使协议事先知道 $\phi$ 也成立，故同时约束未知相位任务。
+

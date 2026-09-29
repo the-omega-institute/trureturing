@@ -6,6 +6,7 @@
    utility: none
    digest: Every finite prefix is realized in the dense null bounded-run union, whose inverse-limit comparison is not surjective. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunSpace
 
 namespace D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion
@@ -260,7 +261,7 @@ noncomputable def boundaryUnit : NativeTheoremUnit bitArena where
       refine ⟨max 2 (n + 1), by omega, ?_⟩
       rw [hfull _ _ (by omega)]; trivial
 
-private theorem bitVariation : LeanInformationAudit.FiniteLawVariation bitArena := by
+theorem bitVariation : LeanInformationAudit.FiniteLawVariation bitArena := by
   refine ⟨bitRealization, cutRealization (fun _ : Bool => false), boundaryUnit.proof, ?_⟩
   intro h
   have hstrict := (h.1 2 (by omega)).2
@@ -269,7 +270,7 @@ private theorem bitVariation : LeanInformationAudit.FiniteLawVariation bitArena 
     simp [bounded]
   exact hstrict.ne heq
 
-private theorem bitSensitivity : LeanInformationAudit.FiniteSlotSensitivity bitArena := by
+theorem bitSensitivity : LeanInformationAudit.FiniteSlotSensitivity bitArena := by
   obtain ⟨good, erased, hgood, herased⟩ := bitVariation
   constructor
   · intro i
@@ -285,12 +286,7 @@ private theorem bitSensitivity : LeanInformationAudit.FiniteSlotSensitivity bitA
 
 local instance : DecidableEq bitArena.State := instDecidableEqBool
 
-information_theorem bounded_run_union_boundary in bitArena
-  readout via (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b))
-  primitives (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b))
-  variation bitVariation sensitivity bitSensitivity
-  escape from (Bool) escape continues (open)
-  : Boundary (fun b : Bool => b) := boundaryUnit.proof
+theorem bounded_run_union_boundary : Boundary (fun b : Bool => b) := boundaryUnit.proof
 
 #print axioms bounded_run_union_boundary
 #print axioms bitVariation

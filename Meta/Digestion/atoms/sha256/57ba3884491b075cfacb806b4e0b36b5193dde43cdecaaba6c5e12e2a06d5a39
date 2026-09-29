@@ -1,0 +1,7 @@
+**定理 19.** 将 (3) 中的 \(|B_P\setminus L|\) 全部按可用缺额计入，所得充分条件
+\[
+ |\mathcal G|+|H|+|L|+\min\{|P|,\varepsilon_c+|B_P\setminus L|\}
+ \leq\binom{N-1}{2}+N
+\]
+是假的。
+

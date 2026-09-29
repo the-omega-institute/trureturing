@@ -1,0 +1,13 @@
+**定义 273.1（六轴共轭双块模型）。** 令 $0<a\le1$、$0\le p\le1$、$q=1-p$，并令 $u$ 取六个单位坐标轴向量 $\{\pm e_x,\pm e_y,\pm e_z\}$。记
+
+$$
+\rho_a(u)=\frac{I_2+a\,u\cdot\boldsymbol\sigma}{2},
+\qquad
+\Omega_{p,a}(u)=p\rho_a(u)\oplus q\overline{\rho_a(u)},
+\qquad
+\mathcal R_{p,a}=\{\Omega_{p,a}(u):u=\pm e_x,\pm e_y,\pm e_z\}.
+\tag{273.1}
+$$
+
+复共轭相对于固定的 Pauli 基底；双块按所示坐标排序。令 $\delta(\mathcal R_{p,a})$ 为定义272.1中的共轭缺口，令 $e_{\mathbb R}(\mathcal R_{p,a})$ 为所有有限输出维数、所有在某个共同基底中产生实模型的 CPTP 编码与所有 CPTP 解码上的最小最坏迹距离恢复误差。下面的达到构造同时保证这个最小值存在。
+

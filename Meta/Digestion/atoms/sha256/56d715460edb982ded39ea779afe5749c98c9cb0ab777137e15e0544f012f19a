@@ -1,0 +1,1 @@
+| [TargetVisibilityConditionCost.target_visibility_condition_cost](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Observer/Conditioning/TargetVisibilityConditionCost.lean) | 使用内积、正规方程及 Hilbert 范数系数代价，未给本文逐坐标最大范数常数。 

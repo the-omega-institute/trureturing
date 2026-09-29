@@ -1,0 +1,25 @@
+#### 238.4.2 预算七所用的三维起点
+
+在 $U=\mathbb C^3$ 中取
+$$
+P=\operatorname{diag}(1,1,0),
+\qquad T=\frac53I_3-P
+=\operatorname{diag}(2/3,2/3,5/3).
+\tag{238.22}
+$$
+令 $F$ 为归一化三阶 Fourier 矩阵，$F_{ab}=3^{-1/2}e^{2\pi iab/3}$，$0\le a,b\le2$。定义 $w_b=\sqrt TFe_b$。矩阵 $F$ 酉且等模，$\operatorname{Tr}T=3$，所以
+$$
+\|w_b\|^2=1,
+\qquad
+\sum_{b=0}^2|w_b\rangle\langle w_b|=T.
+\tag{238.23}
+$$
+于是 $P$ 与三个秩一投影之和为 $(5/3)I_3$。逐个取空间补，得到四个投影 $Q_j$，满足
+$$
+\sum_{j=1}^4Q_j=\frac73I_3,
+\qquad
+(\operatorname{rank}Q_1,\ldots,\operatorname{rank}Q_4)=(1,2,2,2).
+\tag{238.24}
+$$
+这是§237 Fourier 构造在当前参数处的直接应用；所需的实际矩阵已在（238.22）—（238.23）给定。
+

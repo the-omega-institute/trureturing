@@ -1,0 +1,44 @@
+**定义 50.1（分量不确定性与预算约束）。** 使用定义49.1的全部对象，只将其中的准备关系 $C$ 记为 $P$，以免与通信成本混淆。特别地，
+
+$$
+\begin{gathered}
+d\ge2,\quad D=d+1,\quad V=\mathbb F_2^d\oplus\mathbb F_2=A\oplus B,
+\quad W=\ker c=\langle e_1,\ldots,e_d\rangle,\\
+\dim A=r>0,\quad\dim B=s>0,\quad r+s=D,\quad
+\ell_A=c|_A,\quad\ell_B=c|_B,\\
+\alpha_i=p_Ae_i,\quad\beta_i=p_Be_i,\quad
+P\subseteq A\times B,\quad\pi_A(P)=A,\quad\pi_B(P)=B,\\
+I_P=\{(\iota_A(a),\iota_B(b)):(a,b)\in P\},\qquad
+\rho_A\iota_A=\operatorname{id}_A,\quad\rho_B\iota_B=\operatorname{id}_B.
+\end{gathered}
+\tag{50.1}
+$$
+
+$P$ 在设计时固定且双方已知，实际初始化只发生在 $P$ 的边上；本端只能用自己的初始摘要初始化。当前摘要始终是 $a=p_Az,b=p_Bz$，$M_A,M_B$ 是实际可达联合像 $Q$ 的两个投影。全部基平移总定义且零位，全部 $N_i(z)=c(z)e_i$ 总定义；公开动作词对来源独立，正确性和累计费用同时量化全部初始边及任意有限词。共同根由两端分别从本地旧持久状态与当前动作算出，二元发送和叶处写入满足 (48.5) 后的局部合同。计时、静默、旧词、对端状态均不提供额外免费输入，所有影响后续的标签和缓存都计入持久记忆。程序构造和运行成本不属于本节容量指标。
+
+对实际二分支撑的每个连通分量 $H$，定义
+
+$$
+\begin{aligned}
+d_A(H)=1
+&\ \Longleftrightarrow\ \exists(a,b),(a,b')\in H,
+       \ c(a+b)\ne c(a+b'),\\
+d_B(H)=1
+&\ \Longleftrightarrow\ \exists(a,b),(a',b)\in H,
+       \ c(a+b)\ne c(a'+b).
+\end{aligned}
+\tag{50.2}
+$$
+
+否则相应值为零。$d_A(H)=0$ 恰指初始控制能从该分量的左顶点恢复，记其函数为 $\kappa_{A,H}$；$d_B(H)=0$ 对偶。每个顶点只属于一个分量，故端点由自己的初始摘要就能确定其分量及上述适用函数。沿用第49.2节的共同商判据，$(d_A,d_B)=(0,0)$ 恰是控制常值的简单分量，其余为硬分量；这里不重证通用共同商。
+
+称 $(d_A,d_B)=(0,1)$ 为 A 拥有者分量，$(1,0)$ 为 B 拥有者分量，$(1,1)$ 为双方不确定分量，并置
+
+$$
+t_A=\mathbf1_{\{\exists H:(d_A(H),d_B(H))=(0,1)\}},\qquad
+t_B=\mathbf1_{\{\exists H:(d_A(H),d_B(H))=(1,0)\}}.
+\tag{50.3}
+$$
+
+“拥有者”仅描述初始信息及下文搬运出的层，不声称初始恢复函数在任意动作后仍有效。对固定整数 $K\ge0$，预算为 $K$ 指 (49.3) 中对所有初始边和所有有限词的同一个上界 $K$。容量优化仍允许无限候选记忆，有限／无限状态集的对数和固定宽度沿用第49.1节约定；最小值将由有限控制器取得。
+

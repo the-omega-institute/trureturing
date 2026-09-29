@@ -1,0 +1,28 @@
+**定义 224.1（含失配的风险盒）。** 对首次失败参数使用定理 223.2 的上端点，记
+
+$$
+u_{\beta_i}
+=
+\min\{1,\widehat\beta_i+r_{\beta_i}+\kappa_{\beta_i}\},
+$$
+
+$$
+u_{\alpha_i}
+=
+\min\{1,\widehat\alpha_i+r_{\alpha_i}+\kappa_{\alpha_i}\},
+\qquad
+u_{\alpha_\infty}
+=
+\min\{1,\widehat\alpha_\infty+r_{\alpha_\infty}+\kappa_{\alpha_\infty}\}.
+$$
+
+定义含失配上界
+
+$$
+\widehat R^+_{\delta,\kappa}
+=
+\sum_i u_{\beta_i}u_{\alpha_i}
++
+u_{\alpha_\infty}.
+$$
+

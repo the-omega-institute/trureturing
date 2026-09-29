@@ -1,0 +1,13 @@
+**定义 245.2（有一个成功后继与能够排除失败后继）。** 若主体可以在状态 $x$ 选择行动 $u\in A(x)$，每个合法行动对应非空后继集合 $N(x,u)$，则一步保证目标的条件为
+
+$$
+\operatorname{Can}(P)(x)\Longleftrightarrow
+\exists u\in A(x),\ \forall y\in N(x,u),\ y\in P.
+$$
+
+行动由主体选择，所选行动的全部可能后继都须满足要求。项目 [FiniteHorizonReachability](../../../D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.lean) 的 `ControlSystem` 显式要求后继非空，`controlPredecessor` 使用这一量词次序；其 `finite_horizon_reachability` 将逐层取得的赢区与有限步保证策略联系起来。这里沿用其一步接口，不重复第 61、164 节的全部递推论证。
+
+此处首先定义逐状态能力。若实际行动者只能取得读数 $q(x)$，还须按第 164 节另证选择能够只凭这些读数合法地实行，不能把知道完整状态 $x$ 默认为已经具备的能力。
+
+若唯一行动的后继为 $\{p,q\}$，而目标仅为 $\{p\}$，成功后继存在，却无一步保证。若反而允许主体在两个单点后继行动之间选择，就能保证其中任一单点目标。后继的并集可以相同，行动怎样组织这些后继却不同；单列“所有可能结果”会丢掉控制结构。
+

@@ -1,0 +1,62 @@
+### 168.1 联合编码与接收边缘
+
+沿用第159节的实对称平稳密度矩阵 $\rho_*$、规范纯化
+$|\Xi\rangle_{MR}=\operatorname{vec}\sqrt{\rho_*}$ 及
+
+$$
+|\psi_j\rangle_{MR}
+=(I_M\otimes Y_R^j)|\Xi\rangle,
+\qquad j=0,1.
+\tag{168.1}
+$$
+
+对一个任意逻辑 qubit 状态 $\sigma$，联合编码为
+
+$$
+\mathfrak E(\sigma)
+=\frac12\sum_{j=0}^1
+Z_Q^j\sigma Z_Q^j\otimes P_{\psi_j},
+\tag{168.2}
+$$
+
+系统顺序按标记排列。定义接收端独自可用的通道
+
+$$
+\mathcal N_{\mathrm{loc}}(\sigma)
+:=\operatorname{Tr}_M\mathfrak E(\sigma)
+=\frac12\left(
+\sigma\otimes\rho_*+
+Z\sigma Z\otimes Y\rho_*Y
+\right)
+\quad\text{位于 }Q\otimes R.
+\tag{168.3}
+$$
+
+置
+
+$$
+\Delta=\det\rho_*,
+\qquad
+r=\lambda_{\max}(\rho_*),
+\qquad
+\ell=\lambda_{\min}(\rho_*),
+\qquad
+\kappa=r-\ell=\sqrt{1-4\Delta}.
+\tag{168.4}
+$$
+
+于是
+$r=(1+\kappa)/2$、
+$\ell=(1-\kappa)/2$。
+本项目来源满足 $0<p<1$、
+$\Delta=p^2/(1+p)^2\in(0,1/4)$，因而
+$0<\kappa<1$、$0<\ell<1/2$。
+
+定义逻辑退相干通道
+
+$$
+\mathcal D_\kappa(\sigma)
+=r\sigma+\ell Z\sigma Z.
+\tag{168.5}
+$$
+

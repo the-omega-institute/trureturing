@@ -1,0 +1,21 @@
+**定理53.1（环境商维数约束）。** 第二终端秩二的七维候选必须满足
+$$
+\dim\operatorname{span}(F,\eta_4,\eta_5,\eta_6)\le3.
+\tag{53.3}
+$$
+
+证明。若在 $E/F$ 中存在两个独立的尾环境类，选对应 $\eta_n,\eta_m$。则
+$$
+(A\otimes F)+(G_n\otimes\eta_n)+(G_m\otimes\eta_m)
+$$
+为维数 $4+2+2=8$ 的代数直和。它包含于七维 $V_0K$，矛盾。证明完毕。
+
+更精确地，任意这种候选都满足两个有限维商空间秩约束
+$$
+\dim\frac{A\otimes F+\sum_{n=4}^6G_n\otimes\eta_n}{A\otimes F}\le3,
+\qquad
+\dim\frac{B\otimes F+\sum_{n=4}^6Q_n\otimes\eta_n}{B\otimes F}\le3.
+\tag{53.4}
+$$
+这是两份七维全域位像扣除各自已占四维后的精确剩余容量。各项必须在同一实际向量空间中合计，不把分别的商维数直接相加。
+

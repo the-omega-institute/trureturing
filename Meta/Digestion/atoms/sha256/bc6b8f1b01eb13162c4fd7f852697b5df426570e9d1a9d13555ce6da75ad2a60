@@ -1,0 +1,2 @@
+**命题 1.13（phase reachability and the finite-layer boundary）。** For any phase $p\pmod P$, run $a$, and residue $r$, a legal LSD prefix realizes $(a,r,p)$ at some sufficiently large length congruent to $p$. At one prescribed finite length, the reachable residues can form a proper subset.
+

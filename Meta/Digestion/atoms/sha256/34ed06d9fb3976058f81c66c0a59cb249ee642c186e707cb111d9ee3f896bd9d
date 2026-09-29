@@ -1,0 +1,27 @@
+**定理119.1（双侧乘积生成的对偶正规形）。** 若 $N=N_{\mathrm{prod}}$，置 $r=7-2\gamma$。存在实际接收空间的正交分解
+
+$$
+K=P\oplus D\oplus Q,\qquad
+\dim P=\dim Q=\gamma,\quad \dim D=r,
+\tag{119.1}
+$$
+
+以及 $D$ 的基 $d_1,\ldots,d_r$、其内积对偶基 $e_1,\ldots,e_r$ 和非零环境向量 $z_1,\ldots,z_r$，使
+
+$$
+\langle d_i,e_j\rangle=\delta_{ij},
+$$
+
+$$
+\boxed{
+\begin{aligned}
+R_1&=(Q\otimes F)\oplus
+       \operatorname{span}\{d_i\otimes z_i:1\le i\le r\},\\
+R_0&=(P\otimes F)\oplus
+       \operatorname{span}\{e_i\otimes z_i^\perp:1\le i\le r\}.
+\end{aligned}}
+\tag{119.2}
+$$
+
+$z_i^\perp$ 表示在 $F$ 中任取一个非零正交向量。显示的两个大块之间为正交直和；各乘积基向量彼此不必正交，不同环境向量也不必正交。
+

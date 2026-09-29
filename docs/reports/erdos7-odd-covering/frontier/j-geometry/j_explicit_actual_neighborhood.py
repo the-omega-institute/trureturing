@@ -24,14 +24,14 @@ HEAVY = 'certificates/source_norms/j-geometry/j_face_retained375_heavy_heads.jso
 SCHEMA = 'erdos7-j-explicit-actual-neighborhood-v1'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    TARGET: '4c0fe07b96685b510627df37cae3e297118e055496568767d7d082042e3376ab',
-    RESTORATION: 'c8a22970a4b7494074b615457386e34f71615316e202ed0eade84ddeb0872afe',
-    'frontier/retained-transport/retained135_heavy_comparison.py': '93ad67489e6ce429f45bd8888cfd8f6e5ac91b0bc3d4fbeebfedef9f7d4b84ac',
+    TARGET: '6705531fc5fc7241522ddbcf8974957fd413cd6014c3605e110c4633b96d402f',
+    RESTORATION: 'de3281d1ddd3371f4d2fa949466b53fad3b0786b44e54802b02ea16f9b1fa961',
+    'frontier/retained-transport/retained135_heavy_comparison.py': 'cb3dfecc24fe9c95759008a54a9e023bafd45d280a92f06c5072e0565e4b7374',
     'frontier/j-geometry/j_face_coupled_seven_heads.py': '78b6846a4eaa01ed568eb96e8c49dca67d0a19df094bc1e28ba5214100dc70a0',
-    'frontier/source-budgets/joint_selected_source_comparison.py': '849ecfdffec509678ace0ab6e059450a72959a44641a46715bcb489a5d376db8',
-    'frontier/retained-transport/retained_deletion_heavy_comparison.py': '553c281d5de5a9bcd9098ea933f6cccf046b587132e6fa49ec4aa8b44b4ec86f',
-    'frontier/j-geometry/j_face_joint_selected_heads.py': '77c34ea38b4f11aabe721d401dddb1f70d992f991094bd29393f9f0aa4be921b',
-    'frontier/j-geometry/j_actual_rows_zero_restoration.py': '8db5387e39feed1bd10b4f2b1e9577a3f426d445b6651d614b28d30e28deacd7',
+    'frontier/source-budgets/joint_selected_source_comparison.py': '6ab7c405b01bce450c5633e0ee5401c305b930c53ef71770ea582f15382a8d50',
+    'frontier/retained-transport/retained_deletion_heavy_comparison.py': 'b5c823b78f082228be4a2ec71eecde1b29b220dcf680fb3f1e478270af4c77d7',
+    'frontier/j-geometry/j_face_joint_selected_heads.py': '3fd533ce6b8e5d8736c2d6aa6636898212cee26f522720bb48cac971d348ed2f',
+    'frontier/j-geometry/j_actual_rows_zero_restoration.py': 'e224793dbca83bd7c25aec7351ebf766ebae342588dbdb10be91bd05d00c95d9',
 }
 MODELS = {(876, 587, 16): '67a917e9001e85289eb2e26cfb974a851fce0810e9cc4970885e5b705be0e5ed', (3306, 6354, 18): '835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e', (6531, 11211, 19): '9f571ed4977b916e2a0823e5e7262eb333717301ac85a30f6c96671ebc9465ce', (12941, 30454, 20): 'e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0', (32151, 56133, 22): '4da5961945a50079d14a49fc0017409abeba79624086971f2c0747d63e8e494d'}
 

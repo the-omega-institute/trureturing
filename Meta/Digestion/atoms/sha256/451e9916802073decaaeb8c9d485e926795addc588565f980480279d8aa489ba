@@ -1,0 +1,30 @@
+**证明。** 由（154.8），
+
+$$
+\mathcal R_n-\mathcal R_*^{(r(n))}
+=\mathcal F^n(I_{\mathscr V}-P)\mathcal E_\omega.
+\tag{154.15}
+$$
+
+写 $n=Lk+t$、$0\le t<L$。对应 Choi 矩阵按输入参考的四个矩阵单位分块，每个输出块均在 $\mathscr H$ 内。对每个块应用 $\mathcal F^{Lk}$，由（154.9）使其 Hilbert–Schmidt 范数至多乘以 $\kappa^k$；总 Hilbert–Schmidt 范数是这些块范数平方和的平方根。因此
+
+$$
+\|J(\mathcal R_n-\mathcal R_*^{(r(n))})\|_{\mathrm{HS}}
+\le B\kappa^k.
+\tag{154.16}
+$$
+
+对厄米保持映射 $\Delta$，标准 Choi 表达式给
+$\|\Delta\|_\diamond\le\|J(\Delta)\|_1$：带参考纯输入等价于对未归一化 Choi 矩阵用输入密度矩阵平方根左右相乘，而该平方根的算子范数不超过一。通道差的完整 diamond 最坏输入可以取这种纯化输入。再用 $4D$ 阶矩阵的
+$\|Z\|_1\le\sqrt{4D}\|Z\|_{\mathrm{HS}}$，有
+
+$$
+\frac12\|\Delta\|_\diamond
+\le\sqrt D\,\|J(\Delta)\|_{\mathrm{HS}}.
+\tag{154.17}
+$$
+
+把（154.16）代入即得（154.14）。证毕。
+
+式（154.14）已经是从原始二维输入出发的完整参考界；没有从无参考迹距离反推 diamond 距离，也没有对任意四维档案逻辑输入另加任务。
+

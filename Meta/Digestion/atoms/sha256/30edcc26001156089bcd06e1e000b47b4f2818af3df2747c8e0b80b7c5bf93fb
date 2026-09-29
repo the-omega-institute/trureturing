@@ -1,0 +1,7 @@
+**定理 52.2（共同可行行动交集判据）。** 在上述有限模型中，具有一步保证的处方存在，当且仅当
+
+$$
+\forall o\in q(X),\qquad
+\bigcap_{x\in q^{-1}(o)}G_K(x)\ne\varnothing.
+$$
+

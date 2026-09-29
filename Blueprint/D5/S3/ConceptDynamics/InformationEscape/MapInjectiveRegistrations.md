@@ -204,4 +204,5 @@ The generic sensitivity theorem checks the encoded ray CUT slot.
 - Dependency: [D5/S0/History/Coding/EventCodeIntertranslation](../../../S0/History/Coding/EventCodeIntertranslation.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/MapInjectiveRegistrationTemplates](MapInjectiveRegistrationTemplates.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog](../InformationEscapeHierarchy/StructuralCatalog.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)
 - Dependency: [D5/S3/QuantumContext/ProjectionValuationObstruction](../../QuantumContext/ProjectionValuationObstruction.md)

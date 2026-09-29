@@ -1,0 +1,27 @@
+**定理 73.3（逐输出列表曲线与最小覆盖大小）。** 在
+$\log^+(1/\sigma_M)=o(Q)$ 下，记 $C_{x,y}(K)$ 为输出后验最大的 $K$ 个原子的总质量。
+对每个固定实数 $z$，取 $K_x(z)=\lfloor2^{h_x+Qz}\rfloor$，则
+
+```math
+\int|C_{x,y}(K_x(z))-\Phi_v(z)|f_x(y)\,dy\longrightarrow0
+```
+
+式 (73.24)。
+
+对固定 $\varepsilon\in(0,1)$，令 $N_{\varepsilon,M}(x,y)$ 为覆盖输出后验质量
+$1-\varepsilon$ 所需的最少原子数，$z_\varepsilon=\sqrt v\Phi^{-1}(1-\varepsilon)$。
+每个固定 $e>0$ 都满足
+
+```math
+\int\mathbf1\left\{
+ \left|\frac{\log_2N_{\varepsilon,M}(x,y)-h_x}{Q}-z_\varepsilon\right|>e
+ \right\}f_x(y)\,dy\longrightarrow0.
+```
+
+式 (73.25)。
+
+收敛具有定理 73.2 的两种原始数据概率意义。
+此外，$D_M^A,D_M^B$、(73.24) 的被积绝对差及 (73.25) 的指示函数，
+在各自噪声范围内都趋零于实际确定支持的联合数据／输出概率，且一致于支持。
+该联合输出由真实支持的计数生成，结论所评价的条件权重仍为原均匀先验的权重。
+

@@ -1,0 +1,52 @@
+**定理 2.1（真子坐标全白、两步独立时的信息阈值）。** 令
+
+$$
+F_M(r)=\frac{\phi(r)+(M-1)\phi(r/(M-1))}{2M}\quad(0\le r\le1),
+\qquad
+c_d=F_M(1)
+=\frac{\log2+(M-1)\phi(1/(M-1))}{2M}.
+$$
+
+在核族 $\mathcal K_d^0$ 中有以下结论。
+
+(i) 对任意固定真子集 $S\subsetneq\{1,\ldots,d\}$，
+整个过程 $((X_t)_S)_{t\ge0}$ 是均匀独立同分布过程；完整链满足
+$P^2=\Pi$，其中 $\Pi(x,y)=1/n$。特别地，所有这些核的特征多项式均为
+$(z-1)z^{n-1}$。
+
+(ii) 对任意 $c\in[0,\log2)$，定义信息预算下的不可逆率上确界
+
+$$
+\Sigma_d(c)=\sup\{\sigma(P):P\in\mathcal K_d^0,\ I(P)\le c\}.
+$$
+
+则
+
+$$
+\boxed{\quad \Sigma_d(c)<\infty\ \Longleftrightarrow\ c<c_d.\quad}
+$$
+
+在 $0<c<c_d$ 时，存在唯一 $r_c\in(0,1)$ 使 $F_M(r_c)=c$，并有显式界
+
+$$
+\sigma(P)\le g(r_c)\qquad
+\bigl(P\in\mathcal K_d^0,\ I(P)\le c\bigr).
+$$
+
+在 $c=0$ 时唯一的核是 $\Pi$，其不可逆率为零。
+
+(iii) 临界值自身可由严格正核实现为发散序列的恒定信息：
+存在 $P_k\in\mathcal K_d^0$ 满足
+
+$$
+I(P_k)=c_d\quad\text{对每个 }k,\qquad
+\sigma(P_k)\longrightarrow+\infty.
+$$
+
+(iv) 当 $d\to\infty$ 时，
+
+$$
+c_d=\frac{\log2}{2^d}
++\frac{1}{2^d(2^d-2)}+O(2^{-4d}).
+$$
+

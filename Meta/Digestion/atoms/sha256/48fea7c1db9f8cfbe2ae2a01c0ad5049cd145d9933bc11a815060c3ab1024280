@@ -1,0 +1,12 @@
+# 381．关系切片先于外部时间参数
+
+设 $G=(V,E,s,t)$ 是有限有向图，其底层无向图连通且 $V\ne\varnothing$，并固定根 $r\in V$。顶点表示已经声明的关系切面，不预设为外部时空点。固定非零有限维复 Hilbert 空间 $\mathcal H$，并令每条边 $e$ 携带酉运输 $U_e:\mathcal H\to\mathcal H$。把
+$\bigoplus_{v\in V}\mathcal H$ 识别为时钟标记空间 $\mathbb C^V\otimes\mathcal H$。若 $\Psi=(\psi_v)_{v\in V}$，定义
+
+$$
+A_e\Psi=\psi_{t(e)}-U_e\psi_{s(e)},\qquad
+K_G=\sum_{e\in E}\lambda_e A_e^\dagger A_e,\quad \lambda_e>0.
+$$
+
+这里 $K_G$ 是关系相容性的静态约束算子；把它另行解释为实际装置的 Hamiltonian 需要额外的实现假设。
+

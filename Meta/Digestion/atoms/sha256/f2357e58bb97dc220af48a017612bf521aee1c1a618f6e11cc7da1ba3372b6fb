@@ -1,0 +1,62 @@
+**证明。** 边缘误差为零，而
+$$
+K_h-K_0=-\frac{\delta_h}{2}Z.
+\tag{265.12}
+$$
+对二阶矩阵，奇异值给出
+$$
+\|Z\|_1^2=\|Z\|_{\mathrm F}^2+2|\det Z|
+=\frac74+\frac32=\frac{13}{4}.
+\tag{265.13}
+$$
+因此
+$$
+\varepsilon(\Omega_h)=\frac{\delta_h}{2}\|Z\|_1
+=16\sqrt{13}\,h^4.
+\tag{265.14}
+$$
+
+令 $J=\operatorname{diag}(0,1,0,-1)$。其算子范数为一，且
+$$
+\operatorname{Tr}\bigl(J(\Omega_h-\Omega_0)\bigr)=h.
+\tag{265.15}
+$$
+迹范数对偶性给下界 $\|\Omega_h-\Omega_0\|_1\ge h$。
+
+对于上界，误差的两个部分为
+$$
+\Omega_h-\Omega_0
+=\frac12\operatorname{diag}(D_h,-D_h)
+-\frac{\delta_h}{4}
+\begin{pmatrix}0&Z\\Z^\dagger&0\end{pmatrix}.
+\tag{265.16}
+$$
+由于 $\det D_h=-4h^4<0$，其两个本征值异号，故
+$$
+\|D_h\|_1=\sqrt{h^2+16h^4}=h\sqrt{1+16h^2}.
+\tag{265.17}
+$$
+非对角部分的迹范数恰为 $\delta_h\|Z\|_1/2=\varepsilon(\Omega_h)$。所以
+$$
+\begin{aligned}
+\|\Omega_h-\Omega_0\|_1
+&\le h\sqrt{1+16h^2}+16\sqrt{13}\,h^4\\
+&\le\left(\frac{\sqrt5}{2}+\frac{\sqrt{13}}{32}\right)h
+<2h.
+\end{aligned}
+\tag{265.18}
+$$
+$\square$
+
+因而即使只允许精确共同边缘的合法竞争态，也不存在平方根或线性局部逆界。更一般地，任意 $\alpha>1/4$ 都有
+$$
+\frac{\|\Omega_h-\Omega_0\|_1}
+{\varepsilon(\Omega_h)^\alpha}
+\ge
+\frac{h^{1-4\alpha}}{(16\sqrt{13})^\alpha}
+\longrightarrow+\infty
+\qquad(h\downarrow0).
+\tag{265.19}
+$$
+这一发散发生在同一个固定混合真值的任意小邻域内。
+

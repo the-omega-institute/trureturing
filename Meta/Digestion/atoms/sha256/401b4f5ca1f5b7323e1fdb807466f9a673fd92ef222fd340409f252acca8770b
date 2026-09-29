@@ -1,0 +1,9 @@
+**命题 4.7.3（平方和恒等式与原有八分之一间隔）。** 对 $k\ge3$，令 $c_k=\sum_{r<k}p_r^2$，则
+$$
+c_k=\frac{3-\lambda_k}{1+\lambda_k}<\frac37<\frac12,
+\qquad
+\eta_k=1-\sqrt{\frac{c_k}{1-c_k}}
+=1-\sqrt{\frac{3-\lambda_k}{2(\lambda_k-1)}}>\frac18.
+$$
+有最终禁祖先的柱切片为空；其余柱 $D$ 满足 $\mu_p(E\cap D)\ge\eta_k\mu_p(D)>\mu_p(D)/8$，特别 $M>1/8$。
+

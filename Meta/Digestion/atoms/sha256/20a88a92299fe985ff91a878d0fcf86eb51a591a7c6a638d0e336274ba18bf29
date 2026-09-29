@@ -1,0 +1,29 @@
+#### 8.6.1 来源、零和约束与精确常数
+
+取有限两两互素整数 $m_1,\ldots,m_r\ge2$，$D=\prod_i m_i$，并经 CRT 将实际模 $D$ 余数写为 $X=\prod_i\mathbb Z/m_i\mathbb Z$。每个模数至多用一次，每次任选一个余数删除，保留动作标签，允许全部子集、顺序和空续接。
+
+对同一实向量 $z\in\mathbb R^X$，定义
+$$
+R_{T,a}(z)=\sum_{c\in X}z_c\prod_{i\in T}\mathbf1_{c_i\ne a_i},
+\qquad \|z\|_{\rm obs}=\max_{T,a}|R_{T,a}(z)|.
+$$
+本题新增的条件是 $\sum_cz_c=0$。定义 $C_0(M)$ 为满足
+$$
+\|z\|_\infty\le C_0(M)\|z\|_{\rm obs}\quad
+\text{对所有 }\sum_cz_c=0
+\tag{ER8.CM.2}
+$$
+的最小非负常数。空族时只有一个坐标，唯一零和向量为零，故按此定义 $C_0(\varnothing)=0$。这避免把不存在的非零向量比值当成一个最大值。
+
+固定总质量下的精确误差放大常数为
+$$
+\boxed{
+C_0(M)=\prod_{i=1}^r\left(2-\frac1{m_i-1}\right)
+-\prod_{i=1}^r\left(1-\frac1{m_i-1}\right).
+}
+\tag{ER8.CM.1}
+$$
+
+
+以下用同一个零和向量满足全部观察约束，并以修正逆行的绝对系数和给匹配上界。仅浮点优化值或仅终态见证不足以承担这两项义务。
+

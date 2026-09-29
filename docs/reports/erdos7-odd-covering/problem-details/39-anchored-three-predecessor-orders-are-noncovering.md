@@ -360,9 +360,9 @@ per-page density simplification \((67/4000)(3/16)^N\).
 
 An extension to unrestricted ordered predecessor sets or every
 3-degenerate graph is not proved. The existing Chapter 37
-[`spine_book_density_certificate.py`](../frontier/cover-geometry/spine_book_density_certificate.py)
+[`spine_book_density_certificate.py`](../frontier/cover-geometry/spine-book-density-certificate/spine_book_density_certificate.py)
 and its
-[`exact output`](../frontier/cover-geometry/spine_book_density_certificate.json)
+[`exact output`](../frontier/cover-geometry/spine-book-density-certificate/spine_book_density_certificate.json)
 check precisely the same six early fees, complete third moment, cubic
 tail, and reserve used in Section 4. No duplicate numerical producer is
 needed here. The all-depth slot inequalities (OT7)--(OT9), selected

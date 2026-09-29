@@ -1,0 +1,90 @@
+{
+  "result": "PASS",
+  "balanced_four": {
+    "22": {
+      "five_owner_multisets": 201376,
+      "survivors": 0
+    },
+    "211": {
+      "five_owner_multisets": 201376,
+      "survivors": 0
+    },
+    "1111": {
+      "five_owner_multisets": 201376,
+      "survivors": 0
+    }
+  },
+  "cap_vector": [
+    "1",
+    "2/7",
+    "3/7",
+    "6/35",
+    "1/7",
+    "1/7",
+    "3/35",
+    "1/21",
+    "1/28"
+  ],
+  "bound": "249/28",
+  "controls": [
+    {
+      "name": "one_nonpure_gap_owner",
+      "source_points": 508,
+      "pair_tests": 480,
+      "phantom_gap_candidates": 0,
+      "monochromatic_original_owners": [
+        0,
+        1
+      ],
+      "actual_K_representatives": [
+        0,
+        2,
+        1,
+        3
+      ],
+      "law_support_points": 50,
+      "actual_caps": [
+        "1",
+        "2/7",
+        "3/7",
+        "6/35",
+        "1/7",
+        "13/105",
+        "3/35",
+        "1/21",
+        "1/28"
+      ],
+      "actual_cap_envelope": "739/84"
+    },
+    {
+      "name": "one_nonactual_gap_candidate",
+      "source_points": 507,
+      "pair_tests": 480,
+      "phantom_gap_candidates": 1,
+      "monochromatic_original_owners": [
+        0,
+        1
+      ],
+      "actual_K_representatives": [
+        0,
+        1,
+        3,
+        2
+      ],
+      "law_support_points": 50,
+      "actual_caps": [
+        "1",
+        "2/7",
+        "3/7",
+        "6/35",
+        "1/7",
+        "13/105",
+        "3/35",
+        "1/21",
+        "1/28"
+      ],
+      "actual_cap_envelope": "739/84"
+    }
+  ],
+  "scope": "Necessary column controls and two actual-source common laws; no flow value or universal source verification."
+}

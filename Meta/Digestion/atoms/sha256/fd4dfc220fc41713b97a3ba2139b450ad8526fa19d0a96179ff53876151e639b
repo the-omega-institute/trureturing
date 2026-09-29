@@ -1,0 +1,54 @@
+### 177.4 相位变化的共同效果界
+
+为控制 $G$ 从 $\varphi_*$ 到 $\varphi$ 的变化，定义实际空间上的效果
+
+$$
+H_j=(\operatorname{id}_M\otimes\mathcal D_j)^*(P_\Xi).
+$$
+
+因为 $\mathcal D_0+\mathcal D_1$ 保迹，
+
+$$
+H_j\succeq0,\qquad H_0+H_1\preceq I.
+$$
+
+所以对 $1\le R\le6$，
+
+$$
+0\preceq H_0+RH_1\preceq RI\preceq6I.
+\tag{177.13}
+$$
+
+第175节的扰动算子为
+
+$$
+A=\gamma X-\beta Z,\qquad
+\|A\|_1=\frac{12}{\sqrt{2353}},
+\qquad
+\dot\xi^\varphi=\mathfrak E(U_\varphi A U_\varphi^\dagger).
+$$
+
+两份扰动之差为迹零 Hermitian 算子。对
+$0\preceq H\preceq RI$，先将 $H$ 中心化为 $H-(R/2)I$，得到
+$|\operatorname{Tr}(HT)|\le(R/2)\|T\|_1$。
+再用编码收缩迹范数，以及实 $XZ$ 平面上的旋转恒等式
+
+$$
+\|U_\varphi A U_\varphi^\dagger-
+U_{\varphi_*}A U_{\varphi_*}^\dagger\|_1
+=2|\sin\delta|\,\|A\|_1,
+$$
+
+便得
+
+$$
+\begin{aligned}
+|G(\mathcal D,\varphi,R)-G(\mathcal D,\varphi_*,R)|
+&\le R|\sin\delta|\,\|A\|_1\\
+&\le\frac{18R}{\sqrt{2353}}\sqrt\ell.
+\end{aligned}
+\tag{177.14}
+$$
+
+这里（177.13）中的效果是同一个 instrument 的加权和。它没有把各个原输入的收益分别按独立保迹通道估计。
+

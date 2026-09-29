@@ -1,0 +1,4 @@
+**定义 359.1（读数的精化方向）。** 给定状态集 $\Omega$，若读数 $a$ 可以写成 $a=f\circ q$，就说 $a$ 的区别受 $q$ 限制：$q$ 相同的状态必有相同 $a$。项目 `D5/S3/ConceptDynamics/ConceptJoinUniversal.lean` 将这一关系写作 `Refines a q`；参数中的 $q$ 是较细读数，不能凭自然语言习惯将方向倒过来。
+
+项目 `D5/S3/ConceptDynamics/Communication/DiscussionCommonSourceUpperBound.lean` 说明：若每条消息均通过同一读数 $q$ 分解，则所有消息的联合读数也通过 $q$ 分解；再加入一个同样受 $q$ 限制的初始读数，仍然保持这个上界。该结构不需要先把讨论者判断为赞同或反对，而只追问每一条消息从哪里取得可区分的信息。
+

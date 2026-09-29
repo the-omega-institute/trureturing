@@ -397,3 +397,4 @@ Two strictly ordered values witness independent changes to each CUT slot for bot
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.pointwiseOrderSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.pointwiseOrder_sensitivity`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates](RegistrationTemplates.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

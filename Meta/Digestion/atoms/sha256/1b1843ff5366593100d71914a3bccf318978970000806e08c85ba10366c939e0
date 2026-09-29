@@ -1,0 +1,53 @@
+### 186.5 最大混合点与纯点的不同边界
+
+在（186.4）的参数族中，若限制两个结果共用反馈酉，即 $v_0=v_1$，
+再最小化二次式，所得二阶系数为
+$(3\beta^2-4\gamma^2)\delta^2/64-\kappa^2\gamma^2\Sigma^2/16$。
+因此结果条件反馈的额外二阶收益为
+
+$$
+\frac{\kappa^2\gamma^2\delta^2}{4(1-\kappa^2)}\epsilon^2.
+\tag{186.13}
+$$
+
+在 $\kappa=0$ 时此收益为零，且上述二阶最优构造的反馈角度均为零。
+二阶最优式回到
+$3\beta^2\delta^2/64-\gamma^2\delta^2/16$；
+这只断言二阶反馈收益消失，不断言所有有限 $\epsilon$ 的全局最优 instrument 必须是 Lüders 形式。
+
+当 $\kappa\uparrow1$，基点正交谱间隙消失。
+若 $\gamma\delta\ne0$，测量最优斜率及部分二阶系数发散；即使这些项恰为零，余项也不能自动一致。
+同一通道公式也定义纯点 $\kappa=1$ 的模型。此时 $M$ 独立且固定为纯态，接收端可测量后重新制备目标 $R=0$。
+例如 $R>1$ 时，使用
+$E_0=\operatorname{diag}(1/2,0)$、$E_1=I-E_0$，得到
+
+$$
+A_0=\frac{1-\beta\epsilon}{2},\qquad
+A_1=\frac{1+\beta R\epsilon}{2},
+$$
+
+$$
+h_1(\epsilon,R)\le
+1-\frac{A_0A_1}{A_0+A_1}
+=\frac34-\frac{\beta(R-1)}8\epsilon+O(\epsilon^2).
+\tag{186.14}
+$$
+
+这已与全部固定 $\kappa<1$ 的正一阶系数相反。
+$R<1$ 可交换标签。若 $R=1$，入口完全不携带原输入信息；
+Bell 参考检验给误差至少 $3/4$，而在接收端制备
+$I_{Q_{\mathrm{out}}}/2\otimes P_0^{R_{\mathrm{out}}}$ 达到它，
+所以纯点误差恰为 $3/4$。
+
+模型与有限维最优误差值随 $\kappa$ 连续：所有空间固定，
+通道及目标随 $\kappa$ 连续，而 CPTP Choi 集紧；目标函数在该紧集上一致连续，取最小值保持连续。
+失去一致性的是
+$\epsilon\downarrow0$ 的渐近展开及相应归一化斜率的先后极限，
+不是最优误差值本身的不连续。
+
+本节没有求出所有有限 $\epsilon$ 的精确最优误差，也没有求纯点的最优一阶系数；纯点的合法明确构造已足以证明满秩展开不能一致延伸。所有二阶最优性均针对这里明确给出的旗标通道模型，不反推任意物理启动机制。
+
+[^general_full_rank_fsw]: Andrew S. Fletcher, Peter W. Shor, Moe Z. Win, “Optimum Quantum Error Recovery using Semidefinite Programming,” [arXiv:quant-ph/0606035v1](https://arxiv.org/abs/quant-ph/0606035v1), §§II–IV，式（7）、（15）、（20）。本文使用其标准 Choi 线性优化框架，完整参考误差另由正文的压缩界与谱估计处理。
+
+[^general_full_rank_bo]: Cédric Bény, Ognyan Oreshkov, “General conditions for approximate quantum error correction and near-optimal recovery channels,” [arXiv:0907.5391](https://arxiv.org/abs/0907.5391), Theorem 1。原定理的两侧最大值均按其允许的全部量子通道与 worst-case entanglement fidelity 定义。
+

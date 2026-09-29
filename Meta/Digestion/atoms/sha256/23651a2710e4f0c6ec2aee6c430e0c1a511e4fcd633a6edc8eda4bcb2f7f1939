@@ -1,0 +1,41 @@
+**引理 57.2。** 任意 CPTP $\Lambda:E\to D$ 都将 $\mathcal S_E$ 映到 $\mathcal S_D$，且对所有厄米差和任意候选 $R_E,S_E$ 有
+
+$$
+D_D\bigl((\operatorname{id}_{AB}\otimes\Lambda)R_E,
+(\operatorname{id}_{AB}\otimes\Lambda)S_E\bigr)
+\le D_E(R_E,S_E).
+\tag{57.7}
+$$
+
+**证明。** 完全正性保持正算符，而保持迹给
+
+$$
+\operatorname{Tr}_D[(\operatorname{id}_{AB}\otimes\Lambda)S_E]
+=\operatorname{Tr}_E S_E.
+$$
+
+所以因果偏迹和归一化保持。
+
+对任意末端事件 $0\preceq F_D\preceq C\otimes I_D$，定义
+
+$$
+F_E=(\operatorname{id}_{AB}\otimes\Lambda^*)(F_D).
+$$
+
+$\Lambda^*$ 完全正且保持单位算符，即 $\Lambda^*(I_D)=I_E$，故
+
+$$
+0\preceq F_E\preceq C\otimes I_E.
+$$
+
+迹配对给
+
+$$
+\operatorname{Tr}\!\left(
+[(\operatorname{id}_{AB}\otimes\Lambda)(R_E-S_E)]F_D
+\right)
+=\operatorname{Tr}((R_E-S_E)F_E).
+$$
+
+对所有 $C,F_D$ 取最大得到式（57.7）。这一证明直接使用全部事件，不需要假设候选本身在所有反馈下归一化，也没有删除归一化迹项。$\square$
+

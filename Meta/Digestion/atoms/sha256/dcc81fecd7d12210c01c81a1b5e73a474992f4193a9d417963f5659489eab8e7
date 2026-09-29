@@ -1,0 +1,68 @@
+### 181.1 Schmidt 坐标中的共同局部小酉
+
+采用 $\rho$ 的实 Schmidt 坐标，写
+
+$$
+\rho=\begin{pmatrix}r&0\\0&\ell\end{pmatrix},
+\qquad
+r=\frac{3+\sqrt5}{6},\quad
+\ell=\frac{3-\sqrt5}{6},
+$$
+
+$$
+\kappa=r-\ell=\frac{\sqrt5}{3},\qquad
+\Delta=r\ell=\frac19,
+\qquad
+|\Xi\rangle=\sqrt r\,|00\rangle+\sqrt\ell\,|11\rangle.
+\tag{181.1}
+$$
+
+这是数学坐标选择。下文所有实际酉只作用于 $R$；换回原坐标时，使用 $R$ 上相应共轭的 Pauli 算子，不操作 $M$。
+
+沿用第179节解掩码后的两个等权旗标，记其符号为
+$s=\pm1$。令
+
+$$
+|\psi\rangle=(I_M\otimes Y_R)|\Xi\rangle,\qquad
+\beta=\frac{288}{2353},\quad
+\gamma=\frac{42}{2353},
+$$
+
+$$
+\eta_s(w)
+=(1-\beta w)P_\Xi+\beta wP_\psi
++s\gamma w\bigl(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\bigr).
+\tag{181.2}
+$$
+
+真实原输入 $j$ 使用 $w=w_j$，其中
+$0<w_0<w_1<1/2$。
+接收端读取旗标后施加
+
+$$
+U_s(t)=e^{-istX_R}=\cos t\,I-is\sin t\,X_R,
+\tag{181.3}
+$$
+
+再丢弃旗标。对参数 $w$ 的输出为
+
+$$
+\sigma(w,t)=\frac12\sum_{s=\pm1}
+(I_M\otimes U_s(t))\eta_s(w)(I_M\otimes U_s(t)^\dagger).
+\tag{181.4}
+$$
+
+同一个 $t$ 用于两个原输入。按第179节附加均匀输出旗标并逆转接收端坐标变换，就得到原接口上的合法共同模拟器。记
+
+$$
+d(w,t)=D(\sigma(w,t),P_\Xi),\qquad
+D_L(t)=\max_{j=0,1}d(w_j,t).
+$$
+
+第179节的完整参考归约给
+
+$$
+\delta_L^{\leftarrow}\le D_L(t).
+\tag{181.5}
+$$
+

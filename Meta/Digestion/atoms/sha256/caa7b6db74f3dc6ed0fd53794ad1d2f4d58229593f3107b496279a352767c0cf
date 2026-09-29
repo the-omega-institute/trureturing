@@ -1,0 +1,60 @@
+**定理 179.2（这一配对族的精确单次信息量）。** 对全部充分近一的 $r$ 及全部 $w\in[0,\delta(r)]$，有
+$$
+I_1(r,w)=\frac{4J(r)^2}{1-u(w)^2}.
+\tag{179.2}
+$$
+均衡输入 $(|0\rangle+|2\rangle)/\sqrt2$ 和 $02$ 对称、反对称基测量达到此值，加入参考系统不增加这个单次最优值。并且
+$$
+\sup_{0\le w\le\delta(r)}
+\left|\frac{I_1(r,w)}{(1-r)^3}-9\right|\longrightarrow0
+\qquad(r\uparrow1).
+\tag{179.3}
+$$
+
+证明。 先核对适用区间。由（177.27）—（177.28），$r-\beta\le g_r/(4K_r)$。有 $g_r\le B_1=O(\varepsilon)$，而最大视界 $n$ 满足 $\varepsilon n\to t_*>0$、$K_r>n$，故
+$$
+\beta=r+O(\varepsilon^2),\qquad
+a=1-2\varepsilon+O(\varepsilon^2),\qquad
+u(w)=1-2\varepsilon+O(\varepsilon^2)
+\tag{179.4}
+$$
+在整个配对区间上一致成立。最后一个式子使用 $J=O(\varepsilon^2)$、$w\le\delta\le\varepsilon/4$。所以 $0<a<1$ 且 $2a-1<u(w)<1$；上界也可由 $u(w)=r^2Z_{2,w/x}(\alpha)\le r^2<1$ 得到。
+
+以下在保持 $a$ 固定时对 $u$ 微分。任意纯信号—参考输入写成 $\sum_i|i\rangle|v_i\rangle$，令 $p_i=\lVert v_i\rVert^2$。输出与矩阵
+$$
+R_p(u)=\operatorname{diag}(\sqrt p)F(a,u)
+\operatorname{diag}(\sqrt p)
+\tag{179.5}
+$$
+经一个不依赖 $u$ 的等距映射相同，因为不同 $i$ 对应的信号基向量正交。混合输入可先纯化，信息量单调性保证这不会减少信息量。因此优化只需考察概率向量 $p$。
+
+交换信号的 $0,2$ 标签记为 $U$。通道与此交换相容。对给定纯输入 $|\psi\rangle$，考虑保留一个参考标记的纯输入
+$$
+|\widetilde\psi\rangle=
+\frac{|\psi\rangle|0\rangle_F+(U\otimes I)|\psi\rangle|1\rangle_F}{\sqrt2}.
+\tag{179.6}
+$$
+其信号人口满足 $p_0=p_2$。输出后去相位标记，得到两个等权且信息量相同的条件输出，信息量等于原输入所给的值。去相位不增加信息量，故（179.6）的信息量至少与原输入一样大。于是可限制到 $p_0=p_2=t/2$、$p_1=1-t$，而不是仅凭信息量的凸性断言这种限制。
+
+令 $\ell=(1-u)/2$、$h=(1+u)/2$。在 $02$ 反对称、对称及 $1$ 的基下，（179.5）分成特征值 $t\ell$ 和二阶块
+$$
+\begin{pmatrix}
+th&a\sqrt{t(1-t)}\\
+a\sqrt{t(1-t)}&1-t
+\end{pmatrix}.
+\tag{179.7}
+$$
+对 $0<t<1$ 解对称对数导数方程，得到关于 $u$ 的信息量
+$$
+\mathcal I_u(t)=\frac t4\left[
+\frac1\ell+
+\frac{1-t(\ell+a^2)}{(1-t\ell)(h-a^2)}\right],
+\qquad
+\frac{d\mathcal I_u}{dt}=
+\frac{1-a^2/(1-t\ell)^2}{4\ell(h-a^2)}.
+\tag{179.8}
+$$
+第一项来自标量块；二阶块的导数为 $\operatorname{diag}(t/2,0)$，其行列式为 $t(1-t)(h-a^2)$，直接代入方程给出第二项。由于 $h>a$、$1-t\ell\ge h$，导数严格为正。端点由各自支持上的信息量或连续极限得到，故最大值在 $t=1$，等于 $1/(1-u^2)$。均衡 $02$ 输入的输出在固定对称、反对称基下给出概率 $(1\pm u)/2$，这一测量达到该信息量。再使用 $du/dw=2J$，得（179.2）。
+
+由（179.4），$1-u(w)^2=4\varepsilon+O(\varepsilon^2)$ 一致成立；由（178.13），$J/\varepsilon^2\to3$。代入即得（179.3）。$F(a,u)$ 在 $2a-1<u<1$ 内正定，因此各端点附近的通道有光滑延伸，所用连续单侧信息量无额外奇点。证毕。
+

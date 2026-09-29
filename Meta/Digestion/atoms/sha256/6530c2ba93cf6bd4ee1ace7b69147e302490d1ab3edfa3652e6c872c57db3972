@@ -1,0 +1,42 @@
+**定理 207.3（固定动作下记录细化缩小鲁棒区间）。** 设过滤 $(r'_t)$ 比 $(r_t)$ 精细，即存在
+
+$$
+c_t:\mathcal H'_t\longrightarrow\mathcal H_t,
+\qquad
+r_t=c_t\circ r'_t.
+$$
+
+对任意粗历史 $h$ 和精历史 $h'$ 满足 $c_t(h')=h$，以及任意固定动作 $a\in\mathcal A_t(h)$，有
+
+$$
+\boxed{
+\inf_{\omega\in\mathfrak R_{h'}}G_a(\omega)
+\ge
+\inf_{\omega\in\mathfrak R_h}G_a(\omega),
+\qquad
+\sup_{\omega\in\mathfrak R_{h'}}G_a(\omega)
+\le
+\sup_{\omega\in\mathfrak R_h}G_a(\omega).
+}
+\tag{207.1}
+$$
+
+若精记录允许的策略类包含粗记录策略的提升，则最大化的鲁棒值满足
+
+$$
+\boxed{
+\sup_{\pi'\ {\rm 精细}}\inf_{\omega\in\mathfrak R}G_{\pi'}(\omega)
+\ge
+\sup_{\pi\ {\rm 粗}}\inf_{\omega\in\mathfrak R}G_{\pi}(\omega).
+}
+\tag{207.2}
+$$
+
+### 证明
+
+由 $\mathfrak R_{h'}\subseteq\mathfrak R_h$，对同一个实值函数取下确界和上确界立即得到（207.1）。
+
+任意粗策略 $\pi$ 都可以定义一个精策略 $\pi'$：在精历史 $h'$ 上执行粗历史 $c_t(h')$ 所规定的动作。因而精策略类包含粗策略类，先对每个粗策略比较其最坏收益，再取上确界，得到（207.2）。证毕。
+
+记录细化有两种同时发生的作用：固定动作时，它删去不再相容的来源；允许自适应动作时，它还扩张了可用策略类。若在边界中只保存“细化后状态更窄”而不保存新增许可动作，便无法结算完整的信息价值。
+

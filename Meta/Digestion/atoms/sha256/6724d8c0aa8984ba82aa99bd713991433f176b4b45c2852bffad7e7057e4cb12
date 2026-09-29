@@ -1,0 +1,112 @@
+**定理 211.2（任意有限维程序的统一校准曲率下界）。** 定义211.1中的每一个程序均满足
+$$
+ \kappa(\rho,t)\ge
+ \kappa_*(a,t):=\frac{a^2}{c_t^2V_*(a,t)}.
+\tag{211.3}
+$$
+该下界不要求实际准备态具有二阶导数，也不要求秩局部恒定。
+
+证明。 先把第209节的受控等距归约推广到非仿射准备。令 $S$ 为全部实际程序态的支持所张成的子空间。由有限维性，可以选择有限多个实际程序态，其支持张成 $S$；这些态的严格正权平均在 $S$ 上满秩。对于任何信号基态 $|i\rangle$，各程序的输出均为 $|i\rangle\langle i|$，因而平均程序仍有同一纯输出。将平均态分解为正权本征投影，非负输出概率的和为零迫使原处理器的 Stinespring 等距在 $\mathbb C^3\otimes S$ 上具有受控形状。这里平均程序只用于证明原等距的结构，不要求平均态属于原参数曲线。
+
+随后按第209.2节将处理器与交换信号标号 $0,2$ 后的处理器平均，再作其固定 Naimark 嵌入。其 Gram 正性、压缩分解和固定嵌入均不使用准备曲线的仿射性，所以得到固定算子与实际嵌入态
+$$
+ \sigma_u=J\rho_uJ^\dagger,\qquad
+ P+Q=I,\quad PQ=0,\quad PT=T,\quad \|T\|_\infty\le1,
+ \qquad
+ \operatorname{Tr}(P\sigma_u)=\frac{1+u}{2},\quad
+ \operatorname{Tr}(\sigma_uT)=a.
+\tag{211.4}
+$$
+此处 $T$ 为第209.5式的 $\widetilde K$，固定等距嵌入保留 SLD 信息量。所有内点的双侧正性保证 $\sigma'_u$ 的核—核压缩为零，故存在有限点态 SLD $L_u$，包括秩变化点。置
+$$
+ H_u=\frac P{1+u}-\frac Q{1-u},\qquad
+ \mathcal S_u(X)=\frac12(H_uX+XH_u),\qquad
+ R_u=\sigma'_u-\mathcal S_u(\sigma_u),\qquad
+ M=\frac{T+T^\dagger}{2}.
+\tag{211.5}
+$$
+由第210.5式的平方残差恒等式，
+$$
+ g(u):=I_Q(\rho_u)-I_r(u)
+      =\operatorname{Tr}[\sigma_u(L_u-H_u)^2],
+ \qquad R_t=0.
+\tag{211.6}
+$$
+读出概率导数给出 $\operatorname{Tr}R_u=0$。由于 $M$ 自伴，令 $D_u=L_u-H_u$，有
+$\operatorname{Tr}(R_uM)=\operatorname{Re}\operatorname{Tr}[\sigma_uD_u(M-aI)]$。
+对带权 Hilbert–Schmidt 内积使用 Cauchy–Schwarz，得到
+$$
+ |\operatorname{Tr}(R_uM)|^2
+ \le g(u)\operatorname{Tr}[\sigma_u(M-aI)^2].
+\tag{211.7}
+$$
+这一估计直接保留了 SLD 的平方范数，不对信息量取连续延拓。
+
+下面计算左侧标量的一阶变化。按 $P\oplus Q$ 分块，记
+$$
+ x=\operatorname{Tr}(\sigma_{t,PP}T_{PP}),\qquad
+ y=\operatorname{Tr}(\sigma_{t,QP}T_{PQ}).
+$$
+$PT=T$、常数期望及其导数给出
+$$
+ x+y=a,\qquad
+ \frac{x}{1+t}-\frac{t\,y}{1-t^2}=0,
+ \qquad x=at,\quad y=a(1-t).
+\tag{211.8}
+$$
+第二个等式使用了 $\sigma'_t=\mathcal S_t(\sigma_t)$。它也说明 $x,y$ 均为实数，即使原算子不为实矩阵。
+
+令 $K_u=\sqrt{(1+u)/2}\,P+\sqrt{(1-u)/2}\,Q$，并冻结辅助曲线
+$\widehat\sigma_u=K_uK_t^{-1}\sigma_tK_t^{-1}K_u$。
+这条辅助曲线光滑，满足 $\widehat\sigma'_u=\mathcal S_u(\widehat\sigma_u)$，并在 $t$ 与实际曲线具有相同的值和一阶导数。由（211.8），
+$$
+ \operatorname{Tr}(\widehat\sigma_uT)
+ =\frac{1+u}{1+t}\,at
+  +\frac{\sqrt{1-u^2}}{\sqrt{1-t^2}}\,a(1-t),
+ \qquad
+ \operatorname{Tr}(\widehat\sigma''_tT)=-\frac a{c_t}.
+\tag{211.9}
+$$
+实际残差 $R$ 未必可微，但其标量像
+$$
+ e(u):=\operatorname{Tr}(R_uM)
+      =-\operatorname{Tr}[\sigma_u\mathcal S_u(M)]
+\tag{211.10}
+$$
+是 $C^1$：这里用到了 $\operatorname{Tr}(\sigma'_uM)=0$，而右侧只含 $C^1$ 实际态及光滑固定算子。对（211.10）求导，在 $t$ 使用 $\sigma'_t=\mathcal S_t(\sigma_t)$ 及 $\mathcal S_t$ 的迹配对自伴性，得到
+$$
+ e'(t)=-\operatorname{Tr}[
+   (\mathcal S'_t(\sigma_t)+\mathcal S_t^2(\sigma_t))M]
+ =-\operatorname{Tr}(\widehat\sigma''_tM)=\frac a{c_t}.
+\tag{211.11}
+$$
+被求二阶导数的是辅助冻结曲线，未对实际曲线附加二阶光滑性。因此
+$e(u)=(a/c_t)(u-t)+o(|u-t|)$。
+
+还需证明名义态的统一方差界
+$$
+ \operatorname{Tr}[\sigma_t(M-aI)^2]\le V_*(a,t).
+\tag{211.12}
+$$
+将 $\sigma_t$ 纯化为单位向量 $\psi$，并将 $P,Q,T$ 张量辅助恒等算子；全部算子关系及期望值保留。置 $p=P\psi$、$q=Q\psi$，则 $\|p\|^2=h$、$\|q\|^2=\ell$。第211.8式等价于
+$\langle p,Tp\rangle=at$、$\langle p,Tq\rangle=2a\ell$。
+对于 $k=T\psi$ 与 $r=T^\dagger p$，作相对于 $\operatorname{span}\{p,q\}$ 的正交分解，得到
+$$
+ k=\frac ahp+k_\perp,\qquad
+ r=\frac{at}{h}p+2aq+r_\perp.
+\tag{211.13}
+$$
+由于 $PT=T$，$k$ 没有 $q$ 分量；上述期望恒等式给出其余投影系数。压缩性给出
+$$
+ \|k_\perp\|^2\le1-\frac{a^2}{h},\qquad
+ \|r_\perp\|^2
+ \le h-\frac{a^2t^2}{h}-4a^2\ell
+ =h-\frac{a^2}{h}.
+\tag{211.14}
+$$
+又因 $T^\dagger\psi=T^\dagger p$ 及 $1+t=2h$，有
+$(M-aI)\psi=(k_\perp+r_\perp)/2$。
+三角不等式给出（211.12）。
+
+最后，方差 $v(u)=\operatorname{Tr}[\sigma_u(M-aI)^2]$ 连续。对于任意 $\varepsilon>0$，充分接近 $t$ 时有 $v(u)\le V_*+\varepsilon$。将这一估计与（211.11）代入（211.7），再取下极限及 $\varepsilon\downarrow0$，得到（211.3）。此论证覆盖 $v(t)=0$、秩变化和信息量不连续的情形；其中没有使用 $R'_t$ 的存在。证毕。
+

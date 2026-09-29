@@ -1,0 +1,22 @@
+**推论 246.2（二维参考的精确最小成本）。** 设
+$$
+C_2(\epsilon)=\inf\left\{
+E_F(\Omega):r_E(\Omega)\le2,\quad g(\Omega)\ge D-\epsilon
+\right\},\qquad\epsilon\ge0.
+\tag{246.12}
+$$
+$B>0$ 时，
+$$
+\boxed{
+C_2(\epsilon)=
+\begin{cases}
+H_2\!\left(
+\dfrac{1+\sqrt{4\epsilon(\sqrt{A+B}-\epsilon)/B}}2
+\right),&0\le\epsilon<\delta,\\[6pt]
+0,&\epsilon\ge\delta.
+\end{cases}
+}
+\tag{246.13}
+$$
+$B=0$ 时所有 $\epsilon\ge0$ 都有 $C_2(\epsilon)=0$。
+

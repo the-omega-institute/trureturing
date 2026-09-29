@@ -1,0 +1,44 @@
+### 122.6 ABCCC 中最后两个方向必须正交
+
+只剩尾词 $ABCCC$。继续使用五维实际 $E$ 及其纤维 $Y_B,Y_C$。若 $\dim Y_C=2$，则 $G_3=G_4$，与它们当前方向不同及第122.1节冲突。因此
+
+$$
+\dim Y_C=3,\qquad \dim Y_B=2,
+\qquad E=(Y_B\otimes B)\dotplus(Y_C\otimes C).
+\tag{122.10}
+$$
+
+定义实际输入子空间
+
+$$
+X_C=(V_1|_{S_0})^{-1}(Y_C\otimes C),\qquad \dim X_C=3.
+$$
+
+实际 $G_3,G_4,G_5\subset X_C$。若 $G_4\ne G_5$，它们张成三维 $P_C$，也张成三维 $X_C$，从而 $G_3\subset P_B\cap P_C=P$，即 $G_3=P$，违反引理122.2。因此
+
+$$
+G_4=G_5=:T,\qquad H_3=H_4.
+\tag{122.11}
+$$
+
+$G_3\ne T$，所以 $G_3+T=X_C$。
+
+三维 $Y_C$ 使 $C\in\mathcal Z$。同时 $C\in\mathcal A=\mathcal Z^\perp$，所以 $C^\perp$ 必为 $A$ 或 $B$。反设 $C^\perp=A$。此时 $\mathcal Z=\{A,C,B^\perp\}$，第三条 $B$ 不属于 $\mathcal Z$，故 $Q_3=Q$。完整一位 $C$ 纤维为
+
+$$
+Y_C=F_C=Q\oplus\mathbb Cd_C,
+\qquad 0\ne d_C\in D.
+$$
+
+将（122.11）投影到 $S_0=Q^\perp$，得到
+
+$$
+G_3=P_{S_0}H_3=P_{S_0}H_4\subset T+\mathbb Cd_C.
+$$
+
+两边连同 $T$ 的跨度为三维，所以 $X_C=T+\mathbb Cd_C$，特别 $d_C\in X_C$。可是 $d_C\otimes C\in R_1$ 与 $T\otimes C\subset R_0$ 正交，给 $d_C\perp T$；$B\ne C^\perp=A$，与 $G_3\otimes B$ 的跨位正交还给 $d_C\perp G_3$。于是非零 $d_C\in X_C\cap X_C^\perp$，矛盾。
+
+只能 $C^\perp=B$，即 $B\perp C$。其余两个尾词及全部两尾均已排除，至此得到（122.3）的必要形态收缩；下面排除最后一个正交回返分支。
+
+在最后的必要形态中，还保留了同一个实际三维 $X_C$、两维 $T=G_4=G_5$、$H_3=H_4$，以及完整实际尾纤维尺寸 $(\dim Y_B,\dim Y_C)=(2,3)$。这些都是同一实际来源的共同约束。
+

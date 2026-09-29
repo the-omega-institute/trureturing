@@ -1,0 +1,74 @@
+### 296.5 可实现概率表的逐项合法性
+
+存在只依赖 $k$ 的整数 $K_0$，使 $K\ge K_0$ 时
+$$
+c_i\le u_{++}\ \Longrightarrow\ \beta_i<1.
+\tag{296.15}
+$$
+证明如下。对每个固定 $m$，将 $m$ 次有放回抽样与无放回抽样耦合；只有发生重复抽样时全成功概率才可能不同。因此
+$$
+0\le(i/K)^m-\frac{(i)_m}{(K)_m}
+\le\frac{m(m-1)}{2K}
+\tag{296.16}
+$$
+对全部 $i$ 成立，包括 $i<m$。
+
+选择固定 $m_0$，使
+$$
+\sup_{0\le z\le1-u_{++}/C_*}
+\sum_{m>m_0}\frac{z^m}{m}\le\kappa/32.
+$$
+上限严格小于一，所以这样一个 $m_0$ 存在。记
+$$
+A_{m_0}=\frac12\sum_{m=1}^{m_0}4^m(m-1).
+$$
+取
+$$
+K_0\ge
+\max\left\{1,\left\lceil m_0/\zeta_k\right\rceil,
+\left\lceil32A_{m_0}/\kappa\right\rceil\right\}.
+\tag{296.17}
+$$
+此时 $d\ge m_0$。如果 $c_i\le u_{++}$，则
+$Bi/K\ge1-u_{++}/C\ge0$。由（296.16）及各项非负，
+$$
+\begin{aligned}
+\sum_{m=1}^{d}\frac{B^m}{m}\frac{(i)_m}{(K)_m}
+&\ge
+\sum_{m=1}^{m_0}\frac{(Bi/K)^m}{m}
+-\frac{A_{m_0}}K\\
+&\ge
+\log(C/u_{++})-\kappa/32-\kappa/32\\
+&=\log C+\kappa/16.
+\end{aligned}
+$$
+代入（296.10）得
+$$
+\beta_i\le1-\frac1{16D}<1,
+$$
+证明（296.15）。此证明甚至覆盖 $c_i\le0$；只在正的固定阈值
+$u_{++}$ 上使用对数级数。
+
+在中间区域 $v<c_i<u$，（296.14）另外给
+$$
+\beta_i\ge L(c_i)\ge1-\frac{5/2}{D}\ge1/11.
+$$
+结合 $c_i<u<u_{++}$，所以这里的 $\beta_i$ 确实属于 $[0,1]$。
+
+现在定义真正的决定零概率表
+$$
+a_i=
+\begin{cases}
+1,&c_i\ge u,\\
+\beta_i,&v<c_i<u,\\
+0,&c_i\le v.
+\end{cases}
+\tag{296.18}
+$$
+对于 $K\ge K_0$，每个 $a_i$ 均合法。实际协议观察 $J$，再以概率 $a_J$ 输出零；其实际响应为
+$$
+f_K(c)=\mathbb E_c a_J.
+\tag{296.19}
+$$
+完整 $n=1$ 情形属于§294的真实计数决策集合；先 reset 情形是自身可访问记录的合法后处理。两者都只使用一个真实 Bernoulli 子实验，上界不要求该子实验保留全部输入信息。
+

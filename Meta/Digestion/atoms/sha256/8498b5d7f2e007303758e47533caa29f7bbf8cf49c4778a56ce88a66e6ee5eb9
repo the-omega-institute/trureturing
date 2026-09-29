@@ -1,0 +1,43 @@
+**证明。** 行列式、特征值和固定点由二阶多项式计算。令
+
+$$
+w=\frac{\tau-\varphi}{\tau-\varphi'}.
+$$
+
+它是保持上半平面的实 Möbius 变换，且
+$w(A\tau)=\varphi^{-4}w(\tau)$。连接两个固定点的测地线被送到虚轴；沿该轴的距离为
+$|\log(\varphi^{-4})|=4\log\varphi$。∎
+
+世界面环面基圈的模变换是标准弦微扰积分中的结构。[ST-Tong6] 本命题将仓内实际黄金矩阵放入这个群作用，给出可复核的表示接口。一个模群元素没有独自选定物理真空或物理时间；两个边界固定点也不构成位于物理模空间内部的固定点。
+
+### 推论 ST6.2：常用的双曲模长度下界
+
+对任意双曲 $A'\in SL_2(\mathbb Z)$，$|\operatorname{tr}A'|$ 是至少为3的整数。其伸缩因子（特征值模）$\lambda>1$ 满足
+$\lambda+\lambda^{-1}=|\operatorname{tr}A'|$。因此
+
+$$
+\ell(A')=2\log\lambda\ge4\log\varphi,
+$$
+
+黄金双更新达到该界。这里固定了曲率为 $-1$ 的双曲度量规范；它是模群几何的经典极值，不能直接用来推导宇宙的最短时间或长度。
+
+### 命题 ST6.3：弦框架与 Einstein 框架中的钟相位相容
+
+在 $D>2$、允许该场重定义的区域，写
+
+$$
+G_E=\Omega^2G_s,
+\qquad\Omega=e^{-2\Phi/(D-2)}.
+$$
+
+同一路径的固有时满足 $d\tau_E=\Omega\,d\tau_s$。对同一个两能级绝热探针，若完整钟作用量按该重定义运输，则其局部能隙满足
+$\Delta E_E=\Omega^{-1}\Delta E_s$，因此
+
+$$
+\boxed{
+\int\frac{\Delta E_E\,d\tau_E}{\hbar}
+=\int\frac{\Delta E_s\,d\tau_s}{\hbar}.
+}
+\tag{ST6.2}
+$$
+

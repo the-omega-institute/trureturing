@@ -1,0 +1,24 @@
+**定理162.1（统一一侧包络与全时域连续性）。** 对全部 $t\in P$、$N\ge3$，
+
+$$
+\boxed{
+0\le E_\infty(t)-B_N(t)\le\zeta_N.
+}
+\tag{162.5}
+$$
+
+因此 $E_\infty$ 在 $P$ 上连续。并且对任意 $t,u\in P$，
+
+$$
+\boxed{
+|E_\infty(t)-E_\infty(u)|
+\le
+\max\left\{
+\max_{1\le n<N}|e_n(t)-e_n(u)|,\
+\sup_{z\in G}|h(t,z)-h(u,z)|
+\right\}
++\zeta_N.
+}
+\tag{162.6}
+$$
+

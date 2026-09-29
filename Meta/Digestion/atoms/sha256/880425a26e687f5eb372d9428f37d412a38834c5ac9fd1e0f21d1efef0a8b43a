@@ -1,0 +1,8 @@
+**命题 1.4。** If $L$ is a positive odd integer, the padded binary divisibility language
+$$
+\mathcal B_L
+=\{w\in\{0,1\}^*:\operatorname{val}_{\mathrm{bin}}(w)\equiv0\pmod L\}
+\tag{TM.530}
+$$
+has a complete minimal DFA with exactly $L$ states. Here $\operatorname{val}_{\mathrm{bin}}$ denotes ordinary binary evaluation, including $\operatorname{val}_{\mathrm{bin}}(\varepsilon)=0$.
+

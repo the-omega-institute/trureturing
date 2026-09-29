@@ -1,0 +1,8 @@
+**定义 36.1（相容状态与命题）。** 固定非空模型状态空间 $\Omega$ 与读数 $q:\Omega\to B$。对 $\omega\in\Omega$ 定义
+
+$$
+F_q(\omega)=\{\eta\in\Omega:q(\eta)=q(\omega)\}.
+$$
+
+它记录在此模型中给出同一读数的状态，且因包含 $\omega$ 而非空。命题用集合 $P\subseteq\Omega$ 表示：$\omega\in P$ 表示该命题在状态 $\omega$ 为真。这里的相容状态不是已被证明存在的平行世界；它们是所声明模型尚未区分的候选。
+

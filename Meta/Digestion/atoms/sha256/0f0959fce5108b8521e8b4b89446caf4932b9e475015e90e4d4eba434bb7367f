@@ -1,0 +1,42 @@
+### 260.1 来源、竞争态与误差合同
+
+固定§256的同一输入与参考接口，以及可信已标定的两条非平行输入方向。由完整响应定义
+$$
+K_\Omega=
+\frac{\mathcal R_a(\Omega)+\mathcal R_b(\Omega)}{2\sqrt A}
+-i\,\frac{\mathcal R_a(\Omega)-\mathcal R_b(\Omega)}{2b_0},
+\qquad A\ge B>0,\quad b_0^2=B.
+\tag{260.1}
+$$
+在明确的 $Y$ 输入基中，$K_\Omega$ 是联合矩阵非对角块的两倍。
+
+理想源为纯纠缠态
+$$
+\Omega_\psi=|\psi\rangle\langle\psi|,
+\qquad
+\rho=\operatorname{Tr}_H\Omega_\psi,
+\qquad
+S=\operatorname{supp}\rho.
+\tag{260.2}
+$$
+qubit 输入使 $\dim S=2$。记 $\rho_S=\rho|_S$，并定义
+$$
+\lambda_{\min}=\lambda_{\min}(\rho_S)>0,\qquad
+\lambda_{\max}=\lambda_{\max}(\rho_S),\qquad
+\kappa(\rho)=\frac{\lambda_{\max}}{\lambda_{\min}}.
+\tag{260.3}
+$$
+环境中的零本征值不计入此条件数。
+
+竞争态 $\Xi$ 是同一联合空间上的任意归一化正半定态，唯一额外限制是
+$$
+\operatorname{Tr}_H\Xi=\rho.
+\tag{260.4}
+$$
+它不必纯、不必纠缠，也不必响应饱和。误差为
+$$
+\delta=\|K_\Xi-K_{\Omega_\psi}\|_1,
+\tag{260.5}
+$$
+其中核范数以及以下联合态迹范数均未除以二。
+

@@ -1,0 +1,19 @@
+**证明及精度。** 正实数的名字可用于搜索一个正有理下界：若 $|v(t)-w|\le2^{-t}$，等待 $v(t)-2^{-t}>0$，再取其一半。对有限层逐个执行，所有搜索都终止。设已得 $0<\ell<w$，对 $y=\nu(C)\in[0,1]$ 和 $w$ 作误差至多 $\alpha<\ell/2$ 的有理近似 $\widetilde y,\widetilde w$，则 $\widetilde w>\ell/2$，且
+$$
+\left|\frac{\widetilde y}{\widetilde w}-\frac y w\right|
+\le\frac{2\alpha}{\ell}+\frac{2\alpha}{\ell^2}.
+$$
+因此可有效选择 $\alpha$，将每个密度比计算到任意要求的绝对精度；有限最大值不放大共同误差。
+
+对要求 $2^{-k}$ 的质量精度，取 $n=N(k+2)$，计算有理 $d_n$，使 $|d_n-D_n|\le2^{-k-2}$，并令 $\widetilde D_n=\max(1,d_n)$。因 $D_n\ge1$，截断不增加误差。倒数在 $[1,\infty)$ 上满足
+$$
+\left|\frac1x-\frac1y\right|=\frac{|x-y|}{xy}\le|x-y|.
+$$
+于是输出 $1/\widetilde D_n$ 的误差满足
+$$
+\left|\frac1{\widetilde D_n}-M\right|
+\le2^{-k-2}+\varepsilon_{N(k+2)}
+\le2^{-k-1}<2^{-k}.
+$$
+实际算法只遍历完整分割并计算实际权重及条件概率。$A_n,R_n$ 只用于正确性证明，没有隐藏的非空性查询。证毕。
+

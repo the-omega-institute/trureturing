@@ -1,0 +1,15 @@
+## ST27–ST33 参考文献
+
+[ST27-KL]: https://doi.org/10.1103/PhysRevA.55.900 "E. Knill and R. Laflamme, Theory of Quantum Error-Correcting Codes; Phys. Rev. A 55, 900 (1997), DOI 10.1103/PhysRevA.55.900. Classical correction conditions and syndrome factorization."
+[ST27-BO]: https://arxiv.org/abs/0907.5391 "C. Beny and O. Oreshkov, General Conditions for Approximate Quantum Error Correction and Near-Optimal Recovery Channels, Phys. Rev. Lett. 104, 120501 (2010). Complementary-channel optimization is background, not a substitute for the direct proof in ST30."
+[ST27-EA]: https://arxiv.org/abs/1110.4806 "B. Trendelkamp-Schroer, J. Helm and W. T. Strunz, Environment-Assisted Error Correction of Single-Qubit Phase Damping, Phys. Rev. A 84, 062314 (2011). Prior phase-damping/environment-assisted correction mechanism and mixed-environment caveats."
+[ST27-Steering]: https://arxiv.org/html/2603.02552v1 "A. Lanka, J. Garcia-Nila and T. A. Brun, Steering paths mid-flight for fault-tolerance in measurement-based holonomic gates, arXiv:2603.02552v1 (3 March 2026), especially III.1–III.4. Preprint status retained."
+[ST27-Gauss]: https://arxiv.org/abs/2604.06087 "J. P. Lacambra, A. Chatwin-Davies, M. Honda and P. A. Hoehn, Gauss law codes and vacuum codes from lattice gauge theories, arXiv:2604.06087 (April 2026). Abstract-level scope checked; not an input to the finite matrix proofs."
+[ST27-Subbundle]: https://arxiv.org/abs/2503.17163 "M. A. Oancea, T. B. Mieling and G. Palumbo, Quantum geometric tensors from sub-bundle geometry, Quantum 10, 1965 (2026). General ambient/sub-bundle geometry belongs to the cited work."
+
+---
+
+---
+
+<a id="observer-constructive-recovery-closure"></a>
+

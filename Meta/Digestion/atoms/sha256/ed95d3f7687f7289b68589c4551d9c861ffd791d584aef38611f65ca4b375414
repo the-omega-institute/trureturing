@@ -1,0 +1,70 @@
+### 188.2 正确块的精确偶宇称矩阵
+
+记 $e_\epsilon(m,n)$ 为该构造的完整半 diamond 恢复误差。
+对原输入 $j$，正确输出块为
+
+$$
+\sigma_{jj}
+=\frac12\sum_{s=\pm1}
+(\operatorname{id}_M\otimes\Gamma_{j,s})(\eta_s(w_j)).
+$$
+
+置
+
+$$
+B_0=2n^2,\qquad B_1=1-2n^2-4m^2,\qquad
+\varsigma_0=-1,\quad\varsigma_1=1,
+$$
+
+$$
+\begin{aligned}
+a_j&=\frac12+w_j[\beta(B_j-\tfrac12)+2\varsigma_j\gamma n],\\
+t_j&=m[1-\beta w_j+2\varsigma_j\gamma n\,w_j],\\
+g_j&=2m^2(1-\beta w_j).
+\end{aligned}
+\tag{188.4}
+$$
+
+旗标平均消去偶、奇宇称之间的块；在 $|00\rangle,|11\rangle$
+张成的偶宇称空间上，直接计算得到
+
+$$
+\boxed{
+\sigma_{jj}^{\mathrm{even}}
+=\begin{pmatrix}
+ra_j&\sqrt{r\ell}\,t_j\\
+\sqrt{r\ell}\,t_j&\ell g_j
+\end{pmatrix}.
+}
+\tag{188.5}
+$$
+
+例如，对主 Kraus 有
+$\sum a\overline d=m$、
+$\sum a\overline b=s\varsigma_j i n$；
+额外 $J$ 只增加结果 $1$ 的 $B_1$，不增加相干项。
+这些量给（188.4）的全部交叉项符号。
+
+对 $q\in[0,1]$，记
+$u_q=(\sqrt q,\sqrt{1-q})^{\mathsf T}$，并定义
+
+$$
+M_q(x_0,x_1)=P_{u_q}-\operatorname{diag}(qx_0,(1-q)x_1).
+$$
+
+第173节的完整参考归约与（188.5）给
+
+$$
+\boxed{
+e_\epsilon(m,n)
+=\max_{q\in[0,1]}\lambda_{\max}
+\begin{pmatrix}
+rM_q(a_0,a_1)&\sqrt{r\ell}\,M_q(t_0,t_1)\\
+\sqrt{r\ell}\,M_q(t_0,t_1)&\ell M_q(g_0,g_1)
+\end{pmatrix}.
+}
+\tag{188.6}
+$$
+
+目标只在偶宇称中，奇宇称的实际输出差半负定，所以不增加正本征值。式（188.6）优化全部原输入参考权重，不是只用等权输入给下界。
+

@@ -1,0 +1,52 @@
+### 70.2 一阶展开与事件范数
+
+令
+
+$$
+w=x+y,\qquad R_0=|w\rangle\langle w|.
+$$
+
+它满足 $\operatorname{Tr}_D R_0=I_A\otimes|0\rangle\langle0|$，所以 $R_0\in\mathcal C$。在固定有限维算符空间中，
+
+$$
+R_\varepsilon=R_0+\varepsilon H_r+O_r(\varepsilon^2),
+\tag{70.7}
+$$
+
+其中
+
+$$
+\begin{aligned}
+H_r={}&-\frac12\bigl(|rx+y\rangle\langle w|
++|w\rangle\langle rx+y|\bigr)\\
+&+\sqrt r\bigl(|z\rangle\langle w|+|w\rangle\langle z|\bigr)\\
+&+|\sqrt r\,x'-z'\rangle\langle\sqrt r\,x'-z'|.
+\end{aligned}
+\tag{70.8}
+$$
+
+确实，第一向量为 $w+\varepsilon(-rx/2-y/2+\sqrt r\,z)+O_r(\varepsilon^2)$，第二向量的外积为式（70.8）第三行乘以 $\varepsilon$，加 $O_r(\varepsilon^2)$。特别地，
+
+$$
+\operatorname{Tr}H_r=0,\qquad
+\operatorname{Tr}_D H_r=-|10\rangle\langle10|+|11\rangle\langle11|.
+\tag{70.9}
+$$
+
+$N$ 是有限维实厄米空间上的范数。正齐次性和三角不等式直接来自式（70.4）。对任意厄米 $X$，取合法反馈 $C=I_{AB}/2$，再分别取 $E=P_+(X)/2$、$E=P_-(X)/2$，得到
+
+$$
+N(X)\ge\frac12\max\{\operatorname{Tr}X_+,\operatorname{Tr}X_-\}
+\ge\frac14\|X\|_1.
+\tag{70.10}
+$$
+
+这里 $X=X_+-X_-$ 是正负部分分解。另一方面，$\operatorname{Tr}C=2$ 给 $\|E\|_\infty\le2$，所以
+
+$$
+N(X)\le2\|X\|_1.
+\tag{70.11}
+$$
+
+这同时证明正定性、连续性及与迹范数的等价。因果集合 $\mathcal C$ 是含 $R_0$ 的紧凸集：它由闭约束给出，且所有元素正、迹恒为 $2$。
+

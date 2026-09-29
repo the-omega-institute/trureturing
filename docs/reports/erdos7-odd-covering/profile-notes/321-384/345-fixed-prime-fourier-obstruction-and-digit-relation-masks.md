@@ -278,7 +278,7 @@ They isolate a limitation of local character probes.
 
 ## 6. Exact verification
 
-The [standalone program](../../frontier/cover-geometry/original_digit_relation_masks.py)
+The [standalone program](../../frontier/cover-geometry/original-digit-relation-masks/original_digit_relation_masks.py)
 uses Python standard-library integers, fractions and exact cyclotomic
 reduction. It writes no files. The default `p=7,t=2` case has588 original
 labels, residual period343 and49 holes. It verifies345744 private-point
@@ -289,8 +289,8 @@ exactly. A separate `t=4` state check verifies49 reachable states,1176
 distinguishable state pairs and2801 proper-prefix cells.
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_digit_relation_masks.py
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_digit_relation_masks.py --prime 11 --depth 1
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-digit-relation-masks/original_digit_relation_masks.py
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-digit-relation-masks/original_digit_relation_masks.py --prime 11 --depth 1
 ```
 
 The arbitrary-height Fourier and state-width statements are the

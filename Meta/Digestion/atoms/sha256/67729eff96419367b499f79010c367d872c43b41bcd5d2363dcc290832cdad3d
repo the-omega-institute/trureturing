@@ -1,0 +1,74 @@
+### 75.4 一个固定反馈事件给出定量矛盾
+
+选择固定反馈
+
+$$
+C=\operatorname{diag}\left(\frac14,1,\frac34,0\right),
+\qquad L=C^{1/2}\otimes I_D,
+\qquad v_+=\frac{\sqrt3}{2}x+\frac12y.
+$$
+
+它满足 $\operatorname{Tr}_A C=I_B$，且 $v_+$ 为单位向量。因此
+
+$$
+E=L|v_+\rangle\langle v_+|L
+=\frac3{16}|w\rangle\langle w|
+\tag{75.15}
+$$
+
+是合法事件；它在整个推导中不随 $K$ 变化。
+
+由一阶早边缘与因果约束，同一反馈总事件的响应为
+
+$$
+\operatorname{Tr}(Y(C\otimes I_D))=-\frac34.
+$$
+
+其互补事件 $C\otimes I_D-E$ 也合法。因此，式（75.14）给
+
+$$
+\begin{aligned}
+N(Y)
+&\ge-\operatorname{Tr}\bigl(Y(C\otimes I_D-E)\bigr)\\
+&=\frac34+\frac3{16}\langle w|Y|w\rangle\\
+&\ge\frac38(p+t+s)
+\ge\frac98\ell_g.
+\end{aligned}
+\tag{75.16}
+$$
+
+现在仅需比较显式常数。若 $0\le g\le1/400$，则
+
+$$
+d_g^2=(1+2g)g\le\frac{201}{80000}<\frac1{361},
+$$
+
+最后一步等价于 $201\cdot361=72561<80000$。所以 $d_g<1/19$，式（75.8）、（75.16）给
+
+$$
+N(Y)\ge\frac98\ell_g
+>\frac98\frac{(18/19)^2}{1+g}
+=\frac{729}{722(1+g)}.
+\tag{75.17}
+$$
+
+若误差假设（75.4）成立，便必须有
+
+$$
+(1+g)^2>\frac{729}{722}.
+$$
+
+但同一参数范围内
+
+$$
+(1+g)^2\le\left(\frac{401}{400}\right)^2
+=\frac{160801}{160000}<\frac{729}{722},
+\tag{75.18}
+$$
+
+矛盾。这排除了所有满足式（75.4）的 $K\in\mathcal T$。
+
+特别地，没有切向修复能达到误差 $401/400$ 或更小。第 70 节已经证明切锥距离的极小值达到，所以严格下界（75.1）成立。再用 $\Gamma\ge\gamma_1$ 与第 73 节的显式统一上界，即得（75.2）。$\square$
+
+该下界使用固定尺度 $r=1$ 和一个固定补事件，未求解真实最优切向修复，也不定位使 $\gamma_r$ 最大的参数。它提供了明确的系数下界，与同一完整 tester 合同下的显式统一上界共同约束最坏渐近误差。
+

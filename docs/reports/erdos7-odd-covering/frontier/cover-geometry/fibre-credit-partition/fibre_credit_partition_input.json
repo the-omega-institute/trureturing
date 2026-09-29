@@ -1,0 +1,9 @@
+{
+  "q_primes": [5, 7, 11, 13, 17, 19, 23],
+  "retained_mass_floor": [2, 15],
+  "hinge_upper": [27, 20],
+  "query_upper": [105, 8],
+  "density_upper": [26, 1],
+  "later_primes": [29, 31],
+  "haar_floor": [1, 3300]
+}

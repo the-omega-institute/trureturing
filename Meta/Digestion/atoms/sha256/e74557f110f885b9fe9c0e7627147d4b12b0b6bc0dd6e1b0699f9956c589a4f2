@@ -1,0 +1,49 @@
+**推论28.3（统一的缓变细化界）。** 任取 $`\eta>0`$，令
+
+$$
+u_j=\frac{C_\eta}{\sqrt{(j+2)[\log(j+2)]^{1+2\eta}}},
+\qquad
+C_\eta=\left(\sum_{j=0}^{\infty}
+\frac1{(j+2)[\log(j+2)]^{1+2\eta}}\right)^{-1/2}.
+\tag{28.25}
+$$
+
+该序列正、非增且平方和为一。令 $`k=\lfloor\log_2n\rfloor`$ 及
+
+$$
+L_{\epsilon,\eta}(n)=\frac1{c_{\rm hist}\epsilon u_k}\ge1.
+\tag{28.26}
+$$
+
+则定理28.2的一套接收器满足
+
+$$
+\dim K_n\le
+4P\left(\Theta,\frac{n^{-1/2}}{L_{\epsilon,\eta}(n)}\right)+1,
+\qquad
+L_{\epsilon,\eta}(n)
+=\Theta_{\epsilon,\eta}\!\left(
+\sqrt{\log n}\,(\log\log n)^{1/2+\eta}\right)
+\quad(n\to\infty).
+\tag{28.27}
+$$
+
+对 $`0<r\le1`$ 和 $`L\ge1`$，圆上的分离数满足
+
+$$
+P(\Theta,r/L)\le(\lfloor2L\rfloor+1)P(\Theta,r).
+\tag{28.28}
+$$
+
+事实上，极大的 $`r`$ 分离集的半径 $`r`$ 弧覆盖 $`\Theta`$；把一份 $`r/L`$ 分离集的点逐一分配到这些弧，每条弧长 $`2r\le2<\pi`$，至多容纳 $`\lfloor2L\rfloor+1`$ 个这样的点。因此同一接收器还有统一于候选集的界
+
+$$
+\dim K_n
+=O_{\epsilon,\eta}\!\left(
+P(\Theta,n^{-1/2})\sqrt{\log n}\,
+(\log\log n)^{1/2+\eta}+1\right).
+\tag{28.29}
+$$
+
+式（28.25）—（28.28）适用于全部 $`n\ge1`$；（28.29）以 $`n\to\infty`$ 理解。
+

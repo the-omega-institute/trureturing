@@ -1,0 +1,14 @@
+**定理 30.3（固定耗散强度下的定时最优旋转与控制代价）。** 固定 $\gamma>0$ 和目标时间 $T>0$，在全部常数 $\omega$ 中优化时，两种模型均满足
+\[
+ \boxed{\min_{\omega\in\mathbb R}c_{\gamma,\omega}(T)=e^{-\gamma T}.}
+\]
+最小绝对值的达到频率为
+\[
+ |\omega_T|=\sqrt{\gamma^2/4+\pi^2/T^2}.
+\]
+若另外要求 $|\omega|\le\Omega<\infty$，则仅当 $\Omega\ge|\omega_T|$ 才能达到上述下界；对固定 $\Omega$ 的小时间极限，
+\[
+ \inf_{|\omega|\le\Omega}c_{\gamma,\omega}(T)
+ =1-\frac{\gamma\Omega^2}{6}T^3+O(T^4).
+\]
+

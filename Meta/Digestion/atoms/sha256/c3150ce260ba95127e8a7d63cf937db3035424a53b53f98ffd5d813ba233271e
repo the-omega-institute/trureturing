@@ -1,0 +1,19 @@
+**命题173.5（二元测量的调和型精确目标）。** 对 $0\preceq E\preceq I_K$ 置
+
+$$
+a_E=\operatorname{Tr}(E\kappa_0),\qquad
+b_E=\operatorname{Tr}((I-E)\kappa_1),
+\qquad \frac{a_Eb_E}{a_E+b_E}:=0\quad\text{若 }a_E+b_E=0.
+$$
+
+则
+
+$$
+\boxed{
+e\ge e_{\mathrm{bit}}
+=1-\max_{0\preceq E\preceq I_K}\frac{a_Eb_E}{a_E+b_E}
+\ge\frac{3-d_K}{4}.
+}
+\tag{173.12}
+$$
+

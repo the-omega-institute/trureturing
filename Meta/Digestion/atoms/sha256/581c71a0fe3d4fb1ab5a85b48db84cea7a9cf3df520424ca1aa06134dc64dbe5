@@ -1,0 +1,52 @@
+**推论166.2（端点质量的尺度）。** 固定 $\Delta>0$，当 $y\downarrow0$ 时，
+
+$$
+\boxed{
+F_\Delta(\ell+y)
+\sim\frac4{\pi\sqrt{\Delta}}\sqrt y,
+\qquad
+f_\Delta(\ell+y)
+\sim\frac2{\pi\sqrt{\Delta}}\frac1{\sqrt y}.
+}
+\tag{166.10}
+$$
+
+在另一端，
+
+$$
+\boxed{
+1-F_\Delta(u_\Delta-y)
+\sim
+\frac{\sqrt{9+28\Delta}}{\pi\Delta}\,y,
+\qquad
+\lim_{x\uparrow u_\Delta}f_\Delta(x)
+=\frac{\sqrt{9+28\Delta}}{\pi\Delta}.
+}
+\tag{166.11}
+$$
+
+**证明。** 由（166.3），
+$\psi_\Delta'(1)=-\Delta/2$，所以
+
+$$
+1-s_\Delta(\ell+y)\sim\frac{2y}{\Delta}.
+$$
+
+再用
+$\arccos(1-z)\sim\sqrt{2z}$ 及
+$1-s^2\sim2(1-s)$，得到（166.10）。
+
+又
+$\psi_\Delta'(0)=-2\Delta/\sqrt{9+28\Delta}$，故
+
+$$
+s_\Delta(u_\Delta-y)
+\sim\frac{\sqrt{9+28\Delta}}{2\Delta}\,y.
+$$
+
+由
+$1-F_\Delta(x)=(2/\pi)\arcsin s_\Delta(x)$
+及 $\arcsin z\sim z$，得到（166.11）。证毕。
+
+因此，同样窄的误差窗口在两端包含不同数量级的比较相位：靠近最低误差的质量按窗口宽度的平方根增长，靠近最高误差的尾质量按宽度线性增长。下端密度虽然无界，仍可积，也不形成原子。
+

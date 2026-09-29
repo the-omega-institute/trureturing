@@ -1,0 +1,26 @@
+### 7.2 行商、列商与评价方格
+
+令
+
+$$
+X_R:=X/\ker(\Sigma),qquad
+P_C:=P/\ker(\Gamma).
+$$
+
+由 (TM.469)，$S_\delta$ 在行像上下降到一个映射 $\bar S_\delta$，$T_F$ 在列像上下降到 $\bar T_F$。评价本身也下降为
+
+$$
+\bar E([x],[p])=E(x,p),
+$$
+
+前提是代表元改变时行、列相等都保持 $E$ 的值。于是
+
+$$
+\bar\Sigma\circ\bar F=\bar S_\delta\circ\bar\Sigma,
+\qquad
+\bar\Gamma\circ\bar\delta=\bar T_F\circ\bar\Gamma,
+\tag{TM.470}
+$$
+
+并且状态更新、协议续接与双侧评价组成交换方格。`UnifiedObserverRepresentation` 与 `DoubleExtensionalQuotientUniversality` 支撑静态行列商；`DynamicProfileCausalClosure` 支撑状态 profile 的右移，(TM.468)—(TM.470) 补上协议轴的动态回拉。
+

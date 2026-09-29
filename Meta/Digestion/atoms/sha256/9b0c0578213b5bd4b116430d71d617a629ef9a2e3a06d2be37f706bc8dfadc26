@@ -1,0 +1,9 @@
+**定义 209.1（共同问题是否有足够的区分力）。** 一族读数 $q_i:X\to V_i$ 若满足
+
+$$
+\forall x,x'\in X,\quad
+\bigl(\forall i,\ q_i(x)=q_i(x')\bigr)\Longrightarrow x=x',
+$$
+
+就共同区分 $X$ 的所有状态。项目 [JointFaithfulnessLeibnizCriterion](../../../D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean) 的 `joint_faithfulness_tfae` 将它与联合读数 $x\mapsto(q_i(x))_i$ 的单射性、所有读数核的交为相等关系联系起来。它是关于指定空间和指定问题族的条件，不是“一切在本体上相同”的前提。
+

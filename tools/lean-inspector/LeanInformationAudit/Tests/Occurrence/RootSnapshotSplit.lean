@@ -1,27 +1,33 @@
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Occurrence.RootCatalog.Snapshot
 
-open Lean LeanInformationAudit
+open Lean Lean.Elab.Command LeanInformationAudit
+open LeanInformationAudit.Tests.Occurrence.RootCatalog
 
 namespace LeanInformationAudit.Tests.RootSnapshotSplit
 
 run_cmd do
-  let empty ← Lean.Elab.Command.liftIO mkEmptyEnvironment
-  let frozen := expectedOccurrencesForRoot empty frozenInformationRootId
-  let designated := expectedOccurrencesForRoot empty designatedInformationRootId
-  unless frozen.size == 11 && designated.size == 13 do
-    throwError "ROOT-B-snapshot-split: expected frozen=11 designated=13, \
-      got {frozen.size}/{designated.size}"
-  unless frozen.all (fun row => row.registrationModuleName == frozenInformationRootId) do
-    throwError "ROOT-B-snapshot-split: frozen contributor changed"
-  let causal := designated.filter (·.registrationModuleName != frozenInformationRootId)
-  unless causal.size == 2 && causal.all (fun row =>
-      row.objectArenaName ==
-        `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena &&
-      row.registrationModuleName ==
-        `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration) do
-    throwError "ROOT-B-snapshot-split: causal occurrence identity changed"
-  let ordinary := `LeanInformationAudit.Tests.RootSnapshotSplit
-  unless (expectedOccurrencesForRoot empty ordinary).isEmpty do
-    throwError "ROOT-B-snapshot-split: ordinary roots acquired fixed expectations"
+  let original ← getEnv
+  try
+    let empty ← liftIO mkEmptyEnvironment
+    setEnv (empty.setMainModule baselineRoot)
+    RootCatalogs.declare baselineContract
+    modifyEnv (·.setMainModule designatedRoot)
+    RootCatalogs.declare designatedContract
+    let env ← getEnv
+    let baseline := expectedOccurrencesForRoot env baselineRoot
+    let designated := expectedOccurrencesForRoot env designatedRoot
+    unless baseline.size == 1 && designated.size == 3 do
+      throwError "ROOT-B-snapshot-split: expected baseline=1 designated=3"
+    unless baseline.all (·.registrationModuleName == baselineRoot) do
+      throwError "ROOT-B-snapshot-split: baseline contributor changed"
+    let causal := designated.filter (·.registrationModuleName != baselineRoot)
+    unless causal.size == 2 && causal.all (fun row =>
+        row.objectArenaName == causalRows[0]!.objectArenaName &&
+        row.registrationModuleName == causalContributor) do
+      throwError "ROOT-B-snapshot-split: causal occurrence identity changed"
+    unless (expectedOccurrencesForRoot env `UnrelatedConsumer).isEmpty do
+      throwError "ROOT-B-snapshot-split: unrelated root acquired supplied expectations"
+  finally
+    setEnv original
 
 end LeanInformationAudit.Tests.RootSnapshotSplit

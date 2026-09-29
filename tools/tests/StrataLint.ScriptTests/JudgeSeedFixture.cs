@@ -124,7 +124,7 @@ internal sealed class JudgeSeedFixture : IDisposable
     internal string AddPrivateSdkReference()
     {
         var source = Path.Combine(Environment.GetEnvironmentVariable("DOTNET_ROOT")
-            ?? throw new InvalidOperationException("DOTNET_ROOT is required for the pinned SDK fixture"),
+            ?? throw new InvalidOperationException("DOTNET_ROOT is required for the SDK fixture"),
             "sdk", "10.0.103", "Microsoft.Build.dll");
         var reference = Path.Combine(temporary.Path, "sdk-reference", "Microsoft.Build.dll");
         Directory.CreateDirectory(Path.GetDirectoryName(reference)!);
@@ -400,7 +400,29 @@ internal sealed class JudgeSeedFixture : IDisposable
 
     private static string Tail(string text) => text.Length > 12000 ? text[^12000..] : text;
 
-    internal Invocation ReadFakeSdkMaterial() => Python("print(json.dumps(judge.seed_registration(root, root / 'extra-sdk')[3]))");
+    internal Invocation ReadFakeSdkMaterial(string resolved = "10.0.103", bool success = true) =>
+        Python($"print(json.dumps(judge.seed_registration(root, root / 'extra-sdk', '{resolved}')[3]))", success);
+
+    internal Invocation ReadDiscoveredSdkMaterial(string resolved = "10.0.400", bool success = true)
+    {
+        var registryPath = PathOf("Meta/judge-seed.json");
+        var registry = JsonNode.Parse(File.ReadAllText(registryPath))!;
+        registry["sdk_files"] = new JsonArray("declared/*.dll");
+        File.WriteAllText(registryPath, registry.ToJsonString());
+        var sdkRoot = PathOf("fake-dotnet");
+        Write($"fake-dotnet/sdk/{resolved}/declared/compiler.dll", "resolved SDK bytes");
+        var executable = Write("fake-bin/dotnet", "#!/bin/sh\n"
+            + "if [ \"$1\" = \"--version\" ]; then\n"
+            + $"  printf '%s\\n' '{resolved}'\n"
+            + "else\n"
+            + $"  printf '%s\\n' '{resolved} [{sdkRoot}/sdk]'\n"
+            + "fi\n");
+        if (!OperatingSystem.IsWindows())
+            File.SetUnixFileMode(executable, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var inheritedPath = Environment.GetEnvironmentVariable("PATH") ?? throw new InvalidOperationException("PATH is required");
+        return Python("print(json.dumps(judge.seed_registration(root)[3]))", success,
+            "DOTNET_ROOT=", "PATH=" + PathOf("fake-bin") + Path.PathSeparator + inheritedPath);
+    }
 
     private void Record(string name, Invocation result, int? csc)
     {

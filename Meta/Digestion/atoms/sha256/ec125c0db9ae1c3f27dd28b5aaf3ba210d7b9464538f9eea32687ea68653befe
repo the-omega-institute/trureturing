@@ -1,0 +1,106 @@
+## ST2．带源和几何变分的精确 Schur 约化
+
+本节先在有限维实对称矩阵上完成全部证明。连续算子和规范场版本还须处理定义域、边界、量子测度及正规化。
+
+### 定理 ST2.1：保留任意线性观察接口的响应
+
+设
+
+$$
+D=\begin{pmatrix}A&B\\B^{\mathsf T}&C\end{pmatrix}>0,
+\qquad S=A-BC^{-1}B^{\mathsf T},
+$$
+
+以及完整源读数矩阵 $J=(J_V,J_H)$。定义
+
+$$
+J_{\mathrm{eff}}=J_V-J_HC^{-1}B^{\mathsf T}.
+$$
+
+则
+
+$$
+\boxed{
+JD^{-1}J^{\mathsf T}
+=J_{\mathrm{eff}}S^{-1}J_{\mathrm{eff}}^{\mathsf T}
++J_HC^{-1}J_H^{\mathsf T}.
+}
+\tag{ST2.1}
+$$
+
+**证明。** 对隐藏变量完成平方，或直接验证块逆：
+
+$$
+D^{-1}=
+\begin{pmatrix}
+S^{-1}&-S^{-1}BC^{-1}\\
+-C^{-1}B^{\mathsf T}S^{-1}&
+C^{-1}+C^{-1}B^{\mathsf T}S^{-1}BC^{-1}
+\end{pmatrix}.
+$$
+
+左右乘 $J,J^{\mathsf T}$，按平方项合并即得。$C>0$ 且 $S>0$ 由正定性和完成平方保证。∎
+
+**含义。** 原实验若耦合到隐藏模，约化时需要转移源接口并保留最后的纯隐藏源项。该项在频域模型中可以依赖频率，不能统一当作局域常数。仅保留 $S$ 通常不能复现原实验。
+
+### 定理 ST2.2：消元与几何方向变分的相容性
+
+令上述矩阵光滑依赖实参数 $u$。它可表示固定坐标与固定测度约定下的一条几何扰动方向。定义
+
+$$
+L=\begin{pmatrix}I\\-C^{-1}B^{\mathsf T}\end{pmatrix}.
+$$
+
+则
+
+$$
+\boxed{\frac{dS}{du}=L^{\mathsf T}\frac{dD}{du}L.}
+\tag{ST2.2}
+$$
+
+**证明。** 有
+
+$$
+DL=\begin{pmatrix}S\\0\end{pmatrix},
+\qquad S=L^{\mathsf T}DL.
+$$
+
+求导时，$dL/du$ 的可见块为零，所以
+$(dL/du)^{\mathsf T}DL$ 与其转置均为零。剩余项正是式(ST2.2)。∎
+
+定义有限高斯真空项
+
+$$
+W(D)=\frac{\hbar}{2}\log\det D.
+$$
+
+由于 $\det D=\det C\det S$，得到
+
+$$
+\boxed{
+\frac{dW}{du}
+=\frac{\hbar}{2}\operatorname{tr}
+\left(C^{-1}\frac{dC}{du}
++S^{-1}L^{\mathsf T}\frac{dD}{du}L\right).
+}
+\tag{ST2.3}
+$$
+
+这证明：在这些假设下，同时保留有效算子与隐藏行列式后，先消元再计算几何响应，与对完整高斯积分计算该响应一致。
+
+### 推论 ST2.3：移动探针的响应也要一起求导
+
+若 $J$ 依赖 $u$，设 $\chi=JD^{-1}J^{\mathsf T}$，则
+
+$$
+\frac{d\chi}{du}
+=\dot J D^{-1}J^{\mathsf T}
++JD^{-1}\dot J^{\mathsf T}
+-JD^{-1}\dot D D^{-1}J^{\mathsf T}.
+\tag{ST2.4}
+$$
+
+这是乘法法则及逆矩阵求导。改变钟尺、源归一化或探针轨迹时，前两项不能无条件略去。
+
+分层消元的算子结合律已有仓内 Lean 锚点。式(ST2.1)至(ST2.4)增加了源与变分的实际义务。连续场论中，各块行列式必须来自同一受控积分与反项处方；独立定义的若干 zeta 行列式不自动满足同一乘法公式。一般时变背景下的延迟影响作用量，也不能直接用欧氏真空行列式替代。
+

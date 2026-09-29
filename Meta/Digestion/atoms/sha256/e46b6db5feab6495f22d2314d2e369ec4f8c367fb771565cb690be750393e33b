@@ -1,0 +1,28 @@
+### 61.1 合同与结论
+
+沿用 $A\otimes B\otimes D$ 的 $2\times2\times3$ 接口、完整量子 tester 事件和候选
+
+$$
+R_\varepsilon=|x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z\rangle
+\langle x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z|,
+\qquad x=000,\ y=101,\ z=112,
+$$
+
+记全部归一化因果修复中的最优事件误差为 $e_\varepsilon$。采用定理 59.1 的单参数约化：对 $0<\varepsilon\le1/16$，
+
+$$
+e_\varepsilon=\min_{1-c\le p\le\varepsilon}N(R_\varepsilon-S_p),
+\quad c=\sqrt{1-\varepsilon},
+$$
+
+其中
+
+$$
+S_p=|\sqrt{1-p}\,x+\sqrt{1-p}\,y+\sqrt p\,z\rangle
+\langle\sqrt{1-p}\,x+\sqrt{1-p}\,y+\sqrt p\,z|
++p|010\rangle\langle010|.
+\tag{61.1}
+$$
+
+$N$ 是完整双向事件误差，不删归一化迹项。
+

@@ -1,0 +1,40 @@
+### 92.2 两种系数秩情形都给出匹配缺陷方向
+
+取满列秩分解
+
+$$
+\mathscr D=HH^*,\qquad
+H=\begin{pmatrix}H_0\\H_1\end{pmatrix}:
+\mathbb C^d\longrightarrow Q\oplus Q.
+$$
+
+置 $X=L_0L_0^*$、$Y=L_1L_1^*$。第76节的精确方程为
+
+$$
+X/\mu+Y/s=I-H_0H_0^*,\qquad
+X/s+Y/\nu=I-H_1H_1^*,
+$$
+
+$$
+L_1L_0^*=-sH_0H_1^*,
+\tag{92.6}
+$$
+
+$$
+X=\frac{\mu s}{\Delta}
+(\mu I-sH_0H_0^*+\nu H_1H_1^*),
+\qquad
+Y=\frac{\nu s}{\Delta}
+(\nu I-sH_1H_1^*+\mu H_0H_0^*).
+\tag{92.7}
+$$
+
+第82节的双侧纤维秩界给
+
+$$
+2d-2\le\operatorname{rank}L_i\le2d-1.
+\tag{92.8}
+$$
+
+写 $E_i=\ker L_i^*$。
+

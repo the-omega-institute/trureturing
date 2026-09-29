@@ -1,0 +1,60 @@
+**定理 188.2（有限响应的最佳秩-$r$ 近似）。** 在所有秩不超过 $r$ 的矩阵 $K$ 中，截断奇异值分解
+
+$$
+\mathsf H_{N,M}=U\Sigma V^{\mathsf T},
+\qquad
+\mathsf H_{N,M}^{(r)}
+=U\Sigma^{(r)}V^{\mathsf T}
+$$
+
+满足
+
+$$
+\boxed{
+\inf_{\operatorname{rank}K\le r}
+\|\mathsf H_{N,M}-K\|_2
+=\varepsilon_{2,r},
+}
+\tag{188.1}
+$$
+
+以及
+
+$$
+\boxed{
+\inf_{\operatorname{rank}K\le r}
+\|\mathsf H_{N,M}-K\|_{\mathrm F}
+=\varepsilon_{\mathrm F,r}.
+}
+\tag{188.2}
+$$
+
+因此任何精确依赖 $r$ 个线性边界坐标的响应因子化，其秩不能超过 $r$；若要求保留该有限块的算子范数误差至多 $\varepsilon$，必要条件是
+
+$$
+\sigma_{r+1}\le\varepsilon.
+$$
+
+### 证明
+
+奇异值分解给出
+
+$$
+\mathsf H_{N,M}-\mathsf H_{N,M}^{(r)}
+=\sum_{k>r}\sigma_k u_kv_k^{\mathsf T}.
+$$
+
+其算子范数为最大剩余奇异值 $\sigma_{r+1}$，Frobenius 范数平方为剩余奇异值平方和。
+
+对任意秩不超过 $r$ 的 $K$，其列空间维数至多为 $r$。取前 $r+1$ 个左奇异向量张成的子空间，并用极小极大原理，至少有一个单位向量 $v$ 使 $Kv$ 无法同时捕获 $\sigma_{r+1}u_{r+1}$ 的正交分量，故
+
+$$
+\|\mathsf H_{N,M}-K\|_2\ge\sigma_{r+1}.
+$$
+
+Frobenius 下界由同一正交分解及平方和极小性得到。证毕。
+
+这是一条任务级误差定理：$\mathsf H_{N,M}^{(r)}$ 是最佳响应矩阵，但它不自动携带一个满足移位一致性的时间演化算子。若要把截断矩阵实现成单一递归接口，还要另外证明投影后的转移、源注入和终端读取满足同一动力学合同。
+
+---
+

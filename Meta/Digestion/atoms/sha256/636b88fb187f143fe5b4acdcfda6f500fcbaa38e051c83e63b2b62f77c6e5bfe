@@ -1,0 +1,2 @@
+**定义 51.1（允许的正观察）。** 给定集合 $X$ 及读数族 $q_i:X\to Y_i$，每个 $Y_i$ 带指定拓扑。定义 $\tau_{\rm obs}$ 为所有 $q_i^{-1}(U)$（$U$ 在 $Y_i$ 中开）生成的初始拓扑。取 Sierpiński 空间 $\mathbb S=\{\bot,\top\}$，其开集为 $\varnothing,\{\top\},\mathbb S$。开集 $U\subseteq X$ 的正检验是 $\chi_U:X\to\mathbb S$。这是一种不指定概率和数值误差的观察语义。把它进一步解释为可执行半判定，需要另给表示、有效索引及算法；任意抽象开集不被自动标成可计算。[^tcs10-pauly]
+

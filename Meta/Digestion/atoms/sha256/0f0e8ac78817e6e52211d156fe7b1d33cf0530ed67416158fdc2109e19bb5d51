@@ -1,0 +1,38 @@
+## ST25．恒定物理能隙下的完整二图册例子
+
+### 定理 ST25.1：单图发散、Chern 数与拓扑界同时可算
+
+取单位球面参数 $\boldsymbol n=(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta)$，
+
+$$
+H(\boldsymbol n)=\Delta\,\boldsymbol n\cdot\boldsymbol\sigma,\qquad
+\Delta>0,\qquad P=(I+\boldsymbol n\cdot\boldsymbol\sigma)/2.
+$$
+
+这是正能级 $+\Delta$ 的投影，完整能隙恒为 $2\Delta$。北、南局部框分别为
+
+$$
+U_N=\begin{pmatrix}\cos(\theta/2)\\e^{i\phi}\sin(\theta/2)\end{pmatrix},
+\qquad
+U_S=e^{-i\phi}U_N.
+$$
+
+它们分别在去掉南极、去掉北极的区域光滑。北图相对于 $|0\rangle$ 的图坐标为
+
+$$
+X_N=e^{i\phi}\tan(\theta/2),\quad
+G_N=\sec^2(\theta/2),\quad Z_N=\cos^2(\theta/2).
+$$
+
+所以南极处 $Z_N=0$、$X_N$ 发散，同时完整物理能隙不变。局部连接、曲率为
+
+$$
+\mathcal A_N=-\sin^2(\theta/2)d\phi,\quad
+\mathcal A_S=\cos^2(\theta/2)d\phi,
+$$
+
+$$
+\mathcal F=-\tfrac12\sin\theta\,d\theta\wedge d\phi,
+\qquad C_1=-1.
+$$
+

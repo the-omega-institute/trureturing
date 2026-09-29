@@ -1,0 +1,45 @@
+### 221.3 保持原通道的旋转删除
+
+直接展开（221.3）可得
+$$
+AXA^\dagger+\lambda LXL^\dagger
+=N_zXN_z^\dagger+M_zXM_z^\dagger.
+\tag{221.13}
+$$
+等价地，这是对原 Kraus 对 $(A,\sqrt\lambda L)$ 作矩阵
+$$
+\frac1{\sqrt{D_z}}
+\begin{pmatrix}
+1&-\sqrt\lambda\,\overline z\\
+\sqrt\lambda\,z&1
+\end{pmatrix}
+$$
+的酉混合。结果标签没有变化，原共同 TP 严格保留。
+
+令 $\zeta=\langle r_+,AL^\dagger r_+\rangle$。最大奇异根简单时，
+$$
+f(z)=s_++2\operatorname{Re}(z\zeta)+O(|z|^2).
+\tag{221.14}
+$$
+若 $\zeta\ne0$，可选充分小的 $z$ 使 $f(z)<s_+$。
+删除 $M_z$ 后，缺失效应范数为
+$$
+\delta_z=\|M_z^\dagger M_z\|_\infty=\lambda f(z)<k.
+$$
+用共同输入 Gram 的逆平方根修复 TP，仍每个结果只有一个 Choi 方向。
+
+所用结果是定理219.3：若 CPTP 通道分为保留 CP 映射 $\mathcal B$ 与删除 CP 映射 $\mathcal T$，且
+$0\le\delta=\|\mathcal T^*(I)\|_\infty<1$，则
+$$
+\mathcal S=\mathcal B\circ\operatorname{Ad}_{(I-\mathcal T^*(I))^{-1/2}}
+$$
+是保留各结果秩的 CPTP 通道，且
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond\le\delta.
+\tag{221.15}
+$$
+该修复使用同一输入上的损失概率与滤波变形界，对全部 $\delta<1$ 成立。因此 $\zeta\ne0$ 时有
+$d_2<k$，完成定理221.3的必要性。
+
+这里严格改进的是原谱删除的通用误差上界 $k$。没有计算 $z=0$ 的原修复候选的真实 diamond 距离，因此不能据此判定该原候选不是最近通道。
+

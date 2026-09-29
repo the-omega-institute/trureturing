@@ -1,4 +1,4 @@
-import LeanInformationAudit.Tests.RegistrationGates.DeclaredSidecar
+import LeanInformationAudit.Tests.RegistrationGates.DeclaredRegistration
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selected
 import LeanInformationAudit.Tests.SourceIsolation
 
@@ -11,8 +11,8 @@ private def observe (name : String) (ok : Bool) : MetaM Unit :=
 run_meta withPrivateSources do
   let initial ← getEnv
   let rows ← assessJoined
-  let #[record] := rows | throwError "setup: exactly one sidecar occurrence required"
-  let .declaredValidated _ := record.result | throwError "setup: sidecar is not validated"
+  let #[record] := rows | throwError "setup: exactly one registration occurrence required"
+  let .declaredValidated _ := record.result | throwError "setup: registration is not validated"
   let some descriptor := record.descriptor | throwError "setup: descriptor absent"
   let some owner := record.bindingOwner | throwError "setup: binding owner absent"
   let .ok plan := selectedPlan (← getEnv) descriptor.getAppFn.constName!
@@ -71,6 +71,25 @@ run_meta withPrivateSources do
   observe "changed_claim_not_cached_safe"
     ((changedRecord.result matches .declaredUnresolved _) &&
       (observedAssessments (← getEnv)).size == before + 1)
+  setEnv initial
+
+-- The imported registration universe grows with the repository. A retained
+-- assessment's currency check and every other joined step own a fixed budget;
+-- the complete join shares none of it.
+run_meta withPrivateSources do
+  let initial ← getEnv
+  let primed ← exportSnapshot
+  unless primed.selected.all (fun row => row.result matches .declaredValidated _) do
+    throwError "setup: retained assessment requires a validated registration"
+  let owners := primed.originals.foldl (fun owners row =>
+    let owner := row.occurrence.key.registrationModule
+    if owners.contains owner then owners else owners.push owner) #[]
+  let modules := owners.map fun owner =>
+    (owner, primed.originals.filter (·.occurrence.key.registrationModule == owner) |>.map (·.occurrence.key))
+  IO.addHeartbeats ((← readThe Core.Context).maxHeartbeats + 1)
+  let rows ← tryCatchRuntimeEx (reportJson modules) fun error =>
+    throwError "[FAIL] joined_occurrence_budget_is_per_occurrence: {error.toMessageData}"
+  observe "joined_occurrence_budget_is_per_occurrence" (!rows.isEmpty && rows.size == modules.size)
   setEnv initial
 
 end LeanInformationAudit.Tests.DeclaredAssessmentCache

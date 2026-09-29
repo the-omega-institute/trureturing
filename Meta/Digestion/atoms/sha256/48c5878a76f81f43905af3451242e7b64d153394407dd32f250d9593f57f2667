@@ -1,0 +1,52 @@
+**定理197.2（两种尺度之间的统一展开）。** 存在固定 $H,C,\epsilon_0>0$，使
+$0<\epsilon\le\epsilon_0$、$H\epsilon\le\ell\le1/2$ 时，
+
+$$
+\boxed{
+\begin{aligned}
+\mathscr E(\ell,\epsilon)
+={}&\frac34+\Phi_\infty\epsilon
+-\frac{g^2\delta^2}{16}\frac{\epsilon^2}{\ell}
+-\frac{\beta\Sigma g^2\delta^2}{32}\frac{\epsilon^3}{\ell^2}\\
+&+O\left(\epsilon^2+\frac{\epsilon^4}{\ell^3}\right).
+\end{aligned}
+}
+\tag{197.5}
+$$
+
+这里 $O$ 常数与 $\ell,\epsilon$ 无关。
+
+特别地，任意满足
+
+$$
+\ell_\epsilon\to0,\qquad
+\frac{\epsilon}{\ell_\epsilon}\to0
+$$
+
+的路径均有
+
+$$
+\boxed{
+\frac{\ell_\epsilon}{\epsilon^2}
+\left[
+\mathscr E(\ell_\epsilon,\epsilon)
+-\frac34-\Phi_\infty\epsilon
+\right]
+\longrightarrow-\frac{g^2\delta^2}{16}.
+}
+\tag{197.6}
+$$
+
+**证明。** 第196节给完整区间上的
+
+$$
+\mathscr E(\ell,\epsilon)
+=\frac34+\epsilon\Phi_{\ell/\epsilon}+O(\epsilon^2).
+$$
+
+取足够大且固定的 $H$，使（197.2）的余项在 $h\ge H$ 由同一常数控制。令 $h=\ell/\epsilon$ 并乘以 $\epsilon$，即得（197.5）。
+
+沿所述路径，（197.5）的第二个修正相对 $\epsilon^2/\ell$ 的比值为 $O(\epsilon/\ell)$，两个余项的比值分别为 $O(\ell)$ 与 $O((\epsilon/\ell)^2)$。它们均趋零，证明（197.6）。证毕。
+
+当 $\gamma\ne0$ 时，式（197.6）给严格负的次阶系数：保持同一个来源与操作权限，最优恢复在正的一阶基线之下还有阶数为 $\epsilon^2/\ell$ 的改善。但这仍是小于 $\epsilon$ 的修正，故不能把最优误差改成低于 $3/4$；后者的一阶差仍为正。
+

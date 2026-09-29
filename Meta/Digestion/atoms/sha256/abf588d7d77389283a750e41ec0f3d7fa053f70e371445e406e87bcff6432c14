@@ -1,0 +1,94 @@
+### 304.4 分离停止窗口的信息下界
+
+反设（304.4）左侧小于 \(1-q\)。选定
+$$
+0<\gamma<1-q
+$$
+大于该 limsup，则所有充分小 \(h\) 满足
+$$
+d(h)m(h)\le\gamma\log\log(1/h),
+\qquad m(h)=\mathbb E_hN.
+\tag{304.8}
+$$
+若任意趋零子序列的期望为无穷大，则（304.4）已成立；在反证中这些期望最终有限。
+
+取
+$$
+h_n=e^{-n\log n}=n^{-n},\quad
+d_n=d(h_n),\quad
+L_n=\log\log(1/h_n)=\log n+\log\log n.
+\tag{304.9}
+$$
+由（304.3），
+$$
+\frac{d_n}{d_{n-1}}
+\le\frac{c_+}{c_-}
+\exp\{-\rho[n\log n-(n-1)\log(n-1)]\}
+=O(n^{-\rho}).
+\tag{304.10}
+$$
+选取固定 \(K\) 足够大，使可以选择
+$$
+\gamma<p_\star<1-q-\gamma/K.
+\tag{304.11}
+$$
+令
+$$
+b_n=\left\lceil Kd_n^{-1}\log n\right\rceil,\qquad
+a_n=b_{n-1}.
+\tag{304.12}
+$$
+由（304.10），从某级起 \(b_n\) 严格递增，且
+$$
+a_nd_n=O(n^{-\rho}\log n)+O(d_n)\longrightarrow0.
+\tag{304.13}
+$$
+这就是幂尺度假设在证明中的实际用途：相邻窗口的早停信息消失，同时 \(L_n/\log n\to1\)。
+
+（304.7）给早停界
+$$
+P_{h_n}(N\le a_n)\le q+o(1).
+$$
+（304.8）、Markov 及（304.12）给晚停界
+$$
+P_{h_n}(N>b_n)
+\le m(h_n)/b_n
+\le\frac{\gamma}{K}\frac{L_n}{\log n}
+=\gamma/K+o(1).
+$$
+于是两两不交的有限回答窗口
+$$
+A_n=\{a_n<N\le b_n\}
+$$
+满足
+$$
+p_n=P_{h_n}(A_n)\ge p_\star
+\tag{304.14}
+$$
+对所有充分大 \(n\) 成立。置 \(q_n=Q(A_n)\)。（304.6）与（304.8）给
+$$
+\operatorname{kl}(p_n,q_n)\le d_nm(h_n)\le\gamma L_n.
+\tag{304.15}
+$$
+另一方面，由二元熵不超过 \(\log2\)，
+$$
+\operatorname{kl}(p_n,q_n)
+\ge p_n\log(1/q_n)-\log2.
+$$
+选择固定 \(\beta\) 满足
+$$
+\gamma/p_\star<\beta<1.
+$$
+因为 \(L_n/\log n\to1\)，从某级起
+$$
+q_n\ge
+\exp[-(\gamma L_n+\log2)/p_\star]
+\ge c\,n^{-\beta}.
+\tag{304.16}
+$$
+右侧求和发散，左侧是同一个 \(Q\) 下互不相交的有限回答事件，故
+$$
+\sum_nq_n\le Q(N<\infty)\le q<1,
+$$
+矛盾。这证明（304.4）。窗口下界没有丢弃任何不回答分支；这些分支恰是 \(1-q\) 信息余量的来源。
+

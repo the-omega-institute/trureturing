@@ -1,0 +1,56 @@
+### 187.4 来源秩极限与扰动极限不能交换
+
+考虑对应的满秩来源族
+
+$$
+\rho_\kappa=\operatorname{diag}\left(\frac{1+\kappa}{2},\frac{1-\kappa}{2}\right),
+\qquad 0\le\kappa<1,
+$$
+
+$$
+\Xi_\kappa=\sqrt{\frac{1+\kappa}{2}}|00\rangle
++\sqrt{\frac{1-\kappa}{2}}|11\rangle,
+\qquad \psi_\kappa=(I\otimes Y)\Xi_\kappa.
+$$
+
+将（187.1）的系数用于 $\Xi_\kappa,\psi_\kappa$，按第186节以 $R$ 表示比值，记相同完整恢复任务的最优误差为
+$h_\kappa(\epsilon,R)$。第186节的满秩展开给每个固定 $\kappa<1$
+
+$$
+\lim_{\epsilon\downarrow0}
+\frac{h_\kappa(\epsilon,R)-3/4}{\epsilon}
+=\frac{\beta(R+1)}8>0.
+\tag{187.12}
+$$
+
+而秩一端点由定理187.2满足
+
+$$
+\lim_{\epsilon\downarrow0}
+\frac{h_1(\epsilon,R)-3/4}{\epsilon}
+=-\frac{R-1}{4}G(\beta,\gamma)<0.
+\tag{187.13}
+$$
+
+对每个固定合法 $\epsilon$，最优值仍然满足
+$h_\kappa(\epsilon,R)\to h_1(\epsilon,R)$。
+事实上，输入通道和目标通道都在有限维中随 $\kappa$ 连续；对任意同一恢复器，两组误差之差至多为输入通道之差与目标通道之差的半 diamond 范数之和。这个上界不依赖恢复器，故对恢复器取最小值后仍成立。
+
+于是两个归一化增量的迭代极限明确不同：
+
+$$
+\boxed{
+\begin{aligned}
+\lim_{\kappa\uparrow1}\lim_{\epsilon\downarrow0}
+\frac{h_\kappa(\epsilon,R)-3/4}{\epsilon}
+&=\frac{\beta(R+1)}8,\\
+\lim_{\epsilon\downarrow0}\lim_{\kappa\uparrow1}
+\frac{h_\kappa(\epsilon,R)-3/4}{\epsilon}
+&=-\frac{R-1}{4}G(\beta,\gamma).
+\end{aligned}
+}
+\tag{187.14}
+$$
+
+差别来自任务可恢复结构的秩退化：每个满秩来源都要求保留不可访问记忆的纯化关系；秩一端点允许测量后局部重制备目标纯态。这里没有把误差值的连续性否定掉，失去一致性的是零扰动处的展开及其斜率。
+

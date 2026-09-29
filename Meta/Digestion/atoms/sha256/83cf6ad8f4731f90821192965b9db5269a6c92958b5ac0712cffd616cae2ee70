@@ -1,0 +1,16 @@
+## 62. 同块关系坐标与有限反演
+
+前面的关联位可以推广为一般的同块记录。令 $A$ 是有限原子位置集，令
+
+$$
+\mathcal K\subseteq 2^A
+$$
+
+是对取子集封闭的合法块族，并记 $\mathcal K^+=\mathcal K\setminus\{\varnothing\}$。一个无序块多重集由非负整数重数 $(m_S)_{S\in\mathcal K^+}$ 描述。对每个非空合法子集 $T$ 定义
+
+$$
+\boxed{y_T=\sum_{\substack{S\in\mathcal K^+\\T\subseteq S}}m_S.}
+$$
+
+它记录有多少个块同时包含 $T$ 的全部原子。
+

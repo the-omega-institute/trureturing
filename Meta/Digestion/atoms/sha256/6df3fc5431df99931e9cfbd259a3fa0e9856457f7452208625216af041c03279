@@ -1,0 +1,19 @@
+**定理254.1（保留选择记录的统一副本界）。** 固定 $A,B,\theta$，在（254.1）—（254.7）的已知二元来源任务中，对所有 $0<z\le1/2$、$0\le\gamma\le1$，
+$$
+\boxed{
+\frac{1-A}{18qA\,r(z,\gamma)}
+\le N_{\mathrm{log}}(z,\gamma)
+\le\left\lceil\frac{12}{q\,r(z,\gamma)}\right\rceil.
+}
+\tag{254.23}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{log}}(z,\gamma)
+=\Theta\left(\frac1{(1-\gamma)z^4+\gamma z^2}\right),
+}
+\tag{254.24}
+$$
+其中上下界常数只依赖固定参数，可对全部 $\gamma$ 统一选择。
+

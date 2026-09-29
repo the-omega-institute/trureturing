@@ -1,0 +1,13 @@
+**引理 44.1（二元经典标签的条件熵连续模数）。** 令 $\rho_{XB},\tau_{XB}$ 是在同一二元经典标签基上块对角的量子态，$\tfrac12\|\rho-\tau\|_1\le\epsilon\le1$。定义
+\[
+ w(\epsilon)=\min\left\{1,\epsilon+(1+\epsilon)
+                         h_2\!\left(\frac{\epsilon}{1+\epsilon}\right)\right\}.
+\]
+则 $|H(X|B)_\rho-H(X|B)_\tau|\le w(\epsilon)$，常数与 $\dim B$ 无关。
+
+**证明。** 先令实际迹距离为 $e>0$，取块对角 Jordan 分解 $\rho-\tau=e(\omega_+-\omega_-)$，其中 $\omega_\pm$ 为态。共同混合态满足
+\[
+ \zeta=(\rho+e\omega_-)/(1+e)=(\tau+e\omega_+)/(1+e).
+\]
+对任何两个态的混合，条件熵在对应条件熵凸组合与该组合加二元混合熵之间；下界是条件熵凹性，上界可通过保留再遗忘混合标签的条件互信息不超过该标签熵得到。用两种方式展开 $\zeta$，并注意二元经典 $X$ 的条件熵在 $[0,1]$ 中，得到差至多 $e+(1+e)h_2(e/(1+e))$。实际 $e\le\epsilon$，该表达式非减，再与平凡范围一比较得到所列模数。$e=0$ 直接成立。该证明是 Winter 连续性方法的 cq 特例；不声称这是该受限类的最优模数。证毕。[^tcs8-continuity]
+

@@ -1,0 +1,60 @@
+**证明。** $\delta>0$ 时，下界是（245.20）。取
+$$
+\theta_\epsilon=\max\left\{0,1-\frac\epsilon\delta\right\}.
+\tag{245.32}
+$$
+若 $0\le\epsilon\le\delta$，则命题245.3给
+$$
+g(\Omega_{\theta_\epsilon})
+=U+\delta\theta_\epsilon=D-\epsilon,
+\qquad
+E_F(\Omega_{\theta_\epsilon})=\theta_\epsilon.
+\tag{245.33}
+$$
+若 $\epsilon\ge\delta$，产品态 $\Omega_0$ 的响应 $U$ 已满足所需下界，成本为零。若 $\delta=0$，产品态本来就达到 $D=U$，故所有容差的最小成本都为零。$\square$
+
+同一论证也把资源预算写成直接形式：对 $z\in[0,1]$，在所有有限参考及满足 $E_F(\Omega)\le z$ 的探针中，
+$$
+\max g(\Omega)=U+\delta z,
+\tag{245.34}
+$$
+由 $\Omega_z$ 取得。这里的普遍响应上界覆盖全部混合态，达到构造才使用正交旗标。
+
+现在比较同一通道对上的纯探针最小纠缠 $E_{\mathrm{pure}}(\epsilon)$。当 $\delta>0$、$0<\epsilon<\delta$ 时，§244的精确纯态反解满足
+$$
+0<E_{\mathrm{pure}}(\epsilon)<1,
+\qquad
+G(E_{\mathrm{pure}}(\epsilon))=D-\epsilon.
+\tag{245.35}
+$$
+定理245.1的内部严格弦界给
+$$
+D-\epsilon
+<U+\delta E_{\mathrm{pure}}(\epsilon),
+$$
+所以
+$$
+\boxed{
+E_{\mathrm{pure}}(\epsilon)
+>1-\frac\epsilon\delta
+=C_{\mathrm{mix}}(\epsilon),
+\qquad 0<\epsilon<\delta.
+}
+\tag{245.36}
+$$
+所有内部容差点都有严格差别。$\epsilon=0$ 时两种成本都为一；$\epsilon\ge\delta$ 时都为零。$\delta=0$ 时全程都为零。
+
+例如取 $c=0$、$p=0$，则
+$$
+D=\frac12,\qquad U=\frac{\sqrt2}{4},
+\qquad \delta=\frac12-\frac{\sqrt2}{4}>0.
+\tag{245.37}
+$$
+在 $\epsilon=\delta/2$ 处，$\Omega_{1/2}$ 实际达到要求，且
+$$
+C_{\mathrm{mix}}(\delta/2)=\frac12
+<E_{\mathrm{pure}}(\delta/2).
+\tag{245.38}
+$$
+这不是更改原纯态结论，而是在相同响应目标下扩大允许探针类并使用同一个形成纠缠定义作比较。
+

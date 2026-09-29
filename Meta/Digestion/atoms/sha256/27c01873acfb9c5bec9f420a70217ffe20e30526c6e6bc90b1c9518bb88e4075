@@ -1,0 +1,18 @@
+**推论207.2（包含纯来源的统一刚性）。**
+固定 $K_3<\infty$，在全部满足
+$0\le e_\epsilon-E_\epsilon\le K_3\epsilon^3$
+的对称化共同 instrument 上，一致有
+
+$$
+\boxed{
+\begin{gathered}
+U_0+V=O_{H,K_3}(\epsilon^2),\qquad
+\rho U_1=O_{H,K_3}(\epsilon^2),\qquad
+M_{\mathrm{def}}=O_{H,K_3}(\epsilon^2),\\
+\|\Gamma-\Gamma^*(h)\|_{\mathrm F}=O_{H,K_3}(\epsilon),\\
+(x+a_{\mathrm{eff}}/2)^2+W_\theta=O_{H,K_3}(\epsilon),
+\qquad 0\le h\le H.
+\end{gathered}}
+\tag{207.22}
+$$
+

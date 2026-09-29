@@ -1,0 +1,55 @@
+### 260.2 所有竞争态共用的二阶白化坐标
+
+先排除竞争态的参考核外支撑。对 $x\in S^\perp$，
+$$
+\sum_{\sigma\in\{+,-\}}
+\langle y_\sigma,x|\Xi|y_\sigma,x\rangle
+=\langle x,\rho x\rangle=0.
+\tag{260.6}
+$$
+各项非负，故各为零；正半定矩阵将零二次型向量送到零。因此
+$$
+\Xi=(I_H\otimes P_S)\Xi(I_H\otimes P_S).
+\tag{260.7}
+$$
+同样结论适用于理想源。核外的质量及其相干均已排除，所以以下限制到 $S$ 不会漏掉合法竞争态。
+
+在 $Y$ 基中写
+$$
+|\psi\rangle=|y_+\rangle\otimes u+|y_-\rangle\otimes v,
+\qquad
+\rho=uu^\dagger+vv^\dagger.
+\tag{260.8}
+$$
+纠缠意味着 $u,v$ 线性无关。令
+$$
+a=\rho_S^{-1/2}u,\qquad b=\rho_S^{-1/2}v.
+\tag{260.9}
+$$
+因为 $aa^\dagger+bb^\dagger=I_S$，二阶方阵的两列 $a,b$ 构成正交归一基。取酉同构 $V:\mathbb C^2\to S$，使 $Ve_0=a$、$Ve_1=b$。
+
+对两态作相同可逆同余：先限制到 $H\otimes S$，再在参考端乘以 $V^\dagger\rho_S^{-1/2}$。理想矩阵变成
+$$
+T_0=
+\begin{pmatrix}E_{00}&E_{01}\\E_{10}&E_{11}\end{pmatrix},
+\tag{260.10}
+$$
+其中 $E_{ij}=|e_i\rangle\langle e_j|$。由于竞争态边缘精确等于 $\rho$，它变成
+$$
+T=
+\begin{pmatrix}
+F&E_{01}+\mathcal E\\
+E_{10}+\mathcal E^\dagger&I_2-F
+\end{pmatrix}\succeq0,
+\tag{260.11}
+$$
+其中 $0\preceq F\preceq I_2$，且
+$$
+\mathcal E=
+\frac12V^\dagger\rho_S^{-1/2}
+\bigl((K_\Xi-K_{\Omega_\psi})|_S\bigr)
+\rho_S^{-1/2}V.
+\tag{260.12}
+$$
+这些白化矩阵的迹为二，不是原来的归一化物理态；证明只使用同余保持正性。也没有要求 $\rho_S$ 在 $a,b$ 基中对角化。
+

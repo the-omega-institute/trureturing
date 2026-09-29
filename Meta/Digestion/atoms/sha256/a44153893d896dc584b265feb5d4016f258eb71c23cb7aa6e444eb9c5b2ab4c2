@@ -1,0 +1,14 @@
+**定义 75.1（只保留单轮结果标签的校准）。** 对共同完整仪器 $\Gamma$，定义结果通道
+
+$$
+\mathcal M_\Gamma(\rho)
+=\operatorname{Tr}_{\mathcal H}\Gamma(\rho),
+\qquad
+\delta_{\mathrm{rec}}(\Gamma,\Gamma_0)
+=\frac12\|\mathcal M_\Gamma-\mathcal M_{\Gamma_0}\|_\diamond.
+$$
+
+它保留单次调用的未点击或点击标签。校准实验仍可使用外部参考；但每次调用后的活动量子输出不属于读出。该伪距离可能把不同完整仪器识别成同一点。
+
+令 $\mathfrak r_{\mathrm{rec}}$ 为对同一名义仪器、同一不终止目标，使用 $\delta_{\mathrm{rec}}$ 取代完整距离得到的下确界。这里的读出不包括重复调用后的全部时间记录；后者是另一类实验。
+

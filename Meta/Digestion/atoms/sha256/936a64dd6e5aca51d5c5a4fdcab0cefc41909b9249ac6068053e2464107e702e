@@ -1,0 +1,10 @@
+**定义 59.2（完整策略轮廓的商）。** 项目的 [`minimal_prediction_belief_state`](../../../D5/S3/ConceptDynamics/SufficiencyQuotient/MinimalPredictionBeliefState.lean)处理一族查询组成的联合轮廓；[`strategy_sufficient_self_universal_minimality`](../../../D5/S3/ConceptDynamics/SufficiencyQuotient/StrategyProfileQuotientMinimality.lean)处理它在策略上的具体形态。后者给定历史 $H$、未来条件索引 $F$、行动 $A$，以及
+
+$$
+P:H\to(F\to\operatorname{PMF}(A)).
+$$
+
+此处 $P(h)(f)$ 是模型指定的行动概率质量函数。若历史摘要 $s:H\to S$ 确定整个 $P$，则摘要的实际像唯一地映到等价类空间 $H/{\sim_P}$，其中 $h\sim_P h'$ 当且仅当 $P(h)=P(h')$。映射是 $s(h)\mapsto[h]_P$；良定义来自相同摘要具有相同轮廓，每个等价类有历史代表则给出满射。
+
+这一对应说明：在固定的未来条件、行动与轮廓定义下，全部充分摘要都保留同一个最低限度的区分。它没有说此商是完整人格、灵魂或所有未来事实；概率轮廓也没有自动成为由实际证据算出的贝叶斯后验。将未来条件族扩大，所需区分可以随之改变。
+

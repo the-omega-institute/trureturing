@@ -1,0 +1,51 @@
+### 19.3 定理：连续支撑模型的完整噪声曲线
+
+记
+\[
+m=\frac{a+b}{2},\quad h=\frac{b-a}{2},\quad
+\varepsilon_1=\frac{(1-b)(b-a)}{4+a+b},\quad
+\varepsilon_2=\frac{(1-b)(b-a)}{2+a},\quad
+\varepsilon_3=1-b^2.
+\]
+有 $0<\varepsilon_1<\varepsilon_2<\varepsilon_3$，且对全部 $\varepsilon\geq0$，
+\[
+\boxed{
+W(\varepsilon)=
+\begin{cases}
+\dfrac{h^2+\varepsilon(1+2m)}{(1-m)^2},&0\leq\varepsilon\leq\varepsilon_1,\\[4pt]
+\dfrac{\varepsilon(1+2b)-\varepsilon^2}{(1-b)^2+3\varepsilon},&\varepsilon_1\leq\varepsilon\leq\varepsilon_2,\\[4pt]
+\dfrac{b^2-a^2+\varepsilon}{1-a^2},&\varepsilon_2\leq\varepsilon\leq\varepsilon_3,\\[4pt]
+1,&\varepsilon\geq\varepsilon_3.
+\end{cases}}
+\tag{19.8}
+\]
+相邻表达式在转折点相等。
+
+**证明。** 第一段使用 $q=(x-m)^2$，它在比较支撑上的最大值为 $h^2$，故式 (19.7) 给出上界。取
+\[
+\mu=W\delta_1+(1-W)\delta_m,\qquad
+\nu=\lambda\delta_a+(1-\lambda)\delta_b,
+\]
+\[
+\lambda=\frac{(1-b)(b-a)-\varepsilon(4+a+b)}{(b-a)(2-a-b)}.
+\tag{19.9}
+\]
+在该区间内 $0\leq\lambda\leq1$。$W$ 从非负值线性增长到式 (19.4) 在 $t=m$ 时小于一的值，故 $0\leq W<1$。两矩误差为 $(-\varepsilon,\varepsilon)$，得到取等。
+
+第二段将式 (19.2) 反解为
+\[
+t(\varepsilon)=\frac{b(1-b)-2\varepsilon}{1-b+\varepsilon}.
+\tag{19.10}
+\]
+这个函数严格递减，将 $[\varepsilon_1,\varepsilon_2]$ 映到 $[a,m]$，端点分别为 $m,a$。将其代入 (19.4) 得到式 (19.8) 的第二段，普遍上界用 $q=(x-t)^2$。该上界不依赖提前指定残余节点。
+
+第三段使用 $q=x^2-a^2$，其在 $[a,1]$ 上非负、在 $[a,b]$ 上不超过 $b^2-a^2$。取
+\[
+\mu=W\delta_1+(1-W)\delta_a,\qquad\nu=\delta_b.
+\]
+此时二次矩误差为 $\varepsilon$，一次矩误差为
+\[
+e_1=\frac{\varepsilon-(1-b)(b-a)}{1+a}.
+\]
+条件 $\varepsilon\geq\varepsilon_2$ 保证 $e_1\geq-\varepsilon$，而 $a\geq0$ 保证 $e_1\leq\varepsilon$；$\varepsilon\leq\varepsilon_3$ 保证 $W\leq1$。最后一段取 $\mu=\delta_1,\nu=\delta_b$，误差为 $(1-b,1-b^2)$，两者均不超过 $\varepsilon_3$。这证明了所有区间的上界、取等与转折。
+

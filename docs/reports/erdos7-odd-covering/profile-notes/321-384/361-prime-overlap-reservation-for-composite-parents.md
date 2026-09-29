@@ -277,7 +277,7 @@ inferred from the example.
 
 ## 5. Literal AP checks and scope
 
-The [standalone checker](../../frontier/cover-geometry/prime_overlap_reservation.py) also
+The [standalone checker](../../frontier/cover-geometry/prime-overlap-reservation/prime_overlap_reservation.py) also
 enumerates the three distinct even-cover fixtures from 357, with periods
 12, 144 and 960. It checks comparable-class disjointness, the pointwise
 ordered-pair loads of PR3, the exact CRT formulas for J and M_comp,

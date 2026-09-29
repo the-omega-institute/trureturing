@@ -1,0 +1,22 @@
+### 53.4 定量环境交叠
+
+置
+$$
+x=|a|^2,\quad y=|b|^2,\quad d=x^2+y,
+\qquad \kappa=\frac{x}{\sqrt d}.
+$$
+令 $t_j$ 为来源初态 $|0\rangle$ 在第 $j$ 终端的零记忆概率，则
+$$
+t_0=1,\qquad t_j=1-y t_{j-1},\qquad
+t_j=x+y^2t_{j-2}\quad(j\ge2).
+\tag{53.7}
+$$
+定义
+$$
+\sigma_m=\sqrt{\min\left\{
+ x\frac{t_{m-1}}{t_m},\ x\frac{t_{m-2}}{t_{m-1}}
+\right\}}\quad(m\ge3).
+\tag{53.8}
+$$
+这是实际两个记忆系数空间 $H_m,G_m$ 的最小主角奇异值。
+

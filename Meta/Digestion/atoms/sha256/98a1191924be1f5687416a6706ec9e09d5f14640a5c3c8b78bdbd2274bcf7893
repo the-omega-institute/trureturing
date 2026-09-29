@@ -1,0 +1,18 @@
+**命题 11.7（有限候选的显式解码）。** 取 $\widehat S$ 的代表元 $s\in[0,P)$，令
+
+$$
+\theta=\frac{P-1-s}{2},\qquad
+\mathcal V(s)=\left\{v\in\mathbb Z:
+\left\lceil\theta-\frac\varepsilon2\right\rceil
+\le v\le
+\left\lfloor\theta+\frac\varepsilon2\right\rfloor
+\right\}.
+\tag{TM.1117}
+$$
+
+把每个 $v$ 化为 $t=v\bmod n$，枚举 $\nu\in B_D(t)$，按（TM.1115）或（TM.1116）计算标签。对合规输入恰有一个类型与收到的 $\lambda$ 相符，用（TM.1109）恢复来源。至多枚举 $m$ 个前缀及 $2m$ 个类型。
+
+证明。条件 $d_P(s,P-1-2t)\le\varepsilon$ 等价于存在与 $t$ 模 $n$ 同余的整数 $v$ 满足 $|v-\theta|\le\varepsilon/2$，因此（TM.1117）列出全部且仅列出相位兼容前缀。闭区间的长度为 $\varepsilon<m$，其中整数至多有 $m$ 个；因 $n>2m$，这些整数不会给出重复模 $n$ 前缀。类型染色保证至多一个匹配标签，真实实现保证至少一个，再由原始末读还原 $u$。$\square$
+
+这个枚举式的数学定义使用精确比较。若把它读成有限计算程序，输入须支持所需的精确取整和闭端点比较，例如给定有理 $s,\varepsilon$ 的精确表示；任意可计算实数的近似描述并不自动允许判断端点等号。枚举至多 $2m$ 个类型不等于总位复杂度或时间复杂度已被界定。采集端先取得 $t$、实际计划并掌握 $\nu$，以及接收端取得有指定精度的相位端口，仍是恢复的实际条件。
+

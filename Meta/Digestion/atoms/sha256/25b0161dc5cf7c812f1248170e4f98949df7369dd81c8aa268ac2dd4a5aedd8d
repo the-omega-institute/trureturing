@@ -1,0 +1,42 @@
+### 170.3 代码上的一步压缩合同
+
+令 $\mathcal E=\mathfrak E$ 为第159节编码，令
+$\mathcal U=\operatorname{Ad}_U$。采用第168节的联合解码器
+$\mathcal D=\Lambda_{\mathrm{joint}}$，在代码补空间的固定输出任取一份逻辑态。于是
+
+$$
+\mathcal D\mathcal E=\operatorname{id},\qquad
+\operatorname{ran}\mathcal E\subseteq
+\{X:\mathsf P X\mathsf P=X\}.
+\tag{170.19}
+$$
+
+除了已知的 $\mathcal F\mathcal E=\mathcal E\mathcal U$，还需要代码整个算子空间上的更强合同：
+
+$$
+\boxed{
+\mathcal F(\mathsf P X\mathsf P)
+=\mathcal E\mathcal U\mathcal D(\mathsf P X\mathsf P)
+\quad\text{对所有 }X.
+}
+\tag{170.20}
+$$
+
+为验证它，将代码算子写成
+
+$$
+\mathsf P X\mathsf P
+=\sum_{s,t=0}^1X_{st}^{Q}\otimes
+|\psi_s\rangle\langle\psi_t|_{MR}.
+$$
+
+吸收把 $\psi_s$ 变为 $\Xi\otimes|s\rangle_B$；按旧位纠错后，逻辑块成为
+$Z^sX_{st}Z^t$。丢弃 $B$ 消去 $s\ne t$ 的项，留下
+
+$$
+\sum_s Z^sX_{ss}Z^s
+=\mathcal D(\mathsf P X\mathsf P).
+$$
+
+再旋转并重新掩码，恰为（170.20）。该式对所有算子线性成立，故保留任意参考。这里不能只以编码像上的轨道恒等式代替整个 $\mathsf P$ 块上的合同。
+

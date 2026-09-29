@@ -50,9 +50,12 @@ hermetic() { local t="$1"; shift
 # **`pgrep -f` 正常,坏的只有 `-c`**;本函数一律用前者。
 #
 # 判据只看 runner 的 `--work-target <路径>`,不看 flight id:同一棵树无论哪条 flight 都算冲突。
+# 路径按字面匹配并锚定到空格或行尾:`/x/tree` 不得命中 `/x/tree-ro-q` 上的席位(2026-09-26 实测:
+# 两个只读检出 `<lane>-ro-q`/`<lane>-ro-a` 上的评审席让 `<lane>` 本身判忙,tests 席被拒派)。
 inflight_on() {
-  local target="$1" pids
-  pids=$(pgrep -f -- "--work-target $target" 2>/dev/null | tr '\n' ' ')
+  local target="$1" pids re
+  re=$(printf '%s' "$target" | sed 's/[][\\.*^$+?(){}|]/\\&/g')
+  pids=$(pgrep -f -- "--work-target ${re}( |\$)" 2>/dev/null | tr '\n' ' ')
   # 排除本进程与其父(本脚本自己的命令行里也含该字符串)
   pids=$(printf '%s\n' $pids | grep -v -e "^$$\$" -e "^$PPID\$" | tr '\n' ' ')
   [ -n "${pids// /}" ] && { printf '%s\n' "$pids"; return 0; }
@@ -184,6 +187,20 @@ PS
     echo "  ok   refuses to dispatch into a worktree that already has a seat (exit 5)"
   else
     echo "  FAIL in-flight guard: rc=$rc out=$(head -2 "$tmp/o")"; fails=$((fails + 1))
+  fi
+  # 前缀不是同一棵树:`$tmp/wt-other` 上的席位不得让 `$tmp/wt` 判忙。MAXC=0 让门确定性超时(exit 4),
+  # 所以放行侧的判词是 4 而不是 5,且不依赖真实负载。
+  mkdir -p "$tmp/wt-other"
+  ( exec -a "fake-runner --work-target $tmp/wt-other --stage review" sleep 8 ) &
+  fake=$!
+  sleep 1
+  hermetic "$tmp" f 1 "$tmp/brief.md" "$tmp/wt" review 0 0 >"$tmp/o" 2>&1
+  rc=$?
+  kill "$fake" 2>/dev/null; wait "$fake" 2>/dev/null
+  if [ "$rc" -eq 4 ] && ! grep -q 'worktree-busy' "$tmp/o"; then
+    echo "  ok   a seat on a sibling tree sharing the path prefix does not block (exit 4)"
+  else
+    echo "  FAIL prefix sibling: rc=$rc out=$(head -2 "$tmp/o")"; fails=$((fails + 1))
   fi
   echo "SELFTEST_FAILS=$fails"; [ "$fails" -eq 0 ]
 }

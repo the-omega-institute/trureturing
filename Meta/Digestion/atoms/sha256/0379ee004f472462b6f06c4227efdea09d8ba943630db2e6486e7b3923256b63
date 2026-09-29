@@ -1,0 +1,11 @@
+**无整数命中时的证明。** 对给定 $N$，每个 $x+k\alpha$，$1\leq k\leq N$，到相邻整数的距离均为正。令
+\[
+d_N=\frac12\min\left(\{\alpha,1-\alpha\}\cup
+\left\{\frac{\min(\{x+k\alpha\},1-\{x+k\alpha\})}{k}:1\leq k\leq N\right\}\right)>0.
+\]
+$N=0$ 时内侧集合为空。若 $|\beta-\alpha|<d_N$，则 $\beta\in(0,1)$，前 $N$ 个累计取整完全相同，故 $P_{r,N}(\beta,x)=P_{r,N}(\alpha,x)$。两个尾部都位于 $[0,r^N]$，因此
+\[
+|G_r(\beta,x)-G_r(\alpha,x)|\leq r^N.
+\]
+给定正误差，取足够大的 $N$ 使 $r^N$ 小于它，便得到连续性。
+

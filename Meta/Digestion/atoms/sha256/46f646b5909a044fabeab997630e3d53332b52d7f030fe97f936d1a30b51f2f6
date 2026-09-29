@@ -1,0 +1,76 @@
+### 306.7 固定增益下任意协议的必要成本
+
+固定 \(h>0\)，比较任务系数 \(c,c'\)。式（306.1）的耦合项完全相消，每一格的差均满足
+$$
+|P_{c,h}(x,z)-P_{c',h}(x,z)|
+=\frac{h|c-c'|}{2BC}.
+$$
+以式（306.8）为分母下界，四格计算给
+$$
+\begin{aligned}
+D(P_{c,h}\Vert P_{c',h})
+&\le\chi^2(P_{c,h}\Vert P_{c',h})\\
+&=\sum_{x,z}\frac{(P_{c,h}(x,z)-P_{c',h}(x,z))^2}
+{P_{c',h}(x,z)}\\
+&\le\frac{16h^2(c-c')^2}{B^2C^2}
+\le4h^2(c-c')^2.
+\end{aligned}
+\tag{306.25}
+$$
+这是完整联合实验的信息界。不能因为 \(Z\) 边缘对 \(c\) 不变，就把联合 KL 等同于旧 \(X\) 的 KL；条件律 \(Z\mid X\) 可以随 \(c\) 改变。
+
+记任意成功协议的
+$$
+M(h)=\sup_{j,r}\mathbb E_{j,r,h}N.
+$$
+若 \(M(h)=\infty\)，所需下界自动成立。否则各次四格严格为正，固定参数比较中的对数似然增量有界；各合法世界几乎必然有限答案，故第302.2—302.3节的共同控制停止 KL 公式适用完整联合记录。参考核在这些固定 \(h\) 的任务参数比较中完全相同。若 \(\mathsf P_{c,h}\) 表示增广停止律，\(N_T\) 表示实际任务调用次数，则
+$$
+\begin{aligned}
+D(\mathsf P_{c,h}\Vert\mathsf P_{c',h})
+&=\mathbb E_{c,h}N_T\,
+D(P_{c,h}\Vert P_{c',h})\\
+&\le4M(h)h^2(c-c')^2.
+\end{aligned}
+\tag{306.26}
+$$
+全部来源选择、过去时长、停止和私随机性保留在共同因果控制中；参考虽贡献零 KL，仍计入实际 \(N\)。
+
+令 \(f_h(c)=\Pr_{c,h}(D=0)\)。风险合同给
+$$
+f_h(r)-f_h(kr)\ge1/3\qquad(l\le r\le1).
+$$
+因为 \(l\le k\)，起点 \(r=1,k,l\) 全部合法。相加得
+$$
+1\le f_h(1)-f_h(kl)+f_h(l)-f_h(k^2),
+$$
+从而
+$$
+1-\operatorname{TV}(\mathsf P_{1,h},\mathsf P_{kl,h})
+\le\operatorname{TV}(\mathsf P_{l,h},\mathsf P_{k^2,h}).
+\tag{306.27}
+$$
+其中 \(k^2\) 是合法 \((j,r)=(1,k)\)，\(kl\) 是合法 \((1,l)\)。相同 \(c\) 的两种参数标记给相同的完整任务与参考联合核，因而同一策略的记录也相同。
+
+用
+$$
+|1-kl|\le3\kappa,\qquad |l-k^2|=g,\qquad |1-k|\le\kappa
+$$
+并置 \(u=M(h)h^2\kappa^2\)，式（306.26）供应第302.4节的三对信息界。Bretagnolle–Huber 重叠界、Pinsker 以及式（306.27）给
+$$
+\tfrac12 e^{-Au}\le A'(g/\kappa)\sqrt u.
+\tag{306.28}
+$$
+单独风险边 \(r=1\) 还给 \(\operatorname{TV}(\mathsf P_{1,h},\mathsf P_{k,h})\ge1/3\)，故 \(u\ge a_0>0\)。对式（306.28）取对数，利用 \(\log u\le u\) 和这个正基线吸收固定常数，得到
+$$
+u\ge a[1+\log(\kappa/g)]=aH.
+$$
+于是
+$$
+M(h)\ge a\frac{H}{h^2\kappa^2}
+\ge a'\mathcal O(h),
+\tag{306.29}
+$$
+最后用 \(w_h\le C_\star\)。常数对允许参数一致。
+
+该必要界覆盖所有允许完整联合记录的适应性协议，不限制它先校准、两流等分或只看 \(X\)。与式（306.23）及式（306.24）组合，完成定理306.1。
+

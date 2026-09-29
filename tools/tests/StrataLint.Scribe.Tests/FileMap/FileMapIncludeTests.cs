@@ -7,8 +7,11 @@ namespace StrataLint.Scribe.Tests;
 public sealed class FileMapIncludeTests
 {
     private const string FragmentPath = "Meta/FILEMAP.docs.reports.toml";
-    private const string Schema = "schema_version = 4\n";
-    private const string Resources = "resources = []\n";
+    private const string Schema = "schema_version = 5\n";
+    private const string Resources = """
+        resources = []
+        evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
+        """ + "\n";
     private const string Include = "include = [\"FILEMAP.docs.reports.toml\"]\n";
     private const string Residence = """
         [residence_policy]
@@ -135,7 +138,7 @@ public sealed class FileMapIncludeTests
     public void DuplicateFragmentKeysAreRejectedByTheStrictDecoder()
     {
         var root = Bytes(Schema + Include + Resources + Residence);
-        var fragment = Bytes(Schema + "schema_version = 4\n" + Entry("docs/**"));
+        var fragment = Bytes(Schema + "schema_version = 5\n" + Entry("docs/**"));
 
         Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(root, "root", _ => fragment));
     }
@@ -179,7 +182,8 @@ public sealed class FileMapIncludeTests
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, RawChangeSet.CreateWithKinds(
             [("docs/reports/old.json", RawChangeKind.Deleted), ("docs/reports/new.json", RawChangeKind.Added)]));
 
-        Assert.False(decision.IsAdmissible);
+        Assert.True(decision.IsAdmissible);
+        Assert.True(decision.RequiresFullEngineering());
         Assert.Equal(AdmissionPlaneClassification.Mixed, decision.Classification);
     }
 
@@ -219,6 +223,20 @@ public sealed class FileMapIncludeTests
             new HashSet<string> { "AGENTS.md", FragmentPath }, entries.Select(entry => entry.Path).ToArray()));
     }
 
+    [Fact]
+    public void ProtectedBaseSchemaTwoRootRetainsIncludedSymlinkDeclarations()
+    {
+        var root = Bytes((Schema + Include + Resources + Residence)
+            .Replace("schema_version = 5", "schema_version = 2", StringComparison.Ordinal));
+        var fragment = Bytes("schema_version = 2\n" + Entry("AGENTS.md")
+            + "symlink = { target = \"CLAUDE.md\", kind = \"file\" }\n" + Entry("CLAUDE.md"));
+
+        var declaration = Assert.Single(FileMapSymlinkPolicy.Parse(root, "root", _ => fragment));
+
+        Assert.Equal("AGENTS.md", declaration.Path);
+        Assert.Equal("CLAUDE.md", declaration.ResolvedTarget);
+    }
+
     [Theory]
     [InlineData("judge")]
     [InlineData("content")]
@@ -230,7 +248,8 @@ public sealed class FileMapIncludeTests
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, RawChangeSet.CreateWithKinds(
             [(FragmentPath, RawChangeKind.Modified), (deletedPath, RawChangeKind.Deleted)]));
 
-        Assert.Equal(deletedPlane == "judge", decision.IsAdmissible);
+        Assert.True(decision.IsAdmissible);
+        Assert.True(decision.RequiresFullEngineering());
         Assert.Equal(deletedPlane == "judge" ? AdmissionPlaneClassification.JudgeOnly : AdmissionPlaneClassification.Mixed,
             decision.Classification);
         Assert.Equal(deletedPlane == "judge" ? string.Empty : AdmissionPlanePolicy.MixedCode, decision.Code);
@@ -279,7 +298,8 @@ public sealed class FileMapIncludeTests
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, RawChangeSet.CreateWithKinds(
             [(FragmentPath, RawChangeKind.Modified), (source, RawChangeKind.Deleted), (destination, RawChangeKind.Added)]));
 
-        Assert.Equal(destinationPlane == "judge", decision.IsAdmissible);
+        Assert.True(decision.IsAdmissible);
+        Assert.True(decision.RequiresFullEngineering());
         Assert.Equal(destinationPlane == "judge" ? AdmissionPlaneClassification.JudgeOnly : AdmissionPlaneClassification.Mixed,
             decision.Classification);
         Assert.Equal(destinationPlane == "judge" ? string.Empty : AdmissionPlanePolicy.MixedCode, decision.Code);

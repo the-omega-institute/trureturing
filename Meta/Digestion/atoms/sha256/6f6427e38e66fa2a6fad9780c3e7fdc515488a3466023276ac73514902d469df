@@ -1,0 +1,19 @@
+**定理292.1（未知小漂移下仍保留访问成本分离）。** 在（292.1）—（292.2）的共同参数平均风险及确定最大完整块预算下，
+$$
+\boxed{
+\frac1{3\delta}
+\le N_{\rm av}^{\rm full}(1,\delta;3\delta)
+\le\frac{23041}{\delta},
+}
+\tag{292.16}
+$$
+并且对全部 $n\ge1$，
+$$
+\boxed{
+\frac1{288\delta^2}
+\le N_{\rm av}^{\rm reset}(n,\delta;3\delta)
+\le\frac{12289}{\delta^2}.
+}
+\tag{292.17}
+$$
+

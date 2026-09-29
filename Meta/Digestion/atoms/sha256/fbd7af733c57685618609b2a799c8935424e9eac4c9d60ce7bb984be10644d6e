@@ -1,0 +1,26 @@
+**命题 52.2（两种截止敏感度的阶数均可达到）。** 即使只有一维活动空间，固定 $0<\eta<1$ 时，输出对校准误差的一阶系数 $1/\eta$ 与成本的一阶系数 $q/\eta^2$ 都不能在整个模型类上统一降低。
+
+证明。比较每轮从不点击的仪器与每轮以概率 $0<\varepsilon\le1$ 点击的仪器。其未点击分支分别为恒等与 $(1-\varepsilon)\operatorname{id}$，点击分支分别为零与 $\varepsilon\operatorname{id}$；完整带记录通道距离为 $\varepsilon$。使用共同标量点击输出，则
+
+$$
+G_\eta^0=0,\qquad
+G_\eta^\varepsilon=\frac{\varepsilon}{\eta+q\varepsilon},
+\qquad
+\mathsf C_\eta^0=\frac1\eta,\qquad
+\mathsf C_\eta^\varepsilon=\frac1{\eta+q\varepsilon}.
+$$
+
+所以
+
+$$
+\lim_{\varepsilon\downarrow0}
+\frac{\delta(\Psi_\eta^0,\Psi_\eta^\varepsilon)}{\varepsilon}
+=\frac1\eta,
+\qquad
+\lim_{\varepsilon\downarrow0}
+\frac{|\mathsf C_\eta^0-\mathsf C_\eta^\varepsilon|}{\varepsilon}
+=\frac q{\eta^2}.
+$$
+
+$\square$
+

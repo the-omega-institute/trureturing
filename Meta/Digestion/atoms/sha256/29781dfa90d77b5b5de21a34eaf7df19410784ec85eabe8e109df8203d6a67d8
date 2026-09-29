@@ -1,0 +1,57 @@
+**证明。** 对单位向量定义复射线角距离
+
+$$
+d_{\mathrm{ray}}(u,v)=\arccos|\langle u,v\rangle|
+\in[0,\pi/2].
+$$
+
+它满足三角不等式。具体地，若 $d_{\mathrm{ray}}(u,v)=p$、
+$d_{\mathrm{ray}}(v,w)=q$ 且 $p+q<\pi/2$，调整 $u,w$ 的相位，使它们与 $v$ 的内积为非负实数，再分解为沿 $v$ 与垂直 $v$ 的部分。Cauchy–Schwarz 给出
+
+$$
+|\langle u,w\rangle|
+\ge\cos p\cos q-\sin p\sin q
+=\cos(p+q).
+$$
+
+于是 $d_{\mathrm{ray}}(u,w)\le p+q$；当 $p+q\ge\pi/2$ 时结论由距离范围直接成立。
+
+对单位 $u$，到子空间 $B$ 的角距离是
+
+$$
+\angle(u,B)
+=\inf_{\substack{v\in B\\\|v\|=1}}d_{\mathrm{ray}}(u,v)
+=\arccos\|P_Bu\|.
+\tag{145.8}
+$$
+
+由主角奇异值分解，可选 $A,A'$ 的主向量正交基 $a_j,a'_j$，满足
+$\langle a_j,a'_l\rangle=\delta_{jl}\cos\alpha_j$，
+$0\le\alpha_j\le\alpha$。定义等距同构 $Qa_j=a'_j$。对任意单位 $u=\sum_jc_ja_j$，
+
+$$
+\langle u,Qu\rangle=\sum_j|c_j|^2\cos\alpha_j\ge\cos\alpha,
+$$
+
+故 $d_{\mathrm{ray}}(u,Qu)\le\alpha$。同理存在 $B\to B'$ 的等距同构，将每条单位射线移动不超过 $\beta$。结合射线角三角不等式及（145.8），得到
+
+$$
+|\angle(u,B)-\angle(Qu,B')|\le\alpha+\beta.
+\tag{145.9}
+$$
+
+角的逐项 min–max 公式为
+
+$$
+\theta_i(A,B)
+=\min_{\substack{L\subseteq A\\\dim L=i}}
+  \ \max_{\substack{u\in L\\\|u\|=1}}\angle(u,B).
+\tag{145.10}
+$$
+
+它由 $P_AP_B|_A$ 的特征值 min–max 公式及
+$\cos^2\angle(u,B)=\langle u,P_Bu\rangle$ 得到。$Q$ 将 $A$ 中的 $i$ 维子空间一一映到 $A'$ 中的 $i$ 维子空间，把（145.9）代入（145.10）即得（145.6）。
+
+最后，在每个非零主角对应的二维主平面上，两投影之差的特征值为
+$\pm\sin\alpha_j$；零主角对应的共同方向上差为零。其余共同正交补上也为零。因此最大绝对特征值为 $\sin\alpha$，证明（145.7）的第一式；第二式同理。证毕。
+

@@ -1,0 +1,13 @@
+**证明。** 两个相位的后续复数输出共同乘上单位复数 $\exp(2\pi in\alpha)$，距离保持不变，给出 $d_\infty$ 的等式。取整数 $M\ge\pi/\varepsilon$，把 $x$ 编到最近的相位 $j/M$，并令
+\[
+ D(j,n)=\exp(2\pi i(j/M+n\alpha)).
+\]
+圆周相位误差至多 $1/(2M)$，故每个时刻的输出误差至多 $\pi/M\le\varepsilon$。该静态解码器读取外部 $n$，其计算资源没有被有限标签数约束。
+
+对有限状态自主预测器，轨道在某个 $\mu\ge0$ 后以周期 $p\ge1$ 重复。在时刻 $\mu+kp$，预测输出恒为某个 $c\in\mathbb C$。由于 $p\alpha$ 无理，真实输出在单位圆上稠密；仓库的 `irrational_rotation_interval_sampling` 亦直接推出这个经典稠密性。连续性给出
+\[
+ \sup_{k\ge0}|\exp(2\pi i(x+(\mu+kp)\alpha))-c|
+ =\sup_{|z|=1}|z-c|=1+|c|\ge1.
+\]
+最后，一状态输出 $0$ 与真实输出的距离恒为 $1$。定理 8.2 给出覆盖不存在的结论。证毕。[^tcs-rotation]
+

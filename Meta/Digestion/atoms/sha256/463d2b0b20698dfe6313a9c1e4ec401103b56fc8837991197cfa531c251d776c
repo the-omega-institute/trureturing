@@ -1,0 +1,74 @@
+**定理 246.3（最省形成纠缠的最小总参考维数）。** 若 $\delta>0$，则
+$$
+\boxed{
+M(\epsilon)=
+\begin{cases}
+2,&\epsilon=0,\\
+3,&0<\epsilon<\delta,\\
+1,&\epsilon\ge\delta.
+\end{cases}
+}
+\tag{246.28}
+$$
+若 $\delta=0$，则所有 $\epsilon\ge0$ 都有 $M(\epsilon)=1$。
+
+**证明。** 先取内部容差 $0<\epsilon<\delta$，置
+$$
+\theta=1-\frac\epsilon\delta\in(0,1).
+\tag{246.29}
+$$
+如果一份探针满足 $r_E(\Omega)\le2$ 且 $E_F(\Omega)\le\theta$，定理246.1与严格弦界给
+$$
+g(\Omega)\le G(\theta)
+<U+\delta\theta=D-\epsilon.
+\tag{246.30}
+$$
+所以所有至多二维参考的混合探针都不能以自由参考最小成本满足目标。必有 $M(\epsilon)\ge3$。
+
+反向，取参考正交基 $|0\rangle,|1\rangle,|2\rangle$，复用§245的实际旗标态
+$$
+\Xi_\theta=\theta|\Phi\rangle\langle\Phi|
+ +(1-\theta)|\eta\rangle\langle\eta|,
+\tag{246.31}
+$$
+其中
+$$
+|\Phi\rangle=
+\frac{|u,+\rangle|0\rangle+|u,-\rangle|1\rangle}{\sqrt2},
+\qquad
+|\eta\rangle=|u,+\rangle|2\rangle.
+\tag{246.32}
+$$
+§245已证明同一探针同时满足
+$$
+E_F(\Xi_\theta)=\theta,
+\qquad
+ g(\Xi_\theta)=U+\delta\theta=D-\epsilon.
+\tag{246.33}
+$$
+其参考边缘为
+$$
+\operatorname{Tr}_H\Xi_\theta
+=\frac\theta2|0\rangle\langle0|
+ +\frac\theta2|1\rangle\langle1|
+ +(1-\theta)|2\rangle\langle2|.
+\tag{246.34}
+$$
+内部容差下这三个本征值均正，参考支撑恰为三维。因此 $M(\epsilon)\le3$，与下界合并得到内部结论。
+
+$\epsilon=0$ 时，最小形成纠缠为一，二维最大纠缠纯态达到完整值。一维参考支撑的联合态只能是 $\rho_H\otimes|e_0\rangle\langle e_0|$，形成纠缠为零，且响应至多 $U<D$，所以最小维数为二。
+
+$\epsilon\ge\delta$ 时，沿共同轴的产品输入配一维参考即达到所需值，形成纠缠为零。归一化态的参考支撑不可能为零维，故最小值为一。$\delta=0$ 时相同产品态已达到完整值，所以全部容差下最小维数也为一。$\square$
+
+等价地，在内部容差下有严格成本比较
+$$
+\boxed{
+C_2(\epsilon)
+>C_{\mathrm{mix}}(\epsilon)
+=C_3(\epsilon)=1-\frac\epsilon\delta,
+\qquad 0<\epsilon<\delta,
+}
+\tag{246.35}
+$$
+其中 $C_3$ 表示参考支撑至多三维时的最小形成纠缠。该结论同时给出排除所有二维替代的上界和同一三维探针的共同达到，不只是一份三维构造的可行性。
+

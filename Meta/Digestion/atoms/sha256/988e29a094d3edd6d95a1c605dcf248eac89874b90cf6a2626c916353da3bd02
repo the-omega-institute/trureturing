@@ -1,0 +1,7 @@
+**第一族，$r>u_+$。** 只要 $G$ 且 $X\ge uY$，输出零概率为一。补事件由坏校准与 $X-uY<0$ 组成，后者均值至少
+$h_\star(u_+-u)\ge h_\star\gamma\kappa$。故
+$$
+f_K(r,h)\ge1-Ae^{-at}\ge L(r)-Ae^{-at}.
+\tag{300.40}
+$$
+

@@ -35,9 +35,11 @@ public sealed class PreflightLeanDonorTests
         Write(donor, ".gitignore", "build/\n.lake/\n");
         Write(donor, "lean-toolchain", "leanprover/lean4:v4.33.0\n");
         Write(donor, "lake-manifest.json", LeanCacheFixtureFile.Manifest());
+        StrataLint.TestSupport.RegPackageFixture.Write(donor);
         Write(donor, "Meta/FILEMAP.toml", """
-            schema_version = 4
+            schema_version = 5
             resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             [residence_policy]
             case_id = "FIXTURE"
             desired = "explicit"
@@ -92,7 +94,11 @@ public sealed class PreflightLeanDonorTests
             Write(donor, ".lake/build/lib/lean/Fixture.olean", "warm project material\n");
             Write(donor, ".lake/packages/mathlib/Mathlib/Fixture.lean", "def fixture := 0\n");
             Write(donor, ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Fixture.olean", "warm mathlib material\n");
-            if (scenario == "partition") Write(donor, "lake-manifest.json", LeanCacheFixtureFile.Manifest('b'));
+            if (scenario == "partition")
+            {
+                Write(donor, "lake-manifest.json", LeanCacheFixtureFile.Manifest('b'));
+                StrataLint.TestSupport.RegPackageFixture.Write(donor);
+            }
             LeanCacheStamp.Write(Path.Combine(donor, ".lake"), LeanPinSet.TryReadWorktree(donor, out _)!);
             if (scenario == "corrupt") Write(donor, ".lake/.stratalint-lean-cache-stamp.json", "broken stamp\n");
             if (scenario == "platform")

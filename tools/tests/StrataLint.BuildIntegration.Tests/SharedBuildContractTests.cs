@@ -172,6 +172,11 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             fi
             if [[ "$1" == test ]]; then
               [[ "${LEAN_NUM_THREADS:-unset}" == 7 ]] || exit 95
+              if [[ "$2" == --help ]]; then
+                [[ "$#" == 2 ]] || exit 96
+                echo initialize >> build/events
+                exit 0
+              fi
               echo test >> build/events
               assembly="$2"
               source=build/passed/execution.trx
@@ -202,7 +207,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             """);
         File.SetUnixFileMode(Path.Combine(root, "build/bin/dotnet"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var binaries = new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.ScribePath,
-            "tools/tests/First/bin/Release/net10.0/First.dll", "tools/tests/Second/bin/Release/net10.0/Second.dll", CommonExecutionEvidence.LeanProducerPath };
+            "tools/tests/StrataLint.First/bin/Release/net10.0/First.dll", "tools/tests/StrataLint.Second/bin/Release/net10.0/Second.dll", CommonExecutionEvidence.LeanProducerPath };
         foreach (var binary in binaries) Write(binary, "synthetic runtime\n");
         CommonExecutionEvidence.Write(root, CommonBuildOutputs.TestsPath, new[] {
             new BuiltTestProject(ExecutionFixture.First, binaries[3]),
@@ -379,7 +384,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
                     Assert.Equal(1, step.GetProperty("raw_exit").GetInt32());
                     Assert.Equal(1, step.GetProperty("exit").GetInt32());
                     Assert.Equal("failed", step.GetProperty("status").GetString());
-                    Assert.Equal(new[] { "test", "test" }, File.ReadAllLines(Path.Combine(root, "build/events")));
+                    Assert.Equal(new[] { "initialize", "test", "test" }, File.ReadAllLines(Path.Combine(root, "build/events")));
                 }
                 if (failure == "selftest-mismatch")
                     Assert.All(summary.GetProperty("steps").EnumerateArray(), step => Assert.Equal(0, step.GetProperty("raw_exit").GetInt32()));
@@ -425,9 +430,17 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             Assert.Equal(new[] { "selftest-pair", "capability-proof", "banned-api-proof" }, units.Select(unit => unit.GetProperty("id").GetString()));
             Assert.Equal(statuses, units.Select(unit => unit.GetProperty("status").GetString()));
         }
-        (int Exit, string Text) Branch(string stage) => Process(root, scope,
-            new[] { stage, "--repository", root }.Concat(stage == "engineering" ? ["--build-round", build.Round] : Array.Empty<string>())
-                .Concat(seedExport is null ? [] : new[] { "--seed-export", seedExport }).ToArray(), environment);
+        (int Exit, string Text) Branch(string stage)
+        {
+            var branch = Process(root, scope,
+                new[] { stage, "--repository", root }.Concat(stage == "engineering" ? ["--build-round", build.Round] : Array.Empty<string>())
+                    .Concat(seedExport is null ? [] : new[] { "--seed-export", seedExport }).ToArray(), environment);
+            Assert.DoesNotContain("unbound variable", branch.Text, StringComparison.Ordinal);
+            if (stage == "engineering")
+                Assert.Equal(new[] { "initialize", "test", "test" }, File.ReadAllLines(Path.Combine(root, "build/events"))
+                    .Where(value => value is "initialize" or "test"));
+            return branch;
+        }
         void Write(string path, string text)
         {
             var full = Path.Combine(root, path);

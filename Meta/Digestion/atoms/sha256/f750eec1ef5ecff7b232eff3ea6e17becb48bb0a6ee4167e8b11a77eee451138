@@ -1,0 +1,11 @@
+### 141.4 全部实际轮次的共同 Gram 判据
+
+给定（141.1）—（141.7）的同一套来源、编码与纯初始化数据。对候选等距 $R_n$，记
+
+$$
+T_n=(W_{n+1}\otimes I_E)
+       (I_{S_{n+1}}\otimes R_n)
+:\ S_{n+1}\otimes\Gamma_n\longrightarrow K\otimes E.
+\tag{141.14}
+$$
+

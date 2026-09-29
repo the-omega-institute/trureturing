@@ -1,0 +1,41 @@
+### 228.3 可达到的完整秩预算阶跃例
+
+固定 $d\ge2$、$m\ge d$、等距嵌入 $U:\mathbb C^d\to\mathbb C^m$、单位输出向量 $r_0$，以及 $0<\kappa<1$。定义两个同接口的 CPTP 记录通道
+$$
+\mathcal T_0(X)=|0\rangle\langle0|\otimes UXU^\dagger,
+$$
+$$
+\mathcal T_1(X)=|1\rangle\langle1|\otimes\operatorname{Tr}(X)P_{r_0},
+$$
+并置
+$$
+\boxed{
+\mathcal R_\kappa=(1-\kappa)\mathcal T_0+\kappa\mathcal T_1.
+}
+\tag{228.HC.6}
+$$
+结果0的单 Kraus 为 $\sqrt{1-\kappa}\,U$。对输入正交基 $f_1,\ldots,f_d$，结果1可取 Kraus
+$$
+A_i=\sqrt\kappa\,|r_0\rangle\langle f_i|,
+\qquad1\le i\le d.
+\tag{228.HC.7}
+$$
+这些 Kraus 线性独立，且
+$$
+\sum_iA_i^\dagger A_i=\kappa I_d.
+$$
+共同 TP 与目标结果秩 $(1,d)$ 随即成立。等价地，结果1 Choi 矩阵为
+$$
+J_1=\kappa I_d\otimes P_{r_0},
+$$
+秩恰为 $d$。经典标签正交，故目标总 Choi 秩恰为 $d+1$。
+
+对整数预算 $R\ge1$，记
+$$
+d_R(\mathcal R_\kappa)=
+\inf_{\substack{\mathcal S\text{ 为同接口 CPTP 记录通道}\\
+\operatorname{rank}J_{\mathcal S}\le R}}
+\frac12\|\mathcal R_\kappa-\mathcal S\|_\diamond.
+$$
+竞争者允许任意量子输出方向和任意 Kraus，只保持相同输出空间、相同两个经典标签及总 Choi 秩预算。
+

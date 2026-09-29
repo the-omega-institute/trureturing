@@ -1,0 +1,34 @@
+**命题 549.1（完整曲面）。** 对定义 545.1—545.2 的全部参数及 $\eta\ge0$，预算可行当且仅当 $\eta\ge\beta$；可行时
+
+$$
+\boxed{
+\mathcal J_{b,a,d}(r,\eta)
+=\max\{\lambda,\ 2\lambda-\eta,\ 2rD-2(1-r)a-3\eta\},
+\quad
+\lambda=rD/2,\quad \beta=(r-M)_+/2.
+}
+$$
+
+证明：可行性由命题 546.1 给出。先设 $0<r<1$。记第三项为 $H_a(\eta)$，则
+
+$$
+H_a(\eta)-(2\lambda-\eta)=2(\eta_a-\eta).
+$$
+
+所以在非空区间 $[\beta,\eta_a]$，第三项最大；命题 548.2—548.3 覆盖并达到这整个区间。
+
+在 $\max(\beta,\eta_a)\le\eta\le\lambda$，取 $R=R_*$，并令 $h=(\lambda-\eta)/(1-r)$，
+
+$$
+T_1=(b,a+D+h,d-h),\qquad
+T_2=(b,a-h,d+D+h).
+$$
+
+$0\le h\le a\le d$ 保证合法。擦除分支的加权误差是 $\lambda$，揭示分支反向搬移 $\lambda-\eta$，故 $m=\eta,j=2\lambda-\eta$，达到第二条下界。
+
+若 $\eta\ge\lambda$，取 $T_i=Q_i,R=R_*$，得到 $m=j=\lambda$。此时第二项不超过 $\lambda$，第三项在 $\eta=\lambda$ 时为 $\lambda-2(1-r)a\le\lambda$，以后继续下降，所以常数项最大。
+
+$r=0$ 时状态总被揭示，最优值为零，公式也为零。$r=1$ 时只有共同输出，$\beta=\lambda=D/2$；可行时中点达到 $m=j=D/2$，其余两条在 $\eta\ge D/2$ 上均不超过这个值。端点不使用含 $1-r$ 的构造。证毕。
+
+当 $a=d=\varepsilon$ 时，这一公式退回第 534 节的 $n=2,p=1$。当 $a<d$ 时，$\eta_s<\eta_a$，多出的达到区间没有增加曲线中的仿射项。新增共同质量的非对称性可以改变最优构造的描述，而最优值仍只读取较小的标签共同质量。
+

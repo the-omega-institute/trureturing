@@ -1,0 +1,22 @@
+**定义 226.1（provenance 全息边界）。** 对每个风险参数定义
+
+$$
+\boxed{
+\eta_{\mathrm{prov}}
+=
+\left(
+\widehat\theta_j,
+n_j\text{ 或时间一致序列},
+\delta_j,
+r_j,
+\kappa_j,
+\text{抽样合同},
+\text{模型适用域},
+\text{来源风险量词与阈值}
+\right)_{j}.
+}
+\tag{226.1}
+$$
+
+其中 $r_j$ 表示抽样误差合同，$\kappa_j$ 表示名义模型到真实关系的结构失配合同；二者都必须有来源和适用范围。
+

@@ -1,0 +1,19 @@
+**推论208.3（严格合法区间内的平台判据）。**
+第二分支包含一段非空噪声区间，当且仅当
+
+$$
+\boxed{
+1+\left(\frac\gamma\beta\right)^2
+<\frac{1+\sqrt R}{R}.
+}
+\tag{208.19}
+$$
+
+其噪声区间恰为
+
+$$
+\frac1{\beta(1+\sqrt R)}
+\le\epsilon<\frac\beta{R(\beta^2+\gamma^2)}.
+\tag{208.20}
+$$
+

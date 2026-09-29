@@ -1,0 +1,37 @@
+**证明。** 令 $P_U$ 为 $U$ 上的正交投影。正性及
+
+$$
+\operatorname{Tr}\bigl[(I_R\otimes(I-P_U))\omega\bigr]
+=\operatorname{Tr}[(I-P_U)\rho]=0
+$$
+
+给 $(I_R\otimes(I-P_U))\omega^{1/2}=0$，从而得到（89.3）。
+
+纯环境边缘又由同一论证使输出支撑落在 $R\otimes K\otimes\mathbb C\eta$。取 $R$ 的偏迹，便有
+
+$$
+\operatorname{supp}(T\rho T^*)\subset K\otimes\mathbb C\eta.
+$$
+
+由于 $T$ 为等距，$\operatorname{supp}(T\rho T^*)=T(\operatorname{supp}\rho)=T(U)$，给出（89.4）。证明完毕。
+
+回到实际接收器，令 $H=K\otimes B$。对于上述最大纠缠测试输入，记第 $n$ 轮接收前的 $H$ 边缘为 $\rho_n$，置
+
+$$
+U_n=\operatorname{supp}\rho_n\subset H,\qquad
+U=U_1+\cdots+U_6.
+\tag{89.5}
+$$
+
+其余系统包括测试参考和本轮来源作用后的活动记忆，均可纳入引理89.2的 $R$。由实际纯新环境和（89.2），
+
+$$
+V(U_n)\subset K\otimes\mathbb C\eta_n
+\subset K\otimes F,
+\qquad
+V(U)\subset K\otimes F.
+\tag{89.6}
+$$
+
+这里 $U$ 是同一个输入 Hilbert 空间 $K\otimes B$ 中六个支撑的线性和；没有将各轮复制为彼此独立的输入空间。
+

@@ -265,6 +265,7 @@ internal sealed class PrivateReaderFixture : IDisposable
     {
         File.WriteAllText(Path.Combine(Reader, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
         File.WriteAllText(Path.Combine(Reader, "lake-manifest.json"), LeanCacheFixtureFile.Manifest());
+        StrataLint.TestSupport.RegPackageFixture.Write(Reader);
         var project = Path.Combine(Reader, ".lake", "build", "lib", "lean");
         Directory.CreateDirectory(project);
         File.WriteAllText(Path.Combine(project, "Fixture.olean"), "fixture output\n");

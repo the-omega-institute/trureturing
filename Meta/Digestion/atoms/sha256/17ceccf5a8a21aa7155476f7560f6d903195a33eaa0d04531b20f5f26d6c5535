@@ -1,0 +1,39 @@
+**定义 50.1（分辨聚簇尺度的 Fourier 坐标）。** 取定义 48.1 的同一原序列、实际数据、
+完整后验标签和精确中心，保留后验阈值卷第 43 章的 $`x_i,c_M,h_M`$。
+置 $`\omega=\pi/2`$，并定义
+
+```math
+F_M(v)=\frac1{B_M}\sum_{i\in J}
+ (\mathbf1_{\{i\in S\}}-\pi_i)e^{-i\omega vx_i},\qquad
+N_M(s)=\lfloor e^s/h_M\rfloor,\qquad
+\mathcal R_M(s)=\sum_{|k|\le N_M(s)}
+ (1+k^2)^{-1/2}|\widehat\mu_M(k)|^2-2\mathfrak L_M Y_M^2.
+```
+
+式 (50.1)。
+
+这里 $`F_M(0)=Y_M`$，且由既定圆周约定精确有
+$`\widehat\mu_M(k)=e^{-i\omega k c_M}F_M(kh_M)`$。
+下述常数中的级数绝对收敛：
+
+```math
+b_* =1+2\gamma_{\mathrm E}
+ +2\sum_{k=1}^{\infty}\left\{(1+k^2)^{-1/2}-k^{-1}\right\},
+```
+
+式 (50.2)。
+
+其中 $`\gamma_{\mathrm E}`$ 为 Euler 常数，与方差 $`\gamma`$ 区别。
+取第 43 章的同一个实 Gaussian 等距过程 $`\mathcal W_\rho`$，置
+
+```math
+F(v)=\int_{\mathbb R}e^{-i\omega vx}\,\mathcal W_\rho(dx),\qquad
+r(v)=e^{-\omega^2v^2/(2\kappa)},\qquad
+\mathcal R(s)=(b_*+2s)Y^2
+ +2\int_0^{e^s}\frac{|F(v)|^2-Y^2}{v}\,dv.
+```
+
+式 (50.3)。
+
+复积分表示实部和虚部分别作用于同一个实等距过程，并非两个独立的复噪声。
+

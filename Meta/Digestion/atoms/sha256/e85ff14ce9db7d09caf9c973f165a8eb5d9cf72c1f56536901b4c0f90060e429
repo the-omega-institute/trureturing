@@ -1,0 +1,97 @@
+**定理70.3（共同一位接收平面不可能）。** 上述前四尾射线互异的候选不可能满足
+$$
+Q_3=Q_4=Q_5=Q_6=:Q.
+\tag{70.4}
+$$
+
+**证明。** 置 $R=G_2+G_3$。固定 $V_1$ 给
+$$
+\dim R=4,\qquad
+\mathcal U:=V_1|_R:R\longrightarrow Q\otimes F
+$$
+为满等距。$V_1G_4,V_1G_5$ 都在此像内，单射性给 $G_4,G_5\subset R$。跨位正交给 $R\perp Q$。
+
+令 $D=H_1+H_2+H_3+H_4$。把其零位像的接收因子送入 $\mathcal U$，有
+$$
+(\mathcal U\otimes I)V_0D=Q\otimes J,
+$$
+其中
+$$
+J=\operatorname{span}\{
+\eta_3\otimes\eta_2,\eta_4\otimes\eta_3,
+\eta_5\otimes\eta_4,\eta_6\otimes\eta_5\}.
+\tag{70.5}
+$$
+前三张量线性无关，故 $\dim J\ge3$。另一方面 $2\dim J=\dim D\le7$，所以 $\dim J=3$、$\dim D=6$。
+
+第65节的非退化双线性核论证仅使用前三对射线互异，因而在这里给同一个可逆 $A:F\to F$，使
+$$
+A\eta_i\parallel\eta_{i+1}\quad(2\le i\le5),
+\qquad J=\operatorname{span}\{Az\otimes z:z\in F\}.
+\tag{70.6}
+$$
+特别地，$\eta_6$ 不同于 $\eta_3,\eta_4,\eta_5$。所以 $G_2,G_3,G_4,G_5$ 的任意两个平面均张成 $R$，因为它们在 $\mathcal U$ 下是四条不同环境上的完整 $Q$ 纤维。
+
+由引理70.1，$S_0=K$ 七维。加入 $H_5$ 前 $D$ 六维，故 $G_6\eta_6$ 与 $V_0D$ 至少交一维。这给
+$$
+\dim(R+G_6)\le5.
+\tag{70.7}
+$$
+实际三个后期域的零位像是
+$$
+G_4\eta_4,\qquad G_5\eta_5,\qquad G_6\eta_6.
+$$
+$\eta_4,\eta_5,\eta_6$ 互异且 $G_4\cap G_5=0$，所以这三个块直和六维。实际 $H_3,H_4,H_5$ 又都包含于 $R\oplus Q$，从而
+$$
+S_*:=H_3+H_4+H_5=R\oplus Q.
+\tag{70.8}
+$$
+
+此时必须 $v\notin Q$。反之，$H_2\subset R\oplus Q=S_*$。而 $H_2,H_3,H_4$ 的三个零位像在 $\mathcal U$ 坐标下对应
+$$
+\begin{aligned}
+&Q\otimes(A\eta_3\otimes\eta_3),\\
+&Q\otimes(A\eta_4\otimes\eta_4),\\
+&Q\otimes(A\eta_5\otimes\eta_5).
+\end{aligned}
+$$
+三个不同射线的平方张量独立，所以这三个域的和六维，等于 $D$。它又包含于 $S_*$，故 $D=S_*$。由于 $H_5\subset S_*$，遂有 $S_0=D$ 六维，违反引理70.1。因此
+$$
+v\notin Q,\qquad p\notin R,
+\tag{70.9}
+$$
+后一项来自 $V_1p=v\eta_2$ 及 $V_1R=Q\otimes F$。
+
+所有零位像都属于 $(R+G_6)\otimes F$，所以初态关系 $V_0k=p\eta_1$ 使 $p\in R+G_6$。结合（70.7）、（70.9），
+$$
+R'=R+G_6\text{ 五维},\qquad
+K=R'\oplus Q.
+\tag{70.10}
+$$
+这里 $G_6\perp Q$ 来自其零位像与整个 $V_1R=Q\otimes F$ 跨位正交。
+
+令 $Z=R'\cap R^\perp$，它是一维。$V_0D\subset R\otimes F$，而
+$V_0K=V_0D+G_6\eta_6$；将接收因子投影到 $Z$，得到整个像恰为 $Z\otimes\eta_6$。由于 $p\notin R$，$P_Zp\ne0$，把首轮关系投影后便得
+$$
+\eta_1\parallel\eta_6.
+\tag{70.11}
+$$
+
+将 $V_1p=v\eta_2$ 与前四个零位块比较。在四条不同当前射线中至多一条正交于 $\eta_2$，而相应四个接收平面任意两个张成 $R$，故 $v\perp R$。如果 $\eta_6$ 不正交于 $\eta_2$，还会有 $v\perp G_6$，由（70.10）得 $v\in Q$，违反（70.9）。因此
+$$
+\eta_6\perp\eta_2.
+\tag{70.12}
+$$
+
+再将 $V_1k=q\eta_1$ 与零位像比较。由（70.11）—（70.12），$\eta_3,\eta_4$ 都不正交于 $\eta_1$，所以 $q\perp G_3+G_4=R$；同环境的 $G_6\eta_6$ 还给 $q\perp G_6$。由（70.10）得到 $q\in Q$。固定单射性及 $V_1G_5=Q\eta_6$ 随即给
+$$
+k\in G_5\subset S_*.
+\tag{70.13}
+$$
+
+最后，$V_0S_*=G_4\eta_4+G_5\eta_5+G_6\eta_6$ 在环境 $\eta_6$ 上的接收纤维恰为 $G_6$。逐 $\eta_4,\eta_5$ 坐标比较，并用 $G_4\cap G_5=0$，即可消去另外两块。由 $k\in S_*$ 和 $V_0k=p\eta_1$，得 $p\in G_6$，从而固定单射性又给 $k\in H_5$。
+
+非零初态因此属于 $G_5\cap H_5=0$，矛盾。证明完毕。
+
+本定理没有证明一般候选具有共同 $Q$。在五射线子类中，引理70.2把实际接收跨度压至五维；剩余缺口是不同 $Q_i$ 的共同实现及可能存在的环境正交配对，不是自由增加预算或预设周期。一般容量区间保持 $7\le d_{\mathrm{CPTP},6}\le8$。
+

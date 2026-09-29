@@ -1,0 +1,24 @@
+**定理 25.3（平方根耦合缩放产生 OU 自由能耗散）。** 固定 $D,E,B$，将每步生成元改为
+\[
+ \Omega_h=\begin{pmatrix}D&B/\sqrt h\\-B^{\mathsf T}/\sqrt h&E\end{pmatrix},
+ \qquad F^{(h)}=Qe^{h\Omega_h}Q^{\mathsf T},\qquad A_*=D-M/2.
+\]
+每步按定义 25.1 重新初始化隐藏变量。则
+\[
+ F^{(h)}=I+hA_*+O(h^2),
+\]
+且对每个有限 $T$ 存在不依赖 $h,n$ 的常数，使 $nh\le T$ 时
+\[
+ \|(F^{(h)})^n-e^{nhA_*}\|=O(Th),
+\]
+累积条件协方差收敛到 $I-e^{tA_*}e^{tA_*^{\mathsf T}}$，其中 $nh\to t$。极限核是
+\[
+ dX_t=(D-M/2)X_t\,dt+B\,dW_t,
+\]
+以 $\gamma_r$ 为平稳分布。对给定的光滑正密度解及可作分部积分的衰减条件，
+\[
+ \boxed{\frac d{dt}D_{\rm KL}(\rho_t\Vert\gamma_r)
+ =-\tfrac12\int\rho_t
+ \|B^{\mathsf T}\nabla\log(\rho_t/\gamma_r)\|^2dx.}
+\]
+

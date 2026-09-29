@@ -47,6 +47,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "guarded donor cache\n");
+        _ = WriteProjectOlean(repository.Path, "WarmMain");
         var target = AddWorktree(repository.Path, "guarded-target");
         bool? concurrentWriterAcquired = null;
         var cloner = new RecordingDirectoryCloner
@@ -69,7 +70,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void BusyDonorIsSkippedAndEnsureUsesCacheGet()
+    public void WarmSiblingCannotReplaceAnUnavailableMainDonor()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
@@ -85,9 +86,9 @@ public sealed partial class LeanCacheEnsureCommandTests
             ["ensure-cache", "--path", target],
             new RecordingWorktreeProcessRunner());
 
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("busy", result.Output, StringComparison.OrdinalIgnoreCase);
-        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        Assert.False(result.Success);
+        Assert.Contains("stamp absent", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.False(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
         Assert.False(File.Exists(Path.Combine(target, ".lake", "build", "cache.bin")));
     }
 
@@ -98,6 +99,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "busy cache\n");
+        _ = WriteProjectOlean(repository.Path, "WarmMain");
         var target = AddWorktree(repository.Path, "cwd-busy-target");
         var runner = new RecordingWorktreeProcessRunner { BusyRoot = repository.Path };
         Assert.True(LeanCacheBusyProbe.IsBusy(repository.Path, runner));
@@ -107,19 +109,20 @@ public sealed partial class LeanCacheEnsureCommandTests
             ["ensure-cache", "--path", target],
             runner);
 
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("busy", result.Output, StringComparison.OrdinalIgnoreCase);
-        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        Assert.False(result.Success);
+        Assert.Contains("busy", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.False(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
         Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp");
     }
 
     [Fact]
-    public void DonorBecomingBusyAfterStagingFallsBackWithoutPublishingTheCopy()
+    public void MainDonorBecomingBusyAfterStagingFailsClosedWithoutPublishingTheCopy()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "copy raced cache\n");
+        _ = WriteProjectOlean(repository.Path, "WarmMain");
         var target = AddWorktree(repository.Path, "post-copy-busy");
         var runner = new RecordingWorktreeProcessRunner
         {
@@ -133,20 +136,21 @@ public sealed partial class LeanCacheEnsureCommandTests
             runner,
             new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
 
-        Assert.True(result.Success, result.Error);
-        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        Assert.False(result.Success);
+        Assert.False(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
         Assert.False(File.Exists(Path.Combine(target, ".lake", "build", "cache.bin")));
         Assert.Empty(Directory.EnumerateDirectories(target, ".lake.stage-*"));
-        Assert.True(LeanCacheStamp.Matches(Path.Combine(target, ".lake"), ReadPins(target), out _));
+        Assert.Contains(Remediation(repository.Path), ReceiptReason(result.Error), StringComparison.Ordinal);
     }
 
     [Fact]
-    public void DonorStampChangingAfterStagingFallsBackWithoutPublishingTheCopy()
+    public void MainDonorStampChangingAfterStagingFailsClosedWithoutPublishingTheCopy()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "copy raced stamp\n");
+        _ = WriteProjectOlean(repository.Path, "WarmMain");
         var target = AddWorktree(repository.Path, "post-copy-stamp-change");
         var cloner = new RecordingDirectoryCloner
         {
@@ -159,12 +163,12 @@ public sealed partial class LeanCacheEnsureCommandTests
             new RecordingWorktreeProcessRunner(),
             cloner);
 
-        Assert.True(result.Success, result.Error);
+        Assert.False(result.Success);
         Assert.Single(cloner.Invocations);
-        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        Assert.False(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
         Assert.False(File.Exists(Path.Combine(target, ".lake", "build", "cache.bin")));
         Assert.Empty(Directory.EnumerateDirectories(target, ".lake.stage-*"));
-        Assert.True(LeanCacheStamp.Matches(Path.Combine(target, ".lake"), ReadPins(target), out _));
+        Assert.Contains(Remediation(repository.Path), ReceiptReason(result.Error), StringComparison.Ordinal);
     }
 
     [Fact]
@@ -183,10 +187,9 @@ public sealed partial class LeanCacheEnsureCommandTests
             ["ensure-cache", "--path", target],
             new RecordingWorktreeProcessRunner());
 
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("symlink", result.Output, StringComparison.OrdinalIgnoreCase);
-        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
-        Assert.False(File.GetAttributes(Path.Combine(target, ".lake")).HasFlag(FileAttributes.ReparsePoint));
+        Assert.False(result.Success);
+        Assert.Contains("stamp absent", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
     }
 
     [Fact]
@@ -195,6 +198,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "cleanup failure donor cache\n");
+        _ = WriteProjectOlean(repository.Path, "WarmMain");
         var target = AddWorktree(repository.Path, "cleanup-failure-target");
         var cloner = new RecordingDirectoryCloner
         {

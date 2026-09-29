@@ -1,0 +1,101 @@
+### 301.4 实际联合表与离散斜率
+
+取得独立的 $K$ 个任务、$K$ 个参考样本，令
+$$
+I\sim\mathrm{Bin}(K,p_x),\quad
+J\sim\mathrm{Bin}(K,p_y),\quad I\perp J,
+$$
+$$
+x=hc,\quad y=h,\quad p_z=(1-z/C)/B.
+$$
+同一经验网格上
+$$
+X_i=C(1-Bi/K),\quad Y_j=C(1-Bj/K),
+$$
+$$
+S_i=\sum_{m=1}^d\frac{B^m}{m}\frac{(i)_m}{(K)_m},
+\quad\lambda_i=\log C-S_i,\quad
+\beta_{ij}=1+\frac{\lambda_i-\lambda_j}{D\kappa}.
+\tag{301.15}
+$$
+简记 $X=X_I,Y=Y_J,\beta=\beta_{IJ}$，并在同一网格上写 $\lambda(X_i)=\lambda_i$、$\lambda(Y_j)=\lambda_j$。下降阶乘在索引不足时按零处理，所有分母非零。
+
+第300节的离散差分推导不需要固定正增益下界：
+$$
+\lambda_i-\lambda_{i+1}
+=\frac BK\sum_{s=0}^{d-1}B^s\frac{(i)_s}{(K-1)_s},
+\qquad0\le i<K.
+\tag{301.16}
+$$
+$d\ge1$ 保证严格单调，故
+$$
+\beta_{ij}>1\quad\Longleftrightarrow\quad X_i>Y_j.
+\tag{301.17}
+$$
+在正的格点 $\varepsilon<X\le Y$ 上，
+$$
+0\le\lambda(Y)-\lambda(X)
+\le\log\frac{Y-\varepsilon}{X-\varepsilon}.
+\tag{301.18}
+$$
+证明是将（301.16）除以步长 $BC/K$，用
+$$
+\frac1C\sum_{s\ge0}\left(\frac{Bi}{K-1}\right)^s
+=\frac{1-1/K}{X_i-\varepsilon}\le\frac1{X_i-\varepsilon},
+$$
+再沿格点积分。
+
+设
+$$
+G=\{Y\ge h_0/2\}.
+$$
+由（301.12）和阈值间距，在 $G$ 上
+$$
+\varepsilon(1-k^D)\le3\varepsilon\kappa
+\le\gamma h_0\kappa/2
+\le(t_0-k^D)Y,
+$$
+所以
+$$
+k^D Y+\varepsilon(1-k^D)\le t_0Y.
+\tag{301.19}
+$$
+与（301.18）结合，得到
+$$
+G,\ X/Y\ge t_0\quad\Longrightarrow\quad\beta\ge0.
+\tag{301.20}
+$$
+所用坐标至少 $t_0h_0/2\ge c_0h_0/2=2a_0(h_0)>\varepsilon$；若 $X>Y$，直接用（301.17）。
+
+实际表为
+$$
+a_{ij}=
+\begin{cases}
+0,&Y_j<h_0/2,\\
+0,&G,\ X_i/Y_j\le v,\\
+\beta_{ij},&G,\ v<X_i/Y_j<u,\\
+1,&G,\ X_i/Y_j\ge u.
+\end{cases}
+\tag{301.21}
+$$
+中区 $v>t_0$ 使 $\beta\ge0$，而 $X/Y<u<1$ 使 $\beta<1$。于是（301.21）逐项合法，包括阈值等号及非正经验坐标。
+
+斜率还给两个全局点态界：
+$$
+(\beta-1)_+\mathbf1_G
+\le\frac A{h_0\kappa}(X-Y)_+,
+\tag{301.22}
+$$
+$$
+(-\beta)_+\mathbf1_{G\cap\{X\ge a_0(h_0)\}}
+\le\frac A{h_0\kappa}(t_0Y-X)_+.
+\tag{301.23}
+$$
+前者使用 $Y-\varepsilon\ge h_0/4$。后者先由（301.18）得到
+$$
+(-\beta)_+\le
+\frac A{h_0\kappa}
+[k^D Y+\varepsilon(1-k^D)-X]_+,
+$$
+再用（301.19）。这些显式 $1/h_0$ 因子将在真实方差与真实均值间距之间抵消，不可直接乘粗略事件概率。
+

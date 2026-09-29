@@ -1,0 +1,29 @@
+**Theorem 1.2 (exact degree-two energy projection).** Every alternating
+real triangle cochain on $V$ satisfies
+$$
+ \sum_{r,i,j,k\in V}(dF)(r,i,j,k)^2
+ =4n\sum_{i,j,k\in V}\bigl(F(i,j,k)-(da)(i,j,k)\bigr)^2.
+$$
+
+*Proof.* Antisymmetry gives $S(i,j)=-S(j,i)$ and
+$\sum_i S(i,j)=0$: the latter sum cancels after interchanging the two
+summation indices. Write $\|F\|_2^2=\sum_{i,j,k}F(i,j,k)^2$ and
+$\|S\|_2^2=\sum_{i,j}S(i,j)^2$. Expanding $da$ and using the
+zero-divergence relation removes all its mixed products, giving
+$\|da\|_2^2=3\|S\|_2^2/n$. Alternation also gives
+$\langle F,da\rangle=3\|S\|_2^2/n$. Hence
+$$
+ \|F-da\|_2^2=\|F\|_2^2-3\|S\|_2^2/n.
+$$
+In the expansion of $\|dF\|_2^2$, each of the four diagonal terms is
+$n\|F\|_2^2$. Each of the six mixed products, with its sign from the
+coboundary, is $-\|S\|_2^2$ before the factor two from squaring.
+Consequently $\|dF\|_2^2=4n\|F\|_2^2-12\|S\|_2^2$, which is four
+times $n$ times the preceding residual identity. $\square$
+
+The complete-simplex Laplacian is classical; see Danijela Horak and
+Jurgen Jost, *Spectra of combinatorial Laplace operators on simplicial
+complexes*, Advances in Mathematics (2013), DOI
+[10.1016/j.aim.2013.05.007](https://doi.org/10.1016/j.aim.2013.05.007).
+The theorem records the explicit ordered normalization and averaged edge
+reconstruction used here.

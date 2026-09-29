@@ -1,0 +1,26 @@
+**定义 49.1（组能量的环境中心）。** 取定义 48.1 的原序列及同一实际实现，
+并沿用后验阈值卷第 42、43 章的校准概率 $`p_i`$、精确后验概率 $`\pi_i`$、
+归一化 $`B_M`$ 和标记网格 $`\delta_M=Q^{-1/2}`$。
+对原窗口中的每个完整得分组 $`g`$，置
+
+```math
+d_g=\sum_{i\in g}p_i(1-p_i),\qquad
+V_M=\frac{d_J}{B_M^2},\qquad
+T_M=\delta_M^{-1/2}(\mathcal Q_M-V_M),\qquad
+\nu_2=2\int_{\mathbb R}\rho(x)^2\,dx
+ =2c_0^2\sqrt{\frac\pi\kappa}.
+```
+
+式 (49.1)。
+
+这里 $`V_M`$ 是可由观测数据确定的辅助方差中心，并非实际后验平方和的条件期望。
+固定 $`1\le p_a\lt p_b\lt\infty`$，另定义有限谱差商
+
+```math
+\widehat V_M=
+\frac{\mathcal E_M(p_b)-\mathcal E_M(p_a)}
+ {2\mathfrak L_M(p_b-p_a)}.
+```
+
+式 (49.2)。
+

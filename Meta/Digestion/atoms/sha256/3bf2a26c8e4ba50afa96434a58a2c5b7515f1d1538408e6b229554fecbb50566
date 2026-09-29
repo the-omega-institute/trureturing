@@ -1,0 +1,44 @@
+**命题 442.2（预算控制未终止部分，从而保全特定停止密度的质量）。** 对每个有限 $n\ge0$，有
+
+$$
+R(\tau_B>n)
+\le e^B\sqrt{P(\tau_B>n)Q(\tau_B>n)}.
+$$
+
+因此 $P(\tau_B<\infty)=1$ 或 $Q(\tau_B<\infty)=1$ 中任意一项就足以推出 $R(\tau_B<\infty)=1$。若 $P(\tau_B<\infty)=1$，在其零测事件 $\{\tau_B=\infty\}$ 上将 $M_{\tau_B}$ 补定义为零，还得到
+
+$$
+\mathbb E_PM_{\tau_B}=1.
+$$
+
+若两个原律均几乎必然终止，以完整停止历史为记录的亲和量还满足精确表示
+
+$$
+\rho(P^{\tau_B},Q^{\tau_B})
+=\mathbb E_R[e^{-A_{\tau_B}}]\le e^{-B}.
+$$
+
+若另有 $A_{\tau_B}\le B+D$ 在 $R$ 下几乎处成立，$D\ge0$，则此亲和量同时不小于 $e^{-(B+D)}$。这项下界关于亲和量，不能当作同值的最优分类错误下界。
+
+证明：事件 $F_n=\{\tau_B>n\}$ 由前 $n$ 步决定，且其上 $A_n<B$。由命题 440.2，
+
+$$
+\begin{aligned}
+R(F_n)&=\sum_{h\in F_n}\sqrt{P_n(h)Q_n(h)}e^{A_n(h)}\\
+&\le e^B\sum_{h\in F_n}\sqrt{P_n(h)Q_n(h)}
+\le e^B\sqrt{P(F_n)Q(F_n)}.
+\end{aligned}
+$$
+
+最后一步用 Cauchy–Schwarz。若任意一个原律下停止几乎必然有限，右端趋于零，事件连续性给出 $R(\tau_B=\infty)=0$。
+
+每个事件 $\{\tau_B=n\}$ 属于 $\mathcal F_n$，有限层密度关系给出
+
+$$
+\mathbb E_P[M_n\mathbf1_{\{\tau_B=n\}}]=R(\tau_B=n).
+$$
+
+非负求和得到 $\sum_{n\ge1}\mathbb E_P[M_n\mathbf1_{\{\tau_B=n\}}]=R(\tau_B<\infty)=1$；在 $P$ 下也几乎必然有限时，左边就是 $\mathbb E_PM_{\tau_B}$。这个证明使用了特定预算未终止事件上的界，没有从一般的“停止时刻有限”推出任意非负鞅的停止期望必为一。
+
+两个原律均终止时，有限停止历史的概率各自总和为一，且 $R$ 也终止。对每个停止历史 $h$，共同停止规则使其记录质量仍是相应前缀概率；于是 $\sqrt{P^{\tau_B}(h)Q^{\tau_B}(h)}=R^{\tau_B}(h)e^{-A_{|h|}(h)}$。对所有停止历史求和得到精确表示。在 $B\le A_{\tau_B}\le B+D$ 时，对指数取上下界即得双侧亲和界；没有上侧超额条件时只保留原上界。证毕。
+

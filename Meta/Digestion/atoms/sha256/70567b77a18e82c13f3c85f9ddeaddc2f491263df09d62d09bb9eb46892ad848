@@ -1,0 +1,46 @@
+**定理 164.3（局部相对误差约束下的全视界下界）。** 对每个充分接近一的 $r<1$，任取一个三维 CPTP 通道 $\mathcal F_r$，不要求其关于 $r$ 连续。定义
+$$
+g(t)=e^{-t}\sin\!\left(\min\left\{\frac{\sqrt3t}{2},\frac\pi2\right\}\right),
+\qquad
+\Phi(\xi)=\sup_{t\ge0}
+\left[g(t)-t\sqrt{\xi(2+\xi)}\right]_+,
+\quad \xi\ge0.
+\tag{164.14}
+$$
+若 $\limsup_{r\uparrow1}\xi_r(\mathcal F_r)\le\xi<\infty$，则
+$$
+\boxed{
+\liminf_{r\uparrow1}W_r(\mathcal F_r)\ge\max\{L,\Phi(\xi)\}.
+}
+\tag{164.15}
+$$
+特别地，若单步风险比 $\ell_r(\mathcal F_r)/\mathcal R_1(r)\to1$，则
+$$
+\liminf_{r\uparrow1}W_r(\mathcal F_r)
+\ge K:=
+\sqrt{\frac37}\exp\!\left[-\frac2{\sqrt3}
+\arctan\!\left(\frac{\sqrt3}{2}\right)\right]>L.
+\tag{164.16}
+$$
+此类预测族中的下界 $K$ 由 $\mathcal F_r=\mathcal F_*$ 达到。式（164.16）不要求每个有限 $r$ 的单步误差已经精确最优。
+
+证明。 令 $\varepsilon=1-r$。由式（163.21），$2\mathcal R_1(r)/(\sqrt3\varepsilon)\to1$，故式（164.3）和所给相对超额假设推出
+$$
+\limsup_{r\uparrow1}
+\frac{\eta_r(\mathcal F_r)}{\varepsilon}
+\le\sqrt{\xi(2+\xi)}.
+\tag{164.17}
+$$
+固定 $t>0$，取 $N=\lfloor t/\varepsilon\rfloor$，则充分小的 $\varepsilon$ 下 $N\ge1$ 且 $\varepsilon N\to t$。定理162.4给出 $\mathcal E_N(r)\to g(t)$，而定理164.2给出
+$$
+W_r(\mathcal F_r)\ge
+\bigl[\mathcal E_N(r)-N\eta_r(\mathcal F_r)\bigr]_+.
+$$
+取下极限得到对每个固定 $t>0$ 都成立的
+$$
+\liminf_{r\uparrow1}W_r(\mathcal F_r)
+\ge\left[g(t)-t\sqrt{\xi(2+\xi)}\right]_+.
+\tag{164.18}
+$$
+$t=0$ 时右端为零也成立；随后对这些已成立的不等式取 $t$ 的上确界，得到下界 $\Phi(\xi)$。另一方面，式（163.18）的逐视界下界适用于每个 $\mathcal F_r$，定理161.6因此还给出下界 $L$。合并两者即得（164.15），没有交换未知预测器的优化与视界上确界。$\xi=0$ 时 $\Phi(0)=\max_tg(t)=K$，由定理162.4计算；同一节与式（163.22）还给出 $\mathcal F_*$ 的全视界风险趋于 $K$。证毕。
+

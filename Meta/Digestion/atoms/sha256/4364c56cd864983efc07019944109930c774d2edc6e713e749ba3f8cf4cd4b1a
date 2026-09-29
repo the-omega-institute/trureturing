@@ -1,0 +1,14 @@
+**定理77.1（等号强制缺陷投影与三块分解）。** 在（77.1）—（77.2）下，$D$ 是秩 $d$ 的正交投影。两个系数满足
+$$
+\operatorname{rank}L_0=\operatorname{rank}L_1=2d.
+\tag{77.3}
+$$
+空间 $E_0=\ker L_0^*$ 与 $E_1=\ker L_1^*$ 正交且各为 $d$ 维。令 $E_c=(E_0\oplus E_1)^\perp$，则 $\dim E_c=d$，且
+$$
+\begin{aligned}
+L_0L_0^*&=\mu P_{E_1}+\frac{\mu^2s}{c}P_{E_c},\\
+L_1L_1^*&=\nu P_{E_0}+\frac{\nu^2s}{c}P_{E_c}.
+\end{aligned}
+\tag{77.4}
+$$
+

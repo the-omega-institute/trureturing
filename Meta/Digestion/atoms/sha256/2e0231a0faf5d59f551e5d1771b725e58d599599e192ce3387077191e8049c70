@@ -1,0 +1,24 @@
+**引理 31.3（相差至多一的块有指定 0/1 因子）。** 对 a,b≥0、|a-b|≤1，存在以下 P_ab∈M_{a,b}(N)、Q_ab∈M_{b,a}(N)，使
+
+$$
+P_{ab}Q_{ab}=J_a(0),\qquad Q_{ab}P_{ab}=J_b(0).
+$$
+
+若 a=b，取 P_ab=I_a、Q_ab=J_a(0)。若 a=b+1，取
+
+$$
+P_{ab}=\begin{bmatrix}I_b\\0\end{bmatrix},\qquad
+Q_{ab}=\begin{bmatrix}0&I_b\end{bmatrix}.
+$$
+
+若 b=a+1，取
+
+$$
+P_{ab}=\begin{bmatrix}0&I_a\end{bmatrix},\qquad
+Q_{ab}=\begin{bmatrix}I_a\\0\end{bmatrix}.
+$$
+
+零维情形按空矩形矩阵处理；J_1(0)=0，所以未配对的单点块也得到正确乘积。
+
+**证明。** 等尺寸情形立即成立。a=b+1 时，P 把 b 个坐标放入前 b 行，Q 将第 j+1 个坐标读入第 j 个位置，PQ 正好是 a 阶超对角移位；QP 是 b 阶相同移位。反向尺寸交换 P、Q。上述逐坐标说明也包含 b=0 或 a=0；两侧都是相应大小的零矩阵。证毕。
+

@@ -1,0 +1,60 @@
+## 415. 五射线两份记录的确定性三分支完成与精确总成功率
+
+**设置。** 固定
+
+$$
+\omega=e^{2\pi i/3},\qquad
+s_1=(1,0),\quad s_2=(0,1),\quad
+s_{3+j}=\frac{(1,r\omega^j)}{\sqrt{1+r^2}}\quad(j=0,1,2),
+\qquad r>0,
+$$
+
+并令 $S=\mathbb C^5$、$R_2=(\mathbb C^2)^{\otimes2}$。在
+
+$$
+W_2=\operatorname{span}\{e_0,e_1,e_2\},\qquad
+e_0=|00\rangle,\quad
+e_1=\frac{|01\rangle+|10\rangle}{\sqrt2},\quad
+e_2=|11\rangle
+$$
+
+中取上述正交归一基，记 $e_-=(|01\rangle-|10\rangle)/\sqrt2$，于是
+$R_2=W_2\oplus\mathbb C e_-$。置
+
+$$
+q_i=s_i^{\otimes2}\in W_2,\qquad
+J_2|i\rangle=|i\rangle\otimes q_i,
+$$
+
+并沿用相关矩阵与相关通道的约定
+
+$$
+C(r)_{ij}=\langle s_j|s_i\rangle,\qquad
+G(r)=C(r)^{\circ2},\qquad
+\Phi_{G(r)}(X)=G(r)\circ X.
+$$
+
+全部两份原始记录保持在完整的 $R_2$ 中联合可访问。允许的协议是在 $J_2$ 之后对完整 $R_2$ 使用有限结果的联合完全正仪器 $\{\mathcal I_y\}_{y\in Y}$，各分支之和保迹。每个有限维分支记录输出空间记为 $O_y$，$\mathcal I_y:\mathcal L(R_2)\to\mathcal L(O_y)$ 为完全正映射，其效果可写为 $E_y:=\mathcal I_y^*(I_{O_y})$，故 $\sum_{y\in Y}E_y=I_{R_2}$。由 $J_2$ 诱导的系统分支明确定义为
+
+$$
+\mathcal M_y(X):=\operatorname{Tr}_{O_y}\!\left[(\operatorname{id}_S\otimes\mathcal I_y)(J_2XJ_2^\dagger)\right]
+\quad(X\in\mathcal L(S)).
+$$
+
+固定的装置、仪器辅助件和 ancillas 独立于未知输入及未操作参考 $A$，均可吸收到这些 $\mathcal I_y$（及 $E_y$）中。固定接受集合 $Y_{\mathrm s}\subseteq Y$，每个实际结果 $y$ 只控制一个作用于整个 $S$ 的终端酉 $U_y$，在此以前不操作系统。仪器的隐藏 Kraus 指标不是额外结果，同一实际 $y$ 的全部隐藏指标必须共用同一个 $U_y$。对任意有限维未操作参考 $A$，原始接口的精确成功条件允许一个固定的 $0\le p\le1$，并要求同一个 $p$ 对所有系统输入、所有有限参考及其矩阵都成立：
+
+$$
+\sum_{y\in Y_{\mathrm s}}\operatorname{Ad}_{U_y}\circ\mathcal M_y=p\, \operatorname{id}_S,
+\qquad \operatorname{Ad}_{U_y}(Z):=U_yZU_y^\dagger.
+$$
+
+等价地
+
+$$
+(\operatorname{id}_A\otimes\sum_{y\in Y_{\mathrm s}}\operatorname{Ad}_{U_y}\circ\mathcal M_y)(X_{AS})=pX_{AS}
+\quad(X_{AS}\in\mathcal L(A\otimes S)).
+$$
+
+这里 $p$ 是该接口的固定总精确成功参数；$p=1$ 即确定性情形，后文的显示构造和实际标签下界均在此确定性情形中。
+这里的 $\eta$ 始终是第390节已定义的相关矩阵总精确恢复泛函，下面不另造新的成功率定义。
+

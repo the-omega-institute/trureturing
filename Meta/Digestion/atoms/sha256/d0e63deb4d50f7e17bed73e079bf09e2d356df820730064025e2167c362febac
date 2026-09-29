@@ -1,0 +1,4 @@
+**证明。** 在 $C$ 的支撑上写 $E=\sqrt C F\sqrt C$，其中 $0\preceq F\preceq I$。令 $Y=\sqrt C X\sqrt C$。正向最大值为 $\operatorname{Tr}Y_+$，负向最大值为 $\operatorname{Tr}Y_-$；二者的较大值等于 $(\|Y\|_1+|\operatorname{Tr}Y|)/2$。再对 $C$ 取最大即得式（54.22）。$\square$
+
+若 $R,S$ 均为归一化确定性量子梳，则每个 $C$ 都给 $\operatorname{Tr}((R-S)C)=0$，事件误差才化为通常策略范数的一半。策略范数的半定规划和序区间对偶见 [Gutoski，arXiv:1008.4636v4](https://arxiv.org/abs/1008.4636v4) 第 4 节式（1）–（2）、定理 3（PDF 第 14–15 页）；正算符的最小策略上界质量见该文定理 4。对非因果候选，式（54.22）的迹项不能删掉，而且两个项必须在**同一个** $C$ 上相加后再取最大。
+

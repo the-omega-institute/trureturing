@@ -1,0 +1,15 @@
+### 305.8 携带增益信息的正有界时长模型
+
+保持第301—304节原两源任务的同参数平均风险。已知
+$$
+B\in\{2,4\},\quad 1\le C\le C_\star=1024/225,\quad
+0<\kappa\le\kappa_0=-\log\sqrt{3/4},
+$$
+$$
+k=e^{-\kappa},\quad 0<g\le k-k^2,\quad l=k^2+g.
+$$
+批次内固定但未知的参数为 \(r\in[l,1]\)、\(h\in(0,1]\)，假设标号 \(j=0,1\)。不提供正增益下界。每次完成调用返回二元联合记录 \((X,Z)\)：
+
+- \(X\) 仍是原任务币或参考币，分别为
+  \(\operatorname{Bernoulli}((1-hk^jr/C)/B)\)、
+  \(\operatorname{Bernoulli}((1-h/C)/B)\)；

@@ -1,0 +1,53 @@
+### 239.3 正则单纯形给出同一实际候选
+
+在 $\mathbb C^{d+1}$ 中令
+$$
+\mathbf1=(1,\ldots,1),
+\qquad V=\mathbf1^\perp,
+\qquad
+P_V=I_{d+1}-\frac1{d+1}\mathbf1\mathbf1^{\dagger}.
+\tag{239.15}
+$$
+选择实际输入 $A$ 与 $V$ 的酉识别。对标准基 $e_j$，定义
+$$
+v_j=P_Ve_j,
+\qquad
+u_j=\sqrt{\frac{d+1}{d}}\,v_j,
+\qquad 1\le j\le d+1.
+\tag{239.16}
+$$
+由（239.15），$\|v_j\|^2=d/(d+1)$，故各 $u_j$ 单位化，并且
+$$
+\langle u_i,u_j\rangle=-\frac1d\quad(i\ne j),
+\qquad
+\sum_{j=1}^{d+1}|u_j\rangle\langle u_j|
+=\frac{d+1}{d}I_V.
+\tag{239.17}
+$$
+这就是正则单纯形紧框架。定义输入效应
+$$
+E_j=|v_j\rangle\langle v_j|
+=\frac d{d+1}|u_j\rangle\langle u_j|
+\quad(1\le j\le d+1),
+\qquad
+E_j=0\quad(j>d+1).
+\tag{239.18}
+$$
+效应和为 $I_V$，所以
+$$
+\mathcal S_j^{\triangle}(X)=\operatorname{Tr}(E_jX)P_j
+\tag{239.19}
+$$
+给出实际同接口 CPTP 记录通道。各活跃分支仅需一个非零 Kraus
+$$
+C_j=|r_j\rangle\langle v_j|,
+\qquad 1\le j\le d+1.
+\tag{239.20}
+$$
+其平方和为 $I_V$。每个活跃分支的 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，秩恰为一；其余分支为零。经典标签使这些支撑直和，因而
+$$
+\boxed{K(\mathcal S^{\triangle})=d+1.}
+\tag{239.21}
+$$
+当 $N>d+1$ 时，零效应只表示候选在那些原标签上不输出；目标依然在全部 $N$ 个标签上各有权重 $1/N$。
+

@@ -1,0 +1,9 @@
+- 在
+  $$
+  u_1+d_\varepsilon\le u\le u_1+T_\eta\varepsilon^2
+  $$
+  内走完 $\Gamma$，使用两端平坦、近乎匀速的调度
+  $$
+  0\le z'(u)\le
+  \frac{1+o(1)}{T_\eta\varepsilon^2}.
+  $$

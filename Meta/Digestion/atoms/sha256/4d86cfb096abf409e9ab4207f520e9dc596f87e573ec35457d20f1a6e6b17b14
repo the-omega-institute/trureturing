@@ -1,0 +1,14 @@
+**定义 5.1（单峰族与临界距离）。** 沿用定义 1.1、1.2 与定理 2.1，
+固定 $z\in C_+$。对 $0<r<1$，令 $q_r=r/(M-1)$，并定义
+
+$$
+b^{(r)}(z)=r,\qquad
+b^{(r)}(x)=-q_r\ (x\in C_+\setminus\{z\}),\qquad
+b^{(r)}(x)=0\ (x\in C_-).
+\tag{5.1}
+$$
+
+相应核记作 $P_{d,r}$。它属于 $\mathcal K_d^0$，且
+$I(P_{d,r})=F_M(r)$。对 $0<c<c_d$ 记
+$\delta=c_d-c$、$L_\delta=\log(1/\delta)$、$r_c=F_M^{-1}(c)$。
+

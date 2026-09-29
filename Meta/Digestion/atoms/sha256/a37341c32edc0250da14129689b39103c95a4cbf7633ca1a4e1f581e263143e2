@@ -1,0 +1,18 @@
+**定理 26.2（热匹配初态的二阶界与一般初态的信息修正）。** 对任意可见密度矩阵 $\rho_A$ 和 $t\ge0$，
+\[
+ \|\Phi_t(\rho_A)-\mathcal U_t^A(\rho_A)\|_1
+ \le\min\{2,2g_q^2t^2\}.
+\]
+对任意联合态 $\rho_{AB}$，设 $\chi=\rho_{AB}-\rho_A\otimes\tau_B$，
+\[
+ \mathscr E=D_{\rm KL}(\rho_{AB}\Vert\rho_A\otimes\tau_B)
+ =I(A:B)_\rho+D_{\rm KL}(\rho_B\Vert\tau_B).
+\]
+则
+\[
+ \|\operatorname{Tr}_B(e^{-itH}\rho_{AB}e^{itH})
+               -\mathcal U_t^A(\rho_A)\|_1
+ \le\min\{2,2g_q^2t^2+2g_qt\|\chi\|_1\}
+ \le\min\{2,2g_q^2t^2+2g_qt\sqrt{2\mathscr E}\}.
+\]
+

@@ -32,3 +32,4 @@ The geometric bound tends to zero, so every K(k) has measure zero. Countable sub
 
 - Truth anchor: `D5/S3/ConceptDynamics/ExperimentBoundary/BoundedRunUnion.bounded_run_union_boundary`
 - Dependency: [D5/S3/ConceptDynamics/ExperimentBoundary/BoundedRunSpace](BoundedRunSpace.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

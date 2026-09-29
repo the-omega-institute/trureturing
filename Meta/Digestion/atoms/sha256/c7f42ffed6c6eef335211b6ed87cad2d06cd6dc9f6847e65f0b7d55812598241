@@ -1,0 +1,19 @@
+**定义210.1（共同恢复任务与对称化操作）。** 固定 $\beta>0,\gamma>0,R>1$，
+置 $\delta=R-1$、$\Sigma=R+1$。沿用第209节的实际来源、不可访问系统 $M$、
+全部外部参考和共同 CPTP 恢复任务，写 $\epsilon=\ell\tau$。
+第189节的无损旗标对称化后，以正旗标上的两个 Choi 矩阵表示操作：
+
+$$
+\mathcal K=\{(J_0,J_1):J_j\succeq0,\quad
+\operatorname{Tr}_{\mathrm{out}}(J_0+J_1)=I\}.
+\tag{210.1}
+$$
+
+Choi 向量采用输入优先次序 $(a,c,b,d)^{\mathsf T}$。
+记第209节的解析最优候选为
+$J_j^\sharp=|k_j^\sharp\rangle\langle k_j^\sharp|$，
+$k_j^\sharp=\operatorname{vec}(K_j^{\sharp\mathsf T})$，
+以及其实际对偶为 $S_j$。候选满足
+$K_0^{\sharp\dagger}K_0^\sharp+K_1^{\sharp\dagger}K_1^\sharp=I$。
+本节的唯一性比较（210.1）中的 Choi 对；不同 Kraus 表示和未对称化实现不作为同一比较空间。
+

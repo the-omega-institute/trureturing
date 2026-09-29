@@ -1,0 +1,11 @@
+**定义 5.1（词响应、残余空间及线性实现）。** 设 $K$ 为域，$\Sigma$ 有限，$f:\Sigma^*\to K$。定义
+\[
+ f_u(v)=f(uv),\qquad V_f=\operatorname{span}_K\{f_u:u\in\Sigma^*\},\qquad
+ H_f(u,v)=f(uv).
+\]
+称 $f$ 具有有限 Hankel 秩 $r$，若 $V_f$ 有限维且 $\dim_K V_f=r$。一个 $d$ 维线性实现由行向量 $\alpha\in K^{1\times d}$、矩阵 $A_a\in K^{d\times d}$ 及列向量 $\beta\in K^{d\times1}$ 给出，满足
+\[
+ f(a_1\cdots a_t)=\alpha A_{a_1}\cdots A_{a_t}\beta.
+\]
+允许 $d=0$ 表示零响应。这里的维数不等同于有限自动机的离散状态基数，也不指定系数的存储精度。
+

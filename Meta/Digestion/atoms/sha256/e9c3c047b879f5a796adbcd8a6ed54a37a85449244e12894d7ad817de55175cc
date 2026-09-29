@@ -1,0 +1,33 @@
+**定义 15.10（单零制备与实际校准像）。** 设 $A,B$ 为有限交换群，$C=\mathbb Z/m\mathbb Z$，$m\ge1$，$H\le C$ 为实际原钟群，$f:A\times B\to C$ 为固定已知函数。取
+
+$$
+S=A\times B\times H,\qquad z_0=(0,0,0),\qquad
+\ell(a,b,h)=h+f(a,b),\qquad n_S=|A||B||H|.
+\tag{15.30}
+$$
+
+制备是双方已知的单点 $z_0$。一步公开标记 $u=(s,t,k)\in S$ 对应处处合法的平移 $\tau_u(z)=z+u$，同一标记同时输入两端。也允许只取一个生成全部 $S$ 的标记集 $U$ 及其逆；所有有限词均允许执行。以下 $U=S$ 或这样的生成集均可，空词也算历史。任意 $z\in S$ 都从 $z_0$ 可达。空间坐标 $a,b$ 属于来源状态；外部类型顶点只有一个固定值，不随 $a,b,h$ 改变。
+
+校准后的实际坐标域及其逆为
+
+$$
+\begin{gathered}
+\Omega_f=\{(a,b,\lambda)\in A\times B\times C:
+                    \lambda-f(a,b)\in H\},\\
+F_f:S\longrightarrow\Omega_f,\quad
+F_f(a,b,h)=(a,b,h+f(a,b)),\qquad
+F_f^{-1}(a,b,\lambda)=(a,b,\lambda-f(a,b)).
+\end{gathered}
+\tag{15.31}
+$$
+
+因此 $|\Omega_f|=n_S$，只有 $H=C$ 时它才是整个 $A\times B\times C$。在此域上的运输是
+
+$$
+\widetilde\tau_u(a,b,\lambda)=
+\bigl(a+s,b+t,\lambda+k+f(a+s,b+t)-f(a,b)\bigr).
+\tag{15.32}
+$$
+
+初始校准读数为 $f(0,0)$，不预设它为零。若改用 $\ell-f(0,0)$，须对全部校准输出作同一个常数平移。
+

@@ -1,0 +1,101 @@
+**定理131.1（二重三维尾侧先行不可能）。** 上述实际合同不能满足（131.1）。因此二重四加三的两尾候选，其第二轮只能位于四维完整零位纤维。
+
+### 131.1 五种必要尾词与交替词排除
+
+定义同一个一位等距的两个完整输入块
+
+$$
+F_A=V_1^{-1}(U_A^\perp\otimes A),\qquad
+F_B=V_1^{-1}(U_B^\perp\otimes B).
+$$
+
+它们满足
+
+$$
+K=F_A\oplus F_B,\qquad F_A\perp F_B,\qquad
+\dim F_A=4,\quad\dim F_B=3,
+\qquad p\in F_A.
+\tag{131.4}
+$$
+
+最后一项来自真实 $V_1p=v\otimes A$。第2至5轮的 $G_i$ 分别位于其已执行后继对应的 $F_A$ 或 $F_B$。
+
+三维 $U_A$ 中的二维实际平面两两有非零交，故当前 $A$ 的已见后继唯一。第三轮若仍为 $A$，此已见自循环会把五位尾词全部固定为 $A$，违反两尾合同。因此相同于第126.1节的五词分类仍成立：
+
+$$
+ABABA,\quad ABABB,\quad ABBAB,\quad ABBBA,\quad ABBBB.
+\tag{131.5}
+$$
+
+先排 $ABABA$。置
+
+$$
+E=G_2+G_4,\qquad O=G_3+G_5.
+$$
+
+第99.3节的局部实际结果给 $\dim O\ge3$。又 $E\subset F_B$、$O\subset F_A$，所以 $E\perp O$。两个空间都在五维 $S_0$ 内，而 $\dim E\ge2$，只能
+
+$$
+\dim E=2,\qquad\dim O=3,\qquad G_2=G_4=E.
+\tag{131.6}
+$$
+
+相同零位像给 $H_1=H_3$，故真实 $p\in H_3$。早期 $H_2$ 和后期 $H_4$ 是共同域 $E$ 上的两个线性图：
+
+$$
+T_2:E\longrightarrow\mathbb Cv,\qquad
+T_2u=(b/a^2)v,\quad T_2w=0,
+\qquad
+T_4:E\longrightarrow Q_4,
+$$
+
+其中 $T_4$ 为同构；$v\in U_A^\perp$、$Q_4\subset U_A^\perp$。固定零位像使
+
+$$
+\dim(H_2+H_4)=\dim O=3,
+$$
+
+所以 $\operatorname{rank}(T_4-T_2)=1$。若 $v\notin Q_4$，差映射的核只能为零，会使其秩二，矛盾。因此 $v\in Q_4$。同一个
+
+$$
+V_1p=v\otimes A\in Q_4\otimes A=V_1G_3
+$$
+
+给 $p\in G_3$，与 $p\in H_3$ 和后期 $H_3\cap G_3=0$ 冲突。这里复用的是第126.2节的局部图差论证；五维 $S_0$ 直接给出所需的二维、三维读数，没有对首环境另加假设。
+
+### 131.2 小侧饱和与实际两步回返的环境限制
+
+以下两个词会出现 $F_B=U_A$ 的分支。此时（131.4）给
+
+$$
+F_A=U_A^\perp.
+$$
+
+定义
+
+$$
+J=S_0\cap U_A^\perp,\qquad\dim J=2.
+$$
+
+真实 $p\in S_0\cap F_A$，所以 $0\ne p\in J$。它不属于 $U_A$；完整零位首像只有在首环境为 $B$ 时才容许这个位置，因为第三环境的零位纤维是 $P\subset U_A$。于是
+
+$$
+[\eta_1]=[B],\qquad p\in J,\qquad q\in U_B^\perp.
+\tag{131.7}
+$$
+
+若某个实际 $G_j$ 当前位于 $B$ 且其已执行后继为 $A$，则
+
+$$
+G_j\subset U_B\cap F_A\subset J.
+$$
+
+两者二维，故 $G_j=J$。这又使
+
+$$
+U_B=P\oplus J,\qquad P\perp J.
+\tag{131.8}
+$$
+
+下面单独明确早期回返所强迫的环境关系。
+

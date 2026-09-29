@@ -1,0 +1,43 @@
+## 定理 382.1（历史态的条件切片）
+
+令 $P_n=|n\rangle\langle n|$。则
+
+$$
+\Pr(n)=\frac1{N+1},\qquad
+\rho_n=V_n\rho_0V_n^\dagger,
+$$
+
+并且对任意 $0\preceq F\preceq I$，
+
+$$
+\Pr(F\mid n)=\operatorname{Tr}(V_n\rho_0V_n^\dagger F).
+$$
+
+### 证明
+
+酉性给出
+
+$$
+\langle W\psi,W\phi\rangle
+=\frac1{N+1}\sum_n\langle V_n\psi,V_n\phi\rangle
+=\langle\psi,\phi\rangle .
+$$
+
+链上的每个分量满足 $V_{n+1}=U_nV_n$，故像空间正好是零约束空间。展开
+
+$$
+\Gamma=\frac1{N+1}\sum_{n,m}|n\rangle\langle m|\otimes
+V_n\rho_0V_m^\dagger
+$$
+
+并对钟空间取条件块，即得所述概率和条件态。∎
+
+对一般图，密度历史态可由任意非零 $\Psi\in\ker K_G$ 归一化后构造；若 $\ker K_G=\{0\}$，则没有这样的归一化态。链图之所以没有这个障碍，是因为所有闭走法的运输均为恒等（往返边的运输相互抵消），$W$ 已显式给出非零核向量。Aharonov 等人的原始论文 [quant-ph/0405098v2](https://arxiv.org/abs/quant-ph/0405098) 的式 (1) 与 Claim 3.3 讨论的是电路历史态和传播项的零能量结构；这里仅借用这种历史态编码的数学形式。
+
+定义钟去相干态
+
+$$
+\Gamma_{\mathrm{diag}}
+=\frac1{N+1}\sum_n|n\rangle\langle n|\otimes V_n\rho_0V_n^\dagger .
+$$
+

@@ -1,0 +1,24 @@
+**定义 38.2（平均态、差分与相对对比度）。** 令
+\[
+ \sigma_i=(\rho_0^{(i)}+\rho_1^{(i)})/2,\qquad
+ \Delta_i=(\rho_0^{(i)}-\rho_1^{(i)})/2.
+\]
+限制在 $\operatorname{supp}\sigma_i$ 上，使 $\sigma_i\succ0$，$\Delta_i=\Delta_i^\dagger$、$\operatorname{Tr}\Delta_i=0$。每个物理输入对满足 $-\sigma_i\preceq \Delta_i\preceq\sigma_i$，故
+\[
+ r_i=\|\sigma_i^{-1/2}\Delta_i\sigma_i^{-1/2}\|\le1.
+\]
+$r_i$ 不是小的 Holevo 信息本身。令自然对数熵为 $S$，并定义
+\[
+ J(\sigma,X)=S(\sigma)-\tfrac12 S(\sigma+X)-\tfrac12 S(\sigma-X),\qquad
+ L=\log2,
+\]
+\[
+ \chi_i=J(\sigma_i,\Delta_i),\quad I_i=\chi_i/L=1-H_i.
+\]
+奇偶位的两个条件输出恰为 $\sigma_1\otimes\sigma_2\pm \Delta_1\otimes \Delta_2$。因此
+\[
+ I^-=\frac{J(\sigma_1\otimes\sigma_2,\Delta_1\otimes \Delta_2)}L
+       =1-H(Z|B_1B_2),
+\]
+而 (HR-upper) 等价于 $I^-\ge I_1I_2$。本批在 $r_i<1$ 时给出充分条件，不假设 $[\sigma_i,\Delta_i]=0$，也不假设两个量子输出可以被共同对角化。
+

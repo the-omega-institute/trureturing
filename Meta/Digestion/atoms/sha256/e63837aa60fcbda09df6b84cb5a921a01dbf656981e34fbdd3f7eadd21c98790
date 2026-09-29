@@ -1,0 +1,39 @@
+### 73.2 任意 tester 的末支撑质量
+
+固定任意完整 tester
+
+$$
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+$$
+
+记
+
+$$
+s=C_{11,11}\in[0,1],\qquad q=C_{00,00}\in[0,1].
+$$
+
+偏迹归一化给 $C_{01,01}=1-s$、$C_{10,10}=1-q$。由 $E\preceq C\otimes I_D$，
+
+$$
+\begin{gathered}
+\langle z|E|z\rangle,\ \langle z'|E|z'\rangle\le s,
+\qquad\langle x'|E|x'\rangle\le q\le1,\\
+\langle w|E|w\rangle
+\le\langle w|C\otimes I_D|w\rangle
+=C_{00,00}+C_{10,10}=1.
+\end{gathered}
+\tag{73.5}
+$$
+
+最后一个等式使用 $x,y$ 的末输出坐标不同。正算子 $E$ 的 Cauchy–Schwarz 不等式于是给
+
+$$
+|\operatorname{Tr}(JE)|
+\le2|\langle z|E|w\rangle|+2|\langle z'|E|x'\rangle|
+\le4\sqrt s.
+\tag{73.6}
+$$
+
+这是对同一个任意 tester 的约束；没有将它与另一个 tester 的最优事件拼接。
+

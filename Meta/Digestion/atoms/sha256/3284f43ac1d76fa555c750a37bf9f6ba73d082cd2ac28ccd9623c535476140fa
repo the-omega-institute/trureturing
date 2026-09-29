@@ -1,0 +1,41 @@
+### 295.5 未截断的迭代偏差修正为 \(O(K^{-s})\)
+
+这里的算子组合是经典 Bernstein 迭代布尔和：$B_KQ_{K,s}=I-(I-B_K)^s$。其标准误差算子恒等式与高阶逼近研究可参见 Li Cheng 与 Xinlong Zhou, “Strong inequalities for the iterated Boolean sums of Bernstein operators,” *Studia Universitatis Babeș-Bolyai Mathematica* 64(3), 299–304 (2019)，印刷第300页及 Theorem 1.1，[原文](https://www.cs.ubbcluj.ro/journal/studia-mathematica/journal/article/download/569/pdf)，[DOI](https://doi.org/10.24193/subbmath.2019.3.01)。本节使用这一标准工具，并给出所需的导数范数估计；真实决策还需要后面的系数合法化及其误差证明。
+
+对每个固定非负整数 \(m\)，
+\[
+\|(I-B_K)f\|_{C^m}
+\le\frac{C_m}{K}\|f\|_{C^{m+2}}
+\qquad(K\ge m).
+\tag{295.4}
+\]
+可直接证明，不需要假设函数解析。对于 \(0\le j\le m\)，令 \(S\sim\operatorname{Bin}(K-j,t)\)，令 \(U_1,\ldots,U_j\) 独立均匀于 \([0,1]\)，则有限差分的积分表示给
+\[
+(B_Kf)^{(j)}(t)=\frac{(K)_j}{K^j}
+\mathbb E f^{(j)}
+\!\left(\frac{S+U_1+\cdots+U_j}{K}\right).
+\]
+括号中随机变量 \(T\) 满足
+\[
+\mathbb E(T-t)=\frac{j(1/2-t)}K,\qquad
+\mathbb E(T-t)^2\le C_j/K,\qquad
+\left|1-\frac{(K)_j}{K^j}\right|\le C_j/K.
+\]
+Taylor 展开到一次、以二阶导数控制余项，即给（295.4）。
+
+连续使用（295.4），每次减少两个被控制的导数阶，得到
+\[
+\|(I-B_K)^sh\|_\infty
+\le C_sK^{-s}\|h\|_{C^{2s}}.
+\]
+代数恒等式
+\[
+B_KQ_{K,s}h=h-(I-B_K)^sh
+\]
+因而证明
+\[
+\|B_KQ_{K,s}h-h\|_\infty\le C_{k,s}K^{-s}.
+\tag{295.5}
+\]
+\(h\in C^{M-1}=C^{2s+1}\) 充分满足所需正则性。这里尚未把越界系数当作概率；其合法化见下一步。
+

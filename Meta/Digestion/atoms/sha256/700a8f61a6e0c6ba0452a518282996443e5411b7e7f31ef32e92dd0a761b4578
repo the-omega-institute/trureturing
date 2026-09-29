@@ -1,0 +1,27 @@
+**定义 204.1（全域候选族及有限半径域）。** 固定 $0<a<1$。对 $-1<A,s<1$，定义
+$$
+\begin{gathered}
+ B_A=\sqrt{1-A^2},\qquad d_s=1-s^2,\\
+ x_{A,s}(u)=\frac{2a-A(1+u)+2(a-A)s}{B_A d_s},\qquad
+ z_s(u)=\frac{u-s^2}{d_s},\\
+ D_{A,s}(u)=d_s^2-
+ \left[\frac{2a-A(1+u)+2(a-A)s}{B_A}\right]^2-(u-s^2)^2.
+\end{gathered}
+\tag{204.1}
+$$
+该程序的 Bloch 向量为 $(x_{A,s}(u),0,z_s(u))$，其满秩条件等价于 $D_{A,s}(u)>0$。对定义201.1的合法 $a,t,R$，记
+$$
+ \mathcal D_{a,t,R}=
+ \{(A,s)\in(-1,1)^2:
+ D_{A,s}(t-R)>0,\ D_{A,s}(t+R)>0\},
+\tag{204.2}
+$$
+以及
+$$
+ \mathcal Q_{a,t}(A,s)=
+ \frac{(1-s)^2-[2a-A(1+s)]^2}
+ {(1-A^2)(1-s)^2D_{A,s}(t)}.
+\tag{204.3}
+$$
+在（204.2）内，仿射曲线在闭区间内满秩，且可延拓到稍大的物理开区间。
+

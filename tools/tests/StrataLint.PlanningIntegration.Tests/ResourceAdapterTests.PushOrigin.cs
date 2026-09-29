@@ -68,7 +68,7 @@ public sealed partial class ResourceAdapterTests
         const string alias = "zz-retired-check";
         const string declaration = "{ id = \"zz-retired-check\", stage = \"current\", owner = \"Meta/FILEMAP.toml\", prerequisites = [\"filemap\"], tools = [], cache_layers = [], cache_activation = {}, materials = [] },\n";
         var original = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
-        var withAlias = original.Replace("]\n[residence_policy]", declaration + "]\n[residence_policy]", StringComparison.Ordinal);
+        var withAlias = original.Replace("\n]\nevidence =", "\n  " + declaration + "]\nevidence =", StringComparison.Ordinal);
         Assert.NotEqual(original, withAlias);
         fixture.Write("Meta/FILEMAP.toml", withAlias.Replace("require = [\"filemap\"]", "require = [\"zz-retired-check\"]", StringComparison.Ordinal));
         fixture.Write("retired/old.txt", "registered historical input\n");
@@ -536,7 +536,7 @@ public sealed partial class ResourceAdapterTests
     public void LocalPushPreflightUsesTheSameNoWorkScopeBeforeAnySdkOrCache()
     {
         using var fixture = new ResourceFixture([]);
-        foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh" })
+        foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh", "tools/scripts/ci_output.py" })
             fixture.Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
         fixture.CommitPlan();
         fixture.Write("fixtures/selected.txt", "documentation change\n");

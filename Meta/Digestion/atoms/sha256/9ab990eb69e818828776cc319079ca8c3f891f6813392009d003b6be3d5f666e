@@ -1,0 +1,67 @@
+### 281.8 低谱空间的固定选取与残角背景
+
+当 $x$ 较大时，用一段低谱方向代替单个 $e_1$。定义完全已知的临界矩阵
+$$
+B_c=I_n-e^{i\theta_c}M_n,\qquad A_c=B_c^\dagger Q_nB_c,
+\qquad\theta_c=2\arcsin(t/2).
+\tag{281.39}
+$$
+§280的差分谱给
+$$
+s_j(B_c)=2t\sin\frac{(2j-1)\pi}{4n+2}\le\frac{\pi j}{4n}.
+$$
+所以按递增次序，$A_c$ 的本征值满足
+$$
+\lambda_j(A_c)\le C_0(j/n)^2,\qquad C_0:=\pi^2/23.
+\tag{281.40}
+$$
+这里使用的是已知 $Q_n,M_n$ 的谱，而非未知真实残角的谱。
+
+为在重根处也得到恰好秩 $r$ 的投影，固定如下规则。按不同本征值递增处理每个本征空间；依次将标准参考基投影到该空间，按这个顺序作Gram–Schmidt，跳过零向量并用正范数归一化。由此得到固定完整本征基。取前 $r$ 个向量的投影和为 $P_r$，其中 $1\le r\le n$。即使第 $r$ 个位置落在退化本征空间内部，也只取规则选出的方向。因此
+$$
+\operatorname{rank}P_r=r,
+\qquad\operatorname{Tr}(P_rA_c)\le r\lambda_r(A_c)
+\le C_0r(r/n)^2.
+\tag{281.41}
+$$
+$P_r$ 仅依赖已知矩阵和整数 $r$，不依赖实际相位及校准结果。
+
+校准后请求实际角度 $\theta=\widehat\phi+\theta_c$，并在记录 $(0,-1)$ 上检测参考投影 $P_r$。残角为 $e$ 时，记
+$$
+B_{c+e}=I_n-e^{i(\theta_c+e)}M_n=B_c+\Delta B,
+\qquad
+\|\Delta B\|^2\le2(1+t)^2(1-\cos e).
+\tag{281.42}
+$$
+由 $(X-Y)^\dagger Q_n(X-Y)\succeq0$，
+$$
+B_{c+e}^\dagger Q_nB_{c+e}
+\preceq2A_c+2\Delta B^\dagger Q_n\Delta B.
+$$
+对 $P_r$ 取迹，结合（281.41）得到
+$$
+\operatorname{Tr}(P_rB_{c+e}^\dagger Q_nB_{c+e})
+\le2C_0r(r/n)^2+4q_+(1+t)^2r(1-\cos e).
+\tag{281.43}
+$$
+除以 $4n$ 并按理想假设自己的真实校准分布取期望，由（281.34），
+$$
+\mathbb E_{0,\phi}p_0(e)
+\le\frac{C_0}2\frac rn(r/n)^2
++32q_+(1+t)^2\frac r{nm}
+\le C_2\frac rn\left[(r/n)^2+\frac1m\right],
+\qquad C_2:=35.
+\tag{281.44}
+$$
+该常数合法，因为 $32q_+(1+t)^2=800/23<35$，且 $C_0/2<35$。
+
+在竞争假设自己的每一个校准历史上，实际混合输出直接给
+$$
+\boxed{
+p_1(e)=(1-\delta)p_0(e)+\frac{\delta r}{4n}
+\ge\frac{\delta r}{4n}.
+}
+\tag{281.45}
+$$
+这不依赖竞争假设下的校准高概率事件，也不借用理想假设的历史分布。
+

@@ -30,23 +30,21 @@ internal static class SnapshotAdmissionCore
                 BootstrapOutcome.ProtectedSurfaceVerificationRequired bootstrapVerification
                 ? BootstrapGate.CreateSl022Diagnostics(bootstrapVerification.ChangeSet)
                 : ImmutableArray<Diagnostic>.Empty;
-            var registry = phaseTiming.Measure(
+            var fileMap = phaseTiming.Measure(
                 "policy-load",
                 () =>
                 {
-                    if (!current.TryGetFile("Meta/registry.yaml", out var registryFile)
-                        || !current.TryGetFile("Meta/domains.yaml", out var domainsFile))
+                    if (!current.TryGetFile("Meta/FILEMAP.toml", out _)
+                        || !current.TryGetFile("Meta/domains.yaml", out _))
                     {
                         throw new InvalidOperationException(
-                            "current snapshot lacks Meta/registry.yaml or Meta/domains.yaml");
+                            "current snapshot lacks Meta/FILEMAP.toml or Meta/domains.yaml");
                     }
 
-                    return RegistryLoader.Load(
-                        registryFile.RawBytes.AsSpan(),
-                        domainsFile.RawBytes.AsSpan()) switch
+                    return RepositoryPolicyLoader.Load(current) switch
                     {
-                        RegistryLoadOutcome.Accepted accepted => accepted,
-                        RegistryLoadOutcome.InfrastructureFailure failure =>
+                        PolicyLoadOutcome.Accepted accepted => accepted,
+                        PolicyLoadOutcome.InfrastructureFailure failure =>
                             throw new InvalidOperationException(failure.Message),
                     };
                 });
@@ -66,7 +64,7 @@ internal static class SnapshotAdmissionCore
                             BootstrapOutcome.Clear clear => AdmissionPipeline.EvaluateWithScribe(
                                 current,
                                 baseline,
-                                registry.Policy,
+                                fileMap.Policy,
                                 lean,
                                 changes,
                                 clear.Capability,
@@ -78,7 +76,7 @@ internal static class SnapshotAdmissionCore
                                 AdmissionPipeline.EvaluateProtectedSurface(
                                     current,
                                     baseline,
-                                    registry.Policy,
+                                    fileMap.Policy,
                                     lean,
                                     changes,
                                     protectedSurfaceVerification.ChangeSet,

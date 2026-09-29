@@ -1,0 +1,21 @@
+### 245.4 三维参考中的共同达到构造
+
+取参考 $E=\mathbb C^3$，正交基为 $|0\rangle,|1\rangle,|2\rangle$。令 $|u,+\rangle,|u,-\rangle$ 为（245.4）共同轴的输入本征基，定义
+$$
+|\Phi\rangle=
+\frac{|u,+\rangle|0\rangle+|u,-\rangle|1\rangle}{\sqrt2},
+\qquad
+|\eta\rangle=|u,+\rangle|2\rangle.
+\tag{245.21}
+$$
+对混合权重 $\theta\in[0,1]$，置
+$$
+\boxed{
+\Omega_\theta=
+\theta|\Phi\rangle\langle\Phi|
++(1-\theta)|\eta\rangle\langle\eta|.
+}
+\tag{245.22}
+$$
+两个分量的参考支撑分别为 $\operatorname{span}\{|0\rangle,|1\rangle\}$ 与 $\operatorname{span}\{|2\rangle\}$。它们正交，形成检验者可实际读取的块旗标。
+

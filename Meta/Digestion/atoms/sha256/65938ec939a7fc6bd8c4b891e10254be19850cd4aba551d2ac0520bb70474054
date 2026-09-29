@@ -1,0 +1,2 @@
+**定义 2.1（切向逃逸空间）。** 设 $F:\mathbb R^p\to\mathbb R^N$ 连续可微，$L(\theta)=\tfrac12\|F(\theta)-y\|^2$，零集 $Z=F^{-1}(y)$。对 $\theta\in Z$，令 $J=DF(\theta)$，切向逃逸空间 $K(\theta)=\ker J$。当 $F\in C^1$ 且 $J$ 在 $\theta$ 的邻域上秩恒定时 $Z$ 在 $\theta$ 附近是 $C^1$ 子流形且 $T_\theta Z=K(\theta)$；不满足秩恒定时 $K(\theta)$ 仍有定义，但不必是 $Z$ 的切空间（例如 $F(z)=z^2$、$y=0$、$\theta=0$ 有 $K(0)=\mathbb R$ 而 $Z=\{0\}$）。
+

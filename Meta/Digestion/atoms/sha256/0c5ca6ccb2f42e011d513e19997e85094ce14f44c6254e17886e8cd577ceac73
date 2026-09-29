@@ -1,0 +1,144 @@
+**命题 409.3（同一两记录制备中，全局指定相位可达而单一乘积分支不可达）。** 取 $S=\mathbb C^5$、$H=\mathbb C^3$，在 $H$ 的正交基 $\{|x\rangle,|y\rangle,|z\rangle\}$ 下给定
+
+$$
+\begin{aligned}
+s_1&=(0,1,1)/\sqrt2,&
+s_2&=(0,1,-1)/\sqrt2,&
+s_3&=(0,1,i)/\sqrt2,\\
+s_4&=(1,0,1)/\sqrt2,&
+s_5&=(1,0,-1)/\sqrt2.
+\end{aligned}
+$$
+
+令 $r_i=s_i$，并固定同一制备 $J_2|i\rangle=|i\rangle\otimes s_i\otimes s_i$。这些记录有 $k=5$ 条不同射线，实际跨度 $\varrho=3$。指定
+
+$$
+z_\star=(1,1,1,1,-1),\qquad
+U_\star=\operatorname{diag}(z_\star).
+$$
+
+在定义 389.2 所允许的全局记录测量下，单位 ket
+
+$$
+|b\rangle=\frac{|x\rangle\otimes|z\rangle+
+                      |z\rangle\otimes|x\rangle+
+                   2|y\rangle\otimes|y\rangle}{\sqrt6}
+$$
+
+及其投影的正交补组成完整两结果测量；只接受 $|b\rangle\langle b|$ 并施加 $U_\star$，接受映射为 $\operatorname{id}_S/6$。相反，没有任何单一非零乘积 bra 分支能在这个固定反馈 $U_\star$ 下给出 $p\operatorname{id}_S$、$p>0$。然而，同一 $J_2$ 上的两位持有者都选单位 bra $(1,1,0)/\sqrt2$，各自补全两结果投影，只接受两个第一结果并取恒等反馈，就得到 $\operatorname{id}_S/16$。两项正恢复等式均作用于全部系统矩阵及任意有限维未操作参考。
+
+证明。每个 $s_j$ 恰有两个模为 $1/\sqrt2$ 的非零坐标，故范数为一。前三个向量的 $x$ 坐标为零、$y$ 坐标相同且非零，而 $z/y$ 依次为 $1,-1,i$，因此它们两两不共线。后两个向量的 $x$ 坐标非零、$y$ 坐标为零，不能与前三者共线；其 $z/x$ 分别为 $1,-1$，所以它们也不同线。并且
+
+$$
+\frac{s_1+s_2}{\sqrt2}=|y\rangle,\qquad
+\frac{s_1-s_2}{\sqrt2}=|z\rangle,\qquad
+\frac{s_4+s_5}{\sqrt2}=|x\rangle,
+$$
+
+从而跨度为三。
+
+写任意 ket 的坐标为 $v=x|x\rangle+y|y\rangle+z|z\rangle$，这里 $x,y,z$ 为复标量。上述 $|b\rangle$ 的三个基分量两两正交，范数平方为 $(1+1+4)/6=1$；其系数为实数，故
+
+$$
+\langle b|v\otimes v\rangle
+ =\frac{2xz+2y^2}{\sqrt6}
+ =\frac{P_0(x,y,z)}{\sqrt6},\qquad
+P_0(x,y,z)=2(xz+y^2).
+$$
+
+代入五个单位记录，前三者均由 $2y^2=1$ 得到值 $1$，后两者由 $2xz=\pm1$ 得到值 $1,-1$，于是 $P_0(s_j)=(z_\star)_j$。完整联合测量为
+
+$$
+\{|b\rangle\langle b|, I_{H\otimes H}-|b\rangle\langle b|\}.
+$$
+
+其接受分支在迹掉记录后给出 $K_\star=\operatorname{diag}(z_\star)/\sqrt6$。因 $U_\star K_\star=I_S/\sqrt6$，对每个矩阵 $B$ 有 $U_\star K_\star B K_\star^\dagger U_\star^\dagger=B/6$；张量 $I_A$ 后同样对每个 $B_{AS}$ 给出 $B_{AS}/6$。全局测量使用了联合记录权限，不属于定义 409.1 的局部权限。
+
+现在设一个乘积 bra 的两个复线性式为
+
+$$
+\lambda(v)=\alpha^T v,\qquad
+\mu(v)=\beta^T v,\qquad
+t_j=\lambda(s_j)\mu(s_j),\qquad K=\operatorname{diag}(t_1,\ldots,t_5).
+$$
+
+任何整体非零比例都可吸收入其中一个线性式，因此这也覆盖未归一化的非零乘积 bra。假设固定反馈满足
+
+$$
+U_\star K B K^\dagger U_\star^\dagger=pB
+\quad\text{对全部 }B,\qquad p>0.
+$$
+
+记 $D=U_\star K=\operatorname{diag}(d_1,\ldots,d_5)$。对矩阵单位 $E_{jj}$ 应用此式，得 $|d_j|^2=p$，故每个 $d_j$ 非零；再对 $E_{j1}$ 应用，得 $d_j\overline{d_1}=p=d_1\overline{d_1}$，因而全部 $d_j=d_1$。于是存在 $\gamma=d_1\ne0$，使
+
+$$
+U_\star K=\gamma I_S,\qquad
+t_j=\gamma(z_\star)_j\quad(1\le j\le5).
+$$
+
+下面求五个记录上的二次齐次评价映射的核。取
+
+$$
+Q(x,y,z)=A x^2+B y^2+C z^2+D_0xy+E_0xz+F_0yz.
+$$
+
+若全部 $Q(s_j)=0$，由前三个值依次得到
+
+$$
+B+C+F_0=0,\qquad B+C-F_0=0,\qquad B-C+iF_0=0.
+$$
+
+前两式给出 $F_0=0$、$B+C=0$，第三式给出 $B-C=0$，故 $B=C=0$。后两个值给出 $A+C+E_0=0$、$A+C-E_0=0$，因而 $A=E_0=0$。只有 $D_0$ 可自由取值；反过来，全部记录都有 $xy=0$，故 $xy$ 确在核中。因此
+
+$$
+\ker\bigl(Q\longmapsto(Q(s_1),\ldots,Q(s_5))\bigr)
+ =\operatorname{span}_{\mathbb C}\{xy\}.
+$$
+
+由 $P_0(s_j)=(z_\star)_j$，任何满足 $Q(s_j)=\gamma(z_\star)_j$ 的二次式都必须具有形式
+
+$$
+Q(x,y,z)=2\gamma(xz+y^2)+txy,\qquad t\in\mathbb C.
+$$
+
+它的复对称系数矩阵以及行列式为
+
+$$
+M_Q=\begin{pmatrix}
+0&t/2&\gamma\\
+t/2&2\gamma&0\\
+\gamma&0&0
+\end{pmatrix},\qquad
+Q(v)=v^T M_Qv,\qquad
+\det M_Q=-2\gamma^3\ne0.
+$$
+
+但若 $Q(v)=\lambda(v)\mu(v)=(\alpha^T v)(\beta^T v)$，它的对称系数矩阵为
+
+$$
+M_Q=\frac{\alpha\beta^T+\beta\alpha^T}{2},\qquad
+\operatorname{ran}M_Q\subseteq\operatorname{span}\{\alpha,\beta\},
+$$
+
+故秩至多为二，与上面的非零三阶行列式矛盾。这里的 $T$ 始终是代数转置；二次多项式的系数计算不使用 Hermitian 配对。因此固定的 $U_\star$ 不能校正任何这样的正成功乘积分支。
+
+最后令两位持有者的单位 ket 都为 $|a\rangle=(|x\rangle+|y\rangle)/\sqrt2$，相应 bra 的坐标就是 $(1,1,0)/\sqrt2$。对五个记录逐个代入，前三者由 $y$ 坐标、后两者由 $x$ 坐标给出
+
+$$
+\langle a|s_j\rangle=\frac12\quad(1\le j\le5),\qquad
+\langle a\otimes a|s_j\otimes s_j\rangle=\frac14.
+$$
+
+每位持有者均作 $\{\Pi,I_H-\Pi\}$，其中 $\Pi=|a\rangle\langle a|$。全部四个结果的投影为
+
+$$
+\Pi\otimes\Pi,\quad
+\Pi\otimes(I_H-\Pi),\quad
+(I_H-\Pi)\otimes\Pi,\quad
+(I_H-\Pi)\otimes(I_H-\Pi),
+$$
+
+其和为 $I_{H\otimes H}$。只接受第一个结果，得到 $K=I_S/4$；取恒等反馈，对任意 $B$ 得到 $B/16$，对任意 $B_{AS}$ 得到 $B_{AS}/16$。两份已制备记录均实际参加测量，且设置与未知输入无关。证毕。
+
+此命题排除的是指定相位方向及固定反馈下的单一乘积 bra 分支，未排除其他相位方向的正局部恢复，也未给出所有局部协议或所有有限轮局部操作与经典通信协议的障碍。所展示的 $1/6$ 与 $1/16$ 都是取得的分支概率，不作最优性比较。本例 $n=2<k-\varrho+1=3$，也低于定理 409.2 第二项的充分界；它不构成这些界尖锐或必要的断言。存在某个可恢复的局部相位方向，与能否实现一个预先指定的全局相位方向，是两个不同的要求。
+

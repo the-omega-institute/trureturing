@@ -1,0 +1,10 @@
+**推论 63.2（纯三量子比特候选无严格间隙）。** 若 $A,B,D$ 均为量子比特且 $R$ 是纯的静态通道 Choi 算符，则 $e_D(R)=\Delta(M)$。因此在这个 $2\times2\times2$ 接口上，任何严格间隙 $e_D(R)>\Delta(M)$ 必须同时满足
+
+$$
+\operatorname{rank}R\ge2,
+\qquad\operatorname{rank}(\operatorname{Tr}_D R)\ge3.
+\tag{63.5}
+$$
+
+式（63.5）是必要条件，没有声称存在满足它的严格反例，也没有解决所有混合 $D=2$ 候选。
+

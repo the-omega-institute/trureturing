@@ -1,0 +1,56 @@
+### 244.2 任意纯联合探针的精确响应
+
+设归一化纯联合探针 $|\psi\rangle\in H\otimes E$ 的输入边缘为
+$$
+\rho=\frac{I_2+r\cdot\sigma}{2},\qquad t=\|r\|\in[0,1].
+\tag{244.9}
+$$
+它的输入—参考纠缠熵是
+$$
+E(\psi)=S(\rho)=H_2\left(\frac{1+t}{2}\right),
+\tag{244.10}
+$$
+其中 $H_2(x)=-x\log_2x-(1-x)\log_2(1-x)$，零项按连续延拓取值。实际半迹距离记为
+$$
+f_p(\rho)=\frac12
+\left\|[(\mathcal S_p-\mathcal R)\otimes\operatorname{id}_E]
+(|\psi\rangle\langle\psi|)\right\|_1.
+\tag{244.11}
+$$
+同一边缘的纯化在参考支撑上只相差等距变换，所以该值只依赖 $\rho$。
+
+四个差效应分别是 $\pm a_p\cdot\sigma/4$ 与 $\pm b_p\cdot\sigma/4$。标准纯化将每个效应变为参考块 $[\sqrt\rho(\cdot)\sqrt\rho]^{\mathsf T}$。经典输出块正交、转置保持迹范数、共同纯输出的迹范数为一，故
+$$
+f_p(\rho)=\frac14\left[
+\|\sqrt\rho(a_p\cdot\sigma)\sqrt\rho\|_1+
+\|\sqrt\rho(b_p\cdot\sigma)\sqrt\rho\|_1
+\right].
+\tag{244.12}
+$$
+
+对任意实向量 $w$，记 $X=\sqrt\rho(w\cdot\sigma)\sqrt\rho$。其迹与行列式为
+$$
+\operatorname{Tr}X=r\cdot w,
+\qquad
+\det X=-\frac{1-t^2}{4}\|w\|^2\le0.
+\tag{244.13}
+$$
+两个本征值异号或至少一个为零，所以
+$$
+\|X\|_1^2=(\operatorname{Tr}X)^2-4\det X
+=(r\cdot w)^2+(1-t^2)\|w\|^2.
+\tag{244.14}
+$$
+该式也覆盖 $t=1$ 的奇异边缘与零矩阵。代入两条等长轴，得到
+$$
+\boxed{
+f_p(\rho)=\frac14\left[
+\sqrt{\ell^2(1-t^2)+(r\cdot a_p)^2}
++
+\sqrt{\ell^2(1-t^2)+(r\cdot b_p)^2}
+\right].
+}
+\tag{244.15}
+$$
+这里直接使用实际噪声通道。对 $0<p<1$、$c<1$，效应一般不再是缩放投影，因此没有把§240的投影取等判据越界用于本节。
+

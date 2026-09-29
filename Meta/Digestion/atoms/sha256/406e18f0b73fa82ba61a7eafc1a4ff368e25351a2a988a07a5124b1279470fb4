@@ -1,0 +1,23 @@
+**定义 2.17。** A weighted continuation system consists of a state set $Q$, a common set $\mathcal T$ of continuation tests, a partial action $\delta(q,u)$, an observation map $o:Q\to O$, an additive cost $c(q,u)$ in a cancellative commutative monoid $M$, and a duration $\tau(q,u)\in\mathbb N$. Tests have an identity $\varepsilon$ and an associative concatenation wherever defined. A legal two-stage action is exactly a legal concatenated action, and for every such action,
+$$
+\begin{aligned}
+\delta(q,uv)&=\delta(\delta(q,u),v),\\
+c(q,uv)&=c(q,u)+c(\delta(q,u),v),\\
+\tau(q,uv)&=\tau(q,u)+\tau(\delta(q,u),v).
+\end{aligned}
+\tag{TM.552}
+$$
+The identity test leaves the state fixed and has zero cost and duration. Ordinary word concatenation with its legal partial transition action is an instance. Vectors of nonnegative real resource costs give an instance of $M$.
+
+The residual task of $q$ is the function on the common test set
+$$
+\mathcal R_q(u)=
+\begin{cases}
+\bot,&\delta(q,u)\text{ is undefined},\\
+\bigl(o(\delta(q,u)),c(q,u),\tau(q,u)\bigr),
+&\delta(q,u)\text{ is defined}.
+\end{cases}
+\tag{TM.553}
+$$
+Define $q\sim q'$ exactly when $\mathcal R_q=\mathcal R_{q'}$. The weighted continuation quotient is $Q/{\sim}$.
+

@@ -1,0 +1,2 @@
+**约定 2.10（两种相位扫描的符号对齐）。** 本节令受控第二振幅为 $e^{i\theta}h$，所以 $I_{\pi/2}=2-2\operatorname{Im}h$。A卷第2.11节 的扫描写成 $a+e^{i\alpha}b$ 并恢复 $\Gamma=a\overline b\,\mu$，其虚部公式为正号。令该节 $a=1,b=h,\mu=1,\alpha=\theta$，则 $\Gamma=\overline h$，故两式相互共轭而一致。对本节一般式（TM.4），取 AP 的第二振幅为 $bh$，得到 $\Gamma=a\overline b\,\overline h$；由 $h=\overline\Gamma/(\overline a b)$ 得同一负号公式。两读数恢复需要已知背景与非零校准；四读数差分可消去共同未知背景，但仍需同一稳定来源、记录和相位控制。各自的同时误差界及分母条件保持独立，不能互换。
+

@@ -1,0 +1,15 @@
+**227.7.4 一维量子输出直接处理。**
+
+当 $m=1$，$A,B$ 是线性独立的行向量。令
+$$
+E_1=A^\dagger A+B^\dagger B,
+\qquad V=\begin{pmatrix}A\\B\end{pmatrix}.
+$$
+$V$ 为可逆 $2\times2$ 矩阵。删除系数的 Rayleigh 最小值给
+$$
+\delta=\lambda_{\min}(VV^\dagger)
+=\lambda_{\min}(V^\dagger V)
+=\lambda_{\min}(E_1).
+$$
+任意结果1秩至多一的候选由一个行向量 $C$ 表示。取其输入核中的单位向量 $v$，则候选结果1概率为零，而目标概率为 $v^\dagger E_1v\ge\delta$。若候选结果1秩为二，则缺失结果0，标签下界为 $q_0$。推论 227.6的修复上界在这一输出维数仍适用。因此（227.GD.3）也对 $m=1$ 成立，不依赖高维输出的多项式稠密论证。
+

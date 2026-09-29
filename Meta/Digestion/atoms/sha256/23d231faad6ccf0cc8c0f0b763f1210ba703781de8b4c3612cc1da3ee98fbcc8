@@ -1,0 +1,12 @@
+### 21.8 形式化范围与参考来源
+
+本节新增的两个 Lean 定理承载第 21.3--21.4 节，并从真实窗口读出完成第 21.2 节的算术识别。第 21.5--21.7 节保留上述普通证明。数量级 $D_n\asymp1/n$ 需要额外控制连分数部分商；本节没有对全部无理斜率声称这个速率，也没有从任意柱集定义直接得到三间隙的长度公式。
+
+Automath 的 `Omega/SPG/SturmianCylinderInformationTime.lean` 接收显式 `hCyl` 上下界后推出信息时间的对数夹逼。本节补入真实观察纤维及其细分关系，定量连分数间隙估计仍需继续证明。另一项承重义务是以圆距离和允许的 Hamming 误码预算研究相位恢复，不把第 21.7 节的切口效应误判为真实圆周不可辨识性。
+
+[21-A] Antoine Julien and Ian F. Putnam. *Spectral triples for subshifts*. Journal of Functional Analysis 270(3), 1031--1063, 2016. DOI: 10.1016/j.jfa.2015.12.002. https://arxiv.org/abs/1411.6800 . Proposition 2.10 与 Theorem 2.11 提供经典 Sturmian 复杂度、旋转区间和三间隙频率背景；这里不把这些经典事实归为新发现。
+
+[21-B] The Omega Institute, trureturing, inspected dev `c37b4b0c0b93c0eca12961440bcd5a23bda0e742`. `D5/S1/Words/Mechanical/MechanicalBalance.lean`, `D5/S1/Words/Mechanical/FloorFractShift.lean`, `D5/S1/Words/ReturnWords/RotationGapArcs.lean` 为本节实际复用的形式证明接口；`GoldenOccurrenceGaps.lean` 与 `GoldenRankArcs.lean` 为已存在的黄金轨道起点版本。
+
+[21-C] The Omega Institute, automath, dev `60ce0a1548858b977dd8719efb939ceb3e87effe`. `lean4/Omega/SPG/ScanErrorDiscrete.lean` 定义实际观察纤维及扫描错误；`lean4/Omega/SPG/SturmianCylinderInformationTime.lean` 的 `hCyl` 明确保留了柱集长度前提。本节不把条件推论误报为已有完整几何识别。
+

@@ -1,0 +1,158 @@
+**四维不可能性的证明。** 反设存在四维接收器服务全部
+$`n\le4`$。只需考虑 Bell 输入
+$`(|0\rangle_J|0\rangle_M+|1\rangle_J|1\rangle_M)/\sqrt2`$。
+未接收时，档案相对 $`JM`$ 的 Schmidt 秩在
+$`n=2,3,4`$ 分别为 $`3,4,4`$。前两项由（21.11）—（21.12）给出。第三项也可不另作档案枚举：三步的 $`JM`$ 边缘正定，而来源的活动记忆通道为
+
+$$
+\mathcal T(X)=\langle0|X|0\rangle|m_0\rangle\langle m_0|
++\langle1|X|1\rangle|m_1\rangle\langle m_1|.
+\tag{23.5}
+$$
+
+由于 $`m_0,m_1`$ 线性独立，$`\mathcal T(I)>0`$。若
+$`\rho_{JM}\ge\lambda I_{JM}`$ 且 $`\lambda>0`$，则
+$`(\operatorname{id}_J\otimes\mathcal T)(\rho_{JM})
+\ge\lambda I_J\otimes\mathcal T(I)>0`$。故第四步仍有 Schmidt 秩四。
+
+把前 $`n`$ 个接收门视为从完整档案到 $`K`$ 的累计编码通道是合法的：较早接收门与后续来源发射作用于不同系统，因而可交换。精确本地解码与上述标准事实遂表明：第二、三、四步的实际 $`JMK`$ 联合态均为纯态，接收器支撑秩分别为三、四、四。此处**没有**断言第一步为纯态；第一步可以具有秩二的可逆附加因子，以下论证允许这种情形。
+
+对 $`j=2,3`$，将纯联合态写为
+
+$$
+|\Psi_j\rangle=\frac1{\sqrt2}\sum_{i=0}^1
+|i\rangle_J\bigl(|0\rangle_Mu_j^i+|1\rangle_Mv_j^i\bigr),
+\quad
+H_j=\operatorname{span}\{u_j^0,u_j^1\},
+\quad
+G_j=\operatorname{span}\{v_j^0,v_j^1\}.
+\tag{23.6}
+$$
+
+这些向量由对应未接收档案向量经同一等距编码得到。由第二步展开，编码前的两组系数为
+
+$$
+\begin{array}{ll}
+\widetilde u_2^0=a^2|00\rangle+b|01\rangle,
+&\widetilde u_2^1=a|10\rangle,\\
+\widetilde v_2^0=ab|00\rangle,
+&\widetilde v_2^1=b|10\rangle;
+\end{array}
+\tag{23.7}
+$$
+
+这里波浪号表示等距编码前的档案坐标，即 $`u_j^i=W_j\widetilde u_j^i`$、$`v_j^i=W_j\widetilde v_j^i`$，其中 $`W_j`$ 是该终端的等距编码。同理，第三步的档案坐标为
+
+$$
+\begin{array}{ll}
+\widetilde u_3^0=a^3|000\rangle+ab|010\rangle+ab|001\rangle,
+&\widetilde u_3^1=a^2|100\rangle+b|101\rangle,\\
+\widetilde v_3^0=a^2b|000\rangle+b^2|010\rangle,
+&\widetilde v_3^1=ab|100\rangle.
+\end{array}
+\tag{23.8}
+$$
+
+非退化性及这些向量的计算基支撑给出
+
+$$
+\dim H_2=\dim G_2=\dim H_3=\dim G_3=2,
+\qquad
+\dim(H_2+G_2)=3,
+\qquad
+H_3+G_3=K.
+\tag{23.9}
+$$
+
+固定一次接收通道的任意 Stinespring 等距映射
+$`V:K\otimes\mathcal B\to K\otimes E`$。第三、四轮发射后、接收前，接收输入的支撑分别为
+
+$$
+L_3=(H_2\otimes|0\rangle)\oplus(G_2\otimes|1\rangle),
+\qquad
+L_4=(H_3\otimes|0\rangle)\oplus(G_3\otimes|1\rangle).
+\tag{23.10}
+$$
+
+二者均为四维：来源发射把（23.6）中的系数分别配到
+$`|i\rangle_Jm_0`$ 和 $`|i\rangle_Jm_1`$，这四个
+$`JM`$ 向量线性独立。第二、三、四步联合态均为纯态，故第三、四轮的新环境各为固定纯向量，且
+
+$$
+V|_{L_3}=U_3\otimes\eta_3,
+\qquad
+V|_{L_4}=U_4\otimes\eta_4,
+\tag{23.11}
+$$
+
+其中 $`U_3:L_3\to K`$、$`U_4:L_4\to K`$ 都是满射等距映射。确切地说，纯输入经等距映射后仍纯，而其 $`JMK`$ 边缘纯，故与新环境成乘积；比较满 Schmidt 支撑的系数即可得到（23.11）。这一步也不要求先前已丢弃的各环境分别为纯态。
+
+置 $`q=\langle\eta_3,\eta_4\rangle`$、$`\gamma=|q|`$。
+等距性给
+$`\langle x,y\rangle=q\langle U_3x,U_4y\rangle`$
+（$`x\in L_3,y\in L_4`$），因而
+
+$$
+P_{L_3}P_{L_4}P_{L_3}=\gamma^2P_{L_3}.
+\tag{23.12}
+$$
+
+若 $`\gamma=1`$，则 $`L_3=L_4`$；按输入位分块得到
+$`H_2=H_3`$、$`G_2=G_3`$，与（23.9）的三维和四维矛盾。
+
+若 $`\gamma=0`$，则 $`L_3\perp L_4`$，于是
+$`H_3=H_2^\perp`$、$`G_3=G_2^\perp`$。因此
+
+$$
+\dim(H_3\cap G_3)
+=\dim(H_2+G_2)^\perp=1,
+\tag{23.13}
+$$
+
+仍与 $`H_3+G_3=K`$ 矛盾。
+
+最后设 $`0<\gamma<1`$。定义第三轮两种输入位的接收像空间
+
+$$
+P=U_3(H_2\otimes|0\rangle),
+\qquad
+Q=U_3(G_2\otimes|1\rangle)=P^\perp,
+\tag{23.14}
+$$
+
+并用 $`P',Q'`$ 表示第四轮的对应像空间。四者均二维。不同输入位在接收前正交，且 $`q\ne0`$，故
+$`P\perp Q'`$、$`Q\perp P'`$。比较维数可得
+$`P'=P`$、$`Q'=Q`$。
+
+式（23.12）且 $`\gamma<1`$ 又给
+$`L_3\cap L_4=\{0\}`$，从而
+$`H_2\cap H_3=G_2\cap G_3=\{0\}`$。这些均为四维
+$`K`$ 中的二维空间，故
+$`H_2+H_3=G_2+G_3=K`$。利用线性性，令
+$`F=\operatorname{span}\{\eta_3,\eta_4\}`$，便得到固定接收门的**全域**约束
+
+$$
+V(K\otimes|0\rangle)\subset P\otimes F,
+\qquad
+V(K\otimes|1\rangle)\subset Q\otimes F.
+\tag{23.15}
+$$
+
+现在把（23.15）用回第二轮，允许第一轮联合态为任意混态。来源等距发射
+$`\mathsf S|0\rangle=m_0\otimes|0\rangle`$、
+$`\mathsf S|1\rangle=m_1\otimes|1\rangle`$ 满足
+
+$$
+(\langle1|_M\otimes I_{\mathcal B})\mathsf S
+=b|0\rangle_{\mathcal B}\langle0|_M.
+\tag{23.16}
+$$
+
+所以任何一轮中，新活动记忆的 $`|1\rangle\langle1|`$
+对角块只经过输入位零。由（23.15），接收并丢弃新环境后，这个对角块的接收器支撑必包含于 $`P`$。第二步实际联合态为（23.6）的纯态，偏迹参考后，该对角块为
+$`\frac12\sum_i|v_2^i\rangle\langle v_2^i|`$，故
+$`G_2\subset P`$。两者维数均为二，得到 $`G_2=P`$。同理第三步给 $`G_3=P`$。这与
+$`G_2\cap G_3=\{0\}`$ 矛盾。
+
+全部 $`\gamma`$ 情形都已排除，四维不可能。维数更小已由第三步 Schmidt 秩下界排除，因此得到（23.1）的下界。
+

@@ -1,0 +1,2 @@
+**定义 357.1（初始判断的统计模型）。** 对固定真实参数 $\theta$，令随机报告满足 $Z_i=\theta+b_i+\varepsilon_i$，其中 $b_i$ 为确定偏差，$\mathbb E\varepsilon_i=0$，误差具有有限二阶矩。写 $\Sigma_{ij}=\mathbb E(\varepsilon_i\varepsilon_j)$。本节权重 $w_i\ge0$ 且 $\sum_iw_i=1$，在看到这次随机报告之前已经确定；若权重依数据变化，以下展开不能不加处理地继续使用。
+

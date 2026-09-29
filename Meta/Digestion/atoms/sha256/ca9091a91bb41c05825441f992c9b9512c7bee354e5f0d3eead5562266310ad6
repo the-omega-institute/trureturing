@@ -1,0 +1,60 @@
+### 264.2 将误差分成可读部分与成对谱核
+
+写
+$$
+\Delta=
+\begin{pmatrix}
+\Delta_{++}&N/2\\
+N^\dagger/2&\Delta_{--}
+\end{pmatrix},
+\qquad
+\Delta_{++}+\Delta_{--}=R.
+\tag{264.6}
+$$
+定义
+$$
+X=
+\begin{pmatrix}
+R/2&N/2\\
+N^\dagger/2&R/2
+\end{pmatrix},
+\qquad
+D=\frac{\Delta_{++}-\Delta_{--}}2,
+\qquad
+H_D=\begin{pmatrix}D&0\\0&-D\end{pmatrix}.
+\tag{264.7}
+$$
+于是
+$$
+\Delta=X+H_D,\qquad
+\mathcal M(H_D)=0.
+\tag{264.8}
+$$
+这正是数据映射的完整Hermitian核形状。
+
+由两态归一化，$\operatorname{Tr}R=0$，从而
+$$
+\operatorname{Tr}X=0.
+\tag{264.9}
+$$
+分别估计对角和非对角部分，得到
+$$
+\|X\|_1
+\le
+\left\|\begin{pmatrix}R/2&0\\0&R/2\end{pmatrix}\right\|_1
++
+\left\|\begin{pmatrix}0&N/2\\N^\dagger/2&0\end{pmatrix}\right\|_1
+=\|R\|_1+\|N\|_1=\varepsilon.
+\tag{264.10}
+$$
+其中非对角块的范数计算使用其本征值为 $N/2$ 的正负奇异值。
+
+对Hermitian算子 $A$，记其负部和负谱总量为
+$$
+A_-=\frac{|A|-A}{2},\qquad
+\nu(A)=\operatorname{Tr}A_-
+=\max_{0\preceq Q\preceq I}\{-\operatorname{Tr}(QA)\}.
+\tag{264.11}
+$$
+最后一个等式来自按正负谱分别取 $Q$，是下文使用的标准负部变分公式。
+

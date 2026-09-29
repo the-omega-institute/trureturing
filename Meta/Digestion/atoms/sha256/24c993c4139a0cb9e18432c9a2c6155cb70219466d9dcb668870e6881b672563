@@ -1,0 +1,173 @@
+**定理 275.3（各向异性六态的严格缺口与不连续点）。** 对 $0\le\varepsilon\le1$，定义
+
+$$
+\mathcal R_\varepsilon
+=\left\{\frac{I_2\pm X}{2},\frac{I_2\pm Z}{2},\frac{I_2\pm\varepsilon Y}{2}\right\}.
+\tag{275.6}
+$$
+
+则
+
+$$
+\delta(\mathcal R_\varepsilon)=\frac{\varepsilon}{1+2\varepsilon},
+\tag{275.7}
+$$
+
+且
+
+$$
+e_{\mathbb R}(\mathcal R_\varepsilon)
+=\begin{cases}
+0,&\varepsilon=0,\\
+\frac14,&0<\varepsilon\le\frac12,\\
+\frac{\varepsilon}{1+2\varepsilon},&\frac12\le\varepsilon\le1.
+\end{cases}
+\tag{275.8}
+$$
+
+正参数时，至多四个经典输出符号足以达到式（275.8）；$0<\varepsilon\le1/2$ 时三个符号足够。特别地，$0<\varepsilon<1/2$ 时 $\delta(\mathcal R_\varepsilon)<e_{\mathbb R}(\mathcal R_\varepsilon)$，而
+
+$$
+\lim_{\varepsilon\downarrow0}\delta(\mathcal R_\varepsilon)=0,
+\qquad
+\lim_{\varepsilon\downarrow0}e_{\mathbb R}(\mathcal R_\varepsilon)=\frac14
+>e_{\mathbb R}(\mathcal R_0).
+\tag{275.9}
+$$
+
+证明。先以标准 Choi、PPT 与纠缠破坏判据给出所需的归约。对每个定义275.1中的层析完备模型，有
+
+$$
+e_{\mathbb R}(\mathcal R)
+=\min_{\mathcal N\in\mathrm{EB}_2}
+\max_j\frac12\|\mathcal N(\rho_j)-\rho_j\|_1.
+\tag{275.2}
+$$
+
+式（275.1）的下确界达到，且可使用至多十六个经典输出符号达到。
+
+取任意允许编码及使模型输出为实的基底，并将其固定为输出坐标。层析完备性与实线性给出：对每个 Hermitian 输入 $H$，$\mathcal E(H)$ 为实 Hermitian 矩阵，因而为对称矩阵。再将任意复矩阵写成两个 Hermitian 矩阵的复线性组合，得到
+
+$$
+T_{\rm out}\mathcal E=\mathcal E
+\tag{275.3}
+$$
+
+在整个输入代数上的恒等式。这里 $T$ 为复线性的矩阵转置，并非逐项复共轭映射。
+
+采用输入因子在前的未归一化 Choi 矩阵
+
+$$
+J_{\mathcal E}
+=\sum_{a,b=0}^1|a\rangle\langle b|\otimes\mathcal E(|a\rangle\langle b|).
+$$
+
+完全正性与式（275.3）给出 $J_{\mathcal E}\succeq0$ 及 $J_{\mathcal E}^{T_{\rm out}}=J_{\mathcal E}$。因此
+
+$$
+J_{\mathcal E}^{T_{\rm in}}
+=(J_{\mathcal E}^{T_{\rm out}})^{\mathsf T}
+=J_{\mathcal E}^{\mathsf T}\succeq0.
+\tag{275.4}
+$$
+
+这正是 $\mathcal E T_{\rm in}$ 的完全正性。于是恢复复合 $\mathcal N=\mathcal D\mathcal E$ 同时满足 $\mathcal N$ 与 $\mathcal NT_{\rm in}$ 完全正，其归一化 Choi 态作用于 $\mathbb C^2\otimes\mathbb C^2$，矩阵大小为 $4\times4$，满足 PPT 条件，因而可分。
+
+这里使用的成熟结果是 Horodecki、Horodecki、Horodecki，*Separability of mixed states: necessary and sufficient conditions*，[arXiv:quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2)，定理3及其后的第一因子转置注记；以及 Horodecki、Shor、Ruskai，*Entanglement Breaking Channels*，[arXiv:quant-ph/0302031v2](https://arxiv.org/pdf/quant-ph/0302031v2)，定理4的可分 Choi 与测量—制备刻画。由后者，$\mathcal N\in\mathrm{EB}_2$。这一步只断言恢复复合是纠缠破坏通道，未把任意输出维数的编码本身判为纠缠破坏。
+
+反之，任意量子比特纠缠破坏通道都可写为
+
+$$
+\mathcal N(X)=\sum_{k=1}^m\operatorname{Tr}(F_kX)\tau_k,
+\qquad F_k\succeq0,\quad\sum_kF_k=I_2.
+\tag{275.5}
+$$
+
+取编码 $\mathcal E(X)=\operatorname{diag}(\operatorname{Tr}F_1X,\ldots,\operatorname{Tr}F_mX)$，解码 $\mathcal D(Y)=\sum_kY_{kk}\tau_k$，两者均在全矩阵代数上 CPTP，编码对全部状态产生实对角矩阵，复合正是 $\mathcal N$。故式（275.2）两侧相等。
+
+归一化 Choi 态所在的两量子比特迹一 Hermitian 矩阵仿射空间的实维数为十五。可分态是纯乘积态的凸包，有限维 Carathéodory 定理给出至多十六项的分解
+
+$$
+J_{\mathcal N}/2=\sum_{k=1}^m w_k\alpha_k\otimes\tau_k,
+\qquad m\le16.
+$$
+
+取 $F_k=2w_k\alpha_k^{\mathsf T}$，Choi 偏迹约束保证 $\sum_kF_k=I_2$，从而式（275.5）只需十六项。可分 Choi 态集合紧，保迹条件闭，有限模型的最大迹距离连续，所以右侧取得最小值，其经典因子分解也使左侧达到。十六只是充分符号数，不宣称最小。此归约只使用上述已注明的成熟判据和经典寄存器因子分解。
+
+现在计算所列六态的精确误差。模型在 Pauli 共轭和交换 $X,Z$、反转 $Y$ 的 Hadamard 共轭下保持不变。在任一恢复通道上同时平均输入和输出的这些酉作用，最大迹距离不增加，纠缠破坏性保持。Pauli 平均消去 Bloch 平移与非对角系数，Hadamard 平均使 $X,Z$ 两个系数相等，所以可以限制到 Bloch 作用
+
+$$
+(x,y,z)\longmapsto(tx,sy,tz).
+\tag{275.10}
+$$
+
+对于共轭误差，也可作相应平均：输入用 $U$、输出用 $\overline U$。所用 Pauli 和 Hadamard 矩阵的逐项共轭与自身至多相差整体相位，所以其共轭作用相同，仍得到式（275.10）。这些平均只用于相应的通道优化，不假设一般编码的输出预先对角。
+
+先计算共轭缺口。式（275.10）的通道完全正恰要求其 Pauli 混合权重
+
+$$
+\frac{1+2t+s}{4},\quad\frac{1-s}{4},\quad
+\frac{1-2t+s}{4},\quad\frac{1-s}{4}
+\tag{275.11}
+$$
+
+非负，分别对应 $I,X,Y,Z$ 共轭。这也可由 Choi 矩阵在 Bell 基中的四个特征值得到。因此 $-1\le s\le1$、$2|t|\le1+s$，特别有 $t\le1$。共轭保持 $X,Z$ 而反转 $Y$，所以模型上的目标误差为
+
+$$
+\max\left\{\frac{|1-t|}{2},\frac{\varepsilon|1+s|}{2}\right\}
+\ge\max\left\{\frac{1-t}{2},\varepsilon t\right\}
+\ge\frac{\varepsilon}{1+2\varepsilon}.
+\tag{275.12}
+$$
+
+最后一个下界可由两条仿射函数的交点取得：$t\le1/(1+2\varepsilon)$ 时第一项给出下界，反之第二项给出。取
+
+$$
+t=\frac1{1+2\varepsilon},\qquad
+s=2t-1=\frac{1-2\varepsilon}{1+2\varepsilon},
+\tag{275.13}
+$$
+
+式（275.11）的权重成为 $t,(1-t)/2,0,(1-t)/2$，均非负且和为一，两种误差同时等于式（275.7）。这也覆盖 $\varepsilon=0$ 的恒等通道。
+
+当 $\varepsilon>0$ 时，模型包含全部三个 Pauli 方向，故层析完备，上面的 PPT 归约把实输出恢复优化化为纠缠破坏通道优化。在式（275.10）中，输入转置把系数 $s$ 变为 $-s$。将两组完全正条件合并，得到
+
+$$
+2|t|+|s|\le1.
+\tag{275.14}
+$$
+
+借助 $2\times2$ PPT 可分性，这也是本 Pauli 对角通道纠缠破坏的充要条件；这里仅将既有 Choi 判据代入当前参数。该量子比特判据及八面体结构的专门论述见 Mary Beth Ruskai，*Qubit Entanglement Breaking Channels*，[arXiv:quant-ph/0302032v3](https://arxiv.org/pdf/quant-ph/0302032v3)，定理1、4及8；本节不将这一通道分类作为新增结论。恢复目标保持三个输入方向，故误差为
+
+$$
+\max\left\{\frac{|1-t|}{2},\frac{\varepsilon|1-s|}{2}\right\}.
+\tag{275.15}
+$$
+
+把 $t,s$ 换为 $|t|,|s|$ 保持可行且不增加误差，因此可取 $t,s\ge0$。由 $2t+s\le1$，有 $t\le1/2$，故第一项至少为 $1/4$；又有 $1-s\ge2t$，式（275.12）的同一交点估计给出下界 $\varepsilon/(1+2\varepsilon)$。因此最优值至少为这两个下界的最大值。
+
+若 $0<\varepsilon\le1/2$，取 $t=1/2,s=0$，误差为 $1/4$。若 $1/2\le\varepsilon\le1$，取
+
+$$
+t=\frac1{1+2\varepsilon},\qquad
+s=\frac{2\varepsilon-1}{1+2\varepsilon},
+\tag{275.16}
+$$
+
+有 $2t+s=1$，且两项误差均为 $\varepsilon/(1+2\varepsilon)$。为用四个经典符号达到，令
+
+$$
+\begin{aligned}
+n_1&=(\sqrt t,\sqrt s,\sqrt t),&n_2&=(\sqrt t,-\sqrt s,-\sqrt t),\\
+n_3&=(-\sqrt t,\sqrt s,-\sqrt t),&n_4&=(-\sqrt t,-\sqrt s,\sqrt t).
+\end{aligned}
+$$
+
+因 $2t+s=1$，四个向量均为单位向量，并有 $\sum_kn_k=0$ 及 $\frac14\sum_kn_kn_k^{\mathsf T}=\operatorname{diag}(t,s,t)$。取 POVM $F_k=(I_2+n_k\cdot\boldsymbol\sigma)/4$，并在结果 $k$ 后制备 $(I_2+n_k\cdot\boldsymbol\sigma)/2$。这些效应非负且和为 $I_2$，第二矩恒等式使恢复 Bloch 作用正好为式（275.10）。这种测量—制备计算与第272节的四面体第二矩计算相同；这里使用的是所给各向异性向量，并不要求它们形成等角 SIC。
+
+若 $0<\varepsilon\le1/2$，最优系数为 $t=1/2,s=0$，还可取三个平面向量 $n_\ell=(\cos(2\pi\ell/3),0,\sin(2\pi\ell/3))$，$\ell=0,1,2$。它们满足 $\sum_\ell n_\ell=0$、$\frac13\sum_\ell n_\ell n_\ell^{\mathsf T}=\operatorname{diag}(1/2,0,1/2)$。用效应 $(I_2+n_\ell\cdot\boldsymbol\sigma)/3$ 和同方向纯态制备，即以三个经典输出符号实现相同最优恢复。所有经典编码和解码都采用式（275.5）之后的全矩阵代数构造，因而是完整 CPTP 映射。
+
+当 $\varepsilon=0$ 时，整个模型只含实的 $X,Z$ 方向及最大混合态；恒等编码和解码已经产生实模型并精确恢复，故 $e_{\mathbb R}=0$。此时层析完备性失效，不能沿用正参数时的纠缠破坏限制。其余比较和极限由两个显式公式直接得到，证毕。
+
+式（275.9）的不连续来自完全实输出的精确约束和模型张成空间的变化。若允许非实残差，恒等编码对每个 $\varepsilon$ 都有定义272.1中的 $e=0,r=\varepsilon$，因此这不是对近似实输出恢复成本的不连续性断言。式（275.7）与（275.8）只比较所列有限状态的迹距离，不包含参考系统；它们给出第272节通用下界的严格例子，不改变该下界或第273节特定模型的等式。
+

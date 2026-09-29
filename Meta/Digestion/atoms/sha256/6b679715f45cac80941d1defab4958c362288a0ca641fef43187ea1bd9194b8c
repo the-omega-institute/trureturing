@@ -1,0 +1,46 @@
+### 266.1 对称锥误差界的标准供应
+
+设 $\mathcal E$ 为有限维欧氏Jordan代数，$\mathcal C$ 为其平方锥，$L\subseteq\mathcal E$ 为实线性子空间，$a_0\in\mathcal E$，且
+$$
+\mathcal C\cap(a_0+L)\ne\varnothing.
+\tag{266.1}
+$$
+范数与距离由Jordan迹内积诱导。
+
+本节使用 Bruno F. Lourenço，*Amenable cones: error bounds without constraint qualifications*，[arXiv:1712.06221v2](https://arxiv.org/pdf/1712.06221v2)，PDF第27页 Proposition 38：对每个固定 $B>0$，存在常数 $\kappa>0$，使所有满足
+$$
+\operatorname{dist}(x,\mathcal C)\le\epsilon,\qquad
+\operatorname{dist}(x,a_0+L)\le\epsilon,\qquad
+\|x\|\le B,\qquad 0\le\epsilon\le1
+\tag{266.2}
+$$
+的 $x$ 都满足
+$$
+\boxed{
+\operatorname{dist}\bigl(x,\mathcal C\cap(a_0+L)\bigr)
+\le\kappa\epsilon^{\,2^{-d_{\mathrm{PPS}}}}.
+}
+\tag{266.3}
+$$
+$\kappa$ 可以依赖固定的锥、仿射切片和范数界 $B$。此定理不要求原始切片含锥的严格内部点，也不要求偏移 $a_0$ 为零。
+
+$d_{\mathrm{PPS}}$ 是到达满足部分多面体Slater条件之面的最少约化步数，定义见该文PDF第5—6页。该文PDF第17页 Proposition 24给
+$$
+d_{\mathrm{PPS}}\le d_S,
+\tag{266.4}
+$$
+其中标准奇异度 $d_S$ 是到达最小面、恢复相对Slater条件所需的最少面约化步数。两种计数不需要预先认定相等。
+
+复Hermitian问题直接属于此框架。取
+$$
+\mathcal E=\operatorname{Herm}(H\otimes E)
+\quad\text{作为实向量空间},
+$$
+$$
+X\circ Y=\frac{XY+YX}{2},
+\qquad
+\langle X,Y\rangle=\operatorname{Re}\operatorname{Tr}(XY).
+\tag{266.5}
+$$
+这是标准欧氏Jordan代数；Hermitian谱分解说明其平方锥就是正半定锥，所诱导范数为Hilbert–Schmidt范数。迹循环性给Jordan积与内积的相容性。因而可直接使用该文PDF第19—20页的Jordan代数约定及（266.3），不把复Hermitian空间误作同阶实对称空间。
+

@@ -170,7 +170,7 @@ of every old survivor.
 
 ## Exact scope and the remaining global input
 
-The [standalone checker](../../frontier/cover-geometry/original_cut_weighting.py) reconstructs
+The [standalone checker](../../frontier/cover-geometry/original-cut-weighting/original_cut_weighting.py) reconstructs
 every literal original CRT label and verifies each private integer against
 every original class. It checks the full-cut dynamic count on an exact old
 prefix partition, rather than enumerating a huge full period. On every old
@@ -189,8 +189,8 @@ reads no certificate and writes no files. It accepts explicit current
 primes and heights and works from external directories:
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_cut_weighting.py
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_cut_weighting.py --current-prime 11 --heights 1 2 --bias-height 2
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-cut-weighting/original_cut_weighting.py
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-cut-weighting/original_cut_weighting.py --current-prime 11 --heights 1 2 --bias-height 2
 ```
 
 The whole-cover condition R subset F_root remains unused by these

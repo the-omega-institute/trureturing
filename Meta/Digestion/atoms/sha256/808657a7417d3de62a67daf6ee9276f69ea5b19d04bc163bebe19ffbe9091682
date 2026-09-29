@@ -1,0 +1,28 @@
+#### 8.5.2 完整删除读数的逆算子
+
+令 $A_m=J_m-I_m$，其中 $J_m$ 是全一矩阵。使用全部模数后的读数向量为
+$$
+y=Az,\qquad A=\bigotimes_i A_{m_i}.
+$$
+直接相乘，利用 $J_m^2=mJ_m$，得到
+$$
+B_m=A_m^{-1}=\frac{J_m}{m-1}-I_m,\qquad
+B=A^{-1}=\bigotimes_i B_{m_i}.
+$$
+单行绝对值之和为
+$$
+\kappa_m=\frac{m-2}{m-1}+(m-1)\frac1{m-1}
+=2-\frac1{m-1}.
+$$
+张量积的每行绝对和相乘。因此
+$$
+\|B\|_{\infty\to\infty}=\kappa(M):=
+\prod_i\left(2-\frac1{m_i-1}\right).
+$$
+完整终态读数属于全部续接读数，故
+$$
+\boxed{\|z\|_\infty\le\kappa(M)\|z\|_{\rm obs}.}
+\tag{ER8.FC.1}
+$$
+这个界比直接对一个相容余数向量作 $2^r$ 项包含排除的误差估计更精确。
+

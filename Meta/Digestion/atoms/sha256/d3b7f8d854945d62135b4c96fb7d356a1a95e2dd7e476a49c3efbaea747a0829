@@ -1,0 +1,15 @@
+**引理264.1（成对谱核必须留下负部）。** 对任意Hermitian参考算子 $D$，令
+$$
+m=\|D\|_1,\qquad d=\|D\|,\qquad
+n=\nu(P_\psi+H_D).
+\tag{264.12}
+$$
+则
+$$
+\boxed{\quad
+m\le\left(\frac2p+1\right)n.
+\quad}
+\tag{264.13}
+$$
+该结论包括 $D$ 在 $\operatorname{supp}\rho$ 之外的任意方向。
+

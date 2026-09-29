@@ -1,0 +1,14 @@
+**引理153.2（半 diamond 的单矩阵对偶）。** 若 $\Delta:\mathcal L(X)\to\mathcal L(O)$ 保持厄米性并满足 $\operatorname{Tr}\Delta(Z)=0$ 对所有 $Z$ 成立，则
+
+$$
+\boxed{
+\frac12\|\Delta\|_\diamond
+=\min\left\{t:\;
+Y\succeq0,\quad Y\succeq J(\Delta),\quad
+\operatorname{Tr}_O Y\preceq tI_X\right\}.
+}
+\tag{153.6}
+$$
+
+最小值取得。
+

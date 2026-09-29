@@ -1,0 +1,10 @@
+**命题 369.3（商上的更新和读数）。** 令 $\pi:X\to X/{\sim_\infty}$ 为商映射，则
+
+$$
+F_*([x])=[Fx],\qquad q_*([x])=q(x)
+$$
+
+不依赖代表元，而且是满足 $F_*\circ\pi=\pi\circ F$、$q_*\circ\pi=q$ 的唯一一对映射。代表无关由命题 369.2 的两个保持条件给出；唯一性由每个商元素都有代表给出。项目 [PredictiveSufficiencyDescent](../../../D5/S3/ObserverMemory/RefinementDescent/PredictiveSufficiencyDescent.lean) 的 `predictive_sufficiency_descent_well_defined_unique` 正以完整未来商表达这两个交换关系与成对唯一性。
+
+这是一项相对于 $q,F$ 的完成。若再加入一个原来没有观察的目标，或更换允许的更新，原商可能需要细化。即使它在当前模型中完整，也不能因此称为人的全部经验、全部伦理身份或一切真理的最终商空间。
+

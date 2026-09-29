@@ -14,7 +14,7 @@ internal static class DescribeReportWriter
         ArgumentNullException.ThrowIfNull(report);
         var material = new
         {
-            schema = "scribe-describe-report-v2",
+            schema = "scribe-describe-report-v3",
             case_id = DescribeReport.CaseId,
             status = report.Status,
             projection_open_count = report.ProjectionOpenCount,
@@ -71,7 +71,7 @@ internal static class DescribeReportWriter
             writer.WriteLine(
                 $"OPEN_PROBLEM_RESOLUTION node={node.NodeId} problem_slug={claim.ProblemSlug.Value} "
                 + $"resolution_kind={DescribeVocabulary.CanonicalName(claim.ResolutionKind)} "
-                + $"declaration_gid={node.DeclarationGid}");
+                + $"declaration_gids={JsonSerializer.Serialize(claim.Members(node.DeclarationGid!))}");
         }
         foreach (var finding in report.RedFindings)
         {
@@ -91,6 +91,7 @@ internal static class DescribeReportWriter
     {
         node_id = node.NodeId,
         document_gid = node.DocumentGid,
+        declaration_gid = node.DeclarationGid,
         kind = node.Kind,
         title = node.Title,
         statement_kind = node.StatementKind,
@@ -105,7 +106,7 @@ internal static class DescribeReportWriter
             {
                 problem_slug = claim.ProblemSlug.Value,
                 // Describe IDs are narrative identities, not resolving Lean declaration selectors.
-                declaration_gid = node.DeclarationGid,
+                declaration_gids = claim.Members(node.DeclarationGid!),
                 resolution_kind = DescribeVocabulary.CanonicalName(claim.ResolutionKind),
             },
     };

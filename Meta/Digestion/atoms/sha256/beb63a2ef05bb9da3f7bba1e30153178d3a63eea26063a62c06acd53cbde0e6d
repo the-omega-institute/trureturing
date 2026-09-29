@@ -1,0 +1,54 @@
+**推论 55.4。** 对每个 $0<\varepsilon\le1/4$，令
+
+$$
+V_\varepsilon|0\rangle=|0,0\rangle,
+\qquad
+V_\varepsilon|1\rangle
+=\sqrt{1-\varepsilon}|0,1\rangle
++\sqrt\varepsilon|1,2\rangle,
+\qquad
+R_\varepsilon=|x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z\rangle
+\langle x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z|.
+\tag{55.22}
+$$
+
+则
+
+$$
+\Delta(R_\varepsilon)=\varepsilon,
+\qquad
+\min_{S\text{ 因果}}D(R_\varepsilon,S)>\varepsilon.
+\tag{55.23}
+$$
+
+**证明。** 同一 $C_+,C_-$ 分别给 $u=1+\varepsilon$、$\ell=1-\varepsilon$。反设 $D\le\varepsilon$，定理 55.3 的两个饱和步骤给
+
+$$
+t=\frac1{1+\varepsilon},
+\qquad \sigma_{00}=t,
+\qquad n_{00}=t-(1-\varepsilon)
+=\frac{\varepsilon^2}{1+\varepsilon}.
+$$
+
+相同的两次正性矩阵元界于是迫使
+
+$$
+\sqrt{1-\varepsilon}
+\le t+\frac{\varepsilon^2}{1+\varepsilon}
+=\frac{1+\varepsilon^2}{1+\varepsilon}.
+\tag{55.24}
+$$
+
+对 $0<\varepsilon<1$，式（55.24）的反向严格不等式等价于
+
+$$
+(1-\varepsilon)(1+\varepsilon)^2
+>(1+\varepsilon^2)^2
+\iff
+1-3\varepsilon-\varepsilon^2-\varepsilon^3>0.
+$$
+
+当 $0<\varepsilon\le1/4$ 时，最后一式的左边至少为 $11/64>0$，矛盾。最小值达到性同定理 55.3。$\square$
+
+因此，归一化缺陷任意小仍不能保证完整两轮接口的同系数修复。这个严格族结论没有给出独立于 $\varepsilon$ 的比例间隙，也不将误差增长误写为平方根级；一般线性上界继续适用。
+

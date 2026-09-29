@@ -61,9 +61,14 @@ def identity(stage, env):
         raise ValueError("cache writes disabled")
     repository = env.get("GITHUB_REPOSITORY", "")
     commit = env.get("CANDIDATE_SHA", "")
-    # Reusable PR jobs are named by their caller; the jobs API identifies
-    # the PR head, while GITHUB_SHA and produced material identify the merge.
-    job_name = "push / " + job if pr_writer else job
+    # Reusable jobs carry their caller's display-name prefix. Callers with a
+    # different nesting can declare it without changing the checked job/stage.
+    job_name = env.get("CI_CACHE_JOB_NAME", "push / " + job if pr_writer else job)
+    if (not isinstance(job_name, str) or not job_name.strip()
+            or job_name != job_name.strip() or not job_name.isprintable()
+            or job_name.rsplit(" / ", 1)[-1] != job):
+        raise ValueError("cache job display identity mismatch")
+    # The jobs API identifies the PR head; produced material uses the merge.
     head = env.get("PR_HEAD_SHA", "") if pr_writer else commit
     run, attempt = env.get("GITHUB_RUN_ID", ""), env.get("GITHUB_RUN_ATTEMPT", "")
     if (not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository)

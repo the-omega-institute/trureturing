@@ -1,0 +1,34 @@
+**定义 61.1（超临界共振的锚定放大）。** 保持定义 54.1 的实际模型、完整后验向量、精确中心与有限截距。
+取确定性序列
+
+```math
+\eta=2m\longrightarrow\infty,\qquad r_*=\eta^2\delta\longrightarrow\infty,
+\qquad s=\log(\eta/\delta),\qquad s\sqrt\delta\le U/2.
+```
+
+式 (61.1)。
+
+对固定参数紧区间令 $`z_\theta=s+\theta/\eta^3`$，定义同一实际标签实现上的两个过程
+
+```math
+\mathcal V_M(\theta)=\eta^{3/2}e^{z_\theta/2}
+ \{\mathcal Z_M(z_\theta\sqrt\delta)-\mathcal J_M
+                         -2z_\theta\sqrt\delta T_M\},\qquad
+\mathcal D_M(\theta)=\sqrt{r_*}
+             \{\mathcal V_M(\theta)-\mathcal V_M(0)\}.
+```
+
+式 (61.2)。
+
+再令 $`\chi_j=(-1)^{mj}`$，$`Y_M^\chi=\sum_j\chi_jA_j`$。
+这里 $`A_j`$ 仍是定义 54.1 的精确中心组和；所有和使用完整计数截断。
+记旧解析 Fourier 场及固定谱分辨率曲线为
+
+```math
+\mathcal F_M(v)=\sum_jA_je^{-i\omega vx_j},\qquad
+\mathcal S_M(a)=E_M(a)-2\mathfrak L Y_M^2,
+\qquad \mathfrak L=\log(1/h),\quad\omega=\pi/2.
+```
+
+式 (61.3)。
+

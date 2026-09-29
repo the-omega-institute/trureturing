@@ -1,0 +1,42 @@
+### 99.3 交替尾词的局部维数下界
+
+现在假设尾词为 $ABABA$，不预设首轮射线。定义
+
+$$
+\begin{aligned}
+R_A&=G_2+G_4+G_6,&r&=\dim R_A,\\
+E&=G_2+G_4,&e&=\dim E,\\
+O&=G_3+G_5,&s&=\dim O,\\
+D_A&=H_1+H_3+H_5,&D_B&=H_2+H_4,\\
+Q_B&=Q_3+Q_5,&Q_A&=Q_4+Q_6.
+\end{aligned}
+\tag{99.8}
+$$
+
+实际固定映射给
+
+$$
+\begin{aligned}
+V_0D_A&=R_A\otimes A,&V_0D_B&=O\otimes B,\\
+V_1E&=Q_B\otimes B,&V_1O&=Q_A\otimes A.
+\end{aligned}
+\tag{99.9}
+$$
+
+因此
+
+$$
+\dim D_A=r,\quad\dim D_B=s,\quad
+\dim Q_B=e,\quad\dim Q_A=s,\qquad
+r\ge e\ge2,\quad s\ge2.
+$$
+
+又 $R_A\subset P_A$、$O\subset P_B$。同一位块等距及环境正交给 $E\perp O$；同环境跨位正交给
+
+$$
+v\perp R_A,\qquad Q_A\perp R_A,
+\tag{99.10}
+$$
+
+其中第一式比较 $V_1p=v\otimes A$ 与 $V_0D_A=R_A\otimes A$。
+

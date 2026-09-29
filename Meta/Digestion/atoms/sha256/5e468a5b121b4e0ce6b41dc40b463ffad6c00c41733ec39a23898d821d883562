@@ -1,0 +1,30 @@
+**theorem 24.1: 有限稳定深度达到完整未来商；Claim status: open.** 设 $X$ 为有限类型，$m$ 是最小满足相邻稳定
+
+$$
+\equiv_m=\equiv_{m+1}
+$$
+
+的深度。则
+
+$$
+\boxed{
+\equiv_m=\equiv_{m+1}=\equiv_\infty
+}
+$$
+
+而且对任何 $n$，若 $\equiv_n=\equiv_{n+1}$，则 $m\le n$。因此，在有限状态模型里，第一次相邻稳定不是一次经验截断，而是已经足以恢复全部未来读出律的动态边界。
+
+仓内 `FiniteStabilityClassBound.finite_stability_class_bound` 给出这三个等式与最小性，并给出数量界。写 $C_\infty=X/{\equiv_\infty}$，写 $C_0=X/{\ker q}$，则
+
+$$
+\boxed{
+m\le |C_\infty|-|C_0|
+\le |X|-|\operatorname{ran}q|.
+}
+\tag{24.1}
+$$
+
+右侧不是把状态数当作信息量，而是把每次未来区分可能新增的等价类数作为一个有限预算。若 $q$ 已经是动态充分的，$m=0$；若初始读出把不同未来合并，深度只能在新的等价类出现时增加。
+
+**证明状态。** 这是既有有限未来关系稳定、类数增长和 `Setoid.quotientKerEquivRange` 的组合；本节没有新增 Lean 声明，也不把式（24.1）外推到无限状态或近似读出。
+

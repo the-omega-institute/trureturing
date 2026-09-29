@@ -1,0 +1,45 @@
+**定义 31.1（与间隙阈值配对的容量）。** 沿用定义 27.1，固定格点振幅，
+其最大格距为 $`h\gt0`$。取 $`b_M\in h\mathbb Z`$ 满足
+$`b_M-\tau_M\to s\in\mathbb R`$。先对齐到正确方向，并置
+
+```math
+A_M=\{i:W_i\gt b_M+h/2\},\qquad
+N_M=|A_M|,\qquad C_M=|A_M\cap S|,\qquad
+m_M=\lfloor\mathbb E_S N_M\rfloor.
+```
+
+式 (31.1)。
+
+支持对称性使这个确定容量不依赖未知的支持位置。
+令 $`T_M`$ 选取补偿得分最大的 $`m_M`$ 个位置，同分处用独立优先级。
+未知方向时先作定义 27.1 的同一方向判决，仍使用这个确定容量。
+对任意确定整数 $`0\le m\le M`$，定义已知方向的固定容量风险
+$`H_{\mathcal E,m}^{k}=\inf_{|T|=m}\sup_{|S|=q}\mathbb E_S^{\mathcal E}[|S\setminus T|/q]`$，
+下确界遍历可随机化的数据规则；未知方向风险 $`H_{\mathcal E,m}^{o}`$
+还对两个方向取上确界，规则不获得方向信息。
+对 $`m=m_M`$，令 $`\xi\in\{k,o\}`$，并定义配对阈值的正确对齐平均风险
+
+```math
+\overline H_M=1-\frac{\mathbb E_S C_M}{q},\qquad
+\sigma^2=p_*(1-p_*),\qquad
+\pi_- =\frac{e^s}{1+e^s},\qquad
+\pi_+ =\frac{e^{s+h}}{1+e^{s+h}}.
+```
+
+式 (31.2)。
+
+令 $`a_+=1-\pi_+`$、$`a_-=1-\pi_-`$，于是
+$`0\lt a_+\lt a_-\lt1`$，并置
+
+```math
+f_s(g)=
+\begin{cases}
+a_+g,&g\le0,\\[0pt]
+a_-g,&g\ge0,
+\end{cases}
+\qquad
+\mu_s=\frac{(a_--a_+)\sigma}{\sqrt{2\pi}}.
+```
+
+式 (31.3)。
+

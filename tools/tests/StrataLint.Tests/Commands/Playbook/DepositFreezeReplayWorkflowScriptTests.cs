@@ -1,8 +1,9 @@
+using static StrataLint.TestSupport.TransactionFixture;
 using System.Text;
 
 namespace StrataLint.Tests;
 
-public sealed partial class DepositCoverWorkflowScriptTests
+public sealed class DepositFreezeReplayWorkflowScriptTests
 {
     [Fact]
     public void DepositAfterStatePinRevocationRefreezesAndCoversInOneMakeInvocation()
@@ -18,7 +19,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.False(fixture.StatePinExists());
         Assert.Equal(historyBefore, fixture.LedgerState());
 
-        var result = fixture.Run("deposit", useCanonicalFrozenQuery: true, throughMake: true);
+        var result = fixture.Run("deposit", realCliPath: Path.Combine(Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!, "StrataLint"), throughMake: true);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.True(fixture.StatePinExists());
@@ -47,7 +48,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var historyBefore = fixture.LedgerState();
         var pinBefore = fixture.StatePinContents();
 
-        var result = fixture.Run("deposit", useCanonicalFrozenQuery: true, throughMake: true);
+        var result = fixture.Run("deposit", realCliPath: Path.Combine(Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!, "StrataLint"), throughMake: true);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Equal(historyBefore, fixture.LedgerState());
@@ -68,7 +69,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         fixture.WriteActiveFreezeForCurrentModule();
         fixture.AddUnrelatedMalformedLedgerShard();
 
-        var result = fixture.Run("deposit", useCanonicalFrozenQuery: true);
+        var result = fixture.Run("deposit", realCliPath: Path.Combine(Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!, "StrataLint"));
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains(

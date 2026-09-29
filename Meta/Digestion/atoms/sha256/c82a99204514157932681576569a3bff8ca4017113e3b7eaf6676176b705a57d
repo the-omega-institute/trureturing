@@ -1,0 +1,28 @@
+## 212. 操作容量切换的二次代价与连续响应
+
+固定第211节的模型参数 $\beta>0$、$0<\gamma<\beta$、$R>1$，
+仍对同一个共同 CPTP 接收器和全部外部参考计算误差，来源为 $\ell=h\epsilon$。
+把第211节的切换曲线简记为 $b(\epsilon)=h_b(\epsilon)$，
+并记完整最优值为 $E(\epsilon,h)=\mathscr E(h\epsilon,\epsilon)$。
+以下均可再缩小第211节的固定接触邻域及正噪声范围。
+
+第211节把精确优化化成解析函数 $q(\epsilon,h,t)$，其中
+$q_{tt}>0$、$q_{th}>0$，而额外 Choi 权重满足 $t\ge0$。
+记全部辅助坐标消去后的解析 Choi 候选为 $\Gamma(\epsilon,h,t)$，并置
+
+$$
+\begin{gathered}
+q_t(\epsilon,h,\widehat t(\epsilon,h))=0,\qquad
+\widehat t(\epsilon,b(\epsilon))=0,\\
+\Gamma_A(\epsilon,h)=\Gamma(\epsilon,h,0),\qquad
+\Gamma_I(\epsilon,h)=\Gamma(\epsilon,h,\widehat t(\epsilon,h)).
+\end{gathered}
+\tag{212.1}
+$$
+
+两支对应的解析值为 $E_A=3/4+\epsilon q(\epsilon,h,0)$ 和
+$E_I=3/4+\epsilon q(\epsilon,h,\widehat t)$。
+左侧 $h<b(\epsilon)$ 的物理最优器是 $\Gamma_I$；
+线上及右侧是 $\Gamma_A$。
+本节进一步确定少保留一个操作方向的完整误差代价，以及这次容量变化的可见正则性。
+

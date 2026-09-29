@@ -13,13 +13,13 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/pure_axis_joint_square_comparison.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/moments-survival/pure_three_joint_factorial_comparison.py': 'cbd49a3802f32a8f0f2212767686b672eb6e02ccbf19bbf66091dcaf3b9db48c',
-    'certificates/source_norms/moments-survival/pure_three_joint_factorial_comparison.json': 'adeff8644a09506b2c833d371145433f56955e6237644eb78ea0155bbd791b4a',
-    'frontier/cover-geometry/pure_axis_cross_sharpness.py': '28316bd090142ee92e3f0cf1e6ea943d8a640fbe751cdaf0c5262d60ddff04c8',
-    'certificates/source_norms/cover-geometry/pure_axis_cross_sharpness.json': '6ca8c598be49ffe61703821f413a69bb08447235c8bdac6c15c5db6a6161abe3',
+    'frontier/moments-survival/pure_three_joint_factorial_comparison.py': '9e9546fa270395484f63d6c662184bab21ef327d074ca139f67c62bd142b91aa',
+    'certificates/source_norms/moments-survival/pure_three_joint_factorial_comparison.json': '0d06b8623e48bffcdbb8ed66c93cf799d767f9081ef4c0a79373f35be746d581',
+    'frontier/cover-geometry/pure_axis_cross_sharpness.py': '5a75483d14c4332c740e6bbc9ea53cd977dac756cdd2a7653f20845a5518dc93',
+    'certificates/source_norms/cover-geometry/pure_axis_cross_sharpness.json': '146bd6a221d89d674340921b8b63d4eba9ba9d5475f73f7951fc6298009c2cc2',
     'frontier/moments-survival/whole_factorial_same_head.py': '845768cfb7c67a9683c92e4ecaacee40dfc22d6b7f6c8791b5169917650e5c24',
     'frontier/endpoint-bounds/k_face_common_seven_hinges.py': 'c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3',
-    'frontier/moments-survival/pure_three_joint_moments.py': '0831f231c4d0d0d6cad5c9f4eb730365ac6c3fcebe968b4aee9d56f3fa82aed6',
+    'frontier/moments-survival/pure_three_joint_moments.py': '90574ee7836c76645d47f590f29c59ea0603c81f9f42377f17a2464632bb77db',
     'frontier/moments-survival/pure_five_joint_moments.py': '4d2491befab31bd869fdf037677ea796f40c9941d1d90fbf752fb1c396913306',
     'profile-notes/065-128/128-the-complete-factorial-tail-retains-its-head-off-the-face.md': '79ae5ce60d7121afdc3fe0eaa3a87abecf21709d15e7627c2425dd7bdb4926cc',
 }

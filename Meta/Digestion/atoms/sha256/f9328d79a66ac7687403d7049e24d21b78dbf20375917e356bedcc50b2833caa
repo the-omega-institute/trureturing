@@ -1,0 +1,12 @@
+**定义 530.2（保留实际记录的两个误差）。** 擦除实验 $E_r$ 以概率 $1-r$ 揭示实际状态 $S$，以概率 $r$ 给出 $\star$，其中 $r\in[0,1]$。目标联合仍为 $J_S(y,x)=E_{r,S}(y)Q_S(x)$，即给定状态后两项观察条件独立。生成器仅从实际旧记录 $y$ 生成新增输出，并保留 $y$；揭示分支记 $T_S$，擦除分支记 $R$。沿用
+
+$$
+\begin{aligned}
+m(T)&=\max_S\operatorname{TV}((1-r)T_S+rR,Q_S),\\
+j(T)&=\max_S\bigl((1-r)\operatorname{TV}(T_S,Q_S)
++r\operatorname{TV}(R,Q_S)\bigr).
+\end{aligned}
+$$
+
+可行预算 $\eta\ge0$ 下的最优联合误差记 $\mathcal J(\eta)=\min_{m(T)\le\eta}j(T)$。同一 $R$ 服务于全部状态，全部分支属于同一个合法生成器。第 514 节的有限维紧性保证可行时最小值达到。本批没有把子集外标签称为不可能输出：它们现在都有严格正的质量 $\varepsilon$。
+

@@ -1,0 +1,38 @@
+### 111.1 六维乘积空间与五维实际尾像
+
+任意 $y\otimes z\in R_1$ 的 $S$ 接收分量 $(P_Sy)\otimes z$ 属于 $N$，因此属于 $M$。反向包含也成立，所以
+
+$$
+(R_1)_{\mathrm{prod}}=(Q\otimes F)\oplus M=:\widehat R,
+\qquad \dim\widehat R=6.
+$$
+
+已执行的尾像为
+
+$$
+E=V_1S=\mathbb C(v\otimes\eta_2)+\sum_{n=3}^6Q_n\otimes\eta_n,
+\qquad\dim E=5.
+$$
+
+该实际乘积生成式使 $E\subset\widehat R$，故 $E=\ker\lambda$，其中 $\lambda:\widehat R\to\mathbb C$ 为非零线性泛函。定义
+
+$$
+B_\lambda:F\to Q^*,\qquad (B_\lambda z)(q)=\lambda(q\otimes z).
+$$
+
+这里 $\widehat R$ 是由全部一位乘积响应生成的代数容器。它与实际已执行像 $E_1$ 是否相同，要由初态 $k$ 相对 $S$ 的位置决定，见111.5节。本节不预设 $\kappa_1=2$。
+
+因为 $M$ 二维、乘积生成且通常纤维为零，只有两种形态：
+
+$$
+M=D\otimes\zeta,\qquad \dim D=2,
+$$
+
+或
+
+$$
+M=\operatorname{span}(r_1\otimes z_1,r_2\otimes z_2),
+$$
+
+其中 $r_1,r_2$ 独立且 $z_1,z_2$ 独立。证明与第104.1节相同：两个生成乘积向量若接收因子共线、环境独立，就产生非零通常纤维；余下两对因子独立时，任何两个系数均非零的组合具有 Schmidt 秩二。
+

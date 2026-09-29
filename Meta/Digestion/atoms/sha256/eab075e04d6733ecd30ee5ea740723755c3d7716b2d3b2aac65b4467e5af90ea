@@ -1,0 +1,22 @@
+**定义 250.1（可组合全息边界）。** 对允许拼接的关系体族定义
+
+$$
+\boxed{
+\eta_{\mathrm{comp}}
+=
+\left(
+Z/\!\sim_{\mathcal K},
+\{\lambda_M\},
+\{K_M(\cdot\mid[z])\},
+\mathcal K,
+\preceq_{\mathrm{refine}},
+\{\varepsilon_i,g_i\},
+\text{联合记录与接口所有权},
+\text{资源债务}
+\right).
+}
+\tag{250.1}
+$$
+
+其中 $Z/\!\sim_{\mathcal K}$ 是延续接口商，$\lambda_M$ 是商接口分布，$K_M(\cdot\mid[z])$ 是在商类上的条件续接核，$\mathcal K$ 是允许后续族。资源债务记录尚未支付的校准、记录或接口访问成本；它不能被终端概率本身代替。
+

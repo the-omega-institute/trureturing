@@ -1,0 +1,4 @@
+### 145.2 主角扰动的逐项界
+
+以下使用复 Hilbert 空间中的标准主角结构。正交基交叉矩阵的奇异值是主角余弦，见 Zhu 与 Knyazev，*Angles between subspaces and their tangents*，[Theorem 2.1](https://arxiv.org/html/1209.0523)。为明确本节所需的常数，下面给出相应扰动界的直接证明。
+

@@ -1,0 +1,20 @@
+**定义 190.1（程序的联合维数与指定点成本）。** 固定 $0<a<1$，令
+$$
+J_a=(2a-1,1),\qquad
+F(a,u)=\begin{pmatrix}1&a&u\\a&1&a\\u&a&1\end{pmatrix},\qquad
+\mathcal T_u=\mathcal S_{F(a,u)}.
+\tag{190.1}
+$$
+沿用第187.1节的固定 CPTP 处理器、全区间精确性与点态 SLD 信息约定。程序曲线的联合支持空间及其维数定义为
+$$
+\mathcal H_{\rm joint}=\operatorname{span}\!\left(\bigcup_{u\in J_a}\operatorname{ran}\rho_u\right),
+\qquad d_{\rm joint}=\dim\mathcal H_{\rm joint}.
+\tag{190.2}
+$$
+它计算整族程序共同需要的固定空间，不等于单个 $\rho_u$ 的秩。对指定的 $u_0\in J_a$，比较不同固定处理器及其全区间程序在 $u_0$ 的信息成本；处理器可以随设计点 $u_0$ 改变，但一旦选定，就必须对全部 $u\in J_a$ 使用同一个处理器。记
+$$
+I_r(u)=\frac1{1-u^2},\qquad
+B(a,u)=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{190.3}
+$$
+

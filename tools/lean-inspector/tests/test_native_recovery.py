@@ -27,7 +27,41 @@ import native
 
 from test_native_support import *
 
-class NativeRecoveryTests:
+
+class NativeBatchPartitionTests:
+    def test_partition_preserves_membership_and_order(self):
+        requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
+                    for index in range(201, -1, -1)]
+        chunks = []
+        with patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
+            native.produce_batch(requests)
+        self.assertEqual([len(chunk) for chunk in chunks], [100, 100, 2])
+        self.assertEqual([row[1] for chunk in chunks for row in chunk],
+                         [f'Module.{index:03}' for index in range(202)])
+
+    def test_partition_binds_reg_sized_inventory(self):
+        requests = [['/root', f'Reg.Module.{index:03}', '', '', '/inspector', '']
+                    for index in range(97)]
+        chunks = []
+        with patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
+            native.produce_batch(requests)
+        self.assertEqual([len(chunk) for chunk in chunks], [97])
+
+    def test_partition_rejects_cross_chunk_duplicate_and_mixed_owner(self):
+        requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
+                    for index in range(101)]
+        for replacement, diagnostic in [
+            (['/root', 'Module.099', '', '', '/inspector', ''], 'duplicate native batch module'),
+            (['/other', 'Module.101', '', '', '/inspector', ''], 'mixed native batch owners'),
+        ]:
+            with self.subTest(diagnostic=diagnostic), \
+                    patch.object(native, 'produce_batch_chunk') as chunk:
+                with self.assertRaisesRegex(ValueError, diagnostic):
+                    native.produce_batch(requests + [replacement])
+                chunk.assert_not_called()
+
+
+class NativeRecoveryConsumerTests:
     def test_release_stage_and_verify_preserve_absent_lake(self):
         self.build()
         self.publish()
@@ -266,8 +300,6 @@ class NativeRecoveryTests:
         self.record_result('boundaries', dict(without_lzma_valid_control_exit=control.returncode,
             unrelated_validator_error_propagates=True, required_producer_errors_propagate=True,
             required_error_types=[type(error).__name__ for error in errors]))
-    def test_native_recovers_only_row_with_encrypted_member(self):
-        self.check_row_decoder_recovery(self.encrypted_member, ValueError)
     def test_native_recovers_only_row_with_encrypted_material(self):
         def damage(data):
             result = io.BytesIO()
@@ -345,43 +377,9 @@ class NativeRecoveryTests:
         self.copy('tools/lean-inspector/Inspector.lean')
         (self.root / 'tools/lean-inspector/materials.py').unlink()
         self.build(success=False)
-    def test_native_no_build_rejects_corruption_without_production(self):
-        cases = [('modules/D5.Alone.zip', targets) for targets in [(':report',),
-            ('D5.Alone:report',), (':report', 'D5.Alone:report'), ('D5.Alone:report', ':report')]]
-        cases.append(('report.zip', (':report',)))
-        for artifact, targets in cases:
-            with self.subTest(artifact=artifact, targets=targets):
-                self.build()
-                path = self.root / '.lake/build/lean-inspector' / artifact
-                expected = path.read_bytes()
-                path.unlink()  # Never mutate a Lake cache hard link.
-                path.write_bytes(b'corrupt optional artifact')
-                self.write('activity.jsonl', '')
-                rejected = self.run_lake('--no-build', 'build', *targets, success=False)
-                self.assertIn('needs to be rebuilt', rejected.stdout + rejected.stderr)
-                self.assertEqual((self.root / 'activity.jsonl').read_text(), '',
-                                 'no-build must reject before repair extraction or aggregation')
-                self.assertTrue(path.is_file(), 'no-build must not remove the rejected artifact')
-                self.assertEqual(path.read_bytes(), b'corrupt optional artifact',
-                                 'no-build must not start private reconstruction')
-                recovered = self.build() if targets == (':report',) else self.run_lake('build', *targets)
-                self.assertIn('inspector artifact rejected; rebuilding privately', recovered.stdout + recovered.stderr)
-                self.assertEqual(path.read_bytes(), expected)
-                self.assertEqual(path.stat().st_nlink, 1)
-                records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-                self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'),
-                                 0 if artifact == 'report.zip' else 1)
-                aggregates = sum(row['count'] for row in records if row['kind'] == 'aggregate')
-                if artifact == 'report.zip':
-                    self.assertEqual(aggregates, 1)
-                else:
-                    self.assertLessEqual(aggregates, int(':report' in targets))
-                self.build()
-                self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        self.write('D5/Alone.lean', (self.root / 'D5/Alone.lean').read_text() + '-- native miss\n')
-        rejected = self.run_lake('--no-build', 'build', ':report', success=False)
-        self.assertIn('needs to be rebuilt', rejected.stdout + rejected.stderr)
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+
+class NativeModuleFacetTests:
     def test_public_module_validates_and_private_job_is_not_a_target(self):
         self.build()
         path = self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip'

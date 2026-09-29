@@ -1,0 +1,41 @@
+**定理167.3（正交纯分支的完整参考恢复公式）。** 在（167.1）—（167.4）的合同下，
+
+$$
+\boxed{
+e=\max_{\omega\in\mathcal D(M)}
+\left\{F(\rho,\omega)-\frac1{d^2}\sum_jp_jF(\rho_j,\omega)\right\}.
+}
+\tag{167.12}
+$$
+
+因此最优误差只依赖目标边缘 $\rho$、带权条件边缘族 $(p_j,\rho_j)$ 及被忘掉的输入维数 $d$。具体纯化坐标和正交接收支撑的额外维数不改变它。
+
+**证明。** 对任意单位 $w\in MR_{\mathrm{out}}$，置
+$\omega=\operatorname{Tr}_{R_{\mathrm{out}}}P_w$。固定边缘的扩张满足
+
+$$
+\max_{\substack{\sigma_j\succeq0\\\operatorname{Tr}_{R_{\mathrm{out}}}\sigma_j=\rho_j}}
+\langle w|\sigma_j|w\rangle=F(\rho_j,\omega).
+\tag{167.13}
+$$
+
+上界来自取边缘下保真度单调性；下界由两边缘的纯化取得最大重叠，且 $\dim R_{\mathrm{out}}=m$ 足以纯化任意 $M$ 状态。每个分支可独立选择其扩张，所以
+
+$$
+\max_{\sigma\in\mathcal C}\langle w|\sigma|w\rangle
+=\sum_jp_jF(\rho_j,\omega).
+\tag{167.14}
+$$
+
+这项只依赖 $\omega$。对固定 $\omega$，再次使用纯化保真度定理，在它的全部纯化 $w$ 中有
+
+$$
+\max_{\operatorname{Tr}_{R_{\mathrm{out}}}P_w=\omega}
+|\langle\Psi|w\rangle|^2=F(\rho,\omega).
+\tag{167.15}
+$$
+
+将（167.14）—（167.15）代入（167.9），再用（167.6），得到（167.12）。密度矩阵集紧且保真度连续，所以最大值达到。最优局部解码器的存在已由紧可达集和引理167.1保证。证毕。
+
+式（167.12）的 $\omega$ 是证明和优化中的测试态，不被解释为观察者已经实际取得的一份额外边缘。这个问题未必变成凸最大化；本节没有给出通用闭式解或计算复杂度下降保证。它消去的是对全部接收通道的搜索表示，同时完整保留其最优值。
+

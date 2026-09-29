@@ -1,0 +1,8 @@
+**定理 6.1.4（历史类的联合极值）。** 令 $p^*=(r,\delta,\ldots,\delta)$。对每个 $q,F,N$，
+$$
+\mu_q(U_{F_{\le N}})\le M_N(p^*,b),\qquad
+\sup_{q,F}\mu_q(U_F)=M_b(p^*),\qquad
+\Gamma(d,\delta,b)=1-M_b(p^*).
+$$
+最后的联合最优由同一个 iid 律 $p^*$ 和定理 6.1.2 的无限码实际取得。
+

@@ -1,0 +1,106 @@
+### 51.4 加权迹不能直接替代普通秩
+
+原文还有一处可单独定位的机制问题。其第2页把投影关系 $p\sim q$ 定义为普通迹相等 $\operatorname{Tr}p=\operatorname{Tr}q$。第4页 Corollary 3.4 的证明在得到
+
+$$
+0\preceq\varrho^{1/2}\Lambda^\kappa(p)\varrho^{1/2}
+\preceq\varrho^{1/2}q\varrho^{1/2},
+\qquad \Lambda^*(\varrho)=\varrho>0
+\tag{51.11}
+$$
+
+后，声称取迹即可推出 $\Lambda^\kappa(p)=q$。但普通迹相等并不保证 $\operatorname{Tr}(\varrho p)=\operatorname{Tr}(\varrho q)$。下面的三维例子把这两个量明确分开。
+
+在 $M_3$ 上定义
+
+$$
+\mathcal F(X)=\operatorname{diag}\left(
+X_{33},X_{33},\frac{\operatorname{Tr}X}{3}\right).
+\tag{51.12}
+$$
+
+它的 Kraus 算子为
+
+$$
+|1\rangle\langle3|,\quad |2\rangle\langle3|,
+\quad \frac1{\sqrt3}|3\rangle\langle j|\quad(j=1,2,3).
+\tag{51.13}
+$$
+
+所以 $\mathcal F$ 完全正且保单位，但不保迹：
+$\mathcal F^*(I)=\operatorname{diag}(1/3,1/3,7/3)$。直接计算得
+
+$$
+\mathcal F^2(X)=\operatorname{diag}\left(
+\frac{\operatorname{Tr}X}{3},\frac{\operatorname{Tr}X}{3},
+\frac{2X_{33}}3+\frac{\operatorname{Tr}X}{9}\right).
+\tag{51.14}
+$$
+
+该式对全部非零半正定输入正定；$\mathcal F$ 自身并非严格正。因此 $\mathcal F$ 本原且 $q(\mathcal F)=2$。归一化正定不动密度为
+
+$$
+\varrho=\operatorname{diag}(1/5,1/5,3/5),
+\qquad \mathcal F^*(\varrho)=\varrho.
+\tag{51.15}
+$$
+
+它的乘法域恰为标量矩阵。确实，若 $X$ 在乘法域中，则第三个对角元的 Schwarz 等号要求
+
+$$
+\frac{\operatorname{Tr}(X^*X)}3
+=\left|\frac{\operatorname{Tr}X}{3}\right|^2,
+\tag{51.16}
+$$
+
+Hilbert–Schmidt Cauchy–Schwarz 的等号条件迫使 $X$ 为标量矩阵。
+
+这一结论对全部迭代也成立，可直接核验而不依赖有争议的秩增长步骤。$\mathcal F^n$ 对角输出的权重来自随机矩阵
+
+$$
+T=\begin{pmatrix}
+0&0&1\\
+0&0&1\\
+1/3&1/3&1/3
+\end{pmatrix}^{\!n}.
+\tag{51.17}
+$$
+
+当 $n=1$ 时第三行全正；当 $n\ge2$ 时全部行全正。任取一行正权重 $t_j$，令 $m=\sum_jt_jX_{jj}$。相应的单侧 Schwarz 缺陷是
+
+$$
+\sum_jt_j\sum_{i\ne j}|X_{ij}|^2
++\sum_jt_j|X_{jj}-m|^2.
+\tag{51.18}
+$$
+
+它为零即迫使非对角项全部为零、对角项全部相等。因此所有迭代的乘法域都是 $\mathbb CI$，乘法指数 $\kappa(\mathcal F)=1$。
+
+现在取两个等普通秩投影
+
+$$
+p=\operatorname{diag}(1,1,0),\qquad
+q=\operatorname{diag}(1,0,1).
+\tag{51.19}
+$$
+
+则
+
+$$
+\mathcal F^\kappa(p)=\operatorname{diag}(0,0,2/3)\preceq q,
+\qquad \mathcal F^\kappa(p)\ne q,
+\tag{51.20}
+$$
+
+而
+
+$$
+\operatorname{Tr}(\varrho p)=2/5,\qquad
+\operatorname{Tr}(\varrho q)=4/5.
+\tag{51.21}
+$$
+
+该映射满足原文所列的保单位、本原、Schwarz 假设，乘法域也已经稳定，却把投影 $p$ 的普通秩从二降到一。因此原文 Corollary 3.4 的相应结论及第5页 Corollary 3.5 的普通秩严格增长结论均不成立。这个三维例子本身没有违反（51.2），因为其指数二小于右侧八；它只定位从忠实加权迹到普通秩的错误迁移。
+
+原文 Lemma 3.1 的式（3.3）明确要求 $X$ 和 $X^*$ 的两条加权范数等号。只满足单侧 Schwarz 等号的矩阵不能反驳这条双侧判据，本节也不把它列为额外缺口。
+

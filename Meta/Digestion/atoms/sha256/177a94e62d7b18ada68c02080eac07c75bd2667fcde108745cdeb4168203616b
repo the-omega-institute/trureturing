@@ -1,0 +1,51 @@
+### 221.8 饱和与严格不等的合法实例
+
+取 $1/2<s<1$、$0<\lambda<1/4$，
+$$
+L=\operatorname{diag}(\sqrt s,\sqrt{1-s}),\quad
+A=\sqrt{1-\lambda(1-s)}\,|0\rangle\langle1|,\quad
+K_0=\sqrt{1-\lambda s}\,|0\rangle\langle0|.
+$$
+共同 TP 与 HS 正交直接成立。主输出方向的两输入行正交，且两个权重条件均成立，所以
+$$
+d_2=\lambda s.
+$$
+小谱 Kraus 的 Schmidt 秩二并不妨碍有限参数饱和。
+
+反过来，取 $0<\sigma<1/2$、$0<\lambda<1/4$，
+$$
+L=\operatorname{diag}(\sqrt{1-\sigma^2},\sigma),
+$$
+$$
+A=\sqrt{1-2\lambda}
+\begin{pmatrix}
+\sigma^2&\sqrt{1-\sigma^2}\\
+0&-\sigma\sqrt{1-\sigma^2}
+\end{pmatrix},
+\qquad
+K_0=(I-A^\dagger A-\lambda L^\dagger L)^{1/2}.
+$$
+根号内至少为 $\lambda I$，故共同 TP 合法；$A,L$ HS 正交，结果秩为
+$(1,2)$，主 Choi 根 $1-2\lambda>\lambda$。
+主左奇异方向为 $r_+=|0\rangle$，但
+$$
+\langle r_+,AL^\dagger r_+\rangle
+=\sqrt{1-2\lambda}\,\sigma^2\sqrt{1-\sigma^2}\ne0.
+$$
+两个权重条件也可直接核对：
+$$
+\|A^\dagger r_+\|^2
+=(1-2\lambda)(1-\sigma^2+\sigma^4)
+>\frac{13}{32}>\lambda(1-\sigma^2),
+$$
+而 $\operatorname{Tr}(K_0^\dagger K_0)=1+\lambda$，故
+$$
+q_0\ge\frac{1+\lambda}{2}>\lambda(1-\sigma^2).
+$$
+因此（221.12）给真实严格不等式
+$$
+d_2<\lambda(1-\sigma^2).
+$$
+当 $\sigma,\lambda\to0$，此合法族趋于同样的投影—重制备主通道。
+故整体 HS 正交及接近端点都不能替代有限参数的逐行正交判据。
+

@@ -1,0 +1,25 @@
+#### 233.2.2 平坦目标支撑
+
+令
+$$
+P_{\rm tar}=\sum_{j=1}^NI_d\otimes|j\rangle\langle j|\otimes P_j.
+\tag{233.FF.9}
+$$
+这是秩 $dN$ 的正交投影，且 $J_{\mathcal R}=P_{\rm tar}/N$。归一化最大纠缠输入得到目标 Choi 态
+$$
+\tau=\frac1dJ_{\mathcal R}=\frac1{dN}P_{\rm tar}.
+\tag{233.FF.10}
+$$
+对任意候选，记 $Q=\operatorname{supp}J_{\mathcal S}$、$k=\operatorname{rank}Q\le R$。候选归一化 Choi 态在效果 $I-Q$ 上概率为零，而目标概率为
+$$
+1-\frac1{dN}\operatorname{Tr}(QP_{\rm tar})
+\ge1-\frac{k}{dN}\ge1-\frac R{dN}.
+\tag{233.FF.11}
+$$
+两份完整输出都是密度矩阵，事件概率差不超过半迹距离。因此
+$$
+\boxed{D_R\ge\max\left\{0,1-\frac R{dN}\right\}.}
+\tag{233.FF.12}
+$$
+此处不假定候选支撑包含于目标支撑。
+

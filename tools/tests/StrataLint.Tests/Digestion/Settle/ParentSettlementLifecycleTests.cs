@@ -3,14 +3,22 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
-using static StrataLint.Tests.DigestionTestSupport;
-using static StrataLint.Tests.NonpropositionalTestSupport;
+using static StrataLint.TestSupport.DigestionTestSupport;
+using static StrataLint.TestSupport.NonpropositionalTestSupport;
 using static StrataLint.Tests.ParentSettlementTests;
 
 namespace StrataLint.Tests;
 
 public sealed partial class DigestionLedgerTests
 {
+    private static readonly string TestModuleStatementId = FrozenStatementReceiptTestData.Id('a');
+
+    private static (string Path, byte[] Bytes)[] FrozenLedgerFiles(string modulePath, params string[] selectors) =>
+        FrozenStatementReceiptTestData.LedgerFiles(new FrozenStatementReceiptTestData.Module(
+            modulePath, TestModuleStatementId, selectors.Select(selector =>
+                new FrozenStatementReceiptTestData.Declaration(selector, FrozenStatementReceiptTestData.Id('b')))
+                .ToImmutableArray()));
+
     [Theory]
     [InlineData(false, false)]
     [InlineData(true, false)]
@@ -197,7 +205,7 @@ public sealed partial class DigestionLedgerTests
         var context = DigestionAtomContextProjection.Resolve(fixture.Snapshot, fixture.Document, parent.AtomId);
         var policy = new RuleFixture();
         fixture.Current = RawRepositorySnapshot.Create(fixture.Current.Entries.Concat(
-            policy.Files.Where(e => e.Key is "Meta/registry.yaml" or "Meta/domains.yaml")
+            policy.Files.Where(e => e.Key is "Meta/registry.yaml" or "Meta/domains.yaml" or "Meta/FILEMAP.toml")
                 .Select(e => RawRepositoryEntry.FromText(e.Key, e.Value))));
         ReplaceFile(fixture, EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest());
         using var temporary = new TemporaryDirectory();

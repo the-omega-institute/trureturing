@@ -1,0 +1,18 @@
+**命题 4.2（计数、纤维非空与有限大小界）。** 定义 4.1 的数据满足
+
+$$
+A^m=RS,\qquad B^m=SR,\qquad AR=RB.
+$$
+
+R 的每行每列均非零。令
+
+$$
+a_m=\max_{i,j}(A^m)_{ij},\qquad b_m=\max_{i,j}(B^m)_{ij}.
+$$
+
+则 R_ij≤a_m、S_ji≤b_m。特别地，对 Q=E_R 及 q=|Q|，
+
+$$
+\max(n,k)\le q\le nk\,a_m.
+$$
+

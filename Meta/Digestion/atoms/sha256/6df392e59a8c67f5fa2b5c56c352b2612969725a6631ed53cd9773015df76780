@@ -1,0 +1,41 @@
+**定理 69.6（实际后验矩与直接噪声的信息量）。** 保持完整组计数向量 $R$、
+原标量 $T_M$ 及均匀大小 $q$ 支持先验。记
+$v_M(x)=\operatorname{Var}(T_M\mid\mathscr X_M=x)$。
+对原平稳独立对和连续路径实验，
+
+```math
+\mathbb E(T_M^2\mid\mathscr X_M)=O_{\mathbb P}(1),\qquad
+v_M(\mathscr X_M)=O_{\mathbb P}(1).
+```
+
+式 (69.40)。
+
+令 $\upsilon_M>0$ 为确定数，$G\sim N(0,1)$ 独立于原数据和全部标签，
+$Z_M=T_M+\upsilon_MG$，且噪声实现值不另行提供。
+每份固定原始数据上，以同一后验计算的互信息满足
+
+```math
+I_x(R;Z_M)=I_x(T_M;Z_M)
+ \le\frac12\log_2(1+v_M(x)/\upsilon_M^2)
+ \le\log_2^+(1/\upsilon_M)+\tfrac12\log_2(1+v_M(x)).
+```
+
+式 (69.41)。
+
+特别地，$\upsilon_M=cQ^{-p}$、固定 $p,c>0$ 时，
+$I_x(R;Z_M)\le p\log_2Q+O_{\mathbb P}(1)$。
+更一般地，只要 $\log^+(1/\upsilon_M)=o(Q^5)$，就有
+
+```math
+\frac{H_x(R\mid Z_M)}{Q^5}\longrightarrow\mathscr H(r,\beta),\qquad
+\frac{I_x(R;Z_M)}{H_x(R)}\longrightarrow0
+```
+
+式 (69.42)。
+
+这里 $H_x(R\mid Z_M)$ 是在固定数据纤维上、对 $Z_M\mid x$ 积分后的剩余离散熵；
+不是对每个单独噪声输出逐点断言。分母为零时将比值定义为零。
+所有渐近断言在先验数据概率下成立，并一致于确定支持的抽样律，
+后者仍评价均匀先验定义的数据函数。
+例如 $\upsilon_M=e^{-Q^4}$ 满足 (69.42)，但本定理不对该尺度声称 (69.31) 的符号风险结论。
+

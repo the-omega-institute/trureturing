@@ -1,0 +1,98 @@
+**定理49.3（三个维数的共同最优值）。** 对每个第46节的伯努利相干窗口，
+
+$$
+\boxed{
+e_{\rm av,Bell}(D)=e_{\rm mm}(D)=e_D,
+\qquad D\in\{1,2,4\}.
+}
+\tag{49.23}
+$$
+
+证明分为构造与必要性。
+
+**维数一。** 编码丢弃整个档案，解码准备
+
+$$
+\tau_{EC}=\frac{I_E}{r}\otimes\operatorname{diag}b,
+\qquad r=4,\quad\kappa=1/r^2.
+\tag{49.24}
+$$
+
+先看初始 Bell 输入。恢复态是
+$I_{AE}/r^2\otimes\operatorname{diag}b$。在目标端点最大纠缠向量张成的一维空间上，目标减恢复的矩阵是
+
+$$
+|\psi^a_\theta\rangle\langle\psi^a_\theta|
+-\frac1{r^2}\operatorname{diag}b;
+\tag{49.25}
+$$
+
+端点正交补上的所有块都非正。引理49.2给完整差算子唯一正特征值 $e_1$。完整差算子迹为零，故半迹误差恰为 $e_1$，与相位无关。
+
+还须证明这个实际擦除码对任意来源输入和参考的误差都不超过 $e_1$。可以证明更强的陈述：固定 $\dim E=r$，对任意参考系统 $A$、任意纯态 $|\zeta\rangle_{AE}$，其钟仍为独立的 $|\psi^a_\theta\rangle$ 时，（49.24）的误差不超过最大纠缠输入的误差。
+
+取 Schmidt 概率 $\lambda_1,\ldots,\lambda_r$，缺项补零。目标减恢复为
+
+$$
+|\zeta\rangle\langle\zeta|\otimes
+|\psi^a_\theta\rangle\langle\psi^a_\theta|
+-\zeta_A\otimes\frac{I_E}{r}\otimes\operatorname{diag}b.
+\tag{49.26}
+$$
+
+这是迹零的秩一正算子减去正算子，且 $r=4$ 时不为零，因而有且只有一个正特征值 $t$；它就是半迹误差。在 Schmidt 基与钟坐标中，正特征值方程由秩一扰动直接给出：若 $u$ 是目标单位向量、$T$ 是被减去的正算子，则正特征向量必须正比于 $(tI+T)^{-1}u$，并满足 $\langle u,(tI+T)^{-1}u\rangle=1$。因此这里有
+
+$$
+\sum_{i=1}^r\sum_\ell
+\frac{\lambda_i a_\ell}{t+\lambda_i b_\ell/r}=1.
+\tag{49.27}
+$$
+
+对任意固定 $t>0$、$c\ge0$，函数 $z\mapsto z/(t+cz)$ 在非负半轴上凹。由 $\sum_i\lambda_i=1$，Jensen 不等式给
+
+$$
+\sum_{i=1}^r\frac{\lambda_i}{t+\lambda_i b_\ell/r}
+\le\frac1{t+b_\ell/r^2}.
+\tag{49.28}
+$$
+
+把 $t=e_1$ 代入（49.27）的左侧，再用（49.28）与（49.16），所得值不超过一。该左侧随 $t>0$ 严格下降，所以其根不大于 $e_1$。混合态由半迹范数凸性得到同一上界。实际来源（49.1）是上述输入集合的子集，且包含最大纠缠 $AE$ 输入；故该码的完整最坏误差正好为 $e_1$。
+
+**维数二。** 编码完整保留二态寄存器 $I$，丢弃 $J,C$；解码准备
+$I_J/2\otimes\operatorname{diag}b$。任意 $\rho_{RI}$ 都原样保留，目标与恢复态分别是
+
+$$
+\rho_{RI}\otimes|\Phi_\theta\rangle\langle\Phi_\theta|_{MJ}
+\otimes|\psi^a_\theta\rangle\langle\psi^a_\theta|_C,
+\qquad
+\rho_{RI}\otimes\frac{I_{MJ}}4\otimes\operatorname{diag}b.
+\tag{49.29}
+$$
+
+张量相同的密度矩阵 $\rho_{RI}$ 不改变半迹距离。在 $MJ$ 的目标 Bell 方向上，差算子为
+$|\psi^a_\theta\rangle\langle\psi^a_\theta|-(1/4)\operatorname{diag}b$；其余三个端点方向均给非正块。因此引理49.2给误差恰为 $e_2$，对每个相位、每个来源初态和参考都成立。
+
+**维数四。** 编码完整保留 $I,J$，丢弃 $C$；解码准备 $\operatorname{diag}b$。误差就是钟的半迹距离
+
+$$
+\frac12\left\||\psi^a_\theta\rangle\langle\psi^a_\theta|
+-\operatorname{diag}b\right\|_1=e_4.
+\tag{49.30}
+$$
+
+对 $M_*>1$，等号由引理49.2及差算子迹零得到；$M_*=1$ 时钟是已知固定纯态，误差为零。端点和参考均完整保留。
+
+以上三个构造通过 $U_{\rm ar}$ 返回原档案，并在共同支撑外任意完成为全域 CPTP 编码；它们均与实际相位无关。因此 $e_{\rm mm}(D)\le e_D$。反向，对任意维数至多为 $D$ 的装置，（49.8）给
+$\mathfrak L_a(\epsilon)\le\kappa_D$；严格单调性迫使 $\epsilon\ge e_D$。这一必要界已经适用于较弱的 Bell 平均合同，故与（49.2）合并得到（49.23）。证明完毕。
+
+维数三只得到
+
+$$
+\underline e_3\le e_{\rm av,Bell}(3)
+\le e_{\rm mm}(3)\le e_2,
+\qquad \mathfrak L_a(\underline e_3)=\frac9{16}.
+\tag{49.31}
+$$
+
+下界来自（49.8），上界由把维数二的代码嵌入三维空间得到。第49.2节虽然在 $D=3$ 也使投影概率上界达到等号，但没有证明该码的半迹误差达到 $\underline e_3$；本节不把两种可达性混同。
+

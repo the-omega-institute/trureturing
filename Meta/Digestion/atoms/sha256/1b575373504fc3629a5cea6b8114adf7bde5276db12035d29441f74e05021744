@@ -1,0 +1,13 @@
+**定理187.2（纯来源的最优小扰动斜率）。** 对固定 $R>1$，
+
+$$
+\boxed{
+h_{\mathrm{pure}}(\epsilon,R\epsilon)
+=\frac34-\frac{R-1}{4}G(\beta,\gamma)\epsilon
++O(\epsilon^2).
+}
+\tag{187.5}
+$$
+
+余项可对 $R$ 的固定紧子区间统一选取。
+

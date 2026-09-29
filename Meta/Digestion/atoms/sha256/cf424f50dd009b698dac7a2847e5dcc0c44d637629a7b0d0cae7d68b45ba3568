@@ -1,0 +1,25 @@
+### 9.10 全部稀疏对偶系数、最优值及达到证明
+
+为把所有符号与每个约束对应起来，以 $[g]$ 表示十六维自由形式空间的第 $g$ 个基符号，求值映射为 $[g]\mapsto A_g$。表中的 $L_a=\sum_{g=0}^{15}d_{ag}[g]$ 是形式线性组合，求值记为 $\overline L_a=\sum_gd_{ag}A_g$。每个表行给正分母 $D$、依来源块顺序排列的 $L_a$、质量系数 $M_a=D\mu_a$、面外向量 $N_a=\sum_{j\notin S}D\nu_{aj}e_j$ 以及整数代价 $C$。未列 $M_a$ 为零；质量列中的 $(a,M_a)$ 第一个数始终是来源块位置，不是目标格。分号分隔相继来源。
+
+全部不等式乘子由以下有限式明确给出：
+
+$$
+\lambda^+_{ag}=\frac{\max(d_{ag},0)}D,\qquad
+\lambda^-_{ag}=\frac{\max(-d_{ag},0)}D,\qquad
+\nu_{aj}=\frac{(N_a)_j}{D},\qquad \mu_a=\frac{M_a}{D}.
+\tag{ER9.DUAL.COEFFICIENTS}
+$$
+
+它们分别放入第 9.7 节的正噪声行、负噪声行、面外行与质量行；所有未列项为零，额外规范行的乘子全部为零。下列两类有限恒等式是所需的全部列条件：
+
+$$
+\sum_{a=0}^{k-1}d_{ag}=0\quad(0\le g\le15),\qquad
+\overline L_a+M_a\mathbf1=\frac Dk e_{t_a}+N_a.
+\tag{ER9.DUAL.IDENTITY}
+$$
+
+第一式是形式系数逐标签为零，强于仅在响应行求值后和为零；它恰消去自由共同 $h$ 的十六个系数。为便于逐格展开，响应支持再次写为有限集合：
+
+| $g$ | $\operatorname{supp}A_g$ | $g$ | $\operatorname{supp}A_g$ |
+|---:|---|---:|---|

@@ -1,0 +1,11 @@
+**证明。** $\rho\mapsto\operatorname{tr}(\Lambda_a\rho)\tau_a$ 完全正：若 $\Lambda_a=\sum_j s_j|v_j\rangle\langle v_j|$、$\tau_a=\sum_i t_i|w_i\rangle\langle w_i|$，其 Kraus 家族为 $\sqrt{s_jt_i}|w_i\rangle\langle v_j|$。又有
+
+$$
+\sum_\ell k_{a\ell}^\dagger k_{a\ell}+\Lambda_a
+=U^\dagger\Bigl(\sum_\ell K_{a\ell}^\dagger K_{a\ell}\Bigr)U.
+$$
+
+取迹得到(ST19.3)，再对 $a$ 求和得到保迹性。∎
+
+补全是一个明确的近似模型：漏出的后态被替换为指定复位态。它只承诺精确保留单步结果效果；没有承诺完整未来。数学上的 CPTP 构造也不说明物理复位或控制资源免费。
+

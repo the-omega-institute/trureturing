@@ -1,0 +1,12 @@
+**定理 18.1（同增广惰性呈示的有效高次时间共轭）。** 设 A,B∈M_n(N[H]) essential、inert，使用同一基顶点集合，并满足 epsilon(A)=epsilon(B)=M。令 a=tau(A)、b=tau(B)。则对每个 k≥max(a,b)，
+
+$$
+A^k=B^k=e_HM^k.
+$$
+
+特别 k≥n b_H 是只依赖 n,H 的充分条件。对每个这样的 k，可用保起终点和总群标记的 k 边路径双射，构造一个 H 等变同胚 h_k:X_{E(A)}→X_{E(B)}，满足
+
+$$
+h_k\sigma_A^k=\sigma_B^k h_k.
+$$
+

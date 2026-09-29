@@ -1,0 +1,60 @@
+**引理32.1（实际路径差格的有限矩阵表示）。** 令支持图有 $m$ 个顶点、$s$ 条边，非空且强连通；本引理暂不要求非周期。取有符号关联矩阵
+$\mathsf D\in\mathbb Z^{m\times s}$，边 $e:i\to j$ 的列为
+$\mathbf e_j-\mathbf e_i$，自环列为零。令
+
+$$
+A=\begin{pmatrix}\mathsf D\\\mathbf1^{\mathsf T}\end{pmatrix},
+\qquad
+G=(g_e)_{e\in\mathcal E}\in\mathbb Z^{q\times s}.
+\tag{32.1}
+$$
+
+若 $L_{\mathrm{path}}$ 为全部等长、同起终点支持路径的边计数差生成的整数群，则
+
+$$
+\boxed{
+L_{\mathrm{path}}=\ker_{\mathbb Z}A,\qquad
+\Lambda=G(\ker_{\mathbb Z}A).
+}
+\tag{32.2}
+$$
+
+而且 $\ker_{\mathbb Z}A$ 的每个元素本身就是一对实际等长、同起终点路径的计数差。商维数可计算为
+
+$$
+\boxed{
+r=\operatorname{rank}\Lambda
+=\operatorname{rank}_{\mathbb R}
+ \begin{pmatrix}\mathsf D\\\mathbf1^{\mathsf T}\\G\end{pmatrix}-m.
+}
+\tag{32.3}
+$$
+
+证明。若 $x(\gamma)\in\mathbb Z_{\ge0}^s$ 为路径边计数，则
+$\mathsf D x(\gamma)=\mathbf e_j-\mathbf e_i$、
+$\mathbf1^{\mathsf T}x(\gamma)=|\gamma|$。等长同端点路径的差在
+$\ker_{\mathbb Z}A$ 中。
+
+反向取 $z\in\ker_{\mathbb Z}A$。强连通性使每条边都位于一个有向闭走法中；将每条边所选闭走法的计数相加，得到
+$c\in\mathbb Z_{>0}^s$，满足 $\mathsf Dc=0$。取整数 $k$ 充分大，使
+$kc$ 和 $kc+z$ 每个坐标均严格为正。两份边重数都在每个顶点入出平衡，且包含全部原图边，因而各自有从同一指定顶点开始的有向 Euler 回路。其总长度相等，计数差恰为 $z$，证明第一式；施以 $G$ 即得第二式。
+
+强连通图的关联矩阵秩为 $m-1$。向量 $\mathbf1^{\mathsf T}$ 不在
+$\mathsf D$ 的行空间中：它在正循环计数 $c$ 上取正值，而
+$\mathsf D$ 的每行在 $c$ 上均为零。所以 $\operatorname{rank}A=m$。
+整数矩阵的有理核实张成其全部实核，给有理基清分母可得
+$\operatorname{span}_{\mathbb R}\ker_{\mathbb Z}A=\ker_{\mathbb R}A$。于是
+
+$$
+\operatorname{rank}\Lambda
+=\operatorname{rank}_{\mathbb R}(G|_{\ker_{\mathbb R}A})
+=\operatorname{rank}_{\mathbb R}\begin{pmatrix}A\\G\end{pmatrix}
+-\operatorname{rank}_{\mathbb R}A,
+\tag{32.4}
+$$
+
+得到（32.3）。证明完毕。
+
+这一表示既保留整数格，也消去了遍历全部路径的定义。实秩只给商维数；
+$\Lambda$ 的完整整数结构还决定 $\mathcal H=\Lambda^\perp$ 的有限连通分支，不能以未校验的浮点核代替整数格。
+

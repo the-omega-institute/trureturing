@@ -94,3 +94,4 @@ The theorem has no assumed sequence values or positivity hypotheses: it denies t
 - Truth anchor: `D5/S0/Certificates/ShankarQStieltjesRefutation.closedFormQ`
 - Truth anchor: `D5/S0/Certificates/ShankarQStieltjesRefutation.closed_form_not_stieltjes`
 - Truth anchor: `D5/S0/Certificates/ShankarQStieltjesRefutation.moment_quadratic_nonnegative`
+- Dependency: [D5/S0/Conventions/IntegerIndexBinomial](../Conventions/IntegerIndexBinomial.md)

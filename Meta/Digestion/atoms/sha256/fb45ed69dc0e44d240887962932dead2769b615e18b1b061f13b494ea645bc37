@@ -1,0 +1,54 @@
+**定理 317.2（从零预算最优直线出发的精确可达曲线）。** 取定理317.1的任一最优单位方向 $u$。对符号角点 $b_\sigma=(\sigma_i\alpha_i)$ 定义
+
+$$
+m_u=\min_{\sigma\in\{\pm1\}^3}(u\cdot b_\sigma)^2,
+\qquad 0\le m_u<A.
+\tag{317.8}
+$$
+
+对 $0\le R\le\eta$，记
+
+$$
+\varepsilon(R)=\frac{R\sqrt{A-m_u}}{\sqrt{1-m_uR^2}},
+\qquad
+P_{u,\varepsilon}=P_u+\varepsilon(I-P_u).
+\tag{317.9}
+$$
+
+则同一对实际二维编码、解码可以具有复合恢复 $P_{u,\varepsilon(R)}$、残差恰为 $R$，以及误差
+
+$$
+e(P_{u,\varepsilon(R)})
+=E_0\left(1-\frac{R\sqrt{A-m_u}}{\sqrt{1-m_uR^2}}\right).
+\tag{317.10}
+$$
+
+所以式（317.10）是 $\widehat G_a(R)$ 在整个 $[0,\eta]$ 上的可达上界，并在两个端点取等。全部零预算最优方向给出相同的 $m_u$ 和这条上界曲线。
+
+证明。式（317.3）的方向至少有两个非零坐标，因而可给其中两个坐标选相反符号，使 $|u\cdot b_\sigma|<\sum_i|u_i|\alpha_i\le\sqrt A$。这证明 $m_u<A$，并保证式（317.9）的分母在所述闭区间严格为正。直接代入可知 $0\le\varepsilon(R)\le1$，两个端点分别为零和一。
+
+对 $0<\varepsilon<1$，矩阵 $P_{u,\varepsilon}$ 是沿 $u$ 的有限参数退相干半群成员，奇异值为 $1,\varepsilon,\varepsilon$；$\varepsilon=0$ 是其闭类极限，$\varepsilon=1$ 为恒等。它们全部幺元、CPTP 且属于允许的闭微分可分类。这里不把完全退相干端点说成有限生成元在有限参数处达到。
+
+对 $\varepsilon>0$，正交分解给出
+
+$$
+\|P_{u,\varepsilon}^{-1}b_\sigma\|_2^2
+=(u\cdot b_\sigma)^2
++\varepsilon^{-2}\bigl(A-(u\cdot b_\sigma)^2\bigr).
+\tag{317.11}
+$$
+
+当 $0<\varepsilon<1$ 时，右侧在内积平方最小时最大；$\varepsilon=1$ 时所有角点相同。故第281节的精确角点公式给出
+
+$$
+r_*(P_{u,\varepsilon})
+=\frac{\varepsilon}{\sqrt{A-m_u+m_u\varepsilon^2}}.
+\tag{317.12}
+$$
+
+令其等于 $R$，解得式（317.9）。另一方面，$I-P_{u,\varepsilon}=(1-\varepsilon)(I-P_u)$，所以最坏误差恰为 $(1-\varepsilon)E_0$。按照第281节选择最小残差方向并配以编码酉旋转及逆酉解码，两个成本由同一方案达到。零参数处单独使用定理317.1的零残差实现。
+
+所有最优方向的坐标绝对值相同，符号改变只置换角点集合，所以 $m_u$ 不变。式（317.10）于是成立，零预算处值为 $E_0$，$R=\eta$ 时为零，分别等于实际最优值。证毕。
+
+这给一般不等半径模型补上了另一个精确端点及全部达到恢复，同时把第291节的等半径退相干上界接到任意正半径。等半径时 $E_0=a/\sqrt6$、$m_u=1/(3a^2)$，式（317.9）还原该节的 $\sqrt8\,q/\sqrt{9-q^2}$。内部预算处仍只是可达上界；本节没有证明最优通道沿固定直线退相干，也没有由上界的导数认定实际最优曲线的导数。
+

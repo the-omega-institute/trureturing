@@ -1,0 +1,33 @@
+**推论 49.6（有限达到者的对数与固定宽度）。** Claim status: open。在第49.1节的扩展实数约定下，同一优化范围中的最小值为
+
+$$
+\begin{aligned}
+S_{\log,\min}
+ &=D+\log_2\bigl((2^{\varepsilon_A}+h)(2^{\varepsilon_B}+h)\bigr),\\
+B_{\mathrm{fix},\min}
+ &=D+\left\lceil\log_2(2^{\varepsilon_B}+h)\right\rceil
+      +\left\lceil\log_2(2^{\varepsilon_A}+h)\right\rceil\\
+ &=D+\varepsilon_A+\varepsilon_B+2h,\\
+B_{\mathrm{central},\min}
+ &:=\min\left\lceil\log_2|Q|\right\rceil=D+h.
+\end{aligned}
+\tag{49.16}
+$$
+
+证明。对定理49.5的各必要容量取单调的对数或向上取整，同一有限达到者保证下界同时达到。因 $|A|=2^r,|B|=2^s$，整数维数可移出取整；对 $\varepsilon,h\in\{0,1\}$ 有 $\lceil\log_2(2^\varepsilon+h)\rceil=\varepsilon+h$，联合最小值为 $2^{D+h}$，得到各式。证毕。
+
+单侧情形以下取 $\varepsilon_A=0,\varepsilon_B=1$，反向单侧只需交换左右：
+
+$$
+\begin{array}{c|c|c|c|c|c}
+\text{控制分布}&h&(|M_A|,|M_B|)_{\min}&S_{\log,\min}&B_{\mathrm{fix},\min}&B_{\mathrm{central},\min}\\ \hline
+\text{单侧}&0&(2|A|,|B|)&D+1&D+1&D\\
+\text{单侧}&1&(3|A|,2|B|)&D+\log_2 6&D+3&D+1\\
+\text{分散}&0&(2|A|,2|B|)&D+2&D+2&D\\
+\text{分散}&1&(3|A|,3|B|)&D+\log_2 9&D+4&D+1
+\end{array}
+\tag{49.17}
+$$
+
+本地固定宽度允许分别给两个有限实际状态集编号，并由本地状态和本次位串更新；集中编码则只给整个实际联合像编号。后一编号不提供两端各自可访问、可更新的寄存器，不能替换前两项本地资源。程序描述长度、查表构造成本和运行时间不包含在这些容量指标内。
+

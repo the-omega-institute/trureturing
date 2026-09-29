@@ -1,0 +1,31 @@
+**定理254.1（保留选择记录的统一副本界）。** 固定 $A,B,\theta$，在（254.1）—（254.7）的已知二元来源任务中，对所有 $0<z\le1/2$、$0\le\gamma\le1$，
+$$
+\boxed{
+\frac{1-A}{18qA\,r(z,\gamma)}
+\le N_{\mathrm{log}}(z,\gamma)
+\le\left\lceil\frac{12}{q\,r(z,\gamma)}\right\rceil.
+}
+\tag{254.23}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{log}}(z,\gamma)
+=\Theta\left(\frac1{(1-\gamma)z^4+\gamma z^2}\right),
+}
+\tag{254.24}
+$$
+其中上下界常数只依赖固定参数，可对全部 $\gamma$ 统一选择。
+
+**证明。** 上界即（254.22）。由于 $A/(1-A)\ge1$，
+$$
+(1-\gamma)\frac A{1-A}z^4+\gamma z^2
+\le\frac A{1-A}r(z,\gamma).
+\tag{254.25}
+$$
+将其代入（254.14）得到下界。$r(z,\gamma)>0$，且取整的加一项可被统一常数吸收，得到（254.24）。$\square$
+
+当 $\gamma(z)/z^2\to0$，旧响应项主导，副本数为 $\Theta(z^{-4})$。当 $\gamma(z)/z^2\to\infty$，互补项主导，副本数为 $\Theta(1/[\gamma(z)z^2])$。任意固定 $\gamma>0$ 都给 $\Theta(z^{-2})$，端点 $\gamma=0$ 则保留旧接口的四次方阶。
+
+对 $0<\gamma<1$，理想输出矩阵（254.7）的两个标签块，分别除以已知概率 $1-\gamma,\gamma$，即可恢复两种仪器各自的总体响应。这是精确数据层面的可恢复性；实际有限副本仍按（254.23）计价，不把该除法当作一次样本可实现的确定性恢复通道。
+

@@ -1,0 +1,47 @@
+## 34. 六维五终端接收排除三条互异尾环境射线
+
+本节回到第29—30节的固定接收通道问题。来源仍为
+$m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，其中
+$ab\ne0$、$|a|^2+|b|^2=1$。接收器从独立纯态启动，所有持久系统都计入六维
+$K$，每轮使用同一个全域 CPTP 通道，新环境随即丢弃且不再访问；接收器不能访问活动记忆或参考，须精确恢复前五个完整参考终端。
+
+命题29.1和29.2已将任何这样的候选归约到五个终端全部为纯的联合编码，每轮新环境为输入无关的单位向量
+$\eta_n$。命题30.1又给
+$\dim\operatorname{span}\{\eta_3,\eta_4,\eta_5\}=2$。
+本节证明，这三个尾环境不能占据三条互异射线。因此只保留两条不同尾射线的
+AAB、ABA、ABB 三种模式；字母相同表示射线相同，字母不同不预设正交。本节不决定这些两射线模式的可行性。
+
+固定共同 Stinespring 等距
+$V:K\otimes B\to K\otimes E$，令
+$V_i x=V(x\otimes|i\rangle)$。原始环境 $E$ 的维数不受预先限制，也不假定
+$V_1(K)$ 已落在二维环境中。沿用（30.1）—（30.4）的正交单位向量
+$p,q$ 和正交单位向量 $u,v,w$，以及初态 $k$：
+
+$$
+\begin{gathered}
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,\\
+V_0p=u\otimes\eta_2,\qquad V_1p=v\otimes\eta_2,
+\qquad V_0q=w\otimes\eta_2,\\
+H_1=\operatorname{span}\{p,q\},\qquad
+G_2=\operatorname{span}\{u,w\},\qquad
+H_2=\operatorname{span}\{a^2u+bv,w\}.
+\end{gathered}
+\tag{34.1}
+$$
+
+对于 $n=3,4,5$，（30.5）—（30.7）给出二维空间
+$H_n,G_n,Q_n$，满足
+
+$$
+\begin{gathered}
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\\
+G_n\perp Q_n,\qquad H_n\subseteq G_n\oplus Q_n,\qquad
+P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n.
+\end{gathered}
+\tag{34.2}
+$$
+
+最后两个投影在 $H_n$ 上都是同构。这是实际来源的非零系数及支撑秩所强制的关系，后文不会将
+$H_n$ 换成任意二维空间。全节的内积对第一变量共轭线性、对第二变量线性。
+

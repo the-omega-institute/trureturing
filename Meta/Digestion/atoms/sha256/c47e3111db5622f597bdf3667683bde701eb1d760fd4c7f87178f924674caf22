@@ -1,0 +1,61 @@
+**引理 78.1（纯未点击固定态对相干方向的约束）。** 设 $\mathcal N(P)=P$，其中 $P=|\psi\rangle\langle\psi|$。选单位向量 $\eta\perp\psi$，置 $R=|\eta\rangle\langle\eta|$。则存在 $\lambda\in[0,1]$ 与 $d\in\mathbb C$，使
+
+$$
+\boxed{
+\mathcal C^*(I)=\lambda R,\qquad
+\mathcal N(|\psi\rangle\langle\eta|)
+=d|\psi\rangle\langle\eta|,\qquad
+|d|^2\le1-\lambda.
+} \tag{78.1}
+$$
+
+此外，若 $a=|\langle0|\psi\rangle|^2$，则
+
+$$
+\boxed{\lambda(1-a)\ge1-\delta(\Gamma).} \tag{78.2}
+$$
+
+证明。为两分支分别选有限 Kraus 族 $A_i,B_j$。由于
+
+$$
+\sum_i|A_i\psi\rangle\langle A_i\psi|=P,
+$$
+
+每个 $A_i\psi$ 都与 $\psi$ 共线。完整保迹及 $\operatorname{Tr}\mathcal N(P)=1$ 又使每个 $B_j\psi=0$。在正交基 $(\psi,\eta)$ 中可写
+
+$$
+A_i=
+\begin{pmatrix}
+ c_i&u_i\\0&v_i
+\end{pmatrix},\qquad
+\sum_i|c_i|^2=1.
+$$
+
+因为点击效果为正且湮灭 $\psi$，它具有形式 $\lambda R$。完整性矩阵等式的非对角项和第二个对角项分别给出
+
+$$
+\sum_i\overline{c_i}u_i=0,\qquad
+\sum_i(|u_i|^2+|v_i|^2)+\lambda=1.
+$$
+
+因此
+
+$$
+\begin{aligned}
+\mathcal N(|\psi\rangle\langle\eta|)
+&=\left(\sum_i c_i\overline{u_i}\right)P
+  +\left(\sum_i c_i\overline{v_i}\right)|\psi\rangle\langle\eta|\\
+&=d|\psi\rangle\langle\eta|,
+\end{aligned}
+$$
+
+且 Cauchy–Schwarz 不等式给
+
+$$
+|d|^2\le\sum_i|v_i|^2\le1-\lambda.
+$$
+
+这一步覆盖任意 Kraus 数，不把不可读 Kraus 指标当成额外记录。
+
+最后，对输入 $P_0=|0\rangle\langle0|$，名义点击概率为一。完整输出距离控制点击事件的概率差，所以实际点击概率至少为 $1-\delta(\Gamma)$；而该概率恰为 $\lambda\operatorname{Tr}(RP_0)=\lambda(1-a)$。得到式 (78.2)。$\square$
+

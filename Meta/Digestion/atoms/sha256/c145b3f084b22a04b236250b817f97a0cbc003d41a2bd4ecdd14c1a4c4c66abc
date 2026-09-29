@@ -1,0 +1,10 @@
+**定义 705.1（关联凸包与容量支撑函数）。** 记
+
+$$
+P_{\mathcal F}=\operatorname{conv}\{\mathbf1_S:S\in\mathcal F\},\qquad
+A_{E,L}=\{u\in[0,L]^I:\sum_i u_i=E\},\qquad
+T_{E,L}(q)=\max_{u\in A_{E,L}}q\cdot u.
+$$
+
+每个 $q\in P_{\mathcal F}$ 都满足 $0\le q_i\le1$、$\sum_iq_i=p$；它表示一组状态权重下各标签被包含的总权重。这里的权重是有限优化中的对偶变量，不预先表示信徒人数、历史影响力或真理比例。
+

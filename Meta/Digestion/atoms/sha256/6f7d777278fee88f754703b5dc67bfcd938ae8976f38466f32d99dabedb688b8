@@ -1,0 +1,33 @@
+### 252.1 固定源与误差合同
+
+沿用§251的已标定输入算子
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X,
+\qquad
+A\ge B>0,\quad b_0^2=B,
+\tag{252.1}
+$$
+以及
+$$
+\ell=\sqrt{A+B},\qquad D=\frac\ell2,\qquad U=\frac{\sqrt A}{2}.
+\tag{252.2}
+$$
+输入为 $H=\mathbb C^2$，参考为同一已声明的有限维空间 $E$。固定一个响应饱和源态 $\Omega$，满足
+$$
+E_F(\Omega)=\theta\in(0,1),
+\qquad g(\Omega)=U+(D-U)\theta.
+\tag{252.3}
+$$
+竞争态 $\Xi$ 为 $H\otimes E$ 上任意归一化正半定态。它的参考边缘、形成纠缠、秩和支撑不受额外限制，也不必饱和。定义
+$$
+\mathcal R_w(T)=\operatorname{Tr}_H[(A_w\otimes I_E)T],
+\qquad
+\Delta_w=\mathcal R_w(\Xi)-\mathcal R_w(\Omega),
+\qquad
+\varepsilon=\|\Delta_a\|_1+\|\Delta_b\|_1.
+\tag{252.4}
+$$
+$\|\cdot\|_1$ 为未除以二的矩阵迹范数。误差包含两份完整参考响应；只给两个标量平均值，或仅给随参考维数变化的算子范数误差，不满足这一合同。
+

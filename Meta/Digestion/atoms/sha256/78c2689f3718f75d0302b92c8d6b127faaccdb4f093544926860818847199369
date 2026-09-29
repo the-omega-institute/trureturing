@@ -1,0 +1,24 @@
+**命题 430.2（按条件区别预算停止的误差界）。** 固定 $B>0$，令 $\tau_B=\inf\{n\ge1:A_n\ge B\}$，并假定它在 $P,Q$ 下均几乎必然有限。停止记录包括时刻及已经取得的全部结果 $(\tau_B,H_{\tau_B})$，特别包括第 $\tau_B$ 次观察。其两个记录律记为 $P^{\tau_B},Q^{\tau_B}$，则其 Hellinger 亲和量满足
+
+$$
+\rho(P^{\tau_B},Q^{\tau_B})\le e^{-B}.
+$$
+
+采用“$L_{\tau_B}\ge1$ 时判 $Q$，否则判 $P$”的规则时，两个逐模型错误概率各不超过 $e^{-B}$，而等先验平均错误概率不超过 $e^{-B}/2$。
+
+证明：$\tau_B$ 是共同的停止时刻；事实上本步预算达到与否已经由 $H_{n-1}$ 决定，但合同规定仍取完第 $n$ 次观察后再停止。所有有限停止历史构成一个可数集合 $\mathcal H_B$。对每个 $h\in\mathcal H_B$，共同停止规则给出 $P^{\tau_B}(h)=p(h)$、$Q^{\tau_B}(h)=q(h)$，其密度比就是 $L_{|h|}(h)$。两个规律下几乎必然有限保证这两列概率各自总和为一。
+
+对共同停止时刻使用增量恒等式 $M_{(k+1)\wedge\tau_B}-M_{k\wedge\tau_B}=\mathbf1_{\{\tau_B>k\}}(M_{k+1}-M_k)$。因指示因子在 $\mathcal F_k$ 中可测，逐项取条件期望并加总得 $\mathbb E_PM_{\tau_B\wedge N}=1$。再用非负性、$P(\tau_B<\infty)=1$ 及 Fatou 引理，得到 $\mathbb E_PM_{\tau_B}\le1$，不需要宣称这个不等式必为等号。因此
+
+$$
+\begin{aligned}
+\rho(P^{\tau_B},Q^{\tau_B})
+&=\sum_{h\in\mathcal H_B}\sqrt{p(h)q(h)}
+=\mathbb E_P\sqrt{L_{\tau_B}}\\
+&=\mathbb E_P[M_{\tau_B}e^{-A_{\tau_B}}]
+\le e^{-B}.
+\end{aligned}
+$$
+
+似然规则在每个停止历史处对两个错误概率之和贡献 $\min(p(h),q(h))$，不超过 $\sqrt{p(h)q(h)}$。求和给出错误之和至多 $e^{-B}$，故各自不超过该值，等先验平均再除以二。逐历史选择较大质量也说明这条规则达到该停止记录上的最小等先验错误。证毕。
+

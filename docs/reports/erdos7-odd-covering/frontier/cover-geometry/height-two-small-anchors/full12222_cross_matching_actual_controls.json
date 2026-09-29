@@ -1,0 +1,88 @@
+{
+  "status": "PASS",
+  "source_name": "four_cross_doubles_with_off_R_J_label",
+  "actual_points": 163,
+  "original_owners": 19,
+  "original_pair_checks": 480,
+  "standalone": true,
+  "no_individually_robust_root": true,
+  "original_anchors": 6,
+  "paired_tree_constructions": 156,
+  "numerical_cylinders": 10602,
+  "root_category_table_checks": 3476,
+  "marker_original49_residue": 29,
+  "psi_marker_mass": "1/4",
+  "marker_is_not_one_of_four_R_J_labels": true,
+  "global_J_1_over_8_cap_fails": true,
+  "safe_global_J_fine_cap": "1/4",
+  "caps": {
+    "psi": [
+      "1",
+      "1/3",
+      "1/4",
+      "1/9",
+      "1/8",
+      "1/4",
+      "1/24",
+      "1/12",
+      "1/36"
+    ],
+    "eta_H": [
+      "1",
+      "1",
+      "1",
+      "1/5",
+      "1",
+      "1/5",
+      "1/5",
+      "1/5",
+      "1/5"
+    ],
+    "eta_J": [
+      "1",
+      "1",
+      "1",
+      "1/4",
+      "1",
+      "1/4",
+      "1/4",
+      "1/4",
+      "1/4"
+    ],
+    "lambda": [
+      "3/5",
+      "1/5",
+      "3/20",
+      "1/15",
+      "3/40",
+      "3/20",
+      "1/40",
+      "1/20",
+      "1/60"
+    ],
+    "pi": [
+      "2/5",
+      "2/5",
+      "1/4",
+      "7/80",
+      "1/4",
+      "1/20",
+      "1/20",
+      "1/20",
+      "1/20"
+    ],
+    "nu": [
+      "1",
+      "2/5",
+      "3/10",
+      "7/80",
+      "1/4",
+      "3/20",
+      "1/20",
+      "1/20",
+      "1/20"
+    ]
+  },
+  "query_bound_from_separate46656_certificate": "691/80",
+  "scope": "Complete source construction controls; not exhaustive sources, minimum cut, Lean or arbitrary height."
+}

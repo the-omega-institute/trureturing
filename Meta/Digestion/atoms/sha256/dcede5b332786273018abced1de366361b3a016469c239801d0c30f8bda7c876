@@ -1,0 +1,55 @@
+### 278.6 两阶段协议的明确整数预算
+
+取
+$$
+m=\left\lceil\frac{576}{\delta}\right\rceil,\qquad
+L=\left\lceil\frac{8n}{\delta}\right\rceil.
+\tag{278.25}
+$$
+第一阶段使用 $m$ 个副本，第二阶段使用 $L$ 个副本，全部计入总数。由 $0<\delta\le1/2$、$n\ge1$，
+$$
+L\le\frac{9n}{\delta}.
+\tag{278.26}
+$$
+
+理想假设下，用并合界和全期望得到
+$$
+\begin{aligned}
+P_{0,\phi}(\widehat b=1)
+&=\mathbb E_{0,\phi}\bigl[1-(1-p_0(e))^L\bigr]\\
+&\le L\,\mathbb E_{0,\phi}p_0(e)\\
+&\le\frac{8L}{nm}
+\le\frac{72}{\delta m}
+\le\frac18.
+\end{aligned}
+\tag{278.27}
+$$
+该期望取自理想假设自己的真实校准分布。
+
+扰动假设下，（278.24）对每个校准历史都给出同一个下界，故
+$$
+\begin{aligned}
+P_{1,\phi}(\widehat b=0)
+&=\mathbb E_{1,\phi}(1-p_1(e))^L\\
+&\le\exp\left(-\frac{L\delta}{4n}\right)
+\le e^{-2}<\frac14.
+\end{aligned}
+\tag{278.28}
+$$
+于是
+$$
+\boxed{
+\sup_{\phi}P_{{\rm err},\phi}\le\frac3{16}<\frac13.
+}
+\tag{278.29}
+$$
+这是一条包含真实校准副本的有限样本保证。预算为
+$$
+m+L
+=\left\lceil\frac{576}{\delta}\right\rceil
++\left\lceil\frac{8n}{\delta}\right\rceil
+=O(\delta^{-1})
+\tag{278.30}
+$$
+这里 $n$ 固定。上界校准只使用经典记录；检测阶段也只需要逐副本记录读取和参考投影。
+

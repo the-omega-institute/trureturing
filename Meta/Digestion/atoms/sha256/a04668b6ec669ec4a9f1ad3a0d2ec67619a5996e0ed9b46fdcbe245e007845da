@@ -1,0 +1,24 @@
+**引理 62.3（$t=0$ 的准确负向最大值）。** 对 $p\in[d,\varepsilon]$，有
+
+$$
+J_\varepsilon(p):=
+\max_{0\le q\le1}
+[\lambda(p;q,0)+\varepsilon(1-q)]
+=
+\begin{cases}
+\varepsilon,&d\le p\le p_0,\\
+F_\varepsilon(p),&p_0\le p\le\varepsilon.
+\end{cases}
+\tag{62.11}
+$$
+
+后一段的达到点为
+
+$$
+q_* =\frac{B-\varepsilon}{2B},
+\qquad
+F_\varepsilon(p)\ge\varepsilon,
+\qquad F_\varepsilon'(p)=1-\frac{\varepsilon^2}{B^2}\ge0.
+\tag{62.12}
+$$
+

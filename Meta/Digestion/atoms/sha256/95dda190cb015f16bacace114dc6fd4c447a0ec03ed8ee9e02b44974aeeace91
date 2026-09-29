@@ -1,0 +1,66 @@
+**一个保持块相干的固定运行吸收器。** 对每个 $`k`$，在 $`B_kR_k`$ 上准备 $`\Xi_k`$，让实际来源 $`T`$ 作用于 $`A_kB_k`$。这给出一个等距
+
+$$
+W_k:A_k\longrightarrow M\otimes\mathcal B\otimes R_k.
+\tag{15.15}
+$$
+
+它的来源边缘通道由（15.6）给出。该通道的另一份最小 Stinespring 等距为
+
+$$
+Z_k|v\rangle
+=\iota_{p(k)}\bigl(U_k|v\rangle\otimes|\Xi_{p(k)}\rangle\bigr)
+\in M\otimes R_{p(k)}.
+\tag{15.16}
+$$
+
+由于 $`\tau_{p(k)}`$ 正定，这份环境的支撑是整个 $`R_{p(k)}`$。Stinespring 唯一性因而给一个等距
+
+$$
+J_k:R_{p(k)}\longrightarrow\mathcal B\otimes R_k,
+\qquad
+W_k=(I_M\otimes J_k)Z_k.
+\tag{15.17}
+$$
+
+这是对整个输入空间 $`A_k`$ 的线性等式，因此即使 $`A_k`$ 与任意参考及 $`Q`$ 纠缠也成立。它也直接蕴含 $`r_{p(k)}\le(\dim\mathcal B)r_k`$，无需另加相同噪声秩的假设。
+
+在 $`K_{\rm run}\otimes\mathcal B`$ 上定义单个部分等距 $`A`$：将第 $`k`$ 块按固定张量次序写成 $`Q\otimes\mathcal B\otimes R_k`$ 后，在 $`Q\otimes\operatorname{ran}J_k`$ 上施加 $`I_Q\otimes J_k^\dagger`$，输出放入第 $`p(k)`$ 块；在这些成功子空间的正交补上取零。
+
+输入块彼此正交，输出块也因 $`p`$ 是置换而彼此正交。因此
+
+$$
+AA^\dagger=I_{K_{\rm run}},\qquad
+P:=A^\dagger A\text{ 是成功支撑投影}.
+\tag{15.18}
+$$
+
+取任意固定运行态 $`\omega`$，定义
+
+$$
+\mathcal C_{\rm run}(X)
+=AXA^\dagger+\operatorname{Tr}[(I-P)X]\,\omega.
+\tag{15.19}
+$$
+
+这是一份全域 CPTP 映射。成功部分必须是单个 Kraus 算子 $`A`$；若将每个块分别作为一个成功 Kraus 算子，就会测量并消除块间相干，不能用于本合同。
+
+为验证实际运行永不离开成功支撑，考虑以下共同纯化子空间：
+
+$$
+\Gamma((\xi_k)_k)
+=\sum_k\xi_k^{A_kQ}\otimes\Xi_k^{B_kR_k},
+\qquad
+\xi_k\in A_k\otimes Q.
+\tag{15.20}
+$$
+
+它包含（15.11）的全部像。由（15.17），一次真实发射加（15.19）把（15.20）精确送到同一形式，其中
+
+$$
+\xi'_{p(k)}=(U_k\otimes I_Q)\xi_k.
+\tag{15.21}
+$$
+
+发射后的接收输入全部位于 $`P`$；补空间重置项的概率为零。式（15.21）是一份块置换加酉的线性等式，既保持块内参考纠缠，也保持不同块之间的相干。因而此性质可以无限迭代，且不用外部时钟切换运行门。
+

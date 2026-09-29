@@ -213,7 +213,7 @@ public sealed partial class CleanLanesCommandTests
         File.WriteAllText(Path.Combine(lane, "README.md"), "unstaged change");
         File.WriteAllText(Path.Combine(lane, "untracked.txt"), "untracked change");
         File.WriteAllText(Path.Combine(lane, "staged.txt"), "staged change");
-        ReviewRegressionTests.RunGit(lane, "add", "staged.txt");
+        TestGit.Run(lane, "add", "staged.txt");
         var runner = fixture.CreateRunner();
 
         var result = fixture.RunWithRaw(runner, "--lanes-only", "--force");
@@ -255,7 +255,7 @@ public sealed partial class CleanLanesCommandTests
         else if (shape == "empty") fixture.EmptyCreationLog(lane);
         else
         {
-            var gitDirectory = ReviewRegressionTests.RunGit(lane, "rev-parse", "--absolute-git-dir").Trim();
+            var gitDirectory = TestGit.Run(lane, "rev-parse", "--absolute-git-dir").Trim();
             File.AppendAllText(Path.Combine(gitDirectory, "logs", "HEAD"), "malformed\n");
         }
 
@@ -452,7 +452,7 @@ public sealed partial class CleanLanesCommandTests
             Git(repository.Path, "worktree", "add", "-b", branch, path, "dev");
 
         private static string Git(string root, params string[] arguments) =>
-            ReviewRegressionTests.RunGit(root, arguments);
+            TestGit.Run(root, arguments);
     }
 
     private sealed class SelectiveFailureRunner(

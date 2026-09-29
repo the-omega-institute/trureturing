@@ -1,0 +1,40 @@
+### 217.1 参数、真实预算与结论
+
+记
+$$
+p=(\epsilon,h,\nu),\qquad
+\gamma=\beta\sqrt{1-\nu},\qquad
+x=\beta\epsilon,\quad H=h/\beta,\quad \ell=\epsilon h=xH.
+\tag{217.1}
+$$
+第213节给实解析函数
+$$
+\mathcal V(p,t)=\frac34+\epsilon q(p,t),\qquad
+\mu=q_t,\qquad q_{tt}>0,\quad \mu_\nu<0,
+\tag{217.2}
+$$
+以及临界图 $\nu_b(\epsilon,h)=N(\beta\epsilon,h/\beta)$ 和不约束符号的根
+$$
+\widehat t(p)=a(p)\Delta(p),\qquad
+\Delta(p)=\nu-\nu_b(\epsilon,h),\qquad a>0,\quad a(0)=1.
+\tag{217.3}
+$$
+实际最优权重为 $t^\sharp=a[\Delta]_+$。这里 $[r]_+=\max(r,0)$。
+
+按第189节固定旗标对称化约定，以正旗标上的共同两结果 Choi 对为变量，定义
+$$
+\mathcal K_{11}
+=\left\{(J_0,J_1):
+J_j\succeq0,\quad
+\operatorname{Tr}_{\mathrm{out}}(J_0+J_1)=I,\quad
+\operatorname{rank}J_j\le1
+\right\}.
+\tag{217.4}
+$$
+$E_{11}(p)$ 是原完整半 diamond 恢复误差在此紧集上的最小值。$E(p)$ 是同一误差对全部共同 CPTP 操作的最优值。
+
+令 $\Gamma_A(p)=\Gamma(p,0)$ 为第213节的边界候选，
+$$
+E_A(p)=\frac34+\epsilon q(p,0).
+$$
+

@@ -1,0 +1,4 @@
+**定义 262.2（项目的贪心结论只比较当前一步）。** [GreedyResidualAllocation](../../../D5/S3/ConceptDynamics/ResidualCoverage/GreedyResidualAllocation.lean)的 `greedy_one_step_optimal` 说，若从给定候选池选择当前边际增益最大的措施，那么加入它之后的覆盖权重至少与加入池内任一其他单项措施一样大。`greedy_positive_progress` 还要求存在一个可用措施能够覆盖当前未覆盖的正权重条件，才推出本步严格进展。候选池没有这种见证时，不能靠“选了最大者”制造正收益。
+
+该模块另以交叉相乘比较增益和成本。只有比较成本为正时，才可以按单位成本收益理解这种关系；全部成本都等于同一个正数时，它与贪心选择等价。成本为零时不能直接进行这种除法解释。
+

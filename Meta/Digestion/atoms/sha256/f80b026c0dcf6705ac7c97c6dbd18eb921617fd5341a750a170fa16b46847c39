@@ -1,0 +1,16 @@
+## 201. 唯一恢复阈值的熵四项展开
+
+本节固定此前的 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，
+保持相同的共同接收端 CPTP 任务及全部外部参考。
+令 $\ell_\epsilon$ 为第198节的唯一恢复阈值，并置
+
+$$
+k_c=-\frac{Q(h_c)}{\Phi'_{h_c}},\qquad
+S_\epsilon=H_2(\ell_\epsilon),\qquad
+H_2(x)=-x\log_2x-(1-x)\log_2(1-x).
+\tag{201.1}
+$$
+
+这里 $H_2(\ell)$ 是来源边缘 $\operatorname{diag}(1-\ell,\ell)$ 的熵，
+也是其指定纯化的两侧纠缠熵；它不是接收器新取得的原始档案长度。
+

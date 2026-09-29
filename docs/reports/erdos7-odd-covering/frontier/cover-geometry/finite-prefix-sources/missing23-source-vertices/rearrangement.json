@@ -1,0 +1,194 @@
+{
+  "A": [
+    0,
+    1,
+    4,
+    4,
+    4,
+    4
+  ],
+  "B": [
+    0,
+    4,
+    4,
+    1,
+    4,
+    4
+  ],
+  "asymmetric_field_local_obstructions": [
+    {
+      "charged_label": [
+        2,
+        1,
+        7,
+        11
+      ],
+      "charged_prime": 7,
+      "complete_component_responses": [
+        "2383/440",
+        "16439/3080"
+      ],
+      "current_label": [
+        2,
+        2,
+        2,
+        8
+      ],
+      "current_prime": 11,
+      "extra5_depth": 0,
+      "from_cell": 121,
+      "local_move_change": "-11/140",
+      "multiplier": 1,
+      "positive3_depth": 3,
+      "to_cell": 61
+    },
+    {
+      "charged_label": [
+        1,
+        1,
+        7,
+        1
+      ],
+      "charged_prime": 11,
+      "complete_component_responses": [
+        "55552/2145",
+        "22135/858"
+      ],
+      "current_label": [
+        2,
+        2,
+        2,
+        8
+      ],
+      "current_prime": 13,
+      "extra5_depth": 0,
+      "from_cell": 121,
+      "local_move_change": "-1/10",
+      "multiplier": 2,
+      "positive3_depth": 1,
+      "to_cell": 61
+    },
+    {
+      "charged_label": [
+        1,
+        1,
+        7,
+        1
+      ],
+      "charged_prime": 13,
+      "complete_component_responses": [
+        "58213/1105",
+        "58026/1105"
+      ],
+      "current_label": [
+        2,
+        2,
+        2,
+        8
+      ],
+      "current_prime": 17,
+      "extra5_depth": 0,
+      "from_cell": 121,
+      "local_move_change": "-11/65",
+      "multiplier": 4,
+      "positive3_depth": 1,
+      "to_cell": 61
+    }
+  ],
+  "boundary": "First7 modulo9 is restricted to2/5/8; each11/13 excludes8 plateau-breaking labels. Other source charts/budgets and unrestricted global forcing are not proved.",
+  "certified_physical_labels_per_stage": [
+    168,
+    272,
+    272,
+    280,
+    280,
+    280
+  ],
+  "certified_physical_tuples": 272848257024000,
+  "complete_physical_tuples": 481890304000000,
+  "earlier_all_six_fixed_domain": 22483074023424,
+  "excluded11_or13_labels": [
+    [
+      1,
+      1,
+      4,
+      1
+    ],
+    [
+      1,
+      1,
+      7,
+      1
+    ],
+    [
+      1,
+      2,
+      4,
+      7
+    ],
+    [
+      1,
+      2,
+      7,
+      7
+    ],
+    [
+      1,
+      3,
+      4,
+      13
+    ],
+    [
+      1,
+      3,
+      7,
+      13
+    ],
+    [
+      1,
+      4,
+      4,
+      4
+    ],
+    [
+      1,
+      4,
+      7,
+      4
+    ]
+  ],
+  "face_certificate_sha256": "33ca20af85a421863ca0c3865fd903f2be1744b824aed951369ffbcaa0e9ca98",
+  "field_incidence_checks": 104664,
+  "finite_prefix_conditions": 15,
+  "fraction_of_full_domain": "3468/6125",
+  "geometry_source_sha256": "d0c5dbf54089cf05da07e562b34b639890fb722fbf9efb96bc8a5068c729ed9a",
+  "last_three_unrestricted_domain": 104088305664000,
+  "layouts_per_case": 1365,
+  "local_layout_checks": 49140,
+  "local_parameter_cases": 36,
+  "local_values_sha256": "80a9ad12bbe5b3c72635e53d694a0a73e6a0427ec00996909155c7eb4384d5fe",
+  "minimum_layout_move_gain": 0,
+  "minimum_source_move_gain": 0,
+  "positive3": [
+    0,
+    6,
+    6,
+    6,
+    6,
+    6
+  ],
+  "prefix_slack_lower": "87611182897/199691894531250",
+  "raw_tube_radius": "1/18000",
+  "scope": "Fixed source chart and five-leaf face; ordinary all-depth comparison proof required. Finite controls only, no full geometry or new Lean verification.",
+  "source_leaf_order": [
+    4,
+    13,
+    22,
+    7,
+    16,
+    25
+  ],
+  "tube_slack_lower": "255839334607/631125000000000",
+  "uniform_face_margin_lower": "116/15625",
+  "weight_unit": "1/6"
+}

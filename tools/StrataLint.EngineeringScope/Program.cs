@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -66,7 +67,8 @@ internal static class Program
             }
             var repository = RepositoryOption(arguments);
             var prepared = CommonExecutionEvidence.PrepareRegisteredTests(repository, round: buildRound);
-            return RunPreparedTests(repository, (project, results) => RunTests(repository, prepared.Assemblies[project], results), output, prepared);
+            return RunPreparedTests(repository, (project, results) => RunTests(repository, prepared.Assemblies[project], results),
+                output, prepared, prepare: () => RunDotnet(repository, ["test", "--help"], output));
         }
         catch (Exception exception)
         {
@@ -117,11 +119,11 @@ internal static class Program
     }
 
     internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null,
-        int maxConcurrentProjects = 1)
-        => RunPreparedTests(root, run, output, CommonExecutionEvidence.PrepareRegisteredTests(root, build), maxConcurrentProjects);
+        int maxConcurrentProjects = 1, Func<int>? prepare = null)
+        => RunPreparedTests(root, run, output, CommonExecutionEvidence.PrepareRegisteredTests(root, build), maxConcurrentProjects, prepare);
 
     private static int RunPreparedTests(string root, Func<string, string, int> run, TextWriter output,
-        CommonExecutionEvidence.PreparedTests prepared, int maxConcurrentProjects = DefaultConcurrentTestProjects)
+        CommonExecutionEvidence.PreparedTests prepared, int maxConcurrentProjects = DefaultConcurrentTestProjects, Func<int>? prepare = null)
     {
         ArgumentOutOfRangeException.ThrowIfLessThan(maxConcurrentProjects, 1);
         output = TextWriter.Synchronized(output);
@@ -137,7 +139,16 @@ internal static class Program
         var invocation = Guid.NewGuid().ToString("N");
         var records = new TestProjectExecution[projects.Length];
         output.WriteLine($"ENGINEERING_TEST_PLAN state=registered selected={projects.Length - reused.Count} reused={reused.Count} candidate={candidate}");
-        Parallel.For(0, projects.Length, new ParallelOptions { MaxDegreeOfParallelism = maxConcurrentProjects }, index =>
+        // CI consumes prebuilt assemblies on a cold SDK profile. Complete ordinary
+        // first-use initialization once before any concurrent dotnet test children.
+        if (projects.Length > reused.Count && prepare is not null)
+        {
+            var exit = prepare();
+            output.WriteLine($"ENGINEERING_TEST_INITIALIZATION raw_exit={exit}");
+            if (exit != 0) return exit;
+        }
+        Parallel.ForEach(Partitioner.Create(Enumerable.Range(0, projects.Length), EnumerablePartitionerOptions.NoBuffering),
+            new ParallelOptions { MaxDegreeOfParallelism = maxConcurrentProjects }, index =>
         {
             var project = projects[index];
             if (reused.TryGetValue(project, out var prior))
@@ -172,23 +183,31 @@ internal static class Program
     }
 
     private static int RunTests(string root, string project, string results)
+        => RunDotnet(root, BuildTestArguments(project, results));
+
+    private static int RunDotnet(string root, IReadOnlyList<string> arguments, TextWriter? initializationOutput = null)
     {
-        var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false };
+        var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false,
+            RedirectStandardOutput = initializationOutput is not null };
         start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
         start.Environment["CI"] = "true";
         // Synthetic test repositories supply their own candidate identity.
         start.Environment.Remove("CANDIDATE_SHA");
         if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
-        foreach (var argument in BuildTestArguments(project, results)) start.ArgumentList.Add(argument);
+        foreach (var argument in arguments) start.ArgumentList.Add(argument);
         using var process = Process.Start(start) ?? throw new InvalidOperationException("could not start dotnet test");
+        // Successful help is ordinary prose, not diagnostics. Keep stderr live and
+        // drain only initialization stdout, retaining it when initialization fails.
+        var initializationText = initializationOutput is null ? null : process.StandardOutput.ReadToEnd();
         process.WaitForExit();
+        if (process.ExitCode != 0) initializationOutput?.Write(initializationText);
         return process.ExitCode;
     }
 
     internal static IReadOnlyList<string> BuildTestArguments(string projectPath, string resultsDirectory) =>
         new[] { "test", projectPath, "--configuration", "Release", "--verbosity", "minimal", "--no-restore", "--no-build" }
-            .Concat(["--logger", "trx;LogFilePrefix=engineering", "--results-directory", resultsDirectory]).ToArray();
+            .Concat(["--logger", "console;verbosity=normal", "--logger", "trx;LogFilePrefix=engineering", "--results-directory", resultsDirectory]).ToArray();
 
     private static int VerifyTrx(IReadOnlyList<string> arguments, Func<string, TestResultEvidence> load, TextWriter output)
     {

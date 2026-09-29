@@ -1,0 +1,4 @@
+**定义 447.3（所有任务与一份成绩单）。** GarblingIncreasesBayesRisk 定义精确的 Blackwell 支配并给出风险单调性；FiniteBayesRiskDominanceCriterion 的 finite_bayes_risk_dominance_iff_postprocessing 给出有限情形的逆向关系：对全部先验、有限行动集和实值损失都有风险优势，当且仅当存在随机后处理。它的实值最优化与前一模块的扩展非负实数实现不同，本文不把两种源码定义字面等同。当前 $[0,1]$ 损失用于定量误差，实际行动集均非空。
+
+这些接口承接经典统计实验比较。Blackwell 的 *Equivalent Comparisons of Experiments*（1953，*Annals of Mathematical Statistics* 24(2)，265—272）是其历史来源之一；本批的精确引用依据是上述项目声明，未把该论文的整套条件原样搬入。重要的量词是“全部同域决策问题”：在一份特定成绩单上相同，还没有穷尽这个量词。以下用同一对具体机制同时算出成绩、模拟器和反向障碍。
+

@@ -1,0 +1,188 @@
+**定理 211.3（实解析纯态程序的全局最优三维实现）。** 对每个定义211.1中的 $a,t$，存在一个固定三维 CPTP 处理器及一条在整个 $J_a$ 上实解析的纯态准备曲线，对所有参数和全部信号输入精确产生 $\mathcal T_u$，而且
+$$
+ \mathcal E(\rho)=\{t\},\qquad
+ \lim_{\substack{u\to t\\u\ne t}}
+ \frac{I_Q(\rho_u)-I_r(u)}{(u-t)^2}=\kappa_*(a,t).
+\tag{211.15}
+$$
+因此，定义211.1中所有有限维 $C^1$ 程序的信息曲率下确界恰为 $\kappa_*$，并被三维实解析纯态程序达到；达到这个最优值并具有精确校准的最小联合支持维数恰为三。
+
+证明。 首先在三维程序空间内构造达到最优值的局部纯态模型。所有以下算子一经 $a,t$ 选定便固定，不依赖待估参数 $u$。令
+$$
+ P_0=\operatorname{diag}(1,1,0),\qquad Z_0=2P_0-I,
+ \qquad \psi_*=(\sqrt h,0,\sqrt\ell)^{\mathsf T},
+ \qquad
+ \gamma=\sqrt{1-\frac{a^2}{h^2}},\quad
+ \alpha=\sqrt{1-\frac{a^2}{h}},
+\tag{211.16}
+$$
+并置
+$$
+ r=\begin{pmatrix}at/h\\\gamma\\2a\sqrt{\ell/h}\end{pmatrix},
+ \qquad s=\frac{\psi_*-(a/\sqrt h)r}{\alpha},
+ \qquad
+ T_0=\begin{pmatrix}r^{\mathsf T}\\s^{\mathsf T}\\0\quad0\quad0\end{pmatrix}.
+\tag{211.17}
+$$
+由 $t^2+4h\ell=1$，有 $\|r\|=1$、$r^{\mathsf T}\psi_*=a/\sqrt h$；继而 $\|s\|=1$ 且 $r^{\mathsf T}s=0$。因此 $T_0T_0^\dagger=P_0$，$T_0$ 为压缩算子，且 $Z_0T_0=T_0$。定义固定等距映射
+$$
+ W_0=\binom{I_3}{0},\qquad
+ W_2=\binom{Z_0}{0},\qquad
+ W_1=\binom{T_0}{\sqrt{I_3-T_0^\dagger T_0}}.
+\tag{211.18}
+$$
+受控等距 $\sum_{i=0}^2|i\rangle\langle i|\otimes W_i$ 后取环境偏迹，给出一个固定三维程序处理器。
+
+令 $h(u)=(1+u)/2$、$\ell(u)=(1-u)/2$，考虑实单位向量及其通道系数
+$$
+ \psi(u,\theta)=\begin{pmatrix}
+ \sqrt{h(u)}\cos\theta\\
+ \sqrt{h(u)}\sin\theta\\
+ \sqrt{\ell(u)}
+ \end{pmatrix},\qquad
+ f(u,\theta)=\psi(u,\theta)^{\mathsf T}T_0\psi(u,\theta).
+\tag{211.19}
+$$
+此程序的 Schur 系数为 $C_{02}=u$、$C_{01}=C_{12}=f(u,\theta)$、$C_{ii}=1$。这是由（211.18）逐矩阵单位得到的恒等式；因为向量和算子均为实数，相关转置给出相同标量。因此 $f(u,\theta)=a$ 即保证对全部信号输入产生 $\mathcal T_u$。
+
+置 $M_0=(T_0+T_0^\dagger)/2$。由（211.17）直接得到
+$$
+ T_0\psi_*=(a/\sqrt h,\alpha,0)^{\mathsf T},\qquad
+ T_0^\dagger\psi_*=(at/\sqrt h,\sqrt h\,\gamma,2a\sqrt\ell)^{\mathsf T},
+ \qquad (M_0-aI)\psi_*=\sqrt{V_*}\,(0,1,0)^{\mathsf T}.
+\tag{211.20}
+$$
+这同时达到证明定理211.2时的方差界。取 $\theta=0$，曲线 $\psi(u,0)$ 正是 $\psi_*$ 的冻结等号曲线，所以（211.9）给出 $f(t,0)=a$、$f_u(t,0)=0$、$f_{uu}(t,0)=-a/c_t$。又由（211.20），
+$$
+ f_\theta(t,0)=2\sqrt h\sqrt{V_*}>0.
+\tag{211.21}
+$$
+实解析隐函数定理因此给出 $t$ 的一个邻域上的实际函数 $\theta(u)$，满足 $f(u,\theta(u))=a$，且
+$$
+ \theta(t)=\theta'(t)=0,\qquad
+ \theta''(t)=\frac{a}{2c_t\sqrt h\sqrt{V_*}}>0.
+\tag{211.22}
+$$
+写 $\psi_u=\psi(u,\theta(u))$。实归一化向量满足 $\langle\psi_u,\psi'_u\rangle=0$，故普通纯态 SLD 信息量为 $4\|\psi'_u\|^2$。将（211.19）求导，得到精确恒等式
+$$
+ I_Q(|\psi_u\rangle\langle\psi_u|)-I_r(u)
+       =4h(u)\theta'(u)^2.
+\tag{211.23}
+$$
+结合（211.22），此局部模型的信息曲率恰为 $a^2/(c_t^2V_*)$。缩小邻域为 $I\Subset J_a$，可令 $\theta''>0$ 在 $I$ 上成立；于是 $\theta'$ 在 $I$ 内的唯一零点为 $t$。
+
+下面证明这个局部纯态模型可以由同一个三维处理器解析延拓到整个 $J_a$。令 $Q_0=I-P_0$、$k=a/h$、$\beta=\sqrt h\,\gamma/\alpha$，则 $0<k,\beta<1$；后一个不等式来自 $\alpha^2-h\gamma^2=1-h>0$。在 $P_0\oplus Q_0$ 分块中写
+$$
+ T_0=\begin{pmatrix}\mathsf A&b\\0&0\end{pmatrix},\qquad
+ \mathsf A=\begin{pmatrix}
+ kt&\gamma\\
+ \sqrt h(1-k^2t)/\alpha&-k\beta
+ \end{pmatrix},\qquad
+ b=\begin{pmatrix}2k\sqrt{h\ell}\\\sqrt\ell(1-2k^2h)/\alpha\end{pmatrix}.
+\tag{211.24}
+$$
+由 $T_0T_0^{\mathsf T}=P_0$，有 $\mathsf A\mathsf A^{\mathsf T}+bb^{\mathsf T}=I_2$。计算得到 $\det\mathsf A=-\beta$，以及
+$$
+ \Delta:=\det(I_2-\mathsf A)
+ =1-kt-(1-k)\beta
+ =2(1-a)-(1-k)(1+\beta),\qquad
+ 0<k(1-t)<\Delta<2(1-a).
+\tag{211.25}
+$$
+因此可以固定一个不依赖 $u$ 的方向
+$$
+ x=(I_2-\mathsf A)^{-1}b,\qquad N=\|x\|,\qquad
+ e=\frac xN=(\cos\bar\theta,\sin\bar\theta)^{\mathsf T}.
+\tag{211.26}
+$$
+直接求逆有
+$x_1=\sqrt\ell(2k\sqrt h+\gamma/\alpha)/\Delta>0$，且
+$\alpha x_2=\sqrt h(1-k)x_1+\sqrt\ell>0$，所以 $0<\bar\theta<\pi/2$。
+
+这一固定方向满足四个恒等式：
+$$
+ N^2=\frac{2(1+\beta)}{\Delta},\qquad
+ b^{\mathsf T}x=1+\beta,\qquad
+ e^{\mathsf T}\mathsf Ae=1-\frac\Delta2,\qquad
+ b^{\mathsf T}e=\frac{\Delta N}{2}>0.
+\tag{211.27}
+$$
+为核对它们，先由 $bb^{\mathsf T}=I_2-\mathsf A\mathsf A^{\mathsf T}$ 得
+$xx^{\mathsf T}=(I_2-\mathsf A)^{-1}+(I_2-\mathsf A^{\mathsf T})^{-1}-I_2$；取迹并使用二维逆矩阵公式，得到第一式。设 $s=\operatorname{Tr}\mathsf A$。从 $\det\mathsf A=-\beta$ 和上述正交关系得 $\|b\|^2=1-\beta^2$；Cayley–Hamilton 恒等式 $\mathsf A^2=s\mathsf A+\beta I_2$ 给出
+$b^{\mathsf T}\mathsf Ab=-s\beta(1+\beta)$。因此
+$b^{\mathsf T}x=[(1-s)(1-\beta^2)-s\beta(1+\beta)]/\Delta=1+\beta$。
+其余两式由 $\mathsf Ax=x-b$ 得到。
+
+将可变的 $P_0$ 概率记为 $p\in[a,1]$。取两个固定角度 $0$ 与 $\bar\theta$，相应实纯态的 $T_0$ 期望分别为
+$$
+ m_0(p)=kt\,p+2k\sqrt{h\ell}\sqrt{p(1-p)},
+ \qquad m_0(h)=a,\quad m'_0(h)=0,
+\tag{211.28}
+$$
+$$
+ m_{\bar\theta}(p)
+ =p\left(1-\frac\Delta2\right)
+  +\frac{\Delta N}{2}\sqrt{p(1-p)}.
+\tag{211.29}
+$$
+$m_0$ 严格凹，故 $m_0(p)\le a$，等号仅在 $p=h$。另一个期望在右端满足
+$m_{\bar\theta}(1)-a=(1-k)(1+\beta)/2>0$；在左端满足
+$m_{\bar\theta}(a)-a=(\Delta/2)[N\sqrt{a(1-a)}-a]>0$，因为
+$N^2>(1+\beta)/(1-a)>a/(1-a)$。式（211.29）的凹性于是给出整个闭区间上的严格夹逼：
+$$
+ m_0(p)\le a<m_{\bar\theta}(p)
+ \qquad(a\le p\le1).
+\tag{211.30}
+$$
+两端和中间的所有期望都属于同一个 $T_0$，没有分别优化处理器。
+
+还须排除所选根的折返。记 $A_0=\mathsf A_{11}$、$D_0=\mathsf A_{22}$、$C_0=\mathsf A_{12}+\mathsf A_{21}>0$、$E_0=b_1>0$、$F_0=b_2$，并令
+$$
+ \begin{aligned}
+ \Phi(p,\theta)={}&p(A_0\cos^2\theta+D_0\sin^2\theta
+                         +C_0\sin\theta\cos\theta)\\
+ &+\sqrt{p(1-p)}(E_0\cos\theta+F_0\sin\theta).
+ \end{aligned}
+\tag{211.31}
+$$
+这就是向量 $(\sqrt p\cos\theta,\sqrt p\sin\theta,\sqrt{1-p})^{\mathsf T}$ 的 $T_0$ 期望。对每个 $p\in(a,1)$，方程 $\Phi(p,\theta)=a$ 在 $[0,\bar\theta)$ 内恰有一个根，且该根处 $\Phi_\theta>0$。证明分两种情形。
+
+若 $F_0\ge0$，则在 $0<\theta<\pi/2$ 上
+$$
+ \frac{\Phi_\theta}{\sin\theta\cos\theta}
+ =2p(D_0-A_0)+pC_0(\cot\theta-\tan\theta)
+ +\sqrt{p(1-p)}\left(\frac{F_0}{\sin\theta}
+                              -\frac{E_0}{\cos\theta}\right)
+\tag{211.32}
+$$
+严格递减，且左右极限分别为正无穷和负无穷。所以 $\Phi$ 先严格增加后严格减少，仅有一个极大值。结合（211.30），在 $\bar\theta$ 之前恰有一次从下方穿过 $a$，根处导数严格为正；$p=h$ 时该根为零，直接求导同样严格为正。
+
+若 $F_0<0$，则 $2k^2h>1$，因而 $h>1/2$ 及 $A_0>0>D_0$。置 $y=\sin\theta$、$q=\sqrt{p(1-p)}$ 及 $G(y)=\Phi(p,\arcsin y)$。直接求导得
+$$
+ G''(y)=2p(D_0-A_0)
+       +\frac{pC_0y(2y^2-3)-qE_0}{(1-y^2)^{3/2}}<0.
+\tag{211.33}
+$$
+因为 $G(0)\le a<G(\sin\bar\theta)$，严格凹性给出唯一根，且从该根到 $\sin\bar\theta$ 的割线斜率严格为正，故根处导数严格为正。这也覆盖 $p=h$、根为零的情形。
+
+把唯一根记为 $\Theta(p)$。非零角导数给出每一点附近的解析隐函数，唯一性使这些局部函数在交叠处一致，因此得到整个 $(a,1)$ 上的实解析函数。此处已证明全域选根相容性，而非直接将局部隐函数定理当作全域延拓。置
+$$
+ \theta(u)=\Theta\!\left(\frac{1+u}{2}\right),\qquad
+ \psi_u=\psi(u,\theta(u)),\qquad
+ \rho_u=\psi_u\psi_u^{\mathsf T}.
+\tag{211.34}
+$$
+这是同一个三维处理器的全区间、全输入精确纯态程序，在开区间实解析。它在 $t$ 附近与此前的局部隐函数重合，所以（211.22）—（211.23）给出所需最优曲率。
+
+最后证明没有额外校准点。在整个 $0\le\theta\le\bar\theta$ 上，$E_0\cos\theta+F_0\sin\theta>0$：$F_0\ge0$ 时直接成立；$F_0<0$ 时除以 $\cos\theta$，所得函数随角度递减，但在 $\bar\theta$ 处仍由 $b^{\mathsf T}e>0$ 保持正性。因此对每个固定角度，$\Phi(p,\theta)$ 关于 $p$ 严格凹。由选根唯一性和（211.30），在 $0<\theta\le\bar\theta$ 上有 $\Phi(h,\theta)>a$。若 $p<h$，从根 $\Phi(p,\Theta(p))=a$ 到 $h$ 的割线斜率严格为正，凹性给出 $\Phi_p>0$；若 $p>h$，相同论证给出 $\Phi_p<0$。结合 $\Phi_\theta>0$，得到
+$$
+ \Theta'(p)<0\quad(p<h),\qquad
+ \Theta'(p)>0\quad(p>h),\qquad
+ \Theta'(h)=0.
+\tag{211.35}
+$$
+于是（211.23）中的信息差值仅在 $u=t$ 为零，完整校准集合恰为 $\{t\}$。
+
+定理211.2给出所有有限维 $C^1$ 程序的统一下界，而上述三维程序达到它。第190.2节对任意二维全区间精确程序给出
+$I_Q(\rho_t)-I_r(t)\ge a^2/[(1+t)(1+t-2a^2)]>0$，一维也不能实现非恒定通道族。因此，达到最优曲率并具有精确校准的最小联合支持维数恰为三；限制为开区间实解析纯态程序仍是同一最小维数。证毕。
+

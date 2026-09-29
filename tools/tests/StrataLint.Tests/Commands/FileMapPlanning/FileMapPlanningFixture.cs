@@ -2,6 +2,8 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 using StrataLint.Engine;
+using Tomlyn;
+using Tomlyn.Model;
 
 namespace StrataLint.Tests;
 
@@ -73,6 +75,44 @@ internal sealed class FileMapPlanningFixture : IDisposable
             done
             exec "$PLAN_REAL_GIT" "$@"
             """ + "\n");
+    }
+
+    internal static FileMapPlanningFixture LibraryPolicy()
+    {
+        var library = new TomlTable
+        {
+            ["pattern"] = "Library/*/*.md", ["require"] = new TomlArray { "filemap", "scribe" },
+            ["kind"] = "data", ["admission_plane"] = "content", ["produced_by"] = "none",
+            ["consumed_by"] = new TomlArray { "reader" }, ["verified_by"] = new TomlArray { "LibraryNoteCatalog" },
+            ["artifact_id"] = "none", ["runtime_disposition"] = "committed-source",
+        };
+        var map = TomlSerializer.Deserialize<TomlTable>(Canonical["filemap"]!.GetValue<string>())!;
+        ((TomlTableArray)map["files"]).Insert(1, library);
+        ((TomlArray)map["resources"]).Add(new TomlTable
+        {
+            ["id"] = "scribe", ["stage"] = "current", ["owner"] = "tools/owner.py",
+            ["prerequisites"] = new TomlArray { "build" }, ["tools"] = new TomlArray { "dotnet" },
+            ["cache_layers"] = new TomlArray(), ["cache_activation"] = new TomlTable(), ["materials"] = new TomlArray(),
+        });
+        var fixture = new FileMapPlanningFixture(TomlSerializer.Serialize(map));
+        var resources = Read(Path.Combine(fixture.Root, "Meta/ci-resources.json"));
+        resources["resources"]!.AsArray().Add(new JsonObject
+        {
+            ["id"] = "scribe", ["projects"] = new JsonArray("tools/Fixture/Fixture.csproj"),
+            ["checks"] = new JsonArray("scribe-describe", "scribe-markdown", "scribe-projections"),
+            ["steps"] = new JsonArray("scribe"),
+        });
+        fixture.Write("Meta/ci-resources.json", resources.ToJsonString());
+        var checks = Read(Path.Combine(fixture.Root, "Meta/ci-checks.json"));
+        checks["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "filemap")!["delta_scope"] = JsonNode.Parse("""
+            {"whole_tree_inputs":["Meta/FILEMAP.toml","Meta/domains.yaml"],
+             "actor_inputs":["**/*.cs"],"inventory_inputs":["Blueprint/**"],"related":[]}
+            """);
+        fixture.Write("Meta/ci-checks.json", checks.ToJsonString());
+        fixture.Write("Meta/domains.yaml", TestFileMap.Domains);
+        fixture.Write(".gitignore", "build/\n.sshx-*\n.echo-review.md\n.caller-review-prompt.md\n/Generated/echo-residuals/\n");
+        fixture.Save();
+        return fixture;
     }
 
     private void Executable(string name, string source)

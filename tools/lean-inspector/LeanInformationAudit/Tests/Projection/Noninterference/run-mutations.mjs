@@ -38,7 +38,13 @@ function changeOnce(source, anchor, replacement) {
 }
 
 function run(label, args, env = {}) {
-  const result = spawnSync('lake', args, {
+  assert(['build', 'env'].includes(args[0]), 'unsupported fixture operation');
+  const command = args[0] === 'build' ? 'make' : 'bash';
+  const routed = args[0] === 'build'
+    ? ['lean', `LEAN_TARGETS=${args.slice(1).join(' ')}`]
+    : [path.resolve('tools/scripts/worktree/lean-cache-run.sh'), 'lake',
+       '-d', path.resolve('tools/lean-inspector'), ...args];
+  const result = spawnSync(command, routed, {
     encoding: 'utf8', env: { ...process.env, ...env }, maxBuffer: 64 * 1024 * 1024,
   });
   fs.writeFileSync(path.join(logDirectory, `${phase}-${label}.log`),
@@ -47,7 +53,7 @@ function run(label, args, env = {}) {
   return result;
 }
 
-const leanFile = file => ['env', 'lean', '--root=tools/lean-inspector', file];
+const leanFile = file => ['env', 'lean', `--root=${path.resolve('tools/lean-inspector')}`, path.resolve(file)];
 const fixtureRoot = 'LeanInformationAudit.Tests.Projection.Noninterference.RealSeal';
 const importedRoot = 'LeanInformationAudit.Tests.Projection.Noninterference.SealedRoot';
 const diagnostic = (consumer, field, selectedRoot = fixtureRoot) =>

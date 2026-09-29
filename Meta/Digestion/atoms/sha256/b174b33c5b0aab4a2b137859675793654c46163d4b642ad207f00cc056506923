@@ -1,0 +1,35 @@
+**定义 18.10（多端坐标任务与完整钟商）。** 设 $R=\mathbb Z/n\mathbb Z$、$V=R^r$，其中 $n\ge1$、$r\ge3$；设 $C=\mathbb Z/m\mathbb Z$、$m\ge1$，$H\le C$，固定已知函数 $f:V\to C$。令
+
+$$
+S=V\times H,\qquad N=|S|,\qquad
+\ell(x,h)=h+f(x).
+\tag{18.1}
+$$
+
+沿用定义15.10–15.11的访问条件：共同制备为已知的 $(0,0)$，外部类型只有一个固定值；每个 $(u,v)\in S$ 都是处处合法的平移输入，同时公开给全部 $r$ 端，任意有限输入词及其任意续接均合法。各端从固定状态出发，更新只读自身完整持久状态与当前输入，解码只读自身状态，在空历史及每个有限前缀精确输出。各端无运行时通信；所有可再参与更新或解码的历史、档案、计数器、控制量及位置或钟信息都计入状态，不另给步数、过去输入词或完整钟标签。竞争状态集可无限，可保留任意历史，不要求状态经当前来源 $S$ 因子分解。固定群运算、$f$、更新与解码函数不随执行变化。
+
+合法切法是 $L\in GL_r(R)$，令 $\lambda_i(x)=(Lx)_i$。此切法指定第 $i$ 端输出 $(\lambda_i(x),\ell(x,h))$，原钟 $h$ 不是额外的局部输出。对历史 $w$，记累积来源为 $z(w)$、局部状态为 $\sigma_i(w)$；实际同源联合像记为
+
+$$
+J=\{(\sigma_1(w),\ldots,\sigma_r(w)):w\in S^*\}.
+\tag{18.2}
+$$
+
+它要求一个共同历史，不是分别选取各端可达状态的笛卡尔积。依定理15.12的恒定差与补偿图，取
+
+$$
+\begin{gathered}
+D=\{d\in V:\ f(x+d)-f(x)=\chi(d)\in H
+                  \text{ 对全部 }x\in V\text{ 成立}\},
+\qquad \chi(d)=f(d)-f(0),\\
+\Gamma=\{(d,-\chi(d)):d\in D\},\qquad
+Q_{\mathrm{clock}}=S/\Gamma,\qquad
+q_0=|Q_{\mathrm{clock}}|=N/|D|,\\
+D_L=LD,\qquad
+K_i=\{(d,-\chi(d)):d\in D\cap\ker\lambda_i\}.
+\end{gathered}
+\tag{18.3}
+$$
+
+这里 $D$ 是子群、$\chi:D\to H$ 是同态，$\Gamma$ 为其负图；$Q_{\mathrm{clock}}$ 专指完整钟未来商，与实际联合像 $J$ 不同。其类记为 $q=[(x,h)]_\Gamma$，并令 $\bar\ell(q)=h+f(x)$；补偿关系保证该函数良定义。对 $I\subseteq\{1,\ldots,r\}$，$\pi_I$ 表示空间坐标投影，$\pi_i=\pi_{\{i\}}$。
+

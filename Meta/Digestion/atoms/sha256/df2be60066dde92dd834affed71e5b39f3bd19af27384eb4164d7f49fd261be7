@@ -1,0 +1,30 @@
+**引理221.2（纯输出核事件的饱和判据）。** $b(r)\le k$，等号当且仅当
+$$
+LL^\dagger r=s_+r,\qquad
+\langle A^\dagger r,L^\dagger r\rangle=0,\qquad
+\|A^\dagger r\|^2\ge k.
+\tag{221.9}
+$$
+证明：若 $A^\dagger r\ne0$，取单位 $v\perp A^\dagger r$，则
+$$
+b(r)\le\lambda|\langle L^\dagger r,v\rangle|^2
+\le\lambda\|L^\dagger r\|^2\le\lambda s_+.
+$$
+首尾相等使每步相等，恰给（221.9）；反向时 $B_r$ 的两本征值为
+$k$ 与 $\|A^\dagger r\|^2$。若 $A^\dagger r=0$，最小根为零，不会饱和正 $k$。
+
+若 $s_+>s_-$，主左奇异方向 $r_+$ 唯一到相位。写 $L$ 的奇异基为
+$$
+L=\begin{pmatrix}\sqrt{s_+}&0\\0&\sqrt{s_-}\end{pmatrix},
+\qquad
+A=\begin{pmatrix}b&a\\c&d\end{pmatrix}.
+\tag{221.10}
+$$
+HS 正交给
+$$
+\sqrt{s_+}b+\sqrt{s_-}d=0.
+\tag{221.11}
+$$
+主方向的正交条件等价于 $b=0$。若 $s_->0$，还等价于 $b=d=0$：
+保留主 Kraus 在小谱 Kraus 的两个奇异基之间只有交叉分量。整体 HS 正交不能代替这项逐行正交。
+

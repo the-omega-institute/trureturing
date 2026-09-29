@@ -1,0 +1,13 @@
+**定理 35.2（任意被动量子记忆下的精确共同曲线）。** 在定义 35.1 中，$\|F(t)\|\le1$、$\det F(t)=e^{-\Gamma(t)}$，并有
+\[
+ \boxed{\eta^{\rm c}(\Phi_t)=\|F(t)\|^2
+ =\eta_{\gamma_2}(\mathcal P_{t,0}),}
+\]
+其中经典一侧也允许定理 33.2 的任意被动经典侧信息。对任意联合态，
+\[
+ \mathcal D_{A|R}((\Phi_t\otimes\operatorname{id})\rho)
+ \le\|F(t)\|^2\mathcal D_{A|R}(\rho),\qquad
+ \|F(t)\|^2\ge e^{-\Gamma(t)}.
+\]
+因此原第 30.2 条的闭式曲线及其三阶起始律，对任意有限量子记忆仍为精确系数。固定 $\gamma>0$、目标时刻 $T>0$、仅优化常数 $\omega$ 时，第 30.3 条的最优值 $e^{-\gamma T}$、达到频率和幅值限制也保持不变。
+

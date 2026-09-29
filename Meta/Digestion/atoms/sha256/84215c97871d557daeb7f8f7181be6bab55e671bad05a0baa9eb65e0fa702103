@@ -1,0 +1,39 @@
+**第一终端秩二：后续环境的二维限制。**
+
+以下取 $`r_1=2`$，故 $`\dim X=4`$、$`\dim F=2`$。令 $`\mathcal R_0=V_0(K)`$，维数为六。
+
+反设至少一个 $`\eta_t\notin F`$（$`t\in\{3,4,5\}`$）。由（29.36）、（29.38），两个相交为零的空间 $`U\otimes F`$ 与 $`G_t\otimes\eta_t`$ 的维数和为六，故
+
+$$
+\mathcal R_0=U\otimes F+G_t\otimes\eta_t.
+\tag{29.39}
+$$
+
+若 $`G_t=U`$，则 $`\mathcal R_0`$ 的全部接收器分量均在 $`U`$ 中，因而 $`G_3=G_4=G_5=U`$。固定 $`V_1`$ 再使 $`\eta_3\parallel\eta_4`$，固定 $`V_0`$ 使 $`H_2=H_3`$，仍与（29.35）矛盾。因此只需考虑 $`Z:=G_t\ne U`$。
+
+任意二维矩形子空间 $`G\otimes\eta\subseteq\mathcal R_0`$ 只有下列两种形式：
+
+$$
+\mathrm A:\quad G=U,\ \eta\in F;
+\qquad
+\mathrm B:\quad G=Z,\ \eta\parallel\eta_t.
+\tag{29.40}
+$$
+
+证明：若 $`\eta\in F`$，由 $`\mathcal R_0\cap(K\otimes F)=U\otimes F`$ 得 $`G=U`$。若 $`\eta\notin F`$，投影环境到 $`E/F`$ 后，（29.39）强制 $`G=Z`$、$`\eta=c\eta_t+f`$，其中 $`c\ne0`$、$`f\in F`$。减去 $`cZ\otimes\eta_t`$ 得 $`Z\otimes f\subseteq U\otimes F`$；如果 $`f\ne0`$，则 $`Z\subseteq U`$，与 $`Z\ne U`$ 矛盾。因此 $`f=0`$，证明（29.40）。这里的两项是普通子空间之和，不假设 $`Z\perp U`$ 或 $`\eta_t\perp F`$。
+
+对第三至第五轮的 $`(G_n,\eta_n)`$ 应用（29.40）。
+
+- 若第三轮为A，则 $`G_3=U`$。固定 $`V_1`$ 在 $`G_2=G_3`$ 上给 $`\eta_4\parallel\eta_3\in F`$，故第四轮仍为A，$`G_4=U`$。于是 $`H_2=H_3`$，违反第二、第三终端的支撑秩差。
+- 若第三、第四轮均为B，则 $`G_3=G_4=Z`$。固定 $`V_1`$ 强制 $`\eta_5\parallel\eta_4\parallel\eta_t`$，第五轮也为B。因此 $`G_3=G_4=G_5=Z`$，由固定 $`V_0`$ 又有 $`H_2=H_3=H_4`$。这使 $`(H_3,G_3)`$ 与 $`(H_4,G_4)`$ 为同一对空间，违反式（26.20）的主角度行列式严格变化：若 $`x=|a|^2`$、$`y=|b|^2`$，则 $`\delta_4-\delta_3=x^3y^2/(t_3t_4)>0`$。
+- 唯一余下为第三轮B、第四轮A。因 $`G_4=U=G_2`$，固定 $`V_1`$ 给 $`\eta_5\parallel\eta_3`$，所以第五轮B。固定 $`V_0`$ 对第三、第五轮的相同像给 $`H_2=H_4`$；于是 $`C_4=H_4+G_4=H_2+U=C_2`$，违反（29.35）。
+
+所有分支均矛盾，因此
+
+$$
+\boxed{\eta_3,\eta_4,\eta_5\in F.}
+\tag{29.41}
+$$
+
+这不是提前假设独立或纯的前两轮环境；第一轮与第二轮环境仍可以纠缠。
+

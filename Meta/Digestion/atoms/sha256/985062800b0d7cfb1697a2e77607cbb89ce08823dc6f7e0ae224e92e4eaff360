@@ -1,0 +1,27 @@
+**证明。** 先证相对闭性。固定 $p\in\Delta_d^\circ$，取 $m_p<r<1$，并缩小一个相对邻域，使其内每个 $q$ 都满足 $\max_a q_a\le r$。取 $1<a<1/r$，由次指数性选取相应 $N_0$。有限截断 $S_{\mathcal F_{\le N}}(q)$ 是坐标的多项式；引理 5.1.3 在此整个邻域上给尾界 $(ar)^{N+1}/(1-ar)$。故这些多项式局部一致收敛到 $S_{\mathcal F}$，该函数连续，$Z_{\mathcal F}$ 相对闭。
+
+再设 $p\in Z_{\mathcal F}$，写 $m=m_p$，选择 $1<a<1/m$ 及其预算阈值 $N_0$。定义
+$$
+C(q,p)=\max_{a\in\Sigma}\frac{q_a}{p_a}.
+$$
+对任何长度 $N$ 的词 $v$，$q(v)\le C(q,p)^N p(v)$。集合 $E_{\mathcal F,N}$ 是同一批长度 $N$ 柱的有限不交并，因此
+$$
+\mu_q(E_{\mathcal F,N})\le C(q,p)^N\mu_p(E_{\mathcal F,N}).
+$$
+满质量前提使 $\mu_p(E_{\mathcal F})=0$，故对 $N\ge N_0$，
+$$
+\mu_q(E_{\mathcal F,N})
+\le C(q,p)^N\frac{(am)^{N+1}}{1-am}
+=\frac{am}{1-am}\bigl(C(q,p)am\bigr)^N.
+$$
+因为 $C(p,p)=1$ 且 $C(q,p)$ 关于 $q$ 连续，条件 $C(q,p)am<1$ 给出 $p$ 的一个相对邻域。在该邻域中令 $N\to\infty$，右侧趋零，而 $E_{\mathcal F}\subseteq E_{\mathcal F,N}$，故 $\mu_q(E_{\mathcal F})=0$。这证明相对开性。
+
+正单纯形是凸集，因而连通；一个既开又闭的子集只能为空或全体。均匀向量 $u$ 满足
+$$
+S_{\mathcal F}(u)=\sum_{n\ge1}|\mathcal F\cap\Sigma^n|d^{-n}
+\le B_d(b)<1,
+$$
+故 $u\notin Z_{\mathcal F}$，排除全体的可能。证毕。
+
+证明比较的是有限深度的柱质量；不同参数的无限 Bernoulli 律不必互相绝对连续，不能用这种未成立的前提替换上述有限似然比和极限论证。到此得到的是每个固定族的严格不满质量；这还不足以推出对全部族共同的正余量。
+

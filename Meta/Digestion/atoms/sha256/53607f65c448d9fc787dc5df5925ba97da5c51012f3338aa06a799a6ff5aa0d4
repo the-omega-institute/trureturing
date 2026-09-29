@@ -1,0 +1,66 @@
+### 172.3 真实运行终端的持续二元读出
+
+令 $\mathcal R_{L+k}$ 为实际运行通道，并定义两份真实接收端状态
+
+$$
+\widehat\xi_{j,k}
+=\operatorname{Tr}_M\mathcal R_{L+k}(P_j),
+\qquad
+D_{L,k}=D(\widehat\xi_{0,k},\widehat\xi_{1,k}).
+\tag{172.7}
+$$
+
+沿用第170节的几何尾界，置
+
+$$
+\varepsilon_k=C_{\mathrm{abs}}\,2^{-(k-1)/2},
+\qquad
+C_{\mathrm{abs}}=6+2\sqrt2,
+\qquad k\ge1.
+\tag{172.8}
+$$
+
+其中
+$C_{\mathrm{abs}}=2(2-\sqrt p)/(1-\sqrt p)$ 在 $p=1/2$ 时恰为上述值。
+由全通道尾界、输入各个 $P_j$ 及取 $M$ 边缘的收缩性，
+
+$$
+D(\widehat\xi_{j,k},\xi_j(k\theta))\le\varepsilon_k.
+$$
+
+距离的反三角不等式遂给
+
+$$
+\boxed{
+|D_{L,k}-\mathfrak d_L(k\theta)|\le2\varepsilon_k.
+}
+\tag{172.9}
+$$
+
+这里不需要加入规范档案目标的 $\delta_{L+k}$，因为本节比较的是两份实际接收态；没有比较来源档案恢复目标。
+
+两原始输入等先验时，接收端最佳终端二元测量的成功概率记为
+$P_{\mathrm{guess}}(L,k)$。Helstrom 公式给
+
+$$
+\boxed{
+P_{\mathrm{guess}}(L,k)=\frac{1+D_{L,k}}2
+\ge\frac12+\frac{\kappa d_L}{2}-\varepsilon_k.
+}
+\tag{172.10}
+$$
+
+该公式也可直接证明：任意二元 POVM 以 $0\preceq E\preceq I$ 表示，其成功概率为
+$\frac12+\frac12\operatorname{Tr}[E(\widehat\xi_{0,k}-\widehat\xi_{1,k})]$；
+取差矩阵的正谱投影达到最优值。
+
+由于 $d_L>0$，存在有限 $K_L$，使全部 $k\ge K_L$ 都满足
+
+$$
+P_{\mathrm{guess}}(L,k)\ge\frac12+\frac{\kappa d_L}{4}>\frac12.
+\tag{172.11}
+$$
+
+例如只需选择 $K_L$ 使
+$\varepsilon_k\le\kappa d_L/4$ 对 $k\ge K_L$ 成立。每个终端可以采用其对应的 Helstrom 测量；这符合原任务允许选择终端解码器的权限，没有改变固定运行通道，也没有为持续接收器添加额外控制或 $M$ 访问权。本结论不要求同一个固定二元 POVM 在所有旋转相位都达到最优值。
+

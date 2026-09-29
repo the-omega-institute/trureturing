@@ -1,0 +1,11 @@
+**定理 36.1（全操作最优谱粗化）。** 在上述有限模型中，
+\[
+\boxed{\inf_{\Lambda_X,\Lambda_Y}
+\| (\Lambda_X\otimes\Lambda_Y)\circ\mathcal J_\lambda
+       -\mathcal J_d\|_\diamond=2(1-q_*).}
+\tag{36.3}
+\]
+一对同时适用于全部扇区的局部拆分映射达到下确界。允许乘积映射的共享
+经典随机混合不降低最优值。这个模型不包含任意非平坦目标、一般 LOCC 或
+可分操作的全分类。
+

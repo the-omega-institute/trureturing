@@ -1,0 +1,14 @@
+**定理 237.1（充分标签数下的完整曲线）。** 在（237.FL.1）下，
+$$
+\boxed{
+D_R=
+\begin{cases}
+1,&1\le R<d,\\[2pt]
+1-\dfrac R{Nd},&d\le R\le(N-1)d,\\[5pt]
+\dfrac1N,&(N-1)d<R<Nd,\\[5pt]
+0,&R\ge Nd.
+\end{cases}}
+\tag{237.FL.6}
+$$
+所有上界均由实际同接口 CPTP 通道达到。在 $R=(N-1)d$，平坦区间的值也为 $1/N$，与后续平台一致。
+

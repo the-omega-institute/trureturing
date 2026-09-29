@@ -1,0 +1,4 @@
+**定义 820.2（项目结构的具体对应）。** 第 808 节使用先前模型距离的 Lipschitz 结构，第 809 节将完整六点集合接到项目 [FixedSymmetrySelectorObstruction](../../../D5/S3/ConceptDynamics/Attribution/FixedSymmetrySelectorObstruction.lean) 与 [StabilizerSelectorObstruction](../../../D5/S3/ConceptDynamics/Attribution/StabilizerSelectorObstruction.lean) 的群作用和允许选择接口。第 811 节的平均反例则继续说明第 780 节对紧凸距离见证所缺的凸性前提。这里核对的是源码陈述和普通数学推导之间的关系；未进行当前 Lean 内核或公理闭包核验。
+
+本批交付为纯理论正文，使用 formal-thinking-and-answer 的关系与条件核对框架及 theory-volume-template 的追加结构；没有新增形式化代码、工程、消化账目、测试、数值实验、枚举或求解器。所有先前合并正文保持原字节，当前成果只在末尾新章中展开。
+

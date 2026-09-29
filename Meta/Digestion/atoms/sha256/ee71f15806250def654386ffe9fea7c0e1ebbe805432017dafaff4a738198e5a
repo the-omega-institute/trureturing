@@ -1,0 +1,25 @@
+### 定理 ST5.3：只能恢复对偶轨道上的不变量
+
+设完整观测数据 $\mathscr D(R)$ 使用相应运输后的实验满足
+
+$$
+\mathscr D(R)=\mathscr D(\alpha'/R).
+$$
+
+则由数据唯一恢复的任何标量 $\Theta$ 必须满足
+
+$$
+\Theta(R)=\Theta(\alpha'/R).
+$$
+
+特别地，任意输出裸半径实数的估计器 $\widehat R$，至少满足
+
+$$
+\boxed{
+\max\left\{\left|\widehat R(\mathscr D)-R\right|,
+\left|\widehat R(\mathscr D)-\alpha'/R\right|\right\}
+\ge\frac12\left|R-\frac{\alpha'}R\right|.
+}
+\tag{ST5.2}
+$$
+

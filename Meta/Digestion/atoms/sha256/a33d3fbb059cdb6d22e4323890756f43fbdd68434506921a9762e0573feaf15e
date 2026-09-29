@@ -1,0 +1,10 @@
+**推论219.5（允许正来源的任务代价极限）。**
+在同一合法正谱侧，沿任意 $p\to0$ 的路径有
+$$
+\boxed{
+\frac{E_{\le2}(p)-E(p)}{\epsilon\,d_2(p)^2}
+\longrightarrow\frac{\beta(R-1)}8.
+}
+\tag{219.26}
+$$
+

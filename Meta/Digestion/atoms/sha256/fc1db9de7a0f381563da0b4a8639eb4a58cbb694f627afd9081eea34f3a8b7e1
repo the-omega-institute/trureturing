@@ -1,0 +1,108 @@
+**定理 194.1（每个局部纯二维程序严格高于下确界）。** 在定义193.1的程序类中，对每个 $t\in U$ 都有
+$$
+I_Q(\rho_t)>B(a,t).
+\tag{194.1}
+$$
+因此定理193.2的下确界不由任何一个允许程序达到。
+
+证明。 固定一个允许程序及内部点 $t$。沿用（193.7）的实线性映射 $\mathcal L$，记 $K=\ker\mathcal L\ne\{0\}$、$A=K^\perp$，以及 Bloch 向量 $r(u)$。$\mathcal L$ 在 $A$ 上单射，故目标通道的非恒定仿射性迫使
+$$
+P_A r(u)=a_0+(u-t)v,\qquad v\in A\setminus\{0\}.
+\tag{194.2}
+$$
+若 $r(t)\perp K$，则 $|a_0|=1$。但非恒定仿射线不可能在内点经过单位球面而两侧都留在闭单位球内；具体地，两个对称参数的平方范数平均为 $1+s^2|v|^2>1$。所以可以选择单位向量 $n\in K$ 使 $n\cdot r(t)\ne0$。
+
+以固定程序酉变换将 $n$ 转到 $Y$ 方向。于是 $\mathcal G(X\otimes Y)=0$，而 $r_y(t)\ne0$。在 $t$ 的一个较小邻域内定义
+$$
+\sigma_u=\frac{\rho_u+\rho_u^{\mathsf T}}2
+=\frac{I+r_x(u)X+r_z(u)Z}{2}\succ0.
+\tag{194.3}
+$$
+它生成同一条通道。这个式子只构造另一条合法状态曲线，不把转置平均视为 CPTP 操作，也不对它使用信息量单调性。记 $s=(r_x,r_z)$。由纯性 $|s|^2+r_y^2=1$ 以及 $r_y\ne0$，直接得到
+$$
+I_Q(\rho_u)=|r'(u)|^2
+=|s'(u)|^2+\frac{(s(u)\cdot s'(u))^2}{1-|s(u)|^2}
+=I_Q(\sigma_u).
+\tag{194.4}
+$$
+最后一项使用满秩 qubit 的 SLD 公式。
+
+还需要固定信号输入之间的共同实现。第191.3节的受控 Stinespring 推导适用于当前任意处理器：程序向量张成整个二维空间，而每个信号基态输出固定为同一纯基态，所以
+$$
+V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i,
+\qquad W_i^\dagger W_i=I_2.
+\tag{194.5}
+$$
+因而对所有程序态 $\tau$，诱导通道都是 Schur 通道。令 $|s_0\rangle=(|0\rangle+|1\rangle+|2\rangle)/\sqrt3$，并定义
+$$
+\mathcal E_0(\tau)=\mathcal G(|s_0\rangle\langle s_0|\otimes\tau).
+\tag{194.6}
+$$
+$3\mathcal E_0(\tau)$ 就是整个诱导通道的相关矩阵，且 $\operatorname{diag}\mathcal E_0(\tau)=(1/3,1/3,1/3)$ 对所有程序态恒成立。对任意概率向量 $p$，定义 $D_p=\operatorname{diag}(\sqrt p)$、$|s_p\rangle=\sum_i\sqrt{p_i}|i\rangle$，则同一处理器满足
+$$
+\mathcal E_p(\tau):=\mathcal G(|s_p\rangle\langle s_p|\otimes\tau)
+=3D_p\mathcal E_0(\tau)D_p.
+\tag{194.7}
+$$
+
+$\mathcal E_0$ 从二维映到三维且消去 $Y$。由第193节使用的 $2\times3$ PPT 判据和 Choi 重构，它存在一个有限测量—制备表示。因为 $\mathcal E_0\circ T=\mathcal E_0$，把各测量效应换成其与转置的平均，可以得到实对称效应的同一个表示：
+$$
+\mathcal E_0(\tau)=\sum_k\operatorname{Tr}(N_k\tau)\tau_k,
+\qquad N_k=N_k^{\mathsf T}\succeq0,\quad \sum_kN_k=I_2.
+\tag{194.8}
+$$
+这里 $\tau_k$ 为固定三维密度矩阵。删去零效应后，$q_k(u)=\operatorname{Tr}(N_k\sigma_u)>0$ 在所取邻域内恒成立；并有 $q_k(u)=\operatorname{Tr}(N_k\rho_u)$。
+
+对每个 $p$ 定义
+$$
+w_k(p)=3\operatorname{Tr}(D_p^2\tau_k)
+=3\sum_i p_i(\tau_k)_{ii},\qquad
+\mathcal F(p)=\sum_k w_k(p)\frac{q_k'(t)^2}{q_k(t)}.
+\tag{194.9}
+$$
+由（194.7）及其保迹性，$\{w_k(p)N_k\}_k$ 对每个 $p$ 都是 POVM。对于严格正的 $p$，相应的归一输出态为 $3D_p\tau_kD_p/w_k(p)$；因此（193.13）—（193.16）的同一分块证明及测量界给出
+$$
+(1-p_1)B(a,t)\le\mathcal F(p)\le I_Q(\sigma_t).
+\tag{194.10}
+$$
+这里的测量—制备分解固定于 $\mathcal E_0$，只按（194.7）对输出作变换，故 $\mathcal F(p)$ 是 $p$ 的一个有限线性函数。
+
+假设 $I_Q(\rho_t)=B(a,t)$。由（194.4）、（194.10）和连续性，令 $p\to p_*=(1/2,0,1/2)$ 得到
+$$
+\mathcal F(p_*)=I_Q(\sigma_t)=B(a,t).
+\tag{194.11}
+$$
+此步取有限标量函数的极限，不在奇异信号输出上使用逆矩阵。
+
+令 $L$ 为满秩态 $\sigma_t$ 的唯一 SLD。它是实对称矩阵，因为 $\sigma_t,\sigma_t'$ 都是实对称矩阵，SLD 方程及其转置有同一个唯一解。测量 $\{w_k(p_*)N_k\}$ 达到（194.11）的信息量。满秩 SLD 的测量等号条件要求，对每个非零效应 $H_k=w_k(p_*)N_k$，
+$$
+\sqrt{H_k}L=s_k\sqrt{H_k},\qquad s_k\in\mathbb R.
+\tag{194.12}
+$$
+它可由逐效应 Hilbert–Schmidt Cauchy–Schwarz 等号及 $\sigma_t$ 可逆直接推出；原始表述见 Braunstein、Caves，*Statistical distance and the geometry of quantum states*，Physical Review Letters 72, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（27）。因此每个这种效应支持在 $L$ 的一个本征空间中。$L$ 不是标量矩阵，否则迹为零的导数迫使 $L=0$，与 $I_Q=B>0$ 矛盾。故它有两个互异本征值，记其秩一实投影为 $P_+,P_-$。
+
+若 $w_k(p_*)>0$，则 $N_k$ 支持在其中一个本征空间中。若 $w_k(p_*)=0$，则 $\tau_k$ 的 $00,22$ 对角元均为零，半正定性迫使相应行列也为零，故 $\tau_k=|1\rangle\langle1|$。这些零权重项的聚合效应满足
+$$
+N_0:=\sum_{k:w_k(p_*)=0}N_k
+=I_2-\sum_{k:w_k(p_*)>0}N_k,
+\tag{194.13}
+$$
+也在 $P_+,P_-$ 基下对角。因此（194.8）对全部程序态只依赖两个数 $\operatorname{Tr}(P_\pm\tau)$：正权重项分别为本征投影的倍数，零权重项具有同一个输出态并可合并。于是
+$$
+\mathcal E_0(\tau)=\sum_{\nu\in\{+,-\}}
+\operatorname{Tr}(P_\nu\tau)\mathcal E_0(P_\nu).
+\tag{194.14}
+$$
+因 $\mathcal E_0$ 决定全部诱导 Schur 系数，（194.14）提升为诱导信号通道的同一个二项分解。令固定 CPTP 通道 $\mathcal R_\nu(\omega)=\mathcal G(\omega\otimes P_\nu)$，便有
+$$
+\mathcal T_u=p(u)\mathcal R_++[1-p(u)]\mathcal R_-,\qquad
+p(u)=\operatorname{Tr}(P_+\rho_u)=\operatorname{Tr}(P_+\sigma_u).
+\tag{194.15}
+$$
+在所取邻域内，$0<p(u)<1$。名义点的 SLD 投影测量给出
+$$
+\frac{p'(t)^2}{p(t)[1-p(t)]}=I_Q(\sigma_t)=B(a,t).
+\tag{194.16}
+$$
+这却是一个二符号经典精确程序，而定理184.3要求它的成本至少为 $B(a,t)/(1-a^2)>B(a,t)$，矛盾。结合定理193.2的非严格下界，得到（194.1）。证毕。
+

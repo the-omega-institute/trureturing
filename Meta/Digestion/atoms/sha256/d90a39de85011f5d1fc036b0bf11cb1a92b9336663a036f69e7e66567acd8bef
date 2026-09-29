@@ -1,0 +1,77 @@
+**引理28.1（相位历史的共同移心比较）。** 给定任意已知相位历史 $`\boldsymbol\varphi=(\varphi_1,\ldots,\varphi_n)`$，以第 $`t`$ 步相位 $`\varphi_t`$ 定义虚拟累计等距 $`T_{\boldsymbol\varphi,n}`$。这些虚拟等距仅用于构造已知子空间，不改变实际来源或接收权限。选择实数
+
+$$
+\delta_t\equiv\vartheta-\varphi_t\pmod{2\pi},\qquad
+|\delta_t|=d_{\mathbb T}(\vartheta,\varphi_t),
+$$
+
+并置
+
+$$
+H=\sum_{t=1}^n\delta_t(-p)^{t-1},\qquad
+b=\mu\sum_{t=1}^n\delta_t+\left(\frac12-\mu\right)H.
+\tag{28.2}
+$$
+
+则同一个标量相位 $`e^{ib}`$ 对整个来源输入空间满足
+
+$$
+\boxed{
+(T_{\vartheta,n}-e^{ib}T_{\boldsymbol\varphi,n})^*
+(T_{\vartheta,n}-e^{ib}T_{\boldsymbol\varphi,n})
+\preceq C_{\rm hist}\left(\sum_{t=1}^n\delta_t^2\right)I_M.
+}
+\tag{28.3}
+$$
+
+证明。来源词的振幅平方给转移矩阵
+
+$$
+\begin{pmatrix}1-p&p\\1&0\end{pmatrix}
+$$
+
+的二态链 $`X_t`$，初位 $`X_1=i\in\{0,1\}`$。它满足
+
+$$
+\mathbb E[X_t\mid X_s]
+=\mu+(X_s-\mu)(-p)^{t-s},\qquad
+\operatorname{Cov}_i(X_s,X_t)
+=(-p)^{t-s}\operatorname{Var}_i(X_s)\quad(s\le t).
+\tag{28.4}
+$$
+
+取 $`Z=\sum_t\delta_tX_t`$。由 $`\operatorname{Var}_i(X_s)\le1/4`$、几何级数及 $`2|xy|\le x^2+y^2`$，
+
+$$
+\begin{aligned}
+\operatorname{Var}_iZ
+&\le\frac14\sum_{s,t=1}^n|\delta_s\delta_t|p^{|s-t|}\\
+&\le\frac14\frac{1+p}{1-p}\sum_{t=1}^n\delta_t^2.
+\end{aligned}
+\tag{28.5}
+$$
+
+另一方面，$`\mathbb E_iZ-b=(i-\tfrac12)H`$，且 Cauchy–Schwarz 不等式给
+
+$$
+H^2\le\frac1{1-p^2}\sum_{t=1}^n\delta_t^2.
+$$
+
+因而两种初位均满足
+
+$$
+\mathbb E_i(Z-b)^2
+=\operatorname{Var}_iZ+\frac14H^2
+\le C_{\rm hist}\sum_{t=1}^n\delta_t^2.
+\tag{28.6}
+$$
+
+逐词展开两个等距，使用 $`|e^{ix}-1|\le|x|`$ 及末端记忆向量的单位范数，得
+
+$$
+\|(T_{\vartheta,n}-e^{ib}T_{\boldsymbol\varphi,n})|i\rangle\|^2
+\le\mathbb E_i(Z-b)^2.
+$$
+
+两个误差列分别位于首档案位为零和一的正交扇区，故无交叉项，（28.6）即给（28.3）。同一标量 $`b`$ 同时控制两个输入列，因此（28.3）可张量任意参考，包含输入的相干叠加。证明完毕。
+

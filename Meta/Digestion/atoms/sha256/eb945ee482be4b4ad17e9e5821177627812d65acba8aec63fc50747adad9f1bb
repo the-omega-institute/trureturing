@@ -1,0 +1,77 @@
+**定理 71.2（二维仪器的证书半径与失效距离严格分离）。** 对两个记录标签“未点击、点击”，在 $\mathbb C^2$ 上取名义 Kraus 算子
+
+$$
+\widehat Q=|0\rangle\langle1|,\qquad
+\widehat L=|0\rangle\langle0|.
+$$
+
+则
+
+$$
+\boxed{
+\widehat M=2,\qquad
+\mathfrak r_{\mathrm{cert}}=\frac12,
+\qquad
+\frac45\le\mathfrak r_{\mathrm{fail}}\le1.
+}
+$$
+
+特别地，任何同接口实际仪器只要与名义仪器的完整半 diamond 距离小于 $4/5$，就对全部初态具有有限平均等待。这里不声称 $4/5$ 就是精确失效距离，也不从这个断言给出整个开球的共同均值常数。
+
+证明。名义未点击映射为 $\widehat{\mathcal N}(\rho)=\rho_{11}|0\rangle\langle0|$，其平方为零，故
+
+$$
+\widehat T=I+|1\rangle\langle1|,
+\qquad \widehat M=2.
+$$
+
+定理 69.2 给证书半径 $1/2$。
+
+现在设实际仪器有一个正概率永不点击的初态 $\rho$。其未点击映射 $\mathcal N$ 是 CP 且迹不增。令
+
+$$
+\tau_k=\frac1k\sum_{j=0}^{k-1}\mathcal N^j(\rho).
+$$
+
+有限维下，从有界正算子列选取收敛子列。由于生存概率递减到某个 $s_\infty>0$，极限 $\tau$ 的迹为 $s_\infty$。而
+
+$$
+\mathcal N(\tau_k)-\tau_k
+=\frac{\mathcal N^k(\rho)-\rho}{k}\longrightarrow0,
+$$
+
+故归一化 $\sigma=\tau/s_\infty$ 满足 $\mathcal N(\sigma)=\sigma$。完整仪器保迹使点击分支在 $\sigma$ 上为零。
+
+若 $\sigma$ 满秩，实际点击效果 $E\ge0$ 满足 $\operatorname{Tr}(\sigma E)=0$，只能有 $E=0$。此时实际仪器对所有输入都不点击；名义仪器对输入 $|0\rangle\langle0|$ 必点击，所以两完整输出的半迹距离为一，$\delta\ge1$。
+
+若 $\sigma$ 秩一，写 $\sigma=|\psi\rangle\langle\psi|$ 并记
+
+$$
+a=|\langle0|\psi\rangle|^2\in[0,1],\qquad P_0=|0\rangle\langle0|.
+$$
+
+同一输入 $\sigma$ 在实际仪器上给全部位于未点击块的 $\sigma$，在名义仪器上给未点击块 $(1-a)P_0$ 与点击块 $aP_0$。所以
+
+$$
+\delta\ge\frac12\left(\|\sigma-(1-a)P_0\|_1+a\right)
+=\frac{a+\sqrt{a^2+4(1-a)^2}}2. \tag{71.1}
+$$
+
+末式可由差矩阵的迹 $a$、行列式 $-(1-a)^2$ 求得，包括 $a=1$ 的退化端点。又 $8/5-a>0$ 且
+
+$$
+a^2+4(1-a)^2-(8/5-a)^2
+=4(a-3/5)^2\ge0.
+$$
+
+故式 (71.1) 至少为 $4/5$。秩一、秩二穷尽二维密度矩阵，得到失效距离下界。取实际仪器恒不点击且保持输入态，可给距离至多一的失效例，故上界成立。
+
+最后，若 $\delta<4/5$，则每个初态最终点击。令 $S_n=\mathcal A^n(I)$。它是递减正算子列，所有态的期望趋零，有限维下因而 $\|S_n\|_\infty\to0$。选择有限 $m$ 使 $\|S_m\|_\infty=q<1$。正性给
+
+$$
+S_{km}\le q^kI,\qquad
+\sum_{n\ge0}S_n\le\frac m{1-q}I.
+$$
+
+因此实际成本势存在，每个初态的均值有限。这最后一步是有限维齐次过程的终止—有限均值关系，亦与第 68.1 条所引有限维运行时间文献一致。$\square$
+

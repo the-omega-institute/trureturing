@@ -1,0 +1,21 @@
+**引理62.2（零位全域像的早期支撑约束）。** 若对某个四维 $L\subset K$，实际第二轮记忆 $|1\rangle$ 分量的接收支撑包含于 $L$，则
+$$
+L=G\otimes\Gamma.
+\tag{62.13}
+$$
+特别地，若全域 $V_0K\subseteq L\otimes E$，该条件成立。
+
+**证明。** 来源每次发射后，记忆 $|1\rangle$ 分量只来自 $m_0$ 的 $b|1\rangle$，因而仅经过固定的零位块 $V_0$。对 Bell 参考输入，第二终端理想编码两列为
+$$
+\Psi_2^0=a\,m_0\otimes u+b\,m_1\otimes v,
+\qquad\Psi_2^1=m_0\otimes w,
+$$
+并张量同一个满秩附加态 $\tau_\Gamma$。投影活动记忆为 $|1\rangle$、迹掉参考后，未归一化接收态为
+$$
+\frac{|b|^2}{2}
+\bigl(|a|^2|u\rangle\langle u|+|w\rangle\langle w|\bigr)
+\otimes\tau_\Gamma.
+\tag{62.14}
+$$
+$ab\ne0$、$\tau_\Gamma$ 正定，使其支撑恰为四维 $G\otimes\Gamma$。包含于四维 $L$ 遂给（62.13）。证明完毕。
+

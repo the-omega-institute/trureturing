@@ -1,6 +1,7 @@
 using System.Text.Json;
 using StrataLint.Engine;
 using Xunit.Abstractions;
+using static StrataLint.TestSupport.DigestionTestSupport;
 using static StrataLint.Tests.ParentSettlementTests;
 
 namespace StrataLint.Tests;
@@ -47,7 +48,7 @@ public sealed class Sl016ObservationAdmissionTests(ITestOutputHelper output)
         var policy = new RuleFixture().Build(RawChangeSet.Create([])).Policy;
         var meta = Assert.IsType<BootstrapOutcome.Clear>(BootstrapGate.Evaluate(changes)).Capability;
         var context = DeltaRuleContext.Create(fixture.Snapshot, DecomposeFixture.Decode(baseline), policy,
-            DigestionTestSupport.AcceptedLean(Array.Empty<string>()), changes, meta);
+            AcceptedLean(Array.Empty<string>()), changes, meta);
 
         // Exercise the production delta selector, candidate/baseline loader, impact
         // selection and diagnostic stamping, not only the status evaluator.

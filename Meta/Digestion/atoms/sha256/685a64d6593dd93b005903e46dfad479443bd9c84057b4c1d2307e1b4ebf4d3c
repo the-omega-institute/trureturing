@@ -1,0 +1,265 @@
+**定理 20.2（统一于端点距离的显式有限时域误差隙）。** 对满足（20.1）的任一来源、任一维数不超过 $`D`$ 的固定接收器及任意一族终端解码器，有
+
+$$
+\boxed{
+\max_{1\le n\le8D^2}\ \sup_{J,\rho_{JM}}
+\frac12\left\|
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n(\rho)
+-\Omega_n(\rho)
+\right\|_1
+\ge\eta_{D,k}>0.
+}
+\tag{20.3}
+$$
+
+事实上，仅取指定初态 $`|0\rangle_M`$、不附加参考，已经足以得到此下界。因此，定义11.1中的全终端误差若严格小于 $`\eta_{D,k}`$，所需接收维数必大于 $`D`$。本节给出第12节正误差隙的一份显式下界，不主张该数值或其容量依赖最优。
+
+证明。把接收初态的固定单位向量用一个固定基变换送到 $`e_0`$，并同时共轭接收通道及各解码器，不改变容量、固定性或恢复误差。因此先令 $`\dim K=D`$，并取初态
+
+$$
+\sigma_0=|0,e_0\rangle\langle0,e_0|_{MK}.
+\tag{20.4}
+$$
+
+以下全过程只使用这一指定纯来源。记一次发射与固定接收的合成通道为 $`\mathcal R`$，并置 $`\sigma_n=\mathcal R^n(\sigma_0)`$、$`\rho_n=\operatorname{Tr}_K\sigma_n`$、$`\sigma_{K,n}=\operatorname{Tr}_M\sigma_n`$。
+
+**环境解耦的有限矩阵表达。** 定义
+
+$$
+h_n=
+\operatorname{Tr}\sigma_{K,n}^2
++\operatorname{Tr}\rho_n^2\operatorname{Tr}\sigma_n^2
+-2\operatorname{Tr}\bigl[(\rho_n\otimes I_K)\sigma_n^2\bigr].
+\tag{20.5}
+$$
+
+取 $`\sigma_n`$ 的任意纯化 $`|\chi_n\rangle_{MKE}`$，则
+
+$$
+h_n=
+\|\rho_{ME,n}-\rho_n\otimes\rho_{E,n}\|_{\rm HS}^2\ge0.
+\tag{20.6}
+$$
+
+为核对交叉项，暂时略去 $`n`$，写
+
+$$
+|\chi\rangle
+=\sum_{i,\alpha,e}c_{i\alpha,e}|i,\alpha,e\rangle,
+\quad
+\sigma_{i\alpha,j\beta}
+=\sum_e c_{i\alpha,e}\overline{c_{j\beta,e}},
+\quad
+(\rho_E)_{ef}
+=\sum_{r,\beta}c_{r\beta,e}\overline{c_{r\beta,f}}.
+\tag{20.7}
+$$
+
+这里 $`i,j,r`$ 是来源指标，$`\alpha,\beta`$ 是接收指标，$`e,f`$ 是纯化环境指标。于是
+
+$$
+\begin{aligned}
+\operatorname{Tr}[\rho_{ME}(\rho_M\otimes\rho_E)]
+&=\langle\chi|\rho_M\otimes I_K\otimes\rho_E|\chi\rangle\\
+&=\sum_{i,j,\alpha,e,f}
+\overline{c_{i\alpha,e}}(\rho_M)_{ij}
+(\rho_E)_{ef}c_{j\alpha,f}\\
+&=\sum_{i,j,\alpha,r,\beta}
+(\rho_M)_{ij}\sigma_{r\beta,i\alpha}
+\sigma_{j\alpha,r\beta}\\
+&=\operatorname{Tr}[(\rho_M\otimes I_K)\sigma^2].
+\end{aligned}
+\tag{20.8}
+$$
+
+纯化两侧边缘具有相同非零谱，另外给出
+ $`\operatorname{Tr}\rho_{ME}^2=\operatorname{Tr}\sigma_K^2`$
+及 $`\operatorname{Tr}\rho_E^2=\operatorname{Tr}\sigma^2`$。
+展开（20.6）的平方范数即得（20.5）。因而（20.5）仅需 $`2D`$ 维联合接收态，虽然其零点检验的是与全部累计环境的解耦。
+
+**终端恢复误差控制解耦缺陷。** 令 $`\epsilon_n`$ 是指定纯来源在终端 $`n`$ 的恢复半迹误差。对解码器取 Stinespring 等距，将 $`\chi_n`$ 送到全局纯态 $`\zeta`$；其档案与活动记忆边缘记为 $`\tau`$，纯目标记为 $`|\Psi_n\rangle`$。由目标纯态投影这一效果，
+
+$$
+f:=\langle\Psi_n|\tau|\Psi_n\rangle\ge1-\epsilon_n.
+\tag{20.9}
+$$
+
+当 $`f>0`$ 时，将 $`\zeta`$ 在目标方向上的分量归一化，得到其余系统上的纯态 $`|\xi\rangle`$，使
+ $`|\langle\zeta|\Psi_n\otimes\xi\rangle|^2=f`$。
+当 $`f=0`$ 时任取 $`\xi`$；此时（20.9）迫使 $`\epsilon_n=1`$，下述界仍成立。纯态距离公式给
+
+$$
+d\bigl(|\zeta\rangle\langle\zeta|,
+|\Psi_n\rangle\langle\Psi_n|\otimes|\xi\rangle\langle\xi|\bigr)
+\le\sqrt{\epsilon_n},
+\qquad d(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{20.10}
+$$
+
+解码只作用于 $`K`$，所以它不改变 $`ME`$ 边缘；真实来源目标的活动记忆边缘也恰为 $`\rho_n`$。对（20.10）偏迹，先得到
+ $`d(\rho_{ME,n},\rho_n\otimes\xi_E)\le\sqrt{\epsilon_n}`$，
+再得到 $`d(\rho_{E,n},\xi_E)\le\sqrt{\epsilon_n}`$。
+由三角不等式以及 $`\|X\|_{\rm HS}\le\|X\|_1`$，
+
+$$
+d(\rho_{ME,n},\rho_n\otimes\rho_{E,n})\le2\sqrt{\epsilon_n},
+\qquad h_n\le16\epsilon_n.
+\tag{20.11}
+$$
+
+因此，若
+
+$$
+G=\sum_{n=1}^{N}h_n,
+\qquad N=8D^2,
+\tag{20.12}
+$$
+
+则 $`G\le16N\max_{1\le n\le N}\epsilon_n`$。
+
+**排除多项式的零点。** 对任何合法接收器及满足（20.1）的来源，都有 $`G>0`$。否则非负性使前 $`N`$ 个 $`h_n`$ 全部为零；由（20.6），记忆与累计环境在这些终端均成乘积。对固定 Kraus 词环境逐矩阵元读取，便得到（12.6）的全部同长度环境交叉等式。第12节的累计词空间在 $`8D^2`$ 层以内稳定，因此这些**精确零等式**延拓到全部字长，并推出（12.14）的全时域纯度恒等式，与非退化来源的谱障碍矛盾。
+
+这里调用的是第12节证明中的环境交叉延拓，不是把单个纯度差当作充分恢复条件，也没有把有限个近似等式延拓到无限时间。下一步将直接对有限多项式 $`G`$ 使用正最小值估计。
+
+**整数半代数参数集。** 任意从 $`2D`$ 维输入到 $`D`$ 维输出的 CPTP 接收通道，其 Kraus 秩至多 $`2D^2`$。补零 Kraus 算子后，可统一写为 Stinespring 等距
+
+$$
+W:\mathbb C^{2D}\longrightarrow
+\mathbb C^D\otimes\mathbb C^{2D^2},
+\qquad W^\dagger W=I_{2D}.
+\tag{20.13}
+$$
+
+$`W`$ 是 $`2D^3\times2D`$ 的复矩阵，共有 $`8D^4`$ 个实参数。再把 $`a,b`$ 的四个实分量也作为变量，共得到（20.2）的 $`v=8D^4+4`$ 个实变量；没有把给定的任意实振幅分量用作不受控制的系数。
+
+等式 $`W^\dagger W=I_{2D}`$ 用对角实方程和非对角项的实部、虚部表示，恰有 $`4D^2`$ 条实二次方程，整数系数高度至多一。另加
+
+$$
+|a|^2+|b|^2-1=0,
+\qquad k|a|^2-1\ge0,
+\qquad k|b|^2-1\ge0.
+\tag{20.14}
+$$
+
+总计 $`s=4D^2+3`$ 条整数二次约束，系数绝对值至多 $`k`$。它们定义一个非空基本闭半代数集 $`\mathscr T_{D,k}\subset\mathbb R^v`$：可取 $`a=b=1/\sqrt2`$ 及任意（20.13）的等距。每个 $`W`$ 列向量的范数为一，来源也归一化，故所有实变量有界；约束闭，因而该集合紧。
+
+每个点都定义一台合法固定接收器和一个非退化来源；前面的零点排除遂给 $`G>0`$ 在整个 $`\mathscr T_{D,k}`$ 上成立。
+
+**次数与系数高度。** 对实变量上的复多项式 $`P=\sum_\alpha c_\alpha x^\alpha`$，使用系数范数
+
+$$
+\|P\|_{\mathrm{coef},1}=\sum_\alpha|c_\alpha|.
+\tag{20.15}
+$$
+
+该范数次可乘，复共轭不改变其值。一个复矩阵元写成 $`x+iy`$ 时范数为二；$`a,b`$ 同样如此。所有计算起于整数及 $`i`$，故中间系数属于 $`\mathbb Z[i]`$。最后取实部是逐系数操作，并满足
+ $`\|\operatorname{Re}P\|_{\mathrm{coef},1}\le\|P\|_{\mathrm{coef},1}`$；
+因此实化不会另增一个二因子。
+
+令 $`t_{ji}=(m_i)_j`$，即 $`t_{00}=a,t_{10}=b,t_{01}=1,t_{11}=0`$。按来源在前的固定因子次序，发射与接收合成的 Kraus 算子为
+
+$$
+(L_u)_{(j,\alpha),(i,\beta)}
+=t_{ji}\,W_{(\alpha,u),(\beta,i)},
+\quad
+1\le u\le2D^2,\quad 1\le\alpha,\beta\le D.
+\tag{20.16}
+$$
+
+每个矩阵元的次数至多二，系数范数至多四。递推
+ $`\sigma_{n+1}=\sum_uL_u\sigma_nL_u^\dagger`$
+的每个矩阵元，至多含 $`(2D^2)(2D)^2`$ 个被加项；左右两个 Kraus 元贡献范数因子至多十六。因此，由（20.4）起归纳，有
+
+$$
+\deg(\sigma_n)_{xy}\le4n,
+\qquad
+\| (\sigma_n)_{xy}\|_{\mathrm{coef},1}
+\le(128D^4)^n=B_D^n.
+\tag{20.17}
+$$
+
+记 $`z=B_D^n`$。接收边缘的每个矩阵元至多是两个 $`\sigma_n`$ 元之和，来源边缘的每个矩阵元至多是 $`D`$ 个之和。逐项求和遂给
+
+$$
+\begin{aligned}
+\|\operatorname{Tr}\sigma_{K,n}^2\|_{\mathrm{coef},1}
+&\le4D^2z^2,\\
+\|\operatorname{Tr}\rho_n^2\|_{\mathrm{coef},1}
+&\le4D^2z^2,\\
+\|\operatorname{Tr}\sigma_n^2\|_{\mathrm{coef},1}
+&\le4D^2z^2,\\
+\|\operatorname{Tr}[(\rho_n\otimes I_K)\sigma_n^2]\|_{\mathrm{coef},1}
+&\le8D^3z^3.
+\end{aligned}
+\tag{20.18}
+$$
+
+最后一项可具体按来源的两个行列指标及一个接收指标求和，共 $`4D`$ 项；其中 $`\rho_n`$ 元的范数至多 $`Dz`$，$`\sigma_n^2`$ 元的范数至多 $`2Dz^2`$，乘积即给上述界。结合（20.5），
+
+$$
+\begin{aligned}
+\|h_n\|_{\mathrm{coef},1}
+&\le4D^2B_D^{2n}
++16D^4B_D^{4n}
++16D^3B_D^{3n}\\
+&\le36D^4B_D^{4n},\\
+\deg G&\le16N=d,
+\qquad
+\|G\|_{\mathrm{coef},1}\le36ND^4B_D^{4N}.
+\end{aligned}
+\tag{20.19}
+$$
+
+式（20.5）对所有实参数均为实数：递推产生 Hermitian 矩阵，而其中的迹表达为实数。也可在定义目标多项式时直接取该表达的实部；它保持全部实参数上的值。由（20.15），得到的 $`G`$ 属于 $`\mathbb Z[x_1,\ldots,x_v]`$，且（20.19）保持原常数。因此约束与目标的整数系数高度统一不超过（20.2）的 $`H`$。
+
+**紧连通分量上的显式正最小值。** Jeronimo–Perrucci–Tsigaridas 的正最小值界指出：[^phase_positive_polynomial_minimum] 若 $`v`$ 个实变量上的基本闭半代数集由 $`s`$ 个整数多项式的等式及非严格不等式定义，其次数不超过偶数 $`d`$、系数绝对值不超过 $`H`$；整数目标多项式也满足这两个界，则它在任一紧连通分量上的非零最小值，其绝对值至少为
+
+$$
+\left(2^{4-v/2}\widehat H d^v\right)^{-v2^vd^v},
+\qquad \widehat H=\max\{H,2v+2s\}.
+\tag{20.20}
+$$
+
+本处 $`v\ge12`$，$`d=16N`$ 是正偶数，全部条件已经满足。由于 $`\mathscr T_{D,k}`$ 紧且 $`G>0`$，其全局最小值在某点取得且严格正。取包含该点的连通分量；连通分量是紧集中的闭子集，因此紧，而且其最小值就是全局最小值。无需额外假定整个参数集连通。
+
+应用（20.20），再用 $`2^{4-v/2}\le16`$ 及 $`2^vd^v=(2d)^v`$，得到
+
+$$
+\min_{\mathscr T_{D,k}}G
+\ge\left(2^{4-v/2}\widehat H d^v\right)^{-v2^vd^v}
+\ge(16\widehat H d^v)^{-v(2d)^v}
+=\kappa_{D,k}.
+\tag{20.21}
+$$
+
+这里增大底数会减小带负指数的表达，故最后替换是保守的下界。结合（20.11）—（20.12），
+
+$$
+\max_{1\le n\le N}\epsilon_n
+\ge\frac{G}{16N}
+\ge\frac{\kappa_{D,k}}{16N}
+=\eta_{D,k}.
+\tag{20.22}
+$$
+
+全部参考和输入的上确界至少包含这份指定纯来源误差。容量小于 $`D`$ 的装置可嵌入 $`D`$ 维寄存器，并在未使用空间任意完成通道；嵌入不改变实际运行。故（20.3）也覆盖全部容量不超过 $`D`$ 的装置。证明完毕。
+
+对固定 $`k`$，上述显式数值的大小可以直接估计。由（20.2），
+
+$$
+-\log\eta_{D,k}
+=\log(16N)+v(2d)^v\log(16\widehat H d^v).
+\tag{20.23}
+$$
+
+当 $`D\to\infty`$ 时，$`v=O(D^4)`$、$`d=O(D^2)`$、$`\log\widehat H=O_k(D^2\log(D+1))`$，因而存在仅依赖 $`k`$ 的常数 $`C_k`$，使
+
+$$
+-\log\eta_{D,k}
+\le\exp\bigl(C_kD^4\log(D+1)\bigr)
+\qquad(D\ge1).
+\tag{20.24}
+$$
+
+这只描述本节所给显式下界的保守尺度；它没有证明第11节对数容量上界最优。其来源依赖通过整数 $`k`$ 明确进入，未声称在退化端点上一致。本节使用既有环境交叉零点排除与标准实代数最小值定理的组合，不把实代数分离定理本身作为新结论。
+

@@ -13,15 +13,19 @@ public sealed class StandaloneLeanBootstrapScriptTests
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new BootstrapFixture(target);
 
+        var makeCalls = target == "lean" ? 2 : 1;
+        var lakeCalls = target == "lean" ? new[] { "build", fixture.InspectorBuild } : [];
         fixture.AssertSuccess(fixture.Make(target));
-        Assert.Equal(new[] { "candidate-first" }, fixture.CliCalls);
-        Assert.Single(fixture.BuildCalls);
-        Assert.Equal(target == "lean" ? new[] { "build" } : [], fixture.LakeCalls);
+        Assert.Equal(Enumerable.Repeat("candidate-first", makeCalls), fixture.CliCalls);
+        Assert.Equal(makeCalls, fixture.BuildCalls.Length);
+        Assert.Equal(lakeCalls, fixture.LakeCalls);
 
         fixture.ChangeSource("candidate-second");
         fixture.AssertSuccess(fixture.Make(target));
-        Assert.Equal(new[] { "candidate-first", "candidate-second" }, fixture.CliCalls);
-        Assert.Equal(2, fixture.BuildCalls.Length);
+        Assert.Equal(Enumerable.Repeat("candidate-first", makeCalls)
+            .Concat(Enumerable.Repeat("candidate-second", makeCalls)), fixture.CliCalls);
+        Assert.Equal(2 * makeCalls, fixture.BuildCalls.Length);
+        Assert.Equal(lakeCalls.Concat(lakeCalls), fixture.LakeCalls);
     }
 
     [Theory]
@@ -57,8 +61,10 @@ public sealed class StandaloneLeanBootstrapScriptTests
 
         Assert.True(result.ExitCode == 23, fixture.Text(result));
         Assert.Equal(builds + (prebuilt ? 0 : 1), fixture.BuildCalls.Length);
-        Assert.Equal(prebuilt ? 2 : 1, fixture.CliCalls.Length);
-        Assert.Equal(target == "lean" ? fixture.CliCalls.Length : 0, fixture.LakeCalls.Length);
+        Assert.Equal(prebuilt ? (target == "lean" ? 3 : 2) : 1, fixture.CliCalls.Length);
+        Assert.Equal(target == "lean"
+            ? prebuilt ? new[] { "build", fixture.InspectorBuild, "build" } : new[] { "build" }
+            : [], fixture.LakeCalls);
     }
 
     [Theory]
@@ -99,6 +105,10 @@ public sealed class StandaloneLeanBootstrapScriptTests
             ScriptHarnessScratch.EnsureDirectory(bin);
             foreach (var path in new[] { "Makefile", WrapperPath("lean"), WrapperPath("lean-cache-ensure") })
                 ScriptHarnessScratch.CopyScriptInto(Path.Combine(TestRepositoryLayout.FindRoot(), path), Path.Combine(root, path));
+            var physicalRoot = TestProcessRunner.Run("/bin/pwd", ["-P"], root,
+                TestBudgets.ScriptProcessHangGuard, 1024);
+            AssertSuccess(physicalRoot);
+            root = Encoding.UTF8.GetString(physicalRoot.StandardOutput).Trim();
             Write(projectDirectory + "/" + projectName + ".csproj", $$"""
                 <Project Sdk="Microsoft.NET.Sdk">
                   <PropertyGroup>
@@ -124,6 +134,7 @@ public sealed class StandaloneLeanBootstrapScriptTests
         internal string[] CliCalls => Calls("cli.log");
         internal string[] BuildCalls => Calls("bootstrap.log");
         internal string[] LakeCalls => Calls("lake.log");
+        internal string InspectorBuild => $"-d {root}/tools/lean-inspector build";
 
         internal void ChangeSource(string marker) => Write(projectDirectory + "/Program.cs", $$"""
             using System;

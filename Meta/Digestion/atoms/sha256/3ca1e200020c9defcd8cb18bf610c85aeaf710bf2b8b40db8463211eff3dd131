@@ -1,0 +1,24 @@
+**定理263.2（全部仿射自由度）。** 有
+$$
+\boxed{
+\operatorname{aff}_{\mathbb R}\mathcal F(Z)
+=F_*+\operatorname{Herm}(U).
+}
+\tag{263.7}
+$$
+因此
+$$
+\boxed{
+\dim_{\mathbb R}\operatorname{aff}\mathcal F(Z)
+=(n-\dim_{\mathbb C}W)^2,
+}
+\tag{263.8}
+$$
+且
+$$
+\boxed{
+\mathcal F(Z)\text{ 为单点}\iff W=S.
+}
+\tag{263.9}
+$$
+

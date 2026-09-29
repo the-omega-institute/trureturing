@@ -1,0 +1,103 @@
+**命题151.3（固定接收器的有限参数夹逼）。** 记 $[t]_+=\max(t,0)$。则
+
+$$
+\boxed{
+\begin{aligned}
+e_{148}(p)\ge\sqrt{xp}\bigl[
+&\lambda\sqrt{x^2\lambda^2+p\kappa^2}\\
+&-\nu\sqrt{x^2\nu^2+p\kappa^2}
+-x\mu^2
+\bigr]_+ ,
+\end{aligned}
+}
+\tag{151.11}
+$$
+
+且
+
+$$
+\boxed{
+e_{148}(p)\le
+\mu^2\left(
+\frac{\sqrt x}{\lambda+\nu}+\frac{x}{2}
+\right).
+}
+\tag{151.12}
+$$
+
+**证明。** 下界只需取合同中允许的输入 $|0\rangle\langle0|$，参考取一维。记
+$m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$。
+第148节的第六轮实际 Stinespring 分支为
+
+$$
+L_A|0\rangle=a\mu\,m_0h,\qquad
+L_B|0\rangle=a\nu\,m_0P+b\kappa\,m_1e.
+\tag{151.13}
+$$
+
+其中 $P,e,h$ 是三个正交单位接收向量，$A,B$ 是同一物理环境的两个正交分支。因而
+
+$$
+\sigma_{6,p}(|0\rangle\langle0|)
+=L_A|0\rangle\langle0|L_A^*
++L_B|0\rangle\langle0|L_B^*.
+\tag{151.14}
+$$
+
+该态的活动记忆 $(1,0)$ 块是
+
+$$
+X
+=ab\left[
+a^2\mu^2|h\rangle\langle h|
++\nu|P\rangle
+\bigl(a^2\nu\langle P|+b\kappa\langle e|\bigr)
+\right].
+\tag{151.15}
+$$
+
+方括号内两项的定义域与值域分别正交，所以两个奇异值贡献直接相加，得到
+
+$$
+\|X\|_1
+=ab\left[
+a^2\mu^2+
+\nu\sqrt{a^4\nu^2+b^2\kappa^2}
+\right].
+\tag{151.16}
+$$
+
+另一方面，第148节的档案等距 $W_6:S_6\to K$ 把同一实际来源的完整理想目标编码为
+
+$$
+U_6|0\rangle
+=a\lambda\,m_0P+b\kappa\,m_1e.
+\tag{151.17}
+$$
+
+这里 $W_6$ 是完整档案支撑上的本地等距，而不是对实际接收态另作假设。它保持活动记忆每个块的迹范数。若 $Y$ 是原始完整档案目标的 $(1,0)$ 块，则由（151.17）
+
+$$
+W_6YW_6^*
+=ab\lambda|P\rangle
+\bigl(a^2\lambda\langle P|+b\kappa\langle e|\bigr),
+$$
+
+$$
+\|Y\|_1
+=ab\lambda\sqrt{a^4\lambda^2+b^2\kappa^2}.
+\tag{151.18}
+$$
+
+把（151.16）、（151.18）代入（151.8），可对每个任意选择的 $\mathcal D_6$ 得到相同下界。由于第六终端和输入 $|0\rangle\langle0|$ 均属于（151.4）的最大值及上确界范围，该下界仍可经过全部解码器的下确界。再代入 $a^2=x,b^2=p$ 并使用误差非负性，即得（151.11）。
+
+上界直接使用第148节已经构造的一组六个合法解码器：前五终端精确，第六终端对全部初始输入及参考满足
+
+$$
+\mu^2\left(
+\frac{a}{\lambda+\nu}+\frac{a^2}{2}
+\right).
+$$
+
+固定同一个物理接收器后，对解码器取下确界只能降低该值，故得（151.12）。上界沿用完整参考恢复证明，没有由单一输入下界反推全输入上界。证毕。
+

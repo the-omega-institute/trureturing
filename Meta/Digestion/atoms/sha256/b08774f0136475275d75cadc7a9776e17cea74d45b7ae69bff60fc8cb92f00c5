@@ -1,0 +1,41 @@
+**推论31.8（商候选集的上下盒维与几何稀疏增长）。** 取任意固定 $\eta>0$，例如选择
+
+$$
+u_j=\frac{C_\eta}{\sqrt{(j+2)[\log(j+2)]^{1+2\eta}}},
+\qquad
+C_\eta=\left(\sum_{j\ge0}
+\frac1{(j+2)[\log(j+2)]^{1+2\eta}}\right)^{-1/2}.
+\tag{31.35}
+$$
+
+令 $\underline d,\overline d$ 分别为
+$\log\operatorname{Pack}(\Gamma,r)/\log(1/r)$ 在 $r\downarrow0$ 的下、上极限。定理31.7的同一门序列满足
+
+$$
+\liminf_{n\to\infty}\frac{\log\dim K_n}{\log n}
+=\frac{\underline d}{2},\qquad
+\limsup_{n\to\infty}\frac{\log\dim K_n}{\log n}
+=\frac{\overline d}{2}.
+\tag{31.36}
+$$
+
+任意合法门序列的相应下、上极限分别至少为这两个数。
+
+证明。细化尺度
+$`r_n=c_*\epsilon u_{\lfloor\log_2n\rfloor}/\sqrt n`$
+递减到零，相邻项之比趋于一，且 $\log(1/r_n)/\log n\to1/2$。dyadic 跳点还使用 $u_{j+1}/u_j\to1$。分离数的单调性在相邻尺度间夹逼，给出与全尺度相同的上下盒维极限。再用（31.22）的逐终端下界及（31.29）的上界即可。这需要所选预算的缓变性质，不适用于任意平方可和预算。证明完毕。
+
+若商候选集满足
+$\operatorname{Pack}(\Gamma,r)\asymp1+\log(1/r)$，则同一在线构造给
+$\dim K_n=\Theta_{P,g,\Gamma,\epsilon,\eta}(\log n)$，任意合法门序列也受相应对数下界。例如，在商环面的局部等距坐标片内取足够短的非零向量 $v$，
+$\Gamma=\{0\}\cup\{a^jv:j\ge0\}$、$0<a<1$，就满足此条件。条件必须落在商空间；原参数集沿 $\mathcal H$ 的几何序列可以投影为单点。
+
+例如，两态 $P_{ij}=1/2$、$q=2$、$g_{ij}=(i-j,\mathbf1_{\{i=j=0\}})$，状态编号为 $0,1$。第一坐标为端点势差，而路径
+$0\to0\to1$ 与 $0\to1\to1$ 的荷差为 $(0,1)$，所以
+$\Lambda=\mathbb Z(0,1)$、$\mathcal H=\mathbb T\times\{0\}$。
+原参数集 $\{(0,0)\}\cup\{(a^j,0):j\ge0\}$ 虽为几何序列，其商像却为单点，整个族有同一份至多 $m^2$ 维档案支撑，能精确常数维接收。只给原参数距离的几何上界也不足以推出对数增长。
+
+[^phase_multiphase_gk]: Mădălin Guţă and Jukka Kiukas, *Equivalence classes and local asymptotic normality in system identification for quantum Markov chains*, [arXiv:1402.3535v1](https://arxiv.org/abs/1402.3535v1)。Theorem 2 将 primitive 量子 Markov 等距的平稳输出等价刻画为相位乘子与内部酉共轭；Lemma 2 给相应模一外围谱判据。Theorem 4 对解析单参数族的有界局部参数 $\theta=\theta_0+u/\sqrt n$ 给联合系统—输出纯态的高斯极限及统计模型强收敛。§5.3 Corollary 1 说明等价规范方向的渐近每步 Fisher 信息为零，初态或端点仍可携带非广延信息。这些结论不直接给出本节任意候选集、全局有限步、任意参考和完整联合恢复的容量定理；（31.9）、（31.15）、（31.20）及前缀支撑构造承担这些额外义务。
+
+本节的前缀支撑相干接收和纯目标迹距离转换分别复用既有机制。[^phase_bcz][^phase_fvg] 商空间尺度及完整联合容量由本节的具体有限源关系推出；这里不作这些容量结论的外部原创优先权主张。
+

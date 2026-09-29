@@ -1,0 +1,28 @@
+### 263.1 可行纤维与最大秩填充
+
+设 $S$ 为 $n\ge1$ 维复Hilbert空间，固定 $Z\in\mathcal L(S)$。定义
+$$
+T_Z(F)=\begin{pmatrix}F&Z/2\\Z^\dagger/2&I_S-F\end{pmatrix},
+\qquad
+\mathcal F(Z)=\{F=F^\dagger:T_Z(F)\succeq0\}.
+\tag{263.1}
+$$
+以下假设 $\mathcal F(Z)\ne\varnothing$。对角压缩给 $0\preceq F\preceq I_S$，所以 $\mathcal F(Z)$ 是有限维实向量空间 $\operatorname{Herm}(S)$ 中的非空紧凸集。
+
+选择使 $T_Z(F)$ 秩最大的一个填充 $F_*$，记
+$$
+T_*=T_Z(F_*),\qquad N=\ker T_*.
+\tag{263.2}
+$$
+最大秩元素存在，因为实际可取的秩构成非空有限整数集。定义
+$$
+\boxed{
+W=\operatorname{span}_{\mathbb C}\{u,v:(u,v)\in N\}\subseteq S,
+\qquad U=W^\perp.
+}
+\tag{263.3}
+$$
+这里把核向量的上、下两个分量分别投影到同一个参考空间，再取共同张成；没有要求这两个分量互为相位倍数。
+
+标准背景可参见 S. Sremac、H. Woerdeman、H. Wolkowicz，*Complete Facial Reduction in One Step for Spectrahedra*，[arXiv:1710.07410v1](https://arxiv.org/abs/1710.07410v1)，PDF第5页Theorem 2.2及其随后关于凸集最小面的说明：半正定锥的面由最大秩元素的支撑或核刻画。该文使用实对称矩阵；以下直接证明当前复Hermitian切片的结论，尤其不把两种标量域的维数公式混用。
+

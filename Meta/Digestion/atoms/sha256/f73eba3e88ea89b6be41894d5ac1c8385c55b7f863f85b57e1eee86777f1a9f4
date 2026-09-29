@@ -1,0 +1,89 @@
+**定理 103.2（保留全部参考输入的精确距离公式与导数）。** 令
+
+$$
+J=\left[\frac{1-\sqrt2}{2},\frac{1+\sqrt2}{2}\right].
+$$
+
+对上述仪器，完整距离准确为
+
+$$
+\boxed{
+\delta(\widehat\Gamma_\theta)
+=\max_{x\in J}\frac12\left[
+\sqrt{\frac54-x+\sin(2\theta)(1-x)^2}
++\sqrt{\frac14+x-x^2}
+\right].
+}
+\tag{103.2}
+$$
+
+特别地，若 $t\downarrow0$，则
+
+$$
+\boxed{
+\delta(\widehat\Gamma_{-t})
+=R-\kappa t+O(t^2),
+\qquad
+\kappa=\frac{\sqrt\phi}{4}>0.
+}
+\tag{103.3}
+$$
+
+证明。完整通道之差保持 Hermitian；第 87 节使用的纯联合输入表征允许在一个量子比特参考上最大化。取任意纯联合输入，其系统边缘为
+
+$$
+\rho=\begin{pmatrix}q_0&u+iv\\u-iv&1-q_0\end{pmatrix},
+\qquad \rho\succeq0,\quad\operatorname{Tr}\rho=1,
+\qquad x=q_0-u.
+$$
+
+每个记录分支在该纯联合输入上各给一个未归一化纯向量。两个向量投影之差满足
+
+$$
+\bigl\||f\rangle\langle f|-|g\rangle\langle g|\bigr\|_1
+=\sqrt{(\|f\|^2+\|g\|^2)^2-4|\langle f,g\rangle|^2}.
+\tag{103.4}
+$$
+
+未点击的两个范数平方为 $1/2+u$ 与 $1-q_0$；内积模平方为
+$(1-\sin2\theta)[(1-x)^2+v^2]/4$。点击分支的两个范数平方为 $1/2-u$ 与 $q_0$，内积模平方为 $(x^2+v^2)/2$。记录正交，故完整输出的半迹距离准确为
+
+$$
+F_\theta(x,v)=\frac12\left[
+\sqrt{\frac54-x-v^2+\sin(2\theta)((1-x)^2+v^2)}
++\sqrt{\frac14+x-x^2-2v^2}
+\right].
+\tag{103.5}
+$$
+
+将边缘态的虚部 $v$ 置零保持正性与迹一，不改变 $x$；因 $\sin2\theta-1\le0$，两个根号内的数均不减。因此最大值可在实边缘态上取得。
+
+再令
+
+$$
+H=\begin{pmatrix}1&-1/2\\-1/2&0\end{pmatrix}.
+$$
+
+有 $x=\operatorname{Tr}(\rho H)$，所以 $x$ 的范围恰为 $H$ 的本征值区间 $J$。每个 $x\in J$ 都由一个实纯系统态达到：在 $H$ 的实本征基上取适当的实单位叠加即可。故对全部联合输入的最大化准确化为式（103.2），而非只取得一个无参考的下界。
+
+在 $\theta=0$ 时，第 73.2 条已给唯一最大坐标
+
+$$
+x_* =\frac{3-\sqrt5}{4}=1-\frac\phi2,
+$$
+
+位于 $J$ 内部，两个根号都严格为正。该处目标对 $x$ 的二阶导数严格为负：第一项 $\sqrt{5/4-x}$ 严格凹，第二项 $\sqrt{1/4+x-x^2}$ 在内部凹。目标在 $(x_*,0)$ 的邻域内光滑。
+
+由紧区间上的唯一最大值，充分小的 $\theta$ 的全部最大坐标都落在 $x_*$ 的任意预定小邻域内；否则取最大点收敛子列会给 $\theta=0$ 的另一最大点。局部二阶导数保持负值，隐函数定理因而给唯一光滑最大坐标 $x(\theta)$。最大值的一阶导数只剩显含 $\theta$ 的部分，得到
+
+$$
+\left.\frac{d}{d\theta}\delta(\widehat\Gamma_\theta)\right|_{\theta=0}
+=\frac{(1-x_*)^2}{2\sqrt{5/4-x_*}}
+=\frac{\sqrt\phi}{4}.
+\tag{103.6}
+$$
+
+光滑性给二阶余项；使用 $\delta(\widehat\Gamma_0)=\delta(\Gamma_+)=R$，再将 $\theta=-t$，便得式（103.3）。$\square$
+
+旋转族用 $\widehat\Gamma_\theta$ 标记，名义装置仍由 $Q_0=|0\rangle\langle1|$、$L_0=|0\rangle\langle0|$ 指定。上述距离在任何角度都是相对于该固定名义装置计算。
+

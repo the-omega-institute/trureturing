@@ -1,0 +1,28 @@
+**推论190.4（原系数在独立联动来源模型中的精确分界）。** 取
+
+$$
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353},\qquad R=4.
+$$
+
+则
+
+$$
+\boxed{
+\frac{h_c}{\beta}
+=\frac{40655-\sqrt{1132383073}}{9216}
+\in\left(\frac12,1\right).
+}
+\tag{190.10}
+$$
+
+在整个 $0\le h\le\beta$ 内，令 $H=h/\beta$，都有
+
+$$
+\boxed{
+\frac{\mathcal C(h)}\beta
+=-\frac{4608H^2-40655H+28236}{6144(H+12)}.
+}
+\tag{190.11}
+$$
+

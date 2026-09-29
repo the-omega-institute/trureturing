@@ -1,0 +1,14 @@
+**$XXXZY$。** $G_2,G_3\subset U$ 的后继都是 $X$，$G_4\subset U$ 的后继是不同的 $Z$。不同乘积环境使 $(G_2+G_3)\cap G_4=0$，故四维预算仍给 $G_2=G_3$。普通第5轮给 $G_5=P$，其后继为 $Y$；环境正交使 $G_2\perp P$，所以
+
+$$
+G_2=G_3=T,\qquad H_1=H_2.
+$$
+
+由 $U=T\oplus P$ 及 $V_1G_4=Q\otimes Z$，式（132.6）给 $V_1U=Q\otimes F$。
+
+实际 $H_5\subset P\oplus Q$ 且满投影到 $Q$。零位像 $V_0H_2=T\otimes X$ 与 $V_0H_5=G_6\otimes Y$ 正交，所以 $H_1=H_2\perp H_5$。真实 $q\perp P$ 遂使 $q\perp Q$，即 $q\in S$。连同 $p\in S$、$H_1=H_2$，得到 $H_2\subset S$，进而真实 $v\in S\cap F_X=\mathbb Cr$。
+
+现在 $V_1p=v\otimes X$ 正交于 $V_1U=Q\otimes F$，故 $p\perp U$。但 $H_2=\operatorname{span}(a^2u+bv,w)$，其中 $u,w$ 是 $T\subset U$ 的独立单位向量，$a\ne0$、$v\perp U$，所以 $H_2\cap U^\perp=0$。这与非零 $p\in H_1=H_2$ 矛盾。
+
+### 132.4 两个共同一位平面的正交冲突
+

@@ -257,11 +257,11 @@ criteria on the same actual families.
 ## 6. Portable exact certificate
 
 The standard-library program
-[unique_root_reserve_certificate.py](../frontier/cover-geometry/unique_root_reserve_certificate.py)
-and its [exact data](../frontier/cover-geometry/unique_root_reserve_certificate.json)
+[unique_root_reserve_certificate.py](../frontier/cover-geometry/unique-root-reserve-certificate/unique_root_reserve_certificate.py)
+and its [exact data](../frontier/cover-geometry/unique-root-reserve-certificate/unique_root_reserve_certificate.json)
 recompute all fifty fixed-reserve rows and the seventeen shared-budget
 intervals. The program reads the Chapter 25
-[six-vertex certificate](../frontier/cover-geometry/six_vertex_conditional_kernel_certificate.json)
+[six-vertex certificate](../frontier/cover-geometry/six-vertex-conditional-kernel-certificate/six_vertex_conditional_kernel_certificate.json)
 through its required `--inherited` argument. The input digest is pinned
 as
 `5fc133a5826747a04787e13a6ddc92c311d065cd54357a18c9f0e414bb45a571`.
@@ -287,5 +287,5 @@ The program requires Python 3.10 or later and rejects optimized `-O`
 execution. From the repository root, reproduce the JSON with
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/unique_root_reserve_certificate.py --inherited docs/reports/erdos7-odd-covering/frontier/cover-geometry/six_vertex_conditional_kernel_certificate.json --output /tmp/unique-root-reserve-certificate.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/unique-root-reserve-certificate/unique_root_reserve_certificate.py --inherited docs/reports/erdos7-odd-covering/frontier/cover-geometry/six-vertex-conditional-kernel-certificate/six_vertex_conditional_kernel_certificate.json --output /tmp/unique-root-reserve-certificate.json
 ```

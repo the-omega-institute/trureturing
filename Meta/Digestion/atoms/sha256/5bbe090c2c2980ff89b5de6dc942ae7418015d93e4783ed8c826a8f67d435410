@@ -1,0 +1,32 @@
+**定义 163.1（一个通道同时服务全部视界）。** 沿用定义161.1的已校准三标签记录源和固定未知共同相位，以及定义161.2的全参考距离。真实过程每步使用一个新鲜空白记录单元，无中间控制、旧记录访问或额外相位校准。固定 $r$ 后，预测者选择一个与 $\phi$、视界 $N$ 均无关的 CPTP 通道 $\mathcal F:B(\mathbb C^3)\to B(\mathbb C^3)$，以后只使用其幂 $\mathcal F^N$；不附加持久记忆寄存器。令
+$$
+\mathcal J(r)=
+\inf_{\mathcal F\ \mathrm{CPTP}}\quad
+\sup_{\substack{N\in\mathbb N,\ N\ge1\\|\phi|\le\alpha(r)}}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F^N).
+\tag{163.1}
+$$
+这里不施加单步最优条件。另记第162节的受限全视界问题为
+$$
+\mathcal J_{\rm one}(r)=
+\inf_{\mathcal F\in\mathfrak F_1(r)}
+\sup_{\substack{N\ge1\\|\phi|\le\alpha(r)}}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F^N).
+\tag{163.2}
+$$
+两个下确界都在视界上确界之前选定通道。它们不同于允许按 $N$ 重选终端通道的 $\sup_{N\ge1}\mathcal R_N(r)$。
+
+以下使用常数
+$$
+k_*=\frac{3\sqrt3\log2}{\pi},\qquad
+t_*=\frac{\pi}{3\sqrt3},\qquad
+L=\frac{\sqrt3}{4}e^{-t_*}.
+\tag{163.3}
+$$
+有 $0<k_*<3$。对 $0<r\le1$ 定义固定预测通道的候选
+$$
+\mathcal T_r(A)=C(r,r^{k_*})\odot A,
+\tag{163.4}
+$$
+并在 $r=0$ 将 $\mathcal T_0$ 定义为系统基下的完全去相干通道。
+

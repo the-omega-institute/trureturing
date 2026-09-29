@@ -1,4 +1,4 @@
-"""Resolved mathlib seed partitions and binary platform isolation."""
+"""Resolved mathlib seed partitions, binary platform isolation and shared Release seed platforms."""
 from __future__ import annotations
 
 import argparse
@@ -36,6 +36,19 @@ def normalized_platform(system: str, machine: str) -> tuple[str, str]:
 def partition_path(root: pathlib.Path) -> str:
     system, machine = binary_platform()
     return f"{resolved_mathlib(root)}/{system}-{machine}"
+
+
+# Release seeds carry the project buildDir. On arm64, macOS and Linux share its
+# .olean/.ilean/IR; Lake retraces native objects per platform and rebuilds them.
+SHARED_SEED_PLATFORMS = (("darwin-arm64", "linux-arm64"),)
+
+
+def seed_partitions(root: pathlib.Path) -> list[str]:
+    """Release partitions this host may restore; its own partition comes first."""
+    own = partition_path(root)
+    revision, platform_name = own.split("/", 1)
+    family = next((group for group in SHARED_SEED_PLATFORMS if platform_name in group), ())
+    return [own] + [f"{revision}/{other}" for other in family if other != platform_name]
 
 
 def main() -> int:

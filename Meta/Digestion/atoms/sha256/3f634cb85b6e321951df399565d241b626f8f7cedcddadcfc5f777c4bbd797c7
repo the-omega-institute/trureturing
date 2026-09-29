@@ -1,0 +1,79 @@
+### 268.4 保持原始切片的显式 $n$ 步证书
+
+在联合Hermitian矩阵空间中定义
+$$
+\mathcal C=\{X:X\succeq0\},
+\qquad
+L=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{268.19}
+$$
+固定Ando切片为 $T_*+L$。实际密度态切片为 $\Omega_*+L$；由于 $T_*=n\Omega_*$，它们使用相同的消去证书条件
+$$
+Y\in L^\perp,\qquad
+\langle Y,T_*\rangle=0
+\quad\Longleftrightarrow\quad
+Y\in L^\perp,\qquad
+\langle Y,\Omega_*\rangle=0.
+\tag{268.20}
+$$
+内积为 $\operatorname{Re}\operatorname{Tr}(XY)$。由§266，
+$L^\perp$ 恰为上下两个对角块相等的Hermitian联合矩阵。
+
+令
+$$
+N_j=\operatorname{span}\{q_1,\ldots,q_j\},\qquad
+N_0=\{0\},\qquad P_j=P_{N_j^\perp},
+$$
+$$
+\mathcal C_j
+=\{X\succeq0:\operatorname{supp}X\subseteq N_j^\perp\}.
+\tag{268.21}
+$$
+第一步取
+$$
+Y_1=q_1q_1^\dagger.
+\tag{268.22}
+$$
+其上下对角块相等，$Y_1\succeq0$，且 $\langle Y_1,T_*\rangle=0$，所以它把 $\mathcal C_0$ 严格约化为 $\mathcal C_1$。
+
+对 $1\le j<n$，取
+$$
+w_j=\left(0,\ te_{j+1}+\frac{t^2}{2}e_j\right),
+$$
+$$
+Y_{j+1}
+=q_{j+1}q_{j+1}^\dagger+q_jw_j^\dagger+w_jq_j^\dagger.
+\tag{268.23}
+$$
+第一项的上下对角块之差为
+$$
+t(e_je_{j+1}^\dagger+e_{j+1}e_j^\dagger)+t^2e_je_j^\dagger.
+\tag{268.24}
+$$
+后两项的差恰为其相反数。因此 $Y_{j+1}\in L^\perp$。由于 $T_*q_j=T_*q_{j+1}=0$，还满足
+$$
+\langle Y_{j+1},T_*\rangle=0.
+\tag{268.25}
+$$
+在当前面上，
+$$
+\boxed{
+P_jY_{j+1}P_j
+=(P_jq_{j+1})(P_jq_{j+1})^\dagger\succeq0.
+}
+\tag{268.26}
+$$
+核向量独立，保证 $P_jq_{j+1}\ne0$。所以 $Y_{j+1}$ 属于当前面的对偶锥，并且
+$$
+\mathcal C_j\cap\{Y_{j+1}\}^\perp=\mathcal C_{j+1}.
+\tag{268.27}
+$$
+这里不要求后续 $Y_{j+1}$ 在原全空间上正半定；其压缩正性正好是§266要求的当前面对偶条件。
+
+第 $n$ 步后，支撑为 $N^\perp$，$T_*$ 在该支撑上严格正，相对Slater条件成立。故标准奇异度满足
+$$
+d_S\le n.
+\tag{268.28}
+$$
+每一步都保持原来的 $L$ 与固定全部数据，没有向切片加入额外方程。
+

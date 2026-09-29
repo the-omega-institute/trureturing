@@ -1,0 +1,17 @@
+### 72.1 四个二次纤维与秩一余等距缺陷
+
+设 $Q$ 为二维复 Hilbert 空间，$F$ 为二维复 Hilbert 空间，$A:F\to F$ 可逆，且
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}.
+$$
+设线性映射 $M:Q\otimes J\to Q\otimes F$ 满足
+$$
+0\preceq I-MM^*,\qquad \operatorname{rank}(I-MM^*)\le1,
+\tag{72.1}
+$$
+并在四条不同射线 $[z_1],\ldots,[z_4]$ 上满足
+$$
+M(Q\otimes(Az_i\otimes z_i))\subset Q\otimes z_i.
+\tag{72.2}
+$$
+

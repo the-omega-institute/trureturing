@@ -1,0 +1,33 @@
+## ST17．已有背景曲率与子空间选择曲率的协变组合
+
+### 假设 ST17.1
+
+在参数域的环境 Hermitian 向量丛上，给定连接
+
+$$
+\nabla_i=\partial_i-i\Gamma_i,\qquad \Gamma_i=\Gamma_i^\dagger,
+\qquad
+F^{\mathrm{full}}_{ij}=\partial_i\Gamma_j-\partial_j\Gamma_i-i[\Gamma_i,\Gamma_j].
+$$
+
+对局部等距框 $U$，定义
+
+$$
+\mathcal A_i=iU^\dagger\nabla_iU
+=U^\dagger\Gamma_iU+iU^\dagger\partial_iU,
+\qquad N_i=(I-\Pi)\nabla_iU.
+$$
+
+### 定理 ST17.2：有效曲率的协变分解
+
+有
+
+$$
+\boxed{
+\mathcal F_{ij}
+=U^\dagger F^{\mathrm{full}}_{ij}U
++i\left(N_i^\dagger N_j-N_j^\dagger N_i\right).
+}
+\tag{ST17.1}
+$$
+

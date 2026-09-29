@@ -1,0 +1,4 @@
+**定义 755.1（三个不同的箭头）。** 项目 [LatentAdequacyCriterion](../../../D5/S3/ConceptDynamics/DefinitionEscape/LatentAdequacyCriterion.lean) 的 `TargetAdequate` 研究确定读数之间的恢复：给定非空状态域 $\Omega$、读数 $q:\Omega\to L$ 和目标 $g:\Omega\to T$，要求存在 $d$ 使 $g=d\circ q$。它等价于 $q$ 的每条纤维上 $g$ 恒定；失败时加入目标会严格细化原读数。本批的条件独立生成式则给出从潜在状态到观察概率律的通道，不能只因为两者都叫 latent，就把该项目判据读成非负混合存在定理。
+
+还有第三个问题：即使模型参数已由总体分布确定，一次观察是否能确定这一次抽到的 $H$。设两个潜在状态权重均正，且各状态下所有 $u_h(x),v_h(y)$ 均严格正。那么任何 $(x,y)$ 在两个潜在状态下都有正联合概率，故两个后验权重都严格正。
+

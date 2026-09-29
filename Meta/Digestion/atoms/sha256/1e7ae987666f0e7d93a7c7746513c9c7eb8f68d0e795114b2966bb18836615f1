@@ -1,0 +1,42 @@
+**定理208.2（全严格合法噪声的精确最优恢复）。**
+在（208.1）内，以下三种情形互斥且穷尽。
+它们给出归约后唯一的最优效果；不据此声称全部未经归约的物理解码器唯一。
+
+若 $w(1+r)\ge1$，则
+
+$$
+\boxed{
+F_* =\frac{P_v}{w(1+r)},\qquad
+q_*=q_L,\qquad
+\mathscr E(0,\epsilon)=1-\frac{r^2}{(1+r)^2}.
+}
+\tag{208.10}
+$$
+
+这正是定理187.3的已有分支及其适用条件。
+
+若 $\beta\epsilon(1+s)\ge1$，则
+
+$$
+\boxed{
+F_*=I-tP_1,\qquad t=\frac1{\beta\epsilon(1+s)},\qquad
+q_*=q_U,\qquad
+\mathscr E(0,\epsilon)=1-\frac{R}{(1+\sqrt R)^2}.
+}
+\tag{208.11}
+$$
+
+若前两个不等式均不成立，则存在唯一
+$q_*\in(q_L,q_U)$ 使 $g'(q_*)=0$，并且
+
+$$
+\boxed{
+F_*={\bf1}_{(0,\infty)}(C(q_*)),\qquad
+\mathscr E(0,\epsilon)=1-g(q_*).
+}
+\tag{208.12}
+$$
+
+中间分支的 $F_*$ 为秩一正交投影。
+在两个接触点，端点分支的效果也成为投影。
+

@@ -1,0 +1,1 @@
+| `D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.lean`，`controlled_finite_stability`，第 499 行起 | 有限非空状态、动作及读数类型下，满射读数的细化平台永久稳定、最大稳定等价及类数界 | 生成元词长不能直接称作物理时间；空生成元族须处理非空前提 

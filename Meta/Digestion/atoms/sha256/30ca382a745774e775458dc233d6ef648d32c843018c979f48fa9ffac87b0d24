@@ -1,0 +1,30 @@
+**定理 23.2（共同不变暗区与统一探测证书）。** 写 $\mathcal N_a(X)=\sum_\alpha Q_{a\alpha}XQ_{a\alpha}^\dagger$，点击 Kraus 为 $L_{a,x,\beta}$。随机协议的确定暗空间是满足
+
+$$
+L_{a,x,\beta}D=0,\qquad Q_{a\alpha}D\subseteq D
+\quad\text{对全部 }a,x,\alpha,\beta
+$$
+
+的最大子空间，与正权重的具体数值无关。若该空间为零，令
+
+$$
+g=\lambda_{\min}\bigl(I-(\overline{\mathcal N}^{,*})^dI\bigr)>0,
+$$
+
+则任意初态满足
+
+$$
+s_{md}\le(1-g)^m,
+\qquad \mathbb E\mathsf N\le d/g.
+$$
+
+若共同暗区非零，从其中任何态出发，任意只使用这些设置、根据已读记录选择下一设置的策略均永不点击。
+
+证明。平均未点击映射的 Kraus 为 $\sqrt{w_a}Q_{a\alpha}$，总点击分支的 Kraus 为 $\sqrt{w_a}L_{a,x,\beta}$。因所有权重正，定理 18.5 中的零条件与不变条件恰为上述共同条件。若共同暗区为零，定理 18.6 保证定义 $g$ 的矩阵正定，因此
+
+$$
+(\overline{\mathcal N}^{,*})^dI\le(1-g)I.
+$$
+
+利用正性逐块迭代并对尾和求和，得到两个界。若初态在共同暗区，每次合法设置都保持该空间且点击概率为零，对策略的结果树归纳即得最后断言。$\square$
+

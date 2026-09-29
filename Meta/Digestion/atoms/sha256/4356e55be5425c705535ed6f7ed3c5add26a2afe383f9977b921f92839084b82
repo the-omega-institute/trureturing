@@ -1,0 +1,23 @@
+**定理 239.1（首个额外预算的联合精确值）。** 在（239.1）下，
+$$
+\boxed{
+D_{d+1}=1-\frac{d+1}{Nd},
+\qquad
+U_{d+1}=1-\frac2N.
+}
+\tag{239.7}
+$$
+存在一份精确总 Choi 秩为 $d+1$ 的同接口 CPTP 通道 $\mathcal S^{\triangle}$，同时满足
+$$
+D(\mathcal S^{\triangle})=D_{d+1},
+\qquad
+U(\mathcal S^{\triangle})=U_{d+1}.
+\tag{239.8}
+$$
+因此两个最优值的严格差距为
+$$
+\boxed{D_{d+1}-U_{d+1}=\frac{d-1}{Nd}>0.}
+\tag{239.9}
+$$
+这里的两项由同一候选同时取得，没有把两份分别可达的通道拼作共同实现。
+

@@ -1,0 +1,35 @@
+**定义 46.1（有限间距的更晚窗口）。** 保持[后验阈值卷定义 39.1](PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)的同一个固定振幅及
+$`P_j,Q_j,\alpha`$，固定 $`\beta\in(1/2,1)`$，令
+
+```math
+\eta_j=\alpha-P_j/Q_j,\quad L_j=\log(1/\eta_j),\quad
+d=\frac{\phi(1-\beta)}\beta,\quad A=\frac{2\log10}{d},\qquad
+\lambda_j=\frac{2L_j}{d}+\frac3d\log Q_j+b_j\in\mathbb N,
+\quad \sup_j|b_j|\lt\infty.
+```
+
+式 (46.1)。
+
+用该强度重新计算 (39.3) 的所有参数，只取最终合法的下标。
+相邻直线点的精确补偿得分差仍记为 $`\Delta`$。定义
+
+```math
+B_{0,M}=\sqrt{q/\lambda},\qquad
+c_j=\frac{W(k_0,l_0)-\tau}{w},\qquad
+\sigma_j=\frac\Delta w,\qquad u_{j,t}=c_j+t\sigma_j,\qquad
+c_0=\frac1{4\pi\sqrt{ab}}.
+```
+
+式 (46.2)。
+
+原窗口的精确中心过程为
+
+```math
+F_M(u)=B_{0,M}^{-1}\sum_{\tau-w\lt W_i\le\tau+uw}
+               (\mathbf1_{\{i\in S\}}-\pi_i),\qquad -1\le u\le1.
+```
+
+式 (46.3)。
+
+仍使用同一实际数据、标签与精确后验；未知方向时，所有坐标共用一次方向判决。
+

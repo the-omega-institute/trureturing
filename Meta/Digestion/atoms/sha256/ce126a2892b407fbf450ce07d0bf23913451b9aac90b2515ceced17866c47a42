@@ -1,0 +1,9 @@
+**定义 26.4（一次全源准备的有限任务）。** 固定时域 $n$，一个确定性实现由完整状态集 $M$、一次准备映射 $I:S\to M$、读出 $\rho:M\to O(S)$ 与总更新 $U:M\to M$ 组成，满足
+
+$$
+\rho(U^jI(s))=O(D^js)\qquad(s\in S,\ 0\le j\le n).
+\tag{26.28}
+$$
+
+准备时允许读取整个来源，之后输出由内部状态生成，不再观察隐藏来源。凡参与后继或读出的控制器、历史、计数器都属于 $M$，不能借免费外置时钟改变 $U$。$|I(S)|$ 是实际初始完整状态数，$|M|$ 是总载体容量；两者不同。若限制 $I=J\circ O$，称仅由初始快照准备。时域之后无输出正确性要求，也不要求发出额外停机符号。一般残余实现与最小性归属 [PROCESS_GEOMETRY 定理6.2](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)；其单锚可达版本见 [ReachableBehaviorMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.lean) 的 `finite_state_minimality`。下述全来源、有限任务的计数直接在定义26.4的量词下证明，不将单锚最小值相加。
+

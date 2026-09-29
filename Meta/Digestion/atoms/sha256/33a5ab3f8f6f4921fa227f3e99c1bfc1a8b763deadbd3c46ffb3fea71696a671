@@ -1,0 +1,41 @@
+**定义 252.1（没有比值极限时的移动基准）。** 保持第248—251节的实际任务、两个分别成立的全域预算、指定有限阶实规范节点数据和原尾窗。设
+
+$$
+\delta_s=\sqrt{\eta_s^2+\zeta_s^2}=F_s+e_s,
+\qquad 0<e_s=o(s),\qquad \eta_s=o(s),
+\qquad \gamma_s=\frac{\eta_s^2}{4dse_s}.
+\tag{252.1}
+$$
+
+不要求 $\gamma_s$ 有极限，也不要求预算关于 $s$ 连续；每个固定任务中的准备仍须关于原输入参数全域实解析。记
+
+$$
+P_s=e_s^2\sup_{T_s}I_Q,
+\qquad Q_s=\frac{e_s}{2ds}\int_{T_s}I_Q\,du,
+\qquad c=\frac{\pi^2}{4},\qquad C=c+h^2.
+\tag{252.2}
+$$
+
+对 $0<\gamma<\infty$ 使用第250节的 $F_j(z;\gamma)$，置
+
+$$
+\begin{aligned}
+m_j(\gamma)&=\min_z F_j(z;\gamma),\qquad j=1,2,\\
+V_w(\gamma)&=\min_z\bigl(wF_2(z;\gamma)+F_1(z;\gamma)\bigr),
+\qquad w>0,\\
+G(\gamma)&=V_1(\gamma)-m_2(\gamma)-m_1(\gamma).
+\end{aligned}
+\tag{252.3}
+$$
+
+所有极小值均取于 $0\le z\le h$、$1-\gamma g(z)>0$。在紧化区间 $[0,\infty]$ 的两端定义
+
+$$
+\begin{aligned}
+m_j(0)&=c,&m_j(\infty)&=C,\\
+V_w(0)&=(w+1)c,&V_w(\infty)&=(w+1)C,\\
+G(0)&=0,&G(\infty)&=0.
+\end{aligned}
+\tag{252.4}
+$$
+

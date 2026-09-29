@@ -1,0 +1,136 @@
+### 184.2 输出结果相关的共同 instrument
+
+先在第182节的实际接收端坐标中使用
+
+$$
+\rho=\frac13\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+H=\frac{-X+2Z}{\sqrt5}.
+$$
+
+于是 $H^2=I$、$\operatorname{Tr}(\rho H)=0$、
+$i\operatorname{Tr}(\rho HY)=\kappa$。
+对旗标 $s=\pm1$，两个原输入的条件态为
+
+$$
+\eta_{j,s}=(1-\beta w_j)P_\Xi+\beta w_jP_\psi
++s\gamma w_j
+\bigl(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\bigr),
+\qquad
+\psi=(I\otimes Y)\Xi,\quad \Xi\perp\psi.
+$$
+
+取 $0<r<1$、$|t|<\min\{r,1-r\}$，写
+
+$$
+p_0=r,\quad p_1=1-r,\qquad t_0=t,\quad t_1=-t.
+$$
+
+现在让实际输出结果 $k$ 选择反馈角度 $u_k$，定义
+
+$$
+\boxed{
+K_{k,s}=e^{is u_kH}(p_kI+st_kY)^{1/2}.
+}
+\tag{184.3}
+$$
+
+操作顺序为先作两结果测量，取得真实结果 $k$ 后施加相应酉，将 $k$ 写入输出标签，再丢弃旧旗标。每个旗标上均有
+
+$$
+\sum_kK_{k,s}^{\dagger}K_{k,s}
+=\sum_k(p_kI+st_kY)=I.
+$$
+
+所以任意这样的 $u_0,u_1$ 都给合法接收端 CPTP 解码器。输出结果 $k$ 不是未知原输入 $j$；在所有四个输入—输出组合中，解码器始终按实际 $k$ 选择同一套操作。
+
+记该构造的完整恢复误差为 $e(r,t,u_0,u_1)$。
+令
+
+$$
+r=\frac12+r_1\epsilon,\qquad
+t=t_1\epsilon,\qquad
+u_j=v_j\epsilon.
+$$
+
+对正确输出块定义
+
+$$
+f_j=\langle\Xi|\sigma_{jj}|\Xi\rangle,\qquad
+a_0=r_1,\ a_1=-r_1,\quad
+b_0=t_1,\ b_1=-t_1,\quad
+c_0=1,\ c_1=R.
+$$
+
+第182节的展开按每个实际输出结果分别适用，得到
+
+$$
+\begin{aligned}
+f_j={}&\frac12+
+\left(a_j-\frac{\beta c_j}{2}\right)\epsilon\\
+&+\left[
+-\beta c_ja_j-\frac{b_j^2}{2}-\frac{v_j^2}{2}
++\kappa v_jb_j+\gamma c_jb_j+\kappa\gamma c_jv_j
+\right]\epsilon^2+O(\epsilon^3).
+\end{aligned}
+\tag{184.4}
+$$
+
+这里也可以直接核对精确振幅：若
+$(p_jI+st_jY)^{1/2}=\mathfrak a_jI+s\mathfrak b_jY$，则
+
+$$
+\operatorname{Tr}(\rho K_{j,s})
+=\mathfrak a_j\cos u_j+\kappa\mathfrak b_j\sin u_j,
+$$
+
+$$
+\operatorname{Tr}(\rho K_{j,s}Y)
+=s(\mathfrak b_j\cos u_j+\kappa\mathfrak a_j\sin u_j).
+$$
+
+对每个固定正确结果 $j$，一阶非标量 Kraus 项仍带单个旗标符号。均匀旗标平均后，
+
+$$
+\sigma_{jj}
+=\frac12P_\Xi+
+\epsilon\left[a_jP_\Xi+\frac{\beta c_j}{2}(P_\psi-P_\Xi)\right]
++O(\epsilon^2),
+$$
+
+故 $(I-P_\Xi)\sigma_{jj}P_\Xi=O(\epsilon^2)$。
+为核对它对完整参考误差的影响，对任意 $q\in[0,1]$，
+第173节的匹配标签矩阵是
+$C_q=P_{\sqrt q\,|0\rangle\Xi+\sqrt{1-q}\,|1\rangle\Xi}
+-\operatorname{diag}(q\sigma_{00},(1-q)\sigma_{11})$。
+按两个目标纯化方向及其正交补分块，其目标方向压缩为
+
+$$
+M_q=
+\begin{pmatrix}
+q(1-f_0)&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&(1-q)(1-f_1)
+\end{pmatrix}.
+$$
+
+正交块半负定，非对角块范数为 $O(\epsilon^2)$，且
+$\lambda_{\max}(M_q)\ge1-\max\{f_0,f_1\}\ge1/4$
+对全部 $q$ 一致成立。若 $D\preceq0$、$\lambda=\lambda_{\max}(M)>0$，
+单位向量的 Rayleigh 商给
+
+$$
+0\le\lambda_{\max}
+\begin{pmatrix}M&B\\B^\dagger&D\end{pmatrix}-\lambda
+\le\frac{\|B\|^2}{\lambda}.
+$$
+
+所以 $C_q$ 的最高根与 $M_q$ 的最高根相差一致的 $O(\epsilon^4)$。
+对 $q$ 取最大值，利用
+$\max_q\lambda_{\max}(M_q)=1-f_0f_1/(f_0+f_1)$，得到
+
+$$
+e(r,t,u_0,u_1)
+=1-\frac{f_0f_1}{f_0+f_1}+O(\epsilon^4).
+$$
+
+余项对有界的 $R,r_1,t_1,v_0,v_1$ 一致。没有把最坏参考权重固定为 $1/2$，也没有把纯化重叠直接当作完整误差。
+

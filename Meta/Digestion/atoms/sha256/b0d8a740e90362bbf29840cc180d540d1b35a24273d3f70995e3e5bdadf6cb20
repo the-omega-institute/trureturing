@@ -1,0 +1,19 @@
+**命题 401.2（相位凸包对 Schur 乘积封闭）。** 若 $A,B\in\mathcal P_d$，则 $A\circ B\in\mathcal P_d$。
+
+证明。取两个有限相位分解
+
+$$
+A=\sum_a p_a z_a z_a^\dagger,\qquad
+B=\sum_b q_b w_b w_b^\dagger,
+\qquad \sum_a p_a=\sum_bq_b=1.
+$$
+
+令 $z_a\circ w_b$ 表示坐标逐项相乘。每个这样的向量仍属于 $\mathbb T^d$，且
+
+$$
+A\circ B=\sum_{a,b}p_aq_b
+ (z_a\circ w_b)(z_a\circ w_b)^\dagger.
+$$
+
+这是有限和，权重非负且总和为 $(\sum_ap_a)(\sum_bq_b)=1$。证毕。
+

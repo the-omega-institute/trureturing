@@ -1,0 +1,18 @@
+**定义 447.2（决策问题是比较的一部分）。** 一项任务由先验 $\pi\in\Delta_\Theta$、有限非空行动集 $A$ 和损失 $\ell:\Theta\times A\to[0,1]$ 给出。允许随机决策 $D:X\to\Delta_A$，其最优先验风险为
+
+$$
+\mathcal R_K(\pi,\ell)=
+\min_D\sum_{\theta,x,a}\pi(\theta)K_\theta(x)D_x(a)\ell(\theta,a).
+$$
+
+比较两实验时，状态意义、先验、行动与损失保持相同。若一个传统改变了何为目标、何为合宜行动，就须把这种改变另外写出，不能只更换观察核却宣称已经比较了其全部规范要求。
+
+作为以下构造的既有前置，项目 BoundedRiskSimulatorTransport 的 bounded_loss_risk_stability_of_simulator 给出：统一 TV 模拟误差至多 $\varepsilon$ 时，将目标决策与模拟器复合，所得决策在每个状态上的风险增加都至多 $\varepsilon$。FiniteDeficiencyRiskTransfer.deficiency_risk_bound 再对决策和模拟器取下确界。其源码中的 finiteBayesRisk 取扩展非负实数值；在本批有限非空集合、概率行和 $[0,1]$ 损失条件下，风险均有限，下面是这一有限有界情形的普通实数读法：
+
+$$
+\mathcal R_K(\pi,\ell)
+\le \mathcal R_L(\pi,\ell)+d(K\longrightarrow L).
+$$
+
+其方向有直接意义：能从 $K$ 模拟 $L$，便能借 $K$ 实行任何基于 $L$ 的决策。证明中的条件损失 $\sum_aD_y(a)\ell(\theta,a)$ 位于 $[0,1]$，故 TV 控制其期望差；核复合仍是合法决策。这些是既有接口的使用依据，不在本批另立为新定理。
+

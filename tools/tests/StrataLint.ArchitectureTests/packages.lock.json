@@ -147,15 +147,16 @@
       "StrataLint": {
         "type": "Project",
         "dependencies": {
+          "StrataLint.Configuration": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.ExecutionEvidence": "[1.0.0, )",
+          "StrataLint.FileMap": "[1.0.0, )",
           "StrataLint.InspectionScope": "[1.0.0, )",
           "StrataLint.Lean": "[1.0.0, )",
           "StrataLint.ResourcePlanning": "[1.0.0, )",
           "StrataLint.Scribe": "[1.0.0, )",
           "StrataLint.Scribe.Documents": "[1.0.0, )",
-          "Tomlyn": "[2.10.1, )",
-          "YamlDotNet": "[16.3.0, )"
+          "Tomlyn": "[2.10.1, )"
         }
       },
       "stratalint.admissiontestsupport": {
@@ -180,13 +181,17 @@
           "StrataLint.ExecutionEvidence": "[1.0.0, )"
         }
       },
-      "stratalint.clitestsupport": {
+      "stratalint.configuration": {
         "type": "Project",
         "dependencies": {
-          "StrataLint": "[1.0.0, )",
-          "StrataLint.AdmissionTestSupport": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
+          "YamlDotNet": "[16.3.0, )"
+        }
+      },
+      "stratalint.configurationtestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.TestSupport": "[1.0.0, )",
           "xunit": "[2.9.3, )"
         }
@@ -224,6 +229,15 @@
           "StrataLint.ResourcePlanning": "[1.0.0, )"
         }
       },
+      "stratalint.filemap": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Configuration": "[1.0.0, )",
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.InspectionScope": "[1.0.0, )",
+          "StrataLint.Scribe": "[1.0.0, )"
+        }
+      },
       "stratalint.inspectionscope": {
         "type": "Project",
         "dependencies": {
@@ -234,12 +248,6 @@
         "type": "Project",
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )"
-        }
-      },
-      "stratalint.leantestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.TestSupport": "[1.0.0, )"
         }
       },
       "stratalint.processtestsupport": {
@@ -279,21 +287,6 @@
         "type": "Project",
         "dependencies": {
           "StrataLint.Scribe": "[1.0.0, )"
-        }
-      },
-      "stratalint.tests": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.NET.Test.Sdk": "[18.0.1, )",
-          "StrataLint": "[1.0.0, )",
-          "StrataLint.AdmissionTestSupport": "[1.0.0, )",
-          "StrataLint.CliTestSupport": "[1.0.0, )",
-          "StrataLint.LeanTestSupport": "[1.0.0, )",
-          "StrataLint.ProcessTestSupport": "[1.0.0, )",
-          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "Xunit.SkippableFact": "[1.5.85, )",
-          "xunit": "[2.9.3, )"
         }
       },
       "stratalint.testsupport": {

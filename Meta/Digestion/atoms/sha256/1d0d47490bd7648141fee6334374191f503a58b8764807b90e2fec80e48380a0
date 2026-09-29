@@ -1,0 +1,18 @@
+**定理209.1（全来源二阶复合展开）。**
+存在仅依赖固定 $\beta,\gamma,R$ 的 $C,\epsilon_0>0$，使
+
+$$
+\boxed{
+\sup_{0\le\ell\le1/2}
+\left|\mathscr E(\ell,\epsilon)-C_{\mathrm{comp}}(\ell,\epsilon)\right|
+\le C\epsilon^3
+\qquad(0<\epsilon<\epsilon_0).
+}
+\tag{209.3}
+$$
+
+取 $\epsilon_0$ 时同时保证入口合法性
+$R\epsilon_0<\beta/(\beta^2+\gamma^2)$。
+因此结论允许来源以任意路径随噪声变化，包括纯点、圆盘接触点和固定满秩来源。
+模型参数在全节固定，不声称它们趋向退化值时常数仍统一。
+

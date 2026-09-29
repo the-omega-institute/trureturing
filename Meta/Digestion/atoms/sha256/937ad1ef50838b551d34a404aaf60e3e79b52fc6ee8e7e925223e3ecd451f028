@@ -1,0 +1,14 @@
+**命题 327.3（总变差给出另一种加性保证）。** 定义
+
+$$
+\operatorname{TV}(P,Q)=\frac12\sum_{\omega}|P(\omega)-Q(\omega)|.
+$$
+
+则对每个 $0\le\ell\le1$ 有
+
+$$
+|R_Q(\ell)-R_P(\ell)|\le\operatorname{TV}(P,Q).
+$$
+
+证明：写 $d(\omega)=Q(\omega)-P(\omega)$。因 $\sum d=0$，正部分总量与负部分绝对值总量相等，均为上式总变差。$\sum d\ell$ 至多等于正部分总量，至少等于负部分的相反数。取 $\ell$ 为 $\{\omega:d(\omega)>0\}$ 的指示函数便达到正向上界，所以这个对全部有界损失的统一常数可以达到。
+

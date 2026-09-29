@@ -1,0 +1,21 @@
+**定理 30.2（共同的最坏相对熵曲线及三阶起始律）。** 定义
+\[
+ s_\omega(t)=
+ \begin{cases}
+ \sinh(t\sqrt{\gamma^2/4-\omega^2})/\sqrt{\gamma^2/4-\omega^2},&|\omega|<\gamma/2,\\
+ t,&|\omega|=\gamma/2,\\
+ \sin(t\sqrt{\omega^2-\gamma^2/4})/\sqrt{\omega^2-\gamma^2/4},&|\omega|>\gamma/2.
+ \end{cases}
+\]
+上述经典模型与量子模型的固定参考熵系数均精确等于
+\[
+ \boxed{c_{\gamma,\omega}(t)
+ =e^{-\gamma t}\left(\sqrt{1+\gamma^2s_\omega(t)^2/4}
+                     +\gamma|s_\omega(t)|/2\right)^2.}
+\]
+$\omega=0$ 时 $c(t)=1$；$\omega\ne0$ 时每个 $t>0$ 有 $c(t)<1$，并且
+\[
+ c_{\gamma,\omega}(t)=1-\frac{\gamma\omega^2}{6}t^3+O(t^4).
+\]
+经典上界由平移 Gaussian 态达到；量子上界由趋近最大混合态的态族逼近。
+

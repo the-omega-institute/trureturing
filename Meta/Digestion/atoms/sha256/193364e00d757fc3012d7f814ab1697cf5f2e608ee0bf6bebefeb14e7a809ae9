@@ -1,0 +1,63 @@
+**定理 147.2（事件数与内部时间的一阶互逆律）。** 若 $T$ 不可约、平稳慢人口 $\pi_1>0$，则
+
+$$
+\boxed{
+\frac{S_m}{m}\longrightarrow\pi_1
+\quad\text{几乎处处},
+\qquad
+\frac{N(t)}{t}\longrightarrow\frac1{\pi_1}
+\quad(t\to\infty)\ \text{几乎处处}.
+}
+\tag{147.1}
+$$
+
+若进一步 $T$ primitive，则还具有均值版本
+
+$$
+\boxed{
+\lim_{t\to\infty}\frac{\mathbb E[N(t)]}{t}
+=\frac1{\pi_1}.
+}
+\tag{147.2}
+$$
+
+### 证明
+
+有限不可约马尔可夫链的遍历定理给出
+
+$$
+\frac1m\sum_{r=1}^{m}A_r\longrightarrow\pi_1
+\quad\text{几乎处处}.
+$$
+
+令
+
+$$
+M_m=\sum_{r=1}^{m}A_r(Y_r-1).
+$$
+
+在给定扇区历史后，$M_m$ 是平方可积鞅差和，且其条件二次变差为 $O(m)$。鞅强大数定律给出 $M_m/m\to0$，于是 $S_m/m\to\pi_1$。
+
+因为 $S_m$ 非降且 $S_m\to\infty$，对任意满足 $S_m\le t<S_{m+1}$ 的 $m$ 有
+
+$$
+\frac{m}{S_{m+1}}
+\le
+\frac{N(t)}t
+\le
+\frac{m+1}{S_m}.
+$$
+
+代入 $S_m/m\to\pi_1$ 得第二个几乎处处极限。
+
+最后，在 primitive 假设下，取充分小的 $s>0$。第 143 节给出
+
+$$
+\lim_{m\to\infty}\frac1m\log\mathbb E[e^{-sS_m}]
+=\log\lambda(s),
+\qquad
+\lambda(s)=\rho(TD(s)),
+$$
+
+且 $\log\lambda(s)=-\pi_1s+o(s)$。对任意 $c>1/\pi_1$，可选取 $s$ 使 $e^{sc}\lambda(s)<1$。Chernoff 界于是使 $\Pr(N(t)\ge ct)$ 按 $t$ 指数衰减；结合几乎处处收敛，对 $N(t)/t$ 取得一致可积性，得到式（147.2）。证毕。
+

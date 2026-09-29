@@ -1,0 +1,1 @@
+| `D5/S1/Dynamics/ProfiniteCharacter.lean` 中 `continuous_character_factors_through_residue` | 相容剩余类整数的连续群特征经一个有限剩余坐标分解 | 任意观察塔的有限标签定理；其目标为圆群，不能借式（TM.451）的有限标签结论省略所用群结构 

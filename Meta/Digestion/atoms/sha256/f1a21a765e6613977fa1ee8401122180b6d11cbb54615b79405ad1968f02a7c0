@@ -1,0 +1,83 @@
+### 72.2 一个保持全部因果约束的切向扰动
+
+继续记
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad h=|010\rangle,
+\quad y=|101\rangle,\quad z=|110\rangle,\quad z'=|111\rangle,
+\qquad w=x+y.
+$$
+
+对固定 $r>0$，取 $0\le\delta<1$，令
+
+$$
+p=1-\delta,\qquad g=\sqrt{rp}.
+$$
+
+定义实厄米方向
+
+$$
+\begin{aligned}
+K_{r,\delta}={}&-(r+p)|x\rangle\langle x|-p|y\rangle\langle y|
+-\left(\frac r2+p\right)(|x\rangle\langle y|+|y\rangle\langle x|)\\
+&+g(|w\rangle\langle z|+|z\rangle\langle w|)\\
+&+r|x'\rangle\langle x'|-g(|x'\rangle\langle z'|+|z'\rangle\langle x'|)
++p|z'\rangle\langle z'|+p|h\rangle\langle h|.
+\end{aligned}
+\tag{72.3}
+$$
+
+它的因果偏迹为
+
+$$
+\operatorname{Tr}_D K_{r,\delta}=I_A\otimes\operatorname{diag}(-p,p).
+\tag{72.4}
+$$
+
+其中跨输入的两个偏迹项 $K_{xz}=g$ 与 $K_{x'z'}=-g$ 相消，其他非对角项在末端偏迹中消失。在 $w^\perp$ 上压缩时，$x-y$ 方向的二次型和它与 $z$ 的配对均为零；$z$ 的对角也为零。其余非零压缩正是
+
+$$
+\begin{pmatrix}r&-g\\-g&p\end{pmatrix}
+\quad\text{在 }\operatorname{span}(x',z')\text{ 上},
+\qquad p|h\rangle\langle h|.
+\tag{72.5}
+$$
+
+因为 $rp=g^2$ 且 $r,p\ge0$，它们均正。由第70节切锥的准确刻画，
+
+$$
+K_{r,\delta}\in\mathcal T.
+\tag{72.6}
+$$
+
+记 $Y_{r,\delta}=H_r-K_{r,\delta}$。在 $\delta=0$ 时，所有 $r$ 依赖恰好相消：
+
+$$
+Y_{r,0}=Y_*:=|x\rangle\langle x|
++\frac12(|x\rangle\langle y|+|y\rangle\langle x|)
+-|h\rangle\langle h|.
+\tag{72.7}
+$$
+
+固定 $r$ 后，$\sqrt{1-\delta}=1-\delta/2+O(\delta^2)$ 给
+
+$$
+Y_{r,\delta}=Y_*+\delta Z_r+O_r(\delta^2),
+\tag{72.8}
+$$
+
+其中
+
+$$
+\begin{aligned}
+Z_r={}&-|w\rangle\langle w|+|h\rangle\langle h|+|z'\rangle\langle z'|\\
+&+\frac{\sqrt r}{2}\bigl(
+|w\rangle\langle z|+|z\rangle\langle w|
+-|x'\rangle\langle z'|-|z'\rangle\langle x'|
+\bigr).
+\end{aligned}
+\tag{72.9}
+$$
+
+下面证明，这个可行扰动使完整事件范数从 $9/8$ 严格下降。
+

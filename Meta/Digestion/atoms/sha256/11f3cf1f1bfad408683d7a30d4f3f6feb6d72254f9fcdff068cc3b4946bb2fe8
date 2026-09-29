@@ -1,0 +1,69 @@
+### 294.1 从完整量子输入到可逆的计数实验
+
+沿用§291—§293的规范来源、共同参数平均风险和确定最大完整块预算。本节只研究完整原输入、\(n=1\)；令
+\[
+k=(1-\delta)^2,\qquad l=1-w,\qquad 0<k<1,\quad 0<l\le1,
+\tag{294.1}
+\]
+并保留原来源对 \(\delta,w\) 的限制。真实比较为 \(c=r\) 与 \(c=kr\)，同一个未知 \(r\in[l,1]\) 用于两假设。每块耗用两份来源，\(K\ge1\) 块对应 \(N=2K\)。
+
+记 \(R_K(k,l)\) 为允许全部完整输入量子策略、最多 \(K\) 个完整块时的最优风险：
+\[
+R_K(k,l)=
+\inf_{\text{实际协议}}
+\sup_{r\in[l,1]}
+\frac{\Pr_{0,r}(\widehat j=1)+\Pr_{1,r}(\widehat j=0)}2.
+\tag{294.2}
+\]
+使用较少块的协议可以忽略补足的输入，故固定 \(K\) 块的二元效应包含这项最大预算下的全部策略。效应须是两假设及所有 \(r\) 共用的同一个实际操作。
+
+完整块态为
+\[
+\Gamma_c=\frac{I_4}{4}
++\frac c4\bigl(|01\rangle\langle10|+|10\rangle\langle01|\bigr).
+\tag{294.3}
+\]
+令 \(|\psi_\pm\rangle=(|01\rangle\pm|10\rangle)/\sqrt2\)。共同本征测量将其化为三标签实验
+\[
+p_c(+)=\frac{1+c}{4},\qquad
+p_c(-)=\frac{1-c}{4},\qquad
+p_c(0)=\frac12.
+\tag{294.4}
+\]
+标签零对应 \(\{|00\rangle,|11\rangle\}\) 子空间。反向制备通道把 \(+\)、\(-\) 分别制备为
+\(|\psi_+\rangle\langle\psi_+|\)、\(|\psi_-\rangle\langle\psi_-|\)，把零制备为
+\[
+\frac12\bigl(|00\rangle\langle00|+|11\rangle\langle11|\bigr).
+\]
+该制备通道与 \(c\) 无关，并准确恢复 \(\Gamma_c\)。因此三标签测量在这个来源族上没有损失判别信息。
+
+对 \(K\) 个独立块，令 \(T\) 是非零标签数，\(J\) 是其中正号数。其分布为
+\[
+T\sim\operatorname{Bin}(K,1/2),\qquad
+J\mid T=t\sim\operatorname{Bin}\left(t,\frac{1+c}{2}\right),
+\tag{294.5}
+\]
+即
+\[
+Q_{K,c}(t,j)=
+2^{-K}{K\choose t}{t\choose j}
+\left(\frac{1+c}{2}\right)^j
+\left(\frac{1-c}{2}\right)^{t-j},
+\qquad 0\le j\le t\le K.
+\tag{294.6}
+\]
+端点按二项分布的通常约定解释。给定 \((t,j)\)，所有具有这些计数的标签排列等概率；从计数均匀抽取一个这样的排列，再逐块使用上述制备通道，就恢复 \(\Gamma_c^{\otimes K}\)。此反向通道也不依赖 \(c\)，包括端点零概率事件上的任意固定定义。
+
+由此得到双向统计等价：
+\[
+\Gamma_c^{\otimes K}
+\quad\longleftrightarrow\quad
+p_c^{\otimes K}
+\quad\longleftrightarrow\quad
+Q_{K,c}.
+\tag{294.7}
+\]
+量子策略中的辅助系统、中间测量或适应性操作，都可合并为 \(\Gamma_c^{\otimes K}\) 上的共同最终效应；在共同对角基中，该效应等价于标签结果上的随机决策，再按条件排列平均即可只依赖 \((T,J)\)。反向的每个计数随机决策都由实际共同本征测量及经典随机化实现。
+
+\(T\) 的分布虽然与参数无关，观察到的 \(T\) 仍是实验结果的一部分；它决定本次获得了多少个带参数的符号，不能将它替换为固定的 \(K/2\)。
+

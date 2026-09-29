@@ -1,0 +1,104 @@
+**引理141.2（固定实现中的附加因子化）。** 对给定 $n$，（141.8）成立，当且仅当存在等距
+
+$$
+R_n:\Gamma_n\longrightarrow\Gamma_{n+1}\otimes E
+$$
+
+满足
+
+$$
+\boxed{
+VJ_n=(W_{n+1}\otimes I_E)
+       (I_{S_{n+1}}\otimes R_n),
+\qquad
+\operatorname{Tr}_E(R_n\tau_nR_n^*)=\tau_{n+1}.
+}
+\tag{141.11}
+$$
+
+等式中的因子结合均取自然识别。
+
+**证明。** 固定 $E$ 的正交基，把（141.10）写成
+$V=\sum_\ell K_\ell\otimes|\ell\rangle$。令 $L=S_{n+1}$，并对输入附加态作谱分解
+
+$$
+\tau_n=\sum_\beta p_\beta|\beta\rangle\langle\beta|,
+\qquad p_\beta>0.
+$$
+
+定义 $B_{\ell\beta}:L\to K$：
+
+$$
+B_{\ell\beta}=K_\ell J_n(I_L\otimes|\beta\rangle).
+$$
+
+（141.8）给出
+
+$$
+\sum_{\ell,\beta}p_\beta B_{\ell\beta}XB_{\ell\beta}^*
+=W_{n+1}(X\otimes\tau_{n+1})W_{n+1}^*.
+\tag{141.12}
+$$
+
+置 $Q=I_K-W_{n+1}W_{n+1}^*$，在（141.12）中取 $X=I_L$ 并左右乘 $Q$。得到一族正半定矩阵之和为零：
+
+$$
+\sum_{\ell,\beta}p_\beta
+QB_{\ell\beta}B_{\ell\beta}^*Q=0.
+$$
+
+由于全部 $p_\beta>0$，每个 $QB_{\ell\beta}=0$，故各 Kraus 分量的像都包含在 $\operatorname{ran}W_{n+1}$ 内。
+
+取 $\Gamma_{n+1}$ 的正交基 $|\alpha\rangle$，定义
+
+$$
+C_{\ell\alpha\beta}
+=(I_L\otimes\langle\alpha|)W_{n+1}^*B_{\ell\beta}
+:\ L\to L.
+$$
+
+将（141.12）压回编码子空间并对输出附加因子取偏迹，得到
+
+$$
+\sum_{\ell,\alpha,\beta}p_\beta
+C_{\ell\alpha\beta}XC_{\ell\alpha\beta}^*=X
+\qquad(X\in\mathcal L(L)).
+\tag{141.13}
+$$
+
+恒等通道的 Choi 矩阵为
+$|I_L\rangle\!\rangle\langle\!\langle I_L|$，秩为一。其任意 Kraus 表示的每个向量化 Kraus 算子，都必须落在这条同一射线上：否则正半定秩一矩阵不能等于这些正半定项之和。因此
+$\sqrt{p_\beta}C_{\ell\alpha\beta}$ 为 $I_L$ 的标量倍数。由 $p_\beta>0$，可写成
+
+$$
+C_{\ell\alpha\beta}=c_{\ell\alpha\beta}I_L.
+$$
+
+令 $R_{n,\ell}:\Gamma_n\to\Gamma_{n+1}$ 的矩阵元为
+$c_{\ell\alpha\beta}$。全部 $\beta$ 上的等式合并为
+
+$$
+K_\ell J_n=W_{n+1}(I_L\otimes R_{n,\ell}).
+$$
+
+在同一个环境基中置
+
+$$
+R_n\gamma=\sum_\ell R_{n,\ell}\gamma\otimes|\ell\rangle.
+$$
+
+便得到（141.11）的第一式。由于 $V,J_n,W_{n+1}$ 均等距，
+
+$$
+I_L\otimes I_{\Gamma_n}
+=(VJ_n)^*(VJ_n)
+=I_L\otimes R_n^*R_n,
+$$
+
+从而 $R_n^*R_n=I_{\Gamma_n}$。再把因子化代入（141.12），取任意迹一的逻辑态，便得
+$\sum_\ell R_{n,\ell}\tau_nR_{n,\ell}^*=\tau_{n+1}$，即第二式。
+
+反向，将（141.11）作用于 $X\otimes\tau_n$ 并对 $E$ 取偏迹，直接得到（141.8）。证毕。
+
+这个结论在整个 $S_{n+1}\otimes\Gamma_n$ 上是算子等式，包含不同附加基向量之间的相干项。虽然实际只准备固定的混合态 $\tau_n$，满秩性和逻辑恒等通道的秩一 Choi 结构已经强制了这份相干约束。它不是新增的制备权限，也不只是一条附加态边缘更新公式。
+

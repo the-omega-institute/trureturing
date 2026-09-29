@@ -1,0 +1,44 @@
+**定理 71.1。** 该函数满足
+
+$$
+\gamma_0=1,
+\qquad
+|\gamma_r-\gamma_s|
+\le2|r-s|+4|\sqrt r-\sqrt s|
+\quad(r,s\ge0).
+\tag{71.2}
+$$
+
+因而它在 $[0,\infty)$ 连续，在每个远离零的紧参数区间上 Lipschitz 连续。两个端点均满足
+
+$$
+\lim_{r\downarrow0}\gamma_r=1,
+\qquad\lim_{r\uparrow\infty}\gamma_r=1.
+\tag{71.3}
+$$
+
+更明确地，若 $r\ge8$，令
+
+$$
+u_r=\frac{r-\sqrt{r^2-4r}}2
+=\frac{2}{1+\sqrt{1-4/r}},
+\tag{71.4}
+$$
+
+则
+
+$$
+1<\gamma_r\le
+\min\left\{\frac98,\ 1+3(u_r-1)\right\}.
+\tag{71.5}
+$$
+
+因此存在某个有限正数 $r_*$，使
+
+$$
+\gamma_{r_*}=\max_{r>0}\gamma_r\in(1,9/8].
+\tag{71.6}
+$$
+
+本结论不指定最大值、最大点或其唯一性。
+

@@ -1,0 +1,14 @@
+**定义 33.1（带被动记忆的参考缺陷）。** 本批量子载体均有限维，记 $\tau_A=I_A/d_A$，$R$ 是任意有限维外部记忆。演化只作用于 $A$，记忆不参与 Hamilton 耦合、反馈或重置。对联合态定义
+\[
+ \mathcal D_{A|R}(\rho)=D(\rho_{AR}\Vert\tau_A\otimes\rho_R)
+ =\log d_A-S(A|R)_\rho
+ =D(\rho_A\Vert\tau_A)+I(A:R)_\rho.
+\]
+相对熵使用自然对数及支持约定；$\operatorname{supp}\rho_{AR}\subseteq\mathcal H_A\otimes\operatorname{supp}\rho_R$，所以本式总是有限。对保单位信道 $\Phi$，定义
+\[
+ \eta^{\rm c}(\Phi)=\sup_{R,\ \mathcal D_{A|R}(\rho)>0}
+ \frac{\mathcal D_{A|R}((\Phi\otimes\operatorname{id}_R)\rho)}
+      {\mathcal D_{A|R}(\rho)}.
+\]
+完整量词包括相关态、纠缠态和任意有限记忆维数；上确界中的参考随输入的 $\rho_R$ 改变，但在一次局部演化中固定。若 $R$ 是有正交标签的经典寄存器，只取块对角联合态，则称为经典标签版本。该区别是完全强数据处理文献的既有定义结构。[^tcs6-complete]
+

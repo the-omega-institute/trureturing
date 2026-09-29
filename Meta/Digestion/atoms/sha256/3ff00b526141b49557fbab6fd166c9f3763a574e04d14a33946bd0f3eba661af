@@ -1,0 +1,6 @@
+**证明。** 支持部分的Kraus为$E_a^\dagger W$，其平方和$WQW=P$；补项补足$I-P$。若(10.5)成立，对Gram矩阵$c$酉对角化得到$F_j^\dagger F_k=\lambda_j\delta_{jk}I$。零权重时$F_j=0$；其余令$S_j=F_j/\sqrt{\lambda_j}$。于是$Q=\sum_j\lambda_jS_jS_j^\dagger$且$WF_j=S_j$，(10.4)精确变成(10.1)的恢复器。
+
+反向，任一恢复Kraus$A_t$与原Kraus的复合必须表示恒等通道。该通道Choi矩阵秩一，所以$A_tE_a=z_{ta}I$。用$\sum_tA_t^\dagger A_t=I$得到$E_a^\dagger E_b=\sum_t\overline z_{ta}z_{tb}I$；取迹确定标量就是$c_{ab}$。∎
+
+公式(10.4)属于已有transpose/Petz型恢复结构。[QREC-BK] 本定理不将数值近零残差等同于(10.5)的精确等式，也没有提供一般实数oracle的有限判等算法。
+

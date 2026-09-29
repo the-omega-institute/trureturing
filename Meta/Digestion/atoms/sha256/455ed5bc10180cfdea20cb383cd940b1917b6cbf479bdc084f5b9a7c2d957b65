@@ -1,0 +1,25 @@
+**推论 11.8（共同截止的唯一容量跳点）。** 在定理11.5的参数范围中，若 $\rho=0$，全部 $h\ge0$ 均有 $\Lambda=2m$。若 $\rho>0$ 且 $j<2\rho$，全部 $h\ge0$ 均有 $\Lambda=2m+1$。若 $\rho>0$ 且 $j\ge2\rho$，则
+
+$$
+\Lambda_{j,h}(\varepsilon)=
+\begin{cases}
+2m,&0\le h<2^{j-2\rho+1},\\
+2m+1,&h\ge2^{j-2\rho+1}.
+\end{cases}
+\tag{TM.1118}
+$$
+
+一个保证（TM.1110）中规模条件成立的充分界为
+
+$$
+j\ge J(m):=\max\left\{
+3+\lfloor\log_2m\rfloor,
+1+\left\lceil\log_2(2m(m-1))\right\rceil
+\right\}.
+\tag{TM.1119}
+$$
+
+对固定非二幂 $m$，若进一步 $j\ge2(m-1)$，随截止松弛变化的两个容量水平都出现。
+
+证明。由 $L=j-q(h)$ 单调下降，条件 $L<2\rho$ 等价于 $q(h)\ge j-2\rho+1$。正阈值计数 $q$ 依次在 $2^1,\ldots,2^j$ 增加；若 $1\le j-2\rho+1\le j$，首个满足值就是（TM.1118）的跳点。其余两种情形直接来自 $0\le L\le j$。式（TM.1119）使 $n=2^{j-1}\ge2m(m-1)$，故 $a\ge2(m-1)\ge2\rho$。非二幂 $m$ 不整除二幂 $n$，所以 $\rho>0$；而 $j\ge2(m-1)\ge2\rho$ 保证起始为低容量、到达所示松弛后为高容量。$\square$
+

@@ -1,0 +1,37 @@
+**定义 223.1（输入端口与输出端口的两种核检验）。** 对任意 $A,B\in M_2(\mathbb C)$，置
+
+$$
+\Gamma(X)=AXA^\dagger+BXB^\dagger,
+$$
+$$
+\delta_{\rm rot}
+=\min_{|c_0|^2+|c_1|^2=1}
+\|c_0A+c_1B\|_\infty^2,
+$$
+$$
+\gamma_{\rm out}
+=\max_{\|r\|=1}\lambda_{\min}(\Gamma^*(P_r)),
+\qquad
+\gamma_{\rm in}
+=\max_{\|v\|=1}\lambda_{\min}(\Gamma(P_v)).
+\tag{223.TS.2}
+$$
+这里 $P_w=|w\rangle\langle w|$，$\Gamma^*$ 是迹配对对偶。所有极值都由紧性取得。
+
+固定输出 $r$ 后，$\Gamma^*(P_r)$ 是两列 $A^\dagger r,B^\dagger r$ 的外积之和；固定输入 $v$ 后，$\Gamma(P_v)$ 是两列 $Av,Bv$ 的外积之和。两列构成的 $2\times2$ 矩阵，其左右 Gram 矩阵具有相同本征值，故
+$$
+\gamma_{\rm out}
+=\max_r\min_c\|(c_0A+c_1B)^\dagger r\|^2,
+$$
+$$
+\gamma_{\rm in}
+=\max_v\min_c\|(c_0A+c_1B)v\|^2.
+\tag{223.TS.3}
+$$
+两次一般弱极小极大不等式给
+$$
+\max(\gamma_{\rm out},\gamma_{\rm in})\le\delta_{\rm rot}.
+\tag{223.TS.4}
+$$
+两个端口均为二维，Kraus 系数空间也为二维。下述反向不等式使用这三处维数条件。一般弱极小极大与 Gram 谱对应仍是第 222 节中采用的标准中间步骤，不单独承担端口完备性。
+

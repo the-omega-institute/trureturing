@@ -1,0 +1,66 @@
+**定理140.2（有限终端最优误差的 Lipschitz 界）。** 对任意 $D,N$、同一装置 $\mathfrak A$ 及任意 $\theta,\theta'\in\Theta$，
+
+$$
+\left|
+\mathcal E_{D,N}(\theta;\mathfrak A)
+-\mathcal E_{D,N}(\theta';\mathfrak A)
+\right|
+\le2N h(\theta,\theta'),
+\tag{140.6}
+$$
+
+并且
+
+$$
+\boxed{
+|\varepsilon_{D,N}(\theta)-\varepsilon_{D,N}(\theta')|
+\le2N h(\theta,\theta').
+}
+\tag{140.7}
+$$
+
+**证明。** 两个来源等距只在输入 $|0\rangle$ 的列上不同，故
+
+$$
+\|T_\theta-T_{\theta'}\|_{\mathrm{op}}=h(\theta,\theta').
+\tag{140.8}
+$$
+
+对任意附加系统和任意输入密度矩阵，分别施加这两个等距后，输出半迹距离至多 $h$。对纯态，这是单位向量所成纯态的半迹距离不超过向量差范数；对混合态先纯化再偏迹即可。该界允许附加系统包含原参考、接收器以及全部先前档案。
+
+固定同一个 $\mathfrak A$，逐步只替换来源发射。每次替换的半迹距离增量至多 $h$；中间的同一 CPTP 接收操作及其后续演化均收缩半迹距离。因此，对任意相同输入 $\rho$ 和 $n\le N$，
+
+$$
+D\bigl(\sigma^{\theta,\mathfrak A}_n(\rho),
+       \sigma^{\theta',\mathfrak A}_n(\rho)\bigr)\le nh,
+\qquad
+D\bigl(\Omega^\theta_n(\rho),\Omega^{\theta'}_n(\rho)\bigr)\le nh,
+\quad D(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{140.9}
+$$
+
+第二项同样逐步比较完整未接收档案，并未只比较活动记忆边缘。对两份来源分别使用同一解码器，三角不等式给
+
+$$
+\begin{aligned}
+&\left|
+D\bigl((\operatorname{id}\otimes\mathcal D_n)
+\sigma^{\theta,\mathfrak A}_n(\rho),\Omega^\theta_n(\rho)\bigr)
+-
+D\bigl((\operatorname{id}\otimes\mathcal D_n)
+\sigma^{\theta',\mathfrak A}_n(\rho),\Omega^{\theta'}_n(\rho)\bigr)
+\right|\\
+&\qquad\le
+D\bigl(\sigma^{\theta,\mathfrak A}_n(\rho),
+       \sigma^{\theta',\mathfrak A}_n(\rho)\bigr)
++D\bigl(\Omega^\theta_n(\rho),\Omega^{\theta'}_n(\rho)\bigr)
+\le2nh.
+\end{aligned}
+\tag{140.10}
+$$
+
+这是接收后联合态变化与真实目标变化的两项之和。省略其中任何一项，均不是本节的来源扰动比较。
+
+对全部参考输入及前 $N$ 个终端取最大值，得到（140.6）。所有 $\theta$ 使用的是同一个可选装置集合，且此估计统一于装置。取 $\theta'$ 的最优装置，得到
+$\varepsilon_{D,N}(\theta)\le\varepsilon_{D,N}(\theta')+2Nh$；交换两个参数即得（140.7）。证明完毕。
+

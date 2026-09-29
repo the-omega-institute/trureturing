@@ -1,0 +1,53 @@
+### 301.8 几何权重消去增益的对数损失
+
+将（301.35）代入（301.30），再代入（301.28）。两流的几何权重分别满足
+$$
+\sum_{s=0}^{d-1}(Bp_x)^s
+\le\frac1{1-Bp_x}=\frac C{hc}\le\frac A h,
+$$
+$$
+\sum_{s=0}^{d-1}(Bp_y)^s
+\le\frac C h\le\frac A h.
+\tag{301.36}
+$$
+这是不带 $1/s$ 的几何和；它产生的 $1/h$ 将与计数差的尺度相消。
+
+准确得到
+$$
+\mathbb E[|\lambda_I-\lambda_J|\mathbf1_F]
+\le
+A\left[
+\kappa+\frac{\sqrt{w_h}}{\sqrt K\,h}
+\right]
+\exp\!\left[-a\frac{Kh^2}{w_h+h}\right].
+$$
+所以
+$$
+\boxed{
+\mathbb E[|\beta|\mathbf1_F]
+\le
+A\left(1+\frac1{\sqrt{t_h}}\right)
+\exp\!\left[-a\frac{Kh^2}{w_h+h}\right].
+}
+\tag{301.37}
+$$
+前因子只通过 $t_h$ 出现，在 $t_h\ge t\ge A_0$ 下统一有界；没有 $\log(1/h_0)$，也没有 $1/(h_0\kappa)$ 残留。
+
+还需把远尾指数接回统一尺度。由 $w_h\ge h\kappa$，
+$$
+\frac{Kh^2}{w_h+h}
+=
+t_h\frac{w_h}{\kappa^2(w_h+h)}
+\ge\frac{t_h}{\kappa(1+\kappa)}
+\ge\frac{t_h}{\kappa_0(1+\kappa_0)}.
+\tag{301.38}
+$$
+而 $t_h\ge t\ge A_0\ge1$，故
+$$
+\boxed{
+\mathbb E[|\beta|\mathbf1_F]\le A e^{-at}.
+}
+\tag{301.39}
+$$
+这也控制坏校准的全部加权影响和非正任务经验坐标的全部有害影响。并集 $F$ 与两种倾斜方向均已包含，没有遗漏某个交换方向的负均值。
+

@@ -1,0 +1,15 @@
+**定理 14.4（稳定隐藏误差仍能产生可见的线性漂移）。** 另设 $\|D\|_{\mathrm{op}}\le\lambda<1$，并令 $r_t=0$、$s_t=w\in W$ 恒定。置 $K=B(I-D)^{-1}$。则
+\[
+ u_n-u_0=nKw+B\left(\sum_{t=0}^{n-1}D^t\right)
+                         \bigl(v_0-(I-D)^{-1}w\bigr),
+\]
+从而
+\[
+ \left\|u_n-u_0-nKw\right\|_2
+ \le\frac{\|B\|_{\mathrm{op}}}{1-\lambda}
+                    \left\|v_0-(I-D)^{-1}w\right\|_2,
+ \qquad
+ \frac{u_n-u_0}{n}\longrightarrow Kw.
+\]
+同时 $v_n$ 有界。对全部常值隐藏驱动都没有此线性漂移，当且仅当 $B=0$。
+

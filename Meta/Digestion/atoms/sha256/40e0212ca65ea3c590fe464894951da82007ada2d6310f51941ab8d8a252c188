@@ -1,0 +1,17 @@
+## 定理 381.2（固定子空间与共同实现）
+
+评价映射
+
+$$
+\operatorname{ev}_r:\ker K_G\longrightarrow\mathcal F_r,\qquad
+\Psi\longmapsto\psi_r
+$$
+
+是线性双射。因此，存在归一化的共同向量切片，当且仅当 $\mathcal F_r\ne\{0\}$。一般图的核可以为零，不能由连通性单独推出归一化历史态存在。
+
+### 证明
+
+零约束沿路径递推给出 $\psi_v=U_\gamma\psi_r$。闭走法因此固定 $\psi_r$，评价映射落入 $\mathcal F_r$，且连通性使其单射。反之，取 $x\in\mathcal F_r$，对每个 $v$ 选一条根到 $v$ 的路径 $\gamma_v$，置 $\psi_v=U_{\gamma_v}x$。两条路径的差组成根处闭走法，故定义与路径选择无关，并满足全部边约束。∎
+
+形式上使用反向路径只是检验相容性，不授予观察者逆转实际过程的操作权限。图上的酉连接与向量丛 Laplacian 的直接框架可参见 Kenyon 的原始论文 [arXiv:1001.4028](https://arxiv.org/abs/1001.4028)，这里采用的是有限维、有限图的相应构造。
+

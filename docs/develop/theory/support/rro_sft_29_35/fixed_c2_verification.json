@@ -1,0 +1,30 @@
+{
+  "arithmetic": "exact integers",
+  "sampling": "none; listed finite sets exhausted",
+  "group": "C2",
+  "matrix_sizes": [
+    2,
+    3,
+    2
+  ],
+  "original_endpoints_unchanged": true,
+  "factor_product_equalities": 4,
+  "lag_two_SE_product_checks": 4,
+  "cleared_denominator_rational_one_step_checks": 2,
+  "base_edge_counts": [
+    16,
+    28,
+    16
+  ],
+  "compatibility_inputs_A": 1024,
+  "compatibility_inputs_B": 1024,
+  "triangle_inverse_identities": 512,
+  "all_five_edge_words_and_starting_group_coordinates_recovery_A": 131072,
+  "all_five_edge_words_and_starting_group_coordinates_recovery_B": 131072,
+  "augmentation_parameter_candidates": 18,
+  "necessary_parity_normal_form_cases": 108,
+  "scope": "finite instances; universal one-step exclusion is the separate paper divisibility proof, not this enumeration",
+  "sentinel": "FIXED_C2_TWO_STEP_CLOSURE_CHECKS_PASSED",
+  "script_sha256": "9afb5b440c297a2c0d73eb927ccfbd4862e435f76368e2759d05c04c7d18a1bc",
+  "shared_script_sha256": "780614da239b9a26496e70b92b0ff17fa4cfbf88f5f8ae37c70887eb9fa0a1af"
+}

@@ -1,0 +1,27 @@
+**推论166.2（端点质量的尺度）。** 固定 $\Delta>0$，当 $y\downarrow0$ 时，
+
+$$
+\boxed{
+F_\Delta(\ell+y)
+\sim\frac4{\pi\sqrt{\Delta}}\sqrt y,
+\qquad
+f_\Delta(\ell+y)
+\sim\frac2{\pi\sqrt{\Delta}}\frac1{\sqrt y}.
+}
+\tag{166.10}
+$$
+
+在另一端，
+
+$$
+\boxed{
+1-F_\Delta(u_\Delta-y)
+\sim
+\frac{\sqrt{9+28\Delta}}{\pi\Delta}\,y,
+\qquad
+\lim_{x\uparrow u_\Delta}f_\Delta(x)
+=\frac{\sqrt{9+28\Delta}}{\pi\Delta}.
+}
+\tag{166.11}
+$$
+

@@ -1,0 +1,22 @@
+**定义 2.19。** Fix an odd prime $p$ and normalized Haar probability $\mu$ on $\mathbb Z_p$. Write
+$$
+[b]_d=\{x\in\mathbb Z_p:x\equiv b\pmod{p^d}\},
+\qquad d\ge0,\quad 0\le b<p^d.
+\tag{TM.561}
+$$
+Thus $[0]_0=\mathbb Z_p$ and $\mu([b]_d)=p^{-d}$. A fixed computably enumerable event presentation includes, at each positive depth $h$, either no forbidden cylinder or one final cylinder
+$$
+C_h=[a_h]_h.
+\tag{TM.562}
+$$
+Repeated announcements of the same cylinder have no effect. The restriction is on the final set of cylinders at each depth; announcements may arrive in any order, and a small-depth cylinder may appear arbitrarily late. Define
+$$
+E=\mathbb Z_p\setminus\bigcup_{h:\,C_h\text{ included}}C_h,
+\qquad
+M=\mu(E),
+\qquad
+R=\{(d,b):E\cap[b]_d\ne\varnothing\}.
+\tag{TM.563}
+$$
+The set $E$ is effectively closed. All masses and extension queries below concern this same final set, this same presentation, and this same Haar law.
+

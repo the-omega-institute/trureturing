@@ -1,0 +1,17 @@
+**证明。** 归一化的完整本征向量为 $\psi=L_Ev/\sqrt{v^\dagger Gv}$。谱分解中 $(zI-H)^{-1}$ 的该留数为 $\psi\psi^\dagger$，左右投影即可。注意这里使用 $zI-H$；使用 $H-zI$ 时留数符号相反。∎
+
+### 定理 ST11.2：参数化 Hellmann–Feynman 公式的下降
+
+设 $H(u)$ 为 $C^1$ Hermitian 矩阵族，$E(u)$ 是简单本征值分支，且在所论区域始终不属于 $C(u)$ 的谱。令 $v(u)\ne0$ 满足 $S(E(u),u)v(u)=0$。则
+
+$$
+\boxed{
+\frac{dE}{du}
+=\frac{v^\dagger(\partial_u S)v}{v^\dagger Gv}
+=\frac{(L_Ev)^\dagger(\partial_u H)(L_Ev)}{\|L_Ev\|^2}.
+}
+\tag{ST11.2}
+$$
+
+其中 $\partial_u S$ 在固定 $E$ 下取偏导。
+

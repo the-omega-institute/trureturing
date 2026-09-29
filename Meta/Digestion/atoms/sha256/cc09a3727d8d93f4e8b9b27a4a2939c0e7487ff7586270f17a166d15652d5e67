@@ -1,0 +1,9 @@
+**定义 19.1（最终点击效果与剩余尾项）。** 对第 18 节的仪器，令
+
+$$
+R=I-F,\qquad R_n=S_n-F=\mathcal A^n(R),
+\qquad r_\rho=\operatorname{Tr}(\rho R).
+$$
+
+$r_\rho$ 是最终点击概率；$\operatorname{Tr}(\rho R_n)$ 是“前 $n$ 轮未点击但以后会点击”的概率。后者为概率事件的差，不要求在第 $n$ 轮已经识别哪些未点击样本将永久无点击。
+

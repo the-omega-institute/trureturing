@@ -1,0 +1,65 @@
+### 205.3 加权 Choi 平方恒等式
+
+在任意复 Kraus 表示
+$K_{j,\alpha}=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)$ 中，
+保持第200节的矩，并定义
+
+$$
+\begin{gathered}
+U_0=\sum_{\alpha\in0}|b-i2na|^2,\qquad
+U_1=\sum_{\alpha\in1}|b+i2na|^2,\\
+V=\sum_{j,\alpha}|d-2ma|^2,\qquad P=P_0+P_1,\\
+w_0=\frac{\beta\delta+\rho}{4},\qquad
+w_1=\frac\rho4,\qquad w_d=\frac{\beta R+\rho}{4}.
+\end{gathered}
+\tag{205.10}
+$$
+
+三权重在固定 $I$ 上都有统一正下界。平方和仅由 Choi 矩决定。
+令 $G_h$ 为第200节只把 $A_j$ 置为 $1/2$、保持其他当前矩的辅助函数。
+共同 TP 给
+
+$$
+\begin{aligned}
+G_h={}&\frac{7h}{12}+\frac{\beta\Sigma}{8}
+-\frac\beta4(B_0+RB_1)
++\frac{\gamma\delta}{2}\operatorname{Im}N_0
++\frac{\gamma R}{2}\operatorname{Im}P\\
+&-\frac{2h}{3}\operatorname{Re}(M_0+M_1)
++\frac h6\sum_j|M_j|^2.
+\end{aligned}
+$$
+
+使用（205.4），严格有
+
+$$
+\boxed{
+\begin{aligned}
+G_h-\Phi_h={}&w_0U_0+w_1U_1+w_dV
++\frac h6\sum_j|M_j-m|^2\\
+&-4n^2\{w_0(A_0-1/2)+w_1(A_1-1/2)\}\\
+&-4m^2w_d(A_0+A_1-1)
++\frac\vartheta2\operatorname{Im}P.
+\end{aligned}}
+\tag{205.11}
+$$
+
+为核对相位项，展开得
+
+$$
+\begin{aligned}
+U_0&=B_0+4n^2A_0+4n\operatorname{Im}N_0,\\
+U_1&=B_1+4n^2A_1-4n\operatorname{Im}N_1,\\
+V&=D_0+D_1+4m^2(A_0+A_1)
+-4m\operatorname{Re}(M_0+M_1).
+\end{aligned}
+$$
+
+由 $N_0+N_1=-P$，两个 $U$ 的相位项合为
+$n(\beta\delta+2\rho)\operatorname{Im}N_0+
+\rho n\operatorname{Im}P$。
+第一项由 KKT 条件匹配 $\gamma\delta\operatorname{Im}N_0/2$；
+第二项使剩余反馈系数成为 $\vartheta/2$。
+若只使用前两个驻点关系而暂不代入圆周等式，
+（205.11）左右之差为 $\rho(4m^2+4n^2-1)/4$，最后由（205.4）消失。
+

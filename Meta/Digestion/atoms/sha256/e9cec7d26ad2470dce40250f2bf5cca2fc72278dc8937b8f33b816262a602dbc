@@ -1,0 +1,104 @@
+**定理 8.2（秩四约化、四次方程与精确错误指数）。** 对定义 8.1 的任意核，
+令 $\mathbf1$ 为全一列向量，并置
+
+$$
+u_p(x)=\mathbf1_{C_p}(x)\sqrt{1+b(x)},\qquad
+v_p(x)=\mathbf1_{C_p}(x)\sqrt{1-b(x)}.
+$$
+
+则
+
+$$
+R=\frac1n\bigl(u_+u_+^\top+u_-u_-^\top+v_+v_-^\top+v_-v_+^\top\bigr),
+\qquad \operatorname{rank}R\le4,\qquad
+\mathcal H_P(T)=\frac1n\mathbf1^\top R^T\mathbf1.
+\tag{8.2}
+$$
+
+$R$ 的 Perron 特征值为 $\lambda=(1+z)/2$，其中 $z\in(0,1]$ 是方程
+
+$$
+\boxed{\quad z^2(1+z)^2=(z+\eta_+^2)(z+\eta_-^2)\quad}
+\tag{8.3}
+$$
+
+的唯一正根。固定 $d$ 与核 $P$ 后，错误指数存在，且
+
+$$
+C_{\rm path}(P):=\lim_{T\to\infty}-\frac1T\log e_P(T)
+=-\log\lambda.
+\tag{8.4}
+$$
+
+所以长期指数只依赖两个标量 $(\eta_+,\eta_-)$；有限时域的 $\mathcal H_P(T)$
+仍由 (8.2) 中的向量决定。$C_{\rm path}=0$ 当且仅当 $b\equiv0$。
+
+证明。同类边给出 $\sqrt{(1+b(x))(1+b(y))}/n$，异类边给出
+$\sqrt{(1-b(x))(1-b(y))}/n$，逐块得到 (8.2) 的矩阵分解。
+路径概率相乘再求和得到其中的亲和度公式。
+零和约束还给出
+
+$$
+\|u_p\|^2=\|v_p\|^2=M,\qquad u_p^\top v_p=M\eta_p.
+\tag{8.5}
+$$
+
+试取正系数的向量 $h=a_+u_++a_-u_-+c_+v_++c_-v_-$。
+下列系数等式足以保证 $Rh=((1+z)/2)h$：
+
+$$
+z a_+=\eta_+c_+,\qquad z a_-=\eta_-c_-,\qquad
+(1+z)c_+=\eta_-a_-+c_-,\qquad
+(1+z)c_-=\eta_+a_++c_+.
+\tag{8.6}
+$$
+
+消去 $a_\pm$ 后，两式的相容条件正是 (8.3)。
+由于 $0<\eta_\pm\le1$，函数
+
+$$
+f(z)=\frac{z^2(1+z)^2}{(z+\eta_+^2)(z+\eta_-^2)}\quad(z>0)
+$$
+
+严格递增：其对数导数为
+$2/z+2/(1+z)-1/(z+\eta_+^2)-1/(z+\eta_-^2)>0$。
+又 $f(0+)=0$ 且 $f(1)\ge1$，故正根唯一且至多为 $1$。
+对该根，(8.6) 可选全部系数为正，从而 $h>0$。
+$R$ 逐项正，故此特征值即 Perron 值。
+这个构造不要求四个生成向量线性独立，也包括某个 $\eta_p=1$ 的退化情形。
+
+为从亲和度得到精确错误指数，将 $h$ 归一化为 $\sum_xh_x^2=1$，并定义
+
+$$
+\widehat P(x,y)=\frac{R_{xy}h_y}{\lambda h_x},\qquad \widehat\pi(x)=h_x^2.
+\tag{8.7}
+$$
+
+此 Perron 归一化是可逆核族的已知 $e$ 投影构造，见
+[Wolfer–Watanabe，定理 7](../../../Library/Dynamics/wolfer2021reversible.md)；
+严格正性满足其共同支持强连通的假设。这里 $\widehat P$ 逐项正，且
+$\widehat\pi(x)\widehat P(x,y)=h_xR_{xy}h_y/\lambda$
+关于 $x,y$ 对称。因此它平稳且可逆。
+在该平稳路径律 $\widehat{\mathbb P}$ 下，置
+
+$$
+S_T=\sum_{t=0}^{T-1}\log\frac{P(X_t,X_{t+1})}{P(X_{t+1},X_t)}.
+$$
+
+边增量反对称而平稳边律对称，故均值为零；有限正链的遍历定理给出
+$S_T/T\to0$ 几乎处处。直接比较路径质量得到精确恒等式
+
+$$
+e_P(T)=\frac{\lambda^T}{2n}
+\widehat{\mathbb E}\!\left[
+\frac{\exp(-|S_T|/2)}{h_{X_0}h_{X_T}}\right].
+\tag{8.8}
+$$
+
+固定 $P$ 时，端点因子有正的上下界。期望的上界为常数；
+对任意 $\epsilon>0$，其下界为某个正的常数乘以
+$e^{-\epsilon T/2}\widehat{\mathbb P}(|S_T|\le\epsilon T)$。
+后者概率趋于 $1$，因此期望不贡献指数率，证明 (8.4)。
+最后 $\lambda=1$ 等价于 $z=1$，由 (8.3) 等价于 $\eta_+=\eta_-=1$，
+又等价于每个 $b(x)=0$。$\square$
+

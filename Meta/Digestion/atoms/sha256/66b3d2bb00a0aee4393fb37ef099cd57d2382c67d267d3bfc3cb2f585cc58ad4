@@ -1,0 +1,11 @@
+## 定理 ST38.1：全局可恢复逻辑维数的整除障碍
+
+在闭定向曲面$\Sigma$上，若一个固定全局逻辑空间$\mathbb C^d$具有ST37的光滑精确可恢复编码，物理支持丛为$E$，则
+
+$$
+\boxed{\operatorname{rank}E=kd,\qquad c_1(E)=d\,c_1(F).}
+\tag{ST38.1}
+$$
+
+所以$d$必须同时整除$\operatorname{rank}E$和第一Chern数。
+

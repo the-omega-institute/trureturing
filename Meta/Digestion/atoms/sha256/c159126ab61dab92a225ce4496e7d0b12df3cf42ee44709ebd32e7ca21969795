@@ -1,0 +1,17 @@
+## ST31．有限记录分辨率与后续实验预算
+
+### 定理 ST31.1：相位分箱给出二次精度界
+
+将单位圆分为$K\ge2$个等宽相位箱，每箱只保存箱号。对箱中心相位$\vartheta_r$，每个所属相位距它不超过$\delta=\pi/K\le\pi/2$，所以
+
+$$
+\operatorname{Re}(e^{-i\vartheta_r}c_r)\ge q_r\cos\delta.
+$$
+
+从而
+
+$$
+\boxed{e_*\le\frac{1-\cos(\pi/K)}2\le\frac{\pi^2}{4K^2}.}
+\tag{ST31.1}
+$$
+

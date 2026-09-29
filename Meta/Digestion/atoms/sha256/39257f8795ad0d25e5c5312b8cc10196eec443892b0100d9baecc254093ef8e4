@@ -1,0 +1,44 @@
+**定义 14.10（固定制备的模时钟来源）。** 取有限群胚 $\mathcal G$，对象集为 $X$，取 $C=\mathbb Z/m\mathbb Z$，$m\ge1$。每条箭头 $e:x\to y$ 有指定费用 $c(e)\in C$，满足
+
+$$
+c(f\circ e)=c(e)+c(f),\qquad c(e^{-1})=-c(e),
+\qquad (x,t)\xrightarrow{e}(y,t+c(e)).
+\tag{14.40}
+$$
+
+恒等箭头费用由加法消去律等于零。群胚中的箭头及逆箭头均允许执行，合法性与费用不依赖额外隐藏历史。实际制备是固定非空 $P\subseteq X$，每个 $p\in P$ 都从时钟零出发。记 $R_P\subseteq X\times C$ 为 $P\times\{0\}$ 经有限合法运输得到的实际集合；$R_P(x)=\{t:(x,t)\in R_P\}$。所保留的联合任务是完整当前对象及其指定模时钟 $(x,t)$ 和这些量的未来运输，不要求反演初始制备点或整份过去档案。比较切分时，$\mathcal G,c,P$ 与初始钟值固定。
+
+先作后续粘合所需的标准归一化。在与 $P$ 相交的连通分支 $O$ 上，选根 $o$ 及箭头 $r_x:o\to x$，令 $r_o=\mathrm{id}$、$\kappa_x=c(r_x)$，并记
+
+$$
+H_O=\{c(\ell):\ell:o\to o\}\le C,
+\qquad
+U_O(P)=\bigcup_{p\in P\cap O}(-\kappa_p+H_O).
+\tag{14.41}
+$$
+
+$H_O$ 是子群：恒等、复合及逆箭头分别给零、加法及加法逆元。通过 $r_x$ 共轭闭路不改变它在交换群 $C$ 中的费用像。对任意 $e:p\to x$，根闭路 $r_x^{-1}\circ e\circ r_p$ 的费用为 $\kappa_p+c(e)-\kappa_x$，故 $c(e)\in\kappa_x-\kappa_p+H_O$。反过来，对实现 $h\in H_O$ 的根闭路 $\ell$，箭头 $r_x\circ\ell\circ r_p^{-1}$ 实现费用 $\kappa_x-\kappa_p+h$。因此精确的实际纤维及其计数是
+
+$$
+R_P(x)=\kappa_x+U_O(P),\qquad
+|R_P\cap(O\times C)|=|O|\,|U_O(P)|.
+\tag{14.42}
+$$
+
+这是闭路运输与实际轨道的已有机制在加法时钟上的使用。运输记忆卷 [TransportMemoryCompletion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §1.7 已给生成树归一化，§2.1–2.3 已区分实际初态轨道与任务商。图论背景中，Jenča，*Voltage lifts of graphs from a category theory viewpoint*，[arXiv:2008.12055v3](https://arxiv.org/abs/2008.12055v3)，Definition 2.7 的提升将群坐标沿边乘上电压，Proposition 2.9 给其典范投影为覆盖；此处交换钟群改用加法记号。Jonoska–Krajčevski–McColm，*Lifting Voltages in Graph Covers*，[arXiv:2501.17135v1](https://arxiv.org/abs/2501.17135v1)，Proposition 4.10 对连通电压图及其电压值生成的群作提升，将每个分支同构于生成树归一化后电压子群上的提升。这里只借用提升及闭路分支机制；这些结果没有给出下文的观察器资源下界或两个局部制备像的粘合判据。
+
+式(14.42)保留所有实际制备给出的陪集并，不取它生成的子群。若有 $r_O$ 个不同的 $-\kappa_p+H_O$，则每个当前对象上的时钟纤维大小为 $r_O|H_O|$。更换参考箭头只改变表达中的代表，不改变实际纤维。没有实际制备的连通分支不属于 $R_P$。
+
+作为这一计算的恢复含义，在每个实际分支上有
+
+$$
+\begin{aligned}
+&t\text{ 可由完整当前对象 }x\text{ 唯一恢复}\\
+&\quad\Longleftrightarrow |U_O(P)|=1\\
+&\quad\Longleftrightarrow H_O=\{0\}\text{ 且所有 }p\in P\cap O\text{ 的 }\kappa_p\text{ 相等}.
+\end{aligned}
+\tag{14.43}
+$$
+
+第一步是每个非空纤维必须为单点。第二步用每个相位陪集都含 $|H_O|$ 个元素；当 $H_O=\{0\}$ 时，各单点相等恰是制备势对齐。不同连通分支可分别选势常数，因为当前对象已辨认分支。仓内 `D5/S3/Observer/AgencyHolonomy/ZeroLoopPotentialEquivalence.lean` 的 `closed_path_zero_iff_exists_potential` 要求连通群胚、`AddCommGroup`、复合费用相加及逆箭头费用取负，结论是所有闭路费用为零当且仅当存在势 $V$ 使 $c(e)=V(y)-V(x)$。在这里逐分支使用它；它不保证所有零钟制备点的势相等，也不承担局部像粘合。非零闭路费用或未对齐的实际制备能使完整当前对象仍有多种钟值，进一步压缩当前对象无法恢复被它遗漏的区别。
+

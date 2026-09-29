@@ -326,14 +326,14 @@ public sealed partial class ResourceAdapterTests
         var environment = EnvironmentFor(fixture);
         MaterializePlan(fixture, environment);
         fixture.Write("tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll", "fixture");
-        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/lib/resource-observation-lib.sh" })
+        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/ci_output.py", "tools/scripts/lib/resource-observation-lib.sh" })
             fixture.Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
         var dotnet = Path.Combine(environment["PATH"], "dotnet");
-        File.WriteAllText(dotnet, "#!/bin/bash\nprintf 'CURRENT_CHILD_STARTED\\n'\nread -r release\nprintf 'CURRENT_CHILD_FINISHED\\n'\n");
+        File.WriteAllText(dotnet, "#!/bin/bash\nprintf 'warning: CURRENT_CHILD_STARTED\\n'\nread -r release\nprintf 'CURRENT_CHILD_FINISHED\\n'\n");
         File.SetUnixFileMode(dotnet, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var result = EngineeringProcess.Process(fixture.Root, Path.Combine(environment["PATH"], "python3"),
             ["-c", """
-            import json, os, signal, subprocess, sys
+            import json, os, pathlib, signal, subprocess, sys
             child = subprocess.Popen(['/bin/bash', 'tools/scripts/ci-stage.sh', 'current'],
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 text=True, start_new_session=True)
@@ -349,8 +349,9 @@ public sealed partial class ResourceAdapterTests
                 stdout, stderr = child.communicate('release\n')
                 text = ''.join(output) + stdout
                 print(json.dumps({'signal': sys.argv[1], 'exit': child.returncode, 'stdout': text, 'stderr': stderr}))
-                assert text.count('CURRENT_CHILD_STARTED') == 1, text
-                assert text.count('CURRENT_CHILD_FINISHED') == 1, text
+                raw = pathlib.Path('build/ci/logs/current/console.log').read_text()
+                assert raw.count('CURRENT_CHILD_STARTED') == 1, raw
+                assert raw.count('CURRENT_CHILD_FINISHED') == 1, raw
                 assert child.returncode == int(sys.argv[2]), (child.returncode, text, stderr)
                 assert 'CI_STAGE_RESULT stage=current exit=' + sys.argv[2] in text, text
             finally:
@@ -425,7 +426,7 @@ public sealed partial class ResourceAdapterTests
     private static (int Exit, string Text) Shell(ResourceFixture fixture, string[] arguments,
         Dictionary<string, string> environment)
     {
-        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/lib/resource-observation-lib.sh" })
+        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/ci_output.py", "tools/scripts/lib/resource-observation-lib.sh" })
             fixture.Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
         return EngineeringProcess.Process(fixture.Root, "/bin/bash", ["tools/scripts/ci-stage.sh", .. arguments],
             environment, TestBudgets.WorkflowProcessHangGuard);

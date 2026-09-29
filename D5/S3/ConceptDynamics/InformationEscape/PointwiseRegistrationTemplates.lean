@@ -7,7 +7,7 @@
    digest: Pointwise relation templates retain both object readouts and provide checked slot sensitivity. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAudit.RegistrationWitnesses
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

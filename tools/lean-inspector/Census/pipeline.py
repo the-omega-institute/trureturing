@@ -154,7 +154,7 @@ def execute(options):
             "import os,json;print(json.dumps(dict(os.environ)))"], cwd=repository, env=env))
         lean_binary = shutil.which("lean", path=env["PATH"])
         env["LEAN_NUM_THREADS"] = "1"
-        env["LEAN_SRC_PATH"] = str(repository / "tools/lean-inspector") + os.pathsep + str(repository)
+        # Keep Lake's source paths for the native builder's recursive --src-deps queries.
         if options.fixture_truth_export:
             report_path = pathlib.Path(options.fixture_truth_export).resolve()
             raw_report = pathlib.Path(options.lean_report).resolve()

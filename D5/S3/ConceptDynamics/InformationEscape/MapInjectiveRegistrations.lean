@@ -6,11 +6,12 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/InformationEscape/MapInjectiveRegistrations.marker_lawSensitive; instance=D5/S3/ConceptDynamics/InformationEscape/MapInjectiveRegistrations.markerRealization
    digest: Three frozen injectivity theorems share one template with exact statements and checked variation and support. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S0.History.Coding.EventCodeIntertranslation
 import D5.S3.QuantumContext.ProjectionValuationObstruction
-import LeanInformationAudit.SealCommand
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -52,18 +53,12 @@ theorem marker_slotSensitive : FiniteSlotSensitivity markerArena :=
   mapInjective_sensitivity _ (fun i : Fin 2 => i)
     (marker_bridge.equivalence.mp marker_digit_injective) (0 : Fin 2) (1 : Fin 2)
     (by decide : (0 : Fin 2) ≠ (1 : Fin 2))
-register_information_theorem marker_digit_injective in markerArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization
-    (Fin 2) (Fin 2) (instDecidableEqFin 2) (fun i => i))
-  primitives markerRealization.toPrimitiveBundle realization marker_bridge
-  variation marker_lawSensitive sensitivity marker_slotSensitive
-example : marker_digit_injective.__information_unit.Statement =
-    Function.Injective markerDigit := rfl
+
+
 #print axioms marker_bridge
 #print axioms marker_lawSensitive
 #print axioms marker_slotSensitive
-expect_information_occurrence marker_digit_injective in markerArena
-  from "D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations"
+
 end Marker
 
 section Opcode
@@ -102,25 +97,19 @@ theorem opcode_slotSensitive : FiniteSlotSensitivity opcodeArena :=
   mapInjective_sensitivity _ (fun i : Fin 12 => i)
     (opcode_bridge.equivalence.mp opcode_index_injective) (0 : Fin 12) (1 : Fin 12)
     (by decide : (0 : Fin 12) ≠ (1 : Fin 12))
-register_information_theorem opcode_index_injective in opcodeArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization
-    (Fin 12) (Fin 12) (instDecidableEqFin 12) (fun i => i))
-  primitives opcodeRealization.toPrimitiveBundle realization opcode_bridge
-  variation opcode_lawSensitive sensitivity opcode_slotSensitive
-example : opcode_index_injective.__information_unit.Statement =
-    Function.Injective opcodeIndex := rfl
+
+
 #print axioms opcode_bridge
 #print axioms opcode_lawSensitive
 #print axioms opcode_slotSensitive
-expect_information_occurrence opcode_index_injective in opcodeArena
-  from "D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations"
+
 end Opcode
 
 section Rays
 open D5.S3.QuantumContext.ProjectionValuationObstruction
 
 /-- There are 3^4 four-coordinate vectors over {-1, 0, 1}. -/
-private def rayCardinality : Nat :=
+def rayCardinality : Nat :=
   Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 
 abbrev RayCode := Fin rayCardinality
@@ -218,33 +207,16 @@ theorem ray_slotSensitive : FiniteSlotSensitivity rayArena :=
   mapInjective_sensitivity _ (fun r => rayReadout r)
     (ray_bridge.equivalence.mp ks_vectors_injective) (0 : Fin 18) (1 : Fin 18)
     (by decide : (0 : Fin 18) ≠ 1)
-register_information_theorem ks_vectors_injective in rayArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization (Fin 18) D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.RayCode (instDecidableEqFin D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.rayCardinality) (fun r => D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.rayReadout r))
-  primitives rayRealization.toPrimitiveBundle realization ray_bridge
-  variation ray_lawSensitive sensitivity ray_slotSensitive
-example : ks_vectors_injective.__information_unit.Statement =
-    Function.Injective ksVectors := rfl
+
+
 #print axioms ray_bridge
 #print axioms ray_lawSensitive
 #print axioms ray_slotSensitive
-expect_information_occurrence ks_vectors_injective in rayArena
-  from "D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations"
+
 end Rays
 
-set_option maxRecDepth 100000 in
-#seal_information_theory
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  for entry in InformationRegistry.entries env do
-    if entry.registrationModuleName == env.header.mainModule then
-      let info ← getConstInfo (RegistrationGates.diagnosticName entry.unitName env.header.mainModule)
-      let some (.lit (.strVal diagnostic)) := info.value?
-        | throwError "registration diagnostic is not a literal"
-      if diagnostic.isEmpty then
-        logInfo m!"REGISTRATION_WITNESSES_CHECKED {entry.theoremName} support=[readout[0]]"
-      else
-        logWarning diagnostic
+
+
 
 end D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations

@@ -1,0 +1,56 @@
+### 230.6 投影扰动保留同一容量证书
+
+保持第一节的 $1\le r<d$、$\nu\ne0$ 及目标分支 $\Gamma$。设另有同一基空间、同一输出中的连续秩 $r$ 正交投影族 $Q$，并有
+$$
+\varepsilon=\sup_x\|P(x)-Q(x)\|_{\rm op}<1.
+\tag{230.HR.34}
+$$
+记 $L_P=\operatorname{im}P$、$L_Q=\operatorname{im}Q$。逐纤维映射
+$$
+A_x=Q(x)|_{L_{P,x}}:L_{P,x}\longrightarrow L_{Q,x}
+\tag{230.HR.35}
+$$
+是束同构。事实上，对 $\xi\in L_{P,x}$，
+$$
+\|Q(x)\xi\|
+\ge\|\xi\|-\|(Q(x)-P(x))\xi\|
+\ge(1-\varepsilon)\|\xi\|.
+\tag{230.HR.36}
+$$
+因此 $A_x$ 单射；两边维数同为 $r$，故满射。在任意局部帧中它是连续的可逆方阵，矩阵求逆连续，故各纤维逆连续拼合，得到全局束同构。于是
+$$
+c_r(H^*\otimes L_Q)
+=c_r(H^*\otimes L_P)=\nu h^r.
+\tag{230.HR.37}
+$$
+这里没有选择全局事件基，也没有假定 $P$ 与 $Q$ 交换。
+
+概率稳定性取决于同一目标分支。定义
+$$
+\mu=\sup_{\|v\|=1}\operatorname{Tr}\Gamma(P_v)
+=\|\Gamma^*(I_m)\|_{\rm op}\le1.
+\tag{230.HR.38}
+$$
+最后的不等式来自 $\Gamma$ 是一份 instrument 的分支。对正矩阵 $\Gamma(P_v)$，算子序界 $-\varepsilon I\preceq P([v])-Q([v])\preceq\varepsilon I$ 给
+$$
+\left|\operatorname{Tr}\bigl[(P([v])-Q([v]))\Gamma(P_v)\bigr]\right|
+\le\varepsilon\operatorname{Tr}\Gamma(P_v)
+\le\varepsilon\mu.
+\tag{230.HR.39}
+$$
+所以新事件具有统一下界
+$$
+\operatorname{Tr}\bigl[Q([v])\Gamma(P_v)\bigr]
+\ge\max\{0,\alpha-\varepsilon\mu\}.
+\tag{230.HR.40}
+$$
+对 $Q$ 应用定理 230.2，任何 $rk<d$ 的同名分支候选均满足
+$$
+\boxed{d_\diamond(\mathcal R,\mathcal S)
+\ge\max\{0,\alpha-\varepsilon\mu\}.}
+\tag{230.HR.41}
+$$
+若只使用 $\mu\le1$，可取更简洁的下界 $\max\{0,\alpha-\varepsilon\}$。$\varepsilon<1$ 保留丛同构类型；$\varepsilon\mu<\alpha$ 则进一步保证扰动后的证书仍给严格正距离及（230.HR.19）的容量下界。这是两个不同条件。
+
+式（230.HR.41）说明用受扰事件族仍能证明的下界；若原来的 $P$ 及其概率下界（230.HR.7）仍然可用，原来的更强下界 $\alpha$ 当然仍成立。
+

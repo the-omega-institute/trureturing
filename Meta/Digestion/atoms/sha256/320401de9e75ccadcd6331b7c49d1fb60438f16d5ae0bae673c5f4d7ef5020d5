@@ -1,0 +1,73 @@
+**命题 47.2（非极端分配的最坏动作与字母表汇总）。** Claim status: open。在命题47.1的条件下再设 $r,s>0$，即两端都不独占完整源。记
+
+$$
+M=\max_{1\le i\le d}C_i,
+\qquad L=\sum_{i=1}^d C_i.
+\tag{47.9}
+$$
+
+$L$ 只是在动作字母表 $\{N_1,\ldots,N_d\}$ 上，把各动作面对全部当前源的最优最坏成本相加。它不是沿某条时间路径的累计成本，也不是摊还成本。全部分配分为三类：
+
+$$
+\begin{array}{c|c|c|c}
+\text{控制信息的归属}&C_i&M&L\text{ 的锐下界}\\ \hline
+\ell_B=0\ (A\text{ 单独确定 }c)&\mathbf1_{\{\beta_i\ne0\}}&1&s\\
+\ell_A=0\ (B\text{ 单独确定 }c)&\mathbf1_{\{\alpha_i\ne0\}}&1&r\\
+\ell_A\ne0,\ \ell_B\ne0
+ &\mathbf1_{\{\alpha_i\ne0\}}+\mathbf1_{\{\beta_i\ne0\}}&2&d+1
+\end{array}
+\tag{47.10}
+$$
+
+对每个 $r,s\ge1$、$r+s=d+1$，三行各自的下界均可达到。
+
+证明。$c$ 非零，所以两限制不可能同时为零。若 $\ell_B=0$，则 $c(a+b)=\ell_A(a)$，正好表示左摘要单独确定 $c$。反向，若左摘要单独确定 $c$，比较全部真实输入 $(a,b)$、$(a,0)$，便有 $\ell_B(b)=0$。另一侧相同。
+
+先取 $\ell_B=0$。由 $B\subseteq W$，投影 $p_B:W\to B$ 满射；$e_1,\ldots,e_d$ 是 $W$ 的基，故非零列 $\beta_i$ 张成 $B$，至少有 $s$ 列非零。由 (47.7)，恰在这些列各付一位 $A\to B$，故 $L\ge s$。$s>0$ 保证至少一列非零，所以 $M=1$。若 $\ell_A=0$，交换两端得 $L\ge r$、$M=1$。
+
+若两限制均非零，对任意 $a\in A$，可选 $b\in B$ 满足 $\ell_B(b)=\ell_A(a)$，使 $a+b\in W$。故 $p_A:W\to A$ 满射；同理 $p_B:W\to B$ 满射。因此
+
+$$
+\#\{i:\alpha_i\ne0\}\ge r,
+\qquad
+\#\{i:\beta_i\ne0\}\ge s,
+\qquad L\ge r+s=d+1.
+\tag{47.11}
+$$
+
+每个 $e_i=\alpha_i+\beta_i\ne0$，故每个 $C_i\ge1$。若所有 $C_i$ 都是一，则 $L=d$，与 (47.11) 矛盾；而 (47.7) 又给 $C_i\le2$，所以 $M=2$。这一步利用共同的投影列与维数，不以分别可达的资源最优值代替同一个分配。
+
+第一行的锐构造为
+
+$$
+A=\operatorname{span}\{e_c,e_1,\ldots,e_{r-1}\},
+\qquad B=\operatorname{span}\{e_r,\ldots,e_d\}.
+\tag{47.12}
+$$
+
+它把 $c$ 放在左端，$r-1$ 个数据坐标也放左端，其余 $s$ 个数据坐标放右端。仅 $i=r,\ldots,d$ 需要左向右一位，所以 $L=s$。第二行由交换两端的相应构造达到 $L=r$。
+
+第三行取分散控制信息的直和
+
+$$
+\boxed{
+A=\operatorname{span}\{e_c,e_1,\ldots,e_{r-1}\},
+\qquad B=\operatorname{span}\{e_c+e_d,e_r,\ldots,e_{d-1}\}.
+}
+\tag{47.13}
+$$
+
+这里 $1\le r\le d$，空指标段按空集处理。所列向量共 $d+1$ 个，生成全部数据基和控制基：$e_d=e_c+(e_c+e_d)$，其余基已在列表中。故它们是一组基，确给维数 $r,s$ 的互补子空间；两侧各含一个控制坐标为一的向量。投影具体为
+
+$$
+(\alpha_i,\beta_i)=
+\begin{cases}
+(e_i,0),&1\le i<r,\\
+(0,e_i),&r\le i<d,\\
+(e_c,e_c+e_d),&i=d.
+\end{cases}
+\tag{47.14}
+$$
+
+于是 $N_d$ 恰需两个方向各一位，其余每项恰需一位，$L=(d-1)+2=d+1$。三类构造都通过直和投影给出摘要，基平移只在本侧加上相应常量投影，故满足原合同。证毕。
+

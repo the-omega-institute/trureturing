@@ -1,0 +1,23 @@
+**证明：构造一个同时延拓六轮的酉。** 由（89.6），$V|_U$ 可视为 $U\to K\otimes F$ 的等距。输入和目标全空间维数相同：
+
+$$
+\dim(K\otimes B)=\dim(K\otimes F)=14.
+$$
+
+设 $\dim U=r$，则 $U^\perp$ 与 $V(U)^\perp\cap(K\otimes F)$ 均为 $14-r$ 维。任取两者之间的酉 $J_0$，定义
+
+$$
+W(u+u^\perp)=Vu+J_0u^\perp
+\qquad(u\in U,\ u^\perp\in U^\perp).
+\tag{89.9}
+$$
+
+两个输出像正交且覆盖 $K\otimes F$，所以 $W$ 为全域酉。若 $\iota:F\hookrightarrow E$ 为包含映射，则
+
+$$
+(I_K\otimes\iota)Wu=Vu\qquad(u\in U).
+\tag{89.10}
+$$
+
+这一次延拓同时固定了全部 $U_n$ 上的动作；对交叠输入的相容性已由原来的同一个 $V$ 保证。补空间上的自由选择不会改变任何 $U_n$ 上的作用。
+

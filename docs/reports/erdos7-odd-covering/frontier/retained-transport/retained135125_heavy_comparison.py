@@ -14,10 +14,10 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/retained135125_heavy_comparison.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/retained-transport/selected_deletion_mask_heavy_comparison.py': '7292f7ea3b0b8494c729436e31ec2badae119bf71ce1c3a9d37dd818d17f3711',
-    'frontier/retained-transport/retained135_heavy_comparison.py': '93ad67489e6ce429f45bd8888cfd8f6e5ac91b0bc3d4fbeebfedef9f7d4b84ac',
-    'frontier/retained-transport/retained135_survival_comparison.py': 'd89258d6ff710ae6479c1e4e5530ef2e81465c7bed9876d94c7bbdaa1c4a5350',
-    'certificates/source_norms/retained-transport/retained135_survival_comparison.json': '6a203d7da0717fd8b16d3a8016375ea80bdc5848c68753fa72c8690da8a7f176',
+    'frontier/retained-transport/selected_deletion_mask_heavy_comparison.py': '8a1fe65a65355f7079a89f4b3004017120135ca50c64343d1c9dfa7e4f2127e8',
+    'frontier/retained-transport/retained135_heavy_comparison.py': 'cb3dfecc24fe9c95759008a54a9e023bafd45d280a92f06c5072e0565e4b7374',
+    'frontier/retained-transport/retained135_survival_comparison.py': 'df4b125e497868abc5eb22a30800647f60c6724d49a5c9215122404813c98837',
+    'certificates/source_norms/retained-transport/retained135_survival_comparison.json': '33805fcb2b4e435ef3792b0932fba2b9c1961b307b0f19a2651fafe1fdbfbc9c',
 }
 BRANCHES = ('nested', 'disjoint')
 NVAR, NROWS, NEQ = 3705, 7163, 56

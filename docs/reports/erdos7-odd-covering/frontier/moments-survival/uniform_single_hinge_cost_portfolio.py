@@ -11,14 +11,14 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/uniform_single_hinge_cost_portfolio.json'
 PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
-    'frontier/comparison-bounds/complete_off_face_cost.py': '0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '41cf0ee10fc00ef29278ee8329085cb20c365a73008313c10b1bc888f737af6c',
+    'frontier/comparison-bounds/complete_off_face_cost.py': '9aecea9f4424bdfd26be82ebb643d72dffe35b5a57d80e6730faaf471eebe986',
     'frontier/retained-transport/finite_source_face_transport.py': '04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291',
-    'frontier/source-budgets/shared_budget_affine_tail.py': 'bdf09dc45ec3f38d7791853c974d1fc637ce3da30cc78c155e643c9d66c60ebd',
-    'frontier/retained-transport/joint_deep_mean_transport.py': 'efbb0825f227e5cc97a0fc24b71acf3e16a35f6b3db662f0e4b392afb8e3d0d0',
+    'frontier/source-budgets/shared_budget_affine_tail.py': '45edf2b53e18190ffc88eee0f58101e399176a16cc442b382f87a8a507dda8a9',
+    'frontier/retained-transport/joint_deep_mean_transport.py': 'd98c3ed06d3deaa3651655c0b0d119add0ac17c10f6fcb99c706bef2630c76db',
     'frontier/endpoint-bounds/broad_weighted_identity_source.py': 'bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6',
     'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
-    'frontier/moments-survival/uniform_ap_survival_denominator.py': '181a1793bd15059074d2998eb820322a3b9c2158bac5edfcb3bc057b7e78f180',
+    'frontier/moments-survival/uniform_ap_survival_denominator.py': '50cb4e8eae092ac38aa12d291c5d587f7ee71557cc9dcec683a4c82224750b22',
     'certificates/source_norms/comparison-bounds/whole_face_stop_loss_generator.json': 'e2456850d6db2ac5445e9ff927cdd75c104e3a1a25c8b22159d72c201fe3b924',
     'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': 'cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6'}
 EXCLUDED = (0, 1, 2, 7, 10, 16, 17, 18, 23, 26, 32, 33, 36)

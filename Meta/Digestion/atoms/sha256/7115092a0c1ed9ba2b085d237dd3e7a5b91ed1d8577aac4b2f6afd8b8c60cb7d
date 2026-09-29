@@ -1,0 +1,12 @@
+**命题 300.1（有限要求的核心与删减对偶）。** 沿用定义 299.1，另设 $R$ 有限。令 $\mathcal C(R)$ 是 $R$ 中全部最小冲突核心的集合。对于任意 $D\subseteq R$，有
+
+$$
+\operatorname{Sat}(R\setminus D)
+\quad\Longleftrightarrow\quad
+\forall C\in\mathcal C(R),\ D\cap C\ne\varnothing.
+$$
+
+正向由命题 299.3。反向若不成立，则保留集合 $R\setminus D$ 不可满足；在它的不可满足子集中，选一个成员数最少的集合 $C$。有限性保证能选到，且每个真子集因成员数更少而可满足。因此 $C\in\mathcal C(R)$，又因为 $C\subseteq R\setminus D$，得到 $D\cap C=\varnothing$，与假设矛盾。
+
+本命题把源码给出的必要方向接成有限情形的充要关系；逆向证明由本文写出，不冒称源码已经逐字包含该逆向。若原要求都可满足，核心族为空，右侧对所有 $D$ 成立，左侧也由向下封闭性成立。
+

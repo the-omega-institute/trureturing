@@ -1,0 +1,52 @@
+### 202.1 同一任务与二阶近优类
+
+固定第200节的 $\beta>0$、$\gamma>0$、$R>1$ 及正紧区间 $I$，
+保持严格内点条件
+
+$$
+n=\frac{\gamma}{2\beta},\qquad
+m(h)=\frac{2h}{h+3\beta R},\qquad
+m(h)^2+n^2<\frac14\quad(h\in I).
+\tag{202.1}
+$$
+
+沿用 $\delta=R-1$、$t=\gamma R$、
+$a_{\mathrm{eff}}(h)$、$Q_0(h)$ 和
+$Q(h)=Q_0(h)-a_{\mathrm{eff}}(h)^2/4-t^2m(h)^2$。
+令
+
+$$
+E_\epsilon(h)=\mathscr E(h\epsilon,\epsilon)
+$$
+
+为相同完整参考任务的最优值。
+以下 $\Gamma$ 表示第189节无损旗标对称化后的共同 instrument，
+$e_\epsilon(h,\Gamma)$ 为其完整误差。
+其正旗标 Kraus 矩、Choi 矩和共同 TP 仍采用第200节的记号。
+置
+
+$$
+\begin{gathered}
+C=C_0+C_1,\qquad D=D_0+D_1,\qquad
+P=P_0+P_1,\qquad
+x=\frac{A_0-A_1}{2\epsilon},\\
+U=\sum_{\alpha\text{ 属于结果 }0}|b-i2na|^2,\qquad
+V=\sum_{j,\alpha}|d-2ma|^2.
+\end{gathered}
+\tag{202.2}
+$$
+
+对固定 $K\ge0$，定义
+
+$$
+\mathcal N_{\epsilon,K}(h)=
+\{\Gamma:0\le e_\epsilon(h,\Gamma)-E_\epsilon(h)
+\le K\epsilon^2\}.
+\tag{202.3}
+$$
+
+这没有把原恢复任务限制成一个可行子族。
+任意原始近优恢复器均可先作第189节的对称化，误差不增且仍近优。
+本节对操作矩的结构结论指这些对称化代表；
+不把代表上的矩公式直接套到未对称化解码器的单个旗标上。
+

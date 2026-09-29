@@ -1,0 +1,15 @@
+**定义 244.1（任务等价）。** 给定目标泛函族 $\mathcal T\subseteq\{\Phi:\mathfrak M\to\mathbb R\}$，定义
+
+$$
+M\sim_{\mathcal T}M'
+\quad\Longleftrightarrow\quad
+\Phi(M)=\Phi(M')
+\quad\text{对所有 }\Phi\in\mathcal T.
+$$
+
+记商映射为
+
+$$
+q_{\mathcal T}:\mathfrak M\to\mathfrak M/\!\sim_{\mathcal T}.
+$$
+

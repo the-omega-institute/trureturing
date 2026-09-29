@@ -1,0 +1,10 @@
+**命题 712.1（星形族的完整值）。** 取 $p=2$、$n\ge3$，状态为 $\mathcal F=\{\{1,i\}:2\le i\le n\}$。标签一是中心标签，其余 $d=n-1$ 个是叶标签。对 $0\le E\le D=2L$，
+
+$$
+\mu_{\mathcal F}(E)=
+\begin{cases}
+0,&0\le E\le L,\\
+\dfrac{d-1}{d}(E-L),&L<E\le2L.
+\end{cases}
+$$
+

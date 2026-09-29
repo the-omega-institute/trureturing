@@ -1,0 +1,17 @@
+**定理259.3（精确最坏重建误差）。** 有
+$$
+\boxed{
+\mathcal R(\rho,K)=\frac12\operatorname{Tr}G.
+}
+\tag{259.28}
+$$
+一个达到最小值的中心是本身属于纤维的中点源
+$$
+\boxed{
+\Omega_0=\frac12\begin{pmatrix}\rho&K\\K&\rho\end{pmatrix}
+=\frac{\Omega_++\Omega_-}{2}.
+}
+\tag{259.29}
+$$
+因此即使把允许的中心限制在数据纤维中，最优值也不变。
+

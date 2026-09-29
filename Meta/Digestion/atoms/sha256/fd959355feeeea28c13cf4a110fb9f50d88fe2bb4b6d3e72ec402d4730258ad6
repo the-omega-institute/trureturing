@@ -1,0 +1,27 @@
+**证明。** 记 $D=\max_ed(e)$。选择 $a>1$ 足够接近一，使
+
+$$a<\min_eb_e,\qquad
+D\arccos\frac{2(2-a)}{a+1}<2\pi.$$
+
+这样的 $a$ 存在，因为边集合有限、全部 $b_e>1$，而显示的反余弦在 $a\downarrow1$ 时趋于零。考虑实际全局长度的紧盒
+
+$$\Omega=\prod_{e\in E}[\operatorname{arccosh}a,\operatorname{arccosh}b_e].$$
+
+第 2 节证明 $\Omega\subset\mathcal L(\mathcal T)$，所以它的全部边界点也是真实非退化几何。
+
+在上面 $x_e=b_e$，逐坐标估计给出 $\alpha_{\hat e}(l)\ge\arccos u_{\hat e}(b)$，故 $K_e(l)<0$。即使某个邻边或对边与 $e$ 被识别，实际向量仍属于用于估计的盒，结论不变。
+
+在下面 $x_e=a$，第 2 节给出每个 $\alpha_{\hat e}(l)\le\arccos(2(2-a)/(a+1))$，所以 $K_e(l)>0$。
+
+对单个超理想四面体，Schlafli 公式为 $d\operatorname{Vol}=-\frac12\sum_i l_i\,d\alpha_i$。因此共体积
+
+$$\operatorname{cov}=2\operatorname{Vol}+\sum_i l_i\alpha_i$$
+
+满足 $d\operatorname{cov}=\sum_i\alpha_i\,dl_i$。在共同全局长度上定义
+
+$$\mathcal H(l)=\sum_{\sigma}\operatorname{cov}_\sigma(l|_\sigma)-2\pi\sum_el_e.$$
+
+按出现次数求导得到 $\partial\mathcal H/\partial l_e=-K_e$。$\mathcal H$ 在 $\Omega$ 上取得最小值。若最小点在某个上面，将该坐标稍微减小使能量严格下降，因为 $-K_e>0$；若在某个下面，将该坐标稍微增加同样使能量下降，因为 $-K_e<0$。故最小点位于盒的内部，所有偏导为零，从而 $K(l^*)=0$。
+
+此证明没有先假设零曲率度量存在，也不需要以一个可能退化的极限代替真实极小点。共体积与实际角度几何是既有输入；本定理要求的有限邻接不等式需在每个应用中真正验证。
+

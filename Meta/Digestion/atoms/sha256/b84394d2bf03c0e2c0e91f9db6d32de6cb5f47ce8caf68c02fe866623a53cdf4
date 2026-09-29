@@ -1,0 +1,66 @@
+### 152.1 两份真实接收边缘及重叠权重
+
+先取
+
+$$
+0<p<1,\qquad a=\sqrt{1-p},\qquad b=\sqrt p,
+$$
+
+并沿用第148节的 $c,d,\kappa,\lambda,\mu,\nu,G,H$ 及接收基
+$u,v,w,P,e,g,h$。其中 $P$ 是接收向量，$p$ 是来源概率。令
+
+$$
+\ell_p=a^2\mu^2,\qquad
+\alpha_p=\frac{c^2}{d^2},\qquad
+\beta_p=\frac{p}{d^2},\qquad
+\alpha_p+\beta_p=1.
+\tag{152.1}
+$$
+
+在第六终端，对来源初态 $|i\rangle$ 产生的实际联合态取活动记忆偏迹，记所得接收边缘为 $\varrho_i$。由第148节的两个实际环境分支，
+
+$$
+\varrho_0=A_p+\ell_p|h\rangle\langle h|,
+\qquad A_p\succeq0,\qquad
+\operatorname{Tr}A_p=1-\ell_p.
+\tag{152.2}
+$$
+
+这里
+
+$$
+A_p=\operatorname{Tr}_M
+|a\nu\,m_0P+b\kappa\,m_1e\rangle
+\langle a\nu\,m_0P+b\kappa\,m_1e|.
+$$
+
+该分解来自实际被丢弃的正交环境分支；没有假定解码器能识别分支。
+
+初态 $|1\rangle$ 的环境为纯 $B$，其实际接收边缘为
+
+$$
+\varrho_1
+=|G\rangle\langle G|+|H\rangle\langle H|
++a\bigl(|G\rangle\langle H|+|H\rangle\langle G|\bigr).
+\tag{152.3}
+$$
+
+向量 $G,H$ 正交且非零，满足
+
+$$
+\|G\|^2=\kappa^2,\qquad
+\|H\|^2=a^2pd^2,\qquad
+\kappa^2+a^2pd^2=1.
+\tag{152.4}
+$$
+
+所以 $\varrho_1$ 在
+$S=\operatorname{span}\{G,H\}$ 上正定。用 $\Pi_S$ 表示该空间的正交投影，记其最小本征值为
+
+$$
+\boxed{
+s_p=\frac{1-\sqrt{1-4a^2p^2d^2\kappa^2}}2>0.
+}
+\tag{152.5}
+$$
+

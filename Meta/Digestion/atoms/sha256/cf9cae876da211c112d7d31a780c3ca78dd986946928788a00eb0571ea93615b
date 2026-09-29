@@ -1,0 +1,27 @@
+### 22.6 推论：黄金斜率下的显式参数位数预算
+
+令 $\alpha=\phi-1=\phi^{-1}$，$n\geq1$。已有 `GoldenHurwitzBound.golden_hurwitz_bound` 对有理数 $a/k$ 的约分分母给出
+\[
+\|k\phi\|>\frac1{\sqrt5\,k+1}>\frac1{4k},
+\]
+其中 $\|\cdot\|$ 为到最近整数的距离。于是第 22.2 节所有切点到零的距离及不同切点的距离均大于 $1/(4n)$，且 $1-\alpha>1/4$，故 $g_n>1/(4n)$。因此
+\[
+0\leq\delta\leq\frac1{8n(n+1)}
+\quad\Longrightarrow\quad
+\lambda(E_n(\alpha,\alpha+\delta))=\frac{n(n+1)}2\delta.
+\tag{22.10}
+\]
+
+**证明。** 对 $a/k$ 应用上述有理逼近界，其约分分母至多为 $k$，再乘 $k$ 得最近整数界。两个切点之差的圆距离是 $(i-j)\alpha$ 到整数的距离，线性距离至少为圆距离。代入实际半径公式即可。该推导复用了新 dev 混合性论证中同一个算术间隔来源，没有把混合时间定理当成斜率稳定性定理。
+
+对 $0<\eta\leq1/16$，只要
+\[
+\boxed{2^{-p}\leq\frac{2\eta}{n(n+1)},}
+\tag{22.11}
+\]
+上方二进制逼近 $\alpha_p^+$ 引起错误记录的相位比例就严格小于 $\eta$。等价的充分整数预算为
+\[
+p\geq\left\lceil\log_2\frac{n(n+1)}{2\eta}\right\rceil.
+\]
+**证明。** 式 (22.11) 蕴含 $2^{-p}\leq1/[8n(n+1)]$，故实际误差 $\delta_p<2^{-p}$ 位于已证局部区间。将它代入式 (22.10) 即得结论。该预算控制均匀相位下的错误比例，不保证每个相位的所有 bit 精确，也不是对某个特定二进制尾误差的必要位数声明。 Lean 专门化以 `IrrationalSlopeFaithfulness.irrational_slope_faithfulness` 的 `FinitePrecisionStable` 分量给出整数标签差的间隔，将标签取为切点和切点差，再应用 `MechanicalSlopeSensitivity.local_slope_disagreement_law` 所构造半径的定量下界，得到式 (22.10)。`Int.ceil_lt_add_one` 给出上方二进制误差的严格上界，`Int.ceil_le` 与 `Real.logb_le_iff_le_rpow` 给出整数预算等价；这三项完整专门化均已通过 Lean 核验，复用既有声明，不新增绑定包装。
+

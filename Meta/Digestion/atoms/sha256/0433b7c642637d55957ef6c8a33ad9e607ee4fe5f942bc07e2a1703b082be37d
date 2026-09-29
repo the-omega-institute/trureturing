@@ -1,0 +1,66 @@
+### 216.4 重制备候选的完整参考来源导数
+
+先冻结（216.18）中的任一候选，暂不让其随来源变化。记
+$$
+\lambda=1-\frac{F_0F_1}{F_0+F_1},\qquad
+r_*=\frac{F_1}{F_0+F_1},\qquad
+c_*=\frac{F_0F_1}{F_0+F_1}=1-\lambda.
+\tag{216.19}
+$$
+$r_*$ 是纯来源的唯一内部参考最大点，且
+$$
+r_*F_0=(1-r_*)F_1=c_*.
+$$
+为避免与约化函数 $q$ 混名，这里把参考权重写作 $r_*$。
+
+由第189节的精确矩，所有输出 $1$ 系数为零时，
+$$
+G_j^{\rm even}=0,\qquad T_j=0.
+\tag{216.20}
+$$
+这里 $G_j^{\rm even}$ 指偶块中的标量矩，不是（216.10）的 Choi 梯度。
+
+第207节的四维匹配偶块，在固定参考 $r_*$ 处成为
+$$
+\begin{pmatrix}
+(1-\ell)(P_{u_*}-c_*I)&\sqrt{\ell(1-\ell)}P_{u_*}\\
+\sqrt{\ell(1-\ell)}P_{u_*}&\ell P_{u_*}
+\end{pmatrix},
+\qquad u_*=(\sqrt{r_*},\sqrt{1-r_*})^{\mathsf T}.
+\tag{216.21}
+$$
+在 $\operatorname{span}\{(u_*,0),(0,u_*)\}$ 上，它恰为
+$$
+\begin{pmatrix}
+(1-\ell)\lambda&\sqrt{\ell(1-\ell)}\\
+\sqrt{\ell(1-\ell)}&\ell
+\end{pmatrix}.
+\tag{216.22}
+$$
+另外两个本征值为 $-(1-\ell)c_*$ 和 $0$。在 $\ell=0$，最高根 $\lambda$ 接近 $3/4$ 且简单。
+
+式（216.22）的最高根为
+$$
+g_\lambda(\ell)=\frac{
+(1-\ell)\lambda+\ell+
+\sqrt{\bigl((1-\ell)\lambda-\ell\bigr)^2+4\ell(1-\ell)}
+}{2}.
+$$
+直接在 $\ell=0$ 求导得
+$$
+g_\lambda'(0)=\frac1\lambda-\lambda.
+\tag{216.23}
+$$
+虽然矩阵条目有 $\sqrt\ell$，此最高根在 $\ell=0$ 的解析性由该显式式子或第207节的偶性已经保证。
+
+实际参考最大点可随 $\ell$ 移动，但它在 $\ell=0$ 是唯一内部驻点。因此对最大参考值求一阶导数时，参考点运动项为零。由完整参考的包络公式，
+$$
+\boxed{
+\partial_\ell e(0,\epsilon,\Gamma)
+=\chi(\lambda),\qquad
+\chi(\lambda)=\lambda^{-1}-\lambda.
+}
+\tag{216.24}
+$$
+这不是只对固定参考取得的下界：唯一内部参考极大点及其驻点方程使（216.24）是完整参考误差的精确导数。相同论证适用于所用环境解析延拓。
+

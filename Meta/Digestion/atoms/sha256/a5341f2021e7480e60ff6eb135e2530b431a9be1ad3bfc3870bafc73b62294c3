@@ -1,0 +1,24 @@
+**定理202.3（操作限制的二阶损失）。** 在上述固定内点区间上一致有
+
+$$
+\boxed{
+E_\epsilon^{\mathrm{fix}}(h)
+=\frac34+\epsilon\Phi_h+
+\epsilon^2[Q(h)+t^2m(h)^2]+o_I(\epsilon^2),
+}
+\tag{202.17}
+$$
+
+$$
+\boxed{
+\begin{aligned}
+E_\epsilon^{\mathrm{bal}}(h)
+&=\frac34+\epsilon\Phi_h+
+\epsilon^2[Q(h)+a_{\mathrm{eff}}(h)^2/4]+o_I(\epsilon^2),\\
+E_\epsilon^{\mathrm{joint}}(h)
+&=\frac34+\epsilon\Phi_h+
+\epsilon^2[Q(h)+a_{\mathrm{eff}}(h)^2/4]+o_I(\epsilon^2).
+\end{aligned}}
+\tag{202.18}
+$$
+

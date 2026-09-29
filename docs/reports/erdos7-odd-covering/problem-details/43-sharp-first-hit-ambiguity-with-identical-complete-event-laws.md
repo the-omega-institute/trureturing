@@ -610,8 +610,8 @@ absolute error at least \(1/234080\) for the physical fee or \(1/16720\)
 for genuine first-hit mass. This is a two-point lower bound; no assertion
 is made that an interval of intermediate source laws is reachable.
 
-The [literal-congruence producer](../frontier/cover-geometry/reachable_clipped_ambiguity.py)
-and its [exact output](../frontier/cover-geometry/reachable_clipped_ambiguity.json)
+The [literal-congruence producer](../frontier/cover-geometry/reachable-clipped-ambiguity/reachable_clipped_ambiguity.py)
+and its [exact output](../frontier/cover-geometry/reachable-clipped-ambiguity/reachable_clipped_ambiguity.json)
 reconstruct all 4608 old atoms and 50688 incoming extended atoms per
 family. They check normalization, strict positivity, all full proper
 marginals, the entire next-stage vector law, (FA20), both kinds of cost,
@@ -622,7 +622,7 @@ of the whole interval is (FA19) and the displayed evaluation, not those
 finite checks. All executable checks remain active under Python \(-O\).
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/reachable_clipped_ambiguity.py --output /tmp/reachable-clipped-ambiguity.json
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/reachable-clipped-ambiguity/reachable_clipped_ambiguity.py --output /tmp/reachable-clipped-ambiguity.json
 ```
 
 The new arithmetic ingredient is that literal pure-power exclusions make
@@ -881,8 +881,8 @@ The generic overlap formula is already available in profile 334; the
 literal classes and common-law masses are the inputs verified here.
 Integer 2 avoids this whole family. No covering counterexample is claimed.
 
-The [exact producer](../frontier/cover-geometry/balanced_prefix_budget.py)
-and [output](../frontier/cover-geometry/balanced_prefix_budget.json) check
+The [exact producer](../frontier/cover-geometry/balanced-prefix-budget/balanced_prefix_budget.py)
+and [output](../frontier/cover-geometry/balanced-prefix-budget/balanced_prefix_budget.json) check
 the literal congruences, actual rows, complete pair marginals, both
 continuations and the cap comparator using rational arithmetic. A
 disjoint radix-cell partition carries the exact mass of every complete
@@ -895,7 +895,7 @@ surplus is \(1/16018066406250\). The all-height justification is
 (FA28)--(FA29), not this additional finite experiment.
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/balanced_prefix_budget.py --output /tmp/balanced-prefix-budget.json
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/balanced-prefix-budget/balanced_prefix_budget.py --output /tmp/balanced-prefix-budget.json
 ```
 
 All checks remain active under \(-O\). Arbitrary forbidden unions,

@@ -1,0 +1,25 @@
+### 296.2 同一真实计数接口与对数比较差
+
+保持
+$$
+\sqrt{3/4}\le k<1,\qquad k^2<l\le k,\qquad
+\kappa=-\log k,\quad
+\eta=\frac{\log(l/k^2)}{\kappa}\in(0,1].
+$$
+实际两假设参数是同一个 $r\in[l,1]$ 下的 $c=r$ 与 $c=kr$。
+决定零概率为 $f(c)$ 时，风险为
+$$
+\frac12\left(1-\inf_{r\in[l,1]}[f(r)-f(kr)]\right).
+$$
+每个独立完整块计两份来源。
+
+两类权限都可产生下面的实际独立 Bernoulli 记录：
+$$
+Y\sim\operatorname{Bernoulli}(p(c)),\qquad
+p(c)=\frac{1-c/C}{B}.
+\tag{296.1}
+$$
+其参数为：
+
+| 访问类 | 实际记录 | $B$ | $C$ |
+|---|---|---:|---:|

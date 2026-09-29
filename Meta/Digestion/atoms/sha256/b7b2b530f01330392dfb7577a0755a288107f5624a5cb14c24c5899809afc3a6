@@ -1,0 +1,19 @@
+**定理169.2（显式谱常数的反向界）。** 有
+
+$$
+\boxed{\chi\le\frac{2}{\lambda}u}
+\tag{169.16}
+$$
+
+及
+
+$$
+\boxed{
+\frac{\beta\lambda}{2}\chi
+\le a
+\le\frac{\beta}{1-\beta}(1-e^{-\chi})
+\le\frac{\beta}{1-\beta}\chi.
+}
+\tag{169.17}
+$$
+

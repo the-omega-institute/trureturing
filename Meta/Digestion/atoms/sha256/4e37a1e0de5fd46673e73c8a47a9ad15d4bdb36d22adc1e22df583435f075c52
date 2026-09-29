@@ -1,0 +1,15 @@
+
+
+接着需要在常数级而非 $`\mathfrak L_M`$ 级控制频率和。
+对任意 $`f\in H^1[0,A]`$，令 $`g(v)=|f(v)|^2-|f(0)|^2`$。
+则 $`g(0)=0`$ 且
+
+```math
+\|g'\|_2\le2\|f\|_\infty\|f'\|_2,\qquad
+|g(v)|\le\sqrt v\,\|g'\|_2,\qquad
+\left|\int_0^\varepsilon\frac{g(v)}v\,dv\right|
+ \le2\sqrt\varepsilon\,\|g'\|_2.
+```
+
+式 (50.11)。
+

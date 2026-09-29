@@ -1,0 +1,37 @@
+**命题 162.3（每个后续视界的严格损失与阈值）。** 对所有 $1/\sqrt3<r<1$ 和所有整数 $N\ge2$，
+$$
+\boxed{\mathcal E_N(r)>\mathcal R_N(r).}
+\tag{162.15}
+$$
+对 $0\le r\le1/\sqrt3$，存在同一个单步最优预测通道在每个视界均最优，且
+$$
+\mathcal E_N(r)=\mathcal R_N(r)=\frac{r^N}{2}\qquad(N\ge1).
+\tag{162.16}
+$$
+在 $r=1$，两者对全部 $N$ 均为零。
+
+证明。 先设 $1/\sqrt3<r<1$，令 $\beta=N\alpha$、$a=c^N>0$。若 $\beta<\pi/2$，式（161.7）、（162.4）给出
+$$
+\left(\frac{2\mathcal E_N}{r^N}\right)^2
+-\left(\frac{2\mathcal R_N}{r^N}\right)^2
+=(a-\cos\beta)^2.
+\tag{162.17}
+$$
+由 $0<\alpha$ 和 $N\ge2$，在 $1\le k<N$ 时
+$$
+\cos((k+1)\alpha)
+=c\cos(k\alpha)-\sin(k\alpha)\sin\alpha
+<c\cos(k\alpha).
+$$
+本情形各个中间角均小于 $\pi/2$，故迭代该不等式得到 $\cos(N\alpha)<c^N=a$，式（162.17）严格为正。
+
+若 $\beta\ge\pi/2$，则 $\mathcal R_N=r^N/2$ 且 $\cos(\min\{\beta,\pi\})\le0$，于是
+$$
+\left(\frac{2\mathcal E_N}{r^N}\right)^2-1
+=a^2-2a\cos(\min\{\beta,\pi\})>0.
+\tag{162.18}
+$$
+这也包含 $\beta=\pi/2$，从而证明式（162.15）。
+
+对 $0<r\le1/\sqrt3$，有 $\alpha(r)\ge\pi/2$。式（161.8）的单步最优通道可取 $\mathcal F_0(A)=C(r,0)\odot A$；它是两个合法源 $\phi=\pm\pi/2$ 的平均。对每个 $N\ge1$，$\mathcal F_0^N(A)=C(r^N,0)\odot A$ 正是定理161.3的逐视界达到通道。任何重复预测通道在第 $N$ 步仍为一个 CPTP 通道，因此其误差不能低于无单步限制的 $\mathcal R_N$；这个共同达到者证明式（162.16）。$r=0$ 时唯一真实通道是完全去相干通道，选它作预测即可；$r=1$ 时唯一真实通道是恒等通道，也可精确预测。证毕。
+

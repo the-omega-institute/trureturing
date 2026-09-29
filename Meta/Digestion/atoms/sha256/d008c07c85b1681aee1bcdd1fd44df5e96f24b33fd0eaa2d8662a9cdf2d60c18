@@ -1,0 +1,31 @@
+**推论 38.4（共同模型类的连续性模量）。** 若一族校准候选模型具有共同的 $b_m\downarrow0$，满足
+
+$$
+\|\mathcal A_{\mathfrak I}^m(R_{\mathfrak I})\|_\infty\le b_m
+\quad\text{对全部候选 }\mathfrak I,
+$$
+
+则上述两种长期误差均不超过
+
+$$
+\omega(\delta)=\min\{1,\inf_{m\ge1}(m\delta+2b_m)\},
+\qquad \lim_{\delta\downarrow0}\omega(\delta)=0.
+$$
+
+若共同尾界具体为 $b_m=q^{\lfloor m/M\rfloor}$，其中 $M\ge1$ 为整数、$0<q<1$，则对 $0<M\delta<1$，令
+
+$$
+k=\left\lceil\frac{\log(1/(M\delta))}{\log(1/q)}\right\rceil,
+\qquad m=Mk,
+$$
+
+可取显式上界
+
+$$
+\boxed{\min\{1,M\delta(k+2)\}.}
+$$
+
+证明。先固定一个使 $2b_m$ 任意小的 $m$，再令 $\delta\downarrow0$，得到模量收敛。几何情形中 $q^k\le M\delta$，代入第 38.3 条即可；$\delta=0$ 时由任意 $m$ 的界及 $b_m\to0$ 得零误差。$\square$
+
+共同尾界是一组足够条件，不是所有模型族稳定性的必要条件。它必须覆盖全部仍被校准资料允许的装置；第 19 节对单个固定模型取得的常数，不能未经证明就充当这一族的共同常数。先取有限前缀、再用共同余项控制极限的思路，与相位边界卷第 162 节相同；这里的余项是可明确识别的迟到点击效果。
+

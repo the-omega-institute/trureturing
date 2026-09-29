@@ -1,0 +1,30 @@
+**命题 33.3（无纠缠也能破坏单比特平方系数）。** 对单比特退极化信道 $\Delta_s(\rho)=s\rho+(1-s)I_2/2$，$0<s<1$，有
+\[
+ \eta_{I_2/2}(\Delta_s)=s^2<\eta^{\rm c}(\Delta_s)\le s.
+\]
+严格不等号可由两个比特的可分输入实现。特别在 $s=1/2$ 时，可以取联合态
+\[
+ \rho_*=(I_4/6)+|\Omega\rangle\langle\Omega|/3,
+ \qquad |\Omega\rangle=(|00\rangle+|11\rangle)/\sqrt2,
+\]
+其两个边缘都为 $I_2/2$，并有
+\[
+ \frac{\mathcal D_{A|R}((\Delta_{1/2}\otimes\operatorname{id})\rho_*)}
+      {\mathcal D_{A|R}(\rho_*)}
+ =\frac{3\log(3/2)+5\log(5/6)}{4\log(4/3)}
+ \approx0.2648649060>\frac14.
+\]
+
+**证明。** 记 $\rho_a=(1-a)I_4/4+a|\Omega\rangle\langle\Omega|$。其边缘固定为最大混合态，局部退极化将 $a$ 变为 $sa$。直接对角化得到
+\[
+ f(a):=D(\rho_a\Vert I_4/4)
+ =\tfrac14[(1+3a)\log(1+3a)+3(1-a)\log(1-a)]
+ =\tfrac32a^2-a^3+O(a^4).
+\]
+所以对每个固定 $0<s<1$，$f(sa)/f(a)=s^2[1+\tfrac23(1-s)a+O(a^2)]>s^2$ 对充分小正 $a$ 成立。设 $P_{j,\pm}=(I\pm\sigma_j)/2$，则
+\[
+ \rho_{1/3}=\frac16\sum_{j=x,y,z}\sum_{\epsilon=\pm}
+             P_{j,\epsilon}\otimes\overline{P_{j,\epsilon}}.
+\]
+右式各项均为产品态，故 $\rho_{1/3}$ 可分；$0\le a\le1/3$ 的 $\rho_a$ 是它与 $I_4/4$ 的凸组合，亦可分。$a=1/3,s=1/2$ 的本征值直接给所列对数比；它大于 $1/4$ 等价于 $253125>248832$。最后，对任意联合态置 $\sigma=I_2/2\otimes\rho_R$，输出为 $s\rho+(1-s)\sigma$；KL 凸性给 $D(s\rho+(1-s)\sigma\Vert\sigma)\le sD(\rho\Vert\sigma)$。未附记忆的等式由第 28.3 条。该反例中全部缺陷都在相关性中，不能从局部已经平衡推断联合缺陷为零；可分也不等于记忆寄存器在某个基底上是经典标签。普通与完全退极化收缩可以分离是文献已有边界，本条给出其显式可分见证和任意 $s$ 的局部展开。证毕。[^tcs6-cporder]
+

@@ -1,0 +1,82 @@
+**定义 18.1（支持损失、方向信息与恢复相界）。** 沿用定义 16.1、17.1
+的正负奇偶类、补偿核及两个实际平稳实验。固定
+$`r\in(0,1)`$、$`\beta\in(1/2,1)`$、$`\alpha\in(0,\infty)`$。
+沿 $`d\to\infty`$ 取整数数列 $`q=q_d,s=s_d`$，满足
+
+```math
+n=2^d=2M,\qquad \ell=\log M,\qquad
+q=M^{1-\beta+o(1)},\qquad \lambda=\frac{s}{n},\qquad
+\frac{\lambda}{\ell}\longrightarrow\alpha,\qquad
+a=\frac{rq}{M-q}.
+\tag{18.1}
+```
+
+未知支持属于 $`\mathfrak S_q=\{S\subset C_+:|S|=q\}`$，在全部观测期间固定。
+正向核为 $`P_S(x,y)=(1+b_S(x)\chi(y))/n`$，其中 $`b_S`$ 在
+$`S,C_+\setminus S,C_-`$ 上分别取 $`r,-a,0`$；反向核为
+$`P_S^{\mathsf T}`$。实验 $`\mathcal E=\mathrm{pair}`$ 观察
+$`s`$ 个独立均匀平稳相邻对，实验 $`\mathcal E=\mathrm{path}`$
+观察均匀起点后的 $`s`$ 次连续转移。观测保留每条边的先后次序；
+未知方向指生成概率律中的参数 $`\varepsilon\in\{+,-\}`$。
+
+记 $`\mathcal A_q`$ 为输出恰好 $`q`$ 个正类状态的随机化估计规则，
+$`\mathcal A`$ 为输出任意正类子集的随机化估计规则。两种 Hamming 损失分别为
+
+```math
+L_q(T,S)=\frac{|T\triangle S|}{2q}
+=1-\frac{|T\cap S|}{q}\quad(|T|=q),\qquad
+L_{\mathrm u}(T,S)=\frac{|T\triangle S|}{q}\quad(T\subset C_+).
+\tag{18.2}
+```
+
+方向已知时先固定正向，并定义
+
+```math
+\begin{aligned}
+H_{\mathcal E,q}^{\mathrm k}
+ &=\inf_{\widehat S\in\mathcal A_q}\max_{S\in\mathfrak S_q}
+   \mathbb E_{S,+}^{\mathcal E}L_q(\widehat S,S),\\[0pt]
+H_{\mathcal E,\mathrm u}^{\mathrm k}
+ &=\inf_{\widehat S\in\mathcal A}\max_{S\in\mathfrak S_q}
+   \mathbb E_{S,+}^{\mathcal E}L_{\mathrm u}(\widehat S,S),\\[0pt]
+F_{\mathcal E}^{\mathrm k}
+ &=\inf_{\widehat S\in\mathcal A}\max_{S\in\mathfrak S_q}
+   \mathbb P_{S,+}^{\mathcal E}\{\widehat S\ne S\}.
+\end{aligned}
+\tag{18.3}
+```
+
+上标 $`\mathrm k`$ 表示方向已知。将三式中的最大值改为遍历
+$`(S,\varepsilon)\in\mathfrak S_q\times\{+,-\}`$，并令规则不知
+$`\varepsilon`$，分别得到方向未知的
+$`H_{\mathcal E,q}^{\mathrm o},H_{\mathcal E,\mathrm u}^{\mathrm o},F_{\mathcal E}^{\mathrm o}`$。
+联合恢复支持与方向时，对所有输出于
+$`2^{C_+}\times\{+,-\}`$ 的随机化规则取下确界，定义错误率
+
+```math
+J_{\mathcal E}
+=\inf_{(\widehat S,\widehat\varepsilon)}
+ \max_{S\in\mathfrak S_q,\ \varepsilon\in\{+,-\}}
+ \mathbb P_{S,\varepsilon}^{\mathcal E}
+ \{(\widehat S,\widehat\varepsilon)\ne(S,\varepsilon)\}.
+\tag{18.4}
+```
+
+此处及以下下确界均取遍相应随机化规则；规则可知道 $`d,s,q,r`$，不知道
+真实支持，只有上标 $`\mathrm k`$ 的规则还可知道真实方向。
+保留 (17.4) 的 $`g_r,I_{\alpha,r},\phi(r)=g_r'(1)`$ 与 (17.5) 的
+$`B_r`$，置
+
+```math
+\alpha_A(r,\beta)=\frac{\beta}{\phi(r)},\qquad
+\alpha_E(r,\beta)
+=\min_{0\lt\theta\lt1}\frac{1-\beta\theta}{-g_r(\theta)}.
+\tag{18.5}
+```
+
+受约束选择、无约束 Hamming 风险与精确恢复概率的区别，以及似然排序的先例，见
+[Butucea–Mammen–Ndaoud–Tsybakov](../../../Library/Dynamics/butucea2023selection.md)；
+几乎全恢复与精确恢复的高斯相界见
+[Butucea–Ndaoud–Stepanova–Tsybakov](../../../Library/Dynamics/butucea2018hamming.md)。
+这些独立坐标结果不提供本模型的路径联合计数律；下述证明使用完整实际似然与定理 17.2。
+

@@ -1,0 +1,53 @@
+### 265.1 参考真值与完整数据合同
+
+输入空间 $H$ 为qubit，块矩阵使用固定的 $Y$ 本征基。先取参考空间 $S=\mathbb C^2$，并定义
+$$
+Z=\begin{pmatrix}1&1/2\\-1/2&1/2\end{pmatrix},
+\qquad
+F=\begin{pmatrix}1/2&-1/4\\-1/4&1/2\end{pmatrix},
+$$
+$$
+T_0=\begin{pmatrix}F&Z/2\\Z^\dagger/2&I_2-F\end{pmatrix},
+\qquad
+\Omega_0=\frac12T_0.
+\tag{265.1}
+$$
+这是§262中 $a=1/2$ 的来源。其两个非零本征值为 $5/8,3/8$，所以是秩二混合态。参考边缘与响应坐标为
+$$
+\rho_0=\operatorname{Tr}_H\Omega_0=\frac12I_2,
+\qquad
+K_0=\mathscr K(\Omega_0)=\frac12Z,
+\qquad
+\mathscr K(X)=2X_{+-}.
+\tag{265.2}
+$$
+按 $(+,0),(+,1),(-,0),(-,1)$ 排列联合基，定义
+$$
+q_0=(1,0,-1,0)^{\mathsf T},
+\qquad
+q_1=(1/2,1,1/2,-1)^{\mathsf T},
+$$
+$$
+v_0=(1,-1/2,1,1/2)^{\mathsf T},
+\qquad
+v_1=(0,1,0,1)^{\mathsf T}.
+\tag{265.3}
+$$
+四个向量两两正交，平方长度依次为 $2,5/2,5/2,2$，而
+$$
+T_0=\frac12v_0v_0^\dagger+\frac38v_1v_1^\dagger,
+\qquad
+\ker\Omega_0=\operatorname{span}\{q_0,q_1\}.
+\tag{265.4}
+$$
+这同时验证了正性、秩和上述本征值。
+
+对任意归一化正半定竞争态 $\Xi$，使用完整数据误差
+$$
+\varepsilon(\Xi)=
+\left\|\operatorname{Tr}_H\Xi-\rho_0\right\|_1+
+\left\|\mathscr K(\Xi)-K_0\right\|_1.
+\tag{265.5}
+$$
+所有迹范数和核范数均未除以二。上界不要求竞争态同边缘、同秩或同支撑；用于下界的具体族将满足精确同边缘。
+

@@ -1,0 +1,26 @@
+### 定义 36：有限通用响应表
+
+对正整数 $a,b$，把 $[a]=\{0,\ldots,a-1\}$。固定同一个 $r$ 元输出集 $O$，令
+
+$$
+\mathcal X_{a,b,r}=[a]\times O^{[b]},\qquad
+\mathcal Y_{a,b,r}=[b]\times O^{[a]}.
+$$
+
+把 Alice 元写成 $(i,s)$、Bob 元写成 $(j,t)$，其中 $s:[b]\to O$、$t:[a]\to O$。定义承诺域与目标
+
+$$
+\begin{aligned}
+D_{a,b,r}&=\{((i,s),(j,t)):s(j)=t(i)\},\\
+f_{a,b,r}((i,s),(j,t))&=s(j)=t(i).
+\end{aligned}
+$$
+
+记 $U_{(a,b,r)}=(\mathcal X_{a,b,r},\mathcal Y_{a,b,r},D_{a,b,r},f_{a,b,r})$。再令 $\mathcal C_{(a,b,r)}$ 是所有输出集为这个固定 $O$、非空有限承诺域且满足
+
+$$
+ c_A(D,f)\leq a,\qquad c_B(D,f)\leq b
+$$
+
+的任务类。
+

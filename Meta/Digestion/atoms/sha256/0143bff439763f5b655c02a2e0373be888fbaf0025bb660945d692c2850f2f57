@@ -1,0 +1,12 @@
+**定理61.4（只余两种非正交内部尾）。** 在本节合同下，三个纯尾环境只可能为
+$$
+(\eta_4,\eta_5,\eta_6)=(\alpha,\alpha,\beta)
+\quad\text{或}\quad
+(\alpha,\beta,\alpha),
+$$
+其中 $\alpha,\beta\in F$ 为不同射线的单位代表，且
+$$
+0<|\langle\alpha,\beta\rangle|<1.
+$$
+两种模式均满足引理61.2的四维加三维接收支撑分解及式（61.10）的相应等式。
+

@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: Check out the analysis commit
         id: checkout-publish
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 1
@@ -46,7 +46,7 @@ jobs:
         run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$GITHUB_SHA"
 
       - name: Set up the pinned .NET SDK
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
 
@@ -60,7 +60,7 @@ jobs:
       - name: Restore the pinned Lean toolchain
         if: steps.keys.outputs.elan_key != ''
         continue-on-error: true
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
@@ -77,7 +77,7 @@ jobs:
       - name: Restore the Lean dependency layer
         id: dependency
         if: steps.keys.outputs.dependency_key != ''
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         continue-on-error: true
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
@@ -87,7 +87,7 @@ jobs:
       - name: Restore the Lean project layer
         id: project
         if: steps.keys.outputs.project_key != ''
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         continue-on-error: true
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
@@ -117,9 +117,8 @@ jobs:
         env:
           OUTPUT_ROOT: ${{ runner.temp }}/lean-analysis-fixtures
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Bound optional dependency transfer at the ensure owner's supported
-          # five-minute floor; analysis production retains this job's budget.
-          STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS: 300
+          # The runner scopes the five-minute cache override to preparation;
+          # analysis production retains this job's budget.
         run: |
           set -euo pipefail
           fixture_runner="$GITHUB_WORKSPACE/tools/lean-inspector/LeanInformationAuditAnalysis/run-analysis-fixtures.sh"
@@ -129,7 +128,7 @@ jobs:
 
       - name: Upload the analysis artifacts and hash log
         if: always() && steps.fixtures.outcome != 'skipped'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: lean-analysis-fixtures
           path: ${{ runner.temp }}/lean-analysis-fixtures/

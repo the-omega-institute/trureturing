@@ -1,0 +1,88 @@
+### 269.5 为匹配下界构造严格正的极限矩阵
+
+下面构造精确同边缘的竞争来源。先定义实数序列
+$$
+c_{2r}=(-1)^r,\qquad
+c_{2r+1}=\frac{(-1)^r}{2},
+\qquad r\ge0,
+$$
+$$
+(C_0)_{ij}=c_{|i-j|},\qquad1\le i,j\le n.
+\tag{269.32}
+$$
+$C_0$ 是实对称Toeplitz矩阵，对角元全为一；这里不要求 $C_0$ 正定。它满足
+$$
+c_{d-1}+c_{d+1}=0\quad(d\ge1),
+\qquad 2c_1=1.
+\tag{269.33}
+$$
+因此对 $i,j\ge2$，
+$$
+(J^\dagger C_0+C_0J)_{ij}
+=(C_0)_{i-1,j}+(C_0)_{i,j-1}
+=\delta_{ij}.
+\tag{269.34}
+$$
+令
+$$
+u=(c_0,c_1,\ldots,c_{n-2})^{\mathsf T}\in\mathbb R^{n-1},
+\tag{269.35}
+$$
+在 $n=1$ 时按空向量解释。完整矩阵关系为
+$$
+J^\dagger C_0+C_0J
+=\begin{pmatrix}0&u^\dagger\\u&I_{n-1}\end{pmatrix}.
+\tag{269.36}
+$$
+
+记 $E_{jj}=|e_j\rangle\langle e_j|$，并取
+$$
+k_0=t(1+\|u\|^2),\qquad
+L_0=t(J^\dagger C_0+C_0J)+k_0E_{11}.
+\tag{269.37}
+$$
+则
+$$
+L_0=
+t\begin{pmatrix}1+\|u\|^2&u^\dagger\\u&I_{n-1}\end{pmatrix}
+=tB^\dagger B,
+\qquad
+B=\begin{pmatrix}1&0\\u&I_{n-1}\end{pmatrix}.
+\tag{269.38}
+$$
+$B$ 可逆，且 $\|B^{-1}\|\le1+\|u\|$。因此
+$$
+L_0\succeq\mu_0 I_n,
+\qquad
+\mu_0=\frac{t}{(1+\|u\|)^2}>0.
+\tag{269.39}
+$$
+再令
+$$
+\beta=(Q^{-1})_{nn}>0,\qquad
+v=C_0e_n,\qquad
+s=\frac{\mu_0}{2\beta\|v\|^2},
+$$
+$$
+C=sC_0,\qquad k=sk_0.
+\tag{269.40}
+$$
+因为 $v_n=1$，这些常数有限且严格正；并有 $C_{nn}=s$。
+
+所需极限矩阵是
+$$
+R_0=t(J^\dagger C+CJ)-\beta CE_{nn}C+kE_{11}.
+\tag{269.41}
+$$
+代入定义，
+$$
+\begin{aligned}
+R_0
+&=sL_0-\beta s^2vv^\dagger\\
+&\succeq(s\mu_0-\beta s^2\|v\|^2)I_n
+=\frac{s\mu_0}{2}I_n\succ0.
+\end{aligned}
+\tag{269.42}
+$$
+这个严格正性将控制整个联合来源，而不是把可能不正的 $C$ 当作来源对角块。
+

@@ -194,5 +194,5 @@ public sealed class AgentInstructionLinkTests
     }
 
     private static string Git(string root, params string[] arguments) =>
-        ReviewRegressionTests.RunGit(root, arguments);
+        TestGit.Run(root, arguments);
 }

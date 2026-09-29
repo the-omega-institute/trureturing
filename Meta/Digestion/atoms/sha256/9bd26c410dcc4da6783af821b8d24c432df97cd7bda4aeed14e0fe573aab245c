@@ -1,0 +1,52 @@
+**证明。** 反设（65.2）成立，使用引理65.1—65.2。定义满等距
+
+$$
+T=(U\otimes I_F)V_0|_{S_0}:S_0=R\oplus Q\longrightarrow Q\otimes J,
+$$
+
+以及
+
+$$
+M=(UP_R)T^{-1}:Q\otimes J\longrightarrow Q\otimes F,
+\tag{65.18}
+$$
+
+其中 $P_R:S_0\to R$ 是正交投影。$T,U$ 满等距且 $P_RP_R^*=I_R$，所以 $MM^*=I_{Q\otimes F}$。
+
+实际 $n=2,3,4,5$ 均满足 $P_RH_n=G_n$。当 $n\ge3$，这来自（65.4）的同一来源满投影及 $Q_n=Q$；当 $n=2$，使用
+
+$$
+H_2=\operatorname{span}\{a^2u+bv,w\},\quad
+G_2=\operatorname{span}\{u,w\},\quad u,w\in R,\quad v\in Q,\quad a\ne0.
+$$
+
+这一步不能用任意二维子空间替代实际第二轮数据。同时由实际固定零位映射，
+
+$$
+TH_n=(UG_{n+1})\otimes\mathbb C\eta_{n+1}
+=Q\otimes\mathbb C(A\eta_{n+1}\otimes\eta_{n+1}).
+\tag{65.19}
+$$
+
+故同一个 $M$ 满足
+
+$$
+M\bigl(Q\otimes\mathbb C(A\eta_{n+1}\otimes\eta_{n+1})\bigr)
+=Q\otimes\mathbb C\eta_{n+1}
+\qquad(n=2,3,4,5).
+\tag{65.20}
+$$
+
+引理65.2已使四条 $[\eta_3],\ldots,[\eta_6]$ 两两不同，恰触发引理65.3的禁阻，矛盾。$n=5$ 只使用实际第六轮的 $G_6$；辅助 $\eta_7$ 仅表示 $UG_6$ 的纤维，没有调用第七轮。证明完毕。
+
+该排除保留任意允许的环境 Gram 参数，也保留实际初态的第七维分量。它使用四个实际切面的满投影和同一个接收等距，不能简化为四份分别成立的几何编码。
+
+本节未结算外置首轮中前四条尾射线已有重复的全部模式，也未结算内置首轮 $\eta_1\in F$ 子类。因此一般容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{65.21}
+$$
+
+以上为普通数学证明，未将本节新增结论宣称为已经编译的 Lean 证明。
+

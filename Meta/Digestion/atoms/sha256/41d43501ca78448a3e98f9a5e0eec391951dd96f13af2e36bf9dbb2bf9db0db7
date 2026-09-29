@@ -1,0 +1,104 @@
+**定理 19.2（候选相位基数的精确存在性判据）。** 定义19.1中的任务存在有限维固定接收器，当且仅当 $`\Theta`$ 是有限集。
+
+若 $`\Theta`$ 无限，则更强地，对任意固定容量 $`D<\infty`$ 的方案，即使允许接收门随终端或步数改变，在本卷指定 Bell 输入上的逐终端最坏误差也满足
+
+$$
+\boxed{
+\lim_{n\to\infty}\sup_{\vartheta\in\Theta}
+d\bigl(\widehat\Omega_{\vartheta,n},\Omega_{\vartheta,n}\bigr)=1.
+}
+\tag{19.1}
+$$
+
+这里允许每个终端的最坏相位不同；结论不声称某一个固定相位的误差必然趋于一。
+
+证明。先设 $`\Theta=\{\vartheta_1,\ldots,\vartheta_q\}`$ 有限。引入只供数学构造使用的标签空间 $`L=\mathbb C^q`$，把扩展来源记忆取为 $`\widetilde M=L\otimes M`$。按来源记忆在前的因子约定，定义固定等距
+
+$$
+\widetilde T(|j\rangle_L\otimes|\psi\rangle_M)
+=|j\rangle_L\otimes
+\operatorname{swap}_{B,M}T_{\vartheta_j}|\psi\rangle_M.
+\tag{19.2}
+$$
+
+不同标签的像正交，每个 $`T_{\vartheta_j}`$ 等距，因此 $`\widetilde T`$ 是一份已知有限维等距来源，$`\dim\widetilde M=2q`$。应用定理16.2，得到一个从独立纯态启动的有限固定接收器，对扩展来源的全部参考完整输入、全部终端都保持误差至多 $`\epsilon`$。
+
+将输入限制为
+
+$$
+|j\rangle\langle j|_L\otimes\rho_{JM},
+\tag{19.3}
+$$
+
+并丢弃不可访问标签，恰得到原候选 $`\vartheta_j`$ 的发射与恢复合同。所构造接收通道只作用于其自身寄存器及每个发出位，不读取 $`L`$；没有向接收器免费交付实际相位。扩展来源上更强的相干输入合同只是充分性证明的工具，原模型不需要允许不同实际相位相干叠加。维数的一个有限上界由定理16.2取 $`m=2q`$ 给出，其中启动长度由整份已知扩展来源及所需误差决定。
+
+现设 $`\Theta`$ 无限。任取 $`q\ge2`$ 个不同候选 $`\vartheta_1,\ldots,\vartheta_q`$。对相同 Bell 初态，令长度 $`n`$ 的纯目标向量为 $`|\Psi_{j,n}\rangle`$。由（5.14），两份目标的重叠是实际总荷的特征函数：
+
+$$
+\langle\Psi_{j,n}|\Psi_{k,n}\rangle
+=\mathbb E\,e^{i(\vartheta_k-\vartheta_j)S_n}.
+\tag{19.4}
+$$
+
+令
+
+$$
+m_n=\left\lfloor\frac{n-1}{3}\right\rfloor,
+\qquad
+c_q=\alpha^3\min_{j\ne k}
+\sin^2\frac{\vartheta_k-\vartheta_j}{2}>0.
+\tag{19.5}
+$$
+
+这些相位彼此不同模 $`2\pi`$，且取的是有限个数，故最小值严格正。由（5.17）的三步转移估计，对 $`j\ne k`$ 有
+
+$$
+|\langle\Psi_{j,n}|\Psi_{k,n}\rangle|
+\le e^{-c_qm_n}.
+\tag{19.6}
+$$
+
+记平均目标
+
+$$
+Q_{q,n}=\frac1q\sum_{j=1}^q
+|\Psi_{j,n}\rangle\langle\Psi_{j,n}|.
+\tag{19.7}
+$$
+
+令 $`V:\mathbb C^q\to H_n\otimes R`$ 的第 $`j`$ 列为 $`|\Psi_{j,n}\rangle`$，其中 $`R=JM`$ 为不可访问的四维系统。$`VV^*`$ 与 Gram 矩阵 $`V^*V`$ 具有相同的非零特征值。后者对角为一，各非对角项由（19.6）控制；以最大绝对行和界其谱半径，得到
+
+$$
+\|Q_{q,n}\|_\infty
+\le\frac{1+(q-1)e^{-c_qm_n}}q.
+\tag{19.8}
+$$
+
+对任意 $`D`$ 维接收器产生的终端态 $`\tau_{j,n}`$，以及同一个 CPTP 解码器 $`\mathcal D_n`$，采用（17.9）的正性估计，平均目标重叠至多
+
+$$
+\begin{aligned}
+\frac1q\sum_{j=1}^q
+\operatorname{Tr}\!\left[
+|\Psi_{j,n}\rangle\langle\Psi_{j,n}|
+(\mathcal D_n\otimes\operatorname{id}_R)(\tau_{j,n})
+\right]
+&\le\operatorname{Tr}
+\left[(\mathcal D_n^*\otimes\operatorname{id}_R)(Q_{q,n})\right]\\
+&\le\frac{4D}{q}\left[1+(q-1)e^{-c_qm_n}\right].
+\end{aligned}
+\tag{19.9}
+$$
+
+因此以 $`e_n`$ 记全候选集合上的最坏半迹误差，便有
+
+$$
+e_n\ge
+\max\left\{0,
+1-\frac{4D}{q}\left[1+(q-1)e^{-c_qm_n}\right]
+\right\}.
+\tag{19.10}
+$$
+
+先固定这 $`q`$ 个候选，让 $`n\to\infty`$，得 $`\liminf_ne_n\ge1-4D/q`$。无限集合允许任意大的有限 $`q`$，故 $`\liminf_ne_n\ge1`$。半迹距离至多为一，得到（19.1），并排除任何固定 $`\epsilon<1`$ 的有限容量实现。这里先取时间极限、再取任意大的有限候选子集，不假定 $`c_q`$ 随 $`q`$ 有统一正下界。证明完毕。
+

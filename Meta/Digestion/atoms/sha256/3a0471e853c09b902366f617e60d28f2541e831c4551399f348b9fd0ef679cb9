@@ -1,0 +1,15 @@
+**证明。** 对每个允许 Kraus 算子，零漏出给出 $KU=Uk$；对每段演化用(ST12.3)。任一固定历史的算子词因而满足 $W_{\mathbf a}U=Uw_{\mathbf a}$。对不可见 Kraus 标签求和后，各分支仍满足
+
+$$
+\mathcal I_{\mathbf a}(U\rho U^\dagger)
+=U\,\mathfrak i_{\mathbf a}(\rho)U^\dagger.
+$$
+
+取迹得到联合概率相等。自适应协议在固定历史上确定一个这样的词，故逐历史成立；零概率历史不被删除。∎
+
+### 反例 ST13.3：质量隙再大也不保证任意实验闭合
+
+取 $H=\operatorname{diag}(0,\Delta)$，$\Delta>0$，$U(1)=|0\rangle$。这是精确不变子空间，原跨块耦合为零。允许一次 Pauli $X$ 操作，则 $U^\dagger XU=0$，$\Lambda=1$。完整实验将 $|0\rangle$ 送到 $|1\rangle$，压缩操作却消灭了全部范数。
+
+所以，允许仪器的实验语言是有效理论的一部分。仅检查质量隙或有效能谱，不能认证任意测量历史。
+

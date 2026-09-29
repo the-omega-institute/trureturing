@@ -1,0 +1,64 @@
+**参考条件均值可平方。** 将四块合成独立两半 $A,B$，
+$\mathcal A_A,\mathcal A_B$ 为 (87.20) 的对应贡献。
+由 (87.21)
+
+$$
+q_G(y)=-\mathbb E[\mathcal A_Ah_{B,\sigma_M}'(y-T_A)]
+        -\mathbb E[\mathcal A_Bh_{A,\sigma_M}'(y-T_B)].
+\tag{87.27}
+$$
+
+除以 $g_x$ 后为两个条件期望。
+$\mathcal A_A$ 与 $T_B+\sigma_MG$ 独立，另一项同理。
+条件 Jensen、(87.19) 及
+$\mathbb E|\mathcal A_A|^4+\mathbb E|\mathcal A_B|^4\le C(1+a_0^4)$ 给
+
+$$
+\int g_x(y)\left|\sqrt\delta\,\frac{q_G(y)}{g_x(y)}\right|^4dy\le C.
+\tag{87.28}
+$$
+
+这是条件均值的统一四阶界，不用可能过大的 $\operatorname{Var}S_G=m/2$。
+由 (87.23)、$g_x\to\varphi_\nu$ 的 $L^1$ 收敛及参考输出的一致四阶矩，
+先得到 $\sqrt\delta q_G/g_x-\gamma y/\nu$ 的 $L^1(g_xdy)$ 收敛，
+再以 (87.28) 插值为 $L^2$。
+同时截断尾部给 $\int y^2|g_x-\varphi_\nu|dy\to0$。
+于是 (87.26) 推出
+
+$$
+\sqrt\delta\,\frac{q_x}{\sqrt{f_x}}
+ \longrightarrow \frac{\gamma y}{\nu}\sqrt{\varphi_\nu(y)}
+ \quad\hbox{于 }L^2(dy),
+\qquad
+\left\|\delta\,\frac{q_x^2}{f_x}
+ -\frac{\gamma^2y^2}{\nu^2}\varphi_\nu\right\|_1\to0.
+\tag{87.29}
+$$
+
+第二式使用 $\|u^2-v^2\|_1\le\|u-v\|_2(\|u\|_2+\|v\|_2)$。
+这一步不能由第 82、84 章的 $L^1$ 回归直接得出。
+
+现在应用每个有限纤维的精确恒等式
+
+$$
+f_x(y)\{\operatorname{Var}_x(S\mid Y=y)-\mathcal V_{{\rm prior},x}\}
+       =c_x(y)-q_x(y)^2/f_x(y).
+\tag{87.30}
+$$
+
+(87.23) 与 (87.29) 的极限相减，输出二次项精确消去：
+
+$$
+\gamma^2\varphi_\nu''(y)
+ -\frac{\gamma^2y^2}{\nu^2}\varphi_\nu(y)
+ =-\frac{\gamma^2}{\nu}\varphi_\nu(y).
+$$
+
+结合 $f_x\to\varphi_\nu$ 的 $L^1$ 收敛，得到
+
+$$
+\int f_x(y)\left|\delta\{\operatorname{Var}_x(S\mid y)
+ -\mathcal V_{{\rm prior},x}\}+\gamma^2/\nu\right|dy\to0.
+\tag{87.31}
+$$
+

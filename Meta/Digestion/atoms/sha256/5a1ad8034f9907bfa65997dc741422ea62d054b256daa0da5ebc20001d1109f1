@@ -1,0 +1,23 @@
+**定义 33.1（保持原系数的端点和因子）。** 令 H=C2={1,g}，g²=1，u=1+g。第 22.4 条的矩阵原样为
+
+$$
+A=\begin{bmatrix}2u&2u+(1-g)\\2u&2u\end{bmatrix},
+\qquad B=\begin{bmatrix}2u&2u\\2u&2u\end{bmatrix}.
+$$
+
+不改变这两个矩阵，定义
+
+$$
+P=\begin{bmatrix}1&u&1\\u&u&0\end{bmatrix},\qquad
+\widehat P=\begin{bmatrix}1&2g&1\\u&u&0\end{bmatrix},\qquad
+V=\begin{bmatrix}u&1\\0&1\\u&1\end{bmatrix},
+$$
+
+以及
+
+$$
+C=u\begin{bmatrix}2&3&1\\1&1&0\\2&3&1\end{bmatrix}.
+$$
+
+所有因子均在 N[C2]；矩形尺寸依次为 2×3、3×2、2×3。
+

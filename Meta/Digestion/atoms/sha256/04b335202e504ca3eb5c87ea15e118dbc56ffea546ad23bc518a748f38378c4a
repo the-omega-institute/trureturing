@@ -1,0 +1,20 @@
+**命题 302.3（逐核心许可不足以保证共同许可）。** 用命题 301.2 的要求与行动，设
+
+$$
+\mathcal A_g=\{\varnothing,\{\alpha\},\{\gamma\}\}.
+$$
+
+每个最小冲突核心都能被某个获准方案触及：第一个由 $\{\alpha\}$，第二个由 $\{\gamma\}$。但没有任何一个获准方案同时触及两个核心，因而没有被该权限关系认可的修复。这严格区分了
+
+$$
+\forall C\in\mathcal C(R)\ \exists D\in\mathcal A_g,\ D\cap C\ne\varnothing
+$$
+
+与
+
+$$
+\exists D\in\mathcal A_g\ \forall C\in\mathcal C(R),\ D\cap C\ne\varnothing.
+$$
+
+若另有 $U\subseteq R$，且权限恰好允许 $U$ 的任意子集，即 $\mathcal A_g=\mathcal P(U)$，那么有限情形的获准修复存在，当且仅当 $U$ 触及每个最小冲突核心：必要性由获准的 $D\subseteq U$ 得到，充分性直接取 $D=U$ 再用命题 300.1。但许可一般不必对并集封闭，不能无条件采用这项简化。
+

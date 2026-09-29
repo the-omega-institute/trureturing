@@ -1,0 +1,14 @@
+**引理164.1（生成元连续给相位群的单侧逼近）。** 若 $t_k\to t_0$，则
+
+$$
+\sup_{z\in G_{t_0}}\operatorname{dist}(z,G_{t_k})\longrightarrow0.
+\tag{164.7}
+$$
+
+若另有 $G_{t_k}\to H$ 的 Hausdorff 收敛，则 $H$ 是紧子群且
+
+$$
+\boxed{G_{t_0}\subseteq H.}
+\tag{164.8}
+$$
+

@@ -1,0 +1,16 @@
+**定理 240.3（参考维数的算术下界）。** 对任意共同约化子空间 $H$，设 $r=\dim H$，则
+$$
+\boxed{\frac{d}{\gcd(d,R)}\ \bigm|\ r.}
+\tag{240.22}
+$$
+因此每个达到纯态的 Schmidt 秩都被 $d/\gcd(d,R)$ 整除，特别是
+$$
+\boxed{r_{\min}\ge\frac{d}{\gcd(d,R)}.}
+\tag{240.23}
+$$
+若 $\gcd(d,R)=1$，则全部达到纯态的输入边缘唯一为
+$$
+\boxed{\rho=I_d/d,\qquad r_{\min}=d.}
+\tag{240.24}
+$$
+

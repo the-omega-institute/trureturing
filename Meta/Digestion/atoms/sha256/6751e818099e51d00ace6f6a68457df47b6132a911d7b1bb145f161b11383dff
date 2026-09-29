@@ -1,0 +1,26 @@
+### 9.6 质量一仿射解码器及负格边界
+
+定义
+
+$$
+B_t(y)=\frac19+\frac29\sum_{\gamma\in\{0,1,2\}^2}y_\gamma
+-\frac12\sum_{\gamma\in C_t}y_\gamma.
+\tag{ER9.SH.7}
+$$
+
+其线性系数在空、单删除行为零，在四个 $C_t$ 标签上为 $-5/18$，其他五个双删除上为 $2/9$。每个双删除属于四个目标的交叉集，故每列的目标系数和为 $9(2/9)-4/2=0$，从而 $\sum_tB_t(y)=1$。每格被四个双删除保留，故 $\sum_{\rm double}F_\gamma p=4\sum p$，结合反演得
+
+$$
+B_t(Fp)=p_t+\frac{1-\sum_jp_j}{9}.
+$$
+
+所以对任何质量一实来源，$B$ 准确反演无噪观察。每行系数绝对和为 $4(5/18)+5(2/9)=20/9$。逐行有限三角不等式给
+
+$$
+\left|\sum_g M_{tg}e_g\right|
+\le\sum_g|M_{tg}|\,|e_g|
+\le\varepsilon\sum_g|M_{tg}|=20\varepsilon/9,
+$$
+
+其中 $M$ 是 $B$ 的线性部分。因此 $R_H(\varepsilon)\le20\varepsilon/9$ 对所有噪声成立。
+

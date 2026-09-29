@@ -1,0 +1,18 @@
+**定义 29.1（紧预算区间上的中心化增益过程）。** 沿用定义 28.1，固定
+$`K\gt1`$，令预算遍历 $`[1,K]`$。每个预算仍取输出大小
+$`m_\kappa=\lfloor q\kappa\rfloor`$，使用同一份数据和同分优先级。置
+
+```math
+\mathcal Z_M(\kappa)
+ =\sqrt{q\sqrt\lambda}\left[
+ D_\kappa-(H_{\mathcal E,1}^{\xi}
+                    -H_{\mathcal E,\kappa}^{\xi})\right].
+```
+
+式 (29.1)。
+
+它是预算网格上的右连续阶梯函数，视为带 $`J_1`$ 拓扑的
+$`D[1,K]`$ 中的随机元。记 $`\Theta`$ 为 (28.4) 的时钟；格点情形沿
+$`\zeta_M\bmod h\to\omega`$ 的任意子序列，将其换成 (28.5) 的
+$`\Theta_\omega`$。
+

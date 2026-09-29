@@ -1,0 +1,24 @@
+**命题 201.3（条件边缘相同而最坏未来不同）。** 取二维系统、参数集 $\Lambda=\{0,1\}$，并令联合条件后继为
+
+$$
+\mathfrak J_\Phi
+=\left\{
+(|0\rangle\langle0|,0),
+(|1\rangle\langle1|,1)
+\right\}.
+$$
+
+定义未来效果 $H_\lambda=|\lambda\rangle\langle\lambda|$，响应为
+
+$$
+ h(\tau,\lambda)=\operatorname{Tr}(\tau H_\lambda).
+$$
+
+在真实联合集合上 $h=1$ 恒成立；在矩形包络上还包含 $(|0\rangle\langle0|,1)$ 与 $(|1\rangle\langle1|,0)$，故
+
+$$
+\inf_{\mathfrak J_\Phi}h=1,
+\qquad
+\inf_{\operatorname{Rect}(\mathfrak J_\Phi)}h=0.
+$$
+

@@ -14,8 +14,8 @@ PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
     'frontier/comparison-bounds/joint_mass_outer_comparison.py': 'c637a858ab8fba9a0141378c353fb9fe8a3fadbff6c91d1e33e35b871d0cdc73',
     'certificates/source_norms/comparison-bounds/joint_mass_outer_comparison.json': 'a85c799a883b994348ef8495c4b2a19d380ca5cc5299ada0c6cce101cf1c2726',
-    'frontier/comparison-bounds/residual_shell_k_comparison.py': '172e74c59a974c25ec9e77b4ee7cd2d4c84ac314f3cca4e3906160a7b065034b',
-    'certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json': '1e1b972b2756007c1f259232d4d03c49b527d5e88242b98e4300f48c3fa08f2f',
+    'frontier/comparison-bounds/residual_shell_k_comparison.py': '93ec80832e84e26e357b70c581aefbaeabbdc46277f09688f406d99e9f3fb3d0',
+    'certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json': 'c02f40a2361a6de1d221d573dd0673b942d8f407df3998617f314d1c71b60dae',
 }
 
 

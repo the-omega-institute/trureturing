@@ -1,0 +1,22 @@
+**定理 34.4（双轴部分去相干的精确完全系数）。** 对 $0\le a,b\le1$，定义单比特信道
+\[
+ \Psi_{a,b}=\mathcal Z_{X,a}\mathcal Z_{Z,b}.
+\]
+其 Bloch 矩阵为 $\operatorname{diag}(b,ab,a)$，且
+\[
+ \boxed{\eta^{\rm c}(\Psi_{a,b})=\max\{a^2,b^2\}.}
+\]
+所以这一两参数族的原平方范数公式在任意被动量子记忆下保持精确。
+
+**证明。** 先取 $a,b>0$，置 $r_x=-\log a$、$r_z=-\log b$。$E_x,E_z$ 交换，故 $\Psi_{a,b}=e^{\mathcal L}$，其中
+\[
+ \mathcal L=r_x(E_x-\operatorname{id})+r_z(E_z-\operatorname{id}).
+\]
+在演化 $\rho_t=(e^{t\mathcal L}\otimes\operatorname{id}_R)\rho$ 中，$\sigma=E_0\rho$ 不变。引理 34.2 的导数界及引理 34.3 给
+\[
+ -\frac d{dt}D(\rho_t\Vert\sigma)
+ \ge2r_xD(\rho_t\Vert E_x\rho_t)+2r_zD(\rho_t\Vert E_z\rho_t)
+ \ge2\min(r_x,r_z)D(\rho_t\Vert\sigma).
+\]
+积分到一得到 $\max(a^2,b^2)$ 上界，对任何记忆维数相同。满秩正则化延至所有态。若某参数为零，用信道和有限维熵的连续性取极限。下界只需常量记忆，在最慢 Bloch 方向上取趋近 $I/2$ 的小扰动；第 28.3 条的二阶展开给匹配比值。注意 $a=b=s$ 给 Bloch 缩放 $(s,s^2,s)$，与命题 33.3 的 $(s,s,s)$ 不同。证毕。
+

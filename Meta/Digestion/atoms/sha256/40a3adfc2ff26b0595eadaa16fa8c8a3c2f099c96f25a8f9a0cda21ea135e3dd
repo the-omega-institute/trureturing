@@ -1,0 +1,31 @@
+### 102.1 固定方向的精确最小交维数
+
+设 $K$ 为 $n$ 维复 Hilbert 空间，$n\ge1$，$F$ 二维，置 $X=K\otimes F$。给定
+
+$$
+E_0,E_1\subset X,\qquad E_0\perp E_1,\qquad
+\dim E_i\le n.
+$$
+
+记所有允许零位像组成的族为
+
+$$
+\mathfrak R(E_0,E_1)
+=\{R_0\subset X:\dim R_0=n,\ E_0\subset R_0\subset E_1^\perp\}.
+\tag{102.1}
+$$
+
+因为 $E_1^\perp$ 至少 $n$ 维且包含至多 $n$ 维的 $E_0$，该族非空。对非零 $z\in F$，置
+
+$$
+S_z=K\otimes\mathbb Cz,\qquad
+S_z^\perp=K\otimes\mathbb Cz^\perp,
+$$
+
+$$
+a_z=\dim(E_0\cap S_z),\qquad
+b_z=\dim(E_1\cap S_z^\perp),\qquad
+h_z=\max\{a_z,b_z\}.
+\tag{102.2}
+$$
+

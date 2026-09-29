@@ -6,6 +6,7 @@
    utility: none
    digest: Boolean predicate readouts retain pointwise iff statements and checked slot sensitivity. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
 
 set_option autoImplicit false

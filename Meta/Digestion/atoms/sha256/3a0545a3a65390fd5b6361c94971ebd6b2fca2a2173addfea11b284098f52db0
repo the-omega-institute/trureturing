@@ -1,0 +1,66 @@
+**定理 180.3（允许自适应时长的最优总调用量级）。** 在定义180.1的协议类内，有
+$$
+B_{1/4}(r;w_0,w_1)
+=\Theta\!\left(\frac{1-r}{(w_1-w_0)^2}\right),
+\tag{180.13}
+$$
+其中常数可对全部充分近一的 $r$ 和全部允许的正参数差统一选择。上界由固定时长 $n(r)$ 的独立均衡 $02$ 输入实现，下界覆盖依据已有记录自适应选择时长的全部允许协议。若只允许第179节的二步查询，则相同判错目标的最小总调用数为 $\Theta(\varepsilon^{-3}/d^2)$；因此允许选择时长后的最小成本与二步接口的最小成本之比为 $\Theta(\varepsilon^4)$。
+
+证明。 先证明预算下界。把协议的每次时长 $N$ 查询替换为（180.3）的固定受控通道和一个新鲜程序符号。为分析保留全部程序符号、量子仪器的经典输出、时长选择和停止记录，记其联合分布为 $\mathsf P_j$，$j=0,1$。给定完整的过往记录，当前条件量子态及控制操作不依赖未知假设；因此下一次仪器输出和时长选择具有相同的条件核。只有新程序符号的条件分布 $P_{N,w_j}$ 依赖假设。经典相对熵的链式法则和（180.5）于是给出
+$$
+D(\mathsf P_0\Vert\mathsf P_1)
+\le\frac{Cd^2}{\varepsilon}
+\mathbb E_0\!\left[\sum_jN_j\right]
+\le\frac{CBd^2}{\varepsilon}.
+\tag{180.14}
+$$
+每次时长至少为一，故至多发生 $B$ 次查询；停止后补一个不依赖参数的吸收记录，即可把链式法则写在固定长度上。允许一般经典结果空间时，同式由条件概率核的链式法则给出。
+
+最终条件量子态由完整记录经不依赖假设的制备映射给出。因此最终两个输出的半迹范数距离 $d_{\rm tr}(\sigma_0,\sigma_1)=\tfrac12\lVert\sigma_0-\sigma_1\rVert_1$ 不超过 $\operatorname{TV}(\mathsf P_0,\mathsf P_1)$。经典 Pinsker 不等式及（180.14）给出
+$$
+d_{\rm tr}(\sigma_0,\sigma_1)
+\le\sqrt{\frac{CBd^2}{2\varepsilon}}.
+\tag{180.15}
+$$
+等先验判错率不超过 $1/4$ 要求该距离至少为 $1/2$，故 $B\ge\varepsilon/(2Cd^2)$。对协议下确界取逼近序列仍保留此必要条件。
+
+再构造匹配上界。记
+$$
+T=\frac{\pi}{3\sqrt3},\qquad A=e^{-T},\qquad U=\frac A2,
+\qquad D_* =\frac{A(1-T)}2>0.
+\tag{180.16}
+$$
+已有 $\varepsilon n\to T$、$n\alpha\to\pi/3$、$r^n\to A$。又由 $g_r\le B_1=O(\varepsilon)$、$K_r>n$ 及显式 $\delta$ 得 $\delta=O(\varepsilon^3)$。第179节给出 $r-\beta=O(\varepsilon^2)$，所以 $a_n=\beta^n\to A$。
+
+由（178.17）记 $L_n=\partial_pZ_{n,p}|_{p=0}$，则 $\varepsilon L_n\to(1-T)/2$。二阶导数界（180.10）证明
+$$
+\sup_{0\le w\le\delta}
+\left|u_n'(w)-\frac{r^nL_n}{x}\right|
+\le\frac{4r^n(n-1)(n-2)\delta}{x^2}=O(\varepsilon).
+\tag{180.17}
+$$
+因而 $u_n(w)\to U$ 及 $\varepsilon u_n'(w)\to D_*$ 都在整个区间上一致成立；积分后还有对所有正参数差的一致割线极限
+$$
+\frac{\varepsilon[u_n(w_1)-u_n(w_0)]}{w_1-w_0}\longrightarrow D_*.
+\tag{180.18}
+$$
+这一步不把一个仅对固定参数差有效的余项除以任意小的 $d$。并列最大视界也满足同样的视界极限。
+
+均衡 $02$ 测量给出 Bernoulli 概率 $q_\pm^{(n)}(w)=(1\pm u_n(w))/2$。两个假设的根保真度 $f_n$ 满足精确恒等式
+$$
+1-f_n=\frac{[u_n(w_1)-u_n(w_0)]^2}{8}
+\sum_{\nu=\pm}
+\frac1{\left(\sqrt{q_\nu^{(n)}(w_0)}+
+\sqrt{q_\nu^{(n)}(w_1)}\right)^2}.
+\tag{180.19}
+$$
+于是，在全部允许参数对上一致有
+$$
+\frac{1-f_n}{d^2/\varepsilon^2}\longrightarrow
+\frac{F_*}{8}>0,
+\qquad F_*:=\frac{D_*^2}{1-U^2}
+=\frac{A^2(1-T)^2}{4(1-A^2/4)}.
+\tag{180.20}
+$$
+$m$ 个独立均衡测量的似然比测试具有判错率至多 $f_n^m/2$。故取 $m=O(\varepsilon^2/d^2)$ 即可达到 $1/4$，所需总调用数 $nm=O(\varepsilon/d^2)$。由于 $d\le\delta=O(\varepsilon^3)$，$\varepsilon^2/d^2\to\infty$ 一致成立，整数取整的附加一次查询不改变成本量级。与下界合并即得（180.13）；第179节的二步接口成本再乘每次的固定成本二，得到所述比值。证毕。
+

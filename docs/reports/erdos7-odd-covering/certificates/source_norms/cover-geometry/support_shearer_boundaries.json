@@ -361,9 +361,9 @@
   },
   "source_sha256": {
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
-    "problem-details/50-prime-support-incidence-at-most-five.md": "846cf7da2cf9b1bf79d57f466df9fd6061a83e7fd9fe2de6276a20167107c6a5",
-    "problem-details/52-two-or-four-exact-predecessor-supports.md": "6ce31e69b18775949e577f4068c5a63da94ad6f62bb8b59c763b85d376c418ee",
-    "problem-details/53-shared-small-prime-budgets-for-six-or-seven-predecessor-supports.md": "684db767a72b43b56227809556d93b437aea003e3377b058ed4431a4a04d13bb"
+    "problem-details/50-prime-support-incidence-at-most-five.md": "c93f10ba4e68a006f0a40b92ac375dbcf91d3aa85ee99e956ae14e844f1b5dd9",
+    "problem-details/52-two-or-four-exact-predecessor-supports.md": "f0db9cfe28a44d137986ec05c1b99c0873db85d89d67e67197e8320aff81ee71",
+    "problem-details/53-shared-small-prime-budgets-for-six-or-seven-predecessor-supports.md": "2ca1c68122e4379fb4239f8c94aba92f73442a7f5031820fb4e065c74905ba8e"
   },
-  "producer_sha256": "a9fc83f1c6f8b1bac924d2fb0bc201cd7bed2d6370e3a06f2d79c512312669bb"
+  "producer_sha256": "c25ec8387ee1e01ebb658243abdb8d162031b7c062a2fa4f53be10ad7016c1eb"
 }

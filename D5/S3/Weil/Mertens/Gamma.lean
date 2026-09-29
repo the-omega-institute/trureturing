@@ -77,7 +77,7 @@ private lemma integrableOn_log_mul_exp_neg :
       exact hstep
 
 /-- Helper: `∫_0^∞ log t · e^{-t} dt = Γ'(1)` (real). -/
-private lemma integral_log_mul_exp_neg_eq_deriv_Gamma :
+lemma integral_log_mul_exp_neg_eq_deriv_Gamma :
     ∫ t in Ioi (0:ℝ), Real.log t * Real.exp (-t) = deriv Real.Gamma 1 := by
   set I : ℝ := ∫ t in Ioi (0:ℝ), Real.log t * Real.exp (-t) with hI
   -- Step 1: derivative of GammaIntegral at 1.

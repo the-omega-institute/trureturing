@@ -1,0 +1,8 @@
+**出处 11.1（逐项来源）。** 第 8.2 条是本批从确定性模拟语义推出的覆盖刻画，相关有限符号模型背景见下列文献；第 9.2 条的稠密性复用仓库无理旋转取样结论，其余证明直接给出；第 9.3 至 9.5 条的周期、丢番图下界及有理时钟构造在本批组成匹配状态界；第 9.6 条使用第 5 节的线性实现语义并直接证明所用特例；第 10.2 至 10.3 条由数字尾项、前缀更新和分离点计数直接推出。上述八条结果均按本批证明列为 `repo-derived`，其中被引用的经典构件单列为 `literature-attested`。此分类不宣告全球首创。
+
+[^tcs-symbolic]: Giordano Pola、Antoine Girard、Paulo Tabuada，*Approximately bisimilar symbolic models for nonlinear control systems*，[arXiv:0706.0246](https://arxiv.org/abs/0706.0246)；Antoine Girard、Giordano Pola、Paulo Tabuada，*Approximately bisimilar symbolic models for incrementally stable switched systems*，[arXiv:0807.5022v1](https://arxiv.org/abs/0807.5022v1)。`literature-attested` 范围为增量稳定条件下的符号近似模型。检索读取了作者预印本条目的摘要和版本信息；这些来源不作为本批覆盖等价、黄金平方根界或精确 $2^L$ 状态数的证明，也不把本文一侧模拟称为双模拟。
+
+[^tcs-rotation]: 固定源码：[D5/S1/Phase/IntervalSampling.lean](https://github.com/the-omega-institute/trureturing/blob/e984c77223b55a3cda565c7694098e436926183d/D5/S1/Phase/IntervalSampling.lean)，声明 `irrational_rotation_interval_sampling` 对任意无理步长、任意指定初相位给出半开区间的极限取样频率。正长度区间的正频率推出稠密性；对周期子序列使用无理步长 $p\alpha$。该源码没有被当作第 9.3 至 9.5 条状态复杂度已完成形式化的证据。
+
+[^tcs-golden]: 固定源码：[D5/S1/Depth/GoldenContinuedFraction.lean](https://github.com/the-omega-institute/trureturing/blob/e984c77223b55a3cda565c7694098e436926183d/D5/S1/Depth/GoldenContinuedFraction.lean)，声明 `golden_ratio_continued_fraction` 给出黄金连分数的全一系数。第 9.5 条另以共轭乘积和 Fibonacci 递推完整证明其实际使用的误差不等式，无需假设某个未提供的最优逼近常数。
+

@@ -1,0 +1,14 @@
+**定义 13.1（扭曲周期计数）。** 对 h∈H 和 j≥1，令
+
+$$
+F_{h,j}(A)=\#\{x\in X_{E(A)}:\sigma^j x=h\cdot x\}.
+$$
+
+令 [h]_H 为 h 的共轭类，C_H(h) 为中心化子，并令
+
+$$
+c_{h,j}(A)=\sum_{g\in[h]_H}[g]\operatorname{tr}(A^j).
+$$
+
+群环迹只表示对角条目之和；对非交换群环不预设 tr(UV)=tr(VU)。
+

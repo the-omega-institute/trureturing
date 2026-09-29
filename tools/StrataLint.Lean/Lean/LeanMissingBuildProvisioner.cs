@@ -68,7 +68,7 @@ internal static class LeanMissingBuildProvisioner
             {
                 copy = runner.Run(
                     "cp",
-                    ["-R", source, staged],
+                    ["-pR", source, staged],
                     worktreeRoot,
                     LeanCacheProvisioner.DirectoryCopyBudget);
             }
@@ -82,7 +82,7 @@ internal static class LeanMissingBuildProvisioner
             if (copy.ExitCode != 0)
             {
                 exit.AppendWarning(
-                    $"ordinary copy failed ({LeanCacheProvisioner.Error(copy, "cp -R failed")})");
+                    $"ordinary copy failed ({LeanCacheProvisioner.Error(copy, "cp -pR failed")})");
                 exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
                 return new LeanBuildProvisionAttempt(null, exit.Warning, exit.Receipt);
             }
@@ -96,17 +96,11 @@ internal static class LeanMissingBuildProvisioner
             LeanCacheProvisioner.VerifyPrivateDirectory(staged);
             var donorLake = Path.Combine(selection.Donor, ".lake");
             var donorIsPrivate = TryVerifyPrivateDirectory(donorLake, out var donorDirectoryReason);
-            string? pinReason = null;
-            var verifiedPins = donorIsPrivate
-                ? LeanPinSet.TryReadWorktree(selection.Donor, out pinReason)
-                : null;
             string? stampReason = null;
             var donorProject = donorIsPrivate
                 ? stateProbe.ProbeOleans(Path.Combine(donorLake, "build", "lib", "lean"))
                 : new OleanWarmthInspection(OleanWarmth.ProbeFailed, donorDirectoryReason);
             if (!donorIsPrivate
-                || verifiedPins is null
-                || !pins.SamePartition(verifiedPins)
                 || !LeanCacheStamp.Matches(
                     donorLake,
                     pins,
@@ -120,7 +114,6 @@ internal static class LeanMissingBuildProvisioner
                     LeanCacheProvisioner.Join(
                         warning,
                         donorDirectoryReason
-                            ?? pinReason
                             ?? stampReason
                             ?? donorProject.Error
                             ?? "donor changed or became busy after staging; discarded staging build"),
@@ -167,12 +160,8 @@ internal static class LeanMissingBuildProvisioner
         catch (Exception exception)
         {
             // Cleanup is confined to this call's own sibling staging directory. A build
-            // already renamed into place is never removed here: this provisioner must not be
-            // able to delete the target build root, and a published-but-unstamped build is
-            // self-healing rather than broken. The next ensure sees a non-clear content root,
-            // so it cannot re-enter this donor path, and falls through to ReproduceExisting,
-            // which runs the producer with CacheTreeOwnership.PreExisting and publishes the
-            // stamp in place without removing any pre-existing tree.
+            // already renamed into place is never removed here; the ensure owner selects the
+            // recovery policy for a published-but-unstamped target.
             var exit = new CloneReceiptExit(cloneReceipt, warning);
             exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
             throw exit.Wrap(exception);

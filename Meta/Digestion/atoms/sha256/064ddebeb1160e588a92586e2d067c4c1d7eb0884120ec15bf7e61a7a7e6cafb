@@ -1,0 +1,18 @@
+## 82. 近似暗态可以在同一完整接口内修成精确暗态
+
+本批接续第 78—81 节。先控制一次合法仪器修改所需的完整通道距离，再把它接到有限占据态，得到实际等待成本关于失效距离的定量上界。此前的严格半径分离、共同有限性与倒数下界均保留；这里仍不决定第 73 节显式失效仪器是否全局最优。
+
+本节先允许任意非零有限维活动空间 $\mathcal H$。记录空间为两个正交标签“未点击、点击”，完整输出为 $\mathcal K=\mathbb C^2\otimes\mathcal H$。仪器 $\Gamma=(\mathcal N,\mathcal C)$ 完全正且完整保迹，输出已在记录基中分块。对指定单位向量 $\psi\in\mathcal H$，记
+
+$$
+P=|\psi\rangle\langle\psi|,\qquad
+y=|\varnothing\rangle\otimes|\psi\rangle,
+\qquad
+\alpha=\langle y|\Gamma(P)|y\rangle
+=\operatorname{Tr}[P\mathcal N(P)],
+\qquad
+\varepsilon=1-\alpha.
+$$
+
+$\varepsilon$ 同时计入点击概率及未点击后离开指定纯态的部分；它一般不等于单独的点击概率。
+

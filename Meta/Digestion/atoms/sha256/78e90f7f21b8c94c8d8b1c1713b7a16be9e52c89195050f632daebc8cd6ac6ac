@@ -1,0 +1,4 @@
+### 2.8 Sparse binary exclusions: pointwise mass equivalence and failure of uniform transport
+
+Fix the native binary prefix tower, with digits read from low to high in $\mathbb Z_2$. This section completes the binary boundary of C卷第2.7节. It uses the canonical-cylinder result of C卷第2.6节. The statements below are ordinary mathematical proofs; they assert neither Lean verification nor research originality. They concern effectively presented infinite families and do not settle a finite covering conjecture.
+

@@ -1,0 +1,74 @@
+### 251.3 正见证把全部竞争态限制到同一核空间
+
+定义参考正算子 $F$ 及联合 Hermitian 算子 $W,L$：
+$$
+F=\frac QD+\frac PU,
+\qquad
+W=\frac14(A_a\otimes H_a+A_b\otimes H_b),
+\qquad
+L=I_{H\otimes E}-(I_H\otimes F)W.
+\tag{251.16}
+$$
+$F$ 在 $E_0^\perp$ 上为零，并与 $H_a,H_b$ 交换，所以 $L$ 确为 Hermitian。
+
+在量子参考块中应用 $V^\dagger$，得到
+$$
+W_{\mathrm{ent}}
+=\frac{A Z\otimes Z+B X\otimes X}{2\ell}\otimes I_M,
+\qquad
+L_{\mathrm{ent}}
+=\left(I-\frac{A Z\otimes Z+B X\otimes X}{A+B}\right)\otimes I_M.
+\tag{251.17}
+$$
+$Z\otimes Z$ 与 $X\otimes X$ 交换，其共同本征向量可取四个 Bell 向量。$L$ 在 Bell 因子上的本征值为
+$$
+0,\qquad\frac{2B}{A+B},\qquad\frac{2A}{A+B},\qquad2.
+\tag{251.18}
+$$
+由于 $A,B>0$，零本征空间恰为 $\operatorname{span}\{|\Phi^+\rangle\}$，其中 $|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2$。
+
+在产品符号块 $E_s$ 上，（251.2）及（251.14）给
+$$
+W_s=U(r_s\cdot\sigma)\otimes I_{E_s},
+\qquad
+L_s=(I_2-r_s\cdot\sigma)\otimes I_{E_s}\succeq0,
+\tag{251.19}
+$$
+其核为 $\operatorname{span}\{|r_s\rangle\}\otimes E_s$。在 $E_0^\perp$ 上 $L=I$。因此
+$$
+\boxed{L\succeq0,\qquad\ker L=\mathcal K,}
+\tag{251.20}
+$$
+其中
+$$
+\mathcal K=
+(I_H\otimes V)(\operatorname{span}\{|\Phi^+\rangle\}\otimes M)
+\ \oplus\!
+\bigoplus_{s\in\Sigma}
+\bigl(\operatorname{span}\{|r_s\rangle\}\otimes E_s\bigr).
+\tag{251.21}
+$$
+各直和项通过正交参考支撑区分。源态正常形保证 $\operatorname{supp}\Omega\subseteq\mathcal K$，从而 $\operatorname{Tr}(L\Omega)=0$。
+
+对任意归一化联合态 $\Xi$，偏迹公式给
+$$
+\operatorname{Tr}(L\Xi)
+=1-\frac14\operatorname{Tr}_E
+\left[F\bigl(H_a\mathcal R_a(\Xi)+H_b\mathcal R_b(\Xi)\bigr)\right].
+\tag{251.22}
+$$
+右侧只使用归一化及两份响应。若 $\Xi$ 具有（251.5）的读数，则
+$$
+\operatorname{Tr}(L\Xi)=\operatorname{Tr}(L\Omega)=0.
+\tag{251.23}
+$$
+正性进一步给
+$$
+0=\operatorname{Tr}(L\Xi)
+=\|L^{1/2}\Xi^{1/2}\|_{\mathrm{HS}}^2,
+\qquad
+\boxed{\operatorname{supp}\Xi\subseteq\mathcal K.}
+\tag{251.24}
+$$
+这同时排除了竞争态在 $E_0^\perp$ 上的权重及其与占用空间的交叉项。它没有预设竞争态饱和，也没有读取竞争态的参考边缘。
+

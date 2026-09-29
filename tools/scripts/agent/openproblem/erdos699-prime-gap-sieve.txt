@@ -1,0 +1,53 @@
+// Compile this text certificate as C++17 using g++ -x c++ -O3.
+// Full deterministic interval sieve for the Erdős 699 large-index certificate.
+// Every odd composite in a segment is struck by a prime <= sqrt(high).
+// No probable-prime test, precomputed gap table, or binomial sampling is used.
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <cstdlib>
+#include <iostream>
+#include <limits>
+#include <stdexcept>
+#include <vector>
+using u64=std::uint64_t;
+int main(int argc,char**argv){
+ try {
+  u64 endpoint=(u64(1)<<31), segment_odds=(u64(1)<<19);
+  if(argc>1) endpoint=std::stoull(argv[1]);
+  if(argc>2) segment_odds=std::stoull(argv[2]);
+  if(endpoint<3 || endpoint>10000000000ULL || segment_odds<1 || segment_odds>(u64(1)<<28))throw std::runtime_error("invalid bound/segment size");
+  const u64 stop=endpoint+4096;
+  u64 root=static_cast<u64>(std::sqrt(static_cast<long double>(stop)));
+  while((root+1)*(root+1)<=stop)++root;
+  while(root*root>stop)--root;
+  std::vector<unsigned char> small(root+1,1); small[0]=small[1]=0;
+  for(u64 p=2;p*p<=root;++p)if(small[p])for(u64 q=p*p;q<=root;q+=p)small[q]=0;
+  std::vector<u64> base;for(u64 p=3;p<=root;p+=2)if(small[p])base.push_back(p);
+  u64 prev=2,count=1,maxgap=0,gaplo=0,gaphi=0,first_above=0,segments=0;
+  std::vector<std::pair<u64,u64>> records;
+  for(u64 lo=3;lo<=stop && !first_above;){
+   u64 hi=std::min(stop,lo+2*(segment_odds-1));if(!(hi&1))--hi;
+   std::vector<unsigned char> isprime((hi-lo)/2+1,1);
+   for(u64 p:base){if(p*p>hi)break; u64 start=std::max(p*p,((lo+p-1)/p)*p);if(!(start&1))start+=p;
+    for(u64 q=start;q<=hi;q+=2*p)isprime[(q-lo)/2]=0;
+   }
+   ++segments;
+   for(u64 k=0;k<isprime.size();++k)if(isprime[k]){
+    u64 p=lo+2*k, gap=p-prev;
+    if(gap>maxgap){maxgap=gap;gaplo=prev;gaphi=p;records.emplace_back(prev,gap);}
+    if(p>endpoint){first_above=p;break;}
+    ++count;prev=p;
+   }
+   lo=hi+2;
+  }
+  if(!first_above)throw std::runtime_error("no prime beyond endpoint in exact scanned padding");
+  std::cout<<"{\n  \"endpoint\": "<<endpoint<<",\n  \"prime_count_to_endpoint\": "<<count
+   <<",\n  \"first_prime_above\": "<<first_above<<",\n  \"max_consecutive_gap\": "<<maxgap
+   <<",\n  \"max_gap_left\": "<<gaplo<<",\n  \"max_gap_right\": "<<gaphi
+   <<",\n  \"segment_odds\": "<<segment_odds<<",\n  \"segments\": "<<segments<<",\n  \"records\": [";
+  for(std::size_t r=0;r<records.size();++r){if(r)std::cout<<",";std::cout<<"["<<records[r].first<<","<<records[r].second<<"]";}
+  std::cout<<"]\n}\n";
+  return 0;
+ }catch(const std::exception&e){std::cerr<<e.what()<<"\n";return 1;}
+}

@@ -206,6 +206,48 @@ class CacheDeadlineCases:
                 self.assertEqual(0, denied.save_timeout_minutes())
                 self.assertEqual([], calls)
 
+    def test_reusable_cache_job_uses_its_declared_name_and_preserves_run_identity(self):
+        for event in ("push", "pull_request"):
+            with self.subTest(event=event):
+                owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
+                env.update(GITHUB_JOB="engineering_cache",
+                           CI_CACHE_JOB_NAME="engineering_cache / engineering_cache")
+                jobs["jobs"][0].update(name=env["CI_CACHE_JOB_NAME"], started_at=datetime.fromtimestamp(
+                    epoch - 20, timezone.utc).isoformat().replace("+00:00", "Z"))
+                if event == "pull_request":
+                    env.update(GITHUB_EVENT_NAME=event, GITHUB_REF="refs/pull/42/merge",
+                               GITHUB_SHA="b" * 40, CANDIDATE_SHA="b" * 40, PR_HEAD_SHA="c" * 40)
+                    jobs["jobs"][0]["head_sha"] = "c" * 40
+                first = owner.begin(self.root, "engineering", 10, env=env, fetch_jobs=fetch,
+                                    now=lambda: epoch, monotonic=lambda: clock[0])
+                self.assertEqual("available", first.reason)
+                self.assertEqual(395, first.snapshot_seconds())
+                self.assertEqual("available", owner.load_deadline(
+                    self.root, "engineering", env=env, monotonic=lambda: clock[0]).reason)
+                self.assertEqual(0, owner.load_deadline(self.root, "engineering",
+                    env={**env, "CI_CACHE_JOB_NAME": "other / engineering_cache"},
+                    monotonic=lambda: clock[0]).save_timeout_minutes())
+                for key, value in (("name", "push / engineering_cache"), ("run_id", 124),
+                                   ("run_attempt", 1), ("head_sha", "d" * 40),
+                                   ("runner_name", "other-runner"), ("status", "completed")):
+                    with self.subTest(field=key):
+                        original = jobs["jobs"][0][key]
+                        jobs["jobs"][0][key] = value
+                        denied = owner.begin(self.root, "engineering", 10, env=env, fetch_jobs=fetch,
+                                             now=lambda: epoch, monotonic=lambda: clock[0])
+                        self.assertEqual(0, denied.save_timeout_minutes())
+                        jobs["jobs"][0][key] = original
+
+    def test_declared_cache_job_name_cannot_be_empty_or_borrow_checking_job(self):
+        for name in ("", " ", "engineering_cache\n", "engineering", "push / engineering", None):
+            with self.subTest(name=name):
+                owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
+                env.update(GITHUB_JOB="engineering_cache", CI_CACHE_JOB_NAME=name)
+                denied = owner.begin(self.root, "engineering", 10, env=env, fetch_jobs=fetch,
+                                     now=lambda: epoch, monotonic=lambda: clock[0])
+                self.assertEqual(0, denied.save_timeout_minutes())
+                self.assertEqual([], calls)
+
     def test_cache_deadline_checks_exact_run_attempt_candidate_and_job(self):
         for key, value in (("name", "engineering"), ("run_id", 124), ("run_attempt", 1),
                            ("head_sha", "b" * 40), ("status", "completed"),

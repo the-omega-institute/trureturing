@@ -1,0 +1,19 @@
+### 27.5 精简结构的三层判定
+
+因此，给定四个表示，精简性应分三层检查：
+
+$$
+\boxed{
+\begin{array}{ll}
+\text{静态充分：}&\displaystyle \bigcap_i\ker(q_i)\subseteq\ker(T);\\[4pt]
+\text{任务精确：}&\displaystyle \bigcap_i\ker(q_i)=\ker(\Phi);\\[4pt]
+\text{动态可运行：}&\displaystyle q_iF=F_iq_i\text{（或联合版本 }JF=F_JJ\text{）}.
+\end{array}
+}
+\tag{27.8}
+$$
+
+第一层只回答一个目标，第二层保留全部声明的未来区别，第三层才保证下一项合法操作可以继续在摘要上定义。把其中任何一层偷换成“值域大小相同”或“当前读数相同”，都会重新引入前面隐藏档案与未来解码的反例。
+
+本节把仓内已形式化的最大不变商、控制 profile 商和实际像因子化接到同一个交核框架中。新增的切面不可删判据、冗余例子和三层判定是普通数学组织，Claim status 均为 open；没有新增 Lean 声明，也不触发消化流程。
+

@@ -1,0 +1,79 @@
+### 68.2 总事件近饱和控制核方向质量
+
+反设存在因果 $S$ 满足
+
+$$
+N(R_\varepsilon-S)\le\varepsilon+g,
+\qquad0\le g\le\frac{\varepsilon^2}{1024}.
+\tag{68.4}
+$$
+
+令
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad\Pi_+=C_+\otimes I_D,
+\quad S_+=\Pi_+S\Pi_+,
+\quad R_+=\Pi_+R_\varepsilon\Pi_+.
+$$
+
+归一化给 $\operatorname{Tr}S_+=1$、$\operatorname{Tr}R_+=1+\varepsilon$。$R_+-S_+$ 的正谱投影是合法事件，所以它的正谱和至多 $\varepsilon+g$。总迹等于 $\varepsilon$，因此负谱绝对值之和至多 $g$。
+
+记 $K$ 为 $\operatorname{ran}\Pi_+$ 内 $R_+$ 的核投影，则
+
+$$
+\operatorname{Tr}(KS_+)=-\operatorname{Tr}(K(R_+-S_+))\le g.
+\tag{68.5}
+$$
+
+这是对同一实际修复的核方向正质量的界，没有把小负谱当成精确正性。
+
+在四维 $\operatorname{ran}\Pi_+$ 中取正交归一基
+
+$$
+\begin{aligned}
+\xi_0&=\frac{x+\sqrt\varepsilon z}{\sqrt{1+\varepsilon}},
+&\nu_0&=\frac{\sqrt\varepsilon x-z}{\sqrt{1+\varepsilon}},\\
+\xi_1&=\frac{x'-\sqrt\varepsilon z'}{\sqrt{1+\varepsilon}},
+&\nu_1&=\frac{\sqrt\varepsilon x'+z'}{\sqrt{1+\varepsilon}}.
+\end{aligned}
+\tag{68.6}
+$$
+
+$\xi_0,\xi_1$ 张成 $R_+$ 的像，$\nu_0,\nu_1$ 张成其核。定义
+
+$$
+m_j=\langle\xi_j|S|\xi_j\rangle,
+\quad k_j=\langle\nu_j|S|\nu_j\rangle,
+\quad f_j=\langle\xi_j|S|\nu_j\rangle
+\quad(j=0,1).
+$$
+
+不假设其他矩阵元为零。核方向正质量和总迹给
+
+$$
+0\le k_0+k_1\le g,\qquad m_0+m_1=1-k_0-k_1.
+$$
+
+现在同时使用误差假设对同一个差算符的约束。记 $X=R_+-S_+$。其负谱绝对值之和至多 $g$，所以 $X+gI\succeq0$；其正谱和至多 $\varepsilon+g$，所以
+
+$$
+\langle\xi_j|X|\xi_j\rangle\le\varepsilon+g.
+$$
+
+$X+gI$ 在 $\xi_j,\nu_j$ 上的二阶主子式非负，而其核方向对角为 $g-k_j$、交叉项为 $-f_j$。因此
+
+$$
+\begin{aligned}
+|f_j|^2
+&\le(\langle\xi_j|X|\xi_j\rangle+g)(g-k_j)
+\le(\varepsilon+2g)(g-k_j)\\
+&\le(\varepsilon+2g)g,\\
+|f_0|+|f_1|&\le2\sqrt{(\varepsilon+2g)g}
+\le L:=2\sqrt{2\varepsilon g}.
+\end{aligned}
+\tag{68.7}
+$$
+
+最后一步使用式（68.4）与 $\varepsilon\le1/16$，从而 $2g\le\varepsilon$。这一估计把总事件近饱和与实际修复的核方向质量同时用于同一个矩阵主子式。
+

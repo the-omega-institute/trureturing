@@ -1,0 +1,20 @@
+### theorem 59.1 黄金范数恢复共同成块数
+
+定义结构性乘法记录
+
+$$
+U(n)=1^{a_2}\theta^{a_3}(\theta^2)^{a_5}(2+\theta)^{a_7}.
+$$
+
+则
+
+$$
+\boxed{\mathcal N(U(n))=(-1)^{a_3}5^{a_7}.}
+$$
+
+特别地，
+
+$$
+\boxed{\kappa=a_7=v_5\!\left(|\mathcal N(U(n))|\right).}
+$$
+

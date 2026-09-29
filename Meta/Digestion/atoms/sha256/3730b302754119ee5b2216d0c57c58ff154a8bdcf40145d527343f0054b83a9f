@@ -1,0 +1,19 @@
+**定义 218.1（统计风险边界）。** 对一个过滤化风险合同，定义
+
+$$
+\boxed{
+\eta_{\mathrm{stat}}
+=
+\left(
+\widehat\theta_j,n_j,\delta_j,
+I_j,
+\text{抽样与独立性合同},
+\text{来源风险量词},
+\text{物理风险阈值}
+\right)_{j=1}^{K}.
+}
+\tag{218.1}
+$$
+
+其中 $\sum_j\delta_j\le\delta$，$I_j$ 是由经验读数和置信半径产生的参数区间。若不同坐标共享样本或具有相关性，独立 Hoeffding 盒不能直接使用，必须换成声明过的联合置信集合。
+

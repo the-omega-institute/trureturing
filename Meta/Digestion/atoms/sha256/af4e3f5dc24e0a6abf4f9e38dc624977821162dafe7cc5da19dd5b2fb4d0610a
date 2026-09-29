@@ -1,0 +1,44 @@
+### 276.7 同一二维接口中的单Jordan来源
+
+仍在同一 $E=\mathbb C^2$ 和同一输入基中，令
+$$
+M_{\mathrm J}(t)=\begin{pmatrix}1&t\\0&1\end{pmatrix},
+\qquad
+Q_{\mathrm J}(t)=\begin{pmatrix}1/2&-t/4\\-t/4&1/2\end{pmatrix},
+\qquad 0\le t\le1/4.
+\tag{276.32}
+$$
+$Q_{\mathrm J}(t)$ 的本征值为 $1/2\pm t/4$，在该区间严格正；直接相乘验证
+$$
+Q_{\mathrm J}(t)+M_{\mathrm J}(t)^\dagger Q_{\mathrm J}(t)M_{\mathrm J}(t)=I_2.
+\tag{276.33}
+$$
+因此§272的二维单链来源恰为
+$$
+\Omega_{\mathrm J}(t)=\frac12T(Q_{\mathrm J}(t),M_{\mathrm J}(t)),
+\qquad\rho_{\mathrm J}=I_2/2,
+$$
+$$
+K_{\mathrm J}(t)=Q_{\mathrm J}(t)M_{\mathrm J}(t)
+=\begin{pmatrix}
+1/2&t/4\\-t/4&1/2-t^2/4
+\end{pmatrix}.
+\tag{276.34}
+$$
+该来源的联合秩为二，且随 $t$ 连续。
+
+对每个固定 $0<t\le1/4$，§269、§272及定理275.3给
+$$
+d_{S,\mathrm J}=2,
+\qquad \alpha_{\mathrm J}=\frac14,
+\tag{276.35}
+$$
+并且完整数据纤维唯一。§272的负性界在 $n=2$ 时为
+$$
+\frac{t^2}{50}
+\le f_{\mathrm J}(t):=\operatorname{Neg}(\Omega_{\mathrm J}(t))
+\le2t^2.
+\tag{276.36}
+$$
+有限维部分转置和迹范数连续，使 $f_{\mathrm J}$ 在整个闭区间连续，且 $f_{\mathrm J}(0)=0$。
+

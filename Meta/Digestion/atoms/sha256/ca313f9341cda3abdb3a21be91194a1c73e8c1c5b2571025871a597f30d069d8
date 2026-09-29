@@ -1,0 +1,31 @@
+**命题 523.1（全支撑对精确代价比例的改进）。** 对第 485 节的有限目标族，假设每个 $Q_i(x)>0$，并设
+
+$$
+u:=\min_x l(x)>0,\qquad0<r\le M<1,\qquad\rho>0.
+$$
+
+则受容量约束半径满足
+
+$$
+\rho_r\le(1-M)\left(1-\frac uM\right),
+$$
+
+进而
+
+$$
+\frac{j_{\mathrm{exact}}}{j_{\mathrm{free}}}
+\le2\tau\left(1-\frac uM\right)<2\tau.
+$$
+
+证明：令 $V=l/M$，并定义 $H_i=(Q_i-l)/(1-M)$。由于 $M<1$，每个 $H_i$ 都是概率分布，且 $Q_i=MV+(1-M)H_i$。$r\le M$ 使 $V$ 属于容量约束集 $\mathcal C_r$。
+
+对任意概率 $H$，利用经典恒等式 $\operatorname{TV}(V,H)=1-\sum_x\min(V(x),H(x))$。置 $a=\min_xV(x)=u/M$；因为 $V(x)\ge a$、$0\le H(x)\le1$，逐坐标有 $\min(V(x),H(x))\ge aH(x)$。求和得到 $\operatorname{TV}(V,H)\le1-u/M$。因此
+
+$$
+\operatorname{TV}(V,Q_i)
+=(1-M)\operatorname{TV}(V,H_i)
+\le(1-M)(1-u/M).
+$$
+
+在容量约束中采用这个合法中心便得到半径上界。由第 503 节 $1-M\le\tau\rho$，以及第 485 节 $j_{\mathrm{exact}}=2r\rho_r$、$j_{\mathrm{free}}=r\rho$，得到比例上界。$u/M>0$、$\tau>0$ 给出严格小于 $2\tau$。所有除法都由假设保证合法。证毕。
+

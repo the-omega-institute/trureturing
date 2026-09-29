@@ -1,0 +1,10 @@
+**出处 50.1（已有数学与本批用途）。** 同胚、保时间共轭、周期不变量、环面闭一形式障碍、Fourier/Hodge 分解、Cartan 拉回公式均属于已有数学。第 46.3 条把固定环面上的全局能量误设写成可计算的精确误差；第 47 节将前轮历史坐标推导补齐其辛形式与条件数；第 48 节计算一个固定频率、固定增益、有限时窗设计的精确最优值及判别资源；第 49 节给出轨迹误差与几何误差的严格分离。这八条结果的具体组合按正文推导记录，不把它们的经典构件认领为新发现。
+
+[^tcs9-topology]: Steven M. LaValle，*Planning Algorithms*，§4.1.1 中 [Homeomorphism: Making a donut into a coffee cup](https://msl.cs.uiuc.edu/planning/node130.html)。同胚忽略度量量，只保留连续结构。甜甜圈和单柄杯子的类比要求比较一致的理想化实体或边界曲面模型，不能混淆材料、内部空腔与只取外壁的不同集合；“洞数相同”不是任意拓扑空间的完整分类。几何本身随时间变化的独立例子是 Ricci 流，可参见 G. Perelman，*The entropy formula for the Ricci flow and its geometric applications*，[arXiv:math/0211159](https://arxiv.org/abs/math/0211159)。本批仅用它说明问题类型，不证明 Ricci 流或 Poincaré 定理。
+
+[^tcs9-symplectic]: Ana Cannas da Silva，*Symplectic Geometry*，Handbook of Differential Geometry, vol. 2，作者稿 [arXiv:math/0505366v1](https://arxiv.org/pdf/math/0505366)。来源范围为 §1.4 的拉回求导与 Cartan 公式、§5.1 的闭/恰当一形式及环面上的非 Hamilton 平移实例，不引用图表。$H^1_{\mathrm{dR}}$ 的障碍是该文已有内容，第 46.3 条另写当前平坦范数下的 Fourier 分解和误差等号。
+
+[^tcs9-embedology]: A. Eftekhari、H. L. Yap、M. B. Wakin、C. J. Rozell，*Stabilizing Embedology: Geometry-Preserving Delay-Coordinate Maps*，Physical Review E 97, 022222 (2018)，[arXiv:1609.06347](https://arxiv.org/abs/1609.06347)。本次读取作者摘要，并复用先前已核对的主卷 §12 的原文问题范围：拓扑嵌入不自动给距离稳定性。第 47.2 条只是一个完全可算的谐振子，不声称任意流或任意标量传感器都由两个延迟恢复。
+
+[^tcs9-design]: E-optimal 设计最大化信息矩阵最小特征值，是既有实验设计准则。本批的直接背景包括 H. Dette、Y. Grigoriev，*E-optimal designs for second-order response surface models*，[arXiv:1403.3805](https://arxiv.org/abs/1403.3805)，其模型与本批第一谐波模型不同，本次仅读取其摘要和准则范围。第 48.2 条通过圆弧凸包独立求解指定二参数实验，未借用该文另一模型的最优常数。
+

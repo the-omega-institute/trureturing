@@ -1,0 +1,300 @@
+# Four active projected phases per level give an actual nine-prime common-source certificate
+
+A finite distinct family on the first nine odd primes leaves actual Haar survivor mass greater than1/8000 under the following condition on its old-only part: at every surviving first-five-coordinate point, the active originals involving17 or19 admit a dividing-endpoint assignment with at mostfour distinct projected phases at each prime-power depth. All original classes touching23 or29 may have arbitrary old and outside residues and arbitrary finite heights. The condition is sufficient, not automatic. These are ordinary source deductions and exact numerical controls, not Lean verification or unrestricted Erdős#7 closure.
+
+The arbitrary-residue bridge needs one probability on the actual old-only survivor set whose complete nonunit query sum is below565/51. The retained five-coordinate process can be tested at the common query threshold6 without changing its kernels or rerunning source geometry. Its resulting bound, together with projection assignments depending on the old boundary at17 and19, supplies this target for a concrete class of actual seven-coordinate old families. All original classes touching23 or29 may then have arbitrary old residues, outside residues and finite heights.
+
+The additional condition retains old activation: at each actual A-only survivor, each active original involving17 or19 is assigned once to a dividing endpoint, with at most FOUR distinct full-depth phases at each depth of each prime. The entire finite table of assignments is fixed before any query. Its existence is not asserted for every family. This is an application of the [five-source comparison in461](../450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md), the [conditioning/query products in463](../450-499/463-two-actual-prime-extensions-preserve-a-common-core-law.md), and the [fixed projection-support principle in522](522-fixed-product-subcarriers-absorb-shared-mixed-unit-projections.md). The source construction and arbitrary-height comparisons retain the attribution and verification boundary in the [Schroeder source entry](../../../../../../Library/Arith/schroeder2026nine.md). The threshold6 calculation is the additional numerical input; no new general conditioning theorem or literature-priority claim is made.
+
+## A common threshold6 on the unchanged five-coordinate process
+
+Use the unchanged ordinary five-coordinate source process of461 on A={3,5,7,11,13}. Its physical kernels, deletion rules and anchor parameters are unchanged. At any finite period resolving the original core and all required queries, let nu be its live measure and sigma the predeletion measure. One complete layout L contains the unit term, and for any t>=1,
+
+    nu(L-1)<=(t-1)nu(1)+sigma((L-t)_+).
+
+In the retained135-cell units let R be the anchor reserve, Delta3 the three old-stage deletion expenses and D3=R-Delta3>0. Then nu(1)>=D3/135. The existing ordered-increment and reverse-integration comparison gives135 sigma((L-t)_+)<=N3(t), for every independently phased complete query under this one process.
+
+Set t=6 globally. Let pi(m) be the existing comparison multiplier law for M=(1+J7)(1+J11)(1+J13), with mean105/64; let F be the fixed cached anchor hinge envelope, W its linear bound and A0 its comparison-carrier mass. The retained formula becomes
+
+    N3(6)=sum_(m=1..5) m*pi(m)*F(6/m)
+          +(105/64-sum_(m=1..5)m*pi(m))*W
+          -6*(1-sum_(m=1..5)pi(m))*A0.
+
+The five arguments are6,3,2,3/2,6/5, all existing cache points. There is no interpolation or new phase search at these arguments. For M>=6 the anchor hinge is exactly linear, so its complete remaining mass and first moment pay the entire tail.
+
+For a constant C>=5, the vertex inequality
+
+    (C-5)D3-N3(6)>=0
+
+extends to every actual continuous pure5 budget by the same concavity argument as461: R is affine, while the deletion bounds and nonnegative hinge comparison are convex. The same threshold6 and C must hold at all32 retained vertices. The exact bound is
+
+    C5(6)=1052000467553752961669550889525
+              /113143330653881187980816775279
+           =9.297945017828285...<93/10.
+
+The fixed-cache inequalities give one normalized old-core probability mu5, supported on the actual A-only survivors, satisfying simultaneously
+
+    R_A(mu5)=sum_(d>1,A-smooth) max_a mu5(a mod d)<93/10,
+    mu5<=Lambda5 H_A, Lambda5=84375000000/1812390307<47.
+
+Changing the query threshold does not change the underlying measure or its mass floor1812390307/22500000000, so the density estimate is unchanged. Averaging unnormalized prefix transports and normalizing once works exactly as in461. If one all-depth probability is required, use the closed finite-period bounds R_A<=C5(6)<93/10 together with the support and density conditions in the finite-simplex compactness argument of466. This does not claim that independently chosen finite laws were already compatible, or that the chosen law is positive on every original survivor.
+
+## Active projections may depend on the old boundary
+
+Consider a finite original family of pairwise distinct odd numerical moduli greater than1 supported on P={3,5,7,11,13,17,19}. Keep every A-only original in the mu5 core. Choose a finite A-supported period K resolving that core and every A-part of an old P-only original. Write U_A for the actual A-only survivor set. Each remaining original is uniquely
+
+    m=d17^j19^k, d A-smooth, j+k>0.
+
+At x in U_A it is active exactly when x=a_m mod d. Require that the active originals admit an assignment p_x(m) in{17,19}, with v_(p_x(m))(m)>0, such that
+
+    at every p,e, the active originals assigned to p at depth e
+    use at most FOUR distinct actual p^e-projection phases.    (Q1)
+
+Fix one such assignment at every x before any query. Since K is finite, this is one finite selector table, extended constantly along deeper A-coordinates if required. The selector does not inspect an incoming query or the as-yet-unsampled17/19 coordinates. Original numerical labels and full residues remain fixed. Requiring(Q1) on all U_A makes the hypothesis independent of the unknown support of a particular source measure. Existence of these assignments is not asserted for every original family.
+
+Let V_p(x) be the complement of the union of all projections assigned there. The finite union bound, majorized by all positive depths, gives uniformly
+
+    H17(V17(x))>=1-4/16=3/4,
+    H19(V19(x))>=1-4/18=7/9.
+
+Normalize these two actual masks and define one joint law
+
+    rho_p^x=H_p(. intersect V_p(x))/H_p(V_p(x)),
+    mu_old(dx,dy,dz)=mu5(dx) rho17^x(dy) rho19^x(dz).
+
+Its A-marginal remains mu5. It is supported on the ACTUAL complete P-only survivor set: an inactive original already fails its old d-condition, while an active original is excluded at its assigned endpoint. Equality with the whole survivor support is not needed.
+
+For e>0 put c17(e)=(4/3)17^-e and c19(e)=(9/7)19^-e; put c17(0)=c19(0)=1. Integrating the uniform conditional bounds over the one old cylinder gives, for every fixed query with arbitrary CRT phases,
+
+    mu_old(a mod d17^j19^k)
+       <=c17(j)c19(k) mu5(a mod d).
+
+This is a conditional-kernel inequality. The joint law need not be a product across the A versus17/19 boundary, and its query maxima are not asserted to factor. The same mu5 and kernels are used for all queries. Summing their nonnegative bounds over the complete exponent inventory gives
+
+    1+R_P(mu_old)<(1+93/10)(1+1/12)(1+1/14)
+                 =1339/112,
+    R_P(mu_old)<1227/112<565/51.                      (Q2)
+
+Here sum_(e>=1)c17(e)=1/12 and sum_(e>=1)c19(e)=1/14. The exponent-zero terms use probability1, retaining all old-only and mixed query labels. The same law satisfies
+
+    mu_old<=(12/7)Lambda5 H_P<(564/7)H_P.             (Q3)
+
+For any finite original family, choose the mu5 resolving period large enough for all subsequent old queries and lift the fixed selector accordingly. An all-depth law, when desired, uses the closed bound R_A<=C5(6) and the same support/density compactness argument stated above. It is not supplied by assuming independently chosen finite laws compatible.
+
+The conditional product of endpoint masks and preservation of the entire core marginal are already explicit in [report452, EA7](../450-499/452-exponent-assignment-controls-arbitrary-two-prime-tail-graphs.md); [report453, UT4](../450-499/453-prime-tail-conditioning-preserves-core-laws-at-unrestricted-support.md) charges only the queried positive-depth coordinates. The complete-query conditional-cap principle is also explicit in [report460](../450-499/460-joint-five-prime-moments-give-a-parent-seventeen-completion-margin.md): uniform conditional cylinder bounds suffice without independence of actual coordinates. The construction here applies it to the active original inventory. A fixed global assignment with at mostfour phases per depth is one sufficient case of(Q1), since each active set is a subset of that global inventory. In that case the masks can be chosen independently of x, recovering a product source. No global assignment is needed for the more general condition(Q1).
+
+## Arbitrary23/29 originals, with one final deletion
+
+Now take ANY finite additional family of original classes touching23 or29. Each complete numerical label is uniquely
+
+    m=d23^j29^k, d P-smooth, j,k>=0, j+k>0.
+
+Every original residue is arbitrary. Numerical distinctness gives at most one original class for each triple(d,j,k). Choose mu_old once for the P-only family, at heights resolving all old cofactors queried by the additional family, and use
+
+    sigma=mu_old tensor H23 tensor H29.
+
+For a fixed(j,k), summing masses of its actual originals is at most23^(-j)29^(-k)(1+R_P(mu_old)). The unit cofactor d=1 remains included. The exact complete outside factor is
+
+    sum_(j+k>0)23^(-j)29^(-k)=51/616.
+
+Deleting the ONE actual later forbidden union from sigma therefore leaves mass strictly greater than
+
+    1-(51/616)(1339/112)=703/68992.                   (Q4)
+
+All old-only classes are already avoided. No original phase is replaced, and different branches cannot select different residues for one complete modulus. By(Q3), the full original survivor set U9 has
+
+    H(U9)>(703/68992)*(7/564)
+          =4921/38911488>1/8000.                     (Q5)
+
+The family is finite, so positive Haar mass yields an uncovered residue on its full CRT period and hence an integer. This proves the stated sufficient nine-prime class under(Q1). It does not prove that unrestricted old17/19 families admit(Q1), or establish a universal R_* bound for all seven-prime old families.
+
+## The local condition strictly enlarges the global four-phase condition
+
+Include the original class 0 mod17. For i=1,...,5 include one original class of modulus 3^i17 whose residue is the unique CRT join of
+
+    alpha_i mod3^i, alpha=(0,1,2,26,80),
+    i-1 mod17.
+
+The complete original pairs are(17,0),(51,0),(153,1),(459,2),(1377,836),(4131,2996). The five old cylinders are pairwise disjoint. The first three are in different ternary roots. The last two are in root2, differ from alpha3 modulo27 because they reduce to26 there, and differ from each other modulo81 because 26 is not80. Thus each old x activates at most one of these five originals.
+
+Every listed modulus involving17 has no19 factor, so any global endpoint assignment must choose17. The pure class together with the five listed classes uses exactly the five depth-one roots {0,1,2,3,4}; hence no global four-phase assignment exists. Locally, the always-active pure phase0 plus at most one further active phase uses at most two distinct roots. There are no19 projections. The local condition therefore holds at every old point and every depth.
+
+One may add any finite A-only original family: it only restricts the set U_A on which the same property is required. One may also add any finite later23/29 original family with pairwise distinct complete numerical moduli; the argument above covers it without phase restrictions. This is an ordinary CRT and conditional-kernel example, not a new finite search or a claim that all seven-prime old families satisfy the local condition.
+
+
+## Actual input outside the literal two-root templates
+
+Use these14 P-only original classes; parentheses in the last column name the one assigned projection side:
+
+    5:0, 7:0, 11:0, 13:0, 15:1                       (A-only),
+    17:0, 51:1, 85:2, 119:3                          (17),
+    19:0, 57:1, 95:2, 133:3                          (19),
+    323:156                                          (17).
+
+The mixed323 residue is3mod17 and4mod19. The assigned depth-one phase sets are exactly{0,1,2,3} on both sides; no other depths occur. In particular, this input includes an actual17-times19 constraint, with its original phase and one fixed assignment.
+
+Add the unit originals0mod23 and0mod29. For q=23 set M=q(q-1)=506. For1<=i<=M use d_i=3^i and
+
+    alpha1=0, alpha2=1, alpha3=2,
+    alpha_i=3^(i-1)-1 fori>=4.
+
+At each i add the TWO original labels d_i*q and d_i*q^2. Their old residues are alpha_i modulo d_i. Their outside residues are, respectively,
+
+    b_(i,1)=1+(i mod22),
+    b_(i,2)=23*floor((i-1)/22)+1+((i-1) mod22).
+
+CRT supplies the unique complete residue for each full numerical modulus. All1012 added nonunit labels are pairwise distinct and are distinct from the old14 and the two unit originals. The complete fixture therefore has1028 original classes on exactly the first nine odd primes.
+
+The first three old cylinders occupy three different roots modulo3. Every literal template in518–524 allows at most two roots there, for every choice of role and reference prefixes. Thus no choice of those two references fits this complete original later family. This is a statement about the literal template premise, not a claim excluding every other theorem or every reduction of the family.
+
+## Every unit-conditioned raw transport still fails
+
+Let rho be ANY probability on the outside coordinates supported away from0mod23. This includes every probability produced by conditioning on the actual unit originals, any further supported product restriction, and any supported joint component law. Depth-one phases above run through each nonzero23-root exactly23 times; depth-two phases run through every residue modulo529 with nonzero23-root exactly once. Consequently
+
+    sum_i rho(b_(i,1) mod23)=23,
+    sum_i rho(b_(i,2) mod529)=1.
+
+The total unscaled raw original expense is24, independently of the distribution or correlations of rho. In any assignment of{23,29} to the two raw-account groups, the group containing23 has scale22 or28. Its original expense is at least22*24=528.
+
+All these source rows have old cofactors3^i,1<=i<=506. Their permitted ancestor columns lie in{1,3,...,3^506}, with507 unit-capacity columns. Hence every such UNIT-CONDITIONED raw transport fails, in every two-group assignment, by at least21. Enlarging the ambient ancestor set or adding other old originals cannot create a new divisor of one of these source rows.
+
+The condition on rho is essential. This does not refute report520 under unconditioned full Haar: for separate23/29 groups, the full-Haar original rows obey22 sum23^(-j)<=1 and28 sum29^(-k)<=1, and self-routing remains possible. Nor does the cut refute an activation-weighted or union-aware account. The new source estimate(Q2) retains the conditional old activation information, and(Q5) certifies positive actual survival despite this raw-account failure.
+
+The fixture can be checked with integer CRT and prefix comparisons, without enumerating its complete period. The source improvement is checked separately on all32 fixed-cache vertices. These finite controls do not supply a universal projection assignment or replace the inherited source construction and arbitrary-height proof premises.
+
+
+## Reproduction and verification scope
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/four-phase-projection-source/four_phase_projection_source.py
+```
+
+The [consumer](../../../frontier/cover-geometry/four-phase-projection-source/four_phase_projection_source.py) reads the [fixed actual input](../../../frontier/cover-geometry/four-phase-projection-source/four_phase_projection_source_input.json), the existing source certificate and geometry cache, and the pinned local source helper. It imports only the helper functions; no geometry traversal or source producer is invoked. The new fixed query threshold uses the same32 vertices and72 existing cache batches. Every old threshold4 bound is retained as a comparison, and all new threshold6 slacks are checked before the four-projection and nine-prime constants are calculated. The code does not claim that6 is an optimal threshold.
+
+The finite program checks the fixed-global-assignment sufficient case of(Q1); the general x-dependent construction is the conditional-kernel proof above. The six-class example separating the two conditions is established by its displayed CRT and disjoint-cylinder argument. The [retained result](../../../frontier/cover-geometry/four-phase-projection-source/four_phase_projection_source.json) records all vertex bounds and exact continuation constants. The exact bound gives Haar survival at least259875917807552913431324815379/1996725484748883999310200000000000, which is stronger than the simple strict bound1/8000. The finite input generates all1028 original numerical labels and their full CRT residues, checks the fixed projection assignment, and tests the raw cost at every506 allowed23-depth-two atom. This pointwise constant proves the stated cost for every unit-conditioned probability, without selecting a favourable law.
+
+The506 old cylinders are pairwise disjoint. At each old cylinder the two23 classes have different first roots. The consumer additionally constructs one private integer for each of the1012 new nonunit classes and verifies that it avoids every other original in the complete1028-class fixture. Thus none of these1012 classes is redundant in that fixture. No such assertion is made for the initial14 old classes. The complete period is not enumerated.
+
+Default execution compares the retained result. `--input-dir` selects a directory containing the fixed input, retained result and the three pinned source inputs; `--output` writes a fresh result. All consumer checks remain enabled under Python optimization. Input identities and exact finite arithmetic do not replace the inherited source construction, convex comparison, continuous-parameter interpolation or arbitrary-height proofs. No Lean build is run.
+
+## Actual projected mass is the sufficient quantity
+
+The proof of(Q2)--(Q5) uses only the masses of the projected masks, not the number of phases at each depth. More generally, for every actual A-only survivor x, fix one endpoint assignment of its active originals before any query. Let F_p(x) be the union of its assigned actual p-projections. It is sufficient that
+
+    H17(F17(x))<=1/4,    H19(F19(x))<=2/9.
+
+The normalized complement kernels then have the same conditional caps4/3 and9/7. The finite activation signature makes the selector measurable, and the conditional-cylinder proof, common query bound and density conversion are exactly those already given above. Hence arbitrary finite later23/29 originals still have full survivor Haar mass>1/8000 under these actual-mask hypotheses. The four-per-depth rule is one sufficient way to verify these masses; it is not necessary.
+
+## An actual 81-class family separates phase counts from projected mass
+
+Let A={3,5,7,11,13}. For 1<=j,k<=9, include one original class C_(j,k) of numerical modulus17^j19^k. Its full residue is the unique CRT join
+
+    x= k mod17^j,    x= j mod19^k.
+
+The81 moduli are pairwise distinct odd integers greater than1. The coprime coordinate conditions define actual nonempty original congruence classes, with all phases fixed simultaneously. Their A-cofactors are1, so all81 are active at every A-point, including every actual A-only survivor after adjoining any finite A-only original family.
+
+Suppose an endpoint assignment met report527's local four-phase condition at such a point. At fixed17-depth j, the nine possible projected phases k=1,...,9 are distinct. At fixed19-depth k, the nine possible projected phases j=1,...,9 are distinct. Assigning an original therefore assigns one edge of K_(9,9) to its row or column vertex, with at most four edges per vertex. The18 vertices could receive at most72 edges, whereas every one of81 original edges must be assigned. This contradiction proves that no such local assignment exists at any A-point. Thus the good set for that four-phase condition is empty and its bad mass is1 under every probability on A-only survivors. No selected-law or synthetic-support assumption enters the argument.
+
+The example is not an artifact of redundant original classes. If two labels have different k values, their first17 roots differ. If k is the same but j differs, their first19 roots differ. Consequently all81 original classes are pairwise disjoint and each has private points. The root0 modulo17 avoids the entire family. Adding the five pure originals0 modulo3,5,7,11,13 gives an86-label actual family with exactly the first seven odd support primes; an A-point nonzero in those five coordinates and root0 modulo17 remains uncovered. More generally, a nonempty A-only survivor set gives private fibres for every grid class.
+
+A fixed weighted projection assignment nevertheless has small cost. Assign C_(j,k) to17 when j>k, and to19 otherwise. Its complete original phase is retained. At17-depth j the assigned inventory has j-1 phases, and at19-depth k it has k phases. The actual projected union masses therefore satisfy
+
+    H17(F17) <= sum_(j=1..9)(j-1)17^(-j)
+              <= sum_(j>=1)(j-1)17^(-j)=1/256<1/4,
+    H19(F19) <= sum_(k=1..9)k19^(-k)
+              <= sum_(k>=1)k19^(-k)=19/324<2/9.
+
+Only the finite81 original classes are used; the infinite sums are nonnegative upper bounds on their finite costs. No compatibility or simultaneous sharpness of separate union bounds is needed: both projections come from this same fixed assignment and are normalized on the same product carrier.
+
+Their complements have masses at least255/256 and305/324, respectively, hence satisfy report527's weaker required mass floors3/4 and7/9. The corresponding conditional densities obey the same4/3 and9/7 caps. The ordinary five-source law, conditional cylinder inequalities, complete query bound, density conversion and subsequent23/29 single-union deletion therefore apply unchanged. In particular the four-phase counting condition may fail everywhere even while its underlying weighted-mask mass requirement succeeds.
+
+This refutes a universal upper bound beta<1 for the bad mass of the literal local-four-phase condition. It does not refute report527's conditional theorem, any noncoverage theorem, or the existence of a good supported law. For this actual grid, arbitrary separately supplied A-only originals and arbitrary finite later23/29 originals retain the full survivor Haar bound>1/8000 from(Q5). It does not establish that arbitrary old A/17/19 interactions admit a small weighted projection assignment. All probability and source claims retain527's ordinary-source assumptions; no source calculation, producer, period enumeration or Lean proof is supplied here.
+
+The retained consumer and numerical result are unchanged. They verify their original fixed input and source constants; they do not check the general weighted-mask hypothesis or the81-class construction. The latter is established by the symbolic counting and geometric-sum arguments in this appendix.
+
+## Three active originals per exponent profile suffice
+
+A further sufficient input permits arbitrary phases and arbitrary finite17/19 heights. At each actual A-only survivor x and each exponent pair(j,k) other than(0,0), assume that at most THREE original moduli d17^j19^k have their actual A-condition x=a_m mod d satisfied. This counts active complete original labels, before merging any equal projected cylinders. It places no condition on the original A-only family, beyond the existing distinct-modulus source hypotheses.
+
+Fix the following selector once for the actual finite family. At every x, assign an active original to17 if j>k and to19 if j<k. At a positive diagonal j=k, order the active complete numerical labels and assign the first to17 and the remaining at most two to19. The finite old activation signature determines this table before any query. No original phase is changed, and no later query reorders or reassigns its labels.
+
+At17-depth e, the profiles k=0,...,e-1 contribute at most3e labels, and the diagonal contributes at most one. At19-depth e, the profiles j=0,...,e-1 contribute at most3e, and the diagonal contributes at most two. The axes are included in these counts. Hence the actual assigned projected unions satisfy, simultaneously at every x,
+
+    H17(F17(x))<=sum_(e>=1)(3e+1)17^-e=67/256,
+    H19(F19(x))<=sum_(e>=1)(3e+2)19^-e=31/108.
+
+These are upper bounds on finite original unions; the infinite geometric sums introduce no new original labels. The corresponding complement masses are at least189/256 and77/108. Normalize Haar on each complement and attach their product conditional on x to the one source mu5. This again produces one probability supported on the actual old survivor set and preserves the complete A-marginal mu5.
+
+Using the fixed coordinate caps256/189 and108/77, positive-depth cylinder sums give
+
+    1+R_P <= (1+C5(6)) (1+16/189)(1+6/77)
+           = (1+C5(6)) (17015/14553)
+           <1752545/145530.
+
+An unqueried coordinate has factor one. These inequalities use uniform caps for each coordinate separately; they do not assume that a bound on a pointwise product of varying caps may be passed through independent old-cylinder maxima.
+
+The same joint probability has full Haar density less than
+
+    47*(256/189)*(108/77)=48128/539.
+
+For any additional finite family touching23 or29, with its actual numerical labels, arbitrary old and outside phases and unit old cofactor included, take its product with full Haar23/29 and delete the one actual forbidden union. Since the outside factor is51/616, the remaining mass is strictly greater than
+
+    1-(51/616)(1752545/145530)=17779/5976432>0.
+
+Consequently the complete original survivor set has full Haar mass
+
+    H(U9)>(17779/5976432)*(539/48128)
+          =17779/533643264>1/31000.
+
+This new density floor belongs to the three-per-profile hypothesis; it does not replace the earlier1/8000 conclusions under their original smaller mask budgets. The source period resolves the entire final family's A-queries, and the selector can be pulled back from the fixed finite activation period. No uniform lifting of an insufficient finite source law is used.
+
+The condition is sufficient, not asserted for every actual old family. It is an ordinary application of the existing conditional endpoint interface and the two geometric sums; no new source calculation, positive instance enumeration, consumer or Lean result is claimed.
+
+## A pointwise product budget does not control the joint query maxima
+
+The preceding bounds use one uniform cap for each queried coordinate. A weaker proposed replacement would require only a bound on the product of the two conditional query factors at each old point. That replacement is false, even for a single law supported on survivors of actual distinct odd original classes.
+
+Here the old coordinate is3 and the added coordinates are5 and7. Include the original class2 modulo3. For1<=j<=4 include the original numerical modulus3^j*5 with its unique CRT residue
+
+    x=0 mod3^j,    y=j mod5.
+
+For1<=k<=6 include the original modulus3^k*7 with its unique CRT residue
+
+    x=1 mod3^k,    z=k mod7.
+
+These eleven numerical moduli are distinct odd integers greater than1; all full residues are fixed simultaneously. Take the old law eta to give mass1/2 to each residue0 and1 modulo3^6, with uniform independent tails in the3-coordinate. On its branch0, choose the5-coordinate Haar conditioned on root0 and unrestricted Haar7. On its branch1, choose unrestricted Haar5 and Haar7 conditioned on root0. Attach these products conditional on the actual old point, giving one law nu. It avoids every displayed original: on branch0 all four5-projections are excluded and every7-original has an inactive old condition; the roles reverse on branch1. No claim that nu has full survivor support is needed.
+
+For a conditional coordinate law rho_p^x define
+
+    s_p(x)=sum_(e>=1) max_b rho_p^x(b modp^e),
+    F(x)=(1+s5(x))(1+s7(x)).
+
+Unrestricted Haarp has s_p=1/(p-1), while Haar conditioned on one root has s_p=p/(p-1). Therefore the two actual branch values are
+
+    F(0)=(1+5/4)(1+1/6)=21/8,
+    F(1)=(1+1/4)(1+7/6)=65/24.
+
+Here ess_sup_eta ranges over the two branches of the old law; no kernel off its support is used. The complete nonunit old query sum is
+
+    R3(eta)=6*(1/2)+sum_(e>=7)(1/2)*3^(-(e-6))=13/4.
+
+Nevertheless the putative bound
+
+    1+R_(3,5,7)(nu) <= ess_sup_eta F(x)*(1+R3(eta))
+
+fails. To compute the left side exactly, first consider query labels with no3-factor. At depth one, the maximal5,7 and5*7 cylinder masses are3/5,4/7 and6/35. All deeper tails are Haar, so the total including the unit query for these labels is
+
+    1+(5/4)*(3/5)+(7/6)*(4/7)+(35/24)*(6/35)=8/3.
+
+For each positive3-depth let w_e be the largest old cylinder mass: it is1/2 for e<=6 and(1/2)*3^(-(e-6)) for e>6. Such a cylinder meets only one old branch. Relative to w_e, the maximal masses for no new root, a5-root, a7-root and a joint5/7-root are respectively1,1,1,1/5. The5-root maximum uses branch0, whereas the7-root and joint maxima use branch1. Uniform new-coordinate tails then give the coefficient
+
+    1+5/4+7/6+(35/24)*(1/5)=89/24.
+
+Consequently all numerical query depths, including their full geometric tails, give
+
+    1+R_(3,5,7)(nu)=8/3+(13/4)*(89/24)=471/32,
+    ess_sup_eta F(x)*(1+R3(eta))=(65/24)*(17/4)=1105/96.
+
+The difference is77/24>0. These are maxima under the same joint law; no phases of the original eleven forbidden classes have been changed. Independent query labels are permitted to choose their own maximizing old residues, exactly as in the complete query functional.
+
+Thus small pointwise conditional products cannot be passed through the separate old-cylinder maxima without further joint control. The fixed separate coordinate caps used in(Q2) and in the three-per-profile deduction do provide that control. This is an ordinary symbolic counterexample to the proposed weaker interface, not a counterexample to either deduction, the five-source construction, or Erdős#7. The retained consumer does not verify this example; the finite CRT support and the all-depth sums are established by the displayed argument.

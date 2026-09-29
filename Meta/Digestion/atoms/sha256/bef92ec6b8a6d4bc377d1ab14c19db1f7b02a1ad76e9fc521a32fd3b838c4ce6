@@ -1,0 +1,54 @@
+### 266.4 数据残差给出精确的仿射距离
+
+对任意Hermitian联合矩阵
+$$
+X=\begin{pmatrix}P&C\\C^\dagger&Q\end{pmatrix},
+$$
+定义
+$$
+R=P+Q-\rho,\qquad N=2C-K,
+\qquad
+E_X=\begin{pmatrix}R/2&N/2\\N^\dagger/2&R/2\end{pmatrix}.
+\tag{266.18}
+$$
+则 $X-E_X\in\mathcal L_{\rho,K}$。又对任意Hermitian $D$，
+$$
+\left\langle E_X,\operatorname{diag}(D,-D)\right\rangle=0.
+\tag{266.19}
+$$
+因此 $E_X$ 是到该仿射集的精确正交修正，得到
+$$
+\boxed{
+\operatorname{dist}_{\mathrm{HS}}(X,\mathcal L_{\rho,K})
+=
+\sqrt{\frac{\|R\|_{\mathrm{HS}}^2+\|N\|_{\mathrm{HS}}^2}{2}}.
+}
+\tag{266.20}
+$$
+到正半定锥的距离则是
+$$
+\operatorname{dist}_{\mathrm{HS}}(X,\mathcal C)
+=\|X_-\|_{\mathrm{HS}}.
+\tag{266.21}
+$$
+
+特别地，若 $X=\Xi$ 是任意合法密度态，则PSD残差为零，而且
+$$
+\|\Xi\|_{\mathrm{HS}}\le\operatorname{Tr}\Xi=1.
+\tag{266.22}
+$$
+令未除以二的完整数据误差为
+$$
+\varepsilon=
+\|\operatorname{Tr}_H\Xi-\rho\|_1+
+\|\mathscr K(\Xi)-K\|_1.
+\tag{266.23}
+$$
+HS范数不超过核范数，所以
+$$
+\operatorname{dist}_{\mathrm{HS}}(\Xi,\mathcal L_{\rho,K})
+\le\frac{\varepsilon}{\sqrt2}.
+\tag{266.24}
+$$
+这同时核对了标准定理所需的残差与有界性，不把方程读数直接当作未经换算的距离。
+

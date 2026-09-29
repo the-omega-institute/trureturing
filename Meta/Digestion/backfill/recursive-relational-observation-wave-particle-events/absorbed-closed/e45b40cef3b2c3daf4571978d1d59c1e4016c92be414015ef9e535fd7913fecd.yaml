@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e45b40cef3b2c3daf4571978d1d59c1e4016c92be414015ef9e535fd7913fecd
+  normalized_sha256: sha256:e45b40cef3b2c3daf4571978d1d59c1e4016c92be414015ef9e535fd7913fecd
+cas_ref: sha256:e45b40cef3b2c3daf4571978d1d59c1e4016c92be414015ef9e535fd7913fecd
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/GeneralInstrumentResidualTailContraction.residual_tail_contraction
+    target_statement_id: sha256:fa95f58f81a77c4b5d9191c13dc90efd0de27e911df3312339d43cc8261e0939
+receipts:
+  unresolved_subitems: []

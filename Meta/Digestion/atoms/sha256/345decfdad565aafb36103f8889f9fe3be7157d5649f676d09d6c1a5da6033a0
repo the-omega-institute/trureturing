@@ -1,0 +1,44 @@
+**定义 15.1（不同振幅的固定多峰）。** 固定已知整数 $q\ge2$，考虑 $M>2q$，
+并给定正振幅向量 $\boldsymbol r=(r_1,\ldots,r_q)\in(0,1)^q$。
+令 $\mathcal Z_{M,q}$ 为 $C_+$ 中全部有序、互异的 $q$ 元组，
+$\boldsymbol z=(z_1,\ldots,z_q)\in\mathcal Z_{M,q}$ 是整个观察期间固定的未知位置。
+记 $S=\{z_1,\ldots,z_q\}$、$R=\sum_i r_i$，定义
+
+$$
+b_{\boldsymbol z}(x)=
+\begin{cases}
+r_i,&x=z_i,\\
+-R/(M-q),&x\in C_+\setminus S,\\
+0,&x\in C_-.
+\end{cases}
+\qquad
+P_{\boldsymbol z}(x,y)=\frac{1+\chi(x)\chi(y)b_{\boldsymbol z}(x)}n.
+\tag{15.1}
+$$
+
+该向量在 $C_+$ 上的和为零，故 $P_{\boldsymbol z}\in\mathcal K_d^0$，
+平稳律均匀且 $P_{\boldsymbol z}^2=\Pi$。
+沿用定义 10.1 的独立状态对与平稳离散轨迹实验，记似然为
+$L^{\epsilon,E}_{\boldsymbol z,s}$。置 $(M)_q=M(M-1)\cdots(M-q+1)$，以及
+
+$$
+\overline L^{\epsilon,E}_{\boldsymbol r,q,s}
+ =\frac1{(M)_q}\sum_{\boldsymbol z\in\mathcal Z_{M,q}}
+ L^{\epsilon,E}_{\boldsymbol z,s},
+\qquad
+\mathcal R^E_{d,\boldsymbol r,q}(s)
+ =\inf_{\widehat\epsilon}\max_{\boldsymbol z,\epsilon}
+ \Pr_{\boldsymbol z,\epsilon}^E\{\widehat\epsilon\ne\epsilon\}.
+\tag{15.2}
+$$
+
+此风险中的判别器知道 $q,\boldsymbol r$，可随机化；重复的振幅值允许出现。
+以下 $I_i=F_M(r_i)$、$v_i=v(r_i)$ 仍取定义 13.1 的单峰函数，$q$ 不随维度增长。
+独立 Bernoulli 信号计数的极端稀疏高斯临界极限见
+[Ditzhaus–Janssen，§1.1、定理 4.10](../../../Library/Dynamics/ditzhaus2018detectability.md)；
+本定义把峰数固定，并使用有补偿的转移核。
+[Hall–Jin，式 (2.2)–(2.3) 与定理 2.1](../../../Library/Dynamics/halljin2010innovated.md)
+则固定一个随维数增长的精确支持数 $m=n^{1-\beta}$，位置无放回均匀抽取；
+其独立高斯模型的 Higher Criticism 在可检测区域内部适应未知稀疏度和强度，功效趋一。
+该结论不涉及常数峰数、各坐标的有限临界参数或下面的乘积风险极限。
+

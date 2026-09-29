@@ -1,0 +1,17 @@
+**AABA。**
+
+现在 $\eta_3=\eta_4=\eta_6=A$、$\eta_5=B$。令 $L=U+G_3$、$l=\dim L$。固定 $V_1$ 将 $L$ 送入环境 $A$，将 $G_4$ 送入环境 $B$，所以 $L\cap G_4=0$。零位像在环境 $A$ 中包含
+$$
+R\otimes A,\qquad R=U+G_3+G_4+G_6,\qquad\dim R\ge l+2.
+$$
+其中 $U\otimes A$ 来自早期块。一位像在同一环境中包含 $V_1L=Q\otimes A$，$\dim Q=l$。不同输入位正交给
+$$
+7\ge\dim R+\dim Q\ge2l+2.
+$$
+$l\ge2$，故只能 $l=2$，即
+$$
+G_3=U.
+\tag{56.6}
+$$
+又因 $A\perp B$，固定 $V_1$ 给 $U\perp G_4$。第三、第四轮的零位像分别为 $U\otimes A$ 与 $G_4\otimes A$，所以 $H_2\perp H_3$。但 $0\ne w\in H_2\cap U$，而（56.6）及同轮满投影给 $P_UH_3=U$，因此 $w$ 不可能正交于整个 $H_3$。矛盾。
+

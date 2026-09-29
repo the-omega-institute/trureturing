@@ -31,7 +31,7 @@ public sealed class TrustTopologyTests
         EngineGidSourcePath,
         CliProgramSourcePath,
         ThisTestSourcePath,
-        "Meta/registry.yaml",
+        "Meta/FILEMAP.toml",
         "Meta/domains.yaml",
         RuleFixture.HeartsPath,
         RepositoryPathPolicy.AssumptionRegistryPath,
@@ -53,7 +53,7 @@ public sealed class TrustTopologyTests
         "Meta/BACKFILL.yaml",
         "Meta/FILEMAP.toml",
         "Golden/values-kernels.toml",
-        TestRegistry.RelativePath,
+        "tools/tests/StrataLint.Tests/Rules/TestFileMap.cs",
         "Library/queries.yaml",
     };
 

@@ -1,0 +1,61 @@
+## 420. 五射线严格内部的逐个有限局部协议不可达界
+
+操作约定。沿用第 416、419 节的原始制备与局部访问权限，固定已知实数 $r>0$，令
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&
+s_1&=|0\rangle,&s_2&=|1\rangle,&
+s_{3+j}&=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}
+\quad(j=0,1,2),\\
+S&=\mathbb C^5,&R_A&=\mathbb C^2,&R_B&=\mathbb C^2,&
+R&=R_A\otimes R_B,\\
+q_i&=s_i\otimes s_i,&J&:S\longrightarrow S\otimes R,&
+J|i\rangle&=|i\rangle\otimes q_i\quad(1\le i\le5).
+\end{aligned}
+$$
+
+Alice、Bob 分别持有原始因子 $R_A,R_B$。在完整四维空间 $R$ 中记
+
+$$
+\begin{aligned}
+e_0&=|00\rangle,&e_1&=\frac{|01\rangle+|10\rangle}{\sqrt2},&e_2&=|11\rangle,\\
+W&=\operatorname{span}\{e_0,e_1,e_2\},&
+e_-&=\frac{|01\rangle-|10\rangle}{\sqrt2},&
+R&=W\oplus\mathbb C e_-,\\
+P_W&=P_{W},&P_-&=|e_-\rangle\langle e_-|,&P_W+P_-&=I_R.
+\end{aligned}
+$$
+
+$W$ 只表示准备像所在的数学子空间；协议始终作用于原始两因子，不允许先把记录物理压缩到 $W$，仪器完备性始终要求在整个 $R$ 上成立。
+
+允许任意一棵各自有限的局部操作树。每个非终端节点由一方在自己当前的有限维工作空间上执行有限实际结果的完全正仪器，每个分支迹不增，各结果的迹之和等于输入迹。双方可以传递经典消息并反复访问自己的寄存器；允许私有经典记忆、私有量子记忆、任意有限维非零局部输出、局部丢弃、含多个隐藏 Kraus 算子的粗粒 CP 结果、曾实际取得但后来遗忘的结果、提前终止、不等叶深、零 CP 分支、单结果通道及零深度树。局部辅助态与未知输入及未操作参考独立，两方初始辅助态为乘积态。后续设置只由当时实际可用的信息决定，保存在局部寄存器内的控制也属于该方的 CP 映射。禁止共享纠缠、量子通信及终端反馈前对 $S$ 的任何操作。不同协议之间不预设共同的深度、结果数、记忆或输出维数上界，也不预设共同的最小正分支权重。
+
+这些局部仪器、条件复合与结果粗粒化约定采用 Chitambar 等，[*Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)*, arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.1–2.3。这里保留每棵树各自有限的限制；隐藏 Kraus 指标从不成为实际结果或后续控制。
+
+以 $\ell$ 索引真实取得的终端历史，包括所有失败与提前停止的历史。即使实际结果后来被遗忘，也只在数学求和中保留其历史索引，不增加协议的可用信息。最终实际标签为 $y=y(\ell)$；多个历史可以并入同一 $y$。用 $\mathcal I_\ell:\mathcal L(R)\to\mathcal L(O_{A,\ell}\otimes O_{B,\ell})$ 表示该真实历史的未归一化记录分支，输出包含尚存的全部局部记忆。不同历史的输出空间可以不同，故先逐历史迹掉全部输出，再在系统矩阵空间内相加：
+
+$$
+\begin{aligned}
+\mathcal M_\ell(X)
+ &=\operatorname{Tr}_{O_{A,\ell}\otimes O_{B,\ell}}
+   \bigl[(\operatorname{id}_S\otimes\mathcal I_\ell)(JXJ^\dagger)\bigr],\\
+\mathcal M_y(X)&=\sum_{\ell:\,y(\ell)=y}\mathcal M_\ell(X)
+\qquad\bigl(X\in\mathcal L(S)\bigr).
+\end{aligned}
+$$
+
+接受集合 $Y_{\mathrm s}$ 预先固定；每个最终实际标签 $y$ 只指定一个作用于整个 $S$ 的终端酉算子 $U_y$，同一标签下全部真实历史、隐藏 Kraus 指标及任何数学谱分解项共用这个反馈。协议、接受集合及反馈可以依赖已知 $r$，不能依赖未知输入或参考。全部未接受历史仍属于完整仪器。精确恢复要求同一标量 $p\in[0,1]$ 满足
+
+$$
+\begin{aligned}
+\mathcal T(X)&:=\sum_{y\in Y_{\mathrm s}}U_y\mathcal M_y(X)U_y^\dagger=pX
+&&\text{对全部 }X\in\mathcal L(S),\\
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})&=pX_{FS}
+&&\text{对每个有限维未操作参考 }F
+\text{ 及全部 }X_{FS}\in\mathcal L(F\otimes S).
+\end{aligned}
+$$
+
+两行由矩阵张量基展开等价；这里显式保留同一协议、同一 $p$ 的全参考要求。对联合密度矩阵取迹，$p$ 是与输入无关的接受概率。空接受集合给出 $p=0$。记这类有限协议的概率上确界为第 416 节的 $\eta_{\mathrm{fin}}(r)$。
+

@@ -1,0 +1,10 @@
+**定理 97.2（共同未来权重比的精确下确界）。** 令 $a_p=v_p(n),b_p=v_p(m)$，$T=\{p\in S:a_p>b_p\}$，则 $T$ 有限，且
+
+$$
+\inf_{c\in\mathcal M(S)}\frac{Z(nc)}{Z(mc)}
+=L_S(n,m):=\frac{Z(n)}{Z(m)}
+\prod_{p\in T}\frac{G_p(b_p)}{G_p(a_p)}.
+$$
+
+所以全部共同未来满足 $Z(nc)\ge Z(mc)$ 当且仅当 $L_S(n,m)\ge1$。$T\ne\varnothing$ 时下确界不被任何有限 $c$ 取到。
+

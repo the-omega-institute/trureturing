@@ -1,0 +1,21 @@
+### 157.4 共同相位群的有限整数多项式定义
+
+沿用第155节互不相同的外围特征值，置
+
+$$
+g=(\lambda_1,\ldots,\lambda_s)\in\mathbb T^s,\qquad
+G=\overline{\{g^n:n\in\mathbb N_0\}}.
+\tag{157.13}
+$$
+
+第155节已经证明 $G$ 为紧群。定义整数关系格
+
+$$
+\Lambda=
+\left\{k=(k_1,\ldots,k_s)\in\mathbb Z^s:
+\prod_{j=1}^s\lambda_j^{k_j}=1\right\},
+\qquad
+\chi_k(z)=\prod_{j=1}^s z_j^{k_j}.
+\tag{157.14}
+$$
+

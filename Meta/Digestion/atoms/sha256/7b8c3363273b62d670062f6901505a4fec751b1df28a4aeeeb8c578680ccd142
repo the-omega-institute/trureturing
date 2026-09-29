@@ -1,0 +1,125 @@
+### 92.3 将匹配方向与中心方向配成共同约化块
+
+令 $m=d-2$，从引理92.2的 $Z$ 中取一个 $m$ 维子空间 $Z'$。取等距 $J_Z:\mathbb C^m\to Z'$。另有
+
+$$
+\dim(\operatorname{ran}H_0+\operatorname{ran}H_1)^\perp
+\ge q-2d=d-2=m.
+$$
+
+从该正交补中取任意 $m$ 维子空间，并以等距 $C_o:\mathbb C^m\to Q$ 参数化它。定义另外两个输出等距
+
+$$
+A_o=\sqrt{s/\nu}\,H_1J_Z,\qquad
+B_o=-\sqrt{s/\mu}\,H_0J_Z.
+\tag{92.15}
+$$
+
+（92.9）使它们均为等距。又因本节两种情形中 $H_0$ 均满列秩，对任意 $v\in E_0$ 都有 $H_1^*v=0$。因此 $B_o$ 的像位于 $E_0$ 并正交于 $\operatorname{ran}H_1$，从而与 $A_o$ 的像正交。$C_o$ 的像则按选择与前两个像正交。故 $A_o,B_o,C_o$ 的输出像两两正交。
+
+从（92.6）、（92.7）、（92.9）逐项得到
+
+$$
+XA_o=\mu A_o,\qquad YA_o=0,\qquad
+XB_o=0,\qquad YB_o=\nu B_o,
+$$
+
+$$
+XC_o=\beta^2C_o,\qquad YC_o=\delta^2C_o,
+$$
+
+$$
+L_1L_0^*A_o=\sqrt{\mu\nu}\,B_o,\qquad
+L_0L_1^*B_o=\sqrt{\mu\nu}\,A_o,
+$$
+
+$$
+L_1L_0^*C_o=0,\qquad L_0L_1^*C_o=0.
+\tag{92.16}
+$$
+
+例如 $H_1^*A_o=\sqrt{\nu/s}\,J_Z$，故交叉块
+$-sH_0H_1^*A_o=\sqrt{\mu\nu}\,B_o$；中心方向上两个 $H_i^*$ 都为零，直接给出中心标量和交叉零式。
+
+现在在同一个输入 $Q$ 中定义
+
+$$
+P_o=\mu^{-1/2}L_0^*A_o,\qquad
+\widetilde P_o=\nu^{-1/2}L_1^*B_o,\qquad
+R_o=\beta^{-1}L_0^*C_o,\qquad
+S_o=\delta^{-1}L_1^*C_o.
+\tag{92.17}
+$$
+
+由（92.16），四者都是等距，且 $P_o^*\widetilde P_o=I_m$。于是
+
+$$
+(P_o-\widetilde P_o)^*(P_o-\widetilde P_o)=0,
+\qquad P_o=\widetilde P_o.
+$$
+
+同一组式子还给
+
+$$
+P_o^*R_o=P_o^*S_o=R_o^*S_o=0.
+\tag{92.18}
+$$
+
+因此 $P_o,R_o,S_o$ 是同一个输入空间中的三组正交 $m$ 维方向，而不是分别为两个系数选择的互不相容极分解。
+
+（92.16）、（92.17）进一步直接给
+
+$$
+\begin{array}{c|ccc}
+& P_o & R_o & S_o\\ \hline
+L_0&\sqrt\mu\,A_o&\beta C_o&0\\
+L_1&\sqrt\nu\,B_o&0&\delta C_o
+\end{array}.
+\tag{92.19}
+$$
+
+令
+
+$$
+Q_{\mathrm{in}}^{\mathrm{sharp}}
+=\operatorname{ran}P_o\oplus\operatorname{ran}R_o
+\oplus\operatorname{ran}S_o,
+$$
+
+$$
+Q_{\mathrm{out}}^{\mathrm{sharp}}
+=\operatorname{ran}A_o\oplus\operatorname{ran}B_o
+\oplus\operatorname{ran}C_o.
+$$
+
+二者均为 $3m$ 维。（92.19）说明两个系数都将前者送入后者。还须验证补空间也共同保持：由（92.16）、（92.17），
+
+$$
+L_0^*A_o=\sqrt\mu P_o,\quad L_0^*B_o=0,\quad
+L_0^*C_o=\beta R_o,
+$$
+
+$$
+L_1^*A_o=0,\quad L_1^*B_o=\sqrt\nu P_o,\quad
+L_1^*C_o=\delta S_o.
+\tag{92.20}
+$$
+
+所以两个伴随都将 $Q_{\mathrm{out}}^{\mathrm{sharp}}$ 送入
+$Q_{\mathrm{in}}^{\mathrm{sharp}}$。取正交补即得
+
+$$
+L_i\bigl((Q_{\mathrm{in}}^{\mathrm{sharp}})^\perp\bigr)
+\subset (Q_{\mathrm{out}}^{\mathrm{sharp}})^\perp
+\qquad(i=0,1).
+\tag{92.21}
+$$
+
+（92.19）与（92.21）才给两个系数的同时直和分解。按每个坐标把三组输入、输出重新排列，锐部分恰为 $m$ 份（92.3）；两个补空间的共同维数是
+
+$$
+q-3m=(3d-2)-3(d-2)=4.
+$$
+
+分别对这两个补空间选择酉坐标，得到（92.4）的 $C_0,C_1$。这些是独立的输入、输出酉坐标；本节没有宣称同一个反复执行的接收器能逐轮自由更换内部坐标。
+

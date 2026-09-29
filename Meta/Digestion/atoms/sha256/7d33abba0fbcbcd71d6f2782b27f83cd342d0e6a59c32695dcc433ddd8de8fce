@@ -1,0 +1,23 @@
+### ST1.1 外部输入：一致背景与有效作用量
+
+在适当的弦模型、规范及微扰范围内，世界面 Weyl 一致性约束背景场。例如最低阶的度量条件具有形式
+
+$$
+\bar\beta^G_{\mu\nu}
+=\alpha'\left(R_{\mu\nu}+2\nabla_\mu\nabla_\nu\Phi
+-\frac14 H_{\mu\rho\sigma}H_\nu{}^{\rho\sigma}\right)
++O(\alpha'^2)=0.
+$$
+
+还要满足反对称张量、dilaton及相应模型的其他条件。世界面圈阶与时空弦耦合的 genus 展开是不同展开；高导数修正的首个非零阶依弦模型而异。[ST-Tong7]
+
+一个标准的两导数 NS-NS 背景作用量写成
+
+$$
+S_{\mathrm{NSNS}}
+=\frac1{2\kappa_D^2}\int d^Dx\sqrt{-G_s}\,e^{-2\Phi}
+\left[R_s+4(\nabla\Phi)^2-\frac1{12}H^2+\cdots\right].
+$$
+
+省略项不被视为已经消失。实际应用需要固定弦模型、允许背景、紧化、其他场和一致截断。这个已知背景结构可以约束本卷所用的传播矩阵及曲率耦合，不能任意替所有模型选定同一组参数。[ST-Tong7] [ST-SenZwiebach]
+

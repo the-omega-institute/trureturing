@@ -1,0 +1,24 @@
+**定义 11.1（固定未知峰位与最坏方向风险）。** 已知 $d$、$r\in(0,1)$、
+正峰符号及其所在的 $C_+$，未知位置 $z\in C_+$ 在整个样本期间保持不变。
+对实验 $E\in\{\mathrm{path},\mathrm{pair}\}$，定义允许随机化判别器的风险
+
+$$
+\mathcal R^E_{d,r}(s)
+=\inf_\delta\ \max_{z\in C_+,\,\epsilon\in\{+,-\}}
+\mathsf P^{\epsilon,E}_{b_z,s}\{\delta\ne\epsilon\}.
+\tag{11.1}
+$$
+
+置 $I=F_M(r)$、$\mu=sI$，并引入偶函数 $\psi$ 与奇函数 $\xi$：
+
+$$
+\psi(u)=\frac{(1+u)\log^2(1+u)+(1-u)\log^2(1-u)}2,
+\qquad
+\xi(u)=\frac{(1+u)\log(1+u)-(1-u)\log(1-u)}2.
+\tag{11.2}
+$$
+
+以下只在 $|u|<1$ 使用对数。相关的稀疏分布检测文献采用截断似然二阶矩，见
+[Bhattacharya–Mukherjee，§5.2.2](../../../Library/Dynamics/bhattacharya2024sparse.md)。
+其固定稀疏指数模型不包含这里恰好一个固定峰位及其弥散补偿的约束。
+

@@ -7,7 +7,7 @@ using Xunit;
 namespace StrataLint.BuildIntegration.Tests;
 
 [Collection("StrataLint.BuildIntegration.Tests process boundary")]
-public sealed class SharedBuildRuntimeTests
+public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper diagnostics)
 {
     [Fact]
     public void CompilerOwnedRuntimeMovesAndExecutesWithoutProducerOrPackagePaths()
@@ -36,7 +36,7 @@ public sealed class SharedBuildRuntimeTests
                 "xunit.assert/2.9.3", "xunit.core/2.9.3", "xunit.extensibility.core/2.9.3", "xunit.extensibility.execution/2.9.3",
                 "xunit.runner.visualstudio/3.1.4" }.Order(StringComparer.Ordinal).Select(package => new {
                     packagePath = package, include = new[] { "**/*" }, exclude = new[] { "**/*.nupkg", "**/*.snupkg" } }) }));
-        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/lib/resource-observation-lib.sh",
+        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/ci_output.py", "tools/scripts/lib/resource-observation-lib.sh",
                      "tools/scripts/report/dotnet_producer.py",
                      "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py",
                      "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/JudgeSeedTask.csproj",
@@ -70,7 +70,7 @@ public sealed class SharedBuildRuntimeTests
             <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup>
             <ItemGroup><ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" /></ItemGroup></Project>
             """);
-        Write("tools/tests/CompileFailProof/MissingCapability.cs", "public class MissingCapability { public void Proof() => StrataLint.Cli.Value.Require(); }\n");
+        Write("tools/tests/CompileFailProof/MissingCapability.cs", "#warning unrelated fixture warning\npublic class MissingCapability { public void Proof() => StrataLint.Cli.Value.Require(); }\n");
         const string bannedProject = "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj";
         Write(bannedProject, """
             <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
@@ -88,8 +88,9 @@ public sealed class SharedBuildRuntimeTests
         Write("Meta/ci-resources.json", JsonSerializer.Serialize(new { schema = "ci-resource-execution-v1",
             resources = new[] { new { id = "build", projects = new[] { cliProject }, checks = Array.Empty<string>(), steps = Array.Empty<string>() } } }));
         Write("Meta/FILEMAP.toml", """
-            schema_version = 4
+            schema_version = 5
             resources = [{ id = "build", stage = "build", owner = "tools/scripts/workflow/ci.py", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] }]
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             [residence_policy]
             case_id = "FIXTURE"
             desired = "registered"
@@ -152,10 +153,19 @@ public sealed class SharedBuildRuntimeTests
                 new EngineeringProjectFixture(excludedProject, "StrataLint.ScriptTests", "cross-cutting-test", false,
                     ["tools/tests/StrataLint.ScriptTests/**/*.cs"]),
             }).ToArray()));
-        Run("dotnet", "restore", testProject, "--use-lock-file", "-nr:false");
+        // Keep resource samples inside the same process tree and ten-second guard
+        // as the restore, so a timeout retains the work observed before the kill.
+        Run("/bin/bash", "-c", """
+            set -euo pipefail
+            source tools/scripts/lib/resource-observation-lib.sh
+            export GITHUB_WORKSPACE="$PWD" RUNNER_TEMP="$PWD" RESOURCE_OBSERVATION_INTERVAL_SECONDS=1
+            resource_observe_run_periodic dotnet "$@"
+            """, "runtime-restore", "restore", testProject, "--use-lock-file", "-nr:false", "-m:1",
+            "--verbosity", "detailed", "-clp:ShowTimestamp");
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", excludedProject, "--use-lock-file", "-nr:false");
+        Directory.Delete(Path.Combine(root, "tools/tests/StrataLint.ScriptTests/obj"), recursive: true);
         EngineeringProcess.Git(root, "add", ".");
         EngineeringProcess.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "runtime fixture");
         using var output = new StringWriter();
@@ -191,6 +201,9 @@ public sealed class SharedBuildRuntimeTests
         Assert.Equal(projects.Length + 2, ObservedCompilers(cold));
         var build = CommonExecutionEvidence.ValidateBuild(root);
         Assert.Equal(new[] { "restore-StrataLint", "build" }, build.Steps.Select(step => step.Name));
+        Assert.True(File.Exists(Path.Combine(root, "tools/tests/StrataLint.ScriptTests/obj/project.assets.json")));
+        Assert.Contains(excludedProject, File.ReadAllText(Path.Combine(root, CommonExecutionEvidence.RootPath, "package-restore.slnx")), StringComparison.Ordinal);
+        Assert.DoesNotContain(excludedProject, File.ReadAllText(Path.Combine(root, CommonExecutionEvidence.RootPath, "selected-build.slnx")), StringComparison.Ordinal);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
         Assert.False(File.Exists(Path.Combine(root, "build/judge-seed/receipts", excludedProject + ".seed.json")));
@@ -255,6 +268,21 @@ public sealed class SharedBuildRuntimeTests
         Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
         environment["CI_BUILD_ROUND"] = build.Round;
         var engineering = Stage("engineering", "engineering");
+        foreach (var (name, diagnostic) in new[] { ("capability-proof", "CS7036"), ("banned-api-proof", "RS0030") })
+        {
+            Assert.Contains(": expected diagnostic " + diagnostic + ":", engineering, StringComparison.Ordinal);
+            Assert.DoesNotContain(": error " + diagnostic + ":", engineering, StringComparison.Ordinal);
+            var marker = Assert.Single(engineering.Split('\n'), line =>
+                line.StartsWith("EXPECTED_DIAGNOSTIC ", StringComparison.Ordinal)
+                && line.Contains("\"name\":\"" + name + "\"", StringComparison.Ordinal));
+            using var matched = JsonDocument.Parse(marker["EXPECTED_DIAGNOSTIC ".Length..]);
+            Assert.Equal("matched", matched.RootElement.GetProperty("status").GetString());
+            Assert.Equal(1, matched.RootElement.GetProperty("raw_exit").GetInt32());
+            Assert.Contains(": error " + diagnostic + ":", File.ReadAllText(
+                Path.Combine(root, matched.RootElement.GetProperty("log").GetString()!)), StringComparison.Ordinal);
+        }
+        Assert.Contains(": warning CS1030:", engineering, StringComparison.Ordinal);
+        Assert.DoesNotContain("Build FAILED.", engineering, StringComparison.Ordinal);
         Assert.DoesNotContain(Calls(), call => call.StartsWith("build tools/StrataLint.sln", StringComparison.Ordinal));
         Assert.Equal(2, Compilers(engineering)); // Both real negative proof compiles.
         Assert.Equal(1, Assert.Single(CommonExecutionEvidence.ValidateTests(root, [testProject]).Projects).Executed);
@@ -392,6 +420,7 @@ public sealed class SharedBuildRuntimeTests
         void Run(string executable, params string[] arguments)
         {
             var result = EngineeringProcess.Process(root, executable, arguments, dotnetEnvironment);
+            diagnostics.WriteLine(result.Text);
             Assert.True(result.Exit == 0, result.Text);
         }
         string[] Calls() => File.ReadAllLines(Path.Combine(root, "build/dotnet-calls"));
@@ -435,14 +464,17 @@ public sealed class SharedBuildRuntimeTests
                 }
             }
             Assert.True(result.Exit == expected, result.Text);
+            if (stage == "engineering" && expected == 0)
+                Assert.Matches(@"CI_SUMMARY .*error=0 .*status=completed exit=0", result.Text);
+            var rawOutput = File.ReadAllText(Path.Combine(root, "build/ci/logs", stage, "console.log"));
             if (stage == "build" && expected == 0)
             {
-                var processes = GraphProcesses(result.Text);
+                var processes = GraphProcesses(rawOutput);
                 Assert.Equal(new[] { "restore", "build" }, processes.Select(process => process.GetProperty("arguments")[0].GetString()));
                 Assert.All(processes, process => Assert.Contains("-m:1",
                     process.GetProperty("arguments").EnumerateArray().Select(argument => argument.GetString())));
             }
-            return result.Text;
+            return rawOutput;
         }
         void Cache(string command, params string[] arguments)
         {

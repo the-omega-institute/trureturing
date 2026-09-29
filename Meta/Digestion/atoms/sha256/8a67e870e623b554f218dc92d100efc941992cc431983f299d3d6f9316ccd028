@@ -1,0 +1,16 @@
+**定理277.2（对齐仪器的副本界）。** 令
+$$
+C_n=\frac{\|H_0(0)\|_1+\|H_1(0)\|_1}{4n}.
+\tag{277.20}
+$$
+则 $0<C_n\le1/2$，且对 $0<h\le h_*$，
+$$
+\boxed{
+\frac1{3C_n\delta}
+\le N_{\rm out}(0,h)
+\le\left\lceil\frac{4n\log(3/2)}{\delta}\right\rceil.
+}
+\tag{277.21}
+$$
+特别有 $N_{\rm out}(0,h)=\Theta(\delta^{-1})=\Theta(h^{-2n})$。
+

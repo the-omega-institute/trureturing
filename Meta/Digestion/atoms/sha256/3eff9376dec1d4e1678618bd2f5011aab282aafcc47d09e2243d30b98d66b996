@@ -1,0 +1,65 @@
+**引理252.2（核内定量注入）。** 任意 Hermitian 算子 $T=\Pi T\Pi$ 满足
+$$
+\boxed{
+\|T\|_1
+\le\frac{k^2}{\sqrt B}
+\bigl(\|\mathcal R_a(T)\|_1+\|\mathcal R_b(T)\|_1\bigr)
+\le\frac{25}{\sqrt B}
+\bigl(\|\mathcal R_a(T)\|_1+\|\mathcal R_b(T)\|_1\bigr).
+}
+\tag{252.20}
+$$
+
+**证明。** 使用§251的等距映射 $J_{\mathrm{ent}}$ 与 $J_s$ 表示各核内块。若 $N$ 是两重数空间之间的矩阵，则 $J_iNJ_j^\dagger$ 与 $N$ 具有相同的非零奇异值，故迹范数相同。
+
+量子—量子块在解码坐标中为 $P_{\Phi^+}\otimes N$，其 $a$ 响应为 $A_a^{\mathsf T}\otimes N/2$。$A_a$ 的两个奇异值均为 $\ell$，因此
+$$
+\|P_{\Phi^+}\otimes N\|_1=\|N\|_1,
+\qquad
+\left\|\frac12A_a^{\mathsf T}\otimes N\right\|_1
+=\ell\|N\|_1.
+\tag{252.21}
+$$
+该块的逆范数因子为 $1/\ell\le1/\sqrt B$。
+
+量子—产品交叉块的响应，按§251完整偏迹公式，形为 $B_{a,s}N/\sqrt2$，其中
+$$
+B_{a,s}z=A_a^{\mathsf T}|\overline{r_s}\rangle\otimes z,
+\qquad
+B_{a,s}^\dagger B_{a,s}=\ell^2I.
+\tag{252.22}
+$$
+于是
+$$
+\left\|\frac1{\sqrt2}B_{a,s}N\right\|_1
+=\frac\ell{\sqrt2}\|N\|_1.
+\tag{252.23}
+$$
+其逆范数因子 $\sqrt2/\ell\le1/\sqrt B$。反向交叉块是伴随，具有相同的界。
+
+对任意产品—产品块 $|r_s\rangle\langle r_t|\otimes N$，两份响应分别为 $c_aN,c_bN$，其中
+$$
+c_w=\langle r_t|A_w|r_s\rangle.
+\tag{252.24}
+$$
+令 $x=\langle r_t|X|r_s\rangle$、$z=\langle r_t|Z|r_s\rangle$。$|r_s\rangle$ 是 $X$ 或 $Z$ 的本征向量，故 $X|r_s\rangle,Z|r_s\rangle$ 构成正交归一基。因此
+$$
+|x|^2+|z|^2=1,
+\qquad
+|c_a|^2+|c_b|^2
+=2A|z|^2+2B|x|^2\ge2B.
+\tag{252.25}
+$$
+至少一个 $|c_w|\ge\sqrt B$。该论证同时覆盖四个可能的产品方向与 $b_0<0$，也包括对角块 $s=t$。所以此类块同样具有逆因子至多 $1/\sqrt B$。
+
+令 $Q_i$ 表示各参考分块投影，量子块也包括在其中。对有序块 $T_{ij}=(I\otimes Q_i)T(I\otimes Q_j)$，响应仍在相同参考块中，并满足
+$$
+\|\mathcal R_w(T_{ij})\|_1
+=\|Q_i\mathcal R_w(T)Q_j\|_1
+\le\|\mathcal R_w(T)\|_1.
+\tag{252.26}
+$$
+对上述三类块分别应用逆界，再以三角不等式对至多 $k^2$ 个有序块求和，就得到（252.20）。$\square$
+
+常数二十五只用于给出统一显式界，不宣称最优。
+

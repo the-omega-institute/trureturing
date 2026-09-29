@@ -1,0 +1,65 @@
+### 271.9 一个最长块已经给出匹配下界
+
+选取 $b_*\in\mathcal B$，使 $r_{b_*}=m$。对该固定块 $Q_{b_*},M_{b_*}$，采用§269的已证下界构造：存在实对称矩阵 $C$、常数 $k,s>0$ 和 $h_0>0$，满足 $C_{mm}=s$，并使
+$$
+S_h=\operatorname{diag}(h^{m-1},\ldots,1),
+\qquad D_h=hS_hCS_h,
+\qquad \delta_h=kh^{2m},
+$$
+$$
+T_{b_*,h}
+=\begin{pmatrix}
+Q_{b_*}+D_h&(1-\delta_h)Q_{b_*}M_{b_*}\\
+(1-\delta_h)M_{b_*}^\dagger Q_{b_*}&I-Q_{b_*}-D_h
+\end{pmatrix}\succ0
+\tag{271.51}
+$$
+对 $0<h\le h_0\le1$ 成立。这里 $C,k,s$ 可按（269.32）—（269.42）明确选取，其严格正性由（269.46）—（269.54）的精确Schur缩放保证。
+
+在自然分解 $H\otimes E\cong\bigoplus_b(H\otimes E_b)$ 下，保持其余块为原真值，定义
+$$
+\widehat T_h
+=T_{b_*,h}\oplus\bigoplus_{b\ne b_*}T_{b,*},
+\qquad
+T_{b,*}=\begin{bmatrix}I\\M_b^\dagger\end{bmatrix}
+Q_b\begin{bmatrix}I&M_b\end{bmatrix},
+\qquad
+\widehat\Omega_h=\frac1N\widehat T_h.
+\tag{271.52}
+$$
+该矩阵正半定、迹为 $N$，因此 $\widehat\Omega_h$ 是完整竞争类中的合法态。其秩为 $N+m$；没有要求所有合法竞争者也具有这种直和结构或秩。
+
+每个块的两对角部分之和保持单位矩阵，所以
+$$
+\operatorname{Tr}_H\widehat\Omega_h=\frac1NI_E=\rho_*.
+\tag{271.53}
+$$
+只有所选块的非对角数据乘以 $1-\delta_h$，故
+$$
+\boxed{
+\varepsilon_h
+=\frac{k\|Z_{b_*}\|_1}{N}h^{2m}.
+}
+\tag{271.54}
+$$
+$Z_{b_*}=2Q_{b_*}M_{b_*}$ 可逆，系数严格正。
+
+将第 $b_*$ 块末基向量的投影记为 $P_*=|e_{b_*,m}\rangle\langle e_{b_*,m}|$。范数一的测试 $\operatorname{diag}(P_*,-P_*)$ 给
+$$
+\|\widehat\Omega_h-\Omega_*\|_1\ge\frac{2s}{N}h.
+\tag{271.55}
+$$
+另一方向只需估计所选块的变化：
+$$
+\|\widehat\Omega_h-\Omega_*\|_1
+\le\frac{2\|C\|_1+k\|Z_{b_*}\|_1}{N}h.
+\tag{271.56}
+$$
+所以该精确同边缘族满足
+$$
+\|\widehat\Omega_h-\Omega_*\|_1=\Theta(h),
+\qquad \varepsilon_h=\Theta(h^{2m}),
+\qquad \widehat\Omega_h\longrightarrow\Omega_*.
+\tag{271.57}
+$$
+

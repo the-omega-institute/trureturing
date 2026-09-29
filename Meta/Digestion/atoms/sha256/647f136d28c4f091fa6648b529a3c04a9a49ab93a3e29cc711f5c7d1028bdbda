@@ -1,0 +1,18 @@
+#### 232.4.2 预算一的完全分离
+
+若 $K(\mathcal S)\le1$，保迹性保证恰有一个非零标签 $j_0$，其分支只有一个 Kraus $C$。复线性行映射
+$$
+v\longmapsto\langle r_{j_0},Cv\rangle\quad:\mathbb C^2\to\mathbb C
+$$
+有非零核。取核中的单位输入 $v$，候选在效果
+$$
+F=\sum_{j=1}^N|j\rangle\langle j|\otimes P_j
+\tag{232.UC.19}
+$$
+上的概率为零，目标概率为一。故每个预算一候选的完整半 diamond 误差均为一。候选集非空，得到
+$$
+\boxed{D_1=1.}
+\tag{232.UC.20}
+$$
+所求核是目标事件的振幅行之核，不是断言 $Cv=0$。
+

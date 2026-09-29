@@ -1,0 +1,43 @@
+**定理 40.2（任意有限维量子输出上的已证明参数区域）。** 在定义 38.2 中，假设 $r_1,r_2<1$。则
+\[
+ \boxed{I^-\ge\frac{2\log2}{\psi(r_1)\psi(r_2)}I_1I_2.}\tag{40.2a}
+\]
+因此当
+\[
+ \boxed{\psi(r_1)\psi(r_2)\le2\log2}\tag{40.2b}
+\]
+时，(HR-upper) 成立。这一结论允许任意有限输出维数、任意不同平均态以及非对易条件输出。
+
+特别地，若 $r_1,r_2\le1/2$，则
+\[
+ I^-\ge k_0 I_1I_2,\qquad
+ k_0=\frac{\log2}{8\log^2(4/3)}\simeq1.0469112739>1.
+\]
+因此对 $I_1I_2>0$ 的这些输入，猜想上界还有至少 $(k_0-1)I_1I_2$ 的严格熵余量。相同对比度 $r_1=r_2=r$ 时，本方法覆盖到唯一满足 $\psi(r_*)=\sqrt{2\log2}$ 的 $r_*\in(0,1)$，数值 $r_*\simeq0.5342304691$；该近似数只用于展示，精确定义为前述方程。
+
+**证明。** 乘积态的归一方向满足
+\[
+ (\sigma_1\otimes\sigma_2)^{-1/2}(\Delta_1\otimes \Delta_2)
+ (\sigma_1\otimes\sigma_2)^{-1/2}
+ = (\sigma_1^{-1/2}\Delta_1\sigma_1^{-1/2})\otimes
+   (\sigma_2^{-1/2}\Delta_2\sigma_2^{-1/2}),
+\]
+其范数为 $r_1r_2<1$。先对乘积使用引理 40.1 的下界，再用定理 39.2，最后对两个单独输入使用引理 40.1 的上界，得到
+\[
+ \begin{aligned}
+ J(\sigma_1\otimes\sigma_2,\Delta_1\otimes \Delta_2)
+ &\ge\tfrac12 Q_{\sigma_1\otimes\sigma_2}(\Delta_1\otimes \Delta_2)\\
+ &\ge\tfrac12Q_{\sigma_1}(\Delta_1)Q_{\sigma_2}(\Delta_2)\\
+ &\ge\frac{2\chi_1\chi_2}{\psi(r_1)\psi(r_2)}.
+ \end{aligned}
+\]
+除以 $\log2$ 并代入 $I_i=\chi_i/\log2$，得到 (40.2a)。在 (40.2b) 下系数至少为一，再用定义 38.2 的等价改写即得猜想。
+
+$\psi$ 非减且 $\psi(1/2)=4\log(4/3)$，给出 $k_0$。为避免依靠小数判定其严格性，可由 $\operatorname{artanh}$ 正级数得到 $\log2>2/3$，而
+\[
+ \log(4/3)=2\operatorname{artanh}(1/7)
+ <\frac27+\frac1{504}=\frac{145}{504},
+ \qquad 8(145/504)^2=21025/31752<2/3.
+\]
+所以 $\log2>8\log^2(4/3)$。最后 $\psi$ 从一严格增加至无穷，$\sqrt{2\log2}>1$，保证 $r_*$ 唯一。这个定理证明的是原猜想的所列子域；(40.2b) 未满足只表示本证明给出的系数不足，不表示原猜想失效。证毕。
+

@@ -1,0 +1,13 @@
+import LeanInformationAudit.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates
+
+section
+open _root_.D5.S3.ConceptDynamics
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency.types false
+open _root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates
+open LeanInformationAudit
+register_information_template existentialWitnessRealization
+end

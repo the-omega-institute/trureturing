@@ -1,0 +1,30 @@
+**证明：排除两条不同射线。** 由第27节，$`\eta_4,\eta_5\in F`$。固定等距的两个位像正交，且
+$`V_0(H\otimes\Gamma)=A\otimes F`$、
+$`V_1(G\otimes\Gamma)=B_3\otimes F`$。所以
+$$
+G_4,G_5\subseteq B_3^\perp=A\oplus Z,\qquad
+Q_4,Q_5\subseteq A^\perp=B_3\oplus Z.
+\tag{29.8}
+$$
+反设 $`\eta_4,\eta_5`$ 是不同射线。固定 $`V_1`$ 在 $`A=G_3`$ 与 $`G_4`$ 上产生不同的纯环境，故 $`A\cap G_4=0`$。因此 $`P_ZG_4=Z`$。由 $`G_4\perp Q_4`$ 与 （29.8），可得 $`P_ZQ_4=0`$，从而 $`Q_4=B_3`$。取 $`R\xi_4=\eta_4`$。等距单射性和
+$$
+V_1A=B_3\otimes\eta_4=V_1(G\otimes\mathbb C\xi_4)
+$$
+给出 $`A=G\otimes\mathbb C\xi_4`$。
+
+若 $`\eta_4\perp\eta_5`$，输入正交性给 $`A\perp G_4`$、$`H_3\perp H_4`$。结合 （29.8），$`G_4=Z`$。此时 $`H_3\subset A\oplus B_3`$，$`H_4\subset Z\oplus B_3`$，并且两者投影到 $`B_3=Q_4`$ 都是同构。故两空间不可能正交：取其任意基，交叉 Gram 矩阵是两个可逆 $`B_3`$ 系数矩阵的乘积，必可逆。矛盾。
+
+若 $`\langle\eta_4,\eta_5\rangle\ne0`$，跨位输入正交性给 $`Q_5\perp G_4`$，而 （29.8） 给 $`Q_5\perp A`$。由于 $`A+G_4=B_3^\perp`$，得到 $`Q_5=B_3`$。取 $`R\xi_5=\eta_5`$，再次用单射性得 $`G_4=G\otimes\mathbb C\xi_5`$。两 $`\xi`$ 不共线，因此
+$$
+B_3\perp A+G_4=G\otimes\Gamma,
+\qquad B_3=\mathbb Cv\otimes\Gamma.
+\tag{29.9}
+$$
+另一方面，$`V_0H_3\subset K\otimes\eta_4`$，而
+$`V_0(H\otimes\xi_4^\perp)=A\otimes R\xi_4^\perp`$，所以
+$$
+H_3\perp H\otimes\xi_4^\perp.
+\tag{29.10}
+$$
+但 $`A=G\otimes\xi_4`$，而 $`P_{B_3}H_3=B_3`$ 由 （29.3） 成立。由 （29.9），$`H_3`$ 在 $`\xi_4^\perp`$ 切片的像为整个 $`\mathbb Cv`$；这不可能正交于 $`H`$，因为 $`\langle z,v\rangle\ne0`$。与 （29.10） 矛盾，证得 （29.4）。
+

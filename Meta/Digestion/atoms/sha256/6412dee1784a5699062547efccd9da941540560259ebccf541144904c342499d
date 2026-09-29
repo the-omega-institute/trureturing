@@ -1,0 +1,44 @@
+**定理 71.2（信息谱稳定与列表大小的次阶极限）。** 在 (71.2) 下，两种原实际实验分别满足
+
+```math
+\sup_z\left|\mathbb P_x\left\{
+ \frac{-\log_2\mathsf P_x^Y(R)-h_x}{Q}\le z\right\}
+ -\Phi\left(\frac z{\sqrt{v_*}}\right)\right|
+ \longrightarrow0
+```
+
+式 (71.5)。
+
+收敛在原始数据概率下成立，且一致于所有大小 $q$ 的确定支持；
+该表述始终评价同一均匀先验定义的联合纤维律，未将其换成点质量先验。
+对每个固定 $z\in\mathbb R$，令 $K_x(z)=\lfloor2^{h_x+Qz}\rfloor$，则
+
+```math
+C_x^0(K_x(z))\longrightarrow\Phi(z/\sqrt{v_*}),\qquad
+\Psi_x(K_x(z))\longrightarrow\Phi(z/\sqrt{v_*}).
+```
+
+式 (71.6)。
+
+对固定 $0<\varepsilon<1$，令
+
+```math
+K_{\varepsilon,M}^{\rm noisy}(x)
+ =\min\{K\in\{0,\ldots,|\mathcal F_x|\}:\Psi_x(K)\ge1-\varepsilon\}.
+```
+
+式 (71.7)。
+
+在同一概率意义下，
+
+```math
+\log_2K_{\varepsilon,M}^{\rm noisy}(x)
+ =h_x+Q\sqrt{v_*}\Phi^{-1}(1-\varepsilon)+o_{\mathbb P}(Q).
+```
+
+式 (71.8)。
+
+这是输出平均的共同列表预算。(71.5) 也在联合纤维律中积分了 $Y$，
+不声称每个输出后验各自具有同一正态信息谱。
+固定参数与精确中心均保留，不将 $h_x$ 换成其 $Q^5$ 主项。
+

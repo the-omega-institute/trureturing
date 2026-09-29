@@ -1,0 +1,4 @@
+**命题 25.5（近似闭合缺陷趋零而条件差不消失）。** 在命题 14.5 的量子比特仪器中，取 $\mathcal V=\mathbb RI$、点击分支 $\Phi(X)=\gamma X$、$H=P_0$。其拉回到 $\mathcal V$ 的最小算子范数距离为 $\gamma/2$，但初态 $P_0,P_1$ 的点击后 $H$ 期望差始终为一。
+
+证明。$\Phi^*H=\gamma P_0$，与 $cI$ 的距离为 $\max\{|\gamma-c|,|c|\}$，在 $c=\gamma/2$ 取最小值 $\gamma/2$。两态同边界、共同点击概率为 $\gamma$，点击后保持原态，所以条件差为一，恰等于 $2(\gamma/2)/\gamma$。当 $\gamma\downarrow0$ 时，未归一化误差趋零，条件误差不变。$\square$
+

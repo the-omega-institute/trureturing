@@ -1,0 +1,11 @@
+**问题 38.1（外部原题及本批限定）。** Hirche–Reeb 的 *Bounds on Information Combining With Quantum Side Information*，IEEE Transactions on Information Theory 64(7), 4739–4757 (2018)，Conjecture VII.2、式 (73)，提出如下上界。本批固定它在独立均匀二元输入下的版本：
+\[
+ \rho_{X_iB_i}=\tfrac12\sum_{x=0}^1|x\rangle\langle x|\otimes\rho_x^{(i)},\qquad
+ \rho_{X_1B_1X_2B_2}=\rho_{X_1B_1}\otimes\rho_{X_2B_2}.
+\]
+这里 $B_i$ 为任意有限维量子系统，$Z=X_1\oplus X_2$。用以二为底的 von Neumann 条件熵记 $H_i=H(X_i|B_i)$，猜想为
+\[
+ \boxed{H(Z|B_1B_2)\le H_1+H_2-H_1H_2.}\tag{HR-upper}
+\]
+这与同文 Conjecture VII.1 的下界是两个不同命题。本批只研究 (HR-upper)。2023 年 Hirche–Guan–Tomamichel 的 Conjecture V.6 将其推广至 Rényi 条件熵；该文证明的特定二阶 Rényi 恒等式并未证明本题的 von Neumann 版本。2025 年 Hirche 的论文结论仍将量子信息合并列为开放方向。本批实际核对了上述原文及后续检索；这不是穷尽全部文献的优先权判定。[^tcs7-hr][^tcs7-hgt][^tcs7-hirche]
+

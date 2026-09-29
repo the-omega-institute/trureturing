@@ -1,0 +1,167 @@
+**命题30.1（后三轮环境的张成恰为二维）。** 在上述合同中，
+
+$$
+\boxed{\dim\operatorname{span}\{\eta_3,\eta_4,\eta_5\}=2.}
+\tag{30.9}
+$$
+
+等价地，后三轮环境 Gram 矩阵的秩恰为二；其中可以有两条或三条不同射线，结论不将它们强制正交。
+
+**证明：排除三维环境张成。**
+
+反设 $`\eta_3,\eta_4,\eta_5`$ 线性无关。由（30.6），它们分别给 $`V_0`$ 与 $`V_1`$ 像中三个各二维的代数直和项。每个全域像的维数也恰为六，所以
+
+$$
+\begin{aligned}
+V_0(K)&=(G_3\otimes\eta_3)\dotplus
+(G_4\otimes\eta_4)\dotplus(G_5\otimes\eta_5),\\
+V_1(K)&=(Q_3\otimes\eta_3)\dotplus
+(Q_4\otimes\eta_4)\dotplus(Q_5\otimes\eta_5).
+\end{aligned}
+\tag{30.10}
+$$
+
+这里的直和不要求正交。取单射逆像，还得
+
+$$
+K=H_2\dotplus H_3\dotplus H_4
+=G_2\dotplus G_3\dotplus G_4.
+\tag{30.11}
+$$
+
+由（30.2），$`G_2\otimes\eta_2=V_0(H_1)\subseteq V_0(K)`$。先在环境上投影到 $`E/\operatorname{span}\{\eta_3,\eta_4,\eta_5\}`$，得到 $`\eta_2`$ 属于这三个向量的张成。若 $`\eta_2`$ 的 $`\eta_3`$ 系数非零，按独立环境坐标比较，必须有 $`G_2\subseteq G_3`$，与（30.11）矛盾；其 $`\eta_4`$ 系数也同理必须为零。因此
+
+$$
+\eta_2\parallel\eta_5,\qquad
+G_5=G_2,\qquad H_1=H_4.
+\tag{30.12}
+$$
+
+最后一个等式来自 $`V_0(H_1)=G_2\otimes\eta_2=G_5\otimes\eta_5=V_0(H_4)`$ 的子空间等式及单射性。
+
+再由（30.1）、（30.10）比较 $`p\otimes\eta_1`$。同样先得 $`\eta_1`$ 属于后三轮环境张成。因为（30.11）、（30.12）使 $`G_3,G_4,G_5`$ 成为三个代数直和空间，非零 $`p`$ 不可能同时属于其中两个；故 $`\eta_1`$ 必与某一个 $`\eta_j`$ 共线，$`j\in\{3,4,5\}`$。同时比较（30.10）的零位和一位像，可得
+
+$$
+k\in H_{j-1}\cap G_{j-1}.
+\tag{30.13}
+$$
+
+第三、第四终端各有四维总支撑，所以 $`H_3\cap G_3=H_4\cap G_4=0`$。因此只能 $`j=3`$，并由（30.4）得到
+
+$$
+\eta_1\parallel\eta_3,\qquad k\parallel w.
+\tag{30.14}
+$$
+
+吸收环境射线相位后，（30.1）、（30.14）使 $`V_0w`$、$`V_1w`$ 分别等于 $`p\otimes\eta_3`$、$`q\otimes\eta_3`$ 的同一个非零标量倍数。第二来源列在第二终端的系数为 $`x_2^1=aw`$、$`y_2^1=bw`$，所以其第三终端零记忆系数为
+
+$$
+0\ne x_3^1\in\mathbb C(a^2p+bq)\subseteq H_1=H_4.
+\tag{30.15}
+$$
+
+它按定义也属于 $`H_3`$，违反（30.11）的 $`H_3\cap H_4=0`$。故后三轮环境不可能张成三维。
+
+**排除共同环境射线。**
+
+现在反设 $`\eta_3\parallel\eta_4\parallel\eta_5`$，吸收相位后写为共同单位向量 $`\eta`$。令
+
+$$
+H_\Sigma=H_2+H_3+H_4,\qquad
+G_\Sigma=G_2+G_3+G_4.
+\tag{30.16}
+$$
+
+固定等距在同一环境方向上给 $`\dim H_\Sigma+\dim G_\Sigma\le6`$。两项均至少为三：若 $`\dim G_\Sigma=2`$，则 $`G_2=G_3=G_4`$，由（30.6）得 $`H_2=H_3`$，违反 $`\dim C_2=3`$、$`\dim C_3=4`$；若 $`\dim H_\Sigma=2`$，则 $`H_2=H_3=H_4`$、$`G_3=G_4`$，违反第26节式（26.20）的主角度行列式严格变化。因此
+
+$$
+\dim H_\Sigma=\dim G_\Sigma=3.
+\tag{30.17}
+$$
+
+去掉共同环境因子，写
+
+$$
+V_0x=f(x)\otimes\eta\quad(x\in H_\Sigma),\qquad
+V_1y=g(y)\otimes\eta\quad(y\in G_\Sigma).
+$$
+
+$`f,g`$ 为等距，其像 $`U=fH_\Sigma`$、$`W=gG_\Sigma`$ 正交且均三维，故
+
+$$
+K=U\oplus W,\qquad
+fH_2=G_3,\quad fH_3=G_4,\quad fH_4=G_5,
+\quad gG_2=Q_3,\quad gG_3=Q_4,\quad gG_4=Q_5.
+\tag{30.18}
+$$
+
+**第二轮环境必须正交于共同尾环境。** 反设 $`\langle\eta_2,\eta\rangle\ne0`$。$`V_0(K)\perp V_1(K)`$，结合（30.2）、（30.18）给
+
+$$
+G_2\perp W,\qquad v\perp U,
+\quad\text{所以}\quad G_2\subset U,\ v\in W.
+\tag{30.19}
+$$
+
+而 $`G_3,G_4\subset U`$，所以 $`G_\Sigma=U`$，$`g:U\to W`$ 为满等距。
+
+若 $`G_3\ne G_4`$，两个二维子空间张成三维 $`U`$。由（30.7），$`P_UH_3=G_3`$、$`P_UH_4=G_4`$，故 $`P_UH_\Sigma=U`$。于是三维 $`H_\Sigma`$ 是线性映射 $`T:U\to W`$ 的图，并有
+
+$$
+T(G_3)=Q_3=gG_2,\qquad T(G_4)=Q_4=gG_3,
+\qquad\operatorname{im}T=g(G_2+G_3).
+\tag{30.20}
+$$
+
+因 $`0\ne w\in H_2\cap G_2\subset H_\Sigma\cap U`$，有 $`\ker T\ne0`$，故 $`\operatorname{rank}T\le2`$。（30.20）及 $`g`$ 单射迫使 $`G_2=G_3`$，从而 $`w\in G_3\cap\ker T`$；但（30.7）使 $`T|_{G_3}`$ 单射，矛盾。
+
+若 $`G_3=G_4`$，固定 $`V_0`$ 与共同环境直接给 $`H_2=H_3`$。由（30.4）、（30.19），$`P_UH_2=G_2`$，而（30.7）给 $`P_UH_3=G_3`$，所以 $`G_2=G_3`$，再次违反第二、第三终端支撑秩差。因此
+
+$$
+\eta_2\perp\eta,\qquad H_1\perp H_\Sigma,\qquad p\perp G_\Sigma.
+\tag{30.21}
+$$
+
+后两个正交性由（30.2）、（30.6）及固定等距直接得到。
+
+**第一轮环境也必须正交于共同尾环境。** 反设 $`\langle\eta_1,\eta\rangle\ne0`$。用（30.1）的两个输入位与（30.18）交叉比较，得 $`p\in U`$、$`q\in W`$。二者又都属于 $`H_1`$，故由（30.21）正交于 $`H_\Sigma`$。
+
+若 $`G_3\ne G_4`$，则 $`P_UH_\Sigma`$ 包含 $`G_3+G_4=U`$，从而 $`p\in U`$ 且 $`p\perp U`$，矛盾。若 $`G_3=G_4`$，则 $`G_\Sigma=G_2+G_3`$，并由（30.7）、（30.18）得到
+
+$$
+P_WH_\Sigma\supseteq Q_3+Q_4
+=g(G_2+G_3)=W.
+$$
+
+于是 $`q\in W`$ 且 $`q\perp W`$，也矛盾。因此
+
+$$
+\eta_1\perp\eta.
+\tag{30.22}
+$$
+
+由（30.1）、（30.18）、（30.22），初态 $`k`$ 同时正交于 $`H_\Sigma`$ 与 $`G_\Sigma`$；而（30.21）及 $`p\in H_1`$ 给 $`p`$ 也同时正交于这两个空间。
+
+**最后的支撑秩矛盾。** $`k,p`$ 必线性无关。否则令 $`p=\lambda k`$，由（30.1）、（30.2）的非零纯张量等式可得 $`\eta_1\parallel\eta_2`$、$`u\parallel p`$、$`v\parallel q`$，从而
+
+$$
+H_1=\operatorname{span}\{u,v\}.
+$$
+
+非零向量 $`a^2u+bv`$ 又属于 $`H_2`$，违反（30.21）的 $`H_1\perp H_\Sigma`$。
+
+因此 $`(H_\Sigma+G_\Sigma)^\perp`$ 至少二维，$`\dim(H_\Sigma+G_\Sigma)\le4`$。但是四维 $`C_3=H_3+G_3`$ 和 $`C_4=H_4+G_4`$ 均包含于这个和空间，故
+
+$$
+C_3=C_4=H_\Sigma+G_\Sigma.
+\tag{30.23}
+$$
+
+（30.8）的共同环境现在给 $`V(D_3)=C_3\otimes\eta=C_4\otimes\eta=V(D_4)`$。单射性强制 $`D_3=D_4`$，分别比较两个输入位得到 $`H_2=H_3`$、$`G_2=G_3`$，继而 $`C_2=C_3`$，与（30.5）的三维、四维秩矛盾。
+
+共同尾射线也被排除。三条非零环境向量的张成只能有维数一、二、三；前后两项均不可能，故得到（30.9）。证明完毕。
+
+
+
+（30.9）没有把二维环境中的三个射线限制为两个，也没有将不同射线正交化。它只控制后三轮环境；前两轮是否属于同一个二维环境空间尚未由此证明。一般六维纯终端实现仍须满足（30.1）—（30.8）及全部跨轮 Gram 等式。标准可逆编码和共同 Stinespring工具沿第23节已读来源；本节没有以这些来源替代具体的支撑与射线推导。
+

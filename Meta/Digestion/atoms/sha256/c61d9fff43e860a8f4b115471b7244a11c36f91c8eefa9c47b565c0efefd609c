@@ -1,0 +1,15 @@
+##### 8.9.4.1 七份有理最优性证书
+
+对协议 $\alpha$ 中的每个非目标删除，平均所有 $m_i-1$ 个实际非目标标签，所得原坐标响应记为 $\overline F_\alpha$。原坐标 $c$ 的保留因子 $g_i(\alpha_i,c_i)$ 依次为 $1$、$\mathbf1_{c_i\ne0}$，以及当 $c_i=0$ 时为 $1$、当 $c_i\ne0$ 时为 $(m_i-2)/(m_i-1)$。这里把目标平移到零。因而 $\overline F_\alpha(c)=\prod_i g_i(\alpha_i,c_i)$，平均后的读数仍受原观察范数控制。
+
+下面每份证书满足
+$$
+\sum_\alpha\lambda_\alpha\overline F_\alpha(c)
+=\mathbf1_{c=0}+\mu,
+\qquad \sum_\alpha|\lambda_\alpha|=C_0.
+\tag{ER8.LP.1}
+$$
+将此恒等式乘以任意零和输入 $z_c$ 后求和，即得 $z_0\le C_0\|Fz\|_\infty$；改变符号给绝对值上界。表中原始轨道向量满足全部响应约束且 $x_0=C_0$，故达到上界。$s_+$ 是归一化轨道向量的正质量 $\sum_\beta w_\beta\max(x_\beta,0)$；非零向量的概率嵌入半径为 $1/(2s_+)$。
+
+| 证书／模数族 | 轨道值 $x_\beta$ | 轨道权 $w_\beta$ | $C_0$ | $\kappa$ | $s_+$ | 该向量半径 | $\mu$ | 非零 $\alpha:\lambda_\alpha$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |

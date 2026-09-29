@@ -1,0 +1,8 @@
+**成熟文献的具体对应。** Yüksel—Saldi 的 [*Convex Analysis in Decentralized Stochastic Control, Strategic Measures and Optimal Solutions*, arXiv:1609.07685v2](https://arxiv.org/pdf/1609.07685v2)，PDF 第11页定理2.2以顺序条件核刻画战略测度；第11—12页定理2.3给独立随机化政策的积分表示；第12页定理2.4在经典信息结构且保留过去观测与动作的条件下证明战略测度凸性。这些结果承担完整信息结构、条件核和随机化的成熟框架；本节另外加入具名坐标只读一次与式(TM.232)的容量不等式。在这种对应中，可由控制者确定选择的是坐标和条件行，不是将受容量限制的结果输出确定化；定理2.3不能被解释为允许预先公开全部结果种子。
+
+von Stengel 的 [*Efficient Computation of Behavior Strategies*, Games and Economic Behavior 14(2), 220—246 (1996)](https://doi.org/10.1006/game.1996.0050)是序列形式的成熟来源。这里的守恒与比值恢复具体对应其作者讲义 [*Extensive Games and the Sequence Form*](https://conferences.mpi-inf.mpg.de/adfocs-24/material/Bernhard/2ext-adfocs.pdf)：PDF 第25、27页给实现概率及 $Ex=e$，第29—30页给子实现概率除以前实现概率的行为策略恢复，并明确完美回忆条件；这些分别是讲义的第18、20、22—23张幻灯片。本节采用完整历史作为安全起点，再单独证明可用的压缩。讲义承担这份具体对应，不将它写成已逐字核对1996年原论文的定理；博弈序列形式本身也未直接给出当前结果容量和末端坐标律投影。
+
+Mannor—Mebel—Xu 的 [*Lightning Does Not Strike Twice: Robust MDPs with Coupled Uncertainty*, arXiv:1206.4643](https://arxiv.org/pdf/1206.4643)，§4.1 定理5及证明位于 PDF 第4—6页，将剩余偏离次数 $d$ 加入状态，并通过状态 $(s,d)$ 与 $(s,d,a)$ 的完全信息顺序博弈进行倒向归纳。该节明确要求参数偏离在发生后被决策者观察，预算计算的是发生偏离的决策阶段数。它支撑“可观察剩余资源必须进入状态”的具体方法，不将任意隐藏预算或跨历史共享源约束自动化为同一种可见预算；其决策者—自然的优化量词也不同于本节自由选择 capped row 的模型。
+
+本节的具体连接是：静态切分可运输一个对所有合法顺序成立的证书，但运输实际采样法还须保存完整条件关系；有限历史流将这些关系变成守恒、归一化和子流容量；在末端任务允许且后继结构相容时，可以消去读取顺序这部分记忆。对更完整的观察者，输出、来源、费用与权限须一起进入保留条件。相同末端数值、相同柱容量或相同递推外形，都不能代替这份关系运输证明。
+

@@ -1,0 +1,2 @@
+**Proof.** Each zero terminates exactly one run of preceding ones, giving the complete blocks; the final run, if present, is the tail. Avoidance of $1^k$ bounds every run by $k-1$, and the zero positions make the decomposition unique. Transition composition and additivity, first across complete blocks and then across the tail, give all four equalities. $\square$
+

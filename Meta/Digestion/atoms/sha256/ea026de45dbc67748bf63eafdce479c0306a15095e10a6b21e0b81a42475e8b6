@@ -1,0 +1,43 @@
+**定理 46.3（完整等待律接近，而平均轮数不接近）。** 将等待律视为 $\{1,2,\ldots\}$ 上的经典概率分布，则
+
+$$
+\boxed{
+\operatorname{TV}(p_\gamma,p_0)=\gamma.
+}
+$$
+
+但
+
+$$
+\boxed{
+\mathbb E_\gamma\mathsf N=2\quad(\gamma>0),
+\qquad \mathbb E_0\mathsf N=1.
+}
+$$
+
+对正 $\gamma$ 还有
+
+$$
+\mathbb E_\gamma\mathsf N^2=2+\frac2\gamma,
+\qquad
+\operatorname{Var}_\gamma(\mathsf N)=\frac2\gamma-2.
+$$
+
+证明。第一轮概率比零模型少 $\gamma$，其余轮次的总概率为 $\gamma$，所以总变差为 $\gamma$。记 $q=1-\gamma$，对 $\gamma>0$ 使用
+
+$$
+\sum_{j\ge0}q^j=\frac1\gamma,
+\quad\sum_{j\ge0}jq^j=\frac q{\gamma^2},
+\quad\sum_{j\ge0}j^2q^j=\frac{q(1+q)}{\gamma^3}.
+$$
+
+将 $n=j+2$ 代入第二轮以后的概率和，得到
+
+$$
+\mathbb E\mathsf N=q+\gamma^2\sum_{j\ge0}(j+2)q^j=2,
+\qquad
+\mathbb E\mathsf N^2=q+\gamma^2\sum_{j\ge0}(j+2)^2q^j=2+2/\gamma.
+$$
+
+减去均值平方得到方差；零参数为常数轮数一。$\square$
+

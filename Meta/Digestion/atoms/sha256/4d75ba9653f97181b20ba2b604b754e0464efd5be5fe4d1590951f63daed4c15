@@ -1,0 +1,34 @@
+**命题42.2（相干窗口的格与商）。** 有
+
+$$
+\mathcal H_0=\Lambda_0^\perp,\qquad
+\Lambda\subseteq\Lambda_0,\qquad r_0-r\in\{0,1\}.
+\tag{42.9}
+$$
+
+更具体地，存在 $v\in\ker_{\mathbb Z}\mathsf D$ 满足 $\mathbf1^{\mathsf T}v=1$。令 $\gamma=Gv$，则
+
+$$
+\Lambda_0=\Lambda+\mathbb Z\gamma.
+\tag{42.10}
+$$
+
+若 $\gamma\notin L$，则 $r_0=r+1$，且 $\mathcal H/\mathcal H_0$ 为一个圆群。若 $\gamma\in L$，则 $r_0=r$，但 $\mathcal H/\mathcal H_0$ 可以是非平凡有限循环群，其阶为满足 $d\gamma\in\Lambda$ 的最小正整数 $d$。特别地，商维数不增加不等于两个子群相同。
+
+证明。强连通支持图中的整数循环满足：每个 $z\in\ker_{\mathbb Z}\mathsf D$ 都能写成两条同起终点实际路径的计数差。具体取严格正的整数循环计数 $c$，对充分大的整数 $k$，$kc$ 与 $kc+z$ 都有从同一顶点开始的 Euler 回路；这里不要求它们等长。因此 $\Lambda_0$ 正是所有同端点、允许不同长度的路径荷差生成的格。
+
+纯势差沿同端点路径相消，所以 $\mathcal H_0\subseteq\Lambda_0^\perp$。反向，若所有整数循环荷的相位都为一，从固定根顶点沿路径定义顶点相位，闭走法相位为一保证定义与路径选择无关；每条边相位于是为端点相位比。因此 $\mathcal H_0=\Lambda_0^\perp$。
+
+primitive 性使所有有向闭走法长度的最大公因子为一。对有限条长度作 Bézout 整数组合，得到长度一的有符号整数循环 $v$。任意 $z\in\ker_{\mathbb Z}\mathsf D$ 满足
+$z-(\mathbf1^{\mathsf T}z)v\in\ker_{\mathbb Z}[\mathsf D;\mathbf1^{\mathsf T}]$，从而（42.10）成立。
+
+对 $h\in\mathcal H$，其 scalar-plus-coboundary 表达中的标量相位唯一：两个表达之比沿任意闭走法给 $e^{i\Delta\omega |\gamma'|}=1$，长度最大公因子一迫使 $e^{i\Delta\omega}=1$。将表达乘在长度一循环 $v$ 上，得到
+
+$$
+\chi(h):=e^{ih\cdot\gamma}=e^{i\omega(h)},\qquad
+\ker\chi=\mathcal H_0.
+\tag{42.11}
+$$
+
+（42.10）使 $\Lambda_0/\Lambda$ 为由 $\gamma+\Lambda$ 生成的循环群。若 $\gamma\notin L$，此群为无限循环群，其对偶为圆群；若 $\gamma\in L$，整数格的有理结构保证存在上述最小正整数 $d$，商群及其对偶都是阶 $d$ 的循环群。这也给秩结论。证明完毕。
+

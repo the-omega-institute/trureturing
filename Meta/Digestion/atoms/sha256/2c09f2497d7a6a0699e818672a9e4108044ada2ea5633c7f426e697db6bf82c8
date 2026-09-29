@@ -1,0 +1,28 @@
+## 61. 七维第二终端秩二只余非正交的两种尾模式
+
+采用第53、58、59节的实际合同：来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$ 非退化，接收器 $K$ 七维、独立纯启动，全部持久资源计费，同一全域 CPTP 通道精确服务前六个完整参考终端；第二终端可逆附加态秩二。
+
+记旧接收编码 $Q\otimes\Gamma\subset K$，$\dim Q=3$、$\dim\Gamma=2$。$u,v,w$ 正交单位，
+$$
+G=\operatorname{span}(u,w),\qquad
+H=\operatorname{span}((a^2u+bv)/\sqrt{|a|^4+|b|^2},w).
+$$
+第三轮排出附加因子的等距为 $R_\Gamma:\Gamma\to F$，$\dim F=2$。写 $A_0=G_3$、$B_0=Q_3$，则
+$$
+V_0(H\otimes\Gamma)=A_0\otimes F,\qquad
+V_1(G\otimes\Gamma)=B_0\otimes F,
+\qquad A_0\perp B_0.
+\tag{61.1}
+$$
+对 $n=4,5,6$，有
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n.
+\tag{61.2}
+$$
+各 $H_n,G_n,Q_n$ 二维；$C_n=G_n\oplus Q_n$ 四维，$H_n$ 到两个正交因子的投影均为同构。本稿只研究
+$$
+\eta_4,\eta_5,\eta_6\in F.
+\tag{61.3}
+$$
+

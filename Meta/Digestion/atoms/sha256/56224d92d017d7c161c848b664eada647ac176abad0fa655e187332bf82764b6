@@ -1,0 +1,6 @@
+**命题 4.5.4（小观察误差不能控制全部 Borel 事件）。** 在二进空间中，令 $x=0^\infty$、$x_N=0^N10^\infty$，则
+$$
+d_{\mathrm{TV}}(\delta_{x_N},\delta_x)=1,\qquad
+d_{\mathrm{obs}}(\delta_{x_N},\delta_x)=2^{-N}.
+$$
+

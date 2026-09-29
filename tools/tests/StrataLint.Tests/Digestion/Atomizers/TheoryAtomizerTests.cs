@@ -1,3 +1,4 @@
+using static StrataLint.TestSupport.TheoryAtomizerAssertions;
 using System.Text;
 using StrataLint.Engine;
 
@@ -5,25 +6,11 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
-    private const string FourthProductionSource =
-        "docs/develop/theory/INTERFACE_PAPER.md";
-
-    private const string InterfacePhilosophySource =
-        "docs/develop/theory/INTERFACE_PHILOSOPHY.md";
-
-    private static void AssertContentIdentity(DigestionAtom atom) => Assert.Equal(
-        DigestionFingerprint.Compute(atom.RawBytes.AsSpan()).RawSha256,
-        atom.Fingerprints.RawSha256);
-
     private static void AssertContentIdentities(AtomizedTheoryDocument document, int expectedCount)
     {
         Assert.Equal(expectedCount, document.Claims.Length);
         Assert.All(document.Claims, AssertContentIdentity);
     }
-
-    private static DigestionAtom ClaimContaining(AtomizedTheoryDocument document, string text) =>
-        Assert.Single(document.Claims, atom =>
-            Encoding.UTF8.GetString(atom.RawBytes.AsSpan()).Contains(text, StringComparison.Ordinal));
 
     [Fact]
     public void RegistryFailsClosedForAnUnknownAtomizerAndListsRegisteredIds()
@@ -507,24 +494,6 @@ public sealed partial class TheoryAtomizerTests
             + WmCurrentTodoClosure + "\n");
         return segments;
     }
-    [Fact]
-    public void InterfacePaperDialectPreservesDuplicateBlocksAsDistinctOccurrences()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var bytes = File.ReadAllBytes(Path.Combine(root, FourthProductionSource));
-
-        var document = AtomizerRegistry.Atomize(
-            AtomizerRegistry.PzgId,
-            bytes,
-            DigestionTestSupport.Rules);
-
-        var duplicateContent = document.Claims
-            .GroupBy(static atom => atom.Fingerprints.RawSha256, StringComparer.Ordinal)
-            .Where(static group => group.Count() > 1)
-            .ToArray();
-        Assert.Equal(2, duplicateContent.Length);
-        Assert.All(duplicateContent, static group => Assert.Equal(2, group.Count()));
-    }
 
     [Fact]
     public void PzgMultiClaimParagraphIncludesIndentedAndUnindentedContinuationLines()
@@ -581,27 +550,6 @@ public sealed partial class TheoryAtomizerTests
 
         Assert.Equal(claimAndProof, Encoding.UTF8.GetString(atom.RawBytes.AsSpan()));
         Assert.Equal(bytes, document.Reassemble().ToArray());
-    }
-
-    [Fact]
-    public void InterfacePhilosophyTheorem612IncludesBothContinuationLines()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var bytes = File.ReadAllBytes(Path.Combine(root, InterfacePhilosophySource));
-
-        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
-        var atom = ClaimContaining(document, "**定理 6.12");
-        var rawText = Encoding.UTF8.GetString(atom.RawBytes.AsSpan());
-
-        Assert.Contains(
-            "  −k_min − O(log Q) ≤ log(|C_Q(R)| / |F_Q|) ≤ −K(y|x) + O(log Q)。",
-            rawText,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "(iii)[证纲] 对定理 6.6 之构造记录可加强选取",
-            rawText,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("**案卷 6.12.1", rawText, StringComparison.Ordinal);
     }
 
     private static DigestionLedgerAlignment AlignUnregisteredGenres(byte[] bytes)

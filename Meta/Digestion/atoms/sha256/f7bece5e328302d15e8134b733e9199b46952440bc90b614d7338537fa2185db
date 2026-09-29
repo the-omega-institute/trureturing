@@ -1,0 +1,8 @@
+**引理158.1（共同轨道在自身闭包内均布）。** 对任意连续函数 $f:G\to\mathbb C$，有
+
+$$
+\lim_{N\to\infty}\frac1N\sum_{n=1}^N f(g^n)
+=\int_G f(z)\,d\mu_G(z).
+\tag{158.4}
+$$
+

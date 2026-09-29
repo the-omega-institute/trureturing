@@ -1,0 +1,339 @@
+{
+  "arithmetic": "exact integers and fractions",
+  "controller": {
+    "all_states_reachable": true,
+    "max_reads": 4,
+    "max_unit_waits": 6,
+    "physical_inputs": 25,
+    "physical_runs_unchanged": true,
+    "response_witnesses": [
+      {
+        "halt": 0,
+        "word": ""
+      },
+      {
+        "halt": 1,
+        "word": ""
+      },
+      {
+        "halt": 2,
+        "word": ""
+      },
+      {
+        "halt": 3,
+        "word": ""
+      },
+      {
+        "halt": 4,
+        "word": ""
+      },
+      {
+        "halt": 5,
+        "word": ""
+      },
+      {
+        "halt": 6,
+        "word": ""
+      },
+      {
+        "halt": 7,
+        "word": ""
+      },
+      {
+        "halt": 8,
+        "word": ""
+      },
+      {
+        "halt": 9,
+        "word": ""
+      },
+      {
+        "halt": 10,
+        "word": ""
+      },
+      {
+        "halt": 11,
+        "word": ""
+      },
+      {
+        "halt": 12,
+        "word": ""
+      },
+      {
+        "halt": 13,
+        "word": ""
+      },
+      {
+        "halt": 14,
+        "word": ""
+      },
+      {
+        "halt": 15,
+        "word": ""
+      },
+      {
+        "halt": 16,
+        "word": ""
+      },
+      {
+        "halt": 17,
+        "word": ""
+      },
+      {
+        "halt": 18,
+        "word": ""
+      },
+      {
+        "halt": 19,
+        "word": ""
+      },
+      {
+        "halt": 20,
+        "word": ""
+      },
+      {
+        "halt": 21,
+        "word": ""
+      },
+      {
+        "halt": 22,
+        "word": ""
+      },
+      {
+        "halt": 23,
+        "word": ""
+      },
+      {
+        "halt": 24,
+        "word": ""
+      },
+      {
+        "halt": 0,
+        "word": "0"
+      },
+      {
+        "halt": 0,
+        "word": "4"
+      },
+      {
+        "halt": 3,
+        "word": "1"
+      },
+      {
+        "halt": 5,
+        "word": "0"
+      },
+      {
+        "halt": 5,
+        "word": "1"
+      },
+      {
+        "halt": 8,
+        "word": "2"
+      },
+      {
+        "halt": 10,
+        "word": "1"
+      },
+      {
+        "halt": 13,
+        "word": "3"
+      },
+      {
+        "halt": 18,
+        "word": "4"
+      },
+      {
+        "halt": 23,
+        "word": "0"
+      },
+      {
+        "halt": 0,
+        "word": "W0"
+      },
+      {
+        "halt": 0,
+        "word": "W4"
+      },
+      {
+        "halt": 3,
+        "word": "W1"
+      },
+      {
+        "halt": 5,
+        "word": "W0"
+      },
+      {
+        "halt": 5,
+        "word": "W1"
+      },
+      {
+        "halt": 8,
+        "word": "W2"
+      },
+      {
+        "halt": 10,
+        "word": "W1"
+      },
+      {
+        "halt": 13,
+        "word": "W3"
+      },
+      {
+        "halt": 18,
+        "word": "W4"
+      },
+      {
+        "halt": 23,
+        "word": "W0"
+      },
+      {
+        "halt": 3,
+        "word": "WW1"
+      },
+      {
+        "halt": 8,
+        "word": "WW2"
+      },
+      {
+        "halt": 13,
+        "word": "WW3"
+      },
+      {
+        "halt": 18,
+        "word": "WW4"
+      },
+      {
+        "halt": 23,
+        "word": "WW0"
+      },
+      {
+        "halt": 3,
+        "word": "4WW1"
+      }
+    ],
+    "state_digit_covariance_checks": 255,
+    "states": 51,
+    "typed_response_rank": 51
+  },
+  "generalizations": {
+    "C4_parity_reference_dimension": 2,
+    "S3_covariance_pairs": 36,
+    "S3_reference_labels": 6,
+    "product_families": [
+      {
+        "common_cover": 9,
+        "common_rank": 5,
+        "cycle_order": 3,
+        "dimension": 7,
+        "natural_W_dimension": 9,
+        "other_register_sizes": [
+          2,
+          2
+        ],
+        "response_fixed_states": 1,
+        "response_free_cycles": 2
+      },
+      {
+        "common_cover": 28,
+        "common_rank": 22,
+        "cycle_order": 4,
+        "dimension": 25,
+        "natural_W_dimension": 28,
+        "other_register_sizes": [
+          2,
+          2,
+          2
+        ],
+        "response_fixed_states": 1,
+        "response_free_cycles": 6
+      },
+      {
+        "common_cover": 55,
+        "common_rank": 47,
+        "cycle_order": 5,
+        "dimension": 51,
+        "natural_W_dimension": 55,
+        "other_register_sizes": [
+          3,
+          2,
+          2
+        ],
+        "response_fixed_states": 1,
+        "response_free_cycles": 10
+      },
+      {
+        "common_cover": 182,
+        "common_rank": 170,
+        "cycle_order": 7,
+        "dimension": 176,
+        "natural_W_dimension": 182,
+        "other_register_sizes": [
+          3,
+          3,
+          3
+        ],
+        "response_fixed_states": 1,
+        "response_free_cycles": 25
+      },
+      {
+        "common_cover": 16,
+        "common_rank": 8,
+        "cycle_order": 3,
+        "dimension": 12,
+        "natural_W_dimension": 15,
+        "other_register_sizes": [
+          3,
+          2
+        ],
+        "response_fixed_states": 3,
+        "response_free_cycles": 3
+      }
+    ],
+    "scope": "Response orbit models are not synthesized optimal physical controllers."
+  },
+  "linear": {
+    "K_fixed_moving": [
+      7,
+      44
+    ],
+    "V_fixed_moving": [
+      11,
+      40
+    ],
+    "common_cover_dimension": 55,
+    "conditional_B_given_A_zero": [
+      [
+        "1/2",
+        "1/3",
+        "1/6"
+      ],
+      [
+        "1/6",
+        "1/3",
+        "1/2"
+      ]
+    ],
+    "equivariant_bridge_rank": 47,
+    "filter_witness_marginals": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      4,
+      0,
+      -4,
+      0,
+      0,
+      0,
+      0
+    ],
+    "joint_linear_dimension": 255,
+    "kernel_dimension": 51,
+    "marginal_rank": 9,
+    "matrix_units_checked": 25,
+    "phase_reference_branches": 5
+  },
+  "scope": "Specified finite models only; no universal controller search or Lean claim."
+}

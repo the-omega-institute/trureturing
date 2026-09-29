@@ -1,0 +1,4 @@
+### 61.7 范围
+
+上述结果只描述指定 $2\times2\times3$ 候选族在 $\varepsilon\downarrow0$ 时的最优修复误差及其边缘参数。它没有给有限 $\varepsilon$ 的闭式最优值，也没有给 $p_\varepsilon$ 的 $\varepsilon^2$ 系数。证明不依赖对全体候选的比例猜测或有限点数值外推。
+

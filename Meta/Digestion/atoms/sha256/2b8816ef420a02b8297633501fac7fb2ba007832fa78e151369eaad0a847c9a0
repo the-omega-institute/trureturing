@@ -1,0 +1,10 @@
+**定义 3.1（带承诺输入域及冲突图）。** 设非空 $D\subseteq\Sigma^*$，目标为 $f:D\to Y$。令
+\[
+ P=\operatorname{Pref}(D)=\{u:\exists v,\ uv\in D\}.
+\]
+在 $P$ 上定义无向冲突图：不同的 $u,v$ 相邻，当且仅当存在 $w$ 使 $uw,vw\in D$ 且 $f(uw)\ne f(vw)$。对于整数 $s\ge1$，称 $c:P\to\{1,\ldots,s\}$ 是转移一致的适当着色，若相邻顶点颜色不同，并且
+\[
+ c(u)=c(v),\ ua,va\in P\quad\Longrightarrow\quad c(ua)=c(va)
+\]
+对全部 $u,v,a$ 成立。域外词不带目标标签，也不被自动解释为拒绝。
+

@@ -1,0 +1,12 @@
+**证明。** 对任意 $X$ 直接展开得
+
+$$
+\sum_b[F_b,X][F_b,X]^\dagger
+=\Phi(XX^\dagger)-\Phi(X)X^\dagger-X\Phi(X^\dagger)+X\Phi(I)X^\dagger=0.
+\tag{12.3}
+$$
+
+正项不能相互抵消，故 $[F_b,X]=0$ 对全部 $X$ 成立。取 $X=e_{jj}$ 消去所有非对角矩阵元，再取 $X=e_{ij}$ 得各对角元相等。于是 $F_b=(F_b)_{i_0i_0}I$。∎
+
+本命题的假设是作用在全部矩阵上的恒等映射。单独的 $\Phi(I)=I$ 不足：$\Phi(X)=ZXZ$ 保单位，但 $Z=\operatorname{diag}(1,-1)$ 与 Pauli $X$ 不交换。正缺陷与纠错的关系可置于完全正映射乘法域的文献背景中；幺通道与非幺通道的分类条件仍须分别保留。[QREC-MD]
+

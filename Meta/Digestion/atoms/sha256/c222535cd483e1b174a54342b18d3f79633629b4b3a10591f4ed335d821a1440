@@ -1,0 +1,38 @@
+**命题 554.1（曲面等价纤维内的严格单向性）。** 对命题 552.1 的两个目标族，沿用第 545 节的通常状态无关随机核定义
+
+$$
+\operatorname{def}(P\longrightarrow Q)
+:=\min_K\max_i\operatorname{TV}(P_iK,Q_i).
+$$
+
+则
+
+$$
+\operatorname{def}(Q^{(1)}\longrightarrow Q^{(2)})=0,
+\qquad
+\boxed{\operatorname{def}(Q^{(2)}\longrightarrow Q^{(1)})
+=\frac{D(d_2-d_1)}{2d_2+D}=\gamma.}
+$$
+
+证明：前向核由命题 552.1 给出。反向下界采用命题 553.2 的先验 $\pi=t_2$ 与零一损失。任一从 $Q^{(2)}$ 后处理得到的实验，其最优风险不能低于 $\mathcal R_{d_2}(t_2)$。若它到 $Q^{(1)}$ 的逐状态最大 TV 至多为 $e$，则把 $Q^{(1)}$ 的最优决策规则搬过来，风险至多为 $\mathcal R_{d_1}(t_2)+e$。项目 FiniteDeficiencyRiskTransfer 的风险转移界因此给出 $e\ge\gamma$。
+
+为达到该下界，令反向核 $L$ 固定公共符号和标签一，把标签二以概率
+
+$$
+h=\frac{2\Delta}{2d_2+D}
+$$
+
+送到公共符号，其余仍为标签二。由于 $0<\Delta<d_2$，有 $0<h<1$。作用后，状态一的公共坐标相对 $Q_1^{(1)}$ 的差为
+
+$$
+b_2+hd_2-b_1=-\Delta+hd_2=-\gamma,
+$$
+
+状态二的公共坐标差为
+
+$$
+b_2+h(d_2+D)-b_1=\gamma.
+$$
+
+每个状态的标签二差均为相反数，标签一不变，因此两个 TV 都恰为 $\gamma$。下界与同一个合法核的上界相合，得到精确值。证毕。
+

@@ -1,0 +1,262 @@
+**定理 420.1（严格内部的可分上界不由任何单个有限局部树取得）。** 对每个 $r>0$ 满足 $1/2<r^2<2$，置
+
+$$
+\kappa=\frac{\sqrt{4+2(r^2+r^{-2})}}3,
+\qquad h=\frac1{3(1+\kappa)},
+\qquad U=\frac1{3\kappa}.
+$$
+
+对每一棵满足上述完整操作约定及精确恢复等式的有限局部树 $\mathsf P$，其接受概率均满足
+
+$$
+\boxed{\displaystyle p(\mathsf P)<U.}
+$$
+
+这里排除的是同一恢复任务的任意有限局部树达到可分上界，不只排除第 416 节某个指定可分测量的局部实施。量词逐个作用于有限协议；结论不推出 $\eta_{\mathrm{fin}}(r)<U$，不提供对所有有限协议统一的正间隙，也不确定无限协议或协议闭包中的可达性。端点另按定理 416.1 结算：$r^2=1/2,2$ 时 $\kappa=1$，完整有限单向树取得 $p=U=1/3$。在闭区间外，即 $0<r^2<1/2$ 或 $r^2>2$，同接口的最优值为零，并由空接受集合取得。
+
+证明。固定严格内部的 $r$ 与一棵允许的有限树。先从局部 CP 映射直接构造每个真实历史节点的原始输入效果。对节点 $t$，保留双方全部尚存工作空间 $H_{A,t},H_{B,t}$，令累计局部映射为
+
+$$
+\Lambda_{A,t}:\mathcal L(R_A)\longrightarrow\mathcal L(H_{A,t}),
+\qquad
+\Lambda_{B,t}:\mathcal L(R_B)\longrightarrow\mathcal L(H_{B,t}).
+$$
+
+根处它们只是添加各自独立辅助态的保迹映射。沿一条真实历史，每一步实际选择和实际结果都已固定；Alice 的步骤只复合到 $\Lambda_{A,t}$，Bob 的步骤只复合到 $\Lambda_{B,t}$。因此由树深度归纳，节点的联合记录分支恰为 $\Lambda_{A,t}\otimes\Lambda_{B,t}$。量子及经典记忆都留在这些映射的陪域中，下一次访问直接作用于该陪域；已经丢弃的寄存器由相应局部偏迹吸收。接收经典消息造成的确定性记录更新可吸收到接收方的保迹映射中，不改变该方拉回的恒等效果。
+
+若某实际结果后来被遗忘，后续 CP 映射仍只使用原协议当时保留的信息。把此前真实历史的和保留到末端，所用的是 CP 映射的线性性；对已合并历史不能重新选择设置或反馈。一个粗粒 CP 结果内部的 Kraus 指标则始终留在该 CP 映射内，既不分出实际节点，也不控制后续步骤。这就把实际遗忘与未观测的隐藏指标区分开来。
+
+以迹对偶记伴随映射，定义原始二量子比特上的正算子
+
+$$
+\begin{aligned}
+A_t&=\Lambda_{A,t}^\dagger(I_{H_{A,t}}),&
+B_t&=\Lambda_{B,t}^\dagger(I_{H_{B,t}}),&
+E_t&=A_t\otimes B_t,\\
+A_{\varnothing}&=I_{R_A},&B_{\varnothing}&=I_{R_B},&E_{\varnothing}&=I_R.
+\end{aligned}
+$$
+
+这里 $E_t$ 给出该真实历史分支在原始输入上的迹。若 Alice 在 $t$ 执行结果为 $c$ 的局部仪器 $\{\Phi_{t,c}\}_c$，忽略不影响效果的确定性消息更新，有
+
+$$
+\begin{aligned}
+A_{tc}&=\Lambda_{A,t}^\dagger
+       \bigl(\Phi_{t,c}^\dagger(I_{H_{A,tc}})\bigr),&
+B_{tc}&=B_t,\\
+\sum_c\Phi_{t,c}^\dagger(I_{H_{A,tc}})&=I_{H_{A,t}},&
+\sum_cE_{tc}&=E_t.
+\end{aligned}
+$$
+
+Bob 操作时交换两因子即可。因而每次分支只改变一个输入效果因子，子节点效果之和等于父节点。这些有限树效果恒等式对应 Cohen，[arXiv:1604.00093v1](https://arxiv.org/abs/1604.00093v1)，§II 式 (1) 及引理 1–2；上面的推导另将此处允许的粗粒 CP 结果、有限记忆与遗忘真实结果直接纳入，不借隐藏 Kraus 细化扩充控制权限，也不调用关于某个指定测量的外部不可实施结论。
+
+令 $\mathsf T(t)$ 为 $t$ 以下的全部终端后代；若 $t$ 本身终止，则 $\mathsf T(t)=\{t\}$。从叶子向上作有限归纳，得到
+
+$$
+\boxed{\displaystyle E_t=\sum_{\ell\in\mathsf T(t)}E_\ell.}
+$$
+
+求和包括任意深度的成功、失败和提前停止历史。由于每个效果非负，$E_t=0$ 时其全部后代效果均为零。特别地，全部真实终端效果在整个 $R$ 上相加为 $I_R$。最终标签的效果 $E_y=\sum_{\ell:\,y(\ell)=y}E_\ell$ 一般仅为可分正算子，不把它当作单个乘积。
+
+现在对接受的真实终端历史 $\ell$，只在数学上分别谱分解 $A_\ell,B_\ell$，删去零权重项，写成
+
+$$
+E_\ell=\sum_\nu a_{\ell\nu}|v_{\ell\nu}\rangle\langle v_{\ell\nu}|,
+\qquad a_{\ell\nu}>0,
+\qquad v_{\ell\nu}=x_{\ell\nu}\otimes y_{\ell\nu},
+\qquad \|x_{\ell\nu}\|=\|y_{\ell\nu}\|=1.
+$$
+
+谱指标 $\nu$ 没有实际可读含义。由输出迹和效果的定义，对系统矩阵单位 $|i\rangle\langle j|$ 有
+
+$$
+\begin{aligned}
+\mathcal M_\ell(|i\rangle\langle j|)
+ &=\langle q_j|E_\ell|q_i\rangle\,|i\rangle\langle j|,\\
+K_{\ell\nu}
+ &=\sqrt{a_{\ell\nu}}\,
+   \operatorname{diag}\bigl(\langle v_{\ell\nu}|q_1\rangle,
+                    \ldots,\langle v_{\ell\nu}|q_5\rangle\bigr),\\
+\mathcal M_\ell(X)&=\sum_\nu K_{\ell\nu}XK_{\ell\nu}^\dagger.
+\end{aligned}
+$$
+
+用未归一化向量化 $|D\rangle\!\rangle=\sum_i|i\rangle\otimes D|i\rangle$ 表示 Choi 矩阵。精确恢复等式给出
+
+$$
+\sum_{\ell:\,y(\ell)\in Y_{\mathrm s}}\sum_\nu
+ |U_{y(\ell)}K_{\ell\nu}\rangle\!\rangle
+ \langle\!\langle U_{y(\ell)}K_{\ell\nu}|
+ =p|I_S\rangle\!\rangle\langle\!\langle I_S|.
+$$
+
+任取与 $|I_S\rangle\!\rangle$ 正交的向量，对此等式取二次型；左边是有限个非负平方之和且总和为零，因此每一项都在 $|I_S\rangle\!\rangle$ 的一维支撑内。于是
+
+$$
+U_{y(\ell)}K_{\ell\nu}=c_{\ell\nu}I_S,
+\qquad
+p=\sum_{\ell:\,y(\ell)\in Y_{\mathrm s}}\sum_\nu|c_{\ell\nu}|^2.
+$$
+
+这始终使用原标签的共同反馈 $U_{y(\ell)}$，没有为任何谱项另选反馈。$q_1=e_0,q_2=e_2$，而每个纬线源的 $e_1$ 系数都非零，故五个 $q_i$ 张成 $W$。若一个保留的谱项满足 $c_{\ell\nu}=0$，酉性就给出 $K_{\ell\nu}=0$，继而 $v_{\ell\nu}\perp W$。但非零的 $\beta e_-$ 在计算基中的系数矩阵行列式为 $\beta^2/2\ne0$，不可能是乘积向量。因此每个非零接受谱项都有 $c_{\ell\nu}\ne0$，其五个平方重叠相等且严格为正。这里仅对数学乘积谱项作分析，不需要给整个接受历史建立秩一结论。
+
+接着对任意具有正平坦响应的非零乘积向量 $v$ 推导几何限制；此处的任意性不依赖某个特定可分仪器或其失败补全。写
+
+$$
+v=\alpha b+\beta e_-,
+\qquad\alpha=\|P_Wv\|>0,
+\qquad b=\frac{P_Wv}{\alpha}=b_0e_0+b_1e_1+b_2e_2.
+$$
+
+$b$ 是单位对称平坦见证。准确复用定理 416.1 及其证明中从定理 413.1 引入的普遍结论：对每一个这样的 $b$，而非只对某个选定轨道，都有
+
+$$
+|b_0|^2=|b_1|^2=|b_2|^2
+ =|\langle b|q_i\rangle|^2=\frac13,
+\qquad |b_1^2-2b_0b_2|=\kappa.
+$$
+
+乘积条件要求 $v$ 的二量子比特系数矩阵行列式为零，具体为
+
+$$
+\begin{aligned}
+0&=\det\begin{pmatrix}
+\alpha b_0&(\alpha b_1+\beta)/\sqrt2\\
+(\alpha b_1-\beta)/\sqrt2&\alpha b_2
+\end{pmatrix}
+ =\alpha^2b_0b_2-\frac{\alpha^2b_1^2-\beta^2}{2},\\
+\beta^2&=\alpha^2(b_1^2-2b_0b_2),
+\qquad |\beta|^2=\kappa\alpha^2,
+\qquad \|v\|^2=(1+\kappa)\alpha^2.
+\end{aligned}
+$$
+
+故每个单位正平坦乘积向量，不论其方位或补全方式，都满足
+
+$$
+|\langle v|q_i\rangle|^2=h=\frac1{3(1+\kappa)},
+\qquad
+\langle v|P_-|v\rangle=\frac{\kappa}{1+\kappa}=3\kappa h.
+$$
+
+还需从两极源得出对两个局部因子的限制。令 $v=x\otimes y$，两因子均为单位向量，置
+
+$$
+s=|\langle0|x\rangle|^2,
+\qquad t=|\langle0|y\rangle|^2,
+\qquad Z=|0\rangle\langle0|-|1\rangle\langle1|,
+\qquad z(u)=\langle u|Z|u\rangle.
+$$
+
+两极平坦等式给出 $st=(1-s)(1-t)=h$，所以 $s+t=1$。由 $z(x)=2s-1$、$z(y)=2t-1$，有
+
+$$
+\begin{aligned}
+z(y)&=-z(x),\\
+z(x)^2=z(y)^2&=1-4h
+ =\frac{3\kappa-1}{3(1+\kappa)}=: \zeta^2,\\
+\langle v|Z\otimes Z|v\rangle&=-\zeta^2.
+\end{aligned}
+$$
+
+严格内部满足 $2\sqrt2/3\le\kappa<1$，从而 $\zeta^2<1/3$。因此每一个可能接受的乘积谱项，其任一局部单位因子都在 $z(u)^2=\zeta^2$ 的两条纬线上；该必要条件覆盖全部可能的成功补全，无须分类配对或重新展开第 413 节的 Fourier 计算。
+
+令 $\mathsf S$、$\mathsf F$ 分别为接受与失败的真实终端历史集。接受谱项满足 $|c_{\ell\nu}|^2=a_{\ell\nu}h$，而其反对称权重是 $a_{\ell\nu}3\kappa h$。在完整效果等式上取 $e_-$ 的二次型，得到
+
+$$
+1=3\kappa p+\sum_{f\in\mathsf F}\langle e_-|E_f|e_-\rangle.
+$$
+
+因此 $p\le U$。为排除等号，以下假设 $p=U$。每个失败项非负，故每个真实失败效果 $E_f=A_f\otimes B_f$ 都满足 $\langle e_-|E_f|e_-\rangle=0$。对非零 $E_f$，把两个因子作正权重谱分解；其每一对单位谱向量 $x,y$ 都须满足
+
+$$
+0=|\langle e_-|x\otimes y\rangle|^2
+ =\frac12|x_0y_1-x_1y_0|^2.
+$$
+
+这说明每一对因子平行。固定 $B_f$ 的一个正谱向量，$A_f$ 的整个支撑都被迫落在它的一维射线上；再固定 $A_f$ 的非零向量，$B_f$ 的支撑也落在同一射线上。因此存在单位向量 $u_f$ 与 $w_f>0$，使
+
+$$
+E_f=w_fP_{u_f}\otimes P_{u_f},
+\qquad P_u=|u\rangle\langle u|.
+$$
+
+不同失败历史可以有不同 $u_f$；这里是每个非零真实失败效果的两个单位因子彼此平行。零失败效果不参与以下加权求和。若把若干失败历史并入一个实际标签，其效果仍是这些项之和，不声称该合并标签秩一。
+
+在饱和假设下，记成功效果的总谱权重及失败效果的总迹为
+
+$$
+\begin{aligned}
+W_{\mathrm s}&=\sum_{\ell\in\mathsf S,\nu}a_{\ell\nu}
+ =\frac ph=\frac{1+\kappa}{\kappa},\\
+W_{\mathrm f}&=\sum_{f\in\mathsf F:\,E_f\ne0}w_f
+ =\operatorname{Tr}I_R-W_{\mathrm s}
+ =4-W_{\mathrm s}=\frac{3\kappa-1}{\kappa}>0.
+\end{aligned}
+$$
+
+对完整效果等式与 $Z\otimes Z$ 取迹配对。根处的配对为 $(\operatorname{Tr}Z)^2=0$；每个单位成功谱项贡献 $-\zeta^2$，每个单位失败项贡献 $z(u_f)^2$。于是
+
+$$
+\begin{aligned}
+0&=-\zeta^2W_{\mathrm s}
+   +\sum_{f:\,E_f\ne0}w_fz(u_f)^2,\\
+\sum_{f:\,E_f\ne0}w_fz(u_f)^2
+ &=\zeta^2W_{\mathrm s}=\frac{3\kappa-1}{3\kappa},\\
+\frac{\sum_{f:\,E_f\ne0}w_fz(u_f)^2}{W_{\mathrm f}}&=\frac13.
+\end{aligned}
+$$
+
+有限个正权重的均值为 $1/3$，所以存在一个非零真实失败历史 $f_0$，其单位因子 $u=u_{f_0}$ 满足
+
+$$
+z(u)^2\ge\frac13>\zeta^2.
+$$
+
+这条射线位于全部可能成功因子的纬线之外：无论另一因子取何值、成功效果如何补全，只要一个单位因子平行于 $u$，相应非零乘积项就不能有正平坦成功响应。
+
+最后从这个真实失败叶子沿原有限树向根回推。起点为 $E_{f_0}=w_{f_0}P_u\otimes P_u\ne0$。设已经知道路径上的某个节点 $v$ 满足 $E_v=c_vP_u\otimes P_u$、$c_v>0$，并令 $t$ 为其父节点。若 $t$ 处由 Alice 操作，未改变的因子是 $B_v=B_t$。由 $A_v\otimes B_v=c_vP_u\otimes P_u\ne0$，对第一因子取偏迹即知 $B_t=bP_u$，其中 $b>0$。故
+
+$$
+E_t=A_t\otimes bP_u,
+\qquad
+0=\operatorname{Tr}\bigl[E_t(I_{R_A}\otimes(I_{R_B}-P_u))\bigr]
+ =\sum_{\ell\in\mathsf T(t)}
+   \operatorname{Tr}\bigl[E_\ell(I_{R_A}\otimes(I_{R_B}-P_u))\bigr].
+$$
+
+右边每项非负，所以每项都为零。对任一非零终端后代 $E_\ell=A_\ell\otimes B_\ell$，这等于
+
+$$
+\operatorname{Tr}(A_\ell)\,
+\operatorname{Tr}\bigl[B_\ell(I_{R_B}-P_u)\bigr]=0.
+$$
+
+第一因子的迹严格为正，第二因子正半定；因此 $B_\ell$ 支撑于 $\mathbb C u$。例如将 $B_\ell$ 谱分解后，每个正权重向量在 $u^\perp$ 上的平方分量都必须为零，即得这个支撑结论。若该终端后代被接受，其任一非零乘积谱项的 Bob 因子便平行于 $u$，与上面的全体成功纬线必要条件矛盾。因此 $t$ 以下没有非零的接受终端效果。
+
+其余非零终端后代全为失败；饱和时已得它们形如 $w_\ell P_{u_\ell}\otimes P_{u_\ell}$。Bob 因子的支撑落在 $\mathbb C u$ 内，就迫使 $P_{u_\ell}=P_u$。把 $\mathsf T(t)$ 中全部终端效果相加，得到
+
+$$
+E_t=c_tP_u\otimes P_u,
+\qquad c_t>0.
+$$
+
+严格正性来自原路径上的非零后代 $E_v$。若 $t$ 处由 Bob 操作，同理保留 Alice 因子，用 $(I_{R_A}-P_u)\otimes I_{R_B}$ 取迹配对，得到相同结论。这一步每次都对 $t$ 的全部终端后代使用完备等式，包含其他分支继续演化后的所有失败及提前停止历史；只比较 $v$ 的直接兄弟并不足以完成此回推。
+
+有限树中从 $f_0$ 到根只有有限条边，逐次回推遂迫使根效果也是非零的 $P_u\otimes P_u$ 倍数，秩为一。若 $f_0$ 已是根，同一冲突立即发生。但根效果实际为完整原始空间上的 $I_R$，秩为四。矛盾排除 $p=U$；结合已证 $p\le U$，得到每棵允许有限树各自满足 $p<U$。
+
+全过程中的系统映射等式都在全部矩阵单位上建立，使用原协议的共同终端反馈。特别地，$U_{y(\ell)}K_{\ell\nu}=c_{\ell\nu}I_S$ 对任意未操作有限参考 $F$ 给出
+
+$$
+(I_F\otimes U_{y(\ell)}K_{\ell\nu})X_{FS}
+(I_F\otimes U_{y(\ell)}K_{\ell\nu})^\dagger
+ =|c_{\ell\nu}|^2X_{FS}.
+$$
+
+按真实历史、谱项及原有标签求和仍是同一个 $pX_{FS}$；没有把全参考恢复降为对角输入或无参考恢复。根效果、反对称预算、总迹四及 $Z\otimes Z$ 矩都在完整 $R$ 中计算，未用物理压缩到 $W$ 的替代协议。
+
+端点 $r^2=1/2,2$ 时 $\kappa=1$，上述高度差变为 $\zeta^2=1/3$，矩条件不再挑出成功纬线以外的失败因子。定理 416.1 已给出完整的十二叶子 Alice 到 Bob 单向树，其六个接受叶子各为 $\operatorname{id}_S/[9(1+\kappa)]$，其余六个叶子保留为失败；在端点总和正是 $\operatorname{id}_S/3$，并在每个未操作有限参考上成立。故端点确实取得 $U$，不在严格内部结论的量词中。闭区间外由定理 413.1 排除同一两记录接口的正成功联合协议，定理 416.1 随即给出局部及可分最优值为零；空接受集合取得零。这里不把端点的可达性与区间外的零成功混为一类。
+
+最后，反证只在精确饱和 $p=U$ 时把失败支撑压到平行乘积射线，并沿一棵给定有限树回推；没有导出与树深度、分支数和正权重无关的定量余量。因此它没有排除一列不同有限树的概率趋近 $U$，也没有建立这样的逼近列；$\eta_{\mathrm{fin}}(r)$ 的严格间隙或精确值、无限协议及闭包仍未由本定理确定。证毕。
+

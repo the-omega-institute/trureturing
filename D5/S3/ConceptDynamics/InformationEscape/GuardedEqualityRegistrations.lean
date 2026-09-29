@@ -6,11 +6,12 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/InformationEscape/GuardedEqualityRegistrations.positiveFirst_lawSensitive; instance=D5/S3/ConceptDynamics/InformationEscape/GuardedEqualityRegistrations.positiveFirstRealization
    digest: Two frozen conditional equations share one template while preserving their statements, guards and complete finite arenas. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification
 import D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups
-import LeanInformationAudit.SealCommand
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -19,7 +20,7 @@ namespace D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations
 
 open GuardedEqualityRegistrationTemplates LeanInformationAudit
 
-register_information_template guardedEqRealization
+
 
 section PositiveFirst
 open D5.S3.ConceptDynamics.ExperimentDesign.AdaptiveEarlyStopping
@@ -43,19 +44,12 @@ theorem positiveFirst_lawSensitive : positiveFirstArena.Law positiveFirstRealiza
     fun h => (by decide : M_0 ≠ M_XY) (h M_XY rfl)⟩
 theorem positiveFirst_slotSensitive : FiniteSlotSensitivity positiveFirstArena :=
   guardedEq_sensitivity _ M_XY M_XY M_0 (by decide)
-register_information_theorem positive_first_experiment_identifies_model in positiveFirstArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates.guardedEqRealization
-    (Fin 3) (Fin 3) (instDecidableEqFin 3)
-    (fun model => positiveFirstReadout model) (fun model => model) (fun _ => modelXYCode))
-  primitives positiveFirstRealization.toPrimitiveBundle realization positiveFirst_bridge
-  variation positiveFirst_lawSensitive sensitivity positiveFirst_slotSensitive
-example : positive_first_experiment_identifies_model.__information_unit.Statement =
-    (∀ (model : Fin 3) (_hpositive : E_X model = true), model = M_XY) := rfl
+
+
 #print axioms positiveFirst_bridge
 #print axioms positiveFirst_lawSensitive
 #print axioms positiveFirst_slotSensitive
-expect_information_occurrence positive_first_experiment_identifies_model in positiveFirstArena
-  from "D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations"
+
 end PositiveFirst
 
 section OuterDimension
@@ -136,36 +130,16 @@ theorem outerDimension_lawSensitive : outerDimensionCodeArena.Law outerDimension
     fun h => (by decide : dimension39Code ≠ dimension40Code) (h (0 : Fin 6) rfl)⟩
 theorem outerDimension_slotSensitive : FiniteSlotSensitivity outerDimensionCodeArena :=
   guardedEq_sensitivity _ (0 : Fin 6) dimension39Code dimension40Code (by decide)
-register_information_theorem dimension_eq_40_of_outer in outerDimensionCodeArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates.guardedEqRealization
-    (Fin 6) (Fin 2) (instDecidableEqFin 2)
-    (fun i => outerGuardReadout i) (fun i => outerDimensionReadout i) (fun _ => dimension40Code))
-  primitives outerDimensionRealization.toPrimitiveBundle realization outerDimension_bridge
-  variation outerDimension_lawSensitive sensitivity outerDimension_slotSensitive
-example : dimension_eq_40_of_outer.__information_unit.Statement =
-    (∀ (g : PhysicalSourceGroup) (_h : g.isOuter = true), g.dimension = 40) := rfl
+
+
 #print axioms outerDimension_bridge
 #print axioms outerDimension_lawSensitive
 #print axioms outerDimension_slotSensitive
-expect_information_occurrence dimension_eq_40_of_outer in outerDimensionCodeArena
-  from "D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations"
+
 end OuterDimension
 
-#seal_information_theory
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  for entry in InformationRegistry.entries env do
-    if entry.registrationModuleName == env.header.mainModule then
-      let name := RegistrationGates.diagnosticName entry.unitName env.header.mainModule
-      let info ← getConstInfo name
-      let some (.lit (.strVal diagnostic)) := info.value?
-        | throwError "registration diagnostic is not a literal"
-      if diagnostic.isEmpty then
-        logInfo m!"REGISTRATION_WITNESSES_CHECKED {entry.theoremName} \
-          support=[readout[0],readout[1],readout[2]]"
-      else
-        logWarning diagnostic
+
+
 
 end D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations

@@ -1,0 +1,31 @@
+**定理159.1（无有限周期可消除的最优误差振荡）。** 取任意整数 $L\ge3$，满足
+
+$$
+\delta_L<\frac{\lambda_*}{8}.
+\tag{159.5}
+$$
+
+存在维数 $D=4L-2$ 的接收空间、独立纯初态和每轮重复的同一个全域 CPTP 接收通道，使其实际单终端最优完整参考半迹误差 $e_n$ 满足：对每个整数 $q\ge1$ 和每个 $0\le r<q$，
+
+$$
+\boxed{
+\begin{aligned}
+\liminf_{k\to\infty}e_{qk+r}
+&\le\frac34+\delta_L,\\
+\limsup_{k\to\infty}e_{qk+r}
+&\ge\frac34+\frac{\lambda_*}{4}-\delta_L.
+\end{aligned}
+}
+\tag{159.6}
+$$
+
+只取正终端，有限个初始索引不影响这些极限。每条这样的子序列的振荡间隔至少为
+
+$$
+\frac{\lambda_*}{4}-2\delta_L>0.
+\tag{159.7}
+$$
+
+因此不存在有限 $q$ 和常数 $c_0,\ldots,c_{q-1}$，使
+$e_n-c_{n\bmod q}\to0$。以下构造通道并证明全部参考下的误差界。
+

@@ -116,7 +116,7 @@ public sealed partial class WorktreeCommandTests
         DetachDonorTo(repository.Path, "dev~1");
         var target = Path.Combine(repository.Path, "read-only-probe-lane");
         var runner = new RecordingWorktreeProcessRunner();
-        var donorHead = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD");
+        var donorHead = TestGit.Run(repository.Path, "rev-parse", "HEAD");
 
         var result = WorktreeCommand.Run(
             repository.Path,
@@ -124,7 +124,7 @@ public sealed partial class WorktreeCommandTests
             runner);
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal(donorHead, ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD"));
+        Assert.Equal(donorHead, TestGit.Run(repository.Path, "rev-parse", "HEAD"));
         // 探测不得引入 lake,也不得引入把货源往前推的 git 写动词。
         // (建树自身对 .git 的写——`worktree add`——不在此列,那是本命令的本职。)
         var forbidden = runner.Invocations
@@ -154,11 +154,11 @@ public sealed partial class WorktreeCommandTests
         for (var index = 0; index < commits; index++)
         {
             File.AppendAllText(Path.Combine(root, "README.md"), $"advance {index}\n");
-            ReviewRegressionTests.RunGit(root, "add", "README.md");
-            ReviewRegressionTests.RunGit(root, "commit", "-m", $"advance {index}");
+            TestGit.Run(root, "add", "README.md");
+            TestGit.Run(root, "commit", "-m", $"advance {index}");
         }
     }
 
     private static void DetachDonorTo(string root, string revision) =>
-        ReviewRegressionTests.RunGit(root, "checkout", "--detach", revision);
+        TestGit.Run(root, "checkout", "--detach", revision);
 }

@@ -1,0 +1,61 @@
+### 299.6 完整输入的稀有点击估计
+
+完整输入使用 $C=1,B=4$；全部真实参数 $c\ge kl>k^3$ 满足
+$$
+p(c)=(1-c)/4\le3\kappa/4.
+$$
+对独立Bernoulli和 $S$，中心化指数矩估计和Chernoff最优化给
+$$
+\Pr(|S-\mathbb ES|\ge x)
+\le2\exp\left[-\frac{x^2}{2(\operatorname{Var}S+x/3)}\right].
+\tag{299.22}
+$$
+这是标准Bernstein界；其指数矩界可由 $|Y-\mathbb EY|\le1$ 和
+$e^t-1-t\le t^2/[2(1-t/3)]$（$0\le t<3$）逐项相乘得到。
+这里方差至多 $3K\kappa/4$，所需阈值间距为常数倍 $K\kappa$，因而每个错误跨越事件的概率至多
+$Ae^{-aK\kappa}$。
+
+对加权负系数，继续使用准确倾斜
+$$
+\mathbb E\left[\frac{(J)_m}{(K)_m}\varphi(J)\right]
+=p^m\mathbb E\varphi(m+Z),\qquad
+Z\sim\operatorname{Bin}(K-m,p).
+\tag{299.23}
+$$
+$m\le d\le\alpha\kappa K$ 使均值偏移不超过 $\alpha\kappa K$，剩余方差仍为 $O(K\kappa)$。由（299.16）保留的阈值间距，倾斜后仍有同一 $Ae^{-aK\kappa}$ 界。若真实 $c\ge v_-$，乘回权重并求和得到
+$$
+\mathbb E_c(-\beta_J)_+
+\le Ae^{-aK\kappa}\frac{\log(1/v_-)}{D\kappa}
+\le A'e^{-aK\kappa}.
+\tag{299.24}
+$$
+所用比值为 $21/(8D)\le21/22$，不存在随 $\kappa\downarrow0$ 发散的前因子。
+
+真实级数尾也保留一个小参数因子。令 $z=1-c\le1-k^3\le3\kappa$，并取固定 $q_0=1-e^{-3\kappa_0}<1$，则
+$$
+R_d(c)\le\frac{z^{d+1}}{D\kappa(d+1)(1-z)}
+\le A q_0^d\le A'e^{-a\kappa K}.
+\tag{299.25}
+$$
+最后一步吸收 $d\ge\alpha\kappa K-1$ 的固定因子。
+
+现按第296节的四个真实参数区域核对响应：
+
+- 第一族 $r\le u_+$：赋零的损失至多 $\Pr(c_J\le v)$，因为 $\beta_i\le1$；赋一无有害下降，因为所有 $\beta_i\le1$。
+- 第一族 $r>u_+$：$c_J\ge u$ 时直接以概率一决定零，利用其补事件及 $L(r)\le1$。
+- 第二族 $c=kr\le v_-$：只有 $c_J>v$ 时实际概率可能非零，利用其小概率及 $L(c)>0$。
+- 第二族 $c>v_-$：高区赋一的增加量至多 $\Pr(c_J\ge u)$；低区赋零的增加由（299.24）控制，再加入（299.25）。
+
+因此统一有
+$$
+f_K(r)\ge L(r)-Ae^{-aK\kappa},\qquad
+f_K(kr)\le L(kr)+Ae^{-aK\kappa}.
+\tag{299.26}
+$$
+选择
+$$
+K\ge A\kappa^{-1}[1+\log(1/\bar\eta)]
+\tag{299.27}
+$$
+并向上取整，即可使两类误差总和不超过（299.14）的余量，证明完整输入上界。
+

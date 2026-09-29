@@ -1,0 +1,19 @@
+**推论159.4（三十四维、每个余数类的统一间隔）。** 当
+$a=b=1/\sqrt2$ 时，存在 $34$ 维固定接收器，使对每个
+$q\ge1$、$0\le r<q$，
+
+$$
+\boxed{
+\begin{aligned}
+\liminf_{k\to\infty}e_{qk+r}
+&\le\frac{97}{128},\\
+\limsup_{k\to\infty}e_{qk+r}
+&\ge\frac{887}{1152},\\
+\limsup_{k\to\infty}e_{qk+r}
+-\liminf_{k\to\infty}e_{qk+r}
+&\ge\frac7{576}>0.
+\end{aligned}
+}
+\tag{159.34}
+$$
+

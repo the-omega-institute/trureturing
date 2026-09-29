@@ -1,0 +1,62 @@
+### 209.5 两层隐函数与解析共同 TP 候选
+
+定义
+
+$$
+f(\ell,\tau,x,y)=\widetilde e(\ell,\ell\tau,\Gamma(x,y)).
+\tag{209.17}
+$$
+
+快 Hessian 非退化，故 $\partial_xf=0$ 唯一给出局部实解析解
+$x=X(\ell,\tau,y)$。
+由（209.15），对所有小 $\tau,y$ 都有
+$X(0,\tau,y)=0$。
+约化函数
+$\bar f(\ell,\tau,y)=f(\ell,\tau,X(\ell,\tau,y),y)$
+在 $\ell=0$ 恒等于 $3/4$，所以
+
+$$
+G(\ell,\tau,y)=\frac{\bar f(\ell,\tau,y)-3/4}{\ell}
+\tag{209.18}
+$$
+
+在零来源轴上具有解析延拓。
+该延拓满足
+$G(0,\tau,y)=\mathcal P(y)+\tau\mathcal N(y)$，
+其中 $\mathcal N$ 是第198节的冻结噪声首项。
+快变量已驻定，故来源求导时没有额外的 $\partial_xf$ 项。
+
+由（209.16），方程 $\partial_yG=0$ 再次满足非退化隐函数条件，
+得到实解析 $y=Y(\ell,\tau)$。
+记相应 Kraus 与 Choi 候选为
+$K_j^\sharp(\ell,\tau)$、$J_j^\sharp=|k_j\rangle\langle k_j|$，
+$k_j=\operatorname{vec}(K_j^{\sharp\mathsf T})$，
+其解析目标值记为 $V(\ell,\tau)$。
+
+对 $\ell\ne0$，$\partial_y\bar f=\ell\partial_yG=0$；
+在 $\ell=0$ 也直接为零。
+因此它在完整单 Kraus 共同 TP 流形上驻定。
+两份 $K_j^\sharp$ 在基点附近均可逆。
+此外
+
+$$
+a_j(0,\tau)=1/\sqrt2,\qquad c_j(0,\tau)=0.
+\tag{209.19}
+$$
+
+在零噪声轴，平衡恒等操作对每个小 $\ell$ 驻定。
+具体地，在 $\Gamma_*$ 处令
+$\rho=\operatorname{diag}(1-\ell,\ell)$、
+$g_0=(1-\ell,0,0,\ell)^{\mathsf T}$，
+完整参考最大点及最高向量直接给 Choi 梯度 $-P_{g_0}/4$。
+乘子 $\rho/4$ 使
+$(\rho\otimes I-P_{g_0})\operatorname{vec}I=0$，验证全部受约束导数为零。
+两层局部隐函数解的唯一性因此给
+
+$$
+K_j^\sharp(\ell,0)=I/\sqrt2.
+\tag{209.20}
+$$
+
+到此只构造了解析驻点；其全共同 CPTP 最优性还须检验对偶正性。
+

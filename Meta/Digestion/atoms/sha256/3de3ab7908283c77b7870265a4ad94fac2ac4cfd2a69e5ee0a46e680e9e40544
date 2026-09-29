@@ -1,0 +1,16 @@
+### 212.1 对每个结果限制一个 Kraus 方向
+
+定义紧集
+
+$$
+\mathcal K_{11}=
+\left\{(J_0,J_1):J_j\succeq0,\quad
+\operatorname{Tr}_{\rm out}(J_0+J_1)=I,\quad
+\operatorname{rank}J_j\le1\right\},
+\tag{212.2}
+$$
+
+并令 $E_{11}(\epsilon,h)$ 为同一完整参考误差在此集合上的最小值。
+这里限制的是无损对称化后的正旗标两结果 instrument。
+不把这个限制等同于原未对称化设备的任意硬件预算。
+

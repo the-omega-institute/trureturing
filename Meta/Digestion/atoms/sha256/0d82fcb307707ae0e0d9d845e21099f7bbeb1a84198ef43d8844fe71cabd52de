@@ -1,0 +1,48 @@
+**定理 204.2（极小值的概率夹逼）。** 若
+
+$$
+0<p_-\le p(\rho)\le p_+\le1
+\qquad(\rho\in\mathfrak R_+),
+$$
+
+则
+
+$$
+\boxed{
+ p_-V_{\mathrm{cond}}
+\le V_{\mathrm{uncond}}
+\le p_+V_{\mathrm{cond}},
+}
+\tag{204.1}
+$$
+
+并且
+
+$$
+\boxed{
+\frac{V_{\mathrm{uncond}}}{p_+}
+\le V_{\mathrm{cond}}
+\le
+\frac{V_{\mathrm{uncond}}}{p_-}.
+}
+\tag{204.2}
+$$
+
+一般不存在一个由 $V_{\mathrm{uncond}}$ 和单个平均概率唯一决定的等式。
+
+### 证明
+
+因为 $h(\rho)\ge V_{\mathrm{cond}}$ 且 $p(\rho)\ge p_-$，有
+
+$$
+ a(\rho)=p(\rho)h(\rho)\ge p_-V_{\mathrm{cond}}.
+$$
+
+取下确界得到第一条左侧界。另一方面，对任意 $\rho$ 有 $a(\rho)\le p_+h(\rho)$，故取一列 $h(\rho_n)\downarrow V_{\mathrm{cond}}$ 得
+
+$$
+V_{\mathrm{uncond}}\le p_+V_{\mathrm{cond}}.
+$$
+
+两边除以正数 $p_+,p_-$ 即得（204.2）。若两个量之间存在只依赖某个平均概率的普适等式，则同一概率与同一无条件值的不同 $(p,h)$ 配对会违反该等式；命题 204.3 给出具体反例。证毕。
+

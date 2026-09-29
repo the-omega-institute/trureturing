@@ -1,0 +1,8 @@
+**命题 262.1（重叠造成边际递减）。** 在第 261 节的固定覆盖模型中，措施 $a$ 对已有选择 $S$ 的增益为
+
+$$
+\Delta(a\mid S)=\sum_{u\in E_a\setminus\bigcup_{b\in S}E_b}w(u).
+$$
+
+若 $S\subseteq T$，则 $\Delta(a\mid T)\le\Delta(a\mid S)$，因为在更多既有修复之后，$a$ 能新增覆盖的条件集合只会缩小。这对应项目的 `marginalGain_antitone` 与 `weightedGain_submodular_insert`。其意义是重复照顾同一组已经满足的需要不会产生同量的新覆盖；它不说关怀、修习或教育在一切情境下都必然边际递减。
+

@@ -1,0 +1,48 @@
+**定理 126.2（标记对象的二元因子化）。** 对任意 Borel 集 $E$，$\mathbf M_\infty(E)$ 完全正且迹不增，并且
+
+$$
+\mathbf M_\infty([0,\infty))=\mathsf F+\mathsf S
+$$
+
+是迹保持通道。对任意密度矩阵 $\rho$，其标量时间测度为
+
+$$
+\boxed{
+\mu_\infty^\rho
+=q_\rho\,\delta_0+p_\rho e^{-t}\,dt,
+\qquad
+q_\rho=\operatorname{Tr}(Q_*\rho),
+\quad
+p_\rho=\operatorname{Tr}(P_*\rho).
+}
+\tag{126.3}
+$$
+
+并且 $q_\rho+p_\rho=1$。因此，极限标记对象可以因子化为
+
+$$
+\boxed{
+X
+\xmapsto{\ \mathsf d\ }
+\bigl(\operatorname{Tr}(Q_*X),\operatorname{Tr}(P_*X)\bigr)
+\xmapsto{\ \mathsf p_E\ }
+\alpha(E)\operatorname{Tr}(Q_*X)P_0
++\beta(E)\operatorname{Tr}(P_*X)\zeta.
+}
+\tag{126.4}
+$$
+
+### 证明
+
+$\mathsf F$ 与 $\mathsf S$ 是正映射的非负标量倍和，因而完全正。对 $X\succeq0$，
+
+$$
+\operatorname{Tr}\mathsf F(X)=\operatorname{Tr}(Q_*X),
+\qquad
+\operatorname{Tr}\mathsf S(X)=\operatorname{Tr}(P_*X).
+$$
+
+由于 $0\le\alpha(E)\le1$ 且 $0\le\beta(E)\le1$，两项的迹之和不超过 $\operatorname{Tr}X$，所以 $\mathbf M_\infty(E)$ 迹不增。对全集，$\alpha=1$、$\beta=1$，且 $Q_*+P_*=I$，故总映射保迹。
+
+把这两个迹写成 $q_\rho,p_\rho$ 即得式（126.3）。式（126.4）只是把式（126.1）的两个系数先读出，再执行相应的准备映射。证毕。
+

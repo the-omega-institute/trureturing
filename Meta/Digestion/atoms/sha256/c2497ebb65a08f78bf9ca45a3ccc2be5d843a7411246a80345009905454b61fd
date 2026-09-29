@@ -1,0 +1,50 @@
+**定理 15.13（原钟的精确歧义与位宽差）。** 令
+
+$$
+L_A=\operatorname{im}\chi_A\cap H,\qquad
+L_B=\operatorname{im}\chi_B\cap H.
+\tag{15.42}
+$$
+
+在 $A$ 端的规范 $T_-$ 未来行为类 $z+N_A^-$ 中，原钟的可能值恰为 $h+L_B$；$B$ 端为 $h+L_A$。因此原钟能由该端的完整 $T_-$ 未来行为唯一恢复，恰好当相反轴的 $L$ 为零子群。同时
+
+$$
+\frac{M_A^+}{M_A^-}=|L_B|,\qquad
+\frac{M_B^+}{M_B^-}=|L_A|,\qquad
+1\le |L_A|,|L_B|\le |H|.
+\tag{15.43}
+$$
+
+令 $R_A=|L_B|,R_B=|L_A|$。若以定长二进制字保存端 $i$ 的有限状态，则其最小位宽差满足
+
+$$
+\begin{gathered}
+\Delta_i^{\mathrm{bits}}=
+\lceil\log_2 M_i^+\rceil-\lceil\log_2 M_i^-\rceil,\\
+\lfloor\log_2R_i\rfloor
+\le\Delta_i^{\mathrm{bits}}
+\le\lceil\log_2R_i\rceil
+\le\lceil\log_2|H|\rceil.
+\end{gathered}
+\tag{15.44}
+$$
+
+原钟不在规范商上可恢复时，并不排除更大的非最小 $T_-$ 状态保存它；完整过去公共词也总能恢复原钟。
+
+证明。$A$ 端同类来源点恰写为 $(a,b+t,h-\chi_B(t))$，$t\in P_B^H$。$\chi_B(P_B^H)=L_B$，而子群在取负下不变，故原钟像精确为 $h+L_B$。每个这样的来源点都可达，所以这里没有虚构相位。像为单点当且仅当 $L_B=\{0\}$。这正是函数在观察纤维上常值的恢复判据；其一般有效像形式见 `D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean` 的 `refinement_iff_kernel_inclusion_on_effective_images`，在此以原钟为待恢复函数、未来行为商为观察函数。$B$ 端同理。
+
+限制同态 $\chi_B:P_B^H\to L_B$ 满射，任意像值的纤维都是 $P_B^0$ 的陪集。因此 $|P_B^H|=|P_B^0||L_B|$；另一轴同理。将这一步通常的同态纤维计数代入定理15.12即得式(15.43)。无论 $H$ 是否等于 $C$，交 $\operatorname{im}\chi_i\cap H$ 都不可删去。
+
+含 $M$ 个状态的定长二进制编码需要且只需 $\lceil\log_2M\rceil$ 位，因为 $b$ 位恰有 $2^b$ 个字。置 $x=\log_2M_i^-$、$y=\log_2R_i$，则 $M_i^+=R_iM_i^-$。由
+
+$$
+\lceil x\rceil+\lfloor y\rfloor
+\le\lceil x+y\rceil
+\le\lceil x\rceil+\lceil y\rceil
+\tag{15.45}
+$$
+
+得到式(15.44)。左式来自 $x+\lfloor y\rfloor\le x+y$ 及整数平移下的取整等式；右式来自 $x+y\le\lceil x\rceil+\lceil y\rceil$。对数状态数之差恰为 $\log_2R_i$，定长位宽差一般只是相邻两个整数之一；若 $R_i$ 为二的幂，两者相同。
+
+若一个候选达到局部最小有限状态数，式(15.40)的满射必为双射，因此它与规范未来商有相同的原钟恢复判据。但保存整个 $S$ 并按平移更新也是一个 $T_-$ 候选，它总能读出 $h$。再者，完整公共历史 $w=u_1\cdots u_r$ 从零制备恢复 $z(w)=\sum_j u_j$，特别是 $h=\sum_j k_j$；不恢复结论只约束所指定的压缩边界，不能用于这个额外提供档案的访问模型。本卷 §13 的逐前缀档案恢复与保存其值所需记忆的区分，在此分别对应完整词和式(15.33)的持久状态。证毕。
+

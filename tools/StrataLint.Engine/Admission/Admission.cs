@@ -86,7 +86,10 @@ public partial record AdmissionOutcome
 
     public partial record RuleRejected(ImmutableArray<Diagnostic> Diagnostics);
 
-    public partial record InfrastructureFailure(string Message);
+    public partial record InfrastructureFailure(string Message)
+    {
+        public ImmutableArray<Diagnostic> Observations { get; init; } = [];
+    }
 
     public partial record ProtectedSurfaceVerificationRequired(
         ImmutableArray<Diagnostic> Diagnostics);

@@ -1,0 +1,35 @@
+**定理90.1（正交纤维核配对）。** 对全部非零 $z$，有
+
+$$
+\boxed{
+ g_0([z])=\operatorname{nullity}\mathcal P(z),\qquad
+ g_1([z])=g_0([z^\perp]).
+}
+\tag{90.4}
+$$
+
+**证明。** $V_0x$ 属于 $K\otimes z$ 的充要条件为
+
+$$
+z_1A_0x-z_0A_1x=0.
+$$
+
+$V_0$ 单射，而 $y\mapsto y\otimes z$ 也单射，故该核与 $\mathcal G_0([z])$ 线性同构，给出第一式。
+
+由（90.2），$y\otimes z\in\operatorname{ran}V_1$ 当且仅当
+
+$$
+V_0^*(y\otimes z)
+=(z_0A_0^*+z_1A_1^*)y=0.
+$$
+
+置 $C_z=\overline{z_0}A_0+\overline{z_1}A_1$，则 $\mathcal G_1([z])=\ker C_z^*$。$C_z$ 是同一七维空间上的方阵，所以 $\operatorname{nullity}C_z^*=\operatorname{nullity}C_z$。又
+
+$$
+C_z=\mathcal P(z^\perp).
+$$
+
+第一式遂给 $g_1([z])=g_0([z^\perp])$。证明完毕。
+
+这个配对依赖两个位像正交且完备；只有两个等距像正交而没有（90.2）时，不能把包含关系升级为上述等式。
+

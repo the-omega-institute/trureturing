@@ -1,0 +1,168 @@
+{
+  "result": "PASS",
+  "necessary_inventory": {
+    "0": [
+      "11123/22222/22222",
+      "11222/12223/12223",
+      "11222/12223/22222",
+      "11222/22222/22222",
+      "11223/12222/12223",
+      "11223/12222/22222",
+      "11233/12222/12222",
+      "12222/12222/12223",
+      "12222/12222/22222"
+    ],
+    "2": [
+      "02222/02222/11111",
+      "02222/11111/11222",
+      "11111/11222/11222"
+    ],
+    "4": [
+      "01111/11111/11111"
+    ],
+    "6": [],
+    "8": []
+  },
+  "partial_inventory": {
+    "3": [
+      [
+        [
+          0,
+          "11111",
+          10,
+          3
+        ],
+        [
+          0,
+          "11111",
+          10,
+          3
+        ],
+        [
+          1,
+          "1111",
+          15,
+          3
+        ]
+      ]
+    ]
+  },
+  "partial_lower_bounds": {
+    "0": 55,
+    "1": 51,
+    "2": 45,
+    "3": 35,
+    "4": 33,
+    "5": 29,
+    "6": 25,
+    "7": 21,
+    "8": 17
+  },
+  "k2_two_column_vectors": [
+    [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ]
+  ],
+  "k4_controls": [
+    {
+      "public": "three G leaves plus y",
+      "points": 270,
+      "pair_tests": 480,
+      "flow": 77,
+      "cut": 77,
+      "root_totals": {
+        "1": "21",
+        "2": "18",
+        "3": "17",
+        "0": "21"
+      },
+      "active_column_totals": {
+        "G": 21,
+        "K": 15,
+        "H": 10,
+        "J": 10
+      },
+      "scope": "One actual source and matching flow/cut; no universal inference from this fixture"
+    },
+    {
+      "public": "whole G plus y",
+      "points": 330,
+      "pair_tests": 480,
+      "flow": 77,
+      "cut": 77,
+      "root_totals": {
+        "1": "21",
+        "2": "18",
+        "3": "17",
+        "0": "21"
+      },
+      "active_column_totals": {
+        "G": 21,
+        "K": 15,
+        "H": 10,
+        "J": 10
+      },
+      "scope": "One actual source and matching flow/cut; no universal inference from this fixture"
+    }
+  ],
+  "k3_partial_controls": [
+    {
+      "public": "three G leaves",
+      "points": 301,
+      "pair_tests": 480,
+      "flow": 77,
+      "cut": 77,
+      "root_totals": {
+        "1": "21",
+        "2": "18",
+        "3": "17",
+        "0": "21"
+      },
+      "inactive_child_total": 7,
+      "maximum_active_block": "10",
+      "scope": "One actual partial-child source; all original fibres retained; no universal inference from this fixture"
+    },
+    {
+      "public": "whole G",
+      "points": 357,
+      "pair_tests": 480,
+      "flow": 77,
+      "cut": 77,
+      "root_totals": {
+        "1": "21",
+        "2": "18",
+        "3": "17",
+        "0": "21"
+      },
+      "inactive_child_total": 7,
+      "maximum_active_block": "10",
+      "scope": "One actual partial-child source; all original fibres retained; no universal inference from this fixture"
+    }
+  ],
+  "scope": "Necessary integer/vector checks and four actual controls. General proofs are separate; not Lean."
+}

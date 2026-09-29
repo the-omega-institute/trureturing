@@ -1,0 +1,29 @@
+**引理 34.2（二元对称缺陷的平方收缩与完整系数）。** 对定义 34.1 的全部数据和任意联合态，
+\[
+ D(\mathcal Z_{U,s}\rho\Vert E_U\rho)
+ \le s^2D(\rho\Vert E_U\rho).
+\]
+该不等式对任意有限记忆维数一致有效，最优系数精确为 $s^2$。对满秩 $\rho$，另有
+\[
+ \operatorname{Tr}[(\rho-E_U\rho)\log\rho]
+ \ge2D(\rho\Vert E_U\rho).
+\]
+
+**证明。** 先取满秩 $\rho$，记 $\sigma=E_U\rho$、$X=\rho-\sigma$，则 $U\sigma U=\sigma$、$UXU=-X$。置 $f(v)=D(\sigma+vX\Vert\sigma)$，$|v|\le1$，有 $f(0)=f'(0)=0$。由矩阵对数的积分微分公式，
+\[
+ f''(v)=\int_0^\infty
+ \operatorname{Tr}\{K_u^2(I+vK_u)^{-2}\}\,du,
+ \quad K_u=(\sigma+uI)^{-1/2}X(\sigma+uI)^{-1/2}.
+\]
+这是 BKM 二次型的直接表示，没有假设 $X$ 与 $\sigma$ 对易。$UK_uU=-K_u$ 使其谱按 $\kappa,-\kappa$ 成对，而 $\sigma\pm X\succeq0$ 给 $|\kappa|<1$ 对 $u>0$ 成立。每对对被积函数的贡献为
+\[
+ \kappa^2[(1+v\kappa)^{-2}+(1-v\kappa)^{-2}],
+\]
+在 $0\le v\le1$ 上非减。因此 $f''$ 非减，且
+\[
+ \frac{f(v)}{v^2}=\int_0^1(1-r)f''(vr)dr
+\]
+对 $v>0$ 非减，得到 $f(s)\le s^2f(1)$。在 $v=1$ 求左导数得到 $f'(1)\ge2f(1)$；$\operatorname{Tr}X\log\sigma=0$ 由二元对称成立，所以 $f'(1)=\operatorname{Tr}X\log\rho$。
+
+对任意半正定态，先与全空间最大混合态作正凸混合，再令混合量趋零。$D(\rho\Vert E_U\rho)=S(E_U\rho)-S(\rho)$ 及有限维熵连续性处理可能的零谱，得到端点和奇异态版本。所有步骤同样适用于 $U\otimes I_R$，常数不依赖 $R$。最后，在 $U$ 的正负本征空间各选一个向量，以二者间的 Hermitian 非零交叉块 $X$ 扰动最大混合态；小扰动相对熵的二阶项为正，输入缩为 $sX$ 后其比趋于 $s^2$，故上界为最优。该证明采用文献的条件期望/BKM 方法，在二元对称下利用谱成对给出当前精确常数。证毕。[^tcs6-complete]
+

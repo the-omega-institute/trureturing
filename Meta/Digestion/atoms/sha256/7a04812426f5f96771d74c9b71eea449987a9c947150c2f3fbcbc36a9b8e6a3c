@@ -1,0 +1,50 @@
+**引理153.2（半 diamond 的单矩阵对偶）。** 若 $\Delta:\mathcal L(X)\to\mathcal L(O)$ 保持厄米性并满足 $\operatorname{Tr}\Delta(Z)=0$ 对所有 $Z$ 成立，则
+
+$$
+\boxed{
+\frac12\|\Delta\|_\diamond
+=\min\left\{t:\;
+Y\succeq0,\quad Y\succeq J(\Delta),\quad
+\operatorname{Tr}_O Y\preceq tI_X\right\}.
+}
+\tag{153.6}
+$$
+
+最小值取得。
+
+**证明。** Watrous 的 Choi 半定规划给一般线性映射的完整 diamond 范数以下对偶，且具有强对偶与最优值取得：[^phase_watrous_reference_trace_sdp]
+
+$$
+\min_{Z_0,Z_1\succeq0}
+\frac12\|\operatorname{Tr}_O Z_0\|_\infty
++\frac12\|\operatorname{Tr}_O Z_1\|_\infty,
+\qquad
+\begin{pmatrix}
+Z_0&-J(\Delta)\\
+-J(\Delta)^*&Z_1
+\end{pmatrix}\succeq0.
+\tag{153.7}
+$$
+
+本处 $J(\Delta)=J(\Delta)^*$。交换两个块再取平均，令 $Z=(Z_0+Z_1)/2$，仍可行，并由范数凸性使目标不增。因此可以要求两个对角块相同。对块指标作 Hadamard 酉变换，块正性等价于
+
+$$
+Z-J(\Delta)\succeq0,\qquad Z+J(\Delta)\succeq0.
+$$
+
+于是完整 diamond 范数等于
+$\min_{Z\succeq\pm J(\Delta)}\|\operatorname{Tr}_O Z\|_\infty$。
+
+置 $Y=(Z+J(\Delta))/2$。上述两个不等式恰好等价于
+$Y\succeq0$、$Y\succeq J(\Delta)$。迹消失条件给
+$\operatorname{Tr}_O J(\Delta)=0$，所以
+
+$$
+\operatorname{Tr}_O Z=2\operatorname{Tr}_O Y.
+$$
+
+由于 $Y\succeq0$，其偏迹半正定，谱范数上界等价于
+$\operatorname{Tr}_O Y\preceq tI_X$。这给（153.6）及其准确的因子 $1/2$；最小值取得也由上述等价转换保留。证毕。
+
+迹消失条件在这里实际承担消去偏迹常数项的作用。不能把（153.6）原样用于任意不保迹差映射。
+

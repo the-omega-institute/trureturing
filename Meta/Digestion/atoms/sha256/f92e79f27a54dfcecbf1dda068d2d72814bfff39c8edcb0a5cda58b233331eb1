@@ -1,0 +1,11 @@
+**定义 253.1（先写清请求包含哪两个时刻）。** “全能者能否造出自己举不起的石头”同时涉及创造前的能力、创造后的对象与创造后的能力。若把这些时刻省略，句子可以在中途更换约束而不被察觉。Hoffman 与 Rosenkrantz 的 [《Omnipotence》第 2 节](https://plato.stanford.edu/entries/omnipotence/)将举石问题放在不同能力说明的争论中；以下只分析一个明列前提的版本，不声称解决了其中每一种形而上学读法。
+
+在一个有共同对象域 $S$ 的状态模型中，固定主体 $g$，令 $\operatorname{Stone}(k,y)$ 表示 $k$ 在状态 $y$ 是石头，$\operatorname{Lift}(g,k,y)$ 表示此时 $g$ 能举起它。设所讨论的完整能力条件为 $\Omega(g,y)$，并明确假定它至少蕴涵
+
+$$
+\forall k\in S,\quad
+\operatorname{Stone}(k,y)\Rightarrow\operatorname{Lift}(g,k,y).
+$$
+
+这只是该能力条件的一个必要后果，不是把“能举一切现有石头”定义为完整全能。后者甚至在没有石头时也会空泛成立，不能替代关于创造、其他任务或主体性质的全部要求。
+

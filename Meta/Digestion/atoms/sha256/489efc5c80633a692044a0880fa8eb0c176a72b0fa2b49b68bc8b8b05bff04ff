@@ -1,0 +1,39 @@
+**定理 53.2（精确几何预算、稳定秩渐近及配对维数门槛）。** 每个 $H_\varepsilon$ 都是光滑嵌入，诱导同一个圆周拓扑，并满足
+\[
+ \|H_\varepsilon'(\varphi)\|=U_\varepsilon=1,\qquad
+ \boxed{l_\varepsilon^2=\frac{2\varepsilon}{9+20\varepsilon}.}
+\]
+令 $\eta_\varepsilon=2/R_{H_\varepsilon}-1$，则有精确的一变量极值式
+\[
+ \eta_\varepsilon=
+ \max_{-1\le q\le3}
+ \frac{(\varepsilon/2)|q(q+1)(2-q)|}
+      {q^2[1+\varepsilon(q-1)]+2\varepsilon},
+\]
+且
+\[
+ \eta_\varepsilon\sim\frac{\sqrt\varepsilon}{2\sqrt2},\qquad
+ \boxed{2-R_{H_\varepsilon}\sim\sqrt{\varepsilon/2},\qquad
+        \frac{2-R_{H_\varepsilon}}{l_\varepsilon}\longrightarrow\frac32.}
+\]
+因此，在问题 52.1 的单射成对谐波设计类内，逼近二延迟稳定秩上限二所需的最少谐波对数恰为三，即六个实基函数。这个上确界不由任何有限单射谐波族达到。
+
+**证明。** $\gcd(2,3,4)=1$，命题 52.2 给嵌入。导数平方范数为 $(4\varepsilon+9+16\varepsilon)/Z_\varepsilon=1$。置 $x=\cos^2(d/2)$，直接使用正弦倍角公式可得平方弦增益
+\[
+ \frac{(4x-1)^2[1+\varepsilon(4x-2)]+2\varepsilon}{Z_\varepsilon}.
+\]
+因 $0\le x\le1$、$\varepsilon\le1/2$，方括号非负；$x=1/4$ 使第一项为零，故下界精确为所列值。每个谐波满足 $|\sin(ku)|\le k|\sin u|$，所以平方上弦增益至多为导数预算一；$d\to0$ 时达到此上确界。
+
+代入命题 52.2 的 $A,B$，再令 $q=4x-1$，约去共同因子，得到精确极值式。这里 $q=3$ 用短弦极限延拓，故最大值可以在闭区间计算。令 $q=\sqrt\varepsilon z$，则极值式除以 $\sqrt\varepsilon$ 后的函数为
+\[
+ \frac{|z(1+\sqrt\varepsilon z)(2-\sqrt\varepsilon z)|/2}
+ {z^2[1+\varepsilon(\sqrt\varepsilon z-1)]+2}.
+\]
+它在任意有界 $z$ 区间上一致趋于 $|z|/(z^2+2)$。对 $\varepsilon\le1/4$，原 $q\in[-1,3]$ 上有 $|(q+1)(2-q)|\le4$，分母至少为 $q^2/2+2\varepsilon$，因此缩放后的函数在 $|z|\ge R$ 至多为 $4/R$。先限制到有界区间，再令 $R\to\infty$，证明极值收敛到
+\[
+ \max_{z\in\mathbb R}\frac{|z|}{z^2+2}=\frac1{2\sqrt2},
+\]
+在 $z=\pm\sqrt2$ 达到。由 $R_H=2/(1+\eta)$ 和 $l_\varepsilon\sim\sqrt{2\varepsilon}/3$ 得两条后果。两对谐波的障碍由定理 52.3，当前三对构造给充分性，故配对数恰为三。上确界不达到也由同条定理。
+
+本构造的拓扑、核和微分增益在全部正 $\varepsilon$ 上相同，但下弦增益趋零。它相对 #8891 §12 的五对谐波构造减少了基函数数量；代价是稳定秩缺口在此与 $l_\varepsilon$ 同阶，而那一构造的缺口与 $l^2$ 同阶。两个设计分别优化了不同资源，不能据维数更小认领全面支配。证毕。[^tcs10-design]
+

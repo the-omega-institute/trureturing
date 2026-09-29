@@ -1,0 +1,55 @@
+### 165.3 正偶宇称方向上的精确支撑函数
+
+为计算（165.11），在 $M$ 和 $R_{\mathrm{out}}$ 同时采用 $\rho_*$ 的实正交本征坐标：
+
+$$
+\rho_*=\begin{pmatrix}r&0\\0&\ell\end{pmatrix},
+\qquad
+r,\ell>0,\quad r+\ell=1,\quad r\ell=\Delta,
+\qquad
+|\Xi\rangle=\sqrt r\,|00\rangle+\sqrt\ell\,|11\rangle.
+\tag{165.12}
+$$
+
+这是数学坐标变换，不是给接收器增加对 $M$ 的操作权限。坐标可取定向保持，从而 $Y$ 不变；反向定向只交换（165.5）的两个分支。
+
+在偶宇称基 $|00\rangle,|11\rangle$ 中定义
+
+$$
+K_s=
+\begin{pmatrix}
+r&\sqrt\Delta\,s\\
+\sqrt\Delta\,s&\ell
+\end{pmatrix}.
+\tag{165.13}
+$$
+
+对任意实数 $c,d>0$，令 $u=c|00\rangle+d|11\rangle$，不要求归一化。固定边缘扩张的最大重叠等于纯化保真度，给出
+
+$$
+\max_{\bar\sigma\in\mathcal K_q}
+\langle u|\bar\sigma|u\rangle
+=
+rc^2+\ell d^2+2\sqrt\Delta\,s\,cd
+=
+\begin{pmatrix}c&d\end{pmatrix}
+K_s
+\begin{pmatrix}c\\d\end{pmatrix}.
+\tag{165.14}
+$$
+
+具体地，对归一化的 $u$，每个分支的最大值是
+$F(\rho_\pm,\operatorname{diag}(c^2,d^2))$；取边缘下的保真度单调性给上界，纯化保真度定理给达到。对任意长度的 $u$，先归一化再利用齐次性即可。在二维中，
+
+$$
+F(a,b)=\operatorname{Tr}(ab)+2\sqrt{\det a\,\det b},
+\qquad
+\det\rho_\pm=\Delta(1-q^2)=\Delta s^2.
+\tag{165.15}
+$$
+
+因此两支分别给出（165.14）右端，且可以独立同时达到。
+
+式（165.14）只陈述正实偶宇称方向上的支撑函数；没有宣称
+$K_s$ 与每个可达态的偶块之间存在全空间半正定序关系。
+

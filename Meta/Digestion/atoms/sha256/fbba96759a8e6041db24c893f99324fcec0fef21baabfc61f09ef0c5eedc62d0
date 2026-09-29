@@ -1,0 +1,29 @@
+**定义 582.2（不均匀的单标签残余族）。** 取整数 $n\ge2$，状态集 $I=\{1,\ldots,n\}$，输出集 $X=\{\circ,1,\ldots,n\}$，以及
+
+$$
+b>0,\quad e_i>0,\quad M=b+\sum_{i=1}^n e_i<1,
+\qquad D=1-M,\qquad c=\frac{n-1}{n}.
+$$
+
+令 $l=(b,e_1,\ldots,e_n)$，目标概率行为
+
+$$
+Q_i=l+D\delta_i.
+$$
+
+每个状态的特别残余只在自己的标签上，故称单标签残余。将标签共同质量从小到大重排为 $e_{(1)}\le\cdots\le e_{(n)}$，记 $E_k=\sum_{j=1}^k e_{(j)}$。排序只用于计算，生成器仍作用于原来有名的标签。
+
+来源实验 $E_r$ 以概率 $1-r$ 揭示实际状态 $i$，以概率 $r$ 给出擦除符号 $\star$，其中 $0\le r\le1$。生成器的揭示行为为 $T_i\in\Delta(X)$，擦除行为为一个共同的 $R\in\Delta(X)$；在不知道状态的擦除分支上，不允许改用各自不同的 $R_i$。目标联合实验 $\mathsf J_i$ 以相同的来源记录为第一分量，第二分量按 $Q_i$ 产生。生成器保留实际第一分量，得到 $\widetilde{\mathsf J}_i$。
+
+定义
+
+$$
+\begin{aligned}
+m_i&=\operatorname{TV}((1-r)T_i+rR,Q_i),&m&=\max_i m_i,\\
+j_i&=(1-r)\operatorname{TV}(T_i,Q_i)+r\operatorname{TV}(R,Q_i),&j&=\max_i j_i,\\
+\mathcal J(r,\eta)&=\min_{m\le\eta}j,&\eta&\ge0.
+\end{aligned}
+$$
+
+这里 $j_i=\operatorname{TV}(\widetilde{\mathsf J}_i,\mathsf J_i)$，因为两种真实来源记录占据互不相交的输出块。若预算不可行，不给该空集的最小值赋一个有限数；可行时，有限单纯形的紧致性保证最小值存在。
+

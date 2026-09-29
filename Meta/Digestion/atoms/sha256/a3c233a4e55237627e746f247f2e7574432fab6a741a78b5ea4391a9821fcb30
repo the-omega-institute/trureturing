@@ -1,0 +1,33 @@
+**命题 568.2（线性区与饱和区共同决定端点比例）。** 当 $\pi\le1/2$ 时，$R=U/A$。当 $\pi>1/2$ 时，仍记 $s=2\pi-1$，并置 $B_\varepsilon=D-4\varepsilon$，则
+
+$$
+\boxed{
+R(\pi,\varepsilon)=
+\begin{cases}
+\min\{U/A,\ 1+4\varepsilon/(sA)\},&0<s\le s_*,\\
+\max\{1+4\varepsilon/(sA),\ Us/B_\varepsilon\},
+&s>s_*,\ B_\varepsilon>0,\ s<B_\varepsilon/A,\\
+U/A,&\text{其余 }s>s_*.
+\end{cases}
+}
+$$
+
+证明：由第 564 节，最大纤维比例也等于全部可共享读数的参数对之比例的上确界。置 $\delta=2\varepsilon/s$。在 $s\le s_*$ 的线性区，任意相容参数对满足 $d_2-d_1\le\delta$，因此
+
+$$
+\frac{2d_2+D}{2d_1+D}
+\le1+\frac{2\delta}{2d_1+D}.
+$$
+
+右边随 $d_1$ 增大而减小，故从 $a$ 出发可达到最大值，直到右端受到 $L$ 限制；这给出第一段。
+
+若 $s>s_*$，则 $t<L$。先看 $t-\delta>a$。当右参数不超过 $t$，仍由低端线性区给出 $1+4\varepsilon/(sA)$；因为 $a+\delta<t$，相应参数对确实合法。当右参数超过 $t$，共享读数约束要求左参数至少为 $t-\delta$。取这个左端，并令右端趋向 $L$，比例的上确界为
+
+$$
+\frac U{2(t-\delta)+D}=\frac{Us}{D-4\varepsilon}.
+$$
+
+两种情形穷尽全部参数对，故取二者最大。条件 $t-\delta>a$ 正好等价于 $B_\varepsilon>0$ 且 $s<B_\varepsilon/A$。
+
+若 $t-\delta\le a$，则整个参数域的风险振幅不超过 $2\varepsilon$，可以同时相容于一个读数，比例为 $U/A$。$t\le a$ 时查询已经恒定，也给同样结果。命题中的最后一段正是这些情形。所有用到 $L$ 的上界由合法参数趋近它；相容区间本身的端点上确界仍可等于 $L$。证毕。
+

@@ -1,0 +1,53 @@
+### 70.4 极限与达到最小值的系数
+
+令 $H_\varepsilon=(R_\varepsilon-R_0)/\varepsilon$。正齐次性给准确等式
+
+$$
+\frac{e_\varepsilon}{\varepsilon}
+=\operatorname{dist}_N(H_\varepsilon,\mathcal D_\varepsilon).
+\tag{70.17}
+$$
+
+任意非空集合 $A$ 的距离函数满足
+
+$$
+|\operatorname{dist}_N(U,A)-\operatorname{dist}_N(V,A)|\le N(U-V).
+$$
+
+式（70.7）、（70.11）因此给
+
+$$
+\left|\frac{e_\varepsilon}{\varepsilon}
+-\operatorname{dist}_N(H_r,\mathcal D_\varepsilon)\right|
+\le N(H_\varepsilon-H_r)=O_r(\varepsilon)\longrightarrow0.
+\tag{70.18}
+$$
+
+由式（70.12）的嵌套性，$\operatorname{dist}_N(H_r,\mathcal D_\varepsilon)$ 随 $\varepsilon\downarrow0$ 单调下降，其极限为
+
+$$
+\inf_{t>0}\operatorname{dist}_N(H_r,\mathcal D_t)
+=\operatorname{dist}_N(H_r,\mathcal T).
+\tag{70.19}
+$$
+
+最后一个等式使用距离对取闭包不变。将 $t$ 限制在任意固定小区间内也给同一个并集闭包，因为更小的缩放集合包含更大的步长所给集合。
+
+故极限存在，并且
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K).
+\tag{70.20}
+$$
+
+最小值确实达到：$0\in\mathcal T$，所以一个极小化序列可以满足 $N(H_r-K_n)\le N(H_r)+1$；式（70.10）使 $K_n$ 在迹范数下有界。有限维收敛子列、$\mathcal T$ 的闭性与 $N$ 的连续性给一个达到下确界的 $K$。
+
+对任意 $K\in\mathcal T$，取
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad\Pi_+=C_+\otimes I_D.
+$$
+
+式（70.9）、（70.13）给 $\operatorname{Tr}((H_r-K)\Pi_+)=1$，所以 $N(H_r-K)\ge1$，即 $\gamma_r\ge1$。下一步排除等号。
+

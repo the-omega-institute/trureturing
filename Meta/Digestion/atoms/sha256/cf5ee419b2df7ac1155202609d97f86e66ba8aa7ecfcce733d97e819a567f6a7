@@ -1,0 +1,82 @@
+**定理 83.5（所有有理多项式像的原率根排除）。** 令 $\Pi\in\mathbb Q[X]$ 为固定多项式。
+若 $x=\Pi(\vartheta)\ne0$ 是某个固定允许参数的内部率根，则该根沿原合法序列
+没有正有限实际均值子序列。特别地，在 $\beta\in(\beta_*,1)$ 时，若任一根如此表示，
+则 $\beta\notin E_2$。这同时适用于原 pair/path 实验。
+
+证明。定理 81.4 的实际均值局部化说明，正有限均值要求存在整数 $j$，使
+
+$$
+QI'(x)(j-Nx)+3\ln Q-C_Q(x;\beta)=O(1),
+\tag{83.14}
+$$
+
+其中 $C_Q$ 精确取 (81.19)，在该固定内部根上一致有界。
+特别地 $\|Nx\|=O(\ln Q/Q)$。若 $Nx$ 反而距离某个整数 $o(Q^{-1})$，
+该整数留下的 $3\ln Q$ 漂移也无法由有界 $C_Q$ 消去。
+
+记 $\vartheta_{n-1}=P_{n-1}/Q_{n-1}$。原十进制序列有
+
+$$
+\vartheta=\vartheta_{n-1}+Q_n^{-1}+\epsilon_n,
+\qquad 0<\epsilon_n<2\,10^{-Q_n^5}.
+\tag{83.15}
+$$
+
+取正整数 $D$ 清除 $\Pi$ 的全部系数分母。若 $m=\deg\Pi$，则充分大时
+
+$$
+A_n=D\left[Q_n^2\Pi(\vartheta_{n-1})
+                  +Q_n\Pi'(\vartheta_{n-1})\right]\in\mathbb Z.
+\tag{83.16}
+$$
+
+这是因为 $Q_n=10^{e_n}$、$e_n/e_{n-1}\to\infty$，
+故每个 $Q_{n-1}^i$，$i\le m$，最终整除 $Q_n^2$，
+而 $i\le m-1$ 时最终整除 $Q_n$。仅对固定多项式使用这条整除关系。
+在 $\vartheta$ 处展开，并保留来自前一截断的导数项，得到
+
+$$
+Q_n^2\Pi(\vartheta)
+ =\frac{A_n}{D}+\frac12\Pi''(\vartheta)
+       -\frac{\Pi'''(\vartheta)}{3Q_n}+O_\Pi(Q_n^{-2}).
+\tag{83.17}
+$$
+
+具体地，令 $h=\vartheta-\vartheta_{n-1}$，则
+$\Pi(\vartheta)-\Pi(\vartheta-h)-h\Pi'(\vartheta-h)
+=\Pi''(\vartheta)h^2/2-\Pi'''(\vartheta)h^3/3+O_\Pi(h^4)$；
+以 $Q_n$ 替换 $Q_n^2h$ 的误差由 (83.15) 吸收。
+
+原 $\vartheta$ 为超越数：若非零整数多项式 $R$ 在其上为零，
+则充分大的不同有理逼近 $P_n/Q_n$ 不是 $R$ 的根，因而
+$|R(P_n/Q_n)|\ge Q_n^{-\deg R}$；
+均值定理及原尾界却给 $|R(P_n/Q_n)|\le C_R10^{-Q_n^5}$，矛盾。
+若 $m\ge3$，$\Pi''(\vartheta)/2$ 因此无理，并且
+
+$$
+\Delta_\Pi=\operatorname{dist}(\Pi''(\vartheta)/2,D^{-1}\mathbb Z)>0.
+\tag{83.18}
+$$
+
+由 $\mathbb Z\subset D^{-1}\mathbb Z$ 和 (83.17)，
+$\|Q_n^2\Pi(\vartheta)\|\ge\Delta_\Pi/2$ 最终成立，与 (83.14) 矛盾。
+
+若 $m\le2$，$\Pi''/2$ 为分母整除 $D$ 的有理数，其余高阶项消失。
+(83.15) 更给
+
+$$
+Q_n^2\Pi(\vartheta)\in D^{-1}\mathbb Z+o(Q_n^{-B})
+\quad\text{对每个固定 }B>0.
+\tag{83.19}
+$$
+
+若 (83.14) 成立，离整数至少 $1/D$ 的非整数格点首先被排除，
+所以相应 $D^{-1}\mathbb Z$ 格点必须就是整数，且 $j-Nx=o(Q^{-1})$。
+(83.14) 遂变成 $3\ln Q-C_Q(x;\beta)=O(1)$，再次矛盾。证毕。
+
+低次无理根的障碍是对格点过度精确的对齐不能补偿对数前因子；
+次数至少三时，二阶导数留下与整数分离的固定相位。
+这两种机制均使用原合法分母，而非以稀疏性猜测等分布。
+排除集可数，包含第 81 章的稠密有理根参数族；它不穷尽允许参数。
+有理函数在有理逼近处的分母未必整除十的幂，故本定理未扩展到任意有理函数或解析函数。
+

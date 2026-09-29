@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>StrataLint.FileMap</RootNamespace>
+    <AssemblyName>StrataLint.FileMap</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../StrataLint.Configuration/StrataLint.Configuration.csproj" />
+    <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <ProjectReference Include="../StrataLint.InspectionScope/StrataLint.InspectionScope.csproj" />
+    <ProjectReference Include="../StrataLint.Scribe/StrataLint.Scribe.csproj" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
+  </ItemGroup>
+</Project>

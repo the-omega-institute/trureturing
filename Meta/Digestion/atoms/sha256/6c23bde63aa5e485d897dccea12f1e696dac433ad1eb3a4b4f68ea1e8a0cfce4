@@ -1,0 +1,69 @@
+### 71.3 零端点的准确修复
+
+把原混合族连续延伸至 $a=1$。对 $0<\varepsilon<1$，置 $c=\sqrt{1-\varepsilon}$、$d=1-c$，并令 $h=|010\rangle$。此时候选为
+
+$$
+R_{1,\varepsilon}=|x+cy\rangle\langle x+cy|
++\varepsilon|z'\rangle\langle z'|.
+$$
+
+定义显式因果修复
+
+$$
+S_\varepsilon=c|w\rangle\langle w|
++d\bigl(|h\rangle\langle h|+|z'\rangle\langle z'|\bigr).
+\tag{71.12}
+$$
+
+它正，且
+
+$$
+\operatorname{Tr}_D S_\varepsilon
+=I_A\otimes\operatorname{diag}(c,d).
+$$
+
+因为 $c+d=1$，这是归一化因果修复。准确差算符为
+
+$$
+R_{1,\varepsilon}-S_\varepsilon
+=d\bigl(|x\rangle\langle x|-|h\rangle\langle h|\bigr)
++cd\bigl(|z'\rangle\langle z'|-|y\rangle\langle y|\bigr).
+\tag{71.13}
+$$
+
+对任意完整事件 $E$，正项响应至多 $d+cd=\varepsilon$，负项绝对响应同样至多 $d+cd=\varepsilon$；这只使用各标准基事件对角元位于 $[0,1]$。所以 $N(R_{1,\varepsilon}-S_\varepsilon)\le\varepsilon$。原早边缘总事件又给下界 $\varepsilon$，故
+
+$$
+e(R_{1,\varepsilon})=\varepsilon
+\qquad(0<\varepsilon<1).
+\tag{71.14}
+$$
+
+为了直接核对变分式的零端点，式（71.12）的一阶方向为
+
+$$
+K_0=-\frac12|w\rangle\langle w|
++\frac12\bigl(|h\rangle\langle h|+|z'\rangle\langle z'|\bigr)
+\in\mathcal T.
+$$
+
+它的因果偏迹为 $I_A\otimes\operatorname{diag}(-1/2,1/2)$，在 $w^\perp$ 上的压缩正；也可直接由式（71.12）的可行割线极限确认其切锥成员身份。此时
+
+$$
+H_0-K_0=
+\frac12\bigl(|x\rangle\langle x|+|z'\rangle\langle z'|
+-|y\rangle\langle y|-|h\rangle\langle h|\bigr).
+\tag{71.15}
+$$
+
+同样的对角事件界给 $N(H_0-K_0)\le1$。而对任意 $K\in\mathcal T$，第 70 节的 $C_+$ 总事件仍给 $\operatorname{Tr}((H_0-K)\Pi_+)=1$。因此 $\gamma_0=1$。
+
+将 $s=0$ 代入式（71.11），得到显式估计
+
+$$
+1<\gamma_r\le1+2r+4\sqrt r\quad(r>0),
+\tag{71.16}
+$$
+
+以及 $r\downarrow0$ 时的极限 $1$。
+

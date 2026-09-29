@@ -1,0 +1,34 @@
+### 238.3 投影族怎样产生实际达到通道
+
+承接§233的取等接口。若四维输入上有四个自伴投影
+$$
+\sum_{j=1}^4\Pi_j=\frac R4I_4,
+\qquad 1\le R\le16,
+\tag{238.15}
+$$
+则定义
+$$
+E_j=\frac4R\Pi_j,
+\qquad
+\mathcal S_j(X)=\operatorname{Tr}(E_jX)P_j.
+\tag{238.16}
+$$
+各效应正半定且和为 $I_4$，所以这是实际 CPTP 通道。选 $\operatorname{im}\Pi_j$ 的正交基 $u_{j,a}$，其 Kraus 可取
+$$
+C_{j,a}=\sqrt{\frac4R}\,|r_j\rangle\langle u_{j,a}|.
+\tag{238.17}
+$$
+分支 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，故精确分支秩为 $\operatorname{rank}\Pi_j$。对（238.15）取迹，得到候选总秩恰为 $R$。
+
+为直接看到完整上界，取公共 CP 部分的分支效应 $\Pi_j/4$。它同时被目标效应 $I_4/4$ 和候选效应 $(4/R)\Pi_j$ 支配，且总迹效应为
+$$
+\frac14\sum_j\Pi_j=\frac R{16}I_4.
+\tag{238.18}
+$$
+两份 CP 残差除以 $1-R/16$ 后均为 CPTP，故 $R<16$ 时半 diamond 距离至多 $1-R/16$；$R=16$ 时候选就是目标。结合（238.6），得
+$$
+\boxed{D_R=1-R/16\quad\text{只要（238.15）的投影族存在}.}
+\tag{238.19}
+$$
+这里使用既有取等判据的充分方向，不重新建立其必要性，也不把实例化另立为新的桥梁定理。
+

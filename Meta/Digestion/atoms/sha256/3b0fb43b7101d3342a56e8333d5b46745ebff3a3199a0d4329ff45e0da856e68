@@ -1,0 +1,55 @@
+**定理 201.2（全部混态程序的仿射替代与有限优化）。** 每个定义201.1的程序均可在同一处理器、同一完整 $U$ 上替换为一个解析满秩仿射程序 $\sigma_u$，在每个 $u\in U$ 都满足
+$$
+\mathcal G(\omega\otimes\sigma_u)=\mathcal T_u(\omega),\qquad
+I_Q(\sigma_u)\le I_Q(\rho_u).
+\tag{201.3}
+$$
+令 $\Phi_{\mathcal G}(b)$ 表示 Bloch 程序 $(I+b\cdot\sigma)/2$ 诱导的信号映射，$\mathcal L_{\mathcal G}$ 表示它对 $b$ 的实线性部分。令 $E_{02}=E_{20}=1$，其他 $E$ 元素为零。以 $\mathscr A_R$ 表示满足
+$$
+\begin{gathered}
+\mathcal G:M_6\to M_3\ \text{为 CPTP},\qquad b,v\in\mathbb R^3,\\
+\Phi_{\mathcal G}(b)=\mathcal T_t,\qquad
+\mathcal L_{\mathcal G}(v)=\mathcal S_E,\\
+|b-Rv|<1,\qquad |b+Rv|<1
+\end{gathered}
+\tag{201.4}
+$$
+的有限变量集合，则
+$$
+\mathfrak M_2(a,t;R)
+=\inf_{\mathscr A_R}\left[|v|^2+
+\frac{(b\cdot v)^2}{1-|b|^2}\right].
+\tag{201.5}
+$$
+这不宣称下确界在严格端点域内达到。
+
+证明。 对给定程序，令 $K=\ker\mathcal L_{\mathcal G}$，并正交分解其 Bloch 向量
+$$
+r(u)=x(u)+y(u),\qquad x(u)\in K^\perp,\quad y(u)\in K.
+\tag{201.6}
+$$
+目标通道仿射，而 $\mathcal L_{\mathcal G}|_{K^\perp}$ 单射，所以 $x(u)=b+(u-t)v$，其中 $v\ne0$。它的范数在 $U$ 上处处严格小于一：投影先给出 $|x|\le1$，若某内点达到一，非恒定仿射线两侧的平方范数平均便严格大于一，矛盾。因此 $\sigma_u=(I+x(u)\cdot\sigma)/2$ 是整个 $U$ 上的解析满秩曲线，且 $y$ 不可见保证它产生同一目标通道。
+
+信息量比较可直接处理秩边界。在原态满秩的一个点，记
+$$
+A=1-|x|^2>0,\qquad q=A-|y|^2>0,\qquad
+\alpha=x\cdot v,\qquad w=y'+\frac{\alpha}{A}y.
+\tag{201.7}
+$$
+代入二维满秩 SLD 公式并完成平方，得到精确恒等式
+$$
+I_Q(\rho_u)-I_Q(\sigma_u)
+=|w|^2+\frac{(y\cdot w)^2}{q}\ge0,
+\qquad I_Q(\sigma_u)=|v|^2+\frac{\alpha^2}{A}.
+\tag{201.8}
+$$
+若原态在该点为纯态，双侧 $C^1$ 正性给出 $r\cdot r'=0$，点态 SLD 公式给出 $I_Q(\rho_u)=|r'|^2$。此时 $|y|^2=A>0$，且 $y\cdot y'=-\alpha$，所以 Cauchy–Schwarz 给出
+$$
+I_Q(\rho_u)=|v|^2+|y'|^2
+\ge |v|^2+\frac{\alpha^2}{A}=I_Q(\sigma_u).
+\tag{201.9}
+$$
+这也覆盖原曲线只在孤立点为纯态的情形。若 $K=\{0\}$，原曲线本来就是上述满秩仿射曲线。这里构造的是另一种状态准备；未把 Bloch 正交投影宣称为 CPTP 操作。所用 SLD 与测量信息框架见 Braunstein、Caves，Physical Review Letters **72**, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）；秩边界使用点态表达，不从满秩分母公式取极限。
+
+仿射替代在两个闭区间端点仍满秩，所以每个原程序给出（201.4）的一个可行元，且（201.5）的目标值不超过原名义成本。反过来，对任意可行元，平方范数的凸性使 $|b+sv|<1$ 在 $|s|\le R$ 成立。两个端点均严格，故可取包含该闭区间的稍大开域并保持 $t+s\in J_a$。在此域准备 Bloch 向量 $b+sv$，两个通道线性约束给出对所有信号输入的精确 $\mathcal T_{t+s}$，其名义成本恰为（201.5）。两向比较完成证明。
+

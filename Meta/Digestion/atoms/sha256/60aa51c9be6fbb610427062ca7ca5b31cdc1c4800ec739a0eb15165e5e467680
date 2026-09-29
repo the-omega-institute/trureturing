@@ -1,0 +1,98 @@
+### 69.5 一个具体反馈下的行列式矛盾
+
+对 $0<q<1$，选择合法反馈
+
+$$
+C_q=\operatorname{diag}(q,1,1-q,0),
+\qquad
+H_q=(C_q^{1/2}\otimes I_D)(R_{a,\varepsilon}-S)
+(C_q^{1/2}\otimes I_D).
+$$
+
+$H_q$ 在 $x,y$ 上的主块为
+
+$$
+B_q=\begin{pmatrix}
+q(a-A)&\sqrt{aq(1-q)}(c-k)\\
+\sqrt{aq(1-q)}(c-\overline k)&(c^2-s)(1-q)
+\end{pmatrix}.
+\tag{69.23}
+$$
+
+令 $\lambda_q=\max(0,\lambda_{\max}(B_q))$。在加权空间选择对应最大正特征值的投影；若无正特征值则取零。将它与正交的 $x'$ 投影相加，得到某个 $0\preceq F_q\preceq I$，从而
+
+$$
+E_q=(C_q^{1/2}\otimes I_D)F_q(C_q^{1/2}\otimes I_D)
+$$
+
+是合法事件。因为 $S_{x',x'}=1-p-A$，该事件的响应差为
+
+$$
+\operatorname{Tr}((R_{a,\varepsilon}-S)E_q)
+=\lambda_q+q(A+p-a).
+$$
+
+同一 $C_q$ 的总响应差是 $-\varepsilon(1-q)$。将所选事件取补，式（69.8）的误差界给
+
+$$
+\lambda_q\le qF+g,
+\qquad F=\varepsilon-p+a-A.
+\tag{69.24}
+$$
+
+这一推导不预设所选事件的响应符号，也不要求 $H_q$ 的其他块或跨块矩阵元为零。
+
+式（69.24）蕴含 $(qF+g)I_2-B_q\succeq0$；取行列式可得
+
+$$
+\bigl[q(\varepsilon-p)+g\bigr]
+\bigl[qF+g+(s-c^2)(1-q)\bigr]
+\ge aq(1-q)|c-k|^2.
+\tag{69.25}
+$$
+
+左侧两个因子均非负。现取同一个具体参数 $q=\varepsilon$。式（69.20）给
+
+$$
+\varepsilon-p\le\frac{\varepsilon^2}{1+\varepsilon}+\delta_p
+<2\varepsilon^2,
+\qquad s-c^2\le\varepsilon-p<2\varepsilon^2.
+$$
+
+同时
+
+$$
+\begin{aligned}
+F&\le2\varepsilon^2+a(1-\mu)+\delta_A\\
+&\le2\varepsilon^2+\frac{263a}{256}\varepsilon
+\le\frac{295}{256}\varepsilon<2\varepsilon.
+\end{aligned}
+$$
+
+因此式（69.25）第一个因子严格小于 $\varepsilon^2(2\varepsilon+\kappa_a)$，第二个因子严格小于 $5\varepsilon^2$，左侧严格小于
+
+$$
+5\varepsilon^4(2\varepsilon+\kappa_a).
+\tag{69.26}
+$$
+
+另一方面，式（69.22）使右侧严格大于
+
+$$
+a\varepsilon(1-\varepsilon)\frac{\varepsilon^2}{9}
+\ge\frac{5a}{48}\varepsilon^3.
+\tag{69.27}
+$$
+
+式（69.4）的参数范围与 $\kappa_a\le a/65536$ 保证
+
+$$
+\varepsilon(2\varepsilon+\kappa_a)
+\le\frac a{128}+\frac a{65536}<\frac a{48}.
+\tag{69.28}
+$$
+
+故式（69.26）严格小于式（69.27），与式（69.25）矛盾。
+
+这排除了全部满足式（69.8）的因果修复。有限维因果修复集合是紧集，事件误差连续，最小值达到。因此所有修复均不能达到误差 $\varepsilon+\kappa_a\varepsilon^2$ 或更小，便得到严格下界（69.4）。
+

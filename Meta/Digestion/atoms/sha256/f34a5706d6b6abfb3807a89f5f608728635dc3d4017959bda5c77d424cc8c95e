@@ -1,0 +1,28 @@
+**引理65.2（二次纤维与尾域饱和）。** 在引理65.1的反设下，令 $U=V_1|_R:R\to Q\otimes F$。存在可逆线性算子 $A:F\to F$ 及三维子空间
+
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}\subset F\otimes F,
+$$
+
+满足
+
+$$
+\begin{gathered}
+(U\otimes I_F)V_0S_0=Q\otimes J,\\
+A\eta_i\parallel\eta_{i+1}\qquad(2\le i\le5).
+\end{gathered}
+\tag{65.7}
+$$
+
+因而 $[\eta_6]$ 不可能等于 $[\eta_3]$、$[\eta_4]$ 或 $[\eta_5]$；四条 $[\eta_3],\ldots,[\eta_6]$ 两两不同。取辅助非零向量 $\eta_7=A\eta_6$，则
+
+$$
+UG_6=Q\otimes\mathbb C\eta_7,
+\qquad
+S_0=H_3+H_4+H_5=R\oplus Q,
+\qquad v\in Q,\quad p\in R,\quad q\in R\oplus Q.
+\tag{65.8}
+$$
+
+$\eta_7$ 只标记一个纤维，没有宣称第七轮存在或具有这一环境。
+

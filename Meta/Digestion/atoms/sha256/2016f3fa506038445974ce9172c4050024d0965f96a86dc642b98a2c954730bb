@@ -1,0 +1,14 @@
+### 64.5 排除 ABCAB
+
+固定 Phase Boundary 第60节的七维六终端纯分支合同。记 $G_1=\mathbb Cp$、$H_1=\operatorname{span}(p,q)$，以及
+$$
+U=G_2=\operatorname{span}(u,w),\quad
+H_2=\operatorname{span}(a^2u+bv,w),
+$$
+其中 $u,v,w$ 正交单位、$ab\ne0$。假定第二至第六轮环境词为
+$$
+(\eta_2,\eta_3,\eta_4,\eta_5,\eta_6)=(A,B,C,A,B),
+\tag{64.9}
+$$
+其中 $A,B,C$ 线性无关，不要求正交。
+

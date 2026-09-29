@@ -1,0 +1,15 @@
+**定理 100.2（有限加法库的仿射闭包）。** 模 $H$ 上，加法库生成的平移恰为 $d\mathbb Z/H\mathbb Z$；全部合法词的作用恰为
+
+$$
+C\longmapsto aC+db\pmod H.
+$$
+
+因此
+
+$$
+x\sim_{H,d}y
+\quad\Longleftrightarrow\quad
+\gcd(ax+db,H)=\gcd(ay+db,H)
+\quad\text{对每个 }a\in\mathbb Z/H\mathbb Z,\ b\in\mathbb Z/(H/d)\mathbb Z.
+$$
+

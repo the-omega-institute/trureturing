@@ -1,0 +1,11 @@
+### 定义 11.1：允许不同输入、输出框架的压缩
+
+取有限维复 Hilbert 空间及等距框架 $U:L\to H$、$W:L'\to H'$，满足 $U^\dagger U=I_L$、$W^\dagger W=I_{L'}$。物理仪器的有限 Kraus 族为 $K_a:H\to H'$，并满足 $\sum_aK_a^\dagger K_a=I_H$。定义
+
+$$
+k_a=W^\dagger K_aU,\qquad R_a=(I_{H'}-WW^\dagger)K_aU.
+\tag{11.1}
+$$
+
+这里 $R_a$ 是相对于输出框架的法向漏出，不是另行假设的噪声强度。分支均用未归一化矩阵描述，零概率分支不除以其概率。
+

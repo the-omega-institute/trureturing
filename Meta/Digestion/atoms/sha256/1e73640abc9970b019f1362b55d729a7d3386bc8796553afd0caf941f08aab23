@@ -1,0 +1,10 @@
+**命题 4.1.2（密度夹逼）。** 令
+$$
+D_n=\max_{i\in I_n}\frac{\nu(C_{n,i})}{w_{n,i}},\qquad m_n=D_n^{-1}.
+$$
+则
+$$
+1\le D_n\le M^{-1},\qquad
+M\le m_n\le a_n\le M+\varepsilon_n.
+$$
+

@@ -1,0 +1,12 @@
+### 238.7 成熟来源、补操作的含义与结果边界
+
+标准 Naimark 补及其融合框架推广参见：P. G. Casazza、M. Fickus、D. G. Mixon、J. Peterson、I. Smalyanau，*Every Hilbert space frame has a Naimark complement*，[arXiv:1104.0810v3](https://arxiv.org/abs/1104.0810v3)，版本日期2013年4月22日；正式发表于 *Journal of Mathematical Analysis and Applications* 406(1), 111–119 (2013)，[DOI 10.1016/j.jmaa.2013.04.047](https://doi.org/10.1016/j.jmaa.2013.04.047)。其§2在PDF第2页以等距分析算子和正交补说明 Naimark 构造；§4、Definition 4.1 与 Remark 4.2 在PDF第6—7页给融合框架的对应构造，允许各子空间维数 $D_j$ 不同，并说明补空间中的子空间由补框架向量张成。第8页明确说明这些子空间保持原维数。
+
+本节对应其紧框架、单位权重的情形：原紧界为 $\alpha$，补框架各块内向量的平方范数为 $\alpha-1$；重新单位化后得到投影和 $\alpha/(\alpha-1)$。式（238.26）采用预先除以 $\sqrt\alpha$ 的 Parseval 归一化，因此（238.28）的系数为 $(\alpha-1)/\alpha$。两种写法一致。本节不调用原文的主夹角或弦距离公式，也没有把这些几何距离当作 diamond 距离。
+
+紧融合框架的投影和定义亦见 P. G. Casazza、G. Kutyniok、S. Li，*Fusion Frames and Distributed Processing*，[arXiv:math/0605374v1](https://arxiv.org/abs/math/0605374v1)，Definition 3.1、Proposition 3.5、§3.2；正式发表 [DOI 10.1016/j.acha.2007.10.001](https://doi.org/10.1016/j.acha.2007.10.001)。标准补操作在这里是通道构造内部的工具；本节的结论是固定四维四标签目标的完整预算曲线。
+
+对一般满足（238.25）的投影族，再作一次 Naimark 补会把维数 $R-d_0$ 转回 $d_0$，所以它给出固定标签数、固定总秩下两个维数的投影和存在性对应。结合空间补 $Q_j\mapsto I-Q_j$，可以寻找新的投影构造。但前者改变输入维数，后者改变总秩；它们都不自动给同一实际通道的物理操作，也不保持两个容量问题的 diamond 距离数值。例如本节三维总秩七的平坦值为 $1-7/12=5/12$，经 Naimark 补得到的四维总秩七平坦值为 $1-7/16=9/16$。
+
+本文没有计算一般无参考最优距离，没有给四标签全部输入维数的完整曲线。非均匀标签权重、混合输出或相干记录会改变目标谱及分支结构，需重新核对共同实现与下界。本节所有上界均有实际保迹候选，所有下界均针对原优化集合中的任意输出方向。
+

@@ -1,0 +1,16 @@
+## 命题 386.3（零空间中的驻定密度）
+
+若 $K=K^\dagger$、$KW=0$ 且 $W^\dagger W=I$，则对任意密度矩阵 $\rho$，$\Gamma=W\rho W^\dagger$ 也是密度矩阵，并有
+
+$$
+K\Gamma=\Gamma K=0,\qquad e^{-isK}\Gamma e^{isK}=\Gamma\quad(\forall s\in\mathbb R).
+$$
+
+在 $K=K^\dagger$ 的假设下，上述驻定等式只需 $KW=0$，不需要 $W^\dagger W=I$；等距条件保证 $\Gamma$ 的迹为一。同样，若 $\operatorname{supp}(\Gamma)\subseteq\ker K$，则上述驻定等式成立。
+
+### 证明
+
+由 $KW=0$ 得 $K\Gamma=0$；$K=K^\dagger$ 给出 $W^\dagger K=0$，从而 $\Gamma K=0$。幂级数展开 $e^{-isK}$ 后，$K\Gamma=\Gamma K=0$ 使共轭逐项化为 $\Gamma$。支撑条件等价地给出同样的左右零作用。∎
+
+因此对任意固定记录检验 $R$，$\operatorname{Tr}(R e^{-isK}\Gamma e^{isK})=\operatorname{Tr}(R\Gamma)$ 与 $s$ 无关。这只说明该静态约束在其零空间上驻定；它不自动产生滴答、测量记录或新的后继。历史编码、物理生成元和记录形成是三个不同任务。Page–Wootters 的原始条件内部钟论文 [DOI:10.1103/PhysRevD.27.2885](https://doi.org/10.1103/PhysRevD.27.2885) 支持条件钟的关系式描述，但不替代这里的有限接口假设。
+

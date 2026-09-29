@@ -1,0 +1,17 @@
+### 242.4 给定容差所需的精确最小纯态纠缠
+
+给定允许缺额 $\varepsilon\ge0$，要求实际探针满足
+$$
+f(\rho)\ge D_*-\varepsilon=\frac12-\varepsilon.
+\tag{242.21}
+$$
+定义其最小纯态纠缠成本
+$$
+E_{\min}(\varepsilon;c)=
+\inf_{\substack{|\psi\rangle\text{ 为归一化纯联合探针}\\
+f(\rho)\ge1/2-\varepsilon}}
+S(\rho).
+\tag{242.22}
+$$
+参考空间可以自由选择；（242.18）说明至多二维已足以实现以下全部最优值。
+

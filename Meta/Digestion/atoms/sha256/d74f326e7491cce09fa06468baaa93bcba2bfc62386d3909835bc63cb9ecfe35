@@ -1,0 +1,12 @@
+**推论 123.3（远离零的有限时间窗）。** 对 $0<a<b<\infty$，令 $I=[a,b]$。则在完整 diamond 范数中
+
+$$
+\boxed{
+\sum_{n:\,a\le\epsilon_j n\le b}
+\mathcal C_j\mathcal N_j^{\,n-1}(X)
+\longrightarrow
+(e^{-a}-e^{-b})\operatorname{Tr}(P_*X)\zeta.
+}
+\tag{123.7}
+$$
+

@@ -1,0 +1,27 @@
+**定理 51.1（截止成本的极点与有限部分）。** 对每一个固定模型，沿用 $F=\lim_mS_m$、$R_m=S_m-F$、$T=\sum_{m\ge0}R_m$。则
+
+$$
+\boxed{
+\mathsf C_\eta
+=\frac F\eta+\sum_{m\ge0}q^mR_m,
+\qquad
+\lim_{\eta\downarrow0}\eta\mathsf C_\eta=F,
+\qquad
+\lim_{\eta\downarrow0}
+\left(\mathsf C_\eta-\frac F\eta\right)=T.
+}
+$$
+
+极限均为算子范数极限。第一项 $F/\eta$ 来自原始过程永久未点击的质量；第二项趋向本卷把永不点击记为零的有限点击时间矩。
+
+证明。将 $S_m=F+R_m$ 代入第 50.3 条，常数项求几何级数即得分解。第 19、43 节对每个固定有限模型给出正级数 $T=\sum_mR_m$ 的收敛。有限维下
+
+$$
+\sum_m\|R_m\|_\infty
+\le\sum_m\operatorname{Tr}R_m=\operatorname{Tr}T<\infty.
+$$
+
+对这个可和上界作有限前缀与尾项分解，$q\uparrow1$ 时得到 $\sum_mq^mR_m\to T$。此外该正和不超过 $T$，所以乘以 $\eta$ 后趋零，给第一个极限。$\square$
+
+对固定初态，若 $\operatorname{Tr}(\rho F)>0$，实际截止成本按 $\operatorname{Tr}(\rho F)/\eta$ 发散；若该权重为零，成本趋向有限点击均值。这与把原始无穷等待赋值为无穷的扩展期望相容，也说明不能把有限点击时间矩误当作所有实际轨迹的完整成本。
+

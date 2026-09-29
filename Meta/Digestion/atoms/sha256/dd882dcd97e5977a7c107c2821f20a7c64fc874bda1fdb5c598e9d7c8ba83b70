@@ -1,0 +1,23 @@
+**定理152.3（固定物理通道的七阶解码最优性）。** 对全部 $0<p<1$，
+
+$$
+\boxed{
+e_{148}(p)\ge
+\frac{\ell_p\alpha_p}
+{\left(
+\sqrt{1+\ell_p/s_p}
++\sqrt{\ell_p\beta_p/s_p}
+\right)^2}.
+}
+\tag{152.14}
+$$
+
+因此，与第148节上界结合，
+
+$$
+\boxed{
+\lim_{p\downarrow0}\frac{e_{148}(p)}{p^7}=\frac14.
+}
+\tag{152.15}
+$$
+

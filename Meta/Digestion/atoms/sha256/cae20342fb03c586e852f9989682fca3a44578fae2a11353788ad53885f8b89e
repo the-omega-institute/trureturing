@@ -1,0 +1,10 @@
+**定理90.1（正交纤维核配对）。** 对全部非零 $z$，有
+
+$$
+\boxed{
+ g_0([z])=\operatorname{nullity}\mathcal P(z),\qquad
+ g_1([z])=g_0([z^\perp]).
+}
+\tag{90.4}
+$$
+

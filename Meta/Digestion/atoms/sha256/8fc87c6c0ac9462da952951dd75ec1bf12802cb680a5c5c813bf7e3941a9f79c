@@ -1,0 +1,11 @@
+**定理 246.1（二维参考的精确形成纠缠预算曲线）。** 对每个 $e\in[0,1]$，
+$$
+\boxed{
+\max\left\{
+ g(\Omega):\Omega\in\mathcal D(\mathbb C^2\otimes\mathbb C^2),\ E_F(\Omega)\le e
+\right\}=G(e).
+}
+\tag{246.10}
+$$
+把约束 $E_F(\Omega)\le e$ 改为 $E_F(\Omega)=e$，最大值仍为 $G(e)$。等价地，该结论覆盖总参考支撑至多二维的全部探针。
+

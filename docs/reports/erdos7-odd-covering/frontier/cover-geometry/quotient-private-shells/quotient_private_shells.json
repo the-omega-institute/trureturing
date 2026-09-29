@@ -1,0 +1,297 @@
+{
+  "schema": "same-private-quotient-shell-controls-v1",
+  "result": "PASS",
+  "scope": "Fixed arithmetic controls, not Lean verification. Whole covers are even or have repeated moduli. Noncover conclusions are restricted to the displayed original private point and prime; normalized parameterized controls also have distinct odd divisor-closed labels.",
+  "totals": {
+    "private_points_checked": 206,
+    "labelwise_quotient_equalities": 46048,
+    "aggregate_shell_equalities": 5476
+  },
+  "cases": [
+    {
+      "name": "distinct_even_period12",
+      "period": 12,
+      "private_points_checked": 8,
+      "labelwise_quotient_equalities": 480,
+      "aggregate_shell_equalities": 96,
+      "slack_negative": 0,
+      "slack_zero": 69,
+      "slack_positive": 27,
+      "class_count": 5
+    },
+    {
+      "name": "even_height_four_period48",
+      "period": 48,
+      "private_points_checked": 32,
+      "labelwise_quotient_equalities": 4480,
+      "aggregate_shell_equalities": 640,
+      "slack_negative": 0,
+      "slack_zero": 492,
+      "slack_positive": 148,
+      "class_count": 7
+    },
+    {
+      "name": "odd_repeated_height_three_other_prime",
+      "period": 135,
+      "private_points_checked": 135,
+      "labelwise_quotient_equalities": 23760,
+      "aggregate_shell_equalities": 2160,
+      "slack_negative": 0,
+      "slack_zero": 2160,
+      "slack_positive": 0,
+      "class_count": 11
+    },
+    {
+      "name": "uncut_does_not_imply_suffix",
+      "period": 45045,
+      "private_points_checked": 5,
+      "labelwise_quotient_equalities": 6000,
+      "aggregate_shell_equalities": 1200,
+      "slack_negative": 176,
+      "slack_zero": 736,
+      "slack_positive": 288,
+      "class_count": 5,
+      "focused": {
+        "point": 0,
+        "prime": 3,
+        "shell_services": [
+          "4",
+          "0"
+        ],
+        "shell_mean_multiplicities": [
+          "2",
+          "0"
+        ],
+        "suffix_slacks": [
+          "0",
+          "-2",
+          "0"
+        ],
+        "scope": "Only this original private point and this prime."
+      }
+    },
+    {
+      "name": "all_suffixes_do_not_imply_shell_coverage",
+      "period": 3465,
+      "private_points_checked": 5,
+      "labelwise_quotient_equalities": 2400,
+      "aggregate_shell_equalities": 480,
+      "slack_negative": 92,
+      "slack_zero": 356,
+      "slack_positive": 32,
+      "class_count": 5,
+      "focused": {
+        "point": 0,
+        "prime": 3,
+        "shell_services": [
+          "1",
+          "3"
+        ],
+        "shell_mean_multiplicities": [
+          "1/2",
+          "3/2"
+        ],
+        "suffix_slacks": [
+          "0",
+          "1",
+          "0"
+        ],
+        "scope": "Only this original private point and this prime."
+      }
+    },
+    {
+      "name": "normalized_divisor_closed_p3_height2",
+      "period": 315,
+      "private_points_checked": 9,
+      "labelwise_quotient_equalities": 2592,
+      "aggregate_shell_equalities": 324,
+      "slack_negative": 72,
+      "slack_zero": 160,
+      "slack_positive": 92,
+      "class_count": 8,
+      "full_period": {
+        "holes": 84,
+        "minimum_private_size": 3,
+        "divisor_closed": true,
+        "comparable_originals_disjoint": true,
+        "prime_classes_normalized": true
+      },
+      "literal_originals_residue_modulus": [
+        [
+          0,
+          3
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          29,
+          45
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          13,
+          21
+        ],
+        [
+          20,
+          63
+        ]
+      ],
+      "checked_private_witnesses": [
+        29,
+        36,
+        50,
+        64,
+        71,
+        146,
+        181,
+        266,
+        314
+      ],
+      "hole": 104,
+      "different_private_direction_failure": {
+        "point": 50,
+        "prime": 5,
+        "lhs": "0",
+        "positive_demand": 4
+      },
+      "focused": {
+        "point": 314,
+        "prime": 3,
+        "shell_services": [
+          "3",
+          "2"
+        ],
+        "shell_mean_multiplicities": [
+          "3/2",
+          "1"
+        ],
+        "suffix_slacks": [
+          "1",
+          "0",
+          "0"
+        ],
+        "scope": "Only this original private point and this prime."
+      }
+    },
+    {
+      "name": "normalized_divisor_closed_p3_height3",
+      "period": 945,
+      "private_points_checked": 12,
+      "labelwise_quotient_equalities": 6336,
+      "aggregate_shell_equalities": 576,
+      "slack_negative": 136,
+      "slack_zero": 280,
+      "slack_positive": 160,
+      "class_count": 11,
+      "full_period": {
+        "holes": 219,
+        "minimum_private_size": 3,
+        "divisor_closed": true,
+        "comparable_originals_disjoint": true,
+        "prime_classes_normalized": true
+      },
+      "literal_originals_residue_modulus": [
+        [
+          0,
+          3
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          26,
+          27
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          14,
+          45
+        ],
+        [
+          89,
+          135
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          13,
+          21
+        ],
+        [
+          41,
+          63
+        ],
+        [
+          62,
+          189
+        ]
+      ],
+      "checked_private_witnesses": [
+        251,
+        260,
+        351,
+        356,
+        379,
+        476,
+        596,
+        701,
+        764,
+        811,
+        869,
+        944
+      ],
+      "hole": 314,
+      "different_private_direction_failure": {
+        "point": 260,
+        "prime": 5,
+        "lhs": "0",
+        "positive_demand": 4
+      },
+      "focused": {
+        "point": 944,
+        "prime": 3,
+        "shell_services": [
+          "3",
+          "3",
+          "2"
+        ],
+        "shell_mean_multiplicities": [
+          "3/2",
+          "3/2",
+          "1"
+        ],
+        "suffix_slacks": [
+          "2",
+          "1",
+          "0",
+          "0"
+        ],
+        "scope": "Only this original private point and this prime."
+      }
+    }
+  ]
+}

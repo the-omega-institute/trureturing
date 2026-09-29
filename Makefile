@@ -2,7 +2,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 BASE ?= origin/dev
-WORKTREE_DEST = $(if $(DEST),$(abspath $(DEST)),$(abspath ../trureturing-$(NAME)))
+WORKTREE_DEST = $(if $(DEST),$(DEST),../trureturing-$(NAME))
 LEAN_REPORT ?= .lake/build/stratalint/raw-lean-report.json
 CENSUS_OUT ?= build/census/$(shell date -u +%Y%m%dT%H%M%S)
 CENSUS_PREFIX ?= D5
@@ -32,7 +32,7 @@ warm-donor:
 	@/bin/bash tools/scripts/worktree/warm-donor.sh
 
 lean:
-	@/bin/bash tools/scripts/worktree/lean-cache-run.sh lake build $(LEAN_TARGETS)
+	@/bin/bash tools/scripts/worktree/lean-cache-run.sh --build $(LEAN_TARGETS)
 
 lean-report:
 	@/bin/bash tools/scripts/report/lean-report.sh

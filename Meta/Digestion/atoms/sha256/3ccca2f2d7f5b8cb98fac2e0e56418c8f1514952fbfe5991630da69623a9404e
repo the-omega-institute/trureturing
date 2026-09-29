@@ -1,0 +1,138 @@
+**引理 63.3（完整 tester 下的两角准确修复）。** 对每个满足式（63.6）的参数组，有
+
+$$
+e_D(R)=\Delta(M)=t+2ad=(a+d)^2-1.
+\tag{63.8}
+$$
+
+一个显式最优修复由任意
+
+$$
+p\in[ac,1-bd]
+\tag{63.9}
+$$
+
+给出：在正交分解 $\operatorname{span}\{x,y\}\oplus\operatorname{span}\{h,z\}$ 上令
+
+$$
+S_p=
+\begin{pmatrix}p&ac\\ac&p\end{pmatrix}_{x,y}
+\oplus
+\begin{pmatrix}1-p&bd\\bd&1-p\end{pmatrix}_{h,z},
+\tag{63.10}
+$$
+
+在其正交补上取零。
+
+**证明。** 先检查参数区间与正性。Cauchy–Schwarz 给
+
+$$
+ac+bd\le\sqrt{a^2+b^2}\sqrt{c^2+d^2}=1,
+$$
+
+故式（63.9）非空。由 $a\ge c,d\ge b$，
+
+$$
+c^2\le ac\le p\le1-bd\le1-b^2=a^2.
+\tag{63.11}
+$$
+
+两个二阶块的特征值分别是 $p\pm ac$ 和 $1-p\pm bd$，均非负。每个块的交叉项具有不同的 $D$ 坐标，偏迹后消失，因此
+
+$$
+\operatorname{Tr}_D S_p
+=I_A\otimes\operatorname{diag}(p,1-p).
+$$
+
+所以 $S_p$ 是归一化因果修复。
+
+令
+
+$$
+R_{\mathrm{diag}}=|r_0\rangle\langle r_0|
++|r_1\rangle\langle r_1|,
+\qquad
+X=R-R_{\mathrm{diag}}=|r_0\rangle\langle r_1|
++|r_1\rangle\langle r_0|.
+\tag{63.12}
+$$
+
+修复保留了每个早输出分支内部的交叉项。因此
+
+$$
+R_{\mathrm{diag}}-S_p
+=(a^2-p)(|x\rangle\langle x|-|h\rangle\langle h|)
++(p-c^2)(|z\rangle\langle z|-|y\rangle\langle y|).
+\tag{63.13}
+$$
+
+两系数非负、和为 $t$。对任意完整 tester，$\operatorname{Tr}_A C=I_B$ 使每个标准基对角元均位于 $[0,1]$。由 $0\preceq E\preceq C\otimes I_D$，式（63.13）的正、负两个部分与 $E$ 的配对各自至多 $t$，所以
+
+$$
+|\operatorname{Tr}[(R_{\mathrm{diag}}-S_p)E]|\le t.
+\tag{63.14}
+$$
+
+对跨分支项，不限制 $C$ 或 $E$ 的非对角元。正算子 $E$ 的 Cauchy–Schwarz 不等式给
+
+$$
+\begin{aligned}
+|\operatorname{Tr}(XE)|
+&\le2|\langle r_1|E|r_0\rangle|\\
+&\le2\sqrt{\langle r_0|E|r_0\rangle
+\langle r_1|E|r_1\rangle}\\
+&\le2\sqrt{\langle r_0|C\otimes I_D|r_0\rangle
+\langle r_1|C\otimes I_D|r_1\rangle}.
+\end{aligned}
+$$
+
+向量 $x,y$ 具有不同的 $D$ 坐标，$h,z$ 也如此。记 $C$ 对角元按 $AB$ 标记，则
+
+$$
+\begin{aligned}
+\langle r_0|C\otimes I_D|r_0\rangle
+&=a^2C_{00,00}+c^2C_{10,10}\le a^2,\\
+\langle r_1|C\otimes I_D|r_1\rangle
+&=b^2C_{01,01}+d^2C_{11,11}\le d^2,
+\end{aligned}
+\tag{63.15}
+$$
+
+因为每行右侧所用的两个 $C$ 对角元和为 $1$。于是
+
+$$
+|\operatorname{Tr}(XE)|\le2ad.
+\tag{63.16}
+$$
+
+式（63.14）、（63.16）在同一个任意 $C,E$ 上同时成立，直接相加得到
+
+$$
+N_D(R-S_p)\le t+2ad.
+\tag{63.17}
+$$
+
+下界由一个合法的完整总事件达到。令
+
+$$
+|\chi\rangle=|00\rangle+|11\rangle,
+\qquad C_+=|\chi\rangle\langle\chi|,
+\qquad E_+=C_+\otimes I_D.
+\tag{63.18}
+$$
+
+$\operatorname{Tr}_A C_+=I_B$，而
+
+$$
+\operatorname{Tr}(RE_+)=(a+d)^2.
+$$
+
+每个归一化因果修复的同一总响应均为 $1$，因此
+
+$$
+t+2ad=(a+d)^2-1\le\Delta(M)\le e_D(R)
+\le N_D(R-S_p)\le t+2ad.
+$$
+
+全部不等式均取等，证明式（63.8）。这个推导也直接算出了 $\Delta$，无需先求另一个反馈端点。$\square$
+

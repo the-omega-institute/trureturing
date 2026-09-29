@@ -373,7 +373,7 @@ private lemma traceNorm_eq_sum_sqrt_eigenvalues (A : Matrix n n ℂ) :
 
 /-- For square complex matrices, the trace norm is the maximum of `re (Tr[U * A])`
 over unitaries `U`. -/
-private theorem traceNorm_eq_max_re_tr_U (A : Matrix n n ℂ) :
+theorem traceNorm_eq_max_re_tr_U (A : Matrix n n ℂ) :
     IsGreatest {x : ℝ | ∃ U : unitaryGroup n ℂ, Complex.re ((U.val * A).trace) = x} (traceNorm A) := by
   classical
   let hH : (Aᴴ * A).IsHermitian := by
@@ -488,7 +488,7 @@ theorem traceDistance_le_one (rho sigma : DensityState ι) : traceDistance rho s
   rw [sub_eq_add_neg]
   linarith
 
-private theorem trace_norm_jordan_mass (A : Matrix ι ι ℂ) (hA : A.IsHermitian) :
+theorem trace_norm_jordan_mass (A : Matrix ι ι ℂ) (hA : A.IsHermitian) :
     traceNorm A = (Matrix.trace (posPart A)).re + (Matrix.trace (negPart A)).re := by
   have h := congrArg (fun B : Matrix ι ι ℂ => (Matrix.trace B).re)
     (CFC.posPart_add_negPart A hA)

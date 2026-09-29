@@ -1,0 +1,83 @@
+### 275.5 多相位证书与任意链的最短深度
+
+令
+$$
+\mathcal N_j=\operatorname{span}\{q_{b,a}:a\le\min(j,r_b)\},
+\qquad P_j=P_{\mathcal N_j^\perp},
+\qquad \mathcal N_0=\{0\}.
+\tag{275.29}
+$$
+标准第 $j$ 面是支撑于 $\mathcal N_j^\perp$ 的PSD锥面。第一张证书仍为
+$Y_1=\sum_bq_{b,1}q_{b,1}^\dagger$。其上下对角块相同，因为上半部分的单位相位在外积中抵消。
+
+对 $1\le j<m$，取
+$$
+w_{b,j}=\left(0,te_{b,j+1}+\frac{t^2}{2}e_{b,j}\right),
+$$
+$$
+Y_{j+1}=\sum_{b:r_b>j}
+\left(q_{b,j+1}q_{b,j+1}^\dagger
++q_{b,j}w_{b,j}^\dagger+w_{b,j}q_{b,j}^\dagger\right).
+\tag{275.30}
+$$
+新外积上下对角块之差仍为
+$t(e_{b,j}e_{b,j+1}^\dagger+e_{b,j+1}e_{b,j}^\dagger)+t^2e_{b,j}e_{b,j}^\dagger$；因为 $w$ 上块为零，交叉项的下块准确抵消该差。因此 $Y_{j+1}\in L^\perp$。
+
+所有项都含真值核向量，所以 $\langle Y_{j+1},T\rangle=0$，且
+$$
+P_jY_{j+1}P_j
+=\sum_{b:r_b>j}(P_jq_{b,j+1})(P_jq_{b,j+1})^\dagger\succeq0.
+\tag{275.31}
+$$
+每步精确增加全部新首层方向，故 $m$ 步到达真值支撑，相对Slater成立。这给 $d_S\le m$。
+
+下面核对多相位不能使另一条链越层。固定 $0\le j<m$，对标准第 $j$ 面上的任意合法证书 $Y$，压缩 $S_j=P_jYP_j\succeq0$，且 $\operatorname{Tr}(S_jT)=0$。因为 $Q\succ0$，$T$ 在 $\mathcal N^\perp$ 上严格正，故 $S_j$ 的像位于 $\mathcal N\cap\mathcal N_j^\perp$。以剩余核基为列组成 $V_j$，可写
+$$
+S_j=P_jV_jCV_j^\dagger P_j,\qquad C\succeq0.
+\tag{275.32}
+$$
+$P_jV_j$ 满列秩：尾核组合若投影为零就落入旧核，违反全部核基独立性。
+
+令 $B=Y-V_jCV_j^\dagger$、$R_j=I-P_j$。由 $P_jBP_j=0$，
+$$
+B=R_jB+BR_j-R_jBR_j.
+\tag{275.33}
+$$
+旧核的上下分量均落在各链的参考前缀中。因此上述余项的两个对角尾主块都为零，包含跨链交叉项。$Y$ 的等对角条件于是成为完整尾系数的关系
+$$
+M_{\mathrm{tail}}CM_{\mathrm{tail}}^\dagger=C,
+\qquad
+M_{\mathrm{tail}}=\Lambda_{\mathrm{tail}}(I+tJ_{\mathrm{tail}}).
+\tag{275.34}
+$$
+这里 $\Lambda_{\mathrm{tail}}$ 仍为块标量酉矩阵，并与幂零的 $J_{\mathrm{tail}}$ 交换。
+
+迭代（275.34）给
+$$
+\|M_{\mathrm{tail}}^kC^{1/2}\|_{\mathrm{HS}}^2=\operatorname{Tr}C.
+\tag{275.35}
+$$
+因为 $M_{\mathrm{tail}}^k=\Lambda_{\mathrm{tail}}^k(I+tJ_{\mathrm{tail}})^k$，左侧等于 $\|(I+tJ_{\mathrm{tail}})^kC^{1/2}\|_{\mathrm{HS}}^2$。后者来自关于非负整数 $k$ 的矩阵多项式。有界性迫使该多项式为常数，比较 $k=0,1$ 得
+$$
+J_{\mathrm{tail}}C^{1/2}=0.
+\tag{275.36}
+$$
+因此当前证书的像只能落在剩余各链首向量的投影空间内，特别有
+$$
+\operatorname{ran}(P_jYP_j)\subseteq\mathcal N_{j+1}.
+\tag{275.37}
+$$
+不同相位可以进一步限制首层之间的系数，但不能放宽到更深层。
+
+最后允许任意未取最大秩的链。若 $j<m$、第 $j$ 步已删空间 $W_j\subseteq\mathcal N_j$ 且该链继续执行，下一实际证书压缩为 $S'=P_{W_j^\perp}YP_{W_j^\perp}\succeq0$。进一步压缩到 $\mathcal N_j^\perp$ 仍满足（275.37）。故对 $x\in\mathcal N_{j+1}^\perp$，有 $x^\dagger S'x=0$，PSD性给 $S'x=0$。因此
+$$
+W_{j+1}=W_j+\operatorname{ran}S'\subseteq\mathcal N_{j+1}.
+\tag{275.38}
+$$
+从 $W_0=0$ 归纳，任何少于 $m$ 步的合法链都尚未消去完整核。唯一真值秩为 $n$，当前支撑仍大于 $n$，相对Slater不可能提前成立。于是
+$$
+\boxed{d_S=m.}
+\tag{275.39}
+$$
+这个结论不要求 $Q$ 分块对角，也不要求所有 $\lambda_b$ 相同。
+

@@ -1,0 +1,53 @@
+**定理 94.2（成本与最慢谱隙的首项相同）。** 有 $\varepsilon(u)>0$，且
+
+$$
+\boxed{\lim_{u\uparrow R}\mathscr K(u)\varepsilon(u)=1.}
+\tag{94.2}
+$$
+
+因此，若 $p,c$ 为定理 89.1 的实际临界参数，则
+
+$$
+\boxed{1-r_{\max}(R-h)\sim c^{-1}h^p.}
+\tag{94.3}
+$$
+
+证明。有限维下，仪器不失效当且仅当 $r(\Gamma)<1$。一方向由全状态终止的有限收缩块成立；另一方向由矩阵幂的有限 Jordan 展开给 $\mathcal N_\Gamma^n\to0$。失效时已有特征值为一的固定密度矩阵，而次保单位的幂有界保证谱半径不会超过一。
+
+每个子临界球都无失效且紧，连续最大值因而严格小于一，得到 $\varepsilon(u)>0$。取最近失效仪器 $\Gamma_*$ 及其固定态 $P_*$，并沿第 80.4 条令
+
+$$
+\Gamma_t=t\Gamma_*+(1-t)\Gamma_0,\qquad t=u/R.
+$$
+
+正性给 $\mathcal N_{\Gamma_t}^n(P_*)\succeq t^nP_*$。若其谱半径严格小于 $t$，有限 Jordan 展开将使该矩阵幂为 $o(t^n)$，矛盾。因此
+
+$$
+r_{\max}(u)\ge u/R\longrightarrow1.
+\tag{94.4}
+$$
+
+取谱半径最优仪器 $\Gamma_u^{\rm sp}$。当 $u\uparrow R$ 时，它的任一仪器聚点都有谱半径一，因而失效；距离极限至多为 $R$，故属于 $\mathfrak F_R$。因此全部谱最优仪器也接近该紧集。
+
+另取成本最优仪器 $\Gamma_u^{\rm cost}$。定理 92.1 使它们接近同一个最近失效集合。定理 93.1 对这两类实际仪器分别给
+
+$$
+\begin{aligned}
+M(\Gamma_u^{\rm sp})[1-r(\Gamma_u^{\rm sp})]&\longrightarrow1,\\
+\mathscr K(u)[1-r(\Gamma_u^{\rm cost})]&\longrightarrow1.
+\end{aligned}
+$$
+
+两类最优装置不必相同，但它们都属于同一个球。由各自极值的方向，
+
+$$
+M(\Gamma_u^{\rm sp})\varepsilon(u)
+\le\mathscr K(u)\varepsilon(u)
+\le\mathscr K(u)[1-r(\Gamma_u^{\rm cost})].
+\tag{94.5}
+$$
+
+两端都趋于一，得到式（94.2）。再代入定理 89.1 即得式（94.3）。$\square$
+
+这份比较没有把两个最优装置强行认作共同实现，而是对各自装置先证明同一个统一预解估计，再按正确的上下界方向夹逼。它也没有声称有限 $u$ 时严格有 $\mathscr K(u)=1/\varepsilon(u)$。
+

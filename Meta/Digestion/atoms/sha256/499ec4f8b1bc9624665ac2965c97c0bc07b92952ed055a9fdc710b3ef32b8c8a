@@ -1,0 +1,2 @@
+**注 2.21。** Separate bijections between the continuation sets at individual states are insufficient unless they implement the same identification of tests across the states being compared. Equality of right languages compares the response to the same continuation. A state-dependent relabeling can exchange those tests. A bijection between represented integer values supplies none of the transition, test, cost, or duration equalities in this theorem.
+

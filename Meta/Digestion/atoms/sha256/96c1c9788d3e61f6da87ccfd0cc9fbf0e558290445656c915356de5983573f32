@@ -1,0 +1,18 @@
+**定义 170.1（允许中间测试的相位盲预测）。** 沿用定义161.1的源族，取 $1/\sqrt3<r<1$，每个实际 $\phi\in[-\alpha(r),\alpha(r)]$ 在全部使用中保持固定，环境记录单元逐步新鲜。记 $\mathbf M_{r,\phi}^{(N)}$ 为这一源在 $N$ 个系统端口上的过程。现在允许测试者在这些端口之间制备、测量和重置系统，保存经典结果；测试者不访问源的环境或预测器的私有记忆。
+
+过程距离直接采用[上下文几何卷定义11.16](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)的共同 tester 接口：令 $\mathfrak T_N$ 包含所有上述合法顺序测试，$p_T^{\mathbf P}$ 是过程 $\mathbf P$ 在测试 $T$ 下的有限输出律，定义
+$$
+d_{\mathfrak T_N}(\mathbf P,\mathbf Q)
+=\sup_{T\in\mathfrak T_N}
+\operatorname{TV}(p_T^{\mathbf P},p_T^{\mathbf Q}).
+\tag{170.1}
+$$
+其中 $\operatorname{TV}(p,q)=\sup_A|p(A)-q(A)|$。每个预测过程 $\mathbf P$ 可有任意有限私有记忆、相关输出和随端口变化的内部通道，并可依赖已知的 $r,N$；但其选择、初始记忆和测试前的资料均与实际 $\phi$ 无关，也不接收另一个真实源的实验结果。所有输入输出端口均与源匹配。定义
+$$
+\mathcal C_N(r)=\inf_{\mathbf P}
+\sup_{|\phi|\le\alpha(r)}
+d_{\mathfrak T_N}(\mathbf M_{r,\phi}^{(N)},\mathbf P).
+\tag{170.2}
+$$
+有限视界中，任意确定性量子梳也可纳入此预测域。tester 的标准概率解释见 Chiribella、D'Ariano、Perinotti，*Theoretical framework for quantum networks*，[arXiv:0904.4483](https://arxiv.org/pdf/0904.4483)，定义11、定理11；本节只用下面显式实现的制备与测量测试，不从抽象表示额外取得控制权限。
+

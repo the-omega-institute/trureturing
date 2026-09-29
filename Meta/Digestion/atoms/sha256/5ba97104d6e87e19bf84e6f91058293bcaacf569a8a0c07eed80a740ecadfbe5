@@ -1,0 +1,133 @@
+**引理34.3（双线性非退化与早期正交刚性）。** 三条互异尾射线的候选必须进一步满足
+
+$$
+c\ne0,\qquad d\ne0,\qquad
+k\in S,\quad q\in Q,\qquad
+\eta_2\perp\eta_3,\quad q\perp v.
+\tag{34.20}
+$$
+
+证明。先分别排除两个退化分支，再处理非退化双线性形式。
+
+若 $d=0$，前述后果使前三个环境射线相同。逐轮将共同相位吸收入该轮全部接收向量，可以取
+$\eta_1=\eta_2=\eta_3=\eta$；同轮的共同调整保留来源系数的相对值。
+由 $Up=v\otimes\eta$ 和（34.4），$p\in G_2$。
+又因 $V_1k=q\otimes\eta$ 与 $V_0H_1=G_2\otimes\eta$ 正交，
+$q\perp G_2$。而 $V_0k=p\otimes\eta\in V_0H_1$，单射性给 $k\in H_1$。
+
+写 $p=\lambda u+\mu w$，其中 $|\lambda|^2+|\mu|^2=1$。
+$V_0$ 等距给
+$\langle k,p\rangle=\langle p,u\rangle=\bar\lambda$、
+$\langle k,q\rangle=\langle p,w\rangle=\bar\mu$，所以
+$k=\lambda p+\mu q$。再由 $V_1$ 等距，
+$\langle q,v\rangle=\langle k,p\rangle=\bar\lambda$。
+置
+
+$$
+c_0=\sqrt{|a|^4+|b|^2}>0.
+\tag{34.21}
+$$
+
+在 $H_1$ 的正交单位基 $p,q$ 与 $H_2$ 的正交单位基
+$(a^2u+bv)/c_0,w$ 之间，交叠矩阵为
+
+$$
+M=\begin{pmatrix}
+a^2\bar\lambda/c_0&\bar\mu\\
+b\bar\lambda/c_0&0
+\end{pmatrix}.
+\tag{34.22}
+$$
+
+另一方面，$V_0H_1=G_2\otimes\eta$、$V_0H_2=G_3\otimes\eta$，
+而（34.10）使 $G_2,G_3$ 的两个主角余弦均为
+$r=|\langle\eta_3,\eta_4\rangle|\in(0,1)$。故
+$MM^*=r^2I$。其非对角元为
+$a^2\bar b|\lambda|^2/c_0^2$；$ab\ne0$ 迫使 $\lambda=0$，
+但这使 $M$ 的第二行全零，与 $r>0$ 矛盾。因此 $d\ne0$。
+
+若 $c=0$，则 $G_5=G_3$。由
+$V_0H_2=G_3\otimes\eta_3$、$V_0H_4=G_3\otimes\eta_5$，
+$H_2,H_4$ 的两个主角余弦均为
+$r=|\langle\eta_3,\eta_5\rangle|\in(0,1)$。单位向量
+$w\in H_2$ 因而满足 $\|P_{H_4}w\|=r$。
+另一方面，$w\in G_2=\operatorname{im}W_{\eta_3}$，
+$G_4=\operatorname{im}W_{\eta_5}$，所以（34.10）也给
+$\|P_{G_4}w\|=r$。
+
+实际来源的（34.2）使 $H_4$ 是某个可逆映射 $T:G_4\to Q$ 的图。
+对任意 $z\in S$，置 $z_4=P_{G_4}z$，由图空间的正交投影公式得
+
+$$
+\|P_{H_4}z\|^2
+=\langle z_4,(I+T^*T)^{-1}z_4\rangle.
+\tag{34.23}
+$$
+
+$T$ 可逆使 $(I+T^*T)^{-1}<I$ 严格成立。取 $z=w$，因
+$z_4\ne0$，便有 $\|P_{H_4}w\|<\|P_{G_4}w\|=r$，矛盾。
+因此 $c\ne0$。
+
+现在 $cd\ne0$，（34.15）的行列式为 $\alpha cd/\beta\ne0$。
+取非零 $\omega\in J^\perp\subset F\otimes F$。在 $F$ 的任意正交单位基中，
+双线性泛函 $\mathcal B$ 的系数矩阵仍为秩二，而其 Hilbert 表示向量
+$\omega$ 的系数矩阵是该矩阵的复共轭，差一个非零标量。
+所以 $\omega$ 的 Schmidt 秩为二。原代数基不正交只引入可逆基变换，不改变这个秩。
+
+令 $k_Q=P_Qk$、$q_S=P_Sq$。$V_1$ 等距及（34.9）给
+$V_1k_Q\perp Q\otimes F$；同时
+
+$$
+V_1k_Q=V_1k-V_1(P_Sk)\in K\otimes F,
+\tag{34.24}
+$$
+
+因为两项分别是 $q\otimes\eta_1$ 和 $Q\otimes F$ 中的向量。
+所以 $V_1k_Q\in S\otimes F$。再由 $V_0K\perp V_1K$，
+
+$$
+V_1k_Q\in R:=(S\otimes F)\cap(V_0K)^\perp,
+\qquad (U\otimes I)R=Q\otimes J^\perp=Q\otimes\mathbb C\omega.
+\tag{34.25}
+$$
+
+对 $V_1k=q\otimes\eta_1$ 取接收器的 $S$ 投影，得到
+$V_1k_Q=q_S\otimes\eta_1$。若 $k_Q\ne0$，等距性使其非零；
+在 $U$ 坐标下，它既是某个 $z\ne0$ 所给的 $z\otimes\omega$，
+又是 $(Uq_S)\otimes\eta_1$。对于 $(Q\otimes F)\mid F$ 切分，
+前者 Schmidt 秩二、后者至多一，矛盾。故 $k_Q=0$，上述等式再给 $q_S=0$，即
+$k\in S$、$q\in Q$。这个论证只限制实际初态的 $Q$ 分量，没有假定整个
+$V_1(Q)$ 都属于 $K\otimes F$。
+
+最后证明早期正交。由 $p=W_{\eta_2}v$、$u,w\in G_2$，可取
+$Q$ 的正交单位基 $r,s$，使
+
+$$
+u=W_{\eta_3}r,\qquad w=W_{\eta_3}s.
+\tag{34.26}
+$$
+
+记 $z=\langle\eta_2,\eta_3\rangle$、
+$t=|\langle\eta_3,\eta_4\rangle|\in(0,1)$，反设 $z\ne0$。
+在上述 $H_1,H_2$ 正交单位基之间，交叠矩阵现为
+
+$$
+M=\begin{pmatrix}
+a^2z\langle v,r\rangle/c_0&z\langle v,s\rangle\\
+b\langle q,v\rangle/c_0&0
+\end{pmatrix}.
+\tag{34.27}
+$$
+
+这里用到 $p,u,w\in S$、$q,v\in Q$、$S\perp Q$。
+固定等距将两空间送到 $G_2\otimes\eta_2$、$G_3\otimes\eta_3$，所以
+$MM^*=|z|^2t^2I$，且 $M$ 满秩。第二行唯一可能非零项必非零；
+两行正交迫使 $\langle v,r\rangle=0$，继而
+$|\langle v,s\rangle|=1$。这使第一行的平方范数为 $|z|^2$，
+却又必须等于 $|z|^2t^2$，违反 $t<1$。因此
+$\eta_2\perp\eta_3$。
+
+此时 $V_0H_1$、$V_0H_2$ 正交，等距性给 $H_1\perp H_2$。
+特别地，$0=\langle q,a^2u+bv\rangle=b\langle q,v\rangle$，
+故 $q\perp v$，证明完毕。
+

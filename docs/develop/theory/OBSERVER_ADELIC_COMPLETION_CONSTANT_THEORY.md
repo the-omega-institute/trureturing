@@ -198861,3 +198861,247 @@ $$
 R-1 由一个实施席同 PR `deposit`(绑本节义务子原子)落地,三席评审后合入;原子 `2981024d…`、`463c0180…`、`b838728a…` 保持 residual-open(散文/方法论条目,本条只提供其数学前置,不 cover)。
 
 后续增订继续严格追加于本节之后。
+## 2143. Twined 观察的幂闭包与共形边界
+
+**定义 2143.1（无约束的双变量等变对数观察）。** 设 $G$ 为任意群，$S\subseteq G$ 为任意子集，记其共轭饱和为 $A=\operatorname{Sat}_G(S)=\{hsh^{-1}:s\in S,\ h\in G\}$。令 $\mathcal C_G$ 为所有满足 $H_g(p,q)\in pq\mathbb Q[[p,q]]$ 且 $H_{hgh^{-1}}=H_g$ 的族 $H=(H_g)_{g\in G}$；正性仅指每个单项式的两个指数均为正，不限制有理系数的符号。定义
+
+$$
+(\Phi H)_g(p,q)=\sum_{k\geq1}\frac{1}{k}H_{g^k}(p^k,q^k),
+\qquad
+\operatorname{Rec}(S):\Longleftrightarrow
+\forall H_1,H_2\in\mathcal C_G,\quad
+\bigl((\Phi H_1)|_S=(\Phi H_2)|_S\bigr)\Longrightarrow H_1|_S=H_2|_S.
+$$
+
+这里的等式均为逐系数等式。对 $m,n\geq1$，$p^m q^n$ 的系数只涉及 $k\mid\gcd(m,n)$；任一指数为零时系数为零。所以群不必有限，级数也不需要解析收敛。量词遍历全部正双次数的有理系数类函数形式级数，并未限制为角色、实际群表示的迹或某个 VOA 的迹。
+
+**定理 2143.2（观察纤维的幂闭包判据）。** 对任意群 $G$ 和任意子集 $S\subseteq G$，在定义 2143.1 的无约束域中有
+
+$$
+\operatorname{Rec}(S)
+\quad\Longleftrightarrow\quad
+\forall g\in\operatorname{Sat}_G(S)\ \forall k\geq1,\ g^k\in\operatorname{Sat}_G(S).
+\tag{2143.1}
+$$
+
+**证明。** 先在全群上定义
+
+$$
+(\Psi L)_g(p,q)=\sum_{k\geq1}\frac{\mu(k)}{k}L_{g^k}(p^k,q^k),
+\qquad L\in\mathcal C_G.
+$$
+
+正双次数保证 $\Phi$ 与 $\Psi$ 的逐系数局部有限性；恒等式 $(hgh^{-1})^k=hg^kh^{-1}$ 保证二者仍为类函数族。把有限的逐系数双重和按 $N=k\ell$ 分组，Möbius 恒等式 $\sum_{d\mid N}\mu(d)=\mathbf1_{N=1}$ 给出
+
+$$
+\begin{aligned}
+(\Psi\Phi H)_g(p,q)
+&=\sum_{N\geq1}\frac{1}{N}\left(\sum_{d\mid N}\mu(d)\right)H_{g^N}(p^N,q^N)=H_g(p,q),\\
+(\Phi\Psi L)_g(p,q)
+&=\sum_{N\geq1}\frac{1}{N}\left(\sum_{d\mid N}\mu(d)\right)L_{g^N}(p^N,q^N)=L_g(p,q).
+\end{aligned}
+$$
+
+这一步使用的是已有的 Möbius 反演；Monster 的等变幂展开先例见 [Borcherds 1992, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。
+
+充分性：设 $A=\operatorname{Sat}_G(S)$ 对所有正整数幂闭合，且 $(\Phi H_1)|_S=(\Phi H_2)|_S$。类函数性使此等式延伸到 $A$。对每个 $s\in S$ 和 $k\geq1$ 都有 $s^k\in A$，故逆式逐项给出
+
+$$
+(H_1-H_2)_s(p,q)=\sum_{k\geq1}\frac{\mu(k)}{k}(\Phi H_1-\Phi H_2)_{s^k}(p^k,q^k)=0.
+$$
+
+必要性：设 $A$ 不对正整数幂闭合，取 $g\in A$ 和 $n\geq2$ 使 $g^n\notin A$。将 $n=r_1\cdots r_t$ 分解为素数的乘积（允许重复），令 $b_0=g$、$b_j=g^{r_1\cdots r_j}$。取最小的 $j$ 使 $b_j\notin A$；这是沿逐次素数幂的第一次退出，因而 $u=b_{j-1}\in A$，而 $u^r\notin A$，其中 $r=r_j$ 为素数。由 $u\in A$，可写 $u=hsh^{-1}$，其中 $s\in S$；共轭不变性于是给出 $s^r\notin A$。
+
+令 $C$ 为 $s^r$ 的共轭类，则 $C\cap A=\varnothing$。构造支撑于该类的对数观察
+
+$$
+\Delta L_x(p,q)=\mathbf1_{x\in C}\,pq\quad(x\in G),
+\qquad H_1=0,\qquad H_2=\Psi\Delta L.
+$$
+
+$\Delta L,H_1,H_2$ 都属于 $\mathcal C_G$。由 $\Phi\Psi=\mathrm{id}$，有 $\Phi H_2=\Delta L$，所以 $(\Phi H_1)|_S=(\Phi H_2)|_S=0$。另一方面
+
+$$
+(H_2)_s(p,q)=\sum_{k\geq1}\frac{\mu(k)}{k}\mathbf1_{s^k\in C}\,p^kq^k,
+\qquad
+[p^r q^r](H_2-H_1)_s=\frac{\mu(r)}{r}=-\frac1r\ne0.
+$$
+
+仅 $k=r$ 能贡献该双次数的系数；这是原始族 $H$ 在对角单项式 $p^r q^r$ 上的改变，并非只在对数观察上的改变。因此 $H_1|_S\ne H_2|_S$，否定 $\operatorname{Rec}(S)$，必要性得证。
+
+若 $S$ 本已共轭不变，则 $A=S$，判据化为 $S$ 的正整数幂闭包。证明中的反例属于无约束类函数域，不保证其系数为实际表示的角色，也不保证来自 VOA；在角色或 VOA 的较窄域中，幂闭包仍充分，但本证明不提供其必要性。该判据也不声称缺少幂闭包时每一组固定迹数据都不可恢复。同一反演和充分性论证可逐字在 $\mathbb C$ 上进行。
+
+**假设 2143.3（分母的实际行列式接口）。** 取 Monster 的一个具体复 VOA $V^\natural$、从它构造的 $G$-等变 Monster Lie 根空间 $W_{m,n}$（$G$ 为 Monster，$m,n\geq1$，每个空间有限维），以及与这些根空间相同构造的 twined 分母 $D_g(p,q)\in1+pq\mathbb C[[p,q]]$。要求在形式幂级数的完成拓扑内同时成立
+
+$$
+D_g(p,q)=\prod_{m,n\geq1}\det(1-p^mq^n g\mid W_{m,n}),
+\qquad
+\dim W_{m,n}=c(mn),
+\qquad
+D_e(p,q)=\frac{J(p)-J(q)}{p^{-1}-q^{-1}}.
+\tag{2143.2}
+$$
+
+这里 $c(r)$ 是 $J(q)=q^{-1}+\sum_{r\geq1}c(r)q^r$ 的系数。三个等式要求同一批实际根空间和同一分母，不能以任意形式级数的因式分解替代。Monster 模块及 Monster Lie 代数的来源见 [FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)；[Borcherds 1992, (7.1), (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。Borcherds 的 (8.3) 含 $n=-1$ 的 Weyl 因子；式 (2143.2) 仅对除去该因子后的 $m,n\geq1$ 部分取行列式。
+
+在该接口内，令 $H_g(p,q)=\sum_{m,n\geq1}\operatorname{tr}(g\mid W_{m,n})p^mq^n$。作为定理 2143.2 的对数观察的具体来源，使用 [Borcherds 1992, §8, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md) 中已有的行列式／迹计算：对每个有限维根空间应用
+
+$$
+-\log\det(1-xg\mid W_{m,n})=\sum_{k\geq1}\frac{\operatorname{tr}(g^k\mid W_{m,n})}{k}x^k,
+$$
+
+再逐系数相加，得到
+
+$$
+-\log D_g(p,q)=\sum_{k\geq1}\frac{1}{k}H_{g^k}(p^k,q^k),
+\qquad
+-\log D_e(p,q)=\sum_{k\geq1}\frac{1}{k}H_e(p^k,q^k).
+$$
+
+由维数条件，$H_e=\sum_{m,n\geq1}c(mn)p^mq^n$；单位元处即为式 (126.2) 的对数展开。这是依赖假设 2143.3 的已有中间计算，不证明该接口的三个等式。若 $\operatorname{Sat}_G(S)$ 幂闭合，则定理 2143.2 的复系数充分性论证从 $(-\log D_g)_{g\in S}$ 恢复 $(H_g)_{g\in S}$；真实根空间的迹受表示论约束，因此无约束域的必要性不自动转移到此接口。
+
+**假设 2143.4（从有理 Fock 数据到复态场、反常与融合）。** 设 $F_{\mathbb Q}=\mathbb Q[X_0,X_1,\ldots]$ 带有有理多项式 Heisenberg 模式 $a_{k+1}=(k+1)\partial/\partial X_k$、$a_{-(k+1)}=X_k\cdot(-)$（$k\geq0$）及 $a_0=0$。复 VOA 定理的系数域前提要求先作标量扩张 $F_{\mathbb C}=\mathbb C\otimes_{\mathbb Q}F_{\mathbb Q}$（或对所论有理 Fock 数据作同样的扩张），并在扩张后的空间上给出相容的态场映射 $Y_F$ 或重构，以及共形向量 $\omega_F$。相容性要求所指定的生成态满足 $Y_F(a_{-1}\mathbf1_F,z)=\sum_{r\in\mathbb Z}(1\otimes a_r)z^{-r-1}$。整体数据 $(F_{\mathbb C},Y_F,\mathbf1_F,\omega_F)$ 的 $Y_F$ 须满足真空、平移及局域性（或 Jacobi）公理；$Y_F(\omega_F,z)=\sum_{r\in\mathbb Z}L_r^Fz^{-r-2}$ 须给出共形分次及 Virasoro 关系。仅有有理模式对易式 $[a_m,a_n]=m\delta_{m+n,0}\mathbf1$ 和 Fock 空间不指定这些数据，也不满足复 VOA 定理的全部前提。[Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md) 的真空表示和重构在 $\mathbb C$ 上；共形结构参见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。所论共形反常另要求同一表示中的数据满足
+
+$$
+T_F(z)T_F(w)\sim\frac{c_F/2}{(z-w)^4}+\frac{2T_F(w)}{(z-w)^2}+\frac{\partial T_F(w)}{z-w},
+\quad
+[L_m^F,L_n^F]=(m-n)L_{m+n}^F+\frac{c_F}{12}(m^3-m)\delta_{m+n,0}\operatorname{Id}_{F_{\mathbb C}},
+$$
+
+以及其它所论对称流的 OPE 与中心扩张数据；仅有分次迹 $\operatorname{tr}(g\mid (F_{\mathbb C})_n)$ 不决定它们。[Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。
+
+融合部分另设 $U$ 为简单复 VOA，满足 $U_n=0$（$n<0$）、$U_0=\mathbb C\mathbf1_U$、$U'\cong U$（作为 $U$-模）、每个 $\mathbb N$-可分次弱 $U$-模完全可约，以及 $\dim U/C_2(U)<\infty$，其中 $C_2(U)=\operatorname{span}\{u_{-2}v:u,v\in U\}$。这些有理性及 $C_2$-余有限性假设不由上述 Fock 数据或标量扩张推出；标准秩一 Heisenberg VOA 本身不满足 $C_2$-余有限性。设 $\{M_i^U\}_{i\in I_U}$ 为 $U$ 的全部不可约模的代表，$M_0^U=U$。用于融合的矩阵 $S_U^{\mathrm{can}}$ 是作用于带插入态的 genus-one 迹函数 $Z_i^U(v,\tau)=\operatorname{tr}_{M_i^U}\bigl(o_U(v)e^{2\pi i\tau(L_0^U-c_U/24)}\bigr)$（$v\in U$）的典范模变换 $\tau\mapsto-1/\tau$ 的矩阵（包含插入态的坐标变换），而非任取一个作用于普通角色 $\chi_i^U(\tau)=Z_i^U(\mathbf1_U,\tau)$ 的矩阵。这里 $o_U(v)$ 为 $v$ 的零模式，$\tau\in\mathbb H$。若观察给出 $U$ 的这一典范作用，或足够丰富而能唯一识别该作用，才可用 [Huang 2008a, introduction, Theorems 5.2 and 5.5](https://arxiv.org/abs/math/0406291v3) [文献注](../../../Library/VertexAlgebra/huang2008verlinde.md) 的既有结论：$S_U^{\mathrm{can}}$ 可逆且 $(S_U^{\mathrm{can}})_{0a}\ne0$（$a\in I_U$），$U$ 的融合系数为
+
+$$
+N_{ij}^{U,k}=\sum_{a\in I_U}\frac{(S_U^{\mathrm{can}})_{ia}(S_U^{\mathrm{can}})_{ja}\bigl((S_U^{\mathrm{can}})^{-1}\bigr)_{ak}}{(S_U^{\mathrm{can}})_{0a}}.
+$$
+
+普通角色本身未必识别 $S_U^{\mathrm{can}}$：互不等价的互为逆变的 $U$-模具有相同的分次维数，因而可以有相同角色；限制到 $v=\mathbf1_U$ 会丢失插入态的区别。只有在额外识别前提成立时，普通角色观察才可用于上述公式。将公式用于从 $F_{\mathbb C}$ 到 $U$ 的路线，还须指定二者相容的 VOA 关系、相应的模与共形数据，以及把 Fock 侧观察同 $U$ 的带插入态迹函数及其典范 $S_U^{\mathrm{can}}$ 作用相联系的迹观察接口；这里尚未给出该接口。相同 $U$ 假设下的刚性、平衡性与非退化编织范畴结论来自 [Huang 2008b, abstract](https://arxiv.org/abs/math/0502533v2) [文献注](../../../Library/VertexAlgebra/huang2008rigidity.md)，并不由有理 Fock 对易关系单独推出。
+
+上述反常边界在复的一维 Heisenberg 真空模 $V=V_{\widehat{\mathfrak h}}(1,0)$ 已有具体例子：[Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md) 给出共形向量 $\omega_t=\omega_0+t a_{-2}\mathbf1$、中心荷 $c_t=1-12t^2$，且这些选择具有同一底层顶点代数和同一 $L_0$ 分次。因此 $t=0$ 与 $t=1$ 的未平移分次维数迹 $\sum_{n\geq0}\dim V_n q^n$ 相同，中心荷却分别为 $1$ 与 $-11$；取平凡作用群已足以说明这类分次迹不能单独恢复中心荷。这里比较的不是带真空能因子 $q^{-c_t/24}$ 的角色：后者随 $t$ 改变。该例也不证明本节的 $F_{\mathbb C}$ 与 $V$ 的态场同构，更不构造尚缺的 Monster 根空间、态场至分母的接口或满足融合定理前提的 $U$。
+
+**假设 2143.5（从 Moonshine 分母到边界 CFT 与 bulk 的额外接口）。** 在假设 2143.3 的实际 $V^\natural$、$W_{m,n}$、$D_g$ 之外，另指定完整的二维局域 CFT $\mathcal C_\partial$，包括其左右手征场、Hilbert 空间 $\mathcal H_\partial$ 与相关函数；指定 Monster 在 $\mathcal H_\partial$ 上保持全理论相关函数的作用 $\rho_\partial$，以及保持真空和共形向量的手征 VOA 嵌入 $\jmath:V^\natural\hookrightarrow V_L(\mathcal C_\partial)$，满足 $\rho_\partial(g)\jmath(v)=\jmath(gv)$。对要使用的 $g\in S$，指定含左右手征插入及缝合数据的 $g$-twined 全理论相关函数族 $\mathfrak C_g(\mathcal C_\partial)$ 和提取映射 $\Pi$，令 $\Theta(\mathcal C_\partial,g)=\Pi(\mathfrak C_g(\mathcal C_\partial))\in pq\mathbb C[[p,q]]$，并验证
+
+$$
+\Theta(\mathcal C_\partial,g)=-\log D_g(p,q)
+=\sum_{k\geq1}\frac1k H_{g^k}(p^k,q^k).
+\tag{2143.3}
+$$
+
+不得以右端直接定义 $\Theta$ 来代替此匹配；$\Pi$ 还须实际读取右手征数据，否则式 (2143.3) 只是一项左手征匹配，不构成全理论匹配。$V^\natural$ 的构造与 Monster Lie 分母公式分别见 [FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md) 与 [Borcherds 1992, §§7–8](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)；这些文献不提供这里所要求的 $\Theta$ 或完整边界 CFT 的同一性证明。尤其，假设 2143.4 的 Heisenberg 生成场不指定嵌入 $\jmath$。
+
+若进一步把该边界理论解释为弦论或 AdS/CFT 模型，还须给出一个具体 bulk 模型、其适用极限、bulk 态空间 $\mathcal H_{\mathrm{bulk,code}}$、等距编码 $E:\mathcal H_{\mathrm{bulk,code}}\to\mathcal H_\partial$，以及在指定 bulk 算子代数上的字典 $\iota$，并在共同定义域上验证 $EA=\iota(A)E$。这是待构造、待验证的数据，不由式 (2143.3)、VOA 公理或融合公式推出。[Maldacena 1998, abstract](https://arxiv.org/abs/hep-th/9711200v3) [文献注](../../../Library/Quantum/maldacena1998ads.md) 的对偶提议针对特定大 $N$ 系统及极限；若还主张区域相对熵或模流对应，须另指定边界区域、bulk 纠缠楔及邻近半经典态，并只在 [Jafferis–Lewkowycz–Maldacena–Suh 2016, abstract](https://arxiv.org/abs/1512.06431) [文献注](../../../Library/Quantum/jlms2016relativeentropy.md) 所论近似范围内使用相应结论。此处未断言满足上述接口的 $\mathcal C_\partial$ 或 bulk 模型存在。
+
+**定理 2143.6（真实表示账本上的单共轭类碰撞）。** 设 $G$ 为有限群，$g\in G$ 的阶 $r>1$，$N=|G|$，$c=N/r\in\mathbb N_{>0}$。定义正双分次的有理 $G$-表示账本 $A,B$：$A_{1,1}=\mathbb Q[G]$ 为左正规表示，其余次数为零表示；$B_{r,r}=\mathbb Q^c$ 为 $c$ 份平凡表示，其余次数为零表示。令 $H^A_h=\sum_{m,n\geq1}\operatorname{tr}(h\mid A_{m,n})p^mq^n$，$H^B_h$ 同理。对每个与 $g$ 共轭的 $h$，有
+
+$$
+(\Phi H^A)_h=(\Phi H^B)_h,
+\qquad [p^rq^r]H^A_h=0\ne c=[p^rq^r]H^B_h.
+\tag{2143.4}
+$$
+
+**证明。** $h$ 的阶也是 $r$，左乘 $h$ 将 $G$ 分成 $c$ 个长度为 $r$ 的循环。故其在正规表示上的特征迹为 $\operatorname{tr}(h^k\mid\mathbb Q[G])=N$ 当 $r\mid k$，否则为 $0$。于是
+
+$$
+(\Phi H^A)_h=\sum_{j\geq1}\frac{N}{rj}(pq)^{rj}
+=\sum_{j\geq1}\frac{c}{j}(pq)^{rj}
+=(\Phi H^B)_h.
+$$
+
+$A$ 只在 $(1,1)$ 次有非零空间，而 $B$ 在 $(r,r)$ 次的迹为 $c>0$，故原始迹不同。等价的纸笔行列式计算为 $\det(1-z h\mid\mathbb Q[G])=(1-z^r)^c=\det(1-z^r h\mid\mathbb Q^c)$，取 $z=pq$ 可得相同的 twined 分母因子。迹级碰撞已有针对实际有限维表示的 Lean 草稿证明；行列式恒等式和行列式到形式对数的桥梁尚无入库形式化证明。正规表示与有限群行列式的标准背景见 [Etingof et al. 2009, §4.2](https://arxiv.org/html/0901.0827#S4.SS2) [文献注](../../../Library/Quantum/etingof2009representation.md)；Moonshine 的等变行列式与迹展开见 [Borcherds 1992, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。这里不主张该简单碰撞是文献原创结果。
+
+式 (2143.4) 只比较 $g$ 的共轭类（更一般地可比较阶同为 $r$ 的元素）；在单位元或全部幂上不成立。$A,B$ 是可实现的表示账本，但没有固定假设 2143.3 的 Monster 根空间、其维数 $c(mn)$ 或 VOA 来源。因此它把定义 2143.1 的无约束反例推进到真实表示域，却不证明 Monster 专属观察的不可识别性。
+
+**问题 2143.7（理论接口核验问卷）。** 以下每问均以同一具体对象上的构造和等式为通过判据；前一问的迹等式不能代替后一问的结构。
+
+1. **Monster 根空间。** 能否在假设 2143.3 的同一批 $V^\natural$、$W_{m,n}$ 上证明 twined 行列式、维数和 $J$-分母三个等式，并判断固定根空间的迹观察是否存在式 (2143.4) 型纤维？需要证明到实际根空间的映射，不能把任意账本 $A,B$ 代入。依据：[FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)；[Borcherds 1992, §§7–8](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。
+2. **Fock 态场。** 能否把给定的有理 Heisenberg 模式和生成场二阶局域性扩张到 $F_{\mathbb C}$ 上每个态的 $Y_F$，验证真空、平移、局域性及相容的共形向量？仅生成场的系数对易不算通过。依据：[Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；[Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。
+3. **反常与融合。** 能否在指定的同一共形表示中证明应力张量 OPE、Virasoro 中心项和所需流代数；若主张融合，能否另外给出满足假设 2143.4 的 $U$、模范畴和带插入态迹函数的典范 $S_U^{\mathrm{can}}$？普通分次迹不足以回答两问。依据：[Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；[Huang 2008a, Theorems 5.2, 5.5](https://arxiv.org/abs/math/0406291v3) [文献注](../../../Library/VertexAlgebra/huang2008verlinde.md)。
+4. **完整边界与 bulk。** 能否构造读取左右手征数据的 $\Pi$ 并验证式 (2143.3)；若进一步声称弦论或 AdS/CFT 对偶，能否指定适用极限、bulk 态及算子字典并验证 $EA=\iota(A)E$？仅 VOA、分母或融合公式不回答这一问。依据：[Maldacena 1998](https://arxiv.org/abs/hep-th/9711200v3) [文献注](../../../Library/Quantum/maldacena1998ads.md)；区域相对熵的附加范围见 [JLMS 2016](https://arxiv.org/abs/1512.06431) [文献注](../../../Library/Quantum/jlms2016relativeentropy.md)。
+
+第 3 问的 Sugawara 子目标由问题 2145.1 给出逐模数判据。一般形式的 Heisenberg 局部截断、正规序算子和 $c=1$ Virasoro 对易式已见 [Kytölä, VirasoroProject, `Sugawara.lean`, 固定提交 `5ff4245`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。用于本节具体 $\mathbb C[X_0,X_1,\ldots]$ 时，仍须核对模式的 Heisenberg 关系、逐态截断、正规序及结论所用算子的同一性。即使完成这一子目标，第 2 问的全态 $Y_F$、第 3 问的应力张量 OPE 和融合数据，以及第 1、4 问的 Monster 与完整边界接口仍各自待证；一般 Virasoro 表示也不能被称作整个 Fock 空间的 Virasoro 真空模。
+
+**问题 2143.8（分次行列式与迹的同源核验）。** 给定同一批正双分次有限维 $G$-表示 $W_{m,n}$（$m,n\geq1$），令 $D_g(p,q)=\prod_{m,n\geq1}\det(1-p^mq^n g\mid W_{m,n})$，其中每个因子都由 $g$ 在该空间上的实际作用定义。能否依次验证：对每个因子，形式恒等式
+
+$$
+[x^k]\bigl(-\log\det(1-xg\mid W_{m,n})\bigr)
+=\frac{\operatorname{tr}(g^k\mid W_{m,n})}{k}\quad(k\geq1)
+$$
+
+连同零次系数成立；这些因子的正双分次乘积逐系数局部有限，且对 $a,b\geq1$ 有
+
+$$
+[p^aq^b](-\log D_g)
+=\sum_{k\mid\gcd(a,b)}\frac{\operatorname{tr}(g^k\mid W_{a/k,b/k})}{k};
+$$
+
+最后，若使用 Monster 名称，能否证明这里的 $W_{m,n}$ 与 $D_g$ 正是同一个 $V^\natural$ 所给的根空间与 twined 分母，并满足假设 2143.3 的维数及 $J$-分母等式？前两步是有限维行列式和局部有限形式乘积的代数接口，不能由任意指定的迹级数代替；最后一步还要求实际 Monster 构造。行列式、外幂与 Adams 迹展开的文献先例见 [Borcherds 1992, §8, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)；$V^\natural$ 的来源见 [FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)。
+
+## 2144. 有限盒行列式的迹系数与剩余识别问题
+
+**定理 2144.1（有限盒的公共除数迹公式）。** 设 $G$ 为有限群，$W_{m,n}$ 为正双分次的有限维有理 $G$-表示，$g\in G$，且
+
+$$
+D_{g,N}(p,q)=\prod_{1\leq m,n\leq N}\det(1-p^mq^n g\mid W_{m,n})\in\mathbb Q[[p,q]].
+$$
+
+若 $a,b\geq1$ 且 $N\geq\max(a,b)$，则
+
+$$
+[p^aq^b](-\log D_{g,N})
+=\sum_{k\mid\gcd(a,b)}\frac{\operatorname{tr}(g^k\mid W_{a/k,b/k})}{k}.
+\tag{2144.1}
+$$
+
+因此该系数对所有 $N\geq\max(a,b)$ 相同。这里的每个行列式均取自所给表示中的实际作用；这是有限维代数恒等式，不要求 $W_{m,n}$ 是 Monster 根空间。
+
+**证明。** 有限维矩阵的恒等式 $-\log\det(1-xA)=\sum_{k\geq1}\operatorname{tr}(A^k)x^k/k$ 对每个因子成立。有限乘积的形式对数可逐因子相加。第 $(m,n)$ 个因子的第 $k$ 项次数为 $(km,kn)$；它贡献 $(a,b)$ 系数当且仅当 $km=a$ 且 $kn=b$。这样的项与 $k\mid\gcd(a,b)$ 一一对应，此时 $(m,n)=(a/k,b/k)$，并自动落在 $[1,N]^2$ 内。相加得到式 (2144.1)，其右端与 $N$ 无关。行列式和等变迹展开的文献先例见 [Borcherds 1992, §8, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)；此处只是该已知代数计算的有限盒表述。
+
+**问题 2144.2（实际 Monster 分母的识别）。** 能否从同一个 $V^\natural$ 构造带 Monster 作用的根空间 $W_{m,n}$，证明其维数为 $J$-系数 $c(mn)$，并证明逐系数稳定的正双分次乘积是 Borcherds 完整 twined 分母除去 $n=-1$ Weyl 因子后的规范化部分？通过判据是给出实际根空间到定理 2144.1 的表示数据的映射，核对 Weyl 因子的规范化，并在同一构造中验证假设 2143.3 的分母等式；单独的形式迹恒等式或任意表示账本均不足以通过。$V^\natural$ 的构造见 [FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)，Monster Lie 代数及分母公式见 [Borcherds 1992, §§7–8](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。态场、反常、融合和完整边界 CFT 的另外几项判据仍见问题 2143.7。
+
+## 追加锚（本行以下为增补区）
+
+## 2145. 秩一 Fock 正规序中心项的逐模数核验
+
+**问题 2145.1（具体 Sugawara 算子的完整 Virasoro 关系）。** 在假设 2143.4 的复多项式 Fock 空间 $F_{\mathbb C}=\mathbb C[X_0,X_1,\ldots]$ 上，取 $a_0=0$、$a_{k+1}=(k+1)\partial/\partial X_k$、$a_{-(k+1)}=X_k\cdot(-)$，并逐态以正规序定义 $L_n=\frac12\sum_{r\in\mathbb Z}:a_{n-r}a_r:$。先证明该和对每个态只有有限个非零项且不依赖足够大的截断，再对所有 $m,n,r\in\mathbb Z$ 和所有 $v\in F_{\mathbb C}$ 验证
+
+$$
+[L_m,a_r]v=-r a_{m+r}v,\qquad
+[L_m,L_n]v=(m-n)L_{m+n}v+\frac{m^3-m}{12}\delta_{m+n,0}v.
+\tag{2145.1}
+$$
+
+可将 $[L_m,L_n]-(m-n)L_{m+n}$ 先证为与所有 $a_r$ 对易，利用多项式 Fock 模的标量交换子性质化为标量算子；$L_0$ 权重排除 $m+n\ne0$ 的标量，剩余义务是在真空上对**每个** $m\in\mathbb Z$ 计算 $[L_m,L_{-m}]\mathbf1$ 的系数 $(m^3-m)/12$。单独核验 $m=2$ 所得 $1/2$，或只证明非对角情形，都不足以回答式 (2145.1) 的全称断言。秩一 Heisenberg 共形结构及中心荷 $c=1$ 的文献背景见 [Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；正规序与 Virasoro 约定见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。[Kytölä, VirasoroProject, 固定提交 `5ff4245`, `Sugawara.lean`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) 是 Lean 实现参考，不能代替本仓工具链下对上述具体算子的核验。
+
+即使式 (2145.1) 全部成立，它仍只履行问题 2143.7 的反常一部分：全态的态场映射、局域性与 OPE、满足融合定理假设的 $U$ 及其典范模变换，以及与 Monster 根空间和完整边界 CFT 的接口，仍须分别构造和验证。
+
+**定理 2145.2（多项式 Fock 态的正规序支撑界）。** 沿用问题 2145.1 的模式约定。对 $v\in F_{\mathbb C}$，令 $B(v)=\max\operatorname{vars}(v)$，空变量集时取 $B(v)=0$，并令 $N(v)=B(v)+2$。若 $:a_{n-r}a_r:$ 按较大模式在右的正规序作用于 $v$，则对每个 $n\in\mathbb Z$，
+
+$$
+\operatorname{supp}\bigl(r\mapsto :a_{n-r}a_r:v\bigr)
+\subseteq \bigl(n-N(v),N(v)\bigr)\cap\mathbb Z.
+\tag{2145.2}
+$$
+
+复 Heisenberg 真空表示的模式背景见 [Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；一般局部截断与 Sugawara 正规序形式化参见 [Kytölä, `Sugawara.lean`, 固定提交 `5ff4245`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。式 (2145.2) 给出本节具体多项式模型的显式逐态界。
+
+**定理 2145.3（Sugawara 有限截断的一致性）。** 沿用定理 2145.2 的记号，若整数 $a\leq n-N(v)$ 且 $b\geq N(v)$，则问题 2145.1 的逐态和满足
+
+$$
+L_nv=\frac12\sum_{r=a}^{b}:a_{n-r}a_r:v.
+\tag{2145.3}
+$$
+
+这个结论只核验问题 2145.1 的有限和与截断一致性；$[L_m,a_r]$、完整中心项、全态态场和局域性仍是独立义务。正规序约定和一般 Sugawara 背景仍见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md) 与 [Kytölä, `Sugawara.lean`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。
+
+**计算 2145.4（具体模式的 Heisenberg 关系及其 Sugawara 作用）。** 对问题 2145.1 的复多项式 Fock 模式和定理 2145.3 的同一个 $L_m$，逐整数有
+
+$$
+[a_m,a_n]=m\delta_{m+n,0}\,\mathrm{id},\qquad
+[L_m,a_r]=-r\,a_{m+r}\qquad(m,n,r\in\mathbb Z).
+\tag{2145.4}
+$$
+
+第一式的混合符号情形来自 $\partial_{X_i}(X_jv)=\delta_{ij}v+X_j\partial_{X_i}v$，同号模式分别由偏导数和乘法的交换性处理。第二式逐态交换有限正规序和后仅有 $k=-r$ 与 $k=m+r$ 两个可能贡献，各给出 $-r a_{m+r}$，外侧系数 $1/2$ 消去两份之和。一般的局部截断 Heisenberg 表示上的第二式见 [Kytölä 2025, `Sugawara.lean`, `commutator_sugawaraGen_heiOper`, 固定提交 `5ff4245`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)；这里还须履行第一式与本节具体模式、有限和之间的对应。
+
+式 (2145.4) 不结算问题 2145.1 的 $[L_m,L_n]$ 全称断言。尚缺的是在同一具体正规序约定下对每个整数 $m,n$ 证明非中心部分恰为 $(m-n)L_{m+n}$，并在 $m+n=0$ 时对每个整数 $m$ 求出正规序边界有限和 $\frac{m^3-m}{12}\,\mathrm{id}$；仅由与所有 $a_r$ 对易，或仅计算 $m=2$，均不能给出这个系数。一般边界项计算见 [Kytölä 2025, `Sugawara.lean`, `commutator_sugawaraGen` 与 `sugawaraGen_cc_sum`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。

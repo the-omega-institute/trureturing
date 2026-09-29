@@ -1,0 +1,52 @@
+### 256.4 球面源的谱、参考边缘与适用范围
+
+在球面上，选 $K=W|K|$ 的任意酉极分解延拓，则
+$$
+\Gamma(K)=J_W|K|J_W^\dagger.
+\tag{256.23}
+$$
+$J_W$ 等距，故唯一源满足
+$$
+\operatorname{rank}\Omega=\operatorname{rank}K,
+\tag{256.24}
+$$
+其非零本征值恰为 $K$ 的非零奇异值。尤其 $\operatorname{rank}\Omega\le r<2r$，满秩联合态不可能由这两份响应唯一确定。
+
+参考边缘和未直接输入的第三条关联分别恢复为
+$$
+\boxed{
+\rho_E=\frac{\sqrt{KK^\dagger}+\sqrt{K^\dagger K}}2,
+\qquad
+R_Y=\frac{\sqrt{KK^\dagger}-\sqrt{K^\dagger K}}2.
+}
+\tag{256.25}
+$$
+第二式使用（256.5）的 $U_Y^\dagger YU_Y=Z$。两个平方根具有相同迹，所以唯一源必有 $\operatorname{Tr}R_Y=0$，即输入的 $Y$ 平均值为零。
+
+对纯联合态，可以进一步精确说明这一条件。写
+$$
+|\psi\rangle=|y_+\rangle\otimes u+|y_-\rangle\otimes v,
+\qquad
+\|u\|^2+\|v\|^2=1.
+\tag{256.26}
+$$
+则
+$$
+K=2uv^\dagger,
+\qquad
+\|K\|_1=2\|u\|\|v\|\le1.
+\tag{256.27}
+$$
+等号当且仅当 $\|u\|^2=\|v\|^2=1/2$，也即 $\langle\psi|Y\otimes I|\psi\rangle=0$。因此
+$$
+\boxed{
+\text{纯源由两份完整响应在全部态中唯一确定}
+\iff
+\langle Y\otimes I\rangle=0.
+}
+\tag{256.28}
+$$
+这一纯态范围不要求最大纠缠或响应饱和。对混合态，单有 $\langle Y\otimes I\rangle=0$ 不够；例如 $I_{H\otimes E}/(2r)$ 的 $K=0$，落在球内。
+
+§248的饱和态已由§251证明在全部态中唯一，因此按定理256.2，其数据都位于球面。§255的共同幅度与角谱条件进一步识别球面上的那个特定饱和子族，并非本节全部唯一源的必要条件。
+

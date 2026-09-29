@@ -1,0 +1,24 @@
+#### 8.1.3 删除后的闭合更新与精度下降
+
+设当前允许动作是 $(m,a)$，令
+$$
+H^+=\{x\in H:x\not\equiv a\pmod m\},\qquad
+M^+=M\setminus\{m\},\qquad D^+=\operatorname{lcm}(M^+).
+$$
+有 $D^+\mid D$。新状态的完整直方图由旧状态唯一确定：
+$$
+\boxed{
+N_r^+
+=\sum_{\substack{s\bmod D\\s\equiv r\ (D^+)\\s\not\equiv a\ (m)}}N_s,
+\qquad r\in\mathbb Z/D^+\mathbb Z.
+}
+\tag{ER8.FH.8}
+$$
+证明只是将新集合按旧模 $D$ 纤维分割：每个纤维或者全部保留、或者全部删除；保留纤维在模 $D^+$ 下合并。这给出交换关系
+$$
+\operatorname{hist}_{D^+}(H^+)
+=\operatorname{Update}_{m,a}\bigl(\operatorname{hist}_{D}(H)\bigr).
+\tag{ER8.FH.9}
+$$
+因此 $(M,(N_s)_{s\bmod D})$ 是确定性闭合接口；$L$ 可作为固定公共参数。当前基数为 $\sum_sN_s$，一次动作后的基数为 ER8.FH.8 各格之和。反复应用 ER8.FH.8 正好得到原集合逐次删除后的直方图，不产生近似误差。
+

@@ -1,0 +1,449 @@
+using System.Collections.Immutable;
+using System.Text;
+using System.Text.RegularExpressions;
+using StrataLint.Engine;
+using Tomlyn.Model;
+using Tomlyn.Parsing;
+
+namespace StrataLint.Engine;
+
+internal enum FileMapKind
+{
+    Truth,
+    Program,
+    Data,
+    Generated,
+    Ledger,
+}
+
+internal sealed record FileMapResidencePolicy(
+    string CaseId,
+    string Desired,
+    int KnownViolationCount,
+    string Status);
+
+internal sealed record FileMapEntry
+{
+    private readonly FileMapGlob glob;
+
+    internal FileMapEntry(
+        string pattern,
+        FileMapKind kind,
+        FileMapAdmissionPlane admissionPlane,
+        string producedBy,
+        ImmutableArray<string> consumedBy,
+        ImmutableArray<string> verifiedBy,
+        bool residenceViolation,
+        string artifactId,
+        string? mode,
+        string runtimeDisposition,
+        string? historyRequirement,
+        ImmutableArray<string> require,
+        FileMapSymlink? symlink,
+        bool digestionSource = false)
+    {
+        glob = FileMapGlob.Create(pattern);
+        Pattern = pattern;
+        Kind = kind;
+        AdmissionPlane = admissionPlane;
+        ProducedBy = producedBy;
+        ConsumedBy = consumedBy;
+        VerifiedBy = verifiedBy;
+        ResidenceViolation = residenceViolation;
+        ArtifactId = artifactId;
+        Mode = mode;
+        RuntimeDisposition = runtimeDisposition;
+        HistoryRequirement = historyRequirement;
+        Require = require;
+        Symlink = symlink;
+        DigestionSource = digestionSource;
+    }
+
+    internal string Pattern { get; }
+
+    internal FileMapKind Kind { get; }
+
+    internal FileMapAdmissionPlane AdmissionPlane { get; }
+
+    internal string ProducedBy { get; }
+
+    internal ImmutableArray<string> ConsumedBy { get; }
+
+    internal ImmutableArray<string> VerifiedBy { get; }
+
+    internal bool ResidenceViolation { get; }
+
+    internal string ArtifactId { get; }
+
+    internal string? Mode { get; }
+
+    internal string RuntimeDisposition { get; }
+
+    internal string? HistoryRequirement { get; }
+
+    internal ImmutableArray<string> Require { get; }
+
+    internal FileMapSymlink? Symlink { get; }
+
+    internal bool DigestionSource { get; }
+
+    internal bool Matches(string path) => glob.IsMatch(path);
+}
+
+internal sealed class FileMapManifest
+{
+    internal FileMapManifest(
+        FileMapResidencePolicy residencePolicy,
+        ImmutableArray<FileMapEntry> entries,
+        ImmutableDictionary<ArtifactKindId, ArtifactPolicy> artifactKinds,
+        ImmutableArray<FileMapResource> resources)
+    {
+        ResidencePolicy = residencePolicy;
+        Entries = entries;
+        ArtifactKinds = artifactKinds;
+        Resources = resources;
+    }
+
+    internal FileMapResidencePolicy ResidencePolicy { get; }
+
+    internal ImmutableArray<FileMapEntry> Entries { get; }
+
+    internal ImmutableDictionary<ArtifactKindId, ArtifactPolicy> ArtifactKinds { get; }
+
+    internal ImmutableArray<FileMapResource> Resources { get; }
+
+    internal ImmutableArray<FileMapEntry> Match(string path) =>
+        Entries.Where(entry => entry.Matches(path)).ToImmutableArray();
+}
+
+internal static partial class FileMapLoader
+{
+    internal const string RelativePath = AdmissionPlanePolicy.FileMapPath;
+
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+    private static readonly Regex NamePattern = new(
+        "\\A[A-Za-z][A-Za-z0-9.-]*\\z",
+        RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
+    private static readonly string[] EntryKeys =
+        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "require", "runtime_disposition", "verified_by"];
+    private static readonly string[] ResidenceEntryKeys =
+        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "require", "residence_violation", "runtime_disposition", "verified_by"];
+    private static readonly string[] RunLocalEntryKeys =
+        ["admission_plane", "artifact_id", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "require", "runtime_disposition", "verified_by"];
+    private static readonly string[] GeneratedArtifactEntryKeys = RunLocalEntryKeys;
+
+    internal static FileMapManifest LoadRepository(string repositoryRoot)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        var inspectedDirectories = new HashSet<string>(StringComparer.Ordinal);
+        byte[] Read(string relativePath)
+        {
+            FileMapSymlinkPolicy.RequirePlainAncestors(repositoryRoot, relativePath, inspectedDirectories);
+            var path = Path.Combine(repositoryRoot, relativePath);
+            if (new FileInfo(path).LinkTarget is not null)
+                throw new FileMapParseException(relativePath, "FILEMAP sources must be regular files");
+            return File.ReadAllBytes(path);
+        }
+
+        var manifest = Parse(Read(RelativePath), RelativePath, Read);
+        ValidateResourceFiles(manifest, repositoryRoot);
+        return manifest;
+    }
+
+    internal static FileMapManifest LoadSnapshot(RepositorySnapshot snapshot)
+    {
+        byte[] Read(string path) => snapshot.Files.TryGetValue(RepoPath.CreateKnown(path), out var file)
+            ? file.RawBytes.ToArray()
+            : throw new FileMapParseException(path, "FILEMAP source is unavailable in this snapshot");
+        return Parse(Read(RelativePath), RelativePath, Read);
+    }
+
+    internal static FileMapManifest Parse(
+        ReadOnlySpan<byte> bytes,
+        string location,
+        Func<string, byte[]>? readInclude = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(location);
+        FileMapDocuments.RequireCanonicalBytes(bytes, location);
+        var documents = FileMapDocuments.Resolve(bytes, location, readInclude);
+        var root = documents[0].Table;
+        var rootKeys = new List<string> { "evidence", "resources", "residence_policy", "schema_version" };
+        if (root.ContainsKey("include")) rootKeys.Add("include");
+        if (root.ContainsKey("files")) rootKeys.Add("files");
+        if (!root.ContainsKey("files") && !root.ContainsKey("include"))
+            throw Invalid(location, "files or include must be present");
+        RequireExactKeys(root, location, rootKeys.ToArray());
+        if (root["schema_version"] is not long schemaVersion || schemaVersion != 5)
+            throw Invalid(location, "schema_version must be 5");
+        if (root["residence_policy"] is not TomlTable residenceTable)
+            throw Invalid(location, "residence_policy must be a table");
+        var residencePolicy = ParseResidencePolicy(residenceTable, $"{location}:residence_policy");
+        var allEntries = ImmutableArray.CreateBuilder<FileMapEntry>();
+        foreach (var document in documents)
+        {
+            if (!document.Table.TryGetValue("files", out var rawFiles)) continue;
+            var files = FileMapTomlTables.Parse(rawFiles, document.Path, allowEmpty: false);
+            var localEntries = files.Select((table, index) => ParseEntry(table, $"{document.Path}:files[{index}]"))
+                .ToArray();
+            var localPatterns = localEntries.Select(entry => entry.Pattern).ToArray();
+            if (!localPatterns.SequenceEqual(localPatterns.Order(StringComparer.Ordinal), StringComparer.Ordinal))
+                throw Invalid(document.Path, "file patterns must be unique and ordinally sorted");
+            allEntries.AddRange(localEntries);
+        }
+
+        var entries = allEntries.OrderBy(entry => entry.Pattern, StringComparer.Ordinal).ToImmutableArray();
+        if (entries.Select(entry => entry.Pattern).Distinct(StringComparer.Ordinal).Count() != entries.Length)
+            throw Invalid(location, "file patterns must be unique and ordinally sorted across all included files");
+
+        var artifactIds = entries
+            .Where(static entry => entry.ArtifactId != "none")
+            .Select(static entry => entry.ArtifactId)
+            .ToArray();
+        if (artifactIds.Distinct(StringComparer.OrdinalIgnoreCase).Count() != artifactIds.Length)
+        {
+            throw Invalid(location, "artifact_id values other than none must be unique");
+        }
+
+        var resources = ParseResources(root, location);
+        var ids = resources.Select(static resource => resource.Id).ToHashSet(StringComparer.Ordinal);
+        foreach (var entry in entries)
+            foreach (var id in entry.Require)
+                if (!ids.Contains(id)) throw Invalid(entry.Pattern, $"unknown resource {id}");
+        FileMapSymlinkPolicy.ValidateCoverage(entries.Select(entry => entry.Symlink).OfType<FileMapSymlink>(),
+            path => entries.Count(entry => entry.Matches(path)), location);
+        return new FileMapManifest(residencePolicy, entries, ParseEvidence(root, location), resources);
+    }
+
+    private static FileMapResidencePolicy ParseResidencePolicy(
+        TomlTable table,
+        string location)
+    {
+        RequireExactKeys(
+            table,
+            location,
+            "case_id",
+            "desired",
+            "known_violation_count",
+            "status");
+        var count = table["known_violation_count"] is long rawCount
+            && rawCount >= 0
+            && rawCount <= int.MaxValue
+                ? (int)rawCount
+                : throw Invalid(location, "known_violation_count must be a non-negative 32-bit integer");
+        return new FileMapResidencePolicy(
+            RequiredName(table, "case_id", location, allowNone: false),
+            RequiredString(table, "desired", location),
+            count,
+            RequiredString(table, "status", location));
+    }
+
+    private static FileMapEntry ParseEntry(TomlTable table, string location)
+    {
+        if (!table.ContainsKey("admission_plane"))
+        {
+            var path = table.TryGetValue("pattern", out var rawPattern)
+                && rawPattern is string declaredPattern
+                    ? declaredPattern
+                    : location;
+            throw new FileMapAdmissionPlaneException(
+                "FILEMAP-ADMISSION-PLANE-MISSING",
+                path,
+                location,
+                "admission_plane is required");
+        }
+
+        var hasResidenceViolation = table.ContainsKey("residence_violation");
+        var isRunLocal = table.TryGetValue("runtime_disposition", out var disposition)
+            && disposition is "run-local";
+        var isDataKeyedGeneratedSet = table.TryGetValue("kind", out var dataKeyedKind)
+            && dataKeyedKind is "generated"
+            && table.TryGetValue("artifact_id", out var dataKeyedArtifactId)
+            && dataKeyedArtifactId is "none"
+            && table.TryGetValue("pattern", out var dataKeyedPattern)
+            && dataKeyedPattern is string patternValue
+            && patternValue.Contains('*');
+        var isDataKeyedRunLocal = isRunLocal && isDataKeyedGeneratedSet;
+        var isGeneratedArtifact = table.TryGetValue("kind", out var rawKind)
+            && rawKind is "generated"
+            && table.TryGetValue("artifact_id", out var rawArtifactId)
+            && rawArtifactId is string artifactIdValue
+            && artifactIdValue != "none"
+            && disposition is "committed-source";
+        var expectedKeys = isDataKeyedRunLocal ? EntryKeys : isRunLocal ? RunLocalEntryKeys : isGeneratedArtifact ? GeneratedArtifactEntryKeys : hasResidenceViolation ? ResidenceEntryKeys : EntryKeys;
+        if (table.ContainsKey("symlink")) expectedKeys = [.. expectedKeys, "symlink"];
+        if (table.ContainsKey("digestion_source")) expectedKeys = [.. expectedKeys, "digestion_source"];
+        RequireExactKeys(table, location, expectedKeys);
+        var digestionSource = table.ContainsKey("digestion_source")
+            ? table["digestion_source"] is true
+                ? true
+                : throw Invalid(location, "digestion_source must be the canonical boolean true")
+            : false;
+        var symlink = FileMapSymlinkPolicy.ParseEntry(table, location);
+        var pattern = RequiredString(table, "pattern", location);
+        _ = FileMapGlob.Create(pattern);
+        var kind = RequiredString(table, "kind", location) switch
+        {
+            "truth" => FileMapKind.Truth,
+            "program" => FileMapKind.Program,
+            "data" => FileMapKind.Data,
+            "generated" => FileMapKind.Generated,
+            "ledger" => FileMapKind.Ledger,
+            _ => throw Invalid(location, "kind must be truth, program, data, generated, or ledger"),
+        };
+        var admissionPlane = RequiredAdmissionPlane(table, pattern, location);
+        var producedBy = RequiredName(table, "produced_by", location, allowNone: true);
+        var consumedBy = RequiredNames(table, "consumed_by", location);
+        var verifiedBy = RequiredNames(table, "verified_by", location);
+        var residenceViolation = !hasResidenceViolation
+            ? false
+            : table["residence_violation"] is true
+                ? true
+                : throw Invalid(location, "residence_violation must be the canonical boolean true");
+        if (residenceViolation && kind is not FileMapKind.Data)
+        {
+            throw Invalid(location, "residence_violation is valid only for data entries");
+        }
+
+        if (kind is FileMapKind.Generated
+            && (producedBy == "none" || !verifiedBy.Contains(producedBy, StringComparer.Ordinal)))
+        {
+            throw Invalid(
+                location,
+                producedBy == "none"
+                    ? "generated produced_by must name a producer"
+                    : "generated verified_by must include its producer");
+        }
+
+        var artifactId = RequiredName(table, "artifact_id", location, allowNone: true);
+        var runtimeDisposition = RequiredString(table, "runtime_disposition", location);
+        _ = runtimeDisposition switch
+        {
+            "committed-source" => runtimeDisposition,
+            "committed-ledger" => runtimeDisposition,
+            "run-local" => runtimeDisposition,
+            _ => throw Invalid(location, "runtime_disposition must be committed-source, committed-ledger, or run-local"),
+        };
+        var hasProjectionFields = (isRunLocal && !isDataKeyedGeneratedSet) || isGeneratedArtifact;
+        var mode = hasProjectionFields ? RequiredString(table, "mode", location) : null;
+        var historyRequirement = hasProjectionFields ? RequiredString(table, "history_requirement", location) : null;
+        if (hasProjectionFields
+            && (kind is not FileMapKind.Generated || artifactId == "none"
+                || mode is null || mode.Length != 6 || mode.Any(static value => value is < '0' or > '7')
+                || historyRequirement != "not-required"))
+        {
+            throw Invalid(location, "generated artifact projection fields are invalid");
+        }
+        if (runtimeDisposition == "committed-ledger"
+            && kind is not FileMapKind.Ledger)
+        {
+            throw Invalid(location, "committed-ledger disposition requires ledger kind");
+        }
+        if (kind is FileMapKind.Ledger
+            && runtimeDisposition != "committed-ledger")
+        {
+            throw Invalid(location, "ledger kind requires committed-ledger disposition");
+        }
+
+        return new FileMapEntry(
+            pattern,
+            kind,
+            admissionPlane,
+            producedBy,
+            consumedBy,
+            verifiedBy,
+            residenceViolation,
+            artifactId,
+            mode,
+            runtimeDisposition,
+            historyRequirement,
+            RequiredNames(table, "require", pattern, allowEmpty: true),
+            symlink,
+            digestionSource);
+    }
+
+    private static ImmutableArray<string> RequiredNames(
+        TomlTable table,
+        string key,
+        string location,
+        bool allowEmpty = false)
+    {
+        if (!table.TryGetValue(key, out var raw) || raw is not TomlArray array || (!allowEmpty && array.Count == 0))
+        {
+            throw Invalid(location, $"{key} must be a non-empty string array");
+        }
+
+        var values = array.Select((value, index) => value is string text
+                ? ValidateName(text, $"{location}:{key}[{index}]", allowNone: false)
+                : throw Invalid(location, $"{key} must contain only strings"))
+            .ToImmutableArray();
+        if (!values.SequenceEqual(values.Order(StringComparer.Ordinal), StringComparer.Ordinal)
+            || values.Distinct(StringComparer.OrdinalIgnoreCase).Count() != values.Length)
+        {
+            throw Invalid(location, $"{key} must be unique (without case collisions) and ordinally sorted");
+        }
+
+        return values;
+    }
+
+    private static string RequiredName(
+        TomlTable table,
+        string key,
+        string location,
+        bool allowNone) =>
+        ValidateName(RequiredString(table, key, location), $"{location}:{key}", allowNone);
+
+    private static string ValidateName(string value, string location, bool allowNone) =>
+        allowNone && value == "none" || NamePattern.IsMatch(value)
+            ? value
+            : throw Invalid(location, "value is not a canonical program/check name");
+
+    private static string RequiredString(TomlTable table, string key, string location) =>
+        table.TryGetValue(key, out var raw)
+        && raw is string value
+        && !string.IsNullOrWhiteSpace(value)
+        && string.Equals(value, value.Trim(), StringComparison.Ordinal)
+            ? value
+            : throw Invalid(location, $"{key} must be a non-empty canonical string");
+
+    private static FileMapAdmissionPlane RequiredAdmissionPlane(
+        TomlTable table,
+        string pattern,
+        string location)
+    {
+        table.TryGetValue("admission_plane", out var raw);
+        var value = raw as string;
+        if (value != "judge" && value != "content")
+        {
+            throw InvalidAdmissionPlane(pattern, location);
+        }
+
+        return value == "judge"
+            ? FileMapAdmissionPlane.Judge
+            : FileMapAdmissionPlane.Content;
+    }
+
+    private static FileMapAdmissionPlaneException InvalidAdmissionPlane(
+        string pattern,
+        string location) =>
+        new(
+            "FILEMAP-ADMISSION-PLANE-INVALID",
+            pattern,
+            location,
+            "admission_plane must be judge or content");
+
+    private static void RequireExactKeys(TomlTable table, string location, params string[] expected)
+    {
+        var expectedSet = expected.ToHashSet(StringComparer.Ordinal);
+        var unknown = table.Keys.Where(key => !expectedSet.Contains(key)).Order(StringComparer.Ordinal).ToArray();
+        var missing = expectedSet.Where(key => !table.ContainsKey(key)).Order(StringComparer.Ordinal).ToArray();
+        if (unknown.Length != 0 || missing.Length != 0)
+        {
+            throw Invalid(
+                location,
+                $"unknown keys [{string.Join(", ", unknown)}] or missing keys [{string.Join(", ", missing)}]");
+        }
+    }
+
+    private static FormatException Invalid(string location, string message, Exception? inner = null) =>
+        new($"Invalid FILEMAP at {location}: {message}.", inner);
+}

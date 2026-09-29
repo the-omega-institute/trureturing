@@ -1,0 +1,7 @@
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+import LeanInformationAudit.Syntax
+
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+register_information_template realize

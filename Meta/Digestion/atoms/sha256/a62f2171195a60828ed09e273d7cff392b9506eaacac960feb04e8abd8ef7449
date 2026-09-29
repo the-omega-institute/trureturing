@@ -1,0 +1,20 @@
+**证明。** 若 $c_{ab}=\langle a,b|C|a,b\rangle$，式（55.3）给
+$c_{00}+c_{10}=1$、$c_{01}+c_{11}=1$ 及 $0\le c_{ab}\le1$。由式（55.9），
+
+$$
+\operatorname{Tr}(R\widehat C)
+=\frac34+\frac14(c_{00}+c_{11})\in[3/4,5/4].
+$$
+
+两端分别由
+
+$$
+\begin{aligned}
+C_+&=|0,0\rangle\langle0,0|+|1,1\rangle\langle1,1|,\\
+C_-&=|0,1\rangle\langle0,1|+|1,0\rangle\langle1,0|
+\end{aligned}
+\tag{55.11}
+$$
+
+达到。二者都满足式（55.3）。$\square$
+

@@ -1,0 +1,71 @@
+**证明。** 在 $H\otimes S$ 上，
+$$
+L_\psi=D M_0D,\qquad
+D=\operatorname{diag}(\rho_S^{-1/2},\rho_S^{-1/2}),
+$$
+$$
+M_0=
+\begin{pmatrix}
+I_S&-|a\rangle\langle b|\\
+-|b\rangle\langle a|&I_S
+\end{pmatrix}.
+\tag{261.10}
+$$
+$M_0$ 的谱为 $0,1,1,2$，其核为 $\mathbb C(a,b)$。因此同余后的核为
+$\mathbb C(\rho_S^{1/2}a,\rho_S^{1/2}b)=\mathbb C(u,v)$。
+
+还须核对正谱隙。矩阵 $DM_0D$ 与
+$M_0^{1/2}D^2M_0^{1/2}$ 的非零谱相同，因为它们分别是
+$(DM_0^{1/2})(DM_0^{1/2})^\dagger$ 及反序Gram矩阵。又有
+$$
+M_0^{1/2}D^2M_0^{1/2}
+\succeq
+\frac{1}{\lambda_{\max}(\rho_S)}M_0.
+\tag{261.11}
+$$
+二者秩均为三。有序本征值的单调性因而给出，$L_\psi$ 在此参考块中的每个正本征值至少为
+$1/\lambda_{\max}(\rho_S)\ge1$。
+
+在 $H\otimes S^\perp$ 上，$L_\psi$ 为恒等算子，且两个参考块之间没有交叉项。这证明（261.8）。最后，
+$$
+\|B_\psi\|
+\le\|\rho_S^{-1/2}\|^2
+\bigl\||a\rangle\langle b|\bigr\|
+=\frac1p,
+\tag{261.12}
+$$
+而 $A_\psi$ 的范数同样不超过 $1/p$。$\square$
+
+这个暴露算子的期望可由完整数据读取。对任意Hermitian $X$，
+$$
+\operatorname{Tr}(L_\psi X)
+=
+\operatorname{Tr}\!\left(A_\psi\operatorname{Tr}_H X\right)
++\operatorname{Re}\operatorname{Tr}\!\left(B_\psi^\dagger\mathscr K(X)\right).
+\tag{261.13}
+$$
+其系数也只依赖理想完整数据，因为
+$$
+B_\psi=-\frac12\rho_S^{-1}
+\bigl(K_{\Omega_\psi}|_S\bigr)\rho_S^{-1},
+\tag{261.14}
+$$
+再向 $S^\perp$ 补零即可。式（261.9）的较好范数估计使用（261.6）的正交向量结构。
+
+由 $L_\psi\psi=0$，迹范数对偶给
+$$
+0\le\operatorname{Tr}(L_\psi\Xi)
+=\operatorname{Tr}(A_\psi\Delta\rho)
++\operatorname{Re}\operatorname{Tr}(B_\psi^\dagger\Delta K)
+\le\frac{\varepsilon}{p}.
+\tag{261.15}
+$$
+令 $Q_\psi=I-P_\psi$，得到
+$$
+\boxed{
+t:=\operatorname{Tr}(Q_\psi\Xi)\le\frac{\varepsilon}{p}.
+}
+\tag{261.16}
+$$
+这里 $Q_\psi$ 是完整联合纯源的正交补投影，区别于参考投影 $P_S$。它控制的尾部包含参考核外质量，也包含原参考支撑内与 $\psi$ 正交的部分。
+

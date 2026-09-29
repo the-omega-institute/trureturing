@@ -1,0 +1,9 @@
+**证明。** 酉的整体负号在$V\rho V^\dagger$中相消；在$|0\rangle\langle0|\otimes I+|1\rangle\langle1|\otimes V$中只改变第二条路径的相位，所以产生$|+\rangle$与$|-\rangle$。∎
+
+因此核或“完整可恢复性”必须相对于明确的实验权限定义。给定相干实现、路径参考和相位数据时，可以构造对应实验；只有普通通道数据时，上述反例禁止唯一补出这些额外信息。[QREC-Control]
+
+[QREC-KL]: https://doi.org/10.1103/PhysRevA.55.900 "E. Knill and R. Laflamme, Theory of quantum error-correcting codes, Physical Review A 55, 900 (1997)."
+[QREC-NS]: https://arxiv.org/abs/quant-ph/0605041 "A. Nayak and P. Sen, Invertible Quantum Operations and Perfect Encryption of Quantum States, Quantum Information and Computation 7(1&2), 103–110 (2007), Theorem 2.1."
+[QREC-BK]: https://arxiv.org/abs/quant-ph/0004088 "H. Barnum and E. Knill, Reversing quantum dynamics with near-optimal quantum and classical fidelity, Journal of Mathematical Physics 43, 2097–2106 (2002)."
+[QREC-Control]: https://arxiv.org/abs/1309.7976 "M. Araújo, A. Feix, F. Costa and Č. Brukner, Quantum circuits cannot control unknown operations, New Journal of Physics 16, 093026 (2014)."
+

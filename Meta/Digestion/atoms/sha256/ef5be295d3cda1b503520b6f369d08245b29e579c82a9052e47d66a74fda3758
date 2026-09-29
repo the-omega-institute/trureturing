@@ -1,0 +1,55 @@
+**定理 84.2（在原先会终止的仪器上，指定修复仍需要平方根尺度）。** 对 $0<\theta<1/2$，置 $\kappa=\theta^4$，
+
+$$
+U_\theta=
+\begin{pmatrix}
+\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta
+\end{pmatrix},\qquad
+Q_\theta=\sqrt{1-\kappa}\,U_\theta,\qquad
+L_\theta=\sqrt\kappa\,I,
+$$
+
+并以它们定义两个记录分支的完整仪器 $\Gamma_\theta$。令 $P=P_0$ 以及
+
+$$
+\varepsilon_\theta
+=1-\operatorname{Tr}[P_0\mathcal N_\theta(P_0)]
+=\kappa+(1-\kappa)\sin^2\theta.
+$$
+
+则每个初态的首次点击时间都是成功参数为 $\kappa$ 的几何分布，均值为 $1/\kappa$，而
+
+$$
+\boxed{
+\frac{\sqrt{\kappa^2+4(1-\kappa)\sin^2\theta}+\kappa}{2}
+\le d_{P_0}(\Gamma_\theta)
+\le\sqrt{\varepsilon_\theta}.
+} \tag{84.1}
+$$
+
+因此
+
+$$
+\boxed{
+\lim_{\theta\downarrow0}
+\frac{d_{P_0}(\Gamma_\theta)}{\sqrt{\varepsilon_\theta}}=1.
+} \tag{84.2}
+$$
+
+证明。完整性由 $Q_\theta^\dagger Q_\theta+L_\theta^\dagger L_\theta=I$ 成立。未点击映射每次将迹乘以 $1-\kappa$，所以全部来源具有上述几何等待律。
+
+任一把 $P_0$ 修成纯暗态的完整仪器，在该输入上的输出必为未点击块中的 $P_0$，点击块为零。原仪器对应输出则为未点击块 $(1-\kappa)P_{\theta}$ 与点击块 $\kappa P_0$，其中 $P_{\theta}=U_\theta P_0U_\theta^\dagger$。两完整输出的半迹距离为
+
+$$
+\frac12\left(\|P_0-(1-\kappa)P_\theta\|_1+\kappa\right)
+=
+\frac{\sqrt{\kappa^2+4(1-\kappa)\sin^2\theta}+\kappa}{2}.
+$$
+
+这里使用第 73.1 式的两个未归一化纯态之差公式。单个输入上的距离是完整 diamond 距离的下界，得到式 (84.1) 左侧；右侧为定理 82.1。
+
+当 $\theta\downarrow0$，有 $\kappa=\theta^4$、$\sin\theta\sim\theta$。式 (84.1) 两端均与 $\theta$ 渐近等价，且 $\sqrt{\varepsilon_\theta}\sim\theta$，夹逼得到式 (84.2)。$\square$
+
+所以即使限定为原先会终止的仪器，也不存在常数 $C<\infty$ 与指数 $p>1/2$，使所有这类指定修复都满足 $d_P(\Gamma)\le C\varepsilon^p$。特别地，统一线性缺陷界不成立。
+

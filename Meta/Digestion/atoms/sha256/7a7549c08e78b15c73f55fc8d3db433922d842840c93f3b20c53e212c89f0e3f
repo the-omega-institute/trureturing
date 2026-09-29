@@ -1,0 +1,26 @@
+## 109. 六维一重已执行像的两尾纤维必须为四加二
+
+沿用第102、107节的同一实际六终端合同，记
+
+$$
+E_0=(\mathbb Cp\otimes\eta_1)+\sum_{i=2}^6G_i\otimes\eta_i,
+\qquad S_0=\mathbb Cp+G_2+\cdots+G_6,
+$$
+
+$$
+P_z=\{y:y\otimes z\in E_0\},\qquad f([z])=\dim P_z.
+$$
+
+本节考察
+
+$$
+\dim E_0=6,\qquad \kappa(E_0)=1,\qquad
+\bigl|\{[\eta_2],\ldots,[\eta_6]\}\bigr|=2.
+$$
+
+所有纤维均相对于同一已执行像 $E_0$；没有重新选择实际动作或补充末轮后继。第102节给 $\dim S_0=5$，第107节给
+
+$$
+\sum_{[z]}(f([z])-1)\le4.
+$$
+

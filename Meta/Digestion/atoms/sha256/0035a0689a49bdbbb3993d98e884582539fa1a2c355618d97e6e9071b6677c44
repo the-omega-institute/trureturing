@@ -1,0 +1,48 @@
+### 270.7 实际符号的均值变化达到相同副本阶
+
+逐份只读取实际符号 $\eta$。记其理想均值为
+$$
+c=\frac{\operatorname{Tr}R_a+\operatorname{Tr}R_b}{2}
+=\frac{\operatorname{Tr}R_Z}{\sqrt2}
+=\frac{\sqrt2}{n}\operatorname{Tr}(QM).
+\tag{270.45}
+$$
+最后一个等式使用 $Q$ 实对称、$M$ 实，故
+$\operatorname{Tr}(M^\dagger Q)=\operatorname{Tr}(QM)$。
+
+这个均值严格正。事实上
+$$
+\operatorname{Tr}(QM)
+=\operatorname{Tr}\left(Q\,\frac{M+M^\dagger}{2}\right),
+$$
+$$
+\frac{M+M^\dagger}{2}
+=I+\frac t2(J+J^\dagger)
+\succeq(1-t)I=\frac34I.
+\tag{270.46}
+$$
+因此 $\operatorname{Tr}(QM)\ge(3/4)\operatorname{Tr}Q>0$。所有符号概率严格正又给 $c<1$。
+
+两假设下实际符号的均值和方差满足
+$$
+\mathbb E_*\eta=c,\qquad
+\mathbb E_h\eta=(1-\delta_h)c,\qquad
+\operatorname{Var}_j(\eta)\le1.
+\tag{270.47}
+$$
+取 $m$ 份独立符号的样本均值，以 $c(1-\delta_h/2)$ 为阈值：超过阈值判 $*$，否则判 $h$。两均值距阈值均为 $c\delta_h/2$。Chebyshev不等式给每一侧错误率
+$$
+P_j(\text{判错})\le\frac4{mc^2\delta_h^2}.
+\tag{270.48}
+$$
+所以
+$$
+\boxed{
+N_{\mathrm{out}}(h)
+\le\left\lceil\frac{12}{c^2\delta_h^2}\right\rceil
+=\left\lceil\frac{12}{c^2k^2}h^{-4n}\right\rceil.
+}
+\tag{270.49}
+$$
+该协议使用真实符号记录。上界可以忽略已开放的 $w$ 和参考；下界仍保留了全部输出。
+

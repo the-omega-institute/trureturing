@@ -1,0 +1,11 @@
+**定义 80.1（完整校准球的最坏实际成本）。** 对 $0\le u\le1$，定义
+
+$$
+\mathfrak B_u=\{\Gamma\in\mathfrak I:\delta(\Gamma)\le u\},
+\qquad
+\mathscr K(u)=\sup_{\Gamma\in\mathfrak B_u}\sup_\rho
+\mathbb E_\rho^\Gamma\mathsf N.
+$$
+
+这里 $\mathsf N$ 是包括首次点击那一轮在内的实际调用数，永久未点击轨迹取 $+\infty$。每个装置重复自己同一仪器，$\sup_\Gamma$ 不允许在一次执行中逐轮更换装置。
+

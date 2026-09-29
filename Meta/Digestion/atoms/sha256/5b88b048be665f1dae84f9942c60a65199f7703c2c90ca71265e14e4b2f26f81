@@ -1,0 +1,22 @@
+**引理147.2（规范平方根的统一斜率界与端点极限）。** 在 $0<p\le1/2$、$p(1-p)\le w\le p$ 上，
+
+$$
+\left\|\frac{\partial}{\partial w}\sqrt{\rho_p(w)}\right\|_{\mathrm{HS}}
+\le2+\sqrt2.
+\tag{147.6}
+$$
+
+在令 $R_0=\operatorname{diag}(1,0)$ 的同一来源正交坐标中，还有一致极限
+
+$$
+\sup_{p(1-p)\le w\le p}
+\left\|
+\frac{\partial}{\partial w}\sqrt{\rho_p(w)}
+-\frac12\begin{pmatrix}0&0\\0&1\end{pmatrix}
+\right\|_{\mathrm{HS}}\longrightarrow0
+\quad(p\downarrow0).
+\tag{147.7}
+$$
+
+坐标可依赖已知来源，但对同一个 $p$ 的全部 $w$ 使用同一坐标。
+

@@ -1,0 +1,12 @@
+**定义 545.2（同一实际记录下的两个误差）。** 擦除源 $E_r$ 以 $1-r$ 揭示状态，以 $r$ 输出 $\star$，$r\in[0,1]$。目标联合仍是给定状态后独立的 $J_i=E_{r,i}\otimes Q_i$。仅从实际源记录生成新增输出并保留源记录的生成器，由揭示分支 $T_1,T_2$ 与共同擦除分支 $R$ 给出。定义
+
+$$
+\begin{aligned}
+m(T)&=\max_{i=1,2}\operatorname{TV}((1-r)T_i+rR,Q_i),\\
+j(T)&=\max_{i=1,2}\bigl((1-r)\operatorname{TV}(T_i,Q_i)
++r\operatorname{TV}(R,Q_i)\bigr).
+\end{aligned}
+$$
+
+可行时记 $\mathcal J_{b,a,d}(r,\eta)=\min_{m(T)\le\eta}j(T)$。有限维紧性沿用第 514 节。所谓“完整曲面”同时包含可行域和其上的最优值；不可行点不能任意填成一个数，再用填充值比较相同与否。
+

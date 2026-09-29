@@ -1,0 +1,2 @@
+**定理 402.3（没有概率地板就没有统一的小误差保证）。** 对任意 $0<\eta<1$，令 $p=(1-\eta)\delta_c+\eta\delta_a$、$r=(1-\eta)\delta_c+\eta\delta_b$，其中 $a,b,c$ 不同。则 $\operatorname{TV}(p,r)=\eta$，但在同一事件 $E=\{a,b\}$ 下，两条件律的 TV 为一。
+

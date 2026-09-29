@@ -1,0 +1,21 @@
+**定义 246.1（实验—任务全息边界）。** 对任务族 $\mathcal T$ 和允许实验类别 $\mathcal E$，定义
+
+$$
+\boxed{
+\eta_{\mathrm{exp}}
+=
+\left(
+\mathfrak M/\!\sim_{\mathcal T},
+\mathcal E,
+\preceq_{\mathrm{refine}},
+\{s_E,c_E\}_{E\in\mathcal E},
+\{F_{E,y}\},
+V,
+\text{来源与干预合同}
+\right).
+}
+\tag{246.1}
+$$
+
+其中 $\preceq_{\mathrm{refine}}$ 是实验精化序，$F_{E,y}$ 是结果纤维，$V$ 是在给定预算和停止规则下的递归主动值。
+

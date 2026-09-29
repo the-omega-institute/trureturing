@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="../../StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj" />
     <ProjectReference Include="../../StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj" />
+    <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
     <ProjectReference Include="../../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj" />
     <ProjectReference Include="../../StrataLint.InspectionScope/StrataLint.InspectionScope.csproj" />

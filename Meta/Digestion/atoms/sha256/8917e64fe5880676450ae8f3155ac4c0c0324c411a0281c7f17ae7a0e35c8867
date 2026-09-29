@@ -1,0 +1,72 @@
+### 96.5 七维替代酉的双侧纤维
+
+对非零 $z\in F$ 定义完整接收纤维
+$$
+\mathcal G_i([z])
+=\{y\in K:y\otimes z\in\operatorname{ran}V_i\},
+\qquad g_i([z])=\dim\mathcal G_i([z]).
+$$
+由于 $V_0$ 为等距，
+$$
+\|A_0x\|^2+\|A_1x\|^2=\|x\|^2,
+$$
+故 $\ker A_0\cap\ker A_1=0$，上面定理适用。
+
+第90节的完整正交配对为
+$$
+g_0([z])=\operatorname{nullity}\mathcal P(z),\qquad
+g_1([z])=g_0([z^\perp]),
+$$
+其中
+$$
+z^\perp=-\overline{z_1}e_0+\overline{z_0}e_1.
+\tag{96.9}
+$$
+为核对这里确实是双侧等式，
+$\operatorname{ran}V_1=(\operatorname{ran}V_0)^\perp$ 给
+$$
+\mathcal G_1([z])
+=\ker(z_0A_0^*+z_1A_1^*).
+$$
+该方阵的核维数等于其伴随的核维数，而伴随为
+$\overline{z_0}A_0+\overline{z_1}A_1=\mathcal P(z^\perp)$，得到（96.9）。
+
+射影正交映射是双射，有限异常集的逆像仍有限。因此两侧具有同一个通常纤维维数 $k$。在奇异子类中，
+$$
+k\in\{1,2,3\}.
+\tag{96.10}
+$$
+令
+$$
+j_i([z])=g_i([z])-k.
+$$
+则
+$$
+j_1([z])=j_0([z^\perp]),\qquad
+\sum_{[z]}j_0([z])=\sum_{[z]}j_1([z])\le7-2k.
+\tag{96.11}
+$$
+具体预算为
+$$
+\begin{array}{c|ccc}
+k&1&2&3\\ \hline
+\text{全部额外核维数之和的上界}&5&3&1
+\end{array}.
+\tag{96.12}
+$$
+两侧预算是同一组跳点经正交配对后的两次描述；合并实际约束时应先把相同射线识别，不能将它们当作两份独立资源。
+
+最后，（96.9）只识别维数，不声称两个接收纤维平面相等。跨位正交另外给出真正的子空间关系：
+$$
+\langle z,w\rangle\ne0
+\quad\Longrightarrow\quad
+\mathcal G_0([z])\perp\mathcal G_1([w]).
+\tag{96.13}
+$$
+证明是对任意对应接收向量 $x,y$，
+$$
+0=\langle x\otimes z,y\otimes w\rangle
+=\langle x,y\rangle\langle z,w\rangle.
+$$
+当环境射线正交时，该式不再提供接收因子的正交关系。由此，双侧通常维数、跳点配对与实际跨位正交三件事都有各自明确的承担范围。
+

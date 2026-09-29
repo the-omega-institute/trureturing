@@ -1,0 +1,18 @@
+## 推论 ST35.2：公开结果的恢复器逐项构造，包括零概率结果
+
+设公开仪器为$\mathcal I_a(X)=\sum_\ell E_{a\ell}XE_{a\ell}^\dagger$。若
+
+$$
+E_{a\ell}^\dagger E_{ak}=c^{(a)}_{\ell k}I_d,
+\qquad p_a=\operatorname{tr}c^{(a)},
+$$
+
+则对每个$a$直接以$Q_a=\mathcal I_a(I)$构造(ST34.2)的恢复 Kraus，得到归一$\mathcal R_a$且
+
+$$
+\boxed{\mathcal R_a\mathcal I_a=p_a\mathrm{id}.}
+\tag{ST35.3}
+$$
+
+**证明。** 充分性证明无需先将分支除以$p_a$；相同计算给出$\sum_j\lambda_j=p_a$。$p_a=0$时全部分支 Kraus 为零，$Q_a=W_a=P_a=0$，只保留显式复位通道。它与零分支的复合确实为零。公开标签间无需交叉条件；删除标签后则必须对合并后的全部 Kraus 检查(ST35.1)。∎
+

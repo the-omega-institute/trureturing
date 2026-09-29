@@ -1,0 +1,11 @@
+**定义 388.1（静态参数的一步更新）。** 设 $\Theta$、$Y$ 为有限非空集合，$b$ 是 $\Theta$ 上的概率分布，$L_\theta(y)$ 是每个参数下归一化的输出概率。令
+
+$$
+p_b(y)=\sum_\theta b(\theta)L_\theta(y),\qquad
+T_y(b)(\theta)=\frac{b(\theta)L_\theta(y)}{p_b(y)}\quad\text{当 }p_b(y)>0.
+$$
+
+若这一步输出在给定参数后与先前历史条件独立，且所用似然相同，则 $p_b$ 是下一步预测，$T_y(b)$ 是观察后的归一化后验。非负性直接成立，对 $\theta$ 求和得到一；Bayes 公式来自联合质量 $b(\theta)L_\theta(y)$。
+
+项目 [BeliefMarkovUpdate](../../../D5/S3/Estimation/SequentialDecisionRisk/BeliefMarkovUpdate.lean) 将相应预测边缘与后验更新联系起来，其基本对象是有限静态隐藏参数上的非负权重。它也处理零分母的全定义约定。该模块没有在这些公式之外自动提供任意动态隐藏状态的转移模型。
+

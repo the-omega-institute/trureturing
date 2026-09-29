@@ -1,0 +1,18 @@
+#### 1.2.15 已有归属与适用范围
+
+整数与增长部分以下列不可变源码快照为定位依据：`19a8543ea50538700a993a51989d9cbc7b5bf4fd`。
+
+- `D5/S0/Tower/DBonacci/Names.lean` 中 `dbonacci d (N+2)` 对应本节 $G_N$；`DBonacciAdmissible` 定义禁连续 $d$ 个一；`dbonacci_name_card` 给一般合法词计数。计数声明本身不等于指定整数值映射的双射，式（TM.376）的区间归纳明确承担后者。
+- `D5/S0/Tower/Tribonacci/Representation.lean` 中 `decode` 使用 $1,2,4,7,\ldots$，`decode_lt_tribonacci`、`decode_bijective`、`decodeEquiv` 与 `encode` 已拥有 $k=3$ 整数情形的范围与双射；本节没有把这一专门化冒称一般 $k$ 源码已全部形式化。
+- `D5/S0/Tower/DBonacci/Values.lean` 的 `dbonacciWordValue` 使用 `dbonacciPerronRoot d` 的负幂实数权重，对应式（TM.402）类型的任务，不是式（TM.375）的整数解码。
+- `D5/S0/Tower/DBonacci/PerronRoot.lean` 已包含正根存在唯一性、特征方程、`two_sub_dbonacciPerronRoot_eq_inv_pow`、根的严格递增、二阶黄金根与 `dbonacciPerronRoot_tendsto_two`。这些成熟接口不因本节使用而成为新增形式化成果。
+- RRO 第 132.2 节的连续一后缀接口、计数矩阵、增长根与任务界面区别，提供禁词任务的背景。后缀长度处理合法性；加上模数值任务时，式（TM.392）的反例说明仍需运输位权相位。
+
+首返宏块部分以下列不可变源码快照为定位依据：`9d416050c9a90f785d50f2a5034f1a1f99334d62`。它与整数及增长部分采用的 `19a8543ea50538700a993a51989d9cbc7b5bf4fd` 是两个不同快照，各自仅承担所列源码定位与结论范围。
+
+- `D5/S0/Automata/TypedPartialDFAOOverBase.lean` 的 `runTransition` 按列表头到尾读取，`evalFrom_append` 与 `runFrom_append` 给部分运行的有序拼接。
+- `D5/S0/Automata/BinaryZeckendorfBlockSkeletonCore.lean` 的 `expand` 展开零、$10$ 与终止尾；`decode_expand`、`expandCode_injective`、`expand_compressLegalWord`、`compressLegalWord_expand` 给该代码层双向关系。其 `LegalWord` 定义为展开像，禁止相邻一的独立语言刻画还须结合下一项。
+- `D5/S0/Automata/BinaryZeckendorfLanguage.lean` 的 `base_success_iff_noAdjacentOnes` 对应成功运行与无相邻一；`BinaryZeckendorfBlockSkeleton.lean` 的 `eval_extractSkeleton` 与 `eval_extractSkeleton_start` 给 skeleton 的精确输出对应。这些声明不自动包括本节全部费用、相位、时长和熵率结论。
+
+本节的新增组织包括：一般整数区间归纳、编码前缀与模数读取的整除判据、可逆权重相位状态、终态剪枝边界、首返费用与 iid 块熵率运输，以及有限窗口与无限完成的量词区分。它们在所列模型中由正文证明支持；没有声称原创性，没有把数学编码层直接等同为物理空间、物理时间或量子过程。
+

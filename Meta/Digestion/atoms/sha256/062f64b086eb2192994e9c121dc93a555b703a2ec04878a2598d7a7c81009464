@@ -1,0 +1,12 @@
+**引理154.4（实际接收通道的完整参考尾界）。** 对所有 $n\ge0$，令 $r(n)$ 为 $n$ 除以 $q$ 的余数，则
+
+$$
+\boxed{
+\frac12
+\|\mathcal R_n-\mathcal R_*^{(r(n))}\|_\diamond
+\le
+\sqrt D\,B\,\kappa^{\lfloor n/L\rfloor}.
+}
+\tag{154.14}
+$$
+

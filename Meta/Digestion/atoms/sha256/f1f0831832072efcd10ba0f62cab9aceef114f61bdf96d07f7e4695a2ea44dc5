@@ -1,0 +1,12 @@
+### 153.3 迹消失的通道差与半 diamond 对偶
+
+固定 Choi 约定：对 $\Phi:\mathcal L(X)\to\mathcal L(O)$，
+
+$$
+J(\Phi)=\sum_{i,j}\Phi(|i\rangle\langle j|)\otimes|i\rangle\langle j|
+\in\mathcal L(O\otimes X).
+\tag{153.5}
+$$
+
+该 Choi 矩阵不归一化。CPTP 条件为 $J(\Phi)\succeq0$、$\operatorname{Tr}_O J(\Phi)=I_X$。
+

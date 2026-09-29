@@ -1,0 +1,35 @@
+**命题190.1（圆盘极小点）。** 对每个 $h\ge0$，（190.1）具有唯一极小点 $(x_h,y_h)$。若
+
+$$
+\left(\frac g\beta\right)^2
++\left(\frac{4h}{h+3\beta R}\right)^2\le1,
+\tag{190.4}
+$$
+
+则
+
+$$
+x_h=\frac g\beta,\qquad
+ y_h=\frac{4h}{h+3\beta R},
+$$
+
+$$
+\boxed{
+\mathcal C(h)
+=-\frac{\delta(\beta^2+g^2)}{8\beta}
++\frac{7h}{12}
+-\frac{4h^2}{3(h+3\beta R)}.
+}
+\tag{190.5}
+$$
+
+否则存在唯一 $\lambda>0$ 满足
+
+$$
+\left(\frac{g\delta}{\beta\delta+8\lambda}\right)^2
++\left(\frac{4h}{h+3\beta R+12\lambda}\right)^2=1,
+\tag{190.6}
+$$
+
+且两项中的分式分别是 $x_h,y_h$。
+

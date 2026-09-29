@@ -3,6 +3,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>StrataLint.Scribe.Documents</RootNamespace>
     <AssemblyName>StrataLint.Scribe.Documents</AssemblyName>
+    <!-- The Blueprint definitions exceed the 2^24-byte user-string heap (CS8103); string literals
+         of at least 100 characters are emitted to data sections instead. -->
+    <Features>$(Features);experimental-data-section-string-literals=100</Features>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../Blueprint/**/*.scribe.cs" LinkBase="Definitions" />

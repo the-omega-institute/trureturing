@@ -1,0 +1,106 @@
+**定理 233.3（二阶分界与一阶切线路径）。** 令 $\alpha=a_*$。分界曲线还满足
+
+$$
+a_{\rm c}(s)=\alpha+\Gamma_*s+\beta_*s^2+O(s^3),\qquad
+\beta_* =\frac{1490\alpha^2+2033\alpha+676}{121}>0.
+\tag{233.12}
+$$
+
+因此对路径 $a_s=\alpha+\Gamma_*s$，所有充分小正 $s$ 的实、复最小维数均为四，包含第231节未判定的一阶切线情形。
+
+证明。 先在一般 $a$ 附近把第214节的三次式展开至所需阶数。写 $Q(h)=-\partial_rP_{a,r}(h)|_{r=1}$，则
+
+$$
+Q'(c)=2a(1+a)(12a^2+10a+1).
+$$
+
+将 $h_1=c-Ks+Ls^2+O(s^3)$ 代入，$s^3$ 系数给出 $2(c-1)L+K^2+Q'(c)=0$，从而
+
+$$
+\begin{aligned}
+L&=-\frac{a(16a^3+4a^2-8a-1)}{(1-2a)^2},\\
+\lambda&=2a+\ell_1s+\ell_2s^2+O(s^3),\\
+\ell_1&=-\frac{K}{2a(1+a)},\qquad
+\ell_2=\frac{4a(1-a)}{(1+a)(1-2a)^2},\\
+\mu&=1-Ms^2+O(s^4),\qquad
+M=\frac{(1-a)(1+2a)^2}{(1+a)(1-2a)^2}.
+\end{aligned}
+\tag{233.13}
+$$
+
+正签名的系数可直接由 $\lambda=[h_1(r+2a)-a]/(h_1+ar)$ 得到，也可由 $\lambda=\sqrt{(h_1^2-a^2)/(h_1-a^2)}/r$ 展开。两式相等依赖已经验证的实际根条件。
+
+置 $t=\sqrt{c(1-c)}$，将完整临界值展开为
+
+$$
+G(a,s)=\eta(a)+J_1(a)s+Z(a)s^2+O(s^3),
+\tag{233.14}
+$$
+
+其中
+
+$$
+\begin{aligned}
+\eta(a)&=2ac-\sigma t-a,\\
+J_1(a)&=-K\left[2a-\frac{\sigma(1-2c)}{2t}
++\frac{c+2at/\sigma}{2a(1+a)}\right].
+\end{aligned}
+\tag{233.15}
+$$
+
+二阶项还须计入鞍点移动。令 $A=1-\alpha-1/[2(1+2\alpha)]$、$B=2-A$，以下带星或未注明自变量的系数均取 $a=\alpha$。在负 $y$ 图中，完整矩在 $z,w$ 的线性项为
+
+$$
+-\sqrt{2M}\,C\,sz+\sqrt2\,C\,sw,
+\qquad C=\sigma_*\sqrt{c_*}+2\alpha\sqrt{1-c_*}=\sqrt{c_*}.
+\tag{233.16}
+$$
+
+与 $Az^2-Bw^2$ 配方后，临界值相对原点值增加 $\tfrac{c_*}{2}(1/B-M/A)s^2$。对原点的矩 $\lambda p-\sqrt{1-\lambda^2}\sqrt{p(1-p)}-a$ 求二阶导数；在基点混合 $p,\lambda$ 导数为零，且其两个一阶导数分别为 $1/(2\alpha),1+\alpha$。代入（233.13），得
+
+$$
+Z(\alpha)=\frac{L}{2\alpha}
++\frac{\sigma_*K_*^2}{8\alpha^3}
++(1+\alpha)\ell_2
++\frac{\alpha\ell_1^2}{2\sigma_*^3}
++\frac{c_*}{2}\left(\frac1B-\frac MA\right).
+\tag{233.17}
+$$
+
+遗漏最后的正项 $c_*/(2B)$ 就只是在旧 $w=0$ 截面上取极小，不能得到完整临界值。
+
+对（233.15）求导，再用 $4\alpha^3+4\alpha^2=1$ 化简，可逐项得到
+
+$$
+\begin{aligned}
+e_*&=2\alpha^2+4\alpha+3,\\
+\eta''(\alpha)&=16\alpha^2+30\alpha+13,\\
+\Gamma_*^2&=\frac8{11}(4\alpha^2+3\alpha+1),\\
+J_1'(\alpha)\Gamma_*&=-\frac{20}{11}(56\alpha^2+81\alpha+34),\\
+Z(\alpha)&=\frac{552\alpha^2+824\alpha+359}{22}.
+\end{aligned}
+\tag{233.18}
+$$
+
+因此沿一阶切线，
+
+$$
+\begin{aligned}
+G(\alpha+\Gamma_*s,s)
+&=\left[\frac12\eta''(\alpha)\Gamma_*^2
++J_1'(\alpha)\Gamma_*+Z(\alpha)\right]s^2+O(s^3)\\
+&=-\frac{1256\alpha^2+1736\alpha+689}{22}s^2+O(s^3).
+\end{aligned}
+\tag{233.19}
+$$
+
+把 $a_{\rm c}(s)=\alpha+\Gamma_*s+\beta_*s^2+O(s^3)$ 代回 $G=0$，得到
+
+$$
+\beta_*=
+\frac{1256\alpha^2+1736\alpha+689}{22e_*}
+=\frac{1490\alpha^2+2033\alpha+676}{121}>0.
+$$
+
+符号直接来自 $\alpha>0$，不依赖数值取样。故一阶切线严格位于实际分界下方，定理233.2给出实四维达到。证毕。
+

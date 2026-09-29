@@ -1,4 +1,3 @@
-using StrataLint.Tests;
 using StrataLint.EngineeringScope;
 
 namespace StrataLint.ArchitectureTests;

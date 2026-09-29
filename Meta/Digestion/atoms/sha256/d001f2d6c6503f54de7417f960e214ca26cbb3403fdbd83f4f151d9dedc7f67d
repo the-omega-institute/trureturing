@@ -1,0 +1,12 @@
+**定义 69.1（标量余量证书的校准半径）。** 对固定名义仪器，定义
+
+$$
+\mathfrak r_{\mathrm{cert}}
+=\sup\left\{
+\frac{\lambda_{\min}(B-\widehat{\mathcal A}B)}{\|B\|_\infty}:
+B\ge0,\ B\ne0,\ \lambda_{\min}(B-\widehat{\mathcal A}B)>0
+\right\},
+$$
+
+若集合为空则取零。每个集合元素认证严格小于它的完整仪器校准距离；它是这一类证书的半径，不定义为仪器实际失去终止性的最小距离。
+

@@ -1,0 +1,10 @@
+**引理155.3（实际通道与外围相位通道的距离）。** 对全部 $n\ge0$，
+
+$$
+\boxed{
+\frac12\|\mathcal R_n-\mathcal R_{g^n}\|_\diamond
+\le\sqrt D\,B\,\kappa^{\lfloor n/L\rfloor}.
+}
+\tag{155.10}
+$$
+

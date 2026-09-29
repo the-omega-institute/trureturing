@@ -1,0 +1,10 @@
+**命题 4.5.2（有限层和整体距离的界）。** 对 $N\ge1$，
+$$
+T_n\le T_{n+1}\le d_{\mathrm{TV}}(\alpha,\beta),\qquad
+d_{\mathrm{obs}}\le d_{\mathrm{TV}}(\alpha,\beta),
+$$
+$$
+2^{-N}T_N\le d_{\mathrm{obs}}
+\le(1-2^{-N})T_N+2^{-N},\qquad T_N\le2^N d_{\mathrm{obs}}.
+$$
+

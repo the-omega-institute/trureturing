@@ -1,0 +1,21 @@
+**推论 47.4（固定截止的实际运行成本不能统一逼近完整均值）。** 截止于第 $m\ge1$ 轮的运行成本为 $\min\{\mathsf N,m\}$，其均值满足
+
+$$
+\boxed{
+\mathbb E_\gamma\min\{\mathsf N,m\}
+=2-(1-\gamma)^{m-1}\quad(0\le\gamma\le1).
+}
+$$
+
+该函数对参数连续，但对任意固定 $m$，
+
+$$
+\sup_{0\le\gamma\le1}
+\left(\mathbb E_\gamma\mathsf N
+-\mathbb E_\gamma\min\{\mathsf N,m\}\right)=1.
+$$
+
+证明。整数等待时间的截断期望是 $\sum_{k=0}^{m-1}s_k$，其中 $s_0=1$。代入第 47.1 条求和；零参数下式值也为一。对正参数，完整均值与截断均值的差为 $(1-\gamma)^{m-1}$，上确界为一；零参数下差为零。$\square$
+
+这个运行成本与第 43 节的 $\mathbb E[\mathsf N\mathbf1_{\{\mathsf N\le m\}}]$ 不同：后者把未结束轨迹记为零，前者把已经执行的 $m$ 轮如实计入。两种都不应与只报告完成样本的条件均值混写。
+

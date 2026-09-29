@@ -70,8 +70,11 @@ def _verified_file(directory, item, copy_to):
         digest, mode = copy_hash(path, copy_to / name)
     actual = {"path": name, "sha256": digest, "mode": mode}
     if actual != item:
-        raise CacheMaterialDifference(f"cache material integrity mismatch: {name}",
-            "mode-changed" if mode != item["mode"] else "content-changed", name)
+        reason = "mode-changed" if mode != item["mode"] else "content-changed"
+        raise CacheMaterialDifference(
+            f"cache material integrity mismatch: {name}; reason={reason}; "
+            f"expected_mode={item['mode']:04o}; actual_mode={mode:04o}; "
+            f"expected_sha256={item['sha256']}; actual_sha256={digest}", reason, name)
     return actual
 
 

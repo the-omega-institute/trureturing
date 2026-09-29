@@ -1,0 +1,30 @@
+### 22.12 推论：改变位权的平均化与极限次序
+
+对 $0<r<1$、$0\leq\alpha<1$、$0\leq x<1$，式 (22.21) 给出
+\[
+G_r(\alpha,x)-\alpha
+=\sum_{k=1}^{\infty}a_k\bigl(x-\{x+k\alpha\}\bigr).
+\]
+由于 $\sum a_k=1-r$，得到
+\[
+\boxed{(1-r)(x-1)\leq G_r(\alpha,x)-\alpha\leq(1-r)x,
+\qquad |G_r(\alpha,x)-\alpha|\leq1-r.}
+\tag{22.25}
+\]
+因此 $r\uparrow1$ 时，完成读出对斜率、相位一致趋于 $\alpha$。这里改变的是位权本身，固定二进制比率 $r=1/2$ 的读出不包含这个极限。
+
+另一方面，固定有限 $n$ 时，每个权重 $(1-r)r^j$ 随 $r\uparrow1$ 趋于零，因此 $P_{r,n}(\alpha,x)\to0$。故
+\[
+\lim_{r\uparrow1}\lim_{n\to\infty}P_{r,n}(\alpha,x)=\alpha,
+\qquad
+\lim_{n\to\infty}\lim_{r\uparrow1}P_{r,n}(\alpha,x)=0.
+\tag{22.26}
+\]
+这两个极限在 $\alpha>0$ 时不同。若同时改变参数、位权和记录长度，对任意 $0\leq\beta<1$，三角不等式、式 (22.14) 与式 (22.25) 给出逐相位预算
+\[
+\boxed{|P_{r,n}(\beta,x)-\alpha|
+\leq r^n+(1-r)+|\beta-\alpha|.}
+\tag{22.27}
+\]
+所以 $\beta\to\alpha$、$r\uparrow1$、$r^n\to0$ 是一种明确的联合收敛方案。`geometric_readout_uniform_slope_bound` 从累计机械词误差的精确分数部分式和有限分部求和证明式 (22.25) 的单侧界，并与已证几何尾界结合给出式 (22.27)。固定 $r<1$ 时的前缀收敛由已证几何尾界推出，完成读出在 $r\uparrow1$ 时趋于 $\alpha$ 由式 (22.25) 推出，固定前缀趋于零由有限和的连续性推出；因此式 (22.26) 的两个迭代极限在 $\alpha>0$ 时不同。这些结论不宣称固定几何位权在参数上的一致连续性。
+

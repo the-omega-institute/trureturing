@@ -1,0 +1,13 @@
+**定理 248.2（饱和态的完整正常形）。** 在当前通道下，满足（248.4）的态，恰好是在参考本地等距换坐标后可写为
+$$
+\boxed{
+\theta P_{\Phi^+}\otimes\sigma_M
+\quad\oplus\quad
+\bigoplus_{s\in\Sigma}q_s P_{r_s}\otimes\tau_s,
+\qquad
+q_s\ge0,\quad\sum_s q_s=1-\theta.
+}
+\tag{248.22}
+$$
+$\sigma_M$ 与各正权重块中的 $\tau_s$ 为归一化密度矩阵；参考的 $Q\otimes M$ 与各 $E_s$ 两两正交。$P_{r_s}$ 表示（248.21）对应的纯量子比特态，零权重块可以省略。
+

@@ -292,5 +292,5 @@ affine values. This identifies the maximum of the reported certificate
 bounds, not an actual family attaining all source inequalities.
 
 Artifacts: [exact checker](../../frontier/j-geometry/j_face_triple_second_depth_heads.py),
-[dual proposer](../../frontier/cover-geometry/propose_j_face_triple_second_depth_heads.py), and
+[dual proposer](../../frontier/cover-geometry/propose-j-face-triple-second-depth-heads/propose_j_face_triple_second_depth_heads.py), and
 [certificate](../../certificates/source_norms/j-geometry/j_face_triple_second_depth_heads.json).

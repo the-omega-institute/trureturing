@@ -1,0 +1,38 @@
+**定理 9.3（有限预测时间的算术下界）。** 设 $0<\varepsilon<1/2$，置
+\[
+ a_\varepsilon=\frac{\arcsin\varepsilon}{\pi},\qquad
+ \Psi_\alpha(s)=\max_{1\le p\le s}\frac{p}{\|p\alpha\|_{\mathbb T}}.
+\]
+若一个 $s$ 状态自主预测器从某个固定初相位起，在 $0\le n\le H$ 内误差至多为 $\varepsilon$，则
+\[
+ H<s+a_\varepsilon\Psi_\alpha(s).
+\]
+若另有 $c>0$、$\nu\ge1$ 满足 $\|p\alpha\|_{\mathbb T}\ge c p^{-\nu}$ 对全部正整数 $p$ 成立，则
+\[
+ H<s+\frac{a_\varepsilon}{c}s^{\nu+1}.
+\]
+这些结论对允许任意复数输出常数的预测器仍成立。
+
+**证明。** 若 $H<s$，结论立即成立。否则有限确定性轨道有 $\mu\ge0,p\ge1$ 满足 $\mu+p\le s$，并从时刻 $\mu$ 起周期为 $p$。令
+\[
+ K=\left\lfloor\frac{H-\mu}{p}\right\rfloor\ge1.
+\]
+时刻 $\mu,\mu+p,\ldots,\mu+Kp$ 的预测输出相同。把每个真实输出与时刻 $\mu$ 的真实输出比较，由三角不等式得到
+\[
+ |1-\exp(2\pi i k p\alpha)|\le2\varepsilon,
+ \qquad \|kp\alpha\|_{\mathbb T}\le a_\varepsilon
+ \quad(1\le k\le K).
+\]
+置 $\delta=\|p\alpha\|_{\mathbb T}>0$，首先有 $\delta\le a_\varepsilon$。若 $K\delta>a_\varepsilon$，取最小 $j\le K$ 使 $j\delta>a_\varepsilon$，则
+\[
+ a_\varepsilon<j\delta\le a_\varepsilon+\delta
+ \le2a_\varepsilon<1-a_\varepsilon.
+\]
+这里 $a_\varepsilon<1/6$。由于 $p\alpha$ 模整数等于 $\delta$ 或 $-\delta$，上述区间迫使 $\|jp\alpha\|_{\mathbb T}>a_\varepsilon$，矛盾。因此 $K\delta\le a_\varepsilon$，从而
+\[
+ H<\mu+(K+1)p
+ \le s+a_\varepsilon\frac{p}{\|p\alpha\|_{\mathbb T}}
+ \le s+a_\varepsilon\Psi_\alpha(s).
+\]
+代入所给丢番图下界，并用 $p\le s$，即得第二个不等式。证毕。
+

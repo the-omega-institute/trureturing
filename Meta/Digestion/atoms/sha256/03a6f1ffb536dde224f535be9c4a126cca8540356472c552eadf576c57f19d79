@@ -1,0 +1,13 @@
+**定义 35.1（固定旋转轴的时变控制）。** 取在每个有限区间上有界且分段连续的实函数 $\gamma(t)\ge0$、$\omega(t)$，令
+\[
+ A(t)=\begin{pmatrix}-\gamma(t)&\omega(t)\\-\omega(t)&0\end{pmatrix},\quad
+ \dot F(t)=A(t)F(t),\quad F(0)=I_2,\quad
+ \Gamma(t)=\int_0^t\gamma(s)ds.
+\]
+经典过程为 $dX=A(t)Xdt+(\sqrt{2\gamma(t)},0)^{\mathsf T}dW$。量子过程为
+\[
+ \dot\rho=-i[(\omega(t)/2)\sigma_y,\rho]
+   +(\gamma(t)/2)(\sigma_z\rho\sigma_z-\rho),
+\]
+记从零时刻到 $t$ 的信道为 $\Phi_t$。控制预先给定且不依赖测量记录，外部 $R$ 无耦合；固定旋转轴与固定去相干轴是本定义的实质限制。
+

@@ -1,0 +1,4 @@
+**定义 855.1（Pareto 关系的准确对应）。** 项目 [ParetoWeakPreorder](../../../D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.lean) 的 `GainVector` 有三个收益坐标与两个负担坐标，`ParetoWeak` 对收益和负担使用相反的比较方向。此处将前三个收益设为常量，把两个负担分别取为来源熵与共同信息，就得到本批使用的逐坐标最小化关系。这里借用的是次序结构，不把互信息解释为该模块日常名称中的风险。
+
+该源码的 `pareto_weak_reflexive_transitive` 提供一般自反与传递关系；它不提供本批曲线公式、最优表示或严格递减性。后者由第 842—849 节的概率关系和解析推导承担。不同成本坐标不可比较时，一个任意总排序不能被反称为已经发现唯一最优解释。
+

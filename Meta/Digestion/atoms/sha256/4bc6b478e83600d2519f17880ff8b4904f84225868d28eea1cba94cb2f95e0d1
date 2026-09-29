@@ -1,0 +1,31 @@
+**推论100.2（同一固定酉的延拓）。** 设 $I_0,I_1\subset K$，并已给定等距
+
+$$
+J_i:I_i\longrightarrow X,
+\qquad E_i=J_i(I_i),\qquad E_0\perp E_1.
+$$
+
+存在固定酉 $W:K\otimes\mathbb C^2\to X$，同时满足
+
+$$
+W(x\otimes|i\rangle)=J_ix\quad(x\in I_i),
+$$
+
+以及
+
+$$
+W(K\otimes|0\rangle)\cap S_z=0,
+\tag{100.4}
+$$
+
+当且仅当（100.3）成立。
+
+**证明。** 必要性取 $R_0=W(K\otimes|0\rangle)$ 并应用定理100.1。充分性先由该定理选 $R_0$，置 $R_1=R_0^\perp$。对每个 $i$，已给等距 $J_i:I_i\to E_i\subset R_i$ 的定义域补空间与目标补空间维数相同，均为 $n-\dim I_i$；选择两者之间的酉，将 $J_i$ 扩为满等距 $\widetilde J_i:K\to R_i$。由于 $R_0,R_1$ 正交且覆盖 $X$，定义
+
+$$
+W(x_0\otimes|0\rangle+x_1\otimes|1\rangle)
+=\widetilde J_0x_0+\widetilde J_1x_1
+$$
+
+即得固定酉及（100.4）。这里没有在两个输入位上分别选择互不相容的输出空间；两次扩充使用同一个正交分解 $X=R_0\oplus R_1$。证明完毕。
+

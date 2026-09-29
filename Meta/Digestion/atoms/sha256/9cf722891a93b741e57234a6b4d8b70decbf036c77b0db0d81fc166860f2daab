@@ -1,0 +1,13 @@
+**定理 13.2（近似状态保持的定量中性界）。** 对上述数据有恒等式
+\[
+ \eta(T)^2=\|T(\bar c)-\bar c\|_2^2
+       +\operatorname{tr}\bigl((A-I)\Sigma(A-I)^{\mathsf T}\bigr),
+\]
+以及
+\[
+ \|(A-I)|_U\|_{\mathrm{op}}\le\eta(T)/\gamma,
+ \qquad
+ \|Av\|_2\ge(1-\eta(T)/\gamma)\|v\|_2\quad(v\in U).
+\]
+特别地，$\eta(T)=0$ 强制 $A|_U=I$。
+

@@ -1,0 +1,63 @@
+### 82.3 四个同源取等基本块
+
+固定任意已经给定的可逆 $A$，使用其同一组权重 $\mu,\nu$ 及同一二维 $F$。下面每个块都按（82.1）在实际 $Q\otimes J$ 的正交基中定义。记其接收维数、完整缺陷秩和最大纤维秩为 $(q,d,r)$。
+
+第一类为第76节的三维加权块：
+$$
+L_0=
+\begin{pmatrix}
+\sqrt\mu&0&0\\
+0&0&0\\
+0&\mu\sqrt{s/\Delta}&0
+\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}
+0&0&0\\
+\sqrt\nu&0&0\\
+0&0&\nu\sqrt{s/\Delta}
+\end{pmatrix}.
+\tag{82.9}
+$$
+它的参数为 $(3,1,2)$，缺陷是秩一正交投影，每条非零纤维的秩为二。第76节（76.14）的直接块计算对当前任意固定 $A$ 适用。
+
+第二类为第72、80节的二维块：
+$$
+L_0=\begin{pmatrix}\sqrt\mu&0\\0&0\end{pmatrix},
+\qquad
+L_1=\begin{pmatrix}0&0\\\sqrt\nu&0\end{pmatrix}.
+\tag{82.10}
+$$
+它的参数为 $(2,1,1)$，缺陷也是秩一正交投影。确实，在正交接收基 $u_0,u_1$ 中，其缺陷为 $hh^*$，其中
+$$
+h=\frac{\sqrt\mu\,u_1\otimes e_0-\sqrt\nu\,u_0\otimes e_1}{\sqrt s},
+\qquad \|h\|=1.
+$$
+纤维的第一列为 $\sqrt\mu\,z_0u_0+\sqrt\nu\,z_1u_1$，第二列为零，所以每条非零纤维秩一。
+
+第三类为一维接收块，取
+$$
+L_0=\sqrt\mu,\qquad L_1=0.
+$$
+其完整输出 Gram 矩阵与缺陷为
+$$
+MM^*=\operatorname{diag}(1,\mu/s),\qquad
+I-MM^*=\operatorname{diag}(0,\nu/s).
+\tag{82.11}
+$$
+因 $0<\mu/s<1$，该块参数为 $(1,1,1)$。纤维系数为 $\sqrt\mu\,z_0$，只在射线 $e_1$ 上降为零。
+
+第四类也为一维接收块，取
+$$
+L_0=\sqrt\mu/2,\qquad L_1=0.
+$$
+此时
+$$
+MM^*=\operatorname{diag}(1/4,\mu/(4s)),\qquad
+I-MM^*=\operatorname{diag}(3/4,1-\mu/(4s)).
+\tag{82.12}
+$$
+缺陷严格正定，故该块参数为 $(1,2,1)$；纤维系数为 $\sqrt\mu\,z_0/2$。
+
+四类块的完整缺陷全部为正，且加权系数式保证它们保持所有二次纤维。四类块在同一射线 $z=e_0$ 上都同时达到各自最大纤维秩，所以后面的正交直接和确实同时实现各项秩之和。
+

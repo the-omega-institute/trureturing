@@ -1,0 +1,8 @@
+**定理 8.1（精确计数未来商）。** 在第 8.1.1 节协议下，对任意 $H,H'\subseteq X_L$，
+$$
+H\equiv_M H'
+\quad\Longleftrightarrow\quad
+\forall c\pmod D,\ N_c(H)=N_c(H').
+\tag{ER8.FH.5}
+$$
+

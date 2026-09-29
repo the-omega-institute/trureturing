@@ -1,0 +1,59 @@
+### 217.2 零噪声受限最优面的全局几何
+
+$\mathcal K_{11}$ 紧，且不依赖 $p$。在零噪声、零实际来源时，完整参考误差精确为
+$$
+\lambda(J)=1-\frac{A_0A_1}{A_0+A_1}\ge\frac34.
+\tag{217.8}
+$$
+分母为零时取误差为一。由共同 TP，有
+$A_0+A_1\le1$。等号 $\lambda=3/4$ 当且仅当
+$$
+A_0=A_1=\frac12,\qquad C_0=C_1=0.
+\tag{217.9}
+$$
+记此零噪声最优面为 $\mathcal F$。
+
+在 $\mathcal K_{11}\cap\mathcal F$ 上，每个 Choi 秩恰为一。固定主 Kraus 的相位使 $a_j=1/\sqrt2$，则
+$$
+c_j=0,\qquad b_1=-b_0,\qquad
+2|b_0|^2+|d_0|^2+|d_1|^2=1.
+\tag{217.10}
+$$
+因此该集合与上述加权五维实球面一一对应，且这是整个受限最优面，不只是一张局部图。
+
+记真实环境函数的一阶冻结系数为
+$$
+L_{h,\nu}(J)
+=\left.
+\frac{\partial}{\partial\epsilon}
+e(\epsilon h,\epsilon,\gamma(\nu),J)
+\right|_{\epsilon=0}.
+\tag{217.11}
+$$
+在中心 $h=\nu=0$，第213节的平方恒等式限制到整个球面给
+$$
+\boxed{
+L_{0,0}(J)-\Phi_*
+=\frac{\beta\delta}{4}|b_0-i/\sqrt2|^2
++\frac{\beta R}{4}(|d_0|^2+|d_1|^2),
+\qquad \Phi_*=-\frac{\beta\delta}{4}.
+}
+\tag{217.12}
+$$
+这是整个球面上的代数恒等式。也可直接由
+$$
+L_{0,0}
+=\frac{\beta(R+1)}8-\frac{\beta(R+1)}4|b_0|^2
+-\frac{\beta\delta}{2\sqrt2}\operatorname{Im}b_0
+$$
+及（217.10）核对。
+
+因为两项权重严格正，唯一极小点是
+$$
+K_0^*=\frac1{\sqrt2}\begin{pmatrix}1&i\\0&0\end{pmatrix},
+\qquad
+K_1^*=\frac1{\sqrt2}\begin{pmatrix}1&-i\\0&0\end{pmatrix}.
+\tag{217.13}
+$$
+平方型在六维环境实空间正定，限制到五维球面切空间仍正定。因此该球面极小点的 Hessian 正定，尽管两份单独的 $K_j^*$ 都不可逆。
+

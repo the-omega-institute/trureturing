@@ -1,0 +1,37 @@
+**命题 507.1（具有容量余量时的扰动保证）。** 保持同一个 $I,X$，原目标族满足 $0<r<M$、$\rho>0$。取一组原来的精确覆盖权重，总权重为 $W$。设扰动后仍为概率的 $Q'_i$ 满足
+
+$$
+\max_i\operatorname{TV}(Q'_i,Q_i)\le\delta,
+\qquad
+0\le\delta<\min\left\{\rho,\frac{M-r}{d}\right\}.
+$$
+
+以撇号记新目标族的共同容量、自由半径与受限半径。则新族精确新增边缘可行、自由误差严格为正，并有
+
+$$
+2\le\frac{j'_{\mathrm{exact}}}{j'_{\mathrm{free}}}
+\le2\left(W+\frac{2d\delta}{\rho-\delta}\right).
+$$
+
+证明：有限概率的单个坐标差不超过 TV，所以 $|Q'_i(x)-Q_i(x)|\le\delta$。对有限族取最小值得 $|l'(x)-l(x)|\le\delta$，求和得到
+
+$$
+M'\ge M-d\delta>r.
+$$
+
+三角不等式又使每个候选中心的两份最坏距离相差至多 $\delta$，因此 $|\rho'-\rho|\le\delta$，特别有 $\rho'\ge\rho-\delta>0$。
+
+若原来 $i$ 在坐标 $x$ 达到最小值，则
+
+$$
+Q'_i(x)\le Q_i(x)+\delta=l(x)+\delta\le l'(x)+2\delta.
+$$
+
+故原精确覆盖权重仍覆盖新族的 $2\delta$ 近似最小值集合。命题 506.2 对新族给出
+
+$$
+1-M'\le W\rho'+2d\delta.
+$$
+
+新族可行时仍有 $\rho'_r\le1-M'$，除以正的 $\rho'$ 并用其下界即可。下界二沿用受限集合包含关系。证毕。
+

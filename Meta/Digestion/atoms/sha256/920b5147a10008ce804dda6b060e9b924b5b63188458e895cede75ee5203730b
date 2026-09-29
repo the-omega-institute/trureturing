@@ -1,0 +1,34 @@
+### 55.7 正插值障碍的具体位置
+
+$R$ 是秩一且非因果。若 $0\preceq T\preceq R$，则 $T=cR$；若另要求 $T$ 为非零正的因果梳倍数，$c>0$ 会使 $R$ 自身满足因果偏迹，与式（55.9）矛盾。因此它没有非零的正因果下包络，尽管最小反馈响应为 $3/4$。
+
+比“没有正下包络”更强的结论是定理 55.3：即使允许任意非线性的因果替代表选择，也不能达到归一化缺陷本身。两份极端反馈 $Q_+,Q_-$ 的同时饱和，分别强制修复算符的秩一压缩和负方向因果上界的零余量；正性最终不能容纳原候选的矩阵元 $\langle x|R|y\rangle=\sqrt3/2$。
+
+一般的策略上界质量构造仍给此例
+
+$$
+\frac14<\min_S D(R,S)\le\frac25.
+\tag{55.28}
+$$
+
+这个上界也有本例内的直接构造。对任意 $0<\varepsilon\le1/4$，令
+
+$$
+T=R_\varepsilon
++\varepsilon|0,1,0\rangle\langle0,1,0|
++\varepsilon|1,0,0\rangle\langle1,0,0|.
+$$
+
+则 $T\succeq R_\varepsilon$，且
+$\operatorname{Tr}_D T=I_A\otimes\operatorname{diag}(1,\varepsilon)$，所以 $S=T/(1+\varepsilon)$ 因果且归一化。正向事件差由 $R_\varepsilon-S\preceq\varepsilon S$ 控制为 $\varepsilon$；负向使用
+
+$$
+S-R_\varepsilon\preceq\frac{T-R_\varepsilon}{1+\varepsilon},
+\qquad
+\operatorname{Tr}((T-R_\varepsilon)\widehat C)
+=1+\varepsilon-\operatorname{Tr}(R_\varepsilon\widehat C)
+\le2\varepsilon,
+$$
+
+得到 $D(R_\varepsilon,S)\le2\varepsilon/(1+\varepsilon)$，在 $\varepsilon=1/4$ 时即为 $2/5$。未将该上界或任何数值解宣称为本例的精确最优值。最小接口去掉 $D$ 后，保留下来的 $M$ 可以按尖锐修复定理达到 $1/4$；式（55.12）说明保留末输出及其相干后，边缘结论不能直接提升为完整梳的同系数结论。
+

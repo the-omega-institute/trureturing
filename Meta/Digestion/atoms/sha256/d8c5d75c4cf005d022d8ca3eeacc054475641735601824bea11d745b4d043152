@@ -1,0 +1,48 @@
+**维数一。** 编码丢弃整个档案，解码准备
+
+$$
+\tau_{EC}=\frac{I_E}{r}\otimes\operatorname{diag}b,
+\qquad r=4,\quad\kappa=1/r^2.
+\tag{49.24}
+$$
+
+先看初始 Bell 输入。恢复态是
+$I_{AE}/r^2\otimes\operatorname{diag}b$。在目标端点最大纠缠向量张成的一维空间上，目标减恢复的矩阵是
+
+$$
+|\psi^a_\theta\rangle\langle\psi^a_\theta|
+-\frac1{r^2}\operatorname{diag}b;
+\tag{49.25}
+$$
+
+端点正交补上的所有块都非正。引理49.2给完整差算子唯一正特征值 $e_1$。完整差算子迹为零，故半迹误差恰为 $e_1$，与相位无关。
+
+还须证明这个实际擦除码对任意来源输入和参考的误差都不超过 $e_1$。可以证明更强的陈述：固定 $\dim E=r$，对任意参考系统 $A$、任意纯态 $|\zeta\rangle_{AE}$，其钟仍为独立的 $|\psi^a_\theta\rangle$ 时，（49.24）的误差不超过最大纠缠输入的误差。
+
+取 Schmidt 概率 $\lambda_1,\ldots,\lambda_r$，缺项补零。目标减恢复为
+
+$$
+|\zeta\rangle\langle\zeta|\otimes
+|\psi^a_\theta\rangle\langle\psi^a_\theta|
+-\zeta_A\otimes\frac{I_E}{r}\otimes\operatorname{diag}b.
+\tag{49.26}
+$$
+
+这是迹零的秩一正算子减去正算子，且 $r=4$ 时不为零，因而有且只有一个正特征值 $t$；它就是半迹误差。在 Schmidt 基与钟坐标中，正特征值方程由秩一扰动直接给出：若 $u$ 是目标单位向量、$T$ 是被减去的正算子，则正特征向量必须正比于 $(tI+T)^{-1}u$，并满足 $\langle u,(tI+T)^{-1}u\rangle=1$。因此这里有
+
+$$
+\sum_{i=1}^r\sum_\ell
+\frac{\lambda_i a_\ell}{t+\lambda_i b_\ell/r}=1.
+\tag{49.27}
+$$
+
+对任意固定 $t>0$、$c\ge0$，函数 $z\mapsto z/(t+cz)$ 在非负半轴上凹。由 $\sum_i\lambda_i=1$，Jensen 不等式给
+
+$$
+\sum_{i=1}^r\frac{\lambda_i}{t+\lambda_i b_\ell/r}
+\le\frac1{t+b_\ell/r^2}.
+\tag{49.28}
+$$
+
+把 $t=e_1$ 代入（49.27）的左侧，再用（49.28）与（49.16），所得值不超过一。该左侧随 $t>0$ 严格下降，所以其根不大于 $e_1$。混合态由半迹范数凸性得到同一上界。实际来源（49.1）是上述输入集合的子集，且包含最大纠缠 $AE$ 输入；故该码的完整最坏误差正好为 $e_1$。
+

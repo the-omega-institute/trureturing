@@ -1,0 +1,899 @@
+{
+  "filtered_control": {
+    "G": 2,
+    "H": 3,
+    "M": 3,
+    "all_full_event_vectors_match": false,
+    "all_retained_event_vectors_match": true,
+    "discarded_originals": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "event_coordinates_checked": 1440,
+    "event_vector_sha256": "4afdbb13e90dcbffea21c7eacc0d0140af556c331f92dce392dced9172429fcf",
+    "filtered": true,
+    "live_transport_points": 8,
+    "old_to_new": {
+      "0": 0,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7
+    },
+    "original": [
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        23,
+        40
+      ],
+      [
+        7,
+        24
+      ],
+      [
+        119,
+        200
+      ],
+      [
+        119,
+        120
+      ],
+      [
+        399,
+        600
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        1,
+        10
+      ],
+      [
+        7,
+        20
+      ],
+      [
+        4,
+        25
+      ],
+      [
+        9,
+        50
+      ],
+      [
+        39,
+        100
+      ],
+      [
+        13,
+        15
+      ]
+    ],
+    "original_count": 15,
+    "original_modulus_sum": 1223,
+    "original_period": 600,
+    "original_private_counts": [
+      208,
+      68,
+      16,
+      10,
+      1,
+      1,
+      1,
+      1,
+      10,
+      10,
+      10,
+      1,
+      1,
+      1,
+      0
+    ],
+    "original_private_witnesses": [
+      2,
+      17,
+      3,
+      23,
+      199,
+      519,
+      599,
+      399,
+      15,
+      71,
+      47,
+      279,
+      159,
+      39,
+      null
+    ],
+    "output": [
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        7,
+        16
+      ],
+      [
+        7,
+        24
+      ],
+      [
+        15,
+        32
+      ],
+      [
+        47,
+        48
+      ],
+      [
+        63,
+        96
+      ]
+    ],
+    "output_count": 8,
+    "output_modulus_sum": 230,
+    "output_multiplicity_histogram": {
+      "1": 92,
+      "2": 4
+    },
+    "output_period": 96,
+    "output_private_counts": [
+      48,
+      24,
+      12,
+      4,
+      1,
+      1,
+      1,
+      1
+    ],
+    "outside_live_discarded_event_hits": 29,
+    "q": 5,
+    "r": 2,
+    "retained_event_coordinates_checked": 768,
+    "source_map_images": 96,
+    "theta_rows": [
+      {
+        "forbidden": [],
+        "live_M": [],
+        "low_labels": [],
+        "theta": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            16,
+            22,
+            21,
+            2
+          ]
+        ],
+        "u": 0
+      },
+      {
+        "forbidden": [],
+        "live_M": [],
+        "low_labels": [],
+        "theta": [
+          [
+            0
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            8,
+            7,
+            13
+          ]
+        ],
+        "u": 1
+      },
+      {
+        "forbidden": [],
+        "live_M": [],
+        "low_labels": [],
+        "theta": [
+          [
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            13,
+            19,
+            18,
+            24
+          ]
+        ],
+        "u": 2
+      },
+      {
+        "forbidden": [],
+        "live_M": [],
+        "low_labels": [],
+        "theta": [
+          [
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            24,
+            0,
+            4,
+            5
+          ]
+        ],
+        "u": 3
+      },
+      {
+        "forbidden": [],
+        "live_M": [],
+        "low_labels": [],
+        "theta": [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            5,
+            11,
+            10,
+            16
+          ]
+        ],
+        "u": 4
+      },
+      {
+        "forbidden": [],
+        "live_M": [],
+        "low_labels": [],
+        "theta": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            16,
+            22,
+            21,
+            2
+          ]
+        ],
+        "u": 5
+      },
+      {
+        "forbidden": [],
+        "live_M": [],
+        "low_labels": [],
+        "theta": [
+          [
+            0
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            8,
+            7,
+            13
+          ]
+        ],
+        "u": 6
+      },
+      {
+        "forbidden": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12,
+          14,
+          15,
+          16,
+          17,
+          20,
+          21,
+          22
+        ],
+        "live_M": [
+          0,
+          2
+        ],
+        "low_labels": [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "theta": [
+          [
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            13,
+            19,
+            18,
+            24
+          ]
+        ],
+        "u": 7
+      }
+    ],
+    "transport_carrier": 96
+  },
+  "fixture_pair_probes": [],
+  "negative_controls": [
+    {
+      "case": "even-not-authorized",
+      "diagnostic": "even input forbidden"
+    },
+    {
+      "case": "removed-needed-label",
+      "diagnostic": "not whole cover"
+    },
+    {
+      "case": "repeated-original-modulus",
+      "diagnostic": "distinct originals"
+    },
+    {
+      "case": "reversed-primes",
+      "diagnostic": "ordered primes required"
+    },
+    {
+      "case": "absent-source-prime",
+      "diagnostic": "missing source prime"
+    },
+    {
+      "case": "unfiltered-strict-control",
+      "diagnostic": "strong tree premise"
+    }
+  ],
+  "positive_control": {
+    "G": 2,
+    "H": 3,
+    "M": 3,
+    "all_full_event_vectors_match": true,
+    "all_retained_event_vectors_match": true,
+    "discarded_originals": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "event_coordinates_checked": 1344,
+    "event_vector_sha256": "fff40a226c89fb538bfeaa0f7453fd1c309709bc4c7a8b5bed6ff73bcc4b3fcd",
+    "filtered": false,
+    "live_transport_points": 8,
+    "old_to_new": {
+      "0": 0,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7
+    },
+    "original": [
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        23,
+        40
+      ],
+      [
+        7,
+        24
+      ],
+      [
+        119,
+        200
+      ],
+      [
+        119,
+        120
+      ],
+      [
+        399,
+        600
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        1,
+        10
+      ],
+      [
+        7,
+        20
+      ],
+      [
+        4,
+        25
+      ],
+      [
+        9,
+        50
+      ],
+      [
+        39,
+        100
+      ]
+    ],
+    "original_count": 14,
+    "original_modulus_sum": 1208,
+    "original_period": 600,
+    "original_private_counts": [
+      228,
+      78,
+      21,
+      10,
+      1,
+      1,
+      1,
+      1,
+      10,
+      10,
+      10,
+      1,
+      1,
+      1
+    ],
+    "original_private_witnesses": [
+      2,
+      13,
+      3,
+      23,
+      199,
+      519,
+      599,
+      399,
+      15,
+      71,
+      47,
+      279,
+      159,
+      39
+    ],
+    "output": [
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        7,
+        16
+      ],
+      [
+        7,
+        24
+      ],
+      [
+        15,
+        32
+      ],
+      [
+        47,
+        48
+      ],
+      [
+        63,
+        96
+      ]
+    ],
+    "output_count": 8,
+    "output_modulus_sum": 230,
+    "output_multiplicity_histogram": {
+      "1": 92,
+      "2": 4
+    },
+    "output_period": 96,
+    "output_private_counts": [
+      48,
+      24,
+      12,
+      4,
+      1,
+      1,
+      1,
+      1
+    ],
+    "outside_live_discarded_event_hits": 0,
+    "q": 5,
+    "r": 2,
+    "retained_event_coordinates_checked": 768,
+    "source_map_images": 96,
+    "theta_rows": [
+      {
+        "forbidden": [
+          0,
+          4,
+          5,
+          10,
+          15,
+          20
+        ],
+        "live_M": [],
+        "low_labels": [
+          8,
+          11
+        ],
+        "theta": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            16,
+            22,
+            21,
+            2
+          ]
+        ],
+        "u": 0
+      },
+      {
+        "forbidden": [
+          0,
+          1,
+          4,
+          5,
+          6,
+          9,
+          10,
+          11,
+          15,
+          16,
+          20,
+          21
+        ],
+        "live_M": [],
+        "low_labels": [
+          8,
+          9,
+          11,
+          12
+        ],
+        "theta": [
+          [
+            0
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            8,
+            7,
+            13
+          ]
+        ],
+        "u": 1
+      },
+      {
+        "forbidden": [
+          0,
+          4,
+          5,
+          10,
+          15,
+          20
+        ],
+        "live_M": [],
+        "low_labels": [
+          8,
+          11
+        ],
+        "theta": [
+          [
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            13,
+            19,
+            18,
+            24
+          ]
+        ],
+        "u": 2
+      },
+      {
+        "forbidden": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12,
+          14,
+          15,
+          16,
+          17,
+          20,
+          21,
+          22
+        ],
+        "live_M": [],
+        "low_labels": [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "theta": [
+          [
+            0
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            24,
+            18,
+            19,
+            23
+          ]
+        ],
+        "u": 3
+      },
+      {
+        "forbidden": [
+          0,
+          4,
+          5,
+          10,
+          15,
+          20
+        ],
+        "live_M": [],
+        "low_labels": [
+          8,
+          11
+        ],
+        "theta": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            11,
+            17,
+            16,
+            22
+          ]
+        ],
+        "u": 4
+      },
+      {
+        "forbidden": [
+          0,
+          1,
+          4,
+          5,
+          6,
+          9,
+          10,
+          11,
+          15,
+          16,
+          20,
+          21
+        ],
+        "live_M": [],
+        "low_labels": [
+          8,
+          9,
+          11,
+          12
+        ],
+        "theta": [
+          [
+            0
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            22,
+            3,
+            2,
+            8
+          ]
+        ],
+        "u": 5
+      },
+      {
+        "forbidden": [
+          0,
+          4,
+          5,
+          10,
+          15,
+          20
+        ],
+        "live_M": [],
+        "low_labels": [
+          8,
+          11
+        ],
+        "theta": [
+          [
+            0
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            8,
+            7,
+            13
+          ]
+        ],
+        "u": 6
+      },
+      {
+        "forbidden": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12,
+          14,
+          15,
+          16,
+          17,
+          20,
+          21,
+          22
+        ],
+        "live_M": [
+          0,
+          2
+        ],
+        "low_labels": [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "theta": [
+          [
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            13,
+            19,
+            18,
+            24
+          ]
+        ],
+        "u": 7
+      }
+    ],
+    "transport_carrier": 96
+  },
+  "scope": "Even whole-cover controls only. The 14-class positive source is irredundant. The 15th class in the strict filtering control is deliberately redundant; it distinguishes the two sufficient premises only. Ordinary finite evidence; no all-odd cover or Lean result.",
+  "strict_strong_bad_u": [
+    3,
+    7
+  ]
+}

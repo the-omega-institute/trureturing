@@ -1,0 +1,50 @@
+### 250.1　实际支撑与完整矩阵读数
+
+固定§248的已标定参数 $A\ge B>0$，令
+$$
+b_0^2=B,\qquad b_0\ne0,\qquad \ell^2=A+B.
+\tag{250.1}
+$$
+在已知输入基中，两条效应差方向为
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X,
+\tag{250.2}
+$$
+其中 $X,Y,Z$ 为标准 Pauli 矩阵。$X,Z$ 在此基中为实，$Y^{\mathsf T}=-Y$。允许 $b_0<0$，不重标原设置或结果。
+
+取满足§248响应饱和条件的有限维联合态 $\Omega$，其形成纠缠为 $0<\theta<1$。给定三份实际矩阵数据
+$$
+\rho_E=\operatorname{Tr}_H\Omega,
+\qquad
+R_a=\operatorname{Tr}_H[(A_a\otimes I)\Omega],
+\qquad
+R_b=\operatorname{Tr}_H[(A_b\otimes I)\Omega].
+\tag{250.3}
+$$
+这些矩阵可以作为相应参考响应块的层析数据，但不等于一次实验所得的单个数值。本节的取得合同要求所声明的矩阵读数确实可用。
+
+先把参考限制到已知实际支撑
+$$
+E=\operatorname{supp}\rho_E.
+\tag{250.4}
+$$
+下文 $I_E$ 均指该占用支撑上的恒等算子。原环境中的未占用方向可在最后补零，不能把它们误作产品旗标空间。
+
+由§248正常形，量子块与产品符号块上的读数为
+$$
+\begin{aligned}
+\rho_E\big|_{\mathrm{ent}}
+&=\frac\theta2V(I_2\otimes\sigma_M)V^\dagger,\\
+R_w\big|_{\mathrm{ent}}
+&=\frac\theta2V(A_w^{\mathsf T}\otimes\sigma_M)V^\dagger,
+\qquad w=a,b,\\
+\rho_E\big|_s&=q_s\tau_s,
+\qquad
+R_w\big|_s=q_s s_w\sqrt A\,\tau_s.
+\end{aligned}
+\tag{250.5}
+$$
+这里仅保留正权重块，并把 $M$、各产品参考空间限制到相应密度矩阵的支撑。因此 $\sigma_M,\tau_s$ 在各自空间内严格正，且所有响应系数非零。$R_a,R_b$ 在整个实际支撑 $E$ 上均可逆。
+

@@ -1,0 +1,35 @@
+**证明：补空间选择的可行性。** 写 $e_i=\dim E_i$。由（102.4），
+
+$$
+\dim(T\cap S_z)
+=\dim T-\dim\pi(T)
+=(2n-e_1)-(n-b_z)=n-e_1+b_z.
+\tag{102.5}
+$$
+
+这个维数至少为 $b_z$，因为 $e_1\le n$；它也至少为 $a_z$，因为
+$E_0\cap S_z\subset T\cap S_z$。因此可在 $T\cap S_z$ 内选取一个 $h_z$ 维子空间 $L$，使
+
+$$
+E_0\cap S_z\subset L.
+\tag{102.6}
+$$
+
+另一方面，
+
+$$
+\dim\pi(E_0)=e_0-a_z.
+$$
+
+需要在 $\pi(T)$ 中选一个 $n-h_z$ 维空间包含它。若 $h_z=a_z$，则
+$e_0-a_z\le n-a_z=n-h_z$；若 $h_z=b_z$，则
+$\pi(E_0)\subset\pi(T)$ 及（102.4）给
+$e_0-a_z\le n-b_z=n-h_z$。同时 $h_z\ge b_z$，所以
+$n-h_z\le n-b_z=\dim\pi(T)$。两侧可选性都成立，故存在
+
+$$
+Y\subset\pi(T),\qquad
+\dim Y=n-h_z,\qquad \pi(E_0)\subset Y.
+\tag{102.7}
+$$
+

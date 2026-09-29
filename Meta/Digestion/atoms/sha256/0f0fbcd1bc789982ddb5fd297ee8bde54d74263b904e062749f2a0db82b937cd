@@ -1,0 +1,40 @@
+**定义 41.1（保持幅度，改变计数网格）。** 固定定义 39.1 的同一个 $`r,\alpha,P_j,Q_j`$，
+以及 $`\beta\in(1/2,1)`$、$`\vartheta\gt0`$。
+把 (39.3) 中的 $`\lambda=Q^3`$ 换成 $`\lambda=\lfloor\vartheta Q^2\rfloor`$，
+其余 $`N,M,k_0,l_0,z_0,q,\tau,\mathsf T`$ 按该式重新计算。
+补偿参数、实际得分、窗口 $`J`$、计数直线 $`\mathcal L`$ 与精确后验仍按 (39.4) 定义。
+令 $`W_c=W(k_0,l_0)`$，$`\Delta`$ 按 (39.18) 的精确得分差定义，并置
+
+```math
+B_0=\sqrt{q/\lambda},\qquad
+c_0=\frac1{4\pi\sqrt{ab}},\qquad
+c_t(\vartheta)=c_0\exp\left(-\frac{\kappa t^2}{2\vartheta}\right),\quad t\in\mathbb Z,
+\qquad
+\Gamma_\vartheta=\sum_{t\in\mathbb Z}c_t(\vartheta),\qquad
+F_\vartheta(x)=\frac1{\Gamma_\vartheta}\sum_{t\le x}c_t(\vartheta).
+```
+
+式 (41.1)。
+
+这里 $`a,b,\kappa`$ 保持 (39.2) 的固定值。对充分大下标，$`\Delta\gt0`$，定义
+
+```math
+Y_M^\vartheta=\frac1{B_0}\sum_{i\in J}(\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+L_M^\vartheta(x)=\frac1{B_0}\sum_{i\in J,\,W_i\le W_c+x\Delta}
+                         (\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+C_M^\vartheta(x)=L_M^\vartheta(x)-F_\vartheta(x)Y_M^\vartheta.
+```
+
+式 (41.2)。
+
+全部坐标使用同一实际数据、优先级和标签；未知方向时共同使用一次方向判决及工作正向权重。
+另取相互独立的 $`G_t^\vartheta\sim N(0,c_t(\vartheta))`$，定义
+
+```math
+Y_\vartheta=\sum_{t\in\mathbb Z}G_t^\vartheta,\qquad
+L_\vartheta(x)=\sum_{t\le x}G_t^\vartheta,\qquad
+C_\vartheta(x)=L_\vartheta(x)-F_\vartheta(x)Y_\vartheta.
+```
+
+式 (41.3)。
+

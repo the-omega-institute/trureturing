@@ -1,0 +1,2 @@
+**定理 2.40。** There is a uniformly computable family of permitted event presentations, all with complement mass $1/2$, for which one cylinder-extension query is the nonhalting predicate. Consequently no total uniform operator can take a permitted presentation and a valid name of its mass and return its extension characteristic function.
+

@@ -1,0 +1,12 @@
+**定理 12.2（自主状态增长与观察熵的精确指数接口）。** 对定义 12.1 的系统，
+\[
+ C_H(2\varepsilon)\le S_H(\varepsilon)
+                \le (H+1)C_H(\varepsilon),
+\]
+因而
+\[
+ \lim_{\varepsilon\downarrow0}\limsup_{H\to\infty}
+            H^{-1}\log S_H(\varepsilon)=h_o(F).
+\]
+若 $o$ 是到 $o[X]$ 的拓扑嵌入，则 $h_o(F)$ 等于采用相容度量 $d_Y(o(x),o(y))$ 定义的拓扑熵。
+

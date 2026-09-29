@@ -1,0 +1,7 @@
+**定义 34.1（二元去相干）。** 令 $U=U^\dagger$、$U^2=I$，其正负本征空间均非零，定义迹保持条件期望及其部分去相干
+\[
+ E_U(X)=\tfrac12(X+UXU),\qquad
+ \mathcal Z_{U,s}=s\operatorname{id}+(1-s)E_U,\quad0\le s\le1.
+\]
+附加记忆时全部映射替换为与 $\operatorname{id}_R$ 的张量积。相对于 $E_U$ 的缺陷是 $D(\rho\Vert E_U\rho)$，它保留 $E_U\rho$ 本身，通常不同于定义 33.1 的全局热替换缺陷。
+

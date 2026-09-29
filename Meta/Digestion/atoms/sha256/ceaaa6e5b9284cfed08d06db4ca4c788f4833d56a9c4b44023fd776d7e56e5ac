@@ -1,0 +1,66 @@
+**（三）零深度退相干反例。** 令 $d=d_1=2$、$k=1$、$n=0$，取
+
+$$
+q_1(t)=|0\rangle,
+\qquad
+q_2(t)=t|0\rangle+\sqrt{1-t^2}|1\rangle,
+\qquad 0\le t\le1,
+$$
+
+并写
+
+$$
+D_t\!\begin{pmatrix}a&b\\c&e\end{pmatrix}
+=\begin{pmatrix}a&tb\\tc&e\end{pmatrix}.
+$$
+
+则
+
+$$
+\mathcal A_0(t)=\{0\}\cup\{\operatorname{Ad}_U\circ D_t:U\in\mathcal U(2)\},
+$$
+
+且
+
+$$
+\min_U\|\operatorname{Ad}_U\circ D_t-\operatorname{id}\|_\diamond=1-t,
+$$
+
+$$
+ p_0(t)=\begin{cases}0,&t<1,\\1,&t=1,\end{cases}
+\qquad
+\eta_0(\delta,t)=\begin{cases}1,&\delta\ge1-t,\\0,&\delta<1-t.
+\end{cases}
+$$
+
+因此对每个 $0<\delta\le2$，
+
+$$
+\sup_{0\le t\le1}(\eta_0(\delta,t)-p_0(t))=1,
+$$
+
+而在 $\delta=0$ 时该上确界为零。
+
+证明。零深度只有确定性的末端拒绝或一个酉校正；没有可免费抽取的硬币，因此每个非零接受映射都保迹并有 $p=1$。令 $Z=|0\rangle\langle0|-|1\rangle\langle1|$、$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$。在矩阵单位上计算源重叠给出 $\Phi_{(t,I)}=D_t$，由零深度根等式得到所列 $\mathcal A_0(t)$。直接计算又得
+
+$$
+D_t=\frac{1+t}{2}\operatorname{id}
+ +\frac{1-t}{2}\operatorname{Ad}_Z,
+$$
+
+酉共轭在任意参考扩张后都保持迹范数，故 $\|\operatorname{Ad}_Z-\operatorname{id}\|_\diamond\le2$；输入 $|+\rangle\langle+|$ 给出两个正交纯态之差，迹范数为二，所以该范数恰为二。从而用 $U=I$ 得
+
+$$
+\|D_t-\operatorname{id}\|_\diamond\le1-t.
+$$
+
+对任意 $U$，令 $P_+=|+\rangle\langle+|$，$\sigma=UD_t(P_+)U^*$。$\sigma$ 的最大特征值为 $(1+t)/2$。利用 $2P_+-I$ 的算子范数为一，得到
+
+$$
+\|\sigma-P_+\|_1
+\ge2\bigl(1-\operatorname{Tr}(P_+\sigma)\bigr)
+\ge1-t.
+$$
+
+钻石范数支配无参考输入的迹范数，故任意 $U$ 都有相反方向的不等式；两者合起来给出最小值 $1-t$。当 $t<1$ 时该距离为正，故不能精确得到恒等映射；$t=1$ 时 $D_1=\operatorname{id}$，取 $U=I$ 即得 $p_0(1)=1$。前述零深度结构又说明近似约束只能接受 $p=1$ 或零映射，故恰好在 $\delta\ge1-t$ 时取到 $1$，否则只能取零。给定 $\delta>0$，选取 $t=1-\min(\delta/2,1/2)$ 即得上确界一；$\delta=0$ 时它退化为精确情形。这里 $p_0$ 在 $t=1$ 向上跳跃；第一项只给出上半连续性。第二项比较的是连续严格阈值，不是可能不连续的 $p_0$ 本身。在 $t=1$，只有 $v(1)\le1$ 才与严格阈值条件冲突；例如 $v\equiv2$ 满足该条件，所以不与第二项矛盾。证毕。
+

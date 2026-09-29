@@ -1,0 +1,10 @@
+**引理262.2（全部极值方向）。** 有
+$$
+\boxed{
+w(Z_a)=1,\qquad
+\mathcal M(Z_a)=\{e^{i\gamma}e_0:\gamma\in\mathbb R\},
+\qquad W(Z_a)=\mathbb Ce_0\subsetneq\mathbb C^2.
+}
+\tag{262.8}
+$$
+

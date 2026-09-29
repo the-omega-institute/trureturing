@@ -1,0 +1,19 @@
+**定义 265.1（可在固定基底中取实的曲线类）。** 对 $0<\eta\le1$，在定义264.1的允许类中，进一步要求存在一个不依赖实参数 $t$ 的酉矩阵 $V$，使
+
+$$
+V\rho(t)V^*\in M_2(\mathbb R)
+\quad(t\in\mathbb R).
+\tag{265.1}
+$$
+
+$V$ 可以依赖整条曲线和 $\eta$。记这一类的名义 SLD 信息上确界为 $F_\eta^{\rm real}$，其中矩阵元可延拓成整函数的子类对应 $F_\eta^{\rm real,ent}$。曲线仍在原基底中满足
+
+$$
+\operatorname{spec}\rho(t)=\{3/4,1/4\},
+\qquad \rho''(t)\preceq C_\eta=\operatorname{diag}(1,\eta)
+\quad(t\in\mathbb R).
+\tag{265.2}
+$$
+
+这里没有要求 $V$ 同时对角化 $C_\eta$。
+

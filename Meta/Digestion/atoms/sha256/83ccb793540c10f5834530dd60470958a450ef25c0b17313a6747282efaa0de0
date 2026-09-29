@@ -1,0 +1,12 @@
+**引理 34.3（互补观察的完全熵分解界）。** 对一个比特及任意记忆 $R$，令 $E_x,E_z$ 为 Pauli $X,Z$ 的完全去相干，$E_0\rho=I_2/2\otimes\rho_R$。则
+\[
+ E_xE_z=E_zE_x=E_0,\qquad
+ D(\rho\Vert E_0\rho)\le D(\rho\Vert E_x\rho)+D(\rho\Vert E_z\rho).
+\]
+对于 $n$ 个比特和任意 $R$，记 $E_i$ 为将第 $i$ 个比特替换为 $I_2/2$ 的条件期望，则
+\[
+ D(\rho\Vert E_1\cdots E_n\rho)
+ \le\sum_{i=1}^nD(\rho\Vert E_i\rho).
+\]
+这些不等式允许所有初始量子相关。
+

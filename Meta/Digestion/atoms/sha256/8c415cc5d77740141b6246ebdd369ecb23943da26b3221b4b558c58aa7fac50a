@@ -1,0 +1,29 @@
+**命题29.1（排除秩二第二终端）。** 六维固定 CPTP 接收器若精确服务前五个完整参考终端，则必有 $`r_2=1`$。
+
+反设 $`r_2=2`$。先证明此分支强制下列几何关系，再与来源系数递推比较导出矛盾。首先必须有
+$$
+\eta_4\parallel\eta_5.
+\tag{29.4}
+$$
+吸收射线相位，写 $`\eta_4=\eta_5=\eta=R\xi`$，其中 $`\xi\in\Gamma`$ 单位。则还必须有
+$$
+G_4=G_3=A,\qquad H_3=H\otimes\mathbb C\xi,
+\tag{29.5}
+$$
+以及
+$$
+\begin{aligned}
+S_0&=(H\otimes\mathbb C\xi)+H_3+H_4,\\
+S_1&=(G\otimes\mathbb C\xi)+A+G_4,
+\end{aligned}
+\qquad \dim S_0=\dim S_1=3.
+\tag{29.6}
+$$
+令 $`\xi^\perp`$ 为任一单位正交补，则
+$$
+C_3=(Q\otimes\mathbb C\xi)\oplus
+\mathbb C(v\otimes\xi^\perp).
+\tag{29.7}
+$$
+在 （29.6） 中，$`H_4\ne H_3`$、$`G\otimes\mathbb C\xi\ne A`$。
+

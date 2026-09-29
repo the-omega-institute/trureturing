@@ -1,0 +1,56 @@
+**证明。** 两种维数相同来自第101节一般恒等式及 $N$ 的通常纤维为零。第103节已经排除零维情形；下面排除一维，不使用正则铅笔的跨纤维交零。
+
+### 106.1 一条额外乘积线的完整纤维合同
+
+反设 $\dim T_N=1$。由维数恒等式，存在单位 $u_*\in S$ 和单位环境 $E\in F$，使
+$$
+N_{\mathrm{prod}}=\mathbb C(u_*\otimes E).
+\tag{106.1}
+$$
+一位完整乘积纤维于是为
+$$
+\mathcal G_1([z])=
+\begin{cases}
+Q\oplus\mathbb Cu_*,&[z]=[E],\\
+Q,&[z]\ne[E].
+\end{cases}
+\tag{106.2}
+$$
+由第90节正交纤维配对，
+$$
+g_0([z])=
+\begin{cases}
+3,&[z]=[E^\perp],\\
+2,&[z]\ne[E^\perp].
+\end{cases}
+\tag{106.3}
+$$
+记 $P=S\cap u_*^\perp$，$\dim P=4$。由于 $u_*\otimes E\in R_1$，跨位正交给
+$$
+[z]\ne[E^\perp]\Longrightarrow\mathcal G_0([z])\subset P.
+\tag{106.4}
+$$
+这里（106.3）是维数读数，（106.4）是子空间关系；均没有断言不同零位纤维交零。
+
+对任意 $y\otimes z\in R_1$，其 $S$ 接收分量 $(P_Sy)\otimes z$ 属于 $N$，因此只能落在（106.1）的乘积线。反向包含由（106.1）与 $Q\otimes F\subset R_1$ 成立，所以全部一位乘积向量张成
+$$
+(R_1)_{\mathrm{prod}}=(Q\otimes F)\oplus\mathbb C(u_*\otimes E),
+\qquad\dim(R_1)_{\mathrm{prod}}=5.
+\tag{106.5}
+$$
+第103节给 $L=\mathbb Cp+G_2+\cdots+G_5=S$。其同一个一位像由实际乘积向量生成，故 $V_1S\subset(R_1)_{\mathrm{prod}}$；两者均五维，因此
+$$
+V_1S=(R_1)_{\mathrm{prod}}.
+\tag{106.6}
+$$
+真实首轮 $V_1k=q\otimes\eta_1$ 也属于右侧，固定单射性还给 $k\in S$。后面的排除只需 $p\in S$、$G_2,\ldots,G_6\subset S$、（106.2）—（106.4）及实际来源关系。
+
+下文 $H_1=\operatorname{span}(p,q)$、$G_2=\operatorname{span}(u,w)$、$H_2=\operatorname{span}(a^2u+bv,w)$ 均保持第89节的实际来源定义；$u,v,w$ 为正交单位向量，$V_0p=u\otimes\eta_2$、$V_1p=v\otimes\eta_2$。对 $3\le n\le6$，按实际同轮结构，若 $\eta_n\not\parallel E$，则 $Q_n=Q$；若 $\eta_n\parallel E$，则 $Q_n\subset Q\oplus\mathbb Cu_*$。始终保留
+$$
+H_n\subset G_n\oplus Q_n,\quad G_n\perp Q_n,
+\quad P_{G_n}|_{H_n},P_{Q_n}|_{H_n}\text{ 均为同构}.
+\tag{106.7}
+$$
+
+### 106.2 早期实际平面的三个约束
+

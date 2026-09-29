@@ -1,0 +1,60 @@
+**定理260.2（精确共同边缘下的线性稳定性）。** 在（260.1）—（260.5）的合同下，
+$$
+\boxed{
+\|\Xi-\Omega_\psi\|_1
+\le\min\{2,\ 7\kappa(\rho)\,\delta\}.
+}
+\tag{260.24}
+$$
+该界适用于全部具有同一参考边缘的合法竞争态，不要求源响应饱和。
+
+**证明。** 令 $C_\rho=\rho_S^{1/2}V$。撤销参考同余时，两个矩阵之差变成
+$$
+(I_H\otimes C_\rho)(T-T_0)(I_H\otimes C_\rho^\dagger).
+\tag{260.25}
+$$
+回到原输入基的酉共轭不改变迹范数。由 Schatten 范数的理想性质及引理260.1，
+$$
+\|\Xi-\Omega_\psi\|_1
+\le\lambda_{\max}\|T-T_0\|_1
+\le14\lambda_{\max}\|\mathcal E\|_1.
+\tag{260.26}
+$$
+另一方面，（260.12）给
+$$
+\|\mathcal E\|_1
+\le\frac{1}{2\lambda_{\min}}\,
+\|K_\Xi-K_{\Omega_\psi}\|_1.
+\tag{260.27}
+$$
+两式合并得到 $7\kappa(\rho)\delta$。两个原始态归一化还给独立上界二，取较小者即得结论。$\square$
+
+若希望保留边缘方向上的精细权重，证明实际还给
+$$
+\|\Xi-\Omega_\psi\|_1
+\le
+7\lambda_{\max}
+\left\|
+\rho_S^{-1/2}
+\bigl((K_\Xi-K_{\Omega_\psi})|_S\bigr)
+\rho_S^{-1/2}
+\right\|_1.
+\tag{260.28}
+$$
+常数七只是上述显式估计的结果，不宣称最优。
+
+对原始响应误差
+$$
+\varepsilon_R=
+\|\mathcal R_a(\Xi)-\mathcal R_a(\Omega_\psi)\|_1
++\|\mathcal R_b(\Xi)-\mathcal R_b(\Omega_\psi)\|_1,
+\tag{260.29}
+$$
+§256的坐标估计给
+$$
+\delta\le
+\left(\frac1{2\sqrt A}+\frac1{2\sqrt B}\right)\varepsilon_R.
+\tag{260.30}
+$$
+因此在同一个精确边缘合同下，也得到对两份实际响应误差的线性全态界。这里仅在范数估计中取 $|b_0|=\sqrt B$，不改变恢复坐标中的符号。
+

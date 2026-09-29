@@ -1,0 +1,56 @@
+### 71.4 无穷端点由同一显式修复控制
+
+固定 $r\ge8$，沿 $a_\varepsilon=1-r\varepsilon$ 取充分小的正 $\varepsilon$。第 66 节所需条件
+
+$$
+\varepsilon\le\frac{1-a_\varepsilon}{8}
+$$
+
+此时等价于 $r\ge8$，所以同一显式二阶修复对每个这样的参数点合法。
+
+将该修复的小根写成 $p_\varepsilon=\varepsilon u_{r,\varepsilon}$。原二次方程变成
+
+$$
+u_{r,\varepsilon}^2-r(1+\varepsilon)u_{r,\varepsilon}+r=0,
+$$
+
+其小根为
+
+$$
+u_{r,\varepsilon}
+=\frac{r(1+\varepsilon)
+-\sqrt{r^2(1+\varepsilon)^2-4r}}2
+\longrightarrow u_r.
+\tag{71.17}
+$$
+
+第 66 节的准确事件上界除以 $\varepsilon$ 后为
+
+$$
+\frac{e(R_{a_\varepsilon,\varepsilon})}{\varepsilon}
+\le1+(u_{r,\varepsilon}-1)
+\left[
+2+\frac{2(\sqrt{1-r\varepsilon}+\sqrt r\,\varepsilon)}
+{\sqrt{1-\varepsilon}+\sqrt{1-p_\varepsilon}}
+\right].
+\tag{71.18}
+$$
+
+固定 $r$ 后，方括号趋于 $3$。由第 70 节已证的真实极限可得
+
+$$
+\gamma_r\le1+3(u_r-1).
+\tag{71.19}
+$$
+
+结合 $\gamma_r\le9/8$，得到式（71.5）。式（71.4）显示 $u_r\to1$；因此 $1\le\gamma_r\le1+3(u_r-1)$ 迫使 $r\uparrow\infty$ 时 $\gamma_r\to1$。
+
+显式上界本身还满足
+
+$$
+3(u_r-1)=\frac3r+O(r^{-2})\qquad(r\uparrow\infty).
+\tag{71.20}
+$$
+
+这只是上界的渐近式，不能将 $3/r$ 识别为实际 $\gamma_r-1$ 的首项。
+

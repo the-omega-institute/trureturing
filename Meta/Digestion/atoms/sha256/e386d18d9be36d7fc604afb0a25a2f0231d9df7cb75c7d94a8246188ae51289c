@@ -1,0 +1,11 @@
+### 30.4 与空间、时间、边界和记忆的统一
+
+把空间、时间、边界和记忆分别看作同一完整 profile 的有限或重排投影时，它们的联合恢复需要两个条件：
+
+1. 每个投影都来自同一个实际来源 $X$，或有已证的共同来源态射；
+2. 投影的联合 kernel 等于 $\ker(\operatorname{TP}_\infty)$，并且各投影的更新、协议和失败结果在相应纤维上下降。
+
+在有限稳定深度 $d$ 存在时，可以用 $\operatorname{TP}_d$ 替代完整 profile；否则，逆极限只提供一个候选完成对象，仍需单独证明实际来源满射或接受它作为 completion。若某个空间切面只记录当前坐标，时间切面只记录未来读数，记忆只记录档案摘要，它们各自的缺失关系由 (27.1)—(27.4) 的交核判据定位，而不是由“都来自同一个系统”自动消失。
+
+本节直接对应仓内 `ItineraryCompletion.itineraryLimitEquiv`、`itinerary_completion`、`completionCoordinateEquiv` 和有限未来稳定结果。逆极限的实际来源条件、无限系统中的满射性以及观察者取得 completion 的资源成本仍为 open；没有新增 Lean 声明。
+

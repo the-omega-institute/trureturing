@@ -1,0 +1,28 @@
+**定理172.1（经典残留的局部可读性）。** 有
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak d_L(\varphi)
+&:=D(\xi_0(\varphi),\xi_1(\varphi))\\
+&=\frac{d_L}{\sqrt{2353}}
+\sqrt{
+\kappa^2(-7\cos2\varphi+48\sin2\varphi)^2
++(7\sin2\varphi+48\cos2\varphi)^2
+}.
+\end{aligned}
+}
+\tag{172.5}
+$$
+
+特别地，
+
+$$
+\boxed{
+\min_\varphi\mathfrak d_L(\varphi)=\kappa d_L>0,
+\qquad
+\max_\varphi\mathfrak d_L(\varphi)=d_L.
+}
+\tag{172.6}
+$$
+

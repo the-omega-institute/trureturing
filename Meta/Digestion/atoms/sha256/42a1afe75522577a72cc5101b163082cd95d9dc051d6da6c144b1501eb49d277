@@ -1,0 +1,15 @@
+**定理 49.1（向量场残差的几何误差预算）。** 设 $(M,\Omega)$ 为光滑辛流形，$X=X_H$ 为光滑 Hamilton 场，$\widetilde X=X+r$ 为另一光滑场，在指定区域及 $0\le t\le T$ 有流 $\widetilde\Phi_t$。固定一个 Riemann 度量以度量向量及二形式范数，假定所有被考察轨迹和拉回点均在该区域，且
+\[
+ \|d(\iota_r\Omega)\|\le\eta,\qquad
+ \|D\widetilde\Phi_t\|\le e^{Lt},\quad L\ge0.
+\]
+则
+\[
+ \mathcal L_{\widetilde X}\Omega=d(\iota_r\Omega),
+\]
+\[
+ \boxed{\|\widetilde\Phi_t^*\Omega-\Omega\|
+ \le\eta\int_0^t e^{2Ls}ds
+ =\begin{cases}\eta(e^{2Lt}-1)/(2L),&L>0,\\\eta t,&L=0.\end{cases}}
+\]
+

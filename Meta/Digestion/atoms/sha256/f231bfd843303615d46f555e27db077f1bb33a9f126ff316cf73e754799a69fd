@@ -1,0 +1,17 @@
+**定理 247.2（精确最小参考熵）。** 对 $0<\theta<1$，
+$$
+\boxed{
+\min_{\Omega\in\mathcal C_\theta}S(\Omega_E)
+=H_2(\theta)+\theta.
+}
+\tag{247.36}
+$$
+最小值在总参考支撑恰为三维的实际态上取得。在 $\mathcal C_\theta$ 内，达到这个熵最小值的参考边缘谱必为
+$$
+\boxed{
+\left(\frac\theta2,\frac\theta2,1-\theta\right)
+}
+\tag{247.37}
+$$
+并只可能另外添加零本征值。
+

@@ -19,7 +19,7 @@ PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID
     object(oid:$head) { ... on Commit { oid statusCheckRollup { contexts(first:100) {
       nodes { __typename
         ... on CheckRun { databaseId name status conclusion
-          checkSuite { databaseId commit { oid } workflowRun { databaseId runNumber workflow { id } }
+          checkSuite { databaseId commit { oid } workflowRun { databaseId runNumber runAttempt workflow { id } }
             checkRuns(first:100,filterBy:{checkType:LATEST}) {
               nodes { databaseId } pageInfo { hasNextPage }
             } } }
@@ -102,13 +102,25 @@ parse_snapshot() {
     def database_id: type == "number" and . > 0 and . <= 9007199254740991 and floor == .;
     def pr_event: . == "pull_request" or . == "pull_request_target";
     def native_run: .path == ".github/workflows/ci-pr.yml";
-    # This repository calls exactly this reusable workflow at its PR merge commit.
-    # GitHub retains that ref after merge even when pull_requests becomes empty.
-    def native_pr:
+    # The unique ci-push call anchors native PR identity. Other reusable calls
+    # must belong to the same repository, candidate and retained PR merge ref.
+    def native_anchor:
       select(native_run and .event == "pull_request") |
-      .referenced_workflows | select(type == "array" and length == 1) | .[0] |
-      select(type == "object" and (.sha | sha and length == 40) and
-        .path == ($repo + "/.github/workflows/ci-push.yml@" + .sha)) |
+      .referenced_workflows | select(type == "array" and length > 0) |
+      select(all(.[]; type == "object" and (.sha | sha and length == 40) and
+        (.path | type == "string") and (.ref | type == "string"))) |
+      . as $references |
+      [.[] | select(.path == ($repo + "/.github/workflows/ci-push.yml@" + .sha))] |
+      select(length == 1) | .[0] as $anchor |
+      select(all($references[]; .sha == $anchor.sha and .ref == $anchor.ref and
+        (.path | startswith($repo + "/.github/workflows/")) and
+        (.path | ltrimstr($repo + "/.github/workflows/") |
+          test("\\A[^/@\\r\\n]+\\.ya?ml@" + $anchor.sha + "\\z")))) |
+      select($references | map(.path) | length == (unique | length)) |
+      $anchor;
+    # GitHub retains that ref after merge; pull_requests only lists open head matches.
+    def native_pr:
+      native_anchor |
       .ref | select(type == "string") | capture("\\Arefs/pull/(?<number>[1-9][0-9]*)/merge\\z") |
       .number | tonumber | select(database_id);
     def associated_prs: if native_run then [native_pr] else [.pull_requests[].number] end;
@@ -125,6 +137,7 @@ parse_snapshot() {
       (.checkSuite.workflowRun == null or
         ((.checkSuite.databaseId | database_id) and (.checkSuite.workflowRun.databaseId | database_id) and
          (.checkSuite.workflowRun.runNumber | database_id) and
+         (.checkSuite.workflowRun.runAttempt | database_id) and
          (.checkSuite.workflowRun.workflow.id | type == "string" and length > 0) and
          (.checkSuite.checkRuns.nodes | type == "array" and length > 0 and all(.[]; .databaseId | database_id)) and
          .checkSuite.checkRuns.pageInfo.hasNextPage == false))
@@ -143,11 +156,12 @@ parse_snapshot() {
     def evidence: {check:check_name, check_id:(.databaseId // .id),
       run_id:(.checkSuite.workflowRun.databaseId // null),
       workflow_id:producer, run_number:(.checkSuite.workflowRun.runNumber // null),
+      run_attempt:(.checkSuite.workflowRun.runAttempt // null),
       commit:(.checkSuite.commit.oid // .commit.oid), status:(.status // .state), conclusion:check_state} +
       (if producer == null then {membership:"commit-context"}
        else {membership:"workflow-run", event:(run_metadata | .event),
          pull_requests:(run_metadata | [.pull_requests[].number])} +
-         (if (run_metadata | native_run) then {referenced_workflow:(run_metadata | .referenced_workflows[0])}
+         (if (run_metadata | native_run) then {referenced_workflow:(run_metadata | native_anchor)}
           else {} end) end);
     fromjson |
     select(type == "object" and (.errors == null or .errors == [])) |
@@ -189,16 +203,19 @@ parse_snapshot() {
       # The workflow path must be known before selecting its PR identity policy.
       (.path | type == "string" and length > 0) and
       (.pull_requests | type == "array") and
-      (if native_run then associated_prs as $prs |
-        ($prs | length) == 1 and all(.pull_requests[]; .number == $prs[0])
-       elif (.event | pr_event) then (.pull_requests | length > 0) else true end) and
+      # Non-native PR runs lack certified trigger identity. Even one association
+      # is a mutable open-head match, so reject before applicability or supersession.
+      (if native_run then (associated_prs | length) == 1
+       elif (.event | pr_event) then false else true end) and
       (.repository.id as $repository_id | all(.pull_requests[];
         type == "object" and (.id | database_id) and (.number | database_id) and
         .url == ("https://api.github.com/repos/" + $repo + "/pulls/" + (.number | tostring)) and
         .head.sha == $head and .base.repo.id == $repository_id)) and
       ([.pull_requests[].number] | length == (unique | length)))) |
     select(all($actions[]; . as $check | run_metadata |
-      .check_suite_id == $check.checkSuite.databaseId and .run_number == $check.checkSuite.workflowRun.runNumber)) |
+      .check_suite_id == $check.checkSuite.databaseId and
+      .run_number == $check.checkSuite.workflowRun.runNumber and
+      .run_attempt == $check.checkSuite.workflowRun.runAttempt)) |
     # Membership precedes producer obligations and latest-run selection. A different PR
     # or non-PR event cannot supply a job, create an obligation, or retire an execution.
     [$items[] | select(applicable)] as $items |

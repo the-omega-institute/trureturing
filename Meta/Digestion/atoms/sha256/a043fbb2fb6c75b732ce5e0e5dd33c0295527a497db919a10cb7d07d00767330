@@ -1,0 +1,35 @@
+**命题 36.1（精确暗态与缓慢泄漏的共同实现）。** 在正交基 $b,d$ 上，记 $P_b,P_d$ 为对应投影。对 $0\le\gamma\le1$，取
+
+$$
+Q_\gamma=\sqrt{1-\gamma}\,P_d,
+\qquad L_b=P_b,
+\qquad L_{d,\gamma}=\sqrt\gamma\,P_d.
+$$
+
+分别作为一个未点击分支和两个点击分支的 Kraus 算子。即使 $\gamma=0$，仍保留零概率的点击标签 $d$。则
+
+$$
+\mathfrak I_\gamma=(1-\gamma)\mathfrak I_0+\gamma\mathfrak I_1,
+\qquad \delta(\mathfrak I_\gamma,\mathfrak I_0)=\gamma,
+$$
+
+并且对每个 $m\ge1$，
+
+$$
+\boxed{
+H_{m,\gamma}=P_b+[1-(1-\gamma)^m]P_d,
+\qquad
+\delta(\Omega_{m,\gamma},\Omega_{m,0})=1-(1-\gamma)^m.
+}
+$$
+
+而最终点击效果为
+
+$$
+\boxed{R_0=P_b,\qquad R_\gamma=I\quad(\gamma>0).}
+$$
+
+证明。三个效果相加为 $P_b+(1-\gamma)P_d+\gamma P_d=I$，仪器合法。其三个输出块为 $(1-\gamma)P_dYP_d$、$P_bYP_b$ 和 $\gamma P_dYP_d$，直接给出凸分解。对任意参考联合态，两通道差只在未点击块和点击 $d$ 块中分别出现负、正的 $\gamma$ 倍压缩态，半迹范数为 $\gamma\operatorname{Tr}[(I_{\mathcal K}\otimes P_d)\rho]$。上确界为 $\gamma$，由输入 $P_d$ 达到。
+
+未点击 $m$ 轮的效果为 $(1-\gamma)^mP_d$，所以得到 $H_{m,\gamma}$。两停止输出之差同样只有一份负的生存块和若干正的首次点击 $d$ 块，总正迹为 $[1-(1-\gamma)^m]\operatorname{Tr}[(I_{\mathcal K}\otimes P_d)\rho]$。取上确界得到停止距离。最后令 $m\to\infty$，分别处理 $\gamma=0$ 与 $\gamma>0$。$\square$
+

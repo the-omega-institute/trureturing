@@ -1,0 +1,6 @@
+**命题 121.3（所给正支持后承不发生爆炸）。** 取三个互异公式标签 $p,n,r$，将 $n$ 作为所选 $p$ 的否定，并仅要求赋值满足 $e(n)=\operatorname{swap}(e(p))$。以第一位为一作为正支持的保留条件，则同时正支持 $p$ 与 $n$，并不蕴含正支持 $r$。
+
+证明。赋 $e(p)=e(n)=(1,1)$，而 $e(r)=(0,0)$。否定交换条件成立，两个前提有正支持，结论没有。这个赋值就是所述后承的反例。证毕。
+
+该范围对应项目的 [`positive_support_nonexplosion`](../../../D5/S3/ConceptDynamics/Evidence/PositiveSupportNonexplosion.lean)：所检验的是带指定否定关系的支持后承，源码没有为所有联结词提供一套完整宗教逻辑。关于多值逻辑、信息解释以及容矛盾后承与真矛盾论的区别，参见 [SEP《Paraconsistent Logic》§1.1、§2.2、§3.6](https://plato.stanford.edu/entries/logic-paraconsistent/)。这里借用已有的信息处理思想，不主张发明新的逻辑体系，也不据一个非爆炸模型证明现实中存在真矛盾。
+

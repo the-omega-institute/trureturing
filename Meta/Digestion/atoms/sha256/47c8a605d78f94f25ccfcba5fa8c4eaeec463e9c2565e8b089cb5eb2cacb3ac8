@@ -1,0 +1,50 @@
+### 182.1 利用来源非均匀性的局部反馈轴
+
+固定 $L\ge3$、$\varphi=\pi/4$，沿用第180节的接收端坐标。来源、纯化及其正交伙伴为
+
+$$
+\rho=\frac13\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+|\Xi\rangle=\operatorname{vec}\sqrt\rho,\qquad
+|\psi\rangle=(I_M\otimes Y_R)|\Xi\rangle.
+$$
+
+仍记
+
+$$
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353},\qquad
+\kappa=\frac{\sqrt5}{3},\qquad
+s_\nu=(-1)^{\nu+1}.
+\tag{182.1}
+$$
+
+定义只作用于 $R$ 的 Hermitian 矩阵
+
+$$
+H=\frac{-X+2Z}{\sqrt5}
+=\frac1{\sqrt5}\begin{pmatrix}2&-1\\-1&-2\end{pmatrix}.
+\tag{182.2}
+$$
+
+它满足
+
+$$
+\boxed{
+H^2=I,\qquad
+\operatorname{Tr}(\rho H)=0,\qquad
+i\operatorname{Tr}(\rho HY)=\kappa.
+}
+\tag{182.3}
+$$
+
+前两式可直接相乘取迹。第三式的符号由
+
+$$
+HY=-\frac{i}{\sqrt5}(Z+2X),\qquad
+\operatorname{Tr}(\rho X)=\frac23,\qquad
+\operatorname{Tr}(\rho Z)=\frac13
+$$
+
+给出：$i\operatorname{Tr}(\rho HY)=5/(3\sqrt5)=\sqrt5/3$。
+这个非零交叉系数来自当前非最大混合的来源。
+

@@ -1,0 +1,8 @@
+**命题 672.2（目标误差与新常数的直接连接）。** 若另有同状态空间的概率目标 $\widetilde Q_S$，满足 $\max_S\operatorname{TV}(\widetilde Q_S,Q_S)\le\delta$，而 $R$ 对扰动目标的 $\widetilde\Phi_t$ 是 $\varepsilon$ 近最优，则第 650 节给出基准目标超额至多 $\varepsilon+2\delta$。因此 $0<t\le M$ 时可将第 662 节直接接上，得到
+
+$$
+\operatorname{dist}_{\rm TV}(R,\mathcal K_t)\le C_t(\varepsilon+2\delta).
+$$
+
+若 $M<t\le1$ 且另外明确满足基准公共条件 $R_\circ=b/t$，第 660 节给出 $(n-1)(\varepsilon+2\delta)/(tm)$ 的中心距离界。这里不把扰动问题的公共坐标自动设成基准公共坐标，也不主张扰动目标本身仍具有唯一中心。该段只是既有扰动关系与本批精确常数的应用，不另申报一项一般稳定性理论。
+

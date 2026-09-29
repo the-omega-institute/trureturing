@@ -1,0 +1,19 @@
+**命题 499.1（添加可由原目标凸组合取得的目标）。** 设
+
+$$
+Q_{\mathrm{new}}=\sum_{i\in I}a_iQ_i,
+\qquad a_i\ge0,\qquad\sum_i a_i=1.
+$$
+
+将它添加到有限目标族后，$l,M$ 不变；对于每一个候选概率 $R$，到全部目标的最坏 TV 距离也不变。因此 $\mathcal C_r,\rho,\rho_r$ 以及相应的两个最优联合误差不变，所写比值的定义域也不变。
+
+证明：每个坐标都有 $Q_{\mathrm{new}}(x)\ge l(x)$，所以添加它不降低原有最小值。另一方面，项目 [TotalVariation/Convexity](../../../D5/S3/TotalVariation/Convexity.lean) 的 total_variation_joint_convex 经有限次平均，给出
+
+$$
+\operatorname{TV}(R,Q_{\mathrm{new}})
+\le\sum_i a_i\operatorname{TV}(R,Q_i)
+\le\max_i\operatorname{TV}(R,Q_i).
+$$
+
+新目标不提高原有最大距离，而旧目标全部还在，故最大值相等。可行集与两个优化的目标函数都相同，遂有结论。证毕。
+

@@ -1,0 +1,54 @@
+### 141.2 由同一编码生成真实接收前接口
+
+固定有限终端数 $N\ge1$，接收空间 $K$ 满足 $\dim K=D$。对 $0\le n\le N$，给定有限维非零附加空间 $\Gamma_n$、在其上正定的密度矩阵 $\tau_n$，以及等距映射
+
+$$
+W_n:S_n\otimes\Gamma_n\longrightarrow K,\qquad
+\mathcal E_n(X)=W_n(X\otimes\tau_n)W_n^*.
+\tag{141.5}
+$$
+
+正定性是把附加空间取为附加态实际支撑后的条件。记 $r_n=\dim\Gamma_n$，则 $s_nr_n\le D$。
+
+独立纯初始化要求
+
+$$
+\Gamma_0=S_0=\mathbb C,\qquad \tau_0=1,\qquad W_0(1)=k,
+\qquad \|k\|=1.
+\tag{141.6}
+$$
+
+这里的 $k$ 与未知来源输入及参考独立。
+
+令 $\Pi_n$ 为只交换最后两个因子的固定重排
+
+$$
+\Pi_n:S_n\otimes B\otimes\Gamma_n
+\longrightarrow S_n\otimes\Gamma_n\otimes B.
+$$
+
+第 $n+1$ 轮实际接收前的编码等距必须取为
+
+$$
+\boxed{
+J_n=(W_n\otimes I_B)\Pi_n(F_n\otimes I_{\Gamma_n})
+:\ S_{n+1}\otimes\Gamma_n\longrightarrow K\otimes B.
+}
+\tag{141.7}
+$$
+
+特别地，$J_0x=k\otimes x$，其中用 $S_1=B$ 作自然识别。对 $X\in\mathcal L(S_{n+1})$，实际输入编码是
+$J_n(X\otimes\tau_n)J_n^*$；其来源嵌入、上一轮编码和附加因子不能独立改选。
+
+对于一个固定全域通道
+$\mathcal C:\mathcal L(K\otimes B)\to\mathcal L(K)$，精确一步续接等式是
+
+$$
+\boxed{
+\mathcal C\!\left(J_n(X\otimes\tau_n)J_n^*\right)
+=W_{n+1}(X\otimes\tau_{n+1})W_{n+1}^*
+\quad\bigl(X\in\mathcal L(S_{n+1})\bigr).
+}
+\tag{141.8}
+$$
+

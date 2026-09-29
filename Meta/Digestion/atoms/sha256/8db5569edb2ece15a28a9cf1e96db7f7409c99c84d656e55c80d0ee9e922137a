@@ -1,0 +1,20 @@
+**定义 32.1（保留早期终端态的有限记录输出）。** 固定 $m\ge1$，令
+
+$$
+T_{n,x}(\rho)=\mathcal C_x\mathcal N^{n-1}(\rho),\qquad
+r=\operatorname{Tr}(\rho R),\qquad h=h_m(\rho)>0,
+\qquad t_m(\rho)=\frac{r-h}{r}.
+$$
+
+在有限直和空间 $\bigl(\bigoplus_{n\le m,x}\mathcal H\bigr)\oplus\mathbb C$ 上定义
+
+$$
+\Omega_{\infty\to m}(\rho)
+=\left(\bigoplus_{n\le m,x}\frac{T_{n,x}(\rho)}r\right)\oplus t_m(\rho),
+\qquad
+\Omega_m(\rho)
+=\left(\bigoplus_{n\le m,x}\frac{T_{n,x}(\rho)}h\right)\oplus0.
+$$
+
+第一态在最终点击条件下保留所有早期记录及其终端量子态，将更晚的点击压入一个正交标志；第二态条件于截止前点击。晚点击标志是条件输出的数学归类，不是在第 $m$ 轮已经认证某个未点击样本今后必会点击。
+

@@ -1,0 +1,29 @@
+## 134. 正交二加一分支的 XXZYY 被零位前像投影秩排除
+
+沿用第132节的同一实际七维六终端合同：来源非退化、接收器独立纯启动、各轮使用同一个固定全域通道。正交异常方向与普通方向满足
+
+$$
+X\perp Y,\qquad Z\ne X,Y,
+$$
+
+$$
+\mathcal G_0(X)=U,\quad\dim U=4,\qquad
+\mathcal G_0(Y)=M,\quad\dim M=3,\qquad
+U\cap M=P,\quad\dim P=2,
+$$
+
+$$
+S=U+M,\quad\dim S=5,\qquad Q=S^\perp,\quad\dim Q=2.
+\tag{134.1}
+$$
+
+普通方向的两个完整纤维为 $P,Q$，完整一位 $X$ 纤维为 $F_X=U^\perp$。所有一位接收因子都正交于 $P$。设单位 $r$ 张成 $S\cap U^\perp$，并置
+
+$$
+T=U\cap P^\perp,\qquad U=P\oplus T,\qquad
+S=U\oplus\mathbb Cr,\qquad F_X=Q\oplus\mathbb Cr.
+\tag{134.2}
+$$
+
+此处尚不预设 $r\in M$。
+

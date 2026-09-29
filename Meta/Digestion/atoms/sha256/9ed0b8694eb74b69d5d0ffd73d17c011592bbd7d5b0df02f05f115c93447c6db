@@ -1,0 +1,35 @@
+### 261.4 任意合法竞争态的全数据线性界
+
+将实际误差作精确分解
+$$
+B_{\mathrm{tail}}=Q_\psi\Xi Q_\psi\succeq0,\qquad
+\operatorname{Tr}B_{\mathrm{tail}}=t,\qquad
+T=\Delta-B_{\mathrm{tail}}.
+\tag{261.29}
+$$
+由于 $\Xi$ 归一化，
+$$
+P_\psi\Delta P_\psi=-tP_\psi.
+\tag{261.30}
+$$
+于是 $T$ 恰为（261.26）的形式，具体可取
+$$
+h=Q_\psi\Xi\psi-\frac t2\psi.
+\tag{261.31}
+$$
+所有纯源与正交补之间的相干都保留在 $T$ 中。
+
+正尾部的两个数据范数满足
+$$
+\|\operatorname{Tr}_H B_{\mathrm{tail}}\|_1=t,
+\qquad
+\|\mathscr K(B_{\mathrm{tail}})\|_1\le t.
+\tag{261.32}
+$$
+第一式来自正性与保迹；第二式是§256已证明的Hermitian非对角压缩收缩界。因此
+$$
+\|\mathcal M(T)\|_{\oplus}
+\le\varepsilon+2t.
+\tag{261.33}
+$$
+

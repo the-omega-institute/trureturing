@@ -1,0 +1,44 @@
+### 163.4 无理旋转的实际超标频率
+
+沿用第159节同一运行酉 $U$ 与启动长度 $L$。令
+
+$$
+U=
+\begin{pmatrix}\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta\end{pmatrix},
+\qquad
+e^{i\theta}=\frac{3+4i}{5}.
+\tag{163.21}
+$$
+
+$e^{i\theta}$ 不是单位根。真实终端 $n\ge L$ 的比较相位为
+$v_{\alpha_n}=(\cos\alpha_n,\sin\alpha_n)$，其中
+$\alpha_n=(n-L)\theta$，于是
+
+$$
+s(v_{\alpha_n})=|\sin(2\alpha_n)|.
+\tag{163.22}
+$$
+
+第159节已经在原完整参考合同下证明
+
+$$
+|e_n-\mathfrak e(v_{\alpha_n})|
+\le\delta_L+\delta_n,\qquad
+\delta_n\longrightarrow0.
+\tag{163.23}
+$$
+
+取已知启动上界 $b\ge\delta_L$。对一个终端集合 $A$，定义其在余数类中的下密度
+
+$$
+\underline d_{q,r}(A)
+=\liminf_{K\to\infty}
+\frac1K
+\#\{1\le k\le K:qk+r\in A\},
+\qquad q\ge1,\quad0\le r<q.
+\tag{163.24}
+$$
+
+有限个启动终端不影响这个量。
+

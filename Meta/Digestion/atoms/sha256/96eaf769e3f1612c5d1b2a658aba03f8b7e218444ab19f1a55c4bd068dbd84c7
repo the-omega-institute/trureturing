@@ -1,0 +1,11 @@
+**证明。** Bloch 球保持给 $\|T\|\le1$。密度矩阵的两个特征值为 $(1\pm|r|)/2$，所以
+\[
+ D(\rho_r\Vert I/2)=\phi(|r|),\qquad
+ \phi(v)=\tfrac12[(1+v)\log(1+v)+(1-v)\log(1-v)].
+\]
+由 $\phi'(v)=\operatorname{artanh}v$ 积分得
+\[
+ \phi(v)=\sum_{k=1}^\infty\frac{v^{2k}}{2k(2k-1)},\quad0\le v\le1,
+\]
+端点由单调收敛解释。所有系数非负，故 $\phi(sv)\le s^2\phi(v)$，其中 $s=\|T\|$。$\phi$ 单调，得到全部输入的上界。取单位最大奇异向量 $a$，令 $r=\varepsilon a$；$\phi(v)=v^2/2+O(v^4)$，熵比趋于 $s^2$。这给出所需下界。本条是已知单比特收缩结构的固定参考版本；幂级数证明说明它依赖二能级的具体熵函数。证毕。[^tcs5-qubit]
+

@@ -1,0 +1,24 @@
+**维数四。** 编码完整保留 $I,J$，丢弃 $C$；解码准备 $\operatorname{diag}b$。误差就是钟的半迹距离
+
+$$
+\frac12\left\||\psi^a_\theta\rangle\langle\psi^a_\theta|
+-\operatorname{diag}b\right\|_1=e_4.
+\tag{49.30}
+$$
+
+对 $M_*>1$，等号由引理49.2及差算子迹零得到；$M_*=1$ 时钟是已知固定纯态，误差为零。端点和参考均完整保留。
+
+以上三个构造通过 $U_{\rm ar}$ 返回原档案，并在共同支撑外任意完成为全域 CPTP 编码；它们均与实际相位无关。因此 $e_{\rm mm}(D)\le e_D$。反向，对任意维数至多为 $D$ 的装置，（49.8）给
+$\mathfrak L_a(\epsilon)\le\kappa_D$；严格单调性迫使 $\epsilon\ge e_D$。这一必要界已经适用于较弱的 Bell 平均合同，故与（49.2）合并得到（49.23）。证明完毕。
+
+维数三只得到
+
+$$
+\underline e_3\le e_{\rm av,Bell}(3)
+\le e_{\rm mm}(3)\le e_2,
+\qquad \mathfrak L_a(\underline e_3)=\frac9{16}.
+\tag{49.31}
+$$
+
+下界来自（49.8），上界由把维数二的代码嵌入三维空间得到。第49.2节虽然在 $D=3$ 也使投影概率上界达到等号，但没有证明该码的半迹误差达到 $\underline e_3$；本节不把两种可达性混同。
+

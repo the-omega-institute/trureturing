@@ -1,0 +1,4 @@
+### theorem 45.2 非零采样核不能独立承载一步细时钟
+
+若 $\ker O_{\mathcal T}\ne0$，不存在函数 $\Phi$ 使 $O_{\mathcal T}(Mx)=\Phi(O_{\mathcal T}(x))$ 对所有 $x$ 成立。
+

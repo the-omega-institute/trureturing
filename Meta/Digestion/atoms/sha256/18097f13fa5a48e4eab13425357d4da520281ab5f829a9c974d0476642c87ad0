@@ -1,0 +1,38 @@
+**证明。** 把§248正常形代入三份偏迹，得到（250.5）、（250.14）及（250.16）；将这些已恢复块重新嵌入，正好得到原正常形，证明（250.17）。
+
+不同合格解码坐标不会改变结果。若 $V_1,V_2$ 均把同一 $Z_E,X_E$ 化为 $Z\otimes I,X\otimes I$，则 $V_1^\dagger V_2$ 同时交织这两条 Pauli 作用，必为 $I_2\otimes U_M$。这可直接由 $Z$ 迫使块对角、$X$ 迫使两对角块相同看出。重数矩阵相应作 $U_M$ 酉共轭，嵌回（250.17）后相互抵消。各 $Q_s$ 本来就是典范谱投影，所以重建与重数基选择无关。$\square$
+
+还可直接显示被恢复的第三个 Pauli 关联。置
+$$
+R_Z=\frac{R_a+R_b}{2\sqrt A},
+\qquad
+R_X=\frac{R_a-R_b}{2b_0}.
+\tag{250.18}
+$$
+在量子块中 $Y^{\mathsf T}=-Y$，产品最优方向又都在 $u,v$ 平面内，所以正常形逐块给
+$$
+\boxed{
+R_Y=\operatorname{Tr}_H[(Y\otimes I_E)\Omega]
+=-\frac{i(A+B)}{4\sqrt A\,b_0}\,C\rho_E.
+}
+\tag{250.19}
+$$
+具体地，量子块的 $R_Y$ 为 $-\theta V(Y\otimes\sigma_M)V^\dagger/2$，而 $C\rho_E=-2i\theta\sqrt A\,b_0V(Y\otimes\sigma_M)V^\dagger/(A+B)$；产品块的两者均为零。量子块上 $C$ 与 $\rho_E$ 交换，故（250.19）右侧确为 Hermitian。这给不需选择重数坐标的等价恢复式
+$$
+\boxed{
+\Omega=\frac12\left(
+I_2\otimes\rho_E+X\otimes R_X+Y\otimes R_Y+Z\otimes R_Z
+\right).
+}
+\tag{250.20}
+$$
+式（250.19）保留 $b_0$ 的符号，不能在此擅自以 $\sqrt B$ 代替它。
+
+该充分性依赖饱和态类。对一般两比特态，取
+$$
+\Omega_\pm=\frac{I_4}{4}\pm tY\otimes Z,
+\qquad 0<t<\frac14.
+\tag{250.21}
+$$
+它们的本征值为 $1/4\pm t$，各重复两次，因而是不同的合法密度矩阵。两者都有 $\rho_E=I_2/2$，而 $R_a=R_b=0$，因为 $A_a,A_b$ 都与 $Y$ 在迹配对下正交。它们的三份读数相同，却不是同一联合态；其响应为零，也不属于本节的饱和类。
+

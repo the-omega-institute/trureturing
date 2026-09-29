@@ -1,0 +1,60 @@
+## ST14．由 Riccati 残差控制全部最终记录
+
+### 定理 ST14.1：非精确图子空间的动力学误差
+
+不再假设 Riccati 方程。仍由任意 $X$ 构造 $L,G,U,\Pi$，并令 $h=U^\dagger HU$。定义
+
+$$
+\mathcal R_X=B^\dagger+CX-X(A+BX),\quad
+D=HU-Uh.
+$$
+
+则
+
+$$
+\boxed{
+D=(I-\Pi)\begin{pmatrix}0\\\mathcal R_X\end{pmatrix}G^{-1/2},
+\qquad r:=\|D\|\le\|\mathcal R_X\|.
+}
+\tag{ST14.1}
+$$
+
+并且
+
+$$
+\boxed{
+\|e^{-itH/\hbar}U-Ue^{-ith/\hbar}\|
+\le\min\{2,|t|r/\hbar\}.
+}
+\tag{ST14.2}
+$$
+
+**证明。** 有 $HL=L(A+BX)+(0,\mathcal R_X)^{\mathsf T}$。左乘 $I-\Pi$ 后第一项为零，得到(ST14.1)。$G\ge I$ 给出范数界。对 $e^{-i(t-s)H/\hbar}Ue^{-ish/\hbar}$ 求导并积分：
+
+$$
+e^{-itH/\hbar}U-Ue^{-ith/\hbar}
+=-\frac{i}{\hbar}\int_0^t
+ e^{-i(t-s)H/\hbar}D e^{-ish/\hbar}\,ds.
+$$
+
+两侧演化均酉，故积分范数至多 $|t|r/\hbar$；两个等距映射之差另有上界2。∎
+
+### 推论 ST14.2：Born 记录的统一误差预算
+
+从同一输入态出发，比较以上两种编码演化，再实施任意共同的 CPTP 实验并保留全部结果。允许初始态与一个不参与演化的有限参考系统纠缠。最终联合记录分布满足
+
+$$
+\boxed{\operatorname{TV}(p,q)\le\min\{1,|t|r/\hbar\}.}
+\tag{ST14.3}
+$$
+
+**证明。** 对纯化输入，两种输出向量之差范数不超过(ST14.2)中的 $|t|r/\hbar$，其纯态迹距离不超过向量差范数。对混态用纯化及偏迹收缩性。随后共同 CPTP 实验保持迹距离收缩，最终经典化得到总变差界。∎
+
+多个演化段之间若采用 ST13 的精确子空间保持仪器，可用逐段替换和通道收缩性将上界相加。第 $j$ 段由既往记录 $a$ 决定时，一个安全预算为
+
+$$
+\min\left\{1,\sum_j\sup_a\frac{|t_j(a)|r_j(a)}{\hbar}\right\}.
+$$
+
+这个界控制完整未后选择的记录；稀有事件条件化需另外给出成功概率下界。存在仪器漏出时，$\mathcal R_X$ 并未计入它，不能继续沿用仅含 $r$ 的预算。
+

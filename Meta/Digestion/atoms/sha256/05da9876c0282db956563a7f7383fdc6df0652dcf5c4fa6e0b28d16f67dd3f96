@@ -1,0 +1,11 @@
+**命题 353.3（到一致对角线的距离）。** 在最大范数 $\|x\|_\infty=\max_i|x_i|$ 下，令 $I=\{c\mathbf1:c\in\mathbb R\}$，其中 $\mathbf1$ 的各坐标均为 $1$。那么
+
+$$
+\operatorname{dist}_\infty(x,I)=\frac{s(x)}2,\qquad
+\operatorname{dist}_\infty(Px,I)\le\operatorname{dist}_\infty(x,I).
+$$
+
+证明。对任意 $c$，由极大与极小坐标得到 $M(x)-m(x)\le |M(x)-c|+|c-m(x)|\le2\|x-c\mathbf1\|_\infty$。取 $c=(M(x)+m(x))/2$ 达到此下界，得第一式，再用命题 353.2。证毕。
+
+这直接接到项目 `D5/S3/Observer/DefectComposition/LinearPostprocessingDefectContraction.lean` 的关系：有限维实范数空间里，连续线性映射 $B$ 对非空闭集 $J$ 满足 $\operatorname{dist}(By,B[J])\le\|B\|\operatorname{dist}(y,J)$。本例中 $I$ 是非空闭子空间，$P\mathbf1=\mathbf1$ 给出 $P[I]=I$；又因 $|(Px)_i|\le\sum_jP_{ij}|x_j|\le\|x\|_\infty$，所以算子范数不超过 $1$。由此得到同一距离不增结论。源码中的集合在这次应用中被选成一致对角线，它没有因被选中就获得“真实世界”的含义。
+

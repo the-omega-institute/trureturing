@@ -1,0 +1,33 @@
+**固定运行且不累积误差。** 前 $`L`$ 步完全使用真实档案支撑 $`S_t`$ 作精确启动压缩，最后编码为（16.8）。因此启动期间没有近似损失；（16.9）只是对实际启动状态与理想比较状态的距离估计。
+
+运行通道使用（15.17）—（15.19）的同一个部分等距 $`A`$，只将公共 $`Q`$ 扩大到（16.5）的维数。它仍满足
+
+$$
+AA^\dagger=I_{K_{\rm run}},
+\qquad
+\mathcal C_{\rm run}(X)
+=AXA^\dagger+\operatorname{Tr}[(I-A^\dagger A)X]\omega.
+\tag{16.10}
+$$
+
+理想比较态位于共同纯化子空间；真实发射加运行接收使该子空间按（15.21）内的置换和酉演化，成功概率始终为一。这里无需理想态静止，也无需外围相位为单位根。
+
+真实启动态可以含有成功子空间外的分量，仍按同一个全域 CPTP 通道合法演化。把一次来源发射加运行接收记为 $`\mathcal R`$。对 $`n=L+\ell`$，定义
+
+$$
+\sigma_n=(\operatorname{id}_J\otimes\mathcal R^\ell)(\alpha_L),
+\qquad
+\widetilde\sigma_n=(\operatorname{id}_J\otimes\mathcal R^\ell)(\widetilde\alpha_L).
+\tag{16.11}
+$$
+
+通道的半迹距离收缩性给
+
+$$
+d(\sigma_n,\widetilde\sigma_n)\le\eta_L
+\qquad\text{对全部 }n\ge L.
+\tag{16.12}
+$$
+
+没有逐步添加新的近似通道，因而这里没有 $`\ell\eta_L`$ 型累积项。
+

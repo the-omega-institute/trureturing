@@ -1,0 +1,19 @@
+**命题 16.2（首次点击与固定历时极限）。** 有
+
+$$
+p_\delta(n)=\sin^2(\omega\delta)\cos^{2(n-1)}(\omega\delta),
+\qquad s_\delta(N)=\cos^{2N}(\omega\delta).
+$$
+
+固定 $T>0$ 时，$s_{T/N}(N)\to1$。
+
+证明。$Q_\delta|0\rangle=\cos(\omega\delta)|0\rangle$，点击振幅为 $-i\sin(\omega\delta)\cos^{n-1}(\omega\delta)|1\rangle$。又
+
+$$
+1\ge\bigl[1-\sin^2(\omega T/N)\bigr]^N
+\ge1-N\sin^2(\omega T/N)
+\ge1-\omega^2T^2/N.
+$$
+
+夹逼得到极限。$\square$
+

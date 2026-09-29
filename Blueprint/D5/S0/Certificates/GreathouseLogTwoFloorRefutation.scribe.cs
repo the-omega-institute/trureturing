@@ -17,15 +17,14 @@ internal sealed class GreathouseLogTwoFloorRefutationDocument : IScribeDocumentD
         Blocks(
             Describe.Lean(DescribeId.Create("a175406-sequence-value"),
                 DeclarationHandle.Create(Prefix + "a"),
-                H("The greatest admissible exponent"),
+                H("The sequence value"),
                 StatementSource.FromAuthor(AFormula()),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "For each natural n, a(n) is the supremum of the natural exponents "
-                        + "whose real power of 1 + 1/n is at most 2. The cast (n : R) is "
-                        + "the real-number cast used in the Lean definition. In the natural "
-                        + "conditionally complete order, sSup of an unbounded set is 0, so "
-                        + "this definition is total."))),
+                    "For each natural n, including zero, a(n) takes the natural sSup "
+                        + "of exponents k satisfying the displayed bound. Powers and "
+                        + "division are real, with Lean's 1/0 = 0 convention. Natural "
+                        + "sSup is 0 for unbounded sets, so a is total."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("a175406-floor-conjecture"),
                 DeclarationHandle.Create(Prefix + "claim"),
@@ -33,9 +32,9 @@ internal sealed class GreathouseLogTwoFloorRefutationDocument : IScribeDocumentD
                 StatementSource.FromAuthor(ClaimFormula()),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "For every natural n with 1 <= n, the conjecture identifies a(n) "
-                        + "with the natural floor of (n + 1/2) times Real.log 2. The "
-                        + "symbol shown as floor with a subscript plus is Nat.floor."))),
+                    "For every positive natural n, the conjecture identifies a(n) "
+                        + "with the displayed natural floor. The subscript plus denotes "
+                        + "Nat.floor, and log is the natural logarithm."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("a175406-floor-conjecture-refuted"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -59,68 +58,33 @@ internal sealed class GreathouseLogTwoFloorRefutationDocument : IScribeDocumentD
     {
         var n = F.Id("n");
         var k = F.Id("k");
-        var nReal = Coerce(n, Reals());
-        var baseValue = Add(D(1), new Formula.Fraction(D(1), nReal));
-        var predicate = new Formula.Relation(
-            new Formula.Power(baseValue, k),
-            FormulaRelationOperator.LessThanOrEqual,
-            D(2));
-        var set = Seq(OpenBrace, k, Sp, InMacro, Sp, Naturals(), Sp, Bar, Sp,
-            predicate, CloseBrace);
-        return Disp(ForAll("n", Naturals(),
-            Equal(Call("a", n), Call("sSup", set))));
+        var baseValue = Seq(Open, D(1), Plus, D(1), Slash, n, Close);
+        // Escaped spaces preserve row breaks through Markdown parsing.
+        return Disp(Seq(Nl, Begin, Grp(F.Id("gathered")),
+            Forall, Sp, n, InMacro, Naturals(), Comma, RowBreak, Esc, Grp(),
+            F.Id("a"), Open, n, Close, Eq, Mathrm, Grp(F.Id("sSup")),
+            Begin, Grp(F.Id("Bmatrix")),
+            k, InMacro, Naturals(), Mid, Sp,
+            new Formula.Power(baseValue, k), Leq, D(2),
+            End, Grp(F.Id("Bmatrix")), End, Grp(F.Id("gathered")), Nl));
     }
 
     private static Formula ClaimFormula()
     {
         var n = F.Id("n");
-        var nReal = Coerce(n, Reals());
-        var half = new Formula.Fraction(D(1), D(2));
-        var floorValue = Seq(
-            Lfloor,
-            Multiply(Add(nReal, half), QualifiedCall("Real", "log", D(2))),
-            Rfloor,
-            Underscore,
-            Plus);
-        var premise = new Formula.Relation(
-            D(1), FormulaRelationOperator.LessThanOrEqual, n);
-        var conclusion = Equal(Call("a", n), floorValue);
-        var quantified = new Formula.Bind(
-            FormulaQuantifier.ForAll,
-            FormulaIdentifier.Create("n"),
-            Naturals(),
-            new Formula.Logic(
-                Parenthesized(premise),
-                FormulaLogicOperator.Implies,
-                Parenthesized(conclusion)));
-        return Disp(new Formula.Logic(
-            Parenthesized(F.Id("claim")),
-            FormulaLogicOperator.Iff,
-            Parenthesized(quantified)));
+        return Disp(Seq(Nl, Begin, Grp(F.Id("gathered")),
+            Mathrm, Grp(F.Id("claim")), Leftrightarrow, RowBreak, Esc, Grp(),
+            Forall, Sp, n, InMacro, Naturals(), Comma, Esc,
+            n, Geq, D(1), Rightarrow, RowBreak, Esc, Grp(),
+            F.Id("a"), Open, n, Close, Eq,
+            Lfloor, Open, n, Plus, D(1), Slash, D(2), Close,
+            Log, Sp, D(2), Rfloor, Underscore, Plus,
+            End, Grp(F.Id("gathered")), Nl));
     }
 
     private static Formula ResultFormula() =>
-        Disp(new Formula.Not(F.Id("claim")));
-
-    private static Formula QualifiedCall(
-        string prefix,
-        string name,
-        params Formula[] arguments) =>
-        new Formula.Apply(Seq(F.Id(prefix), Dot, F.Id(name)), [.. arguments]);
-
-    private static Formula Coerce(Formula value, Formula type) =>
-        Parenthesized(Seq(value, Sp, Colon, Sp, type));
-
-    private static Formula ForAll(string name, Formula domain, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.ForAll,
-            FormulaIdentifier.Create(name), domain, body);
+        Disp(Seq(Nl, Neg, Mathrm, Grp(F.Id("claim")), Nl));
 
     private static Formula Naturals() =>
-        new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
-
-    private static Formula Reals() =>
-        new Formula.NamedConstant(FormulaIdentifier.Create("Real"));
-
-    private static Formula Parenthesized(Formula value) =>
-        Seq(Open, value, Close);
+        Seq(Mathbb, Grp(F.Id("N")));
 }

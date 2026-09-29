@@ -1,0 +1,41 @@
+### 推论 33.1：布尔投影的系数与局部指数
+
+在定义 33 中令指定标签为 $t_i,d_i$，指定映射为
+
+$$
+\phi_i:\mathbb B\times D_i\to\mathbb B,
+\qquad \phi_i(t_i,d_i)=t_i,
+$$
+
+其中 $D_i$ 是固定的任意非空有限无关字母表。设
+
+$$
+H(\pi)=\max_j|N_j|,
+\qquad N_j=\{i:\operatorname{pos}(t_i)<\operatorname{pos}(a_j)
+ <\operatorname{pos}(b_j)<\operatorname{pos}(d_i)\}.
+$$
+
+则对所有允许的普通族和任意有限输出全任务，
+
+$$
+W_F(\operatorname{cn}(\pi))\leq2^r W_F(\pi)^{2^{H(\pi)}}.
+$$
+
+最小一致实指数为 $2^{H(\pi)}$，布尔输出已强制这个最小值。对定理 33 使用的每个 $B,P$（无普通对被触及时 $P=\varnothing$），令
+
+$$
+M_B=\{i:t_i\in B\setminus P\},
+\qquad E_B=\{i:t_i\in P\setminus B\}.
+$$
+
+更细地有
+
+$$
+\kappa_B(F)\leq2^{|M_B|}\kappa_P(F)^{2^{|E_B|}},
+\qquad \max_B|E_B|=H(\pi).
+$$
+
+**证明。** 将每个无关非空 $D_i$ 商为单点，但保留标签 $d_i$ 及其骨架位置。每个切面的原响应都是商后响应沿后缀直积投影的拉回；该投影满射，故不同商后函数仍不同，而每个商后前缀又有原前缀提升。因此商前商后的每一原始层容量相同。商后固定指定族的 $D$ 恰为 $2^r$，每个 $\tau_i=2$，定理 33 直接给出所称全局系数及指数。其布尔下界族也沿同一满射拉回恢复原固定虚端点字母表；无需另作锐利性证明。
+
+在式 (33.1) 中，商后 $B\setminus P$ 的指定坐标只有 $M_B$ 中的选择器贡献非平凡因子，故 $d(B,P)=2^{|M_B|}$；$E$ 恰为 $E_B$，从而同一回放给出局部界。共有的 $B\cap P$ 选择器随前缀复制，不进入组标记或共同后缀。已有 $E_B\subseteq N_k$；反向取达到 $H$ 的普通对 $j$，在 $\rho$ 刚读完 $a_j$ 的层，每个 $i\in N_j$ 尚未触及，而 $P$ 的终点至少为 $\operatorname{pos}(a_j)$，所以 $N_j\subseteq E_B$。故最大值恰为 $H$。∎
+

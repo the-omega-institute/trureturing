@@ -1,0 +1,17 @@
+**证明。** 在 $t\downarrow0$ 时，
+
+$$
+s(t)=t\log_2\frac1t+\frac{t}{\ln2}+O(t^2).
+\tag{195.4}
+$$
+
+这是将 $-(1-t)\ln(1-t)=t+O(t^2)$ 代入定义。令 $t=h\epsilon$，得到
+
+$$
+\frac{s(h\epsilon)}{\epsilon L_\epsilon}-h
+=\frac{-h\log_2h+h/\ln2}{L_\epsilon}
++O\left(\frac{H^2\epsilon}{L_\epsilon}\right).
+$$
+
+$h\log h$ 在零点连续延拓为零，故分子在 $[0,H]$ 有界；余项对该区间一致，证明结论。证毕。
+

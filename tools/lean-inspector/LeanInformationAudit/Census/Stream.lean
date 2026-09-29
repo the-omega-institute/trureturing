@@ -1,4 +1,4 @@
-import LeanInformationAudit.RegistryTypes
+import LeanInformationAuditInterface.Records
 import LeanInformationAudit.NameWire
 import LeanInformationAudit.Census.Ownership
 

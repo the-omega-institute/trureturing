@@ -1,0 +1,7 @@
+**证明。** Pauli 基计算给出首个乘法等式。条件期望的对数在其像代数中；按迹配对展开得 Pythagoras 身份
+\[
+ D(\rho\Vert E_0\rho)
+ =D(\rho\Vert E_x\rho)+D(E_x\rho\Vert E_0\rho).
+\]
+对 $E_x$ 用数据处理，并以 $E_xE_z\rho=E_0\rho$ 代入，得到 $D(E_x\rho\Vert E_0\rho)\le D(\rho\Vert E_z\rho)$。奇异态用熵差身份及正则化处理。多比特时，各 $E_i$ 交换；逐个应用同一 Pythagoras 身份使总缺陷望远镜分解，每一项再由此前条件期望的数据处理界控制为 $D(\rho\Vert E_i\rho)$。这是文献中 commuting-square 熵张量化的当前特例；常数一的结构是后续精确计算的前件。证毕。[^tcs6-complete]
+

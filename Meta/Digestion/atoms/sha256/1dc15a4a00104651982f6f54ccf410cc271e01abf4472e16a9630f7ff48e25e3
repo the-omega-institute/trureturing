@@ -1,0 +1,48 @@
+**定理 149.1（截止事件数的概率生成式）。** 对 $0\le z<1$，定义
+
+$$
+\boldsymbol{\mathcal U}_{w,z}(dt)
+=
+\sum_{m\ge1}z^{m-1}\boldsymbol\mu_m(dt).
+$$
+
+则
+
+$$
+\boxed{
+\widehat{\boldsymbol{\mathcal U}}_{w,z}(s)
+=
+[I-zD(s)T]^{-1}D(s)w
+=
+D(s)[I-zT D(s)]^{-1}w.
+}
+\tag{149.1}
+$$
+
+并且
+
+$$
+\boxed{
+\mathbb E[z^{N(t)}]
+=
+1-(1-z)\,
+\mathbf1^{\mathsf T}
+\boldsymbol{\mathcal U}_{w,z}([0,t]).
+}
+\tag{149.2}
+$$
+
+### 证明
+
+式（149.1）由定义 148.1 的逐项 Laplace 变换和 Neumann 级数得到。
+
+对每条 $N(t)$ 有限的样本路径，有限几何和恒等式给出
+
+$$
+1-z^{N(t)}
+=(1-z)\sum_{m=1}^{N(t)}z^{m-1}
+=(1-z)\sum_{m\ge1}z^{m-1}\mathbf1_{\{S_m\le t\}}.
+$$
+
+取期望，再用 $\boldsymbol\mu_m$ 的定义，得到式（149.2）。证毕。
+

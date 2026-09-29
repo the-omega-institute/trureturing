@@ -1,0 +1,45 @@
+**定理 396.2（所有正成功率共用的支撑误差下界）。** 上述最小值取得，$0\le\mu(C)\le d$，且
+
+$$
+\mu(C)>0
+\quad\Longleftrightarrow\quad
+H_C\cap\mathbb T^d=\varnothing
+\quad\Longleftrightarrow\quad
+\eta(C)=0.
+$$
+
+每个定义 395.1 的正成功协议满足
+
+$$
+f_{\mathrm{actual}}\le f_\star
+ \le\left(1-\frac{\mu(C)}d\right)t,
+\qquad
+\delta\ge\frac{2\mu(C)}d.
+$$
+
+因此，存在一个对所有正成功率协议都成立的严格正误差下界，当且仅当 $\eta(C)=0$。这里没有断言 $2\mu(C)/d$ 就是可达到的最小 diamond 误差。
+
+证明。$\mathbb T^d$ 是有限个单位圆的乘积，因而紧致；$z\mapsto\|Q_Cz\|_2^2$ 连续，故取得最小值。正交投影不增加范数，而 $\|z\|_2^2=d$，给出 $0\le\mu(C)\le d$。最小值为零恰好意味着某个相位向量满足 $Q_Cz=0$，也就是它属于 $H_C$。与定理 391.1 的支撑判据结合，得到所述等价。
+
+命题 395.2 的每个细分项满足 $0\preceq v_jv_j^\dagger\preceq M\preceq C$。若 $x\in\ker C$，则
+
+$$
+0\le|v_j^\dagger x|^2\le x^\dagger Cx=0,
+$$
+
+故 $v_j\perp\ker C$，即 $v_j\in H_C$。对任意 $v\in H_C$，逐坐标选择与 $v_i$ 同相的 $z_i$（$v_i=0$ 时任取单位相位），并用三角不等式，得到
+
+$$
+\|v\|_1=\max_{z\in\mathbb T^d}|z^\dagger v|
+ =\max_{z\in\mathbb T^d}|(P_Cz)^\dagger v|
+ \le\sqrt{d-\mu(C)}\,\|v\|_2.
+$$
+
+最后一步使用 $\|P_Cz\|_2^2=d-\|Q_Cz\|_2^2\le d-\mu(C)$ 与 Cauchy–Schwarz。对所有 $v_j$ 平方求和，除以 $d^2$，再代入 $\sum_j\|v_j\|_2^2=dt$，便有
+$f_\star\le(1-\mu(C)/d)t$。命题 395.2 给出
+$t\delta\ge2(t-f_{\mathrm{actual}})\ge2t\mu(C)/d$；因 $t>0$，得到与 $t$ 无关的误差下界。
+
+若 $\eta(C)>0$，定理 391.1 从支撑内的相位向量构造一个正成功概率的精确协议，其归一化误差为零，排除了对所有正成功协议统一成立的任何严格正下界。反方向已由 $\mu(C)>0$ 证明。证毕。
+
+秩亏本身不是障碍。例如 $d\ge2$ 时，$C=\mathbf1\mathbf1^\dagger$ 的秩为 $1$，但 $\mathbf1\in H_C\cap\mathbb T^d$，且 $C\in\mathcal P_d$，由定理 390.2 得 $\eta(C)=1$。关键是支撑与相位环面的相对位置；把成功概率压低并不能让被 $C$ 支配的向量离开该支撑。
+

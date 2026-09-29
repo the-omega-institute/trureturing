@@ -1,0 +1,37 @@
+**定义 236.1（固定任务的临界矩阵系数与实弧长）。** 固定第235节的充分小 $s>0$、$a=a_{\rm c}(s)$、共同处理器、共轭 $C$ 和窗口 $K$。置 $p_0=h_1$、$x_0=\sqrt{1-p_0}$，以 $v_0=v_{\rm sad}(a,s,p_0)$ 表示实际实鞍点，写
+
+$$
+T=\begin{pmatrix}0&0\\k&B\end{pmatrix},\qquad Q=\frac{B+B^{\mathsf T}}2.
+\tag{236.1}
+$$
+
+令 $\ell_0$ 为球面驻点乘子，并定义
+
+$$
+\begin{aligned}
+Qv_0+\frac{x_0k}{2}&=\ell_0v_0,&H_0&=Q-\ell_0I,\\
+j&=(B^{\mathsf T}-B)v_0-x_0k,&E&=j^\perp,\qquad M=I-v_0v_0^{\mathsf T}.
+\end{aligned}
+\tag{236.2}
+$$
+
+置
+
+$$
+\kappa=\max_{\beta\in E\setminus\{0\}}
+\frac{-\beta^{\mathsf T}H_0\beta}{4\beta^{\mathsf T}M\beta},
+\qquad\gamma=\partial_pg(a,s,p_0).
+\tag{236.3}
+$$
+
+在固定 $p=p_0$ 的精确实纤维 $\mathcal F_{p_0}^{\mathbb R}$ 中，以 $\rho_A$ 表示被强制的第一节点，以 $\rho_0$ 表示向量 $x_0q+v_0$ 的纯态密度。定义
+
+$$
+L=\inf_{\rho:[0,1]\to\mathcal F_{p_0}^{\mathbb R}\atop
+\rho(0)=\rho_A,\ \rho(1)=\rho_0}
+\int_0^1\|\rho'(t)\|_1\,dt,
+\tag{236.4}
+$$
+
+其中路径分段 $C^1$，纤维中的向量取正 $q$ 规范。这个长度只涉及单个临界截面；$Q_s,E_s$ 仍是第235节对全域解析准备定义的两个代价。
+

@@ -10,11 +10,11 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "fb63c6891d392e1a745b2fe92636c097b272ec9522ee8ee6f7a33d2e324abc9a",
+      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "bafda9956190095b5265646b546a34bab5fe4794c2f2a7668dbd12d692265f33",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
       "profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md": "5fc4cb982389c4c6f9bf781334691c2aa430f8aa5e4ccdf2f845637e49712fbe",
-      "profile-notes/321-384/327-actual-two-prime-survival-needs-a-masked-moment.md": "6f4f1ebf49e84ddf4ed886a5330aca588e4a876269240a50e3d5a9575c7b3c7c",
+      "profile-notes/321-384/327-actual-two-prime-survival-needs-a-masked-moment.md": "6a5e627e1387bfad0c804ae90f10642d7a2227427270d6564b028d11cbe166cd",
       "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7",
       "frontier/source-budgets/irredundant_whole_j_finite_source.py": "a4de254b6473ae9930614ef006b114161beff96fda2ca605e62cc358e8233501",
       "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62",

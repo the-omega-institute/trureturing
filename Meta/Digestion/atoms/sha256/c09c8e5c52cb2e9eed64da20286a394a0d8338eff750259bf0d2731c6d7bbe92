@@ -1,0 +1,80 @@
+### 112.1 六维反设的四加二合同
+
+第105节给已执行通常纤维维数 $\kappa_0\ge1$；第98、102节给
+
+$$
+d_0=s_0+\kappa_0,\qquad s_0\ge5,\qquad d_0\le7.
+$$
+
+反设 $d_0=6$，则必有 $s_0=5,\kappa_0=1$。第108节定理108.1排除三条尾射线，第71节排除一条；所以恰有两条尾射线。第109节给一对正交尾射线 $A,B$，暂按纤维尺寸命名为
+
+$$
+f(A)=4,\qquad f(B)=2,\qquad A\perp B.
+\tag{112.2}
+$$
+
+还给共同接收单线 $P$ 与剩余接收空间，满足
+
+$$
+P_A=P\oplus D_A,\qquad \dim D_A=3,\qquad
+P_B=P\oplus D_B,\qquad \dim D_B=1,
+$$
+
+$$
+P_A\cap P_B=P,\qquad
+P_z=P\quad([z]\notin\{A,B\}).
+\tag{112.3}
+$$
+
+其中 $D_A,D_B\subset P^\perp$，不预设 $D_A\perp D_B$。
+
+实际早期列为
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+$$
+
+$$
+V_0p=u\otimes\eta_2,\qquad
+V_1p=v\otimes\eta_2,\qquad
+V_0q=w\otimes\eta_2,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),
+\tag{112.4}
+$$
+
+$p,q$ 与 $u,v,w$ 分别正交归一。对 $3\le n\le6$，
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\tag{112.5}
+$$
+
+两个同轮投影均为同构，故 $H_n\cap G_n=0$。同环境跨位正交还给
+
+$$
+Q_n\perp P_{\eta_n},\qquad
+P_{P_{\eta_n}}H_n=G_n\quad(3\le n\le6).
+\tag{112.6}
+$$
+
+特别地，同轮环境相同且 $H_i=H_j$ 时，投影到这个完整已执行纤维便得 $G_i=G_j$。
+
+若第二轮采用 $A$，早期同环境跨位正交给 $v\perp P_A$。因为 $a\ne0$，由（112.4）还有
+
+$$
+P_{P_A}H_2=G_2.
+\tag{112.7}
+$$
+
+后面把早期 $H_2$ 与后期平面比较时，明确使用这一式，不把 $H_2$ 当成后期双满投影结构。
+

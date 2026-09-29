@@ -1,0 +1,10 @@
+**证明。** 有限谱分解给出 $WQW=P$，于是
+
+$$
+\sum_aR_a^\dagger R_a=P,
+\qquad
+\sum_bR_{\perp b}^\dagger R_{\perp b}=(I-P)^2=I-P.
+$$
+
+所有分量均由显式 Kraus 矩阵给出，完全正性和保迹性随之成立。若 $v\in\ker Q$，则 $0=v^\dagger Qv=\sum_a\|E_a^\dagger v\|^2$，所以 $PE_a=E_a$，原通道输出确实支持在 $P$ 内。公式(ST34.3)用的仅是通道、其 Hilbert–Schmidt 伴随及 $Q$，因此对 Kraus 表示的酉混合不变。∎
+

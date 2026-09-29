@@ -1,0 +1,17 @@
+**定义 200.1（二维名义最优程序与续接域）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$，令 $\mathcal T_u=\mathcal S_{F(a,u)}$、$I_r(u)=1/(1-u^2)$。本节的程序由一个固定 CPTP 处理器 $\mathcal G:M_6\to M_3$、一个包含 $t$ 的连通开区间 $U\subset J_a$ 和其上的 $C^1$ 二维密度矩阵曲线组成，满足
+$$
+\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega)
+\quad(u\in U),\qquad
+I_Q(\rho_t)=I_r(t).
+\tag{200.1}
+$$
+通道等式针对全部信号输入，不只针对一个选定探针；任何点都不预先规定程序秩。这里 $I_Q$ 取点态 SLD 值 $\operatorname{Tr}(\rho_tL^2)$，其中 $\rho_t'= (L\rho_t+\rho_tL)/2$；不将跨秩的度量极限代作该点值。记
+$$
+h_0=\frac{1+t}{2},\qquad
+A_0=\frac{at}{h_0},\qquad
+B_0=2a\sqrt{\frac{1-t}{1+t}},\qquad
+\lambda_*:=\frac{B_0}{\sqrt{1-A_0^2}}.
+\tag{200.2}
+$$
+由 $h_0>a$ 及 $A_0^2+B_0^2=a^2/h_0^2<1$，可知 $0<\lambda_*<1$。
+

@@ -1,0 +1,49 @@
+**227.3.1 两个中心都在球内：极体包含给出对称等式。**
+
+设 $\|n_0\|<1$，令
+$$
+K=\mathbb B-s_0,\qquad H=\mathbb B-n_0,\qquad C=LK.
+$$
+三者都是包含原点为内点的紧凸体。记支撑函数为
+$$
+h_C(y)=\max_{x\in C}x\cdot y,
+$$
+极体为
+$$
+C^\circ=\{y:x\cdot y\le1\ \text{对所有 }x\in C\}.
+$$
+由（227.GD.11）及线性函数在闭球上的极值可取于球面，
+$$
+\delta-c=\min_{y\in\partial H}h_C(y),
+\qquad
+\alpha-c=\min_{x\in\partial C}h_H(x).
+\tag{227.GD.14}
+$$
+下面直接说明两式右侧相等。对任意 $r\ge0$，
+$$
+h_C(y)\ge r\quad\text{对所有 }y\in\partial H
+\iff C\supseteq rH^\circ.
+\tag{227.GD.15}
+$$
+理由是 $h_{H^\circ}(y)=1$ 在 $\partial H$ 上成立；由正齐次性，边界上的比较等价于所有向量上的支撑函数比较，再由闭凸集的分离定理等价于包含。取极体并使用双极恒等式，
+$$
+C\supseteq rH^\circ
+\iff H\supseteq rC^\circ.
+\tag{227.GD.16}
+$$
+在 $r>0$ 时这是取极体后反向包含的直接重排，$r=0$ 时两边均成立。再次使用（227.GD.15），得到
+$$
+\min_{y\in\partial H}h_C(y)
+=\min_{x\in\partial C}h_H(x).
+$$
+所以 $\delta=\alpha$。
+
+此外，对 $x=s-s_0\in\partial K$，
+$$
+\lambda_+(s)-c=\|Lx\|-n_0\cdot Lx>0,
+$$
+$$
+\lambda_-(s)-c=-\|Lx\|-n_0\cdot Lx<0,
+$$
+因为 $Lx\ne0$ 且 $\|n_0\|<1$。紧性给 $\alpha>c>\beta$，证明（227.GD.13）的第一行。
+

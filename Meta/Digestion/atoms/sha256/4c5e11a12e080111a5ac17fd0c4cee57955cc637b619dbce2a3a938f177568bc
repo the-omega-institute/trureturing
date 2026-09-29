@@ -1,0 +1,13 @@
+**命题 729.1（覆盖与原始等号行）。** 假设 $C=\varnothing$，取 $0<E\le pL$。对全部原始行有
+
+$$
+\Phi_t^{\mathcal F}(R)\ge\left(1-\frac1\tau\right)E.
+$$
+
+此下界可达到，当且仅当存在 $y\in Y$ 满足 $y_i\le\tau L/E$。在可达到时，全部原始最优行恰由这些覆盖给出：
+
+$$
+a_\circ=0,\qquad a_i=\frac E\tau y_i,
+\qquad y\in Y,\qquad y_i\le\frac{\tau L}{E}.
+$$
+

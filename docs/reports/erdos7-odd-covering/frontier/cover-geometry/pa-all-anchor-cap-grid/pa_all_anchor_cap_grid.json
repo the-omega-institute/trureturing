@@ -1,0 +1,872 @@
+{
+  "scope": "Specified unrefined PA constant-cap comparison certificate, all15 anchor pairs, all integer cap endpoints and all24 fixed later orders; no optimization over actual laws or adaptive schedules.",
+  "arithmetic": "exact Fraction",
+  "Q": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "total_anchor_pairs": 15,
+  "total_cap_tuples": 10404,
+  "query_h_values": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "incumbent560": "157471921154183512277/30602497889515978126",
+  "target": "257/51",
+  "winner": {
+    "thresholds": [
+      2,
+      2,
+      4,
+      4
+    ],
+    "alpha": "52945498078747367/514629637441920000",
+    "loss": "75711911281732633/514629637441920000",
+    "query": "157471921154183512277/30602497889515978126",
+    "h": 3,
+    "order": [
+      13,
+      11,
+      19,
+      17
+    ],
+    "anchors": [
+      5,
+      7
+    ],
+    "anchor_pure_masses": [
+      "1/2",
+      "2/3"
+    ],
+    "anchor_mixed_charge": "1/12",
+    "later_primes": [
+      11,
+      13,
+      17,
+      19
+    ],
+    "caps": [
+      "5/3",
+      "3/2",
+      "2",
+      "9/5"
+    ],
+    "Phi": "22496082952171/69510823782400"
+  },
+  "strict_improvement": false,
+  "crosses_target": false,
+  "per_pair": [
+    {
+      "anchors": [
+        5,
+        7
+      ],
+      "tuples": 2160,
+      "positive_tuples": 1349,
+      "grid_result_sha256": "371dc739a46e3f7fe9dd405342f6bf8d94f89e8c061a5c78fc45efc4bac7c1dd",
+      "winner": {
+        "thresholds": [
+          2,
+          2,
+          4,
+          4
+        ],
+        "alpha": "52945498078747367/514629637441920000",
+        "loss": "75711911281732633/514629637441920000",
+        "query": "157471921154183512277/30602497889515978126",
+        "h": 3,
+        "order": [
+          13,
+          11,
+          19,
+          17
+        ],
+        "anchors": [
+          5,
+          7
+        ],
+        "anchor_pure_masses": [
+          "1/2",
+          "2/3"
+        ],
+        "anchor_mixed_charge": "1/12",
+        "later_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "caps": [
+          "5/3",
+          "3/2",
+          "2",
+          "9/5"
+        ],
+        "Phi": "22496082952171/69510823782400"
+      },
+      "hinge_cache_entries": 19272
+    },
+    {
+      "anchors": [
+        5,
+        11
+      ],
+      "tuples": 1296,
+      "positive_tuples": 671,
+      "grid_result_sha256": "83788312762a7d5540b1e899bb64a156d836eb6a9a5a7d2fe1226ed700eb6939",
+      "winner": {
+        "thresholds": [
+          1,
+          2,
+          4,
+          4
+        ],
+        "alpha": "29659190139878619/307898073683200000",
+        "loss": "78105135649241381/307898073683200000",
+        "query": "1599067920526660468247/291431202314447310294",
+        "h": 4,
+        "order": [
+          7,
+          13,
+          19,
+          17
+        ],
+        "anchors": [
+          5,
+          11
+        ],
+        "anchor_pure_masses": [
+          "1/2",
+          "4/5"
+        ],
+        "anchor_mixed_charge": "1/20",
+        "later_primes": [
+          7,
+          13,
+          17,
+          19
+        ],
+        "caps": [
+          "3/2",
+          "3/2",
+          "2",
+          "9/5"
+        ],
+        "Phi": "144954862716663707473/605081294402224640000"
+      },
+      "hinge_cache_entries": 11334
+    },
+    {
+      "anchors": [
+        5,
+        13
+      ],
+      "tuples": 1080,
+      "positive_tuples": 480,
+      "grid_result_sha256": "7fdc3cf31b8bb9a1b280776425050e0d273e691c4333b844f43c771584dac34c",
+      "winner": {
+        "thresholds": [
+          1,
+          2,
+          4,
+          4
+        ],
+        "alpha": "52666764281770693/514629637441920000",
+        "loss": "140319349758949307/514629637441920000",
+        "query": "2863588418616722150409/517503625832678829418",
+        "h": 4,
+        "order": [
+          7,
+          11,
+          19,
+          17
+        ],
+        "anchors": [
+          5,
+          13
+        ],
+        "anchor_pure_masses": [
+          "1/2",
+          "5/6"
+        ],
+        "anchor_mixed_charge": "1/24",
+        "later_primes": [
+          7,
+          11,
+          17,
+          19
+        ],
+        "caps": [
+          "3/2",
+          "5/3",
+          "2",
+          "9/5"
+        ],
+        "Phi": "87405169407912377477/337116721166953728000"
+      },
+      "hinge_cache_entries": 9072
+    },
+    {
+      "anchors": [
+        5,
+        17
+      ],
+      "tuples": 810,
+      "positive_tuples": 299,
+      "grid_result_sha256": "385bd7780a5257bc4a3c9d53cb458adac68f5ef7fcb5339659245e54f83f0ad2",
+      "winner": {
+        "thresholds": [
+          1,
+          2,
+          2,
+          4
+        ],
+        "alpha": "45683973720242899/491495438353920000",
+        "loss": "153986048111037101/491495438353920000",
+        "query": "3578199596664456377013/626692751494292088482",
+        "h": 4,
+        "order": [
+          7,
+          13,
+          11,
+          19
+        ],
+        "anchors": [
+          5,
+          17
+        ],
+        "anchor_pure_masses": [
+          "1/2",
+          "7/8"
+        ],
+        "anchor_mixed_charge": "1/32",
+        "later_primes": [
+          7,
+          11,
+          13,
+          19
+        ],
+        "caps": [
+          "3/2",
+          "5/3",
+          "3/2",
+          "9/5"
+        ],
+        "Phi": "566040447393860037189/2247444807779691520000"
+      },
+      "hinge_cache_entries": 6492
+    },
+    {
+      "anchors": [
+        5,
+        19
+      ],
+      "tuples": 720,
+      "positive_tuples": 243,
+      "grid_result_sha256": "22b1114769f522b28e35f76481e9fe1299cbdba33d7f44eeaf1d7772b18935ac",
+      "winner": {
+        "thresholds": [
+          1,
+          2,
+          2,
+          4
+        ],
+        "alpha": "419523615938891/4318570384128000",
+        "loss": "1379880710781109/4318570384128000",
+        "query": "23674118908551571143/4122239050215542966",
+        "h": 4,
+        "order": [
+          7,
+          13,
+          11,
+          17
+        ],
+        "anchors": [
+          5,
+          19
+        ],
+        "anchor_pure_masses": [
+          "1/2",
+          "8/9"
+        ],
+        "anchor_mixed_charge": "1/36",
+        "later_primes": [
+          7,
+          11,
+          13,
+          17
+        ],
+        "caps": [
+          "3/2",
+          "5/3",
+          "3/2",
+          "2"
+        ],
+        "Phi": "753826783860329483/2828951506296115200"
+      },
+      "hinge_cache_entries": 5634
+    },
+    {
+      "anchors": [
+        7,
+        11
+      ],
+      "tuples": 864,
+      "positive_tuples": 425,
+      "grid_result_sha256": "e364ebd4e4a1798d6cae61df95cffcb23de60ac7eacf4bb8be8ae9ddf830240f",
+      "winner": {
+        "thresholds": [
+          1,
+          2,
+          4,
+          4
+        ],
+        "alpha": "9886396713292873/76974518420800000",
+        "loss": "28600862497107127/76974518420800000",
+        "query": "1599067920526660468247/291431202314447310294",
+        "h": 4,
+        "order": [
+          5,
+          13,
+          19,
+          17
+        ],
+        "anchors": [
+          7,
+          11
+        ],
+        "anchor_pure_masses": [
+          "2/3",
+          "4/5"
+        ],
+        "anchor_mixed_charge": "1/30",
+        "later_primes": [
+          5,
+          13,
+          17,
+          19
+        ],
+        "caps": [
+          "2",
+          "3/2",
+          "2",
+          "9/5"
+        ],
+        "Phi": "144954862716663707473/453810970801668480000"
+      },
+      "hinge_cache_entries": 7923
+    },
+    {
+      "anchors": [
+        7,
+        13
+      ],
+      "tuples": 720,
+      "positive_tuples": 319,
+      "grid_result_sha256": "a8fdaf4f9c32837b60e5e5f3c221185af43a4aac671d905faec4787e778bfb17",
+      "winner": {
+        "thresholds": [
+          1,
+          2,
+          4,
+          4
+        ],
+        "alpha": "52666764281770693/385972228081440000",
+        "loss": "151040800538989307/385972228081440000",
+        "query": "2863588418616722150409/517503625832678829418",
+        "h": 4,
+        "order": [
+          5,
+          11,
+          19,
+          17
+        ],
+        "anchors": [
+          7,
+          13
+        ],
+        "anchor_pure_masses": [
+          "2/3",
+          "5/6"
+        ],
+        "anchor_mixed_charge": "1/36",
+        "later_primes": [
+          5,
+          11,
+          17,
+          19
+        ],
+        "caps": [
+          "2",
+          "5/3",
+          "2",
+          "9/5"
+        ],
+        "Phi": "87405169407912377477/252837540875215296000"
+      },
+      "hinge_cache_entries": 6468
+    },
+    {
+      "anchors": [
+        7,
+        17
+      ],
+      "tuples": 540,
+      "positive_tuples": 212,
+      "grid_result_sha256": "40d4b59c816a0f99a43aeeeb0d09ca6decfcb81a265ebd4894b0d1f9af37d664",
+      "winner": {
+        "thresholds": [
+          1,
+          2,
+          2,
+          4
+        ],
+        "alpha": "45683973720242899/368621578765440000",
+        "loss": "161665664335317101/368621578765440000",
+        "query": "3578199596664456377013/626692751494292088482",
+        "h": 4,
+        "order": [
+          5,
+          13,
+          11,
+          19
+        ],
+        "anchors": [
+          7,
+          17
+        ],
+        "anchor_pure_masses": [
+          "2/3",
+          "7/8"
+        ],
+        "anchor_mixed_charge": "1/48",
+        "later_primes": [
+          5,
+          11,
+          13,
+          19
+        ],
+        "caps": [
+          "2",
+          "5/3",
+          "3/2",
+          "9/5"
+        ],
+        "Phi": "188680149131286679063/561861201944922880000"
+      },
+      "hinge_cache_entries": 4728
+    },
+    {
+      "anchors": [
+        7,
+        19
+      ],
+      "tuples": 480,
+      "positive_tuples": 175,
+      "grid_result_sha256": "a3cab98a05a33b656ad558af03e5e796802a06472dc81ab7ffbdfef6e4bcb2f8",
+      "winner": {
+        "thresholds": [
+          1,
+          2,
+          2,
+          4
+        ],
+        "alpha": "419523615938891/3238927788096000",
+        "loss": "1439860855005109/3238927788096000",
+        "query": "23674118908551571143/4122239050215542966",
+        "h": 4,
+        "order": [
+          5,
+          13,
+          11,
+          17
+        ],
+        "anchors": [
+          7,
+          19
+        ],
+        "anchor_pure_masses": [
+          "2/3",
+          "8/9"
+        ],
+        "anchor_mixed_charge": "1/54",
+        "later_primes": [
+          5,
+          11,
+          13,
+          17
+        ],
+        "caps": [
+          "2",
+          "5/3",
+          "3/2",
+          "2"
+        ],
+        "Phi": "753826783860329483/2121713629722086400"
+      },
+      "hinge_cache_entries": 4122
+    },
+    {
+      "anchors": [
+        11,
+        13
+      ],
+      "tuples": 432,
+      "positive_tuples": 126,
+      "grid_result_sha256": "598319320a7b9b73307d9b12934cc82eed6c344da98fdaf683ab03d23b4db0d1",
+      "winner": {
+        "thresholds": [
+          1,
+          1,
+          4,
+          4
+        ],
+        "alpha": "8365674876312267/76974518420800000",
+        "loss": "41667762097207733/76974518420800000",
+        "query": "1587405545169790768213/246603364003933006626",
+        "h": 4,
+        "order": [
+          5,
+          7,
+          19,
+          17
+        ],
+        "anchors": [
+          11,
+          13
+        ],
+        "anchor_pure_masses": [
+          "4/5",
+          "5/6"
+        ],
+        "anchor_mixed_charge": "1/60",
+        "later_primes": [
+          5,
+          7,
+          17,
+          19
+        ],
+        "caps": [
+          "2",
+          "3/2",
+          "2",
+          "9/5"
+        ],
+        "Phi": "169519090631598349667/453810970801668480000"
+      },
+      "hinge_cache_entries": 3672
+    },
+    {
+      "anchors": [
+        11,
+        17
+      ],
+      "tuples": 324,
+      "positive_tuples": 75,
+      "grid_result_sha256": "8b778c476c365f42342bedaa755cd51ddc332e98e465d7a30c0dc723ea36f771",
+      "winner": {
+        "thresholds": [
+          1,
+          1,
+          3,
+          4
+        ],
+        "alpha": "533380645669433/5012336929600000",
+        "loss": "2912600993430567/5012336929600000",
+        "query": "49636258783686464671/7316915697293281894",
+        "h": 4,
+        "order": [
+          5,
+          7,
+          13,
+          19
+        ],
+        "anchors": [
+          11,
+          17
+        ],
+        "anchor_pure_masses": [
+          "4/5",
+          "7/8"
+        ],
+        "anchor_mixed_charge": "1/80",
+        "later_primes": [
+          5,
+          7,
+          13,
+          19
+        ],
+        "caps": [
+          "2",
+          "3/2",
+          "2",
+          "9/5"
+        ],
+        "Phi": "27685511691806618989/68759238000252800000"
+      },
+      "hinge_cache_entries": 2664
+    },
+    {
+      "anchors": [
+        11,
+        19
+      ],
+      "tuples": 288,
+      "positive_tuples": 60,
+      "grid_result_sha256": "3f65797a158aa98c064e2f7f9c479e7eb89ad53e2d3806ae52d5ac4999d13133",
+      "winner": {
+        "thresholds": [
+          1,
+          1,
+          2,
+          4
+        ],
+        "alpha": "66012411177829/645940014720000",
+        "loss": "386145599126171/645940014720000",
+        "query": "13137813865349912251/1945913856700043262",
+        "h": 4,
+        "order": [
+          5,
+          7,
+          13,
+          17
+        ],
+        "anchors": [
+          11,
+          19
+        ],
+        "anchor_pure_masses": [
+          "4/5",
+          "8/9"
+        ],
+        "anchor_mixed_charge": "1/90",
+        "later_primes": [
+          5,
+          7,
+          13,
+          17
+        ],
+        "caps": [
+          "2",
+          "3/2",
+          "3/2",
+          "2"
+        ],
+        "Phi": "1460014459049956493/3808203950783232000"
+      },
+      "hinge_cache_entries": 2328
+    },
+    {
+      "anchors": [
+        13,
+        17
+      ],
+      "tuples": 270,
+      "positive_tuples": 49,
+      "grid_result_sha256": "91ee9b9a7a251396e9597798e75514d4e5cb4174e9a0bad71232390f52d3cf58",
+      "winner": {
+        "thresholds": [
+          1,
+          1,
+          2,
+          4
+        ],
+        "alpha": "38258938618442921/368621578765440000",
+        "loss": "226687821119217079/368621578765440000",
+        "query": "3558364456027805325327/524836119967799990278",
+        "h": 4,
+        "order": [
+          5,
+          7,
+          11,
+          19
+        ],
+        "anchors": [
+          13,
+          17
+        ],
+        "anchor_pure_masses": [
+          "5/6",
+          "7/8"
+        ],
+        "anchor_mixed_charge": "1/96",
+        "later_primes": [
+          5,
+          7,
+          11,
+          19
+        ],
+        "caps": [
+          "2",
+          "3/2",
+          "5/3",
+          "9/5"
+        ],
+        "Phi": "220428455124933928277/561861201944922880000"
+      },
+      "hinge_cache_entries": 2157
+    },
+    {
+      "anchors": [
+        13,
+        19
+      ],
+      "tuples": 240,
+      "positive_tuples": 40,
+      "grid_result_sha256": "ce78b912f7359ca62cd9dda6cffdffdbfa4b24bfafdae55236655eabb0992ef7",
+      "winner": {
+        "thresholds": [
+          1,
+          1,
+          2,
+          4
+        ],
+        "alpha": "359377457394289/3238927788096000",
+        "loss": "2009838239453711/3238927788096000",
+        "query": "23815082260841600997/3531242896356283714",
+        "h": 4,
+        "order": [
+          5,
+          7,
+          11,
+          17
+        ],
+        "anchors": [
+          13,
+          19
+        ],
+        "anchor_pure_masses": [
+          "5/6",
+          "8/9"
+        ],
+        "anchor_mixed_charge": "1/108",
+        "later_primes": [
+          5,
+          7,
+          11,
+          17
+        ],
+        "caps": [
+          "2",
+          "3/2",
+          "5/3",
+          "2"
+        ],
+        "Phi": "881423571451516657/2121713629722086400"
+      },
+      "hinge_cache_entries": 1896
+    },
+    {
+      "anchors": [
+        17,
+        19
+      ],
+      "tuples": 180,
+      "positive_tuples": 23,
+      "grid_result_sha256": "b76c33cb612b2c74391ffde4ef5e25f3c94ac38f63344181631bcff1e2ebea78",
+      "winner": {
+        "thresholds": [
+          1,
+          1,
+          2,
+          3
+        ],
+        "alpha": "25206225011/252392716800",
+        "loss": "169346494189/252392716800",
+        "query": "65530525179969357/8755932211571090",
+        "h": 4,
+        "order": [
+          5,
+          7,
+          11,
+          13
+        ],
+        "anchors": [
+          17,
+          19
+        ],
+        "anchor_pure_masses": [
+          "7/8",
+          "8/9"
+        ],
+        "anchor_mixed_charge": "1/144",
+        "later_primes": [
+          5,
+          7,
+          11,
+          13
+        ],
+        "caps": [
+          "2",
+          "3/2",
+          "5/3",
+          "2"
+        ],
+        "Phi": "15995926444363591/35719084675456000"
+      },
+      "hinge_cache_entries": 1380
+    }
+  ],
+  "checks": {
+    "full_grid_(5, 7)": true,
+    "pair_DP_24_orders_(5, 7)": true,
+    "full_grid_(5, 11)": true,
+    "pair_DP_24_orders_(5, 11)": true,
+    "full_grid_(5, 13)": true,
+    "pair_DP_24_orders_(5, 13)": true,
+    "full_grid_(5, 17)": true,
+    "pair_DP_24_orders_(5, 17)": true,
+    "full_grid_(5, 19)": true,
+    "pair_DP_24_orders_(5, 19)": true,
+    "full_grid_(7, 11)": true,
+    "pair_DP_24_orders_(7, 11)": true,
+    "full_grid_(7, 13)": true,
+    "pair_DP_24_orders_(7, 13)": true,
+    "full_grid_(7, 17)": true,
+    "pair_DP_24_orders_(7, 17)": true,
+    "full_grid_(7, 19)": true,
+    "pair_DP_24_orders_(7, 19)": true,
+    "full_grid_(11, 13)": true,
+    "pair_DP_24_orders_(11, 13)": true,
+    "full_grid_(11, 17)": true,
+    "pair_DP_24_orders_(11, 17)": true,
+    "full_grid_(11, 19)": true,
+    "pair_DP_24_orders_(11, 19)": true,
+    "full_grid_(13, 17)": true,
+    "pair_DP_24_orders_(13, 17)": true,
+    "full_grid_(13, 19)": true,
+    "pair_DP_24_orders_(13, 19)": true,
+    "full_grid_(17, 19)": true,
+    "pair_DP_24_orders_(17, 19)": true,
+    "all15_pairs": true,
+    "all10404_cap_tuples": true,
+    "fixed57_560_recovered": true,
+    "global_comparison_to_incumbent_consistent": true,
+    "all4546_positive_tuples": true,
+    "target_not_crossed": true,
+    "no_improvement_(5, 7)": true,
+    "no_improvement_(5, 11)": true,
+    "no_improvement_(5, 13)": true,
+    "no_improvement_(5, 17)": true,
+    "no_improvement_(5, 19)": true,
+    "no_improvement_(7, 11)": true,
+    "no_improvement_(7, 13)": true,
+    "no_improvement_(7, 17)": true,
+    "no_improvement_(7, 19)": true,
+    "no_improvement_(11, 13)": true,
+    "no_improvement_(11, 17)": true,
+    "no_improvement_(11, 19)": true,
+    "no_improvement_(13, 17)": true,
+    "no_improvement_(13, 19)": true,
+    "no_improvement_(17, 19)": true
+  },
+  "check_count": 51
+}

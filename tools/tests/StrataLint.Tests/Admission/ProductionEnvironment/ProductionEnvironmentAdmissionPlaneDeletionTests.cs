@@ -24,7 +24,7 @@ public sealed partial class ProductionEnvironmentTests
         var changes = DeletionChanges();
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            candidate, baseline, changes);
+            candidate, baseline, changes, out _);
 
         Assert.True(decision.IsAdmissible, decision.Message);
         Assert.Equal(deletedPlane == "judge"
@@ -36,12 +36,12 @@ public sealed partial class ProductionEnvironmentTests
 
     [Theory]
     [InlineData(null, "ADMISSION-PLANE-FILEMAP-UNAVAILABLE")]
-    [InlineData("", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
-    [InlineData("[[files]]\npattern = 'other.txt'\nadmission_plane = 'judge'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
-    [InlineData("[[files]]\npattern = '**'\nadmission_plane = 'judge'\n[[files]]\npattern = 'retired/*'\nadmission_plane = 'content'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
+    [InlineData("schema_version = 2", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
+    [InlineData("schema_version = 2\n[[files]]\npattern = 'other.txt'\nadmission_plane = 'judge'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
+    [InlineData("schema_version = 2\n[[files]]\npattern = '**'\nadmission_plane = 'judge'\n[[files]]\npattern = 'retired/*'\nadmission_plane = 'content'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
     [InlineData("[[files]]\npattern = '**'", "ADMISSION-PLANE-FILEMAP-INVALID")]
     [InlineData("[[files]]\npattern = '**'\nadmission_plane = 'observer'", "ADMISSION-PLANE-FILEMAP-INVALID")]
-    [InlineData("[[files]]\npattern = 'retired/?.txt'\nadmission_plane = 'judge'", "FILEMAP-PATTERN-UNSAFE")]
+    [InlineData("schema_version = 2\n[[files]]\npattern = 'retired/?.txt'\nadmission_plane = 'judge'", "FILEMAP-PATTERN-UNSAFE")]
     [InlineData("files = [", "ADMISSION-PLANE-FILEMAP-INVALID")]
     public void DeletedPathRequiresUniqueValidBaselineRegistration(string? baselineManifest, string expectedCode)
     {
@@ -51,7 +51,7 @@ public sealed partial class ProductionEnvironmentTests
         var changes = DeletionChanges();
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            candidate, baseline, changes);
+            candidate, baseline, changes, out _);
 
         Assert.False(decision.IsAdmissible);
         Assert.Equal(expectedCode, decision.Code);
@@ -75,7 +75,7 @@ public sealed partial class ProductionEnvironmentTests
         var changes = DeletionChanges();
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            candidate, baseline, changes);
+            candidate, baseline, changes, out _);
 
         Assert.False(decision.IsAdmissible);
         Assert.Equal(expectedCode, decision.Code);
@@ -114,7 +114,7 @@ public sealed partial class ProductionEnvironmentTests
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         // Even a claimed deletion cannot replace the two snapshots' presence evidence.
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            candidate, baseline, changes);
+            candidate, baseline, changes, out _);
 
         Assert.False(decision.IsAdmissible);
         Assert.Equal("ADMISSION-PLANE-PATH-MATCH-COUNT", decision.Code);
@@ -142,33 +142,34 @@ public sealed partial class ProductionEnvironmentTests
         const string source = "judge/source.txt";
         const string destination = "content/destination.txt";
         using var repository = new TemporaryDirectory();
-        ReviewRegressionTests.RunGit(repository.Path, "init");
-        ReviewRegressionTests.RunGit(repository.Path, "config", "user.email", "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(repository.Path, "config", "user.name", "StrataLint Tests");
+        TestGit.Run(repository.Path, "init");
+        TestGit.Run(repository.Path, "config", "user.email", "stratalint@example.invalid");
+        TestGit.Run(repository.Path, "config", "user.name", "StrataLint Tests");
         Directory.CreateDirectory(Path.Combine(repository.Path, "judge"));
         Directory.CreateDirectory(Path.Combine(repository.Path, "content"));
         Directory.CreateDirectory(Path.Combine(repository.Path, "Meta"));
         File.WriteAllText(Path.Combine(repository.Path, source), "renamed component\n");
         File.WriteAllText(Path.Combine(repository.Path, FileMapPath),
             Manifest((FileMapPath, "judge"), (source, "judge")));
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
-        var baseline = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "baseline");
+        var baseline = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
         File.Move(Path.Combine(repository.Path, source), Path.Combine(repository.Path, destination));
         File.WriteAllText(Path.Combine(repository.Path, FileMapPath),
             Manifest((FileMapPath, "judge"), (destination, "content")));
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "candidate");
         var gateway = new GitRepositoryGateway(repository.Path);
         var prepared = gateway.Prepare(baseline);
 
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            gateway.ReadCurrent(), gateway.ReadRevision(prepared.Revision), prepared.Changes);
+            gateway.ReadCurrent(), gateway.ReadRevision(prepared.Revision), prepared.Changes, out var observations);
 
         Assert.Contains(prepared.Changes.Entries, change => change.Path.Value == source && change.Kind == RawChangeKind.Deleted);
         Assert.Contains(prepared.Changes.Entries, change => change.Path.Value == destination && change.Kind == RawChangeKind.Added);
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        Assert.Contains(rejected.Diagnostics, static item => item.Message.Contains("ADMISSION-PLANE-MIXED", StringComparison.Ordinal));
+        Assert.Null(outcome);
+        AssertAdmissionPlaneWarning(observations);
+        Assert.Contains(observations, static item => item.Message.Contains("ADMISSION-PLANE-MIXED", StringComparison.Ordinal));
     }
 
     private static RawRepositorySnapshot DeletionSnapshot(string? manifest, bool includePath = false)

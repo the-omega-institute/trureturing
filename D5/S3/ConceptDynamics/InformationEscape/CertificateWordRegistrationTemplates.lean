@@ -6,8 +6,9 @@
    utility: none
    digest: Six-position certificate words retain each finite code in a separate CUT readout. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
-import LeanInformationAudit.Syntax
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -36,6 +37,6 @@ def certificateWordRealization {X : Type} (readWord : X -> Fin 6 -> Fin 5) :
   readout index state := readWord state index
   anchor := Fin.elim0
 
-register_information_template certificateWordRealization
+
 
 end D5.S3.ConceptDynamics.InformationEscape.CertificateWordRegistrationTemplates

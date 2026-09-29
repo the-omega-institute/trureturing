@@ -1,0 +1,54 @@
+### 172.1 同一真实启动的两份逻辑输出
+
+固定第171节的来源 $p=1/2$ 和任意有限整数 $L\ge3$。记
+
+$$
+\tau_j=\Theta_L(P_j),\qquad
+z_L=\left(-\frac12\right)^{L-1},
+\qquad
+d(t)=\frac19-\frac t6-\frac{t^2}{2},
+$$
+
+$$
+h(z)=\frac z4+\sqrt{d(z/3)}-\sqrt{d(-2z/3)},
+\qquad
+d_L=D(\tau_0,\tau_1)
+=\frac{24h(z_L)}{\sqrt{2353}}>0.
+\tag{172.1}
+$$
+
+这里始终采用 $D(\rho,\sigma)=\|\rho-\sigma\|_1/2$。
+第171节证明 $h(z_L)>0$，并给出逻辑 Bloch 向量差
+
+$$
+\Delta x=-\frac{336h(z_L)}{2353},
+\qquad
+\Delta y=0,
+\qquad
+\Delta z=\frac{2304h(z_L)}{2353}.
+\tag{172.2}
+$$
+
+令
+
+$$
+U_\varphi=
+\begin{pmatrix}
+\cos\varphi&-\sin\varphi\\
+\sin\varphi&\cos\varphi
+\end{pmatrix},
+\qquad
+\xi_j(\varphi)
+=\operatorname{Tr}_M\mathfrak E
+(U_\varphi\tau_jU_\varphi^*).
+\tag{172.3}
+$$
+
+$\xi_j(\varphi)$ 是接收端 $Q,R$ 上的状态，没有保留对 $M$ 的访问权。
+对当前来源，第168节的局部退相干参数为
+
+$$
+\kappa=\frac{\sqrt5}{3}\in(0,1).
+\tag{172.4}
+$$
+

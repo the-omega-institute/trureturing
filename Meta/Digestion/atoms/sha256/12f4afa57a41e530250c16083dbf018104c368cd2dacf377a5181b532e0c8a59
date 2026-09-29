@@ -1,0 +1,6 @@
+**定理 12（资源计数）.** 选 \(A_0\in\mathcal G\)。若 \(\mathcal G\setminus\{A_0\}\) 可单射地配给两类互不混淆的资源：\(R\subseteq Z\) 中与所配避点 AP 不相交的对，以及 \(S\subseteq V\setminus H\) 中与所配 AP 不相交的点；又若 \(P\) 中至少 \(p-e\) 个 AP 可单射地配给 \(R\) 外、被该 AP 包含的坏对，则 \(\delta\leq z-|R|+e\) 且 \(s\geq-e\)。全匹配时，可选出 \(\delta\) 个 AP，使它们分别配给 \(Z\setminus R\) 中被自身包含的不同坏对。
+
+**证明.** \(g-1=|R|+|S|\) 且 \(|S|\leq N-1-h\)，所以 \(t\leq|R|\)。设 AP 匹配中有 \(k\) 个像落在 \(Z\)。余下至少 \(p-e-k\) 条边属于定理 9 的图，故 \(\delta\leq e+k\leq e+z-|R|\)，再用 (5)。全匹配的强化从一组 \(P\) 到 \(L\) 的最大匹配出发，对其未匹配的 \(\delta\) 个 AP 沿全匹配与 \(L\)-匹配交替行走。路径不可能终止于未匹配的 \(L\) 对，否则可增广；故终止于不同的 \(Z\setminus R\) 对。翻转这些不相交路径即可。\(\square\)
+
+构造联合图 \(\mathcal J\)：左侧为 \(\mathcal G\sqcup P\)，右侧为 \((V\setminus H)\sqcup(Z\cup B_P)\)；避点 AP 接到与自身不相交的点或对，\(Q\in P\) 接到自身所含坏对。记左侧缺额为 \(D_{\mathcal J}\)。对于 \(X\subseteq\mathcal G\)，写 \(H_X=\bigcap X\)、\(Z_X=\bigcup_{A\in X}\binom{V\setminus A}{2}\)，并约定 \(H_\varnothing=V\)。
+

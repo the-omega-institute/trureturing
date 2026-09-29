@@ -1,0 +1,52 @@
+**定理 58.2（等待律、截止律与完整仪器距离）。** 对正 $\gamma$ 的仪器，任意初态最终都点击。从共同来源 $P_s$ 出发有
+
+$$
+\boxed{
+p(1)=1-w,\qquad
+p(n)=w\gamma(1-\gamma)^{n-2}\ (n\ge2),\qquad
+\mu=1+\frac w\gamma.
+}
+$$
+
+与基准的完整首次点击时间分布之总变差距离为 $w$。令 $q=1-\eta$、$0<\eta\le1$，则
+
+$$
+\boxed{
+a_\eta=1-\frac{w\eta}{\eta+q\gamma},\qquad
+\sup_{0<\eta\le1}|a_\eta-1|=w.
+}
+$$
+
+若保留正交的点击、未点击记录及其量子输出，完整单轮仪器通道与基准的半 diamond 距离恰为
+
+$$
+\boxed{\delta_{\mathrm{inst}}=\max\{w,\gamma\}.}
+$$
+
+证明。第一轮未点击的概率为 $w$，条件后继为 $P_u$。从 $P_u$ 开始，每轮以概率 $\gamma$ 点击，否则回到 $P_u$，给出上述几何尾和均值。从任意初态开始，第一次未点击后也为 $P_u$，所以正 $\gamma$ 保证最终点击。概率式在 $\gamma=1$ 时按零次幂为一解释。
+
+基准时间律为集中在一的点质量，因此总变差距离为 $1-p(1)=w$。截止响应由级数直接得到
+
+$$
+a_\eta=1-w+\frac{wq\gamma}{1-q(1-\gamma)}
+=1-\frac{w\eta}{\eta+q\gamma}.
+$$
+
+损失不超过 $w$，在 $\eta=1$ 取得它。
+
+对任意有限参考系统与联合输入态，记输入在 $s,u$ 基上的两个参考对角块为 $\rho_{ss},\rho_{uu}$，均正半定且迹之和为一。两仪器输出之差在未点击记录块为
+
+$$
+D\otimes P_u,\qquad D=w\rho_{ss}-\gamma\rho_{uu},
+$$
+
+在点击记录块为 $-D\otimes P_s$。记录块正交，故输出差的半迹范数为
+
+$$
+\|D\|_1
+\le w\operatorname{Tr}\rho_{ss}+\gamma\operatorname{Tr}\rho_{uu}
+\le\max\{w,\gamma\}.
+$$
+
+通道差的 diamond 范数可用带参考的输入态取上确界；上式给上界。分别输入 $P_s$ 和 $P_u$ 达到 $w$ 与 $\gamma$，故取其较大值即得等号。$\square$
+

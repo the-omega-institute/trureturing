@@ -1,0 +1,44 @@
+**定理 50.3（点击响应与运行成本的预解式）。** 定义实际调用次数的期望效果 $\mathsf C_\eta$，即
+
+$$
+\mathbb E_\rho\min\{\mathsf N,\mathsf M\}
+=\operatorname{Tr}(\rho\mathsf C_\eta).
+$$
+
+则
+
+$$
+\boxed{
+G_\eta=(\operatorname{id}-q\mathcal A)^{-1}(B),\qquad
+\mathsf C_\eta=(\operatorname{id}-q\mathcal A)^{-1}(I)
+=\sum_{m\ge0}q^mS_m,
+}
+$$
+
+并有
+
+$$
+\boxed{
+I\le\mathsf C_\eta\le\frac I\eta,\qquad
+I=qG_\eta+\eta\mathsf C_\eta.
+}
+$$
+
+因此只要硬币合同已知，截止前点击概率 $a_\eta=\operatorname{Tr}(\rho G_\eta)$ 就确定平均调用成本
+
+$$
+\boxed{c_\eta=\frac{1-q a_\eta}{\eta}.}
+$$
+
+证明。$\mathcal A$ 正且次保单位；在 Hermitian 算子的算子范数下是收缩，因为 $-I\le H\le I$ 推出 $-I\le\mathcal A(H)\le I$。故 $q<1$ 时 Neumann 级数收敛，给出两份逆算子表达。
+
+实际调用次数严格超过 $m$ 的概率为 $q^m\operatorname{Tr}(\rho S_m)$。对 $m\ge0$ 求和得到成本式。由 $S_0=I$、$0\le S_m\le I$ 得两侧界。
+
+最后
+
+$$
+(\operatorname{id}-q\mathcal A)(I)=\eta I+qB.
+$$
+
+作用逆算子即得恒等式，取迹得到标量成本。$\eta=1$ 时 $q=0$，本协议只运行一轮，所有式子仍成立。$\square$
+

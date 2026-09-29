@@ -1,0 +1,8 @@
+**定义 42.1（无指定原点的二元实验）。** 令 $S$ 是一个恰含两个元素的集合，$\iota:S\to S$ 为唯一无不动点置换。实验 $\mathsf W$ 给每个 $s\in S$ 指定一个有限维密度矩阵 $\rho_s$，先验均匀。这里没有指定哪个元素叫作零。两实验合并的输出标签集定义为
+\[
+ (S_1\times S_2)/\{(s,t)\sim(\iota_1s,\iota_2t)\},
+\]
+每个轨道对应其中两个产品态的等权混合。任选两套标签后，这恰为第 38 节的奇偶合并，记为 $\mathsf W_1\boxast\mathsf W_2$。相对任意标签取 $\sigma=(\rho_++\rho_-)/2$、$\Delta=(\rho_+-\rho_-)/2$；交换标签只改变 $\Delta$ 的符号。
+
+若存在两条固定 CPTP 映射 $\Lambda,\mathcal R$，对两个条件态同时满足 $\Lambda(\rho_s)=\widetilde\rho_{\pi(s)}$ 和 $\mathcal R(\widetilde\rho_{\pi(s)})=\rho_s$，其中 $\pi$ 是标签双射，则称两实验统计等价。恢复只要求在指定实验态族上成立，不要求在整个矩阵空间上可逆。有限维经典实验可用对角态表示；一般操作概率理论则从状态、效应、变换与复合规则开始，不能未加假设就使用本卷的 von Neumann 熵或 Hilbert 张量积。[^tcs8-operational][^tcs8-buscemi]
+

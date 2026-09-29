@@ -84,9 +84,10 @@ run_cmd do
   checkDispatch
     "information_theorem probe in missingArena object_arena obj catalog cat readout via (descriptor) primitives p : True := by trivial"
     "informationTheoremOccurrenceReadoutCmd" "IE-C003"
-  checkDispatch
-    "declare_information_template_binding missingTheorem in missingArena readout via (descriptor)"
-    "declareInformationTemplateBindingCmd" "IE-C003"
+  match Parser.runParserCategory (← getEnv) `command
+      "declare_information_template_binding missingTheorem in missingArena readout via (descriptor)" with
+  | .error _ => logInfo "[PASS] retired_sidecar_grammar_rejected"
+  | .ok _ => throwError "retired sidecar grammar accepted"
   checkDispatch
     "#seal_information_theory"
     "sealInformationTheoryCmd" ""

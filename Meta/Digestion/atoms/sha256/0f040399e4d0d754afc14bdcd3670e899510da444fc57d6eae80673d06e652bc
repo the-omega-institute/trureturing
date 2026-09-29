@@ -1,0 +1,48 @@
+### 42.1 源交叠不等于商后交叠
+
+令实际来源被局部子集覆盖：
+
+$$
+\Omega=\bigcup_i\Omega_i,
+\qquad
+q_i:\Omega_i\twoheadrightarrow B_i.
+\tag{42.1}
+$$
+
+在来源交叠 $\Omega_i\cap\Omega_j$ 上，若存在过渡映射
+
+$$
+t_{ij}:q_i(\Omega_i\cap\Omega_j)\to q_j(\Omega_i\cap\Omega_j),
+\qquad
+t_{ij}\circ q_i=q_j,
+\tag{42.2}
+$$
+
+其存在的充分必要条件是
+
+$$
+\ker(q_i|_{\Omega_i\cap\Omega_j})
+\subseteq
+\ker(q_j|_{\Omega_i\cap\Omega_j}).
+\tag{42.3}
+$$
+
+若两侧核相等，$t_{ij}$ 才在这些实际像之间双射。由同一个来源诱导的三重交叠运输自动满足
+
+$$
+t_{jk}\circ t_{ij}=t_{ik}
+\tag{42.4}
+$$
+
+但等式的定义域只是实际三重交叠像。把 (42.4) 延拓到形式上可组合、却没有共同来源代表的接口点，需要另行证明域相容。
+
+一个有限反例说明“各片都能因子化”仍不够。令
+
+$$
+\Omega=\{a,b\},\quad
+\Omega_1=\{a\},\quad\Omega_2=\{b\},\quad
+q(a)=q(b)=*,
+$$
+
+并令目标读出 $f(a)=0,f(b)=1$。两个局部限制的来源交叠为空，所以局部一致性条件真空成立；但全局 $f$ 不能因子化为 $\bar f\circ q$，因为同一商点 $*$ 要求两个不同值。修复方式是要求补丁对 $q$ 饱和，或直接在所有由商合并产生的接口交叠上检查 fiber-constant 条件。
+

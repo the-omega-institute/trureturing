@@ -1,0 +1,72 @@
+## ST24．全局拓扑约束法向混合与控制强度
+
+### 假设 ST24.1
+
+现在允许环境本身是带相容 Hermitian 连接的向量丛；内积仍正定。参数曲面带一个固定 Riemann 度量，取局部定向正交切向框 $e_1,e_2$。沿用 ST17 的定义
+
+$$
+N_a=(I-P)\nabla_{e_a}U,\qquad
+\mathcal F_{12}=U^\dagger F^{\rm full}_{12}U
++i(N_1^\dagger N_2-N_2^\dagger N_1).
+$$
+
+该曲率分解来自相容连接的子丛几何，一般形式明确归于已有几何及2026年的系统研究。[ST19-OMP] 定义
+
+$$
+\mathscr E_N=\int_\Sigma(\|N_1\|_F^2+\|N_2\|_F^2)\,dA,
+\quad
+\mathscr B=\int_\Sigma\operatorname{tr}(U^\dagger F^{\rm full}_{12}U)\,dA.
+$$
+
+二者在局部酉换框下不变，故为全局量。参数度量在比较中固定，并不预先识别为物理时空度量。
+
+### 定理 ST24.2：带环境曲率扣除的拓扑界
+
+有
+
+$$
+\boxed{\mathscr E_N\ge|2\pi C_1(E)-\mathscr B|.}
+\tag{ST24.1}
+$$
+
+**证明。** 逐点使用 Frobenius Cauchy–Schwarz 与 $2ab\le a^2+b^2$：
+
+$$
+\left|\operatorname{tr}i(N_1^\dagger N_2-N_2^\dagger N_1)\right|
+\le2\|N_1\|_F\|N_2\|_F
+\le\|N_1\|_F^2+\|N_2\|_F^2.
+$$
+
+由曲率分解积分并使用三角不等式。∎
+
+环境平直时，$\mathscr B=0$，得到 $\mathscr E_N\ge2\pi|C_1|$。这一平直形式与已有量子度量拓扑界相容。[ST19-MO] 非平直环境中若漏掉 $\mathscr B$，结论一般错误，ST25给出等式见证。
+
+### 推论 ST24.3：无跃迁生成元的面积积分界
+
+定义每个单位参数方向上的法向控制生成元
+
+$$
+H_{{\rm cd},a}=i\hbar[\nabla_{e_a}P,P].
+$$
+
+则
+
+$$
+\sum_a\|H_{{\rm cd},a}\|_F^2
+=2\hbar^2\sum_a\|N_a\|_F^2,
+$$
+
+从而
+
+$$
+\boxed{
+\mathscr C_2:=\int_\Sigma\sum_a\|H_{{\rm cd},a}\|_F^2dA
+\ge2\hbar^2|2\pi C_1(E)-\mathscr B|.
+}
+\tag{ST24.2}
+$$
+
+**证明。** 对 $E\oplus E^\perp$ 分块，$\nabla P$ 只有互为伴随的非对角块 $N_a,N_a^\dagger$。交换子改变一个块的符号，故 Frobenius 范数平方为 $2\hbar^2\|N_a\|_F^2$。再用(ST24.1)。∎
+
+它是给定参数度量下、两个单位方向的生成元平方强度积分。它不是任意单条路径的热力学功下界，也没有推导最短物理时间。真正沿路径运动时，控制还乘以参数速度并受到可实现性限制。无跃迁驱动的一般机制见[ST19-Berry]。
+

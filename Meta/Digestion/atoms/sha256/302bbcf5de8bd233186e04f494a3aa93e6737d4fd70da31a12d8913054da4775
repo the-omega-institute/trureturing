@@ -1,0 +1,54 @@
+### 191.2 当前 Choi 变量及非负缺陷
+
+沿用（189.5）—（189.10）的旗标对称化与 Choi 记号。置
+
+$$
+\mathfrak c=C_0+C_1,\qquad
+s=F_0+F_1,\qquad d=F_0-F_1,
+\qquad F_j=A_j+\epsilon L_j.
+\tag{191.2}
+$$
+
+这里 $d$ 是两个正确主概率之差，不是 Kraus 矩阵元素。我们只需分析满足
+$e\le3/4+K\epsilon$ 的 instrument，$K$ 为某个统一常数：第188节可行上界保证最优解都属于这一类。
+
+第189.4节的推导在 $h\in[0,H]$ 上所有常数可统一选取，给
+
+$$
+\mathfrak c=O(\epsilon),\quad d=O(\sqrt\epsilon),\quad
+A_j=\frac12+O(\sqrt\epsilon),\quad s=1+O(\epsilon).
+\tag{191.3}
+$$
+
+具体地，$|L_j|$ 由固定参数和紧 Choi 集统一控制；主压缩下界是
+
+$$
+\lambda=r\left(1-\frac{F_0F_1}{s}\right),\qquad
+\lambda-\frac34
+=-\frac{3h\epsilon}{4}
+-\frac{r\epsilon(L_0+L_1)}4
++r\left(\frac{\mathfrak c}4+\frac{d^2}{4s}\right).
+\tag{191.4}
+$$
+
+近优上界与 $r\ge1-H\epsilon$ 比较，分别控制最后两项即可得到（191.3）。以下缩小统一的 $\epsilon_0$，使 $r\ge1/2$、$1/2\le s\le2$、$A_j\ge1/4$。
+
+定义偏离量
+
+$$
+t=\sqrt{\mathfrak c}+|d|+\epsilon.
+$$
+
+由保迹及当前变量关系，
+
+$$
+\left|A_j-\frac12\right|\le C(\mathfrak c+|d|+\epsilon),
+\qquad |N_0+N_1|=|P_0+P_1|\le\sqrt{\mathfrak c}.
+\tag{191.5}
+$$
+
+第二式使用
+$|P_0+P_1|\le\sum_j\sqrt{C_jD_j}
+\le\sqrt{(C_0+C_1)(D_0+D_1)}$
+及 $D_0+D_1\le1$。
+

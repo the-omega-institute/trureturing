@@ -1,0 +1,18 @@
+### 233.8 紧融合框架、投影和文献及适用边界
+
+对 $W_j=\operatorname{im}\Pi_j$，恒等式（233.FF.7）等价于
+$$
+\sum_{j=1}^N\|\Pi_jv\|^2=\frac Rd\|v\|^2
+\quad\text{对所有 }v\in\mathbb C^d.
+\tag{233.FF.49}
+$$
+省略零子空间后，它是单位权重、紧界 $R/d$ 的有限紧融合框架。各子空间可以相交，维数也可以不同。总维数 $\sum_j\dim W_j=R$ 是恒等式的迹，不是额外独立假设。
+
+这一结构属于成熟框架理论。P. G. Casazza、G. Kutyniok、S. Li，*Fusion Frames and Distributed Processing*，[arXiv:math/0605374v1](https://arxiv.org/abs/math/0605374v1)，Definition 3.1，[PDF 第5页](https://arxiv.org/pdf/math/0605374v1#page=5)，用加权投影平方范数定义融合框架及紧性；Proposition 3.5，第6页，给紧界与加权子空间维数之和的关系；§3.2，第7页，定义融合框架算子为 $\sum_jv_j^2\Pi_j$。论文发表于 *Applied and Computational Harmonic Analysis* 25(1), 114–132 (2008)，[DOI 10.1016/j.acha.2007.10.001](https://doi.org/10.1016/j.acha.2007.10.001)。这里的投影和条件就是该标准框架的单位权重特例。
+
+标量算子作为投影和的问题亦有专门文献：S. A. Kruglyak、V. I. Rabanovich、Yu. S. Samoilenko，*On Sums of Projections*，*Functional Analysis and Its Applications* 36(3), 182–195 (2002)，[DOI 10.1023/A:1020193804109](https://doi.org/10.1023/A:1020193804109)。该文的出版方摘要明确研究哪些标量 $\alpha I$ 可以表示为给定数量的正交投影之和。本稿将它作为标准问题的文献定位，不调用未在正文证明的分类结论；尤其保留这里固定有限维 $d$、固定投影数量 $N$ 和总秩 $R$ 的共同实现约束。
+
+仓内已有平坦 Choi 态秩下界、记录分支事件振幅核及量子比特平衡框架的相邻结果。对 D5 量子声明及钉版 Mathlib 投影、矩阵与内积空间目录的定向检索未定位到本节“完整通道误差取等当且仅当固定维数投影和存在”的接口定理。本文用标准矩阵工具给出该桥梁，未据此宣称文献原创性。
+
+本定理针对均匀权重、固定纯输出、经典标签及完整参考误差。非均匀权重改变目标 Choi 谱；混合输出改变支撑结构；相干记录改变分支直和；无参考优化不具备本节使用的全部纯化输入。这些变更不能直接沿用（233.FF.6）—（233.FF.7）的等价判据。
+

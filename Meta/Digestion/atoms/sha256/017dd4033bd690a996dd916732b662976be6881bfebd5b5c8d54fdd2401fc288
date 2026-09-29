@@ -1,0 +1,20 @@
+**定义 266.1（带布居摆幅限制的允许类）。** 固定 $b=1/4$。对 $0<\eta\le1$、$0\le\Delta\le b/2$，考虑全实轴上的 $C^2$ 二维密度曲线
+
+$$
+\rho(t)=I/2+\boldsymbol u(t)\cdot\boldsymbol\sigma,
+\qquad |\boldsymbol u(t)|=b,
+\qquad \rho''(t)\preceq C_\eta=\operatorname{diag}(1,\eta).
+\tag{266.1}
+$$
+
+记 $z(t)=u_z(t)$，并要求
+
+$$
+\operatorname{osc}_{\mathbb R}z
+:=\sup_{t\in\mathbb R}z(t)-\inf_{t\in\mathbb R}z(t)
+\le\Delta.
+\tag{266.2}
+$$
+
+记这一类的名义 SLD 信息上确界为 $F(\eta,\Delta)$，整函数矩阵元子类对应 $F_{\rm ent}(\eta,\Delta)$。式（266.2）也正是对角元 $\rho_{11}=1/2+z$ 的摆幅上界；它与固定特征值条件是不同约束。
+

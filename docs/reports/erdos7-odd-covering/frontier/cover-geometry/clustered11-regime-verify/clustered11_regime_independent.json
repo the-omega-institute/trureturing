@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "checks": 9664,
+  "new_lean_verification": false,
+  "optimizer_used": false,
+  "active_variables": 419,
+  "outside_query_tuples": 512,
+  "literal_rows": 135584,
+  "matrix_nonzero_entries": 650752,
+  "dual_rows": 700,
+  "fee_groups": 512,
+  "positive_residual_count": 312,
+  "source_mass": "305684996597/646498195200",
+  "exact_upper": "676452579812687931521867/8935026225378244992000000000000000000",
+  "target": "193/100000",
+  "strictly_below_target": true,
+  "witness_sha256": "2dcae097ef90e6b4977c187cc0a107bfc455aef0e174540a0c763dec2d667dbc",
+  "program_sha256": "502d1691fa0ef4bace31052950694c0827e17c169c5b1dd676e04c02e4c8fcac",
+  "scope": "Fixed109source and f(central coarse cell, none-or-unique-root1/special-other regime) only. Complete512 fees and fullmode8 additions. No exactzero optimum or unrestricted full5 conclusion."
+}

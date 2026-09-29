@@ -1,0 +1,14 @@
+**定理150.1（固定容量的前缀极限定理）。** 在（150.1）—（150.5）的合同下，
+
+$$
+\boxed{
+\varepsilon_{D,\infty}
+=\min_{c\in\mathcal X_D}\sup_{n\ge1}e_n(c)
+=\sup_{N\ge1}\varepsilon_{D,N}
+=\lim_{N\to\infty}\varepsilon_{D,N}.
+}
+\tag{150.6}
+$$
+
+存在同一个 $c_*\in\mathcal X_D$ 和一族终端解码器，同时达到全时域最优值。
+

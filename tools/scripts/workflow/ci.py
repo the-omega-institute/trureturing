@@ -258,6 +258,25 @@ def stage_input(args):
     return result
 
 
+def summary(root, stage):
+    value = json.loads((root / "build/ci" / (stage + "-result.json")).read_text())
+    steps = value.get("steps", [])
+    text = (f"CI_RESULT stage={stage} status={value['status']} exit={value['exit']} "
+            f"steps={len(steps)}\n")
+    for key in ("test_projects_executed", "test_projects_reused"):
+        if value.get(key) is not None:
+            text += f"{key}={value[key]}\n"
+    if value.get("error"):
+        text += f"error: {value['error']}\n"
+    for step in steps:
+        if step.get("status") == "failed":
+            text += "error: " + json.dumps(step, ensure_ascii=False) + "\n"
+    print(text, end="")
+    if os.environ.get("GITHUB_STEP_SUMMARY"):
+        with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as stream:
+            stream.write("```text\n" + text + "```\n")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("resolve", "checkout", "pack", "restore", "verify", "advisory", "summary",
@@ -303,12 +322,7 @@ def main():
         elif args.command == "checkout": checkout(args.repository, args.commit)
         elif args.command in ("pack", "restore", "verify"): transport(args)
         elif args.command == "advisory": advisory(args.repository, args.head)
-        else:
-            text = (args.repository / "build/ci" / (args.stage + "-result.json")).read_text()
-            if os.environ.get("GITHUB_STEP_SUMMARY"):
-                with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as stream:
-                    stream.write("```json\n" + text + "\n```\n")
-            print(text)
+        else: summary(args.repository, args.stage)
         return 0
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
         if args.command == "stage-input" and args.stage in ("build", "engineering", "current", "delta"):

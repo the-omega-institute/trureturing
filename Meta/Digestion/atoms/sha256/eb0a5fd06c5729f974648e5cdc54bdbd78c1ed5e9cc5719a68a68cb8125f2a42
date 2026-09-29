@@ -1,0 +1,22 @@
+### 10.2 恢复器的精确与近似合同
+
+精确恢复器应写成实际像上的
+
+$$
+R_s:\operatorname{im}\rho_s\to X,
+\qquad
+\rho_s\circ R_s=\operatorname{id}_{\operatorname{im}\rho_s},
+\tag{10.3}
+$$
+
+并且 $R_s\rho_s$ 只能恢复声明的目标或行为商，不应被解释为恢复原始隐藏状态的任意细节。若只要求目标 $T:X\to Z$，准确条件是存在 $\bar T$ 使 $T=\bar T\circ\rho_s$；这等价于 $T$ 在每个实际纤维上恒定。
+
+近似合同需要距离 $d_X$、输出距离 $d_Z$ 和误差界
+
+$$
+\sup_{x\in X}d_Z\bigl(T(x),\widehat T(\rho_s x)\bigr)\le\varepsilon.
+\tag{10.4}
+$$
+
+如果输出是概率向量，还要另写 $\widehat T(\rho_s x)\in\Delta$ 或给出到实际概率域的投影；坐标逐点落在 $[0,1]$ 不保证总和为一，也不保证属于观察映射的联合像。`NoisyMomentAtomExtremum`、`RobustMinimaxKernelBound` 和本卷第9节的自洽输入反例分别支撑误差、分类风险和联合像约束不能互换。
+

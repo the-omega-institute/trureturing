@@ -1,0 +1,2 @@
+**注 1.14。** A finite continuation horizon can restrict $D_{a,t}$ and must remain part of the task. The unrestricted residue quotient also supplies no unconditional factor for distinguishable phases: when $H$ is empty or is the whole residue group, the arithmetic phase does not affect acceptance. An autonomous sufficient state is $(a,r,t\bmod P)$; an externally indexed layer can instead supply $t$ and its weights to the transition rule.
+

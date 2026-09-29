@@ -1,0 +1,105 @@
+**定理 312.1（支撑加权的二阶超额）。** 固定正半径六态模型，沿用第298至301节的唯一正角点端点解 $M_*=S_*-\Omega_*$、$G$、$Z_*=\lambda vv^{\mathsf T}$、$D_a$、$\kappa_a$，并记 $A=\|b\|_2^2$、$\alpha_i=1/a_i$。定义活跃列集合、支撑权重及列方向衰减率为
+
+$$
+I=\{i:a_i\|M_*e_i\|_2=2\kappa_a\},\qquad
+\pi_i=\frac{\alpha_i\|Ge_i\|_2}{D_a},\qquad
+\rho_i=\frac{\langle M_*e_i,M_*^2e_i\rangle}{\|M_*e_i\|_2^2}.
+\tag{312.1}
+$$
+
+所有列都非零，$\pi_i\ge0$、$\sum_i\pi_i=1$，且 $\pi_i>0$ 蕴含 $i\in I$。令 $T_t=e^{-tM_*}$，对 $0<\delta<1$，令 $t(\delta)$ 是使 $r_*(T_{t(\delta)})=\eta(1-\delta)$ 的唯一参数。那么对每个固定模型，在 $\delta\downarrow0$ 时，
+
+$$
+e(T_{t(\delta)})-\widehat G_a\bigl(\eta(1-\delta)\bigr)
+=\mathcal E_a\delta^2+o(\delta^2),
+\tag{312.2}
+$$
+
+$$
+\mathcal E_a
+=\frac{\kappa_a}{2}
+\left(\sum_i\pi_i\rho_i-\min_{i\in I}\rho_i\right)\ge0.
+\tag{312.3}
+$$
+
+等号 $\mathcal E_a=0$ 恰当且仅当每个正支撑权重对应的 $\rho_i$ 都等于活跃列中的最小值。特别地，当 $G\succ0$ 时，等号恰好要求 $\rho_1=\rho_2=\rho_3$。
+
+证明。第298节给出 $S_*\succ0$，因此 $M_*$ 可逆，式（312.1）的所有分母非零。最优对偶目标为 $D_a=\sum_i\alpha_i\|Ge_i\|_2>0$，故权重归一化；列支撑取等条件给出其支集包含于 $I$。
+
+先证明一个由同一对最优原、对偶矩阵决定的恒等式：
+
+$$
+\sum_i\pi_i\rho_i
+=1-\frac{2\lambda}{A}d_1d_2,
+\tag{312.4}
+$$
+
+其中 $d_1,d_2$ 是 $S_*$ 的两个较小特征值。由 $\mathcal C(S)=(\operatorname{Tr}S)I-2S$ 及 $G=bb^{\mathsf T}+\mathcal C(Z_*)$，对任意实矩阵 $N$ 有
+
+$$
+b^{\mathsf T}Nb
+=\langle G,N\rangle_F-\operatorname{Tr}\bigl(Z_*\mathcal C(\operatorname{sym}N)\bigr).
+\tag{312.5}
+$$
+
+取 $N=M_*^2$。由 $M_*b=b$，左侧等于 $A$。对每个非零支撑列，最优列方向和尺度关系给出
+
+$$
+Ge_i=\frac{D_a\|Ge_i\|_2}{A\alpha_i}M_*e_i,
+\qquad \|M_*e_i\|_2=\frac{A\alpha_i}{D_a}.
+$$
+
+因此 $\langle Ge_i,M_*^2e_i\rangle
+=A\pi_i\rho_i$；零支撑列两侧都为零。遂有 $\langle G,M_*^2\rangle_F=A\sum_i\pi_i\rho_i$。
+
+另一方面，第301节给出 $d_3=d_1+d_2$、$S_*v=d_3v$ 及 $v\cdot\omega=0$，其中 $\Omega_*x=\omega\times x$。所以
+
+$$
+\begin{aligned}
+\operatorname{Tr}(M_*^2)&=d_1^2+d_2^2+d_3^2-2\|\omega\|_2^2,\\
+v^{\mathsf T}M_*^2v&=d_3^2-\|\omega\|_2^2,\\
+\operatorname{Tr}\bigl(Z_*\mathcal C(\operatorname{sym}M_*^2)\bigr)
+&=-2\lambda d_1d_2.
+\end{aligned}
+\tag{312.6}
+$$
+
+把这些等式代入式（312.5），便得式（312.4）。这里没有将 $M_*$ 当作对称矩阵。
+
+接着在同一实际预算下展开固定半群。第305、309节覆盖全部正半径，并保证
+$r_*(T_t)=\|e^{tM_*^{\mathsf T}}b\|_2^{-1}$；第304节保证预算参数唯一。令 $U=\|\Omega_*b\|_2^2$。由 $M_*^{\mathsf T}b=b+2\Omega_*b$ 及 $M_*b=b$，与第311节相同的固定矩阵展开给出
+
+$$
+t(\delta)=\delta+\left(\frac12-\frac{2U}{A}\right)\delta^2+O(\delta^3).
+\tag{312.7}
+$$
+
+对每一列展开矩阵指数和欧氏范数，有
+
+$$
+\frac{a_i}{2}\|(I-T_t)e_i\|_2
+=\frac{a_i\|M_*e_i\|_2}{2}
+\left(t-\frac{\rho_i}{2}t^2\right)+O(t^3).
+$$
+
+不在 $I$ 中的列与最大的首项系数有严格正间隙；列数有限，所以它们在充分小的正 $t$ 处不影响最大误差。对 $I$ 中的列取最大值得
+
+$$
+e(T_t)=\kappa_at-\frac{\kappa_a}{2}
+\min_{i\in I}\rho_i\,t^2+O(t^3).
+\tag{312.8}
+$$
+
+代入式（312.7），并使用第301节的
+$\Gamma_a=-2\kappa_aU/A$ 与
+$\Theta_a=\kappa_a(\lambda/A)d_1d_2$，再减去第300节实际受限最优值的二阶展开，得到
+
+$$
+\mathcal E_a
+=\frac{\kappa_a}{2}\left(1-\min_{i\in I}\rho_i\right)-\Theta_a.
+$$
+
+以式（312.4）消去 $\Theta_a$，即为式（312.3）。非负性及等号条件直接来自支撑于 $I$ 的概率权重。$G\succ0$ 时三个权重都严格为正，且三列全部活跃，故等号等价于三个衰减率相等。
+
+按第281节，同一个 $T_t$ 配合达到残差的酉输出坐标选择及逆酉解码，同时实现上述预算与误差；其复合恢复属于所比较的无限小可分类。式（312.2）比较的是同一个方案的两个读数。证毕。
+

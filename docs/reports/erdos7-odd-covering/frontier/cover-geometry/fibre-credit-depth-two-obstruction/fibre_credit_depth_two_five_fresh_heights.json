@@ -1,0 +1,68 @@
+{
+  "Haar_lower": "3500552703183369329/97495699047118888902750",
+  "Haar_lower_decimal": 3.59046884877617e-05,
+  "accepted_volume_numerator": "1541800119634011095040",
+  "box_volume": 43820595,
+  "box_volume_numerator": "1541800119634011095040",
+  "branch_counts": {
+    "convex-unary-tangent-and-concave-corners": 10400,
+    "linear": 10,
+    "quadratic": 1711,
+    "zero": 40
+  },
+  "budget": "194558096999947588/10093228543125",
+  "conditioned_convex_source_replayed": true,
+  "cube_cap": "31390970044192/6211217565",
+  "cube_weights": [
+    "13/25",
+    "89/100",
+    "1/2",
+    "9/25",
+    "3/10"
+  ],
+  "dependency_hashes": {
+    "fibre_credit_depth_two_conditioned_convex_source.json": "2b74e5eb1fbcacf2b9f9493affdc1df9ff17af6c8096df46a23d678d491df8a3",
+    "fibre_credit_depth_two_conditioned_convex_source.py": "4bf5f7610dc21b0b410074d54ee23f7d10a2d08c0c726c1827adad1da3bab251"
+  },
+  "exact_all_domain_enclosure_passed": true,
+  "grid_denominator": 512,
+  "kappa": "1/250",
+  "leaf_depths": {
+    "10": 244,
+    "11": 228,
+    "12": 418,
+    "13": 729,
+    "14": 1021,
+    "15": 1091,
+    "16": 493,
+    "17": 757,
+    "18": 1548,
+    "19": 1862,
+    "20": 2926,
+    "21": 559,
+    "22": 116,
+    "23": 76,
+    "6": 4,
+    "7": 10,
+    "8": 22,
+    "9": 57
+  },
+  "leaves": 12161,
+  "max_depth": 23,
+  "mean_W_lower": "8557010599229824/80745828345",
+  "mean_cap": "354870451028/26915276115",
+  "nodes": 24321,
+  "outside_lower": "2224487/100",
+  "scope": "Ordinary exact integer enclosure with replayed same-source convex-comparison arithmetic. Inherited actual-source and carving proofs remain ordinary, not Lean.",
+  "simple_Haar_lower": "1/30000",
+  "square_cap": "1940069387744/8971758705",
+  "square_weights": [
+    "31/2",
+    "7/10",
+    "0",
+    "0",
+    "0"
+  ],
+  "target": 19700,
+  "target_minus_budget": "4278505299614912/10093228543125"
+}

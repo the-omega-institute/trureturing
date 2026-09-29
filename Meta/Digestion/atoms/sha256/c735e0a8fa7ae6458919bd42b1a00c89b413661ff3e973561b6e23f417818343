@@ -1,0 +1,51 @@
+**定理52.1（三周期独立环境的六终端容量下界）。** 如果同一固定 Stinespring 表示的前六轮实际新环境依次为输入无关纯向量
+$$
+A,B,C,A,B,C,
+$$
+且 $A,B,C$ 线性无关，则
+$$
+\boxed{D:=\dim K\ge8.}
+\tag{52.1}
+$$
+不要求三条环境方向正交。
+
+证明。记 $V_i x=V(x\otimes|i\rangle)$、初始接收态为单位 $k$。每个终端的来源两列写成
+$$
+\Psi_n^i=|0\rangle x_n^i+|1\rangle y_n^i,
+$$
+令 $H_n=\operatorname{span}\{x_n^0,x_n^1\}$、$G_n=\operatorname{span}\{y_n^0,y_n^1\}$。首步有正交单位向量 $p,q$，第二步有正交单位向量 $u,v,w$，使
+$$
+H_1=\operatorname{span}(p,q),\quad G_1=\mathbb Cp,
+$$
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\quad G_2=\operatorname{span}(u,w),
+\quad H_2\cap G_2=\mathbb Cw.
+$$
+对 $n\ge2$，$H_n,G_n$ 均二维。对 $n\ge3$，来源按初始位与最后发射位给出四个非零、支撑互不相交的档案向量；$m_0,m_1$ 线性独立，故 Bell 输入的参考—活动记忆边缘秩为四。实际环境纯且与来源输入无关，使接收后的参考—活动记忆—接收器联合态纯，并保持这个不可访问边缘。因此四个接收系数向量线性独立，得到
+$$
+H_n\cap G_n=0.
+\tag{52.2}
+$$
+
+依第1/4、第2/5、第3/6轮分组，定义两类输入位的累计接收域
+$$
+\begin{array}{lll}
+H_A=\mathbb Ck+H_3,&H_B=H_1+H_4,&H_C=H_2+H_5,\\
+G_A=\mathbb Ck+G_3,&G_B=G_1+G_4,&G_C=G_2+G_5.
+\end{array}
+\tag{52.3}
+$$
+$V_0H_A,V_0H_B,V_0H_C$ 分别落在 $K\otimes A,K\otimes B,K\otimes C$，三个环境向量线性无关，故这些像为代数直和。$V_0$ 单射，于是
+$$
+\dim H_A+\dim H_B+\dim H_C\le D.
+\tag{52.4}
+$$
+同理，
+$$
+\dim G_A+\dim G_B+\dim G_C\le D.
+\tag{52.5}
+$$
+
+逐个环境块都需要至少五维的两位输入总量：
+
+- $H_3,G_3$ 各二维且交零，非零 $k$ 不可能同时属于它们。因此 $\dim H_A+\dim G_A\ge5$。

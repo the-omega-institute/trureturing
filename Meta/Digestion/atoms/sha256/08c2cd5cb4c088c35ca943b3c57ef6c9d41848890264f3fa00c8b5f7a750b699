@@ -1,0 +1,23 @@
+**定理 20.3（原始时间的显式等变重叠编码）。** 假设 A、B essential。扩张中的双边输入写成 (a_i,h_i)_{i∈Z}，其中
+
+$$
+\psi_A^{-1}(a_i)=(u_i,v_i),\qquad
+\alpha_i=\ell(u_i),\quad\beta_i=\ell(v_i),\quad
+h_{i+1}=h_i\alpha_i\beta_i.
+$$
+
+定义
+
+$$
+b_i=\psi_B(v_i,u_{i+1}),\qquad k_i=h_i\alpha_i,
+\qquad F((a_i,h_i)_i)=(b_i,k_i)_i.
+$$
+
+则 F:X_{E(A)}→X_{E(B)} 是 H 等变的原始一步时间共轭。其逆为：由 b_{i-1} 的分解读取 u_i，由 b_i 的分解读取 v_i，再令
+
+$$
+a_i=\psi_A(u_i,v_i),\qquad h_i=k_i\ell(u_i)^{-1}.
+$$
+
+正向只需输入坐标 [i,i+1]，逆向只需 [i-1,i]。这些公式不要求 A、B inert，也不要求 H 交换。
+

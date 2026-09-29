@@ -6,31 +6,7 @@ Five frozen causal peers reuse the separation template on two existing canonical
 
 The intervention catalog contains four new peers and its gold shadow; the observation-intervention catalog contains one new peer and its gold shadow. Each occurrence uses exactly the two finite readouts of its declared law. No anchors, carrier copies, or theorem-truth readouts enter the bundles.
 
-**Definition 1.1 (Five intervention occurrences).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.interventionCatalog`
-
-*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.interventionCatalog` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The catalog uses the complete finite intervention registry vector.
-
-**Definition 1.2 (Two observation-intervention occurrences).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observationCatalog`
-
-*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observationCatalog` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The catalog uses the complete finite observation-intervention registry vector.
-
-**Definition 1.3 (Finite intervention object arena).**
+**Definition 1.1 (Finite intervention object arena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finiteInterventionArena`
 
@@ -42,7 +18,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finite
 
 The intervention registrations enumerate the finite SCM object arena used by their declared readouts.
 
-**Definition 1.4 (Finite intervention law arena).**
+**Definition 1.2 (Finite intervention law arena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finiteInterventionLawArena`
 
@@ -54,7 +30,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finite
 
 The homogeneous finite signature turns intervention and counterfactual codes into the separation law.
 
-**Definition 1.5 (Finite observation object arena).**
+**Definition 1.3 (Finite observation object arena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finiteObservationInterventionArena`
 
@@ -66,7 +42,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finite
 
 The observation-intervention registrations enumerate the finite directional SCM object arena.
 
-**Definition 1.6 (Finite observation law arena).**
+**Definition 1.4 (Finite observation law arena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finiteObservationInterventionLawArena`
 
@@ -78,7 +54,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finite
 
 The same homogeneous signature records observation and intervention code separation.
 
-**Definition 1.7 (Intervention code readouts).**
+**Definition 1.5 (Intervention code readouts).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.icIntCode`
 
@@ -90,7 +66,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.icIntC
 
 Marginal and counterfactual outcome tables are encoded as the two public finite readout functions.
 
-**Definition 1.8 (Counterfactual code readout).**
+**Definition 1.6 (Counterfactual code readout).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.icCFCode`
 
@@ -102,7 +78,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.icCFCo
 
 The joint outcome table supplies the second intervention readout.
 
-**Definition 1.9 (Observation code readout).**
+**Definition 1.7 (Observation code readout).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.oiObsCode`
 
@@ -114,7 +90,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.oiObsC
 
 The observation code branches on the direction field and projects the root and child fields.
 
-**Definition 1.10 (Intervention code readout).**
+**Definition 1.8 (Intervention code readout).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.oiIntCode`
 
@@ -126,7 +102,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.oiIntC
 
 The intervention code branches on the direction field and projects the corresponding causal field.
 
-**Theorem 1.11 (Counterfactual kernel strictness).**
+**Theorem 1.9 (Counterfactual kernel strictness).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finer_bridge`
 
@@ -138,7 +114,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finer_
 
 The collapse identity supplies inclusion; the remaining law is separation.
 
-**Theorem 1.12 (Variation on a coupling fiber).**
+**Theorem 1.10 (Variation on a coupling fiber).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.fiber_bridge`
 
@@ -150,7 +126,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.fiber_
 
 Introducing or eliminating the common marginal label preserves the separation law.
 
-**Theorem 1.13 (Failure of identifiability).**
+**Theorem 1.11 (Failure of identifiability).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.not_identifiable_bridge`
 
@@ -162,7 +138,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.not_id
 
 The factorization criterion converts failure of identifiability into a separated pair.
 
-**Theorem 1.14 (Target-relative sufficiency).**
+**Theorem 1.12 (Target-relative sufficiency).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.target_bridge`
 
@@ -174,7 +150,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.target
 
 Universal sufficiency factorization identifies the failed counterfactual upgrade.
 
-**Theorem 1.15 (Full intervention profile strictness).**
+**Theorem 1.13 (Full intervention profile strictness).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.profile_bridge`
 
@@ -186,7 +162,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.profil
 
 The null-action coordinate supplies observational inclusion; strictness supplies separation.
 
-**Theorem 1.16 (Intervention law sensitivity).**
+**Theorem 1.14 (Intervention law sensitivity).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.intervention_law_sensitive`
 
@@ -198,7 +174,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.interv
 
 The actual realization satisfies the law and a constant realization of the same signature fails it.
 
-**Theorem 1.17 (Observation law sensitivity).**
+**Theorem 1.15 (Observation law sensitivity).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observation_law_sensitive`
 
@@ -210,35 +186,10 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observ
 
 The actual realization satisfies the law and a constant realization of the same signature fails it.
 
-**Theorem 1.18 (All occurrences are trivial in their shared catalogs).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.all_peers_trivial`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.all_peers_trivial` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every occurrence has zero unique capture because a real peer has the same agreement kernel.
-
-**Theorem 1.19 (No occurrence lowers shared escape).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.no_peer_lowers_escape`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.no_peer_lowers_escape` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Nondegeneracy turns empty unique capture into failure of LowersEscape for all seven occurrences.
-
-The maximal seal succeeds on both complete catalogs with a redundant verdict: every occurrence is certified trivial in its catalog and carries one finite IE-C007 zero-unique-capture record (intervention full 0 and without 0; observation-intervention full 24 and without 24). Each catalog publishes a redundancy certificate, no occurrence receives positive admission, system irredundancy is refuted for this root, and the census query certifies triviality for all seven occurrences.
+Reg.Catalogs.SharedArenaPeers imports the genuine registration leaves and owns both complete catalogs and their maximal seal. The seal reports a redundant verdict: every occurrence is certified trivial in its catalog and carries one finite IE-C007 zero-unique-capture record (intervention full 0 and without 0; observation-intervention full 24 and without 24). Each catalog publishes a redundancy certificate, no occurrence receives positive admission, system irredundancy is refuted for this root, and the census query certifies triviality for all seven occurrences.
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.all_peers_trivial`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.fiber_bridge`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finer_bridge`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finiteInterventionArena`
@@ -247,11 +198,8 @@ The maximal seal succeeds on both complete catalogs with a redundant verdict: ev
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finiteObservationInterventionLawArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.icCFCode`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.icIntCode`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.interventionCatalog`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.intervention_law_sensitive`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.no_peer_lowers_escape`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.not_identifiable_bridge`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observationCatalog`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observation_law_sensitive`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.oiIntCode`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.oiObsCode`
@@ -265,4 +213,5 @@ The maximal seal succeeds on both complete catalogs with a redundant verdict: ev
 - Dependency: [D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog](../InformationEscapeHierarchy/StructuralCatalog.md)
 - Dependency: [D5/S3/ConceptDynamics/InterventionLaws/ObservationInterventionKernelStrictness](../InterventionLaws/ObservationInterventionKernelStrictness.md)
 - Dependency: [D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion](../Interventions/CounterfactualIdentifiabilityCriterion.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)
 - Dependency: [D5/S3/ConceptDynamics/Sufficiency/SufficiencyIsTargetRelative](../Sufficiency/SufficiencyIsTargetRelative.md)

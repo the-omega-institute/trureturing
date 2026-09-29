@@ -79,7 +79,7 @@ def project_registry(root):
             registered_file(root, value)
         paths = set()
         for row in data["projects"] + data["historical_projects"]:
-            if not isinstance(row, dict) or set(row) != PROJECT_FIELDS:
+            if not isinstance(row, dict) or set(row) - {"execution_path_inventory"} != PROJECT_FIELDS:
                 raise ValueError("invalid engineering project row fields")
             path = registered_path(row["path"])
             if not path.endswith(".csproj") or path in paths:
@@ -117,6 +117,16 @@ def project_registry(root):
                             raise ValueError(f"invalid registered reference: {path}: {value}")
                     else:
                         source_glob(value)
+            inventory = row.get("execution_path_inventory")
+            if role not in TEST_ROLES:
+                if inventory is not None:
+                    raise ValueError(f"unexpected registered execution_path_inventory: {path}")
+            elif inventory is not None:
+                if (not isinstance(inventory, list) or any(not isinstance(value, str) for value in inventory)
+                        or inventory != sorted(set(inventory))):
+                    raise ValueError(f"invalid registered execution_path_inventory: {path}")
+                for value in inventory:
+                    registered_glob(value)
             # Execution declarations are validated but never enter compile_projection.
             for field in ("build_inputs", "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths"):
                 values = row[field]
@@ -279,8 +289,36 @@ class SeedRegistrationError(ValueError):
     """Registration errors block preparation; cache transport errors do not."""
 
 
-def seed_registration(root, sdk_root=None):
-    """Read declared paths only. DOTNET_ROOT is a supplied location, not a probe."""
+def resolved_sdk_version(root):
+    """The SDK the dotnet host resolves for global.json; only its major version is pinned."""
+    result = subprocess.run(["dotnet", "--version"], cwd=root, text=True, capture_output=True)
+    if result.returncode or not result.stdout.strip():
+        raise ValueError("dotnet did not resolve an SDK for global.json: " + result.stderr.strip())
+    return result.stdout.strip()
+
+
+def resolved_sdk_root(root, resolved):
+    """Locate the installation containing the SDK selected by the dotnet host."""
+    output = subprocess.run(["dotnet", "--list-sdks"], cwd=root, text=True, capture_output=True)
+    if output.returncode:
+        raise ValueError("dotnet --list-sdks failed: " + output.stderr.strip())
+    candidates = set()
+    for line in output.stdout.splitlines():
+        match = re.fullmatch(r"\s*([^\s]+)\s+\[(.*)\]\s*", line)
+        if match is None or match.group(1) != resolved:
+            continue
+        sdk_directory = pathlib.Path(match.group(2)).resolve()
+        if sdk_directory.name == "sdk":
+            candidates.add(sdk_directory.parent)
+    if len(candidates) == 1:
+        return next(iter(candidates))
+    if not candidates:
+        raise ValueError(f"dotnet --list-sdks did not report the resolved SDK: {resolved}")
+    raise ValueError(f"dotnet --list-sdks reported multiple roots for the resolved SDK: {resolved}")
+
+
+def seed_registration(root, sdk_root=None, resolved=None):
+    """Read declared paths only, discovering DOTNET_ROOT when the caller omitted it."""
     def unique_fields(pairs):
         fields = {}
         for name, value in pairs:
@@ -298,12 +336,15 @@ def seed_registration(root, sdk_root=None):
         version = json.loads((root / "global.json").read_text(), object_pairs_hook=unique_fields)["sdk"]["version"]
         if not isinstance(version, str) or version != registration["sdk_version"]:
             raise ValueError("judge seed SDK registration differs from global.json")
+        resolved = resolved or resolved_sdk_version(root)
+        if resolved.split(".")[0] != version.split(".")[0]:
+            raise ValueError(f"resolved SDK major version differs from the registered SDK: {resolved} vs {version}")
+        # Later stages bind the SDK actually used; compiler identity hashes its materials.
+        registration = dict(registration, sdk_version=resolved)
         if not registration["sdk_files"] or registration["target_framework"] != "net10.0":
             raise ValueError("missing SDK materials or unsupported registered framework")
-        location = sdk_root or os.environ.get("DOTNET_ROOT")
-        if not location:
-            raise ValueError("supply DOTNET_ROOT for the pinned SDK")
-        sdk = pathlib.Path(location).resolve() / "sdk" / version
+        location = sdk_root or os.environ.get("DOTNET_ROOT") or resolved_sdk_root(root, resolved)
+        sdk = pathlib.Path(location).resolve() / "sdk" / resolved
 
         def expand(base, patterns):
             if not isinstance(patterns, list) or any(not isinstance(item, str) or not item or
@@ -466,7 +507,7 @@ def prepare_task(directory, sdk, registration):
     check = ET.SubElement(project, "Target", Name="JudgeSeedRegisteredSdk", BeforeTargets="PrepareForBuild")
     ET.SubElement(check, "Error", Code="JUDGE_SEED_REGISTRATION",
                   Condition=f"'$(NETCoreSdkVersion)' != '{registration['sdk_version']}'",
-                  Text="Build SDK differs from the registered pinned SDK.")
+                  Text="Build SDK differs from the registered SDK.")
     project.find("ItemGroup/Compile").set("Include", str(source))
     write_if_changed(directory / "JudgeSeedTask.csproj", ET.tostring(project))
     write_if_changed(directory / "packages.lock.json", json.dumps({"version": 1, "dependencies": {framework: {}}}).encode())

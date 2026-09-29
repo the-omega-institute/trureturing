@@ -1,0 +1,33 @@
+**定理 65.1（同一两轮过程的两种记录实验）。** 在第 58.1 条仪器中固定 $\gamma=1$，未知参数为 $0\le w<1$，来源为 $P_s$。所以 $\mathsf N$ 只取一、二，概率分别为 $1-w,w$，均值为 $\mu=1+w$。
+
+加入第 50 节已标定的独立几何截止，$0<\eta\le1$、$q=1-\eta$，点击同轮优先。记 $C$ 为实际调用数，$F$ 为终端点击或截止标签。完整记录的三个可能结果为
+
+$$
+\boxed{
+\begin{array}{c|c}
+(C,F)&\text{概率}\\\hline
+(1,\mathrm{click})&1-w\\
+(1,\mathrm{abort})&w\eta\\
+(2,\mathrm{click})&wq
+\end{array}
+}
+$$
+
+完整记录确定变量
+
+$$
+R=\mathbf1_{\{F=\mathrm{abort}\ \text{或}\ C=2\}},
+\qquad R\sim\operatorname{Bernoulli}(w).
+$$
+
+反过来，由 $R$ 加一枚参数已知、与 $w$ 无关的截止硬币，可以生成上述完整记录律。因此在这个已知两点支撑族中，两种记录可经共同随机核互相模拟。
+
+只保留终端标签时，截止指示变量为
+
+$$
+A=\mathbf1_{\{F=\mathrm{abort}\}}
+\sim\operatorname{Bernoulli}(w\eta).
+$$
+
+证明。第一轮直接点击的概率为 $1-w$。否则已经进入 $u$，若此轮硬币截止则给 $(1,\mathrm{abort})$；若继续，第二轮必点击，给 $(2,\mathrm{click})$。于是完整记录恰好判断是否发生了第一轮未点击。若给定 $R=1$，按概率 $\eta,q$ 生成后两种记录；给定 $R=0$，输出第一种记录。这份模拟核不含未知的 $w$。丢弃 $C$ 就合并两种点击结果，给最后的 Bernoulli 律。$\square$
+

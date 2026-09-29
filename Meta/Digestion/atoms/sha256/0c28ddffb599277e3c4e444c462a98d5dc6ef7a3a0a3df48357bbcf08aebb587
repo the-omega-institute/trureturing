@@ -1,0 +1,20 @@
+**定义 214.1（一个处理器可分别尖锐校准的位置集合）。** 固定 $`0<a<1`$ 和程序空间维数预算 $`d\ge1`$。对一个固定 CPTP 处理器 $`\mathcal G`$，令 $`\mathfrak P_\nu(\mathcal G;a)`$ 为全部在整个 $`J_a`$ 上全输入精确的纯态准备曲线，其中 $`\nu=1`$ 要求 $`C^1`$，$`\nu=\omega`$ 要求实解析。精确性、点态 SLD 信息和尖锐下极限均沿用定义213.1。置
+
+```math
+\mathcal C_\nu(\mathcal G;a)
+ =\{t\in J_a:\exists\rho\in\mathfrak P_\nu(\mathcal G;a),\quad
+                           t\in\mathcal E_*(\rho)\},
+ \qquad \nu\in\{1,\omega\}.
+\tag{214.1}
+```
+
+不同位置允许选择不同的完整准备曲线，处理器始终相同。记
+
+```math
+C_\nu(d,a)=\sup_{\dim\mathcal H\le d,\,\mathcal G}
+                         \#\mathcal C_\nu(\mathcal G;a).
+\tag{214.2}
+```
+
+这一定义不同于同一条准备曲线的尖锐集合大小。预算允许未使用的程序方向，不把它们计作某条曲线的实际联合支持。
+

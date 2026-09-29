@@ -1,0 +1,7 @@
+**定理58.1（共同外部纯尾环境不可能）。** 不可能有
+$$
+\eta_4\parallel\eta_5\parallel\eta_6,\qquad \eta_4\notin F.
+\tag{58.3}
+$$
+因此第53节的 $OOO$ 必要模式实际上不能由该接收器实现。
+

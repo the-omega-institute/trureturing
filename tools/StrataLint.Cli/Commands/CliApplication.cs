@@ -298,6 +298,7 @@ internal static class CliApplication
         AdmissionOutcome.InfrastructureFailure failure,
         ICliConsole console)
     {
+        RenderObservations(failure.Observations, console);
         console.WriteError($"INFRASTRUCTURE_FAILURE {failure.Message}\n");
         return 2;
     }

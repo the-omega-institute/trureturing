@@ -33,3 +33,4 @@ The supplied coefficient reader is evaluated at the state and the selected index
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/AgohCoefficientReadoutTemplate.coefficientRealization`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/AgohCoefficientReadoutTemplate.coefficientSignature`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/TheoremUnit](TheoremUnit.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

@@ -1,0 +1,466 @@
+{
+  "verified": true,
+  "source_inputs": {
+    "mixed_split_pair_support_certificate.json": "21835ce8429c77ff3a0debe4e3cfd9d85e807f78abf2dce54ecf9892e65cc449",
+    "common_law_mass_tail.json": "3781704377f2ca6234ed55f3eff1a37d2f8665a3810b02c694aebdc2fc063cb4"
+  },
+  "support_pair_audit_rerun": false,
+  "Lean_rerun": false,
+  "scope": "Fixed two global centres, first-root split at3,5,7 and common at11,13,17,19; one selector per original full numerical label.",
+  "profile_schema": [
+    "signed3",
+    "signed5",
+    "signed7",
+    "common11",
+    "common13",
+    "common17",
+    "common19"
+  ],
+  "profiles": [
+    [
+      2,
+      2,
+      -2,
+      2,
+      1,
+      2,
+      1
+    ],
+    [
+      2,
+      2,
+      -2,
+      1,
+      2,
+      2,
+      1
+    ],
+    [
+      2,
+      -2,
+      0,
+      2,
+      2,
+      2,
+      1
+    ]
+  ],
+  "indices_in_fixed_20076_profile_order": [
+    108,
+    98,
+    931
+  ],
+  "capacities_by_nonempty_bitmask": [
+    20,
+    20,
+    40,
+    24,
+    40,
+    40,
+    58
+  ],
+  "literal_label_count": 36,
+  "membership_pattern_histogram": [
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      0,
+      2,
+      2
+    ],
+    [
+      0,
+      3,
+      2
+    ],
+    [
+      0,
+      4,
+      2
+    ],
+    [
+      1,
+      0,
+      2
+    ],
+    [
+      1,
+      4,
+      2
+    ],
+    [
+      2,
+      0,
+      2
+    ],
+    [
+      2,
+      4,
+      2
+    ],
+    [
+      3,
+      0,
+      2
+    ],
+    [
+      3,
+      4,
+      2
+    ],
+    [
+      4,
+      0,
+      2
+    ],
+    [
+      4,
+      4,
+      2
+    ],
+    [
+      5,
+      0,
+      2
+    ],
+    [
+      5,
+      5,
+      2
+    ],
+    [
+      6,
+      0,
+      2
+    ],
+    [
+      6,
+      6,
+      2
+    ],
+    [
+      7,
+      0,
+      2
+    ],
+    [
+      7,
+      7,
+      2
+    ]
+  ],
+  "axis23_vertices": [
+    [
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "22"
+    ],
+    [
+      "0",
+      "18",
+      "22"
+    ],
+    [
+      "0",
+      "20",
+      "0"
+    ],
+    [
+      "0",
+      "20",
+      "20"
+    ],
+    [
+      "18",
+      "0",
+      "22"
+    ],
+    [
+      "18",
+      "18",
+      "22"
+    ],
+    [
+      "18",
+      "20",
+      "20"
+    ],
+    [
+      "20",
+      "0",
+      "0"
+    ],
+    [
+      "20",
+      "0",
+      "20"
+    ],
+    [
+      "20",
+      "18",
+      "20"
+    ],
+    [
+      "20",
+      "20",
+      "0"
+    ],
+    [
+      "20",
+      "20",
+      "18"
+    ]
+  ],
+  "axis29_vertices": [
+    [
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "24"
+    ],
+    [
+      "0",
+      "16",
+      "24"
+    ],
+    [
+      "0",
+      "20",
+      "0"
+    ],
+    [
+      "0",
+      "20",
+      "20"
+    ],
+    [
+      "16",
+      "0",
+      "24"
+    ],
+    [
+      "16",
+      "16",
+      "24"
+    ],
+    [
+      "18",
+      "18",
+      "22"
+    ],
+    [
+      "18",
+      "20",
+      "20"
+    ],
+    [
+      "20",
+      "0",
+      "0"
+    ],
+    [
+      "20",
+      "0",
+      "20"
+    ],
+    [
+      "20",
+      "18",
+      "20"
+    ],
+    [
+      "20",
+      "20",
+      "0"
+    ],
+    [
+      "20",
+      "20",
+      "18"
+    ]
+  ],
+  "axis23_vertex_row_minima": [
+    "514",
+    "294",
+    "150",
+    "314",
+    "154",
+    "150",
+    "6",
+    "10",
+    "314",
+    "154",
+    "10",
+    "78",
+    "6"
+  ],
+  "nonsingular_bases_per_polytope": 78,
+  "vertex_pairs_checked": 182,
+  "minimum_numerator": "6",
+  "minimizing_axis23": [
+    "18",
+    "18",
+    "22"
+  ],
+  "minimizing_axis29": [
+    "20",
+    "20",
+    "0"
+  ],
+  "survivor_sum_lower_bound": "3/308",
+  "all_three_strictly_below_threshold_impossible_for": "0 < theta <= 1/308",
+  "old_pair_threshold": "1/3696",
+  "pair_zero_witnesses": [
+    {
+      "points": [
+        0,
+        1
+      ],
+      "Q": [
+        20,
+        20
+      ],
+      "N": 40,
+      "axis23": [
+        20,
+        20
+      ],
+      "axis29": [
+        20,
+        20
+      ],
+      "mixed_deletion": [
+        16,
+        16
+      ]
+    },
+    {
+      "points": [
+        0,
+        2
+      ],
+      "Q": [
+        20,
+        24
+      ],
+      "N": 40,
+      "axis23": [
+        20,
+        20
+      ],
+      "axis29": [
+        18,
+        22
+      ],
+      "mixed_deletion": [
+        20,
+        12
+      ]
+    },
+    {
+      "points": [
+        1,
+        2
+      ],
+      "Q": [
+        20,
+        24
+      ],
+      "N": 40,
+      "axis23": [
+        20,
+        20
+      ],
+      "axis29": [
+        18,
+        22
+      ],
+      "mixed_deletion": [
+        20,
+        12
+      ]
+    }
+  ],
+  "auxiliary_chart_reference": [
+    2,
+    7,
+    3,
+    4
+  ],
+  "eight_anchor_extra_phases": {
+    "45": 31,
+    "75": 16
+  },
+  "positive_auxiliary_profile_masses": [
+    {
+      "profile": [
+        2,
+        2,
+        -2,
+        2,
+        1,
+        2,
+        1
+      ],
+      "six_anchor_initial_mass": "8/225",
+      "eight_anchor_initial_mass": "8/225",
+      "later_comparison_mass": "949440/423229807",
+      "six_anchor_profile_mass": "506368/6348447105",
+      "eight_anchor_profile_mass": "506368/6348447105",
+      "positive_six_anchor_cells": 24,
+      "positive_eight_anchor_cells": 24,
+      "sample_cell": 8
+    },
+    {
+      "profile": [
+        2,
+        2,
+        -2,
+        1,
+        2,
+        2,
+        1
+      ],
+      "six_anchor_initial_mass": "8/225",
+      "eight_anchor_initial_mass": "8/225",
+      "later_comparison_mass": "594432/357271915",
+      "six_anchor_profile_mass": "528384/8931797875",
+      "eight_anchor_profile_mass": "528384/8931797875",
+      "positive_six_anchor_cells": 24,
+      "positive_eight_anchor_cells": 24,
+      "sample_cell": 8
+    },
+    {
+      "profile": [
+        2,
+        -2,
+        0,
+        2,
+        2,
+        2,
+        1
+      ],
+      "six_anchor_initial_mass": "8/225",
+      "eight_anchor_initial_mass": "8/225",
+      "later_comparison_mass": "660480/785998213",
+      "six_anchor_profile_mass": "352256/11789973195",
+      "eight_anchor_profile_mass": "352256/11789973195",
+      "positive_six_anchor_cells": 24,
+      "positive_eight_anchor_cells": 24,
+      "sample_cell": 14
+    }
+  ],
+  "evidence_boundary": "Exact standard-library arithmetic and ordinary proof, not Lean. Positive auxiliary chart weights do not assert positive mass in the completed actual source or simultaneous realizability as its low-survivor set. No source replacement and no new centre choices per point."
+}

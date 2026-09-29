@@ -1,0 +1,19 @@
+**定理 29.2（同一 Gramian 决定可观测深度与最坏熵损失）。** 对所有 $t\ge0$，
+\[
+ \eta_{\gamma_d}(\mathcal P_t)=\|F_t\|^2,
+ \qquad 1-\eta_{\gamma_d}(\mathcal P_t)=\lambda_{\min}G_t,
+\]
+\[
+ G_t=I-F_t^{\mathsf T}F_t
+     =\int_0^te^{sA^{\mathsf T}}BB^{\mathsf T}e^{sA}ds.
+\]
+以下等价：$m<\infty$；某个正时刻的熵系数严格小于一；每个正时刻的熵系数严格小于一。成立时
+\[
+ \boxed{1-\eta_{\gamma_d}(\mathcal P_t)=\Theta(t^{2m+1})\quad(t\downarrow0).}
+\]
+选任意 $t_0>0$、$c_0=\|F_{t_0}\|^2<1$，则全部有限熵初态及全部 $t\ge0$ 有
+\[
+ D(\mathcal P_t\nu\Vert\gamma_d)
+ \le c_0^{\lfloor t/t_0\rfloor}D(\nu\Vert\gamma_d).
+\]
+

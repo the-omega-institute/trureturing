@@ -1,0 +1,91 @@
+### 295.2 具有高阶接触的固定宽度常值端段
+
+固定 \(s\)，取偶整数 \(M=2s+2\)。令
+\[
+R_M(z)=
+\frac{\int_0^z u^{M-1}(1-u)^{M-1}\,du}
+{\int_0^1 u^{M-1}(1-u)^{M-1}\,du}
+\qquad(0\le z\le1),
+\]
+并定义
+\[
+\rho(t)=
+\begin{cases}
+0,&t\le1/4,\\
+R_M(2t-1/2),&1/4<t<3/4,\\
+1,&t\ge3/4.
+\end{cases}
+\]
+\(\rho\in C^{M-1}(\mathbb R)\)，\(0\le\rho\le1\)，在两个拼接点分别以恰好 \(M\) 阶接触 0 和 1。特别地，其前 \(M-1\) 阶导数与常值段连续匹配。
+
+在 \(x\in[0,3]\) 定义
+\[
+G(x)=
+\begin{cases}
+1-x\rho(x)/3,&0\le x\le1,\\
+(3-x)/3,&1\le x\le2,\\
+(3-x)\rho(3-x)/3,&2\le x\le3,
+\end{cases}
+\]
+\[
+H(x)=
+\begin{cases}
+x\rho(x),&0\le x\le1,\\
+x,&1\le x\le2,\\
+x\rho(3-x),&2\le x\le3.
+\end{cases}
+\]
+外延取 \(G=1,H=0\) 于 \(x\le0\)，\(G=H=0\) 于 \(x\ge3\)。在 \(x=1,2\) 的邻域，邻接公式本来就是同一个线性函数；在 \(x=0,3\) 的邻域已经恒定。因此 \(G,H\in C^{M-1}(\mathbb R)\)。
+
+有 \(0\le G\le1\)、\(H\ge0\) 以及 \(H\le36G\)。末段只需注意 \(\rho(3-x)>0\) 时 \(3-x>1/4\)，从而
+\[
+H/G=\frac{3x}{3-x}\le36.
+\]
+首段和中段的上界分别是 \(3/2\) 和 6。
+
+令
+\[
+\varepsilon=\eta/144,\qquad A_\varepsilon=G-\varepsilon H.
+\]
+则
+\[
+\frac34G\le A_\varepsilon\le G\le1.
+\]
+尤其零集与 \(G\) 相同；其取值为 1 的集合也与 \(G\) 相同。
+
+对 \(0\le x\le1\)，有准确恒等式
+\[
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+\left(\frac13+\varepsilon\right)x[1-\rho(x)]
+\ge\frac13+\varepsilon.
+\]
+对 \(1\le x\le 2-\eta\)，令 \(t=2-x\in[\eta,1]\)，则
+\[
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+[1-\rho(t)]\left[\frac t3-\varepsilon(3-t)\right].
+\]
+括号至少为
+\(\eta/3-3\eta/144=5\eta/16>0\)。故所有合法比较均有余量 \(\eta/144\)。
+
+与 §293 相同，定义全实轴函数
+\[
+F_\eta(c)=
+\begin{cases}
+0,&c\le k^3,\\
+A_\varepsilon(\log c/\log k),&k^3<c<1,\\
+1,&c\ge1.
+\end{cases}
+\]
+实际常值区更宽：
+\[
+F_\eta(c)=0\quad(c\le k^{11/4}),\qquad
+F_\eta(c)=1\quad(c\ge k^{1/4}).
+\]
+因此 \(F_\eta\in C^{M-1}(\mathbb R)\)，各阶至 \(M-1\) 的导数界对 \(0<\eta\le1\) 一致。真实 \(r\in[l,1]\) 满足
+\[
+F_\eta(r)-F_\eta(kr)\ge\frac13+\frac{\eta}{144}.
+\tag{295.1}
+\]
+

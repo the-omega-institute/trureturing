@@ -1,0 +1,38 @@
+using StrataLint.Engine;
+
+namespace StrataLint.Digestion.Tests;
+
+public sealed class CoverageStatementReceiptRuleTests
+{
+    [Fact]
+    public void FrozenLedgerEventPathAloneDoesNotWakeSl016()
+    {
+        var path = FrozenLedgerChangeClassifier.AcceptedRoot + "/changed.json";
+        var context = new RuleFixture().Build(RawChangeSet.Create([path]));
+
+        Assert.False(BackfillInventoryRule.IsAffectedBy(context));
+    }
+
+    [Fact]
+    public void StatementIdDriftIsANewBlockingCoverageReceiptMismatch()
+    {
+        const string gid = "D5/S0/Carrier/StatementReceipt.target";
+        var targetSource = "theorem target : True := by trivial\n";
+        var previousStatementId = DigestionFingerprint.Compute(
+            System.Text.Encoding.UTF8.GetBytes(targetSource)).RawSha256;
+        var current = CoverageStatementReceiptTests.Evaluate(
+            gid,
+            previousStatementId,
+            FrozenStatementReceiptTestData.Id('7'),
+            FrozenStatementReceiptTestData.Id('6'),
+            targetSource);
+
+        var finding = Assert.Single(BackfillInventoryRule.ClassifyReceiptIntegrityGaps(current));
+
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+        Assert.Equal(
+            "statement-receipt:coverage-target-mismatch:D5/S0/Carrier/StatementReceipt.target",
+            finding.Message);
+    }
+
+}

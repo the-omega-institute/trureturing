@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Engine;
-using static StrataLint.Tests.FrozenLedgerTestData;
+using static StrataLint.TestSupport.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
 

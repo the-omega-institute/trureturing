@@ -13,60 +13,68 @@ internal sealed class LocalMarginalCorrelationBlindSpotDocument : IScribeDocumen
         Formula two = D(2);
         Formula mSquared = new Formula.Power(m, two);
         Formula nSquared = new Formula.Power(n, two);
-        Formula localA = Call("localASector", m, n);
-        Formula localB = Call("localBSector", m, n);
-        Formula local = Call("Sup", localA, localB);
-        Formula correlation = Call("correlationSector", m, n);
-        Formula traceZero = Call("bipartiteTraceZero", m, n);
+        Formula local = F.Id("L");
+        Formula correlation = F.Id("C");
+        Formula traceZero = new Formula.Subscript(F.Id("H"), D(0));
         Formula firstRank = Seq(mSquared, Sp, Minus, Sp, D(1));
         Formula secondRank = Seq(nSquared, Sp, Minus, Sp, D(1));
-        Formula correlationRank = Seq(
-            Grp(firstRank), Sp, Times, Sp, Grp(secondRank));
-        Formula totalRank = Seq(
-            Grp(mSquared), Sp, Grp(nSquared), Sp, Minus, Sp, D(1));
-        Formula bell = Seq(Operatorname, Grp(F.Id("bellDensity")));
-        Formula classical = F.Id("classicalCorrelatedDensity");
+        Formula correlationRank = Seq(Open, firstRank, Close, Open, secondRank, Close);
+        Formula totalRank = Seq(mSquared, nSquared, Sp, Minus, Sp, D(1));
+        Formula bell = Rho;
+        Formula classical = SigmaLower;
         Formula classicalSquared = new Formula.Power(classical, two);
-        Formula statement = Disp(Seq(
+        // Escaped spaces preserve row breaks through Markdown parsing.
+        Formula statement = Disp(Seq(Nl,
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, m, Comma, Sp, n, Comma, Sp,
+            Forall, Sp, m, Comma, Sp, n, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")),
+            Comma, RowBreak, Esc, Grp(),
             m, Sp, Geq, Sp, D(1), Sp, Land, Sp,
             n, Sp, Geq, Sp, D(1), Sp, Land, Sp,
-            Grp(m), Sp, Times, Sp, Grp(n), Sp, Gt, Sp, D(1),
-            Sp, Rightarrow, Sp, RowBreak, Grp(),
-            Call("Sup", localA, localB, correlation), Sp, Eq, Sp, traceZero,
-            Sp, Land, RowBreak, Grp(),
-            Call("finrankR", local), Sp, Eq, Sp,
-            Grp(firstRank), Sp, Plus, Sp, Grp(secondRank),
-            Sp, Land, RowBreak, Grp(),
-            Call("finrankR", correlation), Sp, Eq, Sp, correlationRank,
-            Sp, Land, RowBreak, Grp(),
-            Frac, Grp(Call("finrankR", correlation)), Grp(Call("finrankR", traceZero)),
+            m, n, Sp, Gt, Sp, D(1), Sp, Rightarrow, RowBreak, Esc, Grp(),
+            local, Sp, Plus, Sp, correlation, Sp, Eq, Sp, traceZero,
+            Sp, Land, RowBreak, Esc, Grp(),
+            Apply("dim", local), Sp, Eq, Sp,
+            Open, firstRank, Close, Sp, Plus, Sp, Open, secondRank, Close,
+            Sp, Land, RowBreak, Esc, Grp(),
+            Apply("dim", correlation), Sp, Eq, Sp, correlationRank,
+            Sp, Land, RowBreak, Esc, Grp(),
+            Frac, Grp(Apply("dim", correlation)), Grp(Apply("dim", traceZero)),
             Sp, Eq, Sp, Frac, Grp(correlationRank), Grp(totalRank),
-            Sp, Land, RowBreak, Grp(),
-            Call("Orthogonal", local, correlation),
-            Sp, Land, RowBreak, Grp(),
-            Call("PosSemidef", bell), Sp, Land, Sp,
-            Call("Tr", bell), Sp, Eq, Sp, D(1), Sp, Land, Sp,
-            Call("rank", bell), Sp, Eq, Sp, D(1),
-            Sp, Land, RowBreak, Grp(),
-            Call("PosSemidef", classical), Sp, Land, Sp,
-            Call("Tr", classical), Sp, Eq, Sp, D(1), Sp, Land, Sp,
+            Sp, Land, RowBreak, Esc, Grp(),
+            local, Sp, Perp, Sp, correlation,
+            Sp, Land, RowBreak, Esc, Grp(),
+            bell, Sp, Geq, Sp, D(0), Sp, Land, Sp,
+            Apply("Tr", bell), Sp, Eq, Sp, D(1), Sp, Land, Sp,
+            Apply("rank", bell), Sp, Eq, Sp, D(1),
+            Sp, Land, RowBreak, Esc, Grp(),
+            classical, Sp, Geq, Sp, D(0), Sp, Land, Sp,
+            Apply("Tr", classical), Sp, Eq, Sp, D(1), Sp, Land, Sp,
             classicalSquared, Sp, Neq, Sp, classical,
-            Sp, Land, RowBreak, Grp(),
-            Call("traceEnvironment", bell), Sp, Eq, Sp,
-            Call("traceEnvironment", classical),
-            Sp, Land, RowBreak, Grp(),
-            Call("traceFirstFactor", bell), Sp, Eq, Sp,
-            Call("traceFirstFactor", classical),
-            Sp, Land, RowBreak, Grp(),
+            Sp, Land, RowBreak, Esc, Grp(),
+            PartialTrace("B", bell), Sp, Eq, Sp, PartialTrace("B", classical),
+            Sp, Land, RowBreak, Esc, Grp(),
+            PartialTrace("A", bell), Sp, Eq, Sp, PartialTrace("A", classical),
+            Sp, Land, RowBreak, Esc, Grp(),
             bell, Sp, Neq, Sp, classical, Dot,
-            End, Grp(F.Id("gathered"))));
+            End, Grp(F.Id("gathered")), Nl));
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "Complete local marginals leave every cross-factor correlation direction unread.",
             H("The Correlation Blind Spot of Local Marginals"),
             Blocks(
+                Paragraph(
+                    Text("In the real Hermitian tensor model with factor dimensions "),
+                    Math(In(Seq(m, Comma, Sp, n))), Text(", write "), Math(In(local)),
+                    Text(" for the sum of the canonical traceless local sectors, "),
+                    Math(In(correlation)), Text(" for the sector traceless in both factors, and "),
+                    Math(In(traceZero)), Text(" for the full traceless space. "
+                        + "Sector dimensions and orthogonality are real.")),
+                Paragraph(
+                    Text("Independently, "), Math(In(bell)),
+                    Text(" is the canonical two-qubit Bell density for 00 and 11, and "),
+                    Math(In(classical)), Text(" their equal diagonal mixture. Here "),
+                    Math(In(Seq(Geq, Sp, D(0)))), Text(" means positive semidefinite; "),
+                    Text("partial-trace subscripts name the factor traced out.")),
                 Describe.Lean(
                     DescribeId.Create("local-marginal-correlation-blind-spot"),
                     DeclarationHandle.Create(
@@ -77,26 +85,19 @@ internal sealed class LocalMarginalCorrelationBlindSpotDocument : IScribeDocumen
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
-                            "For two positive finite factor dimensions with nontrivial product, "
-                                + "the locally visible "
-                                + "directions are the join of the two canonical local Hermitian "
-                                + "sectors. Their real dimension is the sum of the two local "
-                                + "traceless dimensions.")),
+                            "The correlation sector is orthogonal to all local directions. "
+                                + "The ratio gives its share of the traceless space.")),
                         Paragraph(Text(
-                            "The orthogonal unread sector is the canonical correlation sector. "
-                                + "It has the product dimension, and its dimension "
-                                + "divided by the full traceless dimension is the displayed "
-                                + "correlation proportion.")),
-                        Paragraph(Text(
-                            "The final clauses give an explicit witness. The canonical Bell "
-                                + "density is a positive trace-one rank-one state, while the "
-                                + "diagonal equal mixture of the 00 and 11 basis states is a "
-                                + "positive trace-one non-idempotent state.")),
-                        Paragraph(Text(
-                            "Both canonical partial traces agree for these two densities, but "
-                                + "the global matrices differ. Thus even complete knowledge of "
-                                + "both local marginals does not determine cross-factor "
-                                + "correlations."))),
+                            "The fixed witness has identical local marginals but different "
+                                + "global matrices: complete local data need not determine "
+                                + "cross-factor correlations."))),
                     DescribeRole.Theorem))));
     }
+
+    private static Formula Apply(string name, Formula argument) =>
+        Seq(Mathrm, Grp(F.Id(name)), Open, argument, Close);
+
+    private static Formula PartialTrace(string factor, Formula argument) =>
+        Seq(new Formula.Subscript(Seq(Mathrm, Grp(F.Id("Tr"))), F.Id(factor)),
+            Open, argument, Close);
 }

@@ -1,0 +1,52 @@
+**引理183.1（唯一的局部解析驻点分支）。** 存在 $w_*>0$ 和实解析函数
+$\alpha:(-w_*,w_*)\to\mathbb R$，满足
+
+$$
+\alpha(0)=\kappa\gamma,\qquad
+t_*(w)=w\alpha(w),\qquad
+\partial_t d(w,t_*(w))=0\quad(0<w<w_*).
+\tag{183.2}
+$$
+
+在 $\alpha=\kappa\gamma$ 的某个固定邻域中，这是唯一这样的解析驻点分支。
+
+**证明。** 将 $t=w\alpha$ 代入。$H(w,w\alpha)/w$ 的各条目在
+$w=0$ 有可去奇点，并实解析延拓为矩阵 $B(w,\alpha)$，其中
+$B(0,\alpha)=\beta P_\Xi$。其最高根在基点简单，谱间隙为
+$\beta>0$，故在 $(0,\kappa\gamma)$ 的邻域中存在实解析的本征值
+$\lambda(w,\alpha)$，且对正 $w$，
+$d(w,w\alpha)=w\lambda(w,\alpha)$。
+
+由第181节的缩放展开，
+
+$$
+\lambda(w,\alpha)
+=\beta+w(\alpha^2-2\kappa\gamma\alpha)+O(w^2).
+$$
+
+因此
+
+$$
+G(w,\alpha)=\frac{\lambda(w,\alpha)-\beta}{w}
+$$
+
+也有实解析延拓，并满足
+
+$$
+G(0,\alpha)=\alpha^2-2\kappa\gamma\alpha,\qquad
+\partial_\alpha G(0,\kappa\gamma)=0,\qquad
+\partial_\alpha^2G(0,\kappa\gamma)=2.
+$$
+
+实解析隐函数定理给出唯一的附近分支
+$\partial_\alpha G(w,\alpha(w))=0$。对正 $w$，
+
+$$
+\partial_\alpha d(w,w\alpha)=w^2\partial_\alpha G(w,\alpha)
+=w\partial_td(w,w\alpha),
+$$
+
+所以它满足（183.2）。证毕。
+
+这里还没有从驻点推断全体 CPTP 最优性。下面给出承担该结论的对偶证书。
+

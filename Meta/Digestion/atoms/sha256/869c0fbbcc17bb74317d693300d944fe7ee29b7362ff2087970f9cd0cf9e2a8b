@@ -1,0 +1,41 @@
+**定理 65.1。** 对 $0<\varepsilon<1-a$，定义
+
+$$
+\beta=\sqrt{\frac{1-a-\varepsilon}{1-\varepsilon}},
+\qquad
+\xi=\sqrt\varepsilon(b-\beta)
+=\frac{a\varepsilon^{3/2}}{(1-\varepsilon)(b+\beta)},
+\qquad
+\zeta=\frac{a\varepsilon^2}{1-\varepsilon}.
+\tag{65.2}
+$$
+
+则有显式准确上界
+
+$$
+\varepsilon\le e(R_{a,\varepsilon})
+\le\varepsilon+2(1+\sqrt a)\xi+\zeta.
+\tag{65.3}
+$$
+
+因此对每个固定 $a\in(0,1)$，
+
+$$
+e(R_{a,\varepsilon})
+=\varepsilon+O_a(\varepsilon^{3/2}),
+\qquad
+\lim_{\varepsilon\downarrow0}
+\frac{e(R_{a,\varepsilon})}{\varepsilon}=1.
+\tag{65.4}
+$$
+
+同时，第 64 节的严格反例条件对充分小的正 $\varepsilon$ 成立，故在该范围仍有
+
+$$
+0<e(R_{a,\varepsilon})-\varepsilon
+=O_a(\varepsilon^{3/2}).
+\tag{65.5}
+$$
+
+式（65.5）的上界不是对差值首个非零阶或系数的确定；它排除了固定 $a$ 下统一的正比例间隙 $e\ge(1+\kappa)\varepsilon$、$\kappa>0$。
+

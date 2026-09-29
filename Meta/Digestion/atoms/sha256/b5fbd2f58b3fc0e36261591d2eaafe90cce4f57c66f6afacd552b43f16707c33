@@ -1,0 +1,41 @@
+**证明。** 在正交单位基
+$\widehat G=G/\|G\|$、$\widehat H=H/\|H\|$ 中，（152.3）的矩阵为
+
+$$
+\begin{pmatrix}
+\kappa^2&a\kappa\|H\|\\
+a\kappa\|H\|&\|H\|^2
+\end{pmatrix}.
+$$
+
+它的迹为一，行列式为
+
+$$
+(1-a^2)\kappa^2\|H\|^2
+=a^2p^2d^2\kappa^2>0.
+$$
+
+故最小本征值为（152.5），第一条半正定不等式成立。
+
+由 $G=a^2dg+a^2bu+b^2w$，有 $h\perp G$；由
+$H=abc\,h+ab^2v$，有
+
+$$
+|\langle\widehat H,h\rangle|^2
+=\frac{a^2pc^2}{a^2pd^2}
+=\frac{c^2}{d^2}=\alpha_p.
+$$
+
+又 $d^2=c^2+p$，得到余下投影平方为 $\beta_p$。
+
+最后，当 $p\downarrow0$ 时，$a,c,d,\kappa\to1$。将（152.5）有理化，
+
+$$
+s_p=
+\frac{2a^2p^2d^2\kappa^2}
+{1+\sqrt{1-4a^2p^2d^2\kappa^2}}
+\sim p^2.
+$$
+
+第148节给 $\mu^2\sim p^7/4$，其余极限由定义得到。证毕。
+

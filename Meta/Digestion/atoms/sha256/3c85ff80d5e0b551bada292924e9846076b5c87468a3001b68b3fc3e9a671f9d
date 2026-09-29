@@ -1,0 +1,17 @@
+**命题 7.2（严格需要两步的矩阵例子）。** 令
+
+$$
+A=\begin{pmatrix}1&1&0\\0&0&1\\1&1&1\end{pmatrix},\quad
+M=\begin{pmatrix}1&1\\1&1\end{pmatrix},\quad B=[2],
+$$
+
+以及
+
+$$
+U_1=\begin{pmatrix}1&0\\0&1\\1&1\end{pmatrix},\quad
+V_1=\begin{pmatrix}1&1&0\\0&0&1\end{pmatrix},\quad
+U_2=\begin{pmatrix}1\\1\end{pmatrix},\quad V_2=\begin{pmatrix}1&1\end{pmatrix}.
+$$
+
+则 ell(A,B)=2。
+

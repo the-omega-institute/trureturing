@@ -1,0 +1,115 @@
+**定理187.2（纯来源的最优小扰动斜率）。** 对固定 $R>1$，
+
+$$
+\boxed{
+h_{\mathrm{pure}}(\epsilon,R\epsilon)
+=\frac34-\frac{R-1}{4}G(\beta,\gamma)\epsilon
++O(\epsilon^2).
+}
+\tag{187.5}
+$$
+
+余项可对 $R$ 的固定紧子区间统一选取。
+
+**证明。** 先构造上界。若 $g\le\beta$，对旗标 $s$ 取
+
+$$
+E_s=
+\begin{pmatrix}
+\frac12&\frac{is\gamma}{2\beta}\\
+-\frac{is\gamma}{2\beta}&\frac{\gamma^2}{2\beta^2}
+\end{pmatrix}.
+\tag{187.6}
+$$
+
+其行列式为零，迹为 $(1+\gamma^2/\beta^2)/2\le1$，故
+$0\preceq E_s\preceq I$。若 $g\ge\beta$，取
+
+$$
+E_s=\frac12(I-s\operatorname{sign}(\gamma)Y).
+\tag{187.7}
+$$
+
+此时 $g\ge\beta>0$，符号有定义，且 $E_s$ 为秩一投影。
+两种构造均满足
+
+$$
+\langle0|E_s|0\rangle=\frac12,
+\qquad
+\operatorname{Tr}[E_s(\beta Z-s\gamma Y)]=G(\beta,\gamma).
+$$
+
+于是测量后重新制备目标纯态的同一恢复器具有精确正确概率
+
+$$
+a_0=\frac12-G\epsilon,
+\qquad
+a_1=\frac12+GR\epsilon.
+\tag{187.8}
+$$
+
+它们自动由合法效果和合法输入态给出。代入（187.2）并展开，得到
+
+$$
+h_{\mathrm{pure}}\le
+1-\frac{(1/2-G\epsilon)(1/2+GR\epsilon)}
+{1+G(R-1)\epsilon}
+=\frac34-\frac{G(R-1)}4\epsilon+O(\epsilon^2).
+\tag{187.9}
+$$
+
+为给匹配下界，令 $\delta=R-1$，在（187.3）的最小化中选择
+$q=1/2+a\epsilon$，其中
+
+$$
+a=
+\begin{cases}
+-\dfrac{\delta(\beta^2+\gamma^2)}{8\beta},&g\le\beta,\\[4pt]
+-\dfrac{\delta\beta}{4},&g\ge\beta.
+\end{cases}
+\tag{187.10}
+$$
+
+充分小正 $\epsilon$ 时 $q\in[0,1]$。记
+$B=\delta\beta/4$、$C=\delta\gamma/4$。直接展开
+
+$$
+A_q=\epsilon M_a+O(\epsilon^2),
+\qquad
+M_a=
+\begin{pmatrix}
+2a+B&iC\\
+-iC&-B
+\end{pmatrix}.
+\tag{187.11}
+$$
+
+若 $g\le\beta$，所选 $a$ 使 $\det M_a=0$，且其非零根为
+$2a<0$，所以
+
+$$
+\|M_a\|_1=-2a
+=\frac{\delta(\beta^2+\gamma^2)}{4\beta}
+=\frac{\delta G}{2}.
+$$
+
+若 $g\ge\beta$，所选 $a=-B$，$M_a$ 的根为
+$-B\pm|C|$，故
+
+$$
+\|M_a\|_1=2|C|=\frac{\delta G}{2}.
+$$
+
+迹范数的三角不等式给
+$\|A_q\|_1=\epsilon\|M_a\|_1+O(\epsilon^2)$，即使其中一个根为零也成立。又有
+$q^2+(1-q)^2=1/2+O(\epsilon^2)$。
+因此（187.3）中的这个可行 $q$ 给
+
+$$
+h_{\mathrm{pure}}
+\ge1-\frac{q^2+(1-q)^2+\|A_q\|_1}{2}
+=\frac34-\frac{\delta G}{4}\epsilon+O(\epsilon^2).
+$$
+
+与（187.9）夹合，得到（187.5）。矩阵余项在固定有界 $R$ 上一致，迹范数 Lipschitz 估计保持这种一致性。证明没有要求最优 $q$ 的解析取支，也没有在简并根处使用不可用的简单谱扰动公式。证毕。
+

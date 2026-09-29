@@ -1,0 +1,8 @@
+**证明。** 写 $T(c_i)-c_i=(A-I)u_i+r$，其中 $r=T(\bar c)-\bar c$。因 $\sum_i u_i=0$，平方展开的交叉项求和为零，得到恒等式。取 $\Sigma|_U$ 的标准正交特征基 $e_j$，对应特征值 $\lambda_j\ge\gamma^2$。于是
+\[
+ \eta(T)^2\ge\sum_j\lambda_j\|(A-I)e_j\|_2^2
+ \ge\gamma^2\sum_j\|(A-I)e_j\|_2^2
+ \ge\gamma^2\|(A-I)|_U\|_{\mathrm{op}}^2.
+\]
+最后对 $Av=v+(A-I)v$ 使用逆三角不等式。无需假设 $A$ 保持 $U$；限制算子可以取值于整个 $\mathbb R^d$。误差为零的特例对应所引文献的精确仿射中性定理。证毕。[^tcs2-error]
+

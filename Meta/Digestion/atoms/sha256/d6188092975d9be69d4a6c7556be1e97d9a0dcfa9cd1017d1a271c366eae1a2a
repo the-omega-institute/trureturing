@@ -1,0 +1,32 @@
+## 122. 二重纤维的三个单支持完整禁阻
+
+沿用第89、101、103、112、117、119节的同一七维实际六终端合同。来源非退化，接收器独立纯启动，每轮使用同一个固定全域接收通道，所有 $p,q,u,v,w$、$G_n,H_n,Q_n$ 均属于同一份实际来源。假设通常纤维维数为二，三维剩余空间全部乘积生成，而且具有三个不同环境上的单支持。第119节给
+
+$$
+K=P\oplus D\oplus Q,\qquad
+\dim P=\dim Q=2,\quad\dim D=3,\quad S_0=P\oplus D,
+$$
+
+$$
+R_1=(Q\otimes F)\oplus
+\operatorname{span}\{d_i\otimes z_i:1\le i\le3\},
+$$
+
+$$
+R_0=(P\otimes F)\oplus
+\operatorname{span}\{e_i\otimes z_i^\perp:1\le i\le3\},
+\qquad \langle d_i,e_j\rangle=\delta_{ij}.
+\tag{122.1}
+$$
+
+三条 $[z_i]$ 不同。记一位异常射线集合为
+$\mathcal Z=\{[z_1],[z_2],[z_3]\}$，零位异常集合为
+$\mathcal A=\mathcal Z^\perp$。完整零位纤维在 $\mathcal A$ 上为三维，在其余方向恰为同一个二维 $P$；完整一位纤维在 $\mathcal Z$ 上为三维，在其余方向恰为 $Q$。记零位纤维为 $P_X$、一位纤维为 $F_X$。任意两个不同方向满足
+
+$$
+P_X\cap P_Y=P,\qquad F_X\cap F_Y=Q.
+\tag{122.2}
+$$
+
+本节先将这一子类收缩为唯一必要尾部，再用同一个真实早期一位向量排除最后分支。
+

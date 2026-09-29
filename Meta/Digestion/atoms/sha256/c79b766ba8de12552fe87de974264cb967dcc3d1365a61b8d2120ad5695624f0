@@ -1,0 +1,14 @@
+**问题 394.2（精确最优值与近似恢复）。** 定理 393.1 留下的精确问题是求出整个 $[0,1]$ 上的 $\eta(C_\varepsilon)$，特别是 $\varepsilon\downarrow0$ 的锐渐近及集合 $\{\varepsilon:\eta(C_\varepsilon)=1\}$。现有上下界没有给出这些答案。
+
+另一问题是在定义 389.2 的同一接口下，将成功映射 $\mathcal T_{\mathrm{s}}$ 的条件改成
+
+$$
+\operatorname{Tr}\mathcal T_{\mathrm{s}}(\rho)=t
+\quad\text{对所有密度矩阵 }\rho,
+\qquad
+\|\mathcal T_{\mathrm{s}}-t\operatorname{id}_S\|_\diamond\le t\delta,
+\qquad t>0,
+$$
+
+其中 $\delta\ge0$，菱形范数通过对参考系统张量恒等映射后取诱导迹范数定义。求在该输入无关、容许参考纠缠的误差合同下可达的 $t$ 与 $\delta$ 关系；$\delta=0$ 返回本批的精确恢复问题，$\delta>0$ 的最优界不由秩一 Choi 的精确论证自动推出。
+

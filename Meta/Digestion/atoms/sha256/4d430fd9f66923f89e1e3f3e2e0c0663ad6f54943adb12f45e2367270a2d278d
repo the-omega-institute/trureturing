@@ -1,0 +1,28 @@
+## ST28．保留结果记录的恢复条件
+
+### 命题 ST28.1：带公开结果的 Knill–Laflamme 条件
+
+设原输入已经限制到逻辑空间，仪器分支为
+
+$$
+\mathcal I_a(\rho)=\sum_\ell E_{a\ell}\rho E_{a\ell}^\dagger,
+\qquad \sum_{a,\ell}E_{a\ell}^\dagger E_{a\ell}=I.
+$$
+
+允许恢复器读取结果$a$。固定常数$p_a\ge0$、$\sum_ap_a=1$。存在逐结果CPTP恢复$\mathcal R_a$满足
+
+$$
+\mathcal R_a\mathcal I_a(\rho)=p_a\rho\quad\forall\rho
+\tag{ST28.1}
+$$
+
+当且仅当对每个$a$存在半正定标量矩阵$c^{(a)}$，使
+
+$$
+\boxed{E_{a\ell}^\dagger E_{ak}=c^{(a)}_{\ell k}I,\qquad
+\operatorname{tr}c^{(a)}=p_a.}
+\tag{ST28.2}
+$$
+
+公开标签$a$之间不需交叉条件。如果$a$被删除、恢复器只能看到无标签通道，标准条件必须检查所有$(a,\ell),(b,k)$交叉项。这是对经典纠错条件的带记录应用。[ST27-KL]
+

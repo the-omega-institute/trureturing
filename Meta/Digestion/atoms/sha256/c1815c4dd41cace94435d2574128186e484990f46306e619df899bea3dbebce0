@@ -1,0 +1,85 @@
+### 177.2 当前相位的收益损失控制到好相位的距离
+
+固定任意一个合法共同 instrument $\mathcal D_0,\mathcal D_1$ 和任意相位
+$\varphi$。使用第175节的精确分解
+
+$$
+F(\mathcal D,\varphi,L):=f_0+f_1
+=F_0(\mathcal D,\varphi)
++\epsilon G(\mathcal D,\varphi,R).
+\tag{177.4}
+$$
+
+记
+
+$$
+\ell=1-F_0(\mathcal D,\varphi)\in[0,1].
+$$
+
+选取最近的好相位
+$\varphi_*\equiv\pi/4\pmod{\pi/2}$，将相位代表选成
+$\delta=\varphi-\varphi_*\in[-\pi/4,\pi/4]$。
+第163、175节的基点纯化重叠界给
+
+$$
+F_0(\mathcal D,\varphi)
+\le1-\frac29(1-|\sin2\varphi|)
+=1-\frac49\sin^2\delta.
+$$
+
+因此
+
+$$
+|\sin\delta|\le\frac32\sqrt\ell.
+\tag{177.5}
+$$
+
+令 $v_\varphi=U_\varphi|0\rangle$，允许选择无关的整体相位。
+同一个 instrument 定义一个逻辑效果 $0\preceq B_\mathcal D\preceq I$，
+使
+
+$$
+F_0(\mathcal D,\varphi)
+=\langle v_\varphi|B_\mathcal D|v_\varphi\rangle.
+\tag{177.6}
+$$
+
+具体地，先把目标投影 $P_\Xi$ 经
+$\operatorname{id}_M\otimes(\mathcal D_0+\mathcal D_1)$
+的对偶拉回，再经编码 $\mathfrak E^*$ 拉回即可得到
+$B_\mathcal D$；这些通道的对偶均保持效果范围。
+
+定义同一个 instrument 在好相位的损失
+$\ell_*=1-F_0(\mathcal D,\varphi_*)$。因 $\cos(\pi/8)>12/13$，有
+
+$$
+\|v_\varphi-v_{\varphi_*}\|
+=\frac{|\sin\delta|}{\cos(\delta/2)}
+\le\frac{13}{12}|\sin\delta|
+\le\frac{13}{8}\sqrt\ell.
+$$
+
+由（177.6）和三角不等式，
+
+$$
+\begin{aligned}
+\sqrt{\ell_*}
+&=\|(I-B_\mathcal D)^{1/2}v_{\varphi_*}\|\\
+&\le\|(I-B_\mathcal D)^{1/2}v_\varphi\|
++\|v_\varphi-v_{\varphi_*}\|
+\le\frac{21}{8}\sqrt\ell.
+\end{aligned}
+$$
+
+故
+
+$$
+\boxed{\ell_*\le\frac{441}{64}\ell\le7\ell.}
+\tag{177.7}
+$$
+
+其中 $\cos(\pi/8)>12/13$ 可由
+$\cos^2(\pi/8)=(2+\sqrt2)/4$ 及
+$2\cdot169^2>238^2$ 直接核对。
+好相位在这里是数学比较点，没有为接收装置增加新的运行控制，也没有为两个原输入更换两份解码器。
+

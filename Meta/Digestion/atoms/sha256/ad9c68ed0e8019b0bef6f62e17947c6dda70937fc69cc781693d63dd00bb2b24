@@ -1,0 +1,81 @@
+**定理199.3（完整最优阈值的二阶位移）。**
+第198节的唯一阈值 $\ell_\epsilon$ 满足
+
+$$
+\boxed{
+\ell_\epsilon
+=h_c\epsilon-
+\frac{Q(h_c)}{\Phi'_{h_c}}\epsilon^2+o(\epsilon^2).
+}
+\tag{199.9}
+$$
+
+**证明。** 置 $h_\epsilon=\ell_\epsilon/\epsilon$。
+第198节给 $h_\epsilon-h_c=O(\epsilon)$。
+在 $h_c$ 和 $h_\epsilon$ 分别选择任意最优器
+$\Gamma_c,\Gamma_\epsilon$。两者均位于引理198.2的固定解析邻域，
+引理199.2给
+
+$$
+\mathcal P(\Gamma_c),\ \mathcal P(\Gamma_\epsilon)
+=\Phi'_{h_c}+o(1).
+$$
+
+冻结各自操作，沿两个端点之间的区间积分（198.5），得到
+
+$$
+\begin{aligned}
+e_\epsilon(h_\epsilon,\Gamma_c)-e_\epsilon(h_c,\Gamma_c)
+&=\epsilon(h_\epsilon-h_c)\Phi'_{h_c}+o(\epsilon^2),\\
+e_\epsilon(h_\epsilon,\Gamma_\epsilon)-e_\epsilon(h_c,\Gamma_\epsilon)
+&=\epsilon(h_\epsilon-h_c)\Phi'_{h_c}+o(\epsilon^2).
+\end{aligned}
+\tag{199.10}
+$$
+
+具体地，斜率误差的贡献为
+$\epsilon|h_\epsilon-h_c|o(1)=o(\epsilon^2)$，
+统一导数余项的贡献为
+$O(\epsilon^2|h_\epsilon-h_c|)=O(\epsilon^3)$。
+这些估计对端点先后和端点重合均成立。
+
+最小值定义分别给
+
+$$
+\begin{aligned}
+e_\epsilon(h_\epsilon,\Gamma_\epsilon)-e_\epsilon(h_c,\Gamma_\epsilon)
+&\le F_\epsilon(h_\epsilon)-F_\epsilon(h_c)\\
+&\le e_\epsilon(h_\epsilon,\Gamma_c)-e_\epsilon(h_c,\Gamma_c).
+\end{aligned}
+$$
+
+由（199.10）夹逼，
+
+$$
+F_\epsilon(h_\epsilon)-F_\epsilon(h_c)
+=\epsilon(h_\epsilon-h_c)\Phi'_{h_c}+o(\epsilon^2).
+\tag{199.11}
+$$
+
+左侧第一项恰为 $3/4$。
+只在固定点 $h_c$ 使用定理199.1，并利用 $\Phi_{h_c}=0$，得到
+
+$$
+F_\epsilon(h_c)=\frac34+\epsilon^2Q(h_c)+o(\epsilon^2).
+$$
+
+代入（199.11），除以 $\epsilon^2$，得
+
+$$
+\frac{h_\epsilon-h_c}{\epsilon}
+\longrightarrow-\frac{Q(h_c)}{\Phi'_{h_c}}.
+$$
+
+再乘回 $\epsilon$ 即为（199.9）。证毕。
+
+定理199.1只给点态二阶展开；定理199.3并未把它直接代入移动的
+$h_\epsilon$，而是通过同一可行操作集上的双侧比较完成传递。
+本节不要求 $Q$ 连续，也不声称关于 $h$ 的统一二阶余项。
+$Q(h_c)$ 的数值与符号仍须求解完整共同 CPTP 二阶问题；
+其存在性不能把可行子族的系数提升为最优系数。
+

@@ -1,0 +1,303 @@
+{
+  "all_support_prime_marginals_at_least_one_noncover": {
+    "classes": [
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        5,
+        6
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        11,
+        12
+      ],
+      [
+        13,
+        24
+      ]
+    ],
+    "holes": [
+      7,
+      19
+    ],
+    "marginal_denominators": {
+      "2": 8,
+      "3": 3
+    },
+    "multiplicity": [
+      2,
+      2,
+      1,
+      1,
+      1,
+      2,
+      2,
+      0,
+      1,
+      3,
+      1,
+      2,
+      2,
+      2,
+      1,
+      1,
+      1,
+      3,
+      2,
+      0,
+      1,
+      2,
+      1,
+      2
+    ],
+    "outside_support_prime_control": {
+      "height": 0,
+      "marginal_denominator": 1,
+      "prime": 5,
+      "scaled_marginal": [
+        2,
+        2,
+        1,
+        1,
+        1,
+        2,
+        2,
+        0,
+        1,
+        3,
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        3,
+        2,
+        0,
+        1,
+        2,
+        1,
+        2
+      ],
+      "scope": "For p not dividing Q, the prime coordinate is trivial and M_p is the literal multiplicity function, so its values at the holes are zero.",
+      "zero_residues": [
+        7,
+        19
+      ]
+    },
+    "period": 24,
+    "scaled_marginals": {
+      "2": [
+        15,
+        8,
+        13
+      ],
+      "3": [
+        4,
+        8,
+        4,
+        3,
+        4,
+        6,
+        4,
+        3
+      ]
+    },
+    "scope": "All support-prime averages (p dividing Q, here 2 and 3) are at least one. This does not hold for primes outside the support. Numerically distinct, nonunit, even and redundant; not an odd or irredundant example.",
+    "support_primes": [
+      2,
+      3
+    ],
+    "total_incidence": 36
+  },
+  "exhaustive": [
+    {
+      "all_single_marginals_at_least_one_families": 24,
+      "expected_projected_signature_counts": {
+        "2": 256,
+        "3": 450
+      },
+      "families": 5460,
+      "include_unit": false,
+      "least_class_noncover_control": null,
+      "moduli": [
+        2,
+        3,
+        4,
+        6,
+        12
+      ],
+      "noncover_families_passing_all_single_marginals": 0,
+      "period": 12,
+      "single_prime_distinct_marginal_counts": {
+        "2": 256,
+        "3": 450
+      },
+      "two_prime_marginal_pairs": 5460
+    },
+    {
+      "all_single_marginals_at_least_one_families": 0,
+      "expected_projected_signature_counts": {
+        "3": 864,
+        "5": 3200
+      },
+      "families": 176640,
+      "include_unit": false,
+      "least_class_noncover_control": null,
+      "moduli": [
+        3,
+        5,
+        9,
+        15,
+        45
+      ],
+      "noncover_families_passing_all_single_marginals": 0,
+      "period": 45,
+      "single_prime_distinct_marginal_counts": {
+        "3": 864,
+        "5": 3200
+      },
+      "two_prime_marginal_pairs": 176640
+    },
+    {
+      "all_single_marginals_at_least_one_families": 0,
+      "expected_projected_signature_counts": {
+        "3": 72,
+        "5": 32
+      },
+      "families": 384,
+      "include_unit": false,
+      "least_class_noncover_control": null,
+      "moduli": [
+        3,
+        5,
+        15
+      ],
+      "noncover_families_passing_all_single_marginals": 0,
+      "period": 15,
+      "single_prime_distinct_marginal_counts": {
+        "3": 72,
+        "5": 32
+      },
+      "two_prime_marginal_pairs": 384
+    }
+  ],
+  "finite_field_layer_controls": [
+    {
+      "characteristic": 5,
+      "cofactor_period": 6,
+      "distinct_mod_p_profiles": 168,
+      "families": 168,
+      "include_unit": true
+    },
+    {
+      "characteristic": 3,
+      "cofactor_period": 10,
+      "distinct_mod_p_profiles": 396,
+      "families": 396,
+      "include_unit": true
+    },
+    {
+      "characteristic": 2,
+      "cofactor_period": 15,
+      "distinct_mod_p_profiles": 768,
+      "families": 768,
+      "include_unit": true
+    },
+    {
+      "characteristic": 2,
+      "cofactor_period": 9,
+      "distinct_mod_p_profiles": 80,
+      "families": 80,
+      "include_unit": true
+    }
+  ],
+  "noncoprime_finite_field_layer_collision": {
+    "characteristic": 2,
+    "cofactor_period": 6,
+    "first": [
+      [
+        0,
+        3
+      ],
+      [
+        0,
+        6
+      ]
+    ],
+    "second": [
+      [
+        3,
+        6
+      ]
+    ]
+  },
+  "repeated_label_one_marginal_carry": {
+    "first": [
+      [
+        0,
+        5
+      ]
+    ],
+    "period": 15,
+    "prime": 3,
+    "second": [
+      [
+        0,
+        15
+      ],
+      [
+        5,
+        15
+      ],
+      [
+        10,
+        15
+      ]
+    ]
+  },
+  "repeated_label_two_marginal_collision": {
+    "first": [
+      [
+        0,
+        15
+      ],
+      [
+        1,
+        15
+      ]
+    ],
+    "period": 15,
+    "primes": [
+      3,
+      5
+    ],
+    "second": [
+      [
+        6,
+        15
+      ],
+      [
+        10,
+        15
+      ]
+    ]
+  },
+  "result": "PASS",
+  "scope": "Complete exact finite enumerations and explicit boundary examples, not an implementation of the constructive decoder. Mathematical generality comes from the ordinary Fourier/layer proof; no Lean or odd-cover impossibility claimed."
+}

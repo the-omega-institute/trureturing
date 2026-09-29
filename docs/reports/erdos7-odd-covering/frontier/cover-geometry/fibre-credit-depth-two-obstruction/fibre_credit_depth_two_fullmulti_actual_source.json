@@ -1,0 +1,91 @@
+{
+  "Haar_survivor_lower": "2368253/314954640",
+  "carrier": 334639305,
+  "core_originals": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      21,
+      8
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      45,
+      1
+    ],
+    [
+      63,
+      1
+    ],
+    [
+      105,
+      59
+    ],
+    [
+      315,
+      179
+    ]
+  ],
+  "core_survivor_count": 75,
+  "debit48_by_support_size": [
+    841425317,
+    325687406,
+    49408113,
+    3666748,
+    132984,
+    1873
+  ],
+  "dependency_hashes": {
+    "fibre_credit_depth_two_fullmulti_actual_certificate.json": "10a8754712272fb4e16fe548dc909a9ee65289bdfbef88180d03080ebb519248",
+    "fibre_credit_depth_two_fullmulti_actual_sieve.cpp": "219906813033b8b22cce46bf80a6082d6a04a6aabde8de69a11c9d092b1c0759",
+    "fibre_credit_depth_two_fullmulti_joint_input.json": "9d1e21705c4e618c70db324b143cf732371ceaf79e3470d4c66b8260bb6ae4e9"
+  },
+  "exact_joint_query_count": 320,
+  "higher_core_debit": "406774147/16",
+  "higher_core_margin": "40260301/16",
+  "lean_verification": false,
+  "normalized_debit": "1407523/1546832",
+  "numerical_reconstruction": {
+    "carrier": 334639305,
+    "exact_query_maxima": 320,
+    "lean_verification": false,
+    "method": "literal numerical progression sieve, then exact residue folding",
+    "numerical_divisors": 384,
+    "originals": 383,
+    "passed": true,
+    "survivor_count": 27939653
+  },
+  "original_count": 383,
+  "outside_used_live_roots": [
+    10,
+    12,
+    16,
+    18,
+    22
+  ],
+  "scope": "One literal full383-slot shallow phase family on3/5/7/11/13/17/19/23; all later core3/5/7 heights and phases arbitrary, outside exponents at most1.",
+  "strict_simple_lower": "1/133",
+  "survivor_count": 27939653,
+  "uniform_over_shallow_phases": false
+}

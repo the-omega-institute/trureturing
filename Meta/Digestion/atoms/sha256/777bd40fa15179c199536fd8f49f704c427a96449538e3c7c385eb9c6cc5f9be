@@ -1,0 +1,162 @@
+**定理85.1（外置首轮 ABAAB 不可能）。** 上述七维实际合同不能具有尾词 $ABAAB$。
+
+### 85.1 四维分叉跨度与末轮零位像
+
+沿用实际早期正交单位组 $p,q$ 和 $u,v,w$：
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+$$
+
+$$
+V_0p=u\otimes A,\qquad V_1p=v\otimes A,\qquad
+V_0q=w\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{85.2}
+$$
+
+因此有一个实际非零交向量
+
+$$
+0\ne w\in H_2\cap G_2.
+\tag{85.3}
+$$
+
+对 $3\le n\le6$，实际二维空间满足
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,\qquad
+P_{G_n}H_n=G_n,\qquad P_{Q_n}H_n=Q_n.
+\tag{85.4}
+$$
+
+两个投影都是同构，故
+
+$$
+H_n\cap G_n=0\qquad(3\le n\le6).
+\tag{85.5}
+$$
+
+置 $S_0=H_1+\cdots+H_5$。由实际零位像，
+$V_0S_0\subset K\otimes F$；真实首轮像
+$V_0k=p\otimes\eta_1$ 不属于该空间，所以 $k\notin S_0$，进而
+
+$$
+\dim S_0\le6.
+\tag{85.6}
+$$
+
+这只是线性维数结论，不要求 $k\perp S_0$。
+
+令当前 $A$ 射线的实际跨度为
+
+$$
+P=G_2+G_4+G_5.
+$$
+
+第2、4轮的已执行一位后继分别属于 $B,A$，即
+
+$$
+V_1G_2=Q_3\otimes B,\qquad
+V_1G_4=Q_5\otimes A.
+$$
+
+两条环境射线独立，固定 $V_1$ 又为单射，故 $G_2\cap G_4=0$，给出 $\dim P\ge4$。另一方面，
+
+$$
+(P\otimes A)\dotplus(G_3\otimes B)\subset V_0S_0.
+$$
+
+这是代数直和，无需两条环境射线正交。由 $\dim G_3=2$ 和（85.6），
+
+$$
+4\le\dim P,\qquad \dim P+2\le\dim S_0\le6.
+$$
+
+因此
+
+$$
+P=G_2+G_4,\qquad \dim P=4,\qquad \dim S_0=6,
+$$
+
+$$
+V_0S_0=(P\otimes A)\dotplus(G_3\otimes B).
+\tag{85.7}
+$$
+
+实际末轮零位像 $G_6\otimes B=V_0H_5$ 也包含于该空间。比较独立环境坐标 $A,B$，得到 $G_6\subset G_3$。两者均二维，所以
+
+$$
+G_6=G_3.
+\tag{85.8}
+$$
+
+### 85.2 两个固定单射迫使早期交空间回返
+
+由（85.7）的同一四维跨度，
+
+$$
+V_1P=(Q_3\otimes B)\dotplus(Q_5\otimes A).
+\tag{85.9}
+$$
+
+实际 $G_5\subset P$，且其已执行后继满足
+
+$$
+V_1G_5=Q_6\otimes B.
+$$
+
+再次比较 $A,B$ 环境坐标，得到 $Q_6\subset Q_3$。二者均二维，故 $Q_6=Q_3$。于是
+
+$$
+V_1G_5=Q_3\otimes B=V_1G_2.
+$$
+
+同一个 $V_1$ 的单射性给
+
+$$
+G_5=G_2.
+\tag{85.10}
+$$
+
+另一方面，由（85.8）及第3、6轮实际零位像，
+
+$$
+V_0H_5=G_6\otimes B
+=G_3\otimes B=V_0H_2.
+$$
+
+同一个 $V_0$ 的单射性给
+
+$$
+H_5=H_2.
+\tag{85.11}
+$$
+
+结合（85.3）、（85.10）、（85.11），实际非零向量 $w$ 满足
+
+$$
+0\ne w\in H_5\cap G_5,
+$$
+
+与（85.5）在 $n=5$ 的交零矛盾。定理85.1证明完毕。
+
+本节禁阻只使用前六轮已经执行的像、外置首轮提供的六维输入跨度预算，以及第二轮与后期终端的交空间差别；没有使用 $G_6$ 的第七轮后继。该结论排除外置首轮的 $ABAAB$ 尾词，不断言其余尾词已有共同实际实现，一般接收容量区间保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{85.12}
+$$
+
+### 85.3 三种剩余必要尾词
+

@@ -1,0 +1,33 @@
+**定理53.4（纯第二终端排除秩三第一终端）。** 在同一七维合同中，若 $r_2=1$，则 $r_1=3$ 不可能。证明只需前五个完整参考终端，因而该分支只余 $r_1=1$ 或 $2$。
+
+证明。反设 $r_1=3$。第一终端附加态的纯化与第二终端纯性，沿第29节式（29.37）给出六个正交单位接收向量 $p_\alpha,q_\alpha$、三个正交单位 $u,v,w$ 和三个正交单位环境向量 $f_\alpha$，使对 $\alpha=1,2,3$ 有
+$$
+V_0p_\alpha=u\otimes f_\alpha,\qquad
+V_1p_\alpha=v\otimes f_\alpha,\qquad
+V_0q_\alpha=w\otimes f_\alpha.
+$$
+这里 $V_i x=V(x\otimes|i\rangle)$，同一个 $V$ 是固定通道的 Stinespring 等距。记
+$$
+X=\operatorname{span}\{p_\alpha,q_\alpha\},\quad
+F=\operatorname{span}\{f_\alpha\},\quad
+U=\operatorname{span}(u,w)=G_2.
+$$
+则
+$$
+\dim X=6,\quad\dim F=3,\quad V_0X=U\otimes F.
+\tag{53.17}
+$$
+第二终端的实际系数空间为
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad G_2=U,
+\qquad \dim(H_2+G_2)=3.
+\tag{53.18}
+$$
+第三至第五轮的新环境 $\eta_3,\eta_4,\eta_5$ 为输入无关纯向量，并有
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\quad
+V_1G_{n-1}=Q_n\otimes\eta_n\qquad(n=3,4,5).
+\tag{53.19}
+$$
+各 $H_n,G_n,Q_n$ 均二维；$n\ge3$ 时 $C_n=H_n+G_n=G_n\oplus Q_n$ 四维，且 $H_n$ 到 $G_n,Q_n$ 的两个投影都是同构。
+

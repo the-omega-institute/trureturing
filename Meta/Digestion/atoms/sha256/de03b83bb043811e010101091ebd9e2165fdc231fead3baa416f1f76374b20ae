@@ -1,0 +1,14 @@
+**定理264.2（逆Schmidt权上界）。** 在（264.1）—（264.5）的合同下，
+$$
+\boxed{
+\|\Xi-P_\psi\|_1
+\le
+\min\left\{2,\,
+\left(\frac2p+2\right)\varepsilon\right\}
+\le
+\min\left\{2,\frac3p\varepsilon\right\}.
+}
+\tag{264.29}
+$$
+常数不依赖参考空间维数，也不要求竞争态的边缘或参考支撑精确。
+

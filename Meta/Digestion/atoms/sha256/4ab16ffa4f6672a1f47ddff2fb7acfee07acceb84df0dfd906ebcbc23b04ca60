@@ -1,0 +1,25 @@
+**定理 224.2（抽样—失配—物理风险三层组合）。** 在定理 223.2 的同时置信事件上，
+
+$$
+\boxed{
+R^\pi_{\mathrm{worst}}
+\le
+\widehat R^+_{\delta,\kappa}.
+}
+\tag{224.1}
+$$
+
+若观测数据满足 $\widehat R^+_{\delta,\kappa}\le\alpha$，则以数据概率至少 $1-\delta$ 得到物理最坏风险阈值 $R^\pi_{\mathrm{worst}}\le\alpha$ 的有效证书。
+
+### 证明
+
+定理 223.2 给出真实参数属于含失配风险盒。风险泛函
+
+$$
+F(\beta,\alpha,\alpha_\infty)
+=
+\sum_i\beta_i\alpha_i+\alpha_\infty
+$$
+
+在 $[0,1]$ 上逐坐标单调不减，所以定理 216.1 的盒上界正是 $\widehat R^+_{\delta,\kappa}$。阈值结论与定理 216.3 相同。证毕。
+

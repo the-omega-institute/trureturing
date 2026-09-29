@@ -1,0 +1,15 @@
+**命题 52.2（谐波观察核及延迟不能修复的混叠）。** 令 $g=\gcd K$，则
+\[
+ H(\varphi)=H(\psi)
+ \iff \varphi-\psi\in(2\pi/g)\mathbb Z\pmod{2\pi}.
+\]
+添加任意有限或无限多个同一已知旋转的延迟读数，仍具有完全相同的核。因此 $H$ 是圆周的光滑嵌入当且仅当 $g=1$；成立时，它诱导原圆周拓扑。对 $d=\varphi-\psi$，两个差行的 Gram 矩阵为
+\[
+ \begin{pmatrix}A(d)&B(d)\\B(d)&A(d)\end{pmatrix},\quad
+ A(d)=4\sum_{k\in K}a_k^2\sin^2(kd/2),\quad
+ B(d)=4\sum_{k\in K}a_k^2\cos(k\theta)\sin^2(kd/2),
+\]
+当 $g=1$ 时，$R_H=2/(1+\sup_{d\not\equiv0}|B(d)|/A(d))$。
+
+**证明。** 单个平面谐波相等恰好要求 $kd\in2\pi\mathbb Z$。Bezout 身份把全部这些条件等价为 $gd\in2\pi\mathbb Z$，反向因 $g$ 整除各 $k$ 立即成立。对任意共同延迟 $t$，$c_k(\varphi-t)$ 是 $c_k(\varphi)$ 乘一个可逆平面旋转，因此不改变任何一对状态是否相等。导数平方范数恒为 $\sum_k k^2a_k^2>0$，故是浸入；$g=1$ 时紧致单射到 Hausdorff 空间是到其像的同胚，结合浸入得到光滑嵌入。$g>1$ 时核非平凡。最后逐个谐波用旋转的内积公式得到 $A,B$，两行 Gram 特征值为 $A\pm|B|$，即得稳定秩式。这里把已知读数核用于实际传感器，而不把添加更多同类时间点自动当成新的分离关系。证毕。
+

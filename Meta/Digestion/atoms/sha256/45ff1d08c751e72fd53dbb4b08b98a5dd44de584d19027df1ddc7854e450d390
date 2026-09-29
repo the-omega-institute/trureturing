@@ -1,0 +1,66 @@
+### 271.5 标准层上所有证书的支撑限制
+
+固定 $0\le j<m$，考虑满足（271.13）、当前支撑为 $P_j$ 的任意证书 $Y$；允许它在当前面上压缩为零。置
+$$
+S=P_jYP_j\succeq0.
+\tag{271.24}
+$$
+因为 $T_*$ 支撑于 $\mathcal N^\perp\subseteq\mathcal N_j^\perp$，
+$\operatorname{Tr}(ST_*)=0$。两个PSD算子的迹乘积为零迫使其支撑正交，故
+$$
+\operatorname{ran}S\subseteq\mathcal N\cap\mathcal N_j^\perp.
+\tag{271.25}
+$$
+
+令 $V_j$ 的列为全部剩余核向量 $q_{b,a}$，其中 $a>j$。$P_jV_j$ 满列秩：若一个尾向量组合的投影为零，该组合便落入旧核，与全部核基线性独立矛盾。其列空间恰为（271.25）的空间。因此存在完整的PSD系数矩阵 $C$，使
+$$
+S=P_jV_jCV_j^\dagger P_j,
+\qquad C\succeq0.
+\tag{271.26}
+$$
+不要求 $C$ 的跨链条目为零。满列秩保证可用左逆写出此 $C$，并保持其正性。
+
+记 $B=Y-V_jCV_j^\dagger$、$R_j=I-P_j$，则 $P_jBP_j=0$ 给
+$$
+B=R_jB+BR_j-R_jBR_j.
+\tag{271.27}
+$$
+定义参考前缀空间与尾空间
+$$
+E_{\le j}=\operatorname{span}\{e_{b,a}:a\le\min(j,r_b)\},
+\qquad E_{>j}=E_{\le j}^\perp,
+\tag{271.28}
+$$
+并令 $\Pi_j$ 投影到 $E_{>j}$。由核向量的坐标，
+$\mathcal N_j\subseteq E_{\le j}\oplus E_{\le j}$。所以（271.27）的每一项，在上或下对角块作尾参考双侧压缩时都消失：
+$$
+\Pi_jB_{++}\Pi_j=0,
+\qquad \Pi_jB_{--}\Pi_j=0.
+\tag{271.29}
+$$
+这包括旧核与其他链尾方向之间的全部交叉项。
+
+$Y\in L^\perp$ 要求两对角块相同。将 $V_jCV_j^\dagger$ 的尾主块写在剩余参考基中，便得到
+$$
+M_{\mathrm{tail}}CM_{\mathrm{tail}}^\dagger=C,
+\qquad
+M_{\mathrm{tail}}=I+tJ_{\mathrm{tail}},
+$$
+$$
+J_{\mathrm{tail}}
+=\bigoplus_{b:r_b>j}J_{r_b-j}.
+\tag{271.30}
+$$
+各剩余链最前列中落入旧参考前缀的分量已被 $\Pi_j$ 删除，因而此式保留的是准确的直和尾算子。
+
+由引理271.2，$C$ 的像只能位于各剩余链的首向量空间。代回（271.26），得到
+$$
+\boxed{
+\operatorname{ran}(P_jYP_j)
+\subseteq\operatorname{span}\{P_jq_{b,j+1}:r_b>j\}
+\subseteq\mathcal N_{j+1}.
+}
+\tag{271.31}
+$$
+这是一切合法证书的支撑限制，不要求证书在新首层空间中具有最大秩。
+
