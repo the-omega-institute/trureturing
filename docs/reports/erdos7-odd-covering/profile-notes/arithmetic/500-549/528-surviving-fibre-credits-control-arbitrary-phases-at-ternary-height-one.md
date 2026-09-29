@@ -1020,6 +1020,153 @@ values. The earlier uniform-contract fixture and result remain valid
 for their stated weaker contract. These are ordinary deductions and
 exact finite checks, not new Lean verification.
 
+## Arbitrary ternary height requires actual prefix unions
+
+The source-floor mechanism extends beyond H3=1 if the active q-prefix
+union is retained. Fix one finite irredundant divisor-closed family
+of distinct odd nonunit originals, with their actual phases. It may
+be a noncover. Let q>=5 have actual height H<=h and complete pure
+cylinders P_j,1<=j<=H. Comparable disjointness gives their exact
+normalizer c_(q,H)=1/(1-U_H), where U_H=sum_(j=1..H)q^-j.
+Use that normalized Haar law lambda_q, and one fixed lambda_3 on
+the actual pure ternary survivors. Original ternary heights are
+arbitrary finite values.
+
+For each t, take the q-projections of precisely the actual originals
+3^i*q^j whose literal ternary prefix contains t. Their union is W_q(t).
+Keep its maximal cylinders by set inclusion. These form a disjoint
+prefix antichain, with Haar mass s_q(t). If the union is nonempty,
+let m be its minimum q-depth. This antichain summarizes the union
+only; it does not replace numerical labels, their distinctness or
+the full operation records.
+
+Every pure P_k either misses W or is wholly contained in W. Indeed
+an intersection with an active cylinder of depth j>=k would violate
+comparable disjointness of the original pure q^k and3^i*q^j. At
+depth j<k, prefix nesting makes P_k a subcylinder whenever they meet.
+The disjoint pure chain therefore gives the exact formula
+
+    beta_q(t)=c_(q,H)*(s_q(t)
+                -sum_(k=1..H)q^-k*1_(P_k subset W_q(t))). (FC37)
+
+All pure P_k with k<=m avoid W. Thus s_q(t)+U_m<=1 and
+
+    beta_q(t)>=c_(q,H)*(s_q(t)-T_(m,H))
+              >=c_(q,h)*(s_q(t)-T_(m,h))>0,
+    T_(m,j)=sum_(k=m+1..j)q^-k.                    (FC38)
+
+The height relaxation uses(s_q(t)+U_m-u)/(1-u), nonincreasing in u
+because of that actual disjointness. Also s_q(t)>=q^-m>T_(m,h).
+Empty unions have beta=0 and no minimum depth. Equality beta=1 is
+permitted: a positive blocked-mass floor is not a survivor lower bound.
+
+For the active originals3^i*q, their q-first roots at a common t
+are distinct by comparable disjointness. If k_q(t) counts these
+incidences, then0<=k_q(t)<=q-1 and, where k_q(t)>0,
+
+    beta_q(t)>=(k_q(t)+1)*c_(q,h)/q-b_(q,h).
+
+Deeper-q originals can only enlarge the blocked union. Integration
+with the SAME lambda_3 yields
+
+    integral beta_q d lambda_3
+      >=(c_(q,h)/q)*sum_(present3^iq)lambda_3(I_(3^iq))
+        -(b_(q,h)-c_(q,h)/q)
+            *lambda_3(union_(present3^iq)I_(3^iq)). (FC39)
+
+The actual prefix union and incidence sum are both retained; they
+are not separately optimized root probabilities.
+
+The upper-budget consumer also extends. On one finite common
+ternary prefix partition define
+
+    B_q(t)=min(1,c_(q,h_q)
+                    *sum_(3^iq^j present,t in I_(3^iq^j))q^-j),
+    Gbar_D(t)=product_(q outside D)(1-B_q(t)).
+
+The actual beta is at most B. Enlarge each q-blocked set to B on
+each partition cell, using the same nonatomic lambda_q. FC4's
+deletion argument then applies directly with Gbar:
+
+    lambda(U)>=integral Gbar_empty d lambda_3
+       -sum_(remaining originals m,|D(m)|>=2)
+           w_m*integral_(I_m)Gbar_D(m) d lambda_3,
+    w_m=product_(q in D(m))c_(q,h_q)*q^-v_q(m).     (FC40)
+
+For a3-free original, I_m is the whole ternary carrier, as in FC4.
+Only the comparison carrier shrinks; sources and originals stay
+fixed. A coordinate with B=1 may erase a comparison fibre. This
+does not mean the original family covers that fibre. No positivity
+or all-height version of FC29--FC30 is inferred from FC40.
+
+### A real seven-class family separates a union from a label sum
+
+Take the following actual originals and their private points:
+
+| Modulus | Residue | Private integer |
+| ---: | ---: | ---: |
+| 3 | 0 | 3 |
+| 5 | 0 | 5 |
+| 9 | 2 | 2 |
+| 15 | 11 | 26 |
+| 25 | 6 | 31 |
+| 45 | 1 | 46 |
+| 75 | 1 | 76 |
+
+Their period is225. The family is divisor-closed and irredundant,
+and leaves81 residues uncovered. At t=1mod9, the active45 cylinder
+projects to1mod5 and the active75 cylinder to1mod25. The latter
+is contained in the former. Pure5 and pure25 remove0mod5 and6mod25,
+so the actual normalized q-law is uniform on19 residues, and
+
+    beta_5(1)=4/19 < 4/19+1/19=5/19.
+
+The right side is the sum of the two separate cylinder floors.
+It is also what incorrectly substituting the label sum1/5+1/25 for
+the union mass in FC35 would give. The correct antichain has only
+1mod5, and FC38 gives exactly4/19.
+
+The actual pure ternary survivor leaves are1,4,5,7,8mod9. Their
+blocked masses are respectively4/19,1/19,4/19,1/19,4/19. Under their
+one uniform lambda_3, the integrated actual mass is14/95; the invalid
+sum of floors is15/95; the valid sum of label upper caps is18/95.
+The actual survivor identity is
+
+    (5/9)*(19/25)*(1-14/95)=81/225.
+
+### Prefix upper caps do not transfer normalized-Haar lower bounds
+
+For this same family, its3-free residual R3 is the19-point q-set
+avoiding0mod5 and6mod25. Give first roots2,3,4 probability1/3 each
+and use Haar tails. This ONE law nu is supported on the same R3
+and satisfies, at every q-depth j>=1,
+
+    nu(C)<=1/(3*5^(j-1))<=3^-j.
+
+These are the one-link3<5 prefix caps of
+[Report376 PC7](../350-399/376-complete-prime-chain-transport-and-joint-prefix-laws.md#4-one-probability-controls-the-entire-selected-prime-chain).
+Nevertheless every actual star15,45,75 has first-q root1 and
+receives nu mass zero despite a nonempty R3 trace. Even the actual
+tree condition holds: R3 meets all10000 complete3-ary subtrees of
+depth2 inside the5-ary tree. Any three first roots include one of
+2,3,4, all of whose children survive.
+
+Thus support and these prefix upper caps do not imply FC38's
+strictly positive Haar floors. This does not identify nu as the
+particular law supplied by Report376 or refute its whole-cover
+consequences. A transfer needs an additional common-law comparison;
+for example, an appropriate positive density lower bound would
+suffice, but none is supplied by the upper caps alone.
+
+The [finite control](../../../frontier/cover-geometry/fibre-credit-partition/active_prefix_source_floor.py)
+and its [exact result](../../../frontier/cover-geometry/fibre-credit-partition/active_prefix_source_floor.json)
+check the actual classes, private points,225-point survivor, all
+prefix unions, integrated quantities, and the complete tree family.
+These are ordinary deductions and finite checks, not new Lean
+verification. The remaining unrestricted obligation is a positive
+common-source estimate or whole-cover descent, preserving all
+prime supports, original heights, labels and phases.
+
 ## Whole-family height one permits a smaller common query interface
 
 The all-depth query in(FC13) permits later originals with arbitrary ternary
