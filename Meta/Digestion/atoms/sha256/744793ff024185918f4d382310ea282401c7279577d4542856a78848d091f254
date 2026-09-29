@@ -1,0 +1,96 @@
+**Theorem 33.1 (all higher odd prime-power layers).** Let $q=2r+1$ be
+odd with $r\geq119$. If $x$ is an integer greater than two and
+
+$$
+x^2-4>128\cdot6^r,
+$$
+
+then $U_q(x)$ is not a square. Consequently, for every odd $n\geq q$,
+the positive integer $F_{qn}/F_n$ is not a square. In particular, if
+$q\geq239$ is an odd prime and $k\geq1$, then
+$F_{q^{k+1}}/F_{q^k}$ is not a square.
+
+Proof. The roots of the recurrence polynomial occur in opposite pairs:
+
+$$
+U_q(X)=\prod_{i=1}^{r}
+  \left(X^2+4\cos^2\frac{\pi i}{q}\right).
+$$
+
+Put $\lambda_i=4\cos^2(\pi i/q)<4$ and
+$A(t)=\prod_{i=1}^{r}(1+\lambda_i t)$. The coefficient of $t$ in
+$A$ is $q-2$, as also follows by comparing the next-to-leading
+coefficient in the recurrence; it is odd. Let
+$S(t)=\sqrt{A(t)}=\sum_{j\geq0}s_jt^j$ be the branch with $S(0)=1$.
+Each factor is nonzero on $|t|\leq1/4$, so this branch is analytic
+there. On the boundary, $|S(t)|\leq2^{r/2}$, and Cauchy's estimate gives
+
+$$
+|s_j|\leq 2^{r/2}4^j. \tag{33.1}
+$$
+
+All $s_j$ are dyadic rationals. Indeed, expanding $S=(1+(A-1))^{1/2}$
+uses only the coefficients
+$\binom{1/2}{m}=(-1)^{m-1}C_{m-1}/2^{2m-1}$, where $C_{m-1}$ is an
+integer Catalan number. Set $e_j=j+v_2(j!)=2j-\operatorname{popcount}(j)$.
+In the coefficient of $t^j$, the $m=j$ summand is
+$\binom{1/2}{j}(q-2)^j$ and has valuation $-e_j$; every $m<j$
+summand has strictly larger valuation. Therefore
+
+$$
+v_2(s_j)=-e_j,\qquad 2^{e_j}s_j\in\mathbb Z,\qquad s_j\ne0
+\quad(j\geq1). \tag{33.2}
+$$
+
+Take $J=\lceil r/2\rceil$, $\delta=2J-r\in\{0,1\}$, and
+$D=2^{e_J}\leq2^r$. For $x>2$ define
+
+$$
+T=x^r\sum_{j=0}^{J}s_jx^{-2j},\qquad
+R=x^rS(x^{-2})-T.
+$$
+
+Equation (33.2) makes $Dx^\delta T$ an integer: its $j$th summand is
+$Ds_jx^{2(J-j)}$. By (33.1) and a geometric tail estimate,
+
+$$
+Dx^\delta|R|
+\leq\frac{D\,2^{r/2+2J+2}}{x^2-4}<1. \tag{33.3}
+$$
+
+The strict inequality follows from $e_J\leq2J-1$,
+$2^{r/2}\leq(3/2)^r$, and $x^2-4>128\cdot6^r$.
+The first omitted term has absolute value at least
+$2^{-e_{J+1}}x^{-2-\delta}$. The remaining terms have absolute sum
+at most
+
+$$
+\frac{2^{r/2}4^{J+2}x^{-2-\delta}}{x^2-4}.
+$$
+
+Their ratio to the first omitted term is at most
+$2^{r/2+4J+6-\operatorname{popcount}(J+1)}/(x^2-4)$.
+Since this exponent is at most $(5/2)r+7$ and
+$2^{(5/2)r+7}\leq128\cdot6^r$, the ratio is less than one. Thus
+$R\ne0$. If $U_q(x)$ were the square of an integer $M$, positivity and
+the product formula would give $M=x^rS(x^{-2})$ after choosing the
+nonnegative root. But $Dx^\delta M$ and $Dx^\delta T$ are integers,
+while their difference is nonzero and has absolute value less than one
+by (33.3), a contradiction.
+
+For the Fibonacci conclusion, the odd-index Binet identity gives
+$F_{qn}/F_n=U_q(L_n)$; equivalently, multiplication by $n$ turns the
+characteristic-root product into $-1$ and yields the stated recurrence.
+The odd-index Lucas subsequence $A_r=L_{2r+1}$ starts with $A_0=1$,
+$A_1=4$ and satisfies $A_{r+2}=3A_{r+1}-A_r$. Induction gives
+$A_r\geq(5/2)^r$, and $L_n\geq L_q$ when $n\geq q$. The exact
+inequality $4\cdot25^{119}>513\cdot24^{119}$ and monotonicity of
+$(25/24)^r$ imply, for all $r\geq119$,
+
+$$
+L_n^2-4\geq(25/4)^r-4>128\cdot6^r.
+$$
+
+The first assertion now applies to $x=L_n$. Taking $n=q^k$ proves the
+last assertion.
+
