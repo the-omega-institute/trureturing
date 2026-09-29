@@ -1,0 +1,57 @@
+## 75. 同块纤维中的精确 Robin 权重
+
+固定母体
+
+$$
+ n=2^{A_2}3^{A_3}5^{A_5}7^{A_7}.
+$$
+
+约数
+
+$$
+ d=2^{b_2}3^{b_3}5^{b_5}7^{b_7}
+$$
+
+的叶子坐标为
+
+$$
+ u=b_2+b_7,\qquad v=b_3,\qquad w=b_5+b_7,\qquad k=b_7.
+$$
+
+于是
+
+$$
+ d=2^u3^v5^w\left(\frac7{10}\right)^k,
+\qquad
+\frac1d=2^{-u}3^{-v}5^{-w}\left(\frac{10}{7}\right)^k.
+$$
+
+固定 $(u,v,w)$ 后，可行的关联数正好是
+
+$$
+ k_{\min}=\max(0,u-A_2,w-A_5),\qquad
+ k_{\max}=\min(A_7,u,w).
+$$
+
+因此无需逐一恢复纤维内部状态，也能保留 Robin 所需的精确权重：
+
+$$
+\boxed{
+\Omega_{u,v,w}=2^{-u}3^{-v}5^{-w}
+\sum_{k=k_{\min}}^{k_{\max}}\left(\frac{10}{7}\right)^k,
+\qquad
+Z(n)=\sum_{\substack{u,v,w\\ k_{\min}\le k_{\max}}}\Omega_{u,v,w}.
+}
+$$
+
+其中
+
+$$
+\mathcal F_n=
+\{(u,v,w):k_{\min}(u,v,w)\le k_{\max}(u,v,w)\}
+$$
+
+是非空纤维的叶子读数集合。
+
+这是“关系记录”与“任务权重”之间的具体接口。若只记录纤维大小而把每个来源按同一倒数权重处理，得到的不是 $Z(n)$。
+

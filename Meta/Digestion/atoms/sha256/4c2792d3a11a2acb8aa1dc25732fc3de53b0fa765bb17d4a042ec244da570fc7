@@ -1,0 +1,12 @@
+### theorem 44.1 两个时刻的行列式
+
+对 $s<t$，有
+
+$$
+\boxed{\det\begin{pmatrix}F_s&F_{s+1}\\F_t&F_{t+1}\end{pmatrix}=(-1)^{s+1}F_{t-s}.}
+$$
+
+**证明。** 令 $\ell_t=(F_t,F_{t+1})=\varepsilon M^t$。把两行同时右乘 $M^{-s}$ 后变为 $\ell_0,\ell_{t-s}$；前者行列式为 $-F_{t-s}$，再乘 $\det(M^s)=(-1)^s$ 即得。证毕。 $\square$
+
+因此两次读数在模 $n$ 下完整恢复，当且仅当 $\gcd(n,F_{t-s})=1$。
+

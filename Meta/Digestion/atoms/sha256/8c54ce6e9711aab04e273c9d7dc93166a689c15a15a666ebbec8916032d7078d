@@ -1,0 +1,18 @@
+## 66. $7r\leftrightarrow10r$ 的关联边界
+
+令
+
+$$
+M_{70}(Y)=\sum_{\substack{r\le Y\\(r,70)=1}}\mu(r),qquad
+\Delta_{7,10}(X)=\sum_{\substack{X/10<r\le X/7\\(r,70)=1}}\mu(r).
+$$
+
+在截断 $n\le X$ 中，配对 $7r$ 与 $10r$ 的实际贡献为
+
+$$
+\mu(7r)\mathbf1_{7r\le X}+\mu(10r)\mathbf1_{10r\le X}
+=-\mu(r)\mathbf1_{7r\le X<10r}.
+$$
+
+因此它在关联边界区间 $[7r,10r)$ 中暂时存在，实际成对总贡献为 $-\Delta_{7,10}(X)$。
+

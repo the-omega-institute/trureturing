@@ -1,0 +1,29 @@
+### definition 33.1 整数边界缺陷群
+
+令内部和形式边界均为整数格，取
+
+$$
+ y=Bx,
+ \qquad B\in\operatorname{Mat}_d(\mathbb Z),
+ \qquad \det B\ne0.
+$$
+
+定义
+
+$$
+\boxed{\mathcal D_B=\mathbb Z^d/B\mathbb Z^d.}
+$$
+
+它记录形式上可写出的边界与实际具有整数内部来源的边界之间的差别。由 Smith 标准形
+
+$$
+UBV=\operatorname{diag}(s_1,\ldots,s_d),
+\qquad s_i>0,\quad s_i\mid s_{i+1},
+$$
+
+得到
+
+$$
+\boxed{\mathcal D_B\cong\bigoplus_i\mathbb Z/s_i\mathbb Z,\qquad |\mathcal D_B|=|\det B|.}
+$$
+

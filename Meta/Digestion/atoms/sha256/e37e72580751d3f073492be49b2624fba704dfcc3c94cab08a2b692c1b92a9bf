@@ -1,0 +1,16 @@
+## 71. 同块关系的递归更新与交换图
+
+对任意合法块 $R\in\mathcal K^+$，令 $e_R$ 表示只在 $R$ 坐标取1的块多重集增量，并定义增量关系向量
+
+$$
+\iota_R(T)=\mathbf1_{\{T\subseteq R\}},qquad T\in\mathcal K^+.
+$$
+
+在完整关系坐标和截断关系坐标上分别定义
+
+$$
+U_R(m)=m+e_R,\qquad
+\widehat U_R(y)=y+\bigl(\iota_R(T)\bigr)_{T\in\mathcal K^+},\qquad
+\widehat U_R^{(r)}(y)=y+\bigl(\iota_R(T)\bigr)_{T\in\mathcal K_{\le r}}.
+$$
+

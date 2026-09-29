@@ -1,0 +1,18 @@
+### theorem 71.2 终端任务的截断充分性判据
+
+设 $\Phi$ 是块多重集上的任务。若
+
+$$
+I_{\le r}m=I_{\le r}m'
+\Longrightarrow
+\Phi(m)=\Phi(m')
+$$
+
+对所有声明的状态，则在 $\operatorname{im}I_{\le r}$ 上存在唯一函数 $\widehat\Phi$ 使
+
+$$
+\Phi=\widehat\Phi\circ I_{\le r}.
+$$
+
+反之，若存在一对同截断读数但任务值不同的状态，则任何只访问 $I_{\le r}m$ 的解码器都会失败。
+

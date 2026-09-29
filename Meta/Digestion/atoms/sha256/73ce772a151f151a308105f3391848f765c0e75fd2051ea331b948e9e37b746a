@@ -1,0 +1,8 @@
+**定理 100.6（操作单调性与同源联合）。** 若 $d_{\mathrm{new}}\mid d_{\mathrm{old}}\mid H$，从 $\eta_{H,d_{\mathrm{new}}}$ 有唯一诱导投影到 $\eta_{H,d_{\mathrm{old}}}$ 的实际像。对于同一正整数源 $C$，联合观察
+
+$$
+C\longmapsto\bigl(\eta_{H,d_1}(C),\eta_{H,d_2}(C)\bigr)
+$$
+
+与 $\eta_{H,\gcd(d_1,d_2)}(C)$ 有完全相同的源纤维。因此二者实际像之间存在保持来源映射的双射，联合实际像的基数为 $\kappa_H(\gcd(d_1,d_2))$，而非任意两个标签集的笛卡尔积基数。
+

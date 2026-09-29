@@ -1,0 +1,11 @@
+### definition 6.1 两次观察矩阵
+
+对正整数权重 $u,v$，令 $q_{u,v}(a,b)=ua+vb$，并定义
+
+$$
+H_{u,v}=\begin{pmatrix}u&v\\v&u+v\end{pmatrix},
+\qquad \Delta(u,v)=u^2+uv-v^2.
+$$
+
+称读出为整数无损的，若 $H_{u,v}$ 是 $\mathbb Z^2$ 的自同构。
+

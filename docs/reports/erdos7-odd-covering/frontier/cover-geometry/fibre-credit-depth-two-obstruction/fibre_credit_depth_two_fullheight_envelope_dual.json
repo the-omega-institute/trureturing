@@ -1,0 +1,575 @@
+{
+  "scope": "Exact same-source sharp-hinge budget obstruction; no optimizer or native oracle.\n\nFourteen literal complete numerical queries provide valid lower hinge cuts.\nThe conclusion concerns one conditional-uniform7 source ansatz and its\nspecified all-height union budget, not actual covering or all source laws.\n",
+  "actual_core_originals": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      45,
+      1
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      8
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      63,
+      59
+    ],
+    [
+      105,
+      74
+    ],
+    [
+      315,
+      269
+    ]
+  ],
+  "old45_points": [
+    2,
+    7,
+    8,
+    14,
+    16,
+    17,
+    19,
+    23,
+    28,
+    29,
+    32,
+    34,
+    37,
+    38,
+    43,
+    44
+  ],
+  "remaining": [
+    5,
+    6,
+    5,
+    2,
+    6,
+    5,
+    5,
+    4,
+    6,
+    3,
+    4,
+    5,
+    6,
+    5,
+    6,
+    2
+  ],
+  "actual315_source_size": 75,
+  "literal_numerical_cylinders_checked": 623,
+  "literal_complete_queries_checked": 14,
+  "query_readings": [
+    {
+      "threshold": 4,
+      "uniform_numerator": 28
+    },
+    {
+      "threshold": 4,
+      "uniform_numerator": 28
+    },
+    {
+      "threshold": 4,
+      "uniform_numerator": 29
+    },
+    {
+      "threshold": 4,
+      "uniform_numerator": 28
+    },
+    {
+      "threshold": 4,
+      "uniform_numerator": 28
+    },
+    {
+      "threshold": 4,
+      "uniform_numerator": 28
+    },
+    {
+      "threshold": 4,
+      "uniform_numerator": 28
+    },
+    {
+      "threshold": 6,
+      "uniform_numerator": 10
+    },
+    {
+      "threshold": 6,
+      "uniform_numerator": 10
+    },
+    {
+      "threshold": 6,
+      "uniform_numerator": 10
+    },
+    {
+      "threshold": 6,
+      "uniform_numerator": 10
+    },
+    {
+      "threshold": 6,
+      "uniform_numerator": 10
+    },
+    {
+      "threshold": 6,
+      "uniform_numerator": 10
+    },
+    {
+      "threshold": 6,
+      "uniform_numerator": 10
+    }
+  ],
+  "constraints": 83,
+  "variables": 29,
+  "threshold_count": 32,
+  "minimum_certified_cost": "12922647501637/12615680000000",
+  "simple_strict_lower": "51/50",
+  "rows": [
+    {
+      "thresholds": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "exact_cost_lower": "1325587592597/1290240000000",
+      "normalization_dual": "4998910370388/5",
+      "scale": 1032192000000,
+      "nonzero_multipliers": 27
+    },
+    {
+      "thresholds": [
+        4,
+        4,
+        4,
+        4,
+        6
+      ],
+      "exact_cost_lower": "1211889717931/1182720000000",
+      "normalization_dual": "13687876615172/5",
+      "scale": 2838528000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        4,
+        4,
+        6,
+        4
+      ],
+      "exact_cost_lower": "4711256901779/4587520000000",
+      "normalization_dual": "4430056901779/5",
+      "scale": 917504000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        4,
+        4,
+        6,
+        6
+      ],
+      "exact_cost_lower": "12922647501637/12615680000000",
+      "normalization_dual": "36392502504911/5",
+      "scale": 7569408000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        4,
+        6,
+        4,
+        4
+      ],
+      "exact_cost_lower": "13690241681533/13271040000000",
+      "normalization_dual": "12856241681533/5",
+      "scale": 2654208000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        4,
+        6,
+        4,
+        6
+      ],
+      "exact_cost_lower": "500669126453/486604800000",
+      "normalization_dual": "2346817632265",
+      "scale": 2433024000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        4,
+        6,
+        6,
+        4
+      ],
+      "exact_cost_lower": "973220981047/943718400000",
+      "normalization_dual": "4557272905235/2",
+      "scale": 2359296000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        4,
+        6,
+        6,
+        6
+      ],
+      "exact_cost_lower": "34751590783/33792000000",
+      "normalization_dual": "2079253810112",
+      "scale": 2162688000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        6,
+        4,
+        4,
+        4
+      ],
+      "exact_cost_lower": "891508540171/860160000000",
+      "normalization_dual": "2508813620513",
+      "scale": 2580480000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        6,
+        4,
+        4,
+        6
+      ],
+      "exact_cost_lower": "18339413721697/17740800000000",
+      "normalization_dual": "34346587443394/5",
+      "scale": 7096320000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        6,
+        4,
+        6,
+        4
+      ],
+      "exact_cost_lower": "7130123720179/6881280000000",
+      "normalization_dual": "6670011720179",
+      "scale": 6881280000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        6,
+        4,
+        6,
+        6
+      ],
+      "exact_cost_lower": "16292889597847/15769600000000",
+      "normalization_dual": "30428099195694/5",
+      "scale": 6307840000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        6,
+        6,
+        4,
+        4
+      ],
+      "exact_cost_lower": "11512538662909/11059200000000",
+      "normalization_dual": "10754858662909/5",
+      "scale": 2211840000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        6,
+        6,
+        4,
+        6
+      ],
+      "exact_cost_lower": "1402617919391/1351680000000",
+      "normalization_dual": "3923661758173/2",
+      "scale": 2027520000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        6,
+        6,
+        6,
+        4
+      ],
+      "exact_cost_lower": "2555693780429/2457600000000",
+      "normalization_dual": "9522215121716/5",
+      "scale": 1966080000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        4,
+        6,
+        6,
+        6,
+        6
+      ],
+      "exact_cost_lower": "8403268401287/8110080000000",
+      "normalization_dual": "15624536802574/3",
+      "scale": 5406720000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        4,
+        4,
+        4,
+        4
+      ],
+      "exact_cost_lower": "18514109540209/17418240000000",
+      "normalization_dual": "34579019080418/5",
+      "scale": 6967296000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        4,
+        4,
+        4,
+        6
+      ],
+      "exact_cost_lower": "1880977014283/1774080000000",
+      "normalization_dual": "31560546257094/5",
+      "scale": 6386688000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        4,
+        4,
+        6,
+        4
+      ],
+      "exact_cost_lower": "85698150739/80640000000",
+      "normalization_dual": "30642729883776/5",
+      "scale": 6193152000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        4,
+        4,
+        6,
+        6
+      ],
+      "exact_cost_lower": "10023485629889/9461760000000",
+      "normalization_dual": "27946696889667/5",
+      "scale": 5677056000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        4,
+        6,
+        4,
+        4
+      ],
+      "exact_cost_lower": "7969708942727/7464960000000",
+      "normalization_dual": "88922987312724/5",
+      "scale": 17915904000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        4,
+        6,
+        4,
+        6
+      ],
+      "exact_cost_lower": "176527113391/165888000000",
+      "normalization_dual": "16217672225709",
+      "scale": 16422912000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        4,
+        6,
+        6,
+        4
+      ],
+      "exact_cost_lower": "5660921306221/5308416000000",
+      "normalization_dual": "15742107918663",
+      "scale": 15925248000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        4,
+        6,
+        6,
+        6
+      ],
+      "exact_cost_lower": "2584991670143/2433024000000",
+      "normalization_dual": "14347534020858",
+      "scale": 14598144000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        6,
+        4,
+        4,
+        4
+      ],
+      "exact_cost_lower": "31143374040769/29030400000000",
+      "normalization_dual": "28921214040769/5",
+      "scale": 5806080000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        6,
+        4,
+        4,
+        6
+      ],
+      "exact_cost_lower": "14225879997113/13305600000000",
+      "normalization_dual": "26369279994226/5",
+      "scale": 5322240000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        6,
+        4,
+        6,
+        4
+      ],
+      "exact_cost_lower": "4608301847/4300800000",
+      "normalization_dual": "5119418216400",
+      "scale": 5160960000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        6,
+        4,
+        6,
+        6
+      ],
+      "exact_cost_lower": "25252233375109/23654400000000",
+      "normalization_dual": "23329273375109/5",
+      "scale": 4730880000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        6,
+        6,
+        4,
+        4
+      ],
+      "exact_cost_lower": "20087574057821/18662400000000",
+      "normalization_dual": "74270856231284/5",
+      "scale": 14929920000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        6,
+        6,
+        4,
+        6
+      ],
+      "exact_cost_lower": "19569110335987/18247680000000",
+      "normalization_dual": "54152131007961/4",
+      "scale": 13685760000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        6,
+        6,
+        6,
+        4
+      ],
+      "exact_cost_lower": "57054595581397/53084160000000",
+      "normalization_dual": "52566211581397/4",
+      "scale": 13271040000000,
+      "nonzero_multipliers": 28
+    },
+    {
+      "thresholds": [
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "exact_cost_lower": "3256172874167/3041280000000",
+      "normalization_dual": "11974115496668",
+      "scale": 12165120000000,
+      "nonzero_multipliers": 27
+    }
+  ],
+  "all_nonnegative_real_old45_weights": true,
+  "sharp_actual_hinges": true,
+  "full_five_outside_heights": true,
+  "actual_covering_or_all_source_obstruction": false,
+  "no_solver_native_or_optimality_premise": true,
+  "lean_verification": false
+}

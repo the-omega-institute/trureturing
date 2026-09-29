@@ -1,0 +1,16 @@
+### theorem 7.2 连续 $k$ 次读数无损恢复
+
+令
+
+$$
+\mathcal O_k(z)=(q_k(z),q_k(C_kz),\ldots,q_k(C_k^{k-1}z)).
+$$
+
+其矩阵 $H_k=(G_{i+j}^{(k)})_{0\le i,j<k}$ 满足
+
+$$
+\det H_k=(-1)^{k(k-1)/2}.
+$$
+
+因此 $\mathcal O_k$ 是整数格同构，模任意 $m\ge2$ 后仍可逆。
+

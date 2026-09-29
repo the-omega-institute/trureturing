@@ -10,7 +10,8 @@ internal static partial class SettleAtomCommand
     // Strict UTF-8/LF TOML: the sole root key is [[requests]]. Each table has
     // exactly the single-settle keys. Validate the envelope before any writes;
     // validate and commit records in input order, retaining the successful prefix.
-    internal static CommandResult RunBatch(string root, IRepositoryGateway repository, IReadOnlyList<string> arguments)
+    internal static CommandResult RunBatch(string root, IRepositoryGateway repository, IReadOnlyList<string> arguments,
+        ILeanReportSource? reportSource = null)
     {
         string? file = null, baseline = null;
         TomlTableArray requests;
@@ -51,7 +52,7 @@ internal static partial class SettleAtomCommand
             var result = Run(root, repository, ["--request", file, "--base", baseline],
                 BackfillInventoryWriter.WriteAtom,
                 (_, _) => [.. StrictUtf8.GetBytes(TomlSerializer.Serialize(table))],
-                static (directory, current, updates) => IngestCommand.ApplyLedgerUpdatesAtomically(directory, current, updates));
+                static (directory, current, updates) => IngestCommand.ApplyLedgerUpdatesAtomically(directory, current, updates), reportSource);
             output.Append(result.Output);
             if (!result.Success)
             {

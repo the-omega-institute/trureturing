@@ -1,0 +1,16 @@
+### corollary 15.7 相邻 Fibonacci 权重是同一观察的时间平移
+
+对 $j\ge1$，
+
+$$
+\theta^j=F_{j-1}+F_j\theta,
+$$
+
+从而
+
+$$
+\varepsilon(\theta^j x)=F_j a+F_{j+1}b.
+$$
+
+特别地，$q_{2,3}(x)=\varepsilon(\theta^3x)$，因为 $\theta^3=1+2\theta$。每个 $\theta^j$ 的范数为 $(-1)^j$，所以这条连续观察链的每一项都给出整数格上的无损两层接口。
+

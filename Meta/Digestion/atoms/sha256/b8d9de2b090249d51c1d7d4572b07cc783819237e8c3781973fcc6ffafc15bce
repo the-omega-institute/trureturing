@@ -1,0 +1,10 @@
+### theorem 70.1 截断关系的精确秩
+
+在整数格及其任意特征零标量扩张中成立；若限制到笛卡尔有界盒
+$0\le m_S\le H$（$H\ge1$），其线性张成空间也具有同一秩。带有额外全局约束的状态集，须另行证明其仿射张成空间仍为全空间。
+
+$$
+\boxed{\operatorname{rank}I_{\le r}=|\mathcal K_{\le r}|,\qquad
+\dim\ker I_{\le r}=|\mathcal K_{>r}|.}
+$$
+

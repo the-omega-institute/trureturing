@@ -1,0 +1,40 @@
+{
+  "actual_complete_layouts": 225,
+  "actual_modulus": 15,
+  "actual_ordered_parent_pairs": 50625,
+  "actual_universal_cubic_maximum": "99/8",
+  "exact_checks_passed": true,
+  "identity_pattern_checks": 512,
+  "nonunit_query_dictionary": [
+    3,
+    5,
+    15
+  ],
+  "same_total_load_example": {
+    "coherent_hybrid_cube": "27",
+    "crossed_parent_hybrid_cube": "11",
+    "identical_parent_hybrid_cube": "8",
+    "parent_loads": [
+      2,
+      2
+    ]
+  },
+  "scope": "Ordinary finite probability and actual fixed-phase CRT queries, not new Lean. Selected hybrid closure is necessary but not equivalent to the full query-source hypothesis.",
+  "selected_closure_boundary": {
+    "divisor_count": 384,
+    "full_centred_cube": 56623104,
+    "same_selected_load": 17,
+    "selected_cube": 4913
+  },
+  "source_centred_hybrid_cube": "315/32",
+  "source_points": [
+    1,
+    2,
+    4,
+    7,
+    8,
+    11,
+    13,
+    14
+  ]
+}
