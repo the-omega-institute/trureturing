@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ArrowThirtyTwoOneThreeBijection
    mirror-E: none(waiver:last-cycle-bijection-of-the-arrow-pattern-32-1-to-3)
-   anchors: [D5/S3/Combinatorics/ArrowThirtyTwoOneThreeDecomp]
+   anchors: []
    utility: none
    digest: Foata edges of the prefix are stable under an arbitrary final cycle, and cannot cross a value selected into that cycle. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ArrowThirtyTwoOneThreeBijectionGaps
    mirror-E: none(waiver:prefix-gap-normal-form-for-the-arrow-pattern-32-1-to-3)
-   anchors: [D5/S3/Combinatorics/ArrowThirtyTwoOneThreeBijection]
+   anchors: []
    utility: none
    digest: Increasing relabelling preserves Foata edges; ordered value cuts give the unique independent gap words of a last-cycle prefix. -/
 

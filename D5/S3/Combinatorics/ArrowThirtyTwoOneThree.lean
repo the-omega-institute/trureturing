@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ArrowThirtyTwoOneThree
    mirror-E: none(waiver:enumeration-of-the-arrow-pattern-32-1-to-3)
-   anchors: [D5/S3/Combinatorics/ArrowThirtyTwoOneThreeDefs, D5/S3/Combinatorics/ArrowThirtyTwoOneThreeSeries, D5/S3/Combinatorics/ArrowThirtyTwoOneThreeRefined, D5/S3/Combinatorics/ArrowThirtyTwoOneThreeAlgebra]
+   anchors: []
    utility: none
    digest: The avoider series satisfies the Zhou--Yu cubic and is its unique branch with constant and linear coefficients one. -/
 

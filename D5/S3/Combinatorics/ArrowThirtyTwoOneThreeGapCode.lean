@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ArrowThirtyTwoOneThreeGapCode
    mirror-E: none(waiver:independent-gap-words-of-the-arrow-pattern-32-1-to-3)
-   anchors: [D5/S3/Combinatorics/ArrowThirtyTwoOneThreeBijectionGaps]
+   anchors: []
    utility: none
    digest: The canonical first-gap construction and extraction are inverse, giving independent avoider words on all selected-value gaps. -/
 

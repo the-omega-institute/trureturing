@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ArrowThirtyTwoOneThreeDecomp
    mirror-E: none(waiver:last-cycle-decomposition-of-the-arrow-pattern-32-1-to-3)
-   anchors: [D5/S3/Combinatorics/ArrowWilfCharacterization]
+   anchors: []
    utility: none
    digest: Structural lemmas for splitting an arrow avoider at its final Foata cycle. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ArrowThirtyTwoOneThreeRefined
    mirror-E: none(waiver:refined-enumeration-of-the-arrow-pattern-32-1-to-3)
-   anchors: [D5/S3/Combinatorics/ArrowThirtyTwoOneThreeBijection, D5/S3/Combinatorics/ArrowThirtyTwoOneThreeCatalan]
+   anchors: []
    utility: none
    digest: The last-cycle bijection gives the Catalan refined counts and the exact integer recurrence for the avoider series. -/
 

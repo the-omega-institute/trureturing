@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ArrowThirtyTwoOneThreeLastCycle
    mirror-E: none(waiver:positive-last-cycle-bijection-for-the-arrow-pattern-32-1-to-3)
-   anchors: [D5/S3/Combinatorics/ArrowThirtyTwoOneThreeGapCode]
+   anchors: []
    utility: none
    digest: Joining the independent gap prefix and a Catalan final-cycle order is bijective onto the positive last-cycle strata. -/
 
