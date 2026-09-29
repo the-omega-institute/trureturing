@@ -1,0 +1,9 @@
+**证明。** Let $z$ commute with the image of $\rho$, and choose an attracting
+pole $a$ with witness $(g,b)$. Choose $x$ distinct from both $b$ and
+$z^{-1}(b)$; then $z(x)\ne b$. The orbit $\rho(g)^n(x)$ tends to $a$, so its
+image under the continuous map $z$ tends to $z(a)$. Commutation gives
+$z(\rho(g)^n(x))=\rho(g)^n(z(x))$ for every $n$, and the attracting-pole
+hypothesis makes this latter sequence tend to $a$. Uniqueness of limits in a
+Hausdorff space yields $z(a)=a$. Thus $z$ fixes a dense subset of $X$;
+continuity makes it the identity everywhere.
+
