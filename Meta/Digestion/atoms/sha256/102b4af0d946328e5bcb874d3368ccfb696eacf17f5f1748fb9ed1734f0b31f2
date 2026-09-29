@@ -1,0 +1,33 @@
+**定理 17.2（三设置精确恢复与尖锐噪声界）。** 对式（FT.19）的任意状态，取 $V=U_P(i)=\operatorname{diag}(i,1)$，定义独立制备实验的三个期望
+
+$$
+m_0=\operatorname{Tr}(P\rho),\quad
+m_1=\operatorname{Tr}(Q\rho),\quad
+m_2=\operatorname{Tr}(QV\rho V^\dagger).
+$$
+
+写 $h=r^2-r$，则
+
+$$
+p=m_0,\quad
+x=\frac{m_1-r-hm_0}{2b},\quad
+y=\frac{r+hm_0-m_2}{2b}.
+\tag{FT.25}
+$$
+
+若三个实测期望各自误差绝对值不超过 $\epsilon$，按这个线性公式重建 $\widehat\rho$，则
+
+$$
+\frac12\|\widehat\rho-\rho\|_1
+\le\sqrt{1+2\varphi}\,\epsilon.
+\tag{FT.26}
+$$
+
+对原始线性重建，该常数不能减小。
+
+**证明。** 第一个式子直接；第二个来自第 16.2 节取迹。$V$ 将 $x+iy$ 变为 $-y+ix$，所以 $m_2=r+hp-2by$，解线性方程即得式（FT.25），分母 $b>0$。
+
+令读数误差为 $\eta_j$。则 $\delta p=\eta_0$，$\delta x=(\eta_1-h\eta_0)/(2b)$，$\delta y=(h\eta_0-\eta_2)/(2b)$。因 $h=1-2r<0$ 且 $(1+|h|)/(2b)=1/s=\sqrt\varphi$，有 $|\delta p|\le\epsilon$，$|\delta x|,|\delta y|\le\sqrt\varphi\epsilon$。迹零两阶 Hermitian 差矩阵的特征值为 $\pm\sqrt{\delta p^2+\delta x^2+\delta y^2}$，给式（FT.26）。取 $\eta_0=\eta_1=\eta_2=\epsilon$，上述三个界同时达到。对真实态 $I/2$ 及足够小的 $\epsilon$，读数仍在 $[0,1]$ 且重建态仍半正定，因此尖锐性也可在物理状态附近达到。证毕。
+
+一般有噪线性重建未必半正定。将 $(\widehat p-1/2,\widehat x,\widehat y)$ 欧氏投影到半径 $1/2$ 的闭球可强制半正定；球投影到真实球内点的距离不增加，故式（FT.26）仍成立。此处三个数是期望，不是三次单样本结果；实际统计精度需要重复制备、测量及独立的误差预算。
+

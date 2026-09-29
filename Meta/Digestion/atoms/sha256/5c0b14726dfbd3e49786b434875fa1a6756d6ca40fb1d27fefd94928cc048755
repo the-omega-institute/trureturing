@@ -1,0 +1,8 @@
+## 20. 有限融合空间的文献输入
+
+[TTWL09] Simon Trebst, Matthias Troyer, Zhenghan Wang and Andreas W. W. Ludwig, *A short introduction to Fibonacci anyon models*, Progress of Theoretical Physics Supplement 176, 384–407 (2008); arXiv v1 submitted 2009. [arXiv:0902.3275v1](https://arxiv.org/html/0902.3275v1). §§2.3–2.5、§3.1 给出路径模型、$F$ 表和黄金链相互作用；本文保留坐标变换与编织的区别。
+
+[FK07] Adrian Feiguin, Simon Trebst, Andreas W. W. Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang and Michael H. Freedman, *Interacting anyons in topological quantum liquids: The golden chain*, Physical Review Letters 98, 160409 (2007). [arXiv:cond-mat/0612341](https://arxiv.org/abs/cond-mat/0612341). 相邻真空通道相互作用与 RSOS/TL 表示的来源归属；临界理论结论不是本文的前提。
+
+[DA03] Domenico D'Alessandro, *On Quantum State Observability and Measurement*, Journal of Physics A: Mathematical and General 36, 9721–9735 (2003). [arXiv:quant-ph/0307127](https://arxiv.org/pdf/quant-ph/0307127). 定理 17.1 复用 §2 的可观测空间与终止算法及 Theorem 1。
+
