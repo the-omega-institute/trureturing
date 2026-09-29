@@ -7785,7 +7785,7 @@ $$
 
 ### 109.2 上下文 profile 与行为同余
 
-固定一组允许的旁支 $U\subseteq\mathcal T$。令一孔生成器为
+固定一组有限允许的旁支 $U\subseteq\mathcal T$。令一孔生成器为
 
 $$
 \Gamma_U=\{\rho\}\cup\{L_u,R_u:u\in U\},
@@ -7901,7 +7901,7 @@ $$
 
 对任意有限 horizon $m$，取 $j>m$。任何长度至多 $m$ 的只含 $D,\rho$ 的词都不能把 $T_j$ 降到 $T_0$，所以读出均为 $0$；任何含二元接续的词都在该处读到稳定失败 $\bot$。因此每一层都有同一个有限 profile 代表。
 
-在各 $R_m^{S,D}$ 之间使用删去长度为 $m$ 的坐标的限制映射。这样有限像始终按实际来源取得，不会把“形式上可表示”与“该共同来源实际可达”混在一起。
+在各 $R_m^{S,D}$ 之间（$m\ge1$）使用删去长度为 $m$ 的坐标的限制映射。这样有限像始终按实际来源取得，不会把“形式上可表示”与“该共同来源实际可达”混在一起。
 
 这些 profile 形成一个相容线程：所有只含 $D,\rho$ 的有限词坐标为 $0$，含二元接续的坐标为 $\bot$。但它不是任何实际 $T_j$ 的完整 profile，因为词 $D^j$ 在 $T_j$ 上读出 $1$。于是
 
@@ -8133,25 +8133,25 @@ $$
 \bar p:(\mathcal T/E)^2\to\{\bot\}\sqcup(\mathcal T/E),
 $$
 
-使合法输入映到 $[p(s,t)]$、非法输入映到 $\bot$，当且仅当对所有 $s,s',t,t'$，在
+使合法输入映到 $[p(s,t)]$、非法输入映到 $\bot$，当且仅当对所有 $s,s',t,t'$，只要
 
 $$
-sEs',\quad tEt',\quad (s,t)\in D,\quad (s',t')\in D
+sEs',\quad tEt'
 $$
 
-时都有
+就有
 
 $$
 (s,t)\in D\iff(s',t')\in D,
 $$
 
-且在合法时
+并且在这两个等价的输入对合法时
 
 $$
-p(s,t)\,E\,p(s',t')
+p(s,t)\,E\,p(s',t') .
 $$
 
-这两个条件。换言之，二叶语法保证“关系可以怎样生成”，不保证选定的边界摘要在下一次拼接时仍然充分；条件成立时商操作由代表无关性唯一确定。
+这两个条件分别保证合法域对 $E\times E$ 饱和，以及合法输出在该产品纤维上代表无关。换言之，二叶语法保证“关系可以怎样生成”，不保证选定的边界摘要在下一次拼接时仍然充分；条件成立时商操作由代表无关性唯一确定。
 
 在 $U=\{\beta\}$ 的具体反例中，$\alpha E\beta$，但
 
@@ -8163,16 +8163,26 @@ $$
 
 所以若把受限 profile 直接当作“只有两个原子状态”的完整边界，二元拼接会失去代表无关性。必须扩大测试族、保存旁支关系，或改用完整未来行为核。
 
-若目标过程还保留部分合法性、失败标签、输出、事件记录或时钟记录，则这里的 $p(s,t)\,E\,p(s',t')$ 应替换为产品纤维上的完整响应相等：对所有 $sEs'$、$tEt'$，在两对输入合法时，对扩大的目标测试族 $V$ 要求
+若目标过程还保留部分合法性、失败标签、输出、事件记录或时钟记录，应把响应扩展为对所有输入对定义的 $\widehat{\operatorname{Resp}}_V$：
 
 $$
-sEs',\quad tEt'
-\Longrightarrow
-\operatorname{Resp}_V(p(s,t),v)=\operatorname{Resp}_V(p(s',t'),v)
-\qquad(\forall v\in V^*),
+\widehat{\operatorname{Resp}}_V(s,t;v)=
+\begin{cases}
+\operatorname{Resp}_V(p(s,t),v),&(s,t)\in D,\\
+\operatorname{FailResp}_V(s,t;v),&(s,t)\notin D.
+\end{cases}
 $$
 
-其中 $v$ 取所有类型正确的有限续接；若一对输入非法，则由前面的合法域等价统一比较失败响应。
+其中 $\operatorname{FailResp}_V$ 是声明的失败响应（包括失败标签、记录和时钟字段）。完整的产品纤维条件是
+
+$$
+ sEs',\quad tEt'
+ \Longrightarrow
+ \widehat{\operatorname{Resp}}_V(s,t;v)=\widehat{\operatorname{Resp}}_V(s',t';v)
+ \qquad(\forall v\in V^*).
+$$
+
+其中 $v$ 取所有类型正确的有限续接；若失败响应约定为统一的 $\bot$，该部分条件自动满足；若失败记录或时钟仍可区分代表，则必须显式满足上式。
 
 这正是过程几何 §45 的“目标测试在源行为核纤维上保持常值”条件。对二元 $p$，一次输入的纤维是产品关系 $E\times E$；对后续动作，$V^*$ 表示全部类型正确的有限续接。满足它时，二叶边界的每个目标测试和后继都唯一因子化到 $\mathcal T/E$；失败、记录或时钟中任一字段在同一纤维上不同，就说明当前 α、β profile 不是该完整任务的充分边界。于是“二原子基础”与“可继续运行的内部观察者边界”之间的桥梁，不是原子数为二，而是全部声明目标响应的纤维常值性。
 
@@ -8306,7 +8316,7 @@ $$
 是把生成项解释到某个实际过程载体 $S$ 的结构保持映射。固定一个允许的内部测试族 $\mathcal C$，并令
 
 $$
-s\equiv_{\mathcal C}t
+s\equiv_{\mathcal C}t\quad(s,t\in\operatorname{im}(\operatorname{Eval}))
 \iff
 \forall w\in\mathcal C^{*},\quad
 \operatorname{Resp}(s,w)=\operatorname{Resp}(t,w),
