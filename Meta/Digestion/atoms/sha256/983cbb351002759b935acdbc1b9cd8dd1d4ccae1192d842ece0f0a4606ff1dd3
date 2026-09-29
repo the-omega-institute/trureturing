@@ -1,0 +1,14 @@
+## 27. 字符进位的文献与适用范围
+
+秩三基态符号的非线性部分固定为三阶行列式；该三形式成为基态截面的字符进位；真实融合要求补足 $E^*$；七个基态模生成六十四个类型；混合迹确定 $1216$ 重最低输出通道；完整字符的四类给出 $S_7$ 谱融合稳定子及 $168$ 阶来源稳定子。Fibonacci 的递归与记录接口保留两来源观察的盲区。
+
+[FAG26] *Fibonacci Atomic Relation Generation*, §§2–5、8、19、25–27，见本仓同名理论卷。其自由树、数量商、操作环与本卷缺陷标签具有不同类型，不能直接转移全称结论。
+
+[Ba17] Tathagata Basak, *The octonions as a twisted group algebra*, arXiv:1702.05705v1 (2017), https://arxiv.org/pdf/1702.05705 。Theorem 1、Lemma 3、§§5–6 给出八元数扭曲群代数背景。
+
+[AM99] Helena Albuquerque and Shahn Majid, *Quasialgebra Structure of the Octonions*, Journal of Algebra 220 (1999), 188–224; arXiv:math/9802116v1, https://arxiv.org/pdf/math/9802116 。§2 的 Eq. (11)、Definition 2.3 和 Corollary 2.4 给出八元数余边界实现。
+
+[K02] 的实际 double 实现和 [EMS20] 的循环轨形是物理接口的外部来源；共同相位归一化、实际固定点模及范畴 $S$ 的匹配仍满足 §14 的额外条件。
+
+上述有限符号结论不构造完整 VOA、非零交织算子或 Monster；秩三全 A 分支及 $S_7$ 标签置换能否提升为场对称仍未解决。$1216$ 重通道的实际耦合与 crossing 相容性仍须由场论构造给出。
+

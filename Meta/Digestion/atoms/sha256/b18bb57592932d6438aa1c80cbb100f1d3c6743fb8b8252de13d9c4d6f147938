@@ -1,0 +1,14 @@
+### 8.1 群作用严格结合，缺陷结点仍可带三余循环
+
+一个严格作用于 VOA 的有限群 $G$，可以具有标记为 $g\in G$ 的对称缺陷 $D_g$。选定一维融合结点 $D_gD_h\to D_{gh}$ 后，两种三重融合次序相差 $\omega(g,h,k)\in U(1)$。四重重组的一致性给
+
+$$
+\omega(h,k,l)\omega(g,hk,l)\omega(g,h,k)
+=\omega(gh,k,l)\omega(g,h,kl).
+\tag{MC.22}
+$$
+
+结点改相位 $b(g,h)$ 将 $\omega$ 乘以三上边界，因此物理障碍是 $[\omega]\in H^3(G,U(1))$。这个层面与式（MC.1）的普通 DHR 范畴分开；$\mathrm{Vec}_G^\omega$ 的标签一开始就输入 $G$，不能借它循环推导 Monster 的存在。
+
+[JF19, Theorem 1] 证明月光作用的反常类有精确阶 24；[L22, §3] 也采用该阶数。
+
