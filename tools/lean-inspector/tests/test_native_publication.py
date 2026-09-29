@@ -79,10 +79,14 @@ class NativePublicationConsumerTests:
             str(self.root) + '/.' if arg == str(self.root) else arg for arg in args]]
             for kind, args in requests]
         request.write_text(json.dumps(requests))
-        with patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations:
+        declarations = sum(len(row['declarations']) for row in self.report()[0])
+        with patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations, \
+                patch.object(materials, 'material_identities', wraps=materials.material_identities) as identities:
             native.batch(request, result)
             self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
-            self.assertEqual(validations.call_count, len(artifacts), '[FAIL] aggregate_row_validated_once')
+            # One validation per row, then one complete-bundle validation in the same process.
+            self.assertEqual(validations.call_count, len(artifacts) + 1, '[FAIL] aggregate_row_validated_once')
+            self.assertEqual(identities.call_count, declarations, '[FAIL] aggregate_identity_computed_once')
         self.assertEqual(output.read_bytes(), (state / 'report.zip').read_bytes())
         original = output.read_bytes()
         alone_index = config['modules'].index('D5.Alone')
@@ -275,7 +279,7 @@ class NativePublicationConsumerTests:
                         verify()
                 finally:
                     added.unlink()
-    def test_publication_validates_material_identities_once(self):
+    def test_publication_recomputes_identities_only_for_bundles_not_accepted_by_lake(self):
         self.build()
         rows, raw, material_bytes = self.report()
         declarations = sum(len(row['declarations']) for row in rows)
@@ -284,7 +288,8 @@ class NativePublicationConsumerTests:
         with patch.dict(os.environ, self.env), patch.object(materials, 'material_identities',
                 wraps=materials.material_identities) as identities:
             native.publish(self.root, destination)
-            self.assertEqual(identities.call_count, declarations)
+            # Lake accepted this bundle in the same invocation; publication re-hashes materials only.
+            self.assertEqual(identities.call_count, 0, '[FAIL] post_lake_publish_skips_identity_replay')
         self.assertEqual(destination.read_bytes(), raw)
         self.assertEqual(publication.member(destination, '.materials.zip').read_bytes(), material_bytes)
         staged = self.root / 'stage' / publication.RAW
@@ -299,6 +304,24 @@ class NativePublicationConsumerTests:
             '--repository', str(self.root)], env=self.env, text=True, capture_output=True, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual((self.root / 'cli-stage' / publication.RAW).read_bytes(), raw)
+    def test_produced_aggregate_is_not_validated_again_by_a_second_process(self):
+        self.build()
+        script = self.root / 'tools/lean-inspector/native.py'
+        commands = self.root / 'native-commands.jsonl'
+        entry = "if __name__ == '__main__':"
+        text = script.read_text()
+        self.assertEqual(text.count(entry), 1)
+        script.write_text(text.replace(entry, "if os.environ.get('STRATALINT_TEST_NATIVE_COMMANDS'):\n"
+            "    with open(os.environ['STRATALINT_TEST_NATIVE_COMMANDS'], 'a') as _commands:\n"
+            "        _commands.write(json.dumps(sys.argv[1:3]) + '\\n')\n" + entry))
+        self.env = dict(self.env, STRATALINT_TEST_NATIVE_COMMANDS=str(commands))
+        self.write('D5/Alone.lean', (self.root / 'D5/Alone.lean').read_text() + '-- changed after the first report\n')
+        self.build()
+        invoked = [json.loads(line) for line in commands.read_text().splitlines()]
+        self.assertIn('batch', [command[0] for command in invoked])
+        self.assertNotIn(['validate', 'report'], invoked, '[FAIL] produced_aggregate_not_revalidated')
+        rows, _, _ = self.report()
+        self.assertIn('D5.Alone', [row['module'] for row in rows])
     def test_native_publication_rejects_incoming_damage_before_normalization(self):
         self.build()
         self.publish()

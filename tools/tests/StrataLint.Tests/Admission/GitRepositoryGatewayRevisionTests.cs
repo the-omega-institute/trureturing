@@ -29,6 +29,62 @@ public sealed class GitRepositoryGatewayRevisionTests
             $"Reading one {payload.Length}-byte file allocated {allocated} bytes.");
     }
 
+    [Fact]
+    public void CurrentSnapshotVisitsEveryPathInOrderAcrossProbeWindows()
+    {
+        using var repository = new TemporaryDirectory();
+        TestGit.Run(repository.Path, "init");
+        var count = GitRepositorySnapshotReader.ProbeWindowPaths + GitRepositorySnapshotReader.ParallelProbeThreshold + 3;
+        var expected = Enumerable.Range(0, count).Select(index => $"d{index % 7}/f{index:D5}.txt")
+            .Order(StringComparer.Ordinal).ToArray();
+        foreach (var path in expected)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repository.Path, path))!);
+            File.WriteAllText(Path.Combine(repository.Path, path), path + "\n");
+        }
+
+        var visited = new List<string>();
+        var inventory = GitRepositorySnapshotReader.VisitCurrent(repository.Path, entry =>
+        {
+            Assert.Equal(entry.Path + "\n", Encoding.UTF8.GetString(entry.Bytes.AsSpan()));
+            visited.Add(entry.Path);
+        });
+
+        Assert.Equal(expected, visited);
+        Assert.Equal(expected, inventory.Select(row => row.Path));
+        Assert.Equal(expected, GitRepositorySnapshotReader.ReadCurrent(repository.Path).Entries.Select(entry => entry.Path));
+    }
+
+    [SkippableFact]
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    public void CurrentSnapshotRaisesTheFirstUnreadablePathInPathOrder()
+    {
+        using var repository = new TemporaryDirectory();
+        TestGit.Run(repository.Path, "init");
+        var count = GitRepositorySnapshotReader.ParallelProbeThreshold * 3;
+        for (var index = 0; index < count; index++)
+            File.WriteAllText(Path.Combine(repository.Path, $"f{index:D4}.txt"), "readable\n");
+        var first = Path.Combine(repository.Path, $"f{count / 4:D4}.txt");
+        var later = Path.Combine(repository.Path, $"f{count - 2:D4}.txt");
+        try
+        {
+            File.SetUnixFileMode(later, UnixFileMode.None);
+            File.SetUnixFileMode(first, UnixFileMode.None);
+            var unreadable = true;
+            try { _ = File.ReadAllBytes(first); unreadable = false; }
+            catch (UnauthorizedAccessException) { }
+            Skip.IfNot(unreadable, "The test process can read files without permission bits.");
+
+            var failure = Assert.Throws<UnauthorizedAccessException>(() => GitRepositorySnapshotReader.ReadCurrent(repository.Path));
+            Assert.Contains(Path.GetFileName(first), failure.Message, StringComparison.Ordinal);
+        }
+        finally
+        {
+            File.SetUnixFileMode(first, UnixFileMode.UserRead | UnixFileMode.UserWrite);
+            File.SetUnixFileMode(later, UnixFileMode.UserRead | UnixFileMode.UserWrite);
+        }
+    }
+
     private const string FirstOid = "1111111111111111111111111111111111111111";
     private const string SecondOid = "2222222222222222222222222222222222222222";
 
