@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ExponentExchange/ForcedCoreNormalization
    mirror-E: none(waiver:general-theorem-no-numerical-experiment)
-   anchors: [D5/S3/Arith/ExponentExchange/RoughPrimeSuffixBellman]
+   anchors: []
    utility: none
    digest: A constrained divisor-sum maximum has an exact ordered prime-prefix representative. -/
 
