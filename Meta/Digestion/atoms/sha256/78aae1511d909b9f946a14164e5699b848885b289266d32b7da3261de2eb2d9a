@@ -1,0 +1,9 @@
+## 26. 两次 Fibonacci 读数如何进入环面标签变换
+
+原子关系卷的无损观察矩阵为
+
+$$
+H_{2,3}=\begin{pmatrix}2&3\\3&5\end{pmatrix}=M^4\in\operatorname{SL}_2(\mathbb Z).
+\tag{FC.17}
+$$
+
