@@ -20,3 +20,4 @@ For every natural index n, F_(n+1) times phi to the power -n plus F_n times phi 
 
 - Truth anchor: `D5/S1/Recurrence/GoldenPartition.fibonacci_golden_partition`
 - Dependency: [D5/S1/Scale/Embedding](../Scale/Embedding.md)
+- Dependency: [D5/S1/Scale/Fibonacci](../Scale/Fibonacci.md)
