@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ebbb2df9b331c0b05e429c62d449b5152c2a059b10ca8c2e30d6b17dec273a66
+  normalized_sha256: sha256:ebbb2df9b331c0b05e429c62d449b5152c2a059b10ca8c2e30d6b17dec273a66
+cas_ref: sha256:ebbb2df9b331c0b05e429c62d449b5152c2a059b10ca8c2e30d6b17dec273a66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact declarations: Matrix.det_fin_two, Matrix.mul_fin_two, Matrix.toLinearEquiv, Function.Semiconj.iterate_right. Normalize det(H_2,3)=1 and both products with [[5,-3],[-3,2]] to I. The general matrix-to-linear-equivalence constructor supplies the lattice equivalence. Normalize H*M=M*H and use Semiconj.iterate_right for all future responses. Restriction to compositions does not assert recovery of syntax. No frozen repository GID for the precise observation matrix was found.'
+    previous_atom_id: a99bfdb7aac042d4dd0f180b76f6831d7606e81da385ffb958f44f775182775b
+    next_atom_id: fcf64605254980344bf4188195b16a74ac6132e800134e83d00b747c90d3c15a
