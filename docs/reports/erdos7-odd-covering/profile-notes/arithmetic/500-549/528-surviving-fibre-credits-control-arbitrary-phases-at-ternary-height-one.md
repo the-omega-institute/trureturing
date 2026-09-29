@@ -705,6 +705,184 @@ FC26--FC28 obstruction remains valid for its declared uniform-capacity
 contract. No positive comparison for the stronger model, or exclusion
 of all other root assignments, is established by rejecting one witness.
 
+## Actual star roots couple the capacity set to the source domain
+
+Fix ONE hypothetical globally class-count-then-modulus-sum minimal
+distinct odd whole cover with H3=1. Keep the normalized Haar laws on
+its actual pure-power survivors used above. The following is a direct
+connection between the existing pair-matching proof, the actual-deficit
+source of [Report816 PS1--PS2](../800-849/816-actual-pure-source-cells-and-a-finite-three-kernel-gap.md#1-actual-deficits-retain-all-pure-heights),
+and the fixed-inventory concavity argument. It introduces no new source
+law, unconstrained root choice, numerical positivity certificate or
+Lean result.
+
+### The same physical root variables refine the pair capacities
+
+For nonempty original3pq inventory, divisor closure supplies actual
+3,p,q,3p,3q,pq,3pq. Let y_pt indicate that actual3p lies on roott,
+and define y_qt similarly. After one CRT normalization of pure3,p,q,
+the remaining rectangle on roott has sides
+
+    A_t=p-1-y_pt, B_t=q-1-y_qt.
+
+Let chi_t indicate that originalpq's actual cell lies in this
+rectangle. Report385's existing matching proof gives
+
+    N_(3pq,t)<=A_t B_t+min(A_t,B_t)-chi_t
+              <=A_t B_t+min(A_t,B_t)
+                 -1_(y_pt=y_qt=0).                (FC30)
+
+Indeed M_t=A_t B_t-chi_t cells remain, and double-occupied cells
+form a matching of size at most min(A_t,B_t). If neither star is on
+that root, the originalpq cell necessarily remains before its own
+deletion, so chi_t=1. With a star on that root, its row or column
+can already remove that cell; the safe bound uses chi_t>=0.
+The own3pq singleton cannot be subtracted again: a largest matching
+may avoid it. Empty inventory satisfies the capacity trivially and
+does not justify inventing missing star-root variables.
+
+For p<q, FC30 yields the following safe ceilings:
+
+| Actual3p /3q roots | Root being counted | Ceiling |
+| --- | --- | ---: |
+| Same | Root containing both | (p-2)(q-1) |
+| Same | Other root | (p-1)q-1 |
+| Different | Root containing3p | (p-2)q |
+| Different | Root containing3q | (p-1)(q-1) |
+
+The total CR8 constraint remains in force, including its existing
+one-smaller ceiling when the actual star roots differ. This is an
+intersection of constraints on one inventory, not an instruction
+to subtract independently obtained savings from its total charge.
+
+### A present3q puts a lower bound on beta at its actual root
+
+Suppose original3q lies on retained roott, and every actual q-height
+is at most h>=1. Its q-first-root cylinder C avoids original pureq
+by comparable disjointness. Write
+
+    A=(q-1)/q, T_h=sum_(e=2..h)q^-e,
+    c_h=1/(A-T_h), b_h=c_h-1.
+
+Let D be the Haar mass removed by the UNION of actual higher pure
+originals from the live first roots, and d_C the portion removed
+from C. These refer to the same source, with0<=d_C<=D<=T_h. The
+exact actual-deficit formula PS1 is
+
+    lambda_q(C)=(1/q-d_C)/(A-D)
+       >=(1/q-D)/(A-D)>=(1/q-T_h)/(A-T_h).
+
+The last quotient decreases with D, since its derivative has numerator
+1/q-A<0. No substitution of c_h for the actual normalizer has been
+made. Since C is contained in the actual star union on roott,
+
+    beta_qt>=ell_(q,h):=2c_h/q-b_h
+      =((q-2)q^(h-1)+1)/((q-2)q^h+1)>1/q.          (FC31)
+
+This remains valid when the actual height is strictly less than h.
+Without a fixed finite bound, the existing PS2 gives beta_qt>=1/q.
+The exact identities
+
+    b_h-ell_(q,h)=2(q^(h-1)-1)/((q-2)q^h+1)>=0,
+    2ell_(q,h)-b_h=((q-4)q^(h-1)+3)/((q-2)q^h+1)>0
+
+show that ell<=b and, for q>=5, the actual3q root has strictly more
+beta mass than the opposite root. This conclusion uses the actual
+source and FC31; it cannot be retroactively inferred from an old
+artificial partition optimized without that restriction.
+
+Presence of q alone does not supply3q or its floor. If3q is known
+absent, divisor closure makes every3q^e absent, and the actual beta
+block is exactly(0,0). Conversely any present original3d containingq
+forces3q. A height upper bound alone does not force it.
+
+There is a stronger bound under stronger data. If the WHOLE actual
+q-height is exactly h and every3q^e,1<=e<=h, exists on the same root,
+their q-projections are pairwise disjoint by comparable disjointness.
+Their union has Haar mass sum_(e=1..h)q^-e and avoids pureq. Higher
+pure originals remove at most T_h. The complete disjoint pure chain
+makes the actual normalizer exactly c_h. Thus beta on that root is
+at least c_h/q, and on the opposite root it is exactly zero.
+
+Both additional conditions matter. At q5, take pure phases0 mod5,
+1 mod25 and0 mod3, and a single3q star with ternary root1 andq-phase1.
+This divisor-closed irredundant NONCOVER has beta=4/19<c_2/5=5/19;
+the missing3q^2 star prevents use of the stronger bound. At actual
+height1, pureq and a live3q first root give beta=1/4<5/19, showing
+why an upper profile h=2 cannot replace actual height in that stronger
+claim. Neither example is a hypothetical whole cover. FC31 remains
+valid in both examples.
+
+### Fix the discrete root data before taking continuous endpoints
+
+Fix the complete actual star-presence/root metadata sigma, root
+weight w, and height bounds h_q. Let Omega_sigma be the finite set
+of allowed numerical/root inventories. It may impose divisor closure,
+CR9, total and root-specific pair/square constraints, FC29 and FC30,
+using ONE shared assignment of every star. The actual inventory must
+belong to it, and its definition must not change with beta. Charge
+each numerical label once, even when it enters several capacity sums.
+
+Use the same full3-free debit as before and define
+
+    F_sigma(beta,w)=C0(beta,w)-Cfree(beta,w)
+        -max_(S in Omega_sigma) sum_(d,t in S)
+             w_t*g_t(supp(d))*product_(q|d)c_q*q^-v_q(d).
+
+For every star-presentq, its fixed actual3q root r_q satisfies
+beta_(q,r_q)>=ell_q, while the pooled sum is at most b_q. Enlarge
+the blocked sets on the same nonatomic source until that sum is b_q.
+The enlargement preserves the floor, source, original phases and
+sigma, and only shrinks the comparison carrier. In physical-root
+order the enlarged block lies on
+
+    (beta_(q,r_q),beta_(q,other))=(t,b_q-t),
+    ell_q<=t<=b_q.
+
+Each fixed label/root charge is affine in this block. Its maximum
+over the fixed Omega_sigma is convex; the carrier and full3-free
+debit are affine. The resulting F_sigma is concave on this segment.
+Therefore the two endpoints sufficient for minimization are
+
+    (b_q,0), (ell_q,b_q-ell_q),
+    in fixed actual3q-root / opposite-root order.   (FC32)
+
+For h_q=1 they coincide. Apply this concavity argument to successive
+star-present coordinates. If beta' is the initially enlarged actual
+blocked-set array, the correct lower-bound chain is
+
+    lambda(U)>=F_sigma(beta',w)
+       >=min_(v among the FC32 vertices)F_sigma(v,w).
+
+No inequality comparing F_sigma at the original and enlarged beta
+is assumed. The vertices are comparison parameters and need not
+themselves be realizable original phase arrangements or pointwise
+enlargements of that particular original array.
+
+For a star-absent coordinate one may retain the exact zero beta block.
+If the full same-root chain above is known, retain its exact opposite
+zero and enlarge only its occupied root to b_q. With separately proved
+floors ell_1,ell_2 on both roots, the analogous endpoints are
+(ell_1,b-ell_1) and(b-ell_2,ell_2), provided their sum is at most b.
+The3q floor must not be assigned twice: the label is unique and
+2ell>b would contradict the pooled budget.
+
+To cover unknown actual root data, bound each consistent sigma and
+then minimize over sigma. A star-present block with unknown3q root
+has four endpoint candidates, attached to that discrete choice:
+
+    root1: (b,0), (ell,b-ell);
+    root2: (b-ell,ell), (0,b).
+
+Allowing Omega_sigma to change with moving beta and then reusing the
+old fixed-set concavity argument is not justified. The old two pure
+partition vertices also omit the mixed endpoint in each clipped
+segment. These conditional domains connect source mass and capacities
+without treating separately optimized root choices as a common
+realization. Positivity of the resulting joint minimum remains an
+unresolved consumer; these necessary constraints do not settle
+unrestricted Erdős#7.
+
 ## Whole-family height one permits a smaller common query interface
 
 The all-depth query in(FC13) permits later originals with arbitrary ternary
