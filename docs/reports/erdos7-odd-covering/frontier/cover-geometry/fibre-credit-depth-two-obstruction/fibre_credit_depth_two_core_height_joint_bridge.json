@@ -1,0 +1,2283 @@
+{
+  "all_three_height_lift_Haar_min": "403073/3734640",
+  "all_three_height_lift_retention_min": "403073/877344",
+  "base_originals": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      0
+    ],
+    [
+      35,
+      0
+    ],
+    [
+      63,
+      0
+    ],
+    [
+      105,
+      0
+    ],
+    [
+      315,
+      0
+    ]
+  ],
+  "coarse_projection_pair_examples": [
+    {
+      "carrier": 945,
+      "coarse_point": 2,
+      "coincident_phases": [
+        2,
+        2,
+        2
+      ],
+      "fibre_survivors_coincident": 2,
+      "fibre_survivors_partition": 0,
+      "global_survivors_coincident": 282,
+      "global_survivors_partition": 272,
+      "individual_conditional_masses": [
+        "1/3",
+        "1/3",
+        "1/3"
+      ],
+      "new_moduli": [
+        27,
+        135,
+        189
+      ],
+      "old_height": 2,
+      "partition_phases": [
+        2,
+        47,
+        65
+      ],
+      "prime": 3,
+      "projected_phases": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "carrier": 1575,
+      "coarse_point": 2,
+      "coincident_phases": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "fibre_survivors_coincident": 4,
+      "fibre_survivors_partition": 0,
+      "global_survivors_coincident": 486,
+      "global_survivors_partition": 455,
+      "individual_conditional_masses": [
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5",
+        "1/5"
+      ],
+      "new_moduli": [
+        25,
+        75,
+        175,
+        225,
+        525
+      ],
+      "old_height": 1,
+      "partition_phases": [
+        2,
+        17,
+        107,
+        47,
+        212
+      ],
+      "prime": 5,
+      "projected_phases": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    }
+  ],
+  "dependency_hashes": {
+    "fibre_credit_depth_two_old23_full_height.json": "ca998ef3ce5e1043cbd1a78a4f9cd4306b12cfb781b219729aa916f0ba016ede",
+    "fibre_credit_depth_two_old_height_subset_source.json": "2f9e9076607397d6cc49e55dd25eb2253f16db288b65865a87773dd07dc6e25f"
+  },
+  "joint_separated_estimates": [
+    {
+      "full_height_axes": [],
+      "separated_retention_lower": "-1720059752911/2735290736640",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [],
+      "separated_retention_lower": "-453561033643/763117977600",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [],
+      "separated_retention_lower": "-453561033643/763117977600",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [],
+      "separated_retention_lower": "-1628755519/2737152000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [],
+      "separated_retention_lower": "-2327745025/3780919296",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [],
+      "separated_retention_lower": "-2327745025/3780919296",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11
+      ],
+      "separated_retention_lower": "-9065025512075/13539689146368",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11
+      ],
+      "separated_retention_lower": "-217752958309/343403089920",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11
+      ],
+      "separated_retention_lower": "-217752958309/343403089920",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11
+      ],
+      "separated_retention_lower": "-156147869/246343680",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11
+      ],
+      "separated_retention_lower": "-61299466009/93577752576",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11
+      ],
+      "separated_retention_lower": "-61299466009/93577752576",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13
+      ],
+      "separated_retention_lower": "-137301670699/208945820160",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13
+      ],
+      "separated_retention_lower": "-42850413473/68892595200",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13
+      ],
+      "separated_retention_lower": "-42850413473/68892595200",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13
+      ],
+      "separated_retention_lower": "-153708029/247104000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13
+      ],
+      "separated_retention_lower": "-1724611411/2681902080",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13
+      ],
+      "separated_retention_lower": "-1724611411/2681902080",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        17
+      ],
+      "separated_retention_lower": "-1878895409/2914017120",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        17
+      ],
+      "separated_retention_lower": "-27272469899/44713944000",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        17
+      ],
+      "separated_retention_lower": "-27272469899/44713944000",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        17
+      ],
+      "separated_retention_lower": "-97874807/160380000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        17
+      ],
+      "separated_retention_lower": "-99866707/158241600",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        17
+      ],
+      "separated_retention_lower": "-99866707/158241600",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        19
+      ],
+      "separated_retention_lower": "-92059042133/143518341120",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        19
+      ],
+      "separated_retention_lower": "-476299987/785100800",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        19
+      ],
+      "separated_retention_lower": "-476299987/785100800",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        19
+      ],
+      "separated_retention_lower": "-552186773/909568000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        19
+      ],
+      "separated_retention_lower": "-35499110671/56538746880",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        19
+      ],
+      "separated_retention_lower": "-35499110671/56538746880",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        23
+      ],
+      "separated_retention_lower": "-831969024739/1305479669760",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        23
+      ],
+      "separated_retention_lower": "-31354420153/52030771200",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        23
+      ],
+      "separated_retention_lower": "-31354420153/52030771200",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        23
+      ],
+      "separated_retention_lower": "-787899283/1306368000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        23
+      ],
+      "separated_retention_lower": "-61916205739/99249131520",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        23
+      ],
+      "separated_retention_lower": "-61916205739/99249131520",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13
+      ],
+      "separated_retention_lower": "-722087459519/1034281809792",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13
+      ],
+      "separated_retention_lower": "-225786537013/341018346240",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13
+      ],
+      "separated_retention_lower": "-225786537013/341018346240",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13
+      ],
+      "separated_retention_lower": "-161749829/244632960",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13
+      ],
+      "separated_retention_lower": "-63452782537/92927907072",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13
+      ],
+      "separated_retention_lower": "-63452782537/92927907072",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17
+      ],
+      "separated_retention_lower": "-543959710117/793341160920",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17
+      ],
+      "separated_retention_lower": "-2615291677/4024254960",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17
+      ],
+      "separated_retention_lower": "-2615291677/4024254960",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17
+      ],
+      "separated_retention_lower": "-9371707/14434200",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17
+      ],
+      "separated_retention_lower": "-3677548349/5483071440",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17
+      ],
+      "separated_retention_lower": "-3677548349/5483071440",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19
+      ],
+      "separated_retention_lower": "-484702472201/710415788544",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19
+      ],
+      "separated_retention_lower": "-40311943/62346240",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19
+      ],
+      "separated_retention_lower": "-40311943/62346240",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19
+      ],
+      "separated_retention_lower": "-158658749/245583360",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19
+      ],
+      "separated_retention_lower": "-62264518361/93288932352",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19
+      ],
+      "separated_retention_lower": "-62264518361/93288932352",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        23
+      ],
+      "separated_retention_lower": "-398344346509/587465851392",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        23
+      ],
+      "separated_retention_lower": "-105298690561/163896929280",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        23
+      ],
+      "separated_retention_lower": "-105298690561/163896929280",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        23
+      ],
+      "separated_retention_lower": "-10783679/16796160",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        23
+      ],
+      "separated_retention_lower": "-29627039269/44662109184",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        23
+      ],
+      "separated_retention_lower": "-29627039269/44662109184",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17
+      ],
+      "separated_retention_lower": "-1648375243/2448583830",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17
+      ],
+      "separated_retention_lower": "-2574213859/4036675500",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17
+      ],
+      "separated_retention_lower": "-2574213859/4036675500",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17
+      ],
+      "separated_retention_lower": "-4614281/7239375",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17
+      ],
+      "separated_retention_lower": "-724502599/1099998900",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17
+      ],
+      "separated_retention_lower": "-724502599/1099998900",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19
+      ],
+      "separated_retention_lower": "-22030511651/32889619840",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19
+      ],
+      "separated_retention_lower": "-404692273/637894400",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19
+      ],
+      "separated_retention_lower": "-404692273/637894400",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19
+      ],
+      "separated_retention_lower": "-468671887/739024000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19
+      ],
+      "separated_retention_lower": "-110391130909/168438350080",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19
+      ],
+      "separated_retention_lower": "-110391130909/168438350080",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        23
+      ],
+      "separated_retention_lower": "-66380422711/99724141440",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        23
+      ],
+      "separated_retention_lower": "-227978774911/361686124800",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        23
+      ],
+      "separated_retention_lower": "-227978774911/361686124800",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        23
+      ],
+      "separated_retention_lower": "-817525483/1297296000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        23
+      ],
+      "separated_retention_lower": "-5835805457/8959991040",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        23
+      ],
+      "separated_retention_lower": "-5835805457/8959991040",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19
+      ],
+      "separated_retention_lower": "-1105728031/1681855560",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19
+      ],
+      "separated_retention_lower": "-1460013221/2346102000",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19
+      ],
+      "separated_retention_lower": "-1460013221/2346102000",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19
+      ],
+      "separated_retention_lower": "-99506057/159885000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19
+      ],
+      "separated_retention_lower": "-710466649/1104272400",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19
+      ],
+      "separated_retention_lower": "-710466649/1104272400",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        23
+      ],
+      "separated_retention_lower": "-9994112113/15298589880",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        23
+      ],
+      "separated_retention_lower": "-13193565443/21340746000",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        23
+      ],
+      "separated_retention_lower": "-13193565443/21340746000",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        23
+      ],
+      "separated_retention_lower": "-47333549/76545000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        23
+      ],
+      "separated_retention_lower": "-3717968423/5815378800",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        23
+      ],
+      "separated_retention_lower": "-3717968423/5815378800",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        19,
+        23
+      ],
+      "separated_retention_lower": "-44518329937/68497390080",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        19,
+        23
+      ],
+      "separated_retention_lower": "-691297157/1124121600",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        19,
+        23
+      ],
+      "separated_retention_lower": "-691297157/1124121600",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        19,
+        23
+      ],
+      "separated_retention_lower": "-114454069/186048000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        19,
+        23
+      ],
+      "separated_retention_lower": "-20979001849/32980935680",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        19,
+        23
+      ],
+      "separated_retention_lower": "-20979001849/32980935680",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17
+      ],
+      "separated_retention_lower": "-173186579707/242409799170",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17
+      ],
+      "separated_retention_lower": "-541910324/799261749",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17
+      ],
+      "separated_retention_lower": "-541910324/799261749",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17
+      ],
+      "separated_retention_lower": "-19400729/28667925",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17
+      ],
+      "separated_retention_lower": "-3803877893/5444994555",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17
+      ],
+      "separated_retention_lower": "-3803877893/5444994555",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19
+      ],
+      "separated_retention_lower": "-115758347213/162803618208",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19
+      ],
+      "separated_retention_lower": "-2130366241/3157577280",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19
+      ],
+      "separated_retention_lower": "-2130366241/3157577280",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19
+      ],
+      "separated_retention_lower": "-492746977/731633760",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19
+      ],
+      "separated_retention_lower": "-579719753765/833769832896",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19
+      ],
+      "separated_retention_lower": "-579719753765/833769832896",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        23
+      ],
+      "separated_retention_lower": "-31717622107/44875863648",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        23
+      ],
+      "separated_retention_lower": "-109135362157/162758756160",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        23
+      ],
+      "separated_retention_lower": "-109135362157/162758756160",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        23
+      ],
+      "separated_retention_lower": "-78161183/116756640",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        23
+      ],
+      "separated_retention_lower": "-2786857259/4031995968",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        23
+      ],
+      "separated_retention_lower": "-2786857259/4031995968",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-58150131377/83251850220",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-6993500/10557459",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-6993500/10557459",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-19038029/28779300",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-1867082449/2733074190",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-1867082449/2733074190",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-47795126041/68843654460",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-63217739/96033357",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-63217739/96033357",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-9058853/13778100",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-888504223/1308460230",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-888504223/1308460230",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-21295271191/30823825536",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-331324859/505854720",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-331324859/505854720",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-76684913/117210240",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-30087930805/44524263168",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-30087930805/44524263168",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-1057566199/1541700930",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-413137658/635402625",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-413137658/635402625",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-56256997/86604375",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-6622639691/9869434575",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-6622639691/9869434575",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-3186941629/4674569130",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-1956014699/3027506625",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-1956014699/3027506625",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-98143348/152026875",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-350144818/524999475",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-350144818/524999475",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-10648890709/15697318560",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-2152651651/3348945600",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-2152651651/3348945600",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-2492228399/3879876000",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-53353534477/80391030720",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-53353534477/80391030720",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-1069153289/1605407580",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-176539043/279932625",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-176539043/279932625",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-96225223/152617500",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-1888927849/2898715050",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-1888927849/2898715050",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-18503078467/25438065345",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-386188079/559154310",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-386188079/559154310",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-52517249/76211850",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-92645486069/130276536390",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "separated_retention_lower": "-92645486069/130276536390",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-353745652/489199095",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-616174753/897566670",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-616174753/897566670",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-10711747/15637050",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-1336248311/1889998110",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        23
+      ],
+      "separated_retention_lower": "-1336248311/1889998110",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-1129730153/1569731856",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-171588959/251170920",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-171588959/251170920",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-158709491/232792560",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-2121419849/3014663652",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-2121419849/3014663652",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-10216902217/14448668220",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-270426697/403102980",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-270426697/403102980",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-36798227/54942300",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-7216189853/10435374180",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-7216189853/10435374180",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-340716722/490541205",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-5858715301/8895636750",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-5858715301/8895636750",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-113936237/173208750",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-2844508669/4187032850",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-2844508669/4187032850",
+      "shape": "root2_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-6499447139/8829741690",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-1119535069/1601214615",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-1119535069/1601214615",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-152205203/218243025",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-2711641364/3768329565",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "separated_retention_lower": "-2711641364/3768329565",
+      "shape": "root2_other_other_column"
+    }
+  ],
+  "ordinary_ICX_transport_implemented_as_arithmetic_only": true,
+  "partial_bounds": [
+    {
+      "Haar_survivor_lower": "443483/3764880",
+      "deletion_upper": "476821/920304",
+      "deletion_upper_decimal": 0.5181124932630957,
+      "n315_min": 77,
+      "n45": 17,
+      "partial_query_caps": {
+        "3": {
+          "cap": "35/83",
+          "layouts": 85,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "3,5": {
+          "cap": "1/11",
+          "layouts": 17,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,5,7": {
+          "cap": "1/77",
+          "layouts": 1,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,7": {
+          "cap": "5/77",
+          "layouts": 1,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "5": {
+          "cap": "7/9",
+          "layouts": 476,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "5,7": {
+          "cap": "9/77",
+          "layouts": 1,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "7": {
+          "cap": "6/11",
+          "layouts": 1,
+          "maximum45_sum": 42,
+          "query45_moduli": [
+            1,
+            3,
+            5,
+            9,
+            15,
+            45
+          ]
+        }
+      },
+      "retention_lower": "443483/920304",
+      "shape": "root1_same_other_column"
+    },
+    {
+      "Haar_survivor_lower": "10753/88560",
+      "deletion_upper": "78233/153504",
+      "deletion_upper_decimal": 0.5096479570564937,
+      "n315_min": 78,
+      "n45": 17,
+      "partial_query_caps": {
+        "3": {
+          "cap": "5/12",
+          "layouts": 85,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "3,5": {
+          "cap": "7/78",
+          "layouts": 17,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,5,7": {
+          "cap": "1/78",
+          "layouts": 1,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,7": {
+          "cap": "5/78",
+          "layouts": 1,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "5": {
+          "cap": "63/82",
+          "layouts": 476,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "5,7": {
+          "cap": "3/26",
+          "layouts": 1,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "7": {
+          "cap": "41/78",
+          "layouts": 1,
+          "maximum45_sum": 41,
+          "query45_moduli": [
+            1,
+            3,
+            5,
+            9,
+            15,
+            45
+          ]
+        }
+      },
+      "retention_lower": "75271/153504",
+      "shape": "root1_other_same_column"
+    },
+    {
+      "Haar_survivor_lower": "10753/88560",
+      "deletion_upper": "78233/153504",
+      "deletion_upper_decimal": 0.5096479570564937,
+      "n315_min": 78,
+      "n45": 17,
+      "partial_query_caps": {
+        "3": {
+          "cap": "5/12",
+          "layouts": 85,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "3,5": {
+          "cap": "7/78",
+          "layouts": 17,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,5,7": {
+          "cap": "1/78",
+          "layouts": 1,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,7": {
+          "cap": "5/78",
+          "layouts": 1,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "5": {
+          "cap": "63/82",
+          "layouts": 476,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "5,7": {
+          "cap": "3/26",
+          "layouts": 1,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "7": {
+          "cap": "41/78",
+          "layouts": 1,
+          "maximum45_sum": 41,
+          "query45_moduli": [
+            1,
+            3,
+            5,
+            9,
+            15,
+            45
+          ]
+        }
+      },
+      "retention_lower": "75271/153504",
+      "shape": "root1_other_other_column"
+    },
+    {
+      "Haar_survivor_lower": "411781/3734640",
+      "deletion_upper": "477419/889200",
+      "deletion_upper_decimal": 0.536908457040036,
+      "n315_min": 75,
+      "n45": 16,
+      "partial_query_caps": {
+        "3": {
+          "cap": "35/76",
+          "layouts": 80,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "3,5": {
+          "cap": "7/75",
+          "layouts": 16,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,5,7": {
+          "cap": "1/75",
+          "layouts": 1,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,7": {
+          "cap": "1/15",
+          "layouts": 1,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "5": {
+          "cap": "21/26",
+          "layouts": 448,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "5,7": {
+          "cap": "3/25",
+          "layouts": 1,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "7": {
+          "cap": "37/75",
+          "layouts": 1,
+          "maximum45_sum": 37,
+          "query45_moduli": [
+            1,
+            3,
+            5,
+            9,
+            15,
+            45
+          ]
+        }
+      },
+      "retention_lower": "411781/889200",
+      "shape": "root2_same_other_column"
+    },
+    {
+      "Haar_survivor_lower": "403073/3734640",
+      "deletion_upper": "474271/877344",
+      "deletion_upper_decimal": 0.5405758744574534,
+      "n315_min": 74,
+      "n45": 16,
+      "partial_query_caps": {
+        "3": {
+          "cap": "35/76",
+          "layouts": 80,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "3,5": {
+          "cap": "7/74",
+          "layouts": 16,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,5,7": {
+          "cap": "1/74",
+          "layouts": 1,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,7": {
+          "cap": "5/74",
+          "layouts": 1,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "5": {
+          "cap": "21/26",
+          "layouts": 448,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "5,7": {
+          "cap": "9/74",
+          "layouts": 1,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "7": {
+          "cap": "19/37",
+          "layouts": 1,
+          "maximum45_sum": 38,
+          "query45_moduli": [
+            1,
+            3,
+            5,
+            9,
+            15,
+            45
+          ]
+        }
+      },
+      "retention_lower": "403073/877344",
+      "shape": "root2_other_same_column"
+    },
+    {
+      "Haar_survivor_lower": "403073/3734640",
+      "deletion_upper": "474271/877344",
+      "deletion_upper_decimal": 0.5405758744574534,
+      "n315_min": 74,
+      "n45": 16,
+      "partial_query_caps": {
+        "3": {
+          "cap": "35/76",
+          "layouts": 80,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "3,5": {
+          "cap": "7/74",
+          "layouts": 16,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,5,7": {
+          "cap": "1/74",
+          "layouts": 1,
+          "maximum45_sum": 1,
+          "query45_moduli": [
+            45
+          ]
+        },
+        "3,7": {
+          "cap": "5/74",
+          "layouts": 1,
+          "maximum45_sum": 5,
+          "query45_moduli": [
+            9,
+            45
+          ]
+        },
+        "5": {
+          "cap": "21/26",
+          "layouts": 448,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "5,7": {
+          "cap": "9/74",
+          "layouts": 1,
+          "maximum45_sum": 9,
+          "query45_moduli": [
+            5,
+            15,
+            45
+          ]
+        },
+        "7": {
+          "cap": "19/37",
+          "layouts": 1,
+          "maximum45_sum": 38,
+          "query45_moduli": [
+            1,
+            3,
+            5,
+            9,
+            15,
+            45
+          ]
+        }
+      },
+      "retention_lower": "403073/877344",
+      "shape": "root2_other_other_column"
+    }
+  ],
+  "scope": "Ordinary exact finite checks for partial315 query caps and actual high-digit joint obstructions; no Lean.",
+  "seven_nested_ladder": [
+    {
+      "coincident_survival": "6/7",
+      "conditional_survival": "1/7",
+      "explicit_global_survivor": 8,
+      "extra_height": 1,
+      "fibre_atom_count": 7,
+      "new_modulus_count": 6,
+      "surviving_atom": 1892
+    },
+    {
+      "coincident_survival": "6/7",
+      "conditional_survival": "1/49",
+      "explicit_global_survivor": 8,
+      "extra_height": 2,
+      "fibre_atom_count": 49,
+      "new_modulus_count": 12,
+      "surviving_atom": 15122
+    },
+    {
+      "coincident_survival": "6/7",
+      "conditional_survival": "1/343",
+      "explicit_global_survivor": 8,
+      "extra_height": 3,
+      "fibre_atom_count": 343,
+      "new_modulus_count": 18,
+      "surviving_atom": 107732
+    },
+    {
+      "coincident_survival": "6/7",
+      "conditional_survival": "1/2401",
+      "explicit_global_survivor": 8,
+      "extra_height": 4,
+      "fibre_atom_count": 2401,
+      "new_modulus_count": 24,
+      "surviving_atom": 756002
+    },
+    {
+      "coincident_survival": "6/7",
+      "conditional_survival": "1/16807",
+      "explicit_global_survivor": 8,
+      "extra_height": 5,
+      "fibre_atom_count": 16807,
+      "new_modulus_count": 30,
+      "surviving_atom": 5293892
+    }
+  ]
+}
