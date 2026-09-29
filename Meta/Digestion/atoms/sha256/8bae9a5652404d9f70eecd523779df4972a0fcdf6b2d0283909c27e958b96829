@@ -1,0 +1,21 @@
+**定理 93.2（双候选储备及其渐近主项）。** 对 $\sqrt x<p\le x-1$ 定义
+
+$$
+d_1(p)=\frac1p-\log(1+1/p),\qquad
+d_2(p,x)=\frac1p-\log(1+1/p+1/p^2)+\lambda_x\log p,
+$$
+
+并令 $B_2(x)=\sum_{\sqrt x<p\le x-1}\min\{d_1(p),d_2(p,x)\}$。对所有 $x>1$，该掩码内实际最优指数属于 $\{1,2\}$，并且
+
+$$
+R_p(x)=\min\{d_1(p),d_2(p,x)\}>0,\qquad
+0\le R(x)-B_2(x)\le5x^{-2/3}+2/x.
+$$
+
+使用无条件 PNT 时，
+
+$$
+B_2(x)\sim R(x)\sim\frac{c_R}{\sqrt x\log x},\qquad
+c_R=2(\sqrt2-1).
+$$
+

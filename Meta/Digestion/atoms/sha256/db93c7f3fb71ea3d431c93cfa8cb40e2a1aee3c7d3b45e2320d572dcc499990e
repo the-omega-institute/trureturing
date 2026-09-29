@@ -1,0 +1,27 @@
+**定义 98.1（同一无约束价格目标）。** 沿用第 85、87、93 节，令 $Z(n)=\sigma(n)/n$、$W(n)=\log Z(n)$，对正价格 $\lambda>0$ 在全部正整数上取
+
+$$
+S(\lambda)=\max_{n\ge1}\{W(n)-\lambda\log n\},\qquad
+\lambda(x)=\frac1{x\log x},\quad x>1.
+$$
+
+这里 $S$ 就是前文的无约束压力 $M$。认证素数块保持来源，数值域仍含全部正整数，并非只含本身为 Fibonacci 数的素数。置
+
+$$
+G_p(a)=\sum_{j=0}^ap^{-j},\qquad
+r_{p,k}=\frac{\log(G_p(k)/G_p(k-1))}{\log p}\quad(k\ge1).
+$$
+
+配置 $T_x$ 取全部 $r_{p,k}>\lambda(x)$ 的层，零收益层一律不取。设
+
+$$
+\mathcal A(x)=\log N(T_x),\qquad \mathcal F(x)=W(N(T_x)),
+$$
+
+$$
+\mathfrak D(x)=\gamma+\log\log x-\lambda(x)x-S(\lambda(x))
+=\Phi(x)+R(x).
+$$
+
+最后一个恒等式正是定理 87.3，要求两项使用同一压力和同一实际最优配置。正价格最大值与有限正部公式来自既有全局价格目标；本节接续其临界点结构。自身规模处的匹配切线价格也已见 [ZECKENDORF_EULER_5040.md](ZECKENDORF_EULER_5040.md) 的“Robin 余量的精确三项修正”及式（19）。
+
