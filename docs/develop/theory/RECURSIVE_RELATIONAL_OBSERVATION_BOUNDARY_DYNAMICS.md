@@ -17658,3 +17658,267 @@ $$
 空间、边界、记忆与状态时间在此只是同一来源上的声明读数；它们与共同核心的关系由(87.14)—(87.16)限定。该构造不赋予这些读数拓扑、度量、物理时空或新的操作权限，累计时钟仍遵守独立的历史合同。
 
 ## 87.99 追加锚
+
+## 88. 实际域上的状态—事件同步细化与指定共同核
+
+第87节的下降定理以分量相容为条件，本节在其有限确定性模型中构造满足条件的最大等价关系对。关键是同步检查状态、当前事件和待尝试事件三个位置，并把下一轮所需的两个后继分量一同保留。所得最小性只比较遵守同一合同的独立分量编码；它不把任意联合记忆、取得成本或物理实现纳入同一个极值问题。
+
+### 定义 88.1（固定实际来源与分量种子）
+
+沿用定义87.1的有限实际像 $S,D,J=j[\Omega]\subseteq S\times D$、接口类型、有类型的接续关系 $\Delta$、完整标签集 $L$ 与总响应 $\widehat T$。始终假设原有来源见证 $U_e\subseteq\Omega\times\Omega$ 满足式(87.8)。于是每个实际配置的成功后继仍在 $J$；细化只能区分已有对象，不能补出缺失的来源见证。若(87.8)未满足，下面的签名仍可比较，但实际来源闭合、共同核上的成功更新及来源提升结论不随之成立。
+
+以原始读出和类型为种子，令
+
+$$
+a_0(s)=o(s),\qquad b_0(d)=(\operatorname{in}(d),\operatorname{out}(d)),\qquad
+R_0=\ker a_0,\quad E_0=\ker b_0.
+\tag{88.1}
+$$
+
+可选地声明一个内部选择器 $h:J\to D$；是否包含它在细化开始前固定。未声明 $h$ 时，以下所有选择器坐标和义务均省去，不能据此得到任意外加选择器的下降。
+
+### 定义 88.2（掩蔽响应与同步签名）
+
+设第 $n$ 轮签名为 $a_n:S\to A_n$、$b_n:D\to B_n$。在一个不交和中使用唯一的 $\mathsf{Outside}$ 标记，定义
+
+$$
+V_n(s,d,e)=
+\begin{cases}
+\mathsf{Outside},&(s,d)\notin J,\\
+\mathsf{Ok}(\ell,a_n(s'),b_n(d')),
+ &(s,d)\in J,\ \widehat T(s,d,e)=\mathsf{Ok}(\ell,s',d'),\\
+\mathsf{Fail}(f,\ell),
+ &(s,d)\in J,\ \widehat T(s,d,e)=\mathsf{Fail}(f,\ell),\\
+\mathsf{Deny}(r,\ell),
+ &(s,d)\in J,\ \widehat T(s,d,e)=\mathsf{Deny}(r,\ell).
+\end{cases}
+\tag{88.2}
+$$
+
+这里 $\ell$ 保留输出、记录、权限状态、时钟增量的全部声明字段；失败与拒绝的原因也逐字保留。域外只有一个标记，原总响应在 $J$ 外采用的拒绝原因或标签约定不属于本节的实际域合同。域内即使类型、关系或权限检查失败，也保留完整拒绝值，不把它改成 $\mathsf{Outside}$。
+
+若声明了 $h$，令 $H_n(s,d)=b_n(h(s,d))$ 当 $(s,d)\in J$，否则为 $\mathsf{Outside}$；其值域取 $B_n\sqcup\{\mathsf{Outside}\}$，域内值使用该不交和的注入。同步定义
+
+$$
+\begin{aligned}
+a_{n+1}(s)=&\bigl(a_n(s),\ (\mathbf1_J(s,d))_{d\in D},\\
+ &\quad(V_n(s,d,e))_{(d,e)\in D^2},\ (H_n(s,d))_{d\in D}\bigr),\\
+b_{n+1}(d)=&\bigl(b_n(d),\ (\mathbf1_J(s,d))_{s\in S},\\
+ &\quad(\mathbf1_\Delta(d,e),\mathbf1_\Delta(e,d))_{e\in D},\\
+ &\quad(V_n(s,d,e))_{(s,e)\in S\times D},\\
+ &\quad(V_n(s,e,d))_{(s,e)\in S\times D},\ (H_n(s,d))_{s\in S}\bigr),\\
+R_n&=\ker a_n,\qquad E_n=\ker b_n.
+\end{aligned}
+\tag{88.3}
+$$
+
+式中 $H_n$ 坐标仅在声明选择器时出现。所有坐标由同一固定集合中的实际元素索引，不选择等价类代表来改变测试集。两种新签名都只读取旧轮 $a_n,b_n$，且保留自己的整个旧签名。嵌套值域 $A_n,B_n$ 随轮次改变；停止条件是两个核同时不再改变，不是嵌套元组的字面相等，也不是只检查一侧的分区。
+
+### 定义 88.3（可接受的分量等价关系对）
+
+按关系包含逐分量比较等价关系对。称 $(R,E)$ 可接受，若 $R\subseteq R_0$、$E\subseteq E_0$，且满足以下同一实际域合同。
+
+1. $J$ 对 $R\times E$ 饱和，$\Delta$ 对 $E\times E$ 饱和：
+
+   $$
+   \begin{aligned}
+   sRt,\ dEd'&\Longrightarrow
+      (\mathbf1_J(s,d)=\mathbf1_J(t,d')),\\
+   dEd',\ eEe'&\Longrightarrow
+      (\mathbf1_\Delta(d,e)=\mathbf1_\Delta(d',e')).
+   \end{aligned}
+   \tag{88.4}
+   $$
+
+2. 对所有 $(s,d),(t,d')\in J$ 及 $e,e'\in D$，若 $sRt,dEd',eEe'$，则两个总响应的分支相同、完整标签相同；在 $\mathsf{Fail}$ 或 $\mathsf{Deny}$ 分支原因相同；在成功分支
+
+   $$
+   \widehat T(s,d,e)=\mathsf{Ok}(\ell,u,v),\quad
+   \widehat T(t,d',e')=\mathsf{Ok}(\ell,u',v')
+   \ \Longrightarrow\ uRu',\ vEv'.
+   \tag{88.5}
+   $$
+
+3. 若声明了 $h$，还要求 $sRt,dEd'$ 且 $(s,d),(t,d')\in J$ 时，$h(s,d)\,E\,h(t,d')$。
+
+这里第2项要求匹配整个带标记响应，式(88.5)只展开其成功后继部分。种子包含保证原始读出和事件类型保持；来源条件(87.8)是固定模型的前提，不是可以靠挑选 $R,E$ 代替的义务。对角关系对总是可接受。
+
+### 定理 88.4（同步稳定、最大分量合同与轮数界）
+
+序列(88.3)满足 $R_{n+1}\subseteq R_n$、$E_{n+1}\subseteq E_n$。存在首个同时稳定的指标
+
+$$
+N=\min\{n:(R_{n+1},E_{n+1})=(R_n,E_n)\},\qquad
+N\le |S|+|D|-|S/R_0|-|D/E_0|.
+\tag{88.6}
+$$
+
+记稳定对为 $(R_\infty,E_\infty)=(R_N,E_N)$。它是种子以下最大的可接受等价关系对：每个可接受 $(R,E)$ 都满足 $R\subseteq R_\infty$、$E\subseteq E_\infty$，且所有后续轮保持此对。
+
+证明。保留旧签名立即给出两个包含。先核对本算子的序方向：对任意等价关系对 $(R,E)$，以商映射 $q_R,q_E$ 充当旧签名，按(88.2)—(88.3)取新核，记为 $\Phi(R,E)$。新核只取决于旧核，不依赖其标签命名。若 $R\subseteq\widetilde R$、$E\subseteq\widetilde E$，则旧值相等蕴含较粗旧值相等；相同成功后继类在较粗商中仍相同，其他分支、原因、标签、域及关系真值保持不变，选择器同理。因此
+
+$$
+\Phi(R,E)\subseteq\Phi(\widetilde R,\widetilde E),\qquad
+\Phi(R,E)\subseteq(R,E).
+\tag{88.7}
+$$
+
+这是本节算子的直接单调性证明，不使用第31节关系侧的反单调断言。由核决定下一核也说明，一旦两侧同时固定，之后永久固定。
+
+现取任意可接受对。归纳证明它在每轮核之下。初始即种子条件。设 $R\subseteq R_n,E\subseteq E_n$。对 $sRt$，固定实际 $d,e$ 比较状态签名：域真值相同；域外均为唯一标记，域内由第2项获得相同分支、原因和标签，成功后继的 $R,E$ 关系再由归纳假设给出相同 $a_n,b_n$ 值。选择器亦由第3项给出相同 $b_n$ 值。连同旧签名可得 $sR_{n+1}t$。对 $dEd'$，固定 $s,e$，分别把 $d,d'$ 放在当前事件和待尝试事件位置；同样的响应论证、$J$ 饱和、$\Delta$ 两个方向的饱和以及选择器条件，给出 $dE_{n+1}d'$。于是任何可接受对都在所有迭代之下。
+
+反过来，设第 $n$ 轮两核同时稳定。$R_n$ 相关的状态在 $a_{n+1}$ 中有相同域行，$E_n$ 相关的事件在 $b_{n+1}$ 中有相同域列；依次替换 $s,d$ 得到 $J$ 的产品饱和。$b_{n+1}$ 同时保留 $\Delta$ 的行和列，依次替换其两位置得到 $\Delta$ 饱和。对实际输入及 $sR_nt,dE_nd',eE_ne'$，依次比较
+
+$$
+(s,d,e)\longrightarrow(t,d,e)\longrightarrow(t,d',e)
+\longrightarrow(t,d',e').
+\tag{88.8}
+$$
+
+$J$ 饱和保证中间配置仍实际存在。第一步用 $a_{n+1}$ 的响应行，第二步用 $b_{n+1}$ 的当前事件坐标，第三步用其待尝试事件坐标；得到三个位置替换前后的 $V_n$ 相等。由标记的不交性，分支、原因和完整标签一致；成功时两个后继分别有相同 $a_n,b_n$ 值，正是(88.5)。选择器按状态、当前事件两步替换证明。故稳定对可接受，与前述归纳合起来给出最大性。
+
+最后令 $c_n=|S/R_n|+|D/E_n|$。它非减，每个未同时稳定的轮次至少严格增加 $1$，且 $c_n\le |S|+|D|$。所以最迟在(88.6)给出的指标处出现同时稳定；在此前恰有 $N$ 次严格增长，从而 $c_0+N\le c_N\le |S|+|D|$。证毕。
+
+这个界计算达到稳定核以前的严格细化轮数；确认第 $N$ 轮稳定仍需与第 $N+1$ 轮比较。它不是运行时间或取得成本界。有效执行还需要可枚举的有限载体、可求值的 $o,J,\Delta,\widehat T$ 表和可选 $h$，以及签名所用值的可判定相等关系；集合论上的有限性本身不提供这些算法。
+
+### 定理 88.5（共同核、实际像上的最小性与有限提升）
+
+令
+
+$$
+\begin{aligned}
+S^\#&=S/R_\infty,\qquad D^\#=D/E_\infty,\\
+q_S&:S\to S^\#,\qquad q_D:D\to D^\#,\\
+\kappa&=(q_S,q_D)|_J,\qquad Q=\kappa[J].
+\end{aligned}
+\tag{88.9}
+$$
+
+则 $J=(q_S,q_D)^{-1}[Q]$，且 $\overline\Delta(q_D(d),q_D(e))\iff(d,e)\in\Delta$ 代表无关；原始读出、类型、完整响应与已声明的选择器也都下降到这些实际商，成功后继在 $Q$ 中。具体地，令 $\mathcal R(X)=\mathsf{Ok}(L\times X)\sqcup\mathsf{Fail}(F_{\mathrm{fail}}\times L)\sqcup\mathsf{Deny}(R_{\mathrm{deny}}\times L)$。对映射 $g:X\to Z$，$\mathcal R(g)$ 只把成功后继 $x$ 换成 $g(x)$，保留其余全部字段。把实际域上的响应记为 $T_J:J\times D\to\mathcal R(J)$，有唯一
+
+$$
+\overline T:Q\times D^\#\to\mathcal R(Q),\qquad
+\overline T(\kappa(x),q_D(e))=\mathcal R(\kappa)(T_J(x,e)).
+\tag{88.10}
+$$
+
+任取独立编码 $\alpha:S\to A$、$\beta:D\to B$，若其核对可接受，则存在唯一的满射
+
+$$
+\begin{aligned}
+p_S &: \alpha[S]\to S^\#,& p_S(\alpha(s))&=q_S(s),\\
+p_D &: \beta[D]\to D^\#,& p_D(\beta(d))&=q_D(d),\\
+p_J &: (\alpha,\beta)[J]\to Q,&
+p_J(\alpha(s),\beta(d))&=\kappa(s,d).
+\end{aligned}
+\tag{88.11}
+$$
+
+因此本共同核在这类保合同的分量编码之间最粗。配置因子 $p_J$ 是 $(p_S,p_D)$ 在联合实际像上的限制，不把未实现的编码对补成配置。
+
+证明。定理88.4逐项提供假设87.3的分量条件，原有 $U_e$ 提供其来源条件，所以命题87.4的关系下降及响应下降论证适用。此处使用该条件定理的证明，不预设本节核等于定义87.2的 $\Gamma,\Pi$ 核；两者对域外总化值和成功后继分量采用不同合同，等同需要另证。最大性给出 $\ker\alpha\subseteq R_\infty$、$\ker\beta\subseteq E_\infty$，故(88.11)代表无关；实际像使这些映射满射且唯一。
+
+对每个 $x\in J,w\in D^*$，命题87.4的词长归纳还给出
+
+$$
+\widehat{\operatorname{Tr}}(x,w)
+=\overline{\operatorname{Tr}}(\kappa(x),q_D^*(w)).
+\tag{88.12}
+$$
+
+更具体地，给定有限商尝试词，为各字母选实际代表 $e_1,\ldots,e_m$，并取任意满足指定初始核心的 $\omega_0\in\Omega$。每个成功步由(87.8)选出 $\omega_{i+1}$，满足 $(\omega_i,\omega_{i+1})\in U_{e_{i+1}}$ 且 $j(\omega_{i+1})$ 为该实际成功后继。响应相容保证其商响应正是指定商步；失败或拒绝保留标签后停止。这给出每条有限商执行的逐步实际提升，不把所有有限提升合称为已取得的无限线程。证毕。
+
+这种最小性既不是任意 $m:J\to M$ 的联合记忆最小性，也不是存储、计算或物理代价的最优性。生成语法有两个叶子，不能据此限制 $|S^\#|,|D^\#|$ 或 $|Q|$。
+
+### 定理 88.6（同一继承合同下再次取商的幂等性）
+
+在 $S^\#,D^\#$ 上重新运行同一构造时，初始观察与类型必须继承原始 $o,\operatorname{in},\operatorname{out}$：例如 $\bar o(q_S(s))=o(s)$；实际域为 $Q$，关系为 $\overline\Delta$，响应为 $\overline T$，选择器为已声明时的 $\bar h(\kappa(x))=q_D(h(x))$。域外仍统一屏蔽，不加入原总响应的域外差别。保留完整标签及所有这些运输后的合同数据，则再次稳定后的两个等价关系均为对角关系，故最终共同核只差唯一的实际像重命名。
+
+证明。取继承模型中任意可接受对 $(\rho,\eta)$，拉回到原载体：
+
+$$
+sR^+t\iff q_S(s)\,\rho\,q_S(t),\qquad
+dE^+e\iff q_D(d)\,\eta\,q_D(e).
+\tag{88.13}
+$$
+
+继承的原始观察和类型使 $R^+\subseteq R_0,E^+\subseteq E_0$。关系饱和与式(88.10)把商上的分支、标签、原因、后继及选择器条件拉回，故 $(R^+,E^+)$ 是原模型的可接受对。其必然包含 $(R_\infty,E_\infty)$，而原最大性给出反向包含。因此两者相等；$q_S,q_D$ 满射，迫使 $\rho,\eta$ 都是对角关系。对角对自身可接受，故它就是继承模型的最大可接受对。
+
+来源仍可取原来的 $\Omega$ 和 $j^\#=\kappa\circ j$；商尝试类 $c$ 的成功见证可取 $U_c^\#=\bigcup_{q_D(e)=c}U_e$。任取该类的实际代表并用(87.8)，即可验证继承模型的来源闭合。这只是原来源关系的按尝试类汇集，并未把 $U_e$ 宣称为 $Q$ 上的权限关系。证毕。
+
+幂等性说的是闭合后的核心，不要求第二次运行从原始观察种子出发就零轮稳定。新增测试、改变关系、增补标签或加入选择器都会改变合同，需要重新闭合；不能借本结论跨合同认定核不变。
+
+### 定理 88.7（四种读数的精确编码与完整响应共轭）
+
+取同一实际域上的读数 $r_i:J\to X_i$，$i\in\{\mathrm{sp},\partial,\mathrm{mem},\mathrm{time}\}$，并记 $X_i^{\mathrm{act}}=r_i[J]$。每个读数恰好编码本节指定核心，当且仅当
+
+$$
+\ker r_i=\ker\kappa\quad\text{在 }J\text{ 上}.
+\tag{88.14}
+$$
+
+此时存在唯一双射 $\phi_i:Q\to X_i^{\mathrm{act}}$ 使 $r_i=\phi_i\circ\kappa$，互恢复映射及其复合满足
+
+$$
+\theta_{ij}=\phi_j\circ\phi_i^{-1},\qquad
+\theta_{ii}=\operatorname{id},\qquad
+\theta_{jk}\circ\theta_{ij}=\theta_{ik}.
+\tag{88.15}
+$$
+
+保持同一个尝试事件商 $D^\#$，定义运输执行器
+
+$$
+\begin{aligned}
+T_i(z,c)&=\mathcal R(\phi_i)
+       \bigl(\overline T(\phi_i^{-1}(z),c)\bigr),\\
+T_j(\theta_{ij}(z),c)&=\mathcal R(\theta_{ij})(T_i(z,c)).
+\end{aligned}
+\tag{88.16}
+$$
+
+第二式是完整带标记响应的共轭：成功后继、失败原因、拒绝原因和全部标签同时运输，尝试类 $c$ 不变。若另行声明执行器 $F_i:X_i^{\mathrm{act}}\times D^\#\to\mathcal R(X_i^{\mathrm{act}})$，其动态正确性还须满足一步交换式
+
+$$
+F_i(r_i(x),q_D(e))=\mathcal R(r_i)(T_J(x,e))
+\quad(x\in J,e\in D).
+\tag{88.17}
+$$
+
+证明。实际像上的因子化判据分别用于 $r_i$ 与 $\kappa$：两方向的核包含给出互逆因子，得到(88.14)—(88.15)。运输规则保留标签，并满足 $\mathcal R(g\circ f)=\mathcal R(g)\circ\mathcal R(f)$，代入即得(88.16)。由于 $\kappa$ 与 $q_D$ 满射，式(88.17)恰迫使 $F_i=T_i$；只知道静态双射不能保证这一步。有限轨迹的交换随后按成功递推、失败或拒绝停止归纳。若有选择器，在表示 $i$ 中运输为 $\bar h\circ\phi_i^{-1}$，仍输出同一个 $D^\#$。证毕。
+
+这说明空间、边界、记忆和时间只有在核条件及执行合同成立时才是此核心的不同坐标。彼此可恢复仍可共同丢失 $Q$，并不蕴含(88.14)。若时间读数只有 $r_{\mathrm{time}}(s,d)=\vartheta(s)$，而 $(s,d),(s,e)\in J$ 且 $q_D(d)\ne q_D(e)$，则两时间值相等但两核心值不同，故它不能恢复 $Q$。当前时间显示也不是累计历史；式(87.17)仍需初值、增量解释、实际执行标签序列及其保存合同。
+
+### 命题 88.8（跨分量传播达到轮数界）
+
+取 $S=\{0,1,2\}$、$D=\{0,1\}$、$J=S\times D$、$\Delta=D\times D$，接口只有一个类型，不声明选择器。令 $a_0=(0,0,1)$、$b_0=(0,0)$，固定完整标签 $\ell_0$，并设
+
+$$
+\widehat T(s,d,e)=\mathsf{Ok}(\ell_0,f(s,d,e),0),\qquad
+f(s,d,e)=\begin{cases}e,&s=0,\\2,&s=1,2.\end{cases}
+\tag{88.18}
+$$
+
+取 $\Omega=J$、$j=\operatorname{id}$，$U_e$ 为 $(s,d)\mapsto(f(s,d,e),0)$ 的确定性图。其后继均在 $J$，每个实际来源都满足(87.8)。以按首次出现次序编号的数字串表示核分区，则同步迭代为
+
+$$
+(001,00)\longrightarrow(012,00)\longrightarrow(012,01)
+\longrightarrow(012,01).
+\tag{88.19}
+$$
+
+证明。第一轮，状态 $0$ 的两个尝试后继在 $a_0$ 下均读作 $0$，状态 $1,2$ 的后继均读作 $1$；因此 $0,1$ 分开，$1,2$ 又由保留的原观察分开，状态核成为对角。当前事件不影响响应；作为尝试事件的 $0,1$ 在旧轮中分别使状态 $0$ 到达状态 $0,1$，而二者旧读出相同，故事件核这一轮仍为 $00$。第二轮使用已经分开的 $a_1(0),a_1(1)$，待尝试事件坐标遂区分两个事件；两侧至此都是对角，下一轮不再分裂。于是首个同时稳定指标 $N=2$，恰好达到 $3+2-2-1=2$ 的界。若第一轮只看未改变的事件核就停止，会漏掉第二轮必须保留的尝试区别。证毕。
+
+此例的 $Q$ 有六个实际配置。四个取值于各自单点集的常值读数虽可彼此唯一恢复，却都不能恢复这六点核心；其共同遗失的信息不会因四种命名而重新出现。例子区分的是成功后继分量合同，全部外显成功标签在此甚至相同。
+
+### 88.9 数学来源与形式化边界
+
+本节是第87节有限分量合同的仓内综合推导，未作经外部文献核对的原创性主张。固定动作集的背景来自 [ControlledSignatureStabilization.controlled_signature_algorithm_correctness](../../../D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.lean)：其参数为 $\mathrm{update}:U\to Y\to Y$、$\mathrm{readout}:Y\to O$，要求 $Y$ 为有限可枚举类型、$U,O$ 有限、三者非空且读出满射；结论连接递归签名、有限词观察与永久稳定。它不同时细化动作 $U$ 的等价类，也未包含本节的实际域掩蔽。
+
+[ControlledFiniteStability.controlled_finite_stability](../../../D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.lean)在 $Y,U,O$ 均有限可枚举且非空、读出满射的条件下，给出固定动作更新的最大共同不变等价关系及 $|Y/\!\sim_\infty|-|O|\le |Y|-|O|$ 所控制的稳定深度。这里的有限类数计数沿用这一论证结构，但式(88.6)计数两个分量，三位置替换与同时稳定仍由本节证明承担，不能直接替换一个类型参数便视为已有结论。
+
+[DynamicClosureMinimality.dynamic_closure_is_least](../../../D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean)对任意类型上的概念及固定干预族，要求候选概念细化原概念且其纤维受所有干预保持，才得动态闭包经候选因子化；它支持“最小性相对于闭合候选”的边界，不给任意联合记忆赋予本节分量最小性。[EffectiveImageKernelCriterion.refinement_iff_kernel_inclusion_on_effective_images](../../../D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean)对同一来源上的两个任意读数，以细读数核包含于粗读数核刻画实际像之间唯一因子，正是式(88.11)、(88.14)的因子化依据，无有限性或环境陪域满射的附加要求。
+
+这些引用限定数学依赖的范围；本节的双分量掩蔽构造、商上幂等性和具体例子没有新增 Lean 编译或内核验证。加权响应、无限载体、来源级权限关系的商化，以及物理时空解释，均不由上述确定性有限合同推出。
+
+## 88.99 追加锚
