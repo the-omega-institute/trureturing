@@ -77,21 +77,21 @@ internal sealed class ForcedCoreNormalizationDocument : IScribeDocumentDefinitio
             Forall, Sp, I("B"), Colon, N, Comma),
         Seq(I("M"), Eq, Core, Comma, Sp, OpenBracket),
         Seq(I("B"), Lt, I("M"), Leftrightarrow, Neg, Exists, Sp, I("n"), Colon, N,
-            Comma, Sp, D(1), Le, I("n"), Land, I("n"), Le, I("B"), Land,
+            Comma, Sp, D(1), Le, Sp, I("n"), Land, I("n"), Le, Sp, I("B"), Land,
             Dvd(I("M"), I("n"))),
-        Seq(Land, Open, I("M"), Le, I("B"), Rightarrow, Exists, Sp,
+        Seq(Land, Open, I("M"), Le, Sp, I("B"), Rightarrow, Exists, Sp,
             I("n"), Colon, N, Comma, Exists, Sp, I("t"), Colon, Lists, Comma),
-        Seq(D(1), Le, I("n"), Land, I("n"), Le, I("B"), Land,
+        Seq(D(1), Le, Sp, I("n"), Land, I("n"), Le, Sp, I("B"), Land,
             Dvd(I("M"), I("n"))),
         Seq(Land, Open, Forall, Sp, I("p"), Comma, I("q"), Colon, N, Comma,
             App("Prime", I("p")), Land, App("Prime", I("q")), Land,
-            I("p"), Lt, I("q"), Rightarrow, Val(I("n"), I("q")), Le,
+            I("p"), Lt, I("q"), Rightarrow, Val(I("n"), I("q")), Le, Sp,
             Val(I("n"), I("p")), Close),
         Seq(Land, App("Ordered", App("c", I("B")), I("t")), Land,
             Suffix, Eq, I("n"), Land, Z(I("n")), Eq, Weight),
         Seq(Land, Open, Forall, Sp, I("m"), Colon, N, Comma,
-            D(1), Le, I("m"), Land, I("m"), Le, I("B"), Land,
+            D(1), Le, Sp, I("m"), Land, I("m"), Le, Sp, I("B"), Land,
             Dvd(I("M"), I("m")), Rightarrow,
-            Z(I("m")), Le, Z(I("n")), Close, Close, CloseBracket)
+            Z(I("m")), Le, Sp, Z(I("n")), Close, Close, CloseBracket)
     ]));
 }
