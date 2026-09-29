@@ -1,7 +1,4 @@
 import LeanInformationAudit.Registry.Enrollment
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 namespace LeanInformationAudit.Tests.OwnerGraphMemo
 open Lean Meta Elab Command

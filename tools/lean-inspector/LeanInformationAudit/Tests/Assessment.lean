@@ -13,6 +13,9 @@ elab "test_assess " "in " command:command : command => registrationTransaction d
   if (← get).messages.hasErrors then return
   let after ← getEnv
   let root := after.header.mainModule
+  for (_, expected) in (ExpectedOccurrenceManifest.owned after).extract
+      (ExpectedOccurrenceManifest.owned before).size (ExpectedOccurrenceManifest.owned after).size do
+    discard <| liftTermElabM <| resolveCanonicalArenaName expected.objectArenaName
   for (owner, input) in (TemplateEnrollmentInputs.owned after).extract
       (TemplateEnrollmentInputs.owned before).size (TemplateEnrollmentInputs.owned after).size do
     assessRecordedEnrollment owner input

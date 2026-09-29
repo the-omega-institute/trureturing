@@ -199,6 +199,9 @@ private def resolveTheorem (id : TSyntax `ident) : CommandElabM Name := do
   catch _ =>
     throwErrorAt id
       "IE-C001 UnregisteredTheoremUnit: {← declarationName id}"
+  -- A generated companion is judge output, never a registrable theorem.
+  if isCompanionName theoremName then
+    throwError "IE-C011 GeneratedCertificateRegistered: {theoremName}"
   pure theoremName
 
 private def witnessName (id : Option (TSyntax `ident)) : CommandElabM Name := do
@@ -275,15 +278,33 @@ private def elabExpectedOccurrenceWithIdentity : CommandElab := fun stx =>
   addExpectedOccurrence ⟨stx[1]⟩ ⟨stx[4]⟩
     (TSyntax.getString ⟨stx[7]⟩) (TSyntax.getString ⟨stx[10]⟩)
 
-private def elaboratePrimitives (realization : Expr) (term : TSyntax `term) :
-    CommandElabM Expr := liftTermElabM do
-  let bundle ← mkAppM
-    `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle #[realization]
-  let value ← elabTerm term (some (← inferType bundle))
-  synthesizeSyntheticMVarsNoPostponing
-  let value ← levelMVarToParam (← instantiateMVars value)
-  requireClosedInput value
-  return value
+/-- A supplied primitive bundle that does not elaborate against the bridge's
+realization cannot match it; this is the registration's statement/proof mismatch. -/
+private def elaboratePrimitives (theoremName : Name) (bridgeArena realization : Expr)
+    (term : TSyntax `term) : CommandElabM Expr := do
+  try
+    liftTermElabM <| Term.withoutErrToSorry do
+      -- The bundle is compiled at the arena's own state decidability, as the
+      -- judge's primitive-bundle comparison does; no instance search is involved.
+      let law := (← RegistrationElaboration.normalizeArena bridgeArena).law
+      let arena ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena #[law]
+      let realizationType ← instantiateMVars (← whnfR (← inferType realization))
+      unless realizationType.getAppArgs.size == 2 do throwError "realization argument mismatch"
+      let compiler ← mkConstWithFreshMVarLevels
+        `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle
+      let bundle := mkAppN compiler #[
+        ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arena],
+        realizationType.getAppArgs[1]!,
+        ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Arena.stateDecidableEq #[arena],
+        realization]
+      let value ← elabTerm term (some (← inferType bundle))
+      synthesizeSyntheticMVarsNoPostponing
+      let value ← levelMVarToParam (← instantiateMVars value)
+      requireClosedInput value
+      return value
+  catch error =>
+    if error.isRuntime then throw error
+    throwError "IE-C006 StatementProofMismatch: {theoremName}"
 
 /-- Elaborate an inline legacy bridge at the imported theorem's exact type and
 publish it under the registration-owned companion name. -/
@@ -438,6 +459,28 @@ def registrationTransaction (action : CommandElabM Unit) : CommandElabM Unit := 
     modify fun s => { s with messages := previousMessages ++ { messages with
       reported := messages.reported.map classify, unreported := messages.unreported.map classify } }
 
+/-- Elaborate one recorder-owned companion. The companion is well typed exactly
+when the recorded inputs fit together; any elaboration error is reported as the
+registration's own diagnostic rather than as an internal elaboration message. -/
+private def elabCompanion (diagnostic : String) (command : TSyntax `command) :
+    CommandElabM Unit := do
+  let previous := (← get).messages
+  modify fun s => { s with messages := {} }
+  elabCommand command
+  let produced := (← get).messages
+  modify fun s => { s with messages := previous ++ (if produced.hasErrors then {} else produced) }
+  if produced.hasErrors then throwError diagnostic
+
+/-- A witness bridge's companion unit is built from its bridge at the registration
+arena and from the positive half of its variation witness. -/
+private def checkWitnessCompanionInputs (theoremName arenaName variationName : Name)
+    (bridgeArena : Expr) : CommandElabM Unit := do
+  let arenaMatches ← liftTermElabM do
+    isDefEq bridgeArena (← mkConstWithFreshMVarLevels arenaName)
+  unless arenaMatches do throwError "IE-C006 StatementProofMismatch: {theoremName}"
+  if variationName.isAnonymous then
+    throwError "unclassified_form:dtr.witness_bridge_requires_positive_variation"
+
 @[command_elab informationTheoremCmd]
 private def elabInformationTheorem : CommandElab := fun stx => registrationTransaction do
     let theoremId : TSyntax `ident := ⟨stx[1]⟩
@@ -459,6 +502,7 @@ private def elabInformationTheorem : CommandElab := fun stx => registrationTrans
         $primitiveRealizationId:ident
           ($arenaId:ident).signature := $primitiveTerm))
     elabCommand (← `(command| theorem $theoremId : $statement := $proof))
+    if (← get).messages.hasErrors then return
     let unitId := absoluteIdentFrom theoremId unitName
     elabCommand (← `(command| def $unitId :
         $theoremUnitId:ident ($arenaId:ident).toArena :=
@@ -472,12 +516,25 @@ private def elabInformationTheorem : CommandElab := fun stx => registrationTrans
 
 @[command_elab registerInformationTheoremViaCmd]
 private def elabRegisterInformationTheoremVia : CommandElab := fun stx => registrationTransaction do
-  let theoremName ← resolveTheorem ⟨stx[1]⟩
   let arenaName ← resolveArena ⟨stx[5]⟩
+  -- The descriptor is elaborated against a rigid zero-universe law arena only;
+  -- any other arena is rejected before the descriptor term is elaborated.
+  liftTermElabM do
+    let arenaType ← inferType (← mkConstWithFreshMVarLevels arenaName)
+    unless arenaType.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena do
+      throwError "P1.ArenaMismatch: not a PrimitiveLawArena"
+    unless (← getConstInfo arenaName).levelParams.isEmpty do
+      throwError "P1.RigidUniverseMismatch: arena"
+    unless arenaType.equal (mkConst `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena
+        [.zero, .zero, .zero]) do
+      throwError "P1.RigidUniverseMismatch: arena must have three zero universe levels"
+  let theoremName ← resolveTheorem ⟨stx[1]⟩
   let descriptor ← liftTermElabM do
     let value ← elabTerm stx[3] none
     synthesizeSyntheticMVarsNoPostponing
     let value ← instantiateMVars value
+    if value.hasMVar || value.hasLevelMVar then
+      throwError "P1.UnresolvedMetavariables: {value}"
     requireClosedInput value
     return value
   let outputEvidence ← liftTermElabM do
@@ -494,11 +551,8 @@ private def elabRegisterInformationTheoremVia : CommandElab := fun stx => regist
   let root := (← getEnv).header.mainModule
   let unitName := localCompanionName (← getEnv) root theoremName theoremUnitSuffix
   let realizationName := localCompanionName (← getEnv) root theoremName primitiveRealizationSuffix
-  liftTermElabM do
-    let type ← inferType descriptor
-    let levels := (collectLevelParams (collectLevelParams {} type) descriptor).params.toList
-    addDecl <| .thmDecl { name := realizationName, levelParams := levels, type, value := descriptor }
-  addLegacyUnit theoremName realizationName unitName
+  -- The reifier derives this bridge and unit from the recorded descriptor at
+  -- report time; the recorder only fixes their names.
   registerEntry {
     theoremName, unitName, arenaName, realizationName, registrationModuleName := root } none (some descriptor) outputEvidence
 
@@ -536,7 +590,7 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
         realizationType.getAppFn.constName? == some RegistrationElaboration.witnessBridgeName) &&
         legacyArgs.size == 3 do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
-    let suppliedPrimitives ← elaboratePrimitives legacyArgs[2]! primitiveTerm
+    let suppliedPrimitives ← elaboratePrimitives theoremName legacyArgs[0]! legacyArgs[2]! primitiveTerm
     let variationName ← optionalWitnessName stx[8]
     let sensitivityName ← optionalWitnessName stx[9]
     if isInline then
@@ -551,7 +605,10 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
         $theoremUnitId:ident ($arenaId:ident).toArena)
       let witnessUnitId := absoluteIdentFrom theoremId (RegistrationElaboration.witnessBridgeName.str "toTheoremUnit")
       let variationId := absoluteIdentFrom theoremId variationName
-      let unitValue <- if realizationType.isAppOf RegistrationElaboration.witnessBridgeName then
+      let witness := realizationType.isAppOf RegistrationElaboration.witnessBridgeName
+      if witness then
+        checkWitnessCompanionInputs theoremName arenaName variationName legacyArgs[0]!
+      let unitValue <- if witness then
           `(term| $witnessUnitId:ident
             $realizationId:ident (And.left $variationId:ident))
         else if realizationType.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization then
@@ -559,10 +616,12 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
         else `(term|
           $legacyToUnitId:ident
             $realizationId:ident $theoremId:ident)
+      let diagnostic := if witness then "unclassified_form:dtr.witness_bridge_requires_positive_variation"
+        else s!"IE-C006 StatementProofMismatch: {theoremName}"
       if isPrivateName unitName then
-        elabCommand (← `(command| private def $unitId : $unitType := $unitValue))
+        elabCompanion diagnostic (← `(command| private def $unitId : $unitType := $unitValue))
       else
-        elabCommand (← `(command| def $unitId : $unitType := $unitValue))
+        elabCompanion diagnostic (← `(command| def $unitId : $unitType := $unitValue))
     registerEntry { entry with
       variationWitness := ← optionalWitnessName stx[8]
       sensitivityWitness := ← optionalWitnessName stx[9]
@@ -601,6 +660,7 @@ private def elabInformationTheoremOccurrence : CommandElab := fun stx => registr
       $primitiveRealizationId:ident
         ($lawArenaId:ident).signature := $primitiveTerm))
   elabCommand (← `(command| theorem $theoremId : $statementTerm := $proofTerm))
+  if (← get).messages.hasErrors then return
   let unitId := absoluteIdentFrom theoremId unitName
   let unitType <- `(term|
     $theoremUnitId:ident ($objectArenaId:ident))
@@ -658,7 +718,7 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
         realizationType.getAppFn.constName? == some RegistrationElaboration.witnessBridgeName) &&
       legacyArgs.size == 3 do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
-  let suppliedPrimitives ← elaboratePrimitives legacyArgs[2]! primitiveTerm
+  let suppliedPrimitives ← elaboratePrimitives theoremName legacyArgs[0]! legacyArgs[2]! primitiveTerm
   let variationName ← optionalWitnessName stx[12]
   let sensitivityName ← optionalWitnessName stx[13]
   unless isInline do
@@ -681,7 +741,10 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     let qualifiedRealizationId := absoluteIdentFrom theoremId realizationName
     let witnessUnitId := absoluteIdentFrom theoremId (RegistrationElaboration.witnessBridgeName.str "toTheoremUnit")
     let variationId := absoluteIdentFrom theoremId variationName
-    let unitValue <- if realizationType.isAppOf RegistrationElaboration.witnessBridgeName then
+    let witness := realizationType.isAppOf RegistrationElaboration.witnessBridgeName
+    if witness then
+      checkWitnessCompanionInputs theoremName lawArenaName variationName legacyArgs[0]!
+    let unitValue <- if witness then
         `(term| $witnessUnitId:ident
           $qualifiedRealizationId:ident (And.left $variationId:ident))
       else if realizationType.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization then
@@ -689,7 +752,9 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
       else `(term|
         $legacyToUnitId:ident
           $qualifiedRealizationId:ident $theoremId:ident)
-    elabCommand (← `(command| def $unitId : $unitType := $unitValue))
+    let diagnostic := if witness then "unclassified_form:dtr.witness_bridge_requires_positive_variation"
+      else s!"IE-C006 StatementProofMismatch: {theoremName}"
+    elabCompanion diagnostic (← `(command| def $unitId : $unitType := $unitValue))
   registerEntry { entry with
     variationWitness := ← optionalWitnessName stx[12]
     sensitivityWitness := ← optionalWitnessName stx[13]

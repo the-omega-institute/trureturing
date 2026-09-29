@@ -624,7 +624,6 @@
         "tools/lean-inspector/Inspector.lean",
         "tools/lean-inspector/LeanInformationAudit/**/*.lean",
         "tools/lean-inspector/LeanInformationAudit/Projection/OutputOnlyAudit.lean",
-        "tools/lean-inspector/LeanInformationAudit/Syntax.lean",
         "tools/lean-inspector/inspect.sh",
         "tools/lean-inspector/lake-manifest.json",
         "tools/lean-inspector/lakefile.lean",

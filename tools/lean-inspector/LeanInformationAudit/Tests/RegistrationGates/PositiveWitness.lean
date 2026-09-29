@@ -1,8 +1,5 @@
 import LeanInformationAuditAnalysis.Tests.WitnessCarriers
 import LeanInformationAudit.Tests.RegistrationGates.Round7PackedConsumer
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
 namespace PositiveWitness

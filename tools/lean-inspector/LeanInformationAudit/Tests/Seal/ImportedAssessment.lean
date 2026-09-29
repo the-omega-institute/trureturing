@@ -60,9 +60,11 @@ run_cmd do
       let root := `LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
       let some entry := (InformationRegistry.forRoot (← getEnv) root)[0]?
         | throwError "missing selected producer"
+      let moved := { entry with registrationModuleName := `UnrelatedRegistration }
       modifyEnv fun env => ($extension).modifyState env fun state =>
-        { state with entries := state.entries.push
-          { entry with registrationModuleName := `UnrelatedRegistration } }))
+        let entries := state.entries.push moved
+        let theoremNames := state.theoremNames.insert moved.theoremName
+        { state with entries, theoremNames }))
     let root := `LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
     liftCoreM do
       assessAndSealRegistration (← RegistrationAssessmentInput.capture root)

@@ -628,7 +628,9 @@ private def sameCacheClaim (a b : TemplateBindingClaim) : MetaM Bool := do
 private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrenceEvent)
     (claim : TemplateBindingClaim) : MetaM Bool := do
   unless sameCacheEvent cached.record.occurrence event do return false
-  unless ← sameCacheClaim cached.claim claim do return false
+  -- An ill-formed claim cannot reuse a retained result; the uncached assessment
+  -- reports its own diagnostic.
+  unless ← (try sameCacheClaim cached.claim claim catch _ => pure false) do return false
   let env ← getEnv
   unless sameCacheObject cached.options (← getOptions) &&
       sameCacheObject cached.registry (InformationRegistry.entries env) do return false

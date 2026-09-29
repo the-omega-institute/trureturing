@@ -17,7 +17,13 @@ private def checkDiagnostics (root : Name) (expected : Nat) : CommandElabM Nat :
   let env := (← getEnv).setExporting false
   let mut checked : Nat := 0
   let mut findings : Nat := 0
-  for (name, owner) in GeneratedDeclarations.entries env do
+  -- Report-time metadata is attributed through the generated-declaration owner;
+  -- a fixture that assessed itself at compile time declares it in its own module.
+  let compiled := match env.getModuleIdx? root with
+    | some index => env.header.moduleData[index.toNat]!.constNames.map (·, root)
+    | none => #[]
+  let generated := (GeneratedDeclarations.entries env).filter (!compiled.contains ·)
+  for (name, owner) in compiled ++ generated do
     unless owner == root do continue
     unless name.getString! == "__information_registration_diagnostic" do continue
     let some (.defnInfo info) := env.find? name

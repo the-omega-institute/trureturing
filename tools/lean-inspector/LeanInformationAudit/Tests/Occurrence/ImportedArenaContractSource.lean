@@ -1,7 +1,4 @@
 import LeanInformationAudit.Tests.Occurrence.ImportedArenaAlignmentSource
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 open D5.S3.ConceptDynamics.InformationEscape
 

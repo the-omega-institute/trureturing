@@ -147,11 +147,13 @@ def ValidatedSourceSnapshot.stageAliases (snapshot : ValidatedSourceSnapshot)
       else liftTermElabM do
         let info ← getConstInfo target
         let source ← mkConstWithFreshMVarLevels source
-        unless GeneratedDeclarations.ownerOf (← getEnv) target == root &&
-            info.value?.isSome && (← isDefEq info.type (← inferType source)) &&
-            (← isDefEq info.value?.get! source) do
+        let mismatch : MetaM Unit :=
           throwError "IE-C050 ClosedTruthReadout reason=unclassified_form rule=dtr.snapshot_alias"
-        checkWithKernel info.value?.get!
+        let some value := info.value? | mismatch
+        unless GeneratedDeclarations.ownerOf (← getEnv) target == root do mismatch
+        unless ← isDefEq info.type (← inferType source) do mismatch
+        unless ← isDefEq value source do mismatch
+        checkWithKernel value
       -- Type elaboration may instantiate universe names, but the alias body
       -- must be the original constant with its full rigid universe telescope.
       liftTermElabM do

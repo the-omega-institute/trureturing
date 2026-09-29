@@ -2,9 +2,6 @@
    registrations in SharedArenaOIProbe. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

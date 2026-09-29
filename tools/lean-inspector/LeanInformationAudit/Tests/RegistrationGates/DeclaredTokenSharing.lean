@@ -35,12 +35,12 @@ private def runChecks : TermElabM Unit := do
     throwError "setup: checked cut template missing"
   let .ok bytes := planEncoding selected | throwError "setup: plan encoding failed"
   let reference := firstReference bytes
-  let repeat := (planEncoding selected).toOption == some bytes
+  let repeated := (planEncoding selected).toOption == some bytes
   let workRejected := !(planEncoding selected bytes.size).isOk
   let identityBound := selected.planIdentity == Sha256.hex bytes &&
     selected.serializedBytes == bytes.size
   for (label, passed) in #[
-      ("shared_plan_tokens_deterministic", reference.isSome && repeat),
+      ("shared_plan_tokens_deterministic", reference.isSome && repeated),
       ("shared_plan_identity_binds_encoding", identityBound),
       ("shared_plan_token_work_charged", workRejected)] do
     (if passed then logInfo else logError) m!"[{if passed then "PASS" else "FAIL"}] {label}"

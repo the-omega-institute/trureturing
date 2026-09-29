@@ -17,11 +17,15 @@ def verifyExistingDeclaration (owner : Name) (declaration : Declaration) : MetaM
     | .defnDecl data => pure (data.name, data.levelParams, data.type, data.value, false)
     | _ => return false
   let some info := (← getEnv).find? name | return false
+  -- Each check runs only after the preceding one holds; nested actions in a
+  -- single Boolean condition would all execute before `&&` could short-circuit.
+  let some existing := info.value? (allowOpaque := true) | return false
   unless GeneratedDeclarations.ownerOf (← getEnv) name == owner &&
-      info.isTheorem == isTheorem && !info.isUnsafe && info.levelParams == levels &&
-      info.value?.isSome && (← isDefEq info.type type) &&
-      (← isDefEq info.value?.get! value) && (← isDefEq (← inferType value) type) do
+      info.isTheorem == isTheorem && !info.isUnsafe && info.levelParams == levels do
     return false
+  unless ← isDefEq info.type type do return false
+  unless ← isDefEq existing value do return false
+  unless ← isDefEq (← inferType value) type do return false
   checkWithKernel value
   return true
 
@@ -33,7 +37,9 @@ def stageDeclarations (env : Environment) (declarations : Array Declaration)
   let options ← getOptions
   let mut stagedEnv := env
   for declaration in declarations do
-    if declaration.getNames.any stagedEnv.contains then
+    -- Only a declaration that preceded this batch can be reused; a name repeated
+    -- inside the batch reaches the kernel and is rejected there.
+    if declaration.getNames.any env.contains then
       unless ← withEnv stagedEnv <| MetaM.run' <| verifyExistingDeclaration
           (GeneratedDeclarations.currentOwner stagedEnv) declaration do
         throwError "IE-C009 ProofConstructionFailed: {declaration.getNames[0]!}\nexisting declaration mismatch"

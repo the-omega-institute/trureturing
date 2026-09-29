@@ -1,7 +1,4 @@
 import Lean
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 -- No protected imports: these are external-library type occurrences.
 namespace ExternalAllowlistTypes

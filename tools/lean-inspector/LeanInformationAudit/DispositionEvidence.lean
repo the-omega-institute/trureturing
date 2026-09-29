@@ -58,6 +58,15 @@ private initialize structuralRegistry :
     addEntryFn := Array.push
     addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
 
+/-- The resolved readout declaration of each structural registration, retained as
+its raw input so an importing report reassesses the same claim. -/
+private initialize structuralDeclarationInputs :
+    SimplePersistentEnvExtension (Name × Option TemplateBinding.ResolvedDeclaration)
+      (Array (Name × Option TemplateBinding.ResolvedDeclaration)) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
+
 /-- Read-only access for exhaustive registration queries. -/
 def structuralProvenanceEntries (env : Environment) : Array StructuralProvenanceEntry :=
   structuralRegistry.getState env
@@ -311,7 +320,9 @@ private def elabStructuralTheorem : CommandElab := fun stx => registrationTransa
         realizationSyntax := realizationTerm.raw.reprint.getD "" } : StructuralProvenanceEntry)
     liftTermElabM do
       RegistrationGates.publishDiagnostic entry.registrationModule entry.unitConst (← RegistrationGates.validateStructural entry)
+    let declaration := TemplateBinding.currentDeclaration (← getEnv)
     modifyEnv fun env => structuralRegistry.addEntry env entry
+    modifyEnv fun env => structuralDeclarationInputs.addEntry env (entry.theoremName, declaration)
     TemplateBinding.publishRegistration entry.registrationModule {
       theoremName := entry.theoremName, unitName := entry.unitConst,
       arenaName := entry.lawArenaConst, realizationName := entry.realizationConst,
@@ -320,6 +331,29 @@ private def elabStructuralTheorem : CommandElab := fun stx => registrationTransa
   catch error =>
     setEnv before
     throw error
+
+/-- Reassess imported structural registrations from their retained inputs, after the
+recorded-input replay has reset the transient assessment state. Entries of the
+current module were assessed by their introducing command. -/
+def replayStructuralRegistrations (rootId : Name) : CommandElabM Unit := do
+  let env ← getEnv
+  let declarations := structuralDeclarationInputs.getState env
+  for entry in structuralRegistry.getState env do
+    unless entry.registrationModule != env.header.mainModule &&
+        moduleReachable env rootId entry.registrationModule do continue
+    let declaration := (declarations.find? (·.1 == entry.theoremName)).bind (·.2)
+    GeneratedDeclarations.withOwner entry.registrationModule do
+      liftTermElabM do
+        RegistrationGates.publishDiagnostic entry.registrationModule entry.unitConst
+          (← RegistrationGates.validateStructural entry)
+      let publish := TemplateBinding.publishRegistration entry.registrationModule {
+        theoremName := entry.theoremName, unitName := entry.unitConst,
+        arenaName := entry.lawArenaConst, realizationName := entry.realizationConst,
+        registrationModuleName := entry.registrationModule,
+        resolvedArenaName := entry.canonicalArena }
+      match declaration with
+      | some declaration => TemplateBinding.withDeclaration declaration publish
+      | none => publish
 
 syntax (name := structuralTheoremReadoutCmd)
   "structural_theorem " ident " in " ident &"readout " "via " "(" term ")"
@@ -827,6 +861,8 @@ open Lean Meta
 /-- One authoritative imported join shared by all requested report modules. -/
 def informationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
     assessRecordedRegistrations (← getEnv).header.mainModule
+    (liftCommandElabM <| DispositionCensus.replayStructuralRegistrations
+      (← getEnv).header.mainModule : CoreM Unit)
     let env ← getEnv
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
     let modules := moduleNames.map fun moduleName => Id.run do

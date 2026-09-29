@@ -1,7 +1,4 @@
 import LeanInformationAudit.Census.Manifest
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 open Lean Meta Elab.Command LeanInformationAudit DispositionCensus CensusManifest
 

@@ -6,9 +6,6 @@ import Mathlib.Algebra.Ring.Nat
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Order.Basic
 import Mathlib.Algebra.Field.ZMod
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
 
 open Lean LeanInformationAudit.RegistrationGates
 open D5.S3.ConceptDynamics.InformationEscape

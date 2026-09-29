@@ -39,7 +39,7 @@ elab "observe_import_body" : command => do
   unless publicInfo.value?.isNone do throwError "setup: public implementation was exposed"
   setEnv visible
   let hiddenResult ← enroll visible.header.mainModule (← getOptions) name
-  let rejected := hiddenResult.isError
+  let rejected := !hiddenResult.isOk
   setEnv (resetTemplatePlans env)
   let full ← enroll env.header.mainModule (← getOptions) name
 

@@ -14,7 +14,9 @@ set_option linter.style.longLine false
 
 def importedAlias := objectArena
 
-/-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.ImportClosureProducer.objectArena theorem_name=LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem registration_modules=["LeanInformationAudit.Tests.Occurrence.ImportClosureProducer","LeanInformationAudit.Tests.Occurrence.ImportClosureRoot"] count=2 -/
+-- A native registration declares its theorem, so re-declaring an imported
+-- theorem is rejected when the recorder elaborates the declaration.
+/-- error: `LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem` has already been declared -/
 #guard_msgs (error) in
 test_assess in information_theorem _root_.LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem
   in lawArena object_arena importedAlias catalog duplicate
