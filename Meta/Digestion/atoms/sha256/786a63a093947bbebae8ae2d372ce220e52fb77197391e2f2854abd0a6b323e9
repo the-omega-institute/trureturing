@@ -1,0 +1,16 @@
+**定理331.3（有限有效近似的联合临界预算）。** 存在 $\delta_0\in(0,e^{-1})$ 与固定 $C_2$，使对每个 $0<\delta<\delta_0$ 和 $\epsilon>0$，都有一份有限来源深度的有效共同策略，支持两种请求并保持首枚 $X$ 身份，满足
+
+$$
+\sup_{w,S}\operatorname{TV}(P_A,P_{\mathrm{target}})<\delta,
+\tag{331.15}
+$$
+
+$$
+\boxed{
+\sup_{w,S}\mathbb EN_H^a\le K_H+\epsilon,
+\qquad
+\sup_{w,S}\mathbb EN_T^a
+\le C_2[\log(1/\delta)]^D+\epsilon.}
+\tag{331.16}
+$$
+

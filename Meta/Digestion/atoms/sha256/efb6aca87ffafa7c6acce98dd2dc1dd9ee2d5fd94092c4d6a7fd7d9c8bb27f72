@@ -1,0 +1,19 @@
+**定理 343.3（非负输入的 Lorentz 负系数）。** 固定上述 $\beta,L,n,q_n,\varepsilon_0$。让 $D$ 遍历充分大的 $2L$ 的正整数倍，令
+
+$$
+m=D-r,\qquad j_0=Dq_n.
+\tag{343.15}
+$$
+
+则 $j_0$ 为整数，并且
+
+$$
+\boxed{
+\operatorname{coef}_{D,j_0}(Q_{m,r}g_n)
+=-\frac{\varepsilon_0n^{1-a}q_n(1-q_n)}{D-1}.
+}
+\tag{343.16}
+$$
+
+特别地，该系数严格为负，大小与 $n^{1-a}/m$ 相差固定倍率。
+

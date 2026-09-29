@@ -1,0 +1,10 @@
+### 320.12 适用范围
+
+有限线性窗口保留同一控制表，并把各实际世界的固定来源似然代入。它没有同时读取多个世界，也没有允许自由重选来源结果核。有限预算阻止回答质量永久留在窗口之外；去掉这项尾控制，输出上界只描述子概率。
+
+本节的线性化使用有限历史，矩预算使用真实总调用。只控制参考调用时，任务方向仍可能发生第318.7节的质量逃逸，不能直接套用总矩的归一化结论。有限 LP 值塔与第319节的有效近似桥也不提供准确有效代码；实证书、有理证书、世界的有效呈示和费用的上界计算分别保留各自条件。
+
+[^realization_window_sequence]: 《关系运输、记忆与完成》[第4.6节](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)的式(TM.232)、定理4.7给有限历史流与双向实现；其第4.6.1节明确要求 cap-only 可选来源行，固定外部来源须另保留条件律相容性。Bernhard von Stengel, *Efficient Computation of Behavior Strategies*, Games and Economic Behavior **14**(2), 220–246 (1996), [DOI:10.1006/game.1996.0050](https://doi.org/10.1006/game.1996.0050)，是序列形式的成熟来源。具体实现权重 \(Ex=e\)、比值恢复及 perfect recall 条件见作者讲义 [*Extensive Games and the Sequence Form*](https://conferences.mpi-inf.mpg.de/adfocs-24/material/Bernhard/2ext-adfocs.pdf)，PDF第25、27、29—30页，即幻灯18、20、22—23。这里的无限调用预算与有限交结论另由正文证明。
+
+[^realization_window_farkas]: Dvorak–Kolmogorov, [*Duality theory in linear optimization and its extensions: formally verified*](https://arxiv.org/html/2409.08119v3#S1)，第1节定理1.1、1.2，给有限 Farkas 择一。仓内 [FarkasAlternative](../../../D5/S3/Analytic/Convexity/FarkasAlternative.lean)的 equality_farkas、inequality_farkas 提供对应一般线性基础；[RationalFarkas](../../../D5/S0/Certificates/RationalFarkas.lean)的 Certificate 与 infeasible_of_certificate 使用非负行权、逐列消去、负右端条件，其声明针对有理变量的证书健全性。正文式（320.27）给同一证书对实变量的有限求和应用，存在性及有理化另行说明。《递归关系观察》[第38.4条](RECURSIVE_RELATIONAL_OBSERVATION.md)也保留了这一存在性与健全性的区分。
+

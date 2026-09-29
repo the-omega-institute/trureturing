@@ -1,0 +1,100 @@
+### 346.4 有符号中心的实际误差
+
+末层未决核心置零后，其成功率恰为 \(\mathcal L_J\)。在实际世界中记
+
+\[
+\Delta_J(w)=F_x(q)-\mathcal L_J(p,q),\qquad
+e_L(w)=S_{m_J}\bar L_J^q(p)-L_J(x,q).
+\]
+
+有精确分解
+
+\[
+\boxed{
+\Delta_J
+=(1-\delta_J)(F_x-L_J)+\delta_JF_x
+ -(1-\delta_J)e_L.}
+\tag{346.19}
+\]
+
+这里把地板乘到目标 \(F_x\) 上，没有把 \(S_m\) 当作正算子。
+
+原参考包络给 \(0\le F_x-L_J\le\Gamma_J\)，并有 \(0\le F_x\le1\)。由式（346.6）、（346.9）及 \(\eta_J\le1\)，
+
+\[
+|\Delta_J(w)|
+\le\Gamma_J(x,q)+\delta_J+C_Lm_J^{-a}
+\le Cn_J^{-a}.
+\tag{346.20}
+\]
+
+下面用实际正世界给匹配下界。令
+
+\[
+\Omega=\frac{15}{16}(2/\underline c)^\beta,\qquad
+\kappa_F=3/8,
+\qquad
+x_J=\frac{x^\dagger}{2}b^{-(J+1)/2}.
+\tag{346.21}
+\]
+
+取原合法子族 \(c=1,h=x_J\)，于是
+
+\[
+p_J=q_J=(1-x_J/C)/B.
+\tag{346.22}
+\]
+
+因 \(0<x_J<x^\dagger/2<1/4\)，这是严格正的合法世界，截平函数在该点为恒等。
+
+第330节的尺度分割满足
+
+\[
+z(x)=2\log_b(x^\dagger/x),\qquad
+v_i(x)>0\Longrightarrow |z(x)-i|<1.
+\]
+
+而 \(z(x_J)=J+1+2\log_b2>J+1\)，所以全部 \(i\le J\) 的已启动环权重为零。第332节式（332.8）的有限系数表达给逐参考系数恒等式
+
+\[
+\ell_{J,t}(x_J)=\frac{1-\Omega x_J^\beta}{2},\qquad
+u_{J,t}(x_J)=\frac{1+\Omega x_J^\beta}{2}.
+\tag{346.23}
+\]
+
+对参考率取二项平均后仍是同一式。在这个 \(c=1\) 世界，目标为
+
+\[
+F_{x_J}(q_J)=\frac12+\kappa_Fx_J^\beta,
+\]
+
+从而
+
+\[
+F_{x_J}(q_J)-L_J(x_J,q_J)=D_*n_J^{-a},
+\]
+
+\[
+D_*=
+\left(\kappa_F+\frac{\Omega}{2}\right)
+\left(\frac{N(x^\dagger)^2}{4b}\right)^a>0.
+\tag{346.24}
+\]
+
+常数不依截止或地板。将其代入式（346.19），利用
+\(\delta_J\le1/4\)、\(F_{x_J}(q_J)\ge1/2\) 和已固定的
+\(|e_L|\le\delta_J/4\)，得到
+
+\[
+\begin{aligned}
+\Delta_J(w_J)
+&\ge(1-\delta_J)D_*n_J^{-a}
++\delta_J/2-(1-\delta_J)\delta_J/4\\
+&\ge\tfrac34D_*n_J^{-a}+\delta_J/4\\
+&\ge\tfrac34D_*n_J^{-a}.
+\end{aligned}
+\tag{346.25}
+\]
+
+这个论证覆盖全部 \(0<\eta_J\le1\)。平滑误差由地板项吸收，不需要再使 \(C_LM^{-a}\) 小于 \(D_*\)，也不需按截止反向更改 \(M\)。未启动环恒等式只用于原参考系数；没有把“在这个世界取值为常数”误当作整个任务函数恒为常数。
+

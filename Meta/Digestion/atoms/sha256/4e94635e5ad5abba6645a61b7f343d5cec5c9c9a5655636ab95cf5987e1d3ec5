@@ -1,0 +1,45 @@
+**引理334.2（适应段的指数尾）。** 一个过程实际执行 $J$ 段。第 $j$ 段的非负费用为 $X_j$，未执行时补零；执行决定在该段开始前的完整历史中可知。假设存在共同常数 $\theta>0$、$K\ge2$、$A,\eta>0$，使
+
+$$
+\mathbb E(e^{\theta X_j}\mid\mathcal F_j)\le K,
+\qquad
+\Pr(J>m)\le Ae^{-\eta m}
+\quad(m\ge0),
+\tag{334.4}
+$$
+
+其中 $\mathcal F_j$ 含此前全部费用，当前段费用在下一段开始前可测。则存在共同 $A',\eta'>0$，使
+
+$$
+\boxed{
+\Pr\left(\sum_{j=1}^JX_j>t\right)\le A'e^{-\eta't}
+\qquad(t\ge0).}
+\tag{334.5}
+$$
+
+结论不要求 $J$ 与各段费用独立，也不要求各段彼此独立。
+
+**证明。** 停止后取吸收历史并补零。对每个固定整数 $m$，迭代条件期望得到
+
+$$
+\mathbb E\exp\left(\theta\sum_{j=1}^mX_j\right)\le K^m.
+\tag{334.6}
+$$
+
+取 $b=\theta/(2\log K)>0$、$m=\lfloor bt\rfloor$。在 $J\le m$ 上，全部实际费用等于前 $m$ 段之和，故
+
+$$
+\begin{aligned}
+\Pr\left(\sum_{j=1}^JX_j>t\right)
+&\le\Pr(J>m)
++\Pr\left(\sum_{j=1}^mX_j>t\right)\\
+&\le Ae^{-\eta m}+e^{-\theta t}K^m\\
+&\le Ae^\eta e^{-\eta bt}+e^{-\theta t/2}.
+\end{aligned}
+\tag{334.7}
+$$
+
+合并常数即得结论；小 $t$ 也由扩大 $A'$ 覆盖。证毕。
+
+这个判据可以条件于一个更早的起始历史使用，只要两个输入界对该历史一致。段之间可以读取来源、更新控制状态或决定是否继续；只须所写的条件矩界仍成立。
+

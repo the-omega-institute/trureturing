@@ -1,0 +1,26 @@
+### 320.1 固定来源与共同控制权重
+
+沿用定义318.1。请求标签集 \(\mathcal S\)、来源动作集 \(\mathcal A\)、输出集 \(\mathcal Z\) 有限非空，每个来源 \(a\) 的回答集 \(\mathcal Y_a\) 有限非空。实际世界集 \(\Theta\ne\varnothing\) 不要求可数、紧致或带拓扑。完整历史为
+$$
+h=(S;(a_1,y_1),\ldots,(a_k,y_k)),\qquad |h|=k.
+$$
+其前 \(i\) 次调用构成 \(h_i\)，追加一次来源请求及回答写为 \(h(a,y)\)。固定核满足
+$$
+\kappa_\theta(y\mid h,a)\ge0,\qquad
+\sum_{y\in\mathcal Y_a}\kappa_\theta(y\mid h,a)=1.
+\tag{320.1}
+$$
+来源核可以依赖世界和完整历史，但不读取隐藏私随机性。原两独立 Bernoulli 来源仍以原合法 \((j,r,h)\) 为世界；一般记号不授权独立扩大两个实际来源率的范围。
+
+策略行 \(\pi_h\in\Delta(\mathcal A\sqcup\mathcal Z)\) 与未知世界无关。选中来源即执行一次真实调用，选中输出即返回；抽象树没有不计数的永久内部停滞。其概率表可含任意实数，不预设有效代码。
+
+定义固定来源似然
+$$
+L_\theta(h)=
+\prod_{i=0}^{k-1}
+\kappa_\theta(y_{i+1}\mid h_i,a_{i+1}),
+\qquad L_\theta(\operatorname{root}_S)=1.
+\tag{320.2}
+$$
+它属于 \([0,1]\)，由世界、来源核与已列历史决定。
+

@@ -1,0 +1,25 @@
+**定义 314.1（误差容限下的共同程序）。** 对 $\delta>0$，令 $\mathfrak A_\delta$ 为如下程序的集合：同一个程序可依赖固定已知参数和 $\delta$，不可依赖实际未知 $c,h$；在每个合法世界、每种请求下都几乎必经有限旧调用和有限内部运行返回，其输出律 $Q^{\mathcal A}_{S,c,h}$ 满足
+
+$$
+\max_{S\in\{T,H\}}\sup_{\text{合法 }j,r,h}
+\|Q^{\mathcal A}_{S,c,h}-P^\beta_{S,c,h}\|_{\mathrm{TV}}
+\le\delta.
+\tag{314.5}
+$$
+
+程序的总旧调用数记为 $M_S$，旧参考调用数记为 $N_{H,S}$。对正整数 $m$，定义
+
+$$
+\begin{aligned}
+\mathcal C_m(\delta)
+&=\inf_{\mathcal A\in\mathfrak A_\delta}
+\max_S\sup_{j,r,h}\mathbb E^{\mathcal A}_{j,r,h}M_S^m,\\
+\mathcal C_m^H(\delta)
+&=\inf_{\mathcal A\in\mathfrak A_\delta}
+\max_S\sup_{j,r,h}\mathbb E^{\mathcal A}_{j,r,h}N_{H,S}^m.
+\end{aligned}
+\tag{314.6}
+$$
+
+全部上确界只遍历实际合法来源。第二项不要求任务调用有任何矩，但任务调用仍真实发生并收费，且总运行仍须几乎必有限。每个 $\delta$ 可选择不同程序；不假定下确界达到。
+

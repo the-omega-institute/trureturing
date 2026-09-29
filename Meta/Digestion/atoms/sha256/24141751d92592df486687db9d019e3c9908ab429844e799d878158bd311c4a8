@@ -1,0 +1,52 @@
+**定理328.5（两个极限不可交换）。** 在本节同一输出、来源与身份合同中，对 $\mathcal C=\mathrm{pol},\mathrm{alg}$ 分别有
+
+$$
+\boxed{
+\lim_{\lambda\downarrow0}\lim_{\delta\downarrow0}
+\mathcal V_a^{\mathcal C}(\delta,\lambda)=\infty,}
+\tag{328.14}
+$$
+
+而
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}\lim_{\lambda\downarrow0}
+\mathcal V_a^{\mathcal C}(\delta,\lambda)
+\le K_*<\infty.}
+\tag{328.15}
+$$
+
+**证明。** 固定 $\lambda>0$，由式（328.3）及第326节，$\delta\downarrow0$ 时费用趋于无穷，故式（328.14）成立。
+
+反过来，固定 $\delta>0$ 与 $\epsilon>0$，采用引理328.4的一份有限有效策略，记其总调用上界为 $n$。对 $0<\lambda\le1$，其每条路径有 $N_H+\lambda N_T\le n$，而 $t\mapsto t^a$ 在 $[0,n]$ 上一致连续。因此存在仅依赖 $a,n,\lambda$ 的 $\omega_{a,n}(\lambda)\downarrow0$，使
+
+$$
+0\le (N_H+\lambda N_T)^a-N_H^a
+\le\omega_{a,n}(\lambda)
+\tag{328.16}
+$$
+
+逐路径成立。例如可取
+
+$$
+\omega_{a,n}(\lambda)=
+\begin{cases}
+(\lambda n)^a,&0<a\le1,\\
+a n^a\lambda,&a\ge1.
+\end{cases}
+\tag{328.17}
+$$
+
+故在两个实现类中都有
+
+$$
+\mathcal V_a^{\mathcal C}(\delta,\lambda)
+\le K_*+\epsilon+\omega_{a,n}(\lambda).
+\tag{328.18}
+$$
+
+先令 $\lambda\downarrow0$，再令 $\epsilon\downarrow0$，得到 $v_{\mathcal C}(\delta)\le K_*$。随着 $\delta\downarrow0$，可行策略集合缩小，所以 $v_{\mathcal C}(\delta)$ 单调不减；其上界 $K_*$ 与 $\delta$ 无关，故极限存在且有限，得到式（328.15）。证毕。
+
+式（328.15）不声称内层价格极限恰好等于仅参考费用的最优值，也没有交换费用下确界与准确完成。有效类的正误差结论不推出其准确类必有有限参考矩；两者的固定参数有效性前提仍须分开。
+

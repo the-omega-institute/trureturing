@@ -1,0 +1,22 @@
+**推论324.5（零误差极限的临界发散）。** 对非整数 $\beta$、$a=\beta/2$，
+
+$$
+\boxed{
+\mathcal C_a^{\mathrm{pol}}(0)
+=\mathcal C_a^{\mathrm{alg}}(0)
+=\infty,}
+\tag{324.34}
+$$
+
+且在扩展实数意义下，
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}\mathcal C_a^{\mathrm{pol}}(\delta)
+=\lim_{\delta\downarrow0}\mathcal C_a^{\mathrm{alg}}(\delta)
+=\infty.}
+\tag{324.35}
+$$
+
+每个固定 $\delta>0$ 的两类费用仍有限，并按第321.6节相等。
+

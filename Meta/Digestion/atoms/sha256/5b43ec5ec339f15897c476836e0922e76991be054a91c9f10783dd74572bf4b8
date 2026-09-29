@@ -1,0 +1,10 @@
+**定理319.6（零误差费用极限）。** 对每个固定实 \(s>0\)，
+$$
+\boxed{
+\lim_{\delta\downarrow0}\mathcal C_s^{\mathrm{alg}}(\delta)
+=\lim_{\delta\downarrow0}\mathcal C_s^{\mathrm{pol}}(\delta)
+=\mathcal C_s^{\mathrm{pol}}(0).}
+\tag{319.12}
+$$
+等式在扩展实数中成立。共同值有限时，抽象准确最优策略存在；不据此断言有效准确程序存在。
+

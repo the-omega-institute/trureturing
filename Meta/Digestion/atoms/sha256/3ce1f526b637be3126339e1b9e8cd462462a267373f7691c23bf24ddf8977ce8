@@ -1,0 +1,19 @@
+**推论340.4（固定参考预算下的有限层任务费用）。** 存在固定 $C_{\rm len},c_{\rm fin}>0$ 和 $k_{\rm geom}$，使任一上述程序在
+
+$$
+\sup_{w,S}\mathbb E^{A^{[J]}}N_H^a\le K,\qquad
+J-k_{\rm geom}\ge C_{\rm len}K>0
+\tag{340.59}
+$$
+
+时满足
+
+$$
+\boxed{
+\sup_{w,S}\mathbb E^{A^{[J]}}N_T^a
+ \ge c_{\rm fin}\frac{J-k_{\rm geom}}K.}
+\tag{340.60}
+$$
+
+这些常数只依固定模型、参考网格和共同批量常数，不依 $J,K$ 或该次地板；$k_{\rm geom}$ 与引理340.2相同。
+
