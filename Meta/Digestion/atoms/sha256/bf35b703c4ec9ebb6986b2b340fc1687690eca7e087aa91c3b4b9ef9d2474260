@@ -1,0 +1,7 @@
+## 27. Root-choice invariant Lucas-block tower
+
+Let $K=\mathbb Q(\omega)$ as in Section 26, fix an algebraic closure
+$\overline K$, and put $B_j=L_{3^j}^2+3$ for $j\geq1$. For every family
+$(\gamma_j)_{j\geq1}$ in $\overline K$ with $\gamma_j^3=B_j$, define
+$T_0=K$ and $T_{m+1}=T_m(\gamma_{m+1})$.
+

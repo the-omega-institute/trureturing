@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1a2d4e21f790e0a1e89a9ae5146620bf5471ba870ee130e31de0ed0b52ab6d6f
+  normalized_sha256: sha256:1a2d4e21f790e0a1e89a9ae5146620bf5471ba870ee130e31de0ed0b52ab6d6f
+cas_ref: sha256:1a2d4e21f790e0a1e89a9ae5146620bf5471ba870ee130e31de0ed0b52ab6d6f
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GoldenCubicBlockKummerTower.golden_cubic_block_kummer_tower_degree
+    target_statement_id: sha256:87dd0be8836007c9cb876d092eac6a1e9f1e0eb039394fe24286d2e9c21557eb
+receipts:
+  unresolved_subitems: []

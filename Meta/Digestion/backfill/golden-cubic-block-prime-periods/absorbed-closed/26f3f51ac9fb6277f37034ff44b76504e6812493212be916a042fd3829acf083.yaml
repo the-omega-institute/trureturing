@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:26f3f51ac9fb6277f37034ff44b76504e6812493212be916a042fd3829acf083
   normalized_sha256: sha256:26f3f51ac9fb6277f37034ff44b76504e6812493212be916a042fd3829acf083
 cas_ref: sha256:26f3f51ac9fb6277f37034ff44b76504e6812493212be916a042fd3829acf083
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GoldenCubicBlockPositiveRootTower.golden_cubic_block_positive_root_tower_degree
+    target_statement_id: sha256:3666403421f4fc59607f510ba31facc34f3f3876d404b12e37e8be1ff33fcd31
 receipts:
   unresolved_subitems: []

@@ -1220,3 +1220,43 @@ degree over $\mathbb Q(\omega)$; it makes no discriminant or
 ramification assertion.
 
 ## 追加锚（本行以下为增补区）
+
+## 27. Root-choice invariant Lucas-block tower
+
+Let $K=\mathbb Q(\omega)$ as in Section 26, fix an algebraic closure
+$\overline K$, and put $B_j=L_{3^j}^2+3$ for $j\geq1$. For every family
+$(\gamma_j)_{j\geq1}$ in $\overline K$ with $\gamma_j^3=B_j$, define
+$T_0=K$ and $T_{m+1}=T_m(\gamma_{m+1})$.
+
+**Theorem 27.1 (degree for every root choice).** For every such family
+and every $J\geq0$,
+
+$$
+[T_J:K]=3^J.
+$$
+
+Proof. We prove the stronger induction claim that a noncube natural
+number $a$ coprime to $B_1,\ldots,B_m$ remains a noncube in $T_m$.
+For $m=0$, a cube root of $a$ in $K$ would make $X^3-a$ reducible over
+$\mathbb Q$, since the quadratic extension $K/\mathbb Q$ cannot contain
+a root of an irreducible cubic. A rational cube root of an integer is
+an integer, contradicting the hypothesis on $a$.
+
+Suppose the claim holds at $m$. Apply it first to $a=B_{m+1}$:
+the noncube theorem and pairwise coprimality of the actual Lucas
+blocks give its hypotheses. Thus $X^3-B_{m+1}$ is irreducible over
+$T_m$, and $T_{m+1}/T_m$ has degree three. Because $\omega\in T_m$,
+this extension is cyclic. The cubic descent of Section 26 shows that
+if another eligible $a$ became a cube in $T_{m+1}$, then
+$aB_{m+1}^e$ would be a cube in $T_m$ for some $0\leq e\leq3$.
+Coprimality of $a$ and $B_{m+1}$ implies that this product is still
+not an integer cube: a prime exponent of $a$ not divisible by three
+is unchanged in the product. Pairwise coprimality of the blocks makes
+the product coprime to every earlier $B_i$, contradicting the induction
+claim.
+
+The empty tower has degree one; multiplying the stage degrees proves
+the formula. The conclusion is independent of the selected cubic
+roots and does not assert a discriminant or ramification law.
+
+## 追加锚（本行以下为增补区）
