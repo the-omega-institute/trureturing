@@ -50,7 +50,10 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Both pairs are inequivalent", Disp(new Formula.Not(F.Id("claim"))),
                 "For a set T of qubits and a subspace C, let V_T(C) be the span of all M psi with psi in C and M a product operator that is the identity on the qubits of T; V_T(C) is the whole space exactly when the reduced state of C on T has full rank. If W is a product of invertible matrices composed with a qubit permutation sigma, conjugating by W turns a product operator that is the identity on T into one that is the identity on sigma(T), so W maps V_T(C) into V_sigma(T)(W C); applied to W and to its inverse, this shows that T is full for C exactly when sigma(T) is full for W C. If a word fixing C is supported in T and has an X or a Y, it commutes with every product operator that is the identity on T, so it fixes V_T(C), which then misses the basis vector 0...0: T is not full. This makes {0,2,3} and {1,2,3} not full for S_B (the words XIZXI and IXXYI), and {0,1,2,3}, {0,1,4,5}, {2,3,4,5} not full for S+ (XXXXII, XXIIXX, IIXXXX). If a word n commutes with the generators, it maps C into C, and V_T(C) is invariant under the part of n on T; when these parts include X_j and Z_j for every j in T, V_T(C) is invariant under every product operator, and being nonzero it contains every basis vector. Tables of such words, checked by the kernel, make every triple other than {0,1,4} and {2,3,4} full for S_A and every set of four qubits other than {0,1,2,3} full for S-; the codespaces of S_A and S+ contain the indicator of the bit strings with x_0 = x_1, x_2 = x_3 and x_4 = x_0 + x_2, and S- is nonzero because it is the image of S+. For the first pair the preimages of {0,2,3} and {1,2,3} under sigma must then be {0,1,4} and {2,3,4}, but the first two share two qubits and the last two share one. For the second pair the images of {0,1,2,3}, {0,1,4,5} and {2,3,4,5} are three different sets of four qubits that are not full for S-, which has only one.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mahmoud-2026-stabilizer-pair-local-unitary-inequivalence"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(
@@ -80,7 +83,6 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(variable), domain, body);
     private static Formula Sub(Formula value, Formula index) => new Formula.Subscript(value, index);
     private static Formula Complexes() => Seq(Mathbb, Grp(F.Id("C")));
-    private static Formula Qubit() => Call("Matrix", Call("Fin", D(2)), Call("Fin", D(2)), Complexes());
     private static Formula Bits(Formula n) => new Formula.TypeArrow(Call("Fin", n), Call("Fin", D(2)));
 
     private static Formula PauliFormula() => Disp(Equal(Named("Pauli"),
@@ -131,14 +133,15 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
     }
 
     private static Formula Words(string name, string first, string second, string third) =>
-        Disp(Equal(Named(name), Seq(Langle, F.Id(first), Comma, Sp, F.Id(second), Comma, Sp,
-            F.Id(third), Rangle)));
+        Disp(Equal(Named(name), Seq(Langle, Sp, F.Id(first), Comma, Sp, F.Id(second), Comma, Sp,
+            F.Id(third), Sp, Rangle)));
 
-    private static Formula Equivalent(int qubits, string source, string target)
+    private static Formula Equivalent(byte qubits, string source, string target)
     {
         Formula u = F.Id("U"), sigma = F.Id("sigma"), n = D(qubits);
         Formula map = Seq(Call("tensorOp", u), Sp, Cdot, Sp, Call("qubitPermutation", sigma));
-        Formula image = Call("map", Call("toLin", map), Call("codespace", Named(source)));
+        Formula toLin = new Formula.Apply(Seq(Operatorname, Grp(F.Id("toLin"), Apos)), [map]);
+        Formula image = Call("map", toLin, Call("codespace", Named(source)));
         return Some("U", new Formula.TypeArrow(Call("Fin", n), Call("unitaryGroup", Call("Fin", D(2)), Complexes())),
             Some("sigma", Call("Perm", Call("Fin", n)), Equal(image, Call("codespace", Named(target)))));
     }
