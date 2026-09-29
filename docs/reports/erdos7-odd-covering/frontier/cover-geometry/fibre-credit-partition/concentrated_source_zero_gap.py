@@ -14,6 +14,8 @@ from pathlib import Path
 ap = argparse.ArgumentParser(description=__doc__)
 ap.add_argument('--input', default='docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_actual_roots_input.json')
 ap.add_argument('--output')
+ap.add_argument('--full-parent', action='store_true',
+                help='Put original35 in the full source cell (4,5), outside all eight target cells.')
 args = ap.parse_args()
 raw = Path(args.input).read_bytes()
 data = json.loads(raw)
@@ -82,7 +84,8 @@ for d in sorted(mixed):
         t = roots[d] if eps else None
         if d == 35:
             need(roots[d]==2,'Original105 root preserved')
-            coords = {5:(1,1 if eps==0 else 3),7:(1,1 if eps==0 else 3)}
+            parent_a,parent_b = (4,5) if args.full_parent else (1,1)
+            coords = {5:(1,parent_a if eps==0 else 3),7:(1,parent_b if eps==0 else 3)}
         else:
             outside = [r for r in support if r not in (5,7)]
             need(len(outside)==1 and outside[0]>=13,'One large cofactor prime')
@@ -212,6 +215,57 @@ for a,b in combinations([r for r in family if r['modulus'] in {3*d for d in sele
     need((a['residue']-b['residue'])%gcd(a['modulus'],b['modulus'])!=0,'Target8 events pairwise disjoint')
 need(len(set(cells.values()))==8,'Eight different full-cap cells')
 
+# Optional strengthening: original35 and all eight target3d events attain
+# their respective same-source caps simultaneously, on both surviving roots.
+# Endpoint identities imply equality for every affine root weighting w.
+parent_group = None
+if args.full_parent:
+    parent = next(r for r in family if r['modulus']==35)
+    need((parent['residue']%5,parent['residue']%7)==(4,5),
+         'The full parent occupies its declared common cell')
+    need((4,5) not in cells.values(),'Parent cell differs from every target cell')
+    parent_rows = []
+    target_sum = sum((F(r['mass']) for r in mass_rows),F(0))
+    for t in (1,2):
+        need(source_matrix[5,t][4]==source_matrix[7,t][5]==1,
+             'One parent cell has both normalized source ratios one on this root')
+        exact,cap = F(1),F(1,35)
+        for q in primes:
+            h=heights[q]
+            pure=[(e,0 if e==1 else 1+q**(e-1)) for e in range(1,h+1)]
+            active=[(e,2 if e==1 else 1+2*q**(e-1)) for e in range(1,h+1)] if t==(1 if q==5 else 2) else []
+            if q in parent['coords']:
+                e,a=parent['coords'][q]
+                available=F(1,q**e)-sum((intersection_mass(q,e,a,f,b) for f,b in pure+active),F(0))
+                need(available==F(1,q**e),'Parent coordinate cylinder avoids every pure and active-star hole')
+                exact*=caps[q]*available
+                cap*=caps[q]
+            else:
+                exact*=1-betas[q,t]
+                cap*=1-betas[q,t]
+        need(exact==cap,'One actual parent attains its cap on this root')
+        for row in family:
+            if row['modulus'] in {3*d for d in selected}:
+                need((parent['residue']-row['residue'])%gcd(35,row['modulus'])!=0,
+                     'Parent and target event are disjoint as actual congruence classes')
+        target_mass=target_sum if t==1 else F(0)
+        # All targets have ternary root1; their pairwise disjointness and exact
+        # root1 cap equalities were checked above, before entering this branch.
+        exact_union=exact+target_mass
+        sum_caps=cap+target_mass
+        need(exact_union==sum_caps,'Joint group union equals the sum of its own root caps')
+        parent_rows.append({'ternary_root':t,'p5_p7_cell':[4,5],
+                            'parent_mass':str(exact),'parent_cap':str(cap),
+                            'parent_cap_deficit':'0','joint_union_mass':str(exact_union),
+                            'joint_sum_caps':str(sum_caps),'joint_cap_deficit':'0'})
+    parent_group={
+        'parent_modulus':35,'target_moduli':[3*d for d in selected],
+        'root_rows':parent_rows,
+        'root_weight_convention':'w times root1 plus (1-w) times root2; 0<=w<=1',
+        'all_root_weights_deficit_coefficients':{'constant':'0','w':'0'},
+        'reason':'The same actual parent attains both root caps; it is disjoint from all targets, which simultaneously attain their own caps and are pairwise disjoint.',
+    }
+
 result = {
  'contract':'135-class actual divisor-closed irredundant NONCOVER; same complete pure/star numerical chains, same beta and caps, all JP1 tables valid; no global-extremality assertion',
  'input':args.input,'input_sha256':sha256(raw).hexdigest(),
@@ -226,6 +280,8 @@ result = {
  'jp_pair_count':55,'jp_root_table_count':110,'jp_nonempty_tables':jp_tables,
  'checks':checks,
 }
+if args.full_parent:
+    result['full_parent_group']=parent_group
 serialized = json.dumps(result,indent=2,sort_keys=True)+'\n'
 if args.output:Path(args.output).write_text(serialized)
 else:print(serialized,end='')

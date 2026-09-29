@@ -1625,6 +1625,282 @@ check all110 buckets and construct their separate full-value slot
 assignments. These are ordinary proofs and finite checks, not new
 Lean verification or a resolution of the unrestricted problem.
 
+## One shallow axis couples all depths of a second prime
+
+The unchanged FC36 inventory has 27 root-1 cofactors with v_5(d)=1 and
+11 dividing d. Their joint deletion charge in the SAME FC34 enlarged
+comparison carrier is at most their independent charge minus
+
+    delta_11 = 5871989479650501664074332 / 30908074423698266486925085881
+             = 0.00018998237803996774... .
+
+For ternary weight w_1 the credit is w_1*delta_11. This bound holds for
+every actual source and phase assignment with the stated complete star
+metadata, after the same-source FC34 enlargement. It does not require
+the concentrated source or the earlier 85-source phase prescription.
+It assumes the H3=1 globally class-count-then-modulus-sum minimal whole
+cover constraints, including JP1. These are ordinary mathematical
+deductions and exact finite controls, not Lean verification or a solution
+of unrestricted Erdős #7.
+
+### Same-source setup and the asymmetric bucket
+
+Keep ONE actual pure-conditioned product source, all original numerical
+labels and their actual phases, and one retained ternary root t. Let
+c_r*r^(-e) be the fixed valid cylinder caps. Enlarge the actual star
+sets on that same nonatomic source to the declared masses B_(r,t), as
+in Report528 FC33--FC34. The enlarged comparison carrier is a subset
+of the original carrier; originals and their phase-capacity constraints
+do not change. The statement is about deletions inside this smaller
+carrier, which still yields a valid lower bound for the true survivor.
+It does NOT identify the original blocked mass beta with B.
+
+Fix distinct primes p,q>=5. Take the actual root-t bucket
+
+    D = {d selected: v_p(d)=1, v_q(d)>=1, root(3d)=t}.
+
+All finite positive q depths are retained. Define the fixed coefficient
+
+    a_d = product_(r outside support(d))(1-B_(r,t))
+          * product_(r in support(d)) c_r*r^(-v_r(d)).
+
+The normalized remaining first-p masses on the SAME source are
+
+    R_i = lambda_p([i]_p minus enlarged B_(p,t))/(c_p/p),
+    0<=R_i<=1,
+    sum_i R_i = S = p*(1-B_(p,t))/c_p.
+
+The root-conditional deletion mass of original 3d is bounded by
+
+    actual_debit(3d) <= a_d * R_(a_(3d) mod p).       (FC47a)
+
+This uses v_p(d)=1. At q and every other supported coordinate use only
+its cap at the ORIGINAL depth; in particular a depth-e q-cylinder is
+bounded by c_q*q^(-e), with no first-q availability multiplier. Outside
+the support retain the exact product factor from the same enlarged
+carrier. Coordinate independence proves FC47a.
+
+Let eps_(q,t) be 1 when original 3q exists on root t, and 0 otherwise.
+Comparable disjointness excludes the pure q first root from every
+3d phase in this bucket, and also excludes the 3q first root when
+eps=1. These two roots are distinct, since pure q divides original 3q.
+Thus the q first-root address has
+
+    J = q-1-eps_(q,t)
+
+permitted columns. These are ADDRESS restrictions valid at all q depths,
+not a bound on the normalized mass of a deep cylinder.
+
+Report385 section17 proves that every actual 3pq phase has at most two
+original occupants, and its JP1 forces doubled cells to form a matching.
+Both statements apply to ALL original 3pq-multiples, at arbitrary p/q
+heights, in the same H3=1 whole-minimal family. They therefore apply to D.
+
+For an upper relaxation drop every other cell/label exclusion, including
+proper mixed-divisor exclusions, and use the complete p by J grid with
+cell<=2 and doubled cells a matching. This relaxation retains the actual
+assignment and is invariant under all p-row permutations. The coefficients
+a_d remain fixed when the p mass vector is varied.
+
+### General exact slot theorem for this relaxation
+
+Write S=k+rho, where k=floor(S) and 0<=rho<1. At a capped-simplex vertex,
+the p row values are k copies of 1, one rho when rho>0, and zeros. Define
+
+    K = k*J + min(k,J),
+    L = J + 1_(k<J) if rho>0, and L=0 if rho=0.
+
+Sort the fixed nonnegative coefficients as a_1>=...>=a_n. If the bucket
+fits the full grid, its maximal relaxed charge at the concentrated vector
+is EXACTLY
+
+    U* = sum_(i<=min(n,K)) a_i
+         + rho * sum_(K<i<=min(n,K+L)) a_i.          (FC47b)
+
+For every actual p-source vector of the same sum S, its relaxed charge
+is at most U*. Equivalently the joint deficit from the independent charge is
+
+    Delta = (1-rho)*sum_(K<i<=min(n,K+L)) a_i
+            + sum_(i>K+L) a_i.                    (FC47c)
+
+The last sum is zero when n<=K+L. The formula concerns THIS complete-grid
+relaxation; equality is not claimed for actual phases with all original
+restrictions or for several buckets simultaneously.
+
+#### Proof of source concentration
+
+For a fixed finite admissible assignment the objective is linear in R.
+The maximum over all assignments is therefore convex in R. A vertex of
+{R in [0,1]^p: sum R=S} has at most one fractional coordinate: two such
+coordinates admit opposite perturbations and are not extreme. All vertices
+are row permutations of the stated concentrated vector. Row symmetry of
+the complete-grid relaxation makes their optimized values equal. Express
+any admissible R as a convex combination of vertices to obtain its upper
+bound by this common value. No separately chosen source laws are glued;
+this is a convex upper bound for each ONE actual source. Fixed coefficients
+and the removal of label-specific incidence restrictions are essential.
+
+#### Proof of the exact slot list
+
+Each row supplies J primary slots at that row's value. A matching may add
+one extra slot to each of at most min(p,J) DISTINCT rows. Conversely every
+such row set is realizable by injecting it into distinct columns of the
+complete grid. Choosing the highest-valued rows for the extra slots makes
+the sorted full slot list coordinatewise at least that from any other
+choice. Nonnegative coefficients may therefore be paired in decreasing
+order with this one list by rearrangement.
+
+At the concentrated vector its mass-one slots number kJ+min(k,J)=K.
+If rho>0, the fractional row has J primary slots and can receive an extra
+exactly when the k full rows have not exhausted the J matching columns,
+giving L=J+1_(k<J). Every remaining slot has value zero. This proves FC47b
+and FC47c. Zero-weight rows and partial matchings cause no exception: adding
+unused zero or nonnegative slots only enlarges the list, and the chosen
+matching realizes the majorizing list. Selecting its first n slots realizes
+the optimum of the relaxed weighted assignment.
+
+### The exact 27-label instance
+
+The FC36 complete star metadata put every 5-star on root 1 and all other
+stars on root 2. With h_5=5 and the original c_5, FC34 gives
+
+    B_(5,1)=b_5=c_5-1,
+    S_5=5*(1-b_5)/c_5=1563/625=2+313/625.
+
+Since 3*11 is on root 2, J=10 on root 1. Thus k=2, rho=313/625,
+K=22, L=11. Every cofactor in this bucket contains 5, which is the only
+star-active coordinate on root 1, so its outside-support factor is 1.
+
+The 19 cofactors with v_11(d)=1 are
+
+    55,715,935,1045,1265,1595,1705,2035,2255,
+    9295,12155,13585,15895,17765,19855,20735,21505,22165,24035.
+
+The eight deeper cofactors, which the two-shallow-axis bucket omits, are
+
+    605,6655,7865,10285,11495,13915,17545,18755.
+
+The five smallest coefficients in the 27-label bucket are
+
+| cofactor d | coefficient a_d |
+| ---: | --- |
+| 24035 | 3653833748125/53446540621645752 |
+| 22165 | 14515304375/192458608305264 |
+| 21505 | 2925091283125/38001485376246344 |
+| 19855 | 300306875/3801589061928 |
+| 20735 | 139730573125/1728892876288464 |
+
+Consequently FC47c gives
+
+    delta_11 = (312/625) * sum_(these five ranked coefficients) a_d
+             = 5871989479650501664074332/30908074423698266486925085881. (FC48)
+
+The five displayed labels identify ORDER STATISTICS used by rearrangement;
+the proof does not say these particular actual labels incur the losses.
+The inequality is about the sum of all 27 actual deficits.
+
+For the same fixed inventory, keeping all other charges unchanged raises
+the FC34 survivor lower comparison by w_1*delta_11 for every w_1 in [0,1].
+This does not establish positivity, and one cannot insert the credit into
+a maximization over unrelated numerical inventories without checking the
+corresponding bucket and coefficient conditions for each candidate.
+
+### What the original saturation question forces
+
+In the concentrated actual source, the full first-5 rows are {3,4}; the
+full first-11 columns on root 1 are {2,...,10}. Suppose old 55 uses a full
+cell and the 19 shallow labels all attain their caps. The shared old-55
+phase excludes one of the 18 full cells, leaving 17 primary slots.
+To fit 19 labels every remaining full cell must be occupied, and exactly
+two cells must be doubled, in different rows and columns. Original 165
+(cofactor 55 on root 1) is comparable with all the other 18 originals,
+so its cell is a singleton and is forbidden to all its descendants.
+
+The eight deeper labels still obey the SAME shallow phase capacities.
+They cannot join already occupied primary cells without creating another
+double in an exhausted row; cannot join doubled cells; and cannot use the
+old-55 cell. The only further possible full-5 addresses are the two cells
+in first-11 column 1. Both must be singletons, because each row already
+contains a double. Thus at most TWO of the EIGHT deeper labels can remain
+in full-5 rows while the shallow saturation persists. At least six must
+move to a nonfull 5 row, or one must relinquish the shallow saturation.
+
+This establishes a same-table obstruction before looking for conflicts
+between the 5/11 and 5/13 shallow buckets. The source-uniform FC47c bound
+allows the optimizer to choose which labels lose mass and does not require
+the old-55 full-cell hypothesis. Parent debit tradeoffs are not needed for
+delta_11 and are intentionally absent from its scope.
+
+### All ordered pairs in the unchanged inventory
+
+The program evaluates all 220 ordered prime-pair/root buckets, retaining
+v_p=1 and all positive q depths. Exactly four have positive FC47c credit:
+
+| root | shallow p | arbitrary-depth q | labels | full slots K | Delta |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 5 | 11 | 27 | 22 | 0.00018998237803996774 |
+| 1 | 5 | 13 | 31 | 26 | 0.00014473369786985690 |
+| 1 | 5 | 17 | 36 | 34 | 0.000023932436464010618 |
+| 1 | 5 | 19 | 42 | 38 | 0.00003443505712262327 |
+
+Exact values are retained in the JSON. These overlapping bucket credits
+MUST NOT be added merely because their displayed smallest-coefficient
+lists differ. A valid combination must charge each actual label deficit
+at most once, or use a proved fractional combination of the whole-bucket
+inequalities. No such combined improvement is claimed here.
+
+The [mixed-depth row-slot control](../../../frontier/cover-geometry/fibre-credit-partition/mixed_depth_row_slots.py)
+and its [exact result](../../../frontier/cover-geometry/fibre-credit-partition/mixed_depth_row_slots.json)
+check all220 buckets and the four exact positive fractions. Independent
+slot controls retain4171 extra-row lists and147 weighted vertex/nonvertex
+cases, including k<J, k>=J and rho=0;7123 explicit predicates pass.
+The general statement follows from the proof above. Arbitrary ternary
+height, all numerical inventories and a strictly positive whole-family
+comparison remain unresolved. No new Lean result is claimed.
+
+### A different actual source also eliminates the joint-parent credit
+
+FC46's positive credit remains tied to its specified source. Strengthen
+the actual135-original construction of FC44 by replacing only original35:
+change1 mod35 to19 mod35, equivalently its(5,7) cell from(1,1) to(4,5).
+Keep105 at(3,3) on root2 and every other original unchanged. The same
+private-point construction and uncovered integer still work; the retained
+certificate checks every literal class. This actual family remains
+numerically divisor-closed and irredundant, and all110 JP tables pass.
+
+The eight target cells listed in FC44 contain no(4,5), so the new parent
+is disjoint from all eight targets. In this ONE concentrated source,
+
+    R_(5,t)(4)=R_(7,t)(5)=1 for both t=1,2.
+
+With a_0=c_5*c_7/35 and g_t({5,7}) as before, the parent's actual
+conditional mass is exactly a_0*g_t({5,7}) on both roots. The eight
+targets already attain every own cap on root1 and are mutually disjoint.
+Thus the same group's conditional union masses equal its independent
+cap sums at BOTH endpoints:
+
+    U_1=a_0+sum_(eight d)u_d,
+    U_2=a_0*g_2({5,7}),
+    joint deficit at weight w = w*0+(1-w)*0=0,
+    for every real 0<=w<=1.                          (FC49)
+
+This gives an actual zero-deficit instance for the parent AND descendants,
+not merely separately feasible parent/child maxima. It refutes deriving
+a source-uniform strictly positive credit for this nine-event group from
+the stated local source totals, label/root metadata, private points and
+JP constraints alone. It is a NONCOVER, not a globally minimal covering
+family or a common realization of the full2138-label inventory. The new
+27-label bound FC48 has different inventory premises, so is unaffected.
+
+The existing [actual-source checker](../../../frontier/cover-geometry/fibre-credit-partition/concentrated_source_zero_gap.py)
+accepts `--full-parent` for this strengthened case. Its
+[full-parent certificate](../../../frontier/cover-geometry/fibre-credit-partition/concentrated_source_full_parent.json)
+checks2544 predicates, including the same parent's two endpoint masses
+and disjointness from every target. Its default remains the original
+2516-check FC44 construction and reproduces the earlier result byte for
+byte for the same input argument. Both variants use the same finite
+source and preserve all of its original heights.
+
 ## Whole-family height one permits a smaller common query interface
 
 The all-depth query in(FC13) permits later originals with arbitrary ternary
