@@ -25,7 +25,10 @@ internal sealed class BFormCodeAveragedEnumeratorDocument : IScribeDocumentDefin
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the averaged formula", Disp(F.Id("claim")),
                 "Exchange the sums over B and r. The term r = 0 gives t_0^(2c) for every B. For r nonzero, antisymmetry with zero diagonal gives r . B^T r = 0, and the linear map B -> B^T r is onto the hyperplane orthogonal to r: if r_j is nonzero, a matrix supported on row and column j reaches any s orthogonal to r. So each such s has the same number of preimages, and the sum over B equals p^(c(c-1)/2) / p^(c-1) times the sum over s orthogonal to r. The constraint r . s = 0 is written as p^(-1) times the sum over k of the standard additive character psi(k r . s); the sum over r and s then factors into the c-th power of the sum over a and b of psi(kab) t_a t_b, and the row r = 0 contributes p t_0^c (sum of t_a)^c. Since t is even, replacing (a, b) by (-a, b) turns psi(kab) into its complex conjugate, so the character sum equals the cosine sum. Counting the B-form matrices as p^(c(c-1)/2) gives the formula.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("angelinos-2022-bform-averaged-enumerator"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
