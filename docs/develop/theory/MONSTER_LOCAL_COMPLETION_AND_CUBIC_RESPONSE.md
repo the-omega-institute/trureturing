@@ -1141,7 +1141,7 @@ $$
 
 实际扩展须先具备定义 28.1 的 $U$ 和全部不同不可约模，应用实际 Verlinde、简单流扩展和诱导扭曲模定理。只验证有限字符不会替代这些前提。本文没有新增 Lean/Scribe，也没有核验所涉 VOA 定理的 Lean 公理闭包。
 
-新增 Library 记录为 [`vanekeren2020atomicmonstercompletion.md`](../../../Library/notes/vanekeren2020atomicmonstercompletion.md)。以下文献读取范围继承上一轮附件的来源记录，本次同步不冒称重新完成了文献审查：
+新增 Library 记录为 [`vanekeren2020atomicmonstercompletion.md`](../../../Library/VertexAlgebra/vanekeren2020atomicmonstercompletion.md)。以下文献读取范围继承上一轮附件的来源记录，本次同步不冒称重新完成了文献审查：
 
 [AM99] H. Albuquerque and S. Majid, *Quasialgebra structure of the octonions*, Journal of Algebra 220 (1999), 188–224; arXiv:math/9802116，DOI 10.1006/jabr.1998.7850。https://arxiv.org/pdf/math/9802116 。附件记录读取导言、§§3–4，并视觉核对 Proposition 4.4。已知八元数扭曲结构保留原作者归属。
 
