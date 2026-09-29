@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The concrete Sugawara zero mode has finite-dimensional energy eigenspaces
-   indexed by weighted monomials. -/
+   digest: The concrete Sugawara L0 has finite-dimensional weighted-monomial eigenspaces. -/
 
 /-
 proof_shape: energyFiber_finite: content; lZero_spectrum: content
@@ -35,14 +34,14 @@ open D5.S3.VertexAlgebra.PolynomialFockSugawaraCommutators
 /-- Weighted degree, with the variable `X i` contributing `i + 1`. -/
 def energy (d : ℕ →₀ ℕ) : ℕ := d.sum fun i e => (i + 1) * e
 
-/-- Exponent vectors of a fixed positive energy. -/
+/-- Exponent vectors of a fixed nonnegative energy. -/
 abbrev EnergyFiber (N : ℕ) := {d : ℕ →₀ ℕ // energy d = N}
 
 /-- The eigenspace of the actual pointwise-finite Sugawara operator. -/
 noncomputable def lZeroEigenspace (N : ℕ) : Submodule ℂ Fock :=
   LinearMap.ker (L 0 - (N : ℂ) • (LinearMap.id : Module.End ℂ Fock))
 
-/-- Positive energy bounds the occupied indices and their exponents, even for infinitely
+/-- Positive variable weights bound occupied indices and exponents, even for infinitely
 many available variables. -/
 theorem energyFiber_finite (N : ℕ) : Finite (EnergyFiber N) := by
   classical
