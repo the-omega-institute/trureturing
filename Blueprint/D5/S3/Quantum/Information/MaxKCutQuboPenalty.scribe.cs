@@ -51,10 +51,7 @@ internal sealed class MaxKCutQuboPenaltyDocument : IScribeDocumentDefinition
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of both conjectures", Disp(F.Id("claim")),
                 "Let t_v be the number of parts of v in an optimal x, and suppose some vertex has t_v at least 2. For each colour j delete j from every vertex with two or more colours, and add up the changes of the objective over all k colours. The penalty of such a vertex drops by c_v t_v (2 t_v - 3) in total, and the term of an edge touching such a vertex increases by w_uv times the number of its shared colours, since each deletion removes one shared colour. That number is at most half the sum of t (2t - 3) over the endpoints with two or more colours, so the edges with negative weight cost at most -d-_v / 2 times t_v (2 t_v - 3) at each such vertex, and the edges with positive weight only help. The total is therefore at least the sum of (c_v + d-_v / 2) t_v (2 t_v - 3), which is positive, so one of the deletions improves x, a contradiction. If some vertex had no colour, giving it colour i gains c_v minus the weight of its neighbours of colour i, which is at least k c_v - d+_v > 0 when summed over i. So x is one-hot and, since the penalty vanishes on one-hot matrices, an optimal k-cut. For the reduced objective the same deletion changes each edge term by at most s_u (s_u - 1) + s_v (s_v - 1) in absolute value and each penalty by c_v s_v (s_v - 1), where s_v is the number of columns set, so the total gain is at least the sum of (c_v - d+_v + d-_v) s_v (s_v - 1) > 0.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("harkness-2025-maxkcut-qubo-penalty"),
-                    ResolutionKind.Proved))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
         []));
 
     private static DocumentBlock Node(
