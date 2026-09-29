@@ -23,6 +23,16 @@ claimed. The finite-difference cancellation and private-mass baseline
 are reused mechanisms; the result here records actual overlap location,
 the exact same-source reset densities, and their joint-payoff consumer.
 
+Section 7 gives the complementary limitation using only four fixed odd
+primes. A globally irredundant distinct-modulus family can have a
+covered, genuinely three-cut fibre whose outside-target overlap tends
+to zero as heights grow. The same occurs after conditioning on the
+avoidance of actual original prime classes. These families have global
+holes; their full overlap on the selected fibre does not tend to zero.
+Thus the local fibre premises and irredundance do not supply the
+projection or weighted-mass input needed for a uniform positive
+outside-target bound.
+
 ## 1. One actual canonical fibre and its original labels
 
 Fix a finite original family $A_i=[a_i]_{d_i}$ with distinct odd moduli
@@ -443,3 +453,245 @@ not provide a uniform positive source mass, the projection-density caps,
 or a positive weighted corner floor. Those are the remaining premises
 for a quantitative Erdős #7 consumer; the report proves their exact
 conditional transport, not their universal availability.
+
+## 7. Three necessary cuts can have arbitrarily little outside-target overlap
+
+The two-cut conclusion EC14 has no height-independent three-cut analogue,
+even for a covered canonical fibre in a globally irredundant family of
+distinct odd originals. The following construction also shows that the
+supported-law premise of EC10 is additional information: its optimal
+projection packing tends to zero, and the actual overlap it would pay
+for tends to zero as well.
+
+Fix three distinct odd primes $p,q,r$ and heights $A,B\ge1$. On the
+selected fibre use
+
+$$
+X=\mathbb Z/p^A\mathbb Z\times\mathbb Z/q^B\mathbb Z
+  \times\mathbb Z/r\mathbb Z,
+\qquad
+C=\{p\mid x,\ q\mid y,\ z=0\}.
+$$
+
+Besides the target, use the four unions of proper-support cylinders
+
+$$
+\begin{aligned}
+B_1&=\{x\ne0\},&
+B_2&=\{x=0,\ y\ne0\},\\
+B_3&=\{y=0,\ z\ne0\},&
+B_4&=\{x=0,\ z\ne0\}.
+\end{aligned}
+\tag{EC16}
+$$
+
+Here $x=0$ means the full residue modulo $p^A$, and similarly for
+$y$. Expand every nonzero condition into its disjoint first-nonzero
+digit cylinders. The resulting literal core conditions are
+
+| Group | Literal core conditions | Number |
+| --- | --- | ---: |
+| $B_1$ | $x=c p^{j-1}\bmod p^j$, $1\le j\le A$, $1\le c<p$ | $(p-1)A$ |
+| $B_2$ | $x=0\bmod p^A$, $y=c q^{j-1}\bmod q^j$, $1\le j\le B$, $1\le c<q$ | $(q-1)B$ |
+| $B_3$ | $y=0\bmod q^B$, $z=c\bmod r$, $1\le c<r$ | $r-1$ |
+| $B_4$ | $x=0\bmod p^A$, $z=c\bmod r$, $1\le c<r$ | $r-1$ |
+
+### 7.1 Literal odd originals and their actual private points
+
+Choose one further odd prime $\ell$, different from $p,q,r$. Order
+the literal suppliers group by group as $B_2,B_4,B_3,B_1$, with any
+fixed order inside each group. Give supplier $i$ the additional
+condition $0\bmod\ell^i$, for $1\le i\le K$, where
+
+$$
+K=(p-1)A+(q-1)B+2(r-1).
+$$
+
+The original target is $0\bmod pqr$ without a tag. CRT fixes one
+residue for each original modulus, once and for all. Every modulus is
+odd and greater than one, and different $\ell$-exponents make the
+supplier moduli numerically distinct. No supplier contains all three
+target primes, so the target is divisibility-maximal. All four primes
+can stay fixed as the heights grow.
+
+The full period and canonical three-cut boundary are
+
+$$
+N=p^Aq^Br\ell^K,\qquad b=\ell^K.
+\tag{EC17}
+$$
+
+On the actual $0\bmod b$ fibre the suppliers are exactly the cylinders
+in the table. They and $C$ cover it: use $B_1$ if $x\ne0$, $B_2$ if
+$x=0,y\ne0$, $B_3$ if $x=y=0,z\ne0$, and $C$ at the origin.
+The target's private set on this fibre is exactly
+
+$$
+\Pi=\{(0,0,0)\},\qquad \theta=p^{-A}q^{-B}r^{-1}.
+\tag{EC18}
+$$
+
+The three pair-support groups omit precisely $r,p,q$, respectively.
+Their missing-prime sets are singletons. Any hitting set for the
+target therefore contains all three primes; this is an
+inclusion-minimal three-cut interface, with no two-cut alternative for
+this target and original inventory.
+
+The entire original family is irredundant, although some suppliers are
+redundant on the selected fibre alone. For supplier $i<K$, take tag
+coordinate $\ell^i\bmod\ell^K$, so exactly the suppliers with index
+at most $i$ are active. At $i=K$, take tag zero. Use the following
+actual core point, with $s$ the supplier's own nonzero shell value
+or nonzero $r$-residue:
+
+| Supplier group | Private core point |
+| --- | --- |
+| $B_2$ | $(0,s,1)$ |
+| $B_4$ | $(0,0,s)$ |
+| $B_3$ | $(1,0,s)$ |
+| $B_1$ | $(s,1,0)$ |
+
+Every point misses $C$. Earlier suppliers in its own group have
+disjoint shell conditions. At a $B_4$ point, earlier $B_2$ suppliers
+miss $y=0$; at a $B_3$ point, the earlier $B_2,B_4$ groups miss
+$x=1$; at a $B_1$ point, $B_2,B_4$ miss $x\ne0$ and $B_3$ misses
+$y=1$. Later suppliers are inactive at its tag. CRT therefore gives
+one globally private point for each original supplier. The full origin
+is private to the target. Finally, tag one and any core point outside
+$C$ give a global hole. These are irredundant noncovers with a covered
+canonical fibre, not odd whole covers.
+
+### 7.2 Exact outside-target overlap and the projection cost
+
+The literal cylinders within each group are disjoint. Therefore on
+the selected fibre the multiplicity of other originals is
+
+$$
+L_-=\mathbf1_{x\ne0}
+ +\mathbf1_{x=0,y\ne0}
+ +\mathbf1_{y=0,z\ne0}
+ +\mathbf1_{x=0,z\ne0}.
+$$
+
+If $z=0$, every nonorigin point has $L_-=1$. If $z\ne0$, this load
+is two exactly when $x=0$ or $y=0$, and is one otherwise. Since
+$z\ne0$ already lies outside $C$, the actual event EC3 is exactly
+
+$$
+\begin{aligned}
+O&=\{z\ne0\}\cap\bigl(\{x=0\}\cup\{y=0\}\bigr),\\
+\mu(O)&=(1-r^{-1})
+ \bigl(p^{-A}+q^{-B}-p^{-A}q^{-B}\bigr)
+ \longrightarrow0\quad(A,B\longrightarrow\infty).
+\end{aligned}
+\tag{EC19}
+$$
+
+The cut primes stay fixed. Conditioning Haar only outside the target
+divides this mass by the fixed number $1-1/(pqr)$, so it does not
+restore a uniform positive bound. Nor does existence of a private point
+or global irredundance supply that bound.
+
+The only probability law supported on $\Pi$ is its point mass. Its
+single-coordinate densities relative to Haar are $p^A,q^B,r$.
+Equivalently, every nonnegative witness measure in the homogeneous
+packing formulation after EC10 has the form $s\delta_{(0,0,0)}$.
+The three projection constraints are exactly
+
+$$
+s\le\frac{\beta_{12}}r,\qquad
+s\le\frac{\beta_{13}}{q^B},\qquad
+s\le\frac{\beta_{23}}{p^A}.
+$$
+
+Consequently its optimum is attained and equals
+
+$$
+s_*=
+\min\left\{\frac{\beta_{12}}r,
+             \frac{\beta_{13}}{q^B},
+             \frac{\beta_{23}}{p^A}\right\}
+\longrightarrow0.
+\tag{EC20}
+$$
+
+This is the direct evaluation of the existing packing interface, not
+a new linear-programming duality theorem. The small-capacity witness
+uses full-depth singleton projections; it does not change which cut
+primes are necessary. Thus failure of a uniform projection packing
+cannot, under these local and irredundance premises, be repaired by
+asserting that the target must instead admit a smaller cut.
+
+The distinction between outside-target overlap and all overlap is
+essential. Every point of $C\setminus\Pi$ has one supplier as well as
+the target. The actual excess on the selected fibre is therefore
+
+$$
+\mu((L-1)_+)=\mu(O)+\frac1{pqr}-\frac1{p^Aq^Br}.
+\tag{EC21}
+$$
+
+It does not tend to zero. These identities refute a uniform
+outside-target amplification from the stated three-cut premises;
+they do not refute a whole-cover forcing theorem using oddness,
+a different original-bucket allocation, or the full excess account.
+No numerical experiment or Lean verification is claimed for this
+symbolic construction.
+
+### 7.3 The obstruction survives an actual pure-prime prefilter
+
+One can also include original prime classes and retain their actual
+avoidance law. Add the four originals $1\bmod p$, $1\bmod q$,
+$1\bmod r$, $1\bmod\ell$. Delete precisely the suppliers contained
+in one of these classes: the $j=1,c=1$ cylinder in each of $B_1,B_2$,
+and the $z=1$ cylinders in $B_3,B_4$. Give the remaining suppliers
+successive tag heights in the same group order. All four groups remain
+nonempty, since every prime is odd. Use the resulting maximum tag
+height $K'$ and actual $0\bmod\ell^{K'}$ fibre.
+
+The deleted cylinders are covered by the added pure classes, so this
+fibre is still covered and its target-private set is still the origin.
+The pair-support groups still force the same three-cut interface.
+For each remaining supplier the private-point table remains valid
+after replacing its free coordinate value $1$ by $2$. Its prescribed
+shell avoids the relevant prime class by the stated deletion rule,
+and all other coordinates also avoid the four pure classes. The tag
+valuation still excludes later suppliers. Each core prime original
+has a private point with its own core coordinate one, the other core
+coordinates zero, and tag two. The prime-$\ell$ original has a private
+point with tag one and core $(2,0,0)$. Thus global irredundance and
+numerical distinctness are retained. Tag two with core $(2,0,0)$ is a
+global hole.
+
+On the selected fibre, condition Haar on avoiding the actual prime
+originals. Its support is
+
+$$
+U=\{x\not\equiv1\pmod p,\quad
+      y\not\equiv1\pmod q,\quad z\ne1\},
+\qquad \mu_U=\mu(\,\cdot\mid U).
+$$
+
+The tag-prime original is already absent on this fibre. At every point
+of $U$ all added pure originals and all deleted cylinders are absent,
+so the other-original load is exactly the same formula as before.
+Writing
+
+$$
+a_A=\frac1{(p-1)p^{A-1}},\qquad
+b_B=\frac1{(q-1)q^{B-1}},
+$$
+
+direct counting under this one actual conditioned law gives
+
+$$
+\mu_U(O)=\frac{r-2}{r-1}
+          (a_A+b_B-a_Ab_B)\longrightarrow0.
+\tag{EC22}
+$$
+
+This is a calculation under the modified family's original prime
+prefilter, not a substitution of its density into a Haar identity.
+The family is still a noncover and is not asserted to be divisor-closed
+or globally minimum in class count. Those stronger whole-cover
+restrictions remain available for a future positive forcing argument.
