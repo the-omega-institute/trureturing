@@ -1,0 +1,23 @@
+**引理340.2（未启动区在真实平滑后仍有正尾）。** 存在只依固定模型与式（340.3）共同常数的 $c_{\rm tail}>0$、$\eta_{\rm conc}>0$ 和几何阈值 $k_{\rm geom}$，使对任一满足
+
+$$
+k\ge k_{\rm geom},\qquad \eta_k\le\eta_{\rm conc}
+\tag{340.20}
+$$
+
+的层，存在原合同合法世界 $w_k$，其中
+
+$$
+x_k=r_k/2,\qquad
+c=1,\quad h=x_k,\quad
+p_k=q_k=\frac{1-x_k/C}{B},
+\tag{340.21}
+$$
+
+并且
+
+$$
+\boxed{G_k(p_k,q_k)\ge c_{\rm tail}n_k^{-a}.}
+\tag{340.22}
+$$
+

@@ -1,0 +1,19 @@
+**定理320.3（预算与误差的静态刻画）。** 存在同一个逐世界几乎必有限回答的策略，满足
+$$
+\sup_{\theta,S}\mathbb E_\theta M^s\le K,\qquad
+\sup_{\theta,S}\|Q_{\theta,S}-P_{\theta,S}\|_{\mathrm{TV}}\le\delta,
+$$
+当且仅当某个 \((r,f)\in\mathcal R\) 同时满足
+$$
+m_n(\theta,S)\le K
+\quad(\theta,S,\ n\ge1),
+\tag{320.11}
+$$
+$$
+F_n(\theta,S,D)\le P_{\theta,S}(D)+\delta
+\quad(\theta,S,\ D\subseteq\mathcal Z,\ n\ge0).
+\tag{320.12}
+$$
+准确情形 \(\delta=0\) 可只要求全部单输出上界
+\(F_n(\theta,S,z)\le P_{\theta,S}(z)\)。
+

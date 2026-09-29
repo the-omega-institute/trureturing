@@ -1,0 +1,16 @@
+**引理328.3（同一参考构造的紧域执行）。** 第327节的准确策略有一个在 $\mathcal K$ 上的共同执行延伸，使两种请求在每个 $(p,q)\in\mathcal K$ 都几乎必有限返回，且
+
+$$
+\sup_{(p,q)\in\mathcal K,S}\mathbb E N_H^a\le K_*<\infty.
+\tag{328.8}
+$$
+
+对该同一策略的总调用数 $M$，还有
+
+$$
+\boxed{
+\lim_{n\to\infty}
+\sup_{(p,q)\in\mathcal K,S}\Pr(M>n)=0.}
+\tag{328.9}
+$$
+

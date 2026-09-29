@@ -1,0 +1,91 @@
+**引理324.2（正系数的端点插值）。** 若某个 $a>0$ 满足
+
+$$
+q_n(p(h))\le K n^{-a}\quad(0<h\le\eta,\ n\ge1),
+\qquad
+\epsilon_n=n^aq_n(p_0)\longrightarrow0,
+\tag{324.11}
+$$
+
+则对任意固定 $H>0$，
+
+$$
+\boxed{
+\eta_n(H):=
+\sup_{0\le h\le\min\{\eta,H/\sqrt n\}}
+n^a q_n(p(h))
+\longrightarrow0.}
+\tag{324.12}
+$$
+
+**证明。** 先增大 $K$，使它同时控制全部 $\epsilon_n$；在引理324.1的使用情形中，端点 Markov 界已给同一个 $K$。对 $0<\lambda<1$ 和
+
+$$
+\vartheta_\lambda=(1-\lambda)\vartheta_0+\lambda\vartheta_1,
+$$
+
+有限正项和的 Hölder 不等式给
+
+$$
+\begin{aligned}
+q_n(\vartheta_\lambda)
+&\le q_n(\vartheta_0)^{1-\lambda}q_n(\vartheta_1)^\lambda\\
+&\quad\cdot
+\exp\!\left(
+n\big[(1-\lambda)\Lambda(\vartheta_0)
++\lambda\Lambda(\vartheta_1)
+-\Lambda(\vartheta_\lambda)\big]\right).
+\end{aligned}
+\tag{324.13}
+$$
+
+$\lambda=0,1$ 由端点恒等式处理。若 $q_n(\vartheta_0)=0$，则正系数及 $p_0\in(0,1)$ 使全部系数为零，故整条尾多项式恒零，无需对零取对数。
+
+因为 $\Lambda''(\vartheta)=p(1-p)\le1/4$，有
+
+$$
+0\le
+(1-\lambda)\Lambda(\vartheta_0)+\lambda\Lambda(\vartheta_1)
+-\Lambda(\vartheta_\lambda)
+\le\frac18\lambda(1-\lambda)(\vartheta_1-\vartheta_0)^2.
+\tag{324.14}
+$$
+
+闭区间 $p([0,\eta])$ 位于 $(0,1)$ 内，因此存在有限 $D>0$，使
+
+$$
+0\le\vartheta_0-\vartheta(h)\le Dh
+\qquad(0\le h\le\eta).
+\tag{324.15}
+$$
+
+取 $L=2DH$，并在每个充分大的 $n$ 选择
+
+$$
+\vartheta_1(n)=\vartheta_0-L/\sqrt n.
+\tag{324.16}
+$$
+
+它对应某个 $h_1(n)\in(0,\eta]$，始终取自原合法 $c=1$ 正域。若 $h\le H/\sqrt n$，则
+
+$$
+\lambda=
+\frac{\vartheta_0-\vartheta(h)}{L/\sqrt n}
+\in[0,1/2].
+\tag{324.17}
+$$
+
+外点的统一界为 $q_n(\vartheta_1(n))\le Kn^{-a}$。式（324.13）—（324.17）遂给
+
+$$
+n^aq_n(p(h))
+\le e^{L^2/8}\epsilon_n^{1-\lambda}K^\lambda
+\le e^{L^2/8}\sqrt{K\epsilon_n}
+\longrightarrow0.
+\tag{324.18}
+$$
+
+界对该整个参数带一致。有限个尚未使外点落入合法域的 $n$ 不影响极限。证毕。
+
+这一步利用的是同一工厂在同一调用预算下的有限来源结构。一般参数化随机变量族不必有式（324.10），所以第315节有界但不一致可积的概率反例不能反驳引理324.2。插值也没有使用 $p>p_0$ 的世界。
+

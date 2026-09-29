@@ -1,0 +1,22 @@
+**定理342.2（固定地板的严格比例改善）。** 存在另一地板 $\eta'$，满足
+
+$$
+0<\eta'_{k+1}\le\eta'_k\le1,\qquad
+\sum_k\eta'_k\le1,\qquad
+\frac{\eta'_k}{\eta'_{k+1}}\le R,\qquad
+\frac{\eta'_k}{\eta_k}\longrightarrow+\infty.
+\tag{342.26}
+$$
+
+其共同标准实现 $A_{\eta'}$ 在一个近临界区间中仍有全部有限任务矩，并满足
+
+$$
+\boxed{
+H_a(A_{\eta'})\le K_0,\qquad
+\frac{T_{a-u}(A_{\eta'})}{T_{a-u}(A_\eta)}
+ \longrightarrow0\quad(u\downarrow0).}
+\tag{342.27}
+$$
+
+其中 $K_0$ 来自第342.2节的同一个标准构造，不依旧地板。结论首先属于完整实概率策略类；有效构造的附加条件在第342.10节说明。
+

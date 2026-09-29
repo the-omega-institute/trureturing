@@ -1,0 +1,35 @@
+### 351.6 精确实现反向迫使所需谱值
+
+反过来，若 \(\alpha P^kb=h_k^{r,\theta}\) 对全部 \(k\ge0\) 成立，则 \(\lambda\) 是 \(P\) 的特征值，包括实相位及零半径参数的退化情况。
+
+令 \(\chi\) 为 \(P\) 的特征多项式。首先设 \(\lambda\notin\mathbb R\)。三个数 \(1,\lambda,\overline\lambda\) 两两不同，且
+
+\[
+h_k^{r,\theta}
+=\frac12-\frac14\lambda^k-\frac14\overline\lambda^k.
+\tag{351.23}
+\]
+
+由 Cayley–Hamilton，对全部 \(k\ge0\)，
+
+\[
+0=\alpha P^k\chi(P)b
+=\frac12\chi(1)
+-\frac14\lambda^k\chi(\lambda)
+-\frac14\overline\lambda^k\chi(\overline\lambda).
+\tag{351.24}
+\]
+
+取 \(k=0,1,2\)，三频率的 Vandermonde 矩阵可逆，所以 \(\chi(\lambda)=0\)。这里不要求相位有理或无理，只使用频率互异。
+
+若 \(\lambda\in\mathbb R\setminus\{1\}\)，响应化为 \(h_k=(1-\lambda^k)/2\)。在 \(k=0\) 应用同一个特征多项式递推，得到
+
+\[
+0=\frac12\chi(1)-\frac12\chi(\lambda).
+\tag{351.25}
+\]
+
+行随机矩阵本有特征值 1，因此 \(\chi(1)=0\)，仍得 \(\chi(\lambda)=0\)。这一计算包含 \(\lambda=0\)，按 \(\lambda^0=1\) 处理首项，无需除以 \(\lambda\)。
+
+若 \(\lambda=1\)，目标恒为 0，而任何行随机矩阵都已含特征值 1，结论同样成立。结合上一节，精确实现与谱容纳的两个方向都已证明。
+
