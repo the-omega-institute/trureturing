@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Arith/Covering/ThreeQuarterCirculantConjecture24Refutation
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [D5/S3/Arith/Covering/ThreeQuarterCirculantConjecture]
+   anchors: []
    utility: none
    digest: Refutes the literal degree-two quantifier of Conjecture 2.4 at k equals one. -/
 
