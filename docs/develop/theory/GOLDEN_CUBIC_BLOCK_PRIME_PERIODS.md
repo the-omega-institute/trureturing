@@ -36,7 +36,6 @@ transfers this order to $Q$.
 
 ## 追加锚（本行以下为增补区）
 
-
 ## 2. Native periods of block powers
 
 For $j\geq 1$, retain $B_j=L_{3^j}^2+3$ and $C_j=L_{3^j}^2+1$.
@@ -1626,3 +1625,20 @@ the second-layer coefficient from the $XU_{m-1}$ term; the leading term
 of the remaining summand is too large in degree to contribute.
 
 ## 追加锚（本行以下为增补区）
+
+## 38. Odd-index Fibonacci quotient and the recurrence polynomial
+
+**Theorem 38.1 (odd-index recurrence bridge).** Let $n$ be an odd
+positive integer. For every $m\geq0$, the recurrence polynomial from
+Section 33 satisfies
+
+$$
+F_n U_m(L_n)=F_{mn}.
+$$
+
+In particular, for $m\geq1$ the integer quotient $F_{mn}/F_n$ equals
+$U_m(L_n)$. To see the identity, put $a=\varphi^n$ in the integral
+golden ring. Its norm is $-1$ and its trace is $L_n$, so its quadratic
+equation reads $a^2=L_n a+1$. The golden coordinate of $a^m$ therefore
+obeys the defining recurrence of $U_m$, starts at zero, and has first
+value $F_n$. The same coordinate of $a^m=\varphi^{mn}$ is $F_{mn}$.

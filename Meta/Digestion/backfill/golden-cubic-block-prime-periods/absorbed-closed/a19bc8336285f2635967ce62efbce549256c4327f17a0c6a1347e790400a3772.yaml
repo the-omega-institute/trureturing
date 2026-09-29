@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a19bc8336285f2635967ce62efbce549256c4327f17a0c6a1347e790400a3772
+  normalized_sha256: sha256:a19bc8336285f2635967ce62efbce549256c4327f17a0c6a1347e790400a3772
+cas_ref: sha256:a19bc8336285f2635967ce62efbce549256c4327f17a0c6a1347e790400a3772
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciRecurrencePolynomialOddBridge.odd_fibonacci_recurrence_bridge
+    target_statement_id: sha256:78c7e5df273aecdaf67c36c1b31f6a742fe075f8056c069d68b5946b0f776495
+receipts:
+  unresolved_subitems: []
