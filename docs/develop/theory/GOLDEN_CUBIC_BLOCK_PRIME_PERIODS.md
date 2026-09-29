@@ -1561,3 +1561,35 @@ for independent formal proof. The displayed argument is a mathematical
 proof in the theory source; it has not yet been verified by Lean.
 
 ## 追加锚（本行以下为增补区）
+
+## 35. An explicit odd-index Lucas growth threshold
+
+**Theorem 35.1 (Lucas threshold for the nonsquare estimate).** Let
+$r,n$ be nonnegative integers with $r\geq119$ and $n\geq2r+1$. Then
+
+$$
+L_n^2-4>128\cdot6^r.
+$$
+
+Proof. Put $A_j=L_{2j+1}$. The Lucas recurrence gives
+$A_0=1$, $A_1=4$, and
+$A_{j+2}=3A_{j+1}-A_j$. Simultaneous induction gives $A_j>0$ and
+$2A_{j+1}\geq5A_j$: if these hold at $j$, then
+$2A_{j+2}-5A_{j+1}=A_{j+1}-2A_j\geq A_j/2>0$.
+Consequently $2^jA_j\geq5^j$ for every $j$.
+
+Direct integer calculation gives
+$4\cdot25^{119}>513\cdot24^{119}$. Multiplying the inequality by
+$25/24>1$ extends it to every $j\geq119$. Since $6^j>16$ there,
+
+$$
+25^j>128\cdot24^j+4\cdot4^j.
+$$
+
+Squaring $2^jA_j\geq5^j$ and using this strict inequality yields
+$A_j^2-4>128\cdot6^j$. Finally, $L_n\geq L_{2r+1}=A_r$ because
+the positive-index Lucas numbers increase; this follows directly from
+$L_{m+1}=F_m+F_{m+2}$ and the monotonicity of Fibonacci numbers.
+Thus the displayed bound holds for $n\geq2r+1$.
+
+## 追加锚（本行以下为增补区）
