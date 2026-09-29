@@ -2761,7 +2761,7 @@ G-c(增订三十三…三十六,#5427/#5445/#5465/#5568)在 kernel 中给出 `ge
 
 ## 一　定义：三种观察对象与实际变换
 
-沿用《Fibonacci 原子关系生成》定义 87.1 与定理 109.1，令
+沿用《Fibonacci 原子关系生成》定义 87.1 与定理 111.1，令
 
 $$
 S_a(z)=\sum_{k=0}^a z^k,\qquad Q_a(z)=\sum_{k=1}^a\frac{z^k}{k},
@@ -2794,7 +2794,9 @@ $$
 Li 的经典判据见 X.-J. Li, *The Positivity of a Sequence of Numbers and the Riemann Hypothesis*, JNT 65 (1997), 325--333。
 这些是本节推导的既有前提，不把局部 Taylor 展开当成全圆盘非零或全阶正性的证明。
 
-Weil 的对象是光滑紧支撑测试函数 $g$ 及其卷积平方 $h=g*g^*$。
+Weil 的对象是偶、光滑、紧支撑的复值测试函数 $g:\mathbb R\to\mathbb C$（`D5/S3/Weil/TestFunctions.lean:23-27`）。定义 involution
+$g^*(x)=\overline{g(-x)}$（`D5/S3/Weil/TestFunctions.lean:84-102`），并令卷积平方 $h=g*g^*$。
+这个测试函数 bundle 不要求 $g=g^*$；偶性是 $g(-x)=g(x)$，不是共轭对称性。
 本卷采用角频率变换
 
 $$
@@ -2820,7 +2822,7 @@ $$
 
 ## 二　命题：有限前缀正性保留的量与系数正性的障碍
 
-定理 109.1 逐轴相加给出，对每个 $n>1$，
+定理 111.1 逐轴相加给出，对每个 $n>1$，
 
 $$
 \log\frac{\sigma(n)}n
