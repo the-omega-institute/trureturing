@@ -489,3 +489,11 @@ cp docs/reports/fib-robin-boundary/refinement_records.py "$run_root/source files
 cmp "$run_root/output/coarse additions.json" docs/reports/fib-robin-boundary/coarse_additions.json
 cmp "$run_root/output/refinement records.json" docs/reports/fib-robin-boundary/refinement_records.json
 ```
+
+`temporal_projection.py` 为 FIB §§141–142 的完整剩余时间模型提供可重建的有限目录。默认 `H=5040`，保留实际数量 `6H` 的共同来源，枚举一个零秩周期内的全部纤维及损失闭包，并检查小模数退化情形。只依赖 Python 3.9+ 标准库；运行 `python3 -B docs/reports/fib-robin-boundary/temporal_projection.py --out docs/reports/fib-robin-boundary/temporal_projection.json`，或指定正整数 `--H` 搜索其他模数。输出是精确有限实验，不是一般闭包或 RH 的形式证明。
+
+FIB §§143–144 使用同一程序的 `projection` 与 `seed_10080` 数据。`Fraction` 有理数检验时间 Möbius 壳、旧体/未来体素乘增量；小模数部分直接构造每个探针的纤维平均，独立对照 gcd 公式。种子证书使用带显式尾界的对数展开、调和数的 Euler 常数夹界及指数 Taylor 下和，保留向外取整的有理端点。它可用于搜寻其他 `--H` 的混合秩与候选增量；全称分析结论仍由正文的条件与推导承担。
+
+可移植复现已检查：脚本拷贝到含空格的目录，从另一工作目录、空环境（仅系统 `PATH`）调用 Python 后，默认 JSON 与入库结果逐字节一致；`--H 0` 明确拒绝。平台范围为本次 macOS/Python 运行，未将其泛化为所有平台的实测。
+
+FIB §§147–148 使用新增的 `rank_shell_bounds` 与 `finite_prime_signs` 数据。前者以直接除数和对照时间可见能量的 Möbius 乘积，检查 5040 的单层 7 壳、`37^a*113`（`a=1,2,3,4`）的共同秩 19 壳与 4181 的 113 增量，共六项精确上界、等号及超额检查。后者对 `P={2,3,5,7}` 用整数筛与规范 Zeckendorf 贪心展开，保留 `X=100,1000,10000,100000` 的普通和及数字奇偶加权和，并逐项核对 64 个平方自由倍数计数与其 Möbius 展开。默认运行命令不变；全部旧结果字段保持原值。它们只验证有限实例；碰撞族的极限、固定有限素数集的正均值证明及外部数字正交定理由正文分别说明，不是对实际 Möbius 函数或 RH 的反例。
