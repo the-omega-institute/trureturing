@@ -145,7 +145,7 @@ internal sealed class FiniteAdditiveReadoutSpectrumDocument : IScribeDocumentDef
             All("i", Id("Nat"),
                 Eq(singular(i), C("ite", Lt(i, quotientCard),
                     C("Real.sqrt", Weight), Zero))),
-            Eq(C("Finset.card", C("Function.support",
+            Eq(C("Finset.card", C("Finsupp.support",
                     C("LinearMap.singularValues", t))), quotientCard));
         Formula normalization = And(
             Eq(C("inf", kernelA, kernelB), C("bot", C("AddSubgroup", G))),
@@ -171,7 +171,7 @@ internal sealed class FiniteAdditiveReadoutSpectrumDocument : IScribeDocumentDef
             Eq(MatMul(joint, joint), joint),
             Eq(C("Matrix.rank", joint), One),
             Eq(SumAt("p", pair, Mul(C("star", coefficient), coefficient)), One),
-            Eq(sourceKet, Lambda("p", pair, coefficient)),
+            Eq(sourceKet, F.Seq(F.Open, Lambda("p", pair, coefficient), F.Close)),
             Eq(sourceKet, Smul(C("Complex.ofReal", C("Real.sqrt", Weight)),
                 SumAt("q", Q, Lambda("p", pair,
                     Mul(LeftVectors(fst, q), RightVectors(snd, q))))))), paired: true);

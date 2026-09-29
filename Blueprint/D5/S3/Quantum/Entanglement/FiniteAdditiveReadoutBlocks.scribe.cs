@@ -159,9 +159,9 @@ internal sealed class FiniteAdditiveReadoutBlocksDocument : IScribeDocumentDefin
         Formula equiv = C("Equiv", sourceCoset, C("Prod", left, right));
         return Theorem(All("q", Q,
             Ex("e", equiv, All("x", sourceCoset,
-                And(Eq(C("Prod.fst", C("Prod.fst", Apply(Id("e"), X))),
+                And(Eq(C("Subtype.val", C("Prod.fst", Apply(Id("e"), X))),
                         Apply(Alpha, C("Subtype.val", X))),
-                    Eq(C("Prod.fst", C("Prod.snd", Apply(Id("e"), X))),
+                    Eq(C("Subtype.val", C("Prod.snd", Apply(Id("e"), X))),
                         Apply(Beta, C("Subtype.val", X))))))), paired: true);
     }
 
@@ -276,8 +276,8 @@ internal static class FiniteReadoutFormula
     internal static Formula SumAt(string name, Formula type, Formula body) =>
         F.Seq(new Formula.Subscript(F.Sum, F.Seq(Id(name), F.Sp, F.InMacro, F.Sp, type)), F.Grp(body));
     internal static Formula FilterCard(Formula type, string name, Formula condition) =>
-        C("Finset.card", C("Finset.filter", C("Finset.univ", type),
-            Lambda(name, type, condition)));
+        C("Finset.card", C("Finset.filter", Lambda(name, type, condition),
+            C("Finset.univ", type)));
 
     internal static Formula G => Id("G");
     internal static Formula A => Id("A");
