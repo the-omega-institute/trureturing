@@ -15,6 +15,12 @@ using disjoint finite pools of tag primes. All phases are fixed once by
 CRT. All probabilities below are under the full original-period Haar
 law, including every tag coordinate.
 
+The squarefree families also have covered fraction tending to one.
+Neither a fixed additive hole-mass penalty nor a fixed multiple of the
+logarithm of inverse hole mass repairs the proposed bound: the rectangle
+sum grows quadratically, while excess and logarithmic hole cost grow
+at most linearly in the construction parameter.
+
 Both families have explicit global holes. They refute the proposed
 extension under Report 840's local premises; they do not refute a bound
 with the additional hypothesis of whole coverage, nor Erdős #7. These
@@ -355,6 +361,101 @@ Finally, all core coordinates zero and all tags 1 give a global hole.
 The primes, pools and original phases are all finite and fixed. This is
 a squarefree irredundant noncover, not a random covering family.
 
+### 3.3 Near coverage and the logarithmic cost of the hole
+
+Let $A_S$ be the event that every core coordinate on side $S\in\{P,Q\}$
+differs from 1. Its mass is $a_S$. For a non-1 pattern $v$ on that
+side, define its actual tag-pool failure probability and total inactive
+pattern mass by
+
+$$
+f_S(v)=\prod_{\ell\in T_v}(1-1/\ell),\qquad
+h_S=\sum_{v\in A_S}\mu_S(\{v\})f_S(v),\qquad
+\varepsilon=e^{-\lambda}=\frac1{4R}.
+\tag{AP21}
+$$
+
+Here $\mu_S$ is uniform on the full core coordinates on side $S$;
+the complete tag contribution is already in $f_S(v)$. AP16 gives
+$0<h_S\le a_S\varepsilon$.
+
+If both core sides have a coordinate equal to 1, a target covers the
+point. If exactly one side has all coordinates different from 1, only
+its matching supplier pool can cover. If both sides have all coordinates
+different from 1, either matching pool can cover. These cases are
+disjoint. The $P$ core and all its tag pools are independent of the
+$Q$ core and all its tag pools under the original full Haar law. Hence
+the exact global hole mass is
+
+$$
+H:=\mu(L=0)
+ =(1-a_Q)h_P+(1-a_P)h_Q+h_Ph_Q.
+\tag{AP22}
+$$
+
+At a fixed core point, the conditional hole probability is zero,
+at most $\varepsilon$, or at most $\varepsilon^2$. Also
+$1-a_S\le1/n$. The explicit hole from Section 3.2 has positive mass
+on this finite full period, so
+
+$$
+0<H\le\varepsilon,\qquad
+H\le\frac{2\varepsilon}{n}+\varepsilon^2.
+\tag{AP23}
+$$
+
+Thus these same odd, squarefree, distinct and irredundant families
+cover a fraction tending to one. In particular, no fixed finite
+$C,C_0\ge0$ can bound $\sum_{p,q}\mu(R_{p,q})$ by
+$C\mathcal E+C_0H$: AP18 is quadratic in $n$, AP19 is at most
+linear, and AP23 tends to zero.
+
+A logarithmic hole penalty also fails, but this requires a lower bound
+on $H$. Every tag prime exceeds $R$. Using
+$\log(1-u)\ge-u/(1-u)$ and AP15 gives, for every actual pattern,
+
+$$
+\log f_S(v)
+ \ge-\frac{\sum_{\ell\in T_v}1/\ell}{1-1/R}
+ \ge-\frac{\lambda+1}{1-1/R}.
+\tag{AP24}
+$$
+
+Put $\beta=\exp[-(\lambda+1)/(1-1/R)]$. Then
+$h_S\ge a_S\beta$, so AP22 and $a_Pa_Q\ge1/2$ imply
+
+$$
+H\ge h_Ph_Q\ge\tfrac12\beta^2,\qquad
+\log(1/H)\le\log2+\frac{2(\lambda+1)}{1-1/R}.
+\tag{AP25}
+$$
+
+All logarithms are natural. For $n\ge4$, the inequalities
+$\log2\le1$ and $\log n\le n/2$ give
+$\lambda=2n\log2+\log8+2\log n\le3n+3\le4n$.
+Using $R\ge2$ in AP25 and AP19 yields the explicit bounds
+
+$$
+\mathcal E\le9n,\qquad \log(1/H)\le18n.
+\tag{AP26}
+$$
+
+Consequently, for any fixed finite $C,D\ge0$, choosing $n\ge4$ with
+$n>36C+72D$ gives
+
+$$
+\sum_{p,q}\mu(R_{p,q})\ge\frac{n^2}{4}
+ >(9C+18D)n
+ \ge C\mathcal E+D\log(1/H).
+\tag{AP27}
+$$
+
+The many tag variables introduce no omitted mass: their complete
+effect is in AP21 and its reciprocal-prime bound AP24. Every instance
+still has $H>0$. AP27 does not address a theorem restricted to exact
+whole coverage or a family-dependent penalty; it rules out this fixed
+scalar correction under the stated local hypotheses.
+
 ## 4. Consequence for the shared budget
 
 The common-pair theorem remains valid. The counterexamples show that
@@ -362,6 +463,8 @@ letting each target choose its own pair needs a genuinely additional
 account, even after replacing pointwise comparison by full Haar
 integration. Numerical distinctness, oddness, irredundancy and
 squarefreeness do not supply a support-independent constant in AP3.
+An arbitrarily high covered fraction and the two scalar hole penalties
+in Section 3.3 do not supply one either.
 
 This does not exclude weights that depend on the chosen prime pair or
 the actual source, a jointly allocated subset of targets, another
@@ -397,7 +500,8 @@ The exact full-Haar excess calculation includes the shallower
 $K-1$ tag contribution. These small controls check the implementation
 and mass formulas; their ratios are below one and do not independently
 establish unboundedness. AP12 proves that claim for arbitrary $n$.
-The squarefree family is supported by AP13--AP20's symbolic proof;
+The squarefree family and its hole bounds are supported by
+AP13--AP27's symbolic proof;
 no enumeration of its tag pools is claimed.
 
 The program uses only the Python standard library and explicit output
