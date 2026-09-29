@@ -122,9 +122,9 @@ public sealed class LegacyContextCausalEvidenceTests
             var rows = changed["modules"]!.AsArray();
             rows.Remove(rows.Single(row => row!["source_path"]!.GetValue<string>() == missingPath));
             File.WriteAllBytes(completePath, StructuredCanonicalWriter.WriteJson(changed.ToJsonString()).AsSpan());
-            var rejected = Assert.Throws<FormatException>(() =>
-                RawLeanReportArtifact.ReadFile(completePath, joined, validateMaterials: true));
-            Assert.Contains("Raw Lean report is missing modules:", rejected.Message, StringComparison.Ordinal);
+            var partial = RawLeanReportArtifact.ReadFile(completePath, joined, validateMaterials: true);
+            Assert.Equal(files.Count - 1, partial.Files.Count);
+            Assert.DoesNotContain(partial.Files.Keys, path => path.Value == missingPath);
         }
         File.WriteAllBytes(completePath, completeBytes);
         var selected = Registrations.Select(RepoPath.CreateKnown).ToArray();

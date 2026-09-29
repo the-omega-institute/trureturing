@@ -1,0 +1,50 @@
+**定理 116.4（接缝调整后的规范柱集及组成提升）。** 设 $w=(w_0,\ldots,w_{m-1})$ 是内部无相邻 1 的二进前缀。若 $m=0$，约定 $V=0,\sigma=0$；若 $m\ge1$，置
+
+$$
+V=\sum_{j<m}w_jG_j,\qquad\sigma=w_{m-1}.
+$$
+
+令 $h=m+\sigma$，$\mathcal C_w\subseteq\mathbb N$ 为补零规范数位的前 $m$ 位等于 $w$ 的全部数。则
+
+$$
+\begin{aligned}
+\mathbb N&\longrightarrow\mathcal C_w,&t&\longmapsto n_t=V+s^h(t)
+\end{aligned}
+$$
+
+是严格递增双射，包括 $t=0$，并且
+
+$$
+\iota(n_t)=\iota(V)+M^h\iota(t).
+$$
+
+特别地，最低 $m$ 位全零的柱集为 $\mathcal H_m=s^m(\mathbb N)$；$m=0$ 时就是整个 $\mathbb N$。
+
+证明。若 $\sigma=0$，未固定数位从位置 $m$ 起可以任意取一个有限支持非相邻序列。若 $\sigma=1$，位置 $m$ 强制为零，未固定数位从 $m+1$ 起可以任意取这样的序列。删除固定前缀及这个强制零位，再把剩余位置降低 $h$，得到唯一的规范整数 $t$。反向将 $t$ 的规范数位提高 $h$ 后与 $w$ 合并，两部分支持不交且接缝不相邻，故显示的和本身就是规范表示，没有额外归一化。两个操作互逆。全零尾部给 $t=0$，不能删掉；$m=0$ 时两操作都是恒等。对同一数位分解逐项使用 $M^{h+j}\mathbf e=M^hM^j\mathbf e$ 就得到组成提升式。
+
+下面同时给出单调性和下一条密度所需的既有位移计算。令 $\varphi=(1+\sqrt5)/2$、$\theta=\varphi^{-1}$、$\psi=-\theta$。Fibonacci 恒等式 $F_{k+1}-\varphi F_k=\psi^k$ 在 $k=0,1$ 成立，两边同满足 Fibonacci 递推，故归纳成立。于是
+
+$$
+\delta(t):=s(t)-\varphi t=\sum_{j\ge0}b_j\psi^{j+2}.
+$$
+
+有限个正项的和严格小于 $\theta^2+\theta^4+\cdots=\theta$；有限个负项的绝对值和严格小于 $\theta^3+\theta^5+\cdots=\theta^2$。所以
+
+$$
+-\varphi^{-2}<\delta(t)<\varphi^{-1}.
+$$
+
+因 $\theta+\theta^2=1$，有 $0<\varphi(t+1)-(s(t)+1)<1$，从而复得既有闭式
+
+$$
+s(t)=\lfloor(t+1)\varphi\rfloor-1.
+$$
+
+相邻输入使取整前的数增加 $\varphi>1$，故 $s$ 严格递增，各次迭代也严格递增，固定平移 $V$ 保持这一性质。最后，位移后的数位仍然规范，逐位 Fibonacci 递推给 $s^2(t)=t+s(t)$，并归纳给
+
+$$
+s^h(t)=F_{h-1}t+F_hs(t)\quad(h\ge1),\qquad s^0(t)=t.
+$$
+
+这些闭式是所引用位移结果及 Fibonacci 递推在本柱集证明中的应用。$\square$
+

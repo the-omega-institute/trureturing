@@ -1,0 +1,110 @@
+**定理 106.3（短共同规范探针）。** 令 $j$ 是满足 $F_j>2H$ 的最小指标，置 $q=F_j$；令 $m$ 是满足 $F_m\ge H(q+1)$ 的最小指标，并置
+
+$$
+L(H)=\left\lceil\frac m3\right\rceil.
+$$
+
+则 $j\ge5$、$2H<q<4H$，且
+
+$$
+D(H)\le D_{00}(H)\le L(H)=O(\log H).
+$$
+
+具体而言，对每个 $(A,B)\in R^2$，存在一个 $w\in\mathcal W^{00}_{L(H)}$，使引理 106.2 的恒等式在所有行上等于 $Au+Bv$。该词接在任意实际合法前缀后，都能作正值规范 End。
+
+证明。先给出所用的严格逼近估计。由 $\phi>3/2$、$\phi^2=\phi+1$、$\phi^3=2\phi+1$，有
+
+$$
+F_2=1<\frac{\phi^2}{2},\qquad
+F_3=2<\frac{\phi^3}{2}.
+$$
+
+若相邻两项满足此不等式，则
+
+$$
+F_{k+2}=F_{k+1}+F_k
+<\frac{\phi^{k+1}+\phi^k}{2}
+=\frac{\phi^{k+2}}2.
+$$
+
+故 $F_k<\phi^k/2$ 对每个 $k\ge2$ 成立；$k=1$ 不在此范围，事实上 $F_1=1>\phi/2$。令 $p=F_{j-1}$。Euclid 递推给出 $\gcd(p,q)=1$。再令 $e_k=F_k\alpha-F_{k-1}$，则 $e_1=\alpha$，由 $\alpha^2+\alpha=1$ 得 $e_{k+1}=-\alpha e_k$，所以
+
+$$
+|q\alpha-p|=\alpha^j,\qquad
+\left|\alpha-\frac pq\right|=\frac{\alpha^j}{q}<\frac1{2q^2}.
+$$
+
+这里最后一步正用 $q\alpha^j<1/2$。因 $F_4=3\le2H$，最小指标 $j\ge5$。又 $F_{j-1}\le2H$ 且 $F_{j-2}<F_{j-1}$，故 $2H<q<2F_{j-1}\le4H$。
+
+接着证明一个移位网格估计。给定任意整数 $p$、整数 $q\ge1$、$\gcd(p,q)=1$，以及实数 $\beta$ 满足 $|\beta-p/q|<1/(2q^2)$。在圆 $\mathbb R/\mathbb Z$ 上使用距离
+
+$$
+d_{\mathbb T}(x,y)=\min_{z\in\mathbb Z}|x-y-z|.
+$$
+
+对任意实数移位 $\theta$，点 $\theta+tp/q$，$1\le t\le q$，组成一个间距 $1/q$ 的完整移位网格：乘以 $p$ 置换模 $q$ 的剩余类，而 $t=q$ 包含零类。每个圆上目标 $x$ 都在某个网格点的距离 $1/(2q)$ 以内。对该点对应的同一个 $t$，有
+
+$$
+\begin{aligned}
+d_{\mathbb T}(\theta+t\beta,\theta+tp/q)
+&\le t|\beta-p/q|<\frac{t}{2q^2}\le\frac1{2q},\\
+d_{\mathbb T}(x,\theta+t\beta)&<\frac1q.
+\end{aligned}
+$$
+
+此估计也包括 $t=q$。当 $q>2H$ 时，对 $a\in\{0,\ldots,H-1\}$ 取胞的中点 $x=(a+1/2)/H$，所得距离严格小于 $1/(2H)$，从而
+
+$$
+\{\theta+t\beta\}\in\left(\frac aH,\frac{a+1}{H}\right).
+$$
+
+圆上以该中点为中心、半径 $1/(2H)$ 的开球，在 $[0,1)$ 中恰落在所示开区间；即使 $a=0$ 或 $a=H-1$ 也不越过端点。因此没有整胞端点的取整歧义。
+
+现在取 $A,B$ 的代表 $a,b\in\{0,\ldots,H-1\}$，令 $\beta=\alpha$、$\theta=(b+1)\alpha/H$。上面的估计给出某个 $1\le t\le q$，使
+
+$$
+\left\{\frac{(b+Ht+1)\alpha}{H}\right\}
+\in\left(\frac aH,\frac{a+1}{H}\right).
+$$
+
+置 $n=b+Ht$，则 $n\equiv B\pmod H$，并由恒等式 $\lfloor Hz\rfloor=H\lfloor z\rfloor+\lfloor H\{z\}\rfloor$ 得
+
+$$
+\lfloor(n+1)\alpha\rfloor\equiv A\pmod H,
+\qquad H\le n\le Hq+H-1<H(q+1).
+$$
+
+特别地，目标 $(A,B)=(0,0)$ 也由正整数 $n$ 实现。
+
+令 $Z(n)$ 为 $n$ 的规范 Zeckendorf 指标集，所有指标均至少为 2，互不相邻，且 $n=\sum_{k\in Z(n)}F_k$。对这里的 $n>0$，直接使用[既有移位 Zeckendorf 恒等式](../../../D5/S3/Analytic/GoldenEulerBetaZeckendorf.lean)（`shiftedFibSum` 与 `floor_succ_div_golden_eq_shifted`）：
+
+$$
+\sum_{k\in Z(n)}F_{k-1}=\lfloor(n+1)\alpha\rfloor.
+$$
+
+在位位置 $k\in Z(n)$ 恰放置 1，其余位置放置 0。位置 0、1 都是零。由引理 106.2，该词在任意行上的值为
+
+$$
+\left(\sum_{k\in Z(n)}F_{k-1}\right)u
++\left(\sum_{k\in Z(n)}F_k\right)v
+=Au+Bv\quad\text{于 }R.
+$$
+
+选择 $n$ 和此位词只用了 $H,A,B$，所以这个恒等式由一个共同字面词同时实现。
+
+因 $n>0$，$Z(n)$ 非空。设其最大指标为 $K$，则
+
+$$
+F_K\le n<H(q+1)\le F_m.
+$$
+
+Fibonacci 数在指标至少为 2 时严格递增，故 $K<m$，未补零的长度 $K+1\le m$。把长度补至 $3\lceil(K+1)/3\rceil$，只需在高端补零、一个零或两个零，位置 $K$ 的 1 仍在最后一窗中。因此所得词属于 $\mathcal W^{00}_{L(H)}$。其首位为零，接在两种接缝后都合法；非空支集在实际 Fibonacci 权重上至少选择一个严格正项，所以最终整数为正，且非零末窗保证规范 End。由 $\mathcal W^{00}_L\subseteq\mathcal W_L$ 得两种深度的次序与上界。
+
+最后，$F_k\ge\phi^{k-2}$ 对 $k\ge2$ 由 $F_2=1$、$F_3=2>\phi$ 和相同递推归纳成立。因此若
+
+$$
+M=\left\lceil 2+\log_\phi(4H^2+H)\right\rceil,
+$$
+
+则 $F_M\ge4H^2+H>H(q+1)$，从而 $m\le M$、$L(H)\le\lceil M/3\rceil=O(\log H)$。$\square$
+

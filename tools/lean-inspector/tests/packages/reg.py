@@ -62,8 +62,10 @@ class NativeRegConsumerTests(NativeRegSupport):
         self.reg_package()
         self.run_lake('build', 'Fixture')
         self.make_lean()
+        # Escape-registration audit is paused (#11269): a bare build no longer
+        # compiles the Reg package; explicit Reg targets still do.
         self.assertFalse((self.root / '.lake/build/reg/lib/lean/Reg').exists())
-        self.assertTrue((self.root / '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegTests/Required.olean').is_file())
+        self.assertFalse((self.root / '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegTests/Required.olean').is_file())
         self.assertFalse((self.root / '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegAnalysis').exists())
         self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Records\n'
                    'def registrationValue := value\n')
@@ -77,12 +79,14 @@ class NativeRegConsumerTests(NativeRegSupport):
         downstream = 'tools/lean-inspector/LeanInformationAuditRegTests/Required.lean'
         self.write(downstream, 'def requiredCheck : Bool := missingRequiredCheck\n')
         self.make_lean('Reg.Support.Entry')
-        failed = self.make_lean(success=False)
+        self.make_lean()  # Paused: the broken Reg test library is not in the bare build.
+        failed = self.make_lean('LeanInformationAuditRegTests', success=False)
         self.assertIn('missingRequiredCheck', failed.stdout + failed.stderr)
         self.write(downstream, 'def requiredCheck : Bool := true\n')
-        self.make_lean()
+        self.make_lean('LeanInformationAuditRegTests')
         self.write('Reg/Support/Entry.lean', 'this must fail\n')
-        self.make_lean(success=False)
+        self.make_lean()
+        self.make_lean('Reg.Support.Entry', success=False)
 
     def test_reg_report_rows_relocation_and_defaults(self):
         self.reg_package()

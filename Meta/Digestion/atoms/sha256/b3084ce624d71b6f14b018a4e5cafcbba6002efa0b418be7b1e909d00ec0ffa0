@@ -1,0 +1,24 @@
+**定义 120.1（同源 gcd 未来的作用域）。** 沿用 §3 的 $\rho$、$M$ 与 §5 的 $q=(2,3)$，来源为包含结构零的完整非负组成 $v=(a,b)\in\mathbb N^2$。每个未来都从同一个 $v$ 反复施加 $\rho$，不能在保持当前数量的条件下换一个来源。复用约定 117.1 与定理 117.3 的坐标和实际支持：
+
+$$
+\begin{gathered}
+(n,z)=(qv,qMv)=(2a+3b,3a+5b),\qquad
+(a,b)=(5n-3z,2z-3n),\\
+A=\left\lceil\frac{3n}{2}\right\rceil,\quad
+B=\left\lfloor\frac{5n}{3}\right\rfloor,\quad
+I_n=[A,B]\cap\mathbb Z,\quad L=|I_n|=C(n),\\
+L=\left\lfloor\frac n6\right\rfloor+1-\mathbf1_{\{n\equiv1\pmod6\}}.
+\end{gathered}
+$$
+
+这里每个 $z\in I_n$ 恰有上述一个实际来源。这是既有两读数逆式和完整支持的复用。尤其 $n=0$ 有一个来源 $(0,0)$，$n=1$ 没有来源；原始非空树是另一种域，不能据其不含空树删掉本节的结构零，也不能用有向组成的规范单位填补 $I_1$。
+
+令 $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$。对整数 $H\ge1$，记
+
+$$
+y_0=n,\qquad y_k=F_{k-1}n+F_kz=qM^kv\quad(k\ge1),\qquad
+R_H(n,z)=\bigl(\gcd(y_k,H)\bigr)_{k\ge1}.
+$$
+
+递推式来自 §5.4 的 $M^2=M+I$。在固定 $n$ 的实际区间上，$z\sim_{n,H}z'$ 表示两个 $R_H$ 相等，记类数为 $Q_H(n)$。这是 gcd 全未来任务；定理 117.4 的完整数值任务仍有自己的容量 $C(n)$。
+
