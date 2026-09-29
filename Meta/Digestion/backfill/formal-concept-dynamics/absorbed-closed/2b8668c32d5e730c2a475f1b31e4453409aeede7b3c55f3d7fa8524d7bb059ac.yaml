@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2b8668c32d5e730c2a475f1b31e4453409aeede7b3c55f3d7fa8524d7bb059ac
+  normalized_sha256: sha256:2b8668c32d5e730c2a475f1b31e4453409aeede7b3c55f3d7fa8524d7bb059ac
+cas_ref: sha256:2b8668c32d5e730c2a475f1b31e4453409aeede7b3c55f3d7fa8524d7bb059ac
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/CARFourStateReverseObstruction.result
+    target_statement_id: sha256:c3a443ec93cc56d8ec2ec934ced5391f8834436c25049f926ca4650f6305101a
+receipts:
+  unresolved_subitems: []
