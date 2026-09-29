@@ -1,0 +1,120 @@
+{
+  "schema": "e7-clean-root-prefix-costs-v1",
+  "source_result_sha256": "1e76928fa5e63ca221913ad6cdd7ba0db4a54ab093a3a2c26086e1e08b1710e5",
+  "source_scope": "one fixed rational31proposal atC; no sourcecell positivity or universalnegative conclusion",
+  "inherited_exact": {
+    "M": "14146681590848275531129/29567892391537500000000",
+    "L": "2183224353269513156333/172479372283968750000000",
+    "tail": "225466842385169002958127645221597184942413416815620536894767036359/4935545854459456216780800000000000000000000000000000000000000000000"
+  },
+  "h16_hinge_plus_remainder_budget": "524216120634459466908497412319727615057586583184379463105232963641/4935545854459456216780800000000000000000000000000000000000000000000",
+  "h16_hinge_plus_remainder_budget_decimal": 0.10621238989418161,
+  "prefix_tail_obstructions": [
+    {
+      "prefix_period": 45,
+      "numerical_label_count_including_unit": 6,
+      "omitted_primes": [
+        7,
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "prefix_h16_identically_zero": true,
+      "tail_lower_coefficient": "546843672439/770782003200",
+      "tail_lower": "7736023313964665804692725623853631/22790399327951312977920000000000000",
+      "tail_lower_decimal": 0.33944220119376367,
+      "tail_lower_minus_h16_budget": "1151116428296013471420270980596074348379913416815620536894767036359/4935545854459456216780800000000000000000000000000000000000000000000",
+      "excluded_at_h16_by_this_lower_bound": true,
+      "scope": "necessary lower bound on a complete first-moment remainder, not an upper certificate"
+    },
+    {
+      "prefix_period": 315,
+      "numerical_label_count_including_unit": 12,
+      "omitted_primes": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "prefix_h16_identically_zero": true,
+      "tail_lower_coefficient": "9231846373/21410611200",
+      "tail_lower": "130599991134458522455357907245117/633066647998647582720000000000000",
+      "tail_lower_decimal": 0.20629738045327817,
+      "tail_lower_minus_h16_budget": "493974060247562788784086672040015796192413416815620536894767036359/4935545854459456216780800000000000000000000000000000000000000000000",
+      "excluded_at_h16_by_this_lower_bound": true,
+      "scope": "necessary lower bound on a complete first-moment remainder, not an upper certificate"
+    },
+    {
+      "prefix_period": 945,
+      "numerical_label_count_including_unit": 16,
+      "omitted_primes": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "prefix_h16_identically_zero": true,
+      "tail_lower_coefficient": "9231846373/21410611200",
+      "tail_lower": "130599991134458522455357907245117/633066647998647582720000000000000",
+      "tail_lower_decimal": 0.20629738045327817,
+      "tail_lower_minus_h16_budget": "493974060247562788784086672040015796192413416815620536894767036359/4935545854459456216780800000000000000000000000000000000000000000000",
+      "excluded_at_h16_by_this_lower_bound": true,
+      "scope": "necessary lower bound on a complete first-moment remainder, not an upper certificate"
+    },
+    {
+      "prefix_period": 3465,
+      "numerical_label_count_including_unit": 24,
+      "omitted_primes": [
+        13,
+        17,
+        19,
+        23
+      ],
+      "prefix_h16_identically_zero": false,
+      "tail_lower_coefficient": "185856193/642318336",
+      "tail_lower": "2629248384058244130830688931897/18991999439959427481600000000000",
+      "tail_lower_decimal": 0.13843978841565618,
+      "tail_lower_minus_h16_budget": "159059803172676726591127873857005259942413416815620536894767036359/4935545854459456216780800000000000000000000000000000000000000000000",
+      "excluded_at_h16_by_this_lower_bound": true,
+      "scope": "necessary lower bound on a complete first-moment remainder, not an upper certificate"
+    },
+    {
+      "prefix_period": 45045,
+      "numerical_label_count_including_unit": 48,
+      "omitted_primes": [
+        17,
+        19,
+        23
+      ],
+      "prefix_h16_identically_zero": false,
+      "tail_lower_coefficient": "814453/4460544",
+      "tail_lower": "29467537753736957931341707/337311726341990400000000000",
+      "tail_lower_decimal": 0.0873599565402025,
+      "tail_lower_minus_h16_budget": "-93047049286704790983189692812313615057586583184379463105232963641/4935545854459456216780800000000000000000000000000000000000000000000",
+      "excluded_at_h16_by_this_lower_bound": false,
+      "scope": "necessary lower bound on a complete first-moment remainder, not an upper certificate"
+    }
+  ],
+  "shallow_clean_root_compression": {
+    "J": 2,
+    "E_q": 1,
+    "numerical_labels": 384,
+    "ambient_incidence_states_before_zero_u": 14580,
+    "phase_table_count_exact": "247648619329316412578774526247829734629936712088241878851969738401185444445569342931954357031755302484365121256687033939843475819202705540719838710279292098507421366480012641672007425174414139665813191838114868091479266774196272512945474523038048167071168826479217320348543602119875759779320213523369093829726013983888281572177085096656732866489422741163391582748630538040623498161101804368463675338744509242194698990967071096509577140633600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "phase_table_count_formula": "3^192 * 2^1280 * 5^128",
+    "phase_table_count_log10_display": 566.3938359110815
+  },
+  "performed": "read inherited scalar outputs; rational necessary-cost bounds and combinatorial size counts",
+  "not_performed": [
+    "source reconstruction",
+    "new source-point evaluation",
+    "query-layout enumeration",
+    "solver",
+    "kernel optimization",
+    "new gate evaluation"
+  ]
+}
