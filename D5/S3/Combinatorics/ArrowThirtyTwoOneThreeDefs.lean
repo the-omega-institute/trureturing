@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ArrowThirtyTwoOneThreeDefs
    mirror-E: none(waiver:enumeration-of-the-arrow-pattern-32-1-to-3)
-   anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Basic, mathlib/module/Mathlib.RingTheory.PowerSeries.Catalan]
+   anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Catalan]
    utility: none
    digest: Definitions for the avoider count, its integer power series, and the Zhou--Yu cubic claim. -/
 
