@@ -1,0 +1,17 @@
+**推论 111.5（无穷多个 Robin 临界谷底及其未决符号）。** 定理 111.4 的每个 $z_j$ 都是第 98 节完整裕度 $\mathfrak D$ 的严格局部极小点，而且
+
+$$
+\begin{aligned}
+\mathfrak D(z_j)
+&=\gamma+\log\log z_j-\log\frac{\sigma(N_j)}{N_j}\\
+&=\log\left(\frac{e^\gamma N_j\log\log N_j}{\sigma(N_j)}\right)
+\longrightarrow0.
+\end{aligned}
+$$
+
+特别地，$\sigma(N_j)/(e^\gamma N_j\log\log N_j)\to1$。
+
+证明。$z_j$ 位于稳定胞腔内部且 $A(z_j)=z_j$，故直接应用定理 98.3，得到严格局部极小及 $\mathfrak D''(z_j)=w(z_j)>0$。同一定理给出根处的裕度表达；将 $z_j=\log N_j$ 代入，得到所写对数比值。定理 98.4 已无条件给出 $\mathfrak D(x)\to0$，沿 $z_j\to\infty$ 即得结论，再对 $-\mathfrak D(z_j)$ 取指数。$\square$
+
+这里的来源分工是：尺度分解来自旧卷定理 8.1，完整裕度分解 $\mathfrak D=\Phi+R$ 来自定理 87.3，储备尾与主项来自定理 93.1—93.2，压力尾积分亦已有旧卷引理 9.1、定理 9.2；局部极小与趋零来自定理 98.3—98.4。本节接上的推导是 Littlewood 双侧符号到稳定向下穿零，再到无穷配置链。局部极小和趋零均未决定 $\mathfrak D(z_j)$ 的符号；所有所需自匹配配置的裕度严格为正仍是未解决问题，正的储备主项不能单独替代同尺度的有符号尾项。上述存在证明不给有效的首根尺度、根间隔、密度或计数渐近式。
+

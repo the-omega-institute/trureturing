@@ -1,0 +1,26 @@
+**约定 116.1（沿用的对象与证明范围）。** 本节至 §118 给出普通数学推导。原始有序树、替换 $\rho$、组成观察 $c$、矩阵 $M$ 和数量观察 $q$ 沿用 §§2–5：
+
+$$
+\begin{gathered}
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\qquad
+\rho(\alpha)=\beta,\quad\rho(\beta)=\langle\beta,\alpha\rangle,\\
+\rho(\langle t_1,t_2\rangle)=\langle\rho(t_1),\rho(t_2)\rangle,\qquad
+c\rho=Mc,\\
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+q(a,b)=2a+3b,\qquad
+\mathbf e=(-1,1),\quad\mathbf r=(3,-2).
+\end{gathered}
+$$
+
+这里 $\mathbb N$ 包含 0，$F_0=0,F_1=1$，$G_j=F_{j+2}$。记 $\mathscr C$ 为全部规范数值码：正值部分采用定义 104.2 的单位位、三位窗口与规范 End，另加一个结构零码。既有 Zeckendorf 唯一性给出 $\nu:\mathscr C\to\mathbb N$ 的双射。它观察的是数值；原始树 $t$ 的规范数值码为 $f(t)=\nu^{-1}(q(c(t)))$。不同树可以有相同的 $f(t)$，甚至不同组成也可以有相同的 $f(t)$。
+
+沿用规范位移 $s$，即把规范表示的每个占用位置提高一格；其既有闭式见 [规范位移读出中的位移闭式](../../../D5/S1/Deficit/ZeckendorfDisplacementReading.lean)。为连接组成坐标，写
+
+$$
+n=\sum_{j\ge0}b_jG_j,\qquad
+s(n)=\sum_{j\ge0}b_jG_{j+1},\qquad
+\iota(n)=\sum_{j\ge0}b_jM^j\mathbf e.
+$$
+
+所有和都有限，$b_j\in\{0,1\}$ 且 $b_jb_{j+1}=0$。这些记号是既有规范位移、数量商和两次读数的坐标连接；本节不把它们另称为新的生成机制。以下证明的地位是普通理论，不是本批的 Lean 内核证明，也不作原创性认证。
+
