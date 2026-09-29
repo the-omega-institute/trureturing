@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:76beb9022d9fc28a1e6ecbf99655c5be23542ddee4513b92a290c9e9142f56c7
   normalized_sha256: sha256:76beb9022d9fc28a1e6ecbf99655c5be23542ddee4513b92a290c9e9142f56c7
 cas_ref: sha256:76beb9022d9fc28a1e6ecbf99655c5be23542ddee4513b92a290c9e9142f56c7
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciFiveAdicRankBudget.fibonacci_five_adic_rank_budget
+    target_statement_id: sha256:04c4eb61b895fffd90b5b4b86fdc731c8b857de3e5e3fbd3d4aef684a4ebe1d2
 receipts:
   unresolved_subitems: []
