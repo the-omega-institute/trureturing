@@ -64,7 +64,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 
 程序编译义务由 FILEMAP 及其登记的 [ci-resources.json](../../Meta/ci-resources.json) 中 `lean_targets` 显式选择。
 正常入口校验可选 `.reuse.json`：报告语义版本号、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
-一致，并且报告五件套通过完整私有校验时，复用报告数据。选中的程序目标仍须通过 Lake 增量编译；未选程序目标的命中不恢复 Lean 重缓存。
+一致，并且报告五件套与收据逐字节相符、信封和输入坐标仍为当前时，复用报告数据。选中的程序目标仍须通过 Lake 增量编译；未选程序目标的命中不恢复 Lean 重缓存。
 缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_cache_release_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。无 scope 的直接调用消费登记的全部程序目标。
 `:report` 只构建登记报告模块及实际依赖，不隐式追加包的默认目标；选中的程序目标在报告命中与未命中时均须执行。
 程序构建义务独立于模块报告失效；只影响这些构建义务、未改变报告依赖的编辑，不会因此重提取无关模块报告。实际缺失或失效的模块
@@ -77,7 +77,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 [lean-report-inputs.json](../../lean-report-inputs.json) 是 FILEMAP 登记的唯一输入
 清单，声明 `report_modules`、`inspector_sources`、`config_inputs`、
 `producer_scopes`，并可声明 `dependency_sources` 和完整调用的 `report_execution` 环境。
-首次生成 `.reuse.json` 须成功完成选中的程序目标、report 和发布；命中后私有校验并重发布报告，
+首次生成 `.reuse.json` 须成功完成选中的程序目标、report 和发布；命中后核对信封并重发布报告，
 同时履行选中的编译义务。该证据随 current 种子传输，不改变报告 schema、模块来源或远端 mathlib 分区。
 [读取器](../scripts/report/lean-report-selection.py) 只展开显式登记的路径集合；路径为
 大小写敏感的仓库相对 POSIX 路径，按 `include`（`pattern`、`optional`）及 `exclude`
@@ -137,19 +137,16 @@ inspector 不兼容改动手动 bump `report_cache_release_semantic_version`。
 仓库输入地址与 provenance 的 `input_address` 由同一输入工具按各自编码计算，
 不能互换，commit ID 与工作树名称不参与这些地址。
 
-缺失的可选原生工件由 Lake 恢复或补建。存在但损坏或不兼容的工件先被拒绝，再在私有构建树
-重建一次，该次恢复禁用缓存读取；重建仍无效则失败。默认输出或任一相邻 sidecar
-丢失、损坏时重新运行 `make lean-report`，它从已验证的 inspector 工件重新发布，
-必要时先补建。接受前仍检查规范 JSON、materials 身份、provenance、源码路径、utility
-记录结构及输入坐标，不能把缓存命中当成检查通过。
+缺失的原生工件由 Lake 恢复或补建；与 olean 相同，trace 仍有效的工件原样复用，不再检查其内容。
+默认输出或任一相邻 sidecar 丢失、损坏时重新运行 `make lean-report`，它从 inspector 工件重新发布，
+必要时先补建；发布核对规范信封与输入坐标。
 
-原生 Lake `--no-build` 保留上述接受条件：
+原生 Lake `--no-build`：
 
 | 工件状态 | `--no-build` 结果 |
 | --- | --- |
-| 所需构建目标已就绪，报告工件有效且输入未变 | 校验后复用，零提取、零汇总。 |
-| 工件缺失且无法由 Lake 恢复，或输入/语义版本变化需要重建 | 非零退出，报告目标需要重建。 |
-| 模块或汇总工件存在但损坏、缺失来源绑定或不兼容 | 非零退出；在修复提取或汇总之前拒绝，不删除或改写被拒工件。 |
+| 所需构建目标已就绪，报告工件 trace 有效 | 直接复用，零提取、零汇总。 |
+| 工件缺失且无法由 Lake 恢复，或输入/语义版本/编译产物变化需要重建 | 非零退出，报告目标需要重建。 |
 
 已用 `make lean-report` 准备好工具和私有 `.lake` 后，可以检查原生报告目标：
 
@@ -158,14 +155,13 @@ tools/scripts/worktree/lean-cache-run.sh lake --no-build build :report
 ```
 
 该命令经同一 writer 入口运行，只检查原生目标，不发布到 `LEAN_REPORT`。
-`--no-build` 限制 Lake 的重建，输入准备、校验及可用原生工件的恢复仍会执行，
+`--no-build` 限制 Lake 的重建，输入准备及可用原生工件的恢复仍会执行，
 不是整个入口的只读模式。需要修复时重新运行 `make lean-report`。
 
 [完整校验](publication.py) 保留每条声明的 `statement_id`、`type_sha256` 和规范
-material 校验，`include_in_statement=false` 的声明也须有对应材料。校验按内容地址只做一次：
-本机的 `.lake/lean-inspector-accepted/`（不在随种子传输的 buildDir 内）下的接受记录绑定语义版本、模块工件与 utility 输入字节
-（汇总则绑定汇总与成员清单字节）；字节相同即不再校验，任何字节变化或无记录都走完整校验。
-汇总按登记顺序拼接已接受的行，原样搬运其已压缩的 materials，不再对拼好的整包重验。
+material 校验，`include_in_statement=false` 的声明也须有对应材料。与 olean 相同，模块报告工件只在生成时完整校验一次，
+不通过即不写出；此后是否复用只由 Lake trace 决定（含本模块及其 claim 的编译产物，olean 一变对应报告即失效），
+命中或从缓存恢复的工件不再校验。汇总按登记顺序拼接各行，原样搬运其已压缩的 materials；发布与收据复用只核对信封和输入坐标。
 
 必需输入错误直接失败：清单缺失或损坏、版本缺失或非正整数、必需登记无匹配文件、
 不安全或穿越 symlink 的路径、模块冲突或无法解析、无效的 utility/claim 输入均不
