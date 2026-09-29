@@ -14,11 +14,13 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.FibonacciAtomic.AdditiveObstruction
 
+universe uX uY uA uB uZ
+
 section Definitions
 
-variable {X Y A B Z : Type*}
+variable {X : Type uX} {Y : Type uY} {A : Type uA} {B : Type uB} {Z : Type uZ}
   [AddCommGroup X] [AddCommGroup Y] [AddCommGroup A] [AddCommGroup B]
-  [AddCommGroup Z] [Fintype X] [Fintype Y] [Fintype A] [Fintype B] [Fintype Z]
+  [AddCommGroup Z] [Fintype X] [Fintype Y]
 
 /-- The left and right linear readouts restricted to a source subgroup. -/
 def leftReadout (D : AddSubgroup (X × Y)) (α : X →+ A) : D →+ A :=
@@ -81,9 +83,9 @@ end Definitions
 
 section Main
 
-variable {X Y A B Z : Type*}
+variable {X : Type uX} {Y : Type uY} {A : Type uA} {B : Type uB} {Z : Type uZ}
   [AddCommGroup X] [AddCommGroup Y] [AddCommGroup A] [AddCommGroup B]
-  [AddCommGroup Z] [Fintype X] [Fintype Y] [Fintype A] [Fintype B] [Fintype Z]
+  [AddCommGroup Z] [Fintype X] [Fintype Y]
   (D : AddSubgroup (X × Y)) (α : X →+ A) (β : Y →+ B) (F : D →+ Z)
 
 private lemma left_sufficient_iff_vanishes :
@@ -195,6 +197,72 @@ noncomputable def recordCapacity
     (hright : vanishesOn F (rightKernel D α β)) : ℕ :=
   Nat.card (AddMonoidHom.range (descendedTask D α β F hleft hright))
 
+/-- A record map separates the task values on the joint kernel. -/
+def recordSeparates {R : Type*}
+    (record : jointKernel D α β → R) : Prop :=
+  ∀ u v, record u = record v →
+    restrictedTask D α β F u = restrictedTask D α β F v
+
+/-- Every finite separating record has at least the image size of the task, and
+there is a canonical separating record with exactly that alphabet. -/
+theorem minimal_record_cardinality
+    (hleft : vanishesOn F (leftKernel D α β))
+    (hright : vanishesOn F (rightKernel D α β))
+    (R : Type*) [Fintype R]
+    (record : jointKernel D α β → R)
+    (hrecord : recordSeparates D α β F record) :
+    recordCapacity D α β F hleft hright ≤ Nat.card R ∧
+      ∃ canonical : jointKernel D α β →
+          AddMonoidHom.range (restrictedTask D α β F),
+        recordSeparates D α β F (fun u =>
+          (canonical u : AddMonoidHom.range (restrictedTask D α β F))) ∧
+          Nat.card (AddMonoidHom.range (restrictedTask D α β F)) =
+            recordCapacity D α β F hleft hright := by
+  classical
+  let T := AddMonoidHom.range (restrictedTask D α β F)
+  let representative : T → jointKernel D α β :=
+    fun z => Classical.choose z.property
+  have representative_spec (z : T) :
+      restrictedTask D α β F (representative z) = z := by
+    exact Classical.choose_spec z.property
+  let encode : T → R := fun z => record (representative z)
+  have encode_injective : Function.Injective encode := by
+    intro a b hab
+    have hab' : record (representative a) = record (representative b) := by
+      simpa [encode] using hab
+    apply Subtype.ext
+    calc
+      (a : Z) = restrictedTask D α β F (representative a) :=
+        (representative_spec a).symm
+      _ = restrictedTask D α β F (representative b) :=
+        hrecord _ _ hab'
+      _ = (b : Z) := representative_spec b
+  have hrange :
+      AddMonoidHom.range (descendedTask D α β F hleft hright) =
+        AddMonoidHom.range (restrictedTask D α β F) := by
+    ext z
+    constructor
+    · rintro ⟨q, rfl⟩
+      refine QuotientAddGroup.induction_on q ?_
+      intro u
+      exact ⟨u, by simpa [descendedTask]⟩
+    · rintro ⟨u, rfl⟩
+      exact ⟨QuotientAddGroup.mk' _ u, by simpa [descendedTask]⟩
+  have hcap :
+      recordCapacity D α β F hleft hright =
+        Nat.card (AddMonoidHom.range (restrictedTask D α β F)) := by
+    simp [recordCapacity, hrange]
+  have lower : Nat.card T ≤ Nat.card R :=
+    Nat.card_le_card_of_injective encode encode_injective
+  refine ⟨?_, ?_⟩
+  · simpa [T, hcap] using lower
+  · let canonical : jointKernel D α β → T := fun u =>
+      ⟨restrictedTask D α β F u, ⟨u, rfl⟩⟩
+    refine ⟨canonical, ?_, ?_⟩
+    · intro u v huv
+      exact congrArg Subtype.val huv
+    · exact hcap.symm
+
 theorem additive_obstruction_complete
     (hleft : vanishesOn F (leftKernel D α β))
     (hright : vanishesOn F (rightKernel D α β)) :
@@ -251,88 +319,83 @@ theorem additive_obstruction_complete
   · rw [joint_sufficient_iff_vanishes D α β F, hrestrict_zero, hdesc_zero]
   · exact congrArg (fun H : AddSubgroup Z => Nat.card H) hrange
 
-theorem obstruction_zero_iff_all_tasks_jointly_descend :
-    Subsingleton (obstruction D α β) ↔
-      ∀ (G : jointKernel D α β →+ obstruction D α β),
-        vanishesOn G (leftObstructionKernel D α β) →
-        vanishesOn G (rightObstructionKernel D α β) →
-        G = 0 := by
-  let E := jointKernel D α β
-  let H : AddSubgroup E :=
-    leftObstructionKernel D α β ⊔ rightObstructionKernel D α β
-  change Subsingleton (E ⧸ H) ↔ _
-  constructor
-  · intro h G hleft hright
-    apply AddMonoidHom.ext
-    intro e
-    have htop : H = ⊤ := (QuotientAddGroup.subsingleton_iff.mp h)
-    have heH : e ∈ H := by simpa [htop]
-    have hker :
-        leftObstructionKernel D α β ⊔ rightObstructionKernel D α β ≤ G.ker := by
-      apply sup_le
-      · intro u hu
-        exact hleft ⟨u, hu⟩
-      · intro u hu
-        exact hright ⟨u, hu⟩
-    exact hker heH
-  · intro hall
-    let q : E →+ obstruction D α β := QuotientAddGroup.mk' H
-    have hleft : vanishesOn q (leftObstructionKernel D α β) := by
-      intro u
-      change q u = 0
-      rw [← AddMonoidHom.mem_ker, QuotientAddGroup.ker_mk']
-      exact (show leftObstructionKernel D α β ≤ H from le_sup_left) u.2
-    have hright : vanishesOn q (rightObstructionKernel D α β) := by
-      intro u
-      change q u = 0
-      rw [← AddMonoidHom.mem_ker, QuotientAddGroup.ker_mk']
-      exact (show rightObstructionKernel D α β ≤ H from le_sup_right) u.2
-    have hq : q = 0 := hall q hleft hright
-    refine ⟨?_⟩
-    intro a b
-    obtain ⟨x, rfl⟩ := QuotientAddGroup.mk'_surjective H a
-    obtain ⟨y, rfl⟩ := QuotientAddGroup.mk'_surjective H b
-    have hx := congrArg (fun f => f x) hq
-    have hy := congrArg (fun f => f y) hq
-    calc
-      q x = 0 := by simpa using hx
-      _ = q y := by simpa using hy.symm
-
 theorem obstruction_nontrivial_has_feasible_failed_task
     (h : ¬ Subsingleton (obstruction D α β)) :
-    ∃ G : jointKernel D α β →+ obstruction D α β,
-      vanishesOn G (leftObstructionKernel D α β) ∧
-        vanishesOn G (rightObstructionKernel D α β) ∧
-          ¬ vanishesOn G (⊤ : AddSubgroup (jointKernel D α β)) := by
-  let E := jointKernel D α β
-  let H : AddSubgroup E :=
-    leftObstructionKernel D α β ⊔ rightObstructionKernel D α β
-  let q : E →+ obstruction D α β := QuotientAddGroup.mk' H
-  have hleft : vanishesOn q (leftObstructionKernel D α β) := by
+    ∃ q : D →+
+        D ⧸ (leftKernel D α β ⊔ rightKernel D α β),
+      leftSufficient D α q ∧
+        rightSufficient D β q ∧
+          ¬ jointlySufficient D α β q := by
+  classical
+  let q : D →+
+      D ⧸ (leftKernel D α β ⊔ rightKernel D α β) :=
+    QuotientAddGroup.mk' _
+  have hleft : leftSufficient D α q := by
+    apply (left_sufficient_iff_vanishes D α β q).mpr
     intro u
     change q u = 0
     rw [← AddMonoidHom.mem_ker, QuotientAddGroup.ker_mk']
-    exact (show leftObstructionKernel D α β ≤ H from le_sup_left) u.2
-  have hright : vanishesOn q (rightObstructionKernel D α β) := by
+    exact (show leftKernel D α β ≤ leftKernel D α β ⊔ rightKernel D α β from le_sup_left) u.2
+  have hright : rightSufficient D β q := by
+    apply (right_sufficient_iff_vanishes D α β q).mpr
     intro u
     change q u = 0
     rw [← AddMonoidHom.mem_ker, QuotientAddGroup.ker_mk']
-    exact (show rightObstructionKernel D α β ≤ H from le_sup_right) u.2
-  have hq : q ≠ 0 := by
-    intro hq
+    exact (show rightKernel D α β ≤ leftKernel D α β ⊔ rightKernel D α β from le_sup_right) u.2
+  have hjoint : ¬ jointlySufficient D α β q := by
+    intro hj
+    have hv := (joint_sufficient_iff_vanishes D α β q).mp hj
     apply h
-    have htop : H = ⊤ := by
-      have hk : q.ker = ⊤ := by simpa [hq]
-      simpa [q, QuotientAddGroup.ker_mk'] using hk
     apply QuotientAddGroup.subsingleton_iff.mpr
-    exact htop
-  have hjoint : ¬ vanishesOn q (⊤ : AddSubgroup E) := by
-    intro hz
-    apply hq
-    apply AddMonoidHom.ext
-    intro e
-    exact hz ⟨e, trivial⟩
+    apply top_unique
+    intro e he
+    have hqzero : q (e : D) = 0 := hv e
+    have hqzero' :
+        (QuotientAddGroup.mk'
+          (leftKernel D α β ⊔ rightKernel D α β) :
+            D →+ D ⧸ (leftKernel D α β ⊔ rightKernel D α β)) (e : D) = 0 := by
+      simpa [q] using hqzero
+    have heH : (e : D) ∈ leftKernel D α β ⊔ rightKernel D α β := by
+      rw [← AddMonoidHom.mem_ker, QuotientAddGroup.ker_mk'] at hqzero'
+      exact hqzero'
+    rw [AddSubgroup.mem_sup] at heH
+    rcases heH with ⟨x, hx, y, hy, hxy⟩
+    rw [AddSubgroup.mem_sup]
+    refine ⟨⟨x, hx.1⟩, ?_, ⟨y, hy.1⟩, ?_, ?_⟩
+    · exact hx
+    · exact hy
+    · apply Subtype.ext
+      exact hxy
   exact ⟨q, hleft, hright, hjoint⟩
+
+
+theorem obstruction_zero_iff_all_tasks_jointly_descend :
+    Subsingleton (obstruction D α β) ↔
+      ∀ (W : Type (max uX uY)) [AddCommGroup W] (G : D →+ W),
+        leftSufficient D α G →
+        rightSufficient D β G →
+        jointlySufficient D α β G := by
+  constructor
+  · intro h W _ G hleft hright
+    apply (joint_sufficient_iff_vanishes D α β G).mpr
+    have hleft' := (left_sufficient_iff_vanishes D α β G).mp hleft
+    have hright' := (right_sufficient_iff_vanishes D α β G).mp hright
+    have hker := quotient_kernel_le D α β G hleft' hright'
+    intro e
+    have htop :
+        leftObstructionKernel D α β ⊔ rightObstructionKernel D α β =
+          (⊤ : AddSubgroup (jointKernel D α β)) :=
+      QuotientAddGroup.subsingleton_iff.mp h
+    have heH : e ∈ leftObstructionKernel D α β ⊔ rightObstructionKernel D α β := by
+      simpa [htop]
+    have heker := hker heH
+    simpa [restrictedTask] using heker
+  · intro hall
+    by_contra h
+    obtain ⟨q, hleft, hright, hjoint⟩ :=
+      obstruction_nontrivial_has_feasible_failed_task D α β h
+    exact hjoint (hall (D ⧸ (leftKernel D α β ⊔ rightKernel D α β)) q hleft hright)
+
 
 end Main
 
