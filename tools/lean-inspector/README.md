@@ -162,9 +162,10 @@ tools/scripts/worktree/lean-cache-run.sh lake --no-build build :report
 不是整个入口的只读模式。需要修复时重新运行 `make lean-report`。
 
 [完整校验](publication.py) 保留每条声明的 `statement_id`、`type_sha256` 和规范
-material 校验，`include_in_statement=false` 的声明也须有对应材料。共享校验可在
-单次调用内复用已计算的声明身份，但仍读取、CRC 检查并哈希实际材料字节。
-当前输入验证不替代完整 materials 校验；报告发布前两者均须通过。
+material 校验，`include_in_statement=false` 的声明也须有对应材料。校验按内容地址只做一次：
+本机的 `.lake/lean-inspector-accepted/`（不在随种子传输的 buildDir 内）下的接受记录绑定语义版本、模块工件与 utility 输入字节
+（汇总则绑定汇总与成员清单字节）；字节相同即不再校验，任何字节变化或无记录都走完整校验。
+汇总按登记顺序拼接已接受的行，原样搬运其已压缩的 materials，不再对拼好的整包重验。
 
 必需输入错误直接失败：清单缺失或损坏、版本缺失或非正整数、必需登记无匹配文件、
 不安全或穿越 symlink 的路径、模块冲突或无法解析、无效的 utility/claim 输入均不

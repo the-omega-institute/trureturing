@@ -5,10 +5,11 @@ from __future__ import annotations
 import json
 from contextlib import contextmanager
 from functools import lru_cache
+import hashlib
 import os
 from pathlib import Path
-import shutil
 import stat
+import struct
 import subprocess
 import sys
 import tempfile
@@ -409,12 +410,19 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
         for name, artifact in zip(config['modules'], artifacts):
             with tempfile.TemporaryDirectory(prefix='row.', dir=directory) as row_dir:
                 try:
+                    utility = state(root) / 'inputs' / (name + '.json')
                     report = public.unpack(artifact, row_dir, ROW_SUFFIXES)
-                    current, origin = validate_module(report, root, name,
-                        state(root) / 'inputs' / (name + '.json'),
-                        verified_materials=verified_materials, template_inputs=template_inputs)
+                    known = accepted(root, 'module', name, artifact, utility)
+                    if known:
+                        current = public.read_json(report.read_bytes())['modules']
+                        origin = public.read_json(public.member(report, '.provenance.json').read_bytes())
+                    else:
+                        current, origin = validate_module(report, root, name, utility,
+                            verified_materials=verified_materials, template_inputs=template_inputs)
                     if origin['compatibility_sha256'] != config['coordinates']['producer']:
                         raise ValueError('native aggregate compatibility mismatch')
+                    if not known:
+                        record_acceptance(root, 'module', name, artifact, utility)
                 except ROW_ERRORS as error:
                     if row_statuses is None:
                         raise
@@ -425,53 +433,106 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
                     row_statuses.append(0)
                 origins[name] = origin
                 rows.extend(current)
+                # Accepted materials match their content addresses; move their
+                # deflated bytes without decompressing or compressing again.
                 with zipfile.ZipFile(public.member(report, '.materials.zip')) as archive:
                     for entry in archive.infolist():
-                        with archive.open(entry) as reader:
-                            if entry.filename in material_offsets:
-                                offset, size = material_offsets[entry.filename]
-                                material_spool.seek(offset)
-                                seen = 0
-                                for block in iter(lambda: reader.read(materials.BUFFER_BYTES), b''):
-                                    seen += len(block)
-                                    if seen > size or block != material_spool.read(len(block)):
-                                        raise ValueError('statement material address collision')
-                                if seen != size:
-                                    raise ValueError('statement material address collision')
-                            else:
-                                material_spool.seek(0, os.SEEK_END)
-                                offset = material_spool.tell()
-                                shutil.copyfileobj(reader, material_spool, materials.BUFFER_BYTES)
-                                material_offsets[entry.filename] = (offset, material_spool.tell() - offset)
+                        shape = (entry.CRC, entry.file_size)
+                        if entry.filename in material_offsets:
+                            if material_offsets[entry.filename][2:] != shape:
+                                raise ValueError('statement material address collision')
+                            continue
+                        data = compressed_member(archive, entry)
+                        material_spool.seek(0, os.SEEK_END)
+                        material_offsets[entry.filename] = (material_spool.tell(), len(data), *shape)
+                        material_spool.write(data)
         if row_statuses is not None and any(row_statuses):
             return
         report = directory / public.RAW
         report.write_bytes(materials.canonical_json({'modules': rows, 'schema': materials.REPORT_SCHEMA}))
         with zipfile.ZipFile(public.member(report, '.materials.zip'), 'w', compression=zipfile.ZIP_DEFLATED,
                              compresslevel=6, allowZip64=True) as archive:
-            for name, (offset, size) in sorted(material_offsets.items()):
+            for name, (offset, size, crc, file_size) in sorted(material_offsets.items()):
                 info = zipfile.ZipInfo(name, materials.ARCHIVE_TIMESTAMP)
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.create_system = 3
                 info.external_attr = (stat.S_IFREG | 0o644) << 16
+                info.CRC, info.file_size = crc, file_size
                 material_spool.seek(offset)
-                with archive.open(info, 'w') as writer:
-                    remaining = size
-                    while remaining:
-                        block = material_spool.read(min(materials.BUFFER_BYTES, remaining))
-                        if not block:
-                            raise ValueError('truncated private material spool')
-                        writer.write(block)
-                        remaining -= len(block)
+                data = material_spool.read(size)
+                if len(data) != size:
+                    raise ValueError('truncated private material spool')
+                append_compressed(archive, info, data)
         public.write_sidecars(report, config['coordinates'], origins)
-        # Every row's statement identities are memoized above, so the complete
-        # canonical bundle check re-hashes materials without re-encoding them.
-        validate_report(report, root, verified_materials, template_inputs)
+        # The bundle concatenates exactly the rows accepted above, in registered
+        # order; checking it again would replay those judgements.
         artifact = directory / 'report.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in public.SUFFIXES])
         os.replace(artifact, output)
+        record_acceptance(root, 'report', 'report', output, state(root) / 'inputs.json')
         activity('aggregate', 1)
         print(f'LEAN_INSPECTOR_AGGREGATE modules={len(rows)} declarations={sum(len(row["declarations"]) for row in rows)}')
+
+
+def compressed_member(archive, info):
+    """The stored deflate stream of one member, exactly as written."""
+    if info.compress_type != zipfile.ZIP_DEFLATED or info.flag_bits & 1:
+        raise ValueError('statement material is not a plain deflated member')
+    archive.fp.seek(info.header_offset)
+    header = archive.fp.read(30)
+    if len(header) != 30 or header[:4] != b'PK\x03\x04':
+        raise ValueError('invalid statement material header')
+    name_length, extra_length = struct.unpack('<HH', header[26:30])
+    archive.fp.seek(info.header_offset + 30 + name_length + extra_length)
+    data = archive.fp.read(info.compress_size)
+    if len(data) != info.compress_size:
+        raise ValueError('truncated statement material')
+    return data
+
+
+def append_compressed(archive, info, data):
+    """Lay out a deflated member exactly as ZipFile.open(info, 'w') does."""
+    info.compress_size = len(data)
+    info.flag_bits = 0
+    archive.fp.seek(archive.start_dir)
+    info.header_offset = archive.fp.tell()
+    archive._writecheck(info)
+    archive._didModify = True
+    archive.fp.write(info.FileHeader(False))
+    archive.fp.write(data)
+    archive.start_dir = archive.fp.tell()
+    archive.filelist.append(info)
+    archive.NameToInfo[info.filename] = info
+
+
+def acceptance_key(root, kind, name, *inputs):
+    """Content address of one successful validation.
+
+    Validation is a pure function of these bytes and the semantic version
+    (compatibility); an identical key is the same judgement, never re-run.
+    """
+    compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
+    fields = [kind, name, compatibility, *(public.digest(path) for path in inputs)]
+    return hashlib.sha256('\0'.join(fields).encode('utf-8')).hexdigest()
+
+
+def acceptance_path(root, kind, name):
+    # Host-local like .lake/lean-input-memo: seeds carry .lake/build, and a
+    # transported record must never excuse transported bytes from validation.
+    return Path(root) / '.lake/lean-inspector-accepted' / kind / name
+
+
+def accepted(root, kind, name, *inputs):
+    path = acceptance_path(root, kind, name)
+    try:
+        return path.read_text(encoding='ascii') == acceptance_key(root, kind, name, *inputs)
+    except (OSError, UnicodeError):
+        return False
+
+
+def record_acceptance(root, kind, name, *inputs):
+    write_if_changed(acceptance_path(root, kind, name),
+                     acceptance_key(root, kind, name, *inputs).encode('ascii'))
 
 
 def validate_module(report, root, name, utility, *, verified_materials=None, template_inputs=None):
@@ -495,18 +556,25 @@ def validate_report(report, root, verified_materials, template_inputs):
 
 
 def validate(kind, root, *args, verified_materials=None, template_inputs=None):
+    if kind == 'module':
+        name, utility, artifact = args
+        inputs = (artifact, utility)
+    elif kind == 'report':
+        name, inputs = 'report', (args[0], state(root) / 'inputs.json')
+    else:
+        raise ValueError('unknown native artifact kind')
+    if accepted(root, kind, name, *inputs):
+        return
     if template_inputs is None:
         template_inputs = selection.Selection(root)
     with tempfile.TemporaryDirectory(prefix='.validate.', dir=state(root)) as directory:
         if kind == 'module':
-            name, utility, artifact = args
             report = public.unpack(artifact, directory, ROW_SUFFIXES)
             validate_module(report, root, name, utility, verified_materials=verified_materials,
                             template_inputs=template_inputs)
-        elif kind == 'report':
-            validate_report(public.unpack(args[0], directory), root, verified_materials, template_inputs)
         else:
-            raise ValueError('unknown native artifact kind')
+            validate_report(public.unpack(args[0], directory), root, verified_materials, template_inputs)
+    record_acceptance(root, kind, name, *inputs)
 
 
 def publish(root, destination):
@@ -519,9 +587,10 @@ def publish(root, destination):
             records = [public.read_json(line) for line in Path(activity_file).read_text().splitlines()]
             mode = 'produced' if records else 'cached'
             print(f'LEAN_INSPECTOR_WORK extracted_modules={sum(row["count"] for row in records if row["kind"] == "extract")} aggregates={sum(row["count"] for row in records if row["kind"] == "aggregate")}')
-        # Only `lake build :report` precedes this phase, and Lake accepted this
-        # exact bundle through the canonical validator in that invocation.
-        public.publish(report, Path(destination), inputs, root, mode=mode, identities=False)
+        # Lake's report facet recorded acceptance of these exact bytes; a
+        # changed or unrecorded bundle takes the complete check.
+        known = accepted(root, 'report', 'report', state(root) / 'report.zip', state(root) / 'inputs.json')
+        public.publish(report, Path(destination), inputs, root, mode=mode, validate=not known)
     print(f'RAW_LEAN_REPORT path={destination} sha256={public.digest(destination)}')
 
 

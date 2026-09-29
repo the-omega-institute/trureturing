@@ -296,7 +296,9 @@ def _require_bundle_files(report):
             raise ValueError(f'missing bundle member: {path.name}')
 
 
-def validate_bundle(report, expected=None, repository=None, verified_materials=None, *, manifest=None, identities=True):
+def validate_bundle(report, expected=None, repository=None, verified_materials=None, *, manifest=None, identities=True,
+                    check_rows=True):
+    """check_rows=False checks the bundle envelope and currency, not the accepted rows."""
     report = Path(report)
     _require_bundle_files(report)
     sha = digest(report)
@@ -328,6 +330,8 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
             'lean_config_sha256': expected['config']}
         if any(provenance[k] != v for k, v in wanted.items()) or lines[1] != 'repository_input_sha256=' + expected['repository']:
             raise ValueError('stale input/provenance')
+    if not check_rows:
+        return None
     rows = validate_rows(report, member(report, '.materials.zip'), verified_materials,
         manifest=Path(repository) / 'lean-report-inputs.json' if repository is not None else manifest,
         identities=identities)
@@ -368,11 +372,12 @@ def unpack(artifact, directory, suffixes=SUFFIXES):
 
 
 def publish(report, destination, expected, repository=None, *, mode=None, manifest=None, expected_hashes=None,
-            identities=True):
+            validate=True):
     """Stage, validate and atomically publish a bundle.
 
-    identities=False is only for a bundle that Lake accepted earlier in the same
-    invocation; a cache-restored bundle keeps the complete identity check.
+    validate=False is only for bundle bytes whose acceptance is already
+    recorded by content address: the envelope and input currency are still
+    checked, the accepted rows are not replayed.
     """
     report, destination = Path(report), Path(destination)
     _require_bundle_files(report)
@@ -391,7 +396,7 @@ def publish(report, destination, expected, repository=None, *, mode=None, manife
         accepted = {suffix: digest(member(staged, suffix)) for suffix in SUFFIXES}
         if expected_hashes is not None and accepted != expected_hashes:
             raise ValueError('publication snapshot differs from sealed bundle')
-        validate_bundle(staged, expected, repository, manifest=manifest, identities=identities)
+        validate_bundle(staged, expected, repository, manifest=manifest, check_rows=validate)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed during validation')
 

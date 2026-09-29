@@ -80,13 +80,23 @@ class NativePublicationConsumerTests:
             for kind, args in requests]
         request.write_text(json.dumps(requests))
         declarations = sum(len(row['declarations']) for row in self.report()[0])
+        shutil.rmtree(self.root / '.lake/lean-inspector-accepted')
         with patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations, \
                 patch.object(materials, 'material_identities', wraps=materials.material_identities) as identities:
             native.batch(request, result)
             self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
-            # One validation per row, then one complete-bundle validation in the same process.
-            self.assertEqual(validations.call_count, len(artifacts) + 1, '[FAIL] aggregate_row_validated_once')
+            # One validation per unrecorded row; the concatenated bundle is not replayed.
+            self.assertEqual(validations.call_count, len(artifacts), '[FAIL] aggregate_row_validated_once')
             self.assertEqual(identities.call_count, declarations, '[FAIL] aggregate_identity_computed_once')
+        self.assertEqual(output.read_bytes(), (state / 'report.zip').read_bytes())
+        # Seeds carry .lake/build; acceptance records must stay host-local.
+        self.assertEqual(len(list((self.root / '.lake/lean-inspector-accepted/module').iterdir())), len(artifacts))
+        self.assertEqual([], [p for p in (self.root / '.lake/build').rglob('*') if 'accepted' in p.name],
+                         '[FAIL] acceptance_records_not_transported')
+        with patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations:
+            native.batch(request, result)
+            self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
+            self.assertEqual(validations.call_count, 0, '[FAIL] accepted_rows_not_revalidated')
         self.assertEqual(output.read_bytes(), (state / 'report.zip').read_bytes())
         original = output.read_bytes()
         alone_index = config['modules'].index('D5.Alone')
@@ -251,10 +261,12 @@ class NativePublicationConsumerTests:
         self.assertEqual(declarations, 6)
         destination = self.root / 'public.json'
         with patch.dict(os.environ, self.env), patch.object(materials, 'material_identities',
-                wraps=materials.material_identities) as identities:
+                wraps=materials.material_identities) as identities, \
+                patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations:
             native.publish(self.root, destination)
-            # Lake accepted this bundle in the same invocation; publication re-hashes materials only.
+            # Lake recorded acceptance of these bundle bytes; publication checks only the envelope.
             self.assertEqual(identities.call_count, 0, '[FAIL] post_lake_publish_skips_identity_replay')
+            self.assertEqual(validations.call_count, 0, '[FAIL] post_lake_publish_skips_row_replay')
         self.assertEqual(destination.read_bytes(), raw)
         self.assertEqual(publication.member(destination, '.materials.zip').read_bytes(), material_bytes)
         staged = self.root / 'stage' / publication.RAW
