@@ -6,7 +6,7 @@ internal sealed class ThreeQuarterCirculantConjectureDocument : IScribeDocumentD
 {
     private const string Prefix = "D5/S3/Arith/Covering/ThreeQuarterCirculantConjecture.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/dalfofiolreyes2026threequarters");
+        LibraryNoteRef.Create("D5/L/Combinatorics/dalfofiolreyes2026threequarters");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The specified lattice and three-sector distance work for every positive k; "

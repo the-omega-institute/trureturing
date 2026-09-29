@@ -8,7 +8,7 @@ internal sealed class ThreeQuarterCirculantConjecture24RefutationDocument
     private const string Prefix =
         "D5/S3/Arith/Covering/ThreeQuarterCirculantConjecture24Refutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/dalfofiolreyes2026threequarters");
+        LibraryNoteRef.Create("D5/L/Combinatorics/dalfofiolreyes2026threequarters");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Conjecture 2.4's literal positive-integer quantifier conflicts with its "
