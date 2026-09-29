@@ -61,6 +61,7 @@ int64_t response(const Layout&layout,int64_t weight_a=1,int64_t weight_b=1){
   return result;
 }
 
+#ifndef E7_UNIFORM_DEPTH_TWO_LIBRARY
 int main(int argc,char**argv){
   init();
   int count=argc>1?std::stoi(argv[1]):0;
@@ -116,3 +117,4 @@ int main(int argc,char**argv){
   for(int i=0;i<7;i++)std::cout<<(i?",":"")<<"["<<best[i][0]<<","<<best[i][1]<<"]";
   std::cout<<"]}\n";
 }
+#endif
