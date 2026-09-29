@@ -1,0 +1,52 @@
+**命题 105.2（允许的相位平移）。** 定义 Fibonacci 秩与对周期
+
+$$
+\rho(H)=\min\{n\ge1:H\mid F_n\},\qquad
+\pi(H)=\min\{n\ge1:(F_n,F_{n+1})\equiv(0,1)\pmod H\}.
+$$
+
+令
+
+$$
+P=\frac{\pi(H)}{\gcd(\pi(H),3)},\qquad
+L_{H,d}=\min\{\ell\ge1:H\mid F_{3\ell},\quad
+F_{3\ell-1}\equiv1\pmod{H/d}\}.
+$$
+
+$L_{H,d}$ 存在且整除 $P$。读完 $j$ 窗的实际下一权重行为
+
+$$
+w_j=(F_{3j+3},F_{3j+4})\pmod H.
+$$
+
+这些行恰有 $P$ 个，且 $w_k=a w_j$ 对某个 $a\in G_{H,d}$ 成立，当且仅当 $k-j$ 是 $L_{H,d}$ 的倍数。若记 $L=L_{H,d}$、$c=F_{3L-1}\bmod H$，则 $c\in G_{H,d}$；当 $k=j+nL$ 时，唯一的共同标量为 $c^n$，负 $n$ 用单位逆。因此整个前缀未来相同还必须有相同结构标签以及 $r_k=c^n r_j$。
+
+证明。列向量形式的 $S$ 矩阵为
+
+$$
+S=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+S^m=\begin{pmatrix}F_{m-1}&F_m\\F_m&F_{m+1}\end{pmatrix}\quad(m\ge1).
+$$
+
+该式由 Fibonacci 递推归纳得到。$S$ 在 $R$ 上可逆，故对周期存在，且其阶就是 $\pi(H)$。从初始行 $(2,3)$ 开始，$w_j=S^{3j}(2,3)$。对 $\ell>0$，Fibonacci 加法式与 Cassini 恒等式给出
+
+$$
+\det(w_j,w_{j+\ell})=(-1)^{3j+4}F_{3\ell}\pmod H.
+$$
+
+若后行是前行的标量倍，该行列式为零，于是 $H\mid F_{3\ell}$。反向有此整除时，矩阵式直接变成
+
+$$
+S^{3\ell}=F_{3\ell-1}I\pmod H.
+$$
+
+其标量是单位，因为矩阵仍可逆（也可由相邻 Fibonacci 数互素看出）。单位作用在每个幺模行上自由：若 $aw=w$ 且 $\alpha u+\beta v=1$，则 $a-1=\alpha(a-1)u+\beta(a-1)v=0$。故允许单位 $a$ 唯一，并由命题 104.5 恰受 $F_{3\ell-1}\equiv1\pmod{H/d}$ 限制。特别地，$w_{j+\ell}=w_j$ 等价于 $S^{3\ell}=I$，所以三步相位的实际周期确为 $P$，没有把所有位相位都算入。
+
+在有限循环群 $\mathbb Z/P\mathbb Z$ 中取
+
+$$
+K=\{\overline\ell:S^{3\ell}=aI\text{ for some }a\in G_{H,d}\}.
+$$
+
+恒等、乘积和逆都保持此性质，故 $K$ 是子群；对应标量的唯一性还给一个同态 $K\to G_{H,d}$。它在 $\mathbb Z$ 中的原像是包含 $P\mathbb Z$ 的非零子群，故恰为 $L\mathbb Z$，其中 $L$ 为上述最小正返回位置。相位商有 $L$ 个元素，标量沿 $n$ 次平移为 $c^n$。注意这不是说任意 $a\in G_{H,d}$ 都把实际相位集合映到自身；只有实际的标量返回子群 $K$ 参与相位计数。$\square$
+

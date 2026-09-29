@@ -394,6 +394,8 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
     root, output = Path(root), Path(output)
     if template_inputs is None:
         template_inputs = selection.Selection(root)
+    if verified_materials is None:
+        verified_materials = {}
     config = public.read_json((state(root) / 'inputs.json').read_bytes())
     if len(artifacts) != len(config['modules']):
         raise ValueError('native aggregate membership mismatch')
@@ -462,8 +464,9 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
                         writer.write(block)
                         remaining -= len(block)
         public.write_sidecars(report, config['coordinates'], origins)
-        # The native aggregate facet validates the completed bundle before
-        # exposing it. Do not repeat that complete pass inside its builder.
+        # Every row's statement identities are memoized above, so the complete
+        # canonical bundle check re-hashes materials without re-encoding them.
+        validate_report(report, root, verified_materials, template_inputs)
         artifact = directory / 'report.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in public.SUFFIXES])
         os.replace(artifact, output)
@@ -481,6 +484,16 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
     return rows, origin
 
 
+def validate_report(report, root, verified_materials, template_inputs):
+    config = public.read_json((state(root) / 'inputs.json').read_bytes())
+    rows = public.validate_bundle(report, config['coordinates'], root, verified_materials)
+    if [row['module'] for row in rows] != config['modules']:
+        raise ValueError('native aggregate membership mismatch')
+    for row in rows:
+        row_binding([row], root, row['module'], state(root) / 'inputs' / (row['module'] + '.json'),
+                    template_inputs=template_inputs)
+
+
 def validate(kind, root, *args, verified_materials=None, template_inputs=None):
     if template_inputs is None:
         template_inputs = selection.Selection(root)
@@ -491,14 +504,7 @@ def validate(kind, root, *args, verified_materials=None, template_inputs=None):
             validate_module(report, root, name, utility, verified_materials=verified_materials,
                             template_inputs=template_inputs)
         elif kind == 'report':
-            report = public.unpack(args[0], directory)
-            config = public.read_json((state(root) / 'inputs.json').read_bytes())
-            rows = public.validate_bundle(report, config['coordinates'], root, verified_materials)
-            if [row['module'] for row in rows] != config['modules']:
-                raise ValueError('native aggregate membership mismatch')
-            for row in rows:
-                row_binding([row], root, row['module'], state(root) / 'inputs' / (row['module'] + '.json'),
-                            template_inputs=template_inputs)
+            validate_report(public.unpack(args[0], directory), root, verified_materials, template_inputs)
         else:
             raise ValueError('unknown native artifact kind')
 
@@ -513,7 +519,9 @@ def publish(root, destination):
             records = [public.read_json(line) for line in Path(activity_file).read_text().splitlines()]
             mode = 'produced' if records else 'cached'
             print(f'LEAN_INSPECTOR_WORK extracted_modules={sum(row["count"] for row in records if row["kind"] == "extract")} aggregates={sum(row["count"] for row in records if row["kind"] == "aggregate")}')
-        public.publish(report, Path(destination), inputs, root, mode=mode)
+        # Only `lake build :report` precedes this phase, and Lake accepted this
+        # exact bundle through the canonical validator in that invocation.
+        public.publish(report, Path(destination), inputs, root, mode=mode, identities=False)
     print(f'RAW_LEAN_REPORT path={destination} sha256={public.digest(destination)}')
 
 

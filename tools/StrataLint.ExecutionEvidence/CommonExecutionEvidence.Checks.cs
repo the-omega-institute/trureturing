@@ -168,7 +168,8 @@ internal static partial class CommonExecutionEvidence
             completed.Add(id, unit);
             return unit;
         }
-        internal RuleExecutionOutcome ExecuteCurrentPredicates(ValidatedPolicy policy, AcceptedLeanClosure? lean)
+        internal RuleExecutionOutcome ExecuteCurrentPredicates(ValidatedPolicy policy, AcceptedLeanClosure? lean,
+            RuleEvaluationMeasure? measureRule = null)
         {
             if (stage != "current") throw new InvalidDataException("current selection requires current owner");
             if (lean is null && registrations.Any(check => Ids.Contains(check.Id) && check.ReportInputs.Length != 0))
@@ -179,7 +180,7 @@ internal static partial class CommonExecutionEvidence
             var selection = SelectCurrentRules();
             var context = lean is null ? CurrentRuleContext.CreateWithoutLean(snapshot, policy, verified, selection)
                 : CurrentRuleContext.Create(snapshot, policy, lean, verified, selection);
-            var evaluated = AdmissionPipeline.CheckCurrent(context);
+            var evaluated = AdmissionPipeline.CheckCurrent(context, measureRule);
             if (evaluated is not RuleExecutionOutcome.Completed complete) return evaluated;
             var actual = complete.Capability;
             var failed = new HashSet<string>(StringComparer.Ordinal);
