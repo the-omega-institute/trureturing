@@ -17359,3 +17359,302 @@ $$
 恢复定理只谈实际像上的函数存在与唯一，不保证解码可计算、已取得、可在预算内实施，也不赋予任意拼接来源或旁支的权限。共同画像足以支持这一项声明任务，并不把一般空间、物理时间、边界与记忆无条件等同。本节只追加理论正文，未进行 Lean 编译或内核验证，也未进行消化结算。
 
 ## 86.99 追加锚
+
+## 87. 递归三阶共同核心：关系、关系的关系与四种表示
+
+本节取第86节同源联合核的有限确定性特例，把事件的关系及后继也纳入共同商。[Fibonacci §§111—113](FIBONACCI_ATOMIC_RELATION_GENERATION.md)提供生成层与行为边界的区分：二叶自由语法及有序配对给出生成方式；加入替换后的种子数、固定加性读出的维数和完整行为类数是不同问题。这里的“三阶”指状态、事件间关系及保存二者接续的共同结构，不指物理维数，也不由两个生成叶推出两个行为类。
+
+### 定义 87.1（有类型的同源事件模型与总化响应）
+
+取有限非空集合 $\Omega,S_0,D_0,I$，以 $S_0$ 表示状态的环境载体，$D_0$ 表示事件的环境载体，$I$ 表示接口类型。给定
+
+$$
+\operatorname{in},\operatorname{out}:D_0\to I,\qquad
+ D_0=\bigsqcup_{i,j\in I}D^0_{i,j},\qquad
+ D^0_{i,j}=\{d:\operatorname{in}(d)=i,\ \operatorname{out}(d)=j\}.
+$$
+
+实际来源由一个联合映射给出：
+
+$$
+j=(\iota_S,\iota_D):\Omega\to S_0\times D_0,\qquad
+J=j[\Omega],\qquad S=\iota_S[\Omega],\quad D=\iota_D[\Omega].
+\tag{87.1}
+$$
+
+其中 $\iota_S:\Omega\to S_0$、$\iota_D:\Omega\to D_0$，并在下文把实际像重新记为
+
+$$
+S:=\iota_S[\Omega]\subseteq S_0,\qquad
+D:=\iota_D[\Omega]\subseteq D_0.
+$$
+
+所以这里的 $S,D$ 已经是同一来源的实际像；没有假设 $J=S\times D$。$D$ 是事件域，$d\in D$ 是当前事件，$e\in D$ 是待尝试事件；$d$ 本身不是接口，$\operatorname{out}(d)$ 才是其输出接口。
+
+一个配置是 $x=(s,d)\in J$；$d$ 是当前事件，当前接口由 $\operatorname{out}(d)$ 给出，尝试事件记为 $e\in D$。另给第二阶关系
+
+$$
+\Delta\subseteq\{(d,e)\in D\times D:
+\operatorname{out}(d)=\operatorname{in}(e)\}.
+\tag{87.2}
+$$
+
+$(d,e)\in\Delta$ 表示声明允许的接口接续关系，不自动授予状态 $s$ 中的执行权限。$J$ 和 $\Delta$ 都不能用各自边缘的笛卡尔积替换。
+
+$\Delta$ 是独立声明的第二阶关系合同；接口类型相容只是它的必要索引条件，不由类型函数自动推出全部关系边。
+
+取有限标签集 $Y,M,P_{\mathrm{state}},H,F_{\mathrm{fail}},R_{\mathrm{deny}}$，令
+
+$$
+L=Y\times M\times P_{\mathrm{state}}\times H
+$$
+
+分别承载输出、记录、权限状态与声明的时钟增量标签；$F_{\mathrm{fail}}$ 承载执行失败原因，$R_{\mathrm{deny}}$ 承载来源、类型、关系或权限拒绝原因。设 $L$ 非空。声明确定性总响应
+
+$$
+\widehat T:S\times D\times D\longrightarrow
+\mathsf{Ok}(L\times S\times D)
+\sqcup\mathsf{Fail}(F_{\mathrm{fail}}\times L)
+\sqcup\mathsf{Deny}(R_{\mathrm{deny}}\times L).
+\tag{87.3}
+$$
+
+按固定优先级检查 $(s,d)\in J$、类型相容及 $(d,e)\in\Delta$；域、类型、关系或权限条件不满足时返回相应的 $\mathsf{Deny}$ 标签；通过这些检查后仍可能在执行阶段返回 $\mathsf{Fail}$。成功值 $\mathsf{Ok}(\ell,s',d')$ 同时给出状态后继与事件后继，不要求 $d'=e$。失败和拒绝保留其记录、权限和增量标签后终止；若任务允许错误后继续，须把它建模为到某个明确错误状态的成功转移，另行检查下降条件。
+
+### 定义 87.2（固定索引的轨迹、状态画像与权限／接续画像）
+
+所有尝试词取自 $D^*$，包括会被拒绝的词；不按代表元删去非法词。总化可见轨迹不直接暴露原始后继 $s',d'$，而以它们继续执行：
+
+$$
+\begin{aligned}
+\widehat{\operatorname{Tr}}(s,d,\varepsilon)&=\varepsilon,\\
+\widehat{\operatorname{Tr}}(s,d,ew)&=
+\begin{cases}
+(\mathsf{ok},\ell)\cdot\widehat{\operatorname{Tr}}(s',d',w),
+ &\widehat T(s,d,e)=\mathsf{Ok}(\ell,s',d'),\\
+[(\mathsf{fail},f,\ell)],&\widehat T(s,d,e)=\mathsf{Fail}(f,\ell),\\
+[(\mathsf{deny},p,\ell)],&\widehat T(s,d,e)=\mathsf{Deny}(p,\ell).
+\end{cases}
+\end{aligned}
+\tag{87.4}
+$$
+
+点号为序列连接，方括号表示单项序列。给定当前声明读出 $o:S\to O$，定义
+
+$$
+\begin{aligned}
+\Gamma(s)&=\left(o(s),
+ \bigl(\mathbf1_J(s,d),\widehat{\operatorname{Tr}}(s,d,w)\bigr)_{d\in D,\,w\in D^*}\right),\\
+\Pi(d)&=\left(\operatorname{in}(d),\operatorname{out}(d),
+ \bigl(\mathbf1_J(s,d),\widehat{\operatorname{Tr}}(s,d,w)\bigr)_{s\in S,\,w\in D^*},
+ \bigl(\widehat{\operatorname{Tr}}(s,e,udv)\bigr)_{s\in S,\,e\in D,\,u,v\in D^*}\right),\\
+s\sim_S t&\iff\Gamma(s)=\Gamma(t),\qquad
+ d\sim_D e\iff\Pi(d)=\Pi(e).
+\end{aligned}
+\tag{87.5}
+$$
+
+$\Pi$ 同时检查事件作为当前接口及作为任意词中一次尝试的角色，包含权限、失败和全部声明续接的可见响应；所有画像使用共同的索引集。只比较出度、当前权限或成功输出都不是这个画像。有限载体上的画像可以含所有有限词坐标，但不因此宣称存在已实现的无限执行。若只保留长度不超过 $n$ 的坐标，应另记 $\Gamma_n,\Pi_n$；它们的核不自动对下一步闭合。
+
+### 假设 87.3（关系饱和、后继相容与实际来源闭合）
+
+记商映射为 $q_S:S\to S/{\sim_S}$、$q_D:D\to D/{\sim_D}$。在所选画像核上要求下列条件；同样的条件也可检查一个较粗的候选摘要。
+
+1. 类型、实际域和第二阶关系在相应纤维上常值。即 $d\sim_D d'$ 时类型相同，且
+
+   $$
+   \begin{aligned}
+   s\sim_S t,\ d\sim_D d'&\Longrightarrow
+   ((s,d)\in J\iff(t,d')\in J),\\
+   d\sim_D d',\ e\sim_D e'&\Longrightarrow
+   ((d,e)\in\Delta\iff(d',e')\in\Delta).
+   \end{aligned}
+   \tag{87.6}
+   $$
+
+   第二行称为 $\Delta$ 饱和，等价于 $\Delta$ 是若干产品等价类的并。类型和 $J$ 的条件已由(87.5)保证，仍列出以明确较粗候选摘要的义务。
+
+2. 在实际输入及其成功后继属于 $J$ 的范围内，定义 $\widehat q$ 为
+
+   $$
+   \begin{aligned}
+   \widehat q(\mathsf{Ok}(\ell,s',d'))&=\mathsf{Ok}(\ell,\kappa(s',d')),\\
+   \widehat q(\mathsf{Fail}(f,\ell))&=\mathsf{Fail}(f,\ell),\\
+   \widehat q(\mathsf{Deny}(r,\ell))&=\mathsf{Deny}(r,\ell).
+   \end{aligned}
+   $$
+
+   要求
+
+   $$
+   (s,d),(t,d')\in J,\quad s\sim_S t,\quad d\sim_D d',\quad e\sim_D e'
+   \Longrightarrow
+   \widehat q\bigl(\widehat T(s,d,e)\bigr)
+   =\widehat q\bigl(\widehat T(t,d',e')\bigr).
+   \tag{87.7}
+   $$
+
+   其中 $\kappa(s',d')$ 在成功分支上有定义，正是由(87.8)保证的。因而成功分支不仅标签相同，两个后继分量也分别等价。可见轨迹相同本身不替代这项分量条件。若还声明控制选择器 $h:J\to D$，须另有 $q_D\circ h$ 在 $(q_S,q_D)|_J$ 的纤维上常值；使用额外档案的选择器须把该档案加入同源配置。
+
+3. 为每个尝试 $e$ 指定实际来源上的成功后继见证 $U_e\subseteq\Omega\times\Omega$，并要求
+
+   $$
+   \begin{gathered}
+   \forall\omega\in\Omega,\ e\in D,\quad
+   \widehat T(\iota_S(\omega),\iota_D(\omega),e)
+        =\mathsf{Ok}(\ell,s',d')\\
+   \Longrightarrow\quad
+   \exists\omega'\in\Omega:\quad
+   (\omega,\omega')\in U_e\ \land\ j(\omega')=(s',d').
+   \end{gathered}
+   \tag{87.8}
+   $$
+
+   这是逐个实际来源的接续提升条件，强于仅有 $s'\in S$、$d'\in D$，也强于独立找两个边缘见证。它保证成功后继在 $J$ 中，且有限执行可沿见证 $U_e$ 逐步实现；$U_e$ 本身不自动成为商核心中的权限关系。若递归升层需要保存来源级权限，必须另定义其商关系并检查代表无关性；失败或拒绝无需虚构成功后继。
+
+### 命题 87.4（递归共同核心的一个充分构造）
+
+在定义87.1—87.2及假设87.3下，令
+
+$$
+\begin{aligned}
+S^\#&=S/{\sim_S},\qquad D^\#=D/{\sim_D},\\
+\kappa&=(q_S,q_D)|_J:J\to Q=\kappa[J],\\
+\overline\Delta(q_D(d),q_D(e))&\iff(d,e)\in\Delta.
+\end{aligned}
+\tag{87.9}
+$$
+
+则 $\overline\Delta$ 及下面的总响应代表无关，并唯一确定在这些实际像上：
+
+$$
+\begin{aligned}
+\overline T &:Q\times D^\#\to
+ \mathsf{Ok}(L\times Q)\sqcup\mathsf{Fail}(F_{\mathrm{fail}}\times L)
+ \sqcup\mathsf{Deny}(R_{\mathrm{deny}}\times L),\\
+\overline T(\kappa(s,d),q_D(e))&=\widehat q\bigl(\widehat T(s,d,e)\bigr).
+\end{aligned}
+\tag{87.10}
+$$
+
+其中成功输出的后继对确实在 $Q$。以(87.4)的同一递归式定义商轨迹，则对每个 $(s,d)\in J$ 和有限词 $w$，
+
+$$
+\widehat{\operatorname{Tr}}(s,d,w)
+=\overline{\operatorname{Tr}}(\kappa(s,d),q_D^*(w)),
+\tag{87.11}
+$$
+
+$q_D^*$ 表示逐字取商。故
+
+$$
+\mathcal C=(S^\#,D^\#,Q,\overline\Delta,\overline T)
+\tag{87.12}
+$$
+
+是保存 $\Delta$ 与总响应商合同的三阶共同结构，$Q$ 是其配置核心；$U_e$ 仍只是实际来源上的成功提升见证，除非另行构造其商关系，否则不属于 $\mathcal C$ 的权限数据。
+
+证明。(87.6)保证关系下降；(87.7)保证总响应及两个成功后继类与代表无关；(87.8)保证下一配置仍有同源联合见证。(87.11)对词长归纳：空词相同，成功步使用两个相同后继类继续，失败与拒绝步保留相同标签并停止。每个商输入都有实际代表，故上述交换式决定全部商值，唯一性只相对于固定的商映射及合同。证毕。
+
+这是充分条件的组合，不主张整组条件对每种粗任务都必要。单独的 $\Delta$ 饱和恰保证原关系真值的精确下降。与第86节的连接也有范围：本节响应可写为确定性点质量核；换成加权分支后，应按所保留的标签及联合后继类聚合，再检验式(86.3)的行常值条件。聚合行相同不能推出每条细分支具有同一个确定性后继，也不能从两个后继边缘相同推出联合行相同。
+
+### 命题 87.5（四种读数在实际像上的恢复条件）
+
+在命题87.4的条件下，令同源读数
+
+$$
+E_i:J\to X_i,\qquad
+ i\in\{\mathrm{sp},\partial,\mathrm{mem},\mathrm{time}\},\qquad
+E_{\mathrm{time}}(s,d)=\theta(s)
+\tag{87.13}
+$$
+
+分别表示空间、边界、记忆与状态侧时间读数。这里 $\theta:S\to X_{\mathrm{time}}$ 是声明的当前时间显示。对 $J$ 上的映射 $f$，记 $\ker(f)=\{(x,x'):f(x)=f(x')\}$。有
+
+$$
+\begin{aligned}
+E_i=\bar E_i\circ\kappa\text{，某个 }\bar E_i:Q\to E_i[J]
+ &\iff\ker(\kappa)\subseteq\ker(E_i),\\
+\kappa=R_i\circ E_i\text{，某个 }R_i:E_i[J]\to Q
+ &\iff\ker(E_i)\subseteq\ker(\kappa).
+\end{aligned}
+\tag{87.14}
+$$
+
+因此，若四个读数均满足
+
+$$
+\ker(E_i)=\ker(\kappa),
+\tag{87.15}
+$$
+
+则它们既通过配置核心因子化，又各自完整恢复这个核心；$\bar E_i$ 是实际像间的双射，唯一互恢复映射为
+
+$$
+R_{ij}=\bar E_j\circ(\bar E_i)^{-1}:E_i[J]\to E_j[J].
+\tag{87.16}
+$$
+
+证明。(87.14)分别以 $\bar E_i(\kappa(x)):=E_i(x)$ 和 $R_i(E_i(x)):=\kappa(x)$ 定义，核包含恰保证代表无关；实际像保证唯一性与满射。两核相等时二者互逆，从而得到(87.16)。证毕。
+
+条件(87.15)对“恰好编码指定核心”充要，对“四种读数彼此可恢复”只是充分：四者也可能共同遗失核心信息或共同保留更多信息。保存动态结构还须保留 $D^\#$ 中的尝试标签，并使各表示中的执行器与(87.10)交换；仅有静态双射不能认证任意外加执行器。若执行器由 $\overline T$ 经这些双射运输定义，交换性随定义成立。
+
+尤其，若同一 $s$ 可与两个不同的 $D^\#$ 类联合出现，则仅依赖 $s$ 的 $E_{\mathrm{time}}$ 无法满足(87.15)。若合同只要求状态核心，可将(87.14)中的 $J,\kappa$ 换成 $S,q_S$，但这不再恢复独立的事件侧信息。全部恢复只针对实际像，不恢复已被商掉的原始来源。
+
+累计时钟是另一份合同：还须指定初值 $t_0$、增量解释 $c:H\to A$（$A$ 为加法幺半群）、实际已执行的标签序列 $\ell_1,\ldots,\ell_n$ 及其取得和保存方式，才能沿该实际历史定义
+
+$$
+\operatorname{Clock}(\ell_1\cdots\ell_n)
+=t_0+c(\operatorname{pr}_H\ell_1)+\cdots+c(\operatorname{pr}_H\ell_n).
+\tag{87.17}
+$$
+
+即使当前状态核心足以预测下一响应，也不自动存储初值、过去执行词或累计值。对额外历史载体上的时钟恢复，应另查其读数核是否包含于 $\ker(\operatorname{Clock})$；不能以状态侧的(87.15)代替。
+
+### 命题 87.6（未饱和候选商的有限反例）
+
+取
+
+$$
+S=\{\ast\},\quad D=\{a,b,c\},\quad
+\Delta=\{(a,c)\},\quad
+q_D^0(a)=q_D^0(b)=A_0,\quad q_D^0(c)=C_0.
+\tag{87.18}
+$$
+
+所有接口取同一类型，取 $\Omega=D$、$j(d)=(\ast,d)$，所以 $J=S\times D$。固定标签 $\ell_0$，令
+
+$$
+\widehat T(\ast,d,e)=
+\begin{cases}
+\mathsf{Ok}(\ell_0,\ast,c),&(d,e)=(a,c),\\
+\mathsf{Deny}(\mathrm{notRelated},\ell_0),&\text{其余情形}.
+\end{cases}
+\tag{87.19}
+$$
+
+取 $U_c=\{(a,c)\}$，其余 $U_e=\varnothing$，则成功分支满足实际来源闭合。然而原关系和带失败值的后继
+
+$$
+N(d,e)=
+\begin{cases}
+c,&(d,e)\in\Delta,\\
+\bot,&(d,e)\notin\Delta
+\end{cases}
+\quad:\ D\times D\to D\sqcup\{\bot\}
+\tag{87.20}
+$$
+
+均不能精确下降到候选商 $D/{\ker(q_D^0)}$。
+
+证明。商输入 $(A_0,C_0)$ 同时代表 $(a,c)$ 和 $(b,c)$，但前者属于 $\Delta$、后者不属于；相应后继分别为 $c$ 和 $\bot$，总响应分别成功和拒绝。代表无关性因此失败。这里单独的状态后继是常值 $\ast$，失效的是保留合法性及成功／拒绝的关系后继，不能用常值状态分量掩盖。证毕。
+
+反例中的 $q_D^0$ 是遗漏关系信息的候选摘要，不是(87.5)的完整 $\Pi$：后者已由尝试 $c$ 区分 $a,b$。若明确隐藏关系与拒绝标签，须重新声明粗任务；其响应可能可聚合，但不能称原 $\Delta$ 或(87.20)已经下降。
+
+### 87.7 递归使用的范围
+
+共同结构可作为下一层的输入对象；每次升层仍须指定类型、实际联合像、总化响应与测试词，并重新检查(87.6)—(87.8)。这使封装后的关系可以继续被比较和接续，不能把未实现的商坐标组合补成实际来源。有限视界的充分性不自动延伸到所有未来，所有有限词的相等也不自动提供无限实际线程、取得算法或资源界。
+
+空间、边界、记忆与状态时间在此只是同一来源上的声明读数；它们与共同核心的关系由(87.14)—(87.16)限定。该构造不赋予这些读数拓扑、度量、物理时空或新的操作权限，累计时钟仍遵守独立的历史合同。
+
+## 87.99 追加锚
