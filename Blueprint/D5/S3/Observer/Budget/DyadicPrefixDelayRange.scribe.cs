@@ -112,42 +112,72 @@ internal sealed class DyadicPrefixDelayRangeDocument : IScribeDocumentDefinition
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Conj(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
-    private static Formula Term() => Call("N", F.Id("p"), Seq(D(2), Sp, Times, Sp, F.Id("t"), Sp, Plus, Sp, F.Id("u")));
-    private static Formula Expected() => Seq(Call("E", F.Id("t")), Sp, Plus, Sp,
-        F.Id("P"), Sp, Times, Sp, Call("K", F.Id("t")));
+    private static Formula AddN(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
+    private static Formula Mul(Formula a, Formula b) => Seq(a, Sp, Times, Sp, b);
+    private static Formula Pow(Formula a, Formula b) => Call("pow", a, b);
+    private static Formula Depth(Formula d) => AddN(d, D(1));
+    private static Formula Period(Formula d) => Pow(D(2), Depth(d));
+    private static Formula Source(Formula t, Formula u) => AddN(Mul(D(2), t), u);
+    private static Formula Terminal(Formula period, Formula b, Formula p, Formula r) =>
+        Call("terminalTime", period, b, p, r);
+    private static Formula Raw(Formula period, Formula b, Formula p, Formula r) =>
+        Seq(Par(Call("terminalRecord", period, b, p, r)), Dot, D(2));
+    private static Formula Correct(Formula period, Formula b, Formula p) =>
+        Call("CorrectOn", Call("rawBit", period, b), p, D(0), D(0), period);
+    private static Formula Earliest(Formula d, Formula t) => Call("earliestTime", d, t);
     private static Formula ValidPair() => Conj(
         Seq(F.Id("t"), Sp, Lt, Sp, Call("pow", D(2), F.Id("d"))),
         Seq(F.Id("u"), Sp, Lt, Sp, D(2)));
 
-    private static Formula TableStatement() => Disp(All("d", N(), All("b", Call("Fin", D(2)),
-        All("K", Seq(N(), Sp, To, Sp, N()), Ex("p", Call("Protocol", Seq(F.Id("d"), Sp, Plus, Sp, D(1))),
-            Conj(Call("Correct", F.Id("p")),
-                All("t", N(), All("u", N(), Imp(ValidPair(), Eqn(Term(), Expected()))))))))));
+    private static Formula TableStatement()
+    {
+        var d = F.Id("d"); var b = F.Id("b"); var p = F.Id("p");
+        var t = F.Id("t"); var u = F.Id("u"); var period = Period(d);
+        var expected = AddN(Earliest(d, t), Mul(period, Call("K", t)));
+        return Disp(All("d", N(), All("b", Call("Fin", D(2)),
+            All("K", Seq(N(), Sp, To, Sp, N()), Ex("p", Call("Protocol", Depth(d)),
+                Conj(Correct(period, b, p), All("t", N(), All("u", N(),
+                    Imp(ValidPair(), Eqn(Terminal(period, b, p, Source(t, u)), expected))))))))));
+    }
 
-    private static Formula NecessityStatement() => Disp(All("d", N(), All("b", Call("Fin", D(2)),
-        All("p", Call("Protocol", Seq(F.Id("d"), Sp, Plus, Sp, D(1))),
-            Imp(Call("Correct", F.Id("p")), All("t", N(), All("u", N(),
-                Imp(ValidPair(), Ex("k", N(), Eqn(Term(), Seq(Call("E", F.Id("t")),
-                    Sp, Plus, Sp, F.Id("P"), Sp, Times, Sp, F.Id("k"))))))))))));
+    private static Formula NecessityStatement()
+    {
+        var d = F.Id("d"); var b = F.Id("b"); var p = F.Id("p");
+        var t = F.Id("t"); var u = F.Id("u"); var period = Period(d);
+        var time = Eqn(Terminal(period, b, p, Source(t, u)),
+            AddN(Earliest(d, t), Mul(period, F.Id("k"))));
+        var prefix = All("t", N(), All("u", N(), Imp(ValidPair(), Ex("k", N(), time))));
+        return Disp(All("d", N(), All("b", Call("Fin", D(2)),
+            All("p", Call("Protocol", Depth(d)), Imp(Correct(period, b, p), prefix)))));
+    }
 
     private static Formula DelayedStatement()
     {
         var a = F.Id("a"); var now = F.Id("now"); var r = F.Id("r");
         var p = F.Id("P"); var k = F.Id("K"); var read = F.Id("read"); var d = F.Id("d");
         var depth = Seq(d, Sp, Plus, Sp, D(1));
+        var n = F.Id("n"); var shift = F.Id("k");
+        var periodic = All("n", N(), All("r", N(), All("k", N(),
+            Imp(Seq(r, Sp, Lt, Sp, p), Eqn(Call("read", AddN(n, Mul(p, shift)), r),
+                Call("read", n, r))))));
+        var law = All("n", N(), All("r", N(), Imp(Seq(r, Sp, Lt, Sp, p),
+            Eqn(Call("read", n, r), Call("threshold", p, n, r)))));
         var valid = Conj(Eqn(Call("mod", a, D(2)), D(0)),
             Conj(Seq(a, Sp, Plus, Sp, Call("pow", D(2), depth), Sp, Le, Sp, p),
                 Conj(Seq(a, Sp, Le, Sp, r),
                     Seq(r, Sp, Lt, Sp, a, Sp, Plus, Sp, Call("pow", D(2), depth)))));
         var delayed = Call("execute", read, Call("delayedMidpoint", p, k, depth, a, now), now, r);
-        var earliest = Call("execute", read, Call("midpoint", p, depth, a, now), now, r);
+        var midpoint = Seq(F.Id("DyadicForwardWaitingOptimality"), Dot,
+            F.Id("midpoint"), Par(Seq(p, Comma, Sp, depth, Comma, Sp, a, Comma, Sp, now)));
+        var earliest = Call("execute", read, midpoint, now, r);
         var result = Conj(Eqn(Call("fst", delayed), Call("fst", earliest)),
             Eqn(Call("snd", delayed), Seq(Call("snd", earliest), Sp, Plus, Sp,
                 p, Sp, Times, Sp, Call("K", Call("div", r, D(2))))));
+        var interval = All("a", N(), All("now", N(), All("r", N(), Imp(valid, result))));
+        var assumptions = Imp(periodic, Imp(law, All("d", N(), interval)));
         return Disp(All("P", N(), All("K", Seq(N(), Sp, To, Sp, N()),
-            All("read", F.Id("NatToNatToFin2"), All("d", N(),
-                Imp(Conj(Call("periodic", read, p), Call("thresholdLaw", read, p)),
-                    All("a", N(), All("now", N(), All("r", N(), Imp(valid, result))))))))));
+            All("read", Seq(N(), Sp, To, Sp, N(), Sp, To, Sp, Call("Fin", D(2))),
+                assumptions))));
     }
 
     private static Formula DeadlineStatement()
@@ -155,27 +185,29 @@ internal sealed class DyadicPrefixDelayRangeDocument : IScribeDocumentDefinition
         var d = F.Id("d"); var b = F.Id("b"); var deadline = F.Id("D");
         var t = F.Id("t"); var u = F.Id("u"); var k = F.Id("k");
         var p = F.Id("p"); var p0 = F.Id("p0"); var p1 = F.Id("p1");
-        var period = F.Id("P"); var wait = F.Id("W");
-        var source = Seq(D(2), Sp, Times, Sp, t, Sp, Plus, Sp, u);
-        var time = Seq(Call("E", t), Sp, Plus, Sp, period, Sp, Times, Sp, k);
-        var family = Call("member", p, Call("F", deadline));
+        var period = Period(d); var wait = Call("sharpWait", Depth(d));
+        var time = AddN(Earliest(d, t), Mul(period, k));
+        var family = Call("deadlineFamily", d, b, deadline, p);
         var reachable = Ex("p", Call("Protocol", Seq(d, Sp, Plus, Sp, D(1))),
-            Conj(family, Eqn(Call("N", p, source), time)));
+            Conj(family, Eqn(Terminal(period, b, p, Source(t, u)), time)));
         var range = All("t", N(), All("u", N(), All("k", N(), Imp(ValidPair(),
             Seq(Par(reachable), Sp, Iff, Sp, Par(Seq(time, Sp, Le, Sp, deadline)))))));
-        var even = Seq(D(2), Sp, Times, Sp, t);
-        var odd = Seq(even, Sp, Plus, Sp, D(1));
-        var shifted = Eqn(Call("N", p1, odd), Seq(Call("N", p0, even), Sp, Plus, Sp, period));
-        var sameRaw = Eqn(Call("Y", p0, even), Call("Y", p1, odd));
-        var collisionBody = Conj(Call("member", p0, Call("F", deadline)),
-            Conj(Call("member", p1, Call("F", deadline)), Conj(shifted, sameRaw)));
+        var even = Mul(D(2), t);
+        var odd = AddN(even, D(1));
+        var shifted = Eqn(Terminal(period, b, p1, odd),
+            AddN(Terminal(period, b, p0, even), period));
+        var sameRaw = Eqn(Raw(period, b, p0, even), Raw(period, b, p1, odd));
+        var collisionBody = Conj(Call("deadlineFamily", d, b, deadline, p0),
+            Conj(Call("deadlineFamily", d, b, deadline, p1), Conj(shifted, sameRaw)));
         var collision = Ex("p0", Call("Protocol", Seq(d, Sp, Plus, Sp, D(1))),
             Ex("p1", Call("Protocol", Seq(d, Sp, Plus, Sp, D(1))), collisionBody));
-        var eligible = All("t", N(), Imp(Conj(Seq(t, Sp, Lt, Sp, Call("pow", D(2), d)),
-            Seq(Call("E", t), Sp, Plus, Sp, period, Sp, Le, Sp, deadline)), collision));
-        var body = Conj(Imp(Seq(deadline, Sp, Lt, Sp, wait), Call("empty", Call("F", deadline))),
+        var eligible = All("t", N(), Imp(Conj(Seq(t, Sp, Lt, Sp, Pow(D(2), d)),
+            Conj(Seq(wait, Sp, Le, Sp, deadline),
+                Seq(AddN(Earliest(d, t), period), Sp, Le, Sp, deadline))), collision));
+        var body = Conj(Imp(Seq(deadline, Sp, Lt, Sp, wait),
+                Seq(Neg, Ex("p", Call("Protocol", Depth(d)), family))),
             Conj(Imp(Seq(wait, Sp, Le, Sp, deadline), range),
-                Imp(Seq(wait, Sp, Le, Sp, deadline), eligible)));
+                eligible));
         return Disp(All("d", N(), All("b", Call("Fin", D(2)), All("D", N(), body))));
     }
 
@@ -185,30 +217,32 @@ internal sealed class DyadicPrefixDelayRangeDocument : IScribeDocumentDefinition
         var baseCount = Call("pow", D(2), d);
         var count = Seq(baseCount, Sp, Plus, Sp,
             Call("card", Call("eligiblePrefixes", d, deadline)));
-        var family = Call("deadlineFamily", d, b, deadline);
+        var family = Call("deadlineFamily", d, b, deadline, F.Id("p"));
         var labels = Call("familyClockLabels", d, b, deadline, F.Id("phi"));
-        var uniform = UniformDecoder(d, family, F.Id("phi"), F.Id("recover"));
+        var uniform = UniformDecoder(d, b, deadline, F.Id("phi"), F.Id("recover"));
         var lower = All("Z", F.Id("Type"), All("phi", Seq(N(), Sp, To, Sp, F.Id("Z")),
-            All("recover", F.Id("ZToFin2ToNat"), Imp(uniform,
+            All("recover", Seq(F.Id("Z"), Sp, To, Sp, Call("Fin", D(2)), Sp, To, Sp, N()), Imp(uniform,
                 Seq(count, Sp, Le, Sp, Call("card", labels))))));
         var upper = Conj(
-            UniformDecoder(d, family, Call("clockTag", d), Call("tagDecode", d, b)),
+            UniformDecoder(d, b, deadline, Call("clockTag", d), Call("tagDecode", d, b)),
             Eqn(Call("card", Call("familyClockLabels", d, b, deadline,
                 Call("clockTag", d))), count));
         return Disp(All("d", N(), All("b", Call("Fin", D(2)), All("D", N(),
             Conj(Imp(Seq(deadline, Sp, Lt, Sp, Call("sharpWait", Seq(d, Sp, Plus, Sp, D(1)))),
-                    Call("empty", family)),
+                    Seq(Neg, Ex("p", Call("Protocol", Depth(d)), family))),
                 Imp(Seq(Call("sharpWait", Seq(d, Sp, Plus, Sp, D(1))), Sp, Le, Sp,
                     deadline), Conj(lower, upper)))))));
     }
 
-    private static Formula UniformDecoder(Formula d, Formula family, Formula encoder, Formula decoder)
+    private static Formula UniformDecoder(Formula d, Formula b, Formula deadline,
+        Formula encoder, Formula decoder)
     {
         var p = F.Id("p"); var r = F.Id("r");
         var depth = Seq(d, Sp, Plus, Sp, D(1));
-        var recovered = Call("apply", decoder, Call("apply", encoder, Call("N", p, r)),
-            Call("Y", p, r));
-        return All("p", Call("Protocol", depth), Imp(Call("member", p, family),
+        var period = Period(d);
+        var recovered = Seq(decoder, Par(Seq(encoder,
+            Par(Terminal(period, b, p, r)))), Par(Raw(period, b, p, r)));
+        return All("p", Call("Protocol", depth), Imp(Call("deadlineFamily", d, b, deadline, p),
             All("r", N(), Imp(Seq(r, Sp, Lt, Sp, Call("pow", D(2), depth)),
                 Eqn(recovered, r)))));
     }
