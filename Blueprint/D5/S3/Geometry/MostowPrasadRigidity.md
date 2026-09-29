@@ -140,13 +140,43 @@ continuity and the dense-set uniqueness theorem above.
 
 *Proof.* Machine-checked in Lean. ∎
 
+**Theorem 1.12 (Dense attracting poles imply a trivial centralizer).**
+
+Lean statement:
+`D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles`
+
+```lean
+theorem rangeCentralizerTrivial_of_dense_attracting_poles
+    {G X : Type*} [Group G] [TopologicalSpace X] [T2Space X]
+    (rho : G →* (X ≃ₜ X))
+    (hthree : ∀ b c : X, ∃ x : X, x ≠ b ∧ x ≠ c)
+    (hdense : Dense {a : X | ∃ (g : G) (b : X), a ≠ b ∧
+      ∀ x : X, x ≠ b →
+        Tendsto (fun n : ℕ => ((rho g : X → X)^[n]) x) atTop (𝓝 a)}) :
+    RangeCentralizerTrivial rho
+```
+
+*Proof.* Machine-checked in Lean at
+`D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles`.
+For each attracting pole, choose a point away from both the repelling point
+and its inverse image under a centralizing homeomorphism. Commutation of all
+iterates and continuity give two limits for the same orbit, so Hausdorff
+uniqueness fixes that pole. Density and `DenseRange.equalizer` then fix every
+point, and `Homeomorph.ext` gives the identity. ∎
+
+*Source.* Repository-derived using Mathlib's `Function.Commute.iterate_right`,
+`tendsto_nhds_unique`, and `DenseRange.equalizer`.
+
 ## Full endpoint still open
 
 The intended endpoint is: every homotopy equivalence between connected,
 complete, finite-volume, curvature `-1` hyperbolic three-manifolds is homotopic
-to a unique isometry. The present module proves only the metric and algebraic
-interfaces; it does not prove existence, finite-volume rigidity, the holonomy
-construction, or the hyperbolic lattice conjugacy theorem.
+to a unique isometry. The attracting-poles criterion is conditional: it does
+not construct an ideal boundary, establish north-south dynamics or density of
+attracting poles for a lattice, prove faithfulness, or construct a conjugator.
+The full endpoint also still needs complete finite-volume hyperbolic geometry,
+the holonomy bridge, conjugator existence, and the homotopy-to-isometry
+existence theorem.
 
 ## References
 
@@ -164,3 +194,4 @@ construction, or the hyperbolic lattice conjugacy theorem.
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_conjugator_unique`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.DenseOrbit`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_orbit`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles`
