@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:f1b03e957b5df7ec29bf05780bd0bc64949552af4a95eaf19fa08d6ecdbceb1e
   normalized_sha256: sha256:f1b03e957b5df7ec29bf05780bd0bc64949552af4a95eaf19fa08d6ecdbceb1e
 cas_ref: sha256:f1b03e957b5df7ec29bf05780bd0bc64949552af4a95eaf19fa08d6ecdbceb1e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciOddTwentyfiveNonsquare.fibonacci_odd_twentyfive_normalized_nonsquare
+    target_statement_id: sha256:9b159bfcb2bc71cfc2f1d19752d92f52f684ba2e7e3e0c018aefcf3b58b0930f
 receipts:
   unresolved_subitems: []
