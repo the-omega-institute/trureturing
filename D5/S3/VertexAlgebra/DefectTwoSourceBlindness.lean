@@ -59,8 +59,8 @@ def sourceTree (g h : E) :
   | .fork left right =>
       .fork (sourceTree g h left) (sourceTree g h right)
 
--- The closed eight-mask carry calculation and recursive tree proof share this elaboration.
 set_option maxHeartbeats 0 in
+-- The closed eight-mask carry calculation and recursive tree proof share this elaboration.
 /-- Any finite binary composition of two-source labels remains blind to cubic carry. -/
 theorem two_source_carry_blind (mask g h : E)
     (left middle right : CharacterCarryCompletion.LabelTree (ZMod 2 × ZMod 2)) :

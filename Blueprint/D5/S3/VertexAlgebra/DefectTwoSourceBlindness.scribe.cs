@@ -13,8 +13,11 @@ internal sealed class DefectTwoSourceBlindnessDocument : IScribeDocumentDefiniti
         "Every finite binary tree built from two defect directions has zero cubic carry response.",
         H("Two-source determinant blindness"),
         Blocks(
-            Paragraph(Text("Fix two coarse defect labels g and h. A coefficient tree has "
-                + "a pair (a,b) in F2 squared at each leaf. The source tree replaces "
+            Paragraph(Text("Let E be F2 cubed, with the explicit sign table f0 of "
+                + "(FC.4), its alternating correction b_m, and the character "
+                + "ell_m(g)_i=f_m(g,u_i). Fix two coarse defect labels g and h. "
+                + "A coefficient tree has a pair (a,b) in F2 squared at each leaf. "
+                + "The source tree replaces "
                 + "that leaf by ag+bh and retains each binary fork; total adds all "
                 + "source labels. Let T denote the finite coefficient trees.")),
             Describe.Lean(
