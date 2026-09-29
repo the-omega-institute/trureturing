@@ -170,6 +170,12 @@ $$
 
 证明。不变性给 $\langle u\cdot v,e\rangle=\langle u,v\rangle$，所以 $e$ 方向系数为右式；正定形式的非退化性唯一确定剩下的 $W$ 分量。单位律和双线性给全部乘法。任意保持 $T$ 的 $U\in O(W)$ 延拓为 $e\mapsto e$，由式（MC.10）保持乘法。反向，代数自同构固定唯一单位，保度量时保持 $W$，并保持 $T$。证毕。
 
+**机器形式化边界。** 上述有限代数步骤已在
+`D5/S3/VertexAlgebra/FiniteCubicRecovery.lean` 形式化。其
+`mul_recovery_formula` 在 `Fin n → ℝ` 坐标中证明式（MC.10），
+`extend_preserves_mul_iff` 证明固定单位的正交延拓保持乘法当且仅当保持三次 sharp
+张量，`preserves_cubicTensor` 再给出标量三点张量的对应读法。该模块的前件是有限实双线性乘法、单位律和不变欧氏形式；它不构造 VOA、实际 Griess 乘法或 Monster 作用。后两者仍分别使用 [DGL05, Theorem 1] 的 Griess 乘法前件及 [G81、GL11] 的外部识别输入。
+
 将已构造的实际 Griess 代数代入，使用其全自同构群识别 [G81、M01、GL11]，得到
 
 $$
