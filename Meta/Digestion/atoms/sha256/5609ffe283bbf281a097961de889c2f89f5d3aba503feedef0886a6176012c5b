@@ -1,0 +1,16 @@
+**定义 85.1（层增益与压力）。** 对素数 $p$、整数 $k\ge1$ 和价格 $\lambda>0$，定义
+
+$$
+\beta_{p,k}=\log\left(1+\frac1{p+\cdots+p^k}\right),\qquad
+\theta_{p,k}=\frac{\beta_{p,k}}{\log p},\qquad
+M(\lambda)=\sup_{n\ge1}\bigl(\log Z(n)-\lambda\log n\bigr).
+$$
+
+由仓内 `GoldenResourceSupremum.golden_resource_supremum_eq_positive_part_sum` 对应的层和结论，可写
+
+$$
+M(\lambda)=\sum_{p,k}(\beta_{p,k}-\lambda\log p)_+.
+$$
+
+这是既有结果的直接使用：$\log G_p(a)=\sum_{k=1}^a\beta_{p,k}$，同一素数的阈值严格递减，选择所有正增益层必然构成指数前缀。由 $\theta_{p,k}<1/(p\log p)$ 及固定 $p$ 时阈值趋零，每个正价格仅有有限个活跃层。等价价格层可以选或不选，其目标值相同；零价格不在有限性结论内。
+

@@ -1,0 +1,27 @@
+**定理 87.2（前缀支配与逐项非负）。** 对所有素数 $p$、整数 $a\ge0$，$Q_p(a)\ge\log G_p(a)$，且 $a\ge1$ 时严格。参考目标 $Q_p(a)-\lambda_xa\log p$ 在 $a=v_p(x)$ 取得最大值。因此
+
+$$
+\begin{aligned}
+R_p(x)={}&\bigl[Q_p(v_p(x))-\lambda_xv_p(x)\log p
+-Q_p(a_p)+\lambda_xa_p\log p\bigr]\\
+&+\bigl[Q_p(a_p)-\log G_p(a_p)\bigr]\ge0.
+\end{aligned}
+$$
+
+**证明。** 对 $0<z<1$，置
+
+$$
+D_a(z)=\sum_{k=1}^a\frac{z^k}{k}-\log(1+z+\cdots+z^a).
+$$
+
+直接求导得
+
+$$
+D_a'(z)=\frac{z^a}{1-z}
+\left(\frac{a+1}{1+z+\cdots+z^a}-1\right).
+$$
+
+$a=0$ 时恒零；$a\ge1$ 时括号严格为正，且 $D_a(0)=0$。代入 $z=1/p$。参考增量 $1/(kp^k)-\lambda_x\log p$ 非负当且仅当 $p^k\log(p^k)\le x\log x$，即 $p^k\le x$。这些增量递减，故取其前缀最大化；在 $x=p^k$ 时最后一个零增量可取可不取。于是所展示的两个括号分别非负。实际层阈值也严格递减，实际并列最优只涉及相邻指数，其目标值相同，因而 $R_p$ 不依赖并列约定。 $\square$
+
+前缀支配不等于增量逐项支配。例如 $p=2,k=2$ 时 $\beta_{2,2}=\log(7/6)>1/8$，不能以 $1/(kp^k)$ 逐层压住实际边际。以上证明明确通过“先比较整个前缀，再取最优值”避免这一错误。
+

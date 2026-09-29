@@ -1,0 +1,21 @@
+**推论 97.3（价格、预算与所有素数未来）。** 对任意固定实数 $\lambda$，定义 $J_\lambda(n)=W(n)-\lambda\log n$，则
+
+$$
+\left[\forall c\in\mathcal M(S),\ J_\lambda(nc)\ge J_\lambda(mc)\right]
+\Longleftrightarrow
+J_\lambda(n)-J_\lambda(m)\ge
+\sum_{p\in T}\log\frac{G_p(a_p)}{G_p(b_p)}.
+$$
+
+若 $S$ 是所有素数，则全部未来的 $Z$ 支配当且仅当 $m\mid n$；再附加预算方向 $n\le m$，只剩 $n=m$。
+
+**证明。** 共同乘数使价格惩罚之差恒为 $-\lambda\log(n/m)$；对比值取下确界得 $\log L_S\ge\lambda\log(n/m)$，即所示式。所有素数都允许时，起始比值的所有优势因子在下确界被抵消，剩下
+
+$$
+L_{\mathrm{all}}(n,m)=\prod_{p:a_p<b_p}\frac{G_p(a_p)}{G_p(b_p)}\le1.
+$$
+
+它达到 1 恰当没有亏损素数，即 $m\mid n$。结合 $n\le m$ 给相等。此结论不使价格比较平凡化，例如 $n=1,m=2,\lambda=1$ 时全部未来权重比至少 $2/3>1/2$，故价格比较仍有严格余量。 $\square$
+
+要用 $n$ 剪掉预算状态 $m$，还须证明 $n\le m$ 并允许传输每个相关继续量：两状态有共同的可行继续域，或给出从 $m$ 到 $n$ 的可行性映射。预算大小只保证 $nc\le mc$，不能保证同余、指数帽、支撑或历史约束也被保留。共享有限预算或联合限制下，无约束幺半群下确界仍给充分下界，但不一定是受限族的精确最小值。只有独立矩形帽 $0\le t_p\le h_p$ 才能把每个优势方向的无穷极限直接替换成 $t_p=h_p$ 得精确有限版本；共同乘积预算不是矩形。
+

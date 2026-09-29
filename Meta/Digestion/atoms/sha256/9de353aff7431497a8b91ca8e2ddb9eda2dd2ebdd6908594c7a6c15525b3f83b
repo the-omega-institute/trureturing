@@ -1,0 +1,14 @@
+**推论 99.7（上下文 Robin 支撑界与动作—值分离）。** 令 $H=5040$、$L=\operatorname{lcm}(C,H)$。每个 $N=CA$ 满足
+
+$$
+J_{1/25}(N)\le J_{1/25}(L),\qquad
+Z(N)\le Z(L)(N/L)^{1/25}.
+$$
+
+若 $N>5040$，写 $E=\log N>1$，则
+
+$$
+\Delta_{\mathrm{Robin}}(N)=\gamma+\log\log E-\log Z(N)
+\ge\gamma+\log\log E-\frac E{25}-J_{1/25}(L).
+$$
+
