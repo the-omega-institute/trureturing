@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.CIRPT.SemanticIntegrity
 import LeanInformationAudit.Tests.SealSuccess
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! AC-CIRPT-011 / IE-C016: proof certificates add no object distinction. -/
 
@@ -45,7 +48,7 @@ example (x y : Bool) :
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.SealSuccess.fstTheorem.__lowers_escape -/
 #guard_msgs (error) in
-register_information_theorem
+test_assess in register_information_theorem
   LeanInformationAudit.Tests.SealSuccess.fstTheorem.__lowers_escape
   in LeanInformationAudit.Tests.SealSuccess.arena
   primitives LeanInformationAudit.Tests.SealSuccess.fstRealization.toPrimitiveBundle

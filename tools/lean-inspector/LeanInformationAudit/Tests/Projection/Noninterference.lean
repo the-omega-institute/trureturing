@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Projection.AnalysisSeal
 import LeanInformationAudit.Projection.OutputOnlyAudit
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 

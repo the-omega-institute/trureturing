@@ -1,6 +1,9 @@
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.EscapeRecords
 open Lean Meta Elab Command
@@ -40,7 +43,7 @@ theorem legacy : LegacyPrimitiveRealization arena (∀ x : Bool, x = x) reads :=
   ⟨⟨fun _ => rfl, fun _ => statement⟩⟩
 theorem forward : EscapePrimitiveRealization arena (∀ x : Bool, x = x) reads := ⟨fun _ => rfl⟩
 
-register_information_template cutRealization
+test_assess in register_information_template cutRealization
 
 /-- Runtime parsing keeps missing grammar and deliberately broken gates as named
 test failures, with a separately compiled oracle. Every case rolls back. -/

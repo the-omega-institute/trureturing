@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean
 open D5.S3.ConceptDynamics.InformationEscape
 namespace P2CloneSplit
@@ -25,16 +28,16 @@ theorem first : (1 + 1 : Nat) = 2 := by decide
 theorem second : (1 + 1 : Nat) = 2 := by decide
 theorem bridge : LegacyPrimitiveRealization arena ((1 + 1 : Nat) = 2) readouts where
   equivalence := Iff.rfl
-register_information_theorem first in arena primitives readouts.toPrimitiveBundle realization bridge
+test_assess in register_information_theorem first in arena primitives readouts.toPrimitiveBundle realization bridge
 def cloneArena := arena
 theorem bridgeSecond : LegacyPrimitiveRealization cloneArena ((1 + 1 : Nat) = 2) readouts where
   equivalence := Iff.rfl
-register_information_theorem second in cloneArena primitives readouts.toPrimitiveBundle realization bridgeSecond
+test_assess in register_information_theorem second in cloneArena primitives readouts.toPrimitiveBundle realization bridgeSecond
 def cat : Catalog arena.toArena := Catalog.ofVector ![first.__information_unit,second.__information_unit]
 example : cat.uniqueCaptureCount (0 : Fin 2) = 0 := by decide
 example : cat.uniqueCaptureCount (1 : Fin 2) = 0 := by decide
-expect_information_occurrence first in arena from "LeanInformationAudit.Tests.Occurrence.P2CloneSplit"
-expect_information_occurrence second in cloneArena from "LeanInformationAudit.Tests.Occurrence.P2CloneSplit"
+test_assess in expect_information_occurrence first in arena from "LeanInformationAudit.Tests.Occurrence.P2CloneSplit"
+test_assess in expect_information_occurrence second in cloneArena from "LeanInformationAudit.Tests.Occurrence.P2CloneSplit"
 run_cmd do
   let catalogs ← (LeanInformationAudit.prepareCatalogs (← getEnv).header.mainModule)
   let [prepared] := catalogs.toList
@@ -45,7 +48,7 @@ run_cmd do
     throwError "P2CloneSplit: aliases split the maximal catalog"
 
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 run_cmd do
   let env ← getEnv

@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.Tests.Seal.ZeroMessage
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open D5.S3.ConceptDynamics.InformationEscape
 
@@ -37,12 +40,12 @@ def testRealization : PrimitiveRealization arena.signature where
   readout := fun _ _ => false
   anchor := Fin.elim0
 
-information_theorem target
+test_assess in information_theorem target
   in arena
   primitives testRealization
   : arena.Law testRealization := by trivial
 
-expect_information_occurrence target
+test_assess in expect_information_occurrence target
   in arena
   from "LeanInformationAudit.Tests.Seal.ReflectedZeroCapture"
 

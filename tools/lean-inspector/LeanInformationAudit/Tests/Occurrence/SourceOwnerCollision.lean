@@ -1,5 +1,8 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -30,11 +33,11 @@ run_cmd do
     localRegistrationNames := false
   }
 
-expect_information_occurrence importedTheorem
+test_assess in expect_information_occurrence importedTheorem
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
-expect_information_occurrence other
+test_assess in expect_information_occurrence other
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.SourceOwnerCollision"
 
@@ -47,6 +50,6 @@ run_cmd do
 
 /-- error: IE-C025 QualifiedNameCollision root=LeanInformationAudit.Tests.Occurrence.SourceOwnerCollision catalog=importedBool generated_name=LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem.«LeanInformationAudit.Tests.Occurrence.SourceOwnerCollision/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_unit occurrences=["LeanInformationAudit.Tests.ImportClosureProducer.objectArena/LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem","LeanInformationAudit.Tests.ImportClosureProducer.objectArena/LeanInformationAudit.Tests.SourceOwnerCollision.other"] -/
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end LeanInformationAudit.Tests.SourceOwnerCollision

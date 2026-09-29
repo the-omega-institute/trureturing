@@ -41,6 +41,9 @@ register_option provenanceDefEqLimit : Nat := {
   descr := "Maximum raw heartbeats for native occurrence inference; legacy option name; zero is incomplete" }
 
 def provenanceJudgeAPIs : Array Name := #[
+  `LeanInformationAudit.RegistrationInputs.owned,
+  `LeanInformationAudit.TemplateEnrollmentInputs.owned,
+  `LeanInformationAudit.SealInputs.owned,
   `LeanInformationAudit.InformationRegistry.entries,
   `LeanInformationAudit.InformationRegistry.find?,
   `LeanInformationAudit.InformationRegistry.hasTheorem,
@@ -50,10 +53,11 @@ def provenanceJudgeAPIs : Array Name := #[
   `LeanInformationAudit.ExpectedOccurrence.statementIdentity,
   `LeanInformationAudit.TemplateAudit.selectedPlan,
   `LeanInformationAudit.TemplateAudit.observeSelectedPlan,
-  `LeanInformationAudit.TemplateAudit.importedSummaryBytes,
+  `LeanInformationAudit.TemplateAudit.assessedPlanBytes,
   `LeanInformationAudit.TemplateBinding.inventory,
   `LeanInformationAudit.TemplateBinding.records,
-  `LeanInformationAudit.TemplateBinding.cachedJoinedRecords,
+  `LeanInformationAudit.replayRegistrationInputs,
+  `LeanInformationAudit.assessRecordedRegistrations,
   `LeanInformationAudit.TemplateBinding.assessJoined,
   `LeanInformationAudit.TemplateBinding.exportSnapshot,
   `LeanInformationAudit.TemplateBinding.observedAssessments,
@@ -82,9 +86,10 @@ private def generatedAddress : Name → Bool
 
 private def judgePayloadType (name : Name) : Bool :=
   #[
+      `LeanInformationAudit.RegistrationInput, `LeanInformationAudit.TemplateEnrollmentInput,
+      `LeanInformationAudit.SealInput, `LeanInformationAudit.TemplateBinding.ResolvedDeclaration,
       `LeanInformationAudit.InformationRegistryEntry, `LeanInformationAudit.ExpectedOccurrence,
       `LeanInformationAudit.TemplateAudit.TemplatePlanData,
-      `LeanInformationAudit.TemplateAudit.TemplatePlanFrame,
       `LeanInformationAudit.TemplateAudit.TemplateIndex,
       `LeanInformationAudit.TemplateAudit.DependencyIdentity,
       `LeanInformationAudit.TemplateOccurrenceKey, `LeanInformationAudit.TemplateOccurrenceEvent,

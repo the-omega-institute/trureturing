@@ -37,7 +37,7 @@ class NativeInvalidationTests:
         # enrollment_encoding_omits_source_hashes in Tests/RegistrationGates.
         prepared = self.guarded_command(['make', 'lean',
             'LEAN_TARGETS=D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates '
-            'LeanInformationAudit.Syntax'], cwd=ROOT, env=os.environ,
+            'LeanInformationAudit.SealCommand'], cwd=ROOT, env=os.environ,
             capture_output=True, text=True, timeout=120)
         self.assertEqual(prepared.returncode, 0, prepared.stdout + prepared.stderr)
         paths = subprocess.check_output(['git', 'ls-files', '-z', '.gitignore', 'D5',
@@ -60,17 +60,12 @@ class NativeInvalidationTests:
             'def helper (b : Bool) : Bool := b\nend D5.CommentSupport\n')
         self.write('D5/CommentOwner.lean', '''import D5.CommentSupport
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
 namespace D5.CommentOwner
 open D5.S3.ConceptDynamics.InformationEscape RegistrationTemplates
 def template {X : Type} (f : X → Bool) : PrimitiveRealization (cutSignature X Bool) :=
   cutRealization (fun x => D5.CommentSupport.helper (f x))
 register_information_template template
-run_meta do
-  let .ok plan := LeanInformationAudit.TemplateAudit.selectedPlan (← Lean.getEnv) ``template
-    | throwError "missing plan"
-  unless plan.dependencies.any (fun dep => dep.name == ``D5.CommentSupport.helper) do
-    throwError "plain helper is not a live plan dependency"
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
   signature := cutSignature Bool Bool
@@ -198,24 +193,25 @@ end D5.CommentOwner
         self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json × Array (Lean.Name × Lean.Name))
 ''')
-        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
-  names.mapM fun _ => do
+  let rows ← names.mapM fun _ => do
     let result ← IO.Process.output { cmd := "python3", args := #["-c",
       "import json,pathlib; print(json.dumps(dict(schema_version=1," ++
       "compatibility_version=json.loads(pathlib.Path('lean-report-inputs.json').read_text())['report_cache_release_semantic_version']," ++
       "inventory=[],registered=[],records=[])))"] }
     IO.ofExcept (Json.parse result.stdout)
+  return (rows, #[])
 ''')
 
         def build():
             self.write('activity.jsonl', '')
             result = self.guarded_command(['make', 'lean',
-                'LEAN_TARGETS=@trureturing/LeanInformationAudit.Registry :report'], cwd=self.root,
+                'LEAN_TARGETS=@trureturing/LeanInformationAudit.SealCommand :report'], cwd=self.root,
                 env=self.env, capture_output=True, text=True, timeout=120)
             self.assertEqual(result.returncode, 0, '[FAIL] module_binding_scope\n' + result.stdout + result.stderr)
             return result.stdout + result.stderr
@@ -382,14 +378,14 @@ class NativeSemanticConsumerTests:
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         changed([])
         # The fixed judge is version-gated outside a module's compiler closure.
-        self.write('LeanInformationAudit/Registry.lean', 'def fixtureDriver : Nat := 2\n')
+        self.write('LeanInformationAudit/SealCommand.lean', 'def fixtureDriver : Nat := 2\n')
         changed([])
 
     def test_native_judge_semantic_version_gate(self):
         self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 1\n')
         driver = 'import LeanInformationAudit.Support\ndef fixtureDriver : Nat := judgeSupport\n'
-        self.write('LeanInformationAudit/Registry.lean', driver)
-        self.write('D5/A.lean', 'import LeanInformationAudit.Registry\n' +
+        self.write('LeanInformationAudit/SealCommand.lean', driver)
+        self.write('D5/A.lean', 'import LeanInformationAudit.SealCommand\n' +
                    (self.root / 'D5/A.lean').read_text())
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['dependency_sources']['include'].append(
@@ -423,7 +419,7 @@ class NativeSemanticConsumerTests:
         for name in ['D5.B', 'D5.Alone']:
             self.assertEqual(self.origins()[name], origins[name])
         changed(set())
-        self.write('LeanInformationAudit/Registry.lean', driver.replace(':= judgeSupport', ':= judgeSupport + 0'))
+        self.write('LeanInformationAudit/SealCommand.lean', driver.replace(':= judgeSupport', ':= judgeSupport + 0'))
         changed({'D5.A', 'Fixture'})
         self.assertEqual(self.report()[1:], original)
 
@@ -437,7 +433,7 @@ class NativeSemanticConsumerTests:
         changed({'D5.B', 'D5.A', 'Fixture'})
 
         # The judge must still build even when this module does not import it.
-        self.write('LeanInformationAudit/Registry.lean', driver + 'unknown_command\n')
+        self.write('LeanInformationAudit/SealCommand.lean', driver + 'unknown_command\n')
         self.run_lake('build', 'D5.Alone:report', success=False)
         self.assertEqual(before, self.stamps())
 

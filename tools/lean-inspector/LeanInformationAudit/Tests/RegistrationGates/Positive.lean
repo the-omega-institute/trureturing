@@ -1,5 +1,7 @@
 import LeanInformationAudit.RegistrationGates
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -30,17 +32,17 @@ theorem slotSensitivity : FiniteSlotSensitivity arena := by
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
 theorem source : arena.Law good := rfl
 theorem bridge : LegacyPrimitiveRealization arena (arena.Law good) good := ⟨Iff.rfl⟩
-register_information_theorem source in arena primitives good.toPrimitiveBundle
+test_assess in register_information_theorem source in arena primitives good.toPrimitiveBundle
   realization bridge variation lawVariation sensitivity slotSensitivity
 
-information_theorem nativePositive in arena primitives good
+test_assess in information_theorem nativePositive in arena primitives good
   variation lawVariation sensitivity slotSensitivity : arena.Law good := rfl
 
 abbrev objectArena : Arena := arena.toArena
-information_theorem nativeOccurrence in arena object_arena objectArena catalog witnessed
+test_assess in information_theorem nativeOccurrence in arena object_arena objectArena catalog witnessed
   primitives good variation lawVariation sensitivity slotSensitivity : arena.Law good := rfl
 theorem legacyOccurrence : arena.Law good := rfl
-register_information_theorem legacyOccurrence in arena object_arena objectArena catalog witnessed
+test_assess in register_information_theorem legacyOccurrence in arena object_arena objectArena catalog witnessed
   primitives good.toPrimitiveBundle realization bridge
   variation lawVariation sensitivity slotSensitivity
 
@@ -70,8 +72,14 @@ run_cmd Elab.Command.liftCoreM do
   let theoremUnit := "D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean"
   unless paths.contains theoremUnit do
     throwError "[FAIL] indirect_judge_import_retains_content_input"
-  let judgePaths := paths.filter (·.startsWith "tools/lean-inspector/")
-  unless judgePaths.all (· == TemplateAudit.sourcePath root) do
+  -- Test fixtures are source inputs of this producer; the implementation
+  -- package itself must not become a source input merely through the test
+  -- harness imports.
+  let judgePaths := paths.filter fun path =>
+    path.startsWith "tools/lean-inspector/LeanInformationAudit/" &&
+      !path.startsWith "tools/lean-inspector/LeanInformationAudit/Tests/"
+  unless judgePaths.all (fun path => path == TemplateAudit.sourcePath root ||
+      path.startsWith "tools/lean-inspector-interface/") do
     throwError "[FAIL] indirect_judge_import_excludes_judge_inputs"
   logInfo "[PASS] indirect_judge_import_content_closure"
 

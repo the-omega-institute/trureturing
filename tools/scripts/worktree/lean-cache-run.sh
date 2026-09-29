@@ -48,7 +48,7 @@ if [[ "$1" == --build ]]; then
   if [[ $# == 0 || ${#impl_targets[@]} != 0 ]]; then
     "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/tools/lean-inspector" build ${impl_targets[@]+"${impl_targets[@]}"}
   fi
-  if [[ ${#reg_targets[@]} != 0 ]]; then
+  if [[ ${#reg_targets[@]} != 0 || ( $# == 0 && -f "$ROOT/Reg/lakefile.toml" ) ]]; then
     "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/Reg" build ${reg_targets[@]+"${reg_targets[@]}"}
   fi
   if [[ ${#downstream_targets[@]} != 0 || $# == 0 ]]; then

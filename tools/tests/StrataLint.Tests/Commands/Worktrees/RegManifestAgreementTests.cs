@@ -99,7 +99,7 @@ public sealed class RegManifestAgreementTests
     {
         var valid = Files();
         var manifest = JsonNode.Parse(valid[RegManifestAgreement.ManifestPath])!;
-        manifest["packages"]![3]!["rev"] = new string('b', 40);
+        manifest["packages"]![2]!["rev"] = new string('b', 40);
         var invalid = manifest.ToJsonString();
         var fixture = new RuleFixture();
         foreach (var (path, text) in valid)
@@ -143,10 +143,10 @@ public sealed class RegManifestAgreementTests
         var files = Files();
         var manifest = JsonNode.Parse(files["Reg/lake-manifest.json"])!;
         var packages = manifest["packages"]!.AsArray();
-        var git = packages[3]!;
+        var git = packages[2]!;
         switch (mutation)
         {
-            case "missing": packages.RemoveAt(3); break;
+            case "missing": packages.RemoveAt(2); break;
             case "extra":
                 var extra = git.DeepClone(); extra["name"] = "extra"; packages.Add(extra); break;
             case "duplicate": packages.Add(git.DeepClone()); break;

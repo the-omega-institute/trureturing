@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.ProvenanceRegressions
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit
 namespace RegistrationProvenance

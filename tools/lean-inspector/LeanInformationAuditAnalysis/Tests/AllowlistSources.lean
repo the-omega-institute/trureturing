@@ -1,4 +1,7 @@
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 -- The defining module belongs to a separate repository library; its declaration
 -- namespace deliberately matches neither the library nor the protected roots.

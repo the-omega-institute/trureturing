@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.RootCausalFixture
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.RootCausalFixture
@@ -25,7 +28,7 @@ private def rejectsCausalMutation (second extra : Bool) (label : String)
       throwError "{label}: wrong mutation input"
     let savedMessages := (← get).messages
     modify fun state => { state with messages := {} }
-    elabCommand (← `(command| #seal_information_theory))
+    elabCommand (← `(command| test_assess in #seal_information_theory))
     let errors := (← get).messages.toArray.filter (·.severity == .error)
     modify fun state => { state with messages := savedMessages }
     unless errors.size == 1 do

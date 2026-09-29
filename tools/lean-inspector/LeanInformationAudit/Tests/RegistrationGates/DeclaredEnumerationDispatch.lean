@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 noncomputable section
 
@@ -121,11 +124,11 @@ run_cmd do
     liftTermElabM <| check label
       (match result with | .ok () => none | .error reason => some reason) expected
 
-register_information_template recTemplate constructors 1 [Direction, State]
-register_information_template casesTemplate constructors 1 [Direction, State]
-register_information_template matchTemplate constructors 1 [Direction, State]
-register_information_template slotTemplate constructors 1 [Direction, State]
-register_information_template boolTemplate constructors 1 [Direction, State]
+test_assess in register_information_template recTemplate constructors 1 [Direction, State]
+test_assess in register_information_template casesTemplate constructors 1 [Direction, State]
+test_assess in register_information_template matchTemplate constructors 1 [Direction, State]
+test_assess in register_information_template slotTemplate constructors 1 [Direction, State]
+test_assess in register_information_template boolTemplate constructors 1 [Direction, State]
 
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype State
@@ -134,31 +137,31 @@ def arena : PrimitiveLawArena where
 
 instance : DecidableEq arena.State := inferInstanceAs (DecidableEq State)
 
-information_theorem recValidated in arena
+test_assess in information_theorem recValidated in arena
   readout via (recTemplate)
   primitives recTemplate
   : ∀ s : State, recRead s = (recRead s).not.not := by
     intro s; exact (Bool.not_not _).symm
 
-information_theorem casesValidated in arena
+test_assess in information_theorem casesValidated in arena
   readout via (casesTemplate)
   primitives casesTemplate
   : ∀ s : State, casesRead s = (casesRead s).not.not := by
     intro s; exact (Bool.not_not _).symm
 
-information_theorem matchValidated in arena
+test_assess in information_theorem matchValidated in arena
   readout via (matchTemplate)
   primitives matchTemplate
   : ∀ s : State, matchRead s = (matchRead s).not.not := by
     intro s; exact (Bool.not_not _).symm
 
-information_theorem slotValidated in arena
+test_assess in information_theorem slotValidated in arena
   readout via (slotTemplate .middle)
   primitives (slotTemplate .middle)
   : ∀ s : State, s.flag = s.flag.not.not := by
     intro s; exact (Bool.not_not _).symm
 
-information_theorem boolValidated in arena
+test_assess in information_theorem boolValidated in arena
   readout via (boolTemplate)
   primitives boolTemplate
   : ∀ s : State, Bool.rec (motive := fun _ => Bool) false true s.flag =

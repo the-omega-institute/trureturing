@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Projection.BoundedProjection
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.Projection.Bounded

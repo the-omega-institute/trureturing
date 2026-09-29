@@ -1,5 +1,7 @@
 import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredP1
 open Lean Meta Elab Command RegistrationReifier
@@ -7,7 +9,7 @@ open D5.S3.ConceptDynamics.InformationEscape PointwiseRegistrationTemplates
 
 def arena := pointwiseEqArena (Arena.ofFintype Bool) Bool
 theorem clean (x : Bool) : x.not.not = x := Bool.not_not _
-register_information_theorem clean
+test_assess in register_information_theorem clean
   via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in arena
   readout via (missingTemplate (fun x : Bool => x))
 
@@ -32,7 +34,7 @@ run_meta do
 elab "observe_p1_argument_insertion" : command => do
   let saved ← get
   modify fun state => { state with messages := {} }
-  elabCommand (← `(command| register_information_theorem hidden
+  elabCommand (← `(command| test_assess in register_information_theorem hidden
     via (ReifierTemplates.pointwise
       (fun x : Bool => have _p := clean; x.not.not) (fun x => x)) in arena))
   let inserted := InformationRegistry.hasTheorem (← getEnv) ``hidden

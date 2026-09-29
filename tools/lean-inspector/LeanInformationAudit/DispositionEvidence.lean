@@ -192,7 +192,7 @@ private def validateFinite (root : Name) (modules : Array Name) (key : Statement
       catalogValue index do failClass key className "seal_certificate.proposition"
   checkWithKernel certificate
   let lawArena ← mkConstWithFreshMVarLevels registration.arenaName
-  let arena := (← RegistrationGates.normalizeArena lawArena).finite
+  let arena := (← RegistrationElaboration.normalizeArena lawArena).finite
   let _ ← typed modules key className "nondegeneracy_certificate"
     payload.nondegeneracyCertificate (← mkAppM ``Arena.Nondegenerate #[arena])
   let _ ← typed modules key className "state_enumeration_certificate"
@@ -731,7 +731,7 @@ private def validateUnreachable (modules : Array Name) (registrations : Array (N
     let arena ← constant modules key className "candidate_arena" name
     let type ← inferType arena
     unless type.isConstOf ``StructuralArena do
-      try discard <| RegistrationGates.normalizeArena arena
+      try discard <| RegistrationElaboration.normalizeArena arena
       catch _ => failClass key className "candidate_arena"
 
 private def validateObserved (head : String) (root : Name) (modules : Array Name)
@@ -826,6 +826,7 @@ open Lean Meta
 
 /-- One authoritative imported join shared by all requested report modules. -/
 def informationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
+    assessRecordedRegistrations (← getEnv).header.mainModule
     let env ← getEnv
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
     let modules := moduleNames.map fun moduleName => Id.run do
@@ -841,6 +842,6 @@ def informationTemplateReportDriver : InformationTemplateReportDriver := fun mod
       return (moduleName, finite ++ structural)
     let rows ← TemplateBinding.reportJson modules
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
-    return rows
+    return (rows, GeneratedDeclarations.entries (← getEnv))
 
 end LeanInformationAudit

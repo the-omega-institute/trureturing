@@ -7,9 +7,6 @@ structure TemplateIndex where
   private trie : TemplateTrie := .node none #[]
   bytes : Nat := 0
   error : Option String := none
-  decodeAttempts : Nat := 0
-  decodedAllocationBytes : Nat := 0
-  private localFrames : Array TemplatePlanFrame := #[]
   deriving Inhabited
 
 private def TemplateIndex.insertChecked (index : TemplateIndex) (plan : TemplatePlanData)
@@ -20,33 +17,6 @@ private def TemplateIndex.insertChecked (index : TemplateIndex) (plan : Template
   return { index with
     trie := TemplateTrie.insertAt index.trie key 0 plan
     bytes := index.bytes + retained }
-
-/-- Both limits are checked before decoding or allocating a single plan node.
-After the first failure, the importer stops consuming the remaining stream. -/
-def TemplateIndex.addFrame (index : TemplateIndex) (frame : TemplatePlanFrame)
-    (env : Environment) (importOwner : Name) : TemplateIndex := Id.run do
-  if index.error.isSome then return index
-  if frame.key.size == 0 || frame.key.size > 1024 || frame.payload.size == 0 ||
-      frame.identity.utf8ByteSize != 64 || frame.retainedBytes > 65536 then
-    return { index with error := some "incomplete_closure:E8.import_framing" }
-  if index.bytes + frame.retainedBytes > 8388608 then
-    return { index with error := some "incomplete_closure:E8.import_bytes" }
-  unless Sha256.hex frame.payload == frame.identity do
-    return { index with error := some "incomplete_closure:E7.import_identity" }
-  let index := { index with decodeAttempts := index.decodeAttempts + 1 }
-  let .ok (decoded, allocated) := PlanDecoder.decode frame.payload (32 * frame.payload.size)
-    | return { index with error := some "incomplete_closure:E7.import_encoding" }
-  let plan := { decoded with planIdentity := frame.identity }
-  if plan.name.isAnonymous || plan.definitionOwner.isAnonymous || plan.enrollmentOwner.isAnonymous ||
-      plan.name.toString.toUTF8 != frame.key || plan.compiler != Lean.versionString ||
-      plan.toolchain != Lean.versionString then
-    return { index with error := some "incomplete_closure:E8.import_framing" }
-  let actualOwner := (RegistrationReifier.declaringModuleOf env plan.name).getD env.header.mainModule
-  unless env.contains plan.name && plan.enrollmentOwner == importOwner &&
-      plan.definitionOwner == actualOwner do
-    return { index with error := some "incomplete_closure:E7.import_owner" }
-  return { (index.insertChecked plan frame.retainedBytes) with
-    decodedAllocationBytes := index.decodedAllocationBytes + allocated }
 
 def TemplateIndex.lookup [Monad m] (index : TemplateIndex) (name : Name)
     (observe : m Unit) : m (Except String TemplatePlanData) := do
@@ -59,41 +29,25 @@ def TemplateIndex.lookup [Monad m] (index : TemplateIndex) (name : Name)
 
 private structure CheckedTemplatePlan where
   data : TemplatePlanData
-  frame : TemplatePlanFrame
+  retainedBytes : Nat
 
-private initialize templateIndexExt : PersistentEnvExtension TemplatePlanFrame CheckedTemplatePlan TemplateIndex ←
-  registerPersistentEnvExtension {
-    -- A new entry layout must not reinterpret an old olean extension payload.
-    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV7
-    mkInitial := pure {}
-    addEntryFn := fun index checked =>
-      { (index.insertChecked checked.data checked.frame.retainedBytes) with
-        localFrames := index.localFrames.push checked.frame }
-    addImportedFn := fun modules => do
-      let env := (← read).env
-      let mut index : TemplateIndex := {}
-      for i in [:modules.size] do
-        if index.error.isSome then break
-        let some owner := env.header.moduleNames[i]? | return { index with error := some "incomplete_closure:E7.import_owner" }
-        for frame in modules[i]! do
-          if index.error.isSome then break
-          index := index.addFrame frame env owner
-      return index
-    exportEntriesFn := fun index => index.localFrames
-  }
+private initialize templateIndexExt : EnvExtension TemplateIndex ←
+  registerEnvExtension (pure {})
+
+def resetTemplatePlans (env : Environment) : Environment := templateIndexExt.setState env {}
 
 /-- Read-only observation of actual query operations in the environment's
-imported index. The observer cannot supply a plan or affect admission. -/
+current assessment index. The observer cannot supply a plan or affect admission. -/
 def observeSelectedPlan [Monad m] (env : Environment) (name : Name)
     (observe : m Unit) : m (Except String TemplatePlanData) :=
   (templateIndexExt.getState env).lookup name observe
 
-/-- Imported checked summaries are the sole lookup source. -/
+/-- Plans are rebuilt from recorded author inputs by the current evaluator. -/
 def selectedPlan (env : Environment) (name : Name) : Except String TemplatePlanData :=
   observeSelectedPlan env name (pure () : Id Unit)
 
-/-- Serialized bytes retained by the actual imported index, including keys. -/
-def importedSummaryBytes (env : Environment) : Nat := (templateIndexExt.getState env).bytes
+/-- Assessed plan size, including keys, within the current fixed quota. -/
+def assessedPlanBytes (env : Environment) : Nat := (templateIndexExt.getState env).bytes
 
 end LeanInformationAudit.TemplateAudit
 
@@ -692,7 +646,7 @@ open Lean Meta Elab Command
 -- P1's reflected-provider pattern. An unavailable pin stays unavailable; import
 -- of an arbitrary same-typed instance cannot supply one later.
 def initializeGrammarPins : CommandElabM Unit := do
-  unless (← getEnv).header.mainModule == `LeanInformationAudit.Syntax do
+  unless (← getEnv).header.mainModule == `LeanInformationAudit.Registry do
     throwError "incomplete_closure:E2.pin_producer_owner"
   for name in standardDictionaryNames do
     if let some info := (← getEnv).find? name then
@@ -800,7 +754,7 @@ private def checkConstructorType (name : Name) : CompileM Unit := do
   rule "E4c.description_v1"
 
 /-- Finite enrollment. The constructor is private and only its checked output
-can enter the persistent extension; public query data never grants insertion. -/
+can enter the assessment index; public query data never grants insertion. -/
 private def compileTemplate (rootId name : Name) (constructors : Array Name) : MetaM CheckedTemplatePlan := do
   let env ← getEnv
   let .defnInfo info ← getConstInfo name | throwError "unclassified_form:E1.definition_kind"
@@ -851,7 +805,7 @@ private def compileTemplate (rootId name : Name) (constructors : Array Name) : M
   let .ok (bodyIdentity, bodyBytes) ← rawIdentity info.levelParams info.value (state.remaining - typeBytes)
     | throwError "incomplete_closure:E7.body_identity"
   let policyOwners := #[`LeanInformationAudit.RegistryTypes, `LeanInformationAudit.Registry,
-    `LeanInformationAudit.ReadoutProvenance, `LeanInformationAudit.Syntax]
+    `LeanInformationAudit.ReadoutProvenance, `LeanInformationAudit.Registry.Enrollment]
     |>.filter (fun name => (env.getModuleIdx? name).isSome)
   NativeCoherence.validate
     (#[rootId] ++ policyOwners ++ state.dependencies.map (·.owner))
@@ -872,9 +826,10 @@ private def compileTemplate (rootId name : Name) (constructors : Array Name) : M
     | .ok result => pure result
     | .error reason => throwError reason
   unless firstWork == secondWork do throwError "incomplete_closure:E8.serialization"
-  let frame : TemplatePlanFrame := { key := name.toString.toUTF8, payload := bytes, identity := Sha256.hex bytes }
-  if frame.retainedBytes > 65536 then throwError "incomplete_closure:E8.plan_bytes"
-  return { data := { data with planIdentity := frame.identity, serializedBytes := bytes.size }, frame }
+  let identity := Sha256.hex bytes
+  let retainedBytes := name.toString.toUTF8.size + bytes.size + identity.utf8ByteSize + 16
+  if retainedBytes > 65536 then throwError "incomplete_closure:E8.plan_bytes"
+  return { data := { data with planIdentity := identity, serializedBytes := bytes.size }, retainedBytes }
 
 def diagnosticFields (message : String) : String :=
   match message.splitOn ":" with
@@ -903,7 +858,7 @@ def exceptionDiagnostic (error : Exception) : MetaM String := do
   if error.isMaxRecDepth then return "incomplete_closure:E8.recursion_depth"
   return ← error.toMessageData.toString
 
-/-- Unsupported enrollment leaves no summary. All budgets are lower-only. -/
+/-- Unsupported enrollment leaves no assessed plan. All budgets are lower-only. -/
 def enroll (rootId : Name) (options : Options) (name : Name)
     (constructors : Array Name := #[]) : CommandElabM (Except String Unit) :=
   withScope (fun scope => { scope with opts := options }) do
@@ -916,9 +871,10 @@ def enroll (rootId : Name) (options : Options) (name : Name)
         | .ok _ => throwError "unclassified_form:E7.duplicate_enrollment"
         | .error _ => pure ()
         if let some error := current.error then throwError error
-        if current.bytes + checkedPlan.frame.retainedBytes > 8388608 then
+        if current.bytes + checkedPlan.retainedBytes > 8388608 then
           throwError "incomplete_closure:E8.import_bytes"
-        modifyEnv fun env => templateIndexExt.addEntry env checkedPlan
+        modifyEnv fun env => templateIndexExt.modifyState env fun index =>
+          index.insertChecked checkedPlan.data checkedPlan.retainedBytes
         pure (.ok ()))
       (fun error => do
         let message ← exceptionDiagnostic error
@@ -994,3 +950,4 @@ def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
         then message else "incomplete_closure:E8.argument_elaboration:" ++ message))
 
 end LeanInformationAudit.RegistrationGates
+

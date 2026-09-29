@@ -516,7 +516,7 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     if escape.bridgeKind == "witness" then
       let rawActual := (← getConstInfo event.realizationName).type.getAppArgs[2]!
       unless ← RegistrationGates.bounded (do
-          let computed ← mkAppM (RegistrationGates.witnessArenaName.str "realization") #[event.arena]
+          let computed ← mkAppM (RegistrationElaboration.witnessArenaName.str "realization") #[event.arena]
           if ← isDefEq rawActual computed then return true
           let readout := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.readout
           isDefEq (← mkAppM readout #[rawActual]) (← mkAppM readout #[computed])) do

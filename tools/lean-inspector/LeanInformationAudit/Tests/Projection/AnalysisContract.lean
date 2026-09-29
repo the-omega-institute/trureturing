@@ -1,5 +1,8 @@
 import LeanInformationAudit.Projection.AnalysisProjection
 import LeanInformationAudit.Tests.Projection.KernelLaws
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 

@@ -1,7 +1,9 @@
 import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
 import LeanInformationAudit.Tests.RegistrationGates.ReifierInterrupt
 import LeanInformationAudit.Tests.RegistrationGates.Positive
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.ReifierChecks
 open Lean Meta Elab Command
@@ -41,40 +43,40 @@ def expectFailure (label reason : String) (action : MetaM Unit) : MetaM Unit := 
 def eqArena := pointwiseEqArena (Arena.ofFintype Bool) Bool
 def neArena := pointwiseNeArena (Arena.ofFintype Bool) Bool
 theorem clean (renamed : Bool) : renamed.not.not = renamed := Bool.not_not _
-register_information_theorem clean
+test_assess in register_information_theorem clean
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem reflexive (x : Bool) : x = x := rfl
 reject_via "reflexive_closed_truth" expects "rule=p1.reflexive_source" in
-register_information_theorem reflexive
+test_assess in register_information_theorem reflexive
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x) (fun x => x)) in eqArena
 
 theorem wrongArena (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "same_carrier_different_law" expects "ArenaMismatch" in
-register_information_theorem wrongArena
+test_assess in register_information_theorem wrongArena
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in neArena
 
 reject_via "missing_arena" expects "IE-C003" in
-register_information_theorem wrongArena
+test_assess in register_information_theorem wrongArena
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in absentArena
 
 theorem quantified (_p x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "theorem_specialisation" expects "StatementIdentityMismatch" in
-register_information_theorem quantified
+test_assess in register_information_theorem quantified
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem poly.{u} (X : Type u) (x : X) : x = x := rfl
 reject_via "rigid_universes" expects "RigidUniverseMismatch" in
-register_information_theorem poly
+test_assess in register_information_theorem poly
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem retained (x : Bool) : (have y := x.not.not; y) = x := Bool.not_not _
-register_information_theorem retained
+test_assess in register_information_theorem retained
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => have y := x.not.not; y) (fun x => x)) in eqArena
 
 theorem collapsed (x : Bool) : (have y := x.not.not; y) = x := Bool.not_not _
 reject_via "collapsed_let" expects "StatementIdentityMismatch" in
-register_information_theorem collapsed
+test_assess in register_information_theorem collapsed
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem unrelatedTrue : True := True.intro
@@ -82,35 +84,35 @@ theorem trueBridge : LegacyPrimitiveRealization eqArena True
     (pointwiseEqRealization (fun _ => false) (fun _ => false)) :=
   ⟨⟨fun _ _ => rfl, fun _ => True.intro⟩⟩
 reject_via "unrelated_true_bridge" expects "UnsupportedDescriptor" in
-register_information_theorem unrelatedTrue via trueBridge in eqArena
+test_assess in register_information_theorem unrelatedTrue via trueBridge in eqArena
 
 theorem hidden (x : Bool) : (have _p := clean; x.not.not) = x := Bool.not_not _
 reject_via "provenance_hidden_proof" expects "reason=unclassified_form rule=dtr.argument_audit" in
-register_information_theorem hidden
+test_assess in register_information_theorem hidden
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => have _p := clean; x.not.not) (fun x => x)) in eqArena
 
 def singletonArena := pointwiseEqArena (Arena.ofFintype (Fin 1)) Bool
 theorem singleton (_x : Fin 1) : false.not.not = false := rfl
 reject_via "nondegenerate_required" expects "IE-C004" in
-register_information_theorem singleton
+test_assess in register_information_theorem singleton
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun _ : Fin 1 => false.not.not) (fun _ => false)) in singletonArena
 
 def trivialOutput := pointwiseEqArena (Arena.ofFintype Bool) Unit
 def unitOutput (_ : Bool) : Unit := Unit.unit
 theorem noOutputs (x : Bool) : unitOutput x = Unit.unit := rfl
 reject_via "distinct_outputs_required" expects "MissingEvidence" in
-register_information_theorem noOutputs
+test_assess in register_information_theorem noOutputs
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => unitOutput x) (fun _ => Unit.unit)) in trivialOutput
 
 theorem unresolved (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "unresolved_descriptor" expects "UnresolvedMetavariables" in
-register_information_theorem unresolved
+test_assess in register_information_theorem unresolved
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun _ : Bool => ?pending) (fun x => x)) in eqArena
 
 theorem exhausted (x : Bool) : x.not.not = x := Bool.not_not _
 set_option informationReifier.fuel 0 in
 reject_via "forced_exhaustion" expects "IncompleteCheck" in
-register_information_theorem exhausted
+test_assess in register_information_theorem exhausted
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 -- Type-only controls isolate the matcher from the Type-0 descriptor restriction.
@@ -194,8 +196,8 @@ theorem emptySensitivity : FiniteSlotSensitivity emptyArena := ⟨(fun i => Fin.
 theorem emptySource : True := True.intro
 theorem emptyBridge : LegacyPrimitiveRealization emptyArena True emptyRealization := ⟨Iff.rfl⟩
 reject_via "empty_slots_derived" expects "UnsupportedDescriptor" in
-register_information_theorem emptySource via emptyBridge in emptyArena
-register_information_theorem emptySource in emptyArena
+test_assess in register_information_theorem emptySource via emptyBridge in emptyArena
+test_assess in register_information_theorem emptySource in emptyArena
   primitives (@PrimitiveRealization.toPrimitiveBundle _ _ emptyArena.stateDecidableEq emptyRealization) realization emptyBridge sensitivity emptySensitivity
 
 run_meta do
@@ -242,8 +244,8 @@ run_meta do
     addDecl (.thmDecl { name, levelParams := [], type, value := mkConst ``clean })
     unless (← getConstInfo name).type.equal type do throwError "raw theorem type not retained"
 
-register_information_theorem nestedPositive via (review_readout nested) in eqArena
-register_information_theorem annotatedPositive via (review_readout annotated) in eqArena
+test_assess in register_information_theorem nestedPositive via (review_readout nested) in eqArena
+test_assess in register_information_theorem annotatedPositive via (review_readout annotated) in eqArena
 run_meta do
   for name in #[``nestedPositive, ``annotatedPositive] do
     unless InformationRegistry.hasTheorem (← getEnv) name do throwError "{name}: positive not registered"
@@ -251,7 +253,7 @@ run_meta do
 
 theorem nestedNegative (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "nested_beta_in_readout" expects "StatementIdentityMismatch" in
-register_information_theorem nestedNegative
+test_assess in register_information_theorem nestedNegative
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => (fun y : Bool => y.not.not) x) (fun x => x)) in eqArena
 
 run_meta do
@@ -288,7 +290,7 @@ run_meta expectPersistedRejection "raw_occurrence_identity" fun e =>
 -- Review R3: logged errors returning valid terms must roll back all six companions.
 theorem loggedError (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "logged_error_rollback" expects "review_logged_error" in
-register_information_theorem loggedError
+test_assess in register_information_theorem loggedError
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
   output_evidence (by
     run_tac Lean.logError "review_logged_error"
@@ -342,10 +344,10 @@ elab "review_exhaustion" : term =>
     MonadRecDepth.withRecDepth 1 <| withIncRecDepth <| pure (mkConst ``Bool.true)
 theorem resourceDescriptor (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "descriptor_exhaustion" expects "P1.IncompleteCheck" in
-register_information_theorem resourceDescriptor via review_exhaustion in eqArena
+test_assess in register_information_theorem resourceDescriptor via review_exhaustion in eqArena
 theorem resourceEvidence (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "evidence_exhaustion" expects "P1.IncompleteCheck" in
-register_information_theorem resourceEvidence
+test_assess in register_information_theorem resourceEvidence
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
   output_evidence review_exhaustion
 
@@ -421,7 +423,7 @@ run_meta do
 -- A descriptor that would fail if arena resolution did not reject first.
 elab "arena_order_tripwire" : term => throwError "arena_order_tripwire executed"
 reject_via "arena_universe1_early" expects "P1.RigidUniverseMismatch" in
-register_information_theorem wrongArena via arena_order_tripwire in highArena
+test_assess in register_information_theorem wrongArena via arena_order_tripwire in highArena
 
 -- Full Name identity survives name resolution, but never unfolds a wrapper.
 theorem aliasPointwise {X Y : Type} [Fintype X] [DecidableEq X] [DecidableEq Y]
@@ -450,17 +452,17 @@ elab "accept_via " label:str " in " command:command : command => do
 
 open D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates in
 accept_via "provider_open_namespace" in
-register_information_theorem wrongArena via (pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+test_assess in register_information_theorem wrongArena via (pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 accept_via "provider_macro" in
-register_information_theorem wrongArena via approved_descriptor in eqArena
+test_assess in register_information_theorem wrongArena via approved_descriptor in eqArena
 reject_via "provider_theorem_alias" expects "P1.UnsupportedDescriptor" in
-register_information_theorem wrongArena via (aliasPointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+test_assess in register_information_theorem wrongArena via (aliasPointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 reject_via "provider_abbrev" expects "P1.UnsupportedDescriptor" in
-register_information_theorem wrongArena via (abbrevPointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+test_assess in register_information_theorem wrongArena via (abbrevPointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 reject_via "provider_reducible" expects "P1.UnsupportedDescriptor" in
-register_information_theorem wrongArena via (reduciblePointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+test_assess in register_information_theorem wrongArena via (reduciblePointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 reject_via "provider_namespace_alias" expects "P1.UnsupportedDescriptor" in
-register_information_theorem wrongArena via (ProviderAlias.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+test_assess in register_information_theorem wrongArena via (ProviderAlias.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 -- Check the same transaction after insertion, when both extension rows and all
 -- six companions exist. Catch at EIO to observe the exact rethrown internal id.
@@ -514,7 +516,7 @@ export D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates (pointwise)
 end Exported
 
 theorem exportedClean (x : Bool) : x.not.not = x := Bool.not_not _
-register_information_theorem exportedClean
+test_assess in register_information_theorem exportedClean
   via (Exported.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 run_meta do
   let env ← getEnv

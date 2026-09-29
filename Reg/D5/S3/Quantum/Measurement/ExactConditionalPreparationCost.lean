@@ -1,6 +1,9 @@
 import D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
 import Reg.Support.DependentFamily
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
@@ -78,11 +81,11 @@ run_cmd do
   let root := `Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
   let sourceName := `D5.S3.Quantum.Measurement.ExactConditionalPreparationCost ++
     `exact_conditional_preparation_cost
-  let identity := theoremStatementIdentity (← getEnv) sourceName
+  let identity := captureStatement (← getEnv) sourceName
   let row : LeanInformationAudit.SnapshotOccurrence := {
     objectArenaName := root ++ `arena
     theoremName := sourceName
-    statementIdentity := identity
+    capturedStatement := identity
     registrationModuleName := root }
   LeanInformationAudit.RootCatalogs.declare {
     rootId := root, expected := #[row], source := #[row], companionPrefix := some root }

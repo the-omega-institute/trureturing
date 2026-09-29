@@ -1,6 +1,9 @@
 import LeanInformationAudit.Projection.KernelProjection
 import LeanInformationAudit.Projection.AsciiHierarchy
 import LeanInformationAudit.Tests.Projection.FixtureState
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape

@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredRecursion
 open Lean Meta Elab Command TemplateAudit
@@ -71,17 +74,14 @@ elab "observe_constructor_recursion" : command => do
     set saved
     if let .ok plan := selected then
       let .ok bytes := planEncoding plan | throwError "setup: retained recursion plan cannot encode"
-      let decoded := PlanDecoder.decode bytes (32 * bytes.size)
-      let valid := match decoded with
-        | .ok (plan, _) => (planEncoding plan).toOption == some bytes
-        | .error _ => false
-      (if valid then logInfo else logError) m!"[{if valid then "PASS" else "FAIL"}] recursion_plan_import_{name} bytes={bytes.size} work={plan.chargedWork}"
-      if let .error reason := decoded then logInfo m!"actual={reason}"
+      let valid := (planEncoding plan).toOption == some bytes &&
+        plan.planIdentity == Sha256.hex bytes && plan.serializedBytes == bytes.size
+      (if valid then logInfo else logError) m!"[{if valid then "PASS" else "FAIL"}] recursion_plan_identity_{name} bytes={bytes.size} work={plan.chargedWork}"
     (if actual == expected && retained == expected.isNone then logInfo else logError) m!"[{if actual == expected && retained == expected.isNone then "PASS" else "FAIL"}] {label} result={repr actual}"
 
 -- The syntax gate is separate from the semantic constructor-description check.
 def futureVersion (f : Bool → Bool) : PrimitiveRealization (cutSignature Bool Bool) := cutRealization f
-register_information_template futureVersion constructors 2 [ObjectTree]
+test_assess in register_information_template futureVersion constructors 2 [ObjectTree]
 run_meta do
   let rejected := !(selectedPlan (← getEnv) ``futureVersion).isOk
   (if rejected then logInfo else logError) m!"[{if rejected then "PASS" else "FAIL"}] constructor_recursion_version_gate"
@@ -90,7 +90,7 @@ observe_constructor_recursion
 
 def treeTemplate (_ : ObjectTree) (f : Bool → Bool) :
     PrimitiveRealization (cutSignature Bool Bool) := cutRealization f
-register_information_template treeTemplate constructors 1 [ObjectTree]
+test_assess in register_information_template treeTemplate constructors 1 [ObjectTree]
 
 def forwardTree (tree : ObjectTree) (f : Bool → Bool) := treeTemplate tree f
 
@@ -100,12 +100,12 @@ def treeArena : PrimitiveLawArena where
   Law r := ∀ x : Bool, r.readout () x = x.not.not
 instance : DecidableEq treeArena.State := instDecidableEqBool
 
-information_theorem directTree in treeArena
+test_assess in information_theorem directTree in treeArena
   readout via (treeTemplate (.leaf true) (fun x => x))
   primitives (treeTemplate (.leaf true) (fun x => x))
   : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm
 
-information_theorem forwardedTree in treeArena
+test_assess in information_theorem forwardedTree in treeArena
   readout via (treeTemplate (.leaf true) (fun x => x))
   primitives (forwardTree (.leaf true) (fun x => x))
   : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm

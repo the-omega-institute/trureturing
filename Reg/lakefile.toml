@@ -18,10 +18,6 @@ path = ".."
 name = "leanInspectorInterface"
 path = "../tools/lean-inspector-interface"
 
-[[require]]
-name = "leanInspector"
-path = "../tools/lean-inspector"
-
 [[lean_lib]]
 name = "Reg"
 srcDir = ".."

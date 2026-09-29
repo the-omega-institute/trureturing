@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Occurrence.ImportedArenaContractSource
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Elab Command LeanInformationAudit ImportedContractProbe
 
@@ -170,11 +173,11 @@ run_cmd do
     checkEvidence aliasName ``arena
     checkEvidence copy copy
 
-register_information_theorem target in lawArena object_arena arena catalog forwarding
+test_assess in register_information_theorem target in lawArena object_arena arena catalog forwarding
   primitives readout.toPrimitiveBundle realization bridge
-register_information_theorem target in lawArena object_arena expectedCopy catalog copy
+test_assess in register_information_theorem target in lawArena object_arena expectedCopy catalog copy
   primitives readout.toPrimitiveBundle realization bridge
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end ImportedContractFixture

@@ -1,9 +1,12 @@
 import LeanInformationAudit.Tests.SealOvercomplete
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean Meta Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.SealOvercomplete
 namespace LeanInformationAudit.Tests.Seal.AddressIndependent
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
-information_theorem peer in arena primitives fstRealization : arena.Law fstRealization := by trivial
+test_assess in information_theorem peer in arena primitives fstRealization : arena.Law fstRealization := by trivial
 run_cmd do
   let some prepared := (← (prepareCatalogs (← getEnv).header.mainModule))[0]? | throwError "missing catalog"
   let result ← prepareProofs #[prepared]

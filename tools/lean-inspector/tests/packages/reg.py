@@ -77,14 +77,12 @@ class NativeRegConsumerTests(NativeRegSupport):
         downstream = 'tools/lean-inspector/LeanInformationAuditRegTests/Required.lean'
         self.write(downstream, 'def requiredCheck : Bool := missingRequiredCheck\n')
         self.make_lean('Reg.Support.Entry')
-        self.make_lean()  # Paused: the broken Reg test library is not in the bare build.
-        failed = self.make_lean('LeanInformationAuditRegTests', success=False)
+        failed = self.make_lean(success=False)
         self.assertIn('missingRequiredCheck', failed.stdout + failed.stderr)
         self.write(downstream, 'def requiredCheck : Bool := true\n')
-        self.make_lean('LeanInformationAuditRegTests')
-        self.write('Reg/Support/Entry.lean', 'this must fail\n')
         self.make_lean()
-        self.make_lean('Reg.Support.Entry', success=False)
+        self.write('Reg/Support/Entry.lean', 'this must fail\n')
+        self.make_lean(success=False)
 
     def test_reg_report_rows_relocation_and_defaults(self):
         self.reg_package()

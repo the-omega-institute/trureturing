@@ -1,6 +1,9 @@
 import LeanInformationAuditAnalysis.Tests.Round7PackedCarrier
 import LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries
 import LeanInformationAudit.StructuralRealization
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean LeanInformationAudit.RegistrationGates
 run_cmd Elab.Command.liftCoreM do
   let env ← getEnv

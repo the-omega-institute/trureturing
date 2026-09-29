@@ -40,6 +40,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("tools/lean-inspector/lakefile.lean", "pr")]
     [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "push")]
     [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "pr")]
+    [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean", "push")]
     [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", "push")]
     [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", "pr")]
     [InlineData("tools/lean-inspector/LeanInformationAuditRegTests/LandedFinite.lean", "push")]

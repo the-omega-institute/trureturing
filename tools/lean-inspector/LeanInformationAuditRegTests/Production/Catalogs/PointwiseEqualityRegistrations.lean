@@ -1,6 +1,9 @@
 import Reg.Catalogs.PointwiseEqualityRegistrations
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 section
 open LeanInformationAudit

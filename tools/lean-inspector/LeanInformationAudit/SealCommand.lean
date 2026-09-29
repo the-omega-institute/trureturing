@@ -1,6 +1,6 @@
 import LeanInformationAudit.ProofBuilder
 import LeanInformationAudit.Projection.ProjectionSeal
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
 import LeanInformationAudit.Projection.OutputOnlyAudit
 
 namespace LeanInformationAudit
@@ -101,19 +101,10 @@ structure StagedAnalysisState where
   declarationNames : Array Name
   deriving Inhabited
 
-private initialize sealRecordExt :
-    SimplePersistentEnvExtension SealArenaRecord (Array SealArenaRecord) ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := Array.push
-    addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
-  }
-
-private initialize stagedAnalysisExt :
-    SimplePersistentEnvExtension StagedAnalysisState (Array StagedAnalysisState) ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := Array.push
-    addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
-  }
+private initialize sealRecordExt : EnvExtension (Array SealArenaRecord) ←
+  registerEnvExtension (pure #[])
+private initialize stagedAnalysisExt : EnvExtension (Array StagedAnalysisState) ←
+  registerEnvExtension (pure #[])
 
 namespace SealRecords
 
@@ -249,7 +240,14 @@ private def preflightNames (env : Environment) (records : Array SealArenaRecord)
     CommandElabM Unit := do
   let mut seen : Array Name := #[]
   for name in declarationNames declarations do
-    if env.contains name || seen.contains name then
+    let reusable ← if seen.contains name then pure false else
+      match declarations.find? (·.getNames.contains name) with
+      | some declaration =>
+        let owner := (catalogForGeneratedName? records name).map (·.catalog.rootId)
+          |>.getD (GeneratedDeclarations.currentOwner env)
+        liftTermElabM <| verifyExistingDeclaration owner declaration
+      | none => pure false
+    if (env.contains name && !reusable) || seen.contains name then
       match catalogForGeneratedName? records name with
       | some record =>
           if record.catalog.localSealNames then
@@ -353,17 +351,18 @@ private def prepareRootQualifiedEntries (rootId : Name) (env : Environment)
       let sourceOwner := entries.any fun candidate =>
         (candidate.unitName == generatedName || candidate.realizationName == generatedName) &&
           candidate.occurrenceKey == entry.occurrenceKey
-      if owners.size > 1 || (env.contains generatedName && !sourceOwner) then
+      if owners.size > 1 || (env.contains generatedName && !sourceOwner &&
+          GeneratedDeclarations.ownerOf env generatedName != rootId) then
         throwError (qualifiedNameCollisionError rootId entry.effectiveCatalogId
           generatedName owners)
   pure qualified
 
 private def retainSealRecords (env : Environment) (records : Array SealArenaRecord) :
     Environment :=
-  records.foldl (init := env) fun current record => sealRecordExt.addEntry current record
+  records.foldl (init := env) fun current record => sealRecordExt.modifyState current (·.push record)
 
 private def retainAnalysisState (env : Environment) (state : StagedAnalysisState) : Environment :=
-  stagedAnalysisExt.addEntry env state
+  stagedAnalysisExt.modifyState env (·.push state)
 
 /-! Seal validates the registry, prepares catalogs and escape-count certificates,
 kernel-checks them locally, and publishes SealRecords. Analysis is staged separately.
@@ -398,7 +397,8 @@ def assessAndSealRegistration (input : RegistrationAssessmentInput) : CoreM Unit
   tryCatchRuntimeEx (do
     unless sameRegistrationEnvironment saved input.environment do
       throwError "IE-C050 ClosedTruthReadout reason=incomplete_closure rule=dtr.assessment_input"
-    withOptions (fun _ => input.options) do
+    withOptions (fun _ => input.options) <| GeneratedDeclarations.withOwner input.rootId do
+      let input := { input with environment := ← getEnv }
       liftCommandElabM do
         withEnv input.environment <| validateRegistrySnapshot input.rootId input.environment
         let snapshot ← assessRegistrationInput input
@@ -410,7 +410,8 @@ def assessAndSealRegistration (input : RegistrationAssessmentInput) : CoreM Unit
     throw error
 
 /-- Stage analysis for an already-sealed root, publishing only after all checks pass. -/
-def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit := do
+def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit :=
+    GeneratedDeclarations.withOwner rootId do
   let sealedEnv ← getEnv
   let sealed := SealRecords.forRoot sealedEnv rootId
   unless !sealed.isEmpty && sealed.all (fun record => sealedEnv.contains record.verdict.name) do
@@ -456,12 +457,6 @@ def prepareInformationAnalysisExport (rootId : Name) (requested : List ArtifactK
     artifacts := artifacts ++ [(.ascii, contents)]
   return { artifacts }
 
-@[command_elab sealInformationTheoryCmd]
-private def elabAuditedSeal : CommandElab := fun _ => do
-  let rootId := (← getEnv).header.mainModule
-  liftCoreM do
-    assessAndSealRegistration (← RegistrationAssessmentInput.capture rootId)
-
 private def elabInformationAnalysisExport : CommandElab :=
   terminalInformationAnalysisExportCommand prepareInformationAnalysisExport
 
@@ -483,5 +478,38 @@ private def elabAuditedInformationAnalysisExport : CommandElab := fun stx => do
       (commandRoot stx) with
   | .error message => throwError message
   | .ok () => elabInformationAnalysisExport stx
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta
+
+/-- The report owns the only production assessment. All inputs are original
+native records; generated proofs remain in this kernel-checked environment. -/
+def assessRecordedRegistrations (rootId : Name) : MetaM Unit := do
+  replayRegistrationInputs (← RegistrationAssessmentInput.capture rootId)
+  let env ← getEnv
+  let mut seen : NameSet := {}
+  for (owner, sealInput) in SealInputs.owned env do
+    unless moduleReachable env rootId owner do continue
+    unless owner == sealInput.rootId do throwError "incomplete_closure:dtr.seal_owner"
+    if seen.contains owner then throwError "incomplete_closure:dtr.duplicate_seal"
+    seen := seen.insert owner
+    withOptions (fun _ => sealInput.options) <| GeneratedDeclarations.withOwner owner do
+      assessAndSealRegistration (← RegistrationAssessmentInput.capture owner)
+
+/-- Fixed finite producer, independently loaded by the standalone inspector. -/
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
+  assessRecordedRegistrations (← getEnv).header.mainModule
+  let env ← getEnv
+  let modules := moduleNames.map fun moduleName => Id.run do
+    let registered := (InformationRegistry.entries env).filter
+      (·.registrationModuleName == moduleName) |>.map fun entry => {
+        root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
+        objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId :
+          TemplateOccurrenceKey }
+    return (moduleName, registered)
+  let rows ← TemplateBinding.reportJson modules
+  return (rows, GeneratedDeclarations.entries (← getEnv))
 
 end LeanInformationAudit

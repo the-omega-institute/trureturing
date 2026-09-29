@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredEvidence
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredRollback
 open Lean Meta Elab Command TemplateAudit TemplateBinding
@@ -11,7 +14,7 @@ elab "observe_unresolved_transaction_commit" : command => do
   let target := mkIdent (`_root_ ++ name)
   registrationTransaction do
     let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``cutRealization | throwError "setup: transaction template missing"
-    elabCommand (← `(command| information_theorem $target in arena
+    elabCommand (← `(command| test_assess in information_theorem $target in arena
       readout via (missingTemplate (fun x : Bool => x))
       primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
       : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm))

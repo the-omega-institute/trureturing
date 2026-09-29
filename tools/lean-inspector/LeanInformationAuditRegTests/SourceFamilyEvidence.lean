@@ -2,6 +2,9 @@ import Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation
 import Reg.D5.S1.Words.Patterns.CyclicStackPreimagesCore
 import Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl
 import LeanInformationAuditRegTests.CompiledSourceWire
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.SourceFamilyEvidence

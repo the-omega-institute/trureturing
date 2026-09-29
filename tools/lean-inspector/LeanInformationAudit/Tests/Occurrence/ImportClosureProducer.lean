@@ -1,4 +1,6 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -30,14 +32,14 @@ def fixtureRealization : PrimitiveRealization lawArena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
 
-information_theorem importedTheorem
+test_assess in information_theorem importedTheorem
   in lawArena
   object_arena objectArena
   catalog importedBool
   primitives fixtureRealization
   : lawArena.Law fixtureRealization := by trivial
 
-expect_information_occurrence importedTheorem in objectArena
+test_assess in expect_information_occurrence importedTheorem in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
 #print axioms

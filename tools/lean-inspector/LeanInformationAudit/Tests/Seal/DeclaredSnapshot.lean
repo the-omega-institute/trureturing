@@ -1,11 +1,14 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredSnapshot
 open Lean Meta Elab Command
 open D5.S3.ConceptDynamics.InformationEscape RegistrationTemplates
 
-register_information_template cutRealization
+test_assess in register_information_template cutRealization
 
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
@@ -14,12 +17,12 @@ def arena : PrimitiveLawArena where
 
 instance : DecidableEq arena.State := instDecidableEqBool
 
-information_theorem selected in arena
+test_assess in information_theorem selected in arena
   readout via (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
   primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
   : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm
 
-expect_information_occurrence selected in arena
+test_assess in expect_information_occurrence selected in arena
   from "LeanInformationAudit.Tests.Seal.DeclaredSnapshot"
 
 private def observe (label : String) (ok : Bool) : CommandElabM Unit :=

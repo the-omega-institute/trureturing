@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Elab Command
 
@@ -8,7 +11,7 @@ run_cmd do
   let env ← getEnv
   let modules := env.header.moduleNames.filter LeanInformationAudit.Repository.isModule
   logInfo m!"DTR_FINITE_MODULE_SET {(toJson (modules.map Name.toString |>.qsort (· < ·))).compress}"
-  let core := #[`LeanInformationAudit.Registry, `LeanInformationAudit.Syntax,
+  let core := #[`LeanInformationAudit.Registry, `LeanInformationAuditInterface.Syntax,
     `LeanInformationAudit.SealCommand, `LeanInformationAudit.Registry.Repository,
     `LeanInformationAudit.Registry.ArenaProvenance].all modules.contains
   (if core then logInfo else logError) m!"[{if core then "PASS" else "FAIL"}] existing_finite_seal_core_accepted"

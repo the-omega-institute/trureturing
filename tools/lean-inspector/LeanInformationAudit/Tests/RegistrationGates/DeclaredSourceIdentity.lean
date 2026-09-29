@@ -1,4 +1,7 @@
 import LeanInformationAudit.Registry.Evidence
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit.TemplateAudit
 

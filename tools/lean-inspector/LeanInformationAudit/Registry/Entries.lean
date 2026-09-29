@@ -1,19 +1,11 @@
 import LeanInformationAudit.Registry.Reifier
-import LeanInformationAuditInterface.RootContract
+import LeanInformationAuditInterface.Store
 import LeanInformationAudit.Registry.ArenaProvenance
 
 namespace LeanInformationAudit
 
 open Lean
 open Lean.Meta
-
-private initialize rootCatalogExt :
-    SimplePersistentEnvExtension RootCatalogContract (Array RootCatalogContract) ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := Array.push
-    addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
-
-
 
 private def theoremUnitName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -26,10 +18,6 @@ private def primitiveRealizationName : Name :=
 
 private def legacyPrimitiveRealizationName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization
-
-def theoremUnitSuffix := "__information_unit"
-
-def primitiveRealizationSuffix := "__primitive_realization"
 
 def generatedCompanionSuffixes : Array String := #[
   theoremUnitSuffix,
@@ -51,10 +39,6 @@ def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : N
 /-- A correctness bound, independent of host speed and caller heartbeat options.
 Every head transition, declaration lookup and environment lookup spends one unit. -/
 def arenaAliasWorkBudget : Nat := 4096
-
-/-- Elaboration provenance for a structure literal, retained across olean imports.
-Lean's structure elaborator eta-contracts field-copy literals before storing them. -/
-def arenaConstructionMarker : Name := ArenaProvenance.construction
 
 private inductive AliasClosure where
   | mk (term : Expr) (bindings : List AliasClosure)
@@ -123,37 +107,11 @@ def acquireProvenance (contract : RootCatalogContract) : MetaM Unit := do
   for row in contract.expected ++ contract.source ++ contract.baseline do
     discard <| resolveCanonicalArenaName row.objectArenaName
 
-def find? (env : Environment) (rootId : Name) : Option RootCatalogContract :=
-  (rootCatalogExt.getState env).find? (·.rootId == rootId)
-
-/-- A root declares its contract before registering/sealing. Imported contracts
-remain keyed by their original root and cannot change a downstream root. -/
-def declare (contract : RootCatalogContract) : Elab.Command.CommandElabM Unit := do
-  let env ← getEnv
-  unless contract.rootId == env.header.mainModule do
-    throwError "IE-C028 RootContractOwnerMismatch: {contract.rootId}"
-  if (find? env contract.rootId).isSome then
-    throwError "IE-C028 DuplicateRootContract: {contract.rootId}"
-  Elab.Command.liftTermElabM <| acquireProvenance contract
-  modifyEnv fun current =>
-    let current := match contract.companionPrefix with
-      | some companionPrefix => current.registerNamespace companionPrefix
-      | none => current
-    rootCatalogExt.addEntry current contract
-
 end RootCatalogs
 
 def InformationRegistryEntry.occurrenceKey
     (entry : InformationRegistryEntry) : Name × Name :=
   (entry.canonicalObjectArenaName, entry.theoremName)
-
-/-- The naming function used for all occurrence-qualified companions. -/
-def catalogQualifiedName (rootId objectArenaName : Name) (catalogId : CatalogId)
-    (theoremName : Name) (suffix : String) : Name :=
-  theoremName
-    |>.str (rootId.toString ++ "/" ++ objectArenaName.toString ++ "/" ++
-      catalogId.toString)
-    |>.str suffix
 
 private def jsonStringArray (values : Array String) : String :=
   (Json.arr <| values.map Json.str).compress
@@ -193,17 +151,11 @@ private structure InformationRegistryState where
   theoremNames : NameSet := {}
   deriving Inhabited
 
-private initialize informationRegistryExt :
-    SimplePersistentEnvExtension InformationRegistryEntry InformationRegistryState ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := fun state entry => {
-      entries := state.entries.push entry
-      theoremNames := state.theoremNames.insert entry.theoremName }
-    addImportedFn := fun ess =>
-      let entries := ess.foldl (· ++ ·) #[]
-      { entries, theoremNames := entries.foldl (fun names entry =>
-          names.insert entry.theoremName) {} }
-  }
+private initialize informationRegistryExt : EnvExtension InformationRegistryState ←
+  registerEnvExtension (pure {})
+
+def InformationRegistry.reset (env : Environment) : Environment :=
+  informationRegistryExt.setState env {}
 
 def InformationRegistry.entries (env : Environment) :
     Array InformationRegistryEntry :=
@@ -251,57 +203,30 @@ def theoremStatementIdentity (env : Environment) (theoremName : Name) : String :
   | some (.thmInfo info) => "sha256:" ++ Sha256.hex (toString info.type).toUTF8
   | _ => ""
 
-/-- One independently declared row in a sealing root's expected-occurrence manifest. -/
-structure ExpectedOccurrence where
-  rootId : Name
-  objectArenaName : Name
-  theoremName : Name
-  statementIdentity : String
-  registrationModuleName : Name
-  deriving Inhabited, Repr
-
-private initialize expectedOccurrenceExt :
-    SimplePersistentEnvExtension ExpectedOccurrence (Array ExpectedOccurrence) ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := Array.push
-    addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
-  }
-
-namespace ExpectedOccurrenceManifest
-
-def declaredEntries (env : Environment) (rootId : Name) : Array ExpectedOccurrence :=
-  expectedOccurrenceExt.getState env |>.filter (·.rootId == rootId)
-
-def addEntry (env : Environment) (entry : ExpectedOccurrence) : Environment :=
-  expectedOccurrenceExt.addEntry env entry
-
-end ExpectedOccurrenceManifest
-
-/-- The root contract selects published companion ownership. Without an explicit
-prefix, imported objects receive private names local to this compilation. -/
-def localCompanionName (env : Environment) (rootId owner : Name) (suffix : String) : Name :=
-  let name := owner.str suffix
-  if (RegistrationReifier.declaringModuleOf env owner).getD env.header.mainModule == rootId then name
-  else match (RootCatalogs.find? env rootId).bind (·.companionPrefix) with
-    | some companionPrefix => companionPrefix ++ name
-    | none => mkPrivateNameCore rootId (privateToUserName name)
-
 def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrence) :
     Array ExpectedOccurrence :=
   rows.map fun row => {
     rootId
     objectArenaName := row.objectArenaName
     theoremName := row.theoremName
-    statementIdentity := row.statementIdentity
+    statementIdentity := if !row.statementIdentity.isEmpty then row.statementIdentity
+      else row.capturedStatement.map
+        (fun type => "sha256:" ++ Sha256.hex (toString type).toUTF8) |>.getD ""
+    capturedStatement := row.capturedStatement
     registrationModuleName := row.registrationModuleName
   }
 
 /-- Resolve the independent expectation source for one sealing root. -/
 def expectedOccurrencesForRoot (env : Environment) (rootId : Name) :
     Array ExpectedOccurrence :=
-  match RootCatalogs.find? env rootId with
-  | some contract => snapshotExpectations rootId contract.expected
-  | none => ExpectedOccurrenceManifest.declaredEntries env rootId
+  let rows := match RootCatalogs.find? env rootId with
+    | some contract => snapshotExpectations rootId contract.expected
+    | none => ExpectedOccurrenceManifest.declaredEntries env rootId
+  rows.map fun row =>
+    let identity := if !row.statementIdentity.isEmpty then row.statementIdentity
+      else row.capturedStatement.map
+        (fun type => "sha256:" ++ Sha256.hex (toString type).toUTF8) |>.getD ""
+    { row with statementIdentity := identity }
 
 def isCompanionName : Name -> Bool
   | .str _ suffix =>
@@ -358,7 +283,7 @@ private def validateEntryDeclarations (env : Environment)
     throw (statementMismatchError entry.theoremName)
 
 def compilePrimitiveBundle (arenaExpr realizationExpr : Expr) : MetaM Expr := do
-  let arenaExpr := (← RegistrationGates.normalizeArena arenaExpr).law
+  let arenaExpr := (← RegistrationElaboration.normalizeArena arenaExpr).law
   let realizationType <- instantiateMVars (← whnfR (← inferType realizationExpr))
   unless realizationType.getAppFn.constName? == some primitiveRealizationName do
     throwError "realization type mismatch"
@@ -422,7 +347,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
     if unitArgs.isEmpty then
       return .error (statementMismatchError entry.theoremName)
     let arenaExpr <- mkConstWithFreshMVarLevels entry.arenaName
-    let normalized ← RegistrationGates.normalizeArena arenaExpr
+    let normalized ← RegistrationElaboration.normalizeArena arenaExpr
     let expectedArena := normalized.finite
     let objectArenaExpr <- if entry.objectArenaName.isAnonymous then
       pure expectedArena
@@ -466,19 +391,19 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
         return .error (statementMismatchError entry.theoremName)
     else if realizationHead == some legacyPrimitiveRealizationName ||
         realizationHead == some `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization ||
-        realizationHead == some RegistrationGates.witnessBridgeName then
+        realizationHead == some RegistrationElaboration.witnessBridgeName then
       match env.find? entry.realizationName with
       | some (.thmInfo _) =>
         let legacyArgs := realizationType.getAppArgs
         unless legacyArgs.size == 3 do
           return .error (statementMismatchError entry.theoremName)
-        let expectedBridgeArena := if realizationHead == some RegistrationGates.witnessBridgeName then
+        let expectedBridgeArena := if realizationHead == some RegistrationElaboration.witnessBridgeName then
           arenaExpr else normalized.law
         unless ← isDefEq legacyArgs[0]! expectedBridgeArena do
           return .error (statementMismatchError entry.theoremName)
         unless ← isDefEq legacyArgs[1]! theoremType do
           return .error (statementMismatchError entry.theoremName)
-        if realizationHead == some RegistrationGates.witnessBridgeName then
+        if realizationHead == some RegistrationElaboration.witnessBridgeName then
           discard <| RegistrationGates.witnessStatement arenaExpr legacyArgs[1]! entry.theoremName
         let primitivesExpr <- mkAppM
           `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
@@ -593,12 +518,13 @@ def registerSemanticEntry (rootId : Name) (entry : InformationRegistryEntry) :
       if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization &&
           diagnostic.isSome then
         throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity: {diagnostic.get!}"
-      if type.isAppOfArity RegistrationGates.witnessBridgeName 3 then
+      if type.isAppOfArity RegistrationElaboration.witnessBridgeName 3 then
         if let some diagnostic := diagnostic then throwError diagnostic
       if entry.derivedCertificate.isSome && diagnostic.isSome then
         RegistrationReifier.checkDiagnostic diagnostic.get!
       RegistrationGates.publishDiagnostic entry.registrationModuleName entry.unitName diagnostic
-    modifyEnv fun env => informationRegistryExt.addEntry env entry
+    modifyEnv fun env => informationRegistryExt.modifyState env fun state => {
+      entries := state.entries.push entry, theoremNames := state.theoremNames.insert entry.theoremName }
     return entry
   | .error message => throwError message
 

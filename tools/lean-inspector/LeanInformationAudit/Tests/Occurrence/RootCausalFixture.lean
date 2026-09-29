@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.RootCatalog.Baseline
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.Occurrence.RootCatalog
@@ -26,7 +29,7 @@ def registerCausalFixture (rootId : Name) (second : Bool := true) (extra : Bool 
   modifyEnv (·.setMainModule rootId)
   try
     elabCommand (← `(command|
-      register_information_theorem observation_strictly_weaker_than_intervention
+      test_assess in register_information_theorem observation_strictly_weaker_than_intervention
         in observationInterventionLawArena
         object_arena unifiedArena
         catalog $catalogId
@@ -34,7 +37,7 @@ def registerCausalFixture (rootId : Name) (second : Bool := true) (extra : Bool 
         realization observation_intervention_unified_realization))
     if second then
       elabCommand (← `(command|
-        register_information_theorem intervention_strictly_weaker_than_counterfactual
+        test_assess in register_information_theorem intervention_strictly_weaker_than_counterfactual
           in interventionCounterfactualLawArena
           object_arena unifiedArena
           catalog $catalogId
@@ -42,7 +45,7 @@ def registerCausalFixture (rootId : Name) (second : Bool := true) (extra : Bool 
           realization intervention_counterfactual_unified_realization))
     if extra then
       elabCommand (← `(command|
-        register_information_theorem extraCausalTheorem
+        test_assess in register_information_theorem extraCausalTheorem
           in observationInterventionLawArena
           object_arena unifiedArena
           catalog $catalogId

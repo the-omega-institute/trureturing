@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.Tests.Seal.ZeroMessage
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! This negative fixture is isolated because registry entries persist through imports. -/
 
@@ -28,12 +31,12 @@ def constantRealization : PrimitiveRealization arena.signature where
   readout := fun _ _ => false
   anchor := Fin.elim0
 
-information_theorem constantTheorem
+test_assess in information_theorem constantTheorem
   in arena
   primitives constantRealization
   : arena.Law constantRealization := by trivial
 
-expect_information_occurrence constantTheorem
+test_assess in expect_information_occurrence constantTheorem
   in arena
   from "LeanInformationAudit.Tests.SealZeroCapture"
 

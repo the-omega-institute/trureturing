@@ -3,6 +3,9 @@ import LeanInformationAudit.SealCommand
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S0.Tower.DBonacci.Substitution
 import D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.ReifierShadow
 open Lean Meta Elab Command
@@ -17,15 +20,15 @@ def substitutionArena := pointwiseEqArena (Arena.ofFintype (Fin 3)) (List Tribon
 def recenterArena := pointwiseEqArena (Arena.ofFintype (Fin 3)) Point
 
 private def viaForms : CommandElabM (Array Syntax) := do
-  let substitution ← `(command| register_information_theorem gapLabelSubstitution_three_compatible via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
+  let substitution ← `(command| test_assess in register_information_theorem gapLabelSubstitution_three_compatible via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
     (fun label : Fin 3 => (gapLabelSubstitution 3 label.1).map tribonacciGapLetterOfLabel) (fun label => gapLetterSubstitution (tribonacciGapLetterOfLabel label.1))) in substitutionArena output_evidence (nontrivial_of_ne [] [.small] (by decide)))
-  let recenter ← `(command| register_information_theorem recenter_direction via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
+  let recenter ← `(command| test_assess in register_information_theorem recenter_direction via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
     (fun d : Fin 3 => recenter d (direction d)) (fun _ => (0, 0))) in recenterArena)
   return #[substitution, recenter]
 
-expect_information_occurrence gapLabelSubstitution_three_compatible in substitutionArena
+test_assess in expect_information_occurrence gapLabelSubstitution_three_compatible in substitutionArena
   from "LeanInformationAudit.Tests.RegistrationGates.ReifierShadow"
-expect_information_occurrence recenter_direction in recenterArena
+test_assess in expect_information_occurrence recenter_direction in recenterArena
   from "LeanInformationAudit.Tests.RegistrationGates.ReifierShadow"
 
 /-- Actual consumer observations: identities/ownership, raw expressions, universes,
@@ -118,7 +121,7 @@ private def manual (form : Syntax) (wrapped : Bool) : CommandElabM Unit := do
   let bridgeSyntax ← `(informationRealization| $bridgeId:ident)
   let variId := mkIdent vari
   let sensId := mkIdent sens
-  elabCommand (← `(command| register_information_theorem $theoremId in $arenaId
+  elabCommand (← `(command| test_assess in register_information_theorem $theoremId in $arenaId
     primitives $primitive:ident realization $bridgeSyntax variation $variId sensitivity $sensId))
   unless InformationRegistry.hasTheorem (← getEnv) theoremName do
     throwError "manual lowering failed; generated_unit={(← getEnv).contains unit}"
@@ -131,7 +134,7 @@ elab "check_pointwise_shadow" : command => do
   unless manualEntries.size == 2 do throwError "manual count"
   let manualObs ← liftTermElabM <| (manualEntries.mapM registrationObservations : MetaM _)
   let manifest := reprStr <| ExpectedOccurrenceManifest.declaredEntries (← getEnv) (← getEnv).header.mainModule
-  elabCommand (← `(command| #seal_information_theory))
+  elabCommand (← `(command| test_assess in #seal_information_theory))
   if (← get).messages.hasErrors then throwError "manual seal command rejected"
   let manualSeal ← liftTermElabM <| sealObservations
   set initial
@@ -155,7 +158,7 @@ elab "check_pointwise_shadow" : command => do
   for entry in derivedEntries do
     liftTermElabM <| RegistrationReifier.validateDerivedCertificate entry
     unless entry.derivedCertificate.isSome do throwError "missing derived certificate"
-  elabCommand (← `(command| #seal_information_theory))
+  elabCommand (← `(command| test_assess in #seal_information_theory))
   if (← get).messages.hasErrors then throwError "derived seal command rejected"
   let derivedSeal ← liftTermElabM <| sealObservations
   unless ← liftTermElabM <| sameObservations manualSeal derivedSeal do throwError "seal/catalog ordering or enumeration differs"

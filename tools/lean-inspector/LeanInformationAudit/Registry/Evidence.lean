@@ -240,7 +240,7 @@ into the finite seal closure. Both bridges retain the exact statement check. -/
 def escapeForwardBridge : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization
 
-def escapeWitnessBridge : Name := RegistrationGates.witnessBridgeName
+def escapeWitnessBridge : Name := RegistrationElaboration.witnessBridgeName
 
 def bridgeKind (event : TemplateOccurrenceEvent) : MetaM String := do
   let type := (← getConstInfo event.realizationName).type
@@ -294,7 +294,7 @@ def inspectionRoots (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
     roots := roots ++ event.arena.getUsedConstants
     let type := (← getConstInfo event.realizationName).type
     roots := roots ++ (← statementDefinitions type.getAppArgs[1]!)
-    let arena := RegistrationGates.witnessArenaName
+    let arena := RegistrationElaboration.witnessArenaName
     roots := roots ++ (#["Domain", "predicate", "embed", "decision", "check", "signature",
       "Law", "realization", "constantTrue", "toPrimitiveLawArena", "toArena"].map arena.str)
     roots := roots ++ #[escapeWitnessBridge, escapeWitnessBridge.str "toTheoremUnit"]
@@ -348,7 +348,7 @@ def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInp
     let continuation := if input.openContinuation then
       some ({ kind := "open" } : EscapeContinuationIdentity) else none
     return { bridgeKind := kind, continuation }
-  let normalized ← RegistrationGates.normalizeArena event.arena
+  let normalized ← RegistrationElaboration.normalizeArena event.arena
   let arena := normalized.finite
   let fromObject ← input.fromObject.mapM fun origin => do
     unless ← statementContainsOrigin event.statement origin do
@@ -359,7 +359,7 @@ def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInp
       throwError "unclassified_form:dtr.escape_from_identity"
     let type ← inferType origin
     let state ← if normalized.witness then
-        mkAppM (RegistrationGates.witnessArenaName.str "Domain") #[normalized.original]
+        mkAppM (RegistrationElaboration.witnessArenaName.str "Domain") #[normalized.original]
       else match normalized.domain with
         | some domain => pure domain
         | none => mkAppM `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arena]

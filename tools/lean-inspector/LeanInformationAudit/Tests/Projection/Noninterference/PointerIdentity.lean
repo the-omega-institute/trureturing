@@ -1,4 +1,7 @@
 import LeanInformationAudit.Projection.OutputOnlyAudit
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.PointerIdentity
 open Lean Elab Command

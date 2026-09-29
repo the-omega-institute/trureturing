@@ -2,13 +2,16 @@ import D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord
 import LeanInformationAudit.Tests.RegistrationGates.EscapeRecords
 import LeanInformationAudit.Tests.SourceIsolation
 import Mathlib.Algebra.Polynomial.Basic
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredWitnessRegistration
 open Lean Meta Elab Command
 open D5.S3.ConceptDynamics.InformationEscape CounterexampleRecord
 
 -- The witness fixture owns enrollment of its pure template input.
-register_information_template counterexampleRealization
+test_assess in register_information_template counterexampleRealization
 
 def claim : Prop := ∀ n : Nat, n ≠ 0 ∧ ∀ b : Bool, b = b
 theorem result : ¬ claim := fun h => (h 0).1 rfl
@@ -197,7 +200,7 @@ private theorem witnessLaw : witnessArena.Law witnessReads := ⟨(0 : Fin 1), rf
 private theorem witnessBridge : WitnessPrimitiveRealization witnessArena (¬ claim) witnessReads := ⟨witnessArena.law_refutes⟩
 private theorem witnessVariation : witnessArena.Law witnessReads ∧ ¬ witnessArena.Law witnessArena.constantTrue := witnessArena.variation witnessLaw
 private theorem witnessSensitivity : FiniteSlotSensitivity witnessArena.toPrimitiveLawArena := witnessArena.sensitivity witnessLaw
-register_information_theorem result in witnessArena
+test_assess in register_information_theorem result in witnessArena
   readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false))
   primitives witnessReads.toPrimitiveBundle realization witnessBridge
   variation witnessVariation sensitivity witnessSensitivity
@@ -253,7 +256,7 @@ theorem law : arena.Law reads := ⟨(0 : Fin 1), rfl⟩
 theorem bridge : WitnessPrimitiveRealization arena (¬ claim) reads := ⟨arena.law_refutes⟩
 theorem variation : arena.Law reads ∧ ¬ arena.Law arena.constantTrue := arena.variation law
 theorem sensitivity : FiniteSlotSensitivity arena.toPrimitiveLawArena := arena.sensitivity law
-register_information_theorem result in arena
+test_assess in register_information_theorem result in arena
   readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false))
   primitives reads.toPrimitiveBundle realization bridge
   variation variation sensitivity sensitivity

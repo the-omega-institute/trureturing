@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -40,11 +43,11 @@ run_cmd registerValidatedEntry (← Lean.getEnv).header.mainModule {
   realizationName := `LeanInformationAudit.Tests.SealPersistedUnit.fixtureRealization
 }
 
-expect_information_occurrence target
+test_assess in expect_information_occurrence target
   in arena
   from "LeanInformationAudit.Tests.SealPersistedUnit"
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 #check target.__lowers_escape
 #check arena.__catalog_irredundant
