@@ -73,13 +73,13 @@ internal sealed class ForcedCoreNormalizationDocument : IScribeDocumentDefinitio
 
     private static Formula CompleteFormula() => Disp(new Formula.Aligned([
         Seq(Forall, Sp, I("ell"), Colon, Lists, Comma, Sp,
-            App("Ordered", App("headD", I("ell"), D(0)), I("ell")), Rightarrow,
+            App("Ordered", App("headD", I("ell"), D(0)), I("ell")), Rightarrow, Sp,
             Forall, Sp, I("B"), Colon, N, Comma),
         Seq(I("M"), Eq, Core, Comma, Sp, OpenBracket),
         Seq(I("B"), Lt, I("M"), Leftrightarrow, Neg, Exists, Sp, I("n"), Colon, N,
             Comma, Sp, D(1), Le, Sp, I("n"), Land, Sp, I("n"), Le, Sp, I("B"), Land, Sp,
             Dvd(I("M"), I("n"))),
-        Seq(Land, Sp, Open, I("M"), Le, Sp, I("B"), Rightarrow, Exists, Sp,
+        Seq(Land, Sp, Open, I("M"), Le, Sp, I("B"), Rightarrow, Sp, Exists, Sp,
             I("n"), Colon, N, Comma, Exists, Sp, I("t"), Colon, Lists, Comma),
         Seq(D(1), Le, Sp, I("n"), Land, Sp, I("n"), Le, Sp, I("B"), Land, Sp,
             Dvd(I("M"), I("n"))),
@@ -91,7 +91,7 @@ internal sealed class ForcedCoreNormalizationDocument : IScribeDocumentDefinitio
             Suffix, Eq, I("n"), Land, Sp, Z(I("n")), Eq, Weight),
         Seq(Land, Sp, Open, Forall, Sp, I("m"), Colon, N, Comma,
             D(1), Le, Sp, I("m"), Land, Sp, I("m"), Le, Sp, I("B"), Land, Sp,
-            Dvd(I("M"), I("m")), Rightarrow,
+            Dvd(I("M"), I("m")), Rightarrow, Sp,
             Z(I("m")), Le, Sp, Z(I("n")), Close, Close, CloseBracket)
     ]));
 }
