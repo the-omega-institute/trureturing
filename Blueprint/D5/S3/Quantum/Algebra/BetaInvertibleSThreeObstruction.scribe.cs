@@ -22,7 +22,10 @@ internal sealed class BetaInvertibleSThreeObstructionDocument : IScribeDocumentD
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the conjecture", Disp(F.Id("claim")),
                 "Reduce rho modulo 3. The reduced matrices still preserve Q, since every vector over Z/3 lifts to Z/N, and still have invertible beta blocks at g other than the identity, since the determinant reduces to a unit. Over Z/3 let S_g = delta_g beta_g^{-1}, where delta_g is the lower-right block. The matrix rho(g) sends (0, x) to (beta_g x, delta_g x), and Q vanishes at (0, x), so y . S_g y = 0 for every y; hence S_g has zero diagonal and opposite off-diagonal entries and is determined by its entry S_g(0, 1). If g and h are different non-identity permutations with S_g = S_h, then rho(h) sends (0, z) to rho(g)(0, x) for z = beta_h^{-1} beta_g x, so rho(h^{-1} g) sends (0, x) to (0, z) for every x and its beta block vanishes, although h^{-1} g is not the identity. So g -> S_g(0, 1) maps the five non-identity permutations injectively into Z/3, which has three elements, a contradiction. The same argument bounds every beta-invertible group by p + 1 for any prime p dividing N.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lu-sun-zhang-2024-beta-invertible-s3-obstruction"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
