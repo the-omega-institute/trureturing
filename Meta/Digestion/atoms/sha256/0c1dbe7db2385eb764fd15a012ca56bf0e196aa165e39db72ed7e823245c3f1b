@@ -1,0 +1,19 @@
+**Theorem 8.2 (maximal mixed lattice and field discriminant).** Suppose
+in addition that $m,n$ are positive, squarefree and coprime. Then
+$S$ is the full ring of integers of $K$, and its field discriminant is
+
+$$
+\Delta(K)=-3(mn)^2.
+$$
+
+Proof. Theorem 1.1 makes $S$ a rational basis of integral elements
+with trace discriminant $-3(mn)^2$. Its power basis has nonzero
+discriminant supported only at primes dividing $3mn$. Discriminant
+clearing puts a nonzero integer multiple of every integral $z$ in
+$\mathbb Z[\alpha]\subseteq S$. A prime divisor of the clearing
+integer equal to $3$ is removed by Theorem 8.1. Every other such prime
+divides exactly one of $m,n$; squarefreeness and coprimality give the
+corresponding case of Theorem 7.1, which removes that prime. Repeating
+the removal proves $z\in S$. The integral basis and the trace-form
+discriminant of Theorem 1.1 now give the field discriminant.
+

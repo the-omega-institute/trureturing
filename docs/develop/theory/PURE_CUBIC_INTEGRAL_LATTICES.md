@@ -179,3 +179,48 @@ $\mathbb Z[\beta]$. Conversely, $\beta=v(3\gamma-1-c\alpha)\in S$
 and $\beta^2=m\alpha\in S$; reduction by $\beta^3=m^2n$
 puts $\mathbb Z[\beta]$ in $S$. Apply the same criterion to $3mz$
 and then use Bezout's identity for $p$ and $3m$.
+## 8. Mixed cubic maximality and field discriminant
+
+Retain the data of Theorem 1.1. Write
+$S=\mathbb Z\cdot1+\mathbb Z\cdot\alpha+\mathbb Z\cdot\gamma$.
+
+**Theorem 8.1 (mixed-lattice saturation at three).** Every $z\in K$
+integral over $\mathbb Z$ satisfies
+
+$$
+3z\in S\quad\Longrightarrow\quad z\in S.
+$$
+
+Proof. Put $\theta=c\alpha$, $\eta=(1+\theta+\theta^2)/3$ and
+$t=c^3n$. Theorem 5.1 applies to the cubic generator $\theta$ because
+$\theta^3=1+9a$. Its lattice
+$A_\theta=\mathbb Z\cdot1+\mathbb Z\cdot\theta+
+\mathbb Z\cdot\eta$ lies in $S$: indeed
+$\beta=v(3\gamma-1-c\alpha)$ and $\eta=\gamma+k\beta$.
+Conversely $tS\subseteq A_\theta$, since
+$t\alpha=c^2n\theta$ and $t\gamma=t\eta-kc\theta^2$.
+The equation $c^3mn^2=1+9a$ implies $3\nmid t$.
+If $3z\in S$, then $3tz\in A_\theta$. Theorem 5.1 gives
+$tz\in A_\theta\subseteq S$, and Bezout's identity for $3$ and $t$
+gives $z\in S$.
+
+**Theorem 8.2 (maximal mixed lattice and field discriminant).** Suppose
+in addition that $m,n$ are positive, squarefree and coprime. Then
+$S$ is the full ring of integers of $K$, and its field discriminant is
+
+$$
+\Delta(K)=-3(mn)^2.
+$$
+
+Proof. Theorem 1.1 makes $S$ a rational basis of integral elements
+with trace discriminant $-3(mn)^2$. Its power basis has nonzero
+discriminant supported only at primes dividing $3mn$. Discriminant
+clearing puts a nonzero integer multiple of every integral $z$ in
+$\mathbb Z[\alpha]\subseteq S$. A prime divisor of the clearing
+integer equal to $3$ is removed by Theorem 8.1. Every other such prime
+divides exactly one of $m,n$; squarefreeness and coprimality give the
+corresponding case of Theorem 7.1, which removes that prime. Repeating
+the removal proves $z\in S$. The integral basis and the trace-form
+discriminant of Theorem 1.1 now give the field discriminant.
+
+## 追加锚（本行以下为增补区）

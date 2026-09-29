@@ -1,0 +1,20 @@
+**Theorem 8.1 (mixed-lattice saturation at three).** Every $z\in K$
+integral over $\mathbb Z$ satisfies
+
+$$
+3z\in S\quad\Longrightarrow\quad z\in S.
+$$
+
+Proof. Put $\theta=c\alpha$, $\eta=(1+\theta+\theta^2)/3$ and
+$t=c^3n$. Theorem 5.1 applies to the cubic generator $\theta$ because
+$\theta^3=1+9a$. Its lattice
+$A_\theta=\mathbb Z\cdot1+\mathbb Z\cdot\theta+
+\mathbb Z\cdot\eta$ lies in $S$: indeed
+$\beta=v(3\gamma-1-c\alpha)$ and $\eta=\gamma+k\beta$.
+Conversely $tS\subseteq A_\theta$, since
+$t\alpha=c^2n\theta$ and $t\gamma=t\eta-kc\theta^2$.
+The equation $c^3mn^2=1+9a$ implies $3\nmid t$.
+If $3z\in S$, then $3tz\in A_\theta$. Theorem 5.1 gives
+$tz\in A_\theta\subseteq S$, and Bezout's identity for $3$ and $t$
+gives $z\in S$.
+
