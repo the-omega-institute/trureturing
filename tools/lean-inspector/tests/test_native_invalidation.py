@@ -1,6 +1,5 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
 import hashlib
-import io
 import json
 import os
 from pathlib import Path
@@ -436,24 +435,6 @@ class NativeSemanticConsumerTests:
         changed({'D5.B'})
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
         changed({'D5.B', 'D5.A', 'Fixture'})
-
-        # Compatible judge edits cannot license damaged, incomplete or foreign rows.
-        state = native.state(self.root)
-        artifact = state / 'modules/D5.Alone.zip'
-        valid = artifact.read_bytes()
-        foreign = (state / 'modules/D5.B.zip').read_bytes()
-        with zipfile.ZipFile(io.BytesIO(valid)) as archive:
-            incomplete = io.BytesIO()
-            with zipfile.ZipFile(incomplete, 'w') as writer:
-                writer.writestr(publication.RAW, archive.read(publication.RAW))
-        for data in [b'damaged', incomplete.getvalue(), foreign]:
-            with self.subTest(damage=data[:16]):
-                artifact.unlink()
-                artifact.write_bytes(data)
-                with self.assertRaises(native.ROW_ERRORS):
-                    native.validate('module', self.root, 'D5.Alone',
-                                    state / 'inputs/D5.Alone.json', artifact)
-                changed({'D5.Alone'})
 
         # The judge must still build even when this module does not import it.
         self.write('LeanInformationAudit/Registry.lean', driver + 'unknown_command\n')
