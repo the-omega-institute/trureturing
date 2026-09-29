@@ -320,7 +320,15 @@ theorem actual_block_matrices (alpha : G →+ A) (beta : G →+ B)
     actualReducedA alpha beta = (blockWeight alpha beta : ℂ) •
       (leftVectors alpha beta * (leftVectors alpha beta)ᴴ) ∧
     actualReducedB alpha beta = (blockWeight alpha beta : ℂ) •
-      (rightVectors alpha beta * (rightVectors alpha beta)ᴴ) := by
+      (rightVectors alpha beta * (rightVectors alpha beta)ᴴ) ∧
+    (∀ q, (actualReducedA alpha beta).mulVec ((leftVectors alpha beta).col q) =
+      (blockWeight alpha beta : ℂ) • (leftVectors alpha beta).col q) ∧
+    (∀ q, (actualReducedB alpha beta).mulVec ((rightVectors alpha beta).col q) =
+      (blockWeight alpha beta : ℂ) • (rightVectors alpha beta).col q) ∧
+    (∀ v : A → ℂ, ((leftVectors alpha beta)ᴴ).mulVec v = 0 →
+      (actualReducedA alpha beta).mulVec v = 0) ∧
+    (∀ v : B → ℂ, ((rightVectors alpha beta)ᴴ).mulVec v = 0 →
+      (actualReducedB alpha beta).mulVec v = 0) := by
   classical
   let U := leftVectors alpha beta
   let V := rightVectors alpha beta
@@ -552,15 +560,16 @@ theorem actual_block_matrices (alpha : G →+ A) (beta : G →+ B)
     simp only [Complex.star_def, Complex.conj_ofReal]
     norm_cast
     exact Real.mul_self_sqrt (div_nonneg (mul_nonneg hKA.le hKB.le) hN.le)
-  refine ⟨hU, hV, hC, ?_, ?_⟩
-  · rw [hA, hC, Matrix.conjTranspose_smul, Matrix.conjTranspose_mul,
+  have hredA : actualReducedA alpha beta = (blockWeight alpha beta : ℂ) • (U * Uᴴ) := by
+    rw [hA, hC, Matrix.conjTranspose_smul, Matrix.conjTranspose_mul,
       Matrix.conjTranspose_conjTranspose, Matrix.smul_mul, Matrix.mul_smul,
       smul_smul, hsq]
     congr 1
     calc
       (U * Vᴴ) * (V * Uᴴ) = U * (Vᴴ * V) * Uᴴ := by simp only [Matrix.mul_assoc]
       _ = U * Uᴴ := by rw [hV, Matrix.mul_one]
-  · rw [hB, ← hreal, hC, Matrix.conjTranspose_smul, Matrix.conjTranspose_mul,
+  have hredB : actualReducedB alpha beta = (blockWeight alpha beta : ℂ) • (V * Vᴴ) := by
+    rw [hB, ← hreal, hC, Matrix.conjTranspose_smul, Matrix.conjTranspose_mul,
       Matrix.conjTranspose_conjTranspose, Matrix.smul_mul, Matrix.mul_smul,
       smul_smul]
     have hsq' : star (Real.sqrt (blockWeight alpha beta) : ℂ) *
@@ -571,6 +580,23 @@ theorem actual_block_matrices (alpha : G →+ A) (beta : G →+ B)
     calc
       (V * Uᴴ) * (U * Vᴴ) = V * (Uᴴ * U) * Vᴴ := by simp only [Matrix.mul_assoc]
       _ = V * Vᴴ := by rw [hU, Matrix.mul_one]
+  refine ⟨hU, hV, hC, hredA, hredB, ?_, ?_, ?_, ?_⟩
+  · intro q
+    have hinner : (Uᴴ).mulVec (U.col q) = Pi.single q (1 : ℂ) := by
+      rw [← Matrix.mulVec_single_one U q, Matrix.mulVec_mulVec, hU,
+        Matrix.one_mulVec]
+    rw [hredA, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec,
+      hinner, Matrix.mulVec_single_one]
+  · intro q
+    have hinner : (Vᴴ).mulVec (V.col q) = Pi.single q (1 : ℂ) := by
+      rw [← Matrix.mulVec_single_one V q, Matrix.mulVec_mulVec, hV,
+        Matrix.one_mulVec]
+    rw [hredB, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec,
+      hinner, Matrix.mulVec_single_one]
+  · intro v hv
+    rw [hredA, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec, hv, Matrix.mulVec_zero, smul_zero]
+  · intro v hv
+    rw [hredB, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec, hv, Matrix.mulVec_zero, smul_zero]
 
 /-- Flat spectra are extracted from the actual reductions, including ambient zero directions. -/
 theorem actual_flat_reductions (alpha : G →+ A) (beta : G →+ B)
@@ -596,7 +622,7 @@ theorem actual_flat_reductions (alpha : G →+ A) (beta : G →+ B)
       (Finset.univ.filter (fun i => hB.isHermitian.eigenvalues i = 0)).card =
         Fintype.card B - Fintype.card (BlockQuotient alpha beta)) := by
   classical
-  obtain ⟨hU, hV, hC, hA, hB⟩ := actual_block_matrices alpha beta hpair
+  obtain ⟨hU, hV, hC, hA, hB, _, _, _, _⟩ := actual_block_matrices alpha beta hpair
   let U := leftVectors alpha beta
   let V := rightVectors alpha beta
   let w := blockWeight alpha beta
@@ -735,7 +761,9 @@ theorem actual_joint_state (alpha : G →+ A) (beta : G →+ B)
       (actualJoint alpha beta).IsHermitian ∧
       Matrix.trace (actualJoint alpha beta) = 1 ∧
       actualJoint alpha beta * actualJoint alpha beta = actualJoint alpha beta ∧
-      (actualJoint alpha beta).rank = 1 := by
+      (actualJoint alpha beta).rank = 1 ∧
+      (∑ p : A × B, star (actualCoefficient alpha beta p.1 p.2) *
+        actualCoefficient alpha beta p.1 p.2) = 1 := by
   classical
   obtain ⟨_, htraceA, _, _, _, _, _, _⟩ := actual_flat_reductions alpha beta hpair
   let psi : A × B → ℂ := fun p => actualCoefficient alpha beta p.1 p.2
@@ -775,8 +803,9 @@ theorem actual_joint_state (alpha : G →+ A) (beta : G →+ B)
   have hrank_le : (actualJoint alpha beta).rank ≤ 1 := by
     rw [houter]
     exact Matrix.rank_vecMulVec_le psi (star psi)
-  refine ⟨hpos, hherm, htrace, hidem, ?_⟩
-  omega
+  refine ⟨hpos, hherm, htrace, hidem, ?_, ?_⟩
+  · omega
+  · simpa only [dotProduct, Pi.star_apply, psi] using hnorm
 
 /-- The actual reduced states have the complete flat spectrum and its entropy. -/
 theorem actual_reduced_entropy (alpha : G →+ A) (beta : G →+ B)
@@ -798,7 +827,10 @@ theorem actual_reduced_entropy (alpha : G →+ A) (beta : G →+ B)
       · exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hB.nonneg
       · exact htraceB
     vonNeumannEntropy rhoA = Real.log (Fintype.card (BlockQuotient alpha beta)) ∧
-      vonNeumannEntropy rhoB = Real.log (Fintype.card (BlockQuotient alpha beta)) := by
+      vonNeumannEntropy rhoB = Real.log (Fintype.card (BlockQuotient alpha beta)) ∧
+      Real.log (Fintype.card (BlockQuotient alpha beta) : ℝ) =
+        Real.log (Fintype.card G : ℝ) - Real.log (Fintype.card alpha.ker : ℝ) -
+          Real.log (Fintype.card beta.ker : ℝ) := by
   classical
   obtain ⟨hw, htraceA, htraceB, _, _, _, hspecA, hspecB⟩ :=
     actual_flat_reductions alpha beta hpair
@@ -831,6 +863,10 @@ theorem actual_reduced_entropy (alpha : G →+ A) (beta : G →+ B)
   have hcardA : (Fintype.card A : ℝ) > 0 := by exact_mod_cast Fintype.card_pos
   have hcardB : (Fintype.card B : ℝ) > 0 := by exact_mod_cast Fintype.card_pos
   have hR : (Fintype.card (BlockQuotient alpha beta) : ℝ) > 0 :=
+    by exact_mod_cast Fintype.card_pos
+  have hKA : (Fintype.card alpha.ker : ℝ) > 0 :=
+    by exact_mod_cast Fintype.card_pos
+  have hKB : (Fintype.card beta.ker : ℝ) > 0 :=
     by exact_mod_cast Fintype.card_pos
   have hflat_entropyA (w : ℝ) (hw' : w =
       (Fintype.card (BlockQuotient alpha beta) : ℝ)⁻¹)
@@ -912,7 +948,21 @@ theorem actual_reduced_entropy (alpha : G →+ A) (beta : G →+ B)
       heigsB hcountB (by
         exact div_pos (mul_pos (by exact_mod_cast Fintype.card_pos)
           (by exact_mod_cast Fintype.card_pos)) (by exact_mod_cast Fintype.card_pos))
-  simpa [rhoA, rhoB] using ⟨hEA, hEB⟩
+  have hcounts : (Fintype.card G : ℝ) =
+      (Fintype.card (BlockQuotient alpha beta) : ℝ) *
+        (Fintype.card alpha.ker : ℝ) * (Fintype.card beta.ker : ℝ) := by
+    exact_mod_cast (show Fintype.card G =
+      Fintype.card (BlockQuotient alpha beta) *
+        Fintype.card alpha.ker * Fintype.card beta.ker by
+      simpa only [Nat.card_eq_fintype_card] using
+        (kernel_quotient_normalization alpha beta hpair).2.2)
+  have hlog : Real.log (Fintype.card (BlockQuotient alpha beta) : ℝ) =
+      Real.log (Fintype.card G : ℝ) - Real.log (Fintype.card alpha.ker : ℝ) -
+        Real.log (Fintype.card beta.ker : ℝ) := by
+    rw [hcounts, Real.log_mul (mul_ne_zero hR.ne' hKA.ne') hKB.ne',
+      Real.log_mul hR.ne' hKA.ne']
+    ring
+  exact ⟨hEA, hEB, hlog⟩
 
 end D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutSpectrum
 
