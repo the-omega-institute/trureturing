@@ -17,7 +17,7 @@ internal sealed class FastSchurGradientEnergyDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(
                     "D5/S3/Observer/HiddenFlow/FastSchurGradientEnergy.coupled_energy_state_velocity"),
                 H("Energy, state, and visible velocity of the coupled flow"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The theorem gives the actual initial value and "
                     + "both coordinate ODEs, the exact visible and hidden squared-force "
