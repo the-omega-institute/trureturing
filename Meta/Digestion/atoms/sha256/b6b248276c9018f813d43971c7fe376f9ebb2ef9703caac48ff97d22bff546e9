@@ -1,0 +1,39 @@
+**定义 12.1（融合类型与路径）。** 令 $L=\{\mathbf1,\tau\}$，允许输出集合为
+
+$$
+\mathsf N(\mathbf1,a)=\mathsf N(a,\mathbf1)=\{a\},\qquad
+\mathsf N(\tau,\tau)=\{\mathbf1,\tau\}.
+\tag{FT.1}
+$$
+
+对 $n\in\mathbb N$、$c\in L$，定义有限集合
+
+$$
+\mathsf P_n(c)=\{x:\{0,\ldots,n\}\to L:
+ x_0=\mathbf1,\ x_n=c,\ x_{j+1}\in\mathsf N(x_j,\tau)\ (0\le j<n)\}.
+\tag{FT.2}
+$$
+
+$\tau$ 是每片叶的类型，$x_j$ 是前 $j$ 片叶的总类型。$n=0$ 时只有终点为 $\mathbf1$ 的空路径。编码 $\mathbf1\mapsto0,\tau\mapsto1$ 后，合法路径具有固定起点、固定终点且相邻位置不出现 $00$；这是路径集合的双射，不携带振幅、结合结构或空间操作权限。
+
+令 $H_n^c=\mathbb C^{\mathsf P_n(c)}$，内积为有限求和，标准基记 $|p\rangle$。令 $H_n=\bigoplus_c H_n^c$，并取保持终点类型的块对角代数
+
+$$
+\mathfrak A_n=\bigoplus_{c:\mathsf P_n(c)\ne\varnothing}\operatorname{End}_{\mathbb C}(H_n^c)
+\subset\operatorname{End}_{\mathbb C}(H_n).
+\tag{FT.3}
+$$
+
+$n=0$ 时 $\mathfrak A_0=\mathbb C$。这个有限模型与既定 Fib 范畴的 $\operatorname{End}(\tau^{\otimes n})$ 通过选定的正交融合基对应；该对应使用 [TTWL09] 的完整 $F$ 数据，不能仅由相同维数推出。
+
+状态用块密度矩阵 $\rho=(\rho_c)_c$ 表示：每块 Hermitian、半正定，且 $\sum_c\operatorname{Tr}\rho_c=1$。可观测量是 $O=O^\dagger\in\mathfrak A_n$，期望为 $\sum_c\operatorname{Tr}(\rho_cO_c)$。这里使用普通矩阵迹表示状态；第 12.3 节的特定迹态另行指定。
+
+在固定总类型 $c$ 中，$\rho(p,q)$ 同时保留两条路径的关系，满足 $\rho(q,p)=\overline{\rho(p,q)}$。只保留 $\rho(p,p)$ 会删除相干性。实际酉门 $U$ 的更新是有限双重求和
+
+$$
+\rho'(p,q)=\sum_{r,s}U(p,r)\rho(r,s)\overline{U(q,s)}.
+\tag{FT.4}
+$$
+
+因此，完整的线性状态载体是同一终点类型下的“路径对”，不是单条已实现历史。跨不同总类型的相干在所选代数中不被观测，本卷不额外引入能混合这些类型的外部装置。
+
