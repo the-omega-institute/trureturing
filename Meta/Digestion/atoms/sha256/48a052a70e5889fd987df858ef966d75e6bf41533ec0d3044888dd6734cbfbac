@@ -1,0 +1,157 @@
+**定理 111.1（联合单射有限加法读出的实际态、完整谱与熵）。** 设 $G,A,B$ 为有限加法交换群，$\alpha:G\to A$、$\beta:G\to B$ 为加法群同态，并假设配对映射
+
+$$
+f:G\longrightarrow A\times B,\qquad f(x)=(\alpha(x),\beta(x))
+$$
+
+单射。不要求任一读出满射，也不要求任一读出单独恢复来源。记
+
+$$
+\begin{aligned}
+N&=|G|,& K_A&=\ker\alpha,& K_B&=\ker\beta,\\
+H&=K_A+K_B=\{s+t:s\in K_A,\ t\in K_B\},&
+Q&=G/H,& R&=|Q|,\\
+k_A&=|K_A|,& k_B&=|K_B|,& \lambda&=\frac{k_Ak_B}{N}.
+\end{aligned}
+$$
+
+各群均含零元，故 $N,k_A,k_B,R$ 为正整数；分式、平方根和对数中的基数均取其实数值，矩阵系数再嵌入复数。$\sqrt{\cdot}$ 取正平方根，$\log$ 为自然对数。对谓词 $P$，$\mathbf1_{[P]}$ 在 $P$ 成立时为 1，否则为 0；对集合 $E$，$\mathbf1_E$ 为其指标函数。
+
+在标准正交基 $\{|a\rangle:a\in A\}$、$\{|b\rangle:b\in B\}$ 上定义实际系数矩阵、相干向量及联合纯态密度：
+
+$$
+\begin{aligned}
+C(a,b)&=\frac1{\sqrt N}\sum_{x\in G}
+  \mathbf1_{[\alpha(x)=a\ \land\ \beta(x)=b]},
+  &&C\in\mathbb C^{A\times B},\\
+|\Psi\rangle&=\frac1{\sqrt N}\sum_{x\in G}
+  |\alpha(x)\rangle\otimes|\beta(x)\rangle
+  =\sum_{a\in A,\ b\in B}C(a,b)|a\rangle\otimes|b\rangle,\\
+J\bigl((a,b),(a',b')\bigr)&=C(a,b)\overline{C(a',b')}.
+\end{aligned}
+$$
+
+这里没有来源依赖的相位。取实际偏迹，约定 $\operatorname{partialTraceRight}$ 消去 $B$、保留 $A$，$\operatorname{partialTraceLeft}$ 消去 $A$、保留 $B$：
+
+$$
+\begin{aligned}
+\rho_A(a,a')&=\operatorname{partialTraceRight}(J)(a,a')
+  =\sum_{b\in B}J\bigl((a,b),(a',b)\bigr),\\
+\rho_B(b,b')&=\operatorname{partialTraceLeft}(J)(b,b')
+  =\sum_{a\in A}J\bigl((a,b),(a,b')\bigr).
+\end{aligned}
+$$
+
+上述对象满足以下全部结论。
+
+核与归一化为
+
+$$
+\begin{gathered}
+K_A\cap K_B=\{0\},\qquad |H|=k_Ak_B,\qquad
+N=Rk_Ak_B,\qquad \lambda=\frac1R>0,\\
+\sum_{a\in A,\ b\in B}|C(a,b)|^2=\langle\Psi,\Psi\rangle=1.
+\end{gathered}
+$$
+
+$J$ 为 Hermitian 正半定矩阵，$\operatorname{Tr}J=1$、$J^2=J$、$\operatorname{rank}_{\mathbb C}J=1$，因此确为归一化纯态密度。
+
+对任意 $q\in Q$，任选代表 $x\in q$，定义两侧标签集
+
+$$
+A_q=\alpha(x)+\alpha(K_B),\qquad
+B_q=\beta(x)+\beta(K_A).
+$$
+
+这些集合与代表无关，$|A_q|=k_B$、$|B_q|=k_A$；不同 $q$ 的 $A_q$ 两两不交，$B_q$ 也两两不交，且
+
+$$
+\alpha(G)=\bigsqcup_{q\in Q}A_q,\qquad
+\beta(G)=\bigsqcup_{q\in Q}B_q.
+$$
+
+实际配对读出把每个来源陪集 $q$ 双射到 $A_q\times B_q$。故每块有 $k_B$ 个 $A$ 标签、$k_A$ 个 $B$ 标签，块内每个系数恰为 $1/\sqrt N$；块外为零。实际矩阵条目为
+
+$$
+\begin{aligned}
+C(a,b)&=\frac1{\sqrt N}\sum_{q\in Q}
+  \mathbf1_{A_q}(a)\mathbf1_{B_q}(b),\\
+\rho_A(a,a')&=\frac{k_A}{N}\sum_{q\in Q}
+  \mathbf1_{A_q}(a)\mathbf1_{A_q}(a'),\\
+\rho_B(b,b')&=\frac{k_B}{N}\sum_{q\in Q}
+  \mathbf1_{B_q}(b)\mathbf1_{B_q}(b').
+\end{aligned}
+$$
+
+因此 $\rho_A$ 的每个支撑块条目是 $k_A/N$，$\rho_B$ 的每个支撑块条目是 $k_B/N$。定义归一化块指标向量
+
+$$
+u_q(a)=\frac{\mathbf1_{A_q}(a)}{\sqrt{k_B}},\qquad
+v_q(b)=\frac{\mathbf1_{B_q}(b)}{\sqrt{k_A}}.
+$$
+
+两族分别在 $\mathbb C^A$、$\mathbb C^B$ 中正交归一。以 $w^*$ 表示共轭转置，有实际 Schmidt 分解与矩阵恒等式
+
+$$
+\begin{aligned}
+|\Psi\rangle&=\sqrt\lambda\sum_{q\in Q}u_q\otimes v_q,\\
+C(a,b)&=\sqrt\lambda\sum_{q\in Q}u_q(a)v_q(b),\\
+P_A&=\sum_{q\in Q}u_qu_q^*,&
+P_B&=\sum_{q\in Q}v_qv_q^*,\\
+\rho_A&=\lambda P_A,& \rho_B&=\lambda P_B,\\
+P_A^2&=P_A=P_A^*,& P_B^2&=P_B=P_B^*,\\
+\rho_A^2&=\lambda\rho_A,& \rho_B^2&=\lambda\rho_B.
+\end{aligned}
+$$
+
+$P_A,P_B$ 是对应块向量张成空间的正交投影。两约化矩阵均 Hermitian 正半定、迹为 1，且
+
+$$
+\operatorname{rank}_{\mathbb C}C
+=\operatorname{rank}_{\mathbb C}\rho_A
+=\operatorname{rank}_{\mathbb C}\rho_B
+=R\le\min(|A|,|B|).
+$$
+
+完整特征值按重数计算：$\rho_A$ 的 $\lambda$ 特征空间为 $\operatorname{span}\{u_q:q\in Q\}$，代数与几何重数均为 $R$；零特征空间为其正交补，重数均为 $|A|-R$。$\rho_B$ 对应地有 $\lambda$ 重复 $R$ 次、零重复 $|B|-R$ 次。重数为零时该特征值不出现；这些零重数包含块内与常量向量正交的方向和读出像之外的全部标签方向。$C$ 的非零奇异值均为 $\sqrt\lambda$，共 $R$ 个，因而 $|\Psi\rangle$ 的 Schmidt 秩为 $R$。按完整特征值列表定义 von Neumann 熵，约定 $0\log0=0$，得到
+
+$$
+S(\rho_A)=S(\rho_B)
+=-R\lambda\log\lambda
+=\log R
+=\log N-\log k_A-\log k_B.
+$$
+
+**证明。** 若 $z\in K_A\cap K_B$，则 $f(z)=f(0)$，联合单射给出 $z=0$。加法映射 $K_A\times K_B\to H$ 满射；若 $s+t=s'+t'$，则 $s-s'=t'-t$ 属于交核，故 $s=s'$、$t=t'$。所以该映射双射，$|H|=k_Ak_B$。每个 $H$ 陪集的大小为 $|H|$，陪集划分 $G$，得 $N=Rk_Ak_B$。此外 $f$ 单射使实际振幅和中的每个位置至多有一个来源，恰有 $N$ 个非零位置，每个为 $1/\sqrt N$，故向量范数平方为 1。外积 $J$ 于是正半定、Hermitian、迹为 1；$J^2=\langle\Psi,\Psi\rangle J=J$，其像为非零向量 $\Psi$ 张成的一维空间。
+
+交核为零还说明 $\alpha$ 在 $K_B$ 上、$\beta$ 在 $K_A$ 上分别单射，故标签集大小分别是 $k_B,k_A$。若更换代表 $x$ 为 $x+s+t$，其中 $s\in K_A,t\in K_B$，则 $\alpha(x)$ 只平移一个 $\alpha(K_B)$ 元素，$\beta(x)$ 只平移一个 $\beta(K_A)$ 元素，两标签集不变。若 $A_q,A_{q'}$ 相交，取代表 $x,y$ 及 $t,t'\in K_B$ 使 $\alpha(x+t)=\alpha(y+t')$，则 $x-y+t-t'\in K_A$，故 $x-y\in H$，即 $q=q'$。$B_q$ 的不交性同理；任一实际读出标签属于其来源所在陪集的标签集，反向包含由定义给出，故两侧确为读出像的划分。
+
+每个 $q=x+H$ 的来源唯一写成 $x+s+t$，$s\in K_A,t\in K_B$，且
+
+$$
+f(x+s+t)=\bigl(\alpha(x)+\alpha(t),\ \beta(x)+\beta(s)\bigr).
+$$
+
+两个核参数独立遍历；由各自受限读出的单射性，该式给出 $q\to A_q\times B_q$ 的双射。因此由原始来源和直接得到上述 $C$ 的块公式。把它代入已经定义的实际偏迹，利用各块指标为实数，得到
+
+$$
+\begin{aligned}
+\rho_A(a,a')
+&=\frac1N\sum_{q,r\in Q}
+ \mathbf1_{A_q}(a)\mathbf1_{A_r}(a')
+ \sum_{b\in B}\mathbf1_{B_q}(b)\mathbf1_{B_r}(b),\\
+\sum_{b\in B}\mathbf1_{B_q}(b)\mathbf1_{B_r}(b)
+&=\begin{cases}k_A,&q=r,\\0,&q\ne r.\end{cases}
+\end{aligned}
+$$
+
+这给出 $\rho_A$ 的条目公式；交换两侧，内层计数为 $k_B$，给出 $\rho_B$ 的条目公式。此处使用的是实际共同来源的支撑，未把候选约化矩阵或候选谱当作假设。
+
+支撑不交及标签集大小给出 $\langle u_q,u_r\rangle=\langle v_q,v_r\rangle=\mathbf1_{[q=r]}$。由于 $\sqrt\lambda/\sqrt{k_Ak_B}=1/\sqrt N$，系数块公式恰为所列 Schmidt 分解；由于 $\lambda/k_B=k_A/N$、$\lambda/k_A=k_B/N$，偏迹块公式恰为两投影公式。正交归一性使 $P_A,P_B$ 均自伴且平方等于自身，因此约化矩阵的平方关系、正半定性与 $\operatorname{Tr}\rho_A=\operatorname{Tr}\rho_B=R\lambda=1$ 随之成立。
+
+在 $u_q$ 张成空间上 $\rho_A$ 作用为乘 $\lambda$，在其正交补上作用为零。前者维数为 $R$，后者为 $|A|-R$；两个特征空间给出整个 $\mathbb C^A$ 的直和分解，故完整代数与几何重数如述。$B$ 侧同理。作为从 $\mathbb C^B$ 到 $\mathbb C^A$ 的线性映射，实系数矩阵 $C$ 把每个 $v_q$ 送到 $\sqrt\lambda u_q$，把它们的正交补送到零，故其秩为 $R$、非零奇异值为 $\sqrt\lambda$。最后把两侧的完整谱代入熵定义，用 $\lambda=1/R$ 及所有基数为正，得到熵的各个等式。$\square$
+
+平凡群和非满射读出都在定理范围内：当 $G=\{0\}$ 时 $N=k_A=k_B=R=1$，实际态为 $|0_A\rangle\otimes|0_B\rangle$，两侧各有特征值 1 一次，其余全为零；一般 $R=1$ 时仍是一个归一化乘积块、熵为零。上述证明未删除这些端点。
+
+第 46.1 节的直接消费者取 $G=(\mathbb Z/n\mathbb Z)^2$，$n\ge1$，$A,B$ 各为两个端口标签的乘积群，$\alpha,\beta$ 为同一来源的四个互异自然时刻读数按任意两对切分。此时 $N=n^2$，实际振幅因子 $1/\sqrt N=1/n$。把两侧核基数与对应时刻间隔的 $\gcd(n,F_{d_A})$、$\gcd(n,F_{d_B})$ 接合，才得到第 46.1 节的秩与对数表达式。对应通用结果及保留原有联合单射假设的全切分精确应用已通过 Lean 编译，包含原始 ket 的逐项相等、任意端口重排、两侧算术接口、实际矩阵条目、投影、特征空间、Schmidt 分解、完整奇异值和重数，以及 $n=1$ 和熵公式。精确应用仅为临时核验，不新增绑定声明；本节正文仍为参考输入，不表示新增冻结或 atom 覆盖。
+
