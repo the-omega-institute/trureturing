@@ -413,12 +413,19 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
             return row.path
           else
             return ← rebuildRejectedArtifact pkg row
-      let build := if aggregate?.isNone && !repaired then do
+      let produced := aggregate?.isNone && !repaired
+      let build := if produced then do
           IO.FS.rename pending file
           pure PUnit.unit
         else direct
       let row ← uncheckedArtifact file build check
-      -- The completed new bundle still crosses the full canonical validator.
+      if produced then
+        -- This batch validated every row and then the completed canonical
+        -- bundle in one process before writing it; a second process would
+        -- only replay that check.
+        setTrace (← row.outputTrace.get)
+        return row.path
+      -- A repaired or directly rebuilt bundle still crosses the full canonical validator.
       acceptArtifact pkg {row with build := direct}
     finally
       removeFileIfExists pending
