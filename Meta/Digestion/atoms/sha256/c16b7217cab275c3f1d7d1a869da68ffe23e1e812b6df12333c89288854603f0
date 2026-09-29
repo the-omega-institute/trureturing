@@ -1,0 +1,29 @@
+### theorem 37.1 顺序边界映射的短正合列
+
+若满秩整数映射先后为 $B_1$、$B_2$，整体为 $B_2B_1$，则
+
+$$
+\boxed{
+0\longrightarrow\mathcal D_{B_1}
+\overset\iota\longrightarrow\mathcal D_{B_2B_1}
+\overset\pi\longrightarrow\mathcal D_{B_2}
+\longrightarrow0,
+}
+$$
+
+其中 $\iota([v])=[B_2v]$，$\pi([w])=[w]$。$B_2$ 的整数单射性给出 $\iota$ 的单射性，$\ker\pi$ 正好是 $\iota$ 的像。因此
+
+$$
+|\mathcal D_{B_2B_1}|=|\mathcal D_{B_1}|\,|\mathcal D_{B_2}|,
+$$
+
+但一般没有自然直和分解。
+
+例如
+
+$$
+B_1=\begin{pmatrix}p&0\\0&1\end{pmatrix}.
+$$
+
+若 $B_2=B_1$，则整体缺陷为 $\mathbb Z/p^2\mathbb Z$；若 $\widetilde B_2=\operatorname{diag}(1,p)$，则整体缺陷为 $(\mathbb Z/p\mathbb Z)^2$。二者都有 $p^2$ 个类别，但前者需要两级恢复精度，后者只需一级。接续关系决定了缺陷深度。
+

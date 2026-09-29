@@ -1,0 +1,13 @@
+### theorem 38.1 偶数步闭合缺陷分解
+
+对 $m\ge1$，有
+
+$$
+\boxed{
+\mathcal D_{2m}\cong
+\begin{cases}
+(\mathbb Z/L_m\mathbb Z)^2,&m\text{ 奇};\\[1mm]
+\mathbb Z/F_m\mathbb Z\oplus\mathbb Z/(5F_m)\mathbb Z,&m\text{ 偶}.
+\end{cases}}
+$$
+

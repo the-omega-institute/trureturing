@@ -1,0 +1,465 @@
+{
+  "status": "PASS",
+  "core": 9527493263501079465984000000000,
+  "profile": [
+    21,
+    13,
+    9,
+    7,
+    6
+  ],
+  "mandatory_core_results": [
+    {
+      "status": "PASS",
+      "profile": [
+        21,
+        13,
+        9,
+        7,
+        6
+      ],
+      "bound": 9527493263501079465984000000000,
+      "core": 9527493263501079465984000000000,
+      "maximum": [
+        72365886696479164830959537,
+        15037079014364077440000000
+      ],
+      "witness": 9527493263501079465984000000000,
+      "states": 6,
+      "branches": 100,
+      "remaining_core_pruned_branches": 95,
+      "prime_prefix": [
+        2,
+        3,
+        5,
+        7,
+        11,
+        13
+      ],
+      "budget_multiplier": 1,
+      "attaining_core_multiplier": 1,
+      "direct_all_multiples_checked": 1,
+      "maximum_decimal_display": "4.8124962718724890453838681399861265",
+      "certificate_path": "certificate-core-times-1.json",
+      "certificate_sha256": "2dc38a12c515beb9cdeaa627ba29d1cb7653a4b356e2629681c433a283c3945c"
+    },
+    {
+      "status": "PASS",
+      "profile": [
+        21,
+        13,
+        9,
+        7,
+        6
+      ],
+      "bound": 19054986527002158931968000000000,
+      "core": 9527493263501079465984000000000,
+      "maximum": [
+        434195371939002974359607059,
+        90222474086184464640000000
+      ],
+      "witness": 19054986527002158931968000000000,
+      "states": 11,
+      "branches": 120,
+      "remaining_core_pruned_branches": 110,
+      "prime_prefix": [
+        2,
+        3,
+        5,
+        7,
+        11,
+        13
+      ],
+      "budget_multiplier": 2,
+      "attaining_core_multiplier": 2,
+      "direct_all_multiples_checked": 2,
+      "maximum_decimal_display": "4.8124968455668873604899829561865942",
+      "certificate_path": "certificate-core-times-2.json",
+      "certificate_sha256": "c2b3421dd91ab2db28a40ce20aa2ccd81781c6edf315c9b7ec6003a84c694afb"
+    },
+    {
+      "status": "PASS",
+      "profile": [
+        21,
+        13,
+        9,
+        7,
+        6
+      ],
+      "bound": 95274932635010794659840000000000,
+      "core": 9527493263501079465984000000000,
+      "maximum": [
+        43060704045486908310829897,
+        8947683380448046080000000
+      ],
+      "witness": 57164959581006476795904000000000,
+      "states": 36,
+      "branches": 206,
+      "remaining_core_pruned_branches": 166,
+      "prime_prefix": [
+        2,
+        3,
+        5,
+        7,
+        11,
+        13
+      ],
+      "budget_multiplier": 10,
+      "attaining_core_multiplier": 6,
+      "direct_all_multiples_checked": 10,
+      "maximum_decimal_display": "4.8124975163493869251797126372804193",
+      "certificate_path": "certificate-core-times-10.json",
+      "certificate_sha256": "d6031097174e7e2e22de819b026f7256b6bcc81453a5dabeb2da6b24633c8127"
+    },
+    {
+      "status": "PASS",
+      "profile": [
+        21,
+        13,
+        9,
+        7,
+        6
+      ],
+      "bound": 9527493263501079465984000000000000,
+      "core": 9527493263501079465984000000000,
+      "maximum": [
+        12474190844475097810717,
+        2273178989321856000000
+      ],
+      "witness": 8422304044934954247929856000000000,
+      "states": 363,
+      "branches": 1071,
+      "remaining_core_pruned_branches": 563,
+      "prime_prefix": [
+        2,
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19
+      ],
+      "budget_multiplier": 1000,
+      "attaining_core_multiplier": 884,
+      "direct_all_multiples_checked": 1000,
+      "maximum_decimal_display": "5.4875532912595013689902541710419939",
+      "certificate_path": "certificate-core-times-1000.json",
+      "certificate_sha256": "44773fc6344f1e0575604a7a4535fba964ed84c6026dc3f0daad9fc055a68223"
+    }
+  ],
+  "small_exhaustive_profiles": [
+    [],
+    [
+      1
+    ],
+    [
+      2
+    ],
+    [
+      3
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      2,
+      1,
+      1
+    ],
+    [
+      3,
+      1,
+      1
+    ],
+    [
+      2,
+      2,
+      1
+    ],
+    [
+      3,
+      2,
+      1
+    ],
+    [
+      3,
+      3,
+      1
+    ],
+    [
+      2,
+      2,
+      2
+    ],
+    [
+      3,
+      2,
+      2
+    ],
+    [
+      3,
+      3,
+      2
+    ],
+    [
+      3,
+      3,
+      3
+    ]
+  ],
+  "small_exhaustive_bound": 180,
+  "nonmonotone_counterexample": {
+    "status": "PASS",
+    "core": 150,
+    "profile": [
+      1,
+      1,
+      2
+    ],
+    "bound": 1200,
+    "all_feasible_integers": [
+      {
+        "n": 150,
+        "value": [
+          62,
+          25
+        ],
+        "factorization": [
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "canonical": false
+      },
+      {
+        "n": 300,
+        "value": [
+          217,
+          75
+        ],
+        "factorization": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "canonical": false
+      },
+      {
+        "n": 450,
+        "value": [
+          403,
+          150
+        ],
+        "factorization": [
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "canonical": false
+      },
+      {
+        "n": 600,
+        "value": [
+          31,
+          10
+        ],
+        "factorization": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "canonical": false
+      },
+      {
+        "n": 750,
+        "value": [
+          312,
+          125
+        ],
+        "factorization": [
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "canonical": false
+      },
+      {
+        "n": 900,
+        "value": [
+          2821,
+          900
+        ],
+        "factorization": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "canonical": true
+      },
+      {
+        "n": 1050,
+        "value": [
+          496,
+          175
+        ],
+        "factorization": [
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            7,
+            1
+          ]
+        ],
+        "canonical": false
+      },
+      {
+        "n": 1200,
+        "value": [
+          961,
+          300
+        ],
+        "factorization": [
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "canonical": false
+      }
+    ],
+    "actual_maximizer": 1200,
+    "actual_maximum": [
+      961,
+      300
+    ],
+    "canonical_maximizer": 900,
+    "canonical_maximum": [
+      2821,
+      900
+    ],
+    "lost_gap": [
+      31,
+      450
+    ],
+    "invalid_swap": {
+      "from": 1200,
+      "to": 720,
+      "reason": "5 exponent drops below mandatory 2"
+    }
+  },
+  "small_exact_comparisons": 3600,
+  "small_infeasible_comparisons": 1802,
+  "corruptions_rejected": [
+    "nonmonotone profile",
+    "false infeasible root",
+    "false remaining-core pruning",
+    "missing allowed branch",
+    "illegal empty suffix before required core",
+    "altered remaining core product"
+  ],
+  "source_hashes": {
+    "core_max.py": "b38c778c7739fbeaf168d1e1469bc171506d8f5f10bb9408e786532db8ce32ba",
+    "core_max_check.py": "7f2e90e5515fae522f344387785b1bd484795b9290e4a4501fc563c008d36579",
+    "core_max_regression.py": "a9ec0fbdd509cb180196ecc214497149472c48a4011ed745ce6d24fe7242a45d"
+  },
+  "scope": "Exact finite arithmetic; no RH assertion or Lean proof."
+}

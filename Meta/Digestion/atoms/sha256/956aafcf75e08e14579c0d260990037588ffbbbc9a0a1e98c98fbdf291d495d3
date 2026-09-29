@@ -1,0 +1,16 @@
+## 54. Fibonacci 双区域的联合障碍
+
+令 $V=(\mathbb Z/n\mathbb Z)^2$，$r_t(a,b)=F_ta+F_{t+1}b$。两个区域保留完整相邻历史
+
+$$
+A_s=(r_s,r_{s+1}),\qquad B_t=(r_t,r_{t+1}),\qquad s<t,
+$$
+
+把共同来源关系明确写成
+
+$$
+D_{s,t}=\{(A_s(x),B_t(x)):x\in V\}\le V\oplus V.
+$$
+
+在这个 $D_{s,t}$ 上，两个局部码分别是 $A_s(x)\mapsto r_s(x)$ 与 $B_t(x)\mapsto r_t(x)$。完整历史各自可逆，但共同压缩只保留 $(r_s,r_t)$。
+

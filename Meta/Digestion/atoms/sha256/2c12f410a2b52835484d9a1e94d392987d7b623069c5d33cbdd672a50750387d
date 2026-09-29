@@ -1,0 +1,18 @@
+### theorem 20.5 Fib 素项的封闭结构刻画
+
+对 $j\ge3$，定义
+
+$$
+\mathfrak V_j=(V_{F_j},M,\partial).
+$$
+
+则
+
+$$
+\boxed{
+F_j\text{ 是素数}
+\iff
+\mathfrak V_j\text{ 没有非零真封闭加法子结构}.
+}
+$$
+

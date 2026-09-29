@@ -1,0 +1,14 @@
+## 53. 线性联合下降障碍群
+
+令 $X,Y$ 为有限交换群，$D\le X\oplus Y$ 为加法子群，$\alpha:X\to A$、$\beta:Y\to B$ 为同态。记 $K_X=\ker\alpha$、$K_Y=\ker\beta$，并定义
+
+$$
+E=D\cap(K_X\oplus K_Y),\quad E_X=D\cap(K_X\oplus\{0\}),\quad E_Y=D\cap(\{0\}\oplus K_Y).
+$$
+
+定义联合下降障碍
+
+$$
+\boxed{\mathfrak J(D;\alpha,\beta)=E/(E_X+E_Y).}
+$$
+

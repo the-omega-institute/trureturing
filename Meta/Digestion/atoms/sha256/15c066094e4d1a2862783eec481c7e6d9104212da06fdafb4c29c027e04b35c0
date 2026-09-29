@@ -1,0 +1,19 @@
+### definition 41.1 分裂截面
+
+对满秩整数矩阵 $B_1,B_2\in\operatorname{Mat}_d(\mathbb Z)$，记第 37 节的商群序列为
+
+$$
+0\longrightarrow\mathcal D_{B_1}
+\overset\iota\longrightarrow\mathcal D_{B_2B_1}
+\overset\pi\longrightarrow\mathcal D_{B_2}
+\longrightarrow0.
+$$
+
+称它分裂，是指存在群同态截面 $\sigma$ 满足
+
+$$
+\pi\circ\sigma=\operatorname{id}_{\mathcal D_{B_2}}.
+$$
+
+这一定义只涉及整数格商，不涉及 Hilbert 空间或物理子系统。
+

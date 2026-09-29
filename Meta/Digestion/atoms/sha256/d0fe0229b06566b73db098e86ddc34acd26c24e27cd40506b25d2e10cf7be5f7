@@ -1,0 +1,14 @@
+### theorem 2.2 结构解释的唯一延拓
+
+对任意集合 $X$、元素 $a_X,b_X\in X$ 和二元运算 $\mu:X\times X\to X$，存在唯一映射 $\operatorname{Eval}:\mathcal T\to X$ 满足
+
+$$
+\operatorname{Eval}(\alpha)=a_X,\qquad
+\operatorname{Eval}(\beta)=b_X,\qquad
+\operatorname{Eval}(\langle s,t\rangle)=\mu(\operatorname{Eval}(s),\operatorname{Eval}(t)).
+$$
+
+**证明。** 按树结构递归给出存在性；对两个满足条件的映射作结构归纳，在两个原子处相同，在二元构造处由归纳假设和 $\mu$ 相同，故唯一。$□$
+
+同一原始树可被解释成数值、语法树、关系档案、程序或图；解释相等不能反推原始结构相等。
+
