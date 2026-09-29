@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 from contextlib import contextmanager
 from functools import lru_cache
-import hashlib
 import os
 from pathlib import Path
 import stat
@@ -15,19 +14,6 @@ import sys
 import tempfile
 import time
 import zipfile
-import zlib
-
-# Match zipfile's optional LZMA support; importing the producer must also work
-# on Python installations without that decoder.
-try:
-    from lzma import LZMAError
-except ImportError:
-    LZMA_ERRORS = ()
-else:
-    LZMA_ERRORS = (LZMAError,)
-
-ROW_ERRORS = (OSError, UnicodeError, ValueError, KeyError, TypeError,
-              zipfile.BadZipFile, zlib.error, NotImplementedError) + LZMA_ERRORS
 
 import materials
 import publication as public
@@ -238,12 +224,11 @@ def module(root, name, source, utility_path, executable, output):
         with phase('native-inspect', request_capture=capture):
             subprocess.run([str(executable), *arguments], check=True, cwd=root)
         materials.compact(directory / 'spool.json', spool, report, root / 'lean-report-inputs.json')
-        # Lake returns only canonically validated public facets. Generation is
-        # private; the completed artifact gets its full validation at acceptance.
-        rows = public.read_json(report.read_bytes())['modules']
-        row_binding(rows, root, name, utility_path)
-        artifact = directory / 'module.zip'
         public.write_origin(report, name, public.production_origin(root, executable))
+        # Like an olean, an artifact is validated once, when it is produced;
+        # Lake's trace alone decides later reuse.
+        rows, _ = validate_module(report, root, name, utility_path)
+        artifact = directory / 'module.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
         os.replace(artifact, output)
         activity('extract', 1)
@@ -255,6 +240,7 @@ def produce_batch_chunk(requests):
     template_inputs = selection.Selection(root)
     executable = requests[0][4]
     origin = public.production_origin(root, executable)
+    verified_materials = {}
     if any(Path(row[0]) != root or row[4] != executable for row in requests):
         raise ValueError('mixed native batch owners')
     with tempfile.TemporaryDirectory(prefix='.inspection.', dir=state(root)) as directory:
@@ -298,11 +284,11 @@ def produce_batch_chunk(requests):
             spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
             report = row_dir / public.RAW
             materials.compact(spool_report, row_spool, report, root / 'lean-report-inputs.json')
-            rows = public.read_json(report.read_bytes())['modules']
-            row_binding(rows, root, name, utility_path, template_inputs=template_inputs)
+            public.write_origin(report, name, origin)
+            validate_module(report, root, name, utility_path, verified_materials=verified_materials,
+                            template_inputs=template_inputs)
             output.parent.mkdir(parents=True, exist_ok=True)
             artifact = row_dir / 'module.zip'
-            public.write_origin(report, name, origin)
             public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
             os.replace(artifact, output)
         if list(spool.iterdir()):
@@ -327,76 +313,22 @@ def produce_batch(requests):
 
 
 @phase('native-batch')
-def batch(request_file, result_file):
+def batch(request_file):
     requests = public.read_json(Path(request_file).read_bytes())
     produce = [args for kind, args in requests if kind == 'produce']
     if produce:
         with phase('native-produce'):
             produce_batch(produce)
-    statuses = []
-    verified_materials = {}
-    source_scopes = {}
-
-    def template_inputs(root):
-        root = Path(root).resolve()
-        if root not in source_scopes:
-            source_scopes[root] = selection.Selection(root)
-        return source_scopes[root]
-
-    # The canonical Lake batch asks for each module's validation followed by
-    # aggregation of exactly those modules. The builder already performs that
-    # same complete validation, so let its row results serve both demands.
-    # Other request shapes retain the ordinary independent boundaries.
-    if requests and requests[-1][0] == 'aggregate':
-        root, output, *artifacts = requests[-1][1]
-        config = public.read_json((state(root) / 'inputs.json').read_bytes())
-        expected = [['validate', [root, 'module', root, name,
-            str(state(root) / 'inputs' / (name + '.json')), artifact]]
-            for name, artifact in zip(config['modules'], artifacts)]
-        # Lake's FilePath retains /./ while pathlib renders the same lexical
-        # path without it. Compare paths without resolving symlinks or '..'.
-        same_requests = len(requests) == len(expected) + 1 and all(
-            kind == wanted_kind and len(args) == len(wanted_args) and
-            args[:4] == wanted_args[:4] and Path(args[4]) == Path(wanted_args[4]) and
-            args[5:] == wanted_args[5:]
-            for (kind, args), (wanted_kind, wanted_args) in zip(requests, expected))
-        if expected and len(artifacts) == len(config['modules']) and same_requests:
-            aggregate(root, output, artifacts, verified_materials=verified_materials,
-                      template_inputs=template_inputs(root), row_statuses=statuses)
-            statuses.append(int(any(statuses)))
-            Path(result_file).write_text(json.dumps(statuses))
-            return
-
     for kind, args in requests:
-        if kind == 'produce':
-            statuses.append(0)
-        elif kind == 'validate':
-            try:
-                validate(*args[1:], verified_materials=verified_materials,
-                         template_inputs=template_inputs(args[0]))
-                statuses.append(0)
-            except ROW_ERRORS as error:
-                print(f'LEAN_INSPECTOR_REJECT {error}', file=sys.stderr)
-                statuses.append(1)
-        elif kind == 'aggregate':
-            if any(statuses):
-                statuses.append(1)
-            else:
-                root, output, *artifacts = args
-                aggregate(root, output, artifacts, verified_materials=verified_materials,
-                          template_inputs=template_inputs(root))
-                statuses.append(0)
-        else:
+        if kind == 'aggregate':
+            aggregate(*args)
+        elif kind != 'produce':
             raise ValueError('unknown native batch operation')
-    Path(result_file).write_text(json.dumps(statuses))
 
 
-def aggregate(root, output, artifacts, verified_materials=None, *, template_inputs=None, row_statuses=None):
+def aggregate(root, output, *artifacts):
+    """Concatenate module artifacts that were validated when produced."""
     root, output = Path(root), Path(output)
-    if template_inputs is None:
-        template_inputs = selection.Selection(root)
-    if verified_materials is None:
-        verified_materials = {}
     config = public.read_json((state(root) / 'inputs.json').read_bytes())
     if len(artifacts) != len(config['modules']):
         raise ValueError('native aggregate membership mismatch')
@@ -409,31 +341,16 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
         origins = {}
         for name, artifact in zip(config['modules'], artifacts):
             with tempfile.TemporaryDirectory(prefix='row.', dir=directory) as row_dir:
-                try:
-                    utility = state(root) / 'inputs' / (name + '.json')
-                    report = public.unpack(artifact, row_dir, ROW_SUFFIXES)
-                    known = accepted(root, 'module', name, artifact, utility)
-                    if known:
-                        current = public.read_json(report.read_bytes())['modules']
-                        origin = public.read_json(public.member(report, '.provenance.json').read_bytes())
-                    else:
-                        current, origin = validate_module(report, root, name, utility,
-                            verified_materials=verified_materials, template_inputs=template_inputs)
-                    if origin['compatibility_sha256'] != config['coordinates']['producer']:
-                        raise ValueError('native aggregate compatibility mismatch')
-                    if not known:
-                        record_acceptance(root, 'module', name, artifact, utility)
-                except ROW_ERRORS as error:
-                    if row_statuses is None:
-                        raise
-                    print(f'LEAN_INSPECTOR_REJECT {error}', file=sys.stderr)
-                    row_statuses.append(1)
-                    continue
-                if row_statuses is not None:
-                    row_statuses.append(0)
+                report = public.unpack(artifact, row_dir, ROW_SUFFIXES)
+                current = public.read_json(report.read_bytes())['modules']
+                origin = public.read_json(public.member(report, '.provenance.json').read_bytes())
+                if [row['module'] for row in current] != [name]:
+                    raise ValueError('native aggregate membership mismatch')
+                if origin['compatibility_sha256'] != config['coordinates']['producer']:
+                    raise ValueError('native aggregate compatibility mismatch')
                 origins[name] = origin
                 rows.extend(current)
-                # Accepted materials match their content addresses; move their
+                # Produced materials matched their content addresses; move their
                 # deflated bytes without decompressing or compressing again.
                 with zipfile.ZipFile(public.member(report, '.materials.zip')) as archive:
                     for entry in archive.infolist():
@@ -446,8 +363,6 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
                         material_spool.seek(0, os.SEEK_END)
                         material_offsets[entry.filename] = (material_spool.tell(), len(data), *shape)
                         material_spool.write(data)
-        if row_statuses is not None and any(row_statuses):
-            return
         report = directory / public.RAW
         report.write_bytes(materials.canonical_json({'modules': rows, 'schema': materials.REPORT_SCHEMA}))
         with zipfile.ZipFile(public.member(report, '.materials.zip'), 'w', compression=zipfile.ZIP_DEFLATED,
@@ -464,12 +379,9 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
                     raise ValueError('truncated private material spool')
                 append_compressed(archive, info, data)
         public.write_sidecars(report, config['coordinates'], origins)
-        # The bundle concatenates exactly the rows accepted above, in registered
-        # order; checking it again would replay those judgements.
         artifact = directory / 'report.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in public.SUFFIXES])
         os.replace(artifact, output)
-        record_acceptance(root, 'report', 'report', output, state(root) / 'inputs.json')
         activity('aggregate', 1)
         print(f'LEAN_INSPECTOR_AGGREGATE modules={len(rows)} declarations={sum(len(row["declarations"]) for row in rows)}')
 
@@ -505,36 +417,6 @@ def append_compressed(archive, info, data):
     archive.NameToInfo[info.filename] = info
 
 
-def acceptance_key(root, kind, name, *inputs):
-    """Content address of one successful validation.
-
-    Validation is a pure function of these bytes and the semantic version
-    (compatibility); an identical key is the same judgement, never re-run.
-    """
-    compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
-    fields = [kind, name, compatibility, *(public.digest(path) for path in inputs)]
-    return hashlib.sha256('\0'.join(fields).encode('utf-8')).hexdigest()
-
-
-def acceptance_path(root, kind, name):
-    # Host-local like .lake/lean-input-memo: seeds carry .lake/build, and a
-    # transported record must never excuse transported bytes from validation.
-    return Path(root) / '.lake/lean-inspector-accepted' / kind / name
-
-
-def accepted(root, kind, name, *inputs):
-    path = acceptance_path(root, kind, name)
-    try:
-        return path.read_text(encoding='ascii') == acceptance_key(root, kind, name, *inputs)
-    except (OSError, UnicodeError):
-        return False
-
-
-def record_acceptance(root, kind, name, *inputs):
-    write_if_changed(acceptance_path(root, kind, name),
-                     acceptance_key(root, kind, name, *inputs).encode('ascii'))
-
-
 def validate_module(report, root, name, utility, *, verified_materials=None, template_inputs=None):
     rows = public.validate_rows(report, public.member(report, '.materials.zip'), verified_materials,
                                 manifest=Path(root) / 'lean-report-inputs.json')
@@ -543,38 +425,6 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
     compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
     origin = public.validate_origin(report, rows, compatibility)
     return rows, origin
-
-
-def validate_report(report, root, verified_materials, template_inputs):
-    config = public.read_json((state(root) / 'inputs.json').read_bytes())
-    rows = public.validate_bundle(report, config['coordinates'], root, verified_materials)
-    if [row['module'] for row in rows] != config['modules']:
-        raise ValueError('native aggregate membership mismatch')
-    for row in rows:
-        row_binding([row], root, row['module'], state(root) / 'inputs' / (row['module'] + '.json'),
-                    template_inputs=template_inputs)
-
-
-def validate(kind, root, *args, verified_materials=None, template_inputs=None):
-    if kind == 'module':
-        name, utility, artifact = args
-        inputs = (artifact, utility)
-    elif kind == 'report':
-        name, inputs = 'report', (args[0], state(root) / 'inputs.json')
-    else:
-        raise ValueError('unknown native artifact kind')
-    if accepted(root, kind, name, *inputs):
-        return
-    if template_inputs is None:
-        template_inputs = selection.Selection(root)
-    with tempfile.TemporaryDirectory(prefix='.validate.', dir=state(root)) as directory:
-        if kind == 'module':
-            report = public.unpack(artifact, directory, ROW_SUFFIXES)
-            validate_module(report, root, name, utility, verified_materials=verified_materials,
-                            template_inputs=template_inputs)
-        else:
-            validate_report(public.unpack(args[0], directory), root, verified_materials, template_inputs)
-    record_acceptance(root, kind, name, *inputs)
 
 
 def publish(root, destination):
@@ -587,18 +437,15 @@ def publish(root, destination):
             records = [public.read_json(line) for line in Path(activity_file).read_text().splitlines()]
             mode = 'produced' if records else 'cached'
             print(f'LEAN_INSPECTOR_WORK extracted_modules={sum(row["count"] for row in records if row["kind"] == "extract")} aggregates={sum(row["count"] for row in records if row["kind"] == "aggregate")}')
-        # Lake's report facet recorded acceptance of these exact bytes; a
-        # changed or unrecorded bundle takes the complete check.
-        known = accepted(root, 'report', 'report', state(root) / 'report.zip', state(root) / 'inputs.json')
-        public.publish(report, Path(destination), inputs, root, mode=mode, validate=not known)
+        # Lake traced this aggregate of production-validated rows.
+        public.publish(report, Path(destination), inputs, root, mode=mode, validate=False)
     print(f'RAW_LEAN_REPORT path={destination} sha256={public.digest(destination)}')
 
 
 def main():
-    actions = {'prepare': prepare, 'module': module, 'aggregate': lambda root, output, *paths: aggregate(root, output, paths),
-               'validate': validate, 'publish': publish, 'batch': batch}
+    actions = {'prepare': prepare, 'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
-        raise ValueError('expected prepare, module, aggregate, validate, or publish')
+        raise ValueError('expected prepare, module, aggregate, publish, or batch')
     actions[sys.argv[1]](*sys.argv[2:])
 
 

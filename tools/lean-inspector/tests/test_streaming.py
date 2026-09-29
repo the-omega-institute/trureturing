@@ -237,39 +237,6 @@ class PublicationTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     inputs.safe_file(path.name)
 
-    def test_binding_batch_scope_expanded_once(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=4,
-                report_modules=paths('X*.lean'), inspector_sources=paths(), config_inputs=paths(),
-                producer_scopes={'lean-report': paths('lean-report-inputs.json',
-                    'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
-            policy = root / 'Policy.lean'
-            policy.write_text('def driver := 1\n')
-            rows, requests = {}, []
-            for i in range(8):
-                name = 'X' + str(i)
-                source = root / (name + '.lean')
-                source.write_text('def x := 1\n')
-                utility = root / (name + '.json')
-                utility.write_text(json.dumps(dict(source_path=source.name, utilities=[])))
-                rows[name] = [dict(module=name, source_path=source.name,
-                    source_sha256='sha256:' + publication.digest(source),
-                    information_templates=evidence_fixture(manifest_fixture(root)))]
-                requests.append(['validate', [str(root), 'module', str(root), name, str(utility), 'fixture.zip']])
-            request, result = root / 'request.json', root / 'result.json'
-            request.write_text(json.dumps(requests))
-            # Isolate the source-binding boundary from ZIP decoding. The batch
-            # loop and each row's path/version validator still execute.
-            def validate(kind, owner, name, utility, artifact, **kwargs):
-                native.row_binding(rows[name], owner, name, utility,
-                    **{key: value for key, value in kwargs.items() if key == 'template_inputs'})
-            with patch.object(native, 'validate', side_effect=validate), patch.object(
-                    publication.selection, 'Selection', wraps=publication.selection.Selection) as selections:
-                native.batch(request, result)
-                self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
-                self.assertEqual(selections.call_count, 1, '[FAIL] binding_batch_scope_expanded_once')
 
     def test_binding_evidence_survives_compaction_and_native_validation(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -656,7 +623,7 @@ raise SystemExit(37)
         lake = write('bin/lake', f'#!{sys.executable}\nimport os, sys\n' +
             'os.execv(sys.executable, [sys.executable, "-B", ' +
             repr(str(self.root / 'tools/lean-inspector/native.py')) + ', "batch", ' +
-            repr(str(request)) + ', "batch-result.json"])\n')
+            repr(str(request)) + '])\n')
         producer = write('candidate.dll', 'fixture candidate producer')
         report = write('public/report.json', 'previous report')
         self.phases.write_text('{"phase":"stale"}\n')
@@ -670,7 +637,6 @@ raise SystemExit(37)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=report exit=1', result.stderr)
         self.assertIn('exit status 37', result.stderr)
         self.assertEqual(report.read_text(), 'previous report')
-        self.assertFalse((self.root / 'batch-result.json').exists())
         phases = [json.loads(line) for line in self.phases.read_text().splitlines()]
         self.assertNotIn('stale', [row['phase'] for row in phases])
         start = next(row for row in phases if row['phase'] == 'native-inspect' and row['boundary'] == 'start')
