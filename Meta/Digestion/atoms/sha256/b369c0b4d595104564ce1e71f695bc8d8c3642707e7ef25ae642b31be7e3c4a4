@@ -1,0 +1,56 @@
+### 351.3 正多边形给出循环随机实现
+
+取整数 \(m\ge3\)，令
+
+\[
+\zeta_m=e^{2\pi i/m},\qquad
+\Pi_m=\operatorname{conv}\{1,\zeta_m,\ldots,\zeta_m^{m-1}\}.
+\tag{351.10}
+\]
+
+若 \(\lambda\in\Pi_m\)，选择一组凸系数
+
+\[
+\lambda=\sum_{\ell=0}^{m-1}a_\ell\zeta_m^\ell,
+\qquad a_\ell\ge0,\qquad \sum_\ell a_\ell=1.
+\tag{351.11}
+\]
+
+在状态集 \(\mathbb Z/m\mathbb Z\) 上，令当前状态 \(j\) 以概率 \(a_\ell\) 转到 \(j+\ell\)。这给一个固定行随机循环矩阵
+
+\[
+P_{j,j+\ell}=a_\ell
+\quad\text{（下标模 \(m\)）}.
+\tag{351.12}
+\]
+
+从状态 0 开始，并取终端输出概率
+
+\[
+b_j=\frac{1-\operatorname{Re}\zeta_m^j}{2}\in[0,1].
+\tag{351.13}
+\]
+
+若 \(J_k\) 为内部状态，则
+
+\[
+\mathbb E[\zeta_m^{J_{k+1}}\mid J_k=j]
+=\sum_\ell a_\ell\zeta_m^{j+\ell}
+=\lambda\zeta_m^j.
+\tag{351.14}
+\]
+
+初始复坐标为 1，迭代得 \(\mathbb E[\zeta_m^{J_k}]=\lambda^k\)。因此
+
+\[
+\alpha P^kb=\mathbb E[b_{J_k}]
+=\frac{1-\operatorname{Re}\lambda^k}{2}
+=h_k^{r,\theta}
+\quad(k\ge0).
+\tag{351.15}
+\]
+
+全部初态、更新行与输出概率均已给出；没有把一般带符号线性递推误当作随机程序。
+
+几何上，复数乘法 \(z\mapsto\lambda z\) 把每个顶点的像写成相同权重的旋转顶点凸组合。式（351.11）因此保证整个 \(\Pi_m\) 在该更新下前向不变。这是正实现中不变多边形或多面锥方法的具体概率版本。[^damped_positive_cone]
+

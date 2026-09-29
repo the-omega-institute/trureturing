@@ -1,0 +1,89 @@
+### 315.3 总调用尾的有限差分障碍
+
+固定目标任务请求并取合法 \(c=1\)，令 \(A=\{(X,Z)=(1,0)\}\)。准确目标事件概率为
+$$
+G(h)=\frac{1-h/C}{2B}-\varepsilon h^\beta.
+\tag{315.13}
+$$
+写 \(g_n(h)=f_n(v(h))\)。程序在每个正世界准确且几乎必有限，故
+$$
+0\le G(h)-g_n(h)
+\le\Pr_h(M>n)\le Q_M(n).
+\tag{315.14}
+$$
+
+对步长 \(t>0\)，定义
+$$
+\Delta_t^Ru(h)=
+\sum_{j=0}^R(-1)^{R-j}\binom Rj u(h+jt).
+$$
+当差分区间合法时，有限多项式满足
+$$
+\Delta_t^Rg_n(h)
+=\int_{[0,t]^R}
+g_n^{(R)}(h+s_1+\cdots+s_R)\,ds_1\cdots ds_R.
+$$
+因此式（315.7）给
+$$
+|\Delta_t^Rg_n(h)|
+\le D_*t^RT_{M,m}(n),
+$$
+$$
+T_{M,m}(n)=
+\sup_{\mathrm{合法},S}\mathbb E(M_S\wedge n)^m.
+\tag{315.15}
+$$
+式（315.14）还给
+$$
+|\Delta_t^R(G-g_n)(h)|\le2^RQ_M(n).
+\tag{315.16}
+$$
+
+取 \(t=h\)。因为 \(R\ge2\)，仿射项被差分消去，且
+$$
+|\Delta_h^RG(h)|=\varepsilon d_{\beta,R}h^\beta,
+$$
+$$
+d_{\beta,R}
+=|(\beta)_R|
+\int_{[0,1]^R}
+(1+s_1+\cdots+s_R)^{\beta-R}\,ds_1\cdots ds_R>0.
+\tag{315.17}
+$$
+这里 \((\beta)_R=\beta(\beta-1)\cdots(\beta-R+1)\)。非整数 \(\beta<R\) 使这个系数非零，被积函数严格为正，故目标差分不会相消为零。
+
+对每个充分大的整数 \(n\)，取
+$$
+h_n=n^{-1/2}.
+\tag{315.18}
+$$
+当 \(n\ge[4(R+1)]^2\)，所有点
+\(h_n,2h_n,\ldots,(R+1)h_n\) 都是合法正增益。由式（315.15）—（315.17），
+$$
+\varepsilon d_{\beta,R}h_n^\beta
+\le D_*h_n^RT_{M,m}(n)+2^RQ_M(n).
+$$
+由于 \(h_n^\beta=n^{-a}\)、\(h_n^R=n^{-m}\)，乘以 \(n^a\) 得
+$$
+\varepsilon d_{\beta,R}
+\le D_*n^{a-m}T_{M,m}(n)+2^Rn^aQ_M(n).
+\tag{315.19}
+$$
+这对每个充分大 \(n\) 都是有限叶不等式，不需要在零增益世界回答。
+
+记 \(L_M=\limsup n^aQ_M(n)\)。若它无穷，下界平凡；若有限，应用引理315.2并对式（315.19）取 limsup，
+$$
+\varepsilon d_{\beta,R}
+\le\left[D_*\frac m{m-a}+2^R\right]L_M.
+$$
+于是可取程序无关的正常数
+$$
+\boxed{
+c_M=
+\frac{\varepsilon d_{\beta,R}}
+{2^R+D_*m/(m-a)},\qquad
+\limsup_{n\to\infty}n^aQ_M(n)\ge c_M.}
+\tag{315.20}
+$$
+这排除统一 \(o(n^{-a})\) 尾，但不宣称每个大 \(n\) 都有同阶下界。上确界可由不同参数世界在不同尾尺度上实现。
+

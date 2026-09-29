@@ -1,0 +1,16 @@
+**定义 316.1（正实阶近似费用）。** 对每个实数 $s>0$，定义
+
+$$
+\begin{aligned}
+\mathcal C_s(\delta)
+&=\inf_{\mathcal A\in\mathfrak A_\delta}
+\max_S\sup_{\mathrm{合法}}\mathbb E^{\mathcal A}M_S^s,\\
+\mathcal C_s^H(\delta)
+&=\inf_{\mathcal A\in\mathfrak A_\delta}
+\max_S\sup_{\mathrm{合法}}\mathbb E^{\mathcal A}N_{H,S}^s.
+\end{aligned}
+\tag{316.2}
+$$
+
+第二个目标不假设任务调用有任何矩，但每个世界的总执行仍须几乎必有限。所有调用真实收费；这里选取不同费用函数，而非删除任务执行。
+

@@ -1,0 +1,54 @@
+### 344.7 公共 HNP 中心及端点尺度
+
+固定一个 HNP 允许的二幂整数 \(b\ge2\)，并固定共同整数起点 \(m_0\ge r\)。对全部函数使用同一网格
+\[
+\Lambda=\{m_0b^j:j\ge0\}.
+\]
+定义线性中心
+\[
+S_{m_0}f=Q_{m_0,r}f,\qquad
+S_mf=S_{m/b}f+Q_{m,r}(f-S_{m/b}f)
+\quad(m>m_0,\ m\in\Lambda).
+\tag{344.29}
+\]
+输出按次数 \(D_m=m+r\) 的 Bernstein 系数解释；旧多项式先提升到新次数。所有函数共用 \(m_0,b,r\)。
+
+HNP §5 Steps 1—3 给出残差导数界
+\[
+|(f-S_{t/b}f)^{(j)}(x)|
+\le C\|f\|_{C^\beta}\Delta_{t/b}(x)^{\beta-j},
+\qquad 0\le j\le r.
+\tag{344.30}
+\]
+这些估计的证明不使用概率函数离零一的余量；该余量在随后保证完整中心系数位于概率区间时才使用。因此这里可用于一般实 \(C^\beta\) 函数。
+
+尺度转换必须在端点也成立。由两个max分量直接比较，
+\[
+\boxed{
+\sqrt b\,\Delta_t(x)\le\Delta_{t/b}(x)\le b\,\Delta_t(x).}
+\tag{344.31}
+\]
+在 \(x=0\) 处比值恰为 \(b\)，不能把右侧统一改为 \(\sqrt b\)。
+
+因为 \(\beta-j>0\)，式（344.30）至多为
+\[
+Cb^{\beta-j}\|f\|_{C^\beta}\Delta_t(x)^{\beta-j}
+\le Cb^\beta\|f\|_{C^\beta}\Delta_t(x)^{\beta-j}.
+\]
+应用 HNP Lemma 24，再用 \(\Delta_t(x)\le t^{-1/2}\)，得到真实的逐尺度系数界
+\[
+\boxed{
+\|S_tf-E S_{t/b}f\|_{\mathrm{coef},t+r}
+\le C_{\beta,b}\|f\|_{C^\beta}t^{-a}.}
+\tag{344.32}
+\]
+固定的 \(b^\beta\) 只进入常数，不改变 \(t^{-a}\) 阶。
+
+初始中心另有
+\[
+\|S_{m_0}f\|_{\mathrm{coef},m_0+r}
+\le C_r\|f\|_{C^\beta}.
+\tag{344.33}
+\]
+这可由式（344.4）、Corollary 16及完整范数中的有限阶导数界直接取得；不把初始项误作 \(O(m_0^{-a})\)。
+

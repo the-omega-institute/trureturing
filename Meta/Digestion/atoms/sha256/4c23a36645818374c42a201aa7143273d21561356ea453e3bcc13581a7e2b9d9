@@ -1,0 +1,21 @@
+**引理327.2（尺度一致的相容包络）。** 存在固定整数 $N\ge r$，使取
+
+$$
+n_k=Nb^k,\qquad d_k=n_k+r,
+\tag{327.16}
+$$
+
+后，对每个 $j\ge0$、$x\in I_j$，存在从 $k=j$ 开始的 $d_k$ 次 Bernstein 上下包络 $A_k^j(x,q)$、$B_k^j(x,q)$，满足：
+
+- 系数 $a_{k,t}^j(x),b_{k,t}^j(x)$ 位于 $[0,1]$，且下系数不超过上系数。
+- 对 $q\in[0,1]$，$A_k^j\le G_x\le B_k^j$，两者趋于 $G_x$。
+- 在 Bernstein 次数提升后的逐系数序下，下包络递增、上包络递减。
+- 每个固定 $j,k,t$ 的系数关于 $x\in I_j$ 连续，并有不依 $j,k,x,q$ 的有限常数 $C_\rho$，使
+
+$$
+0\le B_k^j(x,q)-A_k^j(x,q)
+\le C_\rho s_j^{-\rho}n_k^{-\rho/2}
+\qquad(k\ge j).
+\tag{327.17}
+$$
+

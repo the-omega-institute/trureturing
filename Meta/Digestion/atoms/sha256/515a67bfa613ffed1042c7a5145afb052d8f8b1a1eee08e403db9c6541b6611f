@@ -1,0 +1,11 @@
+**推论321.6（原双请求族的正误差同值）。** 对第317节的原 $h^\beta$ 双请求模型，每个固定 $\beta>0$、实 $s>0$，在本节两种合同各自内部都有
+$$
+\boxed{
+\delta_*=0,\qquad
+\mathcal C_s^{\mathrm{alg}}(\delta)
+=\mathcal C_s^{\mathrm{pol}}(\delta)<\infty
+\quad(\delta>0).}
+\tag{321.21}
+$$
+抽象最优策略在每个正容差达到，共同费用在正容差域凸且连续。
+

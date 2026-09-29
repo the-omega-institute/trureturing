@@ -1,0 +1,56 @@
+### 340.6 固定可求和地板的严格近临界缺口
+
+非增可求和地板满足
+
+$$
+k\eta_k\longrightarrow0.
+\tag{340.39}
+$$
+
+这是因为
+
+$$
+\lfloor k/2\rfloor\eta_k
+ \le\sum_{j=\lfloor k/2\rfloor}^{k}\eta_j
+ \longrightarrow0.
+$$
+
+对任意 $u\downarrow0$，取 $k=\lfloor1/u\rfloor$。则
+
+$$
+uk\longrightarrow1,\qquad
+n_k^{-u}=N^{-u}b^{-uk}\longrightarrow b^{-1}>0.
+\tag{340.40}
+$$
+
+下界中的 $\eta_k^{u/a}$ 仍须保留。为处理任意衰减速度的地板，置
+
+$$
+z_k=(k\eta_k)^{-1}\longrightarrow+\infty.
+$$
+
+精确变形得到
+
+$$
+u\eta_k^{-1+u/a}
+ =(uk)\,k^{-u/a}\,z_k^{\,1-u/a}.
+\tag{340.41}
+$$
+
+其中 $k^{-u/a}\to1$，且充分小 $u$ 时 $1-u/a\ge1/2$，所以
+
+$$
+u\eta_k^{-1+u/a}\ge c_5\sqrt{z_k}
+ \longrightarrow+\infty.
+\tag{340.42}
+$$
+
+结合式（340.32）、（340.40），证明
+
+$$
+\boxed{\lim_{u\downarrow0}uT_{a-u}(A)=+\infty.}
+\tag{340.43}
+$$
+
+这是沿全部小 $u$ 的极限，不仅是一条子序列；允许任务矩本身无限。式（340.41）避免把指数修正误当作一。这个极限论证本身不需要相邻地板比有界；该条件仍属于本节相容网格和任务上界所采用的构造接口。
+

@@ -1,0 +1,131 @@
+### 313.9 两种目标请求的源别充分构造
+
+充分性使用第310节的居中包装，并分别计算实际两来源费用。对本次所请求主来源的旧成功率 \(u\in\{p,q\}\)，令 \(u_1=u,u_0=1-u\)，定义
+$$
+b_x(u)=\frac1{6u_x},\qquad
+a(q)=\frac12+6\varepsilon[C(1-Bq)]^\beta.
+\tag{313.36}
+$$
+在式（313.13）的紧区间 \(I\) 上，
+$$
+b_0\in[1/6,1/3],\qquad
+b_1\in[1/3,8/9],\qquad
+a\in[1/2,7/8].
+\tag{313.37}
+$$
+两个倒数门控在 \(I\) 邻域解析且严格离开零一，Nacu–Peres 的解析工厂及紧区间统一性给它们统一指数尾，记长度为 \(N_{b,x}\)。因此任意固定整数阶矩都一致有限。[^reference_source_np]
+
+一次目标请求先取得并保留主来源的实际 \(X=x\)，再用该主来源新鲜币模拟门控 \(V\sim\operatorname{Bernoulli}(b_x(u))\)。若 \(V=0\)，输出新的公平 \(Z\)；若 \(V=1\)，用新鲜旧参考币模拟 \(A\sim\operatorname{Bernoulli}(a(q))\)。当 \(x=0\) 时令 \(Z=0\iff A=1\)，当 \(x=1\) 时令 \(Z=0\iff A=0\)。
+
+因为 \(a(q)-1/2=6\varepsilon h^\beta\)，
+$$
+\Pr(Z=0\mid X=0)=\frac12+
+\frac{\varepsilon h^\beta}{1-u},\qquad
+\Pr(Z=0\mid X=1)=\frac12-
+\frac{\varepsilon h^\beta}{u}.
+$$
+乘以首枚币边缘，得到目标四格
+$$
+\begin{array}{c|cc}
+ &z=0&z=1\\ \hline
+x=0&(1-u)/2+\varepsilon h^\beta
+ &(1-u)/2-\varepsilon h^\beta\\
+x=1&u/2-\varepsilon h^\beta
+ &u/2+\varepsilon h^\beta
+\end{array}.
+\tag{313.38}
+$$
+实际首枚 \(X\) 身份保留。门控触发率恒为
+$$
+\Pr(V=1)=\sum_{x=0}^1u_xb_x(u)
+=\frac13.
+\tag{313.39}
+$$
+
+对目标任务请求，保留币和门控使用旧任务流，偏置使用旧参考流，故
+$$
+N_T=1+N_{b,X},\qquad N_H=VN_A.
+\tag{313.40}
+$$
+这里 \(N_A\) 是触发后新启动参考工厂的长度，未触发时对应贡献为零。对每个整数 \(m\ge1\)，
+$$
+\boxed{\mathbb E_{p,q}N_H^m
+=\frac13\mathbb E_qN_A^m.}
+\tag{313.41}
+$$
+证明时先截断 \(N_A^m\)，在门控完成的完整记录上条件化，再用单调收敛；所以等式也覆盖无穷矩。新启动工厂的输入和私随机性均新鲜，不要求 \(V\) 与门控长度独立。任务侧 \(1+N_{b,X}\) 在全部合法参数上有统一指数尾，无论参考偏置的正则性如何。
+
+对目标参考请求，保留币、门控和偏置均使用旧参考流的连续新鲜片段，故
+$$
+N_T=0,\qquad N_H=1+N_{b,X}+VN_A.
+\tag{313.42}
+$$
+各阶段几乎必终止后，尚未读取的参考尾在历史条件下仍为新鲜 \(q\) 币。有限停止记录分层即可证明这一条件律，不需要另设物理参考流。凸性
+\((a+b+c)^m\le3^{m-1}(a^m+b^m+c^m)\) 给
+$$
+\boxed{
+\mathbb E_{p,q}N_H^m
+\le3^{m-1}\left[
+1+\sum_{x=0}^1q_x\mathbb E_qN_{b,x}^m
++\frac13\mathbb E_qN_A^m
+\right].}
+\tag{313.43}
+$$
+这里包含参考请求的首币和门控费用，没有只记偏置工厂。
+
+若 \(\beta\) 是正整数，\(a\) 在 \(I\) 邻域解析并严格离开零一，同一解析工厂理论给统一指数尾。式（313.41）、（313.43）立刻给两种请求的所有固定整数阶统一参考矩。
+
+对非整数 \(\beta>2m\)，可明确满足 HNP 工厂的全域条件。令
+$$
+q_*=\frac1B,\qquad
+J=\left(\frac{1-1/(2C)}B,\frac{1+q_*}{2}\right).
+$$
+有 \(I\Subset J\Subset(0,1)\)。选择已知
+\(\psi\in C_c^\infty(J)\)，使 \(0\le\psi\le1\)、\(\psi=1\) 于 \(I\)；可用标准光滑阶梯在 \(I\) 两端与 \(J\) 两端之间完成过渡。定义
+$$
+\widetilde a(q)=\frac12+
+6\varepsilon\psi(q)\max\{C(1-Bq),0\}^\beta,
+\qquad q\in[0,1].
+\tag{313.44}
+$$
+它在 \(I\) 上等于 \(a\)。在支集上正部分至多 \(1/2\)，因此
+$$
+\frac12\le\widetilde a(q)
+\le\frac12+\frac38\,2^{-\beta}<\frac78<1.
+\tag{313.45}
+$$
+写 \(\beta=d+\gamma\)，\(d=\lfloor\beta\rfloor\)、\(0<\gamma<1\)。正部分幂的第 \(d\) 阶导数是常数乘 \(t_+^\gamma\)，而
+$$
+|v_+^\gamma-w_+^\gamma|\le|v-w|^\gamma.
+$$
+所以紧区间上的 \(t_+^\beta\) 属于 \(C^\beta\)。仿射换元、光滑截断及支集外常数拼接保持此性质，故
+$$
+\widetilde a\in C^\beta[0,1],\qquad
+\widetilde a:[0,1]\longrightarrow(0,1).
+\tag{313.46}
+$$
+
+HNP Definition 5 与 Theorem 8 的实际相容包络工厂可取非整数 \(\alpha=\beta\)，给同一个准确参考工厂，使
+$$
+\Pr_q(N_A>n)
+\le A_\beta
+\max\left\{\sqrt{\frac{q(1-q)}n},\frac1n\right\}^{\beta}
+\le A_\beta n^{-\beta/2}
+\tag{313.47}
+$$
+对所有 \(q\in[0,1]\)、\(n\ge1\) 成立。[^reference_source_hnp] 该定理供应嵌套相容的 Bernstein 上下包络，不只是近似误差；其每轮的一枚公平币由免费私随机性提供，轮数就是所计的旧参考币数。
+
+整数尾和于是给
+$$
+\begin{aligned}
+\sup_{q\in I}\mathbb E_qN_A^m
+&\le1+C_{m,\beta}
+\sum_{n\ge1}n^{m-1-\beta/2}\\
+&<\infty\qquad(\beta>2m).
+\end{aligned}
+\tag{313.48}
+$$
+与式（313.41）、（313.43）结合，完成两种目标请求的统一有限参考矩充分性。有限个几乎必终止工厂的组合仍几乎必有限，全部旧请求都实际计费；程序不依赖未知 \(c,h\)。
+
+结合第313.7节，定理313.2 得证。正整数由解析工厂处理，没有在 HNP 的非整数版本中代入整数光滑阶。对于非整数坏指数，参考侧统一 \(m\) 阶矩不可能；本构造的任务侧仍可保持统一指数尾，明确区分了两个来源承担的费用。
+

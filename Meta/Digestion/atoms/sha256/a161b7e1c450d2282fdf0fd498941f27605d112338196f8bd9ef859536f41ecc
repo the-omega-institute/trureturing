@@ -1,0 +1,15 @@
+**引理348.2（真实状态数的次数界）。** 若控制器有至多 \(d\) 个可达非终端配置，则对每个终端事件 \(E\)，
+
+\[
+F_E(t,t)\in\mathcal R_{d,d},
+\qquad
+\mathcal R_{d,d}
+=\left\{\frac{P}{D}:
+P,D\in\mathbb R[t],\
+\deg P,\deg D\le d,\
+D\not\equiv0\right\}.
+\tag{348.9}
+\]
+
+这个响应在全部 \(t\in(0,1)\) 实解析并取值于 \([0,1]\)。
+

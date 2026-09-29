@@ -1,0 +1,54 @@
+### 342.2 共同批量、相邻比与参考预算
+
+对所有所构造地板，预先固定同一个充分大的 $M$，并取
+
+$$
+\delta_k=\frac14b^{-ak}\eta_k,\qquad
+r_k=Mn_k\eta_k^{-1/a},\qquad
+r_k\le m_k\le r_k+2,\qquad MN\ge4,
+\tag{342.5}
+$$
+
+其中 $m_k$ 为安全取整得到的整数。仍使用第339节的数组
+$A_{k,s,t}=(1-\delta_k)\bar\ell_{k,t}(s/m_k)$、
+$B_{k,s,t}=(1-\delta_k)\bar u_{k,t}(s/m_k)+\delta_k$。
+
+非增地板给出的相容性估计为
+
+$$
+\begin{aligned}
+c_0(\delta_{k-1}-\delta_k)
+ -C_{\rm sm}m_{k-1}^{-a}
+&\ge
+\left[
+ \frac{c_0(1-b^{-a})N^a}{4}
+ -C_{\rm sm}M^{-a}\right]
+ n_{k-1}^{-a}\eta_{k-1}.
+\end{aligned}
+\tag{342.6}
+$$
+
+所以足够大的 $M$ 只依固定模型和正则常数，不依具体地板、其总和或 $u$。取整满足 $m_k\le3r_k/2$，因此
+
+$$
+M^an_k^a\eta_k^{-1}\le m_k^a
+ \le(3M/2)^an_k^a\eta_k^{-1},\qquad
+4/3\le m_{k+1}/m_k\le\frac32bR^{1/a}.
+\tag{342.7}
+$$
+
+固定共同相邻比上界 $R$ 后，任务尾和使用的网格常数也共同。
+
+参考预算由第339.17式和固定包装的 $a$ 矩给
+
+$$
+H_a(A_\eta)\le
+ C_H\left(1+\sum_k\eta_k\right)+K_{\rm wrap}.
+\tag{342.8}
+$$
+
+其中常数属于同一个模型、参考网格、标准批量与门控。只要归一化为 $\sum_k\eta_k\le1$，即可统一取
+$K_0=2C_H+K_{\rm wrap}$。任务初始批量可以随地板改变；它仍须计入 $T_s$，但不改变固定参考初始批量或上述参考预算。
+
+这里仅使用包装的固定 $a$ 矩，以及由整数计数比较得到的 $0<s\le a$ 矩，不需要更高阶包装矩。
+
