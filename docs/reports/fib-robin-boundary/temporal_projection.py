@@ -171,6 +171,104 @@ def direct_projection(h):
     return {'H': h, 'quotients': len(divisors(h)), 'all_probes_checked': True}
 
 
+def shell_bound(h, p):
+    """Compare the observable shell product with a direct divisor-sum gain."""
+    fs, r = factor(h), rank(p)
+    a = fs[p]
+    layers = [(q, k) for q, e in fs.items() for k in range(1, e+1)
+              if fib(r) % (q**k) == 0 and rank(q**k) == r]
+    ratios = [local_visible(q, fs[q], fs[q]-k) /
+              local_visible(q, fs[q], fs[q]-k+1) for q, k in layers]
+    shell = prod(ratios, start=Q(1))
+    observable = prod((visible(h, h//gcd(h, fib(d))) ** mobius(r//d)
+                       for d in divisors(r)), start=Q(1))
+    assert r > 1 and observable == shell
+    ell_ratio = local_visible(p, a, a-1) / local_visible(p, a, a)
+    gain = (zeta_body(p*h)-zeta_body(h)) / zeta_body(h)
+    bound = (1-shell)/(p-1)
+    assert gain == (1-ell_ratio)/(p-1) <= bound
+    assert (gain == bound) == (layers == [(p, 1)])
+    excess = ell_ratio * (1-shell/ell_ratio)/(p-1)
+    assert bound-gain == excess
+    return {'H': h, 'p': p, 'rank': r, 'layers': layers,
+            'exp_minus_shell': str(shell), 'relative_gain': str(gain),
+            'shell_upper': str(bound), 'excess': str(excess),
+            'upper_over_gain': str(bound/gain)}
+
+
+def collision_diagnostics():
+    single = shell_bound(5040, 7)
+    assert single['exp_minus_shell'] == '25/28'
+    assert single['relative_gain'] == single['shell_upper'] == '1/56'
+    rows = [shell_bound(37**a * 113, 37) for a in range(1, 5)]
+    for a, row in enumerate(rows, 1):
+        assert row['layers'] == [(37, 1), (113, 1)]
+        assert Q(row['relative_gain']) == Q(36, 37*(37**(a+1)-1))
+        assert Q(row['shell_upper']) > Q(14, 57969)
+    for first, second in zip(rows, rows[1:]):
+        assert Q(first['relative_gain']) > Q(second['relative_gain'])
+        assert Q(first['shell_upper']) > Q(second['shell_upper'])
+        assert Q(first['upper_over_gain']) < Q(second['upper_over_gain'])
+    other = shell_bound(4181, 113)
+    assert rows[0]['exp_minus_shell'] == '4373725/4528023'
+    assert rows[0]['shell_upper'] == '77149/81504414'
+    assert other['relative_gain'] == '1/12882'
+    assert other['shell_upper'] == '77149/253569288'
+    return {'single_layer': single, 'collision_family': rows,
+            'other_colliding_prime': other,
+            'scope': 'six exact finite shell/gain checks; no asymptotic certification'}
+
+
+def finite_prime_sign_diagnostics():
+    """Independent integer sieve, squarefree expansion and greedy FIB digits."""
+    ps, checkpoints = (2, 3, 5, 7), (100, 1000, 10000, 100000)
+    limit, q = checkpoints[-1], prod(ps)
+    mu, prime = [1]*(limit+1), [True]*(limit+1)
+    mu[0] = 0
+    for p in range(2, limit+1):
+        if prime[p]:
+            for n in range(p, limit+1, p):
+                mu[n] = -mu[n]
+                prime[n] = False
+            for n in range(p*p, limit+1, p*p):
+                mu[n] = 0
+    weights = [1, 2]
+    while weights[-1] < limit:
+        weights.append(weights[-1]+weights[-2])
+    totals, rows = [0]*5, []
+    for n in range(1, limit+1):
+        remainder, digital = n, 1
+        for w in reversed(weights):
+            if w <= remainder:
+                remainder -= w
+                digital = -digital
+        assert remainder == 0
+        fp = mu[n]**2 * prod(-1 if n % p == 0 else 1 for p in ps)
+        for j, value in enumerate((mu[n], mu[n]**2, fp, digital*fp, digital*mu[n])):
+            totals[j] += value
+        if n in checkpoints:
+            expanded = 0
+            for d in divisors(q):
+                direct = sum(mu[m]**2 for m in range(d, n+1, d))
+                squarefree = sum(mu[k]*(n//(d*k*k//gcd(d, k*k)))
+                                 for k in range(1, isqrt(n)+1))
+                assert direct == squarefree
+                expanded += (-2)**len(factor(d)) * squarefree
+            assert expanded == totals[2]
+            rows.append(dict(zip(('X', 'M', 'squarefree', 'finite_prime_sign_sum',
+                                  'digital_twisted_fP_sum', 'digital_twisted_mu_sum'),
+                                 (n, *totals))))
+    assert [list(row.values()) for row in rows] == [
+        [100, 1, 61, -1, -5, 17], [1000, 2, 608, 52, -16, 30],
+        [10000, -23, 6083, 509, 45, 113],
+        [100000, -48, 60794, 5064, 326, -230]]
+    coefficient = prod((Q(p-1, p+1) for p in ps), start=Q(1))
+    assert coefficient == Q(1, 12)
+    return {'finite_prime_set': ps, 'density_coefficient_times_zeta2': str(coefficient),
+            'squarefree_expansion_checks': len(checkpoints)*len(divisors(q)),
+            'rows': rows, 'scope': 'exact finite diagnostic; no asymptotic or RH proof'}
+
+
 def log_interval(x, terms=32):
     """Rational atanh expansion with geometric upper bound on its tail."""
     assert x > 0
@@ -237,6 +335,8 @@ def main():
               'projection': projection_diagnostics(args.H),
               'edge_projections': [projection_diagnostics(h) for h in (1, 2, 3, 6, 8, 12)],
               'direct_fiber_averages': [direct_projection(h) for h in (1, 2, 6, 12, 24, 60)],
+              'rank_shell_bounds': collision_diagnostics(),
+              'finite_prime_signs': finite_prime_sign_diagnostics(),
               'seed_10080': seed_certificate()}
     data = json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + '\n'
     if args.out:

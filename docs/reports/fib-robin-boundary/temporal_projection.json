@@ -579,6 +579,51 @@
       }
     }
   ],
+  "finite_prime_signs": {
+    "density_coefficient_times_zeta2": "1/12",
+    "finite_prime_set": [
+      2,
+      3,
+      5,
+      7
+    ],
+    "rows": [
+      {
+        "M": 1,
+        "X": 100,
+        "digital_twisted_fP_sum": -5,
+        "digital_twisted_mu_sum": 17,
+        "finite_prime_sign_sum": -1,
+        "squarefree": 61
+      },
+      {
+        "M": 2,
+        "X": 1000,
+        "digital_twisted_fP_sum": -16,
+        "digital_twisted_mu_sum": 30,
+        "finite_prime_sign_sum": 52,
+        "squarefree": 608
+      },
+      {
+        "M": -23,
+        "X": 10000,
+        "digital_twisted_fP_sum": 45,
+        "digital_twisted_mu_sum": 113,
+        "finite_prime_sign_sum": 509,
+        "squarefree": 6083
+      },
+      {
+        "M": -48,
+        "X": 100000,
+        "digital_twisted_fP_sum": 326,
+        "digital_twisted_mu_sum": -230,
+        "finite_prime_sign_sum": 5064,
+        "squarefree": 60794
+      }
+    ],
+    "scope": "exact finite diagnostic; no asymptotic or RH proof",
+    "squarefree_expansion_checks": 64
+  },
   "projection": {
     "V_time8_over_V_time4": "25/28",
     "Z": "403/105",
@@ -666,6 +711,127 @@
         "gain": "403/5880",
         "old_body_loss": "403/980"
       }
+    }
+  },
+  "rank_shell_bounds": {
+    "collision_family": [
+      {
+        "H": 4181,
+        "excess": "9590/40752207",
+        "exp_minus_shell": "4373725/4528023",
+        "layers": [
+          [
+            37,
+            1
+          ],
+          [
+            113,
+            1
+          ]
+        ],
+        "p": 37,
+        "rank": 19,
+        "relative_gain": "1/1406",
+        "shell_upper": "77149/81504414",
+        "upper_over_gain": "77149/57969"
+      },
+      {
+        "H": 154697,
+        "excess": "34682/143705151",
+        "exp_minus_shell": "110722285/111770673",
+        "layers": [
+          [
+            37,
+            1
+          ],
+          [
+            113,
+            1
+          ]
+        ],
+        "p": 37,
+        "rank": 19,
+        "relative_gain": "1/52059",
+        "shell_upper": "262097/1005936057",
+        "upper_over_gain": "262097/19323"
+      },
+      {
+        "H": 5723789,
+        "excess": "6741644/27915261795",
+        "exp_minus_shell": "614934242/620339151",
+        "layers": [
+          [
+            37,
+            1
+          ],
+          [
+            113,
+            1
+          ]
+        ],
+        "p": 37,
+        "rank": 19,
+        "relative_gain": "1/1926220",
+        "shell_upper": "5404909/22332209436",
+        "upper_over_gain": "27024545/57969"
+      },
+      {
+        "H": 211780193,
+        "excess": "997781974/4131460890513",
+        "exp_minus_shell": "455059850285/459051210057",
+        "layers": [
+          [
+            37,
+            1
+          ],
+          [
+            113,
+            1
+          ]
+        ],
+        "p": 37,
+        "rank": 19,
+        "relative_gain": "1/71270177",
+        "shell_upper": "997839943/4131460890513",
+        "upper_over_gain": "997839943/57969"
+      }
+    ],
+    "other_colliding_prime": {
+      "H": 4181,
+      "excess": "19155/84523096",
+      "exp_minus_shell": "4373725/4528023",
+      "layers": [
+        [
+          37,
+          1
+        ],
+        [
+          113,
+          1
+        ]
+      ],
+      "p": 113,
+      "rank": 19,
+      "relative_gain": "1/12882",
+      "shell_upper": "77149/253569288",
+      "upper_over_gain": "77149/19684"
+    },
+    "scope": "six exact finite shell/gain checks; no asymptotic certification",
+    "single_layer": {
+      "H": 5040,
+      "excess": "0",
+      "exp_minus_shell": "25/28",
+      "layers": [
+        [
+          7,
+          1
+        ]
+      ],
+      "p": 7,
+      "rank": 8,
+      "relative_gain": "1/56",
+      "shell_upper": "1/56",
+      "upper_over_gain": "1"
     }
   },
   "scope": "finite exact temporal, projection, rank-shell and Robin diagnostics",
