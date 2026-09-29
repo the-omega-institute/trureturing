@@ -1,0 +1,21 @@
+**定理 92.2（障碍余量的完整截断规则）。** 在事件间冻结 $\Psi=C,P=P_0$，令 $V(x)=\Phi(x)+1/(2\sqrt x\log x)$。定义
+
+$$
+T(x)=x-\frac{\sqrt x(\log x+2)}{4(\log x+1)}.
+$$
+
+对 $x>1$ 有
+
+$$
+V'(x)=\frac{\log x+1}{x^2\log^2x}[T(x)-C],\qquad
+T'(x)=1-\frac{\log x(\log x+3)}{8\sqrt x(\log x+1)^2}>0.
+$$
+
+若 $C>1/2$，唯一根 $r=T^{-1}(C)$ 在闭区间 $[a,b]$ 上截断后的点是最小点；内点情形的最小值为
+
+$$
+V(r)=\gamma+\log\log r-P_0+\frac1{4\sqrt r(\log r+1)}.
+$$
+
+若 $C\le1/2$，最小点是左端点。这里的右端点值按连续延拓取值。
+

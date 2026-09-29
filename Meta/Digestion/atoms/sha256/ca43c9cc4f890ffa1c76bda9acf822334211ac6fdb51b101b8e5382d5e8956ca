@@ -1,0 +1,13 @@
+**定理 87.4（显式正子储备）。** 令
+
+$$
+B(x)=\sum_{\substack{p\text{ 素数}\\\sqrt{2x}\le p\le x-1}}
+\left(\frac1p-\log(1+1/p)\right).
+$$
+
+则 $R(x)\ge B(x)\ge0$；求和区间含素数时 $B(x)>0$。无条件的素数定理给出
+
+$$
+B(x)\sim\frac1{\sqrt2\sqrt x\log x}\qquad(x\to\infty).
+$$
+

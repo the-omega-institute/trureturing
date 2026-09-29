@@ -1,0 +1,17 @@
+**命题 89.1（补足第三行指数边界）。** 第 75 节固定母体 $n=2^{A_2}3^{A_3}5^{A_5}7^{A_7}$ 后，非空纤维域必须改读为
+
+$$
+\mathcal F_n^{\mathrm{corr}}=
+\left\{(u,v,w)\in\mathbb N^3:
+0\le v\le A_3,\quad
+\max(0,u-A_2,w-A_5)\le\min(A_7,u,w)\right\}.
+$$
+
+在这个域上，第 75 节的 $k_{\min}$、$k_{\max}$ 与 $\Omega_{u,v,w}$ 公式保持成立，且
+
+$$
+Z(n)=\sum_{(u,v,w)\in\mathcal F_n^{\mathrm{corr}}}\Omega_{u,v,w}.
+$$
+
+原先只写 $k_{\min}\le k_{\max}$ 的定义域遗漏了 $v\le A_3$；后续使用必须附上此条件。
+
