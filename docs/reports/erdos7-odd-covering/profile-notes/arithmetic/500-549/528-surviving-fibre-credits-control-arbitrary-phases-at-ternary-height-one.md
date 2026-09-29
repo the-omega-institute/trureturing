@@ -481,6 +481,22 @@ before the fixed-inventory optimization. For instance, an actual
 original containing3,5,7 can have at most seven distinct nonternary
 prime factors; this is not a bound on the family's complete support.
 
+The square inventories must be imposed as well. If x_(d,r) indicates
+an original3d with at least two nonternary support primes, and z_(q,e,r)
+indicates an original3q^e, Report385 PI3 gives the simultaneous cuts
+
+    sum_(d:q^2|d,r) x_(d,r) + sum_(e>=2,r) z_(q,e,r)
+        <=4q^2-6q-3,
+    sum_(d:q^2|d) x_(d,r) + sum_(e>=2) z_(q,e,r)
+        <=2q(q-1)-2, for each r.                     (FC26)
+
+These use the same original labels as the pair constraints. If a
+selected3d has q-depth h, divisor closure forces all3q^e with1<=e<=h;
+in particular h-1 star labels consume the total square capacity.
+A height *upper bound* alone does not force these labels. Their actual
+roots must also be retained when using the root-specific cut. These
+constraints are independent of the artificial beta parameters.
+
 Fix the finite exponent inventory, beta parameters and root weight w.
 An original label3d assigned to root r has nonnegative deletion charge
 
@@ -523,9 +539,149 @@ physical root labels and proving the additional relation. The
 uniform inventory bounds in Report385 avoid that inference.
 
 This gives a legal way to bring whole-cover phase restrictions into
-the joint numerical inventory. No positive uniform bound for the
-resulting optimized functional, all-weight obstruction, unrestricted
-support conclusion or new Lean result is claimed here.
+the joint numerical inventory. The finite obstruction below shows
+that these numerical constraints do not by themselves make this
+comparison positive. No unrestricted-support conclusion or new Lean
+result is claimed.
+
+## Joint pair, square and divisor constraints still leave a negative comparison
+
+Fix the twelve-prime height-one branch through41, with
+
+    Q=(5,7,11,13,17,19,23,29,31,37,41),
+    h=(5,5,4,4,4,4,4,3,3,3,3),
+    b_q=(q^h_q-1)/((q-2)q^h_q+1),
+    c_q=(q-1)q^h_q/((q-2)q^h_q+1).
+
+These are the simultaneous finite height bounds above. At the
+comparison partition A={5}, put beta_q1=b_q only for q=5, and
+beta_q2=b_q for q!=5. The opposite entries are zero. Keep
+g_r(D)=product_(q notin D)(1-beta_qr) and
+u_d=product_(q|d)c_q/q^v_q(d).
+
+For root r define the carrier and full3-free debit
+
+    C_r=g_r(empty),
+    B_r=sum_(D subset Q, |D|>=2) product_(q in D)b_q*g_r(D).
+
+The3-free debit is still the complete bounded numerical inventory.
+It is not asserted to be the debit of one actual original family.
+Let Omega consist of numerical/root selections satisfying all the
+total and root-specific pair capacities, CR9, mixed divisor closure,
+and FC26 with the forced star labels. Original numerical identities
+remain distinct. No nonternary residue assignment is part of Omega.
+The strengthened comparison is
+
+    F_Omega(w)=w(C_1-B_1)+(1-w)(C_2-B_2)
+       -max_(S in Omega) [w sum_(d assigned1 in S)g_1(D(d))*u_d
+                      +(1-w)sum_(d assigned2 in S)g_2(D(d))*u_d].
+
+It is a lower-bound comparison after the indicated relaxations,
+not an actual survivor mass. One fixed feasible selection S gives
+an affine *upper bound on this comparison*:
+
+    F_Omega(w)<=w L_1+(1-w)L_2,
+    L_r=C_r-B_r-sum_(d assigned r in S)g_r(D(d))*u_d.  (FC27)
+
+Thus two negative endpoints certify failure for every real root
+weight, without computing the maximum or sampling a weight grid.
+
+The [explicit finite witness](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_inventory_witness_input.json)
+has2206 mixed labels3d, assigned197 to root1 and2009 to root2.
+It includes42 star labels3q^e: all1<=e<=h_q, with the5-stars on
+root1 and every other star on root2. Direct factorization and exact
+arithmetic verify simultaneously:
+
+- all55 overlapping pair capacities and110 root-specific pair capacities;
+- all11 uniform square capacities and22 uniform root-specific square
+  capacities of FC26,
+  including the stars rather than paying their slots twice;
+- all7550 label-pair CR9 restrictions and every finite height bound;
+- all6375 immediate mixed-divisor edges, hence every mixed proper
+  divisor required by a selected label.
+
+The numerical palette obtained by adjoining3, bothq^e and3q^e for
+all42 star positions, and bothd and3d for each selected mixedd has
+4497 distinct odd nonunit labels and is divisor-closed. This is a
+numerical completion only; no residues making it an extremal cover
+are supplied. Its3-free part is smaller than the unrestricted debit
+B_r used in FC27.
+
+The most restrictive square counts include:
+
+| Square divisor | Mixed counts on roots1/2 | Star counts on roots1/2 | Full root counts | Total cap | Each-root cap |
+| --- | ---: | ---: | ---: | ---: | ---: |
+|3*5^2|34 / 2|4 / 0|38 / 2|67|38|
+|3*7^2|7 / 78|0 / 4|7 / 82|151|82|
+|3*11^2|10 / 215|0 / 3|10 / 218|415|218|
+
+For this same selection the exact rational endpoint checks give
+
+    L_2=-0.037407841838047365...<-1/100,
+    L_1=-0.030920050975640826...<-1/100.
+
+The full fractions, all capacities, source caps and debit components
+are in the [exact result](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_inventory_witness.json).
+Equation FC27 therefore gives F_Omega(w)<-1/100 for every w in[0,1]
+at this single comparison partition. This rules out a positive
+uniform bound from this particular relaxed functional, even if a
+different root weight is chosen for each partition. It does not
+rule out using additional actual phase relations, constraining the
+3-free debit jointly, or constructing a different source law.
+
+### Why numerical divisor closure alone cannot recover the missing saving
+
+There is a general reason to keep phase information separate from
+numerical closure in this optimization. Fix the beta parameters,
+nonternary heights, and an explicit star inventory. Suppose a selected
+mixedd has an absent proper divisore of at least two-prime support.
+Replace3d by3e on the same root. Every pair/square total or root
+occupancy is unchanged or decreases, height bounds and CR9 persist,
+and no new star is forced. The number of selected mixed labels is
+unchanged and their numerical sum decreases strictly.
+
+The unweighted assigned-root charge also increases. Removing one
+factorq when v_q(d)>1 multiplies the charge byq. Removing the last
+factorq, while retaining at least two support primes, multiplies it by
+
+    q*(1-beta_qr)/c_q
+      >=q*(1-b_q)/c_q
+      =q*((q-3)+2q^(-h_q))/(q-1)>1, q>=5.            (FC28)
+
+For an arbitrary absent proper divisor, apply the same ratio along
+the removed prime factors. Iterating missing-divisor replacements
+terminates because the positive integer sum of numerical labels
+strictly decreases. The result is a mixed divisor ideal, with no
+smaller charge on either root. Consequently, for this numerical
+capacity problem, an optimum can already be chosen divisor-closed.
+Adding just that closure cannot decrease the maximizing debit.
+
+This compression statement concerns the numerical optimization.
+Replacing a real original by a divisor at the same ternary root
+need not preserve its nonternary phase, private region or joint
+replacement liability. FC28 does not license such a replacement in
+an actual cover.
+
+The [standalone checker](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_inventory_witness.py)
+reads only its explicitly named JSON input, factors every label and
+checks all displayed constraints. It computes the full3-free debit
+independently as
+
+    B_r=product_q(1-beta_qr+b_q)-C_r
+        -sum_q b_q*g_r({q}),
+
+and performs both endpoint comparisons over exact rationals. A
+separate reconstruction sums over all support subsets. These are
+finite computational checks and ordinary deductions, not newly
+compiled Lean results or an Erdős#7 counterexample.
+
+Normal execution and optimized execution from a relocated directory
+with spaces give identical output. No personal shell configuration,
+directory scan or external package is used.
+
+```sh
+python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_inventory_witness.py --input docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_inventory_witness_input.json
+```
 
 ## Whole-family height one permits a smaller common query interface
 
