@@ -21,9 +21,20 @@ def euler_support(primes):
     assert len(set(primes)) == len(primes)
     value = Q(1)
     for p in primes:
-        assert p >= 19 and all(p % q for q in primes if q != p)
+        assert p >= 19 and is_prime(p)
         value *= Q(p, p - 1)
     return value
+
+
+def is_prime(n):
+    if n < 2:
+        return False
+    divisor = 2
+    while divisor * divisor <= n:
+        if n % divisor == 0:
+            return n == divisor
+        divisor += 1
+    return True
 
 
 def z_factor(p, exponent):
@@ -54,6 +65,7 @@ def main():
     for p, a in zip(primes, exponents):
         product *= z_factor(p, a)
     assert product < euler_support(primes)
+    assert euler_support(()) == 1
 
     # The support criterion itself is a rational implication.
     assert DELTA_LOWER - Z_UPPER * (SUPPORT_THRESHOLD - 1) == 0
