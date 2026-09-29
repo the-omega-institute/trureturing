@@ -77,7 +77,7 @@ internal sealed class FiniteColumnGcdNormalizationDocument : IScribeDocumentDefi
                             Seq(Neg, Sp, member(p, s)),
                             result)))));
         return Disp(forall(coordinateType, F.Id("TypeStar"),
-            Seq(Call("DecidableEq", coordinateType), Comma, Sp,
+            Seq(OpenBracket, Call("DecidableEq", coordinateType), CloseBracket, Comma, Sp,
                 statement)));
     }
 }
