@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5699f4966b418b299a28cad167e484577b5e494aeb4ecfedb7261ee99599d629
+  normalized_sha256: sha256:5699f4966b418b299a28cad167e484577b5e494aeb4ecfedb7261ee99599d629
+cas_ref: sha256:5699f4966b418b299a28cad167e484577b5e494aeb4ecfedb7261ee99599d629
+coverage_gids:
+  - gid: D5/S0/Carrier/Ring.b_mul
+    target_statement_id: sha256:d322359ede8e45bbf7393d26e660b5e4d82234cf871b723136633dde1f108ff1
+receipts:
+  unresolved_subitems: []

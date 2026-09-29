@@ -33,3 +33,4 @@ The same factorization expansion applies on the contraction face. The public two
 - Truth anchor: `D5/S1/Deficit/Displacement/GoldenDesubstitutionClosedForms.lambdaMinus_eq_log_nS_sub_goldenRatio_log`
 - Truth anchor: `D5/S1/Deficit/Displacement/GoldenDesubstitutionClosedForms.lambdaPlus_eq_log_nS_sub_goldenConj_log`
 - Dependency: [D5/S1/Deficit/Displacement/GoldenDesubstitutionConjugateLength](GoldenDesubstitutionConjugateLength.md)
+- Dependency: [D5/S1/Scale/Fibonacci](../../Scale/Fibonacci.md)

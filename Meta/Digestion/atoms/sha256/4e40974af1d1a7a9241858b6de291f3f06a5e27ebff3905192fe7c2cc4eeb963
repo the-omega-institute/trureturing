@@ -1,0 +1,12 @@
+### theorem 4.4 内部自然数半环
+
+映射 $\eta(n)=ne$ 是从 $\mathbb N$ 到 $\mathcal N$ 的双射，并保持零、后继、加法和 $\otimes$；因此
+
+$$
+(\mathcal N,0,e,+,\otimes)\cong(\mathbb N,0,1,+,\times).
+$$
+
+**证明。** 生成定义给出满射，定理 4.2 给出单射；加法由 $me+ne=(m+n)e$，乘法对第二变量归纳得到 $(me)\otimes(ne)=(mn)e$。$□$
+
+于是 $e,\bar\alpha,\bar\beta$ 才可分别读作 $1,2,3$。
+

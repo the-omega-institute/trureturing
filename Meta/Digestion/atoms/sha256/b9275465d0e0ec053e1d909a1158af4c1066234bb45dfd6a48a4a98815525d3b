@@ -1,0 +1,13 @@
+**定义 12.1（本批的循环谱前提）。** $V$ 为复数域上简单、强有理、全纯、CFT 型且带相容正定酉结构的 VOA，$c=24,V_1=0$。每个使用到的非恒等二阶自同构 $g$ 有唯一不可约扭曲模 $V(g)$；其最低权 $h_g>0$，并且 $h_g\in\frac12\mathbb Z$，即循环 type $2\{0\}$。有限对称族是实际忠实同态 $E=\mathbb F_2^r\hookrightarrow\operatorname{Aut}(V)$，每个 $g\ne0$ 都满足上述条件。自同构保真空、共形向量及全部 $Y(a,z)$，并非仅保某层维数的矩阵。
+
+使用 [EMS20, §3] 的规范化循环模变换及轨形定理。记 $q=e^{2\pi i\tau}$、$a_g=\dim V(g)_{1/2}$，以及
+
+$$
+t=\left(\frac{\eta(\tau)}{\eta(2\tau)}\right)^{24}
+=q^{-1}-24+276q-2048q^2+\cdots,\quad
+t(-1/\tau)=4096/t(\tau/2).
+\tag{MD.1}
+$$
+
+另有 $Z_V=J=j-744=q^{-1}+196884q+\cdots$ [DM02, Lemma 2.1]。所有谱函数都在上半平面收敛；在尖点的展开由规范化模变换确定。定义 $F_g=\operatorname{Tr}_V(gq^{L_0-1})$，$Z_g=\operatorname{Tr}_{V(g)}q^{L_0-1}$。
+

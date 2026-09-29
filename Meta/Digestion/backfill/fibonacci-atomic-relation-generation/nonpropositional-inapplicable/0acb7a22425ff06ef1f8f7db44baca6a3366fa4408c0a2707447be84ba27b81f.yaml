@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0acb7a22425ff06ef1f8f7db44baca6a3366fa4408c0a2707447be84ba27b81f
+  normalized_sha256: sha256:0acb7a22425ff06ef1f8f7db44baca6a3366fa4408c0a2707447be84ba27b81f
+cas_ref: sha256:0acb7a22425ff06ef1f8f7db44baca6a3366fa4408c0a2707447be84ba27b81f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact declarations: FreeMagma.lift, FreeMagma.lift_of, FreeMagma.hom_ext. Use FreeMagma Bool for the two-leaf ordered binary syntax and give X multiplication mu. FreeMagma.lift extends the two chosen values and hom_ext gives uniqueness. No frozen repository GID states this universal arbitrary-magma evaluator.'
+    previous_atom_id: 547bfff9ca737662c912b22c5eed15656622617ed950baa01fbfd98c739355c3
+    next_atom_id: 05abe2c978ebd3f22d168817ef931c83bbf7462be7d1bd7de15525d3b7846da1

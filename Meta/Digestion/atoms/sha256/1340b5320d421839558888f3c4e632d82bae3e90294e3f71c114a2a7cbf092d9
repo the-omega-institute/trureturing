@@ -1,0 +1,12 @@
+### theorem 63.2 加入单寄存器边缘后的剩余核
+
+$$
+\boxed{\dim(\ker L\cap\ker\Pi)=8,}
+$$
+
+并且一组基为
+
+$$
+\boxed{D_{a,1}-D_{a,0},\qquad D_{a,2}-D_{a,0}\quad(a=1,2,3,4).}
+$$
+

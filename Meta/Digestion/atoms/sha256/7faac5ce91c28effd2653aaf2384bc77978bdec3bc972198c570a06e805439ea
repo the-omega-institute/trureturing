@@ -1,0 +1,41 @@
+### corollary 41.3 对角层的 CRT 分裂
+
+令
+
+$$
+B_1=\operatorname{diag}(a_1,\ldots,a_d),
+\qquad
+B_2=\operatorname{diag}(b_1,\ldots,b_d),
+$$
+
+其中 $a_i,b_i>0$。则第 37 节的序列分裂，当且仅当
+
+$$
+\boxed{\gcd(a_i,b_i)=1\quad\text{对每个 }i.}
+$$
+
+充分性是每个坐标上的 CRT 截面相加。必要性可逐坐标检验：总序列是这些坐标扩张的直和；若整体有截面，把第 $i$ 个商坐标嵌入商群，再投影到第 $i$ 个总群坐标，便得到该坐标扩张的截面。因此若 $p\mid a_i$ 且 $p\mid b_i$，坐标扩张
+
+$$
+0\longrightarrow\mathbb Z/a_i\mathbb Z
+\longrightarrow\mathbb Z/(a_ib_i)\mathbb Z
+\longrightarrow\mathbb Z/b_i\mathbb Z
+\longrightarrow0
+$$
+
+的 $p$-部分含有不可分裂的循环因子，矛盾。故整体也不分裂。证毕。 $\square$
+
+例如，连续两次压同一方向的 $\operatorname{diag}(5,1)$ 得到
+
+$$
+\mathcal D\cong\mathbb Z/25\mathbb Z,
+$$
+
+而先压 $\operatorname{diag}(5,1)$、再压 $\operatorname{diag}(1,5)$ 得到
+
+$$
+\mathcal D\cong(\mathbb Z/5\mathbb Z)^2.
+$$
+
+两者都有 25 个缺陷类别，但前者把两层缺陷合并成两级深度，后者保持两个独立的一层方向。
+

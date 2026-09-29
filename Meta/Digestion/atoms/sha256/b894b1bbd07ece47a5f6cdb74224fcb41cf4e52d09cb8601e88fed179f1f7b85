@@ -1,0 +1,14 @@
+**证明。** 对 $x\in K_r$ 取整数代表 $\widetilde x$，定义
+
+$$
+\alpha_r(x)=\left[\frac{B\widetilde x}{p^r}\right]\in\mathcal D_B.
+$$
+
+更换代表只增加 $B\mathbb Z^d$，故无歧义；其像被 $p^r$ 消去。若像为零，$B$ 在整数格上单射，得到 $\widetilde x\in p^r\mathbb Z^d$，所以 $x=0$。反过来，$p^r[y]=0$ 恰好给出 $p^ry=Bx$ 的核原像。余核同构直接由
+
+$$
+G_r/\operatorname{im}B_r\cong\mathbb Z^d/(B\mathbb Z^d+p^r\mathbb Z^d)
+$$
+
+得到。证毕。 $\square$
+

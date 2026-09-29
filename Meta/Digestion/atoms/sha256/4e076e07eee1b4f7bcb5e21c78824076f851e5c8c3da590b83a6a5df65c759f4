@@ -1,0 +1,10 @@
+### theorem 35.1 合法边界的相位校验
+
+$$
+\boxed{
+\mathbf1_{\operatorname{im}B}(y)
+=\frac1{|Z_B|}\sum_{z\in Z_B}
+\exp\left(\frac{2\pi i}{q}z^{\mathsf T}y\right).
+}
+$$
+

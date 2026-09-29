@@ -1,0 +1,24 @@
+**定理 100.3（局部分类及全局实现）。** 设 $p^h\parallel H$，$h\ge1$，令
+
+$$
+e=v_p(d),\qquad 0\le e\le h,\qquad k=h-e,\qquad M=p^k.
+$$
+
+对 $x\bmod p^h$，非零余数的截断深度为 $r=\min(v_p(x),h)$，零余数直接规定 $r=h$。以不同标签区分以下两类：
+
+$$
+\eta_{p,h,e}(x)=
+\begin{cases}
+S(r,u),&r<e,\quad u=(x/p^r)\bmod M,\\
+D(z),&r\ge e,\quad z=(x/p^e)\bmod M.
+\end{cases}
+$$
+
+低类型 $S$ 的 $u$ 取模 $M$ 的单位类；$M=1$ 时单位类集合仍为单点，可记作 $0\bmod1$，而非要求其代表整数 0 素于 $p$。该编码恰好分类所有标量乘法和 $p^e$ 倍平移后的截断深度响应。全局编码
+
+$$
+\eta_{H,d}(x)=\bigl(\eta_{p,h_p,e_p}(x)\bigr)_{p\mid H}
+$$
+
+恰好分类定理 100.2 的全局行为。
+

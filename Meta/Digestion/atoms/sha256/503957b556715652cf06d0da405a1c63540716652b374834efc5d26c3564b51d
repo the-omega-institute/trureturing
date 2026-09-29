@@ -1,0 +1,9 @@
+**推论 2.3（相对交换子尾部障碍）。** 对任意 $\gamma\in\mathrm{FDQC}(A)$，存在 $N$，使全部 $n\ge N$ 都有保迹星同构
+
+$$
+M_{-n}'\cap\gamma(M_0)\cong M_{-n}'\cap M_0.
+\tag{QCA.9}
+$$
+
+这些同构还与 $n\mapsto n+1$ 的包含相容。
+

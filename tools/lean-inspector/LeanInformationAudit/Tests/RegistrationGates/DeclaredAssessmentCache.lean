@@ -73,4 +73,23 @@ run_meta withPrivateSources do
       (observedAssessments (← getEnv)).size == before + 1)
   setEnv initial
 
+-- The imported registration universe grows with the repository. A retained
+-- assessment's currency check and every other joined step own a fixed budget;
+-- the complete join shares none of it.
+run_meta withPrivateSources do
+  let initial ← getEnv
+  let primed ← exportSnapshot
+  unless primed.selected.all (fun row => row.result matches .declaredValidated _) do
+    throwError "setup: retained assessment requires a validated registration"
+  let owners := primed.originals.foldl (fun owners row =>
+    let owner := row.occurrence.key.registrationModule
+    if owners.contains owner then owners else owners.push owner) #[]
+  let modules := owners.map fun owner =>
+    (owner, primed.originals.filter (·.occurrence.key.registrationModule == owner) |>.map (·.occurrence.key))
+  IO.addHeartbeats ((← readThe Core.Context).maxHeartbeats + 1)
+  let rows ← tryCatchRuntimeEx (reportJson modules) fun error =>
+    throwError "[FAIL] joined_occurrence_budget_is_per_occurrence: {error.toMessageData}"
+  observe "joined_occurrence_budget_is_per_occurrence" (!rows.isEmpty && rows.size == modules.size)
+  setEnv initial
+
 end LeanInformationAudit.Tests.DeclaredAssessmentCache

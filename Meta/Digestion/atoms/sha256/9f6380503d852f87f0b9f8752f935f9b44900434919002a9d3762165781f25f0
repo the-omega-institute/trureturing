@@ -1,0 +1,25 @@
+**定理 26.1（有限深度修饰的平移与层置换分类）。** 设 $\chi_X>0$，令 $\Gamma_m$ 是由 $\mathrm{FDQC}(A_m)$、独立平移 $T_i$ 和全部层置换 $\Sigma_\sigma$ 生成的 QCA 子群。则
+
+$$
+\Gamma_m/\mathrm{FDQC}(A_m)\cong\mathbb Z^m\rtimes S_m,
+\tag{SC.21}
+$$
+
+其中乘法为
+
+$$
+(\mathbf k,\sigma)(\boldsymbol\ell,\tau)
+=(\mathbf k+\sigma\boldsymbol\ell,\sigma\tau).
+\tag{SC.22}
+$$
+
+定理 25.2 的带标记尾部表给出该群值不变量的参数恢复。
+
+**证明。** FDQC 在 QCA 中为正规子群 [JL24, Definition 2.5 后]；共轭局部门仍局部，有界重叠可以有限着色。因此每个生成词都能将电路因子移到左侧，写成 $\gamma\Phi_{\mathbf k,\sigma}$。独立平移交换且 $\Sigma_\sigma\alpha_{\boldsymbol\ell}\Sigma_\sigma^{-1}=\alpha_{\sigma\boldsymbol\ell}$，所以式（SC.22）给一个满的商群同态。
+
+若两个正规形属于同一电路类，命题 25.1 使它们的带标记表在共同充分大 $n$ 相等。定理 25.2 恢复同一参数，故正规形唯一，满同态单射。反向，同一参数的两个正规形显然只差 FDQC，完成双向分类。证毕。
+
+这给出具体可组合的结构不变量，超出只检测“非电路”的单个障碍。它分类的范围明确限于 $\Gamma_m$；没有证明每个融合链 QCA 都属于这个子群，没有证明切口表对任意 QCA 完整，也没有给出任意输入 QCA 是否属于 $\Gamma_m$ 的决定算法。
+
+尾部阈值取决于电路修饰的实际支持预算。单凭 QCA 的传播半径没有在本批证明一个通用识别阈值。因此有限表恢复是“在已越过阈值且满足模板承诺时”的精确结论；相对交换子维数的取得、噪声稳定性和物理测量成本仍需独立研究。
+

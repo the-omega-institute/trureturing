@@ -1,0 +1,44 @@
+**约定 117.1（组成差异记录及符号）。** 对 $\mathbf v\in\mathbb Z^2$ 且 $n=q(\mathbf v)\ge0$，令
+
+$$
+z=q(M\mathbf v),\qquad \kappa(\mathbf v)=s(n)-z.
+$$
+
+§5.4 的两次读数逆式给
+
+$$
+\iota(n)=(5n-3s(n),\ 2s(n)-3n),\qquad
+\mathbf v=\iota(n)+\kappa(\mathbf v)\mathbf r.
+$$
+
+确实，定义 116.1 给 $q\iota(n)=n$、$qM\iota(n)=s(n)$，代入同一逆矩阵即得第一式；而 $q\mathbf r=0$、$qM\mathbf r=-1$ 给第二式。这里 $(n,\kappa)$ 只是既有 $(n,z)$ 的可逆换坐标 $z=s(n)-\kappa$，不另构造一个恢复来源树的机制。
+
+为固定符号，复用既有[黄金相位亏量](../../../D5/S1/Deficit/GoldenPhaseDeficit.lean)及[带符号进位路径](../../../D5/S1/Deficit/ChargedCarryPath.lean)，记
+
+$$
+\mathfrak c(a,b)=s(a)+s(b)-s(a+b)\quad(a,b\in\mathbb N).
+$$
+
+其值在 $\{-1,0,1\}$。在当前坐标中，这可由 $s(n)=\lfloor\varphi n+\varphi^{-1}\rfloor$ 直接核对：若 $f_n=\{\varphi n+\varphi^{-1}\}$，则
+
+$$
+\mathfrak c(a,b)=-\lfloor f_a+f_b-\varphi^{-1}\rfloor.
+$$
+
+括号内在 $(-1,2)$ 中，故取整只有三种可能。由于 $\ker q=\mathbb Z\mathbf r$，对数量为零的差向量再施加 $qM$，得到符号恒等式
+
+$$
+\iota(a)+\iota(b)-\iota(a+b)=-\mathfrak c(a,b)\mathbf r.
+$$
+
+若用黄金整数坐标 $\xi^2=\xi+1$ 和 $\Lambda(a,b)=(a+2b)+(2a+3b)\xi$，则 $\Lambda(\mathbf r)=-1$，故上式的 $\Lambda$ 像为 $+\mathfrak c(a,b)$。$\Lambda$ 的坐标矩阵行列式为 $-1$；它在 $a+b\xi$ 坐标下是乘 $\xi^3$ 的加法格同构，不是保持通常乘法单位的环同构。这与既有路径总电荷和规范终点的一致性相容。
+
+再由 $M^2=M+I$，序列 $q(M^k\mathbf r)$ 从 $0,-1$ 开始按 Fibonacci 递推，因此
+
+$$
+q(M^k\mathbf r)=-F_k,\qquad
+q(M^k\mathbf v)=s^k(n)-F_k\kappa\quad(k\ge0).
+$$
+
+所以 $qM^k$ 作用于两个规范加数与规范和的差时，给 $+F_k\mathfrak c(a,b)$。对数量非负的两个组成，来源相加的记录是 $\kappa_1+\kappa_2-\mathfrak c(n_1,n_2)$。这些均是同一两读数恢复与既有进位的直接应用；两个加数的三值净修正不限制任意来源的 $\kappa$ 只能取三个值，也不限制多次加法的总修正只有三值。
+

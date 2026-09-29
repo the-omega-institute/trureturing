@@ -1,0 +1,8 @@
+### theorem 3.2 结构级 Fibonacci 递归
+
+对所有 $j\ge0$，
+
+$$
+T_{j+2}=\langle T_{j+1},T_j\rangle .
+$$
+
