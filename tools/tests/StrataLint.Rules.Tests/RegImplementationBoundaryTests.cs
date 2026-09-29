@@ -48,6 +48,14 @@ public sealed class RegImplementationBoundaryTests
     }
 
     [Fact]
+    public void NonDefaultExecutableIsPartOfRegPackage()
+    {
+        var head = Files(("RegTools/Check.lean", $"import {Judge}\n"));
+        head[Lakefile] += "\n[[lean_exe]]\nname = \"check\"\nsrcDir = \"../RegTools\"\nroot = \"Check\"\n";
+        AssertBlock(Evaluate(Files(), head), "RegTools/Check.lean", Judge);
+    }
+
+    [Fact]
     public void ImplementationRequireBlocks()
     {
         var head = Files();

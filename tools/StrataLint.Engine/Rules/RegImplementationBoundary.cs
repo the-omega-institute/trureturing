@@ -48,7 +48,8 @@ internal static class RegImplementationBoundary
         _ = Tomlyn.Parsing.SyntaxParser.ParseStrict(file.Text, sourceName: Lakefile, validate: true);
         var config = TomlSerializer.Deserialize<TomlTable>(file.Text)
             ?? throw new FormatException("Reg Lake configuration is empty");
-        var libraries = Tables(config, "lean_lib");
+        var targets = Tables(config, "lean_lib").Select(table => (Table: table, Kind: "library"))
+            .Concat(Tables(config, "lean_exe").Select(table => (Table: table, Kind: "executable")));
         foreach (var require in Tables(config, "require"))
         {
             var name = String(require, "name");
@@ -66,15 +67,16 @@ internal static class RegImplementationBoundary
             pathsByModule[LeanImportClosure.ModuleName(path)] = path.Value;
         var packageSources = new HashSet<string>(StringComparer.Ordinal);
         var packageDirectory = Resolve("Reg", OptionalString(config, "srcDir", "."));
-        foreach (var library in libraries)
+        foreach (var (library, kind) in targets)
         {
             var name = String(library, "name");
             var directory = Resolve(packageDirectory, OptionalString(library, "srcDir", "."));
-            var roots = Strings(library, "roots", [name]);
-            var globs = Strings(library, "globs", [name + ".*"]);
+            var roots = kind == "executable" ? [OptionalString(library, "root", name)]
+                : Strings(library, "roots", [name]);
+            var globs = kind == "executable" ? [] : Strings(library, "globs", [name + ".*"]);
             if (ImplementationModule(name) || directory == "tools/lean-inspector"
                 || directory.StartsWith("tools/lean-inspector/", StringComparison.Ordinal))
-                edges.Add(new(Lakefile, $"library:{name}:{directory}"));
+                edges.Add(new(Lakefile, $"{kind}:{name}:{directory}"));
             var prefix = directory.Length == 0 ? "" : directory + "/";
             foreach (var path in snapshot.Files.Keys)
             {
