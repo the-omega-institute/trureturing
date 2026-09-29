@@ -1,8 +1,8 @@
 # 魔群为何出现：局部完成、三阶响应与祖先标记
 
-> 2026-09-28，`generic-v1` 理论研究稿。本卷承接 PR #10310，研究用户新明确的目标：给出 Monster 出现的数学物理解释。原 QCA 卷继续承担其分类问题，本卷不复制其证明。本文区分已发表构造、本文推论和未完成的选择问题；无 Lean 核验、独立同行审定、实验实现或全球原创性声明。
+本卷研究 Monster 出现的数学物理条件，区分已发表构造、条件推论和未完成的选择问题。QCA 的分类问题由相应理论卷承担。
 
-研究基点为 PR 头 `4e4cdebe0cea76deea94dc5be8a421c408e0557d`；本轮另读取 dev `8a1eb042cb44cc73c6d5ef1b9627d40de774ebe9`。主接口是实际局部场的乘法及相关函数。文中 Monster 指有限单群 $\mathbb M$；与仅有二元运算的 magma 完全分开。
+主接口是实际局部场的乘法及相关函数。文中 Monster 指有限单群 $\mathbb M$；与仅有二元运算的 magma 完全分开。
 
 ## 1. 两个排除结果确定魔群应出现在哪一层
 
@@ -19,7 +19,7 @@ $$
 
 因此，只保留 DHR 简单扇区、融合或其编织自等价作用，会把这个实际魔群作用送到平凡群。这里没有把共形网当作原 QCA 定义中的有限迹融合自旋链；两者的对象衔接仍需新的定理。式（MC.1）只直接证明该类粗观察会遗漏局部场对称。
 
-仓内 [MonsterPrimitiveMobiusRecovery](https://github.com/the-omega-institute/trureturing/blob/930316bfabefbed08c26ee7611e173380ca82c43/D5/S3/Analytic/Dilation/MonsterPrimitiveMobiusRecovery.lean) 的实际声明输入任意整数系数 $c$ 与一个已给对数展开，结论为 Möbius 恢复。它可以复用来恢复字符系数；它没有构造 $V^\natural$、局部乘法或魔群作用。本轮读取该源，没有重新编译。
+仓内 [MonsterPrimitiveMobiusRecovery](https://github.com/the-omega-institute/trureturing/blob/930316bfabefbed08c26ee7611e173380ca82c43/D5/S3/Analytic/Dilation/MonsterPrimitiveMobiusRecovery.lean) 的声明输入任意整数系数 $c$ 与一个已给对数展开，结论为 Möbius 恢复。它可恢复字符系数，但不构造 $V^\natural$、局部乘法或魔群作用。
 
 ### 1.2 已算得的平移群本身不能解释小层数中的魔群
 
@@ -116,7 +116,7 @@ $$
 
 因此正候选只有 $1/2,24,142/5$。代入 $Bd=A$ 时 $B$ 在三点均非零，得到 $d=1,196884,-164081$。前件排除首尾，只剩所述值。证毕。
 
-这个选择结论是 Matsuo 已发表理论的重用；本文推导重点是后续三阶响应与标记恢复接口。实际读取的 arXiv v1 中，Theorem 3.2 证明的负候选列表与其显示公式的直接消元不同；式（MC.6）已经精确展开检错。本文只使用正分支证明，未将那个负根列表当作依据，未声称核对了期刊版该排印位置。
+这个选择结论重用 Matsuo 已发表理论；本文随后处理三阶响应与标记恢复。arXiv v1 的 Theorem 3.2 负候选列表与其显示公式的直接消元不同；式（MC.6）采用正分支证明，不以负根列表为前提。
 
 ### 3.3 不能跳过的选择缺口
 
@@ -374,7 +374,7 @@ $$
 
 结点改相位 $b(g,h)$ 将 $\omega$ 乘以三上边界，因此物理障碍是 $[\omega]\in H^3(G,U(1))$。这个层面与式（MC.1）的普通 DHR 范畴分开；$\mathrm{Vec}_G^\omega$ 的标签一开始就输入 $G$，不能借它循环推导 Monster 的存在。
 
-[JF19, Theorem 1] 证明月光作用的反常类有精确阶 24。已读取该文 arXiv v3 和 2019 在线、2020 卷期的一页勘误；勘误只更正 handling editor，不修改该定理。后续 [L22, §3] 也明确采用精确阶 24。
+[JF19, Theorem 1] 证明月光作用的反常类有精确阶 24；[L22, §3] 也采用该阶数。
 
 **命题 8.1（局部结点不能无代价严格化）。** 若 $[\omega]\ne0$，不存在结点改相位使全部结合相位同时为一。叠放 $k$ 份相同手征月光作用时，其内部群反常类为 $k[\omega]$，恰在 $24\mid k$ 时消失。与反手征共轭理论作对角群作用时，两个内部类相消。
 
@@ -394,45 +394,31 @@ $$
 
 本卷也没有推出物理宇宙必须选择这个模型，没有证明四大力统一、引力 RT 公式、Fibonacci 链必然流到 Moonshine CFT，或构造新的单群。它给出一个真实数学物理模型中的出现原因与可反驳的进一步选择问题。
 
-## 10. 后续形式化的具体依赖
+## 11. 文献输入与适用范围
 
-有限部分先定义带单位的正定实 Frobenius 代数、正交补、对称三线性张量与其正交作用。按式（MC.10）证明双向重构，按式（MC.19）构造实际有限线性导数算子及范数；不得将“稳定子恰为 Monster”作为一般引理的字段。本模型的 Monster 识别须引用或最终形式化实际 Griess 构造。
+[G81] R. L. Griess Jr., *A construction of F1 as automorphisms of a 196,883-dimensional algebra*, PNAS 78 (1981), 689–691. https://doi.org/10.1073/pnas.78.2.689 。立方形式实现保留原有归属；完整 1982 构造 DOI 为 https://doi.org/10.1007/BF01389186 。
 
-脉冲部分以有限自伴矩阵、矩阵指数、Schatten 范数和八个有序子词为输入，证明望远镜误差，再实例化已核的 4620、900 迹公式。定理 5.2 的非负时长、归一化迹、标签单位范数、复误差及 $N$ 因子都不可省略。
+[GL11] R. L. Griess Jr. and C. H. Lam, *A new existence proof of the Monster by VOA theory*, arXiv:1103.1414v2. https://arxiv.org/pdf/1103.1414 。Monster 型群的唯一性仍为该文引用的群论输入。
 
-标记部分先形式化有限正交群作用、投影与中央化子的等价、绝对不可约条件下的群平均。缺陷部分先定义群上三余循环及二维结点改相位；Monster 的实际阶 24 仍是外部定理。无限 VOA/共形网、最低权模、扭曲扩展和 DHR 全识别是独立而实质性的后续工作。
+[KL05] Y. Kawahigashi and R. Longo, *Local conformal nets arising from framed vertex operator algebras*, arXiv:math/0407263v2. https://arxiv.org/pdf/math/0407263 。使用 Theorem 3.6、Example 3.8、Lemma 5.1、Theorem 5.4 的具体 Moonshine 网，不以一般 VOA/net 关系代替此处的对象。
 
-没有新 Lean 或 Scribe 绑定。简单的数值计数、条件恢复公式或本稿文本均不计为形式化真值。
+[M01] A. Matsuo, *Norton's Trace Formulae for the Griess Algebra of a Vertex Operator Algebra with Larger Symmetry*, Commun. Math. Phys. 224 (2001), 565–591. https://doi.org/10.1007/s00220-001-0565-3 ，https://arxiv.org/pdf/math/0007169v1 。使用 §§1、3.1、Corollary 4.1；显示多项式和负候选列表的差异见第 3.2 节。
 
-## 11. 文献和实际验证范围
-
-[G81] R. L. Griess Jr., *A construction of F1 as automorphisms of a 196,883-dimensional algebra*, PNAS 78 (1981), 689–691. https://doi.org/10.1073/pnas.78.2.689 。实际读取原作者摘要，并取得其短文 PDF；没有把它当作 1982 年完整构造的重验；立方形式实现的原有地位明确保留。完整 1982 构造 DOI 为 https://doi.org/10.1007/BF01389186 ，本轮仅取得其出版记录，不冒称全文重验。
-
-[GL11] R. L. Griess Jr. and C. H. Lam, *A new existence proof of the Monster by VOA theory*, arXiv:1103.1414v2. https://arxiv.org/pdf/1103.1414 。读取构造路线、中央化子与有限性论证；PDF 第 2 页已视觉核对。Monster 型群的唯一性仍为该文引用的群论输入。
-
-[KL05] Y. Kawahigashi and R. Longo, *Local conformal nets arising from framed vertex operator algebras*, arXiv:math/0407263v2. https://arxiv.org/pdf/math/0407263 。使用 Theorem 3.6、Example 3.8、Lemma 5.1、Theorem 5.4；PDF 第 15、20 页已视觉核对。本文只采用其具体 Moonshine 网，不将 2005 年对一般 VOA/net 关系的旧状态描述当作当前状态。
-
-[M01] A. Matsuo, *Norton's Trace Formulae for the Griess Algebra of a Vertex Operator Algebra with Larger Symmetry*, Commun. Math. Phys. 224 (2001), 565–591. https://doi.org/10.1007/s00220-001-0565-3 ，本轮实际读取 https://arxiv.org/pdf/math/0007169v1 。使用 §§1、3.1、Corollary 4.1；PDF 第 7、13、16 页已视觉核对。显示多项式和负候选列表的差异按第 3.2 节记录。
-
-[DGL05] C. Dong, R. L. Griess Jr. and C. H. Lam, *On the uniqueness of the moonshine vertex operator algebra*, arXiv:math/0506321v1. https://arxiv.org/pdf/math/0506321 。实际核对 Theorem 1 的全部前件，PDF 第 1 页已视觉核对。不能删除 Griess 乘法前件。
+[DGL05] C. Dong, R. L. Griess Jr. and C. H. Lam, *On the uniqueness of the moonshine vertex operator algebra*, arXiv:math/0506321v1. https://arxiv.org/pdf/math/0506321 。Theorem 1 保留 Griess 乘法前件。
 
 [ALY] T. Abe, C. H. Lam and H. Yamada, *A remark on Z_p-orbifold constructions of the Moonshine vertex operator algebra*, arXiv:1705.09022v4. https://arxiv.org/html/1705.09022v4 。使用 §1 的反射构造及其他 prime orbifold 构造范围，不认领其新颖性。
 
-[JF19] T. Johnson-Freyd, *The Moonshine Anomaly*, Commun. Math. Phys. 365 (2019), 943–970. https://arxiv.org/html/1707.08388v3 。Theorem 1 及 §2 的物理/数学缺陷解释。勘误全文 https://link.springer.com/content/pdf/10.1007/s00220-019-03636-9.pdf 已读取且截图核对，只更正编辑署名。
+[JF19] T. Johnson-Freyd, *The Moonshine Anomaly*, Commun. Math. Phys. 365 (2019), 943–970. https://arxiv.org/html/1707.08388v3 。使用 Theorem 1 及 §2 的缺陷解释；勘误见 https://link.springer.com/content/pdf/10.1007/s00220-019-03636-9.pdf 。
 
-[Z96] Y. Zhu, *Modular invariance of characters of vertex operator algebras*, J. Amer. Math. Soc. 9 (1996), 237–302. https://doi.org/10.1090/S0894-0347-96-00182-8 。本轮读取作者上传全文的导言及 Theorem 5.3.2 的导言说明；模变换定理作为外部输入，未重验整篇证明。
+[Z96] Y. Zhu, *Modular invariance of characters of vertex operator algebras*, J. Amer. Math. Soc. 9 (1996), 237–302. https://doi.org/10.1090/S0894-0347-96-00182-8 。模变换定理作为外部输入。
 
 [L22] Ying-Hsuan Lin, *Topological modularity of Monstrous Moonshine*, arXiv:2207.14076v3. https://arxiv.org/html/2207.14076v3 。使用 §3 对月光反常和有限子群 gauging 限制的陈述。
-
-实际标准库精确检查见 [`monster_completion_checks.py`](../../reports/monster-local-completion/monster_completion_checks.py) 和 [`monster_completion_results.json`](../../reports/monster-local-completion/monster_completion_results.json)。检查了 orbifold 字符有限系数、权重二计数、显示多项式消元、响应常数、明确标为 toy 的有限置换模型中的标记/中央化子/平均、立方导数和循环群结点五边形。错误的二阶充分性预测被显式拒绝。
-
-程序没有存储或计算实际 196883 维 Monster 矩阵、完整 Griess 张量、VOA 公理、月光反常上同调或实际 $\kappa,\eta$。有限诊断不升级一般证明、物理实验或原 QCA 反例的审定状态。未运行 Lean、CI、独立同行评审，也未建立本文推论组合的全球优先权。
 
 ## 追加锚（本行以下为后续增补区）
 
 ## 12. 二阶谱选择的补入：不先给定魔群或 Griess 乘法
 
-本批日期为 2026-09-28，接续 PR #10310 的 `beb3c5b9c87d201626bd413afebfc95b8d64ea98`，沿用本文件为魔群研究唯一主卷。此前对话附件 `MONSTER_SELECTOR_APPEND.md` 中的循环谱、逆轨形和字符选择结果在第 12–13 节补入；该附件原拟接到 QCA 卷，尚未写回。本次按实际远端归属接入这里，已有三阶响应、标记、反常和 QCA 正文均保留。以下为普通数学证明稿，无 Lean、独立审定或全球优先权声明。
+以下循环谱、逆轨形和字符选择均使用本卷前述的 VOA 条件；所需外部定理在证明中标明。
 
 ### 12.1 候选理论与实际循环缺陷
 
@@ -695,39 +681,35 @@ $$
 
 本批的出现解释现在具有具体逻辑：中心荷与低能缺口限制单缺陷谱；双方向环面接合强制互易负号；足够多共同对称使这些负号不能全局相容；被迫出现的另一种缺陷通过逆轨形选择整个月光场代数。普遍 FLM 唯一性、从给定 Fibonacci 自旋链导出此 VOA、以及任何真实材料的实现均未由此解决。
 
-## 19. 形式化顺序、来源与实际交付检查
+## 19. 循环轨形与模函数的文献输入
 
-有限证明先实现：分级有限表示的字符投影；式（MD.5）的模恒等式接口与整系数 Euler 乘积；$\mathbb F_2$ 三余循环及循环限制；有理函数的三尖点主部与常数线性方程；一维表示的符号乘法；九对矛盾；陪集递推阻挡界；秩三显式点积表。条件 14.1 必须由实际模块及模变换方块承载，不能将“存在 B 型”或“同构于月光”作为它的字段。完整 VOA、Zhu 模性、循环轨形、Leech/FLM 识别仍是实质性外部依赖。
+定义 14.1 的共同迹条件须由实际模块及模变换方块满足；它不由“存在 B 型”或“同构于月光”推出。完整 VOA、Zhu 模性、循环轨形及 Leech/FLM 识别仍是外部前提。
 
-[DM02] C. Dong and G. Mason, *Holomorphic Vertex Operator Algebras of Small Central Charges*, arXiv:math/0203005. https://arxiv.org/pdf/math/0203005 。本批读取 Lemma 2.1 和 Theorem 3(b)，用于字符和二十四维阿贝尔流刚性。
+[DM02] C. Dong and G. Mason, *Holomorphic Vertex Operator Algebras of Small Central Charges*, arXiv:math/0203005. https://arxiv.org/pdf/math/0203005 。Lemma 2.1 和 Theorem 3(b) 用于字符和二十四维阿贝尔流刚性。
 
-[EMS20] J. van Ekeren, S. Möller and N. R. Scheithauer, *Dimension Formulae in Genus Zero and Uniqueness of Vertex Operator Algebras*, IMRN 2020, 2145–2204; arXiv:1704.00478v3. https://arxiv.org/pdf/1704.00478 。使用 §3 的循环规范化及逆轨形、§4.1 的 eta 主模；PDF 第 9、15 页已视觉核对。其二阶维数机制已有 Montague 来源。
+[EMS20] J. van Ekeren, S. Möller and N. R. Scheithauer, *Dimension Formulae in Genus Zero and Uniqueness of Vertex Operator Algebras*, IMRN 2020, 2145–2204; arXiv:1704.00478v3. https://arxiv.org/pdf/1704.00478 。使用 §3 的循环规范化及逆轨形、§4.1 的 eta 主模；其二阶维数机制已有 Montague 来源。
 
 [T93] M. P. Tuite, *On the Relationship between Monstrous Moonshine and the Uniqueness of the Moonshine Module*, arXiv:hep-th/9305057. https://arxiv.org/pdf/hep-th/9305057 。§3.6 的逆轨形识别是定理 12.3 的历史归属。FLM 完整群识别与本卷原 §2 保持相同外部来源。
 
-[GPRV14] M. R. Gaberdiel, D. Persson, H. Ronellenfitsch and R. Volpato, *Generalised Mathieu Moonshine*, arXiv:1211.7074v3. https://arxiv.org/pdf/1211.7074 。采用 §3.1 对一般 holomorphic orbifold 的项目作用、余循环和模变换的说明，不采用该文后续对 Mathieu 扭曲椭圆亏格的猜测作为证明。PDF 第 17、18 页已视觉核对；第 18 页式（40）下双星号脚注的一般推导边界保留在 §14.2。
+[GPRV14] M. R. Gaberdiel, D. Persson, H. Ronellenfitsch and R. Volpato, *Generalised Mathieu Moonshine*, arXiv:1211.7074v3. https://arxiv.org/pdf/1211.7074 。采用 §3.1 对一般 holomorphic orbifold 的项目作用、余循环和模变换的说明，不采用后续 Mathieu 猜测作为证明；式（40）下脚注的一般推导边界保留在 §14.2。
 
-[K02] A. Kirillov Jr., *Modular categories and orbifold models*, Commun. Math. Phys. 229 (2002), 309–335; arXiv:math/0104242. https://arxiv.org/pdf/math/0104242 。读取引言的完整假设、§5 的结合三余循环、Lemma 5.3 和 Theorem 5.12。使用的是零余循环下的真实双重范畴构造，不能直接以它删去实际字符实现义务。
+[K02] A. Kirillov Jr., *Modular categories and orbifold models*, Commun. Math. Phys. 229 (2002), 309–335; arXiv:math/0104242. https://arxiv.org/pdf/math/0104242 。§5、Lemma 5.3 和 Theorem 5.12 给出零余循环下的双重范畴构造，不能删去实际字符实现义务。
 
-[CM18] S. Carnahan and M. Miyamoto, *Regularity of fixed-point vertex operator subalgebras*, arXiv:1603.05645v4. https://arxiv.org/pdf/1603.05645 。读取 Corollaries 5.25–5.26、Theorem 6.2；正则性及到标量的协变不被混称为自动已固定全部相位。
+[CM18] S. Carnahan and M. Miyamoto, *Regularity of fixed-point vertex operator subalgebras*, arXiv:1603.05645v4. https://arxiv.org/pdf/1603.05645 。Corollaries 5.25–5.26、Theorem 6.2 的正则性及协变结论不自动固定全部相位。
 
 [Mi17] J. S. Milne, *Modular Functions and Modular Forms*, v1.31 (2017). https://www.jmilne.org/math/CourseNotes/MF.pdf 。使用 §2 的紧模曲线与尖点基础；式（MD.15）的 lambda 规范与 theta 变换另列为标准二级模函数输入。式（MD.13）的常数消元与符号结论由正文直接证明。
 
-[CC26] S. Carpi and G. Codogni, *Vertex operator algebras, partition functions and Teichmüller modular forms*, arXiv:2605.26972v1. https://arxiv.org/html/2605.26972v1 。本轮重新读取其一般 FLM 唯一性仍开放的说明，不把条件识别定理升级为该猜想的解答。缺陷反常的来源继续使用本卷 [JF19]，本轮亦读取其 §2.2 的 VOA/net 范围区别。
+[CC26] S. Carpi and G. Codogni, *Vertex operator algebras, partition functions and Teichmüller modular forms*, arXiv:2605.26972v1. https://arxiv.org/html/2605.26972v1 。一般 FLM 唯一性仍不由本卷的条件识别定理解决；缺陷反常另用 [JF19, §2.2]。
 
-本批定向检索没有建立秩四选择及其阻挡集组合的全球优先权。三余循环、模函数、逆轨形和有限几何工具都有既有来源；这里的研究增量是把它们接到明确的未知场论选择条件，并给出可逐项核对的证明。检索返回的若干相关性不足结果未用作依据。
-
-实际执行文件为 [`twisted_pair_checks.py`](../../reports/monster-twisted-pair-selection/twisted_pair_checks.py)，输出为 [`twisted_pair_results.json`](../../reports/monster-twisted-pair-selection/twisted_pair_results.json)。使用标准库整数和 Fraction 到截断阶 40，检查式（MD.5）、lambda 的独立 theta 乘积与 $E_6/\eta^{12}$、三尖点消元、九对矛盾、秩三完整表和余循环限制。另以全体低维输入检查余循环方程及 32 个低维四子空间。输出复跑逐字节一致。此前附件的 `monster_selector_checks.py` 也实际复跑，与其原结果一致，未把这次重放计算作新增理论结果。
-
-上述程序没有构造真实 VOA、共同扭曲迹条件、范畴–解析字符的衔接、Leech 格或 Monster。新结论仍接受独立数学复核；没有 Lean/Scribe、CI 或物理实验成功声明。原主卷所有字节保持，原 QCA 卷和已有并行三阶响应内容未改写。
+三余循环、模函数、逆轨形和有限几何工具分别保留上述文献归属。它们与定义 14.1 的共同场论选择条件联用；有限代数恒等式本身不产生真实 VOA、Leech 格或 Monster。
 
 ## 追加锚（本行以下为后续增补区，MD 批次结束）
 
 ## 20. Fibonacci 原子关系与秩三缺陷：必须保留的来源类型
 
-本批日期为 2026-09-29，接续 PR #10310 的 `b63c3943185863b42ad5adb7d0b861a0dcb644b7`。本卷仍是魔群研究的唯一理论属主。读取 [Fibonacci 原子关系生成卷](https://github.com/the-omega-institute/trureturing/blob/409ac8ac7e6ea43a5afc318381b0af261543ca73/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的相关正文至 §36，源 blob 为 `734088bcd52f4f752593942f5ecda392bbc67ea8`。本批使用其自由树、组成商、可展开封装、双读数与进位接口；没有宣称已审阅该源之后的全部章节，也不改写其原文。
+[Fibonacci 原子关系生成卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的自由树、组成商、可展开封装、双读数与进位接口用于下列有限代数构造。
 
-该源的 §§2–5 区分原始树、组成及数量观察；§8 要求封装保存展开后的行为；§§25–27 把进位解释为截面不保运算时必须记录的资料。本批得到一个具体的缺陷版本：基态标签组成的截面不保持实际融合，丢掉它的字符进位会把允许的输出通道误认成另一条基态。
+该卷 §§2–5 区分原始树、组成及数量观察；§8 保留展开后的行为；§§25–27 把进位解释为截面不保运算时的记录。这里的缺陷版本中，基态标签组成的截面不保持实际融合，丢掉字符进位会把允许的输出通道误认成另一条基态。
 
 **定义 20.1（本批的三层前提）。** 有限代数部分只取 $E=\mathbb F_2^3$ 及函数 $f:E\times E\to\mathbb F_2$，满足
 
@@ -1013,31 +995,25 @@ $$
 
 $U,S$ 通过欧几里得行变换生成 $\operatorname{SL}_2(\mathbb Z)$：对互素的第一列反复减整倍并交换，化为 $(1,0)$，再以剪切消去右上项；逆操作重构原矩阵。因此 $M^2,I+\partial$ 也生成该群。任意这种两标签变换仍保持 $\langle g,h\rangle$，所以增加全部模变换也不会跨过定理 25.2 的来源秩盲区。
 
-## 27. 形式化接口、来源与实际检错
+## 27. 字符进位的文献与适用范围
 
-本批主要推导链为：秩三基态符号的非线性部分固定为三阶行列式；该同一三形式成为基态截面的字符进位；真实融合要求补足 $E^*$；七个基态模生成全部六十四个类型；混合迹确定被迫离开基态的 $1216$ 重最低输出通道；全部字符归成四类，产生可计算的 $S_7$ 谱融合稳定子及 $168$ 阶来源稳定子。Fibonacci 的作用是给出有类型的递归、记录与模标签接口，并明确两来源观察的盲区。
+秩三基态符号的非线性部分固定为三阶行列式；该三形式成为基态截面的字符进位；真实融合要求补足 $E^*$；七个基态模生成六十四个类型；混合迹确定 $1216$ 重最低输出通道；完整字符的四类给出 $S_7$ 谱融合稳定子及 $168$ 阶来源稳定子。Fibonacci 的递归与记录接口保留两来源观察的盲区。
 
-有限形式化次序是：$E=(\mathrm{Fin}\ 3\to\mathbb F_2)$、实际对偶、式（FC.4）的有限和；证明所有解之差双线性；用多项式恒等式证明行列式进位；构造六维群的截面与展开同构；证明七生成元唯一关系和子集正常形；有限 Fourier 投影推导重数；最后接实际模块融合与模函数。辅助八元数可通过显式系数同构复用已有理论，不以它作为待证明 OPE 的定义。没有新增 Lean/Scribe 或当前编译结论。
+[FAG26] *Fibonacci Atomic Relation Generation*, §§2–5、8、19、25–27，见本仓同名理论卷。其自由树、数量商、操作环与本卷缺陷标签具有不同类型，不能直接转移全称结论。
 
-[FAG26] 用户指定原子关系卷，固定提交、blob 及读取范围见 §20。重点使用 §§2–5、8、19、25–27。其原始树、数量商、操作环和本卷的缺陷标签具有不同类型；本批不把全称结论从一种载体直接搬到另一种载体。
+[Ba17] Tathagata Basak, *The octonions as a twisted group algebra*, arXiv:1702.05705v1 (2017), https://arxiv.org/pdf/1702.05705 。Theorem 1、Lemma 3、§§5–6 给出八元数扭曲群代数背景。
 
-[Ba17] Tathagata Basak, *The octonions as a twisted group algebra*, arXiv:1702.05705v1 (2017), https://arxiv.org/pdf/1702.05705 。实际读取 Theorem 1、Lemma 3、§§5–6 的证明。PDF 第 2、3 页截图请求失败，读取的是可解析文本，不报告视觉复核。
+[AM99] Helena Albuquerque and Shahn Majid, *Quasialgebra Structure of the Octonions*, Journal of Algebra 220 (1999), 188–224; arXiv:math/9802116v1, https://arxiv.org/pdf/math/9802116 。§2 的 Eq. (11)、Definition 2.3 和 Corollary 2.4 给出八元数余边界实现。
 
-[AM99] Helena Albuquerque and Shahn Majid, *Quasialgebra Structure of the Octonions*, Journal of Algebra 220 (1999), 188–224; arXiv:math/9802116v1, https://arxiv.org/pdf/math/9802116 。采用 §2 的 Eq. (11)、Definition 2.3 和 Corollary 2.4；PDF 第 6 页已视觉核对。八元数的余边界实现保留既有归属。
+[K02] 的实际 double 实现和 [EMS20] 的循环轨形是物理接口的外部来源；共同相位归一化、实际固定点模及范畴 $S$ 的匹配仍满足 §14 的额外条件。
 
-[K02] 的实际 double 实现和 [EMS20] 的循环轨形为本批物理接口的外部来源；本批重读两份原论文相应部分。共同相位归一化、实际固定点模及范畴 $S$ 的匹配仍有 §14 的条件边界。没有把全部形式符号表宣布为可实现 VOA。
-
-本批代码 [`bridge_checks.py`](../../reports/monster-fibonacci-character-carry/bridge_checks.py) 及输出 [`bridge_results.json`](../../reports/monster-fibonacci-character-carry/bridge_results.json) 使用标准库整数与 Fraction，实际运行并复跑。覆盖八个符号表的全部有限三元组、字符进位和展开复合、全部七点置换的二次型保持、$168$ 阶来源子群计数、字符到 $x^{30}$ 的有限系数、输出 $724/1216/24064$ 重数，以及两原子递归和第三独立输入反例。逐系数检查和边界实例存在包含关系，不相加当作独立结果数。
-
-这些有限运行没有构造完整 VOA、intertwining operator 的非零系数、Monster 或其反常类。普通证明尚无独立审定或全球优先权认证。本批没有把秩三全 A 分支排除，也没有证明任何 $S_7$ 置换提升为完整场对称。接下来真正的未知量已具体缩小为那些 $1216$ 重通道的实际耦合及其 crossing 相容性；它们须由场论构造，而非给辅助八元数改名。
+上述有限符号结论不构造完整 VOA、非零交织算子或 Monster；秩三全 A 分支及 $S_7$ 标签置换能否提升为场对称仍未解决。$1216$ 重通道的实际耦合与 crossing 相容性仍须由场论构造给出。
 
 ## 追加锚（本行以下为后续增补区，FC 批次结束）
 
-## 28. AD 追加稿与已提交 FC 正文的对齐及完整模块前提
+## 28. 完整模块与扩展前提
 
-本批为 2026-09-29 的实际同步整理，基点为 PR #10310 的 `5fe7c4039a16816e9e9862abd25ddcb37c0defa7`，原主卷 blob 为 `5826eb5284c90b35add4731a09b7ff7fe4db8198`。上一轮对话附件 `ATOMIC_DEFECT_APPEND.md` 原按旧头规划第 20–29 节；本次发现远端已经具有 FC 第 20–27 节，因此保留既有正文，复用其中的字符进位、六十四类、四类完整字符和七点谱对称，只追加尚缺的模块封装障碍、三十种实际扩展及其对偶扭曲谱、辅助范数证明与来源勘误。没有把重复结果计成新的发现。
-
-Fibonacci 来源继续固定为本卷第 20 节已引用的 `FIBONACCI_ATOMIC_RELATION_GENERATION.md`，提交 `409ac8ac7e6ea43a5afc318381b0af261543ca73`、blob `734088bcd52f4f752593942f5ecda392bbc67ea8`。其自由树、组成、可展开封装和续接任务接口已在 FC 正文接入；本次不修改该源或原 QCA 主卷。全部新增内容仍是普通证明稿，不升级为 Lean 核验、独立审定或全球优先权结论。
+以下复用第 20–27 节的字符进位、六十四类、四类完整字符与七点谱对称，并增加完整模块及实际扩展所需的假设。Fibonacci 自由树与缺陷标签之间仅使用前述有类型的映射。
 
 **定义 28.1（实际模块与扩展前提）。** 保留定义 12.1、14.1、20.1 的候选 VOA、$c=24,V_1=0$、实际 $E=\mathbb F_2^3$ 作用、正的循环 type 零扭曲模及同一套共同迹，并限定全部七个非零缺陷均为 A 型。记 $U=V^E$。涉及实际融合、OPE 和扩展时，要求 $U$ 是简单、强有理、CFT 型且自对偶的 VOA，全部不同不可约模确为 $M_{g,\xi}$，$(g,\xi)\in E\oplus E^*$，且满足第 14.2 节的真实模块分解与 double 模资料。所有非真空模最低权严格为正。
 
@@ -1119,41 +1095,37 @@ $$
 
 证明。八元数是交替代数，Artin 定理保证任意两个元素生成的子代数结合 [B02, §2]；对树作结构归纳，其值始终在这个子代数中。证毕。
 
-这将第 25.2 节对两个齐次缺陷标签的秩限制补充到任意两个八元数语义值。标准虚基的三周期已在第 25.2 节证明，这里不重复。对附件检查程序的代表表 $\ell_g=(1,3,6,7,4,5,2)$，有 $(e_1e_2)e_4=-e_7$ 而 $e_1(e_2e_4)=e_7$。三个独立方向可以检测非结合性；该符号代表与第 21 节的 $f_0$ 可相差一个已允许的交错双形式，不要求不同规范中的这两个单独符号相同。
+这将第 25.2 节对两个齐次缺陷标签的秩限制补充到任意两个八元数语义值。对代表表 $\ell_g=(1,3,6,7,4,5,2)$，有 $(e_1e_2)e_4=-e_7$ 而 $e_1(e_2e_4)=e_7$。三个独立方向可以检测非结合性；该符号代表与第 21 节的 $f_0$ 可相差一个已允许的交错双形式，不要求不同规范中的这两个单独符号相同。
 
 这个辅助代数的结合差仍是式（FC.16），普通三上同调类为零；它不是阶二十四的 Moonshine 反常。定理 29.1 也阻止将其 $e_ge_h\propto e_{g+h}$ 直接当作实际基态 OPE。二字母编码能描述许多对象，与固定一种乘法的两个语义生成元，是不同资源。
 
-## 33. 来源勘误与本次同步的剩余边界
+## 33. 算术勘误与剩余边界
 
 ### 33.1 原子关系源中的一个不承重的算术勘误
 
-对话附件指出：固定版本 FAR 推论 6.4 的“相邻下标 $n,n+1$ 都大于三时，其中一个被三整除”并不成立，例如七、八。所需修正可用奇偶：相邻下标的偶数项若至少六，写成 $2k$、$k\ge3$，则 $F_k$ 是 $F_{2k}=F_kL_k$ 的非平凡真因子。因此偶下标只能是四，留下 $(F_3,F_4)$ 与 $(F_4,F_5)$。此记录来自待同步附件，本次不修改其他作者的源文，也没有使用该素数推论证明任何 Monster 结论。
+原子关系卷 FAR 推论 6.4 使用的“相邻下标 $n,n+1$ 都大于三时，其中一个被三整除”不成立，反例为七、八。所需修正可用奇偶：相邻下标的偶数项若至少六，写成 $2k$、$k\ge3$，则 $F_k$ 是 $F_{2k}=F_kL_k$ 的非平凡真因子。因此偶下标只能是四，留下 $(F_3,F_4)$ 与 $(F_4,F_5)$。该素数推论不是任何 Monster 结论的前提。
 
-### 33.2 未被本次同步关闭的数学问题
+### 33.2 未决的数学问题
 
-本次整理保留原附件的非重复内容。字符进位与六十四类闭包继续以第 20–27 节为唯一正文；新增的定理 30.2–30.3只解决同一固定点的实际扩展与全 A 对偶问题。没有证明秩三全 A 候选存在或不存在，没有删除实际 double 模块和共同扭曲迹前提，没有证明所有 $S_7$ 标签置换都提升为场自同构，也没有构造完整 Griess 乘法或证明一般 FLM 唯一性。
+定理 30.2–30.3 只处理同一固定点的实际扩展与全 A 对偶问题。它们不决定秩三全 A 候选的存在性，不删除实际 double 模块和共同扭曲迹前提，不使所有 $S_7$ 标签置换提升为场自同构，也不构造完整 Griess 乘法或证明一般 FLM 唯一性。
 
-有限结果不升级原 QCA 反例、秩四选择或本卷早先证明稿的独立审定状态。不能从同一固定点内的三十种再完成跳到任意 orbifold、任意新固定点或所有局部场论的穷尽结论。
+同一固定点内的三十种再完成不推出任意 orbifold、任意新固定点或所有局部场论的穷尽结论。
 
-## 34. 形式化依赖、文献承接与实际检查
+## 34. 模块扩展的文献前提
 
-有限部分先复用第 20–27 节的 $\mathbb F_2^3$ 字符、行列式进位、六维二次空间和短子集正规形，再证明本批的压缩障碍、全奇异子空间计数、陪集原子唯一性和完成轨道。命题 32.1 可从明确的带符号矩阵直接形式化；其全体实向量结论由矩阵恒等式承担，不从有理样本外推。
+第 29–32 节使用第 20–27 节的 $\mathbb F_2^3$ 字符、行列式进位、六维二次空间和短子集正规形。命题 32.1 的全体实向量结论依赖矩阵恒等式，不能从有限有理样本外推。
 
-实际扩展须先具备定义 28.1 的 $U$ 和全部不同不可约模，应用实际 Verlinde、简单流扩展和诱导扭曲模定理。只验证有限字符不会替代这些前提。本文没有新增 Lean/Scribe，也没有核验所涉 VOA 定理的 Lean 公理闭包。
+实际扩展须具备定义 28.1 的 $U$ 和全部不同不可约模，并满足 Verlinde、简单流扩展和诱导扭曲模定理的前提；有限字符不替代这些前提。
 
-新增 Library 记录为 [`vanekeren2020atomicmonstercompletion.md`](../../../Library/VertexAlgebra/vanekeren2020atomicmonstercompletion.md)。以下文献读取范围继承上一轮附件的来源记录，本次同步不冒称重新完成了文献审查：
+所用文献及其数学范围如下：
 
-[AM99] H. Albuquerque and S. Majid, *Quasialgebra structure of the octonions*, Journal of Algebra 220 (1999), 188–224; arXiv:math/9802116，DOI 10.1006/jabr.1998.7850。https://arxiv.org/pdf/math/9802116 。附件记录读取导言、§§3–4，并视觉核对 Proposition 4.4。已知八元数扭曲结构保留原作者归属。
+[AM99] H. Albuquerque and S. Majid, *Quasialgebra structure of the octonions*, Journal of Algebra 220 (1999), 188–224; arXiv:math/9802116，DOI 10.1006/jabr.1998.7850。https://arxiv.org/pdf/math/9802116 。§§3–4、Proposition 4.4 给出已知的八元数扭曲结构。
 
 [B02] J. C. Baez, *The Octonions*, Bulletin of the AMS 39 (2002), 145–205; arXiv:math/0105155。作者全文 https://math.ucr.edu/home/baez/octonions/ ，尤其 node2.html 的交替性、Artin 定理和 Hurwitz 分类。使用的是成熟数学输入。
 
-[EMS17] J. van Ekeren, S. Möller and N. R. Scheithauer, *Construction and Classification of Holomorphic Vertex Operator Algebras*, arXiv:1507.08142v3，J. reine angew. Math. 759 (2020), 61–99，DOI 10.1515/crelle-2017-0046。https://arxiv.org/pdf/1507.08142 。附件记录读取 Theorem 2.2、§§3–4，并视觉核对 Theorem 4.2。完整正性、强有理、自对偶和 group-like fusion 前提在定义 28.1 保留。
+[EMS17] J. van Ekeren, S. Möller and N. R. Scheithauer, *Construction and Classification of Holomorphic Vertex Operator Algebras*, arXiv:1507.08142v3，J. reine angew. Math. 759 (2020), 61–99，DOI 10.1515/crelle-2017-0046。https://arxiv.org/pdf/1507.08142 。Theorem 2.2 与 Theorem 4.2 所需的正性、强有理、自对偶和 group-like fusion 前提保留在定义 28.1。
 
-[Y04] H. Yamauchi, *Module categories of simple current extensions of vertex operator algebras*, J. Pure Appl. Algebra 189 (2004), 315–328; arXiv:math/0211255v3，DOI 10.1016/j.jpaa.2003.10.006。https://arxiv.org/pdf/math/0211255 。附件记录读取 §§2–3、Theorems 3.2–3.3 的诱导及无稳定子情形。这里用于同一 $L$ 陪集的重数一扭曲模块，没有以抽象标签自同构替代诱导。
-
-配套文件为 [`atomic_defect_checks.py`](../../reports/monster-atomic-defect-bridge/atomic_defect_checks.py) 和 [`atomic_defect_results.json`](../../reports/monster-atomic-defect-bridge/atomic_defect_results.json)。程序与上一轮附件逐字相同；本次实际执行并与附件结果作逐字节比较，完全一致。它检查八个符号表、所有三方向电荷、六十四模块的有限 Fourier 字符、三十个全奇异三空间及其全部对偶迹、Fano 轨道和辅助八元数矩阵。各计数可能包含相同数学对象的不同系数，不相加宣称独立定理数量。
-
-程序 Git blob 为 `93ecb7cb7a82cfcb3a7dfcc4d5e34493289999df`，结果 Git blob 为 `1a2a3937430f68a018eaee5a6072bbeef1ed567d`。这些精确有限检查没有构造 VOA、实际交织算子、扩展或 Monster。同步只发布普通数学正文及检错材料，不声明 Lean、独立同行评审、硬件实验或 CI 通过。
+[Y04] H. Yamauchi, *Module categories of simple current extensions of vertex operator algebras*, J. Pure Appl. Algebra 189 (2004), 315–328; arXiv:math/0211255v3，DOI 10.1016/j.jpaa.2003.10.006。https://arxiv.org/pdf/math/0211255 。Theorems 3.2–3.3 的诱导及无稳定子情形用于同一 $L$ 陪集的重数一扭曲模块，不以抽象标签自同构替代诱导。
 
 ## 追加锚（本行以下为后续增补区，AD 同步批次结束）
 
