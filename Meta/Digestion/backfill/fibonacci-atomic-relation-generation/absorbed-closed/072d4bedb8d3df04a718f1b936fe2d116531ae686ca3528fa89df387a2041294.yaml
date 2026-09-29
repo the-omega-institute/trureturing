@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:072d4bedb8d3df04a718f1b936fe2d116531ae686ca3528fa89df387a2041294
+  normalized_sha256: sha256:072d4bedb8d3df04a718f1b936fe2d116531ae686ca3528fa89df387a2041294
+cas_ref: sha256:072d4bedb8d3df04a718f1b936fe2d116531ae686ca3528fa89df387a2041294
+coverage_gids:
+  - gid: D5/S0/Carrier/Units.isUnit_iff_norm_eq_one_or_neg_one
+    target_statement_id: sha256:a9d1ff7acee2f130d44824e35f815e2981d15f9a9291fa393a34164cb168c751
+  - gid: D5/S0/Carrier/Units.norm_phi_pow
+    target_statement_id: sha256:68042ed4babee5ef77b2801c4dce97c1929d862ecd9e857d1547aacf638a6a0f
+  - gid: D5/S1/Scale/Embedding.embedding_apply
+    target_statement_id: sha256:513cd5189cf2ec17f867bf43e963fb910b6ce7cba8d2ad7713be9bd279c4c189
+  - gid: D5/S1/Scale/Fibonacci.golden_phi_pow_eq_fib_pair
+    target_statement_id: sha256:d216732e11d7a2e479d9c2c4667ce688b4f5a7eb54e80c6bce46e6858e22e2be
+  - gid: D5/S1/Scale/Log.embedding_phiUnitZPowMul
+    target_statement_id: sha256:eee0670df23eb53ff28f43f3783d1553837b8d190c031c177d551c9f7edb8f08
+  - gid: D5/S1/Scale/Units.golden_units_eq_signed_phi_pow
+    target_statement_id: sha256:8380d1b069101c77061086bc019a8721861d3062f5b3eb500f1a85742e4506c0
+receipts:
+  unresolved_subitems: []
