@@ -41,25 +41,15 @@ internal sealed class FiniteAdditiveReadoutSpectrumDocument : IScribeDocumentDef
                     + "elements. Joint injectivity gives the needed bijection."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("finite-readout-kernel-quotient"),
-                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutSpectrum.kernel_quotient_normalization"),
-                H("Kernel and quotient sizes"),
+                DescribeId.Create("finite-readout-source-coset-product"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutSpectrum.source_coset_product"),
+                H("Source cosets and product blocks"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The two readout kernels intersect only at zero. Their sum has the product "
-                    + "cardinality, and the source cardinality is the quotient cardinality times "
-                    + "that product."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("finite-readout-block-partitions"),
-                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutSpectrum.readout_block_partitions"),
-                H("Partitions of realized labels"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Distinct quotient blocks have disjoint labels on each side. The union of left "
-                    + "blocks is the left readout image, and the union of right blocks is the right image."))),
+                    "The paired readout restricts to a bijection from each source coset onto the "
+                    + "product of its left and right label blocks. Both coordinates of the "
+                    + "bijection are the original readout values."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-readout-actual-block-matrices"),
@@ -71,19 +61,22 @@ internal sealed class FiniteAdditiveReadoutSpectrumDocument : IScribeDocumentDef
                     "Normalized left and right block columns are orthonormal. The actual coefficient "
                     + "matrix factors through these columns with the square-root block weight. "
                     + "Taking its two actual partial traces gives scaled block projections, their "
-                    + "column actions, and zero action on the respective conjugate-transpose kernels."))),
+                    + "column actions, and zero action on the respective conjugate-transpose kernels. "
+                    + "Both block projections are Hermitian and idempotent. The blocks on each side "
+                    + "are disjoint and their union is precisely that readout's image."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-readout-left-eigenspaces"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutSpectrum.actual_left_eigenspaces"),
-                H("Exact left eigenspaces"),
+                H("Exact eigenspaces and dimensions"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "A left vector has eigenvalue equal to the positive block weight exactly when it "
-                    + "lies in the range of the actual left block-column matrix. It has eigenvalue "
-                    + "zero exactly when its conjugate transpose annihilates it. Both converses use "
-                    + "orthonormality of the actual block columns."))),
+                    "On either side, a vector has eigenvalue equal to the positive block weight exactly "
+                    + "when it lies in the range of that side's block-column matrix. The zero eigenspace "
+                    + "is the kernel of its conjugate transpose. The positive eigenspaces have dimension "
+                    + "equal to the quotient cardinality; the zero eigenspaces have the ambient dimension "
+                    + "minus that cardinality."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-readout-flat-reductions"),
@@ -92,10 +85,17 @@ internal sealed class FiniteAdditiveReadoutSpectrumDocument : IScribeDocumentDef
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The block weight is the reciprocal quotient cardinality. Both actual marginals "
+                    "The kernels intersect only at zero, their sum has the product cardinality, and "
+                    + "the source cardinality is that product times the quotient cardinality. "
+                    + "The block weight is the reciprocal quotient cardinality. Both actual marginals "
                     + "have trace one and rank equal to the quotient cardinality, as does the actual "
                     + "coefficient matrix. Their positive eigenvalues equal the block weight with "
-                    + "that multiplicity; all remaining eigenvalues are zero."))),
+                    + "that multiplicity; all remaining eigenvalues are zero. The von Neumann entropy "
+                    + "of either actual marginal is the logarithm of the quotient cardinality, equal "
+                    + "to the source-cardinality logarithm minus the two kernel-cardinality logarithms. "
+                    + "The actual coefficient map between Euclidean spaces has the square root of the "
+                    + "block weight as each positive singular value, repeated the quotient cardinality "
+                    + "times, with every subsequent singular value zero."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-readout-joint-state"),
@@ -106,17 +106,8 @@ internal sealed class FiniteAdditiveReadoutSpectrumDocument : IScribeDocumentDef
                 Blocks(Paragraph(Text(
                     "The outer product of the actual coefficients is positive semidefinite and "
                     + "Hermitian, has trace and rank one, and is idempotent. The coefficient norm "
-                    + "square is one."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("finite-readout-reduced-entropy"),
-                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutSpectrum.actual_reduced_entropy"),
-                H("Entropy of the actual marginals"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The von Neumann entropy of either actual reduced density state is the natural "
-                    + "logarithm of the quotient cardinality. It also equals the source-cardinality "
-                    + "logarithm minus the logarithms of the two kernel cardinalities."))),
+                    + "square is one. The sum of the actual source basis kets equals the coefficient "
+                    + "vector coordinate by coordinate, and equals the sum of the products of the "
+                    + "normalized block vectors scaled by the square root of the block weight."))),
                 DescribeRole.Theorem))));
 }
