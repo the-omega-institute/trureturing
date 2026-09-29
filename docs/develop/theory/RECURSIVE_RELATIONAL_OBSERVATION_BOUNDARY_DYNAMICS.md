@@ -16161,3 +16161,945 @@ $$
 [^boundary79-presentation]: [Pauly 的表示空间来源条目](../../../Library/ConceptDynamics/pauly2016represented.md)说明有效内容必须绑定表示。本节对有限显式表给出了直接枚举算法；该算法不需要用无限表示空间定理充当证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 80. 任务投影与两次重叠拼接的存活端口
+
+本节把 §36 的任务选择与 §79 的后续端口要求接到同一个有限实例：先沿共享坐标 $h$ 拼接，再沿共享坐标 $y$ 拼接。固定这两次拼接的次序、输出和合法性查询后，当前输出只需两类，而支持下一次拼接的关系需要四类。下面只计算这项任务，不另建一般商理论。
+
+### 80.1 完整运行与声明的任务投影
+
+**定义 80.1（运行结果的任务投影）。** 沿用 §36.1 的实际来源 $S$ 与有类型动作词 $w$，将完整运行结果明确写作
+
+$$
+\operatorname{Run}_w(s)
+=\bigl(\operatorname{Adm}_w(s),\operatorname{Out}_w(s),
+\operatorname{Rec}_w(s),\operatorname{End}_w(s)\bigr).
+$$
+
+四个分量依次记录合法性、输出、所保留的记录和终配置；失败情况须有声明的类型及失败标记。对每个 $w$，先声明本任务保留哪些结果，再指定其结果域上的投影 $\Pi_w$，定义
+
+$$
+\operatorname{Obs}_w=\Pi_w\circ\operatorname{Run}_w.
+\tag{80.1}
+$$
+
+任务核指全部已声明 $\operatorname{Obs}_w$ 的相等核之交；取恒等投影才回到相应的完整运行任务。投影可以选取分量，也可以选取已声明的分量读数，但不能在比较状态之后临时改变。特别地，若实验族含空词 $\varepsilon$，并原样保留 $\operatorname{End}_{\varepsilon}(s)=s$，则观察相等强迫 $s=t$：这是更强的身份恢复任务。删除原始终配置后，才可能合并对声明任务无差别的不同来源。
+
+本节的固定任务明确不采用这个原始身份空词：第一次拼接成功后，空词读数只取下文的 $\sigma$，不保留中间联合赋值或原始来源的恒等终配置。若把 $\operatorname{End}_{\varepsilon}$ 原样加入同一任务，四类中间剖面结论就不再是该任务的结论，而应按更强的身份恢复任务重新计数。
+
+§45 保留相对相位所决定的相等性响应及协议标签，§79 保留指定任务的补全响应与指定端口查询；二者使用这样的投影任务，不要求恢复原始终配置。本节明确这些任务与 §36.1 完整 $\operatorname{Run}$ 任务的关系，不把任务强弱的差别称为 §36 的错误，也不改写旧节。
+
+### 80.2 核包含方向的显式读法
+
+沿用 §36 的已声明目标核 $K$ 及其商投影 $q$，令 $r$ 的值域取实际像 $r[S]$。§36.2 的两条包含式保持原样，其“丢失”与“冗余”的方向明确如下：
+
+$$
+\begin{aligned}
+K\subseteq\ker(r)
+&\iff \exists\bar r:\ q[S]\to r[S],\quad r=\bar r\circ q,\\
+\ker(r)\subseteq K
+&\iff \exists d:\ r[S]\to q[S],\quad q=d\circ r.
+\end{aligned}
+\tag{80.2}
+$$
+
+第一行表示从目标商可以向下得到 $r$；$r$ 可以更粗，严格包含时会丢失目标区别。第二行的 $\ker(r)\subseteq K$ 表示 $r$ 不合并目标仍要区分的状态，是在实际像上由 $r$ 恢复目标商及其任务读出的充要条件；严格包含时，$r$ 还区分目标认为相同的状态，因而可以冗余。两核相等进一步排除这些冗余区别，给出最小的精确表示，两个实际像之间的恢复器互逆。这里的证明就是检查因子在纤维上是否恒定：第一行把 $[s]_K$ 送到 $r(s)$，第二行把 $r(s)$ 送到 $[s]_K$，相应包含式分别保证良定义；从复合等式反推核包含也逐点成立。实际像保证因子唯一。
+
+这是对 §36.2 包含式的澄清，历史正文与公式不变；后文“可丢失”专指第一方向，“可冗余”专指第二方向。集合上的恢复器存在还不自动给出允许协议下的取得算法、成本界或动态闭包。
+
+### 80.3 同一来源上的两次重叠拼接
+
+**定义 80.2（固定的四坐标模型）。** 令 $\mathbb B=\{0,1\}$，取
+
+$$
+I=\{x,h,y,z\},\qquad S=\mathbb B^I,\qquad
+A=\{x,h\},\quad C=\{h,y\},\quad D=\{y,z\}.
+\tag{80.3}
+$$
+
+写 $s=(x,h,y,z)$ 时，各字母也表示相应坐标值。局部消息为
+
+$$
+m_A(s)=(h,x),\qquad m_C(s)=(h,y),\qquad m_D(s)=(y,z).
+$$
+
+在任意局部消息对上，定义带严格失败的部分拼接
+
+$$
+J_1\bigl((h_A,x),(h_C,y)\bigr)
+=\begin{cases}(x,y),&h_A=h_C,\\ \bot,&h_A\ne h_C,\end{cases}
+\qquad
+J_2\bigl((x,y),(y',z)\bigr)
+=\begin{cases}x\mathbin{\mathrm{xor}}z,&y=y',\\ \bot,&y\ne y'.\end{cases}
+\tag{80.4}
+$$
+
+$\bot$ 与合法输出 $0,1$ 不同；带 $\bot$ 的输入继续拼接仍返回 $\bot$，不能用某个正常输出代替失败。调度固定为先 $J_1$ 后 $J_2$。$A\cap C=\{h\}$，而 $(A\cup C)\cap D=\{y\}$：第一次检查后可以忘掉 $h$，第二次仍须检查 $y$。
+
+对于每个同一来源 $s$，两次匹配都成功，最终输出为 $x\mathbin{\mathrm{xor}}z$。全部四个中间态 $(x,y)\in\mathbb B^2$ 都由完整来源共同实现：例如取 $s=(x,0,y,0)$。这里不是分别取两个边缘的可达值后假定它们能够联合出现。
+
+下一步的候选输入另记为 $a=(y',z)\in\mathbb B^2$；任务允许对每个候选检查合法性并在合法时读出结果。这些候选不是承诺来自当前同一个 $s$ 的 $m_D(s)$。来自同一 $s$ 的消息必然匹配；外部候选则可以不匹配，失败正是任务要求保留的回答。每个候选本身都是某个完整来源的 $D$ 消息，但不把不匹配的候选与当前中间态冒称为一个共同来源的限制。
+
+### 80.4 两类静态读数与四类续接关系
+
+**命题 80.3（固定任务的四类下界及达到）。** 在成功的中间态集合 $U=\mathbb B^2$ 上，定义
+
+$$
+\sigma(x,y)=x,\qquad
+\rho_a(x,y)=J_2\bigl((x,y),a\bigr),\qquad
+\Pi(x,y)=\bigl(\sigma(x,y),(\rho_a(x,y))_{a\in\mathbb B^2}\bigr).
+\tag{80.5}
+$$
+
+这里 $\Pi$ 是本实例的完整任务剖面，与式(80.1)的逐词投影 $\Pi_w$ 区分。固定的尝试剖面记为
+
+$$
+F_{\mathrm{mid}}(x,y)=\bigl(\sigma(x,y),(\rho_a(x,y))_{a\in\mathbb B^2}\bigr).
+$$
+
+它明确表示：从同一个成功中间态分别尝试四个候选动作所得到的四组反事实响应；四个 $\rho_a$ 不是一条失败后仍自动回到原态的顺序运行记录。可取空词的任务读数为 $\sigma$，一步词 $a$ 的任务读数为 $\rho_a$；合法性由是否为 $\bot$ 恢复，不额外要求原始终配置或完整历史。静态读数 $\sigma$ 恰有两类，且在本固定任务上 $F_{\mathrm{mid}}(u)=F_{\mathrm{mid}}(v)$ 当且仅当 $u=v$；从来源 $S$ 提升时，剖面相等当且仅当两来源的 $(x,y)$ 相同，$h,z$ 被任务投影丢弃。任何同时恢复 $\sigma$ 及全部 $\rho_a$ 的确定性中间消息至少有四个实际值；保留 $(x,y)$ 正好达到下界。
+
+**证明。** $\sigma$ 只区分 $x=0,1$，每类包含两个 $y$ 值。若两个中间态的 $x$ 相同而 $y$ 不同，选动作 $(0,0)$：$y=0$ 的一侧合法，$y=1$ 的一侧返回 $\bot$。若 $y$ 相同而 $x$ 不同，选共同合法动作 $(y,0)$，两侧输出分别为各自的 $x$，因而不同。若 $x,y$ 均不同，静态分量 $\sigma$ 已将两态分开。因此 $\Pi$ 区分全部四个中间态。
+
+若消息 $m$ 能恢复 $\Pi$，则 $m(u)=m(v)$ 必有 $\Pi(u)=\Pi(v)$，从而 $u=v$；四个实际可达态不能共用消息。反过来，$(x,y)$ 直接给出 $\sigma$，比较 $y=y'$ 后计算异或就给出每个 $\rho_a$，所以四值编码足够。$\square$
+
+按动作顺序 $(0,0),(0,1),(1,0),(1,1)$，全部读数为：
+
+| 80.4 中间态 | 当前 $\sigma$ | $\rho_{(0,0)}$ | $\rho_{(0,1)}$ | $\rho_{(1,0)}$ | $\rho_{(1,1)}$ |
+| --- | --- | --- | --- | --- | --- |
+| $(0,0)$ | $0$ | $0$ | $1$ | $\bot$ | $\bot$ |
+| $(0,1)$ | $0$ | $\bot$ | $\bot$ | $0$ | $1$ |
+| $(1,0)$ | $1$ | $1$ | $0$ | $\bot$ | $\bot$ |
+| $(1,1)$ | $1$ | $\bot$ | $\bot$ | $1$ | $0$ |
+
+在来源 $S$ 上，这四类由 $(x,y)$ 标识，每类含四个 $h,z$ 组合；后续候选中的 $z$ 是动作输入，不要求从中间消息恢复原来源的 $z$。四值下界是这一个中间阶段、这一个任务的消息容量，不是对 $m_A,m_C,m_D$ 各自通信成本的同时最优结论。
+
+### 80.5 四种任务完备表达及其恢复器
+
+**定义 80.4（同一四类关系的四种读法）。** 以下表达都取同一实际来源在 $J_1$ 成功后的实际像，并使用式(80.5)的同一任务。空间表达只保留指定切面上的坐标值；时间表达记带动作标签的一步续接树；边界表达记合法端口集合及输出参数；记忆表达由第一次拼接成功时写入两个比特。
+
+| 80.5 角色 | 明确的任务完备表达 | 恢复 $(x,y)$ | 从 $(x,y)$ 恢复该表达 |
+| --- | --- | --- | --- |
+| 80.5 空间 | 带标签的切面赋值 $r_{\mathrm{sp}}=\{X\mapsto x,\ Y\mapsto y\}$ | 读取 $X,Y$ 两个标签下的值 | 写入这两个坐标值 |
+| 80.5 时间 | $r_{\mathrm{tm}}=(\rho_{(0,0)},\rho_{(0,1)},\rho_{(1,0)},\rho_{(1,1)})$，坐标保留动作标签和先 $J_1$ 后 $J_2$ 的阶段约定 | 若 $\rho_{(0,0)}\ne\bot$ 则 $y=0$，否则 $y=1$；再取 $x=\rho_{(y,0)}$ | 按式(80.4)生成四个带标签响应 |
+| 80.5 边界 | $r_{\partial}=(x,L)$，$L=\{b\in\mathbb B:y=b\}$，端口 $b$ 合法时的输出规则为 $x\mathbin{\mathrm{xor}}z$ | $x$ 为第一分量，$y$ 为单元素集 $L$ 的唯一元素 | 形成 $(x,\{y\})$ 并用固定异或规则 |
+| 80.5 记忆 | $r_{\mathrm{mem}}=(b_x,b_y)$，$J_1$ 成功时赋值 $(b_x,b_y)=(x,y)$ | 读取两个寄存器 | 把 $(x,y)$ 写入这两个寄存器 |
+
+时间行中，在所测试的 $z=0$ 的两个动作 $(0,0)$ 与 $(1,0)$ 中恰有一个合法，其首坐标恢复 $y$；完整四动作表则有两个合法动作。这是式(80.4)给出的事实；因此表中每对恢复器在实际像上互逆，四种表达的核均等于 $\ker\Pi$。它们在 $S$ 上表达同一四类关系，在 $U$ 上则各自区分全部四态。完整的响应表是数学表达；从未知来源实际取得它仍需允许的查询、状态准备和成本条件。记忆初值由实际收到的两份相容消息产生，不授予读取未知来源的额外权限。
+
+单凭“空间”“时间”“边界”“记忆”的角色名称不够。若记忆只写 $x$，或时间表达只记阶段编号，表中的恢复器就不存在。这里证明的是这些指定表达对同一任务的恢复关系，没有证明任意四种视角的普遍本体论，也没有由一张响应表恢复经过时长或原始历史。
+
+### 80.6 动态下降、内部选择与严格失败
+
+对各阶段的实际状态及消息取带阶段标签的不交并；失败值也按阶段带类型。令 $r$ 在每个阶段取该阶段的编码。某个固定动作 $a$ 要在编码上下降，必须有
+
+$$
+\operatorname{Adm}_a=\overline{\operatorname{Adm}}_a\circ r,
+\qquad
+\operatorname{Out}_a=\overline{\operatorname{Out}}_a\circ r,
+\qquad
+r\circ T_a=\overline T_a\circ r.
+\tag{80.6}
+$$
+
+最后一式在由阶段 $j$ 到 $j+1$ 的有类型动作上读作
+$r_{j+1}\circ T_a=\overline T_a\circ r_j$，不把中间二元组与终端比特混作同一类型。这些等式要求合法性、输出在每个 $r_j$ 纤维上恒定，并要求同纤维状态的后继仍落在同一 $r_{j+1}$ 纤维；失败用 $\bot$ 严格传播，使部分拼接成为带失败标记的总映射。若任务保留额外记录，其读出和更新也须满足对应的下降等式。
+
+**命题 80.5（本例的第二次拼接在保留端口后下降）。** 第一次拼接后尚未压缩的联合赋值为 $v=(x,h,y)\in\mathbb B^{A\cup C}$，取
+
+$$
+r_{\mathrm{mid}}(v)=(x,y),\qquad
+\operatorname{Adm}_{(y',z)}(v)=\mathbf1_{\{y=y'\}},\qquad
+\operatorname{Out}_{(y',z)}(v)=T_{(y',z)}(v)
+=\begin{cases}x\mathbin{\mathrm{xor}}z,&y=y',\\ \bot,&y\ne y'.\end{cases}
+$$
+
+终端域为 $\mathbb B\sqcup\{\bot\}$，取 $r_{\mathrm{end}}=\mathrm{id}$；中间失败另设 $\bot_{\mathrm{mid}}$，其合法性为假，输出及后继为终端失败。则式(80.6)成立。若改用 $\sigma\circ r_{\mathrm{mid}}$ 作为中间编码，连合法性都不能下降。
+
+**证明。** 在中间像上定义 $\overline{\operatorname{Adm}}_{(y',z)}(x,y)=\mathbf1_{\{y=y'\}}$，$\overline{\operatorname{Out}}_{(y',z)}(x,y)=\overline T_{(y',z)}(x,y)=\rho_{(y',z)}(x,y)$。三式直接成立，且与被丢弃的 $h$ 无关；失败分支按上述约定成立。反向取 $v=(0,0,0)$ 与 $v'=(0,0,1)$，二者静态编码同为 $0$，但动作 $(0,0)$ 的合法性分别为真、假，故不存在静态编码上的合法性函数。$\square$
+
+第一步的端口检查仍由 $J_1$ 负责；不相容的 $(h_A,x),(h_C,y)$ 产生中间失败，相容时将 $(x,h,y)$ 映为 $r_{\mathrm{mid}}(x,h,y)$。因此删除 $h$ 有明确的阶段条件：其相等性已经检查，且剩余调度不再询问 $h$。四种表达之间的动态恢复由表中的互逆映射运输式(80.6)，终端均使用同一终端编码。
+
+若动作由内部控制策略选择，还必须检验
+
+$$
+\pi=\bar\pi\circ r.
+\tag{80.7}
+$$
+
+例如本例选择 $\pi(v)=(y,0)$ 可由 $r_{\mathrm{mid}}$ 得到且总合法；选择 $\pi(v)=(h,0)$ 则不能，因为同一 $(x,y)$ 纤维含不同 $h$。外部给定全部候选动作足以定义响应剖面，不等于内部策略可以使用已经丢掉的坐标。固定动作下降与内部选择下降合在一起，才使闭环执行也由保留的消息决定。
+
+### 80.7 既有接口的范围与本节边界
+
+本节的核方向沿用 [InterfaceKernelCriterion.interface_refinement_iff_kernel_inclusion](../../../D5/S3/ObserverMemory/Refinement/InterfaceKernelCriterion.lean)：其范围是实际像上的因子分解当且仅当反向核包含。[ControlledBehaviorUniversality](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean) 的范围包含有限载体、满射实现以及更新和读出的交换条件；[StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean) 处理有类型的部分操作与严格失败；[DynamicClosureMinimality](../../../D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean) 给出相对于所声明干预族的最小干预闭合细化。这些只作为各自范围的引用，不用来替本节实例省略共同实现、端口保留、选择器或动态交换的检查，也不新增任何定理包装。
+
+本节给出有限、确定性、固定调度 $J_1;J_2$ 下的普通数学推导。四类结论只覆盖成功的中间态；失败是额外的带类型标记，阶段标签及终端存储不计入该四类下界。这里不主张任意装配树上的同时最小性、无限完成、随机或量子版本、物理时钟、完整历史恢复，或随规模与调度变化仍成立的一致有限记忆界。本文没有新增 Lean 声明，也不声称这些具体推导已获 Lean kernel 核验；既有形式化接口的引用不改变这一边界。
+
+## 追加锚（本行以下为增补区）
+
+## 81. 二叶生成层与动作词边界的桥接
+
+第 80 节给出了一个带重叠端口的有限拼接实例；Fibonacci 卷第 93—95 节则给出了二叶自由生成语法及其任务相对行为核。本节把它们接到第 20—22 节的动作词未来边界：在只观察原子组成及其 Fibonacci 未来响应的固定任务中，组成投影本身就是完整动作词行为核；一旦增加合法性、失败、记录或内部控制，行为核按声明的新增响应细化。以下仍是有限树、确定性替换和固定测试族的普通数学推导。
+
+### 81.1 二叶载体与声明的动作族
+
+令
+
+$$
+\mathcal T=\mu X\bigl(\{\alpha,\beta\}\sqcup(X\times X)\bigr),
+\qquad
+t::=\alpha\mid\beta\mid\langle t,t\rangle,
+$$
+
+并沿用
+
+$$
+\rho(\alpha)=\beta,
+\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle .
+$$
+
+组成投影为
+
+$$
+c(t)=(\#\alpha,\#\beta)\in\mathbb N^2,
+\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+固定一个实际可声明的旁支集 $U\subseteq\mathcal T$。令
+
+$$
+L_u(t)=\langle t,u\rangle,
+\qquad
+R_u(t)=\langle u,t\rangle,
+\qquad
+A_U=\{\rho\}\cup\{L_u,R_u:u\in U\}.
+\tag{81.1}
+$$
+
+这里的 $U$ 是动作合同的一部分；把形式上所有树都当作观察者已经可以免费取得的旁支，会改变实际来源和权限任务。若某个旁支或替换在实际合同中非法，就把动作扩展为带类型失败的总化动作，并在读出中保留失败标签。
+
+### 81.2 整个动作词族在组成边界上下降
+
+对每个生成动作，组成满足
+
+$$
+\begin{aligned}
+c(\rho(t))&=Mc(t),\\
+c(L_u(t))&=c(t)+c(u),\\
+c(R_u(t))&=c(u)+c(t).
+\end{aligned}
+\tag{81.2}
+$$
+
+令 $\lambda_\rho(z)=Mz$，令 $\lambda_{L_u}(z)=z+c(u)$、$\lambda_{R_u}(z)=c(u)+z$。按动作词先后复合，得到每个 $w\in A_U^*$ 的仿射映射 $\lambda_w$，并有
+
+$$
+\boxed{c(w[t])=\lambda_w(c(t)).}
+\tag{81.3}
+$$
+
+**证明。** 空词时 $\lambda_\varepsilon=\operatorname{id}$。若式(81.3)对 $w$ 成立，再在末尾接一个生成动作，分别使用式(81.2)及仿射映射复合即可。对词长归纳完成。$\square$
+
+这比只验证 $c\circ\rho=M\circ c$ 更强：所有声明的旁支接法及其任意有限顺序都由同一组成边界运输。由于加法交换，$L_u$ 和 $R_u$ 在这个特定任务的组成读出上相同；若任务保留左右位置、路径或记录，它们必须重新区分。
+
+### 81.3 组成核就是该任务的完整行为核
+
+只保留组成读出的完整动作词 profile 定义为
+
+$$
+\Gamma_U(t)(w)=\widehat c(w[t]),
+\qquad w\in A_U^*,
+\tag{81.4}
+$$
+
+其中 $\widehat c(\bot)=\bot$；在当前自由树总化模型中没有失败分支，加入失败只是为了与一般部分过程使用同一类型接口。
+
+**命题 81.1（组成核与动作词核）。** 若空词属于测试族并读出 $c$，则
+
+$$
+\boxed{
+\Gamma_U(t)=\Gamma_U(t')\iff c(t)=c(t').
+}
+\tag{81.5}
+$$
+
+若删除空词，只要 $U$ 含一个固定已知旁支 $u_0$，并保留 $L_{u_0}$ 的组成读出，结论仍成立。
+
+**证明。** 若 $c(t)=c(t')$，式(81.3)对每个 $w$ 给出相同读数，故 profile 相同。反向在含空词的情形直接取 $w=\varepsilon$。删除空词时，取 $w=L_{u_0}$；由
+
+$$
+c(L_{u_0}(t))=c(t)+c(u_0)
+$$
+
+及 $\mathbb Z^2$ 加法的消去律，两个 profile 相同即推出 $c(t)=c(t')$。证毕。$\square$
+
+因此
+
+$$
+\mathcal T/\ker\Gamma_U
+\cong
+\operatorname{im}c=\mathbb N^2\setminus\{(0,0)\}.
+\tag{81.6}
+$$
+
+在这个固定任务下，树的左右次序和括号结构被有意商掉；例如 $\langle\alpha,\beta\rangle$ 与 $\langle\beta,\alpha\rangle$ 属于同一行为类。若扩大测试族以读取路径、左右位置或完整记录，式(81.5)的核必须重新计算，不能继续把 $c$ 当作充分边界。
+
+### 81.4 Fibonacci 两读数是同一边界的另一表达
+
+对权重 $p,q\in\mathbb Z$，令
+
+$$
+H_{p,q}=\begin{pmatrix}p&q\\q&p+q\end{pmatrix}=pI+qM,
+\qquad
+b_{p,q}(t)=H_{p,q}c(t).
+$$
+
+由于 $H_{p,q}$ 是 $M$ 的多项式，有
+
+$$
+H_{p,q}M=MH_{p,q}.
+\tag{81.7}
+$$
+
+故 $b_{p,q}$ 上的替换与旁支运输分别为
+
+$$
+\bar\rho(b)=Mb,
+\qquad
+\bar L_r(b)=b+H_{p,q}c(r),
+\qquad
+\bar R_r(b)=H_{p,q}c(r)+b.
+\tag{81.8}
+$$
+
+当 $(u,v)=(2,3)$ 时
+
+$$
+\det H_{2,3}=1,
+\qquad
+H_{2,3}^{-1}=\begin{pmatrix}5&-3\\-3&2\end{pmatrix}.
+$$
+
+所以 $b_{2,3}$ 与 $c$ 在实际像上双向恢复，并且二者诱导同一个动作词核。根据 Fibonacci 卷第 13 节，在整数线性读数这一表示类别中，两个读数达到恢复全部组成的下界；这不是对树结构、任意观察者状态或所有可能任务的容量下界。
+
+### 81.5 四种表达与递归核的层级关系
+
+在本节的固定任务中，可以把同一实际像上的四种表示写为
+
+$$
+\boxed{
+\text{空间 }c(t)
+\ \longleftrightarrow
+\text{时间 }\Gamma_U(t)
+\ \longleftrightarrow\
+\text{边界 }b_{2,3}(t)
+\ \longleftrightarrow\
+\text{记忆 }m(t),
+}
+\tag{81.9}
+$$
+
+其中记忆 $m$ 必须是实际寄存器上的 $c$ 或 $b_{2,3}$ 的双射编码，并且更新、旁支权限和失败标签都按式(81.3)、(81.8)下降。此时四者的恢复器由 $H_{2,3}$、其逆矩阵和动作词仿射运输共同给出。
+
+若观察者新增一项合法性、记录、参考或选择器任务，记新的 profile 为 $\Gamma'_U$。则
+
+$$
+\ker\Gamma'_U\subseteq\ker\Gamma_U=\ker c.
+\tag{81.10}
+$$
+
+严格包含表示新增关系确实不能由 Fibonacci 组成边界恢复；新的最小边界应取 $\mathcal T/\ker\Gamma'_U$，而不是把失败或记录塞进原有数值坐标。反复扩大任务族得到
+
+$$
+K_0=\ker c\supseteq K_1\supseteq K_2\supseteq\cdots,
+\qquad
+K_\infty=\bigcap_nK_n,
+\tag{81.11}
+$$
+
+这就是“关系的关系”的同一内部递归：下一层仍是对同一载体声明新的合法接续和读出，不需要增加系统外观察者。有限状态下若核链稳定，可在有限层得到最终边界；否则只能把相容有限 profile 的逆极限作为候选完成，并另证实际来源满射。
+
+当新增任务不是对象树的读出，而是“状态—协议”联合评价时，$\Gamma'_U$ 应写成双侧 profile：状态侧是实际配置，协议侧是允许的测试、权限和选择器。仓内 `UnifiedObserverRepresentation.unified_observer_representation` 给出完整协议签名像对当前接口因子化的唯一表示；`DoubleExtensionalQuotientUniversality.double_extensional_quotient_universal_minimality` 则在两侧满射及双侧外延性条件下给出状态商与协议商的双向最小性。因而，观察者自读、动作选择和记忆更新不是在二叶边界外再放一个主体，而是把测试族从 $A_U^*$ 扩展为联合协议 profile，并重新计算同一个核塔。
+
+### 81.6 适用范围
+
+本节的精确同构只适用于每个项本身有限、确定性 $\rho$、固定旁支合同以及只保留组成与其动作词响应的任务；载体 $\mathcal T$ 本身仍是无限的，因此不把有限载体的基数或稳定深度定理直接套到这里。若加入左右位置、括号、共享随机来源、权限、失败原因、完整档案或观察者策略，必须把相应字段纳入联合 profile，并重新检查动态下降、共同来源和实际像闭合。本文没有把二叶生成层提升为所有关系的普适本体，也没有新增 Lean 声明；引用的 `EffectiveProtocolActionMonoid`、`ControlQuotientUniversalMinimality`、`BehaviorUpdateWordAction` 与 `DynamicClosureMinimality` 只作为已有接口的对应支点。
+
+## 81.99 追加锚
+
+## 82. 二叶生成层的双侧协议画像
+
+第 81 节把组成 \(c\) 证明为固定动作词任务的完整状态边界，但它把状态读出和允许读出固定在同一个测试族里。内部观察者还需要保留协议、权限和选择器这一侧：改变可用协议会改变状态的行为核，扩大实际状态像也会改变协议之间的可区分性。
+
+### 82.1 状态行商与协议列商
+
+令 \(S\) 是同一实际来源上的状态像，\(P\) 是声明过的协议集合，\(\Lambda\) 是带失败值的读出集合，且
+\[
+L:S\times P\longrightarrow\Lambda
+\]
+是完整状态—协议响应。定义
+\[
+\begin{aligned}
+s\equiv_S s'&\iff\forall p\in P,\ L(s,p)=L(s',p),\\
+p\equiv_P p'&\iff\forall s\in S,\ L(s,p)=L(s,p').
+\end{aligned}
+\tag{82.1}
+\]
+第一关系合并面对全部当前协议行为相同的状态，第二关系合并在全部当前状态上行为相同的协议。
+
+若有满射
+\[
+\eta:S\twoheadrightarrow B,\qquad \pi:P\twoheadrightarrow Q
+\]
+以及
+\[
+\bar L:B\times Q\longrightarrow\Lambda
+\]
+满足
+\[
+L(s,p)=\bar L(\eta(s),\pi(p)),
+\tag{82.2}
+\]
+并且 \(\bar L\) 两侧外延：
+\[
+\begin{aligned}
+(\forall q,\ \bar L(b,q)=\bar L(b',q))&\Longrightarrow b=b',\\
+(\forall b,\ \bar L(b,q)=\bar L(b,q'))&\Longrightarrow q=q',
+\end{aligned}
+\tag{82.3}
+\]
+则 \(B\cong S/{\equiv_S}\)、\(Q\cong P/{\equiv_P}\)。所以双侧外延的精确画像同时是状态行商和协议列商；单独压缩状态侧不能自动保留协议权限和后续选择。
+
+### 82.2 二叶组成任务的双侧画像
+
+回到
+\[
+\mathcal T=\mu X\bigl(\{\alpha,\beta\}\sqcup(X\times X)\bigr).
+\]
+给定实际声明的旁支合同 \(U\)，取协议集合 \(P_U=A_U^*\)，其中 \(A_U\) 包含替换 \(\rho\) 和合法的左、右旁支动作。对组成任务令
+\[
+L_U(t,w)=c(w[t]),\qquad t\in S\subseteq\mathcal T,\quad w\in P_U.
+\tag{82.4}
+\]
+第 81 节的运输式给出仿射映射 \(\lambda_w\)，使
+\[
+L_U(t,w)=\lambda_w(c(t)).
+\tag{82.5}
+\]
+因此状态侧可以取 \(\eta(t)=c(t)\)，协议侧则按实际组成像定义
+\[
+w\equiv_{P_U}w'
+\iff
+\forall t\in S,\ \lambda_w(c(t))=\lambda_{w'}(c(t)).
+\tag{82.6}
+\]
+两侧取商后，
+\[
+\bar L_U([c(t)],[w])=\lambda_w(c(t)).
+\tag{82.7}
+\]
+这里 \(\alpha,\beta\) 是状态生成层的两个叶标签，而协议商记录的是允许如何继续作用。协议商会随旁支合同、权限、失败标签和记录规则变化；把所有形式上可写的动作词都当作免费协议，会改变实际共同来源。
+
+### 82.3 当前读数相同不保证未来协议相同
+
+最小有限例子取 \(S_0=\{\alpha,\beta\}\)。当前协议 \(q\) 满足
+\[
+q(\alpha)=q(\beta)=0.
+\]
+在 \(\{q\}\) 上两状态属于同一行商。加入一个仍然合法的后续协议 \(\ell\)，令
+\[
+\ell(\alpha)=0,\qquad \ell(\beta)=1.
+\]
+联合响应表为
+\[
+\begin{array}{c|cc}
+&q&\ell\\ \hline
+\alpha&0&0\\
+\beta&0&1
+\end{array}
+\]
+于是原来可合并的两态在扩大的协议族上被分开。当前读数没有区别，不代表未来续接仍然代表无关。
+
+在自由树中，同样的障碍由
+\[
+t=\langle\alpha,\beta\rangle,\qquad
+t'=\langle\beta,\alpha\rangle
+\]
+给出：\(c(t)=c(t')=(1,1)\)，但左位置协议分别返回 \(\alpha,\beta\)。因此组成边界对组成和 Fibonacci 动作词任务充分，对保留左右位置的任务不充分。
+
+### 82.4 动态闭合和内部选择
+
+若 \(T_a:S\rightharpoonup S\) 是状态更新，协议也因权限或控制更新为 \(u_a:P\rightharpoonup P\)，则动态边界需满足
+\[
+\eta\circ T_a=\bar T_a\circ\eta,\qquad
+\pi\circ u_a=\bar u_a\circ\pi,
+\tag{82.8}
+\]
+并且合法性、失败与记录读出也下降：
+\[
+\begin{aligned}
+\operatorname{Adm}_a(s,p)
+ &=\overline{\operatorname{Adm}}_a(\eta(s),\pi(p)),\\
+\operatorname{Out}_a(s,p)
+ &=\overline{\operatorname{Out}}_a(\eta(s),\pi(p)).
+\end{aligned}
+\tag{82.9}
+\]
+若选择器由状态决定下一协议，还必须有
+\[
+\mathsf{choose}(s)=\overline{\mathsf{choose}}(\eta(s)).
+\tag{82.10}
+\]
+否则同一边界状态可能要求不同动作，静态读出虽能下降，内部运行却不能闭合。记忆更新同样必须是摘要和实际结果的函数；不能把参考、权限或选择器藏在边界外。
+
+这些条件把观察者自读、动作选择和记忆更新留在同一接口中。它们不是给二叶结构再加一个系统外主体，而是把协议族扩大后重新计算同一个行为核。
+
+### 82.5 适用边界与已有接口
+
+固定状态集合上的单侧行像因子化对应 UnifiedObserverRepresentation；同时要求状态行商和协议列商、满射以及两侧外延性时，对应 DoubleExtensionalQuotientUniversality。动作词和控制器的动态运输还需显式检查式(82.8)—(82.10)；抽象接口不替具体任务证明共同来源、权限、失败标签、记录字段和实际像闭合。
+
+本节限定于普通集合、确定性响应、声明过的协议和有限动作词。随机读数需要结果核，量子协议需要态、通道和正性条件，无限完成需要分离性、线程完备性和实际来源满射。没有新增 Lean 声明，也没有把二叶生成层提升为所有关系的普适本体。
+
+## 82.99 追加锚
+
+## 83. 静态保构造签名下的二原子最小性
+
+第 82 节说明了为什么“二叶”不能直接等同于“二状态”。在静态、保构造、禁止额外解码的合同中，\(\alpha,\beta\) 这两个零元生成元确实不能再减；这是一条生成签名的相对最小性，而不是所有动态过程的状态下界。
+
+### 83.1 静态签名
+
+令
+\[
+\mathcal T_2=\mu X\bigl(\{\alpha,\beta\}\sqcup(X\times X)\bigr),
+\qquad
+\mathcal T_1=\mu X\bigl(\{\ast\}\sqcup(X\times X)\bigr).
+\]
+若 \(h:\mathcal T_1\to\mathcal T_2\) 保持二元构造器，则它由 \(t_0=h(\ast)\) 唯一决定，并满足
+\[
+h(\langle s,t\rangle)=\langle h(s),h(t)\rangle.
+\tag{83.1}
+\]
+
+若 \(t_0=\alpha\)，结构归纳说明 \(h(u)\) 的所有叶都是 \(\alpha\)，所以 \(\beta\) 不在像中；\(t_0=\beta\) 时对称。若 \(t_0=\langle r,s\rangle\)，保构造闭包始终以二元构造为根，永远不会产生零元叶，故 \(\alpha,\beta\) 都不在像中。三种情形覆盖 \(t_0\)，因此 \(h\) 不可能满射。带两个常数和同一构造器的恒等解释达到满射，于是
+\[
+\boxed{
+\text{静态保构造生成 }\mathcal T_2
+\text{ 至少需要两个零元生成元和一个二元构造器。}
+}
+\tag{83.2}
+\]
+删除二元构造器则只能生成叶，不能覆盖复合项。
+
+### 83.2 与一粒动态种子的区别
+
+加入
+\[
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle
+\]
+后，从 \(\alpha\) 出发先用 \(\rho\) 取得 \(\beta\)，再用有序配对和 \(\rho\) 的有限组合，可以生成任意有限的 \(\alpha/\beta\) 二叉树。这不与式(83.2)矛盾，因为式(83.2)禁止额外替换和解码。
+
+因此要区分
+\[
+\boxed{
+\text{静态零元数}=2,\qquad
+\text{加入 }\rho\text{ 后的动态种子数}=1,\qquad
+\text{组成未来边界的线性维数}=2.
+}
+\tag{83.3}
+\]
+三者分别回答静态签名、动态生成和指定线性读出的不同问题。
+
+### 83.3 静态对称与动态方向
+
+静态自由代数有叶交换自同构
+\[
+\tau(\alpha)=\beta,\qquad
+\tau(\beta)=\alpha,\qquad
+\tau(\langle s,t\rangle)=\langle\tau(s),\tau(t)\rangle,\qquad
+\tau^2=\mathrm{id}.
+\]
+但 \(\tau\) 不与 \(\rho\) 交换：
+\[
+\tau\rho(\alpha)=\alpha,\qquad
+\rho\tau(\alpha)=\langle\beta,\alpha\rangle.
+\tag{83.4}
+\]
+所以静态生成层可以交换两个叶，而 Fibonacci 动力学为它们赋予方向角色。把 \(\alpha,\beta\) 强行商成一个无向原子，会同时改变原来的替换、配对或读出合同。
+
+### 83.4 范围
+
+式(83.2)支持“FIBONACCI_ATOMIC_RELATION_GENERATION 更接近生成底座”的判断，但只在静态保构造签名下成立。编码、商、额外操作和带状态解码器都可能用一个符号携带两个叶；那已经改变了签名或任务接口，必须重新计算行为核和动态充分边界。本文没有把两个叶提升为现实关系的普适本体，也没有新增 Lean 声明。
+
+## 83.99 追加锚
+
+## 84. 有限呈示下的坐标支撑与反向存活边界递推
+
+§20、§26 和 §29 已分别给出总化动作词、共同未来核以及失败分支的完整语义；§81—§83 又给出动作运输、协议侧和二叶生成层。本节不再重复一般未来核的构造，而把它特化到一个**有限、分阶段、显式呈示**的合同，使坐标支撑能够反向计算。新增内容是：如何从这个有限核选择可执行坐标字段，以及如何把它应用回 §80。§83 的生成元数仍是另一层问题。以下是普通数学推导和有限检查，不是新增 Lean 核验，也不作全球原创性声明。
+
+### 84.1 既有未来核的有限阶段呈示
+
+**定义 84.1（有限合同呈示）。** 固定 $N\in\mathbb N$，在阶段 $j=0,\ldots,N$ 取有限坐标集 $I_j$ 及同一实际来源上的有限状态像
+
+$$
+S_j\subseteq\prod_{i\in I_j}X_{j,i}.
+\tag{84.1}
+$$
+
+若相同坐标元组因未记录历史而有不同未来响应，必须先把该历史补入 $I_j$；否则它不是本节所说的确定性呈示。失败原因、权限和须保留的记录也只有在声明任务要求区分时才进入状态标签。
+
+对 $j<N$ 固定一组**声明的候选动作** $A_j$。本节采用 all-actions 合同：未来实验可以尝试 $A_j$ 中的每个动作，非法尝试必须总化为带类型失败。对每个动作给出有限结果标签集 $Y_{j,a}$、两两不交的分支域 $D_{j,a,y}\subseteq S_j$ 及
+
+$$
+T_{j,a,y}:D_{j,a,y}\longrightarrow S_{j+1}.
+\tag{84.2}
+$$
+
+这些分支连同声明的失败标签覆盖 $S_j$；若任务只允许 selector 选择的动作，就把允许动作族改成该 selector 合同，不能把 all-actions 结论转用于更窄任务。内部结果标签若未被任务观察，应先在总化响应中汇总，不能因为枚举方便而把隐藏标签加入行为核。
+
+令 $Q_j$ 只包含任务声明要保留的当前输出、合法性、失败、记录和选择器读数；若某个分支可用性本身要被观察，才把相应指示函数 $\delta_{j,a,y}=\mathbf1_{D_{j,a,y}}$ 放入 $Q_j$。因此 $\mathbf Q_j(s)=(q(s))_{q\in Q_j}$ 是本合同的当前联合响应，$Q_N$ 是终端联合响应。停机若需放入固定时域，只能填充为不新增查询的吸收记录；阶段编号若由调度外部给定，不计入观察者记忆。
+
+### 84.2 有限未来核是既有动作词核的阶段特化
+
+把每个 $(a,y)$ 的域指示和保留结果看作总化动作词的首步标签，定义有限 horizon 核
+
+$$
+\begin{aligned}
+sK_Nt&\iff\mathbf Q_N(s)=\mathbf Q_N(t),\\
+sK_jt&\iff\mathbf Q_j(s)=\mathbf Q_j(t)\ \land\\
+&\quad\forall a\in A_j\ \forall y\in Y_{j,a},\quad
+s\in D_{j,a,y}\iff t\in D_{j,a,y},\\
+&\quad\text{且在该共同分支上 }T_{j,a,y}(s)K_{j+1}T_{j,a,y}(t).
+\end{aligned}
+\tag{84.3}
+$$
+
+这里的 $K_j$ 正是 §20、§26 的完整未来行为核在阶段 $j$ 的 $N-j$ 截断；它只量化本定义声明的有限动作、结果和查询，不声称无限时域或普遍关系核。阶段标签若要由内部选择器读取，必须已进入 $Q_j$ 或状态。
+
+令 $M_j=S_j/K_j$、$q_j(s)=[s]_{K_j}$。有限响应树的归纳给出
+
+$$
+\begin{aligned}
+\mathbf Q_j&=\overline{\mathbf Q}_j\circ q_j,&
+\pi_j&=\bar\pi_j\circ q_j,\\
+q_{j+1}\circ T_{j,a,y}&=\bar T_{j,a,y}\circ q_j,&
+\bar T_{j,a,y}([s])&=[T_{j,a,y}(s)].
+\end{aligned}
+\tag{84.4}
+$$
+
+其中最后两式只在共同、合法的分支上解释；非法分支已由前一行的类型标签比较。若 $m_j:S_j\to B_j$ 是任意能恢复本合同全部有限未来响应的确定性编码，则
+
+$$
+\ker m_j\subseteq K_j,
+\qquad q_j=d_j\circ m_j,
+\qquad d_j:m_j[S_j]\twoheadrightarrow M_j.
+\tag{84.5}
+$$
+
+因此 $M_j$ 是本有限合同的未来充分商；它自身带有式(84.4)的可更新结构。式(84.5)只对“能恢复全部响应”的编码给出下界；若还要求任意 $m_j$ 自身有更新下降，则必须另加该条件，不能从编码充分性单独推出。
+
+**证明。** 在有限阶段树上反向归纳：末端比较 $Q_N$；前一层先比较当前保留响应和总化分支标签，再比较每个共同分支的后继类。这是 §20/§26 的未来核证明在阶段标签展开后的有限呈示。归纳同时给出式(84.4)的代表元无关性。若两个状态被 $m_j$ 合并而其有限响应树不同，解码器对同一记忆必须给出两种响应，矛盾；令 $d_j(m_j(s))=[s]$ 即得唯一满射。$\square$
+
+### 84.3 语义支撑与反向寄存器规则
+
+**定义 84.3（支撑与前像支撑）。** 对 $D\subseteq S_j$、函数族 $f$ 和坐标投影 $\eta_L(s)=s|_L$，定义语义支撑族
+
+$$
+\operatorname{Supp}_D(f)=
+\{L\subseteq I_j:\ \forall s,t\in D,\quad
+\eta_L(s)=\eta_L(t)\Rightarrow f(s)=f(t)\}.
+\tag{84.6}
+$$
+
+函数族的相等逐项解释。选取一个经核对的支撑，记为 $\operatorname{supp}_D(f)$；这不是默认存在唯一最小集合。有限表可枚举所有子集并检查全部状态对，再用预先固定的顺序选取一个支撑。定义分支的前像支撑为所选集合
+
+$$
+\operatorname{pre}_{j,a,y}(L)
+=\operatorname{supp}_{D_{j,a,y}}(\eta_L\circ T_{j,a,y}).
+\tag{84.7}
+$$
+
+定义域本身的依赖由 $Q_j$ 负责，不能因只在 $D_{j,a,y}$ 内求支撑而忘掉分支是否可用。空定义域可选空支撑。
+
+**命题 84.4（反向存活的充分性与删字段见证）。** 按选定支撑令
+
+$$
+\boxed{
+\begin{aligned}
+L_N&=\operatorname{supp}_{S_N}(\mathbf Q_N),\\
+L_j&=\operatorname{supp}_{S_j}(\mathbf Q_j)
+\ \cup\!\!\bigcup_{a\in A_j,\ y\in Y_{j,a}}
+\operatorname{pre}_{j,a,y}(L_{j+1}).
+\end{aligned}}
+\tag{84.8}
+$$
+
+则 $\ker\eta_{L_j}\subseteq K_j$，且 $\eta_{L_j}$ 上的查询、选择器和更新可执行下降：
+
+$$
+q_j=d_j\circ\eta_{L_j},\qquad
+\eta_{L_{j+1}}\circ T_{j,a,y}
+=\widehat T_{j,a,y}\circ\eta_{L_j}
+\quad\text{于 }D_{j,a,y}.
+\tag{84.9}
+$$
+
+对 $i\in L_j$，从这一投影删去 $i$ 后仍充分，当且仅当不存在一对实际状态 $s,t$ 满足
+
+$$
+\eta_{L_j\setminus\{i\}}(s)=\eta_{L_j\setminus\{i\}}(t),
+\qquad \neg(sK_jt).
+\tag{84.10}
+$$
+
+若这样的状态对存在，命题84.2给出一个声明的有限区分实验；它是该字段相对于当前投影不可删的见证。
+
+**证明。** 末端由支撑定义成立。若两态在 $L_j$ 上相等，它们有相同的 $Q_j$，故分支定义域一致；每个启用分支的前像支撑又给出后继在 $L_{j+1}$ 上相等。归纳假设及式(84.3)给 $sK_jt$。相同投影得到相同后继投影，也直接给式(84.9)中的良定义更新；查询和选择器同理。删字段判据就是 $\ker\eta_{L_j\setminus\{i\}}\subseteq K_j$ 的否定与否；原投影充分保证见证两态必在字段 $i$ 上不同。$\square$
+
+支撑必须相对于实际像判断。例如 $S=\{(0,0),(1,1)\}$ 上的读出 $f(x,y)=x$ 同时由 $\{x\}$、$\{y\}$ 支撑，但不由其空交集支撑；这两个实际状态已给反例。只搜索“保持其他全部坐标不动、改变一坐标”的状态对，在这个相关像上也会漏掉区别。即使实际像是完整二比特乘积，末端只读 $x\mathbin{\mathrm{xor}}y$ 时，两个坐标都不能从坐标投影中删除，但一个奇偶位已有两值精确商，而原投影有四值。因此式(84.8)给充分的寄存器实现，不保证坐标数或消息数最小。语法上读取的变量只有在所有控制、定义域和副作用依赖已计入时才给充分支撑；变量名出现并不证明语义不可删。
+
+### 84.4 作为有限实例：§80 的两次拼接由同一递推定位字段寿命
+
+**命题 84.5（中间八态到四值边界）。** 这是命题84.4在 §80 合同上的有限实例，而非新的普遍下界。取 §80 的成功中间态 $v=(x,h,y)\in\mathbb B^3$。下一步候选仍为全部 $a=(y',z)\in\mathbb B^2$，保留 §80 的 $\sigma$、合法性和 $\rho_a$，内部选择器取 $\pi(v)=(y,0)$，额外档案读出为空。终端读取输出比特或严格失败。终端唯一值字段存活，反向式(84.8)可取
+
+$$
+L_{\mathrm{mid}}=\{x,y\},\qquad
+vK_{\mathrm{mid}}v'
+\iff (x,y)=(x',y'),\qquad
+M_{\mathrm{mid}}\cong\mathbb B^2.
+\tag{84.11}
+$$
+
+**证明。** $J_2$ 的合法性及选择器只读 $y$，合法输出只读 $x$ 和当前动作输入 $z$；后继也只保留这个输出。失败响应不读取 $h$。于是当前查询支撑和全部后继前像支撑的并可取 $\{x,y\}$。式(84.9)就是 §80.6 的下降等式。
+
+删除 $y$ 会合并 $v=(0,0,0)$ 与 $v'=(0,0,1)$；动作 $(0,0)$ 对前者合法并输出 $0$，对后者失败。删除 $x$ 会合并 $(0,0,0)$ 与 $(1,0,0)$；同一合法动作 $(0,0)$ 的输出分别为 $0,1$。这两对都是实际来源的联合像。更一般地，当前读出 $\sigma$ 恢复 $x$，声明的选择器 $\pi(v)=(y,0)$ 恢复 $y$，故联合查询相等必使 $(x,y)=(x',y')$。于是任意未来充分编码至少区分全部四个 $(x,y)$，而该编码恰好做到；每类含两个 $h$ 值。在完整来源 $\mathbb B^{\{x,h,y,z\}}$ 上，每类则含四个 $h,z$ 组合。$\square$
+
+§80.5 的空间赋值、带动作标签的时间响应树、合法端口边界和双寄存器记忆都由 $(x,y)$ 生成并恢复它，故原表的恢复器在这同一个四态实际像上仍互逆；通过这些双射运输式(84.9)就得到各自更新。中间失败另外占一个有类型的类，不计入这四态，也不把失败填成正常位。这里复用 §80 的恢复器，不把该实例的四态结论提升为任意协议的容量界。
+
+$h$ 的寿命终点在 $J_1$ 已完成相等性检查之后。检查之前必须保留足以判断 $h_A=h_C$ 的关系；检查之后，当前合同再无 $h$ 的消费者。若新增档案读出 $h$ 或把选择器改为 $(h,0)$，则 $(0,0,0)$ 与 $(0,1,0)$ 虽有相同 $(x,y)$，新增响应却不同，递推必须保留额外区别。这里没有从“当前不输出 $h$”推出“以后永远不需 $h$”。§81 的组成任务和 §82 的协议侧也应按各自新增查询重新计算；本节未改变它们的动作族或生成签名。
+
+### 84.5 同时存活槽数是另一项资源
+
+另设固定有限二叉表达式树的破坏式求值合同：每个叶只装入一次，每个内部节点只在两个子结果都在场时执行一次，原子地覆写其中一槽并释放另一槽。中间结果不能复制、重算、提前丢弃、外存溢出、借代数律改树或与别的结果合包；树的左右语义保留，但求值次序可选并可交错。每个节点结果占一槽，槽的字母表与位宽另计。输入装载前的外部来源、程序和控制栈不计入槽数，根结果占一槽。
+
+在这个独立合同中，最小峰值槽数是经典 Strahler／表达式树寄存器递推：[^boundary84-register]
+
+$$
+s(\mathrm{leaf})=1,\qquad
+s(v)=
+\begin{cases}
+\max\{s(v_l),s(v_r)\},&s(v_l)\ne s(v_r),\\
+s(v_l)+1,&s(v_l)=s(v_r).
+\end{cases}
+\tag{84.12}
+$$
+
+这一已知中间工具只用于区分本节两种资源。其树归纳如下。子树需求为 $p,q$，先算左或先算右分别达到 $\max\{p,1+q\}$、$\max\{q,1+p\}$；较大者先算给式(84.12)的上界。任一全树求值限制到某个子树，仍是该子树的合法求值，故至少需 $\max\{p,q\}$ 槽。若 $p=q=k$ 而全程只有 $k$ 槽，每个子树都必须在某时刻独占至少 $k$ 槽。取两个子树首次达到此值的较早时刻；另一子树此前不能已经开始，因为已开始的子树在根合并之前始终至少留下一个活结果。等另一子树达到 $k$ 时，先前子树至少仍有一个活结果，矛盾。这也覆盖交错调度，给 $k+1$ 的下界。
+
+与 §79 的语义容量对照，四叶平衡 XOR 树的每个非空切面只需一个奇偶位，$\kappa_A=2$，但式(84.12)给根需求 $3$ 槽。四叶梳形树在“每个叶出现一次、根输出保留有序四比特元组”的特定任务下满足 $\kappa_A=2^{|A|}$；根有 $16$ 种输出，却只需 $2$ 槽：先保留已形成的元组，再装下一叶，合并后释放一槽。元组槽的位宽随长度增长，不能把两槽说成两比特。两例都使用同一完整四比特输入域；容量直接沿用 §79 的定义。它们分离同时存活槽数与消息／端口 profile 的标签数，不给复制、重算、编码改写或其他执行模型下的普适下界。
+
+[^boundary84-register]: Ravi Sethi and J. D. Ullman, *The Generation of Optimal Code for Arithmetic Expressions*, Journal of the ACM 17(4), 1970, 715–728, [doi:10.1145/321607.321620](https://doi.org/10.1145/321607.321620)。这里只借表达式树的寄存器分配背景；式(84.12)按本节明确的槽合同给出了独立证明。
+
+### 84.6 有限枚举与开放边界
+
+以下 Python 只使用标准库，检查 §80 的全部状态与候选动作、式(84.8)的具体支撑以及独立求值合同。`F` 是区别于正常输出的失败标签。`inputs` 枚举任意局部消息对及带失败输入；只有匹配的子集是 §80 同一完整来源的限制。槽数检查直接搜索全部可达活结果前沿，允许任意叶装载和任意已就绪兄弟合并，以最小峰值为代价；它不把式(84.12)自身当作搜索转移规则。前沿所覆盖的叶记录了已消耗输入，保证没有复制或重算。
+
+```python
+from itertools import product, combinations
+from functools import lru_cache
+from heapq import heappush, heappop
+
+B = (0, 1)
+F = "failure"
+actions = tuple(product(B, repeat=2))
+success = tuple(product(B, repeat=3))  # (x,h,y)
+mid = success + (F,)
+inputs = tuple(product(actions + (F,), repeat=2))
+
+def j1(pair):
+    a, c = pair
+    if a == F or c == F or a[0] != c[0]:
+        return F
+    return (a[1], a[0], c[1])
+
+def mem(v):
+    return F if v == F else (v[0], v[2])
+
+def step(v, a):
+    return F if v == F or v[2] != a[0] else v[0] ^ a[1]
+
+def queries(v):
+    sigma, selector = (F, "stop") if v == F else (v[0], (v[2], 0))
+    # output/result tags determine branch domains; record is empty.
+    return (sigma, selector, tuple((step(v, a) != F, step(v, a), ())
+                                  for a in actions))
+
+def proj(v, indices):
+    return tuple(v[i] for i in sorted(indices))
+
+def supports(states, indices, read):
+    return all(proj(s, indices) != proj(t, indices) or read(s) == read(t)
+               for s in states for t in states)
+
+def support(states, width, read):
+    for size in range(width + 1):
+        for indices in combinations(range(width), size):
+            if supports(states, indices, read):
+                return frozenset(indices)
+    raise AssertionError("full coordinates must support the readout")
+
+# Backward response signatures at the three stages; terminal query is identity.
+k2 = {s: s for s in B + (F,)}
+k1 = {v: (queries(v), tuple(k2[step(v, a)] for a in actions)) for v in mid}
+k0 = {p: (j1(p) != F, mem(j1(p)), k1[j1(p)]) for p in inputs}
+assert tuple(len(set(k.values())) for k in (k0, k1, k2)) == (5, 5, 3)
+assert all((k1[s] == k1[t]) == (mem(s) == mem(t)) for s in mid for t in mid)
+assert sum(j1(p) != F for p in inputs) == 8
+plain_pairs = tuple(product(actions, repeat=2))
+assert len(plain_pairs) == 16 and sum(j1(p) == F for p in plain_pairs) == 8
+for p in inputs:
+    for a in actions:
+        v, r = j1(p), mem(j1(p))
+        expected = F if r == F or r[1] != a[0] else r[0] ^ a[1]
+        assert step(v, a) == expected
+for x, h, y, z in product(B, repeat=4):
+    assert step(j1(((h, x), (h, y))), (y, z)) == x ^ z
+
+# Terminal field {0}; preimage supports are checked separately on each result domain.
+L = support(success, 3, queries)
+for a in actions:
+    for result in B + (F,):
+        domain = tuple(v for v in success if step(v, a) == result)
+        L |= support(domain, 3, lambda v: (step(v, a),))
+assert L == frozenset((0, 2))
+assert not supports(success, (0,), lambda v: k1[v])  # deleting y
+assert not supports(success, (2,), lambda v: k1[v])  # deleting x
+assert step((0, 0, 0), (0, 0)) == 0
+assert step((0, 0, 1), (0, 0)) == F
+assert step((1, 0, 0), (0, 0)) == 1
+assert len({(k1[v], v[1]) for v in success}) == 8  # h record/selector added
+assert all(step(v, (v[2], 0)) == v[0] for v in success)
+
+# A delayed read tests the preimage term without any immediate state query.
+delayed = tuple(product(B, repeat=2))
+assert support(delayed, 2, lambda v: ()) == frozenset()
+assert support(delayed, 2, lambda v: (v[1],)) == frozenset((1,))
+diagonal = ((0, 0), (1, 1))
+assert supports(diagonal, (0,), lambda v: v[0])
+assert supports(diagonal, (1,), lambda v: v[0])
+assert not supports(diagonal, (), lambda v: v[0])
+assert support(delayed, 2, lambda v: v[0] ^ v[1]) == frozenset((0, 1))
+assert len({v[0] ^ v[1] for v in delayed}) == 2
+
+def spatial(u):
+    return (("X", u[0]), ("Y", u[1]))
+def temporal(u):
+    return tuple(step((u[0], 0, u[1]), a) for a in actions)
+def time_inverse(r):
+    y = 0 if r[0] != F else 1
+    return (r[2*y], y)
+def boundary(u):
+    return (u[0], frozenset((u[1],)))
+encoders = (spatial, temporal, boundary, lambda u: u)
+decoders = (lambda r: (dict(r)["X"], dict(r)["Y"]), time_inverse,
+            lambda r: (r[0], next(iter(r[1]))), lambda r: r)
+for encode, decode in zip(encoders, decoders):
+    assert len({encode(u) for u in actions}) == 4
+    for u in actions:
+        assert decode(encode(u)) == u
+        assert encode(decode(encode(u))) == encode(u)
+
+@lru_cache(None)
+def trees(n):
+    if n == 1:
+        return (None,)
+    return tuple((l, r) for k in range(1, n)
+                 for l in trees(k) for r in trees(n-k))
+
+def strahler(t):
+    if t is None:
+        return 1
+    l, r = map(strahler, t)
+    return max(l, r) + (l == r)
+
+def slots(t):
+    children, coverage, leaves = [], [], []
+    def build(u):
+        if u is None:
+            i = len(children)
+            children.append(None)
+            coverage.append(1 << len(leaves))
+            leaves.append(i)
+            return i
+        l, r = map(build, u)
+        i = len(children)
+        children.append((l, r))
+        coverage.append(coverage[l] | coverage[r])
+        return i
+    root = build(t)
+    best, todo = {0: 0}, [(0, 0)]
+    while todo:
+        peak, state = heappop(todo)
+        if best[state] != peak:
+            continue
+        if state == 1 << root:
+            return peak
+        used = 0
+        for i, covered in enumerate(coverage):
+            if state >> i & 1:
+                used |= covered
+        nexts = [state | (1 << i) for i in leaves if not (used & coverage[i])]
+        for i, pair in enumerate(children):
+            if pair is not None:
+                l, r = pair
+                if state >> l & 1 and state >> r & 1:
+                    nexts.append((state & ~(1 << l) & ~(1 << r)) | (1 << i))
+        for ns in nexts:
+            np = max(peak, bin(ns).count("1"))
+            if np < best.get(ns, 10**9):
+                best[ns] = np
+                heappush(todo, (np, ns))
+    raise AssertionError("root is unreachable")
+
+checked = 0
+for n in range(1, 8):
+    for t in trees(n):
+        assert slots(t) == strahler(t)
+        checked += 1
+assert checked == 197
+balanced = ((None, None), (None, None))
+comb = (((None, None), None), None)
+assert (slots(balanced), slots(comb)) == (3, 2)
+
+# §79 response classes, computed directly from all completions.
+def capacity(indices, task):
+    indices = tuple(indices)
+    rest = tuple(i for i in range(4) if i not in indices)
+    rows = set()
+    for local in product(B, repeat=len(indices)):
+        row = []
+        for external in product(B, repeat=len(rest)):
+            values = dict(zip(indices, local))
+            values.update(zip(rest, external))
+            row.append(task(tuple(values[i] for i in range(4))))
+        rows.add(tuple(row))
+    return len(rows)
+for size in range(1, 5):
+    for indices in combinations(range(4), size):
+        assert capacity(indices, lambda v: sum(v) % 2) == 2
+        assert capacity(indices, lambda v: v) == 2**size
+print("PASS: 16 sources; J1 16+9 failure-input pairs; 100 chains; "
+      "36 mid/actions; classes 5/5/3; support and four inverses; "
+      "197 trees; slots 3/2; XOR/tuple cut capacities")
+```
+
+本有限检查的覆盖为：16 个完整来源，16 个普通 $J_1$ 消息对及 9 个至少一端失败的消息对，合计 100 个两步候选链；9 个含失败的中间态乘 4 个动作；三阶段响应类数依次为 $5,5,3$，成功中间态单独为四类。小树枚举覆盖 1—7 叶的全部 197 棵有序满二叉树；两项四比特任务还枚举全部非空切面及其补全。有限检查通过不替代命题84.2、84.4的任意有限合同归纳，也不替代式(84.12)的树归纳。
+
+开放边界有明确的类型：扩大未来查询或改变内部策略会改变 $K_j$ 与字段寿命；无限时域需另证稳定或实际来源的完成条件；随机或量子分支需另给结果律及其更新语义。语义最小商不保证最便宜的取得、编码或运算，坐标支撑搜索也未给高效复杂度界。四种表达的互逆仍限于 §80 的声明任务及实际像，不能恢复未保留的原始历史、物理时长或所有可能观察。本文未进行消化、Lean 或内核验证。
+
+## 84.99 追加锚
