@@ -8,6 +8,12 @@ internal sealed class FiniteAdditiveReadoutBlocksDocument : IScribeDocumentDefin
         "Finite additive readouts of one coherent source determine quotient blocks and flat marginals.",
         H("Finite Additive Readout Blocks"),
         Blocks(
+            Paragraph(Text(
+                "The source G and label spaces A and B are finite additive commutative groups. "
+                + "The maps alpha and beta are additive homomorphisms from that same source, "
+                + "and the paired map is injective. Blocks are indexed by G modulo the sum of "
+                + "the two kernels. Source amplitudes are divided by the square root of the "
+                + "source cardinality; labels outside a readout image have zero amplitude.")),
             Describe.Lean(
                 DescribeId.Create("finite-readout-paired-block"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutBlocks.paired_block_iff"),
@@ -17,7 +23,8 @@ internal sealed class FiniteAdditiveReadoutBlocksDocument : IScribeDocumentDefin
                 Blocks(Paragraph(Text(
                     "A pair of readout labels comes from one source element exactly when the two labels "
                     + "occur in the same quotient block. The kernel sum lets representatives on the "
-                    + "two sides be joined into one source."))),
+                    + "two sides be joined into one source. This criterion itself requires neither "
+                    + "finiteness nor joint injectivity."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-readout-actual-coefficient"),

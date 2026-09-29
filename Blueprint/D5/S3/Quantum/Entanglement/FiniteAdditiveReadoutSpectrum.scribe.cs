@@ -8,6 +8,13 @@ internal sealed class FiniteAdditiveReadoutSpectrumDocument : IScribeDocumentDef
         "Finite additive readouts of one coherent source determine quotient blocks and flat marginals.",
         H("Finite Additive Readout Spectrum"),
         Blocks(
+            Paragraph(Text(
+                "For finite additive commutative groups G, A and B, the two additive readouts "
+                + "alpha and beta have a jointly injective paired map. Every matrix here is "
+                + "computed from the source sum normalized by the square root of the source "
+                + "cardinality. The quotient is G modulo the sum of the readout kernels. "
+                + "The positive block weight is the product of their cardinalities divided "
+                + "by the source cardinality. Logarithms are natural logarithms.")),
             Describe.Lean(
                 DescribeId.Create("finite-readout-eigenspaces"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutSpectrum.actual_eigenspaces"),
