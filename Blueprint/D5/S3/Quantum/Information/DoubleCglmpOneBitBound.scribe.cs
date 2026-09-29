@@ -50,7 +50,10 @@ internal sealed class DoubleCglmpOneBitBoundDocument : IScribeDocumentDefinition
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the three bounds", Disp(F.Id("claim")),
                 "Take inputs U, V of Alice whose bits in one copy are 0 and 1, and inputs W, Z of Bob whose bits in that copy are 0 and 1. The four winning conditions of that copy would give a_U <= b_Z <= a_V < b_W <= a_U, so they cannot all hold: in every such rectangle {U, V} x {W, Z} on which Bob answers alike, some cell is lost. A kernel-checked count over the Boolean patterns of won cells shows that three inputs of one party that send the same message lose at least four of their twelve cells, and two such inputs lose at least two of their eight; splitting Alice's (or Bob's) inputs by the message they send, at most 12 of the 16 cells are won, and at most 7 and 4 in the truncations. For a fixed hidden value the Bell expression is linear in each response distribution, so replacing each by a best output does not decrease it; the value at each t is therefore at most the deterministic bound, and integrating over mu gives the bound for the class. Deterministic strategies with outputs 0 and 1 and a point mass attain 12, 12, 7 and 4, for every d >= 2.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("marton-2023-double-cglmp-one-bit-bound"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
