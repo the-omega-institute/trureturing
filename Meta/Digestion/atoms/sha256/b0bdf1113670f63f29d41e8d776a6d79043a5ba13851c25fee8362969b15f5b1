@@ -1,0 +1,6 @@
+**Theorem 5 (fixed-point census).** Let $n>0$ and let $t\in G_n$ have
+$3t=0$ and two nonzero coordinates. Then translation by $t$ fixes exactly
+$n^2/3$ members of $\mathcal T_n$. In particular, when $n=3m$ with $m>0$,
+each of the four nonzero vectors in Theorem 2 fixes $n^2/3$ triples; every
+other nonzero vector fixes none.
+

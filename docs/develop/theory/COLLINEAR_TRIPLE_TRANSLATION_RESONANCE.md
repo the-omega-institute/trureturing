@@ -89,3 +89,32 @@ $x\in\mathbb Z/(3m)\mathbb Z$,
 $3x=0$ means $3m\mid3\bar x$, equivalently $m\mid\bar x$.
 The only such representatives are $0,m,2m$. Conversely, three times
 each of these residues is divisible by $3m$. $\square$
+
+**Theorem 5 (fixed-point census).** Let $n>0$ and let $t\in G_n$ have
+$3t=0$ and two nonzero coordinates. Then translation by $t$ fixes exactly
+$n^2/3$ members of $\mathcal T_n$. In particular, when $n=3m$ with $m>0$,
+each of the four nonzero vectors in Theorem 2 fixes $n^2/3$ triples; every
+other nonzero vector fixes none.
+
+**Proof.** The cycle $C_t=\{0,t,2t\}$ has three distinct points in each
+coordinate. Its difference determinants vanish, so $C_t\in\mathcal T_n$.
+Translation by $t$ fixes $C_t$ and hence every translate of it. Conversely,
+if $t$ fixes a triple $S$, the three-point translation-cycle theorem applied
+at any $p\in S$ gives $S=p+C_t$. Thus the fixed triples form precisely one
+translation orbit. The stabilizer of $C_t$ has order dividing three and
+contains the nonzero element $t$, so its order is three. Orbit-stabilizer
+therefore gives $n^2/3$ fixed triples. For $n=3m$, Theorems 2 and 4 rule out
+all other nonzero fixing vectors. $\square$
+
+**Corollary 6 (Burnside form of Theorem 1).** If $n=3m$ with $m>0$ and
+$O(n)$ is the number of translation orbits on $\mathcal T_n$, then
+
+\[
+  A(n)+4\frac{n^2}{3}=n^2 O(n),\qquad O(n)\ge2.
+\]
+
+**Proof.** In Burnside's fixed-point sum, the identity contributes $A(n)$,
+the four eligible nonzero vectors contribute $n^2/3$ each by Theorem 5,
+and every other term is zero. Since $n^2=3(n^2/3)$ and $A(n)\ge0$, an orbit
+count of zero or one would contradict the displayed equality. Setting
+$q=O(n)-2$ gives $A(n)=n^2q+2n^2/3$. $\square$

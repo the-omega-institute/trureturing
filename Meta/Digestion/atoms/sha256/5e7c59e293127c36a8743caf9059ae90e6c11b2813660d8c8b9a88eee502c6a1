@@ -1,0 +1,5 @@
+**Proof.** For the standard representative $0\leq \bar x<3m$,
+$3x=0$ means $3m\mid3\bar x$, equivalently $m\mid\bar x$.
+The only such representatives are $0,m,2m$. Conversely, three times
+each of these residues is divisible by $3m$. $\square$
+
