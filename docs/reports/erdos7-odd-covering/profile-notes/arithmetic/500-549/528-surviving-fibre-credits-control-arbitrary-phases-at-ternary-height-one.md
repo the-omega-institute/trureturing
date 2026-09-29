@@ -883,6 +883,143 @@ realization. Positivity of the resulting joint minimum remains an
 unresolved consumer; these necessary constraints do not settle
 unrestricted Erdős#7.
 
+## Complete star metadata fixes a comparison array but does not close the debit
+
+Keep the globally extremal whole-cover hypotheses and the ONE actual
+star assignment sigma of FC29--FC32. For each nonternary prime q and
+retained root t, its complete exponent inventory gives
+
+    E_(q,t)={e: original3q^e exists on root t},
+    B_(q,t)=c_q*sum_(e in E_(q,t))q^-e.             (FC33)
+
+The two exponent sets are disjoint subsets of{1,...,h_q}. On the same
+actual pure-survivor law, the cylinder bound gives
+beta_(q,t)<=B_(q,t) and B_(q,1)+B_(q,2)<=b_q<1. Enlarge each blocked
+set separately on each ternary root to its prescribed mass B_(q,t).
+Nonatomicity supplies these enlargements; the q-sets on the two roots
+need not be disjoint. No new original or new probability is introduced.
+
+Apply FC4 directly to this smaller comparison carrier. With the same
+full3-free debit and the same beta-independent inventory set Omega_sigma,
+
+    lambda(U)>=F_sigma(B^sigma,w), for every fixed w. (FC34)
+
+The comparison array is now determined by the complete discrete star
+data. This route needs no continuous beta minimization. It does not
+assert that B^sigma is an actual phase realization or that F is
+monotone under enlargement. If every star through h_q occurs, its
+pooled budget is b_q and this array lies in the FC32 domain, so its
+comparison is at least the minimum over that domain. If some stars
+are absent, the pooled budget is smaller; FC34 remains a valid bound,
+but that observation alone gives no numerical ordering against the
+old enlarged-domain bound. Missing stars do not remove any charge
+from the full3-free inventory used here.
+
+### Every occupied root has a positive floor at its actual precision
+
+For nonempty E=E_(q,t), set m=min E and S=sum_(e in E)q^-e. The
+extremal family's pure q-chain is complete and pairwise disjoint
+through its actual height H_q<=h_q. On root t the star q-cylinders
+are disjoint, since their full numerical moduli are comparable. Every
+pure q^j with j<=m avoids their union. Hence the higher pure originals
+remove at most T_(m,H_q)=sum_(j=m+1..H_q)q^-j from it, and
+
+    beta_(q,t)>=c_(q,H_q)*(S-T_(m,H_q))
+                >=c_(q,h_q)*(S-T_(m,h_q))>0.        (FC35)
+
+To check the second inequality, write U_H=sum_(j=1..H)q^-j. The
+expression is(S+U_m-U_H)/(1-U_H), decreasing with U_H because
+S+U_m<1 for q>=5. Its numerator stays positive since
+S>=q^-m>T_(m,h_q). For a single star of depth e, the bound is
+
+    ((q-2)q^(h_q-e)+1)/((q-2)q^h_q+1)>q^-e.
+
+For a complete same-root chain FC35 recovers c_q/q. This uses the
+actual complete pure chain and its normalization, not an arbitrary
+law satisfying cylinder caps. Both roots have positive actual beta
+whenever both have stars. FC33--FC34 themselves only need the upper
+cylinder budgets.
+
+### A fixed inventory still obstructs every choice of root weight
+
+Consider the same finite twelve-prime profile as FC26:
+
+    Q=(5,7,11,13,17,19,23,29,31,37,41),
+    h=(5,5,4,4,4,4,4,3,3,3,3).
+
+The [explicit inventory](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_actual_roots_input.json)
+has2138 mixed labels3d. All five stars3*5^e lie on root1; every star
+at the other primes lies on root2. There are42 stars, with every
+chain complete through its stated height. The mixed root counts
+are187 and1951. Mixed divisors remain present, and every forced
+star is included. Adjoining pure3, bothq^e and3q^e at all42 positions,
+and bothd and3d for the selected cofactors gives4361 distinct odd
+numerical labels in a divisor-closed palette. No nonternary AP phases
+or actual cover are supplied by that palette.
+
+The inventory satisfies all55 overlapping pair totals, including
+the one-smaller CR8 bound when the two actual first-star roots differ;
+all110 FC30 root-pair bounds; all11 improved square totals; and all22
+FC29 root-square bounds, including every square-star slot. At5,7,11
+the root-square counts are respectively(29,2),(7,69),(9,192), within
+their coupled caps(29,38),(82,69),(218,197). There are6178 immediate
+mixed-divisor closure edges and7328 individual-label CR9 checks.
+
+FC33 assigns exactly B_(5,1)=b_5 and B_(q,2)=b_q for q!=5, with
+the opposite entries zero. Thus the source array and all capacities
+use the same complete star data. Both FC31 and the stronger
+complete-chain floor are satisfied at this comparison array.
+
+This source array is attainable by the pure/star subfamily itself.
+At every q, choose pureq phase0, and pureq^e phase1+q^(e-1) for e>=2.
+Choose the q-projection of3q to be2, and of3q^e to be3+q^(e-1) for
+e>=2, keeping the declared ternary root for all its stars. Each
+comb is pairwise disjoint. The four distinct first-q roots0,1,2,3
+also make the pure and star unions disjoint. Consequently the pure
+normalizer is exactly c_q and the actual star mass is exactly b_q.
+Add pure3 at0. These85 originals are irredundant: for a designated
+q-original choose its own q-phase and put every other q-coordinate
+at4; choose a nonzero ternary root, the declared one for a star.
+For pure3 use ternary root0 and every q-coordinate4. CRT supplies
+these private points. This realizes the common source and stars,
+not the2138 mixed phases or the full3-free inventory.
+
+For this ONE fixed selection S, let L_t be the root-t carrier minus
+the full3-free debit minus its selected3-divisible charge. Exact
+rational evaluation gives
+
+    L_2=-2408151122759878659324596276092640488806533531741
+         /65347786899807790172976071031049451363727817295616,
+    L_1=-65412811398963818975709603474259586033354459743
+         /2333849532135992506177716822537480405847422046272.
+
+They are approximately-0.03685130341830998 and-0.028027861478754596,
+both strictly less than-1/100. Since a maximum over Omega_sigma is
+at least the charge of this feasible S, for every w in[0,1],
+
+    F_sigma(B^sigma,w)
+       <=w*L_1+(1-w)*L_2<-1/100.                  (FC36)
+
+This is an upper bound on the declared LOWER comparison functional,
+not a bound saying that actual survivor mass is negative. It shows
+that the specified numerical, root-capacity and source-budget
+constraints alone still permit failure for every root reweighting.
+Additional actual-phase, overlap or shared3-free-debit constraints
+can exclude this selection; none are disproved by FC36. The paid
+full3-free inventory is the finite-profile relaxation, not the debit
+of the4361-label palette. No omitted height tail enters this finite
+obstruction, and no finite profile is substituted for unrestricted#7.
+
+The [exact checker](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_inventory_witness.py)
+uses the explicit `actual-star-roots` contract for this input and
+reconstructs the source array from the stars, without reading an
+independent partition or supplied beta table. Its
+[result](../../../frontier/cover-geometry/fibre-credit-partition/fibre_credit_actual_roots.json)
+contains every constraint row and the exact carrier, debit and endpoint
+values. The earlier uniform-contract fixture and result remain valid
+for their stated weaker contract. These are ordinary deductions and
+exact finite checks, not new Lean verification.
+
 ## Whole-family height one permits a smaller common query interface
 
 The all-depth query in(FC13) permits later originals with arbitrary ternary

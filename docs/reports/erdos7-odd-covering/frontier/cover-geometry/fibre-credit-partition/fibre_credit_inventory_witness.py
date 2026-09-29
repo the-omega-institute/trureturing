@@ -34,6 +34,9 @@ def root_cap(p, q):
 
 
 def check(data):
+    contract = data.get('capacity_contract', 'uniform')
+    require(contract in ('uniform', 'actual-star-roots'), 'unknown capacity contract')
+    actual_roots = contract == 'actual-star-roots'
     primes = tuple(data['primes'])
     heights = tuple(data['heights'])
     require(primes and all(is_prime(p) for p in primes), 'prime domain')
@@ -41,7 +44,8 @@ def check(data):
     require(len(heights) == len(primes), 'one height per prime')
     require(all(type(h) is int and h >= 1 for h in heights), 'positive heights')
     limits = dict(zip(primes, heights))
-    partition = frozenset(data['partition_A'])
+    partition = frozenset(data.get('partition_A', []))
+    require(actual_roots or 'partition_A' in data, 'uniform partition required')
     require(partition <= set(primes), 'partition outside source')
     threshold = Fraction(data['strict_upper_threshold'])
     require(threshold < 0, 'negative comparison threshold required')
@@ -116,24 +120,43 @@ def check(data):
 
     pair_table = []
     for p, q in combinations(primes, 2):
-        require(counts[p, q] <= total_cap(p, q), 'overlapping pair capacity')
+        cap = total_cap(p, q)
+        if actual_roots and (p, 1) in stars and (q, 1) in stars:
+            cap -= int(stars[p, 1] != stars[q, 1])
+        require(counts[p, q] <= cap, 'overlapping pair capacity')
         by_root = [root_counts[p, q, r] for r in (1, 2)]
-        require(all(c <= root_cap(p, q) for c in by_root), 'pair root capacity')
-        pair_table.append(dict(pair=[p, q], count=counts[p, q],
-                               total_cap=total_cap(p, q), root_counts=by_root,
-                               root_cap=root_cap(p, q)))
+        rcaps = [root_cap(p, q)] * 2
+        if actual_roots:
+            for r in (1, 2):
+                yp = int(stars.get((p, 1)) == r)
+                yq = int(stars.get((q, 1)) == r)
+                a, b = p - 1 - yp, q - 1 - yq
+                rcaps[r - 1] = a * b + min(a, b) - int(yp == yq == 0)
+        require(all(c <= rc for c, rc in zip(by_root, rcaps)), 'pair root capacity')
+        row = dict(pair=[p, q], count=counts[p, q], total_cap=cap,
+                   root_counts=by_root, root_cap=root_cap(p, q))
+        if actual_roots:
+            row['root_caps'] = rcaps
+        pair_table.append(row)
     square_table = []
     for p in primes:
-        cap = 4 * p * p - 6 * p - 3
+        cap = 4 * p * p - 6 * p - (5 if actual_roots else 3)
         rcap = 2 * p * (p - 1) - 2
         total = square_counts[p] + star_counts[p]
         by_root = [square_root_counts[p, r] + star_root_counts[p, r]
                    for r in (1, 2)]
         require(total <= cap, 'square PI3 total capacity including stars')
-        require(all(c <= rcap for c in by_root), 'square PI3 root capacity')
-        square_table.append(dict(prime=p, mixed=square_counts[p],
-                                 stars=star_counts[p], total=total, total_cap=cap,
-                                 root_counts=by_root, root_cap=rcap))
+        rcaps = [rcap] * 2
+        if actual_roots:
+            rcaps = [rcap - 2 * (p - 1) * int(stars.get((p, 1)) == r)
+                     - int(stars.get((p, 2)) == r) for r in (1, 2)]
+        require(all(c <= rc for c, rc in zip(by_root, rcaps)),
+                'square PI3 root capacity')
+        row = dict(prime=p, mixed=square_counts[p], stars=star_counts[p],
+                   total=total, total_cap=cap, root_counts=by_root, root_cap=rcap)
+        if actual_roots:
+            row['root_caps'] = rcaps
+        square_table.append(row)
 
     b = {}; c = {}
     for p, h in limits.items():
@@ -142,6 +165,22 @@ def check(data):
         c[p] = Fraction((p - 1) * p ** h, denominator)
     beta = {r: {p: b[p] if ((p in partition) == (r == 1)) else Fraction()
                 for p in primes} for r in (1, 2)}
+    if actual_roots:
+        # These masses come from the SAME explicit star exponent/root metadata.
+        # Actual blocked sets may be enlarged to their per-root cylinder budgets.
+        beta = {r: {p: c[p] * sum((Fraction(1, p ** e)
+                    for (q, e), t in stars.items() if q == p and t == r), Fraction())
+                    for p in primes} for r in (1, 2)}
+        for p, h in limits.items():
+            require(beta[1][p] + beta[2][p] <= b[p], 'pooled source budget')
+            for r in (1, 2):
+                exponents = [e for (q, e), t in stars.items() if q == p and t == r]
+                if exponents:
+                    mass = sum((Fraction(1, p ** e) for e in exponents), Fraction())
+                    tail = sum((Fraction(1, p ** e)
+                                for e in range(min(exponents) + 1, h + 1)), Fraction())
+                    require(beta[r][p] >= c[p] * (mass - tail) > 0,
+                            'occupied-root source floor')
 
     def g(r, support):
         return prod((1 - beta[r][p] for p in primes if p not in support),
@@ -164,7 +203,7 @@ def check(data):
     if expected is not None:
         require(endpoints == [Fraction(v) for v in expected], 'endpoint mismatch')
 
-    return dict(
+    result = dict(
         scope='Fixed-partition numerical/root relaxation; not an actual AP family, '
               'negative survivor mass, or counterexample to Erdos 7.',
         primes=primes, heights=heights, partition_A=sorted(partition),
@@ -181,6 +220,15 @@ def check(data):
         selected_charge_by_root={r: str(selected[r]) for r in (1, 2)},
         endpoints=list(map(str, endpoints)), endpoint_decimals=list(map(float, endpoints)),
         strict_upper_threshold=str(threshold))
+    if actual_roots:
+        result.update(
+            scope='Fixed actual-star metadata and numerical/root relaxation; '
+                  'not an actual AP family, negative survivor mass, or Erdos 7 counterexample.',
+            capacity_contract=contract,
+            source_budget_by_root={r: {p: str(beta[r][p]) for p in primes}
+                                   for r in (1, 2)})
+        result.pop('partition_A')
+    return result
 
 
 def main():
