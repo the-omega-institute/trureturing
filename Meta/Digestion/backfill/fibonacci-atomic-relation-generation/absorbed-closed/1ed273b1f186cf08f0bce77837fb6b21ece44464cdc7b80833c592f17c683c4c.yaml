@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:1ed273b1f186cf08f0bce77837fb6b21ece44464cdc7b80833c592f17c683c4c
   normalized_sha256: sha256:1ed273b1f186cf08f0bce77837fb6b21ece44464cdc7b80833c592f17c683c4c
 cas_ref: sha256:1ed273b1f186cf08f0bce77837fb6b21ece44464cdc7b80833c592f17c683c4c
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Recurrence/FiniteSamplingSmithDefect.finite_sampling_smith_defect
+    target_statement_id: sha256:9f6657ad26c6b975f7b0a054d13ec3f7eece2d9a61ae1c167afb2afdfb904bd2
 receipts:
   unresolved_subitems: []
   chain_atoms:
