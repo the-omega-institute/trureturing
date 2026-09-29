@@ -1,0 +1,21 @@
+**命题 141.1（完整剩余时间切面）。** 在式 (141.1) 的来源族，观察 $Y_d(t)=N_d(t)\bmod H$，含 $Y_0=0$。令
+
+$$
+g_d=\gcd(H,F_d),\qquad M_d=H/g_d.
+$$
+
+则 $Y_d(t)=F_dt\bmod H$，且
+
+$$
+Y_d(t)=Y_d(u)\quad\Longleftrightarrow\quad t\equiv u\pmod {M_d}. \tag{141.2}
+$$
+
+对预先固定的有限时间集合 $D$，同时观察全部 $Y_d$ 的纤维为模
+
+$$
+M_D=\mathop{\mathrm{lcm}}_{d\in D}M_d
+=\frac H{\gcd(H,(F_d)_{d\in D})} \tag{141.3}
+$$
+
+的剩余类；空 $D$ 取分母 $H$、$M_D=1$。特别地 $M_{\{d,e\}}=H/\gcd(H,F_{\gcd(d,e)})$。
+
