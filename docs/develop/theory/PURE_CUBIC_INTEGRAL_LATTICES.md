@@ -102,3 +102,27 @@ $\mathbb Z$. If $z=u+v\theta+w(1+\theta+\theta^2)/3$ with
 $u,v,w\in\mathbb Z$, compare the coefficient of $\theta^2$ in the
 rational power basis $(1,\theta,\theta^2)$. This gives $1/p=w/3$,
 or $pw=3$, contradicting primality and $p\ne3$.
+## 5. Saturation at three
+
+**Theorem 5.1 (three-saturation of the cubic suborder).** Under the
+hypotheses of Theorem 3.1, let
+$A=\mathbb Z\cdot1+\mathbb Z\cdot\theta+
+\mathbb Z\cdot(1+\theta+\theta^2)/3$. For every element $z$ of $K$
+integral over $\mathbb Z$,
+
+$$
+3z\in A\quad\Longrightarrow\quad z\in A.
+$$
+
+Proof. Put $B=1+9a$ and $\beta=(1+\theta+\theta^2)/3$. Write
+$3z=u+v\theta+w\beta$ with integers $u,v,w$. The cubic power basis
+gives $\operatorname{Tr}(1)=3$,
+$\operatorname{Tr}(\theta)=\operatorname{Tr}(\theta^2)=0$, and
+$\operatorname{Tr}(\beta)=1$. Since the trace of an algebraic integer
+is integral, $\operatorname{Tr}(z)=u+w/3$ implies $3\mid w$.
+Subtracting $(w/3)\beta$ leaves the integral element
+$z_1=(u+v\theta)/3$. Its squared trace is $u^2/3$, hence $3\mid u$.
+Subtracting $u/3$ leaves the integral element $z_2=v\theta/3$.
+Its cubed trace is $v^3B/9$, an integer. Because $B\equiv1\pmod3$,
+this implies $3\mid v$. All three coordinates of $z$ in the
+$(1,\theta,\beta)$ basis are therefore integers.
