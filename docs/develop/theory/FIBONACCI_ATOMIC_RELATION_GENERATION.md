@@ -14846,7 +14846,7 @@ $$
 $$
 \phi=\frac{1+\sqrt5}{2},\qquad
 \psi=-\phi^{-1},\qquad
-\lambda=\psi^3,qquad |\lambda|<1.
+\lambda=\psi^3,\qquad |\lambda|<1.
 $$
 
 对五个窗口取组成向量
