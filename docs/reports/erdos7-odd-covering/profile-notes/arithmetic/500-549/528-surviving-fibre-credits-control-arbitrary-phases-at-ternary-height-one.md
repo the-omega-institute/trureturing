@@ -445,7 +445,7 @@ mass negative. The missing information can be the intersections of
 different original deletions or additional whole-cover constraints.
 
 The latter have a concrete inventory interface.
-[Report385, PI1--PI3 and JP1--JP4](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#17-small-interfaces-bound-whole-cover-numerical-inventories)
+[Report385, PI1--PI3, JP1--JP4 and CR0--CR9](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#18-retained-mixed-originals-couple-both-ternary-roots)
 bounds the numbers of original multiples of3pq and3q^2 in one globally
 extremal whole cover with H3=1. Those formulas retain the actual prime
 labels and the entire original family; they impose no bound on its
@@ -455,23 +455,27 @@ irredundant noncovers.
 Its shared four-label repair also couples two different actual phases:
 within a retained ternary root, two3pq phases sharing a p-root or
 q-root have at most three original occupants together. Since each
-phase has at most two, double-occupied cells form a matching. In the
-same whole-cover model this gives the beta-independent bounds
+phase has at most two, double-occupied cells form a matching. The new
+CR1--CR8 parent movement uses an actual retained mixed original to
+couple the two ternary roots: either the oldpq phase is unguarded and
+its deletion removes one more allowed cell, or it is guarded and a
+complete repair yields the stronger cross-root capacity. In the same
+whole-cover model these give the beta-independent bounds
 
-    # {d original:3pq|d}<=2(p-1)(q-1)-|p-q|-1,
+    # {d original:3pq|d}<=2(p-1)(q-1)-|p-q|-2,
     # {d original:3pq|d, a_d mod3=r}
         <=(p-1)(q-1)+min(p-1,q-1)-1.
 
-For105 these are45 originals in total and at most27 on either actual
-ternary root, strengthening the earlier independent-phase75/46
-bounds. They are simultaneous necessary restrictions, not separately
+For105 these are44 originals in total and at most27 on either actual
+ternary root, strengthening the earlier45/27 joint bound and75/46
+independent-phase bound. They are simultaneous necessary restrictions, not separately
 attainable maxima. They retain all original numerical identities and
 do not require identifying artificial partition membership with an
 original phase. Finer row/column constraints themselves require those
 physical phase labels to be kept explicitly.
 
-JP4 also excludes a candidate numerical label if its own forced
-3pq-divisor inventory exceeds JP2. This exclusion depends on the
+CR9 also excludes a candidate numerical label if its own forced
+3pq-divisor inventory exceeds CR8, strengthening JP4's earlier ceiling. This exclusion depends on the
 original label and its heights, not on beta, so it may be applied
 before the fixed-inventory optimization. For instance, an actual
 original containing3,5,7 can have at most seven distinct nonternary

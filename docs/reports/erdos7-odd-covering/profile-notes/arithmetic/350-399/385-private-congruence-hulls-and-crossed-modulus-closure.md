@@ -24,6 +24,11 @@ label to its largest original multiple. Moving the parent to one actual
 descendant phase converts that group's joint replacement obligation
 into a repair budget for the parent's complete private region.
 
+[Section18](#18-retained-mixed-originals-couple-both-ternary-roots)
+uses a retained mixed original to repair a moved parent across both
+ternary roots. At H3=1 it sharpens the total105-multiple bound from45
+to44 without restricting the other heights or the support size.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -2309,3 +2314,194 @@ describes how these capacities can constrain its actual numerical
 deletion inventory without changing the common source. Neither the
 capacity formulas nor their finite control close that comparison or
 bound the number of support primes.
+
+## 18. Retained mixed originals couple both ternary roots
+
+Continue with ONE hypothetical whole distinct odd cover globally
+minimizing class count and then modulus sum, with full ternary height
+H3=1. A repair using the actual retained3p or3q class strengthens the
+previous total3pq-multiple inventory ceiling by one: for105 it becomes44.
+The separate root ceiling27 remains valid. The phase cases below improve
+the total further when the oldpq class has a retained mixed guard.
+These are ordinary proofs, not new Lean verification or noncoverage.
+
+### Actual phases and the retained-guard hypothesis
+
+Let p,q>=5 be distinct primes, put h=3pq, and let D be the original numerical modulus set. Write
+
+    N_h = #{d in D : h divides d}.
+
+If N_h=0, all bounds below are immediate. Otherwise divisor closure puts 3,p,q,3p,3q,pq,h in D. One CRT translation normalizes the ACTUAL original prime classes to residue zero. Comparable-original disjointness then gives the following phases:
+
+    A_3  : t=0;
+    A_3p : t=r_p, x=u,       r_p in {1,2}, u!=0 mod p;
+    A_3q : t=r_q, y=v,       r_q in {1,2}, v!=0 mod q;
+    A_pq : x=x_0, y=y_0,    x_0!=0, y_0!=0.
+
+Here t,x,y are the residues modulo 3,p,q. No retained original is reassigned in this notation. Let c=(x_0,y_0), and define
+
+    eps_p = 1 if x_0=u, otherwise 0;
+    eps_q = 1 if y_0=v, otherwise 0.
+
+Thus eps_p=1 means the WHOLE old pq class on ternary root r_p is contained in the actual original A_3p. The analogous assertion holds for eps_q=1 and A_3q. This is an exact whole-cylinder containment, with every higher prime-power lift and every other coordinate unrestricted.
+
+Call a nonzero ternary root guarded if one of these two containments holds there. If both nonzero roots were guarded, A_3 together with the two retained mixed originals would cover ALL of A_pq. Deleting pq would then reduce the original class count. Hence there are at most one guarded nonzero root. In particular,
+
+    r_p != r_q  ==>  eps_p+eps_q <= 1.                  (CR0)
+
+This restriction comes from the whole-cover minimality premise, not merely from the finite support table.
+
+### One guarded root gives a vertical occupancy bound
+
+Assume eps_p+eps_q>=1. By CR0 and its same-root analogue, there is exactly one guarded nonzero ternary root r_0. Let r_1 be the other nonzero root. Choose the three different lifts rho_0,rho_1,rho_2 of r_1 modulo 9. Insert the following three classes, specified by CRT:
+
+    B_9   : t_9=rho_0;
+    B_9p  : t_9=rho_1, x=x_0;
+    B_9q  : t_9=rho_2, y=y_0.
+
+The actual A_3 covers the part of the old A_pq on root 0. The retained guarding A_3p or A_3q covers the part on r_0. The three displayed new classes cover the ENTIRE part on r_1. Therefore
+
+    A_pq subset A_3 union A_guard union B_9 union B_9p union B_9q.  (CR1)
+
+The numerical repair labels 9,9p,9q are pairwise distinct, odd, and greater than one. They are absent from the entire original palette because H3=1; freshness does not depend on which originals are removed. Their phases preserve c on their respective cofactors. Nothing here substitutes an invented cofactor phase for an actual retained original's phase.
+
+Now fix ANY target pair z=(x',y') modulo p,q. Let
+
+    J(z) = {d in D : h divides d, a_d mod p=x', a_d mod q=y'},
+    k(z) = |J(z)|.
+
+Every d in J(z) is a proper multiple of pq. Thus pq itself is not in J(z), and neither guarding label 3p nor 3q nor the retained pure label 3 is in J(z). Move the single original label pq to the class z modulo pq, delete all J(z), and insert B_9,B_9p,B_9q.
+
+This preserves the ENTIRE original covered union:
+
+* Every old original outside {pq} union J(z) remains unchanged.
+* Every deleted original A_d, d in J(z), lies in the moved pq class by its actual p/q residues, regardless of its ternary root, all original heights, and all other factors.
+* Every point of the old A_pq is covered by CR1.
+
+In particular, this argument covers points jointly owned by several removed originals and does not replace full liability by their separate private regions. It holds on all integers; equivalently one may compare on the common period lcm(Q,9pq)=3Q.
+
+The moved numerical label pq cancels from the modulus-sum comparison. The new family has |D|-k(z)+3 classes, with globally distinct numerical labels. If k(z)>3, it has fewer classes. If k(z)=3, the three removed labels are distinct positive odd multiples of h. Their three distinct odd quotients have sum at least 1+3+5=9, so
+
+    sum_(d in J(z)) d >= 9h,
+    9+9p+9q = 9(1+p+q) < 9pq = 3h < 9h.
+
+The middle strict inequality holds for p,q>=5 because pq-p-q-1>0. Under H3=1 the quotients are also coprime to 3, so the stronger lower bound (1+5+7)h=13h is available but unnecessary. The cardinality tie therefore strictly lowers the modulus sum. Both alternatives contradict the fixed global lexicographic minimum. Consequently
+
+    k(z) <= 2 for every target pair z.                  (CR2)
+
+All h-multiples avoid the original A_3, so k(z) is exactly the sum of their occupancies on the two nonzero ternary roots. Writing n_r(z) for these occupancies gives
+
+    n_1(z)+n_2(z) <= 2.                                (CR3)
+
+This is one common cross-root constraint, produced by one three-label repair. It does not run two independent repairs with reused numerical labels. When z=c, comparable disjointness already gives k(c)=0; the argument is consistent with that degenerate target.
+
+### Exact proper-divisor support counts
+
+Relabel p,q if necessary so p<q. Set
+
+    a=p-1, b=q-1, B=2ab-a-b.
+
+The physical support table on each nonzero ternary root has a nonzero p-rows and b nonzero q-columns. Let S_r be the cells avoiding all ACTUAL proper-divisor originals of h. An h-multiple can occupy only S_r. These proper divisors are exactly 3,p,q,3p,3q,pq, so the following counts are exact for these tables, not independently optimized phase bounds.
+
+If r_p=r_q, the common root loses the row R={x=u} and column C={y=v}, a total of a+b-1 cells. The other root has no such deletion. The pq cell c is excluded on both roots. Therefore
+
+    M=|S_1|+|S_2| = B-1,  if eps_p=eps_q=0;
+    M=|S_1|+|S_2| = B,    if eps_p+eps_q>=1.          (CR4)
+
+If r_p!=r_q, one root loses R and the other C, for a+b deletions before pq. The pq deletion removes 2-eps_p-eps_q further cells. By CR0 there are only two cases:
+
+    M=B-2, if eps_p=eps_q=0;
+    M=B-1, if eps_p+eps_q=1.                          (CR5)
+
+The excluded case eps_p=eps_q=1 would make pq redundant, as already shown.
+
+### Guarded cases: at most two extra occupants beyond M
+
+Assume the guard premise, so CR3 holds. For each p/q cell z let
+
+    s(z)=1_(z in S_1)+1_(z in S_2).
+
+If s(z)=2, CR3 bounds its total occupancy by 2=s(z). If s(z)=0, occupancy is zero. If s(z)=1, its total occupancy is at most 1 plus the indicator that the unique allowed root has a double-occupied cell there. Summing these pointwise inequalities gives
+
+    N_h <= M + K_single,
+
+where K_single counts double-occupied cells located in only one of the two allowed tables. Doubles in the common support provide no extra total above M: their opposite-root single is simultaneously excluded by CR3.
+
+Existing JP1 says that all double-occupied cells in each fixed root form a matching in the p-row/q-column table. It implies K_single<=2 as follows.
+
+If r_p=r_q, the support in the root with the blocked cross R union C is contained in the other support, because c lies in that cross under the guard premise. The cells allowed in only one root are precisely (R union C) minus {c}, all in the other root. A matching in the union of one row and one column has size at most two: at most one edge can be in the row and at most one remaining edge in the column.
+
+If r_p!=r_q, assume for notation eps_p=1, eps_q=0; the other case is symmetric. The cells allowed only on root r_p lie in C minus R. The cells allowed only on root r_q lie in R minus (C union {c}). On the first root at most one double lies in this one-column strip; on the second at most one lies in the one-row strip. Thus K_single<=2 again.
+
+Combining with CR4–CR5 gives the stronger guarded bounds
+
+    N_h <= B+2, if r_p=r_q and eps_p+eps_q>=1;
+    N_h <= B+1, if r_p!=r_q and eps_p+eps_q=1.        (CR6)
+
+These inequalities use the same actual tables and the same original family throughout. No separately attainable table extrema are asserted to occur together in a whole cover.
+
+### Unguarded cases and the uniform improvement
+
+If eps_p=eps_q=0, CR3 is not supplied by this repair. Retain exactly the existing JP1 matching argument: each root has at most a double cells, and the actual 3p row deletion limits its root to a-1. Thus the total double-cell count K<=2a-1. Combining this with the exact support counts above gives
+
+    N_h <= B+2a-2, if r_p=r_q and eps_p=eps_q=0;
+    N_h <= B+2a-3, if r_p!=r_q and eps_p=eps_q=0.     (CR7)
+
+All four actual-phase cases are therefore bounded as follows:
+
+| Actual 3p/3q roots | Their coverage of the old pq phase | Inventory ceiling |
+| --- | --- | ---: |
+| same | neither covers it | B+2a-2 |
+| different | neither covers it | B+2a-3 |
+| same | at least one covers it | B+2 |
+| different | exactly one covers it | B+1 |
+
+The remaining different-root/both-covered case is impossible by redundancy. Since a>=4, every displayed ceiling is at most B+2a-2. Replacing a,b by p,q symmetrically yields
+
+    #{d in D : 3pq divides d}
+      <= 2(p-1)(q-1)-|p-q|-2.                       (CR8)
+
+This improves JP2 by one. The improvement is not a subtraction for the original h singleton. It comes from a dichotomy: absent a mixed guard, the proper-divisor support already loses another cell; present a mixed guard, moving pq becomes legal after full repair and forces the cross-root constraint CR3.
+
+For p=5,q=7, B=38 and the four conditional ceilings are respectively 44,43,40,39. Hence the uniform 105-multiple inventory ceiling improves from 45 to 44. Existing JP3's uniform root ceiling 27 remains a valid separate constraint; no stronger unconditional root ceiling is claimed here.
+
+Divisor closure gives the corresponding direct update of JP4. For any actual m divisible by 3pq,
+
+    v_p(m)*v_q(m)*product_(r|m, r notin {3,p,q})(v_r(m)+1)
+      <= 2(p-1)(q-1)-|p-q|-2.                       (CR9)
+
+Thus the product is at most 44 for an original divisible by 105. This is a consumer of CR8, not a separate substantive theorem; the earlier omega(m)<=8 consequence is unchanged.
+
+### Finite controls and the remaining global obligation
+
+The expanded [phase control](../../../frontier/cover-geometry/composite-parent-contraction/h3_phase_capacity.py)
+keeps all2304 original15/21/35 phase assignments outside their pure
+prime classes. Exactly48 are excluded because their original35 is
+covered by the retained3,15,21 classes. For every remaining assignment
+it computes the actual two allowed tables and the relevant matching
+capacities. The four case ceilings44,43,40,39 are attained by finite
+occupancy relaxations; none is asserted to be an actual whole cover.
+The original105 singleton can be assigned an allowed single cell in
+these comparisons. Its extra reservation is not the reason for the
+new subtraction by one.
+
+The control also verifies the moved-parent repair on every relevant
+original phase and every nonzero target5/7 pair, using the full joint
+period315. Retained3/15/21 classes and the three fresh repair classes
+cover the whole old35 class, and the moved35 class covers both ternary
+roots of the target pair. Higher original coordinates remain free in
+these cylinder containments, as the proof requires.
+
+RP2 rules out repairing both nonzero ternary roots of an arbitrary old
+pq phase using only fresh labels3^(2+j)e, e|pq, and retained pure3:
+R=6 and t=4 give exactly the excluded equality t=R(3-1)/3. Merely adding
+fresh heights cannot fix that repair. CR1 uses an additional actual
+premise: retained3p or3q already covers one complete old-parent nonzero
+root, leaving only the other root to repair. It therefore changes the
+remaining liability and respects the existing obstruction.
+
+No argument here forces an unrestricted hypothetical cover to violate
+CR8. The new result is a stronger necessary original-inventory condition
+and its exact phase-dependent refinement. It preserves arbitrary
+nonternary heights and arbitrary finite support, with the explicit
+whole-family H3=1 and global extremality hypotheses.
