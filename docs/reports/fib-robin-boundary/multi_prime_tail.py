@@ -2,10 +2,11 @@
 """Exact support-budget checks for the high-v2 Robin tail.
 
 The certificate is deliberately weaker than a step-by-step multi-prime
-argument: it bounds the final Euler-factor product.  It proves the support
-criterion used in theory section 154 and records the nine-prime corollary;
-failure at ten primes only means that this certificate has run out of budget.
-All sign decisions use Fraction arithmetic.
+argument: it checks the final support products, the rational threshold and a
+factor-product instance.  The seed evaluation, logarithmic comparison and
+the proposition's generic multiplicativity argument remain paper-level proof.
+Failure at ten primes only means that this certificate has run out of budget.
+All arithmetic decisions use Fraction values.
 """
 
 from fractions import Fraction as Q
@@ -58,7 +59,8 @@ def main():
     assert margin == Q(44551188659, 528099264000)
     assert margin > 0
 
-    # Equation (154.1), checked on a mixed-exponent instance.
+    # The prime-power factor product in equation (154.1), checked on one
+    # mixed-exponent instance.
     primes = (19, 29, 53)
     exponents = (1, 3, 2)
     product = Q(1)
