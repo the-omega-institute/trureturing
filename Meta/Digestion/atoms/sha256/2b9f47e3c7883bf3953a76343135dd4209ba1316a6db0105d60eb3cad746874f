@@ -1,0 +1,8 @@
+**定理 2143.6（真实表示账本上的单共轭类碰撞）。** 设 $G$ 为有限群，$g\in G$ 的阶 $r>1$，$N=|G|$，$c=N/r\in\mathbb N_{>0}$。定义正双分次的有理 $G$-表示账本 $A,B$：$A_{1,1}=\mathbb Q[G]$ 为左正规表示，其余次数为零表示；$B_{r,r}=\mathbb Q^c$ 为 $c$ 份平凡表示，其余次数为零表示。令 $H^A_h=\sum_{m,n\geq1}\operatorname{tr}(h\mid A_{m,n})p^mq^n$，$H^B_h$ 同理。对每个与 $g$ 共轭的 $h$，有
+
+$$
+(\Phi H^A)_h=(\Phi H^B)_h,
+\qquad [p^rq^r]H^A_h=0\ne c=[p^rq^r]H^B_h.
+\tag{2143.4}
+$$
+
