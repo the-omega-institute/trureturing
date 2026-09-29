@@ -1,0 +1,17 @@
+**定理 87.3（有限分解与已有尾积分的对应）。** 定义有限和
+
+$$
+\Psi(x)=\sum_{p^k\le x}\log p,\qquad
+P(x)=\sum_{p^k\le x}\frac1{kp^k},\qquad
+\Phi(x)=\gamma+\log\log x-P(x)+\frac{\Psi(x)-x}{x\log x}.
+$$
+
+令 $R(x)=\sum_pR_p(x)$，并取定义 85.1 中无附加整数约束的压力 $M$，则
+
+$$
+\boxed{\Delta(\lambda_x):=\gamma+\log\log x-\frac1{\log x}-M(\lambda_x)
+=\Phi(x)+R(x).}
+$$
+
+每个 $x>1$ 的上述素数和都只有有限支撑，且 $R(x)\ge0$。
+

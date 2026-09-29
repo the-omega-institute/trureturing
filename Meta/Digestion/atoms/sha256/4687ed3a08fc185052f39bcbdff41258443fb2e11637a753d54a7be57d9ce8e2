@@ -1,0 +1,14 @@
+**命题 90.4（支持直线只有上界保证）。** 对 $\lambda>0$ 定义
+
+$$
+H_y(\lambda)=\sup_{n\text{ 为 }y\text{-rough}}
+\{\log Z(n)-\lambda\log n\}.
+$$
+
+则
+
+$$
+\log U_y(B)\le
+\inf_{\lambda>0}\{H_y(\lambda)+\lambda\log B\}.
+$$
+
