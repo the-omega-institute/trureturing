@@ -99,7 +99,7 @@ internal sealed class DyadicDeadlineStaircaseDocument : IScribeDocumentDefinitio
         var interval = Seq(F.Id("Finset"), Dot, F.Id("Icc"), Par(Seq(D(1), Comma, Sp, depth)));
         var q = Seq(Par(interval), Dot, F.Id("filter"), Par(Lambda(i,
             Leq(Pow(D(2), i), h))), Dot, F.Id("card"));
-        var count = Add(Sub(period, depth), q);
+        var count = Add(Sub(period, Par(depth)), q);
         var family = Call("deadlineFamily", d, b, deadline, p);
         var time = Call("terminalTime", period, b, p, r);
         var raw = Call("snd", Call("terminalRecord", period, b, p, r));
