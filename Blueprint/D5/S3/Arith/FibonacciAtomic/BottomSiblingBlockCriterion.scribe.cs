@@ -7,7 +7,7 @@ internal sealed class BottomSiblingBlockCriterionDocument : IScribeDocumentDefin
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actual Fibonacci prefixes and globally attached words define the target; an actual bounded-word nonconverse is proved.",
+        "Actual Fibonacci prefixes and globally attached words define the target; common-depth fullness and an actual bounded-word nonconverse are proved, while the full criterion remains open.",
         H("Actual Sources and Bottom Sibling Blocks"),
         Blocks(
             Describe.Lean(
