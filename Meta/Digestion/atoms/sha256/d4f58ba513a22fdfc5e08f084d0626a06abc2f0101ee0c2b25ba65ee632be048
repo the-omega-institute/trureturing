@@ -1,0 +1,50 @@
+## 150. 共轭收缩坐标上的五窗仿射递归固定点
+
+本节把五窗递归放到黄金共轭的收缩坐标中。
+令
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\psi=-\phi^{-1},\qquad
+\lambda=\psi^3,\qquad |\lambda|<1.
+$$
+
+对五个窗口取组成向量
+
+$$
+d_{\mathrm{null}}=(0,0),\quad d_2=(1,0),\quad d_3=(0,1),\quad
+d_{25}=(2,1),\quad d_5=(1,1).
+$$
+
+写 $\sigma_-(a,b)=a+b\psi$，并置 $\delta_\sigma=\sigma_-(d_\sigma)$。
+按上述顺序，五个共轭坐标为
+
+$$
+0,\quad 1,\quad \psi,\quad 2+\psi,\quad 1+\psi=\psi^2.
+$$
+
+相应的仿射分支为
+
+$$
+f_\sigma(y)=\delta_\sigma+\lambda y.
+$$
+
+因 $\sigma_-(M^3x)=\psi^3\sigma_-(x)$，$f_\sigma$ 正是 §149 的三步递归在共轭坐标下的分支。
+本节路径地址按低窗到高窗读取；§149 对有限地址作从高窗到低窗的 Horner 求值，二者方向相反。
+状态 $0$ 表示 incoming seam 未被占用，状态 $1$ 表示低位侧 incoming seam 已占用。
+采用 incoming occupied seam rule 时，状态 $1$ 的当前窗首位必须为零；边从当前输入状态指向当前窗最高位决定的输出状态。
+在这个低到高约定下，有向两状态图的方程为
+
+$$
+\begin{aligned}
+K_0={}&f_{\mathrm{null}}(K_0)\cup f_2(K_0)\cup f_3(K_0)
+       \cup f_{25}(K_1)\cup f_5(K_1),\\
+K_1={}&f_{\mathrm{null}}(K_0)\cup f_3(K_0)\cup f_5(K_1).
+\end{aligned}
+$$
+
+因此，从 $0$ 出发的 $25$、$5$ 分支进入 $1$，而从 $1$ 出发的
+$\mathrm{null}$、$3$ 分支回到 $0$，$5$ 分支留在 $1$。
+若改用高窗到低窗的扫描，必须相应反向或重标图；不能在未声明约定时混用这两种方向。
+这些并集只表达允许的分支，不能声称各子集彼此不交；重叠是允许的。
+

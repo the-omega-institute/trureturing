@@ -1,0 +1,4 @@
+### 143.1. 加权的除数探针与可见能量
+
+在式 (141.1) 的同一均匀相位 $t\in\mathbb Z/H\mathbb Z$ 上用归一化内积 $\langle f,h\rangle=H^{-1}\sum_t f(t)h(t)$。对每个 $q\mid H$，置 $f_q(t)=\mathbf1_{q\mid t}$。对 $M\mid H$，令 $P_M$ 为按 $t\bmod M$ 的纤维取条件平均的正交投影。
+
