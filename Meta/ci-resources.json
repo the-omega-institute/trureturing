@@ -230,9 +230,7 @@
       "lean_targets": [
         "leanInspector/LeanInformationAudit",
         "leanInspector/reportInspector",
-        "leanInspectorInterface/LeanInformationAuditInterface",
-        "reg/LeanInformationAuditRegTests",
-        "reg/Reg"
+        "leanInspectorInterface/LeanInformationAuditInterface"
       ]
     },
     {
