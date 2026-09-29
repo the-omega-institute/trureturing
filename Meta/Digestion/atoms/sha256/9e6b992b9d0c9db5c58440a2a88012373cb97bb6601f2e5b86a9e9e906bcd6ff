@@ -1,0 +1,17 @@
+### proposition 25.3 层间加法分裂的互素条件
+
+对标准短序列
+
+$$
+0\longrightarrow\mathbb Z/e\mathbb Z
+\overset{\times d}{\longrightarrow}\mathbb Z/de\mathbb Z
+\longrightarrow\mathbb Z/d\mathbb Z
+\longrightarrow0
+$$
+
+存在保持加法的截面，当且仅当
+
+$$
+\boxed{\gcd(d,e)=1.}
+$$
+

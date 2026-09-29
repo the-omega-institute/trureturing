@@ -1,0 +1,11 @@
+## 92. 联合事件状态、截断最小点与最终障碍的 RH 强度
+
+沿用第 87 节的右连续和式 $P(x)=\sum_{m\le x}\Lambda(m)/(m\log m)$、$\Psi(x)=\sum_{m\le x}\Lambda(m)$ 及
+
+$$
+\Phi(x)=\gamma+\log\log x-P(x)+\frac{\Psi(x)-x}{x\log x}
+=\int_x^\infty(\Psi(v)-v)\frac{\log v+1}{v^2\log^2v}\,dv.
+$$
+
+它正是 [ZECKENDORF_EULER_5040.md](ZECKENDORF_EULER_5040.md) 在“两个有限素数幂求和”后的“定理 1.1：尾积分的有限算式”中的 $I_\psi$；同处“定理 1.2：压力余量的精确二分解”的 $D_{\mathrm{disc}}$ 就是本卷的 $R$。这里复用有限公式，不把它重新命名为新发现。以下归一化状态写作 $\mathcal Z$，以区别整数的 $Z(n)$。
+

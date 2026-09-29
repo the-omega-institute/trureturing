@@ -1,0 +1,28 @@
+## 39. 缺陷精度曲线与跨尺度几何
+
+对 Smith 因子的 $p$-进指数 $\nu_i=v_p(s_i)$，定义
+
+$$
+\boxed{h_r=\log_p|\ker(B\bmod p^r)|=\sum_i\min(r,\nu_i),\qquad h_0=0.}
+$$
+
+则
+
+$$
+\boxed{h_r-h_{r-1}=\#\{i:\nu_i\ge r\},}
+$$
+
+以及
+
+$$
+\boxed{(h_r-h_{r-1})-(h_{r+1}-h_r)=\#\{i:\nu_i=r\}.}
+$$
+
+逐项检查 $\min(r,\nu_i)$ 即得。故整条有限精度亏损曲线恢复
+
+$$
+\mathcal D_{B,p}\cong\bigoplus_i\mathbb Z/p^{\nu_i}\mathbb Z.
+$$
+
+这里总混同量 $\sum_i\min(r,\nu_i)$、最坏恢复滞后 $\max_i\nu_i$ 和有缺陷方向数 $\#\{i:\nu_i>0\}$ 是三个不同量；一个熵值不能决定另外两个。
+

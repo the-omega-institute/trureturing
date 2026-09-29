@@ -1,0 +1,281 @@
+{
+  "scope": "Rebuild the complete weighted query envelope and one positive29-height bridge.\n\nThe native enumerator performs exact integer arithmetic over every actual\nold45 query pair; this consumer independently verifies actual315 support,\nall numerical cylinder caps, maximizing numerical queries and rational\ntransport. The result is scoped to one fixed core phase family, not all\nold sources, and is not Lean verification.\n",
+  "actual_core_originals": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      45,
+      1
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      8
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      63,
+      59
+    ],
+    [
+      105,
+      74
+    ],
+    [
+      315,
+      269
+    ]
+  ],
+  "old45_points": [
+    2,
+    7,
+    8,
+    14,
+    16,
+    17,
+    19,
+    23,
+    28,
+    29,
+    32,
+    34,
+    37,
+    38,
+    43,
+    44
+  ],
+  "remaining": [
+    5,
+    6,
+    5,
+    2,
+    6,
+    5,
+    5,
+    4,
+    6,
+    3,
+    4,
+    5,
+    6,
+    5,
+    6,
+    2
+  ],
+  "weights": [
+    8,
+    5,
+    4,
+    12,
+    10,
+    12,
+    12,
+    12,
+    10,
+    12,
+    7,
+    12,
+    10,
+    12,
+    5,
+    4
+  ],
+  "query_count": 4480,
+  "ordered_pairs": 20070400,
+  "uniform_query_ordered_pairs": 20070400,
+  "uniform_J4": 29,
+  "uniform_J6": 10,
+  "maximizing_queries": [
+    {
+      "threshold": 4,
+      "numerical_query": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          15,
+          8
+        ],
+        [
+          45,
+          38
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          35,
+          19
+        ],
+        [
+          63,
+          47
+        ],
+        [
+          105,
+          89
+        ],
+        [
+          315,
+          173
+        ]
+      ],
+      "weighted_numerator": 296
+    },
+    {
+      "threshold": 6,
+      "numerical_query": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          15,
+          14
+        ],
+        [
+          45,
+          29
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          35,
+          19
+        ],
+        [
+          63,
+          5
+        ],
+        [
+          105,
+          89
+        ],
+        [
+          315,
+          299
+        ]
+      ],
+      "weighted_numerator": 104
+    }
+  ],
+  "actual315_cells": 75,
+  "all_numerical_cylinder_count": 623,
+  "outside_primes": [
+    13,
+    17,
+    19,
+    23,
+    29
+  ],
+  "full_height_flags": [
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "thresholds": [
+    4,
+    4,
+    4,
+    6,
+    6
+  ],
+  "rho": [
+    "1/9",
+    "1/13",
+    "1/15",
+    "1/17",
+    "1/22"
+  ],
+  "outside_factor": "10304/7293",
+  "multioutside_factor": "11789/218790",
+  "native_sha256": "3abbe8ce16f302e8f8fa424dcac0572e4641aad71022b3634129d61e615ca212",
+  "D": 684,
+  "M": 1300,
+  "K": 16428,
+  "t": 12,
+  "caps": [
+    360,
+    218,
+    180,
+    128,
+    60,
+    147,
+    83,
+    52,
+    32,
+    28,
+    12
+  ],
+  "J4": 296,
+  "J6": 104,
+  "cost": "18506669/18706545",
+  "conservative_cost": "18914518/18706545",
+  "haar_cap": "2254/99",
+  "haar_survivor": "99938/212952285",
+  "same_source_all_caps_and_hinges": true,
+  "all_remaining_phases_arbitrary_and_global": true,
+  "all_core_heights_finite": true,
+  "all_multioutside_supports": true,
+  "uniform_over_all_old_sources": false,
+  "no_solver_or_optimality_premise": true,
+  "lean_verification": false
+}

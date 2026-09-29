@@ -1,0 +1,33 @@
+### definition 18.1 算术的两个实嵌入
+
+令
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad
+\psi=\frac{1-\sqrt5}{2}=-\varphi^{-1},
+$$
+
+并对 $x=a+b\theta\in R$ 定义
+
+$$
+\sigma_+(x)=a+b\varphi,\qquad
+\sigma_-(x)=a+b\psi,\qquad
+\iota(x)=(x_+,x_-)=(\sigma_+(x),\sigma_-(x)).
+$$
+
+这里的 Minkowski 双坐标是数域的两个实嵌入所给出的算术映射，不是 Lorentz 时空度规。由两个根都满足 $t^2=t+1$，有
+
+$$
+\iota(\theta x)=(\varphi x_+,\psi x_-),\qquad
+\iota(x^*)=(x_-,x_+),\qquad
+N(x)=x_+x_-.
+$$
+
+沿用 $F_0=0,F_1=1$ 的 Fibonacci 编号，对 $j\ge1$，
+
+$$
+\theta^j=F_{j-1}+F_j\theta.
+$$
+
+这些是递归作用、共轭交换与范数的坐标表达，范数乘积本身不提供物理距离或因果关系。
+

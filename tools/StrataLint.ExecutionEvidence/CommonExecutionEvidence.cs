@@ -36,7 +36,7 @@ internal static partial class CommonExecutionEvidence
     internal const string TestsPath = RootPath + "/tests.json";
     internal const string TestSeedPath = RootPath + "/test-seed";
     // Every change to invocation/acceptance semantics changes the project input identity.
-    private const string TestContract = "registered-tests-v2;dotnet-test;Release;no-build;no-restore;unfiltered;trx;language=en-US";
+    private const string TestContract = "registered-tests-v3;serial-dotnet-test-help-before-execution;dotnet-test;Release;no-build;no-restore;unfiltered;trx;language=en-US";
     internal const string BuildPath = RootPath + "/build.json";
     internal const string EngineeringPath = RootPath + "/engineering.json";
     internal const string CurrentPath = RootPath + "/current.json";

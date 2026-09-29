@@ -1,0 +1,39 @@
+**证明。** 写 $z=1/p$ 及 $D_p(a)=Q_p(a)-\log G_p(a)$。有限几何和给
+
+$$
+D_p(a)=-\log(1-z^{a+1})-\sum_{k>a}\frac{z^k}{k},\qquad
+\frac{dD_p(a)}{dz}=\frac{z^a}{1-z}
+\left(\frac{a+1}{1+z+\cdots+z^a}-1\right).
+$$
+
+在 $a=0$ 时它恒为零；在 $a\ge1,0<z<1$ 时导数为正且 $D_p(a)(0)=0$。因此 $D_p(a)\ge0$，又由 $-\log(1-u)<u/(1-u)$ 得
+
+$$
+D_p(a)<\frac{z^{a+1}}{1-z^{a+1}}\le2z^{a+1}.
+$$
+
+参考目标 $Q_p(a)-\lambda_xa\log p$ 的第 $k$ 个增量非负恰当 $p^k\le x$，所以 $v_p$ 是其最大点，端点允许零增量。逐前缀 $\log G_p(a)\le Q_p(a)$ 给 $R_p\ge0$；在实际最大式中取 $a=v_p$ 则给
+
+$$
+0\le R_p(x)\le D_p(v_p)<2p^{-v_p-1}<2/x.
+$$
+
+实际边际 $h_p(k)=\log(1+1/(p+\cdots+p^k))$ 严格递减且小于 $p^{-k}$。对 $p\ge x$，首层 $h_p(1)<1/p\le\lambda_x\log p$，故实际最大点为零，参考最大值也为零，$R_p=0$；总储备只有有限支撑。
+
+令 $t=x^{1/(K+1)}$。对 $t<p\le x^{1/K}$，恰有 $v_p=K$，故
+
+$$
+R-R_K\le\frac{2\pi(t)}x+2\sum_{t<p\le x^{1/K}}p^{-K-1}.
+$$
+
+使用 $\pi(t)\le t$ 和递减函数的整数尾和估计
+
+$$
+\sum_{n>t}n^{-K-1}\le t^{-K-1}+\frac{t^{-K}}K
+\le\left(1+\frac1K\right)t^{-K}
+$$
+
+即得所示常数。这一界无需 PNT。
+
+最后，若 $x\ge K^K,p>x^{1/K}$，则 $p>K$、$\log p>\log x/K$，从而 $p^{K+1}\log p>xp\log p>x\log x$。于是 $h_p(K+1)<\lambda_x\log p$，所有后续边际也为负，最优指数至多 $K$。该结论不能扩展到所有素数：$K=2,x=16,p=2$ 时 $h_2(3)=\log(15/14)>1/15>1/64=\lambda_{16}\log2$，故最优指数至少为 3。 $\square$
+

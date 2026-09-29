@@ -1,0 +1,11 @@
+因而，使用经典 Mertens 判据时，
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall\varepsilon>0,\quad
+\Delta_{7,10}(X)=O_\varepsilon(X^{1/2+\varepsilon}).
+}
+$$
+

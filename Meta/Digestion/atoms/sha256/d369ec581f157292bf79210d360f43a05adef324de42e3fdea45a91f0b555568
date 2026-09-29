@@ -1,0 +1,12 @@
+### definition 9.1 原子字母上的序列化
+
+定义
+
+$$
+\operatorname{code}(\alpha)=\alpha\alpha,\qquad
+\operatorname{code}(\beta)=\alpha\beta,\qquad
+\operatorname{code}(\langle s,t\rangle)=\beta\,\operatorname{code}(s)\,\operatorname{code}(t).
+$$
+
+这里没有先把对象转换成整数。
+

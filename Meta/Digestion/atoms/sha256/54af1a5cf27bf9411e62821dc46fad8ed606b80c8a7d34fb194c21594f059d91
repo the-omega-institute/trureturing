@@ -1,0 +1,26 @@
+### 101.2. 半周平移的直接更新
+
+令当前粗状态为 $q=\gcd(C,H)$。任意正乘法仍有闭合更新
+
+$$
+q(Cm)=\gcd(qm,H).
+$$
+
+若 $H\mid c$，则 $C+c\equiv C\pmod H$，所以加法更新是恒等。其余不增加边界的加法只发生在偶数 $H$：写
+
+$$
+H=2^hM,\qquad h\ge1,\quad M\text{ 奇},\qquad c=(H/2)t.
+$$
+
+当 $t$ 偶数时仍是整周平移；当 $t$ 奇数时令 $r=v_2(q)\in\{0,\ldots,h\}$（约数 $q$ 的零余数以 $r=h$ 表示），则
+
+$$
+\boxed{
+q(C+c)=
+\begin{cases}
+q,&r<h-1,\\
+2q,&r=h-1,\\
+q/2,&r=h.
+\end{cases}}
+$$
+

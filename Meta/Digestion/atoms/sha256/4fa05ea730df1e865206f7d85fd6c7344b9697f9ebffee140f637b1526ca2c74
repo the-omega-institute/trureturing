@@ -1,0 +1,8 @@
+### theorem 54.1 Fibonacci 双区域障碍
+
+若附加记录的目标是恢复完整来源 $x$（即恒等任务），令 $g=\gcd(n,F_{t-s})$。则
+
+$$
+\boxed{\mathfrak J\cong\mathbb Z/g\mathbb Z,\qquad |R|_{\min}=g.}
+$$
+

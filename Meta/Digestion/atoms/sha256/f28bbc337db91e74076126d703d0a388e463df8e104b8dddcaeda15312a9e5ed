@@ -1,0 +1,39 @@
+**定理 100.5（封闭更新）。** 固定 $p,h,e,k,M$ 如上，各坐标按模 $M$ 计算。令 $\nu_{p,k}(z)$ 为模 $p^k$ 的截断深度，零余数取 $k$，则读出为
+
+$$
+S(r,u)\longmapsto r,\qquad
+D(z)\longmapsto e+\nu_{p,k}(z).
+$$
+
+各轴的 $p$ 幂相乘恢复 gcd，进而恢复 $F_H$。对允许加数 $c=p^e\delta$，更新为
+
+$$
+D(z)\longmapsto D(z+\delta),\qquad
+S(r,u)\longmapsto S(r,u+p^{e-r}\delta).
+$$
+
+对正乘数 $m=p^sv$，$p\nmid v$，更新为
+
+$$
+D(z)\longmapsto D(mz),\qquad
+S(r,u)\longmapsto
+\begin{cases}
+S(r+s,vu),&r+s<e,\\
+D(p^{r+s-e}vu),&r+s\ge e.
+\end{cases}
+$$
+
+对两个同合同的抽象操作数，乘法良定义且满足
+
+$$
+D(z)D(w)=D(p^ezw),\qquad S(r,u)D(z)=D(p^ruz),
+$$
+
+$$
+S(r,u)S(s,v)=
+\begin{cases}
+S(r+s,uv),&r+s<e,\\
+D(p^{r+s-e}uv),&r+s\ge e.
+\end{cases}
+$$
+
