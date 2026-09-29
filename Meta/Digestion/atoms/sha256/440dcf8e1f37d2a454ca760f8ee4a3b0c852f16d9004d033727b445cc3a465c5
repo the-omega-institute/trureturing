@@ -1,0 +1,21 @@
+**Theorem 6.1 (squarefree pure-cubic integer ring).** Under the hypotheses
+of Theorem 3.1, suppose additionally that $B=1+9a$ is squarefree in
+$\mathbb Z$. Then every element of $K$ integral over $\mathbb Z$ belongs
+to $A=\mathbb Z\cdot1+\mathbb Z\cdot\theta+
+\mathbb Z\cdot(1+\theta+\theta^2)/3$. Thus $A$ is the full ring of
+integers of $K$.
+
+Proof. The discriminant of the power basis $(1,\theta,\theta^2)$ is
+$-27B^2$. Discriminant clearing therefore puts $27B^2z$ in
+$\mathbb Z[\theta]$ for every integral $z\in K$. If a prime $p$
+divides $B$, squarefreeness makes $X^3-B$ Eisenstein at $p$. The
+Eisenstein integrality criterion says that an integral element $y$ with
+$py\in\mathbb Z[\theta]$ already lies in $\mathbb Z[\theta]$.
+Moreover, $3A\subseteq\mathbb Z[\theta]$ because
+$3\beta=1+\theta+\theta^2$. Hence, if $pz\in A$, applying the
+criterion to $y=3z$ gives $3z\in\mathbb Z[\theta]\subseteq A$;
+Theorem 5.1 then gives $z\in A$. For $p=3$, Theorem 5.1 applies
+directly. Every prime dividing $27B^2$ is covered by one of these
+cases, so removal of its prime factors from the discriminant-clearing
+multiple gives $z\in A$. Theorem 3.1 gives the reverse inclusion
+$A\subseteq\mathcal O_K$.

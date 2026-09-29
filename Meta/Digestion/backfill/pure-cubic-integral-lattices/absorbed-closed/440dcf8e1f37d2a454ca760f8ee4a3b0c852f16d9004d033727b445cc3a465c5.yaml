@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:440dcf8e1f37d2a454ca760f8ee4a3b0c852f16d9004d033727b445cc3a465c5
+  normalized_sha256: sha256:440dcf8e1f37d2a454ca760f8ee4a3b0c852f16d9004d033727b445cc3a465c5
+cas_ref: sha256:440dcf8e1f37d2a454ca760f8ee4a3b0c852f16d9004d033727b445cc3a465c5
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/PureCubicSquarefreeMaximality.pure_cubic_squarefree_maximality
+    target_statement_id: sha256:fea7ee4201e42896a7858c34fa55d06a235cd6cdb9c4d1bc101519c001fc3b35
+receipts:
+  unresolved_subitems: []
