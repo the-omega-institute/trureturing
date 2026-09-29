@@ -228,7 +228,7 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
             D(1), Sp, Le, Sp, h, Sp, Land, Sp, e, Sp, Le, Sp, h);
         return Disp(All(p, Nat(), All(h, Nat(), All(e, Nat(), Seq(
             Par(hypotheses), Sp, Rightarrow, Sp,
-            Par(Seq(responseEquality, Sp, Land, Sp, realization)))))));
+            Par(Seq(Par(responseEquality), Sp, Land, Sp, Par(realization))))))));
     }
 
     private static Formula IffFormula(Formula left, Formula right) =>
