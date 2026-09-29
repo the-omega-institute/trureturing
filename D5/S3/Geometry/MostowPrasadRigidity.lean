@@ -8,9 +8,12 @@
  -/
 
 import Mathlib.Topology.MetricSpace.Isometry
+import Mathlib.Topology.Homotopy.Equiv
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+open scoped ContinuousMap
 
 namespace D5.S3.Geometry.MostowPrasadRigidity
 
@@ -44,6 +47,59 @@ theorem isometry_equiv_eq_of_dense_range
   have hfun : (f : X → Y) = g :=
     he.equalizer f.continuous g.continuous hfg
   exact fun x => congrFun hfun x
+
+/-!
+The target theorem quantifies over homotopy equivalences, while the geometric
+construction produces isometries.  These predicates keep the existence and
+uniqueness obligations separate and make their exact combination explicit.
+-/
+
+def HasIsometryRepresentative
+    {X Y : Type*} [MetricSpace X] [MetricSpace Y]
+    (h : X ≃ₕ Y) : Prop :=
+  ∃ e : X ≃ᵢ Y, ContinuousMap.Homotopic (e.toHomeomorph : C(X, Y)) h.toFun
+
+def UniqueIsometryRepresentative
+    {X Y : Type*} [MetricSpace X] [MetricSpace Y]
+    (h : X ≃ₕ Y) : Prop :=
+  ∀ e₁ e₂ : X ≃ᵢ Y,
+    ContinuousMap.Homotopic (e₁.toHomeomorph : C(X, Y)) h.toFun →
+    ContinuousMap.Homotopic (e₂.toHomeomorph : C(X, Y)) h.toFun →
+    e₁ = e₂
+
+/-- The exact `∃!` endpoint for one pair of metric spaces. -/
+def MostowPrasadRigidityEndpoint
+    {X Y : Type*} [MetricSpace X] [MetricSpace Y] : Prop :=
+  ∀ h : X ≃ₕ Y, ∃! e : X ≃ᵢ Y,
+    ContinuousMap.Homotopic (e.toHomeomorph : C(X, Y)) h.toFun
+
+theorem hasIsometryRepresentative_of_isometry
+    {X Y : Type*} [MetricSpace X] [MetricSpace Y] (e : X ≃ᵢ Y) :
+    HasIsometryRepresentative e.toHomeomorph.toHomotopyEquiv := by
+  refine ⟨e, ?_⟩
+  exact ContinuousMap.Homotopic.refl (e.toHomeomorph : C(X, Y))
+
+theorem uniqueIsometryRepresentative_of_eqOn_dense
+    {X Y : Type*} [MetricSpace X] [MetricSpace Y] (h : X ≃ₕ Y)
+    (s : Set X) (hs : Dense s)
+    (hboundary : ∀ e₁ e₂ : X ≃ᵢ Y,
+      ContinuousMap.Homotopic (e₁.toHomeomorph : C(X, Y)) h.toFun →
+      ContinuousMap.Homotopic (e₂.toHomeomorph : C(X, Y)) h.toFun →
+      Set.EqOn e₁ e₂ s) :
+    UniqueIsometryRepresentative h := by
+  intro e₁ e₂ h₁ h₂
+  exact isometry_equiv_eq_of_eqOn_dense s hs e₁ e₂ (hboundary e₁ e₂ h₁ h₂)
+
+theorem existsUnique_isometryRepresentative_of_parts
+    {X Y : Type*} [MetricSpace X] [MetricSpace Y] (h : X ≃ₕ Y)
+    (hex : HasIsometryRepresentative h)
+    (huniq : UniqueIsometryRepresentative h) :
+    ∃! e : X ≃ᵢ Y,
+      ContinuousMap.Homotopic (e.toHomeomorph : C(X, Y)) h.toFun := by
+  rcases hex with ⟨e, he⟩
+  refine ⟨e, he, ?_⟩
+  intro e' he'
+  exact huniq e' e he' he
 
 /-!
 The group-theoretic form of Mostow--Prasad compares holonomy representations
@@ -131,6 +187,9 @@ end GroupConjugacy
 
 #print axioms isometry_equiv_eq_of_eqOn_dense
 #print axioms isometry_equiv_eq_of_dense_range
+#print axioms hasIsometryRepresentative_of_isometry
+#print axioms uniqueIsometryRepresentative_of_eqOn_dense
+#print axioms existsUnique_isometryRepresentative_of_parts
 #print axioms groupConjugacy_symm
 #print axioms groupConjugacy_trans
 #print axioms groupConjugacy_conjugator_unique

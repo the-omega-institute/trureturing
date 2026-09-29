@@ -35,6 +35,60 @@ internal sealed class MostowPrasadRigidityDocument : IScribeDocumentDefinition
                     "The same uniqueness result accepts a dense parametrization directly."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("mostow-prasad-has-isometry-representative"),
+                DeclarationHandle.Create(Prefix + "HasIsometryRepresentative"),
+                H("Existence of an isometry representative"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A homotopy equivalence has an isometry representative."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("mostow-prasad-unique-isometry-representative"),
+                DeclarationHandle.Create(Prefix + "UniqueIsometryRepresentative"),
+                H("Uniqueness of an isometry representative"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "All isometry representatives in one homotopy class are equal."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("mostow-prasad-endpoint"),
+                DeclarationHandle.Create(Prefix + "MostowPrasadRigidityEndpoint"),
+                H("Mostow--Prasad endpoint specification"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every homotopy equivalence has a unique isometry representative."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("mostow-prasad-isometry-representative-of-isometry"),
+                DeclarationHandle.Create(Prefix + "hasIsometryRepresentative_of_isometry"),
+                H("An isometry supplies its representative"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "An isometry induces a homotopy equivalence for which it is a representative."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mostow-prasad-unique-representative-dense"),
+                DeclarationHandle.Create(Prefix + "uniqueIsometryRepresentative_of_eqOn_dense"),
+                H("Dense boundary criterion for uniqueness"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Agreement on a dense boundary set proves uniqueness of representatives."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mostow-prasad-endpoint-from-parts"),
+                DeclarationHandle.Create(Prefix + "existsUnique_isometryRepresentative_of_parts"),
+                H("Endpoint from existence and uniqueness"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The existence and uniqueness obligations combine into the exact endpoint."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("mostow-prasad-group-conjugacy"),
                 DeclarationHandle.Create(Prefix + "GroupConjugacy"),
                 H("Group conjugacy interface"),
