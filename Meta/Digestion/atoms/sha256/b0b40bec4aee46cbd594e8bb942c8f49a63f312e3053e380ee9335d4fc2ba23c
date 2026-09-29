@@ -1,0 +1,7 @@
+**来源与推导分工。** Luo–Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*, arXiv:1404.5365v2，Theorem 1.4、Lemma 4.3、Propositions 4.4–4.5、Lemma 4.6 及 Theorem 6.3，提供正长度公式、真正／平坦分类和最大角结构的共同正长度实现。本轮读取了该 PDF 文本，并成功检查印刷页 2、21 的页面图像；印刷页 16、17 的图像请求失败，相关公式按解析文本和前文第 65–66 节复用，不将失败读取写成成功图像核验。第 88 节的三角恒等式及二阶导数、后续 Jensen 预算和全局饱和排除均在本文给出完整推导。
+
+CFMP 原始给定剖分问题仍定位于 Costantino–Frigerio–Martelli–Petronio, arXiv:math/0402339，Conjecture 0.8。既有矩形屏障、三边实现等结论维持原范围。本轮仓内 CFMP PR 搜索定位到 #9474 与 #8155；有界网络和仓内检索不构成穷尽文献或世界范围优先权证明。
+
+- https://arxiv.org/pdf/1404.5365
+- https://arxiv.org/abs/math/0402339
+

@@ -1,0 +1,7 @@
+**情形 R。** 有 $a=\pi,b=c=0$。由 (72.5) 和 $\theta>0$ 得 $p=1$、$\theta=\pi/q$、$q\ge5$。式 (72.4) 给出 $v=2qu,k=2qh$。引理 72.1 使 $u+v=u(1+2q)$、$h+k=h(1+2q)$ 均为偶数，故 $u,h\ge2$。于是
+
+$$\beta=\frac\pi{qu}\le\frac\theta2,\qquad
+\delta=\frac\pi{qh}\le\frac\theta2.$$
+
+在真正 $D$ 的 $R$ 边两端，角和均为 $\theta+\beta+\delta\le2\theta\le2\pi/5<\pi/2$。定理 70.1 强制 $R<3$。然而对边相等的 $C$ 在 $R$ 对平坦，原始余弦或原卷第 50 节准则给出 $R\ge1+A+B>3$，矛盾。
+

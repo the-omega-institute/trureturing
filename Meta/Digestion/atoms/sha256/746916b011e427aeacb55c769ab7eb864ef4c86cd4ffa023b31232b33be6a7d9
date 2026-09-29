@@ -1,0 +1,12 @@
+**来源定位。** 第 76 节从 Frigerio–Moraschini, arXiv:1801.05326v3，第 1.1 节公式 (1)、(3)、(4) 的既有逆余弦公式推导。本轮重新查看了印刷页 6 的 PDF 图像，并检查了该文 Proposition 3.1 的条件：它的角限制带有体积下界前提。本节新的端点估计没有该体积前提；未将作者的体积结论直接充当本节的角帽。Luo–Yang, arXiv:1404.5365v2，Theorem 1.4、6.3 提供正广义长度和最大角结构，印刷页 21 再次通过 PDF 图像核对。原卷的平坦 Cauchy 条件和严格角构造继续按原来源使用。
+
+本轮还检索并读取 Huabin Ge 于 2026-09-23 上传的 arXiv:2609.27635v1，*Geometric ideal triangulations of hyperbolic 3-manifolds*。作者在 Theorems 1.1–1.4 声称通过相容细分得到某个几何理想／部分截断剖分。该预印本的引言本身区分 CFMP 的“给定剖分”目标及最低九度已有结果。这里不将其视为固定最低六度剖分已经实现，也不宣称独立验证了整篇新预印本。它的 Lemma 3.2 中四面体高度商空间维数为零，提示“最小块已经没有再细分的同顶点自由度”；这只帮助定位两条路线的差异，未被作为第 78 节的存在性输入。
+
+DNA 来源分别为 Goodman–Berry–Turberfield（2004）及 Goodman 等（2005），本轮读取其 PubMed 作者摘要；DNA 纳米结构只用于阐明设计配对和三维闭合的启发，未作为双曲几何或 CFMP 的实验证明。
+
+- https://arxiv.org/html/1801.05326v3
+- https://arxiv.org/pdf/1404.5365
+- https://arxiv.org/html/2609.27635v1
+- https://pubmed.ncbi.nlm.nih.gov/15179470/
+- https://pubmed.ncbi.nlm.nih.gov/16339440/
+

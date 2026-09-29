@@ -1,0 +1,16 @@
+**证明。** 置
+
+$$\Delta_R=R^2+A^2+B^2+2RAB-1,\quad
+\Delta_S=S^2+A^2+B^2+2SAB-1.$$
+
+直接使用正向六变量余弦并相减，得到
+
+$$\cos\beta-\cos\delta=
+-\frac{(A-B)((A+B)^2-(R-1)(S-1))}{\sqrt{\Delta_R\Delta_S}}.$$
+
+根号正。$R$ 边的原始余弦 $\varphi_R$ 满足
+
+$$\Delta_R(1+\varphi_R)=(R+1)((A+B)^2-(R-1)(S-1)).$$
+
+真正性使 $\varphi_R>-1$，所以括号严格正。由反余弦严格递减得到 (72.3)，包括相等当且仅当 $A=B$ 的情形。
+

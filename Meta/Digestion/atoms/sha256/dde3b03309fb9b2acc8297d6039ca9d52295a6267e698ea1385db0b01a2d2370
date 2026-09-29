@@ -1,0 +1,4 @@
+# 三维理想剖分的几何实现：混合匹配补篇（第 65–69 节）
+
+本篇属于既有理论卷 [CFMP_GEOMETRIC_REALIZATION](CFMP_GEOMETRIC_REALIZATION.md)，承接该卷第 64 节的暴露边星问题，不设立另一个猜想或理论目标。读取基线为 PR #9474 的 `0a2267f24b7dd9b7a1a4f575c7aa88368e87e2fc`。原卷第 1–64 节保持不变；本篇是同一 PR 中单独存放的续篇源文件。
+

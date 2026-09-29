@@ -1,0 +1,25 @@
+**证明。** 令 $a=\pi/(2g)\le\pi/6$，$Q,\lambda$ 如第 88 节。某个目标角 $\theta_j\le\pi/g=2a$。真正对边 $o_j>1$ 与 (88.1) 给出
+
+$$Q>\frac{1+\cos\theta_j}{1-\cos\theta_j}
+=\cot^2(\theta_j/2)\ge\cot^2a\ge3.$$
+
+长边条件 $r\ge1+2h$ 给出 $Q\le h$。于是
+
+$$\lambda^2=\frac{h^2-1}{Q+h^2}
+\ge\frac{h^2-1}{h+h^2}=1-\frac1h
+\ge1-\frac1Q>1-\tan^2a.$$
+
+第 88.2 节的严格凸性及普通标量 Jensen 不等式给出
+
+$$\sum_i\beta_i\ge g b_\lambda(2a)
+>g\arctan\left(\cot a\sqrt{1-\tan^2a}\right)
+=g\arccos(\tan a).$$
+
+最后的恒等式两侧都属于 $(0,\pi/2)$，其正切均为 $\sqrt{1-\tan^2a}/\tan a$。又 $a\le\pi/6$，所以
+
+$$\tan a\le1/\sqrt3<\sqrt3/2\le\cos a,$$
+
+从而 $\arccos(\tan a)>a$，得到 (89.1)。即使全部 $\theta_i$ 相等，严格性仍由 $o_j>1$ 给出的严格 $Q$ 下界保证。
+
+这里的 Jensen 只估计已经存在的真实角总和。没有把不同四面体替换为一个平均块，没有变更任何实际全局边方程，也没有由平均后的可行性倒推原度量存在。
+

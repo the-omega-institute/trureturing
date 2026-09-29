@@ -1,0 +1,16 @@
+## 72. 两组横边长度可不同的最低六度混合匹配实现
+
+本节把原来的单一横边类拆为两个保留对边关系的实际全局类 $\mathsf A,\mathsf B$。全部四面体仍只有两种类型，标准顺序为
+
+$$C=(\mathsf R,\mathsf A,\mathsf B,\mathsf R,\mathsf A,\mathsf B),$$
+$$D=(\mathsf R,\mathsf A,\mathsf B,\mathsf S,\mathsf A,\mathsf B). \tag{72.1}$$
+
+四个全局类非空且互不交，两型均非空。各类每条边的 $(C,D)$ 出现数分别为
+
+$$\mathsf R:(p,q),\quad \mathsf A:(u,v),\quad
+\mathsf B:(h,k),\quad \mathsf S:(0,w), \tag{72.2}$$
+
+其中 $p,q,u,v,h,k,w$ 为正整数。没有预先要求同类边等长，更没有要求 $\mathsf A$ 与 $\mathsf B$ 等长。假设
+
+$$p+q\ge6,\quad u+v\ge6,\quad h+k\ge6,\quad w\ge6.$$
+

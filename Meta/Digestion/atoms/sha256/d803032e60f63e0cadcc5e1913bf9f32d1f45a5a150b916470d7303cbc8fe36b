@@ -1,0 +1,16 @@
+**定理 70.1（两端角和的严格长度界）。** 若
+
+$$\theta+a+b\le\sigma_1\le\pi/2,\qquad
+\theta+c+d\le\sigma_2\le\pi/2,$$
+
+令 $H(s)=\operatorname{arsinh}(\tan(s/2))$，则
+
+$$\boxed{\ell_{12}<H(\sigma_1)+H(\sigma_2).} \tag{70.2}$$
+
+特别地，当 $\sigma_1=\sigma_2=\sigma$ 时，
+
+$$\boxed{\cosh\ell_{12}<1+2\tan^2(\sigma/2)
+=\frac{3-\cos\sigma}{1+\cos\sigma}.} \tag{70.3}$$
+
+取 $\sigma=\pi/2$，得到 $\cosh\ell_{12}<3$。不限制与目标边相对的角 $g$，也不要求任意两角或两长度相等。
+

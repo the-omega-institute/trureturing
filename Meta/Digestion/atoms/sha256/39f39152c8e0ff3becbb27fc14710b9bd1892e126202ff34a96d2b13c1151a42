@@ -1,0 +1,8 @@
+**引理 88.1（精确横角响应）。** 有
+
+$$\boxed{o=Q-(Q+1)\cos\theta,\qquad
+\beta=b_\lambda(\theta):=
+\arctan\left(\lambda\cot\frac\theta2\right).} \tag{88.1}$$
+
+其中 $0<\theta<\pi$、$0<\beta<\pi/2$，所以所有反三角分支确定。对固定 $r,h$，$\lambda$ 不随对边 $o$ 改变。
+
