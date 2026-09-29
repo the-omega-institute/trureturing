@@ -1,0 +1,31 @@
+**定理 95.2（精确各向异性响应）。** 定义
+
+$$\lambda_\pm=
+\frac{\sqrt{a^2-1}\mathbin{\pm}\sqrt{b^2-1}}{a+b}
+\sqrt{\frac{r-1}{r+1}}.$$
+
+则 $0<\lambda_+<1$、$|\lambda_-|<\lambda_+$，并有
+
+$$\boxed{\frac{\beta+\delta}{2}
+=\arctan\left(\lambda_+\cot\frac\theta2\right),} \tag{95.4}$$
+$$\boxed{\frac{\beta-\delta}{2}
+=\arctan\left(\lambda_-\cot\frac\theta2\right).} \tag{95.5}$$
+
+对固定 $r,a,b$，平均横角仍是第 88 节的严格凸响应 $b_{\lambda_+}(\theta)$；该参数不随对边 $o$ 变化。
+
+**证明。** 利用 (95.3) 及正正弦表达式，
+
+$$\frac{\sin\beta+\sin\delta}{\cos\beta+\cos\delta}
+=\frac{\sqrt{a^2-1}+\sqrt{b^2-1}}{a+b}\sqrt{L/M}
+=\lambda_+\cot(\theta/2).$$
+
+左端是 $\tan((\beta+\delta)/2)$。两角和小于 $\pi$，所以反正切分支为 $(0,\pi/2)$。将分子换成正弦之差，得到 $\tan((\beta-\delta)/2)$，分支为 $(-\pi/2,\pi/2)$，证明 (95.5)。因 $0<\sqrt{a^2-1}<a$、$0<\sqrt{b^2-1}<b$，参数范围成立。
+
+写 $D(\theta)=\sin^2(\theta/2)+\lambda_+^2\cos^2(\theta/2)$，直接微分给出
+
+$$b_{\lambda_+}'=-\frac{\lambda_+}{2D}<0,\qquad
+b_{\lambda_+}''=
+\frac{\lambda_+(1-\lambda_+^2)\sin\theta}{4D^2}>0.$$
+
+这里复用第 88 节已经证明的单变量导数，新增内容是两个不等横边角与该响应的精确识别。由 (95.5) 还恢复 $\operatorname{sign}(\beta-\delta)=\operatorname{sign}(a-b)$；这个角序已见第 72 节，不再次计为独立新结论。
+

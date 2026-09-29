@@ -1,0 +1,13 @@
+**定理 120.1（精确非对称判据）。** 对第 119 节的全部正长度，定义
+
+$$\begin{aligned}
+\Xi={}&2(ro-1-A^2+B^2)\xi^2+2(ro-1+A^2-B^2)\zeta^2\\
+&+4(r-o)\xi\zeta+(\xi^2-\zeta^2)^2.
+\end{aligned}$$
+
+则
+
+$$\boxed{\det G=-LM+\Xi,\qquad x\text{ 真正}\ \Longleftrightarrow\ \Xi<LM.} \tag{120.1}$$
+
+这是六独立变量的充要条件，没有要求对边等长，也没有要求 $\Xi$ 非负。
+

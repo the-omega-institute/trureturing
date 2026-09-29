@@ -1,0 +1,14 @@
+**引理 116.1（平坦对边传递响应下界）。** 固定 $a,b,r,o>1$、$w=a+b$，且
+
+$$r\ge1+w,\qquad(r-1)(o-1)\ge w^2.$$
+
+假设存在 $g\ge3$ 个真正目标 $r$ 出现，横边为同一对 $a,b$，目标角之和为 $\pi$。设
+
+$$K=\frac{(\sqrt{a^2-1}+\sqrt{b^2-1})^2}{w^2}\in(0,1),\quad
+T=\frac{r-1}{r+1},$$
+$$\lambda_r^2=KT,\qquad \lambda_o^2=K\frac{o-1}{o+1}.$$
+
+则
+
+$$\boxed{\lambda_r^2>\frac13,\qquad\lambda_o^2>\frac17.} \tag{116.1}$$
+

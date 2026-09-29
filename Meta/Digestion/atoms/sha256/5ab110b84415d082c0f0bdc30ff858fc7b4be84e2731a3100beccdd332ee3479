@@ -1,0 +1,5 @@
+## 105. 来源、执行复核与认证边界
+
+经典正向角长公式继续取自 Frigerio–Moraschini, *On volumes of truncated tetrahedra with constrained edge lengths*, arXiv:1801.05326，第 1.1 节公式 (1)–(5)。本次成功查看了 PDF 印刷页 6 的图像。Luo–Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*, arXiv:1404.5365，Theorem 6.3 的印刷页 21 也已成功查看；其提供的共同正广义长度与平坦可能性保持原意。存在性输入使用 Theorem 6.3，不从该页附近的 convex 散文误取体积凸性。第 96.1 节的非线性需求、原卷第 42.2 节的严格角构造与第 51.2 节的标签型规则均为仓内前置，不重复计算为本轮新结果。
+
+- https://arxiv.org/pdf/1801.05326

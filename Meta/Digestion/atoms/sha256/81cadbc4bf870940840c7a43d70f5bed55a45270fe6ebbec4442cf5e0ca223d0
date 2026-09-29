@@ -1,0 +1,10 @@
+**推论 122.2（Cayley 与 Schreier 公式）。** 对正则右作用 $\Omega=\Gamma$，令 $a=\operatorname{ord}\ell,b=\operatorname{ord}h$。有 $|\Gamma|/a$ 条低边、$|\Gamma|/b$ 条高边、$[\Gamma:K]$ 个边界分量，每个的亏格为
+
+$$\boxed{1+|K|(1-1/a-1/b).} \tag{122.4}$$
+
+对陪集空间 $\Omega=C\backslash\Gamma=\{Cg:g\in\Gamma\}$ 的右作用，边界分量对应双陪集 $C\backslash\Gamma/K$；代表 $g$ 对应轨道大小
+
+$$m_g=[K:K\cap g^{-1}Cg].$$
+
+若 $C$ 与 $\langle\ell\rangle,\langle h\rangle$ 的每个共轭子群都平凡相交，则所有返回圈仍分别有长度 $a,b$，该边界亏格为 $1+m_g(1-1/a-1/b)$。一般情形必须使用 (122.3) 的逐圈计数。
+

@@ -1,0 +1,45 @@
+**证明。** 令 $k=a+b>2$、$j=a-b$、$\tau=\tan(\theta/2)$、$\lambda=\lambda_+$。首先
+
+$$(\sqrt{a^2-1}+\sqrt{b^2-1})^2>k(k-2).$$
+
+确切地，写 $a=1+u,b=1+v$，$u,v>0$，两侧之差是
+
+$$2\bigl(\sqrt{u(u+2)v(v+2)}-uv\bigr)>0.$$
+
+因 $r\ge k+1$，于是
+
+$$\lambda^2>\frac{k-2}{k}\frac{k}{k+2}
+=\frac{k-2}{k+2}. \tag{96.2}$$
+
+定义
+
+$$F(r)=\frac{(r-1)(2(r+1)-j^2)}{(r+1)k^2}.$$
+
+由 (95.2) 直接通分，得到严格正余项
+
+$$\boxed{\tau^2-F(r)=
+\frac{2(r-1)(o-1)D_r}{(r+1)Lk^2}>0.} \tag{96.3}$$
+
+这一步也适用于 $F(r)<0$，未通过错误的分母比较排除该情形。对 $r\ge k+1$，因 $|j|<k-2<r+1$，
+
+$$F'(r)=\frac{2}{k^2}\left(1-\frac{j^2}{(r+1)^2}\right)>0.$$
+
+所以
+
+$$\tau^2>F(r)\ge F(k+1)
+=\frac{2(k+2)-j^2}{k(k+2)}
+>\frac{6-k}{k+2}. \tag{96.4}$$
+
+将 (96.2) 的两倍与 (96.4) 相加，恰好得到
+
+$$\boxed{\tau^2+2\lambda^2>1.} \tag{96.5}$$
+
+若 $\theta\ge\pi/2$，由 $\beta+\delta>0$ 直接得到结论。否则令 $\eta=(\beta+\delta)/2\in(0,\pi/2)$。利用精确响应及 (96.5)，
+
+$$\cos^2\eta=\frac{\tau^2}{\tau^2+\lambda^2}
+<\frac{2\tau^2}{1+\tau^2}
+=1-\cos\theta
+<\sin^2\theta.$$
+
+最后一个严格不等式使用 $0<\cos\theta<1$。两边正平方根和反余弦分支确定，故 $\eta>\pi/2-\theta$，得到 (96.1)。
+

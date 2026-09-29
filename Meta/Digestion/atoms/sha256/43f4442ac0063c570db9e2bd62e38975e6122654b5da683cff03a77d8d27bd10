@@ -1,0 +1,4 @@
+# CFMP 理论卷续篇：群字符、六独立长度与非交换运输（第 119–125 节）
+
+本篇延续同一 CFMP 目标，承接 [第 95–118 节](CFMP_GEOMETRIC_REALIZATION_TWO_RESERVOIRS.md)，并直接使用[总卷](CFMP_GEOMETRIC_REALIZATION.md)第 37–40 节。读取基线为 PR #9474 的 `2592a3cc30d0fbd6fed6f1cf6a79e45b025479e5`。本篇单独存放以避免覆盖并行形式化；已有理论、Lean、Scribe、审计和冻结状态不改动。
+

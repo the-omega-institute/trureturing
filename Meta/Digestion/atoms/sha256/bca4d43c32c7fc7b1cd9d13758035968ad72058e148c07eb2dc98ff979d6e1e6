@@ -1,0 +1,10 @@
+**定理 113.2（内生保护的配对实现）。** 在原卷实际流形与负 Euler 边界条件下，全部边度至少六，并有第 101 节分割与框架。若
+
+$$H\subseteq N_\infty,$$
+
+且每个 $\sigma\notin Z_\infty$ 都满足
+
+$$\{R_\sigma,O_\sigma\}\cap H\subseteq\{A_\sigma,B_\sigma\}, \tag{113.1}$$
+
+则给定的同一剖分具有真正双曲实现及完全测地边界。
+
