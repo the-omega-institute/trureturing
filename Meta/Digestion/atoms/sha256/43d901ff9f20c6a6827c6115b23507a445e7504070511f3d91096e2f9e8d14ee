@@ -1,0 +1,18 @@
+**定理 90.1（包含零指数的规范化）。** 固定整数 $y\ge1,B\ge1$，称 $n$ 为 $y$-rough，若每个素因子均严格大于 $y$，并允许 $n=1$。令 $q_0<q_1<\cdots$ 为所有大于 $y$ 的连续素数。则
+
+$$
+U_y(B)=\max_{\substack{1\le n\le B\\p\mid n\Rightarrow p>y}}Z(n)
+$$
+
+在某个 $n=\prod_{i=0}^{s-1}q_i^{a_i}$ 处取得，其中 $a_0\ge\cdots\ge a_{s-1}>0$；$s=0$ 表示 $1$。
+
+**证明。** 在直到原最大素因子的有限素数表上补齐零指数。若 $p<q$ 且 $0\le a<b$，交换 $p^aq^b$ 为 $p^bq^a$ 将整数乘以 $(p/q)^{b-a}<1$。同时
+
+$$
+\frac{G_p(k+1)}{G_p(k)}=1+\frac1{p+p^2+\cdots+p^{k+1}},\qquad
+\frac{G_p(b)}{G_p(a)}=
+\prod_{k=a}^{b-1}\left(1+\frac1{p+\cdots+p^{k+1}}\right).
+$$
+
+每个因子随 $p$ 严格递减，所以 $G_p(b)G_q(a)>G_p(a)G_q(b)$，其余素数的因子不变，$Z$ 严格增大。这里 $a=0$ 同样有效，因而漏掉较小允许素数也能被修正。反复交换相邻逆序，有限指数表的逆序数严格减少，终止于非增排列；正指数遂形成连续前缀。整数不增、$Z$ 不减、rough 条件保留。原可行整数集合有限非空，故最大值存在且可在规范族取得。这个交换步骤正是既有 `D5.S3.Arith.ExponentExchange.IntegerSwap.prime_exponent_swap` 的内容，包括较小指数可以为零；从局部交换到整个规范族的归约在这里给出纸面证明。 $\square$
+
