@@ -5014,6 +5014,89 @@ $$
 第二层满足 $\beta_{p,2}<1/p^2<\lambda_x\log p$，最后一步来自
 $p^2\log p\ge x\log(2x)>x\log x$。于是 $a_p=1$ 唯一，$R_p=1/p-\log(1+1/p)>0$。其余方向非负，得到子储备下界。又 $1/p-\log(1+1/p)=1/(2p^2)+O(p^{-3})$。素数定理和部分求和给出 $\sum_{p\ge t}p^{-2}\sim1/(t\log t)$；取 $t=\sqrt{2x}$，减去 $p>x-1$ 的 $O(1/(x\log x))$ 尾并控制三次项，即得所述常数。该渐近式没有提供一个已指定的有限起点。 $\square$
 
+### 87.5 严格有限前缀支配的单独解析命题
+
+**定理 87.5（严格有限几何前缀支配）。** 对所有自然数 $a\ge1$ 和实数 $0<z<1$，
+
+$$
+\log\left(\sum_{k=0}^{a}z^k\right)
+<\sum_{k=1}^{a}\frac{z^k}{k}.
+$$
+
+**证明。** 令 $S(t)=(1-t^{a+1})/(1-t)$ 以及
+$D(t)=\sum_{k=1}^{a}t^k/k-\log S(t)$。
+在 $0\le t<1$，几何和恒等式给出 $S(t)=\sum_{k=0}^{a}t^k>0$。
+有限求和与商的求导法则给出
+
+$$
+D'(t)=\frac{t^a}{1-t}\left(\frac{a+1}{S(t)}-1\right).
+$$
+
+对 $0<t<1$，每个正指数项严格小于 $1$，所以 $S(t)<a+1$，从而 $D'(t)>0$。
+又 $D$ 在 $[0,z]$ 连续且 $D(0)=0$，由严格单调性得 $D(z)>0$。 $\square$
+
+本命题是定理 87.2 中严格前缀子句的通用实变量形式；取 $z=1/p$ 得该子句。
+$a=0$ 时两侧均为零。它不含定理 87.2 的参考目标最大值与 $R_p(x)\ge0$ 子句，
+也不控制 §87.3 的有符号无限尾项。
+
+### 87.6 局部储备的量级与两个拓扑观察边界
+
+以下定量估计与拓扑构造是纸面推导，不扩大定理 87.5 的 Lean 覆盖。
+在 $a\ge1$、$0<z<1$ 下，令 $S_a(t)=\sum_{k=0}^a t^k$，
+$D_a(t)=\sum_{k=1}^a t^k/k-\log S_a(t)$。对 $0\le t\le z$，
+
+$$
+D_a'(t)=\frac{t^a((a+1)-S_a(t))}{(1-t)S_a(t)}
+\ge\frac{a t^a}{S_a(z)},\qquad
+D_a(z)\ge\frac{a z^{a+1}}{(a+1)S_a(z)}.
+$$
+
+这里 $(a+1)-S_a(t)=\sum_{j=1}^a(1-t^j)\ge a(1-t)$，
+再从 $0$ 积分；$a=1$ 给出
+$z-\log(1+z)\ge z^2/(2(1+z))$。
+因此定理 87.4 的**正储备**（区别于 §87.3 的有符号 $\Phi$）满足
+
+$$
+B(x)\ge\sum_{\substack{p\text{ 素数}\\\sqrt{2x}\le p\le x-1}}
+\frac1{2p(p+1)}.
+$$
+
+此界逐项来自 $z=1/p,a=1$，保留原有的正储备量级，
+但不估计 $\Phi(x)$，也不推出所有 $n>5040$ 的 Robin 不等式。
+
+对 $n>1$，令 $K_n$ 为真约数偏序集
+$\{d:1<d<n,\ d\mid n\}$ 的序复形。
+Philip Hall 的链公式给出
+$\widetilde\chi(K_n)=\mu(n)$，故 $\chi(K_n)=1+\mu(n)$；
+本仓 `StrictDivisorChainMobius` 的冻结链和对应这一交替计数。
+若 $p^2\mid n$，映射 $d\mapsto\operatorname{lcm}(d,p)$
+在真约数偏序集上满足 $d\le f(d)$ 与 $p\le f(d)$，
+由偏序映射的同伦给出到点 $p$ 的收缩。
+特别地 $5040=2^4 3^2 5\cdot7$，所以 $K_{5040}$ 可缩且
+$\chi(K_{5040})=1$；Klein 瓶的 $\chi=0$，不是这个复形。
+§86.2 引用的 Axler (2023, Theorem 3) 与 Hertlein (2018, Theorem 2)
+若按其所列充分条件使用，则任何 $n>5040$ 的潜在 Robin 反例都被 $4$ 整除，
+故其 $\mu(n)=0$ 且 $K_n$ 可缩；这不排除潜在反例。
+Euler 示性数或**无标签**同伦型因此不能单独判定加权 Robin 目标；
+完整保留整数标签、端点与权重 $1/d$ 的约数数据仍能恢复
+$\sum_{d\mid n}1/d=\sigma(n)/n$。
+
+另构造 Fibonacci 传递矩阵 $Q=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$
+在完整 $\mathbb{RP}^1(\mathbb R)$ 上的射影圆映射，
+并取 $Q^m$ 的映射环面。对 $v(\theta)=(\cos\theta,\sin\theta)$，
+像的角导数为 $\det(Q^m)/\|Q^mv(\theta)\|^2$，
+故圆映射的定向度为 $(-1)^m$。
+圆同胚按定向类同痕，映射环面在奇数 $m$ 时为 Klein 瓶，
+偶数 $m$ 时为环面：$7$ 与所有奇素数步属前者，$5040$ 与素数步 $2$ 属后者。
+这是额外构造的**完整实射影圆**上的分类；正 Fibonacci 轨道、
+$\mathbb{CP}^1$ 和 Li 的 $\xi$ 圆盘均是不同对象，未得到内禀 zeta 或 RH 拓扑。
+Klein 瓶在 $\chi=0$ 时的 Heawood 表达式取值 $7$，但其实际地图色数上限为 $6$；
+地图区域着色也不是 Franklin 图的顶点着色。
+圆映射环面的分类见 [mapping torus](https://en.wikipedia.org/wiki/Mapping_torus)，
+偏序链与约化 Euler 示性数的关系见
+[incidence algebra](https://en.wikipedia.org/wiki/Incidence_algebra#Euler_characteristic)，
+Klein 着色例外见 [Heawood conjecture](https://en.wikipedia.org/wiki/Heawood_conjecture)。
+
 ## 88. 连续胞腔证书与未解决的尺度条件
 
 **命题 88.1（事件连续性与全局下界的条件）。** $\Phi$ 在每个素数幂事件 $x=p^k$ 连续。在无事件区间固定 $C=\Psi(x)$、$P_0=P(x)$ 后，若 $C>1$，则对所有 $x>1$
