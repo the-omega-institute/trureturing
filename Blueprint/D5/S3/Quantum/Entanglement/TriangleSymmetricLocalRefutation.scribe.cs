@@ -29,7 +29,10 @@ internal sealed class TriangleSymmetricLocalRefutationDocument : IScribeDocument
             Node("result", "A local fully symmetric distribution above one quarter",
                 Disp(new Formula.Not(F.Id("claim"))),
                 "Let each source send one of the 12 ordered pairs x = (x_1, x_2) of distinct outcomes, uniformly, and let every party apply the rule f(x, y) = x_2 if x_2 is one of y_1, y_2, and x_1 otherwise, to its two sources in cyclic order: A = f(beta, gamma), B = f(gamma, alpha), C = f(alpha, beta). Cutting [0, 1] into 12 equal cells turns this into responses on [0, 1]; each cell has measure 1/12 and the integral factorises over the cells, so p(a, b, c) is the number of source triples with outputs (a, b, c) divided by 12^3 = 1728. A kernel-checked count over the 1728 triples gives 123 when a = b = c, 19 when exactly two outputs agree and 23 when all differ. This depends only on how many outputs are distinct, which neither a relabelling of the outcomes nor a permutation of the parties changes, so p is fully symmetric, and p(A = B = C) = 4 * 123 / 1728 = 41/144 > 1/4.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("baumer-2024-triangle-symmetric-local-quarter"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(
