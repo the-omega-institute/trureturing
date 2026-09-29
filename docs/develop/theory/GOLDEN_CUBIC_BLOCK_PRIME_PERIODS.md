@@ -1609,3 +1609,20 @@ the next-to-leading coefficient two steps later. The recurrence also
 bounds the degree of $U_m$ by $m-1$, so no higher term contributes.
 
 ## 追加锚（本行以下为增补区）
+
+## 37. The third coefficient layer of the Fibonacci recurrence polynomial
+
+**Theorem 37.1 (third near-leading coefficient).** For the recurrence
+polynomial $U_m(X)$ of Section 33 and every $m\geq5$, the coefficient
+at $X^{m-5}$ is
+
+$$
+\frac{(m-3)(m-4)}2.
+$$
+
+This is the next coefficient layer after Theorem 36.1. The recurrence
+transfers it from the preceding polynomial two steps earlier and receives
+the second-layer coefficient from the $XU_{m-1}$ term; the leading term
+of the remaining summand is too large in degree to contribute.
+
+## 追加锚（本行以下为增补区）
