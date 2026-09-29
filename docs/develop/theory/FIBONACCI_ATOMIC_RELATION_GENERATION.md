@@ -14964,9 +14964,9 @@ $$
 
 The bound is part of the common domain promise, not merely a fact true of an unobserved distinguished source.
 
-**命题 152.2（Quantity and composition under a size promise）。** The domain $K_B$ is finite. If $L>B$, then $O_L$ recovers the exact current quantity on $K_B$, and $\widehat B_L$ recovers the exact composition there. Ordered tree syntax is still not recovered.
+**命题 152.2（Quantity and composition under a size promise）。** The domain $K_B$ is finite. If $L>B$, then $O_L$ recovers the exact current quantity on $K_B$, and $\widehat B_L$ recovers the exact composition there. Ordered tree syntax need not be recovered in general: for $B\ge5$, the two trees $\langle A,B\rangle$ and $\langle B,A\rangle$ have the same composition and quantity and remain indistinguishable.
 
-证明。The inequalities $a\le B/2$ and $b\le B/3$ put $K_B$ in a finite rectangle. Every admissible quantity $n$ satisfies $2\le n\le B<L$, so its least nonnegative residue is $n$ itself. A quantity need not determine composition: for $B\ge6$, $(3,0)$ and $(0,2)$ both have quantity 6. Double readings instead determine both coordinate residues by theorem 148.1. The promised coordinates are each strictly less than $L$, so their least nonnegative representatives are their actual values. Proposition 145.2 still gives distinct ordered trees of the same composition. $\square$
+证明。The inequalities $a\le B/2$ and $b\le B/3$ put $K_B$ in a finite rectangle. Every admissible quantity $n$ satisfies $2\le n\le B<L$, so its least nonnegative residue is $n$ itself. A quantity need not determine composition: for $B\ge6$, $(3,0)$ and $(0,2)$ both have quantity 6. Double readings instead determine both coordinate residues by theorem 148.1. The promised coordinates are each strictly less than $L$, so their least nonnegative representatives are their actual values. For $B\ge5$, proposition 145.2 supplies the distinct ordered trees $\langle A,B\rangle$ and $\langle B,A\rangle$ of the same composition; for smaller bounds the proposition makes no universal nonrecovery claim. $\square$
 
 **命题 152.3（Proper prime divisors and finite arithmetic certificates）。** For $2\le n\le B$, compositeness is equivalent to the existence of a prime $p$ such that
 
