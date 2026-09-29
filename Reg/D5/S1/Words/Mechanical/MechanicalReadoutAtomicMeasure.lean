@@ -396,18 +396,4 @@ register_information_theorem
   variation rationalJumpVariation sensitivity rationalJumpSensitivity
   escape from (ℝ) escape continues (open)
 
-open Lean in
-run_meta do
-  for theoremName in #[
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic,
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit,
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support,
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form] do
-    let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-      record.occurrence.key.theoremName == theoremName
-    let valid := row.any fun record => match record.result with
-      | .declaredValidated _ => true
-      | _ => false
-    unless valid do throwError "atomic-measure information registration is not declaredValidated: {theoremName}"
-
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure

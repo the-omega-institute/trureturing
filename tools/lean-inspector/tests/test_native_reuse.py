@@ -139,7 +139,7 @@ class NativeReportConsumerTests:
         (self.root / 'entry-tools/lake').chmod(0o755)
         (self.root / 'entry-tools/lean').symlink_to(Path(self.lake).with_name('lean'))
         self.env['LAKE_BIN'] = str(self.root / 'entry-tools/lake')
-        workspace = ['-d', str((self.root / 'Reg').resolve())]
+        workspace = ['-d', str((self.root / 'tools/lean-inspector-reg').resolve())]
         def builds():
             return [args for line in calls.read_text().splitlines()
                     if (args := json.loads(line))[:3] == [*workspace, 'build']]

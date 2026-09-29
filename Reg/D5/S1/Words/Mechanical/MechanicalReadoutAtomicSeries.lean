@@ -95,14 +95,4 @@ register_information_theorem
   variation seriesVariation sensitivity seriesSensitivity
   escape from (ℝ) escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass
-  unless row.any (fun record => match record.result with
-      | .declaredValidated _ => true
-      | _ => false) do
-    throwError "atomic-series information registration is not declaredValidated"
-
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries

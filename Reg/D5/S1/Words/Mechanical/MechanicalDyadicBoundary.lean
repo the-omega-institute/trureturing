@@ -165,16 +165,4 @@ register_information_theorem
   variation stableVariation sensitivity stableSensitivity
   escape from (ℝ) escape continues (open)
 
-open Lean in
-run_meta do
-  for theoremName in #[
-      `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq,
-      `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits] do
-    let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-      record.occurrence.key.theoremName == theoremName
-    let valid := row.any fun record => match record.result with
-      | .declaredValidated _ => true
-      | _ => false
-    unless valid do throwError "mechanical dyadic information registration is not declaredValidated: {theoremName}"
-
 end Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary

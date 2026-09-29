@@ -28,9 +28,9 @@ class NativeRegSupport:
         return result
 
     def build_reg_report(self, success=True):
-        return self.run_lake('-d', str(self.root / 'Reg'), 'build', ':report',
+        return self.run_lake('-d', str(self.root / 'tools/lean-inspector-reg'), 'build', ':report',
                              'trureturing/Audit', 'leanInspector/reportInspector',
-                             'reg/LeanInformationAuditRegTests', success=success)
+                             'regInspector/LeanInformationAuditRegTests', success=success)
 
 
 class NativeRegTests(NativeRegSupport):
@@ -62,11 +62,9 @@ class NativeRegConsumerTests(NativeRegSupport):
         self.reg_package()
         self.run_lake('build', 'Fixture')
         self.make_lean()
-        # Escape-registration audit is paused (#11269): a bare build no longer
-        # compiles the Reg package; explicit Reg targets still do.
         self.assertFalse((self.root / '.lake/build/reg/lib/lean/Reg').exists())
-        self.assertFalse((self.root / '.lake/build/reg/lib/lean/LeanInformationAuditRegTests/Required.olean').exists())
-        self.assertFalse((self.root / '.lake/build/reg/lib/lean/LeanInformationAuditRegAnalysis').exists())
+        self.assertTrue((self.root / '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegTests/Required.olean').is_file())
+        self.assertFalse((self.root / '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegAnalysis').exists())
         self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Records\n'
                    'def registrationValue := value\n')
         self.make_lean('Reg.Support.Entry', 'D5.Alone')

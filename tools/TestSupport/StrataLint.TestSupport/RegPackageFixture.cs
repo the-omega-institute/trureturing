@@ -11,7 +11,10 @@ public static class RegPackageFixture
         var reg = Path.Combine(root, "Reg");
         Directory.CreateDirectory(reg);
         foreach (var (path, text) in files)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(root, path))!);
             File.WriteAllText(Path.Combine(root, path), text);
+        }
     }
 
     public static IReadOnlyDictionary<string, string> Files(string manifest)
@@ -36,8 +39,30 @@ public static class RegPackageFixture
             inherited["inherited"] = true;
             packages.Add(inherited);
         }
+        var hostPackages = packages.DeepClone().AsArray();
+        foreach (var package in hostPackages.Where(p => p!["type"]!.GetValue<string>() == "path"))
+        {
+            var name = package!["name"]!.GetValue<string>();
+            package["dir"] = name switch
+            {
+                "trureturing" => "../..", "leanInspector" => "../lean-inspector",
+                _ => "../lean-inspector-interface",
+            };
+            package["inherited"] = name != "leanInspector";
+        }
+        hostPackages.Insert(0, new JsonObject
+        {
+            ["type"] = "path", ["name"] = "reg", ["dir"] = "../../Reg",
+            ["configFile"] = "lakefile.toml", ["manifestFile"] = "lake-manifest.json", ["inherited"] = false,
+        });
         return new Dictionary<string, string>
         {
+            ["tools/lean-inspector-reg/lakefile.toml"] = "name = \"regInspector\"\n",
+            ["tools/lean-inspector-reg/lake-manifest.json"] = new JsonObject
+            {
+                ["version"] = "1.2.0", ["name"] = "regInspector",
+                ["packagesDir"] = "../../.lake/packages", ["packages"] = hostPackages,
+            }.ToJsonString() + "\n",
             ["Reg/lakefile.toml"] = """
             name = "reg"
             packagesDir = "../.lake/packages"

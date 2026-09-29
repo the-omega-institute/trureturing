@@ -140,16 +140,4 @@ register_information_theorem
   variation isometricVariation sensitivity isometricSensitivity
   escape from (ℝ) escape continues (open)
 
-open Lean in
-run_meta do
-  for theoremName in #[
-      `D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights,
-      `D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion] do
-    let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-      record.occurrence.key.theoremName == theoremName
-    let valid := row.any fun record => match record.result with
-      | .declaredValidated _ => true
-      | _ => false
-    unless valid do throwError "mechanical order registration is not declaredValidated: {theoremName}"
-
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder

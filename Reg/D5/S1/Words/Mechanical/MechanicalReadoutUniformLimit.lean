@@ -74,15 +74,4 @@ register_information_theorem
   variation uniformVariation sensitivity uniformSensitivity
   escape from (ℝ) escape continues (open)
 
-open Lean in
-run_meta do
-  for theoremName in #[
-      `D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound] do
-    let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-      record.occurrence.key.theoremName == theoremName
-    let valid := row.any fun record => match record.result with
-      | .declaredValidated _ => true
-      | _ => false
-    unless valid do throwError "mechanical limit registration is not declaredValidated: {theoremName}"
-
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit
