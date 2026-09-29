@@ -22,7 +22,7 @@ For every function Phi on the sample space, the identity O(S(x))=Phi(O(x)) for a
 
 Over Z/3Z, M^4=2I and r(4j,x)=2^j*b for every natural j. In particular r(8j,x)=b and r(8j+4,x)=2b. The states (0,0) and (1,0) agree at every time 4j, but their time-one readings are respectively 0 and 1, which are distinct.
 
-For this modulus define O4(x)=(r(0,x),r(4,x)). There exists a function Psi with O4(S^4(x))=Psi(O4(x)) for every x; multiplication of both sample coordinates by 2 gives one. There is no function Phi with O4(S(x))=Phi(O4(x)) for all x. The theorem explicitly negates the implication from the existence of the four-step update to the existence of the one-step update. This refutes the claim that coarse time closure implies fine time closure.
+For this modulus define O4(x)=(r(0,x),r(4,x)). There exists a function Psi with O4(S^4(x))=Psi(O4(x)) for every x; multiplication of both sample coordinates by 2 gives one. There is no function Phi with O4(S(x))=Phi(O4(x)) for all x. The theorem explicitly negates the implication from the existence of the four-step update to the existence of the one-step update: in this example the coarse sample closes under the four-step clock but not under the one-step clock.
 
 Cayley-Hamilton gives the coarse recurrence. Fibonacci divisibility places the two-reading kernel inside the sampling kernel. Their equal finite cardinalities, both gcd(n,F(g)), give equality. Applying that equality to differences yields the coarse observation equivalence. The invertible Fibonacci step gives adjacent-reading injectivity and the obstruction to a one-step update.
 

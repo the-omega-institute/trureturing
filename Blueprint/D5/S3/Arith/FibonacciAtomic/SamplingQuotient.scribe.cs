@@ -41,8 +41,8 @@ internal sealed class SamplingQuotientDocument : IScribeDocumentDefinition
                     + "with O4(S^4(x))=Psi(O4(x)) for every x; multiplication of both sample coordinates "
                     + "by 2 gives one. There is no function Phi with O4(S(x))=Phi(O4(x)) for all x. "
                     + "The theorem explicitly negates the implication from the existence of the four-step "
-                    + "update to the existence of the one-step update. This refutes the claim that coarse "
-                    + "time closure implies fine time closure.")),
+                    + "update to the existence of the one-step update: in this example the coarse sample "
+                    + "closes under the four-step clock but not under the one-step clock.")),
                 Paragraph(Text("Cayley-Hamilton gives the coarse recurrence. Fibonacci divisibility places "
                     + "the two-reading kernel inside the sampling kernel. Their equal finite cardinalities, "
                     + "both gcd(n,F(g)), give equality. Applying that equality to differences yields the "
