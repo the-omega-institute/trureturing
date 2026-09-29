@@ -149,3 +149,33 @@ directly. Every prime dividing $27B^2$ is covered by one of these
 cases, so removal of its prime factors from the discriminant-clearing
 multiple gives $z\in A$. Theorem 3.1 gives the reverse inclusion
 $A\subseteq\mathcal O_K$.
+## 7. Prime saturation of a mixed pure-cubic lattice
+
+**Theorem 7.1 (mixed-radicand prime saturation).** Use the hypotheses and
+notation of Theorem 1.1, and write
+$S=\mathbb Z\cdot1+\mathbb Z\cdot\alpha+\mathbb Z\cdot\gamma$.
+Let $p$ be a positive prime satisfying one of the following conditions:
+
+1. $p\mid mn^2$, $p^2\nmid mn^2$, and $p$ is coprime to $3n$;
+2. $p\mid m^2n$, $p^2\nmid m^2n$, and $p$ is coprime to $3m$.
+
+Then every $z\in K$ integral over $\mathbb Z$ satisfies
+$pz\in S\Longrightarrow z\in S$.
+
+Proof. In the first case $X^3-mn^2$ is Eisenstein at $p$.
+The identity $3n\gamma=n+cn\alpha+v\alpha^2$ puts $3nS$ in
+$\mathbb Z[\alpha]$. Conversely, $v^2=1$ and
+$\beta=v(3\gamma-1-c\alpha)$ give
+$\alpha^2=nv(3\gamma-1-c\alpha)\in S$.
+Reduction by $\alpha^3=mn^2$ therefore puts
+$\mathbb Z[\alpha]$ in $S$. Thus $pz\in S$ implies
+$p(3nz)\in\mathbb Z[\alpha]$, and the Eisenstein integrality criterion
+puts $3nz$ in $\mathbb Z[\alpha]\subseteq S$. Bezout's identity for
+$p$ and $3n$, together with $pz\in S$, gives $z\in S$.
+In the second case $\beta^2=m\alpha$ and $\beta^3=m^2n$.
+The polynomial $X^3-m^2n$ is Eisenstein at $p$, while
+$3m\gamma=m+c\beta^2+vm\beta$ puts $3mS$ in
+$\mathbb Z[\beta]$. Conversely, $\beta=v(3\gamma-1-c\alpha)\in S$
+and $\beta^2=m\alpha\in S$; reduction by $\beta^3=m^2n$
+puts $\mathbb Z[\beta]$ in $S$. Apply the same criterion to $3mz$
+and then use Bezout's identity for $p$ and $3m$.
