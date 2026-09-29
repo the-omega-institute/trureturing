@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Topology.MetricSpace.Isometry]
    utility: none
-   digest: Dense uniqueness and the group-conjugacy interface for the Mostow--Prasad endpoint.
- -/
+   digest: Dense uniqueness and the group-conjugacy interface for the Mostow--Prasad endpoint. -/
 
 import Mathlib.Topology.MetricSpace.Isometry
 import Mathlib.Topology.Homotopy.Equiv
