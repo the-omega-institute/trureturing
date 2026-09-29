@@ -4,7 +4,9 @@ from test_reuse import EXECUTION
 
 
 class NativeReportConsumerTests:
-    def test_impl_resource_rebuilds_production_reg_on_warm_report(self):
+    def test_impl_resource_skips_production_reg_while_audit_paused(self):
+        # Escape-registration audit is paused (#11269): registered targets
+        # no longer compile Reg, so an Impl change must not rebuild or fail on it.
         # Use the actual Impl resource selection, package target declarations,
         # report entry and Lake compiler. Only the mathematical inputs are tiny.
         sys.path.insert(0, str(ROOT / 'tools/scripts/workflow'))
@@ -62,7 +64,6 @@ class NativeReportConsumerTests:
         self.assertTrue(untouched)
         stamps = {path: (path.stat().st_mtime_ns, publication.digest(path)) for path in untouched}
         production = self.root / '.lake/build/reg/lib/lean/Reg/ProductionOnly.olean'
-        before = production.stat().st_mtime_ns
         self.write(impl, 'def gateValue : Nat := 2\n')
         import reuse
         self.assertFalse(reuse.probe(self.root, output)['needs_lake'])
@@ -71,9 +72,9 @@ class NativeReportConsumerTests:
         logs = Path(str(output) + '.logs')
         programs = (logs / 'programs.stdout.log').read_text() + (logs / 'programs.stderr.log').read_text()
         self.assertRegex(programs, r'Built LeanInformationAudit\.RegistrationGates(?:\s|$)')
-        self.assertRegex(programs, r'Built Reg\.ProductionOnly(?:\s|$)',
-                         '[FAIL] warm_report_must_compile_production_reg_outside_test_imports')
-        self.assertNotEqual(before, production.stat().st_mtime_ns)
+        self.assertNotRegex(programs, r'Built Reg\.',
+                            '[FAIL] paused_audit_must_not_compile_reg')
+        self.assertFalse(production.exists())
         self.assertNotRegex(programs, r'Built (?:D5\.|Mathlib\.)')
         self.assertEqual(stamps, {path: (path.stat().st_mtime_ns, publication.digest(path)) for path in untouched})
         self.assertEqual(report_stamps, self.stamps())
@@ -81,18 +82,14 @@ class NativeReportConsumerTests:
         self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', compiled.stdout)
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
 
-        # The Impl still compiles; its production-only consumer now fails.
-        # No report-module edit or report miss is used to expose the failure.
+        # A Reg consumer that no longer type-checks is not compiled while paused.
         self.write(impl, 'def gateValue : Bool := true\n')
         self.assertFalse(reuse.probe(self.root, output)['needs_lake'])
-        failed = entry('production-consumer-failure')
-        self.assertNotEqual(failed.returncode, 0, '[FAIL] production_consumer_failure_must_block_reuse')
+        paused = entry('production-consumer-paused')
+        self.assertEqual(paused.returncode, 0, paused.stdout + paused.stderr)
         errors = (logs / 'programs.stdout.log').read_text() + (logs / 'programs.stderr.log').read_text()
-        self.assertIn('Reg/ProductionOnly.lean', errors)
-        self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stdout + failed.stderr)
-        self.assertFalse(publication.member(output, '.reuse.json').exists())
+        self.assertNotIn('Reg/ProductionOnly.lean', errors, '[FAIL] paused_audit_must_not_compile_reg')
         self.assertEqual(expected, output.read_bytes())
-        self.assertEqual(report_stamps, self.stamps())
 
     def inspect(self, *, success=True, phase='report-entry'):
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
