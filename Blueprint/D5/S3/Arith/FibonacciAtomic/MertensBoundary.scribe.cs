@@ -50,7 +50,7 @@ internal sealed class MertensBoundaryDocument : IScribeDocumentDefinition
     {
         var n = F.Id("n"); var x = F.Id("X"); var r = F.Id("R");
         return Disp(Equal(C(r, x), Seq(new Formula.Subscript(Sum,
-            Seq(D(0), Lt, n, Le, new Formula.Floor(x), Comma,
+            Seq(D(0), Lt, n, Le, new Formula.Floor(Seq(Sp, x)), Comma,
                 Call("gcd", n, r), Eq, D(1))), Call("mu", n))));
     }
     private static Formula BoundaryFormula()
@@ -67,7 +67,7 @@ internal sealed class MertensBoundaryDocument : IScribeDocumentDefinition
         Formula bound(Formula f) => Call("P", f, a);
         Formula restricted = Call("C", D(7, 0));
         Formula ordinary = Call("C", D(1));
-        return Disp(Seq(Forall, a, InMacro, Seq(Mathbb, Grp(F.Id("R"))), Comma,
+        return Disp(Seq(Forall, Sp, a, InMacro, Seq(Mathbb, Grp(F.Id("R"))), Comma,
             D(0), Lt, a, Rightarrow,
             Open, bound(F.Id("B")), Leftrightarrow, bound(restricted), Close, Land,
             Open, bound(restricted), Leftrightarrow, bound(ordinary), Close));
