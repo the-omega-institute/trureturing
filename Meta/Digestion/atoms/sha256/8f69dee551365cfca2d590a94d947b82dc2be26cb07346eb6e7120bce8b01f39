@@ -1,0 +1,5 @@
+**命题 27.2。** 设 $N_{ij}(e)$ 为上述实际循环字的转移次数。两个边星预算可精确组织为以下权重矩阵的循环和：
+
+$$W_L=\begin{pmatrix}\beta_4&\beta_3\\\beta_3&\beta_2\end{pmatrix},\qquad
+W_H=\begin{pmatrix}\theta_2&\theta_1\\\theta_1&\theta_0\end{pmatrix}.$$
+

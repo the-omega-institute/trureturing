@@ -28,4 +28,3 @@ The quantified raw face pairing defines global edges as equivalence classes gene
 
 - Truth anchor: `D5/S3/Geometry/Hyperideal/EdgeStarBudgetMatrix.actual_edge_budget_matrix`
 - Dependency: [D5/S3/Geometry/Hyperideal/EdgeStarTransitions](EdgeStarTransitions.md)
-- Dependency: [D5/S3/Geometry/Hyperideal/HighFaceNeighbourBudgets](HighFaceNeighbourBudgets.md)

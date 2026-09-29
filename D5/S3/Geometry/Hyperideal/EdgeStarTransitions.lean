@@ -199,33 +199,13 @@ noncomputable def EdgeStars.pathEndCount {T Edge : Type*} [Fintype T] [Decidable
     letI : Fintype (s.Fiber e) := Subtype.fintype _
     exact ∑ i : s.Fiber e, if isPathEnd (s.localColor i.1) i.1.2 then 1 else 0
 
-/-- On every global edge, the two directed face-signature transitions have
-equal multiplicity, and own-color P4 path ends occur an even number of times. -/
-private theorem oriented_edge_balance {T Edge : Type*} [Fintype T] [DecidableEq Edge]
-    (s : EdgeStars T Edge) (e : Edge) :
-    s.rise e = s.fall e ∧ Even (s.pathEndCount e) := by
-  letI : Fintype (s.Fiber e) := Subtype.fintype _
-  have hslotTable (j : Fin 6) (b : Bool) :
-      faceEdge (if b then (edgeFaces j).1 else (edgeFaces j).2)
-        (if b then (edgeFaceSlots j).1 else (edgeFaceSlots j).2) = j := by
-    cases b <;> fin_cases j <;> decide
-  have hslot (i : Occurrence T) :
-      faceEdge (s.outgoing i) (outgoingSlot s.reversed i) = i.2 := by
-    simpa [EdgeStars.outgoing, outgoingFace, outgoingSlot] using
-      hslotTable i.2 (s.reversed i)
-  have hpres (i : Occurrence T) :
-      s.globalEdge (s.next i) = s.globalEdge i := by
-    let x : T × Fin 4 := (i.1, s.outgoing i)
-    let n := outgoingSlot s.reversed i
-    have hf := s.faceLabels x n
-    calc
-      s.globalEdge (s.next i) =
-          s.edgeLabel (s.facePair x).1
-            (faceEdge (s.facePair x).2 (s.faceMap x n)) := by
-        change s.globalEdge (rawNext s.facePair s.faceMap s.reversed i) = _
-        rfl
-      _ = s.edgeLabel x.1 (faceEdge x.2 n) := hf.symm
-      _ = s.globalEdge i := by simp [x, n, EdgeStars.globalEdge, hslot i]
+/-- Local path ends are exactly signature changes. Face-slot gluing
+carries each outgoing signature to the next incoming one. -/
+theorem path_end_signature_and_next {T Edge : Type*} [Fintype T]
+    (s : EdgeStars T Edge) (i : Occurrence T) :
+    (isPathEnd (s.localColor i) i.2 ↔ s.signature i ≠ s.signature (s.next i)) ∧
+    s.signature (s.next i) =
+      decide (faceLowCount (s.localColor i) (s.outgoing i) = 2) := by
   have hlocal (low : Fin 6 → Bool) (e : Fin 6) (h : allowed low) :
       isPathEnd low e ↔
         faceLowCount low (edgeFaces e).1 ≠ faceLowCount low (edgeFaces e).2 := by
@@ -242,37 +222,6 @@ private theorem oriented_edge_balance {T Edge : Type*} [Fintype T] [DecidableEq 
       fin_cases i <;> rfl
     rw [← hvec] at h ⊢
     exact hbits (low 0) (low 1) (low 2) (low 3) (low 4) (low 5) e h
-  have hbalance (q : s.Fiber e → Bool) (shift : Equiv.Perm (s.Fiber e)) :
-      (∑ i : s.Fiber e, if q i = false ∧ q (shift i) = true then 1 else 0) =
-        (∑ i : s.Fiber e, if q i = true ∧ q (shift i) = false then 1 else 0) ∧
-      Even (∑ i : s.Fiber e, if q i ≠ q (shift i) then 1 else 0) := by
-    have hshift :
-        (∑ i : s.Fiber e, (q (shift i)).toNat) =
-          ∑ i : s.Fiber e, (q i).toNat := by
-      simpa using (Equiv.sum_comp shift (fun i => (q i).toNat))
-    have hstep (i : s.Fiber e) :
-        (if q i = false ∧ q (shift i) = true then 1 else 0) + (q i).toNat =
-          (if q i = true ∧ q (shift i) = false then 1 else 0) +
-            (q (shift i)).toNat := by
-      cases q i <;> cases q (shift i) <;> simp
-    have hsum := Finset.sum_congr rfl
-      (fun i (_ : i ∈ (Finset.univ : Finset (s.Fiber e))) => hstep i)
-    simp only [Finset.sum_add_distrib] at hsum
-    have heq :
-        (∑ i : s.Fiber e, if q i = false ∧ q (shift i) = true then 1 else 0) =
-          ∑ i : s.Fiber e, if q i = true ∧ q (shift i) = false then 1 else 0 := by
-      omega
-    have hsplit (i : s.Fiber e) :
-        (if q i ≠ q (shift i) then 1 else 0) =
-          (if q i = false ∧ q (shift i) = true then 1 else 0) +
-            (if q i = true ∧ q (shift i) = false then 1 else 0) := by
-      cases q i <;> cases q (shift i) <;> simp
-    have hend := Finset.sum_congr rfl
-      (fun i (_ : i ∈ (Finset.univ : Finset (s.Fiber e))) => hsplit i)
-    simp only [Finset.sum_add_distrib] at hend
-    refine ⟨heq, ?_⟩
-    refine ⟨∑ i : s.Fiber e, if q i = false ∧ q (shift i) = true then 1 else 0, ?_⟩
-    omega
   have hdiff (a b : ℕ) (ha : a = 1 ∨ a = 2) (hb : b = 1 ∨ b = 2) :
       (decide (a = 2) ≠ decide (b = 2)) ↔ a ≠ b := by
     rcases ha with rfl | rfl <;> rcases hb with rfl | rfl <;> decide
@@ -340,6 +289,70 @@ private theorem oriented_edge_balance {T Edge : Type*} [Fintype T] [DecidableEq 
     rw [hnext i]
     exact (hface i).trans
       ((hdiff _ _ (s.valid i (s.incoming i)) (s.valid i (s.outgoing i))).symm)
+  exact ⟨hpath i, hnext i⟩
+
+/-- On every global edge, the two directed face-signature transitions have
+equal multiplicity, and own-color P4 path ends occur an even number of times. -/
+private theorem oriented_edge_balance {T Edge : Type*} [Fintype T] [DecidableEq Edge]
+    (s : EdgeStars T Edge) (e : Edge) :
+    s.rise e = s.fall e ∧ Even (s.pathEndCount e) := by
+  letI : Fintype (s.Fiber e) := Subtype.fintype _
+  have hslotTable (j : Fin 6) (b : Bool) :
+      faceEdge (if b then (edgeFaces j).1 else (edgeFaces j).2)
+        (if b then (edgeFaceSlots j).1 else (edgeFaceSlots j).2) = j := by
+    cases b <;> fin_cases j <;> decide
+  have hslot (i : Occurrence T) :
+      faceEdge (s.outgoing i) (outgoingSlot s.reversed i) = i.2 := by
+    simpa [EdgeStars.outgoing, outgoingFace, outgoingSlot] using
+      hslotTable i.2 (s.reversed i)
+  have hpres (i : Occurrence T) :
+      s.globalEdge (s.next i) = s.globalEdge i := by
+    let x : T × Fin 4 := (i.1, s.outgoing i)
+    let n := outgoingSlot s.reversed i
+    have hf := s.faceLabels x n
+    calc
+      s.globalEdge (s.next i) =
+          s.edgeLabel (s.facePair x).1
+            (faceEdge (s.facePair x).2 (s.faceMap x n)) := by
+        change s.globalEdge (rawNext s.facePair s.faceMap s.reversed i) = _
+        rfl
+      _ = s.edgeLabel x.1 (faceEdge x.2 n) := hf.symm
+      _ = s.globalEdge i := by simp [x, n, EdgeStars.globalEdge, hslot i]
+  have hbalance (q : s.Fiber e → Bool) (shift : Equiv.Perm (s.Fiber e)) :
+      (∑ i : s.Fiber e, if q i = false ∧ q (shift i) = true then 1 else 0) =
+        (∑ i : s.Fiber e, if q i = true ∧ q (shift i) = false then 1 else 0) ∧
+      Even (∑ i : s.Fiber e, if q i ≠ q (shift i) then 1 else 0) := by
+    have hshift :
+        (∑ i : s.Fiber e, (q (shift i)).toNat) =
+          ∑ i : s.Fiber e, (q i).toNat := by
+      simpa using (Equiv.sum_comp shift (fun i => (q i).toNat))
+    have hstep (i : s.Fiber e) :
+        (if q i = false ∧ q (shift i) = true then 1 else 0) + (q i).toNat =
+          (if q i = true ∧ q (shift i) = false then 1 else 0) +
+            (q (shift i)).toNat := by
+      cases q i <;> cases q (shift i) <;> simp
+    have hsum := Finset.sum_congr rfl
+      (fun i (_ : i ∈ (Finset.univ : Finset (s.Fiber e))) => hstep i)
+    simp only [Finset.sum_add_distrib] at hsum
+    have heq :
+        (∑ i : s.Fiber e, if q i = false ∧ q (shift i) = true then 1 else 0) =
+          ∑ i : s.Fiber e, if q i = true ∧ q (shift i) = false then 1 else 0 := by
+      omega
+    have hsplit (i : s.Fiber e) :
+        (if q i ≠ q (shift i) then 1 else 0) =
+          (if q i = false ∧ q (shift i) = true then 1 else 0) +
+            (if q i = true ∧ q (shift i) = false then 1 else 0) := by
+      cases q i <;> cases q (shift i) <;> simp
+    have hend := Finset.sum_congr rfl
+      (fun i (_ : i ∈ (Finset.univ : Finset (s.Fiber e))) => hsplit i)
+    simp only [Finset.sum_add_distrib] at hend
+    refine ⟨heq, ?_⟩
+    refine ⟨∑ i : s.Fiber e, if q i = false ∧ q (shift i) = true then 1 else 0, ?_⟩
+    omega
+  have hpath (i : Occurrence T) :
+      isPathEnd (s.localColor i) i.2 ↔
+        s.signature i ≠ s.signature (s.next i) :=
+    (path_end_signature_and_next s i).1
   have hcount : s.pathEndCount e = s.ends e := by
     unfold EdgeStars.pathEndCount EdgeStars.ends
     apply Finset.sum_congr rfl

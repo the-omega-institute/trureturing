@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:35f66d181cadcfaff519f62dc08a328813557f5568596fff796672c4abd14e05
   normalized_sha256: sha256:35f66d181cadcfaff519f62dc08a328813557f5568596fff796672c4abd14e05
 cas_ref: sha256:35f66d181cadcfaff519f62dc08a328813557f5568596fff796672c4abd14e05
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/PositiveOppositeThirteenThreshold.exact_positive_opposite_thirteen_threshold
+    target_statement_id: sha256:425d4ccf7abe9cfe2628c568b1c4b3050c6351a8943404556462f68ed145ab83
 receipts:
   unresolved_subitems: []

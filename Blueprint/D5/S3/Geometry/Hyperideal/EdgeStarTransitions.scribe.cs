@@ -34,6 +34,23 @@ internal sealed class EdgeStarTransitionsDocument : IScribeDocumentDefinition
                 + "transition. A path end is a local edge at an end of the three-edge path "
                 + "formed by edges of its own color.")),
             Describe.Lean(
+                DescribeId.Create("path-end-face-signature-transport"),
+                DeclarationHandle.Create(
+                    "D5/S3/Geometry/Hyperideal/EdgeStarTransitions.path_end_signature_and_next"),
+                H("Path ends are signature changes"),
+                StatementSource.FromAuthor(F.Disp(SignatureStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("In an oriented colored edge-star structure, a local "
+                        + "occurrence is a path end exactly when its incoming signature "
+                        + "differs from the successor's incoming signature. The successor "
+                        + "signature equals the outgoing face's two-count indicator.")),
+                    Paragraph(Text("The local incidence classification identifies path "
+                        + "ends with distinct adjacent face counts. Transporting all three "
+                        + "edge labels across the paired face preserves its low-edge "
+                        + "count and identifies the outgoing and next incoming signatures."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("normal-edge-circle-transition-balance"),
                 DeclarationHandle.Create(Declaration),
                 H("Rises equal falls and path ends have even multiplicity"),
@@ -53,6 +70,30 @@ internal sealed class EdgeStarTransitionsDocument : IScribeDocumentDefinition
                     Paragraph(Text("The conclusion concerns colored face incidence on the "
                         + "normal circle and uses no edge lengths or angle estimates."))),
                 DescribeRole.Theorem))));
+
+    private static Formula SignatureStatement()
+    {
+        var t = F.Id("T");
+        var edge = F.Id("Edge");
+        var s = F.Id("s");
+        var i = F.Id("i");
+        var nextSignature = Call("signature", s, Call("next", s, i));
+        return All([
+            ("T", F.Id("Type")),
+            ("Edge", F.Id("Type")),
+            ("finite", Call("Fintype", t)),
+            ("s", Call("EdgeStars", t, edge)),
+            ("i", Call("Occurrence", t))
+        ], And(
+            new Formula.Logic(
+                Call("isPathEnd", Call("localColor", s, i), Call("slot", i)),
+                FormulaLogicOperator.Iff,
+                new Formula.Relation(Call("signature", s, i),
+                    FormulaRelationOperator.NotEqual, nextSignature)),
+            Equal(nextSignature, Call("decide",
+                Equal(Call("faceLowCount", Call("localColor", s, i),
+                    Call("outgoing", s, i)), F.D(2))))));
+    }
 
     private static Formula Statement()
     {

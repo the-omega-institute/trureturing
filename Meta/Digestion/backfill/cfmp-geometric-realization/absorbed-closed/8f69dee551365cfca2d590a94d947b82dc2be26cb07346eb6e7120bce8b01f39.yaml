@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8f69dee551365cfca2d590a94d947b82dc2be26cb07346eb6e7120bce8b01f39
+  normalized_sha256: sha256:8f69dee551365cfca2d590a94d947b82dc2be26cb07346eb6e7120bce8b01f39
+cas_ref: sha256:8f69dee551365cfca2d590a94d947b82dc2be26cb07346eb6e7120bce8b01f39
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/EdgeStarBudgetMatrix.actual_edge_budget_matrix
+    target_statement_id: sha256:4c46ba6dd931178a7857ed6865f536b13d7aca0638c562b1dfb642c3d5e472e4
+receipts:
+  unresolved_subitems: []

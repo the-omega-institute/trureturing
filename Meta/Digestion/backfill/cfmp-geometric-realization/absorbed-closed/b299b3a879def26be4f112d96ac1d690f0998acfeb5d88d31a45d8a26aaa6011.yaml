@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:b299b3a879def26be4f112d96ac1d690f0998acfeb5d88d31a45d8a26aaa6011
   normalized_sha256: sha256:b299b3a879def26be4f112d96ac1d690f0998acfeb5d88d31a45d8a26aaa6011
 cas_ref: sha256:b299b3a879def26be4f112d96ac1d690f0998acfeb5d88d31a45d8a26aaa6011
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/CriticalEdgeSignatureWord.critical_edge_signature_word
+    target_statement_id: sha256:278251caf646325a72a7d3a749b7eed7a23cf167a78932aff3cc0de208382588
 receipts:
   unresolved_subitems: []
