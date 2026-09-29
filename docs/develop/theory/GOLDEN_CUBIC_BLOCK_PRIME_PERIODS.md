@@ -1288,3 +1288,38 @@ $25d_n\equiv-1\pmod7$, hence $d_n\equiv5\pmod7$. The quadratic
 residues modulo seven are $0,1,2,4$, so $d_n$ is not a square.
 
 ## 追加锚（本行以下为增补区）
+
+## 29. Five-adic rank budget from odd Fibonacci support
+
+For a prime $p$, let $\rho(p)$ be its first positive Fibonacci zero.
+For a finite set $H$ of primes, put
+$R_H=\operatorname{lcm}_{p\in H}\rho(p)$.
+
+**Theorem 29.1 (five-adic rank budget).** Suppose $5\in H$ and $n>0$.
+Assume every prime dividing $n$ belongs to $H$, and every prime occurring
+to odd multiplicity in $F_n$ belongs to $H$. Then
+
+$$v_5(n)\leq v_5(R_H)+1.$$
+
+Proof. Write $a=v_5(R_H)$ and $e=v_5(n)$, and suppose
+$e\geq a+2$. Apply Theorem 28.1 to the positive odd index $5^a$:
+
+$$F_{5^{a+2}}=25F_{5^a}d,\qquad d\text{ is not a square}.$$
+
+The exact five-adic valuation of Fibonacci numbers gives $v_5(d)=0$.
+Choose a prime $p$ occurring to odd multiplicity in $d$; thus $p\ne5$.
+It divides $F_{5^{a+2}}$. Its first entry rank is a power $5^j$ with
+$j\leq a+2$. If $j\leq a$, then $p$ also divides $F_{5^a}$.
+Since $p$ divides neither index, the prime-to-index valuation law makes
+its valuations in these two Fibonacci numbers equal. Their displayed
+product identity would then force $v_p(d)=0$, a contradiction. Hence
+$j>a$. If $p\in H$, its rank divides $R_H$, contradicting
+$v_5(R_H)=a$; therefore $p\notin H$.
+
+Now $5^{a+2}\mid n$, so $p\mid F_n$. The index-support hypothesis gives
+$p\nmid n$. The prime-to-index valuation law transfers the odd value
+$v_p(d)=v_p(F_{5^{a+2}})$ to $v_p(F_n)$. This contradicts the assumed
+odd-prime support of $F_n$ and proves the bound. No square-class
+classification or rank-closure premise is used here.
+
+## 追加锚（本行以下为增补区）
