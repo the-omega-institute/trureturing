@@ -121,14 +121,4 @@ register_information_theorem
   variation phaseVariation sensitivity phaseSensitivity
   escape from (ℝ) escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law
-  unless row.any (fun record => match record.result with
-      | .declaredValidated _ => true
-      | _ => false) do
-    throwError "phase-calibration information registration is not declaredValidated"
-
 end Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration

@@ -196,7 +196,7 @@ public sealed class RegManifestAgreementTests
     {
         using var repository = new TemporaryDirectory();
         var files = Files();
-        foreach (var name in new[] { "lake-manifest.json", "Reg/lake-manifest.json" })
+        foreach (var name in new[] { "lake-manifest.json", "Reg/lake-manifest.json", RegManifestAgreement.HostManifestPath })
         {
             var manifest = JsonNode.Parse(files[name])!;
             var git = manifest["packages"]!.AsArray().Single(item => item!["type"]!.GetValue<string>() == "git")!;
@@ -209,6 +209,29 @@ public sealed class RegManifestAgreementTests
         Assert.Empty(Current(files));
     }
 
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("pin")]
+    [InlineData("owner")]
+    [InlineData("path")]
+    public void DownstreamManifestRejectsMissingPinsAndIncorrectPackageOwnership(string mutation)
+    {
+        var files = Files();
+        var manifest = JsonNode.Parse(files[RegManifestAgreement.HostManifestPath])!;
+        var packages = manifest["packages"]!.AsArray();
+        if (mutation == "pin")
+            packages.Single(row => row!["type"]!.GetValue<string>() == "git")!["rev"] = new string('b', 40);
+        if (mutation == "owner") packages[0]!["inherited"] = true;
+        if (mutation == "path") packages[0]!["dir"] = "../other";
+        files[RegManifestAgreement.HostManifestPath] = manifest.ToJsonString();
+        if (mutation == "missing") files.Remove(RegManifestAgreement.HostManifestPath);
+        Assert.Contains(Current(files), finding => finding.Path == RegManifestAgreement.HostManifestPath);
+        using var repository = new TemporaryDirectory();
+        Write(repository.Path, files);
+        Assert.Null(LeanPinSet.TryReadWorktree(repository.Path, out var reason));
+        Assert.Contains("REG-MANIFEST-", reason, StringComparison.Ordinal);
+    }
+
     private static Dictionary<string, string> Files()
     {
         var git = JsonNode.Parse("""
@@ -216,23 +239,13 @@ public sealed class RegManifestAgreementTests
              "rev":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","inputRev":"v4.33.0",
              "subDir":null,"configFile":"lakefile.lean","manifestFile":"lake-manifest.json","inherited":true}
             """)!;
-        var paths = new[] { ("trureturing", "..", "lakefile.toml"),
-            ("leanInspectorInterface", "../tools/lean-inspector-interface", "lakefile.toml"),
-            ("leanInspector", "../tools/lean-inspector", "lakefile.lean") };
-        var packages = new JsonArray(paths.Select(item => (JsonNode)new JsonObject
-        {
-            ["type"] = "path", ["name"] = item.Item1, ["dir"] = item.Item2,
-            ["configFile"] = item.Item3, ["manifestFile"] = "lake-manifest.json", ["inherited"] = false,
-        }).ToArray());
-        packages.Add(git.DeepClone());
-        return new()
+        var rootManifest = new JsonObject { ["packages"] = new JsonArray(git) }.ToJsonString();
+        var files = new Dictionary<string, string>(StrataLint.TestSupport.RegPackageFixture.Files(rootManifest))
         {
             ["lean-toolchain"] = "leanprover/lean4:v4.33.0\n",
-            ["lake-manifest.json"] = new JsonObject { ["packages"] = new JsonArray(git) }.ToJsonString(),
-            ["Reg/lakefile.toml"] = "name = \"reg\"\n",
-            ["Reg/lake-manifest.json"] = new JsonObject
-                { ["packagesDir"] = "../.lake/packages", ["packages"] = packages }.ToJsonString(),
+            ["lake-manifest.json"] = rootManifest,
         };
+        return files;
     }
 
     private static void Write(string root, Dictionary<string, string> files)
