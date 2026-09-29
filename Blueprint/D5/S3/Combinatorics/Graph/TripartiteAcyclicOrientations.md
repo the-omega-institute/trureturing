@@ -42,7 +42,7 @@ psi(G) is the number of acyclic orientations of G, counted as Boolean relations 
 
 **Definition 1.4 (Clause (4) of Conjecture 1).**
 
-$$claim \Leftrightarrow (\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall p \in \mathbb{N},\; 1 \le m \Rightarrow (1 \le n \Rightarrow (1 \le p \Rightarrow (\neg(\operatorname{Odd}\left(m\right) \land \left(\operatorname{Odd}\left(n\right) \land \operatorname{Odd}\left(p\right)\right)) \Rightarrow (\operatorname{acyclicOrientationCount}\left(\operatorname{completeMultipartiteGraph}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right), \operatorname{Fin}\left(p\right)\right)\right) \operatorname{mod} 4 = 2)))))$$
+$$claim \Leftrightarrow (\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall p \in \mathbb{N},\; 1 \le m \Rightarrow (1 \le n \Rightarrow (1 \le p \Rightarrow (\neg(\operatorname{Odd}\left(m\right) \land \left(\operatorname{Odd}\left(n\right) \land \operatorname{Odd}\left(p\right)\right)) \Rightarrow (\operatorname{acyclicOrientationCount}\left(\operatorname{completeMultipartiteGraph}\left(((i : \operatorname{Fin}\left(3\right)) \mapsto \operatorname{Fin}\left([m, n, p](i)\right))\right)\right) \operatorname{mod} 4 = 2)))))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations.claim` (`✓ std3`).
 
@@ -50,7 +50,7 @@ $$claim \Leftrightarrow (\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\;
 
 *Commentary.*
 
-For all m, n, p at least 1 that are not all odd, the complete tripartite graph K_{m,n,p}, Mathlib's complete multipartite graph with parts Fin m, Fin n and Fin p, in which two vertices are adjacent exactly when they lie in different parts, has psi congruent to 2 modulo 4.
+For all m, n, p at least 1 that are not all odd, the complete tripartite graph K_{m,n,p}, Mathlib's complete multipartite graph over the family i ↦ Fin([m, n, p](i)) indexed by Fin 3, that is with parts Fin m, Fin n and Fin p, in which two vertices are adjacent exactly when they lie in different parts, has psi congruent to 2 modulo 4.
 
 **Theorem 1.5 (Proof of clause (4)).**
 

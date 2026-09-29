@@ -24,7 +24,7 @@ internal sealed class TripartiteAcyclicOrientationsDocument : IScribeDocumentDef
                 "psi(G) is the number of acyclic orientations of G, counted as Boolean relations on the vertex set.",
                 "acyclicOrientationCount", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Clause (4) of Conjecture 1", ClaimFormula(),
-                "For all m, n, p at least 1 that are not all odd, the complete tripartite graph K_{m,n,p}, Mathlib's complete multipartite graph with parts Fin m, Fin n and Fin p, in which two vertices are adjacent exactly when they lie in different parts, has psi congruent to 2 modulo 4.",
+                "For all m, n, p at least 1 that are not all odd, the complete tripartite graph K_{m,n,p}, Mathlib's complete multipartite graph over the family i ↦ Fin([m, n, p](i)) indexed by Fin 3, that is with parts Fin m, Fin n and Fin p, in which two vertices are adjacent exactly when they lie in different parts, has psi congruent to 2 modulo 4.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of clause (4)", Disp(F.Id("claim")),
                 "If two commuting involutions r and s of a finite set act without fixed points, and so does r s, the orbits have four elements and 4 divides the size of the set. For non-adjacent vertices u and v with the same neighbours and an edge avoiding both, take r the reversal of all arcs and s the swap of u and v on the acyclic orientations: r has no fixed point because the graph has an edge, and r s has none because it reverses the edge avoiding u and v, so the acyclic orientations not fixed by s number a multiple of 4. The orientations fixed by s are those that give v the arcs of u, and deleting v is a bijection from them onto the acyclic orientations of the graph without v: a directed cycle through v becomes a closed walk through u. Hence psi(G) and psi(G - v) agree modulo 4. In K_{m,n,p} two vertices of the same part are such twins, and one vertex from each of the other two parts gives an edge avoiding them; removing vertices this way ends at the triangle K_{1,1,1}, whose 8 orientations are 6 transitive ones and 2 cyclic ones. So psi(K_{m,n,p}) is congruent to 6, that is to 2, modulo 4, for all m, n, p at least 1.",
@@ -93,8 +93,11 @@ internal sealed class TripartiteAcyclicOrientationsDocument : IScribeDocumentDef
     private static Formula ClaimFormula()
     {
         Formula m = F.Id("m"), n = F.Id("n"), p = F.Id("p");
-        Formula tripartite = Call("completeMultipartiteGraph", Call("Fin", m), Call("Fin", n),
-            Call("Fin", p));
+        Formula i = F.Id("i");
+        Formula entry = Seq(OpenBracket, m, Comma, Sp, n, Comma, Sp, p, CloseBracket, Open, i, Close);
+        Formula parts = Seq(Open, Open, i, Sp, Colon, Sp, Call("Fin", D(3)), Close, Sp, Mapsto, Sp,
+            Call("Fin", entry), Close);
+        Formula tripartite = Call("completeMultipartiteGraph", parts);
         Formula notAllOdd = Not(And(Call("Odd", m), And(Call("Odd", n), Call("Odd", p))));
         Formula conclusion = Equal(Seq(Call("acyclicOrientationCount", tripartite), Sp, Named("mod"),
             Sp, D(4)), D(2));
