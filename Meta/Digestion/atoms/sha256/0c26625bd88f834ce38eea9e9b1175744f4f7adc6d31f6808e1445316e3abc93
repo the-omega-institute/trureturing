@@ -1,0 +1,21 @@
+### 16.6 仓内共同响应律与一个真正的 NP-hard 相位控制问题
+
+在已读取的 `CompleteMediatorCutSharpBounds.lean` 中，`complete_mediator_maxcut_sharp` 对全部 Boolean 响应表取得最大值，`complementOutcomeLaw_benefit` 用同一个公平随机位选择整张表或其补表，精确达到半个 cut mass。该 Lean 源没有假设逐对独立选择，并显式使用 `Finite.exists_max`；本轮没有重新编译或新增这一结果的形式证明。
+
+给定无向图非负有理边权 $w_{ij}$，令 $W=\sum_{i<j}w_{ij}>0$。取有向 mediator coupling $\pi(i,j)=w_{ij}/(2W)$，无边为零。对表 $y_i\in\{0,1\}$，仓内共同补表分布给
+\[
+ \mathrm{benefit}(y)=\frac{\mathrm{Cut}_w(y)}{2W}.
+ \tag{16.6}
+\]
+这与下述同表物理控制具有明确映射。固定一个忠实隐藏热态 $\tau$ 及 $H_B$，全部条件 Hamiltonian 都是 $H_B$，逻辑 $K=0$。只允许二值相位控制器
+\[
+ s_i=(-1)^{y_i},\quad D_s=\operatorname{diag}(s_i),\qquad
+ \mathcal R_s(\rho)=D_s\rho D_s^\dagger\otimes\tau.
+\]
+每个控制器都 CPTP、保持所有标签概率、正确恢复同一个 Gibbs 态并精确时间协变。现规定任务为：按 $w_{ij}/W$ 抽取边，输入 $|+_{ij}\rangle$，固定以 $|-_{ij}\rangle$ 的投影作为成功。它是相位翻转任务，区别于 §15 的相干模长保持任务。其成功率为
+\[
+ \boxed{P_s=\frac1W\sum_{i<j}w_{ij}\frac{1-s_is_j}{2}
+ =\frac{\mathrm{Cut}_w(y)}W=2\,\mathrm{benefit}(y).}     \tag{16.7}
+\]
+逐边计算振幅即可得到。随机选择二值控制器的平均得分是这些得分的凸组合，不能超过最优确定控制器；相同的全局补表机制使所有单标签响应公平，而不改变 cut。
+

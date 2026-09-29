@@ -1,0 +1,11 @@
+**定理 2.5。** 对 $t\ge0$，
+$$
+\|Oe^{At}z_0-e^{Kt}Oz_0\|_{P^{-1}}
+\le t\epsilon\|z_0\|_S.
+$$
+若 $\omega_*:=\sigma_{\min}(\Omega)>\epsilon$，则
+$$
+\sigma_{\min}(D)\ge\sqrt{\omega_*^2-\epsilon^2}>0.
+$$
+因而潜状态维数为偶数。奇数维的任何 $O$ 必有 $\epsilon\ge\omega_*$。
+
