@@ -1,0 +1,18 @@
+**证明。** 若 $\chi_X=0$，定理 21.3 给 $N$ 秩一。正 Perron 向量及对称谱分解强制
+
+$$
+N=\frac{\delta}{\mathfrak d}dd^T.
+$$
+
+因 $d_0=1$，$q=N_{00}=\delta/\mathfrak d$ 是严格正整数。$X$ 的重数列为 $Ne_0=qd$，故每个 $d_a=N_{a0}/q$ 为有理数。融合维数是整矩阵的特征值，因而是代数整数；有理代数整数是整数。这给整性与式（SC.6），没有先假设正则对象存在。
+
+反向，在整融合范畴中，Frobenius 互反给
+
+$$
+\sum_u d_u\dim\operatorname{Hom}(a,u\otimes b)
+=\sum_u d_u\dim\operatorname{Hom}(u,a\otimes\bar b)
+=d_a d_b.
+$$
+
+所以 $N_{R_{\mathcal C}}=dd^T$，$N_X=qdd^T$，秩一。将其幂作用于 $e_0$，使用 $d^Td=\mathfrak d$ 得式（SC.7）。证毕。
+

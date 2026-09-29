@@ -1,0 +1,2 @@
+**命题 25.1（左右电路保持带标记表的尾部）。** 若 $\beta=\gamma_L\alpha\gamma_R$，其中 $\gamma_L,\gamma_R$ 为 FDQC，则对每组固定 $\mathbf s,\mathbf t$，全部充分大 $n$ 有 $K_\beta(n;\mathbf s,\mathbf t)=K_\alpha(n;\mathbf s,\mathbf t)$。对任意有限探针集合，可取共同阈值。
+
