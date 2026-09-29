@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:81827fb732acb436dedc8a1e8fdf8c096ed64616552951f7ff7de3f5b545685e
+  normalized_sha256: sha256:81827fb732acb436dedc8a1e8fdf8c096ed64616552951f7ff7de3f5b545685e
+cas_ref: sha256:81827fb732acb436dedc8a1e8fdf8c096ed64616552951f7ff7de3f5b545685e
+coverage_gids:
+  - gid: D5/S3/Factorization/Collinear/SlopeFilteredTripleFixedPoints.card_fixedBy_nonzero
+    target_statement_id: sha256:766fbfda95036f5a30b7c20f868d69f4ec79255a083671dff1bbfd75552a4991
+receipts:
+  unresolved_subitems: []

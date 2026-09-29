@@ -1,0 +1,7 @@
+**Proof.** Translation by $(h,k)$ sends $\Gamma_{a,b}(X)$ to
+$\Gamma_{a,b+k-ah}(h+X)$. Equality of the two graphs implies equality of
+their first-coordinate projections, hence $h+X=X$. Choose $x\in X$.
+Comparing the unique graph points above $x$ then gives
+$ax+b+k-ah=ax+b$, so $k=ah$. Conversely, these two equations make the
+translated graph equal to the original graph. $\square$
+

@@ -1,0 +1,14 @@
+**Theorem 10 (slope-filtered fixed-point census).** Let $n>0$, let
+$a,t\in\mathbb Z/n\mathbb Z$ with $t\ne0$, and let $\mathcal V_a$ be the
+three-element subsets $X$ of $\mathbb Z/n\mathbb Z$ on which multiplication
+by $a$ is injective. Translation preserves $\mathcal V_a$. The number of
+members fixed by translation by $t$ is
+
+\[
+  |\operatorname{Fix}_t(\mathcal V_a)|=
+  \begin{cases}
+    n/3,&3t=0\text{ and }at\ne0,\\
+    0,&\text{otherwise}.
+  \end{cases}
+\]
+
