@@ -1,197 +1,209 @@
-# Mostow--Prasad rigidity: metric uniqueness interface
+# Mostow--Prasad rigidity: metric and group interfaces
 
 ## Abstract
 
-The reusable interfaces for the Mostow--Prasad endpoint have two layers. The
-metric layer says that an isometry equivalence is determined by its values on a
-dense subset. The group layer records the statement that an abstract group
-isomorphism between holonomy domains is realized by conjugacy in an ambient
-group, and isolates the centralizer condition needed for uniqueness. The full
-theorem additionally requires complete finite-volume hyperbolic three-manifolds,
-curvature normalization, the existence theorem, and the homotopy-to-isometry
-bridge. None of those geometric hypotheses is hidden in this module.
+The metric and group-conjugacy interfaces for the Mostow--Prasad rigidity endpoint.
+
+The reusable interfaces for the Mostow--Prasad endpoint include metric uniqueness and the algebraic statement that holonomy representations are related by conjugacy in an ambient group. The full theorem requires additional hyperbolic geometry and is not claimed by this module.
 
 **Theorem 1.1 (Dense-set uniqueness of isometries).**
 
-Lean statement:
-`D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_eqOn_dense`
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_eqOn_dense`
 
-*Proof.* Machine-checked in Lean as
-`D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_eqOn_dense` (`✓ std3`).
-∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_eqOn_dense` (`✓ std3`). ∎
 
-*Source.* Repository-derived from Mathlib's `DenseRange.equalizer` and
-`IsometryEquiv.ext`.
+*Source.* Repository-derived.
 
 *Commentary.*
 
-If two isometries agree on a dense subset of the source, continuity extends the
-agreement to every point. This supplies the equality step after a geometric
-argument has reduced two candidate Mostow--Prasad maps to a dense family of
-points.
+Two isometry equivalences that agree on a dense subset of the source are equal.
 
 **Theorem 1.2 (Dense-range uniqueness).**
 
-Lean statement:
-`D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_dense_range`
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_dense_range`
 
-*Proof.* Machine-checked in Lean as
-`D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_dense_range` (`✓ std3`).
-∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_dense_range` (`✓ std3`). ∎
 
-*Source.* Repository-derived from Mathlib's `DenseRange.equalizer`.
+*Source.* Repository-derived.
 
 *Commentary.*
 
-The pointwise form accepts a dense parametrization directly, which is useful for
-developing boundary or orbit models without introducing a second copy of the
-dense subset as a set.
+The same uniqueness result accepts a dense parametrization directly.
 
-**Definition 1.3 (Existence and uniqueness obligations).**
+**Definition 1.3 (Existence of an isometry representative).**
 
-The endpoint is split into explicit predicates:
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.HasIsometryRepresentative`
 
-- `D5/S3/Geometry/MostowPrasadRigidity.HasIsometryRepresentative`
-- `D5/S3/Geometry/MostowPrasadRigidity.UniqueIsometryRepresentative`
-- `D5/S3/Geometry/MostowPrasadRigidity.MostowPrasadRigidityEndpoint`
+*Formalization.* `D5/S3/Geometry/MostowPrasadRigidity.HasIsometryRepresentative` (`✓ std3`).
 
-The first says that a given homotopy equivalence has an isometric representative;
-the second says that such a representative is unique within its homotopy class;
-the third combines them into the exact `∀ h, ∃! e` target for one pair of
-metric spaces.
+*Source.* Repository-derived.
 
-**Theorem 1.4 (An isometry supplies its own representative).**
+*Commentary.*
 
-Lean statement:
-`D5/S3/Geometry/MostowPrasadRigidity.hasIsometryRepresentative_of_isometry`
+A homotopy equivalence has an isometry representative.
 
-Every isometry equivalence induces a homotopy equivalence, and is itself a
-representative of that homotopy equivalence.
+**Definition 1.4 (Uniqueness of an isometry representative).**
 
-*Proof.* Machine-checked in Lean. ∎
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.UniqueIsometryRepresentative`
 
-**Theorem 1.5 (Dense boundary criterion for uniqueness).**
+*Formalization.* `D5/S3/Geometry/MostowPrasadRigidity.UniqueIsometryRepresentative` (`✓ std3`).
 
-Lean statement:
-`D5/S3/Geometry/MostowPrasadRigidity.uniqueIsometryRepresentative_of_eqOn_dense`
+*Source.* Repository-derived.
 
-If a future boundary or holonomy argument proves equality on a dense subset for
-any two representatives, the representatives are equal. This is the exact
-handoff from the geometric boundary argument to the metric uniqueness layer.
+*Commentary.*
 
-*Proof.* Machine-checked in Lean. ∎
+All isometry representatives in one homotopy class are equal.
 
-**Theorem 1.6 (Existence plus uniqueness gives the endpoint).**
+**Definition 1.5 (Mostow--Prasad endpoint specification).**
 
-Lean statement:
-`D5/S3/Geometry/MostowPrasadRigidity.existsUnique_isometryRepresentative_of_parts`
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.MostowPrasadRigidityEndpoint`
 
-The two obligations combine to the required unique-isometry conclusion without
-introducing any hidden axiom.
+*Formalization.* `D5/S3/Geometry/MostowPrasadRigidity.MostowPrasadRigidityEndpoint` (`✓ std3`).
 
-*Proof.* Machine-checked in Lean. ∎
+*Source.* Repository-derived.
 
-**Definition 1.7 (Group conjugacy interface).**
+*Commentary.*
 
-Lean definition:
-`D5/S3/Geometry/MostowPrasadRigidity.GroupConjugacy`
+Every homotopy equivalence has a unique isometry representative.
 
-For `e : G ≃* H`, `ρ : G →* K`, and `σ : H →* K`, this means that there is
-an ambient element `a : K` such that
-`σ (e g) = a * ρ g * a⁻¹` for every `g`. This is the exact algebraic shape of
-the lattice-conjugacy statement used by Mostow--Prasad.
+**Theorem 1.6 (An isometry supplies its representative).**
 
-**Theorem 1.8 (Conjugacy is symmetric and compositional).**
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.hasIsometryRepresentative_of_isometry`
 
-Lean statements:
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.hasIsometryRepresentative_of_isometry` (`✓ std3`). ∎
 
-- `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_symm`
-- `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_trans`
+*Source.* Repository-derived.
 
-*Proof.* Machine-checked in Lean. ∎
+*Commentary.*
 
-**Theorem 1.9 (Uniqueness of the conjugator under trivial centralizer).**
+An isometry induces a homotopy equivalence for which it is a representative.
 
-Lean statement:
-`D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_conjugator_unique`
+**Theorem 1.7 (Dense boundary criterion for uniqueness).**
 
-If the centralizer of the image of `ρ` is trivial, two ambient conjugators
-implementing the same group isomorphism are equal. This exposes the precise
-remaining geometric input needed to turn algebraic conjugacy into uniqueness.
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.uniqueIsometryRepresentative_of_eqOn_dense`
 
-*Proof.* Machine-checked in Lean. ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.uniqueIsometryRepresentative_of_eqOn_dense` (`✓ std3`). ∎
 
-**Definition 1.10 (Dense holonomy orbit).**
+*Source.* Repository-derived.
 
-Lean definition:
-`D5/S3/Geometry/MostowPrasadRigidity.DenseOrbit`
+*Commentary.*
 
-For a representation into the isometry group of a metric space, `DenseOrbit`
-records that the orbit of a chosen basepoint is dense.
+Agreement on a dense boundary set proves uniqueness of representatives.
 
-**Theorem 1.11 (Dense orbit implies trivial centralizer under basepoint control).**
+**Theorem 1.8 (Endpoint from existence and uniqueness).**
 
-Lean statement:
-`D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_orbit`
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.existsUnique_isometryRepresentative_of_parts`
 
-If every centralizing isometry fixes the basepoint and its orbit is dense, then
-the centralizer of the representation image is trivial. The proof uses
-continuity and the dense-set uniqueness theorem above.
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.existsUnique_isometryRepresentative_of_parts` (`✓ std3`). ∎
 
-*Proof.* Machine-checked in Lean. ∎
+*Source.* Repository-derived.
 
-**Theorem 1.12 (Dense attracting poles imply a trivial centralizer).**
+*Commentary.*
 
-Lean statement:
-`D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles`
+The existence and uniqueness obligations combine into the exact endpoint.
 
-```lean
-theorem rangeCentralizerTrivial_of_dense_attracting_poles
-    {G X : Type*} [Group G] [TopologicalSpace X] [T2Space X]
-    (rho : G →* (X ≃ₜ X))
-    (hthree : ∀ b c : X, ∃ x : X, x ≠ b ∧ x ≠ c)
-    (hdense : Dense {a : X | ∃ (g : G) (b : X), a ≠ b ∧
-      ∀ x : X, x ≠ b →
-        Tendsto (fun n : ℕ => ((rho g : X → X)^[n]) x) atTop (𝓝 a)}) :
-    RangeCentralizerTrivial rho
-```
+**Definition 1.9 (Group conjugacy interface).**
 
-*Proof.* Machine-checked in Lean at
-`D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles`.
-For each attracting pole, choose a point away from both the repelling point
-and its inverse image under a centralizing homeomorphism. Commutation of all
-iterates and continuity give two limits for the same orbit, so Hausdorff
-uniqueness fixes that pole. Density and `DenseRange.equalizer` then fix every
-point, and `Homeomorph.ext` gives the identity. ∎
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.GroupConjugacy`
 
-*Source.* Repository-derived using Mathlib's `Function.Commute.iterate_right`,
-`tendsto_nhds_unique`, and `DenseRange.equalizer`.
+*Formalization.* `D5/S3/Geometry/MostowPrasadRigidity.GroupConjugacy` (`✓ std3`).
 
-## Full endpoint still open
+*Source.* Repository-derived.
 
-The intended endpoint is: every homotopy equivalence between connected,
-complete, finite-volume, curvature `-1` hyperbolic three-manifolds is homotopic
-to a unique isometry. The attracting-poles criterion is conditional: it does
-not construct an ideal boundary, establish north-south dynamics or density of
-attracting poles for a lattice, prove faithfulness, or construct a conjugator.
-The full endpoint also still needs complete finite-volume hyperbolic geometry,
-the holonomy bridge, conjugator existence, and the homotopy-to-isometry
-existence theorem.
+*Commentary.*
+
+An abstract group isomorphism is realized by conjugacy in an ambient group.
+
+**Theorem 1.10 (Symmetry of group conjugacy).**
+
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_symm`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_symm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The group-conjugacy relation is preserved by inverting the group isomorphism.
+
+**Theorem 1.11 (Composition of group conjugacy).**
+
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_trans`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_trans` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Conjugacy certificates compose along group isomorphisms.
+
+**Theorem 1.12 (Uniqueness of the conjugator).**
+
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_conjugator_unique`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_conjugator_unique` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A trivial centralizer for the holonomy image makes the ambient conjugator unique.
+
+**Definition 1.13 (Dense holonomy orbit).**
+
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.DenseOrbit`
+
+*Formalization.* `D5/S3/Geometry/MostowPrasadRigidity.DenseOrbit` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The orbit of a chosen basepoint under an isometry representation is dense.
+
+**Theorem 1.14 (Dense orbit centralizer criterion).**
+
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_orbit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_orbit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A dense orbit and basepoint control imply a trivial centralizer.
+
+**Theorem 1.15 (Dense attracting poles force a trivial centralizer).**
+
+Lean statement: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let G be any group, X any Hausdorff topological space in which every pair of points has a third point distinct from both, and rho a group homomorphism from G to the homeomorphisms of X. Suppose the set of a for which there are g in G and b in X with a distinct from b, such that the n-fold iterate of rho(g) at every x distinct from b converges to a, is dense in X. Then every homeomorphism commuting with every rho(g) is the identity.
+
+For each attracting pole a, choose x away from b and the inverse image of b under a centralizing homeomorphism z. Commutation transports the entire iterated orbit through z. Continuity makes its limit z(a), while the attracting-pole condition makes the same orbit converge to a. Hausdorff uniqueness fixes a; density and continuity fix all of X.
+
+This gives a conditional route to the centralizer premise of groupConjugacy_conjugator_unique. It does not construct an ideal boundary, establish north-south dynamics or lattice pole density, prove faithfulness, construct a conjugator, or prove MostowPrasadRigidityEndpoint.
 
 ## References
 
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_eqOn_dense`
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_dense_range`
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.HasIsometryRepresentative`
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.UniqueIsometryRepresentative`
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.MostowPrasadRigidityEndpoint`
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.hasIsometryRepresentative_of_isometry`
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.uniqueIsometryRepresentative_of_eqOn_dense`
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.existsUnique_isometryRepresentative_of_parts`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.DenseOrbit`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.GroupConjugacy`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.HasIsometryRepresentative`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.MostowPrasadRigidityEndpoint`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.UniqueIsometryRepresentative`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.existsUnique_isometryRepresentative_of_parts`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_conjugator_unique`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_symm`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_trans`
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_conjugator_unique`
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.DenseOrbit`
-- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_orbit`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.hasIsometryRepresentative_of_isometry`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_dense_range`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.isometry_equiv_eq_of_eqOn_dense`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_orbit`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.uniqueIsometryRepresentative_of_eqOn_dense`
