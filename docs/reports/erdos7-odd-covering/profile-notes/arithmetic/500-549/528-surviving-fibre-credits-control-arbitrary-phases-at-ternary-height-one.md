@@ -1167,6 +1167,191 @@ verification. The remaining unrestricted obligation is a positive
 common-source estimate or whole-cover descent, preserving all
 prime supports, original heights, labels and phases.
 
+## Shared phase cells retain information that separate pair bounds miss
+
+The FC36 fixture localizes the remaining comparison problem. Keep its
+same42 stars, source array and FULL3-free debit. Filtering only its
+selected3-divisible mixed labels gives the following divisor ideals:
+
+| Retained mixed cofactors d | Labels | Root1 endpoint | Root2 endpoint |
+| --- | ---: | ---: | ---: |
+| support size at most2 | 469 | 0.0198693402014 | -0.00607974904216 |
+| support size at most3 | 1566 | -0.0267091541081 | -0.0341137177097 |
+| sum_(q divides d)(v_q(d)-1) at most0 | 479 | 0.0367184100419 | -0.0123318524293 |
+| sum_(q divides d)(v_q(d)-1) at most1 | 1299 | -0.0185049650252 | -0.0341681706355 |
+
+Both filters are downward closed. All capacity counts decrease,
+labelwise CR9 persists, and the stars are unchanged. These are decimal
+displays of the exact FC36 sums over explicitly specified subsets of
+the same input. The smallest displayed support cutoff with both
+endpoints negative is3; the smallest displayed excess cutoff is1.
+Hence upper-cap or deletion cuts supported only on selected labels
+of support at least4, or only on excess at least2, cannot repair this
+relaxation if those cuts are vacuous when their labels are absent.
+This does not exclude constraints that force additional labels to be
+present or couple these subsets to the rest of the inventory. The full3-free debit still includes every support and
+height in the declared profile; it has not been truncated with the
+selected3-divisible inventory.
+
+### A separate d/3d phase constraint can have zero saving
+
+Use precisely the actual85-class pure/star source constructed after
+FC35. For a mixed cofactor d supported on D, let
+
+    u_d=product_(q in D)c_q/q^v_q(d),
+    g_t(D)=product_(q outside D)(1-beta_(q,t)).
+
+Fix the root r of3d and nonnegative root weights w_t summing to1.
+A single d/3d pair has the local debit upper bound
+
+    [sum_t w_t*g_t(D)+w_r*g_r(D)]*u_d.             (FC41)
+
+Even requiring one shared d-phase on both roots and a different
+cofactor phase for3d does not reduce this bound on this source.
+Choose d-phase4 at every supported q-power. Since D contains at
+least two primes>=5, choose one q_*>=7 and give3d phase5 there,
+phase4 elsewhere. CRT supplies both full phases and the desired
+ternary root. Their cofactor residues differ, so the two APs are
+disjoint. Their entire q-cylinders avoid every pure/star projection,
+whose first digits lie in{0,1,2,3}. Each has exactly the full
+pure-conditioned mass u_d and no inside-support star loss. Both
+terms in FC41 are therefore attained, for every weight w.
+
+This constructs each pair separately on the same source. It does
+not construct phases for all pairs or all their mixed divisors at
+once. For example, assigning phase4 to both35 and385 makes those
+comparable classes intersect. Thus independent optimization of
+each d/3d pair alone gives no strict universal improvement here;
+constraints between different numerical labels are still available.
+
+### Weighted slots for one actual source and label bucket
+
+Fix one pure-conditioned product source, its actual star unions
+B_(q,t), and a ternary root t. Let lambda_q be its coordinate law
+with valid caps c_q*q^-j. For distinct primes p,q>=5, retain the
+actual normalized first-root availability
+
+    R_p(a)=lambda_p([a]_p minus B_(p,t))/(c_p/p),
+    R_q(b)=lambda_q([b]_q minus B_(q,t))/(c_q/q).
+
+Both lie in[0,1]. Take a bucket J of original labels3d on root t
+with v_p(d)=v_q(d)=1; other exponents are unrestricted. Define
+
+    a_d=g_t(supp(d))*u_d.
+
+Product independence on this one source implies that each original's
+actual deletion mass inside the post-star carrier, conditional on
+root t, is at most
+
+    a_d*R_p(a_(3d) mod p)*R_q(a_(3d) mod q).
+
+Retain any allowed cell set E containing all actual phases, and set
+z_(a,b)=R_p(a)*R_q(b). For a nonempty bucket, divisor closure
+supplies the one original pq, whose cell exclusion is globally fixed
+on both ternary roots; E can drop this exclusion only
+as a declared upper relaxation. Assume Report385's whole-minimal
+H3=1 phase constraints: at most two originals per cell, with doubled
+cells a matching. For a matching M in E, form a slot list containing
+one z_e for every cell and a second z_e for every e in M. Write its
+entries v_i(M) in decreasing order, and sort the n=|J| coefficients
+as a_1>=...>=a_n>=0. Then
+
+    sum_(d in J) actual conditional deletion mass
+      <=max_(M matching, at least n slots) sum_(i=1..n)a_i*v_i(M).
+                                                        (FC42a)
+
+To prove this, use the actual doubled-cell matching and add unused
+primary slots. For this enlarged list, choosing the n largest slots
+and pairing largest coefficients with largest slots bounds every
+actual assignment, by rearrangement. Maximizing over matchings
+preserves the upper-bound direction. If no matching has enough slots,
+the prescribed bucket has no realization satisfying these capacities.
+The construction preserves original label weights and the source;
+it does not assume that independent optimal phases are simultaneous.
+
+The exact first-depth condition is essential. A deeper cylinder can
+avoid a small hole within a depleted first root and still attain its
+own depth-specific cap. For such a cylinder, its first-root mass
+ratio cannot be multiplied into that cap; retain a literal deeper
+prefix mass table instead.
+
+### A fixed-source weighted cell bound gives a strict saving
+
+Now specialize to the actual85-class pure/star source constructed
+after FC35. Suppose the hypothetical whole minimal H3=1 family obeys Report385's actual3pq cell constraints: each
+cell contains at most two originals, and cells containing two form
+a matching. Consider on root1 only selected cofactors with
+v_5(d)=v_7(d)=1. The FC36 fixture supplies exactly eight:
+
+    455,665,805,1015,1085,1295,1435,5915.
+
+All contain5, so g_1(supp(d))=1 in this source. Their u_d values
+decrease in the displayed order. After the actual star exclusions,
+the allowed5-first roots{1,3,4} have masses, relative to c_5/5,
+
+    (rho_5,rho_5,1), rho_5=469/625.
+
+The allowed7-first roots{1,...,6} have relative masses
+
+    (rho_7,1,1,1,1,1), rho_7=2001/2401>rho_5.
+
+The relative cell mass is the product of its row and column values.
+One slot per cell is available, with a second slot only on a
+matching. If the occupied slot masses are sorted decreasingly,
+their first eight entries are coordinatewise at most
+
+    (1,1,1,1,1,1,rho_7,rho_5).
+
+Indeed the five weight-one cells lie in one row, which can contain
+only one doubled cell. Thus at most six slots have weight1. Every
+cell with weight exceeding rho_5 lies in that same six-column row,
+which supplies at most seven slots in total. All nonunit cell weights
+are at most rho_7. Removing cells or reserving slots for other
+originals only makes this bound stronger.
+
+For nonnegative label coefficients, rearrangement pairs the largest
+coefficients with the largest slots. Bounding all remaining supported
+coordinates by their original caps therefore forces these eight
+labels' actual root1 debit below their independent sum by at least
+
+    Delta=(1-rho_7)*u_1435+(1-rho_5)*u_5915
+      =635674842953/2406595308643068
+      >0.0002641386529218.                         (FC42)
+
+The weighted gain is w_1*Delta. This is a conditional bound for the
+specified source and this inventory bucket; it uses a shared phase
+table, not an assertion that every original has an independent best
+cell. It is a valid saving even when the rest of the fixture has
+additional restrictions, since those were relaxed in obtaining the
+upper bound. The slot relaxation itself can attain the displayed
+eight-slot vector, but simultaneous phases for the entire inventory
+are not asserted.
+
+FC42 cannot be added to the maximization over all Omega_sigma unless
+every candidate is covered by a corresponding bound. Nor does the
+still-negative value L_1+Delta prove failure of a fully optimized
+phase-aware comparison: it only says that this particular displayed
+credit does not yet certify positivity. Credits from overlapping
+prime-pair buckets cannot be added without accounting for repeated
+labels.
+
+The fixed-source condition is material. In another actual source,
+higher pure and star losses may share a first-q root, leaving more
+full-mass cells. The85-class construction separates those roots.
+The next missing bound must retain the actual source matrix while
+coupling the numerical labels across all relevant cells, or control
+the extra3-free inventory jointly. Neither these local results nor
+the finite source example supplies unrestricted Erdős#7 or a new
+Lean result.
+
+The [weighted-slot control](../../../frontier/cover-geometry/fibre-credit-partition/source_weighted_cell_matching.py)
+and its [exact result](../../../frontier/cover-geometry/fibre-credit-partition/source_weighted_cell_matching.json)
+reconstruct the actual5/7 first-root masses, the eight original
+labels and all229 partial matchings. All285 explicit checks pass,
+including an attaining slot assignment after one shared35-cell
+exclusion. This is a finite check of the stated relaxation; the
+source-dependent inequality follows from the proof above.
+
 ## Whole-family height one permits a smaller common query interface
 
 The all-depth query in(FC13) permits later originals with arbitrary ternary
