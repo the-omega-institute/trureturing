@@ -109,6 +109,7 @@ def reducedQuboPenaltyConjecture : Prop :=
 def claim : Prop := quboPenaltyConjecture ∧ reducedQuboPenaltyConjecture
 
 set_option maxHeartbeats 2000000 in
+-- The averaged moves expand large finite sums inside this single declaration.
 /-- Both conjectures hold. -/
 theorem result : claim := by
   have ind_sq :
@@ -542,7 +543,7 @@ theorem result : claim := by
       congr 1
       rw [Finset.sum_eq_single j]
       · simp [ind_sq]
-      · intro i hi hij; simp at hi; exact absurd hi hij
+      · intro i hi hij; exact absurd (by simpa using hi) hij
       · intro h; simp at h
     rw [hsq]
     simp_rw [hsplit, Finset.sum_add_distrib]
