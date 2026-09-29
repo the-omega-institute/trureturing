@@ -1,0 +1,12 @@
+### 4.4 有界对数特例与零谱聚集实例
+
+$A$ 有有界逆时，$Q=(\log|z|+i\operatorname{Arg}z)(A)$ 是有界 Borel 演算，不要求谱邻域有全纯对数，且 $A^t=e^{tQ}$。第 3.1 节的 Bessel 引理与任意正窗定理立即给出可逆特例。
+
+在 $\ell^2(\mathbb N_{\ge1})$ 上取 $Ae_n=e^{-n}e_n$、$g_n=\sqrt{2n}e_n$，则
+$$
+\mathcal E_T(x)=\sum_{n\ge1}(1-e^{-2nT})|x_n|^2,
+\quad a(T)=1-e^{-2T},\quad M(T)=1.
+$$
+初始族非 Bessel，$A^{-1}$ 无界，但所有正窗均稳定。该实例由逐坐标积分得到。
+
+<a id="sec-correlation"></a>

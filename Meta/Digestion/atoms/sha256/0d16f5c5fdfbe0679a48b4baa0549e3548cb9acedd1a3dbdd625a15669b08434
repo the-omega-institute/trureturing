@@ -1,0 +1,16 @@
+## theorem 1.4: Degree-two range
+
+For every integer $k\ge2$, the residues $a=1$ and $b=-c$ in
+$\mathbb Z/N\mathbb Z$ are nonzero and distinct. Consequently the set
+$\{z+a,z+b\}$ has cardinality two for every vertex $z$.
+
+Here $q=k-1\ge1$ and $N=qc+d>k+5>c>1$. A zero $a$ would force
+$N\mid1$; a zero $b$ would force $N\mid c$; equality $a=b$ would force
+$N\mid(k+5)$. Each divisibility contradicts the displayed strict bound.
+
+At $k=1$, $N=3$ and $b=-5=1=a$ modulo $3$, so the set of outgoing
+neighbors has cardinality one. This does not affect the preceding sector
+coverage, exact-radius witness, or lattice equality. It does contradict the
+paper's degree-two graph convention when that convention is imposed on the
+literal $k\ge1$ quantifier.
+

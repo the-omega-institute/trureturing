@@ -1,0 +1,15 @@
+### 143.2. 时间 Möbius 反演只按零秩分层
+
+定义第 $k$ 层损失代价（$1\le k\le a$）
+
+$$
+\ell_{p,k}=\log v_{p,a}(a-k+1)-\log v_{p,a}(a-k)>0.
+$$
+
+深度用 $a-k$ 而非 $k$：事件 $p^k\mid F_d$ 表示从原商指数 $a$ 向下已丢失至少 $k$ 层。令 $V_d^{\rm time}(H)=V_{H/\gcd(H,F_d)}(H)$，并对正 $d$ 定义
+
+$$
+L_H(d)=\log\frac{Z(H)}{V_d^{\rm time}(H)},\qquad
+A_H(r)=\sum_{d\mid r}\mu(r/d)L_H(d).
+$$
+

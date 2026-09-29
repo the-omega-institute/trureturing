@@ -1,0 +1,8 @@
+### 6.3 少量读数闭合的反例
+
+$H=Z\otimes Z$ 中 $\operatorname{span}\{I,Z\}\otimes I$ 闭合，但 $V=H,\delta=2$。$|+\rangle\langle+|\otimes|0\rangle\langle0|$ 与隐藏态 $|1\rangle$ 的版本有相同可见初态，之后可见因子分别按 $e^{-itZ}$ 与 $e^{itZ}$ 旋转；$t=\pi/4$ 的 $Y$ 期望相反，$Z$ 读数却始终相同。热态
+$$
+\gamma_H=\tfrac14(I-\tanh\beta\,Z\otimes Z)
+$$
+具有混合局部边缘而非乘积联合态。这区分不变线性观测空间与完整子系统代数。
+

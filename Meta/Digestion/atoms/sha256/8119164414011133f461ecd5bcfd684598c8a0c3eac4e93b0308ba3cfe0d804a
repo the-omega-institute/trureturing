@@ -1,0 +1,5 @@
+### 7.7 Tesla 与实际能流
+
+tesla 是 $B$ 的 SI 单位，$1\,\mathrm T=1\,\mathrm{Wb/m^2}=1\,\mathrm{N/(A\,m)}$ [NIST]。Tesla 的 US381968A 专利用错相交流产生旋转磁极。理想两相模型 $B(t)=B_0(\cos\nu t\,e_x+\sin\nu t\,e_y)$ 幅值固定而方向旋转；它将相位与旋转结构变成机电耦合。输入电功、场能、机械功和损耗必须平衡 [Tesla1888]。
+
+<a id="sec-unified-results"></a>

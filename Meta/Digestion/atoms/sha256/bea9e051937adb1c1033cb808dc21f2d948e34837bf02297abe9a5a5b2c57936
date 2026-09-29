@@ -1,0 +1,13 @@
+**命题 28.1（单点替换纤维的精确参数化）。** 设 $L$ 为有限集，$R\subseteq L\times L$ 为对称的零一邻接关系，允许自环。对任意 $n\ge0$、端点 $s,t\in L$，令 $\mathcal P_n(s,t)$ 是满足 $x_0=s$、$x_n=t$ 和 $R(x_k,x_{k+1})$（$0\le k<n$）的全部路径。任取 $1\le i<n$ 及 $x\in\mathcal P_n(s,t)$，并假设 $x_{i-1}=x_{i+1}=a$。定义
+
+$$
+\mathcal F_i(x)=\{z\in\mathcal P_n(s,t):z_k=x_k\text{ 对每个 }k\ne i\}.
+$$
+
+则评价映射 $z\mapsto z_i$ 给出双射
+
+$$
+\mathcal F_i(x)\;\cong\;\{b\in L:R(a,b)\}.
+\tag{FT.31}
+$$
+

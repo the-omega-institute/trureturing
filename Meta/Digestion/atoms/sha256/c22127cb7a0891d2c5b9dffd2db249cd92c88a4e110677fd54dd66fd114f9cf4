@@ -1,0 +1,26 @@
+**定理 15.1（任意共同环境下的定量环路缺口）。** 对 §15.2 中全部通道和全部环境维数，
+\[
+ \boxed{\sum_{(i,j)\in\mathcal C}\sqrt{2\delta_{ij}/\mu_{ij}}
+ \ge h_{\mathcal C},\qquad
+ \sum_{(i,j)\in\mathcal C}\delta_{ij}
+ \ge\frac{h_{\mathcal C}^2}{2\sum_{(i,j)\in\mathcal C}\mu_{ij}^{-1}}.} \tag{15.3}
+\]
+环上的每对模长同时达到根保真度，当且仅当 $U_{\mathcal C}$ 是标量相位。树上的全部边总能同时达到各自最优模长。
+
+**证明。** 写 $S_i=\sqrt{\tau_i}$、$M_{ij}=W_iW_j^\dagger$，其范数至多一。若 $c_{ij}\ne0$，取 $\zeta_{ij}=c_{ij}/|c_{ij}|$；零时取任意相位。由迹循环，$c_{ij}=\operatorname{Tr}(|S_iS_j|T_{ij}^\dagger M_{ij})$。于是
+\[
+ \delta_{ij}=\operatorname{Tr}|S_iS_j|
+ [I-\operatorname{Re}(\bar\zeta_{ij}T_{ij}^\dagger M_{ij})]
+ \ge\frac{\mu_{ij}}2\|W_i-\zeta_{ij}T_{ij}W_j\|_F^2. \tag{15.4}
+\]
+中括号半正定，最后使用 $W_iW_i^\dagger=W_jW_j^\dagger=I_d$ 展开平方。沿环逐项相减并使用酉矩阵不改变 Frobenius 范数，得
+\[
+ \|(I-\zeta_{12}\cdots\zeta_{\ell1}U_{\mathcal C})W_1\|_F
+ \le\sum\|W_i-\zeta_{ij}T_{ij}W_j\|_F.
+\]
+左侧等于去掉 $W_1$ 后的范数，因 $W_1W_1^\dagger=I_d$；它至少为 $h_{\mathcal C}$。代入 (15.4) 得第一式，Cauchy–Schwarz 给第二式。
+
+若全部缺口为零，第一式迫使环路为标量。反向沿一棵生成路径选方形酉 $W_i$，逐边令 $W_i=T_{ij}W_j$；最后一边仅差环路的标量相位，所以模长仍取等。树上没有闭环约束，同一递归适用于全部边。证毕。
+
+一般连接图需同时检验独立环。这个结论使用共同矩阵振幅，不能由逐对 Uhlmann 存在性独立相加得到。忠实性保证 $\mu_{ij}>0$；秩亏极限不能沿用正的统一下界。此处净化束的 holonomy 与 §7 的电磁曲率都是几何输运对象，但未证明二者为同一物理场。
+

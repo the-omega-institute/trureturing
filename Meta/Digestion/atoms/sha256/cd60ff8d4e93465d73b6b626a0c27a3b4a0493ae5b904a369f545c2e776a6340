@@ -1,0 +1,16 @@
+**定理 22.1（零判据的精确对象分类）。** 在定义 21.1 的前提下，$\chi_X=0$ 当且仅当 $\mathcal C$ 是整融合范畴，即所有 $d_a\in\mathbb N_{>0}$，且存在整数 $q\ge1$ 使
+
+$$
+X\cong qR_{\mathcal C},\qquad
+R_{\mathcal C}:=\bigoplus_{a\in S}d_a a.
+\tag{SC.6}
+$$
+
+此时
+
+$$
+N=qdd^T,\quad \delta=q\mathfrak d,\quad
+D(n)=q^{2n}\mathfrak d^{2n-1}\quad(n\ge1).
+\tag{SC.7}
+$$
+

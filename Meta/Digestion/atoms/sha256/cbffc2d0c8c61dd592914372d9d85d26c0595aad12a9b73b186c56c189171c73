@@ -1,0 +1,14 @@
+**定理 12.4（远隔状态的最优判别错误率）。** 对同一轨道上的等先验两状态 $\varphi_0=0$、$\varphi_1=2\pi/3$，原状态距离为 $\sqrt3$，但
+\[
+ \|\mathcal F_\varepsilon(\varphi_0)
+       -\mathcal F_\varepsilon(\varphi_1)\|^2
+ =\frac{12(1+\sqrt3)\varepsilon}{Z_\varepsilon}.
+\]
+全部可测判别器的最小错误率恰为
+\[
+ \boxed{p_\varepsilon^*=\Phi\!\left(-\frac1\sigma
+       \sqrt{\frac{3(1+\sqrt3)\varepsilon}{Z_\varepsilon}}\right)
+ \longrightarrow\tfrac12,}
+\]
+其中 $\Phi$ 是标准 Gaussian 分布函数。对任意固定标量传感器 $h_\alpha=\alpha^TH_\varepsilon$、$\|\alpha\|\le1$，在两个标量延迟具有同方差 Gaussian 噪声时，最小判别错误率至少为上式。
+

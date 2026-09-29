@@ -1,0 +1,9 @@
+### 2.1 最小连续线性预测商
+
+固定 $S=S^T\succ0$、$A=JS$、$H=z^TSz/2$、读数 $b=Cz$。定义
+$$
+W_0=\operatorname{im}C^T,\quad W_{k+1}=W_k+A^TW_k,
+\quad W=\operatorname{span}\{(A^T)^kW_0:k\ge0\}.
+$$
+Cayley–Hamilton 给出 $W=W_{2n-1}$。取满行秩 $O$ 使其行空间为 $W$；$C=0$ 时单独取零维平凡商。
+

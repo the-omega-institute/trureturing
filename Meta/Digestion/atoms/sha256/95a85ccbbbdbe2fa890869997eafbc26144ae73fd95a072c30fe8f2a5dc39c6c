@@ -1,0 +1,10 @@
+**定理 23.1（谱判据推出平移整格单射）。** 若 $\chi_X>0$，则
+
+$$
+\mathbb Z^m\longhookrightarrow\mathrm{QCA}(A_m)/\mathrm{FDQC}(A_m),
+\qquad\mathbf k\longmapsto[\alpha_{\mathbf k}]
+\tag{SC.8}
+$$
+
+是单射群同态，而且 $\operatorname{Ind}(\alpha_{\mathbf k})=\delta^{\sum_i k_i}$。
+
