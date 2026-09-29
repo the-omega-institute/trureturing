@@ -1,0 +1,104 @@
+### 342.8 差分质量与保持相邻比的加权尾
+
+令
+
+$$
+\Delta\eta_j=\eta_j-\eta_{j+1}\ge0,\qquad
+\mu_j=(j+1)\Delta\eta_j.
+\tag{342.28}
+$$
+
+非增可求和性给 $(m+1)\eta_{m+1}\to0$。有限分部求和后取极限，得到
+
+$$
+\begin{aligned}
+\sum_{j=0}^{m}\mu_j
+ &=\sum_{j=0}^{m}\eta_j-(m+1)\eta_{m+1},\\
+\sum_{j\ge0}\mu_j
+ &=\sum_{j\ge0}\eta_j<\infty,\qquad
+\eta_k=\sum_{j\ge k}\Delta\eta_j.
+\end{aligned}
+\tag{342.29}
+$$
+
+对 $r\ge1$，选择严格递增整数 $K_r\ge r$，使
+
+$$
+\sum_{j\ge K_r}\mu_j\le2^{-r}/r^2.
+\tag{342.30}
+$$
+
+有限质量保证这些阈值存在。置
+
+$$
+a_j=1+\#\{r\ge1:K_r\le j\}.
+\tag{342.31}
+$$
+
+每个 $a_j$ 为有限正整数，序列非减且趋于无穷。非负 Tonelli 求和给
+
+$$
+\begin{aligned}
+\sum_{j\ge0}a_j\mu_j
+&=\sum_{j\ge0}\mu_j+
+  \sum_{r\ge1}\sum_{j\ge K_r}\mu_j\\
+&\le\sum_{j\ge0}\eta_j+
+   \sum_{r\ge1}2^{-r}/r^2<\infty.
+\end{aligned}
+\tag{342.32}
+$$
+
+这是标准的有限质量序列缓增长加权事实。
+
+定义
+
+$$
+\widetilde\eta_k=\sum_{j\ge k}a_j\Delta\eta_j.
+\tag{342.33}
+$$
+
+每项有限，因为 $\Delta\eta_j=\mu_j/(j+1)$；每项严格为正，因为
+$a_j\ge1$ 且 $\eta_k>0$。差为
+$\widetilde\eta_k-\widetilde\eta_{k+1}=a_k\Delta\eta_k\ge0$，所以序列非增。再次交换非负求和，
+
+$$
+\boxed{
+\sum_{k\ge0}\widetilde\eta_k
+ =\sum_{j\ge0}(j+1)a_j\Delta\eta_j
+ =\sum_{j\ge0}a_j\mu_j<\infty.}
+\tag{342.34}
+$$
+
+由于 $a_j\ge a_k$ 对 $j\ge k$ 成立，
+
+$$
+\widetilde\eta_k
+ \ge a_k\sum_{j\ge k}\Delta\eta_j
+ =a_k\eta_k,\qquad
+\widetilde\eta_k/\eta_k\longrightarrow+\infty.
+\tag{342.35}
+$$
+
+相邻比也不增大。由
+$\widetilde\eta_{k+1}\ge a_k\eta_{k+1}>0$，
+
+$$
+\begin{aligned}
+\frac{\widetilde\eta_k}{\widetilde\eta_{k+1}}
+&=1+\frac{a_k\Delta\eta_k}{\widetilde\eta_{k+1}}\\
+&\le1+\frac{\Delta\eta_k}{\eta_{k+1}}
+ =\frac{\eta_k}{\eta_{k+1}}\le R.
+\end{aligned}
+\tag{342.36}
+$$
+
+记 $\widetilde S=\sum_k\widetilde\eta_k<\infty$，选择固定
+$c=(1+\widetilde S)^{-1}>0$，令
+
+$$
+\eta'_k=c\widetilde\eta_k.
+\tag{342.37}
+$$
+
+则新地板总和小于一，每项不超过一；共同缩放保留单调性、相邻比及式（342.35）的发散比例。也可选择足够小的正有理缩放因子。由此得到式（342.26）。
+

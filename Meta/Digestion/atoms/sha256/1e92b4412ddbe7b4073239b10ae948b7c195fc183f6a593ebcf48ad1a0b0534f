@@ -1,0 +1,16 @@
+**引理326.2（同一策略的可调局部插值）。** 若式（326.12）成立，则
+
+$$
+\sup_{0\le h\le H/\sqrt n}
+ n^a\Pr_h(M>n)
+\le e^{c_*r}K^{1/r}\xi_n^{1-1/r},
+\tag{326.14}
+$$
+
+$$
+\sup_{0\le h\le H/\sqrt n}
+ n^{a-m}\mathbb E_h(M\wedge n)^m
+\le e^{c_*r}K^{1/r}\zeta_n^{1-1/r}.
+\tag{326.15}
+$$
+

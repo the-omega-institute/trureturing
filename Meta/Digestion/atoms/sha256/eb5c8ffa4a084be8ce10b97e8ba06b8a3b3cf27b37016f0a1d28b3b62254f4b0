@@ -1,0 +1,26 @@
+**引理330.4（有正余量的定量 Hölder 工厂）。** 设 $\beta>0$ 非整数，$f:[0,1]\to[e,1-e]$，$0<e\le1/4$，且对 $A,L\ge1$，
+
+$$
+\|f^{(m)}\|_\infty\le AL^m
+\quad(1\le m\le r_\beta),\qquad
+[f^{(r_\beta)}]_\theta\le AL^\beta.
+\tag{330.30}
+$$
+
+则存在同一准确实概率工厂，其初始实际任务批量 $m_0$ 可取为
+
+$$
+m_0\le C_\beta L^2(A/e)^{R_\beta},
+\qquad
+R_\beta=\max\{2,2/\beta\},
+\tag{330.31}
+$$
+
+并对每个 $0<s<a$ 满足
+
+$$
+\sup_{p\in[0,1]}\mathbb E_pT^s
+\le C_{\beta,s}m_0^s.
+\tag{330.32}
+$$
+

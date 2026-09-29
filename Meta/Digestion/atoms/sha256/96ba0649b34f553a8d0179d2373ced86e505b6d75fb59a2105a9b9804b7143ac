@@ -1,0 +1,19 @@
+**命题 15.1（投影脉冲的完整代数律）。** 对任意有限维正交投影 $P$ 和 $z\in\mathbb C$、$|z|=1$，定义
+
+$$
+U_P(z)=I+(z-1)P.
+\tag{FT.15}
+$$
+
+则 $U_P(z)^\dagger=U_P(\overline z)$、$U_P(z)U_P(w)=U_P(zw)$，故 $U_P(z)$ 酉。对固定读数 $O$，相应 Heisenberg 更新为
+
+$$
+U_P(z)^\dagger O U_P(z)
+=O+(z-1)OP+(\overline z-1)PO+|z-1|^2POP.
+\tag{FT.16}
+$$
+
+**证明。** 展开两个因子并使用 $P^2=P$；一次项系数为 $(z-1)+(w-1)+(z-1)(w-1)=zw-1$。取 $w=\overline z$ 得酉性。三因子直接展开得最后一式。证毕。
+
+取物理 Hamiltonian $H=-JP$、$J\in\mathbb R$、$\hbar>0$，$z=e^{iJt/\hbar}$，幂级数给 $e^{-itH/\hbar}=U_P(z)$。可先形式化式（FT.15）这个有限多项式引理，再连接矩阵指数；不必把矩阵指数计算当作基础定义。这里是给定相互作用的理想模型，不代表任何装置已实现任意门。
+

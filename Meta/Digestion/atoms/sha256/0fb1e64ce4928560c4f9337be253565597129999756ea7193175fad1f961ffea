@@ -1,0 +1,9 @@
+### 5.1 从相关曲率读取闭包缺陷
+
+正定二次系统中取 Gibbs 初态 $z_0\sim N(0,\beta^{-1}S^{-1})$，$y_t=Oz_t$，$O$ 满行秩。令
+$$
+C(t)=\mathbb E[y_ty_0^T],\quad
+F(t)=C(0)^{-1/2}C(t)C(0)^{-1/2}.
+$$
+第 2 节坐标给 $F(t)=Qe^{t\Omega}Q^T$、$QQ^T=I$、$\Omega^T=-\Omega$。因此 $F(0)=I,F(-t)=F(t)^T,\|F(t)\|\le1$。这是假定的平稳 Gibbs 初态，不推出单条轨迹遍历性。
+

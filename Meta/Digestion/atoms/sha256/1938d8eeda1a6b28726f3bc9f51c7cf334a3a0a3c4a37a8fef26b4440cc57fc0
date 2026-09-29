@@ -1,0 +1,27 @@
+**证明。** 在有限叶上直接按同一个世界和同一个预算计算，
+
+$$
+\begin{aligned}
+v^{\mathsf T}C_n(p)v
+&=\sum_j\mathbb E_pN_{j,n}\frac{v_j^2}{p_j(1-p_j)}\\
+&\le K_w(p,v)\sum_jw_j\mathbb E_pN_{j,n}
+\le WK_w(p,v).
+\end{aligned}
+\tag{312.23}
+$$
+
+令 $w_{\min}=\min_jw_j>0$，则总均值不超过 $W/w_{\min}$。有限叶概率一致收敛，局部Hessian一致有界。沿固定方向用式（312.13），再利用 $K_w(p+sv,v)$ 的连续性，得到式（312.21）。局部梯度收敛同式（312.14），传递式（312.6）得到式（312.22）。没有将各来源的上确界相加。证毕。
+
+对 $v\ne0$，$K_w(p,v)>0$，故可以把这两条不等式除以它，给出 $W$ 的必要下界。例如在 $0<g(p)<1$ 的点，
+
+$$
+W\ge
+\frac{\max\left\{
+|v^{\mathsf T}\operatorname{Hess}g(p)v|,
+(v^{\mathsf T}\nabla g(p))^2/[g(p)(1-g(p))]
+\right\}}{K_w(p,v)}.
+\tag{312.24}
+$$
+
+对任意点和方向的这些下界取上确界仍合法。边界概率取零或一时只用方向不等式，避免除零。若实际路径费用 $T\ge\sum_jw_jN_j$，则同一右侧也约束 $\sup_p\mathbb E_pT$。正收费仍须结合定义312.1的完整旧币信息合同，不能允许额外含参时长后继续沿用纯币下界。
+

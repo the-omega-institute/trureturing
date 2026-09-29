@@ -1,0 +1,14 @@
+**引理345.3（共同完整余量与跨中心差）。** 可以固定足够大的整数 \(\tau\)，使所有完整上下函数、其参考提升凸组合以及全部 \(m\in\Lambda\) 满足
+
+\[
+\varepsilon\le c_m(f)_i\le1-\varepsilon
+\tag{345.12}
+\]
+
+的同一个 \(\varepsilon>0\)。固定这一 \(\tau\) 后，任意 \(m'\ge m\) 的共同网格点上有
+
+\[
+\|c_{m'}(f)-E c_m(f)\|_\infty\le C_\times m^{-a}.
+\tag{345.13}
+\]
+

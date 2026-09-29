@@ -1,0 +1,11 @@
+**定理346.5（固定地板的近临界严格损失）。** 对每份固定
+\(A\in\mathfrak G_\infty\)，若 \(H_a(A)<\infty\)，则
+
+\[
+\boxed{\lim_{u\downarrow0}u^aT_{a-u}(A)=+\infty.}
+\tag{346.40}
+\]
+
+同一结论对每个固定世界、每种请求的
+\(u^a\mathbb E^{A,w,S}N_T^{a-u}\) 成立。矩允许取扩展实数值。
+

@@ -1,0 +1,4 @@
+**证明。** 条件期望的双模性质与 $\mathbb E_A(V)=0$ 给第一式。对矩阵单位求有限几何和，Weyl twirl 为 $d^{-2}\sum(W\otimes I)V(W^\dagger\otimes I)=d^{-1}I\otimes\operatorname{Tr}_AV=0$。故 $V=d^{-2}\sum R_{ab}(W_{ab}^\dagger\otimes I)$，给左界，交换子范数给右界。展开平方后两个平方项各为 $\|V\|_{2,n}^2$，平均交叉项为零。Weyl 族张成整个可见矩阵代数，得到闭合等价。证毕。
+
+有限证书不自动具有多项式于量子比特数的测量成本。
+

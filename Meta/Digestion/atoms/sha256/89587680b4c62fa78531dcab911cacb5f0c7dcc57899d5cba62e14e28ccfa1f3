@@ -1,0 +1,22 @@
+**证明。** 对紧支光滑标量 $\psi(u)$，生成元反对称性给
+\[
+\mathbb E[\psi\mathscr Lr_i]
+=-\mathbb E[(\mathscr L\psi)r_i]
+=-\mathbb E\sum_j(\partial_j\psi)v_jr_i
+=-\int\rho\sum_j(\partial_j\psi)\mathcal C_{ij}\,du.
+\]
+最后一步用条件零均值消掉 $b_jr_i$，分部积分得到 $k_i$。再对 $\mathscr Lu=b(u)+r_u$ 求生成元，条件平均给 $Db\,b+k$。对任意 $\psi$，平稳性给 $\mathbb E\mathscr L\psi=\int\rho b\cdot\nabla\psi=0$，即边缘连续方程。证毕。
+
+因此只演化平均漂移 $b$ 可以保持正确的静态边缘，同时漏掉条件均值的二阶项。令 $u\in\operatorname{Dom}\mathscr L^3$、$c_3=\|\mathscr L^3u\|_{L^2}$，定义
+\[
+g_{2,t}(u)=u+tb(u)+\tfrac12t^2[Db(u)b(u)+k(u)].
+\]
+三次积分 Taylor 公式和条件期望收缩给
+\[
+\boxed{\|\mathbb E[u_t\mid u]-g_{2,t}(u)\|_{L^2}\le t^3c_3/6,}
+\]
+\[
+\mathbb E\|u_t-g_{2,t}(u)\|^2-\mathcal R_*(t)\le t^6c_3^2/36.
+\]
+这是局部条件均值预测器的保证；不宣称截断更新是辛积分器，也不把它迭代为已经证明长期稳定的 Markov 动力学。$k$ 是二阶投影响应，不能单凭它恢复全部非线性记忆核。
+

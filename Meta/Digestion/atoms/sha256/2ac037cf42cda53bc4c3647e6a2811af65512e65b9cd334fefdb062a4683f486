@@ -1,0 +1,44 @@
+### 351.2 阻尼 qubit 的实际 CPTP 实现
+
+以
+
+\[
+\rho_0=\frac{I+\sigma_x}{2}
+\tag{351.6}
+\]
+
+制备一个 qubit。令 \(U_\theta=\exp(-i\theta\sigma_z/2)\)，每次 advance 施加
+
+\[
+\mathcal T_{r,\theta}
+=\mathcal D_r\circ\operatorname{Ad}_{U_\theta},
+\qquad
+\mathcal D_r
+=\frac{1+r}{2}\operatorname{id}
++\frac{1-r}{2}\operatorname{Ad}_{\sigma_z}.
+\tag{351.7}
+\]
+
+\(\mathcal D_r\) 是两个酉共轭通道的凸组合，故完全正且保迹；它把 Bloch 赤道坐标 \((x,y)\) 变为 \((rx,ry)\)，保持 \(z\) 坐标。\(\operatorname{Ad}_{U_\theta}\) 在赤道平面旋转 \(\theta\)，且与此阻尼交换。因此
+
+\[
+\mathcal T_{r,\theta}^k(\rho_0)
+=\frac12\left[
+I+r^k\cos(k\theta)\sigma_x
++r^k\sin(k\theta)\sigma_y
+\right].
+\tag{351.8}
+\]
+
+取固定终端效果 \(E=(I-\sigma_x)/2\)，即得
+
+\[
+\operatorname{tr}\!\left(E\,\mathcal T_{r,\theta}^k(\rho_0)\right)
+=h_k^{r,\theta}.
+\tag{351.9}
+\]
+
+这是一份覆盖全部 \(k\) 的单 qubit 实现。若 \(\lambda\ne1\)，则 \(\operatorname{Re}\lambda<1\)，故 \(h_1^{r,\theta}>h_0^{r,\theta}=0\)。一维 Hilbert 空间只有一个归一化态，固定 CPTP 更新与固定效果只能给常数响应，因而此时最小持续 Hilbert 维数恰为 2。若 \(\lambda=1\)，目标恒 0，一维已足够。
+
+这里需要保存的是指定终端概率，不是通过一次测量读出 \(k\)。阻尼后的连续密度态及经典连续信念分布本身，都不能代替后面的正实现容量证明。
+

@@ -1,0 +1,10 @@
+### 338.11 适用范围与来源
+
+任务批量与参考批量的比值为 $m_k/n_k\asymp J^{1/a}$。相同未决概率中的任务平滑项，对参考临界和的贡献为 $J(n_k/m_k)^a=O(1)$，对任务临界和的贡献为 $O(J)$；局部化项则由同一世界的式（338.28）共同控制。初始任务批量的临界费用也是 $O(J)$，已完整计入。
+
+构造通过联合数组使用共享任务历史，没有把第335节原指定任务行的多项式损失设成零，故不与其两正世界行下界冲突。各层的不同最坏世界也没有被当作同一实现相加。
+
+对于非整数 $\beta>2$，普通 Bernstein 平滑仅凭均值和方差不能给式（338.10）所需的 $m^{-\beta/2}$。本节没有证明高阶修正仍保持张量系数非负与相容，故不将定理338.1外推至该范围。全部结论是纸面综合推导，不认领 Lean 核验、内部计算时间矩或文献核定的原创性。
+
+[^tensor_linear_np]: Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, Annals of Applied Probability 15(1A) (2005), 93–115, [DOI](https://doi.org/10.1214/105051604000000549), [arXiv:math/0309222v5](https://arxiv.org/pdf/math/0309222v5)。本节使用 Proposition 3 与 Remarks A—C 的兼容包络、式（7）—（11）的超几何次数提升及 Lemma 4 的均值方差；两来源乘积实现已在第338.6节按原合同证明。第330节的参考包络来自 Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363, [DOI](https://doi.org/10.1007/s00365-010-9108-5), [arXiv:0808.1936v3](https://arxiv.org/pdf/0808.1936v3)。本节新增连接是共用任务网格的张量相容数组、有限层误差分配及其同世界联合预算。
+

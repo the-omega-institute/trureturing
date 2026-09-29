@@ -1,0 +1,13 @@
+**定理320.7（有限预算不相容见证）。** 若定理320.3中的预算与误差要求不可实现，则存在有限非空 \(\Gamma\subseteq\Theta\) 和整数 \(N\ge1\)，使下列有限系统不可行：
+$$
+(r,f)\in\mathcal R_N,\qquad
+m_n(\theta,S)\le K
+\quad(\theta\in\Gamma,\ S,\ 1\le n\le N),
+\tag{320.15}
+$$
+$$
+F_n(\theta,S,D)\le P_{\theta,S}(D)+\delta
+\quad(\theta\in\Gamma,\ S,\ D\subseteq\mathcal Z,\ 0\le n\le N).
+\tag{320.16}
+$$
+

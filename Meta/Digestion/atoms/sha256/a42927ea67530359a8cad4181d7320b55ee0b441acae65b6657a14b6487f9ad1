@@ -1,0 +1,13 @@
+### 11.8 同一个组合障碍的有限量子实例
+
+有限维可见/隐藏系统上，用归一 Hilbert–Schmidt 内积，$\mathsf U_tX=e^{itH}Xe^{-itH}$、$\mathscr LX=i[H,X]$，以及正交条件期望
+$\mathsf P X=e^{-1}\operatorname{Tr}_B(X)\otimes I_B$，其中 $e=\dim\mathcal H_B$。归一迹参考不变，所以定理 11.1 的全部投影恒等式与两延迟误差下界成立。每个约化 $\mathsf T_t$ 都是完全正、保幺算子，但不自动组成半群。
+
+取 $H=Z\otimes Z$、隐藏初态 $I/2$。直接计算得到
+\[
+ \mathsf T_t(X)=\cos(2t)X,\quad
+ (\mathsf T_{2h}-\mathsf T_h^2)X=-\sin^2(2h)X,
+ \quad\|\mathsf Q\mathscr L(X\otimes I)\|_{2,n}^2=4.
+\]
+重复刷新隐藏系统时，$n$ 步的因子为 $\cos(2t/n)^n\to1$；不刷新时是 $\cos2t$。这与经典热动量刷新具有同一压缩算子机制。它是有限量子系统、无限温度参考下的明确定理实例，不把量子测量记录当作经典无扰动历史，也不将一般有限温相关态的条件期望默认为正交偏迹。
+

@@ -1,0 +1,10 @@
+**推论 7.1（联合核中的无穷循环子群）。** $k\mapsto[\alpha_k]$ 给出
+
+$$
+\mathbb Z\hookrightarrow
+\frac{\ker\mathrm{Ind}\cap\ker\mathrm{DHR}}{\mathrm{FDQC}(A)}.
+\tag{QCA.26}
+$$
+
+$\Theta_A(\alpha_1)$ 也有无穷阶。
+

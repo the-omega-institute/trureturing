@@ -1,0 +1,67 @@
+### 350.6 全时域近似的实频率必要界
+
+精确分离并非只在零误差点成立。先设 \(\lambda\) 不在 \(P\) 的谱中。有限几何和恒等式给出
+
+\[
+\frac1M\sum_{k=0}^{M-1}\lambda^{-k}P^k
+=\frac1M
+\bigl(I-\lambda^{-M}P^M\bigr)
+\bigl(I-\lambda^{-1}P\bigr)^{-1}.
+\tag{350.16}
+\]
+
+随机矩阵的各次幂在复 \(\ell_\infty\) 算子范数中均为 1，所以右侧趋于零。左右乘固定 \(\alpha,b\)，得到
+
+\[
+\lim_{M\to\infty}\frac1M\sum_{k=0}^{M-1}\lambda^{-k}g_k=0.
+\tag{350.17}
+\]
+
+目标响应满足
+
+\[
+\lambda^{-k}h_k
+=\frac12\lambda^{-k}-\frac14-\frac14\lambda^{-2k}.
+\tag{350.18}
+\]
+
+由于 \(n\ge3\)，\(\lambda\ne1\) 且 \(\lambda^2\ne1\)，两个非平凡几何序列的 Cesàro 平均均趋零。因此式（350.18）的平均极限为 \(-1/4\)。若式（350.4）成立，先控制每个有限加权平均的误差，再取极限，已有 \(\varepsilon\ge1/4\)。
+
+利用误差为实数，可以保留更强的余弦权。定义
+
+\[
+m_n=\frac1n\sum_{j=0}^{n-1}
+\left|\cos\frac{2\pi j}{n}\right|>0.
+\tag{350.19}
+\]
+
+取式（350.17）—（350.18）的实部，得到
+
+\[
+\lim_{M\to\infty}\frac1M\sum_{k=0}^{M-1}
+(g_k-h_k)\cos(k\theta)=\frac14.
+\tag{350.20}
+\]
+
+另一方面，其每个有限平均的绝对值至多
+\(\varepsilon M^{-1}\sum_{k<M}|\cos(k\theta)|\)，后者趋于 \(\varepsilon m_n\)。所以
+
+\[
+\lambda\notin\sigma(P)
+\quad\Longrightarrow\quad
+\varepsilon\ge\frac1{4m_n}.
+\tag{350.21}
+\]
+
+若 \(d<n\)，单位圆引理已排除 \(\lambda\in\sigma(P)\)。因此对全部 \(n\ge3\)，
+
+\[
+d<n\quad\Longrightarrow\quad
+\sup_{k\ge0}|g_k-h_k|\ge\frac1{4m_n}.
+\tag{350.22}
+\]
+
+等价地，误差要求 \(\varepsilon<1/(4m_n)\) 时，经典最小状态数仍恰为 \(n\)，因为第350.5节的 \(n\) 态精确实现提供上界。一般情形没有在这里证明阈值 \(1/(4m_n)\) 最优，也不对其等号处作额外断言。例如 \(n=3,6\) 时 \(m_n=2/3\)，给出 \(3/8\)；\(n=4\) 时 \(m_n=1/2\)，给出 \(1/2\)。
+
+以上证明使用任意长续接的统一误差；固定有限截止的下界不能由同一个无限平均直接推出。
+

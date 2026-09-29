@@ -1,0 +1,16 @@
+**推论344.6（公共中心的尺度负部）。** 固定上述共同 \(b,m_0\)。设 \(n\ge1\)，非负 \(g\in C^\beta([0,1])\) 满足
+\[
+\|g^{(j)}\|_\infty\le A_j n^{j/2-a}
+\quad(0\le j\le r),\qquad
+[g^{(r)}]_{C^\theta}\le A_\theta,
+\tag{344.38}
+\]
+其中常数对所考虑的尺度族共同。则对 \(m\in\Lambda\)、\(m\ge n\)，
+\[
+\boxed{
+\min_i C_{m+r,i}(S_mg)
+\ge-C\left(n^{1-a}/m+m^{-a}\right).}
+\tag{344.39}
+\]
+常数可依正则阶、固定公共网格及式（344.38）的常数，不依 \(n,m\)。
+

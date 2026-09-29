@@ -1,0 +1,11 @@
+**定理320.9（费用等于有限窗口上确界）。** 对定义318.3的抽象费用、任意实 \(s>0\) 及固定 \(\delta\ge0\)，
+$$
+\boxed{
+\mathcal C_s^{\mathrm{pol}}(\delta)
+=
+\sup_{\substack{\Gamma\subseteq\Theta\text{ 有限非空}\\N\ge1}}
+\ell_\delta(\Gamma,N).}
+\tag{320.20}
+$$
+等式在扩展实数中成立。共同值有限时，一份抽象策略达到该最优值。
+

@@ -1,0 +1,13 @@
+### 12.4 固定十维测量族的上确界及阶匹配构造
+
+取 $0<\varepsilon\le1/10$，定义
+\[
+ Z_\varepsilon=9+(26+20\sqrt3)\varepsilon,
+\]
+\[
+ H_\varepsilon=Z_\varepsilon^{-1/2}
+ \big(\sqrt\varepsilon c_1,\sqrt{\sqrt3\varepsilon}c_2,
+ c_3,\sqrt{\sqrt3\varepsilon}c_4,\sqrt\varepsilon c_5\big).
+\]
+这是固定十维、最高谐波次数为五的测量族，没有随 $\varepsilon$ 增加维数或频带。
+
