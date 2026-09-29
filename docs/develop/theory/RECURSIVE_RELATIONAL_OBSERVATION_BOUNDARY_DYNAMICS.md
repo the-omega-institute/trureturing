@@ -17922,3 +17922,218 @@ $$
 这些引用限定数学依赖的范围；本节的双分量掩蔽构造、商上幂等性和具体例子没有新增 Lean 编译或内核验证。加权响应、无限载体、来源级权限关系的商化，以及物理时空解释，均不由上述确定性有限合同推出。
 
 ## 88.99 追加锚
+
+## 89. 分量核心的标量测试语义与当前核心的持续取得障碍
+
+本节给第88节的指定分量核心一份精简的标量测试语义，并与保持配置完整、只沿具名尝试运行的未来行为比较。二者的任务合同不同：前者允许在数学测试中逐槽固定其他实际边缘元素；后者只延续当前实际配置。测试值可因子化、实际操作能取得测试值及表示具有闭合更新，是三个分别需要条件的结论。
+
+### 定义 89.1（同一模型与两种载体的测试）
+
+严格沿用定义87.1、定义88.1的有限非空实际边缘 $S,D$、同源实际像 $J=j[\Omega]\subseteq S\times D$、类型 $\operatorname{type}(d)=(\operatorname{in}(d),\operatorname{out}(d))$、接续关系 $\Delta$、完整标签 $L=Y\times M\times P_{\mathrm{state}}\times H$、失败原因 $F_{\mathrm{fail}}$、拒绝原因 $R_{\mathrm{deny}}$、总响应 $\widehat T$ 及原始读出 $o:S\to O$。原来源上的每个 $U_e$ 均满足(87.8)，特别是实际成功后继仍在 $J$。可选选择器 $h:J\to D$ 是否属于合同，须在构造前固定；未声明时省去以下所有 $h$ 测试和义务。
+
+这里“有类型单孔”的类型只指 $S,D$ 两种载体排序。它不按权限、$\Delta$ 或接口类型相容性筛选代入：尝试槽遍历全部具名 $e\in D$，包括返回 $\mathsf{Deny}$ 的尝试。非孔槽固定为相应实际边缘中的任意元素；固定后的配置若不在 $J$，用掩蔽值记录，不把它补为实际配置。
+
+标量测试指只有一个输入槽的映射，每个测试各有自己的结果载体：$p:S\to A_p$ 或 $q:D\to B_q$；不要求所有测试共用数值域，也不要求其环境陪域有限。其实际像因输入载体有限而有限。对一族测试定义共同核
+
+$$
+\ker\mathcal P=\{(x,x'):\ \forall p\in\mathcal P,\ p(x)=p(x')\}.
+\tag{89.1}
+$$
+
+各结果载体中的下列分支均使用不交标记；即使某个旧测试值本身是带标记对象，也作为新标记内部的值保留。
+
+### 定义 89.2（掩蔽标量响应与有限秩语法）
+
+以 $\mathcal P_S^0=\{o\}$、$\mathcal P_D^0=\{\operatorname{type}\}$ 为种子。对 $p:S\to A_p$ 与 $q:D\to B_q$ 定义
+
+$$
+C_S[p](s,d,e)=
+\begin{cases}
+\mathsf{Outside},&(s,d)\notin J,\\
+\mathsf{Ok}(\ell,p(u)),&(s,d)\in J,\ \widehat T(s,d,e)=\mathsf{Ok}(\ell,u,v),\\
+\mathsf{Fail}(f,\ell),&(s,d)\in J,\ \widehat T(s,d,e)=\mathsf{Fail}(f,\ell),\\
+\mathsf{Deny}(r,\ell),&(s,d)\in J,\ \widehat T(s,d,e)=\mathsf{Deny}(r,\ell),
+\end{cases}
+\tag{89.2}
+$$
+
+$$
+C_D[q](s,d,e)=
+\begin{cases}
+\mathsf{Outside},&(s,d)\notin J,\\
+\mathsf{Ok}(\ell,q(v)),&(s,d)\in J,\ \widehat T(s,d,e)=\mathsf{Ok}(\ell,u,v),\\
+\mathsf{Fail}(f,\ell),&(s,d)\in J,\ \widehat T(s,d,e)=\mathsf{Fail}(f,\ell),\\
+\mathsf{Deny}(r,\ell),&(s,d)\in J,\ \widehat T(s,d,e)=\mathsf{Deny}(r,\ell).
+\end{cases}
+\tag{89.3}
+$$
+
+$\ell$ 的全部四类字段、$f$ 与 $r$ 均原样保留；域内拒绝与 $\mathsf{Outside}$ 不同。令 $\mathcal C_n$ 为全部 $C_S[p]$（$p\in\mathcal P_S^n$）和 $C_D[q]$（$q\in\mathcal P_D^n$）组成的有限索引族，按以下规则同时生成下一秩：
+
+$$
+\begin{aligned}
+\mathcal P_S^{n+1}={}&\mathcal P_S^n
+ \cup\{s\mapsto C(s,d,e): C\in\mathcal C_n,\ d,e\in D\},\\
+\mathcal P_D^{n+1}={}&\mathcal P_D^n
+ \cup\{d\mapsto C(s,d,e),\ d\mapsto C(s,e,d):
+                  C\in\mathcal C_n,\ s\in S,\ e\in D\}\\
+ &\cup\{d\mapsto\mathbf1_\Delta(d,e),\ d\mapsto\mathbf1_\Delta(e,d):e\in D\}.
+\end{aligned}
+\tag{89.4}
+$$
+
+若声明了 $h$，还对每个旧测试 $q\in\mathcal P_D^n$ 定义
+
+$$
+H[q](s,d)=
+\begin{cases}
+\mathsf{Outside},&(s,d)\notin J,\\
+\mathsf{In}(q(h(s,d))),&(s,d)\in J,
+\end{cases}
+\tag{89.5}
+$$
+
+并在(89.4)两行分别加入全部 $s\mapsto H[q](s,d)$（$d\in D$）及 $d\mapsto H[q](s,d)$（$s\in S$）。所有新测试只用上一秩测试，旧测试全部保留；因此每秩为有限族，重复测试无需强行去重。有限秩测试指这两条递归中任一有限阶段产生的测试。
+
+无需另加显式 $J$ 测试：$D$ 非空、种子族非空且一直保留，故任选固定尝试后，掩蔽响应是否为 $\mathsf{Outside}$ 就给出域真值。此语法不添加原始身份测试，也不调用旧签名的整体读数 oracle；指定种子本身是否分离原始元素由 $o,\operatorname{type}$ 决定。它不赋予复制、重置、重新准备或分量重组的执行原语。这里给出的是约去冗余域坐标后的统一充分模式，不声称每个具体模型都需要其中每一项原语。
+
+### 定理 89.3（标量共同核恰为同步核）
+
+对每个 $n\ge0$，测试族与式(88.3)使用相同种子、相同实际模型及相同选择器约定时，同时有
+
+$$
+\ker\mathcal P_S^n=R_n,\qquad
+\ker\mathcal P_D^n=E_n.
+\tag{89.6}
+$$
+
+因此取定理88.4的首个同时稳定指标 $N$，秩 $N$ 的两个有限测试族已分别刻画所有有限秩测试的共同核，且 $N$ 满足原界(88.6)。每个有限秩测试都通过对应的秩 $N$ 测试值元组的实际像因子化。
+
+证明。对 $n$ 同时归纳。零秩正是两种种子核。假设结论在 $n$ 成立。比较任意两组三槽输入时，全部 $\mathcal C_n$ 值相等，恰好等于 $V_n$ 值相等：$\mathsf{Outside}$ 与域内分支不交；域内所有测试均保完整响应头，即分支、$\ell$ 及适用的原因。成功时，全部状态旧测试相等恰恢复 $a_n(u)=a_n(u')$，全部事件旧测试相等恰恢复 $b_n(v)=b_n(v')$，这正是 $V_n$ 的两个旧后继签名相等。反向由同一个 $V_n$ 值立即得到每个标量响应相等。种子族非空使响应头和域外标记始终被检测，即使某侧旧测试全是常值也如此。
+
+固定非孔槽后，(89.4)的状态测试遂恰恢复 $a_{n+1}$ 中所有 $V_n$ 坐标；保留旧测试恰恢复旧状态签名。固定任一 $e\in D$，$C_S[o](s,d,e)$ 的外部标记还恢复每个 $\mathbf1_J(s,d)$，故(88.3)中额外写出的域行不再增加核条件。事件侧同理恢复域列；当前事件和尝试事件两个槽分别恢复 $V_n(s,d,e)$ 与 $V_n(s,e,d)$ 两组坐标，$\Delta$ 的两个方向也逐项一致。若有 $h$，全部 $H[q]$ 相等恰恢复 $H_n$ 相等，状态和当前事件两个截面恰对应原有选择器坐标。于是得到下一秩的两个等式。
+
+再用定理88.4的永久同时稳定：低于 $N$ 的测试已保留在第 $N$ 族中，高于 $N$ 的族与它同核，故全部有限秩测试都在该核上常值。实际像因子化给末项；不需另证一条通用最小化定理。证毕。
+
+两个事件槽承担不同的替换义务，统一模式不能只留其中一个：第88.8节的模型只通过尝试槽传播事件区别，本节下述命题89.6则只通过当前事件槽产生首次事件分裂。个别模型可有冗余，不能由此删掉一般合同的槽位。秩计算递归测试的构造层数；它既不是一条实际执行的步数，也不是取得、存储或求值成本。
+
+### 89.4 任意联合记忆所需保存的测试
+
+令 $\pi_S:J\to S$、$\pi_D:J\to D$ 为两投影，把秩 $N$ 测试提升为同一实际来源上的族
+
+$$
+\mathcal L_N=
+ \{p\circ\pi_S:p\in\mathcal P_S^N\}
+ \cup\{q\circ\pi_D:q\in\mathcal P_D^N\}.
+\tag{89.7}
+$$
+
+定理89.3与(88.9)给出 $\ker\mathcal L_N=\ker\kappa$。因此，对于任意联合记忆 $m:J\to M$，不要求它分解为两个分量编码，已有的有效像因子化判据在此恰给
+
+$$
+\begin{aligned}
+&\text{每个 }t\in\mathcal L_N\text{ 均通过 }m[J]\text{ 因子化}\\
+\iff{}&\ker m\subseteq\ker\kappa\\
+\iff{}&\exists!\rho:m[J]\to Q,\quad\rho\circ m=\kappa.
+\end{aligned}
+\tag{89.8}
+$$
+
+其中最后的 $\rho$ 自动满射。理由是逐测试因子化恰说同一 $m$ 值给同一测试值；取共同核得中间项。按 $\rho(m(x))=\kappa(x)$ 定义时，核包含保证代表无关；$m[J]$ 与 $Q=\kappa[J]$ 保证唯一性及满射。这是在指定测试任务下直接使用既有判据，不把第88.5节的分量最小性扩大为任意任务的联合记忆最小性。
+
+(89.8)只保证从已有 $m$ 恢复 $Q$。若 $m$ 比核心更细，其额外区别未必在成功后继上闭合，也未必允许以同一个尝试类 $D^\#$ 为输入。因此不能仅从恢复器制造 $m$ 自身的正确更新；仍须检查第88.7节的完整执行器交换条件，即把(88.17)中的 $r_i,F_i$ 换为 $m,F_m$。即使全部标量测试在数学上有定义，也尚未给出从未知当前配置实际取得它们的操作。
+
+### 定义 89.5（保持配置完整的普通未来行为及比较）
+
+本项比较固定不含选择器的合同。令 $\rho_0(s,d)=(o(s),\operatorname{type}(d))$。对实际 $x=(s,d)\in J$ 和每个原始具名词 $w\in D^*$，定义记录 $W(x,w)$，其中 $\mathsf{Obs},\mathsf{Ok},\mathsf{Fail},\mathsf{Deny}$ 是不交可见标记，方括号为有限序列：
+
+$$
+\begin{aligned}
+W(x,\varepsilon)&=[\mathsf{Obs}(\rho_0(x))],\\
+W(x,ew)&=
+\begin{cases}
+[\mathsf{Obs}(\rho_0(x)),\mathsf{Ok}(\ell)]\cdot W(y,w),
+ &T_J(x,e)=\mathsf{Ok}(\ell,y),\\
+[\mathsf{Obs}(\rho_0(x)),\mathsf{Fail}(f,\ell)],
+ &T_J(x,e)=\mathsf{Fail}(f,\ell),\\
+[\mathsf{Obs}(\rho_0(x)),\mathsf{Deny}(r,\ell)],
+ &T_J(x,e)=\mathsf{Deny}(r,\ell),
+\end{cases}\\
+B(x)&=(W(x,w))_{w\in D^*}.
+\end{aligned}
+\tag{89.9}
+$$
+
+所以 $B$ 保留根观察、全部具名尝试的完整标签与原因、每次成功后的根观察，并在失败或拒绝时停止。它不直接读取原始后继身份，不提供 $J,\Delta$ 检查器，也不提供分量路由、替换、重置或重新准备。全部词作为数学索引，不表示同一未知配置的所有反事实分支可同时执行。
+
+由第88.5节的下降与种子保持，对词长归纳即有
+
+$$
+\ker\kappa\subseteq\ker B,\qquad
+\psi:Q\twoheadrightarrow B[J],\quad\psi(\kappa(x))=B(x).
+\tag{89.10}
+$$
+
+具体地，核心相同给相同根观察；同一个原始尝试 $e$ 有同一个 $q_D(e)$，所以一步下降给相同完整响应头。失败或拒绝同时停止；成功后继仍实际且核心相同，归纳继续。有效像判据遂给唯一满射 $\psi$。它是双射，当且仅当 $\ker\kappa=\ker B$；结合(89.7)，这又当且仅当全部提升的有限秩标量测试在 $B$ 纤维上常值，等价地只检查有限族 $\mathcal L_N$ 即可。这里比较的是两份指定任务，不断言普通运行总需要较大的分量核心。
+
+### 命题 89.6（四点核心、三类未来与持续的当前核心歧义）
+
+取 $S=\{0,1\}$、$D=\{a,b\}$、$J=S\times D$、$\Delta=D\times D$，只有一种接口类型，$o(s)=s$，不声明选择器。固定一个完整标签 $\ell_0$，令
+
+$$
+\widehat T(s,d,e)=\mathsf{Ok}(\ell_0,f_d(s),d),\qquad
+f_a(s)=s,\quad f_b(s)=1\quad(e\in\{a,b\}).
+\tag{89.11}
+$$
+
+尝试名 $e$ 遍历两者，但不再影响响应。下表给出全部八个响应；每格都保留完整的同一个 $\ell_0$。
+
+| 89.6 当前配置 | 尝试 $a$ 的响应 | 尝试 $b$ 的响应 |
+| --- | --- | --- |
+| 89.6a：$(0,a)$ | $\mathsf{Ok}(\ell_0,0,a)$ | $\mathsf{Ok}(\ell_0,0,a)$ |
+| 89.6b：$(0,b)$ | $\mathsf{Ok}(\ell_0,1,b)$ | $\mathsf{Ok}(\ell_0,1,b)$ |
+| 89.6c：$(1,a)$ | $\mathsf{Ok}(\ell_0,1,a)$ | $\mathsf{Ok}(\ell_0,1,a)$ |
+| 89.6d：$(1,b)$ | $\mathsf{Ok}(\ell_0,1,b)$ | $\mathsf{Ok}(\ell_0,1,b)$ |
+
+取 $\Omega=J$、$j=\operatorname{id}$，并令 $U_e$ 为 $(s,d)\mapsto(f_d(s),d)$ 的图。每个后继都在 $J$，且这个后继自身就是(87.8)要求的来源见证，所以全部原来源成功条件成立。
+
+按 $S$ 的次序 $0,1$ 和 $D$ 的次序 $a,b$，用首次出现编号表示分区，则分量迭代为
+
+$$
+(01,00)\longrightarrow(01,01)\longrightarrow(01,01),\qquad |Q|=4.
+\tag{89.12}
+$$
+
+普通联合配置则按 $(0,a),(0,b),(1,a),(1,b)$ 排序；从根读出出发，逐轮保留旧类及每个具名尝试的完整响应头和后继旧类，得到
+
+$$
+0011\longrightarrow0122\longrightarrow0122,\qquad |B[J]|=3.
+\tag{89.13}
+$$
+
+证明。$o$ 已分开两个状态。事件种子只有一类，但固定状态 $0$、尝试 $a$ 后，当前事件为 $a,b$ 的下一状态读数分别为 $0,1$，故第一轮分开事件；两侧至此离散，之后稳定。联合根读出先只区分状态。一步成功使 $(0,a)$ 仍读 $0$，$(0,b)$ 改读 $1$，故它们分裂；$(1,a),(1,b)$ 对每个尝试都各自自环，完整标签和观察始终相同。前两配置与后二者由根观察分开，前两者由一步观察分开，后二者由词长归纳始终不分，故恰有三类。
+
+再取任何确定性自适应协议：初始保留记录与控制器相同，只能读取(89.9)中的实际观察与响应，根据已获记录选择下一个具名 $a,b$ 或停止，并按共同确定规则更新记录与控制器。从 $(1,a)$ 与 $(1,b)$ 开始，初始观察相同；若某阶段记录相同，下一选择及停止决定相同。执行任一尝试都返回相同 $\ell_0$、相同新观察，且两配置分别保持原来的自环，故新记录仍相同。按阶段归纳，任意有限阶段的选择、转录和停止均相同。若协议在某阶段输出当前核心，两个执行只能给同一输出，但其实际当前核心一直不同，因而不能在二者上都精确；继续尝试不会消除这份歧义。此结论不要求控制器记忆有限。
+
+语义测试
+
+$$
+d\longmapsto C_S[o](0,d,a),\qquad
+a\longmapsto\mathsf{Ok}(\ell_0,0),\quad
+b\longmapsto\mathsf{Ok}(\ell_0,1)
+\tag{89.14}
+$$
+
+确能区分事件。然而要把它用于未知的当前事件，须保留那个事件并把它与状态 $0$ 重组；在原完整配置上选择具名尝试 $a$ 或 $b$ 并不执行这种重组。即使 $J$ 是全乘积，关系上存在 $(0,d)$ 也不提供从 $(1,d)$ 取得它的操作。两种当前核心在所有已获相同记录之后仍不同，所以障碍是持续取得当前核心的不足，不能解释为只丢失了某段初始历史。证毕。
+
+### 89.7 四表达的回接与数学归属
+
+对空间、时间、边界和记忆的同源读数 $r_i:J\to X_i$，恢复本节指定核心要求 $\ker r_i\subseteq\ker\kappa$，等价于各自保存(89.7)全部测试；恰好表达这个核心则要求第88.7节的 $\ker r_i=\ker\kappa$。后者给实际像之间唯一互恢复映射，动态共轭仍用(88.16)，外加执行器仍须(88.17)。四者只有静态互恢复，可以共同合并命题89.6中的两个当前核心；它也不说明运行中已取得那些读数。由两生成叶 $\alpha,\beta$ 产生对象，并不额外提供对未知当前分量的分解或重组操作。
+
+本节是第87—88节模型上的 repo-derived 普通理论推导，无原创性主张。其单孔机制的既有归属是 [StrictOneHoleContexts.contextual_equivalence_is_greatest](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean)：该声明在单一载体 $X$ 上，使用任意符号族的有限元数部分操作 $(\operatorname{Fin}(\operatorname{arity}(f))\to X)\to\operatorname{Option}(X)$，每个孔的其余槽允许全部 $X$ 参数，严格传播未定义值；结论是所有单孔上下文观察的等价关系为读出核以下的最大强同余。它不要求 $X$ 有限，但没有直接陈述本节两种排序、多个标量结果载体及完整标签的掩蔽构造；式(89.6)的桥接由这里的同时归纳承担，该排序带标记实例未作 Lean 编译。
+
+[EffectiveImageKernelCriterion.refinement_iff_kernel_inclusion_on_effective_images](../../../D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean)对同一实际来源上的任意两个读数，给核包含与两个有效像间唯一因子的等价；无需有限性，也无需读数满射到原环境陪域。式(89.8)、(89.10)直接复用这一因子化机制，满射性来自目标取实际像。[ControlledSignatureStabilization.controlled_signature_algorithm_correctness](../../../D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.lean)只作固定动作背景：它使用 $\mathrm{update}:U\to Y\to Y$、$\mathrm{readout}:Y\to O$，要求 $Y$ 有限可枚举、$U,O$ 有限、三者非空及读出满射；它不提供两分量同时取商的证明。本节有限秩结论直接采用定理88.4，而未改写该固定动作定理的适用范围。
+
+前述访问限制、全部非孔参数及同源组合条件，分别接续 [Process Geometry 的定理3.4—3.6](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)；测试纤维常值与完整响应的比较接续该卷命题45.2至推论45.5；生成与四表达的区分接续该卷第52节，并以第88.7节的指定核心及执行器条件为准。这里没有从有限测试语义推出操作权限、物理取得方法、容量或通信界，也没有把普通证明或有限例子计作新增内核结果。
+
+## 89.99 追加锚
