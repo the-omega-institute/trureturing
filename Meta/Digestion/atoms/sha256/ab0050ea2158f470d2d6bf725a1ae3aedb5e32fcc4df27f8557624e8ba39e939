@@ -1,0 +1,24 @@
+**定理 92.1（精确双状态事件递推）。** 令
+
+$$
+\mathcal Z(x)=\sqrt x\log x\,\Phi(x),\qquad
+ e(x)=\frac{\Psi(x)-x}{\sqrt x}.
+$$
+
+对连续素数幂事件 $1<a<b=p^k$，取右连续状态，并置
+
+$$
+\sigma=\sqrt{a/b},\quad
+\rho=\sqrt{b/a}\frac{\log b}{\log a},\quad
+K_0=\sqrt b\log b\log\frac{\log b}{\log a}-\frac{b-a}{\sqrt b}.
+$$
+
+则
+
+$$
+\begin{aligned}
+e(b)&=\sigma e(a)+\frac{\log p-(b-a)}{\sqrt b},\\
+\mathcal Z(b)&=\rho\mathcal Z(a)+(\sigma-\rho)e(a)+K_0.
+\end{aligned}
+$$
+

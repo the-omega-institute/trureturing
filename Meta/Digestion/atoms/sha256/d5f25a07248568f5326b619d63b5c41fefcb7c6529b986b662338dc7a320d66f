@@ -1,0 +1,21 @@
+**定理 96.2（条件 Gibbs 律、KL 与结合 cocycle）。** 在 $A$ 的约数上取 $\mu_A(u)=1/(uZ(A))$，类似定义 $\mu_B$，并令 $P=\mu_A\otimes\mu_B$。则
+
+$$
+P(\Gamma_{A,B})=\frac{Z(AB)}{Z(A)Z(B)},\qquad
+I(A,B)=\log\frac{Z(A)Z(B)}{Z(AB)}\ge0.
+$$
+
+条件律 $\nu=P(\cdot\mid\Gamma_{A,B})$ 经乘法推前恰为 $\mu_{AB}$，并且
+
+$$
+D_{\mathrm{KL}}(\nu\Vert P)=I(A,B),\qquad
+I(A,B)=0\Longleftrightarrow\gcd(A,B)=1.
+$$
+
+写 $W=\log Z$，则对第三个正整数 $C$，
+
+$$
+I(A,B)+I(AB,C)=I(B,C)+I(A,BC)
+=W(A)+W(B)+W(C)-W(ABC).
+$$
+
