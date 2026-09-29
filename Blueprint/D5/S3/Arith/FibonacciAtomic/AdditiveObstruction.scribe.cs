@@ -1,0 +1,91 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
+
+internal sealed class AdditiveObstructionDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/AdditiveObstruction.";
+
+    private static ScribeNode Entry(
+        string id, string declaration, string heading, string prose, DescribeRole role) =>
+        Describe.Lean(
+            DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + declaration),
+            H(heading),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))),
+            role);
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite additive joint readouts have a complete descent obstruction and an exact image-size record cost.",
+        H("Additive joint descent obstruction"),
+        Blocks(
+            Entry("left-readout", "leftReadout", "Left readout",
+                "The homomorphism alpha is applied to the first coordinate of every source element.",
+                DescribeRole.Definition),
+            Entry("right-readout", "rightReadout", "Right readout",
+                "The homomorphism beta is applied to the second coordinate of every source element.",
+                DescribeRole.Definition),
+            Entry("left-coordinate", "leftCoordinate", "First coordinate",
+                "The first-coordinate projection is restricted to the source subgroup.",
+                DescribeRole.Definition),
+            Entry("right-coordinate", "rightCoordinate", "Second coordinate",
+                "The second-coordinate projection is restricted to the source subgroup.",
+                DescribeRole.Definition),
+            Entry("joint-readout", "jointReadout", "Joint readout",
+                "The joint readout pairs the two additive component readouts.",
+                DescribeRole.Definition),
+            Entry("joint-kernel", "jointKernel", "Joint kernel",
+                "The joint kernel consists of source elements whose two readout values vanish.",
+                DescribeRole.Definition),
+            Entry("left-kernel", "leftKernel", "Left single-side kernel",
+                "The left kernel is the joint kernel with zero second coordinate.",
+                DescribeRole.Definition),
+            Entry("right-kernel", "rightKernel", "Right single-side kernel",
+                "The right kernel is the joint kernel with zero first coordinate.",
+                DescribeRole.Definition),
+            Entry("left-obstruction-kernel", "leftObstructionKernel", "Left obstruction subgroup",
+                "The left single-side kernel is viewed as a subgroup of the joint kernel.",
+                DescribeRole.Definition),
+            Entry("right-obstruction-kernel", "rightObstructionKernel", "Right obstruction subgroup",
+                "The right single-side kernel is viewed as a subgroup of the joint kernel.",
+                DescribeRole.Definition),
+            Entry("obstruction", "obstruction", "Descent obstruction",
+                "The obstruction is the additive quotient of the joint kernel by the sum of the two single-side kernels.",
+                DescribeRole.Definition),
+            Entry("vanishes-on", "vanishesOn", "Vanishing on a subgroup",
+                "A homomorphism vanishes on a subgroup when every element of that subgroup is sent to zero.",
+                DescribeRole.Definition),
+            Entry("left-sufficient", "leftSufficient", "Left single-side sufficiency",
+                "The task is unchanged whenever the second source coordinate and the left readout agree.",
+                DescribeRole.Definition),
+            Entry("right-sufficient", "rightSufficient", "Right single-side sufficiency",
+                "The task is unchanged whenever the first source coordinate and the right readout agree.",
+                DescribeRole.Definition),
+            Entry("jointly-sufficient", "jointlySufficient", "Joint sufficiency",
+                "The task is constant on every fibre of the joint readout.",
+                DescribeRole.Definition),
+            Entry("restricted-task", "restrictedTask", "Restricted task",
+                "The task restricted to the joint kernel is an additive homomorphism into the target.",
+                DescribeRole.Definition),
+            Entry("descended-task", "descendedTask", "Descended task",
+                "When both single-side kernels are killed, the restricted task descends to the obstruction quotient.",
+                DescribeRole.Definition),
+            Entry("record-capacity", "recordCapacity", "Record capacity",
+                "The record capacity is the cardinality of the image of the descended task.",
+                DescribeRole.Definition),
+            Entry("additive-obstruction-complete", "additive_obstruction_complete",
+                "Complete additive obstruction theorem",
+                "Each single-side sufficiency condition is equivalent to vanishing on its kernel. Under both conditions, joint sufficiency is equivalent to the descended task being zero, and the least record alphabet has cardinality equal to the image of the descended task, equivalently the image of the restricted task.",
+                DescribeRole.Theorem),
+            Entry("obstruction-zero-all-tasks", "obstruction_zero_iff_all_tasks_jointly_descend",
+                "Zero obstruction criterion",
+                "The obstruction quotient is subsingleton exactly when every obstruction-valued additive task that vanishes on both single-side subgroups is zero. If the quotient is nontrivial, its quotient map supplies a single-side-feasible task that fails joint descent.",
+                DescribeRole.Theorem),
+            Entry("obstruction-nontrivial-failed-task", "obstruction_nontrivial_has_feasible_failed_task",
+                "Nontrivial obstruction witness",
+                "When the obstruction quotient is nontrivial, its quotient map is an additive task that vanishes on both single-side obstruction subgroups but does not vanish on the whole joint kernel.",
+                DescribeRole.Theorem)),
+        []));
+}
