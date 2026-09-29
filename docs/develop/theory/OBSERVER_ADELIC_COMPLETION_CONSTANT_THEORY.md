@@ -199074,3 +199074,22 @@ $$
 可将 $[L_m,L_n]-(m-n)L_{m+n}$ 先证为与所有 $a_r$ 对易，利用多项式 Fock 模的标量交换子性质化为标量算子；$L_0$ 权重排除 $m+n\ne0$ 的标量，剩余义务是在真空上对**每个** $m\in\mathbb Z$ 计算 $[L_m,L_{-m}]\mathbf1$ 的系数 $(m^3-m)/12$。单独核验 $m=2$ 所得 $1/2$，或只证明非对角情形，都不足以回答式 (2145.1) 的全称断言。秩一 Heisenberg 共形结构及中心荷 $c=1$ 的文献背景见 [Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；正规序与 Virasoro 约定见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。[Kytölä, VirasoroProject, 固定提交 `5ff4245`, `Sugawara.lean`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) 是 Lean 实现参考，不能代替本仓工具链下对上述具体算子的核验。
 
 即使式 (2145.1) 全部成立，它仍只履行问题 2143.7 的反常一部分：全态的态场映射、局域性与 OPE、满足融合定理假设的 $U$ 及其典范模变换，以及与 Monster 根空间和完整边界 CFT 的接口，仍须分别构造和验证。
+
+**定理 2145.2（多项式 Fock 态的正规序支撑界）。** 沿用问题 2145.1 的模式约定。对 $v\in F_{\mathbb C}$，令 $B(v)=\max\operatorname{vars}(v)$，空变量集时取 $B(v)=0$，并令 $N(v)=B(v)+2$。若 $:a_{n-r}a_r:$ 按较大模式在右的正规序作用于 $v$，则对每个 $n\in\mathbb Z$，
+
+$$
+\operatorname{supp}\bigl(r\mapsto :a_{n-r}a_r:v\bigr)
+\subseteq \bigl(n-N(v),N(v)\bigr)\cap\mathbb Z.
+\tag{2145.2}
+$$
+
+复 Heisenberg 真空表示的模式背景见 [Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；一般局部截断与 Sugawara 正规序形式化参见 [Kytölä, `Sugawara.lean`, 固定提交 `5ff4245`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。式 (2145.2) 给出本节具体多项式模型的显式逐态界。
+
+**定理 2145.3（Sugawara 有限截断的一致性）。** 沿用定理 2145.2 的记号，若整数 $a\leq n-N(v)$ 且 $b\geq N(v)$，则问题 2145.1 的逐态和满足
+
+$$
+L_nv=\frac12\sum_{r=a}^{b}:a_{n-r}a_r:v.
+\tag{2145.3}
+$$
+
+这个结论只核验问题 2145.1 的有限和与截断一致性；$[L_m,a_r]$、完整中心项、全态态场和局域性仍是独立义务。正规序约定和一般 Sugawara 背景仍见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md) 与 [Kytölä, `Sugawara.lean`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。
