@@ -29,6 +29,11 @@ uses a retained mixed original to repair a moved parent across both
 ternary roots. At H3=1 it sharpens the total105-multiple bound from45
 to44 without restricting the other heights or the support size.
 
+[Section19](#19-actual-star-roots-and-a-guarded-square-parent-repair)
+uses the actual3q root to repair a movedq^2 parent. Under the same
+whole-family H3=1 condition it sharpens the3q^2-multiple bound to
+4q^2-6q-5 and retains stronger root-specific constraints.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -2505,3 +2510,176 @@ CR8. The new result is a stronger necessary original-inventory condition
 and its exact phase-dependent refinement. It preserves arbitrary
 nonternary heights and arbitrary finite support, with the explicit
 whole-family H3=1 and global extremality hypotheses.
+
+## 19. Actual star roots and a guarded square-parent repair
+
+Fix the same ONE hypothetical distinct odd whole cover globally minimizing
+class count and then modulus sum, with whole-family H3=1. For a prime
+q>=5 put h=3q^2 and let N count all original multiples of h. Nonternary
+heights and finite support size remain unrestricted. The total bound is
+
+    N<=4q^2-6q-5.                                   (SQ1)
+
+This improves PI3 by two: 67 becomes65 at q5, 151 becomes149 at q7,
+and415 becomes413 at q11. The original roots of3q and3q^2 also give
+stronger root-specific constraints below. These are ordinary proofs and
+finite controls, not new Lean verification or a noncoverage theorem.
+
+### The exact proper-divisor cells retain actual star roots
+
+If N=0, SQ1 is immediate. Otherwise divisor closure supplies the actual
+originals3,q,q^2,3q,h. Normalize the pure3 andq phases to zero by ONE
+CRT translation. Write b modq^2 for the original pureq^2 phase,
+(r,u) for the original3q phase modulo(3,q), and s for the originalh
+root modulo3. Let delta=1 when b modq=u, and0 otherwise.
+Comparable disjointness gives b modq!=0, u!=0 and r,s in{1,2}.
+The pureq^2 original has no ternary root; s denotes the different
+original3q^2 label.
+
+After the pure3 andq exclusions, each remaining root has q(q-1)
+q^2 cells. Originalq^2 removes cellb on both roots. Original3q
+removes q cells on rootr, overlapping the already removed cell exactly
+when delta=1. Hence the allowed h-phase count on roott is exactly
+
+    M_t=q(q-1)-1-(q-delta)*1_(t=r).                 (SQ2)
+
+PI3's existing three-label single-phase repair limits each h-phase
+to two original occupants. The originalh phase is allowed and has
+exactly one occupant by comparable disjointness. For the original
+h-multiple count N_t on roott, put R_q=2q(q-1)-2,
+y_t=1_(t=r), z_t=1_(t=s). Then
+
+    N_t<=2M_t-z_t,
+    N_t+2(q-delta)y_t+z_t<=R_q,
+    N_t+2(q-1)y_t+z_t<=R_q.                         (SQ3)
+
+These indicators refer to actual original star roots, not artificial
+beta partition membership. Since y_1+y_2=z_1+z_2=1, summing gives
+
+    N<=4q^2-6q-5+2delta.                            (SQ4)
+
+Thus the unguarded delta=0 branch already proves SQ1. The safe root
+ceilings from SQ3 are:
+
+| q | R_q | Stars3q and3q^2 on the same root: that root / other | Stars on different roots:3q root /3q^2 root |
+| ---: | ---: | ---: | ---: |
+|5|38|29 / 38|30 / 37|
+|7|82|69 / 82|70 / 81|
+|11|218|197 / 218|198 / 217|
+
+When delta=0, subtract a further two from the entry for the3q root.
+These are simultaneous necessary ceilings, not separately attainable
+maxima or a whole-cover construction.
+
+### A guarded old square class can be moved after complete repair
+
+Assume delta=1. Retained original3 covers the old A_(q^2) on root0,
+and retained original3q covers it on rootr. Let t be the other nonzero
+root. Choose its three different lifts rho_0,rho_1,rho_2 modulo9.
+By CRT insert the three classes
+
+    label9:    x=rho_0 mod9;
+    label9q:   x=rho_1 mod9, x=b modq;
+    label9q^2: x=rho_2 mod9, x=b modq^2.
+
+Every point of the ENTIRE old q^2 class on roott is covered by its
+corresponding lift. Higher q digits and all other coordinates are
+free. Thus these three classes together with retained3 and3q repair
+the full old parent, including joint liability rather than only its
+private points.
+
+Choose any targetc moduloq^2. Move originalq^2 to that target and
+delete all originalh-multiples whose q^2 phase isc, across both
+nonzero ternary roots. Each deleted class lies in the new parent.
+The deleted set contains neither the moved numericalq^2 label nor
+the retained3 and3q guards. Every other original stays. Consequently
+the whole old covered union is contained in the new covered union.
+
+All three inserted numerical labels are distinct odd nonunits,
+globally fresh because their ternary height is two. Four or more
+deletions strictly reduce class count. Three deletions tie the count
+but strictly reduce modulus sum: three distinct odd multiples ofh
+have total at least h(1+3+5)=9h, while
+
+    9+9q+9q^2=9(1+q+q^2)<27q^2=9h.
+
+The moved numericalq^2 label cancels in the sum comparison. Global
+extremality is among all distinct odd covers; it does not prohibit
+using a replacement of ternary height two. We conclude that
+
+    #{d original:h|d, a_d=c modq^2}<=2, for everyc.  (SQ5)
+
+This is ONE repair coupling both roots, with no reuse of its fresh
+labels by separate repairs. At c=b the count is zero already, by
+comparable disjointness with originalq^2. Occupied projections avoid
+q-residue0 and cellb, leaving q(q-1)-1 choices. Therefore
+
+    delta=1 ==> N<=2(q(q-1)-1)=R_q.                 (SQ6)
+
+For q>=5, (4q^2-6q-5)-R_q=2q(q-2)-3>0. Combining SQ6 with the
+unguarded SQ4 proves SQ1, using an exhaustive split on the actual
+old phases.
+
+### Mixed-label consumers must also pay the square stars
+
+Let X_t count originalh-multiples with at least two distinct
+nonternary support primes, and let P_t count actual originals3q^e
+with e>=2 on roott. Because H3=1, N_t=X_t+P_t. The safe root cut is
+
+    X_t+P_t+2(q-1)y_t+z_t<=R_q.                     (SQ7)
+
+The original3q^2 is counted once in P_s; the additional z_s accounts
+for that phase's missing second occupant, so it is a separate term.
+Using only P_t>=z_t gives the weaker X_t+2(q-1)y_t+2z_t<=R_q.
+All actual higher stars should remain in P_t. A height upper bound
+alone does not force their existence; divisors of a present label do.
+The corresponding totals are
+
+    X_1+X_2+P_1+P_2<=4q^2-6q-5,
+    delta=1 ==> X_1+X_2+P_1+P_2<=R_q.              (SQ8)
+
+Any nonempty inventory contains3q^2. Thus its mixed portion alone
+has at most4q^2-6q-6 labels, giving64,148,412 at q5,7,11, before
+subtracting any further forced stars. SQ7 and the first line of SQ8
+are independent of beta and can be imposed on the fixed numerical/root
+selection set of [Report528](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md#joint-pair-square-and-divisor-constraints-still-leave-a-negative-comparison).
+The guarded line requires actual delta data or a justified disjunctive
+relaxation; it cannot be selected from an artificial partition.
+
+### Effect on the existing witness and finite controls
+
+Report528's2206-label numerical witness explicitly assigns the5-stars
+to root1 and every other star to root2. Its complete square inventories
+including stars are38/2,7/82,10/218 at q5,7,11. The root containing
+both3q and3q^2 must instead have at most29,69,197 by SQ3. Hence the
+given root assignment violates all three constraints. Its totals
+40,89,228 also exceed the guarded caps38,82,218: an actual family with
+those totals would have delta=0 and root caps27,67,195.
+
+This does not revise the earlier witness's conclusion for the explicitly
+weaker uniform FC26 constraints. It shows why keeping the star roots
+enables a stronger rejection. It does not prove positivity of the new
+optimization or exclude reassigning the same numerical labels to other
+roots. Unrestricted Erdős#7 remains unresolved.
+
+The [phase checker](../../../frontier/cover-geometry/composite-parent-contraction/square_guarded_repair.py)
+and [exact result](../../../frontier/cover-geometry/composite-parent-contraction/square_guarded_repair.json)
+enumerate normalized proper-original phases at q5,7, count allowed
+h-phases directly as integer residues, and check SQ2--SQ4 for every
+allowed own-h phase. They check the whole old-parent repair and every
+target projection on period9q^2, including both complete targeth-cells.
+These cells contain any deleted originals regardless of their additional
+factors and depths. They also check label distinctness and the strict
+modulus-sum comparison.
+
+| q | Proper phase assignments | Guarded assignments | Own-h phase choices | Full-liability target checks | Period |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+|5|160|40|5320|1000|225|
+|7|504|84|37884|4116|441|
+
+The finite controls do not enumerate covers or replace the general
+proof. With Python3.10+ and only the standard library, run
+
+```sh
+python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/composite-parent-contraction/square_guarded_repair.py --output /tmp/square_guarded_repair.json
+```

@@ -683,6 +683,28 @@ directory scan or external package is used.
 python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_inventory_witness.py --input docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_inventory_witness_input.json
 ```
 
+### Actual star roots impose a stronger constraint than FC26
+
+[Report385 SQ1--SQ8](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#19-actual-star-roots-and-a-guarded-square-parent-repair)
+sharpen the uniform square total to4q^2-6q-5. More decisively, if y_t
+indicates the actual3q root and z_t the actual3q^2 root, then
+
+    mixed_square_count_t + square_star_count_t
+      +2(q-1)y_t+z_t<=2q(q-1)-2.                    (FC29)
+
+Every indicator and counted original belongs to the same hypothetical
+globally extremal family with H3=1. These actual root variables can be
+retained in a beta-independent feasible set; the artificial partition
+A does not supply their values.
+
+The2206-label witness explicitly specifies the stars. Its complete
+square counts on the root containing both3q and3q^2 are38,82,218 at
+q5,7,11, while FC29 allows at most29,69,197. Its displayed root
+assignment therefore fails the strengthened model. The earlier
+FC26--FC28 obstruction remains valid for its declared uniform-capacity
+contract. No positive comparison for the stronger model, or exclusion
+of all other root assignments, is established by rejecting one witness.
+
 ## Whole-family height one permits a smaller common query interface
 
 The all-depth query in(FC13) permits later originals with arbitrary ternary
