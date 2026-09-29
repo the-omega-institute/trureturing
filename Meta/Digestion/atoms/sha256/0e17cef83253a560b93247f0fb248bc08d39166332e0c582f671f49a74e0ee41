@@ -1,0 +1,27 @@
+**命题 141.1（完整剩余时间切面）。** 在式 (141.1) 的来源族，观察 $Y_d(t)=N_d(t)\bmod H$，含 $Y_0=0$。令
+
+$$
+g_d=\gcd(H,F_d),\qquad M_d=H/g_d.
+$$
+
+则 $Y_d(t)=F_dt\bmod H$，且
+
+$$
+Y_d(t)=Y_d(u)\quad\Longleftrightarrow\quad t\equiv u\pmod {M_d}. \tag{141.2}
+$$
+
+对预先固定的有限时间集合 $D$，同时观察全部 $Y_d$ 的纤维为模
+
+$$
+M_D=\mathop{\mathrm{lcm}}_{d\in D}M_d
+=\frac H{\gcd(H,(F_d)_{d\in D})} \tag{141.3}
+$$
+
+的剩余类；空 $D$ 取分母 $H$、$M_D=1$。特别地 $M_{\{d,e\}}=H/\gcd(H,F_{\gcd(d,e)})$。
+
+**证明。** 数量公式消去 $6H,9H$ 后给 $Y_d$。写 $H=g_dM_d,F_d=g_dc_d$，有 $\gcd(c_d,M_d)=1$；$H\mid F_d(t-u)$ 当且仅当 $M_d\mid t-u$。多个同余取交即 lcm；逐素数比较赋值得第二式，再用 Fibonacci 强整除律得双时刻式。$d=0$ 时 $g_0=H$，观察恒定，也符合公式。$\square$
+
+这使用标准 gcd 消去（Mathlib `Nat.ModEq.cancel_left_div_gcd` 及整数版本），并没有新造消去定理。固定多时刻的公式不能直接替代依赖此前读数选择时刻的自适应合同。
+
+三种读数必须区分：上述读数是 **完整模 $H$ 剩余**；若读取整数 $N_d$，在 $d\ge1$ 时 $F_d>0$，同一数量族上的不同 $t$ 已被分开；若只读 $\gcd(N_d,H)$，例如 $d=1,H=5040$ 的 $t=1,11$ 都给 1，却有不同完整剩余。后者不能直接套用式 (141.2)，应回到 §§119–133 的 gcd 行为合同。
+

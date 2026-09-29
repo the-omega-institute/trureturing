@@ -1,0 +1,34 @@
+**命题 148.1（任意固定有限素数集的符号模型）。** 固定有限素数集 $P$（允许为空），令 $Q=\prod_{p\in P}p$，对正整数定义
+
+$$
+f_P(n)=\mu(n)^2\prod_{p\in P}\bigl(1-2\mathbf1_{p\mid n}\bigr).
+$$
+
+它是有界乘法函数，$f_P(n)^2=\mu(n)^2$；对每个 $p\in P$、$p\nmid n$，有 $f_P(pn)=-f_P(n)$，并在全部 $P$-光滑整数上等于 $\mu$。对每个实数 $X\ge1$，
+
+$$
+\sum_{n\le X}f_P(n)
+=c_PX+E_P(X),\qquad
+c_P=\frac1{\zeta(2)}\prod_{p\in P}\frac{p-1}{p+1}>0,\qquad
+|E_P(X)|\le3^{|P|+1}\sqrt X. \tag{148.1}
+$$
+
+证明。素数处的值在 $P$ 内为 $-1$、在其外为 $1$，每个指数至少二的素数幂处为零；互素乘法、符号规则及平方恒等式随之成立。对平方自由 $d$，设 $S_d(X)=\sum_{n\le X,d\mid n}\mu(n)^2$。用 $\mu(n)^2=\sum_{k^2\mid n}\mu(k)$ 得准确有限展开
+
+$$
+S_d(X)=\sum_{k\le\sqrt X}\mu(k)
+\left\lfloor\frac X{\operatorname{lcm}(d,k^2)}\right\rfloor. \tag{148.2}
+$$
+
+令 $N=\lfloor\sqrt X\rfloor\ge1$。去掉取整的误差至多 $N$；因 $\operatorname{lcm}(d,k^2)\ge k^2$，补齐无限和的误差至多 $X\sum_{k>N}k^{-2}\le X/N\le2\sqrt X$。故总误差至多 $3\sqrt X$，与 $d$ 无关。绝对收敛系数的 Euler 乘积为
+
+$$
+\sum_{k\ge1}\frac{\mu(k)}{\operatorname{lcm}(d,k^2)}
+=\prod_{p\mid d}(p^{-1}-p^{-2})\prod_{p\nmid d}(1-p^{-2})
+=\frac1{\zeta(2)}\prod_{p\mid d}\frac1{p+1}. \tag{148.3}
+$$
+
+把定义中的有限乘积展开，得到 $\sum_{n\le X}f_P(n)=\sum_{d\mid Q}(-2)^{\omega(d)}S_d(X)$。主项因子化为式 (148.1) 的 $c_P$，误差系数的绝对值和为 $\sum_{d\mid Q}2^{\omega(d)}=3^{|P|}$，证明完毕。这里的正均值与渐近结论均固定 $P$；不把 $P$ 随 $X$ 增大时的误差当作统一平方根界。$\square$
+
+在任意有限整数区间的均匀概率空间上，对任何合法 FIB 前缀划分及其细化，$f_P$ 都满足 §145.2 的条件投影勾股分解；每个柱集上的平方能量还与 $\mu$ 相同，因为二者逐点平方相同。这没有宣称二者的带符号柱集平均相同。故这些守恒和任意固定有限组新素数翻号规则，无法单独推出所有满足它们的函数都有 $O_\varepsilon(X^{1/2+\varepsilon})$ 总和；取 $0<\varepsilon<1/2$，式 (148.1) 即给反模型。这不是实际 $\mu$ 或 RH 的反例。
+

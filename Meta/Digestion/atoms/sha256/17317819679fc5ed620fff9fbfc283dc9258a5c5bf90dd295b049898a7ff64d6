@@ -1,0 +1,34 @@
+**引理 138.1（隔离一个完整素数幂的实际来源）。** 固定 $H>1$ 的完整因子 $P=p^e\parallel H$，置 $Q=H/P$。对任意观察剩余对 $x=(\bar n,\bar z)\bmod P$，逐坐标取最小非负剩余，定义
+
+$$
+A_x=[C^{-1}x]_P
+ =\bigl([5\bar n-3\bar z]_P,[-3\bar n+2\bar z]_P\bigr),\qquad
+V_{H,P}(x)=Q A_x.
+$$
+
+则 $V_{H,P}(x)\in\{0,\ldots,H-1\}^2$ 是实际来源，而且对每个 $k\ge1$，
+
+$$
+g_H(V_{H,P}(x);k)=Qp^{c_x^{(e)}(k)}.
+$$
+
+证明。每个 $A_x$ 坐标介于 $0$ 与 $P-1$，故 $V_{H,P}(x)$ 的坐标介于 $0$ 与 $Q(P-1)=H-Q<H$。$CA_x\equiv x\pmod P$，所以由定理 5.4 的递推式，
+
+$$
+qM^k A_x\equiv F_{k-1}\bar n+F_k\bar z\pmod P
+\quad(k\ge1).
+$$
+
+截断赋值只依赖模 $P$ 的剩余，于是准确的整数恒等式给
+
+$$
+\begin{aligned}
+\gcd(qM^k V_{H,P}(x),H)
+ &=\gcd(QqM^k A_x,QP)\\
+ &=Q\gcd(qM^k A_x,P)
+ =Qp^{c_x^{(e)}(k)}.
+\end{aligned}
+$$
+
+因为 $P$ 是完整因子，$Q$ 是 $p$ 单位；实际观察对在模 $P$ 下是 $Qx$，保留了 $x$ 的局部指数。在其它完整素数幂处，来源及观察都为零，永远饱和。这是同一实际来源同时实现全部局部条件的构造。其确切观察对 $CV_{H,P}(x)$ 自动满足实际不等式，因而没有把独立局部边缘的存在冒充联合来源的存在。$\square$
+

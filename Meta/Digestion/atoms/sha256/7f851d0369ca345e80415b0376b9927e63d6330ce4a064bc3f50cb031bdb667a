@@ -1,0 +1,14 @@
+**证明。** 首式直接展开，$C=T^3$ 给后两式；组成式也直接展开，或交换两个坐标后取相反数。$\square$
+
+这复用 §22 的黄金二次型和 `GoldenAntiIsometry.golden_anti_isometry`。一次转移把正、负扇区互换，零锥保持；两次转移保存原值。因此同一递归可以同时有扇区交换和两步守恒。$Q$ 不是正定能量；符号交替本身也不是物理学意义的自发对称破缺。若要作后者解释，还缺物理状态、作用量/测度、对称群及所选状态等模型对应。
+
+本库实际可定位的“勾股分类”包括 [GICT 附录 E.46](GICT.md) 的三角群/度量区分，以及 `SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm` 的精确关系
+
+$$
+(\gamma_0-2\beta)^2+3\gamma_0^2=4m(m+1)
+\quad\Longleftrightarrow\quad
+\beta^2-\beta\gamma_0+\gamma_0^2=m(m+1).
+$$
+
+它是整坐标的 Eisenstein 范数门，不自动给出 FIB 五窗到全部原始勾股三元组的分类映射，也不能用名称把它认作 Berggren 树。
+

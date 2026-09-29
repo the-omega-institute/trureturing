@@ -1,0 +1,25 @@
+**定义 136.3（末层覆盖与全塔覆盖）。** 对正整数 $R$ 记
+
+$$
+\mathcal R_R(S)=\{k\bmod R:k\in S\}.
+$$
+
+在增长层 $j\ge2$，对父类 $a\in\mathbb Z/r_{j-1}\mathbb Z$，记
+
+$$
+b_j(a;S)=\bigl|\{b\in\mathcal R_{r_j}(S):b\equiv a\pmod{r_{j-1}}\}\bigr|.
+$$
+
+它数不同子剩余类，多次访问同一子类只计一次。末层条件 $D_{p,e}(S)$ 按互斥的四种情形定义为
+
+$$
+\begin{array}{ll}
+e=1,\ r_1=p+1:&|\mathcal R_{r_1}(S)|\ge r_1-1;\\
+e=1,\ r_1<p+1:&\mathcal R_{r_1}(S)=\mathbb Z/r_1\mathbb Z;\\
+e\ge2,\ r_e=r_{e-1}:&\mathcal R_{r_e}(S)=\mathbb Z/r_e\mathbb Z;\\
+e\ge2,\ r_e=pr_{e-1}:&b_e(a;S)\ge p-1\quad\text{对每个 }a\bmod r_{e-1}.
+\end{array}
+$$
+
+全塔条件 $\mathcal C_{p,e}(S)$ 是首层条件与所有 $2\le j\le e$ 层条件的合取：停滞层要求全部模 $r_j$ 剩余，增长层要求每个父类至少 $p-1$ 个不同子类。$e=1$ 时只有首层条件。
+
