@@ -8807,3 +8807,203 @@ $$
 任一条件缺失，都只能得到单向投影或某个固定路径的数值恒等，不能声称空间、时间、边界和记忆已经是同一过程的互相恢复表达。特别是零费用差、当前读数相同或当前势值相同，都不自动保证未来安全；必须检查同步后继和全部声明续接。第13节的同步状态对判据给出了有限确定性情形下的可诊断版本。本节为理论推导，未新增 Lean 声明；Lean 文件只作为上述商下降、势存在性和档案时钟恢复的锚点。
 
 ## 31.99 追加锚
+
+## 32. Fibonacci 纯轨道上的四表达互恢复
+
+本节是第31节时钟／势判据与[过程几何卷第52节共同商判据](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)的 Fibonacci 特化。只取同一条实际纯轨道，用一个轨道指标和一个行列式为一的边界映射连接空间、时间、边界与记忆；四者是同一对象的坐标表达。这里的“空间”仅指组成切面，“时间”仅指固定原点后的替换步钟，不据此主张普遍物理时间或另一套关系本体。
+
+### 32.1 实际载体、组成与固定原点
+
+**定义 32.1（纯轨道的四个字段）。** 沿用 [Fibonacci 卷第111—113节](FIBONACCI_ATOMIC_RELATION_GENERATION.md)的有序二叶树、替换和生成范围，取
+
+$$
+\begin{gathered}
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho(s),\rho(t)\rangle,\\
+O=\{T_n=\rho^n(\alpha):n\in\mathbb N\},\qquad
+\sigma(T_n)=T_{n+1},\qquad T_0=\alpha,\\
+c(\alpha)=\binom10,\quad c(\beta)=\binom01,\quad
+c(\langle s,t\rangle)=c(s)+c(t),\quad
+c(t)=(c_\alpha(t),c_\beta(t)),\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\\
+c(T_n)=M^n\binom10.
+\end{gathered}
+\tag{32.1}
+$$
+
+这里 $O$ 是实际允许的树集合，不是把同一树附上不同 $n$ 标签得到的历史集合，也不是任意配对闭包。记 $Q(t)=2c_\alpha(t)+3c_\beta(t)$。由替换递推，$Q(T_n)=F_{n+3}$，其中 $F_0=0,F_1=1$；该列从 $2,3$ 起严格递增。因此 $n\mapsto T_n$ 和 $c|_O$ 都单射，轨道指标确实由实际树决定。
+
+定义边界、固定原点的步钟和候选记忆为
+
+$$
+\begin{gathered}
+H_{2,3}=\begin{pmatrix}2&3\\3&5\end{pmatrix},\qquad
+\det H_{2,3}=1,\qquad
+H_{2,3}^{-1}=\begin{pmatrix}5&-3\\-3&2\end{pmatrix},\\
+b(T_n)=H_{2,3}c(T_n)
+=\binom{Q(T_n)}{Q(T_{n+1})},\\
+\tau(T_n)=n\quad\text{（固定 }T_0=\alpha,\ \tau(T_0)=0\text{）},\qquad
+m(T_n)=(b(T_n),\tau(T_n)).
+\end{gathered}
+\tag{32.2}
+$$
+
+逆矩阵只在实际像 $b[O]$ 上用于恢复轨道组成；任意整数对不自动属于这个像。$m[O]$ 同样是相容联合像，不能把一个端点的边界与另一个端点的时钟任意配对。此处 $m$ 是任务记忆的表示，尚不表示观察者已经取得并存储这些字段。
+
+### 32.2 声明动作、费用与互恢复条件
+
+固定包含 $\sigma$ 的确定性请求字母表 $A$。每个动作 $a\in A$ 的合法域为 $D_a\subseteq O$，合法后继 $T_a:D_a\to O$ 留在同一轨道。为使合法与失败请求使用同一语义，记 $\operatorname{Option}(X)=\{\mathrm{none}\}\sqcup\{\mathrm{some}(x):x\in X\}$，并声明完整响应
+
+$$
+\begin{gathered}
+E_a=\{0,1\}\times\operatorname{Option}(F_a)
+\times\operatorname{Option}(Y_a)\times\operatorname{Option}(R_a)
+\times P_a\times J_a\times\operatorname{Option}(\Lambda_a),\\
+L_a(x)=(\ell_a(x),\operatorname{Fail}_a(x),\operatorname{Out}_a(x),
+\operatorname{Rec}_a(x),\operatorname{Perm}_a(x),\operatorname{Ref}_a(x),
+\operatorname{Clk}_a(x))\in E_a,\\
+\mathcal R_a:O\longrightarrow E_a\times\operatorname{Option}(O),\qquad
+\mathcal R_a(x)=(L_a(x),S_a(x)).
+\end{gathered}
+$$
+
+这里 $F_a,Y_a,R_a,P_a,J_a,\Lambda_a$ 分别是合同固定的失败标签、输出、记录、权限状态、参考状态和时钟标签类型；缺失的输出、记录或时钟标签用 $\mathrm{none}$ 表示。$\ell_a(x)=1\iff x\in D_a$；合法请求满足 $\operatorname{Fail}_a(x)=\mathrm{none}$、$S_a(x)=\mathrm{some}(T_ax)$。在 $x\notin D_a$ 时须返回 $\mathrm{some}(f)$ 型失败标签，$S_a(x)$ 则按合同为 $\mathrm{none}$（终止）或 $\mathrm{some}(x')$，其中 $x'\in O$ 是失败后的实际状态，不能默认为原状态。另记 $h:O\to E_0$ 为合同声明的当前读出，包括当前权限／参考状态及所需当前时钟；若有闭环选择器 $\pi:O\to\operatorname{Option}(A)$，也纳入合同。
+
+对每个 $\eta\in\{c,\tau,b,m\}$，在实际像 $\eta[O]$ 上声明 $\overline D_{\eta,a}\subseteq\eta[O]$、$\overline T_{\eta,a}:\overline D_{\eta,a}\to\eta[O]$ 和 $\overline{\mathcal R}_{\eta,a}:\eta[O]\to E_a\times\operatorname{Option}(\eta[O])$，要求
+
+$$
+\begin{gathered}
+x\in D_a\iff\eta(x)\in\overline D_{\eta,a},\qquad
+(\operatorname{id}_{E_a}\times\operatorname{Option}(\eta))\circ\mathcal R_a
+=\overline{\mathcal R}_{\eta,a}\circ\eta,\\
+\eta(T_a x)=\overline T_{\eta,a}(\eta(x))\quad(x\in D_a),\qquad
+h=\overline h_\eta\circ\eta,\qquad \pi=\overline\pi_\eta\circ\eta.
+\end{gathered}
+\tag{32.3}
+$$
+
+其中 $\operatorname{Option}(\eta)$ 保持 $\mathrm{none}$，把 $\mathrm{some}(x')$ 送到 $\mathrm{some}(\eta(x'))$；$\overline h_\eta:\eta[O]\to E_0$ 与 $\overline\pi_\eta:\eta[O]\to\operatorname{Option}(A)$ 具有相同读出类型。完整响应等式在所有 $x\in O$ 上成立，逐项运输失败状态、权限／参考状态、时钟标签及失败后继；合法域上的后继分量与 $\overline T_{\eta,a}$ 一致。独立变化的观察者记忆、权限或参考状态若影响响应、选择或更新，须先并入实际配置，或证明它由这些字段决定；本节的纯轨道结论只适用于后一种情形，不能隐去独立状态后仍使用式(32.3)。这正是[过程几何第34、52节](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)及[边界动力学第81、85节](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)的动态下降要求。
+
+为把声明的路径费用识别为这个步钟的势差，明确取边界域、边界更新和整数费用为
+
+$$
+\overline D_a:=\overline D_{b,a}=b[D_a]\subseteq b[O],\qquad
+\overline T_a:=\overline T_{b,a}:\overline D_a\to b[O],\qquad
+\kappa_a:D_a\to\mathbb Z,\qquad
+\bar\kappa_a:\overline D_a\to\mathbb Z.
+$$
+
+其中 $\bar\kappa_a$ 是合同声明的边界费用部分。$\kappa_a$ 的值纳入合法请求的 $\operatorname{Clk}_a$ 标签；若失败请求收费，其费用同样作为失败响应的时钟标签运输。由式(32.3)，$x\in D_a$ 当且仅当 $b(x)\in\overline D_a$，因此下式中的 $\bar\kappa_a(b(x))$ 有定义，且残差的域明确为 $D_a$：
+
+$$
+r_a:D_a\to\mathbb Z,\qquad r_a(x)=\kappa_a(x)-\bar\kappa_a(b(x)).
+\tag{32.4}
+$$
+
+对合法词 $w=a_1\cdots a_k$，令 $x_0=x\in O$、$x_{j-1}\in D_{a_j}$、$x_j=T_{a_j}x_{j-1}$，并记 $T_wx=x_k$。其下降词从 $z_0=b(x)$ 出发，满足 $z_{j-1}\in\overline D_{a_j}$、$z_j=\overline T_{a_j}z_{j-1}$。式(32.3)保证 $z_j=b(x_j)$，且下降词与原词的逐步合法性相同。定义
+
+$$
+K_\kappa(x,w)=\sum_{j=1}^k\kappa_{a_j}(x_{j-1}),\qquad
+\overline K_\kappa(z_0,w)=\sum_{j=1}^k\bar\kappa_{a_j}(z_{j-1}).
+$$
+
+空词 $\varepsilon$ 的更新为恒等、两个费用和均为零。上述路径费用只在逐步合法的词上定义；失败词仍具有完整响应，但不自动取得式(32.7)的费用／势差结论。
+
+这里 $r$ 是扣除边界部分后待由端点势承担的残差，即第31节式(31.9)的 $d$。使用命题31.4时，要求同一来源上的合法路径具有连通的路径群胚延拓，$r$ 对复合可加、对逆边取负，且 $r_\sigma(T_n)=1$。每条闭路的残差和须为零，包括“两条同端点合法路径之一接另一条的形式逆”形成的比较闭路。只检查原有向图中的有向循环不够；例如无有向循环的两条平行路径仍可具有不同费用。形式逆只用于检验路径一致性，不授予观察者逆向操作权限。若不采用群胚表述，可直接要求任意同起终点的合法路径残差相等。
+
+**定理 32.2（纯轨道上的四表达模型定理）。** 在上述固定原点和共同实际载体 $O$ 上，若声明动作族及其失败后继保持轨道、$c$ 与 $b$ 分离实际像中的不同点、全部声明的完整响应（含合法性、失败、输出、记录、权限／参考状态、时钟标签及可选后继）、当前读出和选择器满足式(32.3)，且时钟残差满足上述归一化与闭路零和条件，则
+
+$$
+\boxed{\ker(c|_O)=\ker\tau=\ker(b|_O)=\ker m=\Delta_O,}
+\qquad
+\Delta_O=\{(x,x):x\in O\}.
+\tag{32.5}
+$$
+
+四个字段在各自实际像之间具有唯一的双向恢复，恢复与每个声明动作相容。对替换一步，具体运输为
+
+$$
+\begin{gathered}
+U=H_{2,3}MH_{2,3}^{-1}=M,\qquad
+b\circ\sigma=U\circ b,\qquad
+\tau\circ\sigma=\tau+1,\\
+m(\sigma x)=(Ub(x),\tau(x)+1).
+\end{gathered}
+\tag{32.6}
+$$
+
+任意合法有限路径 $w$ 的时钟费用满足
+
+$$
+K_\kappa(x,w)=\tau(T_wx)-\tau(x)+\overline K_\kappa(b(x),w),
+\tag{32.7}
+$$
+
+其中 $\overline K_\kappa$ 是上面已定义的下降词费用和。一般有非零边界费用时，只由端点恢复的是扣除该项后的势差，不是任意完整路径费用。
+
+证明。式(32.1)的严格递增读数给出 $c|_O$ 的分离性；$H_{2,3}$ 的整数逆给出 $b|_O$ 的分离性。$\tau(T_n)=n$ 也单射，$m$ 包含这两个相容字段，故四核都是对角线。对任意两种字段 $\eta_i,\eta_j$，唯一恢复器在实际像上定义为
+
+$$
+R_{j\leftarrow i}(\eta_i(T_n))=\eta_j(T_n).
+\tag{32.8}
+$$
+
+单射性保证良定义，实际像的满射性保证唯一；交换 $i,j$ 即得逆。具体地，$b$ 先经 $H_{2,3}^{-1}$ 恢复 $c$，再由严格递增的 $Q(T_n)$ 定位唯一 $n$；给定 $n$ 则用式(32.1)—(32.2)恢复其余字段。由式(32.3)，这些恢复器运输完整响应、当前读出和选择器，包括失败、权限／参考状态、时钟标签以及 $\operatorname{Option}$ 型后继，故满足过程几何第52节的操作相容条件。
+
+另一方面，命题31.4在这里给出势 $p$，满足 $r_a(x)=p(T_ax)-p(x)$。固定 $p(T_0)=0$ 后，由 $r_\sigma=1$ 沿轨道归纳得 $p(T_n)=n=\tau(T_n)$；所以闭路条件并非只给一个未校准的势。对路径望远镜求和即得式(32.7)。矩阵 $H_{2,3}=2I+3M$ 与 $M$ 交换，给出式(32.6)的边界更新，步钟更新由固定指标直接得到。证毕。
+
+式(32.5)的集合恢复本身来自分离性；动作及闭路条件分别保证它也是过程恢复和路径时钟恢复。本定理是受限模型中的普通推导，不是物理时间的普遍命题，也不是本节已通过 Lean 验证的定理。第31节所引 `closed_path_zero_iff_exists_potential`（`D5/S3/Observer/AgencyHolonomy/ZeroLoopPotentialEquivalence.lean`）与 `all_interventions_unique_completion_descent`（`D5/S3/ObserverMemory/Dynamics/ControlledInterventionDescentUniqueness.lean`）是现有代码中的势和下降锚点；本节没有把这些锚点当作该 Fibonacci 特化已编译的证据。
+
+### 32.3 最小性只相对于未来响应核
+
+令 $\mathcal C_A=A^*$ 为第32.2节请求字母表上全部有限动作词的语言，包括空词 $\varepsilon$、发生失败的词及其任意有限续接；它对串接封闭，不是有限个实验组成的抽样族。用该节的完整标签与可选后继定义每个词的响应类型及响应：
+
+$$
+\begin{gathered}
+V_\varepsilon=E_0\times\operatorname{Option}(A),\qquad
+V_{aw}=(E_0\times\operatorname{Option}(A))\times E_a\times\operatorname{Option}(V_w),\\
+\operatorname{Resp}(x,\varepsilon)=(h(x),\pi(x)),\\
+\operatorname{Resp}(x,aw)=
+\bigl((h(x),\pi(x)),L_a(x),
+\operatorname{Option}(z\mapsto\operatorname{Resp}(z,w))(S_a(x))\bigr)\in V_{aw}.
+\end{gathered}
+$$
+
+未声明选择器时取 $\pi\equiv\mathrm{none}$。递归中的 $\mathrm{none}$ 明确表示请求后已终止、剩余后缀不再执行；$\mathrm{some}(x')$ 则无论该次请求成功或失败，都从实际后继 $x'$ 继续。故每个 $w\in A^*$ 和每个 $x\in O$ 都有同类型的响应，失败词不会被删去或与成功的空响应混同。后继状态通过其后续响应比较，不直接把原状态身份作为输出。定义全续接未来核
+
+$$
+x\equiv_{\mathcal C_A}y
+\iff
+\forall w\in\mathcal C_A,\quad
+\operatorname{Resp}(x,w)=\operatorname{Resp}(y,w).
+\tag{32.9}
+$$
+
+串接封闭性保证：若 $x\equiv_{\mathcal C_A}y$，则任意首请求有相同完整标签和相同终止状态；若二者都有后继，该后继对所有后缀仍等价。因此合法与失败后继均可下降到这个商。按过程几何定理52.3及本卷推论31.3，相对于全部 $\mathcal C_A=A^*$ 响应的最小充分边界是 $O/\!\equiv_{\mathcal C_A}$，不是仅匹配某个有限测试集的商。若合同在 $h$ 中包含当前精确 $Q$ 读出或当前 $\tau$ 读出，则空词响应已分离全部 $T_n$，从而 $\equiv_{\mathcal C_A}=\Delta_O$，四个字段才与这个最小行为商同构。若全续接响应仍不分离轨道点，则四个字段仍可彼此恢复，却保留了当前任务不需要的区别，不能据此称为该任务的最小边界。
+
+这里没有两个整数寄存器的普遍下界：在这一条由 $n$ 参数化的轨道上，单个无界整数 $n$ 或 $Q(T_n)$ 已足够。$m=(b,\tau)$ 也没有额外的独立信息，只把边界与时钟的一致性写明。任意编码可以使用更少字段，但不因此减少必须区分的行为类或取得成本；精确保留所有 $n$ 仍需要无限多种记录值。边界动力学第81节的全组成任务、Fibonacci 第112—113节的静态叶数／动态种子数／线性接口维数各有不同量词，不可把其中的“二”移作本轨道的容量结论。
+
+### 32.4 三个失效反模型
+
+**命题 32.3（模边界合并轨道点）。** 若只保存 $b_2(T_n)=b(T_n)\bmod2$，则它仍按 $U\bmod2$ 更新，但不能恢复无界步钟。
+
+证明。$c(T_0)=(1,0)$、$c(T_3)=(1,2)$，故 $b(T_0)=(2,3)$、$b(T_3)=(8,13)$，模二后同为 $(0,1)$，而 $\tau(T_0)=0\ne3=\tau(T_3)$。所以模边界虽动态闭合，分离性已经失败。证毕。
+
+**命题 32.4（任意配对加左读破坏组成充分性）。** 若把载体扩为任意有序配对和旁支动作闭包，并声明根节点的左子树读出，则相同组成不再保证相同响应。
+
+证明。取 $s=\langle\alpha,\beta\rangle$、$t=\langle\beta,\alpha\rangle=T_2$，二者都可由允许的旁支接法得到，且 $c(s)=c(t)=(1,1)$、$b(s)=b(t)=(5,8)$，但左读分别返回 $\alpha$、$\beta$。$s\notin O$，所以扩大的动作已越出纯轨道，原来的 $\tau(T_n)=n$ 也未定义在整个新载体上。这是过程几何第34.5节的纤维反例；任意配对本身仍可保持数量响应，失败发生在新增左读不再通过组成下降时。证毕。
+
+**命题 32.5（非零闭路残差阻止端点势恢复）。** 在 $T_0$ 处加入一个合法自环 $a(T_0)=T_0$，令该边的 $\kappa_a=1$、$\bar\kappa_a=0$。则不存在覆盖这个扩大家族的端点势。
+
+证明。该闭路的残差为 $1$，但任何单值势都给出 $p(T_0)-p(T_0)=0$。空路径和自环有相同端点而残差不同，故端点无法恢复累计残差；若用计数器记录绕行次数，实际配置已提升为含历史记忆的载体。这个 holonomy 障碍破坏的是路径时钟恢复，并不否定原来四个静态字段在 $O$ 上的单射性。证毕。
+
+### 32.5 生成深度、实际来源与取得边界
+
+Fibonacci 结构分解的生成深度 $d(t)$ 与本节固定原点的 $\tau$ 是两个定义；在由 $\alpha$ 制备且只执行同步替换的这条轨道上，才有 $d(T_n)=\tau(T_n)=n$。若实际制备是 $T_k$，随后执行 $j$ 步，则当前结构指标为 $k+j$，该次经过步数却为 $j$。第29节的来源记录或制备横截面条件仍须保留。允许配对后，生成深度还可下降；若每步物理时长不同，相同替换步数也不决定物理历时。
+
+同样，$b(T_n)$ 的两项是同一源的相邻响应，不是两份独立来源的任意读数。按第29.4节顺序取得两项时，观察者须保留首读，执行一次替换，再取得次读；此时源已移到 $T_{n+1}$，恢复器报告的是先前 $T_n$ 的坐标。原点、来源、读口精度、权限、控制、工作记忆及档案均须按实际协议计入；坐标互逆不提供免费复制、重置、无限整数存储或已经取得的观察者记忆。
+
+本节状态为普通散文／模型推导，未新增 Lean、C# 或消化核验；仍开放的是向任意树及更广动作族的互恢复扩展，以及在明确来源、权限和资源合同下的实际取得。此处只完成纯轨道到既有共同商与时钟势判据的最小桥接。
+
+## 32.99 追加锚
