@@ -6,7 +6,7 @@ namespace LeanInformationAudit.Tests.DeclaredExport
 open Lean Meta Elab Command TemplateBinding
 
 run_meta do
-  let snapshot ← exportSnapshot
+  let snapshot ← (exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let expected := #[
     `LeanInformationAudit.Tests.DeclaredBindings.validated,
     `LeanInformationAudit.Tests.DeclaredBindings.unresolved,

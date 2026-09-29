@@ -6,7 +6,7 @@ namespace LeanInformationAuditRegTests.InfiniteSourceContract
 set_option trace.InformationRegistration.check true
 
 run_meta do
-  let snapshot ← TemplateBinding.exportSnapshot
+  let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let records := snapshot.selected.filter (fun record => record.occurrence.key.registrationModule ==
     `Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl)
   let #[record] := records | throwError "expected one complete infinite source registration"

@@ -267,7 +267,7 @@ elab "observe_escape_record_routes" : command => do
       | .error message => ok := false; logInfo message
       | .ok command =>
         try elabCommand command catch error => ok := false; logInfo error.toMessageData
-    let rows ← liftTermElabM TemplateBinding.assessJoined
+    let rows ← liftTermElabM do (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
     let moduleName := (← getEnv).header.mainModule
     ok := ok && !(← get).messages.hasErrors && rows.any fun row =>
       row.occurrence.key.registrationModule == moduleName &&

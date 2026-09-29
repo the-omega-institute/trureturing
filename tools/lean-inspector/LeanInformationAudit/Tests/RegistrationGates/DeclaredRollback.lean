@@ -10,7 +10,7 @@ elab "observe_unresolved_transaction_commit" : command => do
   let name := saved.env.header.mainModule.str "commits"
   let target := mkIdent (`_root_ ++ name)
   registrationTransaction do
-    let .ok () ← enroll ``cutRealization | throwError "setup: transaction template missing"
+    let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``cutRealization | throwError "setup: transaction template missing"
     elabCommand (← `(command| information_theorem $target in arena
       readout via (missingTemplate (fun x : Bool => x))
       primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))

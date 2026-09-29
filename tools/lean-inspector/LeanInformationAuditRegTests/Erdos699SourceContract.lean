@@ -106,7 +106,7 @@ run_meta do
     unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
       throwError "[FAIL] nonstandard axiom closure: {name}: {axioms}"
     logInfo m!"[PASS] standard_axioms {name}: {axioms}"
-  let snapshot ← TemplateBinding.exportSnapshot
+  let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let originals := snapshot.originals.filter (·.occurrence.key.registrationModule == owner)
   unless originals.size == 1 && originals[0]!.occurrence.key == event.key do
     throwError "[FAIL] exported source inventory"

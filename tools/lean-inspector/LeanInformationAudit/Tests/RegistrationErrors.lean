@@ -76,7 +76,7 @@ LeanInformationAudit.Tests.RegistrationErrors.nativeBundleTarget -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
       theoremName := `LeanInformationAudit.Tests.RegistrationErrors.nativeBundleTarget
       unitName :=
         `LeanInformationAudit.Tests.RegistrationErrors.mismatchedNativeBundleUnit
@@ -100,7 +100,7 @@ LeanInformationAudit.Tests.RegistrationErrors.nativeLawMismatchTarget -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
       theoremName :=
         `LeanInformationAudit.Tests.RegistrationErrors.nativeLawMismatchTarget
       unitName := `LeanInformationAudit.Tests.RegistrationErrors.nativeLawMismatchUnit
@@ -225,7 +225,7 @@ LeanInformationAudit.Tests.RegistrationErrors.generated.__information_catalog -/
 #guard_msgs in
 run_cmd do
   try
-    registerValidatedEntry {
+    registerValidatedEntry (← getEnv).header.mainModule {
       theoremName :=
         `LeanInformationAudit.Tests.RegistrationErrors.generated.__information_catalog
       unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
@@ -240,7 +240,7 @@ LeanInformationAudit.Tests.RegistrationErrors.generated.__catalog_irredundant -/
 #guard_msgs in
 run_cmd do
   try
-    registerValidatedEntry {
+    registerValidatedEntry (← getEnv).header.mainModule {
       theoremName :=
         `LeanInformationAudit.Tests.RegistrationErrors.generated.__catalog_irredundant
       unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
@@ -278,7 +278,7 @@ LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
       theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
       unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
       arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
@@ -296,7 +296,7 @@ LeanInformationAudit.Tests.RegistrationErrors.notATheorem -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
     theoremName := `LeanInformationAudit.Tests.RegistrationErrors.notATheorem
     unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
     arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
@@ -311,7 +311,7 @@ LeanInformationAudit.Tests.RegistrationErrors.missingArena -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
     theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
     unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
     arenaName := `LeanInformationAudit.Tests.RegistrationErrors.missingArena
@@ -329,7 +329,7 @@ LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
     theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
     unitName := `LeanInformationAudit.Tests.RegistrationErrors.wrongUnitHead
     arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena

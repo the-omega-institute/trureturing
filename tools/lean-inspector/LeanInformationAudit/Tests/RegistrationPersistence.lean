@@ -47,7 +47,7 @@ run_cmd do
   let some entry := InformationRegistry.find? env
       `LeanInformationAudit.Tests.RegistrationErrors.nativeExample
     | throwError "missing persisted native registration"
-  match ← Lean.Elab.Command.liftTermElabM <| validatePersistedEntry env entry with
+  match ← Lean.Elab.Command.liftTermElabM <| validatePersistedEntry env.header.mainModule env entry with
   | .ok () => pure ()
   | .error message => throwError message
 
@@ -116,7 +116,7 @@ run_cmd do
         throwError "insertion changed imported entry order or identities"
       let beforeDuplicate ← getEnv
       let duplicate ← indexException do
-        discard <| registerSemanticEntry inserted
+        discard <| registerSemanticEntry (← getEnv).header.mainModule inserted
       let some error := duplicate | throwError "duplicate occurrence was accepted"
       unless (← error.toMessageData.toString).startsWith "IE-C002 DuplicateRegistration" do
         throwError "duplicate occurrence changed its first rejection"

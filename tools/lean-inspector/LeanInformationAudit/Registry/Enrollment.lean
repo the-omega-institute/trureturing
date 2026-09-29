@@ -3,55 +3,6 @@ import LeanInformationAudit.Registry.Evidence
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
 
-/-- A byte-radix tree. Each node has at most 256 sorted outgoing byte edges;
-lookup visits only the selected key's path, never the collection of templates. -/
-inductive TemplateTrie where
-  | node (value : Option TemplatePlanData) (edges : Array (UInt8 × TemplateTrie))
-  deriving Inhabited
-
-namespace TemplateTrie
-private partial def insertAt (tree : TemplateTrie) (key : ByteArray) (offset : Nat)
-    (value : TemplatePlanData) : TemplateTrie := Id.run do
-  let .node old edges := tree
-  if offset == key.size then return .node (some value) edges
-  let byte := key[offset]!
-  let mut found := false
-  let mut next := edges.map fun (b, child) =>
-    if b == byte then
-      (b, insertAt child key (offset + 1) value)
-    else (b, child)
-  for (b, _) in edges do if b == byte then found := true
-  if !found then
-    next := next.push (byte, insertAt (.node none #[]) key (offset + 1) value)
-  return .node old (next.qsort fun a b => a.1 < b.1)
-
-/-- The callback observes actual node/edge visits. It cannot change the lookup. -/
-private partial def lookupAt [Monad m] (tree : TemplateTrie) (key : ByteArray)
-    (offset : Nat) (observe : m Unit) : m (Option TemplatePlanData) := do
-  observe
-  let .node value edges := tree
-  if offset == key.size then return value
-  let byte := key[offset]!
-  for (b, child) in edges do
-    observe
-    if b == byte then return ← lookupAt child key (offset + 1) observe
-    if b > byte then return none
-  return none
-
-end TemplateTrie
-
-/-- The only persistent enrollment entry: byte buffers and a fixed digest.
-No decoded expression, plan, universe list or dependency graph is deserialized
-by Lean on behalf of this extension. Lean's general olean loading is separate. -/
-structure TemplatePlanFrame where
-  key : ByteArray
-  payload : ByteArray
-  identity : String
-  deriving Inhabited
-
-def TemplatePlanFrame.retainedBytes (frame : TemplatePlanFrame) : Nat :=
-  frame.key.size + frame.payload.size + frame.identity.utf8ByteSize + 16
-
 structure TemplateIndex where
   private trie : TemplateTrie := .node none #[]
   bytes : Nat := 0
@@ -850,7 +801,7 @@ private def checkConstructorType (name : Name) : CompileM Unit := do
 
 /-- Finite enrollment. The constructor is private and only its checked output
 can enter the persistent extension; public query data never grants insertion. -/
-private def compileTemplate (name : Name) (constructors : Array Name) : MetaM CheckedTemplatePlan := do
+private def compileTemplate (rootId name : Name) (constructors : Array Name) : MetaM CheckedTemplatePlan := do
   let env ← getEnv
   let .defnInfo info ← getConstInfo name | throwError "unclassified_form:E1.definition_kind"
   if info.safety != .safe || info.all.length > 1 || (← isRecursiveDefinition name) then
@@ -903,10 +854,10 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Ch
     `LeanInformationAudit.ReadoutProvenance, `LeanInformationAudit.Syntax]
     |>.filter (fun name => (env.getModuleIdx? name).isSome)
   NativeCoherence.validate
-    (#[env.header.mainModule] ++ policyOwners ++ state.dependencies.map (·.owner))
+    (#[rootId] ++ policyOwners ++ state.dependencies.map (·.owner))
   let data : TemplatePlanData := {
     compiler := Lean.versionString, toolchain := Lean.versionString,
-    name, definitionOwner := owner, enrollmentOwner := env.header.mainModule,
+    name, definitionOwner := owner, enrollmentOwner := rootId,
     levelParams := info.levelParams, slots, sourceBound, constructorTypes := constructors,
     typeIdentity, bodyIdentity, planIdentity := "", dependencies := state.dependencies,
     plan, typePlan, rules := state.rules,
@@ -953,27 +904,29 @@ def exceptionDiagnostic (error : Exception) : MetaM String := do
   return ← error.toMessageData.toString
 
 /-- Unsupported enrollment leaves no summary. All budgets are lower-only. -/
-def enroll (name : Name) (constructors : Array Name := #[]) : CommandElabM (Except String Unit) := do
-  let saved ← getEnv
-  let answer ← liftTermElabM <| tryCatchRuntimeEx
-    (withCumulativeBudget do
-      let checkedPlan ← compileTemplate name constructors
-      let current := templateIndexExt.getState (← getEnv)
-      match current.lookup name (pure () : Id Unit) with
-      | .ok _ => throwError "unclassified_form:E7.duplicate_enrollment"
-      | .error _ => pure ()
-      if let some error := current.error then throwError error
-      if current.bytes + checkedPlan.frame.retainedBytes > 8388608 then
-        throwError "incomplete_closure:E8.import_bytes"
-      modifyEnv fun env => templateIndexExt.addEntry env checkedPlan
-      pure (.ok ()))
-    (fun error => do
-      let message ← exceptionDiagnostic error
-      pure (.error (if message.startsWith "unclassified_form:" ||
-          message.startsWith "forbidden_dependency:" || message.startsWith "incomplete_closure:"
-        then message else "incomplete_closure:E8.elaboration:" ++ message)))
-  if answer matches .error _ then setEnv saved
-  return answer
+def enroll (rootId : Name) (options : Options) (name : Name)
+    (constructors : Array Name := #[]) : CommandElabM (Except String Unit) :=
+  withScope (fun scope => { scope with opts := options }) do
+    let saved ← getEnv
+    let answer ← liftTermElabM <| tryCatchRuntimeEx
+      (withCumulativeBudget do
+        let checkedPlan ← compileTemplate rootId name constructors
+        let current := templateIndexExt.getState (← getEnv)
+        match current.lookup name (pure () : Id Unit) with
+        | .ok _ => throwError "unclassified_form:E7.duplicate_enrollment"
+        | .error _ => pure ()
+        if let some error := current.error then throwError error
+        if current.bytes + checkedPlan.frame.retainedBytes > 8388608 then
+          throwError "incomplete_closure:E8.import_bytes"
+        modifyEnv fun env => templateIndexExt.addEntry env checkedPlan
+        pure (.ok ()))
+      (fun error => do
+        let message ← exceptionDiagnostic error
+        pure (.error (if message.startsWith "unclassified_form:" ||
+            message.startsWith "forbidden_dependency:" || message.startsWith "incomplete_closure:"
+          then message else "incomplete_closure:E8.elaboration:" ++ message)))
+    if answer matches .error _ then setEnv saved
+    return answer
 
 /-- Nat indices and enrolled dictionaries are checked in their declared type positions. -/
 def typePositions (type : Expr) : Array Bool := Id.run do

@@ -117,7 +117,7 @@ run_meta do
   unless (TemplateAudit.compactRawIdentity [] (balanced unique)).toOption.isNone do
     throwError "[FAIL] oversized unique compact source accepted"
   logInfo "[PASS] compact_source_deep_and_unique_budget_negatives"
-  let snapshot ← TemplateBinding.exportSnapshot
+  let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let modules := #[event.key.registrationModule].map fun module =>
     (module, snapshot.originals.filter (·.occurrence.key.registrationModule == module) |>.map (·.occurrence.key))
   let wires ← TemplateBinding.reportJson modules

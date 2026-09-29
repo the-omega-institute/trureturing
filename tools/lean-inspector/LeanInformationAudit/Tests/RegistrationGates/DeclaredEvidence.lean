@@ -39,7 +39,7 @@ elab "observe_declared_evidence" : command => do
   for (label, kind, form) in forms do
     set initial
     modify fun state => { state with messages := {} }
-    let .ok () ← enroll ``cutRealization | throwError "setup: independent template enrollment failed"
+    let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``cutRealization | throwError "setup: independent template enrollment failed"
     let caught ← commandException (elabCommand form)
     let env ← getEnv
     let inventoryOk ← if kind == 2 then
@@ -66,7 +66,7 @@ elab "observe_declared_evidence" : command => do
   let before ← get
   let staged ← IO.mkRef false
   let caught ← commandException <| registrationTransaction do
-    let .ok () ← enroll ``cutRealization | throwError "setup: rollback enrollment failed"
+    let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``cutRealization | throwError "setup: rollback enrollment failed"
     elabCommand forms[0]!.2.2
     staged.set <| InformationRegistry.hasTheorem (← getEnv) name &&
       (inventory (← getEnv)).any (·.key.theoremName == name) &&

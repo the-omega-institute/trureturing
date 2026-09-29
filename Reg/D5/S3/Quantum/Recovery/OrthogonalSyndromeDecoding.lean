@@ -1,6 +1,6 @@
 import D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
 import Reg.Support.DependentFamily
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Syntax
 
 open _root_.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
 open _root_.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
@@ -327,6 +327,5 @@ register_information_theorem syndrome_transport_orthogonal in arena
 #print axioms registration
 end SyndromeTransportOrthogonal
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← Lean.getEnv)
 
 end Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding

@@ -33,7 +33,7 @@ def customPersistedUnit : TheoremUnit arena.toArena :=
     Statement := arena.Law fixtureRealization
     proof := target }
 
-run_cmd registerValidatedEntry {
+run_cmd registerValidatedEntry (← Lean.getEnv).header.mainModule {
   theoremName := `LeanInformationAudit.Tests.SealPersistedUnit.target
   unitName := `LeanInformationAudit.Tests.SealPersistedUnit.customPersistedUnit
   arenaName := `LeanInformationAudit.Tests.SealPersistedUnit.arena

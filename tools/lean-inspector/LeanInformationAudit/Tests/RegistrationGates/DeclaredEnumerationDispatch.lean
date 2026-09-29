@@ -116,7 +116,7 @@ run_cmd do
     ("extra_arguments_dispatch", ``extraTemplate, #[``Direction, ``State], none)]
   for (label, name, constructors, expected) in cases do
     let saved ← get
-    let result ← enroll name constructors
+    let result ← enroll (← getEnv).header.mainModule (← getOptions) name constructors
     set saved
     liftTermElabM <| check label
       (match result with | .ok () => none | .error reason => some reason) expected

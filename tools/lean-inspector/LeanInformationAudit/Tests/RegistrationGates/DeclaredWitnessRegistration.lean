@@ -205,7 +205,7 @@ register_information_theorem result in witnessArena
 end AuthorExample
 
 run_meta LeanInformationAudit.Tests.withPrivateSources do
-  let records ← TemplateBinding.assessJoined
+  let records ← (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let some record := records.find? (·.occurrence.key.theoremName == ``result)
     | throwError "missing author example"
   let .declaredValidated certificate := record.result | throwError "author example was not validated"
@@ -214,7 +214,7 @@ run_meta LeanInformationAudit.Tests.withPrivateSources do
   let assessments (env : Environment) := ((TemplateBinding.observedAssessments env).filter
     (·.theoremName == ``result)).size
   let before := assessments primed
-  discard <| TemplateBinding.assessJoined
+  discard <| (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   unless assessments (← getEnv) == before do throwError "cache not reused"
   logInfo "[PASS] witness_author_example_and_cache_reuse"
   let path := TemplateAudit.sourcePath primed.header.mainModule
@@ -229,7 +229,7 @@ run_meta LeanInformationAudit.Tests.withPrivateSources do
     try
       IO.FS.writeFile path changed
       let rejected ← try
-        let rows ← TemplateBinding.assessJoined
+        let rows ← (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
         pure <| rows.any fun row => row.occurrence.key.theoremName == ``result &&
           (row.result matches .declaredUnresolved _)
       catch _ => pure true

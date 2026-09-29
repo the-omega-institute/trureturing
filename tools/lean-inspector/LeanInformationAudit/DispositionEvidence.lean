@@ -131,7 +131,7 @@ def finiteSealInScope? (env : Environment) (modules : Array Name)
       return some (record, occurrence)
   return none
 
-private def validateFinite (modules : Array Name) (key : StatementKey)
+private def validateFinite (root : Name) (modules : Array Name) (key : StatementKey)
     (payload : FiniteOccurrenceDisposition key)
     (trivial : Option (TrivialInCatalogDisposition key) := none) : MetaM Unit := do
   let className := if trivial.isSome then "trivial_in_catalog" else "finite_occurrence"
@@ -142,7 +142,7 @@ private def validateFinite (modules : Array Name) (key : StatementKey)
   let some registration := candidates[0]?
     | throwError (identityError key.theoremName "canonical_arena" "registered-arena"
         payload.canonicalArena.toString)
-  match ← validatePersistedEntry env registration with
+  match ← validatePersistedEntry root env registration with
   | .error message => throwError message
   | .ok () => pure ()
   unless payload.registration == registration.unitName do
@@ -163,9 +163,10 @@ private def validateFinite (modules : Array Name) (key : StatementKey)
   let index ← ProjectionProof.fin occurrence.index record.theorems.size
   for row in record.theorems do
     let some peer := (InformationRegistry.entries env).find? fun peer =>
-        peer.theoremName == row.theoremName && peer.canonicalObjectArenaName == payload.canonicalArena
+        modules.contains peer.registrationModuleName && peer.theoremName == row.theoremName &&
+          peer.canonicalObjectArenaName == payload.canonicalArena
       | failClass key className "catalog.membership"
-    match ← validatePersistedEntry env peer with
+    match ← validatePersistedEntry root env peer with
     | .error message => throwError message
     | .ok () => pure ()
     let unit ← constant modules key className "catalog.unit" row.unitName
@@ -309,9 +310,9 @@ private def elabStructuralTheorem : CommandElab := fun stx => registrationTransa
         lawArenaSyntax := lawArenaId.raw.reprint.getD ""
         realizationSyntax := realizationTerm.raw.reprint.getD "" } : StructuralProvenanceEntry)
     liftTermElabM do
-      RegistrationGates.publishDiagnostic entry.unitConst (← RegistrationGates.validateStructural entry)
+      RegistrationGates.publishDiagnostic entry.registrationModule entry.unitConst (← RegistrationGates.validateStructural entry)
     modifyEnv fun env => structuralRegistry.addEntry env entry
-    TemplateBinding.publishRegistration {
+    TemplateBinding.publishRegistration entry.registrationModule {
       theoremName := entry.theoremName, unitName := entry.unitConst,
       arenaName := entry.lawArenaConst, realizationName := entry.realizationConst,
       registrationModuleName := entry.registrationModule,
@@ -789,14 +790,14 @@ def validateEvidenceSources (root : Name) (inventory : DispositionInventory)
       | .trivialInCatalog payload =>
         match payload.context with
         | .finite nondegenerate enumeration =>
-          validateFinite modules key ⟨payload.canonicalArena, payload.registration,
+          validateFinite root modules key ⟨payload.canonicalArena, payload.registration,
             payload.realization, nondegenerate, enumeration⟩ (some payload)
         | .structural =>
           let source ← validateStructural root inventory.headSha modules registrations
             key theoremExpr statement ⟨payload.canonicalArena, payload.registration,
               payload.realization, .anonymous, .anonymous⟩ (some payload)
           unless sources.contains source do sources := sources.push source
-      | .finiteOccurrence payload => validateFinite modules key payload
+      | .finiteOccurrence payload => validateFinite root modules key payload
       | .structuralOccurrence payload =>
         let source ← validateStructural root inventory.headSha modules registrations
           key theoremExpr statement payload

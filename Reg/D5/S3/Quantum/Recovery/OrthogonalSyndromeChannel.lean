@@ -1,6 +1,6 @@
 import D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel
 import Reg.Support.DependentFamily
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Syntax
 
 open _root_.D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel
 open _root_.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
@@ -724,6 +724,5 @@ register_information_theorem logical_representation_on_copy in arena
 #print axioms registration
 end LogicalRepresentationOnCopy
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← Lean.getEnv)
 
 end Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel

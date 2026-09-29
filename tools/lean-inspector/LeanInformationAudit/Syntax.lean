@@ -71,7 +71,7 @@ private def optionalWitnessName (stx : Syntax) : CommandElabM Name := do
   witnessName (some ⟨stx[1]⟩)
 
 private def registerEntry (entry : InformationRegistryEntry) : CommandElabM Unit := do
-  registerValidatedEntry entry
+  registerValidatedEntry (← getEnv).header.mainModule entry
 
 private def catalogIdFrom (id : TSyntax `ident) : CatalogId :=
   let name := id.getId
@@ -343,7 +343,7 @@ private def elabInformationTheorem : CommandElab := fun stx => registrationTrans
       throwErrorAt arenaId "IE-C003 ArenaResolutionFailed: {arenaId.getId}"
     let realizationName := theoremName.str primitiveRealizationSuffix
     let unitName := theoremName.str theoremUnitSuffix
-    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv).header.mainModule (← getEnv) {
       theoremName, unitName, arenaName, realizationName }
     ensureRegisterableName (← getEnv) entry
     let realizationId := absoluteIdentFrom theoremId realizationName
@@ -390,9 +390,9 @@ private def elabRegisterInformationTheoremVia : CommandElab := fun stx => regist
     return some value
   if (← get).messages.hasErrors then return
   let theoremName ← resolveTheorem theoremId
-  let unitName := localCompanionName (← getEnv) theoremName theoremUnitSuffix
-  let realizationName := localCompanionName (← getEnv) theoremName primitiveRealizationSuffix
-  let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+  let unitName := localCompanionName (← getEnv) (← getEnv).header.mainModule theoremName theoremUnitSuffix
+  let realizationName := localCompanionName (← getEnv) (← getEnv).header.mainModule theoremName primitiveRealizationSuffix
+  let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv).header.mainModule (← getEnv) {
     theoremName, unitName, arenaName, realizationName,
     statementIdentity := theoremStatementIdentity (← getEnv) theoremName }
   ensureRegisterableName (← getEnv) entry
@@ -412,11 +412,11 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
     catch _ =>
       throwErrorAt arenaId "IE-C003 ArenaResolutionFailed: {arenaId.getId}"
     let generatedRealizationName :=
-      localCompanionName (← getEnv) theoremName primitiveRealizationSuffix
+      localCompanionName (← getEnv) (← getEnv).header.mainModule theoremName primitiveRealizationSuffix
     let (realizationName, isInline) ← resolveLegacyRealization theoremName arenaName
       generatedRealizationName realizationSyntax
-    let unitName := localCompanionName (← getEnv) theoremName theoremUnitSuffix
-    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+    let unitName := localCompanionName (← getEnv) (← getEnv).header.mainModule theoremName theoremUnitSuffix
+    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv).header.mainModule (← getEnv) {
       theoremName, unitName, arenaName, realizationName }
     ensureRegisterableName (← getEnv) entry
     let realizationInfo ← match (← getEnv).find? realizationName with
@@ -506,7 +506,7 @@ private def elabInformationTheoremOccurrence : CommandElab := fun stx => registr
     theoremUnitSuffix
   let realizationName := catalogQualifiedName rootId objectArenaName catalogId theoremName
     primitiveRealizationSuffix
-  let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+  let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv).header.mainModule (← getEnv) {
     theoremName
     unitName
     arenaName := lawArenaName
@@ -552,7 +552,7 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     theoremUnitSuffix
   let realizationName := catalogQualifiedName rootId objectArenaName catalogId theoremName
     primitiveRealizationSuffix
-  let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+  let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv).header.mainModule (← getEnv) {
     theoremName
     unitName
     arenaName := lawArenaName
@@ -653,7 +653,7 @@ private def elaborateTemplateEnrollment (id : TSyntax `ident)
     logWarning m!"IE-C050 ClosedTruthReadout template={name} reason=unclassified_form rule=E4c.version"
     return
   let constructors ← types.mapM fun ast => liftCoreM <| realizeGlobalConstNoOverloadWithInfo ast
-  match ← TemplateAudit.enroll name constructors with
+  match ← TemplateAudit.enroll (← getEnv).header.mainModule (← getOptions) name constructors with
   | .ok () => pure ()
   | .error message =>
     logWarning m!"IE-C050 ClosedTruthReadout template={name} {TemplateAudit.diagnosticFields message}"
@@ -794,7 +794,7 @@ private def elabSourceRegistration : CommandElab := fun stx => registrationTrans
   TemplateBinding.withDeclaration {
     theoremName, arena := arenaName, descriptor, diagnostic,
     escapeInput := { residual with sourceSelection := some selection } } do
-    registerValidatedEntry {
+    registerValidatedEntry (← getEnv).header.mainModule {
       theoremName, unitName := unit, arenaName, realizationName := recordName,
       sourceBound := true, objectArenaName := arenaName, resolvedArenaName := arenaName,
       registrationModuleName := root, localRegistrationNames := false }

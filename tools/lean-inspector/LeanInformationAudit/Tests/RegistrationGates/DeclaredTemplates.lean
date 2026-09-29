@@ -57,7 +57,7 @@ elab "observe_declared_template_enrollment" : command => do
     ("body_recursive_definition_rejected", ``recursiveBody, some "unclassified_form:E4.recursion:Nat.rec")]
   for (label, name, expected) in cases do
     let state ← get
-    let result ← enroll name
+    let result ← enroll (← getEnv).header.mainModule (← getOptions) name
     let actual := match result with | .ok () => none | .error text => some text
     let present := (selectedPlan (← getEnv) name).isOk
     set state
@@ -68,7 +68,7 @@ observe_declared_template_enrollment
 
 elab "observe_declared_template_plan_identity" : command => do
   let saved ← get
-  let .ok () ← enroll ``symbolicPointwise | throwError "identity fixture enrollment failed"
+  let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``symbolicPointwise | throwError "identity fixture enrollment failed"
   let .ok plan := selectedPlan (← getEnv) ``symbolicPointwise
     | throwError "identity fixture plan missing"
   let .ok bytes := planEncoding plan | throwError "identity fixture encoding failed"
@@ -102,7 +102,7 @@ elab "observe_declared_template_plan_identity" : command => do
     unless (retained.lookup plan.name (pure () : Id Unit)).isOk do
       throwError "[FAIL] manifest_version_preserves_enrollment_encoding_and_verdict"
     setEnv saved.env
-    let .ok () ← enroll ``symbolicPointwise | throwError "setup: bumped manifest enrollment failed"
+    let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``symbolicPointwise | throwError "setup: bumped manifest enrollment failed"
     let .ok fresh := selectedPlan (← getEnv) ``symbolicPointwise
       | throwError "setup: fresh plan missing"
     let .ok freshBytes := planEncoding fresh | throwError "setup: fresh encoding failed"

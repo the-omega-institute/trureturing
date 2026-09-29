@@ -233,6 +233,41 @@ open EscapeRecord
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.CIRPT
 end
+section
+open _root_.D5.S3.ConceptDynamics
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency.types false
+set_option maxHeartbeats 2000000
+set_option maxRecDepth 100000
+open _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
+open RegistrationTemplates
+open _root_.D5.S3.ConceptDynamics.InformationEscapeArenas
+open SharedArenaFiniteTemplates
+open EscapeRecord
+open LeanInformationAudit
+open _root_.D5.S3.ConceptDynamics.CIRPT
+
+open Lean Meta LeanInformationAudit in
+run_cmd do
+  let catalogs ← prepareCatalogs `Reg.Catalogs.SharedArenaPeers
+  unless catalogs.size == 2 do throwError "expected two maximal canonical catalogs"
+  for (prepared, expected) in catalogs.zip #[``interventionCatalog, ``observationCatalog] do
+    Lean.Elab.Command.liftTermElabM do
+      unless ← isDefEq prepared.type (← inferType (mkConst expected)) do
+        throwError "measured catalog uses a different canonical arena: {expected}"
+      -- The engine's empty vector tail is extensionally empty, not definitionally
+      -- the vecEmpty term. Check every actual unit in its complete finite vector.
+      for unit in prepared.record.units do
+        let bound ← mkAppM ``LT.lt #[mkNatLit unit.index, mkNatLit prepared.record.units.size]
+        let position ← mkAppM ``Fin.mk #[mkNatLit unit.index, ← mkDecideProof bound]
+        let measured ← mkAppM ``Catalog.theoremAt #[mkConst expected, position]
+        unless ← isDefEq measured (mkConst unit.unitName) do
+          throwError "measured catalog differs at occurrence {unit.theoremName}"
+    logInfo m!"MAXIMAL_CATALOG_VALIDATED: {prepared.record.arenaName}; occurrences={prepared.record.units.size}"
+end
+
 end Reg.Catalogs.SharedArenaPeers
 #print axioms _root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual.«Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.SharedArenaPeers/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena/finiteProbe».__information_unit
 #print axioms _root_.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer.«Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena/finiteProbe».__information_unit

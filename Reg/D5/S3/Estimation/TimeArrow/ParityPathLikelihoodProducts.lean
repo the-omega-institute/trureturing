@@ -1,6 +1,6 @@
 import D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts
 import Reg.Support.ParityKernelRegistrationTemplates
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Syntax
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.ConceptDynamics.InformationEscape.ParityKernelRegistrationTemplates
@@ -270,6 +270,5 @@ register_information_theorem forward_backward_inner_product in mixedArena
 #print axioms mixed_sensitivity
 #print axioms mixed_dependence
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← getEnv)
 
 end Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts

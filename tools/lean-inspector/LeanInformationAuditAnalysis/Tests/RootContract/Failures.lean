@@ -7,7 +7,7 @@ private def rejects (expected source baseline : Array SnapshotOccurrence)
   let saved ← getEnv
   let message ← try
     RootCatalogs.declare { rootId := saved.header.mainModule, expected, source, baseline }
-    validateRegistrySnapshot (← getEnv)
+    validateRegistrySnapshot (← getEnv).header.mainModule (← getEnv)
     pure "accepted"
   catch error => error.toMessageData.toString
   finally setEnv saved

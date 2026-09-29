@@ -134,7 +134,7 @@ public sealed class LegacyContextCausalEvidenceTests
         foreach (var path in Registrations)
         {
             var wire = JsonNode.Parse(files[path].InformationTemplates!.Value.GetRawText())!;
-            Assert.Equal(15, wire["compatibility_version"]!.GetValue<int>());
+            Assert.Equal(16, wire["compatibility_version"]!.GetValue<int>());
             var record = Assert.Single(wire["records"]!.AsArray(),
                 row => row!["registration_source_path"]!.GetValue<string>() == path)!;
             Assert.Equal("declared_validated", record["state"]!.GetValue<string>());

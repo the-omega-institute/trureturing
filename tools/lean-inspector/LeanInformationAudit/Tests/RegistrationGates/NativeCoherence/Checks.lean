@@ -23,7 +23,7 @@ private def withFile (path : System.FilePath) (bytes : ByteArray)
 
 private def observeEnrollment (label : String) (expected : Option String) : CommandElabM Unit := do
   let saved ← get
-  let result ← enroll `DTRNativeFixture.template
+  let result ← enroll (← getEnv).header.mainModule (← getOptions) `DTRNativeFixture.template
   let actual := match result with | .ok () => none | .error text => some text
   let present := (selectedPlan (← getEnv) `DTRNativeFixture.template).isOk
   set saved

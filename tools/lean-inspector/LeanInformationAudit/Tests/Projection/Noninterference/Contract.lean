@@ -13,7 +13,7 @@ commands and verifies rejection before any declaration or artifact escapes.
 
 open Lean Lean.Elab.Command LeanInformationAudit
 
-example : CommandElabM Unit := @prepareSealPublication
+example : ValidatedSourceSnapshot → CommandElabM Unit := @prepareSealPublication
 
 example : Name -> CommandElabM Unit := @prepareInformationAnalysisStage
 

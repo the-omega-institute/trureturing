@@ -10,7 +10,7 @@ private def rejectsCausalMutation (second extra : Bool) (label : String)
     (missing unexpected : Array String) : CommandElabM Unit := do
   let original ← getEnv
   try
-    registerCausalFixture second extra
+    registerCausalFixture designatedRoot second extra
     modifyEnv (·.setMainModule designatedRoot)
     RootCatalogs.declare designatedContract
     let env ← getEnv

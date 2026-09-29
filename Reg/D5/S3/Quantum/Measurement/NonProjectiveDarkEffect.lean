@@ -1,6 +1,6 @@
 import D5.S3.Quantum.Measurement.NonProjectiveDarkEffect
 import Reg.Support.DependentFamily
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Syntax
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
@@ -123,6 +123,5 @@ register_information_theorem non_projective_dark_effect in arena
 #print axioms sensitivity_proof
 #print axioms dependence_proof
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← getEnv)
 
 end Reg.D5.S3.Quantum.Measurement.NonProjectiveDarkEffect

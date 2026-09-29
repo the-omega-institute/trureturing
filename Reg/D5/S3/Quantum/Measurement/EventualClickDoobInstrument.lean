@@ -1,6 +1,6 @@
 import D5.S3.Quantum.Measurement.EventualClickDoobInstrument
 import Reg.Support.DependentFamily
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Syntax
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Foundation.FiniteKrausChannel
@@ -153,6 +153,5 @@ register_information_theorem eventual_click_doob_instrument in arena
 #print axioms sensitivity_proof
 #print axioms dependence_proof
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← getEnv)
 
 end Reg.D5.S3.Quantum.Measurement.EventualClickDoobInstrument

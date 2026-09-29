@@ -10,7 +10,7 @@ private def observe (name : String) (ok : Bool) : MetaM Unit :=
 
 run_meta withPrivateSources do
   let initial ← getEnv
-  let rows ← assessJoined
+  let rows ← (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let #[record] := rows | throwError "setup: exactly one registration occurrence required"
   let .declaredValidated _ := record.result | throwError "setup: registration is not validated"
   let some descriptor := record.descriptor | throwError "setup: descriptor absent"
@@ -19,7 +19,7 @@ run_meta withPrivateSources do
     | throwError "setup: selected plan absent"
   let primed ← getEnv
   let before := (observedAssessments primed).size
-  discard <| assessJoined
+  discard <| (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   observe "authoritative_assessment_reused" ((observedAssessments (← getEnv)).size == before)
   -- Lake hashes source text modulo CRLF. Start a fresh assessment environment
   -- so native coherence checks the unchanged trace rather than an earlier
@@ -31,7 +31,7 @@ run_meta withPrivateSources do
     let edited := (String.fromUTF8! original).crlfToLf.replace "\n" "\r\n"
     unless edited.toUTF8 != original do throwError "setup: line endings did not change bytes"
     IO.FS.writeFile path edited
-    let changed ← assessJoined
+    let changed ← (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
     observe "imported_line_endings_preserve_verdict"
       (changed.all (fun row => row.result matches .declaredValidated _))
   finally IO.FS.writeBinFile path original
@@ -50,18 +50,18 @@ run_meta withPrivateSources do
   let bytes ← IO.FS.readBinFile unrelated
   try
     IO.FS.writeFile unrelated ((String.fromUTF8! bytes) ++ "\n-- changed unrelated enrollment input\n")
-    let unchanged ← assessJoined
+    let unchanged ← (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
     observe "unrelated_template_keeps_selected_evidence"
       (unchanged.all (fun row => row.result matches .declaredValidated _) &&
         (observedAssessments (← getEnv)).size == before)
   finally IO.FS.writeBinFile unrelated bytes
   setEnv primed
   setReducibilityStatus plan.name .irreducible
-  discard <| assessJoined
+  discard <| (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   observe "changed_native_metadata_not_cached_safe"
     ((observedAssessments (← getEnv)).size == before + 1)
   setEnv primed
-  let lowered ← withOptions (fun options => informationTemplate.work.set options 1) assessJoined
+  let lowered ← withOptions (fun options => informationTemplate.work.set options 1) do (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   observe "changed_options_not_cached_safe"
     (lowered.all (fun row => row.result matches .declaredUnresolved _) &&
       (observedAssessments (← getEnv)).size == before + 1)
@@ -78,7 +78,7 @@ run_meta withPrivateSources do
 -- the complete join shares none of it.
 run_meta withPrivateSources do
   let initial ← getEnv
-  let primed ← exportSnapshot
+  let primed ← (exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   unless primed.selected.all (fun row => row.result matches .declaredValidated _) do
     throwError "setup: retained assessment requires a validated registration"
   let owners := primed.originals.foldl (fun owners row =>

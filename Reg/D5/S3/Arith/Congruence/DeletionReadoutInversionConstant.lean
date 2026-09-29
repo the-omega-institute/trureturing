@@ -1,6 +1,6 @@
 import D5.S3.Arith.Congruence.DeletionReadoutInversionConstant
 import Reg.Support.DependentFamily
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Syntax
 
 open _root_.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -118,6 +118,5 @@ register_information_theorem deletion_readout_inversion_constant in arena
 #print axioms sensitivity_proof
 #print axioms dependence_proof
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← getEnv)
 
 end Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant

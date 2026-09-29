@@ -39,7 +39,7 @@ expect_information_occurrence constantTheorem
 
 run_cmd do
   let before := (← get).messages
-  LeanInformationAudit.prepareSealPublication
+  LeanInformationAudit.prepareSealPublication (← validateSourceSnapshot (← Lean.getEnv).header.mainModule (InformationRegistry.entries (← Lean.getEnv)))
   LeanInformationAudit.Tests.checkZeroMessages "finite" 1 before
 
 end LeanInformationAudit.Tests.SealZeroCapture

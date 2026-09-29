@@ -129,6 +129,5 @@ register_information_theorem finite_branching_path_clock_criterion in arena
 #print axioms sensitivity_proof
 #print axioms dependence_proof
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← getEnv)
 
 end Reg.D5.S3.Estimation.ExperimentCost.FiniteBranchingPathClockCriterion

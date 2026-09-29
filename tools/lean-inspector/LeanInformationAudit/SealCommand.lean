@@ -311,15 +311,14 @@ def validateFrozenBaselineInSnapshot (rootId : Name)
       baselineContributors retainedContributors
 
 /-- Compare the independent root manifest with the sealed import-closure registry. -/
-def validateRegistrySnapshot (env : Environment) : CommandElabM Unit := do
-  let rootId := env.header.mainModule
+def validateRegistrySnapshot (rootId : Name) (env : Environment) : CommandElabM Unit := do
   if let some contract := RootCatalogs.find? env rootId then
     validateFrozenBaselineInSnapshot rootId (snapshotExpectations rootId contract.source)
   let expectedEntries ← liftTermElabM <|
     (expectedOccurrencesForRoot env rootId).mapM fun entry => do
       let objectArenaName ← resolveCanonicalArenaNameFromEvidence entry.objectArenaName
       pure { entry with objectArenaName }
-  let actualEntries := InformationRegistry.entries env
+  let actualEntries := InformationRegistry.forRoot env rootId
   let expectedKeys := expectedEntries.map expectedKey |>.qsort (· < ·)
   let actualKeys := actualEntries.map actualKey |>.qsort (· < ·)
   unless expectedKeys == actualKeys do
@@ -342,10 +341,9 @@ private def rootQualifiedEntry (rootId : Name) (localSealNames : Bool)
       realizationName := catalogQualifiedName rootId entry.canonicalObjectArenaName
         entry.effectiveCatalogId entry.theoremName primitiveRealizationSuffix }
 
-private def prepareRootQualifiedEntries (env : Environment)
+private def prepareRootQualifiedEntries (rootId : Name) (env : Environment)
     (entries : Array InformationRegistryEntry) :
     CommandElabM (Array InformationRegistryEntry) := do
-  let rootId := env.header.mainModule
   let localSealNames := entries.all fun entry =>
     entry.localRegistrationNames && entry.registrationModuleName == rootId
   let qualified := entries.map (rootQualifiedEntry rootId localSealNames)
@@ -371,13 +369,11 @@ private def retainAnalysisState (env : Environment) (state : StagedAnalysisState
 kernel-checks them locally, and publishes SealRecords. Analysis is staged separately.
 Neither publication command has an artifact selector or destination. -/
 
-def prepareSealPublication : CommandElabM Unit := do
+def prepareSealPublication (snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
   let baseEnv ← getEnv
   try
-    validateRegistrySnapshot baseEnv
-    let sourceEntries := InformationRegistry.entries baseEnv
-    let snapshot ← validateSourceSnapshot sourceEntries
-    let catalogEntries ← prepareRootQualifiedEntries baseEnv sourceEntries
+    withEnv baseEnv <| validateRegistrySnapshot snapshot.rootId baseEnv
+    let catalogEntries ← prepareRootQualifiedEntries snapshot.rootId baseEnv snapshot.sourceEntries
     let snapshot ← snapshot.stageAliases catalogEntries
     let aliasEnv ← getEnv
     let catalogs ← prepareCatalogsFromSnapshot snapshot
@@ -390,6 +386,27 @@ def prepareSealPublication : CommandElabM Unit := do
     setEnv stagedEnv
   catch error =>
     setEnv baseEnv
+    throw error
+
+private def elabSealInformationTheory : ValidatedSourceSnapshot → CommandElab :=
+  terminalSealCommand prepareSealPublication
+
+/-- The report entry uses exactly the command assessment and kernel publisher.
+Every environment change, including assessment extensions, rolls back on failure. -/
+def assessAndSealRegistration (input : RegistrationAssessmentInput) : CoreM Unit := do
+  let saved ← getEnv
+  tryCatchRuntimeEx (do
+    unless sameRegistrationEnvironment saved input.environment do
+      throwError "IE-C050 ClosedTruthReadout reason=incomplete_closure rule=dtr.assessment_input"
+    withOptions (fun _ => input.options) do
+      liftCommandElabM do
+        withEnv input.environment <| validateRegistrySnapshot input.rootId input.environment
+        let snapshot ← assessRegistrationInput input
+        match auditSealOutputOnly (← getEnv) ``elabSealInformationTheory input.rootId with
+        | .error message => throwError message
+        | .ok () => elabSealInformationTheory snapshot Syntax.missing
+  ) fun error => do
+    setEnv saved
     throw error
 
 /-- Stage analysis for an already-sealed root, publishing only after all checks pass. -/
@@ -439,16 +456,11 @@ def prepareInformationAnalysisExport (rootId : Name) (requested : List ArtifactK
     artifacts := artifacts ++ [(.ascii, contents)]
   return { artifacts }
 
-private def elabSealInformationTheory : CommandElab :=
-  terminalSealCommand prepareSealPublication
-
 @[command_elab sealInformationTheoryCmd]
-private def elabAuditedSeal : CommandElab := fun stx => do
-  let currentEnv ← getEnv
-  match auditSealOutputOnly currentEnv ``elabSealInformationTheory
-      currentEnv.header.mainModule with
-  | .error message => throwError message
-  | .ok () => elabSealInformationTheory stx
+private def elabAuditedSeal : CommandElab := fun _ => do
+  let rootId := (← getEnv).header.mainModule
+  liftCoreM do
+    assessAndSealRegistration (← RegistrationAssessmentInput.capture rootId)
 
 private def elabInformationAnalysisExport : CommandElab :=
   terminalInformationAnalysisExportCommand prepareInformationAnalysisExport
