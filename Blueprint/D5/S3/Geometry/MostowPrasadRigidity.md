@@ -77,6 +77,25 @@ remaining geometric input needed to turn algebraic conjugacy into uniqueness.
 
 *Proof.* Machine-checked in Lean. ∎
 
+**Definition 1.6 (Dense holonomy orbit).**
+
+Lean definition:
+`D5/S3/Geometry/MostowPrasadRigidity.DenseOrbit`
+
+For a representation into the isometry group of a metric space, `DenseOrbit`
+records that the orbit of a chosen basepoint is dense.
+
+**Theorem 1.7 (Dense orbit implies trivial centralizer under basepoint control).**
+
+Lean statement:
+`D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_orbit`
+
+If every centralizing isometry fixes the basepoint and its orbit is dense, then
+the centralizer of the representation image is trivial. The proof uses
+continuity and the dense-set uniqueness theorem above.
+
+*Proof.* Machine-checked in Lean. ∎
+
 ## Full endpoint still open
 
 The intended endpoint is: every homotopy equivalence between connected,
@@ -93,3 +112,5 @@ construction, or the hyperbolic lattice conjugacy theorem.
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_symm`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_trans`
 - Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.groupConjugacy_conjugator_unique`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.DenseOrbit`
+- Truth anchor: `D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_orbit`

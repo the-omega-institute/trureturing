@@ -69,6 +69,24 @@ internal sealed class MostowPrasadRigidityDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A trivial centralizer for the holonomy image makes the ambient conjugator unique."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mostow-prasad-dense-orbit"),
+                DeclarationHandle.Create(Prefix + "DenseOrbit"),
+                H("Dense holonomy orbit"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The orbit of a chosen basepoint under an isometry representation is dense."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("mostow-prasad-dense-orbit-centralizer"),
+                DeclarationHandle.Create(Prefix + "rangeCentralizerTrivial_of_dense_orbit"),
+                H("Dense orbit centralizer criterion"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A dense orbit and basepoint control imply a trivial centralizer."))),
                 DescribeRole.Theorem)),
         []));
 }

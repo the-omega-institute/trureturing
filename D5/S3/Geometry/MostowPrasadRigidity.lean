@@ -88,6 +88,27 @@ theorem groupConjugacy_trans
 def RangeCentralizerTrivial (ρ : G →* K) : Prop :=
   ∀ z : K, (∀ g : G, z * ρ g = ρ g * z) → z = 1
 
+/-- The orbit of a point under a representation is dense. -/
+def DenseOrbit {X : Type*} [MetricSpace X] (ρ : G →* (X ≃ᵢ X)) (x₀ : X) : Prop :=
+  Dense (Set.range fun g : G => ρ g x₀)
+
+theorem rangeCentralizerTrivial_of_dense_orbit
+    {X : Type*} [MetricSpace X] (ρ : G →* (X ≃ᵢ X)) (x₀ : X)
+    (horbit : DenseOrbit ρ x₀)
+    (hbase : ∀ z : X ≃ᵢ X,
+      (∀ g : G, z * ρ g = ρ g * z) → z x₀ = x₀) :
+    RangeCentralizerTrivial ρ := by
+  intro z hz
+  refine isometry_equiv_eq_of_eqOn_dense (Set.range fun g : G => ρ g x₀) horbit z 1 ?_
+  intro y hy
+  obtain ⟨g, rfl⟩ := hy
+  calc
+    z (ρ g x₀) = (z * ρ g) x₀ := rfl
+    _ = (ρ g * z) x₀ := by rw [hz g]
+    _ = ρ g (z x₀) := rfl
+    _ = ρ g x₀ := by rw [hbase z hz]
+    _ = (1 : X ≃ᵢ X) (ρ g x₀) := rfl
+
 theorem groupConjugacy_conjugator_unique
     (e : G ≃* H) (ρ : G →* K) (σ : H →* K)
     {a b : K}
@@ -113,5 +134,6 @@ end GroupConjugacy
 #print axioms groupConjugacy_symm
 #print axioms groupConjugacy_trans
 #print axioms groupConjugacy_conjugator_unique
+#print axioms rangeCentralizerTrivial_of_dense_orbit
 
 end D5.S3.Geometry.MostowPrasadRigidity
