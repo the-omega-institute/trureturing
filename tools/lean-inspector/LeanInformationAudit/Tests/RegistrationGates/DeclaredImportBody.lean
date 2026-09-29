@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selected
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredImportBody
 open Lean Meta Elab Command TemplateAudit
@@ -24,12 +27,8 @@ elab "observe_import_body" : command => do
   let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) name | throwError "setup: ordinary template enrollment failed"
   let env ← getEnv
   let .ok plan := selectedPlan env name | throwError "setup: checked plan absent"
-  let .ok bytes := planEncoding plan | throwError "setup: checked plan encoding failed"
-  let frame : TemplatePlanFrame := {
-    key := name.toString.toUTF8, payload := bytes, identity := Sha256.hex bytes }
-  -- Build an empty module environment through the compiler's public constructor.
-  -- Transport the already kernel-checked declaration through native async views;
-  -- this isolates addFrame without reimporting the full test dependency graph.
+  -- A report must reassess the original body. A public signature-only
+  -- environment cannot borrow a plan from a different checked environment.
   let empty ← finalizeImport default #[] {} 0 false false (isModule := true)
   let publicBranch ← (empty.setMainModule env.header.mainModule).addConstAsync name .defn (some .axiom)
   publicBranch.commitConst checked (exportedInfo? := some (.axiomInfo {
@@ -38,13 +37,15 @@ elab "observe_import_body" : command => do
   let visible := publicBranch.mainEnv.setExporting true
   let some publicInfo := visible.find? name | throwError "setup: public declaration absent"
   unless publicInfo.value?.isNone do throwError "setup: public implementation was exposed"
-  let imported := ({} : TemplateIndex).addFrame frame visible plan.enrollmentOwner
-  let ok := (imported.lookup name (pure () : Id Unit)).isOk
-  let ordinary := ({} : TemplateIndex).addFrame frame env plan.enrollmentOwner
-  let full := (ordinary.lookup name (pure () : Id Unit)).isOk
+  setEnv visible
+  let hiddenResult ← enroll visible.header.mainModule (← getOptions) name
+  let rejected := hiddenResult.isError
+  setEnv (resetTemplatePlans env)
+  let full ← enroll env.header.mainModule (← getOptions) name
+
   set saved
-  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] import_never_reaudits_body"
-  (if full then logInfo else logError) m!"[{if full then "PASS" else "FAIL"}] selective_import_within_cap_accepted"
+  (if rejected then logInfo else logError) m!"[{if rejected then "PASS" else "FAIL"}] report_rejects_missing_original_body"
+  (if full.isOk then logInfo else logError) m!"[{if full.isOk then "PASS" else "FAIL"}] report_accepts_checked_original_body"
 
 observe_import_body
 

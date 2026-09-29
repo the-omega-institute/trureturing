@@ -1,4 +1,6 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 open LeanInformationAudit
@@ -32,7 +34,7 @@ def probeRealization : PrimitiveRealization probeArena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
 
-information_theorem probeTheorem
+test_assess in information_theorem probeTheorem
   in probeArena
   primitives probeRealization
   : probeArena.Law probeRealization := by

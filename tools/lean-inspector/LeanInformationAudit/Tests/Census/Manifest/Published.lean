@@ -1,4 +1,7 @@
 import LeanInformationAudit.Census.Publish
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta Elab Command LeanInformationAudit CensusProjection
 

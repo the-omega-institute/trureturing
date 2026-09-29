@@ -1,4 +1,7 @@
 import LeanInformationAudit.Projection.ProjectionSchema
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit
 

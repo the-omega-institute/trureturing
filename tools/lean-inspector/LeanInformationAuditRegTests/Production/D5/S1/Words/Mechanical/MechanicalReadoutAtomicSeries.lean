@@ -1,6 +1,9 @@
 import Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 noncomputable section
 namespace Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries

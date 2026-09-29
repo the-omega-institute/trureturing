@@ -1,6 +1,9 @@
 import Reg.D5.S3.Observer.Separation.BooleanLowCycleBudgets
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace Reg.D5.S3.Observer.Separation.BooleanLowCycleBudgets
 open _root_.D5.S3.Observer.Separation.BooleanLowCycleBudgets

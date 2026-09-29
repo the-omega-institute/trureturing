@@ -1,4 +1,7 @@
 import LeanInformationAudit.Census.Membership
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit CensusStream
 

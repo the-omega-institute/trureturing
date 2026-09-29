@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistryProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 open LeanInformationAudit

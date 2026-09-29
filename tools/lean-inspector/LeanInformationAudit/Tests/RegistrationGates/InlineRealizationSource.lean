@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.InlineProofHelper
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.InlineRealizationSource
 

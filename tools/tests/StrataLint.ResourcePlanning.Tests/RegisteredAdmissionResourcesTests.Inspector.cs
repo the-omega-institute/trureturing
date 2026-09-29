@@ -21,7 +21,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         Assert.Equal(CommonCheckRegistrationFixture.Ids
             .Where(id => id is not ("banned-api-proof" or "capability-proof" or "selftest-pair")).Order(StringComparer.Ordinal),
             Strings(plan["execution"]!["checks"]!));
-        Assert.Equal(new[] { "leanInspector/LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface" },
+        Assert.Equal(new[] { "leanInspector/LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface", "reg/Reg", "regInspector/LeanInformationAuditRegTests" },
             Strings(plan["execution"]!["lean_targets"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
             Strings(plan["execution"]!["steps"]!));
@@ -40,6 +40,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("tools/lean-inspector/lakefile.lean", "pr")]
     [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "push")]
     [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "pr")]
+    [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean", "push")]
     [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", "push")]
     [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", "pr")]
     [InlineData("tools/lean-inspector/LeanInformationAuditRegTests/LandedFinite.lean", "push")]
@@ -48,7 +49,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     {
         var plan = Plan(input, "", mode);
         Assert.Contains("lean-inspector-build", Strings(plan["resources"]!));
-        Assert.Equal(new[] { "leanInspector/LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface" },
+        Assert.Equal(new[] { "leanInspector/LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface", "reg/Reg", "regInspector/LeanInformationAuditRegTests" },
             Strings(plan["execution"]!["lean_targets"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
             Strings(plan["execution"]!["steps"]!));

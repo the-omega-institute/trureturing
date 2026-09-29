@@ -4,10 +4,9 @@ import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 
 namespace LeanInformationAudit.RegistrationGates
-open Lean Meta
+open Lean Meta RegistrationElaboration
 open D5.S3.ConceptDynamics.InformationEscape
 
-initialize registerTraceClass `InformationRegistration.check
 
 /-- Zero proof synthesis and no realization enumeration. Each obligation,
 including type construction, has a fresh fixed elaboration budget. -/
@@ -34,41 +33,6 @@ def checked (name : Name) (expected : Expr) : MetaM Bool := do
   if proof.hasMVar then return false
   checkWithKernel proof
   return true
-
-def witnessArenaName : Name :=
-  `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessArena
-
-def objectDomainArenaName : Name :=
-  `D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
-
-def witnessBridgeName : Name :=
-  `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessPrimitiveRealization
-
-/-- Keep the author's arena for ownership and bridge identity. Only the derived
-law arena and its finite carrier are used for signature and catalog checks. -/
-structure NormalizedArena where
-  original : Expr
-  law : Expr
-  finite : Expr
-  witness : Bool
-  domain : Option Expr
-
-def normalizeArena (arena : Expr) : MetaM NormalizedArena := do
-  let type ← whnfR (← inferType arena)
-  let witness := type.isConstOf witnessArenaName
-  let objectDomain := type.isConstOf objectDomainArenaName
-  let law ← if witness then mkAppM (witnessArenaName.str "toPrimitiveLawArena") #[arena]
-    else if objectDomain then mkAppM (objectDomainArenaName.str "toPrimitiveLawArena") #[arena]
-    else pure arena
-  let finite ← if witness || type.isConstOf ``PrimitiveLawArena then
-      mkAppM ``PrimitiveLawArena.toArena #[law]
-    else if objectDomain then mkAppM ``PrimitiveLawArena.toArena #[law]
-    else if type.isConstOf ``Arena then pure arena
-    else throwError "IE-C003 ArenaResolutionFailed: {arena}"
-  let domain ← if objectDomain then
-      some <$> mkAppM (objectDomainArenaName.str "Domain") #[arena]
-    else pure none
-  return { original := arena, law, finite, witness, domain }
 
 private def closedExpression (e : Expr) : Bool :=
   !e.hasFVar && !e.hasMVar && !e.hasLooseBVars
@@ -271,9 +235,16 @@ def diagnosticName (unitName registrationModule : Name) : Name :=
 from statement identity. Their value is a literal, not executable report logic. -/
 def publishDiagnostic (rootId unitName : Name) (diagnostic : Option String) : MetaM Unit := do
   let name := diagnosticName unitName rootId
-  if (← getEnv).contains name then throwError "registration diagnostic already exists: {name}"
-  addDecl <| .defnDecl {
-    name, levelParams := [], type := mkConst ``String
-    value := mkStrLit (diagnostic.getD ""), hints := .abbrev, safety := .safe }
+  let type := mkConst ``String
+  let value := mkStrLit (diagnostic.getD "")
+  if let some info := (← getEnv).find? name then
+    unless GeneratedDeclarations.ownerOf (← getEnv) name == rootId &&
+        info.type.equal type && info.value?.any (·.equal value) do
+      throwError "registration diagnostic binding mismatch: {name}"
+    checkWithKernel value
+  else
+    addDecl <| .defnDecl {
+      name, levelParams := [], type, value, hints := .abbrev, safety := .safe }
+    modifyEnv (GeneratedDeclarations.record · name)
 
 end LeanInformationAudit.RegistrationGates

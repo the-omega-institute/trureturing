@@ -1,6 +1,9 @@
 import Reg.D5.S3.Arith.WuPyramidalComplement
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace Reg.D5.S3.Arith.WuPyramidalComplement
 section

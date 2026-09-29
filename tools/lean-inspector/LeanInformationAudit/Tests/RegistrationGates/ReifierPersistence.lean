@@ -2,6 +2,9 @@ import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
 import LeanInformationAudit.Tests.RegistrationGates.ReifierShadow
 import LeanInformationAudit.Tests.RegistrationGates.ReifierChecks
 import LeanInformationAudit.Tests.RegistrationPersistence
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit in
 run_meta do

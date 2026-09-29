@@ -174,7 +174,8 @@ def checkProviderPin (info : ConstantInfo) (owner : Name) (fuel : Nat := 65536) 
 /-- Reflect imported ownership. Current declarations have no import index;
 `checkedProvider` retains the current-module fallback in that case. -/
 def declaringModuleOf (env : Environment) (name : Name) : Option Name :=
-  (env.getModuleIdxFor? name).bind fun idx => (env.header.modules[idx]?).map (·.module)
+  ((GeneratedDeclarations.entries env).find? (·.1 == name)).map Prod.snd <|>
+    ((env.getModuleIdxFor? name).bind fun idx => (env.header.modules[idx]?).map (·.module))
 
 /-- Both insertion and persisted validation bind Name, raw type and declaring module.
 A namespace spelling, even with an identical type, is not module ownership. -/
@@ -277,14 +278,21 @@ def occurrenceBinding (e : InformationRegistryEntry) : Array Name := #[
   e.sensitivityWitness, e.catalogId, e.registrationModuleName, e.objectArenaName,
   e.resolvedArenaName, e.canonicalObjectArenaName, e.effectiveCatalogId]
 
-private def declaration (name : Name) (type value : Expr) (proof := true) : MetaM Unit := do
+private def declaration (owner name : Name) (type value : Expr) (proof := true) : MetaM Unit := do
   let type ← instantiateMVars type
   let value ← instantiateMVars value
   closed type; closed value
-  if proof then
-    addDecl (.thmDecl { name, levelParams := [], type, value })
+  if let some info := (← getEnv).find? name then
+    unless GeneratedDeclarations.ownerOf (← getEnv) name == owner &&
+        (← isDefEq info.type type) && info.value?.isSome &&
+        (← isDefEq info.value?.get! value) do
+      throwError "P1.BridgeBindingMismatch: existing declaration {name}"
+    checkWithKernel value
   else
-    addAndCompile (.defnDecl { name, levelParams := [], type, value, hints := .abbrev, safety := .safe })
+    if proof then addDecl (.thmDecl { name, levelParams := [], type, value })
+    else addAndCompile (.defnDecl {
+      name, levelParams := [], type, value, hints := .abbrev, safety := .safe })
+    modifyEnv (GeneratedDeclarations.record · name)
   unless ← RegistrationGates.checked name type do throwError "P1.MissingEvidence: kernel/axioms {name}"
 
 def unitValue (e : InformationRegistryEntry) : MetaM Expr := do
@@ -292,17 +300,18 @@ def unitValue (e : InformationRegistryEntry) : MetaM Expr := do
 
 /-- No per-registration witness declarations: create the name-based gate inputs. -/
 def derive (e : InformationRegistryEntry) (arena descriptor : Expr)
-    (outputEvidence : Option Expr := none) : MetaM InformationRegistryEntry := bounded do
+    (outputEvidence : Option Expr := none) : MetaM InformationRegistryEntry :=
+    GeneratedDeclarations.withOwner e.registrationModuleName <| bounded do
   let (statement, realization) ← exactUse e.theoremName arena descriptor
   let bridgeType ← mkAppM ``LegacyPrimitiveRealization #[arena, statement, realization]
-  declaration e.realizationName bridgeType descriptor
+  declaration e.registrationModuleName e.realizationName bridgeType descriptor
   let nd := e.unitName.str "__nondegenerate"
   let ndType ← mkAppM ``Arena.Nondegenerate #[← mkAppM ``PrimitiveLawArena.toArena #[arena]]
   let some nondegenerate ← RegistrationGates.attempt (reduceEval (← mkDecide ndType) : MetaM Bool)
     | throwError "P1.IncompleteCheck: nondegeneracy decision"
   unless nondegenerate do throwError "P1.IE-C004 DegenerateArena: {e.arenaName}"
   let ndProof ← mkDecideProof ndType
-  declaration nd ndType ndProof
+  declaration e.registrationModuleName nd ndType ndProof
   let params := descriptor.getAppArgs.extract 0 5
   let output := params[1]!
   let expected ← mkAppM ``Nontrivial #[output]
@@ -317,12 +326,12 @@ def derive (e : InformationRegistryEntry) (arena descriptor : Expr)
   let sensitivity := e.unitName.str "__sensitivity"
   let sensitivityValue := mkAppN (mkConst sensitivityProvider)
     (params ++ #[nontrivial, ← rigid nd])
-  declaration sensitivity (← mkAppM ``FiniteSlotSensitivity #[arena]) sensitivityValue
+  declaration e.registrationModuleName sensitivity (← mkAppM ``FiniteSlotSensitivity #[arena]) sensitivityValue
   let variation := e.unitName.str "__variation"
   let variationValue ← mkAppM variationProvider #[arena, mkConst ``Bool.false, ← rigid sensitivity]
-  declaration variation (← mkAppM ``FiniteLawVariation #[arena]) variationValue
+  declaration e.registrationModuleName variation (← mkAppM ``FiniteLawVariation #[arena]) variationValue
   let value ← unitValue e
-  declaration e.unitName (← inferType value) value false
+  declaration e.registrationModuleName e.unitName (← inferType value) value false
   let e := { e with variationWitness := variation, sensitivityWitness := sensitivity }
   return { e with derivedCertificate := some {
     occurrence := occurrenceBinding e, catalogKind := e.catalogKind,
@@ -351,7 +360,8 @@ def closedTruthExcluded (entry : InformationRegistryEntry) : MetaM Unit := bound
   let name := RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName
   let info ← getConstInfo name
   let env ← getEnv
-  unless env.getModuleIdxFor? name == env.getModuleIdxFor? entry.unitName &&
+  unless GeneratedDeclarations.ownerOf env name == entry.registrationModuleName &&
+      GeneratedDeclarations.ownerOf env entry.unitName == entry.registrationModuleName &&
       info.type.equal (mkConst ``String) && info.value?.any (·.equal (mkStrLit "")) do
     throwError "P1.SemanticRejected: incomplete or unbound registration diagnostic"
 

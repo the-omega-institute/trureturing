@@ -1,4 +1,7 @@
 import LeanInformationAudit.Registry
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests
 open Lean

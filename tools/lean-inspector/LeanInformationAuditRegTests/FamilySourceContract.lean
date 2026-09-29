@@ -1,5 +1,14 @@
-import LeanInformationAuditRegTests.CausalSourceContract
+import Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
+import Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner
+import Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily
+import Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion
+import Reg.D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative
+import D5.S3.ConceptDynamics.DagSemantics.KnowledgeAlongDependency
+import D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion
 import Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta Elab Command LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

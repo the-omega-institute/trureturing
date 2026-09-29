@@ -92,9 +92,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
     }
 
     [Theory]
-    [InlineData("tools/lean-inspector/LeanInformationAudit/Syntax.lean", true)]
     [InlineData("tools/lean-inspector/LeanInformationAudit/Projection/OutputOnlyAudit.lean", true)]
-    [InlineData("tools/lean-inspector/LeanInformationAudit/Registry/Entries.lean", false)]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Registry/Enrollment.lean", false)]
     public void InspectorSourceConsumersSelectOnlyTheirCompleteProjects(string path, bool grammarConsumer)
     {
         foreach (var mode in new[] { "push", "pr" })

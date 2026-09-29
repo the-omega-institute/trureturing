@@ -1,6 +1,9 @@
 import Reg.D5.S3.Observer.Separation.BooleanRankThreeProtocol
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

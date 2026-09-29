@@ -1,6 +1,9 @@
 import Reg.D5.S0.Automata.BoundedStateSampleCompactness
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace Reg.D5.S0.Automata.BoundedStateSampleCompactness
 open _root_.D5.S0.Automata.DFAOStateLowerBound

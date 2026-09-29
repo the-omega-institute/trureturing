@@ -23,8 +23,7 @@ internal static class RegManifestAgreement
     internal static string? Validate(string? rootManifest, string? regManifest, bool hasLakefile) =>
         ValidatePackage(rootManifest, regManifest, hasLakefile, "../.lake/packages",
             [("trureturing", "..", "lakefile.toml", false),
-             ("leanInspectorInterface", "../tools/lean-inspector-interface", "lakefile.toml", false),
-             ("leanInspector", "../tools/lean-inspector", "lakefile.lean", false)]);
+             ("leanInspectorInterface", "../tools/lean-inspector-interface", "lakefile.toml", false)]);
 
     private static string? ValidatePackage(string? rootManifest, string? regManifest, bool hasLakefile, string packagesDir,
         (string Name, string Directory, string Config, bool Inherited)[] expectedPaths)

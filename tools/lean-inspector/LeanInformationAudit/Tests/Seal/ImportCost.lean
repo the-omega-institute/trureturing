@@ -1,5 +1,8 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Seal.M3
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean Lean.Elab.Command
 run_cmd do
   -- Walk the import metadata already present in this environment. Loading a

@@ -4,6 +4,9 @@ import Reg.Catalogs.TemplateShadow
 import LeanInformationAuditRegTests.ProductionInputs
 import LeanInformationAudit.Tests.Seal.M3
 import LeanInformationAudit.Tests.Occurrence.RootCatalog.Ownership
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open Reg.Support
@@ -12,11 +15,10 @@ open Reg.Support
 -- split among several leaves. Expected counts come only from content contracts.
 private def checkDiagnostics (root : Name) (expected : Nat) : CommandElabM Nat := do
   let env := (← getEnv).setExporting false
-  let some idx := env.getModuleIdx? root
-    | throwError "[FAIL] FrozenRootsCompile: module not loaded: {root}"
   let mut checked : Nat := 0
   let mut findings : Nat := 0
-  for name in env.header.moduleData[idx]!.constNames do
+  for (name, owner) in GeneratedDeclarations.entries env do
+    unless owner == root do continue
     unless name.getString! == "__information_registration_diagnostic" do continue
     let some (.defnInfo info) := env.find? name
       | throwError "[FAIL] FrozenRootsCompile: missing metadata: {name}"

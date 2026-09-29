@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.AllowlistRulesCore
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 
 

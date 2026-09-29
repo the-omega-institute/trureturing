@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.AliasConstruction
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit D5.S3.ConceptDynamics.InformationEscape
 open LeanInformationAudit.Tests.ImportClosureProducer
@@ -45,7 +48,7 @@ run_cmd do
 
 /-- error: IE-C025 QualifiedNameCollision root=LeanInformationAudit.Tests.Occurrence.AliasBoundary catalog=collision generated_name=AliasBoundary.next.«LeanInformationAudit.Tests.Occurrence.AliasBoundary/AliasBoundary.zeta/collision».__information_unit occurrences=["LeanInformationAudit.Tests.ImportClosureProducer.objectArena/AliasBoundary.next"] -/
 #guard_msgs (error) in
-information_theorem next
+test_assess in information_theorem next
   in lawArena object_arena zeta catalog collision
   primitives fixtureRealization
   : lawArena.Law fixtureRealization := by trivial

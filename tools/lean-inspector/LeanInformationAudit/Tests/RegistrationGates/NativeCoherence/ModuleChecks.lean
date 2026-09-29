@@ -2,6 +2,9 @@ import LeanInformationAudit.Registry
 import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Plain
 import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Modern
 import LeanInformationAudit.Tests.SourceIsolation
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit LeanInformationAudit.TemplateAudit
 

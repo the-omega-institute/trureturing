@@ -138,7 +138,7 @@ run_cmd do
         result = self.guarded_command([self.lake, 'build'], cwd=package, env=env)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
-    def test_interface_only_reports_missing_handler(self):
+    def test_interface_only_records_unassessed_inputs(self):
         package, env = self.interface_package()
         built = self.guarded_command([self.lake, 'build'], cwd=package, env=env)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
@@ -148,17 +148,17 @@ run_cmd do
             'register_information_template Nat\n')
         result = self.guarded_command([self.lake, 'env', 'lean', 'MissingHandler.lean'],
                                       cwd=package, env=env)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn('elaboration function', result.stdout + result.stderr)
-        self.assertNotIn('unexpected token', result.stdout + result.stderr)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertNotIn('IE-C050', result.stdout + result.stderr)
 
     def test_interface_grammar_has_single_owner(self):
         implementation = ROOT / 'tools/lean-inspector/LeanInformationAudit/Syntax.lean'
-        source = implementation.read_text()
+        self.assertFalse(implementation.exists(), 'retired implementation elaborator remains')
+        source = (ROOT / 'tools/lean-inspector/LeanInformationAudit/Registry.lean').read_text()
         grammar = r'(?m)^\s*(syntax\b|declare_syntax_cat\b|elab\s)'
         self.assertFalse(re.search(grammar, source), 'implementation still declares registration grammar')
         self.assertNotRegex(source, r'(?m)^\s*def\s+(registrationTerm|\w+Keyword)\b')
-        self.assertIn('run_cmd TemplateAudit.initializeGrammarPins', source)
+        self.assertIn('run_cmd LeanInformationAudit.TemplateAudit.initializeGrammarPins', source)
         output_audit = implementation.parent / 'Projection/OutputOnlyAudit.lean'
         self.assertFalse(re.search(grammar, output_audit.read_text()),
                          'output-only audit still declares command grammar')

@@ -2,8 +2,11 @@ import Reg.D5.S3.Constants.Billiards.CollidingBlocksRecords
 import Reg.D5.S3.StatisticalMechanics.RandomWalks.KnightWalkRangeIntegrality
 import Reg.D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling
 
-import LeanInformationAuditRegTests.NegativeNamedEntry
+import Reg.D5.S3.Quantum.Information.NiceErrorBasisNonNormalStabilizer
 import LeanInformationAuditRegTests.CompiledNamedClaimWire
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.NamedClaimSourceContract

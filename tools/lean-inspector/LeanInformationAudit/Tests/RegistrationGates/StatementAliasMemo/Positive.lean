@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.StatementAliasMemo.SharedArenaOIProbe
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit
 run_meta do

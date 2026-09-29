@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.RootCatalog.Snapshot
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.Occurrence.RootCatalog
@@ -18,7 +21,7 @@ run_cmd do
     unless expected.size == 3 do throwError "missing-contributor control lost expectations"
     let savedMessages := (← get).messages
     modify fun state => { state with messages := {} }
-    elabCommand (← `(command| #seal_information_theory))
+    elabCommand (← `(command| test_assess in #seal_information_theory))
     let errors := (← get).messages.toArray.filter (·.severity == .error)
     modify fun state => { state with messages := savedMessages }
     unless errors.size == 1 do throwError "missing-contributor control needs one seal error"

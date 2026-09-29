@@ -1,4 +1,7 @@
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 run_cmd do
   if (← Lean.getEnv).header.moduleNames.any (fun name =>

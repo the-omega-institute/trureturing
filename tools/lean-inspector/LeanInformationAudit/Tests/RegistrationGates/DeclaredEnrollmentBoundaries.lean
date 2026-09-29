@@ -1,5 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredEnrollmentBoundaries
 open Lean Meta Elab Command TemplateAudit
@@ -23,7 +25,7 @@ def arena : PrimitiveLawArena where
 
 instance : DecidableEq arena.State := instDecidableEqBool
 
-information_theorem registeredTruth in arena
+test_assess in information_theorem registeredTruth in arena
   primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
   : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm
 

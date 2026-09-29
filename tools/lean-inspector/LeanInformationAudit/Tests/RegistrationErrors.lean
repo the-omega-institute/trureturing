@@ -1,4 +1,6 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 open D5.S3.ConceptDynamics.CIRPT
@@ -41,7 +43,7 @@ def fixtureRealization : PrimitiveRealization fixtureLawArena.signature where
 def fixtureBundle :=
   fixtureRealization.toPrimitiveBundle
 
-information_theorem nativeExample
+test_assess in information_theorem nativeExample
   in fixtureLawArena
   primitives fixtureRealization
   : fixtureLawArena.Law fixtureRealization := by
@@ -53,7 +55,7 @@ example : nativeExample.__information_unit.primitives =
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.RegistrationErrors.unrelatedNative -/
 #guard_msgs (error) in
-information_theorem unrelatedNative
+test_assess in information_theorem unrelatedNative
   in fixtureLawArena
   primitives fixtureRealization
   : 2 + 2 = 4 := by
@@ -118,7 +120,7 @@ theorem legacyRealization :
     LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
   equivalence := Iff.rfl
 
-register_information_theorem legacyExample
+test_assess in register_information_theorem legacyExample
   in fixtureLawArena
   primitives fixtureBundle
   realization legacyRealization
@@ -136,7 +138,7 @@ end ImportedFixture
 
 open ImportedFixture
 
-register_information_theorem importedExample
+test_assess in register_information_theorem importedExample
   in fixtureLawArena
   primitives fixtureBundle
   realization importedRealization
@@ -152,14 +154,14 @@ def definitionBackedRealization :
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.RegistrationErrors.definitionBackedTarget -/
 #guard_msgs (error) in
-register_information_theorem definitionBackedTarget
+test_assess in register_information_theorem definitionBackedTarget
   in fixtureLawArena
   primitives fixtureBundle
   realization definitionBackedRealization
 
 /-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena theorem_name=LeanInformationAudit.Tests.RegistrationErrors.legacyExample registration_modules=["LeanInformationAudit.Tests.RegistrationErrors"] count=2 -/
 #guard_msgs (error) in
-register_information_theorem legacyExample
+test_assess in register_information_theorem legacyExample
   in fixtureLawArena
   primitives fixtureBundle
   realization legacyRealization
@@ -175,7 +177,7 @@ theorem generatedRealization :
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.RegistrationErrors.generated.__lowers_escape -/
 #guard_msgs (error) in
-register_information_theorem generated.__lowers_escape
+test_assess in register_information_theorem generated.__lowers_escape
   in fixtureLawArena
   primitives fixtureBundle
   realization generatedRealization
@@ -191,7 +193,7 @@ theorem generated.__catalog_irredundant : True :=
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.RegistrationErrors.generated.__information_catalog -/
 #guard_msgs (error) in
-register_information_theorem generated.__information_catalog
+test_assess in register_information_theorem generated.__information_catalog
   in fixtureLawArena
   primitives fixtureBundle
   realization generatedRealization
@@ -199,7 +201,7 @@ register_information_theorem generated.__information_catalog
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.RegistrationErrors.generated.__catalog_irredundant -/
 #guard_msgs (error) in
-register_information_theorem generated.__catalog_irredundant
+test_assess in register_information_theorem generated.__catalog_irredundant
   in fixtureLawArena
   primitives fixtureBundle
   realization generatedRealization
@@ -207,7 +209,7 @@ register_information_theorem generated.__catalog_irredundant
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.RegistrationErrors.authored.__information_catalog -/
 #guard_msgs (error) in
-information_theorem authored.__information_catalog
+test_assess in information_theorem authored.__information_catalog
   in fixtureLawArena
   primitives fixtureRealization
   : fixtureLawArena.Law fixtureRealization := by trivial
@@ -215,7 +217,7 @@ information_theorem authored.__information_catalog
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.RegistrationErrors.authored.__catalog_irredundant -/
 #guard_msgs (error) in
-information_theorem authored.__catalog_irredundant
+test_assess in information_theorem authored.__catalog_irredundant
   in fixtureLawArena
   primitives fixtureRealization
   : fixtureLawArena.Law fixtureRealization := by trivial
@@ -263,7 +265,7 @@ theorem mismatchedRealization :
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs (error) in
-register_information_theorem mismatchTarget
+test_assess in register_information_theorem mismatchTarget
   in fixtureLawArena
   primitives fixtureBundle
   realization mismatchedRealization
@@ -342,7 +344,7 @@ run_cmd do
 /-- error: IE-C001 UnregisteredTheoremUnit:
 LeanInformationAudit.Tests.RegistrationErrors.unknownTheorem -/
 #guard_msgs (error) in
-register_information_theorem unknownTheorem
+test_assess in register_information_theorem unknownTheorem
   in fixtureLawArena
   primitives fixtureBundle
   realization legacyRealization

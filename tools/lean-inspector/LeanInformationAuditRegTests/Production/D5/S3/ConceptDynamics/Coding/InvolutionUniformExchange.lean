@@ -1,6 +1,9 @@
 import Reg.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open _root_.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

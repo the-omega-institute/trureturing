@@ -1,7 +1,10 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean Lean.Elab.Command LeanInformationAudit LeanInformationAudit.Tests.ImportClosureProducer
-expect_information_occurrence importedTheorem in objectArena
+test_assess in expect_information_occurrence importedTheorem in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 run_cmd do
   let env ← getEnv

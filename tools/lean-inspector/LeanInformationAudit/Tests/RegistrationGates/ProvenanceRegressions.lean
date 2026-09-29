@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.Provenance
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape
@@ -89,11 +92,11 @@ def structuralSignature : StructuralPrimitiveSignature := ⟨Unit, inferInstance
 
 def finiteTemplate (f : Unit → Bool → Bool) : PrimitiveRealization finiteSignature :=
   ⟨f, Fin.elim0⟩
-register_information_template finiteTemplate
+test_assess in register_information_template finiteTemplate
 
 def structuralTemplate (f : Unit → Nat → Nat) :
     StructuralPrimitiveRealization RegistrationStructural.arena structuralSignature := ⟨f⟩
-register_information_template structuralTemplate
+test_assess in register_information_template structuralTemplate
 
 private def expectBinding (name : Name) (label : String) (reason : Option String) : Meta.MetaM Unit := do
   let rows ← (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
@@ -117,14 +120,14 @@ local instance : DecidableEq RegistrationPositive.arena.State :=
   RegistrationPositive.arena.toArena.stateDecidableEq
 theorem aliasRealization : LegacyPrimitiveRealization RegistrationPositive.arena True aliasReads :=
   ⟨⟨fun _ => rfl, fun _ => True.intro⟩⟩
-register_information_theorem aliasRegistered in RegistrationPositive.arena
+test_assess in register_information_theorem aliasRegistered in RegistrationPositive.arena
   readout via (finiteTemplate (fun i x => aliasRead i x))
   primitives aliasReads.toPrimitiveBundle realization aliasRealization
   variation RegistrationPositive.lawVariation sensitivity RegistrationPositive.slotSensitivity
 run_cmd Elab.Command.liftTermElabM do
   expectBinding ``aliasRegistered "EscapeRegistrationFinite" (some "unclassified_form rule=E6.argument_identity")
 
-information_theorem cleanFinite in RegistrationPositive.arena
+test_assess in information_theorem cleanFinite in RegistrationPositive.arena
   readout via (finiteTemplate (fun i x => clean i x))
   primitives (finiteTemplate (fun i x => clean i x))
   variation RegistrationPositive.lawVariation sensitivity RegistrationPositive.slotSensitivity

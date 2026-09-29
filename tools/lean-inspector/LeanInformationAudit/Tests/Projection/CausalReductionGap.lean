@@ -1,5 +1,8 @@
 import LeanInformationAudit.Projection.KernelProjection
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalCatalog
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape

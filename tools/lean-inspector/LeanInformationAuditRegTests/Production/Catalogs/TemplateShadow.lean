@@ -1,6 +1,9 @@
 import Reg.Catalogs.TemplateShadow
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit
 section

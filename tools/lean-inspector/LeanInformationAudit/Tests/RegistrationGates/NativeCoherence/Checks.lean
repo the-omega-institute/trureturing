@@ -1,6 +1,9 @@
 import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Owner
 import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Plain
 import LeanInformationAudit.Tests.SourceIsolation
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.NativeCoherence
 open Lean Meta Elab Command TemplateAudit
@@ -59,7 +62,7 @@ elab "observe_empty_report_driver_coherence" : command => withPrivateSources do
   let observe (label : String) (expected : Option String) : CommandElabM Unit := do
     let saved ← get
     let actual ← try
-      let values ← liftTermElabM <| finiteInformationTemplateReportDriver #[requested]
+      let (values, _) ← liftTermElabM <| finiteInformationTemplateReportDriver #[requested]
       unless values.size == 1 &&
           (values[0]!.getObjValAs? (Array Json) "inventory").toOption.any (·.isEmpty) do
         throwError "setup: expected exactly one empty inventory"

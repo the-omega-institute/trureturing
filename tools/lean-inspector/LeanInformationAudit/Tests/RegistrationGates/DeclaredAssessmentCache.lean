@@ -1,6 +1,9 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredRegistration
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selected
 import LeanInformationAudit.Tests.SourceIsolation
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredAssessmentCache
 open Lean Meta Elab Command TemplateBinding TemplateAudit

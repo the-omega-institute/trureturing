@@ -2,6 +2,9 @@ import LeanInformationAudit.Tests.RegistrationGates.InlineProvenanceWire
 import LeanInformationAudit.Tests.RegistrationGates.InlineRealizationSource
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 import LeanInformationAudit.Tests.SourceIsolation
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.InlineRealization
 
@@ -13,20 +16,20 @@ open LeanInformationAudit.Tests.InlineRealizationSource
 
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
 
-register_information_theorem quantified in arena
+test_assess in register_information_theorem quantified in arena
   primitives good.toPrimitiveBundle
   realization inline good := by
     exact ⟨fun _ => rfl, fun _ _ _ x => InlineProofHelper.witness_self x⟩
   variation lawVariation sensitivity slotSensitivity
 
-register_information_theorem readoutQuantified in arena
+test_assess in register_information_theorem readoutQuantified in arena
   readout via (missingInlineTemplate good)
   primitives good.toPrimitiveBundle
   realization inline good := by
     exact ⟨fun _ => rfl, fun _ _ _ x => InlineProofHelper.witness_self x⟩
   variation lawVariation sensitivity slotSensitivity
 
-register_information_theorem occurrenceQuantified in arena
+test_assess in register_information_theorem occurrenceQuantified in arena
   object_arena objectArena catalog inline
   readout via (missingInlineOccurrenceTemplate good)
   primitives good.toPrimitiveBundle
@@ -34,7 +37,7 @@ register_information_theorem occurrenceQuantified in arena
     exact ⟨fun _ => rfl, fun _ _ _ x => InlineProofHelper.witness_self x⟩
   variation lawVariation sensitivity slotSensitivity
 
-register_information_theorem twoUniverses in arena
+test_assess in register_information_theorem twoUniverses in arena
   primitives good.toPrimitiveBundle
   realization inline good := by
     exact ⟨fun _ => rfl, fun _ _ _ _ _ x => InlineProofHelper.witness_self x⟩
@@ -42,7 +45,7 @@ register_information_theorem twoUniverses in arena
 
 theorem namedTarget : arena.Law good := rfl
 theorem namedBridge : LegacyPrimitiveRealization arena (arena.Law good) good := ⟨Iff.rfl⟩
-register_information_theorem namedTarget in arena primitives good.toPrimitiveBundle
+test_assess in register_information_theorem namedTarget in arena primitives good.toPrimitiveBundle
   realization namedBridge variation lawVariation sensitivity slotSensitivity
 
 run_meta do
@@ -101,7 +104,7 @@ elab "reject_inline " label:str " in " command:command : command => do
 
 theorem wrongStatementTarget : True := trivial
 reject_inline "wrong_statement" in
-register_information_theorem wrongStatementTarget in arena primitives good.toPrimitiveBundle
+test_assess in register_information_theorem wrongStatementTarget in arena primitives good.toPrimitiveBundle
   realization inline good := namedBridge
 
 def otherArena : PrimitiveLawArena where
@@ -115,28 +118,28 @@ def otherArena : PrimitiveLawArena where
 
 theorem wrongArenaTarget : True := trivial
 reject_inline "wrong_arena" in
-register_information_theorem wrongArenaTarget in otherArena primitives good.toPrimitiveBundle
+test_assess in register_information_theorem wrongArenaTarget in otherArena primitives good.toPrimitiveBundle
   realization inline good := namedBridge
 
 theorem wrongBundleTarget : arena.Law good := rfl
 reject_inline "wrong_bundle" in
-register_information_theorem wrongBundleTarget in arena primitives bad.toPrimitiveBundle
+test_assess in register_information_theorem wrongBundleTarget in arena primitives bad.toPrimitiveBundle
   realization inline good := by exact ⟨Iff.rfl⟩
 
 theorem nonproofTarget : arena.Law good := rfl
 reject_inline "nonproof" in
-register_information_theorem nonproofTarget in arena primitives good.toPrimitiveBundle
+test_assess in register_information_theorem nonproofTarget in arena primitives good.toPrimitiveBundle
   realization inline good := true
 
 theorem unresolvedTarget : arena.Law good := rfl
 reject_inline "unresolved_proof" in
-register_information_theorem unresolvedTarget in arena primitives good.toPrimitiveBundle
+test_assess in register_information_theorem unresolvedTarget in arena primitives good.toPrimitiveBundle
   realization inline good := unresolvedInlineProof
 
 theorem forbiddenTarget : arena.Law good := rfl
 axiom forbiddenBridge : LegacyPrimitiveRealization arena (arena.Law good) good
 reject_inline "forbidden_axiom" in
-register_information_theorem forbiddenTarget in arena primitives good.toPrimitiveBundle
+test_assess in register_information_theorem forbiddenTarget in arena primitives good.toPrimitiveBundle
   realization inline good := forbiddenBridge
 
 private def replaceSource (path : System.FilePath) (bytes : ByteArray) : IO Unit := do

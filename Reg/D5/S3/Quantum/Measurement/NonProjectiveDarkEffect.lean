@@ -1,6 +1,9 @@
 import D5.S3.Quantum.Measurement.NonProjectiveDarkEffect
 import Reg.Support.DependentFamily
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
@@ -59,7 +62,7 @@ run_cmd do
   let row : LeanInformationAudit.SnapshotOccurrence := {
     objectArenaName := root ++ `arena
     theoremName := sourceName
-    statementIdentity := theoremStatementIdentity (← getEnv) sourceName
+    capturedStatement := captureStatement (← getEnv) sourceName
     registrationModuleName := root }
   LeanInformationAudit.RootCatalogs.declare {
     rootId := root, expected := #[row], source := #[row], companionPrefix := some root }

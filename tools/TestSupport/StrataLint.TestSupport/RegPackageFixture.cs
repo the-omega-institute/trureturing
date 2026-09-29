@@ -25,7 +25,6 @@ public static class RegPackageFixture
                  {
                      ("trureturing", "..", "lakefile.toml"),
                      ("leanInspectorInterface", "../tools/lean-inspector-interface", "lakefile.toml"),
-                     ("leanInspector", "../tools/lean-inspector", "lakefile.lean"),
                  })
             packages.Add(new JsonObject
             {
@@ -50,6 +49,11 @@ public static class RegPackageFixture
             };
             package["inherited"] = name != "leanInspector";
         }
+        hostPackages.Add(new JsonObject
+        {
+            ["type"] = "path", ["name"] = "leanInspector", ["dir"] = "../lean-inspector",
+            ["configFile"] = "lakefile.lean", ["manifestFile"] = "lake-manifest.json", ["inherited"] = false,
+        });
         hostPackages.Insert(0, new JsonObject
         {
             ["type"] = "path", ["name"] = "reg", ["dir"] = "../../Reg",
@@ -74,9 +78,6 @@ public static class RegPackageFixture
             [[require]]
             name = "leanInspectorInterface"
             path = "../tools/lean-inspector-interface"
-            [[require]]
-            name = "leanInspector"
-            path = "../tools/lean-inspector"
             [[lean_lib]]
             name = "Reg"
             srcDir = ".."

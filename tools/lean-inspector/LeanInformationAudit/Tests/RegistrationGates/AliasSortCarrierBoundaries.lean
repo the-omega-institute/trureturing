@@ -1,5 +1,8 @@
 import LeanInformationAudit.ReadoutProvenance
 import LeanInformationAuditAnalysis.Tests.AliasSortCarriers
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit.RegistrationGates
 namespace AliasSortCarrierBoundaries

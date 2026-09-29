@@ -113,7 +113,7 @@ class NativePublicationConsumerTests:
                     artifact.unlink()
                     artifact.write_bytes(good_artifact)
                     source.write_bytes(good_source)
-        driver = self.root / 'LeanInformationAudit/Registry.lean'
+        driver = self.root / 'LeanInformationAudit/SealCommand.lean'
         good_driver = driver.read_bytes()
         driver.write_bytes(good_driver + b'\n-- changed shared driver\n')
         try:

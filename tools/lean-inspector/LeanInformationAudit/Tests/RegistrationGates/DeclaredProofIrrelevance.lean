@@ -1,5 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredProofIrrelevance
 open Lean Meta Elab Command TemplateAudit

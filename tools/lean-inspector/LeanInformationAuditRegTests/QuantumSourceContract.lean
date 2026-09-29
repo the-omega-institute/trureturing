@@ -1,6 +1,9 @@
 import Reg.D5.S3.Quantum.Information.ActualQubitChordObstruction
 import LeanInformationAuditRegTests.CompiledQuantumWire
 import LeanInformationAuditRegTests.CompiledQuantumHistoricalWire
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.QuantumSourceContract

@@ -1,6 +1,9 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
 import LeanInformationAudit.Tests.RegistrationPersistence
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.ImportClosureProducer
@@ -57,8 +60,9 @@ run_cmd do
       let root := `LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
       let some entry := (InformationRegistry.forRoot (← getEnv) root)[0]?
         | throwError "missing selected producer"
-      modifyEnv fun env => ($extension).addEntry env
-        { entry with registrationModuleName := `UnrelatedRegistration }))
+      modifyEnv fun env => ($extension).modifyState env fun state =>
+        { state with entries := state.entries.push
+          { entry with registrationModuleName := `UnrelatedRegistration } }))
     let root := `LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
     liftCoreM do
       assessAndSealRegistration (← RegistrationAssessmentInput.capture root)

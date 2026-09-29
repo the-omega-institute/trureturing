@@ -1,6 +1,9 @@
 import Reg.Catalogs.SharedArenaPeers
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace Reg.Catalogs.SharedArenaPeers
 section

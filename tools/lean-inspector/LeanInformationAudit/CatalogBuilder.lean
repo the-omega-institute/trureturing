@@ -28,7 +28,7 @@ private def catalogNameFor (env : Environment) (rootId arenaName : Name) (catalo
 
 private def entryArenaValue (entry : InformationRegistryEntry) : MetaM Expr := do
   if entry.objectArenaName.isAnonymous then
-    return (← RegistrationGates.normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)).finite
+    return (← RegistrationElaboration.normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)).finite
   else
     mkConstWithFreshMVarLevels entry.objectArenaName
 
@@ -133,7 +133,7 @@ def ValidatedSourceSnapshot.stageAliases (snapshot : ValidatedSourceSnapshot)
         (source.unitName, target.unitName, theoremUnitSuffix)] do
       if oldName != newName then
         unless newName == catalogQualifiedName root source.canonicalObjectArenaName
-            source.effectiveCatalogId source.theoremName suffix && !env.contains newName &&
+            source.effectiveCatalogId source.theoremName suffix &&
             !(aliases.any (·.2 == newName)) do
           throwError "IE-C050 ClosedTruthReadout reason=unclassified_form rule=dtr.snapshot_alias"
         aliases := aliases.push (oldName, newName)
@@ -141,7 +141,17 @@ def ValidatedSourceSnapshot.stageAliases (snapshot : ValidatedSourceSnapshot)
     for (source, target) in aliases do
       let sourceId := mkIdent (`_root_ ++ source)
       let targetId := mkIdent (`_root_ ++ target)
-      elabCommand (← `(command| abbrev $targetId := $sourceId))
+      if !(← getEnv).contains target then
+        elabCommand (← `(command| abbrev $targetId := $sourceId))
+        modifyEnv (GeneratedDeclarations.record · target)
+      else liftTermElabM do
+        let info ← getConstInfo target
+        let source ← mkConstWithFreshMVarLevels source
+        unless GeneratedDeclarations.ownerOf (← getEnv) target == root &&
+            info.value?.isSome && (← isDefEq info.type (← inferType source)) &&
+            (← isDefEq info.value?.get! source) do
+          throwError "IE-C050 ClosedTruthReadout reason=unclassified_form rule=dtr.snapshot_alias"
+        checkWithKernel info.value?.get!
       -- Type elaboration may instantiate universe names, but the alias body
       -- must be the original constant with its full rigid universe telescope.
       liftTermElabM do

@@ -5,6 +5,9 @@ import Reg.D5.S1.Words.Patterns.CyclicStackPreimagesFinalLow
 import Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants
 import LeanInformationAuditRegTests.CyclicSourceInventory
 import LeanInformationAuditRegTests.CompiledCyclicWire
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

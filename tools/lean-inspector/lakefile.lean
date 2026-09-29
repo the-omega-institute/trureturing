@@ -190,7 +190,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let mut sourceModules := #[mod]
   -- Inspector loads this fixed judge even for an empty registration inventory.
   -- Demand its build without making this program a report data dependency.
-  let some driver := (← getWorkspace).findModule? `LeanInformationAudit.Registry
+  let some driver := (← getWorkspace).findModule? `LeanInformationAudit.SealCommand
     | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
   let driverBuild ← driver.exportInfo.fetch
   for name in claims do

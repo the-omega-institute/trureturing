@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationErrors
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 
@@ -53,7 +56,7 @@ run_cmd do
 
 /-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena theorem_name=LeanInformationAudit.Tests.RegistrationErrors.legacyExample registration_modules=["LeanInformationAudit.Tests.RegistrationErrors","LeanInformationAudit.Tests.RegistrationPersistence"] count=2 -/
 #guard_msgs (error) in
-register_information_theorem
+test_assess in register_information_theorem
   LeanInformationAudit.Tests.RegistrationErrors.legacyExample
   in LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
   primitives LeanInformationAudit.Tests.RegistrationErrors.fixtureBundle
@@ -100,7 +103,7 @@ run_cmd do
   let caught ← indexException <|
     LeanInformationAudit.registrationTransaction do
       Lean.Elab.Command.elabCommand (← `(command|
-        information_theorem $target
+        test_assess in information_theorem $target
           in LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
           primitives LeanInformationAudit.Tests.RegistrationErrors.fixtureRealization
           : LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena.Law
