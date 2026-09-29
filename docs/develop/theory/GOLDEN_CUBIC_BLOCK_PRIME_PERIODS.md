@@ -1593,3 +1593,19 @@ $L_{m+1}=F_m+F_{m+2}$ and the monotonicity of Fibonacci numbers.
 Thus the displayed bound holds for $n\geq2r+1$.
 
 ## 追加锚（本行以下为增补区）
+
+## 36. The first two coefficients of the Fibonacci recurrence polynomial
+
+**Theorem 36.1 (near-leading recurrence coefficients).** Keep the
+recurrence polynomial $U_m(X)$ of Section 33. For every integer
+$m\geq1$, its leading coefficient, at $X^{m-1}$, is $1$. For every
+$m\geq3$, its coefficient at $X^{m-3}$ is $m-2$. In particular, the
+coefficient at $X^{q-3}$ for odd $q=2r+1$ is the odd integer $q-2$.
+
+The two formulas follow together from the recurrence
+$U_{m+2}=XU_{m+1}+U_m$: multiplication by $X$ shifts the old
+coefficients, and the leading coefficient of $U_m$ contributes one to
+the next-to-leading coefficient two steps later. The recurrence also
+bounds the degree of $U_m$ by $m-1$, so no higher term contributes.
+
+## 追加锚（本行以下为增补区）
