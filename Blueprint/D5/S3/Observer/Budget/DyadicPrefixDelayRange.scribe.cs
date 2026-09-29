@@ -20,6 +20,20 @@ internal sealed class DyadicPrefixDelayRangeDocument : IScribeDocumentDefinition
                     + "the number of nonzero binary digits of t. Controllers receive only "
                     + "raw high-bit observations and their own elapsed clock.")),
             Describe.Lean(
+                DescribeId.Create("delayed-midpoint-execute"),
+                DeclarationHandle.Create(Prefix + "delayed_midpoint_execute"),
+                H("Delay-table execution on both final-bit siblings"),
+                StatementSource.FromAuthor(DelayedStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any P, delay table K, and readout agreeing with the threshold below P "
+                        + "and invariant under addition of P periods, the recursively delayed "
+                        + "midpoint tree returns the same answer as the earliest tree. Its actual "
+                        + "last-read time adds exactly P K(floor(r/2)). The source interval has "
+                        + "even start a, length 2^(d+1), and lies below P; r ranges over that "
+                        + "whole interval, with arbitrary initial time now."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("arbitrary-prefix-delay-table"),
                 DeclarationHandle.Create(Prefix + "arbitrary_prefix_delay_table"),
                 H("One causal controller realizes an entire delay table"),
@@ -46,6 +60,29 @@ internal sealed class DyadicPrefixDelayRangeDocument : IScribeDocumentDefinition
                         + "along every source path gives the earliest-time lower bound; the "
                         + "terminal sibling phase then makes the nonnegative difference an "
                         + "integer multiple of P. Both possible last source bits are included."))),
+                DescribeRole.Theorem),
+            Paragraph(Text(
+                "For deadline D, F_D is the family of actual successful depth-(d+1) "
+                    + "raw-bit protocols whose last read is at most D on every source r<P. "
+                    + "Write W=sharpWait(d+1), E(t)=P-1+P wt(t)-2t, N_p(r) for the actual "
+                    + "last-read time, and Y_p(r) for the raw final bit. The family range "
+                    + "result below proves no controller exists below W. For D>=W it "
+                    + "characterizes each reachable prefix time and gives an operational "
+                    + "same-raw-bit collision when E(t)+P<=D. It does not assert the full "
+                    + "minimum clock alphabet.")),
+            Describe.Lean(
+                DescribeId.Create("deadline-prefix-time-range-and-collision"),
+                DeclarationHandle.Create(Prefix + "deadline_prefix_time_range_and_collision"),
+                H("Exact deadline times and a cross-controller collision"),
+                StatementSource.FromAuthor(DeadlineStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A one-prefix delay table reaches each permitted time while the earliest "
+                        + "tree keeps every other source within W. A controller below W "
+                        + "contradicts the sharp waiting lower bound. For an eligible prefix, "
+                        + "the zero-delay even source and one-period-delayed odd source have "
+                        + "the same actual raw final read, although their source residues "
+                        + "differ and their terminal times differ by P."))),
                 DescribeRole.Theorem))));
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
@@ -73,4 +110,53 @@ internal sealed class DyadicPrefixDelayRangeDocument : IScribeDocumentDefinition
             Imp(Call("Correct", F.Id("p")), All("t", N(), All("u", N(),
                 Imp(ValidPair(), Ex("k", N(), Eqn(Term(), Seq(Call("E", F.Id("t")),
                     Sp, Plus, Sp, F.Id("P"), Sp, Times, Sp, F.Id("k"))))))))))));
+
+    private static Formula DelayedStatement()
+    {
+        var a = F.Id("a"); var now = F.Id("now"); var r = F.Id("r");
+        var p = F.Id("P"); var k = F.Id("K"); var read = F.Id("read"); var d = F.Id("d");
+        var depth = Seq(d, Sp, Plus, Sp, D(1));
+        var valid = Conj(Eqn(Call("mod", a, D(2)), D(0)),
+            Conj(Seq(a, Sp, Plus, Sp, Call("pow", D(2), depth), Sp, Le, Sp, p),
+                Conj(Seq(a, Sp, Le, Sp, r),
+                    Seq(r, Sp, Lt, Sp, a, Sp, Plus, Sp, Call("pow", D(2), depth)))));
+        var delayed = Call("execute", read, Call("delayedMidpoint", p, k, depth, a, now), now, r);
+        var earliest = Call("execute", read, Call("midpoint", p, depth, a, now), now, r);
+        var result = Conj(Eqn(Call("fst", delayed), Call("fst", earliest)),
+            Eqn(Call("snd", delayed), Seq(Call("snd", earliest), Sp, Plus, Sp,
+                p, Sp, Times, Sp, Call("K", Call("div", r, D(2))))));
+        return Disp(All("P", N(), All("K", Seq(N(), Sp, To, Sp, N()),
+            All("read", F.Id("NatToNatToFin2"), All("d", N(),
+                Imp(Conj(Call("periodic", read, p), Call("thresholdLaw", read, p)),
+                    All("a", N(), All("now", N(), All("r", N(), Imp(valid, result))))))))));
+    }
+
+    private static Formula DeadlineStatement()
+    {
+        var d = F.Id("d"); var b = F.Id("b"); var deadline = F.Id("D");
+        var t = F.Id("t"); var u = F.Id("u"); var k = F.Id("k");
+        var p = F.Id("p"); var p0 = F.Id("p0"); var p1 = F.Id("p1");
+        var period = F.Id("P"); var wait = F.Id("W");
+        var source = Seq(D(2), Sp, Times, Sp, t, Sp, Plus, Sp, u);
+        var time = Seq(Call("E", t), Sp, Plus, Sp, period, Sp, Times, Sp, k);
+        var family = Call("member", p, Call("F", deadline));
+        var reachable = Ex("p", Call("Protocol", Seq(d, Sp, Plus, Sp, D(1))),
+            Conj(family, Eqn(Call("N", p, source), time)));
+        var range = All("t", N(), All("u", N(), All("k", N(), Imp(ValidPair(),
+            Seq(Grp(reachable), Sp, Iff, Sp, Grp(Seq(time, Sp, Le, Sp, deadline)))))));
+        var even = Seq(D(2), Sp, Times, Sp, t);
+        var odd = Seq(even, Sp, Plus, Sp, D(1));
+        var shifted = Eqn(Call("N", p1, odd), Seq(Call("N", p0, even), Sp, Plus, Sp, period));
+        var sameRaw = Eqn(Call("Y", p0, even), Call("Y", p1, odd));
+        var collisionBody = Conj(Call("member", p0, Call("F", deadline)),
+            Conj(Call("member", p1, Call("F", deadline)), Conj(shifted, sameRaw)));
+        var collision = Ex("p0", Call("Protocol", Seq(d, Sp, Plus, Sp, D(1))),
+            Ex("p1", Call("Protocol", Seq(d, Sp, Plus, Sp, D(1))), collisionBody));
+        var eligible = All("t", N(), Imp(Conj(Seq(t, Sp, Lt, Sp, Call("pow", D(2), d)),
+            Seq(Call("E", t), Sp, Plus, Sp, period, Sp, Le, Sp, deadline)), collision));
+        var body = Conj(Imp(Seq(deadline, Sp, Lt, Sp, wait), Call("empty", Call("F", deadline))),
+            Conj(Imp(Seq(wait, Sp, Le, Sp, deadline), range),
+                Imp(Seq(wait, Sp, Le, Sp, deadline), eligible)));
+        return Disp(All("d", N(), All("b", Call("Fin", D(2)), All("D", N(), body))));
+    }
 }

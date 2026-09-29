@@ -28,10 +28,6 @@ def delayedMidpoint (P : Nat) (K : Nat → Nat) : (d : Nat) → Nat → Nat → 
         .query w (fun bit => delayedMidpoint P K d
           (if bit = 0 then a else m) (now + w))
 
-private theorem threshold_periodic (P n r k : Nat) :
-    threshold P (n + P * k) r = threshold P n r := by
-  simp only [threshold, Nat.add_mul_mod_self_left]
-
 private theorem midpoint_time_le_protocol {P : Nat} {read : Nat → Nat → Fin 2}
     (law : ∀ n r, r < P → read n r = threshold P n r) (d : Nat) :
     ∀ (p : Protocol (d + 1)) a now early,
@@ -213,7 +209,8 @@ theorem arbitrary_prefix_delay_table (d : Nat) (b : Fin 2) (K : Nat → Nat) :
     ((dyadic_forward_waiting_optimality (d + 1) b).1 n r hr).2
   have periodic (n r k : Nat) (hr : r < P) :
       sensor P b (n + P * k) r = sensor P b n r := by
-    rw [law _ _ hr, law _ _ hr, threshold_periodic]
+    rw [law _ _ hr, law _ _ hr]
+    simp only [threshold, Nat.add_mul_mod_self_left]
   have compare (r : Nat) (hr : r < P) :=
     delayed_midpoint_execute P K (sensor P b) periodic law d 0 0 r
       (by decide) (by dsimp [P]; omega) (by omega) (by simpa [P] using hr)
@@ -296,7 +293,120 @@ theorem arbitrary_protocol_prefix_time (d : Nat) (b : Fin 2)
     (P - 1 + P * t.bitIndices.length - 2 * t) + P * k
   simpa only [Nat.mul_comm P k] using hk
 
+/-- The hidden family contains exactly the successful raw controllers whose
+actual last read meets the common deadline on every original source. -/
+def deadlineFamily (d : Nat) (b : Fin 2) (D : Nat)
+    (p : Protocol (d + 1)) : Prop :=
+  let P := 2 ^ (d + 1)
+  CorrectOn (rawBit P b) p 0 0 P ∧
+    ∀ r, r < P → terminalTime P b p r ≤ D
+
+/-- An impossible deadline has no successful controller. Above the sharp wait,
+one causal tree realizes each permitted prefix time on both last-bit siblings.
+An eligible prefix also gives two actual controllers and different sources with
+the same uncorrected final bit. -/
+theorem deadline_prefix_time_range_and_collision (d : Nat) (b : Fin 2) (D : Nat) :
+    ((D < sharpWait (d + 1) →
+      ¬ ∃ p : Protocol (d + 1), deadlineFamily d b D p) ∧
+    (sharpWait (d + 1) ≤ D →
+      ∀ t u k : Nat, t < 2 ^ d → u < 2 →
+        ((∃ p : Protocol (d + 1), deadlineFamily d b D p ∧
+          terminalTime (2 ^ (d + 1)) b p (2 * t + u) =
+            (2 ^ (d + 1) - 1 + 2 ^ (d + 1) * t.bitIndices.length - 2 * t) +
+              2 ^ (d + 1) * k) ↔
+          (2 ^ (d + 1) - 1 + 2 ^ (d + 1) * t.bitIndices.length - 2 * t) +
+            2 ^ (d + 1) * k ≤ D))) ∧
+    (∀ t : Nat, t < 2 ^ d → sharpWait (d + 1) ≤ D →
+      (2 ^ (d + 1) - 1 + 2 ^ (d + 1) * t.bitIndices.length - 2 * t) +
+        2 ^ (d + 1) ≤ D →
+      ∃ p₀ p₁ : Protocol (d + 1),
+        deadlineFamily d b D p₀ ∧ deadlineFamily d b D p₁ ∧
+        terminalTime (2 ^ (d + 1)) b p₁ (2 * t + 1) =
+          terminalTime (2 ^ (d + 1)) b p₀ (2 * t) + 2 ^ (d + 1) ∧
+        (terminalRecord (2 ^ (d + 1)) b p₀ (2 * t)).2 =
+          (terminalRecord (2 ^ (d + 1)) b p₁ (2 * t + 1)).2) := by
+  let P := 2 ^ (d + 1)
+  have hsharp := (dyadic_forward_waiting_optimality (d + 1) b).2.1
+  have hearly := (dyadic_forward_waiting_optimality (d + 1) b).2.2.2
+  have range :
+      (D < sharpWait (d + 1) →
+        ¬ ∃ p : Protocol (d + 1), deadlineFamily d b D p) ∧
+      (sharpWait (d + 1) ≤ D →
+        ∀ t u k : Nat, t < 2 ^ d → u < 2 →
+          ((∃ p : Protocol (d + 1), deadlineFamily d b D p ∧
+            terminalTime P b p (2 * t + u) =
+              (P - 1 + P * t.bitIndices.length - 2 * t) + P * k) ↔
+            (P - 1 + P * t.bitIndices.length - 2 * t) + P * k ≤ D)) := by
+    constructor
+    · intro hD ⟨p, hp⟩
+      have hmin := hsharp.2 ⟨p, hp.1, hp.2⟩
+      omega
+    · intro hD t u k ht hu
+      constructor
+      · rintro ⟨p, hp, htime⟩
+        rw [← htime]
+        exact hp.2 _ (by omega)
+      · intro htime
+        let K : Nat → Nat := fun v => if v = t then k else 0
+        obtain ⟨p, hc, times⟩ := arbitrary_prefix_delay_table d b K
+        refine ⟨p, ⟨hc, ?_⟩, ?_⟩
+        · intro r hr
+          have hq : r / 2 < 2 ^ d := by omega
+          have hu' : r % 2 < 2 := Nat.mod_lt _ (by decide)
+          have hsplit : 2 * (r / 2) + r % 2 = r := by omega
+          have hactual := times (r / 2) (r % 2) hq hu'
+          rw [hsplit] at hactual
+          rw [hactual]
+          by_cases hrt : r / 2 = t
+          · simp only [K, if_pos hrt]
+            simpa only [hrt, P] using htime
+          · simp only [K, if_neg hrt, mul_zero, add_zero]
+            have he := (earliest_midpoint_terminal_time d b (r / 2) (r % 2) hq hu').1
+            have hb := hearly r (by simpa only [P] using hr)
+            rw [hsplit] at he
+            change terminalTime P b (rawMidpoint P b (d + 1)) r ≤
+              sharpWait (d + 1) at hb
+            rw [he] at hb
+            exact hb.trans hD
+        · simpa only [K, if_pos rfl, P] using times t u ht hu
+  refine ⟨range, ?_⟩
+  intro t ht hD helig
+  have helig' : (P - 1 + P * t.bitIndices.length - 2 * t) + P * 1 ≤ D := by
+    simpa only [P, mul_one] using helig
+  have hbase : (P - 1 + P * t.bitIndices.length - 2 * t) + P * 0 ≤ D := by
+    simp only [mul_zero, add_zero]
+    exact le_trans (Nat.le_add_right _ _) (by simpa only [mul_one] using helig')
+  obtain ⟨p₀, hp₀, htime₀⟩ := (range.2 hD t 0 0 ht (by decide)).2 hbase
+  obtain ⟨p₁, hp₁, htime₁⟩ := (range.2 hD t 1 1 ht (by decide)).2 helig'
+  have htime₀' : terminalTime P b p₀ (2 * t) =
+      P - 1 + P * t.bitIndices.length - 2 * t := by
+    simpa only [Nat.add_zero, mul_zero] using htime₀
+  have pair₀ := (terminal_pair_fiber_bijection_and_clock_injectivity d b p₀ hp₀.1).1 t ht
+  have pair₁ := (terminal_pair_fiber_bijection_and_clock_injectivity d b p₁ hp₁.1).1 t ht
+  have hcycle : cycleCount P b p₁ t = cycleCount P b p₀ t + 1 := by
+    change terminalTime P b p₁ (2 * t) / P = terminalTime P b p₀ (2 * t) / P + 1
+    rw [pair₁.1, htime₁, htime₀']
+    simpa only [mul_one] using
+      (Nat.add_mul_div_left (P - 1 + P * t.bitIndices.length - 2 * t) 1
+        (Nat.two_pow_pos (d + 1)))
+  refine ⟨p₀, p₁, hp₀, hp₁, ?_, ?_⟩
+  · rw [htime₀', htime₁]
+    simp only [mul_one]
+    rfl
+  · apply Fin.ext
+    have hbit₀ := pair₀.2.2 0 (by decide)
+    have hbit₁ := pair₁.2.2 1 (by decide)
+    change (terminalRecord P b p₀ (2 * t)).2.val =
+      (b.val + cycleCount P b p₀ t + 0) % 2 at hbit₀
+    change (terminalRecord P b p₁ (2 * t + 1)).2.val =
+      (b.val + cycleCount P b p₁ t + 1) % 2 at hbit₁
+    rw [hbit₀, hbit₁, hcycle]
+    omega
+
+#print axioms midpoint_time_le_protocol
+#print axioms delayed_midpoint_execute
 #print axioms arbitrary_prefix_delay_table
 #print axioms arbitrary_protocol_prefix_time
+#print axioms deadline_prefix_time_range_and_collision
 
 end D5.S3.Observer.Budget.DyadicPrefixDelayRange
