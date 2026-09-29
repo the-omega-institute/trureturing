@@ -1,0 +1,19 @@
+**命题 10.5（相同平均力、不同预测下限）。** 所有 $a,c$ 的可见 Gibbs 密度均为
+\[
+\rho(x,p_x)\propto\exp[-\beta(x^4/4+p_x^2/2)],
+\quad A_\beta(x)=x^4/4+\text{常数},
+\quad b=(p_x,-x^3).
+\]
+但
+\[
+\mathcal C_{p_xp_x}=4\kappa a^2x^2/\beta+c^2/\beta,
+\quad k=(0,-(4\kappa a^2x^2+c^2)p_x).
+\]
+令 $v_\beta=\mathbb E x^2=2\beta^{-1/2}\Gamma(3/4)/\Gamma(1/4)$，用白化观察 $u=(x/\sqrt{v_\beta},\sqrt\beta p_x)$，则
+\[
+\boxed{N=\operatorname{diag}(0,4\kappa a^2v_\beta+c^2),}
+\qquad
+\boxed{E_{\rm expr}=\operatorname{diag}(0,3v_\beta-1/(\beta v_\beta)).}
+\]
+因此当前状态的真正短时风险系数随 $a,c$ 改变，而所有静态可见热统计与平均力相同。
+

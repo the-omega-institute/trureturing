@@ -1,0 +1,11 @@
+### 13.4 信息保留的证书及其量词
+
+补充 $V$ 使 $\binom QV$ 正交，令 $u=Qx,v=Vx$。沿用第 8 节的恢复：保留后验的 $u$ 边缘，把 $v$ 恢复成独立平衡参考 $N(0,I)$。平均后验 KL 缺陷为
+\[
+\Delta(P)=I(v;Y\mid u)=\tfrac12\log\det(I+VF V^T).
+\]
+这个身份对任何正交 $P$ 成立，不要求自治。若 $b=\|B\|<1$，则
+\[
+\boxed{\mathcal E(P)\le\Delta(P)\le\frac{\mathcal E(P)}{1-b}.}
+\]
+

@@ -1,0 +1,9 @@
+### 1.4 耗散、端口与热参考
+
+对光滑储能 $V$，模型
+$$
+\dot z=(J-R)\nabla V+Bu,\quad J^T=-J,\ R\succeq0,
+\quad y=B^T\nabla V
+$$
+满足 $\dot V=-\nabla V^TR\nabla V+y^Tu$。反对称性负责这项能量平衡；一般变量 Poisson 结构还须满足 Jacobi。封闭 GENERIC 模型 $\dot z=L\nabla E+M\nabla S$，在 $L^T=-L$、$M\succeq0$、$L\nabla S=0$、$M\nabla E=0$ 下满足 $\dot E=0$、$\dot S=\nabla S^TM\nabla S\ge0$，均由链式法则得到 [G97, VSM02]。
+

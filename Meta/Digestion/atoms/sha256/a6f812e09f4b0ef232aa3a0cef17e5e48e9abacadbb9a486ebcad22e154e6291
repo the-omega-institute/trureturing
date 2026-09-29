@@ -1,0 +1,27 @@
+**命题 143.1（体与商边界）。** 记 $Z(H)=\sigma(H)/H$，则
+
+$$
+\begin{aligned}
+(P_Mf_q)(r)&=\frac{\gcd(q,M)}q\mathbf1_{\gcd(q,M)\mid r},\\
+Z(H)&=\sum_{q\mid H}\|f_q\|_2^2=\sum_{q\mid H}\frac1q,\\
+V_M(H)&:=\sum_{q\mid H}\|P_Mf_q\|_2^2
+=\sum_{q\mid H}\frac{\gcd(q,M)}{q^2},\\
+E_M(H)&:=\sum_{q\mid H}\|f_q-P_Mf_q\|_2^2
+=Z(H)-V_M(H)\ge0. \tag{143.1}
+\end{aligned}
+$$
+
+**证明。** 联立 $t\equiv r\pmod M,t\equiv0\pmod q$ 的相容条件是 $\gcd(q,M)\mid r$；相容时在该纤维中所占比例为 $\gcd(q,M)/q$。有 $1/\gcd(q,M)$ 的纤维相容，平方并取平均给第二个范数公式。最后逐探针用正交投影的勾股分解。$\square$
+
+这些是 **逐探针能量之和**，即直和空间的范数；没有换成 $\|\sum_q f_q\|^2$，后者会多出 $\langle f_q,f_s\rangle=1/\mathrm{lcm}(q,s)$ 的交叉项。归一化探针 $\sqrt q f_q$ 的权重是 $1/q$，这也解释“加权”的含义。CRT 乘积从同一均匀相位的联合分布导出，未分别优化各轴的来源。改变相位分布，或者补回省去的端点并按 $H+1$ 个来源平均，均须重算公式。
+
+写 $H=\prod_p p^{a_p},M=\prod_p p^{b_p}$，$0\le b_p\le a_p$，则
+
+$$
+v_{p,a}(b)=\sum_{j=0}^a p^{\min(j,b)-2j},\qquad
+V_M(H)=\prod_{p\mid H}v_{p,a_p}(b_p),\qquad
+Z(H)=\prod_{p\mid H}v_{p,a_p}(a_p). \tag{143.2}
+$$
+
+空积给 $H=1$ 时 $Z=V=1,E=0$。这些乘积只是有限除数和的乘法分解，不给予不同实际来源之间的联合极值。
+

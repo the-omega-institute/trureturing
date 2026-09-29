@@ -1,0 +1,23 @@
+### 5.2 记忆、随机力与当前状态预测风险
+
+取 $V$ 使 $\binom QV$ 正交，$\xi_0=\sqrt\beta S^{1/2}z_0\sim N(0,I)$，$u=Q\xi,v=V\xi$。设 $B_h=V\Omega Q^T,E_h=V\Omega V^T$。则
+$$
+\dot u=Du-B_h^Tv,\quad\dot v=B_hu+E_hv.
+$$
+变参数消元给
+$$
+\dot u(t)=Du(t)-\int_0^t\Lambda(t-s)u(s)ds+\eta(t),
+\quad\Lambda(t)=B_h^Te^{tE_h}B_h,
+\quad\eta(t)=-B_h^Te^{tE_h}v_0.
+$$
+独立标准高斯 $u_0,v_0$ 及 $E_h$ 反对称给出
+$$
+\mathbb E\eta(t)\eta(s)^T=\Lambda(t-s),\quad
+\Lambda(0)=M,\quad\|\Lambda(t)\|\le\|M\|.
+$$
+乘以 $u_0^T$ 取期望，得 $F'=DF-\Lambda*F$。再一次 Duhamel 与三角域积分得到
+$$
+\|F(t)-e^{tD}\|\le\tfrac12t^2\|M\|.
+$$
+这是条件均值的界，不能替代任意隐藏初态的 $O(\epsilon t)$ 轨迹界。有限封闭系统的记忆可不衰减 [M65, M65C, LL26, LL25]。
+

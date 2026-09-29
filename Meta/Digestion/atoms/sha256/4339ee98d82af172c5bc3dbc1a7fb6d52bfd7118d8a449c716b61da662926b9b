@@ -1,0 +1,7 @@
+**定理 5.3。** $W_h\succeq0$。若 $\|\widehat F_h-F(h)\|\le\delta$，则
+$$
+\|\widehat W_h-M\|\le
+\eta(h,\delta):=\tfrac23b^4h^2+(2\delta+\delta^2)/h^2.
+$$
+大于 $\eta$ 的估计特征值个数是 $\operatorname{rank}M$ 的可靠下界。
+

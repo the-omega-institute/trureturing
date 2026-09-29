@@ -1,0 +1,16 @@
+**定理 10.7（条件热恢复的非线性延拓）。**
+\[
+\Delta_T:=\mathbb E D(\mu_{Y_T}\Vert\mathcal R\nu_{Y_T})
+=I(Z;Y_T\mid u),
+\qquad
+\boxed{\Delta_T=\frac{T^3}{6s}n_u+O(T^4).}
+\]
+一个显式余项为
+\[
+\left|\Delta_T-\frac{T^3}{6s}n_u\right|
+\le\frac{T^4\sqrt{n_u}K_2}{8s}
++\frac{3T^5K_2^2}{128s}
++\frac{8K_1^4T^6}{9s^2}
+ \exp\!\left(\frac{4K_1^2T^3}{3s}\right).
+\]
+

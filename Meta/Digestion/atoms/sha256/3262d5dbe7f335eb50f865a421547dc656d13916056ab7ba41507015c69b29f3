@@ -1,0 +1,11 @@
+### 5.6 Kubo 相关与同一矩阵几何
+
+有限正则量子模式、正定 Weyl 二次 $\widehat H=\widehat z^TS\widehat z/2$ 的 Gibbs 态下，定义
+$$
+C^K_{ij}(t)=\beta^{-1}\int_0^\beta
+\operatorname{Tr}[\rho_\beta e^{s\widehat H}\widehat y_i(t)e^{-s\widehat H}\widehat y_j]ds.
+$$
+则
+$$
+C^K(t)=\beta^{-1}Oe^{At}S^{-1}O^T.
+$$
