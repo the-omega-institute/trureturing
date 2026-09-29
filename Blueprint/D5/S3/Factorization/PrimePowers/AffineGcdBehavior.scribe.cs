@@ -51,6 +51,26 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
                             + "addition closure has the same carrier. Closure induction extracts "
                             + "one concrete list of original additions, valid for every positive "
                             + "source x."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("affine-low-quotient-separation"),
+                DeclarationHandle.Create(Prefix + "affine_low_quotient_separation"),
+                H("Unequal low quotient coordinates have a depth-separating continuation"),
+                StatementSource.FromAuthor(LowSeparationFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let p be prime, r < e <= h, and M = p^(h-e). If integers u and v "
+                            + "have different residues modulo M, multiplication by p^(e-r) "
+                            + "followed by translation by -p^e u sends p^r u to zero modulo "
+                            + "p^h but does not send p^r v to zero. The same continuation "
+                            + "works for every signed integer representative of these two "
+                            + "residue classes modulo p^h.")),
+                    Paragraph(Text(
+                        "The zero-aware depth of the first output is h; that of the second "
+                            + "is strictly smaller. Cancellation of the nonzero factor p^e "
+                            + "shows that equality of the outputs would force u and v to be "
+                            + "equal modulo M."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
@@ -68,6 +88,7 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
 
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Int() => Seq(Mathbb, Grp(F.Id("Z")));
     private static Formula Positive() => Seq(Mathbb, Grp(F.Id("N")), Underscore, Grp(Gt, D(0)));
     private static Formula ListOf(Formula x) => Call("List", x);
     private static Formula All(Formula x, Formula domain, Formula body) =>
@@ -113,5 +134,36 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
                 Par(Seq(D(2), Sp, Le, Sp, h, Sp, Land, Sp,
                     Call("libraryGcd", h, library), Sp, Mid, Sp, shift)),
                 Sp, Rightarrow, Sp, realizes))))));
+    }
+
+    private static Formula LowSeparationFormula()
+    {
+        Formula p = F.Id("p"), h = F.Id("h"), e = F.Id("e"), r = F.Id("r");
+        Formula u = F.Id("u"), v = F.Id("v"), x = F.Id("x"), y = F.Id("y");
+        Formula a = F.Id("a"), b = F.Id("b");
+        Formula m = Seq(p, Caret, Grp(Seq(h, Minus, e)));
+        Formula ph = Seq(p, Caret, Grp(h));
+        Formula pe = Seq(p, Caret, Grp(e));
+        Formula pr = Seq(p, Caret, Grp(r));
+        Formula residueU = Call("residue", ph, Seq(pr, u));
+        Formula residueV = Call("residue", ph, Seq(pr, v));
+        Formula hypotheses = Seq(Call("Prime", p), Sp, Land, Sp,
+            r, Sp, Lt, Sp, e, Sp, Le, Sp, h, Sp, Land, Sp,
+            Call("residue", m, u), Sp, Neq, Sp, Call("residue", m, v));
+        Formula source = Seq(Call("residue", ph, x), Sp, Eq, Sp, residueU,
+            Sp, Land, Sp, Call("residue", ph, y), Sp, Eq, Sp, residueV);
+        Formula first = Call("depth", p, h, D(0),
+            Call("residue", ph, Seq(a, x, Sp, Plus, Sp, pe, b)));
+        Formula second = Call("depth", p, h, D(0),
+            Call("residue", ph, Seq(a, y, Sp, Plus, Sp, pe, b)));
+        Formula outputs = Seq(first, Sp, Eq, Sp, h, Sp, Land, Sp,
+            second, Sp, Lt, Sp, h);
+        Formula witness = Seq(Exists, Sp, a, Sp, InMacro, Sp, Nat(), Comma, Sp,
+            D(0), Sp, Lt, Sp, a, Sp, Land, Sp,
+            Exists, Sp, b, Sp, InMacro, Sp, Int(), Comma, Sp,
+            All(x, Int(), All(y, Int(), Seq(Par(source), Sp, Rightarrow, Sp, outputs))));
+        return Disp(All(p, Nat(), All(h, Nat(), All(e, Nat(), All(r, Nat(),
+            All(u, Int(), All(v, Int(), Seq(Par(hypotheses), Sp, Rightarrow, Sp,
+                witness))))))));
     }
 }

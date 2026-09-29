@@ -7,6 +7,7 @@
    digest: Positive mixed words retain an affine form with gcd-divisible translation. -/
 
 import D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
+import D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution
 import Mathlib.Data.PNat.Basic
 import Mathlib.Data.Int.GCD
 import Mathlib.Data.ZMod.Basic
@@ -163,5 +164,108 @@ theorem affine_action_realization (H : Nat) (hH : 2 ≤ H) (A : List ℕ+)
   simpa only [runWord, update, PNat.mul_coe, Nat.cast_add, Nat.cast_mul] using haction
 
 #print axioms affine_action_realization
+
+/-- Distinct low quotient coordinates admit a concrete local affine continuation:
+one resulting residue is zero and the other has strictly smaller depth. -/
+theorem affine_low_quotient_separation (p h e r : Nat) (hp : p.Prime)
+    (heh : e ≤ h) (hre : r < e) (u v : Int)
+    (huv : (u : ZMod (p ^ (h - e))) ≠ (v : ZMod (p ^ (h - e)))) :
+    ∃ a : Nat, 0 < a ∧ ∃ b : Int,
+      ∀ x y : Int,
+        (x : ZMod (p ^ h)) = ((p : Int) ^ r * u : ZMod (p ^ h)) →
+        (y : ZMod (p ^ h)) = ((p : Int) ^ r * v : ZMod (p ^ h)) →
+        D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.depth p h 0
+          ((a : Int) * x + (p : Int) ^ e * b : ZMod (p ^ h)) = h ∧
+        D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.depth p h 0
+          ((a : Int) * y + (p : Int) ^ e * b : ZMod (p ^ h)) < h := by
+  letI : Fact p.Prime := ⟨hp⟩
+  have htop (z : ZMod (p ^ h)) :
+      D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.depth p h 0 z = h ↔
+        z = 0 :=
+    (D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result p h (by omega)).2.1 0 z
+  have hquot : ¬ ((p ^ (h - e) : Nat) : Int) ∣ v - u := by
+    intro hd
+    apply huv
+    exact (ZMod.intCast_eq_intCast_iff_dvd_sub u v (p ^ (h - e))).2 hd
+  have hscale : ¬ ((p ^ h : Nat) : Int) ∣ ((p ^ e : Nat) : Int) * (v - u) := by
+    intro hd
+    have hpow : ((p ^ h : Nat) : Int) =
+        ((p ^ e : Nat) : Int) * ((p ^ (h - e) : Nat) : Int) := by
+      rw [← Nat.cast_mul, ← pow_add, Nat.add_sub_of_le heh]
+    rw [hpow] at hd
+    exact hquot ((mul_dvd_mul_iff_left
+      (by exact_mod_cast pow_ne_zero e hp.ne_zero)).1 hd)
+  have hmul : ((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r = (p : Int) ^ e := by
+    rw [Nat.cast_pow, ← pow_add, Nat.sub_add_cancel (le_of_lt hre)]
+  have hzero :
+      D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.depth p h 0
+        (((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r * u +
+          (p : Int) ^ e * -u : ZMod (p ^ h)) = h := by
+    apply (htop _).2
+    have hz : ((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r * u +
+        (p : Int) ^ e * -u = 0 := by
+      rw [hmul]
+      ring
+    simpa only [Int.cast_add, Int.cast_mul, Int.cast_pow, Int.cast_natCast,
+      Int.cast_neg, Int.cast_zero] using
+      congrArg (fun z : Int => (z : ZMod (p ^ h))) hz
+  have hlt :
+      D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.depth p h 0
+        (((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r * v +
+          (p : Int) ^ e * -u : ZMod (p ^ h)) < h := by
+    have hnonzero :
+        (((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r * v +
+          (p : Int) ^ e * -u : ZMod (p ^ h)) ≠ 0 := by
+      intro hz
+      have hz' : ((((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r * v +
+          (p : Int) ^ e * -u : Int) : ZMod (p ^ h)) = 0 := by
+        simpa only [Int.cast_add, Int.cast_mul, Int.cast_pow, Int.cast_natCast,
+          Int.cast_neg] using hz
+      have hd := (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).1 hz'
+      apply hscale
+      have heq : ((p ^ e : Nat) : Int) * (v - u) =
+          ((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r * v +
+            (p : Int) ^ e * -u := by
+        simp only [Nat.cast_pow]
+        have hmul' : (p : Int) ^ (e - r) * (p : Int) ^ r = (p : Int) ^ e := by
+          simpa only [Nat.cast_pow] using hmul
+        rw [hmul']
+        ring
+      rw [heq]
+      exact hd
+    have hbound :=
+      (D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.result p h (by omega)).1
+        0 (((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r * v +
+          (p : Int) ^ e * -u : ZMod (p ^ h))
+    have hne_depth :
+        D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution.depth p h 0
+          (((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r * v +
+            (p : Int) ^ e * -u : ZMod (p ^ h)) ≠ h := by
+      intro heq
+      exact hnonzero ((htop _).1 heq)
+    exact Nat.lt_of_le_of_ne hbound.1 hne_depth
+  refine ⟨p ^ (e - r), pow_pos hp.pos _, -u, ?_⟩
+  intro x y hx hy
+  have hxout :
+      (((p ^ (e - r) : Nat) : Int) * x + (p : Int) ^ e * -u : ZMod (p ^ h)) =
+      (((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r * u +
+        (p : Int) ^ e * -u : ZMod (p ^ h)) := by
+    simp only [Int.cast_add, Int.cast_mul, Int.cast_pow, Int.cast_natCast,
+      Int.cast_neg] at hx ⊢
+    rw [hx]
+    ring
+  have hyout :
+      (((p ^ (e - r) : Nat) : Int) * y + (p : Int) ^ e * -u : ZMod (p ^ h)) =
+      (((p ^ (e - r) : Nat) : Int) * (p : Int) ^ r * v +
+        (p : Int) ^ e * -u : ZMod (p ^ h)) := by
+    simp only [Int.cast_add, Int.cast_mul, Int.cast_pow, Int.cast_natCast,
+      Int.cast_neg] at hy ⊢
+    rw [hy]
+    ring
+  constructor
+  · simpa only [Int.cast_neg] using (hxout.symm ▸ hzero)
+  · simpa only [Int.cast_neg] using (hyout.symm ▸ hlt)
+
+#print axioms affine_low_quotient_separation
 
 end D5.S3.Factorization.PrimePowers.AffineGcdBehavior
