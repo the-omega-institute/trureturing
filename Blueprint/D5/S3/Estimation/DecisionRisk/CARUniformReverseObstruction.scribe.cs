@@ -33,7 +33,8 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
                     + "used for every state. The deficiency infimum ranges over all such matrices on "
                     + "the full alphabet. It imposes no support restriction. The notation d(X,Y) means "
                     + "simulation from X to Y; the Lean function finiteDeficiency takes Y first and X second. "
-                    + "Total variation is half the sum of absolute differences.")),
+                    + "The generic observation types O and T below are finite; A = Fin n is finite and "
+                    + "nonempty. Total variation is half the sum of absolute differences.")),
                 new DocumentBlock.DisplayFormula(Display(DeficiencyDefinition())),
                 Paragraph(Text("The forward kernel sends a singleton uniformly to its containing "
                     + "pairs and sends the full block uniformly to all complements of singletons. The "
@@ -127,11 +128,11 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
             All(V("B"), V("Bset"), AndInline(LeF(D(0), Call("w", V("B"))), LeF(D(0), Call("v", V("B"))))),
             All(V("i"), V("A"), AndInline(Eqn(SumOver(Typed(V("B"), V("Bset")), Call("W", V("i"), V("B"))), D(1)),
                 Eqn(SumOver(Typed(V("B"), V("Bset")), Call("V", V("i"), V("B"))), D(1)))),
-            All(CommaList(V("i"), V("j")), V("A"), AndInline(
+            All(CommaList(V("i"), V("j")), V("A"),
                 Implies(Call("neq", V("i"), V("j")), AndInline(
                     Eqn(Call("r", V("w"), V("i"), V("j")), V("b")),
-                    Eqn(Call("r", V("v"), V("i"), V("j")), V("b")))),
-                Eqn(Call("Delta", V("i"), V("j")), D(0)))),
+                    Eqn(Call("r", V("v"), V("i"), V("j")), V("b"))))),
+            All(CommaList(V("i"), V("j")), V("A"), Eqn(Call("Delta", V("i"), V("j")), D(0))),
             Eqn(V("R"), D(0)),
             Some(CommaList(V("F"), V("G")), Call("FiniteMarkovKernel", V("Bset"), V("Bset")), And(
                 All(CommaList(V("B"), V("C")), V("Bset"), KernelFormula()),
@@ -292,23 +293,24 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
             Eqn(Call("r", V("v"), V("i"), V("j")), V("b")))),
         Eqn(Call("Delta", V("i"), V("j")), Sub(Call("r", V("v"), V("i"), V("j")), Call("r", V("w"), V("i"), V("j")))),
         Eqn(Call("Delta", V("i"), V("j")), D(0)),
-        Eqn(V("R"), Mul(Div(D(1), D(2)), Call("max", V("i"),
-            SumOver(Call("neq", V("j"), V("i")), Call("max", Call("Delta", V("i"), V("j")), D(0)))))), Eqn(V("R"), D(0)));
+        Eqn(V("R"), Budget("Delta")), Eqn(V("R"), D(0)));
 
     private static Formula DeficiencyDefinition() => Lines(
-        All(V("O"), Call("Type"), All(V("p"), Arrow(V("O"), Real()),
-            All(V("q"), Arrow(V("O"), Real()), Eqn(
-                Call("TV", V("p"), V("q")), Mul(Div(D(1), D(2)),
-                    SumOver(Typed(V("z"), V("O")), Abs(Sub(Call("p", V("z")), Call("q", V("z")))))))))),
+        All(V("O"), Call("Type"), All(V("hO"), Call("Fintype", V("O")),
+            All(V("p"), Arrow(V("O"), Real()),
+                All(V("q"), Arrow(V("O"), Real()), Eqn(
+                    Call("TV", V("p"), V("q")), Mul(Div(D(1), D(2)),
+                        SumOver(Typed(V("z"), V("O")), Abs(Sub(Call("p", V("z")), Call("q", V("z"))))))))))),
         All(V("O"), Call("Type"), All(V("T"), Call("Type"),
-            All(V("X"), Arrow(V("A"), Arrow(V("O"), Real())),
-                All(V("Y"), Arrow(V("A"), Arrow(V("T"), Real())), AndInline(
+            All(V("hO"), Call("Fintype", V("O")), All(V("hT"), Call("Fintype", V("T")),
+                All(V("X"), Arrow(V("A"), Arrow(V("O"), Real())),
+                    All(V("Y"), Arrow(V("A"), Arrow(V("T"), Real())), AndInline(
                     Eqn(Call("d", V("X"), V("Y")),
                         Call("inf", Typed(V("K"), Call("FiniteMarkovKernel", V("O"), V("T"))),
                             Call("ofReal", Call("max", Typed(V("i"), V("A")),
                                 Call("TV", Call("Y", V("i")),
                                     Call("channelOutput", Projection(V("K")), Call("X", V("i")))))))),
-                    Eqn(Call("d", V("X"), V("Y")), Call("finiteDeficiency", V("Y"), V("X")))))))));
+                    Eqn(Call("d", V("X"), V("Y")), Call("finiteDeficiency", V("Y"), V("X")))))))))));
 
     private static Formula KernelFormula() => AndInline(
         Eqn(Call("F", V("B"), V("C")), Ite(Eqn(Card(V("B")), D(1)),
@@ -407,8 +409,6 @@ internal sealed class CARUniformReverseObstructionDocument : IScribeDocumentDefi
             Eqn(Call("Deltaprime", V("i"), V("j")),
                 Sub(Call("r", V("vprime"), V("i"), V("j")), Call("r", V("wprime"), V("i"), V("j")))),
             Eqn(Call("Deltaprime", V("i"), V("j")), D(0)))),
-        Eqn(V("Rprime"), Mul(Div(D(1), D(2)), Call("max", V("i"),
-            SumOver(Call("neq", V("j"), V("i")), Call("max", Call("Deltaprime", V("i"), V("j")), D(0)))))),
         Eqn(V("Rprime"), D(0)),
         Eqn(Call("finiteDeficiency", V("EQ"), V("EP")), Call("ofReal", Mul(V("t"), V("epsilon")))),
         Eqn(Call("finiteDeficiency", V("EQ"), V("EP")), Call("ofReal", Div(D(2), Mul(D(3), V("n"), Sub(V("n"), D(1)))))),
