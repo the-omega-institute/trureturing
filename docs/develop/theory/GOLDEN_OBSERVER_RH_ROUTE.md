@@ -2756,3 +2756,133 @@ G-c(增订三十三…三十六,#5427/#5445/#5465/#5568)在 kernel 中给出 `ge
 面板两席核实:`Meta/Digestion/backfill/golden-observer-rh-route/residual-open/` 现有 798 条,其中含已冻结定理的旧 atom(G-g-3 已由 `ZetaBridge/RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh` 冻结;G-g-5、G-g-7/8、Z-7、G-c 各层亦然)——是卷尾追加重键与旧版 atom 留存的消化滞后,不是数学缺口。选题只以冻结定理名与陈述同一性为准;对账(bind cover)另行走 `make cover`,不占实施席。
 
 后续增订继续严格追加于本节之后。
+
+# 增订三十八　有限 Euler 前缀与 RH 等价路线的可组合边界
+
+## 一　定义：三种观察对象与实际变换
+
+沿用《Fibonacci 原子关系生成》定义 87.1 与定理 104.1，令
+
+$$
+S_a(z)=\sum_{k=0}^a z^k,\qquad Q_a(z)=\sum_{k=1}^a\frac{z^k}{k},
+\qquad D_a(z)=Q_a(z)-\log S_a(z).
+$$
+
+对 $n=\prod_p p^{a_p}$，Robin 的有限算术观察是
+$\sigma(n)/n=\prod_{p\mid n}S_{a_p}(1/p)$，所以其对数是有限的逐轴和。
+Robin 判据的经典量词是所有整数 $n>5040$ 上
+$\sigma(n)<e^\gamma n\log\log n$，不是单个轴的正性
+（G. Robin, *Grandes valeurs de la fonction somme des diviseurs et hypothèse de Riemann*, J. Math. Pures Appl. 63 (1984), 187--213）。
+
+令 $\xi$ 为完成的 zeta 函数，$w$ 为 Li 圆盘坐标，
+$s=(1-w)^{-1}$，逆变换为 $w=1-s^{-1}$。实际 Li 生成函数与系数为
+
+$$
+G(w)=(1-w)^{-2}\frac{\xi'(s)}{\xi(s)},\qquad
+\lambda_n=\frac1{(n-1)!}
+\left.\frac{d^n}{ds^n}\bigl[s^{n-1}\log\xi(s)\bigr]\right|_{s=1}
+\quad(n\ge1).
+$$
+
+在 $w=0$ 邻域有 $G(w)=\sum_{n\ge0}\lambda_{n+1}w^n$。
+这里有具体的对象对应：$|w|<1$ 当且仅当 $\Re s>1/2$；
+因此整圆盘的 $\xi((1-w)^{-1})$ 非零条件与整个右半平面的非零条件可互相拉回。
+来源为 `CanonicalLiLocalExpansion.canonicalLiCoefficient`、`liGenerator`、
+`canonical_li_local_expansion` 与 `CanonicalLiDiskEquivalence.xi_disk_zero_free_iff_right_half_plane`。
+`CanonicalLiDiskEquivalence.rh_iff_canonical_li_global_expansion` 使用整圆盘每一点，
+`CanonicalLiNonnegativeConverse.canonical_li_nonnegative_implies_rh` 使用每个正整数阶的系数非负。
+Li 的经典判据见 X.-J. Li, *The Positivity of a Sequence of Numbers and the Riemann Hypothesis*, JNT 65 (1997), 325--333。
+这些是本节推导的既有前提，不把局部 Taylor 展开当成全圆盘非零或全阶正性的证明。
+
+Weil 的对象是光滑紧支撑测试函数 $g$ 及其卷积平方 $h=g*g^*$。
+本卷采用角频率变换
+
+$$
+\widehat h(u)=\int_{\mathbb R}e^{-iux}h(x)\,dx,\qquad
+u_\rho=-i(\rho-1/2).
+$$
+
+给定含真实重数的穷尽零点数据及所需收敛性，显式公式是
+
+$$
+\sum_\rho m_\rho\widehat h(u_\rho)
+=\widehat h(-i/2)+\widehat h(i/2)
+-\sum_{p,k\ge1}\frac{\log p}{p^{k/2}}
+ \bigl[h(k\log p)+h(-k\log p)\bigr]+A(h),
+$$
+
+其中 $A$ 是对应的 digamma 阿基米德积分。来源是
+`FourierLaplace.fourierLaplace`、`PrimePoleTerms.primeTerm` 与
+`ZetaBridge.ClassicExplicitFormula.weil_explicit_formula`。
+`Separator.WeilSquarePositivityCriterion.rh_iff_weilSquarePositivity` 在给定 `ZeroData`、
+每个测试函数及相应 `SymmetricConvergent` 条件下等价于所有卷积平方零点和的实部非负。
+经典先例是 A. Weil, *Sur les « formules explicites » de la théorie des nombres premiers*, 1952。
+
+## 二　命题：有限前缀正性保留的量与系数正性的障碍
+
+定理 104.1 逐轴相加给出，对每个 $n>1$，
+
+$$
+\log\frac{\sigma(n)}n
+<\sum_{p\mid n}Q_{a_p}(1/p),\qquad
+\sum_{p\mid n}D_{a_p}(1/p)>0.
+$$
+
+但是 $D_a(z)>0$ 在 $0<z<1$ 上成立，不推出它的 Taylor 系数非负。
+更精确地，在 $|z|<1$ 上取在零点归一化的解析对数，有
+
+$$
+D_a(z)=\sum_{m\ge1}\frac{z^{(a+1)m}}m
+-\sum_{k\ge a+1}\frac{z^k}{k}.
+$$
+
+当 $a\ge1$ 时，$z^{a+1}$ 的系数是 $a/(a+1)>0$，
+而 $z^{a+2}$ 的系数是 $-1/(a+2)<0$。
+特别地，$D_1(z)=z-\log(1+z)=z^2/2-z^3/3+\cdots$。
+
+**证明。** 算术恒等式由素数幂的约数和相乘得到，至少一个 $a_p\ge1$，故有限和严格。
+对系数断言，用 $S_a(z)=(1-z^{a+1})/(1-z)$，
+并应用经典收敛对数级数 $-\log(1-z)=\sum_{k\ge1}z^k/k$。
+两级数在 $|z|<1$ 绝对收敛，故可逐系数相减。
+$a+2$ 不是 $a+1$ 的倍数，给出所列负系数。 $\square$
+
+因此从 Robin 轴的实轴正性移到 Li 全阶系数正性，必须另证一个保持所需符号的变换；
+仅作 Taylor 展开已经不能保持该正性。这里的 $z=p^{-1}$ 与 $w=1-s^{-1}$ 是不同坐标，
+没有把 $D_a$ 识别为实际 $G$ 或它的误差项。上述负系数不是 Li 系数的反例，也不是 RH 的反例。
+
+## 三　命题：与 Weil 素数幂权重的精确匹配及其适用边界
+
+固定素数 $p>1$，若一个偶测试函数 $h$ 在采样点满足
+
+$$
+h(\pm k\log p)=
+\begin{cases}
+\displaystyle\frac{p^{-k/2}}{2k\log p},&1\le k\le a,\\
+0,&k>a,
+\end{cases}
+$$
+
+则 `PrimePoleTerms.primeTerm` 中该 $p$ 轴的正值素数幂和恰好为 $Q_a(1/p)$，
+而显式公式右侧的该轴贡献为 $-Q_a(1/p)$。
+
+**证明。** 每个非零采样项为
+$\log p\,p^{-k/2}\,2p^{-k/2}/(2k\log p)=1/(kp^k)$，
+在 $1\le k\le a$ 相加即可。 $\square$
+
+这个条件说明所需桥梁的准确权重，但没有给出同时实现各素数轴采样值的卷积平方 $h=g*g^*$。
+即使这样的测试函数存在，还需控制它的极点项、$A(h)$ 和共同零点和，
+才能得到 Weil 二次型下界；不能丢弃显式公式右侧的负素数项而把 $D_a>0$ 直接移过去。
+尤其不能把分别可实现的单轴采样当成同一个测试函数的联合可实现性。
+
+## 四　假设：可逆路线与未控制的全局量
+
+若路线之间给出了同一对象上的映射、复合与逆映射，并证明保持目标估计，
+便可沿复合传递这些估计。上面的 Möbius 坐标变换给出了明确的双向对象对应；
+Robin 的逐轴正差、Li 系数序列与 Weil 卷积平方却未给出这样的共同见证空间。
+RH 命题之间的逻辑等价只传递真值，不自动给出候选见证的双射或保持下界的变换。
+故“群”的类比在此只是寻找可逆关系的启发，未建立群、群胚或范畴定理。
+
+有限前缀结论不提供参考目标最大值的全局控制，也不提供《Fibonacci 原子关系生成》
+§87.4 中有符号无限尾项的下界。连续价格带
+$10^{-6}\le\lambda\le1/25$、$\delta=123/500000$ 与到 $10^{30000}$ 的整数覆盖
+保留它们原来的范围；有限覆盖不能替代所有 $n>5040$ 的量词。
