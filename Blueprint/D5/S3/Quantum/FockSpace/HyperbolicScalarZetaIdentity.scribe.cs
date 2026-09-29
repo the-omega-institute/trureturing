@@ -20,7 +20,10 @@ internal sealed class HyperbolicScalarZetaIdentityDocument : IScribeDocumentDefi
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the identity", Disp(F.Id("claim")),
                 "Replace riemannZeta(-j) by (-1)^j B_(j+1)/(j+1) and multiply by 2^(2k+2)(k+1); put N = 2k + 2 and b_m = sum over i of C(m, i) 2^i B_i. The exponential generating functions give b_m = (2 - 2^m) B_m, since e^t 2t/(e^(2t) - 1) = 2t/(e^t - 1) - 2t/(e^(2t) - 1); in particular b_m = 0 for odd m. The middle sum becomes the sum of b_i (1/i + 1/(N - i)) over 1 <= i <= N - 1, and the zeta sum becomes the sum of C(N, i) 2^i B_i H_(i-1) over 1 <= i <= N. Two harmonic-binomial identities, C(n, i)(H_n - H_i) = sum over j = 1..n of C(n - j, i)/j (by Pascal's rule and induction) and the transform of C(n, i) 2^i B_i / i into the sum of (b_j - 1)/j (by induction on n), rewrite the zeta sum through sums of b_i/i and b_(N-i)/i. These cancel against the middle sum, and what is left is -H_(N-1) - 1/N + H_N = 0 after b_N = (2 - 2^N) B_N is used.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nishioka-sato-2021-bernoulli-harmonic-zeta-identity"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
