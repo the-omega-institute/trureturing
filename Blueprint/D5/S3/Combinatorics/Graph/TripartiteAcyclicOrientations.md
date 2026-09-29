@@ -18,7 +18,7 @@ A Boolean relation d on the vertices orients the simple graph G when every edge 
 
 **Definition 1.2 (Acyclic relations).**
 
-$$\operatorname{IsAcyclic}\left(d\right) \Leftrightarrow (\forall a \in V,\; \neg(\operatorname{TransGen}\left(d, a, a\right)))$$
+$$\operatorname{IsAcyclic}\left(d\right) \Leftrightarrow (\forall a \in V,\; \neg(\operatorname{TransGen}\left(((x, y) \mapsto \operatorname{d}\left(x, y\right) = \operatorname{true}), a, a\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/TripartiteAcyclicOrientations.IsAcyclic` (`✓ std3`).
 

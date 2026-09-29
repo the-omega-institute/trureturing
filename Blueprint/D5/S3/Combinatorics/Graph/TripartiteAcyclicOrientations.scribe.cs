@@ -74,9 +74,11 @@ internal sealed class TripartiteAcyclicOrientationsDocument : IScribeDocumentDef
 
     private static Formula AcyclicFormula()
     {
-        Formula d = F.Id("d"), a = F.Id("a"), v = F.Id("V");
+        Formula d = F.Id("d"), a = F.Id("a"), v = F.Id("V"), x = F.Id("x"), y = F.Id("y");
+        Formula arc = Seq(Open, Open, x, Comma, Sp, y, Close, Sp, Mapsto, Sp,
+            IsTrue(Call("d", x, y)), Close);
         return Disp(Iff(Call("IsAcyclic", d),
-            All("a", v, Not(Call("TransGen", d, a, a)))));
+            All("a", v, Not(Call("TransGen", arc, a, a)))));
     }
 
     private static Formula CountFormula()
