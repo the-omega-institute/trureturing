@@ -1365,3 +1365,87 @@ Lemma 10.2 for $q\equiv1,49,71,119\pmod{120}$ or the general
 Fibonacci square-class rigidity used there.
 
 ## 追加锚（本行以下为增补区）
+
+## 31. Cubic characters on prime ideals and factored denominators
+
+Let $E=\mathbb Z[\omega]$, where $\omega^2+\omega+1=0$. For a maximal
+ideal $P\subset E$ with finite residue field $E/P$ of cardinality
+$q\equiv1\pmod3$, assume $3\notin P$. Put
+$\mu_3=\{1,\omega,\omega^2\}\subset E$.
+
+**Theorem 31.1 (local cubic character and composite denominator).** For
+every $a\notin P$, there is a unique $\chi_P(a)\in\mu_3$ such that
+
+$$
+\chi_P(a)\equiv a^{(q-1)/3}\pmod P.
+$$
+
+For $a,b\notin P$, one has
+$\chi_P(ab)=\chi_P(a)\chi_P(b)$. Given a finite indexed family
+$(P_i)_{i\in S}$ of such ideals and multiplicities $e_i\geq0$, define
+the character of the specified factored denominator by
+
+$$
+\chi_{(P,e)}(a)=\prod_{i\in S}\chi_{P_i}(a)^{e_i},
+\qquad a\notin P_i\text{ for every }i\in S.
+$$
+
+It is multiplicative in $a$, and addition of multiplicities gives
+
+$$
+\chi_{(P,e+f)}(a)=\chi_{(P,e)}(a)\chi_{(P,f)}(a).
+$$
+
+This definition uses the prime-ideal factors and their multiplicities;
+it does not use a single Euler exponent in the quotient by a composite
+ideal. In particular, the oriented factorization in Theorem 8.1
+supplies the denominator factors and multiplicities for $\eta_j$.
+
+Proof. The nonzero class of $a$ in the field $E/P$ satisfies
+$a^{q-1}=1$, so $a^{(q-1)/3}$ is a root of $T^3-1$. This polynomial
+factors as $(T-1)(T-\omega)(T-\omega^2)$. The three displayed roots
+remain distinct modulo $P$: their pairwise differences have norm
+three, and $3\notin P$. This proves existence and uniqueness of
+$\chi_P(a)$. The Euler condition for $ab$ is the product of the
+conditions for $a$ and $b$, so uniqueness proves local
+multiplicativity. Multiplying these local equalities over $S$ proves
+numerator multiplicativity; the identity
+$z^{e_i+f_i}=z^{e_i}z^{f_i}$ proves the denominator law.
+
+## 追加锚（本行以下为增补区）
+
+## 32. A modulus-31 obstruction for two prime-power layers
+
+**Theorem 32.1 (two remaining residue classes).** Let $q\geq7$ be a
+prime with $q\equiv49$ or $71\pmod{120}$. For every $k\geq0$, the
+integer quotient
+
+$$
+C_{q,k+1}=\frac{F_{q^{k+1}}}{F_{q^k}}
+$$
+
+is positive and satisfies
+
+$$
+C_{q,k+1}\equiv
+\begin{cases}
+27\pmod{31},&k\text{ even},\\
+23\pmod{31},&k\text{ odd}.
+\end{cases}
+$$
+
+In particular, $C_{q,k+1}$ is not a square. This covers the $49$ and
+$71$ classes left open by Theorem 30.1; it does not address the $1$
+and $119$ classes or the complete prime-power statement of Lemma 10.2.
+
+Proof. The Fibonacci pair $(F_n,F_{n+1})$ has period $30$ modulo $31$:
+$F_{30}\equiv0$ and $F_{31}\equiv1\pmod{31}$. In the two stated
+classes, $q\equiv19$ or $11\pmod{30}$, respectively, and both residues
+square to $1$ modulo $30$. Consequently $q^k\equiv1\pmod{30}$ for
+even $k$ and $q^k\equiv19$ or $11\pmod{30}$ for odd $k$. Since
+$F_1\equiv1$ and $F_{11}\equiv F_{19}\equiv27\pmod{31}$, the values
+$F_{q^k}$ alternate between $1$ and $27$ modulo $31$. Fibonacci
+divisibility makes the displayed quotient an integer; positivity
+follows from positivity of both Fibonacci values. Its residue is $27$
+on even $k$ and $27^{-1}\equiv23\pmod{31}$ on odd $k$.
+Neither $27$ nor $23$ is a square modulo $31$.

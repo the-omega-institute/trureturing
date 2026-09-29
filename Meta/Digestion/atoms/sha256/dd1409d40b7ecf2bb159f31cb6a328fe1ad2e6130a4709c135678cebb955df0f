@@ -1,0 +1,7 @@
+## 31. Cubic characters on prime ideals and factored denominators
+
+Let $E=\mathbb Z[\omega]$, where $\omega^2+\omega+1=0$. For a maximal
+ideal $P\subset E$ with finite residue field $E/P$ of cardinality
+$q\equiv1\pmod3$, assume $3\notin P$. Put
+$\mu_3=\{1,\omega,\omega^2\}\subset E$.
+
