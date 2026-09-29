@@ -1,0 +1,9 @@
+**定理 94.2（非退化区间的统一下界）。** 对实数 $4\le a<b$，置 $C=\Psi(a)>1$，并定义
+
+$$
+\Gamma(a,b)=\gamma+\log\log C-P(b^-)
++\sum_{\sqrt b<p\le a-1}\min\{d_1(p),d_2(p,b)\}.
+$$
+
+则对每个 $x\in[a,b]$ 有 $\Delta(\lambda_x)\ge\Gamma(a,b)$；对 $a\le a'<b'\le b$ 有 $\Gamma(a',b')\ge\Gamma(a,b)$。
+

@@ -1,0 +1,6 @@
+**命题 99.5（因子—单位纤维）。** 对每个 $d\mid H$，模 $H$ 余数中 $\gcd(r,H)=d$ 的纤维大小为 $\varphi(H/d)$，因此
+
+$$
+\sum_{d\mid H}\varphi(H/d)=H,\qquad \varphi(5040)=1152.
+$$
+
