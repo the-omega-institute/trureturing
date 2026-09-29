@@ -28,3 +28,4 @@ The statement records the integral normal form and the modular kernel and inject
 - Dependency: [D5/S1/Recurrence/FibVajda](FibVajda.md)
 - Dependency: [D5/S1/Recurrence/FiniteColumnGcdNormalization](FiniteColumnGcdNormalization.md)
 - Dependency: [D5/S1/Recurrence/LucasCompanion](LucasCompanion.md)
+- Dependency: [D5/S1/Scale/Fibonacci](../Scale/Fibonacci.md)
