@@ -9,8 +9,8 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Factorization/PrimePowers/AffineGcdBehavior.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite positive operation words have gcd-restricted affine actions, and every such modular action is realized.",
-        H("Affine actions of a finite addition library"),
+        "Finite positive words realize gcd-restricted affine actions; computed local quotient coordinates preserve every affine depth response.",
+        H("Affine words and typed local quotient coordinates"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("affine-word-translation"),
@@ -53,24 +53,31 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
                             + "source x."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("affine-low-quotient-separation"),
-                DeclarationHandle.Create(Prefix + "affine_low_quotient_separation"),
-                H("Unequal low quotient coordinates have a depth-separating continuation"),
-                StatementSource.FromAuthor(LowSeparationFormula()),
+                DescribeId.Create("local-encoding-signed-response"),
+                DeclarationHandle.Create(Prefix + "local_encoding_signed_response"),
+                H("Exact signed quotient coordinates preserve affine responses"),
+                StatementSource.FromAuthor(LocalResponseFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let p be prime, r < e <= h, and M = p^(h-e). If integers u and v "
-                            + "have different residues modulo M, multiplication by p^(e-r) "
-                            + "followed by translation by -p^e u sends p^r u to zero modulo "
-                            + "p^h but does not send p^r v to zero. The same continuation "
-                            + "works for every signed integer representative of these two "
-                            + "residue classes modulo p^h.")),
+                        "Let p be prime, 1 <= h, 0 <= e <= h, and M = p^(h-e). "
+                            + "LocalCode(p,h,e) is the tagged sum of Fin(e) times Units(ZMod(M)) "
+                            + "and ZMod(M). For an actual residue x, localEncoding computes its "
+                            + "zero-aware depth r. If r < e, it returns S(r,u), where u is the "
+                            + "unit obtained from the exact canonical quotient x.val/p^r. "
+                            + "Otherwise it returns D(x.val/p^e modulo M). Nondivisibility "
+                            + "at depth r+1 proves the low canonical quotient coprime to p. "
+                            + "This includes e=0, e=h, M=1, and the zero residue.")),
                     Paragraph(Text(
-                        "The zero-aware depth of the first output is h; that of the second "
-                            + "is strictly smaller. Cancellation of the nonzero factor p^e "
-                            + "shows that equality of the outputs would force u and v to be "
-                            + "equal modulo M."))),
+                        "For every signed integer representative X of x, a low tag has depth r, "
+                            + "p^r divides X, and X/p^r modulo M is u. A deep tag has depth at "
+                            + "least e, p^e divides X, and X/p^e modulo M is its recorded z. "
+                            + "Changing the representative by a multiple of p^h changes the "
+                            + "quotient by a multiple of M. Equal codes give equal depths after "
+                            + "every positive multiplier a and every signed translation p^e b. "
+                            + "For low tags, below e the depth is r+v_p(a); after crossing e "
+                            + "the multiplied residues agree modulo p^h. Deep tags already "
+                            + "retain the full source residue. No converse is asserted here."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
@@ -136,34 +143,46 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
                 Sp, Rightarrow, Sp, realizes))))));
     }
 
-    private static Formula LowSeparationFormula()
+    private static Formula LocalResponseFormula()
     {
         Formula p = F.Id("p"), h = F.Id("h"), e = F.Id("e"), r = F.Id("r");
-        Formula u = F.Id("u"), v = F.Id("v"), x = F.Id("x"), y = F.Id("y");
-        Formula a = F.Id("a"), b = F.Id("b");
+        Formula u = F.Id("u"), z = F.Id("z"), x = F.Id("x");
+        Formula bigX = F.Id("X"), bigY = F.Id("Y"), a = F.Id("a"), b = F.Id("b");
         Formula m = Seq(p, Caret, Grp(Seq(h, Minus, e)));
-        Formula ph = Seq(p, Caret, Grp(h));
-        Formula pe = Seq(p, Caret, Grp(e));
+        Formula ph = Seq(p, Caret, Grp(h)), pe = Seq(p, Caret, Grp(e));
         Formula pr = Seq(p, Caret, Grp(r));
-        Formula residueU = Call("residue", ph, Seq(pr, u));
-        Formula residueV = Call("residue", ph, Seq(pr, v));
+        Formula modM = Call("ZMod", m), modH = Call("ZMod", ph);
+        Formula codeX = Call("localEncoding", p, h, e, x);
+        Formula repX = Call("residue", ph, bigX);
+        Formula quotientR = Call("residue", m, Call("div", bigX, pr));
+        Formula quotientE = Call("residue", m, Call("div", bigX, pe));
+        Formula depthX = Call("depth", p, h, D(0), x);
+        Formula low = All(r, Call("Fin", e), All(u, Call("Units", modM), Seq(
+            Par(Seq(codeX, Sp, Eq, Sp, Call("S", r, u))), Sp, Rightarrow, Sp,
+            Par(Seq(depthX, Sp, Eq, Sp, r, Sp, Land, Sp,
+                pr, Sp, Mid, Sp, bigX, Sp, Land, Sp,
+                quotientR, Sp, Eq, Sp, Call("value", u))))));
+        Formula deep = All(z, modM, Seq(
+            Par(Seq(codeX, Sp, Eq, Sp, Call("D", z))), Sp, Rightarrow, Sp,
+            Par(Seq(e, Sp, Le, Sp, depthX, Sp, Land, Sp,
+                pe, Sp, Mid, Sp, bigX, Sp, Land, Sp,
+                quotientE, Sp, Eq, Sp, z))));
+        Formula representatives = All(x, modH, All(bigX, Int(), Seq(
+            Par(Seq(repX, Sp, Eq, Sp, x)), Sp, Rightarrow, Sp,
+            Par(Seq(low, Sp, Land, Sp, deep)))));
+        Formula encodingX = Call("localEncoding", p, h, e, repX);
+        Formula encodingY = Call("localEncoding", p, h, e, Call("residue", ph, bigY));
+        Formula responseX = Call("depth", p, h, D(0),
+            Call("residue", ph, Seq(a, bigX, Plus, pe, b)));
+        Formula responseY = Call("depth", p, h, D(0),
+            Call("residue", ph, Seq(a, bigY, Plus, pe, b)));
+        Formula responses = All(bigX, Int(), All(bigY, Int(), Seq(
+            Par(Seq(encodingX, Sp, Eq, Sp, encodingY)), Sp, Rightarrow, Sp,
+            All(a, Positive(), All(b, Int(), Seq(responseX, Sp, Eq, Sp, responseY))))));
         Formula hypotheses = Seq(Call("Prime", p), Sp, Land, Sp,
-            r, Sp, Lt, Sp, e, Sp, Le, Sp, h, Sp, Land, Sp,
-            Call("residue", m, u), Sp, Neq, Sp, Call("residue", m, v));
-        Formula source = Seq(Call("residue", ph, x), Sp, Eq, Sp, residueU,
-            Sp, Land, Sp, Call("residue", ph, y), Sp, Eq, Sp, residueV);
-        Formula first = Call("depth", p, h, D(0),
-            Call("residue", ph, Seq(a, x, Sp, Plus, Sp, pe, b)));
-        Formula second = Call("depth", p, h, D(0),
-            Call("residue", ph, Seq(a, y, Sp, Plus, Sp, pe, b)));
-        Formula outputs = Seq(first, Sp, Eq, Sp, h, Sp, Land, Sp,
-            second, Sp, Lt, Sp, h);
-        Formula witness = Seq(Exists, Sp, a, Sp, InMacro, Sp, Nat(), Comma, Sp,
-            D(0), Sp, Lt, Sp, a, Sp, Land, Sp,
-            Exists, Sp, b, Sp, InMacro, Sp, Int(), Comma, Sp,
-            All(x, Int(), All(y, Int(), Seq(Par(source), Sp, Rightarrow, Sp, outputs))));
-        return Disp(All(p, Nat(), All(h, Nat(), All(e, Nat(), All(r, Nat(),
-            All(u, Int(), All(v, Int(), Seq(Par(hypotheses), Sp, Rightarrow, Sp,
-                witness))))))));
+            D(1), Sp, Le, Sp, h, Sp, Land, Sp, e, Sp, Le, Sp, h);
+        return Disp(All(p, Nat(), All(h, Nat(), All(e, Nat(), Seq(
+            Par(hypotheses), Sp, Rightarrow, Sp,
+            Par(Seq(representatives, Sp, Land, Sp, responses)))))));
     }
 }
