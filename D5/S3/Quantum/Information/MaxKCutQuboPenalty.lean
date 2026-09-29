@@ -9,14 +9,17 @@
 /-
 proof_shape: result: content
 escape_witness: form (2): the conclusion `result` itself, produced on its live path by the averaged
-  colour-deletion move `stepA` and `stepA2` (deleting one colour from every multiply coloured
-  vertex and summing the change over all colours, with the edge bounds `hL` and `hD` and the
-  regrouping `pair_regroup`), the averaged colour-insertion move `stepB` for an empty vertex, and
-  the identity `pair_count` for the reduced penalty
+  colour-deletion moves `stepA` and `stepA2` (deleting one colour from every multiply coloured
+  vertex and summing the change over all colours, with the edge bounds `hL` and `hD`) and the
+  averaged colour-insertion move `stepB` for an empty vertex; the rearrangements `pair_regroup`
+  and `pair_count` only support these moves
 admission_basis: open-problem-resolution (issue #11239)
-Direct frozen dependencies: none (pinned Mathlib only)
+Direct frozen dependencies: D5/S3/Quantum/Entanglement/PhaseHistoryBound (module statement_id
+  sha256:e4719c87fa3f8264afd02a8de664b52d595e2d47f4a42a82fe15d1c014db4a45):
+  `bit` (sha256:7706541dc9903a7c132d1b1b7f22c9e43f2c374be384ba8d4e6974b1e067c424)
 -/
 
+import D5.S3.Quantum.Entanglement.PhaseHistoryBound
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Real.Basic
@@ -31,6 +34,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Quantum.Information.MaxKCutQuboPenalty
 
 open Finset
+open D5.S3.Quantum.Entanglement.PhaseHistoryBound (bit)
 
 /-!
 A. Harkness, H. Validi, R. Fakhimi, I. V. Hicks, S. Stein, T. Terlaky and L. F. Zuluaga,
@@ -47,9 +51,6 @@ gains at least `Σ_v (c_v + d⁻_v / 2) t_v (2 t_v − 3)`, respectively
 average `c_v − d⁺_v / k` from receiving a colour.
 -/
 
-/-- A binary variable `x_vj ∈ {0, 1}` read as a real number. -/
-def ind (b : Bool) : ℝ := if b then 1 else 0
-
 /-- `d⁺_v`: the sum of the positive weights at `v`. -/
 noncomputable def dplus {n : ℕ} (w : Fin n → Fin n → ℝ) (v : Fin n) : ℝ :=
   ∑ u ∈ univ.filter (fun u => u ≠ v ∧ 0 < w u v), w u v
@@ -60,31 +61,31 @@ noncomputable def dminus {n : ℕ} (w : Fin n → Fin n → ℝ) (v : Fin n) : �
 
 /-- The BQO objective `g(x) = Σ_{u<v} w_uv (1 − Σ_j x_uj x_vj)`, the weight of the cut. -/
 noncomputable def cutValue {n k : ℕ} (w : Fin n → Fin n → ℝ) (x : Fin n → Fin k → Bool) : ℝ :=
-  ∑ u, ∑ v ∈ univ.filter (fun v => u < v), w u v * (1 - ∑ j, ind (x u j) * ind (x v j))
+  ∑ u, ∑ v ∈ univ.filter (fun v => u < v), w u v * (1 - ∑ j, bit (x u j) * bit (x v j))
 
 /-- The QUBO objective `q(x) = g(x) − Σ_v c_v (Σ_j x_vj − 1)²`. -/
 noncomputable def quboObjective {n k : ℕ} (w : Fin n → Fin n → ℝ) (c : Fin n → ℝ)
     (x : Fin n → Fin k → Bool) : ℝ :=
-  cutValue w x - ∑ v, c v * (∑ j, ind (x v j) - 1) ^ 2
+  cutValue w x - ∑ v, c v * (∑ j, bit (x v j) - 1) ^ 2
 
 /-- The BQO constraint `Σ_j x_vj = 1` for every vertex. -/
-def OneHot {n k : ℕ} (x : Fin n → Fin k → Bool) : Prop := ∀ v, ∑ j, ind (x v j) = 1
+def OneHot {n k : ℕ} (x : Fin n → Fin k → Bool) : Prop := ∀ v, ∑ j, bit (x v j) = 1
 
 /-- The R-BQO objective on `k − 1` columns,
 `Σ_{u<v} w_uv (1 − Σ_j x_uj x_vj − (1 − Σ_j x_uj)(1 − Σ_j x_vj))`. -/
 noncomputable def reducedCutValue {n m : ℕ} (w : Fin n → Fin n → ℝ)
     (x : Fin n → Fin m → Bool) : ℝ :=
   ∑ u, ∑ v ∈ univ.filter (fun v => u < v), w u v *
-    (1 - ∑ j, ind (x u j) * ind (x v j) - (1 - ∑ j, ind (x u j)) * (1 - ∑ j, ind (x v j)))
+    (1 - ∑ j, bit (x u j) * bit (x v j) - (1 - ∑ j, bit (x u j)) * (1 - ∑ j, bit (x v j)))
 
 /-- The R-QUBO objective `q̄(x) = ḡ(x) − Σ_v c_v Σ_{i<j} x_vi x_vj`. -/
 noncomputable def reducedQuboObjective {n m : ℕ} (w : Fin n → Fin n → ℝ) (c : Fin n → ℝ)
     (x : Fin n → Fin m → Bool) : ℝ :=
   reducedCutValue w x -
-    ∑ v, c v * ∑ i, ∑ j ∈ univ.filter (fun j => i < j), ind (x v i) * ind (x v j)
+    ∑ v, c v * ∑ i, ∑ j ∈ univ.filter (fun j => i < j), bit (x v i) * bit (x v j)
 
 /-- The R-BQO constraint `Σ_j x_vj ≤ 1` for every vertex. -/
-def AtMostOneHot {n m : ℕ} (x : Fin n → Fin m → Bool) : Prop := ∀ v, ∑ j, ind (x v j) ≤ 1
+def AtMostOneHot {n m : ℕ} (x : Fin n → Fin m → Bool) : Prop := ∀ v, ∑ j, bit (x v j) ≤ 1
 
 /-- Conjecture 1: for `k ≥ 3` and `c_v > max(d⁺_v / k, −d⁻_v / 2)`, every maximiser of the
 QUBO objective is BQO-feasible and maximises the cut weight among feasible points. -/
@@ -112,18 +113,18 @@ set_option maxHeartbeats 2000000 in
 -- The averaged moves expand large finite sums inside this single declaration.
 /-- Both conjectures hold. -/
 theorem result : claim := by
-  have ind_sq :
-      ∀ (b : Bool), ind b * ind b = ind b := by
+  have bit_sq :
+      ∀ (b : Bool), bit b * bit b = bit b := by
     intro b
-    cases b <;> simp [ind]
-  have ind_nonneg :
-      ∀ (b : Bool), 0 ≤ ind b := by
+    cases b <;> simp [bit]
+  have bit_nonneg :
+      ∀ (b : Bool), 0 ≤ bit b := by
     intro b
-    cases b <;> simp [ind]
-  have ind_le_one :
-      ∀ (b : Bool), ind b ≤ 1 := by
+    cases b <;> simp [bit]
+  have bit_le_one :
+      ∀ (b : Bool), bit b ≤ 1 := by
     intro b
-    cases b <;> simp [ind]
+    cases b <;> simp [bit]
   have pair_regroup : ∀ {n : ℕ} (F : Fin n → Fin n → ℝ), (∀ u v, F u v = F v u) →
       ∀ G : Fin n → ℝ,
       ∑ u, ∑ v ∈ univ.filter (fun v => u < v), F u v * (G u + G v) =
@@ -160,30 +161,30 @@ theorem result : claim := by
   have stepA : ∀ {n k : ℕ} (w : Fin n → Fin n → ℝ) (c : Fin n → ℝ), (∀ u v, w u v = w v u) →
       (∀ v, -dminus w v / 2 < c v) → ∀ xh : Fin n → Fin k → Bool,
       (∀ x : Fin n → Fin k → Bool, quboObjective w c x ≤ quboObjective w c xh) →
-      ∀ v, ∑ j, ind (xh v j) ≤ 1 := by
+      ∀ v, ∑ j, bit (xh v j) ≤ 1 := by
     intro n k w c hw hc xh hopt
     by_contra hcon
     push Not at hcon
     obtain ⟨v0, hv0⟩ := hcon
-    set a : Fin n → Fin k → ℝ := fun v j => ind (xh v j) with ha
+    set a : Fin n → Fin k → ℝ := fun v j => bit (xh v j) with ha
     set T : Fin n → ℝ := fun v => ∑ j, a v j with hTdef
     have hTnat : ∀ v, T v = ((univ.filter (fun j => xh v j = true)).card : ℝ) := by
       intro v
-      simp only [T, a, ind, Finset.sum_boole]
+      simp only [T, a, bit, Finset.sum_boole]
     let V2 : Finset (Fin n) := univ.filter (fun v => 1 < T v)
     let e : Fin n → ℝ := fun v => if v ∈ V2 then 1 else 0
     let δ : Fin k → Fin k → ℝ := fun i j => if i = j then 1 else 0
     let y : Fin k → Fin n → Fin k → Bool :=
       fun j v i => xh v i && !(decide (v ∈ V2) && decide (i = j))
-    have hy : ∀ j v i, ind (y j v i) = a v i * (1 - e v * δ i j) := by
+    have hy : ∀ j v i, bit (y j v i) = a v i * (1 - e v * δ i j) := by
       intro j v i
-      simp only [y, a, e, δ, ind]
+      simp only [y, a, e, δ, bit]
       by_cases h1 : v ∈ V2 <;> by_cases h2 : i = j <;> by_cases h3 : xh v i = true <;>
         simp [h1, h2, h3]
-    have ha01 : ∀ v i, a v i * a v i = a v i := fun v i => ind_sq _
+    have ha01 : ∀ v i, a v i * a v i = a v i := fun v i => bit_sq _
     have hδ : ∀ i, ∑ j, δ i j = 1 := by intro i; simp [δ]
     -- the averaged edge identity
-    have hI1 : ∀ u v, ∑ j, ∑ i, ind (y j u i) * ind (y j v i) =
+    have hI1 : ∀ u v, ∑ j, ∑ i, bit (y j u i) * bit (y j v i) =
         (k - (e u + e v - e u * e v)) * ∑ i, a u i * a v i := by
       intro u v
       simp_rw [hy]
@@ -199,10 +200,10 @@ theorem result : claim := by
       simp
       ring
     -- the averaged penalty identity
-    have hI2 : ∀ v, ∑ j, (∑ i, ind (y j v i) - 1) ^ 2 =
+    have hI2 : ∀ v, ∑ j, (∑ i, bit (y j v i) - 1) ^ 2 =
         k * (T v - 1) ^ 2 - e v * T v * (2 * T v - 3) := by
       intro v
-      have hrow : ∀ j, ∑ i, ind (y j v i) = T v - e v * a v j := by
+      have hrow : ∀ j, ∑ i, bit (y j v i) = T v - e v * a v j := by
         intro j
         simp_rw [hy]
         simp only [T, mul_sub, mul_one, Finset.sum_sub_distrib]
@@ -233,7 +234,7 @@ theorem result : claim := by
       intro v _
       rw [← Finset.mul_sum, Finset.sum_sub_distrib, hI1]
       simp [M, τ]
-    have hpen : ∑ j, ∑ v, c v * (∑ i, ind (y j v i) - 1) ^ 2 =
+    have hpen : ∑ j, ∑ v, c v * (∑ i, bit (y j v i) - 1) ^ 2 =
         ∑ v, c v * (k * (T v - 1) ^ 2 - P v) := by
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
@@ -247,7 +248,7 @@ theorem result : claim := by
         ∑ u, ∑ v ∈ univ.filter (fun v => u < v), w u v * (τ u v * M u v) +
           ∑ v, c v * P v := by
       have hyobj : ∑ j, quboObjective w c (y j) =
-          ∑ j, cutValue w (y j) - ∑ j, ∑ v, c v * (∑ i, ind (y j v i) - 1) ^ 2 := by
+          ∑ j, cutValue w (y j) - ∑ j, ∑ v, c v * (∑ i, bit (y j v i) - 1) ^ 2 := by
         simp only [quboObjective, Finset.sum_sub_distrib]
       rw [Finset.sum_sub_distrib, hyobj, hcut, hpen, Finset.sum_const, Finset.card_univ,
         Fintype.card_fin, nsmul_eq_mul, hxh]
@@ -269,8 +270,8 @@ theorem result : claim := by
         ring
       linear_combination hA + hB
     -- bounds on the overlaps and the sizes
-    have ha0 : ∀ v i, 0 ≤ a v i := fun v i => ind_nonneg _
-    have ha1 : ∀ v i, a v i ≤ 1 := fun v i => ind_le_one _
+    have ha0 : ∀ v i, 0 ≤ a v i := fun v i => bit_nonneg _
+    have ha1 : ∀ v i, a v i ≤ 1 := fun v i => bit_le_one _
     have hM0 : ∀ u v, 0 ≤ M u v := fun u v =>
       Finset.sum_nonneg fun i _ => mul_nonneg (ha0 u i) (ha0 v i)
     have hMu : ∀ u v, M u v ≤ T u := fun u v =>
@@ -368,20 +369,20 @@ theorem result : claim := by
   have stepB : ∀ {n k : ℕ} (w : Fin n → Fin n → ℝ) (c : Fin n → ℝ), (∀ u v, w u v = w v u) →
       0 < k → (∀ v, dplus w v / k < c v) → ∀ xh : Fin n → Fin k → Bool,
       (∀ x : Fin n → Fin k → Bool, quboObjective w c x ≤ quboObjective w c xh) →
-      (∀ v, ∑ j, ind (xh v j) ≤ 1) → ∀ v, 1 ≤ ∑ j, ind (xh v j) := by
+      (∀ v, ∑ j, bit (xh v j) ≤ 1) → ∀ v, 1 ≤ ∑ j, bit (xh v j) := by
     intro n k w c hw hk hc xh hopt hA
     by_contra hcon
     push Not at hcon
     obtain ⟨v0, hv0⟩ := hcon
-    let a : Fin n → Fin k → ℝ := fun v j => ind (xh v j)
+    let a : Fin n → Fin k → ℝ := fun v j => bit (xh v j)
     let T : Fin n → ℝ := fun v => ∑ j, a v j
-    have ha0 : ∀ v i, 0 ≤ a v i := fun v i => ind_nonneg _
-    have ha1 : ∀ v i, a v i ≤ 1 := fun v i => ind_le_one _
+    have ha0 : ∀ v i, 0 ≤ a v i := fun v i => bit_nonneg _
+    have ha1 : ∀ v i, a v i ≤ 1 := fun v i => bit_le_one _
     have hzero : ∀ j, a v0 j = 0 := by
       intro j
       have hle : a v0 j ≤ T v0 := Finset.single_le_sum (fun i _ => ha0 v0 i) (Finset.mem_univ j)
       have : a v0 j < 1 := lt_of_le_of_lt hle hv0
-      simp only [a, ind] at this ⊢
+      simp only [a, bit] at this ⊢
       split_ifs at this ⊢ <;> simp_all
     have hT0 : T v0 = 0 := Finset.sum_eq_zero fun j _ => hzero j
     have hT01 : ∀ v, 0 ≤ T v ∧ T v ≤ 1 := fun v =>
@@ -390,14 +391,14 @@ theorem result : claim := by
     let δ : Fin k → Fin k → ℝ := fun j i => if j = i then 1 else 0
     let z : Fin k → Fin n → Fin k → Bool :=
       fun i v j => xh v j || (decide (v = v0) && decide (j = i))
-    have hz : ∀ i v j, ind (z i v j) = a v j + ε v * δ j i := by
+    have hz : ∀ i v j, bit (z i v j) = a v j + ε v * δ j i := by
       intro i v j
       by_cases h1 : v = v0
       · subst h1
         have := hzero j
-        simp only [a, ind] at this
-        by_cases h2 : j = i <;> by_cases h3 : xh v j = true <;> simp_all [z, ε, δ, ind]
-      · simp [z, ε, δ, ind, h1, a]
+        simp only [a, bit] at this
+        by_cases h2 : j = i <;> by_cases h3 : xh v j = true <;> simp_all [z, ε, δ, bit]
+      · simp [z, ε, δ, bit, h1, a]
     have hεT : ∀ v, ε v * T v = 0 := by
       intro v; by_cases h : v = v0
       · simp [ε, h, hT0]
@@ -409,7 +410,7 @@ theorem result : claim := by
         simp [ε, this]
       · simp [ε, h]
     have hδ : ∀ j, ∑ i, δ j i = 1 := by intro j; simp [δ]
-    have hedgesum : ∀ u v, u < v → ∑ i, ∑ j, ind (z i u j) * ind (z i v j) =
+    have hedgesum : ∀ u v, u < v → ∑ i, ∑ j, bit (z i u j) * bit (z i v j) =
         k * (∑ j, a u j * a v j) + ε v * T u + ε u * T v := by
       intro u v huv
       simp_rw [hz]
@@ -453,14 +454,14 @@ theorem result : claim := by
         intro v hv
         rw [← Finset.mul_sum, Finset.sum_sub_distrib, hedgesum u v (Finset.mem_filter.1 hv).2]
         simp
-      have hpenz : ∑ i, ∑ v, c v * (∑ j, ind (z i v j) - 1) ^ 2 =
+      have hpenz : ∑ i, ∑ v, c v * (∑ j, bit (z i v j) - 1) ^ 2 =
           ∑ v, c v * (k * (T v + ε v - 1) ^ 2) := by
         rw [Finset.sum_comm]
         apply Finset.sum_congr rfl
         intro v _
         rw [← Finset.mul_sum]
         congr 1
-        have hrow : ∀ i, ∑ j, ind (z i v j) = T v + ε v := by
+        have hrow : ∀ i, ∑ j, bit (z i v j) = T v + ε v := by
           intro i
           simp_rw [hz, Finset.sum_add_distrib, ← Finset.mul_sum]
           simp [δ, T]
@@ -470,7 +471,7 @@ theorem result : claim := by
             ∑ v, c v * (T v - 1) ^ 2 := by
         simp [quboObjective, cutValue, T, a]
       have hzobj : ∑ i, quboObjective w c (z i) =
-          ∑ i, cutValue w (z i) - ∑ i, ∑ v, c v * (∑ j, ind (z i v j) - 1) ^ 2 := by
+          ∑ i, cutValue w (z i) - ∑ i, ∑ v, c v * (∑ j, bit (z i v j) - 1) ^ 2 := by
         simp only [quboObjective, Finset.sum_sub_distrib]
       rw [Finset.sum_sub_distrib, hzobj, hcutz, hpenz, Finset.sum_const, Finset.card_univ,
         Fintype.card_fin, nsmul_eq_mul, hxh]
@@ -519,30 +520,30 @@ theorem result : claim := by
     refine ⟨hone, fun x hx => ?_⟩
     have e1 : ∀ y : Fin n → Fin k → Bool, OneHot y → quboObjective w c y = cutValue w y := by
       intro y hy
-      have : ∀ v, (∑ j, ind (y v j) - 1) ^ 2 = 0 := fun v => by rw [hy v]; ring
+      have : ∀ v, (∑ j, bit (y v j) - 1) ^ 2 = 0 := fun v => by rw [hy v]; ring
       simp [quboObjective, this]
     have := hopt x
     rw [e1 x hx, e1 xh hone] at this
     exact this
   have pair_count : ∀ {m : ℕ} (b : Fin m → Bool),
-      ∑ i, ∑ j ∈ univ.filter (fun j => i < j), ind (b i) * ind (b j) =
-        ((∑ j, ind (b j)) ^ 2 - ∑ j, ind (b j)) / 2 := by
+      ∑ i, ∑ j ∈ univ.filter (fun j => i < j), bit (b i) * bit (b j) =
+        ((∑ j, bit (b j)) ^ 2 - ∑ j, bit (b j)) / 2 := by
     intro m b
-    have hreg := pair_regroup (n := m) (fun i j => ind (b i) * ind (b j)) (fun i j => mul_comm _ _)
+    have hreg := pair_regroup (n := m) (fun i j => bit (b i) * bit (b j)) (fun i j => mul_comm _ _)
       (fun _ => (1 / 2 : ℝ))
-    have e1 : ∀ i j : Fin m, ind (b i) * ind (b j) * (1 / 2 + 1 / 2) = ind (b i) * ind (b j) := by
+    have e1 : ∀ i j : Fin m, bit (b i) * bit (b j) * (1 / 2 + 1 / 2) = bit (b i) * bit (b j) := by
       intro i j; ring
     simp only [e1] at hreg
     rw [hreg]
-    have hsq : (∑ j, ind (b j)) ^ 2 = ∑ j, ∑ i, ind (b i) * ind (b j) := by
+    have hsq : (∑ j, bit (b j)) ^ 2 = ∑ j, ∑ i, bit (b i) * bit (b j) := by
       rw [sq, Finset.sum_mul_sum, Finset.sum_comm]
-    have hsplit : ∀ j, ∑ i, ind (b i) * ind (b j) =
-        ∑ i ∈ univ.filter (fun i => i ≠ j), ind (b i) * ind (b j) + ind (b j) := by
+    have hsplit : ∀ j, ∑ i, bit (b i) * bit (b j) =
+        ∑ i ∈ univ.filter (fun i => i ≠ j), bit (b i) * bit (b j) + bit (b j) := by
       intro j
       rw [← Finset.sum_filter_add_sum_filter_not univ (fun i => i ≠ j)]
       congr 1
       rw [Finset.sum_eq_single j]
-      · simp [ind_sq]
+      · simp [bit_sq]
       · intro i hi hij; exact absurd (by simpa using hi) hij
       · intro h; simp at h
     rw [hsq]
@@ -553,32 +554,32 @@ theorem result : claim := by
       (∀ v, dplus w v - dminus w v < c v) → ∀ xh : Fin n → Fin m → Bool,
       (∀ x : Fin n → Fin m → Bool,
         reducedQuboObjective w c x ≤ reducedQuboObjective w c xh) →
-      ∀ v, ∑ j, ind (xh v j) ≤ 1 := by
+      ∀ v, ∑ j, bit (xh v j) ≤ 1 := by
     intro n m w c hw hc xh hopt
     by_contra hcon
     push Not at hcon
     obtain ⟨v0, hv0⟩ := hcon
-    let a : Fin n → Fin m → ℝ := fun v j => ind (xh v j)
+    let a : Fin n → Fin m → ℝ := fun v j => bit (xh v j)
     let T : Fin n → ℝ := fun v => ∑ j, a v j
     have hTnat : ∀ v, T v = ((univ.filter (fun j => xh v j = true)).card : ℝ) := by
       intro v
-      simp only [T, a, ind, Finset.sum_boole]
+      simp only [T, a, bit, Finset.sum_boole]
     let V2 : Finset (Fin n) := univ.filter (fun v => 1 < T v)
     let e : Fin n → ℝ := fun v => if v ∈ V2 then 1 else 0
     let δ : Fin m → Fin m → ℝ := fun i j => if i = j then 1 else 0
     let y : Fin m → Fin n → Fin m → Bool :=
       fun j v i => xh v i && !(decide (v ∈ V2) && decide (i = j))
-    have hy : ∀ j v i, ind (y j v i) = a v i * (1 - e v * δ i j) := by
+    have hy : ∀ j v i, bit (y j v i) = a v i * (1 - e v * δ i j) := by
       intro j v i
-      simp only [y, a, e, δ, ind]
+      simp only [y, a, e, δ, bit]
       by_cases h1 : v ∈ V2 <;> by_cases h2 : i = j <;> by_cases h3 : xh v i = true <;>
         simp [h1, h2, h3]
-    have ha01 : ∀ v i, a v i * a v i = a v i := fun v i => ind_sq _
+    have ha01 : ∀ v i, a v i * a v i = a v i := fun v i => bit_sq _
     have hδ : ∀ i, ∑ j, δ i j = 1 := by intro i; simp [δ]
     have he2 : ∀ v, e v * e v = e v := by intro v; simp only [e]; split_ifs <;> simp
     let M : Fin n → Fin n → ℝ := fun u v => ∑ i, a u i * a v i
     let τ : Fin n → Fin n → ℝ := fun u v => e u + e v - e u * e v
-    have hI1 : ∀ u v, ∑ j, ∑ i, ind (y j u i) * ind (y j v i) = (m - τ u v) * M u v := by
+    have hI1 : ∀ u v, ∑ j, ∑ i, bit (y j u i) * bit (y j v i) = (m - τ u v) * M u v := by
       intro u v
       simp_rw [hy]
       rw [Finset.sum_comm, Finset.mul_sum]
@@ -592,7 +593,7 @@ theorem result : claim := by
       simp_rw [this, ← Finset.mul_sum, Finset.sum_sub_distrib, ← Finset.mul_sum, hδ]
       simp [τ]
       ring
-    have hrow : ∀ j v, ∑ i, ind (y j v i) = T v - e v * a v j := by
+    have hrow : ∀ j v, ∑ i, bit (y j v i) = T v - e v * a v j := by
       intro j v
       simp_rw [hy]
       simp only [T, mul_sub, mul_one, Finset.sum_sub_distrib]
@@ -602,8 +603,8 @@ theorem result : claim := by
     -- the averaged edge term of the reduced objective
     let D : Fin n → Fin n → ℝ := fun u v =>
       -(τ u v * M u v) + e u * T u * (1 - T v) + e v * T v * (1 - T u) + e u * e v * M u v
-    have hIO : ∀ u v, ∑ j, (1 - ∑ i, ind (y j u i) * ind (y j v i) -
-        (1 - ∑ i, ind (y j u i)) * (1 - ∑ i, ind (y j v i))) =
+    have hIO : ∀ u v, ∑ j, (1 - ∑ i, bit (y j u i) * bit (y j v i) -
+        (1 - ∑ i, bit (y j u i)) * (1 - ∑ i, bit (y j v i))) =
         m * (1 - M u v - (1 - T u) * (1 - T v)) - D u v := by
       intro u v
       rw [Finset.sum_sub_distrib, Finset.sum_sub_distrib, hI1]
@@ -615,10 +616,10 @@ theorem result : claim := by
       simp [D, M, T]
       ring
     -- the averaged penalty term
-    have hIP : ∀ v, ∑ j, ∑ i, ∑ l ∈ univ.filter (fun l => i < l), ind (y j v i) * ind (y j v l) =
+    have hIP : ∀ v, ∑ j, ∑ i, ∑ l ∈ univ.filter (fun l => i < l), bit (y j v i) * bit (y j v l) =
         m * ((T v ^ 2 - T v) / 2) - e v * T v * (T v - 1) := by
       intro v
-      have : ∀ j, ∑ i, ∑ l ∈ univ.filter (fun l => i < l), ind (y j v i) * ind (y j v l) =
+      have : ∀ j, ∑ i, ∑ l ∈ univ.filter (fun l => i < l), bit (y j v i) * bit (y j v l) =
           ((T v - e v * a v j) ^ 2 - (T v - e v * a v j)) / 2 := by
         intro j
         rw [pair_count, hrow]
@@ -643,7 +644,7 @@ theorem result : claim := by
       intro v _
       rw [← Finset.mul_sum, hIO]
     have hpen : ∑ j, ∑ v, c v * ∑ i, ∑ l ∈ univ.filter (fun l => i < l),
-        ind (y j v i) * ind (y j v l) = ∑ v, c v * (m * ((T v ^ 2 - T v) / 2) - ψ v) := by
+        bit (y j v i) * bit (y j v l) = ∑ v, c v * (m * ((T v ^ 2 - T v) / 2) - ψ v) := by
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
       intro v _
@@ -660,7 +661,7 @@ theorem result : claim := by
         ∑ u, ∑ v ∈ univ.filter (fun v => u < v), -(w u v * D u v) + ∑ v, c v * ψ v := by
       have hyobj : ∑ j, reducedQuboObjective w c (y j) =
           ∑ j, reducedCutValue w (y j) - ∑ j, ∑ v, c v * ∑ i, ∑ l ∈ univ.filter (fun l => i < l),
-            ind (y j v i) * ind (y j v l) := by
+            bit (y j v i) * bit (y j v l) := by
         simp only [reducedQuboObjective, Finset.sum_sub_distrib]
       rw [Finset.sum_sub_distrib, hyobj, hcut, hpen, Finset.sum_const, Finset.card_univ,
         Fintype.card_fin, nsmul_eq_mul, hxh]
@@ -683,8 +684,8 @@ theorem result : claim := by
         intro v _
         ring
       linear_combination hA + hB
-    have ha0 : ∀ v i, 0 ≤ a v i := fun v i => ind_nonneg _
-    have ha1 : ∀ v i, a v i ≤ 1 := fun v i => ind_le_one _
+    have ha0 : ∀ v i, 0 ≤ a v i := fun v i => bit_nonneg _
+    have ha1 : ∀ v i, a v i ≤ 1 := fun v i => bit_le_one _
     have hM0 : ∀ u v, 0 ≤ M u v := fun u v =>
       Finset.sum_nonneg fun i _ => mul_nonneg (ha0 u i) (ha0 v i)
     have hMu : ∀ u v, M u v ≤ T u := fun u v =>
@@ -792,12 +793,12 @@ theorem result : claim := by
     have e1 : ∀ y : Fin n → Fin m → Bool, AtMostOneHot y →
         reducedQuboObjective w c y = reducedCutValue w y := by
       intro y hy
-      have hz : ∀ v, ∑ i, ∑ j ∈ univ.filter (fun j => i < j), ind (y v i) * ind (y v j) = 0 := by
+      have hz : ∀ v, ∑ i, ∑ j ∈ univ.filter (fun j => i < j), bit (y v i) * bit (y v j) = 0 := by
         intro v
         rw [pair_count]
-        have h0 : 0 ≤ ∑ j, ind (y v j) := Finset.sum_nonneg fun j _ => ind_nonneg _
-        have hnat : ∑ j, ind (y v j) = ((univ.filter (fun j => y v j = true)).card : ℝ) := by
-          simp only [ind, Finset.sum_boole]
+        have h0 : 0 ≤ ∑ j, bit (y v j) := Finset.sum_nonneg fun j _ => bit_nonneg _
+        have hnat : ∑ j, bit (y v j) = ((univ.filter (fun j => y v j = true)).card : ℝ) := by
+          simp only [bit, Finset.sum_boole]
         have h1 := hy v
         rw [hnat] at h1 ⊢
         have : (univ.filter (fun j => y v j = true)).card ≤ 1 := by exact_mod_cast h1

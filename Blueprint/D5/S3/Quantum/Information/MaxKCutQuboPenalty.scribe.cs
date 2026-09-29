@@ -14,9 +14,6 @@ internal sealed class MaxKCutQuboPenaltyDocument : IScribeDocumentDefinition
         "For max k-cut with real edge weights, every optimal solution of the one-hot QUBO reformulation is an optimal k-cut as soon as each penalty c_v exceeds max(d+_v / k, -d-_v / 2), and every optimal solution of the reduced R-QUBO reformulation is one as soon as c_v exceeds d+_v - d-_v, where d+_v and d-_v are the sums of the positive and of the negative weights at v. These are Conjectures 1 and 2 of A. Harkness et al. (arXiv:2511.01108), who proved the bounds with -(3/2) d-_v and -2 d-_v.",
         H("Tight penalty coefficients for the QUBO reformulations of max k-cut"),
         Blocks(
-            Node("ind", "Binary variables", IndFormula(),
-                "A Boolean entry x_vj is read as the number 1 or 0.",
-                "ind", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("dplus", "Positive weighted degree", DegreeFormula("dplus", true),
                 "The sum of the positive weights w(u, v) over the vertices u other than v.",
                 "dplus", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -24,7 +21,7 @@ internal sealed class MaxKCutQuboPenaltyDocument : IScribeDocumentDefinition
                 "The sum of the negative weights w(u, v) over the vertices u other than v.",
                 "dminus", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("cut", "The BQO objective", CutFormula(),
-                "The weight of the edges u < v whose endpoints share no part, written as in the BQO formulation of max k-cut.",
+                "The BQO objective of max k-cut, evaluated on every Boolean matrix; each entry is read by the frozen bit as 1 or 0. On one-hot matrices it is the weight of the edges u < v whose endpoints lie in different parts.",
                 "cutValue", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("qubo", "The QUBO objective", QuboFormula(),
                 "The BQO objective minus the penalty c_v (sum_j x_vj - 1)^2 at every vertex.",
@@ -53,7 +50,7 @@ internal sealed class MaxKCutQuboPenaltyDocument : IScribeDocumentDefinition
                 "The conjunction of Conjectures 1 and 2.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of both conjectures", Disp(F.Id("claim")),
-                "Let t_v be the number of parts of v in an optimal x, and suppose some vertex has t_v at least 2. For each colour j delete j from every vertex with two or more colours, and add up the changes of the objective over all k colours. The penalty of such a vertex drops by c_v t_v (2 t_v - 3) in total, and an edge touching such a vertex loses w_uv times the number of its shared colours. That number is at most half the sum of t (2t - 3) over the endpoints with two or more colours, so the edges with negative weight cost at most -d-_v / 2 times t_v (2 t_v - 3) at each such vertex, and the edges with positive weight only help. The total is therefore at least the sum of (c_v + d-_v / 2) t_v (2 t_v - 3), which is positive, so one of the deletions improves x, a contradiction. If some vertex had no colour, giving it colour i gains c_v minus the weight of its neighbours of colour i, which is at least k c_v - d+_v > 0 when summed over i. So x is one-hot and, since the penalty vanishes on one-hot matrices, an optimal k-cut. For the reduced objective the same deletion changes each edge term by at most s_u (s_u - 1) + s_v (s_v - 1) in absolute value and each penalty by c_v s_v (s_v - 1), where s_v is the number of columns set, so the total gain is at least the sum of (c_v - d+_v + d-_v) s_v (s_v - 1) > 0.",
+                "Let t_v be the number of parts of v in an optimal x, and suppose some vertex has t_v at least 2. For each colour j delete j from every vertex with two or more colours, and add up the changes of the objective over all k colours. The penalty of such a vertex drops by c_v t_v (2 t_v - 3) in total, and the term of an edge touching such a vertex increases by w_uv times the number of its shared colours, since each deletion removes one shared colour. That number is at most half the sum of t (2t - 3) over the endpoints with two or more colours, so the edges with negative weight cost at most -d-_v / 2 times t_v (2 t_v - 3) at each such vertex, and the edges with positive weight only help. The total is therefore at least the sum of (c_v + d-_v / 2) t_v (2 t_v - 3), which is positive, so one of the deletions improves x, a contradiction. If some vertex had no colour, giving it colour i gains c_v minus the weight of its neighbours of colour i, which is at least k c_v - d+_v > 0 when summed over i. So x is one-hot and, since the penalty vanishes on one-hot matrices, an optimal k-cut. For the reduced objective the same deletion changes each edge term by at most s_u (s_u - 1) + s_v (s_v - 1) in absolute value and each penalty by c_v s_v (s_v - 1), where s_v is the number of columns set, so the total gain is at least the sum of (c_v - d+_v + d-_v) s_v (s_v - 1) > 0.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("harkness-2025-maxkcut-qubo-penalty"),
@@ -96,19 +93,12 @@ internal sealed class MaxKCutQuboPenaltyDocument : IScribeDocumentDefinition
     private static Formula FinOf(Formula n) => Call(F.Id("Fin"), n);
     private static Formula W(Formula u, Formula v) => new Formula.Apply(F.Id("w"), [u, v]);
     private static Formula Ind(Formula x, Formula v, Formula j) =>
-        Call(F.Id("ind"), new Formula.Apply(x, [v, j]));
+        Call(F.Id("bit"), new Formula.Apply(x, [v, j]));
     private static Formula RowSum(Formula x, Formula v) =>
         SumOver(F.Id("j"), Ind(x, v, F.Id("j")));
     private static Formula Overlap(Formula x, Formula u, Formula v) =>
         SumOver(F.Id("j"), Times(Ind(x, u, F.Id("j")), Ind(x, v, F.Id("j"))));
     private static Formula PairIndex() => Seq(F.Id("u"), Sp, Lt, Sp, F.Id("v"));
-
-    private static Formula IndFormula()
-    {
-        Formula b = F.Id("b");
-        return Disp(Equal(Call(F.Id("ind"), b), Seq(Named(F.Id("if")), Sp, b, Sp,
-            Named(F.Id("then")), Sp, D(1), Sp, Named(F.Id("else")), Sp, D(0))));
-    }
 
     private static Formula DegreeFormula(string name, bool positive)
     {
