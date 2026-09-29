@@ -1,7 +1,7 @@
 # Finite Robin and atomic-relation bounds
 
 These standard-library Python programs reproduce the finite arithmetic in
-[FIBONACCI_ATOMIC_RELATION_GENERATION.md, §§83–97](../../develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+[FIBONACCI_ATOMIC_RELATION_GENERATION.md, §§83–102](../../develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
 They use exact integers, rational numbers, or outward integer intervals. Decimal
 strings are display values; no sign decision uses floating point. These are
 experimental arithmetic certificates with paper justifications, not Lean proofs.
@@ -430,7 +430,7 @@ product of independent labels. In particular, `+7` and `+10` have 1440 and
 `+13 -> 5040` and `+2520 -> 60`; all 5040 source residues satisfy §100.8's
 explicit `+2520` gcd update. Exposing `+2` and `+5` separately gives 5040
 states, while a closed `+7` macro has 1440. The retained counterexample is
-`C=5,725`: equal macro states, but after `+2` the gcd readouts are 7 and 1.
+`C=5` and `C=725`: equal macro states, but after `+2` the gcd readouts are 7 and 1.
 
 Final SHA-256 identifiers:
 
@@ -450,3 +450,42 @@ margin. The paper proofs and finite diagnostics have no new Lean kernel
 verification, originality, or RH-completion claim. Earlier programs and results
 remain unchanged, and the earlier scoped Lean check is not extended to this
 new prose or Python.
+
+## Coarse additions and direct half-turn checks (§101)
+
+[`coarse_additions.py`](coarse_additions.py) is the adapted finite verifier for §101. It uses only Python's standard library and exact integer gcd arithmetic. It checks every positive translation representative for `H=2,…,256`, then computes stable Moore behavior partitions for selected libraries with `H=2,…,48`, positive representatives for every scalar, and the explicit `H=5040` macro cases. Assertions are part of verification: optimized execution is rejected, bytecode writes are disabled, and `--out` is the only output path.
+
+```sh
+python3 docs/reports/fib-robin-boundary/coarse_additions.py \
+  --out "/tmp/fib_atomic final verification/coarse_additions.json"
+```
+
+The delivered JSON is [`coarse_additions.json`](coarse_additions.json). Its actual run counts are 255 complete translation windows, 32,895 one-addition models, 857,558 direct source-translation checks, 32,512 one-addition counterexample pairs, 49,407 closed update checks, 3,447 positive-lift checks, 424 independent complete behavior models, 738,785 Moore transition scans, and 20,160 `H=5040` closed-update checks. The retained JSON hash is `6a5e99b69699873ef4e31f0a93ab95489f710f1edc27c5593122db77d9956fac`; the delivered source hash is `3177c59b037a59e99dd56be8c7b7a31694c1d965d14f5004dd880c07fc1ba03e`.
+
+## Refinement records and conditional capacity (§102)
+
+[`refinement_records.py`](refinement_records.py) independently enumerates actual affine gcd responses for `H=2,…,24`, checks every nested `d_new | d_old` pair through `H=128`, and checks the `H=5040` examples, the `+H/2` no-refinement corollary, and incomparable-library gcd joins. It constructs and decodes a finite record map jointly with the old summary, checks local maxima at unit sources, and keeps all output in the caller's `--out` path. It is standard-library-only, disables bytecode writes, and rejects `-O`/`-OO` because assertions bear verification.
+
+```sh
+python3 docs/reports/fib-robin-boundary/refinement_records.py \
+  --out "/tmp/fib_atomic final verification/refinement_records.json"
+```
+
+The delivered JSON is [`refinement_records.json`](refinement_records.json). Its actual counts are 83 raw affine models, 151,487 raw affine gcd evaluations, 202 raw behavior-refinement pairs, 2,044 eta-refinement pairs, 2,267 total refinement-pair record checks, 262,060 encode/decode checks, 92,882 unit-source maximum checks, 60 half-modulus no-refinement libraries, and 302,400 corresponding source checks. The retained JSON hash is `c6b9c8394b1865df6282883e790dbba3ccc355e35f02808163905428f1438438`; the delivered source hash is `2adbd12ef8a9affe072960f8a61ba2e4e2732a086fc69fae7a27954132604a8a`.
+
+For both programs, a portability run uses an unrelated working directory, copied final source paths containing spaces, `env -i PATH=/usr/bin:/bin`, and external output paths; the produced JSON is compared byte-for-byte with the retained file. These finite programs verify the stated finite scopes and record contracts only. Sections 101–102 are paper mathematics and direct corollaries of §100, with zero new Lean candidates; they make no originality, RH, or physical-dimension claim and do not complete the infinite-scale research goal.
+
+The exact portability command is:
+
+```sh
+run_root="/tmp/fib_atomic final verification"
+mkdir -p "$run_root/source files" "$run_root/unrelated cwd" "$run_root/output"
+cp docs/reports/fib-robin-boundary/coarse_additions.py "$run_root/source files/coarse additions.py"
+cp docs/reports/fib-robin-boundary/refinement_records.py "$run_root/source files/refinement records.py"
+(cd "$run_root/unrelated cwd" && env -i PATH=/usr/bin:/bin PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 \
+  "$run_root/source files/coarse additions.py" --out "$run_root/output/coarse additions.json")
+(cd "$run_root/unrelated cwd" && env -i PATH=/usr/bin:/bin PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 \
+  "$run_root/source files/refinement records.py" --out "$run_root/output/refinement records.json")
+cmp "$run_root/output/coarse additions.json" docs/reports/fib-robin-boundary/coarse_additions.json
+cmp "$run_root/output/refinement records.json" docs/reports/fib-robin-boundary/refinement_records.json
+```
