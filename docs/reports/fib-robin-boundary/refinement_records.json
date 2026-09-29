@@ -1,0 +1,337 @@
+{
+  "counts": {
+    "encode_decode_checks": 262060,
+    "eta_refinement_pairs": 2044,
+    "half_modulus_no_refinement_libraries": 60,
+    "half_modulus_no_refinement_sources": 302400,
+    "raw_affine_gcd_evaluations": 151487,
+    "raw_affine_models": 83,
+    "raw_behavior_refinement_pairs": 202,
+    "refinement_pairs": 2267,
+    "unit_source_maximum_checks": 92882
+  },
+  "domains": {
+    "eta_enumeration_H": [
+      2,
+      128
+    ],
+    "large_H": 5040,
+    "large_refinements": 17,
+    "raw_affine_H": [
+      2,
+      24
+    ]
+  },
+  "examples": [
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 60
+      },
+      "new": 2520,
+      "new_states": 60,
+      "old": 5040,
+      "old_states": 60,
+      "record_values": 1
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 2,
+        "1152": 1,
+        "12": 4,
+        "144": 3,
+        "16": 3,
+        "192": 3,
+        "2": 3,
+        "24": 7,
+        "288": 2,
+        "32": 2,
+        "36": 2,
+        "384": 1,
+        "4": 4,
+        "48": 7,
+        "576": 1,
+        "6": 4,
+        "64": 1,
+        "72": 1,
+        "8": 5,
+        "96": 4
+      },
+      "new": 1,
+      "new_states": 5040,
+      "old": 5040,
+      "old_states": 60,
+      "record_values": 1152
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 4,
+        "12": 2,
+        "16": 6,
+        "192": 2,
+        "2": 6,
+        "24": 6,
+        "32": 4,
+        "4": 8,
+        "48": 4,
+        "6": 4,
+        "64": 2,
+        "8": 10,
+        "96": 2
+      },
+      "new": 7,
+      "new_states": 1440,
+      "old": 5040,
+      "old_states": 60,
+      "record_values": 192
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 4,
+        "12": 8,
+        "144": 4,
+        "2": 6,
+        "24": 10,
+        "36": 4,
+        "4": 6,
+        "48": 4,
+        "6": 8,
+        "72": 2,
+        "8": 4
+      },
+      "new": 10,
+      "new_states": 1512,
+      "old": 5040,
+      "old_states": 60,
+      "record_values": 144
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 2,
+        "12": 4,
+        "144": 4,
+        "16": 3,
+        "192": 2,
+        "2": 3,
+        "24": 9,
+        "288": 1,
+        "32": 2,
+        "36": 2,
+        "4": 5,
+        "48": 6,
+        "576": 2,
+        "6": 4,
+        "72": 1,
+        "8": 5,
+        "96": 5
+      },
+      "new": 2,
+      "new_states": 3780,
+      "old": 5040,
+      "old_states": 60,
+      "record_values": 576
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 2,
+        "12": 5,
+        "16": 5,
+        "192": 3,
+        "2": 5,
+        "24": 5,
+        "32": 3,
+        "384": 2,
+        "4": 5,
+        "48": 8,
+        "6": 2,
+        "64": 2,
+        "8": 8,
+        "96": 5
+      },
+      "new": 3,
+      "new_states": 2800,
+      "old": 5040,
+      "old_states": 60,
+      "record_values": 384
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 4,
+        "12": 8,
+        "144": 2,
+        "16": 2,
+        "2": 6,
+        "24": 6,
+        "288": 2,
+        "36": 4,
+        "4": 4,
+        "48": 6,
+        "6": 8,
+        "72": 2,
+        "8": 4,
+        "96": 2
+      },
+      "new": 5,
+      "new_states": 2016,
+      "old": 5040,
+      "old_states": 60,
+      "record_values": 288
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 2,
+        "1152": 1,
+        "12": 4,
+        "144": 3,
+        "16": 3,
+        "192": 3,
+        "2": 3,
+        "24": 7,
+        "288": 2,
+        "32": 2,
+        "36": 2,
+        "384": 1,
+        "4": 4,
+        "48": 7,
+        "576": 1,
+        "6": 4,
+        "64": 1,
+        "72": 1,
+        "8": 5,
+        "96": 4
+      },
+      "new": 1,
+      "new_states": 5040,
+      "old": 2520,
+      "old_states": 60,
+      "record_values": 1152
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 24,
+        "2": 36
+      },
+      "new": 1260,
+      "new_states": 96,
+      "old": 2520,
+      "old_states": 60,
+      "record_values": 2
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 720,
+        "6": 720
+      },
+      "new": 1,
+      "new_states": 5040,
+      "old": 7,
+      "old_states": 1440,
+      "record_values": 6
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 504,
+        "2": 252,
+        "4": 504,
+        "8": 252
+      },
+      "new": 1,
+      "new_states": 5040,
+      "old": 10,
+      "old_states": 1512,
+      "record_values": 8
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 2520,
+        "2": 1260
+      },
+      "new": 1,
+      "new_states": 5040,
+      "old": 2,
+      "old_states": 3780,
+      "record_values": 2
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 1680,
+        "3": 1120
+      },
+      "new": 1,
+      "new_states": 5040,
+      "old": 3,
+      "old_states": 2800,
+      "record_values": 3
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 1008,
+        "4": 1008
+      },
+      "new": 1,
+      "new_states": 5040,
+      "old": 5,
+      "old_states": 2016,
+      "record_values": 4
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 5040
+      },
+      "new": 1,
+      "new_states": 5040,
+      "old": 1,
+      "old_states": 5040,
+      "record_values": 1
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 1575
+      },
+      "new": 8,
+      "new_states": 1575,
+      "old": 16,
+      "old_states": 1575,
+      "record_values": 1
+    },
+    {
+      "coarse_fiber_size_histogram": {
+        "1": 630,
+        "2": 945
+      },
+      "new": 4,
+      "new_states": 2520,
+      "old": 8,
+      "old_states": 1575,
+      "record_values": 2
+    }
+  ],
+  "fixed_record_contract": "A finite record value is decoded together with the old summary; labels may be reused across coarse fibers.",
+  "formula": "min |R| = phi(H/d_new) / phi(H/d_old), when d_new divides d_old divides H",
+  "incomparable_libraries": [
+    {
+      "old": 7,
+      "record_values": 6,
+      "requested": 10,
+      "union": 1
+    },
+    {
+      "old": 10,
+      "record_values": 8,
+      "requested": 7,
+      "union": 1
+    },
+    {
+      "old": 16,
+      "record_values": 8,
+      "requested": 9,
+      "union": 1
+    },
+    {
+      "old": 9,
+      "record_values": 6,
+      "requested": 16,
+      "union": 1
+    }
+  ],
+  "scope": "Finite integer diagnostics for a direct corollary of section 100; no new Lean or novelty claim."
+}
