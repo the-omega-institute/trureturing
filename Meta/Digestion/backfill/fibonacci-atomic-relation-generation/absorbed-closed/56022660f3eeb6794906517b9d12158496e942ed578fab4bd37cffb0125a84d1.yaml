@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:56022660f3eeb6794906517b9d12158496e942ed578fab4bd37cffb0125a84d1
   normalized_sha256: sha256:56022660f3eeb6794906517b9d12158496e942ed578fab4bd37cffb0125a84d1
 cas_ref: sha256:56022660f3eeb6794906517b9d12158496e942ed578fab4bd37cffb0125a84d1
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimePowers/GlobalAffineGcdBehavior.global_encoding_complete
+    target_statement_id: sha256:f15a95e44d095d443333fab856f5d377625f42a3a90e683d54d66600cc19e7d9
 receipts:
   unresolved_subitems: []
