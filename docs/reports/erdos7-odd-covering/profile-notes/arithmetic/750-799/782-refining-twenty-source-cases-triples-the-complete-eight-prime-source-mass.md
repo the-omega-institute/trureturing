@@ -15,7 +15,7 @@ Use Schroeder edition1.0.1's finite source certificate, as identified and locall
 
 `a1720cea93f30e04f31db6b49700a7d5c2d0fcfe9dff2f63ea2e3130b08629ac`.
 
-It contains28001 unique source-case rows. Each row gives an integer lower reserve and upper loss, both measured in units1/135000 of physical Haar mass. A surplus of four supplied the older mass1/33750. The consumer checks the original data bytes, schema, complete phase multiplicities, row identities and original minimum; it does not use a program-byte hash as a mathematical acceptance gate.
+It contains28001 unique source-case rows. Each row gives an integer lower reserve and upper loss, both measured in units1/135000 of constructed source mass. A surplus of four supplied the older mass1/33750. The consumer checks the original data bytes, schema, complete phase multiplicities, row identities and original minimum; it does not use a program-byte hash as a mathematical acceptance gate.
 
 Exactly27981 original rows already have integer surplus at least twelve; their minimum is exactly twelve. The remaining twenty consist of four `anchor`, four `coarse`, and twelve `pure3` leaves. There is no original surplus-eleven leaf. The unchanged rows include all twenty-eight terminal `closing` cases, one of which has integer surplus twelve when reserve and the full six-loss sum are rounded together. The separate uniform closing-budget estimate11 is a coarser display, not the minimum of those original whole-row certificates.
 
