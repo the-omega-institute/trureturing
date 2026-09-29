@@ -7866,7 +7866,15 @@ D(T_{j+1})=T_j,
 \tag{109.9}
 $$
 
-并保留前向替换 $\rho(T_j)=T_{j+1}$、$\rho(\bot)=\bot$。把每个一孔二元接续 $L_u,R_u$ 从 $S$ 上的来源送到失败 $\bot$，失败后保持 $\bot$。读出为
+并保留前向替换 $\rho(T_j)=T_{j+1}$、$\rho(\bot)=\bot$。把每个一孔二元接续 $L_u,R_u$ 从 $S$ 上的来源送到失败 $\bot$，失败后保持 $\bot$。为使这个前驱动作也属于本次测试族，令
+
+$$
+\Gamma_{U,D}:=\Gamma_U\cup\{D\},
+$$
+
+其中 $D$ 按上面的部分／失败语义执行；在 $\bot$ 上保持 $\bot$。读出为
+
+本节的 $\Gamma_{U,D}$ 只在实际来源 $S$ 及失败态 $\bot$ 上声明；对自由树载体中不属于该来源的项，不免费扩展 $D$ 的定义域。
 
 $$
 q(T_0)=1,
@@ -7877,22 +7885,22 @@ $$
 
 对任意有限 horizon $m$，取 $j>m$。任何长度至多 $m$ 的只含 $D,\rho$ 的词都不能把 $T_j$ 降到 $T_0$，所以读出均为 $0$；任何含二元接续的词都在该处读到稳定失败 $\bot$。因此每一层都有同一个有限 profile 代表。
 
-这里的有限像要按实际来源限制：记
+这里的有限像要按实际来源限制。令 $\Phi_m^{\Gamma_{U,D}}$ 表示把式(109.4)中的 $\Gamma_U$ 换成 $\Gamma_{U,D}$ 所得的有限 profile，并记
 
 $$
-\Phi_m^S=\Phi_m\!\upharpoonright_S,
+\Phi_m^{S,D}=\Phi_m^{\Gamma_{U,D}}\!\upharpoonright_S,
 \qquad
-R_m^S=\operatorname{ran}\Phi_m^S,
+R_m^{S,D}=\operatorname{ran}\Phi_m^{S,D},
 $$
 
-并在各 $R_m^S$ 之间使用同样的限制映射。否则把整个自由树载体的像误代入，会把“形式上可表示”与“该共同来源实际可达”混在一起。
+在各 $R_m^{S,D}$ 之间使用同样的限制映射。否则把整个自由树载体的像误代入，会把“形式上可表示”与“该共同来源实际可达”混在一起。
 
 这些 profile 形成一个相容线程：所有只含 $D,\rho$ 的有限词坐标为 $0$，含二元接续的坐标为 $\bot$。但它不是任何实际 $T_j$ 的完整 profile，因为词 $D^j$ 在 $T_j$ 上读出 $1$。于是
 
 $$
-\varprojlim_m R_m^S
+\varprojlim_m R_m^{S,D}
 \supsetneq
-\operatorname{ran}\bigl(t\mapsto(\Phi_m^S(t))_m\bigr).
+\operatorname{ran}\bigl(t\mapsto(\Phi_m^{S,D}(t))_m\bigr).
 \tag{109.11}
 $$
 
@@ -8022,16 +8030,16 @@ $$
 
 ### 110.4 来源限制与线程完备性保持独立
 
-**推论 110.6（同余范围修正不补足共同来源）。** 对 §109.3 的指定实际来源 $S$，有限像仍取 $R_m^S=\operatorname{ran}(\Phi_m|_S)$，其中 $\Phi_m$ 使用该节含 $D$ 的测试族。记 $E_S$ 为这同一测试族在 $S$ 上的完整行为核，不与未加入 $D$ 的 $\Gamma_U$ 关系 $E$ 混用。原有映射
+**推论 110.6（同余范围修正不补足共同来源）。** 对 §109.3 的指定实际来源 $S$，有限像取 $R_m^{S,D}=\operatorname{ran}(\Phi_m^{S,D})$，其中 profile 使用该节明确声明的 $\Gamma_{U,D}$ 测试族。记 $E_{S,D}$ 为这同一测试族在 $S$ 上的完整行为核，不与未加入 $D$ 的 $\Gamma_U$ 关系 $E$ 混用。原有映射
 
 $$
-S/E_S\longrightarrow\varprojlim_m R_m^S
+S/E_{S,D}\longrightarrow\varprojlim_m R_m^{S,D}
 \tag{110.8}
 $$
 
 仍为单射，满射仍恰好要求每个相容线程由同一个 $s\in S$ 实现；由行为类恢复原始来源仍另需 profile 在 $S$ 上分离。二元下降与旁支运输都不替代这些条件。
 
-证明。两个来源给同一线程，当且仅当它们在每个有限测试上相同，也即 $E_S$ 相关；线程属于实际像，当且仅当存在同一来源实现其全部坐标。这些论证只使用原有 profile 及其限制映射，不使用二元商。若扩大旁支或动作族，须重算该任务的行为关系，不能把它的区别或恢复能力归给旧受限任务。$\square$
+证明。两个来源给同一线程，当且仅当它们在每个有限测试上相同，也即 $E_{S,D}$ 相关；线程属于实际像，当且仅当存在同一来源实现其全部坐标。这些论证只使用 $\Gamma_{U,D}$ profile 及其限制映射，不使用二元商。若扩大旁支或动作族，须重算该任务的行为关系，不能把它的区别或恢复能力归给旧受限任务。$\square$
 
 ## 110.99 追加锚
 
@@ -8200,14 +8208,14 @@ $$
 $$
 \operatorname{Orb}_{\rho}(\alpha)
 \subsetneq
-\mathcal T_{\mathrm F},
+\mathcal T,
 \qquad
 \operatorname{Cl}_{\langle-,-\rangle,\rho}(\{\alpha\})
-=\mathcal T_{\mathrm F}.
+=\mathcal T.
 \tag{112.1}
 $$
 
-**证明。** 轨道严格包含于自由树集，因为每个 $T_j=\rho^j(\alpha)$ 都满足 Fibonacci 轨道的固定递归，而例如 $\langle\alpha,\alpha\rangle$ 不在该轨道。另一方面，$\beta=\rho(\alpha)$，所以闭包包含两个叶 $\alpha,\beta$；再对项的构造递归，若 $s,t$ 已在闭包中，则 $\langle s,t\rangle$ 也在闭包中，故包含全部 $\mathcal T_{\mathrm F}$。反包含由闭包定义成立。$\square$
+**证明。** 轨道严格包含于自由树集，因为每个 $T_j=\rho^j(\alpha)$ 都满足 Fibonacci 轨道的固定递归，而例如 $\langle\alpha,\alpha\rangle$ 不在该轨道。另一方面，$\beta=\rho(\alpha)$，所以闭包包含两个叶 $\alpha,\beta$；再对项的构造递归，若 $s,t$ 已在闭包中，则 $\langle s,t\rangle$ 也在闭包中，故包含全部 $\mathcal T$。反包含由闭包定义成立。$\square$
 
 因此，“一个种子”可以有两种完全不同的含义：只允许反复施加 $\rho$ 时，它只生成一条 Fibonacci 轨道；允许任意有序配对和局部使用 $\rho$ 时，一个种子已经足以生成全部有限二叶树。后一结论是操作闭包的生成性，不是把静态签名中的两个零元合并成一个。
 
@@ -8221,10 +8229,10 @@ F_1(X)=\{\star\}\sqcup(X\times X),
 F_2(X)=\{\alpha,\beta\}\sqcup(X\times X),
 $$
 
-分别取其有限初始代数 $\mathcal T_1,\mathcal T_{\mathrm F}$。不存在保持有序二元构造器的满射
+分别取其有限初始代数 $\mathcal T_1,\mathcal T$。不存在保持有序二元构造器的满射
 
 $$
-h:\mathcal T_1\twoheadrightarrow\mathcal T_{\mathrm F}
+h:\mathcal T_1\twoheadrightarrow\mathcal T
 $$
 
 满足
@@ -8256,7 +8264,7 @@ $$
 它们分别回答静态语法、可执行生成协议和固定加性任务的最小边界三个问题，不能合并为“关系本体只有两个不可约关系”。完整过程仍须沿
 
 $$
-\mathcal T_{\mathrm F}
+\mathcal T
 \longrightarrow I
 \longrightarrow S_0
 \longrightarrow S_0/\!\equiv_{\mathcal C}
@@ -8275,13 +8283,13 @@ $$
 令
 
 $$
-\mathcal T_2=\mu X\bigl(\{\alpha,\beta\}+X\times X\bigr)
+\mathcal T=\mu X\bigl(\{\alpha,\beta\}+X\times X\bigr)
 $$
 
 是二叶自由生成代数，令
 
 $$
-\operatorname{Eval}:\mathcal T_2\longrightarrow S
+\operatorname{Eval}:\mathcal T\longrightarrow S
 $$
 
 是把生成项解释到某个实际过程载体 $S$ 的结构保持映射。固定一个允许的内部测试族 $\mathcal C$，并令
@@ -8296,7 +8304,7 @@ $$
 其中响应至少包括声明的合法性、输出、失败标签、记录和后继接口。则生成层对任务的实际边界只能通过
 
 $$
-\mathcal T_2
+\mathcal T
 \xrightarrow{\operatorname{Eval}}
 \operatorname{im}(\operatorname{Eval})
 \longrightarrow

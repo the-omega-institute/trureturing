@@ -8853,7 +8853,7 @@ $$
 
 ### 32.2 声明动作、费用与互恢复条件
 
-固定包含 $\sigma$ 的确定性请求字母表 $A$。每个动作 $a\in A$ 的合法域为 $D_a\subseteq O$，合法后继 $T_a:D_a\to O$ 留在同一轨道。为使合法与失败请求使用同一语义，记 $\operatorname{Option}(X)=\{\mathrm{none}\}\sqcup\{\mathrm{some}(x):x\in X\}$，并声明完整响应
+固定包含 $\sigma$ 的确定性请求字母表 $A$。每个动作 $a\in A$ 的合法域为 $D_a\subseteq O$，合法后继 $T_a:D_a\to O$ 留在同一轨道；替换动作满足 $D_\sigma=O$ 且 $T_\sigma(T_n)=T_{n+1}$。为使合法与失败请求使用同一语义，记 $\operatorname{Option}(X)=\{\mathrm{none}\}\sqcup\{\mathrm{some}(x):x\in X\}$，并声明完整响应
 
 $$
 \begin{gathered}
@@ -8894,7 +8894,25 @@ $$
 \bar\kappa_a:\overline D_a\to\mathbb Z.
 $$
 
-其中 $\bar\kappa_a$ 是合同声明的边界费用部分。$\kappa_a$ 的值纳入合法请求的 $\operatorname{Clk}_a$ 标签；若失败请求收费，其费用同样作为失败响应的时钟标签运输。由式(32.3)，$x\in D_a$ 当且仅当 $b(x)\in\overline D_a$，因此下式中的 $\bar\kappa_a(b(x))$ 有定义，且残差的域明确为 $D_a$：
+其中 $\bar\kappa_a$ 是合同声明的边界费用部分。为使费用进入时钟标签具有明确类型，固定一个费用投影
+
+$$
+\operatorname{fee}_a:\Lambda_a\to\mathbb Z,
+\qquad
+\operatorname{fee}^{\operatorname{opt}}_a:\operatorname{Option}(\Lambda_a)\to\operatorname{Option}(\mathbb Z),
+\qquad
+\operatorname{fee}^{\operatorname{opt}}_a(\mathrm{none})=\mathrm{none},
+\qquad
+\operatorname{fee}^{\operatorname{opt}}_a(\mathrm{some}(\lambda))=\mathrm{some}(\operatorname{fee}_a(\lambda)),
+$$
+
+并要求合法请求满足
+
+$$
+\operatorname{fee}^{\operatorname{opt}}_a(\operatorname{Clk}_a(x))=\mathrm{some}(\kappa_a(x))\qquad(x\in D_a).
+$$
+
+若失败请求收费，其费用同样作为失败响应的时钟标签运输，并按同一投影解释。由式(32.3)，$x\in D_a$ 当且仅当 $b(x)\in\overline D_a$，因此下式中的 $\bar\kappa_a(b(x))$ 有定义，且残差的域明确为 $D_a$：
 
 $$
 r_a:D_a\to\mathbb Z,\qquad r_a(x)=\kappa_a(x)-\bar\kappa_a(b(x)).
@@ -8912,7 +8930,7 @@ $$
 
 这里 $r$ 是扣除边界部分后待由端点势承担的残差，即第31节式(31.9)的 $d$。使用命题31.4时，要求同一来源上的合法路径具有连通的路径群胚延拓，$r$ 对复合可加、对逆边取负，且 $r_\sigma(T_n)=1$。每条闭路的残差和须为零，包括“两条同端点合法路径之一接另一条的形式逆”形成的比较闭路。只检查原有向图中的有向循环不够；例如无有向循环的两条平行路径仍可具有不同费用。形式逆只用于检验路径一致性，不授予观察者逆向操作权限。若不采用群胚表述，可直接要求任意同起终点的合法路径残差相等。
 
-**定理 32.2（纯轨道上的四表达模型定理）。** 在上述固定原点和共同实际载体 $O$ 上，若声明动作族及其失败后继保持轨道、$c$ 与 $b$ 分离实际像中的不同点、全部声明的完整响应（含合法性、失败、输出、记录、权限／参考状态、时钟标签及可选后继）、当前读出和选择器满足式(32.3)，且时钟残差满足上述归一化与闭路零和条件，则
+**定理 32.2（纯轨道上的四表达模型定理）。** 在上述固定原点和共同实际载体 $O$ 上，若声明动作族及其失败后继保持轨道，且 $D_\sigma=O$、$T_\sigma(T_n)=T_{n+1}$；若 $c$ 与 $b$ 分离实际像中的不同点、全部声明的完整响应（含合法性、失败、输出、记录、权限／参考状态、时钟标签及可选后继）、当前读出和选择器满足式(32.3)，且时钟残差满足上述归一化与闭路零和条件，则
 
 $$
 \boxed{\ker(c|_O)=\ker\tau=\ker(b|_O)=\ker m=\Delta_O,}
