@@ -189,7 +189,7 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
                 quotientE, Sp, Eq, Sp, z))));
         Formula representatives = All(x, modH, All(bigX, Int(), Seq(
             Par(Seq(repX, Sp, Eq, Sp, x)), Sp, Rightarrow, Sp,
-            Par(Seq(low, Sp, Land, Sp, deep)))));
+            Par(Seq(Par(low), Sp, Land, Sp, Par(deep))))));
         Formula encodingX = Call("localEncoding", p, h, e, repX);
         Formula encodingY = Call("localEncoding", p, h, e, Call("residue", ph, bigY));
         Formula responseX = Call("depth", p, h, D(0),
@@ -203,7 +203,7 @@ internal sealed class AffineGcdBehaviorDocument : IScribeDocumentDefinition
             D(1), Sp, Le, Sp, h, Sp, Land, Sp, e, Sp, Le, Sp, h);
         return Disp(All(p, Nat(), All(h, Nat(), All(e, Nat(), Seq(
             Par(hypotheses), Sp, Rightarrow, Sp,
-            Par(Seq(representatives, Sp, Land, Sp, responses)))))));
+            Par(Seq(Par(representatives), Sp, Land, Sp, Par(responses))))))));
     }
 
     private static Formula CompleteFormula()
