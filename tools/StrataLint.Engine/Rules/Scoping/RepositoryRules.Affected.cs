@@ -5,7 +5,8 @@ namespace StrataLint.Engine;
 internal static partial class RepositoryRules
 {
     private static bool RegistrationImportsAffected(DeltaRuleContext context) =>
-        Changed(context, static path => path.StartsWith("D5/", StringComparison.Ordinal)
+        Changed(context, static path => (path.StartsWith("D5/", StringComparison.Ordinal)
+                || path.StartsWith("Reg/", StringComparison.Ordinal))
             && path.EndsWith(".lean", StringComparison.Ordinal))
         || Changed(context, path => IsLeanReportProducerInput(path, context.RegisteredRuleBuildInputs));
 
