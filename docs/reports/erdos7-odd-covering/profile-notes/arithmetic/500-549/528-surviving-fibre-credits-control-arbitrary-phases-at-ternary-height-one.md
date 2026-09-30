@@ -25874,8 +25874,8 @@ nonnegative source supported on those cells. Later normalized rows
 preserve these earlier marginal charges. For an additional tail,
 the exact remaining account is eta(Phi_5^(>11))-sum_(p>11)mu_<p(g(beta_p));
 it includes the later pairs' transport through seven and eleven and
-has no asserted sign. When this remaining inventory is empty
-does FC1127 give the whole aggregate. The bound3^(H+1) remains valid
+has no asserted sign. When this remaining inventory is empty,
+FC1127 gives the whole aggregate. The bound3^(H+1) remains valid
 at arbitrary H, but
 for H>=2 it no longer implies the nine-label inequality used here.
 Other old cofactors, extra active stages and their signed transport
@@ -25887,3 +25887,179 @@ They distinguish the specified full source from mere full support
 and connect an existing global replacement rule to one actual
 transport obstruction. They neither force FC1108/1113 at an
 arbitrary proper cut nor settle unrestricted Erdős#7.
+
+## Vacant mixed moduli give a phase capacity independent of ternary height
+
+Keep one hypothetical whole cover minimizing class count and then
+modulus sum, with its actual original phases and divisor-closed
+numerical set D. Normalize its original prime classes as in EB3.
+In particular0 mod3 remains present. Use the existing joint
+replacement rule Report385 PH2/DR2, but allow genuinely vacant
+LOW ternary labels, rather than requiring every repair to lie
+above the global ternary height.
+
+Let h>1 be a3-free original. Suppose there are distinct nonunit
+divisors f,g of h for which3f and3g are absent from D. Then
+
+    q_h(c):=#{u original:h|u,a_u=c mod h}<=1
+                         for EVERY phase c mod h. (FC1128)
+
+At the original h-phase this is comparable disjointness. Otherwise,
+suppose two proper original multiples u,v share phase c. Move h
+to c, absorbing BOTH complete original classes, and remove u,v.
+Repair the entire old h-class using the two globally fresh classes
+
+    x=1 mod3, x=a_h mod f;
+    x=2 mod3, x=a_h mod g.
+
+Together with retained0 mod3, they cover every old h-point, with
+all higher digits and other coordinates unrestricted. The new
+moduli3f,3g are distinct, absent from every retained original and
+different from h. The class count is unchanged, whereas
+3(f+g)<=6h<8h<=u+v: the two distinct proper odd multipliers are
+at least3 and5. This contradicts the second extremal objective.
+No complete joint liability was replaced by separately optimized
+private points. The argument repairs more than its actual liability.
+
+This is a new application of the existing replacement principle,
+not a new general exchange theorem. It has NO upper bound on the
+global ternary height. FC1037's blindness result remains valid for
+its stated fresh-above-global-height palette; FC1128 uses different,
+numerically verified vacancies. Report385 SR6 also has a different
+contract: saturated full-height parents and actual full-class
+intersections, rather than all old activations with these vacancies.
+
+### Every companion composite interface has the required vacancies
+
+Fix a full-height head at B>=5. Let C be its component containing3,
+and O the union of its other components, as in FC1093--1109. For
+every composite original h supported on O, take g=h and one proper
+nonunit f|h. Neither3f nor3h can be an original: both would be head
+labels and would connect an O-prime to3. This is absence from the
+ENTIRE original numerical set, not just from a future query list.
+Thus FC1128 applies to every such h.
+
+For two DISTINCT future originals u,v with nonunit old parts d,e
+supported on O, simultaneous old activation at x implies
+
+    gcd(d,e) is1 or a prime.                     (FC1129)
+
+Otherwise the composite h=gcd(d,e) is an original by divisor closure,
+and both original phases equal x modulo h, contradicting q_h(x)<=1.
+No future coordinate was retained to make these projections disjoint.
+In particular this conclusion is stronger than disjointness of
+comparable full original classes. A diagonal u=v remains permitted,
+even for a composite old part, and must still be included in moments.
+
+There is also one joint count across ALL future suffixes and heights.
+Let the O-components have sizes k_j and put k=sum_j k_j. Every
+composite old part contains q^2 or qr in a single component.
+Assign each selected future original once to one such divisor.
+Each interface has capacity one, so at every actual old point
+
+    sum_(future u:old part in O is composite) I_u(x)
+         <=k+sum_j binom(k_j,2).                 (FC1130)
+
+Only squares dividing the actual old carrier contribute; including
+the other k square slots enlarges the bound. Neither a new suffix
+nor a new height receives a fresh copy of this shared allowance.
+Unit and prime old parts are not included in FC1130.
+
+## Companion second moments retain only the permitted original pairs
+
+Use EXACTLY the published no-2-or-3 source P_O and survivor restriction
+eta_O=P_O|R_O from FC1093. Its mass is r_O>1/5. On this one full
+law the joint cylinder cap is the product of M_q q^-e_q over positive
+depths, with M_q=1/(1-delta_q)<=2. The conditioned survivor law need
+not preserve these caps; use domination before normalizing once.
+
+For the actual suffix decomposition FC1109, B_v has NO unit old
+cofactor: that possible original slot has already been assigned to
+A_v. Distinctness of original numerical moduli gives at most one
+entry of B_v for each old d>1. FC1129 eliminates its off-diagonal
+ordered pairs with composite gcd. Compatible remaining pairs give
+one actual cylinder at lcm(d,e); incompatible pairs give zero.
+
+The following all-height arithmetic sum bounds precisely this
+permitted inventory. Define on the finite prime set O
+
+    u_q=1+2M_q/(q-1),
+    v_q=M_q(q+1)/[q(q-1)],
+    U_O=product_q u_q, K_1=product_q[1+M_q/(q-1)],
+    Theta_O=U_O[1+sum_q v_q/u_q]-K_1-sum_q M_q/q.
+    E_(P_O) B_v<=K_1-1,
+    E_(P_O) B_v^2<=Theta_O.                      (FC1131)
+
+To verify the pair sum, first include the unit divisor in the
+NUMERICAL index set. Gcd1 permits at most one positive depth at
+each prime, giving local factor u_q. Gcd exactly q permits local
+minimum depth one at q; its sum is
+M_q/q+2M_q sum_(e>=2)q^-e=v_q. Summing the choice of that prime
+gives U_O[1+sum v_q/u_q]. Next restore every composite diagonal;
+their total is K_1-1-sum_q M_q/q. Finally remove all ordered pairs
+involving the unit, of total2K_1-1. The result is Theta_O.
+
+Thus Theta_O is a nonnegative sum over numerical pairs, despite
+its subtractive closed form. No fictitious unit contribution has
+been subtracted from an actual moment. The diagonal includes ALL
+prime powers, not just primes. Infinite exponent completion only
+enlarges a convergent positive majorant; the original family and
+its literal phases remain finite and fixed.
+
+With the same full joint-cap envelope kappa_O from FC1093, the
+allowed pair inventory is a subset of the complete one, hence
+
+    0<=Theta_O<=kappa_O,
+    E_(eta_O/r_O) B_v<=5(K_1-1),
+    E_(eta_O/r_O) B_v^2<=5Theta_O.                (FC1132)
+
+For O empty, K_1=1 and Theta_O=0, as B_v=0 requires. Strictness
+is not needed, and these weak bounds include zero queries. They
+apply to ACTUAL original sections, not arbitrary independent-layout
+queries. In particular they do not replace J_O inside FC1094 or
+assert a new multiplicative Gamma theorem.
+
+Take the same supported head product mu_C tensor(eta_O/r_O) as
+FC1095, and retain the core moments R_1,R_2 of FC1110. Initial block
+independence, the first moment in FC1132 and the square expansion
+give the full all-original head supplier
+
+    Psi_B<=R_2+10R_1(K_1-1)+5Theta_O;
+    Psi_B<=[sqrt(R_2)+sqrt(5Theta_O)]^2.          (FC1133)
+
+Either valid right side can be compared with
+pi(B)(log pi(B)+loglog pi(B)-3)^2 when pi(B)>=10. FC1107--1108
+then supplies the already proved complete continuation, including
+every future original. No head factorization is reapplied after
+future kernels couple the components. The formulas remove no
+part of the ternary-connected core's actual query obligation.
+
+For the size of this companion envelope put
+E_O=product_(q in O)q/(q-1). The existing prime-product estimate
+used at FC1092 suffices. Since M_q<=2,
+
+    U_O<=E_O^4, K_1<=E_O^2,
+    v_q/u_q<=2(q+1)/[q(q+3)]<=2/q,
+    Theta_O<=E_O^4(1+2log E_O)
+             =O((log B)^4 loglog B).             (FC1134)
+
+The middle ratio increases with M_q and is evaluated at2. Also
+sum_q1/q<=log E_O. The asymptotic is uniform in actual old heights,
+global ternary height and choice of O subset; it is an upper
+envelope, not an asymptotic equality for the actual second moment.
+This improves the earlier sixth-power prime-product envelope for
+the companion, using an additional whole-minimality constraint.
+
+Inside C, FC1128 still excludes any actual pair whose3-free old
+gcd has two stated vacant mixed divisors. Those vacancies are NOT
+automatic there. A connected core, or mere absence of3h, does
+not imply two available repair labels. Nor does the O estimate
+bound arbitrary ternary-core R_2, furnish its survivor source, or
+force a proper cut satisfying FC1133's endpoint comparison.
+Those remain the unrestricted obligations.
+
+The new inputs are the low-layer vacant-label repair and its
+actual-pair consumer. The replacement rule, no-2-or-3 source,
+ordered-pair expansion and full tail theorem are reused. These
+are ordinary symbolic deductions with independent review, not
+new Lean verification or a settlement of unrestricted Erdős#7.
