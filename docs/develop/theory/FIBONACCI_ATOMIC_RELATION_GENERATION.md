@@ -18345,3 +18345,147 @@ $$
 该结论只否定固定收缩观察中的连续 Robin 读出。它不否定有限整数组成到精确黄金收缩坐标的单射性，也不否定保留实际来源、模余数及素数赋值的联合观察模型；从精确有限编码可定义一个算术读出，与它能在收缩完成上连续延拓，是两份不同的性质。
 
 ## 追加锚（本行以下为增补区）
+
+## 188. 同一模边界上的局部 Euler 因子稳定性
+
+本节从 §187 的近界来源继续，但先证明一个可独立复用的算术关系。以下为经典 Mertens、§160 的 Axler 包络及初等估计上的纸面推导，未新增 Lean 声明。记
+
+$$
+z_p(a)=\sum_{i=0}^{a}p^{-i},\qquad
+Z(n)=\prod_{p\mid n}z_p(v_p(n)),\qquad
+Z_{\le m}(n)=\prod_{p\le m}z_p(v_p(n)).
+$$
+
+**引理 188.1（共同模边界的局部乘积误差）。** 对整数 $m\ge2$、正整数 $a,b$，若 $a\equiv b\pmod{m!}$，则
+
+$$
+\delta_m\le\frac{Z_{\le m}(a)}{Z_{\le m}(b)}\le\delta_m^{-1},
+\qquad
+\delta_m=\prod_{p\le m}(1-p^{-v_p(m!)-1}).
+\tag{188.1}
+$$
+
+并且 $\delta_m=1+O(m^{-1/2})$。
+
+证明。对同一个素数 $p\le m$，记 $t=v_p(m!)$。若 $v_p(a)<t$，同余条件迫使 $v_p(b)=v_p(a)$；反向也成立。否则两个赋值都至少为 $t$。由
+
+$$
+z_p(v)=\frac{1-p^{-v-1}}{1-p^{-1}},
+$$
+
+局部比值落在 $[1-p^{-t-1},(1-p^{-t-1})^{-1}]$。乘法得到式（188.1），没有独立选择不同整数的赋值极值。
+
+由于 $v_p(m!)\ge\lfloor\log m/\log p\rfloor$，在 $p\le\sqrt m$ 上有 $p^{-v_p(m!)-1}<1/m$；在 $p>\sqrt m$ 上使用 $v_p(m!)\ge1$。所以
+
+$$
+\sum_{p\le m}p^{-v_p(m!)-1}
+\le\frac1{\sqrt m}+\frac1{\sqrt m-1}.
+$$
+
+有限乘积不等式 $\prod(1-u_i)\ge1-\sum u_i$ 给所需误差，有限个小 $m$ 不影响渐近。$\square$
+
+## 189. 规模受控的模观察与可达到的分辨误差
+
+**定理 189.1（有界规模同余的统一约数权重转移）。** 固定 $C>0$。当 $m\to\infty$ 时，
+
+$$
+\sup_{\substack{1\le a,b\le\exp(Cm\log m)\\a\equiv b\pmod{m!}}}
+\left|\frac{Z(a)}{Z(b)}-1\right|\longrightarrow0.
+\tag{189.1}
+$$
+
+证明。引理 188.1 处理全部 $p\le m$。对任一实际 $n\le\exp(Cm\log m)$，取 $X=m(\log m)^2$，并记
+
+$$
+P(t)=\prod_{p\le t}(1-p^{-1})^{-1}.
+$$
+
+将高素数分为 $m<p\le X$ 和 $p>X$：前者扩大到完整区间，后者的不同素数个数至多 $\log n/\log X$，每项 $\log(p/(p-1))\le1/(p-1)\le1/(X-1)$。于是
+
+$$
+1\le Z_{>m}(n)
+\le\frac{P(X)}{P(m)}
+\exp\!\left(\frac{\log n}{(X-1)\log X}\right)=1+o(1),
+\tag{189.2}
+$$
+
+且误差只依赖 $m,C$。最后等式使用经典 Mertens 乘积公式以及 $\log X/\log m\to1$；指数为 $O_C((\log m)^{-2})$。将同一上界用于 $a,b$，再结合式（188.1），即得统一结论。$\square$
+
+仅给模边界与这样的规模控制，其误差不能任意加速。下面还求出一个精确主项。
+
+**定理 189.2（幂次高度内的尖锐模分辨率）。** 固定 $C>1$，定义
+
+$$
+E_m(C)=\max_{\substack{1\le a,b\le(m!)^C\\a\equiv b\pmod{m!}}}\frac{Z(a)}{Z(b)}.
+$$
+
+则
+
+$$
+\lim_{m\to\infty}(E_m(C)-1)\frac{\log m}{\log\log m}=1.
+\tag{189.3}
+$$
+
+证明。这里使用经典 Mertens 倒数素数公式的标准误差形式
+
+$$
+\sum_{p\le x}\frac1p=\log\log x+B_1+O(1/\log x).
+\tag{189.4}
+$$
+
+它与本卷已有 Mertens 文献输入同源；可见 Lichtman 文献 Theorem 1.1 所列公式 (1.1)。所有以下小量均在固定 $C$ 下取极限。
+
+上界取 $X=m\log m\log\log m$。对 $n\le(m!)^C$，其高素数 Euler 对数至多
+
+$$
+\sum_{m<p\le X}\frac1p+O(1/m)
++\frac{C\log(m!)}{(X-1)\log X}.
+$$
+
+式（189.4）的首项为
+
+$$
+\log\log X-\log\log m+O(1/\log m)
+=(1+o(1))\frac{\log\log m}{\log m}.
+$$
+
+最后的尾项是 $O_C(1/(\log m\log\log m))$。低素数乘积误差由引理 188.1 给出 $\log\delta_m^{-1}=O(m^{-1/2})$，而分母的高素数因子至少为一。因此
+
+$$
+\log E_m(C)\le(1+o(1))\frac{\log\log m}{\log m}.
+$$
+
+为了同时实现下界，取
+
+$$
+X_0=\frac{C-1}{8}m\log m,\qquad
+P_m=\prod_{m<p\le X_0}p,
+\qquad b_m=m!,\quad a_m=m!P_m.
+$$
+
+充分大 $m$ 时 $X_0>m$。两者确在同一模 $m!$ 的零纤维中，且 $\gcd(m!,P_m)=1$。§178 的初等 Chebyshev 界给
+
+$$
+\log a_m\le\log(m!)+4X_0
+=\log(m!)+\frac{C-1}{2}m\log m<C\log(m!)
+$$
+
+对充分大 $m$ 成立，最后使用 $\log(m!)\sim m\log m$。故是同一高度域中的实际见证，并且
+
+$$
+\frac{Z(a_m)}{Z(b_m)}=Z(P_m),\qquad
+\log Z(P_m)=\sum_{m<p\le X_0}\log(1+1/p)
+=(1+o(1))\frac{\log\log m}{\log m}.
+$$
+
+这给匹配下界。因为所得对数趋于零，$E_m-1\sim\log E_m$，得到式（189.3）。$\square$
+
+同一见证还给
+
+$$
+Z(a_m)-Z(b_m)\sim e^\gamma\log\log m\longrightarrow\infty,
+$$
+
+因为 §186 的阶乘公式给 $Z(m!)\sim e^\gamma\log m$。因此，“相对响应趋于相同”不能直接升级为“加性差额趋于零”。这个结论精确限制模观察所给估计的强度，并不是 Robin 反例。
+
+## 追加锚（本行以下为增补区）
