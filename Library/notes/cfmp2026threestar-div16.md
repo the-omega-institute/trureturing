@@ -1,5 +1,5 @@
 ---
-bibkey: cfmp2026threestar-div16
+bibkey: cfmp2026threestardiv16
 authors: trureturing contributors
 year: 2026
 title: Pure three-star role-homogeneous 16-divisibility obstruction
