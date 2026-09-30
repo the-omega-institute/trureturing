@@ -5024,6 +5024,17 @@ v_t+(v\cdot\nabla_z)v=(\nu/c^2)\Delta_zv-\nabla_zq.
 $$
 时间导数、对流与压力梯度各为原式的 $1/c$ 倍，$\Delta_zv=c\Delta_Xu$，故黏性须变为 $\nu/c^2$。此可逆换元保留寿命与有界性。原文 Theorem 37 的温和解类还要求 $L^2_tH^{s+1}_x$；这里所用 $C_tH^2$ 唯一性已直接证明，不将不同函数类混同。原文 Exercise 43 的定性依赖也不替代（25.106）的明确常数。$\square$
 
+**可复用支撑结果 25.4A（全模行散度热核的 Bochner 路径）。** 固定 $\nu>0$ 与 $\tau>0$。令 $K=\mathbb Z^2$，输出纤维为 $\mathbb C^2$，张量纤维为 $2\times2$ 复矩阵，并令 $H=\ell^2(K;\mathbb C^2)$、$G=\ell^2(K;\mathbb C^{2\times2})$。对 $k=(k_1,k_2)$ 置 $\rho(k)=k_1^2+k_2^2$、$\kappa(k)=(k_1,k_2)$，令 $P_k$ 为去除 $\mathbb C\kappa(k)$ 的正交投影（$k=0$ 时为恒等投影）。若 $q:\mathbb R\to G$ 在全实时间上连续，且存在 $C\ge0$ 使 $\|q(s)\|\le C$ 对全部 $s$ 成立，则存在连续 $D:\mathbb R\to H$，满足
+$$
+D(0)=0,\qquad \|D(t)\|\le 2C\sqrt{t/\nu}\quad(0\le t\le\tau),
+$$
+并且对全部 $k\in K$ 与 $t\in[0,\tau]$，
+$$
+D(t,k)=\int_0^t e^{-\nu(t-s)\rho(k)}\,iP_k
+\left(\sum_{j=1}^2\kappa_j(k)q(s,k)_{\bullet j}\right)\,ds.
+$$
+这里的行指标是输出分量，求和指标 $j$ 是导数频率指标；$k=0$ 时行散度本身为零。该支撑结果只构造任意给定全模张量路径的连续 Bochner 路径及其定量界；它不构造非线性张量积路径，也不单独给出不动点、唯一性、压力、光滑性或最大延拓。
+
 **引理 25.5（两个端口的共同二次泛函）。** 对任意实 $\phi\in L^\infty(\mathbb T^2)$、$\|\phi\|_\infty\le1$，在实 Banach 空间 $L^2(\mathbb T^2;\mathbb R^2)$ 上定义
 $$
 Q_\phi(u)=\int u_1u_2\phi\,d\mu.
