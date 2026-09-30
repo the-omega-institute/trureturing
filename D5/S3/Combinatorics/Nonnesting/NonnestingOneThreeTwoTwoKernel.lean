@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwoKernel
    mirror-E: none(waiver:formal-catalytic-kernel)
-   anchors: [mathlib/module/Mathlib]
+   anchors: []
    utility: none
    digest: Constructs the catalytic kernel and extracts the all-degree counting recurrence. -/
 

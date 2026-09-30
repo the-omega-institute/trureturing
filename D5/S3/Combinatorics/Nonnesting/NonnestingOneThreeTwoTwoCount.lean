@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwoCount
    mirror-E: none(waiver:weighted-terminal-counting)
-   anchors: [mathlib/module/Mathlib]
+   anchors: []
    utility: none
    digest: Counts terminal constructions with arbitrary weights on every finite alphabet. -/
 

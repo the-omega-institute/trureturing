@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo
    mirror-E: none(waiver:lagrange-inversion-counting)
-   anchors: [mathlib/module/Mathlib]
+   anchors: []
    utility: none
    digest: Proves the all-size 1322 binomial enumeration by strong-inductive Lagrange inversion. -/
 
