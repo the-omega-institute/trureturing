@@ -26706,3 +26706,143 @@ complete light estimate. Actual next-layer vacancy and phase
 compatibility are not forced here. FC1156--1159 are ordinary
 symbolic deductions reusing the established exchange and tail
 theorems, with no new Lean verification or unrestricted resolution.
+
+## A composite repair palette detects joint mixed depth
+
+Keep the same minimum whole cover, full-height proper head B,
+and suppose5 is in C. Retain the ACTUAL normalized prime classes
+0 mod3 and0 mod5 simultaneously. Their complement consists of
+the eight unit residues modulo15. The following use of the
+existing full-liability replacement principle depends on vacant
+JOINT labels15q^j, rather than on missing3q^j or5q^j separately.
+
+For q in C without3,5, so q>=7, put
+
+    t_q=max({0} union {j>=1:15q^j in D}),
+    e_q=t_q+8.
+
+If e_q<=H_q, divisor closure makes h=q^e_q original. All eight
+labels15q^(t_q+i),1<=i<=8, are globally absent. Assign them
+bijectively to the eight unit residues modulo15; their q-phases
+are those of the OLD h-class at their respective depths. The
+two retained prime classes cover the nonunit residues, and these
+eight repairs cover the rest of the ENTIRE old h-class. Higher
+digits and every outside coordinate are unrestricted.
+
+The retained prime labels are not h-multiples and cannot be among
+the descendants removed when h is moved. The repair modulus sum
+has the geometric bound
+
+    15 sum_(i=1..8)q^(t_q+i)
+        <15q/(q-1)*h<=35h/2<80h.
+
+Eight distinct proper odd h-multiples have modulus sum at least
+(3+5+...+17)h=80h. Moving h to a common phase of eight such
+descendants, deleting them and adding the repairs contradicts
+the second minimum. Comparable disjointness handles the old
+h-phase. Thus the already established exchange principle gives
+
+    q_(q^(t_q+8))(c)<=7 for every phase c,
+                            if t_q+8<=H_q.       (FC1160)
+
+This is a new concrete palette for that principle, not another
+general replacement theorem. It requires actual3 and5 guards,
+but neither15 itself nor either separate mixed label has to be
+absent. If an original contains both3 and5, its q-depth cannot
+exceed t_q; however an original containing only one of these
+primes may have a larger q-depth and is covered by this cap.
+
+### Choose one interface per direction and retain joint slots
+
+Use u and v_q from FC1152. For q in C without3,5 define
+
+    w_q=min(v_q+2,t_q+8),
+    z_q=min(v_q+1,t_q+8).
+
+When v_q+2<=t_q+8 choose the prime3 repair interface, of cap one;
+otherwise choose the composite15 interface, of cap seven. An
+interface above H_q is inactive. The ternary and5 interfaces
+remain q=3 at depth u+4, of cap three, and q=5 at depth v_5+2,
+of cap one. Select each original future label whose C-supported
+old part crosses at least one chosen threshold, assigning it
+once to one qualifying direction. All other labels remain light.
+
+There is only one chosen interface for each direction. In
+particular the prime and composite caps for a given q are not
+added. With c=|C|, their total shared allowance satisfies
+
+    b<=3+1+7(c-2)=7c-10,
+    sum_(selected original m)I_(m,head)(x)<=b.   (FC1161)
+
+This bound is simultaneous across ALL future suffixes, including
+terminal originals. Finite heights and absent selected cones can
+only reduce b. It does not add FC1158's optional square selection.
+
+For a fixed actual light suffix, count its possible C old slots
+in three disjoint classes. At ternary depth zero there are at
+most(v_5+2) product_q w_q slots. At positive ternary depth with
+no5 factor, the ternary depth is at most u+3; divisor closure
+also caps each remaining q-depth by v_q. The count is therefore
+at most(u+3) product_q z_q. Finally, if both3 and5 occur, closure
+forces ternary depth at most u,5-depth at most v_5, and every
+other q-depth at most t_q. This gives
+
+    A_15=(v_5+2) product_(q in C without3,5)w_q
+             +(u+3) product_(q in C without3,5)z_q
+             +u*v_5 product_(q in C without3,5)(t_q+1),
+    every actual light core section has load<=A_15.
+                                                     (FC1162)
+
+The unit slot occurs once, in the first class. Empty products
+are one. These are upper inventories, so finite heights require
+no extra premise. The third term is essential: two separate
+mixed-depth bounds cannot replace the actual joint15 relation.
+Divisor closure gives t_q<=v_q, hence A_15<=A_sharp. The selected
+allowance can be larger than FC1153's, so the full new certificate
+is not claimed to dominate FC1154 for every family.
+
+On ONE new light-only Haar continuation, use the same core Dirac
+source and companion mu_O as FC1144--1146. Those results apply
+directly with the actual b and light bound A_15. In particular,
+for k=pi(B)>=10 a complete sufficient test is
+
+    B>2(7c-10),
+    [A_15+sqrt(5Theta_O)]^2
+                        /[1-2(7c-10)/B]<=T_B.    (FC1163)
+
+Every selected original is paid once under the same law as its
+light complement. No original phase is optimized independently,
+and neither a core survivor-mass denominator nor a new assumption
+on the whole original height has entered the comparison.
+
+### Absence of15 removes all height dependence from this inventory
+
+If15 is not original, divisor closure forces
+
+    u=v_5=t_q=0 for every q in C without3,5,
+    A_15<=5*8^(c-2).                             (FC1164)
+
+The separate depths v_q can still be arbitrarily large in this
+inventory bound. The composite palette truncates their light
+contribution because every joint label15q^j is absent. This
+case is compatible with the numerical graph condition5 in C:
+connectivity may pass through another prime and does not imply
+that an original modulus contains both3 and5.
+
+Consequently fix0<alpha<1/log64. At every sufficiently large
+proper cut, a minimum whole cover cannot simultaneously have
+5 in C,15 absent, and c<=alpha log B. To use FC1163, its selected
+debit is O(c/B)=o(1), while
+
+    A_15^2/(B log B)
+        <=[25/64^2]*B^(alpha log64-1)/log B=o(1).
+
+The same uniform companion estimate FC1134 and prime endpoint
+comparison used in FC1155 complete the test. This consequence
+has no ternary or nonternary height restriction. It asserts no
+numerical cutoff and does not force the existence of a passing
+proper cut. Dense JOINT mixed labels, or larger connected cores,
+remain outside this sufficient condition. The composite palette
+and three-class inventory are ordinary symbolic deductions; the
+replacement rule and complete tail theorem are reused, and no
+Lean verification or unrestricted resolution is claimed.
