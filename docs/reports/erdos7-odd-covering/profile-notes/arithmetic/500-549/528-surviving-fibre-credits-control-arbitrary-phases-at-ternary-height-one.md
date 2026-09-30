@@ -19558,3 +19558,327 @@ They strengthen the available reserve, give an explicit all-prime
 remainder and retain actual matching/cofactor capacities. The missing
 uniform positive mixed-head margin in FC819 remains open; unrestricted
 Erdos #7 is neither proved nor refuted by these results.
+
+## The root envelope has an explicit sorted matching certificate
+
+Keep one actual top-height packet, one y and all the FC821 rows fixed.
+Its cell envelope has the form
+
+    W_uv=F(t_u,s_v),
+    F(t,s)=alpha t^2 s+beta t T_q(s), alpha,beta>=0,    (FC826)
+
+where t_u and s_v are the actual raw root masses. The two coefficients
+are COMMON to all cells: in FC821 they are respectively
+(A_>p/a_p)kappa_q product d_ell and
+(A_>p/a_p)[4(H+1)/(p-2)]product f_ell. The function T_q of FC821 is
+nonnegative, nondecreasing and zero at zero. Its defining geometric
+tail converges. Use the existing zero convention when a_p=0.
+
+For t>=t' and s>=s', subtraction gives
+
+    F(t,s)+F(t',s')-F(t,s')-F(t',s)
+      =alpha(t^2-t'^2)(s-s')
+          +beta(t-t')[T_q(s)-T_q(s')]>=0.
+
+Sort the m current masses and n earlier masses in decreasing order,
+and put k=min(m,n). The maximum on the COMPLETE bipartite graph is
+
+    S_sorted=sum_(i=1..k)F(t_(i),s_(i)).              (FC827)
+
+Nonnegative weights allow any matching to be extended to size k.
+Coordinate monotonicity allows its endpoints to be replaced by the
+largest k masses. The four-point inequality then removes any inverted
+pairing without reducing weight. The sorted pairing itself attains
+the resulting bound. Zero masses, ties and empty carriers are allowed.
+This is an elementary rearrangement of this particular envelope,
+not a new matching theorem or an assertion of actual phase attainment.
+
+One can supply attaining nonnegative row and column potentials without
+solving an optimization problem. Pad both sorted lists by zero to
+N=max(m,n), and put
+
+    delta_r(s)=F(t_(r),s)-F(t_(r+1),s),
+    z_i=sum_(r=i..N-1)delta_r(s_(r+1)),
+    z'_i=F(t_(i),s_(i))-z_i.
+    z_i,z'_i>=0,
+    z_i+z'_j>=F(t_(i),s_(j)),
+    sum_i z_i+sum_j z'_j=S_sorted.                   (FC828)
+
+Each delta_r is nonnegative and nondecreasing. For r>=i its value
+at s_(r+1) is at most its value at s_(i), so telescoping proves
+0<=z_i<=F(t_(i),s_(i)). If i<j, the difference z_i-z_j is a sum of
+delta_r(s_(r+1)) for i<=r<j, each at least delta_r(s_(j)); if i>j,
+the reversed sum gives the same edge inequality. Diagonal equality
+and summation prove the last identity. Dummy endpoints have zero
+potentials, since F vanishes on either zero coordinate.
+
+The actual allowed graph is a subgraph of the complete graph, hence
+FC822 may use S_sorted or the potentials in FC828 as an upper bound.
+The sorted diagonal need not consist of allowed cells, and maximizing
+pairings at different y need not come from one global phase assignment.
+These are upper bounds on one actual source, so no such attainment
+is needed. All baseline and cross-packet costs in FC820 remain.
+
+Cellwise refinement does not automatically preserve the sorting rule.
+For positive a,b the envelope t^2 s at t=(2a,a), s=(2b,b) gives
+
+    W=a^2 b [[8,4],[2,1]],
+    min(W,2a^2 b)=a^2 b [[2,2],[2,1]].                (FC829)
+
+The second matrix's diagonal has weight3a^2 b, less than its crossed
+matching weight4a^2 b. Both matrices entering the minimum were
+nonnegative, coordinate-monotone and satisfied the four-point
+inequality. This is a function-level counterexample, not a claimed
+arithmetic realization of the cofactor envelope. Thus FC824's refined
+cell weights cannot simply be summed on the old sorted diagonal.
+The old potentials still dominate smaller weights; alternatively,
+take the minimum of whole independently certified matching bounds.
+
+## Restoring the actual top prefix removes a height multiplicity
+
+Fix an active stage p and any set E subset M_p of distinct actual
+originals with ternary exponent H, the global maximum. Set Bset=M_p
+minus E. Without assuming
+any extra-extra incompatibility, the complete increment is
+
+    Delta_E=sum_(e,e' in E)Psi_ee'
+                +2sum_(e in E,b in Bset)Psi_eb,
+    g_p=g_Bset+Delta_E.
+    integral_(G_J)w Delta_E dnu_3
+       <=12(2H+1)3^(-H)E_p/(p-2)^2, H>=1.           (FC830)
+
+Every counted pair has max(v_3(m),v_3(n))=H. There are2H+1 ordered
+ternary exponent pairs at this level; each compatible actual prefix
+intersection has nu_3 mass at most2*3^(-H). Retain the unique original
+label per full exponent tuple before completing the current and
+earlier depths. Their summed caps are6E_p/(p-2)^2 by FC811, proving
+FC830. At H=0 the analogous constant is6E_p/(p-2)^2. For H>=1 the
+factor(2H+1)3^(-H) decreases from1 to zero.
+
+This pays ONE common prefix probability. It is invalid to attach
+3^(-H) to an already sorted row envelope that has forgotten which
+label occupies which prefix. In FC830 the label is retained before
+integration; a numerical modulus3^H d has only one original phase
+across all depth-H prefixes. There is no extra3^H multiplicity.
+
+Under the same irredundancy premise as FC823, one can also keep the
+cofactor saturation inside this integral. Let U be the actual earlier
+nonternary carrier, h_ell(j)=2c_ell ell^(-j) for j>=1, and let k,j
+be full nonternary exponent vectors with positive current exponents
+and nonempty earlier supports R_k,R_j. Put
+
+    Z*_(k,j)=(3/2)h_p(k_p)h_p(j_p)
+           product_(ell in R_k union R_j)
+                    kappa_ell h_ell(max(k_ell,j_ell)),
+    Q*_(k,j)=h_p(k_p)
+           product_(ell in R_k union R_j)kappa_ell
+           product_(ell in R_k)h_ell(k_ell).
+    integral_(G_J)w Delta_E dnu_3
+      <=4*3^(-H)sum_(k,j)min((H+1)Z*_(k,j),Q*_(k,j))
+      <=(4/3)sum_(k,j)min(2Z*_(k,j),Q*_(k,j)), H>=1. (FC831)
+
+For an actual extra with cofactor vector k, FC823--824 also apply
+when the baseline bucket contains all of M_p. On G_J, its depth
+bound is at most Z*, using a_p>=2/3, and its disjoint bucket cap is
+at most Q*. In the latter, the current denominator has already
+canceled, so it has no extra3/2 factor. Retain I_e before integrating
+to pay2*3^(-H). At height H each full k gives at most one actual e.
+Finally Delta_E<=2sum_(e in E,m in M_p)Psi_em retains every E-by-E
+term, at the cost of counting it twice. This proves the first bound.
+The second uses (H+1)3^(-H)<=2/3 and3^(-H)<=1/3.
+
+The completed sums converge: sum_(k,j)Z*_(k,j)<=6E_p/(p-2)^2, so
+both minima are dominated by convergent multiples of Z*. Summing Q*
+alone would lose depth decay. Without using the saturation minimum,
+the uniform second line only gives16E_p/(p-2)^2, weaker than FC830's
+constant12; improvement is not asserted merely from adding structure.
+For one packet, the integrated sorted bound and FC830--831 may be
+combined by a minimum of whole bounds. These estimates pay only the
+chosen top increment, not g_Bset or the full mixed head.
+
+## Deleting remote primes has an explicit cost on the fixed raw law
+
+There is a limited transport theorem behind FC819's warning about
+changing tails. Fix one complete family and an integer B>=7. Its core
+contains ALL originals whose nonternary prime factors are at most B,
+including every pure3 original. Delete all other originals for this
+comparison, but do not change any retained label, residue or depth.
+The core pure laws, star rows and mixed kernels at q<=B are unchanged:
+their definitions use only originals assigned to those coordinates.
+Use the same local row formula wherever a_q>0, including fibres on
+which a remote row has zero mass, and the same zero-row convention
+where a_q=0. This fixes a common extension before deleting remote rows.
+
+Let G_< be the guard for assigned core primes and
+A_<=product_(q in V,q<=B)a_q over ALL actual core rows. Define
+the unconditioned core law
+
+    mu_<=1_(G_<)nu_3 product_(q in V,q<=B)Khat_q.
+
+Coordinates are resolved to all required original and query depths.
+Beyond the core's own period, use its consistent independent Haar
+suffixes. Let G_> guard only assigned primes above B, let
+A_>=product_(q>B)a_q, and r_>(y)=1_(G_>)A_>. Reverse integration of
+the complete raw law gives the exact core marginal
+
+    (mu_full)_core=r_>(y)mu_<,
+    0<=mu_<-(mu_full)_core,
+    [mu_<-(mu_full)_core](1)
+       <=delta_B:=(9/2)sum_(q>B prime)(q-2)^(-2)
+       <=9/[2(B-2)].                                (FC832)
+
+For the last inequality B is an integer and the prime sum is enlarged
+to integers, then bounded by the integral of(x-2)^(-2) from B to
+infinity. For the first bound, put b_q=1-a_q1_(guard) at assigned
+remote stages and b_q=1-a_q elsewhere. Then
+1-r_><=sum b_q, and FC809 and FC779 give
+E b_q<=(9/2)(q-2)^(-2). The exact core raw mass at a fixed y is
+1_(G_<)A_< <=1; integrating it can only reduce the loss allowance.
+Inactive remote rows allow the smaller coefficient2, if retained.
+
+Let S_< be the actual core survivor set, including every core mixed
+class, and supply a finite measurable selector0<=h(y,x_<)<=1_(S_<).
+Then the original full law restricted by this SAME head selector has
+mass at least
+
+    L_<(h)-delta_B(h),
+    L_<(h)=integral h dmu_<,
+    delta_B(h)=integral h(1-r_>)dmu_< <=delta_B.       (FC833)
+
+This head selection is derived explicitly. It is not an unproved
+extension of FC807's y-only filtering rule. No current kernel is
+renormalized after selection. For a stage p>B, h stays inside the
+head integral while later coordinates are integrated backwards.
+Dropping r_>'s guards and omitted masses only increases its nonnegative
+fee. Thus the three-response proof of FC817 applies with head law
+h mu_<, and yields the fixed-star-source sufficient condition
+
+    L_<(h)>delta_B(h)+6 C_NN(h mu_<)T_B(B).           (FC834)
+
+Here B satisfies FC812's anchor hypotheses. The C_NN response must
+resolve every head query in the complete family, including deeper
+head coordinates of remote originals. The next paragraph gives a
+finite certified replacement independent of that query depth.
+The delta term may use its upper bound delta_B. This construction
+preserves the original raw rows and permits comparison with their
+actual matching/cofactor fees. It does not claim optimality among
+all laws or a new general prime-tail continuation theorem.
+
+## A finite query box certifies the response at every future depth
+
+Fix the core originals, all their raw kernels and the selector h.
+They now define ONE positive measure nu=h mu_<, with consistent Haar
+suffixes. Increasing test precision does not add forbidden originals.
+Use the complete head prime set P={3} union{q in V:q<=B}, and put
+
+    L_3=2,
+    L_q=2kappa_q c_q for q!=3,
+    B_ell=1+L_ell(3ell-1)/(ell-1)^2.
+
+These B_q agree with FC811's actual-row coefficients; B_3=5.
+For a nonnegative integer query-depth vector e=(e_ell), define
+Q_e=product_(ell in P)ell^e_ell and
+
+    C_e(nu)=max_b integral [sum_(d|Q_e)1_(x=b_d mod d)]^2 dnu,
+    C_infinity(nu)=sup_(finite k) C_k(nu).
+
+The unit divisor is included; one phase is chosen per numerical
+divisor, with no cross-divisor compatibility requirement. Maxima are
+taken against the same nu. If e is shallower than the original core
+or h, these expectations use the marginals of that whole fixed law.
+
+The explicit positive tails and their product remainder are
+
+    D_ell(e)=L_ell sum_(j>e)(2j+1)ell^(-j)
+      =L_ell ell^(-e-1)[(2e+3)/(1-1/ell)
+                              +(2/ell)/(1-1/ell)^2],
+    epsilon_e=product_(ell in P)B_ell
+                -product_(ell in P)[B_ell-D_ell(e_ell)].
+    C_e(nu)<=C_infinity(nu)<=C_e(nu)+epsilon_e.       (FC835)
+
+This is the multidimensional consumer of the complete test-tail
+argument in
+[Report15 KT2--KT3](../../001-064/15-a-clean-cylinder-makes-all-current-prime-pair-caps-exact.md)
+and the coefficient-box subtraction in
+[Chapter09 S1](../../../problem-details/09-quantitative-extension-of-the-old-prime-powers.md).
+No new generic query-tail theorem or Lean wrapper is asserted.
+
+For completeness, expand each actual nonnegative test-label pair.
+At a selected nonternary coordinate, backwards integration gives
+one bound L_q q^(-max(i,j)); at an unselected coordinate it gives
+at most1. The ternary pair has bound2*3^(-max(i,j)) if its maximum
+is positive, and1 if both exponents are zero. Dropping0<=h<=1 and
+the guard only enlarges these bounds. They hold at every suffix
+depth of this same law. There are2j+1 ordered pairs with maximum j.
+
+The pairs wholly inside Q_e are paid by their ACTUAL expectation,
+at most C_e(nu). The other pairs' completed coefficient sum is exactly
+epsilon_e: subtract the known inside coefficient product from the
+known full product, not an unknown inside expectation. Every finite
+larger query has this bound. A query not comparable with e embeds in
+its coordinatewise maximum with e. Conversely any e-layout extends
+to deeper tests with nonnegative added load. This proves FC835.
+
+Also epsilon_e<=sum_(ell in P)D_ell(e_ell)
+product_(r in P,r!=ell)B_r, so it tends to zero as all e_ell grow.
+For a supplied finite rational core law and selector, C_e is a finite
+rational optimization and epsilon_e is explicit rational arithmetic.
+This gives a finite sufficient certificate, not an efficiency claim.
+It does not permit dropping deeper forbidden classes, reconstructing
+a lost source from a shallower summary, or asserting that a lower
+bound on the extended supremum applies to the original finite-period
+maximum.
+
+## Reuse the stronger normalized tail when the core survivors are supplied
+
+For the same supplied nu=h mu_< supported on all actual core survivors,
+there is also an already established route requiring no delta_B loss.
+Use Chapter08 T1--T5 and Chapter33 SH8--SH12 with nu as the homogeneous
+joint head seed, and process all remote primes using NEW normalized
+half-threshold kernels with their full Haar coordinates as base.
+These kernels handle all actual remote originals, including their
+pure and star labels; they are not the old star-source tail kernels.
+
+They preserve the entire supplied head law. At each current prime,
+distinct numerical original moduli give at most one class per complete
+earlier numerical divisor, including the head and all earlier remote
+primes, in each current exponent group, as required in Chapter08.
+The inherited propagation factor is1+2(3p-1)/(p-1)^2 and the charge
+is at most the current joint-load response divided by(p-1)^2.
+Thus, for B>=286, integer ell>=4 and3^ell<=B, the EXISTING tail factor
+
+    tau_7(B,ell)=c_ell^7/B * (B/(B-3))^2
+                    *sum_(j=0..7)7!/((7-j)!ell^j),
+    c_ell=(2ell^2+1)/(2ell^2-1),
+
+combines directly with FC835 to give the sufficient certificate
+
+    L_<(h)>[C_e(nu)+epsilon_e]tau_7(B,ell).           (FC836)
+
+All remote primes must exceed B; all core-only originals must already
+be avoided by nu. Lift the SAME core law to their head query depths
+before applying the existing transfer. The one final law retains
+mass at least L_<(h)-[C_e+epsilon_e]tau_7 after all remote bad sets
+are deleted, so a positive certificate gives an actual full survivor.
+The common initial law, all original phases and all exponents remain
+fixed throughout. This reuses the stronger normalized continuation;
+FC832--834 are only the explicit comparison for keeping the old raw
+star law. No old raw-source fees are transferred into the new law.
+
+The core finite-query certificate resolves a query-resolution input
+obligation. It does NOT supply a positive core survivor selector for
+every original family, or prove that its mass beats FC836's cost.
+In particular the old proposed universal Gamma targets in Chapter09
+remain refuted by their star construction; truncating tests does not
+restore them. Enlarging B adds possible core originals and can change
+nu, L_< and C_e. Adding forbidden head depths also changes the law;
+it is not the test lifting justified above. No automatic iteration
+from a restricted core to an arbitrary core is asserted.
+
+The deductions FC826--836 are ordinary mathematical applications of
+the stated interfaces, with independent proof review and no new
+numerical experiment or Lean compilation. They remove an optimization
+step for the root envelope, bound complete top-label increments and
+make the finite input to a same-law tail certificate explicit. The
+unrestricted objective still requires a valid positive head margin
+under the original universal quantifiers, or a different contradiction.
