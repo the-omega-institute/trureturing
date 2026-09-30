@@ -1,6 +1,6 @@
 {
   "scope": "finite integer/polynomial identities and permutation counts; no analytic or Lean proof",
-  "source_sha256": "5bc50e8a001a95b9ce9adaac78384a645c1386c70be8154bbfe1e37ca7c46f46",
+  "source_sha256": "a48723d80769589644e4ab055e12ef34fc0129dcf4f3a2911435d910668e8476",
   "seed": [
     16,
     29
@@ -320,5 +320,1089 @@
     },
     "residue_polynomials_with_no_root": 12,
     "candidate_roots_checked": 1356
+  },
+  "unit_bit_one_affine": {
+    "purpose": "Distinguish failed old-support transfer, exact shifted character condition, bounded-translation obstruction, and an explicit successful subfamily.",
+    "arithmetic": "Python 3 standard library, exact integers and fractions",
+    "identities": {
+      "seeds": [
+        [
+          1,
+          0
+        ],
+        [
+          16,
+          29
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "j_inclusive": [
+        0,
+        16
+      ],
+      "g_inclusive": [
+        1,
+        5
+      ],
+      "kernel_translation_r_inclusive": [
+        -4,
+        4
+      ],
+      "prime_limit_inclusive": 500,
+      "shifted_square_checks": 340,
+      "translation_norm_and_content_checks": 3060,
+      "actual_shifted_prime_quadratic_residue_hits": 426
+    },
+    "old_support_counterexamples": {
+      "examples": [
+        {
+          "seed": [
+            16,
+            29
+          ],
+          "j": 3,
+          "g": 1,
+          "composition": [
+            74,
+            119
+          ],
+          "U": 505,
+          "N": 506,
+          "prime": 2,
+          "k": 105,
+          "Q_mod_p": 1,
+          "Ar_mod_p": 1,
+          "old_trace_polynomial_root_count": 0,
+          "old_canonical_indices": [
+            14,
+            11,
+            9,
+            5
+          ],
+          "shifted_canonical_indices": [
+            14,
+            11,
+            9,
+            5,
+            2
+          ],
+          "new_square_D": -479,
+          "new_square_D_mod_p": 1,
+          "new_square_witness_mod_p": 1
+        },
+        {
+          "seed": [
+            16,
+            29
+          ],
+          "j": 4,
+          "g": 1,
+          "composition": [
+            119,
+            193
+          ],
+          "U": 817,
+          "N": 818,
+          "prime": 409,
+          "k": 105,
+          "Q_mod_p": 288,
+          "Ar_mod_p": 162,
+          "old_trace_polynomial_root_count": 0,
+          "old_canonical_indices": [
+            15,
+            12,
+            10,
+            6
+          ],
+          "shifted_canonical_indices": [
+            15,
+            12,
+            10,
+            6,
+            2
+          ],
+          "new_square_D": 489,
+          "new_square_D_mod_p": 80,
+          "new_square_witness_mod_p": 191
+        }
+      ],
+      "infinite_progression_certificate": {
+        "seed": [
+          16,
+          29
+        ],
+        "g": 1,
+        "prime": 409,
+        "phi_order_mod_p": 408,
+        "progression_j": "4+14280*t, t>=0",
+        "period": 14280,
+        "progression_checks_t": [
+          0,
+          1,
+          2,
+          10,
+          1000000
+        ],
+        "scope": "The finite period identity plus multiplication proves the congruence for every t; canonical legality for all j>=3 is justified separately in the paper record."
+      }
+    },
+    "bounded_translation_obstruction": {
+      "seed": [
+        1,
+        0
+      ],
+      "g": 2,
+      "j_inclusive": [
+        3,
+        120
+      ],
+      "kernel_translation_r_inclusive": [
+        -6,
+        6
+      ],
+      "nonnegative_translation_checks": 1506,
+      "general_content_divisor": "d_r divides 4*(-1)^j+r^2-3r+1",
+      "r0_content_divisor_even_j": 5,
+      "r0_content_divisor_odd_j": 3,
+      "finite_bound_used": "abs(Q_primitive)>N/(2*(4*(-1)^j+r^2-3r+1)^2)",
+      "sample_rows": [
+        {
+          "j": 3,
+          "N": 17,
+          "r": 0,
+          "new_gcd": 1,
+          "raw_norm": -19,
+          "primitive_norm": -19,
+          "abs_primitive_norm_over_N": "19/17"
+        },
+        {
+          "j": 4,
+          "N": 27,
+          "r": 0,
+          "new_gcd": 1,
+          "raw_norm": -19,
+          "primitive_norm": -19,
+          "abs_primitive_norm_over_N": "19/27"
+        },
+        {
+          "j": 7,
+          "N": 111,
+          "r": 0,
+          "new_gcd": 3,
+          "raw_norm": -99,
+          "primitive_norm": -11,
+          "abs_primitive_norm_over_N": "11/111"
+        },
+        {
+          "j": 8,
+          "N": 179,
+          "r": 0,
+          "new_gcd": 1,
+          "raw_norm": -149,
+          "primitive_norm": -149,
+          "abs_primitive_norm_over_N": "149/179"
+        },
+        {
+          "j": 14,
+          "N": 3195,
+          "r": 0,
+          "new_gcd": 5,
+          "raw_norm": -2725,
+          "primitive_norm": -109,
+          "abs_primitive_norm_over_N": "109/3195"
+        },
+        {
+          "j": 24,
+          "N": 392837,
+          "r": 0,
+          "new_gcd": 1,
+          "raw_norm": -335519,
+          "primitive_norm": -335519,
+          "abs_primitive_norm_over_N": "335519/392837"
+        },
+        {
+          "j": 48,
+          "N": 40730022149,
+          "r": 0,
+          "new_gcd": 1,
+          "raw_norm": -34787591999,
+          "primitive_norm": -34787591999,
+          "abs_primitive_norm_over_N": "34787591999/40730022149"
+        },
+        {
+          "j": 96,
+          "N": 437845991669110338053,
+          "r": 0,
+          "new_gcd": 1,
+          "raw_norm": -373965122399130138239,
+          "primitive_norm": -373965122399130138239,
+          "abs_primitive_norm_over_N": "373965122399130138239/437845991669110338053"
+        },
+        {
+          "j": 120,
+          "N": 45396748104013727913951365,
+          "r": 0,
+          "new_gcd": 1,
+          "raw_norm": -38773451816979763879591199,
+          "primitive_norm": -38773451816979763879591199,
+          "abs_primitive_norm_over_N": "38773451816979763879591199/45396748104013727913951365"
+        }
+      ]
+    },
+    "successful_Fibonacci_plus_one_subfamily": {
+      "seed": [
+        1,
+        0
+      ],
+      "g": 1,
+      "j_inclusive": [
+        3,
+        120
+      ],
+      "cases_checked": 118,
+      "shifts_used": [
+        [
+          -1,
+          1
+        ],
+        [
+          2,
+          -1
+        ]
+      ],
+      "new_multiplier_bound": "d<2*q(primitive)",
+      "absolute_primitive_norms": [
+        1,
+        5
+      ],
+      "sample_rows": [
+        {
+          "j": 3,
+          "a": 1,
+          "m": 2,
+          "shift": [
+            -1,
+            1
+          ],
+          "N": 9,
+          "new_multiplier": 3,
+          "primitive_composition": [
+            0,
+            1
+          ],
+          "primitive_norm": -1,
+          "primitive_quantity": 3
+        },
+        {
+          "j": 4,
+          "a": 2,
+          "m": 3,
+          "shift": [
+            2,
+            -1
+          ],
+          "N": 14,
+          "new_multiplier": 2,
+          "primitive_composition": [
+            2,
+            1
+          ],
+          "primitive_norm": 5,
+          "primitive_quantity": 7
+        },
+        {
+          "j": 5,
+          "a": 1,
+          "m": 3,
+          "shift": [
+            -1,
+            1
+          ],
+          "N": 22,
+          "new_multiplier": 2,
+          "primitive_composition": [
+            1,
+            3
+          ],
+          "primitive_norm": -5,
+          "primitive_quantity": 11
+        },
+        {
+          "j": 6,
+          "a": 2,
+          "m": 4,
+          "shift": [
+            2,
+            -1
+          ],
+          "N": 35,
+          "new_multiplier": 7,
+          "primitive_composition": [
+            1,
+            1
+          ],
+          "primitive_norm": 1,
+          "primitive_quantity": 5
+        },
+        {
+          "j": 7,
+          "a": 1,
+          "m": 4,
+          "shift": [
+            -1,
+            1
+          ],
+          "N": 56,
+          "new_multiplier": 7,
+          "primitive_composition": [
+            1,
+            2
+          ],
+          "primitive_norm": -1,
+          "primitive_quantity": 8
+        },
+        {
+          "j": 8,
+          "a": 2,
+          "m": 5,
+          "shift": [
+            2,
+            -1
+          ],
+          "N": 90,
+          "new_multiplier": 5,
+          "primitive_composition": [
+            3,
+            4
+          ],
+          "primitive_norm": 5,
+          "primitive_quantity": 18
+        },
+        {
+          "j": 14,
+          "a": 2,
+          "m": 8,
+          "shift": [
+            2,
+            -1
+          ],
+          "N": 1598,
+          "new_multiplier": 47,
+          "primitive_composition": [
+            5,
+            8
+          ],
+          "primitive_norm": 1,
+          "primitive_quantity": 34
+        },
+        {
+          "j": 15,
+          "a": 1,
+          "m": 8,
+          "shift": [
+            -1,
+            1
+          ],
+          "N": 2585,
+          "new_multiplier": 47,
+          "primitive_composition": [
+            8,
+            13
+          ],
+          "primitive_norm": -1,
+          "primitive_quantity": 55
+        }
+      ]
+    },
+    "limitations": [
+      "Finite checks are not a Robin proof.",
+      "The bounded-translation obstruction does not exclude unbounded kernel translations with growing new gcd.",
+      "The successful g=1 Fibonacci subfamily does not cover arbitrary multipliers g."
+    ]
+  },
+  "unit_one_near_boundary_samples": {
+    "scope": "six explicit integer-cutoff CRT witnesses; exact arithmetic only",
+    "samples": [
+      {
+        "prime_index": 101,
+        "core_cutoff": 2,
+        "rough_cutoff": 148,
+        "search_attempts": 4,
+        "integer_digits": 41,
+        "integer_sha256": "6d93bdc92a10e4ce8f14b19e403dfaaffd8f16c7257280cb311e7ceb11db9d3d",
+        "multiplier": "57314784401381708417",
+        "core": "2",
+        "core_response": "3/2",
+        "canonical_composition_and_unit_bit": true,
+        "primitive_norm_one": true,
+        "coprime_core_and_rough_cofactor": true,
+        "affine_square_identity": true,
+        "shifted_raw_norm_bounds": true,
+        "all_primes_below_2r_minus_1_realized": 46
+      },
+      {
+        "prime_index": 211,
+        "core_cutoff": 10,
+        "rough_cutoff": 320,
+        "search_attempts": 1,
+        "integer_digits": 87,
+        "integer_sha256": "7110aa076e8af7e0e24b7b93544a410c9c20fa0bfb13dea9f8cba723ec13af27",
+        "multiplier": "5583507329530046553662808658578667235725051",
+        "core": "2520",
+        "core_response": "26/7",
+        "canonical_composition_and_unit_bit": true,
+        "primitive_norm_one": true,
+        "coprime_core_and_rough_cofactor": true,
+        "affine_square_identity": true,
+        "shifted_raw_norm_bounds": true,
+        "all_primes_below_2r_minus_1_realized": 81
+      },
+      {
+        "prime_index": 401,
+        "core_cutoff": 28,
+        "rough_cutoff": 627,
+        "search_attempts": 8,
+        "integer_digits": 166,
+        "integer_sha256": "3a67de32d6260021c03edaca707da05faeaebbbe2bdab853b487e31f4425ed4b",
+        "multiplier": "28481229810848961175798893768146099561538008878230489098647719564596927730527015099",
+        "core": "80313433200",
+        "core_response": "5904384/1062347",
+        "canonical_composition_and_unit_bit": true,
+        "primitive_norm_one": true,
+        "coprime_core_and_rough_cofactor": true,
+        "affine_square_identity": true,
+        "shifted_raw_norm_bounds": true,
+        "all_primes_below_2r_minus_1_realized": 139
+      },
+      {
+        "prime_index": 809,
+        "core_cutoff": 78,
+        "rough_cutoff": 1301,
+        "search_attempts": 1,
+        "integer_digits": 337,
+        "integer_sha256": "c3af0667581d9910ed7107ecf2574355f66fe90c6be45d7a5b8afd1742f634eb",
+        "multiplier": "526642568340505773149544409224417452286145210537225755418998457927936234869167127524404744622421717574958550454991449450813059263725287280660799135822296463993960667611",
+        "core": "410555180440430163438262940577600",
+        "core_response": "355707232976476569600/47591904479072518877",
+        "canonical_composition_and_unit_bit": true,
+        "primitive_norm_one": true,
+        "coprime_core_and_rough_cofactor": true,
+        "affine_square_identity": true,
+        "shifted_raw_norm_bounds": true,
+        "all_primes_below_2r_minus_1_realized": 255
+      },
+      {
+        "prime_index": 1601,
+        "core_cutoff": 180,
+        "rough_cutoff": 2638,
+        "search_attempts": 5,
+        "integer_digits": 668,
+        "integer_sha256": "a16dd629b76bee2853ed361b94f628dd67882415eeec10a26e9e8d3a7ee36fdf",
+        "multiplier": "1736708932610696531655007625222972645102115865175376593269098078701896306218589400855693335295427611604119187486284572318176676161152006245283343330904878067104777379976918400813611338703419993478295942783111150153344393902115716115120518165711052397483764006066386720569112692140982052411379058652583408179839409941271604362441937099",
+        "core": "1289494614414635084884678239799219980907919666679843581569982055265585117488000",
+        "core_response": "185180020592349788298704857420448874296141414400000000/20338261124767996752690002645742058895834569433971691",
+        "canonical_composition_and_unit_bit": true,
+        "primitive_norm_one": true,
+        "coprime_core_and_rough_cofactor": true,
+        "affine_square_identity": true,
+        "shifted_raw_norm_bounds": true,
+        "all_primes_below_2r_minus_1_realized": 452
+      },
+      {
+        "prime_index": 3203,
+        "core_cutoff": 418,
+        "rough_cutoff": 5398,
+        "search_attempts": 5,
+        "integer_digits": 1338,
+        "integer_sha256": "acb79ad491beee31f6042698edc7c6accb2e617fd1528464a13212a8f33516ea",
+        "multiplier": "109125618577312726648721900307987194207563658648779538374235032878613941737605213921839454431206714358883656751941144881124198863602997292807121223732173797044402960179419212129716110186097459820649931043824773535525687225595645849407801246597962272977340568000630927327116653183403177958310145770411625695425159877105675096760490756593939099467950285623516550850205716755698642403312952866482774779484583012642696513453303694586614403384291893284435285015475980105950553945470034496882702031942844925379697891143077742646585060778621156447957693943813698608172381266174378059828335370403996928456847364210307238654351967649760602779092680252836875244516572484657026887",
+        "core": "9786078921235332411985538641727093494452304397678501240454771259802886638128517922501762106887193141243531175704680604601888381217797378602122087297309985035365212550588800032000",
+        "core_response": "40374959230098621260343026646685257185494339124808027170005611763873324461160848158435634201431931617280000000000000000000/3803133136319406454518430623120829546724243400730308311326157810903603687035254544292103457347582771933478757424125993999",
+        "canonical_composition_and_unit_bit": true,
+        "primitive_norm_one": true,
+        "coprime_core_and_rough_cofactor": true,
+        "affine_square_identity": true,
+        "shifted_raw_norm_bounds": true,
+        "all_primes_below_2r_minus_1_realized": 834
+      }
+    ],
+    "limitation": "These finite cuts are specified inputs, not a certificate of the logarithmic cutoff formula, an asymptotic limit, or a Robin margin."
+  },
+  "unit_one_fixed_parameter_sources": {
+    "status": "PASS",
+    "kind": "finite exact arithmetic diagnostics, not Lean or an infinite proof",
+    "ranges": {
+      "seed_coordinates": "0..12, primitive nonzero, plus (4,21) for the two-nonunit g=1 case",
+      "g": "1..12",
+      "j": "parities with m=0..12",
+      "primes": "all primes <=101",
+      "all_prime_seeds": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          16,
+          29
+        ],
+        [
+          11,
+          8
+        ]
+      ]
+    },
+    "counts": {
+      "quadratic_identities": 29328,
+      "square_target_pairs": 79,
+      "norm_one_targets": 158,
+      "content_nonunit_targets": 26,
+      "actual_prime_places": 2348,
+      "trace_kummer_checks": 2473,
+      "unit_rank_checks": 1314,
+      "legal_all_prime_witnesses": 156
+    },
+    "target_examples": {
+      "g_1_2_units": {
+        "seed": [
+          0,
+          1
+        ],
+        "g": 1,
+        "parity": 0,
+        "Delta": 9,
+        "roots": [
+          [
+            "13",
+            "-8"
+          ],
+          [
+            "-2",
+            "1"
+          ]
+        ]
+      },
+      "g_1_1_units": {
+        "seed": [
+          1,
+          4
+        ],
+        "g": 1,
+        "parity": 0,
+        "Delta": 49,
+        "roots": [
+          [
+            "106/11",
+            "-65/11"
+          ],
+          [
+            "-5",
+            "3"
+          ]
+        ]
+      },
+      "g_gt_1_0_units": {
+        "seed": [
+          1,
+          4
+        ],
+        "g": 11,
+        "parity": 0,
+        "Delta": 5329,
+        "roots": [
+          [
+            "865/121",
+            "-527/121"
+          ],
+          [
+            "-74/11",
+            "45/11"
+          ]
+        ]
+      },
+      "g_1_0_units": {
+        "seed": [
+          4,
+          21
+        ],
+        "g": 1,
+        "parity": 0,
+        "Delta": 1369,
+        "roots": [
+          [
+            "74/11",
+            "-45/11"
+          ],
+          [
+            "-185/31",
+            "112/31"
+          ]
+        ]
+      }
+    },
+    "all_prime_examples": [
+      {
+        "p": 2,
+        "g": 1,
+        "j": 4,
+        "N": "14"
+      },
+      {
+        "p": 3,
+        "g": 1,
+        "j": 8,
+        "N": "90"
+      },
+      {
+        "p": 5,
+        "g": 2,
+        "j": 20,
+        "N": "57315"
+      },
+      {
+        "p": 7,
+        "g": 3,
+        "j": 16,
+        "N": "12544"
+      },
+      {
+        "p": 11,
+        "g": 5,
+        "j": 10,
+        "N": "1166"
+      }
+    ]
+  },
+  "cyclotomic_105": {
+    "root_action": {
+      "k": 105,
+      "prime_factors": [
+        3,
+        5,
+        7
+      ],
+      "unit_count": 48,
+      "parameter_count": 5040,
+      "distinct_permutations": 5040,
+      "twisted_slope_map_is_involution_and_bijection": true,
+      "twisted_slope_map_is_group_automorphism": true,
+      "chi5_minus_one": 1,
+      "kernel_parameters_A_b": [
+        [
+          1,
+          0
+        ]
+      ],
+      "affine_coefficients_cover_full_AGL": true,
+      "permutations_with_fixed_root": 2304,
+      "fixed_root_fraction": "16/35",
+      "fixed_root_count_histogram": {
+        "0": 2736,
+        "1": 1575,
+        "3": 525,
+        "5": 105,
+        "7": 45,
+        "15": 35,
+        "21": 15,
+        "35": 3,
+        "105": 1
+      },
+      "local_CRT_fixed_root_histograms": {
+        "3": {
+          "0": 2,
+          "1": 3,
+          "3": 1
+        },
+        "5": {
+          "0": 4,
+          "1": 15,
+          "5": 1
+        },
+        "7": {
+          "0": 6,
+          "1": 35,
+          "7": 1
+        }
+      },
+      "CRT_histogram_matches_direct_enumeration": true,
+      "CRT_coordinate_checks": 1587600
+    },
+    "actual_divisor_checks": [
+      {
+        "seed": [
+          16,
+          29
+        ],
+        "Q": -121,
+        "V_0": 119,
+        "V_1": 193,
+        "max_index_inclusive": 420,
+        "prime_limit_inclusive": 2000,
+        "eligible_primes": 299,
+        "integer_divisibility_checks": 125879,
+        "actual_divisor_hits": 719,
+        "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 719,
+        "trace_discriminant_zero_hits": 396,
+        "actual_trace_root_derivative_zero_hits": 179
+      },
+      {
+        "seed": [
+          1,
+          4
+        ],
+        "Q": -11,
+        "V_0": 14,
+        "V_1": 23,
+        "max_index_inclusive": 420,
+        "prime_limit_inclusive": 2000,
+        "eligible_primes": 299,
+        "integer_divisibility_checks": 125879,
+        "actual_divisor_hits": 452,
+        "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 452,
+        "trace_discriminant_zero_hits": 248,
+        "actual_trace_root_derivative_zero_hits": 95
+      },
+      {
+        "seed": [
+          1,
+          5
+        ],
+        "Q": -19,
+        "V_0": 17,
+        "V_1": 28,
+        "max_index_inclusive": 420,
+        "prime_limit_inclusive": 2000,
+        "eligible_primes": 299,
+        "integer_divisibility_checks": 125879,
+        "actual_divisor_hits": 507,
+        "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 507,
+        "trace_discriminant_zero_hits": 293,
+        "actual_trace_root_derivative_zero_hits": 131
+      }
+    ],
+    "changing_norm_family": {
+      "family": "v_t=(4+361t)+phi, t>=0",
+      "identity": "Q_t=19+3249t+130321t^2 == 19 (mod 19^2)",
+      "split_roots_mod_19": [
+        5,
+        15
+      ],
+      "identity_samples": [
+        {
+          "t": 0,
+          "seed": [
+            4,
+            1
+          ],
+          "Q": 19,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 1,
+          "seed": [
+            365,
+            1
+          ],
+          "Q": 133589,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 2,
+          "seed": [
+            726,
+            1
+          ],
+          "Q": 527801,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 3,
+          "seed": [
+            1087,
+            1
+          ],
+          "Q": 1182655,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 4,
+          "seed": [
+            1448,
+            1
+          ],
+          "Q": 2098151,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 5,
+          "seed": [
+            1809,
+            1
+          ],
+          "Q": 3274289,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 6,
+          "seed": [
+            2170,
+            1
+          ],
+          "Q": 4711069,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 7,
+          "seed": [
+            2531,
+            1
+          ],
+          "Q": 6408491,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 19,
+          "seed": [
+            6863,
+            1
+          ],
+          "Q": 47107631,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 105,
+          "seed": [
+            37909,
+            1
+          ],
+          "Q": 1437130189,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 1000000,
+          "seed": [
+            361000004,
+            1
+          ],
+          "Q": 130321003249000019,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 1000000000000,
+          "seed": [
+            361000000000004,
+            1
+          ],
+          "Q": 130321000000003249000000000019,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        }
+      ],
+      "source_congruence_seed_parameters": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "source_congruences": [
+        {
+          "seed": [
+            4,
+            1
+          ],
+          "Q": 19,
+          "V_0": 11,
+          "V_1": 17,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 91,
+          "integer_divisibility_checks": 19201,
+          "actual_divisor_hits": 216,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 216,
+          "trace_discriminant_zero_hits": 157,
+          "actual_trace_root_derivative_zero_hits": 52
+        },
+        {
+          "seed": [
+            365,
+            1
+          ],
+          "Q": 133589,
+          "V_0": 733,
+          "V_1": 1100,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 89,
+          "integer_divisibility_checks": 18779,
+          "actual_divisor_hits": 241,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 241,
+          "trace_discriminant_zero_hits": 195,
+          "actual_trace_root_derivative_zero_hits": 71
+        },
+        {
+          "seed": [
+            726,
+            1
+          ],
+          "Q": 527801,
+          "V_0": 1455,
+          "V_1": 2183,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 91,
+          "integer_divisibility_checks": 19201,
+          "actual_divisor_hits": 282,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 282,
+          "trace_discriminant_zero_hits": 216,
+          "actual_trace_root_derivative_zero_hits": 76
+        },
+        {
+          "seed": [
+            1087,
+            1
+          ],
+          "Q": 1182655,
+          "V_0": 2177,
+          "V_1": 3266,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 89,
+          "integer_divisibility_checks": 18779,
+          "actual_divisor_hits": 246,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 246,
+          "trace_discriminant_zero_hits": 186,
+          "actual_trace_root_derivative_zero_hits": 64
+        },
+        {
+          "seed": [
+            1448,
+            1
+          ],
+          "Q": 2098151,
+          "V_0": 2899,
+          "V_1": 4349,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 90,
+          "integer_divisibility_checks": 18990,
+          "actual_divisor_hits": 225,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 225,
+          "trace_discriminant_zero_hits": 180,
+          "actual_trace_root_derivative_zero_hits": 64
+        },
+        {
+          "seed": [
+            1809,
+            1
+          ],
+          "Q": 3274289,
+          "V_0": 3621,
+          "V_1": 5432,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 91,
+          "integer_divisibility_checks": 19201,
+          "actual_divisor_hits": 249,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 249,
+          "trace_discriminant_zero_hits": 173,
+          "actual_trace_root_derivative_zero_hits": 51
+        },
+        {
+          "seed": [
+            2170,
+            1
+          ],
+          "Q": 4711069,
+          "V_0": 4343,
+          "V_1": 6515,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 90,
+          "integer_divisibility_checks": 18990,
+          "actual_divisor_hits": 252,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 252,
+          "trace_discriminant_zero_hits": 187,
+          "actual_trace_root_derivative_zero_hits": 63
+        },
+        {
+          "seed": [
+            2531,
+            1
+          ],
+          "Q": 6408491,
+          "V_0": 5065,
+          "V_1": 7598,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 90,
+          "integer_divisibility_checks": 18990,
+          "actual_divisor_hits": 248,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 248,
+          "trace_discriminant_zero_hits": 184,
+          "actual_trace_root_derivative_zero_hits": 61
+        }
+      ],
+      "total_integer_divisibility_checks": 152131,
+      "total_actual_divisor_hits": 1959,
+      "total_actual_repeated_root_hits": 502,
+      "limitation": "These finite checks certify the evaluated identities and modular tests only; the all-t valuation statement follows from the displayed polynomial identity, not sampling."
+    }
   }
 }
