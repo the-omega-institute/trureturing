@@ -21386,3 +21386,293 @@ every original family. The star-query comparison and FC882 do not
 yet supply that all-family strict margin. These are independently
 reviewed written proofs and exact CRT examples, with no numerical
 scan or new Lean proof.
+
+## A blocker forest repairs repeated subtraction in the actual credit
+
+FC880 subtracts every earlier blocker separately. The forest union
+bound of Report334 JC2 and Report433 CG3--CG6 gives a sharper consumer
+on precisely the same raw reference measure; no new generic union
+theorem is needed. Fix the actual family, stage p, ternary value y,
+and a current forest edge i->j as in FC878--881. Restrict m_<p^y to
+the complete earlier intersection E_ij of these two originals,
+without normalizing. Its mass is J_ij. For two distinct earlier
+mixed original labels b,c, retain the four-label CRT integral
+
+    J_ijbc=1_(I_i intersect I_j intersect I_b intersect I_c)
+             product_(q<p)tau_q(C_iq intersect C_jq
+                                        intersect C_bq intersect C_cq).
+                                                               (FC884)
+
+All literal phases and depths belong to the same original family.
+An incompatible intersection is zero; an absent coordinate contributes
+a_q, not1. Choose a forest T_ij(y) on ALL earlier mixed blocker labels,
+allowing isolated vertices, fixed while the earlier point varies.
+On a point covered by k blockers, the induced forest has at most k-1
+edges when k>0 and zero when k=0. Integration on E_ij therefore gives
+
+    m_<p^y(E_ij intersect union_b E_b)
+       <= U_ij^T:=sum_b J_ijb-sum_({b,c} in T_ij)J_ijbc,
+    b_ij^T:=[J_ij-U_ij^T]_+
+       >=b_ij^0:=[J_ij-sum_b J_ijb]_+,
+    b_ij^T<=m_<p^y(E_ij intersect S_<p).             (FC885)
+
+Here U_ij^T is nonnegative. If c_T is the number of active forest
+components, its slack is the restricted integral of (c_T-1)_+;
+the empty active set contributes zero. In particular it is exact
+if every nonempty active set is connected
+almost everywhere. If the restricted blocker sets form a laminar
+family, a containment forest with equal-set ties broken acyclically
+has this property. This is containment after restriction to E_ij,
+not a claim that globally irredundant originals contain one another.
+
+Retain FC879's CURRENT-label forest and c_ij=t_j(2t_i+t_j). Replacing
+only its activation lower bound gives
+
+    L_p^T(w)=integral_(G_J)w A_>p/a_p
+                     sum_(i->j)c_ij b_ij^T dnu_3,
+    0<=L_p^0(w)<=L_p^T(w)<=D_p(w),
+    F_p(w)<=H_p^chain(w)-L_p^T(w).                 (FC886)
+
+Use the same zero-row convention and the complete additive-square
+upper bound as FC881. Different current edges may choose different
+blocker forests: each FC885 is a valid lower bound on the same law.
+For B earlier blockers one current edge uses at most max(B-1,0) new
+four-label terms. This does not give a uniform efficient algorithm.
+Estimated negative triple terms require upper bounds; positive
+four-label terms require lower bounds, on this same restricted law.
+
+Writing V_ij=sum_({b,c} in T_ij)J_ijbc, the additional credit is exactly
+
+    b_ij^T-b_ij^0=[J_ij-sum_b J_ijb+V_ij]_+
+                            -[J_ij-sum_b J_ijb]_+,
+    0<=b_ij^T-b_ij^0<=V_ij.                         (FC887)
+
+Some of V_ij can first pay a negative old deficit. Adding V_ij again
+after using b_ij^T would double count. The blocker forest repairs the
+activation estimate; it is not a second source reserve.
+
+An actual strict example uses primes5,7,11,13,17,19 in numerical order,
+the six pure classes0 mod q, the four earlier blockers1 mod35,55,65,85,
+and the two current originals
+
+    i:1 mod1463=1 mod(7*11*19),
+    j:1 mod4199=1 mod(13*17*19).
+
+These twelve odd moduli are distinct. A private point for a pure
+original sets its coordinate to0 and all others to3. A private point
+for any mixed original sets precisely its support coordinates to1
+and all others to3. Thus the family is irredundant; the all-3 point
+survives. There are no stars, a_q=1, the guard is vacuous and w=1.
+The reference rows are uniform on nonzero residues. At p=19, choose
+the single current edge i->j. Then
+
+    c_ij=3/18^2=1/108,
+    E_ij={x_7=x_11=x_13=x_17=1},
+    J_ij=1/(6*10*12*16)=1/11520=:J.                 (FC888)
+
+Inside E_ij each of the four distinct blockers is exactly x_5=1.
+Every triple and every four-label intersection therefore has mass
+J/4. Use the blocker path35--55--65--85. It gives
+
+    b_ij^0=[J-4J/4]_+=0,
+    U_ij^T=4J/4-3J/4=J/4,
+    b_ij^T=3J/4,
+    L_19^T=(1/108)(3J/4)=1/1658880.                 (FC889)
+
+This equals D_19 in the twelve-label family. Indeed at stage7 the
+blocker35 removes x_7=1 whenever x_5=1, since its reference fraction
+is1/6<1/2. For x_5!=1 all four earlier blockers are inactive and their
+kernels retain the reference rows. The actual prefix mass of E_ij
+is exactly3J/4. The two current cylinders coincide, so their square
+difference is c_ij on E_ij and zero elsewhere.
+
+The strict improvement also occurs in a divisor-closed irredundant
+family: add2 mod77,221,133,209,247,323. Each new private point sets
+precisely its two support coordinates to2 and all others to3; the
+old private points still work. These are all missing proper nonunit
+divisors of the two current three-prime moduli. The added earlier
+blockers77,221 miss E_ij and can be isolated forest vertices. The four
+added19-ending originals have current phase2. Consequently the same
+selected credit L_19^T remains1/1658880 on this eighteen-label family's
+own source. Other current overlaps may contribute additional credit;
+only D_19>=L_19^T is asserted for this extension.
+
+Thus actual four-original data can recover a positive credit erased
+by FC880's repeated blocker subtraction, even under divisor closure
+and irredundancy. This example supplies neither a whole cover nor
+a uniform lower credit for every family. The unrestricted positive
+budget remains to be established. These are written deductions and
+exact CRT examples, with no new Lean verification or numerical scan.
+
+## Complete queries on the actual mixed raw process have a uniform comparison
+
+The star-source comparison FC871--875 extends to the actual FC814
+mixed raw process by retaining its forbidden-union probability in
+each density bound. Fix one finite original family and increasing
+numerical order of nonternary primes. Keep its pure laws, star rows,
+restarted mixed kernels and full common guard G_J. No selector is
+added. Let Q be any finite query modulus supported on the ternary
+coordinate and processed nonternary coordinates, with coherent Haar
+suffixes for query depths beyond the original finite carrier. Put
+
+    h_r(p,e)=sum_(j_1,...,j_r=0..e)p^-max(j_1,...,j_r),
+    H_Q=sum_(d,f|Q)1/lcm(d,f)=product_(p|Q)h_2(p,e_p).
+
+As in FC865, C_Q is the maximum squared complete-divisor query load
+with an independently chosen literal phase for each divisor, and
+A_Q is the maximum when all phases descend from one coherent anchor.
+The claim is that a universal finite K_raw satisfies
+
+    C_Q(mu_B)<=K_raw H_Q,
+    C_Q(mu_B)/A_Q(mu_B)<(7200/2729)K_raw.             (FC890)
+
+It is independent of support size, original and query heights, phases
+and B>=7, for this specified prime order and source. The source can
+still charge mixed forbidden originals. Neither inequality asserts
+a positive final survivor budget or a support-independent absolute
+query cost, since H_Q itself depends on Q.
+
+At a fixed actual history write F_p for the active star forbidden
+union and B_p for the active mixed union; set B_p empty at unassigned
+stages. Relative to the pure law nu_p put
+
+    u=nu_p(F_p), b=nu_p(B_p outside F_p), beta_p=u+b.
+
+Recall c_p=(p-1)/(p-2), nu_p<=c_p Haar_p, and nu_3<=2Haar_3.
+The star row is tau_p=g_p1_(F_p^c)nu_p with
+g_p=(1-min(u,1/2))^-1 and mass a_p=min(1,2(1-u)). For a_p>0 the
+normalized reference lambda_p=tau_p/a_p is exactly nu_p conditioned
+off F_p; the mixed forbidden fraction is b/(1-u). The two density
+caps give Khat_p<=4nu_p. If beta_p<1/2, neither clipping threshold
+is reached, a_p=1 and Khat_p is exactly nu_p conditioned off
+F_p union B_p, with density at most1/(1-beta_p)<=1+2beta_p.
+If beta_p>=1/2, then4<=1+6beta_p. Zero rows require no normalization.
+Consequently the original FC814 row satisfies
+
+    Khat_p<=min(4,1+6beta_p)nu_p.                    (FC891)
+
+For each actual p-depth e>=1, star and mixed originals assigned to p
+have numerical form d p^e with d supported on3 and earlier primes.
+Distinct numerical moduli leave at most one original per d at that
+fixed depth. Their earlier projections form a partial old complete
+layout L_e^orig, retaining every literal earlier phase. Hence
+
+    beta_p<=c_p sum_(e>=1)p^-e L_e^orig.             (FC892)
+
+Only finitely many original depths occur. Completing this sum later
+does not identify phases belonging to different originals or depths.
+
+Let Gamma_3(<p) be the supremum of complete third-query moments over
+all finite windows on the already processed coordinates and y, on
+their SAME actual raw prefix law with coherent suffixes. Expand a
+cube into ordered divisor triples. If all three current depths are
+zero, its row mass is a_q<=1. Otherwise the literal current cylinders
+either conflict or intersect in one cylinder at their maximum depth,
+of mass at most4c_q q^-max by FC891. The three earlier projected
+layouts may differ: Holder on the one earlier measure bounds their
+product by its complete third-moment maximum. At the ternary root
+use1_(G_J)nu_3<=2Haar_3 and unit-triple mass at most1. This proves
+
+    Gamma_3(<p)<=[1+2(h_3(3,infinity)-1)]
+           product_(5<=q<p, q actual)[1+4c_q(h_3(q,infinity)-1)],
+    h_3(q,infinity)=(1+4/q+1/q^2)/(1-1/q)^3,
+    1+2(h_3(3,infinity)-1)=31/2.                    (FC893)
+
+This also proves finiteness of the supremum. For q>=5,
+4c_q(h_3(q,infinity)-1)<=70/q: after multiplication by the positive
+denominator the required polynomial is42q^3-272q^2+346q-140;
+writing q=5+t gives42t^3+358t^2+776t+40>=0.
+Set s=1+1/log p. Every prime q<p has q^-s>=1/(exp(1)q), so the
+Euler product and the integral bound for zeta give
+
+    product_(q<p)(1+70/q)
+       <=exp(70sum_(q<p)1/q)
+       <=zeta(s)^(70exp(1))<=(1+log p)^193,
+    Gamma_3(<p)<=(31/2)(1+log p)^193.                (FC894)
+
+Here zeta(s)<=1+1/(s-1) and exp(1)<11/4. Unneeded primes only enlarge
+this nonnegative upper bound. No prime enumeration is used.
+
+Now keep the original arbitrary query Q. At the next processed prime
+p put h_p=h_2(p,e_p), where e_p=0 is allowed. For a fixed query layout,
+write each divisor as d p^j and let L_j be its complete earlier
+projected layout. In the square expansion, j=k=0 contributes at most
+C_old, the squared-query maximum on the ORIGINAL old query window.
+For max(j,k)>0, integrate the current cylinders before collecting
+earlier slots. Their mass is bounded by
+
+    c_p p^-max(j,k)(1+6beta_p).
+
+Their p-phases can depend on the complete old divisor; the bound is
+uniform in those phases and does not set them equal. Cauchy--Schwarz
+then gives integral L_j L_k<=C_old. For the extra term, FC892 gives
+
+    integral beta_p L_j L_k dmu_old
+       <=c_p sum_(e>=1)p^-e integral L_e^orig L_j L_k dmu_old
+       <=c_p/(p-1)Gamma_3(<p).                     (FC895)
+
+For this last bound choose ONE enlarged old finite window containing
+the original old query window and every actual original cofactor at
+this stage.
+Extend the three partial layouts by nonnegative slots in that window
+and apply Holder on its same source. FC894 bounds its third moment.
+Only this error estimate uses the enlargement; C_old, Q and H_Q do
+not change. Summing current exponent pairs therefore proves
+
+    C_new<=b_p C_old+d_p Gamma_3(<p),
+    b_p=1+c_p(h_p-1),
+    d_p=6c_p^2(h_p-1)/(p-1).                        (FC896)
+
+An unqueried stage has b_p=1,d_p=0, since integrating its raw row
+cannot increase the old query moment. Its realized coordinate and
+its influence on subsequent kernels are still in the actual prefix
+law used for later Gamma_3; they have not been discarded.
+
+Normalize by H_new=H_old h_p. FC866 already gives
+product_p(b_p/h_p)<8/5 for primes at least5 and arbitrary finite
+query depths. Also c_p<=4/3 and
+(h_p-1)/((p-1)h_p)<=3/p^2, the latter by substituting
+h_2(p,infinity)=p(p+1)/(p-1)^2. Thus
+
+    d_p/h_p<=32/p^2,
+    C_Q(mu_B)/H_Q
+       <=(8/5)[2+32sum_(5<=p<=B)Gamma_3(<p)/p^2]
+       <=(8/5)[2+496sum_(n>=5)(1+log n)^193/n^2].   (FC897)
+
+The initial ternary ratio is at most2 and H_old>=1. Unrolling
+FC896 uses only nonnegative terms and the product bound, not
+independence of successive distorted coordinates. The infinite
+series is finite. Explicitly, for n>=5 and x in[n,n+1], its nth term
+is at most4(1+log x)^193/x^2. Integration gives the finite choice
+
+    I_193=sum_(k=0..193)binom(193,k)k!,
+    K_raw=(8/5)(2+1984I_193).                       (FC898)
+
+The constant is deliberately unoptimized and supplies no useful
+numerical head margin by itself. The exact recurrence FC896 can
+instead retain actual finite head moments.
+
+Finally, averaging a coherent anchor uniformly modulo Q gives
+A_Q(mu_B)>=mass(mu_B)H_Q for any one finite measure: for each fixed
+point and divisor pair d,f the anchor probability is1/lcm(d,f).
+Every raw row integrates to a_q(y)<=1 independently of earlier
+nonternary coordinates. Thus FC808 and FC814 give
+
+    mass(mu_B)=integral_(G_J)product_(q<=B)a_q dnu_3
+                >=R_J>2729/7200.
+
+Together with FC897--898 this proves both inequalities in FC890.
+The omitted later a_q factors explain why mu_B need not be the full
+law's head marginal; the proof keeps the full-family guard and
+ternary resolution throughout.
+
+This result bounds complete-query distortion for the actual mixed
+source. It does not identify coherent anchors with full maximizers,
+assert the same bound for all prime permutations or arbitrary
+selectors, or pay the mixed forbidden mass left by clipping.
+Reports720 and726 obstruct particular stronger sufficient survivor
+gates; Report722 obstructs equality of anchor and full-query maxima
+on other supported laws. Neither is a counterexample to FC890's
+comparison on this specified source. The remaining #7 obligation is
+still a strict same-source aggregate budget for every actual family.
+The present argument is a written proof, not a new Lean verification.
