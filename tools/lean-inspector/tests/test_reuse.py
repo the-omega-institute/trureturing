@@ -412,8 +412,7 @@ class ReuseTests(unittest.TestCase):
         # external cache/build processes. No Lean compilation is needed here.
         for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
                          'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
-                         'tools/scripts/lib/resource-observation-lib.sh',
-                         'tools/scripts/workflow/ci_plan.py'):
+                         'tools/scripts/lib/resource-observation-lib.sh'):
             target = self.root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, target)
