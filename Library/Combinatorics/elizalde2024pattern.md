@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2412.00336v6
 claim: "In Table 4 we list some cases that seem to give interesting enumeration sequences. All the conjectures have been checked for n up to 8."
 strata_touched:
   - D5/S3/Combinatorics/Nonnesting/NonnestingFour
+  - D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo
 license: citation-only
 triage: anchor
 ---

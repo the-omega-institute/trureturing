@@ -1276,3 +1276,434 @@ $$
 这里的障碍来自实际三尺度水平集与五窗尺度 $\varphi^3$ 的不相容。它不改变定理 15.2 的完整词表示，也不排除使用无界词、无界组成或已定前缀的递归关系；Cloitre 的全局同步词图亦不由此命题判定。第七节的有限同余观察合同与本节准确读出 $b(n)$ 的合同不同，故其有限状态结论与本定理相容。
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Cloitre 黄金下斜率与整数进制同步障碍
+
+**假设 18.1（外部黄金界及 Fibonacci 等号）。** 对定义 15.1 的 Cloitre 序列，使用下列全局关系作为本节的显式前提：
+
+$$
+1\leq C(n)\leq n,\qquad C(n)\geq G(n)\quad(n\geq1),
+\qquad C(F_j)=F_{j-1}\quad(j\geq2).
+$$
+
+下界与 Fibonacci 等号取自 [Cloitre 黄金结构，§§4、6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/golden-proof.md)，其论证含明确的有限归纳基。这里只使用所列关系，不假设 $C(n)/n$ 的全局极限存在。
+
+**定义 18.2（整数进制同步词图）。** 固定整数 $k\geq2$。把 $n$ 与 $C(n)$ 的规范 $k$ 进制位从高到低排列，在高端补零到任意共同长度，再逐位配对。所有 $n\geq1$ 的这些配对词组成语言 $\mathcal H_{C,k}$。其字母表为 $\{0,\ldots,k-1\}^2$。正则性指存在有限自动机识别整个配对词语言，不预设读入期间能够自主生成递归轨道。
+
+**定理 18.3（所有整数进制的同步词图均非正则）。** 在假设 18.1 下，对每个整数 $k\geq2$，$\mathcal H_{C,k}$ 都不是正则语言。
+
+证明。由 $G(n)>\alpha n-\alpha^2$ 及 Fibonacci 等号，得到
+
+$$
+\liminf_{n\to\infty}\frac{C(n)}n=\alpha.
+\tag{18.1}
+$$
+
+使用 Schaeffer、Shallit 的已知中间结果：[*The Critical Exponent is Computable for Automatic Sequences*, v3，§4，Theorem 14](https://arxiv.org/abs/1104.2303v3)。其“特殊点”指沿语言中一列两两不同的词，两个整数读出的商所取得的极限；无限正则语言的最大特殊点必为有理数或正无穷。这里需要的是按不同词取得的最大特殊点，不能将它换成忽略重复商值后所得集合的极限上确界；所引版本的 §8 明确区别了这两个结论。
+
+反设 $\mathcal H_{C,k}$ 正则。与“首个输入位非零”的正则语言相交，得到无限正则语言 $L$。由于 $1\leq C(n)\leq n$，$L$ 对每个 $n\geq1$ 恰有一个词，其长度是 $n$ 的规范位数；输出行允许高端零。首行作为分子、第二行作为分母，词的商为
+
+$$
+Q(n)=\frac n{C(n)}.
+$$
+
+由式 (18.1) 及 $\alpha>0$，有
+
+$$
+\limsup_{n\to\infty}Q(n)=\alpha^{-1}=\varphi.
+\tag{18.2}
+$$
+
+具体地，黄金下界给
+
+$$
+Q(n)\leq\frac n{\alpha n-\alpha^2}
+\quad\text{对充分大的 }n,
+$$
+
+所以所有渐近商不超过 $\varphi$；Fibonacci 等号又给
+
+$$
+Q(F_j)=\frac{F_j}{F_{j-1}}\longrightarrow\varphi.
+$$
+
+因为 $L$ 中每个整数只有一个共同长度词，任意两两不同词的无限序列对应的输入整数趋于无穷：每个有界整数区间只贡献有限多个词。因此它的每个有限商极限都不超过 $\varphi$，且不可能取得正无穷极限。Fibonacci 词列则两两不同，并实现特殊点 $\varphi$。于是 $\varphi$ 恰为 $L$ 的最大特殊点。
+
+所引最大特殊点定理 迫使 $\varphi$ 为有理数，与其无理性矛盾。故 $\mathcal H_{C,k}$ 非正则。这个论证对每个 $k\geq2$ 分别成立；它使用已知正则商定理作为中间步骤，所得结论是该定理与 Cloitre 黄金关系的对应，而不是一个新的通用自动机定理。
+
+该推导排除的是整数进制的正则同步关系。五窗读出使用矩阵 $S$ 的尺度 $\varphi^3$，并不满足这里的整数进制有理周期展开前提；Cloitre 的规范五窗全局词图是否正则，仍未由本定理判定。定理 15.2 的完整词轨道表示也不需要这个正则性。
+
+## 19. 规范缺陷振幅对内周期的约束
+
+**定义 19.1（同一周期上的振幅）。** 固定外部索引 $n\geq3$，令 $O\subseteq D_n$ 为 $T_{n,C}$ 的一条周期的全部不同索引。取
+
+$$
+\ell=|O|,\qquad s=\max O-\min O,\qquad
+\Delta_O=\max_{x\in O}E_C(x)-\min_{x\in O}E_C(x).
+$$
+
+这里 $E_C=C-G$ 是定义 15.1 的规范黄金缺陷。它与 [Fibonacci collars，§7](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md) 的局部轮廓缺陷 $C(F_k+t)-F_{k-1}-\max(0,t)$ 不同；本节只用同一实际周期上的规范缺陷振幅。
+
+**定理 19.2（周期跨度、长度及实际进位振幅）。** 对定义 19.1 的每条周期，不要求假设 18.1，均有
+
+$$
+s<\varphi^2(\Delta_O+1),\qquad
+\ell\leq\left\lceil\varphi^2(\Delta_O+1)\right\rceil,
+\qquad
+\Delta_O\geq\left\lfloor\alpha^2(\ell-1)\right\rfloor.
+\tag{19.1}
+$$
+
+若 $\Delta_O=0$，则更强地有 $\ell\leq2$。由定理 15.3，$\Delta_O$ 也等于这一周期中各个索引的实际拆分树总标量进位的振幅。因此，若一族实际内周期的长度无界，其实际进位总量在各自周期内的振幅必无界；这不预设这样的周期族存在。
+
+证明。对有限非空集合上的实函数写 $\operatorname{osc}_O f=\max_O f-\min_O f$。周期映射 $T_{n,C}$ 置换 $O$，故
+
+$$
+s=\operatorname{osc}_O T_{n,C}
+=\operatorname{osc}_O C
+\leq\operatorname{osc}_O G+\Delta_O.
+$$
+
+$G$ 单调，且 $R(x)=G(x)-\alpha x$ 满足 $-\alpha^2<R(x)<\alpha$。设 $u=\min O$、$v=\max O$，则
+
+$$
+\operatorname{osc}_O G=G(v)-G(u)
+=\alpha s+R(v)-R(u)<\alpha s+1.
+$$
+
+所以 $(1-\alpha)s<\Delta_O+1$。用 $1-\alpha=\alpha^2=\varphi^{-2}$ 得到跨度界。$O$ 含 $\ell$ 个不同整数，故 $\ell\leq s+1$；因 $s$ 是整数，严格跨度界给 $\ell\leq\lceil\varphi^2(\Delta_O+1)\rceil$。同理
+
+$$
+\alpha^2(\ell-1)\leq\alpha^2s<\Delta_O+1,
+$$
+
+且 $\Delta_O$ 是非负整数，得到式 (19.1) 的最后一个界。
+
+若 $\Delta_O=0$，则 $E_C$ 在 $O$ 上为同一个常数，故 $C=G+E_C$ 在 $O$ 上单调不减，$T_{n,C}$ 单调不增。它在 $O$ 上又是双射，因此严格反转 $O$ 的次序。将 $O$ 排列为 $z_1<\cdots<z_\ell$，必有 $T_{n,C}(z_i)=z_{\ell+1-i}$，从而 $T_{n,C}^2$ 在 $O$ 上恒等，一条周期只能有一或两个点。此处使用有限有序集上反序双射的经典性质；局部轮廓零缺陷的反射先例见定义 19.1 所引 §7，两个缺陷坐标不能互换。
+
+最后，对每个 $x\in O$ 单独使用其自己的实际拆分树，定理 15.3 给
+
+$$
+\Delta_O=\operatorname{osc}_{x\in O}
+\left(\sum_{u\in I_x}\delta(g_{m_u},m_u-g_{m_u})\right).
+\tag{19.2}
+$$
+
+因此周期长度无界与式 (19.1) 一起迫使式 (19.2) 的振幅无界。单个缺陷值很大而在整个周期上保持常数，仍只能给长度至多二；控制缺陷的量级和控制其周期内变化是不同条件。这里的振幅界也没有控制进入周期之前的前周期长度。
+
+**命题 19.3（周期五的规范缺陷读出）。** 对 $n=196$ 的实际内周期
+
+$$
+120\to116\to117\to118\to115\to120,
+$$
+
+规范缺陷依序为 $(6,7,6,8,5)$，因而 $s=5$、$\ell=5$、$\Delta_O=3$。
+
+证明。该实际周期及其五个 $C$ 值见定义 19.1 所引文献 §7 的周期五证书。用 $G(x)=\lfloor\alpha(x+1)\rfloor$ 读出：
+
+$$
+\begin{array}{c|rrrrr}
+x&120&116&117&118&115\\ \hline
+C(x)&80&79&78&81&76\\
+G(x)&74&72&72&73&71\\
+E_C(x)&6&7&6&8&5\\
+196-C(x)&116&117&118&115&120
+\end{array}
+$$
+
+五个索引不同且最后一行闭合，得到最短周期五；其最大最小索引与缺陷差给出所列读数。这一证书的局部轮廓正缺陷为 $(6,3,5,3,5)$，与规范缺陷不同，故不能把文献的轮廓缺陷字直接代入式 (19.1)。
+
+## 追加锚（本行以下为增补区）
+
+## 20. 缺陷词图闭合与有界周期的五窗分离
+
+**定义 20.1（共同长度合同及比较映射）。** 沿用定义 14.1 的 $G$、$M$、$S$、$q$、$r_G$、$d_\sigma$ 与定义 17.2 的高到低词 $W(n)$。记 $L(n)$ 为规范词的窗口数，故 $L(0)=L(1)=0$。对 $H\geq L(n)$，定义
+
+$$
+W_H(n)=\mathrm{null}^{H-L(n)}W(n).
+$$
+
+对任意 $f:\mathbb N_{>0}\to\mathbb N$，其全补零同步词图是
+
+$$
+\mathcal G_f=
+\left\{\bigl(W_H(n),W_H(f(n))\bigr)_{\mathrm{sync}}:
+ n\geq1,\ H\geq\max\{L(n),L(f(n))\}\right\}.
+\tag{20.1}
+$$
+
+其中每个词恰含 $H$ 个窗口配对字母，最后恰有一个单位位配对字母；窗口字母和单位末字母的字母表不交。三轨及投影也使用同一个 $H$，只删除相应轨道，不改变字母数。每一轨都须满足定义 2.1 的不相邻占位条件。这里保留所有共同长度，不只取最短共同长度；$n=1$、零值输出、零窗口词及任意额外高端 $\mathrm{null}$ 都在合同内。
+
+取 $A=[2]$、$B=\mathrm{null}$，并定义
+
+$$
+\begin{aligned}
+\mathcal S&=\{n_m:m\geq1\},&
+n_m&=F_{6m+9}+F_{3m+6}+2,\\
+p_0(n)&=G(n),&
+p_\star(n)&=G(n)+\mathbf1_{\mathcal S}(n).
+\end{aligned}
+\tag{20.2}
+$$
+
+对 $G(n)\leq p(n)\leq n$ 的映射记 $E_p(n)=p(n)-G(n)$。对 $N\geq2$，记 $D_N=\{1,\ldots,N-1\}$、$T_{N,p}(x)=N-p(x)$；周期长度指此映射在 $D_N$ 中一条周期的不同索引数，与同步词图的窗口数无关。
+
+**定理 20.2（缺陷闭合等价及合法五窗分离）。** 对每个 $p:\mathbb N_{>0}\to\mathbb N$，若对所有 $n\geq1$ 都有 $G(n)\leq p(n)\leq n$，则在定义 20.1 的全补零合同中
+
+$$
+\operatorname{Reg}(\mathcal G_p)
+\quad\Longleftrightarrow\quad
+\operatorname{Reg}(\mathcal G_{E_p}).
+\tag{20.3}
+$$
+
+定义 20.1 的两个比较映射都全局单调不减，并满足
+
+$$
+\begin{aligned}
+1&\leq p_0(n)\leq p_\star(n)\leq n&& (n\geq1),\\
+p_0(F_j)&=p_\star(F_j)=F_{j-1}&& (j\geq2),\\
+\lim_{n\to\infty}\frac{p_0(n)}n
+&=\lim_{n\to\infty}\frac{p_\star(n)}n=\alpha,\\
+E_{p_0}(n)&=0,\qquad E_{p_\star}(n)\in\{0,1\}&& (n\geq1).
+\end{aligned}
+\tag{20.4}
+$$
+
+对每个 $N\geq2$，$T_{N,p_0}$ 与 $T_{N,p_\star}$ 均保持 $D_N$，其每条周期长度都至多二。然而 $\mathcal G_{p_0}$ 正则，$\mathcal G_{p_\star}$ 与 $\mathcal G_{E_{p_\star}}$ 非正则。后者的扰动有合法规范来源
+
+$$
+W(n_m)=AB^mAB^mA\underline0\qquad(m\geq1),
+\tag{20.5}
+$$
+
+故即使同时给出黄金上下界、全部 Fibonacci 锚、黄金极限斜率、缺陷振幅至多一、全局单调性及周期长度至多二，也不能推出规范五窗同步词图正则。
+
+这两个比较映射均在 $n=7$ 违反定义 15.1 的 Cloitre 自指方程。对实际 Cloitre 序列，在假设 18.1 下，式 (20.3) 只给出条件等价
+
+$$
+\operatorname{Reg}(\mathcal G_C)
+\quad\Longleftrightarrow\quad
+\operatorname{Reg}(\mathcal G_{E_C}),
+\qquad
+E_C(n)=\sum_{u\in I_n}\delta(g_{m_u},m_u-g_{m_u}),
+\tag{20.6}
+$$
+
+其中右侧是定理 15.3 的同一实际拆分树总进位；本定理不判定这两个实际词图中的任何一个是否正则，也不证明实际内周期长度无界。
+
+证明。先确定共同长度的数值资源。$H$ 个窗口连同单位位所能占用的 Fibonacci 索引恰为 $2,\ldots,3H+2$。令 $V_K$ 是索引 $2,\ldots,K$ 中不相邻占位的最大和，取 $V_1=0$、$V_2=1$。按最高位是否占用，有
+
+$$
+V_K=\max\{V_{K-1},F_K+V_{K-2}\}\qquad(K\geq3),\qquad
+V_K=F_{K+1}-1\qquad(K\geq1).
+$$
+
+最后一个等式由 Fibonacci 递推归纳得到。若整数的规范表示含索引至少 $K+1$，其值至少为 $F_{K+1}$；反之，由规范表示的存在性，小于此阈值的整数不可能含这种索引。因此
+
+$$
+L(x)\leq H
+\quad\Longleftrightarrow\quad
+0\leq x<F_{3H+3}.
+\tag{20.7}
+$$
+
+特别地，$n$ 能放入 $H$ 个窗口时，每个 $0\leq x\leq n$ 都能放入同样的 $H$ 个窗口。这包括 $H=0$ 的两个数零、一；其阈值为 $F_3=2$。后面所有投影所需的辅助数 $p(n)$、$E_p(n)$、$G(n)$、零和一均不超过正输入 $n$，所以不需要增加共同窗口数。
+
+构造三轨关系 $\mathcal A$：三个合法共长词分别表示 $(n,z,y)$，第一轨要求 $n\geq1$，并满足
+
+$$
+y=G(n)+z.
+\tag{20.8}
+$$
+
+Fibonacci 表示的同步加法、有限进位及正则语言闭合是已知中间工具，先例为 Du、Mousavi、Schaeffer、Shallit，[*Decision Algorithms for Fibonacci-Automatic Words, with Applications to Pattern Avoidance*](https://arxiv.org/abs/1406.0670)，§2 的高端补零三轨加法。这里将这一工具按本卷的降阶黄金读出、五窗及独立单位位具体化；$\mathcal A$ 本身不作为新的通用自动机定理。
+
+由于
+
+$$
+M^{-1}=\begin{pmatrix}-1&1\\1&0\end{pmatrix},
+\qquad qM^{-1}=r_G,\qquad M^{-1}S=SM^{-1},
+$$
+
+对从高到低读入的窗口三元组 $(\sigma_{\mathrm{input}},\sigma_{\mathrm{defect}},\sigma_{\mathrm{output}})$，从 $h_0=0\in\mathbb Z^2$ 更新
+
+$$
+\begin{aligned}
+h'&=Sh+M^{-1}d_{\mathrm{input}}+d_{\mathrm{defect}}-d_{\mathrm{output}},\\
+qh+e_{\mathrm{input}}+e_{\mathrm{defect}}-e_{\mathrm{output}}&=0
+\quad\text{在单位末字母处接受}.
+\end{aligned}
+\tag{20.9}
+$$
+
+这里 $d_{\mathrm{input}}$ 等分别指对应窗口的 $d_\sigma$。Horner 展开及上述交换式给
+
+$$
+h_H=M^{-1}c_Z(n)+c_Z(z)-c_Z(y).
+$$
+
+由式 (14.1)，式 (20.9) 的终态左侧恰为 $G(n)+z-y$；即使某一轨有额外高端零窗口，该恒等式也不改变。
+
+为把式 (20.9) 限制在有限状态内，令
+
+$$
+\begin{aligned}
+D&=\{M^{-1}d_\sigma+d_\tau-d_\upsilon:
+\sigma,\tau,\upsilon\in\Sigma\},\\
+\Lambda&=\varphi^3=2+\sqrt5,\qquad
+\Theta=-\varphi^{-3}=2-\sqrt5,\\
+q_+&=\frac{q(S-\Theta I)}{\Lambda-\Theta},\qquad
+q_- =\frac{q(\Lambda I-S)}{\Lambda-\Theta},\\
+A_\pm&=\max_{\Delta\in D}|q_\pm\Delta|,\qquad
+B_- =\frac{A_-}{1-|\Theta|},\qquad
+B_+ =\frac{A_+}{\Lambda-1}+B_-+2.
+\end{aligned}
+$$
+
+这些常数只依赖固定的五窗字母表。两个行读出满足 $q=q_++q_-$、$q_+S=\Lambda q_+$、$q_-S=\Theta q_-$，且相互独立：$q$ 和 $qS=(8,13)$ 不成比例，故 $q$ 在两个不同特征方向上的分量都非零。对任何从零开始的前缀状态，收缩方向的几何和给
+
+$$
+|q_-h_j|\leq B_-.
+$$
+
+若完整词满足式 (20.8)，在前缀后还剩 $t=H-j$ 个窗口，单位位差
+
+$$
+\zeta=e_{\mathrm{input}}+e_{\mathrm{defect}}-e_{\mathrm{output}}
+\in\{-1,0,1,2\}
+$$
+
+满足 $q_+h_H=-q_-h_H-\zeta$。展开剩余窗口的更新，得到
+
+$$
+\begin{aligned}
+\Lambda^t|q_+h_j|
+&\leq A_+\frac{\Lambda^t-1}{\Lambda-1}+B_-+2,\\
+|q_+h_j|&\leq B_+.
+\end{aligned}
+$$
+
+因此所有可接受词的全部前缀状态都属于固定集合
+
+$$
+Q=\{h\in\mathbb Z^2:|q_-h|\leq B_-,\ |q_+h|\leq B_+\}.
+$$
+
+两个独立线性读出的有界区间在 $\mathbb R^2$ 中给出有界区域，故 $Q$ 有限。只保留 $Q$，按式 (20.9) 更新，越界拒绝，单位末字母按终态等式接受。所有满足式 (20.8) 的词均不越界；所有接受词也都满足该式。这是 Fibonacci/Pisot 有限进位机制在当前三轨关系上的应用，界不随 $n$、$H$ 或填充数量改变。
+
+还须分别核对三轨的合法性。写窗口的三位为 $(l_\sigma,m_\sigma,u_\sigma)$，次序仍为低到高。窗口内的不相邻条件已由 $\Sigma$ 保证；高到低读取相邻窗口 $\sigma$、$\tau$ 时，只须检查 $l_\sigma u_\tau=0$。读者保存最近窗口的最低位 $l_\sigma$，随后更新为 $l_\tau$；读到单位位时检查最低窗口的 $l$ 与该单位位不能同时为一。没有窗口时保存位取零。三轨各使用这一有限接缝守卫，再要求恰有一个专用末字母及第一轨非零，即得到准确的 $\mathcal A$。不要求各轨最高窗口同时非空；共同加一个全 $\mathrm{null}$ 的高端三元组时，初态仍为零，各轨接缝仍合法。故该识别涵盖所有高端填充，包括零窗口及仅有单位位的情形。
+
+用 $\pi_{n,z}$、$\pi_{n,y}$ 表示三轨上的同步投影。算术等式与合法性给出
+
+$$
+\begin{aligned}
+\mathcal G_p
+&=\pi_{n,y}\left(\mathcal A\cap
+\pi_{n,z}^{-1}(\mathcal G_{E_p})\right),\\
+\mathcal G_{E_p}
+&=\pi_{n,z}\left(\mathcal A\cap
+\pi_{n,y}^{-1}(\mathcal G_p)\right).
+\end{aligned}
+\tag{20.10}
+$$
+
+两个方向的存在见证分别是 $z=E_p(n)$ 和 $y=p(n)$。它们满足
+
+$$
+0\leq E_p(n)\leq p(n)\leq n,\qquad 0\leq G(n)\leq n.
+$$
+
+式 (20.7) 因而保证每个原配对词的同一 $H$ 上都有所需第三轨，式 (20.10) 没有漏掉最短词或只保留较长填充词。反向包含由 $y=G(n)+z$ 直接得到。特别地，$n=1$ 强制 $p(1)=1$、$E_p(1)=0$，在 $H=0$ 时三轨的单位末字母为 $(\underline1,\underline0,\underline1)$，终态等式成立。正则语言对逆字母投影、相交和字母投影封闭，所以式 (20.10) 证明式 (20.3)，并给出精确的有限状态闭合判据：在这些界内，缺陷的同合同同步词图正则既充分又必要。
+
+下面证明比较映射的全部条件。$n_m$ 的占位索引恰为
+
+$$
+3,\quad 3m+6,\quad 6m+9.
+$$
+
+三者均属于窗口的最低位，窗口层数依次为 $0,m+1,2m+2$，索引间隔均为 $3m+3\geq6$，单位位为零。这是合法 Zeckendorf 来源，其高到低规范词正是式 (20.5)，且
+
+$$
+n_1=F_{15}+F_9+2=610+34+2=646.
+$$
+
+三个占位保证它不等于任何单占位 Fibonacci 锚；$F_2=1$ 也不在 $\mathcal S$。由式 (14.1) 的降阶和，每个支持点都满足
+
+$$
+\begin{aligned}
+G(n_m)&=F_{6m+8}+F_{3m+5}+1,\\
+n_m-G(n_m)&=F_{6m+7}+F_{3m+4}+1
+=a(n_m)+b(n_m)\geq3.
+\end{aligned}
+\tag{20.11}
+$$
+
+所以支持点上加一仍不超过 $n_m$，非支持点上 $p_\star=G$。取整式给 $1\leq G(n)\leq n$，得到式 (20.4) 的界。降阶和给 $G(F_j)=F_{j-1}$，支持又避开全部锚，得到两个映射的锚值。因为 $|G(n)-\alpha n|<1$ 且扰动介于零、一之间，两个商都趋于 $\alpha$，所列缺陷也直接成立。
+
+$G$ 单调不减。对每个支持点 $n_m$，将最低窗口 $[2]$ 换成 $[3]$，其余窗口不变，占位索引变为 $4,3m+6,6m+9$，仍无相邻占位，故是合法规范来源；它的数量从 $n_m$ 增为 $n_m+1$，黄金读出也从 $G(n_m)$ 增为 $G(n_m)+1$。因此
+
+$$
+p_\star(n_m)=G(n_m)+1=G(n_m+1)\leq p_\star(n_m+1).
+$$
+
+对非支持点 $n$，有 $p_\star(n)=G(n)\leq G(n+1)\leq p_\star(n+1)$。两类穷尽全部相邻整数，证明全局单调性。
+
+对 $p=p_0$ 或 $p=p_\star$，界 $1\leq p(x)\leq x\leq N-1$ 给 $1\leq N-p(x)\leq N-1$，所以 $T_{N,p}$ 保持 $D_N$。单调性使 $T_{N,p}$ 单调不增。在任何一条周期的有限有序点集 $O=\{x_1<\cdots<x_\ell\}$ 上，它又是双射，因此必须满足
+
+$$
+T_{N,p}(x_i)=x_{\ell+1-i},\qquad T_{N,p}^{2}(x_i)=x_i.
+$$
+
+故一条周期的长度至多二。这里使用有限有序集反序双射的经典性质，与定理 19.2 中零振幅的中间步骤相同；不据此断言前周期长度有统一界。
+
+$E_{p_0}=0$ 的词图由任意合法正输入轨及全零输出轨组成，输出窗口全为 $\mathrm{null}$、单位位为零，故正则；式 (20.3) 给 $\mathcal G_{p_0}$ 正则。为证明另一个词图非正则，在正则关系 $\mathcal A$ 中把缺陷轨限制为常数一，即任意个 $\mathrm{null}$ 后接 $\underline1$，并删除该轨。得到正则过滤关系
+
+$$
+\mathcal J=\{(W_H(n),W_H(y))_{\mathrm{sync}}:
+ n\geq1,\ y=G(n)+1,\ H\geq\max\{L(n),L(y)\}\}.
+$$
+
+常数一在每个 $H\geq0$ 都有表示；过滤未增加词长。若 $\mathcal G_{p_\star}$ 正则，则与 $\mathcal J$ 相交、投影到输入轨，得到支持 $\mathcal S$ 的全部高端补零词。每个支持点的输出不超过输入，所以其规范输入长度上的见证也由式 (20.7) 存在。再与“最高窗口非 $\mathrm{null}$，或没有窗口”的规范合法词语言相交，恰得到
+
+$$
+\mathcal L_{\mathcal S}=\{AB^mAB^mA\underline0:m\geq1\},
+$$
+
+且该语言将为正则。
+
+但对每个 $i\geq1$，取前缀 $u_i=AB^iA$ 和后缀 $v_i=B^iA\underline0$。对所有 $j\geq1$，
+
+$$
+u_jv_i\in\mathcal L_{\mathcal S}
+\quad\Longleftrightarrow\quad j=i.
+$$
+
+各个 $u_i$ 因而有两两不同的右残余，由经典 Myhill–Nerode 判据，$\mathcal L_{\mathcal S}$ 非正则，矛盾。这里的非正则语言来自已核对的合法五窗占位，而非任意外加编码。故 $\mathcal G_{p_\star}$ 非正则，式 (20.3) 同时给 $\mathcal G_{E_{p_\star}}$ 非正则。这证明有界缺陷及短周期仍能保留两段空窗长度相等的无界约束；给出缺陷的取值集合不能代替识别哪些合法输入取得这些值。
+
+最后核对自指边界。$n_m$ 严格递增且首项为 646，所以两个比较映射在索引七及其以下都等于 $G$。对其中任意一个 $p$，有
+
+$$
+p(6)=4,\quad p(3)=2,\quad p(5)=3,\quad p(4)=3,\quad p(7)=4.
+$$
+
+固定外部索引七，从六开始、深度为 $p(6)=4$ 的实际比较轨道是
+
+$$
+6\longmapsto7-p(6)=3
+\longmapsto7-p(3)=5
+\longmapsto7-p(5)=4
+\longmapsto7-p(4)=4.
+$$
+
+因此所选终点为四，Cloitre 方程要求
+
+$$
+p(7)=p(4)+p(7-4)=3+2=5,
+$$
+
+而比较映射给 $p(7)=4$。它们不是定义 15.1 的实际 $C$；不能将该分离构造当作实际 Cloitre 正则性的反例。
+
+若实际 $C$ 满足假设 18.1，$G\leq C\leq n$ 正好履行式 (20.3) 的前提，定理 15.3 则把这里的 $E_C$ 确认为同一实际拆分树总标量进位，得到式 (20.6)。树对每个输入有限，并不保证跨全部输入的进位读出具有有限状态的同步词图；相反，本定理要求检验的恰是这个全局缺陷读出。比较映射未履行实际自指方程，故其短周期及非正则性均不能转移给 $C$。实际 $C$ 的两种五窗词图正则性、以及实际周期是否存在无界长度族，仍分别需要满足递归约束的证明。
+
+## 追加锚（本行以下为增补区）
