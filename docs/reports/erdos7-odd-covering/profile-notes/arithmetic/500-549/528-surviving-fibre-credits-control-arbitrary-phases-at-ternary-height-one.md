@@ -11700,3 +11700,388 @@ The raw comparison coefficients and each case remain separate throughout.
 The comparison at 83 limits this fixed endpoint certificate; it does not
 settle arbitrary first-digit phases, higher old ternary heights or the
 excluded middle primes.
+
+## Projection decrements require a coupled fee bound
+
+These are ordinary mathematical deductions for the fixed FC110/FC131
+head laws, private star laws, limiting caps and exact FC159 remainder
+inventory. These deductions do not claim new Lean verification or a
+new continuation range. Both tables have the same w,g; their
+canonical X,Y and physically reachable phase sets differ. Unless a
+finite N is specified, w,g and the canonical box below are the limiting
+ones. A finite-N application uses its own actual w_N,g_N and box; it
+does not substitute the limiting values into a finite family.
+
+### 1. The actual first-digit problem lies inside a positive raw box
+
+Keep all pure/star originals, higher role words, physical rows and
+selected roots fixed. Change arbitrary shallow private digits. At a
+private q and finite N, one role's projection is the union of one
+first-digit cylinder and its prescribed higher tail. Under the SAME
+pure-conditioned law its mass is at most
+
+    c_(q,N)*(1/q+sum_(e=2..N)q^-e)=b_(q,N).
+
+Intersecting with an actual star survivor cannot increase it. The
+mass of a within-head union is at most the sum of its active role
+masses. Therefore every actual changed tuple satisfies, row by row,
+
+    0<=X<=X_canonical, 0<=Y<=Y_canonical.
+
+Coincident digits may make these inequalities strict. They do not
+authorize treating separate role budgets as disjoint actual sets.
+The same statement holds for the limiting raw masses.
+
+In the limiting canonical box each head has at most two active
+tokens of mass b_q=1/(q-2), and g is either1 or1-b_q. Hence everywhere
+in this box
+
+    g-X-Y>=1-5*b_q>=4/9>0, since q>=11.
+
+Thus P=g-X-Y is affine throughout this box; no positive-part boundary
+is crossed by a coordinatewise decrement. The actual reachable set
+is much smaller than the box because the higher words and common
+root/head incidences remain prescribed.
+
+Write the fixed native comparison as
+
+    J=A(P)-Fee(K), K=g-max(X,Y),
+    A(P)=sum_(r,i,j) gamma_r*w_(5,r,i)*w_(7,r,j)*product_q P_(q,r,i,j).
+
+Lowering X,Y raises both P and K. The second increase raises the
+remainder upper fees. The sign of their difference requires a proof.
+
+### 2. Exact one-private-coordinate increment
+
+Change one private q, holding every other private coordinate fixed.
+Let dX_(r,i)=X_old-X_new>=0 and dY_(r,j)=Y_old-Y_new>=0. Set
+
+    dP_(r,i,j)=dX_(r,i)+dY_(r,j),
+    dK_(r,i,j)=max(X_old,Y_old)-max(X_new,Y_new).
+
+The arguments of each maximum use the indicated SAME q,r,i,j. Then
+
+    0<=dK<=max(dX,dY)<=dP,
+    A_new-A_old
+      =sum_(r,i,j) gamma_r*w5*w7*dP*product_(t!=q) P_t.       (FC505)
+
+This is an exact identity. No independence within q is asserted.
+
+For a remaining support D with q outside D, a head depth vector e
+and fixed supported-head address a, let Psi_old_(D,e,r)(a) be the
+FC163 kernel including its supported-head min-caps. Its exact change
+is
+
+    dPsi_(D,e,r)(a)
+      =sum_(i,j agreeing with a)
+         product_(p in heads minus D) w_(p,r,row_p)
+         *product_(p in heads intersect D) min(c_p*p^-e_p,w_(p,r,row_p))
+         *product_(t in Q minus(D union{q})) K_t(r,i,j)
+         *dK(r,i,j).                                      (FC506)
+
+For q inside D the kernel and its cap charge are unchanged, so its
+fee increment is0. In particular one must not charge that support
+again in a projection-decrement bound.
+
+At this fixed D,e define the old free/selected candidate functions
+
+    f(a)=sum_r gamma_r*Psi_old_r(a),
+    s(r,a)=gamma_r*Psi_old_r(a),
+    M_f=max_a f(a), M_s=max_(r,a) s(r,a),
+    delta_f(a)=sum_r gamma_r*dPsi_r(a),
+    delta_s(r,a)=gamma_r*dPsi_r(a).
+
+The exact change of each maximum is the elementary slack identity
+
+    dM_f=max_a [delta_f(a)-(M_f-f(a))],
+    dM_s=max_(r,a) [delta_s(r,a)-(M_s-s(r,a))].              (FC507)
+
+The brackets cannot have a negative maximum, since any old maximizer
+has zero slack and a nonnegative increment. FormulaFC507 preserves
+the one free address across roots and one selected root/address.
+It identifies useful information beyond a total fee: the slack of
+each candidate address before the new observation is applied.
+
+Consequently, with the original private coefficient
+B_private(D)=product_(t in D intersect Q)1/(t-2),
+
+    J_new-J_old
+      =dA-sum_(D:q notin D) B_private(D)*sum_(allowed e)(dM_f+dM_s). (FC508)
+
+Each maximum remains INSIDE its head-depth summand. An immediate
+sufficient upper allowance replacesFC507 by
+
+    dM_f<=max_a delta_f(a), dM_s<=max_(r,a) delta_s(r,a).     (FC509)
+
+This retains all row/root coupling in the increment and is sharper
+than bounding the maximum by a sum of independently charged cells.
+
+For changes at several q, choose a fixed order and applyFC508
+sequentially. It telescopes exactly, using the current other-coordinate
+P,K at each step. For positivity it is sufficient that the total
+fee-increment allowance minus total dA is smaller than the original
+positive J. Requiring EVERY individual step to have nonnegative gain
+is a stronger, unnecessary condition. A negative local comparison
+does not refute overall positivity.
+
+The source requirement is on the actual endpoints. Intermediate raw
+tuples used for this algebraic bound need only obey the proved box
+guards; they are not silently advertised as actual congruence-family
+realizations. A theorem for actual phases still needs the explicit
+map from those phases to the endpoint X,Y.
+
+### 3. Derivative and scale boundaries
+
+Along a linear decrement of this q, dP/dt=dX+dY. Away from ties,
+
+    dK/dt=dX if X(t)>Y(t), and dY if Y(t)>X(t).
+
+At an exact tie the right derivative is min(dX,dY). Each fee maximum
+has the directional derivative of the largest candidate derivative
+among its current maximizing addresses. ThusFC505–FC508 also give
+the active-address derivative certificate, with explicit switches
+when either a projection ordering or a fee maximizer changes.
+
+A cruder cellwise upper bound follows by replacing all other private
+K factors with their unchanged g, summing address indicators and
+bounding each free and selected increment separately. It loses
+essential information. Already original35 at head depths(1,1) has
+min(c5/5,w5)=w5 and min(c7/7,w7)=w7 on every row. Charging both35 and
+105 independently against each cell spends that cell twice, whereas
+the A slope counts it once and the actual maxima choose only one
+address per original. Failure of this uniform cell certificate says
+nothing about a coupled row decrement or reachable phase positivity.
+
+For the present fixed head laws, exact evaluation may use a justified
+finite depth decomposition: depth1, and depth at least2. Every cap
+at depth at least2 is below every positive row mass. Within such a
+block its positive depth factor is common to ALL candidate addresses
+and roots; zero rows retain zero indicators. Only for that reason may
+the common factor be pulled out of each maximum and summed
+geometrically. This is not an arbitrary interchange of max and sum.
+
+### 4. Global raw-box monotonicity is false for BOTH fixed tables
+
+Here is a fully specified algebraic counterexample in their common
+guarded raw domain. It is NOT an actual shallow-phase construction.
+
+Keep all w,g, caps and the complete FC159 inventory fixed. Set every
+X,Y to0 except
+
+    X_(q=37,r=1,i=2)=epsilon, epsilon=1/100.
+
+Compare this tuple z(epsilon) with z(0), where that entry is also0.
+Both original tables have S5 at q37 on row2/root1, so its canonical
+upper entry is b37=1/35>epsilon. Both tuples therefore lie in the
+canonical coordinatewise lower box. All P remain positive. Lowering
+this one X from epsilon to0 increases A, but increases fees MORE.
+
+At root1 the head5 row2 mass is a5=4/15 and total head7 mass is1.
+The exact group change is
+
+    A(0)-A(epsilon)=(1/2)*a5*epsilon=(2/15)*epsilon.         (FC510)
+
+Let I=Q minus{37}, and define
+
+    S=sum_(q in I)b_q,
+    S2=sum_(s<t in I)b_s*b_t,
+    E2=product_(q in I)(1+b_q)-1-S >= S2.
+
+We now lower-bound Fee(0)-Fee(epsilon) using disjoint fee collections,
+all with37 OUTSIDE their nonternary support. Fees supporting37 are
+unchanged. All other fee contributions are nonnegative in this
+direction, so they can be omitted. Throughout divide their difference
+by the common positive factor (1/2)*a5*epsilon.
+
+First retain the FREE fees with37 outside their support, taking only
+depth1 on head5 whenever5 is supported. Depth1 is excluded for
+support{5,q}, as required.
+At depth1 the unique common maximizing5 row is2. After perturbation
+it still dominates: a5*(1-epsilon)>1/5 on root1, and row2 remains a
+maximal row on root2. Common maximizing7 rows exist on both roots.
+When5 is unsupported, the affected row is integrated with its actual
+weight a5. Head7's full cap sum is1/5; its depth>=2 cap sum is1/35.
+Sorting by supported heads gives the following contribution:
+
+    no supported head:                         E2,
+    only5, depth1 and >=2 private primes:       E2,
+    only7, one private / >=2 private primes:    S/35+E2/5,
+    both5,7, head5 depth1:                      (1+S+E2)/5.
+
+These sum to(11/5)*E2+S/35+(1+S+E2)/5.
+
+Next retain all SELECTED fees with5 supported at depth1. Root1 is
+their maximizing root even after perturbation: if7 is supported,
+the unchanged root2 private product is at most g_(37,2)=34/35,
+whereas1-epsilon=99/100>34/35; if7 is unsupported, its extra root2
+head mass factor4/5 only makes root2 smaller. Their contribution is
+
+    only5 with >=2 private primes:             E2,
+    both5,7:                                   (1+S+E2)/5.
+
+Finally retain SELECTED fees with no supported heads and EXACTLY
+two private primes. Root1 is again the maximizing root throughout
+the comparison. At most two of the first six private primes
+(11,13,17,19,23,29) lie in their support. Their outside-root2 star
+product is therefore at most
+
+    (14/15)*(16/17)*(20/21)*(26/27).
+
+The root2 candidate is at most13312/20655, while the perturbed root1
+candidate is2/3-(4/15)/100=83/125, which is strictly larger. Hence
+this last disjoint fee collection contributes exactly S2.
+
+Combining these collections gives
+
+    [Fee(0)-Fee(epsilon)] / [(2/15)*epsilon]
+      >=2/5+(3/7)*S+(18/5)*E2+S2
+      >=2/5+(3/7)*S+(23/5)*S2=:kappa.                     (FC511)
+
+Only exact sums of the prescribed eight rational b values are needed:
+
+    S=31464712/66621555,
+    S2=1619396/17131257,
+    kappa=4353469702/4197157965>1.
+
+FromFC510–FC511 it follows that
+
+    J(z(epsilon))-J(z(0))
+       >=(2/15)*(1/100)*(kappa-1)
+       =156311737/3147868473750>0.                      (FC512)
+
+Thus a coordinatewise DECREASE of X can strictly DECREASE native J,
+even with these fixed physical head laws, star carriers, canonical
+raw bounds and complete remainder inventory. It rules out a global
+raw-box monotonicity theorem as the missing proof step.
+
+The zero projections in this example suppress mandatory higher role
+tails, so the example is outside the actual fixed-higher-word phase
+set. It is not a negative-score claim, an actual covering family,
+or a counterexample to noncovering for arbitrary shallow digits.
+It instead demonstrates why the reachable constraints or a net
+gain certificate must be retained. The counterexample concerns the stated raw relaxation only.
+
+### 5. The proposed local concavity reduction is valid
+
+Fix every private coordinate except q. Partition q's closed canonical
+raw box by all hyperplanes
+
+    X_(q,r,i)=Y_(q,r,j).
+
+On each resulting closed polytope choose the corresponding consistent
+weak ordering. Every K_q=g-max(X,Y) is affine there; at ties the two
+affine formulas agree. P_q=g-X-Y is already affine by section1.
+Therefore A is affine as a function of this q tuple. A fee whose
+support contains q is constant in it. Every other depth/address
+candidate is affine, since its product contains only ONE varying
+private factor K_q. Its maximum over addresses/roots is convex.
+The nonnegative sum of these convex fees is convex, and the summable
+cap majorant makes the complete fee finite and continuous. Hence
+
+    J is concave in this q tuple on each ordering polytope. (FC513)
+
+It follows that the minimum over one such polytope is attained at a
+vertex. This is separate, piecewise concavity, NOT global concavity
+or monotonicity across the ordering boundaries. For a product of
+chosen q polytopes, repeatedly replacing one q coordinate by a
+no-larger-J vertex proves that a global minimum is attained among
+products of local vertices. The finite union of ordering cells gives
+a finite algebraic relaxation without taking phase representatives
+from unrelated sources as jointly actual.
+
+Vertices of the ambient polytopes need not be realizable by the
+prescribed role cylinders. Positivity on all of them would suffice
+for actual reachable tuples; failure at an artificial vertex would
+only identify a weakness of the relaxation. A sharper feasible set
+must retain the per-q common root incidences, fixed higher tails,
+and same-row union/coincidence constraints before applyingFC513.
+No manageable vertex count, efficient procedure, or successful
+positivity bound on that sharper set is claimed here.
+
+### 6. A monotone ratio survives, but its head integration needs a new bound
+
+For fixed g and P=g-X-Y>0, define
+
+    R(X,Y)=K/P=(g-max(X,Y))/(g-X-Y)=1+min(X,Y)/P.
+
+This ratio is nondecreasing in each of X and Y. In the region X>=Y,
+its partial derivatives are Y/P^2 and (g-X)/P^2; in X<=Y they are
+(g-Y)/P^2 and X/P^2. All are nonnegative, and the formulas join
+continuously at X=Y. Therefore for every actual dominated tuple,
+
+    K_actual/P_actual <= K_canonical/P_canonical=:R_bar.   (FC514)
+
+This does not assert K_actual<=K_canonical; K itself increases under
+the decrement. Instead it bounds the fee factor relative to the
+simultaneously increasing lower-mass factor on the SAME physical
+root/head cell.
+
+There is a precise common-head-mass reformulation. On cells with
+positive head weights set
+
+    nu_z(r,i,j)=gamma_r*w5*w7*product_q P_(q,r,i,j),
+    mass(nu_z)=A(z).
+
+For a support D, head depths e and cell(r,i,j), define the static
+canonical coefficient
+
+    Theta_bar_(D,e)(r,i,j)
+       =product_(p in heads intersect D) min(c_p*p^-e_p,w_p)/w_p
+        *product_(q in Q minus D) R_bar_q(r,i,j)
+        /product_(q in Q intersect D) P_bar_q(r,i,j).        (FC515)
+
+Every symbol is evaluated at the indicated physical row and root.
+Zero-head-weight cells can be omitted: both their comparison mass
+and any supported min-cap contribution are0, so no0/0 is used.
+
+For each free candidate address a, the exact raw fee candidate is
+the integral against nu_z of its address indicator times the same
+expression asFC515, with actual K/P and actual1/P factors. By
+FC514 and P_actual>=P_bar, it is at most
+
+    sum_(cells agreeing with a) nu_z(cell)*Theta_bar_(D,e)(cell).
+
+The selected candidate has in addition one fixed root indicator.
+Hence the full fee satisfies
+
+    Fee(z)<=G_bar(nu_z),
+
+where G_bar sums the original B_private(D) and head-depth allowances,
+keeping their free/selected address maxima in place, over these
+static-coefficient integrals. This is a lawful common-source bound;
+no independently attainable root or head optimum was combined.
+
+The missing head bridge is now explicit:
+
+    G_bar(nu_z) <= (1-rho)*mass(nu_z)
+
+for some rho>0 and every nu_z arising from the actual phase image.
+Here rho is a new desired margin, distinct from the counterexample
+coefficient kappa in FC511.
+The positive value at the canonical nu alone does not prove this:
+changing P reweights different head cells, and the fee maxima can
+switch. G_bar is a positive homogeneous convex function of nu; its
+ratio to total mass need not be constant or monotone.
+
+A completely unrestricted pointwise sum budget is again too strong.
+Original35 and105 can select the same head cell and active root. At
+their head depths(1,1), the supported M/w factors are1 and each
+remaining product of canonical R_bar factors is at least1. Thus
+charging every original separately permits a local coefficient at
+least2, even before the other labels are charged. This only blocks
+that pointwise union-fee budget; it does not block a budget using
+head-mass constraints, shared address choices, or overlap-aware
+grouping. Such a bridge is an additional proof obligation, not a
+consequence ofFC514.
+
+### Next sufficient target
+
+The usable next target is either the net boundFC508–FC509 over the
+actual reachable projection losses, with address slacks if needed,
+or a positivity certificate for a faithful per-q ordering-polytope
+relaxation. The ratioFC514 gives another route through the explicit
+head-mass inequality followingFC515. The full-box monotonicity
+shortcut is refuted byFC512.
+This leaves the original arbitrary-shallow-phase noncovering target
+unchanged, and identifies the additional joint information needed
+instead of buying more phase enumeration.
