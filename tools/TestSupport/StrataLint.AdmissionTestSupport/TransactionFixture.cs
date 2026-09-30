@@ -128,7 +128,7 @@ internal sealed partial class TransactionFixture : IDisposable
                 statement_id =
                     "sha256:3333333333333333333333333333333333333333333333333333333333333333",
             },
-            schema_version = 5,
+            schema_version = 6,
         });
         WriteLedger(freeze);
         WriteFile(StatePinPath,
@@ -505,7 +505,7 @@ internal sealed partial class TransactionFixture
                 prerequisite_frozen_node_ids = Array.Empty<string>(),
                 statement_id = "sha256:" + identity,
             },
-            schema_version = 5,
+            schema_version = 6,
         }) + "\n");
         return relativePath;
     }

@@ -34,7 +34,7 @@ public sealed partial class MakeWorkflowTests
         // make test 是薄委托;数学门链条的唯一真源在 math-gate.sh 里,断言脚本本体。
         var mathematicalTestRecipe = Recipe(makefile, "test");
         Assert.DoesNotContain("dotnet test", mathematicalTestRecipe, StringComparison.Ordinal);
-        Assert.Contains("tools/scripts/workflow/math-gate.sh", mathematicalTestRecipe, StringComparison.Ordinal);
+        Assert.Contains("make lean-report", mathematicalTestRecipe, StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
@@ -50,9 +50,6 @@ public sealed partial class MakeWorkflowTests
         {
             WorktreeInitScriptPath,
             LeanCacheEnsureScriptPath,
-            PreflightScriptPath,
-            "tools/scripts/workflow/math-gate.sh",
-            LocalHarnessGateScriptPath,
         })
         {
             var excludedText = File.ReadAllText(Path.Combine(root, excludedCaller));
@@ -128,10 +125,8 @@ public sealed partial class MakeWorkflowTests
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),
             StringComparison.Ordinal);
-        Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
-        Assert.Equal(
-            $"\t@MODE=\"$(MODE)\" BASE=\"$(BASE)\" /bin/bash {PreflightScriptPath}",
-            Recipe(makefile, "preflight"));
+        Assert.Contains("check-current", Recipe(makefile, "gate"), StringComparison.Ordinal);
+        Assert.Contains("check-delta", Recipe(makefile, "gate"), StringComparison.Ordinal);
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
         Assert.Contains("\"$(KIND)\" \"$(NAME)\"", worktreeRecipe, StringComparison.Ordinal);

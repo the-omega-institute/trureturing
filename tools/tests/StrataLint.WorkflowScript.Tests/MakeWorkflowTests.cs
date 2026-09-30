@@ -7,9 +7,6 @@ namespace StrataLint.WorkflowScript.Tests;
 public sealed partial class MakeWorkflowTests
 {
     private const string ScribeScriptPath = "tools/scripts/scribe.sh";
-    private const string LocalHarnessGateScriptPath =
-        "tools/scripts/local-harness-gate.sh";
-    private const string PreflightScriptPath = "tools/scripts/preflight.sh";
     private const string ScribeContentChecksScriptPath =
         "tools/scripts/workflow/scribe-content-checks.sh";
     private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
@@ -76,12 +73,9 @@ public sealed partial class MakeWorkflowTests
         "worktree-remove",
         "pr-open",
         "pr-watch",
-        "preflight",
         "gate",
         "census",
         "census-derivational",
-        "current",
-        "delta",
     ];
 
     private static readonly string[] ToolsTargets =
@@ -91,9 +85,6 @@ public sealed partial class MakeWorkflowTests
         "dotnet",
         "check-fast",
         "test",
-        "ci-build",
-        "engineering",
-        "engineering-tests",
         "selftest",
         "compile-proof",
         "capacity-audit",

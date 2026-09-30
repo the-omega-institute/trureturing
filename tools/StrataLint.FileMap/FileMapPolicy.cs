@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Configuration;
-using StrataLint.EngineeringScope;
 using StrataLint.Scribe;
 
 namespace StrataLint.FileMap;
@@ -54,9 +53,7 @@ internal static partial class FileMapPolicy
     private static readonly IReadOnlyDictionary<string, string> DataVerifierImplementations =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["CommonExecutionEvidence"] = "tools/StrataLint.ExecutionEvidence/CommonExecutionEvidence.cs",
             ["EngineeringProjectRegistry"] = "tools/StrataLint.Engine/RepositoryIo/EngineeringProjectRegistry.cs",
-            ["JudgeSeedRegistration"] = "tools/scripts/report/dotnet_producer.py",
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
@@ -66,7 +63,6 @@ internal static partial class FileMapPolicy
             ["lean-build"] = "tools/scripts/worktree/lean-cache-run.sh",
             ["lean-inspector"] = "tools/lean-inspector/inspect.sh",
             ["NativeArchivePaths"] = "tools/scripts/worktree/lean_actions.py",
-            ["PackageMaterialRegistry"] = "tools/StrataLint.BuildRuntime/PackageMaterialRegistry.cs",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["DomainsLoader"] = DomainsLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,
@@ -219,8 +215,7 @@ internal static partial class FileMapPolicy
         var selected = selectedPaths is null ? paths : paths.Where(selectedPaths.Contains).ToArray();
         var selectedManifest = selectedPaths is null ? manifest : new FileMapManifest(manifest.ResidencePolicy,
             manifest.Entries.Where(entry => selectedPaths.Any(entry.Matches)).ToImmutableArray(),
-            manifest.ArtifactKinds,
-            manifest.Resources);
+            manifest.ArtifactKinds);
         var trackedModes = TrackedModes(repositoryRoot);
         var dependencyFindings = InspectDependencies(
             manifest,

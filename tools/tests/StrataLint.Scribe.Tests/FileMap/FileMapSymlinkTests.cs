@@ -11,8 +11,7 @@ public sealed class FileMapSymlinkTests
     public void InlineFilesAndTableArraysDescribeTheSameLink(string path, string target, string kind)
     {
         var inline = $$"""
-            schema_version = 5
-            resources = []
+            schema_version = 6
             evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             files = [
               { pattern = "{{path}}", require = [], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "{{target}}", kind = "{{kind}}" } },
@@ -36,7 +35,7 @@ public sealed class FileMapSymlinkTests
     public void HistoricalLinkDataDoesNotRelaxTheCurrentResourceSchema()
     {
         var historical = Manifest("AGENTS.md", "CLAUDE.md", "file")
-            .Replace("schema_version = 5", "schema_version = 2", StringComparison.Ordinal)
+            .Replace("schema_version = 6", "schema_version = 2", StringComparison.Ordinal)
             .Replace("resources = []\n", "", StringComparison.Ordinal)
             .Replace("require = []\n", "", StringComparison.Ordinal);
         var bytes = Encoding.UTF8.GetBytes(historical);
@@ -46,7 +45,7 @@ public sealed class FileMapSymlinkTests
     }
 
     [Theory]
-    [InlineData("schema_version = 5", "schema_version = 2")]
+    [InlineData("schema_version = 6", "schema_version = 2")]
     [InlineData("resources = []\n", "")]
     [InlineData("require = []\n", "")]
     public void CurrentLoaderStillRequiresSchema5AndResourceFields(string original, string replacement)
@@ -65,7 +64,7 @@ public sealed class FileMapSymlinkTests
     public void UnsupportedLinkManifestVersionsAreRejected(string version)
     {
         var source = Manifest("AGENTS.md", "CLAUDE.md", "file")
-            .Replace("schema_version = 5", $"schema_version = {version}", StringComparison.Ordinal);
+            .Replace("schema_version = 6", $"schema_version = {version}", StringComparison.Ordinal);
 
         Assert.ThrowsAny<FormatException>(() => FileMapSymlinkPolicy.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
     }
@@ -115,8 +114,7 @@ public sealed class FileMapSymlinkTests
     {
         var tableBytes = Encoding.UTF8.GetBytes(Manifest(".codex/skills", "../skills", "directory"));
         var inlineBytes = Encoding.UTF8.GetBytes("""
-            schema_version = 5
-            resources = []
+            schema_version = 6
             evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             files = [{ pattern = ".codex/skills", require = [], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } }]
             [residence_policy]
@@ -192,8 +190,7 @@ public sealed class FileMapSymlinkTests
     }
 
     private static string Manifest(string path, string target, string kind) => $$"""
-        schema_version = 5
-        resources = []
+        schema_version = 6
         evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
         [residence_policy]
         case_id = "RESIDENCE-EPOCH"
@@ -202,7 +199,6 @@ public sealed class FileMapSymlinkTests
         status = "closed"
         [[files]]
         pattern = "{{path}}"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
