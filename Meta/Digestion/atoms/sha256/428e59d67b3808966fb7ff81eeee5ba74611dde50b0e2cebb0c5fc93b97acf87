@@ -1,0 +1,24 @@
+### 231.2 两个真实命中共用同一个整数
+
+沿用引理 230.2 的近极值基底
+
+$$
+n_y=\prod_{p\le y}p^{a_p},\qquad
+ a_p=\begin{cases}
+\lceil\log s/\log p\rceil,&p\le\sqrt s,\\
+1,&\sqrt s<p\le y.
+\end{cases}
+\tag{231.9}
+$$
+
+它的全部素因子不超过 $y$，故充分大时 $(n_y,V)=1$。引理 230.2 给出的统一结论是：若 $J_s(d)\le KR$ 且 $d/n_y=u/v$ 已约分，则
+
+$$
+\log u+\log v
+=\sum_p|v_p(d)-a_p|\log p
+=O_K(y/\sqrt\ell)=o(y),
+\tag{231.10}
+$$
+
+其中 $p>y$ 时约定 $a_p=0$。该误差对整个低亏损集合一致，不只是对典型原子成立。
+

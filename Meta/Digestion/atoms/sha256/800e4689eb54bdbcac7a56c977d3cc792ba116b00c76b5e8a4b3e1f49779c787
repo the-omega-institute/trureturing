@@ -1,0 +1,95 @@
+**引理 230.5（窗口内的共同整数立方体）。** 对每个预先固定的 $a>0$，存在与 $V$ 互素的整数 $n_0$，满足式（230.19）、（230.20），使下面定义的正系数整数立方体满足式（230.22）、（230.23）。
+
+证明。考虑辅助的独立开关 $B_p\in\{0,1\}$，概率为
+
+$$
+\Pr(B_p=1)=\theta_p:=\frac{c_1r_p}{g_p}.
+\tag{230.16}
+$$
+
+这份概率只把随后正系数立方体的有限求和归一化；它不是实际命中后的 Euler 分布。
+
+相对于 $n_y$，开关的平均对数大小移动为
+
+$$
+M_y=\sum_{p\in\mathcal P_+}\theta_p\log p
+-\sum_{p\in\mathcal P_-}\theta_p\log p.
+\tag{230.17}
+$$
+
+为证明 $M_y=O_\kappa(R)$，令
+$\theta(t)=c_1e^{-t}/(c_0+c_1e^{-t})$，则
+$\theta_p=\theta(|z(p)|)+O_\kappa(\ell/y)$；这个误差乘 $\log p$ 求和为 $O(1)$。强 PNT 将主和换成
+
+$$
+\int_0^\kappa\theta(t)\bigl(v_y(t)-v_y(-t)\bigr)\,dt+o(R),
+\qquad v_y(t)=\frac{x(t)^2}{x(t)+s}.
+$$
+
+在固定区间内 $v_y'(t)=O(y/\ell^2)=O(R)$，所以积分为 $O_\kappa(R)$。这里使用的是同一个真实素数密度；正负两块的主项抵消，不是假设两块素数恰好成对。
+
+选择缓冲素数只在两个不交区间
+
+$$
+-3\kappa\le z(p)\le-2\kappa,
+\qquad 2\kappa\le z(p)\le3\kappa
+\tag{230.18}
+$$
+
+内进行。这两段各有 $(\kappa+o(1))R$ 个素数，且每个 $\log p=\ell+O_\kappa(1/\ell)$。若需要降低基底，就从下段移除素数；若需要提高基底，就从上段加入素数。按任意固定顺序逐个操作，直到总对数改变量逼近
+
+$$
+\log X-aR/2-\log n_y-M_y.
+$$
+
+目标为 $O_{a,\kappa}(R)$，所以只用 $O_{a,\kappa}(R/\ell)$ 个缓冲素数，资源充足；单步误差为 $O(\ell)$。得到同一个整数 $n_0$，满足
+
+$$
+\log n_0+M_y=\log X-aR/2+O(\ell),
+\qquad \mathcal L(n_0,n_y)=O_{a,\kappa}(R).
+\tag{230.19}
+$$
+
+缓冲素数与临界块不交；$n_0$ 在下临界块的指数仍为一，在上临界块仍为零，且 $(n_0,V)=1$。每次缓冲变动的对数权重损失为 $O_\kappa(1)$，因此式（230.5）给
+
+$$
+J_s(n_0)=o(R),\qquad \mu_s(n_0)=m_s e^{-o(R)}.
+\tag{230.20}
+$$
+
+定义真正的整数立方体
+
+$$
+d_{\mathbf B}=n_0
+\prod_{p\in\mathcal P_-}p^{-B_p}
+\prod_{p\in\mathcal P_+}p^{B_p}.
+\tag{230.21}
+$$
+
+它始终为正整数且与 $V$ 互素。其辅助均值由式（230.19）位于窗口中央，方差至多
+
+$$
+\sum_{p\in\mathcal P_-\cup\mathcal P_+}(\log p)^2\theta_p(1-\theta_p)
+=O_\kappa(y).
+$$
+
+由于 $R/\ell\to\infty$ 且 $R^2/y=y/\ell^4\to\infty$，Chebyshev 给
+
+$$
+\Pr\{D<d_{\mathbf B}\le X\}=1-O_{a,\kappa}(\ell^4/y)=1-o(1).
+\tag{230.22}
+$$
+
+此外对每个开关配置都成立
+
+$$
+J_s(d_{\mathbf B})
+=J_s(n_0)-\sum_p B_p\log r_p
+\le(2\kappa^2+o(1))R<KR.
+\tag{230.23}
+$$
+
+因此所有这些正系数立方体原子都在同一个低价格集合中；式（230.22）保留了实际严格下端点和非严格上端点。
+
+$\square$
+

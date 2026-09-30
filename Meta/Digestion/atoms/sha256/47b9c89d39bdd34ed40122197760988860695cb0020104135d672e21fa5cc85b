@@ -1,0 +1,33 @@
+**定理 202.3（仿射字符预算）。** 在命题202.1的实际来源下，假设 $D$ 非平方，令 $m=4|D|$、$\Lambda=\log\log N$。则
+
+$$
+Z(N)<e^{8+2/\Lambda}
+\sqrt{(1+\Lambda)(2+\log m)\frac m{\varphi(m)}}.
+\tag{202.6}
+$$
+
+特别地，下面是仅使用实际来源参数的 Robin 充分条件：
+
+$$
+e^{16-2\gamma+4/\Lambda}
+(1+\Lambda)(2+\log m)\frac m{\varphi(m)}
+<\Lambda^2.
+\tag{202.7}
+$$
+
+证明。取 $z=\log N\ge2$。同一 $N$ 的大素因子数量至多为 $z/\log z$，故
+
+$$
+\sum_{\substack{p\mid N\\p>z}}\log\frac p{p-1}
+\le\frac{z}{(z-1)\log z}\le\frac2\Lambda.
+$$
+
+小素因子全部在式（202.3）的集合中。由 $N>1$ 的严格有限幂截断和引理202.2，
+
+$$
+Z(N)<\frac N{\varphi(N)}
+\le P_{\chi,0+}(z)e^{2/\Lambda},
+$$
+
+得到式（202.6）。将其与正预算 $e^\gamma\Lambda$ 比较并平方，即得式（202.7）。$\square$
+

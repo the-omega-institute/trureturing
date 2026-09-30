@@ -1,0 +1,58 @@
+### 230.1 对象与高价格亏损尾
+
+沿素数指标 $r\to\infty$，使用同一个实际 FIB 家族
+
+$$
+V=F_r,\quad I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+Vg,\quad A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g.
+$$
+
+记
+
+$$
+y=\log A,\quad \ell=\log y,\quad s=y\ell,\quad
+R=y/\ell^2,\quad \delta=y/\ell^3,\quad T=y/\ell^4,
+\quad b_2=\pi^2/6,
+$$
+
+$$
+\Delta_y=\log(X/A)=O(1),\qquad H=e^{aR},\qquad D=X/H,
+$$
+
+其中 $a>0$ 固定。模数 $V=F_r$ 满足 $\log V=y/2+O(1)$，单位群阶 $Q=\varphi(V)$ 满足 $\log Q=y/2+O(1)$，而 $p\mid V\Rightarrow p>2y$ 最终成立。
+
+使用实际乘法增量
+
+$$
+b_s(1)=1,\qquad b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1),\qquad
+Z(n)=\sigma(n)/n,
+$$
+
+$$
+w_{p,j}=b_s(p^j)/p^j,\quad w_{p,0}=1,\quad
+U(s)=\sum_{d\ge1}b_s(d)/d,\quad
+\mu_s(d)=b_s(d)/(dU(s)).
+$$
+
+令 $m_{p,s}=\max_{j\ge0}w_{p,j}$、$M_s=\prod_p m_{p,s}$、$m_s=M_s/U(s)$，以及
+
+$$
+J_s(d)=\log m_s-\log\mu_s(d)
+=\sum_p J_{p,s}(v_p(d)),\qquad
+J_{p,s}(j)=\log(m_{p,s}/w_{p,j})\ge0.
+\tag{230.1}
+$$
+
+最大值与有限乘积由 §218 成立。定义真实截断变换
+
+$$
+F_D(\chi,\tau)=
+\sum_{\substack{D<d\le X\\(d,V)=1}}
+\mu_s(d)\chi(d)d^{i\tau},
+\qquad
+\|F\|_{1,*}=Q^{-1}\sum_{\chi\ne1}|F(\chi)|.
+\tag{230.2}
+$$
+
+所有字符范数均使用 $Q$ 点平均测度；非主范数把主字符坐标置零。
+

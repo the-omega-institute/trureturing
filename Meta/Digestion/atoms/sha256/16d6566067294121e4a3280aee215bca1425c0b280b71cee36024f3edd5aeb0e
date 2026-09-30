@@ -1,0 +1,40 @@
+### 207.1 同一个整数上的粗素数尾与核心预算
+
+定义
+
+$$
+\vartheta_{r,N}=\frac{L\Lambda}{(Y_r-1)\log Y_r},
+\qquad u=\frac{\log H}{L}\in[0,1].
+$$
+
+因为 $g\in I_r$，Binet 公式给
+
+$$
+L=2r\rho+O(1),\qquad
+\Lambda=\log r+O(1),\qquad
+\vartheta_{r,N}=\rho+o(1),
+$$
+
+且误差对同一 $r$ 下的全部 $g$ 一致。每个 $p\mid H$ 均大于 $Y_r$，所以
+
+$$
+0\le\log Z(H)
+\le\log\frac H{\varphi(H)}
+\le\frac{\log H}{(Y_r-1)\log Y_r}
+=\frac{\vartheta_{r,N}u}{\Lambda}.
+\tag{207.1}
+$$
+
+$H=1$ 时按空乘积理解。这个上界把同一个整数的余因子大小和素数下界同时使用。
+
+记 $N_K$ 为 §160.1 的 Axler 输入门槛。该输入给每个整数 $m\ge N_K$ 上的
+
+$$
+\frac m{\varphi(m)}
+<e^\gamma\left(\log\log m+
+\frac{a_0}{(\log\log m)^2}\right).
+\tag{207.2}
+$$
+
+不能因 $N$ 大就把式（207.2）直接用于可能很小的核心 $C$；下面分开处理这个边界。
+
