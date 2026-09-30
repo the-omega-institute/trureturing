@@ -21030,7 +21030,8 @@ the SAME complete ternary word y; no independence after integration
 over y is imposed. Unqueried rows have mass a_p(y)<=1 and may be
 dropped only for an upper bound.
 
-For a finite query Q=3^e3 product_p p^ep, let V_+={p in V:ep>0}.
+Resolve any deeper query digits by the coherent uniform lift of this
+same source. For a finite query Q=3^e3 product_p p^ep, let V_+={p in V:ep>0}.
 Reuse FC865's H_p=sum_(j,k=0..ep)p^-max(j,k), and put
 
     b_p=1+c_p(H_p-1),
@@ -21168,3 +21169,220 @@ particular these bounds do not substitute zeta_star for FC814's
 actual mixed prefix law, assert a positive mixed-survivor mass, or
 pay a whole-family tail/remainder. The all-family strict margin
 remains unresolved. These are written derivations, not Lean results.
+
+## A uniform pure-reference reserve fails even for actual stars
+
+The same-reference retained fraction in FC867 cannot be bounded below
+uniformly for all actual star families. Choose disjoint finite prime
+sets P_1,P_2, all primes at least5. Fix these original classes:
+
+    0 mod3;
+    0 modp for every p in P_1 union P_2;
+    x= t mod3 and x=1 modp, for p in P_t, t=1,2.
+
+The last class has its original numerical modulus3p. All moduli are
+distinct odd nonunits, and the inventory is divisor-closed above1.
+The family is irredundant: for a star use its own p-coordinate1,
+its ternary root t, and every other nonternary coordinate2; for a pure
+p class use its own coordinate0, the other nonternary coordinates2
+and ternary root1; for pure3 use root0 and all other coordinates2.
+CRT realizes these private points. Root1 with every other coordinate2
+is a full survivor.
+
+The normalized pure-survivor product mu has uniform ternary roots1,2
+and uniform nonzero p-residues. Each star event has exact probability
+w_p=1/[2(p-1)]. The literal conflict graph used in
+[Chapter24](../../../problem-details/24-laminar-prefix-conflicts-under-actual-conditioning.md)
+is the complete bipartite graph between P_1 and P_2. Its signed
+independence polynomial and the actual survivor mass are respectively
+
+    Z_I(w)=product_(p in P_1)(1-w_p)
+             +product_(p in P_2)(1-w_p)-1,
+    m=mu(avoid all stars)
+       =(1/2)product_(p in P_1)(1-1/(p-1))
+        +(1/2)product_(p in P_2)(1-1/(p-1))>0.        (FC876)
+
+An independent vertex set lies wholly in one part, proving the first
+formula. Conditioning on the SAME actual ternary root proves the
+second. By divergence of prime reciprocals, for every integer R>=1
+there exist finite disjoint blocks with sum_(p in P_t)1/(p-1)>=2R.
+Then1-u<=exp(-u) gives Z_I(w)<=2exp(-R)-1<0 and0<m<=exp(-2R).
+Thus the strict Shearer-region premise fails at the exact event
+probabilities, and a uniform positive pure-reference fraction is false.
+No covering is constructed.
+
+Grouping each P_t into its actual union gives two disjoint events.
+Their two-vertex polynomial equals exactly m>0. This grouping repairs
+that certificate failure without creating a uniform same-source reserve.
+It reuses Chapter24's conditional criterion, not a new local lemma.
+
+The FC780 star source is a different lawful construction. Here every
+alpha_p(y) is0 or1/(p-1)<=1/4, so each allowed kernel is already a
+probability and a_p(y)=1. In particular
+
+    Z_star=1,
+    d zeta_star/dmu
+       =product_(p in P_t)(p-1)/(p-2)
+       on the actual surviving part of ternary root t. (FC877)
+
+The derivative is zero on the forbidden union. Its positive value
+can be arbitrarily large as R grows. Thus FC874's source with positive
+raw mass is compatible with the vanishing pure-reference mass in FC876.
+It changes the actual weights through the declared kernels; it is not
+a uniform-density submeasure of mu. General mixed originals remain
+outside this example and outside the star-only reserve proof.
+
+## Actual good-prefix transport supplies the missing overlap lower bound
+
+Return to the restarted mixed kernels of FC814--816, on ONE fixed
+actual family, order and star source. Let q be an earlier nonternary
+stage and B_q its actual active mixed forbidden union. Write
+alpha=ell_q/a_q when a_q>0. The existing clipped-row formula gives
+the density k_q=dKhat_q/dtau_q:
+
+    alpha<=1/2: k_q=1/(1-alpha) on B_q^c, 0 on B_q;
+    alpha>1/2:  k_q=2 on B_q^c, 2-1/alpha on B_q.
+
+At alpha=0 or1 these are interpreted almost everywhere; a zero raw
+row is zero. Thus1_(B_q^c)tau_q<=Khat_q. This good-side minorant is
+already used in Chapter43 FA27 and Report17 AM4, with the explicit
+kernel in Report771. It supplies more than the upper cap alone.
+
+At fixed complete ternary y, let M_<p contain ALL actual mixed
+originals assigned before p. Let E_b(y) be b's full earlier-coordinate
+event, empty if its ternary condition fails. Define
+
+    m_<p^y=product_(q<p)tau_q(y,.),
+    S_<p(y)=complement of union_(b in M_<p)E_b(y).
+
+The joint derivative of the sequential prefix law relative to this
+raw product is the product of the actual conditional k_q. On S_<p
+each factor is at least1. Therefore
+
+    product_(q<p)Khat_q >=1_(S_<p) m_<p^y.            (FC878)
+
+All earlier nonternary coordinates are included. Pure and star
+exclusions already belong to tau_q. There is no renormalization, no
+removal of a deep blocker, and no identification of the two measures.
+
+## Current-prefix forests complement the full numerical chains
+
+Fix stage p and y. For each original i assigned to p retain its full
+modulus, ternary prefix I_i, earlier nonternary cylinder E_i, current
+literal p-cylinder C_i and mass t_i=tau_p(C_i). Its actual activation
+is A_i(z)=1_(I_i)(y)1_(E_i)(z). Put
+
+    f=sum_i t_i A_i, ell=tau_p(union_(i:A_i=1)C_i).
+
+Choose a forest T_p(y) of ORIGINAL labels, oriented so that every
+edge i->j has C_j subset C_i and every vertex has at most one parent.
+Equal cylinders are allowed with an acyclic tie order. This forest
+may depend on y, but is fixed while the earlier nonternary history z
+varies. Let delta_T=sum_(i->j)t_j A_i A_j.
+
+At each current leaf the induced forest has at most (k-1)_+ edges when
+k active cylinders contain that leaf. Integrating the ordinary forest
+union bound gives delta_T<=f-ell. Since an active edge satisfies
+f>=t_i+t_j and ell>=t_i,
+
+    f^2-ell^2 >=(f+ell)delta_T
+      >=sum_(i->j in T_p(y)) t_j(2t_i+t_j)A_i A_j.   (FC879)
+
+This is a squared-union consumer of Report334's forest inequality.
+It needs no independence of the edge overlap regions. A matching
+is a special case. Summing credits from cyclic graphs or separately
+chosen forests without a further accounting proof is not licensed.
+
+For an irredundant family, a nonzero nested edge joins INCOMPARABLE
+full numerical moduli. Comparable originals have disjoint full
+classes; simultaneous earlier activation and current nesting would
+instead make them intersect. Thus FC859's full numerical chains and
+FC879 constrain different arrangements of the SAME actual labels.
+Private points alone do not give their joint activation a uniform
+positive mass under the actual sequential source.
+
+For an edge i->j define the literal raw product integrals
+
+    J_ij(y)=1_(I_i intersect I_j)(y)
+             product_(q<p)tau_q(C_iq intersect C_jq),
+    J_ijb(y)=1_(I_i intersect I_j intersect I_b)(y)
+             product_(q<p)tau_q(C_iq intersect C_jq intersect C_bq),
+    b_ij(y)=[J_ij(y)-sum_(b in M_<p)J_ijb(y)]_+.       (FC880)
+
+Here C_iq is the q-coordinate cylinder of E_i. An absent coordinate
+contributes its entire mass a_q, not1. A compatible prime-power
+intersection is the actual deepest cylinder;
+an incompatible one has mass0. These are CRT products under tau,
+not substituted Haar inverse-LCM masses. The union bound proves
+b_ij<=1_(I_i intersect I_j)m_<p^y(E_i intersect E_j intersect S_<p).
+An exact common-source blocker union may replace the triple sum.
+
+Restore precisely FC816's selector w(y), guard G_J, later product
+A_>p=product_(r>p)a_r and denominator a_p. Put
+
+    L_p(w)=integral_(G_J) w A_>p/a_p
+              sum_(i->j in T_p(y))t_j(2t_i+t_j)b_ij dnu_3.
+
+Use zero at a_p=0. FC878--880 imply
+
+    D_p(w):=integral_(G_J) w A_>p/a_p (f^2-ell^2)
+                                dnu_3 product_(q<p)Khat_q
+          >=L_p(w)>=0,
+    F_p(w)<=Hchain_p(w)-L_p(w).                      (FC881)
+
+Here Hchain_p must bound the COMPLETE additive-square fee, including
+the diagonal and every unselected or cross-packet term. FC790 bounds
+that additive square before the union, so the full FC792 Gram sum,
+with valid FC859--860 chain refinements, supplies such an upper bound.
+The deduction uses an upper bound on the additive fee and a LOWER
+bound on the actual duplicate credit. It does not subtract an upper
+estimate of a reference overlap.
+
+Under the unchanged FC812/818 continuation hypotheses, a sufficient
+whole-family criterion is consequently
+
+    R(w)-sum_(p<=Q)[Hchain_p(w)-L_p(w)]
+                  -6 C_NN(w)T_B(Q)>0.              (FC882)
+
+Every term retains the same actual phases, rows, order, selector and
+guard. This supplies a concrete lower-credit input to the earlier
+head criterion, not a proof that every family satisfies it.
+
+## Six actual labels distinguish retained credit from complete shielding
+
+Use the divisor-closed palette5,7,11,35,55,77. The pure classes have
+their corresponding coordinate0. Fix55 by x_5=x_11=1 and77 by
+x_7=x_11=1. Fix35 by x_5=1,x_7=t, with t=1 or2 specifying two
+separate actual families. Both are irredundant: private points for
+5,7,11 are(0,2,2),(2,0,2),(2,2,0); private points for35,55,77 are
+(1,t,2),(1,3,1),(2,1,1). The point(2,2,2) survives both families.
+All points are CRT coordinates modulo(5,7,11).
+
+There are no stars, all a_q=1, the guard is vacuous and w=1. The
+pure reference rows are uniform on4,6,10 nonzero residues. At stage7
+the sole mixed event deletes x_7=t when x_5=1; its fraction1/6 is
+below1/2. Thus on that history Khat_7 is uniform on the remaining
+five residues; elsewhere it equals tau_7.
+
+At stage11 use the single forest edge between55 and77. The current
+cylinders coincide with mass1/10, so its coefficient is3/100 and
+J_(55,77)=1/24. The only earlier mixed blocker is35. Exactly,
+
+    t=1: J_(55,77,35)=1/24, L_11=D_11=0;
+    t=2: J_(55,77,35)=0, L_11=1/800,
+         D_11=(3/100)(1/4)(1/5)=3/2000.              (FC883)
+
+In the first family the positive uncorrected reference credit1/800
+is completely removed by the earlier original. In the second it
+survives and FC881 supplies a strict positive deduction. The selected
+pair reference data agree between the families; the literal triple
+data and sequential kernels distinguish them. Neither example is
+a whole cover or excludes a stronger theorem using whole-cover
+extremality.
+
+The remaining task is to force enough aggregate corrected credit,
+or reduce the remaining additive fees, on some lawful source for
+every original family. The star-query comparison and FC882 do not
+yet supply that all-family strict margin. These are independently
+reviewed written proofs and exact CRT examples, with no numerical
+scan or new Lean proof.
