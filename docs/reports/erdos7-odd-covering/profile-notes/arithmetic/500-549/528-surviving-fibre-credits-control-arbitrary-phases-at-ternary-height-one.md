@@ -18211,3 +18211,698 @@ target remains unresolved.
 Root0 is harmless. Further pure powers and high-singleton originals
 remain outside this single-label class. No Top initialization or
 saved continuation transfers automatically to the restricted source.
+
+## Pure-nine weighting has an exact two-root reduction
+
+Fix one FC110 or FC131 full-target source, its actual head gates and
+lawful common head transport. Retain the full-P mixed inventory of
+FC726--FC739 and add exactly one pure original alpha mod9. No other
+new higher pure or high-singleton label is included in this subsection.
+The baseline pure original is0 mod3; a root0 phase is harmless.
+
+Suppose the hole belongs to root h in{1,2}; write s for the other root.
+The surviving depth-two child counts are n_h=2,n_s=3, and put
+theta_j=n_j/3. The old source is
+
+    R_N=sum_(j=1,2) H_3|[j]_3 tensor nu_(j,N),
+    nu_(j,N)(total)=a_N A_(j,N), Q_N=2a_N/3.
+
+Keep these same nonternary measures on every surviving child of their
+root. For nonnegative lambda_1,lambda_2 define one common source
+
+    R_(lambda,N)=sum_j lambda_j
+       H_3|{surviving children of root j} tensor nu_(j,N),
+    u_j=theta_j lambda_j, D_hu=(u_1/theta_1,u_2/theta_2).    (FC760)
+
+Multiplying this source once by
+c=1/max(1,lambda_1,lambda_2)>0 puts it below R_N and hence below
+the original Haar reference. All masses and fees scale by the same c.
+This is not a separate normalization for each query or each root.
+The weighting may depend on the fixed table and observed pure9 root,
+but is fixed before taking the remaining mixed phase maxima.
+
+### The exact weighted functional
+
+Let F_N(v),S_N(v) be the homogeneous free and height-one selected
+functions of FC754. Thus F_N(1,1)=F_N and S_N(1,1)=S_N.
+Let G_N(v) be the homogeneous high-shallow function obtained by taking,
+for each head/private pair, the maximum of v_j times its root/row
+candidate, with its existing supported-private coefficient. Its
+unweighted value is G_N(1,1)=G_P,N. These candidates include the old
+factor gamma=1/2.
+
+The source mass divided by Q_N is A_N dot u/2. Free labels and
+height-one selected labels see u. At each height t>=2 the maximum
+prefix capacity in root j is lambda_j 3^(1-t). Consequently the
+complete prescribed score is
+
+    J_(h,N)(u)=A_N dot u/2-F_N(u)-S_N(u)
+                -S_N(D_hu)/2-G_N(D_hu)/2.                 (FC761)
+
+A positive value gives actual survivor mass at least
+c Q_N J_(h,N)(u)>0 on the one downscaled source. This retains every
+original numerical label of the earlier mixed inventory exactly
+as charged there. Positive homogeneity permits normalization
+
+    u=(x,1-x), 0<=x<=1.                                  (FC762)
+
+Then lambda_j<=3/2, so c=2/3 is always a valid common downscaling.
+The unweighted-density cases of FC755 have u=theta, corresponding
+after normalization to x=2/5 or3/5. FC759 prevents both of those
+specified root cases from being positive for one fixed table; it
+does not say each is nonpositive or bound the optimum over FC762.
+
+### Why deeper ternary weights cannot improve this functional
+
+Allow an arbitrary nonnegative finite-depth ternary density, with
+uniform Haar tails beyond its finite leaf partition, supported on
+the surviving children. Keep the same nu_(j,N) on every leaf of
+root j. Write tau for this ternary measure and u_j=3tau([j]_3).
+Mass, free candidates and height-one candidates depend only on u.
+
+At depth t>=2 there are n_j3^(t-2) surviving cylinders in root j.
+Their tau masses sum to u_j/3. Hence
+
+    max_(depth-t w in root j) 3tau(w)
+       >=u_j/[n_j3^(t-2)]
+        =(u_j/theta_j)3^(1-t).                           (FC763)
+
+The equal-child, uniform-tail source FC760 attains this bound at
+every height simultaneously. Each nonternary candidate is independent
+of the deeper ternary address and nonnegative. Multiplication by
+that candidate, maximization over roots and physical head addresses,
+and summation over the complete inventory therefore preserve the
+inequality. Symmetrizing cannot increase any higher fee and leaves
+all other terms unchanged. Thus FC761 gives exactly the best score
+within this class of finite-depth ternary reweightings.
+
+This reduction is specific to the complete phase-max functional.
+It does not apply to literal fixed-prefix fees, restricted phase
+menus, or high-singleton restrictions changing the nonternary source
+between deeper leaves.
+
+### Primal conditions and the existing finite minimax dual
+
+Define the no-extra-pure weighted score by
+
+    J_(0,N)(u)=A_N dot u/2-F_N(u)-(3/2)S_N(u)-G_N(u)/2.
+
+Then
+
+    J_(h,N)(u)=J_(0,N)(u)
+        -[S_N(D_hu)-S_N(u)]/2
+        -[G_N(D_hu)-G_N(u)]/2.                          (FC764)
+
+Both bracketed penalties are nonnegative. Let V_(b,j,N) be the
+maximum root-j candidate in each selected support/depth block b,
+and W_(g,j,N) the maximum root-j candidate in each high-shallow
+pair g, before its coefficient. If
+
+    u_s V_(b,s,N)>=(3/2)u_h V_(b,h,N) for every b,
+    u_s W_(g,s,N)>=(3/2)u_h W_(g,h,N) for every g,         (FC765)
+
+then the untouched root can attain every stretched selected maximum;
+both penalties vanish. A positive J_(0,N)(u) satisfying FC765 is
+therefore sufficient, but FC765 is not necessary.
+
+The general LP/minimax result is already FC173--FC175. Its exact
+application here has source vector L=A_N/2 and four types of choices:
+
+- a free block uses omega_b(X_(b,1)(a),X_(b,2)(a)), with one
+  physical address a shared between roots;
+- a height-one selected block uses omega_b X_(b,j)(a)e_j;
+- its higher tail uses (omega_b/2)X_(b,j)(a)e_j/theta_j;
+- a high-shallow pair uses its old coefficient times
+  Y_(g,j)(a)e_j/(2theta_j).
+
+Here e_j denotes a coordinate vector. With v_(k,c) denoting these
+finite choices,
+
+    max_(u>=0,u_1+u_2=1) J_(h,N)(u)
+      =min_(pi_k in probability simplices)
+          max_(j=1,2) [L_j-sum_k sum_c pi_k(c)v_(k,c,j)].  (FC766)
+
+Thus the exact obstruction to positive reweighting is the existence
+of choice mixtures with
+
+    sum_k sum_c pi_k(c)v_(k,c,j)>=L_j, j=1,2.             (FC767)
+
+Such mixtures need not be actual simultaneously realizable phases;
+they obstruct this relaxation, not noncoverage. Conversely a
+positive primal weight is one source valid for all admitted mixed
+phase assignments.
+
+The existing rootwise contraction and paired-candidate data retain
+the required coefficients: the full-P outside-support quotients and
+T0/T5/T7 contractions, the eighteen deep-pair masked_V_P rows, the
+two-head X_P rows, and the shallow saved_C_P rows. Scalar maxima
+alone would not suffice. Source and shallow/deep coefficients must
+remain attached to their original physical addresses; no supported
+depth factor is paid twice.
+
+The established finite signatures and stable masks give uniform
+convergence of FC761 on the simplex, since it is a finite sum of
+maxima of convergent linear functions. A strict positive limiting
+primal witness gives positivity for all sufficiently large finite N.
+A limiting dual with strict excess in both coordinates gives an
+eventual negative uniform bound. A zero-gap limiting bound does
+not decide finite-N signs. These sign certificates have not been
+evaluated here.
+
+For the single-pure9 extension of one table, both possible hole
+roots require a positive witness, with a different weight allowed
+after observing the root. Arbitrary heads, additional higher pure
+powers, high singletons and unrestricted prime support remain
+separate obligations. Raw domination does not transfer old
+normalized moments or a Top initialization.
+
+## Actual cofactor forests and distinct-height fibre capacity
+
+Fix one finite registry of actual mixed originals. Write each label
+uniquely as m=3^t d with3 not dividing d, and write its actual event as
+
+    E_(t,d)=I_(t,d) times C_(t,d),
+
+where I has ternary depth t, with the whole coordinate at t=0,
+and C is one residue modulo the same numerical cofactor d. Both
+projections come from the one original phase. Numerical distinctness
+permits at most one original per pair(t,d).
+
+### Exact within-cofactor unions
+
+For fixed d, two cofactor cylinders are equal or disjoint. In the
+equal case their ternary prefixes are nested or disjoint. Thus the
+full events in this bucket are laminar. Let A_d be its inclusion-maximal
+events, and attach each other event to its nearest proper containing
+event. The resulting forest is on the original labels.
+
+For any finite nonnegative measure R, including the actual restricted
+source of FC740,
+
+    R(union_t E_(t,d))
+      =sum_(E in A_d)R(E)
+      =sum_t R(E_(t,d))-sum_(nonmaximal E in d)R(E).       (FC768)
+
+Every forest-edge intersection is exactly its child event. Combining
+the vertex-disjoint bucket forests gives
+
+    R(outside all mixed)
+      >=R(total)-sum_m R(E_m)+W_cof(R),
+    W_cof(R)=sum_d sum_(nonmaximal E in d)R(E).            (FC769)
+
+There may still be inter-cofactor union slack. The general forest
+certificate is reused from FC621--FC623 and
+[Report334, JC2--JC3](../../321-384/334-same-chain-overlap-and-future-risk-certificates.md);
+the additional point is exact laminarity of every full numerical
+cofactor bucket. Additional interbucket edges must preserve a valid
+global forest, or use the complete signed terms of a lawful stronger
+intersection certificate.
+
+Keep the old source R_N, a finite actual mixed inventory M, and the
+union D of newly imposed pure/singleton events. Put R_PS=1_(D^c)R_N.
+If B0=Q_N Phi_0 is the old complete allowance, define
+
+    Q_N M0=R_N(total)-B0,
+    Slack0=B0-sum_(m in M)R_N(E_m)>=0.
+
+Applying FC769 on the same restricted source gives
+
+    R_PS(outside mixed)
+      >=Q_N M0-R_N(D)+Slack0
+           +sum_m R_N(D intersect E_m)+W_cof(R_PS).       (FC770)
+
+The gain required is the simultaneous total on the right, rather
+than a demand that overlap alone repay the loss. Absent labels and
+relaxed actual phases contribute to Slack0; this term cannot be
+borrowed from another phase registry. Exact nonduplication is
+
+    sum_m R_N(D intersect E_m)+W_cof(R_PS)
+      =sum_(nonmaximal E)R_N(E)
+          +sum_(maximal E)R_N(D intersect E).             (FC771)
+
+The removed part and its complement partition every nonmaximal event.
+These are literal integral identities, not identities between
+separately maximized fees.
+
+### A cover forces enough active numerical cofactors
+
+For this paragraph use the root-constant pre-remainder source
+R_N=sum_r H_3|[r]_3 tensor nu_r. Restrict nu_r by all actual mixed
+originals of ternary height0 or1 applying to root r, giving zeta_r.
+This does not affect the deeper Haar digits. Let S3 avoid the actual
+finite pure ternary family and theta_r=3H_3(S3 intersect[r]_3).
+Take a finite maximum higher mixed height H>=2 and define
+
+    b_(d,r)(x)=sum_(2<=t<=H; I_(t,d) has root r)
+                 3^(1-t) 1_(x in C_(t,d)),
+    B_r(x)=#{d:b_(d,r)(x)>0},
+    c_H=(1-3^(1-H))/2<1/2.
+
+Distinct numerical labels give
+
+    b_(d,r)(x)<=c_H 1_(b_(d,r)(x)>0).                     (FC772)
+
+At fixed x the higher mixed union has root Haar mass at most
+sum_d b_(d,r)(x)/3. Allowing its mass on already removed pure
+holes only increases this upper bound. Therefore the final actual
+survivor has mass at least
+
+    (1/3)sum_r integral [theta_r-sum_d b_(d,r)(x)]_+
+                            d zeta_r(x)
+      >=(1/3)sum_r integral [theta_r-c_H B_r(x)]_+
+                            d zeta_r(x).                 (FC773)
+
+No conditional private independence is needed after the restrictions.
+High singletons can be included among the cofactors if all their
+original t labels are retained.
+
+With one pure9 hole in root i, theta_i=2/3 and theta_s=1.
+Positive zeta_i mass on B_i<=1 gives a survivor coefficient at least1/18.
+Positive zeta_s mass on B_s<=2 gives a coefficient at least3^-H.
+Consequently a hypothetical cover forces
+
+    B_i>=2 zeta_i-almost everywhere,
+    B_s>=3 zeta_s-almost everywhere.                     (FC774)
+
+For arbitrary finitely many further pure powers, theta_r>1/2 on
+each old active root, so a hypothetical cover forces B_r>=2.
+This is a necessary condition under a cover assumption, not a proof
+that any low-incidence region has positive mass. B_r allows several
+different phases for a cofactor across different t; it is not a
+one-phase-per-d layout to which such query bounds may be applied.
+
+### Equal marginal masses can hide opposite overlap geometry
+
+In either canonical finite table with N>=2, root2 has positive head
+rows(0,2),(2,5),(2,2); root1 head5 row0 is a baseline star hole.
+All full-target conditional private totals are positive.
+
+Add D=[1]_9. For H>=3 take the distinct mixed labels3^t35,0<=t<=H,
+with phases
+
+    t=0:30 mod35;
+    t=1:47 mod105;
+    t>=2: x=2+3^(t-1) mod3^t and x=2 mod35.               (FC775)
+
+The three cofactor residues are30,12,2. High phases with s>t reduce
+to2 mod3^t, different from2+3^(t-1), so all high prefixes are
+pairwise disjoint. Every mixed event has positive mass in root2.
+The free event has zero root1 mass because its head5 row is0;
+the others explicitly select root2. Thus
+
+    R_N(E_m intersect E_n)=0 for m!=n,
+    R_N(D intersect E_m)=0 for all m,
+    R_N(D)=nu_1(total)/9>0.                              (FC776)
+
+The literal certificate loses exactly R_N(D). Numerical distinctness,
+even for a complete finite chain of one cofactor with positive event
+masses, does not force overlap or removed-region incidence.
+
+Keep the same moduli and phases at t=0,1, but replace the high
+ternary phases by2 mod3^t. Root constancy preserves each individual
+event mass, while the high events become nested and have positive
+forest credit. Thus marginal masses and numerical labels alone do
+not determine the union or the available credit.
+
+These are noncovering examples. They do not refute stronger conditions
+under a hypothetical whole cover or disprove FC770 for the examples.
+Nor does projected incidence force original-event overlap: in the
+hole root, take(x mod9,x mod d)=(4,2) at d=35 and(7,2) at d=175.
+On x=2 mod175 the two events cover the two surviving children but
+are disjoint. Separately, in untouched root2, use children2,5,8
+at d=35,175,875, all with cofactor phase2. On x=2 mod875 the three
+events cover that root and are pairwise disjoint. These are separate
+local assignments, not simultaneous choices for the same315/1575
+originals. Both fibre sets have positive canonical nonternary mass;
+neither construction is a global cover.
+
+The missing useful estimate is positive low-incidence mass in FC773,
+or sufficient actual slack and joint credit in FC770, with the
+original source and all its hypotheses retained.
+
+There is a further restriction on this proposed overlap route. In
+any irredundant finite family, even a noncovering one, comparable
+numerical moduli have disjoint actual classes: if m divides n and
+the classes meet, the n-class is contained in the m-class and has
+no private point. All labels in a fixed cofactor bucket are comparable.
+Thus W_cof=0 on every irredundant core. The identity FC768 removes
+redundant marginal charges, but cannot supply positive overlap
+credit in the globally minimum hypothetical cover of
+[Report350, EB1--EB3](../../321-384/350-extremal-paired-branch-and-source-support.md).
+There the useful credit must involve different cofactors, actual
+marginal slack, or another consequence of the whole-cover hypothesis.
+The stronger replacement restrictions proved under a whole-family
+ternary-height-one assumption cannot be imposed on this arbitrary-height
+inventory or a family containing pure9 without a fresh applicability
+argument.
+
+## An all-height star source on arbitrary finite prime carriers
+
+The source construction below replaces the specialized head/private
+reference. It uses the normalized-kernel and original-label square
+bounds already proved in [Chapter52](../../../problem-details/52-two-or-four-exact-predecessor-supports.md),
+with the full-history cylinder mechanism of
+[Chapter07](../../../problem-details/07-ordered-local-kernels-unbounded-feedback-sets-and-treewidth.md).
+It supplies one positive source avoiding all pure and star originals;
+it does not transfer the old full-P masses or pay the remaining
+general mixed supports.
+
+Let P={3} union V, with any finite set V of primes at least5.
+Fix a finite family of pairwise distinct odd numerical moduli greater
+than1 supported on P, each with its one actual phase. Separate pure prime powers,
+stars3^t p^e(t,e>=1,p in V), and the remaining originals M. Every
+member of M has at least two nonternary prime factors. All projected
+prefixes below come from their original phases. If3 is absent, the
+star part is empty and pure conditioning alone supplies its source.
+
+Let S_p be the actual pure-p survivor, with
+
+    s_p=H_p(S_p)>=(p-2)/(p-1),
+    nu_p=H_p|S_p/s_p, c_p=(p-1)/(p-2),
+    nu_p(C_e)<=c_p p^-e.                                (FC777)
+
+In particular nu_3<=2H_3. At the full ternary word y, unite all
+active star cylinders on the same p coordinate first:
+
+    F_p(y)=union_(actual(t,p,e); y in I_(t,p,e)) C_(t,p,e),
+    alpha_p(y)=nu_p(F_p(y)).
+
+The union is not a sum of independent deletions.
+
+### Retaining the lower ternary height in the square estimate
+
+Temporarily retain only stars with t>=T>=1. Distinct moduli give
+at most one label per(t,e) at fixed p. Completing only these
+nonnegative original sums yields
+
+    E_(nu3) alpha_p<=3^(1-T)/(p-2).                       (FC778)
+
+For the square, expand pairs of actual original labels before
+completing their exponent tuples. Two compatible ternary prefixes
+intersect in a single cylinder of depth max(t,u), which pays one
+nu_3 cap. The two p-cylinder mass factors are bounded separately.
+Therefore
+
+    E_(nu3) alpha_p^2
+      <=[2/(p-2)^2] sum_(t,u>=T)3^-max(t,u)
+       =2*3^(1-T)/(p-2)^2.                              (FC779)
+
+There are2(k-T)+1 ordered pairs with maximum k. Summing their
+geometric weights gives3^(1-T). This is the existing one-{3}
+predecessor-support bound with its lower height retained; it does
+not assume compatible phases for different originals.
+
+### Restrict one normalized law, without normalizing each surviving row
+
+Use Chapter52's half-threshold kernel K_p(y,dx_p), normalized for
+every y including alpha_p=1 and capped by2 relative to nu_p.
+Its actual forbidden mass is beta_p=(2alpha_p-1)_+.
+Restrict only to its allowed part:
+
+    tau_p(y,dx_p)=1_(F_p(y)^c) K_p(y,dx_p),
+    a_p(y)=tau_p(y,total)=1-beta_p(y)
+           =min(1,2(1-alpha_p(y))).                     (FC780)
+
+All kernels depend on the same ternary y. The single subprobability
+
+    zeta_star(dy,dx_V)=nu_3(dy) product_(p in V)tau_p(y,dx_p)
+                                                               (FC781)
+
+avoids every actual pure and star original. It is the restriction
+of one normalized conditional-product law, not a product of separately
+optimized post-deletion sources. Since beta_p<=alpha_p^2,
+
+    Z_star=zeta_star(total)
+      =integral product_p a_p(y) dnu_3(y)
+      >=1-sum_p E beta_p
+      >=1-sum_p E alpha_p^2
+       >1-2*(719/3600)=1081/1800.                       (FC782)
+
+The strict prime-square estimate
+sum_(p>=5 prime)(p-2)^-2<719/3600 is the existing Chapter52 bound.
+It makes FC782 uniform over arbitrary finite V and arbitrary actual
+finite pure/star heights and phases. For stars only at t>=2 the
+same calculation gives4681/5400; that stronger number does not pay
+the t=1 stars.
+
+Some complete ternary fibres may be empty. The integrated mass is
+positive, but the normalized source rho_star=zeta_star/Z_star has
+ternary marginal proportional to product_p a_p(y)dnu_3(y), generally
+different from nu_3. The Haar comparison pays all density costs:
+
+    zeta_star<=D_star H_P,
+    D_star=2 product_(p in V)(2c_p),
+    H_P(pure-and-star survivor)>1081/(1800D_star).         (FC783)
+
+An unassigned p can use c_p instead of2c_p. The probability reserve
+in FC782 is not itself a Haar-mass lower bound.
+
+### Full-prefix responses for every remaining mixed query
+
+For each queried nonternary support S subset V retain the actual
+ternary measure
+
+    B_S(w)=integral_(y in w) product_(p in V minus S)a_p(y)dnu_3(y).
+                                                               (FC784)
+
+In particular B_empty(total)=Z_star and B_S(w)<=nu_3(w).
+For actual p-cylinders C_p of depths e_p,
+
+    zeta_star(w times product_(p in S)C_p)
+       <=B_S(w) product_(p in S)(2c_p p^-e_p).            (FC785)
+
+The exact response has the actual tau_p(y,C_p) factors inside the
+same integral. All queries refer to one source; normalization, if
+used, divides every response by the same Z_star. The omitted-support
+product must not be reconstructed by division through possibly
+zero a_p factors.
+
+For each supplied finite family, choose K resolving every pure3
+and star ternary prefix. Each density in FC784 is constant within
+a depth-K leaf, giving the exact tail
+
+    max_(depth w=K+j)B_S(w)
+      =3^-j max_(depth w=K)B_S(w), j>=0.                 (FC786)
+
+There is no uniform bound on K or representation cost from numerical
+distinctness alone.
+
+For m in M, write S_m for its nonternary support, I_m for its
+actual ternary prefix (the whole coordinate at height0), and
+C_(m,p) for its actual p-prefix. Its exact charge is
+
+    Q_m=integral_(I_m)
+          product_(p in S_m)tau_p(y,C_(m,p))
+          product_(p notin S_m)a_p(y)dnu_3(y).            (FC787)
+
+The first missing sufficient estimate is
+
+    sum_(m in M) Q_m<Z_star.                             (FC788)
+
+Then the actual survivor has positive zeta_star mass, and hence
+an avoiding CRT configuration exists. Actual forest or stronger
+joint overlap credits can weaken this sufficient requirement;
+FC788 is not asserted uniformly here.
+
+If the remaining mixed phases are forgotten, a complete phase-max
+sufficient allowance is
+
+    Phi_star=sum_(S subset V, |S|>=2)
+       product_(p in S)[2/(p-2)]
+       [B_S(total)+sum_(t>=1)max_(depth w=t)B_S(w)]
+       <Z_star.                                         (FC789)
+
+Distinct full numerical labels justify completing each exponent
+tuple once. FC786 supplies the finite-prefix plus exact-tail form.
+The maxima need not be jointly realizable. No value or sign of
+FC789 is supplied here. Replacing all B_S by nu_3 gives the crude
+majorant2sum_(|S|>=2)product_(p in S)2/(p-2), which does not supply
+an unrestricted prime-support bound.
+
+The old head/private groups now belong to M and must be charged on
+this source. Neither their avoidance nor the old row targets,
+positive P lower bounds, depth-two saturation, full-P fees, raw Xi
+constants or saved continuation transfers from FC782. Normalizing
+each surviving p row instead would cost1/(1-alpha_p(y)), which can
+be arbitrarily large; the cap2 in FC780 belongs to the unnormalized
+allowed row and the original capped kernel.
+
+Thus the arbitrary-prime all-pure/all-star source obligation has
+a positive supplier. What remains is a joint mixed-support estimate
+on that same source, or another valid construction handling those
+originals. The ordinary deductions above add no Lean verification,
+no evaluated new phase-max fee, and no unrestricted Erdős #7
+resolution.
+
+### Restarting the mixed-support kernels on the actual star source
+
+The remaining mixed originals can also be processed by new normalized
+kernels. Their reference rows must be the actual star-surviving rows,
+not the old pure laws. Put
+
+    A(y)=product_(p in V)a_p(y),
+    omega(dy)=A(y)nu_3(dy)/Z_star,
+    lambda_p^y=tau_p(y,.)/a_p(y) on A(y)>0.
+
+Then rho_star=omega product_p lambda_p^y. Values on A=0 are immaterial
+to this probability. Fix an order of V and assign each remaining
+original to its last nonternary prime p. At p, use the half-threshold
+normalized kernel relative to lambda_p^y for the actual active
+remaining union. Its cap is kappa_p=2; set kappa_p=1 when no remaining
+original is assigned there. These kernels keep y and all earlier
+coordinates, preserve their whole joint marginal, and remain supported
+outside every original pure and star event.
+
+For originals m,n assigned to p, let R_m,R_n be their earlier
+nonternary supports, R_mn=R_m union R_n, and let
+D_(mn,q)=C_(m,q) intersect C_(n,q), with an absent cylinder interpreted
+as the whole coordinate. Retain their actual ternary prefixes I_m,I_n.
+The original-label square and backward conditional caps give
+
+    Gamma_p=sum_(m,n assigned to p) integral_(I_m intersect I_n)
+        lambda_p^y(C_(m,p)) lambda_p^y(C_(n,p))
+        product_(q in R_mn)[kappa_q lambda_q^y(D_(mn,q))]
+        domega(y).                                      (FC790)
+
+Incompatible intersections have zero mass. Indeed the active union
+mass is at most the sum of its actual current-cylinder probabilities.
+Square that load, then bound each selected earlier intersection at
+fixed y by backward conditioning under the new normalized kernels.
+The current forbidden mass is at most this square. Therefore, for
+one new full sequential law,
+
+    sum_p Gamma_p<1
+      implies H_P(full survivor)>=
+        Z_star(1-sum_p Gamma_p)/(D_star product_p kappa_p)>0.
+                                                               (FC791)
+
+The new law is dominated by(product_p kappa_p)rho_star. This explains
+every factor of the full Haar cost in FC791. The criterion has not
+been verified for arbitrary mixed supports. It changes the source,
+so it is not claimed to dominate the fixed-source condition FC788.
+
+The indispensable denominator is visible before global normalization.
+Write gamma_p=Z_star Gamma_p. Each pair integrand, against nu_3 on
+I_m intersect I_n, is exactly
+
+    [tau_p(y,C_(m,p)) tau_p(y,C_(n,p))/a_p(y)]
+      product_(q in R_mn)[kappa_q tau_q(y,D_(mn,q))]
+      product_(r notin R_mn union{p})a_r(y).              (FC792)
+
+Use zero for the first factor when a_p=0. Both numerator measures
+then vanish; when a_p>0,
+
+    tau_p(C)tau_p(D)/a_p<=min(tau_p(C),tau_p(D)).
+
+Thus the actual integral is finite. There are two current-coordinate
+factors in the square but only one in A(y), leaving exactly one
+uncancelled a_p denominator. In fact the normalized surviving row is
+nu_p|F_p(y)^c/(1-alpha_p(y)); its bound2nu_p/a_p cannot be replaced
+by2nu_p. This is the missing premise in an attempted direct transfer
+of Chapter52's old scalar support-Gram constants.
+
+The same construction can keep subprobability rows of mass a_p(y):
+multiply the new normalized kernel at p by a_p(y). If ell_p denotes
+the active remaining union's raw tau_p mass, the new raw violation is
+
+    (2ell_p-a_p)_+<=ell_p^2/a_p,                         (FC793)
+
+with zero on a_p=0. The full new mass is Z_star and its full Haar
+cap is D_star product_p kappa_p. Later rows integrate to their known
+y-dependent masses, which must remain in the calculation. This gives
+FC792 again, not free unconditional marginal preservation for
+subprobability kernels.
+
+### Common good fibres trade retained mass for conditional caps
+
+The exact good-fibre criterion is already in
+[Chapter08](../../../problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md):
+for old probability mu, obtaining full-survivor rows with cap C
+and old marginal density cap D requires and is ensured by
+mu{survival>=1/C}>=1/D. Apply that existing mechanism to one common
+ternary set, not separately selected coordinate sources.
+
+Choose0<eta_p<=1 and define
+
+    G_eta={y:a_p(y)>=eta_p for every p in V},
+    R_eta=integral_(G_eta) A(y)dnu_3(y).                  (FC794)
+
+When R_eta>0 the restricted source can be normalized. Its rows
+satisfy lambda_p^y<=2nu_p/eta_p. Restrict every FC792 integral to
+this same G_eta, defining gamma_p(G_eta). The sufficient condition
+and its full Haar conclusion are
+
+    sum_p gamma_p(G_eta)<R_eta,
+    H_P(full survivor)>=
+      [R_eta-sum_p gamma_p(G_eta)]/
+         [D_star product_p kappa_p]>0.                  (FC795)
+
+For a coarse explicit comparison, a_p<eta_p is equivalent to
+alpha_p>1-eta_p/2, and on this event A<=a_p<eta_p. The union and
+second-moment bounds yield
+
+    Z_star-R_eta
+      <=sum_p eta_p nu_3{alpha_p>1-eta_p/2}
+      <=sum_p eta_p E_(nu3)alpha_p^2/(1-eta_p/2)^2.       (FC796)
+
+FC779 supplies the existing second moments. Small thresholds make
+this possible loss small but allow larger1/eta_p factors in the mixed
+budget. Positive masses of the separate good sets do not establish
+positive mass of their intersection; FC794 retains that common
+realization. No threshold choice, sign of FC795, or unrestricted
+mixed-support bound is asserted. The remaining target is the actual
+coupled estimate FC792 or FC795, including its retained mass.
+
+### A common positive reserve with uniformly bounded survivor rows
+
+The retained mass can be bounded more sharply by combining the
+star restriction and good-fibre restriction before taking a union
+bound. For1/2<=c<1 set
+
+    G_c={y:alpha_p(y)<=c for every p in V},
+    R_c=integral_(G_c) product_p a_p(y)dnu_3(y).
+
+Define b_p(y)=1-a_p(y)1_(alpha_p(y)<=c). If alpha_p<=c, then
+b_p=(2alpha_p-1)_+<=alpha_p^2<=alpha_p^2/c^2. If alpha_p>c,
+then b_p=1<=alpha_p^2/c^2. Since all b_p lie in[0,1],
+
+    R_c=E_(nu3) product_p(1-b_p)
+       >=1-sum_p E b_p
+       >=1-c^-2 sum_p E alpha_p^2
+        >1-719/(1800c^2).                               (FC797)
+
+This applies to the same finite original star family and the same
+pure-coordinate laws as FC779--FC781. The common set G_c is chosen
+once for all primes; it is not an intersection whose mass is inferred
+from separate positive masses alone.
+
+Taking c=2/3 gives the explicit uniform consequences
+
+    R_(2/3)>81/800,
+    a_p(y)>=2/3 on G_(2/3),
+    lambda_p^y=nu_p|F_p(y)^c/(1-alpha_p(y))<=3nu_p
+                     on G_(2/3).                       (FC798)
+
+The first fraction is1-(9/4)(719/1800)=81/800.
+Let zeta_c=1_(G_c)zeta_star and rho_c=zeta_c/R_c.
+For c=2/3 this one actual pure-and-star survivor law has full Haar
+density at most D_star/R_c<(800/81)D_star. Its ternary marginal
+is A1_(G_c)nu_3/R_c, not the old pure law. Its conditional nonternary
+rows all have the cap3 relative to the corresponding nu_p. This
+remains true for arbitrary finite prime carriers and arbitrary
+finite original heights; no positive mass of each individual head
+row is asserted.
+
+Under new sequential mixed kernels, the selected preceding rows have
+caps3kappa_p relative to nu_p, while the ternary marginal pays its
+actual factor A1_(G_c)/R_c. Alternatively FC792 can be retained exactly.
+In either representation the remaining sufficient condition is
+sum_p gamma_p(G_c)<R_c, with the same-source full Haar bound FC795.
+It has not been established uniformly for general mixed supports.
+
+Thus the unrestricted star subfamily admits both a positive integrated
+reserve and, after one common restriction, uniformly bounded
+conditional survivor rows. This removes arbitrarily small a_p from
+that chosen source at a stated mass cost. It does not restore the
+old fixed head/private tables, control the entire mixed-support sum,
+or settle unrestricted Erdős #7.
