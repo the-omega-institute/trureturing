@@ -106,6 +106,10 @@ $$\neg claim22$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result22` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-equal-size-refutation` (refuted) by `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result22`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-equal-size-refutation","declaration_gid":"D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result22","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
@@ -118,6 +122,10 @@ $$\neg claim23$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result23` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-partition-refutation` (refuted) by `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result23`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-partition-refutation","declaration_gid":"D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result23","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
@@ -129,6 +137,10 @@ Use the conjugation rack of the ten transpositions in S₅. The two maximal R-cl
 $$\neg claim24$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24` (`✓ std3`). ∎
+
+*Resolves.* `Problems/kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-divisibility-refutation` (refuted) by `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-divisibility-refutation","declaration_gid":"D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 

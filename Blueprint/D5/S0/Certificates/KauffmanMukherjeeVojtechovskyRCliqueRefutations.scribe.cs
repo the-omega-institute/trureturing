@@ -76,20 +76,23 @@ internal sealed class KauffmanMukherjeeVojtechovskyRCliqueRefutationsDocument
                 + "for a,b = 1,2,3, acting by x XOR a on the lower block and by "
                 + "4 + ((x−4) XOR b) on the upper block, form another maximal R-clique. "
                 + "Their cardinalities 7 and 9 differ. Fin 105 indexes the literal permutation "
-                + "vectors and conjugation table; positive right-translation words certify connectedness."),
+                + "vectors and conjugation table; positive right-translation words certify connectedness.",
+                "kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-equal-size-refutation"),
             RepositoryTheorem("kmv-partition-refutation", "Overlapping maximal R-cliques", "result23",
                 ResultFormula(23),
                 "Use the conjugation rack of the ten transpositions in S₅. The two maximal "
                 + "R-cliques {(1 2),(3 4)} and {(1 2),(3 5)} are distinct and intersect in "
                 + "(1 2). Fin 10 indexes the literal permutation vectors and conjugation table. "
-                + "The rack is connected, so these two subsets refute the partition assertion."),
+                + "The rack is connected, so these two subsets refute the partition assertion.",
+                "kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-partition-refutation"),
             RepositoryTheorem("kmv-divisibility-refutation", "A size that does not divide the carrier size",
                 "result24", ResultFormula(24),
                 "Use the conjugation rack of the 70 three-cycles in S₇. The subset "
                 + "{(1 2 3),(1 3 2),(4 5 6),(4 6 5)} is a maximal R-clique of size 4, "
                 + "and 4 does not divide 70. Fin 70 indexes the literal permutation vectors "
                 + "and conjugation table. Positive right-translation words certify connectedness. "
-                + "This refutes universal divisibility and supplies the existence requested in Problem 5.24."))));
+                + "This refutes universal divisibility and supplies the existence requested in Problem 5.24.",
+                "kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-divisibility-refutation"))));
 
     private static DocumentBlock LiteratureDefinition(
         string id, string title, string declaration, Formula formula, string prose) =>
@@ -98,10 +101,13 @@ internal sealed class KauffmanMukherjeeVojtechovskyRCliqueRefutationsDocument
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static DocumentBlock RepositoryTheorem(
-        string id, string title, string declaration, Formula formula, string prose) =>
+        string id, string title, string declaration, Formula formula, string prose,
+        string problemSlug) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create(problemSlug),
+                ResolutionKind.Refuted));
 
     private static Formula Q() => F.Id("Q");
     private static Formula Mul() => F.Id("mul");
