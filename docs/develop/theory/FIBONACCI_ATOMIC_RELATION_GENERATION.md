@@ -31447,3 +31447,305 @@ $\|F_D\|_{p,*}\ge\|F_D\|_{1,*}$ 及 $\|C_H\|_{p',*}\ge\|C_H\|_{1,*}$。应用定
 式（230.34）下界的是取绝对值与 Hölder 后的上界表达式，不能据此下界实际带符号字符相关或识别指定逆余数的命中。保留同一乘积过滤的带符号联合核仍须另行估计；本节没有完成整个 FIB 家族的 Robin 不等式或所有整数的 RH 判据。
 
 ## 追加锚（本行以下为增补区）
+
+## 231. 实际低亏损命中的共同实现与 Robin 单候选界
+
+本节沿用 §230 的实际增量源和低亏损编辑界，直接比较两个来自同一 FIB 窗口的真实命中。共同基底可以在两个命中的同余式之间消去；所得结论控制可能承载低亏损大除数的整数个数，不预先控制该整数上的总权重。
+
+### 231.1 实际窗口、低亏损集合与固定阶尾界
+
+沿素数指标 $r\to\infty$，取
+
+$$
+V=F_r,\qquad
+I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N_g=1+Vg,
+\qquad A=\min_{g\in I}N_g,\qquad X=\max_{g\in I}N_g.
+$$
+
+记
+
+$$
+y=\log A,\quad \ell=\log y,\quad s=y\ell,
+\quad R=\frac y{\ell^2},\quad\delta=\frac y{\ell^3},\quad T=\frac y{\ell^4},
+\quad t=e^\gamma\ell,\quad b_2=\frac{\pi^2}{6}.
+$$
+
+固定 $a>b_2$，并置
+
+$$
+H=e^{aR},\qquad D=X/H,\qquad K=8b_2,\qquad T_I=|I|.
+\tag{231.1}
+$$
+
+这里 $T_I$ 表示整数窗口的大小，与解析余项尺度 $T$ 不同。已有 FIB 参数关系给
+
+$$
+\log V=\frac y2+O(1),\qquad
+\frac{T_I}{X}=\exp[-y/2+O(1)],\qquad
+D>T_I\quad\text{最终成立},
+\tag{231.2}
+$$
+
+且每个 $p\mid V$ 最终都满足 $p>2y$。所有下文常数和起效阈值均可依赖预先固定的 $a$；不令 $a$ 随 $y$ 改变。
+
+继续使用非负乘法增量
+
+$$
+b_s(1)=1,\qquad b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1),
+\qquad Z(n)=\frac{\sigma(n)}n,
+$$
+
+以及
+
+$$
+U(s)=\sum_{d\ge1}\frac{b_s(d)}d,\qquad
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\qquad
+m_s=\max_{d\ge1}\mu_s(d),\qquad
+J_s(d)=\log\frac{m_s}{\mu_s(d)}\ge0,
+\qquad\Lambda=\frac{XU(s)}{t^s}.
+\tag{231.3}
+$$
+
+最大原子来自 §218，且每个实际增量原子均严格为正。定义实际低亏损大除数命中的指标集
+
+$$
+E_y=\{g\in I:\exists d\mid N_g,\ d>D,\ J_s(d)\le KR\}.
+\tag{231.4}
+$$
+
+这个定义保留同一个 $N_g$ 上的整除关系；没有用仅满足大小、单位条件的源边缘替换实际命中。
+
+**引理 231.1（固定四分之一指数的高亏损尾）。** 对任意预先固定的 $k>0$，
+
+$$
+\mu_s\{J_s>kR\}
+\le\exp\left[-\left(\frac k4-\frac{b_2}{3}\right)R+o(R)\right].
+\tag{231.5}
+$$
+
+特别地，对于式（231.1）的 $K=8b_2$，
+
+$$
+\boxed{
+\mu_s\{J_s>KR\}\le\exp[-(5b_2/3)R+o(R)].
+}
+\tag{231.6}
+$$
+
+证明。§218 的最大原子展开与 §223 在固定 $q=3/4$ 处的完整幂和展开分别为
+
+$$
+\log m_s=-b_2(R-\delta)+O(T),\qquad
+\log\sum_{d\ge1}\mu_s(d)^{3/4}
+=\frac{7b_2}{12}(R-\delta)+O(T).
+\tag{231.7}
+$$
+
+该固定阶属于 §223 的收敛域 $q>1/2$，所以幂和有限。由 $J_s$ 的定义，精确地
+
+$$
+\mathbb E_{\mu_s}e^{J_s(d)/4}
+=\sum_{d\ge1}\mu_s(d)\left(\frac{m_s}{\mu_s(d)}\right)^{1/4}
+=m_s^{1/4}\sum_{d\ge1}\mu_s(d)^{3/4}.
+\tag{231.8}
+$$
+
+其对数等于 $b_2(R-\delta)/3+O(T)=b_2R/3+o(R)$。Markov 不等式于是给
+
+$$
+\mu_s\{J_s>kR\}
+\le e^{-kR/4}\mathbb E_{\mu_s}e^{J_s/4},
+$$
+
+从而得到式（231.5）；代入 $k=8b_2$ 得到式（231.6）。这个尾界针对完整真实源，因此同时控制其任意实际单位、大小或命中子集，不要求筛选后的分布继续独立。$\square$
+
+### 231.2 两个真实命中共用同一个整数
+
+沿用引理 230.2 的近极值基底
+
+$$
+n_y=\prod_{p\le y}p^{a_p},\qquad
+ a_p=\begin{cases}
+\lceil\log s/\log p\rceil,&p\le\sqrt s,\\
+1,&\sqrt s<p\le y.
+\end{cases}
+\tag{231.9}
+$$
+
+它的全部素因子不超过 $y$，故充分大时 $(n_y,V)=1$。引理 230.2 给出的统一结论是：若 $J_s(d)\le KR$ 且 $d/n_y=u/v$ 已约分，则
+
+$$
+\log u+\log v
+=\sum_p|v_p(d)-a_p|\log p
+=O_K(y/\sqrt\ell)=o(y),
+\tag{231.10}
+$$
+
+其中 $p>y$ 时约定 $a_p=0$。该误差对整个低亏损集合一致，不只是对典型原子成立。
+
+**定理 231.2（低亏损大除数命中的共同实现）。** 对上述固定参数，充分大时
+
+$$
+\boxed{|E_y|\le1.}
+\tag{231.11}
+$$
+
+证明。任取 $g_1,g_2\in E_y$，为其各选取实际大除数 $d_i\mid N_{g_i}$，满足 $d_i>D$ 和 $J_s(d_i)\le KR$。令
+
+$$
+h_i=N_{g_i}/d_i,\qquad d_i/n_y=u_i/v_i
+$$
+
+且后一分数已约分。因为 $N_{g_i}\le X$、$d_i>D=X/H$，有严格范围
+$1\le h_i<H$，故 $\log h_i\le aR=o(y)$。由 $N_{g_i}\equiv1\pmod V$，清分母得到
+
+$$
+n_yu_i h_i\equiv v_i\pmod V.
+$$
+
+将两个同余式交叉相乘，再消去模 $V$ 的单位 $n_y$，得
+
+$$
+u_1h_1v_2\equiv u_2h_2v_1\pmod V.
+\tag{231.12}
+$$
+
+由式（231.10）和 $\log h_i\le aR$，两边正整数的对数均为 $o(y)$，并且这个界同时适用于全部候选命中。式（231.2）给 $\log V=y/2+O(1)$，故充分大时式（231.12）的两边都严格小于 $V$。其同余因而是整数等式。于是
+
+$$
+\frac{u_1h_1}{v_1}=\frac{u_2h_2}{v_2},\qquad
+N_{g_1}=n_y\frac{u_1h_1}{v_1}
+=n_y\frac{u_2h_2}{v_2}=N_{g_2}.
+\tag{231.13}
+$$
+
+最后由 $g\mapsto1+Vg$ 的单射性得到 $g_1=g_2$，证明式（231.11）。$\square$
+
+同一个 $N_g$ 可以有很多低亏损大除数。定理 231.2 控制的是这些大除数共同命中的实际整数个数，不把除数数目当成整数数目。它只使用统一编辑界和共同基底的单位性，不依赖 §230 的有界对偶测试或端点范数下界。
+
+### 231.3 候选补集上的实际矩预算
+
+对 $d\ge1$，记
+
+$$
+A_{I\setminus E_y}(d)
+=\#\{g\in I\setminus E_y:d\mid N_g\},
+\qquad
+\mathcal M_{\mathrm{out}}(s)=\sum_{g\in I\setminus E_y}Z(N_g)^s.
+$$
+
+**命题 231.3（候选补集的精确矩分解与剩余上界）。** 充分大时
+
+$$
+\boxed{
+\frac{\mathcal M_{\mathrm{out}}(s)}{t^s}
+\le\Lambda\left(\frac{T_I}X+\frac DX+\mu_s\{J_s>KR\}\right).
+}
+\tag{231.14}
+$$
+
+令 $c_a=\min(a-b_2,2b_2/3)>0$，则进一步有
+
+$$
+\boxed{
+\frac{\mathcal M_{\mathrm{out}}(s)}{t^s}
+\le\exp[-c_aR+o(R)]\longrightarrow0.
+}
+\tag{231.15}
+$$
+
+证明。真实乘法增量在每个正整数上满足有限恒等式
+
+$$
+Z(N)^s=\sum_{d\mid N}b_s(d).
+$$
+
+所以在同一个实际补集上，精确地
+
+$$
+\mathcal M_{\mathrm{out}}(s)
+=\sum_{d\le X}b_s(d)A_{I\setminus E_y}(d).
+\tag{231.16}
+$$
+
+先处理 $d\le D$。实际 $N_g$ 均与 $V$ 互素；非单位 $d$ 的命中计数为零，单位 $d$ 的乘子只占模 $d$ 的一个余数类。因 $I$ 是连续整数区间，
+
+$$
+A_{I\setminus E_y}(d)\le A_I(d)\le T_I/d+1.
+$$
+
+非负性与 $d\le D$ 给
+
+$$
+\begin{aligned}
+\sum_{d\le D}b_s(d)A_{I\setminus E_y}(d)
+&\le T_I\sum_{d\le D}\frac{b_s(d)}d+\sum_{d\le D}b_s(d)\\
+&\le T_IU(s)+DU(s).
+\end{aligned}
+\tag{231.17}
+$$
+
+再处理 $d>D$。由 $D>T_I$，每个实际大除数至多命中一个 $N_g$：若命中两个，则 $(d,V)=1$ 且 $d\mid(g_1-g_2)$，而 $|g_1-g_2|<T_I<d$，只能有 $g_1=g_2$。因此 $A_{I\setminus E_y}(d)\le1$。
+
+按式（231.4），补集没有 $J_s(d)\le KR$ 的实际大除数；对它的大除数部分遂有
+
+$$
+\begin{aligned}
+\sum_{D<d\le X}b_s(d)A_{I\setminus E_y}(d)
+&\le\sum_{\substack{D<d\le X\\J_s(d)>KR}}b_s(d)\\
+&=XU(s)\sum_{\substack{D<d\le X\\J_s(d)>KR}}\frac dX\mu_s(d)\\
+&\le XU(s)\mu_s\{J_s>KR\}.
+\end{aligned}
+\tag{231.18}
+$$
+
+最后一步使用实际 $d\le X$，因而 $d/X\le1$；每个大除数已经按唯一命中只计一次。将式（231.17）与式（231.18）代入式（231.16），除以 $t^s$，得到式（231.14）。
+
+§210.2 给 $\log\Lambda=b_2R+o(R)$。结合式（231.1）、（231.2）、（231.6），式（231.14）右侧的三项分别至多为
+
+$$
+\exp[-y/2+b_2R+o(R)],\qquad
+\exp[-(a-b_2)R+o(R)],\qquad
+\exp[-(2b_2/3)R+o(R)].
+\tag{231.19}
+$$
+
+第一项比任意固定负指数 $e^{-cR}$ 更小；后两项由固定 $a>b_2$ 严格衰减。合并三项即得式（231.15）。这里使用逐整数的有限增量展开，未将一个固定矩平均的极限公式用于增长的 $s$。$\square$
+
+### 231.4 Robin 非严格违例至多一个
+
+**推论 231.4（指定 FIB 窗口的 Robin 单候选界）。** 沿上述素数指标家族，充分大时
+
+$$
+\boxed{
+\#\{g\in I:Z(N_g)\ge e^\gamma\log\log N_g\}\le1.
+}
+\tag{231.20}
+$$
+
+更精确地，所有可能的非严格违例均在式（231.4）的 $E_y$ 中。
+
+证明。式（231.15）最终使
+
+$$
+\sum_{g\in I\setminus E_y}\left(\frac{Z(N_g)}t\right)^s<1.
+$$
+
+各项非负且 $s>0$，所以每个 $g\notin E_y$ 都满足 $Z(N_g)<t$。又 $N_g\ge A$，故
+
+$$
+Z(N_g)<t=e^\gamma\log\log A
+\le e^\gamma\log\log N_g.
+\tag{231.21}
+$$
+
+补集中的每个整数因而都满足严格 Robin 不等式；等号同样被排除在补集之外。定理 231.2 给 $|E_y|\le1$，于是得到式（231.20）。$\square$
+
+这个结论只对指定 FIB 窗口和充分大的素数指标成立，没有给出各项估计同时起效的有效数值起点。它不判定 $E_y$ 是否为空，也不判定其可能唯一的整数是否满足 Robin。该整数可以承载很多低亏损大除数；本节没有给它们的实际联合权重上界。
+
+单个命中条件 $n_y(u/v)h\equiv1\pmod V$ 仍不能直接提升成整数等式：清分母后保留的 $n_y$ 大小约为 $e^y$，超过模数尺度 $e^{y/2+O(1)}$。定理 231.2 使用两个实际命中的比较，在共同基底消去以后才得到两边都小于 $V$ 的整数同余。因此“至多一个共同实现”没有变成“没有共同实现”。
+
+本节未证明整个 FIB 家族的 Robin 不等式，也未回接所有 $n>5040$ 的 Robin 判据；RH 仍未得到证明。
+
+## 追加锚（本行以下为增补区）
