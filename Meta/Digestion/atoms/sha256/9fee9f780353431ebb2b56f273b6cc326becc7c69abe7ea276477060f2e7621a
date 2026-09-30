@@ -1,0 +1,16 @@
+## Proof ledger
+
+Every positive term has a prime divisor (`Nat.exists_prime_and_dvd`). For each
+endpoint, `Nat.four_dvd_or_exists_odd_prime_and_dvd_of_two_lt` gives either a
+multiple of four or an odd prime divisor. If both endpoints were multiples of
+four, `Nat.dvd_sub` would give `4 | 2`, a contradiction. Thus one endpoint
+has an odd prime divisor. If it were also a divisor of the other endpoint,
+the same subtraction gives a prime divisor of `2`; primality and oddness rule
+out both `1` and `2`. Finally, consecutive coprimality from
+`Nat.coprime_add_self_right` and `Nat.eq_one_of_dvd_coprimes` separates the
+middle divisor from each endpoint divisor.
+
+The hypotheses that all three terms are composite are retained to match the
+named Erdős slice. The proof only needs the first one to exclude `n = 1`; the
+prime-divisor and coprimality facts handle the other two terms directly.
+

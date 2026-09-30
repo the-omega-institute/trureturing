@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:16b21a9d92205c17983aa81415a81f85f99e12e1e32c922c1fd076d6eea68808
+  normalized_sha256: sha256:16b21a9d92205c17983aa81415a81f85f99e12e1e32c922c1fd076d6eea68808
+cas_ref: sha256:16b21a9d92205c17983aa81415a81f85f99e12e1e32c922c1fd076d6eea68808
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/Erdos375ThreeComposites.exists_distinct_prime_divisors_of_three_composites
+    target_statement_id: sha256:48f47b44574eb5064bdefe8481ea88f27416c78104d590d65ac72ffb1ba508b3
+receipts:
+  unresolved_subitems: []

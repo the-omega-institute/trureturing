@@ -1,0 +1,5 @@
+source_id = "erdos-375-grimms-conjecture"
+path = "docs/develop/theory/ERDOS_375_GRIMMS_CONJECTURE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

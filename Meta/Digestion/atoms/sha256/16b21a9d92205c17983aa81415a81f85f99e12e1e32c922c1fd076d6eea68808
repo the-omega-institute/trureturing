@@ -1,0 +1,17 @@
+## Formal target
+
+For `n >= 1`, assume `n + 1`, `n + 2`, and `n + 3` are composite. Then there
+exist pairwise distinct primes `p_1`, `p_2`, and `p_3` such that
+
+\[
+p_i \mid n+i \qquad (i=1,2,3).
+\]
+
+This is the first case beyond the page's stated trivial range `k <= 2`. The
+Lean declaration is
+
+```text
+D5.S3.Arith.Congruence.Erdos375ThreeComposites
+  .exists_distinct_prime_divisors_of_three_composites
+```
+
