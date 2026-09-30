@@ -1,0 +1,73 @@
+**推论 219.2（四分之一真实矩预算的截断）。** 在 $\Lambda\ge1$ 时，取
+
+$$
+\boxed{
+B_\dagger=8C_s\Lambda\bigl(1+\log(8\Lambda)\bigr).
+}
+\tag{219.4}
+$$
+
+则
+
+$$
+\boxed{\Lambda\mathcal B_D^{\mathrm{pow}}(B_\dagger)\le\frac14.}
+\tag{219.5}
+$$
+
+在当前渐近尺度上还有
+
+$$
+\log B_\dagger
+=b_2R-b_2\delta+O(y/\ell^4).
+\tag{219.6}
+$$
+
+证明。置 $L=1+\log(8\Lambda)>1$，则 $B_\dagger/C_s=8\Lambda L$，
+并且 $1+\log(B_\dagger/C_s)=L+\log L\le2L$。
+代入式（219.2），得到
+
+$$
+\Lambda\mathcal B_D^{\mathrm{pow}}(B_\dagger)
+\le\frac{L+\log L}{8L}\le\frac14.
+$$
+
+§217 的展开给
+
+$$
+\log\Lambda=\log(X/A)+b_2R-b_2\delta+O(y/\ell^4),
+$$
+
+所以 $\Lambda\to\infty$。另一方面，
+$\log C_s=O(\ell)$、$\log L=O(\ell)$，而
+$\ell=o(y/\ell^4)$、$\log(X/A)=O(1)$。
+对式（219.4）取对数即得式（219.6）。$\square$
+
+与式（216.24）的不带核门槛 $\log B_*=(2a+o(1))R$ 相比，
+式（219.6）将真实矩中的剩余完整素数幂门槛降至主项 $b_2R$。
+两个门槛使用不同预算：前者是 $\mu_s(\mathcal H_D)$ 的目标预算，
+后者是 $\mathcal Q_r$ 的实际增量预算，不能将式（219.5）改称
+不带核质量的上界。
+
+令剩余核为
+
+$$
+\mathcal B_D^{\mathrm{cap}}
+=\sum_{\substack{d\in\mathcal H_D\\B(n(d))\le B_\dagger}}
+\frac dX\mu_s(d).
+$$
+
+§217 的小除数分解与式（219.5）给充分大的实际参数下
+
+$$
+\mathcal Q_r
+\le\Lambda\frac TX+\Lambda\frac DX+\frac14
++\Lambda\mathcal B_D^{\mathrm{cap}},
+\qquad
+\Lambda T/X+\Lambda D/X=o(1).
+\tag{219.7}
+$$
+
+所以 $\limsup_{r\to\infty}\Lambda\mathcal B_D^{\mathrm{cap}}<3/4$
+是该实际 FIB 族最终满足指定矩证书的充分条件。
+当前没有建立这个剩余核上界；仅有每个完整素数幂低于 $B_\dagger$ 并不能推出它。
+

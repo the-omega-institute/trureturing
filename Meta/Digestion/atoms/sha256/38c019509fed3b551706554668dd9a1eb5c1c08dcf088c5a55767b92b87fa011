@@ -1,0 +1,63 @@
+### 224.1 对象、参数与有限群观察
+
+沿素数指标 $r\to\infty$，取
+
+$$
+V=F_r,\quad I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+Vg,\quad A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,
+$$
+
+$$
+y=\log A,\quad\ell=\log y,\quad s=y\ell,\quad
+R=\frac y{\ell^2},\quad\delta=\frac y{\ell^3},\quad
+b_2=\frac{\pi^2}{6},\quad t=e^\gamma\ell.
+$$
+
+继续使用非负乘法增量与实际 Euler 概率
+
+$$
+b_s(1)=1,\qquad
+b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1),
+\qquad Z(n)=\frac{\sigma(n)}n,
+$$
+
+$$
+U(s)=\sum_{d\ge1}\frac{b_s(d)}d,\qquad
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\qquad
+U_p(s)=\sum_{j\ge0}\frac{b_s(p^j)}{p^j},\qquad
+\pi_p(j)=\frac{b_s(p^j)}{p^jU_p(s)}.
+$$
+
+定义单位条件、条件源及其模像为
+
+$$
+c_V=\mu_s((d,V)=1)>0,\qquad
+\widetilde\mu_s(d)=\frac{\mu_s(d)\mathbf1_{(d,V)=1}}{c_V},
+$$
+
+$$
+G=(\mathbb Z/V\mathbb Z)^\times,\qquad N=|G|=\varphi(V),
+\qquad
+\nu_s(a)=\sum_{d\equiv a\pmod V}\widetilde\mu_s(d).
+$$
+
+每个 $r$ 上的比较都使用这个指定群 $G$ 及其均匀律 $u_G$，群阶随 $r$ 增长。§222 给出
+
+$$
+\log N=y/2+O(1),\qquad
+p\mid V\Longrightarrow p>2y\quad\text{最终成立},\qquad
+0\le-\log c_V=O(\sqrt y\,\ell)=o(R).
+\tag{224.1}
+$$
+
+对可数概率 $P$，采用自然对数并定义
+
+$$
+H(P)=\sum_xP(x)\log\frac1{P(x)},\qquad
+S_q(P)=\sum_xP(x)^q,\qquad
+H_q(P)=\frac{\log S_q(P)}{1-q}\quad(q>0,\ q\ne1),
+\tag{224.2}
+$$
+
+其中零质量项对 Shannon 熵的贡献约定为零。熵起初允许为正无穷。
+

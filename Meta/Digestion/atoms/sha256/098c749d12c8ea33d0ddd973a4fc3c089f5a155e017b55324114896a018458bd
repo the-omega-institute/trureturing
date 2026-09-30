@@ -1,0 +1,49 @@
+**定理 204.4（单位位一固定参数族的 Robin 比值趋于零）。** 在本节列明的固定域 Chebotarev、Fibonacci 秩与 Mertens 输入下，对每个固定 $g,v$，
+
+$$
+\lim_{j\to\infty}
+\frac{Z(gV_j+1)}{e^\gamma\log\log(gV_j+1)}=0.
+\tag{204.15}
+$$
+
+因此这个固定参数族的全部充分大指标满足严格 Robin 不等式。
+
+证明。非平方判别式的奇偶类已经由式（204.4）处理。对平方判别式奇偶类，先固定引理204.2所需的共同 $k$，再任取固定 $0<a_0<1$。设
+
+$$
+y=\lceil j^{a_0}\rceil,\qquad X=j(\log j)^2.
+$$
+
+充分大时，一切固定异常素数都已落在 $p\le y$ 内。该范围的实际素数直接扩充到全部素数。大于 $y$ 的单位根分支由式（204.14）控制；位于 $(y,X]$ 的非单位根分支由式（204.12）控制。尚未收取的 $p>X$ 只使用同一个实际 $N_j$ 的大小预算，其对数 Euler 因子和至多
+
+$$
+\frac{\log N_j}{(X-1)\log X}
+=O_{g,v}((\log j)^{-3})\longrightarrow0,
+\tag{204.16}
+$$
+
+因为 Binet 公式给 $\log N_j=j\log\phi+O_{g,v}(1)$。每个奇偶类与每个 $m\bmod k$ 都只有固定有限种，故这些渐近可取共同阈值。
+
+Mertens 公式、式（204.10）及上述实际素支撑覆盖给
+
+$$
+\begin{aligned}
+Z(N_j)
+&\le\frac{N_j}{\varphi(N_j)}\\
+&\le(1+o(1))e^\gamma\log y
+\left(\frac{\log X}{\log y}\right)^\eta\\
+&=(1+o(1))e^\gamma a_0^{1-\eta}\log j.
+\end{aligned}
+\tag{204.17}
+$$
+
+式（204.10）的常数在同一分支的商中消去。若没有非单位根，则取 $\eta=0$、空乘积为一。又 $\log\log N_j=\log j+O_{g,v}(1)$，所以
+
+$$
+\limsup_{j\to\infty\atop j\equiv r_0\ (2)}
+\frac{Z(N_j)}{e^\gamma\log\log N_j}
+\le a_0^{1-\eta}.
+$$
+
+同一个固定 $\eta<1$ 适用于每个预先选定的 $a_0>0$。先对每个 $a_0$ 取 $j$ 的极限，再令 $a_0\downarrow0$，得到该奇偶类的比值趋于零。没有在一个极限内部让数域或截止指数随 $j$ 变化。合并两个奇偶类即得式（204.15）。$\square$
+
