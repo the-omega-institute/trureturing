@@ -115,3 +115,54 @@ $$
 eventually. Its positive-weight discriminants violate the support cap of (B1). The hypothesis $D(n)\asymp n$ has not been established for actual SA/CA candidates; the fixed-support density example in the [complementary-divisor note](../ArithSums/fibcomplement2026weightedresidues.md) cannot supply it there.
 
 These are paper applications of the cited lemma and the existing finite identity. They diagnose this choice of support primes, preserving zeros and all source weights. They supply neither a square-discriminant exclusion nor the pointwise signed Euler deficit required for Robin; modified sieves and primes outside the candidate support remain separate possibilities.
+
+## A polynomial score that also retains zeros
+
+T. D. Browning, *The polynomial sieve and equal sums of like polynomials*,
+[arXiv:1306.6767v1](https://arxiv.org/pdf/1306.6767v1), submitted 2013-06-28.
+The inspected locators are **Theorem 1.1, printed p.2**, and its proof in
+**§2, printed p.5**. The source permits nonnegative summable weights, a
+fixed integer polynomial $f(x;y)$ of degree $d$ in $x$, any nonzero
+auxiliary polynomial, and a positive integer parameter $\alpha$.
+The theorem retains a height cutoff $|y|<\exp(L)$ and permits constants
+depending on the fixed polynomials.
+
+Take $f(x;y)=x^2-y$ and auxiliary polynomial one. The coefficient gcd is
+one, so this choice removes no primes dividing $y$. The proof's local
+root count and score are
+
+$$
+\nu_p(y)=\#\{x\bmod p:x^2=y\},\qquad
+F_\alpha(\nu)=\alpha+(\nu-1)(2-\nu).
+$$
+
+For the common odd support primes above, $\nu_p(D(n))$ is two when
+$p\nmid D(n)$ and one when $p\mid D(n)$. Both have score $\alpha$.
+The expression in the proof therefore specializes exactly to
+
+$$
+\sum_n a_n\left(\sum_{p\in\mathcal S}
+F_\alpha(\nu_p(D(n)))\right)^2
+=\alpha^2L^2\sum_n a_n.
+$$
+
+Each $p,q$ contribution after combining the source's nine coefficient
+terms equals $\alpha^2\sum_n a_n$; the individual root-count moments need
+not be equal. This zero-sensitive quadratic score also provides no saving
+on the forced support configuration.
+
+For this monic specialization one can directly prove, at every height,
+
+$$
+\mathbf1_{\{y\text{ an integer square}\}}
+\le\frac{\left(\sum_{p\in\mathcal S}
+F_\alpha(\nu_p(y))\right)^2}{\alpha^2L^2}.
+$$
+
+An integer square has a root at every prime and hence score $\alpha$ at
+every selected odd prime; the right side is nonnegative for every other
+$y$. This direct majorant has no height condition, but equals one on the
+support-conditioned discriminants. It does not remove the height
+condition from the quoted general theorem. Prime-power conditions,
+different polynomials and primes outside the forced support are not
+excluded by this computation.
