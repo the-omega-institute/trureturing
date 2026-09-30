@@ -119,8 +119,21 @@ require_lake() {
     || { echo 'inspect.sh: an absolute executable lake path is required (LAKE_BIN)' >&2; return 2; }
   export LAKE_BIN="$LAKE"
 }
+# A standalone call builds the producer once; every later step runs that DLL
+# instead of refreshing the project through `dotnet run`.
+require_producer() {
+  [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]] || return 0
+  run_phase producer-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
+    --configuration Release --nologo --verbosity quiet -t:Build -getProperty:TargetPath
+  local producer
+  producer="$(tail -n 1 "$LOG_DIR/producer-build.stdout.log")"
+  [[ "$producer" == /* && -f "$producer" ]] \
+    || { echo 'inspect.sh: the producer build reported no existing absolute DLL' >&2; return 2; }
+  export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+}
 if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
   require_lake
+  require_producer
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
 fi
 open_logs() {
@@ -159,11 +172,8 @@ run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOS
   --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
 rm -f -- "${OUTPUT}.reuse.json"
-if [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
-  run_phase utility-input-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
-    --configuration Release --nologo --verbosity quiet
-fi
 if [[ ${#BUILD_TARGETS[@]} == 0 ]]; then
+  require_producer
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
 fi
 open_logs

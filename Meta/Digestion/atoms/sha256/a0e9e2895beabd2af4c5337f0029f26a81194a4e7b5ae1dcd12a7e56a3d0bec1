@@ -1,0 +1,21 @@
+**引理 207.1（小核心最终逐点安全）。** 对全部充分大的素数 $r$，如果 $C\le N^{1/4}$，则 $\Delta(N)>0$，一致于 $g\in I_r$。
+
+证明。若 $C<N_K$，§164.1 的有限门槛包络给 $C/\varphi(C)<32e^\gamma$；$C=1$ 时直接用 $Z(C)=1$。若 $N_K\le C\le N^{1/4}$，函数 $t+a_0/t^2$ 在该门槛之上严格递增，故式（207.2）给
+
+$$
+Z(C)<e^\gamma\left(
+\Lambda-\log4+
+\frac{a_0}{(\Lambda-\log4)^2}\right).
+$$
+
+两种情形合起来，$Z(C)/e^\gamma$ 被上式括号与常数32的最大值控制。随 $r\to\infty$，括号最终大于32。式（207.1）及 $u\le1$ 遂给
+
+$$
+\frac{Z(N)}{e^\gamma}
+\le\left(\Lambda-\log4+o(1)\right)
+\exp\left(\frac{\vartheta_{r,N}}\Lambda\right)
+=\Lambda-\log4+\rho+o(1).
+$$
+
+因为 $\log4>\rho$，差额最终统一严格为正。$\square$
+

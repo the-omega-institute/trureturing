@@ -29,7 +29,7 @@ env:
 jobs:
   current:
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v5
         with:

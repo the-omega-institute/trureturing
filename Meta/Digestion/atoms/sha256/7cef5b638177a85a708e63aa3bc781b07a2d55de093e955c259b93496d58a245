@@ -1,0 +1,56 @@
+### 203.1 同一个整数上的精确平移账本
+
+令 $x=A+B\phi=M^jv$，$U=2A+3B$，$Q_j=A^2+AB-B^2=(-1)^jQ(v)$，并令 $N=gU+1$。记
+
+$$
+\mathbf e=(-1,1),\qquad\mathbf r=(3,-2),\qquad c_j=4A+7B.
+$$
+
+有 $q(\mathbf e)=1$、$q(\mathbf r)=0$，故全部满足 $q(y)=N$ 的整数向量恰为
+
+$$
+y_r=gx+\mathbf e+r\mathbf r
+=(gA+3r-1,\ gB+1-2r),\qquad r\in\mathbb Z.
+\tag{203.1}
+$$
+
+直接展开得到
+
+$$
+\mathcal Q(y_r)
+=g^2Q_j+g\bigl(r(4A+7B)-(A+3B)\bigr)-r^2+3r-1.
+\tag{203.2}
+$$
+
+特别地，直接吸收单位位的 $r=0$ 平移给
+
+$$
+\mathcal Q(y_0)=g^2Q_j-g(A+3B)-1.
+\tag{203.3}
+$$
+
+令 $d_r=\gcd(|(y_r)_1|,|(y_r)_2|)$。因 $q(y_r)=N>0$，有 $d_r>0$，并且
+
+$$
+\begin{gathered}
+ d_r\mid N,\qquad \gcd(d_r,g)=1,\\
+ d_r\mid A+B-rU,\qquad
+ d_r\mid g^2Q_j+r^2-3r+1,\\
+ \mathcal Q(y_r/d_r)=\mathcal Q(y_r)/d_r^2.
+\end{gathered}
+\tag{203.4}
+$$
+
+证明。$d_r\mid N$ 来自整数线性读数。若某素数同时整除 $d_r,g$，便整除平移向量两个坐标，与该向量的数量为一矛盾。取 $x,y_r$ 的行列式得到 $A+B-rU$；模 $d_r$ 有 $gx\equiv-(\mathbf e+r\mathbf r)$，取范数得到最后一个整除式，因为 $\mathcal Q(\mathbf e+r\mathbf r)=-r^2+3r-1$。范数的齐次性给归一化式。$\square$
+
+原始范数与本原范数必须通过实际的新公因子 $d_r$ 联系，不能用前者的下界代替后者的下界。
+
+§202 的同整数平方恒等式在这里为
+
+$$
+(gc_j)^2-D_j=5N(N-2),\qquad D_j=5-4g^2Q_j.
+\tag{203.5}
+$$
+
+因此对奇 $p\mid N$、$p\nmid D_j$，新判据是 $(D_j/p)=1$。一般没有旧的 $p\mid U$ 关系；事实上始终有 $\gcd(N,gU)=1$。
+

@@ -1,0 +1,104 @@
+**引理 210.1（两种 Euler 矩的显式比较）。** 对每个实数 $s\ge4$，
+
+$$
+0\le\log W(s)-\log U(s)
+\le\sqrt s\,(\log s+5).
+\tag{210.7}
+$$
+
+证明。记 $P_p=(1-p^{-1})^{-s}$，分两段估计。
+
+当 $p\le\sqrt s$ 时，取整数
+
+$$
+a=\lceil\log s/\log p\rceil-1\ge1.
+$$
+
+则 $p^a<s\le p^{a+1}$。因 $p^{-(a+1)}\le1/s\le1/4$，由 $\log(1-u)\ge-2u$（$0\le u\le1/2$），有
+
+$$
+(1-p^{-(a+1)})^s\ge e^{-2}.
+$$
+
+在式（210.3）中只保留这一项，得到
+
+$$
+U_p(s)\ge(1-p^{-1})p^{-a}P_p
+(1-p^{-(a+1)})^s
+\ge\frac{e^{-2}}{2s}P_p.
+$$
+
+又 $W_p(s)\le P_p$，故
+
+$$
+0\le\log\frac{W_p(s)}{U_p(s)}
+\le\log(2e^2s).
+\tag{210.8}
+$$
+
+当 $p>\sqrt s$ 时，式（210.3）中所有 $a\ge1$ 的项都满足 $Z(p^a)^s\ge(1+p^{-1})^s$，所以
+
+$$
+U_p(s)\ge1-p^{-1}+p^{-1}(1+p^{-1})^s.
+$$
+
+若 $P\ge Q>0$、$c\ge0$、$d>0$，则 $(c+dP)/(c+dQ)\le P/Q$。使用此式可得
+
+$$
+\frac{W_p(s)}{U_p(s)}
+\le\frac{(1-p^{-1})^{-s}}{(1+p^{-1})^s}
+=(1-p^{-2})^{-s}.
+$$
+
+于是
+
+$$
+0\le\log\frac{W_p(s)}{U_p(s)}
+\le-s\log(1-p^{-2})
+\le\frac s{p^2-1}.
+\tag{210.9}
+$$
+
+令 $k=\lfloor\sqrt s\rfloor\ge2$。用整数尾和放大素数尾和，并作望远镜求和：
+
+$$
+\sum_{p>\sqrt s}\frac s{p^2-1}
+\le\frac s2\left(\frac1k+\frac1{k+1}\right)
+\le2\sqrt s.
+$$
+
+小素数数量不超过 $\sqrt s$，所以式（210.8）、式（210.9）给
+
+$$
+\sum_p\log\frac{W_p(s)}{U_p(s)}
+\le\sqrt s\,(\log s+\log2+4)
+\le\sqrt s\,(\log s+5).
+$$
+
+两边 Euler 乘积均正且收敛；对有限素数集合先证明该界，再取极限，即得到式（210.7）。$\square$
+
+显式矩阶 $s=y\log y$ 因而满足
+
+$$
+0\le\log W(s)-\log U(s)
+=O\bigl(\sqrt y\,(\log y)^{3/2}\bigr)
+=o\left(\frac y{(\log y)^m}\right)
+\tag{210.10}
+$$
+
+对每个固定正整数 $m$ 成立。
+
+Weingartner 原文 Lemma 5 的 $b_2=\pi^2/6$、$b_3=-\pi^2/6$ 遂给
+
+$$
+\log\frac{XU(s)}{t^s}
+=\log(X/A)+b_2R_y
+-b_2\frac y{(\log y)^3}
++O\left(\frac y{(\log y)^4}\right).
+\tag{210.11}
+$$
+
+因此，改为保留完整赋值的全域矩后，证书 $XU(s)/t^s$ 仍趋于无穷；它没有自动提供排除所需的 $R_y$ 尺度节省。这个结论针对式（210.6）的**无限 Euler 上界**，不声称实际有限和或 FIB 等差数列的矩与它相等。
+
+这与原文的相关结构一致：Theorem 1 同时给约数和与 totient 的极限分布尾相同的任意固定阶展开；Theorem 3 通过补小素数的赋值，把两种分布进行比较，并付出 $e^{3\sqrt y}$ 与 $5e^\gamma/\sqrt y$ 阈值位移。式（210.7）在这里提供的是有限矩接口需要的显式对照，不宣称独立原创性，也不从极限分布未经论证地交换出有限矩结论。
+

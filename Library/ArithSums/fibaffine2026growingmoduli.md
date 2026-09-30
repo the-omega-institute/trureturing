@@ -5,7 +5,7 @@ year: 2026
 title: Growing-modulus interfaces for affine Fibonacci Robin candidates
 doi: null
 url: https://github.com/the-omega-institute/trureturing
-claim: "A parameter comparison for six cited primary sources: positive moment bounds transfer to finite intervals, while the quoted smooth-number, inverse-distribution and fixed-modulus theorems do not supply the required fixed Fibonacci modulus estimate at logarithmic smoothness and a subpower cofactor."
+claim: "A parameter comparison of the cited primary sources, including Pascadi's 2025 unconditional exponent 5/8: positive moment bounds transfer to finite intervals, while the quoted distribution theorems do not supply the required fixed Fibonacci modulus estimate at logarithmic smoothness with growing weights and a subpower cofactor."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -64,7 +64,7 @@ $$
 Y\asymp\log x,
 $$
 
-一致于上述允许的 $H$ 范围；小余因子不会消除模数与光滑度的尺度障碍。
+一致于上述允许的 $H$ 范围；小余因子不会消除临界光滑度与指定模数误差的障碍。
 
 ## 可直接使用：Weingartner 的高正矩
 
@@ -142,7 +142,9 @@ $$
 
 当前取 $q=V$、$y=Y$ 时有两个独立不满足的前提：$q\asymp X^{1/2}$ 超过每个固定 $Y^A$，而 $\log(X/H)/\log q\to2$，不趋于无穷。Theorem 2 的陪集版本仍要求 $q\le y^A$（固定 $A$）及相同对数比极限，因此也不能直接接入。论文讨论的 Soundararajan 猜想原表述仍有这两个前提；仅假设该猜想为真也不足以覆盖当前参数。
 
-## Pascadi：大模数平均不能指定当前模数
+## Pascadi：大模数平均与指定模数的误差
+
+### 2023 论文的 2025 版本：模数指数 $66/107$
 
 Alexandru Pascadi, *Smooth numbers in arithmetic progressions to large moduli*, arXiv:2304.11696v3 (2025版)。
 
@@ -166,10 +168,44 @@ $$
 模数指数 $1/2$ 确实低于 $66/107$，但这一条指数比较不满足整个定理：
 
 - 当前 $y\asymp\log x$，原文给出的存在性常数 $C$ 不保证允许指数1；不能自行取 $C=1$。
-- 结论平均于模数，不能据此断言指定模数 $F_r$ 具有足够小的误差，更不能断言该剩余类无解。
+- 结论的绝对误差总和非负，可以合法抽取指定模数 $F_r$ 的一项；但所得上界仍为完整的 $\Psi(x,y)/(\log x)^A$，没有额外的 $1/\varphi(F_r)$ 因子，不能仅凭此界断言已控制这一剩余类的实际命中数。
 - 当前剩余类为 $H^{-1}\bmod V$，随实际 $H$ 改变；所引 Theorem 1.1 的 $a$ 固定。
 
 即使另行弥补光滑度和剩余类的一致性，平均误差界本身仍需足够强到能控制这一个模数的实际命中数。不能把平均主项小于1与逐点没有整数命中等同。
+
+### 2025 新论文：无条件模数指数 $5/8$
+
+Alexandru Pascadi, *On the exponents of distribution of primes and smooth numbers*, arXiv:2505.00653v2，2025-06-29。
+
+- 原文：https://arxiv.org/html/2505.00653v2
+- 精确位置：[Theorem 1.5 及其后的 Remark](https://arxiv.org/html/2505.00653v2#S1.Thmtheorem5)。
+
+此文与上面的 arXiv:2304.11696v3 是不同论文。Theorem 1.5 无条件推进了光滑数分布的模数指数：对固定 $a\in\mathbb Z\setminus\{0\}$、$A,\varepsilon>0$ 及 $x\ge2$，存在充分大的 $C=C(a,A,\varepsilon)>0$，使得当
+
+$$
+(\log x)^C\le y\le x^{1/C},\qquad Q\le x^{5/8-\varepsilon},
+$$
+
+有
+
+$$
+\sum_{\substack{q\le Q\\(q,a)=1}}
+\left|\Psi(x,y;a,q)-\frac{\Psi_q(x,y)}{\varphi(q)}\right|
+\ll_{\varepsilon,A,a}\frac{\Psi(x,y)}{(\log x)^A}.
+$$
+
+当前 $x=X/H=V^{2-o(1)}$，故 $V=x^{1/2+o(1)}$。固定 $0<\varepsilon<1/8$ 并取充分大规模后，模数大小已在新定理范围内；不能继续把 $66/107$ 当作这条路线最新的无条件指数。临界光滑度 $Y\asymp\log x$ 仍不由定理保证；即使用较宽的 $Y\asymp\log x\log\log x$ 截断，也不能自行把存在性常数 $C$ 取为1。
+
+这里平均的是模数，光滑整数本身没有任意给定系数。定理后的 Remark 指出，可按 Drappeau–Granville–Shao 的方法推广到光滑支撑乘法函数；它没有直接给出本题随规模增长的素数幂增量权的一致估计。对 $s>0$、$Z(n)=\sigma(n)/n$，实际权重为
+
+$$
+w_s(d)=\frac{b_s(d)}d,\qquad
+b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1).
+$$
+
+它们一般不完全乘法，并且 $w_s(2)=((3/2)^s-1)/2$ 随 $s$ 增长；全源在每个素数处都有非零增量，有限光滑截断必须另计尾项。扩大光滑支撑以满足定理下限，也必须支付改变后的 $\Psi(x,y)$ 和实际权重成本。
+
+即使其余前提成立，从非负总和抽取指定 $q=V$ 仍只得到上述总误差，不会自动得到额外的 $1/\varphi(V)$。固定 $A$ 时，这个误差上界不能被当作相对于单余类主项的小误差，更不等于该余类没有整数命中。原定理还固定 $a$；在除数或核心切面上，$H^{-1}\bmod V$ 随实际余因子改变，其一致性不能由此陈述直接代入。对后续分解 $N_g=dh=1+Vg$，还必须保留同一个乘积的区间 $d\in[(1+V\lceil V/10\rceil)/h,X/h]$ 与同余 $dh\equiv1\pmod V$。新的平均分布定理改进了可复用背景，尚未关闭这一指定模数、真实权重和共同乘积窗口的联合接口。
 
 ## Jennings–Pollack–Thompson：丰数分布的量词
 

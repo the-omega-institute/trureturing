@@ -429,7 +429,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             publication.validate_bundle(output, publication.coordinates(clone), clone)
             self.assertEqual(output.read_bytes(), expected[0])
             self.assertEqual(publication.member(output, '.materials.zip').read_bytes(), expected[1])
-            for phase in ['inputs', 'utility-input-build', 'ensure', 'report', 'publish']:
+            for phase in ['inputs', 'producer-build', 'ensure', 'report', 'publish']:
                 self.assertEqual((logs / (phase + '.exit.log')).read_text(), '0\n')
             row = Path('.lake/build/lean-inspector/modules/D5.Alone.zip')
             self.assertNotEqual((donor / row).stat().st_ino, (clone / row).stat().st_ino)

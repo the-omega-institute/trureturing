@@ -1,0 +1,13 @@
+**定义 144.2（逐方阵全幺模判据）。** 对任意 $k\in\mathbb N$、任意单射
+$f:\operatorname{Fin}(k)\to V$ 与 $g:\operatorname{Fin}(k)\to E$，取子矩阵
+$$
+\partial[f,g](i,j)=\partial_{\operatorname{tail},\operatorname{head}}(f(i),g(j)).
+\tag{144.2}
+$$
+称该端点矩阵全幺模，是指所有这些有限方阵满足
+$$
+\det(\partial[f,g])\in\{-1,0,1\}.
+\tag{144.3}
+$$
+当 $k=0$ 时，空矩阵行列式按约定为 $1$。因此全幺模性只在每个有限 minor 上使用有限性，而不把全局有限性假装成假设。
+
