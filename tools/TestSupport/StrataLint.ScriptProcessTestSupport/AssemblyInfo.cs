@@ -12,7 +12,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.RoutingTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.StageIntegration.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.TransportIntegration.Tests")]
-[assembly: InternalsVisibleTo("StrataLint.Cache.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Cache.Native.Tests")]
-[assembly: InternalsVisibleTo("StrataLint.Cache.Release.Tests")]
-[assembly: InternalsVisibleTo("StrataLint.HeaderScript.Tests")]
