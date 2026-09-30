@@ -9312,3 +9312,356 @@ are stronger than necessary for general noncoverage. No universal
 bridge or unrestricted solution is supplied by these controls.
 These results are ordinary mathematical reuse and exact arithmetic,
 without new Lean verification or an external novelty claim.
+
+## Seven private-prefix types preserve the head certificate and the pure/star continuation
+
+For each of the nine private primes, all seven named cross-head
+incidence types are admitted by the existing FC159 min-cap head
+certificate. Their independent combinations give `7^9=40353607`
+named private-prefix types for each fixed FC110 or FC131 head assignment.
+The proof uses actual prefix unions, not a relaxation that counts
+overlapping roles twice inside one head.
+
+The existing pure/star-only two-layer comparison also transfers, with
+a newly defined actual survivor source for each family. It gives the
+same continuation through73 and the same conditional tail above10000.
+The stronger group-specific corrections require additional source checks beyond this argument.
+
+This is ordinary mathematical reuse and a finite structural extension.
+No new Lean verification or unrestricted Erdős#7 result is claimed.
+
+### 1. Exact unchanged inventory and permitted phase changes
+
+All FC references below are in this report.
+FC147–FC152 supply the actual prefix construction; FC120–FC122 and
+FC137 and FC161–FC164 supply the common-source head comparison; FC230,
+FC330–FC338 and FC349–FC359 supply the source cap and pure/star
+continuation. [Report823 Section2](../800-849/823-common-prefix-transport-reduces-the-free45-phase-to-three-cases.md) supplies the exact named-prefix orbit
+criterion. These are reused, not presented as new general machinery.
+
+Fix either stored FC110 or FC131 assignment, one finite `N>=1`, and
+
+    Q=(11,13,17,19,23,29,31,37,41),
+    V={5,7} union Q, R={3} union V.
+
+At each private q, choose four digits in the ordered roles
+
+    (F5,S5,F7,S7) = (alpha,beta,gamma,delta),
+    alpha,beta,gamma,delta in R_q=(Z/qZ) minus {0,1,6},
+    alpha != beta, gamma != delta.                   (FC417)
+
+Only the depth-one private components of numerical originals
+`5q,15q,7q,21q`, respectively, change. Every original's head row and
+selected ternary root stay fixed. Pure and star originals at every
+depth, all grouped components at depths2 throughN, and every numerical
+label stay fixed. Cross-head coincidences are allowed. Each set of
+coordinate phases defines its original global residue by CRT, once
+per numerical label; nothing is chosen separately for a later query.
+
+The optional old nongroup remainder is exactly FC159's inventory:
+
+    m=3^epsilon product_(p in V)p^e_p, epsilon in{0,1},
+    at least two supported nonternary primes,
+    support{h,q}, h in{5,7}, q in Q => e_h>=2.
+
+No additional pure, star, shallow grouped, or higher-ternary old-only
+label is admitted, including such labels aboveN. A finite subset of
+this inventory may have arbitrary globally fixed phases. Existing
+labels are neither overwritten nor duplicated by the remainder.
+
+### 2. All-depth actual union proof
+
+Read q-adic words from the least significant digit. FC147's rolej
+at depth e is the word `6^(e-1) j`, for j=0,...,5. Pure usesj=0,
+star usesj=1, and the four named group roles use
+
+    F5: j=2, S5: j=4, F7: j=3, S7: j=5.
+
+For example, after the change the actual private F5 projection is
+
+    R_F5 = [alpha]_q union
+           union_(e=2..N)[6^(e-1) 2]_(q^e).         (FC418)
+
+Use the analogous expressions for the other three roles. The original
+higher cylinders are mutually disjoint across different roles and
+depths: the shorter word terminates in j<=5 where a longer word still
+has6, or two equal-depth terminal roles differ.
+
+Every modified depth-one cylinder avoids the pure/star first roots0,1
+and every higher pure/star/group cylinder's first root6. Thus every
+individual complete role remains disjoint from all actual pure/star
+cylinders and is internally disjoint across depths. Within the5
+family the two complete role projections are disjoint because
+alpha!=beta; within the7 family they are disjoint because gamma!=delta.
+This remains true when free and selected roles use the SAME head row.
+
+Let the actual pure-conditioned private law be lambda_(q,N), and put
+
+    A_(q,N)=sum_(e=1..N)q^-e,
+    c_(q,N)=1/(1-A_(q,N))=(q-1)/(q-2+q^-N),
+    b_(q,N)=c_(q,N)A_(q,N).                          (FC419)
+
+Its normalizer is unchanged. Each modified depth-one cylinder has
+mass `c_(q,N)/q`; each complete named role has mass `b_(q,N)`, exactly
+as before. At ternary rootr and head rowi the actual raw5 union is
+
+    X_(q,r,i)=b_(q,N) [1_(i=i_F5(q))
+                     +1_(r=r_S5(q))1_(i=i_S5(q))], (FC420)
+
+and the analogous formula givesY with7. These are union masses,
+not merely sums assumed to be disjoint. Disjointness within each
+head-family was proved above. Inactive selected roles contribute zero.
+
+Pure/star data are unchanged, so all head weightsw and private star
+survival masses g are unchanged. Equations (FC419)--(FC420) prove that the
+ENTIRE raw signature `(w,g,X,Y)` equals the original signature at the
+same assignment andN. This proof holds for every finiteN; it does not
+infer an all-depth statement from a finite numerical check.
+
+### 3. Exact cross-head correction and the inherited positive head bound
+
+Let M_q be the equality graph between the two named roles{F5,S5} and
+the two named roles{F7,S7}. The within-head inequalities make M_q a
+matching. At a rootr and physical head pair(i,j), retain an edge only
+when both of its named roles are active there. Let e_(q,r,i,j) be the
+number of these active edges.
+
+Cross-head intersection can occur only at a matched depth-one digit.
+Different matching edges use distinct digits. Higher projections
+remain disjoint. Therefore the actual joint complement has the exact
+formula
+
+    H_new(q,r,i,j)=g-X-Y
+                   +(c_(q,N)/q)e_(q,r,i,j).         (FC421)
+
+The canonical skeleton has no edges and H_old=g-X-Y. In particular
+H_new>=H_old pointwise in root/head-row indices, although covered sets
+on the original CRT space need not be nested. This is a comparison of
+conditional coordinate masses, not a common pointwise set inclusion.
+
+FC137's general intersection sandwich, also used in FC161, gives
+
+    P=max(0,g-X-Y) <= H_new <= K=g-max(X,Y).         (FC422)
+
+BothP andK are unchanged. In these signatures `g-X-Y>=0`, as in the
+canonical source. FC162's group lower expression therefore stays
+exactly the same; FC120–FC122/FC163's per-original min-cap upper fees
+also stay the same. The bound remains valid even though actual group
+survival and actual remainder deletion can change. All comparisons
+use one source; no actual joint maximizer of those fees is asserted.
+
+For `N>=N_+`, the original FC157–FC159 argument consequently gives,
+uniformly over all choices in (FC417) and every admitted finite nongroup
+remainder with arbitrary phases,
+
+    Surv_new >= J_infinity(z_i,N) >= mu_i >0,
+    mu_first=12288140637404551/155479519655460000,
+    mu_bounded=36518862868606981/466438558966380000. (FC423)
+
+HereSurv uses the uniform law on the two retained ternary roots and
+the SAME nonternary pure-conditioned product carrier. It is not an
+unconditional density. The common eventual thresholdN_+ is unchanged
+because the raw signature is exactly unchanged, not merely close.
+
+### 4. Seven types and the literal assignment count
+
+A matching inK_(2,2) is empty, one of four single edges, or one of two
+perfect matchings. Hence there are exactly seven named equality types.
+The following representatives, ordered(F5,S5,F7,S7), work at every
+q inQ, since digits2,3,4,5 all belong toR_q:
+
+| Named cross-head equalities | Representative |
+|---|---|
+|none|(2,3,4,5)|
+|F5=F7|(2,3,2,4)|
+|F5=S7|(2,3,4,2)|
+|S5=F7|(2,3,3,4)|
+|S5=S7|(2,3,4,3)|
+|F5=F7 and S5=S7|(2,3,2,3)|
+|F5=S7 and S5=F7|(2,3,3,2)|
+
+All combinations at the nine separate primes are simultaneously
+realizable: CRT supplies each complete original residue, and numerical
+labels remain distinct. For each fixed head assignment andN this gives
+
+    7^9=40353607 named private-prefix incidence types. (FC424)
+
+These are types of the named private-prefix relations, not a minimal
+behavioral quotient. Different selected ternary roots can make a
+private equality invisible to a particular simultaneous head query;
+no observer-distinguishability or physical-dimension claim follows
+from (FC424).
+
+For a concrete distinction, FC110 at q=13 has both5 roles at head row2,
+both7 roles at head row4, selected5 on root1 and selected7 on root2.
+At N=2 an allowed first-digit cylinder has pure-conditioned mass13/155.
+The equality S5=S7 has no active intersection on either root, whereas
+F5=F7 contributes13/155 on both roots. The raw arrays are identical
+in both cases. Thus a private-prefix equality, an actual gated
+intersection and a task-sufficient raw summary are different objects.
+
+ForM=q-3 available digits, the ordered5 pair hasM(M-1) choices, and
+the ordered7 pair hasM(M-1) choices independently. Thus the total
+literal depth-one phase assignments are
+
+    product_(q in Q)[(q-3)(q-4)]^2
+      =4205524670804538271292764088791203840000000000. (FC425)
+
+Per prime the empty type has(M)_4 assignments, each single edge has
+(M)_3, and each perfect matching has(M)_2, with falling factorials.
+The identity(M)_4+4(M)_3+2(M)_2=[M(M-1)]^2 confirms the partition.
+These counts concern the36 permitted depth-one components for ONE
+fixed assignment andN; arbitrary remainder choices are not included.
+
+The canonical four digits(2,4,3,5) have empty equality type. If a new
+tuple has four distinct digits, one first-child permutation fixing
+0,1,6 maps the canonical digits to it; use identity child maps inside
+the entire root6 subtree. This preserves every higher fixed role and
+all pure/star phases. The map extends to the complete family and all
+queries as in PC1. Conversely a cross-head equality cannot be obtained
+by a bijection from four distinct named roots. Thus the canonical
+common-tree orbit intersects this allowed class in exactly the all-
+empty type, while (FC423) covers all 7^9 types. Any two assignments with
+the SAME named matching type are similarly related by such root
+permutations. This is the explicit orbit description for this declared
+class of36 named core first-digit components, not a classification of
+all source configurations. To transport the COMPLETE family, carry
+its arbitrary nongroup remainder and every query along the same map;
+their phases need not remain individually fixed. Equal core matching
+types do not assert that two independently fixed complete remainder
+families lie in the same orbit.
+
+### 5. A physical source for each family, with the same universal cap
+
+The pure/star-only continuation requires more than a positive scalar;
+its physical source can be reconstructed with the original cap.
+Fix one actual allowed phase assignmenttheta and its entire old
+remainder. LetU_theta be its COMPLETE old survivor, lambda_N the
+unchanged two-root pure-conditioned probability, and
+
+    s_theta=lambda_N(U_theta)>=mu_i>=m_star,
+    m_star=36518862868606981/466438558966380000,
+    C_V=product_(p in V)(p-1)/(p-2)=1048576/403767.
+
+Relative to full product HaarH_R, the pure carrier satisfies
+
+    lambda_N <= (3/2) C_V H_R.                       (FC426)
+
+The factor3/2 is the density of the UNIFORM two-root ternary law. No
+single favored root is selected. Define exactly
+
+    mu_theta=lambda_N restricted to U_theta / s_theta,
+    D0=(3/2)C_V/m_star
+       =1816999451688960000/36518862868606981,
+    eta_theta=mu_theta/D0,
+    h=eta_theta(total)=36518862868606981/1816999451688960000.
+
+Then
+
+    eta_theta <= H_R,
+    support(eta_theta) subset U_theta.              (FC427)
+
+Equivalently eta_theta is h times the actual normalized survivor law.
+It is generally DIFFERENT for differenttheta. There is no assertion
+that an old normalized survivor was transported unchanged or that
+different families share one physical joint distribution. Within a
+fixed actual family, this one law is fixed before every query and
+cost. Uniform lifting to any larger finite head period preserves its
+mass, cap and original support, as in FC230.
+
+### 6. The already proved pure/star-only continuation transfers
+
+Assume `N>=max(2,N_+)`. All actual pure/star cylinders and their ternary
+root allocations are unchanged. LetLambda be FC330's unnormalized
+product-Haar reference retaining their first TWO layers, root by root.
+Its local masses and run factors are exactly FC350–FC351:
+
+    u_p=1/p+1/p^2,
+    a_(p,r)=1-u_p-1_(star p active on r)u_p,
+    nu_(p,r)(0)=a_(p,r)-1/p,
+    nu_(p,r)(j)=(p-1)/p^(j+1), j>=1.
+
+Because (FC427) is Haar dominated and avoids these same cylinders,
+
+    eta_theta <= Lambda.                            (FC428)
+
+FC331–FC338 use only this support/cap domination and complete numerical
+query labels with globally fixed phases. Group placements do not
+appear in those coordinate bounds. Their joint-colour scalarXi is
+therefore IDENTICAL for everytheta, and for every finite complete
+query layoutPhi and nonnegative increasing convexf,
+
+    integral f(L_Phi) d eta_theta <= integral f d Xi.
+
+The exact massh is also identical, so the sameTop_h(Xi) is valid.
+This verifies all input hypotheses of FC349–FC359 without rerunning
+their producer, finite controls, or numerical continuation.
+
+Apply the existing fixed half-clipping steps43,47,53,59,61,67,71,73.
+For each actual family, at a positive step restrict its current
+physical law to actual survivors and use one family/stage scalar to
+reach the certified target mass. That scalar is independent of later
+query and cost. Thus each family has one consistent actual source
+sequence. Its common comparison outputs retain
+
+    m73>93/100000,
+    M4<11310000,
+    eta73<=256 H_head,
+    Haar(actual head survivor)>93/25600000>1/300000. (FC429)
+
+Under the SAME Report734/779 analytic prime-product premise, the
+already fixed quartic tail withB=10000, ell=8, delta=2/5 and growth25
+leaves distorted mass greater than1/1250. This is not a final Haar
+density. Additional support primes in(73,10000] remain excluded.
+
+The old-only source inventory stays as in§1. Additional originals may
+have arbitrary finite exponents, including ternary exponents, and
+arbitrary mixed supports when they touch a newly processed head prime
+or an admitted tail prime. Assign each original once to its final new
+coordinate, preserving its numerical label and globally fixed phase,
+as required by the inherited continuation. No extra old-only9 or
+other excluded source label is admitted by this transfer.
+
+The same fixed comparator still has its FC358–FC359 all-constant79
+mean obstruction. That is a comparator limitation, not an upper bound
+on actual survival. No79 step or parameter search is run here.
+
+The one-pair and full-group corrections (FC363), (FC385) have
+additional joint-geometry hypotheses. Those corrections and the stronger
+continuation constants (FC396)--(FC401) do not follow solely from
+FC426–FC428 and are not claimed by this transfer argument.
+
+### 7. Information and verification boundary
+
+Membership in the class uses the ACTUAL original phases, fixed head
+rows/roots, inventory and prefix conditions (FC417). The shared raw
+signature by itself does not reveal which named equality type occurs,
+and is insufficient to recover arbitrary joint queries. A computation
+that has discarded the original phase relations cannot reconstruct
+them for free from(w,g,X,Y). The head certificate deliberately uses
+proved envelopes that remain sufficient without that reconstruction.
+
+The source construction is a finite mathematical normalization of the
+actual survivor. It establishes existence and lawful use in the proof;
+it does not assert that an internal observer has computed that law,
+found a survivor cheaply, or obtained an optimal control policy for
+free. No such acquisition or complexity guarantee is part of (FC429).
+
+The [private-role consumer](../../../frontier/cover-geometry/pure-support-profiles/private_role_atlas.py)
+accepts an explicit output path. Its152 explicit checks cover exactly
+the seven prescribed types atq=11 with two literal prefix layers,
+using antichain union/intersection arithmetic. It checks unchanged
+same-head union masses, actual cross-head corrections and both fixed
+private-star states. Those all-role local tests do not pretend that
+every role is simultaneously active at one actual FC110/FC131 head
+row. Counts for the nine declared primes are evaluated directly from
+FC425. No full CRT space, source class, prime schedule, clipping or
+depth parameter is searched. Results are in
+[the exact result](../../../frontier/cover-geometry/pure-support-profiles/private_role_atlas.json).
+
+The all-N conclusion follows from§2, the uniform head bound from§3,
+and the continuation transfer from the explicit physical-source map
+in§5–§6. The existing FC354–FC359 arithmetic is reused, not recomputed
+or represented as a new numerical experiment. Unrestricted old phase
+families, arbitrary old prefix incidences, and the middle-prime gap
+remain unresolved.
