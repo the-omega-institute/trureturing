@@ -14,8 +14,7 @@ internal sealed class NonnestingFourDocument : IScribeDocumentDefinition
         H("Enumeration for Four Forbidden Patterns"),
         Blocks(
             Node("nonnesting-nonnestingfour-result", "Four-pattern generating function", "result",
-                "The ordinary generating function for doubled nonnesting permutations avoiding 1231, 1312, 2231, and 3221 is (1 - 3x + 2x squared) divided by (1 - 3x)(1 - x - x squared).", DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("elizalde-luo-nonnesting-1231-1312-2231-3221"), ResolutionKind.Proved))),
+                "The ordinary generating function for doubled nonnesting permutations avoiding 1231, 1312, 2231, and 3221 is (1 - 3x + 2x squared) divided by (1 - 3x)(1 - x - x squared).", DescribeRole.Theorem)),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
