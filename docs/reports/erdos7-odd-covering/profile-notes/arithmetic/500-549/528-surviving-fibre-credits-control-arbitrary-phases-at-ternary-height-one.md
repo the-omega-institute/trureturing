@@ -6053,3 +6053,209 @@ For FC159, that all-height core-source theorem has not been supplied: deeper cor
 [Report709](../700-749/709-twelve-and-thirteen-small-heads-admit-unrestricted-prime-tails.md) already proves noncoverage with at most twelve small head primes below100000 when only the head-only originals have ternary height at most one, without FC159's skeleton phase restrictions. The present10000 cutoff uses the stronger density of those restricted FC159 sources; it does not lower Report709's cutoff for its larger phase class.
 
 The fixed rational constants in FC212--FC213 were evaluated directly. These arithmetic substitutions use the existing analytic and core-source premises; they do not constitute a new Lean verification.
+
+## Joint ternary-prefix budgets for squarefree pair families
+
+Two positive statements follow from retaining the common ternary coordinate while counting pair conflicts. Both allow arbitrary finite ternary heights and arbitrary globally fixed phases, including the dead fibres in report528 FC181:
+
+1. Any finite family supported on pure powers of 3 and labels `3^k*q_i*q_j`, with at most eleven distinct nonternary primes at least 5, is noncovering. The pair graph and every finite depth inventory are unrestricted.
+2. The same conclusion holds with arbitrarily many nonternary primes at least 5 when the pair graph is 2-degenerate.
+
+Only squarefree nonternary pairs are allowed here. Nonternary pure classes, the singleton labels `3^k*q`, higher nonternary powers, and three-or-more nonternary support primes are not included. These are ordinary mathematical deductions and exact controls, not Lean verification or a claim of public mathematical priority.
+
+### Existing results and the specific interface added here
+
+- Report386 PC5--PC11 gives the sequential pair-conflict extension count on a fixed finite carrier. Its bounded-pattern condition is not automatically true after projecting arbitrary original ternary depths. FC181 exhibits that failure.
+- Report452 already controls all finite ternary heights and arbitrary one/two-outside-prime graphs, with arbitrary outside exponents, at a large cutoff depending on the supplied head inventory. Merely showing existence of a sufficiently large cutoff would add no new interface.
+- Report453 permits unrestricted outside support and preserves the whole supplied nonternary core marginal. Report455 has a height-independent cutoff under a full-Haar density hypothesis while preserving good core support rather than the exact marginal. Neither produces an arbitrary small-prime core survivor for free.
+- Chapter07 DG1--DG6 already treats degenerate graphs with arbitrary powers and more general head data. Its displayed 2-degenerate row starts at outside prime 19 with an arbitrary `{3,5,7}` head. The present result instead permits pair coordinates starting at 5 and unbounded graph size, but has the narrower pure3-plus-squarefree-pair syntax. These contracts are different; neither is asserted to subsume the other.
+- Report528 FC161--FC179 retains a common ternary prefix partition and per-label fees, but separate worst-prefix maxima can lose a shared good root. FC180 treats one depth per pair; FC181 proves that arbitrary heights can destroy individual fibres. The estimate below pays for the union of bad ternary fibres and constructs survivors only on the remaining positive mass.
+- The additional scope comparison read reports709, 771, 788 and 789. The latter local-height results retain their height restrictions; report771's thirteen-prime bare conclusion requires a missing prime among `{3,5,7,11}`. The present eleven-nonternary-prime statement allows all of `{3,5,7,11}` and arbitrary ternary height, with its own narrower pair syntax. No exhaustive literature or repository-novelty claim follows from this comparison.
+
+### 1. Actual family, one source, and graph ordering
+
+Fix distinct primes `q_1,...,q_n >=5` in a declared order, not necessarily increasing. Consider a finite actual family consisting only of:
+
+    one possible class at each numerical pure modulus 3^k, k>=1;
+    one possible class at each numerical modulus 3^k*q_i*q_j,
+        k>=0, i<j.                                      (FC214)
+
+Missing labels are allowed. Every present residue is fixed globally. The phrase “one possible class” means at most one original class per numerical modulus; no phases are chosen again at different fibres. The nonternary exponents in every pair are exactly one. The exponent k starts at zero, so 3-free pair originals are included.
+
+Resolve all actual ternary prefixes in `T=Z/3^H`, with finite `H>=1`. Let `H_3` be uniform probability on T and `H_Q` uniform probability on `product_i F_(q_i)`. Their product is the ordinary full CRT Haar law. Let `S_3` avoid the actual pure3 originals and put `alpha=H_3(S_3)`. Numerical distinctness gives
+
+    alpha >=1-sum_(k>=1)3^-k=1/2.                       (FC215)
+
+The finite actual sum is strictly less than 1/2, but the weak bound suffices. No conditioned source or marginal-independence claim after deletion is used.
+
+The underlying simple pair graph has edge `{i,j}` precisely when at least one actual pair original uses those two primes. Let `d_i` be the number of neighbors of i preceding it in the declared order. Assign every pair original to its later endpoint. Thus, at each fixed ternary depth k, at most `d_i` assigned originals belong to i. This remains true for missing edges and arbitrary original phases.
+
+For `t in T`, let
+
+    c_i(t)=number of assigned originals at i whose actual
+           ternary prefix contains t.                 (FC216)
+
+This counts original numerical labels, including repetitions of a projected pair at different k. At k=0 its ternary prefix is all of T. In particular the dangerous repeated projected patterns from FC181 have not been discarded.
+
+### 2. Exact fibre criterion and full Haar normalization
+
+Fix a ternary point t avoiding pure3 originals. Choose the private coordinates in the declared order. For every legal earlier tuple, an active pair original assigned to i either fails at its earlier endpoint or forbids its one actual residue at q_i. Consequently at most `c_i(t)` current residues are forbidden. Coincident forbidden residues only reduce this number.
+
+If every `c_i(t)<q_i`, the number of legal full private tuples is at least `product_i(q_i-c_i(t))`. If some count is at least q_i, the following nonnegative lower bound is simply zero. Thus, with `x_+=max(x,0)`,
+
+    H_Q(actual survivor in fibre t)
+      >= product_i (1-c_i(t)/q_i)_+.                   (FC217)
+
+Integrating on the SAME full CRT carrier gives
+
+    Haar(actual full survivor)
+      >= integral_(S_3) product_i(1-c_i(t)/q_i)_+ dH_3. (FC218)
+
+The pointwise product is a count of successive uniformly bounded numbers of extensions. It does not assert independence of the surviving coordinates or of the different bad-fibre events.
+
+Set `B_i={t:c_i(t)>=q_i}` and `G=S_3 minus union_i B_i`. On G every integer `q_i-c_i(t)` is at least one. Therefore
+
+    Haar(actual full survivor)>=H_3(G)/product_i q_i.   (FC219)
+
+This supplies a positive proportion of the full finite carrier, not only an existence assertion for ternary points. No lower bound on every fibre is required. The empty private support has product one.
+
+### 3. A tail budget for the actual bad ternary sets
+
+Fix i with `d_i>0` and an integer h with `0<=h*d_i<q_i`. The depths `0,...,h-1` contain at most `h*d_i` assigned labels in total, so their contribution to c_i(t) is at most that number for every t. Let
+
+    R_(i,h)(t)=sum_(assigned originals m at i, k_m>=h)
+                  1_(t in I_m),
+    Z_(i,h)=sum_(same originals) H_3(S_3 intersect I_m). (FC220)
+
+The original prefixes `I_m` and the pure3 avoid-set refer to the same actual family. On `S_3 intersect B_i`, `R_(i,h)>=q_i-h*d_i`. Integration consequently yields
+
+    H_3(S_3 intersect B_i)
+      <= Z_(i,h)/(q_i-h*d_i)
+      <= [(3*d_i)/2]*3^-h/(q_i-h*d_i).                (FC221)
+
+The second inequality uses, once for each distinct original label,
+
+    Z_(i,h)<=sum_(k>=h)d_i*3^-k=(3*d_i/2)*3^-h.
+
+This is a nonnegative enlargement of a finite actual sum, not an infinite congruence family. The first inequality retains finer actual prefix incidence and can be strictly sharper.
+
+For `d_i=0`, take `beta_i=0`. Otherwise define the finite actual-tree certificate
+
+    beta_i=min(alpha, min_(integer h>=0, h*d_i<q_i)
+                         Z_(i,h)/(q_i-h*d_i)).
+
+Then
+
+    H_3(G)>=alpha-sum_i beta_i,
+    Haar(actual full survivor)
+      >=(alpha-sum_i beta_i)_+/product_i q_i.          (FC222)
+
+The minimum selects one valid global threshold for the bound on each B_i. It does not optimize phases independently on different ternary leaves. All intersections in Z can be integrated on the existing event-address tree. Separate B_i may overlap arbitrarily; the union bound requires no independence. Replacing beta_i by any of FC221's geometric upper bounds is also valid.
+
+### 4. Arbitrary pair graphs on at most eleven private primes
+
+First take the eleven smallest permitted private primes, in increasing order:
+
+    (5,7,11,13,17,19,23,29,31,37,41).
+
+For a complete graph `d_i=i-1`; smaller graphs have no more active assigned labels at any depth. Use the following fixed thresholds and geometric bounds. The first vertex has no earlier neighbor and no bad set.
+
+| q_i | d_i bound | h_i | bad-mass upper bound |
+| ---: | ---: | ---: | ---: |
+| 7 | 1 | 6 | 1/486 |
+| 11 | 2 | 5 | 1/81 |
+| 13 | 3 | 3 | 1/24 |
+| 17 | 4 | 3 | 2/45 |
+| 19 | 5 | 3 | 5/72 |
+| 23 | 6 | 3 | 1/15 |
+| 29 | 7 | 3 | 7/144 |
+| 31 | 8 | 3 | 4/63 |
+| 37 | 9 | 3 | 1/20 |
+| 41 | 10 | 3 | 5/99 |
+
+Every denominator `q_i-h_i*(i-1)` is positive. These ten rational bounds sum to
+
+    672449/1496880 <1/2,
+    delta_11:=1/2-672449/1496880=75991/1496880>0.       (FC223)
+
+Hence for the actual eleven-prime set above,
+
+    H_3(G)>=delta_11,
+    Haar(actual full survivor)
+      >=75991/75904355744768350800>0.                 (FC224)
+
+Here `product_i q_i=50708377254535`. These are ordinary full-Haar lower bounds, uniform over all finite ternary depths, all allowed inventories and all globally fixed phases in FC214.
+
+For any increasing tuple of at most eleven distinct primes at least 5, its i-th prime is at least the displayed i-th prime. Keep the same h_i and use `d_i<=i-1`. The geometric expression in FC221 increases with d_i and decreases with q_i on its positive-denominator domain. Thus its bad-mass sum is at most the corresponding initial segment of the table. The good ternary mass is still at least delta_11. The full survivor bound is `delta_11/product_i q_i`; the specific numerical denominator in FC224 is only for the displayed tuple. No substitution preserves that numerical denominator for larger primes.
+
+### 5. Arbitrary graph size with two earlier neighbors
+
+Suppose the underlying simple pair graph is 2-degenerate: there exists an ordering with `d_i<=2`. The primes may occur in any order in that certificate. For each odd prime q>=5 choose
+
+    h=(q-1)/2.
+
+Since `d_i<=2`, the denominator `q-h*d_i` is at least one, and FC221 gives
+
+    H_3(S_3 intersect B_i)<=3*3^(-(q_i-1)/2).          (FC225)
+
+This bound also safely covers vertices with fewer predecessors, though their actual bounds are smaller. Sum over the actual distinct primes. For an upper bound, include 5, 7 and every odd integer at least 11. There is no prime 9, so
+
+    sum_(q prime,q>=5)3^{1-(q-1)/2}
+      <=1/3+1/9+sum_(r>=5)3^{1-r}
+      =1/3+1/9+1/54=25/54.                           (FC226)
+
+This is an explicit convergent geometric sum; no asymptotic estimate for primes is used. Combining FC215, FC219 and FC226 gives
+
+    H_3(G)>=1/2-25/54=1/27,
+    Haar(actual full survivor)>=1/(27*product_i q_i)>0.(FC227)
+
+Thus arbitrary finite 2-degenerate pair graphs on primes starting at 5 survive at arbitrary finite ternary height and arbitrary phases. The count of primes, maximum degree and ternary height are unbounded within this restricted syntax. Higher nonternary powers and unary nonternary originals remain excluded.
+
+### 6. What the source retains, and why dead fibres cause no contradiction
+
+Every count and every intersection in FC216--FC222 uses the actual labelled prefix family. A long nested branch can be genuinely dead, as in FC181. The proof removes such branches within the union of bad sets and pays for their actual ternary mass. It does not combine separately attainable favorable phases.
+
+For example choose q=5,r=7. List all 35 private pairs once, assigning the j-th pair to the unique actual label `3^j*5*7`, with ternary prefix `1 mod3^j`, for j=1,...,35. Add the pure class `0 mod3`. On `1 mod3^35` the private grid is completely covered. Yet the mixed original events are disjoint by their private-pair addresses, so the exact full-Haar survivor is
+
+    2/3-(1-3^-35)/70>0.                              (FC228)
+
+This is an actual finite globally phased family, not a mixture of separately chosen configurations. The control evaluates it by its 36 prefix-depth shells, not by enumerating a period of size `3^35*35`.
+
+The good set G and its graph constraints may depend on higher ternary digits inside one first root. Positive mass guarantees some first root contains positive surviving mass. It does NOT automatically provide a Cartesian survivor `first-root cylinder times fixed private set`. Therefore FC227 must not be inserted into the first-root product consumer FC182--FC194 without a further source bridge. A literal deeper product cylinder exists after resolving a positive finite survivor, but its depth can depend on the family, as FC195--FC196 already explain.
+
+For each fixed finite prime support, conditioning full Haar on the actual surviving set gives a joint density bound at most `product_i q_i/delta`, with delta from FC223 or FC227, independent of the finite ternary height. The resulting joint ternary/private law may be correlated. The full-core continuation below accepts exactly this law; it does not force the ternary coordinate out of the head.
+
+### 7. A full-core tail consumer removes the separate ternary-depth cost
+
+The full-core bridge FC197--FC204 reuses [Report458 DP10--DP14](../450-499/458-distinguished-prime-completion-removes-the-early-phase-restriction.md) with an unused distinguished prime. It accepts a probability on the full actual core survivor, including the entire ternary coordinate, dominated by Lambda times full Haar. Its cutoff depends on Lambda and the finite head prime set, not on the full head exponent heights.
+
+For either proved pair-core class above, put
+
+    R={3,q_1,...,q_n}, P_Q=product_i q_i,
+    delta=delta_11 for the at-most-eleven-prime class,
+          or 1/27 for the 2-degenerate class,
+    Lambda_Q=P_Q/delta,
+    N_Q=ceil(Lambda_Q*product_(p in R)p(p+1)/(p-1)^2).
+
+Let U be the ACTUAL complete core survivor. By FC219/FC223 or FC227, Haar(U)>=1/Lambda_Q, so normalized Haar on U is a full joint source with density at most Lambda_Q. This conclusion holds for every permitted finite ternary height and every original phase assignment in the stated core syntax. Resolving larger head query heights by uniform lifting preserves the same density cap.
+
+Consequently every such fixed core extends to any finite globally phased family of distinct tail originals
+
+    m=a*product_(p in T)p^(f_p),
+    a|Q, support(Q) subset R,
+    nonempty T subset outside primes,
+    every outside prime >= 3^256*N_Q^3,               (FC229)
+
+with arbitrary finite support sizes and exponent heights. Here Q is any finite actual head-cofactor inventory; it may contain higher powers of 3 or the private core primes. Its heights do not enter N_Q. Tail labels have an outside factor, so they do not collide with core-only labels. The squarefree-pair restriction applies to the core-only originals; outside-touching originals in this consumer have unrestricted support and exponents.
+
+For completeness, the source map is direct. Choose an odd prime r absent from the complete finite family. In Report458's distinguished-r statement, every actual original has r-depth zero, and every tail event is early. The full head period, including 3, is coprime to this r. The complete head intersection sum obeys `J2(Q)<=product_(p in R)p(p+1)/(p-1)^2`; thus the bound in FC229 meets its cutoff. Its single final global conditioning has positive mass, avoids every actual original, and preserves the good core SUPPORT. It need not preserve the exact conditioned-Haar core marginal. The auxiliary prime adds no forbidden class and changes no original phase.
+
+For fixed R this is a cutoff uniform in all admitted ternary core heights. It removes the first-root-product restriction of FC182--FC194 for the new restricted pair-core classes. It does not extend FC159's own skeleton to arbitrary ternary heights: that is a different core family. N_Q can grow with the core prime set and its product, so no cutoff uniform in arbitrary core size is asserted. No new numerical cutoff was searched or evaluated.
+
+### 8. Controls and remaining target
+
+The [joint ternary controls](../../../frontier/cover-geometry/fibre-credit-partition/joint_ternary_controls.py) independently checks the fixed rational table and the two-degenerate geometric sum, directly enumerates three finite globally phased three-prime models to compare the actual fibre counts with FC217 and FC221, and evaluates the actual dead-fibre family FC228 by exact prefix shells. The [result](../../../frontier/cover-geometry/fibre-credit-partition/joint_ternary_controls.json) contains 247 exact predicates. The controls evaluate the fixed constants and the actual finite families. The all-family claims are proved above, not inferred from those finite checks.
+
+For unrestricted Erdős #7, the principal omitted cases are nonternary unary/pure-power originals, higher nonternary exponents, mixed supports of size at least three, and large dense pair graphs not meeting a positive FC222 budget. The present eleven-prime certificate does not extend the FC159 skeleton itself: that skeleton has pure, star and other originals excluded from FC214. Nor does the present construction assert positivity for arbitrary prime support.
+
+The useful new interface is explicit: preserve the common ternary prefix tree, bound the union of fibres whose actual incoming label counts exhaust a prime domain, and perform the private extension count on the remaining positive mass. Increasing depth can create dead fibres without exhausting that common mass. Additional pure/mixed syntax needs an added budget or a different construction on this same source, not reuse of a bound that omitted those classes.
