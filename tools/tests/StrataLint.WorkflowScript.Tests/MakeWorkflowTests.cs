@@ -95,6 +95,7 @@ public sealed partial class MakeWorkflowTests
         "engineering",
         "engineering-tests",
         "selftest",
+        "compile-proof",
         "capacity-audit",
         "update-renderer-contract",
         "clean-lanes",

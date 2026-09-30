@@ -11,6 +11,7 @@ public sealed class DotnetTestScriptTests
     [InlineData("project", "selected", false, 0)]
     [InlineData("relative-project", "selected", false, 0)]
     [InlineData("project", "other", false, 2)]
+    [InlineData("project", "hang-guard", false, 2)]
     [InlineData("project", "selected", true, 0)]
     [InlineData("project", "other", true, 2)]
     [InlineData("unknown", "all-owners", false, 2)]
@@ -36,7 +37,7 @@ public sealed class DotnetTestScriptTests
         var emitted = evidence switch
         {
             "all-owners" => owners,
-            "selected" => [selectedAssembly],
+            "selected" or "hang-guard" => [selectedAssembly],
             "other" => new[] { otherAssembly },
             "zero" => [],
             _ => throw new ArgumentException("unknown fixture evidence", nameof(evidence)),
@@ -54,6 +55,15 @@ public sealed class DotnetTestScriptTests
                 new XElement("TestMethod", new XAttribute("className", assembly + ".Fixture"), new XAttribute("name", "Runs"))))),
             new XElement("ResultSummary", new XAttribute("outcome", "Completed"), new XElement("Counters",
                 new XAttribute("executed", emitted.Length), new XAttribute("passed", emitted.Length))))).Save(trx);
+        if (evidence == "hang-guard")
+        {
+            var document = XDocument.Load(trx);
+            document.Root!.Element("Results")!.Add(new XElement("UnitTestResult",
+                new XAttribute("testId", "hang"), new XAttribute("testName", "Fixture.Hangs"), new XAttribute("outcome", "NotExecuted"),
+                new XElement("Output", new XElement("ErrorInfo", new XElement("Message", "infrastructure-hang-guard expired: fixture")))));
+            document.Root.Element("TestDefinitions")!.Add(new XElement("UnitTest", new XAttribute("id", "hang")));
+            document.Save(trx);
+        }
         WriteExecutable(Path.Combine(binDirectory, "dotnet"),
             """
             #!/bin/bash
@@ -100,6 +110,8 @@ public sealed class DotnetTestScriptTests
         var error = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(result.ExitCode == expectedExit, $"expected exit {expectedExit}, actual {result.ExitCode}\n{output}\n{error}");
         Assert.Single(File.ReadAllLines(log), line => line.StartsWith("test ", StringComparison.Ordinal));
+        Assert.All(File.ReadAllLines(log).Where(line => line.StartsWith("run ", StringComparison.Ordinal)),
+            line => Assert.StartsWith("run --project " + Path.Combine(root, "tools/StrataLint.Cli/StrataLint.Cli.csproj") + " ", line));
         if (expectedExit == 0 && (!filtered || scope != "solution"))
         {
             var required = scope == "solution" ? owners : [selectedAssembly];
@@ -114,7 +126,8 @@ public sealed class DotnetTestScriptTests
         }
         else if (expectedExit != 0)
         {
-            var failure = evidence == "zero" ? "dotnet test executed zero tests"
+            var failure = evidence == "hang-guard" ? "INFRASTRUCTURE_UNRESOLVED"
+                : evidence == "zero" ? "dotnet test executed zero tests"
                 : "TRX has no executed identity from required assembly " + (scope == "solution" ? otherAssembly : selectedAssembly);
             Assert.Contains("TEST_EVIDENCE_FAILED " + failure, error, StringComparison.Ordinal);
         }

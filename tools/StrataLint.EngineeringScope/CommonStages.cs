@@ -362,7 +362,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         CommonExecutionEvidence.ValidateDeltaPlan(root, build, baseSha!, resourcePlan);
         RequireBinary(build, CommonExecutionEvidence.CliPath);
         Step("check-delta", "dotnet", [CommonExecutionEvidence.CliPath, "check-delta", "--protected-base", baseSha!,
-            "--candidate-lean-report", CommonExecutionEvidence.ReportPath], allowAnnotation: true);
+            "--candidate-lean-report", CommonExecutionEvidence.ReportPath, "--common-build-round", build.Round], allowAnnotation: true);
     }
 
     private static void RequireBinary(CommonStageRecord record, string path)

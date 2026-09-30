@@ -90,6 +90,14 @@ internal sealed class SystemCliConsole : ICliConsole
 
 internal static class CliApplication
 {
+    private static int RenderTestEvidence(string command, string[] tail, ICliConsole console)
+    {
+        using var output = new StringWriter();
+        using var error = new StringWriter();
+        var exit = StrataLint.EngineeringScope.TestEvidenceCommands.Run([command, .. tail], output, error);
+        return RenderExplicit(new(exit, output.ToString(), error.ToString()), console);
+    }
+
     // 这张表是动词的唯一真源:dispatch 查它,USAGE 由它渲染,`CliVerbLinkageTests` 也据它
     // 判 Makefile 与脚本里的调用是否悬空。此前 USAGE 是手抄的第二份清单,既包含悬空
     // 动词,又漏掉了已实现的动词。
@@ -108,6 +116,8 @@ internal static class CliApplication
                 RenderExplicit(environment.CheckCurrent(tail), console),
             ["check-delta"] = static (environment, tail, console) =>
                 RenderExplicit(environment.CheckDelta(tail), console, allowProtectedAnnotation: true),
+            ["compile-proof"] = static (_, tail, console) =>
+                RenderExplicit(CompileProofCommand.Run(tail, Environment.CurrentDirectory), console),
             ["clean-lanes"] = static (environment, tail, console) =>
                 RenderCommand(environment.CleanLanes(tail), console),
             ["coverage"] = static (environment, tail, console) =>
@@ -136,6 +146,8 @@ internal static class CliApplication
                 RenderExplicit(environment.EchoVerify(tail), console),
             ["gate-authority"] = static (environment, tail, console) =>
                 RenderExplicit(environment.GateAuthority(tail), console),
+            ["verify-trx"] = static (_, tail, console) => RenderTestEvidence("verify-trx", tail, console),
+            ["list-test-owner-assemblies"] = static (_, tail, console) => RenderTestEvidence("list-test-owner-assemblies", tail, console),
             ["filemap-conform"] = static (environment, tail, console) =>
                 RenderExplicit(environment.FileMapConform(tail), console),
             ["ingest"] = static (environment, tail, console) =>
