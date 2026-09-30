@@ -31749,3 +31749,911 @@ $$
 本节未证明整个 FIB 家族的 Robin 不等式，也未回接所有 $n>5040$ 的 Robin 判据；RH 仍未得到证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 232. 全部低亏损除数的共同核心与任意约化剩余类
+
+§231 通过短余因子比较两个低亏损大除数命中。本节保留同一真实增量源，改为比较两份除数与同一参考整数的公共部分。由此不再需要大除数阈值：全部低亏损除数只能集中到至多一个实际整数。模数也无需具有 FIB 素因子下界；所需单位性由实际约化剩余类自动提供。
+
+### 232.1 公共核心的有限分离条件
+
+取正整数 $m,n_\circ$、整数 $c$，满足 $(c,m)=1$。令 $I$ 为非空有限连续整数区间，并要求每个
+
+$$
+N_g=c+mg\quad(g\in I)
+$$
+
+均为正整数。记 $T_I=|I|$、$X=\max_{g\in I}N_g$ 及
+$\operatorname{diam}(I)=\max I-\min I=T_I-1$。给定一个非负亏损函数 $J(d)$、阈值 $J_0\ge0$，定义全部低亏损除数命中的集合
+
+$$
+E^*=\{g\in I:\exists d\mid N_g,\ J(d)\le J_0\}.
+\tag{232.1}
+$$
+
+**引理 232.1（公共核心的有限单点判据）。** 假设对每个 $J(d)\le J_0$ 的正整数，将 $d/n_\circ=u_d/v_d$ 约分以后，都有 $\log v_d\le L_0$。若
+
+$$
+\boxed{n_\circ e^{-2L_0}>\operatorname{diam}(I),}
+\tag{232.2}
+$$
+
+则 $|E^*|\le1$。这里不要求 $(n_\circ,m)=1$，也不要求 $d$ 有指定的下界。
+
+证明。任取 $g_1,g_2\in E^*$，各选一个实际除数 $d_i\mid N_{g_i}$，满足 $J(d_i)\le J_0$。写成既约分数 $d_i/n_\circ=u_i/v_i$。约分的定义给
+
+$$
+v_i\mid n_\circ,\qquad
+\gcd(d_i,n_\circ)=n_\circ/v_i.
+$$
+
+于是正整数
+
+$$
+\begin{aligned}
+q_0
+&=\gcd(n_\circ/v_1,n_\circ/v_2)\\
+&=\frac{n_\circ}{\operatorname{lcm}(v_1,v_2)}
+\ge\frac{n_\circ}{v_1v_2}
+\ge n_\circ e^{-2L_0}
+\end{aligned}
+\tag{232.3}
+$$
+
+同时整除 $d_1,d_2$，从而同时整除 $N_{g_1},N_{g_2}$。因 $N_{g_1}\equiv c\pmod m$ 且 $(c,m)=1$，必有 $(q_0,m)=1$。由
+$q_0\mid N_{g_1}-N_{g_2}=m(g_1-g_2)$ 得到
+
+$$
+q_0\mid g_1-g_2.
+$$
+
+式（232.2）—（232.3）又给
+$|g_1-g_2|\le\operatorname{diam}(I)<q_0$，故 $g_1=g_2$。$\square$
+
+若已有统一编辑界
+
+$$
+\mathcal L(d,n_\circ):=\sum_p|v_p(d)-v_p(n_\circ)|\log p
+=\log u_d+\log v_d\le L_0,
+\tag{232.4}
+$$
+
+它当然提供引理所需的分母界。但公共核心只消耗分母高度：移除参考素因子会缩小核心，新增分子素因子不会缩小它。因此可独立求更紧的分母界，而不必让式（232.2）承受全部编辑成本。
+
+条件（232.2）是一份有限充分条件，不由 §231 的正分数交叉乘积条件自动推出。某个有限实例通过短余因子高度过滤，并不表示它已经通过本节的全部除数公共核心过滤。
+
+### 232.2 不再切分大小的完整剩余矩
+
+取 $s\ge1$，使用真实非负乘法增量
+
+$$
+b_s(1)=1,\qquad
+b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1),
+\qquad Z(n)=\sigma(n)/n.
+$$
+
+令
+
+$$
+\begin{gathered}
+w(d)=b_s(d)/d,\qquad U=\sum_{d\ge1}w(d),\qquad
+\mu_s(d)=w(d)/U,\\
+M=\prod_p\max_{j\ge0}w(p^j),\qquad
+m_s=M/U,\qquad J_s(d)=\log(M/w(d)),\\
+W_q=\sum_{d\ge1}w(d)^q\quad(1/2<q<1),\qquad
+\Lambda=XU/t^s\quad(t>0).
+\end{gathered}
+\tag{232.5}
+$$
+
+这里 $w(p^0)=1$。对每个固定 $s\ge1$，由 $1\le Z(p^j)\le2$ 及中值定理，
+
+$$
+0<b_s(p^j)\le s2^{s-1}p^{-j},\qquad
+0<w(p^j)\le s2^{s-1}p^{-2j}\quad(j\ge1).
+$$
+
+因此 $U$ 收敛；对每个固定 $q>1/2$，$\sum_p\sum_{j\ge1}w(p^j)^q<\infty$，故 $W_q$ 收敛。除有限多个素数外，所有 $j\ge1$ 都有 $w(p^j)<1$；每个剩余素数的局部序列趋于零并取得最大值，所以 $M$ 是有限多个非平凡局部最大值的乘积，并由某个有限整数取得。这只说明定义良好，不提供随 $s$ 增长的统一误差。以 $J=J_s$ 定义式（232.1）的集合。
+
+**命题 232.2（全部除数过滤的剩余矩）。** 对上述任意有限约化剩余类窗口，
+
+$$
+\boxed{
+\sum_{g\in I\setminus E^*}\left(\frac{Z(N_g)}t\right)^s
+\le \Lambda\left(1+\frac{T_I}{X}\right)\mu_s\{J_s>J_0\}.
+}
+\tag{232.6}
+$$
+
+并且
+
+$$
+\boxed{
+\sum_{g\in I\setminus E^*}\left(\frac{Z(N_g)}t\right)^s
+\le\frac{(T_I+X)e^{-(1-q)J_0}M^{1-q}W_q}{t^s}.
+}
+\tag{232.7}
+$$
+
+这两条有限上界不要求式（232.2），也不要求任何大除数阈值或 $D>T_I$。
+
+证明。每个实际整数都满足有限恒等式
+
+$$
+Z(N)^s=\sum_{d\mid N}b_s(d).
+\tag{232.8}
+$$
+
+若 $(d,m)>1$，则 $d$ 不能整除任何 $N_g$。若 $(d,m)=1$，命中的乘子只占模 $d$ 的一个余数类，故在连续整数区间 $I$ 中命中数至多 $T_I/d+1$。对 $g\notin E^*$，其每个实际除数均满足 $J_s(d)>J_0$。由非负性以及实际 $d\le X$，
+
+$$
+\begin{aligned}
+\sum_{g\in I\setminus E^*}Z(N_g)^s
+&\le\sum_{\substack{d\le X\\J_s(d)>J_0}}b_s(d)(T_I/d+1)\\
+&\le(T_I+X)\sum_{J_s(d)>J_0}w(d)\\
+&=(T_I+X)U\mu_s\{J_s>J_0\}.
+\end{aligned}
+\tag{232.9}
+$$
+
+除以 $t^s$ 即得式（232.6）。在高亏损集合上，$w(d)<Me^{-J_0}$，从而
+
+$$
+\begin{aligned}
+\sum_{J_s(d)>J_0}w(d)
+&=\sum_{J_s(d)>J_0}w(d)^q w(d)^{1-q}\\
+&\le e^{-(1-q)J_0}M^{1-q}W_q.
+\end{aligned}
+\tag{232.10}
+$$
+
+代回式（232.9）便得到式（232.7）。$W_q$ 是未归一化权重的幂和，所以这里无需另乘一个 $U$。$\square$
+
+当式（232.2）也成立时，若 $E^*$ 非空，将其唯一整数记作 $N_*$，并定义
+
+$$
+C_*:=t^{-s}\sum_{\substack{d\mid N_*\\J_s(d)\le J_0}}b_s(d);
+$$
+
+若 $E^*$ 为空则取 $C_*=0$。于是完整实际矩具有精确分解
+
+$$
+\boxed{
+\sum_{g\in I}\left(\frac{Z(N_g)}t\right)^s=C_*+R_{\mathrm{high}},
+\qquad
+0\le R_{\mathrm{high}}
+\le\Lambda(1+T_I/X)\mu_s\{J_s>J_0\}.
+}
+\tag{232.11}
+$$
+
+其中 $R_{\mathrm{high}}$ 保留所有实际整数的全部高亏损除数，包括 $N_*$ 本身的高亏损除数。它的上界仍按式（232.9）对完整 $I$ 上的高亏损命中计数得到。同一个 $N_*$ 可以承载许多低亏损除数；式（232.11）没有把 $C_*$ 当成单个源原子，也没有证明 $C_*<1$。
+
+### 232.3 FIB 窗口的加强版单候选界
+
+回到 §231 的 FIB 窗口，令 $y=\log A$、$\ell=\log y$、$s=y\ell$、$R=y/\ell^2$、$t=e^\gamma\ell$、$b_2=\pi^2/6$，并固定 $J_0=8b_2R$。继续使用式（231.9）的参考整数 $n_y$。
+
+§230 的统一低亏损编辑界和参考规模给
+
+$$
+J_s(d)\le8b_2R
+\ \Longrightarrow\
+\log v_d\le\mathcal L(d,n_y)=O(y/\sqrt\ell)=o(y),
+\qquad \log n_y=y+o(R).
+\tag{232.12}
+$$
+
+另一方面，$\log\operatorname{diam}(I)=y/2+O(1)$。所以式（232.2）最终成立，引理 232.1 给全部除数集合 $|E^*|\le1$。此步不再使用 $n_y$ 与 $V$ 的互素性。
+
+引理 231.1 及 §210.2 分别给
+
+$$
+\mu_s\{J_s>8b_2R\}\le e^{-5b_2R/3+o(R)},
+\qquad\log\Lambda=b_2R+o(R).
+$$
+
+代入式（232.6），并用 $T_I/X=e^{-y/2+O(1)}$，得到
+
+$$
+\boxed{
+|E^*|\le1,\qquad
+\sum_{g\in I\setminus E^*}\left(\frac{Z(N_g)}t\right)^s
+\le e^{-2b_2R/3+o(R)}\longrightarrow0.
+}
+\tag{232.13}
+$$
+
+这是整个候选补集矩的衰减率，不再含 §231 中由 $H=e^{aR}$ 产生的 $a-b_2$ 项，也不再选择 $a,H,D$。因补集矩最终小于一，其中每个整数都满足
+
+$$
+Z(N_g)<t=e^\gamma\log\log A
+\le e^\gamma\log\log N_g.
+\tag{232.14}
+$$
+
+所有可能的 Robin 非严格违例仍至多一个，且现在被集中到“含任意低亏损除数”的实际整数上。唯一整数是否存在及其完整权重是否低于 Robin 预算，仍是另一项问题。
+
+### 232.4 任意增长模数的统一推论
+
+公共核心还适用于没有 FIB 来源的模数。给定实数 $1<A\le X$、正整数 $m$ 及 $(c,m)=1$，令
+
+$$
+\mathcal A(A,X;m,c)
+=\{N\in\mathbb Z\cap[A,X]:N\equiv c\pmod m\}.
+\tag{232.15}
+$$
+
+其乘子集合 $I=\{g\in\mathbb Z:A\le c+mg\le X\}$ 是连续整数区间；空集时下述结论平凡成立。对非空集合，有
+
+$$
+\operatorname{diam}(I)\le(X-A)/m.
+$$
+
+因此有限公共核心充分条件可以直接写成
+
+$$
+\boxed{n_\circ e^{-2L_0}>(X-A)/m.}
+\tag{232.16}
+$$
+
+**推论 232.3（多项式规模模数的逐剩余类集中）。** 固定 $C_0>1$ 和 $\beta>0$。当 $A\to\infty$ 时，对所有同时满足
+
+$$
+A\le X\le C_0A,\qquad m\ge A^\beta,\qquad(c,m)=1
+\tag{232.17}
+$$
+
+的参数，充分大时每份集合 $\mathcal A(A,X;m,c)$ 内至多有一个 Robin 非严格违例。以 $y=\log A$、$\ell=\log y$、$s=y\ell$、$R=y/\ell^2$、$t=e^\gamma\ell$ 和 $J_0=8b_2R$ 定义同一真实源，则其全部低亏损除数只命中至多一个整数，且余下的完整归一化矩满足式（232.13）的上界。起效阈值可依赖 $C_0,\beta$，但不依赖具体的 $m,c,X$。
+
+证明。统一编辑界（232.12）只依赖真实源参数 $y,s$，不依赖模数。由此
+
+$$
+\log(n_y e^{-2L_0})=y-o(y),\qquad
+(X-A)/m\le C_0 A^{1-\beta}.
+$$
+
+固定 $\beta>0$ 后，式（232.16）对所有显示参数同时最终成立。因而引理 232.1 给低亏损命中集至多一个。这里没有假设参考整数是模 $m$ 的单位；若它不是单位，引理中的实际共同除数仍因命中约化剩余类而自动与 $m$ 互素。
+
+源的渐近展开仍给
+
+$$
+\log\Lambda=\log(X/A)+b_2R+o(R)=b_2R+o(R),
+$$
+
+其中 $0\le\log(X/A)\le\log C_0$。此外 $T_I\le(X-A)/m+1\le X+1$，故 $1+T_I/X$ 一致有界。式（232.6）和固定阶尾界于是给统一的 $e^{-2b_2R/3+o(R)}$ 上界。该界最终小于一，逐项推出严格 Robin，再用单点性得到所述非严格违例个数界。$\square$
+
+本推论允许合数模数、带小素因子的模数和任意约化剩余类；没有声称覆盖非约化剩余类，也没有将“每类至多一个”相加成“所有类都没有”。它是依赖 §§210、218、223、230 解析前提的充分大结论，尚未给出统一有效起点。
+
+### 232.5 与既有全局稀疏性的量词区别
+
+[Luca–Pomerance–Solé 的 2025 年勘误](../../../Library/Analytic/lucapomerancesole2025robin.md)已经无条件证明，$5040<n\le x$ 中 Robin 非严格违例的总数至多
+
+$$
+x^{O(1/\log\log x)}
+=\exp[O(\log x/\log\log x)].
+\tag{232.18}
+$$
+
+其结论是全部整数上的全局计数。本节控制每一个预先指定的增长约化剩余类，并同时给该类内源权重的完整补集矩上界；不能把已知的全局稀疏性称为本研究新结论，也不能仅凭全局总数界推出逐类的单点性。这里不作原创性判断。
+
+式（232.11）把尚未控制的部分集中为同一实际整数上的联合低亏损权重 $C_*$。消除这个整数需要新的实际命中约束、候选排除或严格联合预算。集中结论本身没有完成这一步，没有证明所有 FIB 窗口的 Robin 不等式，也没有证明 RH。
+
+## 追加锚（本行以下为增补区）
+
+## 233. Robin 文献接口、经典简化与剩余的联合预算
+
+本节把 §§208—232 使用的工具接回已有文献。文献范围截至 2026 年 9 月 30 日，限于与当前 Robin、近极值整数、增长矩及固定剩余类路线直接相关的原文；不声称穷尽 RH 文献。以下区分已发表结果、版本固定的预印本陈述和本卷的纸面推导，均不凭文献阅读生成 Lean 核验状态。
+
+### 233.1 直接复用的定义与估计
+
+[Fan–Kobayashi–Molnar](../../../Library/ArithSums/fankobayashimolnar2025family.md) 的式（4）定义
+
+$$
+\sigma_{-1}^{[\kappa]}(n)
+=\sum_{d\mid n}\mu(n/d)\left(\frac{\sigma(d)}d\right)^\kappa.
+$$
+
+该论文已于 2026 年 6 月 7 日发表于 The Ramanujan Journal；此处公式定位仍钉在 2025 年 arXiv v1，未将预印本的排印问题外推到尚未取得正文的期刊版。
+
+取 $\kappa=s$，它就是本卷的 $b_s(n)$；其式（3）的 $c(s)$ 就是 $U(s)=\sum_n b_s(n)/n$。因此，真实增量源的定义、Möbius 展开与均值常数应直接引用该来源，不能作为 FIB 的新构造。该文的主要 $\kappa$-Robin 定理处理另一个函数 $\sigma^{[\kappa]}=\mu*\sigma^\kappa$，不自动成为 $b_s$ 的 Robin 定理；其固定 $\kappa$ 的均值误差也不能直接用于 $s=\log A\log\log A$。
+
+[Weingartner 的高正矩展开](../../../Library/ArithSums/weingartner2010distribution.md)已经提供 $s=y\log y$ 的尺度与 $\pi^2/6$ 的首项修正。该来源的 Euler 乘积 $W(s)$ 属于 $n/\varphi(n)$，与 $U(s)$ 的比较及实际增量源的亏损尾仍须各自核对。本卷已有此来源接口，不另行重建同名矩理论。
+
+[Luca–Pomerance–Solé 的勘误](../../../Library/Analytic/lucapomerancesole2025robin.md)提供 Robin 非严格违例的全局稀疏性。固定价格下相对极值整数的对数损失则是 [Erdős–Nicolas 的 benefit 方法](../../../Library/ArithSums/erdosnicolas1975repartition.md)。重新用“边界预算”命名这些量不改变它们的文献来源。
+
+### 233.2 单候选计数的经典简化
+
+§232 的完整加权补集矩与不带权候选计数必须区分。后者可直接由经典 benefit 的支撑损失思路、素数定理与 Mertens 乘积估计推出，无需 FIB 来源，也无需实际增量源的高阶矩。下面写明这一综合推论，不把它归为新的 FIB 方法或已核实的原创结果。经典 benefit 的定义见 [Erdős–Nicolas 1975](../../../Library/ArithSums/erdosnicolas1975repartition.md)，所需定量素数估计可取 [Dusart 2010](../../../Library/Weil/dusart2010estimates.md) 的 Theorems 5.2、6.12。
+
+固定 $C_0>1$，取 $A>e^2$、$y=\log A$，并定义
+
+$$
+P_y=\prod_{p\le y}p,\quad
+\vartheta(y)=\log P_y,\quad
+u(x)=\log\frac{x}{x-1},\quad
+\epsilon_y=\frac{u(y)}{\log y},\quad
+L_y=\log\frac{P_y}{\varphi(P_y)}.
+$$
+
+函数 $u(x)/\log x$ 在 $x>1$ 严格递减，故 $a_y(p)=u(p)-\epsilon_y\log p$ 在 $p\le y$ 非负，在 $p>y$ 非正。对任意正整数 $n$ 定义有限支撑损失
+
+$$
+\begin{aligned}
+\Delta_y(n)
+&=L_y-\epsilon_y\vartheta(y)
+-\log\frac n{\varphi(n)}+\epsilon_y\log n\\
+&=\sum_{\substack{p\le y\\p\nmid n}}a_y(p)
++\sum_{\substack{p>y\\p\mid n}}(-a_y(p))
++\epsilon_y\sum_{p\mid n}(v_p(n)-1)\log p
+\ge0.
+\end{aligned}
+\tag{233.1}
+$$
+
+这保留同一个整数的实际素因子；三项分别计缺失小素数、加入大素数和重复素幂的代价。对
+
+$$
+A\le n\le C_0A,\qquad
+\frac n{\varphi(n)}\ge e^\gamma\log y,
+$$
+
+直接有统一有限上界
+
+$$
+0\le\Delta_y(n)\le
+D_y:=L_y-\log(e^\gamma\log y)
++\epsilon_y(y+\log C_0-\vartheta(y)).
+\tag{233.2}
+$$
+
+若 $D_y<0$，这份候选集合为空；否则上界有效。Dusart 的上述两个定理分别给
+
+$$
+\vartheta(y)=y+O(y/\log^2y),\qquad
+L_y=\gamma+\log\log y+O(1/\log^2y).
+$$
+
+又 $\epsilon_y=O(1/(y\log y))$，故 $D_y=O_{C_0}(1/\log^2y)=o(1/\log y)$。误差不依赖具体的 $n$、模数或剩余类。
+
+为把损失转成公共素因子，取 $0<\eta<1/2$ 且 $(1-\eta)y>1$。由于 $u(x)-\epsilon_y\log x$ 递减，记
+
+$$
+\kappa_y(\eta)=u((1-\eta)y)-\epsilon_y\log((1-\eta)y)>0.
+$$
+
+由式（233.1），缺失素因子的对数质量满足有限界
+
+$$
+\sum_{\substack{p\le y\\p\nmid n}}\log p
+\le\frac{\log y}{\kappa_y(\eta)}\max(D_y,0)
++\vartheta(y)-\vartheta((1-\eta)y).
+\tag{233.3}
+$$
+
+取 $\eta=(\log y)^{-1/2}$。由 $1/x\le u(x)\le1/x+1/(x(x-1))$，充分大时 $\kappa_y(\eta)\ge\eta/(2y)$；定量素数定理同时给末项 $O(y/\sqrt{\log y})$。因此，统一于这份候选集合，
+
+$$
+\sum_{\substack{p\le y\\p\nmid n}}\log p
+=O_{C_0}\!\left(\frac y{\sqrt{\log y}}\right)=o(y).
+\tag{233.4}
+$$
+
+任取两个候选 $n_1,n_2$，它们与同一 $P_y$ 的公共核心满足
+
+$$
+\log\gcd(P_y,n_1,n_2)
+\ge y-O_{C_0}\!\left(\frac y{\sqrt{\log y}}\right).
+\tag{233.5}
+$$
+
+若两者又在同一约化剩余类 $n_i=c+mg_i$、$(c,m)=1$，该共同除数 $q_0=\gcd(P_y,n_1,n_2)$ 与 $m$ 互素，故 $q_0\mid(g_1-g_2)$。固定 $\beta>0$ 且 $m\ge A^\beta$ 时，
+
+$$
+|g_1-g_2|\le(C_0-1)A/m
+\le(C_0-1)e^{(1-\beta)y}
+<q_0
+$$
+
+对充分大 $A$ 一致成立，因此 $n_1=n_2$。最后，Robin 非严格违例满足
+
+$$
+\frac n{\varphi(n)}\ge\frac{\sigma(n)}n
+\ge e^\gamma\log\log n
+\ge e^\gamma\log\log A=e^\gamma\log y,
+$$
+
+所以 §232 的不带权逐类单点结论已由这条经典路线得到。其起效阈值可依赖 $C_0,\beta$，不依赖 $m,c,X$；没有假设参考素数乘积与模数互素，只有实际共同核心需要并自动具有该性质。
+
+这条路线没有给出 §232 的真实增量源低亏损命中集，也没有给出 $e^{-2b_2R/3+o(R)}$ 的完整加权补集矩，更没有排除唯一候选。未在所查原文中找到同一句逐类陈述，不意味着该短推论具有文献优先权。本段是经典结果的书面综合与研究去重，未新增 Lean 声明，也未完成 RH。
+
+### 233.3 换切面必须保留实际的检验集合
+
+[Musin 的 2026 年 9 月 27 日预印本](../../../Library/Analytic/musin2026higherorder.md)直接研究支撑坐标的递归细化。其 Theorems 3.1—3.2 为坐标族 $(F(u),-H(\rho))$ 保留 Robin 判据给出增长与凹性假设，其中 $u=\log\log n$、$\rho=\sigma(n)/n$，比较域始终是同一份 colossally abundant 整数集。它提供可核对的充分条件，不由坐标可逆性或 Zeckendorf 编码唯一性替代。
+
+该文还区分两类现象：某些每层保留 Robin 判据的无限集合，可以无条件具有空交集；另一类满足 Theorem 4.1 假设且各层非空、保留全局最大 Robin 比值的集合，其最小成员逃向无穷才与 RH 等价。因此，“逐层排掉每个固定整数”本身不能证明所有层都没有违例。对 FIB 观察而言，仍需证明相关观察保留真正的约数和及判据所需的检验对象。
+
+将任意潜在违例输送到一个支撑接触点，也不保证保留 $N\equiv1\pmod{F_r}$。反之，只证明该剩余类没有违例，尚未覆盖全部 colossally abundant 整数。两条路线之间缺少的是保留目标性质的算术映射，不能只按“都属于几何换切面”连接。
+
+### 233.4 固定模数的最新分布接口
+
+[增长模数来源笔记](../../../Library/ArithSums/fibaffine2026growingmoduli.md)纳入 Pascadi, arXiv:2505.00653v2 的 Theorem 1.5：无权平滑数在模数平均下的范围已推进到 $x^{5/8-\varepsilon}$。当前大除数源长度 $x=F_r^{2-o(1)}$，故固定 $0<\varepsilon<1/8$ 并取充分大规模后，$F_r=x^{1/2+o(1)}$ 的大小本身在其允许范围内。
+
+仍不能直接代入的条件是：定理要求的平滑度下限、当前随规模增长的素数幂增量权，以及从模数平均抽取一个指定 $F_r$ 时误差的强度。抽取单项保留整个总误差，没有额外的 $1/\varphi(F_r)$ 因子。该定理固定非零剩余类参数 $a$；除数切面中的 $h^{-1}\bmod F_r$ 随 $h$ 变化，所需一致性仍须另证。共同来源还要求同一个分解 $dh=N_g=1+F_rg$ 及相应大小窗口；分别估计 $d$ 与 $h$ 的边缘分布不能代替这个联合关系。
+
+[已有 Fourier 来源笔记](../../../Library/Fourier/fibentropy2026weightedaggregates.md)中的 Hardy–Xu 与 Drappeau–Granville–Shao 继续按各自条件使用。固定复合模数并非 Hardy–Xu 的障碍；其源长度、平滑度和受限乘法权条件才是当前直接代入的缺项。Drappeau–Granville–Shao 的任意系数大筛与受限乘法函数定理也须分开，不能把一条的自由系数移到另一条的大模数范围。
+
+### 233.5 下一项估计必须控制同一候选的完整权重
+
+§232 的加权结论将低亏损贡献集中到至多一个实际整数；它比不带权计数多保留了完整源矩的信息，但没有排除该整数。以下取 $A>5040$ 且式（232.2）成立，并假设 $E^*$ 非空，将其唯一实际整数记为 $N_*$。若 $E^*$ 为空，则在补集矩界小于一的范围内已无候选需要另行估计。沿用 $t=e^\gamma\log\log A$、$s=\log A\log\log A$ 及式（232.11）的 $C_*$，把该整数自身的高亏损贡献记为
+
+$$
+H_*:=t^{-s}\sum_{\substack{d\mid N_*\\J_s(d)>J_0}}b_s(d).
+$$
+
+该候选的实际 Robin 目标是
+
+$$
+C_*+H_*<\left(\frac{e^\gamma\log\log N_*}{t}\right)^s.
+$$
+
+若已有 $R_{\mathrm{high}}\le\varepsilon_A$，则 $H_*\le\varepsilon_A$，因而证明
+
+$$
+C_*+\varepsilon_A<\left(\frac{\log\log N_*}{\log\log A}\right)^s
+$$
+
+是一项足够的联合预算条件。不能把它写成已经得到的估计，也不必把更强的 $C_*+\varepsilon_A<1$ 当作原问题的必要条件。估计必须同时保留“这些除数都属于同一个 $N_*$”、素数幂重数、所在窗口以及指定余类，不能组合分别可达而不共同实现的局部最优值。
+
+在这里核对的来源中，尚未取得可直接代入该联合预算的统一定理。下一步的研究对象是这项缺失估计，或能在同一量词范围内排除候选的条件；不再以重做 Möbius 源定义、支撑线构造或扩大已知有限验证范围内的实验代替它。已有有限窗口计算只承担方法核验，不作为 Robin 验证纪录的推进。本文不作原创性声明，不宣称全部 FIB 窗口的 Robin 不等式或 RH 已获证明。
+
+### 233.6 近期解析输入的核验边界
+
+[Nicolas 的 2025 年单作者稿](../../../Library/ArithSums/nicolas2025comparison.md)已经无条件比较
+
+$$
+\Phi(X)=\max_{n\le X}n/\varphi(n),\qquad
+\Sigma(X)=\max_{n\le X}\sigma(n)/n.
+$$
+
+其 Theorems 1.2—1.3 给出 $\Phi(X)/\Sigma(X)$ 的任意固定阶渐近展开与有效余项界，首个修正为 $2\sqrt2/(\sqrt{\log X}\log\log X)$。这是同一截断下两个分别取得的最大值，不是同一个整数上两个函数之比。若从该来源取得正下界 $L(X)\le\Phi(X)/\Sigma(X)$，便可合法使用 $Z(n)\le\Sigma(X)\le\Phi(X)/L(X)$（$n\le X$）；使它小于实际 $n$ 的 Robin 预算仍须额外估计。该文的 CA 素幂阈值用于极值包络，未提供本卷实际增量源的增长矩尾界或保留指定余类的输送。这里不重建这份包络比较，也不将不同极值的实现合并成同一个来源。
+
+另外两条直接相关的近期来源是 Broadbent–Fiori–Kadiri–Ng–Wilk 的 [Bounds for Mertens sums, arXiv:2608.01498v1](https://arxiv.org/abs/2608.01498v1)，以及 Mishra–Sarkar 的 [A finite arithmetic form of Robin’s inequality and its equivalence to the Riemann hypothesis, arXiv:2609.26787v1](https://arxiv.org/abs/2609.26787v1)。前者提供显式 Mertens 乘积估计，后者提出按 $\omega(n)$ 截断指数级数的等价判据。这里已核对相关陈述，未独立审完全部证明；本节的短证只使用上面已经定位的经典渐近估计，不借这些新陈述宣告 RH 已解。
+
+Fabbian 的 [2026 年 9 月 29 日预印本](https://doi.org/10.5281/zenodo.23025480)还提出更强的显式 Mertens 常数及 26-free Robin 推论。其数值证书和全部依赖尚未独立复核，因此不能用它替换本卷已核对的估计或把所称范围登记为本项目已验证结果。近期发表日期、等价重述和更大的有限验证范围承担不同任务，均不能单独补齐式（233.5）之后的候选排除与实际联合预算。
+
+## 追加锚（本行以下为增补区）
+
+## 234. 实际增量亏损与经典极值价格的有限比较
+
+本节把 §232 的源亏损直接接到 [Erdős–Nicolas 的 benefit](../../../Library/ArithSums/erdosnicolas1975repartition.md)。所用增量仍是 [Fan–Kobayashi–Molnar 的既有函数](../../../Library/ArithSums/fankobayashimolnar2025family.md)。以下是经典价格最优条件与局部差分因子的纸面综合，不作原创性声明，也未新增 Lean 证明。参考极值整数不预设属于指定 FIB 窗口或剩余类。
+
+### 234.1 同价极大丰数给最大增量源一个双侧界
+
+固定实数 $s\ge1$，令 $C$ 为任意使 $Z(n)n^{-1/s}$ 在正整数上取得最大值的整数，记
+
+$$
+\mathcal Q_s=\frac{Z(C)^s}{C},\qquad
+w_s(n)=\frac{b_s(n)}n,\qquad M_s=\max_{n\ge1}w_s(n).
+\tag{234.1}
+$$
+
+这里允许价格临界点上的多个极值整数，也允许 $C=1$。经典极大丰数优化给出 $C$ 的存在；§232.2 已保证 $M_s$ 定义良好。对 $n\ge1$ 定义有限乘积
+
+$$
+r_s(n)=\frac{b_s(n)}{Z(n)^s}
+=\prod_{p^a\parallel n}
+\left[1-\left(\frac{Z(p^{a-1})}{Z(p^a)}\right)^s\right].
+\tag{234.2}
+$$
+
+空乘积为一，所以 $0<r_s(n)\le1$ 对全部正整数成立。这是 §216.1—§216.2 已有的实际除数分布在 $D=n$（互补因子为一）处的概率，不是新的算术源。
+
+**命题 234.1（价格极值与最大增量的有限比较）。** 对上述任意同价极值整数 $C$，有
+
+$$
+\boxed{
+\mathcal Q_s\frac{\varphi(C)}C
+\le w_s(C)\le M_s\le \mathcal Q_s,
+\qquad
+J_s(C)\le\log\frac C{\varphi(C)}.
+}
+\tag{234.3}
+$$
+
+证明。对每个 $p^a\parallel C$，比较同一个价格目标在 $C$ 和 $C/p$ 上的值，得到
+
+$$
+\left(\frac{Z(p^a)}{Z(p^{a-1})}\right)^s\ge p.
+$$
+
+因此式（234.2）在 $C$ 上的每个因子至少为 $1-1/p$，从而 $r_s(C)\ge\varphi(C)/C$。另一方面，对任意 $n$，
+
+$$
+w_s(n)=\frac{Z(n)^s}{n}r_s(n)\le\frac{Z(n)^s}{n}\le \mathcal Q_s.
+$$
+
+前者给 $w_s(C)\ge \mathcal Q_s\varphi(C)/C$，后者给 $M_s\le \mathcal Q_s$。相除并取对数得到 $J_s(C)=\log(M_s/w_s(C))\le\log(C/\varphi(C))$。证明没有要求极值唯一；$C=1$ 时各空乘积及不等式仍成立。$\square$
+
+因此，优化增量 $b_s(n)/n$ 与优化 $Z(n)^s/n$ 虽然不是同一问题，其最大值之间已经有独立、明确的有限比较，不能继续把两者之间的全部连接都列作未知。
+
+### 234.2 源亏损等于价格损失加局部差分修正
+
+在同一个 $C,s$ 下，定义经典价格损失与两个差分修正量：
+
+$$
+\begin{aligned}
+\operatorname{Ben}_{C,1/s}(n)
+&=\frac1s\log\frac nC-\log\frac{Z(n)}{Z(C)}\ge0,\\
+\delta_s&=\log(\mathcal Q_s/M_s),\\
+\Lambda_s(n)&=-\log r_s(n)\ge0.
+\end{aligned}
+\tag{234.4}
+$$
+
+式（234.3）给 $0\le\delta_s\le\log(C/\varphi(C))$。直接代入实际源，得到精确关系
+
+$$
+\boxed{
+J_s(n)=s\operatorname{Ben}_{C,1/s}(n)+\Lambda_s(n)-\delta_s.
+}
+\tag{234.5}
+$$
+
+从而对任意正整数都有
+
+$$
+\operatorname{Ben}_{C,1/s}(n)
+\le\frac{J_s(n)+\log(C/\varphi(C))}{s}.
+\tag{234.6}
+$$
+
+这是一个方向明确的传递：低增量亏损强制低经典价格损失。反向传递还要上界 $\Lambda_s(n)$；不能删除该项而把两种损失直接相等。式（234.5）中的 $\delta_s$ 只依赖价格，$\Lambda_s(n)$ 则依赖同一实际整数的完整素幂重数。
+
+取当前尺度 $s=y\ell$、$\ell=\log y$、$R=y/\ell^2$，并令 $y\to\infty$。由删除素数层的条件及
+
+$$
+\frac{Z(p^a)}{Z(p^{a-1})}=1+\frac{p^{-a}}{Z(p^{a-1})}\le1+1/p,
+$$
+
+得到
+
+$$
+p\mid C\quad\Longrightarrow\quad
+\log p\le s\log(1+1/p)\le s/p
+\quad\Longrightarrow\quad p\le y.
+$$
+
+于是由 [Mertens 乘积估计](../../../Library/Weil/dusart2010estimates.md)，
+
+$$
+\log\frac C{\varphi(C)}
+\le\log\prod_{p\le y}(1-1/p)^{-1}
+=\gamma+\log\ell+O(\ell^{-2}).
+\tag{234.7}
+$$
+
+特别地，对任意固定 $K>0$，
+
+$$
+\begin{aligned}
+J_s(n)\le KR
+&\Longrightarrow
+\operatorname{Ben}_{C,1/s}(n)
+\le\frac K{\ell^3}+O\!\left(\frac{\log\ell}{y\ell}\right),\\
+J_s(C)&=O(\log\ell)=o(R),\\
+0\le\log \mathcal Q_s-\log M_s&=O(\log\ell)=o(R).
+\end{aligned}
+\tag{234.8}
+$$
+
+因此，§232 的 $J_s\le8b_2R$ 过滤会保留全部同价 CA 极值整数。这个结论没有证明任何这样的整数属于 $[A,X]\cap(1+F_r\mathbb Z)$；实际窗口和余类命中仍是独立的算术义务。它说明：源亏损集中本身不能以正价格损失为由删去这些极值配置，因为它们的 benefit 恰为零。
+
+### 234.3 素幂资源限制何时不能改善经典支撑界
+
+记 $F_s(n)=\log Z(n)-s^{-1}\log n$，其全局最大值为 $s^{-1}\log \mathcal Q_s$。对任意候选集合 $\mathcal A$，若它仍包含一个同价极值整数 $C$，则
+
+$$
+\sup_{n\in\mathcal A}F_s(n)=\frac1s\log \mathcal Q_s.
+\tag{234.9}
+$$
+
+这是使用资源松弛前可直接核对的饱和条件。例如，若仅保留
+
+$$
+q\mid n,\qquad n/q\le H,\qquad
+p^{v_p(n)}\le B\ \ (p\mid n),\qquad A\le n\le X,
+$$
+
+而某个同价 $C$ 同时满足这些条件，则这些限制没有使该价格包络降低。若任务保留的是准确截断核心 $\gcd(n,n_y)=q$，须检查 $\gcd(C,n_y)=q$，不能只检查 $q\mid C$。若再保留 $n\equiv1\pmod{F_r}$，还须检查该同余；不能从资源条件的饱和推出指定余类也饱和。
+
+对实际整数 $n>5040$，仍有经典的精确预算
+
+$$
+\log\frac{e^\gamma\log\log n}{Z(n)}
+=\operatorname{Ben}_{C,1/s}(n)
+-\left[\frac{\log \mathcal Q_s+\log n}{s}
+-\log(e^\gamma\log\log n)\right].
+\tag{234.10}
+$$
+
+式（234.6）给低亏损候选的 benefit **上界**，而式（234.10）需要足够的 benefit **下界**，或对括号内支撑线过量的上界。两者不能交换方向。所需附加信息必须作用于同一个实际候选，例如指定同余强制的素幂损失，或排除所有同时满足窗口和余类的近极值配置。
+
+### 234.4 与实际截断包络的关系仍保留一项间隔
+
+沿用 §233.6 的 $\Sigma(n)=\max_{m\le n}Z(m)$，定义
+
+$$
+D_n=\log\frac{\Sigma(n)}{Z(n)}\ge0,\qquad
+K_s(n)=\frac{\log \mathcal Q_s+\log n}{s}-\log\Sigma(n)\ge0.
+$$
+
+后一个非负性由同一价格上界对全部 $m\le n$ 成立得到。于是
+
+$$
+\boxed{D_n=\operatorname{Ben}_{C,1/s}(n)-K_s(n).}
+\tag{234.11}
+$$
+
+因此，经典 benefit 和实际包络亏损也不是同一个量。欲用 benefit 下界取得 $D_n$ 下界，必须同时上界支撑线间隔 $K_s(n)$。这一点与式（234.5）的增量差分修正承担不同任务，不能把两份非负损失按名称合并。
+
+式（234.3）—（234.8）提供了此前两个优化目标之间的有限传递；式（234.9）—（234.11）限定其用于候选排除的方向。它们没有给出指定 FIB 余类上的统一正损失，也没有证明所有候选满足 Robin。不含窗口和余类的经典极值比较可以复用；尚需研究的部分是这些额外条件怎样迫使同一整数偏离仍被过滤保留的极值配置。
+
+## 追加锚（本行以下为增补区）
+
+## 235. 5040 核与 Fibonacci 第 19 层的同一坐标
+
+这里以素数秩比较 5040 与一个 Fibonacci 扩展示例；5040 的 Robin 阈值不由 Fibonacci 秩决定。记
+$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。则
+
+$$
+5040=2^4\,3^2\,5\,7,
+\qquad
+(\operatorname{rank}_F(2),\operatorname{rank}_F(3),
+\operatorname{rank}_F(5),\operatorname{rank}_F(7))=(3,4,5,8),
+$$
+
+其中 $\operatorname{rank}_F(p)$ 是 $p$ 首次整除正 Fibonacci 项的指标。另一方面
+
+$$
+F_{19}=4181=37\cdot113,
+$$
+
+且 $37,113$ 都首次出现在第 19 项；它们与 5040 互素。因此
+
+$$
+5040F_{19}=2^4\,3^2\,5\,7\,37\,113=21072240.
+$$
+
+这给出一个有限、可复核的秩分层：5040 提供低秩骨架
+$\{3,4,5,8\}$，乘上 $F_{19}$ 只增加一个新的秩 19 bucket，而没有重用旧素数轴。
+一次性 Lean 检查已核验 $F_{19}$ 的分解、互素性、两个秩 19
+成员、完整素数支撑以及约数和比值
+
+$$
+\frac{\sigma(5040F_{19})}{5040F_{19}}
+=\frac{581932}{146335}
+=\frac{403}{105}\frac{38}{37}\frac{114}{113}.
+$$
+
+因此 Fibonacci 扩展对数预算的新增部分是精确的
+
+$$
+\log\frac{38}{37}+\log\frac{114}{113}
+=\log\frac{4332}{4181}\approx0.03548,
+$$
+
+而不是一个与 5040 核混在一起的未知项。已有 `FibonacciRankEulerTail.result` 在 $d=19$
+给出该秩桶的统一上界
+
+$$
+\sum_{p\in B(19)}\log\frac p{p-1}
+\le\frac{6H_{19}}{19}
+\le\frac{6(1+\log19)}{19}.
+$$
+
+这里应区分实际约数和增量与 Euler 包络：
+
+$$
+\log\frac{4332}{4181}
+<\log\frac{4181}{4032}
+=\log\frac{37}{36}+\log\frac{113}{112}
+\le\frac{6H_{19}}{19}.
+$$
+
+两者分别约为 $0.03547888$ 和 $0.03628792$；秩桶统一上界远粗于这两个值，但它说明“Fibonacci 新层”确实可以单独记账。
+
+5040 的约数和比值是
+$403/105\approx3.838095$；在 Robin 临界量
+$e^\gamma\log\log n$ 上，$n=5040$ 的数值约为 $3.816877$，差额仍为正，
+所以 5040 本身落在临界线的错误一侧。对 $N=5040F_{19}=21072240$，新增的
+$0.03548$ 对数预算同时伴随 $\log\log N$ 的增长；直接数值检查给出
+${\sigma(N)}/{N}\approx3.976711$、$e^\gamma\log\log N\approx5.031796$。
+这些浮点值只比较两个样本，不构成有理区间 Robin 证书，也不能推出异常集中于 5040 或其 Fibonacci 扩展普遍满足 Robin。
+
+与本卷 §209 的正核合并时，对 $N=5040F_{19}$ 有逐轴恒等式
+
+$$
+\log\frac{\sigma(N)}N
+=\sum_{p\mid N}Q_{a_p}(1/p)-\sum_{p\mid N}D_{a_p}(1/p),
+$$
+
+其中第一项按低秩 5040 骨架和秩 19 新层分组，第二项由正核定理逐轴给出正的可量化扣除。
+所以现在有了一个真正的三段分解：
+
+1. 5040 低秩骨架四轴的有限调和幂前缀主项；
+2. Fibonacci 第 19 层两轴的有限调和幂前缀主项；
+3. 从两组主项中扣除每条素数轴的正核缺额 $D_a(1/p)$。
+
+这还没有控制 Robin 路线中唯一的符号不确定部分：把有限主项、Fibonacci bucket 尾项和正核储备接到
+全体 $p^k$ 的有符号无限 $\Phi$ 尾项时，仍需一个保持符号的全局桥。特别是不能用
+$D_a(1/p)>0$ 直接替代该尾项，也不能把 Fibonacci 的秩桶上界当作所有整数的逐点 Robin 证明。
+这明确了下一步：证明一个同一压力/同一配置下的尾项比较不等式，而不是再增加孤立的有限因子恒等式。
+
+## 236. 五窗递归的范数增量与联合算术状态
+
+本节承接 §§149、150、161、165。五个局部标签来自三位二进制窗中禁止相邻占位：
+`000,100,010,101,001`（低位到高位），不是由素数五或 Robin 阈值 5040 决定。
+在低位到高位扫描中，跨窗仍须检查接缝；incoming 位占用时，`100,101` 禁止，只有三个当前标签可用。
+因此任意层数的合法路径不能当作五个分支独立选择的乘积空间。
+
+### 236.1 固定推进与分支注入可逐项分开
+
+沿用 §149 的高窗到低窗 Horner 坐标，令
+$S(a,b)=(a+2b,2a+3b)$、$Q(a,b)=a^2+ab-b^2$。
+对任意整数贡献 $(c,d)$，直接展开得到
+
+$$
+Q(S(a,b)+(c,d))
+=-Q(a,b)+(4a+7b)c-(3a+4b)d+Q(c,d).
+\tag{236.1}
+$$
+
+写 $I_\sigma(a,b)=Q(S(a,b)+d_\sigma)+Q(a,b)$，五个分支的增量恰为：
+
+| 标签 | 贡献 $d_\sigma$ | $I_\sigma(a,b)$ |
+| --- | --- | --- |
+| null | $(0,0)$ | $0$ |
+| 2 | $(1,0)$ | $4a+7b+1$ |
+| 3 | $(0,1)$ | $-3a-4b-1$ |
+| 2 5 | $(2,1)$ | $5a+10b+5$ |
+| 5 | $(1,1)$ | $a+3b+1$ |
+
+这不是五个分支共享的范数守恒。null 只使 $Q$ 翻号；其他分支注入依赖当前状态的量。
+在 $a,b\ge0$ 时标签 3 的注入严格为负，其余非零标签严格为正；
+由于 $Q$ 自身不定号且每一步翻号，这不推出绝对范数或 Robin 余量的单调性。
+若 $x_{j+1}=Sx_j+d_{\sigma_j}$，反复代入给
+
+$$
+Q(x_k)=(-1)^kQ(x_0)
++\sum_{j=0}^{k-1}(-1)^{k-1-j}I_{\sigma_j}(x_j).
+\tag{236.2}
+$$
+
+式（236.1）与表中全部分支已作临时 Lean 代数核验；
+式（236.2）为本节纸面归纳，未新增冻结声明。
+这里的符号来自黄金范数递推，不等同于 Möbius 符号或无限 $\Phi$ 尾项的符号。
+
+### 236.2 守恒证书在哪里失效可以精确定位
+
+§165 中固定本原种子沿齐次 Fibonacci 轨道保留绝对范数，范数素因子可以给出缺素数证书。
+允许局部贡献后，式（236.1）指出证书改变的具体位置。
+已有合法来源 $(4,5)$ 的数量为 $23$、范数为 $11$；
+应用标签 2 的更新后得到 $(15,23)$，数量 $99$、范数 $41$，且 $11\mid99$。
+这组整数等式同样已作临时 Lean 核验。
+因此固定轨道的缺素数性质不能直接传播到任意五窗路径；
+继续研究应跟踪当前范数与实际数量的模响应，而非把初始种子证书永久附在路径上。
+
+### 236.3 收缩几何须与算术响应同时保留
+
+§150 的共轭坐标按 $\psi^3$ 收缩，§161 则证明任意固定合法低位前缀仍允许每一种模数余数的有限延长。
+这些结论共同说明：几何窗口越小，不保证该窗口中的素赋值越确定。
+同一合法有限地址可以同时更新接缝、组成坐标与选定模 $H$ 的组成坐标；
+结束后才以相同的单位位和 $q(a,b)=2a+3b$ 读出实际数量。
+Horner 扫描与低位前缀扫描方向不同，须分别沿用各自接缝合同。
+
+一个具体的下一步研究对象是：在此联合状态上建立对每个合法后继都成立的 Robin 预算比较，
+或对全部尚未结束的合法后继建立统一的剩余预算上界。
+模 $H$ 只保留所选有限素方向；随路径增加的新素方向与高素幂仍需要独立尾界。
+因此五窗递归提供逐步归纳与反例搜索的接口，尚未提供全体整数的 Robin 不等式。
+
+## 追加锚（本行以下为增补区）
+
+## 237. 五窗计数与三步 Fibonacci 推进的同一转移
+
+本节承接 §§104、149、236。五分类来自长度三的无相邻占位窗；它首先是一套带接缝约束的语言。
+以下接缝表按低位到高位扫描。令接缝状态 0 表示前一位空、1 表示前一位占用。只数合法窗并按末位分类，得到：
+
+| incoming | outgoing 0 的窗 | outgoing 1 的窗 |
+| --- | --- | --- |
+| 0 | `000,100,010` | `101,001` |
+| 1 | `000,010` | `001` |
+
+因此以 incoming 为行、outgoing 为列的计数矩阵为
+
+$$
+T=\begin{pmatrix}3&2\\2&1\end{pmatrix}.
+$$
+
+而 §236 的高窗到低窗组成推进为
+
+$$
+S=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad
+J_{\mathrm{swap}}=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad T=J_{\mathrm{swap}}SJ_{\mathrm{swap}}.
+$$
+
+更直接地，单个位的接缝计数矩阵
+$C_{\mathrm{seam}}=\begin{pmatrix}1&1\\1&0\end{pmatrix}$ 满足 $C_{\mathrm{seam}}^3=T$。
+这里 $C_{\mathrm{seam}}$ 与 $J_{\mathrm{swap}}$ 是本节的局部记号。高位到低位 Horner 扫描在 incoming 占用时禁用 `001,101`，应沿相反接缝方向检验；它的计数矩阵同样是 $T$。
+这说明合法路径增长与组成坐标推进来自同一个三步 Fibonacci 递推。
+两个矩阵都满足 $X^2=4X+I$、行列式为 $-1$；谱为
+$2+\sqrt5=\varphi^3$ 和 $2-\sqrt5=-\varphi^{-3}$。
+此处的特征值说明增长与共轭收缩的尺度来源，不说明素因子分布。
+窗枚举、$T=J_{\mathrm{swap}}SJ_{\mathrm{swap}}$、$C_{\mathrm{seam}}^3=T$ 和二次矩阵关系已作一次性 Lean 精确检查，未新增绑定声明。
+
+用户关于“像群”的直觉可以在这里精确化一部分：齐次组成推进 $S$ 在整数格上有整数逆，
+在每个模 $H$ 坐标上也是可逆变换；加上固定贡献仍是可逆的仿射变换。
+但合法执行同时含接缝禁用、结束标志与非法吸收态，全部执行规则不能直接当作群作用。
+应保留可逆的坐标动作与合法语言之间的耦合，不能由矩阵可逆性推断所有后继均合法。
+
+对 Robin 的启发是一个明确的研究合同：递归证明所携带的状态必须足以计算所需预算，
+不仅足以计算路径数量。有限模状态只能观察已选素方向；同谱关系不自动提供新素方向与高素幂的统一尾界。
+可先在真实合法转移上寻找预算函数 $V$，要求每个允许分支满足同一个可累加比较式。
+找不到这样的比较式，五分类只是组织搜索的结构，不能替代无限部分的控制。
+
+## 238. 指数递推削弱素数坐标上的有限正储备
+
+本节承接 §209 的有限正核。定义
+
+$$
+S_a(z)=\sum_{k=0}^{a}z^k,\qquad
+Q_a(z)=\sum_{k=1}^{a}\frac{z^k}{k},\qquad
+D_a(z)=Q_a(z)-\log S_a(z).
+$$
+
+### theorem 238.1 指数增量的两种符号区域
+
+对任意整数 $a\ge1$，有
+
+$$
+\forall z\in(0,\tfrac12],\quad D_{a+1}(z)<D_a(z),
+\qquad D_{a+1}(1)>D_a(1).
+\tag{238.1}
+$$
+
+**证明。** 令 $u=z^{a+1}$。有限和递推给出
+
+$$
+D_{a+1}(z)-D_a(z)
+=\frac{u}{a+1}-\log\frac{S_a(z)+u}{S_a(z)}.
+$$
+
+当 $0<z\le1/2$，$u>0$ 且有限几何和满足
+$S_{a+1}(z)<1/(1-z)\le2\le a+1$。
+对 $0<S_a/S_{a+1}<1$ 使用严格对数上界 $\log x<x-1$，得到
+
+$$
+\log\frac{S_{a+1}}{S_a}
+>1-\frac{S_a}{S_{a+1}}
+=\frac{u}{S_{a+1}}
+>\frac{u}{a+1}.
+$$
+
+因而指数增量为负。当 $z=1$ 时 $S_a(1)=a+1$，同一对数上界则给
+
+$$
+\log\frac{a+2}{a+1}<\frac1{a+1},
+$$
+
+所以增量严格为正。证毕。
+
+**复用与内容边界。** 已有正核的较强下界含分母 $1+z$。它与下一指数的上界直接比较时，条件是
+$z(1+z)<a(a+2)/(a+1)^2$。这已覆盖 $a=1,0<z<1/2$ 和 $a\ge2,0<z\le1/2$。
+剩余端点 $a=1,z=1/2$ 可由 $\log(7/6)>1/8$ 的严格对数界核验。
+因此式（238.1）应作为既有正核结果的应用与理论解释，不另增绑定声明。
+上面的同前缀增量推导提供另一种解释；两条推导都不构成 RH 或 Robin 的全称结算。
+不主张文献原创性。
+
+对实际素数 $p$，$\sigma(p^a)/p^a=S_a(1/p)$ 随指数严格增加，
+而 $D_a(1/p)$ 严格减少。因此不能把“更多迭代、更多指数”当成正储备只增不减的归纳。
+这与五窗范数存在分支注入的现象共同指向同一方法要求：用精确增量式选择状态和预算，
+再验证它在所有实际合法后继上怎样变化。
+无限有符号 $\Phi$ 尾项仍未因此受控；唯一翻号点的存在性与唯一性也未在本节证明。
