@@ -627,3 +627,109 @@ theorem schur_upper [Nonempty Sector] (M : Model Sector spectralSize)
   exact ⟨hKernelProperties, r, hr, hSpectralMinimum, hEncodedDiamondUpper⟩
 
 end D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality
+
+
+namespace D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality
+
+variable {Sector : Type u} [Fintype Sector] [DecidableEq Sector]
+
+set_option maxHeartbeats 40000000 in
+/-- A single simplex maximizer dominates all nonnegative weighted complex quadratic forms. -/
+theorem simplex_quadratic_dominates_weighted_complex_form [Nonempty Sector]
+    (A : Sector → Sector → ℝ) (hA : ∀ i j, 0 ≤ A i j) :
+    ∃ r ∈ stdSimplex ℝ Sector,
+      (∀ w ∈ stdSimplex ℝ Sector,
+        (∑ i, ∑ j, A i j * w i * w j) ≤
+          ∑ i, ∑ j, A i j * r i * r j) ∧
+      (∀ p ∈ stdSimplex ℝ Sector, ∀ x : Sector → ℂ,
+        (∑ i, ‖x i‖ ^ 2) = 1 →
+          (∑ i, ∑ j,
+            Real.sqrt (p i) * Real.sqrt (p j) * A i j *
+              (star (x i) * x j).re) ≤
+            ∑ i, ∑ j, A i j * r i * r j) := by
+  classical
+  let quadratic (y : Sector → ℝ) : ℝ :=
+    ∑ i, ∑ j, A i j * y i * y j
+  let weighted (p : Sector → ℝ) (x : Sector → ℂ) : ℝ :=
+    ∑ i, ∑ j,
+      Real.sqrt (p i) * Real.sqrt (p j) * A i j *
+        (star (x i) * x j).re
+  let i₀ : Sector := Classical.arbitrary Sector
+  have hsimplex : (stdSimplex ℝ Sector).Nonempty :=
+    ⟨Pi.single i₀ 1, single_mem_stdSimplex ℝ i₀⟩
+  have hcontinuous : Continuous quadratic := by
+    dsimp [quadratic]
+    fun_prop
+  obtain ⟨r, hr, hmax⟩ :=
+    (isCompact_stdSimplex ℝ Sector).exists_isMaxOn hsimplex hcontinuous.continuousOn
+  have hRayleigh (p : Sector → ℝ) (hp : p ∈ stdSimplex ℝ Sector)
+      (x : Sector → ℂ) (hx : (∑ i, ‖x i‖ ^ 2) = 1) :
+      weighted p x ≤ quadratic r := by
+    let y : Sector → ℝ := fun i => Real.sqrt (p i) * ‖x i‖
+    let m : ℝ := ∑ i, y i
+    have hy (i : Sector) : 0 ≤ y i :=
+      mul_nonneg (Real.sqrt_nonneg _) (norm_nonneg _)
+    have hm : m ≤ 1 := by
+      have hcs := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ
+        (fun i => Real.sqrt (p i)) (fun i => ‖x i‖)
+      have hroot : (∑ i, Real.sqrt (p i) ^ 2) = 1 := by
+        simp_rw [Real.sq_sqrt (hp.1 _)]
+        exact hp.2
+      rw [hroot, hx, one_mul] at hcs
+      change m ^ 2 ≤ 1 at hcs
+      nlinarith
+    let w : Sector → ℝ := fun i =>
+      y i + (1 - m) * (Pi.single i₀ (1 : ℝ) : Sector → ℝ) i
+    have hw : w ∈ stdSimplex ℝ Sector := by
+      constructor
+      · intro i
+        exact add_nonneg (hy i) (mul_nonneg (sub_nonneg.mpr hm)
+          ((single_mem_stdSimplex ℝ i₀).1 i))
+      · change
+          (∑ i : Sector,
+            (y i + (1 - m) * (Pi.single i₀ (1 : ℝ) : Sector → ℝ) i)) = 1
+        rw [Finset.sum_add_distrib, ← Finset.mul_sum]
+        have hs : (∑ i : Sector, Pi.single i₀ (1 : ℝ) i) = 1 :=
+          (single_mem_stdSimplex ℝ i₀).2
+        rw [hs]
+        change m + (1 - m) * 1 = 1
+        ring
+    have hyw (i : Sector) : y i ≤ w i :=
+      le_add_of_nonneg_right (mul_nonneg (sub_nonneg.mpr hm)
+        ((single_mem_stdSimplex ℝ i₀).1 i))
+    have hphase (i j : Sector) :
+        (star (x i) * x j).re ≤ ‖x i‖ * ‖x j‖ := by
+      calc
+        (star (x i) * x j).re ≤ ‖star (x i) * x j‖ :=
+          Complex.re_le_norm _
+        _ = ‖x i‖ * ‖x j‖ := by rw [norm_mul, norm_star]
+    calc
+      weighted p x ≤ quadratic y := by
+        dsimp [weighted, quadratic]
+        apply Finset.sum_le_sum
+        intro i _
+        apply Finset.sum_le_sum
+        intro j _
+        have hcoeff :
+            0 ≤ Real.sqrt (p i) * Real.sqrt (p j) * A i j :=
+          mul_nonneg (mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))
+            (hA i j)
+        have h := mul_le_mul_of_nonneg_left (hphase i j) hcoeff
+        calc
+          _ ≤ Real.sqrt (p i) * Real.sqrt (p j) * A i j *
+              (‖x i‖ * ‖x j‖) := h
+          _ = _ := by dsimp [y]; ring
+      _ ≤ quadratic w := by
+        dsimp [quadratic]
+        apply Finset.sum_le_sum
+        intro i _
+        apply Finset.sum_le_sum
+        intro j _
+        exact mul_le_mul (mul_le_mul_of_nonneg_left (hyw i) (hA i j))
+          (hyw j) (hy j) (mul_nonneg (hA i j) (hw.1 i))
+      _ ≤ quadratic r := hmax hw
+  refine ⟨r, hr, (fun w hw => hmax hw), ?_⟩
+  intro p hp x hx
+  exact hRayleigh p hp x hx
+
+end D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality
