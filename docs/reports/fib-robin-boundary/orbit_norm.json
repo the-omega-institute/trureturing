@@ -1,0 +1,188 @@
+{
+  "schema": "fib-orbit-norm-v1",
+  "norm_orbits": {
+    "coefficient_box": [
+      0,
+      32
+    ],
+    "indices": [
+      0,
+      80
+    ],
+    "invariant_and_gcd_checks": 88128,
+    "primitive_norm_prime_exclusions": 97929,
+    "legal_affine_branch_obstruction": {
+      "seed": [
+        4,
+        5
+      ],
+      "seed_quantity": 23,
+      "seed_norm": 11,
+      "branch": "[2]",
+      "new_composition": [
+        15,
+        23
+      ],
+      "new_quantity": 99,
+      "new_norm": 41,
+      "regained_prime": 11
+    }
+  },
+  "quantity_fibers": {
+    "quantities": [
+      1,
+      128
+    ],
+    "primes_through": 97,
+    "fiber_residue_checks": 135680,
+    "local_primitive_roots": 2593,
+    "same_quantity_example": {
+      "n": 7,
+      "compositions": [
+        [
+          2,
+          1
+        ],
+        [
+          -1,
+          3
+        ]
+      ],
+      "norms": [
+        5,
+        -11
+      ]
+    }
+  },
+  "two_term_carriers": {
+    "identity_high_index_range": [
+      4,
+      150
+    ],
+    "identities": 5476,
+    "domain": "2 <= b <= a-2 and a == b modulo 2",
+    "complete_factorization_high_index_range": [
+      4,
+      48
+    ],
+    "actual_prime_carrier_checks": 1973,
+    "pairs_with_shared_odd_prime": 48,
+    "shared_prime_example": {
+      "indices": [
+        12,
+        4
+      ],
+      "sum": 147,
+      "shared_prime": 7
+    },
+    "opposite_parity_obstruction": {
+      "indices": [
+        8,
+        3
+      ],
+      "sum": 23,
+      "rank": 24
+    },
+    "essential_rank_two_exception": {
+      "indices": [
+        32,
+        8
+      ],
+      "factor_indices": [
+        20,
+        12
+      ],
+      "missing_rank_in_raw_carrier": 3
+    },
+    "analytic_log_high_index_threshold": 60,
+    "relative_linear_slack_at_threshold": [
+      77,
+      195
+    ]
+  },
+  "effective_seed_examples": [
+    {
+      "coefficients": [
+        1,
+        4
+      ],
+      "gcd": 1,
+      "primitive_norm": -11,
+      "excluded_prime": 11,
+      "constant_n_valuation": 0,
+      "sufficient_L_lower": 32,
+      "sufficient_index": "j > 4*exp(32)",
+      "criterion": "absent prime with totient padding"
+    },
+    {
+      "coefficients": [
+        4,
+        5
+      ],
+      "gcd": 1,
+      "primitive_norm": 11,
+      "excluded_prime": 11,
+      "constant_n_valuation": 0,
+      "sufficient_L_lower": 32,
+      "sufficient_index": "j > 4*exp(32)",
+      "criterion": "absent prime with totient padding"
+    },
+    {
+      "coefficients": [
+        9,
+        13
+      ],
+      "gcd": 1,
+      "primitive_norm": 29,
+      "excluded_prime": 29,
+      "constant_n_valuation": 0,
+      "sufficient_L_lower": 32,
+      "sufficient_index": "j > 4*exp(32)",
+      "criterion": "absent prime with totient padding"
+    },
+    {
+      "coefficients": [
+        22,
+        34
+      ],
+      "gcd": 2,
+      "primitive_norm": 19,
+      "excluded_prime": 19,
+      "constant_n_valuation": 0,
+      "sufficient_L_lower": 32,
+      "sufficient_index": "j > 4*exp(32)",
+      "criterion": "absent prime with totient padding"
+    },
+    {
+      "coefficients": [
+        2,
+        1
+      ],
+      "gcd": 1,
+      "primitive_norm": 5,
+      "excluded_prime": 5,
+      "constant_n_valuation": 1,
+      "sufficient_L_lower": 32,
+      "sufficient_index": "j > 4*exp(32)",
+      "criterion": "retained actual prime factor"
+    },
+    {
+      "coefficients": [
+        1771561,
+        7086244
+      ],
+      "gcd": 1771561,
+      "primitive_norm": -11,
+      "excluded_prime": 11,
+      "constant_n_valuation": 6,
+      "sufficient_L_lower": 57,
+      "sufficient_index": "j > 4*exp(57)",
+      "criterion": "retained actual prime factor"
+    }
+  ],
+  "sources_sha256": {
+    "orbit_norm.py": "2fac5d1bead6bdea08623b0d9643a9ded1e9d5b6851d5c0508125c381b03d658",
+    "kernel_tail.py": "e94521843b87d43a051ec9ee0fa409f14510516d674da2356bee6613dfc0300a"
+  },
+  "scope": "Exact finite diagnostics only. Universal orbit, carrier and Robin arguments are paper mathematics using published inputs; no new Lean or RH proof and no originality claim."
+}
