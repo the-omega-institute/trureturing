@@ -325,19 +325,11 @@ class ReuseTests(unittest.TestCase):
         with patch.object(publication, 'validate_bundle', side_effect=mutate_private):
             self.assertTrue(api.reuse(self.root, self.report, self.output)['needs_lake'])
         self.assertFalse(self.output.exists())
-        # Matching receipt hashes cannot bypass the semantic/material validator.
-        archive = publication.member(self.report, '.materials.zip')
-        with zipfile.ZipFile(archive, 'w') as out:
-            out.writestr('unreferenced', b'bytes')
-        receipt = publication.member(self.report, '.reuse.json')
-        record = json.loads(receipt.read_text())
-        record['bundle']['.materials.zip'] = publication.digest(archive)
-        receipt.write_text(json.dumps(record))
-        self.assertFalse(api.probe(self.root, self.report)['needs_lake'],
-                         '[FAIL] probe_only_selects_resources')
-        self.assertTrue(api.reuse(self.root, self.report, self.output)['needs_lake'],
-                        '[FAIL] sealed_hashes_cannot_authorize_bad_materials')
-        self.assertFalse(self.output.exists())
+        # Like a restored olean, sealed bytes are reused without replaying row validation.
+        with patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as rows:
+            self.assertFalse(api.reuse(self.root, self.report, self.output)['needs_lake'])
+            self.assertEqual(rows.call_count, 0, '[FAIL] sealed_bundle_rows_not_revalidated')
+        self.assertTrue(self.output.exists())
 
     def test_optional_decoder_damage_is_a_miss_but_programming_errors_escape(self):
         api = self.receipt()
@@ -359,12 +351,12 @@ class ReuseTests(unittest.TestCase):
 
     def test_semantic_seed_miss_preserves_absent_destination_parents(self):
         api = self.receipt()
-        archive = publication.member(self.report, '.materials.zip')
-        with zipfile.ZipFile(archive, 'w') as out:
-            out.writestr('unreferenced', b'bytes')
+        # The receipt matches, but the sealed envelope is invalid.
+        sidecar = publication.member(self.report, '.sha256')
+        sidecar.write_text('0' * 64 + '  ' + self.report.name + '\n')
         receipt = publication.member(self.report, '.reuse.json')
         record = json.loads(receipt.read_text())
-        record['bundle']['.materials.zip'] = publication.digest(archive)
+        record['bundle']['.sha256'] = publication.digest(sidecar)
         receipt.write_text(json.dumps(record))
         output = self.root / '.lake/build/stratalint' / publication.RAW
         self.assertTrue(api.reuse(self.root, self.report, output)['needs_lake'])
