@@ -104,10 +104,34 @@ $$
 
 A cutoff family with $B\le C/L$ would give an $O(L^{-2})$ bound for this Gamma remainder. The existence of such a family subordinate to increasingly fine FIB windows is an additional condition, not a consequence of the window count. The signed first integral in (2) remains the arithmetic obligation for the same actual $f$ and cutoffs. A large absolute-value envelope neither supplies that lower bound nor proves no better estimate is possible.
 
+## A prime edge crossing an intermediate FIB window
+
+The five first-level internal-coordinate intervals have geometric order $[3],[null],[5],[2],[2\ 5]$. Put $\varphi=(1+\sqrt5)/2$. In particular
+
+$$
+I_3=[-1,\varphi-2],\qquad I_{null}=[\varphi-2,2\varphi-3],\qquad I_5=[2\varphi-3,\varphi-1].
+$$
+
+For this test construction, choose these numerical intervals as windows in the Weil physical $x$ coordinate. This choice does not identify prime translation with an operation on the original golden-coordinate source or prove an intertwining theorem. Translation by $\log2$ sends the entire interval $[-41/100,-39/100]\subset\operatorname{int}I_3$ into $\operatorname{int}I_5$, across $I_{null}$. This is an edge of the actual prime translation, not a legal-digit seam transition.
+
+For a smooth example take a nonzero even real $\eta\in C_c^\infty(-1/100,1/100)$, $a=2/5$, $b=\log2-2/5$, and
+
+$$
+f(x)=\eta(x-a)+\eta(x+a)+\eta(x-b)+\eta(x+b).
+$$
+
+It is even with support in $[-41/100,41/100]$. At this radius $2<e^{2L}<3$, so the only active prime power is $2$. The four bump supports are disjoint. Exactly the ordered centre pairs $(a,-b)$ and $(b,-a)$ have separation $\log2$, giving
+
+$$
+\int f(x)f(x-\log2)\,dx=2\|\eta\|_2^2>0.
+$$
+
+The original prime contribution to $Q$ is therefore $-2\sqrt2\log2\,\|\eta\|_2^2$. The pair $(b,-a)$ crosses $I_{null}$, whereas $(a,-b)$ connects $I_{null}$ to $I_5$. Dropping the nonadjacent pair alone loses $-\sqrt2\log2\,\|\eta\|_2^2$, half of the displayed prime contribution, even for a legitimate even smooth test. This is not a negative-full-form example and does not refute RH. Pairing mirrored windows to keep evenness changes their support geometry and must retain the corresponding cross terms.
+
 ## Reuse and remaining research target
 
 The standard IMS identity is reusable mathematics, not a new FIB positivity theorem. The project's [smooth rational approximation](../../D5/S3/Weil/TestFunctions/RationalCutoffApproximation.lean) controls the complete paired zero sum; its [golden cofinal interface](../../D5/S3/Weil/CofinalSupport/GoldenCofinalPositivity.lean) still requires positivity for every admitted test at every chosen scale. Neither supplies a lower bound for the signed integral in (2).
 
 A sufficient next input would combine genuine lower margins for the localized tests with a lower bound for the **same** $W_f$ against $\Psi-u$, paying the displayed Gamma remainder uniformly over all allowed coefficients and growing supports. The family $W_f$ is constrained by a common $f$ and square partition; it cannot be replaced by arbitrary independently optimized weights. The corresponding Robin research also retains a joint signed prime fluctuation, but identifying those two test families requires another explicit map.
 
-The analytic localization and Stieltjes calculations above are paper-level applications with their hypotheses displayed, not a new Lean closure. The scalar Gamma cancellation has a successful transient exact Lean check; no named wrapper is retained. The complete integral transport and its analytic hypotheses have not been newly formalized. The nonlocal source, these checks, and the missing all-scale arithmetic estimate have different evidentiary roles.
+The analytic localization and Stieltjes calculations above are paper-level applications with their hypotheses displayed, not a new Lean closure. Transient exact Lean checks cover only the stated rational interval placement, first-prime support threshold, pointwise four-bump pairing, and scalar Gamma cancellation; no named wrapper is retained. The nonlocal source, these checks, and the missing all-scale arithmetic estimate have different evidentiary roles.
