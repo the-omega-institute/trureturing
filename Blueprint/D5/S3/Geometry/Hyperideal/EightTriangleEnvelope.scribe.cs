@@ -43,5 +43,5 @@ internal sealed class EightTriangleEnvelopeDocument : IScribeDocumentDefinition
                     + "finite enumeration or numerical sampling."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Statement() => F.Id("high_upper_taylor");
+    private static Formula Statement() => F.Id("highUpperTaylor");
 }
