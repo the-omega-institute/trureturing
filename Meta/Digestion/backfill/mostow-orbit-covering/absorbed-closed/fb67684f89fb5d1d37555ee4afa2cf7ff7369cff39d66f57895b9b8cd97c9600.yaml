@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fb67684f89fb5d1d37555ee4afa2cf7ff7369cff39d66f57895b9b8cd97c9600
+  normalized_sha256: sha256:fb67684f89fb5d1d37555ee4afa2cf7ff7369cff39d66f57895b9b8cd97c9600
+cas_ref: sha256:fb67684f89fb5d1d37555ee4afa2cf7ff7369cff39d66f57895b9b8cd97c9600
+coverage_gids:
+  - gid: D5/S3/Geometry/IsometricOrbitMetric.orbitDistance
+    target_statement_id: sha256:e42eb0ec053838333c228b469e4cc05766bb01a29ad7c34b7e8cda384b875e06
+receipts:
+  unresolved_subitems: []
