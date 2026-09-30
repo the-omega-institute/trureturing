@@ -29,6 +29,13 @@ Helena Albuquerque and Shahn Majid, *Quasialgebra Structure of the Octonions*, J
 
 The octonion twisted-group-algebra construction is established literature. The FC manuscript identifies its finite sign table by an explicit quadratic basis gauge. It does not claim new octonions or identify that table with an actual ground-state OPE.
 
+## Verified locator
+
+- Basak, arXiv:1702.05705v1, Theorem 1, Lemma 3, and sections 5–6:
+  https://arxiv.org/abs/1702.05705
+- The parsed arXiv text at those locations was inspected on 29 September 2026.
+  PDF screenshots of pages 2 and 3 were unavailable, so no visual check is claimed.
+
 ## Actual fusion and modular interfaces
 
 A. Kirillov Jr., *Modular categories and orbifold models*, Commun. Math. Phys. 229 (2002), 309–335; arXiv:math/0104242. https://arxiv.org/pdf/math/0104242 . The actual untwisted-double realization retains the hypotheses and limitations already recorded in the owner. The simple fusion rule is also displayed as an explicit finite Verlinde sum. An arbitrary scalar character transformation matrix is not silently promoted to categorical S data.
