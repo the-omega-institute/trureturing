@@ -27,4 +27,4 @@ globs = ["Reg.+"]
 [[lean_lib]]
 name = "TriggerImplLib"
 srcDir = "../tools/lean-inspector"
-roots = ["TriggerOnly"]
+roots = ["Census.TriggerOnly"]
