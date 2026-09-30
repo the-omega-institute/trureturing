@@ -170,6 +170,44 @@ was found. §159 explains the separate target-domain argument. The regression
 also exercises the margin CLI on both core values and rejects altered weights,
 missing recurrence states, empty frontiers and invalid cores.
 
+## Joint valuation stopping from the literature
+
+[Hertlein's totient bound and finite-range coverage](../../../Library/notes/hertlein2018robin.md)
+give a stronger stopping test than checking each small-prime direction alone.
+For primes actually dividing the same integer, the product of their local
+factors `1 - p^(-v_p(n)-1)` may already be at most `1771560/1771561`, even
+when none of the separate valuation rules applies.
+
+This literature application covers every `n=M*t` with the exact core
+`M=2^21*3^13*5^9*7^7*11^6` and all prime factors of `t` greater than 11,
+with no bound on the tail support or exponents. The earlier finite support
+certificates are weaker for that exact-core family. Multiplying `M` by small
+primes changes its valuations, so this does not cover all multiples of `M`.
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/valuation_slices.py \
+  --primes 2 3 5 7 11 --lower 21 13 9 7 6 --caps 25 15 11 9 7 \
+  --threshold 1771560/1771561 --out /tmp/valuation-slices.json
+```
+
+[valuation_slices.json](valuation_slices.json) records 270 cells: 17 pass the
+product condition, 253 fail it, and none is ambiguous. A coordinate at its cap
+represents all larger exponents, with its factor bounded above by 1. Thus this
+is an exact classification of the unbounded exponent orthant for that
+condition. The report gives 12 minimal profiles that fail the condition and
+8 maximal regions that pass. General input caps may instead give `OPEN`
+with explicitly listed ambiguous cells.
+
+Together with the existing five separate stopping rules, a hypothetical
+Robin counterexample must be divisible by at least one of those 12 profiles'
+cores: `M*r` with `r` in `{6,14,15,16,20,21,35,44,50,99,110,539}`.
+For the authenticated family `5040*F_j`, the existing rank/lifting formulas
+transport this to `D*r | j`, with `D` as in the index stopping section below.
+Failing this sufficient test does not establish a counterexample.
+The Python program certifies rational factors and the finite partition; the
+analytic Robin implication relies on the cited literature. No new Lean
+theorem, global verification range or proof of RH is claimed.
+
 ## Recursive reserve, index stopping and gluing
 
 ```sh
