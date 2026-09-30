@@ -316,6 +316,38 @@ $$
 
 Equation (14) is a necessary condition under positivity, not a supplied prime-discrepancy estimate. In particular a zero lower bound for $J_\chi$ cannot alone certify these directions. The needed arithmetic estimate must provide this positive contribution and also control the other, oscillatory test directions. The identities and uniform estimates (9)–(14) are paper-level deductions; they do not settle RH or establish a new compiled localization theorem.
 
+## Separating higher prime powers with the same test
+
+The [weighted Mertens application](broadbent2026mertens.md) controls the higher-prime-power contribution for every compact smooth complex test, including the non-even local pieces. In the notation of (10), define the primary-prime discrepancy
+
+$$
+C_L(f)=2\int_0^{2L}e^{t/2}R_f(t)dt
+-2\sum_{p\le e^{2L}}\frac{\log p}{\sqrt p}R_f(\log p).
+$$
+
+Keep the actual same $f$ throughout. Then $J_{0,L}(f)=C_L(f)-T(f)$, where $T$ is the higher-power sum in that note; compact support makes its infinite-index notation identical to the common finite cutoff. Writing
+
+$$
+T(f)=\tfrac12|\int f|^2+2\kappa\|f\|_2^2+\epsilon(f),\qquad
+|\epsilon(f)|\le(8M_1+D_3)\|f'\|_2^2,
+$$
+
+the remaining comparison is exactly
+
+$$
+Q_{\rm full}(f)=C_L(f)-\tfrac12|\int f|^2
++(a_0-2\kappa)\|f\|_2^2+E_*(f)-\epsilon(f).
+$$
+
+The combined remainder has absolute value at most $(26/125+8M_1+D_3)\|f'\|_2^2$. Its higher-power energy has a favorable sign: that note also gives $-\epsilon(f)=4\int E(v)R_f'(2v)dv+\mathcal D_{\ge3}(f)$ with $\mathcal D_{\ge3}(f)\ge0$. Together with $E_*(f)\ge0$, this yields the paper-level sufficient condition
+
+$$
+C_L(f)\ge\tfrac12|\int f|^2+(2\kappa-a_0)\|f\|_2^2+8M_1\|f'\|_2^2
+\quad\Longrightarrow\quad Q_{\rm full}(f)\ge0.
+$$
+
+No such lower bound for $C_L(f)$ has been supplied. The derivative budget is useful on fixed smooth slow dilations, where it decreases quadratically, and need not be affordable on oscillatory tests. The Mertens supplier closes one paper-level debit estimate while leaving the signed primary-prime comparison unresolved. It provides no FIB-to-prime-translation intertwiner, all-support positivity, or RH conclusion.
+
 ## A prime edge crossing an intermediate FIB window
 
 The five first-level internal-coordinate intervals have geometric order $[3],[null],[5],[2],[2\ 5]$. Put $\varphi=(1+\sqrt5)/2$. In particular
