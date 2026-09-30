@@ -50,6 +50,10 @@ internal sealed class FibonacciObservationDocument : IScribeDocumentDefinition
                             + "to recovering framed gluing parameters from the Fibonacci "
                             + "return readout alone.")),
                     Paragraph(Text(
+                        "The exact congruence kernel is characterized by "
+                            + "FibonacciObservation.kernel_phase_characterization: every "
+                            + "input in the 5k-kernel has the form (k*t,2*k*t+5*k*s).")),
+                    Paragraph(Text(
                         "At the concrete modulus 5040=5*1008, the same theorem gives the "
                             + "five-part phase ambiguity. The factor seven in 5040 contributes "
                             + "no additional kernel state to this observation.")),
