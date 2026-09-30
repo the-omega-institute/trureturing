@@ -57,6 +57,10 @@ does not supply that existence or uniqueness theorem.
 | `Geometry/Riemannian/Covering/Completeness.lean` | `PoincareMT.RiemannianMetric.metricComplete_pullbackOfLocalDiffeomorph` | The same upward completeness transfer for the actual local-diffeomorphism pullback metric. |
 | `Geometry/Riemannian/Curvature/LocalIsometry.lean` | `PoincareMT.LeviCivitaData.curvatureTensor_eq_of_local_isometry` | A smooth map preserving tangent inner products on an open set transports the four-covariant curvature tensor; it needs the two metrics and Levi-Civita data. |
 | `Geometry/Riemannian/Curvature/LocalIsometry.lean` | `PoincareMT.LeviCivitaData.curvatureTensorNorm_eq_of_local_isometry` | Transports the retained Hilbert-Schmidt curvature norm under the same hypotheses. |
+| `Geometry/Riemannian/Metric/Induced/Immersion.lean` | `PoincareMT.RiemannianMetric.Induced.pullbackMetric` | Constructs a smooth positive-definite metric by pulling back through a smooth immersion; injectivity of each differential is required. |
+| `Geometry/RicciFlow/Surgery/Metric/Construction/MetricCombination.lean` | `PoincareMT.MetricSurgery.positiveScaling` | Multiplies a smooth metric by a supplied smooth, strictly positive function. |
+| `Geometry/Riemannian/Metric/Induced/Complete.lean` | `PoincareMT.RiemannianMetric.edist_map_le_of_metric_pullback` | A smooth map preserving tangent inner products contracts the induced path distance; an inverse with the same properties gives distance equality. |
+| `Geometry/Riemannian/Metric/Gluing/Descent.lean` | `Poincare.Gluing.exists_unique_metric_of_covering_local_diffeomorphisms` | Descends metrics through a family of local diffeomorphisms covering the target, provided equal projected tangent vectors have equal source inner products; the target smooth structure is input. |
 
 The `Geometry/` paths in this table have the prefix `PoincareLib/`.
 `MetricComplete` means completeness of the emetric obtained from the specified
@@ -73,50 +77,82 @@ The covering-completeness closure comprises 14 external source modules,
 65,144 bytes excluding Mathlib. All compiled unchanged under our pins.
 The union with the curvature-local-isometry and smooth-gluing closures
 comprises 47 external source modules, 280,402 bytes excluding Mathlib.
-All compiled unchanged under the same pins. The seven public declarations
-listed in the table have recursive axiom closures consisting only of
+All compiled unchanged under the same pins. The seven smooth-gluing, covering-completeness and curvature-transport
+declarations in the table have recursive axiom closures consisting only of
 `propext`, `Classical.choice` and `Quot.sound`.
-This establishes source compatibility for these closures, not installation of
-an external dependency or independent verification of the complete Poincare proof.
+The additional immersion, positive-scaling, metric-contraction and metric-descent
+APIs were checked in separate unchanged-source compatibility closures. Their
+modules are not included in the 47-module count above. This establishes source
+compatibility for the checked closures, not installation of an external
+dependency or independent verification of the complete Poincare proof.
 
-## Interface still missing for the rigidity target
+## Connection to the hyperbolic model and orbit quotient
 
-The project already supplies an isometric representation's orbit covering
-under freeness, compact-set proper discontinuity and local compactness,
-and a quotient metric inducing the original quotient topology under
-compact-set proper discontinuity. Proper ambient spaces additionally give
-proper orbit quotients. These prerequisites do not assert finite covolume
-or curvature.
+The project supplies an isometric representation's orbit covering under
+freeness, compact-set proper discontinuity and local compactness, and an
+orbit metric inducing the quotient topology under compact-set proper
+discontinuity. Proper ambient spaces additionally give proper orbit
+quotients. These prerequisites do not assert finite covolume or curvature.
 
 For a locally compact metric ambient space, freeness and compact-set proper
-discontinuity also give a radius at every point on which the projection to
-this orbit metric preserves distance. This application was checked
-transiently, without adding a named project theorem. A disjoint neighborhood
-contains a ball of radius epsilon, so every nonidentity translate moves its
-center by at least epsilon. On the ball of radius epsilon/4, the triangle
-inequality makes each nonidentity translate at least as distant as the
-identity; taking the orbit infimum therefore gives the original distance.
-Ambient properness is unnecessary for this estimate. Kapovich's classical
-Lemma 21(3), cited in `kapovich2023properactions.md`, gives local isometry
-under metric properness and freeness; that lemma does not assume ambient
-properness or geodesicity. Its metric-proper-action hypothesis is distinct
-from the compact-set condition used here.
+discontinuity give a radius at every point on which the orbit projection
+preserves distance. This application was checked transiently. A disjoint
+neighborhood contains a ball of radius epsilon, so every nonidentity
+translate moves its center by at least epsilon. On the ball of radius
+epsilon/4, the triangle inequality makes each nonidentity translate at least
+as distant as the identity. The orbit infimum therefore gives the original
+distance. Ambient properness is unnecessary for this estimate. Kapovich's
+classical Lemma 21(3), cited in `kapovich2023properactions.md`, instead assumes
+metric properness and freeness. Its metric-proper-action hypothesis is
+distinct from the compact-set condition used here.
 
 Pinned Mathlib's `Geometry/Manifold/Instances/Quotient.lean` supplies a
-charted-space structure for a free properly discontinuous action. It
-explicitly leaves smooth manifold structure and smoothness of the projection
-as TODOs. The external smooth-gluing theorem is a candidate construction
-tool for that gap, not an already supplied smooth orbit projection.
+charted space for a free properly discontinuous action and leaves smooth
+manifold structure and smoothness of the projection as TODOs. A transient
+construction using covering branches and smooth deck transformations
+supplies a smooth structure on the actual project orbit quotient in its
+existing quotient topology, with a locally diffeomorphic projection. Given
+a smooth source metric and deck transformations preserving its tangent
+inner products, the external metric descent theorem then supplies the
+unique quotient metric preserving projection differentials. Smoothness and
+metric invariance of arbitrary hyperbolic deck transformations remain
+premises of this construction.
 
-To connect the two libraries, construct the orbit quotient's smooth overlap
-system, identify the resulting charts with the chosen quotient topology,
-descend the invariant tangent metric, and identify its path distance with
-the existing orbit metric. Metric local distance preservation alone does
-not discharge these differential-geometric obligations. After this bridge,
-curvature transport can carry the model's curvature to the quotient.
-Finite volume, the cusp analysis and the global rigidity argument remain
-separate mathematical obligations. Compact positive-curvature sphere
-covering results cannot be substituted for them.
+A separate transient check connects the source metrics. On the existing
+`HyperbolicThreeSpace`, choose an orthonormal identification of its ambient
+coordinates with `EuclideanSpace` on `Fin 3`, use the positive-height open
+coordinate chart, pull back the Euclidean metric, and scale it by the inverse
+square of height. In this same chart the resulting smooth metric has inner
+product equal to the Euclidean inner product divided by height squared.
+Horizontal translations and the project's inversion are smooth and preserve
+these tangent inner products. For every globally continuously differentiable
+curve its length on an ordered closed parameter interval is the nonnegative
+integral of Euclidean coordinate speed divided by height.
+
+For arbitrary source endpoints, the induced Riemannian extended distance
+equals `ENNReal.ofReal` of the project's existing `hyperbolicDist`. Equal
+horizontal coordinates reduce to exponential vertical curves and the
+log-height lower bound. For unequal horizontal coordinates, a real quadratic
+root chooses a horizontal translation after which inversion makes the two
+horizontal coordinates equal. Applying the metric contraction theorem to
+these maps and their inverses transports the vertical distance equality.
+This derives the distance identity without assuming it. Existing
+hyperbolic completeness consequently gives `MetricComplete` for this
+same constructed source metric.
+
+These checks compiled under the project pins using the unchanged cited
+external sources and only `propext`, `Classical.choice` and `Quot.sound`.
+They are temporary applications of existing results; no new named project
+declaration or external dependency is installed by this note.
+
+The remaining bridge needs smoothness and tangent-metric invariance for all
+relevant hyperbolic deck transformations, equality of the descended
+Riemannian path distance with the actual orbit metric, and completeness
+downstairs. The model's curvature of minus one and its Levi-Civita data must
+also be supplied before applying curvature transport. Finite covolume,
+noncompact cusp analysis, and the global Mostow-Prasad existence and
+uniqueness argument remain separate obligations. Compact positive-curvature
+sphere covering results cannot replace them.
 
 ## Verified locator
 
