@@ -22553,3 +22553,553 @@ closure, restored private support and summable coefficients do not
 establish that comparison. These are written mathematical arguments
 with independent review, not new Lean results or a resolution of
 unrestricted Erdős #7.
+
+## Fractional actual-query moments lower the required tail moment
+
+Fix FC936's normalized combined continuation of ONE supplied actual
+head-survivor measure eta, at an integer B>4. The entire original
+finite family, literal phases and complete old-coordinate window stay
+fixed. Use FC922's actual suffix queries, including consumed p^e
+sections before their update. Put Gamma_r=max_v integral L_v^r,
+with the empty maximum zero. For 0<epsilon<=1, r=2+epsilon, define
+
+    h_r(p)=(1-1/p)sum_(n>=0)(n+1)^r p^-n,
+    c_p=(p-1)/(p-2), a_r(p)=1+2c_p(h_r(p)-1).
+
+Then the actual normalized row, and also any subprobability row
+dominated by it, obeys
+
+    Gamma_r(new)<=a_r(p)Gamma_r(old).              (FC955)
+
+Here is a noninteger-power proof, without a fractional tuple expansion.
+At a fixed old history split the actual new query into its zero-depth
+load L_0 and positive-depth original indicators. A depth-j indicator
+has pure-law probability at most c_p p^-j. The increasing convex
+payoff is maximized by the common-uniform nested coupling at these
+caps. To justify this comparison, first raise marginals to their caps.
+For fixed marginals maximize over the finite polytope of Bernoulli
+joint laws. Moving equal mass from incomparable support subsets A,B
+to A intersection B,A union B preserves marginals and increases the
+strictly convex payoff. A maximizer is therefore supported on a chain.
+Equal-depth indicators have the same cap and turn on together there.
+This is an auxiliary comparison, not a rephasing of actual originals.
+
+Let J have tails Pr(J>=j)=c_p p^-j. Its comparison load is
+sum_(j<=J)L_j, where every L_j is an actual old section. For fixed n,
+Minkowski gives, writing t=||L_0||_r/Gamma_r^(1/r)<=1,
+
+    integral[(sum_(j=0..n)L_j)^r-L_0^r]
+      <=Gamma_r[(t+n)^r-t^r]
+      <=[(n+1)^r-1]Gamma_r.
+
+The last difference increases with t. Gamma_r=0 is immediate;
+an absent zero-depth group has L_0=0. Split off L_0^r BEFORE using
+the density cap two. Row mass at most one handles that old term,
+and averaging the remaining comparison proves FC955. Extending the
+finite actual depth set by zero loads only enlarges the majorant.
+
+For p>=5, a_r is itself the r-moment of J'+1 for the probability
+law Pr(J'>=j)=2c_p p^-j; its zero atom is nonnegative. Holder gives
+log-convexity in r. Set h_p=h_2(p). With t=1/(p-1)<=1/4,
+
+    a_2/h_p=(1+4t)/(1+t-2t^2)<=(1+t)^3,
+    a_(2+epsilon)/h_p<=(p/(p-1))^(3+8epsilon).     (FC956)
+
+The first polynomial difference is
+t^2(4-2t-5t^2-2t^3)>0. Interpolate it with FC938's
+a_3/h_p<=(p/(p-1))^11 to obtain the second inequality.
+
+The actual density bound also interpolates:
+K_p<= [1+min(1,2beta_p)]nu_p <=[1+(2beta_p)^epsilon]nu_p.
+In the positive-depth SECOND-moment tuple expansion, use Holder
+with exponents r,r,r/epsilon on the two old loads and beta^epsilon.
+FC925 and Minkowski give
+||beta_p||_r<=c_p Gamma_r^(1/r)/(p-1). The all-zero tuple still
+uses only row mass at most one. Consequently
+
+    Gamma_2'<=b_p Gamma_2+d_epsilon(p)Gamma_r,
+    d_epsilon=c_p(h_p-1)[2c_p/(p-1)]^epsilon.     (FC957)
+
+Every factor in Holder is on the SAME actual prefix measure; no
+normalization factor is suppressed for a finite unnormalized source.
+The endpoint c_p(h_p-1)/h_p<=4/p reduces to p^2>=9. Interpolating
+it with FC937's d_1/h_p<=32/(3p^2) yields
+
+    d_epsilon/h_p<=C_epsilon p^(-1-epsilon),
+    C_epsilon=4(8/3)^epsilon.                     (FC958)
+
+Write S_(k,epsilon)(B)=sum_(p>B)Pi_k(B,p)/p^(1+epsilon), with the
+same prime products as FC939. Divide both moment recursions by the
+product of h_2, use FC956, and retain the old product bound D_B on
+b_p/h_p. For supplied same-source seeds G_2,G_(2+epsilon),
+
+    tail bad mass <=D_B T_3(B)[G_2+
+       C_epsilon G_(2+epsilon)S_(3+8epsilon,epsilon)(B)]. (FC959)
+
+At epsilon=1 this is exactly FC939. Each fixed epsilon>0 gives a
+convergent error series. Independently valid bounds on this SAME law
+can be compared by taking their minimum; there is no uniform claim
+as epsilon tends to zero or the family changes. Holder also supplies
+G_(2+epsilon)<=G_2^(1-epsilon)G_3^epsilon for 0<epsilon<1;
+the endpoint is direct. Actual fractional seeds can improve this.
+
+Under FC908's integer B>=286, ell>=7, 3^ell<=B, and any integer
+k>=3+8epsilon, the existing product-ratio bound gives
+
+    S_(3+8epsilon,epsilon)(B)
+      <=u_B c_ell^k B^(-epsilon)/epsilon
+                    P_k(1/(epsilon ell)).        (FC960)
+
+Enlarge the prime sum to integers n>B and compare over [n,n+1].
+The power ratio costs at most u_B because 1+epsilon<=2. Substituting
+x=B exp(t) in the resulting integral gives
+B^(-epsilon)P_k(1/(epsilon log B))/epsilon; log B>=ell completes
+the bound. For rational epsilon, any supplied positive rational
+lower bound for B^epsilon gives a rational upper certificate.
+
+There is a strict actual-family consumer of the lower moment. Fix
+B>=5 and 0<epsilon<1. For any integer N>=1 choose prime q>max(B,N+1),
+pure originals 0 mod5,0 modq, and m_i=5^i q with phases
+1 mod5^i and i modq, 1<=i<=N. These distinct originals are
+irredundant: their terminal roots separate mixed private points,
+and zero roots give pure private points; (2,1) survives. Supply
+unit head mass on x_5=1 mod5^N with a coherent lift on unused old
+coordinates. It avoids the head and gives actual-section seeds
+G_2=N^2,G_(2+epsilon)=N^(2+epsilon),G_3=N^3. The ratio of the
+FC959 error term to FC939's error term is
+
+    [C_epsilon S_(3+8epsilon,epsilon)(B)/
+       ((32/3)S_11(B))]N^(epsilon-1) ->0.         (FC961)
+
+At fixed B the bracket is finite and positive, so the new complete
+allowance is strictly smaller for sufficiently large N. This compares
+upper allowances on the same seed, not achieved failure masses;
+neither allowance is asserted below one. No all-family seed is supplied.
+
+## An explicit actual-pair potential pays signed future transport
+
+Report334 JC6--JC7 already supplies the generic physical/killed
+backward-risk principle. The additional input here is a finite CRT
+potential of actual ORIGINAL PAIRS; it does not use unknown exact
+survival as an input. Keep FC936's head source eta and pure laws nu_p.
+For a nonpure original i let p(i) be its largest nonternary prime,
+C_(i,q) its literal q-cylinder, and I_i(x_<p) its complete old
+activation. Absent prime conditions are full cylinders. At p(i)=p put
+
+    lambda_i=nu_p(C_(i,p)),
+    A_p=sum_(i:p(i)=p)lambda_i I_i,
+    H_p^pair=A_p^2,
+    g(beta)=(2beta-1)_+<=beta^2<=H_p^pair.         (FC962)
+
+The last inequality uses the actual union bound beta_p<=A_p.
+H_p^pair is not the scalar Haar growth factor h_p. Define, after
+cutoff t, the finite function
+
+    Phi_t=sum_(p>t)sum_(i,j:p(i)=p(j)=p)
+       lambda_i lambda_j I_ij^<=t
+       product_(t<q<p)nu_q(C_(i,q) intersection C_(j,q)). (FC963)
+
+Pairs are ordered, including the diagonal. The old indicator retains
+both literal original conditions, including all ternary coordinates.
+The TERMINAL coefficient is lambda_i lambda_j, not the current
+intersection mass: the target is the square of an additive load.
+Intermediate coefficients are exact finite pure-conditioned CRT
+intersection masses. Phi is the independent pure-tail expectation
+of future pair charges, not a replacement of the actual K source.
+For rational eta, eta(Phi_B) is a finite rational sum of actual
+head-pair intersection masses. No polynomial cost is asserted.
+
+At the next actual tail prime q, finite disintegration gives
+
+    Phi_<q=H_q^pair+nu_q(Phi_q),
+    Phi_final=0.                                 (FC964)
+
+Assigned-q pairs disappear through H_q^pair; later pairs acquire
+their q-intersection factor. This keeps terminal disappearance and
+does not choose an uncontrolled maximizing query at each stage.
+
+Let d_q=max(beta_q,1-beta_q). The normalized row has the exact
+density and covariance identity, including beta=0 or1,
+
+    dK_q/dnu_q=1+(beta_q-1_(D_q))/d_q,
+    C_q=nu_q(1_(D_q)Phi_q)-beta_q nu_q(Phi_q),
+    K_q(Phi_q)-nu_q(Phi_q)=-C_q/d_q.              (FC965)
+
+With mu_t=eta product_(B<q<=t)K_q, integrate FC964--965 on the
+one actual prefix and telescope:
+
+    sum_q mu_<q(H_q^pair)
+       =eta(Phi_B)-sum_q mu_<q(C_q/d_q).          (FC966)
+
+Positive C_q means deletion lowers future pair cost; negative C_q
+inflates it. Set delta_q=H_q^pair-g(beta_q)>=0. Then exactly
+
+    sum_q mu_<q(g(beta_q))
+       =eta(Phi_B)-sum_q mu_<q(C_q/d_q+delta_q),
+    final survivor mass >=eta(1)-eta(Phi_B)
+                          +sum_q mu_<q(C_q/d_q+delta_q). (FC967)
+
+The first line sums marginal failure event masses. Their union is
+bounded by that sum, not asserted equal to it. Pure and head
+exclusions are already avoided; normalized later rows preserve
+these marginal laws. No first-hit source is silently substituted.
+
+The EXACT aggregate condition for the marginal-charge sum to be at
+most eta(Phi_B), and a stronger local sufficient condition, are
+
+    sum_q mu_<q(C_q/d_q+delta_q)>=0;
+    C_q(x)>=-d_q(x)delta_q(x), respectively.      (FC968)
+
+The aggregate condition need not be necessary for the UNION to obey
+that bound, because event overlaps can lower it further. A convenient
+stronger test is C_q>=0 pointwise. Indeed FC963 writes Phi_q as a
+nonnegative weighted sum of actual q-intersection indicators 1_Gamma.
+The corresponding covariance is
+nu_q(D_q intersection Gamma)-beta_q nu_q(Gamma). If Gamma subset D_q
+it equals (1-beta_q)nu_q(Gamma); if D_q subset Gamma it equals
+beta_q(1-nu_q(Gamma)). Thus comparability by inclusion for every
+positive nonconstant term suffices. The union D_q need not itself
+be a cylinder. Weighted cancellation can satisfy FC968 when this
+termwise test fails; it must be checked on the actual source.
+
+Under the auxiliary pure continuation eta product nu, FC926 has
+cap A=1,C=0 and propagates second moments by b_q alone. Group
+FC962 by current depth e and use lambda_i<=c_p p^-e. Minkowski
+then bounds its integrated pair charge by Gamma_2^pure/(p-2)^2.
+For the actual head-section seed G_2 this proves
+
+    eta(Phi_B)<=G_2 sum_(p>B)
+          [product_(B<q<p)b_q]/(p-2)^2
+       <=D_B T_3(B)G_2.                          (FC969)
+
+The first products and sum may retain only actual finite tail primes;
+the second is the existing all-prime majorant. The pure-law moments
+are not claimed equal to actual transported moments: FC966 pays
+their signed difference. Under FC968, in particular under the
+inclusion test, one obtains
+
+    total actual tail bad mass<=D_B T_3(B)G_2.    (FC970)
+
+There is no cubic seed term and no uniform projected-load premise.
+Without FC968 the negative correction remains payable; FC966--967
+still hold. The following counterexample forbids dropping it.
+
+Use FC948's originals 0 mod5,0 mod7,0 mod11,
+1 mod(5*7^E),23 mod77. On the active x_5=1 row, of head mass1/4,
+write alpha=1/(6*7^(E-1)). The deleted seven-cylinder has depth E
+at1, whereas the later query is the root2 cylinder. Thus
+
+    Phi_7=1_(x_7=2)/100,
+    C_7=-alpha/600,
+    integrated future pair inflation=alpha/[2400(1-alpha)]. (FC971)
+
+Its ratio to the current quadratic fee alpha^2/4 tends to infinity.
+The local condition FC968 would require
+alpha^2>=alpha/[600(1-alpha)], which fails for large E. Replacing
+23 mod77 by1 mod77 gives C_7=5alpha/600>0. This exactly detects
+the existing signed query obstruction without imposing a false
+universal sign or a minimal-whole-cover hypothesis on this family.
+
+For a strict consumer take the following14 original labels: pure
+0 mod5,0 mod7,0 mod11; five early 5^i*7 with phases1 mod5^i,
+i mod7 (1<=i<=5); six late 7^j*11 with phases1 mod7^j,
+j mod11 (1<=j<=6). All phases are CRT phases of the literal labels.
+Early private points use x_5=1 mod5^5,x_7=i,x_11=7; late private
+points use x_5=2,x_7=1 mod7^6,x_11=j. Pure private points use their
+zero root and avoid1 in the others. The point (2,2,2) survives.
+This is irredundant and noncovering, not divisor closed or a
+minimal-whole-cover example; the supplier needs neither premise.
+
+At B=5 take the complete pure-five law through depth5, of mass1,
+with an unchanged ternary factor if present. Put
+R=min(v_5(x_5-1),5), N=min(v_7(x_7-1),6). Finite tail sums give
+
+    Pr(R>=i)=1/(4*5^(i-1)),
+    E R^2=1169/2500, E R^3=2221/2500,
+    E_nu7 N^2=4357/16807,
+    G_2^sec=G_3^sec=1.                            (FC972)
+
+The suffix7 load is R, and each suffix7^j*11 is a separate unit
+query, proving the last line. At seven beta_7=R/6 and
+H_7^pair=R^2/36; at eleven beta_11=N/10 and H_11^pair=N^2/100.
+The pure-reference pair allowance is exactly
+
+    eta(Phi_5)=1169/90000+4357/1680700.            (FC973)
+
+Every nonzero term of Phi_7=N^2/100 lies in root1. For R>=1 this
+root is inside the current forbidden roots {1,...,R}; for R=0 the
+forbidden union is empty. Thus the covariance test holds on every
+row and is strict on positive mass. The actual seven-row density
+on root1 is respectively1,0,0,0,1/2,4/5 for R=0,...,5.
+Since Pr(R=0)=3/4,Pr(R=4)=1/625,Pr(R=5)=1/2500, its averaged
+multiplier gamma=9389/12500. Consequently
+
+    sum_q mu_<q(H_q^pair)
+      =1169/90000+(9389/12500)(4357/1680700),
+    signed saving=(3111/12500)(4357/1680700)>0.    (FC974)
+
+For the SAME exact seeds FC937 instead gives b_7=5/3,d_7^0=4/15,
+Gamma_2(after7)<=29/15 and the finite two-stage scalar allowance
+
+    1/25+(29/15)/81=388/6075.                     (FC975)
+
+Already FC973 is below1/25: its two summands are below1/50 and1/100.
+FC974 is smaller still. This is a strict finite allowance comparison,
+not an evaluation of the B=5 infinite-tail majorant. Both actual
+stages have beta>1/2 on positive mass: R=4 or5 at seven, and N=6
+with R=0 at eleven. Their marginal bad masses are exactly1/1250
+and gamma/504210; they need not be disjoint events.
+
+## Saturated descendant groups supply full actual-section credits
+
+Now impose ONE hypothetical whole cover minimizing class count and
+then modulus sum. Use its original moduli and phases, full period Q
+and FULL ternary height H=v_3(Q)>=1. Report385 ML2 and MX2--MX4
+are the existing replacement inputs; no private-hull enlargement
+is assumed. At an ML2-qualified wholly old interface h let B_h be
+its fresh repair count minus one. Write
+q_h(c)=#{m in D:h|m,a_m=c mod h}, where D is the original modulus set.
+For an original u divisible by h,
+write S_u(b)={m in D:u|m,m>u,a_m=b mod u} and define
+t_u=max_(b mod u:b mod h!=a_u mod h)|S_u(b)|, empty maximum zero,
+s_u=max(t_u-1,0). MX2 and the old phase cap imply
+
+    q_h(a_u mod h)<=B_h-s_u,
+    C^r<=sum_u(B_h-s_u)^(r-1)I_u, r=2,3.         (FC976)
+
+Here C is the activation sum of any selected originals from one
+actual suffix section, all divisible by h. If I_u=1, every other
+selected active label shares u's old h-phase, proving the second
+bound. The different-h-phase condition in t_u is essential for MX2;
+descendants already in the old phase cannot be counted twice.
+
+For a simultaneous consumer fix k old nonternary primes S and one
+actual future suffix v. Select its originals with v_3(u)=H and
+at least s primes of S, where 2<=s<=k and 2s-k>=2. Let C_v be
+their old activation sum and let R_v contain EVERY other original
+in this same section, so L_v=R_v+C_v. Each old pair interface
+h_qr=3^H q r has a genuine single-layer fresh ternary repair with
+N=3,B_h=2: its cofactor qr has four divisors, as required by ML2.
+An occupied pair is available by divisor closure. At every actual
+old point all active labels through that pair share its phase.
+Double-counting label/pair incidences therefore gives
+
+    binom(s,2)C_v<=2binom(k,2),
+    C_v<=K=floor(2binom(k,2)/binom(s,2)).          (FC977)
+
+This retains arbitrary global H, other prime heights and support;
+it does not use an H=1-only inventory. Pair capacities are evaluated
+on ONE point, not optimized separately or treated as disjoint resources.
+
+Call a selected u saturated if it has an actual proper-descendant
+phase group of size two. MX4 makes u the only original in its old
+h_qr-phase for every pair q,r in its S-support. Every other selected
+label shares at least 2s-k>=2 primes with u. If both were active,
+they would share that actual pair phase, contradicting MX4. Hence
+for T_v=sum_(saturated selected u)I_u,
+
+    T_v<=1, T_v=1 ==> C_v=1.                     (FC978)
+
+This is exclusion of PROJECTED old activations, stronger than full
+class disjointness. Count each saturated original once, irrespective
+of how many interfaces support its exclusion. It follows pointwise
+
+    C_v^2<=K C_v-(K-1)T_v,
+    C_v^3<=K^2 C_v-(K^2-1)T_v.                  (FC979)
+
+Expand the actual full section L=R+C, retaining its complement:
+
+    L^2<=R^2+(2R+K)C-(K-1)T,
+    L^3<=R^3+(3R^2+3KR+K^2)C
+                   -[3(K-1)R+K^2-1]T.         (FC980)
+
+On ANY ONE actual nonnegative prefix law eta, these improve the
+corresponding C<=K baseline allowances by respectively
+
+    (K-1)integral T deta,
+    3(K-1)integral RT deta+(K^2-1)integral T deta. (FC981)
+
+They supply M_2(v),M_3(v) to FC926 without independently extremizing
+R,C,T. Lower ternary heights, shallow supports and all other section
+entries stay in R; divisor closure does not permit discarding them.
+
+For S={5,7,11,13},s=3 and an old cutoff at least13, K=4. Thus
+
+    L^2<=R^2+(2R+4)C-3T,
+    L^3<=R^3+(3R^2+12R+16)C-(9R+15)T.           (FC982)
+
+At a head cutoff B>=13 resolve every old exponent of the entire
+original family, including future originals, in N_B. For w=1 use
+either the unguarded raw mu_B^o or its FULL actual head-survivor
+restriction 1_(S_B)mu_B^o. Every future saturated original u has
+a private integer by irredundancy. Its old resolving cell lies in
+S_B, activates I_u, and has mass at least1/N_B by FC935. FC978
+makes these selected activation cells disjoint. If n_v is the number
+of saturated selected originals in this section, then on either law
+
+    integral T_v deta>=n_v/N_B.                  (FC983)
+
+The specified FC982 allowances therefore improve by at least
+3n_v/N_B and15n_v/N_B, retaining the extra9 integral RT. Arbitrary
+selectors or changed laws require their own mass proof. No argument
+forces n_v>0 or a useful mass in every hypothetical whole cover.
+These bounds remain valid when all private hulls satisfy Gamma_d=d.
+They need not beat some other sharper section bound, and improving
+one section does not lower the maximum unless FC950's competing
+near-max slack is also paid. R and all other sections remain payable.
+
+## First-hit suffix decrements and a fixed-head height obstruction
+
+Return to FC936's ONE supplied head-survivor eta, of mass s, without
+assuming whole coverage unless explicitly stated. Report334's existing
+first-hit construction restricts each normalized row to its allowed
+points. Write R_p for this row, distinct from any suffix complement:
+
+    R_p=1_(D_p^c)K_p
+       =1_(D_p^c)nu_p/[1-min(beta_p,1/2)],
+    R_p(1)=1-g(beta_p),
+    zeta_<p=eta product_(B<q<p)R_q.               (FC984)
+
+It is exactly mu_<p restricted to avoiding all prior tail originals.
+The beta at each history is unchanged. With r(beta)=min(beta,1-beta)^2,
+the pointwise identity beta^2=g(beta)+r(beta) yields the reused
+first-hit accounts
+
+    zeta_final(1)=s-Q_live+C_local
+                =s-Q_all+C_dead+C_local,          (FC985)
+
+where Q_live=sum integral beta_p^2 dzeta_<p,
+C_local=sum integral r(beta_p)dzeta_<p,
+Q_all=sum integral beta_p^2 dmu_<p, and C_dead is the latter sum
+restricted to histories already hit earlier. Local slack and removed
+later charges have different supports; one cannot mix their laws or
+cancel an upper allowance as though it were the actual square cost.
+
+The live row has mass at most one and the same normalized density
+bounds. FC926 and FC959 therefore apply on zeta. More precisely,
+for a future suffix v with a zero-current-depth group,
+
+    J_r(v)=integral g(beta_p)L_(<p,v)^r dzeta_<p,
+    zero-depth contribution=M_r(v)-J_r(v), r=2,3. (FC986)
+
+Replace Z_r(v) in FC926 by Z_r(v)-J_r(v), with both zero if the
+group is absent; leave all positive-depth tuple upper bounds intact.
+The zero group is independent of the current coordinate, so its
+exact multiplier is R_p(1). This removes future charges to dead
+histories for originals not involving p. At beta=1 every future
+query vanishes on that row. Further positive-depth savings require
+actual deleted-query intersections. To scalarize, use
+max_v(A_v-J_v), or reduction min_v[(A-A_v)+J_v] with A=max A_v;
+subtracting max J_v from max A_v is invalid.
+
+If the original family IS a whole cover and P is its last tail prime,
+every positive live old cell avoids all previous originals. Every
+pure-allowed P completion must therefore be forbidden at this stage:
+
+    beta_P=1 on the live support,
+    r(beta_P)=0.                                 (FC987)
+
+If the live mass is already zero there is no positive support to
+use. Private witnesses give pre-stage support, not terminal square
+slack or survivors after their own original is tested. A supplier
+using local slack must force it earlier, or use actual query decrements
+and removed dead-history charges instead.
+
+There is a concrete conditional geometric input. For a nonpure
+original m assigned at p and an original n assigned later, let
+V_m,V_n be their complete private regions on the same full carrier.
+Let C be the intersection of their projections onto ALL coordinates
+strictly before p. On each cell of C a completion in V_m supplies
+a pure-allowed p-point inside D_p, and one in V_n supplies a
+pure-allowed p-point outside it. If D_p^live counts pure-surviving
+p-cells at the complete actual depth, uniformity of nu_p gives
+
+    1/D_p^live<=beta_p<=1-1/D_p^live on C,
+    integral r(beta_p)dzeta_<p
+       >=zeta_<p(C)/(D_p^live)^2.                 (FC988)
+
+For multiple pairs use their actual union or disjoint allocation.
+For the complete pure head restricted to its survivor event, every
+surviving prefix has live density at least one relative to the pure
+product, so a nonempty resolving projection cell has positive mass.
+An arbitrary supplied seed can charge it zero. Neither enough such
+intersections nor a useful uniform total mass has been established
+under whole-cover extremality.
+
+The following explicit NONCOVER fixes the head and prime support
+while showing why partiality alone supplies no uniform relative slack.
+For E>=1 take support {3,5,7,11} and these literal originals, empty
+sums zero:
+
+- 0 mod3 and0 mod11.
+- Pure 5^i,1<=i<=10: phase0 at i=1, and
+  2+sum_(k=1..i-2)5^k for i>=2.
+- Pure 7^j,1<=j<=E: phase0 at j=1, and
+  4+sum_(k=1..j-2)7^k for j>=2.
+- For1<=j<E, modulus5*7^j with phases x_5=3 and
+  x_7=sum_(k=0..j-2)7^k+2*7^(j-1) mod7^j.
+- Modulus5*7^E with phases x_5=1,x_7=1 mod7^E.
+- For1<=i<=10, modulus5^i*11 with phases x_5=1 mod5^i,x_11=i.
+
+Every nonunit divisor of a listed modulus is present. Pure powers
+have disjoint comb phases; shallow5*7^j have another disjoint comb,
+the deep mixed label has a different five-root, and the eleven-stage
+labels have distinct eleven-roots. Comparable originals are disjoint.
+
+Every original is private somewhere. For pure-five points use their
+own comb with x_7=3; for pure-seven use x_5=4 and their own comb.
+For shallow mixed labels use x_5=3 and their seven-comb point.
+Nonzero eleven and ternary coordinates suffice in these cases. The
+deep mixed label has private point x_5=6,x_7=1 mod7^E,x_11=2:
+only the i=1 eleven activation remains, with forbidden root1.
+An eleven-stage label uses x_5=1 mod5^i,x_11=i,x_7=3. Pure3 and
+pure11 use their zero coordinate with x_5=4,x_7=3 and the other
+coordinate nonzero. The full point (x_3,x_5,x_7,x_11)=(1,4,3,1)
+survives, so none of these facts asserts a whole cover.
+
+At B=5 supply eta=nu_3 nu_5 restricted to x_5=1 mod5^10. Its
+head and mass are independent of E. The pure-seven surviving Haar
+fraction is (5*7^E+1)/(6*7^E). On this seed all shallow mixed labels
+are inactive, and the deep label has the fraction
+
+    s=eta(1)=4/(3*5^10+1),
+    beta_7=alpha_E=6/(5*7^E+1)<=1/6.             (FC989)
+
+The seven-row deletes the forbidden cylinder without losing live
+mass. At eleven all ten activations are present, filling the ten
+pure-allowed roots; beta_11=1 and all seed mass is killed. Exactly
+
+    sum integral g(beta)dzeta=s,
+    Q_live=s(1+alpha_E^2), C_local=s alpha_E^2,
+    C_local/s=36/(5*7^E+1)^2 ->0.                (FC990)
+
+Distinctness, oddness, divisor closure, comparable disjointness,
+irredundancy, fixed prime support and a positive-mass partial row all
+hold. They do not imply a height-independent positive relative local
+credit. This does not supply positive seed mass for FC988: the entire
+seed fibre is covered by the eleven-stage library, so no private point
+of the deep seven-original projects into it. Its private witness x_5=6
+lies outside. Nor does this example impose global lex-minimal WHOLE
+cover constraints; a supplier using those extra assumptions remains open.
+
+For a fixed normalized threshold0<=t<1 the actual forbidden mass is
+
+    g_t(beta)=(beta-t)_+/(1-t), g_t(1)=1.          (FC991)
+
+For every fixed t>0 sufficiently large E has alpha_E<t. Thus in
+this example threshold changes still preserve the seed until eleven
+and then consume it all. This does not exclude improving an allowance
+with a threshold, or choosing another actual head; it excludes using
+threshold optimization to replace a proof that the supplied head is
+useful. Changed thresholds require their own source and moment bounds.
+
+These suppliers sharpen distinct parts of one-source accounting:
+fractional moments lower the required seed order; actual-pair potentials
+retain signed future correlations; extremal descendant groups reduce
+full section allowances; first-hit rows remove dead-query charges.
+They do not yet force a useful aggregate of credits for every finite
+distinct odd family. The remaining obligation is a whole-cover
+arithmetic argument supplying sufficient same-source head mass and
+joint savings, with all complementary loads and near-max sections paid.
+All additions here are ordinary mathematical derivations with independent
+review, not new Lean results or a resolution of unrestricted Erdős #7.
