@@ -6562,3 +6562,199 @@ The [exact joint-prime consumer](../../../frontier/cover-geometry/fibre-credit-p
 The reusable sources checked for this deduction are [Report463 PE2–PE6](../450-499/463-two-actual-prime-extensions-preserve-a-common-core-law.md), [Report465](../450-499/465-two-query-scalars-do-not-determine-a-surviving-extension.md), [Report771](../750-799/771-stop-loss-profiles-preserve-the-ordinary-source-through-thirteen-primes.md), [Report773](../750-799/773-repeated-upper-mass-comparison-lowers-the-fourteen-prime-tail-cutoff.md), [Report778](../750-799/778-upper-mass-haar-comparison-lowers-the-general-eight-prime-tail-cutoff.md), and [Chapter33 SH5–SH13](../../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md). Report465 explains why separate axis averages do not determine a common overlap, but does not obstruct this stronger same-source full-profile comparison. Report773's missing-small-prime source is not imported: only its general equal-mass comparison/update theorem is reused. Our physical source is (FC239), in which all of 3,5,7,11 may occur under FC159's stated syntax.
 
 The original general core-source obligation remains open. This result adds arbitrary 43/47-touching originals to the restricted twelve-prime source and retains its far-tail continuation. Primes 53 through 10000 are not thereby absorbed, and unrestricted new old-only originals are not allowed. No mathematical-priority claim follows from this reuse and synthesis.
+
+## Pure prime powers can be paid inside the joint ternary pair boundary
+
+The joint ternary-prefix argument extends to **all actual pure powers of every occurring prime**, with arbitrary finite heights and arbitrary globally fixed phases, in the following two useful ranges:
+
+1. At most ten nonternary primes at least5, with arbitrary pair graph.
+2. Arbitrarily many nonternary primes at least5, provided the pair graph admits an order with at most two earlier neighbours at every vertex and, when5 occurs, at most one earlier neighbour at5. If5 is absent, every 2-degenerate pair graph qualifies.
+
+The remaining nonpure labels are precisely `3^k*q_i*q_j`, k>=0, with squarefree nonternary part. The singleton mixed labels `3^k*q_i` for k>=1, higher nonternary exponents in pair labels, and supports with three or more nonternary primes are **not included**. All original numerical moduli are distinct and greater than one. These are ordinary mathematical deductions with new finite controls, not Lean verification or unrestricted Erdős #7.
+
+### 1. Reuse boundary: forest noncoverage is already available
+
+This note reuses Report528 FC214–FC222's ownership, common ternary source and bad-prefix budget. The additional term is the actual pure-prime deletion on the full private coordinate; it changes both the threshold and the positive extension volume.
+
+Before claiming a new graph range, the following existing sources were checked.
+
+* [Chapter52 Branch A](../../../problem-details/52-two-or-four-exact-predecessor-supports.md) proves noncoverage, at arbitrary original heights, for any prime order starting with3 in which each assigned group has at most two exact nonempty predecessor supports. A forest pair graph admits an order with at most one earlier private neighbour q. The only supports assigned to a later vertex are then `{q}` and `{3,q}`. Thus **forest plus all pure powers is already contained in that theorem**, even with more general nonternary exponents. It is an instance here, not a new noncoverage result.
+* Chapter52 Branch B already handles at most four exact predecessor supports in numerical prime order. In particular it covers pair graphs with at most two smaller private neighbours. Its order requirement is not implied by the arbitrary-order hypothesis in item2 above.
+* Chapter39 handles an anchored order starting with3,5 and then7 when present, with at most three earlier neighbours counting anchors. Chapter41 handles numerical order with at most four smaller prime neighbours. Both allow more general original exponents. They supply existing overlapping graph regimes and are not being re-proved here.
+* Chapter07 DG1–DG6 admits 2-degenerate outside graphs starting at prime19 over an arbitrary `{3,5,7}` head. Its forest row starts at17. The present syntax is narrower and includes private primes5,7,11,13,17 in the joint budget, so those rows alone do not establish the displayed general consumers.
+* Chapter34's block-size condition, Chapter36's disjoint four-prime pages on a fixed `{3,5}` spine, and Chapter48's incidence-forest condition are not automatic for a general graph in item1 or2. The ternary coordinate shared by adjacent pair supports can create incidence cycles even when the private pair graph is a forest.
+* Reports604 and606 retain explicit pure3/pure5 and mixed central-phase contracts. Report709 retains ternary height at most one on head-only originals. Their source hypotheses are not imported here to handle arbitrary pure and pair phases at arbitrary ternary height.
+
+These comparisons identify the reused and additional interfaces in the checked sources; they are not an exhaustive literature or priority claim. In particular, the forest case and naturally ordered low-predecessor cases should be reported as reuse.
+
+### 2. Actual full coordinates and the changed extension inequality
+
+Fix distinct primes q_1,...,q_n>=5 in a declared order, not necessarily increasing. The allowed original labels are:
+
+    3^e, e>=1;
+    q_i^e, e>=1;
+    3^k*q_i*q_j, k>=0, i<j.                         (FC251)
+
+Each numerical label is absent or has one actual globally fixed residue. All present inventories are finite. Resolve the full ternary coordinate T=Z/3^H and every private coordinate X_i=Z/q_i^(H_i), with H,H_i>=1. Let H_3 and H_i be their full uniform Haar laws.
+
+Let S_3 avoid all actual pure3 originals and let S_i avoid all actual pure q_i originals. Numerical distinctness gives
+
+    alpha=H_3(S_3)>=1/2,
+    sigma_i=H_i(X_i minus S_i)<=1/(q_i-1).           (FC252)
+
+These are actual pure events on the original coordinate. They are not first-root replacements: all higher pure-power residues remain in S_i.
+
+Assign each pair original to its later endpoint in the declared order. Let d_i count the earlier private neighbours of i. For t in T, let c_i(t) count all assigned original pair labels whose actual ternary prefix contains t. At any fixed ternary depth k there are at most d_i such labels. The k=0 labels are included, and labels at different depths remain distinct even when their projections coincide.
+
+Fix t in S_3 and a legal tuple of earlier full private coordinates. Each active assigned pair either misses its earlier endpoint or excludes one first-root residue at q_i. Therefore their union has full H_i mass at most c_i(t)/q_i. Together with the actual pure deletion, the available extension volume is at least
+
+    (1-sigma_i-c_i(t)/q_i)_+.
+
+Sequential counting on this one carrier gives
+
+    H_private(U_t)
+      >=product_i(1-sigma_i-c_i(t)/q_i)_+,
+    Haar(U)>=integral_(S_3)
+                    product_i(1-sigma_i-c_i(t)/q_i)_+ dH_3. (FC253)
+
+The product is a bound on successive extension volumes for every legal earlier history. It does not assert independence of the surviving coordinates.
+
+If c_i(t)<=q_i-2, then FC252 gives the uniform positive factor
+
+    1-sigma_i-c_i(t)/q_i
+      >=1-1/(q_i-1)-(q_i-2)/q_i
+      =(q_i-2)/(q_i*(q_i-1))=:rho_i>0.             (FC254)
+
+Define
+
+    B_i={t:c_i(t)>=q_i-1},
+    G=S_3 minus union_i B_i.
+
+The sufficient bad-count threshold is now q_i-1, rather than q_i in the pure3-only argument. On the common good set,
+
+    Haar(U)>=H_3(G)*product_i rho_i.                (FC255)
+
+This keeps a quantitative full-Haar reserve independent of every finite pure-power height. Isolated private primes have no bad set, but their actual pure exclusions are still paid in rho_i.
+
+### 3. The complete original-prefix certificate
+
+For d_i>0 and an integer h>=0 with h*d_i<q_i-1, the assigned labels at depths0,...,h-1 contribute at most h*d_i pointwise. Let
+
+    Z_(i,h)=sum_(assigned original m at i, k_m>=h)
+                  H_3(S_3 intersect I_m),
+
+where I_m is the original ternary prefix. On S_3 intersect B_i the deeper count is at least q_i-1-h*d_i, hence
+
+    H_3(S_3 intersect B_i)
+      <=Z_(i,h)/(q_i-1-h*d_i)
+      <=(3*d_i/2)*3^-h/(q_i-1-h*d_i).              (FC256)
+
+The last step completes the nonnegative finite depth inventory using at most d_i labels per depth and their Haar masses3^-k. It changes no original phase. The first inequality retains the actual intersections with the pure3 survivor and can be sharper.
+
+For d_i=0 take beta_i=0; otherwise put
+
+    beta_i=min(alpha, min_(h>=0, h*d_i<q_i-1)
+                          Z_(i,h)/(q_i-1-h*d_i)).
+
+Then the finite actual-tree certificate is
+
+    H_3(G)>=alpha-sum_i beta_i,
+    Haar(U)>=(alpha-sum_i beta_i)_+*product_i rho_i. (FC257)
+
+Every event in this expression refers to the same original family. The threshold minimum chooses a bound on one fixed bad set, not a different favorable source or phase on different branches. The union bound allows arbitrary overlap between bad sets.
+
+### 4. At most ten private primes, with arbitrary graph
+
+Put the actual primes in increasing order. Its i-th prime is at least the i-th member of
+
+    (5,7,11,13,17,19,23,29,31,37).
+
+Every graph has d_i<=i-1. Use the following FC256 bounds at the reference primes. The first vertex has d=0 and contributes zero.
+
+| q | d bound | h | bad-mass bound |
+| ---: | ---: | ---: | ---: |
+| 7 | 1 | 5 | 1/162 |
+| 11 | 2 | 4 | 1/54 |
+| 13 | 3 | 3 | 1/18 |
+| 17 | 4 | 3 | 1/18 |
+| 19 | 5 | 3 | 5/54 |
+| 23 | 6 | 3 | 1/12 |
+| 29 | 7 | 3 | 1/18 |
+| 31 | 8 | 3 | 2/27 |
+| 37 | 9 | 3 | 1/18 |
+
+All denominators q-1-h*d are positive. The sum is exactly
+
+    161/324<1/2,
+    H_3(G)>=1/324,
+    Haar(U)>=(1/324)*product_i(q_i-2)/(q_i*(q_i-1))>0. (FC258)
+
+For fixed h on the positive-denominator domain, the expression in FC256 increases with d and decreases with q. Thus the same table bounds any smaller graph and any increasing tuple of at most ten distinct primes>=5; missing vertices only shorten the sum. The product in FC258 uses the actual primes, not the reference ones.
+
+The eleventh reference prime41 with d=10 has the optimized FC256 geometric bound1/18, making this particular complete-graph budget179/324>1/2. This is failure of that conservative certificate, not a covering example and not a proof that eleven private primes are impossible. The earlier eleven-prime statement without nonternary pure classes remains valid under its original syntax.
+
+### 5. Unbounded graph size and a protected small prime
+
+Suppose a declared order has d_i<=2. For every odd q>=5 choose
+
+    h=(q-3)/2.
+
+Then q-1-h*d_i>=2, so FC256 gives
+
+    H_3(S_3 intersect B_i)
+      <=(3/2)*3^(-(q_i-3)/2).                      (FC259)
+
+If5 is absent, include7 and all odd integers>=11 to bound the actual distinct-prime sum:
+
+    sum_i bad_fee_i
+      <=1/6 + sum_(r>=5)(3/2)*3^{-(r-1)}
+      =1/6+1/36=7/36.
+
+Consequently
+
+    H_3(G)>=11/36,
+    Haar(U)>=(11/36)*product_i rho_i>0.             (FC260)
+
+If5 is present, assume additionally d_5<=1 in that SAME order. Its FC256 threshold h=3 gives bad mass at most1/18 (zero if d_5=0). Every other vertex retains FC259. Therefore
+
+    sum_i bad_fee_i<=1/18+1/6+1/36=1/4,
+    H_3(G)>=1/4,
+    Haar(U)>=(1/4)*product_i rho_i>0.               (FC261)
+
+The graph may have arbitrarily many vertices, edges and cycles. The order can be nonnumerical. For example a cycle can be ordered from5, if present, so that5 has no earlier neighbour and every later vertex has at most two. Some such instances also fall within existing Chapter52/39/41 contracts; that overlap is reuse, not a claim of a new cycle theorem.
+
+The additional condition at5 is not automatic from 2-degeneracy. Subdivide one edge of K4 and place prime5 at the new degree-two vertex. It is a 2-degenerate graph, but that vertex is its only degree-at-most-two vertex initially. In any admissible forward order, its last vertex must have full degree at most two; therefore5 must be last and has two earlier neighbours. This graph does not satisfy FC261. It is an obstruction to that order certificate, not a covering-system counterexample. FC258 independently handles its small number of private primes.
+
+For forests, d_i<=1 and the threshold h=q_i-2 gives geometric fee `(3/2)*3^{-(q_i-2)}`. Summing over all odd integers>=5 gives1/16 and good ternary mass at least7/16. This quantitative version follows from the current certificate, but forest noncoverage and an all-height density source were already supplied by Chapter52 Branch A with a broader original syntax.
+
+The unrestricted 2-degenerate calculation that permits d_5=2 only yields25/36, which exceeds the available weak pure3 reserve1/2. No general all-2-degenerate-with5 conclusion is claimed. Improving actual prefix intersections or using another source remains possible.
+
+### 6. A legitimate full-core tail source
+
+For either FC258, FC260 or FC261, set delta to the corresponding good-ternary lower bound and let
+
+    Lambda=1/(delta*product_i rho_i).
+
+The actual full survivor U has Haar mass at least1/Lambda. Normalized full Haar on U is therefore one joint probability of density at most Lambda. This density bound is uniform over all finite ternary and pure-prime heights for the fixed prime set and declared graph condition. Uniform lifting to larger query heights preserves it.
+
+The existing full-head continuation, Report528 FC197–FC204 or [Report458's unused-distinguished-prime consumer](../450-499/458-distinguished-prime-completion-removes-the-early-phase-restriction.md), then admits arbitrary finite outside-prime labels beyond the symbolic sufficient cutoff
+
+    B>=3^256*ceil(Lambda*product_(p in {3,q_i})p(p+1)/(p-1)^2)^3. (FC262)
+
+Tail-touching originals may have arbitrary old cofactor powers, outside exponents and supports; newly inserted head-only originals are not silently admitted. No numerical cutoff search is included. The tail preserves the actual good support and may change the conditioned core marginal. The cutoff is not asserted uniform as the private prime set grows.
+
+### 7. New finite actual-family controls
+
+The [pure-power pair consumer](../../../frontier/cover-geometry/fibre-credit-partition/joint_ternary_pure_controls.py) reads no prior result and runs no earlier checker. It independently evaluates the rational table and the geometric sums, and constructs three explicit finite families from their numerical CRT moduli and one residue per label. The fixtures contain actual pure powers, including depth-two private pure classes, and pair originals at several ternary depths.
+
+Full integer enumeration covers67,725 CRT residues. Separately, sequential extension counts are checked on2,140 legal earlier histories; the two predicates agree. In total2,334 exact checks pass, including every actual fibre inequality, the pure masses, actual Z-based bad-set bounds, global integration, and the claimed good-set bound. The [result certificate](../../../frontier/cover-geometry/fibre-credit-partition/joint_ternary_pure_controls.json) records the exact data.
+
+| Fixture | Full period | Actual full-Haar survivor | Good ternary mass |
+| --- | ---: | ---: | ---: |
+| Blocked legal earlier history, two pure depths | 33075 | 12944/33075 | 17/27 |
+| Path with disjoint ternary phases | 17325 | 1712/5775 | 5/9 |
+| Triangle with three ternary layers | 17325 | 2008/5775 | 2/3 |
+
+The first fixture has order7,5. At ternary point1 mod27 and the legal earlier value x_7=0, four active pair labels remove first roots0,1,2,3 at5; the actual pure5 class removes root4. Thus that earlier history really has no private extension. It is explicitly excluded by the changed threshold c_5>=4, while the common good ternary set remains positive. The argument never assumes every actual fibre or history survives.
+
+The consumer accepts an explicit output path through `--output` and uses standard-library exact arithmetic. Finite controls check these instances and arithmetic; the preceding inequalities and common-source argument supply the universal phase and height claims. No Lean verification is claimed.
