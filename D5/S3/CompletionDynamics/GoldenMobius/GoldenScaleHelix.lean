@@ -107,3 +107,30 @@ theorem goldenHelixStep_scaleLift_strict
 #print axioms goldenHelixStep_scaleLift_strict
 
 end D5.S3.CompletionDynamics.GoldenMobius.GoldenScaleHelix
+
+
+/-- Iterating an orientation-flipping deck step around any even cycle has
+trivial monodromy on the orientation sheet. -/
+theorem orientationCover_monodromy
+    (state : GoldenHelixState) (k : ℕ) :
+    (goldenHelixStep^[2 * k] state).orientation = state.orientation := by
+  induction k generalizing state with
+  | zero =>
+      simp
+  | succ k ih =>
+      rw [show 2 * (k + 1) = 2 * k + 2 by omega,
+        Function.iterate_add_apply]
+      rw [ih]
+      simp [goldenHelixStep]
+
+/-- The 80-step common 5040 phase orbit has trivial orientation monodromy. -/
+theorem goldenHelixStep_80_orientation
+    (state : GoldenHelixState) :
+    (goldenHelixStep^[80] state).orientation = state.orientation := by
+  convert orientationCover_monodromy state 40 using 1 <;> norm_num
+
+/-- The 16-step 7-factor phase orbit has trivial orientation monodromy. -/
+theorem goldenHelixStep_16_orientation
+    (state : GoldenHelixState) :
+    (goldenHelixStep^[16] state).orientation = state.orientation := by
+  convert orientationCover_monodromy state 8 using 1 <;> norm_num
