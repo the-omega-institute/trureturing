@@ -16339,7 +16339,7 @@ $$
 
 ## 81. 二叶生成层与动作词边界的桥接
 
-第 80 节给出了一个带重叠端口的有限拼接实例；Fibonacci 卷第 223—225 节则给出了二叶自由生成语法及其任务相对行为核。本节把它们接到第 20—22 节的动作词未来边界：在只观察原子组成及其 Fibonacci 未来响应的固定任务中，组成投影本身就是完整动作词行为核；一旦增加合法性、失败、记录或内部控制，行为核按声明的新增响应细化。以下仍是有限树、确定性替换和固定测试族的普通数学推导。
+第 80 节给出了一个带重叠端口的有限拼接实例；Fibonacci 卷第 226—228 节则给出了二叶自由生成语法及其任务相对行为核。本节把它们接到第 20—22 节的动作词未来边界：在只观察原子组成及其 Fibonacci 未来响应的固定任务中，组成投影本身就是完整动作词行为核；一旦增加合法性、失败、记录或内部控制，行为核按声明的新增响应细化。以下仍是有限树、确定性替换和固定测试族的普通数学推导。
 
 ### 81.1 二叶载体与声明的动作族
 
@@ -17350,7 +17350,7 @@ $$
 
 ### 86.6 来源、后续切面与适用边界
 
-本节是仓内结果的具体综合及第85节必要条件的修正，不主张新的通用商定理或经文献检索确认的原创结果。[Process Geometry 第29节、命题31.20及第52节](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)分别提供联合标签核、不可读标签先求和与细标签额外条件、生成解释像和共同商的背景；[Fibonacci 第223—227节](FIBONACCI_ATOMIC_RELATION_GENERATION.md)限定生成叶子、组成摘要、允许操作和行为类的区别；[Joint Clocks 第31—32节](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md)限定时钟载体、实际纯轨道与四表达互恢复。式(86.10)保留有序配对差别，不能据两个生成叶子推出所有任务只有两个行为类。
+本节是仓内结果的具体综合及第85节必要条件的修正，不主张新的通用商定理或经文献检索确认的原创结果。[Process Geometry 第29节、命题31.20及第52节](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)分别提供联合标签核、不可读标签先求和与细标签额外条件、生成解释像和共同商的背景；[Fibonacci 第226—230节](FIBONACCI_ATOMIC_RELATION_GENERATION.md)限定生成叶子、组成摘要、允许操作和行为类的区别；[Joint Clocks 第31—32节](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md)限定时钟载体、实际纯轨道与四表达互恢复。式(86.10)保留有序配对差别，不能据两个生成叶子推出所有任务只有两个行为类。
 
 既有形式化锚仅作范围明确的引用：[EffectiveImageKernelCriterion.refinement_iff_kernel_inclusion_on_effective_images](../../../D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean)对应命题86.3的实际像因子化；[DynamicsDescent.dynamics_descends_iff](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean)处理满射摘要下的确定性自映射下降；[DynamicClosureMinimality.dynamic_closure_is_least](../../../D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean)要求候选细化对声明干预闭合；[ControlledBehaviorUniversality.controlled_behavior_universal_property](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean)要求有限实现、满射及更新和读出交换。这些引用不表示本节的半环加权实例、反例或全部解释已被 Lean 核验。
 
@@ -17362,7 +17362,7 @@ $$
 
 ## 87. 递归三阶共同核心：关系、关系的关系与四种表示
 
-本节取第86节同源联合核的有限确定性特例，把事件的关系及后继也纳入共同商。[Fibonacci §§225—227](FIBONACCI_ATOMIC_RELATION_GENERATION.md)提供生成层与行为边界的区分：二叶自由语法及有序配对给出生成方式；加入替换后的种子数、固定加性读出的维数和完整行为类数是不同问题。这里的“三阶”指状态、事件间关系及保存二者接续的共同结构，不指物理维数，也不由两个生成叶推出两个行为类。
+本节取第86节同源联合核的有限确定性特例，把事件的关系及后继也纳入共同商。[Fibonacci §§228—230](FIBONACCI_ATOMIC_RELATION_GENERATION.md)提供生成层与行为边界的区分：二叶自由语法及有序配对给出生成方式；加入替换后的种子数、固定加性读出的维数和完整行为类数是不同问题。这里的“三阶”指状态、事件间关系及保存二者接续的共同结构，不指物理维数，也不由两个生成叶推出两个行为类。
 
 ### 定义 87.1（有类型的同源事件模型与总化响应）
 

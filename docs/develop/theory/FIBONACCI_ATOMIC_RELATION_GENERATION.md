@@ -26849,11 +26849,1168 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 220. 原子替换的唯一逆像、结构深度与最小续接边界
+## 220. 累计深赋值过滤与实际 FIB 子族的完整矩
+
+沿用 §210、§216—219 的实际整数族与非负约数增量：
+
+$$
+V=F_r,\quad r\ge7\text{ 为素数},\quad
+I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,\quad N_g=1+Vg,
+$$
+
+$$
+A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,\quad T=|I|,
+\quad y=\log A,\quad\ell=\log y,\quad s=y\ell,\quad t=e^\gamma\ell,
+$$
+
+$$
+R=y/\ell^2,\quad\delta=y/\ell^3,\quad b_2=\pi^2/6,\quad
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\quad\Lambda=\frac{XU(s)}{t^s}.
+$$
+
+固定 $a>b_2$，令 $H=e^{aR}$、$D=X/H$，并记
+
+$$
+\mathcal H_D=\{d>D:\exists g\in I,\ d\mid N_g\}.
+$$
+
+以下渐近均沿素数指标 $r\to\infty$。充分大时，每个 $d\in\mathcal H_D$
+只命中一个实际整数 $n(d)=dh$，其中 $1\le h<H$ 且 $d/X\le1/h$。
+继续使用已有展开
+
+$$
+\log\Lambda=\log(X/A)+b_2R-b_2\delta+O(y/\ell^4).
+\tag{220.1}
+$$
+
+### 220.1 所有过深素赋值的联合一阶矩
+
+对实数 $q\ge4$ 定义
+
+$$
+k_p(q)=\lceil\log q/\log p\rceil,\qquad
+E_q(n)=\prod_{p\mid n}p^{(v_p(n)-k_p(q))_+},\qquad E_q(1)=1.
+\tag{220.2}
+$$
+
+每个素数先保留 $k_p(q)$ 层，再把其余深度相乘。
+这个量不同于 §219 的最大完整素数幂 $B(n)$；指数为一的大素数不增加 $E_q$。
+
+**定理 220.1（累计过深赋值的有限一阶矩）。** 对所有 $s\ge4$、$q\ge4$，
+
+$$
+1\le W_{s,q}:=\mathbb E_{\mu_s}E_q(d)
+\le\mathfrak A_{s,q}:=
+\exp\!\left(\frac{2e^2s^2(2+\log q)}{q^2}\right).
+\tag{220.3}
+$$
+
+证明。有限组素赋值在同一个 Euler 概率 $\mu_s$ 下独立。
+由 §216 的局部界 $\mu_s\{v_p(d)=j\}\le2e^2s^2p^{-2j}$，记 $k=k_p(q)$，得
+
+$$
+\begin{aligned}
+\mathbb E_{\mu_s}p^{(v_p(d)-k)_+}
+&=1+\sum_{j>k}(p^{j-k}-1)\mu_s\{v_p(d)=j\}\\
+&\le1+2e^2s^2\sum_{j>k}p^{j-k}p^{-2j}
+=1+\frac{2e^2s^2p^{-2k}}{p-1}.
+\end{aligned}
+\tag{220.4}
+$$
+
+令 $N=\lfloor q\rfloor$。对 $p\le q$，有 $p^{k_p(q)}\ge q$，所以
+
+$$
+\sum_{p\le q}\frac{p^{-2k_p(q)}}{p-1}
+\le q^{-2}\sum_{m=1}^{N-1}\frac1m
+\le\frac{1+\log q}{q^2}.
+$$
+
+对 $p>q$，有 $k_p(q)=1$。利用
+
+$$
+\frac1{m^2(m-1)}
+\le\frac12\left(\frac1{(m-1)^2}-\frac1{m^2}\right)
+$$
+
+与 $N\ge3q/4$，得到
+
+$$
+\sum_{p>q}\frac{p^{-2k_p(q)}}{p-1}
+\le\sum_{m>N}\frac1{m^2(m-1)}
+\le\frac1{2N^2}\le\frac1{q^2}.
+$$
+
+先对有限素数集合相乘，再用 $\log(1+u)\le u$，得到式（220.3）的统一上界。
+有限乘积逐点递增至 $E_q(d)$，单调收敛给出完整一阶矩及其有限性。$\square$
+
+尤其有
+
+$$
+W_{s,s}\le e^{4e^2}s^{2e^2},\qquad
+W_{s,s^2}\le\exp\!\left(\frac{4e^2(1+\log s)}{s^2}\right)
+=1+O(\log s/s^2).
+\tag{220.5}
+$$
+
+### 220.2 从同一整数的深度关系回到实际尺度核
+
+**定理 220.2（累计深度的实际命中过滤）。** 在上述唯一命中范围内，对任意
+$s\ge4$、$q\ge4$、$B>0$，有
+
+$$
+\mathcal B_D^{\mathrm{exc}}(B;q):=
+\sum_{\substack{d\in\mathcal H_D\\E_q(n(d))>B}}
+\frac dX\mu_s(d)
+\le\frac{W_{s,q}}B\le\frac{\mathfrak A_{s,q}}B.
+\tag{220.6}
+$$
+
+将筛选条件改成 $E_q(n(d))\ge B$，同一个上界仍成立。
+
+证明。逐素数使用
+
+$$
+(v_p(d)+v_p(h)-k_p(q))_+
+\le(v_p(d)-k_p(q))_++v_p(h)
+$$
+
+得 $E_q(dh)\le E_q(d)h$。在同一个实际分解 $n(d)=dh$ 上，
+
+$$
+\frac dX\le\frac1h\le\frac{E_q(d)}{E_q(n(d))}.
+\tag{220.7}
+$$
+
+所选每项因此至多为 $E_q(d)\mu_s(d)/B$。每个 $d$ 只出现一次，
+扩大到全部正整数后应用定理 220.1 即得。$\square$
+
+对任意固定 $0<\varepsilon<1$，取
+
+$$
+B_{\mathrm{exc}}(\varepsilon)
+=\frac{\Lambda}{\varepsilon}\mathfrak A_{s,s^2}.
+\tag{220.8}
+$$
+
+则
+
+$$
+\Lambda\mathcal B_D^{\mathrm{exc}}(B_{\mathrm{exc}}(\varepsilon);s^2)
+\le\varepsilon,
+\qquad
+\log B_{\mathrm{exc}}(\varepsilon)
+=b_2R-b_2\delta+O(y/\ell^4).
+\tag{220.9}
+$$
+
+与 §219 的大幂过滤各分配 $1/4$ 预算，由并集上界得到充分目标
+
+$$
+\limsup_{r\to\infty}\Lambda
+\sum_{\substack{d\in\mathcal H_D\\
+B(n(d))\le B_\dagger\\
+E_{s^2}(n(d))\le4\Lambda\mathfrak A_{s,s^2}}}
+\frac dX\mu_s(d)<\frac12.
+\tag{220.10}
+$$
+
+小除数部分的归一贡献仍为 $o(1)$。式（220.10）是待证的充分条件；
+累计深度过滤本身没有给出其中剩余和的上界。
+
+### 220.3 两个实际深赋值给出的完整矩衰减
+
+取 §214 的整数 $K$，并预先固定该节允许的有限低赋值目录。
+在当前参数下，$\log K=o(R)$、$(K,V)=1$；$K\mid n$、$A\le n\le X$
+保证 $n$ 存活于该节指定的完整缺陷与有限目录筛选。
+其在 2、3 处的赋值为 $O(\log\ell)$。
+
+固定 $b_2<c<2b_2$，定义
+
+$$
+m_2=\left\lceil\frac{cR}{2\log2}\right\rceil,\quad
+m_3=\left\lceil\frac{cR}{2\log3}\right\rceil,\quad
+P=2^{m_2}3^{m_3},\quad L=\operatorname{lcm}(K,P),
+$$
+
+$$
+\mathcal F_r=\{g\in I:K\mid N_g,\ v_2(N_g)=m_2,\ v_3(N_g)=m_3\}.
+\tag{220.11}
+$$
+
+**定理 220.3（实际存活子族的完整指定矩趋零）。** 对全部充分大的素数指标，
+上述子族满足
+
+$$
+\#\mathcal F_r=\frac{T}{3L}+O(1)
+=T\exp(-cR+o(R))=V^{1-o(1)},
+\tag{220.12}
+$$
+
+且每个成员均通过指定的 §214 筛选。同时
+
+$$
+\boxed{
+\sum_{g\in\mathcal F_r}\left(\frac{Z(N_g)}t\right)^s
+\le\Lambda T/X+\Lambda/H+
+\exp\!\left(-(c-b_2)R-b_2\delta+O(y/\ell^4)\right)
+\longrightarrow0.
+}
+\tag{220.13}
+$$
+
+因此该实际子族的所有成员最终均满足严格 Robin 不等式。
+
+证明。充分大时，$m_2,m_3$ 超过 $K$ 在这两个素数处的赋值。
+记 $K_0=K/(2^{v_2(K)}3^{v_3(K)})$，则 $L=PK_0$、$\log L=cR+o(R)$。
+$K$ 的素因子最终均小于 $2r-1$，且 $F_r$ 与 6 互素，故 $(6L,V)=1$。
+
+式（220.11）的条件等价于 $L\mid N_g$ 且 $(N_g/L,6)=1$，
+即 $N_g$ 模 $6L$ 位于 $L$、$5L$ 两类。因 $V$ 可逆，
+它们分别对应 $g$ 的一个余数类；在同一个区间 $I$ 内计数得
+$2T/(6L)+O(1)$。由 $\log L=o(\log V)$，主项趋于无穷，得到式（220.12）。
+整除 $K$ 则保证该节明确指定的筛选存活。
+
+每个成员都被 $P$ 整除，所以 $E_{s^2}(N_g)\ge E_{s^2}(P)$，且
+
+$$
+\log E_{s^2}(P)
+=\log P-k_2(s^2)\log2-k_3(s^2)\log3
+=cR-4\log s+O(1).
+\tag{220.14}
+$$
+
+对这个实际子族的大除数贡献，式（220.7）给
+
+$$
+\Lambda\sum_{\substack{d\in\mathcal H_D\\n(d)=N_g,\ g\in\mathcal F_r}}
+\frac dX\mu_s(d)
+\le\frac{\Lambda W_{s,s^2}}{E_{s^2}(P)}.
+\tag{220.15}
+$$
+
+由式（220.1）、（220.5）、（220.14），右端至多为式（220.13）的最后一项；
+这里 $\log s=O(\ell)=o(y/\ell^4)$。对 $d\le D$，
+受限子族的命中数至多为完整族的 $T/d+1$；若 $(d,V)>1$ 则命中数为零。
+这部分归一和至多为 $\Lambda T/X+\Lambda D/X$，从而得式（220.13）。
+$a>b_2$、$c>b_2$ 保证三项都趋零。
+
+最终非负和小于一，故每一项都小于一，即 $Z(N_g)<t$。
+又 $N_g\ge A$ 给 $t=e^\gamma\log\log A\le e^\gamma\log\log N_g$，
+得到严格 Robin。这个结论的充分大指标门槛尚未量化。$\square$
+
+该族中的两个实际完整素数幂分别为
+
+$$
+2^{v_2(N_g)},\ 3^{v_3(N_g)}=\exp(cR/2+O(1))<B_\dagger
+\tag{220.16}
+$$
+
+最终成立，因为 $c/2<b_2$。因此所强制的这两个素数幂本身不触发 §219 的过滤。
+其余完整素数幂没有上界，式（220.16）不证明 $\mathcal F_r$ 与旧大幂上限集合的交集非空。
+式（220.13）对完整 $\mathcal F_r$ 成立，所以也控制其任意交集。
+该族在实际乘子中的比例为 $\exp(-cR+o(R))\to0$，没有覆盖整个 FIB 区间。
+
+### 220.4 同一安全子族内，互补因子增大可以使核单项增大
+
+**命题 220.4（真实互补除数的增量比较及增长实例）。** 对任意实数 $s\ge1$、
+正整数 $n$ 和 $h\mid n$，有
+
+$$
+b_s(n/h)\le h\,b_s(n).
+\tag{220.17}
+$$
+
+以下恢复 $s=y\ell$。固定 $0<\rho<c/2$，令 $J=\lfloor\rho R/\log2\rfloor$。
+对定理 220.3 的全部实际成员 $n=N_g$，一致地对 $0\le j\le J$ 有
+
+$$
+n/2^j\in\mathcal H_D,\qquad
+\frac{((n/2^j)/X)\mu_s(n/2^j)}{(n/X)\mu_s(n)}
+=\frac{b_s(n/2^j)}{b_s(n)}=2^j(1+o(1)).
+\tag{220.18}
+$$
+
+证明。对 $v\ge2$，相邻增量 $b_s(p^{v-1})$、$b_s(p^v)$
+是递增函数 $su^{s-1}$ 在相邻区间上的积分，区间长度分别为 $p^{-(v-1)}$、$p^{-v}$。
+所以前者不超过后者的 $p$ 倍。对 $v=1$，Bernoulli 不等式给
+$p((1+1/p)^s-1)\ge s\ge1=b_s(1)$。
+沿每个实际素赋值逐层下降再相乘，得到式（220.17）。
+
+对构造中精确的 2-赋值 $m_2$，记 $B_v=b_s(2^v)$。
+均值定理给 $B_v=s2^{-v}\xi_v^{s-1}$，其中
+$2-2^{1-v}\le\xi_v\le2-2^{-v}$。
+在 $m_2-J\le v\le m_2$ 上，
+
+$$
+s2^{-v}\le\exp(-(c/2-\rho)R+O(\ell))\to0.
+$$
+
+因此该范围内一致有
+
+$$
+B_v=s2^{s-1}2^{-v}
+\left(1+O\left(s2^{-(m_2-J)}\right)\right).
+$$
+
+同一个 $n$ 的奇数部分约去后，增量比为 $2^j(1+o(1))$。
+又 $\rho<c/2<b_2<a$ 给
+
+$$
+\log\frac{n/2^j}{D}\ge(a-\rho)R-\log(X/A)\to+\infty.
+$$
+
+所以这些除数仍处于实际大除数核中，且尺度核中的 $d$ 与概率分母中的 $d$ 抵消，
+得到式（220.18）。$\square$
+
+取 $j=J$，核单项相对 $h=1$ 的比值增至 $\exp(\rho R+O(1))$。
+故不存在固定 $C>0$、$\beta\ge0$，使所有这些实际成员及大除数互补因子都满足
+
+$$
+((n/h)/X)\mu_s(n/h)\le Ch^{-\beta}(n/X)\mu_s(n).
+\tag{220.19}
+$$
+
+这不否定总核估计：同一子族的完整归一矩仍由式（220.13）趋零。
+它说明比较互补项时必须保留深赋值造成的基准损失。
+由于与旧最大幂上限的实际交集尚未证明非空，这也不是该交集内的反例。
+
+## 追加锚（本行以下为增补区）
+
+## 221. 欠赋值过滤、整体粗部分与固定截断核心
+
+沿用 §210–220 的实际 FIB 家族。对每个素数指标 $r\ge7$，定义
+
+$$
+V=F_r,\qquad I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N_g=1+Vg,
+$$
+
+$$
+A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,\quad T=|I|,
+\quad y=\log A,\quad\ell=\log y,\quad s=y\ell,\quad t=e^\gamma\ell,
+\quad R=y/\ell^2,\quad\delta=y/\ell^3,\quad\Lambda=XU(s)/t^s.
+$$
+
+固定 $a>b_2=\pi^2/6$，令 $H=e^{aR}$、$D=X/H$，以及
+
+$$
+\mathcal H_D=\{d\in\mathbb N:D<d\le X,\ \exists g\in I,\ d\mid N_g\}.
+$$
+
+所有渐近均指素数指标 $r\to\infty$；充分大时 $d\in\mathcal H_D$ 唯一命中一个
+实际整数 $n(d)=dh$，其中 $1\le h<H$，并有 $d/X\le1/h$。
+
+继续使用 §210 的非负乘法函数与全域 Euler 概率
+
+$$
+Z(n)=\frac{\sigma(n)}n,\qquad b_s(1)=1,\qquad
+b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1),
+$$
+
+$$
+U(s)=\sum_{d\ge1}\frac{b_s(d)}d,\qquad
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\qquad
+\mathcal Q_r=\sum_{g\in I}\left(\frac{Z(N_g)}t\right)^s.
+$$
+
+有限组素数赋值在 $\mu_s$ 下独立。这个全域乘积概率与实际余数类中的命中分布不同。
+§217 的归一化常数展开为
+
+$$
+\log\Lambda=\log(X/A)+b_2R-b_2\delta+O(y/\ell^4),
+\qquad X/A\longrightarrow2.
+$$
+
+### 221.1 局部价格亏损与同整数的欠赋值量
+
+记 $U_p(s)=\sum_{j\ge0}b_s(p^j)/p^j$。§216 给局部边缘
+
+$$
+\nu_{p,s}(j)=\mu_s\{d:v_p(d)=j\}
+=\frac{b_s(p^j)}{p^jU_p(s)},
+$$
+
+以及对 $s\ge4$ 的估计
+
+$$
+P_p=(1-p^{-1})^{-s},\qquad
+U_p(s)\ge\frac{P_p}{2e^2s},\qquad
+b_s(p^j)\le s p^{-j}P_p\quad(j\ge1),
+\tag{221.1}
+$$
+
+$$
+\nu_{p,s}(j)\le2e^2s^2p^{-2j}\quad(j\ge1).
+\tag{221.2}
+$$
+
+§218 给 $M_s=\max_d b_s(d)/d$ 及
+$J_s(d)=\log M_s-\log(b_s(d)/d)\ge0$。
+记
+
+$$
+m_{p,s}=\max_{j\ge0}\frac{b_s(p^j)}{p^j},\qquad
+j_{p,s}(k)=\log m_{p,s}-\log\frac{b_s(p^k)}{p^k}.
+$$
+
+则
+
+$$
+J_s(d)=\sum_p j_{p,s}(v_p(d)),\qquad j_{p,s}(k)\ge0.
+\tag{221.3}
+$$
+
+这是一份有限和：$p\ge y+2$ 且 $p\nmid d$ 时该项为零。
+这些因子来自实际增量 $b_s$；经典目标 $Z(n)^s/n$ 的局部价格因子与之不同。
+
+对正整数 $n$，定义欠赋值量，并记
+
+$$
+E_s^-(n)=\sum_{p\le\sqrt s}
+\left[\frac{s}{p^{v_p(n)+1}}-\log(2e p^2s)\right]_+,
+\qquad G_s=\frac{XM_s}{t^s},
+\qquad [u]_+=\max\{u,0\}.
+$$
+
+**命题 221.1（同整数的欠赋值价格下界）。** 对每个素数 $p\le\sqrt s$、整数 $k\ge0$，
+
+$$
+\boxed{j_{p,s}(k)\ge
+\left[\frac{s}{p^{k+1}}-\log(2e p^2s)\right]_+.}
+\tag{221.4}
+$$
+
+对每个 $d\mid n$，
+
+$$
+\boxed{J_s(d)\ge E_s^-(n).}
+\tag{221.5}
+$$
+
+在上述实际参数下，充分大时对所有实数 $L$ 有
+
+$$
+\Lambda\sum_{\substack{d\in\mathcal H_D\\E_s^-(n(d))\ge L}}
+\frac dX\mu_s(d)
+\le2G_sT e^{-L}.
+\tag{221.6}
+$$
+
+证明。对 $p\le\sqrt s$，§218 的实际构造给
+$m_{p,s}\ge P_p/(2e p^2s)$。对每个 $k\ge0$，
+
+$$
+\frac{b_s(p^k)}{p^k}\le Z(p^k)^s
+=P_p(1-p^{-k-1})^s\le P_p e^{-s/p^{k+1}}.
+$$
+
+两式取对数，并使用 $j_{p,s}(k)\ge0$，得到式（221.4）。
+这里 $k=0$ 对应 $b_s(1)=1$，已包括真实缺素数的情形。
+若 $d\mid n$，则 $v_p(d)\le v_p(n)$；逐素数应用式（221.4）并求和，得到式（221.5）。
+
+§217 的实际核计数给 $\sum_{d\in\mathcal H_D}d/X\le2T$（充分大时）。
+再由 $\mu_s(d)=(M_s/U(s))e^{-J_s(d)}$，在 $E_s^-(n(d))\ge L$ 上逐项应用式（221.5），
+得到式（221.6）。$\square$
+
+因此对任意固定预算 $\rho\in(0,1)$，取
+$L=\log(2G_sT/\rho)$ 使这一增量子和的归一贡献至多为 $\rho$。
+§218 给 $\log G_s=\log(X/A)+o(R)$，且 $\log T=y/2+O(1)$，故门槛为
+$L=y/2+o(R)$。此界只过滤达到该具体欠赋值门槛的整数，不保证全部剩余整数都达到它。
+
+### 221.2 增长的强制除数与归一矩中的零阶小量
+
+**命题 221.2（实际局部低赋值的概率尾）。** 设 $s\ge4$，$p$ 为素数、$k\ge1$。则
+
+$$
+\mu_s\{d:v_p(d)<k\}
+\le2e^2s\exp(-s/p^k).
+\tag{221.7}
+$$
+
+证明。由式（221.1），
+
+$$
+\begin{aligned}
+\sum_{j=0}^{k-1}\nu_{p,s}(j)
+&\le\frac1{U_p(s)}\sum_{j=0}^{k-1}b_s(p^j)\\
+&=\frac{Z(p^{k-1})^s}{U_p(s)}
+\le2e^2s(1-p^{-k})^s
+\le2e^2s e^{-s/p^k}.
+\end{aligned}
+$$
+
+求和包含 $j=0$，所以已覆盖真实缺素数。$\square$
+
+对实数 $w\ge2$，令
+
+$$
+C_-(w)=\operatorname{lcm}(1,\ldots,\lfloor w\rfloor).
+$$
+
+**命题 221.3（强制除数过滤）。** 对所有 $s\ge4$、$w\ge2$，有式（221.8）。取式（221.9）的实际参数后，式（221.10）和式（221.11）成立。
+
+证明。若 $C_-(w)\nmid d$，则存在素数 $p\le w$，使
+$v_p(d)<\lfloor\log w/\log p\rfloor$。每个被要求的最高素数幂不超过 $w$，故联合上界给
+
+$$
+\mu_s\{d:C_-(w)\nmid d\}
+\le2e^2sw e^{-s/w}.
+\tag{221.8}
+$$
+
+在实际参数下取
+
+$$
+L_-=\log(8e^2s^2\Lambda),\qquad w_-=s/L_-.
+\tag{221.9}
+$$
+
+充分大时 $2\le w_-\le s$，并且
+
+$$
+w_-=\frac{\ell^3}{b_2}\left(1+\frac1\ell+O(\ell^{-2})\right).
+\tag{221.10}
+$$
+
+由 $d/X\le1$，式（221.8）立即给
+
+$$
+\boxed{
+\Lambda\sum_{\substack{d\in\mathcal H_D\\C_-(w_-)\nmid d}}
+\frac dX\mu_s(d)
+\le\frac{w_-}{4s}=\frac1{4L_-}=o(1).
+}
+\tag{221.11}
+$$
+
+这使剩余增量项满足同一整数关系 $C_-(w_-)\mid d\mid n(d)$。
+由于 $w_-=O(\ell^3)<2r-1$，该强制除数与 $V$ 互素。条件 $C_-(w_-)\mid N_g$
+在模 $C_-(w_-)$ 上指定一个乘子余数类；该类与 $I$ 的交集数量为
+$T/C_-(w_-)+O(1)$，而剩余实际乘子包含于此交集。
+由素数定理，$\log C_-(w_-)=(1+o(1))w_-=(1/b_2+o(1))\ell^3=o(R)$。$\square$
+
+该强制除数提供的同余计数节省只有 $e^{o(R)}$，未达到临界预算中的 $e^{b_2R+o(R)}$ 尺度。
+
+这里的 $C_-(w_-)$ 只是赋值下限，不是完整小素数核心。
+即使 $d=C_-(w_-)u$，两因子仍可能有公因子，不能无条件将
+$b_s(d)$ 写成 $b_s(C_-(w_-))b_s(u)$。
+式（221.11）控制不含该强制除数的增量项总和，并不单独给出逐点 Robin 上界。
+
+### 221.3 完整粗素数部分的核过滤
+
+对 $w\ge1$ 定义同一个整数的完整粗部分
+
+$$
+R_w(n)=\prod_{p>w}p^{v_p(n)},\qquad
+C_w(n)=\prod_{p\le w}p^{v_p(n)},\qquad n=C_w(n)R_w(n).
+$$
+
+这里 $R_w(n)$ 是按定义真正粗的完整因子；它与任意除数的互补因子 $h=n/d$ 是不同对象。
+
+**定理 221.4（粗部分的统一分数矩与实际核上界）。** 对所有
+$s\ge4$、$w\ge s+1$、$0<\varepsilon<1$，置 $\tau=1-\varepsilon$。则
+
+$$
+\mathbb E_{\mu_s}R_w(d)^\tau
+\le\exp\left(\frac{4esw^{-\varepsilon}}\varepsilon\right).
+\tag{221.12}
+$$
+
+对任意 $B>0$，同一实际命中的核满足
+
+$$
+\boxed{
+\sum_{\substack{d\in\mathcal H_D\\R_w(n(d))>B}}
+\frac dX\mu_s(d)
+\le B^{-\tau}\exp\left(\frac{4esw^{-\varepsilon}}\varepsilon\right).
+}
+\tag{221.13}
+$$
+
+证明。若 $p>w\ge s+1$，则 $P_p\le\exp(s/(p-1))\le e$。
+式（221.1）给 $b_s(p^j)\le es p^{-j}$，所以
+
+$$
+\begin{aligned}
+\mathbb E_{\nu_{p,s}}p^{\tau j}
+&=\frac{1+\sum_{j\ge1}b_s(p^j)p^{-(1-\tau)j}}{U_p(s)}\\
+&\le1+es\sum_{j\ge1}p^{-(2-\tau)j}
+\le1+2es p^{-1-\varepsilon}.
+\end{aligned}
+$$
+
+独立局部边缘与非负极限给整体乘积。又
+
+$$
+\sum_{p>w}p^{-1-\varepsilon}
+\le\sum_{m>w}m^{-1-\varepsilon}
+\le\frac{\lfloor w\rfloor^{-\varepsilon}}\varepsilon
+\le\frac{2w^{-\varepsilon}}\varepsilon.
+$$
+
+对乘积取对数，用 $\log(1+u)\le u$，便得式（221.12）。
+该常数对 $\varepsilon$ 明确，因此允许后面令 $\varepsilon$ 随规模变化。
+
+对同一个 $n(d)=dh$，粗部分满足
+$R_w(n(d))=R_w(d)R_w(h)\le R_w(d)h$。
+若 $R_w(n(d))>B$，则
+
+$$
+\frac dX\le\frac1h<\frac{R_w(d)}B,
+\qquad \frac dX\le1.
+$$
+
+每个 $d$ 只计一次，所以该子集的核至多为
+
+$$
+\mathbb E_{\mu_s}\min\{1,R_w(d)/B\}
+\le B^{-\tau}\mathbb E_{\mu_s}R_w(d)^\tau,
+$$
+
+其中 $\min(1,x)\le x^\tau$。这证明式（221.13）。$\square$
+
+令
+
+$$
+B_{\mathrm{rough}}
+=\left[4\Lambda\exp\left(\frac{4esw^{-\varepsilon}}\varepsilon\right)\right]^{1/\tau}.
+\tag{221.14}
+$$
+
+则该部分真实归一矩中的大除数项贡献至多 $1/4$。这约束的是全部 $p>w$ 贡献的乘积，
+该乘积条件与 §219 的最大单个素数幂条件不同；本定理不要求被删子集与 §219 的存活集合有实际非空交集。
+
+#### 221.3.1 较高截止与临界预算的前两阶
+
+取
+
+$$
+\varepsilon=\ell^{-2},\qquad
+\tau=1-\ell^{-2},\qquad w=s^{2\ell^2}.
+\tag{221.15}
+$$
+
+这时 $sw^{-\varepsilon}=s^{-1}$，故式（221.12）的对数上界为
+$4e\ell^2/s=o(1)$。因此
+
+$$
+\log B_{\mathrm{rough}}
+=b_2R-b_2\delta+O(y/\ell^4).
+\tag{221.16}
+$$
+
+其代价是素数截止很大：$\log w=2\ell^2\log s=O(\ell^3)$。
+该截止满足 $w>y$；式（221.16）不等于 $y$-光滑部分上的同一门槛。
+剩余实际整数的完整 $w$-核心至少为
+$C_w(n)\ge n/B_{\mathrm{rough}}$。
+
+#### 221.3.2 较低截止与更大的粗部分门槛
+
+也可取
+
+$$
+w=s+1,\qquad \tau=\ell^{-1},\qquad\varepsilon=1-\ell^{-1}.
+\tag{221.17}
+$$
+
+充分大时 $\ell\ge2$，且
+$4esw^{-\varepsilon}/\varepsilon\le8e^3$。
+由式（221.14），
+
+$$
+\log B_{\mathrm{rough}}
+=b_2\frac y\ell-b_2\frac y{\ell^2}+O(y/\ell^3).
+\tag{221.18}
+$$
+
+这份门槛比式（221.16）大，但素数截止降为 $s+1$。
+§221.5 给出相应候选整数个数的上界。
+
+### 221.4 不相交素数区域上的联合截断核心
+
+为在不相交的素数区域中组合两份局部估计，
+对任意实数 $q\ge4$，定义
+
+$$
+k_p(q)=\left\lceil\frac{\log q}{\log p}\right\rceil,\qquad
+E_q(n)=\prod_p p^{(v_p(n)-k_p(q))_+}.
+$$
+
+定理 220.1 给出同一概率矩 $W_{s,q}$ 的上界：对所有 $s,q\ge4$，
+
+$$
+1\le W_{s,q}:=\mathbb E_{\mu_s}E_q(d)
+\le\exp\left(\frac{2e^2s^2(2+\log q)}{q^2}\right).
+\tag{221.19}
+$$
+
+每个局部深赋值因子至少为一，故式（221.19）同样控制任意素数子集的深赋值乘积。
+
+定义固定有限整数
+
+$$
+K_{q,w}=\prod_{p\le w}p^{k_p(q)},\qquad
+F_{q,w}(n)=\frac n{\gcd(n,K_{q,w})}.
+$$
+
+这不是按 $n$ 重新优化的核心，$K_{q,w}$ 在选定 $q,w$ 后固定。
+其局部分解为
+
+$$
+F_{q,w}(n)
+=\left(\prod_{p\le w}p^{(v_p(n)-k_p(q))_+}\right)R_w(n).
+\tag{221.20}
+$$
+
+对同一个乘积 $n=dh$，逐素数有
+
+$$
+F_{q,w}(dh)\le F_{q,w}(d)h.
+\tag{221.21}
+$$
+
+**定理 221.5（固定截断核心的联合核上界）。** 在定理 221.4 的条件下，对任意 $q\ge4$、$B>0$ 令
+
+$$
+L_E(s,q)=\frac{2e^2s^2(2+\log q)}{q^2},
+\qquad
+L_R(s,w,\varepsilon)=4esw^{-\varepsilon}/\varepsilon.
+$$
+
+则
+
+$$
+\mathbb E_{\mu_s}F_{q,w}(d)^\tau
+\le\exp(L_E+L_R),
+\tag{221.22}
+$$
+
+以及
+
+$$
+\boxed{
+\sum_{\substack{d\in\mathcal H_D\\F_{q,w}(n(d))>B}}
+\frac dX\mu_s(d)
+\le B^{-\tau}\exp(L_E+L_R).
+}
+\tag{221.23}
+$$
+
+证明。式（221.20）的两个因子分别仅依赖 $p\le w$ 与 $p>w$，在全域概率
+$\mu_s$ 中独立。第一因子至少为一，其 $\tau$ 次幂不超过其一次幂，
+而其一次幂期望不超过 $W_{s,q}$，再由式（221.19）控制。第二因子由式（221.12）控制。
+因此得到式（221.22）。这只组合一份同一概率测度在不相交坐标上的实际局部矩，
+没有将分别可达的最大值当作同一整数。
+
+再将式（221.21）代入定理 221.4 的同整数尺度核证明，即得式（221.23）。$\square$
+
+取
+
+$$
+B_{\mathrm{joint}}
+=\left[4\Lambda e^{L_E+L_R}\right]^{1/\tau}.
+\tag{221.24}
+$$
+
+则被排除部分的真实归一矩中的大除数项贡献至多 $1/4$。剩余实际整数满足
+
+$$
+\boxed{\gcd(n,K_{q,w})\ge n/B_{\mathrm{joint}}.}
+\tag{221.25}
+$$
+
+以下两种选择均取 $q=s^2$，从而
+
+$$
+L_E(s,s^2)=\frac{4e^2(1+\log s)}{s^2}=o(1).
+$$
+
+采用式（221.15）的选择时，$L_R=o(1)$，因此仍有
+
+$$
+\log B_{\mathrm{joint}}
+=b_2R-b_2\delta+O(y/\ell^4).
+\tag{221.26}
+$$
+
+采用式（221.17）的选择时，$\ell L_E=o(1)$ 且 $L_R=O(1)$，所以仍有
+
+$$
+\log B_{\mathrm{joint}}
+=b_2\frac y\ell-b_2\frac y{\ell^2}+O(y/\ell^3).
+\tag{221.27}
+$$
+
+两种选择有不同取舍，不能把较低截止与较小门槛分别取出后同时使用。
+
+### 221.5 较低截止下的实际候选个数
+
+使用式（221.17）、$q=s^2$ 及 $B=B_{\mathrm{joint}}$。满足式（221.25）的每个实际整数都可写成
+
+$$
+n=mu,\qquad m=\gcd(n,K_{q,w}),\qquad u=F_{q,w}(n)\le B,
+$$
+
+其中 $m$ 的所有素因子不超过 $w=s+1$。$u$ 未被认作粗因子，因为它可能包含小素数的过深赋值。
+令 $\Psi(X,w)$ 为不超过 $X$ 的 $w$-光滑正整数个数，则
+
+$$
+\#\{n\in[A,X]:F_{q,w}(n)\le B\}\le\lfloor B\rfloor\Psi(X,w).
+\tag{221.28}
+$$
+
+**命题 221.6（实际剩余整数的次幂级个数上界）。** 有
+
+$$
+\boxed{
+\log\#\{n\in[A,X]:F_{q,w}(n)\le B_{\mathrm{joint}}\}
+\le(3+o(1))\frac{y\log\ell}{\ell},
+}
+\tag{221.29}
+$$
+
+若集合为空则直接理解为对应的计数上界。特别地，满足这些条件的实际
+FIB 整数至多有 $V^{o(1)}$ 个。
+
+证明。取 $\alpha=3\log\ell/\ell$，充分大时 $0<\alpha\le1/2$。
+Rankin 的有限正项上界给
+
+$$
+\Psi(X,w)\le X^\alpha\prod_{p\le w}(1-p^{-\alpha})^{-1}.
+$$
+
+由 $1-2^{-\alpha}\ge\alpha\log2/2$，
+
+$$
+\begin{aligned}
+\log\prod_{p\le w}(1-p^{-\alpha})^{-1}
+&\le\frac2{\alpha\log2}\sum_{p\le w}p^{-\alpha}\\
+&\le\frac4{\alpha\log2}w^{1-\alpha}
+=O\left(\frac{y}{\ell\log\ell}\right).
+\end{aligned}
+$$
+
+最后一步使用 $w=s+1\sim y\ell$ 及
+$w^{-\alpha}=\ell^{-3}(1+o(1))$。因此
+
+$$
+\log\Psi(X,w)\le(3+o(1))\frac{y\log\ell}{\ell}.
+$$
+
+式（221.27）给 $\log B=O(y/\ell)=o(y\log\ell/\ell)$，代入式（221.28）即得。
+这只是实际区间中一个明确受限集合的上界，所以对它与 FIB 余数类的交集仍成立，
+不需要假设光滑数在该余数类中均匀分布。$\square$
+
+此结论缩小的是剩余核可依附的整数集合；它不是该集合的加权矩上界。
+特别地，$(y\log\ell)/\ell$ 大于 $R=y/\ell^2$，仅以候选个数乘最大增量原子
+仍不能跨过需要的核预算。
+
+### 221.6 同一实际整数上的预算交集
+
+以下可采用式（221.15）或式（221.17）中的任一参数选择，均取 $q=s^2$。
+
+记 $B(n)=\max_{p^v\parallel n}p^v$（$n>1$）及 $B(1)=1$。取 §219 的门槛
+
+$$
+B_\dagger=8(4e^2s^2)\Lambda(1+\log(8\Lambda)).
+$$
+
+式（219.5）使 $B(n)>B_\dagger$ 的真实归一矩中的大除数项贡献至多为 $1/4$。
+再用式（221.24）过滤 $F_{q,w}(n)>B_{\mathrm{joint}}$，最多再花费 $1/4$；
+式（221.11）删去不含 $C_-(w_-)$ 的除数仅花费 $o(1)$。
+对这些实际集合取交，得到明确的剩余核
+
+$$
+\mathcal B_{\mathrm{rem}}=
+\sum_{\substack{d\in\mathcal H_D\\
+B(n(d))\le B_\dagger\\
+F_{q,w}(n(d))\le B_{\mathrm{joint}}\\
+C_-(w_-)\mid d}}
+\frac dX\mu_s(d).
+$$
+
+**命题 221.7（过滤后的充分预算）。** 在上述参数下，
+
+$$
+\mathcal Q_r\le\frac12+\Lambda\mathcal B_{\mathrm{rem}}+o(1).
+\tag{221.30}
+$$
+
+因而 $\limsup_{r\to\infty}\Lambda\mathcal B_{\mathrm{rem}}<1/2$ 足以保证 $\mathcal Q_r<1$ 最终成立。
+
+证明。各过滤可以先后分配给不相交的被删部分；对应全域上界对其子集仍成立。
+式（219.5）、式（221.23）及式（221.11）分别贡献至多 $1/4$、$1/4$ 和 $o(1)$。
+§217 的小除数项满足 $\Lambda T/X+\Lambda D/X=o(1)$；加总即得式（221.30）。$\square$
+
+也可把式（221.14）、式（221.24）中的常数 $4$ 换成任意固定 $1/\rho$，
+分别使用任意固定正预算 $\rho$；前两阶门槛不变。
+式（221.6）的欠赋值价格过滤若以正预算 $\rho$ 加入，并把剩余核限制到该过滤的补集，
+则充分界的常数项相应增加 $\rho$。
+
+### 221.7 近极大原子的条件相容性与大型核心范围
+
+**命题 221.8（近极大原子与联合过滤相容）。** 取 §218 的 $z=y-\delta$ 及同一有限整数 $n_z$。采用式（221.15）或式（221.17），并取 $q=s^2$。充分大时，$C_-(w_-)\mid n_z\mid K_{q,w}$；若 $n_z$ 实际命中 $N_g=n_zh$，则 $B(N_g)<B_\dagger$ 及 $F_{q,w}(N_g)<B_{\mathrm{joint}}$。
+
+证明。§218 的构造给小素数指数 $k_p(s)$。由于 $w_-=O(\ell^3)<\sqrt s$ 且 $w_-<s$，有
+$\lfloor\log w_-/\log p\rfloor\le k_p(s)$，因此
+$C_-(w_-)\mid n_z$。该构造 $n_z$ 的所有素因子都小于 $y<s+1$，且各指数不超过
+$k_p(s)\le k_p(s^2)=k_p(q)$，所以 $n_z\mid K_{q,w}$。
+若它实际命中 $N_g=n_zh$，则
+
+$$
+F_{q,w}(N_g)\le F_{q,w}(n_z)h=h
+\le\exp(\delta+o(\delta)).
+$$
+
+由于 $\delta=o(R)$，这低于以上两种 $B_{\mathrm{joint}}$。命题 219.3 同时给 $B(N_g)<B_\dagger$，证明全部结论。$\square$
+
+命题 221.8 的前提包含实际命中；其结论不保证该命中存在。
+
+采用任一种窗口，剩余实际完整核心或固定截断核心的对数均至少为 $y-o(y)$，
+大于 $\log V\sim y/2$。因而 §215 依靠多项式短区间平均得到的
+$C\le V^{1-\eta}$ 范围仍不能直接处理这些核心。因此式（221.30）的未决项仍包含同一整数的
+大型核心、互补部分与唯一实际乘子的联合命中。上述过滤未给出该项所需的上界，
+也未从实际 FIB 族的充分矩证书推出任意自然数的完整 Robin 判据。
+
+## 追加锚（本行以下为增补区）
+
+## 222. 增长 FIB 模数上的大量缓衰减字符
+
+沿用实际整数族 $V=F_r$、$N_g=1+Vg$、
+$I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z$。
+以下令 $r\to\infty$ 经过素数，并记
+
+$$
+A=\min_{g\in I_r}N_g,\qquad y=\log A,\qquad\ell=\log y,
+\qquad s=y\ell,\qquad R=y/\ell^2.
+$$
+
+继续使用 §210、§216 的实际增量概率
+
+$$
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\quad(a\ge1),\quad b_s(1)=1.
+$$
+
+本节检验的是一项具体的谱估计：能否使这份完整权重在每个非主字符上的
+傅里叶系数都不超过 $e^{-cR}$，其中 $c>0$ 固定。
+以下结果排除这个统一估计，但不判定指定余数类的实际命中质量。
+
+### 222.1 单位条件、局部指数与绝对收敛
+
+定义
+
+$$
+U_p(s)=\sum_{a\ge0}\frac{b_s(p^a)}{p^a},\qquad
+\pi_p(a)=\frac{b_s(p^a)}{p^aU_p(s)},\qquad q_p=1-\pi_p(0).
+$$
+
+在 $\mu_s$ 下，各素数的赋值服从这些局部概率。取单位条件的质量
+
+$$
+c_V=\mu_s\{d:(d,V)=1\}=\prod_{p\mid V}U_p(s)^{-1}>0.
+$$
+
+令 $G=(\mathbb Z/V\mathbb Z)^\times$，把条件概率推到该有限群：
+
+$$
+\nu_s(a)=\frac1{c_V}\sum_{d\equiv a\pmod V}\mu_s(d),\qquad a\in G.
+$$
+
+对模 $V$ 的 Dirichlet 字符 $\chi$，在非单位上延拓为零，约定
+
+$$
+\widehat\nu_s(\chi)=\sum_{a\in G}\nu_s(a)\chi(a),\qquad
+\widehat\mu_s(\chi)=\sum_{d\ge1}\mu_s(d)\chi(d)
+=c_V\widehat\nu_s(\chi).
+\tag{222.1}
+$$
+
+单位条件只把 $p\mid V$ 处的赋值固定为零，其余局部分布仍为 $\pi_p$。
+
+§216 的局部界给 $\pi_p(a)\le2e^2s^2p^{-2a}$。
+令 $Q_s=2e^2s^2$、$k=\lceil\log Q_s/(2\log p)\rceil$，则
+
+$$
+\begin{aligned}
+\mathbb E_{\pi_p}a^2
+&\le k^2+\sum_{j\ge1}(k+j)^2Q_sp^{-2(k+j)}\\
+&\le k^2+\sum_{j\ge1}(k+j)^2 4^{-j}
+\ll k^2+1.
+\end{aligned}
+$$
+
+因此对素数 $p$ 和 $s\ge4$ 一致有
+
+$$
+\mathbb E_{\pi_p}a^2
+\ll(1+\log s/\log p)^2\ll\log^2s.
+\tag{222.2}
+$$
+
+再置 $P_p=(1-p^{-1})^{-s}$。局部非负增量望远镜求和为 $P_p-1$，故
+
+$$
+q_p\le U_p(s)-1
+\le\frac{P_p-1}{p}
+\le\frac{s}{p(p-1)}\exp\left(\frac{s}{p-1}\right).
+\tag{222.3}
+$$
+
+这里使用 $-\log(1-p^{-1})\le1/(p-1)$ 及 $e^u-1\le ue^u$。
+因为 $s/(2y-1)=\ell/2+O(\ell/y)$，式（222.3）中间的界给
+$\sup_{p>2y}q_p=O(y^{-1/2})$。把素数扩大为全部整数并求望远镜尾，另得
+
+$$
+\begin{aligned}
+\sum_{p>2y}(U_p(s)-1)
+&\le s\exp\left(\frac{s}{2y-1}\right)
+\sum_{m>2y}\frac1{m(m-1)}\\
+&=\frac{s}{\lfloor2y\rfloor}\exp\left(\frac{s}{2y-1}\right)
+=O(\sqrt y\,\ell).
+\end{aligned}
+\tag{222.4}
+$$
+
+先固定每个有限 $s$，这些界保证相关 Euler 乘积绝对收敛；随后才取指定渐近。
+
+### 222.2 由有限素分辨率产生的字符相位盒
+
+实际参数满足 $y=2\log V+O(1)=2r\log\phi+O(1)$，其中
+$\phi=(1+\sqrt5)/2$。由 $p\mid F_r\Rightarrow p\ge2r-1$ 和
+$4\log\phi<2$，充分大时所有 $p\le2y$ 都是模 $V$ 的单位。
+此外
+
+$$
+\log\varphi(V)=y/2+O(1),\qquad
+m:=\pi(2y)=(2+o(1))y/\ell.
+\tag{222.5}
+$$
+
+第一式使用 §217 的 $V/\varphi(V)=1+O(1/\ell)$，第二式是素数定理。
+
+取 $L=\lfloor y^{1/8}\rfloor$，把单位圆划分为 $L$ 个等长半开弧。
+$\varphi(V)$ 个字符在 $p\le2y$ 的 $m$ 个相位坐标上，至多落入 $L^m$ 个盒。
+在一个最大的盒中固定字符 $\chi_0$，将该盒内所有字符除以 $\chi_0$。
+得到互不相同的字符集合 $\mathcal C_r$，其中包含主字符，并且
+
+$$
+\chi(p)=e^{i\theta_{\chi,p}},\qquad
+|\theta_{\chi,p}|\le2\pi/L
+\quad(p\le2y,\ \chi\in\mathcal C_r).
+\tag{222.6}
+$$
+
+其基数至少为 $\varphi(V)/L^m$；由于 $\log L=\ell/8+o(1)$，
+
+$$
+\log|\mathcal C_r|\ge\log\varphi(V)-m\log L
+=y/4+o(y).
+\tag{222.7}
+$$
+
+这是有限相位分盒的抽屉原理，也是对偶群上的标准 Bohr 集容量机制；
+相关原始定位及距离约定见 [Bohr 字符文献条目](../../../Library/Fourier/fibcharacter2026bohrbarrier.md)。
+没有假设这些小素数生成整个单位群，
+也没有假设各个相位独立或均匀。$\mathcal C_r$ 不要求是子群，
+其中的字符也不要求本原。
+
+### 222.3 大量非主字符在临界尺度上衰减不足
+
+**定理 222.1（完整增量概率的大量缓衰减字符）。** 存在绝对常数 $C>0$，
+使所有充分大的素数指标 $r$ 及全部 $\chi\in\mathcal C_r$ 满足
+
+$$
+\boxed{
+|\widehat\nu_s(\chi)|\ge e^{-Cy^{3/4}\ell},\qquad
+|\widehat\mu_s(\chi)|\ge e^{-Cy^{3/4}\ell}.
+}
+\tag{222.8}
+$$
+
+其中至少 $\exp(y/4+o(y))-1$ 个字符是非主字符。
+因为 $y^{3/4}\ell=o(R)$，不存在固定 $c>0$，使任一变换在所有
+非主字符上最终一致满足模长上界 $e^{-cR}$。
+
+证明。乘法性与绝对收敛给
+
+$$
+\widehat\nu_s(\chi)=\prod_{p\nmid V}F_p(\chi),\qquad
+F_p(\chi)=\sum_{a\ge0}\pi_p(a)\chi(p)^a.
+\tag{222.9}
+$$
+
+对 $p\le2y$ 和 $\chi\in\mathcal C_r$，由 $\cos u\ge1-u^2/2$ 得
+
+$$
+\operatorname{Re}F_p(\chi)
+\ge1-\frac{\theta_{\chi,p}^2}{2}\mathbb E_{\pi_p}a^2
+\ge1-O(L^{-2}\log^2s).
+$$
+
+该损失一致趋零，最终至多为 $1/2$。用
+$-\log(1-u)\le2u$，可得
+
+$$
+-\log\prod_{p\le2y}|F_p(\chi)|
+\ll mL^{-2}\log^2s
+\ll y^{3/4}\ell.
+\tag{222.10}
+$$
+
+对 $p>2y$ 的单位素数，无论字符相位如何，将指数零项分离便有
+$|F_p(\chi)|\ge1-2q_p$。
+式（222.3）保证 $q_p\le1/4$ 最终一致成立，故
+$-\log|F_p(\chi)|\le4q_p$。
+由式（222.4），这些大素数的全部损失至多为 $O(\sqrt y\,\ell)$。
+结合式（222.10），得到 $\widehat\nu_s$ 的下界。
+
+最后所有 $p\mid V$ 均大于 $2y$，所以
+
+$$
+0\le-\log c_V=\sum_{p\mid V}\log U_p(s)
+\le\sum_{p>2y}(U_p(s)-1)=O(\sqrt y\,\ell).
+\tag{222.11}
+$$
+
+代入式（222.1）即可得到 $\widehat\mu_s$ 的下界，常数 $C$ 适当增大。
+非主字符个数由式（222.7）减去主字符得到。
+对每个固定 $c>0$，$y^{-1/4}\ell^3\to0$ 保证
+$Cy^{3/4}\ell<cR$ 最终成立，因而这些字符均违反所拟的统一上界。$\square$
+
+**推论 222.2（删除少量例外字符仍不足）。** 固定 $0<\varepsilon<1/4$。
+若例外字符集合 $\mathcal E_r$ 满足
+$|\mathcal E_r|\le\exp((1/4-\varepsilon)y)$，则充分大时仍有
+非主字符 $\chi\notin\mathcal E_r$ 满足式（222.8）。
+因此删除固定个数、或至多 $(\log V)^K$ 个字符（$K$ 固定），
+也不能恢复上述全体剩余字符的 $e^{-cR}$ 上界。
+
+证明。式（222.7）给 $|\mathcal C_r|>|\mathcal E_r|+1$ 最终成立。
+删去 $\mathcal E_r$ 与主字符后应用定理 222.1。
+又 $\log((\log V)^K)=O(\ell)=o(y)$，得到最后一项。$\square$
+
+### 222.4 与实际命中估计的准确关系
+
+定理 222.1 作用于完整的 $\mu_s$ 及其单位条件分布。
+它没有给余类 $1$、某个 $h^{-1}$ 或指定实际乘子区间的质量下界：
+傅里叶系数的模长不能决定它们在余类重构公式中的相位抵消。
+
+同样，加入大小截断、完整素数幂上限或 $d/X$ 权重后，不能继续把所得
+分布的傅里叶变换认作式（222.9）。这些限制需要另行保留，
+不能由完整 Euler 分布的结论直接搬运。
+
+本节排除的是一种逐字符一致衰减路线。仍可研究带移动区间的完整字符相关和，
+或直接估计实际命中与乘法亏损的联合关系；上述障碍没有证明或反驳
+该实际 FIB 子族的 Robin 不等式，也没有解决全部整数的 RH 判据。
+
+## 追加锚（本行以下为增补区）
+
+## 223. 原子替换的唯一逆像、结构深度与最小续接边界
 
 本节在第2—3节的原始有序树上求逆像；不把组成向量、叶子词或数量商当作原树。以下为普通数学证明，未作新的 Lean 编译或内核核验。实际制备来源、取得接口和时钟的附加条件见[联合来源与时钟卷第29节](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md)。
 
-### 220.1 固定语法与生成操作
+### 223.1 固定语法与生成操作
 
 沿用有限非空自由树集
 
@@ -26869,13 +28026,13 @@ $$
 
 在只有配对的签名中，两个叶子都是不可再配对分解的原子；若把 $\rho$ 也列为可用构造操作，则一个起始对象 $\alpha$ 足以生成全部树：先取得 $\beta=\rho(\alpha)$，再按任一目标树的有限结构逐层配对。这是固定签名中的生成事实，既不把 $\alpha,\beta$ 视为相同叶子，也不声称全部树都在单一轨道 $T_j=\rho^j(\alpha)$ 上。例如 $\langle\alpha,\alpha\rangle$ 不是该轨道上的树，下面的逆像判据将直接证明这一点。这里没有跨签名的普遍原子最少性或实际制造权限结论。
 
-### 220.2 精确像语言与唯一部分逆
+### 223.2 精确像语言与唯一部分逆
 
-**定理220.1。** 令 $I$ 为以下文法的最小有限树语言：
+**定理223.1。** 令 $I$ 为以下文法的最小有限树语言：
 
 $$
 I::=\beta\mid\langle\beta,\alpha\rangle\mid\langle I,I\rangle.
-\tag{220.1}
+\tag{223.1}
 $$
 
 则 $I=\rho(\mathcal T)$，三个生成分支互不相交。定义域恰为 $I$ 的部分函数 $D$ 为
@@ -26883,7 +28040,7 @@ $$
 $$
 D(\beta)=\alpha,\qquad D\langle\beta,\alpha\rangle=\beta,
 \qquad D\langle u,v\rangle=\langle Du,Dv\rangle\quad(u,v\in I).
-\tag{220.2}
+\tag{223.2}
 $$
 
 其他输入上 $D$ 未定义，并有
@@ -26891,20 +28048,20 @@ $$
 $$
 D(\rho t)=t\quad(t\in\mathcal T),\qquad
 \rho(Du)=u\quad(u\in I).
-\tag{220.3}
+\tag{223.3}
 $$
 
 特别地，$\rho$ 单射，像内每棵树的结构前驱唯一。
 
-**证明。** 对 $t$ 作结构归纳，三个替换规则分别落入(220.1)的三个分支。反过来，文法中的叶子 $\beta$、特殊树 $\langle\beta,\alpha\rangle$ 分别是 $\alpha,\beta$ 的像；两个像的配对仍为其前驱配对的像，文法归纳给出反向包含。
+**证明。** 对 $t$ 作结构归纳，三个替换规则分别落入(223.1)的三个分支。反过来，文法中的叶子 $\beta$、特殊树 $\langle\beta,\alpha\rangle$ 分别是 $\alpha,\beta$ 的像；两个像的配对仍为其前驱配对的像，文法归纳给出反向包含。
 
-文法没有根为 $\alpha$ 的成员。因此特殊树的右子树不在 $I$，它不可能同时来自 $\langle I,I\rangle$；叶子分支也与两个配对分支不同。由此(220.2)无歧义，每次递归只作用于真子树，故有限终止。按文法归纳证明 $\rho(Du)=u$；按原树归纳证明 $D(\rho t)=t$，其中配对输入的两个像子树均在 $I$，不会误入特殊分支。对 $\rho s=\rho t$ 两侧应用 $D$ 得 $s=t$。$\square$
+文法没有根为 $\alpha$ 的成员。因此特殊树的右子树不在 $I$，它不可能同时来自 $\langle I,I\rangle$；叶子分支也与两个配对分支不同。由此(223.2)无歧义，每次递归只作用于真子树，故有限终止。按文法归纳证明 $\rho(Du)=u$；按原树归纳证明 $D(\rho t)=t$，其中配对输入的两个像子树均在 $I$，不会误入特殊分支。对 $\rho s=\rho t$ 两侧应用 $D$ 得 $s=t$。$\square$
 
-还有一个等价的局部判据：每个 $\alpha$ 必须是某个字面树 $\langle\beta,\alpha\rangle$ 的右叶，其左兄弟必须就是单叶 $\beta$；根 $\alpha$ 因没有这样的父节点而不合格。必要性来自替换规则。充分性按根分类：叶子只能是 $\beta$；根有 $\alpha$ 子叶时，条件强制整根是特殊树；否则两个子树分别满足同一条件，归纳用(220.1)。这些特殊二叶子树互不重叠。故 $D$ 也可同时收缩原树中的每个特殊二叶子树为 $\beta$，并把未参与收缩的原 $\beta$ 叶改成 $\alpha$。收缩新产生的叶子不在本轮再次改写；这不是任意顺序的局部重写系统。
+还有一个等价的局部判据：每个 $\alpha$ 必须是某个字面树 $\langle\beta,\alpha\rangle$ 的右叶，其左兄弟必须就是单叶 $\beta$；根 $\alpha$ 因没有这样的父节点而不合格。必要性来自替换规则。充分性按根分类：叶子只能是 $\beta$；根有 $\alpha$ 子叶时，条件强制整根是特殊树；否则两个子树分别满足同一条件，归纳用(223.1)。这些特殊二叶子树互不重叠。故 $D$ 也可同时收缩原树中的每个特殊二叶子树为 $\beta$，并把未参与收缩的原 $\beta$ 叶改成 $\alpha$。收缩新产生的叶子不在本轮再次改写；这不是任意顺序的局部重写系统。
 
-### 220.3 四值识别边界
+### 223.3 四值识别边界
 
-**定理220.2。** 对已经给出的有限树，精确认识 $I$ 的完全确定自底向上树自动机最少需要四个子树摘要值。
+**定理223.2。** 对已经给出的有限树，精确认识 $I$ 的完全确定自底向上树自动机最少需要四个子树摘要值。
 
 **构造与证明。** 用 $A,B,G,X$ 分别表示字面 $\alpha$、字面 $\beta$、$I\setminus\{\beta\}$、$\mathcal T\setminus(I\cup\{\alpha\})$。叶子转移为 $\alpha\mapsto A$、$\beta\mapsto B$。配对转移的完整表如下，行是左子树，列是右子树：
 
@@ -26915,7 +28072,7 @@ $$
 | $G$ | $X$ | $G$ | $G$ | $X$ |
 | $X$ | $X$ | $X$ | $X$ | $X$ |
 
-接受值为 $B,G$。特殊表项 $(B,A)$ 对应字面二叶树，其余接受表项恰为两个像子树的配对；定理220.1和结构归纳证明四个值的含义。
+接受值为 $B,G$。特殊表项 $(B,A)$ 对应字面二叶树，其余接受表项恰为两个像子树的配对；定理223.1和结构归纳证明四个值的含义。
 
 四值分别由 $\alpha,\beta,\langle\beta,\alpha\rangle,\langle\alpha,\alpha\rangle$ 到达。在空上下文、$\langle\square,\alpha\rangle$、$\langle\beta,\square\rangle$ 下，这四棵树的接受位依次是
 
@@ -26927,13 +28084,13 @@ $$
 
 四值只计代数上的子树摘要。遍历位置、控制阶段、保存子结果的栈、输出树和计数器都没有包含在这个数字中；它不是内部观察者总容量为四的结论。
 
-### 220.4 正测度、有限结构深度与射线分解
+### 223.4 正测度、有限结构深度与射线分解
 
-**定理220.3。** 令 $\mathcal R=\mathcal T\setminus I$。每个 $t\in\mathcal T$ 有唯一分解
+**定理223.3。** 令 $\mathcal R=\mathcal T\setminus I$。每个 $t\in\mathcal T$ 有唯一分解
 
 $$
 t=\rho^{d(t)}r(t),\qquad r(t)\in\mathcal R,\quad d(t)\in\mathbb N.
-\tag{220.4}
+\tag{223.4}
 $$
 
 而且
@@ -26941,7 +28098,7 @@ $$
 $$
 d(t)=\max\{k\in\mathbb N:t\in\rho^k(\mathcal T)\},\quad
 r(\rho t)=r(t),\quad d(\rho t)=d(t)+1.
-\tag{220.5}
+\tag{223.5}
 $$
 
 故 $(r,k)\mapsto\rho^k r$ 给出 $\mathcal R\times\mathbb N\cong\mathcal T$；$\rho$ 在这些坐标中是 $(r,k)\mapsto(r,k+1)$。
@@ -26952,42 +28109,42 @@ $$
 Q(\rho t)-Q(t)=(3a+5b)-(2a+3b)=a+2b>0,
 $$
 
-因为非空树满足 $a+b\ge1$。每次成功的 $D$ 严格降低正整数 $Q$，所以不断取前驱必在有限步停于 $r\notin I$，逆向重建给出(220.4)。若 $\rho^i r=\rho^j s$ 且 $r,s\notin I$，不妨 $i\ge j$；用单射性消去 $j$ 次替换。若 $i>j$，则 $s=\rho^{i-j}r\in I$，矛盾；故 $i=j,r=s$。
+因为非空树满足 $a+b\ge1$。每次成功的 $D$ 严格降低正整数 $Q$，所以不断取前驱必在有限步停于 $r\notin I$，逆向重建给出(223.4)。若 $\rho^i r=\rho^j s$ 且 $r,s\notin I$，不妨 $i\ge j$；用单射性消去 $j$ 次替换。若 $i>j$，则 $s=\rho^{i-j}r\in I$，矛盾；故 $i=j,r=s$。
 
-若 $t=\rho^k u$，迭代(220.3)给出前 $k$ 次逆均存在；唯一终止链因而至少长 $k$。反向，该链的每个长度 $k\le d(t)$ 都给出 $t=\rho^kD^k(t)$。最大值公式成立。对 $\rho t=\rho^{d(t)+1}r(t)$ 应用唯一性，得两条更新式。$\square$
+若 $t=\rho^k u$，迭代(223.3)给出前 $k$ 次逆均存在；唯一终止链因而至少长 $k$。反向，该链的每个长度 $k\le d(t)$ 都给出 $t=\rho^kD^k(t)$。最大值公式成立。对 $\rho t=\rho^{d(t)+1}r(t)$ 应用唯一性，得两条更新式。$\square$
 
 这里“本原”只表示不属于这个 $\rho$ 的像，包含配对树 $\langle\alpha,\alpha\rangle$ 和 $\langle\alpha,\beta\rangle$。$Q$ 是终止测度，$d$ 是最大可逆层数；二者均没有附带物理历时。有限树是必要范围，本证明没有对无限树建立终止或本原分解。
 
-### 220.5 叶子预算的尖锐深度界
+### 223.5 叶子预算的尖锐深度界
 
 取 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$。
 
-**定理220.4。** 对 $k\ge0$ 及 $c(s)=(a,b)$，
+**定理223.4。** 对 $k\ge0$ 及 $c(s)=(a,b)$，
 
 $$
 L(\rho^k s)=aF_{k+1}+bF_{k+2},\qquad
 Q(\rho^k s)=aF_{k+3}+bF_{k+4}.
-\tag{220.6}
+\tag{223.6}
 $$
 
 对每个整数叶子预算 $n\ge1$，
 
 $$
 \max_{L(t)\le n}d(t)=K(n):=\max\{k\ge0:F_{k+1}\le n\}.
-\tag{220.7}
+\tag{223.7}
 $$
 
-**证明。** $T_0,T_1$ 的叶数为 $1,1$，数量为 $2,3$；第3.2节的结构递推及配对加性给出 $L(T_k)=F_{k+1}$、$Q(T_k)=F_{k+3}$。每个原 $\alpha$ 叶经 $k$ 步变成 $T_k$，每个原 $\beta$ 叶变成 $T_{k+1}$，保留原配对骨架，故逐叶相加得到(220.6)。由于 $a+b\ge1$ 及 $F_{k+2}\ge F_{k+1}$，若 $t=\rho^k s$ 则 $L(t)\ge F_{k+1}$。用 $k=d(t)$ 得上界；$T_{K(n)}$ 的深度就是 $K(n)$，叶数不超过 $n$，所以达到上界。
+**证明。** $T_0,T_1$ 的叶数为 $1,1$，数量为 $2,3$；第3.2节的结构递推及配对加性给出 $L(T_k)=F_{k+1}$、$Q(T_k)=F_{k+3}$。每个原 $\alpha$ 叶经 $k$ 步变成 $T_k$，每个原 $\beta$ 叶变成 $T_{k+1}$，保留原配对骨架，故逐叶相加得到(223.6)。由于 $a+b\ge1$ 及 $F_{k+2}\ge F_{k+1}$，若 $t=\rho^k s$ 则 $L(t)\ge F_{k+1}$。用 $k=d(t)$ 得上界；$T_{K(n)}$ 的深度就是 $K(n)$，叶数不超过 $n$，所以达到上界。
 
 最大值确实有限：$F_{m+2}\ge2F_m$ 对 $m\ge1$ 成立，故每两个下标至少倍增。它还给出 $K(n)=O(\log(n+1))$。$\square$
 
-预算 $n=1$ 允许深度一，由 $\beta$ 达到；不能因 $\alpha$ 也只有一叶就把此最大值误写成零。(220.6)还给出 $F_{d(t)+3}\le Q(t)$。
+预算 $n=1$ 允许深度一，由 $\beta$ 达到；不能因 $\alpha$ 也只有一叶就把此最大值误写成零。(223.6)还给出 $F_{d(t)+3}\le Q(t)$。
 
-### 220.6 连续求逆的总工作量
+### 223.6 连续求逆的总工作量
 
-**命题220.5。** 在已给出的显式树表示上，反复扫描、识别并构造 $D$，直到第一次未定义，求出 $(r(t),d(t))$ 的总节点工作量为 $O(N(t))$，可用 $O(N(t))$ 个存储字。
+**命题223.5。** 在已给出的显式树表示上，反复扫描、识别并构造 $D$，直到第一次未定义，求出 $(r(t),d(t))$ 的总节点工作量为 $O(N(t))$，可用 $O(N(t))$ 个存储字。
 
-**证明。** 单次自底向上扫描保持字面叶标签及定理220.2的摘要。特殊分支由原子标签识别，普通分支拼接已算出的子结果；每个节点只作有界次读写。拒绝也可在一次完整扫描内判定。令 $t_i=D^i(t)$，$0\le i\le d=d(t)$，$L_i=L(t_i)$。一个正向替换不减叶数，两个正向替换把每个 $\alpha$ 叶变成二叶、每个 $\beta$ 叶变成三叶，因此
+**证明。** 单次自底向上扫描保持字面叶标签及定理223.2的摘要。特殊分支由原子标签识别，普通分支拼接已算出的子结果；每个节点只作有界次读写。拒绝也可在一次完整扫描内判定。令 $t_i=D^i(t)$，$0\le i\le d=d(t)$，$L_i=L(t_i)$。一个正向替换不减叶数，两个正向替换把每个 $\alpha$ 叶变成二叶、每个 $\beta$ 叶变成三叶，因此
 
 $$
 L_{i+1}\le L_i,\qquad L_{i+2}\le\tfrac12L_i
@@ -27003,7 +28160,7 @@ $d=0$ 时直接成立。因此，包括最后一个无前驱树的拒绝扫描�
 
 这里采用地址、计数及有限标签可装入 $O(\log(N+2))$ 位字的 RAM，字读写、比较和所用加减为单位工作；不把任意大整数算术视为单位工作。可用按倍增扩展的缓冲区实现无需预知 $N$ 的分配：扩展时复制的容量形成几何级数，仍为线性总字工作。栈阶段、地址、深度计数和最终输出均计入存储，保守位存储界为 $O(N\log(N+2))$。这没有计入一个尚未提供的外部取得接口，也没有把局部计算的逆像当作源对象已经倒退。
 
-### 220.7 单次遍历的深度与本原标志
+### 223.7 单次遍历的深度与本原标志
 
 定义
 
@@ -27012,12 +28169,12 @@ $$
 \qquad \eta(t)=(d(t),\epsilon(t)).
 $$
 
-**定理220.6。** 此摘要有下列精确递推：
+**定理223.6。** 此摘要有下列精确递推：
 
 $$
 \eta(\alpha)=(0,1),\qquad \eta(\beta)=(1,1),\qquad
 \eta(\rho t)=(d(t)+1,\epsilon(t)),
-\tag{220.8}
+\tag{223.8}
 $$
 
 $$
@@ -27026,10 +28183,10 @@ $$
 (j+2,1),&\eta(s)=(i,e),\ \eta(t)=(j,f),\ e=f=1,\ i=j+1,\\
 (\min(i,j),0),&\text{其余情形}.
 \end{cases}
-\tag{220.9}
+\tag{223.9}
 $$
 
-**证明。** 叶子和 $\rho$ 的公式由定理220.3得到。对配对令 $k=\min(i,j)$。在第 $h<k$ 次逆后，两子树仍有正深度，均属于 $I$；尤其右子树不是 $\alpha$，所以整根不可能是特殊二叶树，只能按普通分支分别求逆。归纳得到
+**证明。** 叶子和 $\rho$ 的公式由定理223.3得到。对配对令 $k=\min(i,j)$。在第 $h<k$ 次逆后，两子树仍有正深度，均属于 $I$；尤其右子树不是 $\alpha$，所以整根不可能是特殊二叶树，只能按普通分支分别求逆。归纳得到
 
 $$
 D^h\langle s,t\rangle=\langle D^h s,D^h t\rangle
@@ -27042,27 +28199,27 @@ $$
 
 因此在每个节点作一次有界字运算即可求 $\eta$。序列遍历仍要保存返回阶段与左子树摘要；高度为 $H$ 的树用 $O(H+1)$ 个栈帧即可。深度值为 $O(\log(N+2))$，但帧、游标、地址与输出都须计费；这不是统一有限状态控制器的构造。
 
-### 220.8 深度读出下的精确最小续接边界
+### 223.8 深度读出下的精确最小续接边界
 
 固定以下数学一孔上下文语言，$u$ 可为任意固定有限树：
 
 $$
 C::=\square\mid\rho(C)\mid\langle C,u\rangle\mid\langle u,C\rangle.
-\tag{220.10}
+\tag{223.10}
 $$
 
-只查询最终深度，定义 $s\equiv_d t$ 当且仅当所有这种 $C$ 都满足 $d(C[s])=d(C[t])$。上下文中的常量和配对是此处声明的代数操作；(220.10)本身不授予观察者取得常量或实际拼接源的权限。
+只查询最终深度，定义 $s\equiv_d t$ 当且仅当所有这种 $C$ 都满足 $d(C[s])=d(C[t])$。上下文中的常量和配对是此处声明的代数操作；(223.10)本身不授予观察者取得常量或实际拼接源的权限。
 
-**定理220.7。**
+**定理223.7。**
 
 $$
 s\equiv_d t\quad\Longleftrightarrow\quad\eta(s)=\eta(t).
-\tag{220.11}
+\tag{223.11}
 $$
 
 所有 $(j,e)\in\mathbb N\times\{0,1\}$ 均可达。因而 $\eta$ 是该语言与该读出任务的精确最小行为商。
 
-**证明。** 定理220.6使 $\rho$ 和两种固定旁支配对都成为 $\eta$ 上的单值更新。按上下文构造归纳，相同 $\eta$ 给所有续接后相同 $\eta$，从而相同深度。
+**证明。** 定理223.6使 $\rho$ 和两种固定旁支配对都成为 $\eta$ 上的单值更新。按上下文构造归纳，相同 $\eta$ 给所有续接后相同 $\eta$，从而相同深度。
 
 反向，深度不同时空上下文已分开。若深度同为 $j$ 而标志不同，标志一的树由唯一分解就是 $T_j$。取
 
@@ -27070,13 +28227,13 @@ $$
 C_j[\square]=\langle T_{j+1},\square\rangle.
 $$
 
-标志一侧输出 $j+2$，标志零侧由(220.9)输出 $j$，故仍被分开。可达性由 $T_j$ 实现 $(j,1)$，由 $\rho^j\langle\alpha,\alpha\rangle$ 实现 $(j,0)$，因为后者的初始配对不在 $I$。
+标志一侧输出 $j+2$，标志零侧由(223.9)输出 $j$，故仍被分开。可达性由 $T_j$ 实现 $(j,1)$，由 $\rho^j\langle\alpha,\alpha\rangle$ 实现 $(j,0)$，因为后者的初始配对不在 $I$。
 
 更具体地，任何在实际像上保留深度并承载上述更新的摘要 $b$，若 $b(s)=b(t)$，沿上下文归纳必有 $s\equiv_d t$，所以 $b(t)\mapsto\eta(t)$ 良定且满射。由此最小性是因子方向上的精确结论，而不只是某种编码的大小比较。$\square$
 
 此边界有无限多个值。即便不使用配对，$d(T_j)=j$ 已要求保留任意深度的终端读出具有无限多个可区分值。有限识别器的四个摘要、这个无界逻辑边界、完整树的表示及取得它们的控制记忆，分别是不同的资源对象。
 
-### 220.9 组成、叶子词和深度互不替代
+### 223.9 组成、叶子词和深度互不替代
 
 第5.4节已证明，对同一树的连续数量读数 $Q_0=Q(t)$、$Q_1=Q(\rho t)$，
 
@@ -27086,7 +28243,7 @@ $$
 
 全部未来数量又满足 $Q_{h+2}=Q_{h+1}+Q_h$。因此完整正向数量序列的相等恰为组成相等；这里复用已有结果，不重新赋予其树恢复含义。
 
-单读数的实例是 $\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ 与 $\langle\beta,\beta\rangle$：当前都为六，下一读数分别九、十。组成相同而深度不同的实例是 $\langle\beta,\alpha\rangle$ 与 $\langle\alpha,\beta\rangle$，组成均为 $(1,1)$，深度分别二、零；这由定理220.1及220.3直接计算。叶子词也不能替代括号：
+单读数的实例是 $\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ 与 $\langle\beta,\beta\rangle$：当前都为六，下一读数分别九、十。组成相同而深度不同的实例是 $\langle\beta,\alpha\rangle$ 与 $\langle\alpha,\beta\rangle$，组成均为 $(1,1)$，深度分别二、零；这由定理223.1及223.3直接计算。叶子词也不能替代括号：
 
 $$
 u=\langle\beta,\langle\beta,\alpha\rangle\rangle,
@@ -27105,19 +28262,19 @@ $V_k$ 非空，因为 $F_k\ge1$；将这些叶子任意有序配对即可构造�
 
 组成边界与 $\eta$ 边界不可比较：前述交换二叶例使组成相同而 $\eta$ 不同；$\langle\alpha,\alpha\rangle$ 与 $\langle\alpha,\beta\rangle$ 都有 $\eta=(0,0)$，组成却分别为 $(2,0)$ 与 $(1,1)$。所以任一边界均不能作为另一边界的函数来源。这些反例没有提供额外坐标的实际读取能力。
 
-### 220.10 数学来源与适用范围
+### 223.10 数学来源与适用范围
 
-可识别像的通用来源是 Joost Engelfriet，*Tree Automata and Tree Grammars*，DAIMI FN-10，1975，作者数字版 [arXiv:1510.02036v1](https://arxiv.org/abs/1510.02036v1)，定义3.62及定理3.65，印刷页26—28。取秩零符号 $\alpha,\beta$、秩二符号配对；全部有限树由一个全接受状态识别。$\rho$ 的三个模板为 $\beta$、$\langle\beta,\alpha\rangle$、$\langle x_1,x_2\rangle$，最后一个模板中各变量恰出现一次，满足线性树同态假设。该定理因此供应像语言可识别性；定理220.1—220.2给出本例的显式逆与四值实现。
+可识别像的通用来源是 Joost Engelfriet，*Tree Automata and Tree Grammars*，DAIMI FN-10，1975，作者数字版 [arXiv:1510.02036v1](https://arxiv.org/abs/1510.02036v1)，定义3.62及定理3.65，印刷页26—28。取秩零符号 $\alpha,\beta$、秩二符号配对；全部有限树由一个全接受状态识别。$\rho$ 的三个模板为 $\beta$、$\langle\beta,\alpha\rangle$、$\langle x_1,x_2\rangle$，最后一个模板中各变量恰出现一次，满足线性树同态假设。该定理因此供应像语言可识别性；定理223.1—223.2给出本例的显式逆与四值实现。
 
-一般的可识别像定理没有断言同态单射，也没有断言历史起点或观察者的取得成本。本文使用定义域为 $I$ 的部分递归逆，不把它称为全定义确定逆变换器。将树展平为词虽使 $\operatorname{yield}(\rho t)=\sigma(\operatorname{yield}(t))$，其中 $\sigma(\alpha)=\beta,\sigma(\beta)=\beta\alpha$，却丢失220.9的括号差异。词或无限固定序列的可识别性结论不能直接充当这里的有限树逆像证明。
+一般的可识别像定理没有断言同态单射，也没有断言历史起点或观察者的取得成本。本文使用定义域为 $I$ 的部分递归逆，不把它称为全定义确定逆变换器。将树展平为词虽使 $\operatorname{yield}(\rho t)=\sigma(\operatorname{yield}(t))$，其中 $\sigma(\alpha)=\beta,\sigma(\beta)=\beta\alpha$，却丢失223.9的括号差异。词或无限固定序列的可识别性结论不能直接充当这里的有限树逆像证明。
 
 本节复用第2—3节的语法和替换、第5.4节的组成恢复及第9.2—9.3节的已有结构表示；新的逆像、深度、上下文和资源陈述由本节普通证明承担。不提出原创优先权、普遍物理时间或空间结论，也不结算本卷的 Robin/RH、素 Fib 无穷性等未决问题。
 
-## 220.99 追加锚
+## 223.99 追加锚
 
-## 221. 第6.4节素数种子证明的更正
+## 224. 第6.4节素数种子证明的更正
 
-### 221.1 失效步骤及保留的结论
+### 224.1 失效步骤及保留的结论
 
 第6.4节证明中的“相邻下标 $n,n+1$ 都大于 $3$ 时，其中一个被 $3$ 整除”不成立：$7,8$ 的模三余数为一、二。这里仅更正该证明步骤，保留原文及其结论：两个正素数权重给出整数无损的两次观察，当且仅当它们是 $(2,3)$ 或 $(3,5)$。
 
@@ -27125,41 +28282,41 @@ $V_k$ 非空，因为 $F_k\ge1$；将这些叶子任意有序配对即可构造�
 
 $$
 F_{2r}=F_r(F_{r-1}+F_{r+1}).
-\tag{221.1}
+\tag{224.1}
 $$
 
-为完整说明这里的整除依据，对 $a\ge1,b\ge0$，恒等式 $F_{a+b}=F_{a-1}F_b+F_aF_{b+1}$ 在 $b=0,1$ 分别由初值和递推成立；两侧关于 $b$ 满足同一二阶递推，故归纳成立。取 $a=b=r$ 得(221.1)。$r\ge3$ 时 $F_r\ge2$，另一因子 $F_{r-1}+F_{r+1}>1$，所以 $1<F_r<F_{2r}$，该偶下标项合成。相邻两项不可能同时为素数。
+为完整说明这里的整除依据，对 $a\ge1,b\ge0$，恒等式 $F_{a+b}=F_{a-1}F_b+F_aF_{b+1}$ 在 $b=0,1$ 分别由初值和递推成立；两侧关于 $b$ 满足同一二阶递推，故归纳成立。取 $a=b=r$ 得(224.1)。$r\ge3$ 时 $F_r\ge2$，另一因子 $F_{r-1}+F_{r+1}>1$，所以 $1<F_r<F_{2r}$，该偶下标项合成。相邻两项不可能同时为素数。
 
 余下 $n=1,2$ 均有首项一，排除；$n=3,4$ 分别给 $(2,3)$、$(3,5)$，两对均为素数且行列式绝对值一，满足整数无损条件。分类不变。$\square$
 
-第220节的逆像、终止、深度及取得接口均未使用第6.4节的素数分类；本更正不承担它们的证明前提，也不声明新的 Lean 核验。
+第223节的逆像、终止、深度及取得接口均未使用第6.4节的素数分类；本更正不承担它们的证明前提，也不声明新的 Lean 核验。
 
-## 221.99 追加锚
-## 222. 深度读出的有限边界与接续语言
+## 224.99 追加锚
+## 225. 深度读出的有限边界与接续语言
 
-### 222.1 全树载体、读出与精确边界
+### 225.1 全树载体、读出与精确边界
 
-沿用第220节的有限非空有序树集 $\mathcal T$、互异叶子 $\alpha,\beta$、有序非结合配对及原替换
+沿用第223节的有限非空有序树集 $\mathcal T$、互异叶子 $\alpha,\beta$、有序非结合配对及原替换
 
 $$
 \rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
 \qquad \rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
 $$
 
-使用定理220.3的唯一分解 $t=\rho^{d(t)}r(t)$，以及定理220.6、220.7的摘要 $\eta(t)=(d(t),\epsilon(t))$。其中 $\epsilon(t)=1$ 当且仅当 $t=T_{d(t)}$，$T_i=\rho^i\alpha$。记
+使用定理223.3的唯一分解 $t=\rho^{d(t)}r(t)$，以及定理223.6、223.7的摘要 $\eta(t)=(d(t),\epsilon(t))$。其中 $\epsilon(t)=1$ 当且仅当 $t=T_{d(t)}$，$T_i=\rho^i\alpha$。记
 
 $$
 R=\langle\alpha,\alpha\rangle,\qquad X_i=\rho^iR.
 $$
 
-故 $\eta(T_i)=(i,1)$、$\eta(X_i)=(i,0)$，所有深度与两种标记均有实际树代表。以下直接使用定理220.6的递推：$\rho$ 使深度加一并保留标记；配对仅在两子树分别为 $T_{j+1},T_j$ 时得到 $T_{j+2}$，其余情形得到深度为两子深度最小值、标记为零的树。
+故 $\eta(T_i)=(i,1)$、$\eta(X_i)=(i,0)$，所有深度与两种标记均有实际树代表。以下直接使用定理223.6的递推：$\rho$ 使深度加一并保留标记；配对仅在两子树分别为 $T_{j+1},T_j$ 时得到 $T_{j+2}$，其余情形得到深度为两子深度最小值、标记为零的树。
 
-**定义222.1。** 固定任意集合 $Y$ 及全函数 $f:\mathbb N\to Y$，读出为 $o_f(t)=f(d(t))$，输出按 $Y$ 中的精确相等比较。允许语言为
+**定义225.1。** 固定任意集合 $Y$ 及全函数 $f:\mathbb N\to Y$，读出为 $o_f(t)=f(d(t))$，输出按 $Y$ 中的精确相等比较。允许语言为
 
 $$
 \mathscr C:\quad C::=\square\mid\rho(C)\mid\langle C,u\rangle\mid\langle u,C\rangle
 \qquad(u\in\mathcal T).
-\tag{222.1}
+\tag{225.1}
 $$
 
 每个语境只有一个孔，$u$ 是任意固定有限树，允许任意有限次嵌套，并包括空语境。定义
@@ -27167,7 +28324,7 @@ $$
 $$
 s\equiv_f t\quad\Longleftrightarrow\quad
 \forall C\in\mathscr C,\ f(d(C[s]))=f(d(C[t])).
-\tag{222.2}
+\tag{225.2}
 $$
 
 精确代数边界是满射 $b:\mathcal T\to B$，带全操作 $r_B:B\to B$、$p_B:B^2\to B$ 及读出 $o_B:B\to Y$，满足对所有 $s,t\in\mathcal T$，
@@ -27175,34 +28332,34 @@ $$
 $$
 b(\rho t)=r_B(b(t)),\qquad
 b\langle s,t\rangle=p_B(b(s),b(t)),\qquad o_B(b(t))=o_f(t).
-\tag{222.3}
+\tag{225.3}
 $$
 
 只数实际像 $B=b(\mathcal T)$ 中的值。叶子值是 $b(\alpha),b(\beta)$；可达指从这两个常量和所列代数操作得到。这个定义没有提供树的物理取得、复制、返回或重置操作，也没有把任意旁支树的准备成本设为零。
 
-在此定义下，同边界值沿每个语境仍给同边界值：对(222.1)的构造归纳，空语境直接成立，每一步由(222.3)成立。因此任何精确边界的同值关系都包含于 $\equiv_f$。反之，$\equiv_f$ 对 $\rho$ 及每个固定旁支配对不变；两个配对输入同时替换可分两次单槽替换完成，所以它是保持读出的同余。于是 $b(t)\mapsto[t]_{\equiv_f}$ 良定、满射并保持全部操作及读出。这是下面各个最小性下界所用的因子方向。
+在此定义下，同边界值沿每个语境仍给同边界值：对(225.1)的构造归纳，空语境直接成立，每一步由(225.3)成立。因此任何精确边界的同值关系都包含于 $\equiv_f$。反之，$\equiv_f$ 对 $\rho$ 及每个固定旁支配对不变；两个配对输入同时替换可分两次单槽替换完成，所以它是保持读出的同余。于是 $b(t)\mapsto[t]_{\equiv_f}$ 良定、满射并保持全部操作及读出。这是下面各个最小性下界所用的因子方向。
 
-### 222.2 最小边界的三分定理
+### 225.2 最小边界的三分定理
 
-**定理222.2。** 对定义222.1的完整载体和完整语言，恰有以下三种情形。
+**定理225.2。** 对定义225.1的完整载体和完整语言，恰有以下三种情形。
 
 1. 若 $f$ 恒定，则 $\equiv_f$ 只有一类，最小精确边界为一值。
 2. 若 $f$ 非恒定但最终恒定，令
    $$K=\min\{k:\forall n\ge k,\ f(n)=f(k)\}.$$
-   则 $K\ge1$，最小精确边界恰有 $2K+2$ 值，其类和完整转移见222.3。
+   则 $K\ge1$，最小精确边界恰有 $2K+2$ 值，其类和完整转移见225.3。
 3. 若 $f$ 不最终恒定，则
    $$s\equiv_f t\ \Longleftrightarrow\ \eta(s)=\eta(t),$$
    因而商恰为可数无限集 $\mathbb N\times\{0,1\}$，不存在有限精确边界。
 
-证明分列于222.3—222.5。这里不要求 $Y$ 有限，也不要求 $f$ 单调、单射或取布尔值。
+证明分列于225.3—225.5。这里不要求 $Y$ 有限，也不要求 $f$ 单调、单射或取布尔值。
 
-### 222.3 最终常值时的完整商代数
+### 225.3 最终常值时的完整商代数
 
-设 $f$ 非恒定且最终恒定，$K$ 如定理222.2，$c=f(K)$。由 $K$ 的最小性，
+设 $f$ 非恒定且最终恒定，$K$ 如定理225.2，$c=f(K)$。由 $K$ 的最小性，
 
 $$
 f(K-1)\ne c,\qquad \forall n\ge K, f(n)=c.
-\tag{222.4}
+\tag{225.4}
 $$
 
 定义商映射 $q_K$ 的纤维
@@ -27213,14 +28370,14 @@ C_i&=\{T_i\} &&(0\le i\le K),\\
 N_i&=\{t:d(t)=i,\ \epsilon(t)=0\} &&(0\le i<K),\\
 G&=\{t:d(t)\ge K\}\setminus\{T_K\}.
 \end{aligned}
-\tag{222.5}
+\tag{225.5}
 $$
 
 类名同时作为摘要值。置 $h(C_i)=i$、$h(N_i)=i$、$h(G)=K$。叶子值为 $C_0,C_1$；读出为
 
 $$
 o_K(C_i)=f(i),\qquad o_K(N_i)=f(i),\qquad o_K(G)=c.
-\tag{222.6}
+\tag{225.6}
 $$
 
 完整一元转移是
@@ -27231,7 +28388,7 @@ r_K(C_i)&=C_{i+1} &&(0\le i<K),&r_K(C_K)&=G,\\
 r_K(N_i)&=N_{i+1} &&(0\le i<K-1),&r_K(N_{K-1})&=G,\\
 r_K(G)&=G.&&&&
 \end{aligned}
-\tag{222.7}
+\tag{225.7}
 $$
 
 完整有序配对转移先处理特殊项
@@ -27240,27 +28397,27 @@ $$
 p_K(C_{j+1},C_j)=
 \begin{cases}C_{j+2},&j+2\le K,\\G,&j=K-1,\end{cases}
 \qquad 0\le j<K.
-\tag{222.8}
+\tag{225.8}
 $$
 
 对其余每个有序输入 $(a,b)$，置 $m=\min(h(a),h(b))$，并令
 
 $$
 p_K(a,b)=\begin{cases}N_m,&m<K,\\G,&m=K.\end{cases}
-\tag{222.9}
+\tag{225.9}
 $$
 
-**命题222.3。** (222.5)是全树上的非空分割，(222.6)—(222.9)使 $q_K$ 成为精确边界，恰有 $2K+2$ 个可达值。
+**命题225.3。** (225.5)是全树上的非空分割，(225.6)—(225.9)使 $q_K$ 成为精确边界，恰有 $2K+2$ 个可达值。
 
 **证明。** 深度小于 $K$ 的树按标记分别进入 $C_i,N_i$；深度至少 $K$ 的树按是否恰为 $T_K$ 分入 $C_K,G$，故互斥且穷尽。$T_i,X_i,T_{K+1}$ 分别实现所有 $C_i,N_i,G$，所以全部非空且代数可达。
 
-$\rho$ 加一深度而保持标记，逐项给出(222.7)。读出在 $G$ 上为 $c$，由(222.4)成立。配对中，两个显式典范值的例外正是(222.8)。若有一个实际子深度小于 $K$，任何剩余的例外都必须涉及 $G$ 与低深度典范树。$G$ 作左输入、右输入为 $T_j$ 且 $j<K$ 时，例外要求左输入恰为 $T_{j+1}$；这些树全部由 $C_1,\ldots,C_K$ 单列，不属于 $G$。$G$ 作右输入、左输入深度小于 $K$ 时，例外要求右深度比左深度还小，也不可能。因此这些剩余配对一律取实际最小深度且标记为零，得到(222.9)的低分支。
+$\rho$ 加一深度而保持标记，逐项给出(225.7)。读出在 $G$ 上为 $c$，由(225.4)成立。配对中，两个显式典范值的例外正是(225.8)。若有一个实际子深度小于 $K$，任何剩余的例外都必须涉及 $G$ 与低深度典范树。$G$ 作左输入、右输入为 $T_j$ 且 $j<K$ 时，例外要求左输入恰为 $T_{j+1}$；这些树全部由 $C_1,\ldots,C_K$ 单列，不属于 $G$。$G$ 作右输入、左输入深度小于 $K$ 时，例外要求右深度比左深度还小，也不可能。因此这些剩余配对一律取实际最小深度且标记为零，得到(225.9)的低分支。
 
-若两子深度都至少 $K$，普通配对的深度至少 $K$，例外配对的深度更高。结果不可能是 $T_K$：$K=1$ 时 $T_K=\beta$ 是叶子；$K\ge2$ 时 $T_K$ 的两个子树分别为 $T_{K-1},T_{K-2}$，均达不到此处的子深度条件。因此结果总在 $G$，给出(222.9)的高分支。全部转移与代表选择无关，满足(222.3)；沿语境归纳得到所有未来读出正确。值数为 $(K+1)+K+1=2K+2$。$\square$
+若两子深度都至少 $K$，普通配对的深度至少 $K$，例外配对的深度更高。结果不可能是 $T_K$：$K=1$ 时 $T_K=\beta$ 是叶子；$K\ge2$ 时 $T_K$ 的两个子树分别为 $T_{K-1},T_{K-2}$，均达不到此处的子深度条件。因此结果总在 $G$，给出(225.9)的高分支。全部转移与代表选择无关，满足(225.3)；沿语境归纳得到所有未来读出正确。值数为 $(K+1)+K+1=2K+2$。$\square$
 
 特别保留 $T_K$ 是必要的结构区别：$\langle T_K,T_{K-1}\rangle=T_{K+1}$，而 $G$ 中任何树与右旁支 $T_{K-1}$ 配对均降到非典范深度 $K-1$。
 
-**命题222.4（$K=1$ 的完整实例）。** 此时四值是 $C_0,C_1,N_0,G$；$r_1(C_0)=C_1$，其余三个一元后继均为 $G$。配对表为
+**命题225.4（$K=1$ 的完整实例）。** 此时四值是 $C_0,C_1,N_0,G$；$r_1(C_0)=C_1$，其余三个一元后继均为 $G$。配对表为
 
 | 左／右 | $C_0$ | $C_1$ | $N_0$ | $G$ |
 |---|---|---|---|---|
@@ -27269,9 +28426,9 @@ $\rho$ 加一深度而保持标记，逐项给出(222.7)。读出在 $G$ 上为 
 | $N_0$ | $N_0$ | $N_0$ | $N_0$ | $N_0$ |
 | $G$ | $N_0$ | $G$ | $N_0$ | $G$ |
 
-**证明。** (222.8)只有 $(C_1,C_0)$ 一个特殊项；(222.9)在其余项上按是否有零层输入给出此表。(222.7)中 $0\le i<K-1$ 的范围为空。四值由 $\alpha,\beta,R,T_2$ 实现。$\square$
+**证明。** (225.8)只有 $(C_1,C_0)$ 一个特殊项；(225.9)在其余项上按是否有零层输入给出此表。(225.7)中 $0\le i<K-1$ 的范围为空。四值由 $\alpha,\beta,R,T_2$ 实现。$\square$
 
-### 222.4 所有不同类的分离
+### 225.4 所有不同类的分离
 
 对 $0\le i<K$ 定义固定语境
 
@@ -27281,44 +28438,44 @@ A_i[\square]&=\rho^{K-i-1}\langle\square,X_{i+1}\rangle,\\
 B_i[\square]&=\rho^{K-i-1}\langle T_{i+1},\square\rangle,
 \end{aligned}
 \qquad H[\square]=\langle\square,T_{K-1}\rangle.
-\tag{222.10}
+\tag{225.10}
 $$
 
-**命题222.5。** 任意两个不同的(222.5)类，都被(222.10)中的某个语境分开，且该语境对这两个类的任意代表均有效。因此这些类恰为 $\equiv_f$ 的类，$2K+2$ 是精确最小值。
+**命题225.5。** 任意两个不同的(225.5)类，都被(225.10)中的某个语境分开，且该语境对这两个类的任意代表均有效。因此这些类恰为 $\equiv_f$ 的类，$2K+2$ 是精确最小值。
 
-**证明。** 若两类的截断层不同，较低层为 $i<K$，另一类所有代表的深度都大于 $i$。$X_{i+1}$ 非典范，故 $A_i$ 中配对后的深度分别为 $i,i+1$，再替换后为 $K-1,K$；由(222.4)输出不同。这覆盖不同低层及任意低层与高层的比较。
+**证明。** 若两类的截断层不同，较低层为 $i<K$，另一类所有代表的深度都大于 $i$。$X_{i+1}$ 非典范，故 $A_i$ 中配对后的深度分别为 $i,i+1$，再替换后为 $K-1,K$；由(225.4)输出不同。这覆盖不同低层及任意低层与高层的比较。
 
 若同处低层 $i$，不同类只能是 $C_i,N_i$。$B_i$ 中第一次配对分别给深度 $i+2,i$，再替换后分别为 $K+1,K-1$，读出为 $c,f(K-1)$，不同。
 
-余下只有 $C_K,G$。$H[T_K]=T_{K+1}$，而每个 $t\in G$ 都不是 $T_K$，因此 $H[t]$ 无例外，深度为 $K-1$；读出仍不同。三类情况穷尽任意两个不同类。命题222.3给同类充分性，定义222.1后的语境归纳禁止任何精确边界合并这些代表，故得等价关系及精确下界。$\square$
+余下只有 $C_K,G$。$H[T_K]=T_{K+1}$，而每个 $t\in G$ 都不是 $T_K$，因此 $H[t]$ 无例外，深度为 $K-1$；读出仍不同。三类情况穷尽任意两个不同类。命题225.3给同类充分性，定义225.1后的语境归纳禁止任何精确边界合并这些代表，故得等价关系及精确下界。$\square$
 
 这也证明所有具有相同最小尾起点 $K$ 的非恒定最终常值函数具有同一个最小商分割，尽管当前读出表可以不同；早期标签相等不会合并这些类。
 
-### 222.5 无限变化与恒定退化
+### 225.5 无限变化与恒定退化
 
-**证明定理222.2的其余两项。** 若 $f$ 不最终恒定，则对每个 $i\ge0$，存在 $m\ge i$ 使 $f(m)\ne f(m+1)$；否则由相邻相等逐项归纳，$f$ 从 $i$ 起恒定，矛盾。
+**证明定理225.2的其余两项。** 若 $f$ 不最终恒定，则对每个 $i\ge0$，存在 $m\ge i$ 使 $f(m)\ne f(m+1)$；否则由相邻相等逐项归纳，$f$ 从 $i$ 起恒定，矛盾。
 
 取任意深度分别为 $i<j$ 的两棵树。语境
 
 $$
 \rho^{m-i}\langle\square,X_{i+1}\rangle
-\tag{222.11}
+\tag{225.11}
 $$
 
 先把深度截成 $i,i+1$，再移到 $m,m+1$，因此分离两输出。若两树同深度 $i$、标记不同，先用 $\langle T_{i+1},\square\rangle$ 得深度 $i+2,i$，再以非典范旁支 $X_{i+1}$ 截断，最后平移：
 
 $$
 \rho^{m-i}\langle\langle T_{i+1},\square\rangle,X_{i+1}\rangle.
-\tag{222.12}
+\tag{225.12}
 $$
 
-两最终深度为 $m+1,m$，输出不同。相同 $\eta$ 保持所有语境读出，由定理220.6或220.7成立。因此 $\equiv_f$ 恰为 $\eta$ 相等，且 $T_i,X_i$ 实现所有可数无限个值。
+两最终深度为 $m+1,m$，输出不同。相同 $\eta$ 保持所有语境读出，由定理223.6或223.7成立。因此 $\equiv_f$ 恰为 $\eta$ 相等，且 $T_i,X_i$ 实现所有可数无限个值。
 
 若 $f$ 恒定，则所有语境读出相同。一值集合配以唯一的一元、二元操作及该常值读出即为精确边界；$\mathcal T$ 非空排除零值。这一情形须单列，不能将 $K=0$ 代入非恒定公式 $2K+2$。$\square$
 
-### 222.6 只准许正向替换时的尾序列
+### 225.6 只准许正向替换时的尾序列
 
-**命题222.6。** 把语境限制为 $\rho^n(\square)$，$n\ge0$，则深度 $i$ 的精确状态为尾序列
+**命题225.6。** 把语境限制为 $\rho^n(\square)$，$n\ge0$，则深度 $i$ 的精确状态为尾序列
 
 $$
 F_i=(f(i+n))_{n\ge0}.
@@ -27338,19 +28495,19 @@ $$
 
 等价的有限实现将深度 $i<\mu$ 记为 $i$，其余记为 $\mu+((i-\mu)\bmod p)$；后继依次前进，最后一个相位回到 $\mu$，各状态读出为其下标的 $f$ 值。
 
-**命题222.7（奇偶读出的语言差异）。** $f(i)=i\bmod2$ 在只准许 $\rho$ 时恰需两个状态，以翻转更新；在(222.1)语言下，其商恰为无限的 $\eta$。
+**命题225.7（奇偶读出的语言差异）。** $f(i)=i\bmod2$ 在只准许 $\rho$ 时恰需两个状态，以翻转更新；在(225.1)语言下，其商恰为无限的 $\eta$。
 
-**证明。** 两个尾按首项不同而分离，且 $\rho$ 翻转奇偶。此函数不最终恒定，故定理222.2适用。更直接地，对任意 $i<j$，$\langle\square,X_{i+1}\rangle$ 把 $X_i,X_j$ 送至相邻深度 $i,i+1$，奇偶不同。$\square$
+**证明。** 两个尾按首项不同而分离，且 $\rho$ 翻转奇偶。此函数不最终恒定，故定理225.2适用。更直接地，对任意 $i<j$，$\langle\square,X_{i+1}\rangle$ 把 $X_i,X_j$ 送至相邻深度 $i,i+1$，奇偶不同。$\square$
 
-### 222.7 固定像语言的配对识别与动态闭包
+### 225.7 固定像语言的配对识别与动态闭包
 
-**定理222.8。** 固定 $k\ge1$，只读 $\mathbf1[d(t)\ge k]$，只准许配对语境而无动态 $\rho$。精确最小边界有 $k+3$ 值。其类为
+**定理225.8。** 固定 $k\ge1$，只读 $\mathbf1[d(t)\ge k]$，只准许配对语境而无动态 $\rho$。精确最小边界有 $k+3$ 值。其类为
 
 $$
 C_i=\{T_i\}\ (0\le i\le k),\qquad
 N=\{t:d(t)<k,\ \epsilon(t)=0\},\qquad
 G=\{t:d(t)\ge k\}\setminus\{T_k\}.
-\tag{222.13}
+\tag{225.13}
 $$
 
 叶子值是 $C_0,C_1$，接受值恰为 $C_k,G$。完整配对表用以下互斥规则给出：
@@ -27359,12 +28516,12 @@ $$
 p(C_{j+1},C_j)=
 \begin{cases}C_{j+2},&j+2\le k,\\G,&j=k-1,\end{cases}
 \quad 0\le j<k;
-\tag{222.14}
+\tag{225.14}
 $$
 
 两个输入均在 $\{C_k,G\}$ 时输出 $G$；其他所有输入输出 $N$。特别地，$N$ 在任一配对槽吸收。
 
-**证明。** 定理220.3给 $\rho^k(\mathcal T)=\{d\ge k\}$。由定理220.6，低深度非典范子树使配对非典范且深度仍小于 $k$，所以所有这类树可合并为 $N$。低典范输入只有所列连续有序对子可能上升；隐藏在 $G$ 的树不能与低层形成例外；两高输入总落入 $G$，理由与命题222.3相同。这证明整个表的代表无关性。$T_i,X_0,T_{k+1}$ 实现全部类。
+**证明。** 定理223.3给 $\rho^k(\mathcal T)=\{d\ge k\}$。由定理223.6，低深度非典范子树使配对非典范且深度仍小于 $k$，所以所有这类树可合并为 $N$。低典范输入只有所列连续有序对子可能上升；隐藏在 $G$ 的树不能与低层形成例外；两高输入总落入 $G$，理由与命题225.3相同。这证明整个表的代表无关性。$T_i,X_0,T_{k+1}$ 实现全部类。
 
 空语境分离接受类与拒绝类。$\langle\square,T_{k-1}\rangle$ 分离 $C_k,G$。对任意拒绝典范类 $C_i$，$i<k$，从
 
@@ -27374,29 +28531,29 @@ $$
 
 开始；$T_i$ 变为 $T_{i+2}$。任何其他拒绝类代表都不触发例外，变成非典范且深度小于 $k$ 的树：若代表在 $N$ 中，取最小值仍小于 $k$；若代表为 $T_j$、$j\ne i$ 且 $j<k$，深度为 $\min(i+1,j)<k$。若目标典范指数 $r=i+2$ 仍小于 $k$，继续把当前孔放在左槽，与 $T_{r-1}$ 配对；目标由 $T_r$ 升为 $T_{r+1}$，再递增 $r$，有限次后进入接受类。另一侧已非典范，任何后续配对都不会升高其深度，故始终拒绝。若起始指数已至少 $k$，无需继续。这也覆盖 $i=0$ 和 $k=1$，没有负下标旁支。故每个拒绝典范类与所有其他拒绝类均可分离；结合前两类分离得到全部下界，完整表达到 $k+3$。$\square$
 
-**命题222.9。** 当 $k\ge2$，上述最小配对边界不承载保持读出的 $\rho$ 更新。加入 $\rho$ 后的最小值为 $2k+2$，恰将 $N$ 拆成 $N_0,\ldots,N_{k-1}$；$k=1$ 时两个签名同为四值，$k=0$ 时同为一值。
+**命题225.9。** 当 $k\ge2$，上述最小配对边界不承载保持读出的 $\rho$ 更新。加入 $\rho$ 后的最小值为 $2k+2$，恰将 $N$ 拆成 $N_0,\ldots,N_{k-1}$；$k=1$ 时两个签名同为四值，$k=0$ 时同为一值。
 
-**证明。** $X_{k-2},X_{k-1}$ 同属(222.13)的 $N$，但 $\rho$ 后深度为 $k-1,k$，接受位不同，因此无法在该 $N$ 值上定义确定的正确后继。阈值函数在 $k\ge1$ 时非恒定且最小常尾起点为 $k$，定理222.2给 $2k+2$ 及上述精确分割。$k=1$ 时 $N$ 本就只有深度零，与命题222.4一致。$k=0$ 的阈值恒真，一值实现并因非空载体而最小。$\square$
+**证明。** $X_{k-2},X_{k-1}$ 同属(225.13)的 $N$，但 $\rho$ 后深度为 $k-1,k$，接受位不同，因此无法在该 $N$ 值上定义确定的正确后继。阈值函数在 $k\ge1$ 时非恒定且最小常尾起点为 $k$，定理225.2给 $2k+2$ 及上述精确分割。$k=1$ 时 $N$ 本就只有深度零，与命题225.4一致。$k=0$ 的阈值恒真，一值实现并因非空载体而最小。$\square$
 
-### 222.8 有效构造所需的有限数据
+### 225.8 有效构造所需的有限数据
 
-**命题222.10。** 若给定正确的尾证书 $\forall n\ge L,\ f(n)=c$，有限表 $f(0),\ldots,f(L-1),c$ 的可执行表示，以及这些有限标签的可判定相等，则可构造最小有限边界及其读出表。
+**命题225.10。** 若给定正确的尾证书 $\forall n\ge L,\ f(n)=c$，有限表 $f(0),\ldots,f(L-1),c$ 的可执行表示，以及这些有限标签的可判定相等，则可构造最小有限边界及其读出表。
 
-**证明。** 检查有限集合 $J=\{j<L:f(j)\ne c\}$。若它为空，函数处处为 $c$，用一值。否则取 $K=1+\max J$；从 $K$ 起所有值为 $c$，而 $f(K-1)\ne c$，所以它恰是最小尾起点。代入(222.5)—(222.9)即可。给定已认证的最小 $K$ 及标签表时，可直接构造，无需再次搜索。$\square$
+**证明。** 检查有限集合 $J=\{j<L:f(j)\ne c\}$。若它为空，函数处处为 $c$，用一值。否则取 $K=1+\max J$；从 $K$ 起所有值为 $c$，而 $f(K-1)\ne c$，所以它恰是最小尾起点。代入(225.5)—(225.9)即可。给定已认证的最小 $K$ 及标签表时，可直接构造，无需再次搜索。$\square$
 
 尾证书不能由任意有限次函数取样替代：沿恒零函数上的任意有限查询记录，取大于所有已查下标的 $h$；仅在 $h$ 取一、其余取零的函数与该记录相同，且也最终恒定，但最小尾起点是 $h+1$。因此在最终恒定的承诺下，这些有限样本也不能统一确定最小尾起点。
 
-从任意总可计算布尔函数的程序描述出发，存在性也没有统一判定程序。给机器 $M$，令 $f_M(n)$ 在 $M$ 未于前 $n$ 步停机时等于 $n\bmod2$，否则等于零。这是有界模拟给出的总函数；它最终恒定当且仅当 $M$ 停机。定理222.2把所假定的有限边界判定程序变为停机判定程序，矛盾。即使承诺最终恒定，统一计算最小值仍不可能：令 $g_M(n)$ 仅在 $M$ 首次于第 $n$ 步停机时为一，其余为零。每个 $g_M$ 最终恒定；未停机时最小值一，停机于 $h$ 时最小尾起点 $h+1$、最小值 $2h+4$。区分这两种最小值也会判定停机。
+从任意总可计算布尔函数的程序描述出发，存在性也没有统一判定程序。给机器 $M$，令 $f_M(n)$ 在 $M$ 未于前 $n$ 步停机时等于 $n\bmod2$，否则等于零。这是有界模拟给出的总函数；它最终恒定当且仅当 $M$ 停机。定理225.2把所假定的有限边界判定程序变为停机判定程序，矛盾。即使承诺最终恒定，统一计算最小值仍不可能：令 $g_M(n)$ 仅在 $M$ 首次于第 $n$ 步停机时为一，其余为零。每个 $g_M$ 最终恒定；未停机时最小值一，停机于 $h$ 时最小尾起点 $h+1$、最小值 $2h+4$。区分这两种最小值也会判定停机。
 
 这些论证限定输入表示。它们不妨碍在正确尾证书和有限可执行表已经给出时构造、求值或最小化；一般抽象 $Y$ 和抽象函数 $f$ 本身不附带这份数据。
 
-### 222.9 有序代数与树自动机的适用定理
+### 225.9 有序代数与树自动机的适用定理
 
 这里使用的同余框架见 Ferenc Gécseg、Magnus Steinby，*Tree Automata*，1984，2015重印本 [arXiv:1509.06233v1](https://arxiv.org/abs/1509.06233v1)，定义1.3.15与引理1.3.16（印刷页23），定理2.6.10、2.6.13（页82、84）及定理2.7.1（页86）。固定其余参数、只变一个参数的初等平移，在本代数中恰为 $\rho$、$\langle u,\square\rangle$、$\langle\square,u\rangle$。对这些平移不变的等价关系就是同余；取全部上下文后的输出相等，给出最大的保持输出的同余。可达约化识别器的最小性及唯一同构是相应的一般结论。
 
-该书识别器的观测是接受或拒绝。对本节任意 $Y$ 值观测，改为同时保持每个输出纤维，或直接用222.1的语境归纳；命题222.3、222.5已对这个多输出版本给出构造及分离。重复变量的代数项不增加此处所需的判据：各出现位置可以逐次单槽替换。这个同余论证并不提供物理复制操作。
+该书识别器的观测是接受或拒绝。对本节任意 $Y$ 值观测，改为同时保持每个输出纤维，或直接用225.1的语境归纳；命题225.3、225.5已对这个多输出版本给出构造及分离。重复变量的代数项不增加此处所需的判据：各出现位置可以逐次单槽替换。这个同余论证并不提供物理复制操作。
 
-若用秩树语法陈述一般识别定理，可取有限签名 $\alpha:0,\beta:0,p:2,r:1$，把 $p$ 解释为实际配对、$r$ 解释为原来的 $\rho$。语法项到 $\mathcal T$ 的求值满射；每个固定旁支树有一个不含 $r$ 的有限项，每个一孔项求值为(222.1)的语境。故项上的语境关系是(222.2)沿求值的拉回，同一实际树的不同表达不会被错误区分。这里没有把 $r$ 当成源树上新增的独立节点标签。
+若用秩树语法陈述一般识别定理，可取有限签名 $\alpha:0,\beta:0,p:2,r:1$，把 $p$ 解释为实际配对、$r$ 解释为原来的 $\rho$。语法项到 $\mathcal T$ 的求值满射；每个固定旁支树有一个不含 $r$ 的有限项，每个一孔项求值为(225.1)的语境。故项上的语境关系是(225.2)沿求值的拉回，同一实际树的不同表达不会被错误区分。这里没有把 $r$ 当成源树上新增的独立节点标签。
 
 固定像的可识别性另由 Joost Engelfriet，*Tree Automata and Tree Grammars*，DAIMI FN-10，1975，作者数字版 [arXiv:1510.02036v1](https://arxiv.org/abs/1510.02036v1)，定义3.62及定理3.65（印刷页26—28）供应。取秩零符号 $\alpha,\beta$ 及秩二符号 $p$，同态模板为
 
@@ -27405,15 +28562,15 @@ $$
 p(x_1,x_2)\mapsto p(x_1,x_2).
 $$
 
-每个变量恰出现一次且保持顺序，故这是有限有序树上的线性、非删除树同态；全树语言可识别，反复应用像闭包定理得到每个固定 $\rho^k(\mathcal T)$ 可识别。这个一般定理给存在性，具体 $k+3$ 与 $2k+2$ 的计算由222.3—222.7承担；它不供应同态单射、实际历史起点、动态 $\rho$ 闭包或取得费用。有限秩树的假设也不被词或无限替换系统的假设替代。
+每个变量恰出现一次且保持顺序，故这是有限有序树上的线性、非删除树同态；全树语言可识别，反复应用像闭包定理得到每个固定 $\rho^k(\mathcal T)$ 可识别。这个一般定理给存在性，具体 $k+3$ 与 $2k+2$ 的计算由225.3—225.7承担；它不供应同态单射、实际历史起点、动态 $\rho$ 闭包或取得费用。有限秩树的假设也不被词或无限替换系统的假设替代。
 
-## 222.99 追加锚
+## 225.99 追加锚
 
-## 223. 二原子生成基础与任务相对不可约性
+## 226. 二原子生成基础与任务相对不可约性
 
-第 220 节给出了替换的部分逆和深度摘要，第 222 节给出了上下文读出下的最小边界。本节把这些结果接到过程几何的有限 profile 与逆极限语言中。核心区分是：二叶原子描述**生成语法**，而上下文商描述**指定任务下仍不可区分的行为**；二者不是同一个“状态数”。
+第 223 节给出了替换的部分逆和深度摘要，第 225 节给出了上下文读出下的最小边界。本节把这些结果接到过程几何的有限 profile 与逆极限语言中。核心区分是：二叶原子描述**生成语法**，而上下文商描述**指定任务下仍不可区分的行为**；二者不是同一个“状态数”。
 
-### 223.1 四种不同的“二”
+### 226.1 四种不同的“二”
 
 沿用
 
@@ -27423,7 +28580,7 @@ $$
 \rho(\alpha)=\beta,
 \qquad
 \rho(\beta)=\langle\beta,\alpha\rangle .
-\tag{223.1}
+\tag{226.1}
 $$
 
 在这个固定签名中至少要区分四个数：
@@ -27436,12 +28593,12 @@ $$
 \text{组成—线性未来的有理秩}&=\operatorname{rank}_{\mathbb Q}\operatorname{span}\{q_{2,3},q_{2,3}M\}=2;\\
 \text{完整上下文行为类数}&\text{取决于任务，可能为有限或无限}.
 \end{aligned}}
-\tag{223.2}
+\tag{226.2}
 $$
 
 第一行是自由代数的零元构造子数；第二行是允许一个替换操作以后对一条轨道的生成描述；第三行是在固定 $q_{2,3}=(2,3)$ 的组成读出合同下由 $M^2=M+I$ 给出的 Hankel 维数。第四行还要看允许哪些后续操作、失败、旁支、记录和读出。因而“只有两个不可约关系”只有在第一行，或在第三行的特定线性任务中成立；它不是所有过程语义的普遍状态下界。
 
-### 223.2 上下文 profile 与行为同余
+### 226.2 上下文 profile 与行为同余
 
 固定一组有限允许的旁支 $U\subseteq\mathcal T$。令一孔生成器为
 
@@ -27451,7 +28608,7 @@ $$
 L_u(t)=\langle t,u\rangle,
 \quad
 R_u(t)=\langle u,t\rangle .
-\tag{223.3}
+\tag{226.3}
 $$
 
 若某个接续非法，按项目的部分过程语义把结果记为失败符号 $\bot$；于是读出取值于含失败标签的集合 $Y_\bot$。对生成器词 $w\in\Gamma_U^*$，记 $w[t]$ 为从 $t$ 开始依次执行 $w$ 的结果，定义长度 $m$ 的 profile
@@ -27460,7 +28617,7 @@ $$
 \Phi_m(t)=\bigl(\widehat q(w[t])\bigr)_{|w|\le m},
 \qquad
 K_m=\ker\Phi_m,
-\tag{223.4}
+\tag{226.4}
 $$
 
 其中 $\widehat q(\bot)$ 保留失败标签。完整上下文关系为
@@ -27470,22 +28627,22 @@ $$
  \iff
  \forall w\in\Gamma_U^*,\quad
  \widehat q(w[t])=\widehat q(w[t']).
-\tag{223.5}
+\tag{226.5}
 $$
 
-**命题 223.1（上下文商与完成核塔）。** 在上述部分或总化语义下：
+**命题 226.1（上下文商与完成核塔）。** 在上述部分或总化语义下：
 
 1. $K_{m+1}\subseteq K_m$，并且
    $$
    \bigcap_{m\ge0}K_m=\equiv_{\Gamma_U,q};
-   \tag{223.6}
+   \tag{226.6}
    $$
 2. $\equiv_{\Gamma_U,q}$ 是包含在当前读出核中、并对 $\Gamma_U$ 所声明的一元生成器保持合法性与响应的最大一元强同余；因此商
    $$
    \mathcal T/\!\equiv_{\Gamma_U,q}
-   \tag{223.7}
+   \tag{226.7}
    $$
-   具有由 $\rho$、各个 $u\in U$ 的 $L_u,R_u$ 和 $q$ 诱导的操作与读出；部分语义下这些操作是 Option-valued，总化后才是全函数。该项不自动给出任意旁支的二元配对下降，后者另需满足 §224.2 的代表无关条件；
+   具有由 $\rho$、各个 $u\in U$ 的 $L_u,R_u$ 和 $q$ 诱导的操作与读出；部分语义下这些操作是 Option-valued，总化后才是全函数。该项不自动给出任意旁支的二元配对下降，后者另需满足 §227.2 的代表无关条件；
 3. 令 $R_m=\operatorname{ran}\Phi_m$，限制映射由删去长度为 $m$ 的坐标给出。则
    $$
    \iota:\mathcal T/\!\equiv_{\Gamma_U,q}
@@ -27493,21 +28650,21 @@ $$
    \varprojlim_m R_m,
    \qquad
    [t]\longmapsto(\Phi_m(t))_{m\ge0}
-   \tag{223.8}
+   \tag{226.8}
    $$
    是单射；它满射，当且仅当每个相容有限 profile 线程都由某个实际 $t$ 实现。
 
-**证明。** 第一项由坐标族包含关系直接得到；若两个项在每个有限长度下 profile 相同，则对任意有限词 $w$ 取 $m=|w|$ 即得(223.5)，反向显然。
+**证明。** 第一项由坐标族包含关系直接得到；若两个项在每个有限长度下 profile 相同，则对任意有限词 $w$ 取 $m=|w|$ 即得(226.5)，反向显然。
 
-若两个项满足(223.5)，对任意声明的一元生成器 $g\in\Gamma_U$，把 $g$ 置于任意后缀词之前，仍是 $\Gamma_U^*$ 中的词；因此 $g$ 的合法性、失败标签、输出及后续响应都与代表无关，商上确有对应的一元操作。空词给出其包含于当前读出核。反过来，任何包含于读出核且对 $\Gamma_U$ 的每个生成器保持合法域和相关响应的一元强同余，都可沿词长作归纳，所以它包含于(223.5)；故得到受限一元语言下的最大性和商上的诱导操作。这里不能再把两个孔依次替换为任意 $L_t,R_s$：当 $s$ 或 $t$ 不在 $U$ 时，相应生成器并未声明，二元配对是否代表无关须另按 §224.2–224.3 检查。
+若两个项满足(226.5)，对任意声明的一元生成器 $g\in\Gamma_U$，把 $g$ 置于任意后缀词之前，仍是 $\Gamma_U^*$ 中的词；因此 $g$ 的合法性、失败标签、输出及后续响应都与代表无关，商上确有对应的一元操作。空词给出其包含于当前读出核。反过来，任何包含于读出核且对 $\Gamma_U$ 的每个生成器保持合法域和相关响应的一元强同余，都可沿词长作归纳，所以它包含于(226.5)；故得到受限一元语言下的最大性和商上的诱导操作。这里不能再把两个孔依次替换为任意 $L_t,R_s$：当 $s$ 或 $t$ 不在 $U$ 时，相应生成器并未声明，二元配对是否代表无关须另按 §227.2–227.3 检查。
 
-式(223.8)良定义，因为同一完整 profile 正是(223.5)的等价类；若两个等价类映射到同一线程，所有有限 profile 相同，故类相同，所以它单射。一个线程属于像，当且仅当存在某个 $t$ 使其每层坐标均为 $\Phi_m(t)$，这恰是线程完备性。证毕。\(\square\)
+式(226.8)良定义，因为同一完整 profile 正是(226.5)的等价类；若两个等价类映射到同一线程，所有有限 profile 相同，故类相同，所以它单射。一个线程属于像，当且仅当存在某个 $t$ 使其每层坐标均为 $\Phi_m(t)$，这恰是线程完备性。证毕。\(\square\)
 
 这个命题把本卷的上下文商接到仓内三个已有接口：严格一孔上下文的 `contextual_equivalence_is_greatest` 供应最大强同余；把生成器作为输入、把失败状态提升为 `Option` 状态后，`ControlledCompletion` 与 `controlled_behavior_universal_property` 供应有限词行为商的唯一因子化；有限词截断的递减核及其交对应 `finite_horizon_kernel_antitone` 和 `complete_kernel_eq_iInf_finite_horizon`。在两个系统之间若还有生成器映射、步骤交换和读出运输，则商上的映射及其完成 profile 的自然性对应 `behavior_completion_is_functorial`。这些是接口对应，不把本卷的具体树语义冒称为已有 Lean 定理。
 
-### 223.3 二叶载体不保证完成线程来自实际来源
+### 226.3 二叶载体不保证完成线程来自实际来源
 
-命题 223.1 的满射条件不能从有限叶字母或上下文闭合自动推出。下面给出一个带失败标签的有限阶段反例。令
+命题 226.1 的满射条件不能从有限叶字母或上下文闭合自动推出。下面给出一个带失败标签的有限阶段反例。令
 
 $$
 T_j=\rho^j(\alpha),
@@ -27521,7 +28678,7 @@ $$
 D(T_{j+1})=T_j,
 \qquad D(T_0)=\bot,
 \qquad D(\bot)=\bot,
-\tag{223.9}
+\tag{226.9}
 $$
 
 并保留前向替换 $\rho(T_j)=T_{j+1}$、$\rho(\bot)=\bot$。把每个一孔二元接续 $L_u,R_u$ 从 $S$ 上的来源送到失败 $\bot$，失败后保持 $\bot$。本节把这些动作都解释为载体
@@ -27542,7 +28699,7 @@ $$
 q(T_0)=1,
 \qquad q(T_j)=0\ (j\ge1),
 \qquad \widehat q(\bot)=\bot .
-\tag{223.10}
+\tag{226.10}
 $$
 
 于是
@@ -27567,12 +28724,12 @@ $$
 \varprojlim_m R_m^{S,D}
 \supsetneq
 \operatorname{ran}\bigl(t\mapsto(\Phi_m^{S,D}(t))_m\bigr).
-\tag{223.11}
+\tag{226.11}
 $$
 
 这个反例只使用项目允许的部分动作和显式失败标签；它没有把失败偷偷当成普通零值，也没有声称自由树的二元构造在所有状态上必须总化。它说明：即使生成底座只有两个叶、并且上下文商对 $\rho$ 与所有声明的一孔接续闭合，逆极限仍可能包含没有共同实际来源的形式线程。要把完成对象重新解释为实际来源，必须另行证明线程完备性；若还要恢复原始树而不是行为类，则还需 profile 分离性。
 
-### 223.4 结论的层次边界
+### 226.4 结论的层次边界
 
 因此，本卷的“基础性”应写成：
 
@@ -27586,31 +28743,31 @@ $$
 \longrightarrow
 \text{有限核塔及其完成}.
 }
-\tag{223.12}
+\tag{226.12}
 $$
 
 前两层说明关系怎样被生成；第三层决定在指定实验族中哪些历史仍不可区分；第四层检查有限观察是否真的提升为相容的实际全局对象。任何一层都不能替代下一层的条件。因此，$\alpha,\beta$ 是生成载体的两个不可约叶，而不是一般关系整体的两个最终不可约状态。
 
-本节是对第 220—222 节的理论桥接，未新增 Lean 声明，也未把有限上下文线程完备性或完整来源恢复宣称为已核验结论。
+本节是对第 223—225 节的理论桥接，未新增 Lean 声明，也未把有限上下文线程完备性或完整来源恢复宣称为已核验结论。
 
-## 223.99 追加锚
+## 226.99 追加锚
 
-## 224. 受限一孔语言与二元配对下降的区别
+## 227. 受限一孔语言与二元配对下降的区别
 
-本节限定 §223.2 的命题 223.1 第 2 项及其逐槽替换论证：$\Gamma_U$ 只提供已声明的一元一孔行为；在 $U$ 受限时，不能直接把它提升为任意旁支下的二元配对同余。命题 223.1 的有限核交与实际来源上的线程判据保持原范围。
+本节限定 §226.2 的命题 226.1 第 2 项及其逐槽替换论证：$\Gamma_U$ 只提供已声明的一元一孔行为；在 $U$ 受限时，不能直接把它提升为任意旁支下的二元配对同余。命题 226.1 的有限核交与实际来源上的线程判据保持原范围。
 
-### 224.1 一元稳定与二元下降
+### 227.1 一元稳定与二元下降
 
-**定义 224.1（受限行为关系与配对合法域）。** 沿用式（223.3）的 $\Gamma_U=\{\rho,L_u,R_u:u\in U\}$，记 $E=\equiv_{\Gamma_U,q}$。这里每个 $L_u,R_u$ 是把旁支固定为实际项 $u$ 的一元操作，全部测试是这些生成器的有限复合。部分语义下失败与成功读出隔离，失败严格传播。
+**定义 227.1（受限行为关系与配对合法域）。** 沿用式（226.3）的 $\Gamma_U=\{\rho,L_u,R_u:u\in U\}$，记 $E=\equiv_{\Gamma_U,q}$。这里每个 $L_u,R_u$ 是把旁支固定为实际项 $u$ 的一元操作，全部测试是这些生成器的有限复合。部分语义下失败与成功读出隔离，失败严格传播。
 
 另给实际部分配对 $p:D\to\mathcal T$，其中 $D\subseteq\mathcal T\times\mathcal T$ 是合法输入对；在合法时写 $p(s,t)$。若存在共同来源、类型或资源约束，它们进入 $D$，不默认任意两项可独立准备。记 $\pi:\mathcal T\to\mathcal T/E$ 为商映射，失败标签 $\bot$ 不属于任何成功商类。
 
-**命题 224.2（代表无关的部分二元下降）。** 存在部分商操作
+**命题 227.2（代表无关的部分二元下降）。** 存在部分商操作
 
 $$
 \bar p:(\mathcal T/E)^2\longrightarrow
 \{\bot\}\sqcup(\mathcal T/E)
-\tag{224.1}
+\tag{227.1}
 $$
 
 使对所有 $s,t\in\mathcal T$，
@@ -27621,7 +28778,7 @@ $$
 [p(s,t)],&(s,t)\in D,\\
 \bot,&(s,t)\notin D,
 \end{cases}
-\tag{224.2}
+\tag{227.2}
 $$
 
 当且仅当对所有 $s,s',t,t'\in\mathcal T$，满足 $s\,E\,s'$、$t\,E\,t'$ 时有
@@ -27632,43 +28789,43 @@ $$
 &(s,t),(s',t')\in D
 \Longrightarrow p(s,t)\,E\,p(s',t').
 \end{aligned}
-\tag{224.3}
+\tag{227.3}
 $$
 
 合法域因此须对 $E\times E$ 饱和。若 $D=\mathcal T^2$，第一项自动成立，第二项恰为通常的二元同余条件；若配对另产生须保留的输出或记录，还须这些响应在相关合法输入对上相同。
 
-证明。若 $\bar p$ 存在，相关输入对给相同商输入，故式（224.2）的结果相同；成功与失败标签隔离给合法性相同，成功结果相同给输出 $E$ 相关。反向，式（224.3）使式（224.2）不依赖代表，因而定义所需操作。商输入的每个分量都有实际代表，所以该操作唯一。带输出或记录时，把它们与成功输出类一起比较，同一论证给相应附加条件。$\square$
+证明。若 $\bar p$ 存在，相关输入对给相同商输入，故式（227.2）的结果相同；成功与失败标签隔离给合法性相同，成功结果相同给输出 $E$ 相关。反向，式（227.3）使式（227.2）不依赖代表，因而定义所需操作。商输入的每个分量都有实际代表，所以该操作唯一。带输出或记录时，把它们与成功输出类一起比较，同一论证给相应附加条件。$\square$
 
-**命题 224.3（一元稳定不自动补足旁支）。** $E$ 对每个已声明的 $\Gamma_U$ 生成器保持合法性，并在合法时保持输出的 $E$ 关系；它是当前读出核内满足这些一元条件的最大等价关系。只有另外验证式（224.3），才可据此声称整个部分二元配对下降。
+**命题 227.3（一元稳定不自动补足旁支）。** $E$ 对每个已声明的 $\Gamma_U$ 生成器保持合法性，并在合法时保持输出的 $E$ 关系；它是当前读出核内满足这些一元条件的最大等价关系。只有另外验证式（227.3），才可据此声称整个部分二元配对下降。
 
 证明。把一个生成器前接到任意后续测试词，仍是 $\Gamma_U$ 中的有限词。一步测试的失败标签给同时合法或非法；合法时全部后续词的读出相等给输出 $E$ 相关。空词给当前读出相同。反向，对任意保持这些一元操作和当前读出的等价关系，沿词长归纳即得全部测试相同，故它包含于 $E$。
 
-若 $U=\mathcal T$ 且 $L_u,R_u$ 恰是 $p$ 的全部单槽部分操作，则可先用 $L_t$ 将 $(s,t)$ 换成 $(s',t)$，再用 $R_{s'}$ 换成 $(s',t')$；两步同时保持合法性，合法输出由传递性保持 $E$，遂得式（224.3）。受限 $U$ 未必包含旁支 $t,s'$，所以这段逐槽论证不能直接应用。它也没有授予同时准备或复制这些旁支的操作权限。$\square$
+若 $U=\mathcal T$ 且 $L_u,R_u$ 恰是 $p$ 的全部单槽部分操作，则可先用 $L_t$ 将 $(s,t)$ 换成 $(s',t)$，再用 $R_{s'}$ 换成 $(s',t')$；两步同时保持合法性，合法输出由传递性保持 $E$，遂得式（227.3）。受限 $U$ 未必包含旁支 $t,s'$，所以这段逐槽论证不能直接应用。它也没有授予同时准备或复制这些旁支的操作权限。$\square$
 
-### 224.2 替换时的旁支运输条件
+### 227.2 替换时的旁支运输条件
 
-**命题 224.4（固定旁支语言的运输边界）。** 对自由树配对及其同态替换 $\rho$，有
+**命题 227.4（固定旁支语言的运输边界）。** 对自由树配对及其同态替换 $\rho$，有
 
 $$
 \rho\circ L_u=L_{\rho(u)}\circ\rho,\qquad
 \rho\circ R_u=R_{\rho(u)}\circ\rho.
-\tag{224.4}
+\tag{227.4}
 $$
 
 若要使右侧的配对仍属于同一个固定 $\Gamma_U$ 语言，须检查旁支运输条件
 
 $$
 \rho(U)\subseteq U.
-\tag{224.5}
+\tag{227.5}
 $$
 
-在以此运输连接受限一孔行为与完整替换—配对商的论证中，式（224.5）与代表无关的二元下降条件（224.3）须分别满足；前者不替代后者。式（224.5）是这条固定语言运输路线的闭包条件，不是任意二元商存在性的必要条件。
+在以此运输连接受限一孔行为与完整替换—配对商的论证中，式（227.5）与代表无关的二元下降条件（227.3）须分别满足；前者不替代后者。式（227.5）是这条固定语言运输路线的闭包条件，不是任意二元商存在性的必要条件。
 
-证明。$\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle$ 直接给式（224.4），右侧固定的旁支是 $\rho(u)$，故保持所声明旁支集合需式（224.5）。它只约束旁支随替换的去向，并未比较任意两对 $E$ 相关输入的合法性和配对输出；后者仍由命题 224.2 判定。$E$ 对 $\rho$ 自身的一元稳定已经由命题 224.3 给出，不依赖把（224.5）当成隐藏前提。$\square$
+证明。$\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle$ 直接给式（227.4），右侧固定的旁支是 $\rho(u)$，故保持所声明旁支集合需式（227.5）。它只约束旁支随替换的去向，并未比较任意两对 $E$ 相关输入的合法性和配对输出；后者仍由命题 227.2 判定。$E$ 对 $\rho$ 自身的一元稳定已经由命题 227.3 给出，不依赖把（227.5）当成隐藏前提。$\square$
 
-### 224.3 两个叶子在受限 profile 下相同的反例
+### 227.3 两个叶子在受限 profile 下相同的反例
 
-**命题 224.5（固定旁支 $\beta$ 不足以恢复任意配对）。** 在全体有限有序树 $\mathcal T$ 上使用原有总替换与总配对，取
+**命题 227.5（固定旁支 $\beta$ 不足以恢复任意配对）。** 在全体有限有序树 $\mathcal T$ 上使用原有总替换与总配对，取
 
 $$
 U=\{\beta\},\qquad
@@ -27677,7 +28834,7 @@ q(t)=
 1,&t=\langle\alpha,\alpha\rangle,\\
 0,&\text{其他情形}.
 \end{cases}
-\tag{224.6}
+\tag{227.6}
 $$
 
 则 $\alpha\,E\,\beta$，但 $E$ 不是总配对的二元同余。
@@ -27689,31 +28846,31 @@ $$
 $$
 q(\langle\alpha,\alpha\rangle)=1,\qquad
 q(\langle\beta,\alpha\rangle)=0.
-\tag{224.7}
+\tag{227.7}
 $$
 
-空词已经分离这两个输出，所以式（224.3）失败。区分它们的 $L_\alpha$ 不在 $\Gamma_{\{\beta\}}$ 中；同时 $\rho(\beta)=\langle\beta,\alpha\rangle\notin U$，也不能暗中使用固定旁支语言的运输闭包。$\square$
+空词已经分离这两个输出，所以式（227.3）失败。区分它们的 $L_\alpha$ 不在 $\Gamma_{\{\beta\}}$ 中；同时 $\rho(\beta)=\langle\beta,\alpha\rangle\notin U$，也不能暗中使用固定旁支语言的运输闭包。$\square$
 
-### 224.4 来源限制与线程完备性保持独立
+### 227.4 来源限制与线程完备性保持独立
 
-**推论 224.6（同余范围修正不补足共同来源）。** 对 §223.3 的指定实际来源 $S$，有限像取 $R_m^{S,D}=\operatorname{ran}(\Phi_m^{S,D})$，其中 profile 使用该节明确声明的 $\Gamma_{U,D}$ 测试族。记 $E_{S,D}$ 为这同一测试族在 $S$ 上的完整行为核，不与未加入 $D$ 的 $\Gamma_U$ 关系 $E$ 混用。原有映射
+**推论 227.6（同余范围修正不补足共同来源）。** 对 §226.3 的指定实际来源 $S$，有限像取 $R_m^{S,D}=\operatorname{ran}(\Phi_m^{S,D})$，其中 profile 使用该节明确声明的 $\Gamma_{U,D}$ 测试族。记 $E_{S,D}$ 为这同一测试族在 $S$ 上的完整行为核，不与未加入 $D$ 的 $\Gamma_U$ 关系 $E$ 混用。原有映射
 
 $$
 S/E_{S,D}\longrightarrow\varprojlim_m R_m^{S,D}
-\tag{224.8}
+\tag{227.8}
 $$
 
 仍为单射，满射仍恰好要求每个相容线程由同一个 $s\in S$ 实现；由行为类恢复原始来源仍另需 profile 在 $S$ 上分离。二元下降与旁支运输都不替代这些条件。
 
 证明。两个来源给同一线程，当且仅当它们在每个有限测试上相同，也即 $E_{S,D}$ 相关；线程属于实际像，当且仅当存在同一来源实现其全部坐标。这些论证只使用 $\Gamma_{U,D}$ profile 及其限制映射，不使用二元商。若扩大旁支或动作族，须重算该任务的行为关系，不能把它的区别或恢复能力归给旧受限任务。$\square$
 
-## 224.99 追加锚
+## 227.99 追加锚
 
-## 225. α、β 的基础性：生成原子、行为关系与观察接口
+## 228. α、β 的基础性：生成原子、行为关系与观察接口
 
 用户所说的“底层两个原子 α、β”在一个严格意义下是成立的，但必须把“原子”限定在自由语法的生成层。它不能直接改写成“所有关系最终只有两种不可约关系”。本节把这几个层次分开。
 
-### definition 225.1 二叶自由生成层
+### definition 228.1 二叶自由生成层
 
 令
 
@@ -27741,7 +28898,7 @@ $$
 
 同时，$\langle\ ,\ \rangle$ 是不可省略的第三个生成原语。α、β 不是在没有组合规则的情况下单独生成复杂关系；没有有序配对，就没有 $\langle\alpha,\beta\rangle$、替换轨道或上下文。
 
-### proposition 225.2 Fibonacci 替换是二叶生成层上的动态闭包
+### proposition 228.2 Fibonacci 替换是二叶生成层上的动态闭包
 
 在二叶自由语法上，定义
 
@@ -27761,12 +28918,12 @@ $$
 
 给出一个最小的 Fibonacci 关系生成系统。这里“最小”只表示生成规则的语法基最小：任何 $T_j$ 的有限展开都回到 α、β 和有序配对。它不表示所有有限图、带环结构或任意观察行为都已经由两个叶子自动生成；环需要引用或商，观察行为需要另行声明测试族。
 
-### proposition 225.3 三种“原子性”不可混同
+### proposition 228.3 三种“原子性”不可混同
 
 对同一个 α、β，至少有三种不同的原子性判定。
 
 1. **语法原子性。** 在 $\mathcal T$ 中，恰有 $\alpha$、$\beta$ 不是二元构造项；$\langle\alpha,\beta\rangle$ 与 $\langle\beta,\alpha\rangle$ 仍是两个不同的项。
-2. **行为原子性。** 给定测试族 $\Gamma$ 和读出 $q$，原子性要相对于行为核 $E_{\Gamma,q}$ 判断。§224.3 的 $U=\{\beta\}$ 反例中，$\alpha E_{\Gamma_U,q}\beta$，所以两个语法叶在这个受限接口下不是两个可区分的行为状态；但二元配对仍可把它们分开。
+2. **行为原子性。** 给定测试族 $\Gamma$ 和读出 $q$，原子性要相对于行为核 $E_{\Gamma,q}$ 判断。§227.3 的 $U=\{\beta\}$ 反例中，$\alpha E_{\Gamma_U,q}\beta$，所以两个语法叶在这个受限接口下不是两个可区分的行为状态；但二元配对仍可把它们分开。
 3. **算术原子性。** 数量商 $3\alpha\sim_q2\beta$ 以及读数 $q(\alpha)=2,q(\beta)=3$ 是额外指定的观察接口。它们不由自由语法或 $\rho$ 自动产生，也不能把 $\bar\alpha=2e,\bar\beta=3e$ 误称为底层语法等式。数量素性又是这一观察接口上的第三层性质。
 
 因此，下面三句话的强度不同：
@@ -27783,7 +28940,7 @@ $$
 
 第一句由定义成立；第二句必须由指定测试族证明；第三句在当前理论中没有成立。
 
-### theorem 225.4 生成基础不能替代动态充分边界
+### theorem 228.4 生成基础不能替代动态充分边界
 
 设 $E$ 是一个观察者任务的行为等价，$p:D\to\mathcal T$ 是允许的部分二元配对。存在代表无关的部分商操作
 
@@ -27844,7 +29001,7 @@ $$
 
 这正是过程几何 §45 的“目标测试在源行为核纤维上保持常值”条件。对二元 $p$，一次输入的纤维是产品关系 $E\times E$；对后续动作，$V^*$ 表示全部类型正确的有限续接。满足它时，二叶边界的每个目标测试和后继都唯一因子化到 $\mathcal T/E$；失败、记录或时钟中任一字段在同一纤维上不同，就说明当前 α、β profile 不是该完整任务的充分边界。于是“二原子基础”与“可继续运行的内部观察者边界”之间的桥梁，不是原子数为二，而是全部声明目标响应的纤维常值性。
 
-### corollary 225.5 面向内部观察者的层级链
+### corollary 228.5 面向内部观察者的层级链
 
 结合过程几何的动态充分边界，当前最小结构应按以下顺序理解：
 
@@ -27866,15 +29023,15 @@ $$
 
 这也解释了为什么相同的 α、β 可以在不同层级互换角色：在原始树里它们是叶子，在数量商里它们成为 $2,3$ 的读数，在同块关系层里一个已封装块又可以被当作下一层原子。每次升层都必须保留 `Expand`、更新接口及指定未来行为；只保存当前数值，不能保证下一次拼接仍然正确。
 
-本节是对 §§2–11、61–73 与 224 的结构性归纳；它没有把受限行为等价提升为任意二元同余，也没有把数量观察或素性封装宣称为底层语法的定理。
+本节是对 §§2–11、61–73 与 227 的结构性归纳；它没有把受限行为等价提升为任意二元同余，也没有把数量观察或素性封装宣称为底层语法的定理。
 
-## 225.99 追加锚
+## 228.99 追加锚
 
-## 226. 静态二叶与动态一种子不可混同
+## 229. 静态二叶与动态一种子不可混同
 
-第 225 节把“二叶生成基础”与“完整行为边界”分开。本节再区分两个容易混淆的最小性问题：保留静态构造签名时需要几个零元生成元，以及把替换当作可执行操作后需要几个动态种子。
+第 228 节把“二叶生成基础”与“完整行为边界”分开。本节再区分两个容易混淆的最小性问题：保留静态构造签名时需要几个零元生成元，以及把替换当作可执行操作后需要几个动态种子。
 
-### 命题 226.1（轨道、操作闭包与静态载体的三种范围）
+### 命题 229.1（轨道、操作闭包与静态载体的三种范围）
 
 令
 
@@ -27891,14 +29048,14 @@ $$
 \qquad
 \operatorname{Cl}_{\langle-,-\rangle,\rho}(\{\alpha\})
 =\mathcal T.
-\tag{226.1}
+\tag{229.1}
 $$
 
 **证明。** 轨道严格包含于自由树集，因为每个 $T_j=\rho^j(\alpha)$ 都满足 Fibonacci 轨道的固定递归，而例如 $\langle\alpha,\alpha\rangle$ 不在该轨道。另一方面，$\beta=\rho(\alpha)$，所以闭包包含两个叶 $\alpha,\beta$；再对项的构造递归，若 $s,t$ 已在闭包中，则 $\langle s,t\rangle$ 也在闭包中，故包含全部 $\mathcal T$。反包含由闭包定义成立。$\square$
 
 因此，“一个种子”可以有两种完全不同的含义：只允许反复施加 $\rho$ 时，它只生成一条 Fibonacci 轨道；允许任意有序配对和局部使用 $\rho$ 时，一个种子已经足以生成全部有限二叶树。后一结论是操作闭包的生成性，不是把静态签名中的两个零元合并成一个。
 
-### 命题 226.2（保构造的静态一叶签名不能覆盖二叶初始代数）
+### 命题 229.2（保构造的静态一叶签名不能覆盖二叶初始代数）
 
 令
 
@@ -27918,14 +29075,14 @@ $$
 
 $$
 h(\langle u,v\rangle)=\langle h(u),h(v)\rangle.
-\tag{226.2}
+\tag{229.2}
 $$
 
 **证明。** 结构保持性使 $h$ 完全由 $t_0=h(\star)$ 决定。如果 $t_0=\alpha$，则 $h$ 的像只含由 $\alpha$ 反复配对形成的树，不能命中叶 $\beta$；$t_0=\beta$ 时对称。如果 $t_0$ 是复合项，则 $t_0$ 本身及其所有后续像都保留至少一个复合根，不能命中任一零元叶。故 $h$ 不可能满射。$\square$
 
 这个命题的最小性严格限于“静态签名、保留二元构造、没有额外编码器或解码器”的范畴。允许 $\rho$、编码器、商映射或隐藏控制器以后，最小性对象已经改变，必须重新按行为核和动态下降条件判定。
 
-### 推论 226.3（当前项目中的基础性读法）
+### 推论 229.3（当前项目中的基础性读法）
 
 当前理论应同时保留以下三项：
 
@@ -27937,7 +29094,7 @@ $$
 \qquad
 \text{Fibonacci 加性未来的线性维数}=2.
 }
-\tag{226.3}
+\tag{229.3}
 $$
 
 它们分别回答静态语法、可执行生成协议和固定加性任务的最小边界三个问题，不能合并为“关系本体只有两个不可约关系”。完整过程仍须沿
@@ -27951,13 +29108,13 @@ $$
 
 检查来源、合法域、失败、记录、权限、时钟和选择器；只有在这些字段对组成纤维保持常值时，二维组成才是该任务的动态充分边界。本节是理论推导，未新增 Lean 核验。
 
-## 226.99 追加锚
+## 229.99 追加锚
 
-## 227. 二叶生成层在内部观察者模型中的位置
+## 230. 二叶生成层在内部观察者模型中的位置
 
-第 225—226 节已经说明，α、β 的“二”是静态签名的二个零元，而不是一般任务的二个最终状态。本节把这个结论接回内部观察者、边界和拼接模型，明确为什么它仍然是更基础的一层。
+第 228—229 节已经说明，α、β 的“二”是静态签名的二个零元，而不是一般任务的二个最终状态。本节把这个结论接回内部观察者、边界和拼接模型，明确为什么它仍然是更基础的一层。
 
-### 命题 227.1（生成解释与任务边界的因子化）
+### 命题 230.1（生成解释与任务边界的因子化）
 
 令
 
@@ -27996,7 +29153,7 @@ $$
 
 这条因子化链给出“基础性”的准确含义：二叶自由代数提供关系如何被构造的最小静态语法；行为商才决定观察者为了继续拼接必须保留的边界。它不要求把每个语义过程都还原成两个值。
 
-### 推论 227.2（四种最小性必须分开）
+### 推论 230.2（四种最小性必须分开）
 
 在当前模型中，至少有以下四个可分别变化的量：
 
@@ -28022,7 +29179,7 @@ $$
 
 特别地，\(\operatorname{Eval}(\alpha)\) 或 \(\operatorname{Eval}(\beta)\) 在过程载体中可以本身是复合过程；“不可约”只由当前生成签名规定，不自动表示语义不可分或物理不可分。
 
-### 227.3 对内部观察者的直接含义
+### 230.3 对内部观察者的直接含义
 
 内部观察者可以把 α、β 当作最初的关系字母，但它要继续行动，必须把实际可访问的边界扩展为足以决定
 
@@ -28035,6 +29192,6 @@ $$
 
 只保存“当前属于 α 还是 β”，通常不能恢复配对位置、共同来源或时钟历史；只保存叶计数，也只有在所有声明任务都对计数纤维常值时才充分。换言之，Fibonacci 原子生成层是整个内部观察理论的**生成底座**，而不是观察者最终持有的完整状态。
 
-本节是对 §§223—226 与过程几何边界下降条件的理论综合；它新增的是层级关系与适用边界，没有新增 Lean 声明，也不把 α、β 的语法不可约性冒称为物理或一般语义不可约性。
+本节是对 §§226—229 与过程几何边界下降条件的理论综合；它新增的是层级关系与适用边界，没有新增 Lean 声明，也不把 α、β 的语法不可约性冒称为物理或一般语义不可约性。
 
-## 227.99 追加锚
+## 230.99 追加锚
