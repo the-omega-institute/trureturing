@@ -54930,3 +54930,61 @@ Jan Vondrák，Richard Pang（scribe）的 *MATH233B: Polyhedral techniques in c
 Kevin Cheung 的 MATH5801 Proposition 7.1 给出每列至多一个正项、至多一个负项的同一类判据与归纳说明。
 
 ## 144.99 追加锚
+
+## 145. 单位极大子式的整数全局重构
+
+**定理 145.1（有限全幺模整数矩阵的内逆）。** 令 $m,n$ 为任意有限类型，
+$A\in\mathbb Z^{m\times n}$。假设对每个 $k\in\mathbb N$ 及单射
+$r:\operatorname{Fin}(k)\to m$、$c:\operatorname{Fin}(k)\to n$，
+$\det A[r,c]\in\{-1,0,1\}$。则存在 $B\in\mathbb Z^{n\times m}$ 使
+$$
+ABA=A.
+$$
+类型可以为空，矩阵可以为零、非方阵或秩亏；不假设存在非零项。
+
+**证明。** 在有非零子式的阶数中取最大值 $k$。空子式的行列式为 $1$，
+故候选集合非空；单射行选取保证阶数至多为 $|m|$，故最大值存在。
+取达到最大值的子式 $U=A[r,c]$。全幺模性及非零性给出
+$\det U=\pm1$，所以 $U$ 在整数矩阵环内可逆。
+将所选行、列分别排在其补集之前，写成
+$$
+M=\begin{pmatrix}U&R\\ C&D\end{pmatrix}.
+$$
+对补集中的任意一行 $i$、一列 $j$，把它们添加到所选坐标，得到
+$(k+1)$ 阶子式。它的行、列选取仍为单射；最大性使其行列式为零。
+带边子式的 Schur 行列式恒等式给出
+$$
+0=\det U\,\bigl(D_{ij}-(CU^{-1}R)_{ij}\bigr).
+$$
+消去单位 $\det U$，得到所有余项为零，因而 $D=CU^{-1}R$。
+置
+$$
+G=\begin{pmatrix}U^{-1}&0\\0&0\end{pmatrix},
+\qquad
+MGM=\begin{pmatrix}U&R\\C&CU^{-1}R\end{pmatrix}=M.
+$$
+将 $G$ 的行、列按相反方向运回原坐标，即得整数 $B$。
+这个推导在 $k=0$ 时仍成立：$U$ 为空可逆矩阵，带边子式为一阶子式，
+最大性使所有项为零。若行或列补集为空，对相应坐标的重构条件为空，
+同一分块乘法仍有效。证毕。
+
+Fampa 与 Lee，*On Sparse Reflexive Generalized Inverses*，
+arXiv:1807.03074v1（2018 年 7 月 9 日），印刷第2页 Theorem 5，
+证明实矩阵中任意秩阶非奇异子式的逆嵌入零块后给出 reflexive generalized inverse。
+上面的整数结论是将单位子式与极大阶带边消去结合的推导，不是该实数定理的逐字转录；
+不主张稀疏最优、范数最优或原创性。
+Sontag，*On generalized inverses of polynomial and other matrices*，
+IEEE Transactions on Automatic Control **25**(3)（1980），514–517，
+印刷第515页 Theorem 2 与 Remark 1，在整域上的固定投射模间讨论
+弱广义逆、像的分裂与最大子式理想的关系；这里只用它说明结构背景，
+不声称证明了该一般等价定理。
+
+本定理只给出整数内逆，不给出 Moore–Penrose 逆或全幺模性逆命题。
+例如 $[1\ 1]$ 可取整数内逆 $[1\ 0]^{\mathsf T}$，其 Moore–Penrose 逆
+却是 $[\tfrac12\ \tfrac12]^{\mathsf T}$；整数可逆矩阵
+$\begin{pmatrix}1&2\\0&1\end{pmatrix}$ 有整数内逆而非全幺模。
+矩阵 $[2]$ 的像作为抽象群自由，但 $[2]B[2]=[2]$ 要求 $4B=2$，
+没有整数解。因此不能用抽象像自由替代嵌入像的分裂，也不能从本定理
+推得完整的相对同调判据或链复形可缩性。
+
+## 145.99 追加锚
