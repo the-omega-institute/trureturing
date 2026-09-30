@@ -9982,3 +9982,225 @@ extra old-only9, the middle-prime gap and unrestricted Erdős#7 remain
 unresolved. These are ordinary mathematical deductions using the
 existing positive comparisons, without new Lean verification or
 an external novelty claim.
+
+## A uniform private-role atlas profile stays positive through73
+
+The preceding uniform private-role comparison gives a usable certificate
+for every allowed matching type, separately for either fixed FC110 or
+FC131 head assignment. Its fixed half-clipping sequence43,47,53,59,61,67,71,73
+has positive mass at every step. Both final masses exceed243/200000,
+both fourth moments are below11296000, and the inherited above10000
+quartic tail leaves distorted mass greater than109/100000.
+
+These are ordinary mathematical and exact-arithmetic results. The old
+source contract remains the private-role atlas with actual finite
+N>=max(2,N_+), fixed head rows and selected roots, unchanged pure/star
+and higher grouped layers, and the FC159 nongroup remainder inventory.
+The two assignments remain separate. No new Lean verification or
+unrestricted Erdős#7 conclusion is claimed.
+
+### 1. One exact uniform comparison per head assignment
+
+For one fixed head assignmenti, every admitted matching choice theta
+has its own actual full-survivor source eta_theta=mu_theta/D0 of mass
+
+    h=36518862868606981/1816999451688960000,
+    eta_theta<=H_R.
+
+The old-only remainder keeps its ternary-height-one, nonternary-support
+and shallow-group exclusions. All original numerical labels and global
+phases are fixed. Future originals touching a newly processed prime
+may have arbitrary finite earlier-coordinate heights, as in the
+existing continuation.
+
+Retain the first two actual pure/star layers. At each privateq, rootr
+and physical head pair use the proved deletion floor
+
+    w_star(q,r,i5,i7)=max(n5(q,r,i5),n7(q,r,i7))/q.
+
+The actual within-head role digits remain distinct, but cross-head
+roles may coincide. For every such actual family the private deletion
+is at leastw_star. The positive conditional proof therefore gives one
+uniform outer profile, with root zero coefficients
+
+    Z_star,r(S)=product_(p in S)z_(p,r)
+       -1_({5,7} subset S)delta_star,(S intersect Q),r,
+    delta_star,Z,r=K_Z,r*(a5,r*a7,r-M_star,Z,r).       (FC446)
+
+All512 private zero sets and all2048 complete zero patterns are retained.
+The minimum and maximum of the two corrected root products are taken
+only AFTER this correction. Coefficients from different head assignments
+are never combined.
+
+The raw profile's direct row-mass identity is
+
+    mass(Xi_star,i)=(1/3)sum_r sum_(i5,i7)
+      beta5,r[i5]*beta7,r[i7]
+       *product_q(a_(q,r)-w_star(q,r,i5,i7)).          (FC447)
+
+This is an outer comparison mass. It is not identified with any actual
+atlas family's grouped survivor mass, and no single matching is claimed
+to attain all its rowwise deletion floors simultaneously. The physical
+source stays eta_theta; only its upper comparison is replaced.
+
+The canonical disjoint-group root coefficients are lower bounds on
+(FC446), and the pure/star-only coefficients are upper bounds. Exact
+arithmetic checks that ordering in every pattern, the corresponding
+ordering of all saved raw low atoms and complete moments, and the
+literal identity(FC447). Each new raw profile admits the unchangedh.
+
+### 2. Exact initialization with split8
+
+The complete moments have orders0,1,2,4 and include every auxiliary
+run height. Low atoms through256 retain the joint zero pattern until
+the final scalar pushforward. They are used for exact hinges and
+splits; they do not truncate original prime-power heights.
+
+For both assignments the inherited bracket and direct trim agree:
+
+    Xi_star,i(M>8)<=h<=Xi_star,i(M>=8),
+    Pi_star,i=Top_h(Xi_star,i), mass(Pi_star,i)=h.     (FC448)
+
+The initialization is uniform over all private matching types within
+that assignment. Its decimal displays are:
+
+| Quantity | FC110 assignment | FC131 assignment |
+|---|---:|---:|
+|Raw outer mass|0.107725448083265945|0.107907918173467486|
+|Top_h cutoff|8|8|
+|Top_h first moment|0.360240231444202280|0.360282656778598307|
+|Top_h second moment|10.459255904749574722|10.460676030660120522|
+|Top_h fourth moment|319195.905183423541|319201.404723665354|
+
+All values are exact fractions in the result. The complete initial
+moments lie between the canonical full-group and pure/star-only
+initial moments. This does not order the new profile against the
+separate one-pair comparison, whose zero-run correction has a different
+support.
+
+### 3. The one fixed eight-step continuation
+
+Forq in43,47,53,59,61,67,71,73 use delta=1/2 andT=(q-1)/2. With current
+complete massm, first momentW and low atoms pi_z, compute
+
+    H_Pi(T)=W-Tm+sum_(z<T)(T-z)pi_z,
+    target=m-H_Pi(T)/T.
+
+Stop that case before any append if target is nonpositive. Otherwise
+append the existing normalized cap-two factor, with mass1-2/q atload1
+and mass2(q-1)/q^v atloadv>=2, then applyTop_target. On the physical
+side restrict the same family's current law to its actual survivors
+and scale downward once to the target. That family/stage scalar is
+fixed before subsequent queries and costs. The procedure defines one
+consistent actual source sequence per family, even though the outer
+numerical profile is shared across its atlas class.
+
+Both cases complete exactly the declared schedule:
+
+| Prime | FC110 mass | FC131 mass | Top cutoff, both |
+|---:|---:|---:|---:|
+|43|0.017046893742564506|0.017046502501827209|10|
+|47|0.014185785048926903|0.014185014827664459|12|
+|53|0.011692526919711194|0.011691426738686984|12|
+|59|0.009484576807693497|0.009483185723329404|16|
+|61|0.007201170847994781|0.007199475934974544|18|
+|67|0.005179996026675138|0.005178038447749786|24|
+|71|0.003219917908339643|0.003217710210108022|32|
+|73|0.001217454838417169|0.001215016677377090|48|
+
+The saved complete endpoint comparisons are:
+
+| Quantity after73 | FC110 assignment | FC131 assignment |
+|---|---:|---:|
+|Massm|0.001217454838417169160|0.001215016677377090307|
+|First momentW|0.111269391188803154423|0.111157367919774153004|
+|Second momentM2|14.615292029689609776|14.610716410931810749|
+|Fourth momentM4|11295796.009763075584|11295972.836022245055|
+|Normalized meanW/m|91.395087257171787|91.486289850551212|
+
+Exact comparisons give the same short bounds separately for both:
+
+    m>243/200000,
+    M4<11296000.                                      (FC449)
+
+Eight cap-two updates, followed only by restrictions and downward
+scalings, implyeta73<=256 H_head. Hence every actual family in the
+corresponding atlas has head survivor Haar mass
+
+    >=m/256>243/51200000.                             (FC450)
+
+The head consists of the twenty odd primes from3 through73. The
+uniform phase class is broader than the canonical disjoint-role
+source, so its new numeric profile is not replaced by the older
+canonical full-group profile or its stronger saved constants.
+
+### 4. The same fixed large-prime tail stays positive
+
+Use the existing Report734/779 tail withB=10000, ell=8, delta=2/5 and
+growth exponent25, under the SAME analytic prime-product premise. Its
+unchanged complete fourth-moment coefficient is
+
+    tau4=(5625/6144)((2ell^2+1)/(2ell^2-1))^25
+          B/(B-1)^4 sum_(j=0..25)25!/((25-j)!(3ell)^j).
+
+The two exact endpoint reserves have decimal displays
+
+    FC110: 0.001093433401483933027101...,
+    FC131: 0.001090993298991766090044... .
+
+The common short certificate is
+
+    m-M4*tau4 >243/200000-11296000*tau4
+       =0.001090976323369598492524...
+       >109/100000>0.                                (FC451)
+
+Thus every admitted finite continuation whose additional support
+primes all exceed10000 leaves a common survivor. Numerical labels,
+arbitrary finite heights, mixed supports and global phases are kept
+through the inherited last-coordinate assignment. Additional support
+primes in(73,10000] remain excluded. The reserve is distorted-source
+mass, not a final Haar-density bound.
+
+### 5. The79 mean obstruction remains
+
+Only the saved73 mass and complete first moment are used at79:
+
+    FC110: 78m-W=-0.016307913792263959953726...,
+    FC131: 78m-W=-0.016386067084361109065353... .
+
+For every legal constant0<delta<1 with1/(1-delta)<=79, the same
+comparison's candidate satisfies
+
+    m_delta=m-H_Pi(78delta)/[78(1-delta)]
+       <=(78m-W)/[78(1-delta)]<0.                    (FC452)
+
+This follows from(z-t)_+>=z-t. It rules out all constant79 clipping
+parameters for THESE endpoint comparisons. It is not an upper bound
+on actual surviving mass, and it does not exclude a different valid
+comparison or strategy. No79 hinge or update was evaluated.
+
+### 6. Reusable consumer and evidence scope
+
+The [atlas consumer](../../../frontier/cover-geometry/pure-support-profiles/atlas_group_profile.py)
+accepts explicit paths for both stored head assignments, the arithmetic,
+coloured and full-group definition libraries, the canonical comparison
+data, and its two outputs. It reuses the existing source-role and
+literal-head-row functions and the complete coloured-profile arithmetic.
+Libraries are loaded as definitions only; prior producer mains and
+finite-control suites are not executed.
+
+The [initial profile result](../../../frontier/cover-geometry/pure-support-profiles/atlas_group_profile.json)
+records20801 exact checks, all512 private zero-pattern conditions per
+root/assignment, all2048 corrected full patterns, the artificial outer
+mass identity, the canonical/pure-star sandwich and split8. The
+[fixed continuation result](../../../frontier/cover-geometry/pure-support-profiles/atlas_group_continuation.json)
+records199 further checks, every permitted stage, complete moments and
+residual moments above256, exact split certificates, density bounds,
+the fixed tail and the mean-only79 decision. Source hashes record
+provenance; they are not source admission or cache gates.
+
+The finite arithmetic evaluates the already proved uniform all-query
+comparison; it does not enumerate the atlas or infer universality
+from sampled matchings. No source, retained depth, prime ordering or
+clipping parameter was searched. Arbitrary old source families and
+unrestricted Erdős#7 remain unresolved.
