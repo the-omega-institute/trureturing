@@ -306,8 +306,8 @@ def produce_batch(requests):
         raise ValueError('mixed native batch owners')
     if any(left[1] == right[1] for left, right in zip(requests, requests[1:])):
         raise ValueError('duplicate native batch module')
-    # Chunks bound per-process memory; Lake still validates every
-    # completed module facet and the full aggregate after these bounded calls.
+    # Chunks bound per-process memory; each chunk validates its modules
+    # before writing their artifacts.
     for start in range(0, len(requests), NATIVE_BATCH_MODULES):
         produce_batch_chunk(requests[start:start + NATIVE_BATCH_MODULES])
 
