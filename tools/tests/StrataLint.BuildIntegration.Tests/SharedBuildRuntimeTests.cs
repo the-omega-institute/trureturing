@@ -130,14 +130,14 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
                 }
             }
             """);
-        const string excludedProject = "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
+        const string excludedProject = "tools/tests/Excluded.Tests/Excluded.Tests.csproj";
         Write(excludedProject, """
             <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
             <IsTestProject>true</IsTestProject><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup>
             <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
             <PackageReference Include="xunit" Version="2.9.3" /><PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" /></ItemGroup></Project>
             """);
-        Write("tools/tests/StrataLint.ScriptTests/Unselected.cs", "namespace Fixture; public class Unselected { [Xunit.Fact] public void Runs() => Xunit.Assert.Equal(\"Fixture\", typeof(Unselected).Namespace); }\n");
+        Write("tools/tests/Excluded.Tests/Unselected.cs", "namespace Fixture; public class Unselected { [Xunit.Fact] public void Runs() => Xunit.Assert.Equal(\"Fixture\", typeof(Unselected).Namespace); }\n");
         Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
             projects.Select(item => new EngineeringProjectFixture($"tools/{item.Item1}/{item.Item1}.csproj",
                 item.Item2, "production", false, [$"tools/{item.Item1}/**/*.cs"], OwnedTestAssembly: "Runtime"))
@@ -150,8 +150,8 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
                     ["tools/tests/BannedApiCompileFailProof/**/*.cs"]),
                 new EngineeringProjectFixture("tools/scripts/report/JudgeSeedTask.csproj", "JudgeSeedTask", "production", false,
                     ["tools/scripts/report/JudgeSeedTask.cs"], OwnedTestAssembly: "JudgeSeedTask.Tests"),
-                new EngineeringProjectFixture(excludedProject, "StrataLint.ScriptTests", "cross-cutting-test", false,
-                    ["tools/tests/StrataLint.ScriptTests/**/*.cs"]),
+                new EngineeringProjectFixture(excludedProject, "Excluded.Tests", "cross-cutting-test", false,
+                    ["tools/tests/Excluded.Tests/**/*.cs"]),
             }).ToArray()));
         // Keep resource samples inside the same process tree and ten-second guard
         // as the restore, so a timeout retains the work observed before the kill.
@@ -165,7 +165,7 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", excludedProject, "--use-lock-file", "-nr:false");
-        Directory.Delete(Path.Combine(root, "tools/tests/StrataLint.ScriptTests/obj"), recursive: true);
+        Directory.Delete(Path.Combine(root, "tools/tests/Excluded.Tests/obj"), recursive: true);
         EngineeringProcess.Git(root, "add", ".");
         EngineeringProcess.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "runtime fixture");
         using var output = new StringWriter();
@@ -201,7 +201,7 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
         Assert.Equal(projects.Length + 2, ObservedCompilers(cold));
         var build = CommonExecutionEvidence.ValidateBuild(root);
         Assert.Equal(new[] { "restore-StrataLint", "build" }, build.Steps.Select(step => step.Name));
-        Assert.True(File.Exists(Path.Combine(root, "tools/tests/StrataLint.ScriptTests/obj/project.assets.json")));
+        Assert.True(File.Exists(Path.Combine(root, "tools/tests/Excluded.Tests/obj/project.assets.json")));
         Assert.Contains(excludedProject, File.ReadAllText(Path.Combine(root, CommonExecutionEvidence.RootPath, "package-restore.slnx")), StringComparison.Ordinal);
         Assert.DoesNotContain(excludedProject, File.ReadAllText(Path.Combine(root, CommonExecutionEvidence.RootPath, "selected-build.slnx")), StringComparison.Ordinal);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));

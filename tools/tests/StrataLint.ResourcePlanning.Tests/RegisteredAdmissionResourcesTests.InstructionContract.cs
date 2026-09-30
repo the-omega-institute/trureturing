@@ -21,7 +21,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     {
         var plan = Plan(path, "", mode);
         var consumers = new[] { "StrataLint.InstructionContract.Tests" };
-        Assert.Equal(OrderedConsumers(consumers.Concat(path == "tools/scripts/agent/batch_pr.sh" ? new[] { "StrataLint.RepositoryContract.Tests", "StrataLint.WorktreeContract.Tests" } : []).Select(name => $"tools/tests/{name}/{name}.csproj")),
+        Assert.Equal(OrderedConsumers(consumers.Concat(path == "tools/scripts/agent/batch_pr.sh" ? new[] { "StrataLint.RepositoryContract.Tests" } : []).Select(name => $"tools/tests/{name}/{name}.csproj")),
             Strings(plan["execution"]!["tests"]!));
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
     }
@@ -45,10 +45,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             var plan = Plan(path, "", mode, change);
             Assert.Equal(WithPathInventory(path.EndsWith(".lean", StringComparison.Ordinal)
-                    ? new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject, WorktreeContractProject }
+                    ? new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject }
                     : new[] { InstructionContractProject }, change), Strings(plan["execution"]!["tests"]!));
             Assert.Equal((path.EndsWith(".lean", StringComparison.Ordinal)
-                    ? new[] { "test-instruction-contract", "test-repository-digestion", "test-repository-filemap", "test-worktree-contract" }
+                    ? new[] { "test-instruction-contract", "test-repository-digestion", "test-repository-filemap" }
                     : new[] { "test-instruction-contract" })
                     .Concat(change is "D" or "R" ? new[] { "test-repository-filemap", "test-repository-topology" } : [])
                     .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),

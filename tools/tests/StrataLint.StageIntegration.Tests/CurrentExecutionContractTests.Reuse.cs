@@ -57,18 +57,16 @@ public sealed partial class CurrentExecutionContractTests
     }
 
     [Theory]
-    [InlineData("StrataLint.ArchitectureTests", false)]
-    [InlineData("StrataLint.Cache.Tests", false)]
-    [InlineData("StrataLint.EngineeringScope.Tests", false)]
-    [InlineData("StrataLint.Lean.Tests", false)]
-    [InlineData("StrataLint.ScriptTests", true)]
-    [InlineData("StrataLint.Tests", false)]
-    public void RegisteredDocumentationAndCacheAdaptersRespectTestInputs(string project, bool generalScripts)
+    [InlineData("StrataLint.ArchitectureTests")]
+    [InlineData("StrataLint.EngineeringScope.Tests")]
+    [InlineData("StrataLint.Lean.Tests")]
+    [InlineData("StrataLint.Tests")]
+    public void RegisteredDocumentationAndCacheAdaptersRespectTestInputs(string project)
     {
         using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == $"tools/tests/{project}/{project}.csproj")!;
-        Assert.Equal(project != "StrataLint.ScriptTests", declaration["ci"]!.GetValue<bool>());
+        Assert.True(declaration["ci"]!.GetValue<bool>());
         EditRegistration(fixture, rows =>
         {
             foreach (var field in new[] { "execution_inputs", "execution_excludes" })
@@ -81,19 +79,18 @@ public sealed partial class CurrentExecutionContractTests
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n[[files]]\npattern = \"tools/tests/First/**\"\nrequire = []\nkind = \"program\"\n"
                 : "registered fixture material\n");
-        var cacheInvalidates = project is "StrataLint.Cache.Tests" or "StrataLint.ScriptTests";
         const string filemap = "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n[[files]]\npattern = \"tools/tests/First/**\"\nrequire = []\nkind = \"program\"\n"
             + "[[files]]\npattern = \"Meta/ci-cache-paths.json\"\nkind = \"data\"\nconsumed_by = [\"automation\"]\n";
         var changes = new[]
         {
             (Path: "tools/scripts/agent/openproblem/README.md", Invalidates: false),
             (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
-            (Path: "tools/scripts/preflight.sh", Invalidates: generalScripts || project == "StrataLint.Tests"),
-            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: generalScripts),
-            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts || project is "StrataLint.Cache.Tests" or "StrataLint.Tests"),
-            (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: project is "StrataLint.Lean.Tests" or "StrataLint.ScriptTests" or "StrataLint.Tests"),
+            (Path: "tools/scripts/preflight.sh", Invalidates: project == "StrataLint.Tests"),
+            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: false),
+            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: project == "StrataLint.Tests"),
+            (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: project is "StrataLint.Lean.Tests" or "StrataLint.Tests"),
             (Path: "Meta/FILEMAP.toml", Invalidates: false),
-            (Path: "Meta/ci-cache-paths.json", Invalidates: cacheInvalidates),
+            (Path: "Meta/ci-cache-paths.json", Invalidates: false),
             (Path: "tools/lean-inspector/Inspector.lean", Invalidates: project is "StrataLint.Lean.Tests" or "StrataLint.Tests"),
             (Path: "tools/lean-inspector/native_image.c", Invalidates: project == "StrataLint.Lean.Tests"),
             (Path: "tools/lean-inspector/tests/test_native_support.py", Invalidates: project == "StrataLint.Lean.Tests"),

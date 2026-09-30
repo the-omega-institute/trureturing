@@ -15,7 +15,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void SourceAtomizerSourcesSelectTheirCompleteProject(string file)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(new[] {
+            Assert.Equal(OrderedConsumers(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 RepositoryTopologyProject,
                 SourceAtomizerProject,
@@ -27,7 +27,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void SourceAtomizerLockSelectsItsCompleteProject()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(new[] { SourceAtomizerProject }),
+            Assert.Equal(OrderedConsumers(new[] { SourceAtomizerProject }),
                 Strings(Plan("tools/tests/StrataLint.SourceAtomizer.Tests/packages.lock.json", "", mode)["execution"]!["tests"]!));
     }
 
@@ -37,7 +37,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void SourceAtomizerSharedHelpersSelectAllRegisteredConsumers(string path, string consumers)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(consumers.Split(',').Append("StrataLint.RepositoryFileMap.Tests").Select(name => $"tools/tests/{name}/{name}.csproj")),
+            Assert.Equal(OrderedConsumers(consumers.Split(',').Append("StrataLint.RepositoryFileMap.Tests").Select(name => $"tools/tests/{name}/{name}.csproj")),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 

@@ -16,15 +16,12 @@ public sealed class FileMapResourceParityTests
             "docs/reports/a110037-0910/BoundaryProbe.lean", "docs/reports/prime-slab-corner-order-0909.json" })
             Assert.Equal(path switch
             {
-                "tools/lean-inspector/README.md" => new[] { "test-worktree-contract" },
+
                 "docs/reports/a110037-0910/BoundaryProbe.lean" or "docs/reports/prime-slab-corner-order-0909.json" =>
                     new[] { "test-repository-filemap" },
                 _ => [],
             },
                 Assert.Single(map.Match(path)).Require);
-        var worktreeInputs = Assert.Single(map.Resources, resource => resource.Id == "test-worktree-contract").PathInputs;
-        Assert.Contains(worktreeInputs, pattern => FileMapGlob.Create(pattern).IsMatch("tools/lean-inspector/README.md"));
-        Assert.DoesNotContain(worktreeInputs, pattern => FileMapGlob.Create(pattern).IsMatch("docs/develop/theory/input.md"));
         var atomizerInputs = Assert.Single(map.Resources, resource => resource.Id == "test-source-atomizer").PathInputs;
         Assert.DoesNotContain(atomizerInputs, pattern => FileMapGlob.Create(pattern).IsMatch("docs/develop/theory/input.md"));
         // Repository path inventory is declared on resources separately from per-file body requirements.

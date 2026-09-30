@@ -18,7 +18,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void CoverBatchSourcesSelectTheirCompleteProject(string file)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(new[] {
+            Assert.Equal(OrderedConsumers(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 CoverBatchProject,
                 RepositoryTopologyProject,
@@ -30,7 +30,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void CoverBatchLockSelectsItsCompleteProject()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(new[] { CoverBatchProject }),
+            Assert.Equal(OrderedConsumers(new[] { CoverBatchProject }),
                 Strings(Plan("tools/tests/StrataLint.CoverBatch.Tests/packages.lock.json", "", mode)["execution"]!["tests"]!));
     }
 
@@ -43,7 +43,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void CoverSupportSelectsItsConsumersAndRepositoryAudits(string file)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(new[] {
+            Assert.Equal(OrderedConsumers(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 CoverBatchProject,
                 RepositoryTopologyProject,
@@ -75,8 +75,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
         foreach (var path in new[] { "D5/S3/Constants/Values.lean", "D5/X_Frontier/ValuesProducer.lean" })
         {
             var plan = Plan(path, "", mode, change);
-            Assert.Equal(WithPathInventory(new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject, WorktreeContractProject }, change), Strings(plan["execution"]!["tests"]!));
-            Assert.Equal(new[] { "test-cover-batch", "test-instruction-contract", "test-repository-digestion", "test-repository-filemap", "test-worktree-contract" }
+            Assert.Equal(WithPathInventory(new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject }, change), Strings(plan["execution"]!["tests"]!));
+            Assert.Equal(new[] { "test-cover-batch", "test-instruction-contract", "test-repository-digestion", "test-repository-filemap" }
                     .Concat(change is "D" or "R" ? new[] { "test-repository-topology" } : []).Order(StringComparer.Ordinal),
                 Strings(plan["stages"]!["engineering"]!["resources"]!));
             Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
@@ -98,7 +98,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void InspectorSourceConsumersSelectOnlyTheirCompleteProjects(string path, bool grammarConsumer)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(new[] {
+            Assert.Equal(OrderedConsumers(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 CoverBatchProject,
                 RepositoryFileMapProject,

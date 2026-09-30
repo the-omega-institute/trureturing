@@ -15,7 +15,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void TruthReleaseSourcesSelectTheirCompleteProject(string file)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(new[] {
+            Assert.Equal(OrderedConsumers(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 RepositoryTopologyProject,
                 TruthReleaseProject,
@@ -28,7 +28,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void TruthReleaseLockSelectsItsCompleteProject()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(new[] { TruthReleaseProject }),
+            Assert.Equal(OrderedConsumers(new[] { TruthReleaseProject }),
                 Strings(Plan("tools/tests/StrataLint.TruthRelease.Tests/packages.lock.json", "", mode)["execution"]!["tests"]!));
     }
 
@@ -44,13 +44,13 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var inputs = new[]
         {
             (Path: "D5/S3/Midline/GoldenSpectralMarker.lean",
-                Projects: new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject, TruthReleaseProject, WorktreeContractProject }),
+                Projects: new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject, TruthReleaseProject }),
             (Path: "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md",
                 Projects: new[] { TruthReleaseProject }),
             (Path: "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs",
                 Projects: new[] {
                     "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
-                    RepositoryTopologyProject, TruthReleaseProject, WorktreeContractProject }),
+                    RepositoryTopologyProject, TruthReleaseProject }),
             (Path: "Golden/Projection/statement-projection-pilot-v1.json",
                 Projects: new[] { "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
                     "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj", TruthReleaseProject }),
@@ -87,9 +87,9 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             var plan = Plan(path, "", mode);
             var consumers = path.EndsWith(".lean", StringComparison.Ordinal)
-                ? new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject, WorktreeContractProject }
+                ? new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject }
                 : path.EndsWith(".scribe.cs", StringComparison.Ordinal)
-                    ? new[] { RepositoryFileMapProject, RepositoryTopologyProject, WorktreeContractProject }
+                    ? new[] { RepositoryFileMapProject, RepositoryTopologyProject }
                     : [];
             Assert.Equal(OrderedConsumers(consumers), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("test-cover-batch", Strings(plan["resources"]!));
@@ -102,7 +102,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void SharedFrozenLedgerFixtureSelectsEveryRegisteredSupportConsumer()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(new[] {
+            Assert.Equal(OrderedConsumers(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
                 CoverBatchProject,

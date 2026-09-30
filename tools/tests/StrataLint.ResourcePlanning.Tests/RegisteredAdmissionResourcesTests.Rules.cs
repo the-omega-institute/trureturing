@@ -10,7 +10,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void RuleBehaviorChangesSelectTheirCompleteProject(string mode)
     {
         var plan = Plan("tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs", "", mode);
-        Assert.Equal(WithWorktreeContract(new[] {
+        Assert.Equal(OrderedConsumers(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
             "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",

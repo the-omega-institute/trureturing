@@ -104,7 +104,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void ResourceOwnerModificationSelectsItsCompleteConsumers(string mode)
     {
         var plan = Plan("tools/StrataLint.Cli/Commands/FileMap/FileMapConformCommand.cs", "", mode, "M");
-        Assert.Equal(WithWorktreeContract(new[]
+        Assert.Equal(OrderedConsumers(new[]
         {
             "StrataLint.ArchitectureTests",
             "StrataLint.CliIntegration.Tests",

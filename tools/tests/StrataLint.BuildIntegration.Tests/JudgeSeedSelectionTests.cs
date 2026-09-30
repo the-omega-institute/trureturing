@@ -19,9 +19,9 @@ public sealed class JudgeSeedSelectionTests
     {
         using var fixture = new SeedFixture();
         var roots = mode == "ci-default" ? new[] { SeedFixture.Tests, SeedFixture.Other }
-            : mode == "explicit-excluded" ? [SeedFixture.ScriptTests] : new[] { SeedFixture.Tests };
+            : mode == "explicit-excluded" ? [SeedFixture.ExcludedTests] : new[] { SeedFixture.Tests };
         var expected = mode == "ci-default" ? new[] { SeedFixture.Library, SeedFixture.Other, SeedFixture.Tests }
-            : mode == "explicit-excluded" ? [SeedFixture.ScriptTests] : new[] { SeedFixture.Library, SeedFixture.Tests };
+            : mode == "explicit-excluded" ? [SeedFixture.ExcludedTests] : new[] { SeedFixture.Library, SeedFixture.Tests };
         fixture.Build(roots);
         foreach (var project in SeedFixture.Projects.Except(expected))
             if (mode == "unselected-corrupt") fixture.Write(fixture.Receipt(project), "broken receipt");
@@ -240,8 +240,8 @@ public sealed class JudgeSeedSelectionTests
         internal const string Library = "tools/FixtureLibrary/FixtureLibrary.csproj";
         internal const string Tests = "tools/tests/Fixture.Tests/Fixture.Tests.csproj";
         internal const string Other = "tools/tests/Other.Tests/Other.Tests.csproj";
-        internal const string ScriptTests = "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
-        internal static readonly string[] Projects = [Library, Tests, Other, ScriptTests];
+        internal const string ExcludedTests = "tools/tests/Excluded.Tests/Excluded.Tests.csproj";
+        internal static readonly string[] Projects = [Library, Tests, Other, ExcludedTests];
         internal string Root { get; } = TemporaryFileSystem.Directory.CreateTempSubdirectory("judge-seed-selection-").FullName;
 
         internal SeedFixture()
@@ -257,7 +257,7 @@ public sealed class JudgeSeedSelectionTests
                 new(Library, "FixtureLibrary", "production", false, ["tools/FixtureLibrary/*.cs"], OwnedTestAssembly: "Fixture.Tests"),
                 new(Tests, "Fixture.Tests", "cross-cutting-test", true, ["tools/tests/Fixture.Tests/*.cs"], References: [Library]),
                 new(Other, "Other.Tests", "cross-cutting-test", true, ["tools/tests/Other.Tests/*.cs"]),
-                new(ScriptTests, "StrataLint.ScriptTests", "cross-cutting-test", false, ["tools/tests/StrataLint.ScriptTests/*.cs"])));
+                new(ExcludedTests, "Excluded.Tests", "cross-cutting-test", false, ["tools/tests/Excluded.Tests/*.cs"])));
             // Real seal() produces receipts for synthetic compiler output. The existing
             // SharedBuildRuntimeTests separately proves cold/warm behavior with Csc.
             var prepared = EngineeringProcess.Process(Root, "python3", ["-B", "-c", """

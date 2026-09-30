@@ -217,15 +217,15 @@ public sealed class EngineeringScopeProgramTests
             TemporaryFileSystem.File.WriteAllText(Path.Combine(directory, "Probe.cs"),
                 "using Xunit; public sealed class Probe { [Fact] public void Runs() { Assert.True(" + (passes ? "true" : "false")
                 + "); Assert.Null(System.Environment.GetEnvironmentVariable(\"CANDIDATE_SHA\")); } }");
-            var retiredSuite = Path.Combine(root, "tools/tests/StrataLint.ScriptTests");
-            TemporaryFileSystem.Directory.CreateDirectory(retiredSuite);
-            TemporaryFileSystem.File.WriteAllText(Path.Combine(retiredSuite, "StrataLint.ScriptTests.csproj"),
+            var excludedSuite = Path.Combine(root, "tools/tests/Excluded.Tests");
+            TemporaryFileSystem.Directory.CreateDirectory(excludedSuite);
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(excludedSuite, "Excluded.Tests.csproj"),
                 "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>");
             TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(root, "Meta"));
             TemporaryFileSystem.File.WriteAllText(Path.Combine(root, EngineeringRegistrationFixture.Path),
                 EngineeringRegistrationFixture.Manifest(
                     new EngineeringProjectFixture("tools/tests/Probe/Probe.csproj", "Probe", "cross-cutting-test", true, ["tools/tests/Probe/**/*.cs"], BuildInputs: ["tools/tests/Probe/Dependencies.props"]),
-                    new EngineeringProjectFixture("tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj", "StrataLint.ScriptTests", "cross-cutting-test", false, [])));
+                    new EngineeringProjectFixture("tools/tests/Excluded.Tests/Excluded.Tests.csproj", "Excluded.Tests", "cross-cutting-test", false, [])));
             TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "global.json"), "{\"sdk\":{\"version\":\"10.0.103\"}}");
             TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "Meta/ci-checks.json"), CommonCheckRegistrationFixture.Manifest(project));
             var registrationPath = Path.Combine(root, EngineeringRegistrationFixture.Path);

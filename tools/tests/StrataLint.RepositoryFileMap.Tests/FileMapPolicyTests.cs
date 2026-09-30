@@ -10,7 +10,6 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
 {
     [Theory]
     [InlineData("lean-report-inputs.json", "LeanReportSelection", "lean-report")]
-    [InlineData("Meta/ci-cache-paths.json", "NativeArchivePaths", "test-cache")]
     public void RuntimeManifestIsAdmittedWithItsRuntimeVerifier(string path, string verifier, string resource)
     {
         var root = TestRepositoryLayout.FindRoot();

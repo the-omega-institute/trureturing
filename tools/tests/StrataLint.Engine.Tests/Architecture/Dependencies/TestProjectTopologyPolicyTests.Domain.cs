@@ -16,10 +16,10 @@ public sealed partial class TestProjectTopologyPolicyTests
     private static TestProjectTopologyProject CrossCuttingHarness(params string[] references) =>
         ProjectWithDefaultProperties(CanonicalHarnessPath, "StrataLint.ArchitectureTests", true, references);
 
-    private static TestProjectTopologyProject ScriptHarness(params string[] references) =>
+    private static TestProjectTopologyProject RepositoryHarness(params string[] references) =>
         ProjectWithDefaultProperties(
-            "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
-            "StrataLint.ScriptTests",
+            "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
+            "StrataLint.RepositoryContract.Tests",
             true,
             references);
 
@@ -49,14 +49,14 @@ public sealed partial class TestProjectTopologyPolicyTests
         // 宾语侧:只扩主语会漏掉这一形。当前仓内无人这么写,故这条守的是空转的缺口 ——
         // 但它与被扩的那一侧是同一个错误类,分开只会让下一个人重新发现它。
         var world = HarnessWorld(
-            ScriptHarness(
+            RepositoryHarness(
                 "../StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj"),
             CrossCuttingHarness());
 
         var debt = TestProjectTopologyPolicy.CalculateDebt(world);
 
         Assert.Equal(
-            [Debt("owned-test-to-owned-test-reference", "StrataLint.ScriptTests", "StrataLint.ArchitectureTests")],
+            [Debt("owned-test-to-owned-test-reference", "StrataLint.RepositoryContract.Tests", "StrataLint.ArchitectureTests")],
             debt.ToArray());
     }
 

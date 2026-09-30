@@ -6,12 +6,9 @@ public sealed class EngineeringProjectRegistrationTests
 {
 
     [Fact]
-    public void RepositoryRegistrationKeepsScriptCiExclusionAndBothProofProjects()
+    public void RepositoryRegistrationKeepsBothProofProjects()
     {
         var topology = RepositoryRules.ReadTrackedProjects(RepositoryLayout.FindRoot());
-        const string scripts = "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
-        Assert.Equal("cross-cutting-test", Assert.Single(topology.Projects, project => project.Path == scripts).Registration.Role);
-        Assert.DoesNotContain(scripts, EngineeringTestPlanPolicy.Evaluate(topology));
         Assert.Equal(new[]
         {
             "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
