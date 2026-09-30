@@ -14,7 +14,7 @@ internal sealed class EightTriangleEnvelopeDocument : IScribeDocumentDefinition
         H("A strict CFMP subcase with adjacent low edges"),
         Blocks(
             Paragraph(Text(
-                "Global edges have degree eight or at least sixteen. In each tetrahedron, "
+                "Global edges have degree eight or at least fourteen. In each tetrahedron, "
                 + "the degree-eight local edges form either a three-star, a three-cycle, "
                 + "or a four-cycle, and each low edge has exactly two low neighbours. "
                 + "The new case is the adjacent three-star/three-cycle packet.")),
@@ -24,7 +24,7 @@ internal sealed class EightTriangleEnvelopeDocument : IScribeDocumentDefinition
                 + "121/175, 13 sqrt(41)/123, and 473/700. Their squared margins "
                 + "are respectively on the correct sides of 1/2, so eight occurrences "
                 + "give strict pi/4 angle budgets. A high edge has upper cosine at most "
-                + "23/25, which is below cos(pi/8), hence degree at least sixteen gives "
+                + "53/59, which is below cos(pi/7), hence degree at least fourteen gives "
                 + "strictly more than 2 pi.")),
             Paragraph(Text(
                 "The formal Lean file checks these exact arithmetic margins. The "
