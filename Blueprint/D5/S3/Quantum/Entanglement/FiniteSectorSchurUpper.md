@@ -31,7 +31,7 @@ For every actual channel whose action on all logical matrices is the target enco
 
 Lean statement: \`D5/S3/Quantum/Entanglement/FiniteSectorSchurUpper.simplex_quadratic_dominates_weighted_complex_form\`
 
-*Proof.* Machine-checked in Lean as \`D5/S3/Quantum/Entanglement/FiniteSectorSchurUpper.simplex_quadratic_dominates_weighted_complex_form\` (\`✓ std3\`). ∎
+*Formalization status.* Lean declaration added on branch `lane/theory/rt-variational-20260930`; focused kernel and CI checks are pending. ∎
 
 *Source.* Repository-derived.
 
