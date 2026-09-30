@@ -6758,3 +6758,191 @@ Full integer enumeration covers67,725 CRT residues. Separately, sequential exten
 The first fixture has order7,5. At ternary point1 mod27 and the legal earlier value x_7=0, four active pair labels remove first roots0,1,2,3 at5; the actual pure5 class removes root4. Thus that earlier history really has no private extension. It is explicitly excluded by the changed threshold c_5>=4, while the common good ternary set remains positive. The argument never assumes every actual fibre or history survives.
 
 The consumer accepts an explicit output path through `--output` and uses standard-library exact arithmetic. Finite controls check these instances and arithmetic; the preceding inequalities and common-source argument supply the universal phase and height claims. No Lean verification is claimed.
+
+## The fixed 53 step, its next-prime obstruction, and the same-source quartic tail
+
+The reviewed 43/47 source accepts one more fixed half-clipped coordinate at prime 53. The resulting actual fifteen-prime source has mass greater than `1/300`, complete-query second moment less than `173/10`, fourth moment less than `2130000`, and full-Haar density at most eight. All these bounds belong to the same physical source. Its actual head survivor therefore has Haar mass greater than `1/2400`.
+
+The current outer comparison then has mean greater than `123/2`. [Report773's exact mean criterion](../750-799/773-repeated-upper-mass-comparison-lowers-the-fourteen-prime-tail-cutoff.md) consequently excludes every legal constant clipping parameter for its next-prime-59 sufficient ledger. This is a failure of this comparison interface, not a covered actual fibre or a counterexample to noncoverage.
+
+The full convex profile also supports an existing quartic continuation. At the previously used cutoff 10000, [Report734's fixed quartic consumer](../700-749/734-seven-and-eight-full-height-heads-admit-quartic-prime-tails.md) leaves distorted survivor mass greater than `33/10000`, under its inherited SH11/HM14 analytic prime-product premise. Thus adding 53 need not worsen the far-tail cutoff. It does not fill the intervening primes 59 through 10000.
+
+This is a numerical application of existing source, upper-mass, clipping and moment theorems. No new abstract theorem, new clipping schedule search, Lean verification or unrestricted Erdős #7 claim is made.
+
+### 1. Source contract and existing comparison
+
+The starting actual old core remains FC159's twelve-prime support
+
+    R={3,5,7,11,13,17,19,23,29,31,37,41},
+
+with its declared skeleton, admitted finite nongroup remainder, `N>=N_+`, and the original bound of one on old core-only ternary height. The whole-source probability has density at most
+
+    D0=1816999451688960000/36518862868606981<50.
+
+The construction in FC239–FC247 starts from `eta0=mu/D0`, of exact mass `1/D0` and density at most one, and uses the Haar full-query increasing-convex comparison followed by fixed half-clipped stages at 43 and 47. Upper-mass comparison cutoffs are 16, 18 and 24. It yields ONE physical measure eta47 of exact mass m47 and a comparator Pi47 of that same mass satisfying
+
+    integral f(L_Phi) deta47 <= integral f(z) dPi47(z) (FC263)
+
+for every complete query layout Phi and every nonnegative increasing convex cost f. Eta47 already avoids all admitted old, 43-touching and 47-touching head originals. Its full-Haar density is at most four.
+
+This statement is stronger than the previously extracted second moment: it is the source/comparator theorem established in FC239–FC247 using Report778's Haar comparison, Report771's all-query clipped update and Report773's upper-mass strengthening. No fourth-moment bound is inferred from a second-moment bound alone.
+
+All finite coordinate heights are fixed large enough to resolve the complete planned family, including full old cofactors of future labels. Uniform lifting introduces no old-only forbidden class. The source and its construction can depend on the actual family, but are fixed before a test layout or cost is chosen.
+
+### 2. Exactly one new actual prime operation
+
+Add an arbitrary finite globally phased collection of distinct originals
+
+    d*43^a*47^b*53^e, d supported on R,
+    a,b>=0, e>=1.                                  (FC264)
+
+Its pure 53-powers and all mixed supports are included. Every cofactor retains its full finite prime-power exponents. No extra original supported only on the earlier primes is included. Originals already processed at 43/47 remain unchanged.
+
+Let beta(x) be the actual fraction of the full Haar 53-fibre deleted by (FC264). Use the same fixed `delta=1/2` as FC239–FC250. The live kernel after actual deletion is
+
+    1_(y outside B_x) H_53(dy)
+      /[1-min(beta(x),1/2)].                        (FC265)
+
+It is defined at beta zero and one, has row mass at most one and pointwise density at most two. The normalized predeletion kernel has the same cap. At each actual exponent, the old cofactor indicators form a partial complete query; different exponents can have different query phases. The weighted Jensen argument of Report771, retaining all these layouts, gives the loss bound
+
+    d53=H_Pi47(26)/26,
+    actual remaining mass >=m47-d53=:m53.           (FC266)
+
+The comparison before restriction is `Pi47 times pi_cap(53,2)`, acting on the product load z(1+J). Restriction decreases nonnegative costs. If the actual remaining mass is v, multiply that one measure by the single scalar m53/v to give exact mass m53; this depends on the actual family but never on the query or cost. Report773 then gives
+
+    Pi53=Top_(m53)(Pi47 times pi_cap(53,2)).          (FC267)
+
+The same eta53 satisfies (FC263) with Pi53 for all costs and layouts. Trimming occurs only in the comparison. It does not identify physical survivors with the highest comparison atoms or assert favorable query/deletion alignment.
+
+### 3. Complete moments and exact arithmetic
+
+The pinned joint43/47 certificate supplies complete mass, first and second moments and exact comparison atoms through 96. The threshold 26 is resolved by
+
+    H_Pi47(26)=W47-26*m47+sum_(z<26)(26-z)pi47(z).
+
+The appended capped coordinate multiplies W and G by
+
+    1+2/52,
+    1+2*(3*53-1)/52^2,
+
+respectively. Remove the lowest comparison atoms until exactly d53 mass is removed. The last atom is split at value 36. Subtract its exact removed first and second moments from the complete moments. The result is
+
+    m53=0.0034102326311586098... >1/300,
+    W53=0.20987830964897963...,
+    G53=17.28921635797139... <173/10,
+    123/2 < W53/m53 <62.                            (FC268)
+
+The decimals are displays; the strict comparisons use the retained exact fractions.
+
+The same comparator supplies a fourth moment because f(z)=z^4 is increasing and convex on its support. Reconstruct its COMPLETE value from the initial Haar product, not from G:
+
+    K4_H=product_(p in R)
+          (p^4+11p^3+11p^2+p)/(p-1)^4.
+
+At each already-reviewed upper-mass trim, subtract `sum z^4*removed_mass(z)`. Those removals are entirely below the known cutoffs 16,18,24. At a capped prime p with cap two, multiply by
+
+    1+2*A4(p),
+    A4(p)=15t+50t^2+60t^3+24t^4, t=1/(p-1).
+
+Carry this through the SAME 43/47 comparison states; no preceding physical source or parameter is rerun or changed. For the one 53 operation apply the same factor and subtract the actual comparison trim at 36. This gives
+
+    K4_53=2125544.095406052... <2130000.             (FC269)
+
+The first, second and fourth moments all retain the infinite auxiliary tail. Low-atom convolution is exact through 96 because a product equal to z has no factor exceeding z. Trim cutoffs are checked to be inside that inventory. The output explicitly records the above-96 mass and each complete tail moment; none is discarded. Arbitrary original exponent heights are not truncated at 96.
+
+The physical density is also controlled on the same construction. Eta47 has density at most four; the new normalized kernel has density at most two; restriction and the one scalar decrease density. Thus
+
+    eta53<=8*H_(R union {43,47,53}),
+    Gamma2(eta53)<=G53,
+    integral L_Phi^4 deta53<=K4_53 for every Phi.    (FC270)
+
+In particular its head Haar survivor mass is at least m53/8, greater than `1/2400`. Normalization gives a probability with density less than 2400. This is a head-Haar bound, distinct from the distorted tail masses below.
+
+### 4. Exact comparison obstruction at the next prime 59
+
+Report773 equation (10) already proves that, for an equal-mass comparator with first moment W, some legal constant clipping parameter has a positive sufficient one-step ledger at q if and only if
+
+    W<(q-1)m.                                      (FC271)
+
+For the present comparator, (FC268) gives the strict failure
+
+    W53-58*m53 > (7/2)*m53 >0.
+
+This excludes all legal constant choices, without a parameter sweep. Indeed for `T=58*delta`, `0<delta<1`, the hinge obeys `H(T)>=W53-T*m53`; hence the declared new mass bound is at most
+
+    m53-H(T)/(58-T)
+      <=(58*m53-W53)/(58-T)<0.                      (FC272)
+
+The cap requirement `1/(1-delta)<=59` only restricts this interval further. Neither a different constant at 59 nor replacing its hinge by a polynomial upper bound can make this exact-comparator ledger positive. Earlier schedules, different physical sources, history-dependent constructions and stronger actual-family estimates are outside this obstruction.
+
+Crucially, W53/m53 is an auxiliary UPPER comparison mean. It is not a measured mean of the actual maximising layout on eta53. This result does not show that the actual source has exhausted its capacity, that a 59 fibre is covered, or that every possible extension fails. The current certified mass was obtained after conservative losses and scalar thinning; the actual deletion and its query correlations have not been determined by those values.
+
+### 5. The second-moment tail criterion and its scope
+
+Apply the homogeneous Chapter33 SH5--SH13 consumer to the same eta53, with its actual mass and G53. Under SH11 its sufficient reserve is
+
+    m53-G53*tau7(B,ell).
+
+At the previously used `B=10000,ell=8`, that particular exact certificate is negative, approximately `-0.0028523715`. This establishes failure of this upper estimate at those fixed parameters, not absence of an actual tail survivor.
+
+At the already-used repository cutoff `B=20000,ell=9`, all domain requirements hold, and the conservative exact bound is
+
+    1/300-(173/10)*tau7(20000,9)>7/10000.            (FC273)
+
+This is a valid second-moment continuation for every finite outside-prime family strictly above 20000. The two cutoffs are fixed existing checks; no smallest cutoff or optimized schedule is asserted.
+
+### 6. The full profile keeps the old cutoff by an existing quartic consumer
+
+The generic Report734 HM3--HM15 moment consumer accepts an arbitrary finite positive head source, not only the seven/eight-prime sources used in its headline applications. Its required four-query product bound follows from (FC270) by Holder on that SAME eta53. It does not cost a division by m53:
+
+    integral L_1 L_2 L_3 L_4 deta53<=K4_53.
+
+Use its existing fixed tail parameters
+
+    k=4, delta_tail=2/5, r=25, B=10000, ell=8.
+
+They satisfy `B>=286`, `ell>=4`, `3^ell<=B`, and `4*ell>=25`. HM13's coefficientwise envelope
+
+    1+(5/3)A4(p)<=(1+1/(p-1))^25
+
+is checked by the same rational/binomial coefficients as the existing consumer. Its all-prime allowance is
+
+    tau4=(5625/6144)*(129/127)^25
+         *10000/(9999^4)
+         *sum_(j=0..25)25!/((25-j)!*24^j).           (FC274)
+
+Under the inherited SH11/HM14 analytic prime-product premise, the exact rational certificate gives
+
+    1/300-2130000*tau4>33/10000>0.                  (FC275)
+
+Every finite set of outside primes strictly greater than 10000 therefore survives, allowing arbitrary original exponents, arbitrary finite support arities, and globally fixed phases. Every actual tail original is assigned once to its last exposed outside prime; its old cofactor retains all powers, including 3,43,47,53. The actual live tail construction in HM7 deletes immediately and may change previous marginals; no exact marginal-preservation theorem is used.
+
+This fourth-moment bound is taken from the full profile of the SAME source used in (FC268). It is not borrowed from a different good source, a different query, or a separately optimized phase assignment. The analytic premise and fixed quartic parameters are inherited unchanged. A different existing tail consumer is selected; no new 53 operation or clipping schedule is searched. The final lower mass is distorted measure mass, not a Haar-density lower bound of `33/10000`.
+
+Consequently the 53 extension can be delivered with the old 10000 far-tail cutoff. The negative second-moment calculation need not force a retreat to a larger cutoff.
+
+### 7. What information is still missing for the middle primes
+
+The next unresolved obstruction is not an omitted high exponent or an uncounted numerical tail: all those are already represented. It is the gap between the all-query outer comparison and the actual phase-labelled deletion geometry. Upper-mass selection places the guaranteed retained comparison mass at its most expensive values; it does not say the real deletion removed the cheapest physical points. Repeated selection raises the comparison mean even when some actual source distributions could remain better.
+
+Report773 already supplies both this trimming principle and the mean-gate obstruction; this note adds their exact application to the current FC159 source. [Report755](../750-799/755-current-query-maxima-are-not-a-closed-continuation-boundary.md) supplies a complementary actual counterexample: even current marked maxima and low-order marginals can agree while the SAME fixed next original produces different deletion and credit. That example diagnoses the lost phase information; it is not a counterexample specific to eta53 or a proof that the present worst comparator is CRT-realizable.
+
+A next improvement must supply additional same-family information, for example:
+
+* a uniform smaller bound on the actual 59 stop-loss `integral(beta59-delta)_+ deta53`, retaining overlaps among original current cylinders and the different old exponent layouts;
+* phase-indexed intersections between candidate near-maximising old query cylinders and the actual deleted set, as in the weighted-prefix/Gram interfaces of Chapter08 and Report750;
+* a better jointly certified retained mass and full profile of one actual source, or a source choice using the known future family, with one construction valid for every subsequent query.
+
+Separate optimal sources for separate 59 phases cannot be assembled into this missing bound. Increasing the moment order of the SAME exact outer profile can improve its far-tail estimate, as above, but does not remove (FC272) at 59. No additional small-prime step or parameter search was performed.
+
+### 8. Portable exact certificate and limits
+
+The [prime53 consumer](../../../frontier/cover-geometry/fibre-credit-partition/prime53_extension.py) reads the [joint43/47 certificate](../../../frontier/cover-geometry/fibre-credit-partition/joint43_47.json), pinned to SHA256
+
+    d185684ac07516e26b9359539abacccfbfcf0680010d6f689477d73213c44862.
+
+It reconstructs the complete fourth-moment metadata of that fixed comparison, performs the one new53 half-clipped operation, and evaluates the fixed mean and tail consumers. The input producer is not rerun. The consumer uses standard-library exact rational arithmetic and accepts an explicit `--output` path; its default input is the named sibling certificate, with an optional explicit `--source` path subject to the same hash check.
+
+The [exact result](../../../frontier/cover-geometry/fibre-credit-partition/prime53_extension.json) records48 checks, complete moments, low atoms, above-96 moment residuals, the split trim, the mean-gate deficit, two fixed second-moment tail evaluations and the quartic allowance. These finite arithmetic checks evaluate the applications of the ordinary source/comparison results and stated analytic premise; no Lean verification is claimed.
+
+The complete old FC159 restriction remains in force. Arbitrary new old-only originals, a general all-height FC159 core, and the middle primes from59 through10000 remain outside the proved source.
