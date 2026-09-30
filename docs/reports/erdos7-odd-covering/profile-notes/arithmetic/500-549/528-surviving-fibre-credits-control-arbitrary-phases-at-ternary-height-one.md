@@ -5865,3 +5865,191 @@ The pair-conflict construction supplies a genuine all-phase repair of the square
 The literal-core tail consumer supplies an unrestricted outside-support continuation once a literal core survivor is available. For the density-controlled FC159 core, FC187--FC194 make the cutoff independent of all nonternary heights; the exact-marginal FC182--FC186 variant still depends on the head-divisor inventory. Neither creates an arbitrary core survivor, admits primes below its cutoff, or guarantees that enlarging the prime set preserves a useful source theorem. Adding a previously excluded core prime changes V and the actual core contract. Report804's smaller cutoff has separate source prerequisites and cannot repair this gap by numerical substitution.
 
 Thus the two useful next interfaces are concrete: prove enough joint pair/prefix geometry on a finite core to obtain a literal surviving cylinder, then attach an existing tail law retaining its required good core support; the Report453 route additionally retains the exact prescribed marginal. The unresolved part is supplying the core cylinder and a usable cutoff for every unrestricted actual family, not representing a finite tree or solving a phase-forgetting weight optimization.
+
+## Full joint cores give a same-source prime-tail cutoff of 10000
+
+The existing repository transfer already accepts an arbitrary correlated core containing the entire 3-adic coordinate. Given a probability supported on an actual core survivor and a joint density bound relative to full core Haar, its sufficiently-large-prime continuation has no separate dependence on the core ternary depth. The decisive hypothesis is that this density bound is uniform in the desired family of core heights. Nonemptiness alone does not supply that quantitative hypothesis.
+
+Two existing routes apply. Report458 gives an elementary large-cutoff route by an unused distinguished-prime specialization of Report455. Chapter33 gives a sharper analytic route through the joint second-moment invariant. For the specific FC159 source, retaining both ternary roots permits a fixed analytic cutoff 10000 under Chapter33's stated prime-product premise. That numerical application keeps FC159's original core restrictions; the general continuation theorem does not by itself extend its source construction to arbitrary core ternary heights.
+
+These are ordinary mathematical applications of existing results. No new Lean theorem, generic kernel estimate, or unrestricted solution of Erdős #7 is claimed. The sequential construction retains every original phase and all resulting dependence among the coordinates.
+
+### Exact reusable sources
+
+- [Chapter08](../../../problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md), T1--T6 and W1: arbitrary correlated head laws, complete original cofactor layouts, and normalized kernels retaining the entire previous joint marginal before final deletion.
+- [Chapter33](../../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md), SH5--SH13: the homogeneous full-head second-moment bound and all-prime tail allowance. The generic sufficient condition SH13 applies to any supplied head source meeting its mass and joint-density hypotheses; its headline seven-prime source theorem is a separate consumer.
+- [Report455](../450-499/455-positive-mass-core-margins-give-height-independent-tail-cutoffs.md), BC1--BC9: one bounded-density core law, actual LCM intersections, globally conditioned good support, and height-independent head moment products. Its original displayed setup keeps 3 out of K.
+- [Report458](../450-499/458-distinguished-prime-completion-removes-the-early-phase-restriction.md), DP10--DP14: the same construction for any odd distinguished prime r, explicitly allowing 3 in K. Its cutoff still uses logarithms to base3 and its constants do not depend on r.
+- [Rosser--Schoenfeld source entry](../../../../../../Library/Arith/rosser1962approximate.md): the Chapter33 SH11 premise is the quoted Rosser--Schoenfeld Theorem8 prime-product bound, equations (3.28)--(3.29). The repository entry records the source and its applicability; the rational evaluation below does not formalize or independently prove that analytic theorem.
+
+### A full-core density theorem without a ternary-depth factor
+
+Fix a finite set R of odd head primes, allowing 3 in R, and a finite actual head-only family with distinct numerical moduli greater than one. Let K0 resolve its full prime-power period, and let U be its actual full survivor in Z/K0. Assume a probability mu0 satisfying
+
+    support(mu0) subset U,
+    mu0 <= Lambda*Haar_(K0), Lambda>=1.              (FC197)
+
+This is a **joint** density bound on the complete head, including all ternary digits and their relations with the other prime coordinates. It is not inferred by multiplying unconditional marginal caps.
+
+Let the added originals have distinct full numerical labels
+
+    m=a*product_(p in T)p^(f_p),
+    a divides Q, nonempty T subset P, f_p>=1,        (FC198)
+
+where Q is any positive integer supported on R and P is any finite set of odd primes outside R. The phases are globally fixed and otherwise arbitrary. All original heights, outside support sizes, and prime counts are finite but unrestricted. Pure outside powers are included through a=1. There are no newly added head-only originals in this continuation; those must already be avoided in FC197.
+
+Set K=lcm(K0,Q). Uniformly lift mu0 to Z/K and lift U by its inverse image. This lift preserves FC197 with exactly the same Lambda: each old atom is split among K/K0 extensions. In particular, a tail cofactor may demand ternary or other head powers higher than those of the actual head-only family without increasing Lambda.
+
+Define the fixed-support moment and integer
+
+    M2(R)=product_(p in R) p(p+1)/(p-1)^2,
+    N_R=ceil(Lambda*M2(R)).                            (FC199)
+
+Then every added family FC198 whose outside primes are at least
+
+    B >= 3^256*N_R^3                                  (FC200)
+
+has a complete actual survivor. More precisely, one common probability nu is supported on avoidance of every original, its core marginal remains supported on the lifted U, and it may change that marginal by the controlled global conditioning described below. The cutoff depends on R and Lambda, with no additional dependence on K, Q, or the core ternary exponent.
+
+#### Direct reuse of Report458 with an unused distinguished prime
+
+Choose an odd prime r not dividing `K*product_(p in P)p`, so it is absent from the complete finite original family and coprime to every coordinate in use. Such a prime exists because this carrier has finite support. This is a proof parameter; no congruence class is added, no numerical modulus is altered, and r is not substituted for any actual prime. In the permitted r-exponent inventory set H=1, with every actual r-exponent equal to zero. The allowance of absent labels in the existing theorem makes this padding legitimate.
+
+All actual head originals are now r-free, and mu is supported on their complete survivor. Every actual tail original has e=0 in Report458 DP11. Therefore every tail original is an early cofactor event under DP10, regardless of any of its actual 3-adic heights. The size of the auxiliary r does not enter the cutoff, and r may be selected after the finite family without changing FC200.
+
+The actual head-label intersection sum satisfies
+
+    J2(Q)=sum_(a,b|Q)1/lcm(a,b) <= M2(R).             (FC201)
+
+The factor at one prime is the existing geometric sum
+
+    sum_(e,f>=0) p^(-max(e,f))
+       =1+sum_(h>=1)(2h+1)p^-h=p(p+1)/(p-1)^2.
+
+Thus DP13 applies under FC200. Its capped process is one common joint law sigma retaining the initial head marginal. For every full previous history its next-coordinate kernel uses the actual forbidden union, including the actual full head phase. The final global good event G excludes all early tail events, and DP12 gives
+
+    sigma(G)>=1-epsilon>0,
+    epsilon<=108*Lambda*J2(Q)*(1+ln B)^2/B<3^-240.     (FC202)
+
+Here every tail event is early, so nu=sigma(.|G) is supported on the complete actual survivor. The initial core support is retained, and the existing domination and variation bounds give
+
+    nu_core(E)<=mu(E)/(1-epsilon),
+    TV(nu_core,mu)<=epsilon.                           (FC203)
+
+The late distinguished-prime completion sum is empty. No auxiliary ternary mixture is required and no factor 3^(J-1) is incurred. Nu is not asserted to factor across either head or outside coordinates; all dependence created by the actual kernels and conditioning is retained.
+
+The inclusion of the entire ternary coordinate costs only
+
+    M2({3} union R0)=3*M2(R0), 3 notin R0,            (FC204)
+
+since `sum_(e,f>=0)3^(-max(e,f))=3`. This bounds actual compatible ternary intersections; incompatible phases contribute zero. It does not replace their globally fixed residues by independent optimal phases.
+
+### What uniform core information is actually needed
+
+For a finite full core, the existence of a probability supported on U with density at most Lambda is equivalent to
+
+    Haar(U)>=1/Lambda.                               (FC205)
+
+Necessity follows by evaluating the density domination on U. Sufficiency uses Haar conditioned on U. More generally, a single actual submeasure eta supported on U with mass at least m>0 and `eta<=D*Haar` yields Lambda=D/m after normalization. Both bounds must refer to the same eta.
+
+Therefore FC200 is uniform over arbitrary core heights only when FC197 or FC205 is uniform over those heights. A known nonempty finite U supplies the source `Haar(.|U)`, but its available density cap `1/Haar(U)` can depend on the full period. The present argument does not establish a uniform core density for arbitrary phases or arbitrary finite prime support. It removes the explicit ternary-depth loss from continuation once such a density-controlled core is supplied.
+
+This also locates why conditioning on one small ternary leaf can discard useful information. For J>=2, take the actual core classes `0 mod3` and `0 mod3^J`, with no other classes. Their full survivor is the same set `t!=0 mod3`, and its normalized Haar law has joint density 3/2 independent of J. Conditioning this law further on `t=1 mod3^J` instead gives density 3^J. The latter cost is introduced by the leaf selection, although the original family has a uniform full-core source. The moduli in this example are distinct; irredundancy is not required by the tail theorem.
+
+#### Exact preservation of the initial marginal remains a different demand
+
+The support-preserving conclusion cannot be replaced by arbitrary exact marginal preservation at a height-independent cutoff. Reuse Report455 BC12: for any outside prime p>=7, take head period `Q=5^(p-1)` and originals
+
+    m_j=5^j*p, j=0,...,p-1,
+    alpha_(m_j)=0 mod5^j, alpha_(m_j)=j modp.         (FC206)
+
+All moduli are distinct and every phase is fixed by CRT. At the actual core point x=0, these p originals cover all p outside roots. Haar on the head has density one and assigns positive mass to this core point, so no completely surviving law can retain that exact Haar marginal. This remains true for arbitrarily large p. Global conditioning is permitted to remove that small core fibre while preserving the good core support. The family has actual holes, for example head x=1 and outside root1. It is a counterexample to the stronger marginal-preservation requirement, not to FC200 or to noncovering.
+
+### The analytic full-core continuation is already available
+
+Chapter33 SH5--SH13 gives a sharper route under its explicitly stated prime-product premise. For a supplied full-head positive submeasure supported on actual head avoidance, with mass between m>0 and one and joint density at most D, define
+
+    G0=D*M2(R),
+    c_ell=(2ell^2+1)/(2ell^2-1),
+    tau7(B,ell)=(c_ell^7/B)*(B/(B-3))^2
+                  *sum_(h=0..7)7!/((7-h)!*ell^h).   (FC207)
+
+Assume the SH11 analytic premise and `B>=286`, integer `ell>=4`, `3^ell<=B`. For every finite set of outside primes **strictly greater than B**, arbitrary original outside support, arbitrary full head query heights, and arbitrary finite exponents, that same construction gives survivor mass at least
+
+    m-G0*tau7(B,ell).                                (FC208)
+
+Positivity is the sufficient condition. No independence of the head law is assumed. The current forbidden fibre is calculated using the actual full earlier history and each original's fixed phase. Each original is assigned once to its largest exposed outside prime, and later normalized kernels preserve each earlier bad-event mass until the final union deletion. These are the existing T1--T5/SH7--SH9 obligations, not fresh product assumptions.
+
+The prime-product premise is
+
+    product_(B<p<=z) p/(p-1)
+       <=c_ell*(ln z)/(ln B), z>=B.
+
+It follows in the cited source from the explicit upper and lower reciprocal-prime-product bounds of Rosser--Schoenfeld Theorem8. The finite rational evaluations below use that analytic premise; they do not prove it or make a Lean certification claim.
+
+### Both FC159 roots give a stronger common source
+
+This application retains FC159's actual skeleton and permitted finite nongroup inventory, with their arbitrary admitted nongroup phases and N>=N_+. The nonternary prime set remains
+
+    V={5,7,11,13,17,19,23,29,31,37,41},
+    R={3} union V.
+
+The core-only originals still have ternary height at most one. Let U be the **whole** actual core survivor across both retained first ternary roots. FC159's original predeletion law is
+
+    lambda=Haar3(. | two retained roots) tensor lambda_N,
+    lambda(U)>=m_*=
+       36518862868606981/466438558966380000.           (FC209)
+
+Its full joint density is at most `(3/2)*C_V`, with `C_V=1048576/403767` from FC187. Condition this one law on the whole U, without selecting a root separately. The resulting probability mu is supported on actual full-core avoidance and satisfies
+
+    Lambda0=C_V/m_*
+       =1211332967792640000/36518862868606981,
+    dmu/dHaar_R <= (3/2)*Lambda0
+       =1816999451688960000/36518862868606981.        (FC210)
+
+Ternary and nonternary coordinates can become correlated under this conditioning; the full-density theorem accepts that joint law directly. Uniform lifting to resolve any later full head query heights preserves this same cap.
+
+Using FC190's M2(V) and FC204, the one common second-moment seed is
+
+    G0=((3/2)*Lambda0)*(3*M2(V))
+       =(9/2)*Lambda0*M2(V)
+       =60565495731699460320/36518862868606981
+       <3321/2.                                     (FC211)
+
+Selecting a single first root would instead give full density at most `3*Lambda0` and twice this upper seed. Retaining both roots avoids that unnecessary source restriction.
+
+#### A fixed cutoff 10000
+
+Take the single fixed pair `B=10000`, `ell=8`. The analytic applicability conditions hold: `10000>=286`, `8>=4`, and `3^8=6561<=10000`. Here
+
+    c_ell=129/127,
+    sum_(h=0..7)7!/((7-h)!*8^h)=425331/131072,
+    tau7(10000,8)=
+       158028357647377093111875/
+       436270024792662927847645184.                 (FC212)
+
+Exact rational evaluation of the SAME seed and tail allowance gives
+
+    G0*tau7(10000,8)=
+       23007369761008877648614335688976747315625/
+       38298281752613041371476462038039709695744
+       <2/3,
+
+    1-G0*tau7(10000,8)=
+       15290911991604163722862126349062962380119/
+       38298281752613041371476462038039709695744
+       >1/3.                                        (FC213)
+
+Thus, under the inherited SH11 analytic premise, every admitted FC159 core extends to **any finite set of outside primes strictly greater than10000**, with unrestricted finite tail ternary heights, nonternary heights, head-query heights, and support sizes. Its complete survivor has mass greater than1/3 in the one constructed distorted measure. This is not a Haar-density bound of1/3 and does not assert independence of its final coordinates.
+
+The old core prime set, skeleton/source contract, allowed core remainders, and core ternary-height-one restriction remain the hypotheses supplying FC209. Primes43 through10000 have not been incorporated into that source theorem. The cutoff10000 is one sufficient value, not a claimed optimum, and is not asserted for an arbitrary supplied core. It uses FC210's two-root source and Chapter33's transfer; Report804's different source or numerical bounds are not substituted.
+
+### The unresolved core obligation
+
+Arbitrary ternary height is no longer an extra restriction of the conditional tail theorem FC197--FC204 or the existing analytic criterion FC207--FC208. The remaining task is to supply an actual all-height core survivor with a useful uniform joint density bound, or a direct joint-moment bound that meets the analytic criterion, while keeping the original global phases and every numerical label.
+
+For FC159, that all-height core-source theorem has not been supplied: deeper core-only originals may alter the complete survivor and its density. A bounded-density full-core source cannot be inferred from nonternary marginals, separate leaf bounds, or the mere existence of one uncovered residue. Passing to a larger query period is legitimate lifting; adding new head-only forbidden classes is a new mathematical obligation. The current argument distinguishes these operations and makes no unrestricted Erdős #7 claim.
+
+[Report709](../700-749/709-twelve-and-thirteen-small-heads-admit-unrestricted-prime-tails.md) already proves noncoverage with at most twelve small head primes below100000 when only the head-only originals have ternary height at most one, without FC159's skeleton phase restrictions. The present10000 cutoff uses the stronger density of those restricted FC159 sources; it does not lower Report709's cutoff for its larger phase class.
+
+The fixed rational constants in FC212--FC213 were evaluated directly. These arithmetic substitutions use the existing analytic and core-source premises; they do not constitute a new Lean verification.
