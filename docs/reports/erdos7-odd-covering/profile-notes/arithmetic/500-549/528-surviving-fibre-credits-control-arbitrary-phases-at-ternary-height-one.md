@@ -26950,3 +26950,247 @@ core, or guarantee a passing proper cut. They are ordinary
 symbolic deductions using the existing full-liability exchange,
 actual-query closure and complete tail estimate, not new Lean
 verification or a resolution of unrestricted Erdős#7.
+
+## Divisor palettes give polynomial inventories for missing15 and105
+
+Keep ONE globally minimum whole cover, its original numerical set
+D and literal phases, and a full-height proper head cut B. Let C
+be its old component containing3, with c=|C|. Fix P=15 or P=105,
+assume every prime dividing P belongs to C, and suppose P notin D.
+No original can contain all these primes, by divisor closure.
+The complete original heights are retained throughout.
+
+The replacement rule remains Report385(PH2/DR2), and the source
+and complete tail theorem remain FC1132--1134 and FC1144--1146.
+The new finite calculation uses mixed divisors of each interface,
+instead of separate pure-power thresholds on every direction.
+
+### A fixed anchor-support class has one common phase capacity
+
+Write A for the prime set of P. For each proper subset T of A put
+
+    M_T=product_(p in A without T)p,
+    R_T=phi(M_T).
+
+An interface with EXACT anchor support T has the form
+
+    h=product_(r in T)r^(a_r)*n,
+    a_r>=1, gcd(n,P)=1.
+
+The number of its divisors containing every anchor in T is
+
+    N_T(h)=product_(r in T)a_r * tau(n).          (FC1169)
+
+An empty product is one. In particular T empty allows f=1 among
+these divisors. Its repair label is P itself, which is absent;
+this differs from FC1142's occupied single-prime repair label.
+
+Suppose h is original and N_T(h)>=R_T. Choose R_T distinct such
+divisors f of h. Every label M_T*f contains P, so ALL are globally
+absent. Since gcd(M_T,h)=1, assign them bijectively to the R_T
+unit roots modulo M_T, using the OLD h-class's literal phase
+modulo f. Retain the actual normalized prime classes0 mod p for
+p|M_T. The retained guards cover every nonunit root, and the new
+classes cover every unit root of the ENTIRE old h-class. No
+remaining digit or outside coordinate has been restricted.
+
+At most one chosen f equals h; every proper odd divisor is at
+most h/3. Therefore
+
+    sum_(chosen f)M_T*f <= M_T*(R_T+2)*h/3
+                         < R_T*(R_T+2)*h.        (FC1170)
+
+The strict inequality holds for every possible complementary
+product here: M_T is one of3,5,7,15,21,35,105, and M_T<3phi(M_T).
+R_T distinct proper odd h-multiples have sum at least
+(3+5+...+(2R_T+1))*h=R_T*(R_T+2)*h. Moving h to a phase shared
+by that many proper descendants, deleting them, and repairing
+its old whole class would thus preserve count and strictly lower
+the modulus sum. The retained guards cannot be deleted: their
+primes do not divide h. Report385's replacement principle gives
+
+    q_h(x):=#{u in D:h|u,a_u=x mod h}<=R_T-1
+                        for EVERY h-phase x.    (FC1171)
+
+At the old h-phase, comparable disjointness gives q_h=1, which
+also satisfies the bound since R_T>=2. This controls descendants
+across all ternary depths when3 belongs to T. The repair guards
+are complementary primes, so there is no same-depth restriction
+and no omitted cross-layer pair.
+
+### Minimize within each support class and fix one assignment
+
+On the complete finite core carrier Q_C, define
+
+    L_T={d|Q_C: supp(d) intersect A=T, N_T(d)<R_T},
+    F_T=minimal under divisibility in
+        {h|Q_C: supp(h) intersect A=T, N_T(h)>=R_T},
+    a_P=sum_(T proper subset A)|L_T|,
+    b_P=sum_(T proper subset A)(R_T-1)|F_T|.      (FC1172)
+
+Minimality is WITHIN the same T. Removing the last copy of an
+anchor changes its repair palette and capacity, so it is not an
+allowed reduction for this minimization. Every high divisor d
+contains a minimal high h in its own T. If d is an actual old
+cofactor, this h is original by divisor closure. A nonoriginal
+frontier label cannot divide such a d and has no assigned class.
+
+Select a future original exactly when its complete old part is
+C-supported and high in its own T. Choose one qualifying h in
+F_T per selected label, once at B, using a fixed numerical choice.
+All other originals stay light, including unit old parts, pure
+future powers and O-supported old parts. Since no original has
+anchor support A, this partition covers the whole original family.
+
+At every head point x, all selected originals across ALL future
+suffixes jointly have head activation count at most b_P. Indeed,
+activation of a label assigned to h implies its phase modulo h
+is x mod h, so FC1171 bounds the assigned group. For each FIXED
+actual light suffix, numerical distinctness bounds its light
+core load by a_P. The unit slot occurs once, in L_empty.
+
+These are precisely the hypotheses already used in FC1144--1146.
+Take the core projection of an actual future private point, the
+same companion mu_O, and ONE new light-only Haar continuation.
+Its entire selected debit is at most2b_P/B. Consequently, with
+j=pi(B)>=10, a complete sufficient noncoverage test is
+
+    B>2b_P,
+    [a_P+sqrt(5Theta_O)]^2/[1-2b_P/B]<=T_B,
+    T_B=j(log j+loglog j-3)^2.                    (FC1173)
+
+No source is changed when paying the selected family. Every
+remaining original is in that law's light queries. Finite heights
+can only reduce the inventories: every divisor of a carrier
+element remains in the carrier, so restricting the height box
+cannot create a new minimal high interface.
+
+### Missing15 has explicit quadratic and cubic inventories
+
+For P=15 let k=c-2 count the primes in C other than3,5. In the
+following lists q,r,s are distinct such primes; permutations only
+occur when different exponents are explicitly shown.
+
+| T | M_T | R_T | All possible light patterns | All minimal high patterns |
+| --- | ---: | ---: | --- | --- |
+| empty | 15 | 8 | 1; q^i for1<=i<=6; qr,q^2r,qr^2 | q^7; q^3r,qr^3,q^2r^2; qrs |
+| {3} | 5 | 4 | 3,3^2,3^3; 3q,3q^2 | 3^4; 3q^3,3^2q; 3qr |
+| {5} | 3 | 2 | 5 | 5^2; 5q |
+
+The first row follows from tau(n)<8 or from divisibility-minimal
+tau(n)>=8. With two outside primes the low exponent pairs are
+(1,1),(2,1),(1,2), and the minimal high pairs are(3,1),(1,3),(2,2).
+Three outside primes are already high at their first powers.
+In the second row the criterion is a_3*tau(n)<4; in the third
+it is a_5*tau(n)<2. These yield the displayed complete lists.
+There is no T={3,5} row because15 is absent.
+
+The unrestricted lists therefore bound every actual height box:
+
+    a_15<=A_15^div(c)=5+8k+3binom(k,2)
+                         =(3c^2+c-4)/2,
+    b_15<=B_15^div(c)=4+14k+24binom(k,2)+7binom(k,3).
+                                                     (FC1174)
+
+For the second formula the three frontiers have respective sizes
+k+3binom(k,2)+binom(k,3),1+2k+binom(k,2),1+k, and respective
+capacities7,3,1. This pays each selected original only once,
+including all high3-bearing and5-bearing old cofactors.
+
+Use these two explicit upper bounds in FC1173. Fix
+0<gamma<sqrt(2/3). At all sufficiently large proper cuts, a
+minimum whole cover cannot simultaneously satisfy
+
+    5 in C,15 notin D,
+    c<=gamma(B log B)^(1/4).                     (FC1175)
+
+Indeed B_15^div=O(c^3), so2B_15^div/B=o(1) uniformly in this
+range, while
+
+    (A_15^div)^2/(B log B)<=(9/4)gamma^4+o(1)<1.
+
+FC1134 gives the same uniform companion bound
+Theta_O=O((log B)^4 loglog B), and the already used prime-counting
+comparison gives T_B asymptotic to B log B. Its companion square
+and cross terms are o(B log B), so the full test FC1173 follows.
+This strengthens the logarithmic core-size range in FC1164 to a
+fourth-root range without bounding any original prime height.
+
+### Missing105 has fifth-degree light and sixth-degree selected bounds
+
+For P=105 put k=c-3. The complementary products and outside-prime
+support bounds for each fixed T are as follows.
+
+| T | M_T | R_T | Maximum outside support of a light pattern | Maximum outside support of a minimal high pattern |
+| --- | ---: | ---: | ---: | ---: |
+| empty | 105 | 48 | 5 | 6 |
+| {3} | 35 | 24 | 4 | 5 |
+| {5} | 21 | 12 | 3 | 4 |
+| {7} | 15 | 8 | 2 | 3 |
+| {3,5} | 7 | 6 | 2 | 3 |
+| {3,7} | 5 | 4 | 1 | 2 |
+| {5,7} | 3 | 2 | 0 | 1 |
+
+For a row with threshold R, a light pattern has every special
+exponent at most R-1 and every outside exponent at most R-2.
+If it uses s outside primes, then2^s<=N_T<R, proving the light
+support bound floor(log_2(R-1)). In a minimal high pattern the
+respective exponent bounds are R and R-1: exceeding either bound
+would leave a high divisor after decrementing that exponent.
+When an outside prime occurs, decrementing its exponent multiplies
+N_T by e/(e+1)>=1/2 and must make it less than R. Thus N_T<2R
+and s<=ceil(log_2 R), proving the last column. The zero-outside
+case has only the finitely many bounded special exponent patterns.
+
+There are consequently finitely many exponent patterns in every
+row, independently of the actual heights or prime values. For
+each fixed support size s, their count is a constant times
+binom(k,s). Denote the resulting unrestricted light polynomial
+by A_105^div(c) and the frontier polynomial, weighted by R_T-1,
+by B_105^div(c). They bound the actual a_105,b_105 from FC1172.
+
+Only the empty row contributes degree five to the light count.
+Its five-prime low pattern has all exponents one: its divisor
+count is32, whereas increasing any exponent makes the count at
+least48. Only the same row contributes degree six to the high
+frontier. Its six-prime minimal pattern has all exponents one:
+64 is high, every immediate divisor has32 divisors, and a larger
+exponent would admit this high squarefree divisor. Therefore
+
+    A_105^div(c)=binom(k,5)+O(k^4),
+    B_105^div(c)=47binom(k,6)+O(k^5), k=c-3.     (FC1176)
+
+The lower-degree terms are fixed finite binomial polynomials with
+nonnegative coefficients. FC1172, rather than the asymptotic
+notation, supplies exact finite inventories for FC1173. No
+numerical enumeration or optimization is needed for these degree
+and leading-coefficient statements.
+
+Fix0<gamma<120^(1/5). At all sufficiently large proper cuts, the
+combination
+
+    3,5,7 in C,105 notin D,
+    c<=gamma(B log B)^(1/10)                     (FC1177)
+
+is impossible in a minimum whole cover. In this range
+
+    2B_105^div/B=O(B^(-2/5)*(log B)^(3/5))=o(1),
+    (A_105^div)^2/(B log B)<=gamma^10/120^2+o(1)<1.
+
+The same uniform companion and T_B comparisons finish FC1173.
+All estimates permit arbitrary original heights, pair-only anchor
+supports, and arbitrary phases. They do not assume the original
+residues optimize separately on different branches.
+
+The earlier pure-power certificates FC1163 and FC1167 remain
+valid alternatives: the divisor selection gives polynomial
+asymptotic inventory bounds, with potentially more selected
+interfaces. Neither the finite light bound nor the full new
+test is claimed to dominate its predecessor pointwise. FC1175
+and FC1177 improve the uniform asymptotic core-size ranges.
+
+These are ordinary symbolic deductions, not new Lean verification.
+The global replacement and continuation results are reused. A
+present anchor product, a larger core, or absence of a passing
+proper cut still prevents these certificates from settling the
+unrestricted question. No such cut is forced here.
