@@ -1,0 +1,24 @@
+**Proof.** Write $m=4t+1$ or $m=4t-1$, where $t\geq1$, and factor
+$t=2^r s$ with $s$ odd. Put $n=2^r$ and $L=L_{2n}$. Lucas doubling,
+starting from $L_2=3$, gives $L\equiv3\pmod4$: each subsequent
+doubling replaces an odd Lucas number by its square minus two.
+Moreover $L>0$ by $L_{u+1}=F_u+F_{u+2}$.
+
+In the golden integer ring, set $x=\varphi^{2n}$. Its norm is one
+and its trace is $L$, so $x^2+1=Lx$. Reduction modulo $L$ gives
+$\varphi^{4n}=-1$. Raising this to the odd power $s$ gives
+$\varphi^{4ns}=-1$. If $m=4ns+1$, multiplication by $\varphi$
+and comparison of the $\varphi$ coordinate give $F_m=-1\pmod L$.
+If $m+1=4ns$, the constant coordinate of
+$\varphi^m\varphi=-1$ gives the same congruence, since multiplication
+by $\varphi$ sends the $\varphi$ coordinate to the constant coordinate.
+
+The Jacobi symbol satisfies $(-1\mid L)=-1$ because $L\equiv3\pmod4$.
+Thus $-1$ is not a square modulo $L$, and neither is the integer $F_m$.
+This is the Lucas-modulus obstruction in Cohn's classical argument
+(*On Square Fibonacci Numbers*, J. London Math. Soc. 39 (1964),
+537--540). It supplies the initial layer $k=0$ in the two residue
+classes left by Theorems 30.1 and 32.1. The higher quotient layers
+use Theorem 33.1; the coprimality and entry-rank clauses of Lemma 10.2
+require their separate valuation arguments.
+
