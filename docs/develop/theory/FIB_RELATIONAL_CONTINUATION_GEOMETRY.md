@@ -1276,3 +1276,141 @@ $$
 这里的障碍来自实际三尺度水平集与五窗尺度 $\varphi^3$ 的不相容。它不改变定理 15.2 的完整词表示，也不排除使用无界词、无界组成或已定前缀的递归关系；Cloitre 的全局同步词图亦不由此命题判定。第七节的有限同余观察合同与本节准确读出 $b(n)$ 的合同不同，故其有限状态结论与本定理相容。
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Cloitre 黄金下斜率与整数进制同步障碍
+
+**假设 18.1（外部黄金界及 Fibonacci 等号）。** 对定义 15.1 的 Cloitre 序列，使用下列全局关系作为本节的显式前提：
+
+$$
+1\leq C(n)\leq n,\qquad C(n)\geq G(n)\quad(n\geq1),
+\qquad C(F_j)=F_{j-1}\quad(j\geq2).
+$$
+
+下界与 Fibonacci 等号取自 [Cloitre 黄金结构，§§4、6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/golden-proof.md)，其论证含明确的有限归纳基。这里只使用所列关系，不假设 $C(n)/n$ 的全局极限存在。
+
+**定义 18.2（整数进制同步词图）。** 固定整数 $k\geq2$。把 $n$ 与 $C(n)$ 的规范 $k$ 进制位从高到低排列，在高端补零到任意共同长度，再逐位配对。所有 $n\geq1$ 的这些配对词组成语言 $\mathcal H_{C,k}$。其字母表为 $\{0,\ldots,k-1\}^2$。正则性指存在有限自动机识别整个配对词语言，不预设读入期间能够自主生成递归轨道。
+
+**定理 18.3（所有整数进制的同步词图均非正则）。** 在假设 18.1 下，对每个整数 $k\geq2$，$\mathcal H_{C,k}$ 都不是正则语言。
+
+证明。由 $G(n)>\alpha n-\alpha^2$ 及 Fibonacci 等号，得到
+
+$$
+\liminf_{n\to\infty}\frac{C(n)}n=\alpha.
+\tag{18.1}
+$$
+
+使用 Schaeffer、Shallit 的已知中间结果：[*The Critical Exponent is Computable for Automatic Sequences*, v3，§4，Theorem 14](https://arxiv.org/abs/1104.2303v3)。其“特殊点”指沿语言中一列两两不同的词，两个整数读出的商所取得的极限；无限正则语言的最大特殊点必为有理数或正无穷。这里需要的是按不同词取得的最大特殊点，不能将它换成忽略重复商值后所得集合的极限上确界；所引版本的 §8 明确区别了这两个结论。
+
+反设 $\mathcal H_{C,k}$ 正则。与“首个输入位非零”的正则语言相交，得到无限正则语言 $L$。由于 $1\leq C(n)\leq n$，$L$ 对每个 $n\geq1$ 恰有一个词，其长度是 $n$ 的规范位数；输出行允许高端零。首行作为分子、第二行作为分母，词的商为
+
+$$
+Q(n)=\frac n{C(n)}.
+$$
+
+由式 (18.1) 及 $\alpha>0$，有
+
+$$
+\limsup_{n\to\infty}Q(n)=\alpha^{-1}=\varphi.
+\tag{18.2}
+$$
+
+具体地，黄金下界给
+
+$$
+Q(n)\leq\frac n{\alpha n-\alpha^2}
+\quad\text{对充分大的 }n,
+$$
+
+所以所有渐近商不超过 $\varphi$；Fibonacci 等号又给
+
+$$
+Q(F_j)=\frac{F_j}{F_{j-1}}\longrightarrow\varphi.
+$$
+
+因为 $L$ 中每个整数只有一个共同长度词，任意两两不同词的无限序列对应的输入整数趋于无穷：每个有界整数区间只贡献有限多个词。因此它的每个有限商极限都不超过 $\varphi$，且不可能取得正无穷极限。Fibonacci 词列则两两不同，并实现特殊点 $\varphi$。于是 $\varphi$ 恰为 $L$ 的最大特殊点。
+
+所引最大特殊点定理 迫使 $\varphi$ 为有理数，与其无理性矛盾。故 $\mathcal H_{C,k}$ 非正则。这个论证对每个 $k\geq2$ 分别成立；它使用已知正则商定理作为中间步骤，所得结论是该定理与 Cloitre 黄金关系的对应，而不是一个新的通用自动机定理。
+
+该推导排除的是整数进制的正则同步关系。五窗读出使用矩阵 $S$ 的尺度 $\varphi^3$，并不满足这里的整数进制有理周期展开前提；Cloitre 的规范五窗全局词图是否正则，仍未由本定理判定。定理 15.2 的完整词轨道表示也不需要这个正则性。
+
+## 19. 规范缺陷振幅对内周期的约束
+
+**定义 19.1（同一周期上的振幅）。** 固定外部索引 $n\geq3$，令 $O\subseteq D_n$ 为 $T_{n,C}$ 的一条周期的全部不同索引。取
+
+$$
+\ell=|O|,\qquad s=\max O-\min O,\qquad
+\Delta_O=\max_{x\in O}E_C(x)-\min_{x\in O}E_C(x).
+$$
+
+这里 $E_C=C-G$ 是定义 15.1 的规范黄金缺陷。它与 [Fibonacci collars，§7](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md) 的局部轮廓缺陷 $C(F_k+t)-F_{k-1}-\max(0,t)$ 不同；本节只用同一实际周期上的规范缺陷振幅。
+
+**定理 19.2（周期跨度、长度及实际进位振幅）。** 对定义 19.1 的每条周期，不要求假设 18.1，均有
+
+$$
+s<\varphi^2(\Delta_O+1),\qquad
+\ell\leq\left\lceil\varphi^2(\Delta_O+1)\right\rceil,
+\qquad
+\Delta_O\geq\left\lfloor\alpha^2(\ell-1)\right\rfloor.
+\tag{19.1}
+$$
+
+若 $\Delta_O=0$，则更强地有 $\ell\leq2$。由定理 15.3，$\Delta_O$ 也等于这一周期中各个索引的实际拆分树总标量进位的振幅。因此，若一族实际内周期的长度无界，其实际进位总量在各自周期内的振幅必无界；这不预设这样的周期族存在。
+
+证明。对有限非空集合上的实函数写 $\operatorname{osc}_O f=\max_O f-\min_O f$。周期映射 $T_{n,C}$ 置换 $O$，故
+
+$$
+s=\operatorname{osc}_O T_{n,C}
+=\operatorname{osc}_O C
+\leq\operatorname{osc}_O G+\Delta_O.
+$$
+
+$G$ 单调，且 $R(x)=G(x)-\alpha x$ 满足 $-\alpha^2<R(x)<\alpha$。设 $u=\min O$、$v=\max O$，则
+
+$$
+\operatorname{osc}_O G=G(v)-G(u)
+=\alpha s+R(v)-R(u)<\alpha s+1.
+$$
+
+所以 $(1-\alpha)s<\Delta_O+1$。用 $1-\alpha=\alpha^2=\varphi^{-2}$ 得到跨度界。$O$ 含 $\ell$ 个不同整数，故 $\ell\leq s+1$；因 $s$ 是整数，严格跨度界给 $\ell\leq\lceil\varphi^2(\Delta_O+1)\rceil$。同理
+
+$$
+\alpha^2(\ell-1)\leq\alpha^2s<\Delta_O+1,
+$$
+
+且 $\Delta_O$ 是非负整数，得到式 (19.1) 的最后一个界。
+
+若 $\Delta_O=0$，则 $E_C$ 在 $O$ 上为同一个常数，故 $C=G+E_C$ 在 $O$ 上单调不减，$T_{n,C}$ 单调不增。它在 $O$ 上又是双射，因此严格反转 $O$ 的次序。将 $O$ 排列为 $z_1<\cdots<z_\ell$，必有 $T_{n,C}(z_i)=z_{\ell+1-i}$，从而 $T_{n,C}^2$ 在 $O$ 上恒等，一条周期只能有一或两个点。此处使用有限有序集上反序双射的经典性质；局部轮廓零缺陷的反射先例见定义 19.1 所引 §7，两个缺陷坐标不能互换。
+
+最后，对每个 $x\in O$ 单独使用其自己的实际拆分树，定理 15.3 给
+
+$$
+\Delta_O=\operatorname{osc}_{x\in O}
+\left(\sum_{u\in I_x}\delta(g_{m_u},m_u-g_{m_u})\right).
+\tag{19.2}
+$$
+
+因此周期长度无界与式 (19.1) 一起迫使式 (19.2) 的振幅无界。单个缺陷值很大而在整个周期上保持常数，仍只能给长度至多二；控制缺陷的量级和控制其周期内变化是不同条件。这里的振幅界也没有控制进入周期之前的前周期长度。
+
+**命题 19.3（周期五的规范缺陷读出）。** 对 $n=196$ 的实际内周期
+
+$$
+120\to116\to117\to118\to115\to120,
+$$
+
+规范缺陷依序为 $(6,7,6,8,5)$，因而 $s=5$、$\ell=5$、$\Delta_O=3$。
+
+证明。该实际周期及其五个 $C$ 值见定义 19.1 所引文献 §7 的周期五证书。用 $G(x)=\lfloor\alpha(x+1)\rfloor$ 读出：
+
+$$
+\begin{array}{c|rrrrr}
+x&120&116&117&118&115\\ \hline
+C(x)&80&79&78&81&76\\
+G(x)&74&72&72&73&71\\
+E_C(x)&6&7&6&8&5\\
+196-C(x)&116&117&118&115&120
+\end{array}
+$$
+
+五个索引不同且最后一行闭合，得到最短周期五；其最大最小索引与缺陷差给出所列读数。这一证书的局部轮廓正缺陷为 $(6,3,5,3,5)$，与规范缺陷不同，故不能把文献的轮廓缺陷字直接代入式 (19.1)。
+
+## 追加锚（本行以下为增补区）

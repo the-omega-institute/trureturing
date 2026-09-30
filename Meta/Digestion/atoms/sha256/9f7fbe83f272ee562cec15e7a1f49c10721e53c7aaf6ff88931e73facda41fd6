@@ -1,0 +1,55 @@
+**引理 225.2（短补因子的一范数能量下界）。** 充分大时 $H^2<V$，且
+
+$$
+\|B\|_{4,*}^4\le2H^2(1+\log H),\qquad
+\|B\|_{1,*}\ge\frac{k^{3/2}}{4H\sqrt{1+\log H}}.
+\tag{225.10}
+$$
+
+证明。先在全部字符上使用正交性。每个 $h\in\mathcal H$ 都是单位，故
+
+$$
+\frac1Q\sum_\chi|B_\chi|^4
+=\#\{(h_1,h_2,h_3,h_4)\in\mathcal H^4:
+ h_1h_2\equiv h_3h_4\pmod V\}.
+$$
+
+由 $H^2<V$，两个正乘积均小于 $V$，其模相等就是整数相等。
+扩大到所有 $1\le h_i<H$，以
+
+$$
+h_1=gu,\quad h_3=gv,\quad h_2=jv,\quad h_4=ju,
+\qquad (u,v)=1
+$$
+
+参数化整数乘积相等。若 $m=\max(u,v)$，则 $g,j<H/m$。
+每个 $m$ 至多有 $2m$ 对 $(u,v)$，故
+
+$$
+\frac1Q\sum_\chi|B_\chi|^4
+\le\sum_{1\le m<H}2m(H/m)^2
+\le2H^2(1+\log H).
+\tag{225.11}
+$$
+
+删除主字符项不会增大四次幂和，得到式（225.10）的第一项。
+
+在主字符坐标置零后的同一个归一测度上，Hölder 给
+
+$$
+\mathbb E|B|^2
+=\mathbb E\bigl(|B|^{2/3}|B|^{4/3}\bigr)
+\le(\mathbb E|B|)^{2/3}(\mathbb E|B|^4)^{1/3}.
+$$
+
+因此
+
+$$
+\|B\|_{1,*}\ge\frac{\|B\|_{2,*}^3}{\|B\|_{4,*}^2}
+\ge\frac{(k/2)^{3/2}}{\sqrt2H\sqrt{1+\log H}}
+=\frac{k^{3/2}}{4H\sqrt{1+\log H}},
+\tag{225.12}
+$$
+
+其中使用了式（225.9），分母非零。$\square$
+

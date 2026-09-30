@@ -1,0 +1,32 @@
+## 212. 实际 FIB 矩障碍的余量门槛、CRT 子族与大核心
+
+沿用 §210 的实际来源族
+
+$$
+V=F_r,\quad r\ge7\text{ 为素数},\quad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+gV,
+$$
+
+并令 $A=\min_gN_g$、$X=\max_gN_g$、$T=|I_r|$、
+$y=\log A$、$\ell=\log y$、$s=y\ell$、$t=e^\gamma\ell$。
+所有渐近均沿素数 $r\to\infty$。实际端点给
+
+$$
+\log T=y/2+O(1),\qquad y=2\log V+O(1),\qquad X/A\to2.
+$$
+
+对同一份实际整数定义
+
+$$
+\mathcal Q_r=\sum_{g\in I_r}(Z(N_g)/t)^s,\qquad
+\mathcal P_r=\sum_{g\in I_r}(Z(N_g)/t_g)^s,\qquad
+t_g=e^\gamma\log\log N_g,
+$$
+
+以及加性余量 $\Delta(N)=e^\gamma\log\log N-Z(N)$。
+§211.5 的精确比较给
+$\mathcal P_r\le\mathcal Q_r\le(X/A)\mathcal P_r$。
+本节仅将 $\mathcal Q_r<1$ 作为充分证书，不假定它是必要条件；
+本族全部安全是否蕴含这个指定证书，尚未判定。
+

@@ -1,0 +1,76 @@
+**命题 206.2（共同最小公倍数的收敛常数）。** 该正项级数收敛，且
+
+$$
+C_k=\prod_p A_k(p),\qquad
+A_k(p)=\sum_{a_1,\ldots,a_k\ge0}p^{-\sum_i a_i-\max_i a_i}.
+$$
+
+一种直接的收敛证明同时给出全 $k$ 显式界：因为 $\ell\ge(d_1\cdots d_k)^{1/k}$，
+
+$$
+C_k\le\zeta(1+1/k)^k\le(k+1)^k.
+$$
+
+第二步用 $\zeta(s)\le1+\int_1^\infty t^{-s}\,dt$，其中 $s>1$。Euler 乘积也可逐素数直接核对：最大赋值为 $m\ge1$ 的项之和至多为 $(m+1)^kp^{-2m}$，所以 $A_k(p)=1+O_k(p^{-2})$。
+
+前两阶为
+
+$$
+C_1=\zeta(2),\qquad
+C_2=\frac{\zeta(2)^2\zeta(3)}{\zeta(4)}.
+$$
+
+第二式的局部因子准确为
+
+$$
+A_2(p)=\frac{1+p^{-2}}{(1-p^{-2})(1-p^{-3})}
+=\frac{1-p^{-4}}{(1-p^{-2})^2(1-p^{-3})}.
+$$
+
+回到 $V=F_r$ 与 $I_r$。固定正整数 $k$ 后，$T\asymp V$、$X\asymp V^2$ 给出 $H_X^k/T\to0$。对每个固定元组 $(d_1,\ldots,d_k)$，当 $r$ 足够大时，元组进入截断盒且与 $V$ 互素，因为 $V$ 的全部素因子至少为 $2r-1$。由上述可求和正项级数作支配收敛，得到
+
+$$
+\frac1{|I_r|}\sum_{g\in I_r} Z(gF_r+1)^k\longrightarrow C_k
+\qquad(r\to\infty,\ r\text{ 为素数}).
+$$
+
+这不需要 Fibonacci 素数无穷，也不需要这些 $N_g$ 的因子分布独立。
+
+还可保留一个定量版本。固定 $0<\varepsilon<1$，令
+
+$$
+C_{k,\varepsilon}=
+\sum_{d_1,\ldots,d_k\ge1}
+\frac{\operatorname{lcm}(d_1,\ldots,d_k)^{\varepsilon}}
+{d_1\cdots d_k\operatorname{lcm}(d_1,\ldots,d_k)}<\infty.
+$$
+
+局部非平凡项为 $O_{k,\varepsilon}(p^{-2+\varepsilon})$，故收敛。 还可直接用 $\ell\ge(d_1\cdots d_k)^{1/k}$ 得到显式界
+
+$$
+C_{k,\varepsilon}\le\zeta(1+(1-\varepsilon)/k)^k
+\le(1+k/(1-\varepsilon))^k.
+$$
+
+盒外元组的最小公倍数大于 $X$，因此截断误差至多 $C_{k,\varepsilon}X^{-\varepsilon}$。又设
+
+$$
+b_k=\sum_{m\ge1}(m+1)^k2^{-2(m-1)},
+$$
+
+则 $A_k(p)-1\le b_kp^{-2}$。删除全部 $p\mid V$ 的局部因子所损失的常数至多
+
+$$
+C_k b_k\sum_{p\mid V}\frac1{p^2}
+\le C_k b_k\frac{\log V}{(2r-1)^2\log(2r-1)}.
+$$
+
+于是固定 $k,\varepsilon$ 时，平均矩与 $C_k$ 的差的绝对值至多
+
+$$
+\frac{H_X^k}{T}+C_{k,\varepsilon}X^{-\varepsilon}
++C_kb_k\frac{\log V}{(2r-1)^2\log(2r-1)}.
+$$
+
+最后一项为 $O_k(1/(r\log r))$。这里的常数随固定的 $k,\varepsilon$ 变化；下节让 $k$ 变化时使用的是另一个全 $k$ 有限界。
+

@@ -3109,3 +3109,1158 @@ $c_0,\delta_0$ 的定义取自固定有限实际 frame 的 $\lambda_0,r$，对�
 此处构造的是有非零统一对比度的实际随机 Bell 事件，没有构造从十二维块到可访问系统的完整量子态转移。第 23 节在小 $N|\delta|$ 时以 $q=4$ 给 $\epsilon_N\le4N|\delta|$；本节在逆失谐预算且精度 $\epsilon<c_0/12$ 时要求 $q\ge12$。调用与精度的量词决定这两个资源结论的适用区域，不给完整转变曲线、最优常数或 $q=5,\ldots,11$ 的中间分类。这些端口结论均限于所述共同 CPTP、参考保持及无额外量子通道合同，不是无条件的物理定律。
 
 ## 追加锚（本行以下为增补区）
+
+## 27. 合法五窗字同时作为对象与单孔上下文
+
+本节至 §38 连接三种已分别声明的结构：规范五窗来源、离散仿射操作、正的量子续接边界。首先保留来源类型，使同一个字确实具有对象解释和上下文解释；随后指定指令词的逐步求值，再将同终态地址对的相干细化接到逐分支条件充分性。沿用本卷定义 1.3 的仪器与正概率条件态，以及母卷定义 104.2、命题 149.4 的单位位、窗口方向、接缝和读出。以下有限路径不预先假定已经取得 End。
+
+**定义 27.1（两态路径与单孔仿射解释）。** 置
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+S=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad
+F_\sigma=T_{d_\sigma}S,
+$$
+
+其中 $T_t(x)=x+t$，五窗表按低位到高位读取：
+
+| 本章边型 | 窗口位 | $d_\sigma$ | 输入接缝 | 输出接缝 |
+| --- | --- | --- | --- | --- |
+| 27 · null | 000 | $(0,0)$ | 0 或 1 | 0 |
+| 27 · 2 | 100 | $(1,0)$ | 0 | 0 |
+| 27 · 3 | 010 | $(0,1)$ | 0 或 1 | 0 |
+| 27 · 25 | 101 | $(2,1)$ | 0 | 1 |
+| 27 · 5 | 001 | $(1,1)$ | 0 或 1 | 1 |
+
+图 $Q$ 有对象 $0,1$ 和八条实际边；不同输入接缝上的同名边仍是不同边。其自由路径范畴中，$v\circ u$ 表示先读 $u$、后读 $v$，低到高串接记为 $uv$。空路径 $1_s$ 是恒等；$[\mathrm{null}]$ 是一条真实边。单位位 $\varepsilon=b_0$ 初始化 $s=\varepsilon$，不是窗口。
+
+对 $w=\sigma_0\cdots\sigma_{n-1}:s\to t$ 定义
+
+$$
+D_w=\sum_{j=0}^{n-1}S^jd_{\sigma_j},\qquad
+\Phi_w(x)=D_w+S^nx.
+\tag{27.1}
+$$
+
+可以把 $x$ 视为有名字的第 $t$ 个格点副本 $V_t=\mathbb Z^2$ 中的孔；输出属于 $V_s$。同一字的对象解释为 $D_w=\Phi_w(0)$，完整来源数量为 $N=\varepsilon+(2,3)D_w$。上下文的孔接受完整的尾部组成向量，并非一个省略类型的“下一数字”。若使用非负来源，正向 $S,T_{d_\sigma}$ 都保持 $\mathbb N^2$；出现逆函数时载体另取整个有向格点或实平面。
+
+**定理 27.2（串接、代入与读取方向）。** 对可串接路径 $u,v$，
+
+$$
+D_{uv}=D_u+S^{|u|}D_v,\qquad
+\Phi_{uv}=\Phi_u\circ\Phi_v,
+\qquad
+D_{uv}=\Phi_u(D_v).
+\tag{27.2}
+$$
+
+故路径的低到高串接与单孔上下文代入完全相容，但相对于 $v\circ u$ 的 chronological 组合约定，这是反变解释。真正低到高在线执行的协变累加器为
+
+$$
+(s,n,a)\xmapsto{\sigma}
+(t,n+1,a+S^nd_\sigma),
+\tag{27.3}
+$$
+
+其 guard 是表中的输入接缝要求。
+
+证明。将 $uv$ 的求和在 $|u|$ 处切开即得第一式；把两仿射函数复合得到第二式，代入零得第三式。逐边应用 (27.3) 从 $(s,0,0)$ 得 $(t,|w|,D_w)$。通常函数复合最右边先执行，故 $\Phi_w=F_{\sigma_0}\circ\cdots\circ F_{\sigma_{n-1}}$ 的 Horner 执行顺序是高窗先做。保留 $V_t\to V_s$ 的方向，或使用目标范畴的对偶，即使反变性有正式类型；不能默默把输入字倒写而沿用原 seam 表。$\square$
+
+例如单位位零的合法字 $89=[\mathrm{null}][\mathrm{null}][5]$ 满足
+
+$$
+D_w=S^2(1,1)=(13,21),\qquad
+S^3=\begin{pmatrix}21&34\\34&55\end{pmatrix},
+\qquad N=2\cdot13+3\cdot21=89.
+$$
+
+它同时给对象 $(13,21)$ 和上下文 $x\mapsto S^3x+(13,21)$。低位 null 保留位次；删去它们便只剩数量 $5$。
+
+**命题 27.3（固定 Hom 内的忠实性）。** 裸合法路径的 $\Phi$ 在每个固定 $\operatorname{Hom}(s,t)$ 上单射。若给边增加参数，且某条实际边允许两个不同参数 $p\ne p'$，两者贡献仍为同一 $d_\sigma$ 而 $\Phi$ 忽略参数差别，则参数化路径上的单射结论不再成立。
+
+证明。$\Phi_u=\Phi_v$ 先给 $S^{|u|}=S^{|v|}$。$S$ 的特征值 $2+\sqrt5>1$ 使长度相等；代入零得到 $D_u=D_v$。两个内部合法字都可从单位位零起读，并补高位零成为有限支持的无相邻 1 序列。母卷的规范 Zeckendorf 唯一性使相同 $(2,3)D$ 的两串逐位相同；长度相等又排除了多保留整个零窗的区别。固定起态后标签逐步确定实际边，故路径相同。这也涵盖空路径和全零路径。若同一实际边带两个不同参数 $p,p'$ 而贡献仍为 $d_\sigma$，两条平行单边已具有相同仿射像，给出参数抹除的反例。$\square$
+
+保留两个对象，以合法正路径的仿射像为全部箭头，并采用上述对偶方向，便得到与裸路径范畴同构的生成像范畴。它没有自动加入仿射逆。一般函子只保持源中已有的组合；把两个对象都送到一个几何对象后，原先不可组合的箭头也可具有可组合的像，这仍可以是函子。因此“不能反映接缝合法性”与“不是任何函子”是不同判断。要获得字面接缝的 typed equivalence，须另要求源靶对应反映原来的匹配，并核验 Hom 的满性与忠实性；一般范畴等价也不自动反映对象的字面相等。
+
+**命题 27.4（最终仿射摘要与原始合法性分离）。** 恒等式
+
+$$
+F_5F_2=F_{\mathrm{null}}F_3,
+\tag{27.4}
+$$
+
+是全孔输入上的局部归一化等式，但不能据此认证原始输入合法。
+
+证明。两边线性部分都是 $S^2$，平移部分分别为
+
+$$
+d_5+Sd_2=(1,1)+(1,2)=(2,3)=Sd_3.
+$$
+
+低到高原字 $[5][2]$ 的 $001|100$ 接缝非法，$[\mathrm{null}][3]$ 合法。若忽略失败历史而机械更新，两字都具有单位位零、长度二、终接缝零、末整窗非零及同一完整 $\Phi$。这些终值的任何函数都不能区别该合法与非法输入。两个六位片段首位、末位都为零，所以把左片段换成右片段保持两侧外部 seam 条件，并消去其内部非法 seam；左右复合任意固定仿射上下文也保持 (27.4)。这是一条正确局部规则，没有由此得到全局归一化的终止性、完备性或唯一正常形。$\square$
+
+方向错误还能合并两个合法规范来源。取 $u=[2][5][3]$、$v=[3][\mathrm{null}][3]$，均为 $0\to0$ 三窗字且末窗非零。正确值为
+
+$$
+D_u=(1,0)+S(1,1)+S^2(0,1)=(12,18),\quad N(u)=78,
+$$
+
+$$
+D_v=(0,1)+S^2(0,1)=(8,14),\quad N(v)=58.
+$$
+
+误按输入次序连续施加 $F_\sigma$，即取 $\Psi_w=F_{\sigma_{n-1}}\cdots F_{\sigma_0}$，(27.4) 却给两者同为 $S^3x+(8,14)$。这不是合法路径之间正确 $\Phi$ 的碰撞，而是换了执行语义；合法性、终态和 End 资格都无法修复这个方向错误。
+
+## 28. 递归签名、正面 reset 编码与原分支的操作边界
+
+**定义 28.1（Stop、End 与有限递归类型）。** 正数 End 的独立资格位初始化为 $\chi=\varepsilon$，读窗后替换为 $\chi'=\mathbf1_{\{\sigma\ne\mathrm{null}\}}$，不取累计 OR。可达活动对为 $(s,\chi)\in\{(0,0),(0,1),(1,1)\}$；非法 seam 进入吸收错误态。正数 End 还须完整来源合同或证书保证未读高位全零；零另用全零的结构表示。单位一的空窗字可表示一并正数 End，单位零的空字不能作正数 End。语法 Stop 仅结束一个有限路径，不提供未知来源的高位证书。
+
+若
+
+$$
+\mathrm{Geom}::=\mathrm{Self}\mid\mathrm{Mirror}(2)
+\mid\mathrm{Translate}(3)\mid\mathrm{Rotate}(4)
+\mid\mathrm{Scale}(\mathrm{Geom})
+$$
+
+中 $2,3,4$ 是有限叶参数集的基数，令 $C$ 为十个叶参数的互斥和，则其有限初始代数为 $\mu X.(C\sqcup X)$。按 §27 的真实窗图，允许 Stop 的有限路径类型和无 Stop 的无限流类型分别为
+
+$$
+X_0=1+3X_0+2X_1,\qquad X_1=1+2X_0+X_1,
+\tag{28.1}
+$$
+
+$$
+\Omega_0=3\Omega_0+2\Omega_1,\qquad
+\Omega_1=2\Omega_0+\Omega_1.
+\tag{28.2}
+$$
+
+前者取有限良基初始解，后者取所有合法无限展开的最大余代数解。
+
+**命题 28.2（签名的实际内容）。** $\mu X.(10+X)\cong C\times\mathbb N$，每项唯一为 $\mathrm{Scale}^k(c)$；它不是五个递归子树的节点。式 (28.1)–(28.2) 则保留了窗图的实际一步展开。
+
+证明。有限项外层不是 Scale 就是叶子；逐层剥除 Scale 必在有限深度遇到唯一叶子，给唯一 $(c,k)$，反向按 $k$ 次包裹构造。对 (28.1)，起态零有三条至零和两条至一的边，起态一有两条至零和一条至一的边，外加各自 Stop；头边与剩余路径唯一确定有限字。对 (28.2)，从任一两排序余代数中的点反复读取唯一声明的头边与后继，得到一条无限合法路径；任何余代数态射必须保留每个有限前缀，故这个展开态射唯一，证明终极性。所有窗口都推进，$[5]$ 留在状态一，只有三种下一窗；每个状态都能继续读 $[3]$。$\square$
+
+若数字表示子项数，签名改成 $1+X^2+X^3+X^4+X$；若表示参数维数，参数集通常无限。单一构造子 $\mathrm{Node}(\mathrm{Ref},2,3,4,G)$ 的全部字段是积 $\mathrm{Ref}\times2\times3\times4\times G$；没有叶子时有限良基初始类型为空，而无限对象是另一流类型。这些解释不能由集合基数相近而识别。比如把 Scale 原样编成 $[5]$、Mirror 编成 $[2]$，嵌套串 $[5][2]$ 已非法。
+
+**定理 28.3（十叶单链的合法程序数据编码）。** 选任意注入 $\beta:C\hookrightarrow\{[\mathrm{null}],[3]\}^4$，定义
+
+$$
+\operatorname{code}(\mathrm{Scale}^k c)
+=([5][\mathrm{null}])^k\,\beta(c)\,[3].
+\tag{28.3}
+$$
+
+此字从零接缝出发合法，长度 $2k+5$、终态零，且在单位位零及已知完整有限词的来源合同下编码为互不相同的实际正自然数。
+
+证明。$[5][\mathrm{null}]$ 是 $0\to1\to0$ reset 宏；$[\mathrm{null}],[3]$ 是零态自环，所以所有拼接合法。先逐个解析初始 reset 宏取得 $k$，其后的四窗以 $\beta$ 恢复 $c$，再检查固定末窗 $[3]$；数据窗不含 $[5]$，所以宏区和叶区无歧义。末整窗非零，使不同完整词不能只差多保留的高零窗；规范 Zeckendorf 唯一性给整数单射。$\square$
+
+这个递归宏的线性推进为 $S^2$，不是一窗 $S$；(28.3) 编的是程序数据。若规定解码后再按 $\mathrm{Scale}^k(c)$ 的另行给定语义求值，剥一层 Scale 对应剥一个 reset 宏，于是有限展开和解码相容。原算术窗口机对这个字计算其来源数值，不因此就执行了几何 Scale。这个受限十叶签名的码，与 §29 五个自由指令的四位最短码具有不同输入语言。
+
+**定理 28.4（正长度原宏的有限阶障碍）。** 任意正长度 $l$ 的五仿射分支宏在 $\mathbb R^2$ 上为 $A(x)=S^lx+t$，有唯一周期点
+
+$$
+p=(I-S^l)^{-1}t,
+$$
+
+该点就是固定点。若 $X\subseteq\mathbb R^2$ 至少含两点、$A(X)\subseteq X$，则不存在注入 $h:X\to Y$ 与有限阶动作 $g^r=I_Y$ 满足 $hA=gh$。
+
+证明。复合归纳给线性部分 $S^l$。$S$ 两特征值为 $2+\sqrt5$ 和 $2-\sqrt5$，其任意正次幂都不是一；故 $I-S^l$ 可逆。移心后 $A$ 为 $S^l$，$A^r(x)=x$ 迫使 $(S^{lr}-I)(x-p)=0$，即 $x=p$。若有上述 intertwiner，迭代与注入性使 $A^r=I_X$，每点都周期，矛盾。$\square$
+
+因此在非退化、可重复的域上，原正宏不能被注入互绕成有限阶 Self、Mirror 或 Rotate。$[2][2]$ 是合法零态回路，但 $F_2^2(0)=(2,2)$；$[2\ 5]$ 则不能跟自己串接，把它忘类型地送到可自由重复的 quarter-turn 会丢失合法性反映，而不排除一般函子。局部三槽反转固定 null、$[3]$、$[2\ 5]$，交换 $[2]/[5]$；它把合法 $[2][5]$ 变成非法 $[5][2]$，并且不是下节的 $J$，因为 $Jd_2=d_2$。
+
+**命题 28.5（原五分支的完整有向群）。** 在 $\mathbb Z^2$ 上另行允许逆分支，所生成的群恰为
+
+$$
+G_5=\{x\mapsto S^kx+t:k\in\mathbb Z,t\in\mathbb Z^2\}
+\cong\mathbb Z^2\rtimes_S\mathbb Z,
+$$
+
+产品为 $(k,t)(k',t')=(k+k',t+S^kt')$，且无非平凡挠元。
+
+证明。$S$ 整数幺模，显示集合是含全部分支的群。反向 $F_{\mathrm{null}}=S$、$F_2S^{-1}=T_{(1,0)}$、$F_3S^{-1}=T_{(0,1)}$ 给全部平移与整数幂。有限阶条件 $S^{kr}=I$ 强迫 $k=0$，再由 $rt=0$ 强迫 $t=0$。$\square$
+
+逆分支增加了平移的可用性，但没有 $J,C$；它们的有限阶也不由原正来源许可。正宏在整实平面有固定点，非零平移没有，故整平面的任意集合共轭也不能把前者变成后者。若把 Scale 指普通 isotropic homothety，正宏的两个不同模特征值排除仿射共轭；其向固定点收敛的稳定集是一条真直线，而可逆标量缩放的稳定集是全平面、单点或有限阶情形，故整平面的拓扑共轭亦失败。零缩放不可逆。把 $S$ 称为“Scale”须明确它是双特征方向的黄金递归，而不是各向同性缩放。
+
+原语义的正面修复是精确的 $F_\sigma=T_{d_\sigma}S$，两个 primitive 均保持 $\mathbb N^2$。另有 signed 分解 $F_\sigma=T_{d_\sigma}(CJ)^3$，$C=MJ$、$CJ=M$；chronological 次序为 $J,C,J,C,J,C,T_d$。$J(0,1)=(1,-1)$ 显示这个分解需要 signed 中间态；若只允许完整宏，读出也只能在声明的宏边界进行。
+
+另一正面合同为每条实际边 $e:s\to t$ 选参数集 $P_e$，以 $(e,p)$、$p\in P_e$ 为参数化图的边；同一输入语言仍用有限可串接路径。另给配置集 $Z_s$、实际部分动作 $G_{e,p}:D_{e,p}\to Z_t$，其中 $D_{e,p}\subseteq Z_s$，把 membership in $D_{e,p}$ 作为额外 guard。保留 $(\varepsilon,s,\chi,n,a,w,z)$，其中 $z\in Z_s$；合法窗按 (27.3) 更新 $n,a$、替换 $s,\chi$、追加参数历史 $w$，并执行 $G_{e,p}(z)$。沿路径复合的定义域是所有中间 guards 都成立的初态；头边分解与函数结合律给唯一的组合相容逐步求值。若指令动作总定义，便是自由路径范畴到相应配置范畴的 functor；一般 partial maps 也按同一串接规则解释，但不能把某个 source 图路径的 seam 合法性当作其所有配置上均可执行。
+
+独立的忠实历史模型取 $H_s$ 为所有结束于 $s$ 的有限参数化 histories，含空历史 $1_s$，边作用为追加 $(e,p)$。对平行路径作用在 $1_s$ 上即读回原路径，所以该历史解释忠实；具体几何投影可以识别 histories，例如两次镜像。轴、中心、平移量、角和比例是新增参数，五个裸名字不提供它们。
+
+将五个窗标签重命名为五个 constructor tags，并保留实际边的源靶与参数，是合法的自由路径语法双射。名为 Self 的非空 constructor 仍不是空 identity path；几何评价消去它或消去两次 Mirror 时，只是该投影识别不同语法，并未否定语法双射。
+
+## 29. 有向离散几何的正规形、探针与可执行数据码
+
+本节把 §28 的额外几何合同写全，再给有限操作的 Fibonacci 对象码。它使用母卷命题 149.2 的矩阵恒等式，不把这个更大群认作 $G_5$。
+
+**定理 29.1（扩大群的唯一正规形与产品）。** 在 signed lattice $\mathbb Z^2$ 上允许 $M,J,T_\alpha,T_\beta$ 及其逆，其中
+
+$$
+\alpha=(1,0),\quad\beta=(0,1),\quad
+J=\begin{pmatrix}1&1\\0&-1\end{pmatrix},\quad C=MJ.
+$$
+
+群 $G=\langle M,J,T_\alpha,T_\beta\rangle$ 的每个元素唯一为
+
+$$
+g_{\epsilon,k,\delta,t}(x)=(-1)^\epsilon M^kJ^\delta x+t,
+\quad \epsilon,\delta\in\{0,1\},\ k\in\mathbb Z,\ t\in\mathbb Z^2.
+\tag{29.1}
+$$
+
+以右项先做的函数复合为产品，$g=(\epsilon,k,\delta,t)$、$h=(\epsilon',k',\delta',u)$ 有
+
+$$
+\begin{aligned}
+\epsilon''&=\epsilon+\epsilon'+\delta k'\pmod2,\\
+k''&=k+(-1)^\delta k',\\
+\delta''&=\delta+\delta'\pmod2,\\
+t''&=t+(-1)^\epsilon M^kJ^\delta u.
+\end{aligned}
+\tag{29.2}
+$$
+
+证明。$M^{-1}=M-I$、$J^2=I$、$JMJ=-M^{-1}$、$(MJ)^2=-I$；故 $-I$ 已生成，且对所有正负整数 $r$，$JM^rJ=(-1)^rM^{-r}$。移全部 $J$ 到右端得到线性正规形及符号 $\delta k'$；由 $AT_uA^{-1}=T_{Au}$ 移全部平移到左端。反向所列因子都在生成群中，给存在性。$M^r=\pm I$ 由扩张特征值 $\phi^r$ 强迫 $r=0$、正号。$J\ne\pm M^r$，否则 $J$ 与 $M$ 交换，与 $JMJ=-M^{-1}$ 合起来强迫 $M^2=-I$，矛盾。两线性正规形相等，先排除不同 $\delta$，再消去同一 $J^\delta$ 得相同 $k,\epsilon$。零点读出给唯一 $t$。$\square$
+
+$J$ 是黄金共轭的整数线性作用；它的二阶不使它成为标准欧氏度量中的正交镜面反射。$C$ 则是该组成坐标的欧氏 quarter-turn。它们的 signed domains 与原 canonical 来源类型分别声明。
+
+**命题 29.2（完整仿射有限阶分类）。** 写 $A=(-1)^\epsilon M^kJ^\delta$。全部情形如下：
+
+| 本章线性型 | 平移条件 | $x\mapsto Ax+t$ 的阶 |
+| --- | --- | --- |
+| 29 · $A=I$ | $t=0$ | 1 |
+| 29 · identity linear part | $t\ne0$ | 无限 |
+| 29 · $A=-I$ | 任意 $t$ | 2 |
+| 29 · $\delta=0,k\ne0$ | 任意 $t$ | 无限 |
+| 29 · $\delta=1,k$ 奇 | 任意 $t$ | 4 |
+| 29 · $\delta=1,k$ 偶 | $(I+A)t=0$ | 2 |
+| 29 · even reflection with drift | $(I+A)t\ne0$ | 无限 |
+
+证明。$g^r(x)=A^rx+\sum_{j=0}^{r-1}A^jt$。$\delta=0,k\ne0$ 的线性部分无限阶。$\delta=1$ 时 $A^2=(-1)^kI$，且正规形唯一性排除 $A=\pm I$。奇 $k$ 给 $I+A+A^2+A^3=0$，所以任意平移都恰为四阶；偶 $k$ 给 $g^2=T_{(I+A)t}$，非零整数平移无限阶。$A=I,-I$ 两行直接由同一公式得到。有限阶中心不必是整数点。对任意 $m\in\mathbb Z$，准确共轭为
+
+$$
+M^{2m}J=(-1)^mM^mJM^{-m}.
+\tag{29.3}
+$$
+
+所以 $k=2m$ 时，反射平移条件还可写成 $t\in\mathbb ZM^m(1,-2)$（$\epsilon+m$ 偶）或 $t\in\mathbb ZM^m(1,0)$（$\epsilon+m$ 奇）；负 $m$ 同样成立。$\square$
+
+**定理 29.3（成员承诺下恰需两个整数全向量探针）。** 任意仿射映射的 $f(0),f(\alpha),f(\beta)$ 给平移和两矩阵列；若已知 $f\in G$，只读 $f(0),f(3,1)$ 就单射识别 $f$，而一个整数输入不够。
+
+证明。置 $Q(a,b)=a^2+ab-b^2$。代入给 $Q(Mw)=-Q(w)$、$Q(Jw)=Q(w)$，故对所有 $r\in\mathbb Z$ 有 $Q(M^rw)=(-1)^rQ(w)$。$v=(3,1)$ primitive 且 $Q(v)=11$。非恒等 $\pm M^k$ 没有非零固定向量：$k\ne0$ 时两个特征值的模都不为一，$k=0$ 的负号只固定零。若 $(-1)^\epsilon M^kJ$ 固定 $v$，奇 $k$ 因平方为 $-I$ 立即矛盾。偶 $k=2m$ 时 (29.3) 使 primitive 向量 $w=M^{-m}v$ 固定于 $(-1)^{\epsilon+m}J$。$J$ 的 primitive 正固定轴只有 $\pm(1,0)$，负固定轴只有 $\pm(1,-2)$，其 $|Q|$ 分别为一、五；但 $Q(w)=(-1)^m11$，矛盾。故 $v$ 的稳定子平凡。
+
+$f(0)$ 固定 $t$，$f(v)-t=Av$ 固定 $A$，因为 $Av=Bv$ 使 $B^{-1}A$ 稳定 $v$。唯一正规形随后固定所有参数。对任意整数 probe $p$，identity 与 $x\mapsto-x+2p\in G$ 在 $p$ 上相同却为不同映射，证明一下界。$\square$
+
+这只计独立的精确完整整数输出查询，并以成员承诺为前提；没有 scalar、模数、噪声、有限精度或高效 $k$ 解码结论，也没有从合法正窗域获得任意 probe 的权限。熟悉的 $0,\alpha$ 两点反而被 $J$ 同时固定。
+
+**定理 29.4（五个自由标签的最短固定受限码）。** 对五个可任意串接的不同指令，要求等长、已知块对齐、码字内部和所有码字边界都没有 $11$。四位码
+
+$$
+\mathcal C=(0000,1000,0100,1010,0010)
+\tag{29.4}
+$$
+
+满足合同，且三位或更短不可能。令程序 $P$ 有 $m\ge0$ 个标签，固定独立单位位 $\varepsilon_{\mathrm{code}}=0$，串接 $4m$ 个 data bits，再加最高标记一，在其上补零至三窗边界，并声明其余高位为零。所得实际正 canonical 来源记为 $\operatorname{Encode}(P)$。其成本恰为单位之后 $4m+1$ 个有效位置、包括单位 $4m+2$ 个位置，以及
+
+$$
+\left\lceil\frac{4m+1}{3}\right\rceil
+\tag{29.5}
+$$
+
+个窗口。空程序编码为二。
+
+证明。四位字都内部合法且末位零，任意边界合法。三位任意串接若同时有末一的字和首一的字就失败，故全部字必须首零或全部末零；内部合法的三位首零字只有 $000,001,010$，末零字只有 $000,010,100$。更短连五个二进制字都没有。对外包装，单位零守住第一边界，末码零守住 marker 边界，高零补齐不会制造 $11$；最高一所在的最后整窗非零，End 资格成立。它位于全位串位置 $4m+1$，所以成本如上；$m=0$ 时为单位零后 $100$，数量 $F_3=2$。最高一只能是 marker。解码验证单位零、最高位置 $h\equiv1\pmod4$，删该一及其上 padding，保留全部 $h-1$ 个 data positions，再按四位块取码字逆。故 $\operatorname{Decode}(\operatorname{Encode}(P))=P$。$\square$
+
+解码使用完整 canonical 来源数、完整码或另行完整 End 证书；未知来源的任意有限 observation prefix 不能认证最高可见一是 marker。零和一不在本码像中。位数是解析开销，不是几何动作数；本下界也不适用于可变长码、state-dependent 码或已受限的指令语言。
+
+**定义 29.5（有限程序的执行、组合与展开）。** 固定五个指令标签 $\Sigma=\{0,\ldots,4\}$，按 (29.4) 的顺序记四位码字为 $c_j=(c_{j,0},c_{j,1},c_{j,2},c_{j,3})$，各位均按低位到高位排列。完整自然数来源使用从单位一开始的 Fibonacci 权重
+
+$$
+w_j=F_{j+2},\qquad w_0=1,\quad w_1=2,\quad
+w_{j+2}=w_{j+1}+w_j\quad(j\ge0).
+$$
+
+对余量 $r\in\mathbb N$，以严格下降的余量递归定义占位集
+
+$$
+\begin{aligned}
+\mathcal A(0)&=\varnothing,\\
+k(r)&=\max\{j\ge0:w_j\le r\}\quad(r>0),\\
+\mathcal A(r)&=\{k(r)\}\cup\mathcal A(r-w_{k(r)})\quad(r>0),\\
+b_j(n)&=\mathbf1_{\{j\in\mathcal A(n)\}}\quad(j\ge0).
+\end{aligned}
+$$
+
+这里 $n$ 是完整来源数，$b_0(n)$ 是独立单位位，所有未占位高位为零；$n=0$ 使用全零序列。对 $n>0$ 记 $h(n)=\max\mathcal A(n)$，补零至三窗边界的来源分组为
+
+$$
+\varepsilon(n)=b_0(n),\qquad q(n)=\left\lceil\frac{h(n)}3\right\rceil,
+\qquad
+\omega_r(n)=(b_{3r+1}(n),b_{3r+2}(n),b_{3r+3}(n))
+\quad(0\le r<q(n)).
+$$
+
+零的单位位为零且无窗；一的单位位为一且无窗。三窗补齐只使用已知为零的高位，不改变来源数或最高占位位置。
+
+对有限词 $P=j_1\cdots j_m\in\Sigma^*$，记 $h=4m+1$，定义完整外包装位串
+
+$$
+d_0(P)=0,\qquad
+d_{4r+s+1}(P)=c_{j_{r+1},s}\quad(0\le r<m,\ 0\le s<4),
+\qquad d_h(P)=1,\qquad d_j(P)=0\quad(j>h).
+$$
+
+其整数编码由有限递推给出：
+
+$$
+e_0(P)=0,\qquad e_{r+1}(P)=e_r(P)+d_r(P)w_r\quad(0\le r\le h),
+\qquad\operatorname{Encode}(P)=e_{h+1}(P).
+$$
+
+因此单位位固定为零，最高标记恰在 $4m+1$，其下完整保留 $4m$ 个数据位；标记之上全零。单位位、标记及三窗 padding 都不属于指令标签。
+
+解码是完整自然数来源上的部分映射。先要求 $n>0$、$b_0(n)=0$、$h=h(n)\ge1$、$h\equiv1\pmod4$，置 $m=(h-1)/4$；再要求每个数据块
+
+$$
+\gamma_r(n)=(b_{4r+1}(n),b_{4r+2}(n),b_{4r+3}(n),b_{4r+4}(n))
+\quad(0\le r<m)
+$$
+
+属于四位表 $\mathcal C$。若 $\gamma_r(n)=c_{j_{r+1}}$，则标签 $j_{r+1}$ 唯一。用
+
+$$
+P_0(n)=\varepsilon,\qquad
+P_{r+1}(n)=P_r(n)j_{r+1}\quad(0\le r<m),\qquad
+\operatorname{Decode}(n)=P_m(n)
+$$
+
+恢复整个词。这里 $\varepsilon$ 表示空词，与单位位 $\varepsilon(n)$ 分属不同类型。块数由最高标记确定，故标记前的末尾全零数据块也必须保留，并恢复为标签零。零、一、框架条件失败或某块不在 $\mathcal C$ 的来源均不定义解码。若给定的只是有限观测前缀而非完整来源数，仍须完整码或 End 证书保证未读高位全零；缺少这个证书时不能认定某个可见一为最高标记。
+
+另行固定配置载体 $Z$、定义域 $D_j\subseteq Z$ 和部分动作 $G_j:D_j\to Z$；guard 恰为当前配置属于 $D_j$。所有动作参数与定义域须在合同中指定。词的合法初态域 $\mathcal D_P$ 与逐步求值递归为
+
+$$
+\begin{aligned}
+\mathcal D_\varepsilon&=Z,&\operatorname{Eval}(\varepsilon,x)&=x,\\
+\mathcal D_{jP}&=\{x\in D_j:G_j(x)\in\mathcal D_P\},&
+\operatorname{Eval}(jP,x)&=\operatorname{Eval}(P,G_j(x))\quad(x\in\mathcal D_{jP}).
+\end{aligned}
+$$
+
+故 $j_1\cdots j_m$ 按先 $j_1$、后 $j_2$ 直至 $j_m$ 的 chronological 顺序执行，求值为 $G_{j_m}\cdots G_{j_1}(x)$，仅在每一步 guard 成立时定义。记码像 $\mathscr N=\operatorname{Encode}(\Sigma^*)$，对 $n\in\mathscr N$、$x\in\mathcal D_{\operatorname{Decode}(n)}$ 定义
+
+$$
+\operatorname{Exec}(n,x)=\operatorname{Eval}(\operatorname{Decode}(n),x).
+$$
+
+来源的普通仿射求值与这里的指令执行分别定义。在码像上取 transported product
+
+$$
+n\star n'=\operatorname{Encode}
+\bigl(\operatorname{Decode}(n)\operatorname{Decode}(n')\bigr).
+\tag{29.6}
+$$
+
+其 identity 为空程序码二；它不是原三位窗的裸串接，也不宣称 $\operatorname{Encode}$ 对原 $\Phi$ 仿射乘法是同态。这个额外解释保留指令组合与逐步执行，原 FIB 来源算术仍按 §27 求值。
+
+以 $\mathsf{Empty}$ 为独立的空词标记，码的展开 $\mathcal U:\mathscr N\to\{\mathsf{Empty}\}\sqcup(\Sigma\times\mathscr N)$ 定义为
+
+$$
+\mathcal U(n)=
+\begin{cases}
+\mathsf{Empty},&\operatorname{Decode}(n)=\varepsilon,\\
+(j,\operatorname{Encode}(P)),&\operatorname{Decode}(n)=jP.
+\end{cases}
+$$
+
+即先区分空词与头标签、余词，再将余词重新编码；空程序码二也可作为非空程序的余词码。
+
+在完整 signed carrier $Z=\mathbb Z^2$ 上，可具体取 $(G_0,G_1,G_2,G_3,G_4)=(I,J,T_\alpha,C,M)$，其中对 $(a,b)\in\mathbb Z^2$，
+
+$$
+\begin{aligned}
+I(a,b)&=(a,b),& J(a,b)&=(a+b,-b),& T_\alpha(a,b)&=(a+1,b),\\
+C(a,b)&=(-b,a),& M(a,b)&=(b,a+b).
+\end{aligned}
+$$
+
+每个动作保持 $\mathbb Z^2$，这里各 $D_j=\mathbb Z^2$，所以每个有限词在任意整数格点上均合法。最后一个动作是黄金递归步，不是各向同性缩放。改用正来源的配置域、受限支撑或其它五种几何动作时，须另行指定载体、各 $D_j$ 与 $G_j$；不能把这组全格点权限沿用过去。
+
+**定理 29.6（解析、执行、组合与展开交换）。** 对所有有限声明程序及逐步合法初态，
+
+$$
+\begin{aligned}
+\operatorname{Decode}\operatorname{Encode}(P)&=P,\\
+\operatorname{Encode}(PQ)&=\operatorname{Encode}(P)\star\operatorname{Encode}(Q),\\
+\operatorname{Exec}(\operatorname{Encode}(P),x)&=\operatorname{Eval}(P,x),\\
+\operatorname{Exec}(n\star n',x)
+&=\operatorname{Exec}(n',\operatorname{Exec}(n,x)).
+\end{aligned}
+\tag{29.7}
+$$
+
+最后一式对 $n,n'\in\mathscr N$ 的定义域恰为 $x\in\mathcal D_{\operatorname{Decode}(n)}$ 且 $\operatorname{Exec}(n,x)\in\mathcal D_{\operatorname{Decode}(n')}$，即先执行 $n$、再执行 $n'$ 均合法的初态。展开同样满足
+
+$$
+\mathcal U(\operatorname{Encode}(\varepsilon))=\mathsf{Empty},\qquad
+\mathcal U(\operatorname{Encode}(jP))=(j,\operatorname{Encode}(P)).
+$$
+
+证明。权重严格递增且无界，所以正余量的最大可用指标存在；每次减去至少一，余量严格下降并有限终止于零。若选中 $k\ge1$，最大性给
+
+$$
+r<w_{k+1}=w_k+w_{k-1},\qquad r-w_k<w_{k-1}.
+$$
+
+所以非零余量的下一指标至多为 $k-2$；$k=1$ 时余量已经为零，$k=0$ 时 $r=1$ 且余量也为零。递推展开给 $n=\sum_jb_j(n)w_j$，相邻两位不同时为一；规范 Zeckendorf 唯一性使此贪心位串等于完整来源码。
+
+编码递推给 $e_{h+1}(P)=\sum_{r=0}^hd_r(P)w_r$。定理 29.4 已证外包装位串无相邻一，最高一恰在 $h=4m+1$，所以其完整规范位就是 $d_r(P)$，三窗补零及精确成本仍如 (29.5)。解码因此逐块恢复原标签，保留标记前全部 $4m$ 位，包括末尾零数据块，得到第一式；反向任何通过全部解码条件（包括每个数据块属于码表）的完整来源也有同一位串，重新编码仍为该数。$m=0$ 时只有 $d_1=1$，故空程序码为 $w_1=2$。由 (29.6) 立即得到第二式。
+
+空词求值为恒等；对 $jP$，解码给同一头标签，guard 是同一 $D_j$，后续按同一余词递归，故得到第三式。对词长归纳，同一递推给 $\operatorname{Eval}(PQ,x)=\operatorname{Eval}(Q,\operatorname{Eval}(P,x))$，且定义域恰为 $x\in\mathcal D_P$、$\operatorname{Eval}(P,x)\in\mathcal D_Q$；代入 (29.6) 给第四式及其全部逐步 guard 条件。解析逆最后使空词和头尾两种展开逐项相同。$\square$
+
+**命题 29.7（正规形整数记录的有限序列化）。** 正规形数据具有独立记录类型。取 zigzag 双射
+
+$$
+z(a)=\begin{cases}2a,&a\ge0,\\-2a-1,&a<0,\end{cases}
+\quad
+z^{-1}(2r)=r,\quad z^{-1}(2r+1)=-r-1.
+$$
+
+将 $(\epsilon_{\mathrm{nf}},k,\delta,t_0,t_1)$ 的五个整数都经 $z$ 变成 $n_1,\ldots,n_5$，序列化为
+
+$$
+1^{n_1}0\,1^{n_2}0\,1^{n_3}0\,1^{n_4}0\,1^{n_5}0.
+\tag{29.8}
+$$
+
+用两个不同 data-symbol tags 承载零、一，再用 (29.4) 和正数外包装编码，即得该记录到实际 Fibonacci 正来源的单射。
+
+证明。依次读到五个零，计数各自前的连续一，再逆 zigzag，即恢复五字段；零长度字段是一个零，连续零没有歧义。拒绝第五个零后的额外数据，检查 $\epsilon_{\mathrm{nf}},\delta\in\{0,1\}$，得到完整逆。两 data tags 与外包装各有左逆，复合仍单射。$\square$
+
+解码记录后才应用 (29.1)，或把它编成已允许 primitive 的有限词；负 $k$ 所需的逆动作可以由已授权的逆原语实现，也可以由已有授权原语组成的有限词实现，但其求值动作必须等于所需逆动作，且在当前输入上的每一步 guard 都须成立。正规形指数本身不授予权限，也不保证 guard 成立。例如定义 29.5 的完整 signed 载体 $\mathbb Z^2$ 上，按先后顺序执行 $J,M,J,C,C$ 的词逐步合法，其动作为 $C^2JMJ=(-I)(-M^{-1})=M^{-1}$，无需另列 $M^{-1}$ 逆原语。在受限来源载体上仍须核验每个中间态的 guard，不能仅从端点矩阵相等推断逆动作宏合法。承载 payload 的两 tags 此时只表示数据，不能未解码就执行其几何动作。程序码与记录码共用接口时须有类型标签或固定类型上下文。正规形保存动作参数，不能恢复被群关系识别掉的来源 instruction history、branching 或 self-reference；例如空词与 $JJ$ 同动作而不同历史。
+
+最后，坐标变换也要运输整个合同。对 $h(x)=Bx+c$、可逆 $B$，动作 $Ax+t$ 的新参数为
+
+$$
+A'=BAB^{-1},\qquad t'=Bt+c-A'c.
+\tag{29.9}
+$$
+
+定义域 $D$ 变成 $h(D)$，初态变成 $h(x)$，观察变成 $o\circ h^{-1}$。代入直接给动作与观察交换，有限合法组合逐步保持。非整数格自同构的 $B$ 改变载体为 $B\mathbb Z^2+c$；即便 $J,C$ 都不保持旧正锥，因为 $J\beta=(1,-1)$、$C\beta=(-1,0)$。seam、End、参数和权限须在来源解析类型中独立运输，不能从数值终点重新推断。
+
+## 30. 另行可用的四阶标签旋转与真实相位载体
+
+§29 在有向格点上提供 $C=MJ$。要连接本卷量子模型，仍须指定有限标签、线性提升和允许控制；整数坐标旋转本身不提供叠加制备。
+
+**定义 30.1（标签置换的酉表示）。** 独立声明 $C(a,b)=(-b,a)$ 在 $X_n=(\mathbb Z/n\mathbb Z)^2$ 上可用，$n\ge1$，并在 $\mathcal H_n=\mathbb C^{X_n}$ 上取
+
+$$
+U_C|x\rangle=|Cx\rangle.
+$$
+
+这是基标签置换的线性提升，$U_C^4=I$；不是给原数字标签逐个任意指定 $i^j$ 相位。
+
+**定理 30.2（完整四相重数与基）。** 令 $g=\gcd(2,n)$。有
+
+$$
+\operatorname{Tr}U_C=g,\quad
+\operatorname{Tr}U_C^2=g^2,\quad
+\operatorname{Tr}U_C^3=g.
+$$
+
+特征值 $1,-1,i,-i$ 的重数分别为
+
+$$
+\frac{n^2+2g+g^2}{4},\qquad
+\frac{n^2-2g+g^2}{4},\qquad
+\frac{n^2-g^2}{4},\qquad
+\frac{n^2-g^2}{4}.
+\tag{30.1}
+$$
+
+对应 character projectors 和每条四循环上的单位向量为
+
+$$
+P_j=\frac14\sum_{r=0}^3i^{-jr}U_C^r,\qquad
+\chi_j=\frac12\sum_{r=0}^3i^{-jr}|C^rx_0\rangle,
+\quad j=0,1,2,3.
+\tag{30.2}
+$$
+
+证明。置换矩阵的迹数固定标签。$Cx=x$ 要求 $a=b$、$2a=0$，共 $g$ 个；$C^2x=x$ 要求 $2a=2b=0$，共 $g^2$ 个；$C^3$ 与 $C$ 固定点相同。有限几何级数给 $P_j^*=P_j$、$P_jP_k=\delta_{jk}P_j$、$\sum_jP_j=I$、$U_CP_j=i^jP_j$；取迹即得 (30.1)。直接循环计数也给 $g$ 条一循环、$(g^2-g)/2$ 条二循环、$(n^2-g^2)/4$ 条四循环；每条二循环贡献 $\pm1$，每条四循环贡献四根。在 (30.2) 中重标 $r+1$ 得 $U_C\chi_j=i^j\chi_j$，彼此正交且覆盖该四循环。$\square$
+
+$n=1$ 时作用 trivial；$n=2$ 时是坐标交换，阶二且重数为 $3,1,0,0$。$n\ge3$ 时 $(1,0),(0,1),(-1,0),(0,-1)$ 四点不同，故所有四相出现，$U_C$ 及其密度共轭动作都有阶四。以下三个载体应保持分离：
+
+| 本章动作载体 | amplitude unitary 阶 | density conjugation 阶 |
+| --- | --- | --- |
+| 30 · scalar $iI$ | 4 | 1 |
+| 30 · literal $2\times2$ matrix $C$ on $\mathbb C^2$ | 4 | 2 |
+| 30 · label permutation $U_C$, $n\ge3$ | 4 | 4 |
+
+中行 $C^2=-I$ 是全局相位，且 $C$ 非标量；末行平方却把 $|x\rangle$ 送到 $|-x\rangle$，不是 $-|x\rangle$。沿四循环的基态投影在前三次作用后都不同，证明 density 阶确为四。模二末行退为阶二，模一为 identity。单个 eigenspace 中的相位是全局相位；只有跨 eigensector 的叠加及相应 recombination/readout 能读相对相位。这些制备和控制是额外权限：单凭基置换，从一个基态不能制备 (30.2) 的 Fourier 向量。
+
+**命题 30.3（有限约化仍缺少旋转原语）。** 对每个 $n\ge2$，$C$ 不在 reduced 五仿射分支及其逆生成的群中。
+
+证明。任何该群元素线性部分仍为 $S^k$，$k\in\mathbb Z$。$S$ 与其逆都对称，故所有幂对称；$n\ge3$ 时 $C$ 的非对角元 $-1,1$ 不相等，故不对称。$n=2$ 时 $S=I$ 而 $C\ne I$。若一个 affine 元素作为函数等于 $C$，代入零先迫使平移为零，再在两个坐标基上得到矩阵相等，已排除。这个有限模型证明没有把有向整数群的 torsion-free 性错误地搬到有限商群。$\square$
+
+**命题 30.4（指定二模式相干的读取设置）。** 对可执行的二模式投影 $|r_\theta\rangle\langle r_\theta|$，其中 $r_\theta=(u+e^{i\theta}v)/\sqrt2$、$u,v$ 为正交单位向量，写 $s=\rho_{uu}+\rho_{vv}$、$z=\rho_{uv}$，则
+
+$$
+p_\theta=\frac s2+\operatorname{Re}(e^{i\theta}z).
+$$
+
+未知 $s$ 时三个设置 $0,\pi,\pi/2$ 已给
+
+$$
+s=p_0+p_\pi,\qquad
+\operatorname{Re}z=(p_0-p_\pi)/2,\qquad
+\operatorname{Im}z=(p_0+p_\pi)/2-p_{\pi/2}.
+\tag{30.3}
+$$
+
+已知 $s$ 时两个设置 $0,\pi/2$ 足够。
+
+证明。展开 $\langle r_\theta|\rho|r_\theta\rangle$ 得显示概率，代入三个角即得逆式。$\square$
+
+四相成对差可方便消去背景，但不是此指定参数读取任务的必要最小设置数；本命题也不是高维全态层析或一次未知态恢复。五个窗标签乘四个 character 名称没有独立性的证明，更不能叫“二十个状态”：有限前缀、程序参数和量子态载体各有自己的类型。
+
+**命题 30.5（扩大动力学改变 sector 权重）。** 对 $n\ge3$，axis-uniform 向量
+
+$$
+\chi_0=\tfrac12\bigl(|(1,0)\rangle+|(0,1)\rangle
++|(-1,0)\rangle+|(0,-1)\rangle\bigr)
+$$
+
+在 $C$ 的 $+1$ sector 中。若另行允许 $U_M|x\rangle=|Mx\rangle$，该 sector 的权重在 $v=U_M\chi_0$ 中恰为 $1/2$。
+
+证明。$v$ 支撑于 $\{(0,1),(1,1),(0,-1),(-1,-1)\}$，$U_Cv$ 支撑于 $\{(-1,0),(-1,1),(1,0),(1,-1)\}$，对所有 $n\ge3$ 两组都不交。$U_C^2v=v$，故 $P_0v=(v+U_Cv)/2$，其平方范数为 $1/2$。$\square$
+
+这说明稳定性依赖全部声明动力学；它不指定 sector 测量权限，也不推出物理粒子规律。
+
+## 31. 新预测信息、相干响应与正的地址粗化
+
+§27 的地址和 §30 的量子标签都是坐标选择；统计信息由实际操作和效果确定。复用定义 11.1，取实际 Hermitian 事件效果的实张成 $\mathcal O_\infty$，以及初始读出的子空间 $\mathcal O_0\subseteq\mathcal O_\infty$。商 $\mathcal O_\infty/\mathcal O_0$ 表示新增预测响应，定义没有规定新增方向必须是相干。
+
+**命题 31.1（纯经典的新增 FIB 响应）。** 在 $\mathcal K_2=\mathbb C^{(\mathbb Z/2)^2}$ 上只允许等待整数次 $U|a,b\rangle=|b,a+b\rangle$ 后读第二坐标。令 $Z_a,Z_b$ 分别在该基取 $(-1)^a,(-1)^b$。则
+
+$$
+U^\dagger Z_bU=Z_aZ_b,\qquad
+(U^2)^\dagger Z_bU^2=Z_a,\qquad U^3=I,
+$$
+
+$$
+\mathcal O_0=\operatorname{span}_{\mathbb R}\{I,Z_b\},\qquad
+\mathcal O_\infty=\operatorname{span}_{\mathbb R}\{I,Z_a,Z_b,Z_aZ_b\}.
+\tag{31.1}
+$$
+
+新增两维全部计算基对角。
+
+证明。迭代第二坐标依次为 $b,a+b,a$，二结果投影是相应 $Z$ 的 $(I\pm Z)/2$，所以效果恰张成 (31.1)。$|00\rangle,|10\rangle$ 初读相同，等待一步后分别读零、一，全程无需相干。$\square$
+
+更强例属于本卷已有的标准 digits、完整低仪器合同。取 $d=e=2$、$\Delta=2\pi/3$、$x=e^{-2\pi i/3}$。定理 14.1 的已证公式为
+
+$$
+W=\frac{I+U^3}{2}+x\frac{I-U^3}{2},\qquad
+U^3=\sum_aE_{aa}\otimes T_{Ma}.
+$$
+
+两输入都用低态 $s=(|00\rangle+|10\rangle)/\sqrt2$，高态分别为 Fourier 基 $p_{10},p_{01}$，都没有高 Fourier 非对角项。低 $00$ 控制 identity，低 $10$ 控制 $T_{01}$；它在两高标签上分别为 $+1,-1$。输出低向量分别为 $s$ 与 $(|00\rangle+x|10\rangle)/\sqrt2$，所以同一合法低事件 $|s\rangle\langle s|$ 的概率为
+
+$$
+1\quad\text{和}\quad |1+x|^2/4=1/4.
+\tag{31.2}
+$$
+
+这个新预测信息来自高标签差异，不是新增高标签相干。定理 14.1 给该共振效果空间 Hermitian 维数 $64$，初始低读出维数 $16$；新增 $48$ 维全在高 Fourier 对角块中。
+
+**定义 31.2（相对于声明 pinching 的相干响应）。** 先指定正交分块 $\{P_y\}$ 与自伴迹对偶 pinching $\mathcal D(X)=\sum_yP_yXP_y$。对实际 Hermitian 响应空间 $\mathcal O$，相干响应为
+
+$$
+\mathcal C_{\mathcal D}(\mathcal O)=(I-\mathcal D)\mathcal O
+\cong\mathcal O/(\mathcal O\cap\operatorname{ran}\mathcal D).
+\tag{31.3}
+$$
+
+新增相干响应可再取 $(I-\mathcal D)\mathcal O_\infty/(I-\mathcal D)\mathcal O_0$。
+
+证明这个识别只需两事实：$\operatorname{Tr}[E(\rho-\mathcal D\rho)]=\operatorname{Tr}[(E-\mathcal DE)\rho]$，以及 $I-\mathcal D$ 限制到 $\mathcal O$ 的核为 $\mathcal O\cap\operatorname{ran}\mathcal D$。第一式由 pinching 自伴性，第二式由 $\mathcal D^2=\mathcal D$；线性第一同构定理给 (31.3)。这是带基准的线性商，不自动成为可执行效果空间或 quantum quotient。
+
+在标准 $d=e=2$ 非共振合同中，沿用定理 14.1 的轨道代数，取完整高 Fourier pinching、保留所有低矩阵，则
+
+$$
+160=64+96,\qquad 160-16=48+96.
+\tag{31.4}
+$$
+
+其中 $64=16\cdot4$ 是完整条件对角矩阵，$96=16(3^2-3)$ 是非零三标签轨道内的高相干；初始十六维包含在前者。共振处高相干部分为零。换成整个 $AH$ 计算基细 pinching 就是另一基准，不能沿用这个分解。
+
+**命题 31.3（粗事件保留块内相干）。** 定义 2.1 的 Lüders 粗采样只删跨事件块相干，rank 大于一的块可保留量子相干。具体在模二时刻 $0,3$ 读第二坐标，可达记录为 $(z,z)$，
+
+$$
+P_z=|0,z\rangle\langle0,z|+|1,z\rangle\langle1,z|,
+\qquad\operatorname{rank}P_z=2.
+$$
+
+两输入 $\chi_\pm=(|00\rangle\pm|10\rangle)/\sqrt2$ 都以概率一给 $(0,0)$，末钟条件态仍为 $|\chi_\pm\rangle\langle\chi_\pm|$。
+
+证明。$U_2^3=I$，所以两个来源投影相同，且两向量都在 $P_0$ 的像内；命题 2.2 的 $U^3P_0$ 分支就是 $P_0$。块内矩阵元 $00,10$ 分别为 $\pm1/2$。一般 $P_y\rho P_y/p_y$ 仅在 $p_y>0$ 时定义，完全可能仍有内部非对角项。$\square$
+
+经典记录不使条件态自动逐地址对角；相同效果也不规定相同更新。若要求细 dephasing 或 measure-and-prepare，须另行声明那个实际分支。
+
+**命题 31.4（pair-address 正性与非单射求和障碍）。** 有限地址集 $X$ 的 density kernel 必须满足 $\rho\ge0$、$\rho=\rho^\dagger$、$\operatorname{Tr}\rho=1$。对非单射 $\kappa:X\to Y$，振幅求和 $A|x\rangle=|\kappa(x)\rangle$ 一般不给 TP 通道。
+
+证明。取 $x\ne x'$、$\kappa(x)=\kappa(x')=y$。对 $\psi_\pm=(|x\rangle\pm|x'\rangle)/\sqrt2$，$A\psi_+=\sqrt2|y\rangle$、$A\psi_-=0$，故 $A\rho A^\dagger$ 的迹分别为二、零。事后归一化非线性，且第二态上无定义。$\square$
+
+有效经典粗化可用 Kraus $|\kappa(x)\rangle\langle x|$：
+
+$$
+\mathcal Q_{\mathrm{mp}}(\rho)
+=\sum_y\operatorname{Tr}(P_y\rho)|y\rangle\langle y|,
+\qquad P_y=\sum_{\kappa(x)=y}|x\rangle\langle x|.
+$$
+
+Kraus 伴随乘积和为 $I_X$，所以 CPTP；它明确舍去纤维内部量子信息。若要保留内部相干，应改用块提取 $\rho\mapsto(P_y\rho P_y)_y$ 到 $\bigoplus_yB(P_y\mathcal H)$，或指定等距及重数系统和其处置。后者保留 rank-two 块而非单个 $|y\rangle$。§35 将证明这些正粗化何时还能保留所声明的全部条件续接。
+
+## 32. 实际 operator system 与可观测稳定扇区
+
+§31 讨论的是实际效果张成。定理 11.2 的特殊完整低仪器合同通过实际过滤、极化、左右双模及乘子代数 $\mathfrak D(S)$ 才证明它等于代数；不能从“事件效果”一词自动借入乘法。
+
+**命题 32.1（同一 FIB 行走的四维效果、五维代数）。** 限制输入到命题 8.2 的三循环空间 $\mathcal V=\operatorname{span}\{u,v,w\}$，其中
+
+$$
+u=|10,p_{10}\rangle,\quad v=|01,p_{11}\rangle,\quad w=|11,p_{01}\rangle,
+\qquad L|_{\mathcal V}=3I-J_3.
+$$
+
+合同仅允许一个不中断的任意非负等待区间，再做一次二结果低读出：选定结果为 $01$，另一结果为其补。没有中间仪器、额外低过滤或任意终端投影。定义正交基
+
+$$
+s=\frac{u+v+w}{\sqrt3},\qquad
+r=\frac{-u+2v-w}{\sqrt6},\qquad d=\frac{u-w}{\sqrt2},
+$$
+
+以及
+
+$$
+A_0=\tfrac13|s\rangle\langle s|+\tfrac23|r\rangle\langle r|,
+\quad X=|s\rangle\langle r|+|r\rangle\langle s|,
+\quad Y=-i|s\rangle\langle r|+i|r\rangle\langle s|.
+$$
+
+实际响应空间为 $\mathcal O=\operatorname{span}_{\mathbb R}\{I,A_0,X,Y\}$，实维四，但
+
+$$
+C^*(\mathcal O)=B(\operatorname{span}\{s,r\})\oplus\mathbb C|d\rangle\langle d|
+\tag{32.1}
+$$
+
+的 Hermitian 维数为五。
+
+证明。$Ls=0,Lr=3r,Ld=3d$，且 $v=s/\sqrt3+\sqrt{2/3}\,r$。终端低结果压缩为 $|v\rangle\langle v|$，其 Heisenberg 效果为
+
+$$
+E_t=A_0+\frac{\sqrt2}{3}\bigl(\cos3t\,X+\sin3t\,Y\bigr).
+$$
+
+非负时间取到两个三角方向，补结果提供 $I$；四算子独立，所以恰维四。$X^2=P_s+P_r$ 不在其中：若为 $aI+bA_0$，在 $d$ 上给 $a=0$，在 $s,r$ 上又要求 $b/3=2b/3=1$，矛盾；$X,Y$ 的非对角项不能修复该对角等式。另一方面 $X^2$ 给两维支撑投影，$XY=i(P_s-P_r)$ 给其对角差，$X,Y$ 给两个角，$I-X^2=P_d$ 给余块，故恰生成 (32.1)。$\square$
+
+实际不可区分态可以明确选为
+
+$$
+\rho_+=\tfrac12P_r+\tfrac12P_d,\qquad
+\rho_-=\tfrac23P_s+\tfrac16P_r+\tfrac16P_d.
+$$
+
+它们对每个 $E_t$ 均给 $1/3$，却对 $X^2$ 分别给 $1/2,5/6$。将生成代数误作可读效果就在这个合同下虚增了可辨信息。一般实际效果的复化含 $I$、伴随封闭、带继承的矩阵正锥，因此首先是 operator system。普通商 $\mathcal O_\infty/\mathcal O_0$ 中 $\mathcal O_0$ 含单位，不能作为非零 CP map 的 operator-system kernel：正 map 若把单位送零，就把所有 $0\le A\le cI$ 送零，线性性使整 map 为零。标准 quotient operator system 还需要合法 kernel 与 Archimedean matrix cones，见 §38 的精确来源。
+
+**命题 32.2（Hermitian 连续响应的生成元）。** 有限维 Hermitian 实空间中，对自伴 $H$，全部非负等待产生的线性响应等于
+
+$$
+\operatorname{span}_{\mathbb R}
+\{e^{itH}Ae^{-itH}:t\ge0,A\in\mathcal O_0\}
+=
+\operatorname{span}_{\mathbb R}
+\{(i\operatorname{ad}_H)^nA:n\ge0,A\in\mathcal O_0\}.
+\tag{32.2}
+$$
+
+证明。导数为 $i[H,A]$，它 Hermitian，而 $[H,A]$ anti-Hermitian。左空间有限维闭，对时间的右导数及其迭代仍在其中；右空间对实线性算子 $i\operatorname{ad}_H$ 不变，其矩阵指数使所有时间轨道在其中，给反向包含。$\square$
+
+固定离散时钟还需处理谱差混叠，不能用该导数代替；(32.2) 是响应张成规则，也没有授权直接测量每个交换子。
+
+**命题 32.3（reducing、单向支持与中心的条件）。** 对全部声明 primitives 生成的含幺星代数 $\mathfrak A$，双向逐分支稳定投影属于 $\mathfrak A'$。对酉 $U$ 条件为 $[P,U]=0$，对全部时间 $e^{-itH}$ 为 $[P,H]=0$。对 Kraus $K_\mu$，仅从 $P$ 不泄漏的单向条件是 $(I-P)K_\mu P=0$；若 $P$ 与补空间都不混合，则为 $[P,K_\mu]=0$。若此外已证实际效果代数恰等于 $\mathfrak A$，可观测的 reducing 投影恰位于 $Z(\mathfrak A)=\mathfrak A\cap\mathfrak A'$。
+
+证明。把 $K_\mu$ 写成 $P\mathcal H\oplus(I-P)\mathcal H$ 的四角，单向条件消一个角，reducing 消两个角，后者等价交换。与全部 generators 及其伴随交换等价于与生成星代数交换。可观测条件再取交即中心；未证明实际效果等于 primitive 代数时只能取实际效果空间与 commutant 的交，不能先宣称中心。$\square$
+
+在标准 $d=e=2$ 固定时钟、完整低仪器合同中，全部低矩阵迫使 commutant 元素形如 $I_A\otimes Q$。定理 14.1 的实际效果代数也等于 primitive 星代数：实际历史效果在后者中，而每个 $W(\Delta)$ 和低 primitive 都在该定理列出的代数中，给两边包含。于是稳定高投影精确分类为：
+
+| 本章时钟类，模 $2\pi$ | commutant 的高层部分 | 稳定 $Q$ |
+| --- | --- | --- |
+| 32 · $0$ | $B(\mathbb C^4)$ | 任意高层正交投影 |
+| 32 · $\pm2\pi/3$ | 完整 Fourier 对角代数 $\mathcal D_F$ | 任意完整 Fourier 标签子集 |
+| 32 · 其余 | $\mathbb CP_{00}\oplus\mathbb CI_{\mathrm{nonzero}}$ | 零标签与非零三标签这两个整块的任意并 |
+
+这是对三种代数直接取 commutant：全低矩阵移除低层重数，$\mathcal D_F$ 在高层的 commutant 仍为 $\mathcal D_F$，$\mathbb C\oplus M_3$ 的 commutant 是两个标量块。
+
+可观测 membership 不保证稳定。在 $\Delta=\pi$，$I_A\otimes P_{10}$ 属于轨道效果代数，但初态 $|10,p_{10}\rangle=u$ 在三循环上受 $W(\pi)=2J_3/3-I$ 作用，原标签幅为 $-1/3$，另两标签幅为 $2/3$，所以该 projection 权重从一降为 $1/9$。反向在 $\Delta=2\pi$，$W=I$，任意 $I_A\otimes Q$ 稳定，但非标量高投影不在 $B_4\otimes I_4$ 的效果空间中。稳定且不可读、可读且不稳定都存在；这些是操作合同的代数结论，不识别物理粒子。
+
+## 33. 合法地址对的有限代数与声明的无限完成
+
+§31 的有限 density kernel 可以取所有地址对；若要求沿合法递归保持矩阵单位乘法，哪些地址对能够共同延伸是另一个问题。本节固定单位位及初始接缝零，计数所有合法开放前缀，不按正数 End 筛选。
+
+**定理 33.1（前缀数与同终态 AF 嵌入）。** 令 $W_{L,s}$ 为长度 $L$、终态 $s$ 的合法窗前缀，$p_{L,s}=|W_{L,s}|$。则
+
+$$
+(p_{L,0},p_{L,1})=(1,0)B^L
+=(F_{3L+1},F_{3L}),\qquad
+B=\begin{pmatrix}3&2\\2&1\end{pmatrix},
+$$
+
+$$
+|W_L|=F_{3L+2},\qquad
+A_L=M_{p_{L,0}}\oplus M_{p_{L,1}}.
+\tag{33.1}
+$$
+
+零大小块略去，故 $A_0=\mathbb C$。对同终态 $u,v$，
+
+$$
+i_L(E_{uv})=\sum_{e:\operatorname{src}(e)=\operatorname{end}(u)}E_{ue,ve}
+\tag{33.2}
+$$
+
+给保持单位的忠实星嵌入，包含重数矩阵为 $B$。
+
+证明。§27 的边表给转移数 $3,2;2,1$。$B=K^3$，$K=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$；由 Fibonacci 递推归纳 $K^n$ 的首行为 $(F_{n+1},F_n)$，给 (33.1)，$L=0$ 直接为 $(1,0)$。$B$ 是 seam 路径计数矩阵，不是组成坐标的 $S$。
+
+矩阵单位相乘时，中间新前缀相等迫使旧前缀和实际末边都相等，故 (33.2) 保持 $E_{uv}E_{ab}=\delta_{va}E_{ub}$；伴随交换两指标，所以也保持伴随。每个旧块有后继，压缩到任一副本可读回原块，故单射。每个新前缀有唯一旧前缀与末边，所以旧总单位映成新总单位。目标终态 $t$ 中旧块 $s$ 出现 $B_{s,t}$ 份，维数恰为 $\sum_sp_{L,s}B_{s,t}=p_{L+1,t}$。$\square$
+
+定义含幺 AF 极限 $A=\varinjlim(A_L,i_L)$，标准包含记为 $j_L$。这个模型保留合法前缀替换、共同边细化、乘法、伴随和矩阵正序；它没有授予每个抽象算子的实际控制权限。此具体构造属于 Bratteli 同终态矩阵单位框架，§38 的 Exel–Renault 来源给标准框架的精确范围。
+
+**命题 33.2（全矩阵障碍仅限含幺星嵌入）。** 全前缀矩阵的第一非零层是 $M_5$，下一层为 $M_{21}$；不存在含幺星嵌入 $M_5\to M_{21}$。但可恢复 isometric CPTP 编码、固定 Hilbert 空间的 cylinder refinement、nonunital corner embedding 均可存在。
+
+证明。含幺星同态 $M_n\to M_m$ 把 $n$ 个最小对角矩阵单位送到等秩、互相正交投影：等秩由两方向矩阵单位部分等距性得到；投影和为 $I_m$，故 $m=nr$。反向 $a\mapsto a\otimes I_r$ 给充分性。$5\nmid21$，所以该含幺嵌入不存在。直接共同延伸不同终态也失败：$[2]$ 的五后继与 $[5]$ 的三后继只共有 null、$[3]$、$[5]$；交叉矩阵单位沿这三标签延伸再乘回伴随，只恢复零态那边三个子投影，而不是全部五个。
+
+任意等距 $V:\mathbb C^n\to\mathbb C^m$，$m\ge n$，仍给 CPTP 编码 $\rho\mapsto V\rho V^*$；固定 density $\tau$ 后，解码
+
+$$
+\sigma\mapsto V^*\sigma V+
+\operatorname{Tr}[(I-VV^*)\sigma]\tau
+$$
+
+是 CP、TP，并在编码像上精确恢复。正交 complement 的 trace-and-prepare 与 compression 各为 CP，其迹和为原迹，证明不需 $n\mid m$。
+
+在一个事先选择的来源 Hilbert 表示上，cylinder multiplication projections 直接满足 $P_u=\sum_eP_{ue}$。这是同一空间的正交分割，给 diagonal function algebra 的含幺细化，不是 $\mathbb C^{W_L}$ 与 $\mathbb C^{W_{L+1}}$ 的全矩阵含幺嵌入。$\square$
+
+还可每次只选 null 后继，$V_L|u\rangle=|u[\mathrm{null}]\rangle$，得到全矩阵的忠实 corner maps $a\mapsto V_LaV_L^*$。旧单位只映到选定 null 子空间的投影，因此 nonunital。Hilbert 直极限有最终全 null 的合法无限地址为基，是可数的 separable 来源空间 $\mathcal H_{\mathrm{ev}}$。任意有限组这样的地址在某共同层出现，故角矩阵并包含所有有限支撑矩阵；它们的范数完成恰为 $\mathcal K(\mathcal H_{\mathrm{ev}})$。无限维 identity 不在其中。只加 $\mathbb CI$ 仍不能容纳一般无限秩且无限余秩的 cylinder projections：若投影 $P=K+cI$，其 Calkin 像是 scalar projection，$c$ 必为零或一，分别要求 $P$ 或 $I-P$ compact，从而有限秩。一般 cylinder projections 应放在 multiplier $B(\mathcal H_{\mathrm{ev}})$。这个 corner 完成与含幺同终态 AF 完成不同。
+
+**定义 33.3（尾等价与全配对的分离）。** 令 $\Omega_0$ 为所有初态零的无限合法路径，带紧 cylinder 拓扑。AF 使用等深 tail equivalence
+
+$$
+R_{\mathrm{tail}}=
+\{(x,y):\text{某共同深度之后的实际边尾部完全相同}\}.
+$$
+
+其组合为 $(x,y)(y,z)=(x,z)$，逆为 $(y,x)$；拓扑取有限深度尾关系的 inductive-limit topology。每类至多可数，因为只有有限前缀替换。全 null 与全 $[3]$ 流不尾等价，所以 $R_{\mathrm{tail}}\ne\Omega_0^2$。
+
+若选择全 pair groupoid $\Omega_0^2$，解析结构必须另定。将 $\Omega_0$ 离散化，有限支撑核按计数卷积作用于 $\ell^2(\Omega_0)$，其范数完成是 $\mathcal K(\ell^2(\Omega_0))$；$\{\mathrm{null},3\}^{\mathbb N}\subseteq\Omega_0$ 已不可数，故这个 Hilbert 空间不可分。另一选择保留紧拓扑，并指定 full-support Radon 概率测度 $\mu$，例如各合法出边均有正概率的 Markov 测度。连续核按
+
+$$
+(f*g)(x,z)=\int f(x,y)g(y,z)\,d\mu(y),\qquad
+f^*(x,y)=\overline{f(y,x)}
+$$
+
+作用于 $L^2(\Omega_0,\mu)$；它们是 Hilbert–Schmidt 从而 compact，continuous rank-one kernels 又因连续函数在 $L^2$ 稠密而范数稠密于全部 compacts，故完成为 $\mathcal K(L^2(\Omega_0,\mu))$。nonatomic 情形单点 delta 不给归一化 $L^2$ 向量；无限维 identity 也不属于这个 compact 范数完成。取强闭包会得到另一表示相关的 $B(\mathcal H)$。这些选择均不从地址集推断物理态或唯一测度；§37 只使用已声明的含幺 AF 极限。
+
+## 34. 等深合法相干与相对格点操作的桥
+
+§27 的对象/上下文解释保留尺度 $S^{|w|}$；§33 的共同尾细化恰好使一对地址的尺度相消。这是连接合法相干矩阵单位与几何操作的具体桥。
+
+**定理 34.1（等深相对平移 cocycle）。** 对任意 $L\ge0$、$s,t\in\{0,1\}$，取初态零的合法根前缀 $u,v\in W_{L,s}$ 及实际边 $e:s\to t$，故 $|u|=|v|=L$、$\operatorname{end}(u)=\operatorname{end}(v)=\operatorname{src}(e)=s$。在 signed 格点上的可逆仿射函数有
+
+$$
+\Phi_u\Phi_v^{-1}=T_{D_u-D_v},\qquad
+D_{ue}-D_{ve}=D_u-D_v.
+\tag{34.1}
+$$
+
+对任意从接缝 $s$ 出发的无限合法尾 $\omega\in\Omega_s$，令 $x=u\omega,y=v\omega$，则 $x,y\in\Omega_0$ 且 $(x,y)\in R_{\mathrm{tail}}$。反之，每个 $(x,y)\in R_{\mathrm{tail}}$ 都有某个共同深度 $L$ 下的上述呈示。以此定义 $c:R_{\mathrm{tail}}\to\mathbb Z^2$、$c(x,y)=D_u-D_v$，得到良定义的连续 additive cocycle。
+
+对完整地址 $x,y,r\in\Omega_0$，若 $(x,y),(y,r)\in R_{\mathrm{tail}}$，则 $(x,r)\in R_{\mathrm{tail}}$，并有
+
+$$
+c(x,r)=c(x,y)+c(y,r).
+$$
+
+对任意 $(x,y)\in R_{\mathrm{tail}}$，其零核满足
+
+$$
+c(x,y)=0\ \Longleftrightarrow\ x=y.
+\tag{34.2}
+$$
+
+证明。由 $u,v\in W_{L,s}$，直接消去 $S^L,S^{-L}$ 给第一式；共同追加实际边 $e:s\to t$ 给两偏移都增加 $S^Ld_e$，得第二式。任意尾等价对在共同实际边尾部开始处切开，就得 $x=u\omega,y=v\omega$；共同尾的首边源保证两前缀的终态都是 $s$，故 $u,v\in W_{L,s}$、$\omega\in\Omega_s$。两个共同尾呈示可细化到同一更深切口，逐次用延伸恒等式使偏移差不变，所以 $c$ 与呈示无关。对上述完整地址 $x,y,r$，在两项尾等价关系成立的切口之后取同一切口，写 $x=u'\omega',y=v'\omega',r=w'\omega'$，其中 $u',v',w'$ 等长且同终态，$\omega'$ 从该终态出发；这也给 $(x,r)\in R_{\mathrm{tail}}$，且 $D_{u'}-D_{w'}=(D_{u'}-D_{v'})+(D_{v'}-D_{w'})$ 给 additivity。每个前缀替换 cylinder 双截面上 $c$ 常值，故对标准 AF 拓扑连续。对 $(x,y)\in R_{\mathrm{tail}}$，若 $c(x,y)=0$，则上述等长前缀满足 $D_u=D_v$，命题 27.3 的证明给 $u=v$，继而 $x=y$。反向取相同前缀即得。$\square$
+
+这里逆函数用于计算相对操作，不声称它保持旧非负域。cocycle 的零核只有 units，也不使其在全群胚上单射：例如固定 $u=[2],v=[3]$，取两个不同合法共同尾，两条不同 arrows 都给 $(1,-1)$。被偏移忽略的 instruction parameters 也会破坏零核结论，所以本节只用裸窗图。
+
+**定理 34.2（任意格点酉表示给忠实兼容的相干解释）。** 选非零 Hilbert 空间 $K$ 和任意 unitary representation $U:\mathbb Z^2\to\mathcal U(K)$，令 $B_U=C^*(U(\mathbb Z^2))$。则
+
+$$
+\Theta_L(E_{uv})=E_{uv}\otimes U(D_u-D_v)
+\tag{34.3}
+$$
+
+给 $A_L\to A_L\otimes B_U$ 的忠实含幺星同态，与 $i_L$ 相容，并延拓为 $\Theta:A\hookrightarrow A\otimes_{\min}B_U$。此忠实性不要求 $U$ 忠实。
+
+证明。矩阵单位中间指标匹配时偏移差相消、$U$ 的乘法律给正确乘积；不匹配时两边都零。伴随改变差号，对角像为 $E_{uu}\otimes I$。更直接地
+
+$$
+V_L=\sum_{w\in W_L}E_{ww}\otimes U(D_w)
+$$
+
+是 finite diagonal unitary，$\Theta_L(a)=V_L(a\otimes I)V_L^*$。$K\ne0$ 使 $a\mapsto a\otimes I$ 等距单射，故忠实。由 (34.1) 逐矩阵单位得到
+
+$$
+(i_L\otimes\mathrm{id})\Theta_L=\Theta_{L+1}i_L.
+$$
+
+在有限层的稠密并上这些等距映射一致，故延拓为含幺等距星同态。没有要求 $V_L$ 在极限中收敛。即使 $U$ trivial，矩阵单位标签仍保留所有 $A$ 信息；是否几何动作也区分格点平移是 $U$ 自己的另一忠实性问题。$\square$
+
+因此同终态相干 $E_{uv}$ 可以附带明确相对 lattice action，且共同尾细化、乘法、伴随和 positivity commute。若再选 faithful lattice translations，每个 nonunit tail arrow 附带非恒等平移。这个构造仍没有选择 density、preparation 或 measurement；也没有把任意具体响应块 $P_u\rho P_v$ 自动认作满足矩阵单位乘法的 abstract $E_{uv}$。
+
+**命题 34.3（稳定坐标仅在尾类内注入）。** 置 $\phi=(1+\sqrt5)/2$、$q=2-\sqrt5$、$\ell(a,b)=a-\phi^{-1}b$。$\ell S=q\ell$、$|q|<1$，故无限合法地址有连续编码
+
+$$
+\pi(x)=\sum_{j\ge0}q^j\ell(d_{x_j}).
+$$
+
+同尾 $x=uz,y=vz$ 满足
+
+$$
+\pi(x)-\pi(y)=\ell(D_u-D_v)=\ell(c(x,y)),
+$$
+
+所以 $\pi$ 在每个尾等价类内单射。
+
+证明。直接行向量乘法给 $\ell S=q\ell$；有限 digit 集与 $|q|<1$ 给一致收敛及连续性。共同尾以同一 $q^L$ 系数出现并相消。$\phi^{-1}$ 无理，使 $\ell$ 在 $\mathbb Z^2$ 上零核；再用 (34.2) 得单射。这个单射不能升级到全部无限地址：母卷 §§150–151 的同一收缩编码像为 $[-1,\phi]$，而 $\Omega_0$ 有非平凡 clopen cylinder，compact 且不连通。若连续 $\pi$ 全局单射，compact-to-Hausdorff 双射会给到该区间的 homeomorphism，与连通性矛盾。故全局碰撞存在，并由刚证结论必须跨尾类。$\square$
+
+以上桥只处理 equal-depth extension。尺度差、unequal-depth graph-groupoid 和其 cocycle 不在本合同中；本节也不以稳定坐标完成来授予 $J,C$ 的全局连续执行权限。
+
+## 35. 从闭合边界坐标到完全正的条件后继
+
+本卷定理 7.4、10.2 已证明具体 pinching/对角合同的逐分支充分性；波粒事件卷定义 20.5、定理 20.6 已给最小动态效果闭包及其可实现坐标，定理 20.3 给下一效果空间的对偶下降判据。这些既有结果不承诺整个较小量子代数上的 CP 后继。本节只补完全正后继的构造条件，再于 §36 应用于真正的 legal-prefix 系统。
+
+**定理 35.1（CP section 下的逐分支实现判据）。** $\mathcal X,\mathcal Y$ 是有限矩阵代数或有限直和矩阵代数，各用声明的普通矩阵迹之和。设 $E:\mathcal X\to\mathcal Y$ CPTP，存在 CP 线性 section $R:\mathcal Y\to\mathcal X$、$ER=\mathrm{id}_{\mathcal Y}$。则 $R$ 自动 TP。对有限 source instrument $\{J_e\}_e$，各分支 CP、总和 TP，下列逐分支条件等价：
+
+$$
+\begin{aligned}
+&\text{存在 target instrument 满足 }EJ_e=J'_eE;\\
+&EJ_e=EJ_eRE;\\
+&\ker E\subseteq\ker(EJ_e);\\
+&J_e^\dagger(\operatorname{ran}E^\dagger)
+\subseteq\operatorname{ran}E^\dagger.
+\end{aligned}
+\tag{35.1}
+$$
+
+满足时 target branch 唯一，且
+
+$$
+J'_e=EJ_eR.
+\tag{35.2}
+$$
+
+证明。$\operatorname{Tr}R(Y)=\operatorname{Tr}ER(Y)=\operatorname{Tr}Y$，所以 TP。若 intertwining 成立，右复合 $R$ 得 (35.2)，再右复合 $E$ 得第二条件。若第二条件成立，(35.2) 是 CP maps 的复合，且分支和 $E(\sum_eJ_e)R$ TP，故为整个 $\mathcal Y$ 上的合法 instrument，并满足 intertwining；CP 分支与总和 TP 也保证每支次保迹。
+
+第二条件给核包含。反向 $X-REX\in\ker E$，故核包含使 $EJ_e(X-REX)=0$。有限维 Hilbert–Schmidt 迹配对下 $\operatorname{ran}E^\dagger=(\ker E)^\perp$。对全部 $X\in\ker E$、$Y\in\mathcal Y$，等式 $\langle Y,EJ_eX\rangle_{\mathrm{HS}}=\langle J_e^\dagger E^\dagger Y,X\rangle_{\mathrm{HS}}=0$ 恰要求最后的 range 包含。这证明全部等价与唯一性。$\square$
+
+这里合法是 CP、总 TP 和空间类型合法。给定设备另有限制的 primitives、支撑、权限或成本时，仍需证明 (35.2) 可实施；有 CP 公式不自动成为已有 primitive 或廉价控制。
+
+**推论 35.2（记录、参考与全部正概率条件续接）。** 固定允许的有限 instruments，所有动作在声明状态域上合法，选择器只读已保留记录与控制数据。若每支满足 (35.1)，则任意有限 adaptive history $h$ 有 $EJ_h=J'_hE$。对任意有限旁观参考 $B$、可纠缠输入 $\rho$，完整 history register $C$ 有
+
+$$
+\begin{aligned}
+&\sum_h|h\rangle\langle h|_C\otimes
+((EJ_h)\otimes\mathrm{id}_B)(\rho)\\
+&\quad=\sum_h|h\rangle\langle h|_C\otimes
+(J'_h\otimes\mathrm{id}_B)((E\otimes\mathrm{id}_B)(\rho)).
+\end{aligned}
+\tag{35.3}
+$$
+
+两边每支迹均为 $p_h=\operatorname{Tr}[(J_h\otimes\mathrm{id}_B)(\rho)]$；$p_h>0$ 时以同一概率除得到相同 boundary–reference 条件态。
+
+证明。逐步代入 intertwining 给复合恒等；同一记录使下一选择同一动作。等式张量恒等仍成立，CP 保证任意参考输入的正性。$E$ TP 给每支原概率，正概率归一化给条件态；零概率支没有条件态义务。求 history 正交直和得到 (35.3)。若选择器还读被删 memory 或隐藏权限，则超出假设，须先把该数据并入边界。$\square$
+
+**命题 35.3（pinching 的下降比交换弱）。** 令 $Q(X)=\sum_yP_yXP_y$，输出代数 $\mathcal N=\bigoplus_yB(P_y\mathcal H)$，$E$ 为 block extraction、$R$ 为自然 block inclusion。则 $ER=I_{\mathcal N}$、$RE=Q$，判据为
+
+$$
+QJ_e=QJ_eQ
+\quad\Longleftrightarrow\quad
+J_e^\dagger(\mathcal N)\subseteq\mathcal N.
+\tag{35.4}
+$$
+
+$QJ_e=J_eQ$ 充分，但更强。
+
+证明。将定理 35.1 的第二、第四条件嵌回原空间即得 (35.4)。固定准备 $J(X)=\operatorname{Tr}(X)\sigma$ 总有 $QJ(X)=\operatorname{Tr}(X)Q\sigma=QJQ(X)$；若 $\sigma$ 有块间相干，$JQ(X)=\operatorname{Tr}(X)\sigma$ 不等于 $QJ(X)$。$\square$
+
+这也保留 §31 的高秩块，而不将其压成单模式。既有定理 7.4 的交换条件在其具体合同下更便于证明，但不是一般下降的必要形式。
+
+**命题 35.4（section 是附加充分假设）。** 非平凡 qubit depolarizing channel $E_p(X)=pX+(1-p)\operatorname{Tr}(X)I/2$，$0<p<1$，没有正 section，但 random-unitary instruments 仍下降。
+
+证明。$E_p$ 线性可逆，唯一右逆为 $Y/p-(1-p)\operatorname{Tr}(Y)I/(2p)$，在 $|0\rangle\langle0|$ 上特征值为 $(1+p)/(2p)$、$-(1-p)/(2p)$，所以不正。对 $J_e(X)=w_eU_eXU_e^\dagger$，$w_e\ge0,\sum_ew_e=1$，酉协变性给 $E_pJ_e=J_eE_p$，直接取 $J'_e=J_e$ 即为 target instrument。$\square$
+
+仅保 branch probability 只检查 $J_e^\dagger I\in\operatorname{ran}E^\dagger$，没有检查全部 boundary effects。直接的 Hadamard 例说明差别：计算基 dephasing $Q$ 将 $|+\rangle\langle+|,|-\rangle\langle-|$ 都送到 $I/2$；单结果 Hadamard branch 的效果为 $I$，两输入事件概率都一，但 $Q\operatorname{Ad}_H$ 分别输出 $|0\rangle\langle0|,|1\rangle\langle1|$。所以这个原概率保留合同没有确定的条件后继。这里 $H|+\rangle=|0\rangle,H|-\rangle=|1\rangle$ 已直接证明反例，不需要外部归属。无 section 时可另找真正 CP $J'_e$ 并核验 intertwining；不能由线性效果闭包直接猜一个未构造的 quantum decoder。
+
+## 36. 有限 legal-prefix AF 层的正边界与实际分支合同
+
+§33 的嵌入保留 observables，§35 的定理保留 states 和 conditional continuations。两者在这里通过普通迹对偶连接，而不是凭相同维数识别两个来源。这里的“细层”是合法窗口长度 $L+1$；它不等于定义 1.1 digits 分解中的高层 $H$。
+
+**定理 36.1（AF 嵌入的 CPTP 边界及所选 section）。** 令 $\mathcal H_{L,s}=\mathbb C^{W_{L,s}}$。每条实际边 $e:s\to t$ 给等距
+
+$$
+V_e:\mathcal H_{L,s}\to\mathcal H_{L+1,t},\qquad V_e|u\rangle=|ue\rangle.
+$$
+
+固定细终态 $t$ 后，incoming-copy 分解为
+
+$$
+\mathcal H_{L+1,t}=\bigoplus_{s,e:s\to t}V_e\mathcal H_{L,s},
+\qquad\sum_{s,e:s\to t}V_eV_e^*=I_t.
+\tag{36.1}
+$$
+
+各层用普通 block trace $\operatorname{Tr}_L=\sum_s\operatorname{Tr}_{\mathcal H_{L,s}}$。则 $i_L$ 的唯一迹对偶为
+
+$$
+(E_L\sigma)_s=\sum_{t,e:s\to t}V_e^*\sigma_tV_e,
+\qquad E_L^\dagger=i_L,
+\tag{36.2}
+$$
+
+它 CPTP。另选每个非零源块的出边权重
+
+$$
+w_{s,e}\ge0,\qquad\sum_{e:\operatorname{src}(e)=s}w_{s,e}=1,
+$$
+
+便有 CPTP section
+
+$$
+(R_L\rho)_t=\sum_{s,e:s\to t}w_{s,e}V_e\rho_sV_e^*,
+\qquad E_LR_L=\mathrm{id}_{A_L}.
+\tag{36.3}
+$$
+
+证明。每个新路径唯一给旧前缀和末边，故 (36.1) 是正交铺满分解。由 §33 的嵌入 $i_L(a)_t=\sum_{s,e}V_ea_sV_e^*$，迹循环性给 $\operatorname{Tr}_L[aE_L\sigma]=\operatorname{Tr}_{L+1}[i_L(a)\sigma]$，非退化迹配对给唯一性。式 (36.2) 是 CP compression 之和，(36.1) 使其总迹为 $\sum_t\operatorname{Tr}\sigma_t$，所以 CPTP。式 (36.3) 的 Kraus 为 $\sqrt{w_{s,e}}V_e$，源权重归一化给 TP；压缩到一条 incoming copy 时其它正交副本消失，故 $(E_LR_L\rho)_s=\sum_ew_{s,e}\rho_s=\rho_s$。所有证明张量有限参考恒等仍成立；零维旧块直接略去，$L=0$ 时 $E_0$ 是 $M_3\oplus M_2$ 两迹之和。$\square$
+
+$E_L$ 求同 extension 的 diagonal copies 之和，完整保留同一旧终态前缀之间的矩阵元，删掉不同末边或不同旧终态的 incoming-copy 角。没有除以出度：$E_L(I_{L+1})_s=d_sI_s$，$d_0=5,d_1=3$。若额外平均，会破坏本迹约定的 TP；相对地 $i_L$ 含幺而一般不保持普通迹。
+
+出边权重是新选择数据，而不是计数自动生成的 Born law。例如在 $A_1=M_3\oplus M_2\to A_2=M_{13}\oplus M_8$，每源均匀的 $1/5,1/3$ 给
+
+$$
+R_1(\rho)_0=(\rho_0/5)^{\oplus3}\oplus(\rho_1/3)^{\oplus2},
+\qquad
+R_1(\rho)_1=(\rho_0/5)^{\oplus2}\oplus(\rho_1/3).
+\tag{36.4}
+$$
+
+维数分别为 $3\cdot3+2\cdot2=13$、$2\cdot3+1\cdot2=8$；粗化分别求五份旧三维块与三份旧二维块的和，恢复原块。section 选择一份细提升，不能反向恢复所有原细态。
+
+**定理 36.2（incoming-copy 下降的精确条件）。** 对固定相邻层的 finite instruments $J_{a,z}:A_{L+1}\to A_{L+1}$，所有声明细态都在动作合法域内、结果 $z$ 可读，target coarse instruments 满足
+
+$$
+E_LJ_{a,z}=J'_{a,z}E_L
+$$
+
+当且仅当每支有
+
+$$
+J_{a,z}^\dagger(i_L(A_L))\subseteq i_L(A_L).
+\tag{36.5}
+$$
+
+满足时唯一 $J'_{a,z}=E_LJ_{a,z}R_L$，且不依赖 section 权重。固定动作 $a_0$ 与结果 $z$ 后，对每个 coarse observable $a$，写 $F=J_{a_0,z}^\dagger(i_L(a))$，(36.5) 恰等价于：同一细终态内不同 actual incoming copies 的交叉块为零，同一旧源块的全部对角 copies 相等。具体为
+
+$$
+V_e^*F_tV_f=0\quad(e\ne f,\ \operatorname{tgt}(e)=\operatorname{tgt}(f)=t),
+$$
+
+$$
+V_e^*F_tV_e=b_s\quad(e:s\to t),
+\tag{36.6}
+$$
+
+其中 $b_s$ 独立于该源的边及其细靶块。
+
+证明。定理 36.1 给 $E_L^\dagger=i_L$ 与 CP section，故定理 35.1 直接给 (36.5)。由正交铺满分解 (36.1)，一个细 observable 在 $i_L(A_L)$ 内，恰是交叉角全零且各旧 $a_s$ 的副本相同，证明 (36.6) 必要且充分；尤其不能漏掉不同细终态中同源副本的相等。只需在 coarse matrix-unit basis 上检查。若已经下降，对任一 section $R$，$E_LJ_{a,z}R=J'_{a,z}E_LR=J'_{a,z}$，所以权重无关；未下降时这个 CP 复合虽可定义，却一般依赖 $R$，不能重现所有细输入。$\square$
+
+**命题 36.3（正面提升仪器与 edge-conditioned 失败）。** 对 coarse Kraus $K_{a,z,\mu}\in A_L$，并对每个固定动作 $a$ 有 $\sum_{z,\mu}K_{a,z,\mu}^*K_{a,z,\mu}=I_L$，提升 Kraus 为 $i_L(K_{a,z,\mu})$ 得一族下降的 fine instruments，coarse successor 就是原 Kraus instrument。
+
+证明。固定动作 $a_0$ 与结果 $z$。含幺星同态保持每个动作的 Kraus 总归一化，且对任意 coarse observable $b\in A_L$ 有
+
+$$
+J_{a_0,z}^\dagger(i_L(b))
+=\sum_\mu i_L(K_{a_0,z,\mu})^*i_L(b)i_L(K_{a_0,z,\mu})
+=i_L\!\left(\sum_\mu K_{a_0,z,\mu}^*bK_{a_0,z,\mu}\right).
+$$
+
+故 $J_{a_0,z}^\dagger(i_L(A_L))\subseteq i_L(A_L)$，满足 (36.5)，唯一性给原 coarse successor。这个子类可在同终态块内部执行真正 coherent matrices；它不是所有直和代数 CP instruments 的穷尽分类，特别没有穷尽跨 coarse central blocks 的经典转移。$\square$
+
+Fine 合法不自动下降。取 $L=1$、旧前缀 $u=[\mathrm{null}],v=[2]$，两条 $0\to0$ 边 $e_1=\mathrm{null},e_2=2$。fine block unitary 只交换 $|ue_2\rangle,|ve_2\rangle$，其它基向量不动。$|ue_1\rangle\langle ue_1|$ 与 $|ue_2\rangle\langle ue_2|$ 原来都粗化为 $|u\rangle\langle u|$，作用后却分别粗化为 $|u\rangle\langle u|$ 和 $|v\rangle\langle v|$，所以这个 edge-conditioned swap 不满足 (36.5)。这是有限矩阵合同中的反例，不新增设备权限。
+
+**命题 36.4（全域正右逆不能创造跨旧中心块相干）。** 令 $Z_s$ 为 $A_L$ 的中心块单位，$Q_s=i_L(Z_s)$。任何线性正映射 $R:A_L\to A_{L+1}$，只要在整个 coarse algebra 上满足 $E_LR=I$，则对所有正输入有
+
+$$
+R(\rho)=\sum_sQ_sR(\rho)Q_s.
+\tag{36.7}
+$$
+
+证明。输入 $\rho_s\ge0$ 只在旧块 $s$，$B_s=R(\rho_s)\ge0$。对 $r\ne s$，迹对偶给 $\operatorname{Tr}(Q_rB_s)=\operatorname{Tr}(Z_rE_LB_s)=0$。正性使 $\|B_s^{1/2}Q_r\|_{\mathrm{HS}}^2=0$，故 $B_sQ_r=Q_rB_s=0$，即 $B_s=Q_sB_sQ_s$。把一般正输入按旧中心块相加，线性性给 (36.7)。证明只需正性，无须 CP，但全域右逆与线性性不可删除。$\square$
+
+这不是所有 fine states 的相干禁令。例如 diagonal extraction $M_2\to\mathbb C\oplus\mathbb C$ 的任何全域正右逆在 $(1/2,1/2)$ 输出 $I/2$，因为两个极端输入的正 lifts 只能支撑于各自坐标；但该特定 coarse state 也有 coherent lift $|+\rangle\langle+|$。准备 map $(a,b)\mapsto(a+b)|+\rangle\langle+|$ 是 CPTP，却只在此特定输入正确，并非全域右逆。
+
+允许的旧块内部 multiplicity coherence 是另一回事。按
+
+$$
+\mathcal H_{L+1,t}\cong\bigoplus_s
+(\mathcal H_{L,s}\otimes\mathbb C^{B_{s,t}}),
+$$
+
+为每源选 $\zeta_{s,t}\ge0$、$\sum_t\operatorname{Tr}\zeta_{s,t}=1$，则
+
+$$
+(R_L^\zeta\rho)_t=\bigoplus_s\rho_s\otimes\zeta_{s,t}
+\tag{36.8}
+$$
+
+仍是 CPTP section：tensoring 固定 positive matrices 完全正，总 trace 因归一化不变，$E_L$ 对 multiplicity 作 partial trace 得 $\rho_s$。非对角 $\zeta_{s,t}$ 保留同一旧源、同一细终态的 copy coherence，符合 (36.7)；相同 diagonal weights 不规定这些 coherent entries。
+
+若所有实际细分支满足 (36.5)，推论 35.2 直接给完整 records、任意有限 reference 和正概率 conditional boundary。section 权重、量子 preparation、fine Kraus 的实际可用性及成本仍是另行合同。这是有限层 legal coherent recursion 的正面实现，不声称无限 AF 的每个元素或 §29 的每个 geometric operation 都物理可用。
+
+## 37. 相容有限正密度与无限 AF 态，及其相干边界
+
+§36 的 $E_L$ 不需把所有 finite-prefix Hilbert spaces 同时放进一个预设量子空间。其相容状态可以直接完成为 §33 的 AF 态；这与 full-pair wavefunction 和固定表示中的正规 density 不同。
+
+**定理 37.1（相容态的双射与拓扑）。** 对每层 positive block densities $\rho_L=(\rho_{L,s})_s$，采用总 trace 一而不要求各块分别 trace 一。则 restriction 给仿射双射
+
+$$
+S(A)\cong
+\left\{(\rho_L)_{L\ge0}:\rho_{L,s}\ge0,
+\ \sum_s\operatorname{Tr}\rho_{L,s}=1,
+\ E_L\rho_{L+1}=\rho_L\right\}.
+\tag{37.1}
+$$
+
+$S(A)$ 的 weak-star topology 与右侧 finite-state-space product topology 同胚。
+
+证明。AF 态限制到每个 $j_L(A_L)$ 给唯一普通 block density。$j_{L+1}i_L=j_L$ 及 $E_L^\dagger=i_L$ 给相容式。反向在 dense algebraic union 定义 $\varphi(j_L(a))=\operatorname{Tr}_L(\rho_La)$；将任意两个表示送到共同更高层，重复迹对偶证明值一致。各层 positive normalized，所以 $|\varphi(a)|\le\|a\|$；唯一连续延拓到 $A$，仍 positive normalized。若两态有限层限制一致，稠密性使其全域一致。构造保持凸组合。
+
+weak-star 收敛使每个有限层 density 收敛。反向，所有态范数一，将任意 $a\in A$ 范数逼近到固定 finite level，误差对态统一受控，再用该层收敛即得 weak-star 收敛。因此映射及逆均连续。此处固定层的条目、trace-norm、弱收敛等价；不声称全 AF 态的范数收敛。$\square$
+
+给定一层 density 与全部未来 section 选择，递推 $\rho_{L+1}=R_L\rho_L$，旧层由连续 $E$ 粗化，便得一个相容无限延拓。固定种子和 section 族时该递推唯一；只给相容条件时不唯一。
+
+**命题 37.2（指定 Perron trace）。** 令
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\lambda=2+\sqrt5=\phi^3,\qquad
+r=(\phi,1)^{\mathsf T},\qquad Br=\lambda r,
+$$
+
+$$
+c_{L,s}=\lambda^{-L}r_s/\phi,
+\qquad\tau_L(a)=\sum_sc_{L,s}\operatorname{Tr}(a_s).
+\tag{37.2}
+$$
+
+这些泛函相容，定义 $A$ 上的 trace state $\tau$。
+
+证明。$\sum_sp_{L,s}c_{L,s}=\lambda^{-L}(1,0)B^Lr/\phi=1$，所以归一化。$\sum_tB_{s,t}c_{L+1,t}=c_{L,s}$ 给嵌入相容，finite positive traces 延拓仍 trace。每条 $e:s\to t$ 若选 $w_e=r_t/(\lambda r_s)$，其出边权重和由 $Br=\lambda r$ 为一，且 $w_ec_{L,s}=c_{L+1,t}$；非相干 section (36.3) 从根态一就生成这个 trace density。$\square$
+
+这是一个明确选择的数学态及边权，不推断来源的物理概率律，也不需要主张 trace 唯一。
+
+**定理 37.3（全部 cylinder probabilities 不决定合法-tail 相干）。** 取同为终态零的一窗前缀 $u=[2],v=[3]$，令
+
+$$
+X=E_{uv}+E_{vu}\in A_1,\qquad 0<\eta<1,
+\qquad\varphi_\pm(a)=\tau((I\pm\eta X)a).
+\tag{37.3}
+$$
+
+两态都是 $\tau$-GNS 表示中的正规态，具有相同的全部长度、全部 cylinder probabilities，却有
+
+$$
+\varphi_\pm(X)=\pm2\eta/\lambda,
+\qquad\tau(X^2)=2/\lambda.
+\tag{37.4}
+$$
+
+证明。$X=X^*$、$\|X\|=1$、$\tau(X)=0$，$X^2=E_{uu}+E_{vv}$。$I\pm\eta X\ge(1-\eta)I$，迹性将 $\tau((I\pm\eta X)a)$ 写成 $\tau((I\pm\eta X)^{1/2}a(I\pm\eta X)^{1/2})$，故 positive normalized。它们由有界正 density 给 $\tau$-GNS 的向量态，因而正规。
+
+$X_L=i_{L-1}\cdots i_1(X)$ 在每层仍 diagonal entries 全零。$L\ge1$ 的具体 densities 为
+
+$$
+\rho_{L,s}^{\pm}=c_{L,s}(I_{p_{L,s}}\pm\eta X_{L,s}),\qquad\rho_0^\pm=1.
+\tag{37.5}
+$$
+
+copy 求和与 (37.2) 给相容性，星嵌入保范数保证正性。任意 $z\in W_{L,s}$ 的 cylinder probability 都是 $c_{L,s}$；但 $\tau(X^2)=2c_{1,0}=2/\lambda$，给 (37.4)。$\square$
+
+具体地，各层 diagonal algebras $D_L$ 通过 cylinder refinement 嵌入，范数完成 $D\cong C(\Omega_0)$：局部常值 cylinder functions 分离路径并稠密。所有 cylinder probabilities 只决定 AF 态在 $D$ 上的限制，即一个路径 probability measure。各层 diagonal pinching 与 $i_L$ 交换，延拓为 UCP projection $\Delta:A\to D$；任意路径测度 $\mu$ 可选 diagonal extension $a\mapsto\int\Delta(a)d\mu$。定理 37.3 证明这个 extension 不是同一 measure 的唯一 AF 态。选择 measure、选择 coherent state、选择统一 section 是不同数据。
+
+**命题 37.4（旧终态的部分同步与整个 cylinder 的不等价）。** 取同深 $L\ge1$ 的 $u,v$，旧终态分别零、一，记 $P_u=j_L(E_{uu})$、$P_v=j_L(E_{vv})$。共用下一窗标签 null、$[3]$、$[5]$，各用自己的实际 typed edges，则 $A_{L+1}$ 内有
+
+$$
+V=E_{u\mathrm{null},v\mathrm{null}}+E_{u3,v3}+E_{u5,v5},
+$$
+
+$$
+V^*V=P_v,\qquad VV^*=P_{u\mathrm{null}}+P_{u3}+P_{u5}=:Q<P_u.
+\tag{37.6}
+$$
+
+但 $P_u,P_v$ 在 AF algebra 内不 Murray–von Neumann 等价。
+
+证明。三个后继中每对具有相同新终态，所以矩阵单位合法；不同末窗正交。状态一只有这三种后继，故 $V^*V$ 覆盖全部 $P_v$；状态零还缺 $u2,u25$ 两个非零子投影，故 $VV^*=Q<P_u$。trace 给 $\tau(P_u)=\lambda^{-L}$、$\tau(P_v)=\lambda^{-L}/\phi$，不相等。若整个 cylinders 等价，部分等距的 trace 恒等会强迫这两个值相等，矛盾。实际 $\tau(Q)=\tau(P_v)$，剩余 trace 为 $\lambda^{-L}(1-\phi^{-1})>0$。$\square$
+
+所以不同旧终态不是 AF 极限中永久的 coherence 禁区。令 $Y=V+V^*$，旧 cylinders 正交使 $V^2=0$、$Y^2=Q+P_v$、$\|Y\|=1$。全部后续 diagonal entries 仍零，故 $\psi_\pm(a)=\tau((I\pm\eta Y)a)$ 是共享全部 cylinder probabilities 的态，且
+
+$$
+\psi_\pm(Y)=\pm2\eta\lambda^{-L}/\phi.
+$$
+
+这项相干已在 $L+1$ 层合法存在，反向 $E_L$ 舍去它。两种 fine densities 都粗化到相同 $\tau_L$；由命题 36.4，它们不能从该 coarse input 经任何全域线性正右逆创造，可作为 $L+1$ 层种子再向后延拓。单态 coherent lift 与统一 recovery channel 因此没有矛盾；$X,V,Y$ 的 abstract membership 也不授予实际测量权限。
+
+**命题 37.5（finite densities 不保证固定 trace 表示中的正规性）。** 最终 null 的地址 $\omega=[2][\mathrm{null}][\mathrm{null}]\cdots$ 给相容 atomic state，但它不是固定 $\tau$-GNS closure 上正规态的限制。
+
+证明。$u_L=[2][\mathrm{null}]^{L-1}$，取 $\sigma_{L,0}=|u_L\rangle\langle u_L|$、$\sigma_{L,1}=0$，$\sigma_0=1$。每次只有同 null extension 的一份 compression 非零，所以 $E_L\sigma_{L+1}=\sigma_L$，定理 37.1 给态 $\omega_*$。nested cylinders $P_L=j_L(E_{u_Lu_L})$ 满足 $P_{L+1}\le P_L$、$\omega_*(P_L)=1$，却有 $\tau(P_L)=\lambda^{-L}\to0$。在 $\tau$-GNS 的 dense vectors $a\Omega_\tau$ 上，迹性给
+
+$$
+\|P_La\Omega_\tau\|^2
+=\tau(a^*P_La)=\tau(P_Laa^*)
+\le\|a\|^2\tau(P_L)\to0.
+$$
+
+投影 uniformly bounded，故 $P_L$ strongly 趋零；正规态在这组递减投影上趋零，与 $\omega_*(P_L)=1$ 矛盾。$\square$
+
+相容性定义的是抽象含幺 AF 态，每态可有自己的 GNS 向量表示；它没有指定所有态共同使用的无限 trace-class density，也没有给全 $\Omega_0^2$ kernel、rank-one wavefunction 或 canonical physical measure。§34 的相干几何桥、§36 的 finite-level conditional instrument bridge 和本节的 state completion 分别保持不同信息，必须在选定 representation、state 与 allowed controls 后一起使用。
+
+## 38. 本补充的来源与适用边界
+
+本补充使用标准框架和上文的普通证明；组合、适配或重述这些来源不构成研究原创性的证据。其来源承担的范围如下。
+
+1. 本卷定义 1.3、命题 2.2–2.3、命题 8.2、定理 11.2、定理 14.1 提供实际 instruments、采样更新、三循环及完整低仪器效果代数；§§31–32 在其精确合同上应用，受限一次读出例另行定义。波粒事件卷[定义 20.5、定理 20.6 和定理 20.3](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#20-事件统计成为动态边界的充要条件)提供线性闭包和条件坐标下降，§35 增加显式 CP 实现条件，而不重复该闭包证明。
+2. 母卷[§104](FIBONACCI_ATOMIC_RELATION_GENERATION.md#104-规范三位窗口正值-end-与任务相关的联合未来商)、[§149](FIBONACCI_ATOMIC_RELATION_GENERATION.md#149-五窗包含细化与组成层的四相旋转)、[§§150–151](FIBONACCI_ATOMIC_RELATION_GENERATION.md#150-共轭收缩坐标上的五窗仿射递归固定点)给规范来源合同、五 offsets、矩阵作用与收缩完成。规范编码存在唯一性沿用 standard Zeckendorf premise；[canonical-window 卷在修订 `30fe08bcd4f4f4ccd1a4dc37d75234560f06c34b` 的 §§13.1–13.4](https://github.com/the-omega-institute/trureturing/blob/30fe08bcd4f4f4ccd1a4dc37d75234560f06c34b/docs/develop/theory/FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md)明确有限来源、位次与独立 End certificate。它们不提供未知高位为空的裸 prefix 认证。
+3. Emily Riehl, [*Category Theory in Context*](https://emilyriehl.github.io/files/context.pdf), Example 4.1.13，印刷页 137：quiver 的自由范畴由有限 composable paths 与 empty identities 构成，quiver map 唯一延拓到 functor。Example 4.1.15，页 138，描述形式加逆的 groupoid completion，不承诺任意范畴忠实嵌入其 completion。§27 使用前一 universal property；裸 affine 忠实性由命题 27.3 自证。
+4. J. J. M. Rutten, [*Universal coalgebra: a theory of systems*](https://www.cs.cornell.edu/courses/cs6861/2024sp/Handouts/Rutten.pdf), *TCS* 249 (2000), 3–80，Theorem 10.1、Examples 10.2，印刷页 43–44：该文所定义的 polynomial Set functors 有 final systems，列出 streams、termination 与 tree examples。§28 的具体 two-sorted legal-stream finality 由逐前缀展开证明，$10+X$ initial algebra 则由 finite-term 分解证明；没有把这两个具体模型当作该文直接陈述。
+5. Ruy Exel and Jean Renault, [*AF-algebras and the tail-equivalence relation on Bratteli diagrams*](https://arxiv.org/abs/math/0307228), Lemmas 2.4–2.5，页 5–6，规定不同 terminal vertices 为零及同 terminal matrix-unit 乘法；Theorem 3.4 前的 refinement 与该定理，页 8，给同 appended edge 的矩阵单位细化及 incidence inductive limit。§4，页 9–11，使用 equal-depth tail relation 的 inductive-limit topology 和 counting Haar system，明确区别于 product-subspace topology。§§33–34 的 finite FIB 实现与 relative-translation cocycle 有本章证明；该来源不提供全 pair kernels 或唯一 state/measure。
+6. Kavruk–Paulsen–Todorov–Tomforde, [*Quotients, Exactness and Nuclearity in the Operator System Category*](https://arxiv.org/abs/1008.2811v2), Proposition 3.1、Definition 3.2，页 5–6，kernel 为非零 CP map 的核，等价地 UCP map 的核，且 nonunital；Proposition 3.4、Definitions 3.5 和 Proposition 3.6，页 7，规定 quotient 的 Archimedean matrix cones 与 universal property。§32 因而不把含单位的 observational subspace 作非零 operator-system quotient kernel。
+7. Mawhinney–Todorov, [*Inductive limits in the operator system and related categories*](https://arxiv.org/abs/1705.04663v1), Theorem 4.11、Proposition 4.13，页 27–28，给 UCP connecting maps 的 operator-system inductive limits，以及各 map 为 complete order embedding 时的 limit embedding。若保留的只有实际 operator systems，这提供另一框架；它不授权 multiplication 或 physical realization，其所用类别允许 noncomplete systems，norm completion 仍须单独声明。本补充的 AF 模型则已直接具有星同态和指定 C* norm completion。
+
+对象码、typed 操作、几何评价与实际事件保持的是各自明确的信息。原字的单孔 affine action 可忠实保存合法裸路径，却不能认证已被抹去的非法历史；程序码的指令执行须按另行声明的动作逐步求值；共同尾相干可携带相对格点操作，有限 positive boundary 只有在逐分支下降条件下保留全部 declared conditional continuations。无限相容态的存在不选择物理来源或全部 controls，也不提供未经声明的全 pair completion。以上结论不推出额外的物理制备或控制权限；有限/infinite、正常形/history、probability/conditional state 与 signed/natural permissions 的区别是各结论的假设组成部分。
+
+## 追加锚（本行以下为增补区）
