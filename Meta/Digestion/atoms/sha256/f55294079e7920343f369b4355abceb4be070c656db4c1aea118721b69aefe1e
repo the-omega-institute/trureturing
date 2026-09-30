@@ -1,0 +1,72 @@
+**命题 224.1（删除模数素因子的固定阶误差）。** 对每个固定 $q\in(1/2,1)\cup(1,\infty)$，单位条件源满足
+
+$$
+\boxed{
+\log S_q(\widetilde\mu_s)
+=b_2(q^{-1}-q)(R-\delta)+O_q(y/\ell^4).
+}
+\tag{224.3}
+$$
+
+式（224.3）与 §223 全域源的两个系数相同。常数及起效阈值可依赖固定的 $q$，不主张对 $q\downarrow1/2$、$q\to1$ 或 $q\to\infty$ 一致。
+
+证明。对每个固定 $V$，条件 $(d,V)=1$ 恰将有限组独立坐标 $p\mid V$ 固定为零，其余局部概率 $\pi_p$ 不变。因此由 §223 的收敛 Euler 分解，
+
+$$
+\log S_q(\widetilde\mu_s)
+=\sum_{p\nmid V}\log S_q(\pi_p),\qquad
+\log S_q(\mu_s)-\log S_q(\widetilde\mu_s)
+=\sum_{p\mid V}\log S_q(\pi_p).
+\tag{224.4}
+$$
+
+为保留删除误差的尺度，置 $P_p=(1-p^{-1})^{-s}$、$\rho_p=1-\pi_p(0)$。§222 的非负望远镜估计给
+
+$$
+\rho_p\le U_p(s)-1\le\frac{P_p-1}{p}
+\le\frac{s}{p(p-1)}\exp\!\left(\frac{s}{p-1}\right),
+\qquad
+\sum_{p>2y}\rho_p=O(\sqrt y\,\ell),
+\tag{224.5}
+$$
+
+且 $\sup_{p>2y}\rho_p=O(y^{-1/2})$。若 $q>1$，由
+$(1-\rho_p)^q\le S_q(\pi_p)\le1$ 得
+
+$$
+\sum_{p>2y}|\log S_q(\pi_p)|=O_q(\sqrt y\,\ell).
+\tag{224.6}
+$$
+
+若 $1/2<q<1$，必须估计每个小原子的 $q$ 次幂，不能只估计总尾质量。对最终的 $s\ge1$，均值定理给
+$b_s(p^j)\le sP_pp^{-j}$，于是
+
+$$
+\begin{aligned}
+0\le\log S_q(\pi_p)
+&\le S_q(\pi_p)-1
+\le\sum_{j\ge1}\pi_p(j)^q\\
+&\le\frac{s^qP_p^q p^{-2q}}{1-p^{-2q}}.
+\end{aligned}
+$$
+
+在 $p>2y$ 上有 $P_p^q\le\exp(qs/(2y-1))=O_q(y^{q/2})$。扩大到整数尾和，利用 $2q>1$，得到
+
+$$
+\sum_{p>2y}|\log S_q(\pi_p)|
+\ll_q s^q y^{q/2}\sum_{n>2y}n^{-2q}
+\ll_q y^{1-q/2}\ell^q.
+\tag{224.7}
+$$
+
+对每个固定的准许指数，式（224.6）、（224.7）均为 $o_q(y/\ell^4)$。由式（224.1），式（224.4）删除的全部坐标包含在这个大素数尾中；再代入 §223 的完整二阶估计，得到式（224.3）。$\square$
+
+这些无限坐标恒等式也可从有限柱集理解。若 $\mathcal P_m(d)$ 记录前 $m$ 个素数的赋值，则其概率降至 $\mu_s(d)$，且
+
+$$
+S_q(\text{第 }m\text{ 层观察})
+=\mathbb E_{\mu_s}[\mu_s(\mathcal P_m(d))^{q-1}].
+$$
+
+当 $q<1$ 时用单调收敛，当 $q>1$ 时用被 $1$ 控制的支配收敛，便得到幂和的无限乘积。同样，柱集信息量单调增加至 $-\log\mu_s(d)$，给出扩展值恒等式 $H(\mu_s)=\sum_pH(\pi_p)$；单位条件后只保留 $p\nmid V$ 的坐标。这些恒等式不预先假定 Shannon 熵有限。
+

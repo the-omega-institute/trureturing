@@ -1,0 +1,18 @@
+## 209. 有限几何前缀亏损的正核表示与 Robin 余量
+
+对自然数 $a\ge1$ 与实数 $t$，记
+
+$$
+S_a(t)=\sum_{k=0}^{a}t^k,
+\qquad
+Q_a(t)=\sum_{k=1}^{a}\frac{t^k}{k},
+\qquad
+P_a(t)=\sum_{k=0}^{a}(a-k)t^k,
+$$
+
+以及有限前缀亏损
+
+$$
+D_a(t)=Q_a(t)-\log S_a(t).
+$$
+
