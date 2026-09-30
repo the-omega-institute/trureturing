@@ -1,0 +1,18 @@
+**定理 35.1（标量周期导数四阶矩）。** 设 $a,b,M\in\mathbb R$，$a\le b$，$0\le M$，且 $f, f_p, f_{pp}:\mathbb R\to\mathbb R$。假设对每个 $x\in\mathbb R$，
+
+$$
+\operatorname{HasDerivAt} f (f_p x) x,
+\qquad
+\operatorname{HasDerivAt} f_p (f_{pp} x) x,
+$$
+
+$f_{pp}$ 在全体 $\mathbb R$ 上连续，端点满足 $f(b)=f(a)$、$f_p(b)=f_p(a)$，并且对每个 $x\in\operatorname{Icc}(a,b)$ 有幅度条件 $|f(x)|\le M$。则
+
+$$
+\int_a^b f_p(x)^4\,dx
+\le
+9M^2\int_a^b f_{pp}(x)^2\,dx,
+$$
+
+其中积分按定向区间积分理解，等价于在 $\operatorname{Ioc}(a,b)$ 上使用 Lebesgue 限制测度。结论的常数是 $9$。
+
