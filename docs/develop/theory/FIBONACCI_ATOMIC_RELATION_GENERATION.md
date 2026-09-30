@@ -24450,3 +24450,965 @@ $$
 固定 FIB 剩余类的加权命中界及所有整数的 Robin 不等式仍未解决。
 
 ## 追加锚（本行以下为增补区）
+
+## 214. 完整缺陷筛选后的存活矩与全部惩罚参数
+
+本节固定使用 Axler 的随规模变化的完整实际缺陷停止条件、Hertlein 的固定乘积停止条件，以及任意预先固定的有限低赋值停止目录。该目录不定义为全部 Robin 安全判据。研究对象始终是同一个整数的完整赋值、因子缺陷与同余命中。
+
+### 214.1 完整缺陷的实际定义及安全方向
+
+对正整数 $n$ 定义
+
+$$
+\eta(n)=\prod_{p\mid n}\left(1-p^{-v_p(n)-1}\right),
+\qquad c(n)=-\log\eta(n),
+$$
+
+乘积只遍历实际素因子，$\eta(1)=1$、$c(1)=0$。有限 Euler 因子化给精确等式
+
+$$
+Z(n)=\frac n{\varphi(n)}\eta(n).
+\tag{214.1}
+$$
+
+令 $a_0=0.0094243$、$\Lambda_n=\log\log n$。在已有 Axler 固定门槛 $n\ge N_K$ 上，
+
+$$
+\frac n{\varphi(n)}
+<e^\gamma\Lambda_n\left(1+\frac{a_0}{\Lambda_n^3}\right).
+$$
+
+因此定义
+
+$$
+h_A(n)=\log\left(1+\frac{a_0}{\Lambda_n^3}\right)
+$$
+
+以后，有以下两个方向：
+
+$$
+c(n)\ge h_A(n)\quad\Longrightarrow\quad
+Z(n)<e^\gamma\Lambda_n,
+\tag{214.2}
+$$
+
+$$
+Z(n)\ge e^\gamma\Lambda_n\quad\Longrightarrow\quad
+c(n)<h_A(n).
+\tag{214.3}
+$$
+
+式（214.2）允许等号，式（214.3）必须严格，因为所用 totient 上包络严格。式（214.3）的右边只是必要候选条件，不能反向推出 Robin 失败。
+
+Hertlein 的固定 totient 包络同样给
+
+$$
+c(n)\ge h_H:=\log(1771561/1771560)
+\quad\Longrightarrow\quad n\text{ 满足严格 Robin},
+\tag{214.4}
+$$
+
+其解析区间与已引用有限验证区间按原文重叠。本节只处理充分大的整数，因此无需对这两个区间重新拼接。
+
+为使筛选集合完全明确，预先固定有限目录 $\mathscr B=\{(p,b_p)\}$，其中每一项都有已引用的文献保证：$n>5040$ 且 $v_p(n)<b_p$ 时严格 Robin 成立。可直接取仓内已核的
+
+$$
+\mathscr B=\{(2,21),(3,13),(5,9),(7,7),(11,6)\},
+\qquad M_{\mathscr B}=\prod_{(p,b_p)\in\mathscr B}p^{b_p}.
+$$
+
+本节实际使用的存活集合与指示是
+
+$$
+\mathcal C_{\mathscr B}
+=\{n\ge N_K:c(n)<h_A(n),\ c(n)<h_H,\ M_{\mathscr B}\mid n\},
+\qquad \chi(n)=\mathbf1_{\mathcal C_{\mathscr B}}(n).
+\tag{214.4a}
+$$
+
+每个充分大的 Robin 等号或超界整数都属于该集合；集合成员可以安全。允许预先增加有限个具有同样已核文献保证的指数下限，后文阈值可依赖这份固定目录。任何已引用的固定部分乘积停止条件，在本节构造中也会最终失效，因为部分缺陷不大于趋零的完整缺陷；这不是对全部其他安全判据的概括。
+
+
+若只观测实际素因子集合 $P\subseteq\{p:p\mid n\}$，则
+
+$$
+c_P(n)=\sum_{p\in P}-\log(1-p^{-v_p(n)-1})\le c(n).
+$$
+
+所以 $c_P\ge h_A$ 或 $c_P\ge h_H$ 都可安全停止；但 $c_P<h_A$ 不保证完整 $c<h_A$。增加实际因子的观测可以继续触发停止。
+
+缺失素数必须单独处理：$p\nmid n$ 时，它在上述 $\eta$ 中的因子为1、在 $c$ 中的贡献为0。不能将 $v_p(n)=0$ 直接代入实际存在素因子的公式，加入虚假的 $1-p^{-1}$ 因子。文献中包含缺失情形的独立低赋值定理可以使用，但其来源是那个定理，而不是式（214.1）的不存在因子。
+
+### 214.2 与有限前缀正核的准确回接
+
+对实际 $p^a\parallel n$、$a\ge1$，§209 的
+
+$$
+D_a(1/p)=\sum_{k=1}^a\frac{p^{-k}}k-\log Z(p^a)
+$$
+
+满足
+
+$$
+-\log(1-p^{-a-1})
+=D_a(1/p)+\sum_{k>a}\frac{p^{-k}}k.
+\tag{214.5}
+$$
+
+证明只需在有限前缀后补全
+$-\log(1-1/p)=\sum_{k\ge1}p^{-k}/k$，再使用局部 Euler 因子化。
+
+因此对同一个 $n$，完整缺陷是已有正核与其正尾部的和。正核的下界可以提供充分停止证书，但正核本身不是整个缺陷。式（214.5）仍只在实际存在的 $p^a$ 上使用；对缺失素数，参考的 totient 因子本来就不存在，不能补出这一正尾部。
+
+### 214.3 用高赋值强制一整个真实子集通过完整缺陷筛选
+
+取正整数 $A,X$，满足
+
+$$
+\frac32A\le X\le\frac52A,
+\qquad y=\log A,\quad\ell=\log y,
+\quad s=y\ell,\quad t=e^\gamma\ell,
+\quad R_y=y/\ell^2,
+\quad\delta=y/\ell^3.
+$$
+
+以下均取 $A$ 充分大。定义整数
+
+$$
+w=\left\lceil\frac{16\ell^3}{a_0}\right\rceil,
+\qquad
+h=\left\lceil\log_2\left(\frac{16w\ell^3}{a_0}\right)\right\rceil,
+\qquad
+K=\left(\prod_{p\le w}p\right)^h.
+\tag{214.6}
+$$
+
+考察同一个实际集合
+
+$$
+\mathcal J_K=\{n\in\mathbb N:A\le n\le X,\ K\mid n\}.
+$$
+
+**引理 214.1（强制高赋值后的统一存活）。** 充分大时，每个 $n\in\mathcal J_K$ 都满足 $c(n)<h_A(n)$，故不会被完整 Axler 缺陷停止条件排除。
+
+证明。对 $p\le w$，$v_p(n)\ge h$；对 $p>w$ 的实际素因子，$v_p(n)\ge1$。记
+
+$$
+S(n)=\sum_{p\mid n}p^{-v_p(n)-1}.
+$$
+
+由式（214.6）与整数平方倒数尾和，
+
+$$
+\begin{aligned}
+S(n)
+&\le w\,2^{-h-1}+\sum_{j>w}j^{-2}\\
+&\le\frac{a_0}{32\ell^3}+\frac1w
+\le\frac{3a_0}{32\ell^3}.
+\end{aligned}
+\tag{214.7}
+$$
+
+每个实际因子中的 $p^{-v_p(n)-1}\le1/4$，所以
+$-\log(1-u)\le2u$ 给
+
+$$
+c(n)\le2S(n)\le\frac{3a_0}{16\ell^3}.
+\tag{214.8}
+$$
+
+另一方面，若 $\ell\ge2$，则 $y=e^\ell>4$，且 $\log(X/A)\le\log(5/2)<1$，所以
+
+$$
+\Lambda_n\le\ell+\log(1+1/y)\le\ell+1/4\le(9/8)\ell.
+$$
+
+因 $(9/8)^3<2$，有 $\Lambda_n^3\le2\ell^3$；同时 $a_0/\Lambda_n^3\le1$。于是
+
+$$
+h_A(n)\ge\frac{a_0}{2\Lambda_n^3}
+\ge\frac{a_0}{4\ell^3}
+>c(n).
+\tag{214.9}
+$$
+
+这证明统一存活。$\square$
+
+这些数值比较只需 $\ell\ge2$ 和 $A\ge N_K$。再要求
+$3a_0/(16\ell^3)<h_H$、$w\ge\max_{(p,b_p)\in\mathscr B}p$、
+$h\ge\max_{(p,b_p)\in\mathscr B}b_p$，就明确保证整个
+$\mathcal J_K\subseteq\mathcal C_{\mathscr B}$。后文另外使用
+$w\le\sqrt s$、$w^h<s$、$\delta\ge2\log4$ 及 §211.2 的解析门槛；
+这些条件全都最终成立，但本稿不将未计算的解析门槛冒充数值门槛。
+
+
+式（214.8）还给 $c(n)\to0$，所以这些整数最终不触发 Hertlein 的固定乘积阈值，或任何固定正阈值的部分实际因子停止条件。因 $w,h\to\infty$，任意预先固定的有限素数集合及有限指数上界也最终被强制超过；故仓内已引用的固定有限低赋值停止目录同样不会排除这些整数。这里的目录固定在 $A\to\infty$ 之前，不能据此声称避开了所有可能随规模新增的独立安全判据。
+
+特别地，低赋值定理若要求假想反例必须被
+$2^{21}3^{13}5^97^711^6$ 整除，$K$ 最终含有这个核心；其他预先固定的有限素数幂方向同理。联合实际因子条件也不能触发，因为每个部分缺陷 $c_P$ 都不超过式（214.8）的完整缺陷。
+
+### 214.4 筛选后的全区间矩仍保留完整的半积分下界
+
+§211.2 构造了只依赖 $A$ 的实际有限整数
+
+$$
+m=\prod_{p\le y-\delta}p^{e_p},
+\qquad
+e_p=\lceil\log s/\log p\rceil-1\quad(p\le\sqrt s),
+$$
+
+较大素数的指数为一，并证明
+
+$$
+m\le A e^{-\delta/2},\qquad
+\log P_s(m)\ge s\log t-y+\frac{\pi^2}{12}R_y-C\delta,
+$$
+
+$$
+P_s(m)=\sum_{d\mid m}\frac{b_s(d)}d,
+\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\ge0.
+\tag{214.10}
+$$
+
+本节的 $K$ 最终整除同一个 $m$。确实，$w=O(\ell^3)$、$h=O(\log\ell)$，所以
+
+$$
+\log(w^h)=O((\log\ell)^2)=o(\log s),
+\qquad w<\sqrt s.
+$$
+
+故对每个 $p\le w$ 有 $p^h<s$，从而 $e_p\ge h$。此外，甚至不用素数定理，仅用素数数量不超过 $w$ 即有
+
+$$
+\log K\le hw\log w
+=O(\ell^3(\log\ell)^2)=o(\delta).
+\tag{214.11}
+$$
+
+令 $Q=X-A+1\ge A/2$。充分大时 $m\le Q/2$。对于每个 $d\mid m$，
+
+$$
+\operatorname{lcm}(K,d)\mid m,
+\qquad \operatorname{lcm}(K,d)\le Kd.
+$$
+
+所以在同一集合 $\mathcal J_K$ 中，
+
+$$
+\#\{n\in\mathcal J_K:d\mid n\}
+\ge\frac{Q}{2\operatorname{lcm}(K,d)}
+\ge\frac{Q}{2Kd}.
+\tag{214.12}
+$$
+
+这里先用倍数计数 $Q/\operatorname{lcm}(K,d)-1$，再用
+$\operatorname{lcm}(K,d)\le m\le Q/2$ 吸收取整误差，没有假设各整除事件独立。
+
+**定理 214.2（上述安全筛选不足以修复全区间指定矩）。** 对上述范围的全部充分大 $A$，
+
+$$
+\log\sum_{n\in\mathcal J_K}(Z(n)/t)^s
+\ge\frac{\pi^2}{12}R_y-C'\delta
+\longrightarrow+\infty,
+\tag{214.13}
+$$
+
+并且个体阈值归一的相同和也满足此下界（增大常数 $C'$）。
+
+证明。由同一整数的非负卷积与式（214.12），
+
+$$
+\sum_{n\in\mathcal J_K}Z(n)^s
+\ge\frac Q{2K}P_s(m).
+$$
+
+代入式（214.10）、式（214.11），$\log(Q/(2A))$ 有下界常数，得到式（214.13）。§211.5 的精确比较只再损失因子 $A/X\ge2/5$，故个体阈值下亦成立。$\square$
+
+因此，任何先排除本节这份安全目录、再对剩余全整数区间求同一个指定矩的方案，仍有一个已明确构造的存活子集迫使矩发散。本结论不保证 $\mathcal J_K$ 的每个整数实际安全，也不保证存在任何 Robin 反例；它只证明这份**必要条件筛选后的全区间矩**最终无法小于一，不能用这个指定证书完成排除。若加入另外的安全规则并删掉 $\mathcal J_K$ 的部分成员，需重新估计，不能沿用本定理的子集包含关系。
+
+### 214.5 固定 FIB 同余上的存活者确实很多，但加权矩仍未判定
+
+回到实际来源族
+
+$$
+V=F_r,\quad r\ge7\text{ 素},\quad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+gV,
+$$
+
+取其实际端点 $A,X$，它们最终满足本节的区间范围。此时
+$y=2r\log\phi+O(1)$、$\ell=\log r+O(1)$。因此
+
+$$
+w=O((\log r)^3)<2r-1,
+\qquad \log K=O((\log r)^3(\log\log r)^2)=o(r).
+$$
+
+素指标秩界 $p\mid F_r\Rightarrow p\ge2r-1$ 保证 $\gcd(K,V)=1$。
+真实同余 $K\mid1+gV$ 在实际连续乘子区间中恰有
+
+$$
+\frac{|I_r|}{K}+O(1)=V^{1-o(1)}
+\tag{214.14}
+$$
+
+个解。它们全部是 §205 已回接的合法单位位一来源，且全部通过本节的完整缺陷筛选和固定有限停止目录。
+
+这说明该筛选并没有把**候选个数**压成真实异常计数所具有的 $V^{o(1)}$。它没有证明这些存活者的高阶矩很大：其响应仍可能很小；式（214.12）的全区间倍数下界不能换成 FIB 余类计数。
+
+更直接地，§212.2 的固定 $0<\beta<1/2$ 的实际 CRT 安全子族也最终全部通过该筛选。该子族的同一个整数为 $N=DH$，其中
+
+$$
+D=\operatorname{lcm}(1,\ldots,\lfloor\beta y\rfloor),
+\qquad
+p\mid H\Rightarrow p>r(\log r)^{1/4}.
+$$
+
+§205 的有限幂截断估计给 $c(D)=O(r^{-1/2})$；粗余因子的实际大小给
+
+$$
+c(H)\le2\sum_{p\mid H}p^{-2}
+\ll\frac{\log H}{z_r^2\log z_r}
+=O\left(\frac1{r(\log r)^{3/2}}\right).
+$$
+
+因此 $c(N)=O(r^{-1/2})=o(h_A(N))$，一致于该子族。每个固定素数在 $D$ 中的指数又趋于无穷，故固定有限低赋值停止条件也不触发。但这些同一个整数已知满足
+
+$$
+\Delta(N)=-e^\gamma\log\beta+o(1)>0.
+$$
+
+所以这里不是抽象地说“候选可能安全”，而是已有真实、已知安全的 FIB 子族通过筛选。其矩贡献仍按 §212.2 的负指数率趋零，不能当作 FIB 矩发散的例子。
+
+### 214.6 滤后矩的精确联合权重，以及一个受限软权重障碍
+
+使用式（214.4a）中明确的存活指示 $\chi(n)$。对固定 FIB 模数，真正要估计的是
+
+$$
+\mathcal M_{\chi}(s;I_r,V)
+=\sum_{g\in I_r}\chi(N_g)Z(N_g)^s.
+$$
+
+仍有精确的同源分解
+
+$$
+\mathcal M_{\chi}
+=\sum_{d\le X}b_s(d)
+\#\{g\in I_r:d\mid1+gV,\ \chi(1+gV)=1\}.
+\tag{214.15}
+$$
+
+$d$ 的整除、实际赋值和安全筛选都在同一个 $g$ 上判断。因为失败整数必存活，
+$\mathcal M_{\chi}/t^s<1$ 是合法的充分排除证书；但这里没有证明这个不等式。
+
+一种可计算的软放松是：只用 $c(n)<h_A(n)\le h_A(A)$，对任意 $k\ge0$ 有
+
+$$
+\chi(n)Z(n)^s
+\le e^{kh_A(A)}Z(n)^s\eta(n)^k
+\qquad(A\le n\le X).
+\tag{214.16}
+$$
+
+记 $F_{s,k}(n)=Z(n)^s\eta(n)^k$。它是乘法函数，且局部值必须写成
+
+$$
+F_{s,k}(1)=1,\qquad
+F_{s,k}(p^a)
+=(1-p^{-1})^{-s}(1-p^{-a-1})^{s+k}\quad(a\ge1).
+\tag{214.17}
+$$
+
+不能把右边的 $a\ge1$ 公式代入 $a=0$，否则会给缺失素数施加虚假惩罚。
+
+当 $0\le k\le s$ 时，这个函数仍有非负的除数卷积系数。实际 $a\ge1$ 的局部值随 $a$ 增加；首步也满足
+
+$$
+F_{s,k}(p)
+=(1+p^{-1})^s(1-p^{-2})^k
+\ge\bigl((1+p^{-1})(1-p^{-2})\bigr)^s>1.
+$$
+
+所以令 $b_{s,k}=\mu*F_{s,k}$ 后，可照 §210 的有限正项桥得到
+
+$$
+\sum_{n\le X}F_{s,k}(n)\le X L(s,k),
+$$
+
+$$
+L(s,k)=\prod_p\left((1-p^{-1})
+\sum_{a\ge0}\frac{F_{s,k}(p^a)}{p^a}\right).
+\tag{214.18}
+$$
+
+这里 $\mu$ 是 Möbius 函数，不是前面由 $b_s(d)/(dU(s))$ 定义的概率权重。
+
+### 214.7 全部非负惩罚参数的 Euler 凸性障碍
+
+保持同一个整数上的实际因子
+$\eta(n)=\prod_{p\mid n}(1-p^{-v_p(n)-1})$，缺失素数的因子为1。
+对固定实数 $s>0$ 及 $k\ge0$，令
+$F_{s,k}(n)=Z(n)^s\eta(n)^k$，并定义
+
+$$
+L(s,k)=\prod_p L_p(s,k),\quad
+L_p(s,k)=(1-p^{-1})\left(1+\sum_{a\ge1}\frac{(1-p^{-1})^{-s}(1-p^{-a-1})^{s+k}}{p^a}\right).
+$$
+
+令 $U(s)=L(s,0)$，$W(s)=\prod_p[1-p^{-1}+p^{-1}(1-p^{-1})^{-s}]$，$E_s=\log W(s)-\log U(s)$。
+这些无限乘积对每个固定有限 $s,k$ 正且收敛：$L_p(s,k)=1+O_{s,k}(p^{-2})$。确实 $F_{s,k}(p)=1+O_{s,k}(p^{-1})$，所有 $a\ge2$ 的 $F_{s,k}(p^a)$ 一致有界；在概率权重 $(1-p^{-1})p^{-a}$ 下与恒等函数1相减，$a=1$ 的项为 $O_{s,k}(p^{-2})$，其余尾为 $O_{s,k}(p^{-2})$。有限个较小素数的局部因子均正。这里没有声称该 $O$ 对无界 $k$ 一致；下述精确不等式逐个覆盖每个 $k$。
+
+**命题 214.3（Euler 惩罚的全参数下界）。** 对每个 $s>0$、$k\ge0$，
+
+$$
+\log L(s,k)\ge\log U(s)-\frac{k}{s}E_s.
+\tag{214.19}
+$$
+
+因此对任意 $h\ge E_s/s$，有
+
+$$
+e^{kh}L(s,k)\ge U(s)\qquad(k\ge0).
+\tag{214.20}
+$$
+
+证明。$k=0$ 时为等式。$k>0$ 时在局部指数 $a\in\mathbb N_0$ 上使用概率权重 $\nu_p(a)=(1-p^{-1})p^{-a}$。
+令 $A_p(0)=B_p(0)=1$，对 $a\ge1$ 置
+$A_p(a)=(1-p^{-1})^{-s}$、$B_p(a)=F_{s,k}(p^a)$。
+逐项恒等式为
+
+$$
+Z(p^a)^s=A_p(a)^{k/(s+k)}B_p(a)^{s/(s+k)}.
+$$
+
+$a=0$ 同样成立，但不能把正赋值公式误代入缺失素数。
+Hölder 不等式的指数取 $(s+k)/k$ 和 $(s+k)/s$，得到
+
+$$
+U_p(s)\le W_p(s)^{k/(s+k)}L_p(s,k)^{s/(s+k)}.
+$$
+
+先在有限素数集合上相乘，再取收敛乘积的极限，取对数并整理即（214.19）。（214.20）随之成立。$\square$
+
+在当前 Robin 尺度，$y=\log A$、$\ell=\log y$、$s=y\ell$，安全停止阈值为
+
+$$
+h=h_A(A)=\log(1+a_0/\ell^3),\qquad a_0=0.0094243.
+$$
+
+§210 的实际赋值比较给 $0\le E_s\le\sqrt{s}(\log s+5)$。由于
+
+$$
+\frac{\log s+5}{\sqrt{s}}=o(\ell^{-3}),\qquad
+h_A(A)\sim a_0\ell^{-3},
+$$
+
+存在与 $k$ 无关的 $A_0$，使所有 $A\ge A_0$ 同时满足（214.20）的前提。因此
+
+$$
+\inf_{k\ge0}\frac{e^{k h_A(A)}X L(s,k)}{t^s}
+=\frac{XU(s)}{t^s},\qquad t=e^\gamma\ell.
+\tag{214.21}
+$$
+
+等号由 $k=0$ 取得。结合 §210 的增长矩展开，右边仍保留 $(\pi^2/6)y/\ell^2$ 的正主项。
+
+这是对整个 Euler 软表达式族的精确最优化结论。对 $0\le k\le s$，非负除数卷积曾给出将实际前缀和压到 $X L(s,k)$ 的合法上界。对较大 $k$，该正项桥未获证明且可能出现负系数；（214.21）既不补造那条上界，也不把 Euler 乘积替换成实际 FIB 求和。它说明：即使另有方法能合法使用这一 Euler 表达式，仅优化其非负惩罚参数也不会比 $k=0$ 改善预算。
+
+若直接保留固定 FIB 模数的实际命中或带符号边界，所得表达式不再是（214.21），本命题不排除它产生新的节省。这里的 Hölder 不等式是经典工具；所用实际赋值比较来自 §210。此组合没有证明实际 FIB 余类上的节省，也不推出 RH。
+
+更大的 $k$ 不能无条件沿用这条正项桥。例如 $k=2s$ 时，
+
+$$
+F_{s,2s}(2)=(27/32)^s<1,
+\qquad b_{s,2s}(2)=F_{s,2s}(2)-1<0.
+$$
+
+负系数使逐项替换 $\lfloor X/d\rfloor\le X/d$ 不再保持原方向。若研究这一范围，需新的带符号估计或直接控制实际有限和；本节没有排除这种其他方法。
+
+
+本节所用文献前置是 [Axler](../../../Library/notes/axler2023robin.md) 原文式（3.4）—（3.5）与 [Hertlein](../../../Library/notes/hertlein2018robin.md) 原文 Lemmas 1–3；有限高矩配置来自 §211，已知安全的实际 CRT 子族来自 §212。全区间矩下界、实际 FIB 存活者计数、Euler 惩罚表达式最优化是不同量词的结论，均不能替代固定 FIB 余类的逐点排除。
+
+## 追加锚（本行以下为增补区）
+
+## 215. 增长矩的固定函数类与实际核心适用范围
+
+沿用 §210–213 的实际整数族。令 $r\ge7$ 为素数，
+
+$$
+V=F_r,\qquad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N_g=1+Vg,
+$$
+
+并记
+
+$$
+A=\min_{g\in I_r}N_g,\quad X=\max_{g\in I_r}N_g,
+\quad T=|I_r|,\quad y=\log A,\quad \ell=\log y,
+\quad s=y\ell,\quad t=e^\gamma\ell.
+$$
+
+于是 $X\asymp V^2$、$T\asymp V$、$y=2\log V+O(1)$。本节讨论的
+归一矩仍为
+
+$$
+\mathcal Q_r=\sum_{g\in I_r}\left(\frac{Z(N_g)}t\right)^s,
+\qquad Z(n)=\frac{\sigma(n)}n.
+$$
+
+本节得到对小核心类的一致估计，但其范围不包含 §212.3 中
+$\mathcal Q_r\ge1$ 所要求的实际大核心。所用 Shiu、Nair–Tenenbaum、
+Henriot 定理的版本、完整条件与勘误见
+[增长矩的文献接口](../../../Library/ArithSums/shiuhenriot2026growingmoments.md)。
+以下明确列出推导所需的函数类常数、参数代入和根密度。
+
+### 215.1 直接代入完整增长矩的两个障碍
+
+令 $f_s(n)=Z(n)^s$。要求 $f_s(p^a)\le A_0^a$ 和
+$f_s(n)\le B_0n^\varepsilon$ 的函数类，在 $p=2,a=1$ 处必有
+
+$$
+A_0\ge(3/2)^s,\qquad
+B_0\ge(3/2)^s2^{-\varepsilon}.
+\tag{215.1}
+$$
+
+因此 $s=y\ell\to\infty$ 时，不能直接把原定理中依赖函数类参数的常数
+当作固定常数。式（215.1）只给参数的必要增长，不给定理隐含常数的精确增长率。
+
+另一项障碍来自 Shiu 上界中的因子
+$\exp(\sum_{p\le x,\,p\nmid q}f_s(p)/p)$。对这里的模数 $V=F_r$，
+$r\ge7$ 为素数蕴含 $2\nmid V$，故该指数包含
+
+$$
+\frac{(3/2)^s}{2}.
+\tag{215.2}
+$$
+
+这一原始上界在当前 Robin 阈值处不能给出所需节省。
+§210 的局部 Euler 矩保留了完整赋值的饱和效应；若改用保留这种结构的估计，
+仍须另外处理式（215.1）的函数类一致性。
+
+### 215.2 删去小素数后的固定函数类
+
+对实数 $s\ge1$、$w\ge s+1$，定义
+
+$$
+R_{s,w}(n)=\prod_{\substack{p^a\parallel n\\p>w}}Z(p^a)^s,
+\qquad
+J_{s,w}(n)=\mathbf1_{P^-(n)>w}\,Z(n)^s,
+\qquad P^-(1)=\infty.
+\tag{215.3}
+$$
+
+$R_{s,w}$ 忽略小素数因子，$J_{s,w}$ 则把含有小素数因子的整数赋值为零。
+后者用于保留完整核心的精确排除条件。
+
+**引理 215.1（粗整数矩的统一函数类）。** 对每个固定
+$\varepsilon>0$，以上两个函数都属于一元函数类
+$\mathcal M_1(A_0,B_0,\varepsilon)$，其中可以同时取
+
+$$
+A_0=e,\qquad B_0=\exp\bigl(\pi(e^{1/\varepsilon})\bigr),
+\tag{215.4}
+$$
+
+与 $s,w$ 无关。这里一元函数类的条件为非负性，以及在 $(m,n)=1$ 时
+
+$$
+F(mn)\le\min\{A_0^{\Omega(m)},B_0m^\varepsilon\}F(n).
+\tag{215.5}
+$$
+
+证明。两个函数均为非负乘法函数，且在 $1$ 处取值为 $1$。
+若 $p>w,a\ge1$，则
+
+$$
+1\le Z(p^a)^s\le(1-1/p)^{-s}
+\le\exp\!\left(\frac{s}{p-1}\right)\le e.
+\tag{215.6}
+$$
+
+在 $p\le w$ 处，$R_{s,w}(p^a)=1$，$J_{s,w}(p^a)=0$。
+所以两者均满足 $F(m)\le e^{\omega(m)}\le e^{\Omega(m)}$。
+把素数分成 $p\le e^{1/\varepsilon}$ 与 $p>e^{1/\varepsilon}$，后者各有
+$e\le p^\varepsilon$，从而
+
+$$
+e^{\omega(m)}\le
+\exp\bigl(\pi(e^{1/\varepsilon})\bigr)m^\varepsilon.
+$$
+
+与 $F(mn)=F(m)F(n)$ 合并即得式（215.5）。当 $J_{s,w}(n)=0$ 时，
+乘法性同时给 $J_{s,w}(mn)=0$，没有除以零或正下界的额外要求。$\square$
+
+**引理 215.2（粗素数 Euler 乘积的统一余量）。** 对 $p>w$ 记
+
+$$
+U_p(s)=(1-1/p)\sum_{a\ge0}\frac{Z(p^a)^s}{p^a}.
+$$
+
+则
+
+$$
+1\le U_p(s)\le1+\frac{(e-1)s}{p(p-1)},
+\qquad
+\prod_{p>w}U_p(s)
+\le\exp\!\left(O\!\left(\frac{s}{w\log w}\right)\right),
+\tag{215.7}
+$$
+
+其中常数绝对，与 $s,w$ 无关。
+
+证明。式（215.6）和几何级数给
+
+$$
+U_p(s)\le1+\frac{e^{s/(p-1)}-1}{p}.
+$$
+
+由 $0\le s/(p-1)\le1$ 和 $e^u-1\le(e-1)u$ 得到逐素数上界。
+下界来自 $Z(p^a)^s\ge1$。再用素数计数上界和分部求和，
+
+$$
+\sum_{p>w}\frac1{p(p-1)}\ll\frac1{w\log w}.
+$$
+
+对有限乘积取对数并用 $\log(1+u)\le u$，最后取极限即得结论。
+特别地，$w=s+1$ 时指数余量为 $O(1/\log s)$。$\square$
+
+### 215.3 完整实际核心的提取与互素条件
+
+定义完整小素数核心
+
+$$
+C_w(n)=\prod_{p\le w}p^{v_p(n)}.
+\tag{215.8}
+$$
+
+固定一个 $w$-光滑正整数 $C$。若 $(C,V)>1$，则 $C_w(N_g)=C$ 的类为空，
+因为 $(N_g,V)=1$。否则取唯一的 $g_C\in\{0,\ldots,C-1\}$，使
+$1+Vg_C\equiv0\pmod C$，并令
+
+$$
+b_C=\frac{1+Vg_C}{C},\qquad
+K_C=\{k\in\mathbb Z:g_C+Ck\in I_r\}.
+$$
+
+**命题 215.3（同一整数的精确核心分解）。** 有
+
+$$
+N_{g_C+Ck}=C(Vk+b_C),\qquad
+Cb_C-Vg_C=1,\qquad (b_C,V)=1,
+\tag{215.9}
+$$
+
+且 $1\le b_C\le V+1$。因此 $Q_C(k)=Vk+b_C$ 是本原一次多项式，
+没有固定素因子，系数绝对值之和为 $O(V)$，常数不依赖 $C$。此外，
+
+$$
+\sum_{\substack{g\in I_r\\C_w(N_g)=C}}Z(N_g)^s
+=Z(C)^s\sum_{k\in K_C}J_{s,w}(Vk+b_C).
+\tag{215.10}
+$$
+
+证明。式（215.9）由定义直接得到；任何同时整除 $b_C,V$ 的素数都整除
+$Cb_C-Vg_C=1$，故互素。$C=1$ 时 $g_C=0,b_C=1$；$C>1$ 时由
+$0\le g_C<C$ 得所述系数界。本原一次多项式在 $p\nmid V$ 时模 $p$ 恰有
+一个根，在 $p\mid V$ 时无根，因而没有固定素因子。
+
+对同一个 $k\in K_C$，完整核心恰为 $C$ 当且仅当 $Vk+b_C$ 不含任何
+$p\le w$ 的素因子。该条件还保证 $(C,Vk+b_C)=1$，因此约数和的乘法性给
+式（215.10）。非光滑 $C$ 的核心类同样为空。$\square$
+
+这一提取也给出 Shiu 定理的正确参数对应。写 $N_g=Cm$ 后，
+
+$$
+m\equiv C^{-1}\pmod V,\qquad
+m\asymp V^2/C,\qquad h_m\asymp V^2/C.
+$$
+
+其模数条件 $V<h_m^{1-\alpha}$ 对应的幂次界为
+
+$$
+C\ll V^{2-1/(1-\alpha)}
+=V^{(1-2\alpha)/(1-\alpha)}.
+\tag{215.11}
+$$
+
+对固定 $0<\eta<1$，取 $0<\alpha<\eta/(1+\eta)$，则
+$C\le V^{1-\eta}$ 最终满足该条件；区间长度与位置同阶，满足另一项短区间条件。
+若直接把 $C\mid n$ 与 $n\equiv1\pmod V$ 合成模 $CV$ 的条件，所得余数在
+$C>1$ 时不与 $CV$ 互素，不能代入要求互素余数的版本。
+
+### 215.4 修正 Henriot 定理的参数代入与受限核心估计
+
+**定理 215.4（小核心类的一致增长矩上界）。** 固定 $0<\eta<1$，取
+$w=s+1$。当素数 $r$ 充分大时，对所有正整数 $C\le V^{1-\eta}$，一致有
+
+$$
+\boxed{
+\sum_{\substack{g\in I_r\\C_w(N_g)=C}}Z(N_g)^s
+\ll_\eta\frac{T}{C\log w}Z(C)^s.
+}
+\tag{215.12}
+$$
+
+证明。非空核心类必有 $C$ 为 $w$-光滑数且 $(C,V)=1$，以下只考虑此情形。
+设 $m=V/C$。由 $0\le g_C<C$，对 $k\in K_C$ 有
+
+$$
+\frac m{10}-1<k\le\frac m5.
+$$
+
+当 $m>20$ 时，$K_C$ 包含于 $(m/20,m/5]$，由两个区间
+$(m/20,m/10]$、$(m/10,m/5]$ 覆盖。两区间均形如 $(u,u+h]$，且
+$h=u\asymp V/C$。由于求和项非负，扩大到这两个区间只会增加上界。
+
+对修正后的 Henriot Theorem 5，取总次数 $1$、
+
+$$
+\alpha_H=\frac12,\qquad \delta_H=\frac\eta2,\qquad
+0<\varepsilon_H<\frac1{100(1+2/\eta)}.
+\tag{215.13}
+$$
+
+其条件为 $u^{\alpha_H}<h\le u$、
+$u\ge C_0\|Q_C\|^{\delta_H}$，以及
+$J_{s,w}\in\mathcal M_1(A_0,B_0,\varepsilon_H)$。
+引理 215.1 提供固定的 $A_0,B_0$；
+$u\gg V^\eta$、$\|Q_C\|\ll V$ 和 $h=u$ 保证其余条件在充分大时一致成立。
+定理常数因而只依赖 $\eta$，没有保留随 $s$ 变化的函数类常数。
+
+对一次多项式 $Q_C(k)=Vk+b_C$，所有 $a\ge1$ 的素数幂根数满足
+
+$$
+\rho(p^a)=
+\begin{cases}
+1,&p\nmid V,\\
+0,&p\mid V.
+\end{cases}
+$$
+
+令 $\kappa(a)=\prod_{p\mid a}p$。修正定理对单个不可约因子的归一根密度为
+
+$$
+\frac{\breve\rho_{Q_C}(a)}{a\kappa(a)}
+=
+\begin{cases}
+\displaystyle\prod_{p^v\parallel a}\frac{p-1}{p^{v+1}},&(a,V)=1,\\
+0,&(a,V)>1.
+\end{cases}
+\tag{215.14}
+$$
+
+$a=1$ 时第一行的空乘积为 $1$。确实，当 $p\nmid V$ 时，模 $p^{v+1}$
+共有 $p-1$ 个余数使 $v_p(Q_C(k))=v$；若 $p\mid V$，则连一次整除也不可能。
+不同素数条件由中国剩余定理合并。单因子情形没有不同不可约因子间的交叉排除条件。
+特别地，式（215.14）不超过 $1/a$，并在 $(a,V)>1$ 时为零。
+
+因此修正定理在每个覆盖区间上的右边不超过固定常数乘以
+
+$$
+h\prod_{\substack{p\le u\\p\nmid V}}(1-1/p)
+\prod_{\substack{p\le u\\p\nmid V}}
+\left(\sum_{a\ge0}\frac{J_{s,w}(p^a)}{p^a}\right).
+\tag{215.15}
+$$
+
+这里先把定理中 $a\le u$ 的非负有限和放大到 Euler 乘积，没有交换带符号的项。
+因 $w=s+1\asymp\log V\log\log V=o(V^\eta)$，有 $w\le u$。
+对 $p\le w$，$J_{s,w}$ 的正次幂项全为零；对 $p>w$，合并局部因子得到
+$U_p(s)$。故式（215.15）等于
+
+$$
+h\prod_{\substack{p\le w\\p\nmid V}}(1-1/p)
+\prod_{\substack{w<p\le u\\p\nmid V}}U_p(s).
+$$
+
+代入式（215.10）、引理 215.2 和 $h\asymp T/C$，得到更明确的上界
+
+$$
+\sum_{\substack{g\in I_r\\C_w(N_g)=C}}Z(N_g)^s
+\ll_\eta\frac TC Z(C)^s
+\prod_{\substack{p\le w\\p\nmid V}}(1-1/p)
+\exp\!\left(O\!\left(\frac{s}{w\log w}\right)\right).
+\tag{215.16}
+$$
+
+素数指标 Fibonacci 数的每个素因子均至少为 $2r-1$。所以
+
+$$
+\omega(V)\le\frac{\log V}{\log(2r-1)},\qquad
+0\le\log\frac V{\varphi(V)}
+\le\frac{\omega(V)}{2r-2}=O(1/\log r).
+$$
+
+Mertens 乘积公式遂给
+
+$$
+\prod_{\substack{p\le w\\p\nmid V}}(1-1/p)
+\le\prod_{p\le w}(1-1/p)\frac V{\varphi(V)}
+\ll\frac1{\log w}.
+$$
+
+又 $s/(w\log w)=O(1/\log s)$，式（215.16）即推出式（215.12）。$\square$
+
+若在余因子求和中用 $R_{s,w}$ 代替 $J_{s,w}$，则小素数局部级数为
+$(1-1/p)^{-1}$，恰好抵消式（215.15）的相应筛因子；所得上界只有
+$\ll_\eta(T/C)Z(C)^s$。因此 $1/\log w$ 的收益来自精确核心的排除条件。
+放弃该条件后，不能把它带来的收益重新补回。
+
+对 $C>V$，集合 $K_C$ 至多有一个整数，因为原乘子区间的长度小于 $V$。
+以上多项式系数一致性没有提供这种单点类所需的平均估计。
+
+### 215.5 一般互素剩余类的增长矩反例
+
+这里允许自由选择模数与互素余数，不限定为 $V=F_r$、余数 $1$。
+
+**命题 215.5（一般 AP 几何不能提供统一的全域矩密度界）。** 存在趋于无穷的
+$x$、素数模数 $q\asymp\sqrt x$ 和 $(a,q)=1$，使区间 $(x/2,x]$ 在该余数类
+中的点数 $T_q\asymp\sqrt x$，但在
+
+$$
+Y=\log x,\qquad L=\log Y,\qquad s=YL,\qquad t=e^\gamma L
+$$
+
+处，
+
+$$
+\frac{\displaystyle\sum_{\substack{x/2<n\le x\\n\equiv a\pmod q}}Z(n)^s}
+{T_qU(s)}\ge\exp\bigl((1/2+o(1))Y\bigr)\longrightarrow\infty,
+\tag{215.17}
+$$
+
+其中 $U(s)=\prod_p U_p(s)$ 是 §210 的完整赋值矩。
+
+证明。取 $n_j=\operatorname{lcm}(1,\ldots,j)$、$x=n_j$。强素数定理和
+Mertens 估计给
+
+$$
+\log n_j=\psi(j)=j+o(j),\qquad
+Z(n_j)=e^\gamma\log j+o(1)=t+o(1).
+\tag{215.18}
+$$
+
+为核对第二式的实际赋值，写成
+
+$$
+Z(n_j)=\prod_{p\le j}(1-p^{-1})^{-1}
+\prod_{p\le j}\left(1-p^{-\lfloor\log j/\log p\rfloor-1}\right).
+$$
+
+当 $p\le\sqrt j$ 时，被减项小于 $1/j$；当 $p>\sqrt j$ 时，被减项为
+$p^{-2}$。两段总和均为 $O(j^{-1/2})$，故第二乘积的对数为
+$O(j^{-1/2})$，对 $Z(n_j)$ 的加性影响为 $o(1)$。
+强 Mertens 估计给第一乘积为 $e^\gamma\log j+o(1)$，而
+$\log\log n_j-\log j=o(1)$，得到式（215.18）。
+
+由 Bertrand 定理选素数 $q_j\in(\sqrt x,2\sqrt x)$。充分大时 $q_j>j$，
+故 $(q_j,n_j)=1$。取 $a_j$ 为 $n_j$ 模 $q_j$ 的最小正余数，则
+$(x/2,x]$ 中这个互素余数类包含 $n_j$，并有
+
+$$
+T_{q_j}=\frac{x}{2q_j}+O(1)\asymp\sqrt x.
+$$
+
+这些区间与模数满足 Shiu 对任意固定 $0<\alpha<1/2$ 的模数幂次条件；
+这里失败的是增长函数的一致矩估计，而非区间几何条件。
+式（215.18）给这个实际点的归一贡献
+
+$$
+\log\left(\frac{Z(n_j)}t\right)^s=o(Y).
+\tag{215.19}
+$$
+
+另一方面，§210.2 的 Euler 矩比较与 Weingartner 展开给
+
+$$
+\log\frac{U(s)}{t^s}=-Y+o(Y).
+\tag{215.20}
+$$
+
+由于 $\log T_{q_j}=Y/2+O(1)$，单点 $n_j$ 已给
+
+$$
+\frac{Z(n_j)^s}{T_{q_j}U(s)}
+=\exp\bigl((1/2+o(1))Y\bigr),
+$$
+
+证明式（215.17）。$\square$
+
+因此一般互素剩余类中不能一致断言
+$\sum Z(n)^s\ll T_qU(s)$；即使允许右边再乘 $\exp(o(Y))$ 也不成立。
+从 $U(s)$ 删除模数素因子 $q_j$ 对应的 Euler 因子只会使右边更小。
+这不反驳利用 Fibonacci 模数与指定余数 $1$ 的额外关系得到更强估计，
+也没有构造 Robin 反例。§211–213 关于全区间矩和已知安全项的结论，同样不能
+代替这里尚未得到的实际 FIB 剩余类估计。
+
+### 215.6 同一整数的大核心与加权命中缺口
+
+§212.3 的必要条件具有明确的共同实现量词：对每个固定 $\varepsilon>0$，
+充分大的每个满足 $\mathcal Q_r\ge1$ 的素数指标 $r$，都有同一个实际
+$g\in I_r$，使在 $z=r(\log r)^{1/2}$ 处
+
+$$
+R_z(N_g)=\prod_{\substack{p\le z\\p\mid N_g}}p,\qquad
+\log R_z(N_g)\ge(2e^{-1/2}-\varepsilon)\log V.
+\tag{215.21}
+$$
+
+这里 $w=s+1\asymp r\log r$，所以 $z<w$ 最终成立。在这同一个整数上，
+
+$$
+R_z(N_g)\mid C_w(N_g).
+$$
+
+由于 $2e^{-1/2}=1.21306\ldots>1$，式（215.21）要求的核心最终超过 $V$，
+因而不属于定理 215.4 的任何固定范围 $C\le V^{1-\eta}$。
+这只是指定矩证书失败的必要见证；没有断言见证存在，也没有断言满足核心大小条件
+就能使 $\mathcal Q_r\ge1$。
+
+另一份精确账本仍是 §210.6 的除数增量分解。定义乘法函数 $b_s$：
+
+$$
+b_s(1)=1,\qquad b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\quad(a\ge1),
+\qquad \mu_s(d)=\frac{b_s(d)}{dU(s)}.
+$$
+
+对固定 $a>\pi^2/6$，令
+
+$$
+D=X\exp(-ay/\ell^2),\qquad
+A_I(d)=\#\{g\in I_r:d\mid N_g\},\qquad
+\mathcal H_D=\{d:D<d\le X,\ A_I(d)>0\}.
+$$
+
+仍待证明的充分节省条件为
+
+$$
+\mu_s(\mathcal H_D)\le e^{-ay/\ell^2}.
+\tag{215.22}
+$$
+
+若 $d\in\mathcal H_D$，则 $d\gg V$，且 $(d,V)=1$。整除条件只允许
+一个模 $d$ 的乘子余数，故在 $I_r$ 内至多命中一个 $g$；对该实际整数，
+其余因子 $h=N_g/d$ 满足
+
+$$
+dh-Vg=1,\qquad 1\le h\le e^{ay/\ell^2}.
+\tag{215.23}
+$$
+
+这里的 $d$ 带有增量权重 $b_s(d)$，不必是完整小素数核心，$h$ 也不必是粗整数。
+式（215.10）与 §210 的除数卷积组织的是同一完整矩，但不能把两份组织方式中的
+单项直接认作相同项。
+
+定理 215.4 处理了固定函数类、实际核心提取和一个受限范围内的平均估计；
+式（215.21）表明矩障碍所需的实际核心已越过该范围。继续推进需要控制这些大核心
+或大除数与唯一实际乘子的联合命中权重。修正定理的系数一致性、粗素数 Euler
+余量以及一般 AP 几何都没有给出式（215.22）。即使最终证明当前实际整数族全部
+满足 Robin 不等式，仍须另行覆盖任意自然数，才能回接完整 Robin 判据。
+
+## 215 追加锚（本行以下为增补区）
