@@ -33,6 +33,7 @@ jobs:
         Meta/FILEMAP.*.toml
         Meta/FILEMAP.toml
         Meta/ReportProducers/*
+        Meta/ci-cache-paths.json
         Meta/ci-checks.json
         Meta/engineering-projects.json
         Reg/lake-manifest.json
@@ -89,6 +90,7 @@ jobs:
         tools/scripts/report/lean-report.sh
         tools/scripts/report/report-supervisor.sh
         tools/scripts/workflow/ci-entry.sh
+        tools/scripts/workflow/install-lean-toolchain.sh
         tools/scripts/worktree/*
         tools/tests/Directory.Build.props
         tools/tests/StrataLint.Lean.Tests/*

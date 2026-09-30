@@ -15,10 +15,19 @@ cd "$(dirname "${BASH_SOURCE[0]}")/../../.."
 ZERO=0000000000000000000000000000000000000000
 fail() { echo "CI_ENTRY_ERROR $*" >&2; exit 2; }
 finish() {
-  local hit="$1" reason="$2"
-  # Checks use only the checked-out candidate and fixed objects (§9.5).
-  for remote in $(git remote); do git remote remove "$remote"; done
-  git for-each-ref --format='%(refname)' refs/remotes | while read -r ref; do git update-ref -d "$ref"; done
+  local hit="$1" reason="$2" remotes refs remote ref
+  # Checks use only the checked-out candidate and fixed objects (§9.5). Any
+  # cleanup failure is red: the hit result is written only after it succeeds.
+  remotes="$(git remote)" || fail "cannot enumerate remotes"
+  while IFS= read -r remote; do
+    [[ -n "$remote" ]] || continue
+    git remote remove "$remote" || fail "cannot remove remote $remote"
+  done <<< "$remotes"
+  refs="$(git for-each-ref --format='%(refname)' refs/remotes)" || fail "cannot enumerate remote refs"
+  while IFS= read -r ref; do
+    [[ -n "$ref" ]] || continue
+    git update-ref -d "$ref" || fail "cannot delete $ref"
+  done <<< "$refs"
   echo "hit=$hit" >> "${GITHUB_OUTPUT:?GITHUB_OUTPUT is required}"
   echo "CI_HIT hit=$hit reason=$reason"
   exit 0

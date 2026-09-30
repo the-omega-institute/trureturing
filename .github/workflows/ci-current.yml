@@ -151,23 +151,28 @@ jobs:
           # Exit 3: protected-surface change (SL-022) with every content check passed.
           if [ "$rc" -eq 3 ]; then echo "::notice title=SL-022::protected surface change; content checks passed"; exit 0; fi
           exit "$rc"
+      # Caches are written only after every check above succeeded; the snapshot
+      # program decides per layer whether the archive is ready to publish.
       - id: snapshot
-        if: ${{ !cancelled() && steps.entry.outputs.hit == 'true' && env.CACHE_WRITES == 'true' }}
+        if: ${{ success() && steps.entry.outputs.hit == 'true' && env.CACHE_WRITES == 'true' }}
         continue-on-error: true
+        env:
+          STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
+          STRATALINT_CHECK_SUCCEEDED: 'true'
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE"
-      - if: ${{ !cancelled() && steps.snapshot.outcome == 'success' && steps.project.outputs.cache-hit != 'true' }}
+      - if: ${{ success() && steps.snapshot.outputs.project_ready == 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
-      - if: ${{ !cancelled() && steps.snapshot.outcome == 'success' && steps.dependency.outputs.cache-hit != 'true' }}
+      - if: ${{ success() && steps.snapshot.outputs.dependency_ready == 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
-      - if: ${{ !cancelled() && steps.entry.outputs.hit == 'true' && env.CACHE_WRITES == 'true' && steps.elan.outputs.cache-hit != 'true' }}
+      - if: ${{ success() && steps.entry.outputs.hit == 'true' && env.CACHE_WRITES == 'true' && steps.elan.outputs.cache-hit != 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:

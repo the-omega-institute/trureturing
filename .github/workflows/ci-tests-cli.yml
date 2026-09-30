@@ -34,6 +34,7 @@ jobs:
         Meta/FILEMAP.*.toml
         Meta/FILEMAP.toml
         Meta/ReportProducers/*
+        Meta/ci-cache-paths.json
         Meta/ci-checks.json
         Meta/engineering-projects.json
         Reg/lake-manifest.json
@@ -101,6 +102,7 @@ jobs:
         tools/scripts/dotnet-test.sh
         tools/scripts/local-harness-gate.sh
         tools/scripts/workflow/ci-entry.sh
+        tools/scripts/workflow/install-lean-toolchain.sh
         tools/scripts/workflow/playbook-workflows.sh
         tools/scripts/worktree-init.sh
         tools/scripts/worktree/cache_material.py

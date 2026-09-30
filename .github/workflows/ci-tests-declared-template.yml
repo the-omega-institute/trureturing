@@ -33,6 +33,7 @@ jobs:
         Meta/FILEMAP.*.toml
         Meta/FILEMAP.toml
         Meta/ReportProducers/*
+        Meta/ci-cache-paths.json
         Meta/ci-checks.json
         Meta/engineering-projects.json
         Reg/lake-manifest.json
@@ -85,6 +86,10 @@ jobs:
         tools/scripts/agent/openproblem/TARGET-GATES.md
         tools/scripts/dotnet-test.sh
         tools/scripts/workflow/ci-entry.sh
+        tools/scripts/workflow/install-lean-toolchain.sh
+        tools/scripts/worktree/cache_material.py
+        tools/scripts/worktree/lean_actions.py
+        tools/scripts/worktree/lean_cache.py
         tools/tests/Directory.Build.props
         tools/tests/StrataLint.DeclaredTemplate.Tests/*
         tools/tests/StrataLint.ScriptTests/*.cs
