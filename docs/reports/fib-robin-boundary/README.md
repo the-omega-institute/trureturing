@@ -970,3 +970,6 @@ below. Both contraction coordinates tend to zero. The paper argument
 therefore rules out a continuous Robin-ratio decoder at zero for this
 single contraction observation; the script checks finite source identity,
 not the limiting responses or continuity theorem.
+
+For factorial congruence, sharp relative resolution, and the external-unit
+comparison in FIB §§188–190, see [modular resolution](modular_resolution.md).
