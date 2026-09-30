@@ -20011,3 +20011,537 @@ $$
 要越过该临界角，需取得上述二幂密度之外的信息：可以改变允许素数集合，也可以在同一个指标上控制额外关系，或取得足以给严格 Robin 符号的其他误差界。仅增加允许集的二幂根分辨率，不能由本节预算推出临界范围的结论。本节证明的是固定种子的小乘子正余量与二幂密度预算的准确边界，不是一般 Robin 不等式或黎曼猜想。
 
 ## 追加锚（本行以下为增补区）
+
+## 198. 混合二十四窗口补足固定平方范数原例
+
+本节继续固定 $v=(16,29)=\phi(3+2\phi)^2$、$Q(v)=-121$，把第196节的二次幂窗口改为固定窗口 $24=8\cdot3$。这里的模三约束与模八约束来自同一个共同根域；联合密度由中国剩余定理下的真实群作用计算。以下为明确文献输入上的纸面推导，未作新增 Lean 核验。
+
+沿用 $K=\mathbb Q(\sqrt5)$、$w=3+2\phi$、$\operatorname N(w)=11$、$\tau=-\phi^2$ 与迹多项式 $\mathcal D_d$。固定 $k=24,n=12$，对每个偶数 $r\in\{0,2,\ldots,22\}$ 定义
+
+$$
+\begin{aligned}
+a_r&=\tau^{-(r+4)/2}w'/w,\qquad t_r=a_r+a_r^{-1},\\
+A_r&=\operatorname{Tr}(v^2\tau^{r+3}),\\
+P_r(X)&=Q\mathcal D_{24}(X)-A_r.
+\end{aligned}
+\tag{198.1}
+$$
+
+与式（196.2）相同的恒等式给
+
+$$
+\frac{P_r(X)}Q
+=\bigl(\mathcal D_{12}(X)-t_r\bigr)
+ \bigl(\mathcal D_{12}(X)+t_r\bigr).
+\tag{198.2}
+$$
+
+对 $j=r+24\ell$，令 $W_j=\phi^{j/2+2}w$、$U_{1,j}=[\phi]W_j$、$U_{2,j}=\operatorname{Tr}(W_j)$。实际整数满足
+
+$$
+V_j=U_{1,j}U_{2,j},\qquad
+\frac{W_j'}{W_j}=a_r\tau^{-12\ell},
+\qquad \operatorname N(W_j)=11(-1)^{j/2}.
+$$
+
+因此引理196.1的证明逐项适用：对 $p\nmid110$ 与 $z_\ell=\operatorname{Tr}(\tau^\ell)$，
+
+$$
+\begin{aligned}
+p\mid U_{1,j}&\Longrightarrow
+ \mathcal D_{12}(z_\ell)-t_r\equiv0\pmod p,\\
+p\mid U_{2,j}&\Longrightarrow
+ \mathcal D_{12}(z_\ell)+t_r\equiv0\pmod p.
+\end{aligned}
+\tag{198.3}
+$$
+
+这一实际因子桥先于任何密度组合；只有对应同一个 $j$ 的真正素因子才被送入相应允许集合。
+
+**定理 198.1（混合窗口的共同根域与联合密度）。** 对式（198.1）的每个偶数 $r$，$P_r$ 的共同根域次数为 $96$，根置换群为
+
+$$
+G=\{h\mapsto ch+d\pmod{24}:
+c\in(\mathbb Z/24\mathbb Z)^\times,\ d\text{ 为偶数}\}.
+\tag{198.4}
+$$
+
+两个十二次因子各自不可约，其分裂域次数均为 $48$，交域次数为 $24$。把有限异常加入两个有根素数集合 $S_0,S_1$ 后，在固定域 Chebotarev 定理下有
+
+$$
+\begin{aligned}
+\delta(S_0)=\delta(S_1)&=\frac14,\\
+\delta(S_0\cap S_1)&=\frac1{24},\\
+\delta(S_0\cup S_1)&=\frac{11}{24}<\frac12,
+\end{aligned}
+\tag{198.5}
+$$
+
+其中 $\delta(S)$ 表示 $\vartheta_S(x)=\delta(S)x+o(x)$。
+
+证明。取本原二十四次单位根 $\zeta$，置
+
+$$
+F=K(\zeta),\qquad u^{12}=a_r,\qquad L=F(u).
+$$
+
+$K$ 在五处分歧，$\mathbb Q(\zeta)$ 只在二、三处分歧，故二者交为 $\mathbb Q$，从而 $[F:\mathbb Q]=2\varphi(24)=16$。引理196.2的十一处论证不依赖窗口为二次幂：$(w),(w')$ 是不同的十一上方素理想，$a_r$ 在其上的赋值分别为负一与正一。$F/K$ 在十一处仍不分歧，所以 $X^{12}-a_r$ 在一个局部离散赋值环上满足 Eisenstein 条件。因此
+
+$$
+[L:F]=12,\qquad [L:\mathbb Q]=192.
+$$
+
+$F$ 包含全部十二次单位根。其每个自同构由 $\varepsilon=\pm1$ 与 $A\in(\mathbb Z/24\mathbb Z)^\times$ 指定，分别作用于 $K$ 与 $\zeta$。它把 $a_r$ 送到 $a_r^\varepsilon$，所以全部延伸的 $u$ 像为 $\zeta_{12}^b u^\varepsilon$，$b\in\mathbb Z/12\mathbb Z$。这些像均在 $L$ 中，故 $L/\mathbb Q$ 正规且可分，全部 $192$ 个自同构均由这些参数实现。
+
+根可写为
+
+$$
+x_h=u\zeta^h+u^{-1}\zeta^{-h},
+\qquad h\in\mathbb Z/24\mathbb Z.
+$$
+
+若两个根相同，则相应的 $u\zeta^h$ 相同或互为倒数；后者迫使 $u^2$ 为单位根，与 $a_r$ 的十一处非零赋值矛盾。因此根互异。自同构准确作用为
+
+$$
+h\longmapsto\varepsilon Ah+2\varepsilon b\pmod{24}.
+$$
+
+它的像恰为式（198.4）的 $96$ 个仿射变换；核恰为 $(\varepsilon,A,b)=(1,1,0)$ 与 $(-1,-1,0)$。根域次数因而是 $192/2=96$，其置换作用忠实。
+
+中国剩余定理给这个同一群的同构
+
+$$
+G\cong G_8\times\operatorname{AGL}_1(\mathbb F_3),
+\tag{198.6}
+$$
+
+其中 $G_8$ 是第196节的模八偶平移群。具体映射为 $(c,d)\mapsto((c\bmod8,d\bmod8),(c\bmod3,d\bmod3))$。任意模八奇单位与模三非零单位确定唯一模二十四单位；任意模八偶平移与模三平移确定唯一模二十四偶平移。因此映射双射，且仿射群乘法逐分量保持。根索引 $\mathbb Z/24\mathbb Z$ 也按同一个中国剩余同构分成 $\mathbb Z/8\mathbb Z\times\mathbb F_3$。
+
+一个元素至少固定一个二十四根，当且仅当两分量各自至少固定一个根。$G_8$ 的十六个元素中，定理196.5给十一者固定根。$\operatorname{AGL}_1(\mathbb F_3)$ 的六个元素中，斜率二的三个元素各有一个固定点，斜率一只有零平移固定点，共四个。因此至少固定一个根的元素数为 $11\cdot4=44$，比例为 $44/96=11/24$。这是共同群的真实直积分解，不假设两个未知分裂域独立。
+
+又 $\mathcal D_{12}(x_h)=(-1)^ht_r$，两个因子分别对应奇偶轨道，偶平移在各轨道上传递，所以各自不可约。两个轨道的点态核分别为 $\{1,(13,0)\}$ 与 $\{1,(13,12)\}$，故因子分裂域各有次数 $48$，联合域次数 $96$，交域次数 $48^2/96=24$。
+
+模八分量中，每条奇偶轨道的固定根比例为 $3/8$，两轨道同时固定根的比例为 $1/16$；模三分量的固定根比例为 $2/3$。在同一个群（198.6）中组合，分别得到
+
+$$
+(3/8)(2/3)=1/4,\qquad
+(1/16)(2/3)=1/24.
+$$
+
+由并集恒等式再次得到 $1/4+1/4-1/24=11/24$。对固定共同根域使用与推论193.4相同的无条件 Chebotarev 输入，再加入首项、分母、判别式及 $110$ 的有限异常，即得到式（198.5）。$\square$
+
+**定理 198.2（该平方范数固定种子的全指标 Robin 余量）。** 对固定种子 $v=(16,29)$ 与每个固定 $C>0$，在定理198.1的固定域 Chebotarev 输入及式（194.2）的 Axler 输入下，
+
+$$
+\liminf_{j\to\infty}
+\ \inf_{\substack{g\in\mathbb Z_{\ge1}\\g\le C\phi^j}}
+\left(e^\gamma\log\log(gV_j)-Z(gV_j)\right)
+\ge e^\gamma\bigl(\log2-H(11/24)\bigr)>0.
+\tag{198.7}
+$$
+
+其中 $H(\delta)=-\delta\log\delta-(1-\delta)\log(1-\delta)$。结论对所有充分大的递归指标及指定范围内全部乘子一致。
+
+证明。对每个固定偶数 $r\pmod{24}$，式（198.3）把实际 $V_j$ 的全部素因子送入定理198.1的联合允许集，其密度为 $11/24<1/2$。定理194.4给该余类上、全部 $g\le C'V_j$ 的统一余量 $e^\gamma(\log2-H(11/24))$。十二个偶余类为有限集合，取共同的充分大阈值即可覆盖全部偶指标。
+
+奇指标的 $(-1)^{j+1}Q$ 是负平方类，已由定理195.1覆盖，其允许密度至多为 $3/8$。因 $H$ 在 $(0,1/2)$ 上递增，该分支的余量不小于式（198.7）的常数。最后 Binet 公式给 $V_j=c_v\phi^j(1+o(1))$、$c_v>0$，所以每个固定的 $g\le C\phi^j$ 范围均包含在某个固定的 $g\le C'V_j$ 范围内。$\square$
+
+对实际单位位为零的规范五窗口来源 $gM^jv$，式（195.2）给 $g<(\phi/|v_-|)\phi^j$。因此定理198.2包含该固定种子在全部充分大指标上的所有这类合法公因子。单位位一的分支没有在此回接；阈值也不对变化种子一致。
+
+**命题 198.3（模一百一十三的实际轨道障碍）。** 素数 $113$ 从不整除该固定种子的任何偶指标数量 $V_j$。它满足二次幂包络所保留的字符条件 $(-5/113)=-1$，但式（198.1）的全部十二个模二十四多项式在 $\mathbb F_{113}$ 上均无根。
+
+证明。在 $\mathbb F_{113}[\phi]$ 中使用关系 $\phi^2=\phi+1$。重复平方给
+
+$$
+5^8=97,\quad 5^{16}=30,\quad 5^{32}=109,\quad
+5^{56}=-1\pmod{113}.
+$$
+
+所以五是非平方，二次代数是 $\mathbb F_{113^2}$；又 $113\equiv1\pmod4$，故 $(-5/113)=-1$。记 $\theta=w'/w$，则
+
+$$
+\tau=(112,112),\qquad
+\theta=(29,-16)/11=(54,91)\pmod{113}.
+$$
+
+组成乘法是 $(a,b)(c,d)=(ac+bd,ad+bc+bd)$。由此可直接核对
+
+$$
+\begin{gathered}
+\tau^2=(2,3),\qquad \tau^{16}=(100,8),\qquad
+\tau^{19}=(1,0),\\
+\theta^2=(10,29),\qquad \theta^4=(37,65),\qquad
+\theta^{32}=(70,54),\qquad
+\theta^{38}=(9,94).
+\end{gathered}
+\tag{198.8}
+$$
+
+若 $j=2t$ 且 $113\mid V_j$，实际因子分解使 $\tau^{t+2}=\theta$ 或 $-\theta$。取三十八次幂，左侧为一，右侧为 $\theta^{38}=(9,94)\ne1$，矛盾。
+
+现在固定任何偶数 $r$。因 $\tau^{19}=1$，有 $a_r^{38}=\theta^{38}=(9,94)$，这个元素不在标量子域 $\mathbb F_{113}$ 中。假设 $P_r$ 在 $\mathbb F_{113}$ 上有根 $x$，取二次方程 $Y^2-xY+1$ 的一个根 $y\in\mathbb F_{113^2}^\times$。迹多项式恒等式给
+
+$$
+y^{24}+y^{-24}=a_r^2+a_r^{-2},
+$$
+
+所以 $y^{24}=a_r^2$ 或 $a_r^{-2}$。Frobenius 置换该二次方程的根，故有两种情况：若 $y^{113}=y$，则 $y\in\mathbb F_{113}$，上述等式会使 $a_r^{38}$ 也属于标量域，与式（198.8）矛盾；若 $y^{113}=y^{-1}$，则 $y^{114}=1$，从而 $(y^{24})^{19}=1$，与 $a_r^{38}\ne1$ 矛盾。因此所有 $P_r$ 均无根。$\square$
+
+这个例子定位了额外约束的作用：二次幂切面保留的半密度类，并没有保留实际递推所需的全部奇数阶信息；混合模三后，共同根群会排除其中一部分。窗口二十四始终固定，再对有限个余类使用数域渐近，没有交换增长窗口与素数分布极限。
+
+本节补足的是固定种子 $(16,29)$ 的主奇偶分支。它与第196、197节的二次幂方法边界相容，不提供所有变化种子的共同阈值，也不推出所有整数的 Robin 不等式或黎曼猜想。
+
+## 追加锚（本行以下为增补区）
+
+## 199. 非单位共轭比的任意稀薄素切面与固定种子全指标余量
+
+混合窗口的作用可直接用于一般固定种子，无需先把平方范数种子开平方。本节先使用非零素理想赋值构造任意稀薄的固定有根素数集，再独立处理共轭比为单位的 Fibonacci 与 Lucas 情形。全部结论仍为纸面推导；所引用的既有 Lean 声明仅承担其原有单位分类与序列恒等式，不表示本节域论及解析估计已作 Lean 核验。
+
+固定非零本原非负种子
+
+$$
+v=a+b\phi,\qquad a,b\in\mathbb Z_{\ge0},\qquad\gcd(a,b)=1,
+\qquad Q=\operatorname N(v)=a^2+ab-b^2\ne0.
+$$
+
+沿用 $K=\mathbb Q(\sqrt5)$、$R=\mathbb Z[\phi]$、$\tau=-\phi^2$，并记
+
+$$
+V_j=q(M^jv)=aF_{j+3}+bF_{j+4},\qquad
+\rho=\frac{v'}v.
+$$
+
+其中 $R$ 是 $K$ 的整数环。$\operatorname N(\rho)=1$，但 $\rho$ 不必是黄金整数单位。Binet 公式给
+
+$$
+V_j=c_v\phi^j+O_v(|\psi|^j),\qquad c_v>0.
+\tag{199.1}
+$$
+
+### 199.1 本原种子的单位共轭比分类
+
+**引理 199.1（只有范数一与范数五可能没有有限赋值）。** 对上述本原种子，
+
+$$
+\rho\in R^\times\quad\Longleftrightarrow\quad |Q|\in\{1,5\}.
+\tag{199.2}
+$$
+
+因此若 $|Q|\notin\{1,5\}$，存在 $R$ 的素理想 $\mathfrak p$，位于某个有理素数 $p_0$ 上方，使
+
+$$
+e=v_{\mathfrak p}(\rho)\ne0.
+$$
+
+证明。对惰性素数 $p$，唯一素理想是 $pR$；若它整除 $(v)$，则 $p\mid a,b$，与本原性矛盾。对分裂素数 $p$，写 $pR=\mathfrak p\mathfrak p'$。本原性禁止 $\mathfrak p,\mathfrak p'$ 同时整除 $(v)$；所以只要 $p\mid Q$，就有
+
+$$
+v_{\mathfrak p}(\rho)
+=v_{\mathfrak p'}(v)-v_{\mathfrak p}(v)\ne0
+$$
+
+或相应共轭处的非零赋值。唯一分歧素数是五，且 $5R=\mathfrak p_5^2$。本原性给 $v_{\mathfrak p_5}(v)\le1$，因为更高赋值会使 $5\mid a,b$。该素理想在共轭下固定，因此 $\rho$ 在此处的赋值为零。
+
+所以 $\rho$ 的全部有限赋值为零，当且仅当 $Q$ 没有分裂素数因子，而此时 $|Q|$ 只能是一或五。反过来这两种范数只允许空素理想支撑或一个分歧素理想，故所有赋值确为零。数域元素及其逆均在整数环内，等价于全部有限赋值为零，因此得到式（199.2）。$\square$
+
+### 199.2 固定奇窗口的实际素因子桥
+
+以下先假设 $\rho\notin R^\times$，固定引理199.1中的 $\mathfrak p,p_0,e$。选择一个奇平方自由整数 $k>1$，满足
+
+$$
+\gcd(k,5p_0e)=1.
+\tag{199.3}
+$$
+
+对每个余类 $r\in\{0,\ldots,k-1\}$，置
+
+$$
+\rho_r=\tau^{-r-3}\rho,
+\qquad A_r=\operatorname{Tr}(v^2\tau^{r+3}),
+\qquad P_{r,k}(X)=Q\mathcal D_k(X)-A_r.
+\tag{199.4}
+$$
+
+$\mathcal D_k$ 是 §196 的 Dickson 迹多项式。$A_r\in\mathbb Z$、$\operatorname N(\rho_r)=1$，且
+
+$$
+\rho_r+\rho_r^{-1}=A_r/Q,
+\qquad v_{\mathfrak p}(\rho_r)=e.
+\tag{199.5}
+$$
+
+后一等式使用 $\tau$ 为单位，因此选择递推指标余类不会改变非零赋值。
+
+**引理 199.2（任意窗口的实际根）。** 若 $j=r+k\ell$、$\ell\ge0$，且素数 $p\nmid10Q$ 整除 $V_j$，则
+
+$$
+P_{r,k}\bigl(\operatorname{Tr}(\tau^\ell)\bigr)\equiv0\pmod p.
+\tag{199.6}
+$$
+
+证明。$\phi^{j+3}v$ 的 $\phi$ 系数等于 $V_j$。所以在 $R/pR$ 内有
+
+$$
+\phi^{j+3}v=\psi^{j+3}v',\qquad
+\tau^{j+3}=v'/v.
+$$
+
+这里 $v$ 因 $p\nmid Q$ 可逆，$\phi,\psi$ 本身是单位。于是 $\tau^{k\ell}=\rho_r$。取迹，并使用 $\mathcal D_k(y+y^{-1})=y^k+y^{-k}$ 及式（199.5），即得式（199.6）。该论证在整个二次代数内有效，不要求 $p$ 在 $K$ 中不分裂。$\square$
+
+### 199.3 满次数与同一共同群的 CRT
+
+**定理 199.3（非零赋值强制完整仿射根群）。** 固定式（199.3）的 $k$ 与任一 $r$。令
+
+$$
+F=K(\zeta_k),\qquad u^k=\rho_r,\qquad L=F(u).
+$$
+
+则
+
+$$
+[F:\mathbb Q]=2\varphi(k),\qquad
+[L:F]=k,
+\qquad [L:\mathbb Q]=2k\varphi(k).
+\tag{199.7}
+$$
+
+$P_{r,k}$ 的实际分裂域 $E$ 满足
+
+$$
+\operatorname{Gal}(E/\mathbb Q)
+\cong\operatorname{AGL}_1(\mathbb Z/k\mathbb Z),
+\qquad [E:\mathbb Q]=k\varphi(k),
+\tag{199.8}
+$$
+
+其根作用就是 $h\mapsto ch+d$，其中 $c$ 遍历模 $k$ 的单位、$d$ 遍历全部模 $k$ 剩余类。
+
+证明。$5\nmid k$，而 $K$ 在五处分歧，$\mathbb Q(\zeta_k)$ 在五处不分歧；所以两个域交为 $\mathbb Q$，得到 $F$ 的次数。又 $p_0\nmid k$，故 $F/K$ 在 $\mathfrak p$ 处不分歧。将该赋值延伸到 $F$，$\rho_r$ 的归一化赋值仍是整数 $e$。
+
+再任取它到 $L$ 的延伸，设相对分歧指数为 $e_L$。由 $u^k=\rho_r$，
+
+$$
+k\,v_L(u)=e_Le.
+$$
+
+$\gcd(k,e)=1$，因而 $k\mid e_L$。于是 $k\le e_L\le[L:F]\le k$，证明满次数。该论证同时允许 $e$ 为正或负，不要求它等于一。
+
+$F$ 包含全部 $k$ 次单位根。$F/\mathbb Q$ 的自同构可独立选择 $K$ 上的符号 $\varepsilon\in\{1,-1\}$ 与 $A\in(\mathbb Z/k\mathbb Z)^\times$，将 $\rho_r$ 送到 $\rho_r^\varepsilon$。它的全部 $k$ 个延伸为
+
+$$
+\zeta_k\longmapsto\zeta_k^A,\qquad
+u\longmapsto\zeta_k^b u^\varepsilon,
+\qquad b\in\mathbb Z/k\mathbb Z.
+$$
+
+这些像都在 $L$ 中，故 $L/\mathbb Q$ 正规且可分。
+
+多项式的根为
+
+$$
+x_h=u\zeta_k^h+u^{-1}\zeta_k^{-h},
+\qquad h\in\mathbb Z/k\mathbb Z.
+$$
+
+若两个根相同，则对应的 $u\zeta_k^h$ 要么相同，要么互为逆。后一情况会使 $u^2$，继而 $\rho_r$ 成为单位根，与其非零赋值矛盾。因此 $k$ 个根彼此不同。
+
+上述自同构给根置换
+
+$$
+h\longmapsto\varepsilon Ah+\varepsilon b\pmod k.
+$$
+
+其像恰为全部仿射群，作用忠实。核只有 $(\varepsilon,A,b)=(1,1,0)$ 与 $(-1,-1,0)$ 两个元素，因此实际根域的次数是 $2k\varphi(k)/2=k\varphi(k)$，并得到式（199.8）。这里没有把扩张域 $L$ 错认成实际根域，也没有假设自同构参数形成直积。$\square$
+
+**推论 199.4（任意稀薄的固定素切面）。** 对每个固定 $k,r$，把 $P_{r,k}$ 的有根素数集与所有整除 $10Q$、多项式首项或判别式的有限异常素数合并，得到 $S_{r,k}$。在与推论193.4相同的固定域 Chebotarev 输入下，
+
+$$
+\vartheta_{S_{r,k}}(x)=\delta_kx+o(x),
+\qquad \delta_k=\prod_{\ell\mid k}\left(1-\frac1\ell\right).
+\tag{199.9}
+$$
+
+每个实际 $V_j$ 的素因子均属于相应的 $S_{r,k}$。对任意 $\eta>0$，都能选择一个满足式（199.3）的固定 $k$，使 $0<\delta_k<\eta$。
+
+证明。$k$ 平方自由。CRT 同时分解同一个仿射群、其群乘法与根索引集合：
+
+$$
+\operatorname{AGL}_1(\mathbb Z/k\mathbb Z)
+\cong\prod_{\ell\mid k}\operatorname{AGL}_1(\mathbb F_\ell),
+\qquad
+\mathbb Z/k\mathbb Z\cong\prod_{\ell\mid k}\mathbb F_\ell.
+$$
+
+一个元素固定某个根，当且仅当每个分量都有固定点。在 $\operatorname{AGL}_1(\mathbb F_\ell)$ 中，斜率不为一时，全部 $\ell$ 个平移都有唯一固定点；斜率为一时，只有零平移有固定点。故有固定点的比例为
+
+$$
+\frac{\ell(\ell-2)+1}{\ell(\ell-1)}
+=1-\frac1\ell.
+$$
+
+相乘得到式（199.9），随后由固定域 Chebotarev 转成加权素数密度。这里的乘法来自一个已识别群作用的精确 CRT，不是假设不同数域独立。引理199.2给实际素因子包含关系。
+
+式（199.3）只排除有限多个素数。素数倒数和在删去有限集合后仍发散，所以有限乘积 $\prod(1-1/\ell)$ 可任意小。每次先选有限个允许素数，取它们的乘积作为固定 $k$，即可得到最后断言。$\square$
+
+### 199.4 非单位共轭比的全指标、全受控乘子结论
+
+**定理 199.5（固定非单位比种子的加性余量）。** 若 $|Q|\notin\{1,5\}$，则对每个固定 $C>0$，在上述固定域 Chebotarev 输入与式（194.2）的 Axler 输入下，
+
+$$
+\liminf_{j\to\infty}
+\ \inf_{\substack{g\in\mathbb Z_{\ge1}\\g\le CV_j}}
+\left(e^\gamma\log\log(gV_j)-Z(gV_j)\right)
+\ge e^\gamma\log2>0.
+\tag{199.10}
+$$
+
+证明。任取满足式（199.3）且 $\delta_k<1/2$ 的固定 $k$。对其有限个余类，推论199.4与定理194.4给共同的充分大阈值，并给同一个左端下界
+
+$$
+e^\gamma\bigl(\log2-H(\delta_k)\bigr).
+$$
+
+由推论199.4，可使 $\delta_k$ 任意趋近零，而 $H(\delta_k)\to0$。所以该固定种子的同一个下极限不小于这些已经成立的常数的上确界 $e^\gamma\log2$。
+
+这一量词顺序是：对每个预先给定的误差容许量，先固定一个有限 $k$，再让 $j\to\infty$；最后比较所得常数。没有令数域随 $j$ 增长，也不需要对增长数域的 Chebotarev 误差一致性。$\square$
+
+同样地，对任意固定 $A>0$，先选 $\delta_k<1/(A+1)$，再应用定理197.3及相同的常数上确界论证，可得
+
+$$
+\liminf_{j\to\infty}
+\ \inf_{1\le g\le V_j^A}
+\left(e^\gamma\log\log(gV_j)-Z(gV_j)\right)
+\ge e^\gamma\log(1+1/A)>0.
+\tag{199.11}
+$$
+
+这使用 $f_\delta(A)\to\log(1+1/A)$，且每次都保持 $A,k$ 固定。阈值仍依赖种子与所选精度；该论证没有给对变化种子一致的显式阈值。
+
+### 199.5 单位比的 Fibonacci 与 Lucas 桥
+
+引理199.1剩下的 $|Q|\in\{1,5\}$ 可以用仓内既有单位分类与 Fibonacci 大素数尾界处理。
+
+既有声明 [`golden_units_eq_signed_phi_pow`](../../../D5/S1/Scale/Units.lean) 给出 $R^\times=\{\pm\phi^s:s\in\mathbb Z\}$。如果 $|Q|=1$，则 $v$ 为单位，且主实嵌入 $v>0$，故
+
+$$
+v=\phi^s,
+\qquad V_j=F_{j+s+3}
+$$
+
+对某个固定整数 $s$ 成立。以下只使用 $j$ 充分大，序列指标为正。
+
+若 $|Q|=5$，由
+
+$$
+(2a+b)^2=5b^2+4Q
+$$
+
+得到 $5\mid2a+b$，继而 $5\mid2b-a$。所以
+
+$$
+\frac v{\sqrt5}
+=\frac{(2b-a)+(2a+b)\phi}{5}\in R,
+\qquad
+\operatorname N\!\left(\frac v{\sqrt5}\right)=-Q/5\in\{1,-1\}.
+$$
+
+再用单位分类与正实嵌入，得到
+
+$$
+v=\sqrt5\,\phi^s,
+\qquad V_j=L_{j+s+3},
+\tag{199.12}
+$$
+
+其中 $L_n=\phi^n+\psi^n$。数量桥来自
+
+$$
+[\phi](\sqrt5\,\phi^n)
+=\frac{\sqrt5\,\phi^n-(-\sqrt5)\psi^n}{\sqrt5}
+=L_n.
+$$
+
+该 Lucas 读数与仓内 [`goldenLucas`](../../../D5/S1/Scale/Lucas.lean) 的迹定义一致。既有 [`golden_fib_two_mul_eq_fib_mul_lucas`](../../../D5/S1/Scale/FibLucasDouble.lean) 给
+
+$$
+F_{2n}=F_nL_n,
+\qquad L_n\mid F_{2n}.
+$$
+
+于是令 $n_j=j+s+3$，两个例外类的实际素因子分别包含于 $F_{n_j}$ 或 $F_{2n_j}$ 的素因子中。取 $y=\lceil j^{5/6}\rceil$，引理184.1对这两个同阶指标给
+
+$$
+T_j(y):=\sum_{\substack{p\mid V_j\\p>y}}\log\frac p{p-1}
+=O_v(j^{-1/12}),
+\qquad (\log j)T_j(y)\longrightarrow0.
+\tag{199.13}
+$$
+
+这没有把 $V_j$ 替换为更大的 Fibonacci 数来比较 Robin 预算；较大 Fibonacci 数只用于上包络同一 $V_j$ 的大素数尾。
+
+**命题 199.6（两种单位比例外具有同样余量）。** 若 $|Q|\in\{1,5\}$，则在引理184.1的 Fibonacci 秩输入与式（194.2）的 Axler 输入下，式（199.10）仍成立。
+
+证明。对同一个 $N=gV_j$，取
+
+$$
+A_j=\prod_{\substack{p\mid V_j\\p\le y}}p,
+\qquad B=gA_j,
+\qquad h=\log g,
+\qquad L=\log V_j=j\log\phi+O_v(1).
+$$
+
+因 $A_j\mid V_j$，$B$ 的素数都来自同一个 $N$；未被 $B$ 包含的素因子必来自 $V_j$ 且大于 $y$。因此
+
+$$
+Z(N)<\frac{B}{\varphi(B)}e^{T_j(y)},
+\qquad \log A_j\le\vartheta(y)=O(j^{5/6}).
+\tag{199.14}
+$$
+
+若 $h\ge j^{11/12}$，则 $B\to\infty$，并且
+
+$$
+\log\log B=\log h+O(j^{-1/12}).
+$$
+
+Axler 包络及式（199.13）给
+
+$$
+Z(N)/e^\gamma\le\log h+o(1),
+$$
+
+一致于 $g\le CV_j$。这里尾乘积的加性误差为 $O((\log j)j^{-1/12})=o(1)$。另一方面 $h\le L+\log C$，故
+
+$$
+\log\log N-\log h
+=\log(1+L/h)\ge\log2+o(1)
+$$
+
+一致成立。
+
+若 $0\le h<j^{11/12}$，则 $\log B\le j^{11/12}+O(j^{5/6})$。§164.1的通用 Euler 包络与式（199.13）给
+
+$$
+Z(N)/e^\gamma\le(11/12)\log j+O_v(1),
+$$
+
+$B=1$ 时用 $B/\varphi(B)=1$ 直接处理。而真实 Robin 预算至少为 $\log\log V_j=\log j+O_v(1)$，故该分支的余量一致趋于无穷。合并两范围得到式（199.10）。$\square$
+
+### 199.6 固定种子的完整结论与规范五窗口回接
+
+**定理 199.7（每个固定本原种子的全指标余量与单位位零来源）。** 在本节明确的固定域 Chebotarev、Fibonacci 秩及 Axler 输入下，对每个固定非零本原非负种子 $v$、每个固定 $C>0$，式（199.10）成立。等价地，可以将乘子范围换成 $g\le C\phi^j$；该数值结论不要求来源另具规范合法性。特别是对该固定种子，全部充分大指标下，单位位为零、组成恰为 $gM^jv$ 的全部合法规范来源，都满足严格 Robin 不等式。
+
+证明。引理199.1把全部种子分成定理199.5与命题199.6两类，两者具有同一个下界。式（199.1）使 $V_j$ 与 $\phi^j$ 相差固定正倍数，因此两个乘子范围可通过改变固定常数互相包含。
+
+对单位位为零的实际规范五窗口来源 $x_{g,j}=gM^jv$，§182的条带条件给
+
+$$
+-1<g\psi^jv_-<\phi,
+\qquad v_-=a+b\psi\ne0.
+$$
+
+因此 $g<\phi^{j+1}/|v_-|$，落在一个依赖固定种子的 $C\phi^j$ 范围内。定理所给余量严格为正，所以所有充分大的这些实际来源安全。$\square$
+
+该结论的量词是“每个固定种子，各有自己的充分大阈值”，不是“存在一个对全部种子共同的阈值”。在不同种子间选取尚未超过各自阈值的配置，仍不受本定理控制。一般自然数也不能仅因具有有限五窗口地址就被视为同一个固定种子的长递归轨迹。因此本节没有证明一般 Robin 不等式或黎曼猜想；缺少的是跨种子的统一控制及剩余规模的覆盖。
+
+## 追加锚（本行以下为增补区）
