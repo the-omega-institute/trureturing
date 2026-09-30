@@ -170,6 +170,38 @@ was found. §159 explains the separate target-domain argument. The regression
 also exercises the margin CLI on both core values and rejects altered weights,
 missing recurrence states, empty frontiers and invalid cores.
 
+## Sharper joint stopping and sufficient prime resolution
+
+[Axler's totient estimate](../../../Library/notes/axler2023robin.md), retained
+inside his proof, gives the stronger joint cutoff
+`1000000000000/1000000315367`. The rational overlap certificate and complete
+five-direction partition can be reproduced with:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/axler_cutoff.py \
+  --out /tmp/axler-cutoff.json
+python3 -B docs/reports/fib-robin-boundary/valuation_slices.py \
+  --primes 2 3 5 7 11 --lower 21 13 9 7 6 --caps 31 21 13 11 9 \
+  --threshold 1000000000000/1000000315367 --out /tmp/valuation-slices-axler.json
+```
+
+Keep `axler_cutoff.py` beside `kernel_tail.py`; it imports the rational log
+enclosures. The actual outputs are [`axler_cutoff.json`](axler_cutoff.json)
+and [`valuation_slices_axler.json`](valuation_slices_axler.json). The latter
+has 9,900 cells, including their unbounded tails: 1,144 certified, 8,756
+outside the condition, zero ambiguous, and 42 minimal outside profiles.
+The caps are coordinatewise minimal for deciding this sufficient condition
+by clipped valuations, not for deciding Robin itself. The cutoff certificate
+also checks the joint `(v13,v23) <= (5,4)` condition with both primes present.
+Together with the cited Fibonacci rank formulas, the note gives 84 necessary
+index-divisibility regions for authenticated sources `n=5040*F_j`.
+
+The published analytic inequalities and original large finite verification
+remain literature inputs. These programs do not prove them, establish RH,
+or add Lean results. The earlier Hertlein calculation below remains a valid,
+weaker partition. Comparing the two counts is not a natural-number density
+comparison because the caps and cell sizes differ.
+
 ## Joint valuation stopping from the literature
 
 [Hertlein's totient bound and finite-range coverage](../../../Library/notes/hertlein2018robin.md)
