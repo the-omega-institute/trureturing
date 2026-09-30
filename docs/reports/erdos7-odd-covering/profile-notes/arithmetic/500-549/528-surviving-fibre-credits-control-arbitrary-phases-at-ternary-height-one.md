@@ -26434,3 +26434,170 @@ a complete same-source tail certificate and a necessary growth
 condition derived from it. The replacement principle, published
 no-2-or-3 source and tail theorem are reused; these are ordinary
 symbolic deductions, not new Lean verification.
+
+## Mixed-depth vacancies give a source-free test inside the connected core
+
+Keep the SAME globally minimum whole cover and full-height proper
+cut B. For each q in C choose an actual OLD prime ell_q different
+from q. The choices need not be pairwise distinct, and ell_q may
+belong to C. Let D be the original numerical modulus set and H_q
+its complete q-height. Define
+
+    t_q=max({0} union {j:1<=j<=H_q,ell_q*q^j in D}),
+    e_q=t_q+ell_q-1.
+
+When e_q<=H_q, h_q=q^e_q is original by divisor closure, whereas
+
+    ell_q*q^(t_q+1),...,ell_q*q^e_q
+
+are ell_q-1 distinct globally absent labels. With the retained
+pure class0 mod ell_q, this palette repairs the ENTIRE old
+h_q-class: assign one nonzero ell_q-root to each fresh label and
+give it the old h_q-phase modulo its q-power. Every old h_q-point
+either has ell_q-root zero or belongs to one of these classes.
+This uses the same full-liability replacement as FC1142. Each new
+label is at most ell_q*h_q; deleting ell_q-1 proper descendants
+at a common new h_q-phase strictly decreases the modulus sum by
+the comparison there. Therefore
+
+    q_(h_q)(c)<=ell_q-2 for every h_q-phase c,
+                       whenever e_q<=H_q.          (FC1150)
+
+No vacancy above the global q-height is asserted or needed. If
+t_q=H_q, this coordinate supplies no interface in the actual
+carrier. More generally, if an actual old divisor d contains
+ell_q, divisor closure forces v_q(d)<=t_q. It can never be
+selected by the condition v_q(d)>=e_q. Thus these caps do not
+silently pay repair-prime-bearing slots which have no vacant
+repair palette.
+
+### Coordinate interfaces make one immutable complete partition
+
+Select each ORIGINAL future label whose complete old part d is
+supported on C and has v_q(d)>=e_q for at least one q in C.
+Assign that label once to one such q, by a fixed choice at B.
+Every other future label is light. In particular unit old parts,
+O-supported old parts and all future pure powers remain light.
+For any actual head point, originals assigned to q are among the
+original h_q-multiples with that point's h_q-phase. FC1150 hence
+gives a shared count across ALL suffixes. For any FIXED actual
+light suffix, its core old part has exponents strictly below e_q.
+The complete finite numerical inventory therefore supplies
+
+    a=product_(q in C) min(H_q+1,e_q),
+    b=sum_(q in C:e_q<=H_q)(ell_q-2),
+    light core load<=a,
+    sum_(selected u)I_(u,head)(x)<=b.              (FC1151)
+
+Numerical distinctness gives at most one original per old slot
+for a fixed suffix. Counts in FC1151 are bounds, not assertions
+that the whole product inventory actually occurs in D.
+
+These are exactly the two pointwise suppliers required by
+FC1144--1146. Reuse the core Dirac survivor source, the SAME
+companion source mu_O and one NEW light-only Haar continuation,
+now for this partition. Set epsilon=2b/p_* if selected originals
+exist, with p_* their smallest terminal prime, and epsilon=0
+otherwise. Then FC1145--1146 apply with a_C=a, b_C=b. This is a
+complete original-family certificate, with every selected label
+paid once on that same law; neither a core Haar mass nor a
+separately optimized source has been introduced.
+
+### The three--five repair has a smaller actual light inventory
+
+Now suppose5 belongs to C, and put c=|C|. Choose ell_3=5 and
+ell_q=3 for every q in C other than3. Write the mixed depths as
+
+    u=max({0} union {j:5*3^j in D}),
+    v_q=max({0} union {j:3*q^j in D}), q!=3,
+    e_3=u+4, e_q=v_q+2.
+
+The maxima are over positive integer j. They are finite and
+bounded by the corresponding actual heights. Membership5 in C
+does not assume15 in D: the two primes may connect indirectly.
+Thus u or v_5 can be zero.
+
+Every light core old divisor d falls into one of three disjoint
+cases, according to its ternary depth r=v_3(d).
+
+* If r=0, every nonternary exponent is at most v_q+1. This gives
+  at most product_(q!=3)(v_q+2) slots, including d=1.
+* If1<=r<=u, divisor closure at every nonternary q gives
+  v_q(d)<=v_q, since3*q^v_q(d) is original whenever q divides d.
+  There are at most u*product_(q!=3)(v_q+1) such slots.
+* If u<r<=u+3, the same nonternary caps hold, but5 cannot divide
+  d: otherwise5*3^r would be original, contrary to the definition
+  of u. These three possible ternary depths contribute at most
+  3*product_(q!=3,5)(v_q+1) slots.
+
+Consequently the sharper complete bound is
+
+    A_sharp=product_(q in C without3)(v_q+2)
+       +[u(v_5+1)+3]
+                      product_(q in C without3,5)(v_q+1),
+    every actual light core section has load<=A_sharp.
+                                                     (FC1152)
+
+Empty products equal one. Actual finite heights only remove
+slots from these lists; no truncated-height premise has been
+added. The second and third cases explicitly retain the originals
+containing the repair prime3, and the second case retains those
+also containing5. The smaller of a in FC1151 and A_sharp can be
+used when actual heights are known.
+
+Only the ternary interface has capacity three; each of the c-1
+others has capacity one. Inactive interfaces have zero cost, so
+
+    b<=c+2,
+    epsilon<=epsilon_bar=2(c+2)/B.                 (FC1153)
+
+The final inequality uses p_*>B when selected labels exist and
+also holds when that family is empty. It is the TOTAL selected
+debit, not an amount to be multiplied by the number of stages.
+
+### A complete endpoint and the remaining mixed-depth obstruction
+
+Let k=pi(B)>=10 and use the unchanged companion quantity Theta_O
+from FC1132. A sufficient COMPLETE noncoverage condition is
+
+    B>2(c+2),
+    [A_sharp+sqrt(5Theta_O)]^2
+                    /[1-2(c+2)/B]<=T_B,
+    T_B=k(log k+loglog k-3)^2.                    (FC1154)
+
+Indeed FC1152 bounds the light core on the Dirac source; FC1132
+bounds every actual companion query on its one supported law.
+Their square supplier is the second alternative in FC1145.
+Using the upper debit epsilon_bar in the scalar reserve is
+conservative, and FC1146 then pays both families on the same
+continuation. No original residue or modulus is changed in that
+probability argument. The replacement argument was used only to
+deduce necessary constraints on the hypothesized minimum cover.
+
+In particular, for any fixed0<gamma<1, at every sufficiently large
+proper cut the conjunction
+
+    5 in C,
+    A_sharp<=gamma sqrt(B log B)                  (FC1155)
+
+is impossible in a globally minimum whole cover. For this
+uniform statement use c<=pi(B) and the existing prime estimates:
+epsilon_bar=O(1/log B)=o(1), independently of heights and core
+size. FC1134 gives sqrt(5Theta_O)=o(sqrt(B log B)) uniformly over
+the companion prime subsets and heights. Thus the left side of
+FC1154 is at most[gamma^2+o(1)]B log B, whereas T_B is asymptotic
+to B log B. The first condition in FC1154 holds at the same
+sufficiently large cuts. No numerical cutoff is asserted.
+
+Together FC1149 and FC1155 force either a large disconnected
+ternary core or a large mixed-depth slot inventory once5 has
+joined it. The inside-core selected debit now vanishes uniformly,
+even if the core contains all old primes. What is still missing
+is a reason that a hypothetical minimum cover must have a proper
+cut with a passing light inventory, or a stronger treatment of
+the dense mixed-label residual. When mixed labels persist to full
+height, their corresponding vacancy interfaces are inactive;
+this argument does not eliminate those residuals. It proves no
+uniform core survivor-mass lower bound and does not settle
+unrestricted Erdős#7. FC1150--1155 are ordinary symbolic deductions;
+no new Lean verification or claim of literature priority is made.
