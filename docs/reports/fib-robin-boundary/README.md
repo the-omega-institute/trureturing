@@ -603,3 +603,42 @@ FIB §§143–144 使用同一程序的 `projection` 与 `seed_10080` 数据。`
 可移植复现已检查：脚本拷贝到含空格的目录，从另一工作目录、空环境（仅系统 `PATH`）调用 Python 后，默认 JSON 与入库结果逐字节一致；`--H 0` 明确拒绝。平台范围为本次 macOS/Python 运行，未将其泛化为所有平台的实测。
 
 FIB §§147–148 使用新增的 `rank_shell_bounds` 与 `finite_prime_signs` 数据。前者以直接除数和对照时间可见能量的 Möbius 乘积，检查 5040 的单层 7 壳、`37^a*113`（`a=1,2,3,4`）的共同秩 19 壳与 4181 的 113 增量，共六项精确上界、等号及超额检查。后者对 `P={2,3,5,7}` 用整数筛与规范 Zeckendorf 贪心展开，保留 `X=100,1000,10000,100000` 的普通和及数字奇偶加权和，并逐项核对 64 个平方自由倍数计数与其 Möbius 展开。默认运行命令不变；全部旧结果字段保持原值。它们只验证有限实例；碰撞族的极限、固定有限素数集的正均值证明及外部数字正交定理由正文分别说明，不是对实际 Möbius 函数或 RH 的反例。
+
+## Source scale and rank tails (§§162–164)
+
+[`source_scale.py`](source_scale.py) provides exact rational diagnostics for
+Robin estimates on the authenticated source `n = 5040*F_j`. Run:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/source_scale.py \
+  --out /tmp/fib-robin-source-scale.json
+```
+
+The retained result is [`source_scale.json`](source_scale.json). It checks:
+
+- the source-size thresholds and the three five-prime bootstrap stages;
+- the explicit index `j = D*(223092870)^10`, where even the true-size
+  nine-factor criterion fails but the exact valuation at 29 certifies Robin;
+- budget exhaustion (`UNRESOLVED`), and a different certificate from the
+  genuinely absent prime 59 using the totient padding identity;
+- every arithmetic constant in the rank-tail paper argument, with rational
+  bounds for logarithms or powers bracketing `e`;
+- 77 high-rank buckets from complete factorizations of `F_j`, `1 <= j <= 48`.
+
+Large-index residues use fast doubling and independent matrix powering.
+The adaptive certificate constructs no huge Fibonacci integer. Its optional
+`--index` arguments must be positive multiples of `D`; `--prime-limit` and
+`--valuation-cap` bound the observations for those requested indices. A zero
+residue at the cap is recorded as a lower bound on the valuation, never as an
+exact valuation. Missing primes affect the totient padding factor only.
+The program rejects optimized Python because assertions verify the evidence.
+It uses only the standard library, writes only the requested output, and
+records hashes of itself and its two existing arithmetic dependencies.
+
+The universal conclusion in §164 is a paper synthesis of published Axler
+inputs, classical Fibonacci ranks and valuations, and a new in-repository
+rank-tail derivation. The finite report is not its Lean proof. A current
+scoped build of the existing `D5.S3.Arith.FibonacciRank` succeeded; this does
+not verify the new analytic composition. The source family is one Fibonacci
+term times 5040, not every integer encoded in Zeckendorf form. No RH or
+originality claim is made.
