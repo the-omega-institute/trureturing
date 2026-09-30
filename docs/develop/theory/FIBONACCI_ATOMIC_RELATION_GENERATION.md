@@ -32221,3 +32221,180 @@ $$
 Fabbian 的 [2026 年 9 月 29 日预印本](https://doi.org/10.5281/zenodo.23025480)还提出更强的显式 Mertens 常数及 26-free Robin 推论。其数值证书和全部依赖尚未独立复核，因此不能用它替换本卷已核对的估计或把所称范围登记为本项目已验证结果。近期发表日期、等价重述和更大的有限验证范围承担不同任务，均不能单独补齐式（233.5）之后的候选排除与实际联合预算。
 
 ## 追加锚（本行以下为增补区）
+
+## 234. 实际增量亏损与经典极值价格的有限比较
+
+本节把 §232 的源亏损直接接到 [Erdős–Nicolas 的 benefit](../../../Library/ArithSums/erdosnicolas1975repartition.md)。所用增量仍是 [Fan–Kobayashi–Molnar 的既有函数](../../../Library/ArithSums/fankobayashimolnar2025family.md)。以下是经典价格最优条件与局部差分因子的纸面综合，不作原创性声明，也未新增 Lean 证明。参考极值整数不预设属于指定 FIB 窗口或剩余类。
+
+### 234.1 同价极大丰数给最大增量源一个双侧界
+
+固定实数 $s\ge1$，令 $C$ 为任意使 $Z(n)n^{-1/s}$ 在正整数上取得最大值的整数，记
+
+$$
+\mathcal Q_s=\frac{Z(C)^s}{C},\qquad
+w_s(n)=\frac{b_s(n)}n,\qquad M_s=\max_{n\ge1}w_s(n).
+\tag{234.1}
+$$
+
+这里允许价格临界点上的多个极值整数，也允许 $C=1$。经典极大丰数优化给出 $C$ 的存在；§232.2 已保证 $M_s$ 定义良好。对 $n\ge1$ 定义有限乘积
+
+$$
+r_s(n)=\frac{b_s(n)}{Z(n)^s}
+=\prod_{p^a\parallel n}
+\left[1-\left(\frac{Z(p^{a-1})}{Z(p^a)}\right)^s\right].
+\tag{234.2}
+$$
+
+空乘积为一，所以 $0<r_s(n)\le1$ 对全部正整数成立。这是 §216.1—§216.2 已有的实际除数分布在 $D=n$（互补因子为一）处的概率，不是新的算术源。
+
+**命题 234.1（价格极值与最大增量的有限比较）。** 对上述任意同价极值整数 $C$，有
+
+$$
+\boxed{
+\mathcal Q_s\frac{\varphi(C)}C
+\le w_s(C)\le M_s\le \mathcal Q_s,
+\qquad
+J_s(C)\le\log\frac C{\varphi(C)}.
+}
+\tag{234.3}
+$$
+
+证明。对每个 $p^a\parallel C$，比较同一个价格目标在 $C$ 和 $C/p$ 上的值，得到
+
+$$
+\left(\frac{Z(p^a)}{Z(p^{a-1})}\right)^s\ge p.
+$$
+
+因此式（234.2）在 $C$ 上的每个因子至少为 $1-1/p$，从而 $r_s(C)\ge\varphi(C)/C$。另一方面，对任意 $n$，
+
+$$
+w_s(n)=\frac{Z(n)^s}{n}r_s(n)\le\frac{Z(n)^s}{n}\le \mathcal Q_s.
+$$
+
+前者给 $w_s(C)\ge \mathcal Q_s\varphi(C)/C$，后者给 $M_s\le \mathcal Q_s$。相除并取对数得到 $J_s(C)=\log(M_s/w_s(C))\le\log(C/\varphi(C))$。证明没有要求极值唯一；$C=1$ 时各空乘积及不等式仍成立。$\square$
+
+因此，优化增量 $b_s(n)/n$ 与优化 $Z(n)^s/n$ 虽然不是同一问题，其最大值之间已经有独立、明确的有限比较，不能继续把两者之间的全部连接都列作未知。
+
+### 234.2 源亏损等于价格损失加局部差分修正
+
+在同一个 $C,s$ 下，定义经典价格损失与两个差分修正量：
+
+$$
+\begin{aligned}
+\operatorname{Ben}_{C,1/s}(n)
+&=\frac1s\log\frac nC-\log\frac{Z(n)}{Z(C)}\ge0,\\
+\delta_s&=\log(\mathcal Q_s/M_s),\\
+\Lambda_s(n)&=-\log r_s(n)\ge0.
+\end{aligned}
+\tag{234.4}
+$$
+
+式（234.3）给 $0\le\delta_s\le\log(C/\varphi(C))$。直接代入实际源，得到精确关系
+
+$$
+\boxed{
+J_s(n)=s\operatorname{Ben}_{C,1/s}(n)+\Lambda_s(n)-\delta_s.
+}
+\tag{234.5}
+$$
+
+从而对任意正整数都有
+
+$$
+\operatorname{Ben}_{C,1/s}(n)
+\le\frac{J_s(n)+\log(C/\varphi(C))}{s}.
+\tag{234.6}
+$$
+
+这是一个方向明确的传递：低增量亏损强制低经典价格损失。反向传递还要上界 $\Lambda_s(n)$；不能删除该项而把两种损失直接相等。式（234.5）中的 $\delta_s$ 只依赖价格，$\Lambda_s(n)$ 则依赖同一实际整数的完整素幂重数。
+
+取当前尺度 $s=y\ell$、$\ell=\log y$、$R=y/\ell^2$，并令 $y\to\infty$。由删除素数层的条件及
+
+$$
+\frac{Z(p^a)}{Z(p^{a-1})}=1+\frac{p^{-a}}{Z(p^{a-1})}\le1+1/p,
+$$
+
+得到
+
+$$
+p\mid C\quad\Longrightarrow\quad
+\log p\le s\log(1+1/p)\le s/p
+\quad\Longrightarrow\quad p\le y.
+$$
+
+于是由 [Mertens 乘积估计](../../../Library/Weil/dusart2010estimates.md)，
+
+$$
+\log\frac C{\varphi(C)}
+\le\log\prod_{p\le y}(1-1/p)^{-1}
+=\gamma+\log\ell+O(\ell^{-2}).
+\tag{234.7}
+$$
+
+特别地，对任意固定 $K>0$，
+
+$$
+\begin{aligned}
+J_s(n)\le KR
+&\Longrightarrow
+\operatorname{Ben}_{C,1/s}(n)
+\le\frac K{\ell^3}+O\!\left(\frac{\log\ell}{y\ell}\right),\\
+J_s(C)&=O(\log\ell)=o(R),\\
+0\le\log \mathcal Q_s-\log M_s&=O(\log\ell)=o(R).
+\end{aligned}
+\tag{234.8}
+$$
+
+因此，§232 的 $J_s\le8b_2R$ 过滤会保留全部同价 CA 极值整数。这个结论没有证明任何这样的整数属于 $[A,X]\cap(1+F_r\mathbb Z)$；实际窗口和余类命中仍是独立的算术义务。它说明：源亏损集中本身不能以正价格损失为由删去这些极值配置，因为它们的 benefit 恰为零。
+
+### 234.3 素幂资源限制何时不能改善经典支撑界
+
+记 $F_s(n)=\log Z(n)-s^{-1}\log n$，其全局最大值为 $s^{-1}\log \mathcal Q_s$。对任意候选集合 $\mathcal A$，若它仍包含一个同价极值整数 $C$，则
+
+$$
+\sup_{n\in\mathcal A}F_s(n)=\frac1s\log \mathcal Q_s.
+\tag{234.9}
+$$
+
+这是使用资源松弛前可直接核对的饱和条件。例如，若仅保留
+
+$$
+q\mid n,\qquad n/q\le H,\qquad
+p^{v_p(n)}\le B\ \ (p\mid n),\qquad A\le n\le X,
+$$
+
+而某个同价 $C$ 同时满足这些条件，则这些限制没有使该价格包络降低。若任务保留的是准确截断核心 $\gcd(n,n_y)=q$，须检查 $\gcd(C,n_y)=q$，不能只检查 $q\mid C$。若再保留 $n\equiv1\pmod{F_r}$，还须检查该同余；不能从资源条件的饱和推出指定余类也饱和。
+
+对实际整数 $n>5040$，仍有经典的精确预算
+
+$$
+\log\frac{e^\gamma\log\log n}{Z(n)}
+=\operatorname{Ben}_{C,1/s}(n)
+-\left[\frac{\log \mathcal Q_s+\log n}{s}
+-\log(e^\gamma\log\log n)\right].
+\tag{234.10}
+$$
+
+式（234.6）给低亏损候选的 benefit **上界**，而式（234.10）需要足够的 benefit **下界**，或对括号内支撑线过量的上界。两者不能交换方向。所需附加信息必须作用于同一个实际候选，例如指定同余强制的素幂损失，或排除所有同时满足窗口和余类的近极值配置。
+
+### 234.4 与实际截断包络的关系仍保留一项间隔
+
+沿用 §233.6 的 $\Sigma(n)=\max_{m\le n}Z(m)$，定义
+
+$$
+D_n=\log\frac{\Sigma(n)}{Z(n)}\ge0,\qquad
+K_s(n)=\frac{\log \mathcal Q_s+\log n}{s}-\log\Sigma(n)\ge0.
+$$
+
+后一个非负性由同一价格上界对全部 $m\le n$ 成立得到。于是
+
+$$
+\boxed{D_n=\operatorname{Ben}_{C,1/s}(n)-K_s(n).}
+\tag{234.11}
+$$
+
+因此，经典 benefit 和实际包络亏损也不是同一个量。欲用 benefit 下界取得 $D_n$ 下界，必须同时上界支撑线间隔 $K_s(n)$。这一点与式（234.5）的增量差分修正承担不同任务，不能把两份非负损失按名称合并。
+
+式（234.3）—（234.8）提供了此前两个优化目标之间的有限传递；式（234.9）—（234.11）限定其用于候选排除的方向。它们没有给出指定 FIB 余类上的统一正损失，也没有证明所有候选满足 Robin。不含窗口和余类的经典极值比较可以复用；尚需研究的部分是这些额外条件怎样迫使同一整数偏离仍被过滤保留的极值配置。
+
+## 追加锚（本行以下为增补区）
