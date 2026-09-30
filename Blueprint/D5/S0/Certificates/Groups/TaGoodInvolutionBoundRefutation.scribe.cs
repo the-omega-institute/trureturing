@@ -34,15 +34,19 @@ internal sealed class TaGoodInvolutionBoundRefutationDocument : IScribeDocumentD
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The bound is attained", Disp(new Formula.Not(F.Id("claim"))),
                 "Take G = QuaternionGroup 2 and X = {a 1, a 3, xa 0, xa 2} = {±i, ±j}. The inverse of a 1 is a 3 and the inverse of xa 0 is xa 2; a 1 and xa 0 do not commute. Conjugation preserves X, and a 1 and xa 0 generate G. The center has order two. The conjugation orbits are {a 1, a 3} and {xa 0, xa 2}, so k = 2. The four good involutions independently exchange or fix the two elements in each orbit. There are eight automorphisms. Thus |Good| = 4 = min(8, 2^2), which contradicts the proposed strict inequality.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ta-2025-problem-11-7-good-involution-bound-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("ta117-" + declaration.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);

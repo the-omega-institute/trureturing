@@ -82,6 +82,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Groups/TaGoodInvolutionBoundRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ta-2025-problem-11-7-good-involution-bound-refutation` (refuted) by `D5/S0/Certificates/Groups/TaGoodInvolutionBoundRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ta-2025-problem-11-7-good-involution-bound-refutation","declaration_gid":"D5/S0/Certificates/Groups/TaGoodInvolutionBoundRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Lực Ta (2025). *Good involutions of conjugation subquandles*. DOI: [10.48550/arXiv.2505.08090](https://doi.org/10.48550/arXiv.2505.08090). URL: <https://arxiv.org/abs/2505.08090v5>.
