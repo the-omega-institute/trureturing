@@ -906,3 +906,7 @@ missing `--out`, and attempting to overwrite the program were rejected with
 exit 2. These execution checks were performed on macOS with system Python.
 The square classification is cited in the
 [primary-source note](../../../Library/Scale/bugeaud2006fibonaccipowers.md).
+
+The [Mertens progression note](../../../Library/Scale/languasco2008mertensprogressions.md)
+records the classical fixed-modulus background and why that asymptotic
+alone cannot replace the explicit estimate with a moving discriminant.
