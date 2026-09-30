@@ -367,7 +367,7 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
         Assert.Contains("\"status\": \"installed\"", expanded, StringComparison.Ordinal);
         Assert.Equal(1, Compilers(expanded));
         var expandedBuild = CommonExecutionEvidence.ValidateBuild(root);
-        Assert.Equal(new[] { testProject, excludedProject }, expandedBuild.Projects);
+        Assert.Equal(new[] { excludedProject, testProject }, expandedBuild.Projects);
         Assert.Contains(excludedProject, CommonExecutionEvidence.TestAssemblies(root, expandedBuild).Keys);
         Assert.All(expandedBuild.Materials, material => Assert.DoesNotContain("/Debug/", material.Path, StringComparison.Ordinal));
         Assert.True(File.Exists(Path.Combine(root, "build/judge-seed/receipts", excludedProject + ".seed.json")));
