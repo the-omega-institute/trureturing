@@ -15724,3 +15724,226 @@ python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/pure-s
   --arithmetic-library docs/reports/erdos7-odd-covering/frontier/cover-geometry/pure-support-profiles/depth_two_profile.py \
   --output /tmp/erdos7-all-height-continuation.json
 ```
+
+## The omitted high shallow cofactors exceed the current additive margin
+
+For each fixed canonical table, the omitted labels
+
+    3^t*h*q^e, t>=2, e>=1, h in{5,7},
+    q in{11,13,17,19,23,29,31,37,41}
+
+have a finite exact generic allowance G/2 in the normalization of FC634–FC650.
+The one fixed-table evaluation gives
+
+| Table | G | J-(S+G)/2 |
+|---|---|---|
+| FC110 |6616627710514/99157856923125|-107507314199/84992448791250|
+| FC131 |6682868375032/99157856923125|-2998925045399/1189894283077500|
+
+Both margins are strictly negative. They are approximately
+-0.0012649043030051855 and-0.0025203289805231163, respectively.
+Thus the existing additive cap certificate does not remove this
+cofactor exclusion by merely paying its full G/2. This is a method
+obstruction, not an actual covering family or a proof that another
+common-source estimate fails. These are ordinary mathematical results
+and exact rational computations; no new Lean verification is claimed.
+
+### 1. The omitted allowance reduces to finite row data
+
+Keep the same fixed canonical benchmark weights, physical first rows,
+root weights gamma1=gamma2=1/2, and numerical source as FC119--FC122.
+Let w_(h,r,N)(i) be the normalized head-row weight. With the actual raw
+projection symbols X,Y of that benchmark, put
+
+    K_(q,r,N)(i,j)=g_(q,r,N)-max(X_(q,r,N)(i),Y_(q,r,N)(j)),
+    P^(-q)_(r,N)(i,j)=product_(s private, s!=q)K_(s,r,N)(i,j).
+
+The head-depth-one min cap is exactly its row mass, because
+0<=w_(h,r,N)(i)<=c_h,infinity/h. Define
+
+    B_(5,q,N)=max_(r,i) [w_(5,r,N)(i)/2
+                         *sum_j w_(7,r,N)(j) P^(-q)_(r,N)(i,j)],
+    B_(7,q,N)=max_(r,j) [w_(7,r,N)(j)/2
+                         *sum_i w_(5,r,N)(i) P^(-q)_(r,N)(i,j)].
+
+The supported private exponent does not enter these sums or maxima.
+Its complete geometric cap sum is
+
+    sum_(e>=1)c_q,infinity*q^-e=1/(q-2)=b_q.
+
+Consequently the FC647 missing coefficient is EXACTLY
+
+    G_N=sum_q b_q*(B_(5,q,N)+B_(7,q,N)).            (FC662)
+
+For each t>=2 the same root-constant pre-remainder reference R_N gives
+the conditional ternary factor3^(1-t). Its sum is1/2, so all the
+additional labels together have generic allowance Q_N*G_N/2.
+One full numerical label has one root and one actual nonternary phase;
+there is no additional factor2 and no assumption that all maximizing
+addresses are simultaneously realized.
+
+The infinite height and private-depth sums were evaluated analytically.
+The only new numeric calculation evaluates the finite row expression
+FC662 for the two specified saved tables. No source layouts, prime
+sets, depths, weights, clipping policies or alternative arrays were tried.
+
+### 2. How the omitted fee compares with the already paid deep-head pair
+
+Let zeta_(h,q,N) be the maximum of gamma_r*T_({h,q},r,N)(i) over
+live head rows. Every live canonical row has
+
+    1/h<=w_(h,r,N)(i)<=c_h,infinity/h.
+
+For head depths a>=2, the cap c_h,infinity*h^-a is at most1/h.
+Therefore all such min caps equal the cap on a live row, and their
+complete sum gives the old selected contribution for THIS pair support:
+
+    E_(h,q,N)=b_q*zeta_(h,q,N)/(h*(h-2)).           (FC663)
+
+The missing shallow contribution G_(h,q,N)=b_q*B_(h,q,N) satisfies
+
+    (h-2)*E_(h,q,N)<=G_(h,q,N)<=(h-1)*E_(h,q,N).   (FC664)
+
+This is a statement about the specified single pair support. The old
+saved buckets grouped by supported heads contain many larger private
+supports and cannot replace E_(h,q,N). At the limiting canonical table,
+live head row weights are1/h or c_h,infinity/h, so the shallow maximum
+can retain a row-mass distinction that the deeper-head tail no longer
+sees.
+
+### 3. Fixed-table arithmetic and finite-depth consequence
+
+The unsupported-private factors used in FC662 are read from the same
+primitive arrays as the already saved J and S:
+
+    K_(s,r)(i,j)=g_(s,r)*(1-max(array5_(s,r,i),array7_(s,r,j))),
+    g_(s,1)=1, g_(s,2)=1-1/(s-2).
+
+The conditional arrays were checked against their same-source free
+and selected increments. Supported head row weights were reconstructed
+from the common head law minus its root-specific star loss. Nothing
+was recomputed over the old2036 mixed-support inventory.
+
+The new exact G splits by supported head as follows:
+
+| Table | Head5 contribution | Head7 contribution |
+|---|---|---|
+| FC110 |1458538215476/33052618974375|2241013064086/99157856923125|
+| FC131 |1477611570308/33052618974375|2250033664108/99157856923125|
+
+These add to the G totals above. The old saved all-height margins
+J-S/2 remain
+
+    FC110:1123372466597/34996890678750,
+    FC131:37098285204793/1189894283077500.
+
+Subtracting the corresponding G/2, from that SAME table, gives the
+negative margins displayed at the start. No favorable coefficients
+are mixed between tables.
+
+Formula FC662 is a finite expression in canonical row weights and
+private factors. Sums, products and finite maxima are continuous, so
+G_N converges to its saved-table limiting value. Combined with the
+already established convergence of J_N and S_N, this proves
+
+    J_N-(S_N+G_N)/2<0
+
+at every sufficiently large finite skeleton depth, separately for
+each table. No numerical depth threshold is asserted. This does not
+prove failure at all small depths, actual covering, or impossibility
+of using a sharper source/overlap calculation.
+
+### 4. A zero actual cost can coexist with the generic positive allowance
+
+The generic cap discards the supported private group restriction. It
+can therefore charge a newly added label whose actual intersection
+with the chosen source is empty.
+
+Suppose the original free grouped label h*q^e has residue a, and a
+new label3^t*h*q^e has nonternary residue a modulo h*q^e. Its full
+cylinder is contained in the already avoided original free group
+cylinder, whatever its ternary prefix. Therefore
+
+    R_N(E_(3^t*h*q^e))=0.                         (FC665)
+
+The same conclusion holds for any high label whose nonternary cylinder
+is contained in an already avoided grouped hole. This is exact
+same-source containment. Arbitrary high-label phases need not satisfy
+it. The canonical worst-address G allowance remains positive in
+general because it does not encode this incidence relation.
+
+For example, take any finite set of such high labels with private
+depths already present in the free grouped skeleton, and match each
+nonternary residue to its original free grouped residue. Adding all
+of them removes no point from the actual source. Thus the negative
+full generic fee cannot be interpreted as an actual survivor-empty
+statement even for large finite collections of those omitted labels.
+
+### 5. The next sufficient target is a joint-hit saving on one fixed source
+
+Let L be an actual finite set of these new high labels, with all phases
+fixed globally, and let R_N be the SAME pre-remainder source used for
+its old group and nongroup family. The required new response is
+
+    R_N(root r intersect B_(h,q,e,actual high phase)),
+
+together with the common ternary-prefix relations of the full labels.
+The known geometric ternary factor applies before their deletion.
+The missing information is the supported nonternary cylinder's actual
+intersection with the source after its original group holes, including
+FC665's exact zeros. These joint relations cannot be recovered from a
+bare cap or independent marginal maxima.
+
+Write a valid same-source upper allowance for their actual UNION as
+
+    R_N(union_(m in L)E_m)
+        <=Q_N*(G_N/2-Delta_N).                    (FC666)
+
+A phase-uniform result must prove FC666 for every allowed actual source
+and registry in the declared class; exhibiting favorable matched phases
+alone does not supply it. With the existing J_N,S_N fees unchanged,
+the new sufficient normalized margin is
+
+    J_N-(S_N+G_N)/2+Delta_N.                       (FC667)
+
+Thus in the limiting comparison a uniform saving exceeding
+
+    FC110:107507314199/84992448791250,
+    FC131:2998925045399/1189894283077500             (FC668)
+
+would bridge the respective gaps, with an appropriate positive finite-
+depth margin. This identifies a concrete proof obligation on one actual
+source. It does not assume such a uniform saving exists, choose a new
+reference separately for each query, or subtract unrelated upper bounds.
+No new moment, clipping or phase scan follows this negative result.
+
+Pure ternary powers, singleton nonternary supports, arbitrary head
+first-row arrangements outside capacity/transport, and unhandled
+middle primes remain outside this result. The high shallow cofactor
+exclusion is not removed by the present calculation.
+
+### 6. Artifacts and verification
+
+The consumer `frontier/cover-geometry/fibre-credit-partition/high_shallow_cofactor_fee.py` has SHA256
+eb6df6d979fdde6cb3a7919811bcadf48127acb6185d8593f4d2c3a52abe3e5a.
+Its result `frontier/cover-geometry/fibre-credit-partition/high_shallow_cofactor_fee.json` has SHA256
+f500e063cf43ffee76f9d749644c8eeed8d78a47b66904aad42f609a45b312b1.
+Each table evaluated exactly18 pair supports,216 prescribed row
+candidates,1260 eight-factor cells, and10080 scalar K factors. The
+single isolated Python run exited0 with23069 exact checks.
+
+The primitive input hashes are
+
+    FC110:5540ef30fbf02147b4c4687e80e4e617b96cdd58f41a706b8a3f460793ce0a70;
+    FC131:7ff231d7a8c95f0a7bc9e5181fd4c7099e816f985403325fdd608dd176ce37c6.
+
+The saved J/S input hash is
+4e824f35c5f921cdacee1cb462cf3387f5524978e859c65460e45cb3fcb5f8c4.
+The JSON retains every candidate row value, exact maximum and attaining
+addresses, all18 pair contributions, the analytic depth-sum checks and
+the two old-score/new-fee subtraction identities. There was no producer,
+old-control, continuation or parameter-search run.
+
+Independent saved-record verification checked2766 rational identities,
+including all row candidates, maxima, same-source input mappings,
+fee totals and negative margins. No producer or continuation was rerun.
