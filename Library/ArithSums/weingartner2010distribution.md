@@ -36,7 +36,7 @@ $$
 \log W(s)=s\log(e^\gamma\log z)-z+
  z\sum_{j=2}^m\frac{b_j}{(\log z)^j}
  +O_m\left(\frac z{(\log z)^{m+1}}\right),
-\qquad b_2=\frac{\pi^2}{6}.
+\qquad b_2=\frac{\pi^2}{6},\quad b_3=-\frac{\pi^2}{6}.
 $$
 
 Lemma 6 treats $t\ge1$, $y=e^{t e^{-\gamma}}$, and
@@ -89,6 +89,32 @@ The inequality includes the threshold equality. It bounds actual
 potential Robin violations, not every integer surviving an unrelated
 necessary-condition sieve. It does not establish that the set is empty.
 
+## Actual valuation moments and the comparison of tails
+
+For the abundancy tail $A(t)$ and the totient tail $B(t)$ defined in the
+original paper, Theorem 3 states, for sufficiently large $t$ and
+$y=e^{t e^{-\gamma}}$,
+
+$$
+A(t)\le B(t)<e^{3\sqrt y}
+A\left(t-\frac{5e^\gamma}{\sqrt y}\right).
+$$
+
+Both the multiplicative factor and the threshold shift are part of the
+statement. They do not by themselves give a finite progression bound.
+Theorem 1 gives the two tails the same expansion to every fixed order;
+neither theorem says that their finite samples agree.
+
+Section 209 of the FIB theory volume instead keeps actual valuations via
+the nonnegative multiplicative coefficients
+$b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s$ and the Euler product
+$U(s)=\sum_d b_s(d)/d$. Its elementary comparison with $W(s)$ is a
+repository paper derivation, not a quoted statement of this source.
+The negative coefficient $b_3=-\pi^2/6$ above is used there to distinguish
+an exact leading-order saving from a bound with an uncontrolled remainder.
+This coefficient $b_3$ is the asymptotic expansion coefficient, not the
+separately defined arithmetic function $b_s(d)$.
+
 ## Scope
 
 The paper's limiting distribution tails are not uniform finite estimates
@@ -105,4 +131,4 @@ complete literature-search claim is made.
 - Pinned abstract: https://arxiv.org/abs/1011.4262v1
 - Pinned original PDF: https://arxiv.org/pdf/1011.4262v1
 - Pinned HTML: https://arxiv.org/html/1011.4262v1
-- Exact locations: equation (5), Lemma 5, Lemma 6.
+- Exact locations: equation (5), Lemma 5, Lemma 6, Theorems 1 and 3.

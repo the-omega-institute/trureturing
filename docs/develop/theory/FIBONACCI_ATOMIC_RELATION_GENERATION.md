@@ -23013,3 +23013,422 @@ $$
 此外，式（208.8）的右边仍趋于无穷；它不能排除一个、有限多个或无穷多个越来越稀疏的异常。它不证明本族每个整数安全，更不证明 RH。继续推进逐点 Robin 仍需将核心、余因子和同余约束联合起来，排除实际达到预算的候选；仅用极限密度或平均意义的稀疏性不能完成这一步。
 
 ## 追加锚（本行以下为增补区）
+
+## 209. 实际赋值矩、FIB 模数与加权同余节省
+
+本节处理固定来源族
+
+$$
+V=F_r,\quad r\text{ 为素数},\quad
+I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+gV.
+$$
+
+记
+
+$$
+A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,
+\quad T=|I|,
+$$
+
+$$
+y=\log A,\quad t=e^\gamma\log y,
+\quad s=y\log y,\quad R_y=\frac y{(\log y)^2},
+\quad b_2=\frac{\pi^2}{6}.
+$$
+
+以下均取充分大的 $r$，使上述量为正且 $s\ge4$。实际端点满足 $X/A\to2$、$\log(T/X)=-y/2+O(1)$。定义实际异常乘子集
+
+$$
+\mathcal E_r=\{g\in I:Z(N_g)\ge e^\gamma\log\log N_g\}.
+$$
+
+这里包含等号；目标为充分大时 $\mathcal E_r=\varnothing$。
+
+本节给出三个可复用结果：直接约数和矩的正项展开；它与 totient 全域矩之间的显式误差；固定模数同余在同一个正项展开中的精确位置。最后的同余节省仍是待证充分条件。
+
+### 209.1 保留实际素数幂赋值的非负卷积
+
+对每个实数 $s>0$，令 $b_s$ 为乘法函数，且
+
+$$
+b_s(1)=1,\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\quad(a\ge1).
+\tag{209.1}
+$$
+
+$Z(p^a)=1+p^{-1}+\cdots+p^{-a}$ 随 $a$ 严格增加，故 $b_s(d)\ge0$。逐素数幂作有限望远镜求和，得到
+
+$$
+Z(n)^s=\sum_{d\mid n}b_s(d).
+\tag{209.2}
+$$
+
+这与只记录素支撑的 $a_s$ 不同：$b_s(p^a)$ 在 $a\ge2$ 时也为正，式（209.2）精确保留实际赋值的增益。
+
+定义
+
+$$
+U_p(s)=1+\sum_{a\ge1}\frac{b_s(p^a)}{p^a}
+=(1-p^{-1})\sum_{a\ge0}\frac{Z(p^a)^s}{p^a},
+\tag{209.3}
+$$
+
+$$
+W_p(s)=1-p^{-1}+p^{-1}(1-p^{-1})^{-s}.
+$$
+
+式（209.3）的等式由绝对收敛的望远镜求和给出：$Z(p^a)^s\le(1-p^{-1})^{-s}$。同一上界给
+
+$$
+1\le U_p(s)\le W_p(s).
+\tag{209.4}
+$$
+
+对每个固定 $s>0$，$\prod_p W_p(s)=W(s)<\infty$；因此 $\prod_pU_p(s)$ 也收敛。非负项的有限 Euler 展开及单调极限给
+
+$$
+U(s):=\prod_pU_p(s)=\sum_{d\ge1}\frac{b_s(d)}d<\infty.
+\tag{209.5}
+$$
+
+于是每个有限 $X\ge1$ 都满足
+
+$$
+\sum_{n\le X}Z(n)^s
+=\sum_{d\le X}b_s(d)\lfloor X/d\rfloor
+\le XU(s)\le XW(s).
+\tag{209.6}
+$$
+
+这里先证明每个 $X,s$ 的有限不等式，再选择增长的 $s$，没有交换固定矩平均极限。作为固定 $s$ 的对照，先固定除数截断再令 $X\to\infty$，也可由式（209.6）两侧夹逼得到 $X^{-1}\sum_{n\le X}Z(n)^s\to U(s)$；本节的增长矩应用不依赖这条极限。
+
+### 209.2 实际赋值损失在全域矩中的尺度
+
+**引理 209.1（两种 Euler 矩的显式比较）。** 对每个实数 $s\ge4$，
+
+$$
+0\le\log W(s)-\log U(s)
+\le\sqrt s\,(\log s+5).
+\tag{209.7}
+$$
+
+证明。记 $P_p=(1-p^{-1})^{-s}$，分两段估计。
+
+当 $p\le\sqrt s$ 时，取整数
+
+$$
+a=\lceil\log s/\log p\rceil-1\ge1.
+$$
+
+则 $p^a<s\le p^{a+1}$。因 $p^{-(a+1)}\le1/s\le1/4$，由 $\log(1-u)\ge-2u$（$0\le u\le1/2$），有
+
+$$
+(1-p^{-(a+1)})^s\ge e^{-2}.
+$$
+
+在式（209.3）中只保留这一项，得到
+
+$$
+U_p(s)\ge(1-p^{-1})p^{-a}P_p
+(1-p^{-(a+1)})^s
+\ge\frac{e^{-2}}{2s}P_p.
+$$
+
+又 $W_p(s)\le P_p$，故
+
+$$
+0\le\log\frac{W_p(s)}{U_p(s)}
+\le\log(2e^2s).
+\tag{209.8}
+$$
+
+当 $p>\sqrt s$ 时，式（209.3）中所有 $a\ge1$ 的项都满足 $Z(p^a)^s\ge(1+p^{-1})^s$，所以
+
+$$
+U_p(s)\ge1-p^{-1}+p^{-1}(1+p^{-1})^s.
+$$
+
+若 $P\ge Q>0$、$c\ge0$、$d>0$，则 $(c+dP)/(c+dQ)\le P/Q$。使用此式可得
+
+$$
+\frac{W_p(s)}{U_p(s)}
+\le\frac{(1-p^{-1})^{-s}}{(1+p^{-1})^s}
+=(1-p^{-2})^{-s}.
+$$
+
+于是
+
+$$
+0\le\log\frac{W_p(s)}{U_p(s)}
+\le-s\log(1-p^{-2})
+\le\frac s{p^2-1}.
+\tag{209.9}
+$$
+
+令 $k=\lfloor\sqrt s\rfloor\ge2$。用整数尾和放大素数尾和，并作望远镜求和：
+
+$$
+\sum_{p>\sqrt s}\frac s{p^2-1}
+\le\frac s2\left(\frac1k+\frac1{k+1}\right)
+\le2\sqrt s.
+$$
+
+小素数数量不超过 $\sqrt s$，所以式（209.8）、式（209.9）给
+
+$$
+\sum_p\log\frac{W_p(s)}{U_p(s)}
+\le\sqrt s\,(\log s+\log2+4)
+\le\sqrt s\,(\log s+5).
+$$
+
+两边 Euler 乘积均正且收敛；对有限素数集合先证明该界，再取极限，即得到式（209.7）。$\square$
+
+显式矩阶 $s=y\log y$ 因而满足
+
+$$
+0\le\log W(s)-\log U(s)
+=O\bigl(\sqrt y\,(\log y)^{3/2}\bigr)
+=o\left(\frac y{(\log y)^m}\right)
+\tag{209.10}
+$$
+
+对每个固定正整数 $m$ 成立。
+
+Weingartner 原文 Lemma 5 的 $b_2=\pi^2/6$、$b_3=-\pi^2/6$ 遂给
+
+$$
+\log\frac{XU(s)}{t^s}
+=\log(X/A)+b_2R_y
+-b_2\frac y{(\log y)^3}
++O\left(\frac y{(\log y)^4}\right).
+\tag{209.11}
+$$
+
+因此，改为保留完整赋值的全域矩后，证书 $XU(s)/t^s$ 仍趋于无穷；它没有自动提供排除所需的 $R_y$ 尺度节省。这个结论针对式（209.6）的**无限 Euler 上界**，不声称实际有限和或 FIB 等差数列的矩与它相等。
+
+这与原文的相关结构一致：Theorem 1 同时给约数和与 totient 的极限分布尾相同的任意固定阶展开；Theorem 3 通过补小素数的赋值，把两种分布进行比较，并付出 $e^{3\sqrt y}$ 与 $5e^\gamma/\sqrt y$ 阈值位移。式（209.7）在这里提供的是有限矩接口需要的显式对照，不宣称独立原创性，也不从极限分布未经论证地交换出有限矩结论。
+
+### 209.3 Fibonacci 模数素因子删除的尺度
+
+令
+
+$$
+U_V(s)=\prod_{p\nmid V}U_p(s),\qquad
+W_V(s)=\prod_{p\nmid V}W_p(s).
+$$
+
+本族有 $p\mid V\Rightarrow p\ge2r-1$。又
+
+$$
+y=2r\log\phi+O(1),\qquad\log\phi<1/2,
+$$
+
+所以充分大时每个 $p\mid V$ 都有 $p-1\ge2y$。因
+
+$$
+(1-p^{-1})^{-s}\le\exp\bigl(s/(p-1)\bigr)
+\le\sqrt y,
+$$
+
+得到
+
+$$
+\log W_p(s)\le\frac{\sqrt y}{p}
+\le\frac1{2\sqrt y}.
+$$
+
+$V$ 的不同素因子数量至多为 $\log V/\log(2r-1)=O(y/\log y)$。故
+
+$$
+0\le\log\frac{U(s)}{U_V(s)}
+\le\log\frac{W(s)}{W_V(s)}
+=O\left(\frac{\sqrt y}{\log y}\right).
+\tag{209.12}
+$$
+
+该量仍是每个固定 $y/(\log y)^m$ 的小阶。只保留 $(d,V)=1$ 这个素支撑筛选，不能消去式（209.11）的 $b_2R_y$ 主修正。真正需要使用的是指定剩余类的命中关系，而非仅把不可逆剩余类删掉。
+
+### 209.4 同一个整数上的精确同余边界项
+
+对每个正整数 $d$，定义
+
+$$
+A_I(d)=\#\{g\in I:d\mid1+gV\}.
+$$
+
+若 $(d,V)>1$，则 $A_I(d)=0$；若 $(d,V)=1$，则
+
+$$
+A_I(d)=\#\{g\in I:g\equiv-V^{-1}\pmod d\}.
+\tag{209.13}
+$$
+
+实际 AP 矩精确等于
+
+$$
+\mathcal M_Z(s;I,V)
+:=\sum_{g\in I}Z(N_g)^s
+=\sum_{\substack{d\le X\\(d,V)=1}}b_s(d)A_I(d).
+\tag{209.14}
+$$
+
+写
+
+$$
+\varepsilon_I(d)=A_I(d)-T/d\quad(d\le X,(d,V)=1),
+\qquad |\varepsilon_I(d)|\le1.
+$$
+
+则
+
+$$
+\mathcal M_Z(s;I,V)=T U_V(s)+\mathcal B_Z(s;I,V),
+\tag{209.15}
+$$
+
+其中完整、带符号的边界项为
+
+$$
+\mathcal B_Z
+=
+\sum_{\substack{d\le X\\(d,V)=1}}b_s(d)\varepsilon_I(d)
+-T\sum_{\substack{d>X\\(d,V)=1}}\frac{b_s(d)}d.
+\tag{209.16}
+$$
+
+第二项来自实际有限区间的尾部截断，不能漏掉。式（209.16）的第一项是有限和，第二项绝对收敛。实际赋值、同余命中和区间边界都来自同一个 $N_g$。
+
+totient 矩有完全同形的式（209.14）—（209.16），只需以平方自由支持的 $a_s$ 替换 $b_s$、以 $W_V$ 替换 $U_V$。两者均不能无证据地把 $\varepsilon_I(d)$ 平均成0，也不能在增长矩阶下抛弃正系数加权后的 $+1$ 误差。
+
+理想主项本身已足够小：由式（209.11）和 $\log(T/X)=-y/2+O(1)$，
+
+$$
+\frac{TU_V(s)}{t^s}
+\le\exp\bigl(-y/2+b_2R_y+o(R_y)\bigr)\longrightarrow0.
+\tag{209.17}
+$$
+
+剩余任务不是重新证明这个主项，而是控制同一 $I,V,s$ 上的 $\mathcal B_Z$。
+
+### 209.5 加权矩排除的充分阈值
+
+每个潜在 Robin 反例都有 $Z(N_g)\ge t$，所以
+
+$$
+|\mathcal E_r|\le\frac{\mathcal M_Z(s;I,V)}{t^s}.
+\tag{209.18}
+$$
+
+因此一个充分条件是 $\mathcal M_Z<t^s$。用全域矩作基准，令
+
+$$
+\delta_Z(s;I,V)
+=\log\frac{XU(s)}{\mathcal M_Z(s;I,V)}\ge0.
+$$
+
+在这一个指定矩阶和共同阈值下，矩证书小于1的精确条件是
+
+$$
+\delta_Z>\log\frac{XU(s)}{t^s},
+\tag{209.19}
+$$
+
+右边的渐近展开由式（209.11）给出；判据比较的是这个实际量，不能任意选择余项符号。
+
+一个容易陈述的足够估计是：存在固定 $a>b_2$，使充分大时
+
+$$
+\mathcal M_Z(s;I,V)\le XU(s)e^{-aR_y}.
+\tag{209.20}
+$$
+
+它会使式（209.18）的右边趋于0，故最终严格小于1，从而排除等号和超界。因 $e^{-aR_y}=X^{-a/(\log\log X)^2+o(1/(\log\log X)^2)}$，所需节省弱于任何固定 $X^{-\eta}$（$\eta>0$）幂次节省。
+
+原文的负三阶系数还说明：若能证明式（209.20）在 $a=b_2$ 时精确成立，它同样足够，因为剩余的 $-b_2y/(\log y)^3$ 趋于负无穷。更细的充分阈值可按式（209.19）保留后续项；不能把 $a>b_2$ 当作必要门槛。
+
+上述条件只是这一矩证书的充分路线。即使每个 $N_g$ 都满足 Robin，也不能保证在预先指定的有限 $s$ 下，全部安全项的 $s$ 次幂总和小于 $t^s$。totient 矩比直接 $Z$ 矩还大，因此要求 totient 矩达到同样节省又加了一层强条件。这里没有证明式（209.20），也没有证明它必然由 RH 或本族 Robin 推出。
+
+### 209.6 大除数与短余因子的加权命中条件
+
+正项展开还给出可独立研究的除数权重：
+
+$$
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\qquad
+\sum_{d\ge1}\mu_s(d)=1.
+$$
+
+定义实际区间的命中系数
+
+$$
+K_{I,V,X}(d)=\frac dX A_I(d).
+$$
+
+$d>X$ 时 $A_I(d)=0$。因为 $\{N_g:g\in I\}\subseteq[1,X]$ 且各 $N_g$ 不同，
+
+$$
+0\le A_I(d)\le\lfloor X/d\rfloor,
+\qquad0\le K_{I,V,X}(d)\le1.
+$$
+
+式（209.14）因此等价于
+
+$$
+\frac{\mathcal M_Z(s;I,V)}{XU(s)}
+=\sum_{d\ge1}\mu_s(d)K_{I,V,X}(d).
+\tag{209.21}
+$$
+
+这份权重与命中关系来自同一个展开；它没有独立性或均匀随机假设。
+
+固定 $a>b_2$，取
+
+$$
+D=Xe^{-aR_y},\qquad
+\mathcal H_D=\{d\in\mathbb N:D<d\le X,\ A_I(d)>0\}.
+$$
+
+对 $d\le D$，由 $A_I(d)\le T/d+1$ 得
+
+$$
+K_{I,V,X}(d)\le T/X+D/X.
+$$
+
+对 $d>D$ 使用 $K\le1$，故
+
+$$
+\frac{\mathcal M_Z(s;I,V)}{XU(s)}
+\le\frac TX+e^{-aR_y}+\mu_s(\mathcal H_D).
+\tag{209.22}
+$$
+
+因此，如果能独立证明
+
+$$
+\mu_s(\mathcal H_D)\le e^{-aR_y},
+\tag{209.23}
+$$
+
+则因 $T/X\le e^{-aR_y}$ 最终成立，式（209.22）给至多 $3e^{-aR_y}$；常数3不影响 $a>b_2$ 时的排除。这不要求每个大除数都不命中，只要求它们的总 $\mu_s$ 权重足够小。
+
+此外，$D/T\to\infty$，所以大除数的命中至多对应一个 $g$。对 $d\in\mathcal H_D$，存在实际整数 $h$ 满足
+
+$$
+dh-gV=1,\qquad g\in I,\qquad
+1\le h\le X/D=e^{aR_y}.
+\tag{209.24}
+$$
+
+这把所需节省接回一个明确的短余因子逆元问题：在 $D<d\le X$ 上，用 $\mu_s(d)$ 加权，控制有小 $h$ 能共同实现 $dh\equiv1\pmod V$ 及实际乘子区间的除数。
+
+这里 $h=N_g/d$ 是当前除数的互补因子，不自动等于 §207 的完整小素数核心之粗余因子 $H$，也不自动只含大素数。若要使用 §207 的粗糙性，必须再证明所选 $d$ 就是那一个完整核心，不能只因两个量都“小”便合并。
+
+式（209.23）仍未证明。实质上已经得到的是：直接约数和全域矩与素支撑矩在所需指数尺度上相同；仅删除 $V$ 的素因子同样不足；任何进一步节省必须进入式（209.16）或式（209.21）中真实的固定模数命中关系。式（209.22）给下一步一个比“所有候选都安全”更具体、仍可独立证伪或估计的加权目标。
+
+### 209.7 文献前置与未决估计
+
+本节使用 Weingartner, *The distribution functions of σ(n)/n and n/φ(n), II*, arXiv:1011.4262v1 (2010)，式（5）、Lemma 5、Theorems 1、3。版本与量词见[文献卡](../../../Library/ArithSums/weingartner2010distribution.md)及[固定原文](https://arxiv.org/html/1011.4262v1)。
+
+式（209.20）、式（209.23）是尚待实现的充分目标。Euler 乘积比较与模数素因子删除估计只限定这两种全域替代的改进尺度；它们不证明实际固定剩余类有正的边界偏差，也不排除有限截断、区间分解或更精确的共同实现关系带来额外节省。
+
+## 追加锚（本行以下为增补区）
