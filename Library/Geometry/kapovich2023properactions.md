@@ -106,3 +106,10 @@ follows from \(d_\rho([x],[z])\leq d_X(x,z)\). The ambient closed ball
 is compact and \(\pi\) is continuous in the agreed topology, so the
 quotient closed ball is compact. This bridge concerns the representation
 quotient; it imposes no finite-volume or smooth-curvature conclusion.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1007/s40863-023-00353-z
+- Author manuscript: https://www.math.ucdavis.edu/~kapovich/EPR/prop-disc.pdf
+- Verified scope: revised manuscript dated 18 June 2024, page 9, formula (20)
+  and Lemma 21(2), with the closed-ball projection proof on page 10.
