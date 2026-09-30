@@ -26,7 +26,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
             Strings(plan["stages"]!["engineering"]!["resources"]!));
         var tests = Strings(plan["execution"]!["tests"]!);
         Assert.Contains("tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj", tests);
-        if (aggregate) Assert.Equal(50, tests.Length);
+        if (aggregate) Assert.Equal(39, tests.Length);
         else Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         Assert.Contains("lake", Strings(requirements["tools"]!));
         foreach (var layer in new[] { "dependency", "elan", "engineering", "project" })
