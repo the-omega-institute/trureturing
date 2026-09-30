@@ -10,8 +10,8 @@ namespace Reg.D5.S3.Arith.Lattices.PureCubicOrderCoordinateQuotient
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Σ _c : ℕ, Σ _d : ℕ, ℤ
-  State := fun _ => ℤ
+  Params := Σ _d : ℕ, Σ _k : ℤ, ℤ
+  State := fun _ => ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -20,7 +20,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun _ p v => triangularLattice p.1 p.2.1 p.2.2 v)
+  (fun _ p c => triangularLattice c p.1 p.2.1 p.2.2)
   (fun e => nomatch e)
 
 def rejected : Realization signature := realize signature
@@ -30,7 +30,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (c d : ℕ) (k v : ℤ)
     (hc : 0 < c) (hd : 0 < d) (hv : v = 1 ∨ v = -1),
-    Nonempty (((ℤ × ℤ × ℤ) ⧸ R.readout () ⟨c, d, k⟩ v) ≃+
+    Nonempty (((ℤ × ℤ × ℤ) ⧸ R.readout () ⟨d, k, v⟩ c) ≃+
       ZMod c × ZMod d)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -65,30 +65,31 @@ def registration : Registration arena (arena.Law actual) where
   dependence := by
     intro i
     cases i
-    refine ⟨⟨1, 1, 0⟩, 1, 2, ?_⟩
-    change triangularLattice 1 1 0 1 ≠ triangularLattice 1 1 0 2
+    refine ⟨⟨1, 0, 1⟩, 1, 2, ?_⟩
+    change triangularLattice 1 1 0 1 ≠ triangularLattice 2 1 0 1
     intro heq
-    have hm : ((0, 0, 1) : ℤ × ℤ × ℤ) ∈ triangularLattice 1 1 0 1 := by
-      refine ⟨0, 0, 1, ?_⟩
+    have hm : ((0, 1, 0) : ℤ × ℤ × ℤ) ∈ triangularLattice 1 1 0 1 := by
+      refine ⟨0, 1, 0, ?_⟩
       ext <;> norm_num
     rw [heq] at hm
     obtain ⟨a, b, t, ht⟩ := hm
-    have hthird := congrArg (fun x : ℤ × ℤ × ℤ => x.2.2) ht
-    norm_num at hthird
+    have hmiddle := congrArg (fun x : ℤ × ℤ × ℤ => x.2.1) ht
+    norm_num at hmiddle
     omega
 
 register_information_theorem triangular_lattice_quotient in arena
   readout via (realize signature
-    (fun _ p v => triangularLattice p.1 p.2.1 p.2.2 v)
+    (fun _ p c => triangularLattice c p.1 p.2.1 p.2.2)
     (fun e => nomatch e))
   realizes registration
   escape from source ({
     owner := `D5.S3.Arith.Lattices.PureCubicOrderCoordinateQuotient
-    coordinates := #[0, 1, 2]
+    coordinates := #[1, 2, 3]
     readouts := #[{
       path := Array.replicate 7 "body" ++
         #["arg", "fn", "fn", "fn", "arg", "arg"]
-      stateBinder := 3 }] })
+      stateBinder := 0
+      stateOperand := some #["fn", "fn", "fn", "arg"] }] })
   escape continues (open)
 
 #print axioms registration
